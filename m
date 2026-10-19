@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A944C8492;
-	Mon, 19 Oct 2026 13:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B865AA66D;
+	Mon, 19 Oct 2026 13:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418144; cv=none; b=cv5wmZPWt1Apn2CEM3UBbPb/y4XYrpCbQvr5vaI2dc3zW3Yv0+D22vktFTz/SHglVWHMG1p7ljzRHRHonkH25vO/t8TkznCcm+P1XgCUXCFDDGrYGsntQ99zfmWWgPlyOTApZ5rGTnRwfLNsZwOgrgT5PL5DXybqlbmHa4i5r5Y=
+	t=1792418146; cv=none; b=ry1Mp4l2WqtRUu1PRQtMcaMcFXK7k8w5sexbu8sutj3mJvaGrYBshFkUwfqpP+hR9OrRvTUaXgJdLKgQgQ9ql+W9RhtgZkAR4wkgUudz9fwg0fdw59e0aoV5/OGvVKHQtCNWPb4XYsutcjzn77rMjYodV11h7l8Bl/7Rs1debtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418144; c=relaxed/simple;
-	bh=KoCqBh4ZMbVOaPb383b2yMYthlaUGhUA6/S0Z5PuA0k=;
+	s=arc-20240116; t=1792418146; c=relaxed/simple;
+	bh=gbk/+8ZvngxK2FY2q/j6180/hh0yY7VYGT2agXx8PXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jgkj1LCSQL+avwVZ042e2RkRkslMPpTmq/jBTnDPWfEtUI49i8LS4dj/tgK+SX+RXmc0bnp4qdLNnio3RBT2S6aYSjmqoE4zTBXkUAChUJw3qWEfXrES5DPWMj1JgYiYonaMj3oGJfUaErQwfov4B8qz/UtBt/For1DqOzi11N8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pp5HnVg8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=t//k7sIwtskI4/eK6oD1Tjc49eygssRJeAk0V0DGMz7xn6JTSm3M7LFCmxLcklApKtjGG3bTvSSX5AaPVHf0UIX1yx/2ld/0VHl+qSIYNCAef9cNCZn1Djx2ZrSxYXKb+68g3f1rzdS2jz0sWCS7/kbMemNg67dh1ybF6LzlxLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o1Zaubbv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pp5HnVg8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9174B1F000C4;
-	Mon, 19 Oct 2026 13:55:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o1Zaubbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75EB1F000C5;
+	Mon, 19 Oct 2026 13:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418142;
-	bh=Tc20pTL7q6jmIQhtxrQ1Hu90HiPPdMpquY7s3JWz3Fg=;
+	s=k20260515; t=1792418143;
+	bh=+4QqVSq5EJGOolgMlm1wGlt1n7CtvHBteLbcpkGvwb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pp5HnVg8QDme211qE8Ypdl86W34/OyQmnGnmLxfS7YWvg+zZ5nP2fiMd7XL0ZBctK
-	 S8b+XKZT3aeU7M9Ikxvp8eH4wzjErxTNwJyVqQETmm/UZPnqJZr7zZWpaSu4GVSGp8
-	 H/Jvx4vRQnTLPWrtr4KpCTo2WoX6+al3cTHYbwwooIZKoX7VjkC4w92Kk5xkjxbU9M
-	 SzQRMsyb/CVpBBI+38zEXN+CXUmVreMJDgeRLBIbsSVMJWYYuNua3bFbkK/724v21y
-	 j5aXjbccLlNzUPXO5+oZBMIUECjYTbTFaNz7igwiTaG5ssQ2UCgzkMOETr2wgCm8Vr
-	 iX8SFkfw1ThfA==
+	b=o1ZaubbvhE+AZE71qzPW3E+qpe9NZzJoK/1I5dmDcm2QNYrRfylZuX2A1+aPtGkxf
+	 wlXs78zb5y4YYM9eBn15wW6R2CwQQ33rqaa+8+bOsKbZVNUa1iX4LjP7tdqnzIO2Ho
+	 Lc1pDymNDRjzrMdKLxgHn/6J43g9AtuB3CxtwtxcQ5gv9IROrocvBD85CLSUWMP88v
+	 GlGf7/P3rRkiKvK1rNtKla7WbkePKr6GMbQiZ3Lg1ptZxfSn9+juMbnZrrQLU7+3C8
+	 1o7/DjVkNx+TA3Pd/B1wJqVOce2wJt5lAF1/nV12xcHtrboCIpXz++lCEK//DlELCx
+	 SLOx8lFfVwfrw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Mark Brown <broonie@kernel.org>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mathieu.poirier@linaro.org,
-	linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] remoteproc: qcom: Check subdev start status in rproc_stop()
-Date: Mon, 19 Oct 2026 09:45:33 -0400
-Message-ID: <20261019135441.1420968-42-sashal@kernel.org>
+	gregkh@linuxfoundation.org,
+	rafael@kernel.org,
+	dakr@kernel.org,
+	linux-kernel@vger.kernel.org,
+	driver-core@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18] regmap: irq: Free the irqdomain we create
+Date: Mon, 19 Oct 2026 09:45:34 -0400
+Message-ID: <20261019135441.1420968-43-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,398 +56,447 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit f44ae8ce156a387b07d40e2d6a0ef979a2748aa1 ]
+[ Upstream commit 2e42cade8ff1ff579e77976d9869db4df1feaf74 ]
 
-For rproc that doing attach, rproc_start_subdevices() is called only when
-attach successfully. If rproc_report_crash() is called in the attach
-function, rproc_boot_recovery()->rproc_stop()->rproc_stop_subdevices()->
-glink_subdev_stop() could be called and cause NULL pointer dereference:
+When domain support was added to regmap-irq it was not possible to
+remove domains, this was added later by 8ee99ada293b (irqdomain: Support
+removal of IRQ domains.).  We did update the main removal path to free
+the domain but forgot the error unwinding case during creation that is
+now in regmap_add_irq_chip_fwnode() after some code motion, meaning that
+errors during instantiation result in an unused irqchip being left
+hanging around.  Add the missing irq_remove_domain() call where the
+comment says it should be.
 
- Unable to handle kernel NULL pointer dereference at virtual address 0000000000000300
- Mem abort info:
- ...
- pc : qcom_glink_smem_unregister+0x14/0x48 [qcom_glink_smem]
- lr : glink_subdev_stop+0x1c/0x30 [qcom_common]
- ...
- Call trace:
-  qcom_glink_smem_unregister+0x14/0x48 [qcom_glink_smem] (P)
-  glink_subdev_stop+0x1c/0x30 [qcom_common]
-  rproc_stop+0x58/0x17c
-  rproc_trigger_recovery+0xb0/0x150
-  rproc_crash_handler_work+0xa4/0xc4
-  process_scheduled_works+0x18c/0x2d8
-  worker_thread+0x144/0x280
-  kthread+0x124/0x138
-  ret_from_fork+0x10/0x20
- Code: a9be7bfd 910003fd a90153f3 aa0003f3 (b9430000)
- ---[ end trace 0000000000000000 ]---
-
-Introduce "subdevs_started" flag to indicate rproc_start_subdevices() has
-been called successfully. Ensure subdevices are only stopped if they have
-been started.
-
-Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260623-rproc-attach-issue-v3-2-8e24310707ce@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Reported-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260901-regmap-irq-deallocate-domain-v1-1-4bfed4aff559@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **v7.3-rc4** (`7.3.0-rc4`). The change is a real NULL-deref
-fix on the remoteproc attach/recovery path, and the triggering code is
-present here.
+The local tree is **6.18.57**. At that base,
+`regmap_add_irq_chip_fwnode()` still has the “Should really dispose of
+the domain but...” stub, so the leak exists here and the one-line
+`irq_domain_remove()` change applies cleanly.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: Subject**
-Record: `[remoteproc/qcom] [Check] Check subdev start status in
-rproc_stop()` — despite the `qcom:` prefix, the diff is in remoteproc
-core, not a Qualcomm-only file.
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[regmap: irq:] [Free] [Release the irqdomain created during
+chip setup]`
 
-**Step 1.2: Tags**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>` (author)
-- `Link: https://lore.kernel.org/r/20260623-rproc-attach-
-  issue-v3-2-8e24310707ce@oss.qualcomm.com`
-- `Signed-off-by: Bjorn Andersson <andersson@kernel.org>` (subsystem
+- `Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>` (researcher
+  report)
+- `Reported-by: Thomas Gleixner <tglx@kernel.org>` (irq subsystem
   maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-  stable` (absence is expected for this review)
-- Ignore any pipeline `Signed-off-by: Sasha Levin` — none present on
-  this commit
+- `Link: https://patch.msgid.link/20260901-regmap-irq-deallocate-
+  domain-v1-1-4bfed4aff559@kernel.org`
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` (regmap maintainer;
+  author)
+- No `Fixes:` tag (expected)
+- No `Cc: stable` (expected)
+- Pipeline-added `[Upstream commit 2e42cade8ff1...]` and Sasha Levin SOB
+  ignored per instructions
+- Notable: two reporters, one of them tglx
 
-**Step 1.3: Body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** On attach, `rproc_start_subdevices()` runs only after attach
-  succeeds. If `rproc_report_crash()` fires during attach, recovery
-  calls `rproc_stop()` → `rproc_stop_subdevices()` →
-  `glink_subdev_stop()` while GLINK was never started.
-- **Symptom:** kernel NULL deref / oops (`qcom_glink_smem_unregister` at
-  `pc` offset into a NULL `smem` pointer). Full stack in the message.
-- **Root cause:** stop is not paired with a successful start.
-- **Fix:** `subdevs_started` flag; skip stop unless start completed.
-- **Version info:** none in the message. Link id `v3-2` = patch 2 of a
-  3-patch series.
+- Bug: when irqdomain support was added to regmap-irq, domains could not
+  be removed. `irq_domain_remove()` was added later (`58ee99ada293b`;
+  the message cites `8ee99ada293b`, missing the leading `5`). The
+  success teardown path was updated; the **creation error-unwind** path
+  was not.
+- Symptom: failed instantiation leaves an unused irqchip/domain hanging
+  around.
+- Failure mode: resource leak of a published irq domain on
+  `request_threaded_irq()` failure after `regmap_irq_create_domain()`.
+- Root cause (author): missing `irq_domain_remove()` at the
+  `err_domain:` label (the comment already said it should be there). The
+  message says `irq_remove_domain()`; the actual API is
+  `irq_domain_remove()`.
+- Version info: none beyond the historical API gap.
 
-**Step 1.4: Hidden bug fix?**
-Record: Not hidden. Explicit crash + stack trace. Cover letter: “Failure
-in rproc_attach() path can cause issues like NULL pointer dereference
-when doing recovery.”
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. This is an explicit error-path resource-leak fix.
+External reporting (KASAN during CPU hotplug) shows the leaked objects
+can become a use-after-free, not only a leak.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: Inventory**
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- `drivers/remoteproc/remoteproc_core.c`: +7 (set flag on successful
-  start; bail/clear on stop)
-- `include/linux/remoteproc.h`: +2 (doc + `bool subdevs_started` in
-  `struct rproc`)
-- Functions: `rproc_start_subdevices()`, `rproc_stop_subdevices()`
-- Scope: single-subsystem, surgical, 9 insertions
+- File: `drivers/base/regmap/regmap-irq.c` (`1` insertion, `1` deletion)
+- Function: `regmap_add_irq_chip_fwnode()`
+- Scope: single-file surgical fix
 
-**Step 2.2: Code flow**
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** `rproc_stop_subdevices()` always walked `rproc->subdevs`
-  and called `stop()`. `glink_subdev_stop()` always called
-  `qcom_glink_smem_unregister(glink->edge)` with `edge` still NULL if
-  start never ran.
-- **After:** flag set only after a full successful start loop; stop is a
-  no-op until then; flag cleared after stop.
-- Path: attach failure + crash recovery (not the normal successful boot
-  path).
+- Before: domain created → `request_threaded_irq()` fails → `goto
+  err_domain` → comment only → mutex/key teardown → `kfree(d)` while
+  `d->domain` stays published with `host_data = d`.
+- After: same path calls `irq_domain_remove(d->domain)` before freeing
+  `d`.
+- Path affected: probe error path only, after successful domain
+  creation.
 
-**Step 2.3: Bug mechanism**
-Record: **NULL pointer dereference (memory safety).**
-Verified in this tree: `qcom_glink_smem_unregister()` does `smem->glink`
-with no NULL check. Crash VA `0x300` matches a field access through
-NULL. Same pattern in `smd_subdev_stop()`
-(`qcom_smd_unregister_edge(smd->edge)`).
-
-**Step 2.4: Fix quality**
-Record: Obviously correct. `rproc_alloc()` uses `kzalloc`, so the flag
-starts false. Partial start failure already unrolls via
-`unroll_registration` and does not set the flag. Start/stop run under
-`rproc->lock` (`rproc_boot`, `rproc_trigger_recovery`,
-`__rproc_shutdown`). Regression risk is low; the flag is not a new UAPI.
-
-## Phase 3: Git history
-
-**Step 3.1: Blame**
-Record: Subdevice start/stop dates to `7bdc9650f03604` (2016, “Introduce
-subdevices”). The missing start-vs-stop pairing is old. This commit only
-adds the flag.
-
-**Step 3.2: Fixes tag**
-Record: No `Fixes:` tag. Concrete trigger in this tree is
-`qcom_pas_attach()` from `16472c99f4699` (“Add late attach support”,
-2026-07-01), which calls `rproc_report_crash()` when the coprocessor
-already crashed. That commit is an ancestor of HEAD.
-
-**Step 3.3: Related file history**
-Record: Same series, same author:
-- `026a3fada4326` — [PATCH v3 1/3] async attach via `schedule_work()`
-  (immediate parent)
-- `f44ae8ce156a3` — this commit, 2/3
-- `0ec167625b4fe` — [PATCH v3 3/3] cancel `crash_handler` on
-  `rproc_add()` error
-
-This patch does not use `attach_work`; it stands alone. Patch 1 makes
-failed attach keep the rproc registered so recovery actually runs; patch
-2 stops that recovery from oopsing.
-
-**Step 3.4: Author**
-Record: Jingyi Wang (Qualcomm). Subsystem maintainers Bjorn Andersson
-and Mathieu Poirier were To:’d; Bjorn applied the series.
-
-**Step 3.5: Dependencies**
-Record: No new helpers. Needs existing `rproc_start_subdevices` /
-`rproc_stop_subdevices` / `struct rproc` — all present. Can apply
-without patch 1. This tree already has patch 1 and late-attach, so the
-crash path is live here.
-
-## Phase 4: Mailing list
-
-**Step 4.1: Original discussion**
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 Record:
-- `b4 dig -c f44ae8ce156a3` → https://patch.msgid.link/20260623-rproc-
-  attach-issue-v3-2-8e24310707ce@oss.qualcomm.com
-- Series: `[PATCH v3 0/3] remoteproc: improve robustness for
-  rproc_attach fail cases`
-- v1 used a NULL check; v2 introduced `subdevs_started`; v3 moved the
-  flag into start/stop. Applied version is v3.
-- No NAK in the saved thread. Bjorn: “Applied, thanks!”
+- Category: error-path resource leak; can escalate to UAF because the
+  domain is published (`irq_domain_list` / fwnode) with `host_data`
+  pointing at memory that is then freed.
+- Mechanism: missing counterpart to the existing `irq_domain_remove()`
+  in `regmap_del_irq_chip()`.
 
-**Step 4.2: Recipients**
-Record: To Bjorn Andersson and Mathieu Poirier (REMOTEPROC maintainers);
-Cc linux-remoteproc. Right people.
-
-**Step 4.3: Bug report**
-Record: No syzbot/bugzilla. Evidence is the oops in the commit (Qualcomm
-attach/crash). Trigger is also in-tree: `qcom_pas_attach()` reports
-crash if fatal IRQ is already high.
-
-**Step 4.4: Series**
-Record: 2/3. 1/3 is robustness (async attach). 3/3 is a UAF-style cancel
-of crash work on `rproc_add()` failure. This patch is self-contained.
-
-**Step 4.5: Stable list**
-Record: lore.kernel.org/stable was blocked (Anubis). UNVERIFIED whether
-anyone nominated this on stable@. No `Cc: stable` on the patch itself.
-
-## Phase 5: Semantic / call graph
-
-**Step 5.1: Functions**
-Record: `rproc_start_subdevices`, `rproc_stop_subdevices`.
-
-**Step 5.2: Callers**
+**Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- `rproc_start_subdevices`: `rproc_start()` (firmware boot),
-  `__rproc_attach()` (attach)
-- `rproc_stop_subdevices`: `rproc_stop()` (recovery/`__rproc_shutdown`),
-  `__rproc_detach()` (attach recovery)
+- For `irq_base == 0` (most DT callers): obviously correct. Domain has
+  no mappings yet; `irq_domain_remove()` is the right unwind and matches
+  the del path.
+- For `irq_base != 0` (legacy/`irq_alloc_descs()` path, including
+  callers passing `-1`): incomplete. Domain creation associates IRQs up
+  front. `irq_domain_remove()` does not dispose those mappings. tglx
+  said the descriptor chip/domain pointers remain and the UAF remains.
+- Regression risk: low for `irq_base == 0`. For `irq_base > 0`, the
+  domain object is freed while descriptors still reference it (already a
+  UAF on `desc->chip` before this patch). The change is still a subset
+  of the correct unwind, not a new feature.
+- Red flags: none on APIs/scope. Completeness gap is real but does not
+  make the one-line change wrong for the common path.
 
-**Step 5.3: Callees**
-Record: `subdev->start` / `subdev->stop` (GLINK, SMD, SSR, virtio).
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 5.4: Reachability**
-Record: Yes. Qualcomm PAS attach: `rproc_add` → auto-boot attach work →
-`rproc_boot` → `rproc_attach` → `qcom_pas_attach` → `rproc_report_crash`
-→ `rproc_crash_handler_work` → `rproc_trigger_recovery` →
-`rproc_boot_recovery` → `rproc_stop`. Matches the posted stack.
-Coprocessor already crashed at probe is a real boot-time case.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record:
+- Comment/label introduced by `4af8be67fd9989` (“regmap: Convert
+  regmap_irq to use irq_domain”, 2012).
+- Domain remove on the **del** path: `b5ab3e5cae097` (“regmap: irq:
+  Remove domain on exit”, 2014).
+- `err_domain:` still only had the comment at **v6.18.57**.
+- This is long-lived error-path debt, not a brand-new 6.18-only bug.
 
-**Step 5.5: Similar patterns**
-Record: `smd_subdev_stop()` has the same NULL-edge unregister. Core flag
-covers all subdevs, which is why v2 dropped a GLINK-only NULL check.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Historical introducer is `4af8be67fd9989`; that
+commit **is** an ancestor of this tree.
 
-## Phase 6: This tree
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record:
+- Nearby: `1da33858af625` (mutex destroy on error), `76b6e14aa7b08`
+  (lockdep key). Both already in v6.18.57; this patch’s context matches.
+- Domain creation helper: `dde286ee57704` / `regmap_irq_create_domain()`
+  already in this tree.
+- Standalone 1-line fix, not patch X/Y.
+- No follow-up in this tree adding `irq_dispose_mapping()` on
+  `err_domain`.
 
-**Step 6.1: Buggy code here?**
-Record: Yes. `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-kernelversion` = `7.3.0-rc4`. Attach, late-attach crash report, GLINK
-stop-without-NULL-check, and recovery all exist. The fix is already an
-ancestor of HEAD (`git merge-base --is-ancestor f44ae8ce156a3 HEAD`
-succeeded); that is apply-evidence, not the reason to accept it.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Author is Mark Brown, **regmap maintainer**. He applied his own
+patch to `broonie/regmap.git for-7.3` the same day.
 
-**Step 6.2: Backport difficulty**
-Record: Clean apply on this tree (already applied). No conflicting
-refactor of those two functions.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record:
+- Needs `irq_domain_remove()`: present (`58ee99ada293b`, exported in
+  this tree).
+- Needs `d->domain` and `err_domain:`: present.
+- Can apply standalone to v6.18.57. No missing helpers.
 
-**Step 6.3: Alternate fix already here?**
-Record: No other start/stop guard. Later commits (`0ec167625b4fe`,
-`74ee3b2f57674`) address crash-work vs teardown, not this pairing.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-## Phase 7: Subsystem
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- Lore/msgid: https://patch.msgid.link/20260901-regmap-irq-deallocate-
+  domain-v1-1-4bfed4aff559@kernel.org
+- Only v1 (`b4 dig -a`); no v2 in that thread.
+- Thread:
+  1. Mark posts the 1-line patch (1 Sep 2026).
+  2. Mark applies it to for-7.3 ~1 hour later.
+  3. tglx (4 Sep): “That won’t work” for the `irq_alloc_descs()` /
+     `virq_base > 0` case; descriptors keep chip/domain pointers; UAF
+     remains. First suggestion: `irq_domain_free_irqs()`.
+  4. tglx follow-up: `irq_domain_free_irqs()` only works with
+     hierarchical domains; use `irq_dispose_mapping(irq_base + i)` then
+     remove the domain.
+  5. Mark: “Ah, thanks - I’d expected removing the domain to clean
+     everything up.”
+- No NAK of calling `irq_domain_remove()` itself; the request is
+  additional dispose before remove.
+- No reviewer `Cc: stable` in the thread.
 
-**Step 7.1:** Record: `drivers/remoteproc` — **IMPORTANT** (Qualcomm
-DSP/modem/WiFi remoteprocs; not core mm/vfs, but widely used on
-phones/embedded).
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: Recipients were linux-kernel, Farhad Alemi, tglx, Mark Brown.
+tglx reviewed after apply. No Acked-by/Reviewed-by on the committed
+patch.
 
-**Step 7.2:** Record: Actively developed (late attach, async attach,
-crash-handler races in 2026).
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record:
+- Public write-up (31 Aug 2026): KASAN invalid read in
+  `irq_migrate_all_off_this_cpu` during CPU offline. tglx traced it to
+  this failed-setup path: descriptors remain mapped to a caller-owned
+  `irq_chip` after that chip/`regmap_irq_chip_data` is freed.
+- Trigger: device IRQ setup fails, then CPU hotplug walks descriptors.
+- Radu Rendec mentioned a similar syzbot hotplug stack; tglx criticized
+  allocation info in that report. Overlap is suggestive, not proven
+  identical.
+- Unprivileged exploit/CVE: not established.
 
-## Phase 8: Impact and risk
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone v1. tglx’s dispose-mapping addition was not in this
+series and is not in this tree. GitHub `master` snapshot still showed
+the old comment, consistent with this being a 7.3-era fix not yet
+universal.
 
-**Step 8.1:** Record: Qualcomm (and any rproc) users who attach to an
-already-running remoteproc. Config: `CONFIG_REMOTEPROC` plus QCOM
-PAS/GLINK. Not universal, but a large device population.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: No useful stable-list hit that this was previously rejected or
+requested. UNVERIFIED beyond search noise.
 
-**Step 8.2:** Record: Trigger = attach while the remote CPU already
-crashed (fatal IRQ high) or crash during attach. Seen in the field (oops
-dump). Not a pure theoretical race; crash work vs `rproc->lock` is
-ordered, then stop runs on unstarted subdevs.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 8.3:** Record: Kernel oops / NULL deref. **HIGH/CRITICAL**.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `regmap_add_irq_chip_fwnode()` only. Callees of interest:
+`regmap_irq_create_domain()`, `request_threaded_irq()`,
+`irq_domain_remove()`.
 
-**Step 8.4:** Record: Benefit high (avoids oops during subsystem
-recovery). Risk very low (9 lines, internal bool, kzalloc-zeroed, lock-
-held).
+**Step 5.2: TRACE CALLERS**
+Record:
+- `regmap_add_irq_chip()` → `regmap_add_irq_chip_fwnode()`
+- `devm_regmap_add_irq_chip_fwnode()` → same
+- `git grep -l "regmap_add_irq_chip"` → **87** `.c` files
+- Call context: driver probe (MFD/PMIC, ASoC codecs, power, GPIO, RTC,
+  DSA). Not a syscall hot path; boot/enumeration and probe-retry.
+- `irq_base != 0` callers exist, including popular PMICs: `rk8xx-core.c`
+  (`-1`), `retu-mfd.c`, `88pm800.c`, `88pm805.c`, `mt6370.c`, plus board
+  `irq_base` in tps65910/wm8994/tps65090.
 
-## Phase 9: Synthesis
+**Step 5.3: TRACE CALLEES**
+Record:
+- `regmap_irq_create_domain()` → `irq_domain_instantiate()` with
+  `virq_base = irq_base`, `host_data = d`. If `virq_base > 0`,
+  `__irq_domain_instantiate()` runs `irq_domain_associate_many()`.
+- `if (irq_base)` also calls `irq_alloc_descs()` first (`-1` is truthy).
+- `irq_domain_remove()` unpublishes and `kfree`s the domain; comment
+  requires mappings already disposed.
 
-**Step 9.1: Evidence**
-**For:**
-- Real oops with stack; `qcom_glink_smem_unregister(NULL)` is visible in
-  code
-- In-tree trigger: `qcom_pas_attach()` + recovery
-- This tree has late attach and async attach, so the path is reachable
-- Small, obviously correct, maintainer-applied (v3)
-- No new UAPI
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record:
+- Reachable from device probe of many PMICs/codecs.
+- Userspace does not call this directly. Probe failure + later CPU
+  offline is the documented KASAN path.
+- Deferred probe retry can also leave a stale fwnode domain if the
+  domain is not removed.
 
-**Against:**
-- Part of a 3-patch series (1/3 is behavioral); this hunk does not need
-  1/3
-- No `Fixes:` / `Cc: stable` (not a negative per rules)
-- Adds a `struct rproc` field (in-tree only; kzalloc-safe)
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: `regmap_del_irq_chip()` already disposes mappings then calls
+`irq_domain_remove()`. That is the model tglx wants on `err_domain` when
+`irq_base > 0`. This patch only adds the remove.
 
-**Unresolved:** Stable mailing-list discussion (lore/stable fetch
-blocked).
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — pairing is clear; oops is
-   the test evidence; maintainer applied v3
-2. Real user-visible bug? **PASS** — NULL deref oops
-3. Important (crash/security/corruption/deadlock)? **PASS** — oops on
-   attach/recovery
-4. Small and contained? **PASS** — 9 lines, two functions + one bool
-5. No new features/APIs? **PASS** — internal flag
-6. Applies to this tree? **PASS** — files and call paths exist; would
-   apply cleanly
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes, at v6.18.57 `drivers/base/regmap/regmap-irq.c`
+`err_domain:` still has `/* Should really dispose of the domain but...
+*/`. Introduced 2012; never unwound on this error path here.
 
-**Step 9.3: Exception category**
-Record: None. Ordinary crash fix.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Expected **clean apply** to v6.18.57. Surrounding
+`mutex_destroy` / `lockdep_unregister_key` already match.
+`irq_domain_remove()` already used in the same file’s del path.
 
-**Step 9.4: Decision**
-This tree needs the fix: attach can report a crash before subdevices
-start, and `rproc_stop_subdevices()` would then oops. The change is
-minimal and correct.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: Del-path domain remove is here (`b5ab3e5cae097`). No other fix
+of this `err_domain` leak. No `irq_dispose_mapping` follow-up on that
+label.
 
-### What it solves for this tree
-If a Qualcomm remoteproc is already crashed when Linux attaches (or
-crashes during attach), recovery calls `rproc_stop()` while GLINK/SMD
-were never started. That is a kernel oops, not a soft failure. The flag
-makes stop a no-op until start has succeeded.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-### Risk vs benefit
-Benefit: prevent a boot/recovery oops on common Qualcomm attach
-hardware. Risk: negligible; flag is zero-initialized and only mutated
-under `rproc->lock`.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `drivers/base/regmap` IRQ helper. **IMPORTANT** (shared by many
+PMICs/MFDs, not core mm/sched, but widely used on ARM/embedded and
+laptops).
 
-### Concerns
-Patch 1/3 is not required for this hunk. Patch 3/3 is a separate
-teardown UAF. Neither blocks applying this commit here. No `Fixes:` tag;
-the late-attach crash report (`16472c99f4699`) is in this tree and is
-the practical introducer of the reported path.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Mature (2011+). Recent work is lockdep nesting, mutex free,
+domain suffix. This is leftover unwind, not churn from a new subsystem.
 
-## Verification
-- [Phase 1] Parsed tags: author SOB, maintainer SOB, lore Link v3-2; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +7 core, +2 header; flag on successful start; early
-  return in stop
-- [Phase 2] `qcom_glink_smem_unregister()`: `smem->glink` with no NULL
-  check — matches oops at VA `0x300`
-- [Phase 3] `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion`: `7.3.0-rc4`
-- [Phase 3] `git merge-base --is-ancestor f44ae8ce156a3 HEAD`: yes
-  (applies/is present)
-- [Phase 3] Parent `026a3fada4326` is series 1/3 (async attach); 3/3 is
-  `0ec167625b4fe`
-- [Phase 3] Blame: start/stop from 2016; flag from this commit
-- [Phase 3] Trigger `qcom_pas_attach` crash report from `16472c99f4699`
-  (in this tree, before this fix)
-- [Phase 4] `b4 dig -c f44ae8ce156a3`: lore thread; v1→v3; Bjorn
-  applied; no NAK
-- [Phase 4] `b4 dig -w`: To Andersson + Poirier
-- [Phase 4] Cover letter v2: flag replaced a GLINK-only NULL check
-- [Phase 4] UNVERIFIED: stable@ discussion (lore/stable Anubis 403)
-- [Phase 5] Call chain verified: `qcom_pas_attach` →
-  `rproc_report_crash` → `rproc_crash_handler_work` →
-  `rproc_trigger_recovery` → `rproc_stop` → `rproc_stop_subdevices`
-- [Phase 5] `rproc_alloc()` uses `kzalloc` — flag starts false
-- [Phase 5] `rproc_boot` / `rproc_trigger_recovery` / `__rproc_shutdown`
-  hold `rproc->lock` around start/stop
-- [Phase 6] Buggy stop-without-start exists conceptually; this tree has
-  attach + late-attach trigger
-- [Phase 8] Failure mode: NULL deref oops, severity HIGH/CRITICAL
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver-specific / config-specific (`CONFIG_REGMAP_IRQ`), but
+that config is selected by many common PMICs. Affects anyone whose
+regmap-irq probe fails after domain create.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record:
+- Trigger: `regmap_irq_create_domain()` succeeds, then
+  `request_threaded_irq()` fails (bad/missing IRQ, busy IRQ, probe
+  deferral, etc.).
+- Not every boot. Realistic on flaky firmware, wrong DT IRQ, deferred
+  probe.
+- Unprivileged trigger: not verified. CPU hotplug typically needs
+  privilege. KASAN still shows a real kernel UAF.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record:
+- Always: leaked published irq domain; `d` freed while domain
+  `host_data` dangles.
+- With `irq_base != 0`: leaked associated IRQ descriptors; `desc->chip`
+  can UAF on CPU offline (`irq_migrate_all_off_this_cpu`). **HIGH** (UAF
+  / KASAN).
+- This patch fully fixes the domain leak; it does **not** fully fix the
+  descriptor UAF when `irq_base > 0`.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- Benefit: high for a 1-line unwind of a published irq domain used by
+  dozens of drivers; needed for probe retry and to stop leaking domain
+  objects.
+- Risk: very low for `irq_base == 0`. For `irq_base > 0`, incomplete;
+  not a new feature; same class of UAF already existed.
+- Ratio: benefit > risk. Follow-up dispose-mapping should also be
+  backported when it exists; that is not a reason to keep the domain
+  leak.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Real error-path leak of a published irq domain; comment admitted the
+  gap since 2012.
+- Reported by tglx; KASAN UAF on CPU hotplug is a serious failure mode.
+- 1 line, same API already used in `regmap_del_irq_chip()`.
+- Buggy code is in v6.18.57; `irq_domain_remove()` is in this tree;
+  applies cleanly.
+- Author is the regmap maintainer; 87 in-tree callers.
+- Probe-path resource leaks are standard stable material.
+
+AGAINST:
+- Incomplete vs the reported `irq_base > 0` UAF; tglx asked for
+  `irq_dispose_mapping()` first; Mark agreed the remove-alone assumption
+  was wrong.
+- No `Fixes:`/`Cc: stable` (not a negative by itself).
+- Applied to for-7.3 before tglx’s review; no v2 in that thread.
+
+UNRESOLVED:
+- Whether a later mainline follow-up with `irq_dispose_mapping()` landed
+  after this tree’s branch.
+- Whether the KASAN report was reproduced on 6.18.y specifically (code
+  path is present).
+- No stable-list discussion found.
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** for the domain leak (`irq_base
+   == 0` and domain object itself). Incomplete for preassociated
+   descriptors, but the added call is the correct API and is already
+   used on the del path.
+2. Fixes a real bug that affects users? **PASS** — leaked irq domain on
+   failed probe; KASAN UAF documented on related leftover mappings.
+3. Important issue? **PASS** — UAF / resource leak of irq core objects,
+   not cosmetic.
+4. Small and contained? **PASS** — 1 line, one function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — v6.18.57 has the exact hunk
+   context.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not ID/quirk/DT/docs. Ordinary error-path leak fix. Build-fix
+exception N/A.
+
+**Step 9.4: MAKE YOUR DECISION**
+This should be backported to **this** 6.18.y tree. The bug is here, the
+helper is here, and the change is the missing unwind the code has
+documented for years. Incompleteness for `irq_base > 0` means a later
+dispose-mapping patch is still needed for the full KASAN UAF; it does
+not make this line a net negative.
+
+### What the commit solves, and why it matters here
+`regmap_add_irq_chip_fwnode()` publishes an irq domain, then on
+`request_threaded_irq()` failure frees `struct regmap_irq_chip_data`
+without removing that domain. Stable 6.18.57 still does this. The
+leftover domain stays on the global list with dangling `host_data`, and
+on the legacy `irq_base != 0` path associated descriptors can later be
+walked during CPU hotplug (KASAN UAF). Many PMICs/MFDs use this helper,
+including rk8xx with `irq_base = -1`.
+
+### Stable rules / risk
+Small, obviously intended, no new API, applies cleanly. Benefit is
+fixing a real leak/UAF-adjacent unwind; risk is a 1-line call that the
+same file already uses on teardown.
+
+Verification:
+- [Phase 1] Tags: Farhad Alemi + tglx Reported-by; lore msgid link; Mark
+  Brown SOB; no Fixes/Cc stable
+- [Phase 1] Body describes creation-path domain leak after
+  `8ee99ada293b`; actual SHA in this tree is `58ee99ada293b`
+- [Phase 2] Diff is 1 line in `regmap_add_irq_chip_fwnode()`
+  `err_domain:`: comment → `irq_domain_remove(d->domain)`
+- [Phase 3] `git blame` at v6.18.57: comment from `4af8be67fd9989`
+  (2012); del-path remove `b5ab3e5cae097` (2014)
+- [Phase 3] `git merge-base --is-ancestor 4af8be67fd9989 HEAD` yes;
+  `58ee99ada293b` is ancestor of v6.18.57
+- [Phase 3] No follow-up dispose-mapping commit on this file in this
+  tree
+- [Phase 4] `b4 dig -c 4784831655ab5`: v1 only, applied to for-7.3 same
+  day
+- [Phase 4] tglx: remove-alone does not clear associated descriptors
+  when `virq_base > 0`; use `irq_dispose_mapping` then remove
+- [Phase 4] Mark acknowledged he expected remove to clean everything up
+- [Phase 4] External write-up: KASAN in `irq_migrate_all_off_this_cpu`
+  after failed regmap IRQ setup
+- [Phase 5] 87 files call `regmap_add_irq_chip*`; probe of
+  MFD/PMIC/codec/etc.
+- [Phase 5] `if (irq_base) irq_alloc_descs()` plus `virq_base`
+  associate_many confirmed in this tree
+- [Phase 6] `git describe HEAD` → `v6.18.57-155-gcdf239ca885b2`; `make
+  kernelversion` → 6.18.57
+- [Phase 6] v6.18.57 still has the dispose comment;
+  `irq_domain_remove()` already in `regmap_del_irq_chip()`
+- [Phase 8] Failure mode: leaked irq domain; UAF on CPU hotplug for
+  preassociated IRQs; severity HIGH
+- UNVERIFIED: later mainline follow-up with `irq_dispose_mapping` on
+  `err_domain`; whether syzbot report is the same bug; stable-list
+  history beyond unsuccessful search
 
 **YES**
 
- drivers/remoteproc/remoteproc_core.c | 7 +++++++
- include/linux/remoteproc.h           | 2 ++
- 2 files changed, 9 insertions(+)
+ drivers/base/regmap/regmap-irq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 2336c55eb021d..068a3ef467f78 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1104,6 +1104,8 @@ static int rproc_start_subdevices(struct rproc *rproc)
- 		}
- 	}
- 
-+	rproc->subdevs_started = true;
-+
+diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
+index 6112d942499be..8c297156ea402 100644
+--- a/drivers/base/regmap/regmap-irq.c
++++ b/drivers/base/regmap/regmap-irq.c
+@@ -941,7 +941,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
  	return 0;
  
- unroll_registration:
-@@ -1119,10 +1121,15 @@ static void rproc_stop_subdevices(struct rproc *rproc, bool crashed)
- {
- 	struct rproc_subdev *subdev;
- 
-+	if (!rproc->subdevs_started)
-+		return;
-+
- 	list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
- 		if (subdev->stop)
- 			subdev->stop(subdev, crashed);
- 	}
-+
-+	rproc->subdevs_started = false;
- }
- 
- static void rproc_unprepare_subdevices(struct rproc *rproc)
-diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-index de98462d58889..ef711a5b1a7f2 100644
---- a/include/linux/remoteproc.h
-+++ b/include/linux/remoteproc.h
-@@ -273,6 +273,7 @@ enum rproc_features {
-  * @has_iommu: flag to indicate if remote processor is behind an MMU
-  * @auto_boot: flag to indicate if remote processor should be auto-started
-  * @sysfs_read_only: flag to make remoteproc sysfs files read only
-+ * @subdevs_started: flag to indicate if subdevs have started
-  * @dump_segments: list of segments in the firmware
-  * @nb_vdev: number of vdev currently handled by rproc
-  * @elf_class: firmware ELF class
-@@ -317,6 +318,7 @@ struct rproc {
- 	bool has_iommu;
- 	bool auto_boot;
- 	bool sysfs_read_only;
-+	bool subdevs_started;
- 	struct list_head dump_segments;
- 	int nb_vdev;
- 	u8 elf_class;
+ err_domain:
+-	/* Should really dispose of the domain but... */
++	irq_domain_remove(d->domain);
+ err_mutex:
+ 	mutex_destroy(&d->lock);
+ 	lockdep_unregister_key(&d->lock_key);
 -- 
 2.53.0
 
