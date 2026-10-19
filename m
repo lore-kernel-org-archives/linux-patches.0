@@ -1,46 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82470634F39;
-	Mon, 19 Oct 2026 14:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411E94FC330;
+	Mon, 19 Oct 2026 14:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418743; cv=none; b=BKlxX41qwajZJXE3OWIUx4KOrifFtJH/1Krn+RYsVndQWPNvlFWyHREPxAbRe4wz3PT0KlytzZ9WTy3k3j+uAZn2q0vGPa3WUla/MXQHKHV75FlO+UHGg0lLPhwN6a0N4vdPAO3GDmjF5EtKI9EKsarEWkqhZ+hHDfTz2Sy/zS0=
+	t=1792418745; cv=none; b=s5CqgDxMn6aTB1A9eYt7aBFqWoaBv4EBdrKEEtmUsU/FZHelg1lzASl48xG/GrcHrplwWmqmEcyECcHVhJYTyf9CwSOcLvoqycZvzARAn0pToo9SEdnbb3jFLVsl3H/fxIvg+zz5xtARwDgCFaEA+mQajzljDPkpSifD2eotglY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418743; c=relaxed/simple;
-	bh=HVjNpkKLxT7qbdAdX4Zdcfqctuwo66CEVxbqw0grWh4=;
+	s=arc-20240116; t=1792418745; c=relaxed/simple;
+	bh=/jn0gULFWbMrwJjmayeNpkDr63HxLyEcKNnDZCIm2Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tCYQqT7xMf+eoFLZbkwbVQRPfh+XnauvM5w0mTisepp1+nLXU8oVNWw4wS4988kiV15ILgzonFRHigTGfCphqJORwYTZuV5PgW4cXSeTMeAspu8XLehVQBT+soxMruGGtsreyuZOwoRLNo0aPVe7HmWPVZrxWr0Fj4Y6LvLh7Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iCiU/Fab; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PrwiLz391RuQA6ikUOb6TLr/LF+X1zRqhtYvlhR5hwN9LapiDPUjaKJ6XyqI29ZFJ+xTwkF0hpNjplDZ3ms9AWM3JhYROfcuZtiKumsPigMMjNlKXGUdeNUU4NylZ58o7545EikiKdV0r1r5QqqHCGaTd3JiGRr26bRAoXS1apc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eRZ3wlGL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iCiU/Fab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A431F000C6;
-	Mon, 19 Oct 2026 14:05:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eRZ3wlGL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E901F000C5;
+	Mon, 19 Oct 2026 14:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418740;
-	bh=7cDxpU4h7PLon0nH984O6cOV2WKPkPMLrPLXQMxU55g=;
+	s=k20260515; t=1792418742;
+	bh=vAjPh0K/1xcc1UTcvd4vlu2Zj2eAFfcETHWsmqpxz3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iCiU/FabYqYihhFEr91ABX8s79SlkjGeTjLiekhJEQP5NGPGBQa8+l5D5AWorrbDL
-	 vOtF4ZidpquaQQ9gd7odJvT7472vQZMrYlr/lLnP8WtjDi+IZz/GuHxd5RpDTwYc9o
-	 Np7p5OGJP9U6Iu+eOD8YkYLHE4pZjhbxkvOEwncDCRIKM6haFp21GxX5EazA8+jnH2
-	 Na451Yg0wwxZQlC4gwnH16vQWxReJXz6e3kUIxAHRKgsjnV4aRZLaEPgas6iHM9XZb
-	 6pIUmu3AzV33mDU4ziFCOZrpOPFO+KsaJZ+A3eJMofkcZDufLD95aYYk4555T/FzlX
-	 8YebOD8PQN//Q==
+	b=eRZ3wlGLO3BU1O0vvlpNY8ddCzRqkBWvP/1jPaQHXSe8m8rs9pxaHRGyWskr7eIxn
+	 bQUbqeQLse0wDzV2lvnMe6vosEl+WtrMdxy9m/5JVVfRaXhjyw88qOMeT6iFGwxeTO
+	 6UM/Rg2aruyoIWGsWnmr8wa10bXaSbDFO5iXsDbDyRPvXey2JOm+zeYTTtVWzFXfcV
+	 QQ7KBMIBrlqVVSFSTI9c8v8BWrNQzbLNabyccFx2bV1NqfJ6KlKJMmgkHLI467vjX5
+	 NRd3TFCDliv7OjBlC3MKWD+LuuaqxkMzOFi9JhHA9eH0Yw+7j0AoFONpitaJgozpvB
+	 S+cRidOtSd90Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tomer Maimon <tmaimon77@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew@codeconstruct.com.au,
-	avifishman70@gmail.com,
-	tali.perry1@gmail.com,
-	openbmc@lists.ozlabs.org,
-	linux-gpio@vger.kernel.org,
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	tglx@kernel.org,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] pinctrl: npcm8xx: clear pending GPIO events during init
-Date: Mon, 19 Oct 2026 09:52:33 -0400
-Message-ID: <20261019135441.1420968-462-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] perf/x86/intel: Fallback to sw branch type decoding if no hw decoding
+Date: Mon, 19 Oct 2026 09:52:34 -0400
+Message-ID: <20261019135441.1420968-463-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,397 +59,433 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomer Maimon <tmaimon77@gmail.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit cd39cce4cfd499f555eb8b8252636609c3468f57 ]
+[ Upstream commit 170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885 ]
 
-A bank may retain pending event status across resets of the GPIO block.
-If probe leaves the old state in place, the chained IRQ handler can see
-spurious events as soon as the irqchip is registered.
+intel_pmu_lbr_filter() currently assumes arch-LBR provides hardware
+branch-type decoding and skips software decoding on that path.
 
-Disable event generation and clear EVST before wiring each GPIO bank
-into gpiolib so the driver starts from a known state.
+However, arch-LBR may not always expose branch-type information. In
+that case, treating entries as hardware-decoded can misclassify sampled
+branches (for example, defaulting to JCC), which breaks branch-type
+filtering results.
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fix this by using software branch-type decoding when hardware
+branch-type decoding is unavailable (that is, when x86_lbr_type is not
+enabled). This keeps branch classification and filtering behavior
+correct across arch-LBR configurations.
+
+Since x86_lbr_type is only set to true when arch-LBR is supported,
+it's unnecessary to check if the CPU has the arch-LBR feature.
+
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260616044654.3468742-4-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
-NPCM8XX pinctrl/GPIO driver is present, the leftover EVEN/EVST init gap
-is real on this path, and the change is a 3-line hardware init fix that
-belongs here.
+I have enough to decide: the 6.18.53 tree still has the JCC
+misclassification, and this is a one-line, already-reviewed correction
+of that path.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[pinctrl/npcm8xx] [clear] [clear leftover GPIO event
-enable/status before irqchip registration]**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [perf/x86/intel] [Fallback] [Use software branch-type decoding
+when Arch LBR does not provide hardware type]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Signed-off-by: Tomer Maimon \<tmaimon77@gmail.com\> (author; original
-  NPCM8XX driver author)
-- Signed-off-by: Linus Walleij \<linusw@kernel.org\> (pinctrl
-  maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
-  or Cc: stable (absence is expected)
+- Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com> (author, Intel)
+- Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org> (perf/x86
+  maintainer; applied to tip)
+- Link: https://patch.msgid.link/20260616044654.3468742-4-
+  dapeng1.mi@linux.intel.com
+- No Fixes: tag (expected)
+- No Reported-by / Tested-by / Reviewed-by / Acked-by / Cc: stable
+- Ignore pipeline tags: [Upstream commit
+  170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885], Signed-off-by: Sasha Levin
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Notable: msgid `-4` is patch 3/8 of “perf/x86: Miscellaneous PMU bug
+fixes” (cover letter is `-1`). Independent patches grouped for
+review/backport, not a tightly coupled series.
+
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** GPIO bank EVEN/EVST can survive GPIO-block reset
-  (bootloader/firmware leftover).
-- **Symptom:** chained IRQ handler sees spurious events as soon as the
-  irqchip is registered at probe.
-- **Root cause:** probe never disables event generation or W1C-clears
-  EVST before `gpiochip_add_data()`.
-- **Fix:** write EVEN=0, then EVST=0xffffffff, per bank, before gpiolib
-  wiring.
-- **Versions:** none stated. Bug is an omission since the driver was
-  added.
+- Bug: `intel_pmu_lbr_filter()` treats Arch LBR as always having
+  hardware branch-type decode and skips software decode.
+- Reality: Arch LBR CPUID leaf 28H ECX bit 2 (`lbr_br_type`) is
+  optional. If it is clear, `get_lbr_br_type()` returns 0.
+- Symptom: type 0 is `ARCH_LBR_BR_TYPE_JCC`, so sampled branches are
+  classified as JCC. Branch-type filters (`PERF_SAMPLE_BRANCH_*`) and
+  saved types are wrong (calls/returns dropped or shown as
+  conditionals).
+- Root cause: gate is `static_cpu_has(X86_FEATURE_ARCH_LBR)` instead of
+  “hardware type actually present”.
+- Fix: gate on `static_branch_likely(&x86_lbr_type)`, which is enabled
+  only when `x86_pmu.lbr_br_type` is set in `intel_pmu_arch_lbr_init()`.
+- Version info in message: none.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. Subject/body describe a real init-time IRQ bug.
-Cover letter of the v1 8-patch series called the series a vendor-tree
-cleanup, but this patch is a concrete spurious-IRQ fix, not style-only.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. Explicit correctness fix for misclassification. Not
+style/cleanup.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` (+3 / −0)
-- Function: `npcm8xx_gpio_fw()`
-- Scope: single-file surgical init fix
+- File: `arch/x86/events/intel/lbr.c` — 1 insertion, 1 deletion
+- Function: `intel_pmu_lbr_filter()`
+- Scope: single-file, one-line surgical change
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Before:** after `fwnode_irq_get()`, the bank’s EVEN/EVST were left
-  as hardware left them; later `npcm8xx_gpio_register()` set
-  `girq->parent_handler = npcmgpio_irq_handler` and called
-  `devm_gpiochip_add_data()`.
-- **After:** EVEN is forced to 0 (no event generation), then EVST is
-  W1C-cleared with `0xffffffff`, still before irqchip registration.
-- Path: probe/init only (`npcm8xx_pinctrl_probe` → `npcm8xx_gpio_fw`).
+- Before: if CPU has Arch LBR and `type <= ARCH_LBR_BR_TYPE_KNOWN_MAX`
+  (0–5), map via `arch_lbr_br_type_map[]`. Else `branch_type()` software
+  decode.
+- After: same hardware map only if `x86_lbr_type` is enabled (HW type
+  field present). Otherwise software decode.
+- Path: LBR sample filtering after PMI / branch-stack snapshot, not
+  probe/init-only.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- **Category:** hardware leftover interrupt state / spurious IRQ (init
-  hygiene, same class as a quirk).
-- **Mechanism:** `npcmgpio_irq_handler()` does `sts = EVST; en = EVEN;
-  sts &= en;` then `generic_handle_domain_irq()` for set bits. If
-  firmware left EVEN and EVST non-zero, the first chained invocation
-  dispatches IRQs for lines that were never requested. Parent bank IRQs
-  in DT are **GIC_SPI, IRQ_TYPE_LEVEL_HIGH**; leftover asserted status
-  can keep the parent line high (storm / “nobody cared”).
-  `npcmgpio_irq_ack()` writes `BIT(gpio)` to EVST, confirming EVST is
-  write-1-to-clear; writing `0xffffffff` is the correct all-clear.
-  Disabling EVEN first avoids a new event sneaking in between the two
-  writes.
+- Category: logic/correctness (wrong classifier when optional HW field
+  is absent)
+- Mechanism: `get_lbr_br_type()` is:
 
-**Step 2.4: ASSESS THE FIX QUALITY**
+```866:873:arch/x86/events/intel/lbr.c
+static __always_inline int get_lbr_br_type(u64 info)
+{
+        int type = 0;
+
+        if (static_branch_likely(&x86_lbr_type))
+                type = (info & LBR_INFO_BR_TYPE) >>
+LBR_INFO_BR_TYPE_OFFSET;
+
+        return type;
+}
+```
+
+When `x86_lbr_type` is off, stored type is 0. Old filter still took the
+Arch LBR map because `0 <= ARCH_LBR_BR_TYPE_KNOWN_MAX`, so every entry
+became JCC. Fix uses the same static key as the reader.
+
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- Obviously correct: disable, then W1C-clear, before the handler is
-  installed.
-- Minimal: two MMIO writes, no API/struct/locking changes.
-- Regression risk: very low. Linux GPIO IRQs must be requested through
-  gpiolib; inheriting bootloader unmasks is not a supported ABI.
-  Starting masked+cleared is the normal irqchip model.
+- Obviously correct: one condition aligned with how type is populated.
+- Minimal; no unrelated edits.
+- Regression risk: low on CPUs with `lbr_br_type` (common Arch LBR) —
+  same HW path.
+- On Arch LBR without HW type: software decode in NMI (existing
+  `branch_type()` path). Sashiko flagged extra NMI cost because
+  `intel_pmu_setup_hw_lbr_filter()` always sets `X86_BR_TYPE_SAVE` for
+  Arch LBR, so the filter never early-returns. That is the cost of
+  correct types, not a change to already-correct behavior. Peter merged
+  this form anyway.
+- No public API / data-structure change.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: The surrounding `npcm8xx_gpio_fw()` bank setup comes from
-**acf4884a57170** (“pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO
-driver”, 2023-08-28), first in **v6.7-rc1**. The bug is missing init,
-present for the lifetime of the driver.
+Step 3.1: BLAME THE CHANGED LINES
+Record:
+- Buggy `if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&` introduced in
+  `47125db27e47e9` (“perf/x86/intel/lbr: Support Architectural LBR”, Kan
+  Liang, 2020-07-08). Contained in `perf-core-2020-08-03` (~v5.9).
+  Present in this tree.
+- `x86_lbr_type` added in `6b19788ddc593` (“perf/x86/intel/lbr: Add
+  static_branch for LBR INFO flags”, 2022-01-18, ~v5.17). Present here.
+- `X86_BR_TYPE_SAVE` forced for Arch LBR in `32ba156df1b1c` (2022, Cc:
+  stable). Present here.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. N/A. Introduced-by is the original driver commit
-above. `git merge-base --is-ancestor acf4884a57170 HEAD` is implicit:
-the file exists on this 7.3 tree.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Functionally this is a late correction of
+`47125db27e47e9`, which is in v6.18.53.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Same-day series (2026-07-15) in this file:
-1. drop RTS/CTS from bmcuart1
-2. enable RMII outputs
-3. RG2 drive strength
-4. **this commit**
-5. rename GPIO7 IOX2
-6. move IRQ setup into `request_resources`
-7. JM1/SMB7 pin flags
-8. debounce register selection
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- `3c492c8eba026` “Fix kernel address leakages in LBR stack” is already
+  in v6.18.53 (same series, patch 4/8). Surrounding filter already has
+  `from_plm` kernel-from dropping.
+- Candidate `906dbeecfa0ff` is this patch on autosel; **not** in
+  `v6.18.53` (`git merge-base --is-ancestor 906dbeecfa0ff v6.18.53`
+  failed).
+- v6.18.53 still has `static_cpu_has(X86_FEATURE_ARCH_LBR)` at the
+  filter. Bug is live on the baseline.
+- Standalone vs series: cover letter: “several independent PMU fixes to
+  simplify review and backporting.” This hunk does not need 1/8, 2/8,
+  5–8. 4/8 is already here.
 
-This patch does not use symbols or structure from 1–3 or 5–8.
-Standalone.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Dapeng Mi is a regular Intel perf/x86 contributor. Peter
+Zijlstra applied it. Nearby same-series work: leakage fix already in
+this stable tree.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Tomer Maimon is the Nuvoton driver author
-(`MODULE_AUTHOR("tomer.maimon@nuvoton.com")`) and added both NPCM7XX and
-NPCM8XX pinctrl drivers. Weight: high.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. Uses existing `NPCM8XX_GP_N_EVEN` / `NPCM8XX_GP_N_EVST`
-and `iowrite32()`. Applies standalone.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record:
+- Needs `x86_lbr_type` — in this tree since ~v5.17.
+- Does not need other v4 patches.
+- Applies standalone: v6.18.53 already has the exact one-line context
+  (candidate applied as 1 line).
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c cd39cce4cfd499f555eb8b8252636609c3468f57` →
-  https://patch.msgid.link/20260715122923.1938327-5-tmaimon77@gmail.com
-- v1 only (`b4 dig -a`): **[PATCH v1 4/8]** in “pinctrl: npcm8xx: fix
-  pinmuxing and configuration handling”
-- Cover letter: issues found by comparing upstream with the Nuvoton
-  tree; this patch is called out as clearing stale GPIO events at probe.
-- Linus Walleij (2026-07-24): “No comments so patches applied.” No NAK,
-  no requested respin.
-- Applied version is v1 (only revision).
+- `b4 dig -c 170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885` → https://patch.m
+  sgid.link/20260616044654.3468742-4-dapeng1.mi@linux.intel.com
+- Subject: `[Patch v4 3/8] perf/x86/intel: Fallback to sw branch type
+  decoding if no hw decoding`
+- Series: v1 2026-06-05, v2 2026-06-09, v3 2026-06-12, v4 2026-06-16;
+  tip-bot2 applied 2026-06-30.
+- v3→v4: unrelated patches; Peter asked to drop markdown in changelogs.
+- v2→v3: “Patch 3/8: Only keep x86_lbr_type check … (Peter).” Committed
+  form is what the maintainer asked for.
+- v1→v2: software fallback added after Sashiko review of v1.
+- Cover: “independent PMU fixes to simplify review and backporting.”
+- Human NAKs: none in the saved thread.
+- Sashiko AI on v4: High — always-on `X86_BR_TYPE_SAVE` plus software
+  decode can add NMI cost if HW type is missing. Not addressed in the
+  merged patch; maintainer still took it.
+- WebFetch to lore.kernel.org: 403. Thread recovered via `b4 dig -m`.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included linusw@kernel.org (pinctrl
-maintainer), brgl@kernel.org (GPIO), andrew@codeconstruct.com.au,
-openbmc@lists.ozlabs.org, linux-gpio, Nuvoton/Google OpenBMC people.
-Maintainer applied the series. No Reviewed-by tags on the commit.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To/Cc included Peter Zijlstra, Ingo Molnar,
+Arnaldo Carvalho de Melo, Namhyung Kim, Ian Rogers, Adrian Hunter,
+Alexander Shishkin, Andi Kleen, Stephane Eranian, linux-perf-users, Zide
+Chen, Thomas Falcon, Xudong Hao. Peter signed off. No extra Reviewed-by
+on the commit.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No Reported-by, bugzilla, or syzbot. Trigger is SoC/firmware
-leftover state, not a fuzzer path. Author is the vendor driver owner;
-that is how this class of BMC GPIO bugs usually surfaces.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No Reported-by, bugzilla, or syzbot. Looks Intel-internal / code
+review. Unverified which SKU has Arch LBR without `lbr_br_type`; CPUID
+documents it as optional (`union cpuid28_ecx.lbr_br_type`).
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 8-patch v1 series. Other patches are pinmux/drive-
-strength/rename/lockdep-IRQ-startup/debounce — not prerequisites. This
-3-line hunk is self-contained.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: v4 8 independent fixes. 4/8 (kernel LBR address leak) already in
+this tree. This 3/8 is self-contained.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned HTTP 403. **UNVERIFIED:**
-no confirmation of prior stable-list discussion. gpio list mbox had no
-“Cc: stable” and no objection.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search returned 403. Cover letter still
+states the series was meant to be easy to backport. UNVERIFIED: no
+stable-list NAK found (could not query the list).
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `npcm8xx_gpio_fw()` (modified). Related, not edited:
-`npcmgpio_irq_handler()`, `npcm8xx_gpio_register()`,
-`npcm8xx_pinctrl_probe()`.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `intel_pmu_lbr_filter()` only. Uses `x86_lbr_type`,
+`arch_lbr_br_type_map`, `branch_type()`, `common_branch_type()`.
 
-**Step 5.2: TRACE CALLERS**
+Step 5.2: TRACE CALLERS
 Record:
-- `npcm8xx_gpio_fw()` ← `npcm8xx_pinctrl_probe()` only (platform probe,
-  `arch_initcall`).
-- `npcmgpio_irq_handler()` ← chained parent handler for each of 8 GPIO
-  banks.
-- Context: boot/probe, then hardirq for bank SPI 116–123.
+- `intel_pmu_lbr_read()` → `intel_pmu_lbr_filter()`
+  - `__intel_pmu_snapshot_branch_stack()` (irq-off snapshot)
+  - Intel PMI handler in `intel/core.c` (~line 3375, NMI)
+- `intel_pmu_store_pebs_lbrs()` → store then filter (PEBS LBR)
 
-**Step 5.3: TRACE CALLEES**
-Record: `iowrite32()` to EVEN and EVST. No alloc, no locks. Later
-`npcm8xx_gpio_register()` → `devm_gpiochip_add_data()`.
+Step 5.3: TRACE CALLEES
+Record: `kernel_ip()`, `arch_lbr_br_type_map[]`, `branch_type()` (insn
+decode in `arch/x86/events/utils.c`), `common_branch_type()`.
+`branch_type()` already used for non-Arch LBR and OTHER_BRANCH.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: DT `compatible = "nuvoton,npcm845-pinctrl"` with 8
-`gpio@f001x000` nodes, each `interrupts = <GIC_SPI 11x
-IRQ_TYPE_LEVEL_HIGH>`. Reachable on every NPCM845/NPCM8XX boot
-(OpenBMC). Not a syscall fuzzer path; userspace GPIO IRQ consumers can
-be hit by the spurious events if leftover enables match those lines.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Userspace `perf_event_open` with `PERF_SAMPLE_BRANCH_STACK` →
+PMI/PEBS → LBR read → filter. Reachable from perf. Needs Intel PMU +
+Arch LBR without HW type to hit the bug; with HW type the new check
+matches old behavior.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: NPCM7XX has the same EVEN/EVST handler and **does not** clear
-them at init (same latent class, out of scope). `pinctrl-owl.c` also
-clears pending GPIO IRQs in its handler path. Pattern is established.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: AMD `arch/x86/events/amd/lbr.c` has its own filter; not this
+bug. Same file already uses `x86_lbr_type` in `get_lbr_br_type()`; the
+filter was the inconsistent check.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` is in this
-7.3-rc4 tree. Driver since v6.7. Without the two writes,
-`npcm8xx_gpio_fw()` still maps banks and `npcm8xx_gpio_register()` still
-installs `npcmgpio_irq_handler`. Bug introduced with the driver, long
-before 7.3.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
+  kernelversion` → 6.18.53; branch `autosel`.
+- v6.18.53 `intel_pmu_lbr_filter()` still uses
+  `static_cpu_has(X86_FEATURE_ARCH_LBR)`.
+- Bug introduced ~v5.9; still present on this 6.18 baseline.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply. Hunk sits immediately after `fwnode_irq_get()` in
-`npcm8xx_gpio_fw()`, which exists here. No structural mismatch.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply. Candidate is a 1-line replace on the v6.18.53 line.
+Leakage extra checks around it do not conflict.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No earlier equivalent EVEN/EVST init. This is the first such
-clear on this file (`git log --grep='pending GPIO'` / `'spurious'` on
-that path only hits this commit).
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No other fallback to `x86_lbr_type` in the filter on v6.18.53.
+Leakage fix is separate and already present.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **pinctrl/GPIO, Nuvoton NPCM8XX (BMC SoC).** Criticality:
-**PERIPHERAL** for the kernel as a whole, **IMPORTANT** for NPCM845
-OpenBMC/server BMC users. `CONFIG_PINCTRL_NPCM8XX` depends on `ARCH_NPCM
-|| COMPILE_TEST`.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: perf/x86 Intel LBR (`arch/x86/events/intel/lbr.c`). IMPORTANT:
+Intel PMU branch recording, not core mm/VFS. Widely used on x86 via
+perf.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature driver (v6.7), with a burst of vendor fixes in the 7.3
-window. Not staging.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively maintained (Kan Liang, Dapeng Mi, Peter Zijlstra). Arch
+LBR path is mature (since 2020), not brand-new.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / platform-specific: Nuvoton NPCM8XX (e.g.
-NPCM845) systems using this pinctrl driver. Typical population: OpenBMC
-on that SoC.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Intel x86 with Arch LBR (Ice Lake+) when CPUID leaf 28H does not
+set branch-type. Users of `perf record -j` / `PERF_SAMPLE_BRANCH_STACK`
+with type filters or type save. Not universal; driver/PMU-specific.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Boot/probe, when firmware or a partial GPIO-block reset left
-EVEN/EVST non-zero. Common on BMCs (bootloader uses GPIOs). Not
-unprivileged-syscall; it is default hardware bring-up.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Normal LBR sampling when HW type is absent. Unprivileged users
+can open perf events if `perf_event_paranoid` allows; typically needs
+profiling access. Not a rare error-path-only bug.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
 Record:
-- Spurious chained IRQs at probe.
-- Parent IRQs are **level-high**; leftover enable+status can hold the
-  line → IRQ storm, “nobody cared”, hung boot.
-- `generic_handle_domain_irq()` on never-requested lines (this driver
-  defaults `girq->handler = handle_level_irq`, not `handle_bad_irq`).
-- **Severity: HIGH** (boot IRQ storm / spurious IRQs on BMC GPIO). Not a
-  universal panic, but a real stability failure on affected boards.
+- Failure: wrong branch types; type filters drop real calls/returns or
+  keep everything as JCC; saved types lie.
+- Not oops, deadlock, or filesystem corruption.
+- Severity: MEDIUM (silent wrong samples). Important for perf
+  correctness; same class as other LBR type fixes that already went to
+  stable (e.g. `32ba156df1b1c`).
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- **Benefit:** high for NPCM8XX (known-state IRQ init; prevents probe-
-  time storms).
-- **Risk:** very low (2 MMIO writes, probe only).
-- **Ratio:** strongly in favor of applying.
+- Benefit: correct LBR classification/filtering on Arch LBR without HW
+  type; no-op where HW type exists.
+- Risk: very low (1 line). Extra software decode only on the previously
+  wrong config; `branch_type()` is already used in NMI.
+- Ratio: favorable.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real leftover-hardware IRQ bug, not a refactor.
-- Level-triggered parent IRQs make leftover EVST/EVEN a boot storm risk.
-- 3 lines, obviously correct (mask then W1C-clear before handler
-  install).
-- Author is the vendor driver owner; pinctrl maintainer applied it.
-- Driver and insertion point exist in this 7.3 tree; no prerequisites.
-- Same class as accepted GPIO “clear pending at init” fixes.
+- Real misclassification (all branches as JCC) when Arch LBR lacks HW
+  type.
+- Bug exists on this 6.18.53 baseline.
+- One-line, obviously correct, matches `get_lbr_br_type()`.
+- Maintainer (Peter Zijlstra) requested this check and signed off.
+- Independent of the rest of the series; cover letter aimed at
+  backporting.
+- Prerequisites (`x86_lbr_type`, Arch LBR filter) are in this tree.
+- Applies cleanly; sibling 4/8 already in 6.18.53.
 
 AGAINST:
-- No user/syzbot report; found via vendor-tree comparison.
-- Affects one BMC SoC family, not core kernel.
-- No Cc: stable (not a negative by itself).
-- Series mixed in feature/rename patches (this hunk does not depend on
-  them).
+- Not a crash, UAF, or security hole (leak is a different commit already
+  here).
+- No user Reported-by / syzbot.
+- Sashiko NMI-overhead note not addressed; only matters if HW type is
+  missing.
+- Which production SKUs omit `lbr_br_type` is unverified.
 
 UNRESOLVED:
-- Could not search lore.kernel.org/stable (HTTP 403).
-- No independent Tested-by.
+- Exact CPU/VMM configs with Arch LBR and `lbr_br_type=0`.
+- Stable-list discussion (lore 403).
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — two register writes,
-   maintainer applied; no test robot/NAK. Formal Tested-by absent, but
-   the change is reviewable from the handler and DT IRQ type.
-2. Fixes a real bug that affects users? **PASS** — leftover EVEN/EVST →
-   spurious chained IRQs on NPCM8XX probe.
-3. Important issue? **PASS** — boot-time spurious/level IRQ storm on BMC
-   GPIO, not cosmetic.
-4. Small and contained? **PASS** — +3 lines, one function.
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — file, registers, and
-   `npcm8xx_gpio_fw()` insertion point are here.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — one-line, maintainer-shaped, in
+   tip/mainline.
+2. Fixes a real bug that affects users? PASS — wrong LBR types/filters.
+3. Important issue? PASS (MEDIUM) — silent wrong branch samples on Intel
+   LBR; not a panic, but user-visible PMU corruption.
+4. Small and contained? PASS — 1 line, one function.
+5. No new features or APIs? PASS.
+6. Can apply to the local tree? PASS — v6.18.53 has the buggy line and
+   `x86_lbr_type`.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Hardware init/workaround (clear stale IRQ state). Not a new ID,
-but the same “make existing hardware boot cleanly” exception.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: None (not a device ID, quirk, DT, build, or doc fix). Qualifies
+as a normal small correctness fix.
 
-**Step 9.4: MAKE YOUR DECISION**
-This is a small, correct, self-contained fix for leftover GPIO event
-state that can fire the chained handler as soon as the irqchip is
-registered. The buggy path exists in this 7.3 tree. It should be applied
-here.
+Step 9.4: MAKE YOUR DECISION
+This 6.18.53 tree still has the Arch LBR filter assuming hardware types
+whenever `X86_FEATURE_ARCH_LBR` is set. That is wrong when CPUID does
+not advertise the type field: types collapse to JCC and filters lie. The
+fix is the same static key already used to read the field, applies
+cleanly, and does not change the common HW-type path. That is
+appropriate for this stable tree.
 
-What the commit solves: NPCM8XX GPIO banks can keep EVEN/EVST across
-GPIO-block reset. Probe used to register the chained handler on that
-dirty state, so leftover enables × pending status become spurious (and,
-with level-high parents, potentially stuck) interrupts at boot.
+What it solves for stable users: Intel perf LBR branch-type
+filtering/classification on Arch LBR configs without hardware type,
+instead of silently tagging everything as conditional jumps.
 
-Stable rules: obviously correct, real bug, important for that platform,
-tiny, no new API, applies cleanly.
-
-Risk vs benefit: two MMIO writes at probe vs boot IRQ storms on OpenBMC
-NPCM845. Benefit dominates.
-
-Concerns: no public reproducer; NPCM7XX still has the same gap (does not
-block this fix). No extra backports required.
+Risk vs benefit: one line vs wrong samples; remaining risk is extra
+software decode only on the previously broken config.
 
 Verification:
-- [Phase 1] Parsed tags: only Tomer Maimon + Linus Walleij SOBs; no
-  Fixes/Reported-by/stable
-- [Phase 2] Diff: +3 lines in `npcm8xx_gpio_fw()`; EVEN=0 then
-  EVST=0xffffffff
-- [Phase 2] Handler at lines 210–227 ANDs EVST with EVEN then
-  `generic_handle_domain_irq()`
-- [Phase 2] `npcmgpio_irq_ack()` writes `BIT(gpio)` to EVST → W1C
-  confirmed
-- [Phase 3] Driver added in acf4884a57170 (v6.7-rc1); blame of
-  surrounding init is that commit
-- [Phase 3] `git merge-base --is-ancestor` of the fix vs HEAD: commit is
-  in this 7.3 history; code path exists either way
-- [Phase 3] Standalone vs 8-patch series: no shared symbols with
-  neighboring patches
-- [Phase 4] `b4 dig -c cd39cce4cfd49`: lore msgid
-  20260715122923.1938327-5; v1 4/8
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: linusw, brgl, openbmc, linux-gpio
-- [Phase 4] mbox: Linus Walleij “No comments so patches applied.”; no
-  NAK; no Cc: stable
-- [Phase 4] Cover letter (LKML archive): vendor-tree comparison; this
-  patch listed as stale-event clear
-- [Phase 4] lore.kernel.org/stable: 403, UNVERIFIED
-- [Phase 5] Callers: `npcm8xx_pinctrl_probe` only; 8 DT GPIO banks,
-  GIC_SPI 116–123 level-high
-- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion`: 7.3.0-rc4
-- [Phase 6] File and `fwnode_irq_get` insertion point present; apply
-  would be clean
-- [Phase 8] Failure mode: spurious chained GPIO IRQs / possible level-
-  triggered storm at probe; HIGH on NPCM8XX, not core-wide
-- UNVERIFIED: stable@ list discussion; independent user reports
+- [Phase 1] Parsed tags: SOB Dapeng Mi + Peter Zijlstra; Link msgid
+  3468742-4; no Fixes/Reported-by/Cc stable
+- [Phase 1] Cover letter (mbox): independent PMU fixes “to simplify
+  review and backporting”; this is v4 3/8
+- [Phase 2] Diff: 1 line in `intel_pmu_lbr_filter()`,
+  `static_cpu_has(X86_FEATURE_ARCH_LBR)` →
+  `static_branch_likely(&x86_lbr_type)`
+- [Phase 2] Confirmed `get_lbr_br_type()` returns 0 when `x86_lbr_type`
+  is off; 0 maps to JCC
+- [Phase 3] `git blame` on parent: buggy check from `47125db27e47e9`
+  (2020 Arch LBR)
+- [Phase 3] `git merge-base --is-ancestor 47125db27e47e9 v6.18.53` →
+  yes; `6b19788ddc593` (x86_lbr_type) → yes
+- [Phase 3] `git merge-base --is-ancestor 906dbeecfa0ff v6.18.53` → no
+  (not in baseline)
+- [Phase 3] `git show v6.18.53:arch/x86/events/intel/lbr.c` still has
+  `static_cpu_has(X86_FEATURE_ARCH_LBR)` in the filter
+- [Phase 3] Leakage fix `3c492c8eba026` is already in v6.18.53
+- [Phase 4] `b4 dig -c 170cc6b02e3d5`: lore thread
+  20260616044654.3468742-4; v1–v4; Peter asked for x86_lbr_type-only
+  check in v3
+- [Phase 4] `b4 dig -w`: Peter, Ingo, acme, Namhyung, Eranian, linux-
+  perf-users CC’d
+- [Phase 4] Sashiko v4: NMI software-decode cost if TYPE_SAVE always
+  set; unverified product impact
+- [Phase 4] WebFetch lore/stable: 403; UNVERIFIED stable-list discussion
+- [Phase 5] Callers: `intel_pmu_lbr_read()` from PMI and snapshot;
+  `intel_pmu_store_pebs_lbrs()` from PEBS
+- [Phase 6] `git describe HEAD`: v6.18.53-5049-g0f0bdc2b0dffb; `make
+  kernelversion`: 6.18.53
+- [Phase 8] Failure: misclassified LBR samples, severity MEDIUM
+- UNVERIFIED: concrete CPUID dumps with Arch LBR and `lbr_br_type=0`
 
 **YES**
 
- drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/events/intel/lbr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-index c94441b2acdae..22cc87d43ea69 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-@@ -2412,6 +2412,9 @@ static int npcm8xx_gpio_fw(struct npcm8xx_pinctrl *pctrl)
- 		if (ret < 0)
- 			return dev_err_probe(dev, ret, "Failed to retrieve IRQ for bank %u\n", id);
- 
-+		iowrite32(0, pctrl->gpio_bank[id].base + NPCM8XX_GP_N_EVEN);
-+		iowrite32(0xffffffff, pctrl->gpio_bank[id].base + NPCM8XX_GP_N_EVST);
-+
- 		pctrl->gpio_bank[id].irq = ret;
- 		pctrl->gpio_bank[id].irq_chip = npcmgpio_irqchip;
- 		pctrl->gpio_bank[id].irqbase = id * NPCM8XX_GPIO_PER_BANK;
+diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
+index 44f5556440223..bbfd6ffbdd68a 100644
+--- a/arch/x86/events/intel/lbr.c
++++ b/arch/x86/events/intel/lbr.c
+@@ -1230,7 +1230,7 @@ intel_pmu_lbr_filter(struct cpu_hw_events *cpuc)
+ 		 * Doesn't support OTHER_BRANCH decoding for now.
+ 		 * OTHER_BRANCH branch type still rely on software decoding.
+ 		 */
+-		if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&
++		if (static_branch_likely(&x86_lbr_type) &&
+ 		    type <= ARCH_LBR_BR_TYPE_KNOWN_MAX) {
+ 			to_plm = kernel_ip(to) ? X86_BR_KERNEL : X86_BR_USER;
+ 			type = arch_lbr_br_type_map[type] | to_plm;
 -- 
 2.53.0
 
