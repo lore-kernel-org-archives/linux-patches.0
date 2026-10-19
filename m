@@ -1,149 +1,172 @@
-Received: from va-1-115.ptr.blmpb.com (va-1-115.ptr.blmpb.com [209.127.230.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1FE4E06CC
-	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 11:00:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.230.115
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5954EB860
+	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 13:51:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792407640; cv=none; b=qGMeNsSJgtMGA/tRCIJDQ2VLr0z+rQcH8GnMe0F00GYqpfVBPgjlFFFH4o8mtBZGYqEQBO34O7Un442n66dTu4u8iwhK8bKaIr5cf975lgvnxyYVJJNdrIe8HEkUjCOTyNsh5ED0xqGZAO7jxyLLcz7rS1DjyTcPSShL2oxWPeA=
+	t=1792417896; cv=none; b=HbU0qKwqEGgZrfYN/pyAgyQufS3wxC/8JBtA1+owA2awAb3vIPSz1AbmTK8yLpeZ2CuAXIy+qVEmVclMoZ0fiHz4CPtvpD8XHezwiy6wkE3rWlM+lRBY/hpDKyRwEICsV6tdHrmUxpGwYfzn/SuIX2lT6fji38u8fivtQP1ksXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792407640; c=relaxed/simple;
-	bh=DEeG+OVMM7oDWOAXVmwXanuReBLaFCkXTAgJYET078o=;
-	h=Mime-Version:Cc:Content-Type:Message-Id:From:Subject:Date:
-	 In-Reply-To:References:To; b=fWCm9Atr+WkosjT9RNCxwfrC5PwwzBy3XcHDXmlyxOr/1L/+K6j8m2gONV1MNnl3zeaB/5iOoxclxzm6hVhRz2ISWWn+FRNz0ZzeNyr5cBEbQF09KQ20qCP0fXSRz3pPMBgPzEThHv4t0KaKUsr2u296L1d3/7/EiJ7i2dO+Rd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=ZCXDas2z; arc=none smtp.client-ip=209.127.230.115
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1792417896; c=relaxed/simple;
+	bh=9VLOtyiejhxDGW0ifbC/1D+jtwCf2kyEatZ8buqURrs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=tbZamS3lY0i29JNH4/AdUCIZSxAOvKPL5LsibbvcUqbciAytCs8ootLWOrznwstRH31KhaQjUgmv9ZrM/z4U/+Qjh7KF277dfc2ZKNF+MZuEJTZulxgKvUcRghweEs3l0SiJFXEw3tphBEE+/bgZheuwQXmUWQls1/5X0cn8IY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=XgK0F9OU; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="ZCXDas2z"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1792407631; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=aqCubf153Xb14OUZAVhvSybo4PNvwko2u4wMBzcpbD0=;
- b=ZCXDas2zUMX8Pg5jCxshqcCAUlYxiXOt2BZj6EHawlcqdU1EpVCEXOO+h2IafVyc3zz6wi
- UpwAxEwmu6H0wguzE0H6jeea1yvWTWAo+9+/yOxspJ/ywfDjnK3TNC79Ij0tIUrp0s5PPe
- q7q0374RS2jHvyCuoKQkWyc8lu7NmvODJRLfQ97X7vrc5duR8PxdrcW8sjIQ/2cieUDSbQ
- Hpy1ScG3bd6Es7JrJPAvcNJH+8AY4ItwbewGNvoDkeic0okC1nT4A9GeA+osRV/rdMuTUk
- AKwroIkdLPkm+KulcDWw5k7eASuYpLaZwbxZ18LjWTCBkwSG3sxQ+RC7YPBOqg==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="XgK0F9OU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1792417894;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=djlN6gLHt7zEzJibUkVKYA1VW63CzqJLxE5NjIS3F+M=;
+	b=XgK0F9OU9VyYh+aNrxGlJHTe6nbU2oFFLJiAn0pHjyaa/epVdEZ1jjVnbB92LZbsCELkQ6
+	QRaYrOmo4re0z+j3lvaTz5SQx3aZ5cHpaSuN+0KA74RbKgSkLa9NWY5v0VapeFhxdUJ1Ql
+	tW7AxqMvpzns7cPchomsDLFZOSLylfE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-371-SBhTUITBPOGnq1ZWcZVnOw-1; Mon, 19 Oct 2026 13:51:33 +0000
+X-MC-Unique: SBhTUITBPOGnq1ZWcZVnOw-1
+X-Mimecast-MFC-AGG-ID: SBhTUITBPOGnq1ZWcZVnOw_1792417892
+Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-48b02d63407so1577074f8f.0
+        for <patches@lists.linux.dev>; Mon, 19 Oct 2026 06:51:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792417892; x=1793022692;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=djlN6gLHt7zEzJibUkVKYA1VW63CzqJLxE5NjIS3F+M=;
+        b=w3qCXMzwMH99BUQ366ijtOncncHy/BgWDqJndgko2vUhOUCpVPFc+KlWwkPBg6EGKb
+         IoIB0KvGhmlRup0LAq/H1k2Uxd8w6KIRfJkr8/hwd1XzGijveBTckTps6AGqO3LfOHy4
+         rOuzEU0fgvHhyo2HPHkJpiznc8hKXVsbwcqCOilTrZduuIm/s2n2yq340ZpgX7Ga2Bia
+         vD0/vppCvYDdC+FmDOwGQpgZrWR8OXx2u2PQ1DhiolMY0Gv7WT44xXX1Euw8r1Te/tQ6
+         rIEdEapuxJ5CtAD0y0xHKTgRGz1EnE8CBkWI/MW4kBy9vGih25YDBNy4OccNQhG+cdkr
+         xZbQ==
+X-Forwarded-Encrypted: i=1; AKwUvBw5Y1e6PR//XnU+J38ANvD/YN8TRgSvjVA5EYlZLO7sm0ITvq4h5hXcm/z2mAdWLOkyi6GEDmqp@lists.linux.dev
+X-Gm-Message-State: AFq9FYL01av6ecV7gsWDfhIPXnHywrRbhdHLIuaoF9ng7HMuFq7t9J3J
+	yza9JHFbMJsOXkQNXtRUTH96rOUwFwo8lhirKHrH5r/6O1Kbr4RvFXBfl4e1D4NpxVCXFbbcGxM
+	/zTc1vq/8y2fvMMOM4nI0NDGUd50WaNxoUWgeveyUvSXTnhWzY1nX1SZw7Xk=
+X-Gm-Gg: AYBFou1mr0JIHuyUd7874jfNZG4ZJH+4QCUY1TBkpjbsWw8wWNWIg/BNqfkNiGLTHer
+	DC8cMPJbOcw+4f5EmWqGEI/6FJTeqyMW6Ww0/6VawNBn6i7m00VDkjcn16KNG0+3pHFN6yB3Goe
+	QA1QxOWUOemyo009mKj7dheHURDvkySdux0yqgMv5tg9+/afqAVh6auW1v/Z5IXWwLj2EMELfeg
+	0rRG8OxYAoRr7K0AyyUlATCMAFtOtSOy6tlnugak0k9qMTDaNRWkmZtjbBFH98qNZioE591Pyhj
+	HSzLxj35/GOR+M9goTmK892iLRrXfH9nYg9Vm0lpOXRpEKo3peClIuOygwT7XWtMDN0fvbeIWvw
+	rSzKp
+X-Received: by 2002:a05:6000:4a12:b0:48d:ef75:8b37 with SMTP id ffacd0b85a97d-48e07fa8816mr15506580f8f.36.1792417891517;
+        Mon, 19 Oct 2026 06:51:31 -0700 (PDT)
+X-Received: by 2002:a05:6000:4a12:b0:48d:ef75:8b37 with SMTP id ffacd0b85a97d-48e07fa8816mr15506448f8f.36.1792417890572;
+        Mon, 19 Oct 2026 06:51:30 -0700 (PDT)
+Received: from sgarzare-redhat ([193.207.74.151])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e1af194bbsm1870082f8f.57.2026.10.19.06.51.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Oct 2026 06:51:29 -0700 (PDT)
+Date: Mon, 19 Oct 2026 15:51:21 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Eric Dumazet <edumazet@google.com>, Arseniy Krasnov <AVKrasnov@sberdevices.ru>, 
+	Stefan Hajnoczi <stefanha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+	Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>, 
+	Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>, virtualization@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>, 
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 1008/1674] vsock/virtio: fix potential unbounded skb
+ queue
+Message-ID: <atYgJz85081YBziv@sgarzare-redhat>
+References: <20261017160431.119607952@linuxfoundation.org>
+ <20261017160457.007728876@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Lms-Return-Path: <lba+26ad5f84d+e09f15+lists.linux.dev+zhengqi.arch@bytedance.com>
-Cc: <stable@vger.kernel.org>, <patches@lists.linux.dev>, 
-	"Muchun Song" <songmuchun@bytedance.com>, 
-	"Christian Brauner" <brauner@kernel.org>, "Chuck Lever" <cel@kernel.org>, 
-	"Darrick J. Wong" <djwong@kernel.org>, 
-	"Dave Chinner" <david@fromorbit.com>, "Kirill Tkhai" <tkhai@ya.ru>, 
-	"Paul E. McKenney" <paulmck@kernel.org>, 
-	"Roman Gushchin" <roman.gushchin@linux.dev>, 
-	"Sergey Senozhatsky" <senozhatsky@chromium.org>, 
-	"Steven Price" <steven.price@arm.com>, "Theodore Tso" <tytso@mit.edu>, 
-	"Vlastimil Babka" <vbabka@suse.cz>, 
-	"Abhinav Kumar" <quic_abhinavk@quicinc.com>, 
-	"Alasdair Kergon" <agk@redhat.com>, 
-	"Alexander Viro" <viro@zeniv.linux.org.uk>, 
-	"Alyssa Rosenzweig" <alyssa.rosenzweig@collabora.com>, 
-	"Andreas Dilger" <adilger.kernel@dilger.ca>, 
-	"Andreas Gruenbacher" <agruenba@redhat.com>, 
-	"Anna Schumaker" <anna@kernel.org>, "Arnd Bergmann" <arnd@arndb.de>, 
-	"Bob Peterson" <rpeterso@redhat.com>, "Borislav Petkov" <bp@alien8.de>, 
-	"Carlos Llamas" <cmllamas@google.com>, 
-	"Chandan Babu R" <chandan.babu@oracle.com>, "Chao Yu" <chao@kernel.org>, 
-	"Chris Mason" <clm@fb.com>, 
-	"Christian Koenig" <christian.koenig@amd.com>, 
-	"Coly Li" <colyli@suse.de>, "Dai Ngo" <Dai.Ngo@oracle.com>, 
-	"Daniel Vetter" <daniel@ffwll.ch>, 
-	"Daniel Vetter" <daniel.vetter@ffwll.ch>, 
-	"Dave Hansen" <dave.hansen@linux.intel.com>, 
-	"David Airlie" <airlied@gmail.com>, 
-	"David Hildenbrand" <david@redhat.com>, 
-	"David Sterba" <dsterba@suse.com>, 
-	"Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>, 
-	"Gao Xiang" <hsiangkao@linux.alibaba.com>, 
-	"Huang Rui" <ray.huang@amd.com>, "Ingo Molnar" <mingo@redhat.com>, 
-	"Jaegeuk Kim" <jaegeuk@kernel.org>, 
-	"Jani Nikula" <jani.nikula@linux.intel.com>, "Jan Kara" <jack@suse.cz>, 
-	"Jason Wang" <jasowang@redhat.com>, "Jeff Layton" <jlayton@kernel.org>, 
-	"Jeffle Xu" <jefflexu@linux.alibaba.com>, 
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>, 
-	"Joonas Lahtinen" <joonas.lahtinen@linux.intel.com>, 
-	"Josef Bacik" <josef@toxicpanda.com>, "Juergen Gross" <jgross@suse.com>, 
-	"Kent Overstreet" <kent.overstreet@gmail.com>, 
-	"Marijn Suijten" <marijn.suijten@somainline.org>, 
-	"Michael S. Tsirkin" <mst@redhat.com>, 
-	"Mike Snitzer" <snitzer@kernel.org>, "Minchan Kim" <minchan@kernel.org>, 
-	"Nadav Amit" <namit@vmware.com>, "Neil Brown" <neilb@suse.de>, 
-	"Oleksandr Tyshchenko" <oleksandr_tyshchenko@epam.com>, 
-	"Olga Kornievskaia" <kolga@netapp.com>, 
-	"Richard Weinberger" <richard@nod.at>, "Rob Clark" <robdclark@gmail.com>, 
-	"Rob Herring" <robh@kernel.org>, "Rodrigo Vivi" <rodrigo.vivi@intel.com>, 
-	"Sean Paul" <sean@poorly.run>, "Song Liu" <song@kernel.org>, 
-	"Stefano Stabellini" <sstabellini@kernel.org>, 
-	"Thomas Gleixner" <tglx@linutronix.de>, 
-	"Tomeu Vizoso" <tomeu.vizoso@collabora.com>, 
-	"Tom Talpey" <tom@talpey.com>, 
-	"Trond Myklebust" <trond.myklebust@hammerspace.com>, 
-	"Tvrtko Ursulin" <tvrtko.ursulin@linux.intel.com>, 
-	"Xuan Zhuo" <xuanzhuo@linux.alibaba.com>, "Yue Hu" <huyue2@coolpad.com>, 
-	"Andrew Morton" <akpm@linux-foundation.org>, 
-	"Sasha Levin" <sashal@kernel.org>
-X-Original-From: Qi Zheng <zhengqi.arch@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-User-Agent: Mozilla Thunderbird
-Message-Id: <1822c44e-60d1-4df3-81c5-f6720dfbcbce@bytedance.com>
-Content-Transfer-Encoding: 7bit
-From: "Qi Zheng" <zhengqi.arch@bytedance.com>
-Subject: Re: [PATCH 6.6 1003/1674] mm: shrinker: add infrastructure for dynamically allocating shrinker
-Date: Mon, 19 Oct 2026 18:59:27 +0800
-In-Reply-To: <2026101913-unicycle-fancy-0adc@gregkh>
-References: <20261017160431.119607952@linuxfoundation.org> <20261017160456.871872142@linuxfoundation.org> <68c00b4f-d74e-4e2d-a7bc-9af44beeb25e@bytedance.com> <2026101913-unicycle-fancy-0adc@gregkh>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+MIME-Version: 1.0
+In-Reply-To: <20261017160457.007728876@linuxfoundation.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: Lw6RXE0Z8maPsJVuIFLNJTUg_xUtoGQgpzxv2bmIW20_1792417892
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On 10/19/26 5:44 PM, Greg Kroah-Hartman wrote:
-> On Mon, Oct 19, 2026 at 05:01:07PM +0800, Qi Zheng wrote:
->> Hi Greg,
->>
->> Backporting just this patch alone doesn't seem to fix any actual issue.
->> Why was it backported to v6.6?
-> 
-> Because:
-> 
->>> Stable-dep-of: d227786ab111 ("fs/mbcache: cancel shrink work before destroying the cache")
-> 
-> this.  Is that not ok?
+On Sat, Oct 17, 2026 at 05:54:40PM +0200, Greg Kroah-Hartman wrote:
+>6.6-stable review patch.  If anyone has any objections, please let me know.
+>
+>------------------
+>
+>From: Eric Dumazet <edumazet@google.com>
+>
+>[ Upstream commit 059b7dbd20a6f0c539a45ddff1573cb8946685b5 ]
 
-Got it. But I don't think it's necessary to introduce new shrinker
-infrastructure just for this fix patch.
+Be careful with this patch, this caused data loss. It's fixed upstream 
+by commits:
+a4f0b001782b ("vsock/virtio: reset connection on receiving queue 
+overflow")
+2a12c05aef21 ("vsock/virtio: collapse receive queue under memory 
+pressure")
+c6087c5aaad6 ("vsock/virtio: fix skb overhead accounting to preserve 
+full buf_alloc")
 
-If we do end up backporting this, please also note the following:
-
- >    * Add a shrinker callback to be called from the vm.
- >    */
- > diff --git a/mm/shrinker_debug.c b/mm/shrinker_debug.c
- > index fcdef821147c1..694acc2b63740 100644
- > --- a/mm/shrinker_debug.c
- > +++ b/mm/shrinker_debug.c
- > @@ -239,9 +239,6 @@ struct dentry *shrinker_debugfs_detach(struct 
-shrinker *shrinker,
- >
- >   	lockdep_assert_held(&shrinker_rwsem);
- >
- > -	kfree_const(shrinker->name);
- > -	shrinker->name = NULL;
-
-This was mistakenly dropped in this patch.
-
-If the entire patchset isn't being backported, this shouldn't be
-included either.
+So if you want to backport this patch, I strongly recommend that you 
+include these others as well in the same backport.
 
 Thanks,
-Qi
+Stefano
 
-> 
-> thanks,
-> 
-> greg k-h
+
+>
+>virtio_transport_inc_rx_pkt() checks vvs->rx_bytes + len > vvs->buf_alloc.
+>
+>virtio_transport_recv_enqueue() skips coalescing for packets
+>with VIRTIO_VSOCK_SEQ_EOM.
+>
+>If fed with packets with len == 0 and VIRTIO_VSOCK_SEQ_EOM,
+>a very large number of packets can be queued
+>because vvs->rx_bytes stays at 0.
+>
+>Fix this by estimating the skb metadata size:
+>
+>	(Number of skbs in the queue) * SKB_TRUESIZE(0)
+>
+>Fixes: 077706165717 ("virtio/vsock: don't use skbuff state to account credit")
+>Signed-off-by: Eric Dumazet <edumazet@google.com>
+>Cc: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+>Cc: Stefan Hajnoczi <stefanha@redhat.com>
+>Cc: Stefano Garzarella <sgarzare@redhat.com>
+>Cc: "Michael S. Tsirkin" <mst@redhat.com>
+>Cc: Jason Wang <jasowang@redhat.com>
+>Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+>Cc: "Eugenio Pérez" <eperezma@redhat.com>
+>Cc: virtualization@lists.linux.dev
+>Link: https://patch.msgid.link/20260430122653.554058-1-edumazet@google.com
+>Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+>Signed-off-by: Sasha Levin <sashal@kernel.org>
+>---
+> net/vmw_vsock/virtio_transport_common.c | 4 +++-
+> 1 file changed, 3 insertions(+), 1 deletion(-)
+>
+>diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
+>index e2a5803c0bbb7..24aa9194e6862 100644
+>--- a/net/vmw_vsock/virtio_transport_common.c
+>+++ b/net/vmw_vsock/virtio_transport_common.c
+>@@ -283,7 +283,9 @@ static int virtio_transport_send_pkt_info(struct vsock_sock *vsk,
+> static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
+> 					u32 len)
+> {
+>-	if (vvs->buf_used + len > vvs->buf_alloc)
+>+	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
+>+
+>+	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
+> 		return false;
+>
+> 	vvs->rx_bytes += len;
+>-- 
+>2.53.0
+>
+>
+>
+
