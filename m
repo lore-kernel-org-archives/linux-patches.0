@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444C152630F;
-	Mon, 19 Oct 2026 14:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3C95013C5;
+	Mon, 19 Oct 2026 14:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418563; cv=none; b=KA1EMPkXf1t2wsoRaKHleYlMzPfdA08st12zAjcsyokQppSWAADDp0Jaoet/Rjht9vv8VPIr4ryQ7kbRmKXsDaxdqDlN+Qj+Py2Xa2+/1BRoMRHBUP7HnxsnyaHwq0BDkHJQ4AI+vTzZhr2uzvOc/U9lISQ8Q+WQwXBf1jjBBYk=
+	t=1792418564; cv=none; b=M4clttfVdel4hzROTGEaZJJ1HLiEYpuH6UFhTSKzTc31Xa56uxokuUFgA1jhyx+epHTHvznC0jHfLKpWAxqKRcPIcbA/A0jwyGOurVkvUoQAZg07Aky8inePZJCVMyzK3J3Q/Vr7qXq6xwPfMV2H7zjcnzHG0QM3/wI6JbAsPeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418563; c=relaxed/simple;
-	bh=AOsWfJuoJDvX7ByDM7Vf7LfNMc4cy7pjSELySqeZQi0=;
+	s=arc-20240116; t=1792418564; c=relaxed/simple;
+	bh=4POMTHIBvXg/SOR+I7AJ8SqBO6G/q9XaINZnLi7s2r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r6prRQA3yP3TtriMYMO6OUe/oQoajUSr2eZFUTwfUcgW70ZUr/h8rO4ZXLEt+fAtkpXP5/rn99AzYtUYgFYbVqCSeVpnGGrNX9pwroKpRc07wxSMRuDVNWI77xX5ULSXy3D/4LEiclOohurXk2NlyL5mOJYjCZxsWCVSCt9QTuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yb+UmcD3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VcqMCK+NhZsb+m+Xdugs06T+4LyFfN2iugJDA7t4B+eO+OjzFtQLQtRygniPL4rs5cPn3qdtu8Y7eRkbXA5mVcLROjFrK9NnwjPmYonGorlKoXu/UWAltdk2dz1go69rza3ALf2Q4mp06H07hr+nfCrXWHLoHfKmDS5VdWRhgk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NjwnI7Tc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yb+UmcD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77D31F000C4;
-	Mon, 19 Oct 2026 14:02:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NjwnI7Tc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894ED1F000C6;
+	Mon, 19 Oct 2026 14:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418561;
-	bh=Vkm5se3sleZ4W01YvoOsLxYeEyqn9p7dB6Bn8zv0Cgc=;
+	s=k20260515; t=1792418562;
+	bh=Bu9DY7uZLrLR+Lg00GYJm3JAD91N7dPD8oGSr501Bqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yb+UmcD39/UrVj8yqe9pjGbNTxyQUMEOdVaPID8jPWu9JSqMR/UZ5j4cvKTZIPWUJ
-	 pdQuVYz9f8x4vKH9ifqh8qtuwcB0qWaAknY55XAqpcL5vUCe341byJjmWG63Mi7SkU
-	 JPeCiD4prJ1gY/8tcZFmSsyRYo+efD3ouEVkFa17gXt7C6j3gSgSrrwaGZ/RhYeu4R
-	 gCEsdc2hmkcJxt+UhFK25+2bC4gG6gaDf5gg2BLDUgcr2A+VHiEPVc3v8/4EMAHJT2
-	 YI4nIqxnffG/qyC1VyhMlpJhMA2L8BzMJ/MiRG2eBjyLoFNz2tsA8iC/9Rjrz0z7i9
-	 PFwpT8fzE5jRQ==
+	b=NjwnI7TcgPZGLjmBUM/0e/ASPPp49tO16upUy1A7fmEOf56lKkqzu3w7O0GtDHi5C
+	 aESiGmGmRrbiHWkcCSIv7K/J1D1YTPtEfuAu1uKgav+6BdUqILJZSGFVBHbSlqsqa1
+	 KUnQjLSBdjKFM4hBehpIWS8pmP3i3RXHeSSfBFGvaouH7e4JPE6E622+xSHp2LjpwE
+	 tzBGHtoP78IhJTZ1vVbKcHSuUMKFy6xPRf783QmHQsC9xQfGZ+aXbCxha2lCcIKWqU
+	 ymKKs9uD9teIczPvXKy8CgOTWsv5if84aw8zsE+99Mf2Jg1RghR+t3T/4XCafH0CqD
+	 v1sNbyUarhcUg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Damon Ding <damon.ding@rock-chips.com>,
-	Douglas Anderson <dianders@chromium.org>,
+Cc: "David C.C.M. Gall" <david.ccm.gall@googlemail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	davem@davemloft.net,
+	linux-crypto@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] drm/panel-edp: Add BOE NE160QDM-NY1 panel
-Date: Mon, 19 Oct 2026 09:50:26 -0400
-Message-ID: <20261019135441.1420968-335-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] crypto: keembay - use crypto_memneq() to compare GCM AEAD tags
+Date: Mon, 19 Oct 2026 09:50:27 -0400
+Message-ID: <20261019135441.1420968-336-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,249 +53,334 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damon Ding <damon.ding@rock-chips.com>
+From: "David C.C.M. Gall" <david.ccm.gall@googlemail.com>
 
-[ Upstream commit be4f10d44757211fd656fa57f37034657f26c883 ]
+[ Upstream commit 353b3a85136f2a0cf3e872acf8ad6c1dec0b7a8e ]
 
-Add an entry for the BOE NE160QDM-NY1 eDP panel. The panel's AUX
-backlight functionality is verified and working on the RK3576 EVB1
-board.
+Use crypto_memneq() for constant-time comparison.
 
-edid-decode (hex):
+The GCM path in keembay-ocs-aes-core.c verifes the received
+authentication tag with memcmp(), which returns early on the first
+mismatched byte. This leaks valid-prefix length and allows for valid
+tag forgery which violates the INT-CTXT guarantee of AEAD.
 
-00 ff ff ff ff ff ff 00 09 e5 85 09 00 00 00 00
-1c 1e 01 04 b5 22 15 78 03 7c e5 a4 55 4c 9f 26
-0f 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 6b 6e 00 a0 a0 40 84 60 30 20
-36 00 58 d7 10 00 00 1a 00 00 00 fd 0c 3c a5 1f
-1f 4e 01 0a 20 20 20 20 20 20 00 00 00 fe 00 42
-4f 45 20 43 51 0a 20 20 20 20 20 20 00 00 00 fe
-00 4e 45 31 36 30 51 44 4d 2d 4e 59 31 0a 01 ed
-
-02 03 1d 00 e3 05 80 00 e6 06 05 01 6a 6a 24 6d
-1a 00 00 02 03 3c a5 00 04 6a 24 6a 24 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff
-
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260625071916.744686-1-damon.ding@rock-chips.com
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: David C.C.M. Gall <david.ccm.gall@googlemail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line eDP panel ID for a driver that already exists in
-6.18.y. That matches the stable device-ID exception, and unknown panels
-already `WARN_ON` on probe.
-
-Local tree: **6.18.53** (`v6.18.53-5049-g0f0bdc2b0dffb`, Makefile
-`VERSION=6 PATCHLEVEL=18 SUBLEVEL=53`). Upstream commit `be4f10d44757`
-is **not** in `v6.18.53`; `panel-edp.c` and `delay_200_500_e50` are.
+This is a 3-line constant-time tag compare for Keem Bay GCM decrypt. The
+local tree is **6.12.111** (`pending-6.12`, `p-6.12-3-gc504cf0baa3d8`).
+The buggy `memcmp()` is present; the candidate is not.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Record: `[drm/panel-edp] [Add] [BOE NE160QDM-NY1 panel table entry]`
+
+Record: `[crypto: keembay] [use] [replace memcmp with crypto_memneq for
+GCM AEAD tag compare]`
+
+- Subsystem: `crypto: keembay` (Intel Keem Bay OCS AES driver)
+- Action verb: **use** (the body is a security fix: constant-time
+  compare)
+- Intent: stop early-exit `memcmp()` from leaking valid-tag prefix
+  length
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Record: No `Fixes:` (expected). No `Reported-by` / `Tested-by` / `Cc:
-  stable`.
-- `Reviewed-by: Douglas Anderson <dianders@chromium.org>` (panel-edp
-  reviewer in MAINTAINERS)
-- `Signed-off-by: Damon Ding <damon.ding@rock-chips.com>` (author)
-- `Signed-off-by: Douglas Anderson <dianders@chromium.org>` (drm-misc
-  maintainer path)
-- `Link:
-  https://patch.msgid.link/20260625071916.744686-1-damon.ding@rock-
-  chips.com`
-- Ignored: `[Upstream commit be4f10d44757…]`, `Signed-off-by: Sasha
-  Levin` (candidate pipeline)
+
+Record:
+- **Fixes:** none (expected)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none
+- **Acked-by:** none
+- **Link:** none
+- **Cc: stable:** none (expected)
+- **Assisted-by:** gregkh_clanker_t1000
+- **Signed-off-by:** David C.C.M. Gall `<david.ccm.gall@googlemail.com>`
+  (author)
+- **Signed-off-by:** Herbert Xu `<herbert@gondor.apana.org.au>` (crypto
+  maintainer, applied it)
+
+SHA: `353b3a85136f2a0cf3e872acf8ad6c1dec0b7a8e`
+AuthorDate: 2026-08-07. No syzbot, no multi-reporter pattern.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record: [Bug] Generic `edp-panel` probe looks up EDID vendor/product
-  in `edp_panels[]`. BOE 0x0985 is missing, so this panel is treated as
-  unknown.
-- [Symptom] Kernel `WARN_ON` on probe plus conservative delays
-  (`unprepare=2000`, `enable=200`) instead of the panel’s 500/50 ms
-  sequence. AUX backlight was verified on RK3576 EVB1.
-- [Version] None stated.
-- [Root cause] Missing table entry; timings otherwise come from EDID.
+
+Record:
+- **Bug:** GCM decrypt checks the received auth tag with `memcmp()`,
+  which returns on the first mismatch.
+- **Symptom/failure mode:** timing leak of matching-prefix length; that
+  leak can be used to forge a valid tag and break AEAD **INT-CTXT**
+  (integrity of ciphertext).
+- **Version info:** none in the message.
+- **Root cause (author):** non-constant-time compare of `in_tag` vs
+  `out_tag`.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: Not a disguised cleanup. It is a device-ID addition. The
-  unknown-panel path also fires a deliberate `WARN_ON`, so the ID stops
-  a real boot warning.
+
+Record: Not hidden. It is an explicit crypto security fix (timing side
+channel / AEAD integrity), even without the word “fix” in the subject.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-- Record: `drivers/gpu/drm/panel/panel-edp.c` +1 / −0. One function/data
-  object: `edp_panels[]`. Single-file surgical change.
+
+Record:
+- File: `drivers/crypto/intel/keembay/keembay-ocs-aes-core.c` (+2 / −1)
+- Functions: `#include` plus `kmb_ocs_aead_run()`
+- Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record: Before: BOE IDs jump 0x0979 → 0x098d. After: 0x0985 maps to
-  `&delay_200_500_e50` named `"NE160QDM-NY1"`. Only the generic EDID
-  lookup path in `generic_edp_panel_probe()` is affected.
+
+Record:
+- **Include hunk:** adds `#include <crypto/utils.h>` (declares
+  `crypto_memneq()`).
+- **Compare hunk (GCM decrypt only):** after `ocs_aes_gcm_op()`, if
+  `rctx->instruction == OCS_DECRYPT`:
+  - Before: `rc = memcmp(rctx->in_tag, rctx->out_tag, tag_size) ?
+    -EBADMSG : 0;`
+  - After: `rc = crypto_memneq(rctx->in_tag, rctx->out_tag, tag_size) ?
+    -EBADMSG : 0;`
+- Encrypt path, CCM path, and DMA cleanup are unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record: [Category] Hardware ID / quirk table. [Mechanism] Missing EDID
-  product ID; `find_edp_panel()` returns NULL → `WARN_ON` + conservative
-  delays. The new row uses an existing delay struct.
+
+Record:
+- **Category:** cryptographic timing / logic correctness (not UAF, leak,
+  race).
+- **Mechanism:** `memcmp()` is not constant-time. `crypto_memneq()` is
+  (`lib/crypto/memneq.c`, `noinline`). Both treat 0 as equal, so
+  `-EBADMSG` vs `0` is unchanged; only timing changes.
+
+CCM still uses `memcmp()` in `ocs-aes.c:ccm_compare_tag_to_yr()`; that
+is a sibling patch (`ff2ac77a034e0`), not a dependency of this one.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-- Record: Obviously correct: one `EDP_PANEL_ENTRY` in vendor/product
-  sort order. EDID bytes `09 e5 85 09` decode to BOE + 0x0985.
-  Regression risk is very low (only this ID). No API, lock, or lifetime
-  changes.
+
+Record:
+- Obviously correct: one-for-one substitution with the API crypto
+  drivers already use for MAC/tag compares (`talitos`, `nx`, `atmel-
+  aes`, `stm32-cryp`, etc. in this tree).
+- Minimal; no API/data-structure change.
+- Regression risk: very low. Return mapping matches. `crypto_memneq` is
+  slightly slower by design (no early exit); that is the fix.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-- Record: Surrounding BOE rows date from 2021–2026. Table machinery:
-  `5f04e7ce392db` (2021-09-20, split from panel-simple) and
-  `5540cf8f3e8da` (generic EDID-probed panels). Both are ancestors of
-  `v6.18.53`.
+
+Record:
+- Introduced in `88574332451380f4b51f6ca88ab9810e714bfb9b` (“crypto:
+  keembay - Add support for Keem Bay OCS AES/SM4”), 2020-12-11, Mike
+  Healy.
+- Original hunk: `rc = memcmp(rctx->in_tag, rctx->out_tag, tag_size) ?`
+- Present since **v5.11** (`git merge-base --is-ancestor` vs `v5.10`
+  fails, vs `v5.11` succeeds). Long-standing, not recent.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: No `Fixes:` tag. Not applicable. The “bug” is an absent ID,
-  not a later regression.
+
+Record: No `Fixes:` tag. Functionally this fixes the original driver
+commit `8857433245138`, which **is** an ancestor of this 6.12 HEAD.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record: `v6.18.53` already has many `drm/panel-edp: Add …` ID patches
-  (72 log hits). Standalone; not `patch X/Y`.
+
+Record (this tree, that file): OF alias, IRQ completion init, AEAD
+unregister count, platform-remove conversion, crypto_engine_op,
+prepare/unprepare removal, path move. None of those change the GCM
+`memcmp`. Standalone vs the CCM sibling (patch 2/2, different file).
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Damon Ding has another panel-edp ID add (`LP079QX1-SP0V`).
-  Reviewer Douglas Anderson is listed under “DRM DRIVER FOR GENERIC EDP
-  PANELS”.
+
+Record: David C.C.M. Gall is not the keembay maintainer. On `crypto-
+next` the same author has a batch of `crypto_memneq` conversions:
+keembay GCM, keembay CCM, sa2ul, octeontx, octeontx2, ccree. Crypto
+maintainer Herbert Xu applied this one.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: Needs `EDP_PANEL_ENTRY`, `delay_200_500_e50`, and
-  `edp_panels[]` — all present in `v6.18.53`. Applies standalone.
+
+Record:
+- Needs `crypto_memneq` / `crypto/utils.h` — both exist here
+  (`include/crypto/utils.h`, `lib/crypto/memneq.c`).
+- `crypto/internal/aead.h` already includes `crypto/algapi.h` →
+  `crypto/utils.h`, so the extra include is redundant but matches
+  mainline and is harmless.
+- No prerequisite series beyond this one hunk. `git apply --check` of
+  `353b3a85136f2` succeeded on this tree.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record: `b4 dig -c be4f10d44757` →
-  https://patch.msgid.link/20260625071916.744686-1-damon.ding@rock-
-  chips.com
-- `b4 dig -a`: single **v1**, no later revisions.
-- Doug Anderson: `Reviewed-by` and pushed to drm-misc-next as
-  `be4f10d44757`. No NAKs, no stable discussion in-thread.
+
+Record:
+- `b4 dig -c 353b3a85136f2`:
+  https://patch.msgid.link/anYEQOzunX0Lm3N1@david.gall
+- `b4 dig -a`: single revision, **v1** `[PATCH 1/2]`. No v2/v3.
+- Saved thread `/tmp/keembay-gcm-memneq.mbox` (2 messages).
+- Herbert Xu (2026-08-15): “All applied. Thanks.” No NAK, no review
+  nits, **no Cc: stable**.
+- Direct lore WebFetch returned 403; discussion taken from the b4 mbox.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record: `b4 dig -w` To/Cc: Douglas Anderson, Neil Armstrong, drm-misc
-  maintainers, `dri-devel`, `linux-kernel`. Right audience.
+
+Record (`b4 dig -w`): To/Cc Herbert Xu, David S. Miller, linux-crypto,
+linux-kernel, gregkh@linuxfoundation.org. Subsystem maintainer was
+included and applied the patch. No Reviewed-by tags.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: No syzbot/bugzilla. Author tested AUX backlight on RK3576
-  EVB1. Panelook lists this as a 16" eDP laptop panel (Lenovo FRUs);
-  that is third-party catalog data, not a kernel bug report.
+
+Record: No Reported-by, no syzbot, no bugzilla. Issue is from code
+review / known `memcmp`-vs-MAC pattern, not a user crash report.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: Standalone 1/1 series. No prerequisite panel patches.
+
+Record: Series is 2/2. Patch 2 is CCM `memcmp` in `ocs-aes.c`.
+Independent of this GCM change. Same pattern as historical stable-bound
+fixes:
+- `79960943fdc11` crypto: talitos - Fix timing leak in ESP ICV
+  verification (`Cc: stable`)
+- `cb8affb55c7e6` crypto: nx - Fix timing leak in GCM and CCM decryption
+  (`Cc: stable`)
+
+Both are already ancestors of this 6.12 HEAD.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: lore.kernel.org/stable returned HTTP 403. Unverified whether
-  stable@ already discussed this ID. Same class of adds is already in
-  6.18.y.
+
+Record: lore.kernel.org/stable WebFetch returned 403. **UNVERIFIED**
+whether anyone already asked for this on stable@. Original crypto thread
+has no stable nomination.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
+No semcode MCP tools. Used grep + file reads.
+
 **Step 5.1: IDENTIFY KEY FUNCTIONS**
-- Record: Data only: `edp_panels[]`. Consumers: `find_edp_panel()`,
-  `generic_edp_panel_probe()`.
+
+Record: `kmb_ocs_aead_run()` (only runtime change).
 
 **Step 5.2: TRACE CALLERS**
-- Record: `find_edp_panel()` ← `generic_edp_panel_probe()` ←
-  `panel_edp_probe()` when DT compatible is `"edp-panel"`. Also
-  `panel_edp_platform_probe` / DP-AUX probe. Probe-time, not interrupt.
+
+Record:
+- `kmb_ocs_aes_aead_do_one_request()` → `kmb_ocs_aead_run()`
+- Engine op `.do_one_request` for `gcm(aes)`, `ccm(aes)`, `gcm(sm4)`,
+  `ccm(sm4)`
+- Encrypt/decrypt entry: `kmb_ocs_aes_gcm_decrypt` /
+  `kmb_ocs_sm4_gcm_decrypt` → `kmb_ocs_aead_common()` →
+  `crypto_transfer_aead_request_to_engine()`
+- CCM returns before the changed lines; only GCM decrypt hits
+  `memcmp`/`crypto_memneq`.
 
 **Step 5.3: TRACE CALLEES**
-- Record: Lookup is a table walk (`drm_edid_match` / `panel_id`
-  compare). Match copies `delay_200_500_e50`. Miss calls
-  `panel_edp_set_conservative_timings()` after `WARN_ON`.
+
+Record: After `ocs_aes_gcm_op()`, compare tags, then
+`kmb_ocs_aead_dma_cleanup()`. No extra alloc/lock from this hunk.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: Userspace cannot call this directly. Any machine with
-  `compatible = "edp-panel"` and this EDID hits it at boot (Chromebooks,
-  Qualcomm laptops, Rockchip EVBs, etc.).
+
+Record:
+- Registered as `gcm(aes)` / `gcm(sm4)` with priority 350.
+- `CRYPTO_ALG_KERN_DRIVER_ONLY` means HW accel not via a userspace ISA;
+  it is **not** `CRYPTO_ALG_INTERNAL`. `af_alg.c` allows that flag, so
+  AF_ALG can still select the driver.
+- Also used by in-kernel AEAD (IPsec, TLS, etc.) when this HW is chosen.
+- Path is reachable whenever Keem Bay OCS AES is enabled and GCM decrypt
+  runs.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: Same one-line `EDP_PANEL_ENTRY` pattern used throughout the
-  table. No duplicate BOE 0x0985.
+
+Record: Remaining `memcmp` in this driver is CCM (`ocs-aes.c:1285`),
+sibling commit. Other HW AEAD drivers in this tree already use
+`crypto_memneq`.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: Yes. `v6.18.53` `panel-edp.c` has 0x0979 then 0x098d; 0x0985
-  is absent. `git merge-base --is-ancestor be4f10d44757 v6.18.53` is
-  false. `delay_200_500_e50` and the unknown-panel `WARN_ON` are
-  present.
+
+Record: **Yes.** `drivers/crypto/intel/keembay/keembay-ocs-aes-
+core.c:922` still has `memcmp(rctx->in_tag, rctx->out_tag, tag_size)`.
+Introduced v5.11; present in 6.12. Candidate is **not** an ancestor of
+HEAD (`git merge-base --is-ancestor 353b3a85136f2 HEAD` failed).
+Kconfig: `CRYPTO_DEV_KEEMBAY_OCS_AES_SM4` depends on `ARCH_KEEMBAY ||
+COMPILE_TEST`. `ARCH_KEEMBAY` exists (`arch/arm64/Kconfig.platforms`).
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: Clean apply. Insertion point and neighbors match the upstream
-  diff. Expected difficulty: clean apply.
+
+Record: **Clean apply.** Surrounding GCM decrypt block matches the
+patch. `crypto/utils.h` exists.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: No other 0x0985 / NE160QDM-NY1 entry in `v6.18.53`. (HEAD on
-  `autosel` already has the candidate; that is pipeline state, not a
-  reason to skip the technical YES.)
+
+Record: No keembay `crypto_memneq` commit in this tree. GCM `memcmp`
+still there.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: [drm/panel-edp] [IMPORTANT] — common generic eDP path for
-  ARM/laptop panels, not core mm/VFS. `DRM_PANEL_EDP` depends on `OF`.
+
+Record:
+- Subsystem: `drivers/crypto/intel/keembay` (platform crypto
+  accelerator)
+- Criticality: **PERIPHERAL** for most 6.12 users (Keem Bay / Movidius
+  SoC only), but the bug is a real AEAD integrity issue for those users.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: Active; 6.18.y already backports many panel IDs. Mature table
-  plus ongoing ID adds.
+
+Record: Mature driver (2020). Recent 6.12 commits are small
+correctness/build items, not a rewrite of GCM tag handling.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: Driver/config-specific: `CONFIG_DRM_PANEL_EDP` + this BOE
-  panel + generic `edp-panel`. RK3576 EVB1 DTS is in 6.18.53 (main DTS
-  has HDMI, not eDP; matching is EDID-based so any `edp-panel` board
-  with this module benefits).
+
+Record: Driver/platform-specific:
+`CONFIG_CRYPTO_DEV_KEEMBAY_OCS_AES_SM4` on Keem Bay, GCM(AES/SM4)
+decrypt on that HW.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record: Every probe of this panel. Not a race. Unprivileged users do
-  not trigger it; boot/display init does. Common for that hardware.
+
+Record: Every successful GCM decrypt on this engine compares tags.
+Trigger is ordinary decrypt, not a rare error path. Unprivileged users
+can hit it via AF_ALG or via kernel users of `gcm(aes)`. Practical
+exploitation needs timing measurement (local is realistic; remote is
+harder). The integrity guarantee is still broken even if remote exploit
+is hard.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record: [WARN_ON + conservative 2s unprepare] [MEDIUM]. Display
-  usually still works; boot warning and slow power sequencing are the
-  user-visible issues. Without the ID, AUX backlight can still work
-  (author’s point is that it was tested once identified).
+
+Record:
+- Failure: timing leak of valid-tag prefix → tag forgery → **INT-CTXT**
+  failure (forged ciphertext accepted).
+- Severity: **HIGH** (crypto/security). Not a panic/deadlock. Same class
+  historically sent to stable (talitos/nx).
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Record: [Benefit: high for those panels — stops WARN_ON, correct
-  delays] [Risk: very low, +1 table line] [Ratio: strongly favors
-  backport]
+
+Record:
+- **Benefit:** restores AEAD integrity for Keem Bay GCM users on 6.12
+  LTS.
+- **Risk:** very low (3 lines, equivalent control flow, well-used
+  helper).
+- **Ratio:** benefit > risk. Niche HW lowers population, not the
+  correctness of backporting a tiny security fix.
 
 ---
 
@@ -308,125 +388,135 @@ is **not** in `v6.18.53`; `panel-edp.c` and `delay_200_500_e50` are.
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-FOR:
-- Stable rule: “fix a real bug **or just add a device ID**”
-  (`Documentation/process/stable-kernel-rules.rst`).
-- Explicit exception: new IDs in an existing driver.
-- One line; uses existing `delay_200_500_e50`.
-- Stops `WARN_ON(!panel->detected_panel)` in
-  `generic_edp_panel_probe()`.
-- Reviewed and merged by the panel-edp reviewer.
-- Driver and helpers exist in this 6.18.y tree; apply is clean.
-- Same class of commits is already routine in this series.
+**FOR backporting:**
+- Real AEAD security bug (non-constant-time tag compare / INT-CTXT).
+- Buggy `memcmp` is in this 6.12 tree since the v5.11 driver.
+- 3-line, obviously correct, applies cleanly.
+- `crypto_memneq` already in tree; same pattern used by other drivers
+  here.
+- Crypto maintainer applied it; historical sibling timing-leak fixes
+  were stable-bound.
+- No new API/feature.
 
-AGAINST:
-- Not a crash/UAF/CVE.
-- Affects only this panel.
-- No `Cc: stable` (not a negative under these rules).
+**AGAINST:**
+- Peripheral SoC (`ARCH_KEEMBAY`), small user base.
+- No user/syzbot report, no CVE, no `Cc: stable`.
+- AI-assisted; no Tested-by/Reviewed-by besides maintainer apply.
+- CCM `memcmp` remains until the sibling patch (this GCM fix is still
+  complete on its own).
 
-UNRESOLVED:
-- lore.kernel.org/stable search was 403.
-- Upstream RK3576 EVB1 DTS does not describe the eDP panel; hardware
-  enablement still depends on DT/`edp-panel` on the board.
+**UNRESOLVED:**
+- Stable@ search 403 (whether anyone already nominated this).
+- No public measurement of exploitability on this SoC (generic
+  `memcmp`-MAC analysis still holds).
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — v1 accepted; tested on
-   RK3576 EVB1; maintainer R-b.
-2. Fixes a real bug that affects users? **PASS** — missing ID is the
-   documented device-ID case; also avoids WARN_ON.
-3. Important issue? **PASS** as device-ID exception (WARN_ON is MEDIUM,
-   not panic).
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — ID only, existing driver.
-6. Can apply to the local tree? **PASS** — context identical in
-   `v6.18.53`.
+
+1. Obviously correct and tested? **PASS** — one helper swap; maintainer
+   applied; helper is the standard MAC compare. No extra runtime test
+   tags.
+2. Fixes a real bug that affects users? **PASS** — GCM decrypt on this
+   HW uses `memcmp` today.
+3. Important issue? **PASS** — AEAD integrity / timing side channel
+   (HIGH), not a crash.
+4. Small and contained? **PASS** — 3 lines, one file, one function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — `git apply --check`
+   succeeded.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: **Device ID addition to existing driver** (`EDP_PANEL_ENTRY` =
-  EDID vendor/product ID).
 
-**Step 9.4: DECISION**
-Backport. This is the standard panel-edp ID add: hardware support plus
-removal of a probe `WARN_ON`, with negligible risk on 6.18.y.
+Record: Not a device-ID/quirk/DT/build/docs exception. Qualifies as a
+small security correctness fix.
 
----
+**Step 9.4: MAKE YOUR DECISION**
 
-### What problem it solves for stable users
+The patch closes a real INT-CTXT hole with a 3-line, clean apply on this
+6.12 tree. Niche hardware is not a reason to leave a known AEAD tag-
+timing bug in LTS.
 
-Boards using generic `edp-panel` with a BOE NE160QDM-NY1 (EDID BOE
-0x0985) currently miss the table, hit `WARN_ON` every boot, and use
-2000/200 ms conservative delays instead of 500/50 ms. Adding the ID
-matches how this driver is meant to be extended.
+### What it solves for this tree
+Keem Bay OCS GCM decrypt still uses early-exit `memcmp` on the auth tag.
+That leaks how much of the tag matched and can be used to forge tags.
+Replacing it with `crypto_memneq()` makes the compare constant-time
+without changing success/failure semantics.
 
 ### Risk vs benefit
-
-Benefit: correct sequencing and no warning on that panel. Risk: one
-sorted table row, no behavior change for other IDs.
-
-### Concerns
-
-None for this tree. No extra commits required. Ignore pipeline markers
-(`[Upstream commit]`, Sasha SOB, presence on `autosel`).
+Benefit is restoring AEAD integrity for that decrypt path. Risk is
+negligible: same branch structure, established helper, no locking or API
+change.
 
 ---
 
 Verification:
-- [Phase 1] Parsed subject/tags: Add panel ID; R-b dianders; Link msgid
-  20260625071916.744686-1; no Fixes/syzbot
-- [Phase 1] Body: AUX backlight tested on RK3576 EVB1; full EDID dump
-- [Phase 2] Diff: +1
-  `EDP_PANEL_ENTRY('B','O','E',0x0985,&delay_200_500_e50,"NE160QDM-
-  NY1")` in `edp_panels[]`
-- [Phase 2] EDID `09 e5 85 09` → BOE + product 0x0985 (verified against
-  commit hex)
-- [Phase 2] `generic_edp_panel_probe()`:
-  `WARN_ON(!panel->detected_panel)` then
-  `panel_edp_set_conservative_timings()` (unprepare 2000, enable 200)
-- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.18.53
-- [Phase 3] `git merge-base --is-ancestor be4f10d44757 v6.18.53`: **no**
-  (not in the release)
-- [Phase 3] `git grep NE160QDM-NY1 v6.18.53 -- panel-edp.c`: missing
-- [Phase 3] `delay_200_500_e50` at `v6.18.53:panel-edp.c:1746`;
-  neighbors 0x0979 then 0x098d — clean insert
-- [Phase 3] Driver added `5f04e7ce392db` (2021); generic table
-  `5540cf8f3e8da`; both in 6.18.53
-- [Phase 3] `git log v6.18.53 --grep='drm/panel-edp: Add'`: 72 similar
-  ID commits already in this series
-- [Phase 4] `b4 dig -c be4f10d44757`: v1 only; lore msgid as in Link
-- [Phase 4] `b4 dig -a`: no v2+
-- [Phase 4] `b4 dig -w`: dianders, dri-devel, drm-misc maintainers
-- [Phase 4] Anderson reply: Reviewed-by + pushed drm-misc-next
-  `be4f10d44757`; no NAK
-- [Phase 4] lore.kernel.org/stable: **UNVERIFIED** (HTTP 403)
-- [Phase 5] Callers: `panel_edp_probe` → `generic_edp_panel_probe` if
-  `compatible = "edp-panel"`
-- [Phase 5] No duplicate 0x0985 in `panel-edp.c`
-- [Phase 6] `rk3576-evb1-v10.dts` exists in v6.18.53; no eDP panel node
-  in that DTS (EDID match still applies wherever `edp-panel` is used)
-- [Phase 7] MAINTAINERS: “DRM DRIVER FOR GENERIC EDP PANELS”, R: Douglas
-  Anderson
-- [Phase 8] Failure: WARN_ON + slow unprepare; not oops; device-ID
-  exception still applies
-- UNVERIFIED: stable@ archive discussion; how many shipping laptops use
-  this exact module
+- [Phase 1] Parsed tags: Assisted-by gregkh_clanker_t1000; SOBs Gall +
+  Herbert Xu; no Fixes/Reported-by/Cc:stable
+- [Phase 1] SHA `353b3a85136f2a0cf3e872acf8ad6c1dec0b7a8e` on crypto-
+  next; not ancestor of HEAD
+- [Phase 2] Diff: +`crypto/utils.h`, `memcmp` → `crypto_memneq` in
+  `kmb_ocs_aead_run()` GCM decrypt
+- [Phase 2] Confirmed remaining CCM `memcmp` in `ocs-aes.c:1285` is
+  sibling `ff2ac77a034e0`, not required here
+- [Phase 2] `crypto_memneq` returns 0 equal / 1 unequal — same ternary
+  as `memcmp`
+- [Phase 3] `git blame`: memcmp from `8857433245138` (2020-12-11); in
+  tree since v5.11
+- [Phase 3] `git merge-base --is-ancestor 8857433245138 HEAD` succeeded
+- [Phase 3] `git apply --check` of the candidate on this tree: success
+- [Phase 3] Author’s related commits on crypto-next: keembay CCM, sa2ul,
+  octeontx, ccree memneq conversions
+- [Phase 4] `b4 dig -c`:
+  https://patch.msgid.link/anYEQOzunX0Lm3N1@david.gall
+- [Phase 4] `b4 dig -a`: v1 only, `[PATCH 1/2]`
+- [Phase 4] `b4 dig -w`: Herbert Xu, davem, linux-crypto, gregkh CC’d
+- [Phase 4] mbox: Herbert “All applied. Thanks.”; no NAK, no stable
+  nomination
+- [Phase 4] Direct lore/stable WebFetch: 403 — UNVERIFIED for stable@
+  archive
+- [Phase 4] Historical same-class fixes `79960943fdc11` (talitos) and
+  `cb8affb55c7e6` (nx) have `Cc: stable` and are in this tree
+- [Phase 5] Call chain: `kmb_ocs_aes_gcm_decrypt` →
+  `kmb_ocs_aead_common` → engine → `kmb_ocs_aes_aead_do_one_request` →
+  `kmb_ocs_aead_run`
+- [Phase 5] Algs: `gcm(aes)`/`gcm(sm4)` priority 350; `KERN_DRIVER_ONLY`
+  is not INTERNAL; AF_ALG allows that flag
+- [Phase 6] `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion`: 6.12.111
+- [Phase 6] Line 922 still `memcmp(...)` in this checkout
+- [Phase 6] `include/crypto/utils.h` and `lib/crypto/memneq.c` present
+- [Phase 7] Kconfig `depends on ARCH_KEEMBAY || COMPILE_TEST`;
+  `ARCH_KEEMBAY` in arm64 Kconfig.platforms
+- [Phase 8] Failure mode: AEAD tag timing leak / possible tag forgery,
+  severity HIGH
+- UNVERIFIED: exploit practicality on Keem Bay specifically; whether
+  stable@ already discussed this commit
 
 **YES**
 
- drivers/gpu/drm/panel/panel-edp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 792923b1d7878..f2ae333a32d8c 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1975,6 +1975,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0964, &delay_200_500_e50, "NV133WUM-N61"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x096e, &delay_200_500_e50_po2e200, "NV116WHM-T07 V8.0"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0979, &delay_200_500_e50, "NV116WHM-N49 V8.0"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0985, &delay_200_500_e50, "NE160QDM-NY1"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x098d, &boe_nv110wtm_n61.delay, "NV110WTM-N61"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0993, &delay_200_500_e80, "NV116WHM-T14 V8.0"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x09ad, &delay_200_500_e80, "NV116WHM-N47"),
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+index 419f88af1031b..c4fd5e1849cdf 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+@@ -11,6 +11,7 @@
+ #include <crypto/internal/aead.h>
+ #include <crypto/internal/skcipher.h>
+ #include <crypto/scatterwalk.h>
++#include <crypto/utils.h>
+ #include <linux/clk.h>
+ #include <linux/completion.h>
+ #include <linux/dma-mapping.h>
+@@ -919,7 +920,7 @@ static int kmb_ocs_aead_run(struct aead_request *req)
+ 
+ 	/* For GCM decrypt, we have to compare in_tag with out_tag. */
+ 	if (rctx->instruction == OCS_DECRYPT) {
+-		rc = memcmp(rctx->in_tag, rctx->out_tag, tag_size) ?
++		rc = crypto_memneq(rctx->in_tag, rctx->out_tag, tag_size) ?
+ 		     -EBADMSG : 0;
+ 		goto exit;
+ 	}
 -- 
 2.53.0
 
