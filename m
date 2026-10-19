@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7E262767B;
-	Mon, 19 Oct 2026 14:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED98538761;
+	Mon, 19 Oct 2026 14:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418701; cv=none; b=nNLOqUZVxAJOACwlcs49AfwcRflGcZ2HOFSZ+mOdwhVZtdqlSEuYqb5KSDg8UM0DxcJXQ9gzW/3BoZNqYzWgKRZfbqnhs/l9eJGOnz65g2FIcFx3LYjpSWfKeGcweMTFF1J0l0om88rywYMEFqILLxt998FXAxQ4obqdRxV6qpo=
+	t=1792418701; cv=none; b=mlMSSwuEB/vR20UHU+KYHlkRDwnKD4RG3oO4k/8a40uTvNEItv/KsW83PC3TWntv4xQaj+7kyHMCBMv4i3sKACECRWIEwquXtl1ebH4AtpFguQ1fl6SAv8nruAABsQ27L80uH1DHm7sx4FXp8g/XUpSetV1SjmYX01TBH6pGWYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418701; c=relaxed/simple;
-	bh=NF2ixWHRmZkuYK6TcV0TEf5jlgSxou9HK0WmZvoYRo0=;
+	bh=24d7NsJbbsGL/694baAXjNMCkaHCuUP7ioiqoBd8DRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jnQ5VcVr0TjNNDzEJ2DYm8GODygfxlT/ocaMJ+T9edzO+BumLR26bBAKh1G9h15WRenXsghxT7CZB3Ygkcz9xWR1YOlo+obwFNvHoYl8QwL3plV7CmzOi4eJhvK/N8YCzxxiwE1l4mlu8tq2sNUFPV20rPjDuMpRp1pV/yRh/UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bQ3gz7Nh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WYAxrjublETIQjaXrw4klyP53YhOl0d302MVWz+h92CrwArtMUkD8RMnaIOcmnmQPdJxnpenHWEcxRA5Hmn+Ma77SqSc1p9dinmB3Tjk0CXvSABakMS89LGzu5sQxhBDHCKy8C+04Cwow1BTzwgi+au9RBvTuGTzMp9W8wT/76c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UqcfdmZV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bQ3gz7Nh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5334F1F000C5;
-	Mon, 19 Oct 2026 14:04:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UqcfdmZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025671F000C6;
+	Mon, 19 Oct 2026 14:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418697;
-	bh=lpE7in3SaLd94HfkNfamLWAv+AjYDt8XbPu4TGYZbaw=;
+	s=k20260515; t=1792418698;
+	bh=4uUYZsf7HeD1FtA/2f/cFcVEPSgoow6CLwoxLwi+h8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bQ3gz7NhsK+HjrzMu7EU4fJwsveEp3sbc25iExZCvs/YbzWxRgO/rg/Tg/rBFpeoj
-	 AWDDb+HOmLicEh+KwurBuQCBzjB3pK7fMOWBh8avCHJZpEd2EnBvuwWcSLltx0d9RN
-	 JPb4oneCjI43Yb7vbnTHSnLksJI7CHBGWmfOnATzK+GhNeNsip1mH2+MzislA7Re5r
-	 rCOhDiKfRE052exboIvaO7eaA8O/FO1aiV3rUjSV8EvQxk6b4NU7AdGHeaux+ebG6Q
-	 DDELjbvI3Z6DpPOU9Fe+TDu0Jjna/cr27NAe15BEXqc/xggkmmB5dnzKBbqsIC6d1P
-	 /rrL8hohm/O6Q==
+	b=UqcfdmZVupyotCD3mZQX+swkTyWLAo80tp1uwKRZWaleWpdrMwh6yHpnTTWZgiG0W
+	 BhOfOYkxfcByj2076LvwNJ3lsFcwwl1p8wRCt7wmHueQ3j4XP2/VTLkZX3D1CTZ+CO
+	 TOAodqKansN0uanN6Qs5KX/pIigdhOtGReKzsvCnrMcjl+nivO4w7yLKcjTVbocdqn
+	 yNvB5gyjEFhdDCccof6Sa1SUuDNIcPcF8SP+RXYAn+ToYcqx9/HBKJ4/p7lcx5NeyE
+	 ut4dOqoX4m95dXpQavveWmzJgsov51HHvUNQ3tdVs9y3GEaxowldIpkJYn5b06uPz0
+	 2s+uzV4YYSh2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	rds-devel@oss.oracle.com,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net/rds: hold the socket while an rds_mr references it
-Date: Mon, 19 Oct 2026 09:52:03 -0400
-Message-ID: <20261019135441.1420968-432-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] ksmbd: reject SMB3.1.1 binding with mismatched cipher
+Date: Mon, 19 Oct 2026 09:52:04 -0400
+Message-ID: <20261019135441.1420968-433-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,507 +45,421 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 9079adef042c1e7a6141dcdfd3041acd30607297 ]
+[ Upstream commit 7019a11f79dc408f2b47b1027240e7f198784c9a ]
 
-Each rds_mr stores a bare back pointer to the socket that created it
-(mr->r_sock) but takes no reference on it.  When the mr is destroyed it
-references the rs. Hence, provisions must be made to avoid the rs
-being destroyed before all mrs referencing it have been destroyed.
+SMB3.1.1 multichannel connections belonging to the same session must use
+the same negotiated encryption cipher.
 
-The MR itself is refcounted, and in-flight messages legitimately hold
-MR krefs that can outlive the socket: rds_release() drops the rb-tree
-references via rds_rdma_drop_keys(), but a send completion arriving
-afterwards drops the final message reference from the CQ handler and
-ends up in
+ksmbd validates the dialect and client GUID during session binding, but
+does not compare the cipher negotiated by the new connection with the
+cipher used by the existing session channels. This allows a channel
+negotiated with AES-128-CCM to bind to a session using AES-128-GCM.
 
-  rds_message_purge()
-    __rds_put_mr_final()
-      rds_destroy_mr()   -> takes rs->rs_rdma_lock
+Compare the new connection's cipher with an existing session channel and
+return STATUS_INVALID_PARAMETER when they differ.
 
-dereferencing a socket that may already have been freed.
+This fixes smb2.session.bind_negative_smb3encGtoCs.
 
-Oracle UEK fixed the same use-after-free ("rds: Add proper refcnt when
-an RDS MR references an RDS Socket") after seeing crashes of the form:
-
-  PF: supervisor write access in kernel mode
-  _raw_spin_lock_irqsave+0x4a/0x6a
-  __rds_put_mr_final+0x2c/0xe0 [rds]
-  rds_message_purge+0x13c/0x150 [rds]
-  rds_message_put+0x39/0x54 [rds]
-  rds_ib_send_cqe_handler+0x147/0x3dd [rds_rdma]
-
-To fix this, take a socket reference when an MR is created and drop it
-when the final MR kref goes away.  The reference cycle is broken by
-rds_release(), which always runs rds_rdma_drop_keys() on close.  So the
-socket reference held by an MR never prevents release, it only delays
-sk_free() until the last MR user is done.
-
-The hold sits next to kref_init() at both allocation sites -
-__rds_rdma_map() and the on-demand-paging path in
-rds_cmsg_rdma_args() - so every MR owns exactly one socket reference
-from the moment it becomes kref-managed.  For that to work on the ODP
-path, its get_mr() error handling is converted from a bare kfree() to
-kref_put(..., __rds_put_mr_final), with r_trans_private cleared first
-since it holds an ERR_PTR there; both sites then tear down through
-the same path and a future error-path change cannot silently leak or
-double-drop the reference.
-
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-[achender: port to net-next (sock_hold/sock_put in place of the UEK
- rds_sock_addref/rds_sock_put helpers); also balance the reference on
- the rds_cmsg_rdma_args() ODP path and unify its error path with
- __rds_put_mr_final(); update commit message]
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-3-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a use-after-free in RDS MR teardown. The buggy path is in this
-5.10 tree, the fix is small, and it should be backported.
+## Local tree
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+This checkout is **6.12.111** (`pending-6.12`, `git describe` =
+`p-6.12-3-gc504cf0baa3d8`). The verdict is only for this tree.
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[net/rds] [hold] hold the socket while an rds_mr references
-it**
-- Subsystem: `net/rds`
-- Action verb: “hold” (keep a missing reference so the socket outlives
-  the MR)
-- Claimed intent: an `rds_mr` keeps a counted socket reference for its
-  lifetime
+Upstream commit analyzed: `7019a11f79dc408f2b47b1027240e7f198784c9a`
+(not in this tree). `git apply --check` of that diff against local
+`fs/smb/server/smb2pdu.c` succeeds.
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record (from the candidate / merged `9079adef042c`):
-- **Fixes:** absent in the git commit. The v4 mailing-list post had
-  `Fixes: eff5f53bef75 ("RDS: RDMA support")`. Absence in git is
-  expected here and is not a negative.
-- **Reported-by:** none. The body cites an Oracle UEK production crash.
-- **Tested-by:** none
-- **Reviewed-by / Acked-by:** none on the commit
-- **Link:** `https://patch.msgid.link/20260730041629.3512480-3-
-  achender@kernel.org`
-- **Cc: stable:** absent (expected)
-- **Signed-off-by:** Håkon Bugge (Oracle, original); Allison Henderson
-  (RDS, port); Jakub Kicinski (net maintainer, merge)
-- Notable: Allison’s trailer says this is a UEK port
-  (`sock_hold`/`sock_put` instead of UEK
-  `rds_sock_addref`/`rds_sock_put`). This tree already has those helpers
-  as thin wrappers around `sock_hold`/`sock_put`.
+---
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: Subject**
+Record: `[ksmbd] [reject] SMB3.1.1 session binding must not succeed when
+the new connection negotiated a different encryption cipher`
+
+**Step 1.2: Tags**
 Record:
-- **Bug:** `mr->r_sock` is a bare back-pointer. `rds_destroy_mr()` takes
-  `rs->rs_rdma_lock` after the socket may already be freed.
-- **Symptom:** kernel oops: `PF: supervisor write access` in
-  `_raw_spin_lock_irqsave` from `__rds_put_mr_final` ←
-  `rds_message_purge` ← `rds_message_put` ← `rds_ib_send_cqe_handler`.
-- **Root cause:** `rds_release()` drops rb-tree MR refs via
-  `rds_rdma_drop_keys()`, but in-flight send completions still hold MR
-  krefs. The CQ/tasklet path then destroys the MR against a freed
-  socket.
-- **Version info:** none beyond “Oracle UEK saw this.” The mechanism is
-  as old as RDS RDMA (2009).
-- **Fix:** `sock_hold()` at both MR alloc sites next to `kref_init()`;
-  `sock_put()` in `__rds_put_mr_final()`. Cycle is broken because
-  `rds_release()` always runs `rds_rdma_drop_keys()`, so the MR ref only
-  delays `sk_free()`, it does not block `release`.
+- Signed-off-by: Namjae Jeon `<linkinjeon@kernel.org>` (author and
+  committer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, `Link:`, or `Cc: stable`
+- Absence of `Fixes:`/`Cc: stable` is expected for this review path and
+  is not treated as a negative signal
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not disguised. Explicit UAF fix with a crash stack. The ODP
-`kfree` → `kref_put` change is part of making the hold/put pairing
-correct on the error path.
-
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
-
-Step 2.1: INVENTORY THE CHANGES
+**Step 1.3: Body**
 Record:
-- `net/rds/rdma.c`: +13 / −1 (functional)
-- `net/rds/rds.h`: +4 / −1 (comment on `r_sock`)
-- **Functions:** `__rds_put_mr_final()`, `__rds_rdma_map()`,
-  `rds_cmsg_rdma_args()`
-- **Scope:** single-subsystem, surgical (~17 lines)
+- Bug: SMB3.1.1 multichannel session binding checks dialect and client
+  GUID, but not cipher. A connection that negotiated AES-128-CCM can
+  bind to a session whose existing channel uses AES-128-GCM.
+- Symptom: invalid bind is accepted; smbtorture
+  `smb2.session.bind_negative_smb3encGtoCs` fails (expects
+  `STATUS_INVALID_PARAMETER`).
+- Root cause: missing comparison of `conn->cipher_type` against an
+  existing session channel.
+- Fix: under `sess->chann_lock`, compare ciphers and return `-EINVAL` →
+  `STATUS_INVALID_PARAMETER`.
+- No kernel-version range in the message.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. Explicit protocol-validation fix for encryption-
+cipher mismatch on bind.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: Inventory**
 Record:
-- **`__rds_put_mr_final`:** after `rds_destroy_mr(mr)`, add
-  `sock_put(rds_rs_to_sk(mr->r_sock))` before `kfree(mr)`.
-- **`__rds_rdma_map`:** after `mr->r_sock = rs`, add `sock_hold()`. This
-  tree already `kref_put`s `mr` on every `out:` path (success and
-  error), so the hold is paired.
-- **ODP path in `rds_cmsg_rdma_args`:** `sock_hold()` next to
-  `kref_init()`. On `get_mr()` failure, clear `r_trans_private` (it is
-  an `ERR_PTR`) and `kref_put(..., __rds_put_mr_final)` instead of a
-  bare `kfree`, so `free_mr()` is not called with an error pointer and
-  the socket ref is dropped.
+- File: `fs/smb/server/smb2pdu.c` only (`+15` lines)
+- Function: `smb2_sess_setup()`
+- Scope: single-file surgical insertion in the existing SMB 3.x
+  multichannel binding branch, immediately after the dialect check
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
+**Step 2.2: Code flow**
 Record:
-- **Category:** use-after-free / missing reference count
-- **Mechanism:** MR outlives socket; destructor uses `rs->rs_rdma_lock`.
-  Fix is one `sock_hold` per kref-managed MR, one `sock_put` on final
-  kref.
+- Before: after `conn->dialect != sess->dialect`, binding proceeds to
+  the signed-request and GUID checks.
+- After: if dialect is SMB 3.1.1, take `down_read(&sess->chann_lock)`,
+  walk `sess->ksmbd_chann_list`, if `conn->cipher_type !=
+  chann->conn->cipher_type` set `rc = -EINVAL`, then `up_read` and `goto
+  out_err`.
+- Path: SESSION_SETUP with `SMB2_SESSION_REQ_FLAG_BINDING` on SMB 3.1.1
+  with multichannel enabled. Existing `out_err` maps `-EINVAL` to
+  `STATUS_INVALID_PARAMETER` (local lines 1916–1917).
 
-Step 2.4: ASSESS THE FIX QUALITY
+**Step 2.3: Bug mechanism**
 Record:
-- Obviously correct: classic missing get/put; both alloc sites covered
-  (only two `kref_init` of `rds_mr` in `net/rds/`).
-- `__rds_rdma_map` already uses `kref_put` on `out:`; ODP error path is
-  converted to the same destructor.
-- Regression risk is low. `sock_put` from the send tasklet is already
-  done in `rds_message_purge()` for `rm->m_rs`. `rds_sock_destruct()` is
-  only a `WARN_ON` on an empty list.
-- No API or data-structure layout change beyond a comment.
+- Category: protocol/crypto correctness (logic), not UAF/leak/race.
+- Mechanism: cipher is per-connection (`conn->cipher_type`, set in
+  `decode_encrypt_ctxt()` at NEGOTIATE). Session encryption/decryption
+  keys are session-wide (`sess->smb3encryptionkey` /
+  `smb3decryptionkey`) and are **not** regenerated on bind
+  (`generate_encryptionkey` is skipped when
+  `SMB2_SESSION_REQ_FLAG_BINDING` is set, local lines 1545–1546).
+  `ksmbd_crypt_message()` then selects GCM vs CCM and 128 vs 256 from
+  **this connection’s** `cipher_type` while using those shared session
+  keys. Accepting a mismatched cipher therefore attaches a channel that
+  will encrypt/decrypt with the wrong AEAD (and possibly the wrong key
+  length) for the session keys.
+- The `break` after the first channel is intentional: one existing
+  channel is enough because all channels of a session are supposed to
+  share one cipher.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-Step 3.1: BLAME THE CHANGED LINES
+**Step 2.4: Fix quality**
 Record:
-- `mr->r_sock = rs` and `rds_destroy_mr()` using that pointer:
-  `eff5f53bef75` (“RDS: RDMA support”), 2009-02-26. Present in 5.10.
-- `__rds_put_mr_final` / `kref_init`: `e228a5d05e9ee` (2020-04-09), in
-  this tree.
-- ODP alloc in `rds_cmsg_rdma_args`: `2eafa1746f178` (2020-01-18), in
-  this tree.
+- Obviously correct: same lock and `xa_for_each` pattern as
+  `free_channel_list()` / `ksmbd_sessions_deregister()`. Lock order
+  matches existing `smb2_sess_setup` (`ksmbd_conn_lock` then
+  `chann_lock`).
+- Minimal: 15 lines, no API/struct change.
+- Regression risk: low. Well-behaved clients already use one cipher for
+  all channels; the new path only rejects invalid binds. `chann->conn`
+  is set when the channel is allocated (`chann->conn = conn` in
+  `ntlm_authenticate`) and the channel is erased under `chann_lock`
+  before free.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No `Fixes:` on the git commit. Mailing-list tag `eff5f53bef75`
-**is** an ancestor of HEAD (`git merge-base --is-ancestor` exit 0).
-Merged mainline SHA `9079adef042c` is **not** an ancestor of this tree
-(exit 1). No later sock-hold-on-MR commit exists in this tree.
+---
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: Blame**
 Record:
-- `91a44b406bc1f` (“net: rds: fix MR cleanup on copy error”) is already
-  here; it only stops double-free of pages/sg on `put_user` failure. It
-  does not hold the socket.
-- `2fabef4f65b46` (“Fix MR reference counting problem”) is about
-  `rds_free_mr()` bypassing kref, not socket lifetime.
-- This patch is standalone vs those.
+- Binding path originates in `f5a544e3bab7` (“ksmbd: add support for
+  SMB3 multichannel”, 2021); it is an ancestor of this HEAD.
+- Dialect check: `af7c39d971e43c` (2022); also an ancestor.
+- Cipher field: `connection.h` `cipher_type` present in this tree.
+- Missing cipher compare has been true for as long as ksmbd had SMB
+  3.1.1 encryption + multichannel, including all of 6.12.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Håkon Bugge has multiple RDS commits in this history. Allison
-Henderson is the RDS maintainer and ported the UEK fix. The original
-crash was seen in Oracle production.
+**Step 3.2: Fixes: tag**
+Record: none. No `Fixes:` follow-up required.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Submitted as **v4 2/4**. Siblings:
-1. `d100966325f7` — don’t `unpin_user_pages_dirty_lock()` from atomic
-   context
-3. message leak in `rds_send_xmit()` drop path
-4. unpin MR pages with `unpin_user_pages_dirty_lock()`
-Those are separate bugs. This diff only needs `sock_hold`/`sock_put`,
-`kref_put`, and `__rds_put_mr_final`, all present here. **Can apply
-standalone.**
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 3.3: File history**
 Record:
-- `b4 dig -c 9079adef042c`: v4 2/4,
-  https://patch.msgid.link/20260730041629.3512480-3-achender@kernel.org
-- Revisions: v1 (2026-07-10), v2, v3 (ODP hold after successful
-  `get_mr`), v4 (hold next to `kref_init`, error path via
-  `__rds_put_mr_final`) — applied version is v4.
-- Cover letter: explicit UAF of the RDS socket through long-lived MR
-  refs; UEK port https://github.com/oracle/linux-uek/commit/94549e4732d8
-- No NAK found on this patch. Jakub applied the series to net-next on
-  2026-08-04 (`9079adef042c`).
-- v4 changelog: ODP ref moved next to `kref_init` so both alloc sites
-  share one ownership rule.
+- Local recent `smb2pdu.c` work is other ksmbd validation/UAF fixes;
+  none already implement this cipher compare (`git log -S 'cipher_type
+  != chann'` on this file is empty here).
+- On `origin/master`, the only commit with this compare is
+  `7019a11f79dc4` itself (no later rework).
+- Neighbor bind_negative work (`f49bca41c12f9`, `3e67423336f08`,
+  `1f12738b0ed7b`, `1c5daa2ea924be`) is **not** in this tree and is
+  about signing of rejected responses / user mismatch, not a
+  prerequisite for this hunk.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): netdev, linux-rdma, Paolo Abeni, Eric Dumazet,
-Jakub Kicinski, Simon Horman, John Hubbard, Leon Romanovsky. Applied by
-the net maintainer. No NAK located.
+**Step 3.4: Author**
+Record: Namjae Jeon is the ksmbd maintainer. Many of his protocol-
+validation commits are already in this 6.12 tree.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla link. Evidence is the UEK oops in the commit
-message, matching this tree’s call chain (`rds_ib_tasklet_fn_send` →
-`rds_ib_send_cqe_handler` → `rds_message_put` → `rds_message_purge` →
-`__rds_put_mr_final`).
+**Step 3.5: Dependencies**
+Record: Standalone. Needs `sess->chann_lock`, `sess->ksmbd_chann_list`,
+`struct channel { ... *conn }`, `conn->cipher_type`, `SMB311_PROT_ID` —
+all present locally. Not labeled `patch X/Y`. `4b706360ffb7e` (channel
+limit) is not required.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: 4 independent RDS bug-fix ports. This one does not need 1/3/4.
+---
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: **UNVERIFIED** — `lore.kernel.org/stable` fetch returned 403. No
-local evidence this was rejected for 5.10.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 4.1: Original discussion**
+Record: `b4 dig -c 7019a11f79dc4` (and `-C`) failed: lore.kernel.org
+returned an error. WebFetch of lore URLs returned 403. Mailing-list
+review text is **UNVERIFIED**.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `__rds_put_mr_final`, `__rds_rdma_map`, `rds_cmsg_rdma_args`
-(plus `rds_destroy_mr` as callee).
+**Step 4.2: Recipients**
+Record: Could not run `b4 dig -w` successfully. Commit has only the
+maintainer’s SOB (author = committer).
 
-Step 5.2: TRACE CALLERS
+**Step 4.3: Bug report / spec / test**
+Record (verified):
+- Samba smbtorture `test_session_bind_negative_smb3encGtoCs`
+  (source4/torture/smb2/session.c): SMB 3.1.1, encryption required,
+  channel 1 AES-128-GCM, bind channel AES-128-CCM, same ClientGUID,
+  expects `NT_STATUS_INVALID_PARAMETER`.
+- Microsoft Open Specifications blog “SMB 3.1.1 Encryption in Windows
+  10”: “Session binding (multichannel) requires that all channels bound
+  to a given session negotiate the same encryption cipher as the master
+  session’s connection” and that all channels share the same encryption
+  keys.
+- MS-SMB2 3.3.5.5 (SESSION_SETUP) documents dialect/GUID/signed/state
+  checks that ksmbd already performs; the published HTML for that
+  section does **not** spell out a CipherId compare (the Windows/Samba
+  behavior and the blog do).
+
+**Step 4.4: Series**
+Record: Cluster of July 2026 `bind_negative_*` ksmbd fixes on
+`origin/master`. This commit is self-contained; it does not depend on
+the signing-response patches.
+
+**Step 4.5: Stable list**
+Record: lore.kernel.org/stable search not reachable (403).
+**UNVERIFIED** whether it was previously discussed for stable.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: Functions**
+Record: `smb2_sess_setup()` only.
+
+**Step 5.2: Callers**
+Record: `fs/smb/server/smb2ops.c` command table `[SMB2_SESSION_SETUP_HE]
+= { .proc = smb2_sess_setup }`. Invoked for every SMB2 SESSION_SETUP on
+the ksmbd server. Network-reachable.
+
+**Step 5.3: Callees**
+Record: `down_read`/`up_read`, `xa_for_each` on
+`sess->ksmbd_chann_list`. Existing error path `goto out_err`.
+
+**Step 5.4: Reachability**
+Record: Yes, from a remote SMB client if `CONFIG_SMB_SERVER` and
+`KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL` are enabled. Trigger: SMB 3.1.1
+session, then a second connection that negotiates a different cipher and
+sends a signed binding SESSION_SETUP. Unprivileged in the sense of “any
+client that can authenticate to ksmbd”; not a local syscall UAF.
+
+**Step 5.5: Similar patterns**
+Record: Dialect mismatch already rejected in the same function. Samba
+has a second test `bind_negative_smb3encGtoCd` (different GUID); this
+tree already rejects GUID mismatch via `memcmp(conn->ClientGUID,
+sess->ClientGUID)`.
+
+---
+
+## PHASE 6: CROSS-REFERENCE AGAINST THIS TREE
+
+**Step 6.1: Buggy code present?**
+Record: Yes. Local `smb2_sess_setup()` at `fs/smb/server/smb2pdu.c`
+~1743–1757 does dialect/GUID checks and has **no** cipher compare.
+`7019a11f79dc4` is not an ancestor of HEAD.
+
+**Step 6.2: Backport difficulty**
+Record: **Clean apply** (`git apply --check` exit 0). Line-number offset
+only vs mainline.
+
+**Step 6.3: Related fixes already here?**
+Record: No `bind_negative` ksmbd commits in this tree. No other cipher-
+on-bind check.
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1**
+Record: `fs/smb/server` (ksmbd). Criticality: **IMPORTANT** — in-kernel
+SMB3 server, remote attack surface, not core mm/VFS, not staging.
+
+**Step 7.2**
+Record: Actively maintained; this 6.12 tree already carries many ksmbd
+validation backports (`reject repeated SMB2 NEGOTIATE`, DACL bounds,
+etc.).
+
+---
+
+## PHASE 8: IMPACT AND RISK
+
+**Step 8.1: Who is affected**
+Record: Users of ksmbd with SMB3 multichannel enabled. Not universal.
+
+**Step 8.2: Trigger**
+Record: Uncommon for production Windows/Samba clients (they keep one
+cipher). Fully reachable from a custom or test client. Requires an
+existing authenticated session plus a signed bind (not an
+unauthenticated bypass).
+
+**Step 8.3: Failure mode**
+Record: Today the invalid bind **succeeds**. Later encrypt/decrypt on
+that channel uses the new connection’s AEAD with session keys derived
+for the original cipher → AEAD failure / broken encrypted I/O, not a
+demonstrated kernel oops. Spec/Windows require rejection with
+`STATUS_INVALID_PARAMETER`. Severity: **MEDIUM** (protocol/crypto
+invariant), not a panic/UAF.
+
+**Step 8.4: Risk–benefit**
 Record:
-- `__rds_put_mr_final`: `kref_put` from `rds_rdma_drop_keys`,
-  `rds_free_mr`, `rds_rdma_unuse`, `rds_rdma_free_op` (ODP),
-  `rds_message_purge` (`op_rdma_mr` / atomic MR), and `__rds_rdma_map`
-  `out:`.
-- `__rds_rdma_map`: `rds_get_mr`, `rds_get_mr_for_dest`,
-  `rds_cmsg_rdma_map` (sendmsg cmsg). Userspace RDMA registration.
-- `rds_cmsg_rdma_args`: `rds_sendmsg` path for `RDS_CMSG_RDMA_ARGS`.
+- Benefit: enforces a documented SMB 3.1.1 encryption invariant on a
+  network server; matches Windows/Samba; tiny.
+- Risk: very low — 15 lines, existing locks, rejects only illegal binds.
+- Ratio: favorable for this tree because the code exists, the patch
+  applies cleanly, and ksmbd crypto protocol holes are worth closing
+  even when the trigger is rare.
 
-Step 5.3: TRACE CALLEES
-Record: `rds_destroy_mr` → `spin_lock_irqsave(&rs->rs_rdma_lock)` (the
-UAF); `free_mr()`; `sock_hold`/`sock_put`.
+---
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace maps an MR or sends RDMA, then closes the socket while
-a send is in flight. Completions run in `rds_ib_tasklet_fn_send`
-(softirq). Reachable from AF_RDS sockets with `CONFIG_RDS` +
-`CONFIG_RDS_RDMA` (InfiniBand). Typical Oracle RAC / IB RDS workload.
+## PHASE 9: SYNTHESIS
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Only two `kref_init` sites for `struct rds_mr`. Both patched.
-`rds_cmsg_rdma_dest` only `kref_get`s an existing tree MR.
+**Step 9.1: Evidence**
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+FOR:
+- Real missing check: dialect is validated, cipher is not.
+- Session keys are shared; cipher is per-connection; mismatch is a
+  crypto/protocol bug, not cosmetic.
+- Samba negative test and Microsoft encryption blog require same cipher
+  on all bound channels.
+- 15 lines, maintainer-authored, applies cleanly to 6.12.111.
+- All data structures and the insertion site exist here; bug is old
+  (multichannel + 3.1.1 encryption).
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes.**
-- Tree: `pending-5.10`, `5.10.270` (`p-5.10-1-gce56b7a73b64b`)
-- `net/rds/rdma.c`: `mr->r_sock = rs` with no `sock_hold` (lines 243–246
-  and 735–738)
-- `__rds_put_mr_final` has no `sock_put` (115–121)
-- `rds_release()` still does `rds_rdma_drop_keys()` then `sock_put(sk)`
-  (`af_rds.c`)
-- Introduced 2009; ODP path 2020. Both in 5.10.
+AGAINST:
+- No crash, UAF, deadlock, or known CVE.
+- Production clients typically never send this.
+- No `Reviewed-by`; lore discussion could not be fetched.
+- Adjacent bind_negative signing patches are not in this tree (not
+  required for this hunk).
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Minor context only.** Mainline uses `kzalloc_obj` /
-`kzalloc_objs`; this tree uses `kzalloc` / `kcalloc`. The hold/put lines
-sit on identical `kref_init` / `mr->r_sock` / ODP `get_mr` error code.
-Local ODP error uses `ret = IS_ERR(...)` then overwrites with
-`-EOPNOTSUPP`; the patch uses `PTR_ERR` then the same overwrite.
-Semantic apply is straightforward.
+UNRESOLVED:
+- Original mailing-list review / any NAK (lore unreachable).
+- Whether MS-SMB2 3.3.5.5 normative text currently names CipherId (blog
+  + Samba/Windows behavior still require the check).
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No socket-hold-on-MR fix. `91a44b406bc1f` is a different MR
-cleanup bug.
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — small, same locking as
+   existing channel walks; covered by smbtorture
+   `bind_negative_smb3encGtoCs`.
+2. Real bug affecting users? **PASS** — ksmbd accepts a bind the
+   protocol forbids; encrypted traffic on that channel is then
+   inconsistent.
+3. Important (crash/security/corruption/deadlock)? **PASS** (lower end)
+   — encryption-cipher invariant on a remote SMB server, not a panic.
+   Important enough given ksmbd’s role and the size of the fix.
+4. Small and contained? **PASS** — +15 lines, one function.
+5. No new features/APIs? **PASS**.
+6. Applies to this tree? **PASS** — clean apply; buggy code present.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 9.3: Exception category**
+Record: none (not a device ID/quirk/DT/build/docs exception). Qualifies
+as a normal small protocol/crypto bugfix.
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **net/rds** — IMPORTANT, not core. RDS over IB is production for
-Oracle RAC and similar clusters. UAF is still a kernel oops for those
-users.
+**Step 9.4: Decision**
+Backport to this 6.12 tree. The missing check is in this code, the fix
+is surgical, and rejecting mismatched SMB 3.1.1 ciphers on bind is the
+correct, low-risk behavior for stable ksmbd.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature (2009). Occasional stable fixes in this tree
-(`91a44b406bc1f` in 2026). Not a new subsystem.
+---
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Why this matters for 6.12 stable users
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **config/driver-specific:** `CONFIG_RDS` + RDMA
-(`CONFIG_RDS_RDMA`). Not all 5.10 boxes, but all RDS/IB RDMA users who
-close a socket with in-flight MRs.
+ksmbd already refuses a bind when the **dialect** does not match. It
+still allows a second SMB 3.1.1 channel to join the same session with a
+**different** negotiated cipher (e.g. AES-128-CCM vs AES-128-GCM).
+Encryption keys are session-scoped and not rebuilt on bind; each
+connection then picks GCM/CCM and key length from its own `cipher_type`.
+That is a protocol and crypto consistency bug on a network-facing
+server. The patch only adds the missing compare and returns
+`STATUS_INVALID_PARAMETER`, which is what Windows/Samba tests expect.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Map MR or send RDMA, close socket before CQ completion. Timing-
-dependent but realistic (UEK crash). Needs an RDS socket; typical RDS
-users are cluster services.
+Risk is low: correct clients are unchanged. The hunk applies here
+without prerequisites.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: **Use-after-free → oops on spinlock of freed `rds_sock`.**
-Severity **CRITICAL/HIGH**. Same class as KASAN UAF; crash stack is
-real.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** high for RDS/IB — prevents a known UAF oops.
-- **Risk:** low — ~17 lines, standard `sock_hold`/`sock_put`, both alloc
-  sites, error path unified.
-- **Ratio:** strongly favors backport.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-Step 9.1: COMPILE THE EVIDENCE
-**FOR:**
-- Real UAF with production oops (Oracle UEK).
-- Same call path exists in this 5.10 tree.
-- Bug dates to 2009 RDMA support; ODP path also here.
-- Small, obviously correct refcount fix; v4 review then net-maintainer
-  merge.
-- Standalone vs the rest of the series.
-- `__rds_rdma_map` already drops the MR via `kref_put` on all exits, so
-  the new hold is balanced.
-
-**AGAINST:**
-- RDS/IB is not universal.
-- Patch was 2/4 of a series (siblings are independent).
-- Minor `kzalloc_obj` vs `kzalloc` context when applying.
-
-**UNRESOLVED:**
-- Stable-list discussion (lore 403).
-- No public syzbot repro (crash is still documented).
-
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — hold at `kref_init`, put in
-   finalizer; merged to net-next; UEK precedent.
-2. Fixes a real bug that affects users? **PASS** — production oops.
-3. Important issue? **PASS** — UAF / kernel oops, HIGH/CRITICAL.
-4. Small and contained? **PASS** — 2 files, ~17 lines.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — buggy code present; minor
-   context only.
-
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary memory-
-safety fix.
-
-Step 9.4: MAKE YOUR DECISION
-This 5.10 tree has the bare `r_sock` pointer, the CQ/tasklet free path,
-and no socket hold on MRs. The fix is the missing refcount. It should be
-backported.
-
-===============================================================
-What this solves for stable users
-===============================================================
-Closing an RDS socket while an RDMA MR is still referenced by an in-
-flight send can free `rds_sock` before `__rds_put_mr_final` →
-`rds_destroy_mr` takes `rs->rs_rdma_lock`. That is an oops. Holding the
-socket until the last MR kref drops keeps the lock valid;
-`rds_rdma_drop_keys()` in `rds_release()` still breaks the tree↔socket
-cycle.
-
-Risk vs benefit: high benefit for RDS/IB, low regression risk.
-`sock_put` from this tasklet is already used for `rm->m_rs`. Backport
-may need trivial context adjustment (`kzalloc` vs `kzalloc_obj`); no
-missing helpers or types.
-
-Verification:
-- [Phase 1] Tags: Link msgid `20260730041629.3512480-3`; SOB Bugge /
-  Henderson / Kicinski; no Fixes in git; ML had `Fixes: eff5f53bef75`
-- [Phase 2] Diff: `sock_put` in `__rds_put_mr_final`; `sock_hold` in
-  `__rds_rdma_map` and ODP alloc; ODP error `kfree` → `kref_put` after
-  NULL-out of `ERR_PTR`
-- [Phase 2] Local `__rds_rdma_map` `out:` already `kref_put`s if `mr`
-  non-NULL (`rdma.c` 348–351)
-- [Phase 3] `git blame`: `r_sock` / `rds_destroy_mr` from `eff5f53bef75`
-  (2009); kref from `e228a5d05e9ee` (2020)
-- [Phase 3] `git merge-base --is-ancestor eff5f53bef75c0 HEAD` → 0;
-  `2eafa1746f178` → 0; `9079adef042c` → 1 (not in this tree)
-- [Phase 3] `git describe HEAD` / `make kernelversion`: pending-5.10,
-  5.10.270
-- [Phase 3] Only two `kref_init(&...r_kref)` sites in `net/rds/`
-- [Phase 4] `b4 dig -c 9079adef042c`: v4 2/4; recipients
-  netdev/rdma/Kicinski/Dumazet/Abeni/Horman
-- [Phase 4] `b4 dig -a`: v1→v4; v4 unifies ODP error path
-- [Phase 4] Cover letter: UEK UAF port; applied as `9079adef042c`
-- [Phase 4] UNVERIFIED: stable@ thread (403)
-- [Phase 5] Call chain confirmed: `rds_ib_tasklet_fn_send` →
-  `rds_ib_send_cqe_handler` → `rds_message_put` → `rds_message_purge` →
-  `__rds_put_mr_final`
-- [Phase 5] `rds_release` calls `rds_rdma_drop_keys` then `sock_put`
-  (`af_rds.c` 78, 89)
-- [Phase 6] Local `rdma.c` has no `sock_hold`/`sock_put`; comment still
-  says “back pointer”
-- [Phase 8] Failure mode: UAF oops on `rs_rdma_lock`, HIGH/CRITICAL
-- UNVERIFIED: whether an unprivileged process can open AF_RDS on a given
-  distro; crash still confirmed for RDS/IB users
+### Verification
+- [Phase 1] Parsed message/tags: maintainer SOB only; no
+  Fixes/Cc/Reported-by.
+- [Phase 2] Diff: +15 lines in `smb2_sess_setup()` binding branch;
+  `-EINVAL` already maps to `STATUS_INVALID_PARAMETER`.
+- [Phase 2] Confirmed bind skips `generate_encryptionkey` (local
+  1545–1546); `ksmbd_crypt_message()` uses `conn->cipher_type` (auth.c
+  1135–1155).
+- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.12.111. `git
+  merge-base --is-ancestor 7019a11f79dc4 HEAD` → not in tree.
+- [Phase 3] `f5a544e3bab7` and `af7c39d971e43c` are ancestors; dialect
+  check present, cipher check absent (local ~1754–1757).
+- [Phase 3] `git apply --check` of `7019a11f79dc4` → clean.
+- [Phase 3] No later origin/master rework of this compare; related
+  bind_negative signing commits are not ancestors and are not required.
+- [Phase 4] `b4 dig` lore error; lore WebFetch 403. Samba test and MS
+  encryption blog fetched successfully.
+- [Phase 5] Caller: `smb2ops.c` SESSION_SETUP proc. Channel
+  lock/list/`cipher_type` exist in this tree.
+- [Phase 6] Insertion site matches; no local substitute fix.
+- [Phase 8] Failure mode: invalid encrypted channel accepted; AEAD
+  mismatch on subsequent I/O. Severity MEDIUM, regression risk very low.
+- UNVERIFIED: lore review thread, stable@ discussion, explicit CipherId
+  sentence in current MS-SMB2 3.3.5.5 HTML.
 
 **YES**
 
- net/rds/rdma.c | 14 +++++++++++++-
- net/rds/rds.h  |  5 ++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/rds/rdma.c b/net/rds/rdma.c
-index 37695056756be..062c12d9318e9 100644
---- a/net/rds/rdma.c
-+++ b/net/rds/rdma.c
-@@ -117,6 +117,7 @@ void __rds_put_mr_final(struct kref *kref)
- 	struct rds_mr *mr = container_of(kref, struct rds_mr, r_kref);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index ccefd325e52e3..d64753124dd9a 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1747,6 +1747,21 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 			goto out_err;
+ 		}
  
- 	rds_destroy_mr(mr);
-+	sock_put(rds_rs_to_sk(mr->r_sock));
- 	kfree(mr);
- }
- 
-@@ -243,7 +244,11 @@ static int __rds_rdma_map(struct rds_sock *rs, struct rds_get_mr_args *args,
- 	kref_init(&mr->r_kref);
- 	RB_CLEAR_NODE(&mr->r_rb_node);
- 	mr->r_trans = rs->rs_transport;
-+	/* The MR can outlive its socket: a socket reference is held
-+	 * until the final kref is dropped in __rds_put_mr_final().
-+	 */
- 	mr->r_sock = rs;
-+	sock_hold(rds_rs_to_sk(rs));
- 
- 	if (args->flags & RDS_RDMA_USE_ONCE)
- 		mr->r_use_once = 1;
-@@ -762,7 +767,12 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
- 			RB_CLEAR_NODE(&local_odp_mr->r_rb_node);
- 			kref_init(&local_odp_mr->r_kref);
- 			local_odp_mr->r_trans = rs->rs_transport;
-+			/* The MR can outlive its socket: a socket
-+			 * reference is held until the final kref is
-+			 * dropped in __rds_put_mr_final().
-+			 */
- 			local_odp_mr->r_sock = rs;
-+			sock_hold(rds_rs_to_sk(rs));
- 			local_odp_mr->r_trans_private =
- 				rs->rs_transport->get_mr(
- 					NULL, 0, rs, &local_odp_mr->r_key, NULL,
-@@ -771,7 +781,9 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
- 				ret = PTR_ERR(local_odp_mr->r_trans_private);
- 				rdsdebug("get_mr ret %d %p\"", ret,
- 					 local_odp_mr->r_trans_private);
--				kfree(local_odp_mr);
-+				local_odp_mr->r_trans_private = NULL;
-+				kref_put(&local_odp_mr->r_kref,
-+					 __rds_put_mr_final);
- 				ret = -EOPNOTSUPP;
- 				goto out_pages;
- 			}
-diff --git a/net/rds/rds.h b/net/rds/rds.h
-index a4816da162930..dcbc4610735d5 100644
---- a/net/rds/rds.h
-+++ b/net/rds/rds.h
-@@ -299,7 +299,10 @@ struct rds_mr {
- 	unsigned int		r_invalidate:1;
- 	unsigned int		r_write:1;
- 
--	struct rds_sock		*r_sock; /* back pointer to the socket that owns us */
-+	struct rds_sock		*r_sock; /* socket that owns us; counted
-+					  * reference, dropped by
-+					  * __rds_put_mr_final()
-+					  */
- 	struct rds_transport	*r_trans;
- 	void			*r_trans_private;
- };
++		if (conn->dialect == SMB311_PROT_ID) {
++			struct channel *chann;
++			unsigned long index;
++
++			down_read(&sess->chann_lock);
++			xa_for_each(&sess->ksmbd_chann_list, index, chann) {
++				if (conn->cipher_type != chann->conn->cipher_type)
++					rc = -EINVAL;
++				break;
++			}
++			up_read(&sess->chann_lock);
++			if (rc)
++				goto out_err;
++		}
++
+ 		if (!(req->hdr.Flags & SMB2_FLAGS_SIGNED)) {
+ 			rc = -EINVAL;
+ 			goto out_err;
 -- 
 2.53.0
 
