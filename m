@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946C55B91F8;
-	Mon, 19 Oct 2026 14:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06CC5B9219;
+	Mon, 19 Oct 2026 14:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418450; cv=none; b=ILWnPi4edNdW0lFTkuzVh7vZMlSMSARe/jICQMzTCeUpz0iVMye+1ZFKc99EM6phswDYncUj1a1D9FQlQ+euQMDvy0ixu4BQzpocSCRbeyYALvtKMd2f9Bm/PhZlR0gViDSrcOrY7JLLCvWhseIwZsPSx4SrW9p9hYuvHGcsX9w=
+	t=1792418453; cv=none; b=kC8uzZ6U4PbaiffPlq42wxDly1fNCHGr2qV+EXuwTqXP+XaBtPxadmOnEMLU2INVXxlPo6kvx3rD+B6zaTiismP4MeWyjhT60cjpE26d7fOZewZn+9AFeT83RTbByOvVuaZxd6TFhK0PrZDaq+iiED+F8I9Xz/uN5B+Zfasla+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418450; c=relaxed/simple;
-	bh=nnfIhw/ClOLIzlQMnJWBoueQ/yCK19dDoH+Vrn6+1VM=;
+	s=arc-20240116; t=1792418453; c=relaxed/simple;
+	bh=OOaK2xDcPKnLHz+w9XRDz6Fv9RbM/JNuJJ8P2ww92z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NbgYtlzHh3rejBEPsgITh7KHTLFAxtTSg+I1GXXy+Vh7PUNtCalddAagZMqZNcyeV8Jkqp+9C+0brchpUYVPDo2Ru0wgl4IMYW0gCeWnBoNxRzsbCxAvAcvN2NS+2E8KISmglu6PL9izXtZfi6ruK0xxYAoUqmYwiCyGm99CxcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j4z6c/Bh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=V/+GnvaMUnpZVqbSYhS/0LHb1HiahCWMHl3JH0+Rodsk2uXCAOpW0gMY0Y8nKFb9Qr5l3iTrHz/sJnOZ66NOb4VKs87lnW38XskR6SkpFnZWSg1Zvelm+MYVPoW5Bng0MNJyftR8QLS4qKFX818OLAfmPwTNzTysUiii2OPyyHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QKJqrFKx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j4z6c/Bh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971651F000C6;
-	Mon, 19 Oct 2026 14:00:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QKJqrFKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8941F000C4;
+	Mon, 19 Oct 2026 14:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418448;
-	bh=4I6ZgoMsk5iPjJsNFRyZkStNIjgABZQ+EeZACWA0tqE=;
+	s=k20260515; t=1792418449;
+	bh=6TS/Q3pKeENFeHIQnE0m6TxBiMaSVd3lpAbnvj2BRtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j4z6c/BhRg0ThGhpfBAKbSvi6BNJ03iknUhtIizl63Fja1kMtzle1nroGuwFM0coA
-	 WIC/4nJvaocgsFcUg6Ox2IOJmpX/6AcH/BAPODF07M7J9dV0fxryGeLoe38BmVv20I
-	 n564nUGvh3Fv6lnlzkEQ7yxmA+HZJoq0f9SXIUm9bOr0UZ4aEQ8ni4/yaPhdH4qAnn
-	 jLFV2gjYqjxJNGDh00mGFWh0pM6E1Z3aXTp+TpKrnDHenMoGXvFagndgBKm6Nu8dBY
-	 l1bLW4fb64KjhDACauQSFyHqGcIXd+jmREz/ej0F+lUKFWj2iRkVRdmbMGS91Z5WTU
-	 zgI47XXIhsaKA==
+	b=QKJqrFKxJ07QdubIgwCCW/GWE5/G9E2Ezrjiiv/5/MuSh3p0cLsfVD985mLI7aoqh
+	 6Btlj4abgNMnk7dVFFitQXzwRkPW4dgLgjGMdJqrwLM6Irrw7EDLFQyIYu13m/7I9g
+	 qeyt27RZTLGobXaGY8eMWK72XlRsrOzv7s5qJu08AlM912ss9/vC2nfFyUmSnm3W9N
+	 ACgRk/49q2w0t9nxbOV6lyUENxpziyRGsV44C1+0p82tmQz7cIA6Xe6iml2lXjgNmD
+	 TW0aUIInkozPxYMLMALCR3IMiUVPWaUPNctmF2yoCqX4hqB4Vgg7sxtMLImLpdCiuI
+	 iAs22YEZZMSaA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Changcheng <chenchangcheng@kylinos.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= <nfraprado@collabora.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: cx88: fix memory leak in cx8802_register_driver() error path
-Date: Mon, 19 Oct 2026 09:49:07 -0400
-Message-ID: <20261019135441.1420968-256-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: hda: Force resume if acomp notified during system suspend
+Date: Mon, 19 Oct 2026 09:49:08 -0400
+Message-ID: <20261019135441.1420968-257-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -47,432 +48,465 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit e228b8b1a5b47a72b265671dc6d864c0da5528d0 ]
+[ Upstream commit c0933934d5d96fc641e8d0025f9099e554a7b47a ]
 
-In cx8802_register_driver(), when drv->probe(driver) fails (non-zero),
-the allocated cx8802_driver struct is freed neither in the else branch
-nor later in cx8802_unregister_driver() (which only frees entries that
-were added to dev->drvlist on success). Each failed probe leaks the
-driver struct.
+Currently if an HDMI cable is connected while the system is suspended,
+the HDMI audio jack status stays off after resume.
 
-Add kfree(driver) in the else branch to fix the leak.
+This is due to the jack state not being synced by the HDA HDMI codec
+device's runtime resume, as that never happens if the device was runtime
+suspended before the system suspended, or by the acomp notification
+triggered from the DRM side if that happens before the HDA HDMI codec
+device has resumed.
 
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+To fix this, if snd_hda_hdmi_acomp_pin_eld_notify() gets called before
+the HDA HDMI codec device has resumed, mark it to be forcefully runtime
+resumed at the next PM complete time.
+
+Do this using a separate acomp_requested_resume flag that can be
+temporarily set without overwriting forced_resume for drivers that
+always want to force resume.
+
+Assisted-by: Copilot:claude-sonnet-4.6
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://patch.msgid.link/20260626-hda-force-resume-eld-notify-v1-1-a92cb01393e0@collabora.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line leak fix in a long-standing cx88 error path. Local
-tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The buggy code has
-been in this lineage since 2006, and the patch is self-contained.
+The local tree is **6.18.y** (`v6.18.53`). The candidate is a small HDMI
+jack-sync fix for AMD/Nvidia HDA; the buggy skip-during-suspend path is
+present at `v6.18.53` and the patch applies there cleanly.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[media/cx88] [fix] [free leaked `cx8802_driver` when
-`drv->probe()` fails in `cx8802_register_driver()`]**
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[ALSA: hda]` `[Force]` Force a runtime resume if the DRM audio
+component (acomp) notifies HDMI pin/ELD state during system suspend.
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Signed-off-by:** Chen Changcheng `<chenchangcheng@kylinos.cn>`
+- `Assisted-by: Copilot:claude-sonnet-4.6` (authoring aid; not a quality
+  verdict)
+- `Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>`
   (author)
-- **Signed-off-by:** Hans Verkuil `<hverkuil+cisco@kernel.org>` (media
-  maintainer; applied the patch)
-- **No Fixes:** tag (expected for this review pipeline)
-- **No Cc: stable@vger.kernel.org** (expected; not a negative signal)
-- **No Reported-by / Tested-by / Reviewed-by / Acked-by / Link**
-- Ignore any pipeline “Upstream commit” / Sasha Levin SOB (none on this
-  commit object itself)
+- `Link: https://patch.msgid.link/20260626-hda-force-resume-eld-
+  notify-v1-1-a92cb01393e0@collabora.com`
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer applied
+  it)
+- Pipeline-added tags ignored: `[Upstream commit ...]`, `Signed-off-by:
+  Sasha Levin`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` (absence expected)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** In `cx8802_register_driver()`, `kzalloc`/`kzalloc_obj` of a
-  `cx8802_driver` is not freed when `drv->probe(driver)` returns non-
-  zero. `cx8802_unregister_driver()` only `kfree`s entries that were
-  `list_add_tail`’d onto `dev->drvlist` after a successful probe.
-- **Symptom:** Each failed probe leaks one `cx8802_driver` object until
-  reboot (or forever across module reload).
-- **Version info:** none in the message. History shows the
-  allocation+else-without-free pattern dates to 2006.
-- **Root cause (author):** failed probes never join `drvlist`, so
-  unregister cannot reclaim them; the else branch must `kfree(driver)`.
+- **Bug:** Plug an HDMI cable while the system is suspended; after
+  resume the HDMI audio jack stays off.
+- **Symptom:** Userspace sees HDMI audio disconnected until a later
+  unplug/replug or some other codec resume.
+- **Root cause:** Two missed sync paths: (1) HDA HDMI runtime resume
+  never runs if the codec was already runtime-suspended before system
+  suspend (direct-complete); (2) DRM `pin_eld_notify` during that window
+  is dropped because `power_state.event == PM_EVENT_SUSPEND`.
+- **Fix:** Remember the notify and force `pm_request_resume()` in
+  `hda_codec_pm_complete()`. Use a dedicated flag so `forced_resume` is
+  not overwritten for codecs that keep it set (Intel KAE / Realtek).
+- **Version info:** None in the message. Author date is 2026-06-26
+  (after 6.18).
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: **Not hidden.** Subject and body say “fix memory leak”. The diff
-is exactly that: add `kfree(driver)` on the probe-failure path.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. It is an explicit functional fix for stale HDMI jack
+state after suspend.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- **File:** `drivers/media/pci/cx88/cx88-mpeg.c` — **+1 / -0**
-- **Function:** `cx8802_register_driver()`
-- **Scope:** single-file, single-line, surgical error-path fix
+- `include/sound/hda_codec.h`: +1 (`acomp_requested_resume` bitfield)
+- `sound/hda/codecs/hdmi/hdmi.c`: +3/-1 in
+  `snd_hda_hdmi_acomp_pin_eld_notify()`
+- `sound/hda/common/codec.c`: +4/-1 in `hda_codec_pm_complete()`
+- Scope: 8 insertions, 2 deletions; single-purpose surgical change
+  across HDMI notifier + codec PM
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record: Before (verified at `e228b8b1a5b47^`):
-
-```
-err = drv->probe(driver);
-if (err == 0) {
-    i++;
-    list_add_tail(&driver->drvlist, &dev->drvlist);
-} else {
-    pr_err("cx8802 probe failed, err = %d\n", err);
-}
-```
-
-After: same, plus `kfree(driver)` in the else branch. Only the **probe-
-failure path** changes. Success path, ENOMEM `goto out`, and unregister
-of successful entries are unchanged.
-
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **[Error path / resource leak]** Mechanism: per-device snapshot
-of `struct cx8802_driver` is allocated, probe fails, pointer is dropped.
-Unregister walks `dev->drvlist` only, so the object is unreachable. Fix:
-free it immediately on failure. This is **adding a put/free (leak
-fix)**, not removing one.
-
-Step 2.4: ASSESS THE FIX QUALITY
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Obviously correct:** allocation is `kzalloc_obj(*drv)` (historically
-  `kzalloc(sizeof(*drv), GFP_KERNEL)`); matching `kfree(driver)` on the
-  only path that neither lists it nor returns it.
-- **Minimal:** one statement; no unrelated edits.
-- **Regression risk: very low.** Probe callbacks (`cx8802_dvb_probe`,
-  `cx8802_blackbird_probe`) return errors without stashing `drv` on a
-  list. `kfree` under `core->lock` is safe. No API/locking/refcount
-  changes.
-- **No red flags.**
+- **hdmi.c:** Previously, acomp notify during system suspend returned
+  immediately (comment: “state will be updated at resume”). After: same
+  early return, but sets `codec->acomp_requested_resume = 1`.
+- **codec.c `hda_codec_pm_complete()`:** Previously requested runtime
+  resume only for jackpoll, `hda_codec_need_resume()`, or
+  `forced_resume`. After: also if `acomp_requested_resume`, then clear
+  the flag.
+- Path: system-sleep complete of an already runtime-suspended HDMI
+  codec, after DRM notified during HDA’s `PM_EVENT_SUSPEND` window.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **Logic / correctness (missed jack sync after suspend/resume).**
+- HDMI acomp codecs set `relaxed_resume` when the DRM notifier is bound
+  (`generic_acomp_notifier_set()`), so `hda_codec_need_resume()` is
+  false.
+- Direct-complete (`hda_codec_pm_prepare`/`complete`, Kai-Heng Feng
+  2020) keeps a runtime-suspended codec suspended through S3.
+- Notify is dropped; resume never runs `snd_hda_hdmi_generic_resume()` →
+  `hdmi_present_sense()` / `sync_eld_via_acomp()`.
+- Jack kcontrol stays off.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct and minimal. Runtime resume already jacks-
+syncs all pins (`hda_call_codec_resume()` → `ops->resume` →
+`hdmi_present_sense` per pin, plus `snd_hda_jack_report_sync()`), so a
+boolean “something changed” is enough. Separate flag avoids clobbering
+`forced_resume`. Regression risk is low: extra `pm_request_resume()`
+only when DRM notified during the suspend window; at worst a short extra
+wake before runtime suspend. Does not change userspace APIs. Intel’s
+`intel_pin_eld_notify()` still skips without this flag (same class of
+bug, different notifier); that gap does not make this AMD/Nvidia-path
+fix incorrect.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Loop, alloc, memcpy, probe, else-`pr_err` introduced by
-  **`6c5be74c86f102`** (“V4L/DVB (4676): Dynamic cx88 mpeg port
-  management…”, Steven Toth, **2006-12-10**).
-- `pr_err` conversion: `65bc2fe86e6670` (2016).
-- Alloc API later became `kzalloc_obj` via **`69050f8d6d075`** (Kees
-  Cook, 2026) then **`bf4afc53b77ae`**.
-- The **missing free is original**, not a recent regression. Present
-  since ~v2.6.20-era, so it exists in every current stable series.
+- Skip-during-suspend introduced in `ade49db337a9d` (“ALSA: hda/hdmi -
+  Allow audio component for AMD/ATI and Nvidia HDMI”, Takashi Iwai,
+  2018; contained in v5.4-rc1).
+- `hda_codec_pm_complete()` forced-resume conditions from
+  `215a22ed31a13` (direct-complete, 2020) and `forced_resume` from
+  `a6e7d0a4bdb02` (2020).
+- Buggy combination (drop notify + stay runtime-suspended because of
+  `relaxed_resume`) has been in the tree for years, including 6.18.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: **No Fixes: tag.** Introducer is `6c5be74c86f102`, confirmed by
-blame of the alloc/`probe`/else block. `git merge-base --is-ancestor
-e228b8b1a5b47 HEAD` → **IS_ANCESTOR** (commit is in this checkout). No
-intermediate “same leak” fixes on this file besides this one.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Not applicable. Introducer of the skip is
+`ade49db337a9d`; it is in this tree.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Recent `cx88-mpeg.c` commits are PCI_DEVICE macros, kmalloc_obj
-conversion, IRQ status clear, dma_ API switch — not prerequisites of
-this `kfree`. Older related leak: **`96df988bb9359`** “[media] cx88: Fix
-possible leak in `cx8802_probe()`” (different function: PCI probe of the
-mpeg manager, not this subdriver register path). **Standalone; not part
-of a series.**
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Recent HDMI/codec PM work is unrelated (Lisuan IDs, `__force`
+cleanup, power-pm error check). No series (`v1-1` standalone). No
+follow-up on these three files that extends this flag.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Chen Changcheng has **only this commit** under
-`drivers/media/pci/cx88/`. Applied by **Hans Verkuil**, linux-media
-maintainer. Subsystem listed as **“Odd fixes”** in MAINTAINERS (`CX88
-VIDEO4LINUX DRIVER`, Mauro Chehab).
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Only this HDA commit from Nícolas Prado in this tree. ALSA
+maintainer Takashi Iwai applied it. Author is a regular kernel
+contributor (Collabora), not the HDA maintainer; maintainer SOB is the
+stronger signal.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: **None.** The hunk only needs the existing `else {
-pr_err("cx8802 probe failed..."); }` block. Allocation style (`kzalloc`
-vs `kzalloc_obj`) is **outside** the hunk, so the one-line add applies
-on older trees. **Can apply standalone.**
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Uses existing `forced_resume` / `hda_codec_pm_complete()` /
+`snd_hda_hdmi_acomp_pin_eld_notify()`. All present at `v6.18.53`.
+Standalone. File layout `sound/hda/codecs/hdmi/hdmi.c` exists in 6.18
+(`6014e9021b28e` reorg is already in this tree).
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- **`b4 dig -c e228b8b1a5b47…`:** https://patch.msgid.link/2026072402521
-  8.32318-1-chenchangcheng@kylinos.cn
-- **`b4 dig -a`:** **v1 only** (2026-07-24). Applied 2026-07-28. No
-  v2/v3.
-- **`b4 dig -m`:** thread is **the patch itself only** — no replies,
-  NAKs, or reviewer `Cc: stable` in the saved mbox.
-- Lore HTML via WebFetch: **403 Forbidden** (could not read the web UI).
-  Content recovered from the mbox; it matches the committed message and
-  diff.
+- `b4 dig -c c0933934d5d96…` → https://patch.msgid.link/20260626-hda-
+  force-resume-eld-notify-v1-1-a92cb01393e0@collabora.com
+- `b4 dig -a`: **v1 only**, no later revisions.
+- Thread (mbox): submission + Takashi Iwai “Applied to for-next branch
+  now. Thanks.” No NAKs, no requested changes, no reviewer `Cc: stable`.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To **mchehab@kernel.org**, **kees@kernel.org**; Cc
-**linux-media**, **linux-kernel**. Appropriate lists. No on-list
-Reviewed-by; **Hans Verkuil committed it** (implicit maintainer
-acceptance). Kees was CC’d (likely due to recent allocator work); no
-recorded reply.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): To Jaroslav Kysela, Takashi Iwai; Cc `linux-
+sound`, `linux-kernel`, Collabora. Maintainer applied v1 as-is.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: **No Reported-by / Link / syzbot / bugzilla.** Bug is from
-**code inspection**, not a user crash report. Still a real leak (see
-Phase 5/8).
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No `Reported-by` / bugzilla / syzbot. Description is a concrete
+user-visible HDMI jack failure. Severity from the author: HDMI audio
+jack stays off after a plug-during-S3. User count unverified beyond the
+author.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone `[PATCH]`, not `n/m`. No sibling cx88 leak patches in
-file history besides the old `cx8802_probe()` leak.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone v1. Intel `intel_pin_eld_notify()` still has the old
+skip; no sibling Intel patch in this tree.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: WebFetch of
-`https://lore.kernel.org/stable/?q=cx8802_register_driver` returned
-**403**. **UNVERIFIED** whether stable@ already discussed this. Not used
-to drive the verdict.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned 403; web search did not
+find a stable-list thread for this subject. UNVERIFIED whether anyone
+already nominated or rejected it for stable. That absence is not used as
+a NO.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: **`cx8802_register_driver()`** only. (semcode MCP not available;
-used hunk headers + grep.)
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `snd_hda_hdmi_acomp_pin_eld_notify()`,
+`hda_codec_pm_complete()`. Struct field
+`hda_codec.acomp_requested_resume`.
 
-Step 5.2: TRACE CALLERS
+**Step 5.2: TRACE CALLERS**
 Record:
-- `cx88-dvb.c` `dvb_init()` →
-  `cx8802_register_driver(&cx8802_dvb_driver)` (`module_init`)
-- `cx88-blackbird.c` `blackbird_init()` →
-  `cx8802_register_driver(&cx8802_blackbird_driver)` (`module_init`)
-- Autoload from PCI probe: `cx8802_probe()` → `request_modules()` →
-  `request_module("cx88-dvb")` / `"cx88-blackbird"` when `board.mpeg`
-  has the corresponding bit.
+- `snd_hda_hdmi_acomp_pin_eld_notify` is the `.pin_eld_notify` op for
+  AMD (`atihdmi.c`) and Nvidia (`nvhdmi.c`). DRM calls it via
+  `amdgpu_dm_audio_eld_notify()`, `radeon_audio`, `nouveau dispnv50`.
+  Typical context: display modeset / connector ELD change (hotplug or
+  resume modeset), not a syscall on the ALSA side.
+- `hda_codec_pm_complete` is `.complete` in `hda_codec_driver_pm`
+  (system sleep complete for every HDA codec).
+- Intel uses a separate `intel_pin_eld_notify()` and is **not** covered.
 
-Context: **module init / device probe**, not IRQ/hot path.
+**Step 5.3: TRACE CALLEES**
+Record: Notify still returns during suspend (no verbs). Complete path
+calls existing `pm_request_resume()`. Runtime resume →
+`hda_call_codec_resume()` → HDMI `snd_hda_hdmi_generic_resume()` →
+`hdmi_present_sense()` (`sync_eld_via_acomp` when acomp is bound).
 
-Step 5.3: TRACE CALLEES
-Record: `cx8802_check_driver()`, `kzalloc_obj`, `memcpy`,
-`mutex_lock(&drv->core->lock)`, **`drv->probe(driver)`**,
-`list_add_tail` on success, `pr_err` + (now) `kfree` on failure.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Reachable without privilege: physical HDMI/DP plug while the
+machine is suspended, then resume. Common laptop/dock path. Not a
+fuzzer/syscall crash path.
 
-Probe implementations:
-- `cx8802_dvb_probe`: **returns `-ENODEV` immediately** if
-  `!(core->board.mpeg & CX88_MPEG_DVB)`; also fails on
-  `vp3054_i2c_probe`, `cx8802_alloc_frontends`, `vb2_queue_init`,
-  `dvb_register`.
-- `cx8802_blackbird_probe`: same **`-ENODEV` if not BLACKBIRD**; also
-  `cx2341x_handler_init` / `vb2_queue_init`.
-
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace/module load of `cx88-dvb` or `cx88-blackbird` (or udev
-via `cx8802_probe`) → register walks **`cx8802_devlist` (every MPEG
-function-2 device)** → alloc + probe. **Reachable from normal driver
-load, not an obscure config.** Type-mismatch `-ENODEV` is a **designed,
-common** failure: register does not filter by `type_id` first.
-
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Unregister already `kfree(d)` after successful `remove`. Success
-path is balanced; **only the failure path was missing the free.** No
-duplicate of this bug in sibling functions beyond the historical
-`cx8802_probe()` leak that was already fixed.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same skip remains in `sound/hda/codecs/hdmi/intelhdmi.c`
+`intel_pin_eld_notify()`. Same `forced_resume` pattern already used for
+jack/KAE. This patch copies that idea for acomp.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes, in this lineage.** Pre-fix source at `e228b8b1a5b47^`
-still has the else branch **without** `kfree`. HEAD already contains the
-fix (`e228b8b1a5b47` is an ancestor). Bug introduced **2006**
-(`6c5be74c86f102`), long before 7.3. The `pr_err` else block and leak
-exist on all current LTS kernels.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** `git describe HEAD` / `make kernelversion` →
+**6.18.53**. At `v6.18.53`:
+- `snd_hda_hdmi_acomp_pin_eld_notify()` still returns on
+  `PM_EVENT_SUSPEND` with no flag.
+- `hda_codec_pm_complete()` has no `acomp_requested_resume`.
+- `hda_codec` has `forced_resume` but not the new bit.
+Bug introduced ~2018/2020; present in 6.18. Upstream SHA `c0933934d5d96`
+is **not** an ancestor of `v6.18.53`.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply / trivial.** Context line `pr_err("cx8802 probe
-failed, err = %d\n", err);` has been stable since 2016. Adjacent
-`kzalloc_obj` vs older `kzalloc(sizeof(*drv), GFP_KERNEL)` is **not in
-this hunk**.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply.** `git diff v6.18.53 6a484c2d8404d` on the three
+files is exactly this patch. Context lines match.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: This exact `kfree` **is** already in HEAD. That is the candidate
-commit, not a different prior fix. No competing rewrite of the error
-path. (`96df988bb9359` is a different leak.)
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No other 6.18 fix for “acomp notify during suspend” / this jack-
+stays-off sequence. Intel skip is still unfixed; not a substitute.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **`drivers/media/pci/cx88`** — Conexant CX2388x analog/DVB TV
-capture. **PERIPHERAL** (specific PCI TV cards). Maintainer status:
-**Odd fixes**. Still in-tree and used on remaining hardware.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: ALSA HD-audio HDMI (AMD/Nvidia acomp). **IMPORTANT** (common
+dGPU/APU HDMI audio), not core mm/vfs. Affects AMD/Nvidia HDMI jack
+kcontrols/PCM availability after S3.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Low churn; mostly treewide/API conversions plus occasional
-bugfixes. **Mature.** A 20-year leak in a quiet driver is still a leak
-for those cards.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Active (quirks, HDMI, PM). The skip itself has been stable since
+2018; this is a late correctness fix, not churn for new infrastructure.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific / config-specific:** `CONFIG_VIDEO_CX88` plus
-`VIDEO_CX88_DVB` and/or `VIDEO_CX88_BLACKBIRD`. Not universal. Distros
-that ship these modules (common in desktop kernels) can hit it on CX88
-MPEG hardware.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver-specific: AMD ATI HDMI (`atihdmi`) and Nvidia HDMI
+(`nvhdmi`) with DRM audio-component binding. Intel HDMI notifier is
+unchanged.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: HDMI/DP cable (or dock) attached while the system is in S3, then
+resume, **and** the HDMI codec was runtime-suspended before suspend
+(normal with `relaxed_resume`). Unprivileged physical hotplug; not a
+syscall exploit. Timing: DRM notify before HDA `complete()`.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: HDMI audio jack stays reported off; HDMI PCM/jack userspace does
+not see the display. No oops, deadlock, or filesystem corruption.
+**MEDIUM** functional suspend/resume bug (audio device missing until
+another resume/replug).
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Primary realistic trigger:** subdriver init probes **every**
-  `cx8802_dev`. A DVB-only card + `cx88-blackbird` load (or mixed cards
-  in one machine) takes the `-ENODEV` path **every boot / every module
-  load**.
-- **Also:** genuine probe errors (`vb2_queue_init`, frontend alloc,
-  etc.).
-- **Module reload** leaks again (unregister never sees the object).
-- Unprivileged users cannot typically trigger it unless they can load
-  modules; **not a UAF/security primitive**, a leak.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: **Memory leak of one `struct cx8802_driver` (~pointers + enums,
-small) per failed probe.** Not a panic/UAF. **Severity: MEDIUM**
-(init/error path, small object, can repeat on reload / multi-device
-mismatch). Still a real, permanent leak of kernel memory for affected
-users.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** stops a real leak on a path that is not purely
-  theoretical (type-mismatch `-ENODEV` is intentional). Helps CX88 users
-  and anyone who reloads these modules.
-- **Risk:** **very low** (1 line, `kfree` of an unlisted object,
-  maintainer-applied).
-- **Ratio:** strongly favors backport.
+- **Benefit:** High for AMD/Nvidia HDMI users who dock/plug during
+  suspend (common). Jack state is restored via the existing resume path.
+- **Risk:** Very low (8 lines, existing PM helper, 1-bit flag still
+  inside the same `unsigned int` bitfield group of 26 bits). Possible
+  extra runtime resume if DRM notifies on every GPU resume while HDA is
+  still `PM_EVENT_SUSPEND`; that is transient power, not a functional
+  break.
+- **Ratio:** Benefit outweighs risk for 6.18.y.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR backporting:**
-- Real leak: alloc without free when probe fails; unregister cannot
-  recover it (verified in both functions).
-- Failure path includes **common `-ENODEV` type mismatch**, not only
-  rare ENOMEM.
-- One-line, obviously correct `kfree`; maintainer (Hans Verkuil) applied
-  it.
-- Bug present since 2006 — all stable trees that have cx88 have the bug.
-- Applies cleanly; no new API, no locking change, no series dependency.
-- Matches the stable “error-path leak / missing kfree” pattern.
+FOR:
+- Real user-visible bug: HDMI audio jack stays off after plug-during-
+  suspend.
+- Mechanism verified in 6.18 code: skip notify + `relaxed_resume` +
+  direct-complete.
+- Tiny, obviously correct, maintainer-applied v1 with no NAKs.
+- Applies cleanly to this tree; all helpers exist.
+- Existing resume path already resyncs ELD/jacks; this only ensures that
+  path runs.
+- Same class of PM/jack workaround already used (`forced_resume`).
 
-**AGAINST:**
-- Peripheral old TV capture driver; small object; not a
-  crash/security/data-corruption bug.
-- No user/syzbot report; no Fixes/Cc: stable (expected here).
-- Not a hot-path unbounded leak unless modules are reloaded or many
-  devices mismatch.
+AGAINST:
+- Not a crash, UAF, or security issue.
+- No independent `Reported-by` / `Tested-by`.
+- Intel HDMI notifier still has the skip (incomplete coverage, not a
+  regression of this patch).
+- Possible extra runtime resume after S3 if DRM notifies during the HDA
+  suspend window.
 
-**UNRESOLVED:**
-- Lore web UI and stable@ search returned HTTP 403; on-list review
-  comments beyond the patch email could not be read (mbox had no
-  replies).
+UNRESOLVED:
+- Could not fetch lore.kernel.org/stable (403); no verified stable-list
+  discussion.
+- Could not quantify how often AMD/Nvidia DRM notifies during HDA’s
+  suspend window on every resume vs only on true hotplug.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — code inspection; applied by
-   media maintainer (no extra Tested-by).
-2. Fixes a real bug that affects users? **PASS** — leaked `kzalloc` on
-   failed/mismatched probe.
-3. Important issue? **PASS** (medium: resource leak on driver load; not
-   panic-level, but a genuine leak stable regularly takes).
-4. Small and contained? **PASS** — +1 line, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — same else-branch context; no
-   missing helpers.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — logic matches the resume
+   path; maintainer applied v1. No extra Tested-by, but the change is
+   reviewable from the code.
+2. Fixes a real bug that affects users? **PASS** — stale HDMI jack after
+   a common plug-during-S3.
+3. Important issue? **PASS** — not panic/corruption, but a
+   suspend/resume hardware-functional bug that leaves HDMI audio
+   unavailable; this class is routinely taken in stable.
+4. Small and contained? **PASS** — 8 insertions / 2 deletions, three
+   files, one flag.
+5. No new features or APIs? **PASS** — internal bitfield; no UAPI.
+6. Can apply to the local tree? **PASS** — identical context at
+   `v6.18.53`.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **Not an exception category** (not a device
-ID/quirk/DT/build/doc). It is a normal **error-path leak fix**.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a normal
+small functional PM/jack fix.
 
-Step 9.4: MAKE YOUR DECISION
-The leak is real, old, and fixed with a single obviously-correct
-`kfree`. Risk is negligible. It belongs in this tree’s stable backports:
-CX88 still probes every MPEG device, and failed probes (including
-designed `-ENODEV`) drop the allocation on the floor.
+**Step 9.4: MAKE YOUR DECISION**
+This should be backported to this 6.18.y tree. The buggy skip and
+complete-path exist here, the fix is surgical, and the user impact (HDMI
+audio missing after docking/plugging in suspend) is real.
 
-**What it solves for stable users:** loading `cx88-dvb`/`cx88-blackbird`
-(or mixed CX88 cards) no longer leaks a `cx8802_driver` per failed
-probe, including across module reload.
+### What the commit solves and why it matters here
+On 6.18, AMD/Nvidia HDMI codecs using acomp set `relaxed_resume` and can
+stay runtime-suspended across system sleep. DRM may notify pin/ELD while
+the codec is still `PM_EVENT_SUSPEND`; that notify is dropped, and
+`hda_codec_pm_complete()` does not wake the codec. HDMI jack kcontrols
+stay off after resume. Forcing a one-shot runtime resume when such a
+notify arrived restores the existing ELD/jack sync in
+`hda_call_codec_resume()`.
 
-**Risk vs benefit:** one-line free on an object that is not on any list
-— benefit clearly wins.
+### Stable rules / risk vs benefit
+Meets the stable bar: real bug, small, no new API, clean apply, low
+regression risk. Benefit is restoring HDMI audio after a common suspend
+hotplug; risk is an extra runtime resume in that window.
 
-**Concerns:** none for apply/prereqs. Severity is “leak” not “oops”;
-still within stable practice for missing `kfree` on error paths.
+### Concerns
+Intel HDMI still skips notify during suspend (separate function). No
+`Fixes:`/`Cc: stable` (expected). No third-party test tag. Neither is a
+reason to withhold this AMD/Nvidia-path fix from 6.18.y.
 
 Verification:
-- [Phase 1] Subject/tags: leak fix; SOBs Chen Changcheng + Hans Verkuil;
-  no Fixes/Reported-by/Cc:stable
-- [Phase 1] Body matches the mechanism verified in source
-- [Phase 2] `git show e228b8b1a5b47`: +1 line `kfree(driver)` in else of
-  `cx8802_register_driver()`
-- [Phase 2] `git show e228b8b1a5b47^`: else branch logs error and does
-  not free
-- [Phase 2] `cx8802_unregister_driver()` only `kfree`s `dev->drvlist`
-  entries after successful `remove`
-- [Phase 3] `git describe HEAD` / `make kernelversion`:
-  v7.3-rc4-27-gf0100363d8c37, 7.3.0-rc4
-- [Phase 3] `git merge-base --is-ancestor e228b8b1a5b47 HEAD`:
-  IS_ANCESTOR
-- [Phase 3] `git blame`: leaky alloc/probe/else from `6c5be74c86f102`
-  (2006-12-10)
-- [Phase 3] Author log: only this cx88 commit; file not a series
-- [Phase 4] `b4 dig -c/-a/-w/-m`: lore msgid 20260724025218.32318-1; v1
-  only; To mchehab+kees; mbox has no replies
-- [Phase 4] WebFetch lore.kernel.org: 403 — UNVERIFIED web
-  thread/stable@ discussion
-- [Phase 5] grep callers: only `cx88-dvb.c` and `cx88-blackbird.c`
-  module_init
-- [Phase 5] Read `cx8802_dvb_probe` / `cx8802_blackbird_probe`:
-  `-ENODEV` if MPEG type bit unset
-- [Phase 5] `cx8802_probe` → `request_modules()` autoloads matching
-  subdrivers
-- [Phase 6] Pre-fix function present; hunk independent of `kzalloc_obj`
-  (`69050f8d6d075`)
-- [Phase 7] MAINTAINERS: CX88 VIDEO4LINUX DRIVER, Odd fixes, Mauro
-  Chehab
-- [Phase 8] Failure mode: kernel memory leak, MEDIUM, driver-specific
-- UNVERIFIED: on-list reviewer comments (mbox empty of replies; lore
-  HTTP 403)
-- UNVERIFIED: whether stable@ already queued this elsewhere (not used
-  for the verdict)
+- [Phase 1] Parsed tags: author SOB, Takashi Iwai SOB, msgid Link; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 1] Body: HDMI jack stays off after plug-during-suspend; skipped
+  acomp notify + no runtime resume
+- [Phase 2] Diff: +1 bitfield, set flag in
+  `snd_hda_hdmi_acomp_pin_eld_notify`, test/clear in
+  `hda_codec_pm_complete` (8+/2-)
+- [Phase 2] `hda_codec_need_resume()` is `!relaxed_resume &&
+  jacktbl.used`; acomp sets `relaxed_resume`
+- [Phase 3] blame: skip from `ade49db337a9d` (v5.4-rc1); complete path
+  from `215a22ed31a13` (2020)
+- [Phase 3] `git merge-base --is-ancestor c0933934d5d96 HEAD` → not in
+  v6.18.53; buggy code is
+- [Phase 3] No series/prereqs; files exist at 6.18 paths
+- [Phase 4] `b4 dig -c`: lore msgid; `b4 dig -a`: v1 only; mbox: Takashi
+  “Applied to for-next”; no NAK
+- [Phase 4] `b4 dig -w`: To Iwai/Kysela, Cc linux-sound
+- [Phase 4] UNVERIFIED: stable@ discussion (lore 403)
+- [Phase 5] Callers: atihdmi/nvhdmi ops; DRM amdgpu/radeon/nouveau
+  pin_eld_notify; Intel uses different function
+- [Phase 5] Resume callee chain verified: `hda_codec_runtime_resume` →
+  `hda_call_codec_resume` → HDMI generic_resume → `hdmi_present_sense`
+- [Phase 6] `git describe HEAD` / Makefile: 6.18.53; `git show
+  v6.18.53:...` has pre-fix code; diff vs candidate is this patch only
+- [Phase 7] ALSA HDA HDMI, important, AMD/Nvidia
+- [Phase 8] Trigger: HDMI plug in S3 then resume; failure: jack stays
+  off; severity MEDIUM; risk very low
+- UNVERIFIED: how often DRM notifies on every GPU resume vs only
+  hotplug; Intel still buggy (out of scope of this commit)
 
 **YES**
 
- drivers/media/pci/cx88/cx88-mpeg.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/sound/hda_codec.h    | 1 +
+ sound/hda/codecs/hdmi/hdmi.c | 4 +++-
+ sound/hda/common/codec.c     | 5 ++++-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/cx88/cx88-mpeg.c b/drivers/media/pci/cx88/cx88-mpeg.c
-index 2c1d5137ac470..bc08b35e247e0 100644
---- a/drivers/media/pci/cx88/cx88-mpeg.c
-+++ b/drivers/media/pci/cx88/cx88-mpeg.c
-@@ -640,6 +640,7 @@ int cx8802_register_driver(struct cx8802_driver *drv)
- 			list_add_tail(&driver->drvlist, &dev->drvlist);
- 		} else {
- 			pr_err("cx8802 probe failed, err = %d\n", err);
-+			kfree(driver);
- 		}
- 		mutex_unlock(&drv->core->lock);
- 	}
+diff --git a/include/sound/hda_codec.h b/include/sound/hda_codec.h
+index 3c9e64dc02524..b801943f0667f 100644
+--- a/include/sound/hda_codec.h
++++ b/include/sound/hda_codec.h
+@@ -257,6 +257,7 @@ struct hda_codec {
+ 	unsigned int link_down_at_suspend:1; /* link down at runtime suspend */
+ 	unsigned int relaxed_resume:1;	/* don't resume forcibly for jack */
+ 	unsigned int forced_resume:1; /* forced resume for jack */
++	unsigned int acomp_requested_resume:1; /* resume requested by acomp */
+ 	unsigned int no_stream_clean_at_suspend:1; /* do not clean streams at suspend */
+ 	unsigned int ctl_dev_id:1; /* old control element id build behaviour */
+ 	unsigned int eld_jack_detect:1;	/* Machine jack-detection by ELD */
+diff --git a/sound/hda/codecs/hdmi/hdmi.c b/sound/hda/codecs/hdmi/hdmi.c
+index f427d04176e92..42e4dc0949ec9 100644
+--- a/sound/hda/codecs/hdmi/hdmi.c
++++ b/sound/hda/codecs/hdmi/hdmi.c
+@@ -2236,8 +2236,10 @@ void snd_hda_hdmi_acomp_pin_eld_notify(void *audio_ptr, int port, int dev_id)
+ 	/* skip notification during system suspend (but not in runtime PM);
+ 	 * the state will be updated at resume
+ 	 */
+-	if (codec->core.dev.power.power_state.event == PM_EVENT_SUSPEND)
++	if (codec->core.dev.power.power_state.event == PM_EVENT_SUSPEND) {
++		codec->acomp_requested_resume = 1;
+ 		return;
++	}
+ 
+ 	snd_hda_hdmi_check_presence_and_report(codec, pin_nid, dev_id);
+ }
+diff --git a/sound/hda/common/codec.c b/sound/hda/common/codec.c
+index 164906e2f00f4..8cab932177194 100644
+--- a/sound/hda/common/codec.c
++++ b/sound/hda/common/codec.c
+@@ -2949,8 +2949,11 @@ static void hda_codec_pm_complete(struct device *dev)
+ 		dev->power.power_state = PMSG_RESUME;
+ 
+ 	if (pm_runtime_suspended(dev) && (codec->jackpoll_interval ||
+-	    hda_codec_need_resume(codec) || codec->forced_resume))
++	    hda_codec_need_resume(codec) || codec->forced_resume ||
++	    codec->acomp_requested_resume)) {
++		codec->acomp_requested_resume = 0;
+ 		pm_request_resume(dev);
++	}
+ }
+ 
+ static int hda_codec_pm_suspend(struct device *dev)
 -- 
 2.53.0
 
