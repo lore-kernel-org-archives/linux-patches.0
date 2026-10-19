@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923355A4659;
-	Mon, 19 Oct 2026 13:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8797358B6CE;
+	Mon, 19 Oct 2026 13:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418385; cv=none; b=GNC3Fx3dolh4hkxSJuHyem2syknV/CRZZU5UO0DTzHcL3nOv9F549toUFK11vV/qipDd6Odt3Rh+rAQEcXEjqFs2RIpsZG9/a3Zj5f0ZKuFax9bzioqC+RJU0u2JRFpwzf5RwGbd+LhEkTUzP03+qxUGYSKLqKcEtrtnoUkrJ08=
+	t=1792418386; cv=none; b=NGUl353MognCx2mGUiwszckl3OqY7/V/rYynJhQbD0/ktWsHHzCIVgp7w4R4rwLb1W4ONwYAFz1oqqnAdYP+TL7jLUsZtwEVkm/euIn9k+7XRDAic/0QZohXmRxSCTSfQfWFL924LFHWeoDIG6yS9uvOWSmmC0KaakJFxorrbIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418385; c=relaxed/simple;
-	bh=CXnKF4+ZDrpWbpAZxBrFKka87tvf/mPvxrk92r7+buY=;
+	s=arc-20240116; t=1792418386; c=relaxed/simple;
+	bh=XZPghCTjb1jX+Q7cqp8MHf8/5S+roAFYzazEhZS/viw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cdrlAI4ORqpS1awKda7ZSWO7Ex4ZN+3ekPH0sCpWaeUss28Mi7QhR9SBO4B+ITodMdzCENEr8P0Uh+2sXrLMK6vMdn/dydmjD2V/fcffY9LoAE3NT1Z2yacc5Wt+sPZWvhSpTZWnDC0e464I5Yv5ShaFZOoEImA3lQn83tmlULY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GY2EEfgI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZLn3BBUTvKEoVPSHe2/2zWk29uI5Jv8rSen/nPPB8nr0vyOqoegDkalIe0UXtL8D8YgIMRVqtQxFa+X0s1cVSp0qbikbjBUH1x2X9blBq5QhVxDivPXjXgCYheCHLSIUdENh75NyyajMDHZ0tF+wQ+14Zhk5LAxRsmHevTskm3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZBDC7KCX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GY2EEfgI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724951F000C7;
-	Mon, 19 Oct 2026 13:59:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZBDC7KCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF6C1F000CA;
+	Mon, 19 Oct 2026 13:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418382;
-	bh=U9Vkwbm05lDdxzxOAYs6Jk3Nr9THOJjffnHBcf4GiHE=;
+	s=k20260515; t=1792418383;
+	bh=D1aPOgBERGuCo14oNo+vtfsa1n/bJR50FBv53Np1Kr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GY2EEfgIrn+JQr1y96dyZF9u1Yct5GyqIzR1eAw2qXf8dOszuMl4W8S9mvhEQa3Cu
-	 2tHHre59FvD6BMX5HnX2AmPBb4WUrZx/DnCNuios4+vyi2UJLQ003nHm04wKaWDJ3X
-	 Djf0hEMYwU/x8kBmuNp/vh1zQjmP31bYOoIyA4mpMOD3kjfiKZZPlHBxE/AyqFxMoX
-	 QCANvLXNiJ7FLwgOwnSbTJcj5yAjpE0of8XnfhAeRXgiyWZbBNsQzfSTKKnVHO+EIS
-	 qY2xoprPbblqr4YNx0DSNVIUZcaH8J7n1yFDJvbJ2c9qvOPpwcGorxyBSvudsRQHuW
-	 qer5vka9HhUNw==
+	b=ZBDC7KCX6j3nXvNmoW/nF3EUWlcoopMnzFDY9eDQU4e31bvGb4nWvPwQrali/yyaS
+	 VTfQcGekeFvvXEf8b+XYacwm5yEjpy/xGk0dSqivLjVxfB3xpWGc0y5WMv8r9k+Pwj
+	 jYyY14a2rbeCRQIpEg61fwR2hwxyVn//wSiKfgix/0wBcZX7E+A2EMBKpCy+EGLFQ+
+	 sG7j1H27cMRxrUglCcp8S8mhQNzackUMmLFNdv0xZTVvNZ3ERpQd2ahZCB+GiSEFEg
+	 aWzKdgrJyarbGSeTBrFQsy6ziikn6P/yKYatjWo9K0ttl4nwBnN7LezJOFZ+FV5uf4
+	 IEzx0Kb4MXPaQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Mike Tipton <mike.tipton@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-cifs@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ksmbd: protect private extended attributes
-Date: Mon, 19 Oct 2026 09:48:20 -0400
-Message-ID: <20261019135441.1420968-209-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] pmdomain: qcom: rpmhpd: Skip retention by default
+Date: Mon, 19 Oct 2026 09:48:21 -0400
+Message-ID: <20261019135441.1420968-210-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,23 +54,30 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Mike Tipton <mike.tipton@oss.qualcomm.com>
 
-[ Upstream commit 4ea46ea602fc7055eee4b5b0e84f90f22da7f7e7 ]
+[ Upstream commit 7178817f190496f2bfdec181fb4aa72832448468 ]
 
-SMB clients can currently create an EA named NTACL because SMB EAs are
-mapped into the user namespace while the ksmbd security descriptor is
-stored as security.NTACL. Allowing the reserved logical name makes the
-server-private ACL metadata appear writable through the SMB EA API.
+Retention is very rarely an operational corner. In the majority of
+cases, HW cannot operate properly at Retention levels and so the minimum
+operational level when enabling a rail is the first corner above
+Retention. A small subset of always-on use cases can operate at
+Retention, but those aren't controlled from HLOS.
 
-Reject NTACL, DOSATTRIB, and DosStream-prefixed EA names without regard
-to case. Filter the same private names from EA query results so stale or
-externally-created user namespace attributes cannot be exposed.
+Currently, we allow Retention by default and only disallow it special
+cases. But this leaves us open to various failures when the PD is
+enabled without first being voted to an OPP above Retention. Such as
+when a child GDSC PD requests to enable its parent RPMh PD. In this
+case, the GDSC would get stuck powering on.
 
-This fixes smb2.ea.acl_xattr when acl_xattr_name is configured as
-NTACL.
+Newer chips have started supporting Retention on rails that didn't
+previously (such as for MMCX). Instead of adding more special cases to
+skip Retention on MMCX, start skipping Retention by default since it's
+almost never desired from an HLOS perspective.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Mike Tipton <mike.tipton@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,357 +85,391 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit message forensics
 
-**Step 1.1 — Subject**
-- Record: `[ksmbd] [protect] keep server-private xattr names off the SMB
-  EA API`
+**Step 1.1: Subject line**
+- Record: `[pmdomain/qcom/rpmhpd] [Skip] Skip Retention voltage as the
+  default enable corner`
 
-**Step 1.2 — Tags**
-- Record: `Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>` (ksmbd
-  maintainer; author and committer).
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable`. Absence of `Fixes:`/`Cc: stable` is
-  expected for this review and is not a negative signal.
+**Step 1.2: Tags**
+- Record:
+  - `Signed-off-by: Mike Tipton <mike.tipton@oss.qualcomm.com>` (author,
+    Qualcomm)
+  - `Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>`
+    (Qualcomm SoC reviewer)
+  - `Signed-off-by: Ulf Hansson <ulfh@kernel.org>` (GENERIC PM DOMAINS
+    maintainer)
+  - No `Fixes:` tag (expected)
+  - No `Cc: stable` (expected)
+  - No `Reported-by`, `Tested-by`, `Link`, or syzbot tags
+- Notable: Qualcomm author + Qualcomm reviewer + subsystem maintainer
+  SOB. No user/syzbot report.
 
-**Step 1.3 — Body**
-- Record: SMB EAs are stored as `user.*` xattrs. ksmbd keeps NT ACL
-  metadata in `security.NTACL`. Clients can still create an EA named
-  `NTACL`, so the reserved logical name looks writable over SMB
-  SET_INFO/QUERY_INFO EA. The patch rejects `NTACL`, `DOSATTRIB`, and
-  `DosStream.`-prefixed names case-insensitively on set, and filters the
-  same names from query results so leftover `user.*` copies are not
-  exposed. Failure mode: reserved metadata can be written or listed
-  through the EA API. Symptom: Samba smbtorture `smb2.ea.acl_xattr`
-  fails when `acl_xattr_name=NTACL`. Introduced with original ksmbd EA
-  mapping; not a new 7.x-only bug.
+**Step 1.3: Body**
+- Record:
+  - **Bug:** HLOS enable of an RPMh PD without an OPP above Retention
+    can vote Retention. Most hardware cannot run at Retention.
+  - **Symptom:** Child GDSC enable of a parent RPMh PD leaves the GDSC
+    stuck powering on (hardware hang, not a kernel oops).
+  - **Root cause:** Retention is allowed by default; only MXC opted out
+    via `skip_retention_level`. Newer chips now expose Retention on
+    rails that previously did not (e.g. MMCX).
+  - **Fix approach:** Skip Retention for every rail when building the
+    cmd-db mapping, instead of adding more per-rail flags.
+  - **Version info:** None in the message. “Newer chips” / MMCX is the
+    motivation.
 
-**Step 1.4 — Hidden bug fix?**
-- Record: Yes. “Protect” is a security/integrity fix, not cleanup. SET
-  currently does not reject reserved names. GET already skipped
-  `DosStream.` / `DOSATTRIB` with case-sensitive `strncmp`, but not
-  `NTACL` and not case variants.
+**Step 1.4: Hidden bug fix?**
+- Record: Not hidden. It is a real hardware-failure fix described as a
+  default-policy change. Skipping Retention is the workaround, not a
+  cleanup.
 
 ## Phase 2: Diff analysis
 
-**Step 2.1 — Inventory**
-- Record: `fs/smb/server/smb2pdu.c` only (`+22/-6`). Functions: new
-  `smb2_is_private_ea()`; `smb2_set_ea()`; `smb2_get_ea()`.
-  Classification: single-file surgical fix.
-
-**Step 2.2 — Flow**
+**Step 2.1: Inventory**
 - Record:
-  - SET: after the EA name-length check, reserved names return `-EACCES`
-    instead of `ksmbd_vfs_setxattr`/`remove_xattr` on `user.<name>`.
-  - GET: STREAM and DOSATTRIB `strncmp` skips become one
-    `smb2_is_private_ea()` skip (adds `NTACL`, case-insensitive).
-    Specific-name QUERY still cannot return those names.
+  - File: `drivers/pmdomain/qcom/rpmhpd.c` (+9 / −5)
+  - Functions/data: `struct rpmhpd` (drop `skip_retention_level`), `mxc`
+    / `mxc_ao` initializers, `rpmhpd_update_level_mapping()`
+  - Scope: single-file surgical change
 
-**Step 2.3 — Bug mechanism**
-- Record: Logic/correctness plus a hardware/protocol reserved-name
-  filter (category g/h). Same-namespace collisions: `user.DOSATTRIB`
-  (DOS flags/create time) and `user.DosStream.*` (named streams).
-  `security.NTACL` is a different namespace, so SET of EA `NTACL`
-  creates `user.NTACL` rather than overwriting the SD; the patch still
-  blocks that reserved name and hides any leftover `user.NTACL`.
+**Step 2.2: Code flow**
+- Record:
+  - **Before:** `rpmhpd_update_level_mapping()` copied cmd-db aux levels
+    into `rpmhpd->level[]`. Retention (vlvl 16) was skipped only if
+    `skip_retention_level` was set. That flag was true only on `mxc` /
+    `mxc_ao`. `enable_corner` became the first non-zero mapped corner,
+    which could be Retention.
+  - **`rpmhpd_power_on()`:** `corner = max(pd->corner,
+    pd->enable_corner)` then aggregate. Enable without an OPP uses
+    `enable_corner`.
+  - **After:** Retention is always skipped. `enable_corner` is the first
+    corner above Retention. MXC’s flag is redundant and removed.
+  - Path affected: probe-time mapping, then every power-on that does not
+    already have a higher OPP (including parent enable from a child
+    GDSC).
 
-**Step 2.4 — Fix quality**
-- Record: Obviously correct. `strncasecmp` + exact length for
-  `NTACL`/`DOSATTRIB`, prefix match for streams. `-EACCES` maps to
-  `STATUS_ACCESS_DENIED` in both `smb2_set_info()` and CREATE error
-  mapping, matching smbtorture. Regression risk is low: only reserved
-  Samba/ksmbd names are rejected. Query of a private name still yields
-  `STATUS_NO_EAS_ON_FILE` rather than ACCESS_DENIED; that is pre-
-  existing GET skip behavior, not a new crash path.
+**Step 2.3: Bug mechanism**
+- Record: **Hardware workaround / logic fix.** Retention as min enable
+  corner is not a valid operational vote for HLOS. Child GDSC parent-on
+  uses that corner and the GDSC never completes power-on.
+- Verified path: `gdsc_register()` attaches GDSCs as genpd subdomains of
+  the clock-controller’s `dev->pm_domain` (`drivers/clk/qcom/gdsc.c`).
+  `genpd_power_on()` walks parents and calls `rpmhpd_power_on()` with no
+  performance state. DT has many `power-domains = <&rpmhpd RPMHPD_MMCX>`
+  nodes (sm8450/sm8550/sm8650/sm8750 and others).
+
+**Step 2.4: Fix quality**
+- Record: Obviously correct given the existing skip logic. Minimal. If
+  cmd-db has no Retention entry, the new `if` never matches (no-op on
+  older rails). Regression risk is a slightly higher min vote (Retention
+  16 → typically MIN_SVS 48) on rails that advertised Retention; the
+  author states HLOS must not use Retention. No API/ABI change.
 
 ## Phase 3: Git history
 
-**Step 3.1 — Blame**
-- Record: Unfiltered SET and GET STREAM/DOSATTRIB skips come from
-  `e2f34481b24db` (“cifsd: add server-side procedures for SMB3”,
-  2021-03-16). Present since ksmbd entered the kernel (5.15 era). `git
-  merge-base --is-ancestor e2f34481b24db HEAD` succeeds.
+**Step 3.1: Blame**
+- Record:
+  - Mapping loop: `279b7e8a62cc` (“soc: qcom: rpmhpd: Add RPMh power
+    domain driver”, 2019)
+  - `enable_corner`: `e3e56c050ab6` (“soc: qcom: rpmhpd: Make power_on
+    actually enable the domain”, 2021) — this is what makes Retention
+    reachable as the enable vote
+  - Opt-in skip: `ddab91f4b2de5` (“Skip retention level for Power
+    Domains”, 2024), MXC only, `Cc: stable@vger.kernel.org # v5.17`
+  - This change: `7178817f19049` (2026-07-13)
 
-**Step 3.2 — Fixes tag**
-- Record: None. Buggy behavior is the original EA mapping, not a later
-  regression.
+**Step 3.2: Fixes tag**
+- Record: None. Closest predecessor is `ddab91f4b2de5` (MXC-only skip).
+  Both `ddab91f4b2de5` and `e3e56c050ab6` are ancestors of this HEAD.
 
-**Step 3.3 — File history**
-- Record: Recent 6.12 ksmbd work is unrelated (buffer sizes, leases,
-  durable reconnect). No competing private-EA helper in this tree.
+**Step 3.3: File history**
+- Record: Recent work is mostly new SoC tables. No later revert of
+  default-skip. Eliza MXC/MMCX add was reverted for unrelated reasons
+  (`9fca7779ad185`). Standalone v1 patch, not part of a numbered series.
 
-**Step 3.4 — Author**
-- Record: Namjae Jeon is the ksmbd maintainer. Surrounding 7.3 ksmbd
-  commits are other protocol/security fixes; this commit is standalone
-  (`4ea46ea602fc`).
+**Step 3.4: Author**
+- Record: Mike Tipton (Qualcomm); this is his only recent commit on
+  `drivers/pmdomain/qcom/`. Konrad reviews rpmhpd regularly. Ulf is the
+  pmdomain maintainer.
 
-**Step 3.5 — Dependencies**
-- Record: Needs `SD_PREFIX`, `DOS_ATTRIBUTE_PREFIX`, `STREAM_PREFIX`
-  from `fs/smb/server/xattr.h` (included via `vfs.h` in `smb2pdu.c`).
-  All exist here. `strncasecmp` is in `include/linux/string.h`. Applies
-  standalone.
+**Step 3.5: Dependencies**
+- Record: Needs `enable_corner` + Retention skip `continue` in
+  `rpmhpd_update_level_mapping()`. Both exist here. Applies standalone
+  on a tree that still has `skip_retention_level`. No other patches
+  required.
 
 ## Phase 4: Mailing list / external
 
-**Step 4.1**
-- Record: SHA `4ea46ea602fc7055eee4b5b0e84f90f22da7f7e7` (v7.3-rc1). `b4
-  dig -c 4ea46ea602fc` failed: lore.kernel.org returned errors (Anubis
-  bot challenge). WebFetch to lore also 403. UNVERIFIED: original thread
-  text, NAKs, reviewer Cc:stable.
+**Step 4.1: Original discussion**
+- Record: `b4 dig -c 7178817f19049` →
+  https://patch.msgid.link/20260629-rpmhpd-skip-
+  ret-v1-1-d94180ad9a29@oss.qualcomm.com
+- Series: **v1 only** (no v2/v3).
+- Thread (mbox): Ulf Hansson: “Applied for next, thanks!” No NAKs, no
+  stable nomination, no reviewer risk flags.
 
-**Step 4.2**
-- Record: UNVERIFIED recipients. Commit is authored and committed by the
-  subsystem maintainer; Linus merged it in `ksmbd-for-7.3-rc1`
-  (`61a09cfc12147`), described as smbtorture-validated protocol fixes
-  and security hardening.
+**Step 4.2: Recipients (`b4 dig -w`)**
+- Record: Ulf Hansson, linux-arm-msm, linux-pm, linux-kernel, Bjorn
+  Andersson, Konrad Dybcio, Taniya Das (author of the MXC skip), Fenglin
+  Wu. Right lists and people.
 
-**Step 4.3**
-- Record: Samba `source4/torture/smb2/ea.c` `torture_smb2_acl_xattr`
-  (`smb2.ea.acl_xattr`) requires `acl_xattr_name`, checks the name is
-  not listed, and expects SET to fail with `NT_STATUS_ACCESS_DENIED`.
-  Confirmed from samba-team/samba master.
+**Step 4.3: Bug report**
+- Record: No public user/syzbot/bugzilla report. Failure mode is
+  described by the Qualcomm author from platform bring-up.
 
-**Step 4.4**
-- Record: Standalone. No later revert or follow-up on
-  `smb2_is_private_ea` through v7.3-rc1 (`git grep` still shows the
-  helper at three sites).
+**Step 4.4: Related series**
+- Record: Standalone. Extends `ddab91f4b2de5` rather than depending on a
+  multi-patch series.
 
-**Step 4.5**
-- Record: UNVERIFIED on lore.kernel.org/stable (lore blocked). No in-
-  tree revert.
+**Step 4.5: Stable list**
+- Record: lore.kernel.org/stable fetch returned 403. UNVERIFIED whether
+  stable@ discussed this subject. The 2024 MXC skip *was* Cc:stable.
 
-## Phase 5: Code semantics
+## Phase 5: Semantic / call graph
 
-**Step 5.1**
-- Record: `smb2_is_private_ea`, `smb2_set_ea`, `smb2_get_ea`.
+**Step 5.1: Functions**
+- Record: `rpmhpd_update_level_mapping()` (changed), `rpmhpd_power_on()`
+  / `rpmhpd_set_performance_state()` (consumers of `enable_corner`,
+  unchanged).
 
-**Step 5.2**
-- Record: `smb2_set_ea` callers: CREATE EA context (`smb2_open` path
-  ~3322) and `FILE_FULL_EA_INFORMATION` in `smb2_set_info_file` (~6644).
-  `smb2_get_ea` caller: `smb2_get_info_file` (~5493). Reachable from
-  SMB2 CREATE / SET_INFO / QUERY_INFO.
+**Step 5.2: Callers**
+- Record: `rpmhpd_update_level_mapping()` ← `rpmhpd_probe()` only.
+  `rpmhpd_power_on()` is `generic_pm_domain.power_on`, called from genpd
+  (including parent-on for child GDSCs). Probe + device/runtime PM, not
+  a syscall-only path.
 
-**Step 5.3**
-- Record: SET uses `ksmbd_vfs_setxattr` / `ksmbd_vfs_remove_xattr` after
-  prefixing `XATTR_USER_PREFIX`. GET uses `ksmbd_vfs_listxattr` /
-  `ksmbd_vfs_getxattr`. Internal DOS/stream/SD writers
-  (`ksmbd_vfs_set_dos_attrib_xattr`, stream helpers,
-  `ksmbd_vfs_set_sd_xattr`) do not go through `smb2_set_ea`, so server-
-  internal writes remain allowed.
+**Step 5.3: Callees**
+- Record: `cmd_db_read_aux_data()`, then later
+  `rpmhpd_aggregate_corner()` → `rpmhpd_send_corner()` (RPMh votes).
 
-**Step 5.4**
-- Record: Yes, from userspace: authenticated SMB client with
-  `FILE_WRITE_EA` / `FILE_READ_EA`. Those rights are normally part of
-  generic write/read.
+**Step 5.4: Reachability**
+- Record: Yes, from normal Qualcomm device probe. Clock-controller GDSCs
+  are subdomains of rpmhpd (often MMCX). Userspace does not need a
+  special trigger; enabling display/video/camera clocks is enough.
 
-**Step 5.5**
-- Record: GET already special-cased STREAM and DOSATTRIB; SET did not.
-  Same reserved names as Samba (`user.DOSATTRIB`, `user.DosStream.*`,
-  `security.NTACL`).
+**Step 5.5: Similar patterns**
+- Record: Only MXC used `skip_retention_level`. MMCX/`mmcx_w_cx_parent`
+  did not. That matches “instead of adding more special cases for MMCX.”
 
-## Phase 6: This tree (6.12.111)
+## Phase 6: This tree only
 
-**Step 6.1**
-- Record: Local tree is `pending-6.12`, `git describe`
-  `p-6.12-3-gc504cf0baa3d8`, `make kernelversion` **6.12.111**.
-  Candidate is **not** an ancestor of HEAD. Buggy SET/GET code is
-  present (`smb2_set_ea` at 2392, `smb2_get_ea` at 4758).
-  `smb2_is_private_ea` is absent.
+**Step 6.1: Does the buggy code exist here?**
+- Record:
+  - Local tree: **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`,
+    Makefile `VERSION=7 PATCHLEVEL=3`).
+  - `drivers/pmdomain/qcom/rpmhpd.c` is present. Pre-commit code had
+    `skip_retention_level` only on MXC.
+  - `7178817f19049` is already an ancestor of HEAD (in v7.3-rc1; **not**
+    in v7.2). Current file already skips Retention unconditionally.
+  - Bug class (Retention as `enable_corner`) dates to `e3e56c050ab6`
+    (2021) whenever cmd-db lists Retention; MMCX Retention on newer
+    chips is why this default change was made. That hardware **is**
+    represented in this 7.3 tree.
 
-**Step 6.2**
-- Record: `git apply --check` of `4ea46ea602fc` succeeded (hunks at
-  2379, 2436, 4852; offsets only). Clean apply.
+**Step 6.2: Backport difficulty**
+- Record: Against current HEAD the patch is already applied (forward
+  apply would fail). Against 7.3 immediately before this commit it is a
+  clean apply (same file layout, `skip_retention_level` present). No
+  extra backport rework for this tree’s rpmhpd.c.
 
-**Step 6.3**
-- Record: No alternate fix. GET still uses case-sensitive
-  STREAM/DOSATTRIB skips and does not filter NTACL.
+**Step 6.3: Related fixes already here**
+- Record: MXC-only skip (`ddab91f4b2de5`) is here; it does **not** cover
+  MMCX/CX/etc. `2a93c6cbd5a70` (enabled_corner aggregation) is a
+  different bug (peer off during sync_state). No substitute for this
+  commit.
 
-## Phase 7: Subsystem
+## Phase 7: Subsystem context
 
 **Step 7.1**
-- Record: `fs/smb/server` (ksmbd). Criticality: IMPORTANT — network file
-  server, optional (`CONFIG_SMB_SERVER` default n), but a common stable
-  attack/integrity surface.
+- Record: `drivers/pmdomain/qcom/` — Qualcomm RPMh power domains.
+  **IMPORTANT** (not core mm/fs, but used on a large set of Snapdragon
+  phones, laptops, and embedded boards). Maintainer: Ulf Hansson
+  (`GENERIC PM DOMAINS`).
 
 **Step 7.2**
-- Record: Actively maintained. This bug is old (original EA code), not a
-  7.3-only feature.
+- Record: Active (new SoC tables: Nord, Hawi, Eliza, Kaanapali, Glymur,
+  etc.). The Retention default is independent of those tables.
 
 ## Phase 8: Impact and risk
 
-**Step 8.1**
-- Record: ksmbd users only (NAS, appliances, distro ksmbd). Not
-  universal.
+**Step 8.1: Who is affected**
+- Record: Qualcomm rpmhpd platforms (`CONFIG_QCOM_RPMHPD`), especially
+  SoCs whose cmd-db advertises Retention on MMCX or other non-MXC rails.
+  Not universal; not staging.
 
-**Step 8.2**
-- Record: Trigger: SMB2 SET_INFO FULL_EA or CREATE with EA context using
-  reserved names. Common for any client that can write EAs. Unprivileged
-  local processes cannot hit it unless they are SMB clients; an
-  authenticated SMB user can.
+**Step 8.2: Trigger**
+- Record: Common: child GDSC on, parent rpmhpd has no OPP. Happens at
+  probe/runtime PM. Unprivileged userspace can cause it indirectly by
+  using multimedia devices; it also happens at boot when those
+  controllers probe.
 
-**Step 8.3**
-- Record: Failure mode: overwrite `user.DOSATTRIB` (hidden/system/create
-  time) and `user.DosStream.*` (stream data); expose or plant
-  `user.NTACL`. Severity: **HIGH** (metadata/stream integrity and
-  reserved-name ACL confusion). Not a kernel oops. Default ksmbd ACL
-  store is `security.NTACL`, so SET EA `NTACL` does not overwrite the
-  SD; DOSATTRIB/streams are the real same-namespace collisions.
+**Step 8.3: Failure mode**
+- Record: GDSC stuck powering on → device/controller hang, probe
+  failure, missing display/video/camera (or boot issues if that path is
+  on the critical path). Severity: **HIGH** (hardware hang), not a
+  KASAN/UAF class crash.
 
-**Step 8.4**
-- Record: Benefit high for ksmbd hosts. Risk very low (~20-line filter,
-  no locking/API change). Ratio favors backport.
+**Step 8.4: Risk-benefit**
+- Record:
+  - **Benefit:** Prevents GDSC/parent-rail hangs on Qualcomm platforms
+    in this tree, including MMCX without extending a per-rail flag list.
+  - **Risk:** Low. 14-line change; no-op if Retention is absent from
+    cmd-db; MXC behavior unchanged; Qualcomm + maintainer reviewed.
+  - **Ratio:** Benefit > risk.
 
 ## Phase 9: Synthesis
 
-**Step 9.1 — Evidence**
+**Step 9.1: Evidence**
 
-FOR:
-- Real reserved-name hole on a network server: SET can write
-  `user.DOSATTRIB` and `user.DosStream.*`.
-- GET can leak `user.NTACL` if that xattr exists.
-- Matches Samba’s long-standing hide/reject of those names; smbtorture
-  `smb2.ea.acl_xattr` expects ACCESS_DENIED.
-- Small, maintainer-authored, in v7.3-rc1 with no revert.
-- Applies cleanly to this 6.12 tree; macros and callers exist.
-- `-EACCES` already maps to `STATUS_ACCESS_DENIED`.
+For:
+- Concrete hang: parent RPMh PD at Retention → child GDSC stuck on.
+- Call path and DT consumers verified in this tree.
+- Small, obviously correct extension of an existing skip that was
+  already Cc:stable for MXC.
+- Safe no-op when Retention is not in cmd-db.
+- Reviewed by Konrad, applied by Ulf; Taniya Das (original skip author)
+  was on Cc.
+- This 7.3 tree has rpmhpd, `enable_corner`, `skip_retention_level`, and
+  MMCX users.
 
-AGAINST:
-- Not a crash/UAF.
-- NTACL SD lives in `security.*`, so this is not a direct ACL overwrite
-  on default ksmbd.
-- Commit message is partly a test fix.
-- Lore review UNVERIFIED.
+Against:
+- No `Fixes:` / public reproducer / syzbot (not a negative per rules).
+- Default change for all rails, not only MMCX (mitigated: Retention skip
+  is a no-op where unused).
+- lore.kernel.org/stable search could not be fetched (403).
 
-UNRESOLVED:
-- Original lore thread / reviewer stable nomination (lore blocked).
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — v1 accepted, maintainer
+   applied, Qualcomm review.
+2. Real user-visible bug? **PASS** — GDSC stuck on parent enable.
+3. Important (hang/corruption/security)? **PASS** — hardware hang on a
+   widely used SoC family; HIGH, not a panic.
+4. Small and contained? **PASS** — +9/−5, one file.
+5. No new features/APIs? **PASS** — same skip, defaulted; no userspace
+   API.
+6. Can apply to this tree? **PASS** — 7.3 has the pre-image; the commit
+   is in 7.3-rc1.
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** (applies cleanly; smbtorture
-   named; maintainer).
-2. Real user-visible bug? **PASS** (EA write/list of private metadata).
-3. Important (crash/security/corruption/deadlock)? **PASS** (HIGH:
-   metadata/stream integrity on an SMB server; security-boundary).
-4. Small and contained? **PASS** (+22/-6, one file).
-5. No new features/APIs? **PASS** (reject/filter only).
-6. Applies to this tree? **PASS** (`git apply --check` succeeded).
+**Step 9.3: Exception category**
+- Record: Hardware workaround (skip a non-operational corner), same
+  class as the 2024 MXC Retention skip.
 
-**Step 9.3 — Exceptions**
-- Record: Not a device-ID/quirk/DT/build/docs exception. Qualifies as a
-  normal security/integrity bug fix.
-
-**Step 9.4 — Decision**
-Backport to this 6.12 tree. The important part is not the Samba test
-name; it is that authenticated clients can currently smash DOS attribute
-and named-stream xattrs that ksmbd treats as private.
+**Step 9.4: Decision**
+This tree is 7.3.0-rc4. The rpmhpd driver, the Retention-
+as-`enable_corner` bug, and MMCX parent-GDSC consumers are all here. The
+change is a small, correct hang fix, not a feature. It should be in this
+tree.
 
 ---
 
-### What this solves for 6.12 users
+### What it solves for users of this tree
 
-ksmbd maps SMB EAs to `user.*`. It stores DOS attributes in
-`user.DOSATTRIB` and streams in `user.DosStream.*`. `smb2_set_ea()` does
-not reject those names, so a client with `FILE_WRITE_EA` can overwrite
-that metadata. Query already hid some of those names, but not `NTACL`
-and not case variants. The patch closes SET and GET.
+Without it, enabling a Qualcomm GDSC whose parent RPMh rail (often MMCX)
+has no OPP votes Retention. That rail cannot actually run there, so the
+GDSC never finishes power-on. Display, video, camera, and similar
+controllers that list `power-domains = <&rpmhpd RPMHPD_MMCX>` hit this
+on probe or runtime PM. Skipping Retention when building the cmd-db map
+makes the min enable corner the first real operational level.
 
-### Stable-rules / risk
+### Risk vs benefit
 
-Meets all six criteria. Benefit is integrity of ksmbd private xattrs;
-risk is a tight ACCESS_DENIED on reserved names that Samba has treated
-as private for years.
+Benefit is avoiding a platform hang on common Qualcomm PM paths. Risk is
+low: SoCs without Retention in cmd-db are unchanged; MXC already skipped
+Retention; HLOS is not supposed to use Retention.
+
+### Concerns
+
+No public reproducer. Stable-list discussion unverified (HTTP 403).
+Slightly higher min vote on rails that listed Retention is intended, not
+a silent functional change for rails that never had it.
 
 ### Verification
-- [Phase 1] Parsed message/tags on `4ea46ea602fc`; only author SOB; no
-  Fixes/Link.
-- [Phase 2] Full `git show 4ea46ea602fc` diff: helper + SET `-EACCES` +
-  GET filter.
-- [Phase 2] Confirmed `-EACCES` → `STATUS_ACCESS_DENIED` at
-  `smb2_set_info` err_out (~6761) and CREATE err_out (~3812).
-- [Phase 2] Confirmed `XATTR_NAME_DOS_ATTRIBUTE` = `user.`+`DOSATTRIB`,
-  `XATTR_NAME_STREAM` = `user.`+`DosStream.`, `XATTR_NAME_SD` =
-  `security.`+`NTACL` in `xattr.h`.
-- [Phase 3] `git blame` SET/GET: `e2f34481b24db` (2021); ancestor of
-  HEAD.
-- [Phase 3] `git merge-base --is-ancestor 4ea46ea602fc HEAD` → no (not
-  in 6.12).
-- [Phase 4] `b4 dig -c 4ea46ea602fc` → lore error. UNVERIFIED mailing-
-  list discussion.
-- [Phase 4] Samba `torture_smb2_acl_xattr` expects SET ACCESS_DENIED and
-  no list leak.
-- [Phase 4] Merge `61a09cfc12147` mentions smbtorture protocol fixes /
-  security hardening.
-- [Phase 4] `smb2_is_private_ea` still in v7.3-rc1; no revert.
-- [Phase 5] Callers: CREATE EA context, SET_INFO FULL_EA, QUERY_INFO EA.
-- [Phase 6] `git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`;
-  kernelversion 6.12.111.
-- [Phase 6] `git apply --check` of the commit succeeded with line
-  offsets only.
-- [Phase 8] Same-namespace overwrite of DOSATTRIB/streams verified in
-  `vfs.c` / `smb2_update_xattrs`.
-- UNVERIFIED: lore reviewers, CVE assignment, whether any distro already
-  carries a different backport.
+- [Phase 1] Parsed tags: author/reviewer/maintainer SOBs only; no
+  Fixes/stable/syzbot
+- [Phase 2] Diff: +9/−5 in `rpmhpd.c`; drop `skip_retention_level`;
+  always skip `RPMH_REGULATOR_LEVEL_RETENTION` (16)
+- [Phase 2] `rpmhpd_power_on()` uses `max(pd->corner,
+  pd->enable_corner)` — verified in file
+- [Phase 2] GDSC subdomain attach in `gdsc_register()` — verified
+- [Phase 2] DT MMCX consumers in sm8450/sm8550/sm8650/sm8750 dtsi —
+  verified
+- [Phase 3] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
+  7.3.0-rc4
+- [Phase 3] `git merge-base --is-ancestor 7178817f19049 HEAD`: yes; not
+  in v7.2; in v7.3-rc1
+- [Phase 3] Blame: mapping 279b7e8a62cc (2019); enable_corner
+  e3e56c050ab6 (2021); MXC skip ddab91f4b2de5 (2024)
+- [Phase 3] Pre-image: `skip_retention_level` only on mxc/mxc_ao; mmcx
+  had no flag
+- [Phase 4] `b4 dig -c 7178817f19049`: lore/msgid `20260629-rpmhpd-skip-
+  ret-v1-1-d94180ad9a29@oss.qualcomm.com`
+- [Phase 4] `b4 dig -a`: v1 only; Ulf “Applied for next”; no NAK
+- [Phase 4] `b4 dig -w`: Ulf, Bjorn, Konrad, Taniya Das, linux-arm-msm,
+  linux-pm
+- [Phase 4] UNVERIFIED: lore.kernel.org/stable (403)
+- [Phase 5] `rpmhpd_update_level_mapping()` called only from
+  `rpmhpd_probe`
+- [Phase 6] Post-fix code already in this checkout; related MXC skip
+  present and insufficient
+- [Phase 8] Failure mode: GDSC stuck on — HIGH hang, Qualcomm-specific
 
 **YES**
 
- fs/smb/server/smb2pdu.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ drivers/pmdomain/qcom/rpmhpd.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e73edf006df72..4f8e2a6307602 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2378,6 +2378,22 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
- 	return err;
- }
+diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
+index 4c3cbf3abc750..fc61ec45755c3 100644
+--- a/drivers/pmdomain/qcom/rpmhpd.c
++++ b/drivers/pmdomain/qcom/rpmhpd.c
+@@ -41,7 +41,6 @@
+  * @addr:		Resource address as looped up using resource name from
+  *			cmd-db
+  * @state_synced:	Indicator that sync_state has been invoked for the rpmhpd resource
+- * @skip_retention_level: Indicate that retention level should not be used for the power domain
+  */
+ struct rpmhpd {
+ 	struct device	*dev;
+@@ -58,7 +57,6 @@ struct rpmhpd {
+ 	const char	*res_name;
+ 	u32		addr;
+ 	bool		state_synced;
+-	bool            skip_retention_level;
+ };
  
-+static bool smb2_is_private_ea(const char *name, size_t name_len)
-+{
-+	if (name_len == SD_PREFIX_LEN &&
-+	    !strncasecmp(name, SD_PREFIX, SD_PREFIX_LEN))
-+		return true;
-+	if (name_len == DOS_ATTRIBUTE_PREFIX_LEN &&
-+	    !strncasecmp(name, DOS_ATTRIBUTE_PREFIX,
-+			   DOS_ATTRIBUTE_PREFIX_LEN))
-+		return true;
-+	if (name_len >= STREAM_PREFIX_LEN &&
-+	    !strncasecmp(name, STREAM_PREFIX, STREAM_PREFIX_LEN))
-+		return true;
-+
-+	return false;
-+}
-+
- /**
-  * smb2_set_ea() - handler for setting extended attributes using set
-  *		info command
-@@ -2419,6 +2435,10 @@ static int smb2_set_ea(struct smb2_ea_info *eabuf, unsigned int buf_len,
- 			rc = -EINVAL;
- 			break;
- 		}
-+		if (smb2_is_private_ea(eabuf->name, eabuf->EaNameLength)) {
-+			rc = -EACCES;
-+			break;
-+		}
+ struct rpmhpd_desc {
+@@ -176,7 +174,6 @@ static struct rpmhpd mxc = {
+ 	.pd = { .name = "mxc", },
+ 	.peer = &mxc_ao,
+ 	.res_name = "mxc.lvl",
+-	.skip_retention_level = true,
+ };
  
- 		memcpy(attr_name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN);
- 		memcpy(&attr_name[XATTR_USER_PREFIX_LEN], eabuf->name,
-@@ -4828,17 +4848,13 @@ static int smb2_get_ea(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
+ static struct rpmhpd mxc_ao = {
+@@ -184,7 +181,6 @@ static struct rpmhpd mxc_ao = {
+ 	.active_only = true,
+ 	.peer = &mxc,
+ 	.res_name = "mxc.lvl",
+-	.skip_retention_level = true,
+ };
+ 
+ static struct rpmhpd nsp = {
+@@ -974,7 +970,15 @@ static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
+ 		return -EINVAL;
+ 
+ 	for (i = 0; i < rpmhpd->level_count; i++) {
+-		if (rpmhpd->skip_retention_level && buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
++		/*
++		 * Most HW won't function properly at Retention. The minimum
++		 * operational level is the first level above Retention. The
++		 * small subset of HW that can operate at Retention isn't
++		 * controlled by HLOS. Skip the Retention level to avoid HW
++		 * failures when the PD is enabled without first having an
++		 * explicit OPP level set.
++		 */
++		if (buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
  			continue;
  
--		if (!strncmp(&name[XATTR_USER_PREFIX_LEN], STREAM_PREFIX,
--			     STREAM_PREFIX_LEN))
--			continue;
--
- 		if (req->InputBufferLength &&
- 		    strncmp(&name[XATTR_USER_PREFIX_LEN], ea_req->name,
- 			    ea_req->EaNameLength))
- 			continue;
- 
--		if (!strncmp(&name[XATTR_USER_PREFIX_LEN],
--			     DOS_ATTRIBUTE_PREFIX, DOS_ATTRIBUTE_PREFIX_LEN))
-+		if (smb2_is_private_ea(&name[XATTR_USER_PREFIX_LEN],
-+				       name_len - XATTR_USER_PREFIX_LEN))
- 			continue;
- 
- 		if (!strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
+ 		rpmhpd->level[i] = buf[i];
 -- 
 2.53.0
 
