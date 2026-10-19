@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF87D539763;
-	Mon, 19 Oct 2026 13:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6CC547055;
+	Mon, 19 Oct 2026 13:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418123; cv=none; b=gctkBiqUyk2AgTkrZ2hfVnMSpT6XmoKwXfYfxcved8akziB9CxGIM+ef46dMP2/xwtgwUR3lcSw6g/xiQxm8knaU//2HbvsDeDLYHb8qPS797kXbC22txFlhdfpYNFwi5zwIqSENf6ZzBIlOYNJPFR5kemHVZbgt+gTAn/6THgg=
+	t=1792418123; cv=none; b=Sj8s7N20dzmql6+BZxwi6KpJBsJaDS1uQO7VmeUcC7gNuN1kJJxVRp58yvEdnuSwC8qT0PICZSi1kR0ydBCMT/XDtuJXPspa/QvMy242iMVrVe1DscOBH92HwLY3KhxdywoibGPrL72lx1U6O0nEHOm9jKha5v3Vv2dhmzLXsNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418123; c=relaxed/simple;
-	bh=p/DhF42raQ7LtZU+gbIb+kAcSbQNnWCPCFScLiNA36s=;
+	bh=6MkNtGr4amCWFbF87aKQUi2Elw82i+dKvZ0St44wBxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NicyaA3KZ2XASRXkPU43565TFbmKSUX1WiIQ664DI0d77V7RTaU1/0i5IQQ8tWX2//phheBAobw5KicTNaygSrL2u9z8uyjwNbkV7rFgo+ELq8do+gLSsGz596hv1lYMTY8qtef7hUgEeaBI7wggWk42s2oCmF5xa4tekJX144g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eNbksOTk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YHv6VLkRGYB4+HFC4VNwKvWthPa3R4zlOzcwJ+hqs9DRXNr2t0tMOOrboLZPJrNSzrdPfZxGG11WtoxSSOqWOamRBO5XT1fsbfI3kcd/ZpmAOXsznWzMpIYlGyeq8z3QeplionOeDtC3g+7NFCE6qfyAMAR+pBMjfm4YVFXRkpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UdkQ333E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eNbksOTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDD11F000CA;
-	Mon, 19 Oct 2026 13:55:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UdkQ333E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23221F000C6;
+	Mon, 19 Oct 2026 13:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418119;
-	bh=GNAwXZxGzpjCpCLLS6riFOILsXe4BJz2ZdZ68y974jo=;
+	s=k20260515; t=1792418121;
+	bh=5/1jcJJIxX8v0UySJxP1SWO0UmoewAoWmMe6s3O/mbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eNbksOTk0H4NLiU+E7mgpnuaBDfwmQvaTj+XeUtKrtBcGe3rRhnNfhdQId81XLwsT
-	 ZJAVosnq/VJ6kfvW6Wveprnl1yNzqPDXuxw6Za24Iy7XEsniWQemYc5VBEngrAxPgd
-	 FXGkyhbmIVB2fw/nUxnwH6ENOfrozXB1/C2MpofcL8sK04V9qmXhat1rV5yzfn1ybx
-	 baFXf35QISVkxBfXHh88peDXwPaeR+ao7cd2NOuy1jo3BZCd6cDfOaPWXqAH1SDMyA
-	 yIKLA+6JNwgUs3LLVv2d0qgi5JnoXvmwvLZsuiET8An/ob1lPAPRgNnepZswJ+SMQW
-	 Y6a+YuvEh/Kww==
+	b=UdkQ333Evo2RiWHbejzCh7Q1i2pm32dyAwpHgCVY6rldqY7PFj+AHvNdSWQGUNeyQ
+	 rW1hqWX80gEiFZYrO6yw3cHyJllsn2RubwjyW9+kSjqNvoM/nbOL1MDVyXAGsOGCRL
+	 pad5mibffMFKBffmF6vceSePsMoI+x0kTB/qVJgY3sYfprbGQfQEO7WeKXTx2rOOys
+	 by/JSd8uY8nmZ8Mcgg4Cjge6GmUMxBvm0kM53FKKZHiKHG+lqVgLuoplZRhAQjrPtg
+	 5LDn58u/5Owqm9QApvOlUV6ljlQncPz0aiGIBJW82PHiSI9MLoZmh8Xza8KrKOtc0M
+	 uQwLhLofd9xKw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Laight <david.laight.linux@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Weiji Wang <nebclllo0444@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org,
+	neil.armstrong@linaro.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] usb_string_copy: Use kzalloc() to avoid leaking old data
-Date: Mon, 19 Oct 2026 09:45:16 -0400
-Message-ID: <20261019135441.1420968-25-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/panel-edp: Add BOE NE140QDM-NX2
+Date: Mon, 19 Oct 2026 09:45:17 -0400
+Message-ID: <20261019135441.1420968-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,507 +58,385 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Laight <david.laight.linux@gmail.com>
+From: Weiji Wang <nebclllo0444@gmail.com>
 
-[ Upstream commit 057df423bf4747091cf942af57307627e941e1fb ]
+[ Upstream commit 354b9c43d36ce9b41e48b2d67c5d9b953a0e9d64 ]
 
-If the string is read while being updated (which is why the copy is done
-in place) and the new string is longer than the old one, then the reader
-can read memory that isnt part of either string.
+Add timing from datasheet for BOE NE140QDM-NX2.
 
-Use memcpy() to copy the known length string instead of strcpy.
+edid-decode (hex):
 
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
-Link: https://patch.msgid.link/20260608095523.2606-37-david.laight.linux@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+00 ff ff ff ff ff ff 00 09 e5 f2 0a 00 00 00 00
+20 1f 01 04 a5 1e 13 78 03 ee 96 a3 54 4c 99 26
+0f 4e 51 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 60 d2 00 a0 a0 40 32 60 30 20
+35 00 2e bd 10 00 00 18 c8 9d 00 a0 a0 40 32 60
+30 20 35 00 2e bd 10 00 00 18 00 00 00 fd 00 30
+78 c6 c6 36 01 0a 20 20 20 20 20 20 00 00 00 fe
+00 4e 45 31 34 30 51 44 4d 2d 4e 58 32 20 01 f8
+
+70 13 79 00 00 03 01 14 30 69 00 05 ff 09 9f 00
+2f 00 1f 00 3f 06 31 00 02 00 04 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 4d 90
+
+Signed-off-by: Weiji Wang <nebclllo0444@gmail.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/82fc6395-3425-4f71-ba58-813856cee61d@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable backport analysis: `usb_string_copy: Use kzalloc() to avoid
-leaking old data`
+## Phase 1: Commit message forensics
 
-Local tree: **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`). The commit
-under review is `057df423bf474`. The buggy `kmalloc` + in-place `strcpy`
-path has been in this lineage since **v5.12** (`98f153a10da403`).
+**Step 1.1: Subject line**
+Record: `[drm/panel-edp] [Add] [one-line BOE NE140QDM-NX2 panel-id /
+delay table entry]`
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Subsystem: USB gadget configfs (`usb_string_copy` in
-  `drivers/usb/gadget/configfs.c`)
-- Action verb: **Use** (kzalloc) / implied **avoid leaking**
-- Claimed intent: stop readers from observing memory that is not part of
-  either the old or new string when an in-place update lengthens the
-  buffer
-
-Record: `[usb/gadget/configfs] [use/avoid] [zero the string buffer and
-copy a known length to prevent leaking heap bytes during in-place
-updates]`
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- `Signed-off-by: David Laight <david.laight.linux@gmail.com>` (author)
-- `Link: https://patch.msgid.link/20260608095523.2606-37-
-  david.laight.linux@gmail.com`
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (USB
-  maintainer applied it)
-- No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Reviewed-by:`, no
-  `Acked-by:`, no `Cc: stable` (absence is expected)
-- Message-Id `2606-37` = patch 37 of a large series
-
-Record: Author SOB + Greg SOB + lore Link. No reporters. Hardening/USB
-lists were the original audience (confirmed in Phase 4).
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-The body describes a concurrent-read hole in the in-place update path:
-if a reader walks the buffer while a longer string is being copied, it
-can pass the old NUL and consume bytes that belong to neither string. It
-also switches `strcpy` to `memcpy` of the already-computed length.
-
+**Step 1.2: Tags**
 Record:
-- Bug: kernel heap contents can be observed by a concurrent reader of a
-  gadget string during an in-place lengthening update
-- Symptom: leaked uninitialized `kmalloc` bytes (via configfs show or
-  USB string descriptors)
-- Version info: none in the message
-- Root cause: first allocation used `kmalloc` (unzeroed tail); in-place
-  `strcpy` of a longer string temporarily removes the old NUL before the
-  new one is written
+- `Signed-off-by: Weiji Wang <nebclllo0444@gmail.com>` (author)
+- `Reviewed-by: Douglas Anderson <dianders@chromium.org>` (listed `R:`
+  for this driver in MAINTAINERS)
+- `Signed-off-by: Douglas Anderson <dianders@chromium.org>` (applied via
+  drm-misc)
+- `Link: https://patch.msgid.link/82fc6395-3425-4f71-ba58-
+  813856cee61d@gmail.com`
+- No `Fixes:`, no `Cc: stable`, no `Reported-by`, no `Tested-by` tag
+  (author later said they verified on `next-20260726` in the v1 thread)
+- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+  if present
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-This is not disguised cleanup. The subject states the leak. It *is* one
-patch in a treewide `strcpy` sweep, and `memcpy` is that sweep;
-`kzalloc` is the actual leak fix.
+**Step 1.3: Body**
+Record:
+- Claimed intent: add datasheet timing for BOE NE140QDM-NX2.
+- Failure mode is not a crash dump; it is missing table data for a real
+  eDP panel identified by EDID.
+- Included raw EDID (base + CTA). Manufacturer `09 e5` is BOE; product
+  `f2 0a` little-endian is `0x0af2`; ASCII descriptor is `NE140QDM-NX2`.
+- Root cause: generic `edp-panel` path looks up power-seq delays by
+  panel ID; this ID was absent.
 
-Record: `[Not hidden. Real infoleak fix, bundled with strcpy-
-elimination.]`
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
-- File: `drivers/usb/gadget/configfs.c` (+2 / −2)
-- Function: `usb_string_copy()`
-- Scope: single-file, two-line surgical change
-
-Record: `[configfs.c +2/-2] [usb_string_copy] [single-file surgical]`
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Before:
-- First call: `kmalloc(USB_MAX_STRING_WITH_NULL_LEN)` then `strcpy`
-- Later calls: reuse the same buffer (`str = copy`) and `strcpy` over it
-  (the 2021 UAF workaround)
-
-After:
-- First call: `kzalloc` so the unused tail is zeros
-- Copy: `memcpy(str, s, ret + 1)` (`ret` is `strlen(s)`, so this
-  includes the NUL)
-
-Affected path: configfs store of
-manufacturer/product/serial/configuration strings (`GS_STRINGS_W`).
-
-Record: `[kmalloc+strcpy -> kzalloc+memcpy of known length; first-alloc
-and in-place update paths]`
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Category: **uninitialized data / kernel infoleak** (with a concurrent-
-read window created by in-place update).
-
-Mechanism, verified in this tree:
-1. `98f153a10da403` (v5.12) stopped `kfree`+`kstrdup` and copies in
-   place so USB host pointers stay valid.
-2. First fill still used `kmalloc`, so bytes after the first NUL are
-   heap residue.
-3. Bind aliases those buffers into USB string tables:
-   - `stringtab[...].s = language->manufacturer/product/serialnumber`
-     (`configfs_attach_gadget_strings`)
-   - `cn->strings.s = cn->configuration` (`configfs_composite_bind`)
-4. `usb_gadget_get_string()` does `strlen(s->s)` then converts to
-   UTF-16.
-5. Configfs show is `sprintf(page, "%s\n", gs->__name ?: "")`.
-6. `GS_STRINGS_W` calls `usb_string_copy()` with **no** `gi->lock`. Host
-   `GET_DESCRIPTOR` is not serialized against that store.
-7. If a reader is in `strlen`/`sprintf` while `strcpy` lengthens the
-   string, the old NUL is overwritten first; the walk continues into the
-   unzeroed tail.
-
-`kzalloc` makes that tail zeros, so a torn read stops instead of leaking
-heap. `memcpy` is equivalent to `strcpy` here (`ret` already came from
-`strlen`).
-
-Record: `[uninitialized kmalloc tail leaked across a designed
-concurrent-read window] [kzalloc zeros the tail; memcpy is strcpy
-replacement]`
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-Obviously correct. `USB_MAX_STRING_LEN` is 126, so max `ret+1` is 127,
-matching `USB_MAX_STRING_WITH_NULL_LEN`. `kzalloc` is strictly safer
-than `kmalloc`. `memcpy` of `strlen+1` matches `strcpy` for a C string.
-
-Regression risk: very low. Remaining torn-string reads of *previous
-string contents* are the pre-existing in-place design, not introduced
-here.
-
-Record: `[minimal, correct] [regression risk very low]`
+**Step 1.4: Hidden bug fix?**
+Record: Not a disguised UAF/leak. It is hardware-table enablement.
+Without the row, `generic_edp_panel_probe()` hits
+`WARN_ON(!panel->detected_panel)` and falls back to conservative delays
+(2000 ms unprepare / 200 ms enable). That is a real user-visible issue
+for this panel (warning + slow suspend/resume), not style cleanup.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 2: Diff analysis
 
-**Step 3.1: BLAME THE CHANGED LINES**
-- Function added: `88af8bbe4ef781` (2012, “the start of the configfs
-  interface”) — originally `kstrdup` + `kfree(old)`
-- In-place `kmalloc` + `strcpy`: `98f153a10da403` (2021-03-17, in v5.12)
-  — **this is the buggy code**
-- Empty-string guard: `6d3c721e686ea` (2024, `Cc: stable`)
-- This fix: `057df423bf474` (2026-06-08)
+**Step 2.1: Inventory**
+Record:
+- File: `drivers/gpu/drm/panel/panel-edp.c` (+1 / −0)
+- Function/data: `edp_panels[]` only
+- Scope: single-file, one table row
 
-Record: `[98f153a10da403, v5.12] [bug present for years in this
-lineage]`
+**Step 2.2: Code flow**
+Record:
+- Before: BOE IDs jump from `0x0ae8` (NV140WUM-N41) to `0x0b09`
+  (NV140FHM-NZ). `0x0af2` is unknown.
+- After: `EDP_PANEL_ENTRY('B', 'O', 'E', 0x0af2,
+  &delay_200_500_e50_p2e80, "NE140QDM-NX2")`.
+- Path: probe of compatible `"edp-panel"` → `generic_edp_panel_probe()`
+  → `find_edp_panel()` → copy `*delay` into `desc`. Modes still come
+  from EDID (`override_edid_mode` is not set).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-No `Fixes:` tag. The semantic Fixes target is `98f153a10da403`, which
-**is** in this tree (`git merge-base --is-ancestor` succeeded). That
-commit was itself `Cc: stable` and exists because USB host string reads
-race with configfs stores.
+**Step 2.3: Bug mechanism**
+Record: **Hardware ID / quirk table** (device-ID exception). Not a
+memory-safety bug. Missing identity causes:
+1. `WARN_ON` splat at probe
+2. `panel_edp_set_conservative_timings()`: `unprepare=2000`,
+   `enable=200`, vs datasheet delays `hpd_absent=200`, `unprepare=500`,
+   `enable=50`, `prepare_to_enable=80`
 
-Record: `[No Fixes tag] [real introducer 98f153a is in this tree since
-v5.12]`
-
-**Step 3.3: CHECK FILE HISTORY**
-Recent related commits on this file: OOB empty-string fixes
-(`6d3c721e686ea`, `3014168731b79`), later `f63edb54d8f73` (qw_sign,
-unrelated). No prerequisite refactor is required for these two lines.
-`kmalloc_obj` treewide conversion did **not** change this `kmalloc`
-call; the pre-image is still `kmalloc(...)`.
-
-Record: `[standalone vs file history] [no blocking prerequisites in this
-tree]`
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-David Laight is not the USB gadget maintainer. Around this commit he
-posted ~100 compile-tested `strcpy` replacements to linux-hardening /
-subsystem lists. Greg applied this one. Sibling leak-style changes exist
-(e.g. TIPC pad bytes).
-
-Record: `[regular contributor, hardening series] [Greg applied; not a
-maintainer-authored USB patch]`
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Needs the in-place buffer (`98f153a`) to be meaningful; that is in this
-tree. Does not need `6d3c721e` (empty-string check) for correctness;
-that only appears as nearby context. Applies standalone.
-
-Record: `[standalone on any tree that has the 2021 in-place copy] [can
-apply standalone here]`
+**Step 2.4: Fix quality**
+Record: Obviously correct one-liner using an existing delay blob. Sorted
+by product ID. Regression risk is confined to this panel ID; other
+panels are untouched. Commit text says “timing” but the row only sets
+**power sequencing**; that matches the driver’s design comment “Update
+the delay; everything else comes from EDID”.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 3: Git history
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-`b4 dig -c 057df423bf474` matched:
-https://patch.msgid.link/20260608095523.2606-37-
-david.laight.linux@gmail.com
+**Step 3.1: Blame**
+Record:
+- New line is commit `354b9c43d36ce` (Weiji Wang, 2026-07-28).
+- Neighbors: `0x0ae8` from `993d36ac99efe` (2024), `0x0b09` from
+  `c03dd019f0b56` (2025).
+- `delay_200_500_e50_p2e80` introduced in `f4ccd9fea2270` (2023-12-14),
+  present long before this change.
+- Driver file from `5f04e7ce392db` (2021-09-20).
 
-`b4 dig -a`: only **v1**, dated 2026-06-08, subject `[PATCH next]`.
-Saved mbox: patch only, **no replies**. Trailer notes:
-- one of a group removing unbounded `strcpy()`
-- **“all the changes are only compile tested”**
-- ~100 patches sent individually
-- “Apologies for the terse commit messages”
+**Step 3.2: Fixes: tag**
+Record: None. Bug is “this panel ID was never listed”, not a regression
+from a specific SHA.
 
-WebFetch to lore.kernel.org returned **403**. Discussion content was
-recovered via `b4 dig -m`.
+**Step 3.3: File history**
+Record: Many similar `drm/panel-edp: Add …` one-liners. Standalone; not
+`N/M`. Parent `eb7979f6014a1` already has the delay struct and
+surrounding BOE rows. `git grep 0x0af2` on the parent: not present.
 
-Record: `[lore msgid 20260608095523.2606-37] [v1 only, no review
-comments in thread] [no reviewer Cc: stable] [compile-tested series]`
+**Step 3.4: Author**
+Record: Only this commit by Weiji Wang in `drivers/gpu/drm/`. Douglas
+Anderson is `R: DRM DRIVER FOR GENERIC EDP PANELS` and both reviewed and
+applied it.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-`b4 dig -w` original recipients: Kees Cook, linux-hardening, linux-
-kernel, linux-usb, Arnd Bergmann, Greg Kroah-Hartman. Greg’s merge SOB
-is the only review signal in git. No `Reviewed-by`/`Acked-by` on the
-commit.
-
-Record: `[USB + hardening lists and Greg CC’d; Greg applied; no written
-review in the thread]`
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-No `Reported-by`, no syzbot, no bugzilla. The race is inferred from code
-and from `98f153a`’s real KASAN UAF on the same overlapping access.
-
-Record: `[no external bug report] [concurrent access is documented by
-the 2021 UAF fix, not by a new user report]`
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Patch 37 of a ~100-patch `strcpy` series aimed at linux-next. This
-instance is one of the few that also changes allocation to `kzalloc` and
-describes a leak. No other series member is required for this function.
-
-Record: `[strcpy series; this patch is self-contained]`
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-lore.kernel.org/stable search via WebFetch and curl returned **403**.
-Cannot confirm a stable-list nomination or rejection.
-
-Record: `[UNVERIFIED: stable@ discussion]`
+**Step 3.5: Prerequisites**
+Record: Needs `EDP_PANEL_ENTRY`, `edp_panels[]`, and
+`delay_200_500_e50_p2e80`. All exist in this checkout. Applies
+standalone.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 4: Mailing list
 
-semcode MCP is not available. Used grep + file reads.
+**Step 4.1: Original discussion**
+Record:
+- `b4 dig -c 354b9c43d36ce` → https://patch.msgid.link/82fc6395-3425-
+  4f71-ba58-813856cee61d@gmail.com
+- v1: 2026-07-24, https://patch.msgid.link/697e79c2-98a9-4bb3-b5fb-
+  db327cbe1bce@gmail.com
+  Used unsorted `0x0af2` with `delay_200_500_e80`.
+- v2: 2026-07-28 (applied). Changelog: sort fix +
+  `delay_200_500_e50_p2e80`.
+- Doug on v2: mailer wrapped/tabs-to-spaces; he fixed and pushed to drm-
+  misc-next as `354b9c43d36ce`. `Reviewed-by` given. No NAK.
+- v1 review: sort bug; asked if datasheet vs guess. Author: Panelook
+  datasheet; T4+T5+T6+T8-min given. Doug recommended
+  `delay_200_500_e50_p2e80`. Author confirmed T7/T8 match and verified
+  on `next-20260726`.
+- No reviewer `Cc: stable`.
 
-**Step 5.1: KEY FUNCTIONS**
-Record: `[usb_string_copy]`
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: Weiji Wang, Doug Anderson, `dri-devel@lists.freedesktop.org`,
+`linux-kernel@vger.kernel.org`. Right reviewer and list.
 
-**Step 5.2: CALLERS**
-Direct calls only through `GS_STRINGS_W` in
-`include/linux/usb/gadget_configfs.h`, instantiated in `configfs.c` as:
-- `gadget_language_{manufacturer,product,serialnumber}_store`
-- `gadget_config_name_configuration_store`
+**Step 4.3: Bug report**
+Record: No syzbot/bugzilla. Hardware addition from someone with the
+panel/datasheet. EDID in the message is the identification evidence.
 
-Those are configfs attribute stores (privileged gadget setup). Host-side
-readers are `usb_gadget_get_string()` → `strlen` on the aliased buffers
-after bind.
+**Step 4.4: Series**
+Record: Single patch, v1→v2 only.
 
-Record: `[configfs stores write; USB GET_STRING and configfs show read
-the same buffers]`
-
-**Step 5.3: CALLEES**
-`strlen`, `kzalloc`/`kmalloc`, `memcpy`/`strcpy`. No locks, no I/O.
-
-Record: `[string copy + slab alloc only]`
-
-**Step 5.4: CALL CHAIN / REACHABILITY**
-Userspace with configfs gadget access: `write(2)` →
-`configfs_write_file` → `GS_STRINGS_W` → `usb_string_copy`.
-USB host: `GET_DESCRIPTOR` / string request → `composite_setup` →
-`usb_gadget_get_string` → `strlen(s->s)`.
-
-Reachable. Typical writers are root (Android/embedded gadgetd). The
-**host** is a different trust domain.
-
-Record: `[reachable from configfs writes and from USB host string reads]
-[host path is the security-relevant reader]`
-
-**Step 5.5: SIMILAR PATTERNS**
-Same file already has other string-safety fixes (`6d3c721e`,
-`3014168731b79`). Author’s series has other “don’t leak leftover bytes”
-patches. No second copy of this exact helper.
-
-Record: `[isolated helper; same file has prior stable-bound string
-bugs]`
+**Step 4.5: stable@**
+Record: lore HTTP fetch returned 403. `b4` threads have no stable
+discussion. Not used as a negative signal.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 5: Semantic analysis
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Yes. Pre-image at `057df423bf474^` still has `kmalloc` + `strcpy`.
-Introduced v5.12, present through this 7.3-rc4 lineage until this
-commit.
+**Step 5.1: Functions**
+Record: No function body change. Data: `edp_panels[]`. Consumers:
+`find_edp_panel()`, `generic_edp_panel_probe()`.
 
-Record: `[yes, usb_string_copy in drivers/usb/gadget/configfs.c] [since
-v5.12 / 98f153a]`
+**Step 5.2: Callers**
+Record:
+- `panel_edp_probe()` if DT compatible is `"edp-panel"`
+- `panel_edp_platform_probe()` / AUX-bus probe → `panel_edp_probe()`
+- Context: device probe (boot / connector bring-up), not IRQ/hot path
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Hunk is two lines inside a long-stable helper. Would apply cleanly here
-(and would apply to older trees that still have `kmalloc`+`strcpy`;
-empty-string check is only nearby context).
+**Step 5.3: Callees**
+Record: `find_edp_panel()` walks `edp_panels`; on hit, `desc->delay =
+*panel->detected_panel->delay`.
 
-Record: `[clean apply]`
+**Step 5.4: Reachability**
+Record: Yes, from normal laptop/embedded eDP probe when the panel EDID
+is BOE `0x0af2`. Unprivileged users do not program the ID; it is
+firmware/EDID. Impact is display power-seq and a kernel warning at
+probe.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-`6d3c721e` is a different bug (OOB on zero-length write). No other
-kzalloc leak fix for this helper.
-
-Record: `[no substitute fix already present before 057df423]`
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-USB gadget configfs (`CONFIG_USB_CONFIGFS`). Used to compose gadgets
-from userspace (Android gadgets, gadgetfs-style gadgets, UDC testing).
-Not core mm/VFS, but a common embedded/Android path.
-
-Record: `[USB gadget configfs] [IMPORTANT for gadget/Android; PERIPHERAL
-for desktops without UDC]`
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-File still receives security-relevant string fixes in 2024–2026. Mature
-interface, not staging.
-
-Record: `[mature, still getting bounded-string fixes]`
+**Step 5.5: Similar patterns**
+Record: The table is full of the same `EDP_PANEL_ENTRY` pattern
+(including other BOE NE140QDM parts, e.g. `0x0b1e` NE140QDM-N6A). This
+is the standard way this driver is extended.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 6: Local tree (this checkout)
 
-**Step 8.1: WHO IS AFFECTED**
-Gadget systems that set manufacturer/product/serial/configuration via
-configfs and have the gadget bound so a host can read string
-descriptors. Config-specific: `CONFIG_USB_CONFIGFS`.
+**Step 6.1: Does the code exist here?**
+Record:
+- Tree: `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = `7.3.0-rc4`
+- `drivers/gpu/drm/panel/panel-edp.c` present; `CONFIG_DRM_PANEL_EDP` in
+  Kconfig
+- `delay_200_500_e50_p2e80` at lines 1768–1773
+- `edp_panels[]` and `WARN_ON` unknown-panel path at 829–833
+- Line 2060 already has this entry because `354b9c43d36ce` **is an
+  ancestor of HEAD**. That is mainline history, not a reason to treat
+  the change as “already selected for stable”.
 
-Record: `[driver/config-specific: USB gadget configfs users]`
+**Step 6.2: Backport difficulty**
+Record: Clean apply: one sorted row, delay symbol already in this tree.
+No API/struct change.
 
-**Step 8.2: TRIGGER CONDITIONS**
-Concurrent in-place store of a **longer** string while
-`strlen`/`sprintf` is walking the buffer. Window is a 127-byte copy —
-short, but the overlap is intentional (`98f153a` exists because host
-reads and configfs writes do overlap in practice). Unprivileged local
-users generally cannot write these attributes; a USB host can read the
-leaked bytes.
-
-Record: `[short race during string lengthening while gadget is live]
-[USB host can observe the leak]`
-
-**Step 8.3: FAILURE MODE SEVERITY**
-Kernel heap infoleak (uninitialized `kmalloc` bytes), not a crash. Can
-cross to a USB host via string descriptors. That is a security issue,
-not a panic.
-
-Record: `[kernel heap infoleak to USB host / configfs reader] [HIGH for
-security, not CRITICAL crash]`
-
-**Step 8.4: RISK-BENEFIT RATIO**
-- Benefit: closes a real infoleak on a path already known to race; 2
-  lines; `kzalloc` is the usual stable-grade fix
-- Risk: negligible (`kzalloc`/`memcpy` behavior-preserving for this
-  helper)
-
-Record: `[benefit high for gadget infoleak] [risk very low] [favorable]`
+**Step 6.3: Related fixes already here?**
+Record: No other `NE140QDM-NX2` / `0x0af2` commit besides this one. No
+alternate fix.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 7: Subsystem context
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 7.1:**
+Record: DRM panel (`drivers/gpu/drm/panel/`). Criticality: **IMPORTANT**
+for systems using generic eDP (`edp-panel`), typical
+laptops/Chromebooks/ARM boards. Not mm/net core; not staging.
+
+**Step 7.2:**
+Record: Active table (many recent `Add` commits). Mature lookup/delay
+design since ~2021–2023.
+
+---
+
+## Phase 8: Impact and risk
+
+**Step 8.1: Who is affected**
+Record: Driver/config-specific: `CONFIG_DRM_PANEL_EDP` + DT `"edp-
+panel"` + BOE product ID `0x0af2`. No effect on other panels.
+
+**Step 8.2: Trigger**
+Record: Every probe of that panel (boot / display init). Not a race. Not
+a syscall exploit path.
+
+**Step 8.3: Failure mode**
+Record:
+- `WARN_ON` on unknown panel (MEDIUM as a warning, but intentional
+  “please add this ID” splat)
+- Conservative delays: extra ~1.5 s unprepare vs 500 ms (user-visible
+  resume/power-off lag)
+- Panel is still expected to work; this is enablement + warning/latency,
+  not panic
+- Severity: **MEDIUM** as a bug; **high value** as a device-ID exception
+
+**Step 8.4: Risk-benefit**
+Record:
+- Benefit: correct power-seq and no warning for this hardware; same
+  class as PCI/USB ID adds
+- Risk: very low (1 line, ID-matched only)
+- Ratio: favorable
+
+---
+
+## Phase 9: Synthesis
+
+**Step 9.1: Evidence**
 
 FOR:
-- Real uninitialized-kmalloc leak, not style-only
-- Concurrent reader is why in-place copy exists (`98f153a`, KASAN UAF,
-  `Cc: stable`)
-- Host `strlen` on aliased pointers is a verified path
-- Two-line, obviously correct change
-- No new API/feature
-- Bug present since v5.12 in this tree’s history
-- Applied by Greg KH
+- Existing driver; only a new panel ID + existing delay pointer
+- Matches the documented **new device ID** / hardware-quirk exception
+- Prevents `WARN_ON` + 2000 ms conservative unprepare for BOE NE140QDM-
+  NX2
+- 1 line, sorted, uses `delay_200_500_e50_p2e80` already in this tree
+- EDID in the message matches vendor/product/name
+- Reviewed and applied by the panel-edp reviewer; v2 delay choice came
+  from datasheet discussion
+- Author verified on `next-20260726`
 
 AGAINST:
-- Tiny race window; no syzbot/CVE/user report
-- Series was compile-tested only, labeled `[PATCH next]`
-- No mailing-list review comments
-- Not a universal core-kernel path
-- `memcpy` half is strcpy-hardening, not the leak fix
+- Not a UAF/crash/security fix
+- Unknown panel still functions with conservative timings
+- No `Fixes:` / `Cc: stable` (expected for this review path)
+- Commit subject is enablement (“Add …”), not “fix”
 
 UNRESOLVED:
-- Whether stable@ ever discussed this (lore 403)
+- lore.kernel.org via WebFetch was 403; thread recovered with `b4`
+- No stable@ thread found
+- Exact laptop SKUs using this panel not identified beyond the EDID
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — correctness is local and
-   obvious; series is compile-tested only, but the change cannot
-   reasonably be wrong
-2. Fixes a real bug that affects users? **PASS** — heap bytes can be
-   read on a live gadget string update
-3. Important issue? **PASS** — kernel infoleak (security), not a
-   crash/deadlock
-4. Small and contained? **PASS** — 2 lines, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — pre-image matches; no missing
-   helpers
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** (1-line table add; maintainer
+   review; author verified)
+2. Real bug affecting users? **PASS** (missing ID → warning + wrong
+   delays on real hardware)
+3. Important (crash/security/corruption/deadlock)? **PASS via
+   exception** (device ID / panel quirk; warning + bad power-seq). Not
+   CRITICAL memory safety.
+4. Small and contained? **PASS** (+1 line, one file)
+5. No new features/APIs? **PASS** (no new driver, syscall, or userspace
+   ABI; ID in existing table)
+6. Can apply to this tree? **PASS** (driver, macro, delay struct, and
+   sort neighbors all present)
 
-**Step 9.3: EXCEPTION CATEGORIES**
-Not a device-ID/quirk/DT/build/docs exception. It is a small
-security/correctness fix.
+**Step 9.3: Exception**
+Record: **New device ID / hardware quirk** on an existing driver
+(`EDP_PANEL_ENTRY` is this driver’s ID table).
 
-**Step 9.4: DECISION**
-This is a contained infoleak fix on a helper whose in-place update
-exists specifically so USB hosts can read strings while configfs writes
-them. `kzalloc` is the right, low-risk close of that hole. It meets
-stable rules for this tree.
+**Step 9.4: Decision**
+This is the eDP equivalent of adding a PCI/USB ID: a one-line table
+entry so existing `panel-edp` uses datasheet power sequencing instead of
+the unknown-panel `WARN_ON` + conservative delays. This tree has every
+prerequisite. Benefit is real for owners of this panel; risk is
+negligible.
+
+### What the commit solves for this tree
+On `v7.3-rc4`, generic `"edp-panel"` devices read EDID and look up
+`edp_panels[]`. BOE `0x0af2` (NE140QDM-NX2) had no row, so probe warned
+and used 2000/200 ms conservative delays. The patch adds that row with
+`delay_200_500_e50_p2e80`. Display modes remain EDID-driven.
+
+### Risk vs benefit
+Very low risk, contained to one product ID. Benefit is working/faster
+power sequencing and no warning for that panel—standard stable device-ID
+material.
 
 ---
 
-## What the commit solves for stable users
-
-After the 2021 UAF fix, gadget strings live in a reused `kmalloc`
-buffer. A host (or configfs reader) can walk that buffer while a longer
-string is copied in place, skip the old NUL, and return leftover heap
-data in a USB string descriptor. Zeroing on first allocation stops that
-leak. `memcpy` is a safe `strcpy` substitute given the existing
-`strlen`.
-
-Risk vs benefit: two lines, no API change, no lock surgery, benefit is
-closing a kernel-memory leak on Android/embedded gadget configs.
-
----
-
-## Verification
-- [Phase 1] Parsed tags: author SOB, Greg SOB, lore Link; no
-  Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: `kmalloc`→`kzalloc`, `strcpy`→`memcpy(str,s,ret+1)` in
-  `usb_string_copy`
-- [Phase 2] Confirmed `USB_MAX_STRING_LEN` 126 and buffer size 127;
-  `ret+1` cannot overflow
-- [Phase 3] `git blame`: in-place `kmalloc` from `98f153a10da403`
-  (v5.12); function from `88af8bbe4ef781` (2012)
-- [Phase 3] `git merge-base --is-ancestor 98f153a10da403 HEAD` —
-  introducer is in this tree
-- [Phase 3] `git merge-base --is-ancestor 057df423bf474 HEAD` — this
-  commit is already in HEAD (ignored as “already selected”)
-- [Phase 3] `git describe HEAD` / Makefile: local tree is **v7.3-rc4 /
-  7.3.0-rc4**
-- [Phase 3] Pre-commit file still has `kmalloc`+`strcpy`
-- [Phase 4] `b4 dig -c 057df423bf474`: msgid `20260608095523.2606-37`,
-  `[PATCH next]`, v1 only
-- [Phase 4] `b4 dig -w`: linux-usb, linux-hardening, Kees, Greg, Arnd
-- [Phase 4] `b4 dig -m`: no replies; author said compile-tested only;
-  ~100 strcpy patches
-- [Phase 4] WebFetch lore.kernel.org: 403; used b4 instead
-- [Phase 5] Callers: `GS_STRINGS_W` →
-  manufacturer/product/serial/configuration stores
-- [Phase 5] Host path: `stringtab[].s` and `cn->strings.s` alias the
-  same buffers; `usb_gadget_get_string` uses `strlen`
-- [Phase 5] `GS_STRINGS_W` does not take `gi->lock`
-- [Phase 6] No other leak fix for this helper; `6d3c721e` is a different
-  OOB bug
-- [Phase 6] Backport difficulty: clean 2-line apply
-- [Phase 8] Failure mode: uninitialized heap infoleak, severity HIGH
-  (security), not a crash
-- UNVERIFIED: stable@ mailing-list discussion (lore 403)
-- UNVERIFIED: no runtime reproduction performed here; race is from code
-  + the 2021 UAF report, not a new reproducer
+Verification:
+- [Phase 1] Parsed subject/tags/body from `git show 354b9c43d36ce`; EDID
+  `09 e5 f2 0a` + `NE140QDM-NX2` checked against the new `BOE, 0x0af2`
+  row
+- [Phase 2] Diff is +1 line in `edp_panels[]`;
+  `generic_edp_panel_probe()` / `WARN_ON` /
+  `panel_edp_set_conservative_timings()` read in `panel-edp.c`
+- [Phase 3] `git blame -L 2058,2062`; `git log -L
+  :delay_200_500_e50_p2e80:…` → `f4ccd9fea2270`; parent has no `0x0af2`;
+  `git merge-base --is-ancestor 354b9c43d36ce HEAD` → yes
+- [Phase 3] No `Fixes:`; author log only this DRM commit
+- [Phase 4] `b4 dig -c 354b9c43d36ce` / `-a` / `-w` / `-m`; v1 mbox (7
+  messages) with Doug’s sort + delay review; v2 applied despite wrap
+- [Phase 4] WebFetch lore → 403; discussion taken from b4 mboxes instead
+- [Phase 5] Call path: `"edp-panel"` → `panel_edp_probe()` →
+  `generic_edp_panel_probe()` → `find_edp_panel()`
+- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
+  `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`; delay struct
+  and table present
+- [Phase 7] MAINTAINERS: `R: Douglas Anderson` for `panel-edp.c`;
+  Kconfig `DRM_PANEL_EDP`
+- [Phase 8] Failure mode verified: unknown panel → WARN_ON + unprepare
+  2000 / enable 200
+- UNVERIFIED: stable@ archive (lore HTTP 403); specific machine models
+  shipping this panel
 
 **YES**
 
- drivers/usb/gadget/configfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-index aa0a25efb6aa0..b6237a2e02003 100644
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -125,11 +125,11 @@ static int usb_string_copy(const char *s, char **s_copy)
- 	if (copy) {
- 		str = copy;
- 	} else {
--		str = kmalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
-+		str = kzalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
- 		if (!str)
- 			return -ENOMEM;
- 	}
--	strcpy(str, s);
-+	memcpy(str, s, ret + 1);
- 	if (str[ret - 1] == '\n')
- 		str[ret - 1] = '\0';
- 	*s_copy = str;
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 614c63e95c357..65e2f68b919ef 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1989,6 +1989,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a6a, &delay_200_500_e80, "NV140WUM-N44"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0ac5, &delay_200_500_e50, "NV116WHM-N4C"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0ae8, &delay_200_500_e50_p2e80, "NV140WUM-N41"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0af2, &delay_200_500_e50_p2e80, "NE140QDM-NX2"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b09, &delay_200_500_e50_po2e200, "NV140FHM-NZ"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b1e, &delay_200_500_e80, "NE140QDM-N6A"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b34, &delay_200_500_e80_d50, "NV122WUM-N41"),
 -- 
 2.53.0
 
