@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E11538422E;
-	Mon, 19 Oct 2026 13:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C423E549FC4;
+	Mon, 19 Oct 2026 13:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418195; cv=none; b=Q9jqXHPp/yBnu5VsqFnN6aw2ivodIroPaay1T5TCg/QHYuUzcVOtES9Ln7+ibSw50XVYa2OEXPmw7HYLJanvLemLjdjWuUP90Vv8o1Rukf6DqkHp7TOmgEL8ynH7NZ4cHBvqSrMezPs8SqB0St+nJSXkpXDN0zsUgIJt4gwHv9M=
+	t=1792418197; cv=none; b=ftVFtClKF0OjBBL+veGugb8rGXrUyT49w+BxpSTBDluTRJLNe1xhbu7giy73icQlerkFMTObrzTeLWskllHE+58LnxHncQKPxIX10K1DrOuQbAuuJxzrQFVxQ3ewbnvlULV8eymHA21xNotjP6NpgKdc2prrpUja7NWZS52BAuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418195; c=relaxed/simple;
-	bh=gDuhLh3xzm1+PCur9Ea4AClzdSiOskaxCsOvp2DCZYY=;
+	s=arc-20240116; t=1792418197; c=relaxed/simple;
+	bh=XKYtZG9jZ3ReqcBRdyDFRva8ElWckOc+6/P9d5PO27Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O4S2F2lDWHHW00cu3yBX3n3NWa1Qjg45GCHE17m0DZiR8W0GlY7YVo78MayectouwtzHLEmPJ3bfyjf0mH2/UU/Kl6X6a3wk890tC9pN/q2uCJHcWa9wEfukE98sWwJa1WwacAvLca0+xA9SSYiYZKtSVwSr3XhC7WFqZUex0TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oYb/5YDK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nWpN1DTzw+VX4lqgX7ro6HVW7NfPbFPLI1pb4tBptNcOEgDn6grf1/W/SwJwF7DAg2popm5bR+fU8yjYd/kya8PJh+4G2WxkPx+uQ2KTaAy/7CeR65SW7sSAQRdkfGd7pT96NKg2WxeA48e2DQYO8Nn8GplKn847fpVT99YfWPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lfqn1lKo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oYb/5YDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E61D1F000C7;
-	Mon, 19 Oct 2026 13:56:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lfqn1lKo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F171F000C4;
+	Mon, 19 Oct 2026 13:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418193;
-	bh=UUmqX9tSMyy7Z8P2BIsi4KqSAwSAqTXl96Wr8w+vzLI=;
+	s=k20260515; t=1792418194;
+	bh=2jrlydWD0ybximvu56ADcj1OMkqBIJuYCWQhhTa9mxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYb/5YDKUMouyxr+ixOxU2s72fM+J0aUCeZW8SCgWHh2zVnpW9uY3u3hIax1SiHYn
-	 4UlQdOV+JuYYD+UbhTSVVIQSJCDW/gkUDoNWZ7CCfCbmh11Qi2hcxoJHRrzcQKLzQ3
-	 37iACtO85NtGYwRB8/4rU2mpDE1YXo0djt3Jy1cOUxzgh9ciWoGY3Q6bo1x5cettez
-	 RLll9yrhsaGiCK7Hx1fUwTiPuPhdKyQ3szViujOVeAmCIo8Sq4JmoYgW8pYo1u/8n2
-	 6gITU2Udk53ETIU6TgqJnUBoCNtfmF30BiEagqKYt55iO1ErjLf+alnovLgOTNbE6g
-	 AdQp++PVINrtQ==
+	b=Lfqn1lKo4Al6ArAUORpxLDkU9AYoZF/ZUsl6/iGEEAwpl2ecHBxm7bGco4bXUKScz
+	 waX0ay3zV+rqdcm9pjWm2CZR3LD87alntU2lu7RCOZyOIqd+jsSb9ylKtTbcq5p5ck
+	 oY50PlIa+Pm1L92KRkO09OlSDi09i+1NefDPKIEH7OIr4r9d+1hU5yvGn6rPkFS35D
+	 hlJP40tWWcwsOuo+9Z6DzGctw9MDHPu/B0PBuptLRrMGKhEWXZheAabN4PARqRI/M3
+	 nk9GmDiBy2AVICJb/MjRDJYXyCwH1mttnFQyewwyDCviwIDqTRg2nCAi4vJTfjbP5G
+	 6TL7RaVZr6uFA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Logan Gunthorpe <logang@deltatee.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kurt.schwemmer@microsemi.com,
-	linux-pci@vger.kernel.org,
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] PCI: switchtec: Add Microchip PCI1008 device ID
-Date: Mon, 19 Oct 2026 09:46:09 -0400
-Message-ID: <20261019135441.1420968-78-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] wifi: mac80211_hwsim: clear PMSR request state on abort
+Date: Mon, 19 Oct 2026 09:46:10 -0400
+Message-ID: <20261019135441.1420968-79-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,361 +53,440 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Logan Gunthorpe <logang@deltatee.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 0d8a6306c680ee534be131e360f0cafa2bada7be ]
+[ Upstream commit 37a77bd1395e8261d1760ae39c7f5eb637300550 ]
 
-Add the Microchip PCI1008 device ID to the core switchtec management
-driver's PCI ID table. Without it, the management endpoint on a PCI1008
-switch is not bound by this driver, preventing userspace tools from
-configuring or monitoring the switch and leaving NTB functionality
-unavailable.
+mac80211_hwsim saves the in-flight cfg80211 PMSR request and its wdev
+in data->pmsr_request / data->pmsr_request_wdev when a measurement
+starts, and clears them only when it reports completion.
 
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260714212010.230606-3-logang@deltatee.com
+mac80211_hwsim_abort_pmsr() never cleared that saved state. cfg80211
+owns the request and frees it once the abort callback returns
+(cfg80211_pmsr_process_abort() calls rdev_abort_pmsr() then
+kfree(req)), so after an abort data->pmsr_request dangles. A later
+hwsim PMSR report then dereferences the freed request in
+hwsim_pmsr_report_nl() and completes it; a use-after-free.
+
+Clear data->pmsr_request and data->pmsr_request_wdev once the abort
+matches the active request. Move the wmediumd/virtio notification check
+below the clear so the saved state is dropped even when no notification
+is sent.
+
+Assisted-by: Codex:gpt-5
+Assisted-by: Claude:opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260708195911.84365-2-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line PCI ID addition to an existing Switchtec driver. The
-local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`).
-`SWITCHTEC_PCI100X_DEVICE` and the PCI1001–PCI1006 IDs are already here,
-so the patch is applicable.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1: Subject line**
+Record: **[wifi: mac80211_hwsim]** **[clear]** in-flight PMSR request
+pointers when abort matches, so cfg80211’s free cannot leave a dangling
+`data->pmsr_request`.
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: [PCI: switchtec] [Add] [Microchip PCI1008 device ID to the
-existing switchtec management driver’s PCI ID table]
+**Step 1.2: Tags**
+Committed message (pipeline-stripped):
+- Link: `https://patch.msgid.link/20260708195911.84365-2-
+  enderaoelyther@gmail.com`
+- Assisted-by: Codex:gpt-5, Claude:opus-4.8
+- Signed-off-by: Zhao Li; Johannes Berg
+- No Fixes:/Cc: stable/Reported-by in the committed text (expected for
+  this pipeline)
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Original mailing-list submission (from the saved mbox, not used as
+circular “already selected” evidence):
+- Fixes: `5530c04c87c5` (“mac80211_hwsim: add PMSR request support via
+  virtio”)
+- Cc: `stable@vger.kernel.org`
+- Cover letter: `[PATCH 0/8] wifi: fix PMSR lifetime and frame
+  validation issues`
+
+**Step 1.3: Body**
 Record:
-- Signed-off-by: Logan Gunthorpe <logang@deltatee.com> (author; listed
-  maintainer of PCI DRIVER FOR MICROSEMI SWITCHTEC)
-- Signed-off-by: Bjorn Helgaas <bhelgaas@google.com> (PCI maintainer)
-- Link:
-  https://patch.msgid.link/20260714212010.230606-3-logang@deltatee.com
-- No Fixes: tag (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by / Cc: stable on
-  this commit
-- Ignore any Sasha Levin SOB (none on the real commit)
+- **Bug:** `mac80211_hwsim_abort_pmsr()` never NULLs
+  `data->pmsr_request` / `data->pmsr_request_wdev`. cfg80211 owns the
+  request and `kfree(req)` after `rdev_abort_pmsr()`.
+- **Symptom:** later `hwsim_pmsr_report_nl()` uses the freed request →
+  use-after-free. Abort also leaves a non-NULL pointer so a new start
+  can see `-EBUSY` forever.
+- **Root cause:** abort notifies wmediumd/virtio but does not drop saved
+  state; an early `return` when wmediumd/virtio is absent skips even the
+  mutex.
+- **Version:** not stated in the message. Introduction is v6.4-rc1
+  (verified in Phase 3).
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.4: Hidden bug fix?**
+Record: **No.** This is an explicit UAF fix, not cleanup disguised as a
+fix.
+
+---
+
+## Phase 2: Diff analysis
+
+**Step 2.1: Inventory**
 Record:
-- Bug: PCI1008 management endpoint is not bound because 0x1008 is
-  missing from `switchtec_pci_tbl`.
-- Symptom: userspace cannot configure/monitor the switch via
-  `/dev/switchtecX`; NTB is unavailable (probe requests
-  `ntb_hw_switchtec` only after this driver binds).
-- Version info: series was based on v7.2-rc3; applied by Helgaas for
-  v7.3.
-- Root cause: incomplete ID table for a new PCI100x SKU, not a logic
-  bug.
+- File: `drivers/net/wireless/virtual/mac80211_hwsim_main.c` (+7 / −3)
+- Function: `mac80211_hwsim_abort_pmsr()` only
+- Scope: single-file surgical fix
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a hidden cleanup. It is an explicit device-ID enablement.
-Stable rules treat “just add a device ID” as an accepted class.
-
-===============================================================
-PHASE 2: DIFF ANALYSIS
-===============================================================
-
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.2: Flow change**
 Record:
-- File: `drivers/pci/switch/switchtec.c` (+1 / −0)
-- Function/data: `switchtec_pci_tbl[]` (static PCI ID table)
-- Scope: single-file, one-line surgical change
+- **Before:** read `data->wmediumd`; if no wmediumd and no virtio,
+  **return unlocked** with saved pointers intact. If notification is
+  sent, still never NULL the pointers.
+- **After:** take the mutex, match `data->pmsr_request == request`, then
+  set both pointers to NULL **before** the notification check. Missing
+  wmediumd/virtio is `goto out` (unlock), not an early return.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- Before: PCI1001–PCI1006 (vendor `PCI_VENDOR_ID_EFAR` / 0x1055) match
-  via `SWITCHTEC_PCI100X_DEVICE`; 0x1008 does not.
-- After: 0x1008 matches the same way as 0x1001–0x1006, with `driver_data
-  = SWITCHTEC_GEN4`.
-- Path: PCI enumeration → `pci_driver.id_table` match →
-  `switchtec_pci_probe()`.
+**Step 2.3: Bug mechanism**
+Record: **Use-after-free / dangling pointer** (also a lifetime/refcount-
+style leak of a cfg80211-owned object). cfg80211 frees the request;
+hwsim keeps the pointer; `hwsim_pmsr_report_nl()` later calls
+`cfg80211_pmsr_report()` / `cfg80211_pmsr_complete()` on it.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- Category: hardware enablement / device ID addition
-- Mechanism: without the ID, the management function is unbound. Probe
-  also does `request_module_nowait("ntb_hw_switchtec")` for
-  `PCI_CLASS_BRIDGE_OTHER`, so NTB never attaches.
+**Step 2.4: Fix quality**
+Record: Obviously correct: abort that matches the in-flight request must
+drop the saved pointers because cfg80211 will free the object. Mutex
+already covers start/abort/report. Regression risk is low: a late report
+after abort now hits `if (!data->pmsr_request) return -EINVAL`, which is
+the intended post-abort behavior. No API/data-structure change.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: same macro and generation as sibling PCI100x IDs.
-- Minimal: one table line, no API/behavior change for other devices.
-- Regression risk: very low; only PCI1008 (vendor 0x1055, device 0x1008)
-  is newly bound.
-- Red flags: none.
+---
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- PCI1001–PCI1006: `a3282f84b2151` (“PCI: switchtec: Add Microchip
-  PCI100X device IDs”, 2025-01-20), first described as
-  `v6.13-rc1-1-ga3282f84b2151`.
-- Sentinel `{0}`: original driver from 2017 (`080b47def5e5e2`).
-- PCI1008 line: this commit `0d8a6306c680e`.
+**Step 3.1: Blame**
+Record: Pre-fix abort body is entirely from **`8ba1da95053e0`**
+(“mac80211_hwsim: add PMSR abort support via virtio”, Jaewan Kim,
+2023-03-22). Pointers are stored in **`5530c04c87c59`** (start/request
+support, same day). First appears in **v6.4-rc1**. Present for a long
+time in this lineage.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. Not applicable.
+**Step 3.2: Fixes: target**
+Record: Original Fixes: `5530c04c87c5` is an ancestor of HEAD (`git
+merge-base --is-ancestor` exit 0). Closest actual miss is abort itself
+(`8ba1da95053e0`), also an ancestor. Related: `2bef4d1fb8b34` (NULL
+deref in `hwsim_pmsr_report_nl`, 2023) — different bug, already here.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- `a3282f84b2151` added the PCI100X macro, IDs 0x1001–0x1006, and
-  matching `SWITCHTEC_PCI100X_QUIRK` entries.
-- Series companions (same author/date):
-  - `8b326de3cc02c` dmaengine: switchtec-dma: Add PCI1008 device ID
-    (msgid -2)
-  - `00a479ba1d012` PCI: switchtec: Add Microchip PCI1008 to NTB DMA
-    alias quirk (msgid -4)
-- This commit is standalone for the management driver. The quirk is
-  needed for NTB DMA under IOMMU; DMA ID is a different PCI function.
+**Step 3.3: File history**
+Record: Neighbor `aeea930c7a878` (“authenticate PMSR report senders”) is
+series patch 2/8, parent of this commit, **independent** (touches
+`hwsim_pmsr_report_nl()`, not abort). File split `340f2ab83a5c9` / move
+`f79cbc77abde2` already in this tree. No extra prerequisite for the
+abort clear.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Logan Gunthorpe is a listed maintainer (`MAINTAINERS`: PCI
-DRIVER FOR MICROSEMI SWITCHTEC). He authored the original switchtec
-driver and this ID series.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- Needs `SWITCHTEC_PCI100X_DEVICE` and `SWITCHTEC_GEN4` — both present
-  here.
-- Does not need the dmaengine or quirk commits to compile or bind the
-  management device.
-- Applies standalone.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c 0d8a6306c680e`:
-  https://patch.msgid.link/20260714212010.230606-3-logang@deltatee.com
-- Series: v1 only, `[PATCH v1 0/3] switchtec: add new device IDs`
-  (2026-07-14)
-- Cover: IDs for PCI driver, DMA driver, and NTB quirk; based on
-  v7.2-rc3; intended for the PCI tree
-- Sashiko: “found no issues” on this patch
-- Bjorn Helgaas (2026-07-17): “Applied to pci/switchtec for v7.3,
-  thanks!”
-- No NAKs. Unrelated Sashiko note on `quirk_switchtec_ntb_dma_alias()`
-  pointer arithmetic was explicitly not a blocker.
-- No Cc: stable in the thread.
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`):
-- To: linux-pci, dmaengine, Vinod Koul, Bjorn Helgaas
-- Cc: Frank Li, Kelvin Cao (Microchip)
-- Vinod Acked-by on the dmaengine ID
-- PCI maintainer applied the series
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No bugzilla/syzbot. Author is the subsystem maintainer adding a
-new SKU. Cover letter says Sashiko reminded him the management ID and
-NTB quirk were also required.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 3 independent one-line ID/quirk additions. This patch is 2/3 and
-self-contained. Companion quirk is valuable for PCI1008 NTB+IOMMU but is
-a separate candidate.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned HTTP 403. Thread mbox has
-no “stable” mentions. UNVERIFIED: whether -stable already discussed this
-ID.
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: No function body changed. Data: `switchtec_pci_tbl[]`.
-Consumers: `switchtec_pci_driver.id_table`, `MODULE_DEVICE_TABLE(pci,
-...)`. Probe: `switchtec_pci_probe()`.
-
-**Step 5.2: TRACE CALLERS**
-Record: PCI core matches `id_table` at enumeration/hotplug. Probe
-creates `/dev/switchtecX`, enables MRPC, and may load
-`ntb_hw_switchtec`. NTB uses `class_interface` on `switchtec_class` (no
-second PCI ID table).
-
-**Step 5.3: TRACE CALLEES**
-Record: Probe calls `stdev_create`, `switchtec_init_pci`,
-`switchtec_init_isr`, `cdev_device_add`. Existing paths; ID only selects
-them for this device.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable when a PCI1008 is present (`CONFIG_PCI_SW_SWITCHTEC`).
-Unprivileged users do not enumerate PCI IDs; impact is hardware owners
-of this switch.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same family already lists 0x1001–0x1006. DMA driver has 0x1008.
-`quirks.c` has `SWITCHTEC_PCI100X_QUIRK(0x1008)` from the companion
+**Step 3.4: Author**
+Record: Zhao Li is not the wireless maintainer. Same-day sibling is the
+report-sender auth patch. Maintainer **Johannes Berg** applied this
 commit.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 3.5: Dependencies**
+Record: Standalone. Uses existing `data->pmsr_request`, `data->mutex`,
+`hwsim_virtio_enabled`. Series 1/8; does not need 2/8–8/8. Can apply
+without `aeea930c7a878`.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. `drivers/pci/switch/switchtec.c` has
-`SWITCHTEC_PCI100X_DEVICE` and PCI1001–PCI1006. Without 0x1008, PCI1008
-would not bind. Prerequisite `a3282f84b2151` is an ancestor (`git merge-
-base --is-ancestor` succeeded). PCI100X support dates to v6.13-rc1.
+---
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply. Adjacent lines are the existing PCI100x block. No
-refactor conflicts in this checkout.
+## Phase 4: Mailing list
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No alternate PCI1008 ID in switchtec.c besides this line.
-Companion DMA ID and NTB quirk are also present here as separate
-commits.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: [PCI switch management driver `drivers/pci/switch/`] [PERIPHERAL
-— specific Microchip/Microsemi Switchtec hardware; NTB/management users]
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature (driver since 2017). Recent work is mostly new IDs (Gen5,
-Gen6, PCI100x). Typical stable ID-table churn.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / config-specific (`CONFIG_PCI_SW_SWITCHTEC`).
-Only PCI1008 (0x1055:0x1008). Other Switchtec IDs unchanged.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Trigger is plugging/booting with a PCI1008. Common for that
-hardware; impossible otherwise. Not a userspace-triggerable crash.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Device not bound → no `/dev/switchtecX`, no NTB. Severity MEDIUM
-for those systems (hardware unusable for management/NTB), LOW for
-everyone else. Not a panic/UAF.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+**Step 4.1: Original discussion**
 Record:
-- Benefit: high for PCI1008 owners (management + NTB enablement);
-  documented stable exception.
-- Risk: very low (one ID line, existing macro).
-- Ratio: strongly favors backport.
+- Lore URL: https://patch.msgid.link/20260708195911.84365-2-
+  enderaoelyther@gmail.com
+- Cover: https://patch.msgid.link/20260708195911.84365-1-
+  enderaoelyther@gmail.com
+- Series: **v1 only** as this patch (`b4 dig -a` “v2” is a different
+  nl80211 color-change patch; false match)
+- Johannes on the cover (2026-07-21): will take the two hwsim patches
+  for **wireless-next**; **“I don’t think hwsim is all that relevant in
+  deployed systems.”** Not a NAK of the UAF. He did apply this patch the
+  same day.
+- No reviewer asked for changes to this hunk. Other series patches
+  (probe-resp, S1G TWT) were called out as LLM-pattern issues; **this
+  patch was not**.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: linux-wireless, Johannes Berg, Jaewan Kim (original PMSR
+author), Intel/Qualcomm/Marvell names, **stable@vger.kernel.org**. Right
+lists for a hwsim UAF.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 4.3: Bug report**
+Record: No syzbot/bugzilla. Found by review. Cover letter: KASAN hwsim
+boot; after the fix, a stale `REPORT_PMSR` got `-EINVAL` with no KASAN
+splat. Author-tested, not an external user report.
 
-FOR:
-- Stable rules: “fix a real bug … or just add a device ID”
-  (`Documentation/process/stable-kernel-rules.rst`).
-- Existing driver + PCI100X macro in this tree.
-- One line, same pattern as PCI1001–PCI1006.
-- Maintainer-authored, PCI maintainer applied, no NAKs.
-- Real user impact: management chardev and NTB never attach without the
-  ID.
+**Step 4.4: Series**
+Record: 8 patches, mixed subsystems. This one is self-contained. 2/8
+(sender auth) is a separate spoofing fix, not required to stop the abort
+UAF (it only narrows who can fire `hwsim_pmsr_report_nl()`).
 
-AGAINST:
-- Not a crash/security fix; new SKU enablement only.
-- Affects a niche PCIe switch.
-- Companion quirk is a separate patch (NTB DMA under IOMMU still
-  incomplete without it). That does not make this ID wrong or unsafe.
+**Step 4.5: Stable list**
+Record: lore.kernel.org returned HTTP 403 via WebFetch. Original
+submission **did** Cc stable. Johannes’s “not relevant in deployed
+systems” is the only maintainer comment on hwsim priority. **No NAK and
+no “do not backport” found in the mbox.**
 
-UNRESOLVED:
-- lore.kernel.org HTTP 403; stable@ discussion not verified beyond the
-  saved thread (no “stable” hits there).
+---
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — identical to existing
-   PCI100x entries; applied by PCI maintainer.
-2. Fixes a real bug that affects users? **PASS** — PCI1008 otherwise
-   unbound (or qualifies as a device ID addition).
-3. Important issue? **PASS** under the device-ID exception (not a
-   panic).
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — ID only; no new ioctls/sysfs.
-6. Can apply to the local tree? **PASS** — `SWITCHTEC_PCI100X_DEVICE`
-   and sibling IDs present.
+## Phase 5: Semantic / call chain
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Device ID addition to an existing driver.
+**Step 5.1: Functions**
+Record: `mac80211_hwsim_abort_pmsr()` only. Consumers of the pointers:
+`mac80211_hwsim_start_pmsr()`, `hwsim_pmsr_report_nl()`.
 
-**Step 9.4: DECISION**
-This is the standard stable device-ID case. The driver and PCI100x
-helper exist in this tree, the change is one table line, and without it
-PCI1008 management/NTB never bind. Risk is negligible.
+**Step 5.2: Callers**
+Record:
+- `ieee80211_ops.abort_pmsr` → `drv_abort_pmsr()` →
+  `ieee80211_abort_pmsr()` → `rdev_abort_pmsr()` →
+  `cfg80211_pmsr_process_abort()` which **then `kfree(req)`**.
+- Abort work: `cfg80211_pmsr_free_wk` / `cfg80211_pmsr_wdev_down`.
+- Socket teardown: `nl80211` URELEASE → `cfg80211_release_pmsr()`.
 
-The companion NTB DMA alias quirk is a separate one-line candidate; this
-ID patch does not depend on it.
+**Step 5.3: Callees**
+Record: mutex, `genlmsg_new`, `mac80211_hwsim_send_pmsr_request`,
+virtio/wmediumd unicast. After the fix, notification is best-effort;
+**state drop is not**.
 
-Verification:
-- [Phase 1] Parsed tags: Logan Gunthorpe SOB, Bjorn Helgaas SOB, lore
-  Link; no Fixes/Reported-by/Cc: stable
-- [Phase 1] `git describe HEAD` / Makefile: local tree is 7.3.0-rc4
-  (`v7.3-rc4-27-gf0100363d8c37`)
-- [Phase 2] Diff: +1 line in `switchtec_pci_tbl[]` —
-  `SWITCHTEC_PCI100X_DEVICE(0x1008, SWITCHTEC_GEN4)`
-- [Phase 2] Confirmed probe uses `id_table` and requests
-  `ntb_hw_switchtec` for bridge class
-- [Phase 3] `git blame`: PCI1001–1006 from `a3282f84b2151` (v6.13-rc1);
-  PCI1008 from `0d8a6306c680e`
-- [Phase 3] `git merge-base --is-ancestor a3282f84b2151 HEAD` succeeded
-- [Phase 3] Series companions: `8b326de3cc02c` (DMA ID), `00a479ba1d012`
-  (NTB quirk)
-- [Phase 4] `b4 dig -c 0d8a6306c680e`: lore URL found; v1-only 3-patch
-  series
-- [Phase 4] `b4 dig -w`: linux-pci, Bjorn Helgaas, Vinod Koul, Microchip
-  Cc
-- [Phase 4] mbox: Helgaas applied for v7.3; Sashiko clean on this patch;
-  Vinod Acked DMA ID; no NAK
-- [Phase 4] UNVERIFIED: stable@ mailing list (lore HTTP 403)
-- [Phase 5] NTB binds via `switchtec_class` class_interface; this ID is
-  required for NTB attach
-- [Phase 6] File in tree has PCI100x macro and IDs; patch applies
-  cleanly
-- [Phase 7] Maintainer entry: Logan Gunthorpe for Switchtec
-- [Phase 8] Failure: device unbound, not a kernel crash; device-ID
-  exception applies
-- [Phase 9] stable-kernel-rules.rst line 15 explicitly allows device ID
-  additions
+**Step 5.4: Reachability**
+Record: Yes, from userspace on this tree:
+1. `NL80211_CMD_PEER_MEASUREMENT_START` (`GENL_UNS_ADMIN_PERM`) with
+   PMSR capa on an hwsim radio (wmediumd or virtio).
+2. Close the nl80211 socket or take the wdev down → abort → cfg80211
+   frees `req`.
+3. `HWSIM_CMD_REPORT_PMSR` has **no** `GENL_UNS_ADMIN_PERM` (verified at
+   the genl op). Combined with a leftover pointer, that is the UAF.
+4. Extra path: wmediumd URELEASE sets `data->wmediumd = 0`
+   (`hwsim_register_wmediumd(net, 0)`). Old abort **returned
+   immediately** and never cleared.
+
+**Step 5.5: Similar patterns**
+Record: Same lifetime bug described for iwlwifi MLD in series 3/8
+(`mld->ftm_initiator.req` left dangling). hwsim abort was the incomplete
+half of start-saves/complete-clears.
+
+---
+
+## Phase 6: This checkout
+
+**Step 6.1: Local tree and buggy code**
+Record:
+- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
+- `make kernelversion`: **7.3.0-rc4**
+- Buggy abort (save on start, clear only in `hwsim_pmsr_report_nl()`)
+  exists here; pre-image at `37a77bd1395e8^` still has the early return
+  and no NULL. Introduced v6.4-rc1; **not after this branch point**.
+
+**Step 6.2: Backport difficulty**
+Record: **Clean apply** on this tree’s `mac80211_hwsim_main.c`. Function
+and fields (`pmsr_request`, `pmsr_request_wdev`, `mutex`) are present.
+
+**Step 6.3: Related fixes already here**
+Record: No earlier abort-clear. `2bef4d1fb8b34` is a different NULL
+check. `aeea930c7a878` is sender auth, not this UAF.
+
+---
+
+## Phase 7: Subsystem
+
+**Step 7.1**
+Record: **drivers/net/wireless/virtual** (mac80211_hwsim). Kconfig:
+“Simulated radio testing tool… not needed for normal wireless LAN
+usage.” Criticality: **PERIPHERAL** as hardware, but **IMPORTANT** as a
+virtual/test driver shipped as a module and used by
+CI/syzkaller/wmediumd.
+
+**Step 7.2**
+Record: File is actively developed (NAN, virtio, many 2026 hwsim fixes).
+PMSR abort itself has been unchanged since 2023 — a long-standing hole,
+not churn from last month.
+
+---
+
+## Phase 8: Impact and risk
+
+**Step 8.1: Who**
+Record: Users with `CONFIG_MAC80211_HWSIM` who start PMSR
+(wmediumd/virtio) and abort. Not general Wi-Fi laptops. Distros often
+ship the module; Android Cuttlefish / mac80211 selftests use it.
+
+**Step 8.2: Trigger**
+Record: Start PMSR, then abort (socket close / iface down), then a
+report **or** wmediumd disconnect so abort’s old early-return fires.
+Needs CAP_NET_ADMIN to **start**; report genl op is unrestricted.
+Timing-dependent if wmediumd still reports after abort;
+**deterministic** dangling pointer after abort regardless.
+
+**Step 8.3: Failure mode**
+Record: **Use-after-free** in `cfg80211_pmsr_report` /
+`cfg80211_pmsr_complete` (`req->cookie`, `req->nl_portid`, …). Severity:
+**HIGH** (oops/KASAN; possible memory corruption). Secondary: stuck
+`-EBUSY` on later PMSR.
+
+**Step 8.4: Risk vs benefit**
+Record: Benefit **high** for anyone hitting hwsim PMSR abort (crash).
+Risk **very low**: ~10-line pointer clear under an existing mutex. Ratio
+favors taking it on this tree.
+
+---
+
+## Phase 9: Synthesis
+
+**Step 9.1: Evidence**
+For:
+- Real UAF with a traced cfg80211 `kfree(req)` after `rdev_abort_pmsr()`
+- Small, obviously correct, mutex-protected
+- Bug in this tree since v6.4-rc1
+- Standalone; no new API
+- Author tested abort-then-report under KASAN
+- Wireless maintainer applied it
+- Original submission had Fixes: + Cc: stable
+
+Against:
+- Test/simulator driver; Johannes said hwsim is not very relevant on
+  deployed systems
+- No syzbot/external user report
+- Start path needs admin + wmediumd/virtio
+- LLM-assisted series (maintainer criticized *other* patches, not this
+  one)
+
+Unresolved: stable@ lore search (HTTP 403). Does not change the local-
+tree technical picture.
+
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** (clear-on-abort; KASAN boot
+   described)
+2. Real user-visible bug? **PASS** (UAF / oops; also stuck PMSR)
+3. Important (crash/security/corruption/deadlock)? **PASS** (UAF → HIGH)
+4. Small and contained? **PASS** (+7/−3, one function)
+5. No new features/APIs? **PASS**
+6. Applies to this tree? **PASS** (code present; clean)
+
+**Step 9.3: Exceptions**
+Record: None (not a device ID/quirk/DT/build/doc exception). Qualifies
+as a normal memory-safety fix.
+
+**Step 9.4: Decision**
+This checkout is **v7.3-rc4**. The buggy hwsim PMSR abort path is here.
+The patch is a small UAF fix with no prerequisites. Maintainer
+skepticism about hwsim on production APs does not make a use-after-free
+in this tree’s driver “not a bug.” It should be taken.
+
+---
+
+## What the commit solves for this tree
+
+`mac80211_hwsim` stores cfg80211’s PMSR request in `data->pmsr_request`.
+cfg80211 frees that object when abort finishes. This tree’s abort
+callback never dropped the pointer (and skipped all cleanup if wmediumd
+had already exited). A later `HWSIM_CMD_REPORT_PMSR` dereferences freed
+memory. Clearing the two pointers under `data->mutex` when abort matches
+is the whole fix.
+
+## Risk vs benefit
+
+Benefit: prevent a KASAN/UAF oops on PMSR abort and allow a later start.
+Risk: negligible; notification becomes best-effort after the pointer is
+already gone, which is what cfg80211 requires.
+
+## Concerns
+
+None that block this tree: no missing helpers, no series dependency,
+file is already `mac80211_hwsim_main.c`. Johannes’s “deployed systems”
+comment is priority, not a correctness NAK.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed committed tags: Link msgid
+  `20260708195911.84365-2`; SOBs Zhao Li + Johannes Berg; no Fixes in
+  committed text
+- **[Phase 1]** mbox of original mail: Fixes `5530c04c87c5`, Cc: stable
+- **[Phase 2]** `git show 37a77bd1395e8`: +7/−3 in
+  `mac80211_hwsim_abort_pmsr` only
+- **[Phase 2]** Read current abort (lines 3848–3911) and
+  `hwsim_pmsr_report_nl` (4213–4277): report uses `data->pmsr_request`
+  then NULLs it
+- **[Phase 2]** Read `cfg80211_pmsr_process_abort()`:
+  `rdev_abort_pmsr()` then `kfree(req)`
+- **[Phase 3]** `git blame` on pre-image: abort from `8ba1da95053e0`;
+  `git describe --contains` → v6.4-rc1
+- **[Phase 3]** `git merge-base --is-ancestor 5530c04c87c59 HEAD` → 0;
+  same for `8ba1da95053e0`
+- **[Phase 3]** `git log --oneline --grep=pmsr --
+  drivers/net/wireless/virtual/`: series neighbor `aeea930c7a878`
+  independent
+- **[Phase 3]** `git log --oneline -S mac80211_hwsim_abort_pmsr --
+  drivers/net/wireless/virtual/`: only intro + this fix
+- **[Phase 4]** `b4 dig -c 37a77bd1395e8`: patch.msgid.link `…84365-2`
+- **[Phase 4]** `b4 dig -a`: v1 of this patch; “v2” is unrelated nl80211
+  color-change
+- **[Phase 4]** `b4 dig -w`: linux-wireless, Johannes, Jaewan Kim,
+  stable@
+- **[Phase 4]** mbox msg from Johannes: wireless-next; hwsim “not all
+  that relevant in deployed systems”; no NAK of this diff
+- **[Phase 4]** WebFetch lore/stable: HTTP 403 — UNVERIFIED whether it
+  was discussed on stable@ beyond original Cc
+- **[Phase 5]** Grep: abort wired in `ieee80211_ops`; nl80211 URELEASE
+  calls `cfg80211_release_pmsr`
+- **[Phase 5]** `HWSIM_CMD_REPORT_PMSR` op has no `GENL_UNS_ADMIN_PERM`;
+  `NL80211_CMD_PEER_MEASUREMENT_START` has it
+- **[Phase 5]** wmediumd URELEASE zeros portid via
+  `hwsim_register_wmediumd(net, 0)`
+- **[Phase 6]** `git describe HEAD` v7.3-rc4-27-gf0100363d8c37; Makefile
+  7.3.0-rc4
+- **[Phase 6]** `git merge-base --is-ancestor 37a77bd1395e8 HEAD` → 0
+  (present; judged on merit, not as “already selected”)
+- **[Phase 6]** Pre-fix abort still has early return without NULL (shown
+  at `37a77bd1395e8^`)
+- **[Phase 7]** Kconfig: test tool, module `mac80211_hwsim`
+- **[Phase 8]** `cfg80211_pmsr_complete()` derefs `req->cookie` /
+  `req->nl_portid` — UAF if abort already freed `req`
+- **UNVERIFIED:** How many distro .configs enable `MAC80211_HWSIM` — not
+  used to drive the verdict; UAF is in-tree regardless
+
+The fix is small, surgical, and matches stable rules for a real use-
+after-free in code this tree has had since v6.4.
 
 **YES**
 
- drivers/pci/switch/switchtec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
-index f32ddfa79da99..30566c2d9f806 100644
---- a/drivers/pci/switch/switchtec.c
-+++ b/drivers/pci/switch/switchtec.c
-@@ -1874,6 +1874,7 @@ static const struct pci_device_id switchtec_pci_tbl[] = {
- 	SWITCHTEC_PCI100X_DEVICE(0x1004, SWITCHTEC_GEN4),  /* PCI1004 16XG4 */
- 	SWITCHTEC_PCI100X_DEVICE(0x1005, SWITCHTEC_GEN4),  /* PCI1005 16XG4 */
- 	SWITCHTEC_PCI100X_DEVICE(0x1006, SWITCHTEC_GEN4),  /* PCI1006 16XG4 */
-+	SWITCHTEC_PCI100X_DEVICE(0x1008, SWITCHTEC_GEN4),  /* PCI1008 16XG4 */
- 	{0}
- };
- MODULE_DEVICE_TABLE(pci, switchtec_pci_tbl);
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index 484198766efda..89794c724858c 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -3654,9 +3654,6 @@ static void mac80211_hwsim_abort_pmsr(struct ieee80211_hw *hw,
+ 	int err = 0;
+ 
+ 	data = hw->priv;
+-	_portid = READ_ONCE(data->wmediumd);
+-	if (!_portid && !hwsim_virtio_enabled)
+-		return;
+ 
+ 	mutex_lock(&data->mutex);
+ 
+@@ -3665,6 +3662,13 @@ static void mac80211_hwsim_abort_pmsr(struct ieee80211_hw *hw,
+ 		goto out;
+ 	}
+ 
++	data->pmsr_request = NULL;
++	data->pmsr_request_wdev = NULL;
++
++	_portid = READ_ONCE(data->wmediumd);
++	if (!_portid && !hwsim_virtio_enabled)
++		goto out;
++
+ 	skb = genlmsg_new(GENLMSG_DEFAULT_SIZE, GFP_KERNEL);
+ 	if (!skb) {
+ 		err = -ENOMEM;
 -- 
 2.53.0
 
