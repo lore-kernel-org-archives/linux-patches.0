@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDB7543C3D;
-	Mon, 19 Oct 2026 14:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AACB543C58;
+	Mon, 19 Oct 2026 14:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418772; cv=none; b=HEa0Io+/zRN6UuW+fOBXvz3d5RJ8oWTr9Op98VX0EmaiSJpeiq15fdBHThAcyk+4KX8iaclH4Tpw4LedwAc7eTblrbAuqKn2MpPKssrPhbY7QUuKR9ADsQ1zh4wRSKJwFpYUEK/M4MkPfLyxEzwLiBrMcEEq7/u3DfxTRp7qulM=
+	t=1792418773; cv=none; b=Bu4Ar2BLyk7CVLjxJuRI6hMVCm4/BbchiUiLpNEHVrIRSWJxiMj4iqIMbru1QU1f72n1IKDAbXOqMOdBAao7QQHUbFTXh8JkQHyW0Dc8Du0ysA0etm3l8DkNGdK8Nkw3Dry/hRyISDByhzBr5W2RntsMPN2kxLVpOwNIn3IkP/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418772; c=relaxed/simple;
-	bh=EoudlL7YwgDi7sJK8VzGj1yFIiwPZ1prbOJ2prvU8OY=;
+	s=arc-20240116; t=1792418773; c=relaxed/simple;
+	bh=bBxz/Uhgb+d5MEu9EO0tuGIkk7pTuyaYOmPNtDxxKKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hoIH/s8VzSKQItYuc98HiwchSnHsCLtSFB61JW3tbsyoC4HioqY7vptc90ir+JneSYu1nd/PwKfr5tu9CR1VxmmEOO2SNEIYU12qNZM6k1AQjYAlPnVFG5OKDpMoV3RjDtEJhipbXOHBvU6nH2L8IHdkkky5KYwV788lNOlzCbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TankBjgE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ssenggmk10naoV6BbnItp9/I+BHjiJk21afQuYJr3kUYjirACIBo76wnVATAi6VfoMOCGjmEaW6IXcRf9dLD5Zjlnu0Id336PpAsfqM1rpW++L7PKAl740+1P8P+Y2NVeLlidFuJd97h9JO1+6qAcAXQRO4F8vO2+pE8Kf5cBzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VFKUGR3k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TankBjgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EFF1F000CD;
-	Mon, 19 Oct 2026 14:06:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VFKUGR3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9041F000C7;
+	Mon, 19 Oct 2026 14:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418769;
-	bh=G9Y99oW6oDHR0wfYeVH1Lh3TE8TZx3h9bjl3n725Kc8=;
+	s=k20260515; t=1792418770;
+	bh=a1Kbn9w0EaGrLWbYU+vny+iLYXmyc0hfhWII48DP8E8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TankBjgE+rvs3Fdy8m+pFKQgCpHVycaQzXHTy6bsLTSAaVqzCLLU/yKbV5eZLOy1W
-	 gXZVpSqKmTXIx5a+GmjdOnZRjPTdfHXu+EBkuQRWa/LqSCiKh69C3i6Hv2vlIvsQmA
-	 vd4Hxvo+mLHfjngRBJHf9VbLo8knTDbaP3QKLUByXW+WlqT1kq7uwD+SX5Balyargi
-	 Mty0IS8RpzEJD8pezKCGmlM+uXKJ6DZQ3u3oHZPnR/6FIxawGYElZ9IKpiO+EEa8//
-	 Sp50WJAeYl50rIdjXRVwfWGcZR5R/t/hfX01g7zOT9lbqft7FQqllcHqjnEeeE8zK6
-	 1QBRCL7m1MRpQ==
+	b=VFKUGR3kYIEf2jKYbGOZHx/SdGHpdpstVhp/izKkwUn2ywap0/nKHDASA82K7VXAH
+	 7a4u9cEvq5aT6xwT5C2k/rQHFhzHLgQDZuDrncRjNLkuB1qZjzkrfr+YiROan2USq+
+	 85gM1FopuSLJrhRfRUgW0S1o2GH24n/AZWAExSWqSlcYyu7exWDINrlIaBf3mt7nus
+	 91gWc+fBpGyzbHaHWD2M2dfFm8+59nsgR0s6ypFf9revU+gqmssFebl6sL1gGPUrel
+	 WtvotObL3nzfGIvV1ALwslnoai2yViWC8fzZsEUvjg1qMC201/estG/kyfX1PzZEpL
+	 8/KXB48/pZnbw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	jack@suse.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: em28xx: dev_info->pr_info since dev has been freed
-Date: Mon, 19 Oct 2026 09:52:53 -0400
-Message-ID: <20261019135441.1420968-482-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] udf: Fix bh leak for unallocated space entries
+Date: Mon, 19 Oct 2026 09:52:54 -0400
+Message-ID: <20261019135441.1420968-483-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,450 +51,453 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit c132b07f7e5853c0df35a9b94b8e204cdc6afdef ]
+[ Upstream commit d95094d4c0a62ea17b8a7c6399b42381b8a55bc0 ]
 
-In em28xx_free_device() dev_info passed &dev->intf->dev,
-but that device can be freed already.
+When processing unallocated space entries we didn't properly release the
+inode bh. Fix it.
 
-Just use pr_info instead.
-
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line use-after-free fix in a USB disconnect/teardown path.
-The local tree is mainline **v7.3-rc4** (`7.3.0-rc4`); the driver and
-the delayed-free path are present, and the change is independently
-correct.
+This is a one-line `brelse()` on the UDF unallocated-space inode success
+path. The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`).
+The UDF `TAG_IDENT_USE` path exists here, the leak is real, and the fix
+is surgical, so it belongs in this tree.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Subsystem: `media: em28xx`
-- Action verb: implicit fix (`dev_info->pr_info since dev has been
-  freed`)
-- Claimed intent: stop logging through a USB `struct device` that may
-  already have been freed.
 
-Record: **[media/em28xx] [replace logging helper] [do not use freed USB
-device in em28xx_free_device()]**
+Record: **[udf] [Fix] [release the inode buffer_head after successfully
+reading an unallocated space entry]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- No `Fixes:` tag (expected for this review)
-- No `Reported-by:` / syzbot
-- `Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>` — author tested
-  on real hardware
-- No `Reviewed-by:` / `Acked-by:` on the committed message
-- No `Link:`
-- No `Cc: stable@vger.kernel.org` (expected)
-- `Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (author;
-  V4L2 maintainer)
-- `Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>`
-  (media maintainer)
-
-Record: **Author+media maintainer SOBs; Tested-by from author; no
-Fixes/Cc stable (not a negative).**
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Body: `em28xx_free_device()` passed `&dev->intf->dev` to `dev_info`, but
-that USB interface device can already be gone. Replace with `pr_info`
-using `dev->name`.
 
 Record:
-- Bug: use of `dev->intf->dev` after the USB interface may have been
-  freed
-- Symptom: kernel UAF / oops while printing “Freeing device”
-- Version info: none in the message; history shows the log line since
-  v4.10
-- Root cause: delayed `kref_put` after USB disconnect tears down `intf`
+- `Signed-off-by: Jan Kara <jack@suse.cz>` (author; UDF maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, `Link:`, or `Cc: stable`
+- Absence of `Fixes:` / `Cc: stable` is expected for this review
+  pipeline and is **not** a negative signal
+- Ignored for decision: any candidate-prep markers (`[Upstream commit
+  ...]`, `Signed-off-by: Sasha Levin`) — none were on the real commit
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
+Record:
+- **Bug:** “When processing unallocated space entries we didn't properly
+  release the inode bh.”
+- **Symptom/failure mode:** leaked `buffer_head` (and the block-device
+  page it pins) on the success path for `TAG_IDENT_USE` inodes
+- **Version information:** none in the message
+- **Root cause (from message + code):** early `return 0` skips the
+  function-wide `out: brelse(bh)`
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Not hidden. Cover letter for the series says explicitly: “The fifth
-patch fixes a use-after-freed”.
 
-Record: **[Explicit UAF fix, not cleanup]**
+Record: **Not a hidden fix.** Subject and body state a leak. The diff is
+a single `brelse(bh)` before `return 0`.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+---
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-- File: `drivers/media/usb/em28xx/em28xx-cards.c` (1 insertion, 1
-  deletion)
-- Function: `em28xx_free_device()`
-- Scope: single-file surgical fix
 
-Record: **[em28xx-cards.c ±1] [em28xx_free_device] [surgical]**
+Record:
+- File: `fs/udf/inode.c` — **+1 / -0**
+- Function: `udf_read_inode()`
+- Scope: **single-file, one-line surgical fix**
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Before:
-```
-dev_info(&dev->intf->dev, "Freeing device\n");
-```
-After:
-```
-pr_info("%s: Freeing device\n", dev->name);
+
+`udf_read_inode()` obtains `bh` from `udf_read_ptagged()` (referenced
+buffer). FE/EFE paths copy inode data and fall through to:
+
+```1665:1668:fs/udf/inode.c
+        ret = 0;
+out:
+        brelse(bh);
+        return ret;
 ```
 
-This runs at the start of the kref release callback, **before**
-`kfree(dev)`. `dev->name` is an embedded `unsigned char name[32]` in
-`struct em28xx`, still valid. `&dev->intf->dev` is not, if USB core
-already dropped the interface.
+The USE (`TAG_IDENT_USE`) branch copies the unallocated-space payload,
+then **returns 0 immediately**. Error paths in that branch (`goto out`)
+already drop `bh`. The success path did not.
 
-Record: **[dev_info on possibly-freed usb_interface -> pr_info on still-
-live em28xx::name]**
+**Before:** success on a USE inode → `return 0` with `bh` still held.
+**After:** `brelse(bh); return 0;` — same as the normal `out:` path.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Category: **memory safety / use-after-free**.
 
-Call path (verified in this tree):
-1. `em28xx_usb_disconnect()` sets `dev->disconnected = 1`, calls
-   `em28xx_close_extension()`, then `em28xx_release_resources()`
-   (`usb_put_dev`), then `kref_put(&dev->ref, em28xx_free_device)`.
-2. Extensions hold extra refs. Audio PCM close still does `kref_put`
-   (`em28xx-audio.c`); v4l2 defers the last `kref_put` until
-   `em28xx_free_v4l2()` after the last userspace close.
-3. If a capture/audio handle is still open at unplug, the last
-   `kref_put` happens **after** USB `disconnect()` returns. USB core
-   then unregisters/frees `usb_interface`. `dev->intf` is dangling.
-4. `dev_info(&dev->intf->dev, ...)` dereferences that freed `struct
-   device`.
-
-This delayed-free path is not new: even before the 2026 v4l2-release-
-callback series, open/close took `kref_get`/`kref_put` on `dev->ref`, so
-the last put could already run after unplug.
-
-Record: **[UAF] [printk through freed usb_interface after delayed kref
-release]**
+Record: **[resource leak / missing `brelse`]**
+`udf_read_ptagged()` returns a held `buffer_head`. The USE success path
+never released it. Error paths were already correct.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Obviously correct: stop touching `intf` once it may be gone; log via a
-field inside `dev` that has not been freed yet. No API change.
-Regression risk is negligible (log prefix loses the kernel device name;
-`dev->name` is set in probe via `snprintf`).
 
-Record: **[minimal, correct] [regression risk very low]**
+Record:
+- **Obviously correct:** the only missing release on that early return;
+  `bh` is not used after the `memcpy`
+- **Minimal:** one statement, no unrelated edits
+- **Regression risk:** very low. No lock, API, or control-flow change
+  beyond dropping a ref that was already dropped on every other path
+- No double-`brelse`: this branch does not fall through to `out:`
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Buggy `dev_info` line: `29b05e22f5c68c` (“[media] em28xx: use
-usb_interface for dev_foo() calls”, Mauro, 2016-12-07). `git describe`
-on that commit: `v4.9-rc6-495-g29b05e22f5c68`; `git describe
---contains`: `v4.10-rc1~71^2^2~4`. `em28xx_free_device()` itself is from
-`47677e51e2a404` (2014).
 
-Record: **[29b05e22f5c68c, first in v4.10] [long-standing]**
+Record:
+- USE branch present since **Linux 2.6.12-rc2** (`1da177e4c3f41`)
+- Early `return 0` for USE came from **`6d3d5e860a114a`** (“udf: Make
+  udf_read_inode() and udf_iget() return error”, **v3.17-rc5**). That
+  commit turned a pre-existing `return;` (also without `brelse`) into
+  `return 0`, still without `brelse`
+- The leak on this success path is **old**, not a recent regression
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-No `Fixes:` tag.
 
-Record: **[N/A — no Fixes tag; introducing commit identified via
-blame]**
+Record: **No `Fixes:` tag.** Not applicable. The missing `brelse` has
+been on this early return since the error-return conversion (and the
+void-function `return;` before that).
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-This commit is **patch 5/6** of Hans Verkuil’s “media: em28xx: fix
-lifecycle issues” series (v2, 2026-06-16), applied next to:
-- `288254383674b` use v4l2_device release callback
-- `de626073dfcbb` drop `users` field
-- `7c8bf63b79371` use `vb2_video_unregister_device` (immediate parent)
-- `67f87b104f4ef` requeue buffers if start_streaming fails
 
-Those other patches are lifetime/refactor/WARN_ON work. **This hunk does
-not use any of that new machinery**; it only edits a log line that has
-existed since 2016.
-
-Record: **[part of a series, but this patch is standalone]**
+Record:
+- Immediate parent: **`b8228f59dc58a`** “udf: bound lengthAllocDescs
+  from unallocated space entry” (Jay Vadayath; committed by Jan Kara two
+  minutes earlier). That adds a `goto out` bounds check on the **error**
+  path of the same branch; it does **not** fix the success-path leak
+- Same 7.3-rc1 fs pull also has other hardening (`udf: validate extent
+  partition references…`, isofs bh-leak fixes)
+- This leak fix is **standalone**. It does not need the bounds-check
+  commit
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Hans Verkuil is the V4L2 maintainer; Mauro is listed as em28xx
-maintainer in `MAINTAINERS`. Cover letter: tested on Hans’s em28xx
-device.
 
-Record: **[subsystem maintainer-level author; related lifecycle series
-exists but is not a hard dep]**
+Record: **Jan Kara is the UDF maintainer** (`MAINTAINERS`: `M: Jan Kara
+<jack@suse.com>`). Recent `fs/udf/` work is mostly his. That is a strong
+quality signal for a one-line leak fix.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-The replacement uses existing `pr_info` and `dev->name`. No new helpers.
-Applies on the pre-series `em28xx_free_device()` as well.
 
-Record: **[no prerequisites] [can apply standalone]**
+Record: **None required.** The hunk only needs the existing
+`TAG_IDENT_USE` early `return 0` and a live `bh`. Both are in this tree.
+Applies standalone.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-`b4 dig -c c132b07f7e585` → https://patch.msgid.link/4f25383b64139feb0a6
-4a07c20b1776d13301f9c.1781615432.git.hverkuil+cisco@kernel.org
 
-`b4 dig -a`:
-- v1: 3-patch series (2026-05-19), this change was not in v1
-- v2: `[PATCHv2 0/6] media: em28xx: fix lifecycle issues` (2026-06-16) —
-  this is 5/6
-
-Cover letter (from saved mbox): “The fifth patch fixes a use-after-
-freed”. No NAK on 5/6. Review discussion in the matched thread was about
-1/6 (`v4l2-async`), not this patch.
-
-Record: **[lore/msgid above] [v1 then v2/6] [no NAK on this patch]
-[author described it as UAF]**
+Record:
+- `b4 dig -c d95094d4c0a62…` — lore returned server errors; **no thread
+  match**
+- lore.kernel.org fetches returned **403**; search for this exact
+  subject did not find a posted patch
+- Unlike `b8228f59dc58a`, this commit has **no `Link:`** and only Jan
+  Kara’s SOB
+- **Conclusion (verified by commit metadata, not lore):** maintainer-
+  applied follow-up after taking Jay Vadayath’s bounds-check patch, not
+  a reviewed mailing-list series
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-`b4 dig -w`: Hans Verkuil; `linux-media@vger.kernel.org`; Mauricio Faria
-de Oliveira; Sakari Ailus. Sakari reviewed 1/6 only. Mauro applied it.
 
-Record: **[media list + Sakari on a different patch; Mauro merged]**
+Record: `b4 dig -w` could not run (no match / lore errors). No external
+reviewers on the commit. Author **is** the subsystem maintainer.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-No syzbot/bugzilla for this specific log-line UAF. Author found it while
-fixing em28xx lifecycle and tested on hardware.
 
-Record: **[no public crash report; maintainer-found UAF]**
+Record: **No dedicated bug report for this leak.** The adjacent USE-path
+work *was* reported:
+- Jay Vadayath’s KASAN OOB on crafted USE `lengthAllocDescs` (statfs →
+  `udf_count_free_table`)
+- Baul Lee’s similar patch, Cc: stable; Jan replied that `b8228f59dc58`
+  already covered it
+That discussion is about **OOB**, not this leak. It does show the USE
+mount path is reachable and under active scrutiny.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Series mates are separate bugs (v4l2-async crash, lifetime refactor, vb2
-unregister, start_streaming WARN_ON). Not required for this one-liner.
 
-Record: **[standalone among the 6]**
+Record: Not a numbered series. Sequential maintainer commits on the same
+branch:
+1. bounds-check (OOB)
+2. this `brelse` (leak)
+
+Independent; either can stand alone.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-lore.kernel.org/stable search was blocked (Anubis bot challenge). No
-stable discussion in the saved media thread.
 
-Record: **[UNVERIFIED: no stable@ thread retrieved]**
+Record: lore.kernel.org/stable search **failed (403)**. **UNVERIFIED**
+whether this SHA was already discussed on stable@. Historical precedent:
+a similar UDF `brelse` leak (`udf: fix memory leak while allocating
+blocks during write`) **did** go to stable in 2013.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+---
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-`em28xx_free_device()` (exported `EXPORT_SYMBOL_GPL`).
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `udf_read_inode()` (modified). Helpers involved:
+`udf_read_ptagged()`, `udf_alloc_i_data()`, `__udf_iget()`.
 
 **Step 5.2: TRACE CALLERS**
-`kref_put(&dev->ref, em28xx_free_device)` from:
-- `em28xx_usb_disconnect()` (`em28xx-cards.c`)
-- `em28xx_free_v4l2()` (`em28xx-video.c`) — after last v4l2 user
-- `em28xx_audio_fini()` and PCM close (`em28xx-audio.c`)
-- `em28xx_dvb` fini (`em28xx-dvb.c`)
-- `em28xx-input.c` fini
 
-The dangerous caller is a **late** `kref_put` after USB disconnect has
-returned.
+Record:
+- `udf_read_inode()` — only caller: `__udf_iget()` in `fs/udf/inode.c`
+- `__udf_iget()` — `udf_iget()` (normal lookup) and `udf_iget_special()`
+  (hidden/metadata inodes)
+- USE inodes are loaded at mount from the partition header:
+  `fs/udf/super.c` `phd->unallocSpaceTable.extLength` →
+  `udf_iget_special()` → sets `UDF_PART_FLAG_UNALLOC_TABLE`
+- That table inode is then used for block alloc/free (`fs/udf/balloc.c`)
+  and `udf_count_free_table()` / `statfs`
 
 **Step 5.3: TRACE CALLEES**
-`kref_to_dev`, `pr_info`, optional `em28xx_release_resources()` only if
-`!dev->disconnected` (that path still has a live interface), `kfree`.
+
+Record: `udf_read_ptagged()` → `udf_read_tagged()` returns a held `bh`.
+`udf_alloc_i_data()` kmallocs `iinfo->i_data`. After copy, the on-disk
+`bh` is no longer needed.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Userspace-reachable: unplug an em28xx USB capture stick while v4l2/ALSA
-still has it open, then close the app. Common physical-unplug path, not
-an obscure config.
 
-Record: **[reachable from USB unplug + close] [yes, from
-userspace/device removal]**
+Record: **Userspace-reachable.** Mount a UDF volume that uses an
+Unallocated Space Table (not only a bitmap). That is a documented UDF
+allocation method, used on some writable UDF media. Not a syscall fuzzer
+path by itself, but a normal mount of such media.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Many other `dev_info(&dev->intf->dev, ...)` calls exist, but they run
-while the interface is still bound (probe, streaming, disconnect
-itself). The unique one in the post-disconnect free callback was this
-“Freeing device” line.
 
-Record: **[only this log site in the free callback]**
+Record: FE/EFE already rely on `out: brelse(bh)`. Same-pull isofs bh-
+leak fixes. Older UDF `brelse` leak in `inode_getblk` was stable
+material. Pattern is systematic: early returns forgetting `brelse`.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Local tree: `v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3
-SUBLEVEL=0 EXTRAVERSION=-rc4`.
 
-`git merge-base --is-ancestor c132b07f7e585 HEAD` → yes. Current source
-already has `pr_info("%s: Freeing device\n", dev->name);`.
-
-The **bug** existed here before that commit; the **buggy pattern**
-(`em28xx_free_device` + `dev->intf` + delayed kref) is still the
-lifetime model. For any stable tree that branched with the 2016
-`dev_info` line and without this commit, the bug is present.
-
-Record: **[driver present; fix already in this mainline checkout; bug
-introduced v4.10]**
+Record: **Yes.** `fs/udf/inode.c` `udf_read_inode()` still has the USE
+branch (`TAG_IDENT_USE`, `iinfo->i_use = 1`, early `return 0`). This
+checkout is **7.3.0-rc4**; the leak existed on that path since v3.17
+(and the same missing release existed before that). `git merge-base
+--is-ancestor d95094d4c0a62 HEAD` succeeds — the fix is in this lineage
+(merged via `fs_for_v7.3-rc1`). That does **not** change technical
+merit; it confirms the code this commit targets is this tree’s UDF inode
+reader.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Hunk is one line in a function whose shape has been stable since 2014.
-Would apply cleanly to trees still using `dev_info`.
 
-Record: **[clean apply on pre-fix trees / already applied here]**
+Record: **Clean apply** on this tree. Context is the existing USE
+`memcpy` + `return 0`. No refactor of `udf_read_inode()` between the
+commit and HEAD that would conflict.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-This is the fix. No earlier alternate fix of this log site.
 
-Record: **[no other fix of this UAF]**
+Record: `b8228f59dc58a` (bounds check) is in this tree; it does **not**
+replace this leak fix. No other `brelse` on the USE success path besides
+this commit.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+---
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-`drivers/media/usb/em28xx/` — USB analog/DVB capture (Hauppauge,
-Terratec, etc.).
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-Record: **[media USB driver] [IMPORTANT / driver-specific, not
-staging]**
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
-Actively maintained (IDs, lifecycle, syzbot list-corruption fixes in the
-same files). Mature driver, bug is old.
+Record: **[fs/udf] [IMPORTANT]** — in-tree filesystem for DVD/CDRW and
+some USB/removable UDF volumes (`CONFIG_UDF_FS`). Not core VFS/mm, but a
+supported production FS, not staging.
 
-Record: **[mature, still active]**
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+Record: Mature driver, actively maintained by Jan Kara. Recent 7.3 work
+is hardening (OOB, deadlock, leaks), not a rewrite.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: WHO IS AFFECTED**
-Users of em28xx USB sticks (`CONFIG_VIDEO_EM28XX`). Not universal, but
-real consumer hardware.
+
+Record: **Filesystem-specific, config-specific:** `CONFIG_UDF_FS`
+volumes that use an **Unallocated Space Table**. Bitmap-only UDF is
+unaffected. Population is smaller than ext4, but real (optical and some
+removable UDF).
 
 **Step 8.2: TRIGGER CONDITIONS**
-Unplug (or USB reset) while a v4l2/ALSA/DVB client still holds the
-device, then close. Timing-dependent on refcount, but the window is the
-entire time the app stays open after unplug — not a one-instruction
-race.
 
-Unprivileged users can trigger it by unplugging hardware.
+Record:
+- Trigger: successful `udf_read_inode()` of a USE inode — typically
+  **once per such inode at mount**
+- Not a hot path; not unprivileged-syscall without an already-mounted
+  (or mountable) UDF image
+- Remount / repeated mount of such media repeats the leak
 
 **Step 8.3: FAILURE MODE SEVERITY**
-`dev_info()` → `dev_printk()` walks a freed `struct device`. UAF: oops /
-KASAN report, possible panic. Not data corruption, but a real crash on a
-common unplug path.
 
-Record: **[UAF oops] [HIGH]**
+Record: **[buffer_head leak] [MEDIUM–HIGH]**
+Not a panic or corruption by itself. A held `bh` pins a **block-device**
+page; the extra ref is not tied to the inode’s later `iput`, so it can
+persist after unmount. That is a real leak, not a log-only issue.
+Severity is below UAF/OOB on this same path, but it is a genuine
+resource bug.
 
 **Step 8.4: RISK-BENEFIT RATIO**
-- Benefit: prevent oops on device removal for em28xx users
-- Risk: 1-line log change, no locking/API/lifetime change
 
-Record: **[high benefit for those devices] [very low risk] [favorable]**
+Record:
+- **Benefit:** stops a long-standing bh leak on a real UDF metadata
+  inode type; same class as prior stable UDF `brelse` fixes
+- **Risk:** very low (1 line, matches existing cleanup)
+- **Ratio:** favorable — tiny, obviously correct leak fix
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
+
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-FOR:
-- Confirmed UAF: delayed `em28xx_free_device()` after USB interface
-  teardown
-- Cover letter calls it a use-after-free
-- One-line, obviously correct
-- Tested by V4L2 maintainer on real em28xx hardware; merged by Mauro
-- Bug in code since v4.10; delayed kref existed long before the 2026
-  series
-- No new API/feature
-- Standalone; other series patches not required
+**FOR backporting**
+- Real missing `brelse` on a success path; error paths already released
+  `bh`
+- One line, obviously correct, maintainer-authored
+- Buggy code is in this tree and has been for many releases
+- No new API/feature; no prerequisites
+- Users of UDF unallocated-space tables hit it at mount
+- Same class of fix has gone to stable before
 
-AGAINST:
-- No `Fixes:` / `Cc: stable` / syzbot (not a reason to reject)
-- Driver-specific, not core mm/net
-- This mainline checkout already contains the commit (expected for a
-  mainline candidate)
-- UNVERIFIED: stable@ mailing list history (lore bot-blocked)
+**AGAINST**
+- Not a crash, UAF, or data-corruption fix
+- Trigger is mount of a less common UDF allocation layout, once per
+  inode
+- No `Reported-by` / syzbot for *this* leak (the adjacent OOB *was*
+  reported)
+- No mailing-list review of this specific commit (maintainer direct
+  commit)
+- Could not query lore.kernel.org/stable (403)
+
+**UNRESOLVED**
+- Whether this SHA was already mailed or discussed on stable@ (lore 403
+  / `b4 dig` failed)
 
 **Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one-line; Tested-by Hans;
-   cover letter explains UAF
-2. Fixes a real bug that affects users? **PASS** — UAF on unplug-while-
-   open
-3. Important issue? **PASS** — UAF oops, HIGH (not theoretical)
-4. Small and contained? **PASS** — 1 line, one function
+
+1. Obviously correct and tested? **PASS** — matches the existing `out:`
+   release; author is the UDF maintainer
+2. Fixes a real bug that affects users? **PASS** — leaked `buffer_head`
+   on USE inode read at mount
+3. Important issue? **PASS** — resource leak that pins bdev pages; not a
+   panic, but a real leak with historical stable precedent
+4. Small and contained? **PASS** — +1 line, one function
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — surrounding
-   `em28xx_free_device()` matches; trees that still have `dev_info` get
-   a clean apply. This checkout already has the after-state because it
-   *is* mainline including the fix.
+6. Can apply to the local tree? **PASS** — `fs/udf/inode.c` USE path is
+   present; hunk is trivial
 
 **Step 9.3: EXCEPTION CATEGORIES**
-Not a device-ID/quirk/DT/build/doc exception. It is a normal memory-
-safety fix.
+
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a normal
+small leak fix.
 
 **Step 9.4: DECISION**
-This should be backported. It is a small, tested UAF fix in a teardown
-path users hit when they unplug a capture device. It does not depend on
-the rest of the lifecycle series.
 
-What it solves for stable users: kernel oops from
-`dev_info(&dev->intf->dev)` after USB core has freed the interface, when
-the last em28xx kref is dropped from v4l2/audio close. Risk is
-essentially zero.
+This is a real, long-standing buffer leak on a path this tree actually
+has. The patch is one `brelse(bh)` on an early return that skipped the
+function’s only cleanup. Risk is negligible; benefit is stopping a leak
+that can pin block-device pages across mount/unmount of UDF volumes that
+use an unallocated space table. That meets stable rules for this
+checkout.
 
-Verification:
-- [Phase 1] Parsed tags: Tested-by Hans Verkuil; SOBs Hans + Mauro; no
-  Fixes/Cc stable/Reported-by
-- [Phase 1] Cover letter (mbox): “The fifth patch fixes a use-after-
-  freed”
-- [Phase 2] Diff: 1 line in `em28xx_free_device()`;
-  `dev_info(&dev->intf->dev)` → `pr_info("%s: ...", dev->name)`
-- [Phase 2] Call path: `em28xx_usb_disconnect` → `kref_put`; extra puts
-  from `em28xx_free_v4l2`, audio PCM close (`kref_put` at em28xx-
-  audio.c:312)
-- [Phase 3] git blame parent: `29b05e22f5c68c` (v4.10) introduced
-  `dev_info`; `git merge-base --is-ancestor 29b05e22f5c68c HEAD` true
-- [Phase 3] No Fixes tag; standalone vs series confirmed by reading
-  `288254383674b` (does not change this log line)
-- [Phase 3] `git merge-base --is-ancestor c132b07f7e585 HEAD` true
-  (original commit is in this mainline tree)
-- [Phase 4] `b4 dig -c c132b07f7e585`: msgid 4f25383b64139feb… ; v2 5/6
-  of lifecycle series
-- [Phase 4] `b4 dig -a`: v1 (3 patches) then v2 (6 patches); this UAF
-  patch added in v2
-- [Phase 4] `b4 dig -w`: linux-media, Sakari Ailus, Mauricio Faria de
-  Oliveira
-- [Phase 4] mbox: no NAK on 5/6; Sakari comments only on 1/6
-- [Phase 4] lore WebFetch 403; stable search Anubis-blocked — UNVERIFIED
-  stable@ discussion
-- [Phase 5] Callers of `em28xx_free_device` enumerated via grep of
-  `kref_put`
-- [Phase 5] `dev->name` is `unsigned char name[32]` in `struct em28xx`;
-  set in probe (`snprintf(dev->name, 28, "em28xx")`)
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = `7.3.0-rc4`
-- [Phase 6] Current file already has `pr_info` (fix present in this
-  checkout)
-- [Phase 7] MAINTAINERS: EM28XX VIDEO4LINUX DRIVER, Mauro Chehab
-- [Phase 8] Failure mode: UAF in `dev_printk` on freed `usb_interface` →
-  oops; trigger = unplug while open
-- UNVERIFIED: whether a dedicated stable@ thread exists (lore bot)
+---
+
+### What the commit solves for this tree
+
+`udf_read_inode()` holds a `buffer_head` from `udf_read_ptagged()`.
+File/extended-file inodes drop it at `out:`. Unallocated space entries
+(`TAG_IDENT_USE`) copy the payload and `return 0` without releasing
+`bh`. That happens when this kernel mounts a UDF filesystem that uses an
+unallocated space table (loaded via `udf_iget_special()` in
+`fs/udf/super.c`). The extra reference is a real leak, not a style
+issue.
+
+### Stable rules / risk
+
+Obviously correct, one line, no new API, applies to this 7.3-rc4 UDF
+code with no extra commits. Benefit outweighs risk.
+
+### Concerns
+
+No mailing-list review of *this* one-liner (likely spotted while
+applying the adjacent bounds-check). That does not make the leak
+incorrect. The bounds-check commit is **not** a prerequisite.
+
+---
+
+### Verification
+
+- **[Phase 1]** Parsed tags on `d95094d4c0a62`: only `Signed-off-by: Jan
+  Kara`; no Fixes/Reported-by/Cc stable
+- **[Phase 2]** Diff: +1 `brelse(bh)` in `udf_read_inode()` USE branch
+  before `return 0`; `out:` at 1666–1668 already does `brelse(bh)`
+- **[Phase 2]** Confirmed FE/EFE do not early-return; only USE does
+- **[Phase 3]** `git blame fs/udf/inode.c` 1475–1493: USE branch old;
+  `return 0` from `6d3d5e860a114a` (v3.17-rc5); `brelse` from this
+  commit
+- **[Phase 3]** `git show 6d3d5e860a114a`: old code was `return;`
+  without `brelse`; leak predates that refactor
+- **[Phase 3]** Parent `b8228f59dc58a` is a bounds check with `goto
+  out`, not a success-path release
+- **[Phase 3]** `git log --author='Jan Kara' -- fs/udf/`: maintainer;
+  `MAINTAINERS` UDF FILESYSTEM entry confirmed
+- **[Phase 3]** `git merge-base --is-ancestor d95094d4c0a62 HEAD` — 0
+  (commit is in this lineage)
+- **[Phase 4]** `b4 dig -c d95094d4c0a62…`: lore errors, no match
+- **[Phase 4]** WebFetch lore.kernel.org: 403; openwall: Jay Vadayath
+  OOB patch and Jan’s reply about `b8228f59dc58`; **no** thread for this
+  leak commit
+- **[Phase 4]** Historical stable UDF bh leak: `2fb7d99` / 3.7-stable
+  review mail (verified via search snippets)
+- **[Phase 5]** Callers: `__udf_iget` → `udf_iget` / `udf_iget_special`;
+  mount path `super.c:1155–1172` for unalloc space table
+- **[Phase 5]** `udf_read_ptagged` in `misc.c` returns
+  `udf_read_tagged()`’s `bh`
+- **[Phase 6]** `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` → `7.3.0-rc4`; Makefile 7.3.0-rc4
+- **[Phase 6]** Local `fs/udf/inode.c` contains the USE branch and the
+  `brelse` from this fix
+- **[Phase 7]** `CONFIG_UDF_FS` in `fs/udf/Kconfig`: CD/DVD/USB UDF
+- **[Phase 8]** Failure mode: leaked bh / pinned bdev page on USE inode
+  read, not oops
+- **UNVERIFIED:** stable@ discussion of this exact SHA (lore 403)
 
 **YES**
 
- drivers/media/usb/em28xx/em28xx-cards.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
-index b8e207443770e..af2c06a05084d 100644
---- a/drivers/media/usb/em28xx/em28xx-cards.c
-+++ b/drivers/media/usb/em28xx/em28xx-cards.c
-@@ -3556,7 +3556,7 @@ void em28xx_free_device(struct kref *ref)
- {
- 	struct em28xx *dev = kref_to_dev(ref);
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index 6a0c66d706295..84b1a0b7b28d2 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -1495,6 +1495,7 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
+ 		memcpy(iinfo->i_data,
+ 		       bh->b_data + sizeof(struct unallocSpaceEntry),
+ 		       bs - sizeof(struct unallocSpaceEntry));
++		brelse(bh);
+ 		return 0;
+ 	}
  
--	dev_info(&dev->intf->dev, "Freeing device\n");
-+	pr_info("%s: Freeing device\n", dev->name);
- 
- 	if (!dev->disconnected)
- 		em28xx_release_resources(dev);
 -- 
 2.53.0
 
