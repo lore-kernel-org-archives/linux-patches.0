@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AC3548383;
-	Mon, 19 Oct 2026 13:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E11538422E;
+	Mon, 19 Oct 2026 13:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418194; cv=none; b=cWPRsycwkMqqYkJzOWg9efVEXyjyKhIxgYAITxW6JVd/EQkamLB32VVCGkLW2hT8pia33Jfti41m71O+73lvFNLOU0ecOjnvXGWKxg2Rn83GlSKyPEn7hFWsFwR3MGqIJjGPON7IOtA3gk4m0PnCxEu/+F00DRKH5caopk1KRpI=
+	t=1792418195; cv=none; b=Q9jqXHPp/yBnu5VsqFnN6aw2ivodIroPaay1T5TCg/QHYuUzcVOtES9Ln7+ibSw50XVYa2OEXPmw7HYLJanvLemLjdjWuUP90Vv8o1Rukf6DqkHp7TOmgEL8ynH7NZ4cHBvqSrMezPs8SqB0St+nJSXkpXDN0zsUgIJt4gwHv9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418194; c=relaxed/simple;
-	bh=ycv05iTVb9HbBERCDJCNS7QLQDCwysj1x2yEF9333bI=;
+	s=arc-20240116; t=1792418195; c=relaxed/simple;
+	bh=gDuhLh3xzm1+PCur9Ea4AClzdSiOskaxCsOvp2DCZYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tHhUh1shMoHBcYGJlorFyY1x2BL2ps/vHIlmO++zvYqzIQHSml7lB+vF8UmHXXQ9NKs9RYUwQbXbo0UsuSMbOq1wWDzrv8gLBcVuKNq6KhvZSfOZso4hq9/lTsAQD0LKi5z3mX3oPpZl0FHCz1QM2ZgtJa6dpTf+2+913Czp/Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lazK86t4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O4S2F2lDWHHW00cu3yBX3n3NWa1Qjg45GCHE17m0DZiR8W0GlY7YVo78MayectouwtzHLEmPJ3bfyjf0mH2/UU/Kl6X6a3wk890tC9pN/q2uCJHcWa9wEfukE98sWwJa1WwacAvLca0+xA9SSYiYZKtSVwSr3XhC7WFqZUex0TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oYb/5YDK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lazK86t4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085991F000C8;
-	Mon, 19 Oct 2026 13:56:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oYb/5YDK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E61D1F000C7;
+	Mon, 19 Oct 2026 13:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418192;
-	bh=FASpZ5k/JyiXygAwiIimxKfKoMxwFYX/5kYDuwsYLlo=;
+	s=k20260515; t=1792418193;
+	bh=UUmqX9tSMyy7Z8P2BIsi4KqSAwSAqTXl96Wr8w+vzLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lazK86t40XxcY2NDAWhd4CJpRHyqnNboR/sDOMjLe8rcn8zw7OOPAEmZ5Bkgb0ooi
-	 s71ErRauZZbFvuhm8xAU+Y8IEwRhamyHRD5W8hksKUYPrfFxpEEaWMlaOlBGRm0B2J
-	 Xu0Ez/0ZCzTUU48f6TJbHRmuRq4YYhfC6xHUFMGzs/Q+sWTaq9kLZibDwBpQ6IoyUD
-	 r5/Yhi8ZZJ+TmvT/czLkFCscdnEDhjIcZQYJo0cs39zueunImfwqqHJVaXriF6s/wS
-	 xDwacxPKkBzZa1c8o7t4E+sQt0/tW6f3ri6qFioet1oVpASDHYRa4zVaBA7M+UunPh
-	 yEr1GRnUfepsA==
+	b=oYb/5YDKUMouyxr+ixOxU2s72fM+J0aUCeZW8SCgWHh2zVnpW9uY3u3hIax1SiHYn
+	 4UlQdOV+JuYYD+UbhTSVVIQSJCDW/gkUDoNWZ7CCfCbmh11Qi2hcxoJHRrzcQKLzQ3
+	 37iACtO85NtGYwRB8/4rU2mpDE1YXo0djt3Jy1cOUxzgh9ciWoGY3Q6bo1x5cettez
+	 RLll9yrhsaGiCK7Hx1fUwTiPuPhdKyQ3szViujOVeAmCIo8Sq4JmoYgW8pYo1u/8n2
+	 6gITU2Udk53ETIU6TgqJnUBoCNtfmF30BiEagqKYt55iO1ErjLf+alnovLgOTNbE6g
+	 AdQp++PVINrtQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Prashant Rahul <prashantrahul23@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+Cc: Logan Gunthorpe <logang@deltatee.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.1] wifi: mt76: mt7921: fix memory leak when skb_linearize fails in mcu rx event
-Date: Mon, 19 Oct 2026 09:46:08 -0400
-Message-ID: <20261019135441.1420968-77-sashal@kernel.org>
+	kurt.schwemmer@microsemi.com,
+	linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] PCI: switchtec: Add Microchip PCI1008 device ID
+Date: Mon, 19 Oct 2026 09:46:09 -0400
+Message-ID: <20261019135441.1420968-78-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,414 +53,361 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashant Rahul <prashantrahul23@gmail.com>
+From: Logan Gunthorpe <logang@deltatee.com>
 
-[ Upstream commit 4361f1660101270611eb5dc39799f620b35f2e4d ]
+[ Upstream commit 0d8a6306c680ee534be131e360f0cafa2bada7be ]
 
-The ownership of sk_buff skb is passed to mt7921_queue_rx_skb, each
-path inside it under the switch case handles cleaning of skb and it
-is true for mt7921_mcu_rx_event as well.
+Add the Microchip PCI1008 device ID to the core switchtec management
+driver's PCI ID table. Without it, the management endpoint on a PCI1008
+switch is not bound by this driver, preventing userspace tools from
+configuring or monitoring the switch and leaving NTB functionality
+unavailable.
 
-mt7921_mcu_rx_event, on a success path, either queues skb via
-mt76_mcu_rx_event or cleans it immediately inside
-mt7921_mcu_uni_rx_unsolicited_event.
-
-However inside mt7921_mcu_rx_event, if skb_linearize fails, the function
-returns immediately and never bothers cleaning skb which leaks skb.
-
-Since skb is fully owned at this point, it is safe to call
-dev_kfree_skb which fixes the leak.
-
-Granted, the skb_linearize failure is rare as it can only fail under
-heavy memory usage, but at the same time, leaking memory under heavy
-memory usage can worsen the OOM condition.
-
-Signed-off-by: Prashant Rahul <prashantrahul23@gmail.com>
-Link: https://patch.msgid.link/20260716-mt7921-mem-leak-v1-1-6e9c0ea19f63@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260714212010.230606-3-logang@deltatee.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable backport analysis: mt7921 MCU RX skb leak
+This is a one-line PCI ID addition to an existing Switchtec driver. The
+local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`).
+`SWITCHTEC_PCI100X_DEVICE` and the PCI1001–PCI1006 IDs are already here,
+so the patch is applicable.
 
-**Tree decided:** `pending-6.6` (6.6.157), SHA `04810563abb71`.
-At the start of this evaluation `git describe`/`make kernelversion`
-reported **6.6.157**. The working copy later moved to v7.3-rc4; every
-presence/absence claim below was rechecked against **`pending-6.6`**,
-not that later checkout.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-The candidate is mainline `4361f16601012` (`wifi: mt76: mt7921: fix
-memory leak when skb_linearize fails in mcu rx event`).
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: [PCI: switchtec] [Add] [Microchip PCI1008 device ID to the
+existing switchtec management driver’s PCI ID table]
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1 — Subject**
-Record: **[wifi: mt76: mt7921]** **[fix]** memory leak when
-`skb_linearize` fails in MCU RX event.
-
-**Step 1.2 — Tags**
-- `Signed-off-by: Prashant Rahul <prashantrahul23@gmail.com>` (author)
-- `Link: https://patch.msgid.link/20260716-mt7921-mem-
-  leak-v1-1-6e9c0ea19f63@gmail.com`
-- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` (mt76 maintainer;
-  applied the patch)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence of Fixes/Cc-stable is expected for this
-  review).
-Record: Maintainer SOB; msgid shows **v1 patch 1/1** (standalone).
-
-**Step 1.3 — Body**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Bug:** `mt7921_queue_rx_skb` transfers skb ownership into
-  `mt7921_mcu_rx_event`. Success paths free or queue the skb. If
-  `skb_linearize()` fails, the function returns without freeing.
-- **Symptom:** skb leak. Author notes failure is rare (ENOMEM) but
-  leaking under memory pressure can worsen OOM.
-- **Root cause:** missing `dev_kfree_skb` on the linearize error path.
-- **Version info in message:** none.
+- Signed-off-by: Logan Gunthorpe <logang@deltatee.com> (author; listed
+  maintainer of PCI DRIVER FOR MICROSEMI SWITCHTEC)
+- Signed-off-by: Bjorn Helgaas <bhelgaas@google.com> (PCI maintainer)
+- Link:
+  https://patch.msgid.link/20260714212010.230606-3-logang@deltatee.com
+- No Fixes: tag (expected)
+- No Reported-by / Tested-by / Reviewed-by / Acked-by / Cc: stable on
+  this commit
+- Ignore any Sasha Levin SOB (none on the real commit)
 
-**Step 1.4 — Hidden bug fix?**
-Record: **No disguise.** This is an explicit leak fix, not cleanup-as-
-fix.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1 — Inventory**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- File: `drivers/net/wireless/mediatek/mt76/mt7921/mcu.c` (**+3 / −1**)
-- Function: `mt7921_mcu_rx_event`
-- Scope: **single-file surgical fix**
-
-**Step 2.2 — Flow**
-Before (pending-6.6 `mcu.c:312-313`):
-
-```
-if (skb_linearize(skb))
-    return;
-```
-
-After:
-
-```
-if (skb_linearize(skb)) {
-    dev_kfree_skb(skb);
-    return;
-}
-```
-
-Record: **error path only.** Success paths unchanged.
-
-**Step 2.3 — Bug mechanism**
-Record: **[resource leak]** On `skb_linearize` failure (`-ENOMEM` for
-nonlinear skbs), the still-owned skb is dropped. Caller
-`mt7921_queue_rx_skb` does not free after `PKT_TYPE_RX_EVENT`. Other
-switch arms in the same caller (`dev_kfree_skb` / `napi_consume_skb`)
-and other arms of `mt7921_mcu_rx_event` (`dev_kfree_skb`,
-`mt76_mcu_rx_event` queue) already consume the skb.
-
-**Step 2.4 — Fix quality**
-Record: **Obviously correct.** Matches established kernel pattern (`if
-(skb_linearize(skb)) { dev_kfree_skb(_any)(skb); return; }`). Same free
-helper already used in this MCU event path. No API/lock/data-structure
-change. Regression risk: **very low** (could only be a double-free if
-linearize already freed; it does not — see Phase 5).
-
----
-
-## PHASE 3: GIT HISTORY
-
-**Step 3.1 — Blame**
-Record: Leak introduced by **`f0ff5d3aa64812`** (`mt76: mt7921: make all
-event parser reusable between mt7921s and mt7921e`, Sean Wang,
-2021-10-19). That commit added `skb_linearize` + early return and never
-freed on failure. Present since ~5.16-era; **`git merge-base --is-
-ancestor f0ff5d3aa64812 pending-6.6` succeeds.**
-
-**Step 3.2 — Fixes: tag**
-Record: **None.** Introducer identified by blame: `f0ff5d3aa64812`,
-which **is** in this 6.6 tree.
-
-**Step 3.3 — File history (pending-6.6)**
-Recent 6.6 work on this file is CLC firmware validation, not MCU RX. No
-competing leak fix. Record: **standalone**; not part of a multi-patch
-series.
-
-**Step 3.4 — Author**
-Prashant Rahul has **no other commits** in this tree’s mt76 history.
-Applied by **Felix Fietkau**, listed maintainer of MEDIATEK MT76 in
-`MAINTAINERS`. Record: one-off contributor; **maintainer-applied**.
-
-**Step 3.5 — Dependencies**
-The hunk only needs `mt7921_mcu_rx_event` + `skb_linearize` +
-`dev_kfree_skb`, all present. Mailing-list patch context matches 6.6
-(the extra `MCU_EVENT_RSSI_NOTIFY` in later mainline is **below** the
-change). Record: **applies standalone**.
-
----
-
-## PHASE 4: MAILING LIST / EXTERNAL
-
-**Step 4.1 — Original discussion**
-- `b4 dig -c <msgid>` / `b4 mbox`: no match (404).
-- lore.kernel.org: **403**.
-- Recovered from Openwall and Ratatoskr:
-  https://lists.openwall.net/linux-kernel/2026/07/16/1707
-  msgid `20260716-mt7921-mem-leak-v1-1-6e9c0ea19f63@gmail.com`
-Record: **v1, single patch**, applied as submitted (`4361f16601012`
-matches that diff). No v2/v3.
-
-**Step 4.2 — Recipients (`b4 dig -w` unavailable; headers from
-Openwall)**
-To: Felix Fietkau, Lorenzo Bianconi, Ryder Lee, Shayne Chen, Sean Wang
-(mt76 maintainers/reviewers), plus MediaTek ARM contacts. Cc: linux-
-wireless, linux-kernel, linux-mediatek, linux-arm-kernel. Record:
-**correct maintainer set**.
-
-**Step 4.3 — Bug report**
-Record: **No syzbot/bugzilla.** Static ownership analysis; author states
-the leak is rare.
-
-**Step 4.4 — Series**
-Record: **1/1 standalone.** No sibling mt7925/mt7915 patches required
-for this tree (only mt7921 has this `skb_linearize` in pending-6.6).
-
-**Step 4.5 — Stable list**
-Search for this subject on lore stable returned unrelated hits. Record:
-**no prior stable NAK found** (lore 403 limited this).
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1 — Functions**
-Record: `mt7921_mcu_rx_event` only.
-
-**Step 5.2 — Callers**
-`mt7921_queue_rx_skb()` (`mac.c`) `case PKT_TYPE_RX_EVENT:` calls it and
-does **not** free afterwards.
-
-That `rx_skb` hook is registered for **PCIe, USB, and SDIO**:
-- `mt7921/pci.c`, `usb.c`, `sdio.c` → `.rx_skb = mt7921_queue_rx_skb`
-- Invoked from `mt76_dma_rx_process` (NAPI), `mt76u` USB RX,
-  `mt76s_process_rx_queue` (SDIO)
-
-Record: **hot RX path** for MT7921E/S/U.
-
-**Step 5.3 — Callees**
-`skb_linearize` → `__skb_linearize` → `__pskb_pull_tail`; returns
-`-ENOMEM` on failure and **does not free** the skb
-(`include/linux/skbuff.h`: “If there is no free memory -ENOMEM is
-returned”). Success continues to `mt7921_mcu_uni_rx_unsolicited_event` /
-`mt76_mcu_rx_event` / `mt7921_mcu_rx_unsolicited_event`.
-
-**Step 5.4 — Reachability**
-Nonlinear MCU events are real:
-- SDIO `mt76s_build_rx_skb` uses `skb_add_rx_frag` when payload >
-  `MT_SKB_HEAD_LEN` — this is **why** `f0ff5d3aa64812` added linearize
-  (“paged fragment skb for the SDIO device”).
-- USB `mt76u_build_rx_skb` same pattern.
-- DMA `mt76_add_fragment` builds fraglists for multi-buffer RX.
-
-Record: reachable from normal firmware MCU events; unprivileged users
-can generate MCU traffic by using WiFi. Failure needs **ENOMEM during
-linearize**.
-
-**Step 5.5 — Similar patterns**
-In pending-6.6, `skb_linearize` appears **only here** under mt76. No
-duplicate site left unfixed in this tree.
-
----
-
-## PHASE 6: LOCAL TREE (pending-6.6 / 6.6.157)
-
-**Step 6.1 — Buggy code present?**
-Record: **Yes.**
-`pending-6.6:drivers/net/wireless/mediatek/mt76/mt7921/mcu.c:312-313`:
-
-```
-if (skb_linearize(skb))
-    return;
-```
-
-`git merge-base --is-ancestor 4361f16601012 pending-6.6` → **false**
-(fix not here).
-`git merge-base --is-ancestor f0ff5d3aa64812 pending-6.6` → **true**
-(bug intro is here).
-Bug age: **2021**, well before 6.6.
-
-**Step 6.2 — Backport difficulty**
-Submitted hunk is 4 lines around `skb_linearize` with context that
-matches 6.6 (`struct mt76_connac2_mcu_rxd *rxd` then the if).
-`MCU_EVENT_RSSI_NOTIFY` is later mainline-only context **below** the
-edit. Record: **clean apply / trivial**.
-
-**Step 6.3 — Related fixes already here?**
-`git log --grep=skb_linearize` on mt76 in this tree: **empty**. No
-alternate fix. Record: **none**.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-**Step 7.1**
-Record: **wifi / mt76 / mt7921**. Criticality: **IMPORTANT** — MT7921E
-is a common laptop WiFi 6 adapter (PCIe); USB/SDIO variants exist
-(`MT7921E/S/U` in Kconfig). Not core mm/net, not staging.
-
-**Step 7.2**
-Record: Mature driver (MCU support from `1c099ab44727c8`, 2021). 6.6
-still receives mt76 bugfixes (CLC, etc.).
-
----
-
-## PHASE 8: IMPACT AND RISK
-
-**Step 8.1 — Who is affected**
-Record: **driver-specific**, users with MediaTek MT7921 (very common on
-laptops). Config: `CONFIG_MT7921E/S/U`.
-
-**Step 8.2 — Trigger**
-Record: Firmware MCU RX event whose skb is nonlinear, **and**
-`skb_linearize` fails (GFP/ENOMEM). Unprivileged WiFi use can generate
-events; the failure itself is **uncommon**. SDIO long events are the
-originally cited nonlinear case; USB/DMA can also fragment.
-
-**Step 8.3 — Failure mode**
-Record: **skb leak under memory pressure**, which can deepen OOM. Not a
-panic/UAF. Severity: **MEDIUM–HIGH** (hot-path leak, not a one-time
-probe leak).
-
-**Step 8.4 — Risk/benefit**
-- Benefit: **medium** — stops a real leak on a widely shipped chip; most
-  valuable when the system is already under memory pressure.
-- Risk: **very low** — 3 lines, error path, same free as sibling paths.
-- Ratio: **favor backport**.
-
----
-
-## PHASE 9: SYNTHESIS
-
-**Step 9.1 — Evidence**
-
-**For:**
-- Real leak with verified ownership (caller does not free).
-- Code and introducer are in 6.6.157; fix is not.
-- Tiny, obviously correct, maintainer-applied.
-- MT7921 is production hardware, not staging.
-- Leak on an RX path under OOM is a stability issue, not a style
-  cleanup.
-
-**Against:**
-- Trigger is rare (`skb_linearize` ENOMEM).
-- No crash/syzbot/CVE.
-- No explicit `Cc: stable` (not a negative per the review rules).
-
-**Unresolved:** Full lore thread (403/404); no reviewer comments beyond
-maintainer merge. Does not change the technical verdict.
-
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested — **PASS** (3-line ownership fix; in
-   mainline via Felix).
-2. Real bug affecting users — **PASS** (skb leak on MT7921 MCU RX).
-3. Important (crash/security/corruption/deadlock) — **PASS** as an RX-
-   path leak that can worsen OOM; not a panic, but in the leak class
-   stable regularly takes.
-4. Small and contained — **PASS** (4 lines, one function).
-5. No new features/APIs — **PASS**.
-6. Can apply to this tree — **PASS** (hunk matches 6.6).
-
-**Step 9.3 — Exceptions**
-Record: none needed (not an ID/quirk/DT/build/doc exception). Ordinary
-small leak fix.
-
-**Step 9.4 — Decision**
-Backport to **this** 6.6.157 tree. The bug exists here, the fix is
-surgical, and regression risk is negligible.
-
----
-
-## What the commit solves for stable users
-
-On MT7921, firmware MCU events are handed to `mt7921_mcu_rx_event` with
-full skb ownership. Nonlinear events (especially SDIO, also USB/DMA
-fragments) are linearized first. If that allocation fails, 6.6 returns
-and leaks the skb. Under memory pressure that leak makes OOM worse.
-Adding `dev_kfree_skb(skb)` on that path closes the leak without
-changing success behavior.
-
-## Risk vs benefit
-
-Benefit is a real leak fix on a common WiFi chip; risk is a three-line
-error-path free that matches existing code in the same function.
-
-## Concerns
-
-None material: no prerequisites, no API change, no locking, expected
-clean apply. Trigger rarity is the only weak point and is not enough to
-reject a contained leak fix.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed tags: author SOB, Link msgid, Felix Fietkau SOB;
-  no Fixes/Reported-by/Cc-stable.
-- **[Phase 2]** Diff: +3/−1 in `mt7921_mcu_rx_event`; adds
-  `dev_kfree_skb` on `skb_linearize` failure.
-- **[Phase 3]** `git blame` on pending-6.6: leak from `f0ff5d3aa64812`
-  (2021-10-19); `git merge-base --is-ancestor f0ff5d3aa64812
-  pending-6.6` true.
-- **[Phase 3]** `git show f0ff5d3aa64812`: added `if
-  (skb_linearize(skb)) return;` with no free.
-- **[Phase 3]** `git log --author=Prashant Rahul`: no other mt76 commits
-  in this history.
-- **[Phase 4]** Openwall/Ratatoskr: v1 1/1, same diff as
-  `4361f16601012`; mt76 maintainers on To:.
-- **[Phase 4]** `b4 mbox` msgid: 404; lore.kernel.org: 403.
-  **UNVERIFIED:** full review replies / explicit stable nomination.
-- **[Phase 5]** Callers: `mt7921_queue_rx_skb` (no free on
-  `PKT_TYPE_RX_EVENT`); hooked from pci/usb/sdio `.rx_skb`.
-- **[Phase 5]** `skb_linearize` documented to return `-ENOMEM` and not
-  free; USB/SDIO `skb_add_rx_frag` makes nonlinear skbs.
-- **[Phase 6]** `git describe` at start: `p-6.6-3-g04810563abb71`, `make
-  kernelversion` 6.6.157.
-- **[Phase 6]** `git grep` on `pending-6.6`: leak at `mcu.c:312-313`.
-- **[Phase 6]** `git merge-base --is-ancestor 4361f16601012 pending-6.6`
-  false.
-- **[Phase 8]** Failure mode: skb leak under ENOMEM on MCU RX; severity
-  MEDIUM–HIGH.
-- **UNVERIFIED:** complete lore thread text after 403.
-
-The fix is small, matches stable leak-fix practice, and the buggy code
-is in this 6.6 tree.
+- Bug: PCI1008 management endpoint is not bound because 0x1008 is
+  missing from `switchtec_pci_tbl`.
+- Symptom: userspace cannot configure/monitor the switch via
+  `/dev/switchtecX`; NTB is unavailable (probe requests
+  `ntb_hw_switchtec` only after this driver binds).
+- Version info: series was based on v7.2-rc3; applied by Helgaas for
+  v7.3.
+- Root cause: incomplete ID table for a new PCI100x SKU, not a logic
+  bug.
+
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a hidden cleanup. It is an explicit device-ID enablement.
+Stable rules treat “just add a device ID” as an accepted class.
+
+===============================================================
+PHASE 2: DIFF ANALYSIS
+===============================================================
+
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `drivers/pci/switch/switchtec.c` (+1 / −0)
+- Function/data: `switchtec_pci_tbl[]` (static PCI ID table)
+- Scope: single-file, one-line surgical change
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- Before: PCI1001–PCI1006 (vendor `PCI_VENDOR_ID_EFAR` / 0x1055) match
+  via `SWITCHTEC_PCI100X_DEVICE`; 0x1008 does not.
+- After: 0x1008 matches the same way as 0x1001–0x1006, with `driver_data
+  = SWITCHTEC_GEN4`.
+- Path: PCI enumeration → `pci_driver.id_table` match →
+  `switchtec_pci_probe()`.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record:
+- Category: hardware enablement / device ID addition
+- Mechanism: without the ID, the management function is unbound. Probe
+  also does `request_module_nowait("ntb_hw_switchtec")` for
+  `PCI_CLASS_BRIDGE_OTHER`, so NTB never attaches.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- Obviously correct: same macro and generation as sibling PCI100x IDs.
+- Minimal: one table line, no API/behavior change for other devices.
+- Regression risk: very low; only PCI1008 (vendor 0x1055, device 0x1008)
+  is newly bound.
+- Red flags: none.
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+**Step 3.1: BLAME THE CHANGED LINES**
+Record:
+- PCI1001–PCI1006: `a3282f84b2151` (“PCI: switchtec: Add Microchip
+  PCI100X device IDs”, 2025-01-20), first described as
+  `v6.13-rc1-1-ga3282f84b2151`.
+- Sentinel `{0}`: original driver from 2017 (`080b47def5e5e2`).
+- PCI1008 line: this commit `0d8a6306c680e`.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: tag. Not applicable.
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record:
+- `a3282f84b2151` added the PCI100X macro, IDs 0x1001–0x1006, and
+  matching `SWITCHTEC_PCI100X_QUIRK` entries.
+- Series companions (same author/date):
+  - `8b326de3cc02c` dmaengine: switchtec-dma: Add PCI1008 device ID
+    (msgid -2)
+  - `00a479ba1d012` PCI: switchtec: Add Microchip PCI1008 to NTB DMA
+    alias quirk (msgid -4)
+- This commit is standalone for the management driver. The quirk is
+  needed for NTB DMA under IOMMU; DMA ID is a different PCI function.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Logan Gunthorpe is a listed maintainer (`MAINTAINERS`: PCI
+DRIVER FOR MICROSEMI SWITCHTEC). He authored the original switchtec
+driver and this ID series.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record:
+- Needs `SWITCHTEC_PCI100X_DEVICE` and `SWITCHTEC_GEN4` — both present
+  here.
+- Does not need the dmaengine or quirk commits to compile or bind the
+  management device.
+- Applies standalone.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 0d8a6306c680e`:
+  https://patch.msgid.link/20260714212010.230606-3-logang@deltatee.com
+- Series: v1 only, `[PATCH v1 0/3] switchtec: add new device IDs`
+  (2026-07-14)
+- Cover: IDs for PCI driver, DMA driver, and NTB quirk; based on
+  v7.2-rc3; intended for the PCI tree
+- Sashiko: “found no issues” on this patch
+- Bjorn Helgaas (2026-07-17): “Applied to pci/switchtec for v7.3,
+  thanks!”
+- No NAKs. Unrelated Sashiko note on `quirk_switchtec_ntb_dma_alias()`
+  pointer arithmetic was explicitly not a blocker.
+- No Cc: stable in the thread.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`):
+- To: linux-pci, dmaengine, Vinod Koul, Bjorn Helgaas
+- Cc: Frank Li, Kelvin Cao (Microchip)
+- Vinod Acked-by on the dmaengine ID
+- PCI maintainer applied the series
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No bugzilla/syzbot. Author is the subsystem maintainer adding a
+new SKU. Cover letter says Sashiko reminded him the management ID and
+NTB quirk were also required.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 3 independent one-line ID/quirk additions. This patch is 2/3 and
+self-contained. Companion quirk is valuable for PCI1008 NTB+IOMMU but is
+a separate candidate.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned HTTP 403. Thread mbox has
+no “stable” mentions. UNVERIFIED: whether -stable already discussed this
+ID.
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: No function body changed. Data: `switchtec_pci_tbl[]`.
+Consumers: `switchtec_pci_driver.id_table`, `MODULE_DEVICE_TABLE(pci,
+...)`. Probe: `switchtec_pci_probe()`.
+
+**Step 5.2: TRACE CALLERS**
+Record: PCI core matches `id_table` at enumeration/hotplug. Probe
+creates `/dev/switchtecX`, enables MRPC, and may load
+`ntb_hw_switchtec`. NTB uses `class_interface` on `switchtec_class` (no
+second PCI ID table).
+
+**Step 5.3: TRACE CALLEES**
+Record: Probe calls `stdev_create`, `switchtec_init_pci`,
+`switchtec_init_isr`, `cdev_device_add`. Existing paths; ID only selects
+them for this device.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Reachable when a PCI1008 is present (`CONFIG_PCI_SW_SWITCHTEC`).
+Unprivileged users do not enumerate PCI IDs; impact is hardware owners
+of this switch.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same family already lists 0x1001–0x1006. DMA driver has 0x1008.
+`quirks.c` has `SWITCHTEC_PCI100X_QUIRK(0x1008)` from the companion
+commit.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. `drivers/pci/switch/switchtec.c` has
+`SWITCHTEC_PCI100X_DEVICE` and PCI1001–PCI1006. Without 0x1008, PCI1008
+would not bind. Prerequisite `a3282f84b2151` is an ancestor (`git merge-
+base --is-ancestor` succeeded). PCI100X support dates to v6.13-rc1.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply. Adjacent lines are the existing PCI100x block. No
+refactor conflicts in this checkout.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No alternate PCI1008 ID in switchtec.c besides this line.
+Companion DMA ID and NTB quirk are also present here as separate
+commits.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: [PCI switch management driver `drivers/pci/switch/`] [PERIPHERAL
+— specific Microchip/Microsemi Switchtec hardware; NTB/management users]
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Mature (driver since 2017). Recent work is mostly new IDs (Gen5,
+Gen6, PCI100x). Typical stable ID-table churn.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver-specific / config-specific (`CONFIG_PCI_SW_SWITCHTEC`).
+Only PCI1008 (0x1055:0x1008). Other Switchtec IDs unchanged.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Trigger is plugging/booting with a PCI1008. Common for that
+hardware; impossible otherwise. Not a userspace-triggerable crash.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Device not bound → no `/dev/switchtecX`, no NTB. Severity MEDIUM
+for those systems (hardware unusable for management/NTB), LOW for
+everyone else. Not a panic/UAF.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- Benefit: high for PCI1008 owners (management + NTB enablement);
+  documented stable exception.
+- Risk: very low (one ID line, existing macro).
+- Ratio: strongly favors backport.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Stable rules: “fix a real bug … or just add a device ID”
+  (`Documentation/process/stable-kernel-rules.rst`).
+- Existing driver + PCI100X macro in this tree.
+- One line, same pattern as PCI1001–PCI1006.
+- Maintainer-authored, PCI maintainer applied, no NAKs.
+- Real user impact: management chardev and NTB never attach without the
+  ID.
+
+AGAINST:
+- Not a crash/security fix; new SKU enablement only.
+- Affects a niche PCIe switch.
+- Companion quirk is a separate patch (NTB DMA under IOMMU still
+  incomplete without it). That does not make this ID wrong or unsafe.
+
+UNRESOLVED:
+- lore.kernel.org HTTP 403; stable@ discussion not verified beyond the
+  saved thread (no “stable” hits there).
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — identical to existing
+   PCI100x entries; applied by PCI maintainer.
+2. Fixes a real bug that affects users? **PASS** — PCI1008 otherwise
+   unbound (or qualifies as a device ID addition).
+3. Important issue? **PASS** under the device-ID exception (not a
+   panic).
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS** — ID only; no new ioctls/sysfs.
+6. Can apply to the local tree? **PASS** — `SWITCHTEC_PCI100X_DEVICE`
+   and sibling IDs present.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Device ID addition to an existing driver.
+
+**Step 9.4: DECISION**
+This is the standard stable device-ID case. The driver and PCI100x
+helper exist in this tree, the change is one table line, and without it
+PCI1008 management/NTB never bind. Risk is negligible.
+
+The companion NTB DMA alias quirk is a separate one-line candidate; this
+ID patch does not depend on it.
+
+Verification:
+- [Phase 1] Parsed tags: Logan Gunthorpe SOB, Bjorn Helgaas SOB, lore
+  Link; no Fixes/Reported-by/Cc: stable
+- [Phase 1] `git describe HEAD` / Makefile: local tree is 7.3.0-rc4
+  (`v7.3-rc4-27-gf0100363d8c37`)
+- [Phase 2] Diff: +1 line in `switchtec_pci_tbl[]` —
+  `SWITCHTEC_PCI100X_DEVICE(0x1008, SWITCHTEC_GEN4)`
+- [Phase 2] Confirmed probe uses `id_table` and requests
+  `ntb_hw_switchtec` for bridge class
+- [Phase 3] `git blame`: PCI1001–1006 from `a3282f84b2151` (v6.13-rc1);
+  PCI1008 from `0d8a6306c680e`
+- [Phase 3] `git merge-base --is-ancestor a3282f84b2151 HEAD` succeeded
+- [Phase 3] Series companions: `8b326de3cc02c` (DMA ID), `00a479ba1d012`
+  (NTB quirk)
+- [Phase 4] `b4 dig -c 0d8a6306c680e`: lore URL found; v1-only 3-patch
+  series
+- [Phase 4] `b4 dig -w`: linux-pci, Bjorn Helgaas, Vinod Koul, Microchip
+  Cc
+- [Phase 4] mbox: Helgaas applied for v7.3; Sashiko clean on this patch;
+  Vinod Acked DMA ID; no NAK
+- [Phase 4] UNVERIFIED: stable@ mailing list (lore HTTP 403)
+- [Phase 5] NTB binds via `switchtec_class` class_interface; this ID is
+  required for NTB attach
+- [Phase 6] File in tree has PCI100x macro and IDs; patch applies
+  cleanly
+- [Phase 7] Maintainer entry: Logan Gunthorpe for Switchtec
+- [Phase 8] Failure: device unbound, not a kernel crash; device-ID
+  exception applies
+- [Phase 9] stable-kernel-rules.rst line 15 explicitly allows device ID
+  additions
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pci/switch/switchtec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index 8c8b35cba856c..f63ef02542387 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -354,8 +354,10 @@ void mt7921_mcu_rx_event(struct mt792x_dev *dev, struct sk_buff *skb)
- {
- 	struct mt76_connac2_mcu_rxd *rxd;
- 
--	if (skb_linearize(skb))
-+	if (skb_linearize(skb)) {
-+		dev_kfree_skb(skb);
- 		return;
-+	}
- 
- 	rxd = (struct mt76_connac2_mcu_rxd *)skb->data;
- 
+diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
+index f32ddfa79da99..30566c2d9f806 100644
+--- a/drivers/pci/switch/switchtec.c
++++ b/drivers/pci/switch/switchtec.c
+@@ -1874,6 +1874,7 @@ static const struct pci_device_id switchtec_pci_tbl[] = {
+ 	SWITCHTEC_PCI100X_DEVICE(0x1004, SWITCHTEC_GEN4),  /* PCI1004 16XG4 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1005, SWITCHTEC_GEN4),  /* PCI1005 16XG4 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1006, SWITCHTEC_GEN4),  /* PCI1006 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1008, SWITCHTEC_GEN4),  /* PCI1008 16XG4 */
+ 	{0}
+ };
+ MODULE_DEVICE_TABLE(pci, switchtec_pci_tbl);
 -- 
 2.53.0
 
