@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9914452F98C;
-	Mon, 19 Oct 2026 14:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A8D6167AE;
+	Mon, 19 Oct 2026 14:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418647; cv=none; b=BCjjw2untDkeGqygEwEYJxoXbDBv5fOqfS/hf4kFml0m5/MeeEk4zzNFFQQDNEfD6+5qRSAHu4XWuzXiRPtFRnoJZNGNgGlRGMjdWO1e7YRDfuB4WIEhgBeJbsiBS0W0jYr/BGR5nnbbFWh+QUhRBMXcCGyAyxGvrEUUYUO7CJY=
+	t=1792418649; cv=none; b=Eln4/3ubGi5v/WQ5o2KW1ZRQ5USQ+x7lrPGWB/yJXp0KaZ6WOGlyE7HBgWzrboEqFLXyQMfQwMFTtBrnwKb1Bqti9VKWO/LIzI47UewJVD5OSbfIsqmcRsqPhC86kVkjynQkCsCFAchh+tLA07cotnB2GhiD3WjAgPbYmpzTj3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418647; c=relaxed/simple;
-	bh=6ZoqQm8Fl4ljfELKoFhXuaLxczt4zZ9SBBnOt//pKMI=;
+	s=arc-20240116; t=1792418649; c=relaxed/simple;
+	bh=h28QfuKQW0s/T3nHUNG4IwJWf6u0RYiVoNZv09vhwZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CoaV0zAgOtQtlLax0QSXTI0UIOs2rkHVi3dWBhwLkAL8ckqZAvhY7rlyH/S4CvKV5xqQUo4zEWFcN1O1akjVcj8VbgGf22biag0Enx3fjJaaWvtSodJvIYEcRAZyBue2B66YusFrcdhv6apP0aSHz0LVFhBMWm4vFCN0bviTViU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z91CjFN9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oqlaQy3R1JGaWM5RZkArDn4Pp2H5gJI+ywR6NmHHJ7tArc/omDSTKeZ0uuu68TiNE0tn2JPpW7PbYitBOnHoLxhEb6T/28UKrU6JfjDcaWCt3UFQSYdNlssG7rnH3T9PQt6/LEDm0MI6s5pttvnp8Gx2VXGw0Igd1aQ/l3p+gJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ag4e60XY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z91CjFN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C401F000C4;
-	Mon, 19 Oct 2026 14:04:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ag4e60XY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF94F1F000C5;
+	Mon, 19 Oct 2026 14:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418645;
-	bh=dha6GLY45Au1RUJLsfxVfDqWBBDF+BSXoNjnCqVGCpg=;
+	s=k20260515; t=1792418646;
+	bh=3OZNVVxxdQo5rbx1RXIX1Z+cH2R3fiOyYgS+oEmHadE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z91CjFN91S3b7frQXjRjcobWvC95iF7rKDPBaIykjrzkT1w2C2ryH4w5unVvdPPUy
-	 xz2JbAgCaP+zhOolwTPHvbetpZ7OXaxKh1MuTQzo2s07WrrC0cfAlliCJy43C0hsGO
-	 HhSjr1ocWvQlKMBqTxNkzofQqQ204zzbx5B1R+eLgwja6g6JUAKnMD/SQTfB388sAL
-	 sVnwX62NLNr37m24ZUBhSUEaX8dorFOebgjLnnwbjpQsIy0PTPB853zwbYfVdjLL8K
-	 5wOeLuqf9S9CeFxLUdiONrmB54E5lFO9GIU3nldOiGCs8LIiM1XjllFJyejZzR4W9l
-	 0QLgTSnHt1vlQ==
+	b=Ag4e60XYGLakfiLnkR1ZfYt0vJIS0UmPeza5E/PlMj1sTGbkUTsTre5eHOXLeIyao
+	 O//xl0ZUiDbJK+FosZ4Y7dobI+qp5wOL7c5Fzscwl3mbmezx6LfpeB5BxvbU3dd4xU
+	 65Dm3qOTk5uhsth0siHeaKF/j+aduEf21VsxcCE02oey1WAudSbJb4en8nNZmtq1ix
+	 8iqbkU/J1yAUENpV34asIpqURdGBU8jZRmJmW+gXQx6xsu7C8lKAFcPNXXreBstwB9
+	 JM6nlec+CLxybQ2yfKXzcsLt9ehK6HjTZoSC5Hd+JYYlph9cwmRzzb+NP9sghEd1nO
+	 V6JdXa2zmQkOQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhao Dongdong <zhaodongdong@kylinos.cn>,
-	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Thomas Huth <thuth@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	amitkumar.karwar@nxp.com,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] Bluetooth: btnxpuart: Fix use-after-free in probe error path
-Date: Mon, 19 Oct 2026 09:51:27 -0400
-Message-ID: <20261019135441.1420968-396-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] smb: server: Make sure that passkey is not leaked on the heap in user_config.c
+Date: Mon, 19 Oct 2026 09:51:28 -0400
+Message-ID: <20261019135441.1420968-397-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,46 +52,40 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhao Dongdong <zhaodongdong@kylinos.cn>
+From: Thomas Huth <thuth@redhat.com>
 
-[ Upstream commit a2b3b4f00403a3a40c5627d1bf537c8fb166e221 ]
+[ Upstream commit 2c5a176882695f73b52482df03b0017b006ef2d1 ]
 
-In nxp_serdev_probe(), if hci_register_dev() succeeds but ps_setup()
-fails, the error path jumps to 'probe_fail' which only calls
-hci_free_dev() and asserts the reset GPIO, but does NOT call
-hci_unregister_dev() first.
+Use kfree_sensitive() to free the user->passkey (and the struct
+ksmbd_login_response in ksmbd_login_user() that contains the same
+information) to avoid that this information could leak somewhere
+else via the heap.
 
-This leaves the HCI device registered in the system with its backing
-memory freed, leading to a use-after-free when userspace subsequently
-accesses the device (e.g. via hciconfig or bluetoothd).
-
-Fix by adding a 'probe_fail_unregister' label that calls
-hci_unregister_dev() before falling through to the existing
-'probe_fail' label. The original 'probe_fail' label is preserved
-for the case where hci_register_dev() itself fails (device was
-never registered, so no unregister is needed).
-
-Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
-Reviewed-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.53** (`pending-6.18`). The probe-path UAF is
-present here, the fix is a 3-line unregister-before-free, and it should
-be backported.
+I have enough to decide: the NTLM passkey wipe is present in this 6.12
+tree, the helpers already exist, and the change is a three-line secret-
+clearing fix. Fetching the series cover letter wrapped up the remaining
+mailing-list context.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
 
-Record: **[Bluetooth / btnxpuart] [Fix] [use-after-free in
-`nxp_serdev_probe()` when `ps_setup()` fails after a successful
-`hci_register_dev()`]**
+Record: **[smb: server:] [Make sure] [passkey is not leaked on the heap
+in user_config.c]**
+
+- Subsystem: `smb: server:` (ksmbd in-kernel SMB3 server)
+- Action verb: “Make sure” — safety/correctness language, not a feature
+- Claimed intent: wipe `user->passkey` (and the IPC login response that
+  holds the same hash) before returning the memory to the heap
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
@@ -103,479 +93,496 @@ Record:
 - **Fixes:** none (expected for this review pipeline)
 - **Reported-by:** none
 - **Tested-by:** none
-- **Reviewed-by:** Neeraj Sanjay Kale `<neeraj.sanjaykale@nxp.com>`
-  (listed `MAINTAINERS` co-maintainer of NXP Bluetooth)
+- **Reviewed-by:** none on the commit itself
 - **Acked-by:** none
-- **Link:** none
-- **Cc: stable:** none (expected; not a negative)
-- **Signed-off-by:** Zhao Dongdong `<zhaodongdong@kylinos.cn>` (author);
-  Luiz Augusto von Dentz `<luiz.von.dentz@intel.com>` (Bluetooth
-  maintainer)
-- Pipeline SOBs (Sasha Levin / Upstream commit markers): ignored per
-  instructions
+- **Link:** none in the commit message
+- **Cc: stable:** none (expected; not a negative signal)
+- **Signed-off-by:** Thomas Huth \<thuth@redhat.com\> (author); Namjae
+  Jeon \<linkinjeon@kernel.org\> (ksmbd maintainer). Ignore any Sasha
+  Levin SOB from candidate preparation.
 
-Notable: maintainer review + Bluetooth maintainer SOB. No syzbot tag.
+Notable pattern: no syzbot/CVE/reporter tags. This came from a
+maintainer-applied hardening series, not a crash report.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
 Record:
-- **Bug:** After `hci_register_dev()` succeeds, `ps_setup()` failure
-  jumps to `probe_fail`, which asserts reset and calls `hci_free_dev()`
-  without `hci_unregister_dev()`.
-- **Symptom:** HCI device stays registered after its driver backing is
-  torn down; userspace (`hciconfig`, bluetoothd) can then UAF.
-- **Version info:** none in the message.
-- **Root cause (author):** missing unregister on the post-register error
-  path; `probe_fail` is correct only when registration itself failed.
+- **Bug:** `user->passkey` and `struct ksmbd_login_response` (which
+  contains `hash[]`) are freed with ordinary `kfree()`/`kvfree()`, so
+  the NTLM password hash remains in the slab until the object is reused.
+- **Symptom/failure mode:** heap leftover of authentication secret
+  material; a later kmalloc of the same cache can return pages still
+  holding the hash (classic kfree-vs-kfree_sensitive info leak).
+- **Version information:** none in the message.
+- **Root cause (author):** passkey-bearing objects were not cleared
+  before free.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
 
-Record: **Not a hidden fix.** Subject and body explicitly describe a
-UAF. The code change matches that description.
+Record: Not a disguised cleanup. The message is explicit about a secret
+leak. It is a security hygiene fix (wipe-before-free), not a crash/UAF.
+Still a real bug class the kernel already treats as such via
+`kfree_sensitive()`.
 
----
-
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
 
 Record:
-- **File:** `drivers/bluetooth/btnxpuart.c` only
-- **Scope:** +3 / −1 (one function)
-- **Function:** `nxp_serdev_probe()`
-- **Classification:** single-file surgical error-path fix
+- File: `fs/smb/server/mgmt/user_config.c` only
+- Scope: **3 substitutions, ~3 lines**, single-file surgical
+- Functions: `ksmbd_login_user()`, `ksmbd_alloc_user()` error path,
+  `ksmbd_free_user()`
+- Surrounding mainline context in the candidate (hash_sz bounds check,
+  `kmalloc_obj`) is **not** part of this commit’s semantic change; it is
+  later-tree context.
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Record (verified against this tree at `nxp_serdev_probe()`):
-
-**Before** (local `drivers/bluetooth/btnxpuart.c` lines 1919–1935):
-```
-if (hci_register_dev(hdev) < 0)
-    goto probe_fail;
-if (ps_setup(hdev))
-    goto probe_fail;          // registered, but treated as never-
-registered
-...
-probe_fail:
-    reset_control_assert(nxpdev->pdn);
-    hci_free_dev(hdev);
-    return -ENODEV;
-```
-
-**After:**
-- `ps_setup()` failure → `probe_fail_unregister` →
-  `hci_unregister_dev(hdev)` then fall through
-- `hci_register_dev()` failure still goes to `probe_fail` only (never
-  registered)
-
-**Path affected:** probe error path only, after successful HCI
-registration.
+Record:
+1. `ksmbd_login_user()` `out:` path: `kvfree(resp)` →
+   `kvfree_sensitive(resp, sizeof(*resp))`. This is the **normal** login
+   path (and the login-failure path). `resp` is the IPC login response
+   from ksmbd.mountd and contains `hash[]`.
+2. `ksmbd_alloc_user()` `err_free:`: `kfree(user->passkey)` →
+   `kfree_sensitive(user->passkey)`. **Error** path after the hash was
+   copied into `user->passkey`.
+3. `ksmbd_free_user()`: same `kfree` → `kfree_sensitive` for
+   `user->passkey`. **Normal** session teardown / reauth mismatch path.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
 
 Record:
-- **Category:** use-after-free / lifetime bug (error-path cleanup)
-- **Mechanism:** `hci_register_dev()` (`net/bluetooth/hci_core.c`) does
-  `device_add()`, `hci_dev_hold()`, and `queue_work(...,
-  &hdev->power_on)`. `hci_free_dev()` is only `put_device()`. Skipping
-  unregister leaves `hdev` on `hci_dev_list` and in sysfs.
-- **Worse than the message states (verified):** `nxpdev` is
-  `devm_kzalloc()` at probe start. Probe returning `-ENODEV` releases
-  managed resources, so `nxpdev` is freed while a still-registered
-  `hdev` has `hci_set_drvdata(hdev, nxpdev)`. HCI callbacks
-  (`btnxpuart_open`, `nxp_setup`, power-on work) then dereference freed
-  driver state.
-- **Fix:** same unregister-then-free order as `nxp_serdev_remove()`
-  (local lines 1959–1962).
+- **Category:** security / sensitive-data leak (heap residual), not
+  UAF/race/crash
+- **Mechanism:** `resp->hash` is the NT hash (`KSMBD_REQ_MAX_HASH_SZ` is
+  18; auth uses `CIFS_ENCPWD_SIZE` of 16 as HMAC-MD5 key in
+  `calc_ntlmv2_hash()`). After `kfree`/`kvfree`, that hash stays in the
+  slab. `kfree_sensitive()` does `memzero_explicit()` over `ksize()`
+  then `kfree()`. `kvfree_sensitive()` does `memzero_explicit(addr,
+  len)` then `kvfree()`.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 
 Record:
-- Obviously correct: pairs register with unregister; preserves the
-  never-registered path.
-- Minimal: 3 insertions, 1 deletion, no API/struct changes.
-- Regression risk: low. `hci_unregister_dev()` is the designed teardown
-  (cancels `power_on` via `disable_work_sync`). Probe failure means
-  `remove()` is not called, so no double-unregister.
-- Does not call `ps_cleanup()` on this path: correct, because
-  `ps_setup()`’s only error return is `devm_gpiod_get_optional()`
-  failure **before** `INIT_WORK` / `timer_setup` / `mutex_init` (local
-  lines 511–517 vs 557–561). Calling `ps_cleanup()` there would operate
-  on uninitialized state.
+- Obviously correct: drop-in replacement; `kfree_sensitive(NULL)` is a
+  documented no-op (needed on `err_free` when `passkey` alloc failed);
+  `kvfree_sensitive` skips `ZERO_OR_NULL_PTR`.
+- Minimal: three call-site changes, no API/structure change.
+- Regression risk: **very low**. Same free, plus a small
+  `memzero_explicit`. `passkey` is ~16 bytes; `sizeof(*resp)` is a fixed
+  login-response struct. No lock/order/API change.
+- Incomplete vs the rest of ksmbd (auth.c still `kvfree(resp)` on the
+  SPNEGO path) — that is a **sibling** series patch, not a dependency of
+  this one.
 
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
 
 Record:
-- Buggy `if (ps_setup(hdev)) goto probe_fail;` introduced by
-  **`c135a5bc34a89a75a739d07964ff3d1c4fa1b154`** (“Bluetooth: btnxpuart:
-  Add GPIO support to power save feature”, Neeraj Sanjay Kale, committer
-  date 2024-11-14).
-- That commit changed `ps_setup()` from `void` to `int` and added the
-  `probe_fail` label that frees without unregister.
-- `git merge-base --is-ancestor c135a5bc34a89a HEAD` → **yes**. Makefile
-  at that commit is **6.12.0-rc6**; this 6.18.53 tree contains the bug.
-- Driver itself: `689ca16e523278` (2023-04-23). Original probe had
-  `ps_setup()` as void after register, so it could not fail after
-  register until `c135a5bc34a89`.
+- `kvfree(resp)`: introduced as cifsd code in `79f6b11a104f3a` (“cifsd:
+  remove wrappers of kvmalloc/kvfree”, 2021) on top of `e2f34481b24db2`
+  (“cifsd: add server-side procedures for SMB3”, 2021-05-10).
+- `kfree(user->passkey)` in `ksmbd_free_user()`: `822bc8ea514ecd`
+  (“cifsd: use kfree to free memory allocated by kmalloc or kzalloc”,
+  2021) — switched from kvfree wrappers to `kfree`.
+- `kfree(user->passkey)` on `err_free`: `a77e0e02af1c2` (“ksmbd: add
+  support for supplementary groups”, 2024-10-11).
+- The leak has been in the SMB server **since cifsd/ksmbd was merged
+  (~v5.15 era)**. Present in this 6.12 tree.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
 
-Record: No `Fixes:` tag. The real introducer is `c135a5bc34a89`, not the
-original driver add. A later duplicate patch (Myeonghun Pak) incorrectly
-tagged `Fixes: 689ca16e5232`. Absence of Fixes here does not change the
-local-tree fact: the buggy goto is in this checkout.
+Record: No `Fixes:` tag. Not applicable. The buggy free sites predate
+this tree’s branch point and are in HEAD.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-Record:
-- Recent `btnxpuart.c` work is firmware dump, OOB, IRQ, baudrate,
-  coredump — none of it unregisters on the `ps_setup()` fail path.
-- `git log --grep="use-after-free" -- drivers/bluetooth/btnxpuart.c` →
-  empty.
-- `probe_fail_unregister` is **not** in this tree.
-- Standalone; not “patch X/Y”. v2 changelog was SubjectPrefix; v3 was
-  gitlint. Same 3-line diff.
+Record (this tree, `-- fs/smb/server/mgmt/user_config.c`):
+- `c9f2872e91b9f` — leak of `ksmbd_ipc_login_request_ext()` buffer
+  (already in this tree; candidate context includes `kvfree(resp_ext)`).
+- `7dd0c858e1909` — ipc_validate_msg size checks
+- `a77e0e02af1c2` — supplementary groups
+- No existing `kfree_sensitive` conversion in this file.
+- Standalone relative to later hash_sz/`kmalloc_obj` work (those strings
+  are **absent** here).
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-Record: `git log --author="Zhao Dongdong" -- drivers/bluetooth/` in this
-tree has no btnxpuart commits (author is not the NXP driver maintainer).
-Weight comes from **Reviewed-by: Neeraj** (NXP maintainer) and **SOB:
-Luiz** (Bluetooth maintainer). Neeraj is the author of the introducing
-commit and of most later btnxpuart work.
+Record: Thomas Huth has **no** other commits under `fs/smb/` in this
+checkout (series is newer than 6.12). Namjae Jeon is the ksmbd
+maintainer and signed the patch off. Cover letter: 5-patch series “Clear
+sensitive data before freeing it”; this is **v2 2/5**.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-Record: No new helpers. Uses existing `hci_unregister_dev()`. Local
-probe matches the hunk (same `ps_setup` / `hci_devcd_register` /
-`probe_fail` sequence). **Can apply standalone.**
+Record:
+- Needs `kfree_sensitive()` / `kvfree_sensitive()` — both exist in this
+  tree (`include/linux/slab.h`, implemented in `mm/slab_common.c` /
+  `mm/util.c`).
+- Does **not** need `kmalloc_obj` or the hash_sz guard (those are only
+  nearby mainline context).
+- Other patches in the series (auth.c, user_session.c, connection.c,
+  smb2pdu.c) are independent per-file wipes. This file’s change applies
+  **standalone**.
+- `user_config.c` already includes `<linux/slab.h>`.
 
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
 Record:
-- `b4 dig -c <msgid>` for v1 msgid
-  `tencent_05373BA21CEEB5195F2ECCED0C77D0C57108@qq.com` → no matching
-  **commit** in this tree (expected: candidate not merged here).
-- Lore.kernel.org fetches returned **403**.
-- Discussion reconstructed from ratatoskr / spinics / lkml.iu.edu:
-  - v1/v2/v3 by Zhao Dongdong, mid-May 2026, linux-bluetooth
-  - v3: https://ratatoskr.run/linux-bluetooth/2026/05/9706550
-  - Luiz replied 2026-05-15; Neeraj reviewed 2026-06-03
-  - Revisions were cosmetic (prefix, gitlint), not logic changes
-- **UNVERIFIED:** exact text of Luiz’s review comment (patchwork
-  presented a bot wall; lore 403)
+- `b4 dig -c <sha>`: **not run** — the candidate SHA is not in this
+  checkout (evaluating a candidate, not an in-tree commit).
+- Found via search: **[PATCH v2 2/5]** Message-ID
+  `20260811154620.2425851-3-thuth@redhat.com`
+- Cover:
+  https://patchew.org/linux/20260811154620.2425851-1-thuth@redhat.com/
+- Openwall: https://lists.openwall.net/linux-kernel/2026/08/11/1820
+- v2 vs v1: cover letter says v2 fixed `kvfree_sensitive` **size in
+  patch 1 (auth.c)**, added a connection.c hunk, and added the smb2pdu.c
+  patch. **This user_config.c patch was not the one that needed a size-
+  calculation fix.**
+- Namjae Jeon: “Applied them to #ksmbd-for-next-next.” No NAK found.
+- Author framed it as “good security practice”; spots found with AI,
+  patches written by hand; asked for careful review. Maintainer still
+  applied the series.
+- No reviewer `Cc: stable` found.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Record: Recipients/maintainers from public threads: Luiz von Dentz,
-Marcel Holtmann, Amitkumar Karwar, Neeraj Kale, linux-bluetooth.
-Committed form has Neeraj `Reviewed-by` and Luiz SOB. No NAK found.
+Record: To/Cc from the v2 mail: Namjae Jeon (ksmbd maintainer), Steve
+French (CIFS/SMB maintainer), linux-kernel, Sergey Senozhatsky, Tom
+Talpey. Maintainer applied it. No separate Reviewed-by on this patch.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Record: No syzbot/bugzilla link. Independent second patch (Myeonghun Pak
-/ Ijae Kim, 2026-06-26, “unregister HCI device on probe failure”)
-describes the same bug. Neeraj told them Zhao’s patch was already
-approved and waiting on Luiz. Two independent submissions = real issue,
-not one-off theory.
+Record: No syzbot, bugzilla, or user crash. This is proactive secret-
+wipe, not a reported oops. Severity from the author: heap leftover of
+passkey/hash.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-Record: Standalone. Duplicate later patch is the same 3-line change with
-a different label name (`unregister_dev` vs `probe_fail_unregister`). No
-series dependency.
+Record: Series of 5 independent kfree_sensitive/memzero_explicit
+patches:
+1. auth.c stack/heap
+2. **user_config.c passkey (this one)**
+3. user_session.c
+4. connection.c
+5. smb2pdu.c Preauth_HashValue
+
+This patch does not depend on 1/3/4/5 applying first.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-Record: `WebFetch` of lore.kernel.org/stable returned 403.
-**UNVERIFIED:** whether stable@ already discussed this specific commit.
-No evidence it was rejected for stable.
+Record: No stable-list hit for this passkey wipe (search did not turn up
+a prior stable request or a rejection). UNVERIFIED that a later stable
+thread exists beyond what search returned. lore.kernel.org fetches
+returned 403 in this environment; discussion was recovered from
+patchew/openwall.
 
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
 
-Record: `nxp_serdev_probe()` only. Calls added: `hci_unregister_dev()`.
+Record: `ksmbd_login_user`, `ksmbd_alloc_user`, `ksmbd_free_user`
 
 **Step 5.2: TRACE CALLERS**
 
-Record: `.probe = nxp_serdev_probe` in the serdev driver (local ~line
-2030). Invoked on UART child-device bind (`compatible =
-"nxp,88w8987-bt"` / `"nxp,88w8997-bt"`), not a syscall. Userspace
-reaches the **aftermath** via HCI (`bluetoothd`, `hciconfig`) once the
-device is left registered.
+Record (this tree):
+- `ksmbd_login_user()` ← `session_user()` in `fs/smb/server/smb2pdu.c` ←
+  SMB2 SESSION_SETUP / `ntlm_authenticate()`. **Network-reachable** on
+  every NTLM login.
+- `ksmbd_alloc_user()` ← `ksmbd_login_user()` and
+  `ksmbd_krb5_authenticate()` in `auth.c` (CONFIG_SMB_SERVER_KERBEROS5).
+- `ksmbd_free_user()` ← session teardown in `user_session.c`; reauth
+  mismatch / anonymous reuse in `smb2pdu.c`; kerberos reauth in
+  `auth.c`.
 
 **Step 5.3: TRACE CALLEES**
 
 Record:
-- `hci_register_dev()`: `device_add`, list insert, `hci_dev_hold`,
-  `queue_work(power_on)`
-- `hci_unregister_dev()`: `HCI_UNREGISTER`, `list_del`,
-  `disable_work_sync(power_on)`, close, mgmt removal
-- `hci_free_dev()`: `put_device`
-- `ps_setup()`: optional GPIO; only hard-fail is
-  `IS_ERR(devm_gpiod_get_optional(...))`
+- `ksmbd_ipc_login_request()` → netlink to ksmbd.mountd; response
+  allocated with `kvzalloc(sz)` in `handle_response()`
+  (`transport_ipc.c:294`), so `kvfree`/`kvfree_sensitive` is the right
+  family.
+- `user->passkey = kmalloc(resp->hash_sz, ...)` then `memcpy` from
+  `resp->hash` — `kfree_sensitive` is the right family.
+- `calc_ntlmv2_hash()` uses `user_passkey()` as HMAC-MD5 key
+  (`CIFS_ENCPWD_SIZE`). Confirmed: this is the NT hash, not a username.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
 
-Record:
-1. Serdev probe for NXP UART BT
-2. `hci_register_dev` → `hci0` visible; `power_on` queued
-3. `ps_setup` fails
-4. Probe returns error without unregister → `devm` frees `nxpdev`
-5. HCI core / userspace / leftover `power_on` uses `hdev` callbacks →
-   UAF
-
-Reachable on any board using this driver with `device-wakeup-gpios` that
-fails to resolve (property present, GPIO unavailable / `-EPROBE_DEFER`
-converted to `-ENODEV`). Binding:
-`Documentation/devicetree/bindings/net/bluetooth/nxp,88w8987-bt.yaml`
-documents that GPIO. In-tree users of the compatible include i.MX
-91/93/95 EVKs, i.MX8MP, TI Verdin AM62, Kobo Clara 2E.
+Record: Unprivileged SMB client sends SESSION_SETUP → kernel looks up
+user via IPC → hash lives in `resp` then `user->passkey` → on
+logout/free, hash is currently left in the slab. Path is **reachable
+from the network** whenever ksmbd is enabled and serving NTLM users. Not
+a syscall-from-unprivileged-local-only issue; it is a **server-side
+credential residual**.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-Record: Other Bluetooth UART drivers typically only `hci_free_dev()`
-when **register** fails. This driver’s bug is specifically “work after
-register that can fail.” Remove path already had the correct
-unregister/free order.
+Record: The SMB **client** in this same tree already uses
+`kfree_sensitive` widely for passwords/`auth_key`
+(`fs/smb/client/smb2pdu.c`, `sess.c`, `fs_context.c`, `misc.c`, …).
+ksmbd server side in this tree still uses plain `kfree`/`kvfree` for
+passkey (only `auth.c` has one `kfree_sensitive(ctx_arc4)`). Same bug
+class, server lagging the client.
 
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-Record: **Yes.** `pending-6.18`, `make kernelversion` = **6.18.53**.
-Exact snippet at lines 1924–1935 of `drivers/bluetooth/btnxpuart.c`.
-Introduced in `c135a5bc34a89` (~6.13 era); present here. Candidate fix
-**not** an ancestor of HEAD.
+Record: **Yes.** Local tree is **6.12.111** (`pending-6.12`,
+`p-6.12-3-gc504cf0baa3d8`).
+
+```31:31:fs/smb/server/mgmt/user_config.c
+        kvfree(resp);
+```
+
+```74:74:fs/smb/server/mgmt/user_config.c
+        kfree(user->passkey);
+```
+
+```84:84:fs/smb/server/mgmt/user_config.c
+        kfree(user->passkey);
+```
+
+No `kvfree_sensitive` / `kfree_sensitive` in this file today. Bug
+introduced with cifsd (2021), long before 6.12.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-Record: **Clean apply.** Surrounding code matches the supplied hunk
-(`hci_register_dev` / `ps_setup` / `hci_devcd_register` / `probe_fail` +
-`reset_control_assert`). Line numbers differ slightly from the candidate
-blob; context is the same. No conflicting refactor.
+Record: **Minor context, not semantic.** This tree has
+`kmalloc(sizeof(struct ksmbd_user), ...)` not `kmalloc_obj`, and **no**
+`hash_sz > sizeof(resp->hash)` guard. The three substitution sites exist
+verbatim (`kvfree(resp);` ×1, `kfree(user->passkey);` ×2). A 3-line
+backport applies; a raw mainline patch with 41-line context around
+`ksmbd_alloc_user` would conflict. `kvfree(resp_ext)` from
+`c9f2872e91b9f` is already here, matching the candidate’s
+`ksmbd_login_user` shape.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
 
-Record: No unregister-on-`ps_setup`-fail fix. Other btnxpuart stable-
-style fixes in this tree (OOB firmware read, FW dump header length) are
-unrelated.
+Record: No passkey wipe already in this file. Client-side
+`kfree_sensitive` does not cover ksmbd server objects.
 
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-Record:
-- **Subsystem:** Bluetooth device driver
-  (`drivers/bluetooth/btnxpuart.c`)
-- **Criticality:** **IMPORTANT** (not core mm/VFS). Real shipping
-  hardware (NXP 88W8987/8997 on i.MX and TI K3). `CONFIG_BT_NXPUART`
-  depends on `BT_HCIUART` and `SERIAL_DEV_BUS`.
+Record: **ksmbd (CONFIG_SMB_SERVER)** under `fs/smb/server/`.
+**IMPORTANT** (not core mm/VFS): optional in-kernel SMB3 server used on
+NAS/embedded; default `n`. Network-facing auth path.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
 
-Record: Actively maintained (many 2025 btnxpuart commits in this tree).
-Bug is in a 2024 error-path addition that has sat unfixed.
+Record: Actively maintained (many recent ksmbd fixes on this branch:
+OOB, ACL, session, credit). Mature enough that the passkey free path has
+been stable since 2021.
 
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
 
-Record: **Driver-specific / config-specific:** `CONFIG_BT_NXPUART` users
-with NXP UART Bluetooth, especially DTs that include `device-wakeup-
-gpios`.
+Record: **config-specific / driver-specific:** systems with
+`CONFIG_SMB_SERVER` (ksmbd) and live SMB sessions. Distros that ship
+ksmbd for NAS (openSUSE, some embedded, ksmbd-tools users).
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
 
 Record:
-- Trigger: `ps_setup()` returns non-zero after successful
-  `hci_register_dev()`.
-- In this tree that is `devm_gpiod_get_optional("device-wakeup")`
-  returning `IS_ERR` (GPIO specified but cannot be acquired). IRQ setup
-  failures are ignored, not a probe fail.
-- Not every boot. GPIO probe deferral / missing controller / bad DT are
-  realistic.
-- Unprivileged userspace does not need to *cause* the probe fail; once
-  it happens, bluetoothd/hciconfig can trip the UAF. Concurrent
-  `power_on` work can trip it without userspace.
+- Trigger: **every successful NTLM login** (`ksmbd_login_user` always
+  frees `resp` containing the hash) and **every `ksmbd_free_user`**
+  (session destroy / failed reauth).
+- Common on any ksmbd server with password auth.
+- Local unprivileged userspace does not need to call a special syscall;
+  a remote SMB client causes the kernel to hold then free the hash.
+  Recovering the leftover bytes still needs another heap-read primitive
+  or slab reuse that exposes old contents — that is the usual
+  `kfree_sensitive` threat model.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
 
-Record:
-- **Failure mode:** UAF of `btnxpuart_dev` (devm-freed) and/or HCI
-  object lifetime violation while `hciX` remains registered; possible
-  oops; `power_on` work not cancelled.
-- **Severity: HIGH** (UAF / crash). Not a panic on every boot, but
-  classically stable-worthy.
+Record: **Failure mode:** NT hash residual in kmalloc/kvmalloc heap.
+**Severity: HIGH** (credential/info leak; pass-the-hash material). Not a
+panic. Not theoretical-only in kind: this is why `kfree_sensitive`
+exists, and the CIFS client already wipes the same class of secrets.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 
 Record:
-- **Benefit:** HIGH for affected hardware — prevents UAF/oops on a real
-  probe failure.
-- **Risk:** VERY LOW — 3 lines, existing API, same order as `remove()`,
-  error path only.
+- **Benefit:** HIGH for ksmbd users — wipes NTLM hashes that currently
+  survive free on a hot auth path.
+- **Risk:** VERY LOW — 3 lines, existing helpers, NULL-safe, no behavior
+  change except zeroing freed secret bytes.
 - **Ratio:** strongly favors backport.
 
----
-
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 **FOR:**
-- Confirmed UAF / lifetime bug in this 6.18.53 tree
-- Small, obviously correct unregister-before-free
-- Matches `nxp_serdev_remove()`
-- Cancels `power_on` work that `hci_register_dev()` queued
-- NXP driver maintainer Reviewed-by; Bluetooth maintainer SOB
-- Independent duplicate patch
-- Clean apply; no prerequisites
-- Real in-tree hardware (i.MX, TI K3)
+- Real leftover NT hash (`resp->hash` / `user->passkey`) on heap after
+  login IPC and session free
+- Reachable from SMB SESSION_SETUP on deployed ksmbd
+- 3-line, obviously correct, uses APIs that exist in 6.12
+- Buggy frees present in this tree since 2021
+- Maintainer (Namjae Jeon) applied the series
+- Same pattern already used by `fs/smb/client/` in this tree
+- `kfree_sensitive(NULL)` safe on the alloc-failure path
 
 **AGAINST:**
-- Driver-specific, not core kernel
-- Trigger is an error path (`ps_setup` GPIO get fail), not every probe
-- No syzbot/CVE/Reported-by
-- No Fixes tag (not a reason to reject)
+- Hardening / defense-in-depth, no CVE/syzbot/user report
+- Part of a 5-patch series (others also wipe secrets; this file does not
+  need them)
+- ksmbd is optional (`default n`)
+- Raw mainline hunk context includes later `kmalloc_obj` / hash_sz check
+  (needs a tiny backport, not the later features)
 
-**UNRESOLVED (do not drive the verdict):**
-- Exact Luiz review comment text
-- Mainline SHA of the candidate (not in this tree)
-- stable@ discussion (lore 403)
+**UNRESOLVED:**
+- Could not run `b4 dig` against a local SHA (candidate not in this git
+  object store)
+- lore.kernel.org HTTP 403; discussion recovered from patchew/openwall
+- No evidence this was previously rejected for stable
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-1. Obviously correct and tested? **PASS** — pairing is the documented
-   HCI lifetime; reviewed by driver + Bluetooth maintainers.
-2. Fixes a real bug that affects users? **PASS** — registered HCI left
-   after probe fail; UAF via callbacks/userspace.
-3. Important issue? **PASS** — UAF / crash, HIGH (not
-   deadlock/corruption, still stable-class).
-4. Small and contained? **PASS** — 3 lines, one function.
+1. Obviously correct and tested? **PASS** — drop-in sensitive-free;
+   maintainer applied v2.
+2. Fixes a real bug that affects users? **PASS** — NTLM hash left in
+   slab after ksmbd login/logout.
+3. Important issue? **PASS** — security info leak of auth material
+   (HIGH, not a crash).
+4. Small and contained? **PASS** — 3 lines, one file.
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — buggy code present; hunk
-   matches.
+6. Can apply to the local tree? **PASS** — sites and helpers exist;
+   context tweak only (no `kmalloc_obj` required).
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
 
-Record: Not ID/quirk/DT/build/docs. It is a **normal UAF bugfix**, which
-is in-scope without an exception.
+Record: Not a device-ID/quirk/DT/build/docs exception. Qualifies as a
+**small security fix** (secret wipe), which stable regularly takes.
 
 **Step 9.4: MAKE YOUR DECISION**
 
-This 6.18.53 tree has the buggy `ps_setup()` → `probe_fail` path from
-`c135a5bc34a89`. The fix is the missing `hci_unregister_dev()` before
-`hci_free_dev()`. That is required HCI lifetime management, matches
-remove(), and prevents UAF of `devm`-managed driver state while `hciX`
-stays registered. Scope and risk are appropriate for stable.
-
----
+This should be backported to **this** 6.12 tree. The bug is here, the
+helpers are here, and the change is a surgical wipe of NTLM passkeys
+that ksmbd currently leaves in the heap after every login IPC and
+session free. Risk is negligible; benefit is wiping high-value
+credential material on a network-facing path.
 
 ### What the commit solves for this tree
 
-On NXP UART Bluetooth probe, if HCI registration succeeds and then
-power-save GPIO setup fails, 6.18.53 currently frees the HCI object
-(and, via `devm`, the driver private data) without unregistering.
-Userspace and the queued `power_on` work can then use freed memory. The
-backport adds one unregister on that path only.
+On 6.12.111 ksmbd still does `kvfree(resp)` on the login response (which
+includes `hash[KSMBD_REQ_MAX_HASH_SZ]`) and `kfree(user->passkey)` after
+copying that hash. Those bytes are the NT hash used as the NTLMv2 HMAC
+key. Switching to `kvfree_sensitive` / `kfree_sensitive` zeros them
+before the slab can reuse the object. That matches what the SMB client
+in this same tree already does for passwords.
 
-### Stable rules / risk vs benefit
+### Risk vs benefit
 
-Meets all six criteria. Benefit is preventing a UAF on a shipping
-driver; risk is a 3-line error-path change that uses the existing
-unregister helper.
+Benefit is wiping secrets on a common ksmbd auth path. Risk is a few
+extra `memzero_explicit` bytes on free. No locking, no API, no control-
+flow change.
 
 ### Concerns
 
-None that block backport. Trigger is uncommon (GPIO get failure), but
-the failure mode is severe enough. No extra commits needed.
+A verbatim mainline apply may need a 3-line backport because this tree
+lacks `kmalloc_obj` and the later `hash_sz` cap; those are **not**
+prerequisites. Sibling series patches (auth.c SPNEGO `kvfree(resp)`,
+session/connection/preauth) are independent and do not block this file’s
+fix.
 
----
-
-### Verification
-
-- **[Phase 1]** Parsed subject/tags/body: UAF fix; Reviewed-by Neeraj;
-  SOB Luiz; no Fixes/syzbot/Cc-stable
-- **[Phase 2]** Diff: +3/−1 in `nxp_serdev_probe()`; `ps_setup` fail now
-  unregisters before free
-- **[Phase 2]** Read local probe/remove/`ps_setup`: bug and GPIO-only
-  fail return confirmed
-- **[Phase 2]** Read
-  `hci_register_dev`/`hci_unregister_dev`/`hci_free_dev`: register
-  queues `power_on` and holds refs; free is `put_device` only
-- **[Phase 3]** `git describe HEAD` / `make kernelversion`:
-  `p-6.18-1-g03b85e06ca9bf`, **6.18.53**
-- **[Phase 3]** `git blame -L 1915,1940`: buggy goto from
-  `c135a5bc34a89`
-- **[Phase 3]** `git merge-base --is-ancestor c135a5bc34a89a HEAD`: yes
-- **[Phase 3]** `git show c135a5bc34a89a`: introduced int `ps_setup` +
-  `goto probe_fail` without unregister
-- **[Phase 3]** Original driver `689ca16e523278`: `ps_setup` could not
-  fail after register
-- **[Phase 3]** `git log --grep="use-after-free"` on this file: empty;
-  fix not in tree
-- **[Phase 4]** `b4 dig` on v1 msgid: no commit in this tree
-- **[Phase 4]** lore.kernel.org: 403 — UNVERIFIED full thread body
-- **[Phase 4]** ratatoskr v3 + lkml.iu.edu: v1–v3 standalone; Neeraj
-  approved; duplicate June 2026 patch
-- **[Phase 5]** Callers: serdev `.probe`; `nxpdev` is `devm_kzalloc`
-- **[Phase 5]** DTS: `nxp,88w8987-bt` on i.MX and TI boards; binding
-  documents `device-wakeup-gpios`
-- **[Phase 6]** Exact buggy snippet present; `probe_fail_unregister`
-  absent
-- **[Phase 8]** Failure: UAF/oops on probe error after register;
-  severity HIGH
-- **UNVERIFIED:** Luiz comment text; candidate mainline SHA; stable@
-  archive
-
-The fix is small, surgical, already in the local probe shape, and
-addresses a real UAF.
+Verification:
+- [Phase 1] Parsed subject/body/tags: no Fixes/Reported-by/Cc:stable;
+  SOBs Thomas Huth + Namjae Jeon
+- [Phase 2] Diff: 3 substitutions in user_config.c; `kvfree(resp)` and
+  two `kfree(user->passkey)`
+- [Phase 2] Confirmed `KSMBD_REQ_MAX_HASH_SZ` is 18 and
+  `calc_ntlmv2_hash()` uses `user_passkey()` as HMAC-MD5 key
+  (`CIFS_ENCPWD_SIZE` 16)
+- [Phase 3] `git blame`: `kvfree(resp)` from 2021 cifsd
+  (`79f6b11a104f3a` / `e2f34481b24db2`); passkey `kfree` from
+  `822bc8ea514ecd` / `a77e0e02af1c2`
+- [Phase 3] `git merge-base --is-ancestor` of those SHAs vs HEAD: all
+  present (exit 0)
+- [Phase 3] `git log --author="Thomas Huth" -- fs/smb/`: empty in this
+  tree (series is newer)
+- [Phase 4] Patchew/openwall: v2 2/5 of “Clear sensitive data before
+  freeing it”; Namjae applied to ksmbd-for-next-next; no NAK
+- [Phase 4] lore.kernel.org WebFetch: 403; b4 dig: no local candidate
+  SHA — discussion recovered from patchew/openwall
+- [Phase 5] Callers: `smb2pdu.c` SESSION_SETUP
+  `session_user()`/`ntlm_authenticate()`, `auth.c` krb5 path,
+  `user_session.c` teardown
+- [Phase 5] `handle_response()` uses `kvzalloc` — `kvfree_sensitive` is
+  the correct free family
+- [Phase 6] `git describe HEAD` / `make kernelversion`: **6.12.111**
+  (`pending-6.12`); buggy kfree/kvfree still in file;
+  `kfree_sensitive`/`kvfree_sensitive` declared in
+  `include/linux/slab.h`
+- [Phase 6] Local file has no `kmalloc_obj` / hash_sz cap; three target
+  call sites exist verbatim
+- [Phase 8] Failure mode: NT-hash residual in heap after login/free;
+  severity HIGH; regression risk very low
+- UNVERIFIED: full lore mailbox / b4 patch-id match; whether a later CVE
+  was assigned
 
 **YES**
 
- drivers/bluetooth/btnxpuart.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/server/mgmt/user_config.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index c7acf6c7efcf6..870ce16ad40b1 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -1924,13 +1924,15 @@ static int nxp_serdev_probe(struct serdev_device *serdev)
- 	}
+diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
+index 0e5fcd6f95c15..909f219c79faa 100644
+--- a/fs/smb/server/mgmt/user_config.c
++++ b/fs/smb/server/mgmt/user_config.c
+@@ -28,7 +28,7 @@ struct ksmbd_user *ksmbd_login_user(const char *account)
+ 	user = ksmbd_alloc_user(resp, resp_ext);
+ 	kvfree(resp_ext);
+ out:
+-	kvfree(resp);
++	kvfree_sensitive(resp, sizeof(*resp));
+ 	return user;
+ }
  
- 	if (ps_setup(hdev))
--		goto probe_fail;
-+		goto probe_fail_unregister;
+@@ -82,7 +82,7 @@ struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp,
  
- 	hci_devcd_register(hdev, nxp_coredump, nxp_coredump_hdr,
- 			   nxp_coredump_notify);
+ err_free:
+ 	kfree(user->name);
+-	kfree(user->passkey);
++	kfree_sensitive(user->passkey);
+ 	kfree(user);
+ 	return NULL;
+ }
+@@ -92,7 +92,7 @@ void ksmbd_free_user(struct ksmbd_user *user)
+ 	ksmbd_ipc_logout_request(user->name, user->flags);
+ 	kfree(user->sgid);
+ 	kfree(user->name);
+-	kfree(user->passkey);
++	kfree_sensitive(user->passkey);
+ 	kfree(user);
+ }
  
- 	return 0;
- 
-+probe_fail_unregister:
-+	hci_unregister_dev(hdev);
- probe_fail:
- 	reset_control_assert(nxpdev->pdn);
- 	hci_free_dev(hdev);
 -- 
 2.53.0
 
