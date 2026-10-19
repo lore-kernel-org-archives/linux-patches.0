@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86ED0533589;
-	Mon, 19 Oct 2026 13:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF87D539763;
+	Mon, 19 Oct 2026 13:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418121; cv=none; b=sgb83vZUFlZZWvd9/O5q1bH4RKSAO+CJ7qQv2sWQ0AdnFSP0N2olmac2wiEUgtkiznqv/fLsvW4Pbsy+ImNMX2TCYkJOAEqXEidfivtRdBIi0aPFb2jTJ0TShoECGQvGvaxdL1WYXnhbJCEFJvpAVFFXQpY/tF70RiWQerKyrMg=
+	t=1792418123; cv=none; b=gctkBiqUyk2AgTkrZ2hfVnMSpT6XmoKwXfYfxcved8akziB9CxGIM+ef46dMP2/xwtgwUR3lcSw6g/xiQxm8knaU//2HbvsDeDLYHb8qPS797kXbC22txFlhdfpYNFwi5zwIqSENf6ZzBIlOYNJPFR5kemHVZbgt+gTAn/6THgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418121; c=relaxed/simple;
-	bh=SnwDmaGbB/8D8fMnHoOLc+J87zXg6C8AhzDsyavSZ4c=;
+	s=arc-20240116; t=1792418123; c=relaxed/simple;
+	bh=p/DhF42raQ7LtZU+gbIb+kAcSbQNnWCPCFScLiNA36s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ax/Pa0v682tDBQsGFtKHRMVuSnef8nQK8dDR2+qoIfjhTDoG6bFTqkFZAq/wWkdQPlTaYYCg0hH16dQ7TcHm7wKMT1t/ucC5pNBGVPG8yH9ti3pBHnHFKZ4rXbcPeQVi4W/FtRq+tOM0rreyCz0k0gGeL5+slLo7YoOa6cF4JDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jmhg3X6/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NicyaA3KZ2XASRXkPU43565TFbmKSUX1WiIQ664DI0d77V7RTaU1/0i5IQQ8tWX2//phheBAobw5KicTNaygSrL2u9z8uyjwNbkV7rFgo+ELq8do+gLSsGz596hv1lYMTY8qtef7hUgEeaBI7wggWk42s2oCmF5xa4tekJX144g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eNbksOTk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jmhg3X6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F341F000C9;
-	Mon, 19 Oct 2026 13:55:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eNbksOTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDD11F000CA;
+	Mon, 19 Oct 2026 13:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418118;
-	bh=DzXpLSCmKSDxDzNcGxTReR6rG9pLC1ND/bBlnj/rcEw=;
+	s=k20260515; t=1792418119;
+	bh=GNAwXZxGzpjCpCLLS6riFOILsXe4BJz2ZdZ68y974jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jmhg3X6/+iTiATNI7B5njoEp4ZfGl3sip4C9L77GcA+7leQ1ZcV8aYqdbnQgbK4LI
-	 LzrngKYlN2cbVglRzaofwK35bQTo46mldKeRUTB5Kw2N5RFRQzoq/y++XPRYYdFZsM
-	 B/Ymgw8WQCFch27cuTUySsT48r+n7BWNj0BQo7TQlrRAxiPJHMIMskyRjz0hp3YDKu
-	 eOwEqHqTbNOiEBL/e57WAjYQGTmQqQ6Jq0BVZYnx1p1sOfqa/VB/Wo+btfwdGMeWPN
-	 HtyxdSGlMOEBcVCCB/laCfzuPTfxPruG8eYoZ6PO+8iBAbsCiRt3pfOTsHyXEyw2DY
-	 /oEAtOafHzHlA==
+	b=eNbksOTk0H4NLiU+E7mgpnuaBDfwmQvaTj+XeUtKrtBcGe3rRhnNfhdQId81XLwsT
+	 ZJAVosnq/VJ6kfvW6Wveprnl1yNzqPDXuxw6Za24Iy7XEsniWQemYc5VBEngrAxPgd
+	 FXGkyhbmIVB2fw/nUxnwH6ENOfrozXB1/C2MpofcL8sK04V9qmXhat1rV5yzfn1ybx
+	 baFXf35QISVkxBfXHh88peDXwPaeR+ao7cd2NOuy1jo3BZCd6cDfOaPWXqAH1SDMyA
+	 yIKLA+6JNwgUs3LLVv2d0qgi5JnoXvmwvLZsuiET8An/ob1lPAPRgNnepZswJ+SMQW
+	 Y6a+YuvEh/Kww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+Cc: David Laight <david.laight.linux@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sched-ext@lists.linux.dev,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] sched_ext/scx_flatcg: expire cached hweights on weight changes
-Date: Mon, 19 Oct 2026 09:45:15 -0400
-Message-ID: <20261019135441.1420968-24-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] usb_string_copy: Use kzalloc() to avoid leaking old data
+Date: Mon, 19 Oct 2026 09:45:16 -0400
+Message-ID: <20261019135441.1420968-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,417 +52,507 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit 94c20e1fb334c2082b443c4470a86ad982f67282 ]
+[ Upstream commit 057df423bf4747091cf942af57307627e941e1fb ]
 
-fcg_cgroup_set_weight() updates cgc->weight and the parent's
-child_weight_sum but doesn't bump hweight_gen, so the hweights cached by
-cgrp_refresh_hweight() stay stale until some task activation bumps the
-generation. For cgroups whose tasks never go through a 0->n runnable
-transition (e.g. persistently busy ones), a cpu.weight change never
-propagates to scheduling at all.
+If the string is read while being updated (which is why the copy is done
+in place) and the new string is longer than the old one, then the reader
+can read memory that isnt part of either string.
 
-Bump hweight_gen on weight changes so the next refresh recomputes with
-the new weight.
+Use memcpy() to copy the known length string instead of strcpy.
 
-Verified on a flatcg VM: a live cpu.weight 100->800 change on a busy
-cgroup leaves HWT update at 0 and the distribution unchanged; with it,
-hweight_gen increments and the refresh recomputes.
-
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Link: https://patch.msgid.link/20260608095523.2606-37-david.laight.linux@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: the buggy path is in this 6.12 tree, the patch
-is a three-line cache-invalidation fix, and it applies here.
+# Stable backport analysis: `usb_string_copy: Use kzalloc() to avoid
+leaking old data`
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+Local tree: **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`). The commit
+under review is `057df423bf474`. The buggy `kmalloc` + in-place `strcpy`
+path has been in this lineage since **v5.12** (`98f153a10da403`).
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [sched_ext/scx_flatcg] [expire] [invalidate cached hierarchical
-weights when cpu.weight changes]
+---
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+- Subsystem: USB gadget configfs (`usb_string_copy` in
+  `drivers/usb/gadget/configfs.c`)
+- Action verb: **Use** (kzalloc) / implied **avoid leaking**
+- Claimed intent: stop readers from observing memory that is not part of
+  either the old or new string when an in-place update lengthens the
+  buffer
+
+Record: `[usb/gadget/configfs] [use/avoid] [zero the string buffer and
+copy a known length to prevent leaking heap bytes during in-place
+updates]`
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- `Signed-off-by: David Laight <david.laight.linux@gmail.com>` (author)
+- `Link: https://patch.msgid.link/20260608095523.2606-37-
+  david.laight.linux@gmail.com`
+- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (USB
+  maintainer applied it)
+- No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Reviewed-by:`, no
+  `Acked-by:`, no `Cc: stable` (absence is expected)
+- Message-Id `2606-37` = patch 37 of a large series
+
+Record: Author SOB + Greg SOB + lore Link. No reporters. Hardening/USB
+lists were the original audience (confirmed in Phase 4).
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+The body describes a concurrent-read hole in the in-place update path:
+if a reader walks the buffer while a longer string is being copied, it
+can pass the old NUL and consume bytes that belong to neither string. It
+also switches `strcpy` to `memcpy` of the already-computed length.
+
 Record:
-- Signed-off-by: Tao Cui <cuitao@kylinos.cn> (author)
-- Signed-off-by: Tejun Heo <tj@kernel.org> (sched_ext maintainer;
-  applied the patch)
-- No Fixes: tag on the committed version (expected for this review
-  pipeline)
-- No Reported-by, Tested-by, Reviewed-by, Acked-by, Link, or Cc: stable
-- BPF CI bot later suggested Fixes: a4103eacc2ab4 ("sched_ext: Add a
-  cgroup scheduler which uses flattened hierarchy")
+- Bug: kernel heap contents can be observed by a concurrent reader of a
+  gadget string during an in-place lengthening update
+- Symptom: leaked uninitialized `kmalloc` bytes (via configfs show or
+  USB string descriptors)
+- Version info: none in the message
+- Root cause: first allocation used `kmalloc` (unzeroed tail); in-place
+  `strcpy` of a longer string temporarily removes the old NUL before the
+  new one is written
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: `fcg_cgroup_set_weight()` writes `cgc->weight` and the parent's
-  `child_weight_sum` but does not bump `hweight_gen`. Cached hweights in
-  `cgrp_refresh_hweight()` stay valid until some task activation changes
-  the active set.
-- Symptom: for cgroups that never go through a 0→n runnable transition
-  (persistently busy ones), a live `cpu.weight` write never affects
-  scheduling.
-- Author verification: on a flatcg VM, `cpu.weight` 100→800 on a busy
-  cgroup left HWT updates at 0 and the distribution unchanged; with the
-  bump, `hweight_gen` increments and refresh recomputes.
-- Root cause: generation counter used as a cache key is not invalidated
-  on the weight-change path, even though the file comment says it "gets
-  inc'd on weight tree changes".
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+This is not disguised cleanup. The subject states the leak. It *is* one
+patch in a treewide `strcpy` sweep, and `memcpy` is that sweep;
+`kzalloc` is the actual leak fix.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. This is an explicit correctness fix: a control knob
-is updated but the derived cached state is not expired.
+Record: `[Not hidden. Real infoleak fix, bundled with strcpy-
+elimination.]`
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+---
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `tools/sched_ext/scx_flatcg.bpf.c` (+3 / -0)
-- Function: `fcg_cgroup_set_weight()`
-- Scope: single-file surgical fix (blank line, comment, one atomic
-  increment)
+## PHASE 2: DIFF ANALYSIS
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: lock; if the cgroup is active, adjust parent
-  `child_weight_sum`; store new `cgc->weight`; unlock; return. Cached
-  `cgc->hweight` is left tagged with the old `hweight_gen`.
-- After: same updates, then `__sync_fetch_and_add(&hweight_gen, 1)` so
-  the next `cgrp_refresh_hweight()` (called from
-  `try_pick_next_cgroup()` / dispatch) misses the cache and recomputes
-  `hweight` from the new weight.
-- Path affected: cgroup `cpu.weight` write while scx_flatcg is loaded.
-  Normal (not error) path.
+**Step 2.1: INVENTORY THE CHANGES**
+- File: `drivers/usb/gadget/configfs.c` (+2 / −2)
+- Function: `usb_string_copy()`
+- Scope: single-file, two-line surgical change
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: logic / correctness (stale cache)
-- Mechanism: `cgrp_refresh_hweight()` returns early when
-  `cgc->hweight_gen == hweight_gen`. `hweight_gen` is only bumped in
-  `update_active_weight_sums()` when a cgroup's active membership
-  actually changes. A weight write on an already-active cgroup never
-  does that, so dispatch keeps charging with the old hierarchical share.
+Record: `[configfs.c +2/-2] [usb_string_copy] [single-file surgical]`
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: it reuses the exact invalidation already used on
-  the active-set path (`__sync_fetch_and_add(&hweight_gen, 1)` at the
-  existing line 504).
-- Minimal; no unrelated edits.
-- Regression risk is very low: extra generation bumps only force more
-  hweight refreshes, which the code already treats as the slow-but-
-  correct path. No new locks, no API change.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Before:
+- First call: `kmalloc(USB_MAX_STRING_WITH_NULL_LEN)` then `strcpy`
+- Later calls: reuse the same buffer (`str = copy`) and `strcpy` over it
+  (the 2021 UAF workaround)
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+After:
+- First call: `kzalloc` so the unused tail is zeros
+- Copy: `memcpy(str, s, ret + 1)` (`ret` is `strlen(s)`, so this
+  includes the NUL)
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: The whole of `fcg_cgroup_set_weight()`,
-`cgrp_refresh_hweight()`, `hweight_gen`, and the existing bump in
-`update_active_weight_sums()` come from a4103eacc2ab4 (Tejun Heo,
-2024-09-04), first contained in v6.12-rc1. The bug is as old as the
-example scheduler itself.
+Affected path: configfs store of
+manufacturer/product/serial/configuration strings (`GS_STRINGS_W`).
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag on the commit. The introducing commit is
-a4103eacc2ab4, which is an ancestor of this tree (`git merge-base --is-
-ancestor` exit 0). No later in-tree commit already expires hweights on
-set_weight.
+Record: `[kmalloc+strcpy -> kzalloc+memcpy of known length; first-alloc
+and in-place update paths]`
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record (this tree, `tools/sched_ext/scx_flatcg.bpf.c`):
-- 65e72372d5282 sched_ext/scx_flatcg: Fix cvtime true-up on slice expiry
-  (already here; same author/thread)
-- ab3d9439475a2 sched_ext/scx_flatcg: Fix cvtime_delta race and add
-  hweight scaling to bypass charging
-- c9c809f4137c3 scx_flatcg: Use a user DSQ for fallback instead of
-  SCX_DSQ_GLOBAL
-- a4103eacc2ab4 original addition
-Standalone: one-line generation bump. Not patch N/M. The related cvtime
-true-up was discovered in the same mailing-list thread but is already in
-this tree.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Category: **uninitialized data / kernel infoleak** (with a concurrent-
+read window created by in-place update).
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Tao Cui has two origin/master commits on this file (this one and
-the cvtime true-up). Tejun Heo is the sched_ext maintainer and applied
-both. This tree already contains the cvtime true-up (65e72372d5282).
+Mechanism, verified in this tree:
+1. `98f153a10da403` (v5.12) stopped `kfree`+`kstrdup` and copies in
+   place so USB host pointers stay valid.
+2. First fill still used `kmalloc`, so bytes after the first NUL are
+   heap residue.
+3. Bind aliases those buffers into USB string tables:
+   - `stringtab[...].s = language->manufacturer/product/serialnumber`
+     (`configfs_attach_gadget_strings`)
+   - `cn->strings.s = cn->configuration` (`configfs_composite_bind`)
+4. `usb_gadget_get_string()` does `strlen(s->s)` then converts to
+   UTF-16.
+5. Configfs show is `sprintf(page, "%s\n", gs->__name ?: "")`.
+6. `GS_STRINGS_W` calls `usb_string_copy()` with **no** `gi->lock`. Host
+   `GET_DESCRIPTOR` is not serialized against that store.
+7. If a reader is in `strlen`/`sprintf` while `strcpy` lengthens the
+   string, the old NUL is overwritten first; the walk continues into the
+   unzeroed tail.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: None. `hweight_gen`, `__sync_fetch_and_add`, and
-`fcg_cgroup_set_weight()` all exist unchanged in this checkout. `git
-apply --check` of 94c20e1fb334c succeeded (hunk offset 1 line from the
-already-backported cvtime fix).
+`kzalloc` makes that tail zeros, so a torn read stops instead of leaking
+heap. `memcpy` is equivalent to `strcpy` here (`ret` already came from
+`strlen`).
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+Record: `[uninitialized kmalloc tail leaked across a designed
+concurrent-read window] [kzalloc zeros the tail; memcpy is strcpy
+replacement]`
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 94c20e1fb334c`:
-  https://patch.msgid.link/20260814144116.2767304-1-cui.tao@linux.dev
-- `b4 dig -a`: single v1 series; no later unapplied revision
-- lore.kernel.org fetches returned 403; discussion recovered from
-  patchew and openwall mirrors
-- Tejun Heo: "Applied to sched_ext/for-7.3." No NAK
-- BPF CI bot: "This looks like a bug fix. Should this include a Fixes:
-  tag..." suggesting a4103eacc2ab4
-- No reviewer asked to keep it out of stable; no Cc: stable either
-  (expected)
+**Step 2.4: ASSESS THE FIX QUALITY**
+Obviously correct. `USB_MAX_STRING_LEN` is 126, so max `ret+1` is 127,
+matching `USB_MAX_STRING_WITH_NULL_LEN`. `kzalloc` is strictly safer
+than `kmalloc`. `memcpy` of `strlen+1` matches `strcpy` for a C string.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To/Cc included tj@kernel.org, void@manifault.com,
-arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev,
-linux-kernel@vger.kernel.org, bpf@vger.kernel.org. Maintainer Tejun
-applied it.
+Regression risk: very low. Remaining torn-string reads of *previous
+string contents* are the pre-existing in-place design, not introduced
+here.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Author follow-up: VM with A(100)→A1/A2(100)
-and D(varying weight), 3 busy tasks per leaf, 4 vCPUs. D=200 ≈ 47% CPU,
-D=800 ≈ 46% — weight changes did nothing. That is how the missing
-`hweight_gen` bump was found.
+Record: `[minimal, correct] [regression risk very low]`
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone v1. Same thread spawned the cvtime true-up fix
-(already in this tree as 65e72372d5282). Tejun noted that even after
-this cache fix, runnable-task limits still cap shares; that is a
-documented example-scheduler limitation, not a dependency of this patch.
+---
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned 403. Local `git log
---grep='expire cached hweights'` on this file is empty — not already in
-this tree. No local evidence of a prior rejection.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 3.1: BLAME THE CHANGED LINES**
+- Function added: `88af8bbe4ef781` (2012, “the start of the configfs
+  interface”) — originally `kstrdup` + `kfree(old)`
+- In-place `kmalloc` + `strcpy`: `98f153a10da403` (2021-03-17, in v5.12)
+  — **this is the buggy code**
+- Empty-string guard: `6d3c721e686ea` (2024, `Cc: stable`)
+- This fix: `057df423bf474` (2026-06-08)
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `fcg_cgroup_set_weight()` (modified). Related:
-`cgrp_refresh_hweight()`, `update_active_weight_sums()`,
-`try_pick_next_cgroup()`.
+Record: `[98f153a10da403, v5.12] [bug present for years in this
+lineage]`
 
-Step 5.2: TRACE CALLERS
-Record:
-- `fcg_cgroup_set_weight` is registered as `.cgroup_set_weight` in the
-  BPF struct_ops (line 959).
-- Kernel calls it from `scx_group_set_weight()` in `kernel/sched/ext.c`
-  when `cpu.weight` / `cpu.weight.nice` changes and scx_flatcg is loaded
-  (`SCX_CALL_OP(..., cgroup_set_weight, ...)`).
-- Reachable from a privileged cgroupfs write, not from an unprivileged
-  syscall.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+No `Fixes:` tag. The semantic Fixes target is `98f153a10da403`, which
+**is** in this tree (`git merge-base --is-ancestor` succeeded). That
+commit was itself `Cc: stable` and exists because USB host string reads
+race with configfs stores.
 
-Step 5.3: TRACE CALLEES
-Record: `find_cgrp_ctx`, `find_ancestor_cgrp_ctx`,
-`bpf_spin_lock/unlock(&cgv_tree_lock)`, and after the patch
-`__sync_fetch_and_add(&hweight_gen, 1)`. No allocation.
+Record: `[No Fixes tag] [real introducer 98f153a is in this tree since
+v5.12]`
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: userspace writes `cpu.weight` → `cpu_weight_write_u64` →
-`scx_group_set_weight` → BPF `fcg_cgroup_set_weight`. Dispatch later
-calls `try_pick_next_cgroup()` → `cgrp_refresh_hweight()`. If
-`hweight_gen` was not bumped, that refresh hits `FCG_STAT_HWT_CACHE` and
-keeps the old share. Users who load scx_flatcg and change cgroup weights
-can trigger this; busy cgroups are the common case where weights matter.
+**Step 3.3: CHECK FILE HISTORY**
+Recent related commits on this file: OOB empty-string fixes
+(`6d3c721e686ea`, `3014168731b79`), later `f63edb54d8f73` (qw_sign,
+unrelated). No prerequisite refactor is required for these two lines.
+`kmalloc_obj` treewide conversion did **not** change this `kmalloc`
+call; the pre-image is still `kmalloc(...)`.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: The only other `hweight_gen` bump is in
-`update_active_weight_sums()` when `nr_active` crosses 0. That is the
-missing counterpart this patch adds on the weight-write path. No other
-copy of the same omission in this file.
+Record: `[standalone vs file history] [no blocking prerequisites in this
+tree]`
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+David Laight is not the USB gadget maintainer. Around this commit he
+posted ~100 compile-tested `strcpy` replacements to linux-hardening /
+subsystem lists. Greg applied this one. Sibling leak-style changes exist
+(e.g. TIPC pad bytes).
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Local tree is pending-6.12, `make kernelversion` =
-6.12.111, `git describe HEAD` = p-6.12-3-gc504cf0baa3d8.
-`fcg_cgroup_set_weight()` at lines 590–609 has the weight update and no
-`hweight_gen` bump. Introduced by a4103eacc2ab4 (in this tree).
-94c20e1fb334c is not an ancestor (`merge-base --is-ancestor` exit 1).
+Record: `[regular contributor, hardening series] [Greg applied; not a
+maintainer-authored USB patch]`
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply. `git show 94c20e1fb334c | git apply --check`
-succeeded with hunk offset 1 (from the already-present cvtime true-up).
-No refactor of this function here.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Needs the in-place buffer (`98f153a`) to be meaningful; that is in this
+tree. Does not need `6d3c721e` (empty-string check) for correctness;
+that only appears as nearby context. Applies standalone.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No alternate hweight-expiry fix. Related accounting fixes
-(cvtime true-up, cvtime_delta race) are present and independent.
+Record: `[standalone on any tree that has the 2021 in-place copy] [can
+apply standalone here]`
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+---
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: tools/sched_ext example BPF scheduler (scx_flatcg), used only
-when `CONFIG_SCHED_CLASS_EXT` is enabled and this program is loaded.
-Criticality: PERIPHERAL relative to core CFS, but IMPORTANT for anyone
-actually running this shipped scheduler — its whole job is hierarchical
-weight control. Not staging.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: sched_ext was new in 6.12; this file has a handful of later
-correctness backports in this tree. Mature enough that the bug is
-original, not from post-branch churn.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+`b4 dig -c 057df423bf474` matched:
+https://patch.msgid.link/20260608095523.2606-37-
+david.laight.linux@gmail.com
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+`b4 dig -a`: only **v1**, dated 2026-06-08, subject `[PATCH next]`.
+Saved mbox: patch only, **no replies**. Trailer notes:
+- one of a group removing unbounded `strcpy()`
+- **“all the changes are only compile tested”**
+- ~100 patches sent individually
+- “Apologies for the terse commit messages”
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Config- and userspace-specific: `CONFIG_SCHED_CLASS_EXT=y` plus
-loading `scx_flatcg`. Not universal. This tree already ships that
-example and has been taking its correctness fixes.
+WebFetch to lore.kernel.org returned **403**. Discussion content was
+recovered via `b4 dig -m`.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Write `cpu.weight` on a cgroup whose tasks stay runnable. Common
-for exactly the workload the scheduler is meant to manage (competing
-busy cgroups). Requires privilege to write the cgroup knob. Not a race;
-it fails every time until some sibling goes idle.
+Record: `[lore msgid 20260608095523.2606-37] [v1 only, no review
+comments in thread] [no reviewer Cc: stable] [compile-tested series]`
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Failure mode = live cgroup CPU shares do not follow `cpu.weight`
-for busy groups (author: 100→800 left HWT updates at 0). No oops,
-deadlock, or corruption. Severity: MEDIUM–HIGH functional/fairness bug
-for that scheduler; LOW for the rest of the kernel.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+`b4 dig -w` original recipients: Kees Cook, linux-hardening, linux-
+kernel, linux-usb, Arnd Bergmann, Greg Kroah-Hartman. Greg’s merge SOB
+is the only review signal in git. No `Reviewed-by`/`Acked-by` on the
+commit.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: makes the primary fairness knob work for persistently busy
-  cgroups on a scheduler this tree already ships and already patches.
-- Risk: very low (3 lines, existing atomic, no lock/API change).
-- Ratio: strongly favors backport.
+Record: `[USB + hardening lists and Greg CC’d; Greg applied; no written
+review in the thread]`
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+No `Reported-by`, no syzbot, no bugzilla. The race is inferred from code
+and from `98f153a`’s real KASAN UAF on the same overlapping access.
 
-Step 9.1: COMPILE THE EVIDENCE
+Record: `[no external bug report] [concurrent access is documented by
+the 2021 UAF fix, not by a new user report]`
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Patch 37 of a ~100-patch `strcpy` series aimed at linux-next. This
+instance is one of the few that also changes allocation to `kzalloc` and
+describes a leak. No other series member is required for this function.
+
+Record: `[strcpy series; this patch is self-contained]`
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+lore.kernel.org/stable search via WebFetch and curl returned **403**.
+Cannot confirm a stable-list nomination or rejection.
+
+Record: `[UNVERIFIED: stable@ discussion]`
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+semcode MCP is not available. Used grep + file reads.
+
+**Step 5.1: KEY FUNCTIONS**
+Record: `[usb_string_copy]`
+
+**Step 5.2: CALLERS**
+Direct calls only through `GS_STRINGS_W` in
+`include/linux/usb/gadget_configfs.h`, instantiated in `configfs.c` as:
+- `gadget_language_{manufacturer,product,serialnumber}_store`
+- `gadget_config_name_configuration_store`
+
+Those are configfs attribute stores (privileged gadget setup). Host-side
+readers are `usb_gadget_get_string()` → `strlen` on the aliased buffers
+after bind.
+
+Record: `[configfs stores write; USB GET_STRING and configfs show read
+the same buffers]`
+
+**Step 5.3: CALLEES**
+`strlen`, `kzalloc`/`kmalloc`, `memcpy`/`strcpy`. No locks, no I/O.
+
+Record: `[string copy + slab alloc only]`
+
+**Step 5.4: CALL CHAIN / REACHABILITY**
+Userspace with configfs gadget access: `write(2)` →
+`configfs_write_file` → `GS_STRINGS_W` → `usb_string_copy`.
+USB host: `GET_DESCRIPTOR` / string request → `composite_setup` →
+`usb_gadget_get_string` → `strlen(s->s)`.
+
+Reachable. Typical writers are root (Android/embedded gadgetd). The
+**host** is a different trust domain.
+
+Record: `[reachable from configfs writes and from USB host string reads]
+[host path is the security-relevant reader]`
+
+**Step 5.5: SIMILAR PATTERNS**
+Same file already has other string-safety fixes (`6d3c721e`,
+`3014168731b79`). Author’s series has other “don’t leak leftover bytes”
+patches. No second copy of this exact helper.
+
+Record: `[isolated helper; same file has prior stable-bound string
+bugs]`
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Yes. Pre-image at `057df423bf474^` still has `kmalloc` + `strcpy`.
+Introduced v5.12, present through this 7.3-rc4 lineage until this
+commit.
+
+Record: `[yes, usb_string_copy in drivers/usb/gadget/configfs.c] [since
+v5.12 / 98f153a]`
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Hunk is two lines inside a long-stable helper. Would apply cleanly here
+(and would apply to older trees that still have `kmalloc`+`strcpy`;
+empty-string check is only nearby context).
+
+Record: `[clean apply]`
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+`6d3c721e` is a different bug (OOB on zero-length write). No other
+kzalloc leak fix for this helper.
+
+Record: `[no substitute fix already present before 057df423]`
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+USB gadget configfs (`CONFIG_USB_CONFIGFS`). Used to compose gadgets
+from userspace (Android gadgets, gadgetfs-style gadgets, UDC testing).
+Not core mm/VFS, but a common embedded/Android path.
+
+Record: `[USB gadget configfs] [IMPORTANT for gadget/Android; PERIPHERAL
+for desktops without UDC]`
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+File still receives security-relevant string fixes in 2024–2026. Mature
+interface, not staging.
+
+Record: `[mature, still getting bounded-string fixes]`
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+Gadget systems that set manufacturer/product/serial/configuration via
+configfs and have the gadget bound so a host can read string
+descriptors. Config-specific: `CONFIG_USB_CONFIGFS`.
+
+Record: `[driver/config-specific: USB gadget configfs users]`
+
+**Step 8.2: TRIGGER CONDITIONS**
+Concurrent in-place store of a **longer** string while
+`strlen`/`sprintf` is walking the buffer. Window is a 127-byte copy —
+short, but the overlap is intentional (`98f153a` exists because host
+reads and configfs writes do overlap in practice). Unprivileged local
+users generally cannot write these attributes; a USB host can read the
+leaked bytes.
+
+Record: `[short race during string lengthening while gadget is live]
+[USB host can observe the leak]`
+
+**Step 8.3: FAILURE MODE SEVERITY**
+Kernel heap infoleak (uninitialized `kmalloc` bytes), not a crash. Can
+cross to a USB host via string descriptors. That is a security issue,
+not a panic.
+
+Record: `[kernel heap infoleak to USB host / configfs reader] [HIGH for
+security, not CRITICAL crash]`
+
+**Step 8.4: RISK-BENEFIT RATIO**
+- Benefit: closes a real infoleak on a path already known to race; 2
+  lines; `kzalloc` is the usual stable-grade fix
+- Risk: negligible (`kzalloc`/`memcpy` behavior-preserving for this
+  helper)
+
+Record: `[benefit high for gadget infoleak] [risk very low] [favorable]`
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real, reproduced bug: busy-cgroup `cpu.weight` changes never reach
-  scheduling.
-- Matches the file's own cache-invalidation design; the set_weight path
-  simply omitted the bump.
-- 3-line, obviously correct, same primitive as the existing active-set
-  path.
-- Bug present since v6.12-rc1 in this tree; patch not yet here; applies
-  cleanly.
-- Maintainer applied it; author and maintainer both tested.
-- Companion scx_flatcg correctness fixes are already in this 6.12 tree.
+- Real uninitialized-kmalloc leak, not style-only
+- Concurrent reader is why in-place copy exists (`98f153a`, KASAN UAF,
+  `Cc: stable`)
+- Host `strlen` on aliased pointers is a verified path
+- Two-line, obviously correct change
+- No new API/feature
+- Bug present since v5.12 in this tree’s history
+- Applied by Greg KH
 
 AGAINST:
-- Example BPF scheduler in `tools/`, not CFS/core.
-- No crash, UAF, deadlock, or CVE.
-- Optional config; production SCX users often load schedulers from the
-  out-of-tree scx repo.
-- Residual share compression from window granting remains even after
-  this fix (separate example-scheduler limit).
+- Tiny race window; no syzbot/CVE/user report
+- Series was compile-tested only, labeled `[PATCH next]`
+- No mailing-list review comments
+- Not a universal core-kernel path
+- `memcpy` half is strcpy-hardening, not the leak fix
 
 UNRESOLVED:
-- lore.kernel.org and lore stable search returned 403; discussion taken
-  from patchew/openwall. No evidence of a stable NAK.
+- Whether stable@ ever discussed this (lore 403)
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — same generation bump as the
-   other path; author + maintainer verified on a VM.
-2. Fixes a real bug that affects users? PASS — `cpu.weight` ignored for
-   busy cgroups; measured.
-3. Important issue? PASS — fairness/control-knob failure of this
-   scheduler (not a panic, but the feature is broken in the case that
-   matters).
-4. Small and contained? PASS — +3 lines, one function.
-5. No new features or APIs? PASS.
-6. Can apply to the local tree? PASS — `--check` succeeded.
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — correctness is local and
+   obvious; series is compile-tested only, but the change cannot
+   reasonably be wrong
+2. Fixes a real bug that affects users? **PASS** — heap bytes can be
+   read on a live gadget string update
+3. Important issue? **PASS** — kernel infoleak (security), not a
+   crash/deadlock
+4. Small and contained? **PASS** — 2 lines, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — pre-image matches; no missing
+   helpers
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not a device ID, quirk, DT, build, or docs fix). Qualifies
-as a normal small correctness fix.
+**Step 9.3: EXCEPTION CATEGORIES**
+Not a device-ID/quirk/DT/build/docs exception. It is a small
+security/correctness fix.
 
-Step 9.4: MAKE YOUR DECISION
-This tree is 6.12.y. The buggy example scheduler is here, the one-line
-invalidation is the intended cache protocol, and the only cost is extra
-hweight refreshes. That is a YES for this checkout.
+**Step 9.4: DECISION**
+This is a contained infoleak fix on a helper whose in-place update
+exists specifically so USB hosts can read strings while configfs writes
+them. `kzalloc` is the right, low-risk close of that hole. It meets
+stable rules for this tree.
 
-What the commit solves for stable users:
-Anyone on this 6.12 tree who loads the shipped `scx_flatcg` scheduler
-currently cannot change CPU shares of persistently busy cgroups through
-`cpu.weight`. That is the main knob the scheduler advertises. The patch
-expires the hweight cache so the next dispatch refresh uses the new
-weights.
+---
 
-Risk vs benefit:
-Benefit is restoring advertised cgroup fairness for that scheduler; risk
-is a generation bump that already exists on another path. No
-prerequisites beyond code already in this tree.
+## What the commit solves for stable users
 
-Verification:
-- [Phase 1] Parsed subject/body/tags from `git log origin/master` / `git
-  show 94c20e1fb334c`; no Fixes:/Reported-by; Tejun SOB
-- [Phase 2] Diff is +3 lines in `fcg_cgroup_set_weight()`; local
-  function at lines 590–609 lacks the bump
-- [Phase 2] Confirmed `cgrp_refresh_hweight()` cache test at lines
-  206–208 and existing bump at 503–504
-- [Phase 3] `git blame -L 590,609`: a4103eacc2ab4; `git describe
-  --contains a4103eacc2ab4` = v6.12-rc1~111^2~20
-- [Phase 3] `git merge-base --is-ancestor a4103eacc2ab4 HEAD` → 0 (bug
-  in this tree)
-- [Phase 3] `git merge-base --is-ancestor 94c20e1fb334c HEAD` → 1 (fix
-  not in this tree)
-- [Phase 3] `git apply --check` of 94c20e1fb334c succeeded (offset 1)
-- [Phase 3] Author history on path: this commit + cvtime true-up
-  (already 65e72372d5282 here)
-- [Phase 4] `b4 dig -c 94c20e1fb334c`: msgid
-  20260814144116.2767304-1-cui.tao@linux.dev; v1 only
-- [Phase 4] `b4 dig -w`: Tejun and sched-ext/bpf lists on CC
-- [Phase 4] patchew: Tejun applied to sched_ext/for-7.3; BPF CI asked
-  for Fixes: a4103eacc2ab4
-- [Phase 4] Author measurements: D=200 ~47% vs D=800 ~46% before the
-  bump
-- [Phase 4] lore.kernel.org 403 — UNVERIFIED on lore itself; recovered
-  from patchew/openwall
-- [Phase 5] Call path: `scx_group_set_weight()` in
-  kernel/sched/ext.c:4113 → BPF `cgroup_set_weight`; refresh from
-  `try_pick_next_cgroup()` line 677
-- [Phase 6] `git describe HEAD` = p-6.12-3-gc504cf0baa3d8; `make
-  kernelversion` = 6.12.111
-- [Phase 7] README: scx_flatcg is the flattened hierarchical weight
-  example
-- [Phase 8] Failure: stale hweights → cpu.weight ignored for busy
-  cgroups; severity MEDIUM–HIGH for that scheduler
-- UNVERIFIED: whether this SHA was discussed on lore.kernel.org/stable
-  (HTTP 403)
+After the 2021 UAF fix, gadget strings live in a reused `kmalloc`
+buffer. A host (or configfs reader) can walk that buffer while a longer
+string is copied in place, skip the old NUL, and return leftover heap
+data in a USB string descriptor. Zeroing on first allocation stops that
+leak. `memcpy` is a safe `strcpy` substitute given the existing
+`strlen`.
+
+Risk vs benefit: two lines, no API change, no lock surgery, benefit is
+closing a kernel-memory leak on Android/embedded gadget configs.
+
+---
+
+## Verification
+- [Phase 1] Parsed tags: author SOB, Greg SOB, lore Link; no
+  Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: `kmalloc`→`kzalloc`, `strcpy`→`memcpy(str,s,ret+1)` in
+  `usb_string_copy`
+- [Phase 2] Confirmed `USB_MAX_STRING_LEN` 126 and buffer size 127;
+  `ret+1` cannot overflow
+- [Phase 3] `git blame`: in-place `kmalloc` from `98f153a10da403`
+  (v5.12); function from `88af8bbe4ef781` (2012)
+- [Phase 3] `git merge-base --is-ancestor 98f153a10da403 HEAD` —
+  introducer is in this tree
+- [Phase 3] `git merge-base --is-ancestor 057df423bf474 HEAD` — this
+  commit is already in HEAD (ignored as “already selected”)
+- [Phase 3] `git describe HEAD` / Makefile: local tree is **v7.3-rc4 /
+  7.3.0-rc4**
+- [Phase 3] Pre-commit file still has `kmalloc`+`strcpy`
+- [Phase 4] `b4 dig -c 057df423bf474`: msgid `20260608095523.2606-37`,
+  `[PATCH next]`, v1 only
+- [Phase 4] `b4 dig -w`: linux-usb, linux-hardening, Kees, Greg, Arnd
+- [Phase 4] `b4 dig -m`: no replies; author said compile-tested only;
+  ~100 strcpy patches
+- [Phase 4] WebFetch lore.kernel.org: 403; used b4 instead
+- [Phase 5] Callers: `GS_STRINGS_W` →
+  manufacturer/product/serial/configuration stores
+- [Phase 5] Host path: `stringtab[].s` and `cn->strings.s` alias the
+  same buffers; `usb_gadget_get_string` uses `strlen`
+- [Phase 5] `GS_STRINGS_W` does not take `gi->lock`
+- [Phase 6] No other leak fix for this helper; `6d3c721e` is a different
+  OOB bug
+- [Phase 6] Backport difficulty: clean 2-line apply
+- [Phase 8] Failure mode: uninitialized heap infoleak, severity HIGH
+  (security), not a crash
+- UNVERIFIED: stable@ mailing-list discussion (lore 403)
+- UNVERIFIED: no runtime reproduction performed here; race is from code
+  + the 2021 UAF report, not a new reproducer
 
 **YES**
 
- tools/sched_ext/scx_flatcg.bpf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/gadget/configfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index d1fc6cb8206c0..3f01441731b7e 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -605,6 +605,9 @@ void BPF_STRUCT_OPS(fcg_cgroup_set_weight, struct cgroup *cgrp, u32 weight)
- 		pcgc->child_weight_sum += (s64)weight - cgc->weight;
- 	cgc->weight = weight;
- 	bpf_spin_unlock(&cgv_tree_lock);
-+
-+	/* expire cached hweights so the new weight propagates */
-+	__sync_fetch_and_add(&hweight_gen, 1);
- }
- 
- static bool try_pick_next_cgroup(u64 *cgidp)
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index aa0a25efb6aa0..b6237a2e02003 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -125,11 +125,11 @@ static int usb_string_copy(const char *s, char **s_copy)
+ 	if (copy) {
+ 		str = copy;
+ 	} else {
+-		str = kmalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
++		str = kzalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
+ 		if (!str)
+ 			return -ENOMEM;
+ 	}
+-	strcpy(str, s);
++	memcpy(str, s, ret + 1);
+ 	if (str[ret - 1] == '\n')
+ 		str[ret - 1] = '\0';
+ 	*s_copy = str;
 -- 
 2.53.0
 
