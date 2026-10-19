@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2177F59F505;
-	Mon, 19 Oct 2026 13:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE8A59F51D;
+	Mon, 19 Oct 2026 13:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418369; cv=none; b=pq/EsL8MPmqeIyifLt5biSEX0U/3O++cu4M5/i87f8o755GhQalCAOqIe1olhPH5NtTmtP+5weYeFc/09w3xQmdUErH9qBJec+6XBwjCUxKcwCpXiSyVnoR0871ric1DW4EUzA6fctEEVgEd65V9LdIuEs9i56LSRjGhUm8Nz84=
+	t=1792418371; cv=none; b=Uii3MqE7cYGTFwJftx8VPVqwNBhLgoLqJHHoayNXSSruGL7t3Pxw6j8uIcpYrmKBonRxNwIgyDkTP1+jXKsWg5qLxL5h1QPNHl9icKm5QAXG8Do74TnBub0BZDXK0DDFm4IB573G7/L284Ak7tGN6mchWYp19y0t9FXXkWlhitk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418369; c=relaxed/simple;
-	bh=ExYcZ8dZAChh5V332irJFI9S2Xph4L0+n07BZFddPaA=;
+	s=arc-20240116; t=1792418371; c=relaxed/simple;
+	bh=3CqDiwc+aGFulVbpCYEr+hO5CJ/k3rk2QV1mL+1tE4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GpSDuaHN5S39rvWmKVqehg3WRiMgwqAgPr0KvzKKHxFUwhp2h+4bFBj4CyF8btLb58PKAJ5JjZq/C+JltCKjHwjy0OId0po+sQstcDh3EMg2PnJh83fh9cIvTnY/5vVSBrdJrmKDCbL9OjU5Ddq/+xrs9VntVmbNzDwO/omJJQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WdlbZCoL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SCza7iNm8ECpPipHLREQfGUEuCg8BDa9XrOK16I+7L7ZCbut5tcIjiXr8wrbXAql+sI9+9ZcRNseZRvxEVHGyMcDereYn9I3sLS/1x3tSWwxJ8/HgvopRxseYKd7SOhXaUCPlZ7B/+nV+BzZ3fkvtH9w3wvWkgOxzyeq/mTTC0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kyPBK8u8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WdlbZCoL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C22E1F000CA;
-	Mon, 19 Oct 2026 13:59:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kyPBK8u8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647931F000C4;
+	Mon, 19 Oct 2026 13:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418367;
-	bh=lSXl3nuPvzEeeN2IWyab7W2XdCu637yuh10cyLL3DjA=;
+	s=k20260515; t=1792418368;
+	bh=rMXuUkx7GYbCKLLF+yXIXy6tQcY24ixbQww77LpLt8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WdlbZCoLT6QaUnOiXtOimZFglCkB1XmhcFM2AD2mjTGFOq+8H7QkNv1Mr55yWu54N
-	 n0nIitNuKUjz8WwE+UJ3cigvJjlffg9wzIbnCQ9RxHUtdQyqIsFGIX8M0NdlCnua70
-	 hPJq7HBxTOYvGTTgp1/fmOKyIfPw/u1nvZRBI/e5W3rdqbXK6P3NiT02Eb2uC9i8N+
-	 9jCIwK0WHFXt28AyAl+w9INXwsmwWRcUZJlN5IVCayEyI+aGBM7jVnMGzInZ6n0XS9
-	 dYmjGqkd1ojBO1LMt7ByCEcC6QyUOkyzGRSQ71nL+XZzGPXbu8PnejO8N+41ozKCug
-	 bhxORQGNjkwBg==
+	b=kyPBK8u80WaGlrmXoaR4m6iZmUSAstYEekTbyqD5AGQ3QDzLmi1QH0zSFjN95grV5
+	 zgJofTrSGx2HMcb2XM15dssiYy5hH3/6uYueYkCvK8E2aCB2ZToSwHgJfXZbEg3gL8
+	 fSrHuaoEpNBpizO6vowVEuPBkQSyxjLU5zCxqtTBknk8IoA4qj/ZVf1KgWQ8O4Ajrj
+	 5S9zBGiH98idh+/ySvbhFZN1h6OYq+CX876ixyyc7//5BrbRhe4uV/c5UpU4iuS/1R
+	 u6xadD1pwJc13xOOrL1XWdUc6ssmXrjMZ8Yi4bNTB67Rtil4WC9s+wL8t5+Bd5Qm9b
+	 mZbGeVSEI9elQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dave Carey <carvsdriver@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	linux-input@vger.kernel.org,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] HID: multitouch: Fix stale MT slots when contact count drops to zero
-Date: Mon, 19 Oct 2026 09:48:08 -0400
-Message-ID: <20261019135441.1420968-197-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] ksmbd: allow FSCTL_SET_SPARSE without input buffer
+Date: Mon, 19 Oct 2026 09:48:09 -0400
+Message-ID: <20261019135441.1420968-198-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -47,536 +45,449 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Carey <carvsdriver@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit e8e60b6439eed340a611e9d7a5b9bcbd0ef62725 ]
+[ Upstream commit 86c84cc760080929b7be44bceebe5854957b99da ]
 
-The INGENIC 17EF:6161 touchscreen (Lenovo Yoga Book 9 14IAH10) reports
-HID_DG_CONTACTCOUNT=0 in the frame immediately following the last finger
-lift rather than omitting the frame entirely.  In mt_touch_report() the
-existing code only updates num_expected when contact_count is non-zero,
-so a zero contact count on the first packet of a new frame leaves
-num_expected at its previous value (e.g. 2 for a two-finger gesture).
-The sync check "num_received >= num_expected" then evaluates "0 >= 2"
-and never fires, preventing INPUT_MT_DROP_UNUSED from releasing the
-stale slots.  Those slots remain active in the kernel MT layer until the
-next touch, at which point they are released in a batch alongside the
-new contact — causing the userspace event consumer to miss the
-intervening finger-up sequence and corrupt its gesture session state.
+FSCTL_SET_SPARSE without an input buffer sets a file sparse.  Treat a
+zero-length input buffer as SetSparse=true and keep rejecting truncated
+non-empty buffers.
 
-Fix by resetting num_expected to 0 when contact_count is zero and
-num_received is still 0 (i.e., this is the first and only packet of the
-frame, not a continuation packet in a multi-packet sequence).  With
-num_expected=0 the sync check "0 >= 0" fires immediately, calling
-input_mt_sync_frame() which drops the stale slots via
-INPUT_MT_DROP_UNUSED.
-
-The num_received==0 guard is critical: continuation packets in a
-multi-packet frame arrive after at least one contact has already been
-processed (num_received>0), so they are correctly excluded from this
-path and the existing multi-packet logic is unaffected.
-
-Signed-off-by: Dave Carey <carvsdriver@gmail.com>
-Tested-by: Dave Carey <carvsdriver@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: the buggy `num_expected` path is in this 6.12
-tree, the Yoga Book 9 prerequisites are already here, and the patch
-applies cleanly.
+Local tree is **6.12.111** (`p-6.12-3-gc504cf0baa3d8`). The candidate is
+mainline `86c84cc76008` (“ksmbd: allow FSCTL_SET_SPARSE without input
+buffer”). It is **not** in this checkout; the overly strict length check
+**is**.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[ksmbd] [allow] [accept FSCTL_SET_SPARSE with a zero-length
+input buffer]**
 
-### Step 1.1: PARSE THE SUBJECT LINE
-Record: **[HID: multitouch:] [Fix] [stale MT slots when a zero
-ContactCount sentinel frame never syncs, so unused slots are not
-dropped]**
-
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Fixes:** none (expected for this review)
-- **Reported-by:** none
-- **Tested-by:** Dave Carey \<carvsdriver@gmail.com\> (author tested on
-  the affected laptop)
-- **Reviewed-by:** none in the commit; HID maintainer Benjamin Tissoires
-  reviewed on-list and applied it
-- **Acked-by:** none
-- **Link:** none in the commit
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Dave Carey (author); Benjamin Tissoires (HID
-  maintainer)
-- Ignore pipeline-added Sasha Levin SOB / `[Upstream commit ...]` if
-  present
+- **Signed-off-by:** Namjae Jeon `<linkinjeon@kernel.org>` (author and,
+  on GitHub, committer)
+- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:,
+  Link:, or Cc: stable
+- Absence of Fixes/Cc: stable is expected for this review pipeline and
+  is **not** a negative signal
+- Ignore any “[Upstream commit …]” / “Signed-off-by: Sasha Levin”
+  markers if present in candidate prep
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** INGENIC 17EF:6161 (Lenovo Yoga Book 9 14IAH10) sends
-  `HID_DG_CONTACTCOUNT=0` on the frame after the last finger lift.
-  `mt_touch_report()` only updates `num_expected` when `contact_count`
-  is non-zero, so a first packet with count 0 leaves `num_expected` at
-  the previous value (e.g. 2).
-- **Symptom / failure mode:** `num_received >= num_expected` becomes `0
-  >= 2` and never fires. `INPUT_MT_DROP_UNUSED` does not run. Slots stay
-  active until the next touch, then are released together with the new
-  contact. Userspace misses the finger-up sequence and corrupts gesture
-  state (stuck touch).
-- **Version info:** none in the message. Logic has been in hid-
-  multitouch since 2017; this hardware/class is recent.
-- **Root cause:** zero ContactCount on the first packet of a new frame
-  is treated as a multi-packet continuation instead of “no contacts.”
+- **Bug:** MS-FSCC FSCTL_SET_SPARSE with no data element must set the
+  sparse flag (SetSparse=TRUE). ksmbd currently rejects InputCount==0.
+- **Symptom:** Client gets an invalid-parameter style failure (`-EINVAL`
+  from this path) instead of marking the file sparse.
+- **Root cause (from message + code):** A length check requires
+  `in_buf_len >= sizeof(struct file_sparse)` (1 byte), so a spec-legal
+  empty buffer is treated as truncated.
+- **Version info in the message:** none
+- **Failure mode:** interoperability / protocol reject, not a kernel
+  oops
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-Record: **Not a hidden fix.** Subject and body describe a real input-
-correctness bug and the exact `num_expected` mechanism.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: **Not disguised cleanup.** Subject says “allow”, but this
+restores documented protocol behavior that the 2021 ioctl validation
+made too strict. It is a spec-compliance bug fix, not a new API.
 
----
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- **File:** `drivers/hid/hid-multitouch.c` — one hunk in
-  `mt_touch_report()` (~8 insertions / ~11 deletions, net −3)
-- **Scope:** single-file surgical logic change in the ContactCount
-  handling block
+- **File:** `fs/smb/server/smb2pdu.c` only (**+8 / −2** upstream)
+- **Function:** `smb2_ioctl()`, `case FSCTL_SET_SPARSE:`
+- **Scope:** single-file surgical change
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Current code in this tree (`drivers/hid/hid-multitouch.c`):
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- **Before:** `if (in_buf_len < sizeof(struct file_sparse)) return
+  -EINVAL;` then pass `buffer` to `fsctl_set_sparse()`.
+- **After:** reject only **non-empty truncated** buffers; if `in_buf_len
+  == 0`, pass a stack `file_sparse` with SetSparse=1; otherwise keep
+  using the request buffer.
+- **Path:** ioctl handling for one FSCTL; not init, not an error-path
+  leak fix.
 
-```1254:1269:drivers/hid/hid-multitouch.c
-        if (contact_count >= 0) {
-                /*
-   - For Win8 PTPs the first packet (td->num_received == 0) may
-   - have a contactcount of 0 if there only is a button event.
-   - ...
-                 */
-                if ((app->quirks & MT_QUIRK_WIN8_PTP_BUTTONS) &&
-                    app->num_received == 0 &&
-                    app->prev_scantime != scantime)
-                        app->num_expected = contact_count;
-                /* A non 0 contact count always indicates a first packet
-*/
-                else if (contact_count)
-                        app->num_expected = contact_count;
-        }
+Verified current 6.12 code (exact pre-image of the patch):
+
+```8496:8505:fs/smb/server/smb2pdu.c
+        case FSCTL_SET_SPARSE:
+                if (in_buf_len < sizeof(struct file_sparse)) {
+                        ret = -EINVAL;
+                        goto out;
+                }
+
+                ret = fsctl_set_sparse(work, id, (struct file_sparse
+*)buffer);
+                if (ret < 0)
+                        goto out;
+                break;
 ```
 
+`struct file_sparse` is a packed 1-byte `SetSparse` field
+(`fs/smb/server/smb2pdu.h`). `in_buf_len` is
+`le32_to_cpu(req->InputCount)` (`unsigned int`). For a 1-byte struct,
+`in_buf_len && in_buf_len < 1` is never true; the real behavioral change
+is **InputCount == 0**.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 Record:
-- **Before:** `contact_count > 0` → set `num_expected`. `contact_count
-  == 0` on a new first packet → set `num_expected = 0` **only** if
-  `MT_QUIRK_WIN8_PTP_BUTTONS`. Otherwise leave the previous
-  `num_expected`. Continuation packets with count 0 are left unchanged.
-- **After:** `contact_count > 0` → set `num_expected`. Else if
-  `num_received == 0` and scantime changed → `num_expected = 0` for
-  **all** devices. Continuation packets still skipped (`num_received >
-  0` or same scantime).
-- **Path:** HID report processing for every hid-multitouch device that
-  reports ContactCount; not an error/init-only path.
+- **Category:** logic / protocol correctness (over-strict length check)
+- **Mechanism:** 2021 validation blocked the documented empty-buffer
+  form to avoid reading `SetSparse` from a zero-length buffer. The fix
+  keeps that OOB protection (does not dereference `buffer` when
+  `in_buf_len == 0`) and supplies SetSparse=true locally.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **[Logic / correctness] + [hardware firmware workaround]**
-
-When ContactCount is 0 on a new frame, `num_expected` is not reset, so
-`mt_sync_frame()` / `input_mt_sync_frame()` never run and
-`INPUT_MT_DROP_UNUSED` cannot release slots.
-
-This tree already has `MT_QUIRK_CONTACT_CNT_ACCURATE` on Yoga Book 9
-(`4dfad42f0610f`). With a stale `num_expected` of N, a 0-count frame can
-still process N ghost slots (`ALWAYS_VALID` skips tip-state validity),
-then sync those ghosts as live contacts. Resetting `num_expected` to 0
-makes the accurate-count guard skip every slot (`0 >= 0`) and then drop
-unused slots.
-
-### Step 2.4: ASSESS THE FIX QUALITY
+**Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- **Quality:** Minimal rewrite of one conditional. Continuation packets
-  still guarded. Win8 PTP button-only frames (`contact_count == 0`,
-  first packet, scantime changed) keep working, without requiring the
-  quirk.
-- **Regression risk:** Low–medium: the `WIN8_PTP_BUTTONS` gate is
-  removed, so any hid-multitouch device that reports ContactCount and a
-  new-frame scantime can now treat a 0-count first packet as “all up.”
-  HID maintainer and hid-tools tests accepted that. Dropping the outer
-  `contact_count >= 0` wrapper means `contact_count == -1` (no
-  ContactCount field) can take the else-if; maintainer later called that
-  semantically misleading but harmless because `num_expected` stays 0.
+- **Obviously correct** vs MS-FSCC 2.3.83 and vs Samba `vfswrap_fsctl()`
+  (`set_sparse = true` unless `in_len >= 1 && in_data[0] == 0`).
+- **Minimal.** No unrelated edits.
+- **Regression risk low:** existing 1-byte path unchanged; share/handle
+  checks in `fsctl_set_sparse()` still apply
+  (`KSMBD_TREE_CONN_FLAG_WRITABLE` and
+  `FILE_WRITE_DATA|FILE_WRITE_ATTRIBUTES`, already in this tree via
+  `c5ab11263e3c8`).
+- `*(u8 *)&sparse = 1` is equivalent to `sparse.SetSparse = 1` for this
+  struct.
 
----
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Multi-packet “zero contactcount” comment: `c2517f62dac608` (Benjamin
-  Tissoires, 2013)
-- Win8 PTP 0-touch handling: **`af8dc4d094909` (“HID: multitouch:
-  Properly deal with Win8 PTP reports with 0 touches”, Hans de Goede,
-  2017-11-22)**
-- Application-level `num_expected`: `f146d1c4d7eafd` / `01eaac7e57134`
-  (2018)
-- `git merge-base --is-ancestor af8dc4d094909 HEAD` → **yes** (exit 0).
-  Buggy pattern is old and present here.
+- `case FSCTL_SET_SPARSE:` from `e2f34481b24d` (“cifsd: add server-side
+  procedures for SMB3”, 2021) — **in this tree**
+- Length check from `f7db8fd03a4bc5` (“ksmbd: add validation in
+  smb2_ioctl”, 2021-10-13) — **in this tree**
+- Buffer base from `c6cd2e8d2d9aa7` (InputOffset, not `&req->Buffer[0]`)
+- Bug has been present for the entire 6.12 lifetime (introduced 2021)
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-Record: **No Fixes: tag.** Introduced behavior is the 2017 Win8 PTP
-special case that never treated a generic 0-count sentinel as end-of-
-frame.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: **No Fixes: tag.** Introducer of the too-strict check is
+`f7db8fd03a4bc5`, present here.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record (this tree, `drivers/hid/hid-multitouch.c`):
-- `bdaabb4cf6603` — Yoga Book 9i quirks / `MT_CLS_YOGABOOK9I`
-- `a7359de3c246b` — Yoga Book 9 14IAH10 misclassification; adds
-  `MT_QUIRK_NOT_SEEN_MEANS_UP` (`INPUT_MT_DROP_UNUSED`)
-- `4dfad42f0610f` — Honor ContactCount ghost-contact suppression
-  (`MT_QUIRK_CONTACT_CNT_ACCURATE`)
-- This candidate is the remaining Yoga Book 9 hid-multitouch fix (author
-  said so on-list)
-
-Standalone: yes. v1 cover letter: independent of the ghost-contacts
-patch; both sit on the misclassification commit. That misclassification
-**is already in this tree.**
-
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Dave Carey is the Yoga Book 9 hid-multitouch contributor, not
-the subsystem maintainer. Same-file commits here: `a7359de3c246b`,
-`4dfad42f0610f`. Maintainer Benjamin Tissoires applied this one to
-hid.git `for-7.3/upstream-fixes`.
-
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 Record:
-- Needs existing `mt_touch_report()` ContactCount / scantime /
-  `num_expected` logic — present since 2017–2018.
-- For Yoga Book 9 specifically, `MT_QUIRK_NOT_SEEN_MEANS_UP` (so
-  `INPUT_MT_DROP_UNUSED` is set) is already here via `a7359de3c246b`.
-- `git merge-base --is-ancestor e8e60b6439eed HEAD` → **no** (not in
-  this tree).
-- Applies standalone; `git apply --check` succeeded (hunk offset −70
-  lines).
+- Same-day mainline series around sparse (2026-07-08), including:
+  - `159e727f763d` persist FSCTL_SET_SPARSE state
+  - `31169f41778a` reject FSCTL_SET_SPARSE on directories
+  - `86c84cc76008` **this** empty-buffer change
+- Those other patches change advertisement/persistence and directory
+  rejection. **This hunk does not use those new structures.**
+- Recent 6.12 ksmbd work on `smb2pdu.c` is unrelated (compound/query-
+  info, leases, etc.).
+- **Standalone** for backport of the empty-buffer check.
 
----
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Namjae Jeon is the **ksmbd maintainer**. Many ksmbd fixes in
+this tree are his. That is a strong quality signal, not a substitute for
+importance.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 Record:
-- `b4 dig -c e8e60b6439eed`:
-  https://patch.msgid.link/20260730124336.637339-1-carvsdriver@gmail.com
-- **v1** (2026-05-15):
-  https://patch.msgid.link/20260515175253.873796-1-carvsdriver@gmail.com
-  — added an `else if (num_received == 0)` branch
-- **v2** (2026-05-22): sent as `[PATCH 2/5]` in reply to v1; maintainers
-  did not treat it as a proper respin
-- **v3** (2026-07-30): same code as v2; standalone subject. Applied
-  2026-08-25
-- lore.kernel.org WebFetch returned 403; thread recovered via `b4 dig
-  -m` and `b4 mbox`
+- Needs existing `fsctl_set_sparse()`, `struct file_sparse`, and
+  `in_buf_len` — all present.
+- Does **not** require persist-xattr or directory-reject commits.
+- `git merge-base --is-ancestor 86c84cc76008 HEAD` → **not an ancestor**
+  (candidate not in this tree).
 
-Key review:
-- Benjamin on v1: hid-tools testsuite still happy; asked to flatten the
-  if/else and add `prev_scantime != scantime`
-- Benjamin on v3: `contact_count == -1` path is misleading but harmless;
-  negative ContactCount would be clamped to 0 (improvement)
-- Applied to hid.git `for-7.3/upstream-fixes` as `e8e60b6439ee`
-- No NAK. AI review noted an unrelated pre-existing sticky-finger timer
-  UAF in `mt_remove()`, not introduced here
-- No reviewer `Cc: stable`
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To/Cc `linux-input@vger.kernel.org`, Jiri Kosina
-(`jikos@kernel.org`), Benjamin Tissoires (`bentiss@kernel.org`). HID
-maintainer reviewed and merged.
-
-### Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Author described HID capture behavior and
-tested on Yoga Book 9 14IAH10 (83KJ). Same author as the two Yoga Book 9
-commits already in this tree.
-
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Intended as the last of three Yoga Book 9 hid-multitouch fixes.
-The other two are already in this 6.12 tree. v2’s “2/5” was a mistaken
-subject, not a hard series dependency. No later same-file follow-up on
-origin/master besides an unrelated ASUS ROG Z13 quirk.
-
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No stable@ discussion found. Commit has no Cc: stable. Not a
-negative signal.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: IDENTIFY KEY FUNCTIONS
-Record: **`mt_touch_report()`** only. Nearby: `mt_sync_frame()`,
-`mt_process_slot()`, `mt_touch_input_configured()`.
-
-### Step 5.2: TRACE CALLERS
-Record: Only caller is `mt_report()` when `rdata->is_mt_collection`.
-That is the HID `.report` callback for incoming device reports.
-Interrupt/HID-completion context, not a syscall. Triggered by touching
-the panel. `CONFIG_HID_MULTITOUCH` (`drivers/hid/Kconfig`).
-
-### Step 5.3: TRACE CALLEES
-Record: Reads `app->raw_cc` / `app->scantime`; walks slots via
-`mt_process_slot()`; then `if (num_received >= num_expected)
-mt_sync_frame()` → `input_mt_sync_frame()` + `input_sync()`. Yoga Book 9
-sets `INPUT_MT_DROP_UNUSED` from `MT_QUIRK_NOT_SEEN_MEANS_UP` in
-`mt_touch_input_configured()`.
-
-### Step 5.4: FOLLOW THE CALL CHAIN
-Record: USB/I2C HID report → `mt_report()` → `mt_touch_report()`.
-Userspace-visible via evdev. Unprivileged user touching the screen can
-trigger it.
-
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same 0-count first-packet case already existed for
-`MT_QUIRK_WIN8_PTP_BUTTONS` (`af8dc4d094909`). This generalizes that
-handling. No duplicate fix already in this tree (`git log --grep` for
-“stale MT” / “contact count drops” on the file: empty).
-
-semcode MCP: not available; used grep/read.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `git describe HEAD` → **`p-6.12-3-gc504cf0baa3d8`**
-- `make kernelversion` → **6.12.111**
-- Branch: **pending-6.12**
-- Buggy block is at `drivers/hid/hid-multitouch.c:1254-1268`
-- Yoga Book 9 class with `NOT_SEEN_MEANS_UP | ALWAYS_VALID |
-  CONTACT_CNT_ACCURATE` is at lines 411–421
-- Introduced in generic form in **v4.15-era (2017)**; this device class
-  is already backported here
+- `b4 dig -c 86c84cc76008` (and `-a`/`-w`): lore.kernel.org returned an
+  error; **no thread matched**
+- Direct lore fetch: **403 / Anubis bot wall**
+- GitHub commit: https://github.com/torvalds/linux/commit/86c84cc7600809
+  29b7be44bceebe5854957b99da (2026-07-08 / committed 2026-08-17)
+- **UNVERIFIED:** reviewer comments, v2/v3, NAKs, in-thread Cc: stable
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **`git apply --check` succeeded** (hunk at line 1251, offset
-−70). Surrounding `mt_touch_report()` matches mainline. **Clean apply /
-trivial offset.**
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: Message has only the author’s SOB. Maintainer self-applied.
+**UNVERIFIED** original To/Cc list (`b4 -w` failed).
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: Misclassification + ContactCount-accurate quirks are here. They
-do **not** reset `num_expected` on a 0-count sentinel. No equivalent of
-`e8e60b6439eed` is in this tree.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No Reported-by/Link. Bug is specified by protocol, not a syzbot
+crash.
 
----
+Verified spec (MS-FSCC 2.3.83): *“The message either has no data
+elements at all or it contains a FILE_SET_SPARSE_BUFFER element. If
+there is no data element, the sparse flag for the file is set, exactly
+as if … SetSparse value of TRUE.”*
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+Win32 `FSCTL_SET_SPARSE`: *“If the lpInBuffer parameter is NULL, the
+operation will behave the same as if … SetSparse … were TRUE.”*
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **HID multitouch input driver** (`drivers/hid/hid-
-multitouch.c`). **IMPORTANT** (laptop touchscreens/touchpads), not core
-mm/fs. Affects all hid-multitouch devices for the ContactCount=0 path;
-the reported user is Yoga Book 9, already enabled here.
+Samba `vfs_default.c`: empty/`in_len==0` → `file_set_sparse(..., true)`.
+smbtorture includes `test_ioctl_sparse_set_nobuf`.
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Active (device IDs, quirks, Yoga Book 9, OOB fixes). This is a
-late correctness fix on long-standing frame-sync logic, not a refactor
-of new code.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Same-day sparse series exists; this patch is the empty-buffer
+piece and is **self-contained**. Later `smb2pdu.c` mainline commits
+(Aug–Sep 2026) do not revert or retune this hunk.
 
----
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: **UNVERIFIED** (lore/stable search blocked). No evidence this
+was rejected for stable.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific / hardware-specific** for the reported failure
-(Yoga Book 9 14IAH10, USB 17EF:6161). The code path is generic hid-
-multitouch. Users of this 6.12 tree already have the rest of that
-device’s support, so they can hit the leftover stuck-touch bug.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `smb2_ioctl()` (modified); `fsctl_set_sparse()` (callee,
+unchanged by this patch).
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Lift all fingers; firmware sends ContactCount=0 instead of
-omitting the frame. Common on this device (author: “immediately
-following the last finger lift”). Unprivileged physical touch. Timing:
-every lift, not a rare race.
-
-UNVERIFIED: firmware HID descriptor was not dumped here to prove
-`HID_DG_SCANTIME` exists. v3 includes the scantime-change guard and
-carries `Tested-by` on this hardware, so scantime almost certainly
-changes; the Yoga Book 9 report-descriptor fixup does not strip usage
-0x56 (`HID_DG_SCANTIME`).
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: **Stuck/stale multitouch slots; missed finger-up; userspace
-gesture state corruption.** Not a kernel oops. **HIGH** for that
-hardware (touch becomes wrong after lift). Fits stable-rules “hardware
-quirk” / “oh, that's not good.”
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Step 5.2: TRACE CALLERS**
 Record:
-- **Benefit:** Completes already-backported Yoga Book 9 support; stops
-  stuck fingers and ghost slots on 0-count frames. Also helps any
-  similar sentinel-frame firmware.
-- **Risk:** Low. ~19-line logic change, continuation path preserved,
-  hid-tools passed, maintainer reviewed the `-1` ContactCount case.
-- **Ratio:** Benefit outweighs risk on this tree.
+- `smb2_ioctl` registered as `[SMB2_IOCTL_HE].proc` in
+  `fs/smb/server/smb2ops.c`
+- Reachable from authenticated SMB2 IOCTL over the network
+  (`CONFIG_SMB_SERVER`)
+- Not interrupt context; request path from ksmbd workers
 
----
+**Step 5.3: TRACE CALLEES**
+Record: `fsctl_set_sparse()` looks up the handle, checks writability,
+sets/clears `FILE_ATTRIBUTE_SPARSE_FILE_LE`, optionally writes DOS
+xattr, `ksmbd_fd_put()`.
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: SMB client → SMB2 IOCTL → `smb2_ioctl` → FSCTL_SET_SPARSE.
+**Yes, userspace/network reachable.** Linux CIFS client currently sends
+a 1-byte buffer (`smb2_set_sparse` → `SMB2_ioctl(..., &setsparse, 1,
+...)`), so Linux-to-ksmbd already works. Windows `DeviceIoControl` with
+NULL buffer and Samba torture `*_nobuf` hit the broken path.
 
-### Step 9.1: COMPILE THE EVIDENCE
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Other FSCTLs in the same switch still require a non-empty input
+struct (`SET_ZERO_DATA`, copychunk, duplicate extents). Only SET_SPARSE
+is specified as valid with no data element. No sibling copy-paste of
+this empty-buffer rule in 6.12 ksmbd.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes**, `fs/smb/server/smb2pdu.c` `smb2_ioctl()`
+FSCTL_SET_SPARSE case, lines 8496–8505. Introduced 2021
+(`f7db8fd03a4bc5`). Local version **6.12.111**.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Pre-image matches exactly (line numbers ~8496 vs mainline
+~9470). **Expected clean apply** with only context offset. No struct/API
+mismatch.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record:
+- Permission checks: **yes** (`c5ab11263e3c8`)
+- Empty-buffer handling: **no**
+- Persist/advertise sparse overhaul (`159e727f763d`) and directory
+  reject (`31169f41778a`): **not in this tree**, and **not required**
+  for this fix
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **ksmbd** (`fs/smb/server/`, `CONFIG_SMB_SERVER`). **IMPORTANT**
+for SMB server deployments (Windows/macOS clients), not core mm/VFS. Not
+staging.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively patched in 6.12.y (leases, query-info, durable
+reconnect, SET_SPARSE permission). Mature server with ongoing protocol-
+correctness backports.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Driver/config-specific:** ksmbd (`CONFIG_SMB_SERVER`) users
+whose clients send FSCTL_SET_SPARSE with InputCount=0 (Windows NULL
+`lpInBuffer`, Samba torture nobuf). Not universal.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record:
+- Trigger: SMB2 IOCTL FSCTL_SET_SPARSE with zero InputCount
+- Common for **Windows** documented API; **not** the Linux CIFS client
+  path (sends 1 byte)
+- Authenticated client with a writable handle (existing checks)
+- Not a race
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record:
+- **Failure:** request rejected; file not marked sparse
+- **Not** oops, UAF, deadlock, or silent data corruption
+- **Severity: MEDIUM** — user-visible protocol break for a documented,
+  commonly used FSCTL
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** Windows/spec clients can set sparse the way MS-FSCC and
+  Samba already do; smbtorture nobuf can pass
+- **Risk:** very low (≈10-line ioctl case, no locking/API change, still
+  go through `fsctl_set_sparse()`)
+- **Ratio:** favorable
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
 
 **FOR backporting:**
-- Real user-visible bug on shipping hardware (Lenovo Yoga Book 9
-  14IAH10)
-- This 6.12 tree already has the two prior Yoga Book 9 hid-multitouch
-  fixes; without this, 0-count frames still leave slots active and can
-  even feed `CONTACT_CNT_ACCURATE` with a stale expected count
-- Small, obviously targeted change; applies cleanly
-- Tested by the author; HID maintainer reviewed (v1 testsuite + v3
-  semantic check) and merged
-- Matches stable rules’ hardware-quirk / input-correctness category
-- Continuation / multi-packet path explicitly preserved
+- Real protocol bug: empty SET_SPARSE must set sparse (MS-FSCC + Win32 +
+  Samba)
+- Buggy length check has been in this tree since 2021
+- Small, obviously correct; does not reintroduce the OOB the 2021
+  validation prevented
+- Applies cleanly; no missing helpers
+- ksmbd maintainer authored it
+- Same class of ksmbd protocol-correctness fixes already land in 6.12.y
+- Existing permission checks still gate the operation
 
-**AGAINST backporting:**
-- Not a crash, UAF, or security issue
-- Widens 0-count handling beyond `MT_QUIRK_WIN8_PTP_BUTTONS`
-- No Fixes:/Cc: stable (not a negative by itself)
-- Niche dual-screen laptop as the reporter
+**AGAINST:**
+- Not a crash, UAF, leak, or CVE-class issue
+- No user report / Tested-by / lore review recovered
+- Same-day mainline series also changes sparse persistence/advertising;
+  this patch is the least dependent piece of that work
+- Linux CIFS client already sends a 1-byte buffer
+- On 6.12, `smb2_get_dos_mode()` still ORs SPARSE onto every regular
+  file when `share_fake_fscaps` has `FILE_SUPPORTS_SPARSE_FILES`, which
+  can mask some client need to SET_SPARSE
 
 **UNRESOLVED:**
-- No independent HID dump confirming scantime on this firmware
-  (mitigated by Tested-by on v3)
-- No distribution-kernel bugzilla
+- Mailing-list review, stable nomination, and whether a newer revision
+  existed (`b4`/lore blocked)
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — maintainer + hid-tools +
-   author Tested-by
-2. Fixes a real bug that affects users? **PASS** — missed finger-up /
-   stuck slots on a supported laptop
-3. Important issue? **PASS** — hardware input correctness / firmware
-   quirk, not theoretical
-4. Small and contained? **PASS** — one function, ~19 lines
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — `git apply --check` clean;
-   prerequisites present
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — matches MS-FSCC/Samba;
+   maintainer-authored. No independent Tested-by (typical for this
+   size).
+2. Fixes a real bug that affects users? **PASS** — spec-legal
+   Windows/Samba requests fail on ksmbd.
+3. Important issue? **PASS** (medium) — interoperability failure on a
+   documented FSCTL, which stable-kernel-rules.rst here also covers as
+   an “oh, that’s not good” user-visible bug; not a kernel panic.
+4. Small and contained? **PASS** — one case in one file, +8/−2.
+5. No new features or APIs? **PASS** — does not add a userspace API;
+   restores required SMB behavior.
+6. Can apply to the local tree? **PASS** — pre-image present, would
+   apply with line-number offset only.
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/DT/build/docs exception. Closest: **hardware
-firmware workaround** in an existing driver, which stable explicitly
-allows.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/build/docs exception. Qualifies as a
+normal small protocol bugfix.
 
-### Step 9.4: MAKE YOUR DECISION
-This 6.12 tree already enables the Yoga Book 9 touchscreen and the
-ContactCount-accurate / DROP_UNUSED quirks. The remaining bug is that a
-firmware 0-count sentinel never completes the frame, so slots are not
-released. The fix is small, reviewed, tested, and applies here. Backport
-it.
+**Step 9.4: MAKE YOUR DECISION**
+This should be backported to **this** 6.12.111 tree. The code the patch
+fixes is here, the change is surgical, and rejecting empty
+FSCTL_SET_SPARSE is a real Windows/Samba interoperability bug, not a new
+feature and not blocked by the later persist-sparse series.
 
----
+What it solves for stable users: ksmbd no longer returns invalid
+parameter when a client sends the documented empty SET_SPARSE request;
+the file is marked sparse via the existing `fsctl_set_sparse()` path.
 
-### What the commit solves for stable users
-On kernels that already have Yoga Book 9 hid-multitouch support (this
-tree does), lifting fingers can leave MT slots active because
-ContactCount=0 does not reset `num_expected`. Userspace then misses the
-up events. The patch forces a frame sync on a new 0-count packet so
-`INPUT_MT_DROP_UNUSED` runs.
+Risk vs benefit: very low risk, clear spec-backed benefit. No extra
+commits are required for the empty-buffer path to work here.
 
-### Stable rules / risk vs benefit
-Meets the written rules: real bug, small, no new API, applies cleanly.
-Risk is a slightly broader 0-count interpretation; that was reviewed and
-is the same condition Win8 PTP already used for button-only frames.
-
-### Concerns
-No crash/CVE; generic path rather than a Yoga-Book-only quirk table
-entry. Still appropriate because the buggy code and the device class are
-both in this checkout.
-
----
-
-Verification:
-- [Phase 1] Parsed tags: Tested-by Dave Carey; SOB Dave Carey + Benjamin
-  Tissoires; no Fixes/Reported-by/Cc: stable/Link
-- [Phase 2] Diff: one hunk in `mt_touch_report()`; 0-count new frames
-  set `num_expected=0`; Win8 PTP quirk gate removed
-- [Phase 2] Local code at `drivers/hid/hid-multitouch.c:1254-1268`
-  matches pre-patch logic
-- [Phase 2] Yoga Book 9 class at 411–421 has `NOT_SEEN_MEANS_UP |
-  ALWAYS_VALID | CONTACT_CNT_ACCURATE`
-- [Phase 3] `git describe HEAD` = p-6.12-3-gc504cf0baa3d8; `make
-  kernelversion` = 6.12.111
-- [Phase 3] blame: Win8 0-touch logic from `af8dc4d094909` (2017);
-  ancestor of HEAD
-- [Phase 3] `git merge-base --is-ancestor e8e60b6439eed HEAD` = not
-  present
-- [Phase 3] Related commits in this tree: `a7359de3c246b`,
-  `4dfad42f0610f`, `bdaabb4cf6603`
-- [Phase 3] Author’s other hid-multitouch commits: those two Yoga Book 9
-  fixes
-- [Phase 4] `b4 dig -c e8e60b6439eed`: v3 at
-  patch.msgid.link/20260730124336.637339-1-carvsdriver@gmail.com
-- [Phase 4] `b4 dig -a`: v1 2026-05-15, v3 2026-07-30 (v2 mistagged 2/5)
-- [Phase 4] `b4 dig -w`: linux-input, jikos, bentiss
-- [Phase 4] mbox: Benjamin hid-tools OK on v1; requested scantime guard;
-  v3 applied for-7.3/upstream-fixes; -1 contact_count called harmless
-- [Phase 4] lore WebFetch 403; used b4 mbox instead
-- [Phase 5] `mt_touch_report` only called from `mt_report()` on MT
-  collections
-- [Phase 5] `INPUT_MT_DROP_UNUSED` set from `MT_QUIRK_NOT_SEEN_MEANS_UP`
-  in `mt_touch_input_configured()`
-- [Phase 6] `git apply --check` of `e8e60b6439eed` succeeded at offset
-  −70
-- [Phase 6] no local equivalent fix (`git log --grep` on the file empty
-  for this bug)
-- [Phase 7] CONFIG_HID_MULTITOUCH in `drivers/hid/Kconfig`
-- [Phase 8] Failure mode: stale MT slots / missed finger-up / gesture
-  corruption, severity HIGH for that hardware
-- UNVERIFIED: no firmware HID dump confirming scantime on 17EF:6161
-  (Tested-by on v3 is the evidence)
-- UNVERIFIED: no stable@ thread (search not useful; lore fetch blocked)
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Parsed message/tags: only Namjae Jeon SOB; no
+  Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: +8/−2 in `smb2_ioctl` FSCTL_SET_SPARSE; empty buffer →
+  stack SetSparse=1; non-empty path unchanged
+- [Phase 2] Confirmed `struct file_sparse` is one packed `__u8`;
+  `in_buf_len` is `unsigned int` from `InputCount`
+- [Phase 2] Confirmed `fsctl_set_sparse()` already has share/handle
+  write checks in this tree (`c5ab11263e3c8`)
+- [Phase 3] `git describe HEAD` / Makefile: 6.12.111
+  (`p-6.12-3-gc504cf0baa3d8`)
+- [Phase 3] `git blame`: length check from `f7db8fd03a4bc5` (2021); case
+  from `e2f34481b24d`; both ancestors of HEAD
+- [Phase 3] `git merge-base --is-ancestor 86c84cc76008 HEAD` → not in
+  this tree
+- [Phase 3] Related mainline series (`159e727f763d`, `31169f41778a`) not
+  required; this hunk is independent
+- [Phase 4] `b4 dig -c/-a/-w 86c84cc76008`: lore error, no thread —
+  UNVERIFIED review
+- [Phase 4] GitHub: commit `86c84cc760080929b7be44bceebe5854957b99da`
+  matches the candidate text
+- [Phase 4] MS-FSCC 2.3.83 and Win32 FSCTL_SET_SPARSE: empty/NULL buffer
+  = SetSparse TRUE
+- [Phase 4] Samba `vfswrap_fsctl` FSCTL_SET_SPARSE: `in_len==0` → set
+  sparse true
+- [Phase 5] Caller: `smb2ops.c` SMB2_IOCTL_HE → `smb2_ioctl`; Linux
+  client sends 1-byte buffer in `smb2_set_sparse()`
+- [Phase 6] Local pre-image unique match at `smb2pdu.c` 8496–8505;
+  expected clean apply
+- [Phase 7] Subsystem ksmbd / CONFIG_SMB_SERVER, actively maintained on
+  this branch
+- [Phase 8] Failure: client EINVAL, severity MEDIUM; not oops/UAF
+- UNVERIFIED: lore/stable discussion and any mailing-list NAKs (lore
+  403)
 
 **YES**
 
- drivers/hid/hid-multitouch.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ fs/smb/server/smb2pdu.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 2461d84eb0e98..8dd69c6e7edf8 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1332,21 +1332,18 @@ static void mt_touch_report(struct hid_device *hid,
- 	 * Includes multi-packet support where subsequent
- 	 * packets are sent with zero contactcount.
- 	 */
--	if (contact_count >= 0) {
-+	if (contact_count > 0)
-+		app->num_expected = contact_count;
-+	else if (app->num_received == 0 && app->prev_scantime != scantime) {
- 		/*
-+		 * New multi-report frame:
-+		 *
- 		 * For Win8 PTPs the first packet (td->num_received == 0) may
- 		 * have a contactcount of 0 if there only is a button event.
--		 * We double check that this is not a continuation packet
--		 * of a possible multi-packet frame be checking that the
--		 * timestamp has changed.
-+		 *
-+		 * Some other devices use a sentinel frame with 0 to release all contacts
- 		 */
--		if ((app->quirks & MT_QUIRK_WIN8_PTP_BUTTONS) &&
--		    app->num_received == 0 &&
--		    app->prev_scantime != scantime)
--			app->num_expected = contact_count;
--		/* A non 0 contact count always indicates a first packet */
--		else if (contact_count)
--			app->num_expected = contact_count;
-+		app->num_expected = 0;
- 	}
- 	app->prev_scantime = scantime;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 6b3cf2dadeecd..f383d1e5e5cb7 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8612,15 +8612,21 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 				rsp);
+ 		break;
+ 	case FSCTL_SET_SPARSE:
+-		if (in_buf_len < sizeof(struct file_sparse)) {
++	{
++		struct file_sparse sparse = {0};
++
++		if (in_buf_len && in_buf_len < sizeof(struct file_sparse)) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
  
+-		ret = fsctl_set_sparse(work, id, (struct file_sparse *)buffer);
++		*(u8 *)&sparse = 1;
++		ret = fsctl_set_sparse(work, id, in_buf_len ?
++				       (struct file_sparse *)buffer : &sparse);
+ 		if (ret < 0)
+ 			goto out;
+ 		break;
++	}
+ 	case FSCTL_SET_ZERO_DATA:
+ 	{
+ 		struct file_zero_data_information *zero_data;
 -- 
 2.53.0
 
