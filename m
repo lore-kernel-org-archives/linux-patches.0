@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792428905;
-	b=QvJ6ru0bgB7ps0enaTcwVKfBI58rsoguIuYGtDPWNxZc6e5I7zmQVDZV9wWbH7hnw0U4
-	 kId6M586qlH67nD3xTe1XD64nTmzrH0ggUw5/8wHNOlQbG2g3bDbLMydNNwJPAV7feo4x
-	 3Ma5Hp3F0J2hqESWwelBa0+pJTRt+RwXVHpU2xoybxRZqzve8vOemG4rtUImKY+eWgwfj
-	 uNLxhKfrDII2AzUO13LsdL3JILGHcwq8KhwMvd5OOWHfrG9t1BnfWdi1TR/YU30w3j6K7
-	 nkFr0+ofPy6cvYH4KXpT2uFjPw9sy82NeMeHqqxmrraHWYntlSpFn71rj0Pa4W9hEAA==
+	t=1792428916;
+	b=hkOctAcbqyucVOHMcq5ItBjSP627uQKdfFu0zbJ0SOrLg7v2NDXDru0uBc473ct39Odl
+	 QD+21HfabuCHwqK7JXjQcRrHvO9EINTH2KgpOYOVVxSnqfxgyIj9M26cJpGOUgl3Fq73w
+	 6QJjvmN8FgR+uArosIE/WwggMXWIHSxJJHioA9nAXgAYUud+mqB0LAHfsf5ti+J/C+i4J
+	 AcaQsB62qrB8w9zmRylJuRx7uI/U4izramvnAtFxtOiSsnbX7xJYTeDDtocmWQ+x1sIIn
+	 EfTi2dG2SiMKyJCkY6ofoBtdLKRYgjYCBngVQuULtmdcNg3iyidYsi7+9tWV/S6Foew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792428905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792428916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=VMwHHkZBQSemDFKq2z6XwRqgAQk+C/KTU/Y6PkEqgCk=;
-	b=QK8RVLm4g/Cbt5dkRpWmi4/f0U7/l//pdx3BMOdaC1c/4l6cy+WikJl9ez2/Ek5Hvtnt
-	 pRSF0093GlvMgDpm/+3HUdClmmc9+0SuJ1WQJkTdFMDOCQhouFvGupl5+fG1+XzcMiq58
-	 CmAG7mRjeQOn1xnMCnrz27UEkydcmiC/F5NievYWPKrrpE3TWTmzgtS6CqaLA6Cmu7Rm3
-	 aS9ocphAZbAlrsXEzdsv+OtlYCM1gvM7S8/t37+DltdF5ias2UU4/e6eKAXOfNCvOZPRC
-	 8t1/5spaaJThABxbrHvEhIHopzio9GuMKPom/CbhEL+jD6oRZR63ePYHYXK4gOVHbLg==
+	bh=QpMt80QArSQLv91EWkqxnwoaOgkJo5H18EiXikv2N/E=;
+	b=kUQ3qwNGXOFoTZMeeF/9GvLib0prPmlhCA+cllg3i8WShMYpY7MzAh5pMapeG2e73T1D
+	 2w/8JmihcnylUw/QnE4cBsMDF7SZPfefXdd1XZAHniM7bFrqIy5f7vFKUWeJnEORb645M
+	 cMtnaMc/PbVocS81GTkienXWjiSB2WaGGWFu/DjPv52qBejWo+pMhqLlMT7YX3LpcvQLN
+	 1+AXM2cYloEfoZInJVGtUjE9fAQcQg0Yt8RmFVANDNHFXJgaCCvfHv0Y+0Wo0IMhc85cN
+	 vH/LJq5qly3j2TH1cholZE6m0d7qCXLN6GcqbblYwaAguSsy1k6Nryrzx86NdycPS6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LUsQuTC9;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hLW07yTe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4094606A321;
-	Mon, 19 Oct 2026 16:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2A8606A319;
+	Mon, 19 Oct 2026 16:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LUsQuTC9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3561F000C6;
-	Mon, 19 Oct 2026 16:54:55 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hLW07yTe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC8C1F000C5;
+	Mon, 19 Oct 2026 16:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792428904;
-	bh=VMwHHkZBQSemDFKq2z6XwRqgAQk+C/KTU/Y6PkEqgCk=;
+	s=k20260515; t=1792428915;
+	bh=QpMt80QArSQLv91EWkqxnwoaOgkJo5H18EiXikv2N/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LUsQuTC9JWW/pCQmky//oFTW6NEPAe9Z/HzA8KdIjYWh1oICrChs351Mne8NjXo/s
-	 pi/fDD03ROXlpTUMFL6EKnTV62mb767lS06SttU0nT9bV6uqhTi4RMgxCh4oyulDoL
-	 HcaBBBiGfKuNqs7+2bIl2YBJDp/I+mHWzatezVANcx9w8hTrig8YKzteZWJ+a5jCeT
-	 52Lr1mr/5vpzsTC1rFriMPs+5Ek2S8Huu64qcNIXqvCXSeTjws9ZpM2FB0Jlh/ZgNd
-	 VWGZBmoeLxk8f3Lf1t8kxdMJAlOXPqG3rB7ssWH9sId1c9R6Z/kMVA90MAuuwqNJKv
-	 k9ZNN4n4J52Xg==
+	b=hLW07yTeTBTQOC2SNWIkG1F52YiU1xBZp5jnIQFdbYZkmQUHc7vAsQndW1JuP7hWR
+	 kCyyp3S3QmwEQCxm4wLPaoaRYjaAzpBeU2rpyZa19rQoUJCJzOpaKacnbLIGR5F2oL
+	 k70YyIQEvNe8Ed1OpSA/eksW5qG08YmGkEaGHR87vrjpzlGWsSdlXLGIFyjvDd99rM
+	 i1nmkgeQOhTpghmJT1jWxl540//rOyJVJ8TjwecTNwv8UCGebb+xhQbyXEah+G9bGq
+	 THkREuBid0FjByre/01Sa03l6hDMWPxc6ittkyxS1Py52xPgiPa9maz8NDV5semfOJ
+	 pGKXrd+pla0QA==
 From: Sasha Levin <sashal@kernel.org>
-To: SJ Park <sj@kernel.org>
+To: Qi Zheng <zhengqi.arch@bytedance.com>
 Cc: Sasha Levin <sashal@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
 	Muchun Song <songmuchun@bytedance.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Chuck Lever <cel@kernel.org>,
@@ -121,11 +120,11 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	Yue Hu <huyue2@coolpad.com>,
 	Andrew Morton <akpm@linux-foundation.org>
 Subject: Re: [PATCH 6.6 1003/1674] mm: shrinker: add infrastructure for dynamically allocating shrinker
-Date: Mon, 19 Oct 2026 12:54:34 -0400
-Message-ID: <rc-reply-0006-61299cd9ea8b@kernel.org>
+Date: Mon, 19 Oct 2026 12:54:35 -0400
+Message-ID: <rc-reply-0007-1cecc6e57462@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261018181413.376492-1-sj@kernel.org>
-References: <20261017160456.871872142@linuxfoundation.org> <20261018181413.376492-1-sj@kernel.org>
+In-Reply-To: <1822c44e-60d1-4df3-81c5-f6720dfbcbce@bytedance.com>
+References: <20261017160431.119607952@linuxfoundation.org> <20261017160456.871872142@linuxfoundation.org> <68c00b4f-d74e-4e2d-a7bc-9af44beeb25e@bytedance.com> <2026101913-unicycle-fancy-0adc@gregkh> <1822c44e-60d1-4df3-81c5-f6720dfbcbce@bytedance.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -138,18 +137,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, Oct 18, 2026 at 11:14:12AM -0700, SJ Park wrote:
-> I just found this patch is causing below warning.
-[...]
-> Could you please add it, too?
+On Mon, Oct 19, 2026 at 06:59:27PM +0800, Qi Zheng wrote:
+>>> Backporting just this patch alone doesn't seem to fix any actual issue.
+>>> Why was it backported to v6.6?
+>
+> Got it. But I don't think it's necessary to introduce new shrinker
+> infrastructure just for this fix patch.
 
-Thanks for the report. The shrinker infrastructure chain was dropped from the
-6.6 queue, so f04eba134e59 ("mm: add printf attribute to
-shrinker_debugfs_name_alloc") is not needed there.
+Agreed. I dropped the four infrastructure patches from the 6.6 queue:
 
-d227786ab111 ("fs/mbcache: cancel shrink work before destroying the cache")
-stays queued as a direct backport without the infrastructure, the same as in
-6.1.
+  - 3ee0aa9f0675 ("mm: move some shrinker-related function declarations
+    to mm/internal.h")
+  - 96f7b2b9bbb1 ("mm: vmscan: move shrinker-related code into a
+    separate file")
+  - c42d50aefd17 ("mm: shrinker: add infrastructure for dynamically
+    allocating shrinker")
+  - 714e5bde00a5 ("mbcache: dynamically allocate the mbcache shrinker")
+
+d227786ab111 ("fs/mbcache: cancel shrink work before destroying the
+cache") is kept as a standalone backport, like 6.1.
+
+> If the entire patchset isn't being backported, this shouldn't be
+> included either.
+
+Right, it is dropped from the 6.6 queue along with the other
+infrastructure patches. Thanks for the review.
 
 -- 
 Thanks,
