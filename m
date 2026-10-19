@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253DC5D18BE;
-	Mon, 19 Oct 2026 14:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E5A5D18DF;
+	Mon, 19 Oct 2026 14:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418492; cv=none; b=erj9n4vGbuMOJfxlIyj5qEuOabkJ6uowo5e7m3rVSywtpml1f81YByjGB5gTs0s+kAKYxKj8RtYOwNWjSoZh1bbGtd8Hp7QRdRZs3+1Q6W4ificDALng55wPSLWzeg+Cwc7DtF5X/nlAKFaKd/YR2/whSyYekTgQlCmvUITeuH4=
+	t=1792418493; cv=none; b=H4GLApeTOK6Wth0htJ1JoxS2SQoMDyhak8tR0c8xi6xHodyL4UrVR4K61WtPBx1moQSstmi5QHPvesQdEN0JauPByRdgWWAoDUQ3fIJIdGt40SEE2dLtf4t9QGIpj5FwE+HSaJ+Pr4Jh//DIfLiBCsHl/EQmr0JXhvHif+FRZXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418492; c=relaxed/simple;
-	bh=UtGByILVLeDDVs9a4tsesfkBDJFlsIYSd1yDo+mI4xc=;
+	s=arc-20240116; t=1792418493; c=relaxed/simple;
+	bh=tF2h+slp+mYt6nWU5GXtnDi27H6BUcMfXLpk4rOJukA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WTdIMfYv9Og94XwRKfU5q0J1oSHuj3dzfyH+il/6Vf8hgRkSNE8jCllLkx4B+VP7eAyaycuh3aI6dN4baM/d2SJCNuIQayPkKTxxieWRESzQTDzAsgyJ5/rj4tsjKcZ4waqzut68P5CL90Ng9ibpqrRD7VBKOZgAnSexVjVsam4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LMoPetaV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oMzoB4EqW40cyCwMGvcl1Mo4WHt9r1XJX7+BP2jP37+ZrIFavSVs9BZQmwqYi2yX6whWO5SXFDuyPuY1wFMA7t22zRn00zT5t57Nm/RoF9TNtZ/kRlKhuijBV4+yYyPedmT63P4qm+YT0YSV8uYLuMmNO+9STPeTpVYG9vt5uLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VjcgDdZc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LMoPetaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB3F1F000C9;
-	Mon, 19 Oct 2026 14:01:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VjcgDdZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FBD1F000CB;
+	Mon, 19 Oct 2026 14:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418490;
-	bh=fXSy8vXI5Q3X55qaJS0tzwo7fN8/NY8JaWm6glYGfgs=;
+	s=k20260515; t=1792418491;
+	bh=9srQrdCZMoRLFkutGZ67T1/tsebmKZ6eRD+DmvGcDX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LMoPetaV3eqnwrygwrwGSkQUuE4LPhPZxP631t06heeD7/3Pa0OQA95gNKUYf0e1f
-	 0AMXVWmdqhGFKVjvyu2nwEIuBTTQNCAoSH8JwFKMKj+UyMd3RAH4l4ZXSV7zpjqNym
-	 B7um9oGcA+5LsjfIXQEIBoFMXY55reguXq3TYr/FbgIiDGTn989zSLUHDVZ9B5fahQ
-	 O93rDdtBhRymuXUGlh0iJoL2JI3YiJ/5UBbzUgkAHyAtfsYmt4zrZ2tLuu2D4aqxfg
-	 8+okA3hCeyOubW3sr084Hahoec/LvWnpw6qIf2is9pmmRKhft6gnqmHGBPgqAilNZo
-	 XATcwrN0pGjEQ==
+	b=VjcgDdZcYCbcuFoB6WoYyeKOYfVxzr+096jOsVjhoh014LXS1sB0z14V378psKXU8
+	 gKXEyU6AHstGpnkdoNBlwoq1KJ+7fE8UsCNefc4+nfScwcJ/iCOgpzaEIGo/DYVqkT
+	 uXwJRdaW9ok5r223+vEI+Uk3l22QylDKxIF9tL9CpJ5QZ08VnruyxQq40aAFSe0F8i
+	 gyENlMdrB2E3JlCUIATjW5Agy1GdHdkc+zi5oICDF5LS2w4MENNdy3MwkEID+pJkYB
+	 LrSnH6EcGASiWBR60a/gjtkHiccbBknFpXh2L0mY/AMk5qWV11AtlHWDNaDW8Y8Soh
+	 XfPR99ziFR19Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Zimmermann <tzimmermann@suse.de>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Thierry Reding <treding@nvidia.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+Cc: Ian Abbott <abbotti@mev.co.uk>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	hsweeten@visionengravers.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/sysfb: simpledrm: Validate mmap size against framebuffer size
-Date: Mon, 19 Oct 2026 09:49:36 -0400
-Message-ID: <20261019135441.1420968-285-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] comedi: quatech_daqp_cs: Fix sanity check in interrupt handler
+Date: Mon, 19 Oct 2026 09:49:37 -0400
+Message-ID: <20261019135441.1420968-286-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,35 +52,29 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 127d52f9c64b1d9aab6226c4a1f38c37fb7254dc ]
+[ Upstream commit 1bc9538df6be8dac8727179d8bcc0d880648361b ]
 
-The size of the mmap'ed framebuffer could be smaller than the minimum
-required framebuffer size. Validate the resource size against the
-framebuffer size.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-Buggy firmware that triggers this check should be fixed up with a quirk
-on a case-by-case base.
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing the dev->read_dev pointer which may be NULL if
+dev->attached is false.  Move the check to avoid the possible null
+pointer dereference.
 
-v3:
-- fix size checks (Sashiko)
-- improve error message for alignment check (Thierry)
-- do not store aligned size value
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Suggested-by: Sashiko <sashiko-bot@kernel.org>
-Reviewed-by: Thierry Reding <treding@nvidia.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patch.msgid.link/20260625094509.157581-6-tzimmermann@suse.de
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-12-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a 6.18.53 tree, the OOB check is
-missing there, and the patch is a small probe-time bounds fix.
+I have the attach/IRQ window, the original KASAN report, and the 4-line
+reorder; compiling that against this 7.3-rc4 tree next.
 
 ---
 
@@ -94,47 +82,43 @@ missing there, and the patch is a small probe-time bounds fix.
 
 **Step 1.1: PARSE THE SUBJECT LINE**
 
-Record: **[drm/sysfb / simpledrm] [Validate] [reject probe when firmware
-framebuffer size exceeds the mapped memory resource]**
+Record: `[comedi: quatech_daqp_cs] [Fix] [sanity check in interrupt
+handler is performed after a possible NULL deref]`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
 Record:
-- **Fixes:** none (expected for this review)
-- **Cc: stable:** none (expected; sibling patches in the same series
-  *did* have it)
-- **Suggested-by:** Sashiko `<sashiko-bot@kernel.org>` — static-analysis
-  bot found the missing bounds check
-- **Reviewed-by:** Thierry Reding, Maxime Ripard, Javier Martinez
-  Canillas (DRM maintainers)
-- **Link:**
-  `https://patch.msgid.link/20260625094509.157581-6-tzimmermann@suse.de`
-  — v3 patch 5/7 of “Various improvements”
-- **Signed-off-by:** Thomas Zimmermann (author/subsystem maintainer)
-- **Reported-by / Tested-by:** none
-- Ignored pipeline tags: `[Upstream commit 127d52f9c64b…]`, `Signed-off-
-  by: Sasha Levin`
+- `Signed-off-by: Ian Abbott <abbotti@mev.co.uk>` — COMEDI maintainer
+  (author)
+- `Link:
+  https://patch.msgid.link/20260618102949.26607-12-abbotti@mev.co.uk` —
+  lore/patch-id; msgid `-12` is cover+11 patches (this is 11/11)
+- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` —
+  char-misc maintainer
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` on the commit itself (absence of Fixes/Cc-stable
+  is expected)
+
+Cover-letter CC (from b4, not the commit): Jaeyoung Chung, Sangyun Kim,
+Kyungwook Boo (SNU) — original reporters of the sibling ISA-driver bugs.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
 Record:
-- **Bug:** firmware/DT can advertise width/height/stride whose product
-  is larger than the mmap’d `IORESOURCE_MEM` / reserved-memory region.
-- **Symptom:** driver maps only `resource_size(mem)` but later draws
-  `height * stride` bytes → out-of-bounds access of the mapping.
-- **Author note:** firmware that trips this should get a quirk, not a
-  silent OOB.
-- **v3:** Sashiko fixed inverted size checks; Thierry improved the ALIGN
-  error text; aligned size is no longer stored.
-- **Versions:** none stated. Driver exists since 2021 (`11e8f5fd223b`,
-  “drm: Add simpledrm driver”).
+- **Bug:** IRQ handler is registered before the device is fully set up.
+  The `dev->attached` guard exists but runs *after* `dev->read_subdev`
+  is used.
+- **Symptom/failure mode:** NULL pointer dereference in interrupt
+  context (kernel oops/panic). Message says `dev->read_dev`; actual
+  field is `dev->read_subdev` (typo in the message, verified in source).
+- **Version info:** none in the commit.
+- **Root cause:** local initializer `cmd = &s->async->cmd` evaluates at
+  function entry, before `if (!dev->attached)`.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
 
-Record: Not disguised. It is an explicit bounds check. Cover letter
-groups it with “improve validation of values provided by the device
-firmware.” Sashiko’s v1/v2 review called the missing/inverted check a
-**High** OOB kernel write.
+Record: Not hidden. Explicit NULL-deref fix; “sanity check” here means
+reorder of an existing guard.
 
 ---
 
@@ -143,42 +127,50 @@ firmware.” Sashiko’s v1/v2 review called the missing/inverted check a
 **Step 2.1: INVENTORY THE CHANGES**
 
 Record:
-- **File:** `drivers/gpu/drm/sysfb/simpledrm.c` — **+24 / −0**
-- **Function:** `simpledrm_device_create()`
-- **Scope:** single-file surgical probe-path validation
-- Adds `#include <linux/overflow.h>` and local `u64 size`
+- File: `drivers/comedi/drivers/quatech_daqp_cs.c` — +3 / −1
+- Function: `daqp_interrupt()`
+- Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Record:
-1. After stride is known: compute `size = height * stride` with
-   `check_mul_overflow`; fail `-EINVAL` on overflow. Then `ALIGN(size,
-   PAGE_SIZE) < PAGE_SIZE` catches wrap of page-align.
-2. System-memory path (`devm_memremap`): if `size > resource_size(mem)`,
-   fail before mapping.
-3. I/O-memory path (`devm_ioremap_wc`): same check after the optional
-   `devm_request_mem_region` fallback.
+Record (verified against `1bc9538df6be8^` and current file):
 
-Before: map whatever firmware gave, then blit using `fb_pitch`/`height`.
-After: refuse to probe if the logical FB does not fit in the mapping.
+Before:
+```c
+struct comedi_subdevice *s = dev->read_subdev;
+struct comedi_cmd *cmd = &s->async->cmd;  /* deref s immediately */
+...
+if (!dev->attached)
+    return IRQ_NONE;
+```
+
+After:
+```c
+struct comedi_subdevice *s = dev->read_subdev;  /* pointer copy only */
+struct comedi_cmd *cmd;
+...
+if (!dev->attached)
+    return IRQ_NONE;
+cmd = &s->async->cmd;  /* only after attached */
+```
+
+Path: interrupt handler, probe/early-IRQ window (and analogously
+detach).
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-Record: **Memory safety / out-of-bounds + integer overflow**
-- `drm_sysfb_plane_helper_atomic_update()` → `drm_fb_blit()` into
-  `sysfb->fb_addr` using `sysfb->fb_pitch`
-- `drm_sysfb_plane_helper_atomic_disable()` `memset_io` over `height`
-  lines of `fb_pitch`
-- Mapping length is `resource_size(mem)`, not `height*stride`
-- v2 had the comparison **inverted** (`resource_size(mem) > size`); v3
-  is `size > resource_size(mem)`
+Record: **NULL pointer dereference** in IRQ context. `s` is NULL until
+`dev->read_subdev` is assigned in `daqp_auto_attach()` (line 734), which
+is *after* `pcmcia_request_irq()` (line 718). `dev->attached` is set
+only later in `comedi_device_postconfig()`
+(`drivers/comedi/drivers.c:833`). C evaluates the `cmd` initializer at
+block entry, so the attached check never ran in time.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 
-Record: Obviously correct after v3. Minimal. Probe-time only. Regression
-risk: probe fail (no simpledrm display) on undersized firmware resources
-that “worked” while writing past the map. Author documents quirks. No
-API/locking/struct changes.
+Record: Obviously correct reorder; no API/locking/behavior change on the
+normal path. Residual `s = dev->read_subdev` before the check is a
+pointer copy, not a deref. Regression risk: very low.
 
 ---
 
@@ -186,47 +178,38 @@ API/locking/struct changes.
 
 **Step 3.1: BLAME THE CHANGED LINES**
 
-Record: Mapping code from Thomas Zimmermann / Thierry Reding (2022–2023,
-originally `drivers/gpu/drm/tiny/simpledrm.c`). Bug is **missing
-validation since the driver was added** (`11e8f5fd223bd`, 2021-05-01),
-not a recent regression.
+Record:
+- `s = dev->read_subdev` and `if (!dev->attached)`: `c12717423e1c61`
+  (2013-02, contained in **v3.9-rc1**)
+- Buggy `cmd = &s->async->cmd`: `2d7840c70dcf52` “use comedi_async
+  'scans_done' to detect EOA” (2014-11, contained in **v3.19-rc1**)
+- Driver itself: `62ed666238aba1` (2009)
+
+Long-standing bug, not new-subsystem code.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
 
-Record: No `Fixes:` tag. Buggy behavior is the original probe path. Not
-introduced after 6.18 branched.
+Record: No `Fixes:` tag. Buggy commit identified by blame:
+`2d7840c70dcf52`. That history is in this tree.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+**Step 3.3: CHECK FILE HISTORY**
 
-Same v3 series (msgid `20260625094509.157581`):
-
-| Patch | Subject | In v6.18.53? |
-|---|---|---|
-| 1/7 | Improve framebuffer-size validation | **YES** (`8d65b8d1722d8`,
-Cc: stable v5.14+) |
-| 2/7 | Improve panel-size validation | **YES** (`54e32ad5e0c74`, Cc:
-stable v6.4+) |
-| 3/7 | Inline `simplefb_get_validated_int()` | NO — cleanup only, not
-required |
-| 4/7 | Improve stride validation | **YES** (`6892f0a2f6b59`, Cc: stable
-v6.1+) |
-| **5/7** | **This mmap-size check** | **NO** |
-| 6–7/7 | Panel orientation | new feature, not this commit |
-
-Record: Standalone vs this tree. Inline helper is not a prerequisite
-(diff vs v6.18.53 does not touch those call sites).
+Record: After this fix, only older moves (`df0e68c1e9945` headers,
+`8ffdff6a8cfbd` out of staging). No conflicting refactors. Standalone vs
+this file.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-Record: Thomas Zimmermann authored simpledrm (2021) and maintains
-drm/sysfb. Related: ofdrm overflow used this same `check_mul_overflow`
-pattern.
+Record: Ian Abbott is listed in MAINTAINERS for COMEDI (`S: Odd Fixes`).
+Same-day series of 11 independent IRQ-guard fixes (aio_iiro_16, das6402,
+dt2811, ni_at_a2150, ni_atmio16d, pcl711, pcl816, pcl818, pcmmio,
+pcmuio, this one).
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-Record: Needs `check_mul_overflow` / `overflow.h` (present in 6.18).
-Needs `simpledrm_device_create` layout after stride validation (present
-at v6.18.53). No new helpers. **Can apply standalone to this tree.**
+Record: No functional dependency on the other 10; each driver is self-
+contained. `dev->attached` / `read_subdev` / `s->async->cmd` all exist
+here. Can apply standalone.
 
 ---
 
@@ -235,86 +218,81 @@ at v6.18.53). No new helpers. **Can apply standalone to this tree.**
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
 Record:
-- `b4 dig -c 127d52f9…` →
-  https://patch.msgid.link/20260625094509.157581-6-tzimmermann@suse.de
-- Series: v1 (3 patches, 2026-06-19) → v2 (6, 2026-06-22) → v3 (7,
-  2026-06-25). Committed version is v3.
-- v1: Sashiko asked to compare firmware size vs mapped resource (High:
-  OOB writes on plane update).
-- v2: check added **inverted**; Sashiko: rejects valid larger resources,
-  allows `size > resource_size`.
-- v3: comparison corrected; ALIGN value not stored.
-- lore.kernel.org / spinics WebFetch: 403/500. Content recovered via `b4
-  dig`, WebSearch snippets, and the ratatoskr thread archive.
-- No NAK. No reviewer `Cc: stable` on this specific patch (unlike 1/7,
-  2/7, 4/7).
+- `b4 dig -c 1bc9538df6be8`:
+  https://patch.msgid.link/20260618102949.26607-12-abbotti@mev.co.uk
+- `b4 dig -a`: **v1 only**, `[PATCH 11/11]`
+- Cover: “comedi: Add/fix sanity check in ISA drivers to avoid null-ptr-
+  deref”
+- Original report [1]: https://lore.kernel.org/lkml/20260610115912.78013
+  1-1-jjy600901@snu.ac.kr/ — subject “KASAN null-ptr-deref in ISA driver
+  IRQ handlers on early IRQ”
+- No NAKs in the saved series mbox (12 messages: cover + 11 patches, no
+  replies)
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Record (`b4 dig -w`): dri-devel; Thierry, Maxime, Javier, airlied,
-simona, Maarten Lankhorst, Neil Armstrong; Sashiko. Subsystem
-maintainers were on To/Cc and Reviewed-by.
+Record (`b4 dig -w`): To/Cc linux-kernel, Greg KH, Ian Abbott, H Hartley
+Sweeten, SNU reporters. No extra Reviewed-by. Applied by Greg KH.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Record: No syzbot/bugzilla/user crash. Finding is Sashiko review of this
-series. Mechanism verified in tree (blit/memset past `resource_size`).
+Record (from `/tmp/snu-report/...mbx`): Jaeyoung Chung / Sangyun Kim /
+Kyungwook Boo. KASAN NULL deref if IRQ fires after `request_irq` and
+before `dev->read_subdev` is set. Listed ISA drivers: das6402,
+ni_atmio16d, aio_iiro_16, pcmmio, comedi_parport, pcl711.
+**quatech_daqp_cs was not in that list**; Abbott added it as the same
+pattern (PCMCIA `pcmcia_request_irq` before `read_subdev`). Suggested
+fix: request IRQ later **or** guard the handler — this patch does the
+latter.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-Record: Patches 6–7 (panel orientation) are features, not needed.
-Patches 1/2/4 already in 6.18.53. Patch 3 is unused cleanup.
+Record: 11 independent per-driver patches. This one does not need the
+others.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-Record: lore.kernel.org/stable search not available (HTTP 403).
-Unverified whether stable@ discussed this SHA. Sibling validation
-patches were already taken into 6.18.53 via `Cc: stable`.
+Record: **UNVERIFIED** — lore.kernel.org/stable search returned HTTP
+403. No stable discussion in the series mbox.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: KEY FUNCTIONS**
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
 
-Record: `simpledrm_device_create()` (modified). Callers of the mapped
-buffer: `drm_sysfb_plane_helper_atomic_update`, `atomic_disable`,
-`get_scanout_buffer`.
+Record: `daqp_interrupt()` modified. Related: `daqp_auto_attach()`,
+`comedi_device_postconfig()`.
 
 **Step 5.2: TRACE CALLERS**
 
-Record:
-- `simpledrm_probe()` → `simpledrm_device_create()` — platform probe for
-  `simple-framebuffer` / sysfb
-- Plane helpers in `drm_sysfb_modeset.c` — atomic update/disable on
-  every scanout
-
-Not IRQ. Probe + modeset. Userspace DRM clients and in-kernel
-fbdev/client setup trigger blits.
+Record: `daqp_interrupt` is only passed to `pcmcia_request_irq()` in
+`daqp_auto_attach()` (`quatech_daqp_cs.c:718`). Hardware IRQ context,
+not a syscall. Probe-time and runtime IRQs.
 
 **Step 5.3: TRACE CALLEES**
 
-Record: `check_mul_overflow`, `ALIGN`, `resource_size`, `devm_memremap`
-/ `devm_ioremap_wc`. No new locks or allocations beyond existing probe.
+Record: After the guard: `inb`, `daqp_ai_get_sample`,
+`comedi_buf_write_samples`, `comedi_handle_events`. Those run only once
+`attached` is true.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
 
-Record: Reachable whenever `CONFIG_DRM_SIMPLEDRM` binds. DT `simple-
-framebuffer` (ARM/QEMU/etc.) and `sysfb_create_simplefb()` (EFI/VESA)
-both hit this function. **EFI/VESA path already checks `height*stride`
-vs VRAM in `sysfb_create_simplefb()`**
-(`drivers/firmware/sysfb_simplefb.c` lines 98–102). **DT `reg` /
-`memory-region` does not.** That is the hole.
+Record:
+`pcmcia probe` → `comedi_auto_config()` → `daqp_auto_attach()` →
+`pcmcia_request_irq(daqp_interrupt)` → later `read_subdev = s` → return
+→ `comedi_device_postconfig()` sets `attached = true`.
+
+Reachable when a DAQP-208/DAQP-308 PCMCIA card is inserted
+(`CONFIG_COMEDI_QUATECH_DAQP_CS`). Unprivileged userspace is not
+required; hardware IRQ during attach is enough. Same class as the KASAN-
+reported ISA siblings.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-Record:
-- **vesadrm / efidrm:** `drm_sysfb_get_visible_size_si(...,
-  resource_size(res))` already caps visible size.
-- **ofdrm:** `check_mul_overflow(linebytes, height, &fb_size)` —
-  **already in v6.18.53** (`ded6ad826fe0f`, Cc: stable). Message says it
-  matches simpledrm.c — i.e. this check in mainline — while 6.18.53
-  still lacks it in simpledrm.
+Record: Same reorder in `pcl711.c` and others in this series.
+`ni_660x.c` even comments “make sure dev->attached is checked before
+doing anything else”. Systematic COMEDI IRQ pattern.
 
 ---
 
@@ -323,258 +301,199 @@ Record:
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
 Record:
-- `git describe HEAD` → **v6.18.53-5049-g0f0bdc2b0dffb**; `Makefile`
-  **6.18.53**
-- `git merge-base --is-ancestor 8f06389364d85 v6.18.53` → **not in
-  6.18.53**
-- At v6.18.53, `simpledrm_device_create()` maps `resource_size(mem)`
-  with **no** `height*stride` check (verified by reading that version of
-  the file)
-- Bug present since simpledrm (v5.14-era), well before 6.18
+- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
+- `make kernelversion`: **7.3.0-rc4**
+- Driver present: `drivers/comedi/drivers/quatech_daqp_cs.c`
+- `git merge-base --is-ancestor 1bc9538df6be8 HEAD`: yes (fix is already
+  on this branch)
+- Pre-fix form verified in `1bc9538df6be8^`; bug introduced v3.19,
+  driver since ~2009
+- Current `daqp_interrupt()` already has the reordered check (lines
+  210–221)
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-Record: **Clean apply.** v6.18.53 already has stride/width/height
-validation; insertion point after `stride = pitch` matches. `overflow.h`
-exists. Only extra autosel commit is the unused inline cleanup.
+Record: Clean apply. Function has been stable since ~2015
+(`f676376d692d8e` / `77e7c200f37536`). No rework needed.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
 
-Record: Dimension/stride caps yes; mmap-vs-resource check **no**. No
-alternate fix for this OOB.
+Record: This exact fix is already on HEAD. Sibling series commits are
+also here. No alternate/competing fix for this file.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-Record: **drm/sysfb / simpledrm** — generic firmware framebuffer.
-**IMPORTANT** (not core mm/net, but default/fallback display on many DT
-and some x86 firmware systems).
+Record: `drivers/comedi/` — data-acquisition. **PERIPHERAL** (PCMCIA
+DAQ: DAQP-208/308). Crash in IRQ handler is still a hard oops for those
+users.
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
 
-Record: Active in 2026 (validation series, ofdrm overflow, vesadrm).
-Driver itself is mature (2021).
+Record: Mature, “Odd Fixes”. Recent work is this IRQ-guard series plus
+small cleanups. Not a new/experimental driver (left staging in 2021,
+`8ffdff6a8cfbd`).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: WHO IS AFFECTED**
+**Step 8.1: DETERMINE WHO IS AFFECTED**
 
-Record: **Driver-specific**, `CONFIG_DRM_SIMPLEDRM`. Highest relevance:
-DT `simple-framebuffer` with mismatched `memory-region`/`reg` vs
-width/height/stride. EFI/VESA sysfb already rejects undersized VRAM
-before creating the device.
+Record: Driver-specific / config-specific:
+`CONFIG_COMEDI_QUATECH_DAQP_CS`, Quatech DAQP PCMCIA cards.
 
-**Step 8.2: TRIGGER CONDITIONS**
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
 
-Record: Probe + later plane update. Trigger is **buggy/mismatched
-firmware or DT**, not a normal userspace syscall. Unprivileged users do
-not invent the resource; they can trigger the blit after a bad probe
-succeeds. Not a timing race.
+Record: IRQ after `pcmcia_request_irq` and before
+`attached`/`read_subdev`. Window during attach (and similar on
+teardown). Not every boot; needs the card and a premature/spurious IRQ.
+SNU reported KASAN for the same pattern on ISA siblings; Abbott
+confirmed this driver has the same ordering.
 
-**Step 8.3: FAILURE MODE SEVERITY**
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
 
-Record: **OOB write** into/beyond ioremap/memremap (`drm_fb_blit` /
-`memset_io`) → **HIGH** (crash, corruption, possible security). Overflow
-of `height*stride` → **HIGH** in principle; with U16 height and INT_MAX
-stride already in 6.18.53, u64 overflow is unlikely; the resource-size
-check is the real fix.
+Record: NULL deref in IRQ handler → oops/panic. **CRITICAL** for users
+of this driver. (Cover letter: “null-ptr-deref”; original report:
+“kernel panic” / KASAN.)
 
-**Step 8.4: RISK-BENEFIT RATIO**
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 
 Record:
-- **Benefit:** HIGH for mismatched DT/firmware; closes a hole sibling
-  drivers already close; ofdrm’s copy of the overflow check is already
-  in this tree.
-- **Risk:** LOW–MEDIUM — 24 lines, probe-only; possible **black screen**
-  if firmware resource is smaller than `height*stride` but the machine
-  still “displayed something.” Author: add quirks. That is still better
-  than kernel OOB writes.
-- **Ratio:** benefit outweighs risk for 6.18.y.
+- Benefit: HIGH for affected hardware (prevents IRQ oops); population is
+  small
+- Risk: VERY LOW (4-line reorder, no lock/API change)
+- Ratio: favorable
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: EVIDENCE**
+**Step 9.1: COMPILE THE EVIDENCE**
 
 **FOR:**
-- Real OOB on plane update when mapped size < `height*stride` (verified
-  blit/memset paths)
-- Sashiko High finding; v3 fixed inverted compare
-- 24 lines, probe-time, no APIs
-- Reviewed by DRM maintainers; author is simpledrm maintainer
-- Same validation series already partly in 6.18.53
-- ofdrm overflow backport in this tree explicitly follows simpledrm
-- Code and context exist; applies cleanly; no extra series patches
-  required
+- Real NULL deref in interrupt context; C initializer ran before
+  `dev->attached`
+- Attach path verified: IRQ requested before `read_subdev` and before
+  `attached = true`
+- Same class as KASAN-reported COMEDI IRQ bugs (SNU); maintainer
+  included this driver
+- Author is the COMEDI maintainer; Greg KH applied it
+- 4 lines, one function, no new APIs, no dependencies
+- Bug present since ~v3.19; driver exists in this 7.3-rc4 tree
 
 **AGAINST:**
-- No `Fixes:` / no user crash dump (absence is not a veto per rules)
-- Author did not `Cc: stable` (sibling patches did; likely because this
-  check was added mid-series)
-- Probe failure on quirky firmware
-- No syzbot reproducer
+- Niche PCMCIA DAQ hardware
+- quatech_daqp_cs was not in the original SNU driver list (pattern match
+  by maintainer)
+- No `Fixes:` / `Cc: stable` (expected, not a negative)
 
 **UNRESOLVED:**
-- lore/stable HTTP fetch failed; no confirmation of stable@ discussion
-- No evidence of a specific board that hits this today (unverified)
+- No stable@ thread found (lore 403)
+- No on-list review replies in the b4 mbox
+- Not proven on this exact Quatech card that IRQ fires in the window
+  (sibling ISA drivers were KASAN-reported)
 
-**Step 9.2: STABLE RULES CHECKLIST**
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-1. Obviously correct and tested? **PASS** — v3 comparison is correct;
-   three DRM R-bs
-2. Real bug affecting users? **PASS** — OOB if DT/firmware sizes
-   disagree with the memory resource
-3. Important (crash/security/corruption)? **PASS** — kernel OOB write,
-   severity HIGH
-4. Small and contained? **PASS** — +24 lines, one function
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — present and matching at v6.18.53
+1. Obviously correct and tested? **PASS** — reorder of existing guard;
+   applied to char-misc by Greg KH
+2. Fixes a real bug that affects users? **PASS** — premature IRQ NULL
+   deref; reported class, same code here
+3. Important issue? **PASS** — oops/panic in IRQ handler (CRITICAL for
+   this driver)
+4. Small and contained? **PASS** — +3/−1, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — same function, clean; tree is
+   7.3-rc4 with this driver
 
-**Step 9.3: EXCEPTION CATEGORIES**
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
 
-Record: None (not a device ID/quirk/DT/build/doc exception). It is a
-normal memory-safety fix.
+Record: None (not an ID/quirk/DT/build/doc exception). Ordinary crash
+fix.
 
 **Step 9.4: DECISION**
 
-This is a small, reviewed bounds check for a real OOB in simpledrm’s
-probe/scanout path. The buggy code is in 6.18.53; prerequisites are
-already there; ofdrm already received the same overflow approach.
-Firmware-quirk probe failure is the main risk and is acceptable versus
-out-of-bounds kernel writes.
+This tree is **7.3.0-rc4**. The driver and the buggy ordering exist
+here. The patch is a 4-line, obviously correct NULL-deref fix in an IRQ
+handler. It meets stable criteria for this checkout.
 
----
+## Why it matters
 
-### What the commit solves for this tree
+`daqp_auto_attach()` calls `pcmcia_request_irq()` before
+`dev->read_subdev` is set and before the core sets `dev->attached`. The
+handler used to do `cmd = &s->async->cmd` at declaration time, so a
+premature IRQ oopses instead of returning `IRQ_NONE`. Stable users with
+this card can panic on insert/probe.
 
-On **6.18.53**, `simpledrm_device_create()` still maps only
-`resource_size(mem)` and then `drm_fb_blit()` / `memset_io()` walk
-`height * stride` bytes. If DT `simple-framebuffer` (or other platform
-data not going through `sysfb_create_simplefb()`) gives a smaller
-resource, that is an out-of-bounds kernel write. This patch fails probe
-instead.
+Risk is negligible; benefit is avoiding a hard crash. No prerequisites.
 
-### Stable rules / risk
+## Verification
 
-Meets the rules: small, obviously correct after v3, no new API, applies
-cleanly here. Benefit is preventing corruption/oops on mismatched
-firmware; risk is losing simpledrm on those same configs (quirks if
-needed).
-
-### Concerns
-
-- Not originally `Cc: stable` (do not treat as a no).
-- Inline helper commit is **not** required.
-- ALIGN overflow check is largely redundant after U16/INT_MAX caps
-  already in 6.18.53; harmless.
-
----
-
-Verification:
-- [Phase 1] Tags: Suggested-by Sashiko; R-b Thierry, Maxime, Javier;
-  Link patch 5/7 v3; no Fixes/Cc: stable
-- [Phase 2] +24 lines in `simpledrm_device_create`: overflow + `size >
-  resource_size` on both mem paths
-- [Phase 3] `git describe`/Makefile: **6.18.53**; `merge-base --is-
-  ancestor 8f063893 v6.18.53` = not present; file at v6.18.53 lacks the
-  check
-- [Phase 3] Series 1/2/4 already in v6.18.53; patch 3 (inline) not
-  needed (`git diff v6.18.53` only inlines helpers)
-- [Phase 3] Blame: mapping from 2022–23 simpledrm; driver
-  `11e8f5fd223bd` (2021)
-- [Phase 4] `b4 dig -c 127d52f9`: lore msgid; v1→v3; inverted check in
-  v2
-- [Phase 4] WebSearch/ratatoskr: Sashiko High OOB; drm_fb_memcpy/blit
-  past map
-- [Phase 4] lore/spinics WebFetch 403/500 — UNVERIFIED full mbox;
-  substance recovered from b4 + archives
-- [Phase 4] stable@ search UNVERIFIED (lore 403)
-- [Phase 5] `simpledrm_probe` → create; blit/memset in
-  `drm_sysfb_modeset.c` use `fb_addr`/`fb_pitch`
-- [Phase 5] `sysfb_create_simplefb()` already rejects `length > size`;
-  DT `simplefb_get_memory_of()` does not
-- [Phase 5] ofdrm `check_mul_overflow` **is** in v6.18.53
-  (`ded6ad826fe0f`)
-- [Phase 6] `check_mul_overflow` in `include/linux/overflow.h` at
-  v6.18.53
-- [Phase 8] Failure: OOB write on plane update, HIGH; trigger =
-  mismatched firmware/DT
-- UNVERIFIED: specific product firmware known to undersize the resource
+- [Phase 1] Tags: Ian Abbott SOB, Greg KH SOB, msgid
+  `20260618102949.26607-12` (11/11). No Fixes/Reported-by/Cc-stable on
+  the commit.
+- [Phase 1] Message typo verified: text says `read_dev`; code uses
+  `read_subdev`.
+- [Phase 2] Diff: +3/−1 in `daqp_interrupt()`; `cmd` init moved after
+  `if (!dev->attached)`.
+- [Phase 2] Pre-fix source from `git show 1bc9538df6be8^:...` confirms
+  initializer before the guard.
+- [Phase 3] Blame: cmd init `2d7840c70dcf52` (v3.19-rc1); attached check
+  `c12717423e1c61` (v3.9-rc1).
+- [Phase 3] `git merge-base --is-ancestor 1bc9538df6be8 HEAD` → is
+  ancestor.
+- [Phase 3] Author is COMEDI maintainer (`MAINTAINERS`); 11-patch
+  series, this file standalone.
+- [Phase 4] `b4 dig -c 1bc9538df6be8` → lore URL; `-a` → v1 only; `-w` →
+  Greg KH, Hartley, SNU CCs.
+- [Phase 4] Cover letter: explicit null-ptr-deref; cites SNU report.
+- [Phase 4] Original report mbox: KASAN NULL deref / panic on early IRQ;
+  quatech not named; Abbott added it.
+- [Phase 4] UNVERIFIED: stable@ discussion (HTTP 403); review replies
+  (none in series mbox).
+- [Phase 5] Only caller: `pcmcia_request_irq` in `daqp_auto_attach`.
+- [Phase 5] `comedi_device_postconfig()` sets `dev->attached = true`
+  only after `auto_attach` returns.
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
+  `kernelversion` 7.3.0-rc4; file present.
+- [Phase 6] Current `daqp_interrupt()` at lines 210–221 already contains
+  the fix.
+- [Phase 7] `CONFIG_COMEDI_QUATECH_DAQP_CS` — DAQP-208/308 PCMCIA.
+- [Phase 8] Failure mode: NULL deref in IRQ → oops; severity CRITICAL
+  for this driver; risk very low.
+- UNVERIFIED: hardware demonstration that this specific PCMCIA card IRQs
+  in the attach window.
 
 **YES**
 
- drivers/gpu/drm/sysfb/simpledrm.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/comedi/drivers/quatech_daqp_cs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/simpledrm.c
-index 22f8caab39be0..91f114ab99a3e 100644
---- a/drivers/gpu/drm/sysfb/simpledrm.c
-+++ b/drivers/gpu/drm/sysfb/simpledrm.c
-@@ -5,6 +5,7 @@
- #include <linux/of_clk.h>
- #include <linux/minmax.h>
- #include <linux/of_reserved_mem.h>
-+#include <linux/overflow.h>
- #include <linux/platform_data/simplefb.h>
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
-@@ -626,6 +627,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 	u16 width_mm = 0, height_mm = 0;
- 	struct device_node *panel_node;
- 	const struct drm_format_info *format;
-+	u64 size;
- 	struct resource *res, *mem = NULL;
- 	struct drm_plane *primary_plane;
- 	struct drm_crtc *crtc;
-@@ -716,6 +718,14 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 		}
- 		stride = pitch;
- 	}
-+	if (check_mul_overflow(height, stride, &size)) {
-+		drm_err(dev, "framebuffer size exceeds maximum\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+	if (ALIGN(size, PAGE_SIZE) < PAGE_SIZE) {
-+		drm_err(dev, "page-aligned framebuffer exceeds maximum\n");
-+		return ERR_PTR(-EINVAL);
-+	}
+diff --git a/drivers/comedi/drivers/quatech_daqp_cs.c b/drivers/comedi/drivers/quatech_daqp_cs.c
+index 2a76c75c513b8..d5e3e213e233b 100644
+--- a/drivers/comedi/drivers/quatech_daqp_cs.c
++++ b/drivers/comedi/drivers/quatech_daqp_cs.c
+@@ -211,13 +211,15 @@ static irqreturn_t daqp_interrupt(int irq, void *dev_id)
+ {
+ 	struct comedi_device *dev = dev_id;
+ 	struct comedi_subdevice *s = dev->read_subdev;
+-	struct comedi_cmd *cmd = &s->async->cmd;
++	struct comedi_cmd *cmd;
+ 	int loop_limit = 10000;
+ 	int status;
  
- 	sysfb->fb_mode = drm_sysfb_mode(width, height, width_mm, height_mm);
- 	sysfb->fb_format = format;
-@@ -741,6 +751,13 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 	if (!dev->attached)
+ 		return IRQ_NONE;
  
- 		drm_dbg(dev, "using system memory framebuffer at %pr\n", mem);
- 
-+		if (size > resource_size(mem)) {
-+			drm_err(dev,
-+				"framebuffer size of %llu exceeds memory range %pr\n",
-+				size, mem);
-+			return ERR_PTR(-EINVAL);
-+		}
++	cmd = &s->async->cmd;
 +
- 		screen_base = devm_memremap(dev->dev, mem->start, resource_size(mem), MEMREMAP_WC);
- 		if (IS_ERR(screen_base))
- 			return screen_base;
-@@ -774,6 +791,13 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 			mem = res;
- 		}
- 
-+		if (size > resource_size(mem)) {
-+			drm_err(dev,
-+				"framebuffer size of %llu exceeds memory range %pr\n",
-+				size, mem);
-+			return ERR_PTR(-EINVAL);
-+		}
-+
- 		screen_base = devm_ioremap_wc(&pdev->dev, mem->start, resource_size(mem));
- 		if (!screen_base)
- 			return ERR_PTR(-ENOMEM);
+ 	status = inb(dev->iobase + DAQP_STATUS_REG);
+ 	if (!(status & DAQP_STATUS_EVENTS))
+ 		return IRQ_NONE;
 -- 
 2.53.0
 
