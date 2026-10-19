@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542135D5DB7;
-	Mon, 19 Oct 2026 14:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463FE5D9D75;
+	Mon, 19 Oct 2026 14:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418523; cv=none; b=PsxawrTLTtbet76Ii6KR+9z2TZGgI18KjtWqkERvaW8PEiSzk7blJKJkkB7oueDkRuPbKfEnzvWrA6j/hNnKJNvq/3xJJGld8Pur0DakrTBhSO3cZNDFtiw//cPzVlMV9xmuXTugLtLwTe6hqKReuesYGZNPVP86f59xzNiYtBk=
+	t=1792418524; cv=none; b=N46wzxLHHlEjBhWji8FU2Vk/M+cYcc8iaPwesSLzpeKnG+aBRiR0abgKGBjUaSULFxkk5bT9mYMo+1C16REcosIPhD2SFuvV5U7Vf/BlDpFa5qnRunvxPcPfSSyR57Td8VtPI1myp1L4JDdddYcvTQ1yuAVOzocrpa8dHb9bqp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418523; c=relaxed/simple;
-	bh=jFjoZje5kLn73JJIeD6nU3VHpkgdr+EoS63/2I4yVqA=;
+	s=arc-20240116; t=1792418524; c=relaxed/simple;
+	bh=MMD+EBEPV0Pg7Ltq9yTjC1CMXB2jXqd4hX7pdWvy8Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uxGI4lbDeA8R6UuKepxwJjFhDfHAk4/LUwj/deSJn3D32mVfkrGWGmRgo8sybhWA/0ptLYXgFACHzFlLdXf+JmBfRQghlA9bvY2uiliMqZhdnG9EucnYwt2FR9/qCSBGfRP6/01caxY/BeZFxN7pOQ7ZZcC/hibRAVWTHkP2iuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jsQZLJj0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KLxSu98svAcFK1QDJg1zuNn0CwTTGnXSrEXiJXKQMuID6Wj2viSO3x82DOy6cwtTRRFfwdm8J1HWIgxpufVsb6L9KxlYQA7KuX2+y6xr6gR4A/1V51SHUDPblgmGtyatqnZzYzUklnKu8w5fOcaqOgglMvZsgDXF7+v8H8Ss064=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dvpfWu8G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jsQZLJj0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E89A1F000CD;
-	Mon, 19 Oct 2026 14:01:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dvpfWu8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494D81F000C8;
+	Mon, 19 Oct 2026 14:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418519;
-	bh=wbCfE7+0JL3bHLkZaRl4667sbctaeZUWcJ36KHksLU8=;
+	s=k20260515; t=1792418521;
+	bh=u/avkUqxcKZrBjqLt0ZXn2Myl1uHIiz9AgCo+A8lC9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jsQZLJj0Xzt6k5uslVbISviUURz0CZWLXYkK7bmWS/IpWACqArtJWN9Qc4CWlT1RO
-	 p0YV9t/V4qXnPxuVWRX6XE5nfUetvaWdp6elCxr7nKRU6E55xnJIHcon1GPL7pUdii
-	 sGoG+cLGfDxuiTRwUJsqrem74Otk6mNWt4DFXrzQnwOObc11TjN/cQiIOY9BqOwaML
-	 A/4IYqCeiT+CUVaSOIFoGKs563wXMqXOr4YHkD7Tm8mZ7c9hZBBT0kyPbTJsXYbJ9F
-	 beP89md4SVnJYYKTkY2M4nGhCy8vGhfOgJlC5o2UkCHtgxYO55hnlh6N/91rBDsut5
-	 9O7jng4C0Ja/w==
+	b=dvpfWu8GEO41oTL8jjpm9IUERIg0k/mjDLKlfOYb5EU6AiKgpqpHh2uK6dzGuMMq3
+	 iY4QJVEsPbpgauJ0uUaZaBDQrdijapKo7EDCvYdhIC9omdaEeoKN0DpMza1DadM6Dd
+	 sGh1TkyM1Aj060g4BDX5Z/IcXf0D1E+4Kn9SGgP+iyZ7hWFcdZCGir+1Id7PqJCr0y
+	 S3FxoxSMoxnMI9YdvZmIaM6KQ/U1wpFU1LBuN/4ahVQERqT+lpydWxzahOhjoYLfLS
+	 6lBQNlJpG8XZi5bZTK3/w3bLIItpm45LL6+GH2WDAX8K/BRJ2rQ7O1mj3nIbWSH+dD
+	 k82S2kIFpqPKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Senjin <senjin@hatchling.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Yu Kuai <yukuai@fygo.io>,
+	Mykola Marzhan <mykola@meshstor.io>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	song@kernel.org,
+	linux-raid@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] fs/ntfs3: fix lseek EINVAL on sparse/compressed files with 64-bit clusters
-Date: Mon, 19 Oct 2026 09:49:57 -0400
-Message-ID: <20261019135441.1420968-306-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] md: skip bitmap accounting for empty write ranges
+Date: Mon, 19 Oct 2026 09:49:58 -0400
+Message-ID: <20261019135441.1420968-307-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,420 +53,494 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Senjin <senjin@hatchling.org>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit 789af83e41aef54c1ff1cee16adc27822e0a0d71 ]
+[ Upstream commit 87c10252e3d6c28769d93bea9e6a9b592e5809d1 ]
 
-When CONFIG_NTFS3_64BIT_CLUSTER is enabled, sbi->maxbytes_sparse is set
-to -1. As a signed loff_t this is -1LL, the most negative value. Any
-lseek on a sparse or compressed file passes this as maxsize to
-vfs_setpos(), which returns -EINVAL whenever offset > maxsize, and
-since -1LL is less than any non-negative offset, every seek fails,
-including lseek(fd, 0, SEEK_SET).
+mkfs.ext4 can submit zero-sector flush/FUA bios. These bios are WRITE
+bios for md_write_start() purposes, but they do not cover any data sector
+and must not dirty bitmap bits.
 
-The intent of -1 here appears to be "no limit" (matching the spirit of
-MAX_LFS_FILESIZE assigned to sbi->maxbytes and sb->s_maxbytes in the
-same block), but the signed type makes it the minimum instead of the
-maximum.
+md bitmap accounting currently passes such bios to bitmap start_write().
+For llbitmap this reaches llbitmap_start_write() with sectors == 0,
+which underflows the end chunk calculation.
 
-Fix by assigning MAX_LFS_FILESIZE to sbi->maxbytes_sparse in the
-64-bit cluster path, consistent with the other two limits set there.
+Personality bitmap mapping can also turn a non-empty bio into an empty
+bitmap range when the requested sectors are outside the active bitmap
+geometry. Treat both cases as not started, so the completion path will not
+call end_write() for an empty range.
 
-Observed on a 16 TB NTFS volume with 0xFFFFFEFF total clusters compiled
-with CONFIG_NTFS3_64BIT_CLUSTER=y. Sequential reads via dd/cp worked
-correctly; any lseek call on sparse files returned EINVAL, preventing
-archive managers and other tools from random-accessing files on the
-volume. The non-64-bit-cluster path correctly sets maxbytes_sparse to
-(1ull << (cluster_bits + 32)) - 1, a large positive value.
-
-Signed-off-by: Senjin <senjin@hatchling.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Tested-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://patch.msgid.link/20260802195038.164272-11-yukuai@kernel.org
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line NTFS3 correctness fix: with 64-bit clusters,
-sparse/compressed `lseek` was passing a signed `-1` limit into
-`vfs_setpos()`, so every nonnegative seek returned `-EINVAL`. The local
-tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`); the path and the
-bug both exist here.
+The local tree is **6.18.53** (`p-6.18`). The empty-range skip is
+missing, and the llbitmap underflow path is present. Full analysis
+follows.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[fs/ntfs3] [fix] [lseek returns EINVAL on sparse/compressed
-files when CONFIG_NTFS3_64BIT_CLUSTER is set]`
+
+Record: **[md] [skip] skip bitmap accounting for empty write ranges**
+- Subsystem: `md` (MD RAID core)
+- Action verb: **skip** (prevent incorrect handling)
+- Intent: do not run bitmap start/end accounting when the write covers
+  no data sectors
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- `Signed-off-by: Senjin <senjin@hatchling.org>` (author)
-- `Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-
-  software.com>` (NTFS3 maintainer; listed in MAINTAINERS)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable@` (absence is expected for this review)
+- `Tested-by: Mykola Marzhan <mykola@meshstor.io>` — independent
+  hardware/user verification
+- `Link:
+  https://patch.msgid.link/20260802195038.164272-11-yukuai@kernel.org` —
+  v5 series, patch 10/29 (msgid `-11` is 1-based with cover)
+- `Signed-off-by: Yu Kuai <yukuai@fygo.io>` — author (MD contributor;
+  ignore pipeline SoBs)
+- No `Fixes:` tag (expected)
+- No `Cc: stable` (expected)
+- No `Reported-by:` / syzbot
+- No `Reviewed-by:` on this revision (v1 had Reviewed-by from Su Yue on
+  earlier series patches)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- **Bug:** With `CONFIG_NTFS3_64BIT_CLUSTER`, `sbi->maxbytes_sparse` is
-  set to `-1`. Used as signed `loff_t`, that is `-1LL`. `ntfs_llseek()`
-  passes it to `vfs_setpos()` / `generic_file_llseek_size()`, which
-  rejects any `offset > maxsize`.
-- **Symptom:** Every `lseek` on sparse/compressed files fails with
-  `EINVAL`, including `lseek(fd, 0, SEEK_SET)`. Sequential `dd`/`cp`
-  still work. Archive managers cannot random-access those files.
-- **Trigger:** Observed on a 16 TB NTFS volume (`0xFFFFFEFF` clusters)
-  with `CONFIG_NTFS3_64BIT_CLUSTER=y`.
-- **Root cause:** `-1` was meant as “no limit” (same idea as
-  `MAX_LFS_FILESIZE` for `sb->s_maxbytes`), but as a signed max it is
-  the minimum, not the maximum.
-- **Fix:** Assign `MAX_LFS_FILESIZE` instead, matching `sb->s_maxbytes`
-  in the same `#ifdef`.
+- **Bug:** mkfs.ext4 can submit zero-sector flush/FUA bios. They are
+  WRITE bios for `md_write_start()`, but they cover no data and must not
+  dirty bitmap bits. They are still passed to bitmap `start_write()`.
+- **llbitmap failure mode:** `llbitmap_start_write()` with `sectors ==
+  0` underflows the end-chunk calculation (`offset + sectors - 1`).
+- **Second case:** personality `bitmap_sector()` can map a non-empty bio
+  to an empty bitmap range (outside active geometry). Completion must
+  not call `end_write()` for a start that never ran / was empty.
+- **Symptom:** bitmap accounting of a zero-length range → unsigned wrap
+  in llbitmap, then a huge page/chunk walk (barriers + state machine),
+  i.e. hang, bitmap corruption, or crash.
+- **Version info:** none in the message; code is the post-6.14 upper-
+  layer bitmap path + llbitmap (2025).
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: `[Not hidden]` — subject and body describe a real, reproduced
-functional bug.
 
----
+Record: **Not hidden.** It is an explicit correctness fix: skip empty
+ranges so start/end stay balanced and llbitmap does not underflow.
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+PHASE 2: DIFF ANALYSIS
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File: `fs/ntfs3/super.c` — 1 insertion, 1 deletion
-- Function: `ntfs_init_from_boot()`
-- Scope: single-file surgical one-liner
+- File: `drivers/md/md.c` only (~+7 / −2, four tight edits)
+- Functions: `md_bitmap_start()`, `md_end_clone_io()`, `md_clone_bio()`
+- Scope: **single-file surgical fix**
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- **Before:** `#ifdef CONFIG_NTFS3_64BIT_CLUSTER` always does
-  `sbi->maxbytes_sparse = -1`.
-- **After:** `sbi->maxbytes_sparse = MAX_LFS_FILESIZE`.
-- Path: superblock init at mount. Affects every later
-  `ntfs_get_maxbytes()` use for sparse/compressed inodes.
+1. **`md_bitmap_start`:** after optional `bitmap_sector()` remap,
+   **return if `sectors == 0`** instead of calling
+   `start_write`/`start_discard`.
+2. **`md_end_clone_io`:** call `md_bitmap_end()` only if
+   `md_io_clone->sectors != 0` (paired with start).
+3. **`md_clone_bio`:** set `md_io_clone->sectors = 0` (mempool reuse).
+   Skip the start path unless `bio_sectors(*bio) != 0`.
+4. **Affected paths:** WRITE clone accounting (`md_account_bio` →
+   `md_clone_bio`), including 0-sector flush/FUA and post-map empty
+   ranges. Not a refactor of the hot data path.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: `[Logic / type-signedness]`
 
-Verified types and call path:
-- `maxbytes_sparse` is `u64` (`fs/ntfs3/ntfs_fs.h`). Assigning `-1`
-  stores `U64_MAX`.
-- `ntfs_get_maxbytes()` returns that as `loff_t`. `U64_MAX` → `-1LL`.
-- `ntfs_llseek()` (`fs/ntfs3/file.c`) passes that to
-  `generic_file_llseek_size()` / `vfs_setpos()`.
-- `vfs_setpos_cookie()` (`fs/read_write.c`) does `if (offset > maxsize)
-  return -EINVAL`. For `offset == 0` and `maxsize == -1`, `0 > -1` is
-  true.
-
-Same conversion also breaks `ntfs_iomap_begin()`’s `IOMAP_REPORT` check
-(`offset > ntfs_get_maxbytes(ni)`), so fiemap/bmap on those files can
-fail the same way.
-
-The `#else` path already uses a large positive `(1ull << (cluster_bits +
-32)) - 1`.
+Record:
+- **Category:** logic / integer underflow (unsigned wrap) + start/end
+  accounting mismatch
+- **Mechanism:** `llbitmap_start_write()` does
+  `end = (offset + sectors - 1) >> chunkshift`.
+  `sectors == 0` underflows. If `offset == 0`, `end` becomes a huge
+  chunk index; the `page_start <= page_end` loop and
+  `llbitmap_state_machine()` then walk a massive range.
+- Legacy `bitmap_start_write()` uses `while (sectors)` and is a no-op
+  for 0; the crash is **llbitmap-specific**, but the skip is correct for
+  both backends.
+- The `sectors = 0` init is required: after skipping the start `if`,
+  completion must not see a stale mempool `sectors` value.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
+
 Record:
-- Obviously correct: `MAX_LFS_FILESIZE` is `LLONG_MAX` on 64-bit
-  (`include/linux/fs.h`); this config is 64-bit-only (`#error` on
-  32-bit). Same constant is already assigned to `sb->s_maxbytes` in this
-  block.
-- Minimal: one assignment change, no API/struct change.
-- Regression risk: very low. Limit goes from “every seek fails” to the
-  VFS max file size. `ntfs_set_size()` / attrib insert compare against
-  `u64`; `LLONG_MAX` is still a huge positive cap and matches VFS, vs
-  the old `U64_MAX` which was accidentally unlimited on those u64
-  checks.
+- **Obviously correct:** empty range → don’t start, don’t end, init
+  `sectors` to 0.
+- **Minimal:** four related edits, no API change.
+- **Regression risk: low.** Worst case is skipping bitmap bits for a
+  0-sector I/O (correct). Start/end stay balanced.
+- **Local extra path:** this tree’s `md_free_cloned_bio()` also calls
+  `md_bitmap_end()` without a `sectors` check (raid5 reshape-wait
+  abort). A faithful backport should add the same guard there. That is a
+  small extra hunk, not a reason to reject.
 
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
+
 Record:
-- Buggy assignment introduced in `82cae269cfa95` (“fs/ntfs3: Add
-  initialization of super block”, 2021-08-13), first in **v5.15-rc1**.
-- Field has been `u64 maxbytes_sparse` since the original headers
-  (`4534a70b7056f`).
-- User-visible `lseek` breakage requires `ntfs_llseek()` using
-  `ntfs_get_maxbytes()`, added in `c613269677283` (“implement llseek
-  SEEK_DATA/SEEK_HOLE…”), contained in **v7.0-rc1**. Before that,
-  `.llseek = generic_file_llseek` used `sb->s_maxbytes`
-  (`MAX_LFS_FILESIZE` in this config), so SEEK_SET worked.
+- `md_bitmap_start` / clone accounting introduced by `cd5fc65338181`
+  (“md/md-bitmap: move bitmap_{start, end}write to md upper layer”,
+  2025-01-09) — **is an ancestor of this HEAD**.
+- Discard ops wiring: `ac9dad8faaa7b`.
+- `else md_io_clone->start_time = 0` already here from `d81822fd5fa81`
+  (“md: avoid stale clone I/O accounting timestamps”).
+- llbitmap: `5ab829f1971dc` (“md/md-llbitmap: introduce new lockless
+  bitmap”, 2025-09-06) — **present**.
+- Bug is in **this** 6.18 tree, not only in later mainline.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: `[N/A — no Fixes: tag]`. Effective buggy commit for the reported
-symptom is `c613269677283` (in this tree). The `-1` store itself is from
-`82cae269cfa95` (also in this tree).
+
+Record: **No Fixes: tag.** Introducers are `cd5fc65338181` (upper-layer
+accounting of all WRITE bios, including 0-sector) and `5ab829f1971dc`
+(llbitmap underflow). Both are in this tree (`git merge-base --is-
+ancestor` exit 0 for `cd5fc65338181`).
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Candidate: `789af83e41aef` (2026-06-13 / committed 2026-07-24).
-- Merged to Linus in `dc83d18cdd904` (`ntfs3_for_7.3`, 2026-08-20);
-  present in **v7.3-rc1**. **Not** in v7.2 / v7.1 / v7.0.
-- Series sibling (v2 1/2): `e31886cb6e0e1` (ATTR_BITMAP extents) is the
-  git parent but touches `fs/ntfs3/inode.c` only. Independent of this
-  hunk.
-- No other `maxbytes_sparse` fix in this tree.
+
+Record: recent `drivers/md/md.c` on this branch includes:
+- `73881ff7a7591` md: wait for behind writes before destroying bitmap
+  (v5 patch 6)
+- `d81822fd5fa81` md: avoid stale clone I/O accounting timestamps (v5
+  patch 7)
+
+Same series already on this tree:
+- `930cc4f1af5a1` md/md-llbitmap: prevent create failure bitmap UAF
+  (patch 8)
+- `c55aa6c17f019` md/md-llbitmap: stop daemon timer rearm on destroy
+  (patch 9)
+
+This commit is **v5 10/29**, the next accounting fix. Standalone vs
+later reshape patches (11+). **No missing prerequisite** among 6–9 for
+this hunk.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Senjin has this plus the ATTR_BITMAP mount fix on the same 16 TB
-volume. Konstantin Komarov is the NTFS3 maintainer (`MAINTAINERS`:
-Supported) and committed both.
+
+Record: Yu Kuai is a primary MD/llbitmap author on this tree (bitmap
+move, llbitmap, this series). Weight: high.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Standalone. Needs only `CONFIG_NTFS3_64BIT_CLUSTER` and
-`MAX_LFS_FILESIZE`, both present since ntfs3 was added. Does not need
-patch 1/2.
 
----
+Record: Needs `md_bitmap_start` / `md_io_clone` /
+`bitmap_ops->start_write` — all present. Does **not** need patch 12
+(`prepare_range` / exact mapping); v5 commit text was updated to
+`bitmap_sector` so it stands alone. **Can apply standalone** with small
+context tweaks.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `b4 dig -c 789af83e41aef`: `[PATCH v2 2/2]`,
-  https://patch.msgid.link/6a2dba8e030b48618aa54661@mailersend.net
-- `b4 dig -a`: v1 was only the ATTR_BITMAP patch (2026-06-10); v2 added
-  this as 2/2 (2026-06-13). Applied version is v2.
-- lore.kernel.org / patch.msgid.link returned **403**; spinics ntfs3
-  thread returned **500**. Patch text confirmed via LKML IU and Openwall
-  mirrors. Full reply thread: **UNVERIFIED**.
+- Lore msgid `20260802195038.164272-11-yukuai@kernel.org` (v5 10/29).
+- Cover: [PATCH v5 00/29] md: improve lockless bitmap reshape support
+  https://lists.openwall.net/linux-kernel/2026/08/02/769
+- Earlier: v1 2026-06-05, v2, v4 07/25, v5 10/29.
+- Cover: patches 6–11 are “md core and llbitmap lifetime/accounting
+  prerequisites”; this one is “empty bitmap ranges”.
+- v5 note: “Fix patch 10 to keep empty-range handling valid before the
+  exact mapping hook is introduced.”
+- **No NAK** in the fetched cover/patch bodies.
+- `b4 mbox`/`b4 dig -c` did not resolve without a mainline SHA (local
+  master is older than this series). Thread recovered via
+  gnuweeb/IU/openwall.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): `senjin@hatchling.org`, `ntfs3@lists.linux.dev`,
-`almaz.alexandrovich@paragon-software.com`, `linux-
-kernel@vger.kernel.org`. Maintainer list was CCed; maintainer signed off
-and merged. No NAK found in reachable archives.
+
+Record: To/Cc Song Liu, Li Nan, Xiao Ni; lists linux-raid, linux-kernel.
+Tested-by Mykola Marzhan (v4, carried to v5). Su Yue Reviewed-by on v1
+series (not re-stated on this hunk in v5).
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla link. Author reports a real 16 TB volume;
-sequential I/O worked, `lseek` did not. Same volume as the ATTR_BITMAP
-mount failure.
+
+Record: No syzbot/bugzilla. Trigger described as **mkfs.ext4 zero-sector
+flush/FUA** — common userspace. Tested-by supports real-world impact.
+**UNVERIFIED:** did not reproduce mkfs.ext4 on this kernel.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: v2 1/2 is a different mount bug (`inode.c`). This 2/2 is self-
-contained. Linus’s `ntfs3_for_7.3` pull lists “lseek EINVAL on
-sparse/compressed files with 64-bit clusters” under Fixed.
+
+Record: Independent of reshape (11+). Empty-range skip is valid before
+`prepare_range`. Same-series 6–9 already in this tree.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search did not turn up this subject
-(403/unrelated hits). **UNVERIFIED** whether anyone already
-requested/rejected it for stable.
 
----
+Record: gnuweeb `/stable/?q=skip+bitmap+accounting...` returned
+unrelated stable-rc noise, **no dedicated stable thread**. Not a
+negative signal.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `ntfs_init_from_boot()` (assignment). Consumers:
-`ntfs_get_maxbytes()` → `ntfs_llseek()`, `ntfs_iomap_begin()`; also raw
-`sbi->maxbytes_sparse` in `ntfs_set_size()` and attrib insert.
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `md_bitmap_start`, `md_bitmap_end` (unchanged body, callers
+gated), `md_end_clone_io`, `md_clone_bio`. Callee of interest:
+`llbitmap_start_write` / `bitmap_start_write`. Local extra:
+`md_free_cloned_bio`.
 
 **Step 5.2: TRACE CALLERS**
+
 Record:
-- `ntfs_init_from_boot()` — mount/fill_super.
-- `ntfs_llseek` — `file_operations.llseek` for regular ntfs3 files
-  (syscall `lseek`/`llseek`).
-- `ntfs_iomap_begin` — fiemap/bmap `IOMAP_REPORT`.
-- Directory `llseek` still uses `generic_file_llseek` (`dir.c`); not
-  this bug.
+- `md_clone_bio` ← `md_account_bio`
+- `md_account_bio` ← raid0, raid1, raid10, raid5, md-linear
+  `make_request`
+- `md_end_clone_io` = clone `bi_end_io`
+- `md_free_cloned_bio` ← raid5 `STRIPE_WAIT_RESHAPE` abort
+- Context: block submit from userspace (mkfs, etc.), not init-only
 
 **Step 5.3: TRACE CALLEES**
-Record: The changed line is an assignment. Downstream: `vfs_setpos()` /
-`generic_file_llseek_size()`.
+
+Record: `md_bitmap_start` → `pers->bitmap_sector` (raid5) →
+`bitmap_ops->start_write` (`llbitmap_start_write` or
+`bitmap_start_write`). llbitmap: unsigned end chunk, per-page barriers,
+`llbitmap_state_machine(..., BitmapActionStartwrite)`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace `lseek` → `ntfs_llseek` → `ntfs_get_maxbytes` →
-`vfs_setpos`. Reachable from unprivileged processes with a file open.
-Confirmed in-tree.
+
+Record: **Userspace-reachable.** raid1/raid5 still send PREFLUSH empty
+bios to `md_flush_request()`, which completes `bio_sectors == 0` without
+accounting. FUA-only 0-sector WRITEs, or PREFLUSH that falls through
+(`-EAGAIN` journal fallback in raid5), hit `md_account_bio`.
+raid0/linear call `md_account_bio` on the I/O path. Confirmed in-tree:
+`raid5_make_request` calls `md_account_bio` at line 6182 after flush
+handling.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: `sbi->maxbytes = -1` remains in the overflow branch (`clusters
->= 1ull << (64 - cluster_bits)`). Same signedness issue for *non-sparse*
-files, but that volume size is far beyond the reported 16 TB /
-`0xFFFFFEFF` clusters. Out of this patch’s scope.
 
----
+Record: `llbitmap_end_write` / `llbitmap_start_discard` use the same
+`offset + sectors - 1` pattern. This patch avoids calling them with 0.
+Legacy bitmap is safe via `while (sectors)`. No duplicate core skip
+already present (`rg` found no `if (!md_io_clone->sectors)`).
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. `fs/ntfs3/super.c`, `ntfs_llseek`,
-`CONFIG_NTFS3_64BIT_CLUSTER`, and `ntfs_get_maxbytes()` are all present.
-Current line is already the fixed assignment (`sbi->maxbytes_sparse =
-MAX_LFS_FILESIZE` at line 1214). Pre-fix `-1` is in `789af83e41aef^`.
-Bug introduction for lseek: v7.0; this checkout is 7.3-rc4.
+
+Record: **Yes.**
+- Tree: `git describe HEAD` → `p-6.18-1-g03b85e06ca9bf`; `make
+  kernelversion` → **6.18.53**
+- `md_bitmap_start()` at `drivers/md/md.c:9261` calls `fn()` with no
+  empty-range check
+- `md_clone_bio()` at 9319 starts bitmap on every WRITE if bitmap
+  enabled, including `bio_sectors == 0`
+- `llbitmap_start_write()` at `md-llbitmap.c:1074` does `offset +
+  sectors - 1`
+- `raid5_bitmap_sector()` can set `*sectors = end - start` to 0 when the
+  mapped range is empty
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply. Surrounding `#ifdef CONFIG_NTFS3_64BIT_CLUSTER` /
-`sb->s_maxbytes = MAX_LFS_FILESIZE` matches the hunk. No conflicting
-refactor in this function.
+
+Record: **Minor conflicts / small extra hunk.**
+- Local `md_end_clone_io` uses `bio->bi_private` as `md_io_clone*`;
+  candidate uses `container_of` + reshape completion. The `sectors &&`
+  condition still matches.
+- Local already has `else start_time = 0` (patch 7).
+- Add the same `md_io_clone->sectors &&` guard to `md_free_cloned_bio()`
+  (6.18-only helper).
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This commit *is* the fix (`789af83e41aef` is an ancestor of
-HEAD). No earlier substitute fix. That is origin-tree presence, not a
-reason to reject on merit.
 
----
+Record: Empty-range skip **not** present. Series patches 6–9 **are**
+present. No alternate fix for this underflow.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `[fs/ntfs3] [IMPORTANT]` — not core VFS, but a supported RW
-filesystem used for Windows/large volumes. Maintainer-supported.
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained (regular `ntfs3_for_*` pulls, many 7.3
-fixes). This is not staging.
+Record: **md (MD RAID bitmap accounting).** **IMPORTANT** — not core
+mm/vfs, but RAID+bitmap is widely used; mkfs on an MD device is a normal
+path. llbitmap is the lockless bitmap backend in 6.18.
 
----
+**Step 7.2: SUBSYSTEM ACTIVITY**
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+Record: **Active** on this branch (llbitmap, clone accounting, this Yu
+Kuai series). Still a real bug in shipping 6.18 code, not a speculative
+cleanup.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Config-specific (`CONFIG_NTFS3_64BIT_CLUSTER=y`, 64-bit,
-recommended N in Kconfig) **and** sparse or compressed files. That
-option exists specifically for 16T+ volumes with 4K clusters (Windows
-ntfs.sys is 32-bit cluster). Real users of large NTFS volumes.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Any `lseek` (SEEK_SET/SEEK_END/nonzero SEEK_CUR) on a
-sparse/compressed file after mount. Common for archive tools, not rare
-error-path. Unprivileged if the user can open the file. Not a race.
+**Step 8.1: WHO IS AFFECTED**
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: `[Failure: all random access via lseek fails with EINVAL;
-sequential read still works] [Severity: HIGH]`. Not a panic/UAF, but the
-filesystem is unusable for a normal class of tools. Also breaks
-fiemap/bmap `IOMAP_REPORT` on those inodes.
+Record: **MD users with a bitmap enabled**, especially **llbitmap**.
+Triggered by 0-sector WRITE/flush/FUA (mkfs.ext4) or raid5
+`bitmap_sector` mapping a request to an empty range. Config: `CONFIG_MD`
++ bitmap (llbitmap or classic).
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record: Benefit high for affected mounts (restores `lseek`). Risk very
-low (1 line, same constant already used for `s_maxbytes`). Ratio
-strongly favors backport.
+**Step 8.2: TRIGGER CONDITIONS**
 
----
+Record:
+- Common: mkfs.ext4 / empty flush+FUA on an MD array with bitmap
+- Also: raid5 geometry mapping to a zero bitmap range
+- Unprivileged user with write access to the array (typical admin/mkfs)
+- Not a narrow race; it is size==0 handling
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record:
+- llbitmap: unsigned wrap → enormous chunk/page walk, barriers, state
+  machine on invalid range → **hang, bitmap corruption, possible crash**
+- Classic bitmap: `while (sectors)` no-op, but start/end still run with
+  0; skip is still correct
+- Severity: **HIGH** (hang/corruption on a common mkfs path with
+  llbitmap)
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit: high** — stops underflow/wrong bitmap updates on a real I/O
+  pattern
+- **Risk: very low** — ~7–10 lines, local to clone accounting, start/end
+  remain paired
+- **Ratio: strongly favors backport**
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 **FOR:**
-- Real user-visible bug on a 16 TB volume; `lseek` always `EINVAL` on
-  sparse/compressed files.
-- Mechanism verified in this tree (`vfs_setpos` `offset > maxsize`,
-  signed `-1`).
-- One-line, obviously correct, matches existing `MAX_LFS_FILESIZE`
-  usage.
-- Maintainer signed off and merged.
-- Standalone; no new API/feature.
-- Call path is a normal syscall.
+- Real bug: 0-sector WRITE accounting into llbitmap underflow
+- Common trigger (mkfs.ext4 flush/FUA), Tested-by
+- Buggy path exists in this 6.18.53 tree (`md_bitmap_start`, llbitmap)
+- Small, obviously correct, no new API
+- Series patches 6–9 already here; this is the matching empty-range fix
+- MD RAID data-integrity relevant
 
 **AGAINST:**
-- Option defaults to N; smaller population.
-- Not a crash/UAF/corruption.
-- Series labeled 2/2 (sibling is unrelated and not required).
-- Full lore review thread not readable (403/500).
+- Part of a larger reshape series (but this hunk is standalone)
+- `md_free_cloned_bio` needs the same `sectors` guard (small extra hunk)
+- Context differs slightly (`bi_private` vs `container_of`)
 
-**UNRESOLVED:** Full reviewer comments; any stable@ discussion.
+**UNRESOLVED:**
+- Did not run mkfs.ext4 against this build
+- `b4 dig -c` had no mainline SHA in this clone; thread confirmed via
+  other archives
+- gnuweeb stable search was noisy, no dedicated nomination thread
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — type/`vfs_setpos` logic is
-   clear; author observed it on real hardware; maintainer merged.
-2. Fixes a real bug that affects users? **PASS** — reproduced; tools
-   cannot seek.
-3. Important issue? **PASS** — HIGH: filesystem random-access completely
-   broken for sparse/compressed files on this config (not a panic, but a
-   serious functional failure).
-4. Small and contained? **PASS** — 1 line, one file, one assignment.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — hunk matches
-   `ntfs_init_from_boot()` here.
+**Step 9.2: STABLE RULES CHECKLIST**
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: `[None]` — ordinary bugfix, not a device-ID/quirk/DT/build/doc
-exception.
+1. Obviously correct and tested? **PASS** — paired start/end skip +
+   Tested-by
+2. Real bug affecting users? **PASS** — mkfs.ext4 0-sector WRITE +
+   llbitmap wrap
+3. Important (crash/corruption/hang)? **PASS** — HIGH (underflow walk /
+   bitmap corruption)
+4. Small and contained? **PASS** — one file, ~9 lines
+5. No new features/APIs? **PASS**
+6. Can apply to the local tree? **PASS** — logic matches; minor extra
+   hunk on `md_free_cloned_bio`
 
-**Step 9.4: MAKE YOUR DECISION**
-This tree has the ntfs3 64-bit-cluster init path and
-`ntfs_llseek()`/`ntfs_get_maxbytes()`. The signed `-1` max makes every
-sparse/compressed seek fail. Replacing it with `MAX_LFS_FILESIZE` is the
-right, minimal fix and meets stable rules.
+**Step 9.3: EXCEPTION CATEGORIES**
 
----
+Record: Not an exception category. Ordinary important bug fix.
 
-### What the commit solves and why it matters here
-On `CONFIG_NTFS3_64BIT_CLUSTER=y`, sparse/compressed files cannot be
-seeked at all. That breaks archive managers and any random-access reader
-while sequential copy still works. This checkout is 7.3, which already
-has the 7.0 `ntfs_llseek` path, so the bug is in this codebase.
+**Step 9.4: DECISION**
 
-### Stable rules
-Small, correct, user-reported functional failure, no new API, applies
-cleanly.
-
-### Risk vs benefit
-Very low risk, high benefit for large NTFS volumes built with 64-bit
-clusters.
-
-### Concerns
-Kconfig recommends N, so not every ntfs3 user. Patch 1/2 is not a
-dependency. Residual `sbi->maxbytes = -1` overflow branch is a separate
-edge case.
-
----
+This tree already moved bitmap accounting into `md_clone_bio` and has
+llbitmap. Empty WRITEs still call `start_write(sectors == 0)`, which
+underflows llbitmap. The patch is the right, small fix and belongs on
+6.18.y.
 
 Verification:
-- [Phase 1] Parsed commit `789af83e41aef`: SOB Senjin + maintainer
-  Komarov; no Fixes/Cc stable/Reported-by
-- [Phase 2] Diff: `sbi->maxbytes_sparse = -1` → `MAX_LFS_FILESIZE` in
-  `ntfs_init_from_boot()`; 1 line
-- [Phase 2] Confirmed `maxbytes_sparse` is `u64`; `ntfs_get_maxbytes()`
-  returns `loff_t`; `vfs_setpos_cookie()` rejects `offset > maxsize`
-- [Phase 2] Confirmed `ntfs_llseek()` and `ntfs_iomap_begin()` consume
-  that value
-- [Phase 3] `git blame`: `-1` from `82cae269cfa95` (v5.15-rc1);
-  `ntfs_llseek` from `c613269677283` (v7.0-rc1)
-- [Phase 3] `git merge-base --is-ancestor 789af83e41aef HEAD`: yes; in
-  v7.3-rc1; not in v7.2/v7.1/v7.0
-- [Phase 3] Series 1/2 `e31886cb6e0e1` touches `inode.c` only; not
-  required
-- [Phase 4] `b4 dig -c/-a/-w`: v2 2/2, maintainer+ntfs3 list CCed; lore
-  fetch 403
-- [Phase 4] LKML IU / Openwall: patch text matches; no NAK in those
-  copies
-- [Phase 4] UNVERIFIED: full lore thread, stable@ discussion
-- [Phase 5] Callers: `ntfs_llseek` (syscall), `ntfs_iomap_begin`
-  (fiemap)
-- [Phase 6] `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion`: 7.3.0-rc4; current `super.c:1214` already has the fix
-- [Phase 6] `CONFIG_NTFS3_64BIT_CLUSTER` in `fs/ntfs3/Kconfig`, 64-bit
-  only
-- [Phase 7] MAINTAINERS: Konstantin Komarov, Supported
-- [Phase 8] Failure: every sparse/compressed `lseek` → `-EINVAL`;
-  severity HIGH; trigger is normal userspace seek
+- [Phase 1] Tags: Tested-by Mykola Marzhan; Link msgid
+  20260802195038.164272-11 (v5 10/29); author Yu Kuai; no Fixes/Cc-
+  stable
+- [Phase 2] Diff: `md.c` only; skip empty start; gate end on `sectors`;
+  init `sectors = 0`; require `bio_sectors` before start
+- [Phase 2] Confirmed `llbitmap_start_write` uses `offset + sectors - 1`
+  at md-llbitmap.c:1079
+- [Phase 3] `git merge-base --is-ancestor cd5fc65338181 HEAD` → 0
+  (upper-layer bitmap in tree)
+- [Phase 3] llbitmap file present; intro `5ab829f1971dc` in history
+- [Phase 3] Series 6–9 already on this branch (`73881ff7`, `d81822fd`,
+  `930cc4f1`, `c55aa6c1`)
+- [Phase 3] No `skip bitmap accounting` commit in local `git log --
+  drivers/md/`
+- [Phase 4] Cover letter: empty bitmap ranges as accounting
+  prerequisite; v5 rebased so patch 10 does not need `prepare_range`
+- [Phase 4] lore.kernel.org 403; recovered via gnuweeb + openwall + IU
+- [Phase 4] No NAK in fetched cover/patch
+- [Phase 5] Callers: raid0/1/5/10/linear `md_account_bio`; userspace
+  block I/O
+- [Phase 5] Legacy `bitmap_start_write` is `while (sectors)` — llbitmap
+  is the underflow
+- [Phase 6] `git describe HEAD` = p-6.18-1-g03b85e06ca9bf; `make
+  kernelversion` = 6.18.53
+- [Phase 6] Current `md_bitmap_start` has no empty return;
+  `md_clone_bio` has no `bio_sectors` guard
+- [Phase 6] Backport: add same `sectors` check to `md_free_cloned_bio`
+  (raid5 reshape abort)
+- [Phase 8] Failure: unsigned wrap → huge llbitmap walk; severity HIGH
+- UNVERIFIED: live mkfs.ext4 reproduction; `b4 dig` match by commit SHA
 
 **YES**
 
- fs/ntfs3/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 346c52f952076..dcf14410c6621 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1163,7 +1163,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- #ifdef CONFIG_NTFS3_64BIT_CLUSTER
- 	if (clusters >= (1ull << (64 - cluster_bits)))
- 		sbi->maxbytes = -1;
--	sbi->maxbytes_sparse = -1;
-+	sbi->maxbytes_sparse = MAX_LFS_FILESIZE;
- 	sb->s_maxbytes = MAX_LFS_FILESIZE;
- #else
- 	/* Maximum size for sparse file. */
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 03d328506b285..ce3bd127e3bb3 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9266,6 +9266,8 @@ static void md_bitmap_start(struct mddev *mddev,
+ 		mddev->pers->bitmap_sector(mddev, &md_io_clone->offset,
+ 					   &md_io_clone->sectors);
+ 
++	if (!md_io_clone->sectors)
++		return;
+ 	fn(mddev, md_io_clone->offset, md_io_clone->sectors);
+ }
+ 
+@@ -9284,7 +9286,8 @@ static void md_end_clone_io(struct bio *bio)
+ 	struct bio *orig_bio = md_io_clone->orig_bio;
+ 	struct mddev *mddev = md_io_clone->mddev;
+ 
+-	if (bio_data_dir(orig_bio) == WRITE && md_bitmap_enabled(mddev, false))
++	if (bio_data_dir(orig_bio) == WRITE && md_io_clone->sectors &&
++	    md_bitmap_enabled(mddev, false))
+ 		md_bitmap_end(mddev, md_io_clone);
+ 
+ 	if (bio->bi_status && !orig_bio->bi_status)
+@@ -9308,12 +9311,14 @@ static void md_clone_bio(struct mddev *mddev, struct bio **bio)
+ 	md_io_clone = container_of(clone, struct md_io_clone, bio_clone);
+ 	md_io_clone->orig_bio = *bio;
+ 	md_io_clone->mddev = mddev;
++	md_io_clone->sectors = 0;
+ 	if (blk_queue_io_stat(bdev->bd_disk->queue))
+ 		md_io_clone->start_time = bio_start_io_acct(*bio);
+ 	else
+ 		md_io_clone->start_time = 0;
+ 
+-	if (bio_data_dir(*bio) == WRITE && md_bitmap_enabled(mddev, false)) {
++	if (bio_data_dir(*bio) == WRITE && bio_sectors(*bio) &&
++	    md_bitmap_enabled(mddev, false)) {
+ 		md_io_clone->offset = (*bio)->bi_iter.bi_sector;
+ 		md_io_clone->sectors = bio_sectors(*bio);
+ 		md_io_clone->rw = op_stat_group(bio_op(*bio));
 -- 
 2.53.0
 
