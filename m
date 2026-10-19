@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200D655A28A;
-	Mon, 19 Oct 2026 13:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C9B55A2BA;
+	Mon, 19 Oct 2026 13:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418232; cv=none; b=Ns7Wu7f2LGiV6JAGEpNFzvb4UbYtAD8am8VMys8peds0JnIVXeYYQN05McnBxNu3Aq2KJoP/ERMc8MjAmUXV8RQtvL8MRRCSscI//tw6HQNAPkyjYHqkkC8CRbjXtVbWZrnpO9qFRwL1nGUZE63fi1rRDcxYqaAvsH9XXj2qByk=
+	t=1792418233; cv=none; b=kzng4YAgt9Zkuy+K9zJDWvTVlQh6IMfwiKmcL/tyJUtt0tSQo7iPT7dpy8/Oyy3W2fpcKwfxcjyTtwCdkG2yH3W5p2NAKjORLsWPgPoa3wcQzvMIruk1fmJtuUPT5mGcAJgvwwA08Iwi9aI/LEf2FFGnjCFWWJOna4JDJbI5XZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418232; c=relaxed/simple;
-	bh=AZXjxsCPS4rNmUCm7QddDv2NNVQGPMq77xilEpD8Zdc=;
+	s=arc-20240116; t=1792418233; c=relaxed/simple;
+	bh=E2U7CFGx9u1LDC4RvMJwcuqc81fFkZJubNwScbWE03w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KUEP8c2IoqJprOAIC7gPQXKJ7oozXoMPDjYmR/0eh9dRweZK1eDtPS9CQkgSLG7WP78ouQDeensNaqdV98Xx/jtkKB4qG8P4IOlOpwvLMNJcCh4KTjehtSUbn69Ifg7dmWZE2AZ3lhdrLodF6xgagFhIYgQEB5nozSJVlP/yu5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IFF4ou3J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AINSRaV1we7jKAG/rWLs25GTrVn8Kj5RvTWDLPwytQI6Kk5IPgvAbQorDimBTaMVnojEoy213nxE+1WE3sscIQFtq6FTiOq2/el0apXAIpc9RRAnE5Dfg8rCI5ofoxrCpPWwfZ1+98BGzFqmYHvIzyAROMVf+1OYz+jeCqpMv+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npG1eZ2s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFF4ou3J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10BB1F000C4;
-	Mon, 19 Oct 2026 13:57:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npG1eZ2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EBF1F000C6;
+	Mon, 19 Oct 2026 13:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418229;
-	bh=Uq1pZL5AqR1p29pZAp1Vr7oZbLYXhdL3FVLTMJ5eOP0=;
+	s=k20260515; t=1792418231;
+	bh=JAcloDKvAqXuJTHrWnLErrI9EthPRSZ/ESEUaCcP6YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IFF4ou3JYsRg0lvbOa+7o0/TqQfbaWkQ+RId3k0xVkwQDQgoEfjGc1udkYxqvaOZi
-	 HXRe+k/zIlGK4TDQQWnmk2mY08/4U5RLB/2XQiBK1hE+tx7RSEHIN20PjKOn+Mnyh4
-	 DpJkHkiybfMLs6FrWn1uZeAnAVpGr1XnxvhDI4uTssMAA2hlcsj50FI04a6HK4pNCt
-	 WwfOus6GBUZRumdvCr2113ekPmS8f8RbZyYgxsI5FomNLVrGEG1T2caXIcEy7V0Oxp
-	 sDGM/NdcWL/5/8bLAtzKslElEltYP3gEnQtqbq2JW6qeZeP2alI3JupDJ3JVQMqMV5
-	 ZeyKnCxJcZSkg==
+	b=npG1eZ2swsMCBGsgoiBjDYkiat1qAaVxfdxZDAZ/2Y1J4/StsS9XmAeLX6J4p6YMl
+	 cNunVdRjqcXW65LyhRAjC1ot2BhX6N0tbUVb/JyKpiCAiNQhjEfSBmfB5xeRy5Dn+W
+	 JqlXKuTZ1Cmy5zJn516ALQ2CKS9pvgfCp/yssOn8t9OcxRDomWwpforF6IoRtT9IS8
+	 jqsucYYI9GbBHtbvTpJwdWHGzq3veNsPzEHKK3uZXH5P5dopGsi+9ivPKuDjKvRSad
+	 Pw1iV0EN+V9jXXkytGf6yycfDljRMeFrtzocNfbVhaHkI+s01sCBvOsnWXbReTr13z
+	 gbPGME+qCRcvQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Navya Malempati <navya.malempati@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	andersson@kernel.org,
+	brgl@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: em28xx: use vb2_video_unregister_device
-Date: Mon, 19 Oct 2026 09:46:35 -0400
-Message-ID: <20261019135441.1420968-104-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] pinctrl: qcom: Add irq_get/set_irqchip_state() for msm gpio irqchip
+Date: Mon, 19 Oct 2026 09:46:36 -0400
+Message-ID: <20261019135441.1420968-105-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,437 +58,448 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-[ Upstream commit 7c8bf63b79371f5b57da1bd1401bd420180ac6e6 ]
+[ Upstream commit 1860fb0be224dec0e4d170f46d1cbbc77e25e09e ]
 
-Use vb2_video_unregister_device instead of video_unregister_device
-to ensure any streaming is correctly stopped at unregister time.
+MPM irqchip monitors the interrupts during SoC sleep state and after wakeup
+replays the edge interrupt by making it pending at respective irqchip by
+invoking irq_set_irqchip_state() API. The msm gpio irqchip however do not
+implement this function making it impossible to replay the gpio interrupt
+on any MPM irqchip based SoC.
 
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Add the missing irq_get/set_irqchip_state() APIs. Implement only
+IRQCHIP_STATE_PENDING case which MPM irqchip uses.
+
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Navya Malempati <navya.malempati@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260424-pinctrl_irqchip_states-v1-1-85286f078916@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The local tree is **7.3.0-rc4**. This commit fills in missing MSM GPIO
+irqchip ops so MPM can replay edge GPIOs after deep sleep. That is a
+real resume bug on Qualcomm MPM SoCs, and the change is small enough to
+be a stable candidate.
 
-**Step 1.1: Subject line**
-Record: `[media: em28xx] [use] switch unregister to
-vb2_video_unregister_device so streaming is stopped at unbind`
+---
 
-**Step 1.2: Tags**
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[pinctrl/qcom] [Add] Implement missing
+irq_get/set_irqchip_state() on the MSM GPIO irqchip`
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (author;
-  V4L2/videobuf2 maintainer)
-- `Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (author tested;
-  not an independent tester)
-- `Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>`
-  (media maintainer)
-- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable`, `Reviewed-by:`, or
-  `Acked-by:`
-- Absence of `Fixes:` / `Cc: stable` is expected for this review and is
-  not treated as a negative
+- `Fixes:` — none (expected)
+- `Reported-by:` — none
+- `Tested-by:` — none
+- `Reviewed-by: Navya Malempati <navya.malempati@oss.qualcomm.com>`
+- `Acked-by: Linus Walleij <linusw@kernel.org>` (pinctrl maintainer)
+- `Link: https://patch.msgid.link/20260424-pinctrl_irqchip_states-v1-1-
+  85286f078916@oss.qualcomm.com`
+- `Cc: stable@vger.kernel.org` — none (expected)
+- `Signed-off-by: Maulik Shah` (author)
+- `Signed-off-by: Sneh Mankad` (submitter)
+- `Signed-off-by: Bartosz Golaszewski` (Qualcomm pinctrl maintainer)
+- Ignore pipeline `Signed-off-by: Sasha Levin`
 
-**Step 1.3: Body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: `video_unregister_device()` does not stop an active vb2 queue, so
-  streaming can continue after the video node is unregistered.
-- Symptom: capture still running across USB unbind / module unload /
-  probe rollback.
-- Root cause (from message + helper docs): drivers that use
-  `_vb2_fop_release()` must use `vb2_video_unregister_device()` so the
-  queue is released at unregister time.
-- No stack trace, reproducer, or version range in the message.
+- **Bug:** After SoC sleep, MPM replays edge IRQs with
+  `irq_set_irqchip_state(..., IRQCHIP_STATE_PENDING, true)`. The MSM
+  GPIO irqchip did not implement that op, so GPIO edges cannot be
+  replayed on MPM SoCs.
+- **Symptom:** Lost GPIO edge interrupts after deep sleep / resume
+  (wakeup events never delivered to the GPIO irqchip).
+- **Root cause:** Missing `irq_chip.irq_{get,set}_irqchip_state` on
+  `msmgpio`.
+- **Versions:** None stated. MPM has called this API since it was added
+  (2022).
 
-**Step 1.4: Hidden bug fix?**
-Record: Yes. “Use helper X” is a correctness fix, not a feature. The
-cover letter for the series is titled “fix lifecycle issues” and says
-this patch “ensures all streaming is stopped when the video device is
-unregistered.”
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a disguised cleanup. Subject says “Add”, but the body
+describes a real missing-op bug. Implementing existing irqchip callbacks
+is a completeness/correctness fix, not a new userspace API.
 
-## Phase 2: Diff analysis
+---
 
-**Step 2.1: Inventory**
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/media/usb/em28xx/em28xx-video.c` (+6 / -6)
-- Functions: `em28xx_v4l2_fini()`, `em28xx_v4l2_init()` error path
-  `unregister_dev`
-- Six call sites: radio / VBI / video, in both fini and probe-error
-  teardown
-- Scope: single-file surgical substitution
+- File: `drivers/pinctrl/qcom/pinctrl-msm.c` — **+39 / -0**
+- New: `msm_gpio_irq_set_irqchip_state()`,
+  `msm_gpio_irq_get_irqchip_state()`
+- Wired into `msm_gpio_irq_chip`
+- Scope: single-file, surgical
 
-**Step 2.2: Code flow**
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Before: `video_unregister_device()` only removes the node; the vb2
-  queue can remain in STREAMING.
-- After: `vb2_video_unregister_device()` unregisters, then
-  `vb2_queue_release()` (under the queue lock) which runs
-  `stop_streaming` and returns buffers.
-- Paths: USB disconnect / module unload (`em28xx_v4l2_fini`) and init
-  failure (`unregister_dev`).
+- **Before:** `irq_set_irqchip_state()` walks the hierarchy from
+  `msmgpio`. That chip had no callback, so it walked to MPM (also no
+  callback). GPIO-only MPM pins disconnect GIC, so the call returns
+  `-EINVAL` and the edge is never made pending.
+- **After:** `msmgpio` writes/reads TLMM `intr_status` for
+  `IRQCHIP_STATE_PENDING`. Other states and `skip_wake_irqs` pins (PDC-
+  owned) return `-EINVAL`.
+- Path: resume / MPM handler, not probe.
 
-**Step 2.3: Bug mechanism**
-Record: `[logic / lifecycle] [use-after-unbind]`
-Verified disconnect order in this tree:
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **Logic / correctness (missing irqchip op)**, with a hardware-
+wakeup workaround flavor.
+Mechanism: MPM’s `qcom_mpm_handler()` does
+`irq_set_irqchip_state(d->irq, IRQCHIP_STATE_PENDING, true)` for non-
+level IRQs. Without the GPIO callback, replay is impossible. The fix
+writes the GPIO status register (bit 0; `intr_status_bit` is 0 on all
+GPIO pingroups).
 
-1. `em28xx_usb_disconnect()` sets `disconnected`, then
-   `em28xx_close_extension()` → `em28xx_v4l2_fini()`.
-2. fini already calls `em28xx_uninit_usb_xfer()`, then unregisters
-   nodes.
-3. Then `em28xx_release_resources()` unregisters I2C and
-   `usb_put_dev()`.
-4. Userspace may still hold the fd. Close calls `em28xx_v4l2_close()` →
-   `_vb2_fop_release()` → `vb2_queue_release()` →
-   `em28xx_stop_streaming()`.
-5. `em28xx_stop_streaming()` does `v4l2_device_call_all(..., video,
-   s_stream, 0)` and `em28xx_uninit_usb_xfer()`. That runs **after**
-   I2C/USB teardown if the queue was not stopped in fini.
-
-Stopping the queue in fini keeps `stop_streaming` on the unbind side of
-I2C/USB teardown.
-
-**Step 2.4: Fix quality**
+**Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- For video and VBI this is the documented vb2 pattern
-  (`include/media/videobuf2-v4l2.h`: drivers using `_vb2_fop_release()`
-  should use this helper). `em28xx_v4l2_close()` does call
-  `_vb2_fop_release()`.
-- Video/VBI set `vdev->queue` (`vb_vidq` / `vb_vbiq`).
-- Radio never sets `vdev->queue`. The helper does
-  `WARN_ON(!vdev->queue)` then still calls `video_unregister_device()`.
-  Two boards have radio (`EM2820_BOARD_LEADTEK_WINFAST_USBII_DELUXE`,
-  `EM2860_BOARD_KAIOMY_TVNPC_U2`).
-- Probe error path: `vdev->queue` is assigned **before**
-  `em28xx_vb2_setup()` / `vb2_queue_init()`. `unregister_dev` after a
-  later `video_register_device()` or media-graph failure can call
-  `vb2_queue_release()` on a zeroed queue (`mutex_lock(&q->mmap_lock)`
-  in `vb2_core_queue_release()`). That is a real, but rare, teardown
-  hazard.
-- No API/feature additions. Regression risk is low on the disconnect
-  path (queue is initialized); radio WARN_ON and probe-error queue
-  release are the main nits.
+- Quality: sufficient for the MPM case. Only `IRQCHIP_STATE_PENDING`;
+  PDC pins are rejected via `skip_wake_irqs`.
+- Nits (not blockers): bool written as the full status register (OK
+  because status bit is 0); no `pctrl->lock` (single `writel`/`readl`);
+  redundant `g` assignment in get; get is unused by MPM but harmless.
+- `intr_ack_high` platforms (msm8660/8960, ipq8064, …) would invert set
+  vs ack; those SoCs do not use MPM.
+- For `skip_wake_irqs` (PDC), the walk now stops at `msmgpio` and
+  returns `-EINVAL` instead of forwarding to PDC/GIC. PDC SoCs do not
+  use MPM replay; this is conservative, not the MPM bug.
+- Regression risk: **low–medium**. Writing pending can inject an IRQ;
+  that is the intended replay. Pinctrl maintainer initially called it
+  “super dangerous”, then acked after Qualcomm review.
 
-## Phase 3: Git history
+---
 
-**Step 3.1: Blame**
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: These callbacks are new. The irqchip struct dates to
+`69b78b8de65b` (2014) / immutable chip `14dbe186b9d4` (2022).
+`skip_wake_irqs` dates to `e35a6ae0eb3a` (2019). MPM (`a6199bb514d8`,
+2022-03-11, ~v5.18) is what started calling `irq_set_irqchip_state()` on
+wakeup.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Bug is omission vs MPM, not a regression from a
+later commit.
+
+**Step 3.3: CHECK FILE HISTORY**
+Record: No prerequisite series. `v1-1` is standalone. No later commit in
+this tree patches these new functions.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Maulik Shah is a regular Qualcomm pinctrl/irqchip contributor
+(PDC, wakeup, irqchip flags). Related work is Qualcomm wakeup IRQ
+handling, not a hard dependency of this patch.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Uses existing `msm_readl/writel_intr_status`, `skip_wake_irqs`,
+and `irq_chip` ops. Can apply standalone to this file.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `video_unregister_device()` on these nodes comes from the
-  embedded-`video_device` era (`d4352f3639d780`, 2015) and older Mauro
-  unregister paths (2008/2013).
-- Bug is long-standing, not new in 7.3.
+- Lore: https://patch.msgid.link/20260424-pinctrl_irqchip_states-v1-1-
+  85286f078916@oss.qualcomm.com
+- Single revision **v1** (no v2/v3).
+- Linus Walleij (28 Apr 2026): “smart and also **super dangerous**” —
+  wanted Qualcomm ACK/test before merge.
+- Navya Malempati (16 Jul 2026): `Reviewed-by`.
+- Linus (25 Jul 2026): `Acked-by`; asked Bartosz to queue it.
+- Bartosz (27 Jul 2026): Applied as `[1/1]`.
+- No `Cc: stable`, no NAK after Qualcomm review.
 
-**Step 3.2: Fixes: tag**
-Record: None. Helper introduced in `f729ef5796d82` (2020, around v5.10).
-`git merge-base --is-ancestor f729ef5796d82 HEAD` succeeds.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: To/Cc: Bjorn Andersson, Linus Walleij, linux-arm-msm, linux-
+gpio, linux-kernel, Maulik Shah. Right lists and maintainers.
 
-**Step 3.3: File history**
-Record: Same-day series on this file:
-1. `288254383674b` media: em28xx: use v4l2_device release callback
-2. `de626073dfcbb` media: em28xx: drop 'users' field
-3. `7c8bf63b79371` **this commit**
-4. Later: `c132b07f7e585` (use-after-free of `dev->intf` in free),
-   `67f87b104f4ef` (requeue on start_streaming failure)
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot, bugzilla, or public user report. Qualcomm-internal
+hardware knowledge. Severity from the message: **GPIO edges cannot be
+replayed after sleep on any MPM SoC**.
 
-This is standalone at the diff level (only a symbol change). Series
-context: patch 1 deferred `v4l2_device_unregister()` until last close,
-which makes a late `stop_streaming()` after I2C teardown more likely.
-This tree already contains patches 1 and 2.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone 1/1. Same 7.3 pinctrl-qcom pull also had PDC work;
+this patch does not depend on those.
 
-**Step 3.4: Author**
-Record: Hans Verkuil is the V4L2/videobuf2 maintainer. He added the
-helper in 2020 and converted au0828/usbtv/cxusb then (`24b5836dbd45b`).
-em28xx was not in that conversion.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: No stable@ discussion found. Merged via “Qualcomm pinctrl
+updates for v7.3-rc1”.
 
-**Step 3.5: Prerequisites**
-Record: Needs `vb2_video_unregister_device()` (present). Needs em28xx
-vb2 video/VBI (present). `em28xx.h` already includes `videobuf2-v4l2.h`.
-Can apply standalone. This tree already has the helper and the driver.
+---
 
-## Phase 4: Mailing list / external
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 4.1: Original discussion**
-Record: `b4 dig -c 7c8bf63b79371` → https://patch.msgid.link/ad61b2c30cd
-477599312e9d5c12045dcd05c8ecd.1779191683.git.hverkuil+cisco@kernel.org
-Saved thread: `/tmp/em28xx-thread.mbox` (cover + 3 patches, **no
-replies**).
-`b4 dig -a`: **v1 only**. Cover: `[PATCH 0/3] media: em28xx: fix
-lifecycle issues`. Quote: “the last patch switches
-video_unregister_device to vb2_video_unregister_device: this ensures all
-streaming is stopped when the video device is unregistered.” Also: “All
-this still needs to be tested on real hardware” at send time; the merged
-commit later has `Tested-by: Hans Verkuil`. No NAK, no `Cc: stable` in
-review (there was no review mail).
+**Step 5.1: KEY FUNCTIONS**
+Record: `msm_gpio_irq_set_irqchip_state`,
+`msm_gpio_irq_get_irqchip_state`; `msm_gpio_irq_chip` updated.
 
-WebFetch of lore returned 403. Thread content was recovered via `b4 dig
--m`.
-
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: Hans Verkuil, `linux-media@vger.kernel.org`, Mauricio Faria de
-Oliveira `<mfo@igalia.com>`. No review mail in the mbox. Mauro applied
-it.
-
-**Step 4.3: Bug report**
-Record: No `Reported-by` / syzbot / bugzilla. No independent user report
-found in the thread.
-
-**Step 4.4: Series**
-Record: Explicit 3/3 of a lifecycle series. This hunk does not need
-patches 1–2 to compile. Those two are already in this tree.
-
-**Step 4.5: Stable list**
-Record: UNVERIFIED. lore.kernel.org/stable was blocked (Anubis bot-
-check). No stable discussion in the captured media thread.
-
-## Phase 5: Semantic / call graph
-
-**Step 5.1: Functions**
-Record: `em28xx_v4l2_fini`, `em28xx_v4l2_init` (`unregister_dev`).
-Callee: `vb2_video_unregister_device` → `video_unregister_device` +
-`vb2_queue_release` → `em28xx_stop_streaming` /
-`em28xx_stop_vbi_streaming`.
-
-**Step 5.2: Callers**
+**Step 5.2: TRACE CALLERS**
 Record:
-- `em28xx_v4l2_fini` ← `em28xx_close_extension()` (`em28xx-core.c`) ←
-  `em28xx_usb_disconnect()` (unplug) and `em28xx_unregister_extension()`
-  (module unload).
-- `unregister_dev` ← probe/init failures after a node is registered.
+- IRQ core: `irq_set_irqchip_state()` / `irq_get_irqchip_state()`
+  (`kernel/irq/manage.c`) start at the leaf chip (`msmgpio`).
+- Primary caller: `qcom_mpm_handler()` in `drivers/irqchip/irq-qcom-
+  mpm.c` (RPM wakeup IRQ, resume).
+- Also: `irq_inject_interrupt()` (debug), KVM vgic (unrelated host
+  IRQs).
 
-**Step 5.3: Callees**
-Record: queue release, `stop_streaming`, `em28xx_uninit_usb_xfer`,
-`v4l2_device_call_all(..., s_stream, 0)`.
+**Step 5.3: TRACE CALLEES**
+Record: `msm_writel_intr_status` / `msm_readl_intr_status` — MMIO to
+TLMM per-pin status.
 
-**Step 5.4: Reachability**
-Record: Yes. Unplug or `rmmod` while an analog capture app is streaming
-is a normal USB-TV / webcam path. Unprivileged userspace can hold the
-device open; unplug is a physical event.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Sleep → MPM latches wakeup GPIO → resume → `qcom_mpm_handler` →
+`irq_set_irqchip_state(PENDING)` → **now** TLMM status. Triggered by
+hardware wakeup, not a raw syscall. User-visible: GPIO clients (keys,
+modem, sensors) miss the edge after suspend.
 
-**Step 5.5: Similar patterns**
-Record: Same helper is used across USB/PCI/platform V4L2 drivers (uvc,
-au0828, usbtv, saa7134, vivid, …). em28xx was a leftover vs the 2020 USB
-conversion.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: PDC already has `irq_chip_{get,set}_parent_state`. GIC
+implements these ops. `skip_wake_irqs` is set only when parent is PDC
+(`IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP`). MPM parent does **not** set that
+flag, so TLMM keeps handling those GPIOs — which is why MSM GPIO must
+implement the ops.
 
-semcode MCP tools: not available; used `git grep` / file reads.
+---
 
-## Phase 6: This tree
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 6.1: Local tree and buggy code**
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 Record:
-- `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`
-- `make kernelversion` / Makefile → **7.3.0-rc4** (mainline, not an LTS
-  branch)
-- `git merge-base --is-ancestor 7c8bf63b79371 HEAD` → yes (already in
-  this checkout)
-- Driver, helper, and `_vb2_fop_release()` close path all exist here
-- Bug class (unregister without stopping vb2) has been in em28xx since
-  ~2015; it was not introduced after this tree
+- Local tree: **v7.3-rc4-27-gf0100363d8c37**, `VERSION=7 PATCHLEVEL=3
+  SUBLEVEL=0 EXTRAVERSION=-rc4`.
+- Driver, MPM (`CONFIG_QCOM_MPM`), `skip_wake_irqs`, and accessors all
+  exist.
+- Commit `1860fb0be224` **is already an ancestor of HEAD** (7.3 merge
+  window). Unfixed code is not on HEAD; the same files still need this
+  on any branch that predates 7.3.
+- Bug present since MPM (v5.18), not introduced after 7.3 branched.
 
-**Step 6.2: Backport difficulty**
-Record: Clean apply on this codebase (already applied). Helper and
-includes are present. No conflicting refactor of these call sites beyond
-the same series.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply** onto this `pinctrl-msm.c`. One file, two new
+functions, two irq_chip pointers. `skip_wake_irqs` and status accessors
+are old.
 
-**Step 6.3: Related fixes already here**
-Record: Lifetime callback + drop-`users` are already here. No alternate
-fix of these six call sites. Follow-up `67f87b104f4ef` is a different
-start_streaming WARN, not a replacement for this change.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No other fix for “MPM cannot replay GPIO pending”. No follow-up
+on these functions after `1860fb0be224`.
 
-## Phase 7: Subsystem
+---
 
-**Step 7.1**
-Record: `[drivers/media/usb/em28xx] [IMPORTANT]` — USB analog capture,
-not core mm/net, but a long-lived in-tree driver with real hardware
-users (`CONFIG_VIDEO_EM28XX` / `VIDEO_EM28XX_V4L2`).
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.2**
-Record: Mature driver; recent work is lifecycle/vb2 correctness from the
-V4L2 maintainer, not a new subsystem.
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+Record: `drivers/pinctrl/qcom` + Qualcomm MPM irqchip. **IMPORTANT**
+(platform GPIO/wakeup), not core mm/vfs. Affects Qualcomm MPM boards
+(sdm660, sm6115/6125/6375, msm8996/8998, qcm2290, …), not PDC phones.
 
-## Phase 8: Impact and risk
+**Step 7.2: SUBSYSTEM ACTIVITY**
+Record: Actively maintained (Bartosz / Qualcomm). This is a targeted
+irqchip-ops fill-in, not a refactor.
 
-**Step 8.1: Who is affected**
-Record: Users of em28xx USB capture sticks (Hauppauge, Empia, etc.),
-analog video/VBI. Radio-only extra is two board entries.
+---
 
-**Step 8.2: Trigger**
-Record: Unplug or unload while `/dev/video*` or VBI is streaming (or
-open with a live queue). Common for USB TV/webcam. Unprivileged process
-can keep the fd; disconnect is the trigger.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.3: Failure mode**
-Record: `stop_streaming` after I2C unregister / `usb_put_dev` → use of
-torn-down USB/I2C, hung DQBUF, possible UAF. Severity **HIGH**. Not a
-guaranteed panic on every unplug (URBs are already killed in fini), but
-the decoder `s_stream(0)` and second uninit run too late.
+**Step 8.1: WHO IS AFFECTED**
+Record: **Platform-specific** — `CONFIG_PINCTRL_MSM*` +
+`CONFIG_QCOM_MPM`. Not universal. Still real products (older/mid
+Qualcomm, IoT, embedded).
 
-**Step 8.4: Risk/benefit**
+**Step 8.2: TRIGGER CONDITIONS**
+Record: SoC deep sleep, then an edge GPIO that MPM monitored. Common on
+suspend/resume. Not an unprivileged syscall exploit path.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+Record: Lost GPIO edge after resume (keys, wake sources, peripherals).
+Not oops/UAF/corruption. **MEDIUM–HIGH** functional/suspend-resume, not
+CRITICAL crash.
+
+**Step 8.4: RISK-BENEFIT RATIO**
 Record:
-- Benefit: high for em28xx users who unplug while capturing; matches the
-  documented vb2 unbind contract.
-- Risk: low on the disconnect path (6 substitutions, helper used since
-  2020). Medium-low on probe-error (uninitialized queue) and radio
-  (`WARN_ON`).
-- Ratio: benefit of stopping the queue at unbind outweighs those edge
-  nits.
+- **Benefit:** High for MPM Qualcomm users (resume GPIO actually fires).
+- **Risk:** Low–medium (39 lines, pending-bit write). Mitigated by
+  PENDING-only and `skip_wake_irqs`. No lock/API/data-structure change.
+- **Ratio:** Benefit outweighs risk for trees that still lack the ops.
 
-## Phase 9: Synthesis
+---
 
-**Step 9.1: Evidence**
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real unbind/lifecycle bug: vb2 stays STREAMING after node unregister;
-  `stop_streaming` can run after I2C/USB teardown.
-- Driver already uses `_vb2_fop_release()`; helper is the required API.
-- Small (6 lines), no new API, helper present in this tree since 2020.
-- V4L2 maintainer authored and tested; media maintainer applied.
-- USB unplug while capturing is a realistic user path.
-- Same conversion already done for sibling USB drivers.
+- Concrete bug: MPM cannot replay GPIO edges after sleep.
+- User-visible resume failure on MPM SoCs.
+- Small, one-file, existing irqchip API only.
+- Prerequisites present here for years.
+- Qualcomm `Reviewed-by`, Walleij `Acked-by`, Bartosz merged.
+- No follow-up fix in this tree.
+- Same class as hardware/suspend quirks that stable takes.
 
 AGAINST:
-- No user crash log / syzbot.
-- Patch 3/3 of a lifecycle series (self-contained, but series-scoped).
-- Radio `WARN_ON(!queue)` on two boards.
-- Probe `unregister_dev` can `vb2_queue_release()` before
-  `vb2_queue_init()`.
-- Cover letter originally said hardware testing was still pending (later
-  `Tested-by` is the author).
+- Worded as “Add”; implements new irqchip methods.
+- Not crash/UAF/security.
+- No public reporter / `Tested-by`.
+- Walleij first called it “super dangerous”.
+- Minor implementation nits.
 
 UNRESOLVED:
-- lore.kernel.org HTTP 403 / stable list Anubis block; no independent
-  stable-thread confirmation beyond the mbox (which had no replies).
+- No public repro log (Qualcomm-described).
+- lore HTTP 403; thread recovered via `b4 dig -m`.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** for video/VBI disconnect; nits
-   on radio/probe-error do not make the core change wrong. Tested-by
-   author.
-2. Real bug affecting users? **PASS** — verified disconnect vs close
-   ordering.
-3. Important (crash/UAF/unbind)? **PASS** — HIGH, use-after-unbind /
-   late `s_stream` on torn-down I2C/USB.
-4. Small and contained? **PASS** — 6 lines, one file.
-5. No new features/APIs? **PASS**.
-6. Applies to this tree? **PASS** — helper, includes, and call sites
-   exist here.
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — PENDING-only, skip PDC pins;
+   reviewed/acked. Initial “dangerous” concern addressed in review. No
+   `Tested-by`, but mechanism matches MPM code.
+2. Fixes a real bug that affects users? **PASS** — lost GPIO IRQs after
+   sleep on MPM SoCs.
+3. Important issue? **PASS** — suspend/resume IRQ loss (serious
+   functional), not oops/CVE.
+4. Small and contained? **PASS** — +39 lines, one file.
+5. No new features or APIs? **PASS** — no new uAPI; fills existing
+   `irq_chip` ops the core already calls.
+6. Can apply to the local tree? **PASS** — same file/helpers; applies
+   cleanly.
 
-**Step 9.3: Exception category**
-Record: None (not an ID/quirk/DT/build/docs exception). It is a normal
-small bugfix.
+**Step 9.3: EXCEPTION CATEGORIES**
+Record: Not a device-ID/DT/build/doc exception. Closest: **hardware
+wakeup workaround** (missing irqchip op so existing MPM hardware works
+after sleep).
 
-**Step 9.4: Decision**
-This tree is 7.3-rc4 and already contains the helper and em28xx vb2
-video. The change is a small, maintainer-tested fix for a real USB-
-unbind lifecycle hole: without it, analog streaming is not stopped when
-the node is unregistered, so `stop_streaming` can run after I2C/USB
-teardown. That is in scope for this codebase and meets the stable bar.
-Radio WARN_ON and a rare probe-error queue release are residual nits,
-not reasons to keep the disconnect bug.
+**Step 9.4: DECISION**
+This tree has the MSM GPIO irqchip, MPM, and `skip_wake_irqs`. The bug
+is missing ops, present since MPM (~v5.18), not a 7.3-only feature. The
+patch is a small, review-vetted fix for lost edge GPIOs after deep
+sleep. That meets stable rules for this checkout.
 
-### What the commit solves for this tree
-On em28xx analog capture, `em28xx_v4l2_fini()` (USB disconnect / module
-unload) unregisters video/VBI with `video_unregister_device()` while the
-vb2 queue can still be STREAMING. Close later stops the queue via
-`_vb2_fop_release()`, but by then `em28xx_release_resources()` has
-already dropped I2C and the USB device. Switching to
-`vb2_video_unregister_device()` stops streaming during fini, while those
-objects are still valid.
+---
+
+### What it solves for stable users
+On Qualcomm MPM SoCs, an edge GPIO during sleep is latched in always-on
+MPM. On resume, MPM marks the leaf irqchip pending. Without these ops,
+`msmgpio` cannot accept that, so the edge is dropped. Users can miss
+keys, modem/Wi-Fi wake, sensors, etc. after suspend.
+
+### Stable rules
+Small, obviously aimed at one hardware path, no new uAPI, real resume
+bug. Risk is writing the GPIO pending bit; the patch limits that to
+`IRQCHIP_STATE_PENDING` and non-PDC pins.
 
 ### Risk vs benefit
-Benefit is a real unbind UAF/use-after-teardown hole on a commonly
-unplugged USB capture driver. Risk is six call-site substitutions
-through a helper that has been in this tree for years. Residual radio
-WARN_ON and probe-error queue release are limited.
+Benefit is real on MPM platforms. Risk is contained. Quality nits do not
+break the MPM case (`intr_status_bit == 0`).
+
+---
 
 ### Verification
-- [Phase 1] Tags: author SOB + Tested-by Hans Verkuil, Mauro SOB; no
-  Fixes/Reported-by/Link/Cc:stable
-- [Phase 2] Diff: 6 `video_unregister_device` →
-  `vb2_video_unregister_device` in `em28xx_v4l2_fini` and
-  `unregister_dev`
-- [Phase 2] Helper: `vb2_video_unregister_device()` unregisters then
-  `vb2_queue_release()`; `WARN_ON(!vdev->queue)` confirmed
-- [Phase 2] `radio_dev` never assigns `.queue`; video/VBI do (`em28xx-
-  video.c` init)
-- [Phase 2] `em28xx_v4l2_close()` calls `_vb2_fop_release(filp, NULL)`
-- [Phase 2] `em28xx_stop_streaming()` calls `s_stream(0)` and
-  `em28xx_uninit_usb_xfer()`
-- [Phase 3] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
-  kernelversion 7.3.0-rc4
-- [Phase 3] Commit `7c8bf63b79371` is ancestor of HEAD; helper
-  `f729ef5796d82` is ancestor
-- [Phase 3] Series: `288254383674b`, `de626073dfcbb`, this commit; 2020
-  USB conversion `24b5836dbd45b` skipped em28xx
-- [Phase 4] `b4 dig -c 7c8bf63b79371`: lore msgid
-  ad61b2c30cd477599312e9d5c12045dcd05c8ecd…; v1-only 3-patch “fix
-  lifecycle issues”
-- [Phase 4] mbox: cover + 3 patches, zero replies; `b4 dig -w`: linux-
-  media + Mauricio Faria de Oliveira
-- [Phase 4] WebFetch lore 403; stable lore Anubis-blocked — UNVERIFIED
-  beyond mbox
-- [Phase 5] fini callers: `em28xx_close_extension` ←
-  `em28xx_usb_disconnect` / `em28xx_unregister_extension`
-- [Phase 6] `em28xx.h` includes `videobuf2-v4l2.h`; radio boards Leadtek
-  Winfast USB II Deluxe, Kaiomy TVnPC U2
-- [Phase 8] Disconnect then `em28xx_release_resources()` does
-  `em28xx_i2c_unregister` + `usb_put_dev` before last close
-- UNVERIFIED: independent hardware test besides author’s Tested-by; any
-  stable@ thread
+- **[Phase 1]** Tags: Reviewed-by Navya, Acked-by Walleij, Link to
+  msgid; no Fixes/Reported-by/Cc:stable.
+- **[Phase 2]** Diff: +39 in `pinctrl-msm.c`; two callbacks + irq_chip
+  pointers; `msm_writel_intr_status(val)` with bool; `intr_status_bit`
+  is 0 on GPIO groups (verified across pinctrl-qcom).
+- **[Phase 2]** `qcom_mpm_handler` confirmed to call
+  `irq_set_irqchip_state(..., IRQCHIP_STATE_PENDING, true)` for non-
+  level IRQs.
+- **[Phase 2]** `irq_set_irqchip_state()` in `kernel/irq/manage.c` walks
+  until a chip implements the op; `qcom_mpm_chip` does not.
+- **[Phase 3]** MPM added `a6199bb514d8` (2022); `skip_wake_irqs` from
+  `e35a6ae0eb3a` (2019); no later fix to these functions.
+- **[Phase 3]** `git merge-base --is-ancestor 1860fb0be224 HEAD` → yes
+  (commit is in this 7.3-rc4 history). Decision is on technical merit,
+  not “already selected”.
+- **[Phase 4]** `b4 dig -c 1860fb0be224` → v1 only; Walleij “super
+  dangerous” then Acked-by; Bartosz applied 1/1.
+- **[Phase 4]** `b4 dig -w`: linux-gpio, linux-arm-msm, Walleij,
+  Andersson.
+- **[Phase 4]** lore.kernel.org WebFetch 403; thread read from
+  `/tmp/pinctrl-irqchip.mbox`.
+- **[Phase 5]** PDC sets `IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP` →
+  `skip_wake_irqs`; MPM sets `IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP` and does
+  not skip TLMM.
+- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` = `7.3.0-rc4`.
+- **[Phase 8]** Failure: dropped GPIO edge after MPM wakeup; severity
+  MEDIUM–HIGH functional, not crash.
+- **UNVERIFIED:** Public reproducer / which exact board Qualcomm used
+  (not in the thread).
+
+The patch is a contained fix for a real resume IRQ-loss bug on hardware
+this tree already supports.
 
 **YES**
 
- drivers/media/usb/em28xx/em28xx-video.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 39 ++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
-index e0a69309687b0..e2907b56220b7 100644
---- a/drivers/media/usb/em28xx/em28xx-video.c
-+++ b/drivers/media/usb/em28xx/em28xx-video.c
-@@ -2243,17 +2243,17 @@ static int em28xx_v4l2_fini(struct em28xx *dev)
- 	if (video_is_registered(&v4l2->radio_dev)) {
- 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->radio_dev));
--		video_unregister_device(&v4l2->radio_dev);
-+		vb2_video_unregister_device(&v4l2->radio_dev);
- 	}
- 	if (video_is_registered(&v4l2->vbi_dev)) {
- 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->vbi_dev));
--		video_unregister_device(&v4l2->vbi_dev);
-+		vb2_video_unregister_device(&v4l2->vbi_dev);
- 	}
- 	if (video_is_registered(&v4l2->vdev)) {
- 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->vdev));
--		video_unregister_device(&v4l2->vdev);
-+		vb2_video_unregister_device(&v4l2->vdev);
- 	}
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 424b14bc29e96..015c9b2f086da 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1289,6 +1289,43 @@ static int msm_gpio_irq_set_affinity(struct irq_data *d,
+ 	return -EINVAL;
+ }
  
- 	v4l2_ctrl_handler_free(&v4l2->ctrl_handler);
-@@ -2901,19 +2901,19 @@ static int em28xx_v4l2_init(struct em28xx *dev)
- 		dev_info(&dev->intf->dev,
- 			 "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->radio_dev));
--		video_unregister_device(&v4l2->radio_dev);
-+		vb2_video_unregister_device(&v4l2->radio_dev);
- 	}
- 	if (video_is_registered(&v4l2->vbi_dev)) {
- 		dev_info(&dev->intf->dev,
- 			 "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->vbi_dev));
--		video_unregister_device(&v4l2->vbi_dev);
-+		vb2_video_unregister_device(&v4l2->vbi_dev);
- 	}
- 	if (video_is_registered(&v4l2->vdev)) {
- 		dev_info(&dev->intf->dev,
- 			 "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->vdev));
--		video_unregister_device(&v4l2->vdev);
-+		vb2_video_unregister_device(&v4l2->vdev);
- 	}
- 
- 	v4l2_ctrl_handler_free(&v4l2->ctrl_handler);
++static int msm_gpio_irq_set_irqchip_state(struct irq_data *d,
++					  enum irqchip_irq_state which, bool val)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++	const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
++
++	if (which != IRQCHIP_STATE_PENDING)
++		return -EINVAL;
++
++	if (test_bit(d->hwirq, pctrl->skip_wake_irqs))
++		return -EINVAL;
++
++	msm_writel_intr_status(val, pctrl, g);
++
++	return 0;
++}
++
++static int msm_gpio_irq_get_irqchip_state(struct irq_data *d,
++					  enum irqchip_irq_state which, bool *val)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++	const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
++
++	if (which != IRQCHIP_STATE_PENDING)
++		return -EINVAL;
++
++	if (test_bit(d->hwirq, pctrl->skip_wake_irqs))
++		return -EINVAL;
++
++	g = &pctrl->soc->groups[d->hwirq];
++	*val = msm_readl_intr_status(pctrl, g);
++
++	return 0;
++}
++
+ static int msm_gpio_irq_set_vcpu_affinity(struct irq_data *d, void *vcpu_info)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+@@ -1377,6 +1414,8 @@ static const struct irq_chip msm_gpio_irq_chip = {
+ 	.irq_request_resources	= msm_gpio_irq_reqres,
+ 	.irq_release_resources	= msm_gpio_irq_relres,
+ 	.irq_set_affinity	= msm_gpio_irq_set_affinity,
++	.irq_set_irqchip_state = msm_gpio_irq_set_irqchip_state,
++	.irq_get_irqchip_state = msm_gpio_irq_get_irqchip_state,
+ 	.irq_set_vcpu_affinity	= msm_gpio_irq_set_vcpu_affinity,
+ 	.flags			= (IRQCHIP_MASK_ON_SUSPEND |
+ 				   IRQCHIP_SET_TYPE_MASKED |
 -- 
 2.53.0
 
