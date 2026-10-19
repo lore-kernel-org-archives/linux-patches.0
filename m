@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831565D5D9C;
-	Mon, 19 Oct 2026 14:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9418D5D5DB7;
+	Mon, 19 Oct 2026 14:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418507; cv=none; b=DUuUfd4uqHXYP3K/mHWKqyXxNzAtB38uZFPf0taE49mj/JHcb1oKIq/6O0WnqjfXEGfwshUirxtOLqQo4azV1LKaP2rbwIv+gTM/s0yAjFd6mqDlmZpX/xYXfgkuIjwg5enOKgx5FurSd2Ir6xzeiRcmvKyYJoJfKNr8TFpjprs=
+	t=1792418509; cv=none; b=MVSk86Kik1w0vapwF4Da0iAhVYQ9/3GAPEcok/WEsR3gUXs9BCYEzu6yGz5hOQKZvfBcWXgR7FLQj0bwfZvFse3SgKiGH6lVKhRrs/RajH5TIxgkk1iiKoy+d12l9VTJAch6qWLI8UrNjEL30A18o8hjT0YavuKlV3S+NQN+2Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418507; c=relaxed/simple;
-	bh=9mzw2mITOQXRw81kHHL08Ce4CnHAtf2EjIxCfonuETY=;
+	s=arc-20240116; t=1792418509; c=relaxed/simple;
+	bh=KbXQMy/Q1xqXOI4xI0aYi99h7GRPx0ATf1Fku2rGguE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jr72uf6UznGON+xepysOSsPrXcxfiY7XSGYY3h8rqS5RM/McaHk8NTnXxCsSqL276knzWHSWTAND8J0XCYkB1ik6aS4meUHRJ2vbR8pQfR3nkEETV8P37I6NSkhsD545SQPyhN2W/CVUwsl0CYJRlGeSmR+UvN9ZG0dWFrLZw9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NWd5iT2J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lz4iGOWqdkiAeNKYX40aZllWzng/qxYwmBkDICewhVQ57L8iuk6za8KZnGA/PA6wXPDfWW9cOWvPbkexiOiE3v65jaQ1D3KjYNBfm/997IsFs9SisHfTDR4ElCIf+Vxs1dGxiO/korirNIZYTVC1I7tbBzwC/tlJrQ0v98F0Tm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZN60bu7/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NWd5iT2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DDE1F000CA;
-	Mon, 19 Oct 2026 14:01:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZN60bu7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7339C1F000C4;
+	Mon, 19 Oct 2026 14:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418505;
-	bh=av2i/a27mFO35q2gQgrs5PYUW708u+igcVfoCp20+Is=;
+	s=k20260515; t=1792418506;
+	bh=Gc/uY6TCcnVW+UyLBbh5C0QYATKOMm7aAOb9j2sCFQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NWd5iT2JmLsYfhiq+yCC8rgx8ZJrJWcIpnqGhXWv+ZT4VvsWPzcPGQXoxkATlRgtL
-	 qxoosAtayMUDLHosAJpj5ZVUI1EcwnRlsSpR18hdV49HEyIhLWk9tGxo6DeTYWj0+m
-	 B7JNkIZdzJ05Q8/8tcRvBre+RZGRVmqYh/LHD8Nl2vXWfbSZYEf2bBcSaGTuizx24b
-	 Z7evQ+M99HefDDHe81oVS37zYN55M1w2/qIAme+SwvZ+OOebWwmoxMDFu6TVhjy6Vt
-	 7nXPKwgq0KiuxHWCACqjZpeiwLc9QFfbaycqaSgouSQzbYPe6zz8owwEXgupef+FQ/
-	 vlLgUwwU0FY6g==
+	b=ZN60bu7/l0JrtnAbv+trQ2PGjUU6aGIK37Y2Pap/KoPhxAo2675dzZ6L14fA9fVqK
+	 f9GjXlwqW8klWmOHOwrV95RXmPMFazzzmlHaq7NF7srLwdKOyw4Yrk5NY0OMvHWoZV
+	 7G0vVYVI31qzrbaydbeXTxeXy6Pd+QSMjxFJR8fX3a6JseQjkb23MT7OpjeAPmyTZt
+	 yx3tj1RsSdmsHHzQPqQaHLmWazkaprY6hMwbK6+7+nQ+NKNBTTRQyRdxRg6J9yW3ie
+	 zF2YX6IgHwsWgctA4tw51p4v6WMttaSzIdJ+c/BvWOTlfvp20Hoo1m2xEMdR2M3s7O
+	 hBhGuxXZWi0Fg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Esteban Urrutia <esteuwu@proton.me>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Krish Gulati <krishgulati7@gmail.com>,
+	erph.briones27@gmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	robin.clark@oss.qualcomm.com,
-	joro@8bytes.org,
-	iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] iommu/arm-smmu-qcom: Add SM8450 MDSS compatible
-Date: Mon, 19 Oct 2026 09:49:47 -0400
-Message-ID: <20261019135441.1420968-296-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Add mute LED quirk for HP Victus 15-fb2xxx
+Date: Mon, 19 Oct 2026 09:49:48 -0400
+Message-ID: <20261019135441.1420968-297-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,332 +55,426 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Esteban Urrutia <esteuwu@proton.me>
+From: Krish Gulati <krishgulati7@gmail.com>
 
-[ Upstream commit d149c8b2c0146a01f1be326ddb1e182b55aee638 ]
+[ Upstream commit c748c42abb9b549fc79c41ea55e1f220eadb60ec ]
 
-Add the compatible for the MDSS client on the Snapdragon 8 Gen 1 so it can
-be properly configured by the IOMMU driver.
+The HP Victus 15-fb2xxx (PCI SSID 103c:8c2f) with the ALC245 codec
+does not turn on the mute LED when audio is muted.
+Add a quirk entry to enable it.
 
-Otherwise, there is an unhandled context fault, because the framebuffer is
-already configured in UEFI.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reported-by: erph.briones27@gmail.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221946
+Signed-off-by: Krish Gulati <krishgulati7@gmail.com>
+Tested-by: Raphael Briones <erph.briones27@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260921131728.8999-1-krishgulati7@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+This is a one-line HP Realtek mute-LED quirk for an existing fixup. The
+local tree is **6.18.57** (`v6.18.57-155-gcdf239ca885b2`). The bug
+exists here: SSID `103c:8c2f` is not in `v6.18.57`, while
+`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` and sibling Victus entries already
+are.
 
-**Step 1.1: Subject line**
-Record: `[iommu/arm-smmu-qcom] [Add] SM8450 MDSS compatible so the
-Qualcomm SMMU driver can configure that display client`
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2: Tags**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: **[ALSA: hda/realtek]** **[Add]** one-line PCI SSID quirk so the
+HP Victus 15-fb2xxx mute LED works.
+
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>`
-  (Qualcomm SoC/display maintainer)
-- `Signed-off-by: Esteban Urrutia <esteuwu@proton.me>` (author)
-- `Signed-off-by: Will Deacon <will@kernel.org>` (IOMMU/arm-smmu
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc:
-  stable@vger.kernel.org` (absence is expected for this review)
+- **Reported-by:** erph.briones27@gmail.com (real user hit it)
+- **Link:** https://bugzilla.kernel.org/show_bug.cgi?id=221946 (user bug
+  report)
+- **Link:**
+  https://patch.msgid.link/20260921131728.8999-1-krishgulati7@gmail.com
+  (submission)
+- **Tested-by:** Raphael Briones \<erph.briones27@gmail.com\> (reporter
+  verified the fix)
+- **Signed-off-by:** Krish Gulati \<krishgulati7@gmail.com\> (author)
+- **Signed-off-by:** Takashi Iwai \<tiwai@suse.de\> (ALSA maintainer)
+- No **Fixes:** tag (expected)
+- No original **Cc: stable** (expected; not a negative)
+- Pipeline `[Upstream commit c748c42abb9b549fc79c41ea55e1f220eadb60ec]`
+  and Sasha Levin SOB ignored per instructions
 
-**Step 1.3: Body**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: SM8450 MDSS is missing from `qcom_smmu_client_of_match`, so it
-  does not get the identity-domain workaround.
-- Symptom: unhandled ARM SMMU context fault because UEFI already
-  programmed the framebuffer with physical addresses.
-- Root cause: without a match, `qcom_smmu_def_domain_type()` returns 0
-  and the IOMMU uses a translated DMA domain instead of identity
-  mapping.
-- Version info: none in the message. SM8450 display support has been in
-  this tree since v6.3 (`drm/msm: mdss add support for SM8450`).
+- **Bug:** HP Victus 15-fb2xxx, PCI SSID `103c:8c2f`, ALC245 codec, mute
+  LED stays off when audio is muted.
+- **Symptom:** mute LED does not light (hardware indicator broken; audio
+  itself is not described as broken).
+- **Root cause (author):** this SSID is missing from the Realtek quirk
+  table, so the existing ALC245 mute-LED coefbit fixup is never
+  selected.
+- **Version info:** none in the message. Reporter later said they tested
+  on kernel 7.2.6-1-cachyos (from the lore thread, not the commit body).
 
-**Step 1.4: Hidden bug fix?**
-Record: Not hidden. The subject says “Add”, but the body describes a
-real hardware workaround (IOMMU identity domain for a bootloader-
-configured display), not a new feature.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a hidden fix. It is an explicit hardware quirk. Same class
+as the documented stable exception for `SND_PCI_QUIRK` / HDA codec
+quirks.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: Inventory**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c` (+1 / −0)
-- Function: static table `qcom_smmu_client_of_match[]`
-- Scope: single-file, one-line compatible addition
+- **File:** `sound/hda/codecs/realtek/alc269.c` (+1 / −0)
+- **Function/data:** `alc269_fixup_tbl[]` only
+- **Scope:** single-file, surgical, one table entry
 
-**Step 2.2: Code flow**
-Record: Before, `of_match_device(qcom_smmu_client_of_match, dev)` misses
-`qcom,sm8450-mdss`, so `qcom_smmu_def_domain_type()` returns 0. After,
-that compatible matches and the function returns
-`IOMMU_DOMAIN_IDENTITY`. Path: IOMMU default-domain selection at MDSS
-probe, not an error path.
-
-**Step 2.3: Bug mechanism**
-Record: Hardware workaround / device-ID (compatible) addition. MDSS
-streams keep using the UEFI framebuffer mapping. Without identity domain
-those accesses translation-fault (`arm-smmu: Unhandled context fault`).
-Same pattern as SM6115, SDM670, X1E80100, QCM2290, SC8280XP.
-
-**Step 2.4: Fix quality**
-Record: Obviously correct and minimal. Only devices with
-`qcom,sm8450-mdss` change behavior. Regression risk is very low;
-neighboring SoCs already use this table the same way. ACTLR table
-already listed `qcom,sm8450-mdss`; the client table was the omission.
-
-## Phase 3: Git history
-
-**Step 3.1: Blame**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Table introduced in `0e764a01015df` (2020, “Allow client devices to
-  select direct mapping”).
-- This line added by `d149c8b2c0146` (2026-07-22).
-- SM8450 MDSS driver: `80056d9ac47ab` (2023-01-12, v6.3-rc1).
-- SM8450 DT: `a6dd1206e45a4` (2022-12-28).
-- Bug window: from v6.3 until this commit (about three years).
+- **Before:** `snd_hda_pick_fixup()` walks `alc269_fixup_tbl` at
+  ALC269-family probe. SSID `103c:8c2f` does not match, so no mute-LED
+  coefbit setup runs.
+- **After:** that SSID maps to `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`, which
+  calls `alc245_fixup_hp_mute_led_coefbit()` on
+  `HDA_FIXUP_ACT_PRE_PROBE` and registers the mute LED cdev via
+  `snd_hda_gen_add_mute_led_cdev()`.
+- **Path:** device probe / codec init only, and only for this SSID.
 
-**Step 3.2: Fixes: tag**
-Record: No `Fixes:` tag. Implicit introducer is `80056d9ac47ab` adding
-SM8450 MDSS without the IOMMU match. That driver and DT are in this
-tree.
-
-**Step 3.3: File history**
-Record: Several sibling “Add … MDSS compatible” commits (`f7fa8520f3037`
-SM6115, `12721e6600579` X1E80100, `28af105cb6504` QCM2290,
-`270a1470408e4` SDM670, `617937d4d5533` Glymur). Standalone one-line
-table entries; SM6115 even had `Cc: stable` and crash logs. No extra
-prerequisite beyond the existing match table.
-
-**Step 3.4: Author**
-Record: Esteban Urrutia has only this IOMMU commit here. Reviewed by
-Konrad Dybcio; applied by Will Deacon. Not a drive-by unreviewed change.
-
-**Step 3.5: Dependencies**
-Record: Needs `qcom_smmu_client_of_match` /
-`qcom_smmu_def_domain_type()` and a `qcom,sm8450-mdss` client. All
-present. No new APIs. Applies as a one-line insert next to
-`qcom,sm8250-mdss`.
-
-## Phase 4: Mailing list / external research
-
-**Step 4.1: Original discussion**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- `b4 dig -c d149c8b2c0146` →
-  https://patch.msgid.link/20260711-sm8450-qol-
-  smmu-v2-1-41a6fba41c3e@proton.me
-- v1: 8-patch “sm8450-qol” series (2026-06-22)
-- v2: this patch split out alone (2026-07-11)
-- Will Deacon: “Applied to iommu (arm/smmu/updates), thanks!” — no NAK
-- Cover note: “This patch allows the MDSS driver to properly function on
-  SM8450 based devices.”
-- lore.kernel.org fetches returned 403; content confirmed via patchew
-  and LKML mirror.
+- **Category:** hardware workaround / existing-driver quirk (h)
+- **Mechanism:** ALC245 mute LED on this HP board is driven by codec
+  coef 0x0b bits, not the generic path. Without the quirk, the LED never
+  turns on. The patch does not invent that logic; it reuses
+  `alc245_fixup_hp_mute_led_coefbit()` already used by nearby Victus IDs
+  (`0x8c30` 15-fb1xxx, `0x8c2d` 15-fa1xxx, `0x8d07` another 15-fb2xxx
+  board).
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: Will Deacon, Robin Murphy, Joerg Roedel, Rob Clark, Konrad
-Dybcio; lists `iommu@`, `linux-arm-msm@`, `linux-arm-kernel@`, `phone-
-devel@`. Right maintainers and lists.
+Verified fixup body in this tree:
 
-**Step 4.3: Bug report**
-Record: No syzbot/bugzilla. Author describes the UEFI framebuffer
-context-fault. Same failure as SM6115 (`f7fa8520f3037`): flood of
-`Unhandled context fault` and failed DPU/GPU bind.
+```1566:1579:sound/hda/codecs/realtek/alc269.c
+static void alc245_fixup_hp_mute_led_coefbit(struct hda_codec *codec,
+                                          const struct hda_fixup *fix,
+                                          int action)
+{
+        struct alc_spec *spec = codec->spec;
 
-**Step 4.4: Series**
-Record: v2 is standalone. Other v1 QoL patches (dispcc, dts, qmp) are
-not required for this one-line match.
+        if (action == HDA_FIXUP_ACT_PRE_PROBE) {
+                spec->mute_led_polarity = 0;
+                spec->mute_led_coef.idx = 0x0b;
+                spec->mute_led_coef.mask = 3 << 2;
+                spec->mute_led_coef.on = 2 << 2;
+                spec->mute_led_coef.off = 1 << 2;
+                snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set);
+        }
+}
+```
 
-**Step 4.5: Stable list**
-Record: No stable-thread hit for this subject. Precedent: SM6115
-equivalent was `Cc: stable`.
-
-## Phase 5: Semantic analysis
-
-**Step 5.1: Functions**
-Record: Table `qcom_smmu_client_of_match[]` only. Consumer:
-`qcom_smmu_def_domain_type()`.
-
-**Step 5.2: Callers**
-Record: `qcom_smmu_def_domain_type` is `.def_domain_type` on the
-Qualcomm SMMU impls. `arm_smmu_def_domain_type()` in `arm-smmu.c` calls
-it; IOMMU core `iommu_get_def_domain_type()` uses that at device attach.
-Probe-time, not IRQ/hot path.
-
-**Step 5.3: Callees**
-Record: `of_match_device()` only.
-
-**Step 5.4: Reachability**
-Record: Yes, on Qualcomm SM8450 with MDSS enabled (`iommus` in
-`sm8450.dtsi`; `&mdss { status = "okay"; }` in `sm8450-hdk.dts`).
-Userspace does not need to do anything; boot + display probe is enough.
-
-**Step 5.5: Similar patterns**
-Record: Same omission pattern for many MDSS SoCs; several already
-patched. SM8450 was the gap between sm8250 and x1e80100.
-
-## Phase 6: Local tree (this checkout)
-
-**Step 6.1: Does the buggy code exist here?**
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`
-- `make kernelversion`: `7.3.0-rc4`
-- This is the 7.3-rc4 mainline checkout, not an older LTS branch.
-- Match table, `qcom_smmu_def_domain_type()`, DRM `qcom,sm8450-mdss`,
-  and DT node all exist.
-- `git merge-base --is-ancestor d149c8b2c0146 HEAD` succeeded (commit is
-  already in HEAD). That is ignored as “already selected”; it does not
-  change technical merit.
-- Without this line, SM8450 MDSS would still take a translated domain on
-  this tree’s code.
+- Obviously correct: one `SND_PCI_QUIRK(0x103c, 0x8c2f, ...,
+  ALC245_FIXUP_HP_MUTE_LED_COEFBIT)` in SSID order between `0x8c2d` and
+  `0x8c30`.
+- `SND_PCI_QUIRK` uses `_SND_PCI_QUIRK_ID(vend, dev)` with
+  `subdevice_mask = 0xffff`, so it matches only this exact SSID.
+- Regression risk is very low: no locking, no API, no shared-path logic
+  change. Wrong-board risk is limited to `103c:8c2f`. Reporter tested
+  both hardware mute key and software mixer.
 
-**Step 6.2: Backport difficulty**
-Record: Clean one-line apply against this file. Context around
-`sm8250-mdss` / `x1e80100-mdss` is stable.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 6.3: Related fixes already here?**
-Record: ACTLR prefetch entry for `qcom,sm8450-mdss` is already present
-(`f91879fdf70bd`). That does not set identity domain. No other fix
-covers this bug.
+Step 3.1: BLAME THE CHANGED LINES
+Record:
+- Insertion sits between existing HP entries. Neighbor `0x8c30` “HP
+  Victus 15-fb1xxx” comes from `b474f60f6a0c9` (“Enable Mute Led for HP
+  Victus 15-fb1xxx”, 2024-09-04), present in this tree.
+- Mute-LED coefbit helper itself dates to `22c7f77247a84` (“Support mute
+  led function for HP platform”, 2025-04-02), ancestor of `v6.18.57`.
+- This is long-lived driver infrastructure, not post-6.18 code.
 
-## Phase 7: Subsystem context
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No `Fixes:` tag. Not applicable. The “bug” is a missing SSID for
+hardware that already existed; there is no introducing-commit in the
+usual sense.
 
-**Step 7.1**
-Record: `drivers/iommu/arm/arm-smmu/` Qualcomm implementation. IMPORTANT
-for ARM64 Qualcomm devices; not core mm/VFS, but IOMMU misconfig breaks
-display on those boards.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- Related: `ce174b48aebb3` “Add mute LED support for HP Victus
+  15-fb2xxx” added **`0x8d07`** (MB 8D07), not `0x8c2f`. That earlier
+  patch even had `Cc: stable@vger.kernel.org`. Same product line,
+  different motherboard SSID.
+- `v6.18.57` already has `0x8d07` and `0x8c30`. `0x8c2f` is the missing
+  sibling.
+- Standalone: not patch X/Y. One table line, no series.
 
-**Step 7.2**
-Record: Actively maintained (recent Glymur, ACTLR, fastrpc fixes). The
-match-table mechanism itself dates to 2020 and is mature.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Krish Gulati has this one Realtek commit in this tree. Not the
+subsystem maintainer. Weight comes from Takashi Iwai applying it and
+from the reporter’s `Tested-by`.
 
-## Phase 8: Impact and risk
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record:
+- Needed pieces in `v6.18.57`: `alc269.c`, `alc269_fixup_tbl`, enum
+  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`,
+  `alc245_fixup_hp_mute_led_coefbit()`, `snd_hda_pick_fixup()`.
+- Confirmed present via `git grep` on `v6.18.57`.
+- Can apply standalone.
 
-**Step 8.1: Who is affected**
-Record: SM8450 (Snapdragon 8 Gen 1) boards with MDSS, e.g.
-`sm8450-hdk.dts` (`status = "okay"`). Config: `CONFIG_ARM_SMMU` +
-`CONFIG_ARM_SMMU_QCOM` (default y on `ARCH_QCOM`).
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 8.2: Trigger**
-Record: Boot when UEFI left the framebuffer mapped and MDSS probes.
-Common on these phones/HDKs, not a rare race. Unprivileged userspace is
-not required.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c c748c42abb9b549fc79c41ea55e1f220eadb60ec` →
+  https://patch.msgid.link/20260921131728.8999-1-krishgulati7@gmail.com
+- `b4 dig -a`: **v1 only**, 2026-09-21. No later revision.
+- Thread:
+  1. Krish Gulati submits the one-line quirk.
+  2. Raphael Briones (reporter): applied on HP Victus 15-fb2xxx, ALC245,
+     SSID `103c:8c2f`, kernel 7.2.6-1-cachyos; mute LED works with
+     hardware key and software mixer. `Tested-by` given.
+  3. Takashi Iwai (2026-09-28): “Applied now. Thanks.” No NAK, no stable
+     objection.
+- Lore HTML fetch returned 403 (Anubis). Thread recovered via `b4 dig
+  -m`.
 
-**Step 8.3: Failure mode**
-Record: Unhandled SMMU context faults; display init can fail (same class
-as SM6115: DPU/GPU bind errors). Severity: HIGH for those devices
-(broken display, fault spam). Not a universal panic.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To/Cc included Jaroslav Kysela, Takashi Iwai,
+linux-sound, Realtek’s Kailang Yang, and the reporter. Maintainer
+applied it. No NAK.
 
-**Step 8.4: Risk–benefit**
-Record: Benefit high for SM8450 display. Risk very low (one compatible,
-existing quirk table). Ratio strongly favors backport.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: Bugzilla 221946 is cited. Direct HTTP fetch was blocked by
+Anubis (403). Primary evidence of user impact is the lore `Tested-by` on
+the exact SSID, which is verified.
 
-## Phase 9: Synthesis
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone v1. Precedent: `ce174b48aebb3` did the same for
+15-fb2xxx SSID `0x8d07` and nominated stable.
 
-**Step 9.1: Evidence**
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable HTML search also 403. UNVERIFIED whether
+stable@ discussed this exact `0x8c2f` patch. The sibling `0x8d07` change
+was explicitly Cc’d to stable, which is verified from git.
 
-For:
-- Real bug: missing identity-domain quirk → SMMU context faults / non-
-  working MDSS
-- Hardware quirk / compatible addition (stable exception)
-- 1 line, obviously correct
-- Reviewed by Konrad Dybcio, applied by Will Deacon
-- Same class as SM6115, which was `Cc: stable`
-- SM8450 MDSS has been in this lineage since v6.3
-- No new API, no refactor, no extra dependencies
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-Against:
-- No `Fixes:` / `Cc: stable` (expected here, not a negative)
-- Affects one SoC family, not all machines
-- Originally in a “QoL” series (v2 is a standalone bugfix)
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: No function body changed. Data: `alc269_fixup_tbl[]`. Runtime
+path: `snd_hda_pick_fixup()` → `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` →
+`alc245_fixup_hp_mute_led_coefbit()`.
 
-Unresolved: lore.kernel.org 403 prevented reading every v1 reply; v2
-application and Konrad’s Reviewed-by are verified via patchew/LKML/`b4
-dig`.
+Step 5.2: TRACE CALLERS
+Record:
+- `alc269_fixup_tbl` is passed from ALC269-family probe in `alc269.c`
+  (`snd_hda_pick_fixup(codec, alc269_fixup_models, alc269_fixup_tbl,
+  alc269_fixups)` around line 8557).
+- Called during HD-audio codec probe, not IRQ/hot path.
+- Impact surface is this one PCI subsystem ID.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — one-line OF match;
-   maintainer review/apply
-2. Real user bug? **PASS** — context faults / MDSS broken on SM8450 with
-   UEFI FB
-3. Important (crash/security/corruption/deadlock)? **PASS** — unhandled
-   SMMU faults and failed display; HIGH for that hardware
-4. Small and contained? **PASS** — +1 line, one file
-5. No new features/APIs? **PASS** — existing quirk table only
-6. Can apply to this tree? **PASS** — table, MDSS driver, and DT are
-   here
+Step 5.3: TRACE CALLEES
+Record: `alc245_fixup_hp_mute_led_coefbit()` writes `spec->mute_led_*`
+and calls `snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set)`.
+Existing, already used by many HP entries in this tree.
 
-**Step 9.3: Exception**
-Record: Device ID / hardware quirk on an existing driver. Automatic YES
-class.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Userspace-reachable on machines with this laptop: codec probe at
+boot, then mute LED updates when the user mutes. Not a syscall crash
+path. Real user-visible hardware behavior.
 
-**Step 9.4: Decision**
-This tree (`v7.3-rc4`) has SM8450 MDSS and the Qualcomm SMMU client
-table. The patch is the standard identity-domain compatible for a
-bootloader-configured display. It should be treated as stable material.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` already used for many HP
+Victus SSIDs in `v6.18.57` (`0x88ee`, `0x8a25`, `0x8a26`, `0x8a4f`,
+`0x8a50`, `0x8bbe`, `0x8bc8`, `0x8c2d`, `0x8c30`, `0x8d07`, …). This is
+the established pattern, not a one-off experiment.
 
-Explanation: Without `qcom,sm8450-mdss` in `qcom_smmu_client_of_match`,
-MDSS is attached to a translated IOMMU domain while UEFI still owns a
-physically addressed framebuffer, which produces unhandled context
-faults and can prevent the display stack from coming up. Adding the
-compatible selects `IOMMU_DOMAIN_IDENTITY`, matching every other
-Qualcomm MDSS entry in that table. Benefit is working display on SM8450;
-risk is a single OF match that cannot affect other hardware.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- Local tree: **Linux 6.18.57** (`git describe HEAD` =
+  `v6.18.57-155-gcdf239ca885b2`, `VERSION/PATCHLEVEL/SUBLEVEL` =
+  6/18/57).
+- `v6.18.57` **does not** contain `0x8c2f` (`git grep 0x8c2f v6.18.57 --
+  sound/hda/codecs/realtek/alc269.c` empty).
+- `v6.18.57` **does** contain the insertion neighbors `0x8c2d` and
+  `0x8c30`, and the fixup enum/function.
+- Bug is a missing quirk for hardware that this driver already supports.
+
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record:
+- Mainline context after the new line includes `0x8c3f`, which is
+  **not** in `v6.18.57` (8c2d is immediately followed by 8c30).
+- Applying to `v6.18.57` is a trivial one-line insert between those two
+  existing entries (minor context fuzz, not a semantic conflict).
+- File path `sound/hda/codecs/realtek/alc269.c` already exists here
+  (Realtek split commit `aeeb85f26c3bbe` is in 6.18).
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: `0x8d07` “HP Victus 15-fb2xxx (MB 8D07)” is already in
+`v6.18.57`. That does **not** cover `0x8c2f`. No other fix for this SSID
+in 6.18.57.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: **ALSA HD-audio / Realtek codec** (`sound/hda/codecs/realtek/`).
+**IMPORTANT** for laptop audio, not core mm/scheduler. Quirk tables in
+this driver are a standard stable target.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively receiving similar one-line HP mute-LED quirks
+(Pavilion, Victus, EliteBook). Mature table, same pattern repeated. This
+is not experimental code.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver/config-specific: `CONFIG_SND_HDA_CODEC_REALTEK` users
+with PCI audio SSID **103c:8c2f** (HP Victus 15-fb2xxx). No effect on
+other machines.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Every boot on that laptop: mute LED stays dark when mute is
+engaged. Unprivileged users notice it; not a security trigger. Reporter
+reproduced it on real hardware.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Mute LED does not light. **MEDIUM** functionally (broken
+hardware indicator, not oops/corruption). Still qualifies under the
+**hardware quirk exception**, which stable explicitly takes.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- **Benefit:** high for owners of this common HP gaming laptop; restores
+  LED using the same path already shipping for sibling Victus boards.
+  Precedent: 8d07 was sent to stable.
+- **Risk:** very low (1 line, exact SSID match, existing fixup).
+- **Ratio:** strongly favors backport.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+**FOR:**
+- Real user bug + Tested-by on the exact SSID
+- Maintainer applied (Takashi Iwai)
+- One-line `SND_PCI_QUIRK` — classic stable exception
+- Fixup and neighboring Victus entries already in 6.18.57
+- Sibling 15-fb2xxx `0x8d07` quirk was Cc:stable
+- No new API, no new function, no shared-path logic change
+
+**AGAINST:**
+- Not a crash/security/corruption fix (mute LED only)
+- Mainline context line `0x8c3f` is absent here (trivial fuzz)
+
+**UNRESOLVED:**
+- Bugzilla 221946 page body (HTTP 403)
+- Whether stable@ already discussed this exact hash (HTTP 403)
+
+Those gaps do not change the decision: lore + git already show a tested,
+maintainer-accepted quirk whose prerequisites are in this tree.
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — 1-line SSID add; reporter
+   tested; maintainer applied
+2. Fixes a real bug that affects users? **PASS** — mute LED broken on HP
+   Victus 15-fb2xxx `103c:8c2f`
+3. Important issue? **PASS** under hardware-quirk exception (severity
+   MEDIUM as a crash class, but explicit stable exception)
+4. Small and contained? **PASS** — +1 line, one table
+5. No new features or APIs? **PASS** — enables existing fixup for one
+   more ID
+6. Can apply to the local tree? **PASS** — file, table, and fixup exist
+   in `v6.18.57`; insert between `0x8c2d` and `0x8c30`
+
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: **Hardware quirk / SND_PCI_QUIRK for an existing HDA Realtek
+driver.** This is the documented YES class (audio codec quirks for
+specific laptop models).
+
+Step 9.4: MAKE YOUR DECISION
+Backport. The 6.18.y driver already has the mute-LED machinery and other
+Victus SSIDs; this only names the missing `103c:8c2f` board.
+
+What problem it solves: on HP Victus 15-fb2xxx (`103c:8c2f`, ALC245) the
+mute LED never turns on because the SSID is absent from
+`alc269_fixup_tbl`. Adding the existing
+`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` entry enables the LED. That matters
+to stable users of this laptop and does not change any other machine.
+
+Risk vs benefit: benefit is restoring a user-visible LED on a current HP
+model; risk is a single exact-SSID table line. Neighbor `0x8d07` for the
+same product name already went to stable.
+
+Concerns: apply context may need dropping the mainline `0x8c3f` line;
+that is a one-line mechanical insert, not a semantic dependency.
 
 Verification:
-- [Phase 1] Parsed tags: Reviewed-by Konrad Dybcio; SOB Esteban Urrutia,
-  Will Deacon; no Fixes/Cc stable
-- [Phase 2] Diff: +1 line in `qcom_smmu_client_of_match[]`;
-  `qcom_smmu_def_domain_type()` returns `IOMMU_DOMAIN_IDENTITY` on match
-- [Phase 3] `git log`/`git blame`: table from `0e764a01015df` (2020);
-  SM8450 DRM `80056d9ac47ab` (v6.3-rc1); this commit `d149c8b2c0146`
-- [Phase 3] Sibling SM6115 commit `f7fa8520f3037` had `Cc: stable` and
-  context-fault logs
-- [Phase 3] `git merge-base --is-ancestor d149c8b2c0146 HEAD` → yes
-  (already in this checkout)
-- [Phase 4] `b4 dig -c d149c8b2c0146`: v2 at
-  patch.msgid.link/20260711-sm8450-qol-smmu-v2-1-41a6fba41c3e@proton.me
-- [Phase 4] `b4 dig -a`: v1 8-patch QoL series → v2 standalone SMMU
-  patch
-- [Phase 4] `b4 dig -w`: Will Deacon, Robin Murphy, Rob Clark, Konrad
-  Dybcio, iommu@ and linux-arm-msm@
-- [Phase 4] patchew: Will Deacon applied; no NAK
-- [Phase 4] lore.kernel.org WebFetch: 403 — UNVERIFIED full v1 reply
-  text; v2 content verified via patchew/LKML
-- [Phase 5] Callers: `arm_smmu_def_domain_type` → IOMMU default domain
-  at probe
-- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion`: 7.3.0-rc4
-- [Phase 6] Confirmed `qcom,sm8450-mdss` in `msm_mdss.c`, `sm8450.dtsi`,
-  HDK `&mdss { status = "okay"; }`
-- [Phase 6] Pre-commit file still had ACTLR `sm8450-mdss` only; client
-  table lacked it
-- [Phase 7] `CONFIG_ARM_SMMU_QCOM` default y on `ARCH_QCOM`
-- [Phase 8] Failure mode: unhandled SMMU context fault / broken MDSS on
-  SM8450, severity HIGH for that platform
-- [Phase 4.5] No stable-list discussion found for this specific commit
+- [Phase 1] Parsed tags: Reported-by, Tested-by (same user), bugzilla
+  221946, maintainer SOB Takashi Iwai
+- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x103c, 0x8c2f, ...
+  ALC245_FIXUP_HP_MUTE_LED_COEFBIT)` in `alc269_fixup_tbl`
+- [Phase 2] `SND_PCI_QUIRK` uses `subdevice_mask = 0xffff`
+  (`include/sound/core.h`) — exact SSID only
+- [Phase 2] Read `alc245_fixup_hp_mute_led_coefbit()` at alc269.c:1566 —
+  existing coef 0x0b LED setup
+- [Phase 3] `git describe HEAD` / Makefile: this tree is 6.18.57
+- [Phase 3] `git merge-base --is-ancestor 22c7f77247a84 v6.18.57` —
+  fixup helper is in 6.18.57
+- [Phase 3] `git grep 0x8c2f v6.18.57 --
+  sound/hda/codecs/realtek/alc269.c` — empty; bug present
+- [Phase 3] `git grep` on v6.18.57: `0x8c2d`, `0x8c30`, `0x8d07`,
+  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` all present
+- [Phase 3] `ce174b48aebb3` is a different SSID (`0x8d07`) for the same
+  product line, Cc:stable
+- [Phase 4] `b4 dig -c c748c42...`: lore
+  https://patch.msgid.link/20260921131728.8999-1-krishgulati7@gmail.com
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: linux-sound + Takashi Iwai + Jaroslav Kysela
+- [Phase 4] mbox: reporter Tested-by on 103c:8c2f; Iwai “Applied now”;
+  no NAK
+- [Phase 4] UNVERIFIED: bugzilla HTML and stable@ lore (HTTP 403 /
+  Anubis)
+- [Phase 5] `alc269_fixup_tbl` selected from codec probe via
+  `snd_hda_pick_fixup()` (alc269.c ~8557)
+- [Phase 6] v6.18.57 table has 8c2d then 8c30; 8c3f not in this series —
+  trivial context adjust
+- [Phase 8] Failure mode: mute LED dark; severity MEDIUM; quirk
+  exception applies
 
 **YES**
 
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+ sound/hda/codecs/realtek/alc269.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index f7cb7de80cfb9..b6493e92343be 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -394,6 +394,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,sm6375-mdss" },
- 	{ .compatible = "qcom,sm8150-mdss" },
- 	{ .compatible = "qcom,sm8250-mdss" },
-+	{ .compatible = "qcom,sm8450-mdss" },
- 	{ .compatible = "qcom,x1e80100-mdss" },
- 	{ }
- };
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 0a3df8b78aae6..4eefd5d87f04b 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7004,6 +7004,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8c2d, "HP Victus 15-fa1xxx (MB 8C2D)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
++	SND_PCI_QUIRK(0x103c, 0x8c2f, "HP Victus 15-fb2xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c3f, "HP Victus 15-fa1xxx (MB 8C3F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c46, "HP EliteBook 830 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
 -- 
 2.53.0
 
