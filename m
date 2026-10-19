@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8797358B6CE;
-	Mon, 19 Oct 2026 13:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0678C52F849;
+	Mon, 19 Oct 2026 13:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418386; cv=none; b=NGUl353MognCx2mGUiwszckl3OqY7/V/rYynJhQbD0/ktWsHHzCIVgp7w4R4rwLb1W4ONwYAFz1oqqnAdYP+TL7jLUsZtwEVkm/euIn9k+7XRDAic/0QZohXmRxSCTSfQfWFL924LFHWeoDIG6yS9uvOWSmmC0KaakJFxorrbIo=
+	t=1792418388; cv=none; b=MNWdHpz2xCMvnljQuzPWmrpPHA9PgZM/utSxMIoe/nKwxEe2LpxneR4jbmKzQ4szUD5zckB0ssSqL6LG/HCLhfxlNSJhrx2D+diB05rV5yDK3I3nEX1tgHD/bW1WoqparMCYOnIhEcT2i2Oqpk6qhg55v0N+3vPfe5wKfxFSXV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418386; c=relaxed/simple;
-	bh=XZPghCTjb1jX+Q7cqp8MHf8/5S+roAFYzazEhZS/viw=;
+	s=arc-20240116; t=1792418388; c=relaxed/simple;
+	bh=q4Kwr21DP2sbCnW/Ls1zpcfgGb54QCiTQ8IzQOgJZYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZLn3BBUTvKEoVPSHe2/2zWk29uI5Jv8rSen/nPPB8nr0vyOqoegDkalIe0UXtL8D8YgIMRVqtQxFa+X0s1cVSp0qbikbjBUH1x2X9blBq5QhVxDivPXjXgCYheCHLSIUdENh75NyyajMDHZ0tF+wQ+14Zhk5LAxRsmHevTskm3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZBDC7KCX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QFuuOq+bFx4U3l8FqbOnC4qZxXq3H8yrHlyScTEkgGIdcwmi/0AoQmXXIRWGGcBuKloXjhjAjW+aNs3EpDzCO1jAX7dMdNfZZA+/qgRgFUhPByae7o2nK/m06JAC7cv/Sx/3uRRonr0WJzmuYsQSfwqOULfVzfs2SbifXz51WQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQtdEHYA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZBDC7KCX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF6C1F000CA;
-	Mon, 19 Oct 2026 13:59:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQtdEHYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EBE1F000C6;
+	Mon, 19 Oct 2026 13:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418383;
-	bh=D1aPOgBERGuCo14oNo+vtfsa1n/bJR50FBv53Np1Kr8=;
+	s=k20260515; t=1792418385;
+	bh=aadi2K92DwERhOn4Fk0o1ulK5sm4tl7p50s/tBdXtHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZBDC7KCX6j3nXvNmoW/nF3EUWlcoopMnzFDY9eDQU4e31bvGb4nWvPwQrali/yyaS
-	 VTfQcGekeFvvXEf8b+XYacwm5yEjpy/xGk0dSqivLjVxfB3xpWGc0y5WMv8r9k+Pwj
-	 jYyY14a2rbeCRQIpEg61fwR2hwxyVn//wSiKfgix/0wBcZX7E+A2EMBKpCy+EGLFQ+
-	 sG7j1H27cMRxrUglCcp8S8mhQNzackUMmLFNdv0xZTVvNZ3ERpQd2ahZCB+GiSEFEg
-	 aWzKdgrJyarbGSeTBrFQsy6ziikn6P/yKYatjWo9K0ttl4nwBnN7LezJOFZ+FV5uf4
-	 IEzx0Kb4MXPaQ==
+	b=cQtdEHYAzmjqs0rc1BNACaVeZ7RMQg1DM5Rzm+Uz5CN184czaqbWFB/BlJKD88c9N
+	 fQRFxHny3nrGtDOBzIAFltmooKtThy6QJ7Bab2oCvrw5wycC6XJUGFFG2BWy9tbskB
+	 Pe8tnrITIqmd6Z7uC1dDWzjtv6ZwgaspRg1L7Piv/AONZQL1eKx7Oy8pQVpxqWuIvR
+	 NBFkPduVjjjjIbHV7O+tzqJjkgTXbD5JFvEX122Ajd1W7+pU4v8A2nN5skU56g+x8d
+	 VFt98M1BjeK5113vb7E7+EUsQQemfubVdVXUm4cu9ly+fy67OAQ4dLD0uw4DIRC+8j
+	 qiuwW7+s+E7pA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mike Tipton <mike.tipton@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+Cc: Namhyung Kim <namhyung@kernel.org>,
+	Sashiko Review <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] pmdomain: qcom: rpmhpd: Skip retention by default
-Date: Mon, 19 Oct 2026 09:48:21 -0400
-Message-ID: <20261019135441.1420968-210-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] tools/lib/api: Fix potential double-free from fdarray__grow()
+Date: Mon, 19 Oct 2026 09:48:23 -0400
+Message-ID: <20261019135441.1420968-212-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,422 +52,409 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Tipton <mike.tipton@oss.qualcomm.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 7178817f190496f2bfdec181fb4aa72832448468 ]
+[ Upstream commit eadce0f46a1d066b812c7e5aa46a33711c78a755 ]
 
-Retention is very rarely an operational corner. In the majority of
-cases, HW cannot operate properly at Retention levels and so the minimum
-operational level when enabling a rail is the first corner above
-Retention. A small subset of always-on use cases can operate at
-Retention, but those aren't controlled from HLOS.
+If the realloc for fda->entries succeeds but the realloc for fda->priv
+fails, the error path frees the newly allocated entries.
 
-Currently, we allow Retention by default and only disallow it special
-cases. But this leaves us open to various failures when the PD is
-enabled without first being voted to an OPP above Retention. Such as
-when a child GDSC PD requests to enable its parent RPMh PD. In this
-case, the GDSC would get stuck powering on.
+However, fda->entries is neither updated to point to the new entries block
+nor cleared to NULL. If realloc moved the allocation to a new block, the
+old fda->entries pointer is now freed memory.
 
-Newer chips have started supporting Retention on rails that didn't
-previously (such as for MMCX). Instead of adding more special cases to
-skip Retention on MMCX, start skipping Retention by default since it's
-almost never desired from an HLOS perspective.
+When fdarray__exit() is later called to clean up, it executes
+free(fda->entries), which would trigger a double-free on that old pointer.
 
-Signed-off-by: Mike Tipton <mike.tipton@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Reported-by: Sashiko Review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-perf-users/20260710200150.11FE71F00A3A@smtp.kernel.org
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The local tree is mainline **v7.3-rc4**. The change is a real `realloc`
+double-free in `perf`/`libperf` userspace, present since v3.18, and it
+is small enough to meet the stable rules.
 
-**Step 1.1: Subject line**
-- Record: `[pmdomain/qcom/rpmhpd] [Skip] Skip Retention voltage as the
-  default enable corner`
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2: Tags**
-- Record:
-  - `Signed-off-by: Mike Tipton <mike.tipton@oss.qualcomm.com>` (author,
-    Qualcomm)
-  - `Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>`
-    (Qualcomm SoC reviewer)
-  - `Signed-off-by: Ulf Hansson <ulfh@kernel.org>` (GENERIC PM DOMAINS
-    maintainer)
-  - No `Fixes:` tag (expected)
-  - No `Cc: stable` (expected)
-  - No `Reported-by`, `Tested-by`, `Link`, or syzbot tags
-- Notable: Qualcomm author + Qualcomm reviewer + subsystem maintainer
-  SOB. No user/syzbot report.
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[tools/lib/api] [fix] [prevent double-free in fdarray__grow()
+on partial realloc failure]**
 
-**Step 1.3: Body**
-- Record:
-  - **Bug:** HLOS enable of an RPMh PD without an OPP above Retention
-    can vote Retention. Most hardware cannot run at Retention.
-  - **Symptom:** Child GDSC enable of a parent RPMh PD leaves the GDSC
-    stuck powering on (hardware hang, not a kernel oops).
-  - **Root cause:** Retention is allowed by default; only MXC opted out
-    via `skip_retention_level`. Newer chips now expose Retention on
-    rails that previously did not (e.g. MMCX).
-  - **Fix approach:** Skip Retention for every rail when building the
-    cmd-db mapping, instead of adding more per-rail flags.
-  - **Version info:** None in the message. “Newer chips” / MMCX is the
-    motivation.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record:
+- `Reported-by: Sashiko Review <sashiko-bot@kernel.org>` — AI static
+  review, not a user crash
+- `Closes: https://lore.kernel.org/linux-perf-
+  users/20260710200150.11FE71F00A3A@smtp.kernel.org`
+- `Reviewed-by: Ian Rogers <irogers@google.com>` — perf tools reviewer
+- `Signed-off-by: Namhyung Kim <namhyung@kernel.org>` — perf tools
+  maintainer (author and committer)
+- No `Fixes:` tag (expected)
+- No `Cc: stable` (expected)
+- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+  ...]` markers — none on the real commit
 
-**Step 1.4: Hidden bug fix?**
-- Record: Not hidden. It is a real hardware-failure fix described as a
-  default-policy change. Skipping Retention is the workaround, not a
-  cleanup.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** In `fdarray__grow()`, `realloc(fda->entries)` can succeed and
+  `realloc(fda->priv)` can fail. The old error path `free(entries)`
+  without updating `fda->entries`.
+- **Symptom:** If `realloc` moved the block, `fda->entries` still points
+  at the old (already freed) pointer. Later `fdarray__exit()` does
+  `free(fda->entries)` → **double-free**.
+- **Version info:** none in the message. Git shows the two-`realloc`
+  pattern since **v3.18-rc1**.
+- **Root cause:** classic partial-`realloc` handling: new pointer
+  discarded, struct left holding a dangling pointer.
 
-## Phase 2: Diff analysis
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not disguised. Explicit double-free fix. The `fdarray__new()`
+`free(fda)` → `fdarray__delete(fda)` change is the matching leak fix
+once `fda->entries` is kept on failure.
 
-**Step 2.1: Inventory**
-- Record:
-  - File: `drivers/pmdomain/qcom/rpmhpd.c` (+9 / −5)
-  - Functions/data: `struct rpmhpd` (drop `skip_retention_level`), `mxc`
-    / `mxc_ao` initializers, `rpmhpd_update_level_mapping()`
-  - Scope: single-file surgical change
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.2: Code flow**
-- Record:
-  - **Before:** `rpmhpd_update_level_mapping()` copied cmd-db aux levels
-    into `rpmhpd->level[]`. Retention (vlvl 16) was skipped only if
-    `skip_retention_level` was set. That flag was true only on `mxc` /
-    `mxc_ao`. `enable_corner` became the first non-zero mapped corner,
-    which could be Retention.
-  - **`rpmhpd_power_on()`:** `corner = max(pd->corner,
-    pd->enable_corner)` then aggregate. Enable without an OPP uses
-    `enable_corner`.
-  - **After:** Retention is always skipped. `enable_corner` is the first
-    corner above Retention. MXC’s flag is redundant and removed.
-  - Path affected: probe-time mapping, then every power-on that does not
-    already have a higher OPP (including parent enable from a child
-    GDSC).
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `tools/lib/api/fd/array.c` — **+3 / −2** (net +1), 5 lines
+  touched
+- Functions: `fdarray__grow()`, `fdarray__new()`
+- Scope: **single-file surgical fix**
 
-**Step 2.3: Bug mechanism**
-- Record: **Hardware workaround / logic fix.** Retention as min enable
-  corner is not a valid operational vote for HLOS. Child GDSC parent-on
-  uses that corner and the GDSC never completes power-on.
-- Verified path: `gdsc_register()` attaches GDSCs as genpd subdomains of
-  the clock-controller’s `dev->pm_domain` (`drivers/clk/qcom/gdsc.c`).
-  `genpd_power_on()` walks parents and calls `rpmhpd_power_on()` with no
-  performance state. DT has many `power-domains = <&rpmhpd RPMHPD_MMCX>`
-  nodes (sm8450/sm8550/sm8650/sm8750 and others).
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- Hunk 1 (`fdarray__grow` error path): **before** `free(entries)` and
+  return `-ENOMEM`, leaving `fda->entries` stale. **after** assign
+  `fda->entries = entries` and return `-ENOMEM`, so `fdarray__exit()`
+  frees the live block once.
+- Hunk 2 (`fdarray__new`): **before** `free(fda)` on grow failure,
+  leaking the entries block after hunk 1. **after**
+  `fdarray__delete(fda)` which runs `fdarray__exit()` then `free(fda)`.
 
-**Step 2.4: Fix quality**
-- Record: Obviously correct given the existing skip logic. Minimal. If
-  cmd-db has no Retention entry, the new `if` never matches (no-op on
-  older rails). Regression risk is a slightly higher min vote (Retention
-  16 → typically MIN_SVS 48) on rails that advertised Retention; the
-  author states HLOS must not use Retention. No API/ABI change.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record:
+- **Category:** double-free (and a companion leak on `fdarray__new`)
+- **Mechanism:** two-step `realloc`. `sizeof(struct priv)` is larger
+  than `sizeof(struct pollfd)` (pointer + flags vs 8-byte `pollfd`), so
+  `psize` is larger than `size`. Entries can grow while priv allocation
+  fails under memory pressure. Callers then `fdarray__exit()`.
 
-## Phase 3: Git history
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- Obviously correct `realloc` handling: if the first `realloc` moved the
+  block, the old pointer is already invalid and **must** be replaced.
+- Clearing `fda->entries` to NULL (what the bot suggested) would leak
+  the new block and leave `fda->nr > 0` with a NULL array.
+- Minimal, no API/`struct fdarray` change. `fdarray__delete()` has
+  existed since 2014.
+- Regression risk: **very low**. Error path only. On failure, extra
+  unused entries capacity may remain (`nr_alloc` unchanged); that is
+  harmless.
 
-**Step 3.1: Blame**
-- Record:
-  - Mapping loop: `279b7e8a62cc` (“soc: qcom: rpmhpd: Add RPMh power
-    domain driver”, 2019)
-  - `enable_corner`: `e3e56c050ab6` (“soc: qcom: rpmhpd: Make power_on
-    actually enable the domain”, 2021) — this is what makes Retention
-    reachable as the enable vote
-  - Opt-in skip: `ddab91f4b2de5` (“Skip retention level for Power
-    Domains”, 2024), MXC only, `Cc: stable@vger.kernel.org # v5.17`
-  - This change: `7178817f19049` (2026-07-13)
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.2: Fixes tag**
-- Record: None. Closest predecessor is `ddab91f4b2de5` (MXC-only skip).
-  Both `ddab91f4b2de5` and `e3e56c050ab6` are ancestors of this HEAD.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record:
+- `free(entries)` on priv failure introduced in **`2171a9256862ec`**
+  (“tools lib fd array: Allow associating an integer cookie with each
+  entry”), Arnaldo, 2014-09-25.
+- First appeared in **v3.18-rc1**.
+- `fdarray` itself: **`1b85337d0685d`** (same merge window).
 
-**Step 3.3: File history**
-- Record: Recent work is mostly new SoC tables. No later revert of
-  default-skip. Eliza MXC/MMCX add was reverted for unrelated reasons
-  (`9fca7779ad185`). Standalone v1 patch, not part of a numbered series.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. The introducing commit is `2171a9256862ec`,
+ancestor of this tree (`git merge-base --is-ancestor` exit 0).
 
-**Step 3.4: Author**
-- Record: Mike Tipton (Qualcomm); this is his only recent commit on
-  `drivers/pmdomain/qcom/`. Konrad reviews rpmhpd regularly. Ulf is the
-  pmdomain maintainer.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Later fdarray work (flags, duplicate, poll-storm, hang) does not
+replace this error path. No follow-up after `eadce0f46a1d0`. Standalone,
+not `N/M`.
 
-**Step 3.5: Dependencies**
-- Record: Needs `enable_corner` + Retention skip `continue` in
-  `rpmhpd_update_level_mapping()`. Both exist here. Applies standalone
-  on a tree that still has `skip_retention_level`. No other patches
-  required.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Namhyung Kim is a **PERFORMANCE EVENTS SUBSYSTEM** maintainer.
+Ian Rogers is a listed reviewer. Author applied it to perf-tools-next.
 
-## Phase 4: Mailing list / external
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None. Uses existing `fdarray__delete()` / `fdarray__exit()`. Can
+apply standalone to any tree that still has the two-`realloc` grow path.
 
-**Step 4.1: Original discussion**
-- Record: `b4 dig -c 7178817f19049` →
-  https://patch.msgid.link/20260629-rpmhpd-skip-
-  ret-v1-1-d94180ad9a29@oss.qualcomm.com
-- Series: **v1 only** (no v2/v3).
-- Thread (mbox): Ulf Hansson: “Applied for next, thanks!” No NAKs, no
-  stable nomination, no reviewer risk flags.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-- Record: Ulf Hansson, linux-arm-msm, linux-pm, linux-kernel, Bjorn
-  Andersson, Konrad Dybcio, Taniya Das (author of the MXC skip), Fenglin
-  Wu. Right lists and people.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c eadce0f46a1d0` →
+  https://patch.msgid.link/20260711003235.1963043-1-namhyung@kernel.org
+- v1: `[PATCH v1] lib/api/fd: Fix potential double-free from
+  fdarray__grow()` (2026-07-10)
+- v2: subject-only (`tools/lib/api:`); **no code change**
+- Ian Rogers: `Reviewed-by` (2026-07-15)
+- Namhyung: “Applied to perf-tools-next, thanks!” (2026-07-16)
+- No NAKs, no `Cc: stable` in review, no reviewer risk flags
 
-**Step 4.3: Bug report**
-- Record: No public user/syzbot/bugzilla report. Failure mode is
-  described by the Qualcomm author from platform bring-up.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): Namhyung, Arnaldo, Ian Rogers, Jiri Olsa, Adrian
+Hunter, James Clark, Peter Zijlstra, Ingo Molnar, LKML, linux-perf-
+users, Sashiko. Right maintainer set.
 
-**Step 4.4: Related series**
-- Record: Standalone. Extends `ddab91f4b2de5` rather than depending on a
-  multi-patch series.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: Sashiko flagged a **High** pre-existing issue on another fdarray
+patch. Namhyung replied “I'll handle this in a separate patch.” No user
+repro, syzbot, or bugzilla. Bug is from code inspection, not a field
+crash.
 
-**Step 4.5: Stable list**
-- Record: lore.kernel.org/stable fetch returned 403. UNVERIFIED whether
-  stable@ discussed this subject. The 2024 MXC skip *was* Cc:stable.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone. Separate from the `fdarray__filter()` nonfilterable
+fix that triggered the review.
 
-## Phase 5: Semantic / call graph
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: **UNVERIFIED** (lore.kernel.org HTTP 403). The v2 mbox has no
+stable discussion.
 
-**Step 5.1: Functions**
-- Record: `rpmhpd_update_level_mapping()` (changed), `rpmhpd_power_on()`
-  / `rpmhpd_set_performance_state()` (consumers of `enable_corner`,
-  unchanged).
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.2: Callers**
-- Record: `rpmhpd_update_level_mapping()` ← `rpmhpd_probe()` only.
-  `rpmhpd_power_on()` is `generic_pm_domain.power_on`, called from genpd
-  (including parent-on for child GDSCs). Probe + device/runtime PM, not
-  a syscall-only path.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `fdarray__grow()`, `fdarray__new()`. Cleanup via
+`fdarray__exit()` / `fdarray__delete()`.
 
-**Step 5.3: Callees**
-- Record: `cmd_db_read_aux_data()`, then later
-  `rpmhpd_aggregate_corner()` → `rpmhpd_send_corner()` (RPMh votes).
+**Step 5.2: TRACE CALLERS**
+Record (grep on this tree):
+- `fdarray__grow`: `fdarray__new`, `fdarray__add`,
+  `perf_evlist__alloc_pollfd`
+- `fdarray__add`: `perf_evlist__add_pollfd`, `builtin-record.c` (per-
+  thread pollfd), `builtin-daemon.c`, `fdarray__dup_entry_from`, tests
+- `fdarray__exit` on those objects: `perf_evlist__exit`, `record` thread
+  teardown (`fdarray__exit(&thread_data[t].pollfd)`), daemon `goto out`
+  → `fdarray__exit(&fda)`
 
-**Step 5.4: Reachability**
-- Record: Yes, from normal Qualcomm device probe. Clock-controller GDSCs
-  are subdomains of rpmhpd (often MMCX). Userspace does not need a
-  special trigger; enabling display/video/camera clocks is enough.
+**Step 5.3: TRACE CALLEES**
+Record: `realloc`, `memset`, `calloc`, `free`. No locks, no kernel
+allocators.
 
-**Step 5.5: Similar patterns**
-- Record: Only MXC used `skip_retention_level`. MMCX/`mmcx_w_cx_parent`
-  did not. That matches “instead of adding more special cases for MMCX.”
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace `perf` / libperf. Typical path: `perf record` mmap →
+`perf_evlist__alloc_pollfd` → `fdarray__grow`. On `-ENOMEM`,
+evlist/thread/daemon cleanup calls `fdarray__exit`. **Reachable from a
+normal perf invocation under memory pressure**, not a kernel syscall
+path.
 
-## Phase 6: This tree only
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Only this grow function does the paired `entries`/`priv`
+realloc. No sibling copy of the bug.
 
-**Step 6.1: Does the buggy code exist here?**
-- Record:
-  - Local tree: **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`,
-    Makefile `VERSION=7 PATCHLEVEL=3`).
-  - `drivers/pmdomain/qcom/rpmhpd.c` is present. Pre-commit code had
-    `skip_retention_level` only on MXC.
-  - `7178817f19049` is already an ancestor of HEAD (in v7.3-rc1; **not**
-    in v7.2). Current file already skips Retention unconditionally.
-  - Bug class (Retention as `enable_corner`) dates to `e3e56c050ab6`
-    (2021) whenever cmd-db lists Retention; MMCX Retention on newer
-    chips is why this default change was made. That hardware **is**
-    represented in this 7.3 tree.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 6.2: Backport difficulty**
-- Record: Against current HEAD the patch is already applied (forward
-  apply would fail). Against 7.3 immediately before this commit it is a
-  clean apply (same file layout, `skip_retention_level` present). No
-  extra backport rework for this tree’s rpmhpd.c.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record:
+- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
+- `make kernelversion`: **7.3.0-rc4** (Linus mainline, `origin` =
+  torvalds/linux.git)
+- Fix commit **`eadce0f46a1d0` is already an ancestor of HEAD**
+- Buggy two-`realloc` body exists in history from v3.18; current file
+  already has the fix
+- Introduced long before this tree
 
-**Step 6.3: Related fixes already here**
-- Record: MXC-only skip (`ddab91f4b2de5`) is here; it does **not** cover
-  MMCX/CX/etc. `2a93c6cbd5a70` (enabled_corner aggregation) is a
-  different bug (peer off during sync_state). No substitute for this
-  commit.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply** to any tree with this `fdarray__grow` shape.
+Function has been stable aside from later `memset` of new slots. No
+conflicting refactor in this file.
 
-## Phase 7: Subsystem context
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This is the fix. No earlier equivalent.
 
-**Step 7.1**
-- Record: `drivers/pmdomain/qcom/` — Qualcomm RPMh power domains.
-  **IMPORTANT** (not core mm/fs, but used on a large set of Snapdragon
-  phones, laptops, and embedded boards). Maintainer: Ulf Hansson
-  (`GENERIC PM DOMAINS`).
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 7.2**
-- Record: Active (new SoC tables: Nord, Hawi, Eliza, Kaanapali, Glymur,
-  etc.). The Retention default is independent of those tables.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **tools/lib/api** used by **tools/perf** and **tools/lib/perf**.
+Criticality: **IMPORTANT** for perf users, **not CORE kernel**.
+Userspace heap corruption, not a kernel oops.
 
-## Phase 8: Impact and risk
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Active (recent poll-storm/hang fixes in the same file’s
+callers). The grow error path itself dates to 2014 and was untouched
+until this commit.
 
-**Step 8.1: Who is affected**
-- Record: Qualcomm rpmhpd platforms (`CONFIG_QCOM_RPMHPD`), especially
-  SoCs whose cmd-db advertises Retention on MMCX or other non-MXC rails.
-  Not universal; not staging.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.2: Trigger**
-- Record: Common: child GDSC on, parent rpmhpd has no OPP. Happens at
-  probe/runtime PM. Unprivileged userspace can cause it indirectly by
-  using multimedia devices; it also happens at boot when those
-  controllers probe.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **config/tool-specific** — anyone running kernel-tree `perf` /
+libperf (record, daemon, evlist polling). Distros ship this `perf`. Not
+a kernel-wide crash.
 
-**Step 8.3: Failure mode**
-- Record: GDSC stuck powering on → device/controller hang, probe
-  failure, missing display/video/camera (or boot issues if that path is
-  on the critical path). Severity: **HIGH** (hardware hang), not a
-  KASAN/UAF class crash.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record:
+- Grow of an fdarray that already has (or just got) an entries
+  allocation
+- `realloc(entries)` succeeds, `realloc(priv)` fails
+- Then `fdarray__exit()` (all production callers do this)
+- Unprivileged `perf` can hit grow; failure needs allocation failure, so
+  uncommon but not fictional (`priv` is the larger realloc)
+- Not a timing race
 
-**Step 8.4: Risk-benefit**
-- Record:
-  - **Benefit:** Prevents GDSC/parent-rail hangs on Qualcomm platforms
-    in this tree, including MMCX without extending a per-rail flag list.
-  - **Risk:** Low. 14-line change; no-op if Retention is absent from
-    cmd-db; MXC behavior unchanged; Qualcomm + maintainer reviewed.
-  - **Ratio:** Benefit > risk.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: **Userspace double-free / heap corruption** of `perf` → abort or
+allocator abort. Severity: **HIGH** for the tool, **not** a kernel
+panic. Possible security angle only if `perf` is privileged; unverified
+here.
 
-## Phase 9: Synthesis
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** stops a real double-free on a cleanup path every grow-
+  failure caller uses
+- **Risk:** very low (5 lines, error path, maintainer-authored and
+  reviewed)
+- **Ratio:** favorable. Official “bothers people” bar is weaker (bot-
+  found, no field report), but the defect is concrete, not a speculative
+  race.
 
-**Step 9.1: Evidence**
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-For:
-- Concrete hang: parent RPMh PD at Retention → child GDSC stuck on.
-- Call path and DT consumers verified in this tree.
-- Small, obviously correct extension of an existing skip that was
-  already Cc:stable for MXC.
-- Safe no-op when Retention is not in cmd-db.
-- Reviewed by Konrad, applied by Ulf; Taniya Das (original skip author)
-  was on Cc.
-- This 7.3 tree has rpmhpd, `enable_corner`, `skip_retention_level`, and
-  MMCX users.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Against:
-- No `Fixes:` / public reproducer / syzbot (not a negative per rules).
-- Default change for all rails, not only MMCX (mitigated: Retention skip
-  is a no-op where unused).
-- lore.kernel.org/stable search could not be fetched (403).
+FOR:
+- Real double-free, not style
+- Tiny, obviously correct
+- Bug since v3.18; this tree has the code
+- All major callers `fdarray__exit()` after `-ENOMEM`
+- Partial failure is plausible because priv is larger than entries
+- Reviewed by Ian Rogers; applied by Namhyung Kim
+- No dependencies; clean apply
+- Matches stable double-free / error-path pattern
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — v1 accepted, maintainer
-   applied, Qualcomm review.
-2. Real user-visible bug? **PASS** — GDSC stuck on parent enable.
-3. Important (hang/corruption/security)? **PASS** — hardware hang on a
-   widely used SoC family; HIGH, not a panic.
-4. Small and contained? **PASS** — +9/−5, one file.
-5. No new features/APIs? **PASS** — same skip, defaulted; no userspace
-   API.
-6. Can apply to this tree? **PASS** — 7.3 has the pre-image; the commit
-   is in 7.3-rc1.
+AGAINST:
+- Userspace tools, not kernel runtime
+- Found by Sashiko, not a user
+- Subject says “potential”; no `Fixes:`/`Cc: stable`
+- Official rule: “real bug that bothers people” / not “this could be a
+  problem”
+- Trigger needs allocation failure
 
-**Step 9.3: Exception category**
-- Record: Hardware workaround (skip a non-operational corner), same
-  class as the 2024 MXC Retention skip.
+UNRESOLVED:
+- Whether stable@ ever discussed it (lore HTTP 403)
+- Whether any distro `perf` user hit it
 
-**Step 9.4: Decision**
-This tree is 7.3.0-rc4. The rpmhpd driver, the Retention-
-as-`enable_corner` bug, and MMCX parent-GDSC consumers are all here. The
-change is a small, correct hang fix, not a feature. It should be in this
-tree.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — realloc semantics;
+   maintainer + reviewer
+2. Fixes a real bug that affects users? **PASS** — double-free on grow-
+   fail + exit; users are `perf` users
+3. Important issue? **PASS** (HIGH userspace heap corruption; not a
+   kernel oops)
+4. Small and contained? **PASS** — 5 lines, one file
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — already present here; same
+   hunk applies to older trees that still have this grow function
 
----
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not an ID/quirk/DT/build/doc exception). It is a normal
+bug fix.
 
-### What it solves for users of this tree
+**Step 9.4: MAKE YOUR DECISION**
+This tree is **7.3-rc4 mainline**, and the fix is already in it. The
+evaluation is whether that fix is stable material for this codebase: it
+is. Distros ship `tools/perf` from the kernel tree; a double-free on a
+path every evlist/daemon/record teardown takes is a real crash of that
+tool. The patch is too small and too localized to justify holding it
+back because the finder was a bot or the trigger is OOM.
 
-Without it, enabling a Qualcomm GDSC whose parent RPMh rail (often MMCX)
-has no OPP votes Retention. That rail cannot actually run there, so the
-GDSC never finishes power-on. Display, video, camera, and similar
-controllers that list `power-domains = <&rpmhpd RPMHPD_MMCX>` hit this
-on probe or runtime PM. Skipping Retention when building the cmd-db map
-makes the min enable corner the first real operational level.
+===============================================================
+What the commit solves, and why it matters
+===============================================================
+`fdarray__grow()` grows two parallel allocations. On the second
+`realloc` failing it used to `free()` the first result without storing
+it, so `fda->entries` could dangle. `perf record`, libperf evlist, and
+`perf daemon` all `fdarray__exit()` afterward, which is a double-free of
+the process heap. Stable users who cannot bump the whole kernel still
+use this `perf`.
 
-### Risk vs benefit
+Risk vs benefit: benefit is preventing heap corruption in a widely
+shipped tool; risk is a 5-line error-path change already reviewed by the
+subsystem.
 
-Benefit is avoiding a platform hang on common Qualcomm PM paths. Risk is
-low: SoCs without Retention in cmd-db are unchanged; MXC already skipped
-Retention; HLOS is not supposed to use Retention.
+No missing prerequisites. No backport rework needed for this `array.c`.
 
-### Concerns
-
-No public reproducer. Stable-list discussion unverified (HTTP 403).
-Slightly higher min vote on rails that listed Retention is intended, not
-a silent functional change for rails that never had it.
-
-### Verification
-- [Phase 1] Parsed tags: author/reviewer/maintainer SOBs only; no
-  Fixes/stable/syzbot
-- [Phase 2] Diff: +9/−5 in `rpmhpd.c`; drop `skip_retention_level`;
-  always skip `RPMH_REGULATOR_LEVEL_RETENTION` (16)
-- [Phase 2] `rpmhpd_power_on()` uses `max(pd->corner,
-  pd->enable_corner)` — verified in file
-- [Phase 2] GDSC subdomain attach in `gdsc_register()` — verified
-- [Phase 2] DT MMCX consumers in sm8450/sm8550/sm8650/sm8750 dtsi —
-  verified
-- [Phase 3] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
-  7.3.0-rc4
-- [Phase 3] `git merge-base --is-ancestor 7178817f19049 HEAD`: yes; not
-  in v7.2; in v7.3-rc1
-- [Phase 3] Blame: mapping 279b7e8a62cc (2019); enable_corner
-  e3e56c050ab6 (2021); MXC skip ddab91f4b2de5 (2024)
-- [Phase 3] Pre-image: `skip_retention_level` only on mxc/mxc_ao; mmcx
-  had no flag
-- [Phase 4] `b4 dig -c 7178817f19049`: lore/msgid `20260629-rpmhpd-skip-
-  ret-v1-1-d94180ad9a29@oss.qualcomm.com`
-- [Phase 4] `b4 dig -a`: v1 only; Ulf “Applied for next”; no NAK
-- [Phase 4] `b4 dig -w`: Ulf, Bjorn, Konrad, Taniya Das, linux-arm-msm,
-  linux-pm
-- [Phase 4] UNVERIFIED: lore.kernel.org/stable (403)
-- [Phase 5] `rpmhpd_update_level_mapping()` called only from
-  `rpmhpd_probe`
-- [Phase 6] Post-fix code already in this checkout; related MXC skip
-  present and insufficient
-- [Phase 8] Failure mode: GDSC stuck on — HIGH hang, Qualcomm-specific
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Tags: Sashiko Reported-by, Closes lore, Reviewed-by Ian
+  Rogers, SOB Namhyung; no Fixes/Cc-stable
+- [Phase 2] Diff: 5 lines in `tools/lib/api/fd/array.c`; `free(entries)`
+  → keep pointer; `free(fda)` → `fdarray__delete(fda)`
+- [Phase 3] `git blame` on parent: `free(entries)` from `2171a9256862ec`
+  (v3.18-rc1)
+- [Phase 3] `git merge-base --is-ancestor 2171a9256862ec HEAD` → yes;
+  `eadce0f46a1d0` also ancestor
+- [Phase 3] `git log --oneline eadce0f46a1d0..HEAD --
+  tools/lib/api/fd/array.c` → empty (no follow-up)
+- [Phase 4] `b4 dig -c eadce0f46a1d0`: v2 at
+  patch.msgid.link/20260711003235.1963043-1-namhyung@kernel.org
+- [Phase 4] `b4 dig -a`: v1→v2 subject-only; applied to perf-tools-next
+- [Phase 4] `b4 dig -w`: perf maintainers on To/Cc
+- [Phase 4] `b4 mbox` of Closes: Sashiko High pre-existing double-free;
+  Namhyung “I'll handle this in a separate patch”
+- [Phase 4] lore WebFetch/curl: 403 — stable@ search UNVERIFIED
+- [Phase 5] grep callers: evlist, builtin-record, builtin-daemon, tests;
+  all production paths `fdarray__exit`
+- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4
+- [Phase 6] Current `array.c` already contains the fixed grow/new bodies
+- [Phase 7] MAINTAINERS: Namhyung maintainer, Ian Rogers reviewer of
+  PERFORMANCE EVENTS SUBSYSTEM
+- [Phase 8] Failure mode: userspace double-free in perf, HIGH for the
+  tool
+- UNVERIFIED: field reports; privileged-perf exploitability; stable@
+  thread
 
 **YES**
 
- drivers/pmdomain/qcom/rpmhpd.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ tools/lib/api/fd/array.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
-index 4c3cbf3abc750..fc61ec45755c3 100644
---- a/drivers/pmdomain/qcom/rpmhpd.c
-+++ b/drivers/pmdomain/qcom/rpmhpd.c
-@@ -41,7 +41,6 @@
-  * @addr:		Resource address as looped up using resource name from
-  *			cmd-db
-  * @state_synced:	Indicator that sync_state has been invoked for the rpmhpd resource
-- * @skip_retention_level: Indicate that retention level should not be used for the power domain
-  */
- struct rpmhpd {
- 	struct device	*dev;
-@@ -58,7 +57,6 @@ struct rpmhpd {
- 	const char	*res_name;
- 	u32		addr;
- 	bool		state_synced;
--	bool            skip_retention_level;
- };
+diff --git a/tools/lib/api/fd/array.c b/tools/lib/api/fd/array.c
+index f0f195207fca9..dcb396ab51eb1 100644
+--- a/tools/lib/api/fd/array.c
++++ b/tools/lib/api/fd/array.c
+@@ -31,7 +31,8 @@ int fdarray__grow(struct fdarray *fda, int nr)
  
- struct rpmhpd_desc {
-@@ -176,7 +174,6 @@ static struct rpmhpd mxc = {
- 	.pd = { .name = "mxc", },
- 	.peer = &mxc_ao,
- 	.res_name = "mxc.lvl",
--	.skip_retention_level = true,
- };
+ 	priv = realloc(fda->priv, psize);
+ 	if (priv == NULL) {
+-		free(entries);
++		/* this will be freed by fdarray__exit() */
++		fda->entries = entries;
+ 		return -ENOMEM;
+ 	}
  
- static struct rpmhpd mxc_ao = {
-@@ -184,7 +181,6 @@ static struct rpmhpd mxc_ao = {
- 	.active_only = true,
- 	.peer = &mxc,
- 	.res_name = "mxc.lvl",
--	.skip_retention_level = true,
- };
+@@ -50,7 +51,7 @@ struct fdarray *fdarray__new(int nr_alloc, int nr_autogrow)
  
- static struct rpmhpd nsp = {
-@@ -974,7 +970,15 @@ static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
- 		return -EINVAL;
- 
- 	for (i = 0; i < rpmhpd->level_count; i++) {
--		if (rpmhpd->skip_retention_level && buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
-+		/*
-+		 * Most HW won't function properly at Retention. The minimum
-+		 * operational level is the first level above Retention. The
-+		 * small subset of HW that can operate at Retention isn't
-+		 * controlled by HLOS. Skip the Retention level to avoid HW
-+		 * failures when the PD is enabled without first having an
-+		 * explicit OPP level set.
-+		 */
-+		if (buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
- 			continue;
- 
- 		rpmhpd->level[i] = buf[i];
+ 	if (fda != NULL) {
+ 		if (fdarray__grow(fda, nr_alloc)) {
+-			free(fda);
++			fdarray__delete(fda);
+ 			fda = NULL;
+ 		} else {
+ 			fda->nr_autogrow = nr_autogrow;
 -- 
 2.53.0
 
