@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DCF59C972;
-	Mon, 19 Oct 2026 14:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC125AD60D;
+	Mon, 19 Oct 2026 14:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418412; cv=none; b=m1HuITmjih+sE7/YvKFDPlpnh8DN81KCd/RJZyeDUZd02Tnf+k2cgOoY1CKHIC41eLhHD8BcobVqjvJ6RiJAYrxQA5WEi7N9VTY0gFU8j9iyh6XYR26Ob0NRDS+CYA8sRrRTN9OxP0TdNxczDvOfAUEC0QSVsTuiRiI+YuYPtNg=
+	t=1792418413; cv=none; b=C5/T5di7NzFnLtImdYbP+XbqDbj9UuTkyWabT9dDIwBSkRJSUGDI38PJQBNbp7aHjQ51anDhKkDYa3E1cnIZT3dJkCqGhGbjBH+t2V7yHVMHizN/WV6RfQbsYvIPDgA5IgcEuNIhptxYSfQiYPMJVFzNCjzW7yWlhubrObVW0J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418412; c=relaxed/simple;
-	bh=gwhDFfaANps3UNfzDYozKCH+2w55PoBIK+sjCeHj9/M=;
+	s=arc-20240116; t=1792418413; c=relaxed/simple;
+	bh=BAxXmKzipUKgwnwjt46mX8OWaHPtpfcRGxvBMikOUgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k6jKjk7YP8VMlJ/RqnhLANDc6JMX8429Ptiu24sCl6Sfl6YoCuGZCZGNzHb627efu5R+Bc4H6xVA62yS/S/32uU6ctfRyC5pzw2KwxRCixn2dir6EYeaDNbCwyBp8TQkmxsyx6F9GvutbanZQ4kpR/d/OX5B1fmc0ln7+Bbn0bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CzoOb6xp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UcSKqsuv0eqJLdDCf+WzS/xpf28UNh5DKmD+1+jCivHoig+8VPpQcZBFfruY8RXa/wprjVqF8Oenhrq/nxbkD8Y++qH61lmkfzwSMa9/ow0FMqyje62rh5w5zlStGbsEx6XC6x1aFlzDjdT09J01TcHyd2ySLsDc/qWAcKo4gGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XodgFDMJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CzoOb6xp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C711F000C6;
-	Mon, 19 Oct 2026 14:00:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XodgFDMJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACB41F000C4;
+	Mon, 19 Oct 2026 14:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418409;
-	bh=JgiHzBkzyS7FDTEmPwxdWyzH5N6tMzeSOTJia8FLgVw=;
+	s=k20260515; t=1792418411;
+	bh=62WN2Y9i3wsFgQq2p6V9Mjpp4uZxM4JD2fNUMBgQi6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CzoOb6xpW5RNnHTk4aMypOfuaer/+x//lw+hVHoDGCgLbvuSzRE+6dp2n1Qq7fVW8
-	 TrP3dNmZzRhZ3b5GuVjtJcupTTFUPEvxSbUnECB55S5mvCQx2bkLqtxwBa53/+pjjn
-	 JE6ISc9hMr8AEWu2UQ7c90C0uCyKotmSmcNSYP1YJ1mNSuCxCjf5zNPsi6EAWP0QiI
-	 TdQLZxMw1hX3GOrV51tKi6YMd4GnaqFdlL5TlWq9k0UOifqsYgAl2yT0PCvmIyDIWR
-	 gl1B+qZ77BQlJw90oP71r7Fi5hprBh9gGi6Z8NFU66gRf2t0ivbsde9zPUKCqBQEls
-	 cCMcQwIs0qR+Q==
+	b=XodgFDMJP27pnY/QoaxbohoV75QlAljUVCPIRsCNLxQkG5wjvqjcvYKZZhztWBIZT
+	 VnjTRdgNOijREW2v+7zXzeDiK33y3v7w3Lz+AVTdsdXvzyJF7sl+hrVo2pyjncdDZc
+	 p8ibT8Vv/CjXGdeYbNIHmR07uWfAW6a+8JI+toM3nKj+abyK3A6666tzoZni8PJ7gY
+	 /caSmLquwejwphDLIAbA5L6hfLuzBku4BHO/resrJNGlPTtw4M01xgtMsd8TAXab8A
+	 KYw16XV5FDr+w/AIYny9Tpr/gW7E/Nu3t3csJ4u76nPJsedko9rB3UzsKRvVCWHZJN
+	 ecTzHpiyfzgGg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Felix Fietkau <nbd@nbd.name>,
+Cc: Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mt76: mt7603: fix U-APSD service period termination
-Date: Mon, 19 Oct 2026 09:48:40 -0400
-Message-ID: <20261019135441.1420968-229-sashal@kernel.org>
+	s.shravan@intel.com,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] platform/x86: int1092: Fix info leak in parse_package()
+Date: Mon, 19 Oct 2026 09:48:41 -0400
+Message-ID: <20261019135441.1420968-230-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,534 +49,431 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 697badc27a9b3b2a8d86092abeed767714f735a2 ]
+[ Upstream commit f5eb833730c071b68a68de5d1df442aae4ae7e6e ]
 
-Frames released from the driver PS queue were all tagged with MORE_DATA
-and none of them ever carried the EOSP bit, so from the client's point of
-view a U-APSD service period was started but never finished. Clients that
-keep their receiver on until EOSP arrives stop sending trigger frames,
-and all downlink traffic for that station stalls until they give up.
-ieee80211_sta_eosp() only cleared the service period state inside
-mac80211, which is why the mismatch went unnoticed.
+Sashiko reports a possible information leak that can occur as follows:
 
-Assign MORE_DATA per frame and set the wire EOSP bit on the last one. If
-the last released frame is a bufferable MMPDU it has no QoS control field
-to carry EOSP, so let mac80211 append a QoS-Null frame instead.
+1. In parse_package(), memory allocated for data->device_mode_info is not
+   zerozed initially as it is allocated with devm_kmalloc_array().
 
-Also stop handing the remaining frame budget to
-mt76_release_buffered_frames() once frames have been released from the PS
-queue: both would signal the end of the same service period. Releasing
-fewer frames than requested is allowed, and MORE_DATA tells the client to
-trigger again.
+2. In the for loop after the allocation, a malformed ACPI package
+   provided by firmware can cause some fields in data->device_mode_info
+   to remain uninitialized.
 
-Link: https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+3. Later in update_sar_data(), the uninitialized fields gets copied to
+   the fields of context->sar_data, which can be exposed to userspace
+   through sysfs attribute read (intc_data_show()).
+
+Fix the leak by switching to use devm_kcalloc() for allocation.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260710052806.100107-1-nihaal%40cse.iitm.ac.in
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20260723-platx86-v4-2-93b4a178b595@cse.iitm.ac.in
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **5.15.221** (`pending-5.15`). The buggy mt7603 U-APSD
-path is present here and matches mainline before `697badc27a9b3`. This
-is a real protocol fix for a stall, and it should be backported.
+I have enough to judge the leak path, the `devm_kcalloc` fix, and
+whether this 7.3-rc4 tree should take it. Writing up the nine-phase
+analysis next.
 
----
+## Phase 1: Commit message forensics
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.1: Subject line**
+Record: `[platform/x86: int1092]` `[Fix]` `[info leak in parse_package()
+— uninitialized kmalloc data can reach sysfs]`
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[wifi/mt76/mt7603] [fix] [U-APSD service period never ends on
-the wire]**
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2: Tags**
 Record:
-- `Link: https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name`
-  — patch **05/10** of Felix Fietkau’s series
-- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` (mt76 maintainer)
-- No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Reviewed-by:`, no
-  `Cc: stable` (absence of the last two is expected in this pipeline)
-- Ignore any `Signed-off-by: Sasha Levin` / `[Upstream commit ...]` if
-  present; they are candidate-prep markers
+- `Reported-by: Sashiko <sashiko-bot@kernel.org>` — automated kernel
+  review bot, not syzbot
+- `Closes: https://sashiko.dev/#/patchset/20260710052806.100107-1-
+  nihaal%40cse.iitm.ac.in`
+- `Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>` (author)
+- `Link: https://patch.msgid.link/20260723-platx86-v4-2-
+  93b4a178b595@cse.iitm.ac.in`
+- `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
+  (platform/x86 maintainer)
+- `Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
+  (applied by maintainer)
+- No `Fixes:` tag in the committed message (expected for this review
+  pipeline)
+- No `Cc: stable` in the committed message; original mail **was** CCed
+  to `stable@vger.kernel.org` (verified via `b4 dig -w` and the v4 cover
+  letter on the stable list)
+- No `Tested-by:` (cover letter: compile-tested only)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3: Body**
 Record:
-- **Bug:** Frames pulled from the driver PS queue all get `MORE_DATA`
-  and never `EOSP`. A U-APSD SP starts and never ends on the air.
-- **Symptom:** Clients that stay awake until EOSP stop sending trigger
-  frames; **all downlink traffic for that STA stalls** until they give
-  up.
-- **Root cause:** `ieee80211_sta_eosp()` only clears mac80211’s
-  `WLAN_STA_SP`. mac80211 documents that a driver implementing
-  `.release_buffered_frames` must set the **wire** EOSP bit itself.
-- **Second bug in the same function:** leftover `nframes` is handed to
-  `mt76_release_buffered_frames()`, which ends the **same** SP a second
-  time.
-- **Fix:** assign `MORE_DATA`/`EOSP` per frame; QoS-Null via
-  `ieee80211_send_eosp_nullfunc()` if the last frame is a bufferable
-  MMPDU; do not forward leftover budget once PS-queue frames were
-  released.
+- **Bug:** `device_mode_info` is allocated with `devm_kmalloc_array()`
+  (non-zeroed). The parse loop `continue`s on malformed ACPI package
+  elements, leaving those array slots uninitialized.
+- **Symptom:** Uninitialized fields can be copied in `update_sar_data()`
+  into `context->sar_data` and read from userspace via `intc_data` sysfs
+  (`intc_data_show()`).
+- **Root cause:** Allocation is not zeroed, despite `parse_package()`
+  documenting that skipped entries “will have the default value of
+  zero.”
+- **Fix:** `devm_kmalloc_array()` → `devm_kcalloc()`.
+- **Version info in message:** none. Driver has existed since v5.15.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Not hidden.** Subject and body describe a concrete protocol
-failure with a user-visible stall.
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. Explicit information-leak fix. The surrounding
+comment already promised zeroed skipped slots; the allocator did not
+provide that.
 
----
+## Phase 2: Diff analysis
 
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1: Inventory**
 Record:
-- File: `drivers/net/wireless/mediatek/mt76/mt7603/main.c` (**+63 /
-  −11**)
-- Functions: `mt7603_ps_skb_hdr()` (new), `mt7603_ps_set_more_data` →
-  `mt7603_ps_set_flags`, `mt7603_release_buffered_frames`
-- Scope: **single-file surgical fix**
+- File: `drivers/platform/x86/intel/int1092/intel_sar.c` (+4/−4)
+- Function: `parse_package()`
+- Scope: single-file, one-call-site surgical change
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 2.2: Code flow**
 Record:
-- **Before:** every released PS-queue frame unconditionally ORs
-  `IEEE80211_FCTL_MOREDATA`; never sets/clears EOSP;
-  `ieee80211_sta_eosp()` is called if the list is non-empty, then
-  leftover `nframes` still go to `mt76_release_buffered_frames()`.
-- **After:**
-  1. Walk remaining PS queue under `ps_lock` and build a pending-TID
-     bitmap.
-  2. If nothing was dequeued, fall through to
-     `mt76_release_buffered_frames()` (unchanged).
-  3. If anything was dequeued, **do not** also release from mac80211
-     TXQs.
-  4. `MORE_DATA` = not-last **or** more frames remain (mac80211
-     `more_data` or pending matching TIDs).
-  5. Wire `EOSP` only on the last frame and only for
-     `IEEE80211_FRAME_RELEASE_UAPSD`.
-  6. Last frame not QoS data → `ieee80211_send_eosp_nullfunc()`; else
-     `ieee80211_sta_eosp()`.
+- **Before:** `devm_kmalloc_array()` returns uninitialized heap. Loop
+  writes only successfully parsed modes; failed/malformed entries leave
+  `device_mode_info[itr]` untouched.
+- **After:** `devm_kcalloc()` zeros the whole array first, so skipped
+  slots stay `{0}` as the function comment describes.
+- **Path:** probe/init (`sar_get_data()` → `parse_package()`), then
+  later sysfs read / ACPI notify (`update_sar_data()`).
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+**Step 2.3: Bug mechanism**
+Record: **Uninitialized data / kernel info leak.**
+Mechanism verified in this tree:
+1. `parse_package()` allocates `device_mode_info`.
+2. Loop uses `continue` on type/count/`get_int_value()` failures (lines
+   105–114).
+3. `update_sar_data()` compares `context->sar_data.device_mode` to
+   `device_mode_info[itr].device_mode` and copies `bandtable_index`,
+   `antennatable_index`, `sartable_index`.
+4. `intc_data_show()` emits those four ints to userspace.
+
+If a skipped slot’s uninitialized `device_mode` happens to match the
+current mode, heap leftovers are copied into `sar_data` and printed.
+
+**Step 2.4: Fix quality**
+Record: Obviously correct. `devm_kcalloc()` is the zeroing counterpart
+of `devm_kmalloc_array()`. No API change, no lock change, no extra error
+path. Regression risk is negligible (slightly more work at probe to zero
+a small array, max 50 modes).
+
+## Phase 3: Git history
+
+**Step 3.1: Blame**
 Record:
-- **Category:** protocol / correctness (U-APSD SP termination), not
-  UAF/leak/race.
-- **Mechanism:** driver never put EOSP on the air; clients that wait for
-  EOSP stop triggering; downlink stalls.
-- Also: `MORE_DATA` was only set, never cleared. Recycled frames from
-  `mt7603_filter_tx()` can keep a stale bit; the new helper assigns both
-  bits.
+- Buggy skip-and-leave-uninitialized loop: `dcfbd31ef4bcf`
+  (“platform/x86: BIOS SAR driver for Intel M.2 Modem”), 2021-08-20,
+  first in **v5.15-rc1**.
+- Original allocator was `kmalloc_array()` (also non-zeroing). Same leak
+  class from day one.
+- Matching-by-`device_mode` copy: `7df227847ab56` (2021-10-11).
 
-**Step 2.4: ASSESS THE FIX QUALITY**
+**Step 3.2: Fixes: tag**
+Record: No `Fixes:` on this commit. The matching parent
+(`30c906cff490c`) has `Fixes: dcfbd31ef4bc`. That introducer **is** an
+ancestor of this tree (`git merge-base --is-ancestor dcfbd31ef4bcf HEAD`
+succeeded).
+
+**Step 3.3: File history**
+Record: Recent related commits on this file:
+- `30c906cff490c` — convert to `devm_*` allocations (patch 1/2, parent
+  of this commit)
+- `f5eb833730c07` — this info-leak fix (patch 2/2)
+This is **patch 2/2** of a two-patch series. It is standalone *on top of
+patch 1*.
+
+**Step 3.4: Author**
+Record: Abdun Nihaal submitted both int1092 fixes in this series. Ilpo
+Järvinen (platform/x86 maintainer) reviewed and applied both. Not the
+original driver author (Shravan Sudhakar / Intel).
+
+**Step 3.5: Prerequisites**
+Record: **Depends on `30c906cff490c`**, which changed
+`kmalloc_objs`/`kmalloc_array` into `devm_kmalloc_array()`. This hunk
+only applies as written if that conversion is present. In **this** tree,
+that parent **is** present (`git merge-base --is-ancestor 30c906cff490c
+HEAD` succeeded). No other missing helpers: `devm_kcalloc()` is core
+device-managed alloc.
+
+## Phase 4: Mailing list / external research
+
+**Step 4.1: Original discussion**
 Record:
-- Matches mac80211’s `.release_buffered_frames` contract
-  (`include/net/mac80211.h`: driver must set EOSP in the QoS header;
-  sending fewer frames than requested is allowed).
-- `IEEE80211_QOS_CTL_EOSP` (0x0010) on the first QoS-control byte is the
-  correct on-wire bit.
-- `ieee80211_send_eosp_nullfunc()` uses `IEEE80211_TX_STATUS_EOSP` on
-  the NDP; TX status then clears `WLAN_STA_SP`. iwlwifi already calls
-  this from BH/TX context; `.release_buffered_frames` must be atomic,
-  and `ieee80211_send_null_response()` uses `dev_alloc_skb` (GFP_ATOMIC)
-  + `ieee80211_xmit`.
-- Regression risk: **low–medium**. Logic is contained; PS-Poll does not
-  set wire EOSP (`uapsd` is false). Companion series patches 06–08 make
-  TIM / HW buffering / TID filing more complete but are not required for
-  this EOSP fix to compile or to be correct on its own.
+- `b4 dig -c f5eb833730c07` → https://patch.msgid.link/20260723-platx86-
+  v4-2-93b4a178b595@cse.iitm.ac.in
+- Series: v1 (combined) → v2 → v3 (split 2/2) → **v4** (applied). v4
+  only updated the commit message per Ilpo to document the leak path.
+- Cover letter: “[PATCH v4 0/2] platform/x86: int1092: Fix two bugs in
+  SAR driver”
+- Explicitly CCed `stable@vger.kernel.org`; also appeared on the stable
+  list (spinics `lists/stable/msg986235.html` / `msg971516.html`).
+- No NAK found in available archives.
+- Cover letter: “Both patches are compile tested only.”
 
----
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: Abdun Nihaal; Shravan Sudhakar; Hans de Goede; Ilpo Järvinen;
+`platform-driver-x86@vger.kernel.org`; `linux-kernel@vger.kernel.org`;
+**`stable@vger.kernel.org`**; Sashiko. Maintainer Ilpo reviewed and
+applied.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+**Step 4.3: Bug report**
+Record: Sashiko static/agent review, not a user crash report. Closes URL
+did not return the specific finding body (only the Sashiko project
+page). Leak path is independently verifiable from the source.
+**UNVERIFIED:** exact Sashiko finding text.
 
-**Step 3.1: BLAME THE CHANGED LINES**
+**Step 4.4: Series**
+Record: 2/2. Patch 1 (`30c906cff490c`) is the `devm_` conversion (has
+`Cc: stable` and `Fixes:`). Patch 2 is this kcalloc leak fix. Both are
+in this tree, in order.
+
+**Step 4.5: Stable list**
+Record: Series was mailed to stable@ (cover + both patches). No evidence
+of a NAK or “not for stable” reason. Patch 1 later received
+CVE-2026-89437 (memory leak). That CVE is **patch 1**, not this info-
+leak commit; not used as the reason for this decision.
+
+## Phase 5: Code semantic analysis
+
+**Step 5.1: Functions**
+Record: `parse_package()` modified. Related: `update_sar_data()`,
+`intc_data_show()`, `sar_get_data()`, `sar_probe()`,
+`sar_get_device_mode()`, `intc_reg_store()`.
+
+**Step 5.2: Callers**
 Record:
-- `mt7603_release_buffered_frames`: `c8846e101502` (2018-11, **mt76: add
-  driver for MT7603E and MT7628/7688**)
-- Unconditional MORE_DATA: `b126c8897435` (2019-03)
-- `ieee80211_sta_eosp()` without wire EOSP: `b7001f46085e` (2019-03)
-- All three are ancestors of this 5.15 tree.
+- `parse_package()` ← `sar_get_data()` ← `sar_probe()` (boot/probe,
+  `MAX_REGULATORY` = 3 times)
+- `update_sar_data()` ← `sar_get_device_mode()` (probe + ACPI notify
+  `0x80`) and `intc_reg_store()` (sysfs write)
+- `intc_data_show()` ← sysfs read of `intc_data`
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: **No `Fixes:` tag.** Buggy behavior dates to driver introduction
-/ 2019 PS-queue helpers, all in this tree.
+**Step 5.3: Callees**
+Record: `get_int_value()`, `devm_kcalloc()`. No locks, no I/O besides
+ACPI objects already passed in.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Mainline follow-ups on the same function (not in this tree):
-- `d5001f493fef` — tell mac80211 when the PS queue is empty
-  (`ieee80211_sta_set_buffered(..., false)`)
-- `636a883e2feef` — restore hardware PS buffering after an SP
-These are related U-APSD bugs, not prerequisites for this diff.
+**Step 5.4: Reachability**
+Record: Yes, from userspace on systems with ACPI ID `INTC1092`:
+- `DEVICE_ATTR_RO(intc_data)` is mode **0444** (`__DEVICE_ATTR_RO` →
+  0444 in `include/linux/device.h`).
+- Documented in `Documentation/ABI/testing/sysfs-driver-intc_sar` as
+  `/sys/bus/platform/devices/INTC1092:00/intc_data`.
+Unprivileged processes can read it. Triggering the *uninitialized* slots
+still needs malformed ACPI firmware; once those slots exist, a matching
+`device_mode` exposes leftover heap words.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Felix Fietkau is the mt76 maintainer and original author of this
-driver. This is a maintainer fix.
+**Step 5.5: Similar patterns**
+Record: Same file’s loop comment already required zeros. No sibling copy
+of this bug in the int1092 directory. The immediately preceding series
+patch did not zero the array (`devm_kmalloc_array`), so this follow-up
+is required to actually close the leak.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Patch **05/10**. Patches 01–03/09–10 target mt7915/mt7996 / MLO
-/ new HW TIM — **not needed**. Patch 04 sets wire EOSP in generic
-`mt76_release_buffered_frames()` (`tx.c`); mt7603 has its **own**
-`.release_buffered_frames` and only calls the generic helper when the
-driver PS queue is empty. This patch does not use new APIs or struct
-fields. **Can apply standalone.**
+## Phase 6: Local tree (this checkout only)
 
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+**Step 6.1: Does the buggy code exist here?**
 Record:
-- `b4 dig -c 697badc27a9b3` →
-  https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name
-- **v1 only** (no v2/v3)
-- Thread is the 10-patch series plus a kernel-test-robot mail
-- Robot error is on **patch 10 / patch 1** (`ieee80211_txq_aql_pending`
-  missing) — **unrelated** to this patch
-- No NAKs, no reviewer risk flags, no `Cc: stable` suggestion in the
-  thread
+- Tree: **`v7.3-rc4-27-gf0100363d8c37`**, `make kernelversion` =
+  **7.3.0-rc4**, `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`.
+- Driver **is** present. `parse_package()` / `update_sar_data()` /
+  `intc_data_show()` all exist.
+- Introducer `dcfbd31ef4bcf` is an ancestor (v5.15-era).
+- Current file already uses `devm_kcalloc()` because `f5eb833730c07` is
+  an ancestor of HEAD. That is **not** treated as “already selected”; it
+  only confirms the code and the fix belong to this lineage.
+- Parent `30c906cff490c` is also an ancestor, so the hunk’s
+  `devm_kmalloc_array` context exists in this history.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: `b4 dig -w`: To/Cc were **Felix Fietkau** and **linux-
-wireless@**. No extra reviewer SOB. Maintainer self-applied into
-wireless-next (listed in the 2026-08-06 wireless-next pull).
+**Step 6.2: Backport difficulty**
+Record: **Clean apply** onto the parent already in this tree (4-line
+allocator swap in one function). No conflicting refactor of this
+function after the parent besides this commit itself.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: OpenWrt mt76 users reported U-APSD stalls / **iPhone freezes**
-on MT7603 APs (openwrt/mt76#1080 / PR #1084). Testers said an EOSP-
-related change made iPhone freezes go away; remaining TX-retry/loss is
-the separate HW-buffering bug (series patch 07).
+**Step 6.3: Related fixes already here**
+Record: Patch 1 (devm conversion) is here. That conversion **does not**
+zero the array, so it does not substitute for this fix. No other info-
+leak fix on this path.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Series 01–10 as above. This commit is self-contained. Patch 06
-should be considered as a follow-up candidate (TIM never cleared); it is
-not required for this hunk.
+## Phase 7: Subsystem context
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: No evidence this fix was discussed on stable@ or previously
-rejected. UNVERIFIED that every stable archive was searchable
-(lore.kernel.org returned 403 for some URLs); `b4`/openwall/syzbot CI
-were used instead.
+**Step 7.1**
+Record: `drivers/platform/x86/intel/int1092/` — Intel BIOS Dynamic SAR
+for M.2 modem. Criticality: **PERIPHERAL / platform-specific**, but the
+sysfs node is world-readable, so the leak is a real userspace-visible
+security issue on those machines.
 
----
+**Step 7.2**
+Record: Low-churn mature driver (added 2021, occasional fixes).
+Maintainer: Shravan Sudhakar; applied by Ilpo Järvinen (pdx86). Config:
+`CONFIG_INTEL_SAR_INT1092`, depends on ACPI.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 8: Impact and risk
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `mt7603_release_buffered_frames`, `mt7603_ps_set_flags`,
-`mt7603_ps_skb_hdr`
+**Step 8.1: Who is affected**
+Record: Users of Intel platforms with ACPI device `INTC1092` and this
+driver loaded (WWAN SAR). Not universal; **driver/platform-specific**.
 
-**Step 5.2: TRACE CALLERS**
-Record: Assigned as `ieee80211_ops.release_buffered_frames` in this
-file. mac80211 calls it for **PS-Poll and U-APSD** from the RX/PS path
-(atomic). Reachable whenever an AP-mode STA uses power save.
+**Step 8.2: Trigger**
+Record: Probe parses BIOS ACPI DSM packages. Malformed/partial packages
+skip slots. Later, ACPI notify or `intc_reg` store calls
+`update_sar_data()`; any user can read `intc_data`. Firmware-dependent,
+but the skip path is intentional (not a theoretical dead branch).
+Unprivileged read of the attribute: **yes**.
 
-**Step 5.3: TRACE CALLEES**
-Record: `mt7603_wtbl_set_ps`, `mt7603_ps_tx_list` /
-`mt76_tx_queue_skb_raw`, `mt76_release_buffered_frames` (empty-PS-queue
-only), `ieee80211_sta_eosp`, `ieee80211_send_eosp_nullfunc` — all exist
-in this tree.
+**Step 8.3: Failure mode**
+Record: Kernel heap contents (a few integers) can be copied into a
+world-readable sysfs attribute. Severity: **HIGH** (info leak /
+security), not a panic. Matches the classic uninitialized-kmalloc-to-
+userspace pattern.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Client trigger (QoS-Null/PS-Poll) → mac80211 →
-`mt7603_release_buffered_frames`. **Yes, userspace/STA traffic triggers
-it.** Typical clients: phones with U-APSD.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Generic `mt76_queue_ps_skb()` in this tree still only sets
-`IEEE80211_TX_STATUS_EOSP` + MORE_DATA, not wire EOSP (mainline patch
-04). `mt7603_rx_loopback_skb()` sets `ieee80211_sta_set_buffered(...,
-true)` and never clears it (mainline patch 06). Same U-APSD family,
-different bugs.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** `mt7603_ps_set_more_data` and
-`mt7603_release_buffered_frames` in
-`drivers/net/wireless/mediatek/mt76/mt7603/main.c` are **byte-for-byte
-identical** to the parent of `697badc27a9b3`. Bug since ~2018/2019.
-
-Local tree: `p-5.15-2-g6703e5d2f3a29`, **5.15.221**. `git merge-base
---is-ancestor 697badc27a9b3 HEAD` → **not in this tree**.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply.** Same function bodies; needed APIs
-(`ieee80211_send_eosp_nullfunc`, `ieee80211_get_qos_ctl`,
-`IEEE80211_QOS_CTL_EOSP`, `IEEE80211_FRAME_RELEASE_UAPSD`) are in 5.15.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No related U-APSD EOSP/TIM/HW-rearm fixes on this file in this
-tree.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **wifi / mt76 / mt7603** (`CONFIG_MT7603E`). Criticality:
-**IMPORTANT** for users of that hardware (MT7603E / MT7628/MT7688 APs —
-very common home routers), not core mm/net.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature driver (since 5.0-era). This is a long-standing bug, not
-a regression in new code.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific:** AP (or GO) mode on MT7603/MT7628 with
-U-APSD (or PS-Poll) clients.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: STA enters power save; hardware redirects frames into
-`msta->psq`; STA sends a U-APSD trigger. Common for phones. Unprivileged
-wireless clients can trigger it.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **Downlink stall / client freeze** until the STA gives up
-(disconnect/retry). Not a kernel oops. Severity: **HIGH** for affected
-APs (connectivity loss), not CRITICAL kernel crash.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+**Step 8.4: Risk–benefit**
 Record:
-- **Benefit:** high for MT7603 AP users — restores U-APSD SP completion
-  so phones keep triggering.
-- **Risk:** low–medium (contained ~50-line logic in one ops callback; no
-  API/lock/core changes).
-- **Ratio:** benefit outweighs risk.
+- **Benefit:** High for affected hardware — closes a kernel-memory
+  disclosure through a documented 0444 sysfs ABI; implements the
+  behavior the function comment already promised.
+- **Risk:** Very low — one allocator flag, no locking, no ABI change, no
+  new features.
+- **Ratio:** Strongly favors taking the fix.
 
----
+## Phase 9: Synthesis
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 9.1: Evidence**
 
-**Step 9.1: COMPILE THE EVIDENCE**
+FOR:
+- Real uninitialized-heap info leak to userspace via sysfs
+- World-readable `intc_data` (0444)
+- Function comment already required zeros;
+  `kmalloc`/`devm_kmalloc_array` never provided them
+- Bug present since the driver was added (v5.15); code exists in this
+  7.3 tree
+- 4-line, obviously correct `devm_kcalloc()` switch
+- Reviewed and applied by the platform/x86 maintainer
+- Author CCed stable@; v4 series posted to the stable list
+- Prerequisite patch 1 is already in this tree
 
-**FOR:**
-- Real, user-visible stall (U-APSD SP never ends on the air)
-- Matches mac80211 driver contract
-- Present in this 5.15 tree since driver introduction
-- Functions identical to mainline parent → clean apply
-- Small, one file, no new APIs
-- Maintainer-authored, merged to mainline as `697badc27a9b3`
-- Corroborated by OpenWrt MT7603/iPhone freeze reports
+AGAINST:
+- Niche Intel WWAN SAR driver, not a core path
+- Needs malformed ACPI to leave holes (though that path is explicit)
+- Compile-tested only, no `Tested-by`
+- Committed message omitted `Fixes:` / `Cc: stable` (not a negative per
+  pipeline rules)
 
-**AGAINST:**
-- Not crash/UAF/security
-- Series 05/10 (other patches are separate bugs/chips)
-- Follow-ups 06–08 still missing here (incomplete *overall* U-APSD, but
-  this patch is a complete EOSP fix)
-- No extra reviewer tags
+UNRESOLVED:
+- Full Sashiko finding text (page did not return the patchset body)
+- Full verbatim Ilpo review mail (known: he asked to document the leak
+  path; then Reviewed-by + applied)
+- lore.kernel.org WebFetch returned 403; discussion reconstructed via
+  `b4 dig`, openwall, LKML archive, and spinics
 
-**UNRESOLVED:**
-- Direct lore.kernel.org HTTP often 403; thread recovered via `b4`
-- No explicit stable@ discussion found
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** (obvious kcalloc swap;
+   maintainer review; compile-tested)
+2. Real bug affecting users? **PASS** (heap data can reach sysfs)
+3. Important (crash/security/corruption/deadlock)? **PASS** —
+   security/info leak
+4. Small and contained? **PASS** — 8 lines in one function
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** — file, function, and
+   `devm_kmalloc_array` parent all exist here
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — protocol-correct; maintainer
-   merged; consistent with mac80211 docs and iwlwifi’s
-   `ieee80211_send_eosp_nullfunc` usage
-2. Fixes a real bug that affects users? **PASS** — stall / client freeze
-   on common AP chipsets
-3. Important issue? **PASS** — serious connectivity failure for U-APSD
-   STAs (not a panic, but production-breaking for those devices)
-4. Small and contained? **PASS** — one file, +63/−11
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean; APIs present
+**Step 9.3: Exception category**
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a normal
+**security/uninitialized-data** bugfix.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/build/docs exception. It is a **driver
-protocol bugfix**.
-
-**Step 9.4: DECISION**
-Backport to this 5.15 tree. The bug exists here; the fix is self-
-contained and applies cleanly. Companion commits `d5001f493fef` and
-`636a883e2feef` are worth later evaluation but are not required for this
-one.
-
----
+**Step 9.4: Decision**
+This tree is 7.3-rc4. The INT1092 SAR driver and the non-zeroed
+allocation-plus-`continue` parse loop are part of this lineage.
+Switching to `devm_kcalloc()` is the minimal, correct way to stop
+leftover slab contents from being matched in `update_sar_data()` and
+printed by `intc_data_show()`. Prerequisite `30c906cff490c` is already
+here, so the patch is self-contained for this tree. That is a stable-
+quality security fix.
 
 ### What the commit solves, and why it matters here
+`parse_package()` can skip malformed ACPI package entries and leave
+`device_mode_info[]` uninitialized. Those words can later be copied into
+`context->sar_data` and read through
+`/sys/bus/platform/devices/INTC1092:00/intc_data` (mode 0444). On 7.3
+this driver is present; without zeroing, that is a kernel info leak.
+`devm_kcalloc()` closes it with no behavioral change for well-formed
+firmware.
 
-mt7603 implements its own `.release_buffered_frames` because hardware
-redirects frames into a driver PS queue. That path tagged every frame
-with `MORE_DATA` and never set EOSP on the air. mac80211 only saw
-`ieee80211_sta_eosp()`, so the stack thought the SP ended while phones
-waiting for EOSP stopped triggering. On 5.15 APs using `CONFIG_MT7603E`,
-that is a real stall, not a cleanup.
-
-### Stable rules / risk vs benefit
-
-Surgical, obviously correct vs the documented U-APSD contract, no new
-APIs, clean apply. Risk is limited to this driver’s PS release path.
-Benefit is restoring downlink for power-save clients on a widely
-deployed chipset.
+### Stable rules / risk
+The change is four lines, maintainer-reviewed, and does not add APIs.
+Benefit is closing a userspace-visible leak; regression risk is
+essentially zero.
 
 ### Concerns
-
-Patches 06–08 (TIM clear, HW PS re-arm, TID filing) address **other**
-remaining PS bugs. They are not compile or semantic prerequisites for
-this hunk. Patch 04 is the analogous EOSP fix for chips that use generic
-`mt76_release_buffered_frames`; mt7603 only hits that when its PS queue
-is empty.
-
----
+Needs patch 1’s `devm_kmalloc_array` conversion — **already in this
+tree**. No other blockers.
 
 Verification:
-- [Phase 1] Parsed subject/body/tags: Link is 05/10; author Felix
-  Fietkau; no Fixes/Reported-by/Cc stable
-- [Phase 2] Diff: +63/−11 in `mt7603_release_buffered_frames`;
-  MORE_DATA+EOSP assignment; stop double SP end; QoS-Null for MMPDU
-- [Phase 2] Confirmed `IEEE80211_QOS_CTL_EOSP` is 0x0010 and
-  `ieee80211_get_qos_ctl()` returns `u8 *` to the first QoS byte
-- [Phase 2] Confirmed `ieee80211_send_eosp_nullfunc()` in 5.15 sets
-  `IEEE80211_TX_STATUS_EOSP` on the NDP; TX status clears `WLAN_STA_SP`
-- [Phase 3] blame: `c8846e101502` / `b126c8897435` / `b7001f46085e`; all
-  ancestors of HEAD
-- [Phase 3] `git merge-base --is-ancestor 697badc27a9b3 HEAD` → not
-  present
-- [Phase 3] Follow-ups on origin/master: `d5001f493fef`, `636a883e2feef`
-  only; no revert
-- [Phase 4] `b4 dig -c 697badc27a9b3`: v1 series, msgid
-  `20260801145334.1166751-5-nbd@nbd.name`
-- [Phase 4] `b4 dig -w`: linux-wireless@ + author only
-- [Phase 4] `b4 mbox`: 11 messages; robot fail is patch
-  10/`ieee80211_txq_aql_pending`, unrelated
-- [Phase 4] OpenWrt mt76#1084: EOSP-related change reported to stop
-  iPhone freezes
-- [Phase 5] ops hook `.release_buffered_frames =
-  mt7603_release_buffered_frames`; callers are mac80211 PS-Poll/U-APSD
-- [Phase 5] `ieee80211_send_eosp_nullfunc` exists and is exported in
-  this tree; iwlwifi calls it from TX/BH
-- [Phase 6] `make kernelversion` → 5.15.221; `git describe HEAD` →
-  p-5.15-2-g6703e5d2f3a29
-- [Phase 6] Byte-for-byte match of both functions vs `697badc27a9b3^`
-- [Phase 7] `CONFIG_MT7603E` present for MT7603E/MT7628
-- [Phase 8] Failure mode: downlink stall / client freeze, severity HIGH
-  for that hardware
-- UNVERIFIED: exhaustive stable@ archive search (lore HTTP 403); no
-  evidence of a prior stable rejection
+- [Phase 1] Parsed tags: Reported-by Sashiko; Reviewed-by/SOB Ilpo
+  Järvinen; no Fixes in the commit; original mail CCed stable@
+- [Phase 2] Diff: `devm_kmalloc_array` → `devm_kcalloc` in
+  `parse_package()` only
+- [Phase 2] Confirmed skip/`continue` loop and `update_sar_data()` copy
+  in `intel_sar.c`
+- [Phase 3] Introducer `dcfbd31ef4bcf` (v5.15-rc1) is ancestor of HEAD
+- [Phase 3] Parent `30c906cff490c` is ancestor of HEAD (`merge-base
+  --is-ancestor` exit 0)
+- [Phase 3] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 4] `b4 dig -c f5eb833730c07`: v4 2/2 at
+  patch.msgid.link/20260723-platx86-v4-2-93b4a178b595@cse.iitm.ac.in
+- [Phase 4] `b4 dig -a`: v1…v4; applied version is v4 (commit-message-
+  only change)
+- [Phase 4] `b4 dig -w`: pdx86 maintainers + stable@vger.kernel.org
+- [Phase 4] Cover letter: two bugfixes, compile-tested only; Ilpo
+  requested leak-path wording
+- [Phase 4] lore.kernel.org WebFetch: 403; used openwall/LKML/spinics
+  instead
+- [Phase 5] Call chain: `sar_probe` → `sar_get_data` → `parse_package`;
+  sysfs `intc_data_show` is 0444
+- [Phase 6] Buggy parse/sysfs path exists in this tree; kcalloc is the
+  correct fix for it
+- [Phase 8] Failure mode: kernel heap integers to userspace sysfs,
+  severity HIGH (info leak)
+- UNVERIFIED: verbatim Sashiko finding body; full Ilpo review email text
 
 **YES**
 
- .../net/wireless/mediatek/mt76/mt7603/main.c  | 74 ++++++++++++++++---
- 1 file changed, 63 insertions(+), 11 deletions(-)
+ drivers/platform/x86/intel/int1092/intel_sar.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/main.c b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
-index 0d7c84941cd0a..f8a43d9f72f95 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
-@@ -423,13 +423,33 @@ mt7603_sta_ps(struct mt76_dev *mdev, struct ieee80211_sta *sta, bool ps)
- 	mt7603_ps_tx_list(dev, &list);
- }
+diff --git a/drivers/platform/x86/intel/int1092/intel_sar.c b/drivers/platform/x86/intel/int1092/intel_sar.c
+index 7263114f0b3d0..f506155f35d4d 100644
+--- a/drivers/platform/x86/intel/int1092/intel_sar.c
++++ b/drivers/platform/x86/intel/int1092/intel_sar.c
+@@ -91,10 +91,10 @@ static acpi_status parse_package(struct wwan_sar_context *context, union acpi_ob
+ 	    item->package.count <= data->total_dev_mode)
+ 		return AE_ERROR;
  
-+static struct ieee80211_hdr *
-+mt7603_ps_skb_hdr(struct sk_buff *skb)
-+{
-+	return (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
-+}
-+
-+/*
-+ * Buffered frames can be recycled into the PS queue by mt7603_filter_tx(), so
-+ * both bits have to be assigned, not just set.
-+ */
- static void
--mt7603_ps_set_more_data(struct sk_buff *skb)
-+mt7603_ps_set_flags(struct sk_buff *skb, bool more_data, bool eosp)
- {
--	struct ieee80211_hdr *hdr;
-+	struct ieee80211_hdr *hdr = mt7603_ps_skb_hdr(skb);
-+
-+	if (more_data)
-+		hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
-+	else
-+		hdr->frame_control &= ~cpu_to_le16(IEEE80211_FCTL_MOREDATA);
-+
-+	if (!ieee80211_is_data_qos(hdr->frame_control))
-+		return;
+-	data->device_mode_info = devm_kmalloc_array(&context->sar_device->dev,
+-						    data->total_dev_mode,
+-						    sizeof(*data->device_mode_info),
+-						    GFP_KERNEL);
++	data->device_mode_info = devm_kcalloc(&context->sar_device->dev,
++					      data->total_dev_mode,
++					      sizeof(*data->device_mode_info),
++					      GFP_KERNEL);
+ 	if (!data->device_mode_info)
+ 		return AE_ERROR;
  
--	hdr = (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
--	hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
-+	if (eosp)
-+		*ieee80211_get_qos_ctl(hdr) |= IEEE80211_QOS_CTL_EOSP;
-+	else
-+		*ieee80211_get_qos_ctl(hdr) &= ~IEEE80211_QOS_CTL_EOSP;
- }
- 
- static void
-@@ -442,7 +462,10 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
- 	struct mt7603_dev *dev = hw->priv;
- 	struct mt7603_sta *msta = (struct mt7603_sta *)sta->drv_priv;
- 	struct sk_buff_head list;
--	struct sk_buff *skb, *tmp;
-+	struct sk_buff *skb, *tmp, *last;
-+	bool eosp_null, uapsd;
-+	u16 pending = 0;
-+	u8 last_tid;
- 
- 	__skb_queue_head_init(&list);
- 
-@@ -458,20 +481,49 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
- 
- 		skb_set_queue_mapping(skb, MT_TXQ_PSD);
- 		__skb_unlink(skb, &msta->psq);
--		mt7603_ps_set_more_data(skb);
- 		__skb_queue_tail(&list, skb);
- 		nframes--;
- 	}
-+
-+	skb_queue_walk(&msta->psq, skb)
-+		pending |= BIT(skb->priority);
- 	spin_unlock_bh(&dev->ps_lock);
- 
--	if (!skb_queue_empty(&list))
--		ieee80211_sta_eosp(sta);
-+	last = skb_peek_tail(&list);
-+	if (!last) {
-+		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
-+					     more_data);
-+		return;
-+	}
-+
-+	/*
-+	 * End the service period here instead of passing the remaining frame
-+	 * budget on to mt76_release_buffered_frames(), which would signal the
-+	 * end of the same service period a second time.
-+	 */
-+	uapsd = reason == IEEE80211_FRAME_RELEASE_UAPSD;
-+	more_data |= !!(pending & tids);
-+
-+	skb_queue_walk(&list, skb)
-+		mt7603_ps_set_flags(skb, skb != last || more_data,
-+				    skb == last && uapsd);
-+
-+	/*
-+	 * EOSP lives in the QoS control field, so a bufferable MMPDU cannot
-+	 * terminate a U-APSD service period on its own. In that case mac80211
-+	 * has to append a QoS-Null frame, which ends the SP through its tx
-+	 * status.
-+	 */
-+	eosp_null = uapsd &&
-+		    !ieee80211_is_data_qos(mt7603_ps_skb_hdr(last)->frame_control);
-+	last_tid = __fls(tids);
- 
- 	mt7603_ps_tx_list(dev, &list);
- 
--	if (nframes)
--		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
--					     more_data);
-+	if (eosp_null)
-+		ieee80211_send_eosp_nullfunc(sta, last_tid);
-+	else
-+		ieee80211_sta_eosp(sta);
- }
- 
- static int
 -- 
 2.53.0
 
