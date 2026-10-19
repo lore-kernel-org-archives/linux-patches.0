@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBFB5172EE;
-	Mon, 19 Oct 2026 13:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF0A50EC0D;
+	Mon, 19 Oct 2026 13:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418111; cv=none; b=N1mpOUDpul4bEMQDztboLbk+yk5lBfHLUB71b4RbDJZUHLSvOF/eUt/X/tlAEp+fWRdGku9p0NpfSAXLwBbursHwQpHBLkUiIZ2SVVa0Lrx4hG2aIRwAfy81AJGOkWuCQc9sdRgeQXiwLarlX1VGfc6YzYm4J25XWiIboaelBO4=
+	t=1792418113; cv=none; b=GHY62tp9rDYPULZGa3lRraPr1erEStziZqMw/dGN0iQ7WQJmBEOXbL059fWuDp1OHuwgyM7eRTae2LNge9YJszf37T6vtj9j3qJ7g8Ubge57DeliziRbi7lzSVk4IKUtknrE/c2hYF7fQe4yJYnY2ypTKvPYZRIRAb28FuDfFfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418111; c=relaxed/simple;
-	bh=A0NjEg9PM04akK49RXHb9ikpdnYdT1NI2cAjgu+MeV4=;
+	s=arc-20240116; t=1792418113; c=relaxed/simple;
+	bh=ob6SbSxU6KL0J9LUBotDK+ahtRmLaWxphDpFbG+VLI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nDYjqEM7UkrOTmU4Hhqiz0iq6ch+Sm0MADlYk/aaqEmx82P3BNAclg9FaNQ5OnuqUhxVe1Wj31vmSGwAnmCo444hYrVOKfm4+EALkfEy/DLOlf7jUVr8iO7Dab8BIea4neZkNsKkNirHQPpMGAAuTwCYZ2lVvdUAGSXmpZ5zYOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kDq3GAs9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gGWXoh7mIVxGoZQfXiNy6F9mvFoUVugygls9W88CTEC9/a7Fd3eDYU92z0B5U4qGwf0tPFYMxybLNgXSGl177wNxukgGFzBtEaMe+MX62j5eTNKLIxP72H3qwWmUNlb/EvtEKjMRZvICm9ZOgsdR4NJCOhgxsAnC/mvyjdNVOCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jYEmRCMW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kDq3GAs9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508731F000C4;
-	Mon, 19 Oct 2026 13:55:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jYEmRCMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F411F000C7;
+	Mon, 19 Oct 2026 13:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418109;
-	bh=MWIDjHAuNsyfVsNMCC8w5XczBjDeiBQ7zVYCKN4liAk=;
+	s=k20260515; t=1792418111;
+	bh=Qq0Sy4dDbS/+hJNRzm9nfc0E5/mBfh7kyOCGmA57em8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kDq3GAs92HH8ErKz2mUlw/1KHbTm2TxJy4didgBuXZmcssXdWf2jq26N31PYHUcEG
-	 yxjfJx5j6Arr4u//ho7tJanfPHs5P6gwLcvl7220yOmY90vGab7wIlYQgbpnIms/E9
-	 ZAGkzIYPSHRVVza/EoH2dccg7sy2uyK34bp+OFmOGCZy69I7LebzSn+TyWkAjzjh7u
-	 A0yxu6t1dD59MK1rz23gKI9p+s/Q2AkmU6CgGp4QlXcA4/mvMbX3ESsYv6Imx4Sp0c
-	 5JKluaQ5+xxNkbvRBy+m9+eVUwcz/FUKqdxmvX2vKSIqKv1deoqUNMtRk7TDWFjsMD
-	 dlTtWE99CWa9Q==
+	b=jYEmRCMWJJWo+Exu7ri6WyQT4YF+Xlvb8KHA7L9skMw4fcJ+ZAKM9djxnrombNjVI
+	 ytSs52coqAZ+ALwbFW30z+v4Diw5ZUqzqWAurSwQRU/uePUXi1cVkAx4xSdtT+OuvG
+	 42h138CeES7TXPA0vUWAMHndjfqzlBXLuPIPIm6Y7q6z2Yd/g/dhbVGT4qXYlQdsaT
+	 Qy3BHMRgzMABCuPoPRwvKhoCEP+pIrSbUrkM+8gRb4r+gsWkcvHZyMfDpCUzcDmwiR
+	 orlidJxQtp5iHH8NJcxqdBvVRZX8v0boXYkxM95hheC4a+lByJURil3wqwmmB2JdTY
+	 N5XrP0OdEgwGw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Garrett Blackmon <garrett@blackmon.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	tglx@kernel.org,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Fix speakers on ASUS ROG Zephyrus G14 GA403UM
-Date: Mon, 19 Oct 2026 09:45:09 -0400
-Message-ID: <20261019135441.1420968-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] perf/x86/intel/uncore: Fix PCI PMU cleanup on setup failure
+Date: Mon, 19 Oct 2026 09:45:10 -0400
+Message-ID: <20261019135441.1420968-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,396 +60,459 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Garrett Blackmon <garrett@blackmon.dev>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit 140fe610af607fd70da95c447943fc2690855519 ]
+[ Upstream commit 003267cb94e21d762eb72d6977d84f44f1705bb7 ]
 
-The GA403UM (SSID 1043:1044) uses the same ALC285 codec + dual CS35L56
-I2C amplifier topology as the GA403U and GA403W variants, which already
-have quirk entries (1043:1b13, 1043:1024). Without the quirk, the
-woofers sit on a separate DAC from the tweeters, so the hardware volume
-control only scales part of the speaker system and the headset
-microphone pins are not configured.
+When uncore_pci_pmu_register() fails, pmu->boxes[die] is set to NULL
+before returning.  In the uncore_pci_remove() path, this causes
+uncore_pci_pmu_unregister() to be skipped entirely, leaking
+pmu->activeboxes.  In the uncore_bus_notify() path,
+uncore_pci_pmu_unregister() may still be called and must exit early
+when pmu->boxes[die] is NULL to avoid a NULL pointer dereference, and
+to ensure activeboxes is only decremented for a previously active box.
 
-Apply the existing ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC fixup to the
-GA403UM as well.
+Additionally, since pci_get_drvdata() returns NULL on registration
+failure, uncore_pci_remove() can no longer treat NULL drvdata as an
+indicator of an auxiliary PCI device.  Remove the associated
+WARN_ON_ONCE().
 
-Signed-off-by: Garrett Blackmon <garrett@blackmon.dev>
-Link: https://patch.msgid.link/20260807150708.33785-1-garrett@blackmon.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://sashiko.dev/#/patchset/20260512233048.9577-1-zide.chen@intel.com?part=1
+Link: https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line PCI SSID quirk for an existing Realtek fixup. The
-local tree is **6.12.111** (`pending-6.12`, `p-6.12-3-g710455e2077bb`).
-The GA403U fixup chain is already here; SSID `1043:1044` is not.
+The 6.18.53 file matches the pre-fix code exactly, so this is a clean,
+self-contained error-path leak and NULL-deref fix. Full phase
+walkthrough follows.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[ALSA: hda/realtek] [Fix] speakers on ASUS ROG Zephyrus G14
-GA403UM`
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [perf/x86/intel/uncore] [fix] [PCI PMU cleanup on setup failure]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Garrett Blackmon <garrett@blackmon.dev>` (author)
-- `Link:
-  https://patch.msgid.link/20260807150708.33785-1-garrett@blackmon.dev`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
-- No `Fixes:` tag (expected)
-- No `Cc: stable` (expected; not a negative)
-- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:`
-- Ignore pipeline `Signed-off-by: Sasha Levin` if present; it is not on
-  the mainline commit `140fe610af607`
+- Signed-off-by: Zide Chen (author)
+- Signed-off-by: Peter Zijlstra (Intel) (perf/x86 maintainer)
+- Reviewed-by: Dapeng Mi (Intel uncore reviewer)
+- Link: https://sashiko.dev/#/patchset/20260512233048.9577-1-
+  zide.chen@intel.com?part=1
+- Link:
+  https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
+- No Fixes: tag (expected)
+- No Reported-by / Tested-by / syzbot
+- No Cc: stable (expected)
+- Ignore: [Upstream commit 003267cb94e21d762eb72d6977d84f44f1705bb7] and
+  Sasha Levin SOB (pipeline)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** GA403UM (SSID `1043:1044`) has ALC285 + dual CS35L56 I2C
-  amps, same topology as GA403U (`1043:1b13`) and GA403W (`1043:1024`).
-- **Symptom:** Without the quirk, woofers are on a different DAC from
-  tweeters, so hardware volume only scales part of the speaker system;
-  headset-mic pins are not configured.
-- **Root cause:** Missing `SND_PCI_QUIRK` entry; the machine never gets
-  `ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC`.
-- **Version info:** None in the message. Commit date is 2026-08-07
-  (after v6.12, 2024-11-17).
+- Bug: when `uncore_pci_pmu_register()` fails, `pmu->boxes[die]` is
+  NULLed and the box is freed, but `pmu->activeboxes` stays incremented.
+- Symptoms: (1) `uncore_pci_remove()` skips unregister because drvdata
+  is NULL → `activeboxes` leak; (2) `uncore_bus_notify()` still calls
+  unregister → NULL deref of `box`; (3) false `WARN_ON_ONCE()` because
+  NULL drvdata is no longer uniquely “extra PCI device”.
+- Version info: none in the message. Code dates to 2020.
+- Root cause: incomplete error-path rollback in
+  `uncore_pci_pmu_register()`, and unregister not tolerating a NULL box.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. It is an explicit hardware-quirk fix for broken
-speakers/headset mic.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. Explicit leak + NULL-deref + false-WARN fix. The
+“remove WARN_ON” piece is diagnostic, not a new feature.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- Mainline file: `sound/hda/codecs/realtek/alc269.c` (`+1` / `-0`)
-- Function/table: `alc269_fixup_tbl[]`
-- Scope: single-file, one-line PCI quirk addition
+- File: `arch/x86/events/intel/uncore.c` (+4 / −1)
+- Functions: `uncore_pci_pmu_register()`, `uncore_pci_pmu_unregister()`,
+  `uncore_pci_remove()`
+- Scope: single-file surgical fix (5 lines)
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Before:** SSID `1043:1044` does not match; generic auto-parse leaves
-  bass speaker NID `0x17` on a separate DAC and does not set headset-mic
-  pins `0x19`/`0x1b`.
-- **After:** That SSID selects `ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC`,
-  which:
-  1. Sets pins `{0x19, 0x03a11050}` and `{0x1b, 0x03a11c30}`
-  2. Chains to `ALC285_FIXUP_ASUS_GA403U_I2C_SPEAKER2_TO_DAC1`
-     (`alc285_fixup_speaker2_to_dac1` forces NID `0x17` onto
-     DAC1/`0x02`)
-  3. Chains to `ALC285_FIXUP_ASUS_GA403U` (inv-dmic only if codec is not
-     ALC285, for SSID reuse)
-- Path: HDA probe / `patch_alc269()`, not an error path.
+- Hunk 1 (`uncore_pci_pmu_register`): first-box `uncore_pmu_register()`
+  failure already NULLed `boxes[die]`, exited and freed the box, but
+  left `activeboxes` incremented. After: `atomic_dec(&pmu->activeboxes)`
+  on that path.
+- Hunk 2 (`uncore_pci_pmu_unregister`): previously always used `box` and
+  decremented `activeboxes`. After: return immediately if `box` is NULL
+  (no deref, no bogus decrement).
+- Hunk 3 (`uncore_pci_remove`): drop `WARN_ON_ONCE(i >=
+  UNCORE_EXTRA_PCI_DEV_MAX)` when drvdata is NULL.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Hardware workaround (PCI SSID quirk).** Missing table entry
-for a shipped laptop SKU. Not UAF/race/leak.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- Obviously correct: reuse of an existing, already-shipped fixup.
-- Minimal: one `SND_PCI_QUIRK` line.
-- Regression risk: very low; the entry matches only `vendor 0x1043, SSID
-  0x1044`. `0x1044` is unused in this tree’s Realtek quirk table.
-- SSID-reuse note: `alc285_fixup_asus_ga403u` already guards non-ALC285
-  hardware that reused `0x1b13`. This new ID is a distinct SSID, not
-  that reuse case.
+- Category: error-path resource leak + NULL pointer dereference (and a
+  false WARN).
+- Mechanism: `atomic_inc_return(&pmu->activeboxes)` runs before
+  `uncore_pmu_register()`. On failure the box is torn down but the
+  counter is not. Discovery/`bus_notify` still looks up the PMU by PCI
+  identity and calls unregister, which does `uncore_box_exit(box)` on
+  NULL (`box->flags`).
+- Leak consequence: the next box of the same PMU sees `activeboxes > 1`
+  and skips `uncore_pmu_register()`, so the PMU never appears in perf.
+
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Quality: obviously correct. Decrement matches the increment; NULL
+  guard is the standard pattern; no API/data-structure change.
+- Regression risk: very low. Sashiko noted that PCI probe failure does
+  not call `remove()`, so the WARN removal is not strictly required for
+  that path. That only drops a diagnostic; it does not create a crash.
+  The NULL check is required for `uncore_bus_notify()`, which is
+  independent of `remove()`.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- Insertion sits between existing ASUS entries `0x103f` (TX300, 2013)
-  and `0x1054` (G614, 2025 backport).
-- Buggy “code” is absence of `1043:1044`, not a later regression in
-  shared logic.
-- The fixup being applied was introduced by `0672b017324b1` (“Fixes for
-  Asus GU605M and GA403U sound”, 2024-04-18) and is in this tree.
-- Earlier `c33f0d4fcfe07` (2024-03-30) added CS35L56 laptop quirks and
-  the GA403U SSID-reuse comment; also in this tree.
+- Buggy register error path: `16fa64315c1bd` (“Factor out
+  uncore_pci_pmu_register()”), Kan Liang, 2020-09-14. First mainline:
+  v5.10-rc1.
+- Unregister without NULL check: `cdcce92a3a03bc` (2020).
+- WARN_ON_ONCE: `899396cf7b4b31` (Yan Zheng, 2013).
+- Long-lived code, present in this 6.18 tree.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. The functional prerequisite is `0672b017324b1`,
-present here (`git merge-base --is-ancestor` → yes).
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Introducer is `16fa64315c1bd`, which **is** an
+ancestor of v6.18.53.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
 Record:
-- Related in this tree: `c33f0d4fcfe07`, `0672b017324b1`.
-- Sibling mainline quirk `cbd46cbc5470f` (GA403W `1043:1024`, 2026-01)
-  is **not** in this tree. It is a parallel SKU entry, not a
-  prerequisite for `1043:1044`.
-- Candidate `140fe610af607` is **not** an ancestor of HEAD.
-- This 6.12 tree already backports many similar one-line Realtek quirks
-  (recent log is almost entirely `Add quirk for …`).
-- Standalone: one table line; no series (`patch X/Y`).
+- This is v3 1/8 of “PMU setup robustness fixes”.
+- Series: 1/8 this fix; 2/8 refcnt cleanup; 3/8 init_box errors; 4/8
+  keep PCI PMUs if MMIO/MSR alloc fails; 5/8 factor box setup; 6–8
+  flags/lazy setup.
+- 4/8 (`d623e292c6a4c`) is already in v6.18.53. 2/8 and 5/8 are not.
+- This patch does not depend on 2/8+; later patches build on it.
+  Standalone.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Garrett Blackmon has this single Realtek commit on
-`origin/master`. Takashi Iwai applied it the same day. Author is a
-hardware user, not the subsystem maintainer; maintainer acked by
-applying.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Zide Chen is an active Intel uncore contributor on this tree
+(die-id, discovery, IMC events, etc.). Maintainer path: Peter Zijlstra
+SOB. Dapeng Mi Reviewed-by.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- Needs `ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC` and
-  `alc285_fixup_speaker2_to_dac1` — both exist in
-  `sound/pci/hda/patch_realtek.c`.
-- Needs CS35L56 HDA I2C sidecar — `sound/pci/hda/cs35l56_hda_i2c.c` is
-  present.
-- Does **not** need the GA403W `0x1024` entry.
-- Cannot apply the mainline diff as-is: mainline file is
-  `sound/hda/codecs/realtek/alc269.c` (split ~2025-07). This tree still
-  has `sound/pci/hda/patch_realtek.c`. Backport is the same one line at
-  the same SSID sort position (after `0x103f`, before `0x1054`).
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: No missing helpers or types. Parent of the candidate and
+`v6.18.53:arch/x86/events/intel/uncore.c` are byte-identical (same
+sha256). Applies standalone. Dry-run `patch -p1` against the v6.18.53
+file succeeded.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c 140fe610af607` →
-  https://patch.msgid.link/20260807150708.33785-1-garrett@blackmon.dev
-- `b4 dig -a`: **v1 only** (2026-08-07), no later revisions.
-- Thread: author submission + Takashi Iwai “Applied to for-next branch
-  now. Thanks.”
-- No NAK, no stable nomination in-thread, no risk discussion.
+- `b4 dig -c 540120722e9bf`: `[PATCH V3 1/8] perf/x86/intel/uncore: Fix
+  PCI PMU cleanup on setup failure`
+- URL:
+  https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
+- lore.kernel.org WebFetch returned 403; full thread saved via `b4 dig
+  -m` (26 messages).
+- V1/V2 existed; this patch was **new in v2** after Sashiko review of
+  v1. v3 only added Reviewed-by. Applied version is latest.
+- Cover letter: “PCI PMU cleanup on setup failure has activeboxes leaks
+  and potential NULL pointer dereference in error paths.”
+- No NAK. tip-bot applied it to perf/core (2026-06-30).
+- Sashiko on v3: questioned WARN_ON removal (Medium); two High notes
+  were pre-existing UAF/races, not introduced by this patch. No stable
+  NAK.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc `tiwai@suse.com`, `perex@perex.cz`, `linux-
-sound@vger.kernel.org`. ALSA maintainers were on the patch; Iwai applied
-it.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: `b4 dig -w` recipients: Peter Zijlstra, Ingo Molnar, Arnaldo,
+Namhyung Kim, Ian Rogers, Adrian Hunter, Alexander Shishkin, Andi Kleen,
+Stephane Eranian, linux-kernel, linux-perf-users, Dapeng Mi. Dapeng
+Reviewed-by on the committed patch; Peter Zijlstra SOB.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No bugzilla/syzbot link. The commit itself is the user report
-(author is fixing their GA403UM). Severity from the text: partial
-speaker volume + unconfigured headset mic.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Found by code review (Sashiko on v1 → new
+patch 1 in v2). Still a real, reachable error path, not a theoretical
+rewrite.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone v1. Related sibling is GA403W `cbd46cbc5470f` (not
-required). No follow-up on `origin/master` that changes `1043:1044`.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: 8-patch robustness series. This 1/8 is self-contained. 4/8
+already landed in this 6.18.53 tree. Later patches are larger (broken-
+state, lazy MSR/MMIO) and are not required for this leak/NULL-deref fix.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned HTTP 403. **UNVERIFIED**
-whether it was discussed on stable@. Not used for the verdict.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable WebFetch returned 403. UNVERIFIED whether
+stable@ discussed it. Not used as a NO signal (absence of Cc: stable is
+expected).
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: No function body change. Adds one entry to `alc269_fixup_tbl[]`.
-Consumed fixups: `ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC` →
-`alc285_fixup_speaker2_to_dac1` → `alc285_fixup_asus_ga403u`.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `uncore_pci_pmu_register`, `uncore_pci_pmu_unregister`,
+`uncore_pci_remove`. Related: `uncore_pci_probe`, `uncore_bus_notify`,
+`uncore_pci_pmus_register`, `uncore_pci_sub_driver_init`.
 
-**Step 5.2: TRACE CALLERS**
+Step 5.2: TRACE CALLERS
 Record:
-- `patch_alc269()` calls `snd_hda_pick_fixup(..., alc269_fixup_tbl,
-  alc269_fixups)` at probe (`sound/pci/hda/patch_realtek.c`).
-- `patch_alc269` covers the ALC269 family, including ALC285
-  (`0x10ec0285`).
-- Trigger: HD-audio codec probe on this laptop, not interrupt/hot path.
+- `uncore_pci_pmu_register`: `uncore_pci_probe` (legacy
+  `uncore_pci_driver`), `uncore_pci_sub_driver_init` (PCI sub-devices),
+  `uncore_pci_pmus_register` (discovery; return value ignored).
+- `uncore_pci_pmu_unregister`: `uncore_pci_remove`, `uncore_bus_notify`.
+- `uncore_bus_notify`: PCI `BUS_NOTIFY_DEL_DEVICE`. Discovery always
+  registers this notifier.
+- Context: driver init / PCI probe / PCI device deletion. Not a syscall
+  hot path, but boot and hot-unplug on Intel systems with uncore
+  (default `y`).
 
-**Step 5.3: TRACE CALLEES**
-Record: `snd_hda_pick_fixup` matches PCI SSID, then pin overrides +
-`snd_hda_override_conn_list(codec, 0x17, …)` so bass/woofer shares DAC1
-with the main speakers.
+Step 5.3: TRACE CALLEES
+Record:
+- `uncore_pmu_register()` → `perf_pmu_register()` (can fail: ENOMEM,
+  sysfs/device_add, name collision).
+- `uncore_box_exit()` at v6.18.53: `test_and_clear_bit(...,
+  &box->flags)` — NULL `box` is a hard oops.
+- `kfree(NULL)` is safe; the crash is `uncore_box_exit`.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: PCI/HDA enumeration → Realtek codec probe → `patch_alc269` →
-quirk table. Reachable on every boot of a GA403UM. Not a syscall attack
-path; it is the normal audio device path.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record:
+- Modern Intel (no `uncore_pci_driver`): `uncore_pci_init` →
+  `uncore_pci_pmus_register` → register (retval ignored) →
+  `bus_register_notifier`. Failed first-box `perf_pmu_register` + later
+  `BUS_NOTIFY_DEL_DEVICE` → `uncore_pci_find_dev_pmu_from_types` still
+  finds the PMU → unregister(NULL) → oops.
+- Same PMU, later boxes: `activeboxes > 1` skips `uncore_pmu_register` →
+  uncore PMU missing from perf.
+- Reachable without a special debug option.
+  `CONFIG_PERF_EVENTS_INTEL_UNCORE` defaults to y on Intel+PCI.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same fixup already used for `0x1043, 0x1b13` (“ASUS
-U41SV/GA403U”). This commit extends that pattern to another SKU. This
-tree regularly takes the same class of one-line quirk.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: MSR/MMIO setup is a different model; this series later factors
+PCI lazy registration for those paths. No duplicate of this exact PCI
+error-path bug in-tree. 2/8 adds refcnt decrement in unregister and is a
+follow-up cleanup, not a prerequisite.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes, as a missing SSID.
-- Tree: 6.12.111 / `pending-6.12`.
-- File: `sound/pci/hda/patch_realtek.c`.
-- Fixup IDs and implementations are present (lines ~7529, ~6831,
-  ~10586–10618).
-- `0x1b13` is present (line 11257). `0x1044` is **not**.
-- Candidate `140fe610af607` is not an ancestor of HEAD.
-- Hardware is a 2026 G14 SKU; 6.12 is LTS, so users can run this kernel
-  on that laptop.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- Local tree: `v6.18.53-5049-g0f0bdc2b0dffb`, `make kernelversion`
+  6.18.53.
+- At v6.18.53, `uncore_pci_pmu_register` still omits `atomic_dec` on
+  `uncore_pmu_register()` failure; unregister has no NULL check;
+  `WARN_ON_ONCE` is present. Bug exists here.
+- Introduced v5.10-rc1; not after 6.18 branched.
+- `git merge-base --is-ancestor 16fa64315c1bd v6.18.53` → yes.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Raw mainline patch does not apply (file was split to
-`sound/hda/codecs/realtek/alc269.c` after 6.12). Functional backport is
-trivial: insert the same `SND_PCI_QUIRK` between `0x103f` and `0x1054`
-in `patch_realtek.c` (lines 11185–11186). No data-structure or API gap.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Expected apply: **clean**. Candidate parent `uncore.c` sha256
+equals v6.18.53 `uncore.c`. Dry-run apply succeeded.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: GA403U fixup yes; this SSID no. No alternate GA403UM fix. `git
-grep 0x1044` in `patch_realtek.c` is empty.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No other “PCI PMU cleanup” fix in v6.18.53. 4/8 of the same
+series is already in 6.18.53 (`d623e292c6a4c`). That does not fix this
+leak/NULL deref.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `sound/pci/hda` Realtek HD-audio. **IMPORTANT** (laptop audio),
-not core mm/fs. Maintainers: Takashi Iwai, Jaroslav Kysela
-(`MAINTAINERS` SOUND). Config: `SND_HDA_CODEC_REALTEK`.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [arch/x86/events/intel uncore PMU] [IMPORTANT — default-on Intel
+server/workstation perf, not core mm/sched, but widely enabled]
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Very active quirk table; recent 6.12 backports are mostly
-device-specific `SND_PCI_QUIRK` additions. Mature pattern, low novelty.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature (2012+) with ongoing platform adds (PTL, WCL, etc.). This
+bug is old incomplete error handling, not a brand-new driver.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver/platform-specific: ASUS ROG Zephyrus G14 GA403UM, SSID
-`1043:1044`, ALC285 + CS35L56. No effect on other machines.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Intel x86 with `CONFIG_PERF_EVENTS_INTEL_UNCORE` (default y).
+Driver-specific / config-default-on. Discovery platforms (newer Xeon)
+hit the bus-notify NULL deref path.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Every boot / any speaker volume or headset-mic use on that
-model. Unprivileged user using audio. Not a race.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
 Record:
-- Failure: woofers do not follow master volume (split DAC); headset mic
-  pins unconfigured.
-- **Severity: MEDIUM–HIGH** for that hardware (laptop audio effectively
-  broken), not a kernel oops. This is the class of “device doesn’t work
-  correctly without a quirk.”
+- Trigger: first box of a PCI uncore PMU fails `perf_pmu_register()`
+  (ENOMEM, sysfs failure, name clash).
+- Not every boot, but a real error path. Discovery ignores register
+  failure and still installs the notifier.
+- Unprivileged users do not trigger it directly; PCI unbind/hotplug and
+  boot setup do. Missing PMU is user-visible to perf.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
 Record:
-- **Benefit:** High for GA403UM owners on 6.12.y (working speakers +
-  headset pins).
-- **Risk:** Very low (one SSID line, existing fixup, SSID unused).
-- **Ratio:** Strongly favors backport. Matches the documented hardware-
-  quirk exception.
+- NULL deref in `uncore_box_exit(NULL)` on device delete → oops.
+  **HIGH** (crash on error + unplug).
+- `activeboxes` leak → later boxes skip PMU registration → uncore events
+  absent. **MEDIUM–HIGH**.
+- False WARN_ON. **LOW**.
+- Overall: **HIGH** (crash on a reachable error path).
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: high — prevents oops and silently missing uncore PMUs after a
+  failed first-box register.
+- Risk: very low — 5 lines, no locking/API change, WARN removal is the
+  only nit.
+- Ratio: strongly favorable.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 9.1: COMPILE THE EVIDENCE
 
-FOR:
-- Real user-visible bug: incomplete speaker volume and unconfigured
-  headset mic.
-- One-line `SND_PCI_QUIRK` using a fixup already in 6.12.
-- Prerequisite `0672b017324b1` is in this tree; CS35L56 HDA I2C is in
-  this tree.
-- ALSA maintainer applied v1 the same day; no NAK.
-- Classic stable exception: PCI ID / hardware quirk for an existing
-  driver.
-- This tree already carries the same fixup for GA403U (`0x1b13`).
-- Insertion point exists; `0x1044` is free.
+FOR backporting:
+- Real leak of `pmu->activeboxes` on `uncore_pmu_register()` failure
+  (code at v6.18.53 matches).
+- Real NULL deref: discovery `uncore_pci_pmus_register()` ignores
+  failure, `uncore_bus_notify` still unregisters,
+  `uncore_box_exit(NULL)` oopses.
+- Same leak causes later boxes to skip `uncore_pmu_register()`, so the
+  PMU never shows up in perf.
+- 5-line, obviously correct, no new API.
+- Applies cleanly; file is identical to the pre-fix version.
+- Bug present since v5.10; this 6.18 tree has it.
+- Reviewed by Dapeng Mi; SOB Peter Zijlstra.
+- Patch 1/8 is standalone; later series members not required.
+- Same series 4/8 already in this 6.18.53 tree.
 
 AGAINST:
-- Mainline patch path differs (`alc269.c` vs `patch_realtek.c`); needs a
-  one-line backport, not a raw apply.
-- No `Reported-by` besides the author; no syzbot/CVE.
-- Not a crash/security bug.
-- Sibling `0x1024` (GA403W) is absent — irrelevant; that SKU is
-  independent.
+- Trigger is an error path (`perf_pmu_register` failure), not a always-
+  on boot crash.
+- No user/syzbot report.
+- Sashiko: WARN_ON removal is weakly justified for the `pci_driver`
+  probe/remove model (probe failure does not call remove). Diagnostic-
+  only concern.
+- Later 2/8 refcnt cleanup is related but separate; not a blocker.
 
 UNRESOLVED:
-- Stable@ lore search (HTTP 403).
-- WebFetch of lore also 403; thread recovered via `b4 dig -m`.
+- Stable mailing list search via lore HTTP was 403 (mbox/review still
+  obtained via b4).
+- How often `perf_pmu_register` actually fails in production:
+  unverified, but ENOMEM/sysfs failure is a standard, reachable errno
+  path.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — reuse of in-tree fixup;
-   maintainer applied.
-2. Fixes a real bug that affects users? **PASS** — broken volume/headset
-   on GA403UM.
-3. Important issue? **PASS** — hardware-quirk exception; audio broken on
-   that laptop, not a panic.
-4. Small and contained? **PASS** — 1 line.
-5. No new features or APIs? **PASS** — existing quirk ID only.
-6. Can apply to the local tree? **PASS** with trivial path adjustment
-   (`patch_realtek.c`, same context).
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — counter rollback + NULL
+   guard; maintainer SOB; Dapeng review; in mainline perf/core.
+2. Fixes a real bug that affects users? **PASS** — leak, skipped PMU
+   registration, oops on device delete.
+3. Important issue? **PASS** — NULL deref oops; missing uncore PMU.
+   Severity HIGH.
+4. Small and contained? **PASS** — 5 lines, one file.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — clean apply to v6.18.53
+   `uncore.c`.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Hardware quirk / PCI SSID addition to an existing driver.**
-Automatic YES class.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
+bugfix; does not need an exception.
 
-**Step 9.4: MAKE YOUR DECISION**
-The missing SSID is present as a gap in this 6.12 tree, the target fixup
-chain is complete, and the change cannot affect any other device.
-Backport it.
+Step 9.4: MAKE YOUR DECISION
+This belongs in 6.18.y: the buggy rollback is in this tree, the fix is
+surgical, and the failure mode is a kernel oops plus a stuck/missing PCI
+uncore PMU. WARN_ON removal is a minor diagnostic tradeoff, not a reason
+to reject the leak and NULL-deref fix.
 
-------------------------------------------------
-What the commit solves for this tree
-------------------------------------------------
-On GA403UM, Linux never applies the GA403U speaker/mic fixup. Master
-volume then moves only tweeters (woofers stay on another DAC), and
-headset-mic pins stay wrong. Adding `SND_PCI_QUIRK(0x1043, 0x1044, "ASUS
-GA403UM", ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC)` to `alc269_fixup_tbl`
-in `sound/pci/hda/patch_realtek.c` is the whole fix.
+What the commit solves for stable users: Intel uncore PCI PMU setup
+failure currently leaks `activeboxes` and can oops in
+`uncore_bus_notify` when the device goes away. Backporting restores
+counter balance, skips unregister when there is no box, and avoids a
+false WARN.
 
-Risk vs benefit: benefit is working audio on that LTS laptop; risk is a
-single unused-SSID match. File-split means the mainline diff needs a
-one-line rewrite, which is normal for Realtek quirks on 6.12.
+Risk vs benefit: benefit is crash/functional correctness on a default-on
+Intel perf driver; risk is a 5-line error-path change that applies with
+no prerequisites.
 
 Verification:
-- [Phase 1] Parsed tags on `140fe610af607`: SOB Blackmon, Link msgid,
-  SOB Iwai; no Fixes/stable/Reported-by
-- [Phase 2] Diff: +1 line `SND_PCI_QUIRK(0x1043, 0x1044, …
-  ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC)`
-- [Phase 3] `git describe HEAD` / `make kernelversion`:
-  `p-6.12-3-g710455e2077bb`, 6.12.111, branch `pending-6.12`
-- [Phase 3] `git merge-base --is-ancestor 140fe610af607 HEAD` → not in
-  tree
-- [Phase 3] `git merge-base --is-ancestor 0672b017324b1 HEAD` → yes
-  (GA403U fixup)
-- [Phase 3] `git merge-base --is-ancestor cbd46cbc5470f HEAD` → no
-  (GA403W 0x1024; not required)
-- [Phase 3] Confirmed fixup chain and `0x1b13` in
-  `sound/pci/hda/patch_realtek.c`; `0x1044` absent
-- [Phase 4] `b4 dig -c 140fe610af607` / `-a` / `-w` / `-m`: v1 only;
-  Iwai applied; To linux-sound + maintainers
-- [Phase 4] UNVERIFIED: lore.kernel.org WebFetch and stable@ search
-  (HTTP 403)
-- [Phase 5] `patch_alc269()` → `snd_hda_pick_fixup(...,
-  alc269_fixup_tbl, …)` at codec probe
-- [Phase 5] `alc285_fixup_speaker2_to_dac1` overrides NID 0x17 to DAC
-  0x02
-- [Phase 6] Insertion context `0x103f` then `0x1054` present at lines
-  11185–11186
-- [Phase 6] `cs35l56_hda_i2c.c` present
-- [Phase 8] Failure mode: partial speaker volume + unconfigured headset
-  mic on one laptop SSID
-- UNVERIFIED: whether this SSID was already requested on stable@
+- [Phase 1] Parsed tags: SOB Zide Chen, SOB Peter Zijlstra, Reviewed-by
+  Dapeng Mi; Links to sashiko and patch.msgid.link; no Fixes/syzbot.
+- [Phase 2] Diff: +`atomic_dec` on register failure; +`if (!box) return`
+  in unregister; −`WARN_ON_ONCE` in remove. 4+/1− in `uncore.c`.
+- [Phase 2] `uncore_box_exit` at v6.18.53 dereferences `box->flags` —
+  NULL box is an oops.
+- [Phase 3] blame: register failure path from `16fa64315c1bd`
+  (v5.10-rc1); present in v6.18.53.
+- [Phase 3] `git merge-base --is-ancestor 16fa64315c1bd v6.18.53` → yes.
+  Candidate itself is not an ancestor of v6.18.53.
+- [Phase 3] Parent `uncore.c` sha256 == v6.18.53 `uncore.c`; `patch -p1
+  --dry-run` succeeded.
+- [Phase 3] Series 1/8 standalone; 4/8 `d623e292c6a4c` already in
+  v6.18.53; 2/8 and 5/8 not in v6.18.53 and not required.
+- [Phase 4] `b4 dig -c 540120722e9bf`: V3 1/8,
+  https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
+- [Phase 4] `b4 dig -a`: v1→v3; this patch added in v2 after Sashiko; v3
+  is what landed.
+- [Phase 4] `b4 dig -w`: perf maintainers CC’d; Dapeng Reviewed-by; no
+  NAK.
+- [Phase 4] mbox cover letter explicitly calls out activeboxes leak and
+  NULL deref.
+- [Phase 4] lore HTTP 403; discussion recovered from b4 mbox. Stable-
+  list search UNVERIFIED (403).
+- [Phase 5] Callers: probe, sub-driver init, discovery
+  `uncore_pci_pmus_register` (ignores retval, always registers bus
+  notifier).
+- [Phase 5] `uncore_pmu_register` → `perf_pmu_register` can fail.
+- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb;
+  `Makefile` 6.18.53; buggy code at v6.18.53 lines 1166–1172 / 1229–1238
+  / 1257.
+- [Phase 7] `CONFIG_PERF_EVENTS_INTEL_UNCORE` default y.
+- [Phase 8] Failure mode: NULL deref oops + skipped PMU registration;
+  severity HIGH.
+- UNVERIFIED: production frequency of `perf_pmu_register` failure;
+  stable@ lore thread (HTTP 403).
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/events/intel/uncore.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 8fdfe1bbe7aff..05e7fcc2f67e6 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7094,6 +7094,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1034, "ASUS GU605C", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
-+	SND_PCI_QUIRK(0x1043, 0x1044, "ASUS GA403UM", ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x1043, 0x106f, "ASUS VivoBook X515UA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index a5793847ed5a9..3d9973c416ecf 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -1165,6 +1165,7 @@ static int uncore_pci_pmu_register(struct pci_dev *pdev,
+ 	/* First active box registers the pmu */
+ 	ret = uncore_pmu_register(pmu);
+ 	if (ret) {
++		atomic_dec(&pmu->activeboxes);
+ 		pmu->boxes[die] = NULL;
+ 		uncore_box_exit(box);
+ 		kfree(box);
+@@ -1230,6 +1231,9 @@ static void uncore_pci_pmu_unregister(struct intel_uncore_pmu *pmu, int die)
+ {
+ 	struct intel_uncore_box *box = pmu->boxes[die];
+ 
++	if (!box)
++		return;
++
+ 	pmu->boxes[die] = NULL;
+ 	if (atomic_dec_return(&pmu->activeboxes) == 0)
+ 		uncore_pmu_unregister(pmu);
+@@ -1254,7 +1258,6 @@ static void uncore_pci_remove(struct pci_dev *pdev)
+ 				break;
+ 			}
+ 		}
+-		WARN_ON_ONCE(i >= UNCORE_EXTRA_PCI_DEV_MAX);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
