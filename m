@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB0E5FB80C;
-	Mon, 19 Oct 2026 14:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF18D5FC780;
+	Mon, 19 Oct 2026 14:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418567; cv=none; b=kjytCsKxvKVpwzgSnu4Wcl1TuvHGXeFqn95ix8+IMfkAk4lxzlSMcBPPZpq7keBx8iEEc/+9Cgw8XK3CrOQ5VPAVsTKR2CTqJ7g5oUQOslOsvYtKXNgVhR7g14qVA4oZwHAbPK1uPzE3xrVUyO6jJ9prYz04xQGQnIWVCJH0hCQ=
+	t=1792418569; cv=none; b=Wbv0Jx10holXSqrLe82aKIgdRbrXFoFAw1OxzJDwJMPhBbNRuzd1pzZ3e+zIkdIeg1ZWWi+Quv33Rn0YxU19EIHbcF0MC5rWpipho8smOPBMifJEB0QfWxMcLAvTPeFFGTYNzs/X5h68VGmizw7oW4CJPFikMQ2zinX8HQF6IZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418567; c=relaxed/simple;
-	bh=f5RGUbe88aw1muNZv2YXeZ9VqYKZsia+RsYKAzNc+MA=;
+	s=arc-20240116; t=1792418569; c=relaxed/simple;
+	bh=93xRt5SqTDeuO4zPLFVami2lPD1a5rffG1IebGHPqMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Welx+rgVw3Epo0bXPIukTu6X/9vdL9Q8/6eq0UguQhhkM5ljBN1pFZ7JKhRz36Yj7b5zdzrR0WTHW6P3QOn+BtYaNkeFJ96m2Le0R4keROioqXRwkoOwK/f6NPLnaR9SvcdXcX6+XSXALWMht7XwmlKqoaza42M6w36XxD13C1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RHxD2Upf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FUYuH6siLpBJBnObBG9BcEZpWonnEmPZccHoJ++nTNN221W0vtDLpM+XR+D562xALIRC46BSM2+XNkajG7qh4q95z26hrHrcfpBzlrHxeiwUOlKrM83J9T+lx+QR5i0KA7uiYAk8g7+Ipsjwb2Iowd/+713nfu/EIkQ4z8qbTHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ak8DZthQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RHxD2Upf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030431F000C4;
-	Mon, 19 Oct 2026 14:02:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ak8DZthQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D1A1F000C6;
+	Mon, 19 Oct 2026 14:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418565;
-	bh=vdl7txQPoa/iZaFlNPBI+imk6kvqcynfyYKGxoYSSxc=;
+	s=k20260515; t=1792418566;
+	bh=xnMRlEbWMji5JvM0Y6k9F2Yr83rEUi+mlxkt5SalFyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RHxD2Upfy0QxrhHhl5dp6Fjis3xXo4qy8oJ3kcFSNG5Mp1ZBpHrB6um1XcdYS4FaW
-	 Nu6Sv98eEuH3MeN9U0RiEjLFTVXpfezapDHZXGJv5F3Qtpc0WXXQ++jebBhzIFXmI6
-	 jeMKqSK6YAaZHsSm7G/rCJyBhEgf90YtUgoTCs5cz9UUKvFnYKxLLKYVgc/h45UzRZ
-	 l+bUIH8sqKDVmLngU17QNQjaKI3uyIH40io82pbBCVKo6Iwu1LWvesl2xUTllqfbBm
-	 x/K6Uke8wI1kdBZANZYFDX+b/l+4P//MVgwk0dhUXn/JS00AUUUsCmu3mgQjgjIkQP
-	 UQqWbUR+DAfvA==
+	b=Ak8DZthQfV7UxlY0jDW5rwrqfp8aI/t4J+IcFWa6FBrHkImQSFd/qB/za0WCdhQWZ
+	 xBgAwmKGENXEZhUMXqXql6yJFDjvyqKw3XKrQmG2PzZHH5o/MbENTfJGpKt3RwCXD8
+	 5EVmbekqBO2D1n9oPZamGXQrnMyHg2Suz4VzmFStrDB7B5XgmrmSv69l8lE4vDyfzy
+	 LWFxgWN/xFUK8udKethalsC0RtmjQzrJeQRiE2hA2Xm55L3lAZxfOCnv8YKfdv6IQl
+	 FeDbRQJnTeIlgtd9LS6hTlWK+3yVhJ9QWPR6R8EsMlqDTXMm+SMXVPQrzfoxLV9erY
+	 Nxlw+en1BD6HA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiawen Liu <1298662399@qq.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Zhe Liu <liuzhe1@kylinos.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kursad.oney@broadcom.com,
-	jonas.gorski@gmail.com,
-	linux-spi@vger.kernel.org,
+	hannes@cmpxchg.org,
+	mkoutny@suse.com,
+	corbet@lwn.net,
+	cgroups@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] spi: bcm63xx-hsspi: return error from failed controller suspend
-Date: Mon, 19 Oct 2026 09:50:29 -0400
-Message-ID: <20261019135441.1420968-338-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] docs: cgroup-v2: fix stale "io" controller introduction
+Date: Mon, 19 Oct 2026 09:50:30 -0400
+Message-ID: <20261019135441.1420968-339-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,407 +57,435 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Zhe Liu <liuzhe1@kylinos.cn>
 
-[ Upstream commit 3b5414d76a0381db77b9694537254af7acfa187a ]
+[ Upstream commit 3345c7248a9e2a91cb9e2477c29af16881706f4f ]
 
-spi_controller_suspend() can fail if the SPI core cannot stop the
-controller. bcm63xx_hsspi_suspend() ignored that error, disabled the
-PLL and core clocks, and returned success.
+The introductory paragraph for the IO controller still states that
+weight based distribution is "available only if cfq-iosched is in use"
+and that "neither scheme is available for blk-mq devices".  This text
+dates from when the cgroup v2 documentation was first written (2015)
+and was correct at the time, but is no longer accurate:
 
-Return the suspend error before disabling the clocks.
+  * cfq-iosched was removed in v5.0;
+  * blk-mq is now the only block I/O path, and both the absolute limit
+    scheme (io.max via blk-throttle) and the weight based scheme
+    (io.weight via iocost, or io.bfq.weight under BFQ) work on it;
+  * latency based protection (iolatency) and I/O priority (ioprio)
+    controllers have since been added.
 
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Acked-by: William Zhang <william.zhang@broadcom.com>
-Link: https://patch.msgid.link/tencent_B5A06807924A77C8690730EBF7A052AABE05@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The rest of the section already documents io.weight, io.max,
+io.cost.{qos,model}, io.latency and io.prio.class correctly, so the
+introduction is the only part that contradicts them.  Rewrite it to
+reflect the current state.
+
+Signed-off-by: Zhe Liu <liuzhe1@kylinos.cn>
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable backport analysis: `spi: bcm63xx-hsspi: return error from
-failed controller suspend`
+I have enough to decide: this is a docs-only correction of text that is
+already wrong in 6.12, and the rewrite matches features this tree
+actually ships.
 
-Local tree is **6.18.53** (`v6.18.53-5049-g0f0bdc2b0dffb`, Makefile
-`VERSION=6` / `PATCHLEVEL=18` / `SUBLEVEL=53`). The verdict is only for
-this tree.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-Upstream commit: `3b5414d76a0381db77b9694537254af7acfa187a` (Mark Brown,
-2026-06-30). It is not an ancestor of `v6.18` or `v6.18.53`. The buggy
-suspend path **is** present at `v6.18.53`.
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [docs / cgroup-v2] [fix] [rewrite the stale IO controller
+introduction so it no longer claims CFQ-only weights and no blk-mq
+support]
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1 — Subject**
-Record: `[spi] [return/propagate] return error from failed controller
-suspend` — subsystem `spi: bcm63xx-hsspi:`; verb “return” meaning “stop
-ignoring a failure.”
-
-**Step 1.2 — Tags**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Jiawen Liu <1298662399@qq.com>` (author)
-- `Acked-by: William Zhang <william.zhang@broadcom.com>` (listed
-  maintainer of this driver)
-- `Link: https://patch.msgid.link/tencent_B5A06807924A77C8690730EBF7A052
-  AABE05@qq.com`
-- `Signed-off-by: Mark Brown <broonie@kernel.org>` (SPI maintainer)
-- No `Fixes:`, no `Reported-by:`, no `Cc: stable` (expected for this
-  review)
-- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+- Signed-off-by: Zhe Liu <liuzhe1@kylinos.cn> (author)
+- Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+- Signed-off-by: Tejun Heo <tj@kernel.org> (cgroup maintainer; applied
+  the patch)
+- No Fixes: tag (expected)
+- No Reported-by / Tested-by / Link / Cc: stable
+- Ignore any pipeline-added Sasha Levin SOB / "[Upstream commit ...]"
+  markers; they are not evidence of selection
 
-**Step 1.3 — Body**
+Notable pattern: maintainer SOB plus a Reviewed-by; single standalone
+patch, not a series.
+
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `bcm63xx_hsspi_suspend()` ignores `spi_controller_suspend()`
-  failure, then disables PLL and core clocks and returns 0.
-- **Symptom:** system suspend is reported successful while the SPI queue
-  may still be running and clocks are gated.
-- **Root cause:** missing return-value check on
-  `spi_controller_suspend()`.
-- **Version info:** none in the message. Bug is in the original 2013
-  driver (`142168eba9dc5`).
-
-**Step 1.4 — Hidden bug fix?**
-Record: Not hidden. It is an explicit error-path correctness fix
-(ignored failure → clocks torn down anyway).
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1 — Inventory**
-Record: one file, `drivers/spi/spi-bcm63xx-hsspi.c`, **+5 / −1**.
-Function: `bcm63xx_hsspi_suspend()`. Surgical, single-file.
-
-**Step 2.2 — Flow**
-Record: **Before:** call `spi_controller_suspend(host)` and ignore the
-result; always `clk_disable_unprepare()` on PLL and core clocks; return
-0. **After:** if `spi_controller_suspend()` fails, return that error and
-leave clocks enabled.
-
-**Step 2.3 — Bug mechanism**
-Record: **Logic / PM error-path.** `spi_controller_suspend()` for a
-queued controller calls `spi_stop_queue()`, which polls up to 500 × ~10
-ms and returns `-EBUSY` if the queue is still busy. The core still
-`__spi_mark_suspended()` and returns that error. The driver then gated
-clocks and lied to PM with success.
-
-This driver sets `host->transfer_one_message` and does **not** set
-`host->transfer`, so `spi_register_controller()` runs
-`spi_controller_initialize_queue()` and sets `ctlr->queued = true`. The
-failure path is reachable.
-
-**Step 2.4 — Fix quality**
-Record: Obviously correct; matches the established SPI driver pattern
-(`spi-bcm63xx.c`, `spi-rockchip.c`, `spi-atmel.c`, etc.). Minimal.
-Regression risk is low: on failure, suspend is aborted instead of
-proceeding with clocks off. Pre-existing SPI-core behavior
-(`__spi_mark_suspended()` even on queue-stop failure) is unchanged; this
-patch does not make that worse, and it is the same contract every other
-checked driver uses.
-
----
-
-## PHASE 3: GIT HISTORY
-
-**Step 3.1 — Blame (at `v6.18.53`)**
-Record: ignored `spi_controller_suspend(host)` line from `2c40be6bc95bd`
-(rename `master`→`host`, 2023). Original ignore-and-return-0 suspend is
-`142168eba9dc5` (2013-12-04, “add bcm63xx HSSPI driver”), ancestor of
-this tree.
-
-**Step 3.2 — Fixes: tag**
-Record: none. Buggy code has been in the driver since introduction; that
-commit is in this tree.
-
-**Step 3.3 — Related file history**
-Record: `v6.18.53` already contains `b782a7cb0a424` (“disable clocks on
-resume failure”, Can Peng, `Cc: stable`, `Fixes: 142168eba9dc`). That is
-the resume-side counterpart of the same class of bug. No later revert of
-this suspend fix.
-
-**Step 3.4 — Author**
-Record: Jiawen Liu; same-week series of the same one-line check on `spi-
-bcm63xx.c`, `spi-bcm-qspi.c`, `spi-bcmbca-hsspi.c`. Not the driver
-maintainer; **William Zhang**, who is, acked this patch.
-
-**Step 3.5 — Prerequisites**
-Record: none. Needs only `spi_controller_suspend()` (present since the
-original driver) and the existing clock disable sequence. Standalone;
-series 2/3 touches only this file. 1/3 is `spi-bcm63xx.c`, 3/3 is `spi-
-bcm-qspi.c`.
-
----
-
-## PHASE 4: MAILING LIST / EXTERNAL
-
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c 3b5414d76a0381db77b9694537254af7acfa187a` → https://p
-atch.msgid.link/tencent_B5A06807924A77C8690730EBF7A052AABE05@qq.com
-`b4 dig -a`: **v1 only**, `[PATCH 2/3]`. Thread saved via `b4 dig -m`.
-No NAK, no requested respin.
-
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: `broonie@kernel.org`, `linux-spi@vger.kernel.org`,
-`william.zhang@broadcom.com`, `kursad.oney@broadcom.com`,
-`jonas.gorski@gmail.com`, `kamal.dasu@broadcom.com`, `bcm-kernel-
-feedback-list@broadcom.com`. Right maintainers were on Cc.
-
-**Step 4.3 — Bug report**
-Record: no syzbot/bugzilla. Found by code review of ignored
-`spi_controller_suspend()` returns.
-
-**Step 4.4 — Series**
-Record: 2/3 in a three-driver series. Each patch is a self-contained
-per-driver check. William Zhang: `Acked-by` on this patch. Kamal Dasu:
-`Reviewed-by` on 3/3 (`spi-bcm-qspi`). Mark Brown applied it.
-
-**Step 4.5 — Stable list**
-Record: lore.kernel.org search via WebFetch returned **403**. No stable-
-thread evidence found. Absence of `Cc: stable` is expected for this
-pipeline.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1 — Functions**
-Record: `bcm63xx_hsspi_suspend()` only.
-
-**Step 5.2 — Callers**
-Record: wired through `SIMPLE_DEV_PM_OPS(bcm63xx_hsspi_pm_ops, ...)` /
-`platform_driver.driver.pm`. Invoked from the PM core on **system
-sleep**, not a syscall hot path. Requires `CONFIG_SPI_BCM63XX_HSSPI` and
-`CONFIG_PM_SLEEP`.
-
-**Step 5.3 — Callees**
-Record: `spi_controller_suspend()` → `spi_stop_queue()` (can return
-`-EBUSY`); then `clk_disable_unprepare()` on PLL and core clocks.
-
-**Step 5.4 — Reachability**
-Record: Yes, on suspend of BCM63xx/BCMBCA boards that use this
-controller (`brcm,bcm6328-hsspi`, `brcm,bcmbca-hsspi-v1.0` in MIPS
-bcm63xx and ARM/ARM64 bcmbca DT). Trigger is suspend while the SPI queue
-stays busy for ~5 seconds.
-
-**Step 5.5 — Similar patterns**
-Record: same ignore-error bug in sibling Broadcom SPI drivers; same
-return-check already used in many in-tree SPI drivers. Systematic, not a
-one-off style tweak.
-
-semcode MCP tools were not available; this used `git grep` and direct
-reads of `spi.c` / the driver.
-
----
-
-## PHASE 6: LOCAL TREE CROSS-CHECK
-
-**Step 6.1 — Buggy code in this tree?**
-Record: **Yes**, at `v6.18.53` `bcm63xx_hsspi_suspend()`:
-
-```c
-spi_controller_suspend(host);
-clk_disable_unprepare(bs->pll_clk);
-clk_disable_unprepare(bs->clk);
-return 0;
-```
-
-Bug introduced 2013, present for the whole 6.18.y lifetime.
-
-**Step 6.2 — Backport difficulty**
-Record: **clean apply with +6 line offset** (`patch --dry-run` succeeded
-against the `v6.18.53` file). Surrounding `remove()` differs from later
-mainline; the suspend hunk itself matches.
-
-**Step 6.3 — Related fixes already here?**
-Record: resume-path clock cleanup (`b782a7cb0a424`) **is** in
-`v6.18.53`. This suspend-path check is **not**. No alternate fix for the
-ignored suspend error.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-**Step 7.1**
-Record: **SPI driver** (`drivers/spi/spi-bcm63xx-hsspi.c`). Criticality:
-**IMPORTANT** (platform SPI, often SPI flash on Broadcom CPE/BCA SoCs),
-not core MM/VFS. Not staging.
-
-**Step 7.2**
-Record: Mature driver (2013), still maintained (William Zhang / Kursad
-Oney / Jonas Gorski). Recent PM fix already landed in this stable
-series.
-
----
-
-## PHASE 8: IMPACT AND RISK
-
-**Step 8.1 — Who is affected**
-Record: users of `CONFIG_SPI_BCM63XX_HSSPI` on BCM63XX / BMIPS /
-ARCH_BCMBCA (routers, gateways, BCA ARM64 boards). Not universal.
-
-**Step 8.2 — Trigger**
-Record: system suspend while `spi_stop_queue()` times out (`-EBUSY`
-after ~5s of a non-empty queue or `ctlr->busy`). Unprivileged users
-cannot hit it directly unless they can suspend. Timing-dependent; real
-when a transfer is stuck or a long SPI flash op overlaps suspend.
-
-**Step 8.3 — Failure mode**
-Record: clocks gated while the controller may still be busy; PM is told
-suspend succeeded. Possible bus hang, incomplete SPI transaction, or
-SPI-flash corruption if a NOR/NAND op is in flight. Severity: **HIGH**
-(hang / possible corruption on the error path), not a guaranteed oops on
-every suspend.
-
-**Step 8.4 — Risk/benefit**
-Record: **Benefit: medium-high** for those platforms (correct suspend
-abort, clocks stay on). **Risk: very low** (5 lines, error path only,
-same pattern as peer drivers; resume counterpart already in this tree).
-Ratio favors backport.
-
----
-
-## PHASE 9: SYNTHESIS
-
-**Step 9.1 — Evidence**
-
-For:
-- Real PM bug: ignored `-EBUSY`, then clock gate + success.
-- Queued controller, so `spi_stop_queue()` can actually fail.
-- Possible hang / in-flight SPI (including flash) with clocks off.
-- 5-line, obviously correct, no new API.
-- Acked by driver maintainer; applied by SPI maintainer.
-- Resume-side analogue already in 6.18.53 as a `Cc: stable` fix.
-- Applies to `v6.18.53` with only a line-number offset.
-- Bug present since 2013 in this tree.
-
-Against:
-- No `Reported-by` / syzbot / crash log.
-- Trigger is the uncommon queue-stop timeout, not every suspend.
-- SPI core still marks the controller suspended on failure (pre-
-  existing; this patch does not fix or worsen that).
-- Peripheral SoC driver, not core kernel.
-
-Unresolved: lore.kernel.org HTML/WebFetch was 403; discussion recovered
-via `b4 dig -m` instead.
-
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — trivial check; acked by
-   maintainer; in mainline.
-2. Real bug affecting users? **PASS** — wrong suspend result and clocks-
-   off while busy.
-3. Important (crash/security/corruption/deadlock)? **PASS** — hang /
-   possible SPI-flash corruption if suspend proceeds after queue-stop
-   failure; same class as the resume fix already in this tree.
-4. Small and contained? **PASS** — +5/−1, one function.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS** — buggy code present; applies with
-   offset 6.
-
-**Step 9.3 — Exception category**
-Record: none (not a device ID / quirk / DT / build / docs exception). It
-is a normal small bugfix.
-
-**Step 9.4 — Decision**
-This belongs in 6.18.y: it stops the driver from disabling HSSPI clocks
-and reporting successful suspend when the SPI core could not stop the
-queue. The matching resume cleanup is already here; this is the suspend-
-side hole that lacked a `Cc: stable` tag.
-
----
-
-## What the commit solves (for this tree)
-
-On Broadcom BCM63xx/BCMBCA HSSPI, system suspend called
-`spi_controller_suspend()` and ignored `-EBUSY` from `spi_stop_queue()`.
-It then turned off the PLL and core clocks and returned 0, so the PM
-core continued suspend while the controller could still be busy. That
-can hang the bus or interrupt an in-flight SPI flash transfer. The fix
-returns the error and leaves clocks enabled so suspend is aborted.
-
-It meets the stable rules: real bug, important on the failure path, five
-lines, no new API, applies to 6.18.53.
-
-Risk vs benefit: very low risk, meaningful benefit on the platforms that
-use this driver. No missing prerequisites.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed tags: author Jiawen Liu; Acked-by William Zhang;
-  SOB Mark Brown; Link to msgid; no Fixes/Reported-by/Cc-stable.
-- **[Phase 2]** Diff: +5/−1 in `bcm63xx_hsspi_suspend()`; check
-  `spi_controller_suspend()` before `clk_disable_unprepare`.
-- **[Phase 2]** `spi_controller_suspend()` in `drivers/spi/spi.c`: on
-  `ctlr->queued`, `spi_stop_queue()` can return `-EBUSY`; then
-  `__spi_mark_suspended()`; return `ret`.
-- **[Phase 2]** `spi_stop_queue()`: 500 iterations ×
-  `usleep_range(10000, 11000)`, then `-EBUSY`.
-- **[Phase 2]** Driver sets `transfer_one_message`, not `transfer`; core
-  sets `queued = true` (also true at `v6.18.53`).
-- **[Phase 3]** `git blame` at `v6.18.53`: ignore-error suspend from
-  original `142168eba9dc5` (2013); `git merge-base --is-ancestor
-  142168eba9dc5 v6.18.53` → YES.
-- **[Phase 3]** `git merge-base --is-ancestor
-  3b5414d76a0381db77b9694537254af7acfa187a v6.18.53` → NO (fix not in
-  6.18.53).
-- **[Phase 3]** Resume counterpart `b782a7cb0a424` **is** ancestor of
-  `v6.18.53` (Can Peng, `Cc: stable`).
-- **[Phase 3]** No revert of this change in `drivers/spi/spi-bcm63xx-
-  hsspi.c`.
-- **[Phase 4]** `b4 dig -c 3b5414d76a0381…`: lore msgid above; v1 only;
-  William Zhang Acked-by; no NAK.
-- **[Phase 4]** `b4 dig -w`: SPI list + Broadcom maintainers Cc’d.
-- **[Phase 4]** `b4 dig -m /tmp/hsspi-thread.mbox`: 4 messages, series
-  2/3 standalone.
-- **[Phase 4]** WebFetch of lore.kernel.org: 403; discussion taken from
-  b4 mbox instead.
-- **[Phase 5]** Callers: `SIMPLE_DEV_PM_OPS` → platform PM; CONFIG
-  `SPI_BCM63XX_HSSPI` depends on `BCM63XX || BMIPS_GENERIC ||
-  ARCH_BCMBCA`.
-- **[Phase 5]** DT: `brcm,bcm6328-hsspi` / `brcm,bcmbca-hsspi-v1.0` on
-  bcm63xx MIPS and bcmbca ARM/ARM64.
-- **[Phase 6]** `git describe HEAD` / `make kernelversion`: 6.18.53.
-- **[Phase 6]** `git show v6.18.53:drivers/spi/spi-bcm63xx-hsspi.c`:
-  still ignores suspend error.
-- **[Phase 6]** `patch --dry-run` against that file: hunk succeeded at
-  line 895 (offset 6).
-- **[Phase 7]** MAINTAINERS: “BROADCOM Broadband SoC High Speed SPI
-  Controller DRIVER”, M: William Zhang.
-- **[Phase 8]** Failure mode verified from `spi.c` + driver suspend
-  path, not from a user crash report.
-- **UNVERIFIED:** live reproduction of `spi_stop_queue()` timeout on BCM
-  hardware; stable@ lore thread (HTTP 403).
-
-The fix is small, surgical, present as a real bug in this 6.18.53 tree,
-and meets the stable criteria.
+- [Bug] Admin-guide intro for the cgroup v2 "io" controller still says
+  weight-based control needs cfq-iosched and that neither weight nor
+  limits work on blk-mq.
+- [Symptom] Operators reading the intro are told IO control does not
+  work on modern (blk-mq-only) kernels, which contradicts the rest of
+  the same document.
+- [Version info] Text written in 2015; cfq-iosched removed in v5.0; blk-
+  mq is now the only block path.
+- [Root cause] Documentation was never updated after CFQ removal and
+  after iocost / iolatency / ioprio / BFQ cgroup support landed. The
+  rest of the section already documents io.weight, io.max,
+  io.cost.{qos,model}, io.latency, and io.prio.class.
+
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a hidden runtime bug. It is an explicit documentation
+correction of obsolete, contradictory admin-guide text. No leak/race/UAF
+disguised as cleanup.
+
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+
+Step 2.1: INVENTORY THE CHANGES
+Record:
+- File: `Documentation/admin-guide/cgroup-v2.rst` (+7 / -3, 10 lines
+  with context)
+- Functions modified: none (prose only)
+- Scope: single-file surgical documentation rewrite of one introductory
+  paragraph
+
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record:
+- Before: "weight based distribution is available only if cfq-iosched is
+  in use and neither scheme is available for blk-mq devices."
+- After: Absolute BPS/IOPS limits via blk-throttle on all devices;
+  proportional weight via iocost (`CONFIG_BLK_CGROUP_IOCOST`) and BFQ
+  (`io.bfq.weight` when BFQ is the device scheduler); also iolatency
+  (`CONFIG_BLK_CGROUP_IOLATENCY`) and ioprio
+  (`CONFIG_BLK_CGROUP_IOPRIO`).
+- Path affected: documentation readers only; no kernel execution path.
+
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Logic / correctness in documentation] The intro describes
+2015-era CFQ/legacy-request_fn constraints that do not exist in this
+tree. Not a memory-safety, locking, or refcount bug.
+
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Obviously correct relative to this tree: CFQ is gone, blk-mq is the
+  I/O path, and the named configs/files exist.
+- Minimal: one paragraph, no unrelated edits.
+- Regression risk: none at runtime. Residual docs risk is only if the
+  new sentence were wrong; it matches `block/Kconfig`,
+  `block/Kconfig.iosched`, and the later IO sections of the same file.
+  `io.bfq.weight` is documented in `Documentation/block/bfq-
+  iosched.rst`, not in the cgroup-v2 interface-file list; that is
+  consistent with the intro pointing at BFQ's own cgroup support.
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+Step 3.1: BLAME THE CHANGED LINES
+Record: Stale paragraph introduced by `6c2920926b10e8` ("cgroup: replace
+unified-hierarchy.txt with a proper cgroup v2 documentation", Tejun Heo,
+2015-11-16). Present since cgroup v2 docs were written. Converted to rST
+by `633b11bee40c37` (2017) without changing that claim. `git merge-base
+--is-ancestor 6c2920926b10e8 HEAD` succeeded.
+
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Not applicable. The "bug" is long-lived stale
+documentation, not a later functional regression.
+
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Recent `cgroup-v2.rst` changes in this tree are unrelated
+(writeback folio conversion, mm/zswap docs, cgroup-for-6.12 merge). No
+prerequisite refactor of the IO intro. Standalone one-patch change (b4:
+v1 only, not patch X/Y).
+
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Zhe Liu has this one commit on `origin/master` for this file.
+Tejun Heo (cgroup maintainer) applied it. Tao Cui reviewed and corrected
+the CFQ-removal version in the commit message from v4.12 to v5.0.
+
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: No code-structure dependencies. The rewrite only names
+controllers/configs that already exist in 6.12 (`BLK_CGROUP_IOCOST`,
+`BLK_CGROUP_IOLATENCY`, `BLK_CGROUP_IOPRIO`, `BFQ_GROUP_IOSCHED`,
+`BLK_DEV_THROTTLING`). Can apply standalone. `git show 3345c7248a9e2 |
+git apply --check` succeeded at offset -172 lines.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- Commit: `3345c7248a9e2a91cb9e2477c29af16881706f4f` (not an ancestor of
+  this HEAD; `git merge-base --is-ancestor` exit 1)
+- b4 dig:
+  https://patch.msgid.link/20260810063535.327765-1-liuzhe1@kylinos.cn
+- Single v1 series; no v2/v3. Tejun applied v1 after fixing the CFQ
+  version in the changelog.
+- Reviewer feedback: Tao Cui, "cfq-iosched was removed in v5.0, not
+  v4.12 (f382fb0bcef4)". Otherwise "looks good." Reviewed-by added.
+- Tejun: "Applied to cgroup/for-7.3 with the cfq removal version in the
+  description corrected to v5.0"
+- No NAK, no stable nomination in the thread
+- Included in the v7.3 cgroup pull (`[GIT PULL] cgroup: Changes for
+  v7.3`)
+- Later `origin/master` text of this paragraph is unchanged; no follow-
+  up rewrite
+
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (b4 dig -w): To/Cc included tj@kernel.org, hannes@cmpxchg.org,
+mkoutny@suse.com, corbet@lwn.net, skhan@linuxfoundation.org, cgroups@,
+linux-doc@, linux-kernel@. Those are the cgroup maintainers plus linux-
+doc. Applied by Tejun Heo.
+
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No Reported-by, bugzilla, or syzbot. Author noticed the intro
+contradicting the rest of the same document. Severity from a reporter's
+perspective: documentation accuracy, not a crash.
+
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone. Later cgroup-v2 doc commits on `origin/master`
+(misc.events, io.latency rotational, io.pressure, etc.) do not touch
+this paragraph and are not prerequisites.
+
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable WebFetch returned HTTP 403. UNVERIFIED
+whether anyone already requested or rejected this on stable@. No
+evidence from b4 or lkml mirrors of a stable discussion.
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: None. Documentation only.
+
+Step 5.2: TRACE CALLERS
+Record: N/A — no functions. Impact surface is readers of the cgroup v2
+admin guide (container/cgroup operators), not a call graph.
+
+Step 5.3: TRACE CALLEES
+Record: N/A.
+
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: N/A for kernel reachability. The misleading text is in the
+primary user-facing cgroup v2 document. Userspace does not "trigger" a
+bug; operators can be misled about whether io.max / io.weight work.
+
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: `cfq-iosched` in this tree's docs remains only in this stale
+intro (plus an unrelated historical RCU lockdep-splat example).
+`init/Kconfig` BLK_CGROUP help still mentions CFQ; that is a separate
+stale-help issue, not part of this patch.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Local tree is **6.12.111** (`pending-6.12`, `git describe
+HEAD` = p-6.12-3-gc504cf0baa3d8). Stale text is at `Documentation/admin-
+guide/cgroup-v2.rst` lines 1834–1838. Features the rewrite describes are
+present:
+- CFQ source `block/cfq-iosched.c` absent; removed by `f382fb0bcef4`
+  (ancestor of HEAD)
+- iocost: `block/blk-iocost.c`, `CONFIG_BLK_CGROUP_IOCOST`
+  (`7caa47151ab2e`, ancestor)
+- iolatency: `block/blk-iolatency.c` (`d70675121546c`, ancestor)
+- ioprio: `block/blk-ioprio.c` (`556910e39249d`, ancestor)
+- blk-throttle: `CONFIG_BLK_DEV_THROTTLING`
+- BFQ cgroup: `CONFIG_BFQ_GROUP_IOSCHED`, `io.bfq.weight` in
+  `Documentation/block/bfq-iosched.rst`
+- Same file already documents io.cost.*, io.weight, io.max, io.latency,
+  io.prio.class
+
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply with hunk offset -172 (upstream intro at ~1988; this
+tree at ~1833). Surrounding Memory Ownership / IO Interface Files
+context matches. Difficulty: clean apply.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: `git log --grep='stale "io" controller'` and `--grep='cfq-
+iosched'` on this file: empty. No equivalent fix in this checkout. `git
+merge-base --is-ancestor 3345c7248a9e2 HEAD` failed.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [Documentation / cgroup v2 admin-guide] Criticality: IMPORTANT
+for operators (the user-facing contract for cgroup IO), PERIPHERAL for
+kernel runtime (no code change). MAINTAINERS: CONTROL GROUP, Tejun Heo
+et al., file `Documentation/admin-guide/cgroup-v2.rst`.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: cgroup-v2.rst still receives interface-doc updates. The IO intro
+itself has been untouched since 2015. Mature, long-stale paragraph
+rather than a bug in brand-new code.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Anyone reading the cgroup v2 IO intro on 6.12 (container hosts,
+systemd/cgroup users, Kubernetes node kernels). Not a
+runtime/config/platform subset. No kernel code path changes.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Reading the admin guide. Common for operators enabling IO
+control. Not a race; not triggerable as a crash by unprivileged users.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: [Failure mode] Contradictory, obsolete documentation: claims IO
+weight/limits do not work on blk-mq, i.e. on essentially all 6.12 block
+devices. [Severity] LOW as kernel runtime; the rest of the same chapter
+already describes working interfaces. The harm is misleading operators,
+not oops/corruption/deadlock.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: medium for documentation accuracy of a widely used
+  controller; the intro currently tells 6.12 users the opposite of
+  reality.
+- Risk: very low (docs-only, 7 insertions / 3 deletions, apply-check
+  clean).
+- Ratio: high benefit-to-risk for a documentation exception; no runtime
+  regression vector.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Stale intro is present in this 6.12 tree and is factually false here
+  (CFQ gone since v5.0; blk-mq-only; iocost/iolatency/ioprio/BFQ all
+  present).
+- Same document already documents the working interfaces; the intro is
+  the part that contradicts them.
+- Small, obviously correct, maintainer-applied (Tejun Heo), Reviewed-by
+  Tao Cui.
+- Applies cleanly.
+- Zero runtime risk.
+- Documentation/comment fixes are an allowed stable exception.
+- This pending-6.12 tree already carries other `docs:` backports under
+  `Documentation/admin-guide/`.
+
+AGAINST:
+- Not a crash, UAF, deadlock, corruption, or security hole.
+- No user report / syzbot / Cc: stable (absence of Cc: stable is
+  expected and not a negative).
+- Later sections already describe the real interfaces, so a careful
+  reader can recover.
+- `stable-kernel-rules.rst` also says no trivial-without-benefit
+  changes; this is more than spelling, but it is still docs-only.
+
+UNRESOLVED:
+- lore.kernel.org/stable search HTTP 403; no confirmed stable@ thread.
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — matches Kconfig and the rest
+   of the same document; reviewed and applied by the cgroup maintainer.
+2. Fixes a real bug that affects users? **PASS** (documentation bug) —
+   the intro is wrong for every 6.12 blk-mq system.
+3. Important issue (crash, security, corruption, deadlock)? **FAIL** as
+   a runtime severity; **PASS** under the documentation exception
+   (incorrect admin-guide, not a spelling nit).
+4. Small and contained? **PASS** — 10 lines, one file.
+5. No new features or APIs? **PASS** — describes existing 6.12
+   interfaces only.
+6. Can apply to the local tree? **PASS** — `git apply --check`
+   succeeded.
+
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: **Documentation fix** (incorrect/obsolete admin-guide text).
+That exception applies. Not a device-ID, quirk, DT, or build fix.
+
+Step 9.4: MAKE YOUR DECISION
+This should be backported to **this** 6.12 tree. The buggy paragraph is
+here, the features the new text describes are here, the patch applies,
+and runtime risk is zero. Stable rules allow documentation corrections
+of incorrect material; this is not a feature add and not a whitespace
+cleanup.
+
+What it solves for stable users: the cgroup v2 admin guide currently
+says weight-based IO control needs CFQ and that neither weights nor
+limits work on blk-mq. On 6.12 that is false for all block devices and
+contradicts io.max / io.weight / iocost / iolatency / ioprio in the same
+file.
+
+Risk vs benefit: documentation-only, surgical, maintainer-acked; benefit
+is correcting the primary operator document for a common container
+feature.
+
+Concerns: none on apply or prerequisites. Not a crash-class fix;
+accepted because it is a contained docs correction of still-present
+stale text.
+
+Verification:
+- [Phase 1] Parsed tags: SOB Zhe Liu, Reviewed-by Tao Cui, SOB Tejun
+  Heo; no Fixes/Reported-by/Cc: stable
+- [Phase 1] Body: stale 2015 CFQ/blk-mq claims; cfq removed v5.0
+- [Phase 2] Diff: `Documentation/admin-guide/cgroup-v2.rst` +7/-3, IO
+  intro only
+- [Phase 3] `git describe HEAD` / `make kernelversion`:
+  p-6.12-3-gc504cf0baa3d8, 6.12.111, branch pending-6.12
+- [Phase 3] `git blame`: stale lines from `6c2920926b10e8` (2015);
+  ancestor of HEAD
+- [Phase 3] `git merge-base --is-ancestor 3345c7248a9e2 HEAD`: not in
+  this tree
+- [Phase 3] CFQ removal `f382fb0bcef4` is ancestor; no `block/cfq-
+  iosched.c`
+- [Phase 3] iocost `7caa47151ab2e`, iolatency `d70675121546c`, ioprio
+  `556910e39249d` are ancestors
+- [Phase 3] `git apply --check` of 3345c7248a9e2: hunk succeeded at 1833
+  (offset -172)
+- [Phase 4] b4 dig -c 3345c7248a9e2: msgid
+  20260810063535.327765-1-liuzhe1@kylinos.cn
+- [Phase 4] b4 dig -a: v1 only
+- [Phase 4] b4 dig -w: cgroup maintainers + linux-doc on the original
+  To/Cc
+- [Phase 4] lkml/openwall: Tao Cui v5.0 correction; Tejun applied to
+  cgroup/for-7.3; no NAK
+- [Phase 4] origin/master still has the rewritten paragraph; no later
+  rewrite
+- [Phase 4] lore.kernel.org/stable: HTTP 403, UNVERIFIED
+- [Phase 5] No functions/callers; docs-only
+- [Phase 6] Stale text at lines 1834–1838 of this tree's cgroup-v2.rst;
+  io.cost/io.weight/io.max/io.latency/io.prio.class already documented
+  below
+- [Phase 6] `CONFIG_BLK_CGROUP_IOCOST`, `IOLATENCY`, `IOPRIO`,
+  `BFQ_GROUP_IOSCHED`, `BLK_DEV_THROTTLING` exist in this tree
+- [Phase 7] MAINTAINERS CONTROL GROUP: Tejun Heo; file listed
+- [Phase 8] Failure mode: misleading admin-guide, severity LOW runtime /
+  docs exception
+- UNVERIFIED: whether this SHA was already discussed on stable@
 
 **YES**
 
- drivers/spi/spi-bcm63xx-hsspi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/cgroup-v2.rst | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
-index b8bf8b5be2cf7..719f0dfd96c96 100644
---- a/drivers/spi/spi-bcm63xx-hsspi.c
-+++ b/drivers/spi/spi-bcm63xx-hsspi.c
-@@ -895,8 +895,12 @@ static int bcm63xx_hsspi_suspend(struct device *dev)
- {
- 	struct spi_controller *host = dev_get_drvdata(dev);
- 	struct bcm63xx_hsspi *bs = spi_controller_get_devdata(host);
-+	int ret;
-+
-+	ret = spi_controller_suspend(host);
-+	if (ret)
-+		return ret;
+diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
+index edcd125d6992f..a62505e55dd07 100644
+--- a/Documentation/admin-guide/cgroup-v2.rst
++++ b/Documentation/admin-guide/cgroup-v2.rst
+@@ -1959,9 +1959,13 @@ IO
  
--	spi_controller_suspend(host);
- 	clk_disable_unprepare(bs->pll_clk);
- 	clk_disable_unprepare(bs->clk);
+ The "io" controller regulates the distribution of IO resources.  This
+ controller implements both weight based and absolute bandwidth or IOPS
+-limit distribution; however, weight based distribution is available
+-only if cfq-iosched is in use and neither scheme is available for
+-blk-mq devices.
++limit distribution.  Absolute BPS and IOPS limits are enforced by
++blk-throttle and apply to all devices, while weight based proportional
++distribution is provided by the iocost cost model controller
++(CONFIG_BLK_CGROUP_IOCOST) and, when the BFQ I/O scheduler is in use
++for a device, by BFQ's own cgroup support.  Latency-based protection
++(CONFIG_BLK_CGROUP_IOLATENCY) and I/O priority assignment
++(CONFIG_BLK_CGROUP_IOPRIO) are also available.
  
+ 
+ IO Interface Files
 -- 
 2.53.0
 
