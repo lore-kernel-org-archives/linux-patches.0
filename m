@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2745D3C37;
-	Mon, 19 Oct 2026 14:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2675D3C4D;
+	Mon, 19 Oct 2026 14:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418500; cv=none; b=YUL3RSHVqz3ou03jXPw4HN41J8ndrszK5ZtY69Z1Aggpll2P7fDMr2Fbba5zMQyILQ/0ah8oPo4OalQu+27T+69e8qZpRU8bquV8D7ZPwDsX3M48c9Ij+dbpAhRzVP+uZ4uBvJ1vhUgIXU3VaVsVNRnABRP/YCW+wlh79/QauNY=
+	t=1792418501; cv=none; b=cxFIYVEuDeNyYaXxXI6+l9iDlfen3NJgainygQFBPn+7w3hBCpRlA6FJUKAvRoN8dfpxopbFCuqeIIohBNk0n10DLrhnff3l/jG64FFqHxy+Oj6abLg7K8SBt5WVccTaqa3O90/KwULAOCAMSIURZ2CbLkOv9NDtPT3Qi6D/tSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418500; c=relaxed/simple;
-	bh=22uhUZ/DLHs0CZkgnFH/MBSGlU2p1a3f72O9EochvAg=;
+	s=arc-20240116; t=1792418501; c=relaxed/simple;
+	bh=PDp5LZvazXyrNB/2aonb8uKGUSGUhcRxBgOuvMtx82k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N+9vwn0LWcPMYcEO0Mr+IA0eYhYpC7K1iBHBPkaOWL0lM+TOlKDndT7oaKJSNx3MUOTkj/9R6iv5MtEb/qcA1cGqoa6h2/1LkQqLbZvNUALD52kyQduNBO8/wFib4ZgFWwXUI4Rlnm7ikW9XhxwQmYmBdVwq6vJ4D+mtwtQGato=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MqhWI+bs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RQpnbSj2dm+6UvX5a3CzN5vvHbqi1IkhwUiCT91EAH5cp9YXIPZYAMCCx9OZraiLL2G4Xq7SlhUQpScc33J5yvL0kf/uNuTgIH6aeMyKBzP8Ln+2pqB3F7LstJ7Rmu9INgEMZh1szxy7BBHiMMrQeYQZEO0D9Z4LGVTJY39I1Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KnFOqkf4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MqhWI+bs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4917B1F000C7;
-	Mon, 19 Oct 2026 14:01:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KnFOqkf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F19F1F000C4;
+	Mon, 19 Oct 2026 14:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418497;
-	bh=ZlO61TrZDclDEP/J41cpKLqQXMCyv97Pd4adStebopw=;
+	s=k20260515; t=1792418498;
+	bh=cTneUewtWVKH46JGXVd6T4WZqiHe8a2SZhide+W0/sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MqhWI+bsOdXCVk36eb4IVA8l8mNum44X8u3KKrudIoXWb5/TuSa7wsHAmWT/hteni
-	 mPJPBquBXPxaDYCoskfsSO0H1nd7o0p7jJA3WanEWryr4XykHrs+RXnUec8DTNDPRe
-	 232e5qRNLC5pE+6Jny1QNilEd3qx3R0ZLzjCl+13M7wzxLjKxjHEEB1kCw97Fodwry
-	 0HSophNji2G2BlVQiILytmCviFI4HyZwnB5ghKSghCDj1y2YnAZ5Ucsx0TGsxR4A6A
-	 R7pX85r1yINJpDmMSenzn3DF3Ik+F6nMl0UCuR9EWjibr0sQH1N4YTFN58wLR5l38e
-	 5vThEZU7VqW6g==
+	b=KnFOqkf46yHJzpOCGy0Oj5WgjLCbWHnll4uXk9qMu/KdTqnt9gZD6AngmeHGXAKEF
+	 hK6jtSpHRO9Mlw1jeilSnrr8Brt2OOqKk9CZAvC/cIpUeORhlBDgSwZgjIEGLuoJbw
+	 ULAfPJVLub0QFrhA7Zlulj28EgTjJE6ziPHLK63aHLSnW24ojLmr6z8qhlYvvwRYJq
+	 OK0S1nH9R9GBbfcrm6WOXyvJMuh5ZK1lCqprecJRGD1CsYbCQp2rOmiQZjmFBVjnp6
+	 fPkQXs4kZ7i4k7ov/GRAV7gdiOF1Dzo4pzbkBPLhU92RYrLUr7j+4mBVbhsz3taYFL
+	 Mpw2TfCgLo3fQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christian Brauner <brauner@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
+Cc: Griffin Kroah-Hartman <griffin@kroah.com>,
+	David Heidelberg <david@ixit.cz>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	shuah@kernel.org,
-	linux-kselftest@vger.kernel.org,
+	oe-linux-nfc@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] selftests/filesystems/overlayfs: fix set_layers_via_fds link error
-Date: Mon, 19 Oct 2026 09:49:41 -0400
-Message-ID: <20261019135441.1420968-290-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] nfc: mrvl: spi: Unregister dev on allocation fail
+Date: Mon, 19 Oct 2026 09:49:42 -0400
+Message-ID: <20261019135441.1420968-291-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,415 +53,402 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Brauner <brauner@kernel.org>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit e5804b1024193c91ff2648403beda882cb4f8b6c ]
+[ Upstream commit d832b95697384a2b67f20b35106bbf925358cde9 ]
 
-set_layers_via_fds.c calls open_tree() directly, but that wrapper is
-not provided by all C libraries, so the test fails to link with
-"undefined reference to open_tree" on toolchains without it.
+Call nfcmrvl_nci_unregister_dev() if nci_spi_allocate_spi() fails,
+unwrapping the previous call to nfcmrvl_nci_register_dev() during the
+nfcmrvl_spi_probe() function.
 
-Use sys_open_tree() from ../wrappers.h, the syscall wrapper already
-used for move_mount(), fsmount() and friends here.  This is also a
-prerequisite for building the new idmapped_mounts test added to this
-directory.
-
-Link: https://patch.msgid.link/20260615-work-idmapped-overlayfs-v1-8-7381632aa402@kernel.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Assisted-by: gkh-clanker-2000
+Cc: David Heidelberg <david@ixit.cz>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a selftest link fix for code that
-already exists on 6.18.y, with a clean apply and no kernel runtime
-change.
+This is a four-line probe error-path fix for a real NULL-deref in the
+Marvell NFC-over-SPI driver. The buggy code is in this 6.12 tree and has
+been there since v4.4.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Record: `[selftests/filesystems/overlayfs] [fix] [replace libc
-  open_tree() with sys_open_tree() so the test links]`
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [nfc: mrvl: spi:] [Unregister] [On `nci_spi_allocate_spi()`
+failure, unregister the NCI device previously registered in probe]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- `Link: https://patch.msgid.link/20260615-work-idmapped-
-  overlayfs-v1-8-7381632aa402@kernel.org` — lore/msgid for patch 8/10 of
-  the idmapped overlayfs series
-- `Reviewed-by: Amir Goldstein <amir73il@gmail.com>` — overlayfs
-  maintainer
-- `Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>` —
-  VFS maintainer / author
-- Pipeline-only (ignored for selection): `[Upstream commit
-  e5804b1024193c91ff2648403beda882cb4f8b6c]`, `Signed-off-by: Sasha
-  Levin`
-- Absent (expected): `Fixes:`, `Cc: stable@vger.kernel.org`, `Reported-
-  by:`, `Tested-by:`, syzbot
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record: Tags from `d832b95697384` (`git show --format=fuller`):
+- Assisted-by: gkh-clanker-2000 (AI-assisted)
+- Cc: David Heidelberg <david@ixit.cz>
+- Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com> (author)
+- Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+- Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
+- Signed-off-by: David Heidelberg <david@ixit.cz> (applied)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable (absence expected)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record: `[Bug] set_layers_via_fds.c calls libc open_tree(), which some
-  C libraries do not provide. [Symptom] link failure: "undefined
-  reference to open_tree". [Version info] none. [Root cause] the test
-  already uses sys_fsopen/sys_fsmount/sys_move_mount from wrappers.h,
-  but this one test used the libc name instead of sys_open_tree(). The
-  message also says the change is a prerequisite for a new
-  idmapped_mounts test.`
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Record:
+- Bug: `nfcmrvl_spi_probe()` calls `nfcmrvl_nci_register_dev()`, then
+  `nci_spi_allocate_spi()`, and ignores a NULL return.
+- Symptom: probe still returns 0, so the SPI driver binds with
+  `drv_data->nci_spi == NULL`. The NCI device stays registered.
+  IRQ/`nci_send` then dereference NULL.
+- Version info: none in the message. Introducer is `caf6e49bf6d02e`
+  ("NFC: nfcmrvl: add spi driver"), first in v4.4-rc1.
+- Root cause: missing failure check after `nci_spi_allocate_spi()`. The
+  unregister is required because returning `-ENOMEM` skips
+  `nfcmrvl_spi_remove()`.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: `[Not a hidden fix] The subject and body state a link error.
-  That is a real userspace build failure of an existing kselftest, not a
-  disguised kernel runtime bug. The "prerequisite for idmapped_mounts"
-  line is extra context for a later new test, not the bug being fixed
-  here.`
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not disguised. It is an explicit error-path fix: missing
+allocation check plus missing rollback of `nfcmrvl_nci_register_dev()`.
 
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
-- Record: `[Files]
-  tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
-  (+8/-8). [Function] TEST_F(set_layers_via_fds,
-  set_layers_via_detached_mount_fds) only. [Scope] single-file surgical
-  rename, 8 call sites.]`
+Step 2.1: INVENTORY THE CHANGES
+Record:
+- File: `drivers/nfc/nfcmrvl/spi.c` (+4 / -0)
+- Function: `nfcmrvl_spi_probe()`
+- Scope: single-file surgical error-path fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record: `[Before] eight open_tree(dfd, path,
-  OPEN_TREE_CLONE|OPEN_TREE_CLOEXEC) calls (libc symbol). [After] the
-  same arguments via sys_open_tree(), the local syscall wrapper. [Path]
-  userspace selftest setup for detached overlay layer mounts. No kernel
-  path, no error-path logic change, no flag change.]`
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record: Current local probe (lines 160–174 of
+`drivers/nfc/nfcmrvl/spi.c`):
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record: `[Category] build / link error (portability). [Mechanism]
-  unresolved libc symbol on C libraries without open_tree();
-  sys_open_tree() already exists in wrappers.h and issues
-  syscall(__NR_open_tree, ...).]`
+```160:174:drivers/nfc/nfcmrvl/spi.c
+        drv_data->priv = nfcmrvl_nci_register_dev(NFCMRVL_PHY_SPI,
+                                                  drv_data, &spi_ops,
+                                                  &drv_data->spi->dev,
+                                                  pdata);
+        if (IS_ERR(drv_data->priv))
+                return PTR_ERR(drv_data->priv);
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Record: `[Quality] obviously correct: same arguments, wrapper already
-  used for the other new-mount syscalls in this file, OPEN_TREE_*
-  already defined in wrappers.h. [Regression risk] very low. syscall()
-  and libc open_tree() both return fd or -1/errno; the test already uses
-  ASSERT_GE(fd, 0). No kernel ABI, locking, or API change.]`
+        drv_data->priv->support_fw_dnld = true;
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+        drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
+                                                 drv_data->priv->ndev);
 
-**Step 3.1: BLAME THE CHANGED LINES**
-- Record: `[Introduced by] ccc829b15d48a ("selftests: add tests for
-  using detached mount with overlayfs", 2025-02-12). [Present in this
-  tree] yes (ancestor of v6.18.53). The test file itself dates to
-  af9199145b197 (2024-10-14).]`
+        /* Init completion for slave handshake */
+        init_completion(&drv_data->handshake_completion);
+        return 0;
+```
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: `[N/A] No Fixes: tag. The intro commit is ccc829b15d48a,
-  confirmed via blame on v6.18.53.]`
+Before: NULL from `nci_spi_allocate_spi()` is ignored; probe returns 0.
+After: if NULL, call `nfcmrvl_nci_unregister_dev(drv_data->priv)` and
+return `-ENOMEM`.
+Path: probe error path only, after a successful
+`nfcmrvl_nci_register_dev()`.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record: `[Related] 0bd92b9fe538b moved wrappers.h to
-  tools/testing/selftests/filesystems/wrappers.h (already in v6.18.53).
-  Next commit 226c30d522a3b adds idmapped_mounts.c (new test, not in
-  v6.18.53). [Standalone] this rename does not need the new test.]`
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record:
+- Category: (a) error-path resource leak + (d) memory safety (NULL
+  deref)
+- Mechanism: `nci_spi_allocate_spi()` (`net/nfc/nci/spi.c:124-143`) is
+  `devm_kzalloc()` and returns NULL on failure. The only caller is this
+  probe. IRQ thread `nfcmrvl_spi_int_irq_thread_fn` does
+  `nci_spi_read(drv_data->nci_spi)` with no NULL check;
+  `__nci_spi_read()` then uses `nspi->acknowledge_mode`.
+  `nfcmrvl_spi_nci_send()` / `nfcmrvl_spi_nci_update_config()` likewise
+  dereference `nci_spi`. Returning `-ENOMEM` without unregister would
+  leak the NCI device, GPIO, fw_dnld state, and `kzalloc`'d
+  `nfcmrvl_private` (not devm-managed).
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: `[Author] Christian Brauner, VFS maintainer, overlayfs
-  contributor. [Related] authored the original detached-mount test and
-  the later idmapped overlayfs series. Not a drive-by change.]`
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Obviously correct and minimal. Same
+`nfcmrvl_nci_unregister_dev()` already used in `nfcmrvl_spi_remove()`.
+IRQ is `devm_request_threaded_irq`, so it is released on probe failure.
+Regression risk is low. Residual window: IRQ can still fire between
+unregister and devm unwind (same pattern as remove). That is better than
+binding with a permanent NULL `nci_spi`.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: `[Dependencies] sys_open_tree() and #include "../wrappers.h"
-  already exist at v6.18.53. Parent file vs v6.18.53 file: 0-line diff.
-  [Standalone] yes for this tree. The new idmapped_mounts test is not
-  required.]`
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+Step 3.1: BLAME THE CHANGED LINES
+Record: `git blame` on `drivers/nfc/nfcmrvl/spi.c` lines 160–174: all
+from `caf6e49bf6d02e` (Vincent Cuissard, 2015-10-26), "NFC: nfcmrvl: add
+spi driver". First tagged in v4.4-rc1. Present and unchanged in this
+tree.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record: `[Lore] https://patch.msgid.link/20260615-work-idmapped-
-  overlayfs-v1-8-7381632aa402@kernel.org . [Series] v1 only (10 patches,
-  "ovl: support idmapped overlay mounts"). This is 08/10. [Review] no
-  NAK on this patch. Amir Goldstein Reviewed-by on the whole series
-  ("the entire series looks good to me"). His risk comments were about
-  FS_ALLOW_IDMAP on overlayfs itself, not this selftest rename. [Stable
-  nomination] none in the thread.]`
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Introducer identified by blame: `caf6e49bf6d02e`.
+`git merge-base --is-ancestor caf6e49bf6d02e HEAD` → in this tree. `git
+merge-base --is-ancestor d832b95697384 HEAD` → not in this tree.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record: `[Recipients] Miklos Szeredi, Amir Goldstein, linux-unionfs,
-  linux-fsdevel. [Reviewer] Amir Goldstein (overlayfs maintainer) gave
-  series-wide Reviewed-by.]`
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Recent local history of `spi.c` is style/DT/SPI-remove-void only
+(`e3c95d56190c9`, `5a478a653b4cc`, `a0386bba70934`). No prior attempt to
+check `nci_spi_allocate_spi()`. Standalone; not patch X/Y. Follow-ups on
+origin/master after this commit are only ID-table style (`777fd2dab4460`
+etc.), not corrections of this fix.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: `[No Reported-by / bugzilla / syzbot] The failure is described
-  by the author as a link error. No independent user report found.]`
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Griffin Kroah-Hartman is not the NFC maintainer. Same-day
+sibling: `56345cea6a30d` "nfc: nxp-nci: Add remove on IRQ error" (same
+AI assist, same applier). This 6.12 MAINTAINERS NFC entry is Krzysztof
+Kozlowski. The commit landed via `Merge tag 'nfc-net-next-20260817'`
+from codeberg.org/linux-nfc (David Heidelberg SOB).
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: `[Series] 01–07/10 and 10/10 are overlayfs idmapped-mount
-  kernel/docs features. 09/10 is the new idmapped_mounts selftest. Those
-  are new functionality and are not in v6.18.53 (no FS_ALLOW_IDMAP on
-  overlay in this tree; no idmapped_mounts.c). This 08/10 patch is
-  independently a fix to an existing test.]`
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Uses only `nfcmrvl_nci_unregister_dev()` and
+`nci_spi_allocate_spi()`, both present here. `git apply --check` of
+`d832b95697384` on this tree succeeded. Standalone.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: `[UNVERIFIED for lore.kernel.org/stable] WebFetch returned
-  403. b4 dig of the original thread found no stable@ discussion.]`
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record: `b4 dig -c d832b95697384` →
+https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
+- `b4 dig -a`: v1 only, 2026-07-07, from Greg Kroah-Hartman
+- Saved mbox: only the original patch email; no replies, NAKs, or
+  reviewer-requested Cc: stable
+- Applied as submitted
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-- Record: `[Modified] TEST_F(set_layers_via_fds,
-  set_layers_via_detached_mount_fds) in userspace kselftest. [Added]
-  none. semcode MCP not available; identified from @@ hunks.]`
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: `b4 dig -w` recipients: Greg Kroah-Hartman, oe-linux-
+nfc@lists.linux.dev, linux-kernel@vger.kernel.org, Griffin Kroah-
+Hartman, David Heidelberg. No Reviewed-by. David Heidelberg's SOB is the
+maintainer apply. Krzysztof Kozlowski was not on this patch's To/Cc (he
+was on the sibling nxp-nci patch).
 
-**Step 5.2: TRACE CALLERS**
-- Record: `[Callers] kselftest harness TEST_HARNESS_MAIN / fixture
-  runner when executing the set_layers_via_fds binary. Not in-kernel.
-  Not interrupt or syscall-kernel context.]`
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No Reported-by, bugzilla, or syzbot. No user-filed report found.
+Bug is from code inspection.
 
-**Step 5.3: TRACE CALLEES**
-- Record: `[sys_open_tree] syscall(__NR_open_tree, dfd, filename, flags)
-  in wrappers.h. Same as other sys_* helpers already used in this file
-  (sys_fsopen, sys_fsmount, sys_move_mount, sys_fsconfig).]`
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Same-day Griffin/Greg NFC error-path patch `56345cea6a30d` for
+nxp-nci. Not a functional dependency. `nci_spi_allocate_spi()` has no
+other callers.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: `[Reachability] only when a developer/CI builds and runs
-  overlayfs kselftests (typically root, CONFIG_OVERLAY_FS). Not a
-  production kernel path. The link failure happens at test build time,
-  before the test runs.]`
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: UNVERIFIED. lore.kernel.org/stable is behind Anubis (bot
+challenge). No stable discussion in the b4 mbox.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: `[This tree at v6.18.53] the only remaining libc open_tree()
-  uses in tools/testing/selftests besides this file are
-  landlock/fs_test.c, which defines its own local open_tree() wrapper.
-  Overlayfs tests were already supposed to use sys_open_tree(). Earlier
-  overlayfs selftest build fixes already in this tree: e8b8c5264d4eb
-  (ppc64 format), 0f05ee447949c (mount.h / sys_mount).]`
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `nfcmrvl_spi_probe()` only. Calls added:
+`nfcmrvl_nci_unregister_dev()`.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: `[Tree] Makefile VERSION=6 PATCHLEVEL=18 SUBLEVEL=53; git
-  describe HEAD = v6.18.53-5049-g0f0bdc2b0dffb; branch autosel.
-  [v6.18.53] set_layers_via_fds.c exists and has all 8 open_tree()
-  calls. wrappers.h already has sys_open_tree() and
-  OPEN_TREE_CLONE/CLOEXEC. Include of ../wrappers.h is already present.
-  [Bug introduced] ccc829b15d48a, in this series.]`
+Step 5.2: TRACE CALLERS
+Record:
+- `nfcmrvl_spi_probe` ← `spi_driver.probe` (`nfcmrvl_spi_driver`),
+  device enumeration for `marvell,nfc-spi` / `nfcmrvl_spi`
+- `nfcmrvl_nci_unregister_dev` already called from `nfcmrvl_spi_remove`,
+  and from uart/i2c/usb counterparts
+- IRQ `nfcmrvl_spi_int_irq_thread_fn` is the crash path if `nci_spi` is
+  NULL after a “successful” probe
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: `[Difficulty] clean apply. `git diff v6.18.53 088318c9d7a6e^
-  -- set_layers_via_fds.c` is empty. Applying the commit patch onto a
-  copy of the v6.18.53 file: APPLY_CLEAN.]`
+Step 5.3: TRACE CALLEES
+Record: `nfcmrvl_nci_unregister_dev()` (`main.c:182-197`) calls
+`nci_unregister_device`, optional `nfcmrvl_fw_dnld_abort`,
+`nfcmrvl_fw_dnld_deinit`, GPIO free, `nci_free_device`, `kfree(priv)`.
+Appropriate after a successful register.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: `[No equivalent fix in v6.18.53] still uses open_tree().
-  Candidate 088318c9d7a6e is on autosel only, not in v6.18.53 (`git
-  merge-base --is-ancestor 088318c9d7a6e v6.18.53` → not an ancestor).]`
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Probe of DT/SPI Marvell NFC (8897-class). Not a syscall. After a
+buggy successful probe, NFC netlink/userspace I/O and the falling-edge
+IRQ are live. Unprivileged trigger of the OOM itself: no. Crash after
+bind: yes, if the chip asserts SPI_INT or userspace talks to the NFC
+device.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: i2c/usb/uart register last in probe, so they do not have this
+post-register allocation. This SPI path is unique. Same class of NFC
+error-path leaks already in this tree: `8a4d480702b71`, `e204ead35401a`,
+`bb55dc2ae4367`.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: `[Subsystem] kselftests for overlayfs
-  (tools/testing/selftests/filesystems/overlayfs/). [Criticality]
-  PERIPHERAL for production runtime; IMPORTANT for overlayfs regression
-  testing of this LTS tree. Overlayfs itself is a widely used fs
-  (containers), but this commit does not touch fs/overlayfs/.]`
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: `[Activity] overlayfs selftests were added/extended through
-  6.15 (fd mounts, detached mounts, override_creds). Relatively new
-  tests, still the ones this 6.18.y tree ships. Kernel overlayfs is
-  mature.]`
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Tree is 6.12.111 (`p-6.12-3-gc504cf0baa3d8`). Buggy
+sequence is in `drivers/nfc/nfcmrvl/spi.c:169-174`. Introduced v4.4-rc1.
+Fix `d832b95697384` is not an ancestor of HEAD (landed in v7.3-rc1).
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply. `git apply --check` succeeded. Later mainline ID-
+table style commits do not touch this hunk.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: `[Affected] people/CI building overlayfs kselftests on a C
-  library without libc open_tree() (author: "not provided by all C
-  libraries"). Not universal kernel users. UNVERIFIED which specific
-  libc versions still lack it in 2026; glibc added open_tree in 2.36, so
-  musl/older glibc are the plausible cases.]`
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No equivalent check. `git log --grep` on this path found no
+prior “nci_spi_allocate_spi fails” fix.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record: `[Trigger] building TEST_GEN_PROGS set_layers_via_fds
-  (Makefile already lists it). Common for anyone running these
-  selftests. Unprivileged users are not a security concern; this is a
-  link failure, not a runtime exploit.]`
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record: `[Failure] userspace link error; the kernel still builds and
-  boots. Test binary is not produced, so that overlayfs selftest cannot
-  be run. [Severity] LOW for production runtime, MEDIUM for stable-
-  kernel testability. Matches the documented "build error" class, not
-  oops/corruption/deadlock.]`
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [drivers/nfc/nfcmrvl] [PERIPHERAL] — Marvell NFC-over-SPI
+(`CONFIG_NFC_MRVL_SPI`), DT compatible `marvell,nfc-spi`. Not core
+mm/net, but a shipped production driver.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Record: `[Benefit] medium for testers of this tree (existing test
-  becomes buildable everywhere the rest of this directory already
-  builds). [Risk] very low: 8 identifier substitutions, no kernel
-  change, wrapper already in tree. [Ratio] favorable if build fixes for
-  existing selftests are in scope; this one is.]`
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature/low-churn. Driver added 2015; 6.12 changes are mostly
+style and small fixes. Bug is long-standing, not a new-code race.
 
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific / config-specific: `CONFIG_NFC_MRVL_SPI` users
+with Marvell NFC SPI hardware (embedded/ARM boards using `marvell,nfc-
+spi`).
 
-FOR backporting:
-- Real link failure of an existing test in this 6.18.y tree
-- Documentation/process/stable-kernel-rules.rst explicitly lists build
-  errors as acceptable
-- 8-line surgical change, obviously correct
-- sys_open_tree() and wrappers.h already present; applies cleanly
-- Overlayfs maintainer Reviewed-by
-- Same class of fix as e8b8c5264d4eb / 0f05ee447949c already in this
-  lineage
-- No kernel runtime regression surface
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: `devm_kzalloc(sizeof(struct nci_spi))` failure during probe
+(GFP_KERNEL). Rare except under memory pressure. Not unprivileged-OOM-
+as-exploit in the usual sense; once bound, IRQ or NFC I/O oopses.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record:
+- Failure: kernel oops (NULL `nci_spi` in
+  IRQ/`nci_spi_send`/`nci_spi_read`)
+- Secondary: if probe were failed without unregister, leaked registered
+  NCI device + GPIO + `priv`
+- Severity: HIGH on trigger (oops); trigger likelihood LOW
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: medium for affected hardware (prevents oops and a leftover
+  NFC device); population is small
+- Risk: very low (4 lines, established unregister helper, error path
+  only)
+- Ratio: favorable — cheap, obviously correct crash/leak fix
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Real bug in this tree: ignored NULL from `nci_spi_allocate_spi()`,
+  probe returns 0
+- Verified crash path: IRQ and send dereference `nci_spi` with no NULL
+  check
+- Unregister is required once probe fails, matching `remove()`
+- 4 lines, applies cleanly, no new API, no prerequisites
+- Bug present since v4.4
+- Same unregister helper already in this tree (`d270453a0d9ec`
+  reordering already applied)
 
 AGAINST:
-- Not a kernel crash, security hole, or data-corruption fix
-- Lives in a 10-patch new-feature series; 09/10 and the kernel idmap
-  work must not be pulled with it
-- No independent user/syzbot report
-- Only testers building kselftests benefit
+- Niche SPI NFC driver
+- Trigger is a small GFP_KERNEL alloc failure
+- No Reported-by / syzbot / Tested-by
+- AI-assisted; mailing list thread has no review replies
+- Not a hot path for most 6.12 users
 
 UNRESOLVED:
-- Exact C libraries that still lack open_tree() in 2026 (author claim,
-  not independently enumerated)
-- No stable@ thread found (lore stable search 403)
+- No stable-list discussion (lore Anubis)
+- No public user report of this oops
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — rename to an existing
-   wrapper; reviewed by Amir Goldstein
-2. Fixes a real bug that affects users? **PASS** — existing kselftest
-   fails to link on some toolchains
-3. Important issue (crash, security, corruption, deadlock)? **PASS**
-   under the documented build-error clause, not under crash/security
-4. Small and contained? **PASS** — 8 lines, one file, one test
-5. No new features or APIs? **PASS** — no new test, no kernel API; the
-   later idmapped_mounts test is a different commit
-6. Can apply to the local tree? **PASS** — v6.18.53 file matches the
-   parent; apply check clean
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — logic matches `remove()`;
+   applied upstream by the NFC tree. No extra runtime test evidence.
+2. Fixes a real bug that affects users? PASS — missing alloc check
+   leaves a bound driver with NULL `nci_spi`.
+3. Important issue? PASS — kernel oops on IRQ/send after a failed alloc;
+   also a registered-device leak if probe is failed without rollback.
+   Severity HIGH on trigger, rare.
+4. Small and contained? PASS — +4 lines, one function.
+5. No new features or APIs? PASS
+6. Can apply to the local tree? PASS — `git apply --check` clean; buggy
+   code present
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: `[Exception] BUILD FIX for an existing in-tree selftest. Not a
-  device ID, quirk, DT, or docs-only change.]`
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: None (not an ID/quirk/DT/build/docs exception). Qualifies as a
+normal small bugfix.
 
-**Step 9.4: MAKE YOUR DECISION**
+Step 9.4: MAKE YOUR DECISION
+This is a small, obviously correct error-path fix for a NULL dereference
+that exists in 6.12. Rarity of the alloc failure does not make the oops
+fictional, and the rollback is the same path `remove()` already uses.
+Benefit outweighs risk.
 
-This should be backported to this 6.18.y tree. The bug is in the tree,
-the wrapper is in the tree, and the patch only makes an existing
-overlayfs selftest match the sys_* calling convention the rest of the
-file already uses. The idmapped-overlay feature series around it is
-irrelevant here: that feature and its new test are not in v6.18.53 and
-are not part of this diff.
+What it solves for stable users: if `nci_spi_allocate_spi()` fails
+during Marvell NFC SPI probe, 6.12 currently treats probe as success.
+The IRQ thread and NCI send path then oops on NULL. The patch fails
+probe with `-ENOMEM` and unregisters the NCI device so
+`priv`/GPIO/`nci_dev` are not left behind.
 
-### What the commit solves and why it matters here
-`set_layers_via_fds` is already built on 6.18.y (`TEST_GEN_PROGS +=
-set_layers_via_fds`). One fixture still calls libc `open_tree()`, so the
-binary fails to link where that symbol is missing. Switching to
-`sys_open_tree()` fixes that with no kernel change.
-
-### Stable rules
-It is small, obviously correct, and a build error. It does not add
-features or APIs.
-
-### Risk vs benefit
-Risk is negligible (userspace identifier change). Benefit is that
-overlayfs kselftests for this LTS tree can actually be built on the same
-toolchains the wrappers were written for.
-
-### Concerns
-Do not pull 09/10 (`idmapped_mounts.c`) or the overlay FS_ALLOW_IDMAP
-kernel patches with this; they implement a new feature this tree does
-not have. This commit does not require them.
+Risk vs benefit: four lines on an error path; apply is clean; no locking
+or API change. Niche hardware, but the failure mode is a crash, which
+stable is meant to take.
 
 Verification:
-- [Phase 1] Parsed tags: Link to patch 8/10, Reviewed-by Amir Goldstein,
-  SOB Christian Brauner; no Fixes/Cc:stable/Reported-by
-- [Phase 1] Body: link error "undefined reference to open_tree"; also
-  mentions idmapped_mounts prerequisite
-- [Phase 2] Diff: 8 open_tree → sys_open_tree in
-  set_layers_via_detached_mount_fds; +8/-8 one file
-- [Phase 2] wrappers.h: sys_open_tree() = syscall(__NR_open_tree, ...);
-  OPEN_TREE_CLONE/CLOEXEC defined
-- [Phase 3] git describe HEAD: v6.18.53-5049-g0f0bdc2b0dffb; make
-  kernelversion 6.18.53
-- [Phase 3] git merge-base --is-ancestor 088318c9d7a6e v6.18.53: NOT in
-  v6.18.53
-- [Phase 3] git blame v6.18.53: open_tree() lines from ccc829b15d48a
-  (2025-02-12), present in this tree
-- [Phase 3] git diff v6.18.53 vs commit parent for this file: 0 lines
-  (identical)
-- [Phase 3] idmapped_mounts.c: not in v6.18.53; FS_ALLOW_IDMAP not set
-  on overlay in this tree
-- [Phase 4] b4 dig -c e5804b1024193c91ff2648403beda882cb4f8b6c: matched
-  08/10 of ovl idmapped series
-- [Phase 4] b4 dig -a: v1 only
-- [Phase 4] b4 dig -w: Miklos Szeredi, Amir Goldstein, linux-unionfs,
-  linux-fsdevel
-- [Phase 4] b4 dig -m: Amir series-wide Reviewed-by; risk comments were
-  about kernel FS_ALLOW_IDMAP, not this patch; no NAK on 08/10
-- [Phase 4] lore WebFetch 403; stable list search 403 — UNVERIFIED
-  beyond the saved mbox
-- [Phase 5] semcode unavailable; callers are kselftest harness only
-- [Phase 5] git grep v6.18.53: only this file plus landlock (local
-  wrapper) use open_tree() in selftests
-- [Phase 6] v6.18.53 has the 8 open_tree() calls and ../wrappers.h
-  include; patch apply onto that file: APPLY_CLEAN
-- [Phase 7] tools/testing/selftests/filesystems/overlayfs; not
-  fs/overlayfs
-- [Phase 8] Failure mode: userspace link error; severity LOW runtime /
-  build-error class
-- UNVERIFIED: exact C libraries lacking open_tree() in 2026; no stable@
-  thread (403)
+- [Phase 1] `git show d832b95697384 --format=fuller`: tags listed above;
+  no Fixes/Reported-by/Cc stable
+- [Phase 1] `make kernelversion` / Makefile: 6.12.111; `git describe
+  HEAD`: p-6.12-3-gc504cf0baa3d8
+- [Phase 2] Read `drivers/nfc/nfcmrvl/spi.c` probe/IRQ/send; confirmed
+  no NULL check on `nci_spi`
+- [Phase 2] Read `net/nfc/nci/spi.c` `nci_spi_allocate_spi`: only
+  failure is `devm_kzalloc` → NULL
+- [Phase 2] Read `nci_spi_read`/`__nci_spi_read`: dereference
+  `nspi->acknowledge_mode` with no NULL guard
+- [Phase 2] Read `nfcmrvl_nci_register_dev`/`unregister_dev`: priv is
+  `kzalloc`, not devm; unregister is the correct rollback
+- [Phase 3] `git blame -L 140,200 drivers/nfc/nfcmrvl/spi.c`: introducer
+  `caf6e49bf6d02e` (2015)
+- [Phase 3] `git describe --contains caf6e49bf6d02e`: v4.4-rc1
+- [Phase 3] `git merge-base --is-ancestor caf6e49bf6d02e HEAD`: yes;
+  `d832b95697384 HEAD`: no
+- [Phase 3] `git describe --contains --match 'v*' d832b95697384`:
+  v7.3-rc1~133^2~2^2~15
+- [Phase 3] `git log origin/master --oneline --grep="Unregister dev on
+  allocation fail" -- drivers/nfc/nfcmrvl/spi.c`: found `d832b95697384`
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1-only thread, no replies in mbox
+- [Phase 4] lore.kernel.org/stable via curl: Anubis challenge,
+  UNVERIFIED
+- [Phase 5] `git grep nci_spi_allocate_spi`: sole caller is this probe
+- [Phase 6] `git show d832b95697384 -- drivers/nfc/nfcmrvl/spi.c | git
+  apply --check`: clean
+- [Phase 6] `git diff HEAD origin/master -- drivers/nfc/nfcmrvl/spi.c`:
+  only this hunk plus later ID-table style
+- [Phase 8] Failure mode: NULL deref → oops after probe “succeeds”;
+  severity HIGH, trigger LOW
+- UNVERIFIED: whether this SHA was discussed on stable@; no user-visible
+  oops report found
 
 **YES**
 
- .../filesystems/overlayfs/set_layers_via_fds.c   | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/nfc/nfcmrvl/spi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c b/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
-index dc0449fa628f8..d4a645ec88636 100644
---- a/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
-+++ b/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
-@@ -624,7 +624,7 @@ TEST_F(set_layers_via_fds, set_layers_via_detached_mount_fds)
+diff --git a/drivers/nfc/nfcmrvl/spi.c b/drivers/nfc/nfcmrvl/spi.c
+index 9c8cde1250fb5..dad07c8e13b84 100644
+--- a/drivers/nfc/nfcmrvl/spi.c
++++ b/drivers/nfc/nfcmrvl/spi.c
+@@ -168,6 +168,10 @@ static int nfcmrvl_spi_probe(struct spi_device *spi)
  
- 	ASSERT_EQ(sys_move_mount(fd_tmpfs, "", -EBADF, "/set_layers_via_fds_tmpfs", MOVE_MOUNT_F_EMPTY_PATH), 0);
+ 	drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
+ 						 drv_data->priv->ndev);
++	if (!drv_data->nci_spi) {
++		nfcmrvl_nci_unregister_dev(drv_data->priv);
++		return -ENOMEM;
++	}
  
--	fd_tmp = open_tree(fd_tmpfs, "u", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	fd_tmp = sys_open_tree(fd_tmpfs, "u", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(fd_tmp, 0);
- 
- 	layer_fds[0] = openat(fd_tmp, "upper", O_CLOEXEC | O_DIRECTORY | O_PATH);
-@@ -633,25 +633,25 @@ TEST_F(set_layers_via_fds, set_layers_via_detached_mount_fds)
- 	layer_fds[1] = openat(fd_tmp, "work", O_CLOEXEC | O_DIRECTORY | O_PATH);
- 	ASSERT_GE(layer_fds[1], 0);
- 
--	layer_fds[2] = open_tree(fd_tmpfs, "l1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[2] = sys_open_tree(fd_tmpfs, "l1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[2], 0);
- 
--	layer_fds[3] = open_tree(fd_tmpfs, "l2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[3] = sys_open_tree(fd_tmpfs, "l2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[3], 0);
- 
--	layer_fds[4] = open_tree(fd_tmpfs, "l3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[4] = sys_open_tree(fd_tmpfs, "l3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[4], 0);
- 
--	layer_fds[5] = open_tree(fd_tmpfs, "l4", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[5] = sys_open_tree(fd_tmpfs, "l4", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[5], 0);
- 
--	layer_fds[6] = open_tree(fd_tmpfs, "d1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[6] = sys_open_tree(fd_tmpfs, "d1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[6], 0);
- 
--	layer_fds[7] = open_tree(fd_tmpfs, "d2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[7] = sys_open_tree(fd_tmpfs, "d2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[7], 0);
- 
--	layer_fds[8] = open_tree(fd_tmpfs, "d3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[8] = sys_open_tree(fd_tmpfs, "d3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[8], 0);
- 
- 	ASSERT_EQ(close(fd_tmpfs), 0);
+ 	/* Init completion for slave handshake */
+ 	init_completion(&drv_data->handshake_completion);
 -- 
 2.53.0
 
