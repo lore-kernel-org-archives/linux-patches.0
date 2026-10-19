@@ -1,64 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792443069;
-	b=QRTYSdoSW83eocNIUnAE8cng/Zc8FT6OqlzE2QMgoCm4eCnq+ghba6CB5FddNz/2XG1p
-	 aJdb33kEyb7Y0jVjeCnK1QqlYdePVd0zWx7NT//JickdDVQs0ZzjT3+nRB2tuaNBlOaS5
-	 Do3itRw4Pyp3Ns2KNUg3AE51r/ajrHpVs/kq4zwPkfQUD4dAnjCwASUYm/mfMiLmugelw
-	 7HnXREVXUAEgN15HlYYDPHBsccNeu/6QBv0IMBiM7r1VMP3TH1UlkGz5MrSrqchXkSatn
-	 sHergObXN8BUTZa5BZW4wzcqxNZ4RUM2GwHg94lxLt1rOt3G+7Q/GQDIiJZtkdNVdHg==
+	t=1792443072;
+	b=WBkU6tnoXQod8AG5OkLjfKStIcQXM013YUVdDBFWfgPv+f0WGG/kmuum2gW4kaj2Mdsw
+	 609L8NYwWkPgOP1V1VaA5qj5kAAxWS8R7rGsdl73rOiuy+o39cKzfDoasMP3N3rRXCovt
+	 ay1oWd7/SOMxQ8B8SGB3/bkzeMuTcD1Smx1DgLaiBJ1/EYigYvvzRcAGJen4IrVRHmr+I
+	 3+Y3kQDMv3Xnr1+nGHeek/DvW25kJUBA1i8TXYQnQoWLWtMI39nEEJEPstgBF+ZWnDZDu
+	 jiG14p04r8urdAyI+wsP0HUeBy0T2hOJxpKnc8vd7pygxjaAJgEOrU3gJCDTWxGgJaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792443069;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792443072;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=jzcC2Eofur3/gHRUHWU0aImbOTkzsRIbkow1EacurcQ=;
-	b=5i82GrXII/ovT8l8XNNeZqj0qW2WcCCDiYKq8XIMIkysIA1GjJKEZuHxC6qizadXr3Z9
-	 XahAlD4IaT2ZuVtKKS6Jfh7Hc9DLVzjlOSIEewCBDXqns2Km5w5452HKgQKv4UL6afxq1
-	 dvZ/SxL+X7rXe5gC2aM4xcXQO2D7SvzBLfbKlc9JrzZR+McjvGF8t6eRWQDNx66pPPr0Q
-	 A34NhDKkveRMOlEAwn51YqjfgGzZanhmTBDOB+aTnKv+ZvjWVmZyvU0ooHrBJUMkqm738
-	 vbGi5tvPf8gzMb98y/IcisPlUj1RpGdC2KDZYhhm2iqn9rggXEbkxr9WPpGY4AaMhtA==
+	bh=S6Zb0tXCLcVWKBkJSSJ5LIY5EEk8HgP5V4eqUOyxYYQ=;
+	b=4GQFy7DomA5osIevVaagfenITrN6wXODcNGlUzIU6DXs6ZW4g9vOOIc6xy80H8jaknRf
+	 patOyLsOW88aRc+Yiur6nPL4keY1JFdqRd/1O3JJm0pfPohA7/0Nn+EWjE36JmFV1TvU6
+	 feFPwl5JAPo9eskVxAY/sGYUxEDYusnQk3CGX2yRx1ofirdMO3gHXhv8bSTOFu+rmsEYD
+	 WZv9Mijw6lZwmvw/8Cv9DjL8xXdZkNtadJtccAvJ0reOS2a/W+nB1GDLhDijifazb1Xxn
+	 Vb7DdWYb9zfYVG/R3k8hxW4YG6SHP2KAls+l//X0oCd6Rw0ANmZcIRVxziZS+W02cLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=DOb7sSOQ;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FSI3O9IN;
 	arc=none smtp.remote-ip=198.175.65.16
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F4960A3828
-	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 20:51:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47F4960A3828
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B282B606A33D
+	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 20:51:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B282B606A33D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=DOb7sSOQ
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FSI3O9IN
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792443069; x=1823979069;
+  t=1792443067; x=1823979067;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=v0WJ9AQWvBfYKzr/Znts6idoP+yJW0SsETXRqNBk0mQ=;
-  b=DOb7sSOQvOdg/eEoDBg40cAVfyFHOky6Fo8GmlFgBrcNsMigqgk0qWV5
-   IXAKsQJZ2BqHxXB6b9eAf86446s0dtuy/7OxbyxbM6V9we6wAQaCcNWtG
-   B90adrFj1qF+1MoVCrr1FTmxwgomXf2MpX9/9D3xt2xBv/18vuAtt4G5E
-   1mxCvlyoTBHdRbi6kqNGKJPqoPNnfzZwx9p+0sNh0DhKHqJz73nW+mvCR
-   CFrU9A7QEoZPPoevUAHYSd/YJwgZz1gysQLbqp1YgtohSEKPxpGi4JDDC
-   swxTgLO6bKiPpztqo+L+o3CLFovc12p0/z0+AEYq9amFPlgZFEnG4FcXw
-   g==;
-X-CSE-ConnectionGUID: PQ0ccwuhRuyNmXVHVLH67A==
-X-CSE-MsgGUID: e7cRv/foREa/gv67MeiAdg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1131289"
+  bh=GUNh2fSeRDb/9opqrVuw2xTtG519fwruzb3NfLlbQ2c=;
+  b=FSI3O9INqP++Ao+G2MHzzlar171zup0BYZbdMouKaQ7gHiuKFPx811Tt
+   r5f4K4WywsuCPKchBEuDbgcvWg2CYxnjwsmSyy7OuVX/sjEjpNCO4MNon
+   E6Iggmz2GYgYrr4SrgQ39yZlpHn+YQYoHXtOP2Wpf4v9fFLDKoPJpmF1v
+   c+4YdVETDaoa9BQQOPIEyzgUzPXwFndb8CmjazjW5M/jsICLfPdUnK4i9
+   MHR3PPRMzuz9eG4YBqvmy8RQa+6/JJO8o414pEF8vJiK/IiP73XCcN0qm
+   JKGs0DDQk1M9W5c2DiUi3ZlfQQbs3fzGsZLe1/lCT9NfEC1vHnsiwHJU3
+   A==;
+X-CSE-ConnectionGUID: 85oEBcsoSPaZ7PDWEfzKVQ==
+X-CSE-MsgGUID: brdpXXhPTLGuZYZARHcajw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1131282"
 X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="1131289"
+   d="scan'208";a="1131282"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
   by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 13:50:51 -0700
-X-CSE-ConnectionGUID: 6kOhtl5XRpSAr4b6VNq5BQ==
-X-CSE-MsgGUID: pz22+bNSSFKkYTYLnfrcLA==
+X-CSE-ConnectionGUID: YiYCFNJbRe+jpAagXUBPyg==
+X-CSE-MsgGUID: wpQu5ymkTzSMkxlqcxUmkA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="3008685"
+   d="scan'208";a="3008681"
 Received: from spandruv-mobl5.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.87])
   by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 13:50:51 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -77,9 +77,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v14 20/24] x86/resctrl: Export interface to report telemetry unbind/remove
-Date: Mon, 19 Oct 2026 13:50:27 -0700
-Message-ID: <20261019205031.16977-21-tony.luck@intel.com>
+Subject: [PATCH v14 19/24] x86/resctrl: Enforce system RMID limit on AET
+Date: Mon, 19 Oct 2026 13:50:26 -0700
+Message-ID: <20261019205031.16977-20-tony.luck@intel.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261019205031.16977-1-tony.luck@intel.com>
 References: <20261019205031.16977-1-tony.luck@intel.com>
@@ -94,106 +94,74 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl obtains the addresses of the telemetry MMIO regions from the
-pmt_telemetry driver at mount time and holds a reference on the module
-until unmount, so the module cannot be unloaded while resctrl may read
-the counters.
+The RMID a CPU uses for telemetry is the RMID written to
+MSR_IA32_PQR_ASSOC.RMID, so the number of RMIDs that register can hold
+(enumerated via CPUID) bounds every monitoring resource. Each AET
+(Application Energy Telemetry) event group separately describes how many
+RMIDs its counters support.
 
-The module reference does not prevent a telemetry device from being
-unbound from the driver, or removed. Either tears down the MMIO mappings
-that hold the event counters, and a subsequent read of an event by
-resctrl faults on the stale address.
+The number of RMIDs an event group supports may be higher than the number
+that can be written to MSR_IA32_PQR_ASSOC.RMID. The telemetry resource
+then advertises more RMIDs than can ever be used, both to user space in
+info/PERF_PKG_MON/num_rmids and, on systems where telemetry is the only
+monitoring resource, as the number of RMIDs available to the mount.
 
-Provide an interface for pmt_telemetry to report that the mappings for a
-package are about to be torn down. Stop using the regions of that package
-and serialize event reads with the notification so that no read uses an
-address once it has been reported. Events of the affected package then
-read "Unavailable".
+Cap the number of RMIDs of the telemetry resource at the number that can
+be written to MSR_IA32_PQR_ASSOC.RMID.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
 v14:
-	Dropped aet_mmio_lock. Now safe to use aet_lock.
-	New commit message
-	Add code comment noting that per-package may be over-reaction.
+	New commit comment
 ---
- include/linux/intel_vsec.h              |  2 ++
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 30 +++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ arch/x86/kernel/cpu/resctrl/internal.h  | 2 ++
+ arch/x86/kernel/cpu/resctrl/core.c      | 2 +-
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 6 ++++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/intel_vsec.h b/include/linux/intel_vsec.h
-index c04b1d0f3143..bcbf4937c71c 100644
---- a/include/linux/intel_vsec.h
-+++ b/include/linux/intel_vsec.h
-@@ -262,11 +262,13 @@ void intel_aet_register_enumeration(struct module *module,
- 				    struct pmt_feature_group *(*get)(enum pmt_feature_id id),
- 				    void (*put)(struct pmt_feature_group *p));
- void intel_aet_unregister_enumeration(void);
-+void intel_aet_invalidate(u8 package_id);
- #else
- static inline void intel_aet_register_enumeration(struct module *module,
- 						  struct pmt_feature_group *(*get)(enum pmt_feature_id id),
- 						  void (*put)(struct pmt_feature_group *p)) { }
- static inline void intel_aet_unregister_enumeration(void) { }
-+static inline void intel_aet_invalidate(u8 package_id) { }
- #endif /* CONFIG_X86_CPU_RESCTRL_INTEL_AET */
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index c66954bc01e7..1f080aad1b67 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -153,6 +153,8 @@ extern struct rdt_hw_resource rdt_resources_all[];
  
- #endif
+ extern bool intel_rdt_mbm_need_quirk;
+ 
++extern u32 pqr_assoc_num_rmid;
++
+ void arch_mon_domain_online(struct rdt_resource *r, struct rdt_l3_mon_domain *d);
+ 
+ /* CPUID.(EAX=10H, ECX=ResID=1).EAX */
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 40466f29e48e..689b9e31fe7a 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -46,7 +46,7 @@ static DEFINE_MUTEX(domain_list_lock);
+ DEFINE_PER_CPU(struct resctrl_pqr_state, pqr_state);
+ 
+ /* Number of unique RMID values that can be written to MSR_IA32_PQR_ASSOC.RMID */
+-static u32 pqr_assoc_num_rmid;
++u32 pqr_assoc_num_rmid;
+ 
+ static void mba_wrmsr_intel(struct msr_param *m);
+ static void cat_wrmsr(struct msr_param *m);
 diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 5c88236d850f..3facb852f22b 100644
+index 75cd602d65ae..5c88236d850f 100644
 --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
 +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -339,6 +339,7 @@ static enum pmt_feature_id lookup_pfid(const char *pfname)
-  * Serialises AET's view of pmt_telemetry:
-  *   - pmt_module, get_feature, put_feature, pmt_in_use
-  *   - every event_group's ->pfg
-+ *   - the telemetry_region::addr entries reachable through ->pfg
-  *
-  * Lock ordering with pmt/telemetry.c's ep_lock is ep_lock -> aet_lock.
-  * AET therefore must not call get_feature() (which takes ep_lock) while
-@@ -413,6 +414,33 @@ void intel_aet_unregister_enumeration(void)
- }
- EXPORT_SYMBOL_NS_GPL(intel_aet_unregister_enumeration, "INTEL_PMT");
+@@ -308,6 +308,12 @@ static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
+ 	else
+ 		r->mon.num_rmid = e->num_rmid;
  
-+/*
-+ * pmt_telemetry driver calls while holding ep_lock. This is for unbind/remove
-+ * operations that will invalidate the virtual addresses of MMIO registers
-+ * provided by intel_pmt_get_regions_by_feature(). This simple interface may
-+ * be overly broad if there are multiple telemetry devices per-package. An
-+ * unbind/remove operation on one device will stop resctrl from reading
-+ * event counters from all devices on the same package.
-+ */
-+void intel_aet_invalidate(u8 package_id)
-+{
-+	struct event_group **peg;
++	/*
++	 * AET may claim to support more RMIDs than are permitted to be
++	 * assigned to MSR_IA32_PQR_ASSOC.RMID. Enforce this limit.
++	 */
++	r->mon.num_rmid = min(r->mon.num_rmid, pqr_assoc_num_rmid);
 +
-+	guard(mutex)(&aet_lock);
-+
-+	for_each_event_group(peg) {
-+		struct event_group *e = *peg;
-+
-+		if (!e->pfg)
-+			continue;
-+		for (int i = 0; i < e->pfg->count; i++) {
-+			if (e->pfg->regions[i].plat_info.package_id == package_id)
-+				e->pfg->regions[i].addr = NULL;
-+		}
-+	}
-+}
-+EXPORT_SYMBOL_NS_GPL(intel_aet_invalidate, "INTEL_PMT");
-+
- bool intel_aet_pre_mount(void)
- {
- 	struct pmt_feature_group *(*get)(enum pmt_feature_id id);
-@@ -488,6 +516,8 @@ int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val)
- 	void *pevt0;
- 	u32 idx;
- 
-+	guard(mutex)(&aet_lock);
-+
- 	pevt0 = pevt - pevt->idx;
- 	e = container_of(pevt0, struct event_group, evts);
- 	idx = rmid * e->num_events;
+ 	if (skipped_events)
+ 		pr_info("%s %s:0x%x monitoring detected (skipped %d events)\n", r->name,
+ 			e->pfname, e->guid, skipped_events);
 -- 
 2.56.0
 
