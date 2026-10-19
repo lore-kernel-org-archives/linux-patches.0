@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F715187E4;
-	Mon, 19 Oct 2026 13:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D4755F624;
+	Mon, 19 Oct 2026 13:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418244; cv=none; b=J6kduHkXEzq1qLgvSZSvtz/lFc46BfQlH98otL8BUSs/XU5j5CUZRJVvtV5+xH9bRPvwDHdFhP3gFmFcMbpdNZMtB+Lr77yxxpko6ZrkAGr7pLl5e43yrbOHvtBAGIuV9nHTS4fnBxmwQ4+8G/j9C9nIxIIlOK94HaOk6Cf7R7c=
+	t=1792418246; cv=none; b=CvXIpmtAvijRRvERsC+ufgiiOhvyOxnLelPLvLmJZgOx7j28EH93GACu58AcDCugQapp6dacvebrbQg+t2V4H5xtViRK/NmHmWBn10nPAQ7Zn39/seW4jdZNj3O6sfPaRsuDXsZU3/WXOHHI2QWIRhWo4Ek7ZKHFGpOkDKOPsJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418244; c=relaxed/simple;
-	bh=jUztPm7uRIP0iS8KOShw58cKzKvgh4GCAlFQpSpBT2Q=;
+	s=arc-20240116; t=1792418246; c=relaxed/simple;
+	bh=qtg5o7vgcWmexblo8MQT+J0ce2cEPo8iV+2RB85ju/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kCdlkGSf8AkALHrLiB2C+dGCeES47b/1t+8UrtPs2Pdb1uEiiRBKKJ7bUhm1Ceyjr1YrEKnCNeaCErY+u/qQlFjy3a51N/c/kCphf7SQ3OItG3kyHMP1FTudPijcEnKeXaK5QFocDdRgyqxXYReApKSyoJj0aXF3CzZ7hAYs3/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DkzAPO9o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hDHNXqs/6FrE6uBm7cleY2q/3M2LEqignc5DG7kcU3vZMNsJez8CgM5QFK3G7r7nBWN+y5sSUKHu8drWbPWk5XzmWMONSsRKsevgHTE0wEpqZG8CK921wu+OUkXSfzX239twSS61XbzFai+z+M+SdltDgZGIla3B9lA6bnkEvNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AItLilEc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DkzAPO9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE5D1F000C6;
-	Mon, 19 Oct 2026 13:57:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AItLilEc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8481F000C4;
+	Mon, 19 Oct 2026 13:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418242;
-	bh=3niE0IEl9FIKpMw7hfLbJ8+0tI0fo/18nEVzpD2/Y60=;
+	s=k20260515; t=1792418243;
+	bh=yI+FRH+GKlmCSgljWKtK+F9J/s6RC2srfk5ZlIgedqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DkzAPO9ov196v2n7rWlFpw+TCtUx8Lp76oV2WK7GPYnEwFR2JbJ+DW/gfeonlC9ME
-	 M7tun86WKiyZl0/nXSBDzg+0cYixHFDo2MhdQe3gpBpymuwhm8gQrfeJjQWSbZ/A+H
-	 9+Ozqg53jrguvmSbfmoNAyS9d7SB2PhDWxykeV6B3Ha/Z6YtOBYe3ECoom7/Rucm4p
-	 qdHW62od5aU4CHtX7FSQwhPxKWlUcnj+pvkAifJP3+qQslSZgNT0+Zx4T2O4oI3yhz
-	 VGyVgMpmWysGS2SB0W20C+9lMkjQMGsA7taGmP7y0Ef+nGQ8qMHyOQclMdUw/2hB0L
-	 YUYuhQZGec24g==
+	b=AItLilEcGJ/ASp82dX0muBpn3FYL8lFmcKQS9TWM17pOFqUsHlBuYeqbAeChvNc7O
+	 Z5cJpZbzQoqVnXhwfAX5fJ3GDSUvVJtyz5oZ5/8LYNjlVLNzGRvfNgvNZX0/7oQuSa
+	 HzCQBHhqs/L06cegHIChUTZVnkHaPZ7jE0VmLcb4TZNTcQFC/WFbni3phI/i7HUXTq
+	 8edj4GaE6NmcFCBL6k6NcgSdSQZqcnm2xD4ekZOrA0SxqbX4BkHuRqqzuiXhgHM1Fi
+	 fJthc8dgHfgzFtAPOjPmQt49RZZpNdoKtKwL1wOBV5u0W3IWfH1nxFRLDY4f2UX7pn
+	 KPvAcynYZdjiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andrew Onyshchuk <andryk.rv@gmail.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Shang En Sim <sim@shangen.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	derekjohn.clark@gmail.com,
-	hmh@hmh.eng.br,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	ibm-acpi-devel@lists.sourceforge.net,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] platform/x86: thinkpad_acpi: Fix fan speed reporting on Edge E330
-Date: Mon, 19 Oct 2026 09:46:44 -0400
-Message-ID: <20261019135441.1420968-113-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Enable mute LEDs on HP Spectre x360 16-aa0xxx
+Date: Mon, 19 Oct 2026 09:46:45 -0400
+Message-ID: <20261019135441.1420968-114-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,435 +48,363 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Onyshchuk <andryk.rv@gmail.com>
+From: Shang En Sim <sim@shangen.org>
 
-[ Upstream commit 8d840dad456f88374d8a3b03851452a280d6ee50 ]
+[ Upstream commit bfcdc1c0eaeae5525c726193568e8d638b2afdc0 ]
 
-The ThinkPad Edge E330 with H3 firmware uses the non-standard EC fan
-register block. Without a matching quirk, thinkpad_acpi reads the legacy
-tachometer registers and reports 0 RPM.
+The HP Spectre x360 2-in-1 Laptop 16-aa0xxx with PCI subsystem ID
+0x103c:0x8c17 only gets the CS35L41 amplifier setup from
+ALC287_FIXUP_CS35L41_I2C_2, so the speaker-mute and mic-mute keyboard
+LEDs do not work.
 
-Add the H3 BIOS family to TPACPI_FAN_NS so the driver reads the fan
-period from EC register 0x95 using the existing non-standard reporting
-path.
+Use ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX like subsystem ID 0x8c16 so
+the mute LEDs work.
 
-Tested on a ThinkPad Edge E330 with BIOS H3ET77WW and EC H3EC35WW.
+Tested on HP Spectre x360 2-in-1 Laptop 16-aa0xxx.
 
-Signed-off-by: Andrew Onyshchuk <andryk.rv@gmail.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/20260806154417.618575-1-andryk.rv@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Shang En Sim <sim@shangen.org>
+Link: https://patch.msgid.link/20260807055139.58707-1-sim@shangen.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Local tree
+The local tree is **6.18.53** (`pending-6.18`,
+`p-6.18-1-g03b85e06ca9bf`). The buggy `0x8c17` mapping is present here,
+and the target AA0XXX fixup already exists.
 
-This checkout is **pending-6.12** (`p-6.12-3-gc504cf0baa3d8`), kernel
-**6.12.111**. The verdict is only for this tree.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-The driver is still `drivers/platform/x86/thinkpad_acpi.c` (not yet
-moved to `drivers/platform/x86/lenovo/`). The H3 `TPACPI_FAN_NS` quirk
-is **not** present. The non-standard fan path that the quirk selects
-**is** present.
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [ALSA hda/realtek] [Enable] [map HP Spectre x360 16-aa0xxx SSID
+0x8c17 to the mute-LED fixup already used by 0x8c16]
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[platform/x86 thinkpad_acpi] [Fix] [fan speed reporting on
-ThinkPad Edge E330]**
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>` (Lenovo
-  thinkpad_acpi reviewer)
-- `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
-  (platform/x86 maintainer)
-- `Signed-off-by: Andrew Onyshchuk <andryk.rv@gmail.com>` (author)
-- `Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
-  (maintainer)
-- `Link:
-  https://patch.msgid.link/20260806154417.618575-1-andryk.rv@gmail.com`
-- No `Fixes:` tag (expected)
-- No `Reported-by:` / `Tested-by:` tags (testing is described in the
-  body instead)
-- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
-  if present
+- Fixes: none (expected for this review)
+- Reported-by: none
+- Tested-by: none as a tag; body says the author tested on the 16-aa0xxx
+- Reviewed-by: none
+- Acked-by: none
+- Link: https://patch.msgid.link/20260807055139.58707-1-sim@shangen.org
+- Cc: stable: none (expected)
+- Signed-off-by: Shang En Sim <sim@shangen.org> (author)
+- Signed-off-by: Takashi Iwai <tiwai@suse.de> (ALSA maintainer; applied
+  the patch)
+- No syzbot / sanitizer tags
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** Edge E330 with H3 firmware uses the non-standard EC fan
-  register block.
-- **Symptom:** without a quirk, the driver reads the legacy tachometer
-  registers and reports **0 RPM**.
-- **Root cause:** missing BIOS-family match in `fan_quirk_table`.
-- **Fix:** add `TPACPI_Q_LNV('H', '3', TPACPI_FAN_NS)` so the existing
-  NS path reads period from EC **0x95**.
-- **Version info:** tested on BIOS **H3ET77WW**, EC **H3EC35WW**. No
-  kernel-version range given.
-- **Failure mode:** wrong hwmon/procfs fan speed (always 0), not a
-  crash.
+- Bug: SSID `0x103c:0x8c17` is wired only to
+  `ALC287_FIXUP_CS35L41_I2C_2`, so CS35L41 amps are set up but speaker-
+  mute and mic-mute keyboard LEDs do not work.
+- Symptom: mute/mic-mute LEDs stay dead on this 16-aa0xxx variant.
+- Root cause: sibling `0x8c16` already uses
+  `ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX`; `0x8c17` was left on the
+  amp-only quirk.
+- Version info: none in the message.
+- Author’s fix: use the same AA0XXX fixup as `0x8c16`. Tested on the
+  16-aa0xxx.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit hardware-quirk bug
-fix.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. This is an explicit hardware-quirk correction, not
+cleanup disguised as a fix.
 
----
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- One file: `drivers/platform/x86/lenovo/thinkpad_acpi.c` in the
-  submitted patch; local equivalent is
-  `drivers/platform/x86/thinkpad_acpi.c`.
-- **+1 line**, 0 removed.
-- Function/data: `fan_quirk_table[]`.
-- Scope: **single-file surgical hardware quirk**.
+- File: `sound/hda/codecs/realtek/alc269.c` (1 hunk)
+- Scope: 1 line changed in `alc269_fixup_tbl[]` (SSID string + fixup id)
+- Classification: single-file surgical quirk-table update
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record: Before, `SND_PCI_QUIRK(0x103c, 0x8c17, ...)` selected
+`ALC287_FIXUP_CS35L41_I2C_2` (`cs35l41_fixup_i2c_two` only). After, the
+same SSID selects `ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX`. That fixup
+still calls `cs35l41_fixup_i2c_two`, and also applies speaker pin
+configs, GPIO amp enable, mute-LED coefbit, and GPIO LED setup. Path:
+codec probe via `snd_hda_pick_fixup()`.
+
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Hardware workaround / audio codec quirk] The wrong existing
+fixup left mute LEDs (and the extra speaker GPIO/pin work from the 2024
+Spectre fixup) unused. The new mapping reuses an already-present fixup.
+
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Obviously correct: `0x8c16` and `0x8c17` were added together as
+“HP Spectre 16”; `0x8c16` already got the full AA0XXX fixup. One-line
+table change, no new API. Regression risk is low: the author tested
+0x8c17 hardware; the new fixup still runs the old CS35L41 I2C setup.
+Residual risk is that 0x8c17 could differ slightly from 0x8c16 in
+speaker pin/GPIO behavior; that is unverified beyond the author’s test.
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+Step 3.1: BLAME THE CHANGED LINES
+Record: In this tree the `0x8c17` line is attributed to `aeeb85f26c3bb`
+(“ALSA: hda: Split Realtek HD-audio codec driver”, 2025-07-09), which is
+a file move. The content originated in `aa8e3ef4fe533` (“ALSA:
+hda/realtek: Add quirks for various HP ENVY models”, 2024-01-26, first
+in v6.9). Both `aa8e3ef4fe533` and `557f6e4ab5ba6` are ancestors of this
+HEAD.
+
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. The incomplete 0x8c17 mapping has been in the
+lineage since v6.9; the AA0XXX fixup landed in `557f6e4ab5ba6` (v6.12)
+for 0x8c16 only and left 0x8c17 on the amp-only quirk.
+
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Related: `557f6e4ab5ba6` added
+`alc245_fixup_hp_spectre_x360_16_aa0xxx` and switched 0x8c16. Recent
+`alc269.c` history is other HP mute-LED quirks. This commit is
+standalone, not patch X/Y.
+
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Shang En Sim has no other Realtek commits in this history.
+Takashi Iwai applied it. This tree already contains many similar HP
+mute-LED `SND_PCI_QUIRK` backports.
+
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Needs `ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX` and the 0x8c17
+table row. Both exist here. `git apply --check` of `bfcdc1c0eaeae`
+succeeded (hunk at offset -491). Standalone.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **Before:** `tpacpi_check_quirks(fan_quirk_table)` does not match BIOS
-  family `H3`. `fan_init()` uses `TPACPI_FAN_RD_TPEC` and reads
-  `fan_rpm_offset` **0x84/0x85**. On this EC those registers are unused,
-  so speed is 0.
-- **After:** BIOS `H3` matches `TPACPI_FAN_NS`. `fan_init()` sets
-  `fan_with_ns_addr`, selects `TPACPI_FAN_RD_TPEC_NS`, and
-  `fan_get_speed()` reads `fan_rpm_status_ns` (**0x95**) and converts
-  period to RPM via `FAN_RPM_CAL_CONST / lo`.
+- `b4 dig -c bfcdc1c0eaeae`:
+  https://patch.msgid.link/20260807055139.58707-1-sim@shangen.org
+- `b4 dig -a`: v1 only (2026-08-06)
+- Thread (mbox): Takashi Iwai “Applied to for-next branch now. Thanks.”
+  No NAK, no stable request, no design concerns.
 
-Verified in this tree:
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: `b4 dig -w`: To Jaroslav Kysela, Takashi Iwai; Cc linux-sound@.
+Maintainer applied it.
 
-```8156:8162:drivers/platform/x86/thinkpad_acpi.c
-        case TPACPI_FAN_RD_TPEC_NS:
-                if (!acpi_ec_read(fan_rpm_status_ns, &lo))
-                        return -EIO;
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No bugzilla/syzbot link. Evidence is the author’s hardware test
+in the commit body. WebFetch of lore/msgid.link returned 403; the thread
+was recovered via `b4 dig -m`.
 
-                if (speed)
-                        *speed = lo ? FAN_RPM_CAL_CONST / lo : 0;
-                break;
-```
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone. Sibling work is `557f6e4ab5ba6` (already in this
+tree).
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **(h) Hardware workaround** — quirk-table entry enabling an
-existing EC register path. Same class as the X120e TPR and L13/X13 Yoga
-NS fan quirks already in this file.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: No lore.kernel.org/stable discussion of this subject was found.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: one table entry, existing matcher, existing NS
-  reader.
-- BIOS matching is right: `H3ET77WW` is the 8-char `xxyTkkWW` form, so
-  `tpacpi_parse_fw_id()` stores `TPID('H','3')`, which is exactly what
-  `TPACPI_Q_LNV('H','3', ...)` matches (`ec = TPACPI_MATCH_ANY`).
-- Minimal; no API/data-structure change.
-- Regression risk is limited to H3-family machines. FAN_NS also marks
-  host fan control as undefined (`fan_ctrl_status_undef = 1`) and uses
-  NS status register 0x93. That is the same behavior already used for
-  L13/X13 Yoga, L380/L390, 11e Gen5. Mark Pearson noted the platform is
-  ~14 years old and he could not independently confirm; the author
-  tested it. Overmatch of unrelated H3 BIOS families is possible in
-  theory but H3ET is the E330/E335 firmware family.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
----
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: Table `alc269_fixup_tbl[]` only. No function body edited.
+Consumed fixup: `alc245_fixup_hp_spectre_x360_16_aa0xxx`.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+Step 5.2: TRACE CALLERS
+Record: `alc269_probe()` → `snd_hda_pick_fixup(..., alc269_fixup_tbl,
+alc269_fixups)` (around line 8517). That is HD-audio codec probe, not a
+hot path or IRQ path.
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: The insertion sits among NS quirks added by:
-- `66e92e23a7276` (2023-12-14) Vishnu Sankar — introduced
-  `TPACPI_FAN_NS` (L13 Yoga Gen 2, X13 Yoga Gen 2)
-- `a6dcd3f1725e0` (2024-02-29) Vishnu Sankar — more NS models (L380,
-  L390, 11e Gen5, …)
+Step 5.3: TRACE CALLEES
+Record: New fixup calls `snd_hda_apply_pincfgs`,
+`snd_hda_override_conn_list`, `alc_update_gpio_data`,
+`cs35l41_fixup_i2c_two`, `alc245_fixup_hp_mute_led_coefbit`,
+`alc245_fixup_hp_gpio_led`. Old quirk only called
+`cs35l41_fixup_i2c_two`.
 
-Both **are ancestors of this HEAD**. The E330 bug is the missing table
-row, not a newly introduced regression. This machine has been mis-
-reported for as long as the default 0x84/0x85 path has been used.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: PCI/HDA enumeration at boot on this laptop. Userspace mute keys
+then drive the LED hooks. Reachable on that hardware without extra
+privileges.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same file already maps 0x8c16 to AA0XXX. Many nearby HP
+`SND_PCI_QUIRK` mute-LED entries. This is the same pattern, for the
+missed sibling SSID.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Related fan quirks already in this 6.12 tree:
-- `f92324135f09e` — X120e TPR fan-speed quirk (stable-style backport
-  already here)
-- `1be765b292577` — L480 `TPACPI_FAN_DECRPM` incorrect RPM
-- `a6dcd3f1725e0` / `66e92e23a7276` — NS fan register path
-- `48792ab445529` — T495/E560 ACPI fan quirk
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-Standalone one-line table add; not patch X/Y.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. `sound/hda/codecs/realtek/alc269.c:6957`:
+`SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre 16",
+ALC287_FIXUP_CS35L41_I2C_2)`
+Target enum, function, and `alc269_fixups[]` slot all exist. `git merge-
+base --is-ancestor bfcdc1c0eaeae HEAD` is false, so the fix is not in
+this tree yet. Incomplete 0x8c17 mapping dates to v6.9; 6.18 still has
+it.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: `git log --author='Onyshchuk'` on `drivers/platform/x86/` in
-this tree is empty. Author is an outside contributor with Lenovo +
-maintainer review, not the subsystem maintainer.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply (`git apply --check` succeeded). File layout matches
+mainline (`sound/hda/codecs/realtek/alc269.c`). No rework needed.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Depends only on `TPACPI_FAN_NS` / `fan_rpm_status_ns` /
-`TPACPI_Q_LNV`, all present here. Can apply standalone (path tweak
-only).
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: `557f6e4ab5ba6` is here (0x8c16 + AA0XXX function). 0x8c17 is
+still on the amp-only quirk. No substitute fix.
 
----
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [ALSA HD-audio Realtek] [IMPORTANT] Common laptop codec path;
+this change is one HP SSID only.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c 051292bf7697e72a760401b6883c55a98beecc5b` failed: SHA is
-  not in this tree (`Not a valid commit name`).
-- `b4 mbox` for msgid `20260806154417.618575-1-andryk.rv@gmail.com`
-  returned 404.
-- lore.kernel.org fetches returned 403.
-- Recovered the thread from Patchew and LKML mirrors:
-  - https://patchew.org/linux/20260806154417.618575-1-
-    andryk.rv@gmail.com/
-  - https://lkml.iu.edu/2608.0/11369.html
-- Single `[PATCH]`, not a series. Applied by Ilpo as
-  `051292bf7697e72a760401b6883c55a98beecc5b`.
-- No NAK. Ilpo noted Linus’s policy that even fixes usually go via for-
-  next unless they are current-cycle regressions — that is merge-window
-  routing, not a stable NAK.
-- No reviewer asked for `Cc: stable`.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: High. Recent `alc269.c` log is mostly HP/Lenovo/ASUS quirk
+additions, including mute LEDs. Mature quirk table, not experimental
+code.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: Mark Pearson (Lenovo) Reviewed-by; Ilpo Järvinen applied it.
-Recipients from Openwall copy: platform-driver-x86, ibm-acpi-devel,
-linux-kernel, plus Pearson / Clark / Holschuh / Hans.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Evidence is the author’s hardware test
-(H3ET77WW / H3EC35WW). Mark Pearson: platform is ~14 years old; he could
-not confirm but was glad the author figured it out.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific / platform-specific: HP Spectre x360 16-aa0xxx
+with PCI SSID 0x103c:0x8c17 only.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone. Same pattern as earlier NS fan quirk additions.
-E330/E335 share the H3ET BIOS family; the 2-char `H3` match is the
-driver’s normal family match.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Every probe of that codec (boot). Mute/mic-mute keys then fail
+to light LEDs. Unprivileged users hit it on that laptop. Not a race.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned 403. No evidence this was
-already requested or rejected on stable. UNVERIFIED beyond that.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Mute/mic-mute LEDs do not work. The unused AA0XXX path also has
+speaker pin/GPIO amp setup that 0x8c16 already gets. Not a panic,
+deadlock, or corruption. Severity MEDIUM for that hardware; this is the
+documented audio-codec quirk exception.
 
----
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record: Benefit high for those users (LEDs, and the same speaker fixup
+as 0x8c16). Risk very low: 1-line table change, same fixup already used
+by sibling SSID, maintainer-applied, author-tested. Ratio strongly
+favors backport.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-semcode MCP is not available; used grep/read.
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: No function body change. Touches `fan_quirk_table`, consumed by
-`fan_init()`. Downstream: `fan_get_speed()`, `fan_get_status()`,
-`fan_read()`, sysfs `fan1_input`.
-
-**Step 5.2: TRACE CALLERS**
-Record:
-- `fan_get_speed()` → `fan_fan1_input_show()` (hwmon `fan1_input`) and
-  `fan_read()` (`/proc/acpi/ibm/fan`).
-- Userspace: lm-sensors, thinkfan, TLP, etc., on ThinkPads with
-  `CONFIG_THINKPAD_ACPI`.
-- Init-time quirk match only; no IRQ path.
-
-**Step 5.3: TRACE CALLEES**
-Record: Existing `acpi_ec_read(0x95)` and RPM conversion. No new
-allocation/locking.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable from userspace sysfs/proc reads on E330 with
-thinkpad_acpi loaded. Unprivileged read of hwmon is typical. Not a
-syscall crash path.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Nine existing `TPACPI_FAN_NS` rows in the same table; this is
-the tenth. Thermal NS table for the Yoga/11e set is **not** extended
-here (E330 was not claimed to need thermal NS).
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. `fan_quirk_table` in `drivers/platform/x86/thinkpad_acpi.c`
-(lines 8805–8837) has NS entries through 11e Gen5 and then jumps to
-`TPACPI_FAN_NOFAN`. No `'H','3'` row. Default TPEC RPM path is used → 0
-RPM on E330. Infrastructure needed for the fix is here since
-`66e92e23a7276`.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Minor path adjustment only.** Surrounding context in this tree
-matches the hunk exactly (same 11e Gen5 / X1 Tablet / L480 / x120e
-neighbors). File move to `lenovo/` happened after 6.12. Expected apply:
-change path, otherwise clean.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: NS path and other model quirks are here. This specific H3/E330
-line is not. `git merge-base --is-ancestor 051292bf7697… HEAD` fails
-because that SHA is not in this object store.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **platform/x86 thinkpad_acpi** — **PERIPHERAL/IMPORTANT for
-ThinkPad users**. Fan sysfs is widely used; not core mm/fs/net.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained; recent 6.12 backports already include other
-thinkpad_acpi fan quirks (X120e TPR, T495 NOACPI). Mature driver, long-
-lived quirk table.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific / DMI-specific.** Only Lenovo machines whose
-BIOS parses as family `H3` (E330 H3ET; likely E335 siblings). Everyone
-else is unchanged.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Every read of `fan1_input` or `/proc/acpi/ibm/fan` on those
-machines. Common for anyone monitoring fans. Unprivileged sysfs read.
-Not a race.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Incorrect fan RPM (always 0). **MEDIUM** for affected users
-(broken monitoring; thinkfan/sensors may treat the fan as stopped). Not
-panic, UAF, or corruption. Still a real hardware bug with a standard
-quirk fix.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** Makes fan tachometer work on E330 (and H3-family
-  siblings) on 6.12 LTS. Same class of fix already accepted in this tree
-  for X120e/L480/Yoga.
-- **Risk:** Very low — one line, model-gated, existing code path.
-- **Ratio:** Favorable.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real, tested hardware bug: E330 reports 0 RPM.
-- Classic stable-eligible **hardware quirk** (one `TPACPI_Q_LNV` row).
-- Existing NS path already in 6.12; no new feature/API.
-- 1-line, obviously correct; Lenovo + pdx86 review.
-- Analogous fan quirks already live in this tree.
-- Applies here with a trivial path change.
+- Real hardware bug on a shipping HP Spectre x360 16-aa0xxx SSID
+- Classic `SND_PCI_QUIRK` audio-codec quirk correction (stable
+  exception)
+- Buggy row and target fixup both exist in 6.18.53
+- One-line, applies cleanly, no new API
+- Author tested; Takashi Iwai applied
+- Sibling 0x8c16 already uses this fixup here
+- This tree already takes similar HP mute-LED quirks
 
 AGAINST:
-- Not crash/security/corruption.
-- Old niche laptop; small population.
-- Maintainer sent it via for-next, not as a current-cycle regression.
-- Author-only test; Pearson could not independently verify.
+- No crash/security/corruption
+- No Fixes:/Cc: stable (not a negative by itself)
+- Author is not the subsystem maintainer (mitigated by Iwai applying it)
+- Theoretical 0x8c16 vs 0x8c17 hardware difference (mitigated by test on
+  0x8c17)
 
 UNRESOLVED:
-- Stable-list discussion (lore 403).
-- Whether every H3 BIOS SKU (e.g. E335) truly uses 0x95; family-level
-  match is the driver’s normal pattern.
+- Could not HTTP-fetch lore (403); thread recovered via b4 mbox
+- No independent second-user report
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — 1-line quirk; tested on E330
-   H3ET77WW; two Reviewed-by.
-2. Fixes a real bug that affects users? **PASS** — fan speed stuck at 0.
-3. Important issue? **PASS** under the hardware-quirk exception;
-   severity MEDIUM, not CRITICAL.
-4. Small and contained? **PASS** — +1 line, one table.
-5. No new features or APIs? **PASS** — enables existing NS path for one
-   BIOS family.
-6. Can apply to the local tree? **PASS** — NS path present; path rename
-   only.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — one-line SSID remap; author
+   tested; maintainer applied
+2. Fixes a real bug that affects users? PASS — mute LEDs dead on this
+   SSID
+3. Important issue? PASS under the audio-codec quirk exception (MEDIUM,
+   not a panic)
+4. Small and contained? PASS — 1 line, one table
+5. No new features or APIs? PASS — reuses existing fixup
+6. Can apply to the local tree? PASS — `git apply --check` succeeded;
+   prerequisites present
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Hardware quirk/workaround** — qualifies even though it adds a
-table row.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Hardware quirk / audio codec `SND_PCI_QUIRK` (HP mute LED +
+pin/GPIO). This class is treated as stable material.
 
-**Step 9.4: DECISION**
-This is the same kind of thinkpad_acpi fan quirk this 6.12 tree already
-carries. The bug exists here, the fix is surgical, and the risk is
-confined to H3-family ThinkPads.
+Step 9.4: MAKE YOUR DECISION
+This tree already has the incomplete 0x8c17 mapping and the AA0XXX
+fixup. The commit only points this SSID at that fixup. That is a small,
+tested hardware quirk and should be backported.
 
----
+What the commit solves: 0x8c17 currently only programs CS35L41 amps, so
+mute LEDs do not work. After the change it matches 0x8c16.
 
-### What the commit solves for this tree
+Risk vs benefit: very low risk, clear user-visible fix on that laptop.
+No missing prerequisites in 6.18.53.
 
-On ThinkPad Edge E330 (BIOS family H3), thinkpad_acpi reads the standard
-EC tachometer at 0x84/0x85 and always reports 0 RPM. Adding
-`TPACPI_FAN_NS` for `H3` switches that model onto the existing 0x95
-period reader so hwmon/`/proc/acpi/ibm/fan` show a real speed. 6.12
-already has that reader; it is only missing this DMI row.
-
-### Risk vs benefit
-
-Benefit is correct fan monitoring on those laptops. Risk is a one-line,
-model-gated change. Backport needs only retargeting the path from
-`lenovo/thinkpad_acpi.c` to `drivers/platform/x86/thinkpad_acpi.c`.
-
----
-
-### Verification
-- [Phase 1] Parsed subject/tags/body from the provided commit message;
-  Link msgid `20260806154417.618575-1-andryk.rv@gmail.com`.
-- [Phase 2] Diff is +1 `TPACPI_Q_LNV('H','3', TPACPI_FAN_NS)` in
-  `fan_quirk_table`.
-- [Phase 2] Read `fan_get_speed()` NS case (0x95) and `fan_init()` NS
-  setup in this tree.
-- [Phase 2] Read `tpacpi_parse_fw_id()`: `H3ET77WW` → `TPID('H','3')`,
-  matches `TPACPI_Q_LNV`.
-- [Phase 3] `git blame -L 8822,8837`: NS rows from `66e92e23a7276` and
-  `a6dcd3f1725e0`.
-- [Phase 3] `git merge-base --is-ancestor 66e92e23a7276 HEAD` and
-  `a6dcd3f1725e0 HEAD`: both in tree.
-- [Phase 3] `git log --author=Onyshchuk` on platform/x86: no local
-  commits.
-- [Phase 4] `b4 dig`/`b4 mbox`/lore.kernel.org failed (missing SHA / 404
-  / 403). Thread recovered from Patchew + lkml.iu.edu + Openwall:
-  Pearson Reviewed-by, Ilpo applied as `051292bf7697`.
-- [Phase 4] Web search: H3ET is E330/E335 BIOS family; author tested
-  H3ET77WW.
-- [Phase 5] semcode unavailable; `grep fan_get_speed` → sysfs
-  `fan1_input` and `fan_read()`.
-- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111.
-- [Phase 6] Grep: no `'H', '3'` / Edge E330 in local file; NS table ends
-  at 11e Gen5.
-- [Phase 6] File exists only at `drivers/platform/x86/thinkpad_acpi.c`.
-- [Phase 6] `051292bf7697` is not a valid object in this repo.
-- [Phase 7] `CONFIG_THINKPAD_ACPI` in `drivers/platform/x86/Kconfig`.
-- [Phase 8] Failure mode: 0 RPM reporting, not oops.
-- UNVERIFIED: stable@ lore discussion (HTTP 403); independent
-  confirmation on E335.
+Verification:
+- [Phase 1] Parsed tags: Link to msgid; SOBs Shang En Sim and Takashi
+  Iwai; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: 1 line in `alc269_fixup_tbl`; 0x8c17
+  `ALC287_FIXUP_CS35L41_I2C_2` →
+  `ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX`
+- [Phase 2] Confirmed AA0XXX still calls `cs35l41_fixup_i2c_two` plus
+  mute-LED/GPIO/pin setup (`alc269.c:3550-3590`)
+- [Phase 2] Confirmed old quirk is amp-only
+  (`[ALC287_FIXUP_CS35L41_I2C_2]` → `cs35l41_fixup_i2c_two`)
+- [Phase 3] `git blame -L 6954,6960`: 0x8c17 line from split commit
+  `aeeb85f26c3bb`; origin `aa8e3ef4fe533` (v6.9)
+- [Phase 3] `git merge-base --is-ancestor aa8e3ef4fe533 HEAD` true;
+  `557f6e4ab5ba6` true; `bfcdc1c0eaeae` false
+- [Phase 3] `git show 557f6e4ab5ba6`: added AA0XXX for 0x8c16, left
+  0x8c17 unchanged
+- [Phase 4] `b4 dig -c bfcdc1c0eaeae`:
+  patch.msgid.link/20260807055139.58707-1-sim@shangen.org
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: Kysela, Iwai, linux-sound
+- [Phase 4] `b4 dig -m`: Iwai applied to for-next; no NAK
+- [Phase 4] WebFetch lore/msgid.link: 403; used mbox instead
+- [Phase 4] Stable lore search: no discussion of this patch
+- [Phase 5] `alc269_probe()` calls `snd_hda_pick_fixup(...,
+  alc269_fixup_tbl, ...)`
+- [Phase 6] `git describe HEAD`: p-6.18-1-g03b85e06ca9bf; `make
+  kernelversion`: 6.18.53; branch pending-6.18
+- [Phase 6] Buggy line at `alc269.c:6957`; 0x8c16 already AA0XXX at 6956
+- [Phase 6] `git show bfcdc1c0eaeae | git apply --check`: succeeded at
+  offset -491
+- [Phase 8] Failure mode: mute LEDs inoperative on SSID 0x8c17; severity
+  MEDIUM; quirk exception applies
+- UNVERIFIED: HTTP lore body (403); whether any 0x8c17 unit differs
+  electrically from 0x8c16 beyond the author’s test
 
 **YES**
 
- drivers/platform/x86/lenovo/thinkpad_acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/codecs/realtek/alc269.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/lenovo/thinkpad_acpi.c b/drivers/platform/x86/lenovo/thinkpad_acpi.c
-index 075543cd0e77e..f3b2e3c794571 100644
---- a/drivers/platform/x86/lenovo/thinkpad_acpi.c
-+++ b/drivers/platform/x86/lenovo/thinkpad_acpi.c
-@@ -8854,6 +8854,7 @@ static const struct tpacpi_quirk fan_quirk_table[] __initconst = {
- 	TPACPI_Q_LNV3('R', '0', 'T', TPACPI_FAN_NS),	/* 11e Gen5 GL */
- 	TPACPI_Q_LNV3('R', '1', 'D', TPACPI_FAN_NS),	/* 11e Gen5 GL-R */
- 	TPACPI_Q_LNV3('R', '0', 'V', TPACPI_FAN_NS),	/* 11e Gen5 KL-Y */
-+	TPACPI_Q_LNV('H', '3', TPACPI_FAN_NS),		/* Edge E330 */
- 	TPACPI_Q_LNV3('N', '1', 'O', TPACPI_FAN_NOFAN),	/* X1 Tablet (2nd gen) */
- 	TPACPI_Q_LNV3('R', '0', 'Q', TPACPI_FAN_DECRPM),/* L480 */
- 	TPACPI_Q_LNV('8', 'F', TPACPI_FAN_TPR),		/* ThinkPad x120e */
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 5098d3f375316..97ab2269dc472 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6969,7 +6969,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c15, "HP Spectre x360 2-in-1 Laptop 14-eu0xxx", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
+-	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre 16", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8c2d, "HP Victus 15-fa1xxx (MB 8C2D)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
 -- 
 2.53.0
 
