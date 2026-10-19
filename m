@@ -1,52 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841314FB9B3;
-	Mon, 19 Oct 2026 13:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC524E0B6A;
+	Mon, 19 Oct 2026 13:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418087; cv=none; b=EpjhU0MEx4ZmE1Y5iUbM0MIzz5lhnnXYwDibeTrTFYfIBHGDz8WF8SWw8LJAkwwu4U+XpxwFg7UBizvNxWcJOhY1jQ+UR3HmAsmu+Tl9klH7OCNkysaDPwYF+M4psioxgM4FvqWIUFDKOhSD9/JwUwsMAHUs4yOEFdPO3D77hbg=
+	t=1792418088; cv=none; b=LSWmpTUpqN97UkMKOKvw/ayvJ9xzJz3y9yQ6yq5nUKWsHpNIjztKOBQIPMF0LVB08z0t8/xqfwL58qnAW0hY/t8CMG8eknGROheorIOhBKZvreJa5sLxrGxEtJlpeSq7gs1n+IpXmkd/AgLh3kc1FyBMid/VE28e7uMVuyeajhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418087; c=relaxed/simple;
-	bh=mn5hukJcRtbyeAxIN4fIXF2f2sf5d9hrj7E/AZtdEkA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qrTEz9wl2/ccD81LIRRw+UGaxEzrx6V7aSTaE+svEbhspLgcAJ+GAQq94+ZZ7FJc747vBMiA4J8L/Zg8JISdi7wnkiYd8n1zD5ETG6g7as8KRgGm/5+dA5Jr5VgLyQfdYutqYw1qTs1gjcRaNoNk+n81xeYgg3FSglgtMHpb5kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WfEUdrgf; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792418088; c=relaxed/simple;
+	bh=CCCkZGrH5vk3HVHXeEajIAsjdCp6kQyrwsDC0sjXb20=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SxC7K8q15wub/Ry53NIyZEnmOBzdBk5GRJR86z6V4RpDNBvbzywLKgM1CTxn+AmXctS8l1G408dPiFDSYZ9jlgyA1vwBkrvfOjfx3nhMD8fGYoSoWVxYK/8mgoZZ6kYPfoFGPNC7XMJuxMRQhCPH+fUTGF4ya1KLqz5uCqx2UFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JtNuvU1N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WfEUdrgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A381F000C5;
-	Mon, 19 Oct 2026 13:54:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JtNuvU1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7211F000C6;
+	Mon, 19 Oct 2026 13:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418084;
-	bh=+rMuxlEzta/xwXzh9GPR/CubwMf9s0sAxRcpqXWWx8M=;
-	h=From:To:Cc:Subject:Date;
-	b=WfEUdrgfwgbrC9/23O5Nbaey4oT1D1nSaA9w/0Z22Nh+9PYIX4hDk/z3+I4zagQoE
-	 73DJAxYXXPVxhygfubRJ5YpPDtvlGyQSE1xHylG6agT3TTT7Hkppl+IWlEdmCPqS32
-	 aysGmuhkqryms/zDxuJf6PVZXZ+StAmU9+WDJ2DKgEdUyjvad4xO0j3hwphw4ZaHc8
-	 Z1ep0klBKA3rgVA+n6nT903PGhtLOyi0Qz82IjcW4uh9sCK7O0CURZT8g/7naOoubN
-	 AEruD50qqmeRMfd82wxkdxqdN47ivlkPRw0dtg+CaQpF6zVkXkUrys4lJQd12ENlTy
-	 wfXr0PeRqFAGA==
+	s=k20260515; t=1792418085;
+	bh=8MyCnyVjuDkCWTOXbthwEjWPs5nnvJurQGBkZhq41Es=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=JtNuvU1NhYBWSPhnBiEPSYR0S8U8E8YBpUwWS0ruyLRDrfkAWp4b53mGXDpaP6xxZ
+	 /l2ZvVrnwFUcdCKu3LfYzORQ717YdHXz8TuNvnBW3ewcX7RcoJoC9WPiOu5FZWrfqk
+	 UVoLq1hE4wNYTA5PUmMt4o9ENnnbna7kjIcV2E1jtjGpUgRM6ESQM/vrPK72wHfdlF
+	 ZBKJZZ5MNaqalmmeiVJKVbW3t7DdDmLJ+sDaPWyHXLmJGbFDlzgZdjQzsrbdxWylmP
+	 A72WaoXaLY5XmdqRNGx+4bBY/0TQb3fLLlIJMaQbhyWgLJx01gdl9OjJtP/ymfYo3i
+	 +o1j/VncrdXRg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Golle <daniel@makrotopia.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Jiaxing Hu <gahing@gahingwoo.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	chester.a.unal@arinc9.com,
-	andrew@lunn.ch,
-	olteanv@gmail.com,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	joro@8bytes.org,
+	heiko@sntech.de,
+	iommu@lists.linux.dev,
 	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.12] net: dsa: mt7530: check CORE_PLL_GROUP4 access in mt7531_setup()
-Date: Mon, 19 Oct 2026 09:44:52 -0400
-Message-ID: <20261019135441.1420968-1-sashal@kernel.org>
+	linux-rockchip@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] iommu/rockchip: Clear stale page faults before enabling stall
+Date: Mon, 19 Oct 2026 09:44:53 -0400
+Message-ID: <20261019135441.1420968-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
+References: <20261019135441.1420968-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,408 +56,437 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Jiaxing Hu <gahing@gahingwoo.com>
 
-[ Upstream commit 1ae63b018d3d70e96d420b59a1334860cf232bc6 ]
+[ Upstream commit b10d5920cafa292ee3cab9c20f813da4fe4f00b8 ]
 
-mt7531_setup() reads CORE_PLL_GROUP4 through the MT7531 indirect c45
-PHY access, modifies it and writes it back to enable the PHY core
-PLL, but checks neither the read nor the write. Now that the indirect
-access functions propagate command-write failures, a failed read
-returns a negative errno that would be bit-modified and written back
-into the PLL register, and a failed write-back would go unnoticed.
-Check both and bail out. The adjacent EEE advertisement writes push a
-constant value and cannot corrupt state, so they are left as is.
+Boot firmware can leave an IOMMU bank in PAGE_FAULT_ACTIVE before the
+driver has configured paging:
 
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://patch.msgid.link/a7dfe3b66ea6ac1ae7915034de0527060e6ddcd4.1785811140.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  PAGE_FAULT_ACTIVE=1  STALL_ACTIVE=0  IDLE=1
+
+Such a bank ignores CMD_ENABLE_STALL and never reaches STALL_ACTIVE, so
+rk_iommu_enable_stall()'s readx_poll_timeout() spins until it times out
+(seen on the RK3576 NPU, whose MMUs share this poll across banks).
+
+Rather than special-casing these banks in the stall path, acknowledge the
+stale fault with CMD_PAGE_FAULT_DONE before enabling stall, so every bank
+starts from a clean state and the normal stall sequence applies to all of
+them.  Banks without a pending fault are untouched.
+
+Signed-off-by: Jiaxing Hu <gahing@gahingwoo.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real, small error-path fix for this 6.12 tree: an unchecked
-CORE_PLL_GROUP4 RMW can write a negative errno into the MT7531 PHY PLL.
-The buggy code is present here, and a related callee change already
-landed.
+The local checkout is mainline **7.3-rc4**. The stall-timeout path is in
+this tree, and the 13-line firmware leftover workaround is a real IOMMU
+enable failure, not a new API.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1 — Subject**
-Record: `[net: dsa: mt7530]` `[check]` Check CORE_PLL_GROUP4 read/write
-results in `mt7531_setup()`. “check” is used as a missing-return-value
-fix, not a feature add.
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[iommu/rockchip] [Clear] [acknowledge leftover
+PAGE_FAULT_ACTIVE so stall enable does not poll-timeout]**
 
-**Step 1.2 — Tags (from the candidate message)**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Signed-off-by: Daniel Golle <daniel@makrotopia.org>` (author)
-- `Link: https://patch.msgid.link/a7dfe3b66ea6ac1ae7915034de0527060e6ddc
-  d4.1785811140.git.daniel@makrotopia.org`
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (netdev maintainer
-  applied it)
+- Signed-off-by: Jiaxing Hu \<gahing@gahingwoo.com\> (author)
+- Signed-off-by: Will Deacon \<will@kernel.org\> (IOMMU maintainer;
+  applied the patch)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
+  or Cc: stable (absence of Fixes/Cc:stable is expected for this review)
 
-Ignored per instructions: any pipeline “already selected” markers.
-
-Original mailing-list version (openwall/lkml, same msgid) also had:
-- `Fixes: c288575f7810 ("net: dsa: mt7530: Add the support of MT7531
-  switch")`
-- No `Cc: stable`, no `Reported-by`, no `Reviewed-by` on this patch
-  itself
-
-Cover letter for the series: Andrew Lunn’s `Reviewed-by` was collected
-on patches 1–3 and 6, not on this one (it was new in v2).
-
-**Step 1.3 — Body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: `mt7531_setup()` RMW of `CORE_PLL_GROUP4` via
-  `mt7531_ind_c45_phy_read/write` does not check either result.
-- Failure mode: a failed read returns a negative errno that is bit-
-  modified and written into the PHY core PLL; a failed write is ignored.
-- Author’s framing: this became acute once the indirect helpers
-  propagate command-write failures.
-- Adjacent EEE advertisement writes are constant `0`, so they cannot
-  corrupt RMW state and are left alone.
+- **Bug:** Boot firmware can leave an IOMMU bank in
+  `PAGE_FAULT_ACTIVE=1`, `STALL_ACTIVE=0`, `IDLE=1` before the driver
+  configures paging.
+- **Symptom:** That bank ignores `CMD_ENABLE_STALL` and never reaches
+  `STALL_ACTIVE`. `rk_iommu_enable_stall()`’s `readx_poll_timeout()`
+  fails. Observed on the RK3576 NPU, whose MMUs share the stall poll
+  across banks (`rk_iommu_is_stall_active()` ANDs every bank).
+- **Root cause:** Stale firmware page-fault state blocks the stall
+  command.
+- **Fix:** Issue `CMD_PAGE_FAULT_DONE` on any bank that still has
+  `PAGE_FAULT_ACTIVE`, then use the normal stall sequence. Banks without
+  a pending fault are untouched.
+- **Version info in message:** none beyond RK3576 NPU.
 
-**Step 1.4 — Hidden bug fix?**
-Record: Not hidden. It is an explicit missing-error-check fix. The “now
-that …” wording is series context (patch 3/6), not a cleanup-only
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not disguised. This is an explicit hardware/firmware leftover
+workaround that prevents a stall-enable timeout.
+
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `drivers/iommu/rockchip-iommu.c` — **+13 / -0**
+- Function: `rk_iommu_enable_stall()`
+- Scope: single-file surgical fix
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- **Before:** If stall is not already active and paging is enabled,
+  broadcast `CMD_ENABLE_STALL` and poll until every bank reports
+  `STALL_ACTIVE` (1 ms timeout, `RK_MMU_POLL_TIMEOUT_US=1000`). One
+  stuck bank fails the whole poll.
+- **After:** Same path, but first walk each bank; if
+  `RK_MMU_STATUS_PAGE_FAULT_ACTIVE` is set, write
+  `RK_MMU_CMD_PAGE_FAULT_DONE` to that bank’s command register, then
+  enable stall as before.
+- Path: initialization / attach / resume (`rk_iommu_enable` →
+  `rk_iommu_enable_stall`), and also disable/suspend (return value
+  ignored there).
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **[Hardware workaround / logic correctness]** Firmware leaves
+`PAGE_FAULT_ACTIVE`. Hardware ignores `CMD_ENABLE_STALL` in that state.
+`rk_iommu_enable()` treats stall timeout as fatal (`if (ret) goto
+out_disable_clocks`), so the IOMMU never reaches
+`rk_iommu_force_reset()` / paging setup and **device attach fails**. The
+fix acks the leftover fault with the same command the IRQ handler
+already uses (`RK_MMU_CMD_PAGE_FAULT_DONE`).
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Minimal and readable. Gated on `PAGE_FAULT_ACTIVE`, so idle
+banks are unchanged. Uses the existing command encoding. Regression risk
+is low; the only flagged concern is not also writing `RK_MMU_INT_CLEAR`
+(see Phase 4), which is incomplete-ack, not a new deadlock or API
 change.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 2.1 — Inventory**
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- File: `drivers/net/dsa/mt7530.c` only
-- Function: `mt7531_setup()`
-- ~10 insertions, ~4 deletions (candidate hunk); net +6 lines of checks
-- Scope: single-file surgical caller fix
+- `rk_iommu_enable_stall()` introduced in **c68a292152d32**
+  (`iommu/rockchip: rk3288 iommu driver`, 2014) — contained in
+  **v3.19-rc1**.
+- Multi-bank `num_mmu` loop: **cd6438c5f8446**, contained in
+  **v4.6-rc1**.
+- `readx_poll_timeout`: **0416bf6479acef**, contained in **v4.17-rc1**.
+- The 13-line ack loop is this commit (**b10d5920cafa2**).
 
-**Step 2.2 — Flow**
-Record: Before, `u32 val = mt7531_ind_c45_phy_read(...)` then OR/AND
-bits and write back, ignoring errors. After, store the `int` in `ret`,
-return if `ret < 0`, copy into `val` only on success, check the write,
-return on write failure. Probe/`sw_setup` fails instead of programming
-PLL from an errno.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: tag. Not applicable. Buggy interaction is firmware
+leftover vs stall path that has existed for years.
 
-**Step 2.3 — Bug mechanism**
-Record: **Logic / error-path correctness**, specifically “treat errno as
-register data.”
-- `mt7531_ind_c45_phy_read()` returns `int` (PHY data or negative
-  errno).
-- Assigned to `u32 val`, then modified (`MT7531_RG_SYSPLL_DMY2 |
-  MT7531_PHY_PLL_BYPASS_MODE`, clear `MT7531_PHY_PLL_OFF`).
-- Written through `mt7531_ind_c45_phy_write(..., u16 data)`, so a value
-  such as `(u32)-ETIMEDOUT` (`0xFFFFFF92`) truncates to
-  `0xFF92`/`0xFFD2` and is programmed into the PHY PLL.
-- Write errors (already returned on poll timeout in this tree) are
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record:
+- Immediate parent on the file: **841363ebb5082** `iommu/rockchip: Take
+  all DT clocks` — same author, same RFC series (patch 4/8). Different
+  problem (extra clocks so DTE_ADDR writes land). **Not a code
+  dependency** of the stall ack.
+- No later commits on this file after b10d5920cafa2 in this tree.
+- Standalone IOMMU change; Will applied 4/8 and 5/8 without the rest of
+  the NPU series.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Jiaxing Hu is not the IOMMU maintainer. In this tree, two
+rockchip-iommu commits (clocks + this). Will Deacon applied both.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Diff only needs `rk_iommu_enable_stall`, `num_mmu`,
+`RK_MMU_STATUS_PAGE_FAULT_ACTIVE`, `RK_MMU_CMD_PAGE_FAULT_DONE` — all
+present long before 7.3. **Can apply standalone.**
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- Lore (via b4):
+  https://patch.msgid.link/20260718031146.3368811-6-gahing@gahingwoo.com
+- Series: **[RFC PATCH v2 0/8] accel/rocket: RK3576 NPU (RKNN)
+  enablement**
+- This patch is **v2 5/8**. v1 had two “skip orphaned-fault banks”
+  patches; v2 replaced them with this fault-ack after Chaoyi Chen asked
+  whether clearing the fault avoids skipping banks.
+- Will Deacon (2026-07-26): “Applied driver changes to iommu (rockchip)”
+  for 4/8 and 5/8. No NAK on this patch.
+- Cover letter: NPU bring-up is still incomplete (“full inference is not
+  correct yet”). This IOMMU fix was still taken on its own.
+- v3 of the wider series was not out when Will applied this; applied
+  version is the latest for this hunk.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: Recipients included Will Deacon, Joerg Roedel, Robin Murphy,
+Heiko Stuebner, iommu@lists.linux.dev, linux-rockchip. No human
+Reviewed-by on 5/8 in the thread. Will applied it. Sashiko bot
+(automated) commented.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla. Author hit it on a Radxa ROCK 4D while
+bringing up the RK3576 NPU IOMMUs. Cover letter lists “clearing a stale
+firmware page fault” as required for those IOMMUs to come up.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: RFC 8-patch NPU enablement. Only the two IOMMU driver patches
+were merged. NPU DT/driver patches are **not** in this tree (no NPU
+IOMMU nodes in `rk3576.dtsi`). This stall patch does not depend on them.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned HTTP 403. **UNVERIFIED**
+whether stable@ discussed this. No in-tree grep hit except this commit.
+
+Sashiko bot concern (verified from mbox): `CMD_PAGE_FAULT_DONE` without
+`RK_MMU_INT_CLEAR` might leave a raw IRQ pending. On `rockchip,disable-
+mmu-reset` instances (in-tree: px30, rk3288, rk3368, rk3399, rk356x,
+rk3576 vdec), `rk_iommu_force_reset()` is skipped, then
+`RK_MMU_INT_MASK` is programmed in `rk_iommu_enable()`. A leftover raw
+bit could fire a page-fault IRQ. The existing IRQ handler already logs,
+optionally `report_iommu_fault()`, zaps cache, issues `PAGE_FAULT_DONE`,
+and clears INT_STATUS. That is a possible spurious IRQ/log, not a
+verified panic. No follow-up commit addressed it; Will still applied the
+patch.
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `rk_iommu_enable_stall()` (modified). Helpers used:
+`rk_iommu_read`, `rk_iommu_is_stall_active`,
+`rk_iommu_is_paging_enabled`, `rk_iommu_command`.
+
+**Step 5.2: TRACE CALLERS**
+Record:
+- `rk_iommu_disable()` line 928 — detach / runtime suspend. Return
   ignored.
+- `rk_iommu_enable()` line 950 — attach / runtime resume. **Failure
+  aborts enable.**
+- `rk_iommu_enable()` called from `rk_iommu_attach_device()` (line 1064)
+  and `rk_iommu_resume()` (line 1349).
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct. `ret` is already declared in
-`mt7531_setup()`. No API/locking/data-structure change. Regression risk
-is that a failing MDIO access now fails switch setup instead of
-continuing with a bogus PLL; that is the intended behavior. Risk of the
-fix itself is very low.
+**Step 5.3: TRACE CALLEES**
+Record: MMIO status/command. No allocation, no new locks.
+`writel(RK_MMU_CMD_PAGE_FAULT_DONE, base + RK_MMU_COMMAND)` matches
+`rk_iommu_base_command()`.
 
-## Phase 3: Git history
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace/DMA attach or runtime PM resume →
+`rk_iommu_attach_device` / `rk_iommu_resume` → `rk_iommu_enable` →
+`rk_iommu_enable_stall`. Reachable on Rockchip SoCs with
+`CONFIG_ROCKCHIP_IOMMU`. Trigger is firmware leftover + paging already
+enabled. Not a syscall fuzz path; it is device bring-up.
 
-**Step 3.1 — Blame**
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: IRQ path already does `RK_MMU_CMD_PAGE_FAULT_DONE` (line 642)
+plus `RK_MMU_INT_CLEAR`. No other stall-path fault ack. In-tree RK3576
+`vdec_mmu` is two-bank (`reg` two regions), so the AND-poll issue is not
+NPU-only in principle.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** Local tree: `git describe HEAD` =
+**v7.3-rc4-27-gf0100363d8c37**, `make kernelversion` = **7.3.0-rc4**.
+`rk_iommu_enable_stall()` is present; this commit is already an ancestor
+of HEAD (`git merge-base --is-ancestor b10d5920cafa2 HEAD` succeeded).
+Landed via `iommu-updates-v7.3` (not in v7.2). Stall path itself dates
+to v3.19.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Hunk is a contiguous insert after the paging-enabled check.
+Expected apply: **clean** on trees that have the 2016 multi-bank
+`num_mmu` loop (v4.6+). No conflicting later edits on this function in
+this checkout.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This is the only “stale page fault” commit. No alternate fix.
+Sibling clocks change is independent.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **drivers/iommu/rockchip-iommu.c** — Rockchip IOMMU.
+Criticality: **IMPORTANT** (platform IOMMU for multimedia/NPU DMA; not
+core mm/VFS, but attach failure takes down the consumer device).
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Mature driver (2014), still receiving Rockchip bring-up fixes.
+Joerg’s v7.3 pull: “Rework Rockchip state handling and fix clock, probe
+and stale-fault handling.”
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **driver-specific / platform-specific** —
+`CONFIG_ROCKCHIP_IOMMU` on Rockchip. Practical trigger reported on
+RK3576 NPU MMUs (those DT nodes are **not** in this tree). Any multi-
+bank instance whose firmware leaves `PAGE_FAULT_ACTIVE` can hit the same
+poll (e.g. in-tree RK3576 `vdec_mmu` has two banks).
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Boot firmware leftover fault, then first stall enable while
+paging is still enabled. Timing: probe/attach or resume, not a hot path.
+Unprivileged users do not trigger it directly; it is firmware × driver
+init. No public reproducer beyond the author’s ROCK 4D bring-up.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: **IOMMU enable fails after a 1 ms poll**
+(`RK_MMU_POLL_TIMEOUT_US=1000`). Attach returns error; the DMA device
+does not get a working IOMMU. **Not** a panic, hang, UAF, or corruption.
+Severity: **HIGH** for the affected device (non-functional), **MEDIUM**
+system-wide (1 ms timeout + error, rest of the machine continues).
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- Unchecked RMW originates in `c288575f7810` (Landen Chao, 2020-09-14):
-  “Add the support of MT7531 switch”.
-- Helper names/`MT753X_CTRL_PHY_ADDR` from later Arınç ÜNAL refactors
-  (`868ff5f4944aa9`, `06dfcd4098cfdc`, 2024).
-- Poll path in this tree already uses `regmap_read_poll_timeout()` from
-  `96e0f5184af69` (Daniel Golle, applied 2026-08-09): “error out on
-  failed reads in MT7531 PHY polling”.
+- **Benefit:** Hardware/firmware workaround so stall enable succeeds;
+  IOMMU attach can proceed. High for RK3576 NPU users; modest for other
+  Rockchip boards unless firmware leaves the same bit.
+- **Risk:** 13 lines, status-gated. Theoretical spurious IRQ if
+  INT_STATUS is not cleared on `disable-mmu-reset` devices. No new
+  locks/APIs.
+- **Ratio:** Benefit outweighs risk. Same class as other hardware
+  leftover/quirk fixes.
 
-**Step 3.2 — Fixes: target**
-Record: `c288575f7810` **is** an ancestor of this tree. The original
-MT7531 support (and this RMW) has been here since well before 6.12.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 3.3 — Related file history**
-Record:
-- `96e0f5184af69` — already in this tree. Makes poll/read failures
-  return negative errno instead of continuing with garbage “success”
-  data.
-- `93d46870c5440` — already in this tree. Same class: do not treat
-  `bus->read()` errno as register data.
-- This candidate is the missing **caller** check for the one in-driver
-  RMW of `mt7531_ind_c45_phy_read()`.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Step 3.4 — Author**
-Record: Daniel Golle is a regular MT7530 contributor (PLL/PHY access,
-MT7988, MT7531BE). Same author as the already-backported poll-error fix.
+FOR:
+- Real, explained failure: stall poll times out, `rk_iommu_enable()`
+  aborts, device attach fails.
+- Small (+13), contained, status-gated.
+- Same command the IRQ handler already uses.
+- Will Deacon applied it independently of the unfinished NPU RFC.
+- v7.3 IOMMU pull listed stale-fault handling as a fix.
+- Driver and stall path exist in this tree since v3.19 / v4.6.
+- Hardware/firmware workaround (stable exception category).
+- No new APIs or features.
 
-**Step 3.5 — Prerequisites**
-Record: This is patch **4/6** of “fix remaining swallowed MDIO access
-errors”. Patch 3 (`error out on failed PHY_IAC command writes`, upstream
-`1c95dcb7e923`) is **not** in this tree. It is not required to compile
-or to apply this hunk: the helpers already return `int`, and
-`mt7531_ind_c45_phy_read/write` already return negative errno on
-`regmap_read_poll_timeout()` failure. Patch 3 only adds extra error
-returns from discarded `mt7530_mii_write()` of `MT7531_PHY_IAC`.
-Standalone apply: **yes**.
+AGAINST:
+- Originated in an RFC series to enable RK3576 NPU; NPU IOMMU DT is
+  still not in this tree.
+- Observed on that NPU, not reported on long-shipped VOP/VDEC.
+- Not crash/security/corruption; 1 ms timeout then enable failure.
+- Sashiko noted missing `INT_CLEAR`; unaddressed.
+- No Fixes:/Cc:stable (not a negative by itself).
 
-## Phase 4: Mailing list / external
+UNRESOLVED:
+- lore.kernel.org/stable search HTTP 403.
+- Whether in-tree vdec/vop firmware also leaves `PAGE_FAULT_ACTIVE`
+  (author only cited NPU).
+- Whether a leftover INT_STATUS after `PAGE_FAULT_DONE` actually fires
+  on `disable-mmu-reset` hardware.
 
-**Step 4.1 — Original discussion**
-Record:
-- `b4 dig` on the msgid failed (`Cannot find a commit matching …`).
-- lore.kernel.org fetches returned 403.
-- Fallback: openwall + lkml + cover letter.
-- Lore/openwall URL: msgid `a7dfe3b66ea6ac1ae7915034de0527060e6ddcd4.178
-  5811140.git.daniel@makrotopia.org` (Tue 4 Aug 2026).
-- Cover: https://lists.openwall.net/netdev/2026/08/04/90
-- This patch was **new in v2**, flagged by Sashiko AI review of v1 as
-  another swallowed MDIO error.
-- Cover letter: “the call site exposed once patch 3 makes the MT7531
-  indirect c45 access propagate command-write failures.”
-- Applied by Jakub Kicinski; patchwork bot lists upstream as
-  `1ae63b018d3d`.
-- No NAK found in the material that could be retrieved.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — logic matches the described
+   hardware state; author tested on ROCK 4D; IOMMU maintainer applied
+   it.
+2. Fixes a real bug that affects users? **PASS** — stall timeout
+   prevents IOMMU enable/attach.
+3. Important issue? **PASS** — device IOMMU never comes up (not a panic,
+   but hardware non-functional). Severity HIGH for that device.
+4. Small and contained? **PASS** — 13 lines, one function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — stall path and symbols are
+   here; hunk is a clean insert.
 
-**Step 4.2 — Recipients**
-Record: To/Cc included Andrew Lunn, Vladimir Oltean, netdev maintainers,
-MediaTek/DSA people, `netdev@`, `linux-mediatek@`. Appropriate audience.
-Andrew reviewed 1–3 and 6; this patch 4 had no `Reviewed-by` in the
-submission.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: **Hardware quirk/workaround** — firmware leftover
+`PAGE_FAULT_ACTIVE` so stall commands work. Not a new driver, not a new
+userspace API.
 
-**Step 4.3 — Bug report**
-Record: No syzbot/bugzilla. Found by AI review of the MDIO-error series,
-not a user crash report.
+**Step 9.4: MAKE YOUR DECISION**
 
-**Step 4.4 — Series**
-Record: v2 6-patch series. Patches 1, 2, 3, 5, 6 are **not** in this
-tree. This patch is self-contained at the `mt7531_setup()` call site.
-
-**Step 4.5 — Stable list**
-Record: No stable-specific discussion found (lore.kernel.org/stable
-search did not return this subject). UNVERIFIED: whether anyone later
-nominated it on stable@.
-
-## Phase 5: Code semantic analysis
-
-**Step 5.1 — Functions**
-Record: `mt7531_setup()` only. Helpers `mt7531_ind_c45_phy_read/write`
-are not modified.
-
-**Step 5.2 — Callers**
-Record:
-- `mt7531_setup` is `.sw_setup` for `ID_MT7531` only (`mt753x_table`).
-- `mt753x_setup()` calls `priv->info->sw_setup(ds)` and aborts on error.
-- `mt753x_setup` is `.setup` in `mt7530_switch_ops` → DSA switch setup /
-  probe.
-- MT7988/EN7581 use `mt7988_setup()` → `mt7531_setup_common()`; they do
-  **not** run this PLL RMW.
-
-**Step 5.3 — Callees**
-Record: `mt7531_ind_c45_phy_read/write` lock the MDIO mutex, write
-`MT7531_PHY_IAC`, poll `MT7531_PHY_ACS_ST`. On poll/read failure they
-`goto out` and return negative `ret`. `mt7530_mii_write()` already
-returns `regmap_write` errors, but those returns are still discarded in
-this tree (patch 3).
-
-**Step 5.4 — Reachability**
-Record: Probe-time only, when an MT7531 DSA switch is instantiated
-(`CONFIG_NET_DSA_MT7530`). Not a syscall hot path. Userspace cannot
-trigger it except by causing device probe. Trigger is MDIO/regmap
-failure or IAC poll timeout during setup.
-
-**Step 5.5 — Similar patterns**
-Record: The only in-driver `mt7531_ind_c45_phy_read()` call site is this
-PLL RMW. Other `mt7531_ind_c45_phy_write()` uses in the same function
-are constant EEE-adv `0`. Phylib also uses these as `.phy_read_c45` /
-`.phy_write_c45`.
-
-## Phase 6: Local tree (6.12.111 / `pending-6.12`)
-
-**Step 6.1 — Buggy code present?**
-Record: **Yes.** `drivers/net/dsa/mt7530.c` `mt7531_setup()` still does:
-
-```2665:2672:drivers/net/dsa/mt7530.c
-        val = mt7531_ind_c45_phy_read(priv,
-MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
-                                      MDIO_MMD_VEND2, CORE_PLL_GROUP4);
-        val |= MT7531_RG_SYSPLL_DMY2 | MT7531_PHY_PLL_BYPASS_MODE;
-        val &= ~MT7531_PHY_PLL_OFF;
-        mt7531_ind_c45_phy_write(priv,
-MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
-                                 MDIO_MMD_VEND2, CORE_PLL_GROUP4, val);
-```
-
-Bug introduced with MT7531 support (`c288575f7810`, v5.10-era). Present
-in 6.12.
-
-**Step 6.2 — Backport difficulty**
-Record: **Clean apply** aside from line-number offset (2665 here vs 2764
-in the candidate diff). Surrounding comments and EEE loop match. `ret`
-is already in scope.
-
-**Step 6.3 — Related fixes already here**
-Record: `96e0f5184af69` already backported. That change makes failed IAC
-polls/reads return errno into this unchecked caller, so this tree
-already has the callee half of the fix without the caller half. No
-equivalent caller check exists yet.
-
-## Phase 7: Subsystem context
-
-**Step 7.1**
-Record: `drivers/net/dsa/mt7530.c` — MediaTek MT7530/MT7531 DSA.
-**IMPORTANT** for MediaTek routers/SBCs (MT7621/MT7622/MT7531), not core
-mm/vfs. `CONFIG_NET_DSA_MT7530`.
-
-**Step 7.2**
-Record: File is actively maintained; recent 6.12 backports already
-include two MDIO-error fixes from the same author.
-
-## Phase 8: Impact and risk
-
-**Step 8.1 — Who is affected**
-Record: Driver-specific: MT7531 switch users (common on MediaTek ARM
-routers). Not MT7988/EN7581 setup (`mt7988_setup`).
-
-**Step 8.2 — Trigger**
-Record: MDIO/regmap failure or PHY_IAC poll timeout during `dsa_switch`
-setup. Uncommon on healthy hardware. Not an unprivileged syscall
-trigger. After `96e0f5184af69`, a failed bus read during poll is a
-**negative errno**, not silent garbage success — so this caller bug is
-easier to hit than before that backport.
-
-**Step 8.3 — Failure mode**
-Record: Hardware misconfiguration: PHY core PLL programmed from a
-truncated errno instead of a real `CORE_PLL_GROUP4` value, then setup
-continues. Switch can probe “successfully” with PHYs/PLL in a bad state.
-Not a KASAN crash. Severity: **HIGH** for that hardware (silent wrong
-PLL), not a generic kernel panic. Failing probe is the correct outcome.
-
-**Step 8.4 — Risk/benefit**
-Record:
-- Benefit: medium-high for MT7531 — closes a hole opened/worsened by the
-  already-applied poll-error backport; avoids writing errno into PLL.
-- Risk: very low (6 lines of `if (ret < 0) return ret`).
-- Ratio: favorable.
-
-## Phase 9: Synthesis
-
-**Evidence FOR**
-- Real bug: negative errno used as PLL register data, then written back.
-- Buggy RMW is in this 6.12 tree; `Fixes:` target `c288575f7810` is
-  here.
-- Companion to `96e0f5184af69`, already in this tree: that commit made
-  failed reads return errno; this caller still treats the result as PHY
-  data.
-- Small, obviously correct, no new API, applies cleanly.
-- Same class as other swallowed-MDIO fixes already accepted here
-  (`93d46870c5440`, `96e0f5184af69`).
-- Author intended it as a bug fix (`Fixes: c288575f7810` on the list).
-- Applied to mainline by Jakub Kicinski (`1ae63b018d3d`).
-
-**Evidence AGAINST**
-- Error path only; no syzbot/user crash report.
-- Driver-specific, probe-time, not a UAF/panic/CVE.
-- Series patch 4/6; Andrew Lunn did not `Reviewed-by` this specific
-  patch.
-- Patch 3 (PHY_IAC command-write checks) is not in this tree; the
-  author’s “now that writes propagate” story is only fully true after
-  patch 3.
-
-**Unresolved / UNVERIFIED**
-- Full lore thread (403); no individual review replies beyond cover
-  letter and patchwork apply notice.
-- Whether patch 3 will be evaluated separately for this tree (not
-  required for this hunk).
-
-**Stable rules**
-1. Obviously correct and tested? **PASS** — trivial return-value checks;
-   merged to net by Kicinski.
-2. Real bug affecting users? **PASS** — MT7531 setup can program PHY PLL
-   from errno on MDIO/poll failure.
-3. Important? **PASS** — hardware PLL corruption and silent “success”
-   after a failed access; worsened by an already-backported callee fix.
-   Not a generic oops, but it is serious for this switch.
-4. Small and contained? **PASS** — one function, ~6 net lines.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS**.
-
-**Exception category:** none (not a device ID/quirk/DT/build/docs
-exception). It qualifies on ordinary bug-fix rules.
-
-The missing patch 3 does not make this a NO: poll timeout and failed
-`regmap_read_poll_timeout()` already return errno here, and those values
-are what get written into `CORE_PLL_GROUP4` today.
-
-### What it solves for this tree
-On MT7531 probe, a failed indirect C45 read of `CORE_PLL_GROUP4` is
-currently folded into the PLL enable RMW and written back. This tree
-already backported the helper change that returns those failures as
-errno. Without this caller check, 6.12 can program the PHY core PLL from
-that errno and keep going. The fix fails setup instead. It is small,
-matches local code, and does not need the rest of the series.
+This tree is 7.3-rc4; the stall path is old and the bug is a firmware
+leftover vs that path, not a 7.3-only feature. The patch is a small,
+maintainer-acked workaround that stops IOMMU attach from failing. Origin
+in an unfinished NPU RFC does not make it a new API; Will merged it as a
+standalone IOMMU fix. Missing `INT_CLEAR` is a residual IRQ-ack concern,
+not a reason to drop a stall-timeout fix that already uses the
+documented fault-done command.
 
 Verification:
-- [Phase 1] Parsed subject/tags/body; list version has `Fixes:
-  c288575f7810`; candidate message has Link + Golle/Kicinski SOBs
-- [Phase 2] Diff: `mt7531_setup()` only; check read and write; `ret`
-  already declared
-- [Phase 3] `git blame` on 2660–2686: RMW from `c288575f7810`; helpers
-  renamed later; poll uses `96e0f5184af69`
-- [Phase 3] `git merge-base --is-ancestor c288575f7810 HEAD` → yes
-- [Phase 3] `git merge-base --is-ancestor 96e0f5184af69 HEAD` → yes
-  (callee error propagation already here)
-- [Phase 3] `git log --grep="PHY_IAC command writes"` → patch 3 **not**
-  in this tree
-- [Phase 3] `git show 96e0f5184af69` confirms
-  `regmap_read_poll_timeout()` returns negative on failed reads
-- [Phase 4] `b4 dig` on msgid failed; lore 403; used openwall/lkml/cover
-  letter; upstream SHA `1ae63b018d3d`; v2 new patch; Andrew reviewed 1–3
-  and 6 only
-- [Phase 4] UNVERIFIED: full review-reply text; stable@ thread
-- [Phase 5] grep: only in-driver `mt7531_ind_c45_phy_read` call is this
-  RMW; `.sw_setup = mt7531_setup` for `ID_MT7531`; `mt753x_setup()`
-  returns that error
-- [Phase 6] `git describe HEAD` → `p-6.12-4-gbf6fcdf761abd`; `make
-  kernelversion` → 6.12.111; buggy code at mt7530.c:2665–2672
-- [Phase 6] Pre-image matches the candidate hunk; clean apply expected
-- [Phase 8] Failure mode: PHY PLL programmed from truncated errno on
-  probe MDIO failure; severity HIGH for MT7531, trigger uncommon but
-  real after `96e0f5184af69`
+- [Phase 1] Parsed tags: only author SOB + Will Deacon SOB; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 1] Body: PAGE_FAULT_ACTIVE leftover → ENABLE_STALL ignored →
+  poll timeout on RK3576 NPU multi-bank poll
+- [Phase 2] Diff: +13 in `rk_iommu_enable_stall()`; loop acks
+  `PAGE_FAULT_ACTIVE` with `CMD_PAGE_FAULT_DONE`
+- [Phase 2] `rk_iommu_enable()` returns on stall timeout before
+  `force_reset` (line 950-952) — attach fails
+- [Phase 3] git blame: function from c68a292152d32 (v3.19); poll from
+  0416bf6479acef (v4.17); multi-mmu cd6438c5f8446 (v4.6)
+- [Phase 3] git merge-base --is-ancestor b10d5920cafa2 HEAD: yes; not in
+  v7.2; in v7.3-rc1
+- [Phase 3] Sibling 841363ebb5082 is clocks-only; not required for this
+  hunk
+- [Phase 4] b4 dig -c b10d5920cafa2:
+  https://patch.msgid.link/20260718031146.3368811-6-gahing@gahingwoo.com
+- [Phase 4] b4 dig -a: RFC v1 (skip banks) → v2 (this ack); Will applied
+  v2 4/8 and 5/8
+- [Phase 4] b4 dig -w: iommu maintainers + rockchip list on CC
+- [Phase 4] mbox: Will “Applied driver changes to iommu (rockchip)”;
+  Sashiko INT_CLEAR warning; no human NAK
+- [Phase 4] lore.kernel.org WebFetch/curl: HTTP 403 — stable-list
+  discussion UNVERIFIED
+- [Phase 5] Callers: disable (unchecked) and enable (fatal); enable from
+  attach_device and resume
+- [Phase 5] IRQ handler already issues PAGE_FAULT_DONE at line 642
+- [Phase 6] git describe HEAD: v7.3-rc4-27-gf0100363d8c37; Makefile
+  7.3.0-rc4; file present
+- [Phase 6] No NPU IOMMU nodes in
+  arch/arm64/boot/dts/rockchip/rk3576.dtsi; vdec_mmu is two-bank +
+  disable-mmu-reset
+- [Phase 7] iommu-updates-v7.3 merge text: “fix clock, probe and stale-
+  fault handling”
+- [Phase 8] Failure: 1 ms poll then IOMMU enable/attach failure; not
+  oops/UAF
+- UNVERIFIED: whether firmware leaves this bit on in-tree vdec/vop;
+  whether INT_STATUS spurious IRQ reproduces; stable@ thread
+
+The fix is small, surgical, and meets the stable criteria as a hardware
+leftover workaround in a long-lived driver.
 
 **YES**
 
- drivers/net/dsa/mt7530.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/iommu/rockchip-iommu.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index d2dcc2f1522f4..4f391ef797ea3 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -2758,14 +2758,20 @@ mt7531_setup(struct dsa_switch *ds)
- 	 * phy_[read,write]_mmd_indirect is called, we provide our own
- 	 * mt7531_ind_mmd_phy_[read,write] to complete this function.
- 	 */
--	val = mt7531_ind_c45_phy_read(priv,
-+	ret = mt7531_ind_c45_phy_read(priv,
- 				      MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
- 				      MDIO_MMD_VEND2, CORE_PLL_GROUP4);
-+	if (ret < 0)
-+		return ret;
-+
-+	val = ret;
- 	val |= MT7531_RG_SYSPLL_DMY2 | MT7531_PHY_PLL_BYPASS_MODE;
- 	val &= ~MT7531_PHY_PLL_OFF;
--	mt7531_ind_c45_phy_write(priv,
--				 MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
--				 MDIO_MMD_VEND2, CORE_PLL_GROUP4, val);
-+	ret = mt7531_ind_c45_phy_write(priv,
-+				       MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
-+				       MDIO_MMD_VEND2, CORE_PLL_GROUP4, val);
-+	if (ret < 0)
-+		return ret;
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index 309ba78e27d4f..982ea9cafee1b 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -422,6 +422,19 @@ static int rk_iommu_enable_stall(struct rk_iommu *iommu)
+ 	if (!rk_iommu_is_paging_enabled(iommu))
+ 		return 0;
  
- 	/* Disable EEE advertisement on the switch PHYs. */
- 	for (i = MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr);
++	/*
++	 * Boot firmware can leave a bank in PAGE_FAULT_ACTIVE with no handler
++	 * (PAGE_FAULT_ACTIVE & !STALL_ACTIVE & IDLE).  Such a bank ignores
++	 * CMD_ENABLE_STALL and never reaches STALL_ACTIVE, timing out the poll
++	 * below.  Acknowledge any stale fault first so every bank starts clean.
++	 */
++	for (i = 0; i < iommu->num_mmu; i++) {
++		if (rk_iommu_read(iommu->bases[i], RK_MMU_STATUS) &
++		    RK_MMU_STATUS_PAGE_FAULT_ACTIVE)
++			writel(RK_MMU_CMD_PAGE_FAULT_DONE,
++			       iommu->bases[i] + RK_MMU_COMMAND);
++	}
++
+ 	rk_iommu_command(iommu, RK_MMU_CMD_ENABLE_STALL);
+ 
+ 	ret = readx_poll_timeout(rk_iommu_is_stall_active, iommu, val,
 -- 
 2.53.0
 
