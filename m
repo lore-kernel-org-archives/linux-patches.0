@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B2B54645C;
-	Mon, 19 Oct 2026 14:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F0764C40A;
+	Mon, 19 Oct 2026 14:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418824; cv=none; b=gi6tPC6QMJGvgIiZNEDYzWKI47Eh0UgyqbsG2RJOF+lxfjU19Yh4mRZV3Xwc7rFh/z90iRrte0TU+aZf0N19OwtPI6b54FR6W7J+lMzVOG/3gxkqdKRS47pUX2qvmrE9r49IZP8ruWtXbog5HLPGUiYWAefrZpJ6IFnuVocpd+4=
+	t=1792418826; cv=none; b=uujvO9FRifzsit4gXvLUwIZSPyTG5REikOmVF6rOb3F4mMhh+hC/D1RCMxTU4uPRZIH2rg+YvYR2geaLasvrDGcA1q7R/dWYdfOsdqlYFgT/McVSK/yTO0AnAbcdLq2swMswGq0cAby4mydJTDtuufvek+iTdu1VxRM0itidFS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418824; c=relaxed/simple;
-	bh=oxdSTRluYO2IE/oTg/gORSQtPQDBuYNfMVkbEt1vNWU=;
+	s=arc-20240116; t=1792418826; c=relaxed/simple;
+	bh=sqcL0GY2ywTF8aRJH9sYcEsSs2ajLx9ikcBAEZe8QD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EOPqdpLElVNfrQhwe/7wARl/hKYX8IMvqLX5SVTMtiTXBu/IHbGND7VziHXy3ZVetEI8p4mcudmC8pvFvWxrWa7VfOO779vW6PfEGkyRk7e4yREfIA7umPFv4654Rq1zgKbITNrp2/rWLwVSeyyTNKeNJIdsUkUy2UYWnHM3I6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g5lNz9W+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CDySn3Kqy2vhWrraP6b0jO1ZZFI3CenFEAzZgGaDGRT5pfs3UWKKf4qGUcIWe1HmXXSqCLIqdQaVNm0LdSTDBQJL2XU6G+Mayl0u+4EgcziGZF1lA40/sB0nV2ZYg64HsdV7z7KjAOqjamisJPWL0n2Qh7aTKx53I5mw48FrNTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=heA2iMeC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g5lNz9W+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C281F000C9;
-	Mon, 19 Oct 2026 14:06:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="heA2iMeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3531F000C4;
+	Mon, 19 Oct 2026 14:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418812;
-	bh=LZCg7XlqP+XFJwUJDmW26gdSPgM58euZsKhP6jYBkzg=;
+	s=k20260515; t=1792418814;
+	bh=4qTdWVxFt0wuCUbw/btJFkq2aKk1a3vWXLWgJiiJKhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g5lNz9W+uXosFNBf12ZfaG4IuAXuO5H5d/G9RacnBZLH+3cYsCqDH+bGpcEYeEn8C
-	 +bSm/s6dwypwB3R6N1PPoJMhIf457jIPCS+vb/86W12izz95ekWXPh0EPkASjADb6k
-	 sNJqe6W1Uk0PkE4ytbsXvuXFoKPdCzutBeNPmrGUqqUNMI5F+orwITXrHGL/NJUtHI
-	 nDHOKoubIjXhGOiaLIuPYk1GWlSnkyGELihD109KT9KdLrrvJvNRi2VH6z7SyYASF9
-	 +IpEPcdBk6y1JJycpqvnHlECMNTAtYEYJdUuvje52s5HiqZqRE2vMYMdgzf/ywDjOB
-	 FN292QrYDPk9w==
+	b=heA2iMeC8fEX72nlmG7AgA9O/qM79S1zO0MeNZCfY6g90ay4agQrKfCPiHJO+nrVB
+	 jD6gI1OhNHIMCDQSm6faNpeavdwR/j5Zi0R4kn973m922KoXQ3PxDB0nGXP1AWAjNt
+	 oTdQZl1CCWCB8UoCDJwCUnC8B1MS88WmYt5x/EZ815abqy/YrKNEOeXneyRTshC8F0
+	 dUHNlpLGAcBo2fk1mC21TIQVRgMZpcYNihVR9G5FZpvmnDl4wXQc0+dxJNiPT+PBNR
+	 z3isPKbtiFF1T3up5OQp79jaeLE22IoYs3641vDqa3bXK6k/cquSMQ1ONYG1edArFg
+	 VA0b0xVX1bwnw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paritosh Potukuchi <paritoshpotukuchi@gmail.com>,
-	Paritosh Potukuchi <paritosh.potukuchi@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	shyam-sundar.s-k@amd.com,
-	linux-i2c@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] i2c: amd-asf: Validate firmware-reported length
-Date: Mon, 19 Oct 2026 09:53:25 -0400
-Message-ID: <20261019135441.1420968-514-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA
+Date: Mon, 19 Oct 2026 09:53:27 -0400
+Message-ID: <20261019135441.1420968-516-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,355 +54,456 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paritosh Potukuchi <paritoshpotukuchi@gmail.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit b2f4816a378dc840b605a1235b80e57c5f85b46c ]
+[ Upstream commit f2d08f3651fb12634347fef2c41687a807a7dcba ]
 
-The firmware may sometimes return a length greater than the
-allocated buffer size, which can lead to out-of-bounds access
-and a kernel panic.
+On the ASUS Vivobook S14 S5406SA (subsystem 0x104310c4, Lunar Lake
+platform) with an ALC294 codec, the headset microphone (3.5mm jack)
+fails to capture any audio. Adding the ALC2XX_FIXUP_HEADSET_MIC
+quirk resolves the issue and restores proper headset mic recording.
 
-Currently, the driver does not validate the length read from
-firmware.
-
-Add a check to ensure the firmware-reported length stays within
-the bounds of the data buffer.
-
-Signed-off-by: Paritosh Potukuchi <paritosh.potukuchi@amd.com>
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260612101815.4124804-1-paritosh.potukuchi@amd.com
+Link: https://github.com/thesofproject/linux/issues/5729
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260807125857.678297-3-zhangheng@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+I have enough to decide for this 6.12 tree: the quirk and insertion
+point exist, the 0x10c4 entry does not.
 
-**Step 1.1 — Subject line**
-Record: **[i2c/amd-asf] [Validate] firmware-reported length used as a
-copy bound**
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2 — Tags** (pipeline markers ignored: `[Upstream commit ...]`,
-`Signed-off-by: Sasha Levin`)
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[ALSA/hda/realtek] [Fix] [headset microphone capture on ASUS
+Vivobook S14 S5406SA]**
+
+Subsystem prefix is `ALSA: hda/realtek`. Action verb is **Fix**. Claimed
+intent is restoring 3.5mm headset-mic capture on one ASUS laptop by
+adding a PCI subsystem quirk.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- Signed-off-by: Paritosh Potukuchi &lt;paritosh.potukuchi@amd.com&gt;
-  (author)
-- Acked-by: Shyam Sundar S K &lt;Shyam-sundar.S-k@amd.com&gt; (original
-  driver author)
-- Signed-off-by: Andi Shyti &lt;andi.shyti@kernel.org&gt; (I2C
-  maintainer)
-- Link: https://lore.kernel.org/r/20260612101815.4124804-1-
-  paritosh.potukuchi@amd.com
-- No Fixes:, Reported-by, Tested-by, Reviewed-by, or Cc: stable (absence
-  expected)
+- **Link:** https://github.com/thesofproject/linux/issues/5729 (user bug
+  report; later confirmed fixed by the model/quirk)
+- **Link:**
+  https://patch.msgid.link/20260807125857.678297-3-zhangheng@kylinos.cn
+  (alsa-devel submission; patch 3/4)
+- **Signed-off-by:** Zhang Heng \<zhangheng@kylinos.cn\> (author)
+- **Signed-off-by:** Takashi Iwai \<tiwai@suse.de\> (ALSA maintainer;
+  applied the series)
+- **Fixes:** none (expected)
+- **Cc: stable:** none (expected)
+- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none in the
+  commit message
 
-**Step 1.3 — Body**
-Record: Firmware can return a length larger than the allocated buffer;
-that produces **out-of-bounds access and a kernel panic**. The driver
-never checked the length read from firmware. The fix is a bounds check
-against the data buffer. No stack trace, reproducer, or version range is
-given.
+Notable: msgid `-3` shows this was patch 3 of a 4-patch batch of
+independent hardware quirks, not a dependent refactor series.
 
-**Step 1.4 — Hidden bug fix?**
-Record: **No.** This is an explicit OOB/panic fix, not cleanup disguised
-as a fix.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
----
+Record:
+- **Bug:** On ASUS Vivobook S14 S5406SA, PCI subsystem `0x1043:0x10c4`,
+  Lunar Lake + ALC294, the 3.5mm headset microphone captures silence.
+  Headset speakers work; internal DMIC works.
+- **Symptom:** Userspace sees a “Headphones Stereo Microphone” source
+  that records silence; analog capture mixer controls are missing.
+- **Root cause (from message + issue):** BIOS leaves headset-mic pin
+  0x19 as `0x411111f0` (N/A). `ALC2XX_FIXUP_HEADSET_MIC` overrides that
+  pin and sets `HDA_PINCFG_HEADSET_MIC`.
+- **Version info in message:** Lunar Lake platform; GitHub reporter was
+  on 6.17, but that does not limit this tree.
 
-## Phase 2: Diff analysis
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-**Step 2.1 — Inventory**
-Record: One file, `drivers/i2c/busses/i2c-amd-asf-plat.c`, **+4 / −0**.
-Function: `amd_asf_process_target()`. Surgical single-function change.
+Record: **Not a hidden fix.** It is an explicit hardware-quirk bug fix:
+one `SND_PCI_QUIRK` line. No cleanup/refactor disguise.
 
-**Step 2.2 — Code flow**
-Before (verified in `v6.18.53`):
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-```92:94:drivers/i2c/busses/i2c-amd-asf-plat.c
-                len = inb_p(ASFDATARWPTR);
-                for (idx = 0; idx < len; idx++)
-                        data[idx] = inb_p(ASFINDEX);
+**Step 2.1: INVENTORY THE CHANGES**
+
+Record:
+- **File in upstream commit:** `sound/hda/codecs/realtek/alc269.c` (+1 /
+  −0)
+- **File in this tree:** `sound/pci/hda/patch_realtek.c` (Realtek codec
+  not yet split)
+- **Function / table:** `alc269_fixup_tbl[]`
+- **Scope:** single-file, one-line surgical hardware quirk
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
+Record:
+- **Before:** SSID `0x1043:0x10c4` has no PCI quirk. `patch_alc269()`
+  still calls `snd_hda_pick_fixup()` on `alc269_fixup_tbl`. Existing
+  ASUS ALC294 *pin* quirks do not match this machine’s pin 0x12
+  (`0x40000000` vs required `0x90a60130`), so no headset-mic fixup is
+  applied. Pin 0x19 stays N/A; analog headset mic is never parsed.
+- **After:** That SSID selects `ALC2XX_FIXUP_HEADSET_MIC` at PRE_PROBE.
+- **Path:** codec probe / jack autoconfig only; not a hot path, error
+  path, or API change.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **[Hardware workaround / pin-config quirk]**
+
+In this tree `ALC2XX_FIXUP_HEADSET_MIC` is:
+
+```10552:10555:sound/pci/hda/patch_realtek.c
+        [ALC2XX_FIXUP_HEADSET_MIC] = {
+                .type = HDA_FIXUP_FUNC,
+                .v.func = alc_fixup_headset_mic,
+        },
 ```
 
-`data` is `u8 data[ASF_BLOCK_MAX_BYTES]` (72). `len` is `u8`, so
-firmware can return 0–255. The loop writes past the stack buffer when
-`len > 72`. A later loop in the same function also indexes `data[idx]`
-with the same `len`.
+`alc_fixup_headset_mic()` (same body as later
+`alc2xx_fixup_headset_mic`) does:
+1. Override pin 0x19 to `0x03a1103c` (headset mic)
+2. Update coef 0x45
+3. Set `spec->parse_flags |= HDA_PINCFG_HEADSET_MIC`
 
-After: if `len > ASF_BLOCK_MAX_BYTES`, return before the copy.
+That matches the GitHub dump: pin 0x19 was `0x411111f0` with VREF_HIZ.
 
-**Step 2.3 — Bug mechanism**
-Record: **(d) Memory safety — buffer overflow / OOB.** Firmware-supplied
-I/O length used as loop bound with no clamp. Same pattern already exists
-on the host write path (`amd_asf_access()`: `if (len == 0 || len >
-ASF_BLOCK_MAX_BYTES)`).
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 2.4 — Fix quality**
-Record: Minimal and obviously correct for stopping the overflow.
-Comparison is `>` against a 72-byte array (index 0..71), so `len == 72`
-is valid. Regression risk is low on the success path. On the error path
-the early `return` skips bank-status clear and `ASFSETDATARDPTR` reset;
-that can leave hardware stuck after a firmware bug, but that path
-already panicked. No API, locking, or data-structure change.
+Record: **Obviously correct and minimal.** One PCI ID, existing fixup
+already used for Acer Nitro 5, ASUS Vivobook 15 X1504VAP, Gigabyte,
+Huawei, Clevo, TongFang, HONOR. Regression surface is only SSID
+`0x1043:0x10c4`. No locking, no API, no new code. **Regression risk:
+very low.**
 
----
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-## Phase 3: Git history
+**Step 3.1: BLAME THE CHANGED LINES**
 
-**Step 3.1 — Blame**
-Record: Buggy loop introduced in `9b25419ad3971` (“i2c: amd-asf: Add
-routine to handle the ASF slave process”, 2024-09-23). First in
-**v6.13-rc1**. Present in this 6.18.y tree.
+Record: The new line is an addition. Neighboring entries exist in this
+tree at:
 
-**Step 3.2 — Fixes: tag**
-Record: None. Introducer is `9b25419ad3971`, confirmed ancestor of
-`v6.18.53`.
+```11192:11193:sound/pci/hda/patch_realtek.c
+        SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA",
+ALC256_FIXUP_ASUS_MIC),
+        SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ",
+ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+```
 
-**Step 3.3 — File history**
-Record: Related commits already in `v6.18.53`:
-- `a5089cd23b10c` — initialize `len` (Fixes: 9b25419ad397)
-- `b719afaa1e5d8` — set `cmd` on error
-No extra prerequisite is required for this bounds check. Standalone.
+The *bug* is missing pin config from BIOS, not a regression in a
+specific old commit. The reusable fixup was added by `1c643c600407d`
+(“Add new alc2xx-fixup-headset-mic model”, 2024-12-07), which is **in
+this tree** (`git merge-base --is-ancestor 1c643c600407d HEAD`
+succeeded). That is the stable backport of upstream `50db91fccea0d`
+(first contained in v6.13-rc3; original SHA is **not** an ancestor of
+this 6.12 branch, but the equivalent change is present).
 
-**Step 3.4 — Author**
-Record: First I2C commit from Paritosh Potukuchi. Acked by original AMD
-ASF author Shyam Sundar S K. Applied by I2C maintainer Andi Shyti.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-**Step 3.5 — Dependencies**
-Record: Uses existing `ASF_BLOCK_MAX_BYTES` and the existing loop. `git
-diff v6.18.53 d88d3b2633b03^ -- drivers/i2c/busses/i2c-amd-asf-plat.c`
-is empty; `git apply --check` against the 6.18.53 file succeeded.
-**Applies standalone and cleanly.**
+Record: **No Fixes: tag.** Not applicable. The hardware never had a
+working pin default for this SSID in this tree.
 
----
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-## Phase 4: Mailing list / external research
+Record: `sound/pci/hda/patch_realtek.c` is actively receiving similar
+one-line quirks (mute LEDs, speakers, headset mics). Recent history is
+the same class of change. **No prerequisite series for this one line.**
+Similar in-tree uses of `ALC2XX_FIXUP_HEADSET_MIC` include Acer Nitro 5
+(`0x1025:0x1539/159c/1597`) and ASUS Vivobook 15 X1504VAP
+(`0x1043:0x1e1f`).
 
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c b2f4816a378dc840b605a1235b80e57c5f85b46c` matched
-https://patch.msgid.link/20260612093502.3805287-1-
-paritosh.potukuchi@amd.com
-Thread saved to mbox (lore HTTP 403 via WebFetch/curl).
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-Revisions:
-- v1 (2026-06-12 09:35): same check, broken indentation
-- v2 (2026-06-12 10:18): indentation fixed (subject still `[PATCH]`, not
-  `[PATCH v2]`)
-- Applied version adds a blank line before the `if` (Andi added it on
-  apply)
+Record: Zhang Heng has multiple Realtek quirk commits in this tree
+(Samsung, ASUS UM6702RC, Inspur, Conexant). Regular ALSA hda
+contributor; this patch was applied by maintainer Takashi Iwai. Related
+same-day patches are other independent quirks (Acer Nitro ANV16-42, Acer
+Gadget E10, Huawei Matebook Conexant), not dependencies.
 
-Andi asked how often this happens and whether it should be considered a
-fix. Shyam acked without quantifying frequency and without NAK. Andi
-merged to `i2c/i2c-for-7.2`. No reviewer asked for `Cc: stable`. No NAK.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: Author, shyam-sundar.s-k@amd.com, andi.shyti@kernel.org,
-linux-i2c, linux-kernel. Right maintainers were on the patch.
+Record: **Standalone.** Needs only `ALC2XX_FIXUP_HEADSET_MIC` /
+`alc_fixup_headset_mic()`, both present. Series 1/4, 2/4, and 4/4 touch
+different SSIDs/files. File path in the upstream diff (`alc269.c`) must
+be rewritten to `patch_realtek.c` here; the hunk context around
+`0x10c0`/`0x10d0` matches.
 
-**Step 4.3 — Bug report**
-Record: No syzbot/bugzilla link. Report is the patch itself from AMD,
-describing firmware returning too-large length and a panic.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.4 — Series**
-Record: Standalone single patch, not part of a multi-patch series.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 4.5 — Stable list**
-Record: lore.kernel.org/stable returned 403. Mbox has no “stable”
-mention. **UNVERIFIED** whether stable@ discussed it separately.
+Record:
+- **Lore msgid:** `20260807125857.678297-3-zhangheng@kylinos.cn`
+- **b4 mbox:** 5 messages; series is four independent quirks
+  (2026-08-07)
+- **Revisions:** single submission (`[PATCH 3/4]`); no v2/v3 in the
+  thread
+- **Maintainer:** Takashi Iwai: “Applied all four patches now. Thanks.”
+  — no NAK, no requested changes, no stable-risk comments
+- Direct lore.kernel.org HTTP fetches returned 403; thread was recovered
+  via `b4 mbox`
 
----
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-## Phase 5: Code semantic analysis
+Record: **To:** tiwai@suse.com. **Cc:** linux-sound@vger.kernel.org,
+linux-kernel@vger.kernel.org. Subsystem maintainer received and applied
+it. `b4 dig -w` was not used (no upstream SHA in this checkout);
+recipients came from the mbox.
 
-**Step 5.1 — Functions**
-Record: `amd_asf_process_target()` only.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-**Step 5.2 — Callers**
-Record: Not called directly. Registered as delayed-work callback in
-`amd_asf_probe()` via `devm_delayed_work_autocancel(...,
-amd_asf_process_target)`. Scheduled from `amd_asf_irq_handler()` when
-ASF target IRQ bit 6 is set (`schedule_delayed_work(&dev->work_buf,
-HZ)`). Workqueue context, not IRQ context.
+Record: GitHub thesofproject/linux#5729 (closed):
+- Hardware: ASUS Vivobook S14 S5406SA, ALC294, SSID `0x104310c4`, Intel
+  Lunar Lake, driver `sof-audio-pci-intel-lnl`
+- Symptom: headset speakers OK, headset mic silent; pin 0x19 =
+  `0x411111f0`
+- Pierre-Louis Bossart: ALC294 config issue, not SOF
+- Zhang Heng / Kailang Yang: try model `alc2xx-fixup-headset-mic`
+- Reporter **confirmed** `hda_model=alc2xx-fixup-headset-mic` on the
+  same machine: dmesg `Headset Mic=0x19`, jack detect works, `pw-record`
+  captures real audio
+- Also referenced Arch forum thread for the same SSID
 
-**Step 5.3 — Callees**
-Record: `inb_p`/`outb_p` (port I/O), then (after this hunk)
-`i2c_slave_event()`. No alloc/lock in the changed path.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-**Step 5.4 — Reachability**
-Record: Reached when AMD ASF slave/target interrupt fires
-(`CONFIG_I2C_AMD_ASF`, ACPI `AMDI001A`). Trigger is firmware/BMC ASF
-traffic, not a generic unprivileged syscall. Still a host kernel stack
-overflow if firmware reports `len > 72`.
+Record: Batch of four independent hardware quirks. This patch does not
+need the others. Other patches are not required for this SSID to work.
 
-**Step 5.5 — Similar patterns**
-Record: Host path already bounds-checks in `amd_asf_access()` (`len == 0
-|| len > ASF_BLOCK_MAX_BYTES`) and `amd_asf_xfer()` (`msgs->len >
-ASF_BLOCK_MAX_BYTES - 3`). Slave/target path was the missing check.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
----
+Record: lore.kernel.org/stable search returned HTTP 403. **UNVERIFIED**
+whether someone already asked stable@ for this specific commit. No in-
+tree evidence it was rejected.
 
-## Phase 6: Local tree (`v6.18.53` / 6.18.y)
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 6.1 — Does the buggy code exist?**
-Record: **Yes.** `git merge-base --is-ancestor d88d3b2633b03 v6.18.53`
-failed (fix not in 6.18.53). `git show
-v6.18.53:drivers/i2c/busses/i2c-amd-asf-plat.c` has the unbounded loop.
-Driver added in v6.13; bug since then.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
 
-**Step 6.2 — Backport difficulty**
-Record: **Clean apply.** Parent of the candidate matches 6.18.53 file
-content; `git apply --check` succeeded.
+Record: No function body changed. Touches `alc269_fixup_tbl[]`. Runtime
+effect is via `alc_fixup_headset_mic()` selected as
+`ALC2XX_FIXUP_HEADSET_MIC`.
 
-**Step 6.3 — Related fixes already here?**
-Record: Uninit-`len` and error-`cmd` fixes are in 6.18.53. **No existing
-bounds check** on this firmware length.
+**Step 5.2: TRACE CALLERS**
 
----
+Record:
+- `HDA_CODEC_ENTRY(0x10ec0294, "ALC294", patch_alc269)` at line 13992
+- `patch_alc269()` → `snd_hda_pick_fixup(..., alc269_fixup_tbl,
+  alc269_fixups)` at 12583–12584
+- Called at codec probe (HDA/SOF HDA generic), not IRQ/syscall hot path
+- Impact surface: **only** PCI subsystem `0x1043:0x10c4`
 
-## Phase 7: Subsystem context
+**Step 5.3: TRACE CALLEES**
 
-**Step 7.1**
-Record: **drivers/i2c** (AMD ASF bus driver). Criticality:
-**PERIPHERAL** (AMD ASF/DASH, depends on `I2C_PIIX4`), but a host panic
-still matters for those systems.
+Record: `alc_fixup_headset_mic` → `snd_hda_apply_pincfgs`,
+`alc_update_coef_idx`, sets `HDA_PINCFG_HEADSET_MIC`. Same pattern
+already used on other laptops in this file.
 
-**Step 7.2**
-Record: Small, mature-enough driver (landed v6.13, a few follow-up fixes
-through 6.15). Not staging.
+**Step 5.4: FOLLOW THE CALL CHAIN**
 
----
+Record: Plug headset → HDA jack parse/probe → if quirk matches, pin 0x19
+becomes a headset mic. **Reachable from userspace** on that laptop
+(PipeWire/ALSA capture). Reporter confirmed it.
 
-## Phase 8: Impact and risk
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-**Step 8.1 — Who is affected**
-Record: **Driver-specific / config-specific:** `CONFIG_I2C_AMD_ASF` on
-AMD systems with ASF (`AMDI001A`).
+Record: Same `ALC2XX_FIXUP_HEADSET_MIC` already applied to multiple
+vendors in `alc269_fixup_tbl`. This is the standard pattern for “BIOS
+left headset mic pin as 0x411111f0”.
 
-**Step 8.2 — Trigger**
-Record: ASF target interrupt + firmware length &gt; 72. Frequency not
-quantified on-list (Andi asked; Shyam only acked). Not a normal syscall
-path; firmware/BMC-driven. Unprivileged userspace generally cannot set
-that I/O length directly.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 8.3 — Failure mode**
-Record: Stack buffer overflow (up to 183 bytes past a 72-byte stack
-array), then OOB read in the second loop. Commit states **kernel
-panic**. Severity: **CRITICAL** (crash; stack smash).
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-**Step 8.4 — Risk vs benefit**
-Record: Benefit **high** for ASF users (panic/OOB). Risk **very low** (4
-lines, success path unchanged, same check already used on the write
-path). Early-return skips HW cleanup only on the already-broken firmware
-path.
+Record: **Yes.** This tree is **6.12.111** (`pending-6.12`, `git
+describe HEAD` = `p-6.12-3-g710455e2077bb`). Makefile: VERSION=6
+PATCHLEVEL=12 SUBLEVEL=111.
 
----
+- Quirk `0x1043:0x10c4` / “S5406SA” is **absent** (`git grep` found no
+  matches).
+- Realtek driver, ALC294 `patch_alc269`, `ALC2XX_FIXUP_HEADSET_MIC`, and
+  Lunar Lake SOF (`sound/soc/sof/intel/pci-lnl.c`) **are present**.
+- The machine is a 2024/2025 Lunar Lake laptop; 6.12 is an LTS that runs
+  that hardware.
 
-## Phase 9: Synthesis
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-**For backporting**
-- Real stack OOB from unvalidated firmware length → panic
-- Tiny, obviously correct, matches existing driver checks
-- Driver and buggy loop are in this 6.18.53 tree (since v6.13)
-- Applies cleanly; no missing helpers
-- Acked by original driver author; applied by I2C maintainer
+Record: **Minor path remap, otherwise clean.** Upstream hunk is against
+`sound/hda/codecs/realtek/alc269.c`; here the table is
+`sound/pci/hda/patch_realtek.c`. Context lines `0x10c0` then `0x10d0`
+match exactly. Enum name is the same. **Expected difficulty: trivial
+backport** (standard for HD-audio quirks on 6.12).
 
-**Against**
-- AMD-only driver, not a core path
-- Frequency of bad firmware length never quantified
-- Early return does not reset ASF bank/pointer (error-path
-  incompleteness, not a happy-path regression)
-- No Fixes:/Cc: stable (not a negative per rules)
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
 
-**Unresolved**
-- Stable mailing list search (lore 403)
-- Exact field reproduction rate (unverified beyond AMD’s “may
-  sometimes”)
+Record: Subject grep for S5406SA / this title found nothing. Pin quirks
+for ASUS ALC294 do not match this pin dump (0x12 is `0x40000000`, not
+`0x90a60130`). **No existing fix for this SSID.**
 
-**Stable rules**
-1. Obviously correct and tested? **PASS** — 4-line bound check;
-   maintainer applied after ack
-2. Real bug affecting users? **PASS** — OOB/panic on ASF target RX
-3. Important (crash/security/corruption/deadlock)? **PASS** — stack
-   overflow → panic
-4. Small and contained? **PASS** — +4 lines, one function
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — clean against 6.18.53
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-Exception category: none needed; this is a normal crash/OOB fix.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-This 6.18.y tree has the unbounded copy and not the fix. Backporting
-prevents a kernel panic on AMD ASF hardware when firmware reports a
-length above 72.
+Record: **[sound/pci/hda Realtek codec] [IMPORTANT]** — common laptop
+audio, not mm/core, but HD-audio quirks are a large fraction of stable
+backports. Affects users of this ASUS model.
 
----
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
 
-## What the commit solves, and why it matters here
+Record: **Active but mature quirk table.** Recent commits are almost all
+device-specific `SND_PCI_QUIRK` additions — the same class as this
+patch.
 
-`amd_asf_process_target()` copies firmware bytes into a 72-byte stack
-buffer using a length read from `ASFDATARWPTR` with no cap. `len` is
-`u8`, so a value 73–255 overruns the stack and can panic. This 6.18.53
-tree still has that loop. The patch adds the same bound already used on
-the write path. Cost is four lines; the normal path is unchanged.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
----
+**Step 8.1: DETERMINE WHO IS AFFECTED**
 
-## Verification
+Record: **Driver/hardware-specific** — only ASUS SSID `0x1043:0x10c4`
+(Vivobook S14 S5406SA, ALC294). Other machines unchanged.
 
-- **[Phase 1]** Parsed message/tags from `git show d88d3b2633b03`; no
-  Fixes/Reported-by/Cc: stable; Acked-by Shyam; SOB Andi Shyti
-- **[Phase 2]** Diff is +4 in `amd_asf_process_target`;
-  `data[ASF_BLOCK_MAX_BYTES]` (72); `len` is `u8`; write path already
-  checks `len > ASF_BLOCK_MAX_BYTES` at line 176
-- **[Phase 3]** `git blame` on v6.18.53: loop from `9b25419ad3971`; `git
-  describe --contains` → v6.13-rc1; `git merge-base --is-ancestor
-  9b25419ad3971 v6.18.53` true
-- **[Phase 3]** `git merge-base --is-ancestor d88d3b2633b03 v6.18.53`
-  false (fix not in 6.18.53)
-- **[Phase 3]** `a5089cd23b10c` and `b719afaa1e5d8` are ancestors of
-  v6.18.53
-- **[Phase 3]** `git diff v6.18.53 d88d3b2633b03^ --
-  drivers/i2c/busses/i2c-amd-asf-plat.c` empty
-- **[Phase 4]** `b4 dig -c b2f4816a378dc840b605a1235b80e57c5f85b46c` /
-  `-a` / `-w` / `-m`; thread: v1 indent bug, v2 indent fix, Andi process
-  nits + “how often?”, Shyam Ack, merged i2c-for-7.2; no NAK
-- **[Phase 4]** lore WebFetch/curl 403; discussion taken from saved mbox
-- **[Phase 4]** git.kernel.org commit
-  `b2f4816a378dc840b605a1235b80e57c5f85b46c` exists; no Fixes/Cc: stable
-  in that commit
-- **[Phase 5]** `git grep amd_asf_process_target`: only definition +
-  `devm_delayed_work_autocancel`; scheduled from `amd_asf_irq_handler`
-- **[Phase 6]** `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`;
-  `make kernelversion` → 6.18.53; buggy loop present in `v6.18.53:` file
-- **[Phase 6]** `git apply --check` of this patch onto the v6.18.53
-  file: rc 0
-- **[Phase 7]** `CONFIG_I2C_AMD_ASF` in v6.18.53 Kconfig, depends on
-  `I2C_PIIX4`, ACPI id `AMDI001A`
-- **[Phase 8]** Failure mode: stack OOB → panic (from commit + code);
-  trigger is firmware length, not a generic syscall
-- **UNVERIFIED:** stable@ list discussion (lore 403); how often firmware
-  returns len &gt; 72 (not answered on-list)
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: **Every use of the 3.5mm headset mic** on that laptop. Not a
+race. Unprivileged user hits it by recording from the headset. Internal
+DMIC still works, so some users workaround; headset-mic users do not.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: **[Headset analog capture silently fails] [MEDIUM functional /
+HIGH for affected hardware]** — not a panic/UAF, but the combo-jack mic
+is unusable, which is exactly what hardware-quirk stable exceptions
+cover. Confirmed by a real user; second report on Arch for the same
+SSID.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit:** High for owners of this laptop on 6.12 LTS (headset mic
+  works without a modprobe model override).
+- **Risk:** Very low — one table entry, existing fixup, SSID-matched,
+  maintainer-applied, user-tested.
+- **Ratio:** Strongly favors backport.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR:**
+- Real, user-confirmed hardware bug (GitHub #5729; model param proven on
+  the same machine)
+- Classic HD-audio PCI quirk — stable exception category
+- One line, existing `ALC2XX_FIXUP_HEADSET_MIC` already in 6.12
+- ALC294 and Lunar Lake SOF support exist here
+- Isolated to one SSID; no API/feature
+- Applied by Takashi Iwai; no NAKs
+- Insertion context `0x10c0`/`0x10d0` matches this file
+
+**AGAINST:**
+- Upstream path is `alc269.c`; this tree still uses `patch_realtek.c`
+  (trivial remap)
+- Not a crash/security issue (quirks are still accepted)
+- Original patch had no Cc: stable (not a negative per the rules)
+
+**UNRESOLVED:**
+- lore.kernel.org HTTP 403; stable@ discussion not fetched (thread
+  recovered via b4)
+- No upstream SHA in this checkout for `b4 dig -c`
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — same fixup already in tree;
+   reporter confirmed `alc2xx-fixup-headset-mic`; maintainer applied it
+2. Fixes a real bug that affects users? **PASS** — silent headset-mic
+   capture on a shipping Lunar Lake ASUS
+3. Important issue? **PASS** under the hardware-quirk exception (device
+   feature broken; not cosmetic)
+4. Small and contained? **PASS** — +1 line
+5. No new features or APIs? **PASS** — existing quirk ID only
+6. Can apply to the local tree? **PASS** — needs path change to
+   `sound/pci/hda/patch_realtek.c`; context matches
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: **Hardware quirk/workaround** (and PCI-ID-style table addition
+to an existing driver). Automatic YES class per the stable quirk rules.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This belongs on 6.12. The bug is present, the fixup infrastructure is
+present, Lunar Lake audio is present, and the change is a one-line SSID
+quirk that only enables headset-mic pin parsing on that laptop.
+
+Verification:
+- [Phase 1] Parsed subject/tags: Fix + GitHub issue + msgid 3/4; no
+  Fixes/Cc:stable (expected)
+- [Phase 1] Body: ALC294 SSID 0x104310c4 headset mic silent; quirk
+  ALC2XX_FIXUP_HEADSET_MIC
+- [Phase 2] Diff: +1 SND_PCI_QUIRK(0x1043, 0x10c4, ...) in
+  alc269_fixup_tbl
+- [Phase 2] This tree implements that ID via alc_fixup_headset_mic():
+  pin 0x19 → 0x03a1103c + HDA_PINCFG_HEADSET_MIC
+- [Phase 3] 1c643c600407d (alc2xx-fixup-headset-mic model) is in HEAD;
+  upstream 50db91fccea0d is not an ancestor (expected 6.12 vs 6.13)
+- [Phase 3] git log --grep=S5406SA -- sound/pci/hda/: no matches; quirk
+  not already applied
+- [Phase 3] Series 1/4–4/4 are independent quirks; 3/4 is standalone
+- [Phase 4] b4 mbox 20260807125857.678297-3: Takashi Iwai applied all
+  four; no NAK
+- [Phase 4] GitHub #5729: reporter confirmed hda_model=alc2xx-fixup-
+  headset-mic restores capture
+- [Phase 4] lore.kernel.org WebFetch: 403 — UNVERIFIED via HTTP;
+  recovered via b4
+- [Phase 5] ALC294 → patch_alc269 →
+  snd_hda_pick_fixup(alc269_fixup_tbl); caller is codec probe
+- [Phase 5] ASUS ALC294 pin quirks do not match this machine (0x12 is
+  0x40000000)
+- [Phase 6] git describe HEAD: p-6.12-3-g710455e2077bb; make
+  kernelversion 6.12.111
+- [Phase 6] File is sound/pci/hda/patch_realtek.c; 0x10c0/0x10d0
+  neighbors match; 0x10c4 absent
+- [Phase 6] sound/soc/sof/intel/pci-lnl.c present (Lunar Lake SOF)
+- [Phase 8] Failure mode: silent analog headset mic, SSID-scoped;
+  severity medium functionally, high for that hardware
+- UNVERIFIED: whether stable@ already discussed this commit (lore 403)
+
+The one-line quirk is the standard stable HD-audio backport: it restores
+headset-mic capture on one confirmed laptop with negligible risk.
 
 **YES**
 
- drivers/i2c/busses/i2c-amd-asf-plat.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i2c/busses/i2c-amd-asf-plat.c b/drivers/i2c/busses/i2c-amd-asf-plat.c
-index ca45f0f233210..f5b73c8340495 100644
---- a/drivers/i2c/busses/i2c-amd-asf-plat.c
-+++ b/drivers/i2c/busses/i2c-amd-asf-plat.c
-@@ -90,6 +90,10 @@ static void amd_asf_process_target(struct work_struct *work)
- 		outb_p(reg, ASFDATABNKSEL);
- 		cmd = inb_p(ASFINDEX);
- 		len = inb_p(ASFDATARWPTR);
-+
-+		if (len > ASF_BLOCK_MAX_BYTES)
-+			return;
-+
- 		for (idx = 0; idx < len; idx++)
- 			data[idx] = inb_p(ASFINDEX);
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 97ab2269dc472..8fdfe1bbe7aff 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7101,6 +7101,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
++	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1154, "ASUS TP3607SH", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.53.0
 
