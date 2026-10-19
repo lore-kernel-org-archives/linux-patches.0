@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3245BD5E4;
-	Mon, 19 Oct 2026 14:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE5E5BD60A;
+	Mon, 19 Oct 2026 14:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418463; cv=none; b=A0DqZI3AKuHVav4idiHuTJCe4rG8CWgTEvDI3tv+gOiNdi3rlQ/5HHq+VvQ9Q1E8+7Im72t20t9TQ7HIsTdytpFBF8Zh6qSicBbtPhUiihUV7Ez2E4bacJKWJJZ5LbmrWiZQiRDFiC4iHCgkwmfhGN1pIBMMbgSnn58UbrChsHc=
+	t=1792418465; cv=none; b=f1s2onl0EhUYQ3vNjWAYrzQsg5UvIgLpcSu2oz35RE3OMAi+NHGkCUyNoaJ5U49N6zLlSq062Khe7fOd8rxCZYhUSCmVZ8KAhNt9l60QYeb0cVmBDyptTrCNpyF/k9/bSVbSa1R4a7zQwcldrSahUQRcD6k/oo2COCxZefmE4EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418463; c=relaxed/simple;
-	bh=deT57D3GLwt4S+n6hCnJBg4KXACI1DwTDzdzSA4/KdA=;
+	s=arc-20240116; t=1792418465; c=relaxed/simple;
+	bh=hRSGPTkLw54cTZJsbX+sj2cXA0YyEva62KGimZnJL9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oLEqxgKo1bZh9Qc+VBKfhNUa9H5IALVms65VsCWur+P00tsQ+yhyTUFVyYHCuG5kWDCVYHoy4g1cv+toHuahHpfjzgM9XyuI8s4qWHmmKSWLG3XcCSAaquTAfSeMh2vslrGt7ou6ekv+35ihZ9aPLIcbswRvtU0xyuEXqHyFeMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=idp/LB3p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=f9vYO9jMkp/59oQhgQ2QXOM14kkUYLJO5TuxMAqSAN7tYX7F/9VBn3KueWoq2NsyG9FEPLllt8xZq1fQDB7gK8WrkBHXvZStdVSjGU34ySjAtiJyd3YmOr/Rg5ODW8v6h2BQ87kjWWJq4pJLPXKtTjeiXMJTZxKgFUiDJIvKe40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mV0F92pW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="idp/LB3p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7B61F000C8;
-	Mon, 19 Oct 2026 14:01:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mV0F92pW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D261F000C7;
+	Mon, 19 Oct 2026 14:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418461;
-	bh=MynhFGxmAm7DOXMHr+uwe12ATUwwoeN4u/MR/YhK6W4=;
+	s=k20260515; t=1792418463;
+	bh=e+MnSU7zP3D5FT+usb4x8OWXQd7SGnkkQ975jMjPpas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=idp/LB3pj6ERZ5j5oOLxDB8YLosRv4EJj9EHScHyuDU7FEk4y7KZMkzeFZLVyevv8
-	 8iPOCUH400QKJKGZThFElawbYU5D+dA6nDu9YeB+yG2XJn0Vg7NhPUkK6AERF6zHkW
-	 2tpDQTxGXW8HCUxYd39vzpMNr312QHQUB+Fk2ICCNYzyfzonykrBan8LR6FhSHjVX8
-	 b5MWmx6ZouOFPbuOd1tGKlJVPOpKAyvAfpvGXL1LfgTmueqcu5w+HnTekBvt4d6H8R
-	 3JjToP69lIVELY2mBjyS+GAAxnKWMsE+JQQFXnlgKbB173ancuwVly5SypXRVKcpFH
-	 4nMNUPX5hfZ1w==
+	b=mV0F92pWj4cUMVp8xam3I6mPV1gcq7RxtKWH9EaVYTrmYqZtWi5MSTa8fwJtAO7WT
+	 T2TfSpuT7pgO0TgWyCl1ZvCk5RrjjNlNRm09WNB8cxUrq9WpOGe1YZZJk+LnskJtbY
+	 g22HonKC5rtM0uGyyQOhj6/wp3vATBnrm3ubmWHjtICJAoEa1KFdJ+Qq13VBLM2IVt
+	 D/RrZVTiIPhmYe+TiszPcybCo0H3NQsdP5M8LDHn34cHH0fTIs4dKwhrs9aAKWuv+B
+	 bnf1MoEjfmHRaa2F3Udo8KZdTtAzYPSgtHFzpZgcKCbt9jTjtJmejxbQ+aiQ1p95qN
+	 L3enKTirOZKsg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jasowangio@gmail.com,
-	eperezma@redhat.com,
-	virtualization@lists.linux.dev,
+	abelvesa@kernel.org,
+	sboyd@kernel.org,
+	bmasney+clk@redhat.com,
+	jbrunet+clk@baylibre.com,
+	Frank.Li@nxp.com,
+	linux-clk@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] vdpa: octeon_ep: add missing MODULE_DEVICE_TABLE()
-Date: Mon, 19 Oct 2026 09:49:16 -0400
-Message-ID: <20261019135441.1420968-265-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] clk: imx: imx8qxp: add missing MODULE_DEVICE_TABLE()
+Date: Mon, 19 Oct 2026 09:49:17 -0400
+Message-ID: <20261019135441.1420968-266-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,9 +62,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 346da62d9f9ccca81cf279c361137d1fe2fe0c7f ]
+[ Upstream commit cd21fdcbef3fb32136f72075ab668b075423b3f6 ]
 
-The driver has a match table for the pci bus wired into its driver
+The driver has a match table for the of bus wired into its driver
 structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
 Add the missing MODULE_DEVICE_TABLE() entry so module alias information
@@ -70,387 +76,346 @@ the driver registration structure, and the missing module alias
 publication.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260705002546.85004-1-pengpeng@iscas.ac.cn>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Link: https://patch.msgid.link/20260705001705.70400-1-pengpeng@iscas.ac.cn
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The one-line
-`MODULE_DEVICE_TABLE()` addition belongs here: the Octeon vDPA PCI IDs
-already exist, but they are not published for autoload.
+## Phase 1: Commit message forensics
 
----
+**Step 1.1 — Subject**
+Record: **[clk/imx]** **[add]** missing `MODULE_DEVICE_TABLE()` so the
+i.MX8QXP SCU clock driver’s OF match table is exported as module
+aliases.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[vdpa/octeon_ep] [add] [export the existing PCI match table
-via MODULE_DEVICE_TABLE so userspace can autoload the module]**
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Verified from mainline `346da62d9f9cc` (`git log -1 --format=fuller`):
-
+**Step 1.2 — Tags**
+Record:
+- `Reviewed-by: Brian Masney <bmasney@redhat.com>`
+- `Link:
+  https://patch.msgid.link/20260705001705.70400-1-pengpeng@iscas.ac.cn`
 - `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Signed-off-by: Michael S. Tsirkin <mst@redhat.com>` (virtio/vDPA
-  maintainer; applied the patch)
-- `Message-ID: <20260705002546.85004-1-pengpeng@iscas.ac.cn>`
+- `Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>` (clk/imx
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Acked-by:`, or `Cc:
+  stable` (absence of the last two is expected for this review)
 
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
-`Link:`, or `Cc: stable`. Absence of `Fixes:` / `Cc: stable` is expected
-for this review and is not a negative.
+**Step 1.3 — Body**
+Record: The driver already has `imx8qxp_match[]` wired as
+`of_match_table`, but it never called `MODULE_DEVICE_TABLE(of, …)`.
+Without that, modpost/`file2alias` does not emit `of:N*T*C…` aliases, so
+udev/`modprobe`/initramfs tools cannot autoload `clk-imx-scu` from DT
+compatible strings. Failure mode: modular `CONFIG_CLK_IMX8QXP=m` does
+not bind on `fsl,scu-clk` / `fsl,imx8qxp-clk` / `fsl,imx8qm-clk` /
+`fsl,imx8dxl-clk`. The author presents this as a source-level
+correctness fix, not a live hardware repro. No version range is given.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** `octep_pci_vdpa_map[]` is wired to `octep_pci_vdpa.id_table`,
-  but is not exported with `MODULE_DEVICE_TABLE()`.
-- **Symptom:** `depmod`/`modpost` do not emit `pci:v0000177Dd0000...`
-  aliases, so udev/kmod will not autoload `octep_vdpa` when the
-  Cavium/Marvell DPU appears.
-- **Version info:** none in the message. Driver introduced in this tree
-  by `8b6c724cdab85` (in v6.11; present in v6.12).
-- **Root cause:** missing module-alias publication, not a runtime logic
-  error.
-
-The “source-level fix / no dynamic hardware reproduction” paragraph is
-in the original lore submission (not a stable-prep marker). MST asked
-what it meant, then applied the patch unchanged.
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Not disguised.** It is an explicit autoload/hardware-binding
-fix, same class as adding PCI IDs.
+**Step 1.4 — Hidden bug fix?**
+Record: Not disguised. It is an explicit completeness fix for module
+alias publication. That is a real functional bug for `=m` builds, not
+style cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `drivers/vdpa/octeon_ep/octep_vdpa_main.c` (**+1 / -0**)
-- Function/object: `octep_pci_vdpa_map[]` (table definition; no function
-  body change)
-- Scope: **single-file surgical fix**
+**Step 2.1 — Inventory**
+Record: One file, `drivers/clk/imx/clk-imx8qxp.c`, **+1 / -0**. One
+insertion after `imx8qxp_match[]`. Surgical single-file change.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** PCI IDs exist and are used for bind **if the module is
-  already loaded**. No `MODULE_DEVICE_TABLE`, so no `modules.alias`
-  entries.
-- **After:** Same IDs plus `MODULE_DEVICE_TABLE(pci,
-  octep_pci_vdpa_map)`, which creates the
-  `__mod_pci__octep_pci_vdpa_map_device_table` alias consumed by
-  `scripts/mod/file2alias.c` (`do_pci_entry()`).
-- Path: **module build / autoload**, not probe/error/init runtime logic.
+**Step 2.2 — Code flow**
+Record: **Before:** `imx8qxp_match[]` is only referenced by
+`imx8qxp_clk_driver.driver.of_match_table` (bind-time matching if the
+module is already loaded). **After:** the same table is also aliased for
+modpost (`__mod_device_table__kmod_*__of__imx8qxp_match`), which
+produces OF module aliases. No probe, init, or error-path logic changes.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **[Hardware enablement / missing device-ID publication]**
-Mechanism: `MODULE_DEVICE_TABLE` is empty when `!MODULE`
-(`include/linux/module.h`). This driver is **module-only** (`depends on
-m`), so the missing export is always the live path. Sibling vDPA PCI
-drivers already have it (`ifcvf_main.c`, `snet_main.c`).
+**Step 2.3 — Bug mechanism**
+Record: **Hardware/module-autoload omission** (same class as missing
+device IDs). The OF table existed; aliases were not published.
+`MODULE_DEVICE_TABLE` is the required export so
+`scripts/mod/file2alias.c` `do_of_entry()` can emit aliases.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: **Obviously correct, one standard line, no API/locking/refcount
-change.** Regression risk is **very low**. MST applied it to mainline.
+**Step 2.4 — Fix quality**
+Record: Obviously correct: same pattern as `clk-imx8mm.c`
+(`MODULE_DEVICE_TABLE(of, imx8mm_clk_of_match)`) and the sibling LPCG
+driver. Minimal, no API/data-structure change. Regression risk is
+essentially none: for `=y` the extra alias symbol is unused at runtime;
+for `=m` it only adds `modules.alias` entries.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: Table and `pci_driver` come from **`8b6c724cdab85`** (`virtio:
-vdpa: vDPA driver for Marvell OCTEON DPU devices`, Srujana Challa,
-2024-06-14; committed 2024-07-09). **Never had `MODULE_DEVICE_TABLE`.**
-Present since v6.11.
+**Step 3.1 — Blame**
+Record: Match table introduced in `c2cccb6d0b33b` (2018, original
+driver). Modular build introduced in `e0d0d4d86c766` (“Support building
+i.MX8QXP clock driver as module”, 2020-08-22, first in **v5.9**). That
+is when `MODULE_DEVICE_TABLE` became necessary and was omitted. Bug is
+long-standing, not recent.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: **No `Fixes:` tag.** Buggy omission is the original driver
-commit above. `git merge-base --is-ancestor 8b6c724cdab85 HEAD` →
-**yes**.
+**Step 3.2 — Fixes: tag**
+Record: None. The introducing commit is `e0d0d4d86c766`; it is an
+ancestor of this HEAD.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record (this tree, `-- drivers/vdpa/octeon_ep/octep_vdpa_main.c`):
-- `b3175ec5209b8` mailbox signature
-- `6e950ebc7da41` PF→VF mailbox address
-- `f655550322469` SR-IOV refcount leak
-- `8b6c724cdab85` driver introduction
+**Step 3.3 — File history**
+Record: Immediate neighbor `e89485455ac49` (`clk: imx: imx8qxp-lpcg: add
+missing MODULE_DEVICE_TABLE()`) is the same author/pattern on the LPCG
+sibling. Independent 1-line fix; this patch does not depend on it. Other
+recent file history (`aadb7d1f2ca0f` softdep on `scu_pd`) is unrelated.
 
-No later commit in this tree adds `MODULE_DEVICE_TABLE`. Standalone; not
-patch X/Y.
+**Step 3.4 — Author**
+Record: Pengpeng Hou submitted a cluster of clk `MODULE_DEVICE_TABLE`
+additions (imx8qxp, imx8qxp-lpcg, mediatek mt6735). Not the clk/imx
+maintainer. Maintainer Abel Vesa applied it; Brian Masney reviewed.
 
-**Step 3.4: CHECK THE AUTHOR’S OTHER COMMITS**
-Record: Pengpeng Hou submitted a July 2026 batch of the same one-line
-fix. Same pattern already **in this 6.12 tree**: `877e99535dfb9` `can:
-ctucanfd: add missing MODULE_DEVICE_TABLE()` (upstream `d937bdb244a75`,
-with `Cc: stable`). Mainline also has `7eeda5e248727` `vdpa: alibaba:
-add missing MODULE_DEVICE_TABLE()`. Author is not the vDPA maintainer;
-MST took the octeon_ep patch.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: **None.** Uses existing table name and `MODULE_DEVICE_TABLE()`.
-`git show 346da62d9f9cc | git apply --check` → **CLEAN APPLY**. Later
-mainline commits (`3e4cddec63db5`, `6519ca235131c`) do not touch this
-site.
+**Step 3.5 — Dependencies**
+Record: None. Needs only `imx8qxp_match[]` and `MODULE_DEVICE_TABLE`
+from `<linux/module.h>`, both present. Standalone.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing list / external research
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c 346da62d9f9cc` →
-  https://patch.msgid.link/20260705002546.85004-1-pengpeng@iscas.ac.cn
-- `b4 dig -a`: **v1 only** (2026-07-05)
-- Thread: author patch + MST reply (“what does this paragraph mean?”
-  about the source-level boilerplate). **No NAK, no stable request, no
-  risk flags.** Applied 2026-08-19.
+**Step 4.1 — Original discussion**
+Record: `b4 dig -c cd21fdcbef3fb` →
+https://patch.msgid.link/20260705001705.70400-1-pengpeng@iscas.ac.cn
+`b4 dig -a`: single **v1**, no later revisions.
+Thread (gnuweeb mirror; lore.kernel.org returned 403): Brian Masney
+`Reviewed-by`; Abel Vesa “Applied, thanks!” as `cd21fdcbef3fb`. No NAK,
+no stable nomination, no risk flags.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included Marvell reviewers
-`schalla@marvell.com`, `vattunuru@marvell.com`; MST; Jason Wang; Xuan
-Zhuo; Eugenio Pérez; `virtualization@lists.linux.dev`. **Subsystem
-maintainer applied it.**
+**Step 4.2 — Recipients (`b4 dig -w`)**
+Record: Abel Vesa, Peng Fan, Stephen Boyd, Michael Turquette, Frank Li,
+Sascha Hauer, Fabio Estevam, linux-clk, imx@lists.linux.dev, linux-arm-
+kernel. Correct maintainers and lists.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: **No user/syzbot/bugzilla report.** Evidence is the match table
-vs missing export. Same class as PCI ID additions.
+**Step 4.3 — Bug report**
+Record: No `Reported-by` / syzbot / bugzilla. Evidence is the match
+table vs missing export. Pull text for clk-imx 7.3 lists “Add missing
+MODULE_DEVICE_TABLE() declarations for i.MX8QXP clock drivers.”
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Same-day one-line series (cadence PCI, tegra CEC, ixp4xx,
-most_usb, imx8qxp, ctucanfd, alibaba vdpa, this driver). Each is self-
-contained.
+**Step 4.4 — Series**
+Record: Standalone `[PATCH]`, not `N/M`. Sibling LPCG patch is parallel
+and not a prerequisite.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: No octeon_ep-specific stable-list hit for this subject. Lore
-HTTP fetch returned 403; search did not show a prior reject. Related
-ctucanfd patch **did** go to this 6.12 tree with `Cc: stable`.
+**Step 4.5 — Stable list**
+Record: gnuweeb `/stable/?q=imx8qxp+MODULE_DEVICE_TABLE` did not show a
+dedicated discussion of this patch (hits were unrelated imx8 noise).
+lore.kernel.org/stable returned 403.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code semantics
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: No function body change. Objects: `octep_pci_vdpa_map`,
-`octep_pci_vdpa`, `octep_vdpa_probe`.
+**Step 5.1 — Functions**
+Record: No function body changed. Data: `imx8qxp_match[]`. Related:
+`imx8qxp_clk_driver`, `imx8qxp_clk_init()`, `imx8qxp_clk_probe()`.
 
-**Step 5.2: TRACE CALLERS**
-Record: `octep_vdpa_probe` is only the PCI `.probe` callback
-(`module_pci_driver`). Invoked by PCI core on match **after** the module
-is loaded. Callers of the *new* macro are `modpost`/`file2alias.c` at
-build time.
+**Step 5.2 — Callers**
+Record: `imx8qxp_clk_init()` (`module_init`) →
+`platform_driver_register(&imx8qxp_clk_driver)`. Probe runs when OF
+compatible matches. Autoload is what was broken: without aliases the
+module may never load, so probe never runs.
 
-**Step 5.3: TRACE CALLEES**
-Record: Probe dispatches to `octep_vdpa_probe_vf` /
-`octep_vdpa_probe_pf`. Unchanged.
+**Step 5.3 — Callees**
+Record: Probe calls `imx_clk_scu_init()`, many
+`imx_clk_scu`/`imx_clk_scu2`, `of_clk_add_hw_provider()`. Unchanged.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: PCI enumeration of Cavium IDs
-0xb900/0xb903/0xba00/0xba03/0xbd00/0xbd03 (`PCI_VENDOR_ID_CAVIUM`
-0x177d). Userspace-visible via hotplug/boot. Autoload is the intended
-udev path. Manual `modprobe octep_vdpa` still works without the patch.
+**Step 5.4 — Reachability**
+Record: Userspace-reachable only in the sense that missing aliases
+prevent the module from being requested. Affects i.MX8QXP/QM/DXL boards
+with `CONFIG_CLK_IMX8QXP=m`. DT compatibles: `fsl,scu-clk`,
+`fsl,imx8dxl-clk`, `fsl,imx8qxp-clk`, `fsl,imx8qm-clk`.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: In-tree vDPA PCI drivers already export tables (`ifcvf`,
-`snet`). This driver was the outlier.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** `drivers/vdpa/octeon_ep/octep_vdpa_main.c:841-857` has
-the table and `.id_table` and **no** `MODULE_DEVICE_TABLE`. Introduced
-**v6.11**, present in this **6.12.111** checkout. `git merge-base --is-
-ancestor 346da62d9f9cc HEAD` → **not in HEAD**.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply.** Surrounding lines match. No refactor of the
-table.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: **No.** `git log --grep=MODULE_DEVICE_TABLE -- drivers/vdpa/` is
-empty. Same-class ctucanfd fix is already in this tree, which shows the
-pattern is accepted here.
+**Step 5.5 — Similar patterns**
+Record: Other imx clk files already had `MODULE_DEVICE_TABLE(of, …)`
+(`clk-imx8mm.c`, `clk-imx8mn.c`, `clk-imx8mp.c`, `clk-imx8mq.c`, `clk-
+imx8-acm.c`, etc.). This file was the omission.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 6: Local tree
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **[drivers/vdpa/octeon_ep — Marvell Octeon DPU vDPA] [PERIPHERAL
-/ IMPORTANT for that hardware]**
-Not core mm/VFS. Real PCI devices; Kconfig is supported (MAINTAINERS:
-MARVELL OCTEON ENDPOINT VIRTIO DATA PATH ACCELERATOR).
+**Step 6.1 — Does the buggy code exist here?**
+Record: Local tree is **v7.3-rc4** (`git describe` =
+`v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+EXTRAVERSION=-rc4`). `CLK_IMX8QXP` is **tristate**. File has
+`imx8qxp_match[]`, `module_init`/`module_exit`, and (after this commit)
+`MODULE_DEVICE_TABLE`. The omission existed from v5.9 until this 7.3-era
+commit. `git merge-base --is-ancestor cd21fdcbef3fb HEAD` is true — the
+fix is already in this checkout; the underlying driver and match table
+are present.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Driver is young (2024) but present for the life of 6.12. Modest
-churn; mailbox/SR-IOV fixes already in this tree.
+**Step 6.2 — Backport difficulty**
+Record: Clean apply: one line after the sentinel of `imx8qxp_match[]`.
+No refactor of that region.
 
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-/hardware-specific** — hosts with Marvell/Cavium CN10x
-DPU vDPA (`CONFIG_OCTEONEP_VDPA=m`). Not universal.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Trigger is **every boot/hotplug** of those PCI devices if the
-module is not preloaded. Unprivileged users do not trigger a crash; they
-just get a **non-bound device**. Kconfig `depends on m` means there is
-**no built-in fallback**.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **Failure mode: module does not autoload; vDPA offload does not
-come up until manual modprobe.** **Severity: MEDIUM** (hardware non-
-function, not oops/corruption). Same user-visible class as missing PCI
-IDs.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** medium for Octeon DPU users (driver actually attaches on
-  device appearance).
-- **Risk:** very low (one `MODULE_DEVICE_TABLE` line, no runtime
-  change).
-- **Ratio:** **favorable.** Official rule: *“It must either fix a real
-  bug that bothers people or just add a device ID.”*
+**Step 6.3 — Related fixes already here?**
+Record: Sibling LPCG table already has `MODULE_DEVICE_TABLE`. No earlier
+equivalent for `clk-imx8qxp.c`. No competing fix.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 7: Subsystem / maintainer
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 7.1**
+Record: **clk / i.MX SoC clocks**. **IMPORTANT** for i.MX8QXP/QM/DXL
+(clock provider for the SoC), not core mm/vfs. Peripheral relative to
+the whole kernel, critical on those boards.
 
-**FOR:**
-- Real autoload bug: IDs exist, aliases are not generated.
-- Module-only driver (`depends on m`) — autoload is the normal load
-  path.
-- +1 line, standard macro, clean apply on 6.12.111.
-- Same omission since driver introduction (in this tree).
-- Sibling vDPA PCI drivers already export tables.
-- Virtio maintainer applied it upstream.
-- Same-class patch already in this 6.12 tree (`can: ctucanfd`).
-- Matches the documented device-ID exception.
+**Step 7.2**
+Record: Actively maintained (`clk-imx-7.3` pull by Abel Vesa). The
+missing alias is old; the rest of the file is mature.
 
-**AGAINST:**
-- Not a crash/UAF/security issue.
-- Niche DPU hardware; no distro bug report.
-- Manual `modprobe` is a workaround.
-- Kconfig notes firmware/emulation must be running first (PCI presence
-  still implies the device is enumerable).
+---
 
-**UNRESOLVED:** Direct lore.kernel.org HTTP was 403; thread recovered
-via `b4 dig` mbox. No stable-list discussion found.
+## Phase 8: Impact and risk
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one-line, maintainer-
-   applied.
-2. Fixes a real bug that affects users? **PASS** — broken autoload for
-   existing PCI IDs.
-3. Important issue? **PASS** under the **device-ID / hardware-
-   enablement** exception (not a crash).
+**Step 8.1 — Who is affected**
+Record: **Platform/config-specific**: NXP i.MX8QXP/QM/DXL with
+`CONFIG_CLK_IMX8QXP=m`. Built-in (`=y`) is unchanged.
+
+**Step 8.2 — Trigger**
+Record: Modular kernel + DT node with those compatibles + autoload via
+aliases (udev, `request_module`, dracut/mkinitramfs). Common for distro
+`=m` configs. Unprivileged users do not trigger it; boot/device-probe
+does.
+
+**Step 8.3 — Failure mode**
+Record: Module never autoloads → SCU clocks never register → consumers
+fail to probe (UART, net, display, etc.). **MEDIUM–HIGH** on affected
+boards; not a panic/UAF. For `=y`, **no effect**.
+
+**Step 8.4 — Risk vs benefit**
+Record: **Benefit:** restores documented autoload for a supported
+tristate clock driver. **Risk:** very low (1 line, no runtime path).
+Ratio is strongly favorable.
+
+---
+
+## Phase 9: Synthesis
+
+**Step 9.1 — Evidence**
+
+FOR:
+- Real bug: OF match table not exported; aliases missing for a
+  `tristate` driver with `module_init`.
+- Same pattern already used throughout `drivers/clk/imx/`.
+- 1-line, obviously correct; maintainer applied; Reviewed-by Brian
+  Masney.
+- Zero runtime change when built-in.
+- Analogous to device-ID additions (exception category: make existing
+  hardware/driver work).
+- Bug present since v5.9 modular support (`e0d0d4d86c766`).
+- Applies cleanly to this tree’s `imx8qxp_match[]`.
+
+AGAINST:
+- No crash/syzbot/user report; source-level only.
+- Impact limited to `CLK_IMX8QXP=m` (many images use `=y`).
+- Not a security/UAF/deadlock class bug.
+
+UNRESOLVED:
+- Could not fetch lore.kernel.org (403); used b4 + gnuweeb/LKML mirrors
+  instead.
+- No dedicated stable-list thread found.
+
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — 1-line standard macro;
+   reviewed and applied by clk/imx.
+2. Real bug affecting users? **PASS** — `=m` autoload/initramfs alias
+   generation is broken without it.
+3. Important? **PASS** — SoC clock provider failing to load breaks the
+   platform; severity is functional, not panic, but that is enough for
+   this class of fix.
 4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — publishes IDs the driver already
-   matches.
-6. Can apply to the local tree? **PASS** — buggy code present; `git
-   apply --check` clean.
+5. No new features/APIs? **PASS** — publishes existing table.
+6. Can apply to this tree? **PASS** — match table, `linux/module.h`, and
+   modular Kconfig are all here.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Device ID / module-alias publication for an existing driver**
-(stable-rules “or just add a device ID”).
+**Step 9.3 — Exception category**
+Record: Closest match is **device-ID / module-alias enablement** for an
+existing driver (not a new driver).
 
-**Step 9.4: MAKE YOUR DECISION**
-Backport. The local 6.12 tree has the driver without aliases; the fix is
-the documented, low-risk hardware-enablement class.
+**Step 9.4 — Decision**
+This tree is mainline **7.3-rc4**. The driver, OF table, and tristate
+module support are here; the fix is a one-line alias export with no
+runtime risk. That meets stable criteria for this checkout.
 
 ---
 
-### What the commit solves for this tree
+### Problem and why it matters
+`clk-imx8qxp.c` can be `=m` since v5.9 and already matches DT via
+`imx8qxp_match[]`, but never published that table with
+`MODULE_DEVICE_TABLE()`. Users with modular i.MX8QXP/QM/DXL kernels do
+not get `of:` aliases, so the clock module may not autoload and
+consumers never get clocks.
 
-On 6.12, `octep_vdpa` can bind only if something already loaded it. The
-PCI table is complete; `MODULE_DEVICE_TABLE` is missing, so udev never
-loads `octep_vdpa` for CN103K/CN105K/CN106K PF/VF IDs. Adding the macro
-generates aliases at module build time and does not change probe logic.
+### Stable rules
+Small, obviously correct, no new API, real autoload bug, applies to this
+tree.
 
 ### Risk vs benefit
-
-Benefit is that those DPUs attach on boot/hotplug. Risk is negligible.
-This is the same pattern already taken for `ctucanfd` in this tree.
+Benefit is correct module loading on a supported config; risk is
+negligible.
 
 ### Concerns
-
-None that block backport: no prerequisites, no conflicts, no new API. No
-`Fixes:`/`Cc: stable` on the original, which is why it needs this
-review.
+No hardware repro and no `Fixes:` tag; neither blocks this pattern.
+Sibling LPCG patch is independent.
 
 ---
 
-### Verification
-- **[Phase 1]** `git log -1 --format=fuller 346da62d9f9cc`: SOB Pengpeng
-  Hou + MST; Message-ID as given; no Fixes/Cc stable/Reported-by.
-- **[Phase 1]** `git describe HEAD` / `make kernelversion` / Makefile:
-  **pending-6.12, 6.12.111**.
-- **[Phase 2]** Diff is +1 `MODULE_DEVICE_TABLE(pci,
-  octep_pci_vdpa_map)` after the ID table.
-- **[Phase 2]** `include/linux/module.h:251-256`: macro emits the alias
-  only for `MODULE`.
-- **[Phase 2]** `scripts/mod/file2alias.c:441-459`: `do_pci_entry()`
-  builds `pci:vNdN...` aliases.
-- **[Phase 2]** `drivers/vdpa/Kconfig:133-142`: `OCTEONEP_VDPA` is
-  `tristate` **`depends on m`**.
-- **[Phase 3]** `git blame -L 841,863`: table from `8b6c724cdab85`;
-  never had MODULE_DEVICE_TABLE.
-- **[Phase 3]** `git merge-base --is-ancestor 8b6c724cdab85 HEAD` → yes;
-  vs v6.11 and v6.12 → in both.
-- **[Phase 3]** `git merge-base --is-ancestor 346da62d9f9cc HEAD` →
-  **not in this tree**.
-- **[Phase 3]** `git log --oneline -20 --
-  drivers/vdpa/octeon_ep/octep_vdpa_main.c`: four commits; none add the
-  macro.
-- **[Phase 3]** `git show 346da62d9f9cc | git apply --check` → **CLEAN
-  APPLY**.
-- **[Phase 3]** `877e99535dfb9` in this tree: same-author
-  MODULE_DEVICE_TABLE pattern already backported.
-- **[Phase 4]** `b4 dig -c 346da62d9f9cc`: lore URL; v1 only; recipients
-  include MST and Marvell; MST question only, then apply.
-- **[Phase 4]** `/tmp/octep_mdt.mbox`: 2 messages; no NAK.
-- **[Phase 4]** lore.kernel.org/stable search: no octeon_ep discussion
-  found (lore HTTP 403 on direct fetch).
-- **[Phase 5]** `grep octep_vdpa_probe`: only PCI `.probe` in this file.
-- **[Phase 5]** `ifcvf`/`snet` already have `MODULE_DEVICE_TABLE(pci,
-  ...)`.
-- **[Phase 6]** Current file lines 841–863: table + driver, **no**
-  MODULE_DEVICE_TABLE.
-- **[Phase 6]** Later origin/master commits do not touch this hunk.
-- **[Phase 7]** MAINTAINERS: `drivers/vdpa/octeon_ep/` listed; reviewers
-  schalla/vattunuru.
-- **[Phase 8]** IDs in `octep_vdpa.h`:
-  0xb900/0xb903/0xba00/0xba03/0xbd00/0xbd03; vendor
-  `PCI_VENDOR_ID_CAVIUM` 0x177d.
-- **[Phase 9]** `Documentation/process/stable-kernel-rules.rst:15`: “fix
-  a real bug … **or just add a device ID**”.
-- **UNVERIFIED:** Live udev/hardware reproduction (author did not claim
-  it; source-level evidence is sufficient). Direct lore.kernel.org page
-  fetch (403); thread recovered via b4.
+Verification:
+- [Phase 1] Parsed tags: Reviewed-by Brian Masney; Link
+  patch.msgid.link/20260705001705.70400-1-pengpeng@iscas.ac.cn; SOBs Hou
+  and Abel Vesa; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +1 line `MODULE_DEVICE_TABLE(of, imx8qxp_match)` in
+  `drivers/clk/imx/clk-imx8qxp.c`; no function body change
+- [Phase 3] `git blame`: table from `c2cccb6d0b33b` (2018); modular
+  support `e0d0d4d86c766` (v5.9) introduced the need for aliases
+- [Phase 3] `git merge-base --is-ancestor e0d0d4d86c766 HEAD`: yes; `git
+  merge-base --is-ancestor cd21fdcbef3fb HEAD`: yes
+- [Phase 3] Neighbor `e89485455ac49` is independent LPCG
+  MODULE_DEVICE_TABLE add
+- [Phase 4] `b4 dig -c cd21fdcbef3fb`: matched v1 at that msgid; `-a`
+  only v1; `-w` listed clk/imx and linux-clk recipients
+- [Phase 4] gnuweeb thread: Masney Reviewed-by; Vesa Applied as
+  cd21fdcbef3fb; no NAK
+- [Phase 4] lore.kernel.org fetch: 403; used mirrors
+- [Phase 5] `CLK_IMX8QXP` is tristate in `drivers/clk/imx/Kconfig`;
+  built as `clk-imx-scu` via Makefile; `module_init(imx8qxp_clk_init)`
+  registers the platform driver
+- [Phase 5] `scripts/mod/file2alias.c` `do_of_entry()` emits
+  `of:N*T*C<compatible>` from MODULE_DEVICE_TABLE
+- [Phase 5] Sibling `clk-imx8mm.c` already uses the same macro
+- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4; file currently contains the added line
+- [Phase 6] Apply difficulty: one line after existing `imx8qxp_match[]`
+- [Phase 8] Failure mode: modular clock provider not autoloaded;
+  severity MEDIUM–HIGH on those SoCs, none if `=y`
+- UNVERIFIED: live udev/initramfs failure on hardware (author did not
+  claim a runtime repro); stable-list discussion beyond the gnuweeb
+  search
 
 **YES**
 
- drivers/vdpa/octeon_ep/octep_vdpa_main.c | 1 +
+ drivers/clk/imx/clk-imx8qxp.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vdpa/octeon_ep/octep_vdpa_main.c b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-index 9aac6dbdaf3aa..e5dbabff5e81b 100644
---- a/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-+++ b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-@@ -898,6 +898,7 @@ static struct pci_device_id octep_pci_vdpa_map[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_CAVIUM, OCTEP_VDPA_DEVID_CN103K_VF) },
- 	{ 0 },
+diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
+index 3ae162625bb1a..15b08fc02f920 100644
+--- a/drivers/clk/imx/clk-imx8qxp.c
++++ b/drivers/clk/imx/clk-imx8qxp.c
+@@ -337,6 +337,7 @@ static const struct of_device_id imx8qxp_match[] = {
+ 	{ .compatible = "fsl,imx8qm-clk", &imx_clk_scu_rsrc_imx8qm, },
+ 	{ /* sentinel */ }
  };
-+MODULE_DEVICE_TABLE(pci, octep_pci_vdpa_map);
++MODULE_DEVICE_TABLE(of, imx8qxp_match);
  
- static struct pci_driver octep_pci_vdpa = {
- 	.name     = OCTEP_VDPA_DRIVER_NAME,
+ static struct platform_driver imx8qxp_clk_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
