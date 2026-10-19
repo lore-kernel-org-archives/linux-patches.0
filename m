@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16709549FE8;
-	Mon, 19 Oct 2026 13:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774934D3BDF;
+	Mon, 19 Oct 2026 13:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418198; cv=none; b=qd0ydzIkviI8GkcUxDeYsqpADttWqADwhfYKojWGdiG8S9DbNGCGT/veU5/SMrg9Ogq3UCdPDsz9zXHtaDxKGGHEuNKGQs+/npMQBiNZMZciiRYbh4IBmDCKr0bm4PEBQ0UKk5Gur0MWg+5snAOg1RzEPkg5nWFLvZdtVx18J/Q=
+	t=1792418199; cv=none; b=QboJ/Qx1fokS/2eRJbsA25G2AfIjIwoTVtEKUG8d/An6wtQcAmShf15d2KcR19rUb60DPJQD2XTxET/ArMpy3wzyo9nJ1jNqnWiu3N0LcMXD53k0sfwFwFXv1foCDOJUBU/0vJzjv32X4me/ZWsV7Wb/2TRcwTC7zuoqUVkhOKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418198; c=relaxed/simple;
-	bh=oo8OmNd7PFkwcBm9mFfdSsWqNFY7K44HIBsli4h8vwE=;
+	s=arc-20240116; t=1792418199; c=relaxed/simple;
+	bh=DGeyJUKNG/Zud4VeFVjsUaBEmqmQzHiz7nCp348GZvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XXeLOO5R2ZQW267FKZyk0pu3viFunoSnPeKbC/fWvXtgWPOlJwjgYoAKX0z5w3OcKLea9QGbuQx/ylj/hiWPEBc5uwW2b7Sw9G/jhR4kQvRBaI10J3MY5cNz0l5pMd2rwUOGOSZ0tPv/nWIRtGey5JuWqs0eBeO596mN3R/AUU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OMBS8j6C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ueMkY7GzYE8vIpmFW3kaNFuFWrLZElm2dStCQe8Jrm6fpEaXnlH+ivCJeYoLPlGVKyjRIPbTLnwpWBlcDnTAnb0s4c6PvtxlTBGfSYoLCHS+0+E6aTEBB3CPvMs1G/TfCTuOfdeThLnyJy8wwwgKKbGDg9wXz8f4n6IvctYQbcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HAZSqTT4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OMBS8j6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B181F000C5;
-	Mon, 19 Oct 2026 13:56:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HAZSqTT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1881F000C6;
+	Mon, 19 Oct 2026 13:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418196;
-	bh=cU4XMLCf+ejcttphqk7t+RlgvoU6IylGaxO6JhCgIaA=;
+	s=k20260515; t=1792418197;
+	bh=ab8K1Llg3UAFspOW+KyCke1prYK5tm9fieHRIDRqQcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OMBS8j6C5rqwdXSuduRYec0+wmo4cDAw9ONdS5AoZ+SdiWi91kQpGpLosNLv+XHtG
-	 II1QNXtU5xqUEXEgpEpk2F27/WEi0zxlo2a8WQskTEOD38qs0o9XEKv42PVZIkucxU
-	 Aq6wAjNFeh0jhy+Bq37hd82WkXrxg3I6qirlSXakqoQ3WjD9SsbvRo8jvSaN0fXFpK
-	 jsp7enxbRPQPmSU9JUftZT6CcFv8tMI6J6LXg+YTAkiatAtuVHLhpijS3aXcwEqvYQ
-	 m2HZuo4QGHxiRYlyBjziczeilZwZZBbxYCH3x4Bk2TcAP/OZIQdXIcjKFSFO4I8Yue
-	 d1SDhc6ReL5pQ==
+	b=HAZSqTT4SSHnZtvrc8unzgvs3tRVtEv2oYsaoPNkGNBAQYvCjCB+wCxzmhNqfUxIT
+	 Hu9URr83A5B5aeaAnHKCZx1q967VLLIIpPHSwrNB595LVyLBvpd4XxBd7P/GSCwSmZ
+	 Aa3UaHqeG9J43VfERhimebWN3mAtkdC6kUiPyv4CPnKCXK7C4Lxd7iZ7+TwglwHgF7
+	 kUyRE1hmBBb9pM/Pm2IXAuaykK4jmNFtuxpWRs7JBNiQZjtnjeaVeEe2ocFLGRcQVa
+	 IlpGYbbJZ9NtC0Iae+RFOiDBicrNpZzwKO1whheAJQqyFSbPR843TV4boMdcjM5VW1
+	 Nvt2Voe9baVLg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Milo Chen <cmh79479@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	andreas.noever@gmail.com,
+	westeri@kernel.org,
+	YehezkelShB@gmail.com,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Limit mic boost on Positivo N15RPE-S
-Date: Mon, 19 Oct 2026 09:46:11 -0400
-Message-ID: <20261019135441.1420968-80-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] thunderbolt: xdomain: Notify peers after enumeration
+Date: Mon, 19 Oct 2026 09:46:12 -0400
+Message-ID: <20261019135441.1420968-81-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,407 +55,442 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Milo Chen <cmh79479@gmail.com>
 
-[ Upstream commit 253010acfc8ad908446347b30a613032d1517bb5 ]
+[ Upstream commit e027dba038f0008df9bc9575f5c3e803e90636c6 ]
 
-The internal mic boost on the Positivo N15RPE-S is too high.
-Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
-to limit the gain.
+Service drivers may register local XDomain properties while discovery is
+still in progress. This can cause the properties changed notification to be
+sent before the peer is ready to act on it.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://patch.msgid.link/20260805154518.19093-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If the peer has already read the local property block before the service
+was registered, it may keep using the old property generation and miss the
+newly registered service. With ThunderboltIP this can leave the network
+service half-discovered after a warm reboot and the login request
+eventually times out.
+
+Queue another properties changed notification after the XDomain reaches
+ENUMERATED so the peer can re-read the final local properties.
+
+Signed-off-by: Milo Chen <cmh79479@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). This is a one-line
-Realtek HDA PCI quirk for a laptop whose driver and existing mic-boost
-fixup are already in this tree.
+The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+candidate is a one-line Thunderbolt XDomain handshake fix: after
+discovery reaches `ENUMERATED`, send another properties-changed
+notification so a peer can pick up services registered during discovery.
+That matches a real ThunderboltIP failure after warm reboot, and the
+surrounding helpers already exist here.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ALSA hda/realtek] [Limit] [apply existing
-ALC269_FIXUP_LIMIT_INT_MIC_BOOST to Positivo N15RPE-S because internal
-mic boost is too high]
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Signed-off-by: Edson Juliano Drosdeck (author)
-- Link: https://patch.msgid.link/20260805154518.19093-1-
-  edson.drosdeck@gmail.com
-- Signed-off-by: Takashi Iwai (ALSA maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable
-- Ignore pipeline markers (none present on the upstream commit
-  `253010acfc8ad`)
+**Step 1.1: PARSE THE SUBJECT LINE**
+- Record: `[thunderbolt: xdomain:] [Notify] [send properties-changed to
+  peers once XDomain discovery reaches ENUMERATED]`
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: internal microphone boost on Positivo N15RPE-S is too high
-- Symptom: excessive gain / noisy internal mic (the fixup comment says
-  levels 2 and 3 are too noisy)
-- Failure mode: hardware-specific unusable/noisy capture, not a kernel
-  crash
-- Root cause: this PCI SSID is not in the quirk table, so the existing
-  boost limiter is not applied
-- Version info: none stated
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- Record:
+  - `Signed-off-by: Milo Chen <cmh79479@gmail.com>` (author)
+  - `Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>`
+    (Thunderbolt maintainer; applied the patch)
+  - No `Fixes:`
+  - No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:` /
+    `Link:` / `Cc: stable`
+  - Absence of `Fixes:` / `Cc: stable` is expected for this review and
+    is not a negative signal
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit hardware quirk: map
-SSID `0x2782:0xa128` to an existing fixup.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+- Record:
+  - **Bug:** Service drivers may register local XDomain properties while
+    discovery is still running. The properties-changed notification can
+    go out before the peer can act on it.
+  - **Symptom:** Peer keeps an old property generation and misses the
+    new service. With ThunderboltIP, the network service stays half-
+    discovered after a **warm reboot** and the **login request times
+    out**.
+  - **Root cause:** Notification is sent too early (during discovery);
+    nothing is sent once the local host is fully enumerated.
+  - **Fix:** Queue another properties-changed notification when the
+    XDomain reaches `ENUMERATED`.
+  - **Version info:** none in the message.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+- Record: Not a disguised cleanup. The message describes a concrete
+  functional failure (ThunderboltIP login timeout) and a protocol-timing
+  fix.
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- Files: `sound/hda/codecs/realtek/alc269.c` (+1 / -0)
-- Function/table: `alc269_fixup_tbl[]`
-- Scope: single-file, one-line surgical quirk addition
+---
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: PCI SSID `0x2782:0xa128` has no match; codec uses default
-  auto-config with full internal-mic boost range
-- After: that SSID matches `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`, which at
-  probe overrides amp caps so internal-mic boost is only steps 0–1
-- Path: codec probe (`patch_alc269()` → `snd_hda_pick_fixup(...,
-  alc269_fixup_tbl, ...)`)
+## PHASE 2: DIFF ANALYSIS
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Hardware workaround] Existing
-`alc269_fixup_limit_int_mic_boost()` already limits noisy boost levels 2
-and 3. This commit only adds the PCI ID so that function runs on this
-laptop.
+**Step 2.1: INVENTORY THE CHANGES**
+- Record:
+  - File: `drivers/thunderbolt/xdomain.c` (`+1 / -0`)
+  - Function: `tb_xdomain_state_work()`
+  - Scope: single-file, one-line surgical change
 
-Verified function in this tree
-(`sound/pci/hda/patch_realtek.c:6661-6690`):
-- Runs only on `HDA_FIXUP_ACT_PROBE`
-- Walks auto-config inputs, keeps only `AUTO_PIN_MIC` with
-  `INPUT_PIN_ATTR_INT`
-- Calls `snd_hda_override_amp_caps()` with `NUM_STEPS=1`
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+- Record:
+  - **Before:** `XDOMAIN_STATE_PROPERTIES` success only sets `xd->state
+    = XDOMAIN_STATE_ENUMERATED`.
+  - **After:** same, then `tb_xdomain_queue_properties_changed(xd)`.
+  - Path: successful remote property fetch at the end of XDomain
+    discovery (normal path, not an error path).
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Quality: obviously correct; identical pattern already used for
-  Positivo ARN50, Positivo N14AP7, VAIO VJFE-CL, several ThinkPads
-- Minimal: one `SND_PCI_QUIRK` line, no API/data-structure change
-- Regression risk: very low; only SSID `0x2782:0xa128` is affected. The
-  chosen fixup is chained to `ALC269_FIXUP_THINKPAD_ACPI`, but that is
-  the same chain used by the other Positivo/VAIO limit-boost entries
-  already in this tree.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+- Record:
+  - **Category:** logic / protocol handshake correctness (missed peer
+    notification).
+  - **Mechanism:** `tb_xdomain_queue_properties_changed()` already runs
+    in `XDOMAIN_STATE_INIT` and after UUID. `tb_register_property_dir()`
+    (used by `thunderbolt-net`) also notifies via
+    `update_all_xdomains()`. If that happens while the peer is not
+    ready, or after the peer already read the old block, the peer can
+    stick on the old generation. There was no notify after local
+    discovery finished. The new call reuses the existing notify helper
+    at ENUMERATED so the peer re-reads the final block.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 2.4: ASSESS THE FIX QUALITY**
+- Record:
+  - **Quality:** Obviously correct relative to the described race. It
+    reuses `tb_xdomain_queue_properties_changed()`, which already sends
+    `PROPERTIES_CHANGED_REQUEST` with retries.
+  - **Minimal:** one call, no API/data-structure change.
+  - **Regression risk:** Low for the intended case. Extra notifies are
+    already part of the protocol; the receiver path in
+    `tb_xdp_handle_request()` treats `PROPERTIES_CHANGED_REQUEST` as
+    “re-run state work / re-read properties.”
+  - **Noted risk (code-derived, not field-confirmed):** because
+    `XDOMAIN_STATE_ENUMERATED` already re-enters `PROPERTIES` when a
+    peer notify arrives, a successful re-read will now send another
+    notify. Two Linux hosts both running this change could keep
+    exchanging property updates. No follow-up revert/fix appears in this
+    tree after the commit. Treat as theoretical unless proven in use.
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Insertion point in this tree is after `SND_PCI_QUIRK(0x2782, 0x4900,
-  "MEDION E15443", ...)` (`98b5ade3a44d8f`, 2024)
-- The buggy “missing ID” is not old code; the laptop simply was never
-  listed
-- The fixup itself dates to `3e0d611b2045b` (“ALSA: hda - Limit internal
-  mic boost for a few Asus machines”, 2013-04-22, contained in
-  v3.10-rc1) and **is an ancestor of HEAD**
+---
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Expected for a new device quirk. Not a negative
-signal.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Related commits already in this tree:
-  - `d44418f5024f6` ALSA: hda/realtek: Limit mic boost on Positivo ARN50
-    (same author, same fixup; already backported here)
-  - `86a433862912f` ALSA: hda/realtek: Limit mic boost on N14AP7 (same
-    author, same fixup; had Cc: stable)
-- Standalone: not patch X/Y. No prerequisite series.
+**Step 3.1: BLAME THE CHANGED LINES**
+- Record:
+  - Surrounding state machine: `8e1de7042596ab` (“thunderbolt: Add
+    support for XDomain lane bonding”, 2022-05-05), first in
+    **v5.19-rc1**.
+  - Notify helper and INIT/UUID notify sites: same commit.
+  - The added line is this candidate (`e027dba038f000`, Milo Chen,
+    2026-06-24).
+  - XDomain discovery protocol itself: `d1ff70241a275` (2017),
+    **v4.15-rc1**.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Edson Juliano Drosdeck has 10 commits in
-`sound/pci/hda/patch_realtek.c` on this tree, almost all Positivo/VAIO
-HDA quirks. Regular hardware-quirk contributor, not a one-off.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+- Record: No `Fixes:` tag. Not applicable. The missing notify at
+  ENUMERATED dates to the 5.19 state machine.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record:
-- Depends only on `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` and
-  `alc269_fixup_tbl[]`, both present
-- Can apply standalone as a one-line quirk in
-  `sound/pci/hda/patch_realtek.c`
-- Mainline file path `sound/hda/codecs/realtek/alc269.c` is the
-  post-6.12 HDA codec split; that path does **not** exist here.
-  Equivalent table is `alc269_fixup_tbl` in `patch_realtek.c`
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+- Record:
+  - Related: `abc27e5bfed2f` (“Allow service drivers to specify their
+    own properties”) — extra per-service properties, not required for
+    this one-line call.
+  - `308092d080852` (“Restart XDomain discovery handshake after
+    failure”) — nearby error-path change; not a prerequisite.
+  - Standalone. Not `patch X/Y`.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+- Record: Milo Chen has only this thunderbolt commit here. Applied by
+  **Mika Westerberg**, Thunderbolt maintainer.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 253010acfc8ad` → https://patch.msgid.link/20260805154518.19
-  093-1-edson.drosdeck@gmail.com
-- `b4 dig -a`: only v1; no later revision
-- Thread is two messages: the patch and Takashi Iwai “Applied to for-
-  next branch. Thanks.”
-- No NAK, no requested changes, no reviewer-flagged risk
-- No explicit Cc: stable in the thread (absence expected)
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+- Record: Depends only on `tb_xdomain_queue_properties_changed()` and
+  `XDOMAIN_STATE_ENUMERATED`, both present since 5.19. Applies
+  standalone.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To Takashi Iwai (`tiwai@suse.com`); Cc Jaroslav
-Kysela (`perex@perex.cz`), Realtek (`kailang@realtek.com`), linux-sound,
-linux-kernel. Subsystem maintainer received and applied it.
+---
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla link. Description is a hardware report from
-the same author who previously submitted verified Positivo quirks. No
-independent public bug count found.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone one-patch series. Same author’s ARN50/N14AP7 limit-
-boost quirks are the precedent; those are already in this tree.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+- Record:
+  - `b4 dig -c e027dba038f000…` →
+    https://patch.msgid.link/20260624060909.2610434-1-cmh79479@gmail.com
+  - **v1:** `[PATCH] thunderbolt: xdomain: notify peers after
+    enumeration` (From: Rqirus) —
+    https://patch.msgid.link/20260624011131.2532004-1-cmh79479@gmail.com
+  - **v2:** same diff; changelog: “Use full name in From and Signed-off-
+    by.”
+  - Mika Westerberg on v2: **“Applied to thunderbolt.git/next,
+    thanks!”**
+  - No NAK. No request for `Cc: stable` in the saved thread.
+  - lore.kernel.org HTTP fetch returned 403; discussion was recovered
+    via `b4 dig -m`.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned HTTP 403. No stable-list
-discussion verified. No evidence this was rejected for stable.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+- Record (`b4 dig -w`): To/Cc Mika Westerberg, Andreas Noever, Michael
+  Jamet, Yehezkel Bernat, linux-usb, linux-kernel. Subsystem maintainers
+  were on the original mail. Mika applied it.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+- Record: No bugzilla/syzbot/Link. The commit text is the bug report:
+  ThunderboltIP half-discovered after warm reboot, login timeout.
+  Severity from the author: networking service fails to complete
+  discovery.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: Table `alc269_fixup_tbl[]` only. Runtime function used by the
-new ID: `alc269_fixup_limit_int_mic_boost()`. Probe picker:
-`snd_hda_pick_fixup()` from `patch_alc269()`.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+- Record: Single-patch series (v1→v2, identical diff). Not part of a
+  multi-patch set.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `patch_alc269()` at `sound/pci/hda/patch_realtek.c:12416` calls
-  `snd_hda_pick_fixup(codec, alc269_fixup_models, alc269_fixup_tbl,
-  alc269_fixups)` (line 12583)
-- That is the ALC269-family codec probe path
-  (CONFIG_SND_HDA_CODEC_REALTEK)
-- Not IRQ, not syscall hot path; once at device probe
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+- Record: Web search of lore.kernel.org/stable for this subject returned
+  no relevant hits. **UNVERIFIED** that nobody asked for it on stable@;
+  no evidence it was rejected either.
 
-Step 5.3: TRACE CALLEES
-Record: `alc269_fixup_limit_int_mic_boost()` →
-`snd_hda_codec_get_pincfg()`, `snd_hda_get_input_pin_attr()`,
-`snd_hda_override_amp_caps()`. No allocation, no new locks.
+---
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace cannot trigger a crash path. The ID is matched when
-this laptop’s Realtek HDA codec is probed. Reachable for owners of
-Positivo N15RPE-S with SND_HDA_CODEC_REALTEK. Unprivileged users then
-get a usable (non-blown-out) internal mic.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` already used for many
-IDs in this tree, including:
-- `0x1c6c:0x122a` Positivo N14AP7
-- `0x2014:0x800a` Positivo ARN50
-- `0x2782:0x0214` VAIO VJFE-CL
-This is a systematic hardware pattern, not a one-off experiment.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+- Record: `tb_xdomain_state_work()` modified; calls
+  `tb_xdomain_queue_properties_changed()`; that queues
+  `tb_xdomain_properties_changed()` →
+  `tb_xdp_properties_changed_request()`.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 5.2: TRACE CALLERS**
+- Record:
+  - `tb_xdomain_state_work` is delayed work started from
+    `start_handshake()` / queue helpers; not a syscall.
+  - `tb_xdomain_queue_properties_changed` call sites: INIT (no UUID
+    needed), UUID success, and (after this patch) PROPERTIES success.
+  - `tb_register_property_dir()` is called from
+    `drivers/net/thunderbolt/main.c` (`tbnet_init`),
+    `drivers/thunderbolt/stream.c`, `drivers/thunderbolt/dma_test.c`.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- `git describe HEAD` = `p-6.12-2-gd38d58a4e0359`; `make kernelversion`
-  = 6.12.111
-- `git merge-base --is-ancestor 253010acfc8ad HEAD` → **not in this
-  tree**
-- `0xa128` is absent from `patch_realtek.c` (grep: no matches)
-- The missing-ID bug exists here: the laptop would probe without the
-  limiter
-- Fixup and table exist since well before 6.12 (fixup from v3.10)
+**Step 5.3: TRACE CALLEES**
+- Record: Notify path allocates/sends an XDomain control packet with
+  retries (`XDOMAIN_RETRIES`). Failure is logged; it does not unwind
+  enumeration.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Needs a trivial backport, not a clean git-am of the mainline
-diff:
-1. Path: `sound/hda/codecs/realtek/alc269.c` →
-   `sound/pci/hda/patch_realtek.c`
-2. Context: mainline next line is Lunnen Ground 14 (`0x2782, 0xa212`),
-   which is **not** in 6.12; insert after `0x2782, 0x4900` and before
-   `0x7017, 0x2014`
-That is the same class of adjustment used for `d44418f5024f6` (ARN50) on
-this tree.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+- Record: Reachable when two hosts do XDomain discovery over
+  Thunderbolt/USB4 (cable/peer already present, including after warm
+  reboot). Userspace does not need a special syscall; loading
+  `thunderbolt-net` during boot vs in-progress discovery is the trigger.
+  Config: `CONFIG_USB4` plus Thunderbolt networking.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No N15RPE-S entry. Nearby same-class quirks (ARN50, N14AP7) are
-present. No alternate fix for `0x2782:0xa128`.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+- Record: Same notify is already used at INIT/UUID and when property
+  dirs are registered. This fills the gap at end-of-discovery. No
+  sibling drivers needed the same hunk.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+---
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [sound/pci/hda Realtek codec] [IMPORTANT for laptop audio;
-PERIPHERAL in that only this PCI ID is affected]
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Very active: last 20 commits on `patch_realtek.c` are mostly
-more `SND_PCI_QUIRK` entries (HP, Lenovo, Samsung, MECHREVO, ASUS).
-Mature driver; this is the normal way hardware enablement/workarounds
-land.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+- Record: Yes. `drivers/thunderbolt/xdomain.c` has the PROPERTIES →
+  ENUMERATED transition. Parent of the candidate only sets `xd->state =
+  XDOMAIN_STATE_ENUMERATED` with no notify. ThunderboltIP registers
+  `"network"` via `tb_register_property_dir()` in this tree. Bug class
+  has been present since the 5.19 state machine; this tree is 7.3-rc4,
+  so the code is in-scope.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+- Record: Expected **clean apply**. Parent context around the hunk
+  matches this tree’s pre-patch source. One added line, no helpers
+  missing.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / PCI-SSID-specific: only Positivo N15RPE-S
-(`0x2782:0xa128`) with Realtek ALC269-family HDA.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+- Record: No other commit on this file addresses “notify after
+  enumeration” or the ThunderboltIP warm-reboot miss. `abc27e5bfed2f` is
+  a separate feature (per-service properties), not a substitute.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record:
-- Trigger: every boot/probe on that laptop when using the internal mic
-  at high boost
-- Common for owners of that model; zero impact elsewhere
-- Not a security trigger; not unprivileged-crash
+---
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: [Noisy / overly boosted internal mic, capture quality unusable
-at high gain] [MEDIUM for those users; LOW globally]. Not
-panic/UAF/corruption, but it is a real hardware defect the existing
-quirk is designed to fix.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: high for N15RPE-S users on 6.12 (mic works as on later
-  kernels)
-- Risk: very low (one ID, existing fixup, same pattern already
-  backported here)
-- Ratio: strongly favors backport
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+- Record: `drivers/thunderbolt/` (USB4/Thunderbolt). **IMPORTANT** for
+  USB4/TBT hosts, **PERIPHERAL** relative to mm/VFS. Affects Thunderbolt
+  XDomain and ThunderboltIP (`drivers/net/thunderbolt/`), not all
+  machines.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+- Record: Actively maintained (Mika Westerberg). Recent xdomain work
+  includes UAF and bounds fixes. Mature protocol with ongoing fixes;
+  this is not staging.
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Explicit audio-codec hardware quirk (`SND_PCI_QUIRK` + existing fixup)
-- Real user-visible bug (internal mic boost too high)
-- One line, obviously correct, maintainer-applied
-- Same author’s identical Positivo ARN50 quirk already in this 6.12 tree
-- Fixup and quirk table already present
-- No new API, no new driver, no behavioral change except this SSID
+---
 
-AGAINST:
-- Not a crash/security/data-corruption bug
-- Mainline path differs; needs 1-line context/path adjustment
-- No independent public bugzilla/syzbot report
-- Affected population is one laptop model
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-UNRESOLVED:
-- Could not query lore.kernel.org/stable (HTTP 403)
-- Could not independently verify the author’s hardware test beyond the
-  commit text and maintainer apply
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+- Record: Thunderbolt/USB4 hosts using XDomain, especially ThunderboltIP
+  between two machines after warm reboot. Driver-specific / config-
+  specific (`CONFIG_USB4`, thunderbolt-net).
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — one ID, existing fixup, applied
-   by Takashi Iwai
-2. Fixes a real bug that affects users? PASS — excessive internal mic
-   boost on this machine
-3. Important issue? PASS under the hardware-quirk exception (audio codec
-   quirk); severity MEDIUM for that model
-4. Small and contained? PASS — +1 line
-5. No new features or APIs? PASS — ID mapped to existing fixup
-6. Can apply to the local tree? PASS — equivalent table exists; needs
-   trivial path/context backport, same as prior quirks on this tree
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+- Record: Warm reboot (or service driver registering properties during
+  discovery). Timing-dependent. Unprivileged users do not trigger it via
+  a random syscall; they hit it by using Thunderbolt networking. Common
+  for that hardware/use case, rare globally.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **Hardware quirk / audio codec quirk** (`SND_PCI_QUIRK` in
-Realtek HDA). This is an explicit stable exception.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+- Record: ThunderboltIP discovery incomplete; login times out; network
+  over Thunderbolt does not come up. Not a panic, UAF, or corruption.
+  **Severity: HIGH for ThunderboltIP users, MEDIUM overall** (feature
+  broken, host stays up).
 
-Step 9.4: MAKE YOUR DECISION
-This should be backported to this 6.12 tree. It is the standard Realtek
-laptop quirk: add a PCI subsystem ID so an existing limiter runs. The
-driver, table, and `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` are all here; only
-the N15RPE-S ID is missing. Risk is confined to that SSID.
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+- Record:
+  - **Benefit:** Restores Thunderbolt networking after a realistic warm-
+    reboot race. High for those users.
+  - **Risk:** Very low line count; extra notify is an existing protocol
+    message. Theoretical Linux↔Linux notify loop is unverified in the
+    field; no revert in this tree.
+  - **Ratio:** Benefit outweighs risk.
 
-------------------------------------------------
-What problem it solves and why it matters
-The Positivo N15RPE-S ships with an internal mic whose boost steps 2–3
-are too hot. Without this ID, 6.12 users of that laptop keep the default
-full boost range. The commit maps `0x2782:0xa128` onto the long-standing
-limiter already used for other Positivo machines in this tree.
+---
 
-Stable-rules fit
-It is small, obviously correct, does not add APIs, and is the documented
-audio-quirk exception. It is not a crash fix, but stable routinely takes
-these ID-only Realtek quirks.
+## PHASE 9: FINAL SYNTHESIS
 
-Risk vs benefit
-Benefit is a working internal mic for that model. Risk is a single-ID
-table entry using a fixup that has been in the kernel since v3.10 and is
-already applied to sibling Positivo IDs here.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Concerns
-The mainline hunk will not `git am` cleanly because of the later HDA
-file split and a neighboring Lunnen Ground 14 entry that 6.12 lacks. The
-backport is still a one-line insert into `alc269_fixup_tbl` in
-`sound/pci/hda/patch_realtek.c`.
+**FOR backporting:**
+- Real user-visible bug: ThunderboltIP half-discovered, login timeout
+  after warm reboot.
+- One-line, reuses an existing helper.
+- Maintainer (Mika Westerberg) applied it with no technical objections.
+- All needed symbols/state exist in this 7.3-rc4 tree (state machine
+  since 5.19).
+- Applies cleanly; not a new API/feature.
+- Standalone; v2 only fixed the author’s From name.
+
+**AGAINST backporting:**
+- Not a crash, UAF, or security bug.
+- Affects a subset (USB4/TBT XDomain / ThunderboltIP).
+- No `Reported-by` besides the author’s scenario.
+- Theoretical extra notify traffic between two patched Linux peers
+  (unverified in production).
+
+**UNRESOLVED:**
+- Could not fetch lore over HTTP (403); used `b4` mbox instead.
+- Mika’s v1 mail body was not in the saved v2 mbox; v2 changelog says
+  the only change was the From/SOB name.
+- No stable@ thread found.
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — one existing helper call;
+   maintainer applied to thunderbolt.git/next.
+2. Fixes a real bug that affects users? **PASS** — ThunderboltIP login
+   timeout after warm reboot.
+3. Important issue? **PASS** — service remains unusable (connectivity
+   failure), not a panic; still a serious functional break for that
+   hardware.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — helpers and state machine are
+   present; hunk context matches.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+- Record: None (not a device ID, quirk table, DT, build, or docs-only
+  change). Qualifies as a normal small bugfix.
+
+**Step 9.4: DECISION**
+This tree has the buggy handshake. The patch is a minimal, maintainer-
+acked fix for a real ThunderboltIP discovery failure. That is
+appropriate to backport here.
+
+---
+
+### What the commit solves for this tree
+On 7.3-rc4, XDomain discovery still notifies peers early and service
+drivers (notably `thunderbolt-net`) can still register the `"network"`
+property directory while handshake is in progress. Without a notify at
+`ENUMERATED`, a peer that already read the old block can miss the
+service; ThunderboltIP then sits half-discovered and login times out
+after warm reboot. One extra `tb_xdomain_queue_properties_changed()` at
+the end of discovery closes that window.
+
+### Stable rules
+The change is obviously correct, tiny, and does not add APIs. It fixes a
+real connectivity bug, not a refactor.
+
+### Risk vs benefit
+Benefit is restoring Thunderbolt networking after reboot. Risk is one
+extra protocol notify on a path that already sends that message.
+Residual ping-pong risk between two Linux peers is unverified and did
+not produce a follow-up fix in this tree.
+
+### Concerns
+No `Fixes:` tag (expected). Not a crash-class bug. Depends on
+Thunderbolt XDomain, which this tree has. No missing prerequisites.
+
+---
 
 Verification:
-- [Phase 1] Parsed tags on `253010acfc8ad`: author SOB, maintainer SOB,
-  msgid Link; no Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x2782, 0xa128, "Positivo N15RPE-S",
-  ALC269_FIXUP_LIMIT_INT_MIC_BOOST)`
-- [Phase 2] Read `alc269_fixup_limit_int_mic_boost()` at
-  `patch_realtek.c:6661-6690`; confirmed it clamps internal-mic amp
-  steps to 0–1
-- [Phase 2] Confirmed `[ALC269_FIXUP_LIMIT_INT_MIC_BOOST]` exists at
-  line 8711 and chains to `ALC269_FIXUP_THINKPAD_ACPI` (same as other
-  Positivo limit-boost entries)
-- [Phase 3] `git merge-base --is-ancestor 3e0d611b2045b HEAD` — fixup
-  present (v3.10)
-- [Phase 3] `git merge-base --is-ancestor 253010acfc8ad HEAD` —
-  candidate **not** in this tree
-- [Phase 3] `git log --grep=N15RPE -- sound/pci/hda/` — empty
-- [Phase 3] Grep `0xa128` in `patch_realtek.c` — no match
-- [Phase 3] Same-class commits in tree: `d44418f5024f6` (ARN50),
-  `86a433862912f` (N14AP7)
-- [Phase 3] Author has 10 Realtek HDA quirk commits in this tree
-- [Phase 4] `b4 dig -c 253010acfc8ad` → msgid
-  20260805154518.19093-1-edson.drosdeck@gmail.com
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: To tiwai, Cc linux-sound / perex / Realtek
-- [Phase 4] LKML/Patchew: Takashi “Applied to for-next”; no NAK
-- [Phase 4] UNVERIFIED: lore.kernel.org/stable search HTTP 403
-- [Phase 5] `patch_alc269()` line 12583 uses `alc269_fixup_tbl`
-- [Phase 6] `git describe HEAD` = p-6.12-2-gd38d58a4e0359; kernelversion
-  6.12.111
-- [Phase 6] Local file is `sound/pci/hda/patch_realtek.c`; `alc269.c`
-  does not exist; insert after 0x2782/0x4900 before 0x7017/0x2014
-- [Phase 8] Failure mode: noisy/excessive internal mic boost on one
-  laptop; not a crash
+- [Phase 1] Parsed commit `e027dba038f0008df9bc9575f5c3e803e90636c6`:
+  subject/body/SOBs only; no Fixes/Reported-by/Cc stable
+- [Phase 2] Diff: +1 line in `tb_xdomain_state_work()` after `xd->state
+  = XDOMAIN_STATE_ENUMERATED`
+- [Phase 2] Confirmed existing notifies at INIT (line 1739) and UUID
+  success (line 1751); `tb_register_property_dir()` calls
+  `update_all_xdomains()`
+- [Phase 2] Confirmed `thunderbolt-net` `tbnet_init()` calls
+  `tb_register_property_dir("network", tbnet_dir)`
+- [Phase 2] Receiver of `PROPERTIES_CHANGED_REQUEST` queues
+  `state_work`; `ENUMERATED` re-enters `PROPERTIES` (verified in
+  `xdomain.c`)
+- [Phase 3] `git blame`: state machine from `8e1de7042596ab`
+  (v5.19-rc1); XDomain protocol from `d1ff70241a275` (v4.15-rc1)
+- [Phase 3] `git log --author="Milo Chen" -- drivers/thunderbolt/`: only
+  this commit
+- [Phase 3] No later xdomain.c commit addresses this notify
+- [Phase 4] `b4 dig -c e027dba038f000…`: lore match
+  https://patch.msgid.link/20260624060909.2610434-1-cmh79479@gmail.com
+- [Phase 4] `b4 dig -a`: v1 and v2; v2 identical diff, From-name fix
+  only
+- [Phase 4] `b4 dig -w`: thunderbolt maintainers + linux-usb
+- [Phase 4] mbox: Mika Westerberg “Applied to thunderbolt.git/next,
+  thanks!”
+- [Phase 4] WebFetch lore: 403; used b4 instead
+- [Phase 4] Stable-list search: no relevant hits
+- [Phase 5] Callers of `tb_register_property_dir`: thunderbolt-net,
+  stream, dma_test (grep)
+- [Phase 5] semcode MCP: not available; used git grep/read
+- [Phase 6] `make kernelversion` / Makefile: 7.3.0-rc4; `git describe
+  HEAD`: v7.3-rc4-27-gf0100363d8c37
+- [Phase 6] Parent hunk lacks the notify; this tree has the helpers
+- [Phase 6] `git merge-base --is-ancestor e027dba038f000 HEAD`: ancestor
+  (original commit in this development tree; not used as “already
+  selected for stable”)
+- [Phase 7] MAINTAINERS: THUNDERBOLT DRIVER, Mika Westerberg
+- [Phase 8] Failure mode: ThunderboltIP login timeout / half-discovered
+  service, not oops
+- UNVERIFIED: Mika v1 review body (not in v2 mbox); whether Linux↔Linux
+  notify looping occurs in the field; whether stable@ ever discussed
+  this patch
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
+ drivers/thunderbolt/xdomain.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index f2b0eb8501a78..5098d3f375316 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7646,6 +7646,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x2782, 0x4900, "MEDION E15443", ALC233_FIXUP_MEDION_MTL_SPK),
-+	SND_PCI_QUIRK(0x2782, 0xa128, "Positivo N15RPE-S", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2782, 0xa212, "Lunnen Ground 14", ALC269VC_FIXUP_LUNNEN_GROUND_14),
- 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
+index d9c2686b5fe41..b35e2f7c318dc 100644
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -1692,6 +1692,7 @@ static void tb_xdomain_state_work(struct work_struct *work)
+ 			tb_xdomain_failed(xd);
+ 		} else {
+ 			xd->state = XDOMAIN_STATE_ENUMERATED;
++			tb_xdomain_queue_properties_changed(xd);
+ 		}
+ 		break;
+ 
 -- 
 2.53.0
 
