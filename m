@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627594FDA4B;
-	Mon, 19 Oct 2026 13:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDFE596089;
+	Mon, 19 Oct 2026 13:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418342; cv=none; b=IRFCUMyEqTUiIsWyDcxC8F0NOpPlKHXfDbpNF7OXdI3Umxv6xEcPrx0T+EUesfz9IOpFNvtHF/i+Y5MXy7O03+LK4xFSH6xG80rdjYYmMmUYo/A0w1DuDVWb6TMeQUf54S9dd0Ul5TIzmrXHm30Q01Mroy7MdKXL9avaVUiyttc=
+	t=1792418343; cv=none; b=ZJfrSfFH1sK1kVLjuTu4v8Hk74gkVbYM8XoNihOkxWjeNdkmLze5e2aJVVnEp/RX0BLrPSoHVZ7+hG6NO4e8TmXFewQ3GbBH4qbW+mqObFknO46i/mtCmwqVMx4A/Pa/BUi2JyG3DVbcPIlEArOg22AbC58JiIPZRowjM8WwyNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418342; c=relaxed/simple;
-	bh=cadGJAcYab2bHwIlTTNQclq6NuGd9Sleo9IMdKXrayI=;
+	s=arc-20240116; t=1792418343; c=relaxed/simple;
+	bh=eXPkSbZty3nJgx67BUK5Exqfe2uKhV5SjWL73GvIeKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VkB7UYbGiegKhRmdMBbR2oeelovGfmH8tstdjTWXepnmhk8jFTeRJGkBWy8Qa0OC8x2s3Z12uo3s2L4ZKocMDEtTj0PJk86lFDhcnWyDO+aq3mvQsX2ssIgHQJZ/HwBR3hH2bfarrT983N4FiVYhe1Gnv+FzHadCOFKcl2E5dIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BwFd7HJp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gbCChLtH/zb31fotrzXGmHYRccX/TCTbul+QquQ05mRMG+OjS+XNAbz2jOWD/AUEQmlCXK+C26VcCl/MSMICktnrQxRjMvC2S4reoLcvXe+Sy7gQ4rkV5emEweLbk+f/8UjCVxMlP228YLgbXu+1DCDjKCEjt7V/siLrlsBqtTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nExBARQ7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BwFd7HJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575BF1F000C6;
-	Mon, 19 Oct 2026 13:58:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nExBARQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D8E1F000C8;
+	Mon, 19 Oct 2026 13:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418339;
-	bh=ZJkC+fDbJ70Bl5y8ELPPo2YhqcptmGDpY1J0f9mKeho=;
+	s=k20260515; t=1792418340;
+	bh=ydWsISwGVhAYduRngYKtRJeZzj1G2o3+akZSzVQmqWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BwFd7HJpmSNqaywlRZpHBSYBY1cXUmf9Em1FoS/nun7kA1IGh8eaLK+BI54j7ilIB
-	 9DGFSJCwFC7rF6iB8pHikiJV9UolG4RFNYH4MzbXUhsu2+vx/l/FAjUXanaGBGRydd
-	 xWHNLG4iYJiIU7UB9aSG1oxp/X+VfyzLSjF5DlSeh2QwKhDmi1v8sW0AuxuEu9I1I6
-	 1l9MDsfLmUd1FcTXG+m5pOv2dA8/ZoatUmYQOKMtZpyoaRY15wsLNp55YBsxT3XMaz
-	 SPlgg4lPX7xoZKBQG+IoOBFaiQ0wi4sjyuC5wLa/kyCt12jWq8zKaTyyePcMH4nJok
-	 iy/cI3sz/kyNA==
+	b=nExBARQ7627TYLL+NmYef9ik0FN4HVzhZsVOHprdNBocvcFnxjiO+OqBzc+VHIWuD
+	 ahS+b63x4qhg6qX9j9SqD2UdsLjjq5VIgcmK+msJh6Jr6Neg2IS1Jl1+o/PjoY+ORZ
+	 MPXv4i20YCudYAlKZfswkW6ljkYM6nBhsjbiZxU4/MZNa3YTzuN1IBUesEL0QRJTJz
+	 X8T1MgzmINMV+UjQjkq0QM3alopAL5zJjjhdqkIpyUkednkNqUv5qhj5NAFg8HzhMc
+	 Y3cWXSQU+31PZB9rLBylwUBxKW5HUoWhTdXh0me264qWkksqJkQj+0KzDWpv89Rlu/
+	 unGL/3nvQ+Eyg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Robin Everaars <robineveraars@pm.me>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	awalls@md.metrocast.net,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: ivtv: stop VBI start-code scan before short tail
-Date: Mon, 19 Oct 2026 09:47:48 -0400
-Message-ID: <20261019135441.1420968-177-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ACPI: button: Add DMI quirk for Razer Blade Pro 17 early 2020 lid switch
+Date: Mon, 19 Oct 2026 09:47:49 -0400
+Message-ID: <20261019135441.1420968-178-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,395 +53,423 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Robin Everaars <robineveraars@pm.me>
 
-[ Upstream commit f373cf17fb8e7a530bc6e1e36fc41cb5dab2cdaa ]
+[ Upstream commit 415125669c2ddc773c579a60df108f75712dfa83 ]
 
-compress_sliced_buf() scans one byte at a time while testing a four-byte
-VBI start code.  The final iterations can read beyond the remaining
-buffer tail.
+The lid switch reports "close" but can miss the matching "open", leaving
+_LID closed after resume. systemd-logind then suspends the system again
+roughly every 35 seconds.
 
-Stop the scan once fewer than four bytes remain.
+Reading the embedded controller's PSTA byte while _LID is stale shows that
+bit 0x04 is set, which the DSDT treats as open. The DSDT returns the cached
+LIDS byte from _LID. Its wake path aborts in RTEC on an unhandled
+SystemCMOS region before copying PSTA to LIDS.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Initialize the lid state to open on resume, matching the existing quirk
+for the Razer Blade Stealth 13 late 2019. With
+button.lid_init_state=open, a physical close suspended once and resume
+reported open without another suspend.
+
+Signed-off-by: Robin Everaars <robineveraars@pm.me>
+Link: https://patch.msgid.link/20260817141414.213075-1-robineveraars@pm.me
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+I have enough to decide: this is a DMI-scoped lid quirk, the buggy path
+exists in 6.12, and the patch applies here.
 
-**Step 1.1: Subject line**
-Record: **[media/ivtv] [stop] stop VBI start-code scan before a short
-tail so a 4-byte SAV check cannot read past the buffer**
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2: Tags**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [ACPI] [Add] [DMI quirk for Razer Blade Pro 17 early 2020 lid
+switch]
+Subsystem prefix: `ACPI: button:`. Action verb: **Add**. Claimed intent:
+add a DMI match so this laptop initializes lid state as open, matching
+an existing Razer quirk.
+
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (media/V4L
-  maintainer; applied the patch)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable`
-- Absence of `Fixes:` / `Cc: stable` is expected for this review and is
-  not a negative signal
+- Signed-off-by: Robin Everaars <robineveraars@pm.me> (author)
+- Link:
+  https://patch.msgid.link/20260817141414.213075-1-robineveraars@pm.me
+- Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com> (ACPI
+  maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable (absence expected for this review)
+- Ignore any pipeline "Upstream commit" / "Signed-off-by: Sasha Levin"
+  markers
 
-**Step 1.3: Body**
+Notable: ACPI maintainer applied it. No syzbot/KASAN. Hardware-quirk
+report from the machine owner.
+
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `compress_sliced_buf()` walks one byte at a time while
-  testing a four-byte VBI start code (SAV: `0xff 0x00 0x00 sav`).
-- **Symptom/failure mode:** last loop iterations read past the remaining
-  buffer tail (out-of-bounds read of up to 3 bytes).
-- **Version info:** none in the message.
-- **Root cause:** loop bound is `i < size` while the body reads
-  `buf[0]`..`buf[3]`.
+- Bug: lid reports "close" but can miss the matching "open"; `_LID`
+  stays closed after resume.
+- Symptom: systemd-logind re-suspends roughly every 35 seconds (suspend
+  loop).
+- Root cause (firmware): EC PSTA bit 0x04 is set (DSDT treats that as
+  open), but `_LID` returns cached LIDS. Wake path aborts in RTEC on an
+  unhandled SystemCMOS region before copying PSTA to LIDS.
+- Fix: DMI quirk `ACPI_BUTTON_LID_INIT_OPEN`, same as Razer Blade
+  Stealth 13 late 2019.
+- Test: with `button.lid_init_state=open`, a physical close suspended
+  once; resume reported open; no second suspend.
+- Version info: none in the message. Commit is in v7.3-rc1 (`git
+  describe --contains` → `v7.3-rc1~39^2^3`).
 
-**Step 1.4: Hidden bug fix?**
-Record: **Not hidden.** This is an explicit bounds fix, not
-cleanup/refactoring.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. It is an explicit hardware quirk for a
+firmware lid bug. The "Add" verb here is the standard DMI-quirk
+exception, not a new feature.
 
----
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-## Phase 2: Diff analysis
-
-**Step 2.1: Inventory**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/media/pci/ivtv/ivtv-vbi.c` — **1 insertion, 1
-  deletion**
-- Function: `compress_sliced_buf()`
-- Scope: **single-file surgical one-liner**
+- File: `drivers/acpi/button.c` (+11 / -0)
+- Function/data: `dmi_lid_quirks[]` only
+- Scope: single-file surgical DMI table addition
+- Commit: `415125669c2ddc773c579a60df108f75712dfa83`
 
-**Step 2.2: Code flow**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Before:** `for (i = 0; i < size; i++, buf++)` then `buf[0]==0xff &&
-  !buf[1] && !buf[2] && buf[3]==sav`
-  - When `i == size-1`, `buf[1]`, `buf[2]`, `buf[3]` are 1–3 bytes past
-    the declared `size`.
-  - When `size` is 1, 2, or 3, the first iteration already overreads.
-- **After:** `for (i = 0; i + 3 < size; i++, buf++)` — stop once fewer
-  than 4 bytes remain.
-- Path: **normal VBI parse path** (finding the first SAV), not an error-
-  only path.
+- Before: this DMI identity is unmatched;
+  `acpi_button_register_driver()` sets `lid_init_state =
+  ACPI_BUTTON_LID_INIT_METHOD` (evaluate `_LID`).
+- After: match vendor `"Razer"` + product `"Blade Pro 17 (Early 2020) -
+  RZ09-0329"` → `ACPI_BUTTON_LID_INIT_OPEN`.
+- Affected path: lid init on first userspace open
+  (`acpi_lid_input_open`) and on resume (`acpi_button_resume` →
+  `acpi_lid_initialize_state` → `acpi_lid_notify_state(device, 1)`).
+- Other machines: unchanged (`dmi_first_match` is exact).
 
-Verified pre-image:
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Hardware workaround / DMI quirk]
+Broken: firmware `_LID` stuck closed after resume; userspace treats that
+as lid-closed and suspends again.
+Fix: report lid open on init/resume for this DMI ID, same as existing
+Razer/Medion/Samsung entries.
 
-```334:336:drivers/media/pci/ivtv/ivtv-vbi.c
-                if (buf[0] == 0xff && !buf[1] && !buf[2] && buf[3] ==
-sav)
-                        break;
-```
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Obviously correct and minimal. Regression risk is confined to
+this DMI string. If the lid is truly closed at resume from another
+wakeup source, init-open can delay one close report until the next close
+notify; that is the established tradeoff for this quirk class (Stealth
+13 late 2019, Medion, Samsung). No API/locking/refcount changes.
 
-(with the new `i + 3 < size` bound on the `for` line immediately above)
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 2.3: Bug mechanism**
-Record: **Memory safety / out-of-bounds read.** The four-byte SAV test
-used a one-byte walk with an inclusive `size` bound. The remaining `size
--= i` / `size < line_size` logic still bails out on a short tail, so
-this is an **overread**, not a later overflow write.
+Step 3.1: BLAME THE CHANGED LINES
+Record: Insertion is between:
+- `0528904926aab` (2020-01-02) Razer Blade Stealth 13 late 2019, same
+  `ACPI_BUTTON_LID_INIT_OPEN` pattern
+- `8fa73ee44daef` (2024-10-20) Samsung Galaxy Book2, same pattern, `Cc:
+  All applicable <stable@vger.kernel.org>`
+- Table exists since `d7cd08231a7fa` (2019-10-28)
+The "bug" is firmware on a 2020 laptop; the kernel quirk table has been
+in this driver for years.
 
-**Step 2.4: Fix quality**
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Not applicable. Firmware defect, not a kernel
+regression from a specific SHA.
+
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record (this tree, last 20 on `drivers/acpi/button.c`): other DMI lid
+quirks (Lenovo Yoga 9, Medion E2228T, Nextbook Ares 8A, Samsung Galaxy
+Book2) plus unrelated notify/input_free_device changes. No prerequisite
+refactor required for this table entry.
+Standalone, not patch X/Y.
+
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: `git log --author='Robin Everaars' -- drivers/acpi/` is empty in
+this tree. Author is a hardware reporter, not the ACPI maintainer.
+Weight comes from Rafael applying it and from matching an existing
+quirk.
+
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Depends only on `dmi_lid_quirks[]` and
+`ACPI_BUTTON_LID_INIT_OPEN`, both present. Later mainline converted
+`acpi_button_add` → `acpi_button_probe`; that is after 6.12 and not
+required. A later mailing-list patch for Blade Stealth 13 Early 2020
+(RZ09-0310) is a sibling quirk, not a dependency. Can apply standalone.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **Obviously correct:** the predicate now matches the 4-byte access.
-  Same pattern as the sibling `cx18` fix (`bf533acaaa7de`).
-- **Minimal:** one loop condition, no API/data-structure change.
-- **Regression risk: very low.** If `size < 4`, the loop does not run,
-  `i` stays 0, then `size < line_size` (51/272/284) returns as before. A
-  4-byte SAV at the last valid position is still seen (`i + 3 < size`
-  allows `i == size-4`).
+- `b4 dig -c 415125669c2dd`:
+  https://patch.msgid.link/20260817141414.213075-1-robineveraars@pm.me
+- `b4 dig -a`: v1 msgid `20260817133259.195548-1-robineveraars@pm.me`,
+  v2 same code; v1 was unapplicable because Proton OpenPGP/MIME inserted
+  line breaks. No logic review changes.
+- Rafael: "Applied as 7.3-rc material, thanks!" No NAK, no stable
+  discussion in-thread.
+- lore.kernel.org WebFetch returned 403; discussion recovered via b4,
+  Patchew, and openwall.
 
----
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To/Cc Rafael J. Wysocki, Len Brown, linux-acpi,
+linux-kernel. Maintainer applied it. No extra Reviewed-by.
 
-## Phase 3: Git history
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No bugzilla/syzbot Link. Evidence is the author's firmware
+analysis (PSTA vs LIDS/RTEC) and the `lid_init_state=open` test. Same
+class as the 2020 Stealth 13 quirk ("systemd continuously re-suspend the
+laptop every 30s"). UserBenchmark/Geekbench and linux-hardware.org Razer
+probes support the product-name form `Blade … - RZ09-xxxx` with vendor
+`Razer`.
 
-**Step 3.1: Blame**
-Record: The scan loop (including `buf[3]`) was introduced in
-**`1a0adaf37c30e`** — *V4L/DVB (5345): ivtv driver for Conexant
-cx23416/cx23415 MPEG encoder/decoder* (Hans Verkuil, **2007-04-27**).
-The bug is as old as the driver.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone v2. Related later proposal: Ian Gallagher, Blade
+Stealth 13 Early 2020 RZ09-0310, which cites this Pro 17 entry as
+already in tree. Not required for this backport.
 
-**Step 3.2: Fixes: tag**
-Record: **No Fixes: tag.** The introducing commit is the original ivtv
-merge (`1a0adaf37c30e`), present in this tree (`git merge-base --is-
-ancestor` exit 0).
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: WebSearch of lore.kernel.org/stable for this model found no
+prior stable request or rejection. UNVERIFIED at the individual-message
+level because lore WebFetch is 403.
 
-**Step 3.3: File history**
-Record: Recent commits on this file are email-address churn, an
-uninitialized `vbi.type` fix (`31218df77e7f1`), SPDX, and this bounds
-fix. **No prerequisite refactor.** Standalone; not `patch X/Y`.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 3.4: Author**
-Record: Pengpeng Hou’s only ivtv commit is this one. Same
-day/author/message as **`bf533acaaa7de`** (`media: cx18: stop VBI start-
-code scan before short tail`). Hans Verkuil applied both; he is the
-long-time V4L maintainer and original ivtv author. That is a strong
-quality signal.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: No function body changed. Data: `dmi_lid_quirks[]`. Consumers:
+`acpi_button_register_driver()`, `acpi_lid_initialize_state()`.
 
-**Step 3.5: Dependencies**
-Record: **None.** The loop, `sav` argument, and `buf[3]` access already
-exist. The cx18 sibling is independent (different driver). **Applies
-standalone.**
-
----
-
-## Phase 4: Mailing list / external
-
-**Step 4.1: Original discussion**
+Step 5.2: TRACE CALLERS
 Record:
-- `b4 dig -c f373cf17fb8e7` →
-  https://patch.msgid.link/2026063008027101.2-ccfa108-0015-media-ivtv-
-  stop-VBI-start-c-pengpeng@iscas.ac.cn
-- `b4 dig -a`: **v1 only** (2026-06-30), no later revisions.
-- Saved mbox: **patch only, no replies.** No NAK, no reviewer
-  commentary, no in-thread `Cc: stable`.
-- lore.kernel.org HTML fetch returned **403** (Anubis bot-wall). Thread
-  content was recovered via `b4 dig -m`.
+- `acpi_button_register_driver()`: module/driver init;
+  `dmi_first_match(dmi_lid_quirks)` if `lid_init_state == -1`.
+- `acpi_lid_initialize_state()`: from `acpi_button_resume()`
+  (CONFIG_PM_SLEEP) and `acpi_lid_input_open()` (userspace opens
+  `/dev/input` lid switch).
+- Not IRQ/hot-path; boot and resume/open.
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: To/Cc included **Andy Walls** (IVTV maintainer in MAINTAINERS),
-**Mauro Carvalho Chehab**, `linux-media@vger.kernel.org`, `linux-
-kernel@vger.kernel.org`. Applied by **Hans Verkuil**.
+Step 5.3: TRACE CALLEES
+Record: `ACPI_BUTTON_LID_INIT_OPEN` → `acpi_lid_notify_state(device, 1)`
+reports SW_LID open. No alloc/new locks.
 
-**Step 4.3: Bug report**
-Record: **No user/syzbot/bugzilla report.** Looks like a static-
-analysis/audit fix (author has many similar bounds patches). The
-mechanism is still a real OOB read, verified from the code.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Userspace-reachable: logind/systemd reads the lid input device
+and acts on SW_LID. Trigger is close-lid suspend then resume with lid
+open — normal laptop use. Unprivileged user can trigger by closing the
+lid.
 
-**Step 4.4: Related series**
-Record: Paired with **cx18** commit `bf533acaaa7de` (same wording, same
-day). Each is self-contained. This ivtv commit does not need the cx18
-change.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same `ACPI_BUTTON_LID_INIT_OPEN` DMI entries already in this
+tree for Lenovo 82BG, Medion E2215T/E2228T, Razer Stealth 13 Late 2019,
+Samsung 750XED. This is another instance of a known firmware class, not
+a new mechanism.
 
-**Step 4.5: Stable list**
-Record: **UNVERIFIED** — lore.kernel.org/stable returned 403. No
-evidence in-tree of a prior rejection.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
----
-
-## Phase 5: Semantic / call-chain
-
-**Step 5.1: Functions**
-Record: `compress_sliced_buf()` only.
-
-**Step 5.2: Callers**
-Record: Only `ivtv_process_vbi_data()` in the same file, twice:
-
-```398:404:drivers/media/pci/ivtv/ivtv-vbi.c
-                lines = compress_sliced_buf(itv, 0, p, size / 2,
-                        itv->vbi.sliced_decoder_sav_odd_field);
-                /* second field */
-                /* experimentation shows that the second half does not
-always begin
-                   at the exact address. So start a bit earlier (hence
-32). */
-                lines = compress_sliced_buf(itv, lines, p + size / 2 -
-32, size / 2 + 32,
-                        itv->vbi.sliced_decoder_sav_even_field);
-```
-
-`ivtv_process_vbi_data()` callers:
-- `ivtv_get_buffer()` in `ivtv-fileops.c` (userspace read of MPEG/VBI
-  streams)
-- `dma_post()` in `ivtv-irq.c` (decoder VBI DMA completion)
-
-**Step 5.3: Callees**
-Record: After the scan, `v4l2_subdev_call(..., decode_vbi_line, ...)`.
-The OOB is in the scan itself, before that call.
-
-**Step 5.4: Reachability**
-Record: Reachable when sliced VBI capture/processing runs on **Hauppauge
-PVR-150/250/350/500** (and other cx23415/cx23416 cards),
-`CONFIG_VIDEO_IVTV`. Needs the hardware; not a generic syscall fuzz
-path. Real for those devices.
-
-**Step 5.5: Similar patterns**
-Record: `cx18` had the identical bug and the same one-line fix.
-`compress_raw_buf()` indexes `p[0..3]` at `buf + i * line_size` with `i
-< lines`, a different bound; not the same bug.
-
----
-
-## Phase 6: This tree
-
-**Step 6.1: Local tree and buggy code**
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
 Record:
-- `git describe HEAD` → **`v7.3-rc4-27-gf0100363d8c37`** (`VERSION=7`,
-  `PATCHLEVEL=3`, `SUBLEVEL=0`, `EXTRAVERSION=-rc4`)
-- Candidate **`f373cf17fb8e7` is already an ancestor of HEAD**
-- Buggy loop existed here from **2007** until that commit; pre-image
-  confirmed via `git show f373cf17fb8e7^:drivers/media/pci/ivtv/ivtv-
-  vbi.c`
+- Tree: `pending-6.12`, `git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`,
+  `make kernelversion` = **6.12.111**
+- `dmi_lid_quirks[]` present; Stealth 13 quirk present; **no**
+  `RZ09-0329` / Blade Pro 17 entry
+- `git merge-base --is-ancestor 415125669c2dd HEAD` → not an ancestor
+  (not in this tree)
+- Quirk infrastructure since 2019; bug is firmware on 2020 hardware,
+  relevant to 6.12
 
-This checkout is **7.3-rc4 mainline**, not an older -stable branch. The
-bug class and the surrounding code are the same ones every current LTS
-still carries.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: `git show 415125669c2dd | git apply --check` succeeded (hunk at
+line 130, offset -3). Difference vs mainline is later
+`acpi_button_probe` conversion, not the DMI table. Expected: **clean
+apply**.
 
-**Step 6.2: Backport difficulty**
-Record: **Clean apply.** The `for (i = 0; i < size; i++, buf++)` line
-has been unchanged since 2007.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No RZ09-0329 match. No other 6.12 commit with this subject (`git
+log --grep='Razer Blade Pro 17' -- drivers/acpi/button.c` empty).
+Samsung/Stealth 13 quirks are related pattern, not a substitute for this
+DMI ID.
 
-**Step 6.3: Related fixes already here**
-Record: Only this commit and the cx18 sibling. No alternate ivtv fix for
-the same scan.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
----
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [ACPI button / laptop lid] [IMPORTANT]
+`CONFIG_ACPI_BUTTON` default y. Lid events drive suspend on essentially
+all ACPI laptops. Not mm/core, but suspend-loop is user-visible
+stability.
 
-## Phase 7: Subsystem context
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: This 6.12 file is mature (quirks since 2019). Mainline later did
+a large button.c rework (platform device, devres); that churn is **not**
+in this tree. The DMI table is the stable part.
 
-**Step 7.1**
-Record: **media/pci/ivtv** — Hauppauge PVR / Conexant cx2341x MPEG
-encoder. **PERIPHERAL** (specific old PCI capture cards), but a
-supported in-tree driver, not staging.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 7.2**
-Record: The file is **mature/quiet**. The driver has been stable for
-years; this is a long-standing latent bounds bug, not fallout from a new
-feature.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific / DMI-specific: Razer Blade Pro 17 Early 2020
+(RZ09-0329) only. ACPI button is default-y, so those laptops on 6.12 are
+in scope.
 
----
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Close lid → suspend → open lid/resume. Common laptop path.
+Unprivileged user can trigger. Not a narrow error path.
 
-## Phase 8: Impact and risk
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: [Suspend loop ~every 35s] [HIGH]
+Not a panic, but the machine cannot stay awake after lid-wake. Matches
+historical "systemd re-suspend every 30s" reports. Data-loss risk if
+unsaved work is interrupted by repeated suspend.
 
-**Step 8.1: Who is affected**
-Record: **Driver-specific / config-specific** (`CONFIG_VIDEO_IVTV`),
-users capturing **sliced VBI** on those cards.
-
-**Step 8.2: Trigger**
-Record: Hardware DMA fills an ivtv buffer; `ivtv_process_vbi_data()`
-scans for SAV. Fires whenever the start code is missing or near the tail
-(including a full walk with no match). Unprivileged users can hit it if
-they can open the V4L VBI/MPEG node. Not a remote network path.
-
-Buffers are `kmalloc(s->buf_size + 256)` and DMA last-SG size is also
-`+= 256` (`ivtv-queue.c`, `ivtv-irq.c`). `dma_post()` may do
-`buf->bytesused += s->dma_last_offset` (cookie search up to 252 bytes).
-A 3-byte overread of the **logical** `size` often still sits inside that
-256-byte DMA window, so a crash is not guaranteed; it is still an out-
-of-bounds access relative to the length the scan is given, and
-`bytesused` can sit close to the allocation.
-
-**Step 8.3: Failure mode**
-Record: **Out-of-bounds read (up to 3 bytes).** Severity **MEDIUM–HIGH**
-as memory safety; practical oops risk **MEDIUM** (small overread, extra
-DMA padding). Remaining length after a false SAV in the tail is `< 4`,
-so `size < line_size` returns without treating the overread as payload.
-**Not data corruption of the VBI output**, but a real buffer-tail
-overread.
-
-**Step 8.4: Risk–benefit**
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- **Benefit:** stops a real OOB read on a path that runs during VBI
-  capture; same class as other stable OOB one-liners; bug present on
-  every LTS.
-- **Risk:** one loop bound, no locking/API change — **very low**.
-- **Ratio:** strongly favors taking the fix.
+- Benefit: HIGH for that model (fixes unusable suspend/resume)
+- Risk: VERY LOW (11-line DMI entry, no other machines)
+- Ratio: strongly favors backport
 
----
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-## Phase 9: Synthesis
+Step 9.1: COMPILE THE EVIDENCE
 
-**Step 9.1: Evidence**
+FOR:
+- Real user-visible bug: lid stuck closed → logind suspend loop
+- Hardware quirk exception (DMI table), explicitly allowed in stable
+- Same mechanism as Stealth 13 late 2019 (in this tree since 2020) and
+  Samsung Galaxy Book2 (`Cc: stable`)
+- 11 lines, one file, no APIs
+- Applies cleanly to 6.12.111
+- ACPI maintainer applied as 7.3-rc
+- Author tested `lid_init_state=open`
+- DMI product string matches later Razer naming (`Blade … - RZ09-xxxx`)
 
-For:
-- Real 4-byte load on a 1-byte scan; last iterations read past `size`
-- One-line, obviously correct, no new API
-- Bug in tree since 2007 (`1a0adaf37c30e`); clean apply
-- Applied by Hans Verkuil; To: Andy Walls (ivtv maintainer)
-- Sibling cx18 fix of the same bug
-- Standalone; no series dependency
+AGAINST:
+- Affects one laptop model, not all users
+- No Fixes:/Cc: stable in the commit (expected; not a negative)
+- Author tested the module param; DMI match correctness is inferred from
+  the string they submitted (if wrong, quirk is a no-op, not a
+  regression)
 
-Against:
-- No crash/syzbot/`Reported-by`
-- Niche, aging PCI hardware
-- +256 DMA/kmalloc padding makes a guaranteed heap oops less likely
-- No mailing-list review comments (v1 applied as-is)
+UNRESOLVED:
+- lore.kernel.org HTTP 403; thread recovered via b4/Patchew/openwall
+- No independent kernel bugzilla duplicate found
+- Stable list not confirmed message-by-message (search found nothing)
 
-Unresolved:
-- Stable-list discussion (lore 403)
-- Exact KASAN behavior vs. the +256 allocation (not reproduced here)
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — copy of existing quirk;
+   author + maintainer
+2. Fixes a real bug that affects users? **PASS** — suspend loop after
+   resume
+3. Important issue? **PASS** — HIGH: system re-suspends every ~35s
+   (hang/unusable, not a panic)
+4. Small and contained? **PASS** — +11 lines, one DMI entry
+5. No new features or APIs? **PASS** — quirk table only
+6. Can apply to the local tree? **PASS** — `git apply --check` clean;
+   table present
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — bound matches the 4-byte
-   access; maintainer applied it; v1 needed no respin.
-2. Real bug affecting users? **PASS** — OOB read on sliced-VBI
-   processing for ivtv hardware.
-3. Important (crash/security/corruption/deadlock)? **PASS** — memory-
-   safety OOB read; practical crash is not certain, but this is the
-   standard small OOB class, not a style tweak.
-4. Small and contained? **PASS** — 1 line, one function.
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — already in 7.3-rc4; pre-fix line
-   is the original 2007 loop, so older stables should take it cleanly.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: **Hardware quirk/workaround** (DMI lid_init_state). Automatic
+stable-qualifier.
 
-**Step 9.3: Exception category**
-Record: Not a device-ID/quirk/DT/build/doc exception. It is a **small
-memory-safety fix**.
+Step 9.4: MAKE YOUR DECISION
+This tree is 6.12.111. The quirk table and `ACPI_BUTTON_LID_INIT_OPEN`
+exist; the RZ09-0329 entry does not. The patch is a small, model-scoped
+workaround for a firmware lid bug that leaves the laptop in a suspend
+loop. That is exactly the class of DMI quirk stable already carries for
+this driver.
 
-**Step 9.4: Decision**
-The commit is a one-line, obviously correct stop of a four-byte SAV scan
-that walked off the declared VBI buffer. That bug has been in ivtv since
-2007, needs no prerequisites, and is the same fix already used on cx18.
-It belongs in stable.
+What it solves for 6.12 users: after closing the lid, resume can leave
+`_LID` closed while the lid is open; systemd-logind then suspends again.
+The quirk reports open on resume for this DMI ID only.
 
----
+Risk vs benefit: benefit is restoring normal lid/suspend on this 2020
+Razer; risk is a no-op on every other machine.
 
-## Verification
+No dependencies, no backport rework, no new API.
 
-- **[Phase 1]** Parsed tags: only author + Hans Verkuil SOBs; no
-  Fixes/Reported-by/Cc: stable
-- **[Phase 2]** Diff: 1 line in `compress_sliced_buf()`; `i < size` → `i
-  + 3 < size`
-- **[Phase 2]** Confirmed `buf[0]..buf[3]` SAV test in current file at
-  lines 333–335
-- **[Phase 3]** `git blame`: loop from `1a0adaf37c30e` (2007-04-27);
-  bound line is this commit
-- **[Phase 3]** `git merge-base --is-ancestor 1a0adaf37c30e HEAD` → yes
-- **[Phase 3]** `git show f373cf17fb8e7^:...ivtv-vbi.c` → old `i < size`
-  loop present
-- **[Phase 3]** File log: no prerequisite refactor; sibling
-  `bf533acaaa7de` is cx18-only
-- **[Phase 4]** `b4 dig -c f373cf17fb8e7`: lore/msgid link above; `b4
-  dig -a`: v1 only
-- **[Phase 4]** `b4 dig -w`: Andy Walls, Mauro Chehab, linux-media,
-  linux-kernel
-- **[Phase 4]** `b4 dig -m`: 81-line mbox, patch only, no replies
-- **[Phase 4]** WebFetch/curl to lore: 403 — stable-list search
-  UNVERIFIED
-- **[Phase 5]** Callers: `ivtv_process_vbi_data` ← `ivtv-fileops.c`,
-  `ivtv-irq.c`
-- **[Phase 5]** cx18 `compress_sliced_buf` uses the same `i + 3 < size`
-  bound after `bf533acaaa7de`
-- **[Phase 6]** `git describe HEAD` = v7.3-rc4-27-g…; `make
-  kernelversion` = 7.3.0-rc4
-- **[Phase 6]** `git merge-base --is-ancestor f373cf17fb8e7 HEAD` →
-  already in this tree
-- **[Phase 7]** MAINTAINERS: IVTV → Andy Walls, linux-media
-- **[Phase 8]** kmalloc `buf_size+256` and DMA `size += 256` /
-  `bytesused += dma_last_offset` verified in `ivtv-queue.c` and `ivtv-
-  irq.c`
-- **UNVERIFIED:** whether this overread was ever KASAN-reported; whether
-  stable@ discussed it
-
-The fix is small, surgical, and meets the stable criteria for an out-of-
-bounds read.
+Verification:
+- [Phase 1] Parsed tags: author SOB, Rafael SOB, Link msgid
+  `20260817141414.213075-1-robineveraars@pm.me`; no Fixes/Reported-
+  by/Cc: stable
+- [Phase 1] Body: `_LID` stale closed after resume; logind re-suspend
+  ~35s; PSTA/LIDS/RTEC firmware explanation; tested
+  `button.lid_init_state=open`
+- [Phase 2] Diff: +11 lines in `dmi_lid_quirks[]` only;
+  `ACPI_BUTTON_LID_INIT_OPEN` for Razer / `Blade Pro 17 (Early 2020) -
+  RZ09-0329`
+- [Phase 2] Local `acpi_lid_initialize_state()` OPEN case calls
+  `acpi_lid_notify_state(device, 1)`; resume and `acpi_lid_input_open`
+  both call it
+- [Phase 3] Blame: Stealth 13 quirk `0528904926aab` (2020); Samsung
+  `8fa73ee44daef` (2024, Cc: stable); table from `d7cd08231a7fa` (2019)
+- [Phase 3] No Fixes: tag; standalone; no Robin Everaars history in this
+  ACPI tree
+- [Phase 4] `b4 dig -c 415125669c2dd`: v2 URL; `b4 dig -a`: v1→v2, PGP
+  wrapping only; `b4 dig -w`: Rafael, Len Brown, linux-acpi
+- [Phase 4] Patchew: Rafael "Applied as 7.3-rc material, thanks!"; no
+  NAK
+- [Phase 4] lore WebFetch 403; UNVERIFIED raw lore HTML
+- [Phase 5] Callers: `acpi_button_register_driver` (init),
+  `acpi_button_resume`, `acpi_lid_input_open`; userspace lid/logind path
+- [Phase 5] Similar OPEN quirks already in this file for
+  Lenovo/Medion/Razer/Samsung
+- [Phase 6] `git describe HEAD` p-6.12-3-gc504cf0baa3d8; kernelversion
+  6.12.111; `merge-base --is-ancestor 415125669c2dd HEAD` false
+- [Phase 6] `git apply --check` succeeded at offset -3
+- [Phase 6] Grep: no RZ09-0329 in this tree
+- [Phase 7] MAINTAINERS ACPI: Rafael Wysocki; `CONFIG_ACPI_BUTTON`
+  default y
+- [Phase 8] Failure mode: suspend loop; severity HIGH; DMI-scoped; risk
+  very low
+- [Phase 3/4] Commit `415125669c2dd` is `v7.3-rc1~39^2^3` on
+  origin/master
+- UNVERIFIED: individual stable@ thread bodies (lore 403); exact
+  dmidecode dump of the author's machine (string is consistent with
+  other 2020+ Razer DMI names)
 
 **YES**
 
- drivers/media/pci/ivtv/ivtv-vbi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/button.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/media/pci/ivtv/ivtv-vbi.c b/drivers/media/pci/ivtv/ivtv-vbi.c
-index ae7a00f462574..af086c4cbe1a7 100644
---- a/drivers/media/pci/ivtv/ivtv-vbi.c
-+++ b/drivers/media/pci/ivtv/ivtv-vbi.c
-@@ -330,7 +330,7 @@ static u32 compress_sliced_buf(struct ivtv *itv, u32 line, u8 *buf, u32 size, u8
- 	unsigned lines = 0;
- 
- 	/* find the first valid line */
--	for (i = 0; i < size; i++, buf++) {
-+	for (i = 0; i + 3 < size; i++, buf++) {
- 		if (buf[0] == 0xff && !buf[1] && !buf[2] && buf[3] == sav)
- 			break;
- 	}
+diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
+index 384caea90ce5f..4ddaee8955c30 100644
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -132,6 +132,17 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
+ 		},
+ 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
+ 	},
++	{
++		/*
++		 * Razer Blade Pro 17 early 2020, notification of the LID device
++		 * only happens on close, not on open and _LID keeps returning closed.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Razer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Blade Pro 17 (Early 2020) - RZ09-0329"),
++		},
++		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
++	},
+ 	{
+ 		/*
+ 		 * Samsung galaxybook2 ,initial _LID device notification returns
 -- 
 2.53.0
 
