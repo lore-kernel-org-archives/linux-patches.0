@@ -1,43 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619E753BBBB;
-	Mon, 19 Oct 2026 14:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAD553D571;
+	Mon, 19 Oct 2026 14:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418709; cv=none; b=Ioj/8HgxvcRTCDQ54uyJzRvx+fRH9bMKZDLlIpGUuc4pZvuI9YB2vPnQrmX8UfjKu2CTckvGBHRfsYJbMsCe92fJnadBR6K/JK3n6Jocmpo1ONxxY/tL5Es+YveL129qv0pTm2939pJen6VayvEsYVGK2Re6AWUX7yx8JC9oiV4=
+	t=1792418711; cv=none; b=K6J8XbI95ujNK/nqedw0HykNJF44sRLPG7oNRXIgHNPJFUtRhRsR0jeXjxWiEM9UGp6qJDGC3MP+jOj7zxTkQ1bbwEo+yA4YEFmHKPuLsTQSQOUGEfcRB8iVyHWJWocMgFb/v4oLhD97RxBda2uqYH/aNS2cpX+0X1FkThrdiIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418709; c=relaxed/simple;
-	bh=w2HX/Fw+5HgIO5XZQ10RGAnFoCq/jW40U+9SRlYu8Sw=;
+	s=arc-20240116; t=1792418711; c=relaxed/simple;
+	bh=KOswoNjEcV8ovVzEKJvJY+RaXH0B+Z4iDE3cex5hL9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=naW6n/8nw/H9oq7xnUAhyZkbw/0QRNW5tq8BVbfkXUqTfl8jZj7UhtqO8r7W6gJaUJlZfuZCY1bB7AcRxoBD2ZBPK2uBfVsqCXb3ZtlDxICxcYzDGRxU0+0qIE2yEEGuQJ48Se7XGW23J6XGGR+vjqqJ/orbGNm3m5TjgBJHLMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DtxGgvC8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Nj6kaTFPO2rtxWdy61dJiBWGtUO90VhO62ZswqHP23BCizvOBNUkbOfkpHoeYBvER7Bb0NePirhAlfWmbA1KusNi/yy2JH+dFkgEZcMrnyGVZOatlimF64YIVjZoB5v7jOWsdDZMnNvBmyZCmYWAipFHZiIzBcJSzNPGs/NvDcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fBOVmxvu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DtxGgvC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72ADB1F000C4;
-	Mon, 19 Oct 2026 14:05:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fBOVmxvu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEA71F000CA;
+	Mon, 19 Oct 2026 14:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418707;
-	bh=Us7JsWYJ7Arw0VBDkGQy6sNQDtX+hznFYmkOxZjm1/w=;
+	s=k20260515; t=1792418709;
+	bh=1atrWMidy/mqUqIpPrKw3eieFv9QQz6XVuDdor/tV+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DtxGgvC86n2S722n7FB1ivnxoAnJqGUionse9sRVgxqwXAFJYCYZETRop3cd/29Kb
-	 OM6FUrqmjvzf0Vefi/Cq3gB2v021xzObXZIUShqg1sZny6f07X0LpZpo88jSTB1vSY
-	 tSUupsRS6E4drmJHkNO3bYMyOmtE4/aQMb9twfw3sJAX008E6PCFGi55xPv24Adg0R
-	 9vXiOjLhG43F4Y2xdhaCdvDyK2THEOoGKYWbBTaAOSsj4a9QKNRdoa0ucFHqvyNjHF
-	 lndYlY8JcPpB+gxwklII+d5wlUT99UQ6FLoCajOQnh1Lc87G2GJ3O6oaa3WPpLLbbN
-	 xj+5trplxTz7A==
+	b=fBOVmxvuuzlVI7nx4UrO4WVGIdWt3t4o8PvVBOrQFkvcBrTx9oGTKWIFhrqHsSMjI
+	 3ja39q2LqBpKX26nSlUQX9g71EulyIjmFmPzFq+B2NGfi7G1Ft1QZkl2H+7LJnMJE9
+	 zcgkqqlR6MShhrvlbe9Wf+mee64TRzmGYWpR/uVqSUnAvBf5fGnUQZS9wyJtpDVyhy
+	 BgJX0XNXMh1veMjZnn7AI85hruEe8VglQ7anIp94ksfXoA5acg1sEOV2oeQN05S3wl
+	 hk16PpBZE5odZFcEjibgZi/DlEseiJWsJyXu3ROSQEE+kYOiRC9GnU7Cs9AmwqpiMu
+	 IGF/al+q7Fc4w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kaloz@kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	fw@strlen.de,
+	davem@davemloft.net,
+	edumazet@kernel.org,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] soc: ixp4xx: qmgr: add missing MODULE_DEVICE_TABLE()
-Date: Mon, 19 Oct 2026 09:52:10 -0400
-Message-ID: <20261019135441.1420968-439-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] netfilter: tproxy: use DEBUG_NET_WARN_ON_ONCE for protocol fallbacks
+Date: Mon, 19 Oct 2026 09:52:11 -0400
+Message-ID: <20261019135441.1420968-440-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,377 +59,453 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 01479280fa5d4691013bcd64fdfd935117b69769 ]
+[ Upstream commit 1f0391aea883e99d402d0f77ba3530e4e879350d ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+Replace WARN_ON calls with DEBUG_NET_WARN_ON_ONCE in the default switch
+blocks of nf_tproxy_get_sock_v4 and v6. Unsupported transport protocols
+are already safely handled by returning a NULL socket pointer. This
+prevents unnecessary system panics when panic_on_warn=1 is enabled in
+production systems.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
-
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Message-ID: <20260704121851.63805-1-pengpeng@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/cover.1786968834.git.zhilinz@nebusec.ai/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+This is a two-line datapath `WARN_ON` demotion in netfilter tproxy. The
+`WARN_ON(1)` is present in this 6.12 tree, `DEBUG_NET_WARN_ON_ONCE`
+already exists here, and Pablo later took the change into `-net` because
+that warning is reachable and can panic under `panic_on_warn=1`.
 
-**Step 1.1 — Subject**
-Record: `[soc: ixp4xx: qmgr]` `[add]` add missing
-`MODULE_DEVICE_TABLE()` so OF module aliases are generated.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2 — Tags**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [netfilter / tproxy] [use] [replace `WARN_ON` with
+`DEBUG_NET_WARN_ON_ONCE` on unsupported-protocol fallbacks in IPv4/IPv6
+tproxy socket lookup]
+
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Message-ID: <20260704121851.63805-1-pengpeng@iscas.ac.cn>`
-- `Signed-off-by: Linus Walleij <linusw@kernel.org>` (IXP4xx/SoC
-  maintainer; applied the patch)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Cc: stable`, or `Link:` tags (absence of Fixes/Cc-stable is
-  expected for this review)
+- Link:
+  https://patch.msgid.link/cover.1786968834.git.zhilinz@nebusec.ai/
+  (cover from Zhiling Zou / nebusec.ai, 2026-08-17)
+- Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de> (author)
+- Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org> (netfilter
+  maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable (absence expected)
+- Ignore any pipeline "Upstream commit" / Sasha Levin SOB if present
 
-**Step 1.3 — Body**
+Notable: the msgid points at an external bug-finding series, not at
+Fernando’s original June nf-next cover. Pablo later described a concrete
+datapath reachability bug.
+
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `ixp4xx_qmgr_of_match[]` is wired to `.of_match_table` but
-  not exported via `MODULE_DEVICE_TABLE(of, ...)`.
-- **Symptom:** `depmod`/modinfo aliases are not generated, so userspace
-  cannot autoload the module from the DT compatible `intel,ixp4xx-ahb-
-  queue-manager`.
-- **Failure mode:** modular `CONFIG_IXP4XX_QMGR=m` does not bind on DT
-  boot unless someone `modprobe`s by hand. Built-in (`=y`) is
-  unaffected.
-- **Version info:** none in the message. Introduced with DT probe in
-  v5.2-rc1.
-- **Root cause (author):** source-level omission; no hardware
-  reproduction claimed.
+- Bug: `WARN_ON(1)` in the default arm of the L4 protocol switch in
+  `nf_tproxy_get_sock_v4` / `nf_tproxy_get_sock_v6`.
+- Symptom: kernel warning splat; with `panic_on_warn=1`, a full panic.
+- Failure mode: “unnecessary system panics when panic_on_warn=1”.
+- Root cause (author): unsupported transport protocols are already
+  handled by returning `sk = NULL`; the `WARN_ON` is not needed for
+  correctness.
+- Version info in the message: none.
 
-**Step 1.4 — Hidden bug fix?**
-Record: Not disguised. It is an explicit autoload fix. The “source-level
-/ no reproduction” wording is honesty, not cleanup-as-fix.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup in the sense of a leak/UAF. It is a real
+defensive fix: a reachable `WARN_ON` in the packet path that can panic
+production/hardened kernels. Originally patch 6/9 of an nf-next “replace
+raw warnings” series; Pablo later moved this specific change to `-net`
+because the warning is reachable.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1 — Inventory**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/soc/ixp4xx/ixp4xx-qmgr.c` (`+1 / -0`)
-- Function/data: `ixp4xx_qmgr_of_match[]` (table, not a function)
-- Scope: single-file, one-line surgical change
+- `net/ipv4/netfilter/nf_tproxy_ipv4.c`: 1 line changed (`WARN_ON(1)` →
+  `DEBUG_NET_WARN_ON_ONCE(1)`)
+- `net/ipv6/netfilter/nf_tproxy_ipv6.c`: same 1-line change
+- Functions: `nf_tproxy_get_sock_v4`, `nf_tproxy_get_sock_v6`
+- Scope: single-function surgical fix, two files, +0/−0 net (2
+  modifications)
 
-**Step 2.2 — Code flow**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Before:** OF table exists and is used for in-kernel matching when
-  the driver is already loaded/built-in. No `alias=of:N*T*Cintel,ixp4xx-
-  ahb-queue-manager` in module metadata.
-- **After:** `MODULE_DEVICE_TABLE(of, ixp4xx_qmgr_of_match)` creates the
-  `file2alias` alias so kmod/udev can load `ixp4xx-qmgr` from DT.
-- Path affected: module-build metadata only; probe/remove/IRQ paths
-  unchanged.
+- Before: protocol switch handles TCP and UDP; any other protocol hits
+  `default: WARN_ON(1); sk = NULL;` then returns NULL.
+- After: same NULL return; warning only if `CONFIG_DEBUG_NET=y`, and
+  only once.
+- Path: packet/socket-lookup path for TPROXY, not init. Already a
+  handled fallback, not a crash-without-WARN bug.
 
-**Step 2.3 — Bug mechanism**
-Record: **Hardware enablement / missing device-table publication**
-(module autoload). Not UAF, leak, race, or crash. Mechanism: missing
-`MODULE_DEVICE_TABLE` so OF IDs never reach userspace.
-
-**Step 2.4 — Fix quality**
-Record: Obviously correct; this is the standard kernel idiom next to
-every OF match table. Minimal, no API change, no locking, no runtime
-behavior change for built-in. Regression risk is effectively zero
-(`MODULE_DEVICE_TABLE` is a build-time alias attribute).
-
-## Phase 3: Git history
-
-**Step 3.1 — Blame**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- OF table added in `9e01a00958405` (“soc: ixp4xx: qmgr: Add DT probe
-  code”, Linus Walleij, 2019) — first in **v5.2-rc1**.
-- `.of_match_table = of_match_ptr(...)` until `526f3f3b102f0`
-  (v5.19-rc1) dropped `of_match_ptr()`.
-- `MODULE_DEVICE_TABLE` never added until this commit `01479280fa5d4`
-  (Pengpeng Hou, 2026-07-04; applied 2026-07-24).
-- Buggy omission has been in tree for ~7 years.
+- Category: logic/correctness of assertions in the datapath (WARN-in-
+  packet-path / panic_on_warn DoS), not UAF/leak/race.
+- Mechanism: `WARN_ON(1)` treats “non-TCP/UDP protocol in tproxy lookup”
+  as a kernel bug. Callers can still pass a non-TCP/UDP protocol. The
+  function already returns NULL and callers drop/break. The WARN is the
+  harmful part under `panic_on_warn`.
 
-**Step 3.2 — Fixes: tag**
-Record: No `Fixes:` tag. Implicit parent is `9e01a00958405` (DT probe).
-That commit **is** an ancestor of this checkout (`git merge-base --is-
-ancestor` succeeded).
-
-**Step 3.3 — File history**
-Record: Recent related work is the sibling `f0b93c158aa92` (“soc:
-ixp4xx: npe: add missing MODULE_DEVICE_TABLE()”) from the same
-author/date. Other nearby commits are `dev_err` cleanup and `remove()`
-signature changes — not prerequisites for this one-liner.
-
-**Step 3.4 — Author**
-Record: Pengpeng Hou is not the subsystem maintainer; this is one of a
-batch of `MODULE_DEVICE_TABLE` additions (ixp4xx npe, aspeed, mediatek,
-rtc, vdpa, watchdog, hwmon, fbdev). Maintainer Linus Walleij applied it
-(“Patch applied.”).
-
-**Step 3.5 — Dependencies**
-Record: Standalone. Requires only the existing `ixp4xx_qmgr_of_match`
-table and `<linux/module.h>` (already included). No series dependency
-beyond the optional sibling npe patch.
-
-## Phase 4: Mailing list / external
-
-**Step 4.1 — Original discussion**
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- `b4 dig -c 01479280fa5d4` →
-  https://patch.msgid.link/20260704121851.63805-1-pengpeng@iscas.ac.cn
-- Thread: patch + maintainer reply only. Linus Walleij: “Patch applied.”
-  No NAK, no stable nomination, no requested revisions.
-- `b4 dig -a` also matched an earlier same-diff series: Liao Chen,
-  2024-08-14, `[PATCH -next] soc: ixp4xx/qmgr: fix module autoloading`
-  (`20240814031004.3876441-1-liaochen4@huawei.com`). Same patch-id; that
-  2024 posting did not land; Hou’s 2026 resend did.
-- Lore HTTP fetch returned 403; thread recovered via `b4 dig -m`.
+- Obviously correct: fallback already returns NULL; only the assertion
+  changes.
+- Minimal: two identical one-line edits.
+- Regression risk: very low. Production kernels (`CONFIG_DEBUG_NET=n`)
+  compile this to `BUILD_BUG_ON_INVALID(1)`, a compile-time sizeof no-op
+  (`include/linux/build_bug.h`). Debug kernels still warn once.
+- No API, locking, or structure changes.
+- Red flag that does not block backport: this does not fix checkentry
+  itself; it makes the already-safe fallback non-fatal.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: To Linus Walleij, Imre Kaloz (historical OpenWrt IXP4xx); Cc
-`linux-arm-kernel`, `linux-kernel`. Right maintainer was on To: and
-merged it.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 4.3 — Bug report**
-Record: No syzbot/bugzilla/`Reported-by`. Author states there is no
-dynamic hardware reproduction.
-
-**Step 4.4 — Series**
-Record: Not numbered `X/Y`. Parallel sibling `f0b93c158aa92` for
-`ixp4xx-npe.c` is independent (same one-line pattern). This qmgr patch
-is self-contained.
-
-**Step 4.5 — Stable list**
-Record: Unverified. `lore.kernel.org/stable/` fetch returned 403. No
-stable discussion found via `b4` or local git.
-
-## Phase 5: Code semantic analysis
-
-**Step 5.1 — Functions**
-Record: No function body changed. Data: `ixp4xx_qmgr_of_match[]`. Driver
-still registered with `module_platform_driver(ixp4xx_qmgr_driver)`.
-
-**Step 5.2 — Callers / impact surface**
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- Probe via platform/OF: DT node `qmgr: queue-manager@60000000` in
-  `arch/arm/boot/dts/intel/ixp/intel-ixp4xx.dtsi` (`compatible =
-  "intel,ixp4xx-ahb-queue-manager"`), used by all IXP4xx SoC DTs that
-  include that dtsi.
-- Consumers of exported qmgr APIs:
-  `drivers/net/ethernet/xscale/ixp4xx_eth.c`,
-  `drivers/net/wan/ixp4xx_hss.c`,
-  `drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c`. Those Kconfigs `depends
-  on IXP4XX_QMGR`.
-- Reachable on IXP4xx boot when the DT node is present. Not a syscall-
-  hot path; device probe / module load.
+- Introduced by `45ca4e0cf2734` (“netfilter: Libify xt_TPROXY”, Máté
+  Eckl, 2018-06-01).
+- `git merge-base --is-ancestor 45ca4e0cf2734 HEAD` succeeded. Present
+  since the tproxy libification, long before 6.12.
 
-**Step 5.3 — Callees**
-Record: Unchanged. `MODULE_DEVICE_TABLE` expands to a used alias
-attribute for `file2alias.c` (see `include/linux/module.h`).
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Not applicable. Upstream applied commit is
+`1f0391aea883` (netdev `-net`); `git merge-base --is-ancestor
+1f0391aea883 HEAD` failed, so this tree does not already contain the
+fix.
 
-**Step 5.4 — Reachability**
-Record: Userspace-reachable only as module autoload (kmod). If
-`CONFIG_IXP4XX_QMGR=m`, missing aliases mean the queue manager (and thus
-Ethernet/HSS/crypto that need it) will not come up automatically. If
-`=y`, this commit is a no-op at runtime.
-`arch/arm/configs/ixp4xx_defconfig` has `CONFIG_IXP4XX_QMGR=y` and
-`CONFIG_IXP4XX_ETH=y`. Kconfig is still **tristate**, so modular builds
-are a supported config.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Recent local history on these files: `21a673bddc8fd` (NULL
+indev), `4a02426787bf0` (BH deadlock), hashinfo via net. No competing
+tproxy WARN change. Standalone; not patch 2/3 of a required series for
+this tree.
 
-**Step 5.5 — Similar patterns**
-Record: Same omission/fix in `drivers/soc/ixp4xx/ixp4xx-npe.c`
-(`f0b93c158aa92`). Same author also added `MODULE_DEVICE_TABLE` in other
-SoC drivers the same week.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Fernando Fernandez Mancera is a regular netfilter contributor in
+this tree (conncount, synproxy, osf, NFQUEUE). Pablo signed off as
+maintainer. Original June 2026 series was a broad WARN→DEBUG_NET
+conversion; only tproxy (and separately conncount) were later taken into
+`-net`.
 
-## Phase 6: Local tree
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Depends only on `DEBUG_NET_WARN_ON_ONCE` in
+`include/net/net_debug.h`, present in this tree. Both files include
+`linux/skbuff.h` (IPv4 directly; IPv6 via `nf_tproxy.h` → `net/tcp.h` →
+`skbuff.h`), and `skbuff.h` includes `net/net_debug.h`. Applies
+standalone.
 
-**Step 6.1 — Does the buggy code exist here?**
-Record: Local tree is **v7.3-rc4** (`7.3.0-rc4`, `git describe HEAD` =
-`v7.3-rc4-27-gf0100363d8c37`). This is mainline, not an LTS branch. The
-OF match table and platform driver exist. `git merge-base --is-ancestor
-01479280fa5d4 HEAD` is true — the candidate is already in this checkout.
-The pre-fix omission existed from v5.2 until this commit.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 6.2 — Backport difficulty**
-Record: Clean apply. One line next to a table that has been stable since
-2019. No structural conflict with later `remove()` or `dev_err` changes.
-
-**Step 6.3 — Related fixes already here**
-Record: This exact line is already present (`MODULE_DEVICE_TABLE(of,
-ixp4xx_qmgr_of_match)` at line 451). Sibling npe fix is also present. No
-alternate autoload fix.
-
-## Phase 7: Subsystem context
-
-**Step 7.1**
-Record: `drivers/soc/ixp4xx` — Intel IXP4xx (XScale ARMv5) SoC queue
-manager. **PERIPHERAL** for the kernel as a whole; **IMPORTANT** on the
-boards that still use this SoC (Ethernet/WAN/crypto sit on it).
-
-**Step 7.2**
-Record: Low-churn, mature platform. Occasional one-line hygiene/fixes.
-Bug is old, not a new-subsystem issue.
-
-## Phase 8: Impact and risk
-
-**Step 8.1 — Who is affected**
-Record: Platform-specific / config-specific: `ARCH_IXP4XX` (or
-`COMPILE_TEST`) with `CONFIG_IXP4XX_QMGR=m`. Official defconfig builds
-it in, so default distro-style `ixp4xx_defconfig` users never hit this.
-Modular custom/OpenWrt-style builds can.
-
-**Step 8.2 — Trigger**
-Record: Boot with DT + driver as a module. Not a race. Unprivileged
-users cannot trigger a crash; they just don’t get the device until a
-manual load. Commonness: low (legacy SoC; defconfig is built-in).
-
-**Step 8.3 — Failure mode**
-Record: Module does not autoload → queue manager never probes →
-Ethernet/HSS/crypto that depend on it fail to operate. **Severity:
-MEDIUM** (device non-function when modular; not
-oops/corruption/deadlock). Built-in: none.
-
-**Step 8.4 — Risk/benefit**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **Benefit:** Medium for modular IXP4xx users (hardware actually
-  binds); low for defconfig/`=y` users.
-- **Risk:** Very low (one line, build-time metadata only).
-- **Ratio:** Favorable. This is the device-ID class of change: tiny,
-  enables existing hardware, no runtime regression surface.
+- `b4 dig -c` not usable: candidate SHA is not in this checkout.
+- lore.kernel.org fetches returned 403.
+- Original submission: [PATCH 6/9 nf-next] 2026-06-01, cover “replace
+  raw warnings with DEBUG_NET_WARN_ON_ONCE”
+  (https://ratatoskr.run/netfilter-devel/2026/06/17074549 and 17074557).
+  Intent: nf-next hardening.
+- Re-posted as [PATCH net 01/10] then [PATCH net,v2 1/9] by Pablo,
+  2026-08-21 / 2026-08-27:
+  https://lists.openwall.net/netdev/2026/08/21/202 and
+  https://lists.openwall.net/netdev/2026/08/27/160
+- Pablo’s cover: “a recent bug found a way to reach WARN_ON from
+  datapath due to insufficient validation of xt_TPROTO checkentry.”
+- Applied to netdev `-net` as `1f0391aea883`; included in the v7.3-rc1
+  networking pull.
+- No NAK found. Florian commented on other patches in the June series,
+  not a NAK of this tproxy hunk.
+- Commit Link cover.1786968834.git.zhilinz@nebusec.ai is dated
+  2026-08-17 (same reporter class as the sch_cake WARN backport already
+  in this tree).
 
-## Phase 9: Synthesis
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: Recipients on Pablo’s net posting: netfilter-devel, davem, kuba,
+pabeni, edumazet, horms, fw@strlen.de (Florian Westphal), ja@ssi.bg.
+Pablo applied it. No separate Reviewed-by on the commit.
 
-**Step 9.1 — Evidence**
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: Direct zhilinz cover fetch from lore 403’d. Independent
+maintainer statement in the `-net` cover is the verified evidence of
+datapath reachability. Same reporter’s analogous `WARN_ON` panic_on_warn
+issue was already backported here as `2504a76e5c069` (“sch_cake: drop
+WARN_ON(1) for malformed packets”).
 
-For:
-- Real, well-understood autoload bug: OF table used by the driver but
-  not published to userspace.
-- One line, idiomatically correct, zero runtime risk.
-- DT node is in the SoC dtsi; Ethernet/WAN/crypto depend on this driver.
-- Kconfig is tristate; modular builds are supported.
-- Bug present since v5.2; applies cleanly; no prerequisites.
-- Maintainer applied it; same fix on the sibling NPE driver.
-- Official stable rules explicitly allow “just add a device ID”; this is
-  the OF equivalent (publish existing IDs for autoload).
-- Matches the documented exception for trivial ID/enablement additions.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: June 9-patch nf-next series is bulk hardening. Pablo cherry-
+picked tproxy into `-net` because it was shown reachable; conncount in
+the same `-net` pull was explicitly “not known issue”. This tproxy
+commit does not need the rest of that series.
 
-Against:
-- Not a crash, security issue, deadlock, or data-corruption bug.
-- Author documents no hardware reproduction.
-- No user `Reported-by`.
-- `ixp4xx_defconfig` uses `CONFIG_IXP4XX_QMGR=y`, so the official config
-  never needs aliases.
-- IXP4xx is a legacy, small user population.
-- No reviewer `Cc: stable`.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search 403. UNVERIFIED whether anyone
+already requested/rejected this on stable@. No evidence in-tree that it
+was already applied.
 
-Unresolved:
-- Could not read lore.kernel.org over HTTP (403); discussion recovered
-  via `b4 dig -m`.
-- Could not search the stable mailing list (same 403).
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — one-line standard idiom;
-   maintainer applied it. “Tested” is source-level, which is sufficient
-   for this class of change.
-2. Fixes a real bug that affects users? **PASS** — modular OF autoload
-   is broken; users can still `modprobe` manually, but autoload is the
-   supported path.
-3. Important issue? **PASS** under the device-ID exception (hardware
-   does not bind when built as a module). Not CRITICAL severity.
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — metadata only.
-6. Can apply to this tree? **PASS** — driver and table exist here; patch
-   is already an ancestor of HEAD and would apply to any tree that still
-   has the OF table.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `nf_tproxy_get_sock_v4`, `nf_tproxy_get_sock_v6`.
 
-**Step 9.3 — Exception category**
-Record: **Device ID / module alias publication** for an existing driver
-(OF equivalent of adding/exporting a PCI/USB ID). Not a new driver, not
-a new API.
+Step 5.2: TRACE CALLERS
+Record (from grep in this tree):
+- `net/netfilter/xt_TPROXY.c`: `tproxy_tg4`, `tproxy_tg6_v1` (mangle
+  PREROUTING)
+- `net/netfilter/nft_tproxy.c`: `nft_tproxy_eval_v4`,
+  `nft_tproxy_eval_v6`
+- Re-entered from `nf_tproxy_handle_time_wait4` / v6 for TIME_WAIT
+  reopen
+- Exported (`EXPORT_SYMBOL_GPL`)
 
-**Step 9.4 — Decision**
-The local checkout is mainline **v7.3-rc4**. The driver, OF table, and
-DT node are all here; the fix is a one-line alias publication with no
-runtime risk. That is exactly the class of change stable trees take so
-existing hardware keeps working when the driver is modular. Niche
-platform and built-in defconfig lower the blast radius; they do not make
-the fix incorrect or risky.
+xt_TPROXY checkentry (`tproxy_tg4_check` / `tproxy_tg6_check`) rejects
+rules that are not `-p tcp`/`-p udp`. Native nft_tproxy returns
+`NFT_BREAK` unless `pkt->tprot` is TCP or UDP. TPROXY target has no
+`.proto` in the `xt_target` struct; protocol restriction is only
+checkentry + nft eval. Pablo’s cover says that checkentry validation is
+insufficient, so the default arm can still run.
 
----
+Step 5.3: TRACE CALLEES
+Record: TCP/UDP hash lookups (`inet_lookup_listener`, `udp4_lib_lookup`,
+IPv6 equivalents), `sock_put` on mismatch. Default arm only sets `sk =
+NULL`. No alloc/lock in the changed path.
 
-### What the commit solves for stable users
-Without `MODULE_DEVICE_TABLE(of, ...)`, a `CONFIG_IXP4XX_QMGR=m` kernel
-never generates `of:N*T*Cintel,ixp4xx-ahb-queue-manager` aliases. On DT
-boot the queue manager stays unloaded, so IXP4xx Ethernet/HSS/crypto
-that depend on it do not come up. The patch only emits those aliases.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Reachable from netfilter PREROUTING when TPROXY/nft tproxy is
+loaded. Not a syscall on every box, but it is a packet path. With user
+namespaces + CAP_NET_ADMIN in a netns, and with syzbot-style fuzzing of
+iptables/nft compat, it is userspace-reachable once the module is
+present. Native nft IPv4 sets `pkt->tprot = ip->protocol` then checks
+tprot, so that path is consistent; xt_TPROXY uses `iph->protocol` /
+`ipv6_find_hdr()` after a checkentry that Pablo says can be bypassed.
 
-### Rules / risk
-Obviously correct, +1 line, no new API, applies cleanly. Benefit is
-hardware enablement for modular builds; risk is negligible because
-nothing in probe, IRQ, or locking changes.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same files still `BUG()` on invalid `lookup_type` (kernel enum,
+not packet proto). Unrelated. Networking policy is to use
+`DEBUG_NET_WARN_ON_ONCE` on datapath asserts (`include/net/net_debug.h`,
+`CONFIG_DEBUG_NET`). This tree already backported a sibling pattern in
+sch_cake.
 
-### Concerns
-No hardware reproduction and a tiny user base. Those are not blockers
-for this exception class. Sibling NPE change is independent and not
-required.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-### Verification
-- **[Phase 1]** Parsed tags: author Pengpeng Hou; SOB Linus Walleij;
-  Message-ID present; no Fixes/Reported-by/Cc-stable.
-- **[Phase 2]** Diff: +1 line `MODULE_DEVICE_TABLE(of,
-  ixp4xx_qmgr_of_match)` in `drivers/soc/ixp4xx/ixp4xx-qmgr.c`.
-- **[Phase 3]** `git blame`: table from `9e01a00958405` (v5.2-rc1); this
-  line from `01479280fa5d4`.
-- **[Phase 3]** `git merge-base --is-ancestor 9e01a00958405 HEAD` and
-  `01479280fa5d4 HEAD`: both true.
-- **[Phase 3]** Sibling `f0b93c158aa92` on `ixp4xx-npe.c` same day; not
-  a prerequisite.
-- **[Phase 4]** `b4 dig -c 01479280fa5d4`: lore URL `https://patch.msgid
-  .link/20260704121851.63805-1-pengpeng@iscas.ac.cn`.
-- **[Phase 4]** `b4 dig -a`: also matched 2024 Liao Chen posting with
-  the same patch-id; Hou 2026 version is what landed.
-- **[Phase 4]** `b4 dig -w`: To Linus Walleij and Imre Kaloz; Cc linux-
-  arm-kernel, linux-kernel.
-- **[Phase 4]** `b4 dig -m`: Walleij reply is “Patch applied.”; no NAK,
-  no stable tag.
-- **[Phase 4]** WebFetch lore/stable: 403. UNVERIFIED: stable-list
-  discussion.
-- **[Phase 5]** Callers of qmgr APIs: `ixp4xx_eth.c`, `ixp4xx_hss.c`,
-  `ixp4xx_crypto.c`. DT node in `intel-ixp4xx.dtsi`.
-- **[Phase 5]** `MODULE_DEVICE_TABLE` in `include/linux/module.h` is an
-  alias attribute for `file2alias.c`.
-- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
-  `make kernelversion` = `7.3.0-rc4`. File already contains the line.
-- **[Phase 6]** Kconfig `IXP4XX_QMGR` is tristate; `ixp4xx_defconfig`
-  sets `CONFIG_IXP4XX_QMGR=y`.
-- **[Phase 8]** Failure mode: module autoload miss → device never
-  probes; severity MEDIUM, not oops.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes.
+- Tree: `pending-6.12`, `git describe` p-6.12-3-gc504cf0baa3d8, `make
+  kernelversion` 6.12.111 (Makefile 6.12.111).
+- `WARN_ON(1)` at `nf_tproxy_ipv4.c:141` and `nf_tproxy_ipv6.c:140`.
+- Bug introduced 2018 (`45ca4e0cf2734`), present in this branch.
+
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Surrounding code matches the submitted diff context exactly.
+Expected apply: clean. `DEBUG_NET_WARN_ON_ONCE` already defined. No
+extra include needed.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: Upstream `1f0391aea883` is not an ancestor. No other commit on
+these files replaces this `WARN_ON`. sch_cake WARN demotion is a
+precedent, not a substitute.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: netfilter tproxy (`net/ipv4/netfilter`, `net/ipv6/netfilter`,
+used by xt_TPROXY / NFT_TPROXY). Criticality: IMPORTANT (transparent
+proxy / service-mesh / squid / k8s-style TPROXY), not core mm/VFS, not
+staging.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature. TPROXY lookup logic has been stable for years; recent
+commits are bugfixes (NULL indev, BH deadlock), not refactors. Fits “old
+assertion, newly shown reachable.”
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Config-specific: `NF_TPROXY_IPV4`/`IPV6`,
+`NETFILTER_XT_TARGET_TPROXY`, `NFT_TPROXY`. Production transparent-proxy
+users, and fuzzers/hardened kernels that load those modules with
+`panic_on_warn=1`.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Packet hits tproxy lookup with protocol ≠ TCP/UDP. Native
+nft_tproxy tries to gate on tprot; xt_TPROXY checkentry tries to require
+`-p tcp|udp`. Pablo stated checkentry is insufficient, so the default
+arm is reachable from the datapath. Not every boot; requires TPROXY in
+the ruleset (or a checkentry bypass). Unprivileged trigger: not from raw
+packets alone without a TPROXY rule; with a loaded rule or netns admin,
+yes. Syzbot-class environments typically have both.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record:
+- Default: `WARN_ON` splat in dmesg, lookup returns NULL, packet
+  dropped/broken — MEDIUM.
+- `panic_on_warn=1` (syzbot, some hardened/Android/debug distros): panic
+  — HIGH/CRITICAL for those users.
+- Not data corruption or UAF.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: medium-high for TPROXY + panic_on_warn; prevents a panic on a
+  path that already handles the case. Low-medium for default 6.12
+  (warning only).
+- Risk: very low (2 lines, no-op when `CONFIG_DEBUG_NET=n`).
+- Ratio: favorable. Same class as the sch_cake WARN removal already in
+  this 6.12 tree.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- `WARN_ON(1)` is in this 6.12 tree since 2018; fix is not.
+- Maintainer placed this in `-net` because the warning is reachable from
+  the datapath.
+- Fallback already returns NULL; the WARN is the only dangerous part
+  under `panic_on_warn`.
+- Two lines, clean apply, `DEBUG_NET_WARN_ON_ONCE` already exists.
+- Same reporter/class as sch_cake WARN backport `2504a76e5c069` already
+  in this tree.
+- TPROXY is a real production feature, not staging.
+
+AGAINST:
+- Started as nf-next bulk hardening, not a one-off crash fix.
+- Does not repair checkentry; only demotes the assertion.
+- Default kernels do not panic on WARN.
+- Affects only TPROXY users / fuzzers, not all 6.12 systems.
+
+UNRESOLVED:
+- Exact zhilinz reproducer (lore 403). Relied on Pablo’s `-net` cover
+  instead.
+- Whether stable@ already discussed this (lore stable 403).
+- Precise checkentry-bypass mechanics in 6.12 (nft_compat proto vs
+  actual matches is a plausible hole; not fully reproduced here).
+  Decision does not depend on re-deriving that hole because the
+  maintainer already stated reachability and the fallback is already
+  correct.
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — two-line assert demotion; Pablo
+   merged to `-net`.
+2. Fixes a real bug that affects users? PASS — reachable datapath WARN;
+   panic with `panic_on_warn=1`.
+3. Important issue? PASS — panic/DoS on hardened and fuzzer configs;
+   warning noise otherwise. Severity HIGH with `panic_on_warn`, MEDIUM
+   without.
+4. Small and contained? PASS — 2 lines, 2 files.
+5. No new features or APIs? PASS.
+6. Can apply to the local tree? PASS — buggy code present, macro
+   present, context matches.
+
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
+bugfix.
+
+Step 9.4: MAKE YOUR DECISION
+The local tree is 6.12.111. The bug exists here. The fix is a minimal,
+obviously correct datapath change that stops a handled protocol fallback
+from taking down `panic_on_warn` systems. That matches stable policy and
+an existing 6.12 precedent for the same WARN class.
+
+What it solves for stable users: a tproxy socket lookup for an
+unsupported L4 protocol currently fires `WARN_ON(1)` even though it
+already returns NULL. On kernels with `panic_on_warn=1` that is a panic;
+otherwise a splat. Backporting only changes the assertion, not lookup
+behavior.
+
+Risk vs benefit: benefit is avoiding a panic/warning on a real packet
+path; risk is negligible (`CONFIG_DEBUG_NET=n` compiles to a no-op). No
+prerequisites missing in 6.12.
+
+===============================================================
+Verification:
+- [Phase 1] Tags: Link to zhilinz cover (2026-08-17), SOB Fernando +
+  Pablo; no Fixes/syzbot/Cc:stable
+- [Phase 2] Diff: 2 files, `WARN_ON(1)` → `DEBUG_NET_WARN_ON_ONCE(1)` in
+  `nf_tproxy_get_sock_v4/v6` default arms; `sk = NULL` unchanged
+- [Phase 2] Confirmed current 6.12 code still has `WARN_ON(1)` at
+  ipv4:141 and ipv6:140
+- [Phase 3] `git blame`: 45ca4e0cf2734 (2018 Libify xt_TPROXY); ancestor
+  of HEAD
+- [Phase 3] `git merge-base --is-ancestor 1f0391aea883 HEAD`: not in
+  this tree
+- [Phase 3] `DEBUG_NET_WARN_ON_ONCE` in `include/net/net_debug.h` gated
+  on `CONFIG_DEBUG_NET`; `BUILD_BUG_ON_INVALID` is sizeof no-op
+- [Phase 3] `linux/skbuff.h` includes `net/net_debug.h`; both tproxy
+  files get that include
+- [Phase 4] lore/b4: lore 403; used openwall + ratatoskr. Original: nf-
+  next 6/9 2026-06-01; Pablo `-net` 2026-08-21/27 stating datapath
+  reachability via weak xt protocol checkentry
+- [Phase 4] No NAK found; applied as 1f0391aea883 in netdev `-net`
+- [Phase 4] UNVERIFIED: full zhilinz thread body; stable@ discussion
+- [Phase 5] Callers: xt_TPROXY, nft_tproxy, timewait helpers; xt
+  checkentry requires TCP/UDP; nft eval checks tprot; TPROXY `xt_target`
+  has no `.proto`
+- [Phase 6] `git describe`/Makefile: pending-6.12 / 6.12.111; context
+  matches patch; clean apply
+- [Phase 6] Precedent in this tree: 2504a76e5c069 sch_cake WARN_ON drop,
+  Reported-by Zhiling Zou, panic_on_warn
+- [Phase 7] netfilter tproxy, IMPORTANT, mature
+- [Phase 8] Failure: WARN splat or panic_on_warn panic; not
+  UAF/corruption
+- UNVERIFIED: exact checkentry-bypass PoC in 6.12; not used as the sole
+  driver (maintainer statement + existing WARN + safe NULL return are
+  verified)
+
+The change is small, already handled correctly aside from the warning,
+and belongs on this 6.12 tree.
 
 **YES**
 
- drivers/soc/ixp4xx/ixp4xx-qmgr.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 +-
+ net/ipv6/netfilter/nf_tproxy_ipv6.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/ixp4xx/ixp4xx-qmgr.c b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-index 475e229039e30..e3ad0e0237a77 100644
---- a/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-+++ b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-@@ -454,6 +454,7 @@ static const struct of_device_id ixp4xx_qmgr_of_match[] = {
-         },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, ixp4xx_qmgr_of_match);
+diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+index 041c3f37f237b..5eab7a2dc8ef2 100644
+--- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
++++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+@@ -137,7 +137,7 @@ nf_tproxy_get_sock_v4(struct net *net, struct sk_buff *skb,
+ 		}
+ 		break;
+ 	default:
+-		WARN_ON(1);
++		DEBUG_NET_WARN_ON_ONCE(1);
+ 		sk = NULL;
+ 	}
  
- static struct platform_driver ixp4xx_qmgr_driver = {
- 	.driver = {
+diff --git a/net/ipv6/netfilter/nf_tproxy_ipv6.c b/net/ipv6/netfilter/nf_tproxy_ipv6.c
+index b2f59ed9d7cc0..12ec36a6be2e1 100644
+--- a/net/ipv6/netfilter/nf_tproxy_ipv6.c
++++ b/net/ipv6/netfilter/nf_tproxy_ipv6.c
+@@ -136,7 +136,7 @@ nf_tproxy_get_sock_v6(struct net *net, struct sk_buff *skb, int thoff,
+ 		}
+ 		break;
+ 	default:
+-		WARN_ON(1);
++		DEBUG_NET_WARN_ON_ONCE(1);
+ 		sk = NULL;
+ 	}
+ 
 -- 
 2.53.0
 
