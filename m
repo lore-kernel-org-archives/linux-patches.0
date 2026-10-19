@@ -1,44 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A386238A0;
-	Mon, 19 Oct 2026 14:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771F450A3E9;
+	Mon, 19 Oct 2026 14:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418693; cv=none; b=s5dDmhQhy3bUfs50TQyFQtBlBhjDqPwHGuaXRu28zbePy8RcQgDW+HwudXwRUCsvwrkaOW0jRX5MwKaveL/v/MIESvSnQWJUwmz9pQI4654eV6KmAEZVNkGYsk9Xx55IeWTngRuiB3NQCJjgLcp0k4DIwuUAlMfEFnWEMM4Clus=
+	t=1792418695; cv=none; b=WIVQoSixFQ9/rgEcWG+1Kk6XRiXsQKzq02h4cOQLM+QiM8b1TJoAy0he/qRXoUtiZoTbdy5GJPt3O3c8TAyE5y2DZsq6yKI9MNfT5VBJp4emN1XqQ3iEKBKn7tgsaW90Vfz/wtHwqSIkEmjdKSb/pgQHtPib3A/GaqUQ6kQ9mhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418693; c=relaxed/simple;
-	bh=ft629vtileep1FfktRDH0L4etrkbJbrC8XDK3cHHkWo=;
+	s=arc-20240116; t=1792418695; c=relaxed/simple;
+	bh=FIOIwoP2afiERcg4/1WmwkN28yCxbEtJtBPVgPdHRHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EfvDvdrPCDUtr9h2hKc3IqRLrVRTsSk9eAsdPVKDWi3PwGavVLvypLIxdZHq+pFwlM2wgwjt80AfUrIWy4ltGceCCZFZwXIuhO3wi2WPMVng835jcyXx+I9i8YIRMpyLFlwE7Cn+LB5VtPMwyklbQxK2GiLlwNgwbiKhsevKm/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOfWy+Bu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Q2HwB9UA4RdCUDmygHO++992aN+dg+2H0pEZjeFHShJ60QaqlicjJhaSuYYVs78ByTzS81rpNR/2sxMjEEqt1OKsbSKOR7DS3jbiPBQKYXklOt/I4v2WzrR+MjxznzEPUfij6Km9uW47A4/R2v9IpU4k53CdswnglJRIPFAIjvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EfGffzrL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOfWy+Bu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681EE1F000C9;
-	Mon, 19 Oct 2026 14:04:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EfGffzrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDB61F000C7;
+	Mon, 19 Oct 2026 14:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418690;
-	bh=4amEEY/Xct1faar7l9czoxlKhgGqkKJbq754RzhoEmM=;
+	s=k20260515; t=1792418692;
+	bh=4nlAkPNRvRnVtsAxzYTceA/wS9G1utQMbrHPnjSJf7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jOfWy+BuXrTl8vItMCjvJtfMgVCfoAfYqcU0HA9oQ5a4DVxgwzVc5tp42HmkE80Qf
-	 p8adFBF6IGGWG1ZBEx4YBVGl3oq9DhvGKJxqqqX3DPCOmMhTrMcxTUOwmWdQpedWws
-	 2b2IWbPzdWrq4yMP1VBGt5GQCBKetUeT8YaAo9kyJKdxwarmWEqjTLXkF17ieo7XNK
-	 Mru+hBkOTMDqHc5V1X1cG6dxuZ6ZnA3/Jdm2Qg8Z8zNKcgiECbI0DSkxjo3H6kWU2v
-	 1TCnkqH81BHmW1xQaVR+pQ2/TRJDtrh3ZbJHqgaisyXLT9m87y0TFPMm+j1z74Uf0K
-	 CROb5LuYAIl4A==
+	b=EfGffzrLYuX7fpzUtELS2FJZeGP5cDw77QtzBRCfhzwNAQM3zrSXMsQ0VTlNy5oJY
+	 K5JmfFWb7WAotDOe6lE2eAgctSB6MPUzc6XaMHQD7i3lZlQEhnh2fXLixij/cqEygG
+	 s9NJ8zcVAGF/s4xrhH6wysrpQZ4ModkcvLwwjIYcpH1E/gBmXkUPZz60f/wqyd9B9v
+	 ri52zaa8PhKT5SGX9idocYaKCSskIeG3F2LbETClSNadfvFIywAhS6mtySSMktrYf/
+	 xB/bONmQQxFhiyNWWG/fK7067Cz//5Vnvu5STskl2tFibWf6WbbYOH46ZzjCMUn4zo
+	 U2S9zDbuvC5qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Thomas Falcon <thomas.falcon@intel.com>,
+	Zide Chen <zide.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-f2fs-devel@lists.sourceforge.net,
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	tglx@kernel.org,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] f2fs: avoid setting SBI_NEED_FSCK on transient resize failure
-Date: Mon, 19 Oct 2026 09:51:58 -0400
-Message-ID: <20261019135441.1420968-427-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] perf/x86: Unregister PMI handler on PMU init failure
+Date: Mon, 19 Oct 2026 09:51:59 -0400
+Message-ID: <20261019135441.1420968-428-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,439 +61,404 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 258c95150c26a30db1896eacd3bdef26314f2ca1 ]
+[ Upstream commit 91787047b1dc52b1fee68b07f79af70aae5fce47 ]
 
-When free_segment_range() fails in f2fs_resize_fs(), no on-disk
-superblock or filesystem metadata has been modified yet, and
-free_segment_range() safely restores all in-memory counters before
-returning.
+Fix an NMI handler leak in init_hw_perf_events(). When PMU
+initialization fails after register_nmi_handler(), the error path
+exits without calling unregister_nmi_handler(), leaving a stale
+NMI_LOCAL "PMI" handler registered. Add the missing call before
+clearing x86_pmu state.
 
-However, the current error recovery path unconditionally sets the
-SBI_NEED_FSCK flag and prints a scary error message on any error,
-forcing an unnecessary and time-consuming fsck.f2fs repair on the
-subsequent mount/reboot.
-
-Fix this by separating the error recovery path with a dedicated
-recover_user_blocks label to bypass setting SBI_NEED_FSCK on
-free_segment_range() failures.
-
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Thomas Falcon <thomas.falcon@intel.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Link: https://patch.msgid.link/20260717080342.1879573-2-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the local 6.12 code, the introducer, and the mailing-list review.
-Compiling the full nine-phase analysis next.
+The local tree is **6.12.111** (`pending-6.12`). The NMI-handler leak is
+in this checkout, and the four-line cleanup applies cleanly.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [f2fs] [avoid setting] Avoid setting `SBI_NEED_FSCK` when
-`f2fs_resize_fs()` fails in `free_segment_range()` before any on-disk
-metadata is modified.
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[perf/x86] [Unregister] Unregister PMI NMI handler when PMU
+init fails after `register_nmi_handler()`**
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Daeho Jeong <daehojeong@google.com> (author,
-  Google/Android f2fs)
-- Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-- Reviewed-by: Chao Yu <chao@kernel.org> (primary f2fs reviewer)
-- Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org> (f2fs maintainer)
-- No Fixes: tag (expected)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / Link / syzbot
-- Ignore pipeline-added Sasha Levin SOB / Upstream commit markers if
-  present
+- Signed-off-by: Dapeng Mi (author)
+- Signed-off-by: Peter Zijlstra (Intel) (perf/x86 maintainer; merged to
+  tip/perf/core)
+- Reviewed-by: Thomas Falcon (Intel)
+- Reviewed-by: Zide Chen (Intel)
+- Link: https://patch.msgid.link/20260717080342.1879573-2-
+  dapeng1.mi@linux.intel.com
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable, or syzbot tags
+  (absence is expected)
+- Pipeline markers ignored per instructions
+- Tip merge SHA: `91787047b1dc52b1fee68b07f79af70aae5fce47` (not an
+  ancestor of this tree)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: `f2fs_resize_fs()` error recovery sets `SBI_NEED_FSCK` on any
-  error after `free_segment_range()`, including failures that happen
-  before `update_sb_metadata()` / `f2fs_commit_super()`.
-- Symptom: scary `f2fs_err` plus a persistent “need fsck” mark, so the
-  next mount/reboot runs a long `fsck.f2fs` even though the filesystem
-  is still consistent.
-- Root cause: one shared `recover_out` label for both “GC/segment-free
-  failed, nothing committed” and “superblock/checkpoint already
-  changed.”
-- Version info: none in the message. Code has been this way since online
-  resize was added.
+- **Bug:** `init_hw_perf_events()` registers NMI_LOCAL handler `"PMI"`
+  then can fail in cpuhp / `perf_pmu_register` without unregistering it.
+- **Symptom:** stale NMI handler remains for the life of the kernel;
+  first cpuhp failure also skips `memset(&x86_pmu)`.
+- **Version info:** none in the message. Code has been this way since
+  the 2016 cpuhp conversion.
+- **Root cause:** missing `unregister_nmi_handler(NMI_LOCAL, "PMI")` on
+  post-register error paths.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. It is an explicit error-path correctness fix: stop
-treating a transient resize failure as filesystem corruption.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not disguised. Explicit error-path resource-leak fix (NMI
+handler leak). Also completes the incomplete `memset(&x86_pmu)` on the
+first `cpuhp_setup_state()` failure, which today still `return err`.
 
 ===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
+PHASE 2: DIFF ANALYSIS
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `fs/f2fs/gc.c` only (~6 insertions / 3 deletions in
-  `f2fs_resize_fs()`)
-- Functions: `f2fs_resize_fs()`
-- Scope: single-file surgical error-path change
+- File: `arch/x86/events/core.c` only (+3 / −1; net +2)
+- Function: `init_hw_perf_events()`
+- Scope: single-file surgical error-path fix
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record (verified against local `fs/f2fs/gc.c`):
-- Before: `free_segment_range()` error → `goto recover_out` → always
-  `set_sbi_flag(SBI_NEED_FSCK)` + restore `user_block_count`.
-- After: `free_segment_range()` error → `goto recover_user_blocks` →
-  restore `user_block_count` / clear `SBI_IS_RESIZEFS` only.
-- `recover_out` still used after `f2fs_commit_super()` /
-  `f2fs_write_checkpoint()` failures (on-disk metadata already touched).
-  It now also `f2fs_bug_on(sbi, err == -EAGAIN)` then sets
-  `SBI_NEED_FSCK`, then falls through to restore `user_block_count`.
-- Success path still falls through both labels with `err == 0`; no extra
-  NEED_FSCK, no counter restore.
-
-Step 2.3: IDENTIFY THE BUG MECHANISM
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Category: logic / error-path correctness (false-positive corruption
-  flag)
-- Mechanism: `free_segment_range()` restores `MAIN_SECS` on every return
-  (`MAIN_SECS(sbi) += secs` at its `out:` label). Callers have not yet
-  called `update_sb_metadata()`. Marking NEED_FSCK is wrong for that
-  path.
-- Common trigger in this tree: `f2fs_gc_range()` returns `-EAGAIN` when
-  valid blocks remain after one GC pass (`gc.c` “if (!dry_run &&
-  get_valid_blocks(...)) return -EAGAIN”).
+- Hunk 1: `cpuhp_setup_state(CPUHP_PERF_X86_PREPARE)` failure currently
+  `return err` (no NMI unregister, no `memset`). After: `goto
+  pmi_unregister`.
+- Hunk 2: new `pmi_unregister:` label after cpuhp teardown, before
+  `out_bad_pmu:`. All later error paths (`out`/`out1`/`out2`) now
+  unregister the PMI handler, then still `memset(&x86_pmu, 0, ...)`.
+- Early `goto out_bad_pmu` (no PMU driver / `check_hw_exists()` fail)
+  stays before `register_nmi_handler()` and still skips unregister —
+  correct.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: splits “no metadata written” vs “metadata already
-  updated.”
-- Minimal; no API/data-structure change.
-- Regression risk low. `f2fs_bug_on(err == -EAGAIN)` on `recover_out` is
-  an invariant: with `CONFIG_F2FS_CHECK_FS=n` it WARNs and sets
-  NEED_FSCK (already being set); with CHECK_FS it BUG_ONs only if
-  checkpoint/super commit returned `-EAGAIN`, which that path should
-  not.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **Error-path resource leak.** `register_nmi_handler()` has no
+matching `unregister_nmi_handler()` if later init fails. Category (a)
+error-path leak; also incomplete cleanup of `x86_pmu` on the first cpuhp
+failure.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct. Success path still `return 0` before the
+labels. First cpuhp failure still skips `cpuhp_remove_state()` (setup
+rolls back on failure). Early `out_bad_pmu` still does not unregister.
+Regression risk is very low; no API/locking/hot-path change.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Unconditional NEED_FSCK on resize failure introduced in
-  `04f0b2eaa3b3ee` (“f2fs: ioctl for removing a range from F2FS”,
-  Qiuyang Sun, 2019).
-- `recover_out` label from `b4b10061ef98c5` (Jaegeuk Kim, 2020).
-- Present in this 6.12 tree (`git merge-base --is-ancestor
-  04f0b2eaa3b3ee HEAD` succeeded).
+- `register_nmi_handler(..., "PMI")`: `9c48f1c629ecfa` (Don Zickus,
+  2011)
+- cpuhp error paths including `return err`: `95ca792c7582fd` (Thomas
+  Gleixner, 2016; in v4.8-rc1)
+- `out_bad_pmu` / `memset(&x86_pmu)`: `916e3a4f950eac` (Paolo Bonzini,
+  2022) — in this tree; message said hotplug install failure should
+  clear `x86_pmu`, but the first `return err` was left uncleared
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Introducer is the 2019 online-resize ioctl,
-confirmed in-tree.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: tag. Introducer of the leaky error path is
+`95ca792c7582fd`, present in this tree (`git merge-base --is-ancestor`
+exit 0).
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Related in-tree: `3b85edf3391f3` (migrate all curseg types in
-  `free_segment_range`), `28fc4e9077ce5` (SBI_IS_RESIZEFS locking),
-  `3ab0598e6d860` (resize panic). None already skip NEED_FSCK on
-  `free_segment_range()` failure.
-- Later mainline (f2fs-for-7.3-rc1, after this patch): “accurately
-  adjust free_sections during free_segment_range” — separate accounting
-  fix, not a prerequisite.
-- Standalone.
+**Step 3.3: CHECK FILE HISTORY**
+Record: Recent `arch/x86/events/core.c` changes are unrelated
+(callchain, hybrid, counters). No equivalent `pmi_unregister` commit.
+`git log -S pmi_unregister -- arch/x86/events/core.c` is empty here.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Daeho Jeong is a regular Google/Android f2fs contributor in this
-tree (gc/zoned/sysfs work). Co-author Samsung. Maintainer Jaegeuk
-applied it.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Dapeng Mi is a regular Intel perf/x86 contributor in this tree
+(PEBS, LBR, KASAN). Patch signed off by Peter Zijlstra.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: No new helpers. Uses existing `set_sbi_flag` / `f2fs_bug_on` /
-`recover_out`. Surrounding mainline context uses `f2fs_down_write_trace`
-and 3-arg `thaw_super`, which this tree does not have; those are context
-only, not dependencies of the logic change. Can apply standalone with a
-trivial context tweak.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Standalone. It is v3 1/8 of “Miscellaneous PMU bug fixes and
+optimizations”. Patch 2 (`Free hybrid state on PMU init failure`) *uses*
+the new `pmi_unregister` label but is a follow-up, not a prerequisite.
+`unregister_nmi_handler()` already exists (`arch/x86/kernel/nmi.c`). No
+new helpers required.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c <sha>` not used: candidate SHA is not in this checkout (`b4
-  dig` on the f2fs-for-7.3-rc1 merge 115bd364 rejected as a merge
-  commit).
-- `b4 mbox` msgid `20260818170535.3190869-1-daeho43@gmail.com`:
-  5-message v1 thread saved.
-- v1 (18 Aug 2026): skip NEED_FSCK only when `err != -EAGAIN`.
-- Chao Yu: don’t key off `-EAGAIN` globally; it might come from other
-  sites later.
-- Daeho: any `free_segment_range()` error is pre-metadata; use a
-  separate label.
-- Chao: add `f2fs_bug_on(sbi, err == -EAGAIN)` on `recover_out`.
-- v2 (20 Aug 2026): matches this candidate. Chao Reviewed-by. No NAKs.
-  No Cc: stable in the thread.
-- Landed in f2fs-for-7.3-rc1 (merged to mainline as 115bd364, “f2fs:
-  avoid setting SBI_NEED_FSCK on transient resize failure”).
+- `b4 dig -c 91787047b1dc52b1fee68b07f79af70aae5fce47` matched the
+  series (patch-id 48e634d2936fd149d8d36fbf100fd51c3fa0e39b)
+- Lore/msgid: https://patch.msgid.link/20260717080342.1879573-2-
+  dapeng1.mi@linux.intel.com
+- v1→v3: this hunk is unchanged across revisions; later-series comments
+  (hybrid cast, drain_pebs) do not affect this patch
+- Merged to tip/perf/core 2026-08-10; no NAK found
+- Cover letter: bugs found by Sashiko review of another series; tested
+  on Diamonds/Novalake (`perf test` 119/155/156)
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: linux-f2fs-devel, linux-kernel, kernel-team@android.com.
-Reviewed by Chao Yu; applied by Jaegeuk Kim.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: `b4 dig -w` recipients included Peter Zijlstra, Ingo Molnar,
+Arnaldo Carvalho de Melo, Namhyung Kim, linux-kernel, linux-perf-users,
+plus Intel reviewers. Reviewed-by Thomas Falcon and Zide Chen;
+maintainer SOB from Peter Zijlstra.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Authors are Android/Samsung; the message
-describes forced fsck after a failed resize. No separate user bug URL
-found.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla/user crash report. Found by static review
+(Sashiko), then coded as an explicit leak fix.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone (v1 then v2 of the same idea). Same 7.3 pull has
-other `free_segment_range` fixes; this one does not depend on them.
-“migrate all curseg types” is already here.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Series of 8; this patch is independent. Patch 2 is a related
+hybrid-state leak on the same function and can land later.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: Web search of lore.kernel.org/stable for this subject found no
-prior stable discussion or rejection. UNVERIFIED that no one privately
-requested it.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: No useful stable-list hit that this was rejected or already
+queued. UNVERIFIED beyond search noise: lore.kernel.org returned 403 for
+direct thread fetch.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `f2fs_resize_fs()`; closely related callees
-`free_segment_range()`, `update_sb_metadata()`, `f2fs_commit_super()`,
-`f2fs_write_checkpoint()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `init_hw_perf_events` (modified). Related:
+`perf_event_nmi_handler`, `unregister_nmi_handler`,
+`x86_pmu_prepare_cpu`.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `f2fs_ioc_resize_fs()` in `fs/f2fs/file.c` (F2FS_IOC_RESIZE_FS and
-  compat). Requires `CAP_SYS_ADMIN`.
-- Not interrupt/hot-path. Userspace-triggered admin ioctl (Android
-  update_engine/vold online shrink is the main production use).
+**Step 5.2: TRACE CALLERS**
+Record: `init_hw_perf_events` is `early_initcall` — once at boot.
+`x86_pmu_prepare_cpu` is the PREPARE cpuhp callback; Intel/AMD
+`cpu_prepare` can return `-ENOMEM` (`intel_cpuc_prepare` kzallocs;
+`amd_pmu_cpu_prepare` kzallocs `lbr_sel` / `amd_nb`).
 
-Step 5.3: TRACE CALLEES
-Record: `free_segment_range()` temporarily drops `MAIN_SECS`, may move
-cursegs and GC, then always `MAIN_SECS += secs` before return. Only
-after success does `f2fs_resize_fs()` call `update_sb_metadata()` /
-`f2fs_commit_super()`.
+**Step 5.3: TRACE CALLEES**
+Record: After register: cpuhp setup, `perf_pmu_register`. Handler
+`perf_event_nmi_handler` returns `NMI_DONE` if `active_events==0`, else
+`static_call(x86_pmu_handle_irq)`.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: ioctl → `f2fs_resize_fs` → freeze → `user_block_count -=
-shrunk_blocks` → `free_segment_range`. `-EAGAIN` when tail sections
-still have valid blocks is reachable and expected. After NEED_FSCK is
-set, a later resize hits `is_sbi_flag_set(sbi, SBI_NEED_FSCK)` and
-returns `-EFSCORRUPTED`. Checkpoint persists `CP_FSCK_FLAG`; remount
-restores NEED_FSCK.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Not a syscall hot path. Reachable at boot if hardware PMU exists
+and later setup fails (ENOMEM in prepare, cpuhp failure,
+`perf_pmu_register` / hybrid register failure). Unprivileged users do
+not trigger it directly. If the handler is left registered after
+`memset(&x86_pmu)`, a later NMI still walks it.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: NEED_FSCK is used widely for real corruption. This was the only
-resize path that set it on a fully rolled-back in-memory failure. In-
-tree “f2fs: remove false alarm on iget failure during GC” is the same
-class of false NEED_FSCK.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Other x86 NMI users (kgdb, IBS, nmi_selftest) pair
+register/unregister. This init path did not.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Local tree is `pending-6.12`, `git describe HEAD` =
-`p-6.12-3-gc504cf0baa3d8`, `make kernelversion` = 6.12.111.
-```
-2364:   set_sbi_flag(sbi, SBI_IS_RESIZEFS);
-2365:   err = free_segment_range(sbi, secs, false);
-2366:   if (err)
-2367:           goto recover_out;
-...
-2388:recover_out:
-2390:   if (err) {
-2391:           set_sbi_flag(sbi, SBI_NEED_FSCK);
-```
-Bug present since 2019 resize ioctl. `recover_user_blocks` is absent.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. `arch/x86/events/core.c`: `register_nmi_handler` at 2108;
+`if (err) return err;` at 2144–2145; `out`/`out1`/`out2` then
+`out_bad_pmu` memset with no unregister.
+`91787047b1dc52b1fee68b07f79af70aae5fce47` is **not** an ancestor
+(`merge-base --is-ancestor` exit 1). Bug introduced with cpuhp
+conversion in v4.8 era.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Functional hunk matches. Mainline context uses
-`f2fs_down_write_trace` (not in 6.12) and `thaw_super(...,
-FREEZE_HOLDER_KERNEL, NULL)` vs local two-arg `FREEZE_HOLDER_USERSPACE`.
-Expected difficulty: minor context adjustment, not a rework.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: `git apply --check` of the two hunks against this tree: **clean
+apply** (rc 0). Surrounding `init_hw_perf_events` matches the patch.
+Difficulty: clean apply.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No. `git log --grep` on gc.c for this subject is empty. Resize-
-related commits here do not skip NEED_FSCK on `free_segment_range()`
-failure.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: `916e3a4f950eac` is present (clears `x86_pmu` on some fail
+paths) but still misses NMI unregister and the first `return err`. No
+later equivalent fix.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: f2fs (`fs/f2fs/`). IMPORTANT: not core VFS, but the default
-Android userdata filesystem; 6.12 LTS is used there.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **perf/x86** (`arch/x86/events/`). **IMPORTANT** — x86 hardware
+performance monitoring, used by `perf`, KVM PMU
+(`perf_get_x86_pmu_capability`), and profiling. Not core mm/scheduler,
+not staging.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Active (recent gc.c history is busy), but this bug is in long-
-stable resize recovery, not new 6.12-only code.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively maintained (frequent intel/amd PMU commits). This leak
+is old (2016), not a brand-new subsystem.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: f2fs users of `F2FS_IOC_RESIZE_FS` (Android virtual A/B /
-dynamic partitions, some embedded). Not universal. Config:
-`CONFIG_F2FS_FS`.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: x86 systems with a hardware PMU whose **init fails after** NMI
+registration (ENOMEM in prepare, cpuhp setup fail, PMU register fail).
+Not every boot; not non-x86.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Shrink ioctl while tail sections still have valid blocks
-(`-EAGAIN`), or other `free_segment_range()` errors (`-EIO`,
-`-ERESTARTSYS`, allocate-segment failures). Common on a busy/full
-filesystem. Privileged only (`CAP_SYS_ADMIN`). Not a race; deterministic
-on that error path.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Boot-time only. Common “no/broken PMU” path (`intel_pmu_init`
+fail / `check_hw_exists` false) is **before** register, so it does not
+leak. The leak needs a later failure. `intel_cpuc_prepare` /
+`amd_pmu_cpu_prepare` returning `-ENOMEM` is a concrete trigger. Not
+unprivileged-triggerable.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Stale NMI_LOCAL handler remains; extra NMI-chain walk for the
+life of the system. If later paths `memset` `x86_pmu` while the handler
+is still registered, `perf_event_nmi_handler` can still run. If
+`active_events==0` it returns `NMI_DONE` (typical after failed
+register). First cpuhp failure today also leaves `x86_pmu` populated, so
+`perf_get_x86_pmu_capability()` can report a live PMU after failed init
+— the case `916e3a4f950eac` tried to close. Severity: **MEDIUM**
+(resource leak in NMI context; rare trigger; latent inconsistency more
+than a guaranteed oops).
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- False `SBI_NEED_FSCK` → next checkpoint writes `CP_FSCK_FLAG` →
-  remount restores the flag → userspace `fsck.f2fs`.
-- Further resize immediately `-EFSCORRUPTED`.
-- `fstrim` warns and returns `-EFSCORRUPTED`; discard thread backs off.
-- Severity: HIGH operational (forced long fsck, resize stuck). Not a
-  panic, silent corruption, or UAF.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: high for Android/embedded f2fs-resize users on 6.12; stops a
-  common `-EAGAIN` from pinning NEED_FSCK until fsck.
-- Risk: very low (few lines, error path only, maintainer-acked).
-- Ratio: favorable.
+- Benefit: medium for affected boots (correct NMI teardown + complete
+  `x86_pmu` clear); modest globally because the path is rare
+- Risk: very low (4-line error-path-only change, applies cleanly)
+- Ratio: favorable — cheap correctness fix for a real leak
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: COMPILE THE EVIDENCE**
+
 FOR:
-- Real, long-standing bug (2019) still in 6.12.111.
-- Common `-EAGAIN` from GC during shrink is treated as corruption.
-- Sticky NEED_FSCK blocks resize and can force a large-partition fsck.
-- Small, obviously correct, reviewed by Chao Yu, applied by Jaegeuk.
-- Google/Samsung authors; Android team on Cc.
-- No missing helpers in this tree.
+- Real NMI handler leak on verified error paths in this 6.12 tree
+- Also closes the leftover `return err` that skips `memset(&x86_pmu)`
+  after PREPARE cpuhp failure
+- Tiny, obviously correct, maintainer-acked, applies cleanly
+- `unregister_nmi_handler` already exists; no new API
+- Concrete `-ENOMEM` failure in Intel/AMD `cpu_prepare`
+- Error-path leak cleanup is standard stable material
 
 AGAINST:
-- Not a crash, UAF, or on-disk corruption (it over-reports corruption).
-- Privileged ioctl, not unprivileged.
-- Exact mainline hunk needs trivial context (lock wrappers /
-  thaw_super).
-- No Fixes:/Cc: stable (not a negative per the rules).
+- Rare one-time init path, not a hot-path leak
+- No user/syzbot report; found by review
+- Not a guaranteed panic/corruption on typical boots (`active_events`
+  usually 0)
 
 UNRESOLVED:
-- Exact mainline SHA not in this checkout (present in 7.3-rc1 f2fs
-  pull).
-- No stable-list thread found.
-- Daeho mentioned restoring `free_sections`; 6.12 `free_segment_range()`
-  only restores `MAIN_SECS`. That does not weaken the NEED_FSCK split.
+- Direct lore.kernel.org fetch returned 403; discussion reconstructed
+  via b4, patchew, lkml.iu.edu
+- No evidence this was rejected for stable
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — review-driven v2; logic matches
-   `free_segment_range()` rollback.
-2. Fixes a real bug that affects users? PASS — false NEED_FSCK / forced
-   fsck / resize stuck.
-3. Important issue? PASS — not a panic, but persistent false corruption
-   flag plus `-EFSCORRUPTED` on later resize/fstrim is a serious
-   availability bug on Android f2fs.
-4. Small and contained? PASS — one function, ~9 lines.
-5. No new features or APIs? PASS
-6. Can apply to the local tree? PASS — buggy code present; needs only
-   context adjustment.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — mechanical unregister;
+   series tested; Peter Zijlstra merged it
+2. Fixes a real bug that affects users? **PASS** — leaked NMI handler
+   after failed x86 PMU init
+3. Important issue? **PASS** — NMI-context resource leak plus incomplete
+   PMU-state teardown; not a guaranteed panic, but more than cosmetic
+4. Small and contained? **PASS** — +3/−1, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — `git apply --check` clean;
+   buggy code present; fix not already here
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None of device-ID / quirk / DT / build / docs. Ordinary bugfix.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/docs exception. Ordinary small bugfix.
 
-Step 9.4: MAKE YOUR DECISION
-This belongs on 6.12. The bug exists here, the fix is surgical, and
-leaving it out keeps a production Android path where a retryable shrink
-failure marks the filesystem corrupted until fsck.
+**Step 9.4: MAKE YOUR DECISION**
+The leak exists in 6.12.111, the fix is surgical, and leaving an NMI
+handler registered after tearing down `x86_pmu` is a real stability
+defect even if the trigger is uncommon. Benefit/risk supports backport.
 
-What it solves for stable users: a failed `F2FS_IOC_RESIZE_FS` that
-never committed superblock/FS metadata currently sets `SBI_NEED_FSCK`.
-That flag is checkpointed as `CP_FSCK_FLAG`, blocks later resize with
-`-EFSCORRUPTED`, and forces a long `fsck.f2fs`. The usual trigger is
-`-EAGAIN` from GC when the tail is not empty yet.
+===============================================================
+What the commit solves and why it matters here
+===============================================================
 
-Risk vs benefit: a few error-path lines, fall-through restore preserved,
-NEED_FSCK still set after real super/checkpoint failures. Benefit is
-large for f2fs resize users on this LTS.
+On this tree, `init_hw_perf_events()` registers the `"PMI"` NMI handler,
+then sets up cpuhp states and registers the PMU. If any of those later
+steps fail, cpuhp is unwound (except the first PREPARE failure, which
+just returns) and `x86_pmu` is zeroed — but the NMI handler is left
+installed. That handler stays on the NMI_LOCAL list for the rest of the
+boot. The patch adds the missing `unregister_nmi_handler()` on those
+paths and routes the PREPARE failure through the same cleanup so
+`x86_pmu` is cleared consistently.
 
-Concerns: apply with 6.12 lock/thaw context, not the mainline
-`f2fs_down_write_trace` / 3-arg `thaw_super` lines.
+That matches stable rules: real bug, small, no new API, applies here
+without dependencies.
 
-Verification:
-- [Phase 1] Tags: Chao Reviewed-by, Jaegeuk SOB, Google+Samsung; no
-  Fixes/syzbot
-- [Phase 2] Diff: `goto recover_user_blocks` on `free_segment_range()`
-  error; NEED_FSCK only on `recover_out`
-- [Phase 2] Local `free_segment_range()`: `MAIN_SECS += secs` on all
-  exits before `update_sb_metadata()`
-- [Phase 2] Local `f2fs_gc_range()`: `-EAGAIN` if valid blocks remain
-- [Phase 3] blame: NEED_FSCK from 04f0b2eaa3b3ee (2019); ancestor of
-  HEAD
-- [Phase 3] `git merge-base --is-ancestor 04f0b2eaa3b3ee HEAD` succeeded
-- [Phase 3] No `recover_user_blocks` in this tree
-- [Phase 4] `b4 mbox` msgid 20260818170535.3190869-1-daeho43@gmail.com:
-  v1, Chao review, label split
-- [Phase 4] v2 + Chao Reviewed-by via lkml/openwall; no NAK
-- [Phase 4] Pull f2fs-for-7.3-rc1 lists this subject
-- [Phase 4] lore.kernel.org WebFetch 403; used b4 mbox + lkml mirrors
-  instead
-- [Phase 5] Caller: `f2fs_ioc_resize_fs`, `CAP_SYS_ADMIN`; NEED_FSCK
-  blocks resize (`gc.c:2293`) and fstrim (`segment.c:3400`); checkpoint
-  writes `CP_FSCK_FLAG` (`checkpoint.c:1386-1387`); remount restores it
-  (`super.c:4642-4643`)
-- [Phase 6] `git describe HEAD` p-6.12-3-gc504cf0baa3d8; `make
-  kernelversion` 6.12.111
-- [Phase 6] `f2fs_down_write_trace` absent; `thaw_super` is 2-arg
-- [Phase 8] Failure: false NEED_FSCK, not oops; HIGH operational impact
-- UNVERIFIED: exact mainline SHA (not in this checkout); no stable-list
-  hit
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Parsed subject/tags: unregister PMI on init failure; SOB
+  Dapeng Mi + Peter Zijlstra; R-b Falcon/Chen; Link msgid
+  20260717080342.1879573-2; no Fixes/syzbot
+- [Phase 2] Diff: +3/−1 in `init_hw_perf_events`; `return err` → `goto
+  pmi_unregister`; add `unregister_nmi_handler(NMI_LOCAL, "PMI")` before
+  `out_bad_pmu`
+- [Phase 3] Blame: leaky cpuhp errors from `95ca792c7582fd` (v4.8); NMI
+  register from `9c48f1c629ecfa` (2011); memset from `916e3a4f950eac`
+  (2022), in this tree
+- [Phase 3] `git merge-base --is-ancestor
+  91787047b1dc52b1fee68b07f79af70aae5fce47 HEAD` → not ancestor (fix
+  absent)
+- [Phase 3] `git log -S pmi_unregister -- arch/x86/events/core.c` →
+  empty
+- [Phase 4] `b4 dig -c 91787047...`: matched series; v1–v3 hunk
+  unchanged; merged tip/perf/core 2026-08-10
+- [Phase 4] Cover letter (lkml.iu.edu / patchew): Sashiko-found PMU
+  bugs; this patch is 1/8 and standalone
+- [Phase 4] `b4 dig -w`: Peter Zijlstra, Ingo, linux-perf-users CC’d; no
+  NAK found
+- [Phase 4] lore.kernel.org WebFetch 403; stable-list search did not
+  show a rejection
+- [Phase 5] `intel_cpuc_prepare` / `amd_pmu_cpu_prepare` return
+  `-ENOMEM` — verified trigger for PREPARE cpuhp failure
+- [Phase 5] `perf_event_nmi_handler` still callable if handler leaked;
+  early-out if `!active_events`
+- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → 6.12.111
+- [Phase 6] Local code at `arch/x86/events/core.c:2108` and `:2144-2201`
+  matches the buggy pattern
+- [Phase 6] `git apply --check` of the two hunks → rc 0 (clean apply)
+- [Phase 8] Failure mode: leaked NMI handler + incomplete `x86_pmu`
+  clear; severity MEDIUM; trigger rare (init error)
+- UNVERIFIED: full lore mbox body (403); whether linus.git mainline SHA
+  differs from tip SHA 91787047 (tip merge confirmed)
+
+The fix is small, surgical, present as a real bug in this 6.12 tree, and
+meets the stable criteria.
 
 **YES**
 
- fs/f2fs/gc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/x86/events/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 02bd008d79b5c..e85d7f239e7d0 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2415,7 +2415,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	err = free_segment_range(sbi, secs, false);
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 330c2ba41f076..2aa9270446634 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2175,7 +2175,7 @@ static int __init init_hw_perf_events(void)
+ 	err = cpuhp_setup_state(CPUHP_PERF_X86_PREPARE, "perf/x86:prepare",
+ 				x86_pmu_prepare_cpu, x86_pmu_dead_cpu);
  	if (err)
--		goto recover_out;
-+		goto recover_user_blocks;
+-		return err;
++		goto pmi_unregister;
  
- 	update_sb_metadata(sbi, -secs);
- 
-@@ -2437,11 +2437,14 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 		f2fs_commit_super(sbi, false);
- 	}
- recover_out:
--	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	if (err) {
-+		f2fs_bug_on(sbi, err == -EAGAIN);
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
--
-+	}
-+recover_user_blocks:
-+	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
-+	if (err) {
- 		spin_lock(&sbi->stat_lock);
- 		sbi->user_block_count += shrunk_blocks;
- 		spin_unlock(&sbi->stat_lock);
+ 	err = cpuhp_setup_state(CPUHP_AP_PERF_X86_STARTING,
+ 				"perf/x86:starting", x86_pmu_starting_cpu,
+@@ -2229,6 +2229,8 @@ static int __init init_hw_perf_events(void)
+ 	cpuhp_remove_state(CPUHP_AP_PERF_X86_STARTING);
+ out:
+ 	cpuhp_remove_state(CPUHP_PERF_X86_PREPARE);
++pmi_unregister:
++	unregister_nmi_handler(NMI_LOCAL, "PMI");
+ out_bad_pmu:
+ 	memset(&x86_pmu, 0, sizeof(x86_pmu));
+ 	return err;
 -- 
 2.53.0
 
