@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792443353;
-	b=gzm0F2WfxA3QahQ+SrKtGGv4LrQ2sndwBidzKKiwvnWP179HOhFFR74r2/K9SOBktj3N
-	 xTUA6w3m0xbHkhXZxnBJGHZqcxI3Z5ig0zstypEujyAjF/j/l49MXytc1UtZzJk/qOLoQ
-	 Ket/F8xsJ0hlpA+/YuwUlmjlkazgkZUnz/R4s8UrziyfGttSql3uWF5mIb6OHQAn2+I0C
-	 KaScLO/q9YWNjO8uIhuV+ikBqbFGU/57aAMjS8SLPNalFKWLh/BthL/JxGtNxW8klkCIl
-	 lCfN0P5qDzmtncbsiaOWCkVEDA+Ji0wo3UoCjTj91MR9HmaLru3yKXFNxlFr7ZPR+Sg==
+	t=1792443354;
+	b=lpUwsnZaz95M5hi6YOUUK8+L2u7HtnMuumZmTaBnGMBKHUCy24AUxStgpSlqwSkyoaKv
+	 LCwhujXRh7VPs7wbVWF01/r6ycLDSBzI7YwQxa7kH5wYdSTgWZSVmxevYYLDxvAK847YV
+	 Wss7m271U0tq38JvuvN9kPGEMsw1Z0sRag3n4TUJ77F3eX0tngU1GiIexv8CNboZnGaoN
+	 VzBxPqaK0W6vEkavioSWimyQbsX6jt9GIvibe26spg/TeO2PJbqoRzgLFjuQcIQB9KxgM
+	 htwQfcc4ae04spjzD+R04AsQr1ZiswdBq0y7+DdbirFWNDiXmlQVNCc3g/SUI3OnhxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792443353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792443354;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=KJs5uZLUTkFcXq/jZfUqNzqxWYFujtuEaluqbHjbanU=;
-	b=hf/6Ns5OtsRV2iSqrf+qSWGQ11HUs7xz0dp62xp8Wz3xX8aet62ev12tXedhoExhmH31
-	 Ia6H1uoAaI7PmwIXojIGPlzYqs5J2aKPnEwaoRJn8q0l9tM9s2aniAHTizjoznn4TBa/u
-	 5EXst3dds9a2/ewe95Ao2NbUwr3XKPTDHXK7Nd0GZpXfvNtXEnHA3c44owLMP7ODayDby
-	 WHT5LBUWb7Vq6blOiGd9oYm8VXGvVgsGFAoHH5xF07cCcQe69RUPDE22ptGJF2nwq4bMy
-	 tGCzGraJdSgmjDP+wu/IJDy9rWoEbNNrnTSIqn+ChRpokV1Ccfi4uZHf8Gvx5WOvOzg==
+	bh=v6EEXAUpl0iY8KsWeaGrKRmoh1OyE5K7fp4U2mkmmSA=;
+	b=o+AdLThx7CFszvFVvTTQYO5DZYYY+PmBCatI0pgD7qsoX7ZjeAedC7If7moFI6/wPL/E
+	 /6p01l2icylQpObxtS4a0vYSL+7F4+QsrL8dF/gEwQM2w0MuMLnNWUiyZerbylEv15heV
+	 spFqcIP5ZzghH959YbPa0XucNl4IebagMflqBmjF1DfZJYhIa4ifQ+YIHpDueot3q54kl
+	 8tsxZX7O2JSVbJvdnQR9uA7RxcrmblIgiXjNm2aFo6i1UQgnzQQZDgKnHBxmqkCslS9Qz
+	 yYEWqs0ZfLt5H/vVja1FZAbSrAM7e0/wEX2ndDvLVcScDMQCKN0ld3Iz42IpLU0ZxPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="bb/AIN/D";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gh1YipFh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD25606A324;
-	Mon, 19 Oct 2026 20:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13054606A324;
+	Mon, 19 Oct 2026 20:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bb/AIN/D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F2F1F000C4;
-	Mon, 19 Oct 2026 20:55:51 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gh1YipFh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B201F000C8;
+	Mon, 19 Oct 2026 20:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792443352;
-	bh=KJs5uZLUTkFcXq/jZfUqNzqxWYFujtuEaluqbHjbanU=;
+	s=k20260515; t=1792443353;
+	bh=v6EEXAUpl0iY8KsWeaGrKRmoh1OyE5K7fp4U2mkmmSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bb/AIN/Dw4UFSHdm9GYeb3CtHa4vRryepBmift4oze0qwRADkNXW5TOcJfcB+y9ER
-	 7q7ewZcS+94GHjDKpsEhjV4CX0lggznD8MZmXwLvKUYuBZtd3ikXuGa9eWpz5XNAEg
-	 Y32nxhjUHEM5nTAh1C7Haskf/pGgQY1AQW/yfrjYJPmygSbqtqP7pmjXUVp7FKn4oU
-	 8qwasuv7xLOoZzHOBgM9YYioBJ8w5urbKS9Zo5tI0VhQmxuP/aN8jjfKzPKNSezKH5
-	 Q4AaApeobgFkLHVEy+imUo8G+NY6NSodCkFj+ioPq8lAcsNEMXJuHxGxmpjUKntmQG
-	 RsTwdkKuX/MVA==
+	b=gh1YipFhXiEvuXeViXj4GfVyFdJjal1FpY0Ewi3s2NxzIoqT29GrfXRMMSWIe78FI
+	 QQ6hSinl70bMqmtomSIN6Q/5PNSaCTAyz+PhKI/Fsd0vdS+4PaoBLxTyBd3HE8arKB
+	 Q70Su1J2kJRDiUOk0L2PQrwDwwVOxppvJ/CLVJfp0Yk0b+we1+7SaBQ4TMhCj8vXgY
+	 fDZEqRSOa1nW/zODn2LBLk+Bu9Orf4P0ytAintCtOiYzmg+1VpwF/sqXACOCiSy6DF
+	 GXAToC7IVNGTDsKMMGqOnFW8UIOlrzUs8MG7dSzGQSvdJhb57UAlyXv9z3+sfP7MEY
+	 thVO6O0i5GK9g==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Harin Lee <me@harin.net>
-Subject: Re: [PATCH 6.12 205/869] ALSA: ctxfi: Refactor resource alloc for sparse mappings
-Date: Mon, 19 Oct 2026 16:55:29 -0400
-Message-ID: <2026-10-19-1-daily-reply-0003-ctxfi-spdifi1-6-18@kernel.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wolfgang Walter <linux@stwm.de>
+Subject: Re: regression 6.18.57: acpi power button vanished in machines running in qemu
+Date: Mon, 19 Oct 2026 16:55:30 -0400
+Message-ID: <2026-10-19-1-daily-reply-0004-acpi-fixed-button-6-18@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <0029273a-f61f-4b08-9a0a-79eb96a02998@harin.net>
-References: <0029273a-f61f-4b08-9a0a-79eb96a02998@harin.net>
+In-Reply-To: <5fe757e7aa54c38df3525d313598db99@stwm.de>
+References: <5fe757e7aa54c38df3525d313598db99@stwm.de>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -63,13 +63,10 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Please check my earlier emails if you missed them:
-> https://lore.kernel.org/stable/e5b53e3f-02ac-4afc-9fa1-823ddb80875e@harin.net/
-> https://lore.kernel.org/stable/d19f3435-57fd-4ddf-9465-36f359c8b8bd@harin.net/
+> since 6.18.57 there is no acpi power button any more in virtual qemu
+> based machines (as far as I can see model doesn't matter).
 
-Queued the three follow-ups for 6.18, thanks. 6.18 does not have the
-dedicated RCA switching change, so the RCA references were dropped from
-the patches.
+Queued the fix for 6.18, thanks for the report and the testing.
 
 -- 
 Thanks,
