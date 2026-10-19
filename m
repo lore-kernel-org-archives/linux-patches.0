@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA7053AEBD;
-	Mon, 19 Oct 2026 14:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE5253F9AB;
+	Mon, 19 Oct 2026 14:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418721; cv=none; b=FuSF9geWptv4QAqZPAePunZiWg1BaAL72M0nAV4V+/zqJbLucsF/qi7HGCY9+Kke/nN8Gq4JO7VDk9c40RhdG07BsK54KcCAgaSGJUyWLq4LGuyxSLgHhyv0u3SU7mnvy7DmcnpNPmhncVfqHtbVoOBFSl8MzO6i2wncSPB4bC8=
+	t=1792418722; cv=none; b=YENZhJtmEqF5DmFr1KVLe5YvgB78rCkaiDsE821gX6orcg3gEGGEYj+xqOb/JmPXxo3c7dagYIzlOUHOxEREOSbzpkI+nLDinUSZPQisoQbk62ncXpEa/L/SF0QYHl1xPjJSnyDHQgMN8kzH0V0owowy1oda6tmwYQm3vajCaus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418721; c=relaxed/simple;
-	bh=1GHERZvj7WRGStB8C1B5WYnW05EF+5bN4u4hksV/hak=;
+	s=arc-20240116; t=1792418722; c=relaxed/simple;
+	bh=fpKt3M6Yb4rAuiuMk+ukdm6y9Uzj2EfKJngLWbZqIMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CajaZ7si6v16nok3uFTjpuljGpTEGg54n7RxMkwWpifqnG8qZcTr44J1ssITUmjL78qTUMwhpzCsv3wqvWXB5/0HfgCR8uwQ9QS9GozCYOW8hUPOjHQB2p9yYfNIOCK/Xszmp9yTkvDtEDM8IinplRrZXUslrDu5WZjTdq6XczI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ac3mMtoG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NKY1lUzX+odaAmGWP54ybpw9o+tYTg5vpRknxQTt+N8AUEDzX4CEri/KunHDNBzp2QYd6br9C2k1nBrR4KcKxpsLqhG9icOe8EjbmCQvxtYDOb65l78gBij/uzwMAsnHd3mSSRXd6Mu9i7oUvm4Gfn8XD1CFBZNVLta5/y8zZ8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nk2nKAAA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ac3mMtoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D948D1F000C9;
-	Mon, 19 Oct 2026 14:05:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nk2nKAAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578201F000C5;
+	Mon, 19 Oct 2026 14:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418718;
-	bh=3HkTGF9xh3harCN/8UsuYuja0pY//1FUxUgh35dHIcM=;
+	s=k20260515; t=1792418719;
+	bh=+hcH1HiLgHTHuCm0DvzlFDDPUk0wpg9BqkPllEirZrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ac3mMtoGk9aVZCAD6QvBDoj2v5FAIfGicvGOQCKgvgHfX5Gt7B5b5mEPyg3TS+FH8
-	 /LFmqbkav4mddqxqFcCeIVHT+hJct4ebPFaRHyNRgUqN5/gm3025TxgikGOl3n6bob
-	 DW/UBIlSFXNNkADMcGt0u+u1QyOZfjnqX2qU983/d8mog1RqmKEOsQs+1j62biVME5
-	 fOzTokXlW98pt3iHplc94RbFNAdNuzI5pCvD567a9LcyCaQg44fYkc68hzklp/Ezqv
-	 KfqrFmIvr3XPGFaZ7RMWU21Zo8FQMSktmT5UJupDMr3usXop8pXfmR+BccAUHCzZ4J
-	 HJQ5g2HvviIHA==
+	b=nk2nKAAAfJRqHb3yMGbpYrSmumy52OMwELcgJ3AUd9jFnXJdOifg17KGD+dMJmoSt
+	 dlVVh7wRVY8dTc/lfjTTDmMGWoXYZeoXZjLBTUoDVoSH/48rHKMBBB5epixVDKZgYf
+	 c+7K1zdZSEaqasmCrzaQ2AigjMsCJ8ESsNxUKWziIk3pIS8mg3GMPx+KT+mKasFtw4
+	 x4Tj6Ipkqf446IvKVi4nTxzOxERaKDCdFM3xme3csoIlX2rXbfe4/DVelSDgM0RjMz
+	 c+aO86Nmv7l3Z4M9ZAfD9nF98nIqJcJCk29lfa6FZQrEZKoDS4k4bnkLWuVq4xwXFs
+	 pkX2Qx0POPtvQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tomer Maimon <tmaimon77@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: Genjian Zhang <zhanggenjian@kylinos.cn>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew@codeconstruct.com.au,
-	avifishman70@gmail.com,
-	tali.perry1@gmail.com,
-	openbmc@lists.ozlabs.org,
-	linux-gpio@vger.kernel.org,
+	song@kernel.org,
+	linux-raid@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] pinctrl: npcm8xx: enable RMII outputs from RMII groups
-Date: Mon, 19 Oct 2026 09:52:17 -0400
-Message-ID: <20261019135441.1420968-446-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] md/raid5: complete discard bios while reshape is active
+Date: Mon, 19 Oct 2026 09:52:18 -0400
+Message-ID: <20261019135441.1420968-447-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,430 +53,435 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomer Maimon <tmaimon77@gmail.com>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-[ Upstream commit c6ccdc305589dd7c7976116e0870a23f291c5fa9 ]
+[ Upstream commit 85764f475f3b3abd956bf8eaeaa643b367676cf4 ]
 
-NPCM8xx uses GCR_INTCR4 bits to release the R1, R2 and RMII3
-transmit outputs from Hi-Z.
+make_discard_request() returns without completing the bio when reshape
+is in progress. Discard callers block in submit_bio_wait()
+waiting for a completion that never arrives.  The caller hangs in
+uninterruptible sleep, and this does not resolve when reshape finishes.
 
-Those bits need to follow the mandatory r1, r2 and rmii3 pin
-groups. The R1_OEn, R2_OEn and R3_OEn side groups are optional and
-should not be required just to enable RMII transmit outputs.
+Complete the bio with BLK_STS_AGAIN so userspace can retry after reshape,
+consistent with the existing policy of not processing discard during
+reshape.
 
-Program the INTCR4 bits when the corresponding RMII groups are
-selected and clear them again when those pins switch back to GPIO or
-another shared function.
+Tested on a loop-backed RAID5 array during mdadm --grow: without this
+patch, blkdiscard hangs in bio_await() and remains in uninterruptible
+sleep after md reports "reshape done"; with this patch it returns
+-EAGAIN instead.
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260711161326.962336-1-zhanggenjian@126.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real NPCM8xx hardware-programming bug (RMII TX left in Hi-Z),
-and the local 7.3 tree already has the driver and the affected mux path.
+This tree is **6.1.188**. The reshape discard hang is present here; the
+fix is a small completion of an otherwise leaked bio.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[pinctrl/npcm8xx] [enable] [program INTCR4 so RMII TX leaves
-Hi-Z when r1/r2/rmii3 groups are selected]`
+Step 1.1: PARSE THE SUBJECT LINE
+Record: `[md/raid5] [complete] complete discard bios while reshape is
+active`
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Signed-off-by: Tomer Maimon `<tmaimon77@gmail.com>` (author; Nuvoton)
-- Signed-off-by: Linus Walleij `<linusw@kernel.org>` (pinctrl
-  maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
-  or Cc: stable
-- Absence of Fixes/Cc-stable is expected for this review and is not a
-  negative signal
+- Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn> (author)
+- Reviewed-by: Yu Kuai <yukuai@fygo.io> (applied the patch to md-7.3)
+- Link:
+  https://patch.msgid.link/20260711161326.962336-1-zhanggenjian@126.com
+- Signed-off-by: Yu Kuai <yukuai@fygo.io> (maintainer tree)
+- No Fixes: tag (expected)
+- No Cc: stable (expected)
+- No Reported-by / Tested-by / Acked-by
+- Ignore pipeline SOBs
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: NPCM8xx GCR_INTCR4 bits 12–14 release R1/R2/RMII3 transmit pads
-  from Hi-Z. The driver muxed the mandatory `r1`/`r2`/`rmii3` groups but
-  never programmed those bits.
-- Symptom: RMII TX stays tri-stated, so those Ethernet ports cannot
-  transmit.
-- Root cause: INTCR4 was (incorrectly) treated as belonging to optional
-  `R1_OEn`/`R2_OEn`/`R3_OEn` side groups; those groups are separate pins
-  and do not program INTCR4.
-- Version info: none in the message. Driver itself arrived in v6.7-rc1.
+- Bug: `make_discard_request()` returns without `bio_endio()` when
+  `mddev->reshape_position != MaxSector`.
+- Symptom: discard callers (`submit_bio_wait()` / `blkdiscard`) sleep in
+  D-state forever. Hang survives reshape completion.
+- Root cause: early return that skips completion; the bio is never
+  finished.
+- Fix: complete with `BLK_STS_AGAIN` so userspace gets `-EAGAIN` and can
+  retry after reshape.
+- Author tested loop-backed RAID5 during `mdadm --grow`.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. The cover letter of the series calls
-the set a “cleanup,” but this patch is explicit hardware-correctness: TX
-is stuck in Hi-Z until INTCR4 is programmed. That is a functional bug,
-not a style change.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. This is an explicit hang fix (bio never completed).
 
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` (+61 / −0)
-- New helpers: `npcm8xx_rmii_output_enable_mask()`,
-  `npcm8xx_set_rmii_output_enable()`
-- Modified: `npcm8xx_setfunc()` (one call at the end)
-- New defines: `NPCM8XX_GCR_INTCR4`,
-  `NPCM8XX_INTCR4_R1_RMII_EN/R2_RMII_EN/RMII3_EN`
-- Scope: single-file surgical change
+- File: `drivers/md/raid5.c` only
+- Scope: surgical, one function (`make_discard_request`)
+- Candidate form: early `return` → `goto complete_again`; success-path
+  `bio_endio` gets an explicit `return`; new label calls
+  `bio_endio_status(bi, BLK_STS_AGAIN)`
+- Mailing-list v1 (what Yu Kuai applied): 3 insertions / 1 deletion,
+  inline `bio_endio_status` before `return`. Same behavior.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: `npcm8xx_setfunc()` only updated MFSEL/I2CSEGSEL bits from
-  `pincfg[]`. INTCR4 was never written.
-- After: after that mux, INTCR4 bits 12–14 are set iff the selected mode
-  is `fn_r1`/`fn_r2`/`fn_rmii3` for pins in those groups; they are
-  cleared when those pins go back to GPIO or another function.
-- Paths: pinmux set (`npcm8xx_pinmux_set_mux`) and GPIO request
-  (`npcm8xx_gpio_request_enable`). Normal mux/GPIO path, not an error
-  path.
+- Before: reshape active → return, bio left outstanding.
+- After: reshape active → complete bio with `BLK_STS_AGAIN`.
+- Path: discard submit during reshape (admin `blkdiscard` / `fstrim` /
+  FS discard).
+- Success path unchanged (`bio_endio(bi)` still runs).
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: `[Hardware programming / logic correctness]` Incomplete mux:
-existing RMII groups did not drive the SoC output-enable bits, so TX
-pads stayed Hi-Z. Fix programs those bits from the same `setfunc()` path
-that already muxes the groups. Pin lists match `r1_pins[]`, `r2_pins[]`,
-and `rmii3_pins[]` exactly.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- Quality: obviously correct against the driver’s own group tables; no
-  API/data-structure change.
-- Regression risk: low–medium. Linux now writes INTCR4 bits that used to
-  be left at firmware values. Clearing the whole R1/R2/RMII3 enable when
-  a single pin in that group is requested as GPIO is the stated intent,
-  but it can drop TX for the rest of that RMII if one pad is taken as
-  GPIO. No deadlock/locking change.
+- Category: logic / resource-completion bug → uninterruptible hang
+- Mechanism: bio remaining count never reaches zero; `submit_bio_wait()`
+  sits in `wait_for_completion_io()`.
+- Fix: complete the bio with a retryable status instead of dropping it.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: `npcm8xx_setfunc()` comes from `acf4884a57170` (“pinctrl:
-nuvoton: add NPCM8XX pinctrl and GPIO driver”, 2023-08-28; first in
-**v6.7-rc1**). INTCR4 handling is new in this commit. The bug is
-“missing programming since the driver was added,” not a recent
-regression.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. Not applicable. The incomplete mux has been there
-since the original driver.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Same-day 8-patch series from Tomer, merged via `pinctrl-v7.3-1`:
-1. drop RTS/CTS from bmcuart1
-2. **this commit**
-3. RG2 drive strength
-4. clear pending GPIO events
-5. rename GPIO7 IOX2
-6. move GPIO IRQ setup
-7. JM1/SMB7 flags
-8. debounce register selection
-This patch does not depend on the others. No later follow-up on INTCR4.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Tomer Maimon is the original npcm8xx/npcm7xx pinctrl author
-(Nuvoton). That is a strong subsystem-author signal, not a drive-by
-change.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Standalone. Uses existing `npcm8xx_setfunc()`,
-`fn_r1`/`fn_r2`/`fn_rmii3`, and `regmap_update_bits()` on the GCR
-syscon. No new helpers from other patches.
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- `b4 dig -c c6ccdc305589d` →
-  https://patch.msgid.link/20260715122923.1938327-3-tmaimon77@gmail.com
-- Series: `[PATCH v1 0/8] pinctrl: npcm8xx: fix pinmuxing and
-  configuration handling` (2026-07-15)
-- Only v1; no v2/v3
-- Cover letter: issues found by comparing upstream with the newer
-  Nuvoton tree
-- Linus Walleij: “No comments so patches applied.”
-- No Cc: stable, no NAKs
+- Obviously correct: every bio must be completed; this path did not.
+- Minimal: a few lines, one function.
+- Regression: callers see `-EAGAIN` instead of hanging.
+  `blkdev_issue_discard()` maps `-EOPNOTSUPP` to success, so
+  `BLK_STS_NOTSUPP` would lie; `BLK_STS_AGAIN` is the right retry
+  signal. Header comment says `BLK_STS_AGAIN` is for NOWAIT; maintainer
+  still accepted this, and the author showed `NOTSUPP` would look like a
+  successful discard.
+- Red flags: none on the hang fix itself. Helper `bio_endio_status()` is
+  missing in 6.1 (backport uses existing `bio->bi_status` +
+  `bio_endio()`).
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included Linus Walleij, Bartosz Golaszewski,
-Andrew Jeffery, linux-gpio, openbmc, and Google/Nuvoton BMC people. Only
-the maintainer reply is in the thread; no Reviewed-by/Tested-by.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No Reported-by, bugzilla, or syzbot. Evidence is the author’s
-hardware description (Hi-Z TX), not a user crash report.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Patch 2/8. Independent of 1/8 (UART pins) and 3/8 (RG2 drive
-strength). Safe to take alone.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable returned 403. UNVERIFIED whether stable@
-discussed this commit. The mbox has no stable nomination.
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: KEY FUNCTIONS**
-Record: `npcm8xx_rmii_output_enable_mask`,
-`npcm8xx_set_rmii_output_enable`, `npcm8xx_setfunc`
-
-**Step 5.2: TRACE CALLERS**
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- `npcm8xx_setfunc` ← `npcm8xx_pinmux_set_mux` (DT/pinctrl mux) and
-  `npcm8xx_gpio_request_enable` (GPIO request)
-- Reachable when a consumer selects `r1`/`r2`/`rmii3` or when those pads
-  are claimed as GPIO
-- Not IRQ/hot-path
+- Introducer: `620125f2bf8ff0` “MD: raid5 trim support” (Shaohua Li,
+  2012-10-11).
+- The skip-without-complete has been in tree since RAID5 discard was
+  added.
+- Present in this 6.1 checkout at `drivers/md/raid5.c:5809-5811`.
 
-**Step 5.3: TRACE CALLEES**
-Record: `regmap_update_bits()` on GCR INTCR4. Side effect is only those
-three bits.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Introducer confirmed via blame + `git merge-base
+--is-ancestor 620125f2bf8ff0 HEAD`.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Device-tree pinctrl for NPCM8xx RMII groups → pinmux → `setfunc`
-→ INTCR4. Userspace cannot trigger it without those pins being muxed.
-In-tree `nuvoton-npcm845-evb.dts` only enables UART/watchdog, but
-`nuvoton-common-npcm8xx.dtsi` already defines `r1`/`r2`/`rmii3` mux
-nodes for board DTs (typical OpenBMC).
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: npcm7xx pinctrl has no INTCR4 RMII enable. This is npcm8xx-
-specific. No sibling copy-paste bug.
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. Local tree is **v7.3-rc4** (`7.3.0-rc4`). `PINCTRL_NPCM8XX`
-and `npcm8xx_setfunc()` are present. `git merge-base --is-ancestor
-c6ccdc305589d HEAD` is true (the fix is already in this checkout). The
-pre-fix mux without INTCR4 existed from v6.7 through this series.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply on this file’s `setfunc()`/GCR-define region. Those
-sites were stable from the original driver until this commit. Later 7.3
-include churn (`mod_devicetable.h`) is unrelated.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This is the only INTCR4/RMII-output change. No alternate fix.
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-Record: `[drivers/pinctrl/nuvoton] [PERIPHERAL]` — Nuvoton NPCM8xx BMC
-pinmux. Important for that BMC’s RMII, not a core mm/fs/net path.
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-Record: Mature driver (v6.7) with a 2026 vendor-sync series. Not a
-brand-new subsystem.
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-Record: NPCM8xx (Arbel) BMC boards that mux `r1`/`r2`/`rmii3`. Config:
-`PINCTRL_NPCM8XX` / `ARCH_NPCM`. Not universal.
-
-**Step 8.2: TRIGGER CONDITIONS**
-Record: Selecting those RMII pin groups (boot pinctrl). Common on boards
-that use RMII Ethernet; unused if those groups are never muxed. Not a
-userspace-triggered security path.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-Record: `[RMII TX held in Hi-Z → no Ethernet transmit] [MEDIUM, HIGH for
-BMC management if that port is the OOB NIC]`. Not a panic, UAF, or
-filesystem corruption.
-
-**Step 8.4: RISK-BENEFIT RATIO**
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
 Record:
-- Benefit: BMC RMII actually transmits when the existing groups are
-  selected; firmware no longer has to paper over Linux.
-- Risk: ~61 lines, three GCR bits, no locking. Behavior change vs “leave
-  INTCR4 to firmware.”
-- Ratio: favorable for trees that already ship this driver.
+- Recent `raid5.c` work is other hang/lockup fixes, not this discard
+  skip.
+- `git log --grep='complete discard'` / `'discard bios while reshape'`
+  on `drivers/md/`: not in this tree.
+- Standalone patch (not `N/M`).
 
-## PHASE 9: FINAL SYNTHESIS
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record:
+- Genjian Zhang: not an MD regular in this tree.
+- Yu Kuai: frequent MD contributor here (`md/raid5: account discard IO`,
+  `fix IO hang when array is broken with IO inflight`, etc.) and applied
+  this to md-7.3.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record:
+- Functional dependency: none. Completing the bio does not need later
+  RAID5 refactoring.
+- `bio_endio_status()` is absent in 6.1; equivalent is already used
+  (`bio_wouldblock_error()`, `bio->bi_status = ...; bio_endio()`).
+- `raid5_discard_limits()` is context from later mainline, not used by
+  the fix. Not in 6.1.
+- Applies standalone with a 2-line helper substitution.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- Lore/msgid: `20260711161326.962336-1-zhanggenjian@126.com`
+- `b4 mbox`: 6-message thread, standalone v1 (no v2).
+- Recipients: Song Liu, Yu Kuai, linux-raid, linux-kernel.
+- Yu Kuai 2026-07-19: Reviewed-by; leave REQ_NOWAIT hang (nowait being
+  removed in mainline).
+- Yu Kuai 2026-07-31: “Rebase and applied to md-7.3”.
+- Author: no v2 for REQ_NOWAIT.
+- No NAK. No reviewer `Cc: stable`.
+- Sashiko bot: (1) REQ_NOWAIT also leaks the bio (pre-existing); (2)
+  `BLK_STS_AGAIN` on blocking bios.
+- Author: NOTSUPP is wrong (discard is supported, just not during
+  reshape); `blkdev_issue_discard()` treats `-EOPNOTSUPP` as success, so
+  NOTSUPP would report success with no discard; `BLK_STS_AGAIN` matches
+  raid10’s discard-during-reshape `-EAGAIN` policy.
+
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: MD maintainers CC’d (Song Liu, Yu Kuai). Yu Kuai reviewed and
+applied. Song Liu did not comment in the thread.
+
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No bugzilla/syzbot. Author reproduced with `blkdiscard` during
+`mdadm --grow` on loop RAID5. Hang remained after “reshape done”.
+
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone. REQ_NOWAIT leak left unfixed on maintainer request
+(mainline nowait removal). In 6.1 that WARN_ON_ONCE return without
+`bio_endio` is still present; it is a separate, rarer path.
+
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: No stable-list discussion found for this subject. Absence of
+`Cc: stable` is expected for this review pipeline.
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `make_discard_request()` only.
+
+Step 5.2: TRACE CALLERS
+Record:
+- Only caller: `raid5_make_request()` when `bio_op(bi) ==
+  REQ_OP_DISCARD` (`drivers/md/raid5.c:6175-6178`).
+- After the call: `md_write_end(mddev)` always runs, so write accounting
+  stays balanced if the bio is completed with error.
+- Context: MD make_request from `submit_bio` / `submit_bio_wait`.
+
+Step 5.3: TRACE CALLEES
+Record: On the buggy skip path, no stripe work, no `bio_inc_remaining`,
+no bitmap. Completing the original bio is sufficient. Success path still
+ends with `bio_endio(bi)` after stripe setup.
+
+Step 5.4: FOLLOW THE CALL CHAIN
+Record:
+```
+blkdiscard / FITRIM / FS discard
+  → blkdev_issue_discard() / sb_issue_discard()
+  → submit_bio_wait()  [wait_for_completion_io, uninterruptible]
+  → raid5_make_request()
+  → make_discard_request()
+  → return without bio_endio  [BUG]
+```
+Reachable from userspace on a RAID5/6 array with discard enabled. Needs
+admin (BLKDISCARD / fstrim), not an unprivileged syscall gadget.
+
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record:
+- Same file still has REQ_NOWAIT `WARN_ON_ONCE` then `return` without
+  completing (6.1-only leftover).
+- RAID10 already returns `-EAGAIN` for discard during reshape
+  (`raid10_handle_discard`, `drivers/md/raid10.c:1653-1654`) and
+  completes NOWAIT discards with `bio_wouldblock_error()`.
+- `raid5_make_request` already uses `bio_wouldblock_error()` for NOWAIT
+  vs reshape on normal I/O (`:6193-6201`). Discard skipped that pattern.
+
+No semcode MCP in this environment; callers/callees from `rg` + reading
+the functions.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes.
+
+```5809:5811:drivers/md/raid5.c
+        if (mddev->reshape_position != MaxSector)
+                /* Skip discard while reshape is happening */
+                return;
+```
+
+- Tree: `p-6.1-11-g10bc6eb33d95f`, `make kernelversion` → 6.1.188.
+- Bug since 2012 (`620125f2bf8ff0`), ancestor of HEAD.
+
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Needs a small backport, not a rework.
+- No `bio_endio_status()` in 6.1 → `bi->bi_status = BLK_STS_AGAIN;
+  bio_endio(bi);` (or `bio_wouldblock_error(bi)`).
+- No `raid5_discard_limits()` (later context only).
+- 6.1 still has the REQ_NOWAIT warning above the reshape check; leave it
+  (out of scope of this commit).
+- Expected difficulty: minor context/helper adjustment.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: This hang is not fixed. Discard still disabled by default
+(`devices_handle_discard_safely = false`), but the hang exists whenever
+that param is set and discard is issued during reshape.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: MD RAID5/6 (`drivers/md/raid5.c`). IMPORTANT: not core VFS/mm,
+but widely used for storage. RAID5 reshape (`mdadm --grow`) is a
+supported production operation.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Active in this tree (recent hang, lockup, discard accounting
+fixes). Yu Kuai is a regular MD committer here. Official maintainer in
+MAINTAINERS: Song Liu.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: RAID5/6 users who enabled discard
+(`raid456.devices_handle_discard_safely=Y`) and run discard
+(`blkdiscard`, `fstrim`, mount-time/online discard) while reshape is
+active. Config- and workload-specific, not universal.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record:
+- Trigger: discard bio while `reshape_position != MaxSector`.
+- How common: reshape is infrequent; overlap with `fstrim.timer` / admin
+  trim is realistic on SSD RAID.
+- Unprivileged: typically no (needs write on the device /
+  CAP_SYS_ADMIN). Still a production hang for admins and FS discard from
+  `fstrim`/ext4/xfs/f2fs (those use `blkdev_issue_discard` →
+  `submit_bio_wait`).
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record:
+- Failure: uninterruptible sleep (`wait_for_completion_io`) that does
+  **not** clear when reshape finishes. Process is unkillable; hung-task
+  warnings; reboot to recover.
+- Severity: **CRITICAL** for the affected path (hang), even though the
+  feature is opt-in.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: high for RAID5/6 + discard + reshape (unkillable hang →
+  `-EAGAIN`).
+- Risk: very low (few lines, error-only path, no new API, no
+  locking/data-structure change). Worst case: discard fails with
+  `-EAGAIN` instead of hanging.
+- Ratio: strongly favors backport.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
 
 FOR:
-- Concrete hardware bug: TX pads stay Hi-Z without INTCR4
-- Existing pin groups; this completes mux, it does not add a new
-  function/API
-- 61 lines, one file, pin lists match group arrays
-- No series dependencies
-- Driver author + pinctrl maintainer
-- Driver and bug exist in this tree (since v6.7)
-- Hardware-workaround exception (broken/incomplete SoC programming)
+- Real, tested uninterruptible hang; does not self-resolve after
+  reshape.
+- Small, obviously correct: complete a bio that was leaked.
+- Buggy code present in this 6.1 tree since 2012.
+- Maintainer Reviewed-by and applied (Yu Kuai, md-7.3).
+- `BLK_STS_AGAIN` avoids the `-EOPNOTSUPP`→success lie in
+  `blkdev_issue_discard()`.
+- Matches “complete with retryable error” rather than silent drop.
+- Callers (`blkdev_issue_discard`, FITRIM, `sb_issue_discard`) all wait
+  on completion.
 
 AGAINST:
-- Not crash/security/corruption/deadlock
-- Cover letter is a Nuvoton-tree sync, no user report or Tested-by
-- In-tree EVB DTS does not enable Ethernet
-- Writes INTCR4 that firmware may already own
-- Part of an 8-patch “cleanup” series (this patch is still self-
-  contained)
+- Discard off by default (`devices_handle_discard_safely`).
+- Exact mainline helper `bio_endio_status()` missing (trivial substitute
+  exists).
+- `BLK_STS_AGAIN` is documented as NOWAIT-oriented; maintainer accepted
+  it anyway.
+- No `Cc: stable` (not a negative for this process).
 
 UNRESOLVED:
-- Could not query lore.kernel.org/stable (HTTP 403)
-- Could not confirm how many shipping boards rely on firmware vs Linux
-  for INTCR4
+- Could not use `b4 dig -c <sha>` (commit not in this checkout). Thread
+  recovered via msgid/`b4 mbox`.
+- No stable-list thread found.
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — matches group tables;
-   maintainer applied v1. Tested-by is missing, but the change is
-   inspectable.
-2. Fixes a real bug that affects users? **PASS** — RMII TX does not
-   leave Hi-Z.
-3. Important issue? **PASS** (MEDIUM, hardware-workaround exception) —
-   dead BMC Ethernet TX, not a kernel oops.
-4. Small and contained? **PASS** — 61 lines, one driver.
-5. No new features or APIs? **PASS** — no new userspace API; programs a
-   register the existing groups already required.
-6. Can apply to the local tree? **PASS** — `pinctrl-npcm8xx.c` and
-   `npcm8xx_setfunc()` are here; the patch is already an ancestor of
-   HEAD.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — missing `bio_endio` is the
+   hang; author tested `blkdiscard` vs reshape; Yu Kuai reviewed.
+2. Fixes a real bug that affects users? **PASS** — D-state hang on
+   discard during reshape.
+3. Important issue? **PASS** — unkillable hang / hung task (CRITICAL on
+   that path).
+4. Small and contained? **PASS** — one function, a few lines.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** with a trivial backport
+   (`bio_endio_status` → set `bi_status` + `bio_endio`).
 
-**Step 9.3: EXCEPTION CATEGORIES**
-Record: Hardware workaround / incomplete mux for existing NPCM8xx RMII
-groups. Not a new driver.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not an ID/quirk/DT/docs exception. Ordinary hang fix.
 
-**Step 9.4: DECISION**
-This tree is 7.3 and already contains NPCM8xx pinctrl. The bug is real:
-selecting the documented RMII groups never released TX from Hi-Z. The
-fix is small, local, and does not need the rest of the series. That is
-the same class of change as a hardware quirk: the existing function does
-not work until the SoC bit is programmed. Benefit outweighs the INTCR4
-behavior change.
+Step 9.4: MAKE YOUR DECISION
+Backport to this 6.1 tree. The hang is in this code, the fix is
+surgical, and the only adjustment is how to set bio status without
+`bio_endio_status()`.
 
 Verification:
-- [Phase 1] Parsed tags: only author + Linus Walleij SOBs; no
-  Fixes/Reported-by/stable
-- [Phase 2] Diff: +61 lines in pinctrl-npcm8xx.c; INTCR4 helpers + call
-  from setfunc
-- [Phase 2] Pin lists verified equal to r1_pins/r2_pins/rmii3_pins
-- [Phase 3] git describe HEAD: v7.3-rc4-27-gf0100363d8c37; make
-  kernelversion 7.3.0-rc4
-- [Phase 3] git merge-base --is-ancestor c6ccdc305589d HEAD: yes
-- [Phase 3] Driver added acf4884a57170, first contained in v6.7-rc1
-- [Phase 3] git blame setfunc: original driver except the new INTCR4
-  call
-- [Phase 3] No Fixes: tag; no INTCR4 history before this commit
-- [Phase 4] b4 dig -c: lore/msgid 20260715122923.1938327-3; series v1
-  2/8
-- [Phase 4] b4 dig -a: only v1
-- [Phase 4] b4 dig -w: linusw, brgl, andrew, openbmc, linux-gpio, Google
-  BMC CCs
-- [Phase 4] mbox: Linus “No comments so patches applied”; no NAK; no Cc:
-  stable
-- [Phase 4] lore.kernel.org HTTP 403 for WebFetch; stable-list search
-  UNVERIFIED
-- [Phase 5] Callers: pinmux_set_mux and gpio_request_enable only
-- [Phase 6] Buggy mux without INTCR4 present from v6.7 until this commit
-- [Phase 6] In-tree EVB DTS has no ethernet node; common dtsi still
-  defines r1/r2/rmii3 muxes
-- [Phase 8] Failure mode: RMII TX Hi-Z, severity MEDIUM (BMC NIC)
+- [Phase 1] Subject/tags/body from the candidate message and lore mbox;
+  hang + `-EAGAIN` policy confirmed.
+- [Phase 2] Diff: reshape early-return without completion → `bio_endio`
+  with `BLK_STS_AGAIN`.
+- [Phase 3] `git blame` `raid5.c:5809-5811` → `620125f2bf8ff0` (2012);
+  `git merge-base --is-ancestor` true; fix not in this tree.
+- [Phase 3] `git log --grep` on `drivers/md/` for this subject: empty.
+- [Phase 4] `b4 mbox` msgid
+  `20260711161326.962336-1-zhanggenjian@126.com`: 6 msgs; Yu Kuai
+  Reviewed-by + applied md-7.3; author rationale for AGAIN vs NOTSUPP.
+- [Phase 4] Openwall/LKML mirrors match the patch; lore.kernel.org fetch
+  403 (Anubis); thread obtained via b4.
+- [Phase 5] `rg make_discard_request`: only `raid5_make_request`.
+  `submit_bio_wait` uses `wait_for_completion_io`.
+  `blkdev_issue_discard` treats only `-EOPNOTSUPP` as 0.
+- [Phase 5] RAID10 already returns `-EAGAIN` for discard during reshape
+  (`raid10.c:1653-1654`).
+- [Phase 6] `git describe HEAD` → `p-6.1-11-g10bc6eb33d95f`; `make
+  kernelversion` → 6.1.188. Buggy return present. `bio_endio_status` /
+  `raid5_discard_limits` absent.
+- [Phase 6] Equivalent completion: `include/linux/bio.h`
+  `bio_wouldblock_error()` / `BLK_STS_AGAIN`.
+- [Phase 7] MAINTAINERS: Song Liu / linux-raid; Yu Kuai active on
+  `drivers/md/raid5.c` in this tree.
+- [Phase 8] Failure mode: D-state hang until reboot; discard opt-in via
+  `devices_handle_discard_safely`.
+- UNVERIFIED: whether some later mainline commit renamed the helper-only
+  form to the `goto complete_again` form (functionally equivalent).
+
+The hang is real in 6.1, the fix is a few lines, and a missing helper is
+not a reason to leave an unkillable discard stall in place.
 
 **YES**
 
- drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 61 +++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ drivers/md/raid5.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-index 0aae1a2534594..c94441b2acdae 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-@@ -26,6 +26,7 @@
- #define NPCM8XX_GCR_SRCNT	0x068
- #define NPCM8XX_GCR_FLOCKR1	0x074
- #define NPCM8XX_GCR_DSCNT	0x078
-+#define NPCM8XX_GCR_INTCR4	0x0c0
- #define NPCM8XX_GCR_I2CSEGSEL	0x0e0
- #define NPCM8XX_GCR_MFSEL1	0x260
- #define NPCM8XX_GCR_MFSEL2	0x264
-@@ -78,6 +79,9 @@
- #define NPCM8XX_GPIO_PER_BANK	32
- #define NPCM8XX_GPIO_BANK_NUM	8
- #define NPCM8XX_GCR_NONE	0
-+#define NPCM8XX_INTCR4_R1_RMII_EN	BIT(12)
-+#define NPCM8XX_INTCR4_R2_RMII_EN	BIT(13)
-+#define NPCM8XX_INTCR4_RMII3_EN	BIT(14)
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 2817cd7d197e9..b7da2b83e1938 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5707,8 +5707,7 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
+ 	int stripe_sectors;
  
- #define NPCM8XX_DEBOUNCE_MAX		4
- #define NPCM8XX_DEBOUNCE_NSEC		40
-@@ -1796,6 +1800,61 @@ static const struct pinctrl_pin_desc npcm8xx_pins[] = {
- 	PINCTRL_PIN(251, "JM2/CP1_GPIO"),
- 	};
+ 	if (mddev->reshape_position != MaxSector)
+-		/* Skip discard while reshape is happening */
+-		return;
++		goto complete_again;
  
-+static u32 npcm8xx_rmii_output_enable_mask(unsigned int pin)
-+{
-+	switch (pin) {
-+	case 178:
-+	case 179:
-+	case 180:
-+	case 181:
-+	case 182:
-+	case 193:
-+	case 201:
-+		return NPCM8XX_INTCR4_R1_RMII_EN;
-+	case 84:
-+	case 85:
-+	case 86:
-+	case 87:
-+	case 88:
-+	case 89:
-+	case 200:
-+		return NPCM8XX_INTCR4_R2_RMII_EN;
-+	case 110:
-+	case 111:
-+	case 209:
-+	case 210:
-+	case 211:
-+	case 214:
-+	case 215:
-+		return NPCM8XX_INTCR4_RMII3_EN;
-+	default:
-+		return 0;
-+	}
-+}
-+
-+static void npcm8xx_set_rmii_output_enable(struct regmap *gcr_regmap,
-+					   const unsigned int *pin,
-+					   int pin_number, int mode)
-+{
-+	u32 mask = 0;
-+	u32 val = 0;
-+	u32 bit;
-+	int i;
-+
-+	for (i = 0; i < pin_number; i++) {
-+		bit = npcm8xx_rmii_output_enable_mask(pin[i]);
-+		mask |= bit;
-+
-+		if ((mode == fn_r1 && bit == NPCM8XX_INTCR4_R1_RMII_EN) ||
-+		    (mode == fn_r2 && bit == NPCM8XX_INTCR4_R2_RMII_EN) ||
-+		    (mode == fn_rmii3 && bit == NPCM8XX_INTCR4_RMII3_EN))
-+			val |= bit;
-+	}
-+
-+	if (mask)
-+		regmap_update_bits(gcr_regmap, NPCM8XX_GCR_INTCR4, mask, val);
-+}
-+
- /* Enable mode in pin group */
- static void npcm8xx_setfunc(struct regmap *gcr_regmap, const unsigned int *pin,
- 			    int pin_number, int mode)
-@@ -1834,6 +1893,8 @@ static void npcm8xx_setfunc(struct regmap *gcr_regmap, const unsigned int *pin,
- 						   BIT(cfg->bit4) : 0);
- 		}
+ 	stripe_sectors = conf->chunk_sectors *
+ 		(conf->raid_disks - conf->max_degraded);
+@@ -5786,6 +5785,11 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
  	}
+ 
+ 	bio_endio(bi);
++	return;
 +
-+	npcm8xx_set_rmii_output_enable(gcr_regmap, pin, pin_number, mode);
++complete_again:
++	/* Skip discard while reshape is happening */
++	bio_endio_status(bi, BLK_STS_AGAIN);
  }
  
- static int npcm8xx_get_slew_rate(struct npcm8xx_gpio *bank,
+ static bool ahead_of_reshape(struct mddev *mddev, sector_t sector,
 -- 
 2.53.0
 
