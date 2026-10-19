@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AD8513BD8;
-	Mon, 19 Oct 2026 13:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959F6555470;
+	Mon, 19 Oct 2026 13:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418223; cv=none; b=MztxnoOqKzvFazLlYQt2q3m3lHan9xzJfpnw8DCVrxXz/mTsZ9pBxwbrQLr6WNmWxTkCv+Tu5KkbvJxRtvH8h8m5ku+OJ2T4FhteMCoowAxykCZYPr/5bP9fRoBwEYCm9BPygo6v1kFJQZ4gRH9ugkAOcPZhyVpFcYDbnMK1OVw=
+	t=1792418225; cv=none; b=chqTz0yyhc9rG96hW58YkPPfsIDCjPyoeBYtrv0EORMyX5wliZgM71DebMgO0R3RwNnOBztUWcjls2anZXW4m0BEJ/OpttVN4R1/yx6IlBdp/lN1X2X+smVGtv+rGs94xaySm3b7Fa4lwUxcjlsC+3bIsNCXQEgIc/bUC41/kqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418223; c=relaxed/simple;
-	bh=3es7n51+Q0LGQP9Wl8jErystEOS50uO+n0RsPoVOa/A=;
+	s=arc-20240116; t=1792418225; c=relaxed/simple;
+	bh=cqRu7aTK5ekNPk/YqtTLqNnHQjvfyCr2SQsLYogN15U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A+q8KW/5H9eFkIYZNKLEpe8Kamk92HDtEynOvLKomDACbhBX+wtx9yK6DB96qZwNCR59trLhY3VGK1gVjfNb0liQpxVkVs3SyKOd1o45iqg5FUp7OHvlRws3dj/SowFIorYqHQayxo8crZwy/5oy5Yg9n/iV3tBIQYeWVXuMNZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SqhhAzln; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HMeyx5pHA0X5fqdMJ7wCeBVXqW/h5yGmeWah6Am8vEYQsBF11zt7FmuxAeSuVK0XTCkGiIT5uSpNSAXK5AOVzy6JEw/RT0X7v/3TOfXXI2TOMEuJMoApSdUeb/JU8NWOdVpXFg1uxtVD3DWm4YVzQRn/34v22uCeSjO4OQF8Y4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3LE11jy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SqhhAzln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB28E1F000C8;
-	Mon, 19 Oct 2026 13:56:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d3LE11jy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7341F000C5;
+	Mon, 19 Oct 2026 13:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418220;
-	bh=M70VlpRT59EjCQshNMw662ftj9w+gKoHqn8i5U7vYRg=;
+	s=k20260515; t=1792418222;
+	bh=+yk4mejZsOHQ1PXvKPrh9FOXwfljT9MoJukQVJod748=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SqhhAzlnEgEbmwNvIynxDhckMQ00g+PFO9Mj2MmKKX71v9ETKlZvpdFx6yKYlTTrv
-	 cdFnRSyYnkwD/HTnqvBjXJiv0YTBEOsO5ZzPzwdjy58gjpBuvwgIzkW25HWOBehJba
-	 Rku6kSZoqNDJwq3ZjckIv4eq+/AmkCgzRSny9KqcZsK+KuCdVXcor83nNhaubdch+M
-	 ndD9t66CRnfdznT/vz+G3fi35BBNXiDLCgYx5t/LOuGMsQwa7cgqonk1ER+8mTcLuC
-	 z7WGovfvaz1NMOhTiroh1rGCX4mBGqetiPh5CmaY8FMsoN7Va0iZPocklV9QOhPdqc
-	 taHn9mFFdyBxQ==
+	b=d3LE11jyKD0BwdB5nGm4911vgNzfccxz6vAC2dgLxajYgExFjtXPi62GzeqkAKpFH
+	 p/aqmSMZ/CMZ4ab+aWFKMDZ5sn+YJkdHuRxUo+an2AX9uFyrsiRCPKXvOSNwn1x9Nm
+	 2vJIbBs9XOCO6nOe/fEOm1eJv3m2+Bj6Rueo83kZHOWgGkA/BdYdgKRq1O8H5g97Ye
+	 +T3PxxGodK2bduiCY7fiosdRgEjtHi/FlG0rEx0tULdwX2d7bpUx2tlnYokKTi0hZ2
+	 F3AeSntXe8eJjdq8/oORJsqhJaJ2VT/9tR2N4PusEGubW4+GZkwGLqS0rSvr3Lofqr
+	 ZyG6Q3Im7VfZQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: William Hansen-Baird <william.hansen.baird@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
+	Jianjun Chen <jianjun@tsinghua.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@kernel.org,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: rtlwifi: rtl8723be: Remove unnecessary irq save/restore in hw_init()
-Date: Mon, 19 Oct 2026 09:46:29 -0400
-Message-ID: <20261019135441.1420968-98-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] netfilter: conntrack: tcp: use UNACK timeout for non-closing RST packets
+Date: Mon, 19 Oct 2026 09:46:30 -0400
+Message-ID: <20261019135441.1420968-99-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,513 +60,457 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Hansen-Baird <william.hansen.baird@gmail.com>
+From: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
 
-[ Upstream commit 1b4cd55626b6ffa93d18848412afb912a4add585 ]
+[ Upstream commit bf80e6802273a900311b44e47c9b1a59c6d2473c ]
 
-rtl8723be hw_init() calls local_save_flags(flags) followed by
-local_irq_enable(). Later, local_irq_restore(flags) is called.
+Commit be0502a3f2e9 ("netfilter: conntrack: tcp: only close if RST
+matches exact sequence") keeps an established conntrack entry in
+ESTABLISHED when an in-window RST does not match the expected sequence
+number exactly, so the endpoint can validate the RST with a challenge
+ACK.
 
-This causes warnings from Lockdep on boot and modprobe,
-as local_irq_restore(flags) should only be called while irqs are disabled.
-The warning was introduced to detect this class of bug in [1].
+The timeout selection nevertheless uses the CLOSE timeout for every RST
+packet.  The bug is that timeout selection is based on the packet type,
+not on the state transition result: even when RST validation keeps
+new_state in ESTABLISHED, the timeout is still forced to
+TCP_CONNTRACK_CLOSE.
 
-With testing I found that all paths which call hw_init() have irqs
-already enabled for rtl8723be.
+Linux TCP independently rate limits challenge ACKs per socket.  A second
+non-exact RST can therefore arrive after the first challenge ACK has
+restored the timeout but before the rate limit expires.  The second RST
+lowers the timeout to 10 seconds again while the endpoint suppresses the
+second challenge ACK, allowing the conntrack entry to expire while both
+TCP endpoints remain established.
 
-Furthermore, the calls were originally added for the rtl8192ce
-in commit f78bccd79ba3 ("rtlwifi: rtl8192ce: Fix too long disable of IRQs")
-before later being added to most other rtlwifi drivers.
+Using the ESTABLISHED timeout for such RSTs would avoid this short
+expiration window, but it could also retain stale entries for the
+five-day default because conntrack cannot reliably match the endpoint's
+exact TCP state.
 
-Commit d3feae41a347 ("rtlwifi: Update power-save routines for 062814 driver")
-then replaces the call to spin_lock_irqsave() before hw_init(),
-and thus the codepath which caused irqs to be disabled in hw_init and
-prompted the original commit has been removed.
+Use the UNACK timeout for RST packets that leave the conntrack entry in
+TCP_CONNTRACK_ESTABLISHED.  Exact-match RSTs and accepted RST packet
+trains still fall through to timeouts[new_state], which preserves the
+CLOSE timeout when conntrack accepts the RST as closing the flow.
 
-The same irq save/restore pattern is also present in the hw_init() of
-rtl8192ce, rtl8723ae, rtl8188ee, rtl8192se and rtl8192cu,
-however I don't have the hardware to test them,
-so I did not include them in my changes.
+This avoids the aggressive 10-second expiration window for non-exact
+RSTs while preserving the short timeout for RSTs that conntrack accepts
+as closing the flow.
 
-Tested on a Razer Blade 14 2017.
-
-Example of output from Lockdep prior to fix:
-
-raw_local_irq_restore() called with IRQs enabled
-
-...
-
-Call Trace:
-<TASK>
-rtl8723be_hw_init+0x5992/0x7220 [rtl8723be]
-? static_obj+0x61/0xa0
-rtl_pci_start+0x222/0x5c0 [rtl_pci]
-rtl_op_start+0x128/0x1a0 [rtlwifi]
-? __kasan_check_read+0x11/0x20
-drv_start+0x16c/0x550 [mac80211]
-
-...
-
-irq event stamp: 887679
-hardirqs last  enabled at (887689): [<ffffffff96511170>] __up_console_sem+0x90/0xa0
-hardirqs last disabled at (887698): [<ffffffff96511155>] __up_console_sem+0x75/0xa0
-softirqs last  enabled at (887670): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
-softirqs last disabled at (887649): [<ffffffff962f4675>] __irq_exit_rcu+0x175/0x2f0
----[ end trace 0000000000000000 ]---
-
-[1] https://lore.kernel.org/all/20210111153707.10071-1-mark.rutland@arm.com/
-
-Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260609095359.2964193-1-william.hansen.baird@gmail.com
+Suggested-by: Florian Westphal <fw@strlen.de>
+Reported-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
+Reported-by: Jianjun Chen <jianjun@tsinghua.edu.cn>
+Signed-off-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4** (mainline 7.3). The candidate is a six-
-line IRQ API fix in `rtl8723be_hw_init()` that stops a real `WARN_ONCE`
-on boot. Full phase walkthrough follows.
+The evaluation is for the **6.6.y** tree this session opened on
+(`pending-6.6` / 6.6.157). The bug is present there; the patch is a
+small, real conntrack timeout fix.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[wifi: rtlwifi: rtl8723be]** **[Remove]** unnecessary irq
-save/restore in `hw_init()`. Intent: drop a leftover `local_save_flags`
-/ `local_irq_enable` / `local_irq_restore` sequence that is no longer
-valid.
+- Record: **[netfilter/conntrack/tcp] [use] use UNACK timeout for non-
+  closing RST packets**
+- Subsystem: `netfilter: conntrack: tcp:`
+- Verb: “use” here is a timeout-policy correction after RST validation
+  already keeps the entry ESTABLISHED.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Record:
-- **Acked-by:** Ping-Ke Shih `<pkshih@realtek.com>` (rtlwifi maintainer)
-- **Signed-off-by:** William Hansen-Baird (author); Ping-Ke Shih
-  (maintainer)
-- **Link:** https://patch.msgid.link/20260609095359.2964193-1-
-  william.hansen.baird@gmail.com
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable (absence expected)
-- Ignore pipeline SOBs
+- Record:
+  - **Suggested-by:** Florian Westphal `<fw@strlen.de>` (conntrack
+    maintainer)
+  - **Reported-by:** Minghao Zhang `<zhangmh25@mails.tsinghua.edu.cn>`
+  - **Reported-by:** Jianjun Chen `<jianjun@tsinghua.edu.cn>` (two
+    reporters)
+  - **Signed-off-by:** Minghao Zhang; Pablo Neira Ayuso (netfilter
+    maintainer)
+  - **No Fixes: / Cc: stable in the committed text** (expected for this
+    review queue)
+  - **v1 and v2 on the list both had** `Fixes: be0502a3f2e9 ("netfilter:
+    conntrack: tcp: only close if RST matches exact sequence")`. That
+    tag was dropped when the patch was folded into an nf-next pull.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
-Record:
-- **Bug:** `rtl8723be_hw_init()` does `local_save_flags(flags);
-  local_irq_enable();` … `local_irq_restore(flags)` while IRQs are
-  already enabled.
-- **Symptom:** `WARN_ONCE` from `warn_bogus_irq_restore()`:
-  `raw_local_irq_restore() called with IRQs enabled`, on boot and
-  `modprobe`. Stack: `rtl8723be_hw_init` → `rtl_pci_start` →
-  `rtl_op_start` → `drv_start`.
-- **Root cause:** The save/enable/restore was copied from rtl8192ce
-  (`f78bccd79ba3`, 2014) to keep IRQs enabled during a long `hw_init()`
-  that used to run under `spin_lock_irqsave()`. `d3feae41a347` (2014)
-  removed that irqsave around the power-save/`hw_init` path, so callers
-  now enter with IRQs enabled. Restore of already-enabled flags is
-  forbidden.
-- **Version info:** Pattern present since the rtl8723be driver was added
-  (`a619d1abe20cc`, 2014-02-28). Warning added in `997acaf6b4b59`
-  (2021).
-- **Author explanation:** All current rtl8723be `hw_init()` callers have
-  IRQs enabled (tested on a Razer Blade 14 2017). Sibling chips still
-  have the pattern but were left alone for lack of hardware.
+- Record:
+  - **Bug:** After `be0502a3f2e9`, an in-window RST that does not match
+    `td_maxack` leaves conntrack in ESTABLISHED so the peer can
+    challenge-ACK. Timeout selection still keys off packet type
+    (`TCP_RST_SET`) and always applies **CLOSE (10s)**.
+  - **Symptom:** A second non-exact RST can land after the first
+    challenge ACK restored the timer, but while Linux still rate-limits
+    challenge ACKs. The second RST drops the timer to 10s again; the
+    suppressed challenge ACK never refreshes it; the conntrack entry
+    expires while both TCP endpoints stay established. NAT/firewall then
+    drop a live flow.
+  - **Root cause:** Timeout is chosen from the RST flag, not from the
+    resulting state.
+  - **Fix:** RST that leaves `new_state == TCP_CONNTRACK_ESTABLISHED`
+    uses **UNACK (5 min)**. Exact-match / RST-train RSTs still fall
+    through to `timeouts[new_state]` (CLOSE).
+  - **Version info:** Tied to `be0502a3f2e9` (2019-03-01), which is in
+    this 6.6 tree.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: Not hidden. Explicit lockdep/IRQ-restore warning fix. “Remove
-unnecessary” is accurate: the sequence became a no-op plus a warning
-after the 2014 caller change.
+- Record: **Not hidden.** It is a real timeout/state mismatch. v1/v2
+  called the 10s window **“exploitable”**. Pablo’s nf-next cover letter
+  softened that to “more conservative timeout”; the failure mode is
+  still live-session teardown through conntrack/NAT.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-
-Record:
-- File: `drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c` — **6
-  deletions, 0 additions**
-- Function: `rtl8723be_hw_init()`
-- Scope: single-file surgical fix
+- Record: **one file**, `net/netfilter/nf_conntrack_proto_tcp.c`; **~3
+  lines** in `nf_conntrack_tcp_packet()`. Surgical single-file logic
+  fix.
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record:
-- **Before:** Save flags, force IRQs on for the whole init, restore
-  flags at the `exit:` label (success and error).
-- **After:** Init runs in the caller’s IRQ state; `exit:` only clears
-  `being_init_adapter`.
-- **Path:** Normal and error `hw_init()` (boot, `modprobe`, interface
-  start, IPS nic-on).
+- Record: After window validation, timeout selection:
+  - **Before:** any `index == TCP_RST_SET` →
+    `timeouts[TCP_CONNTRACK_CLOSE]` (10s), even if `new_state` was
+    forced back to ESTABLISHED (`new_state = old_state` at the non-exact
+    RST path).
+  - **After:** only RST **and** `new_state == TCP_CONNTRACK_ESTABLISHED`
+    → UNACK (5 min). Closing RSTs (`tcp_conntracks[][]` maps
+    ESTABLISHED+RST → CLOSE, exact-seq / RST-train `break` without
+    restoring ESTABLISHED) still get CLOSE.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **Logic / IRQ-flag API misuse** (WARN_ON class).
-`local_irq_restore()` must be called with IRQs disabled
-(`raw_check_bogus_irq_restore()` in `include/linux/irqflags.h`). Callers
-already have IRQs enabled, so restore trips `WARN_ONCE`. Same class as
-`8b144dedb928e` (“rtlwifi: rtl8192cu: Fix WARNING when calling
-local_irq_restore() with interrupts enabled”), which used
-`local_irq_disable()` before restore and was **Cc: stable**. Here the
-save/enable/restore is removed because it is no longer needed.
+- Record: **[Logic / correctness]** plus a **security-relevant NAT
+  teardown window**. Timeout no longer contradicts the RFC 5961 “stay
+  ESTABLISHED for challenge ACK” path from `be0502a3f2e9`.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-
-Record:
-- Obviously correct if all callers have IRQs enabled (author tested;
-  maintainer agreed; `rtl_pci_start` / `rtl_op_start` /
-  `rtl_ps_enable_nic` are process-context, mutex/work, not
-  `spin_lock_irqsave`).
-- Minimal: six lines deleted, no unrelated edits.
-- Regression risk: if some caller still had IRQs off, `hw_init()` could
-  run ~hundreds of ms with IRQs disabled (the 2014 audio-underrun/clock-
-  freeze bug). Verified not the case in this tree. Maintainer: “current
-  `hw_init()` is not in scope of `spin_lock_irqsave()`, so irqs is not
-  disabled.”
+- Record: **Obviously correct** for defaults (ESTABLISHED=5 days,
+  UNACK=5 min, CLOSE=10s). Minimal. Regression risk is low:
+  - Dead flows after a bogus RST linger **5 min instead of 10s** (same
+    UNACK used for unacked data / out-of-window FIN|RST).
+  - If sysctl sets ESTABLISHED **below** UNACK (e.g. 120s NAT boxes),
+    this commit can **extend** the timer. Follow-up `73df81b38cb7f`
+    (`timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK]`) closes that.
+    Pablo: “Not a big deal… only affect timeout configurations where
+    unack timeout is longer than established.” Defaults on 6.6 are fine.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-
-Record: IRQ save/restore was in rtl8723be from **`a619d1abe20cc`
-(“rtlwifi: rtl8723be: Add new driver”, 2014-02-28)**. Pattern copied
-from rtl8192ce `f78bccd79ba3` (2014-02-01). Present for ~12 years.
+- Record: The unconditional RST→CLOSE timeout was added in
+  **`be0502a3f2e9`** (Florian Westphal, 2019-03-01, v5.1 era). It is an
+  ancestor of `pending-6.6`. Long-lived 6.6 code, not a new-mainline-
+  only bug.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
+- Record: Committed message has **no Fixes:**. Submissions targeted
+  **`be0502a3f2e9`**, which **is** in this tree (`git merge-base --is-
+  ancestor be0502a3f2e9 pending-6.6` → YES). That commit documented
+  CLOSE timeout for non-exact RSTs as intentional; this patch revises
+  that because challenge-ACK rate limiting makes the 10s window drop
+  live flows.
 
-Record: No Fixes: tag. Related history:
-- `f78bccd79ba3` — **in this tree** — added save/enable/restore because
-  `hw_init` ran too long with IRQs off.
-- `d3feae41a347` — **in this tree** — replaced `spin_lock_irqsave`
-  before `hw_init` with `spin_lock` / mutex; IRQ-disabled caller gone.
-- `997acaf6b4b59` — **in this tree** — added the `WARN_ONCE`.
-- `8b144dedb928e` (2021) — **in this tree** — same warning on rtl8192cu;
-  **Cc: stable**.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: Recent `rtl8723be/hw.c` commits are unrelated (stack size, const
-arrays, LED, `kfree_skb`). Standalone; not patch X/Y in the committed
-form (v2 was a single patch).
+**Step 3.3: CHECK FILE HISTORY**
+- Record (on `pending-6.6`): related RST work includes `2bb6d82b586ea`
+  (invalid-seq RST direction check) and `628d694344a02` (UNACK for out-
+  of-window FIN/RST). **Standalone** timeout change; not patch 2/N.
+  Follow-up `73df81b38cb7f` is **not** in `pending-6.6` and should ride
+  along once this is applied (it has `Fixes: bf80e6802273`).
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+- Record: Minghao Zhang / Jianjun Chen (Tsinghua) —
+  reporters/researchers, not netfilter maintainers. Weight comes from
+  **Suggested-by Florian** and **SOB Pablo**. No other Minghao commits
+  on this file in 6.6.
 
-Record: William Hansen-Baird is a contributor, not the maintainer.
-Nearby work is separate ASPM quirks for the same chip (June 30), not
-prerequisites. Maintainer Ping-Ke Shih acked and applied it.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: None. Deletes three API calls that have existed since 2014.
-Applies standalone.
+**Step 3.5: DEPENDENT/PREREQUISITE COMMITS**
+- Record: Needs the `be0502` non-exact-RST ESTABLISHED path (present).
+  Uses existing `TCP_CONNTRACK_UNACK`. **Applies standalone** on 6.6.
+  Optional follow-up for inverted sysctl timeouts.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- Lore/msgid: https://patch.msgid.link/20260609095359.2964193-1-
-  william.hansen.baird@gmail.com
-- v1: https://patch.msgid.link/20260608135345.2526325-3-
-  williamhb+k@fastmail.com
-- v1 → v2: drop dmesg timestamps, `[1]` footnote, `rtw-next` subject
-  prefix. **Code unchanged.**
-- Maintainer: “I think removal is okay.” No NAK. No Cc: stable in
-  review. Applied to rtw-next as `1b4cd55626b6`.
+- Record:
+  - `b4 dig -c bf80e6802273a` → v2: https://patch.msgid.link/20260729154
+    654.3599616-1-zhangmh25@mails.tsinghua.edu.cn
+  - **v1** (2026-07-29): explicit CLOSE branch + UNACK fallback;
+    **Fixes:** + “exploitable 10-second expiration window”
+  - **v2:** Pablo/Florian simplification; UNACK only if `new_state ==
+    ESTABLISHED`
+  - Florian (https://patch.msgid.link/amoXj6UGRW8SQXBT@strlen.de): asked
+    to drop redundant CLOSE assignment and test a narrower condition.
+    Author tested ESTABLISHED-only UNACK and sent v2.
+  - **No NAK.** Queued in Pablo’s nf-next pull (patch 9/9), 2026-07-31:
+    https://lists.openwall.net/netdev/2026/07/31/313
+  - Jakub forwarded an AI review
+    (https://lists.openwall.net/netdev/2026/08/05/12): should have
+    Fixes:; CLOSE-for-inexact-RST was intentional in 2019; missing “only
+    lower, never extend” guard; closing-RST CLOSE timeout not preserved
+    for some non-default sysctls. The **extend** issue is exactly what
+    `73df81b38cb7f` later fixed.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: To/Cc: `pkshih@realtek.com`, linux-wireless, linux-kernel.
-Subsystem maintainer reviewed and Acked.
+- Record (`b4 dig -w`): To/Cc **netfilter-devel**,
+  **pablo@netfilter.org**, **fw@strlen.de**, Jianjun Chen. Right
+  maintainers. Florian reviewed v1; Pablo merged.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot/bugzilla for this exact chip. Author reproduced on a
-Razer Blade 14 2017 with a full lockdep-style trace. Same warning class
-was syzbot+stable for rtl8192cu in 2021.
+- Record: Dual Reported-by from Tsinghua. v1/v2 text: **exploitable**
+  10s window via RST + challenge-ACK rate limit. Concrete trigger, not
+  syzbot. Syzbot CI on the series: **passed**
+  (https://ci.syzbot.org/series/36445e46-2abc-4e64-93d2-bb558ec1f53b).
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: v1 msgid `-3` looks like a series slot; v2 was sent standalone.
-Other June 2026 Hansen-Baird rtlwifi patches are ASPM, independent.
-Sibling drivers (rtl8192ce, rtl8723ae, rtl8188ee, rtl8192se, rtl8192cu)
-still have the pattern; not required for this chip’s fix.
+- Record: Standalone nf-next patch (not a 9-patch dependency; the other
+  8 were unrelated flowtable/conncount work). Follow-up: `73df81b38cb7f`
+  / https://lists.openwall.net/netdev/2026/08/10/387 — “Reported by
+  sashiko”.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: No stable-thread discussion found for this subject. Precedent:
-`8b144dedb928e` was explicitly Cc: stable for the same warning.
+- Record: **No useful stable-list discussion found** for this subject
+  (lore.kernel.org/stable search did not surface this patch). Not
+  previously rejected for 6.6.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-
-Record: `rtl8723be_hw_init()` only.
+**Step 5.1: KEY FUNCTIONS**
+- Record: **`nf_conntrack_tcp_packet()`** only.
 
 **Step 5.2: TRACE CALLERS**
-
-Record:
-- `rtl_pci_start()` (`pci.c:1737`) ← `rtl_op_start()` (`core.c:129`,
-  `conf_mutex`) ← mac80211 `drv_start`. Matches the reported stack.
-  Process context, IRQs on.
-- `rtl_ps_enable_nic()` (`ps.c:26`) ←
-  `_rtl8723be_phy_set_rf_power_state()` IPS ERFON path (`phy.c:2534`) ←
-  `rtl_ps_set_rf_state()` (plain `spin_lock`, not irqsave) ←
-  `rtl_ips_nic_on()` (`ips_mutex`). Process/work context, IRQs on.
-- USB `rtl_usb_start()` also calls `hw_init`; **RTL8723BE is PCIe-only**
-  (`CONFIG_RTL8723BE`).
+- Record: `pending-6.6:net/netfilter/nf_conntrack_core.c:1897` — every
+  tracked TCP packet. Softirq/hook path, not init-only.
 
 **Step 5.3: TRACE CALLEES**
-
-Record: MAC/FW/PHY init, register I/O, `rtl8723be_dm_init`. Long-
-running, sleepable. Must not run with IRQs off for hundreds of ms —
-which is why 2014 added enable, and why it is safe to drop now that
-callers already have IRQs on.
+- Record: `nf_ct_timeout_lookup()`, `tn->timeouts[]`, later
+  `nf_ct_refresh_acct()`. Writes entry expiry.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Userspace-reachable: interface up / module load / IPS wake.
-Unprivileged users who can bring the interface up can hit it. Debug
-kernels dump a warning on every start.
+- Record: Userspace/network reachable whenever `CONFIG_NF_CONNTRACK`
+  tracks TCP (iptables/nftables/NAT, Docker, Kubernetes, firewalls).
+  **High impact.** An on-path or in-window RST injector can hit it.
+  Unprivileged remote: needs in-window (not exact) SEQ; that is the RFC
+  5961 threat model.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same save/enable/restore still in rtl8723ae, rtl8192ce,
-rtl8188ee, rtl8192se, rtl8192cu. rtl8192cu already does
-`local_irq_disable()` before restore (`8b144dedb928e`). Systematic
-leftover; this patch only fixes the tested chip.
+- Record: Sibling branches already only **lower** timeout
+  (RETRANS/UNACK/zero-window). This RST branch was the odd one-out.
+  `nf_tcp_handle_invalid()` also uses UNACK for out-of-window FIN/RST
+  (`628d694`).
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+- Record: **Yes on `pending-6.6` / 6.6.157:**
 
-Record:
-- Local tree: **`v7.3-rc4-27-gf0100363d8c37`**, `VERSION=7 PATCHLEVEL=3`
-  (7.3.0-rc4).
-- Driver and `rtl8723be_hw_init()` exist. Buggy sequence was here from
-  2014 until **`1b4cd55626b6f`**, which is already in **v7.3-rc1** (not
-  in v7.2).
-- Current `hw.c` has no `local_save_flags` (grep empty). Evaluation is
-  of the fix’s merit for this lineage, where the bug lived for years and
-  the code still matches.
+```
+else if (unlikely(index == TCP_RST_SET))
+    timeout = timeouts[TCP_CONNTRACK_CLOSE];
+```
+
+at `nf_conntrack_proto_tcp.c` ~1327–1328. Non-exact RST still does
+`new_state = old_state` (~1260). `be0502a3f2e9` is an ancestor.
+Candidate **`bf80e6802273a` is not** an ancestor of `pending-6.6`.
+Introduced with `be0502` (2019), present for the whole 6.6 lifetime.
+
+*(HEAD later detached at `v7.3-rc4-70` during this session; that
+mainline tree already contains the fix. The stable tree this review is
+for remains 6.6.157 / `pending-6.6`, where the bug is still open.)*
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: Expected apply: **clean**. Six-line deletion of a pattern
-unchanged since 2014. No structural dependency on later rtlwifi
-refactors.
+- Record: **Clean apply.** Exact before-image on `pending-6.6`. No
+  refactor of this hunk vs the candidate.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: This exact fix is in 7.3-rc1. No alternate fix for rtl8723be.
-rtl8192cu’s 2021 workaround is a sibling, not a substitute.
+- Record: `2bb6d82b586ea` is a **different** RST CLOSE issue (SYN/RST
+  direction). It does **not** change RST timeout selection. No earlier
+  UNACK-for-non-closing-RST fix in 6.6.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+- Record: **netfilter conntrack TCP** — **IMPORTANT**. Core firewall/NAT
+  path on virtually every router, distro firewall, and container host.
 
-Record: **wifi / rtlwifi / rtl8723be** (Realtek RTL8723BE PCIe 802.11n).
-**IMPORTANT** (common 2014–2018 laptop WiFi: ThinkPads, Razers, etc.),
-not core mm/net.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Mature, low-churn vendor driver. Bug is old leftover, not a new-
-feature regression.
+**Step 7.2: SUBSYSTEM ACTIVITY**
+- Record: Mature tracker; this file still gets targeted RST/timeout
+  fixes. Bug is old (`be0502`), not churn from a new subsystem.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
+**Step 8.1: WHO IS AFFECTED**
+- Record: **Conntrack/NAT users** (`CONFIG_NF_CONNTRACK`) — default on
+  most distro kernels. Not arch-specific.
 
-Record: **Driver-specific**, `CONFIG_RTL8723BE`. Warning only with
-**`CONFIG_DEBUG_IRQFLAGS`** (selected by `DEBUG_LOCKDEP`). Debug/lockdep
-kernels, syzbot-style configs, `panic_on_warn`. Production distro
-kernels usually omit lockdep, so they would not print it — the API
-misuse is still present.
+**Step 8.2: TRIGGER CONDITIONS**
+- Record: In-window, non-exact RST on an ESTABLISHED tracked flow. 6.6
+  still **per-socket** rate-limits challenge ACKs via
+  `__tcp_oow_rate_limited()` and `sysctl_tcp_invalid_ratelimit = HZ/2`
+  (500ms), even with global `tcp_challenge_ack_limit = INT_MAX`. A
+  second RST inside that window matches the commit’s scenario. Also:
+  single RST + lost/unseen challenge ACK (asymmetric routing) leaves a
+  10s expiry. **On-path attacker or sequence-in-window injection.**
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+**Step 8.3: FAILURE MODE SEVERITY**
+- Record: **Live TCP dropped through NAT/firewall** after ~10s;
+  endpoints stay ESTABLISHED. Not a panic. **HIGH** (session disruption
+  / DoS on middleboxes). Authors called it **exploitable**.
 
-Record: Every `hw_init()`: boot, `modprobe`, iface start. Not a race.
-Unprivileged users can trigger via network start if the module is
-loaded.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: `WARN_ONCE` in `warn_bogus_irq_restore()`. Not a panic/oops by
-default. Can panic if `panic_on_warn`. Mark Rutland’s 2021 commit notes
-restore-with-IRQs-enabled can desync IRQ-state tracing and break archs
-whose `arch_local_irq_restore()` assumes IRQs are off. **Severity:
-MEDIUM** (WARN_ON), with a documented arch/lockdep correctness angle.
-Prompt lists WARN_ON triggers as a strong backport signal.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit:** Stops a boot-time warning on a common laptop chip;
-  restores correct IRQ API use. Same class already taken into stable for
-  rtl8192cu.
-- **Risk:** Very low (6-line delete). Residual risk is long IRQ-off
-  `hw_init` if some caller still had IRQs disabled — **not true in this
-  tree**.
-- **Ratio:** Favorable.
+**Step 8.4: RISK-BENEFIT RATIO**
+- Record: **Benefit high** (stops silent NAT teardown of established
+  sessions). **Risk low** (3-line, default UNACK < ESTABLISHED).
+  Residual risk: short ESTABLISHED sysctl vs longer UNACK — mitigated by
+  a one-line follow-up, not a reason to skip this fix.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 9.1: EVIDENCE**
 
 **FOR:**
-- Real, reproduced `WARN_ONCE` on boot/`modprobe` (Razer Blade 14 2017).
-- Incorrect `local_irq_restore()` usage; can confuse lockdep and some
-  arch restore paths.
-- Six-line deletion, obviously correct once callers have IRQs enabled
-  (verified in `rtl_pci_start` / `rtl_op_start` / IPS).
-- Tested on hardware; Acked and applied by Ping-Ke Shih.
-- Same warning on rtl8192cu was **Cc: stable** in 2021.
-- Driver present since 2014; no missing prerequisites.
-- WARN_ON is listed as a strong stable signal.
+- Real, user-visible bug: conntrack expires while TCP stays up.
+- Security-relevant (in-window RST + challenge-ACK throttle); v1/v2 said
+  “exploitable”; had `Fixes: be0502a3f2e9`.
+- `be0502` and the buggy CLOSE timeout are in 6.6.
+- Challenge-ACK **per-socket** throttle exists in 6.6 (`HZ/2`).
+- Tiny, obviously correct for default timeouts; Florian suggested, Pablo
+  merged, author tested v2.
+- Applies cleanly to `pending-6.6`.
 
 **AGAINST:**
-- Warning is gated on `CONFIG_DEBUG_IRQFLAGS`; typical production
-  kernels never print it.
-- Not a crash, deadlock, corruption, or security hole in the default
-  config.
-- Sibling chips left unfixed (incomplete family-wide cleanup, not a
-  dependency).
-- Removing enable-IRQs-during-init would be harmful if an IRQ-disabled
-  caller still existed (none found here).
+- Merged via **nf-next**, not nf; committed text dropped Fixes: and
+  “exploitable”.
+- `be0502` originally **meant** CLOSE timeout for non-exact RSTs (policy
+  shift 10s → 5 min).
+- Follow-up needed for ESTABLISHED < UNACK sysctl.
+- Not a crash/corruption/deadlock.
 
-**UNRESOLVED:** Could not fetch lore HTML (403); used `b4 dig -m` mbox
-instead. No stable@ thread found for this specific subject.
+**UNRESOLVED:** Full lore.kernel.org HTML was 403 (used `b4` + openwall
++ local mbox instead). No CVE number found.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — v2 tested by author;
+   Florian/Pablo; syzbot CI passed.
+2. Fixes a real bug that affects users? **PASS** — NAT/firewall drop of
+   live TCP.
+3. Important (crash/security/corruption/deadlock)? **PASS** —
+   exploitable middlebox teardown / DoS, not a panic.
+4. Small and contained? **PASS** — ~3 lines, one function.
+5. No new features or APIs? **PASS** — existing UNACK timeout.
+6. Can apply to this tree? **PASS** — exact match on `pending-6.6`.
 
-1. Obviously correct and tested? **PASS** — hardware test + maintainer
-   ack; callers have IRQs on.
-2. Fixes a real bug that affects users? **PASS** — lockdep/debug warning
-   on every start of this NIC.
-3. Important issue? **PASS** (MEDIUM) — WARN_ONCE; same class previously
-   shipped to stable; not a production panic.
-4. Small and contained? **PASS** — 6 lines, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — code exists; deletion applies
-   cleanly to the pre-fix file.
+**Step 9.3: EXCEPTION CATEGORIES**
+- Record: None (not a device ID/quirk/DT/build/doc exception). Ordinary
+  netfilter bugfix.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: None (not a device ID, quirk table, DT, build, or docs-only
-change). Qualifies as a normal small bugfix.
-
-**Step 9.4: MAKE YOUR DECISION**
-
-This is a small, verified fix for a real IRQ-flag warning that fires on
-a common PCIe WiFi chip whenever `hw_init()` runs under debug
-IRQ/lockdep configs. Callers in this tree already have IRQs enabled, so
-deleting the leftover save/enable/restore is the right fix and does not
-reintroduce long IRQ-off init. Benefit clearly beats risk.
+**Step 9.4: DECISION**
+Backport. 6.6 has the 2019 RST-validation change **and** the 10s CLOSE
+timeout that undermines it. The 5-minute UNACK value is the same
+compromise already used for other “conntrack and endpoints disagree”
+cases. Take follow-up `73df81b38cb7f` with it when possible; this commit
+is still right on default 6.6 timeouts without it.
 
 ---
 
-### What the commit solves for stable users
+## What the commit solves for stable users
 
-`rtl8723be_hw_init()` restored IRQ flags while IRQs were already
-enabled, which `CONFIG_DEBUG_IRQFLAGS` treats as broken and warns on
-every boot/`modprobe`. The enable/restore dance was only needed when
-`hw_init()` ran under `spin_lock_irqsave()`; that path has been gone
-since 2014. Users of RTL8723BE (many 2014–2018 laptops) on debug kernels
-get a stack dump at start; `panic_on_warn` would panic.
+On 6.6 firewalls/NAT, an in-window RST that is **not** the exact next
+SEQ leaves conntrack ESTABLISHED (RFC 5961) but still arms a **10s**
+timer. Linux then rate-limits challenge ACKs (~500ms per socket). A
+second such RST re-arms 10s with no refresh ACK, so conntrack deletes a
+flow that both endpoints still consider established. That is a real
+production failure and a plausible DoS on NAT.
 
-### Stable rules / risk vs benefit
+## Stable rules / risk vs benefit
 
-Meets all six rules: tiny, tested, no new API, applies cleanly. Risk is
-a 6-line delete. Benefit is removing a boot-time WARN and illegal
-restore. Same bug class was already backported for rtl8192cu.
+Meets the rules: small, tested, no new API, applies cleanly, fixes an
+important conntrack bug. Benefit is high for a common config; regression
+risk is a slightly longer hold of *stale* entries (5 min vs 10s), which
+is acceptable.
 
-### Concerns
+## Concerns
 
-None that block a backport here: no extra commits required; sibling
-chips are independent; production kernels without `DEBUG_IRQFLAGS`
-simply never print the warning, but the misuse is still worth fixing.
+- Pair with `73df81b38cb7f` so sysctl ESTABLISHED < UNACK cannot extend
+  lifetime.
+- Behavior change vs 2019 “intentional CLOSE timeout” is the point of
+  the fix, not a blocker.
 
 ---
 
-Verification:
-- [Phase 1] Parsed tags: Acked-by Ping-Ke Shih; Link msgid
-  20260609095359; no Fixes/Cc:stable/syzbot
-- [Phase 1] Body: lockdep `raw_local_irq_restore() called with IRQs
-  enabled`; stack `rtl8723be_hw_init` → `rtl_pci_start` → `rtl_op_start`
-- [Phase 2] Diff: 6 deletions in `rtl8723be_hw_init()` only (`git show
-  1b4cd55626b6f`)
-- [Phase 3] `git merge-base --is-ancestor`: `f78bccd79ba3`,
-  `d3feae41a347`, `997acaf6b4b59`, `8b144dedb928e` all in HEAD
-- [Phase 3] `git log -S local_save_flags -- rtl8723be/hw.c`: introduced
-  in `a619d1abe20cc` (2014), removed in `1b4cd55626b6f`
-- [Phase 3] `8b144dedb928e`: same warning on rtl8192cu, Cc: stable,
-  added `local_irq_disable()` before restore
-- [Phase 4] `b4 dig -c 1b4cd55626b6f`: lore match; v1→v2 message-only;
-  maintainer ack, no NAK
-- [Phase 4] `b4 dig -m`: saved /tmp/rtl8723be-thread.mbox (721 lines);
-  WebFetch lore HTML 403
-- [Phase 5] Callers: `rtl_pci_start` under `conf_mutex`;
-  `rtl_ps_enable_nic` from IPS via `spin_lock` not irqsave
-- [Phase 5] Grep: sibling drivers still have `local_save_flags`;
-  rtl8723be file has none after the fix
-- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` 7.3.0-rc4
-- [Phase 6] Commit in v7.3-rc1, not v7.2; current hw.c already patched
-- [Phase 7] `CONFIG_RTL8723BE` PCIe 802.11n; driver added 2014
-- [Phase 8] `warn_bogus_irq_restore()` is `WARN_ONCE`; `DEBUG_LOCKDEP`
-  selects `DEBUG_IRQFLAGS`
-- UNVERIFIED: no stable@ mailing-list thread for this exact subject
-  (search not exhaustive beyond b4/git)
-
-The fix is small, surgical, and meets the stable criteria for this tree.
+## Verification
+- **[Phase 1]** Tags: Suggested-by Florian, two Reported-by, Pablo SOB;
+  committed text has no Fixes:/Cc:stable; v1/v2 mbox **did** include
+  `Fixes: be0502a3f2e9` and “exploitable”.
+- **[Phase 2]** Diff: 3-line change in `nf_conntrack_tcp_packet()` RST
+  timeout arm; CLOSE preserved when `new_state != ESTABLISHED`.
+- **[Phase 3]** `be0502a3f2e9` is ancestor of `pending-6.6`; candidate
+  is not. Blame: CLOSE-on-every-RST from `be0502`. Follow-up
+  `73df81b38cb7f` not in 6.6.
+- **[Phase 3]** `git show
+  pending-6.6:net/netfilter/nf_conntrack_proto_tcp.c` lines 1327–1328:
+  buggy `index == TCP_RST_SET` → CLOSE.
+- **[Phase 4]** `b4 dig -c bf80e6802273a`: v1+v2; Florian review
+  `amoXj6UGRW8SQXBT@strlen.de`; Pablo nf-next 9/9; Jakub AI review
+  2026-08-05; follow-up 2026-08-10 “Reported by sashiko”.
+- **[Phase 4]** `b4 dig -w`: netfilter-devel, pablo, fw. `b4 dig -a`:
+  v1→v2 only.
+- **[Phase 4]** lore.kernel.org WebFetch: **403**; used b4 mbox +
+  openwall. Stable list: no hit on this subject.
+- **[Phase 5]** Caller: `nf_conntrack_core.c:1897` on every tracked TCP
+  packet.
+- **[Phase 6]** First probe: `pending-6.6`, `make kernelversion`
+  6.6.157. Later HEAD detached at `v7.3-rc4-70` (mainline already has
+  the fix). Re-checked **`pending-6.6`**: VERSION 6.6.157, buggy timeout
+  present, exact before-image, candidate not ancestor.
+- **[Phase 6]** 6.6 challenge ACK: `__tcp_oow_rate_limited` +
+  `sysctl_tcp_invalid_ratelimit = HZ/2`; global limit INT_MAX does
+  **not** disable per-socket limit.
+- **[Phase 6]** Defaults on 6.6: ESTABLISHED 5 days, UNACK 5 min, CLOSE
+  10s.
+- **[Phase 8]** Failure: NAT/conntrack drop of live TCP; severity HIGH /
+  security-relevant.
+- **UNVERIFIED:** CVE id (none found). Could not fetch lore HTML
+  directly.
 
 **YES**
 
- drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c | 6 ------
- 1 file changed, 6 deletions(-)
+ net/netfilter/nf_conntrack_proto_tcp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-index e1f8112188949..bf7b5a32adaaf 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/hw.c
-@@ -1333,11 +1333,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
- 	bool rtstatus = true;
- 	int err;
- 	u8 tmp_u1b;
--	unsigned long flags;
--
--	/* reenable interrupts to not interfere with other devices */
--	local_save_flags(flags);
--	local_irq_enable();
- 
- 	rtlhal->fw_ready = false;
- 	rtlpriv->rtlhal.being_init_adapter = true;
-@@ -1443,7 +1438,6 @@ int rtl8723be_hw_init(struct ieee80211_hw *hw)
- 
- 	rtl8723be_dm_init(hw);
- exit:
--	local_irq_restore(flags);
- 	rtlpriv->rtlhal.being_init_adapter = false;
- 	return err;
- }
+diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
+index 91da35e2b0d8d..456721e40ed0c 100644
+--- a/net/netfilter/nf_conntrack_proto_tcp.c
++++ b/net/netfilter/nf_conntrack_proto_tcp.c
+@@ -1325,8 +1325,9 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
+ 	if (ct->proto.tcp.retrans >= tn->tcp_max_retrans &&
+ 	    timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
+ 		timeout = timeouts[TCP_CONNTRACK_RETRANS];
+-	else if (unlikely(index == TCP_RST_SET))
+-		timeout = timeouts[TCP_CONNTRACK_CLOSE];
++	else if (unlikely(index == TCP_RST_SET &&
++			  new_state == TCP_CONNTRACK_ESTABLISHED))
++		timeout = timeouts[TCP_CONNTRACK_UNACK];
+ 	else if ((ct->proto.tcp.seen[0].flags | ct->proto.tcp.seen[1].flags) &
+ 		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
+ 		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
 -- 
 2.53.0
 
