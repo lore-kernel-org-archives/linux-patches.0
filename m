@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB2E646982;
-	Mon, 19 Oct 2026 14:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E698646984;
+	Mon, 19 Oct 2026 14:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418792; cv=none; b=s+/Nzo9pyMlxpp8PJZ8rM+9YrR+nwDPn1mnkV/y1g9yfP9bkS/QhVFPAYIt9E+fsLhDE8/t2Cyg6rInCAuzZVVhxJYLP9ZoIV6VE3LicQ/yydk3sVxf25I6yZzq/4KQIndS4k8p3nvQBhXNWQsJxDVkhYxcJLUIYFfyrUXQITtY=
+	t=1792418794; cv=none; b=ttCE70n2qAnK9GoqD5MSpkLvo3vqnsOk2sTHNLX3pPUFnpPS8j8gOXQshKZppf4z+3ClKXHzJPWFTOrzjmJjcjxv1iUSjgQ6YxEAqC/zdNMFTuO/w8nJ8+8RcmgXXZQMYSuH9Neervh0We3sVIwOz3mk9l7HJEFA5Rr4P9YX0gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418792; c=relaxed/simple;
-	bh=b970QSfivtWhXrCHnwzJxaqW6ZddRWQZLiIE8vwH3Ik=;
+	s=arc-20240116; t=1792418794; c=relaxed/simple;
+	bh=DIjaZS84LAc19WXPq5YOGaiFUOcay9QyGAgedbAcO9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gUt1NaXtULie3h5q2IGpsJNMCwhueG2+c5bPxsBmnqyjlVdAPJMZ6/pD96p+o9XLHKfHXpPzLuYRwhji5vfzDywuzqx/ERg8M3r9ZbkAgZB6G+GdPPC+OvZENnAe+w7uMWfg0AUDIrKcMjy+SK2k4WZ/e2YQceEZVKopxcITKZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kjOEgefw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bXfISiFUDVZa7k6Zfc9aK9bcb4MizNdcr+/7glc8AlPkEnHQ2/cK0cG1NWgZEQVv1cmG4hxnP9v+1RXb4B0Qka98zEj/0snLaYmVGXFbECWJNMgoR9gHyfMsG/XAMP3P0zHp/8GSEEovMNcanzGx5Obb5N5BD4DK/R85CT7vLEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NUA3H4Za; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kjOEgefw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031161F000C5;
-	Mon, 19 Oct 2026 14:06:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NUA3H4Za"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF371F000C4;
+	Mon, 19 Oct 2026 14:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418789;
-	bh=hOQDEz33xStZKw/+9YXAnJNUn5iUFyNgLBgNBn1kxMM=;
+	s=k20260515; t=1792418791;
+	bh=zjAjO0BSBACDj5Kt6V/l7hCPxN8HOcQsmHMRubHsGJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kjOEgefwtRTl8ILkOEMAOI8kWJzovXDpvC965hB1Kcn1+3RyfdSF8kc/b3hp3XthF
-	 yfbQCb2Vm9KGc/cJpHvrUvHNquQo4VMDRP0sjYiI8Jx7cWDa8cEAsO/aWaTcgaVc+y
-	 fhicJYKn5ozuGWPJv9TOCoA9P7PeVcetxqNfzFK2RdaQWSuBnkOj8FYDLI/90w8unM
-	 dcRcq8h2UBdID4Db+vcqDdwGxUjgZvxx66yoYgG5WMzIEkfBiYiXz9ewpCtaijTRyT
-	 A2Jfn/a9eOfOQwVGiZhOzPpn8R1j07nsaS2PQydsGK18GiOmS09e5j/WuMSDQRqF4l
-	 LonZXj1x47HCA==
+	b=NUA3H4Zalv5BEjYKOw13yIS1g6S3vGN7u2RzTV0c+k6iG3NpRLAP+mx+k0FAN4EkQ
+	 0x9Kjdecay3BzK99Vuy7TKt35jujhKl/r3/q0lEChCGXZ+fy2jQT8bZvOYCyBEOdOm
+	 qzCGaJ3VJYtDIBJDKOWk2JxjRVmw1b6UuZcU3FZzCxah46n2wAHVmM6PZGvO69Zep2
+	 ObHX2pvpLfB8+33d08Ow+e+lPVYucqPU3ZAfeflumS4IDe91tg043w2cRRRCe7hRQb
+	 X23q45UmLcq9wTrSnUTqze76voIb52e/cbwdgC5Mbmaz8+bLMWh3TmNKmQo/5xLKdb
+	 ub6H4IwJN2H0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yun Zhou <yun.zhou@windriver.com>,
-	syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+Cc: Ruoyu Wang <ruoyuw560@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	axboe@kernel.dk,
-	linux-block@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] block: reject block device inodes with i_rdev == 0 in lookup_bdev()
-Date: Mon, 19 Oct 2026 09:53:09 -0400
-Message-ID: <20261019135441.1420968-498-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/radeon: avoid double free in r600 DPM cleanup
+Date: Mon, 19 Oct 2026 09:53:10 -0400
+Message-ID: <20261019135441.1420968-499-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,465 +56,515 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 83887ad02f30c1814bed5da3ca999f7b0f3f337c ]
+[ Upstream commit d3f30034f861a585f8e487ae1555d9f288a96f87 ]
 
-lookup_bdev() blindly returns inode->i_rdev without validating it.
-When a FUSE filesystem exposes a root inode with S_IFBLK mode but
-i_rdev == 0 (via rootmode=060000), any subsequent mount attempt using
-that path as a block device source propagates dev_t 0 into the
-superblock machinery.  After commit 9ee5f161a4db ("fs: maintain a
-global device-to-superblock table") this triggers a WARNING in
-super_dev_register().
+r600_parse_extended_power_table() uses manual kfree() calls for some
+early allocation failures, but the freed pointers are left in the
+dynamic power-management state. If device teardown later calls
+r600_free_extended_power_table(), those stale pointers can be freed
+again.
 
-Reject i_rdev == 0 early with -ENODEV since no real block device
-driver registers major 0.
+Use the common extended power table cleanup helper for those early
+failure paths as well, and clear each pointer after freeing it so
+repeated cleanup stays safe.
 
-Reported-by: syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=72fe3ea5814121fbc76e
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Link: https://patch.msgid.link/20260703065548.1135125-1-yun.zhou@windriver.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable backport analysis: `83887ad02f30c`
+# Stable backport analysis: `drm/radeon: avoid double free in r600 DPM
+cleanup`
 
-Local tree: **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`). Both the
-device-to-superblock table (`9ee5f161a4db`) and this lookup check landed
-in the `vfs-7.3-rc1.super` pull. Verdict is for this checkout only.
+Local tree: **6.18.53** (`v6.18.53-5049-g0f0bdc2b0dffb`, branch
+`autosel`). Verdict is for this tree only.
+
+Upstream commit: `d3f30034f861a585f8e487ae1555d9f288a96f87` (Alex
+Deucher, 2026-06-17).
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: **[drm/radeon] [avoid] [double free in r600 DPM cleanup]**
 
-Record: **[block] [reject] reject block device inodes with `i_rdev == 0`
-in `lookup_bdev()`**
+Subsystem prefix `drm/radeon`. Verb **avoid** is a bug-fix verb. Claimed
+intent: prevent a double-free in R600 dynamic power-management cleanup.
 
-Subsystem `block:`. Verb `reject` is a defensive check, not a feature.
-Intent: stop `lookup_bdev()` from returning `dev_t` 0.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- **Reported-by:**
-  `syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com` (fuzzer, C
-  repro)
-- **Closes:**
-  https://syzkaller.appspot.com/bug?extid=72fe3ea5814121fbc76e
-- **Link:** https://patch.msgid.link/20260703065548.1135125-1-
-  yun.zhou@windriver.com
-- **Signed-off-by:** Yun Zhou (author); Christian Brauner (VFS
-  maintainer; applied)
-- **Fixes:** none (expected for this review)
+- **Fixes:** none (expected for this review queue)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none
+- **Acked-by:** none
+- **Link:** none in the commit; lore found later via `b4 dig`
 - **Cc: stable:** none (expected)
-- **Tested-by / Reviewed-by / Acked-by:** none on the commit
+- **Signed-off-by:** Ruoyu Wang (author); Alex Deucher (AMD/radeon
+  maintainer)
 
-Sasha Levin SOB is ignored per pipeline rules.
+No syzbot, no CVE, no multi-reporter pattern. Maintainer SOB is a
+positive quality signal.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `lookup_bdev()` copies `inode->i_rdev` with no check. FUSE
-  `rootmode=060000` (`S_IFBLK`) can present a block inode with `i_rdev
-  == 0`. A later mount that uses that path as a block-device source
-  feeds `dev_t` 0 into superblock setup.
-- **Symptom:** `WARNING in super_dev_register()` after `9ee5f161a4db`
-  (`VFS_WARN_ON_ONCE(!sb->s_dev)`).
-- **Root cause:** major 0 is not a real block major (`get_anon_bdev()`
-  allocates `MKDEV(0, n)` with `n >= 1`). Fake inodes can still expose
-  0.
-- **Version info:** warning is tied to `9ee5f161a4db` (2026-06-29). That
-  commit **is** an ancestor of this HEAD.
+- **Bug:** `r600_parse_extended_power_table()` does manual `kfree()` on
+  some early allocation-failure paths and leaves the pointers in
+  `rdev->pm.dpm.dyn_state`.
+- **Symptom:** later `r600_free_extended_power_table()` can free those
+  stale pointers again → **double-free**.
+- **Root cause:** incomplete error-path cleanup plus non-idempotent free
+  helper.
+- **Fix:** use `r600_free_extended_power_table()` on those early paths,
+  and NULL each pointer after `kfree()` so repeated cleanup is safe.
+- **Version info:** none in the message.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: **Not disguised.** It is an explicit validation fix. Not cleanup
-or API work.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+Record: **Not hidden.** This is an explicit double-free fix. The “use
+the common helper” wording is cleanup-shaped, but it is fixing real
+dangling pointers.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-**Step 2.1: INVENTORY THE CHANGES**
-
+### Step 2.1: INVENTORY THE CHANGES
 Record:
-- **File:** `block/bdev.c` only (`+12` comment + check, `−0`)
-- **Function:** `lookup_bdev()`
-- **Scope:** single-file surgical check on an existing error path (`goto
-  out_path_put`)
+- **File:** `drivers/gpu/drm/radeon/r600_dpm.c` (**+15 / −6**)
+- **Functions:** `r600_parse_extended_power_table()`,
+  `r600_free_extended_power_table()`
+- **Scope:** single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record:
 
-Record: **Before:** after `S_ISBLK` and `may_open_dev()`, always `*dev =
-inode->i_rdev`. **After:** if `i_rdev == 0`, return `-ENODEV` and drop
-the path. Success path unchanged for real devices.
+**Hunk 1 (three early error returns in parse):**
+- Before: on `r600_parse_clk_voltage_dep_table()` failure for VDDCI-on-
+  MCLK / VDDC-on-MCLK / MVDD-on-MCLK, manually `kfree()` previously
+  allocated `*.entries` and return, **without clearing the pointers**.
+- After: call `r600_free_extended_power_table(rdev)` then return.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+**Hunk 2 (free helper):**
+- Before: twelve `kfree()`s, pointers left non-NULL.
+- After: same `kfree()`s, each pointer set to NULL.
 
-Record: **Logic / correctness** (invalid `dev_t`), plus **debug
-assertion** (`WARN_ON_ONCE` under `CONFIG_DEBUG_VFS`). Mechanism: stop
-`dev_t` 0 from reaching `sget_dev()` → `set_bdev_super()` →
-`super_dev_register()`.
+The first parse failure (`vddc_dependency_on_sclk`) still does a bare
+`return ret`. That is correct: `r600_parse_clk_voltage_dep_table()` only
+fails after `kcalloc` returns NULL, so there is nothing allocated yet.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: **[DOUBLE-FREE] [error-path resource cleanup]**
 
-Record: **Obviously correct and minimal.** Real block drivers do not
-register major 0; `get_anon_bdev()` starts minors at 1 for that reason.
-Regression risk is **low**: only rejects `i_rdev == 0`. No new API, no
-lock changes. Possible behavior change: callers that used to get `dev_t`
-0 now get `-ENODEV` instead of failing later in `blkdev_get_no_open()`
-(`-ENXIO`). That is a better error for “no such device.”
+Mechanism:
+1. Early parse error: `kfree(ptr)` but `ptr` remains in `dyn_state`.
+2. Later error paths in the same function already called
+   `r600_free_extended_power_table()` without NULLing.
+3. Teardown (`*_dpm_fini` → `r600_free_extended_power_table`) `kfree()`s
+   the same pointers again.
+
+NULLing also makes the helper idempotent for callers that free on their
+own error path and then free again in `fini` (e.g. `si_dpm_init` /
+`ci_dpm_init` / `btc_dpm_init`).
+
+### Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- **Quality:** obviously correct. `kfree(NULL)` is a no-op; NULLing
+  after free is the standard idempotent-cleanup pattern.
+- **Minimal:** only the three incomplete early paths plus NULL stores in
+  the existing helper. No API/struct changes.
+- **Regression risk:** low. Success-path `fini` still frees once;
+  NULLing after free cannot change live DPM behavior. A pre-existing
+  issue remains: `radeon_pm_init_dpm()` ignores `radeon_dpm_init()`’s
+  return, so a NULL deref is possible if code continues with `count > 0`
+  and `entries == NULL`. That is **not introduced** by this patch (old
+  code was UAF/double-free on the same path). Sashiko flagged it; Alex
+  Deucher applied the patch anyway.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: BLAME THE CHANGED LINES**
+### Step 3.1: BLAME THE CHANGED LINES
+Record:
+- Buggy manual `kfree()`s introduced in **`61b7d6011054eb`**
+  (“drm/radeon/dpm: add helpers for extended power tables (v2)”, Alex
+  Deucher, 2012-11-14) → first in **v3.11-rc1**.
+- MVDD path: **`dd621a22cf43bb`** (2013-05-06).
+- Free helper body: **`41cd0b3b78d83a`** (“drm/radeon: clean up
+  r600_free_extended_power_table()”, Dan Carpenter, 2013-09-04) →
+  **v3.12-rc2**.
 
-Record: Unchecked `*dev = inode->i_rdev` comes from `4e7b5671c6a883`
-(“block: remove i_bdev”, 2020-12-01), on top of `lookup_bdev()` back to
-`1da177e4c3f41`. The **warning** is new with `9ee5f161a4db`
-(2026-06-29). The new check is `83887ad02f30c` itself.
+This has been in the tree for more than a decade, including 6.18.y.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
+### Step 3.2: FOLLOW THE FIXES: TAG
+Record: **No Fixes: tag.** Not applicable. The introducing commit is in
+this tree (v3.11).
 
-Record: **No Fixes: tag.** The message names `9ee5f161a4db`. `git merge-
-base --is-ancestor 9ee5f161a4db HEAD` succeeded. That commit is in this
-tree. `git describe --contains`: both `9ee5f161a4db` and `83887ad02f30c`
-are in **v7.3-rc1**.
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- Related: **`20c3dffdccbd4`** “radeon: avoid double free in
+  ci_dpm_init()” (v6.5-rc1). Same class of bug: parse error already
+  calls `r600_free_extended_power_table()`, then `ci_dpm_fini()` calls
+  it again.
+- File is mature; recent commits are drive-by cleanups, not DPM-table
+  refactors.
+- **Standalone**, not patch X/Y.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Ruoyu Wang is not the radeon maintainer; nearby DRM work is
+similar cleanup-safety (`drm/msm`, `drm/mediatek`). Weight comes from
+**Alex Deucher’s SOB and “Applied”**.
 
-Record: Recent `block/bdev.c` work is unrelated (`bdev_yield_claim`,
-unfreezable bdev, etc.). Standalone one-patch series, not `N/M`.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Yun Zhou also has filesystem fixes (ext4/xfs/jfs) in this
-history; not the block maintainer. Applied by **Christian Brauner**, VFS
-maintainer.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: The check is self-contained in `lookup_bdev()`. The **warning**
-needs `super_dev_register()`, which this tree has. No extra helper or
-struct change required. **Can apply standalone** on this tree’s
-`lookup_bdev()`.
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: **No prerequisites.** The helper and the three `kfree` sites
+exist in this tree. Applies standalone.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c 83887ad02f30c` → https://patch.msgid.link/20260703065548.11
-  35125-1-yun.zhou@windriver.com
-- `b4 dig -a`: **v1 only**, 2026-07-03
-- Mbox is the patch only; **no review replies** in the saved thread
-- Openwall mirror matches; no NAK
-- Applied the same day (commit date 2026-07-03 15:12 +0200)
-- **No Cc: stable** in the submission
+- **Lore:**
+  https://patch.msgid.link/20260608063638.24-1-ruoyuw560@gmail.com
+- **Revisions:** v1 only (`b4 dig -a`)
+- Direct lore.kernel.org fetch returned 403; thread recovered via `b4
+  dig -m`.
+- Sashiko bot: pre-existing ignored `radeon_dpm_init()` return and stale
+  `count` fields. Not NAKs of this patch.
+- **Alex Deucher (2026-06-15): “Applied. Thanks!”** No request for v2.
+- No reviewer `Cc: stable`.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To/Cc included Alex Deucher, Christian König,
+David Airlie, Simona Vetter, amd-gfx, dri-devel, linux-kernel. Applied
+by the radeon maintainer.
 
-Record (`b4 dig -w`): To Jens Axboe and Christian Brauner; Cc linux-
-block, linux-kernel. Brauner applied it. No extra Reviewed-by.
+### Step 4.3: SEARCH FOR THE BUG REPORT
+Record: no Reported-by / syzbot / bugzilla. Static/code analysis style
+fix, same family as `20c3dffdccbd4` (SVACE) and amdgpu `a6582701178a4`.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: standalone v1. Sibling in amdgpu: **`a6582701178a4`**
+“drm/amd/pm: fix a double-free in amdgpu_parse_extended_power_table”
+(already in this tree). Same parse-then-fini double-free shape.
 
-Record (syzkaller):
-- Title: `WARNING in super_dev_register`
-- Label: **prio:normal**; subsystem fuse
-- C repro; first crash 2026-07-02 on linux-next
-- Stack: `mount` → `fuse_get_tree` → `get_tree_bdev_flags` → `sget_dev`
-  → `super_dev_register`
-- Warning text: `!sb->s_dev` at `super_dev_register`
-- Syzbot CI: **Unprivileged: ❌**; DenialOfService/Exploitable marked,
-  but not an unprivileged trigger
-- Status: fix listed as `83887ad02f30`
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Single patch. Syzbot CI series passed KASAN build/boot/fuzz. No
-follow-up fix on `lookup_bdev()` `i_rdev` in this tree.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: lore.kernel.org WebFetch returned **403**. Web search of
-`site:lore.kernel.org/stable` did not find a discussion of this patch.
-**UNVERIFIED:** no confirmed stable-list thread.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: **UNVERIFIED.** `lore.kernel.org/stable/` returned 403. No
+evidence in the dri-devel thread of a stable NAK.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `r600_parse_extended_power_table()`,
+`r600_free_extended_power_table()`. Helper used internally:
+`r600_parse_clk_voltage_dep_table()` (ENOMEM-only failure).
 
-Record: **`lookup_bdev()`** only.
+### Step 5.2: TRACE CALLERS
+Record (parse): `btc_dpm_init`, `ni_dpm_init`, `si_dpm_init`,
+`ci_dpm_init`, `trinity_dpm_init`, `kv_dpm_init`.
 
-**Step 5.2: TRACE CALLERS**
+Record (free): those chips’ `*_dpm_fini`, plus error paths inside parse
+and some init functions (`si_dpm_init`, `ni_dpm_init`, `btc_dpm_init`,
+`ci_dpm_init`).
 
-Record (this tree): `get_tree_bdev_flags()` in `fs/super.c` (mount path
-that warned); `bdev_file_open_by_path()`; hibernate; quota; nilfs2;
-btrfs; MTD; dm-table; bcache. **~26** call sites. Important path:
-**`get_tree_bdev_flags()`** from filesystem `get_tree` (including
-fuseblk).
+Context: driver probe (`radeon_pm_init` → `radeon_dpm_init`) and
+teardown (`radeon_pm_fini` → `radeon_dpm_fini`). Not interrupt/hot-path.
 
-**Step 5.3: TRACE CALLEES**
+### Step 5.3: TRACE CALLEES
+Record: `kcalloc`/`kzalloc` for VBIOS power-play tables, `kfree` in the
+helper. No locking, no new allocations in the patch.
 
-Record: `kern_path()`, `d_backing_inode()`, `S_ISBLK()`,
-`may_open_dev()`, `path_put()`. No alloc/lock added.
+### Step 5.4: FOLLOW THE CALL CHAIN
+Record (verified in this tree):
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
+```
+radeon_pm_init_dpm()
+  radeon_dpm_init(rdev);          /* return IGNORED, radeon_pm.c:1442 */
+  radeon_dpm_enable(...)
+cik/si/ni/..._init()
+  radeon_pm_init(rdev);           /* return also ignored, e.g.
+cik.c:8620 */
 
-Record: Userspace `mount()` with a FUSE `rootmode=S_IFBLK` path as
-fuseblk/block source. **Reachable from the mount syscall**, typically
-with mount privilege. Confirmed by syzbot C repro. Not a hot I/O path.
+radeon_pm_fini_dpm()
+  radeon_dpm_fini(rdev);          /* ALWAYS, radeon_pm.c:1678 */
+    -> r600_free_extended_power_table()
+```
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+On unload, `radeon_driver_unload_kms()` → `radeon_device_fini()` → asic
+`fini` → `radeon_pm_fini()`.
 
-Record: No other `i_rdev == 0` reject in block core.
-`early_lookup_bdev()` is name/PARTUUID parsing at boot, not inode-based;
-different bug. `bdev_statx()` uses `i_rdev` via `blkdev_get_no_open()`,
-which already fails closed on missing devices.
+Because DPM init failure is ignored, a failed parse still reaches `fini`
+on unbind/unload. **Reachable from normal driver lifetime**, not a
+theoretical path. Trigger is allocation failure while parsing ATOM
+power-play tables (ENOMEM during probe). Unprivileged userspace cannot
+force it except by load/unload under memory pressure.
+
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: same bug already fixed in amdgpu (`a6582701178a4`) and partially
+in `ci_dpm_init` (`20c3dffdccbd4`). Remaining hole was exactly these
+radeon helper paths.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: **Yes.** Parent of the candidate (`d3276745c87d1^`) still has
+the manual `kfree()`s at the three early returns and the free helper
+without NULL stores. Introduced in v3.11; present throughout 6.18.y.
 
-Record: **Yes.**
-- `lookup_bdev()` is in `block/bdev.c`
-- `super_dev_register()` in `fs/super.c` has
-  `VFS_WARN_ON_ONCE(!sb->s_dev)`
-- `get_tree_bdev_flags()` still does `lookup_bdev(fc->source, &dev)`
-  then `sget_dev(fc, dev)`
-- Bug introduced for this warning: **`9ee5f161a4db`**, first in
-  **v7.3-rc1**, present here
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: **clean apply.** Surrounding `r600_dpm.c` DPM-table code matches
+the patch context. No conflicting refactor in this series.
 
-Current `lookup_bdev()` already contains this check because
-`83887ad02f30c` is an ancestor of HEAD (same 7.3-rc1 vfs pull). That is
-git history of this series, not a pipeline “already selected” marker.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Clean apply** on this tree’s `lookup_bdev()`. Surrounding code
-matches the hunk. No backport rewrite needed.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: This is the fix in this lineage. No alternate `i_rdev` check
-elsewhere.
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: `20c3dffdccbd4` is already in this tree and only hardens
+`ci_dpm_init`; it does **not** NULL the r600 helper pointers or convert
+the early parse `kfree()`s. This commit is still needed.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: **[drm/radeon DPM] [IMPORTANT]** — pre-GCN AMD GPUs (R600–CIK:
+HD 2000 through Hawaii/Kaveri). Not core mm/net, but a long-lived
+production driver (`CONFIG_DRM_RADEON`).
 
-Record: **block / VFS mount** (`block/bdev.c`, used by `fs/super.c`).
-**CORE** for block-backed mounts.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Active in 7.3 (device-to-superblock table is new this cycle).
-The check is a same-cycle guard for that table.
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: mature/low churn. `r600_dpm.c` last real DPM logic is from
+~2013; later commits are mechanical. Long-present bugs in this code are
+the ones stable still cares about.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
+### Step 8.1: DETERMINE WHO IS AFFECTED
+Record: **driver-specific / config-specific** (`CONFIG_DRM_RADEON`, DPM
+method, chips that call `r600_parse_extended_power_table`:
+BTC/NI/SI/CI/Trinity/KV).
 
-Record: Anyone mounting a block-backed fs using a path that is a fake
-`S_IFBLK` inode with `i_rdev == 0` (FUSE `rootmode=S_IFBLK` is the known
-trigger). Not universal hardware. **Config-specific extra:**
-`CONFIG_DEBUG_VFS` (default **n**, `DEBUG_KERNEL`) is required for the
-**runtime WARNING**. Without it, `VFS_WARN_ON_ONCE` is
-`BUILD_BUG_ON_INVALID` (no runtime warn).
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: FUSE mount with `rootmode=060000`, then mount that path as a
-block device (fuseblk / `get_tree_bdev`). **Unprivileged: no** (syzbot).
-Not every boot; needs a crafted mount. Reproducible (C repro).
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
 Record:
-- **With `CONFIG_DEBUG_VFS`:** `WARN_ON_ONCE(!sb->s_dev)` — **MEDIUM**
-  (WARN; panic if `panic_on_warn`)
-- **Without it:** `s_dev = 0` is still registered in the global table,
-  then `setup_bdev_super()` → `bdev_file_open_by_dev(0)` →
-  `blkdev_get_no_open(0)` fails (`NULL` → `-ENXIO`). Mount fails.
-  **LOW–MEDIUM** correctness (invalid table key; mount still fails)
+- Trigger: ENOMEM (or parse failure) while building extended power
+  tables during DPM init, then device teardown.
+- Not every boot; needs allocation failure in that path.
+- Unprivileged users cannot craft a VBIOS, but module unload after a
+  failed/partial DPM init is a normal admin path.
+- **r600_parse_clk_voltage_dep_table() only returns -ENOMEM**, so the
+  three converted sites are memory-pressure probe errors. The NULL
+  stores also close double-frees on later parse/init error paths that
+  already called the helper.
 
-Not UAF, not filesystem corruption, not an unprivileged crash.
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: **double-free / invalid `kfree` → kernel oops/BUG in SLUB,
+possible further corruption.** Severity: **HIGH** (crash on GPU probe-
+failure teardown). Not a guaranteed panic on every radeon boot.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- **Benefit:** Stops `dev_t` 0 from entering `sget_dev` /
-  `super_dev_register` on this 7.3 line, which has the new table.
-  Matches a syzbot C repro.
-- **Risk:** Very low (~12 lines, error-path only).
-- **Ratio:** Favorable **on this tree**, because `9ee5f161a4db` is
-  present.
+- **Benefit:** medium-high for radeon DPM users — prevents a real
+  double-free that `fini` will hit after a failed parse, including
+  because init errors are ignored.
+- **Risk:** very low — 15 insertions, NULL-after-free, no locking/API
+  change.
+- **Ratio:** favorable.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: COMPILE THE EVIDENCE**
+### Step 9.1: COMPILE THE EVIDENCE
 
-**For backporting to this tree:**
-- Introducing commit `9ee5f161a4db` **is in this tree** (v7.3-rc1)
-- Syzbot C repro of `WARNING in super_dev_register`
-- Small, obviously correct `-ENODEV` check
-- Applied by VFS maintainer; syzbot CI passed
-- Call path is real: `get_tree_bdev_flags()`
-- Also avoids publishing `s_dev == 0` in the device-to-superblock table
+**FOR backporting:**
+- Real double-free, not style cleanup.
+- Buggy code exists in this 6.18.y tree (since v3.11).
+- Small, obviously correct, single file.
+- No new APIs/features; no prerequisites.
+- Maintainer applied it.
+- Same pattern already treated as a real bug in-tree (`20c3dffdccbd4`,
+  amdgpu `a6582701178a4`).
+- Teardown always calls `radeon_dpm_fini()`; DPM init return is ignored,
+  so the second free is actually reached.
 
-**Against:**
-- Runtime WARN is **`CONFIG_DEBUG_VFS` only** (default n)
-- Trigger is a privileged, crafted FUSE/fuseblk mount, not normal disks
-- syzbot **prio:normal**; not unprivileged
-- Production mount already fails later with `-ENXIO`
-- No Fixes/Cc-stable (not a negative by itself)
+**AGAINST:**
+- No user report / syzbot / Fixes tag (absence is expected here).
+- Trigger is ENOMEM during probe, not a hot path.
+- Sashiko noted pre-existing ignored-init-return / stale-count issues
+  this patch does not fully solve.
 
-**Unresolved:**
-- lore.kernel.org 403; no stable-list thread found (UNVERIFIED)
+**UNRESOLVED:**
+- Stable-list discussion (lore.kernel.org/stable 403).
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — syzbot repro + CI; logic is
-   sound
-2. Fixes a real bug that affects users? **PASS** — warning and invalid
-   `dev_t` 0 on this 7.3 VFS
-3. Important issue? **PASS** (borderline) — WARN_ON / table invariant;
-   not UAF/corruption; still a real VFS assertion this tree has
-4. Small and contained? **PASS** — one function, +12 lines
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — `lookup_bdev()` and
-   `super_dev_register()` match
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: **None** (not a device ID, quirk, DT, build, or docs patch).
-Qualifies as a small correctness fix, not an exception class.
-
-**Step 9.4: MAKE YOUR DECISION**
-
-On **this** v7.3-rc4 tree the warning path exists: `9ee5f161a4db` is
-here, `lookup_bdev()` can still feed 0 into `sget_dev()`, and syzbot has
-a C repro. The patch is a 12-line `-ENODEV` check with negligible
-regression risk. That meets stable rules for this checkout. It would not
-be appropriate on a tree that lacks `super_dev_register()`; that is not
-this tree.
-
----
-
-### What the commit solves, and why it matters here
-
-Without the check, a FUSE inode with `S_IFBLK` and `i_rdev == 0` makes
-`lookup_bdev()` return 0. `get_tree_bdev_flags()` then calls
-`sget_dev(fc, 0)`, and `super_dev_register()` hits
-`VFS_WARN_ON_ONCE(!sb->s_dev)` when `CONFIG_DEBUG_VFS=y`. This tree has
-that table and that warning. Rejecting `i_rdev == 0` with `-ENODEV`
-stops the bad `dev_t` at the lookup.
-
-### Risk vs benefit
-
-Benefit is silencing a reachable WARN and keeping `dev_t` 0 out of the
-superblock device table on 7.3. Risk is a slightly earlier `-ENODEV`
-instead of a later `-ENXIO` for a path that was never a real block
-device.
-
-### Concerns
-
-Depends on `9ee5f161a4db` for the warning; that dependency **is
-satisfied here**. No extra backport patches. lore.kernel.org could not
-be fetched (403); discussion was recovered via `b4 dig` and an openwall
-mirror.
-
----
-
-### Verification
-
-- **[Phase 1]** Parsed tags: syzbot Reported-by, Closes syzkaller URL,
-  msgid Link, Brauner SOB; no Fixes
-- **[Phase 2]** Diff: +12 in `lookup_bdev()` in `block/bdev.c`;
-  `-ENODEV` if `!inode->i_rdev`
-- **[Phase 3]** `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`;
-  `make kernelversion` → `7.3.0-rc4`
-- **[Phase 3]** `git merge-base --is-ancestor 9ee5f161a4db HEAD` → yes
-- **[Phase 3]** `git merge-base --is-ancestor 83887ad02f30c HEAD` → yes
-  (in v7.3-rc1 vfs-super pull)
-- **[Phase 3]** `git blame -L 1259,1297 block/bdev.c`: unchecked assign
-  from `4e7b5671c6a883`; check from `83887ad02f30c`
-- **[Phase 3]** `git describe --contains 9ee5f161a4db` / `83887ad02f30c`
-  → both v7.3-rc1
-- **[Phase 4]** `b4 dig -c 83887ad02f30c` →
-  patch.msgid.link/20260703065548.1135125-1-yun.zhou@windriver.com
-- **[Phase 4]** `b4 dig -a`: v1 only; `-w`: axboe + brauner + linux-
-  block
-- **[Phase 4]** `b4 dig -m`: mbox is the patch only; no NAK
-- **[Phase 4]** WebFetch syzkaller bug: WARNING, prio:normal, C repro,
-  Unprivileged ❌
-- **[Phase 4]** lore.kernel.org WebFetch: **403**; stable-list hit:
-  **UNVERIFIED**
-- **[Phase 5]** Callers: `get_tree_bdev_flags`,
-  `bdev_file_open_by_path`, btrfs/nilfs2/dm/quota/hibernate/mtd/bcache
-- **[Phase 5]** `include/linux/vfsdebug.h`: `VFS_WARN_ON_ONCE` is
-  runtime only if `CONFIG_DEBUG_VFS`
-- **[Phase 5]** `lib/Kconfig.debug`: `DEBUG_VFS` default n, “If unsure,
-  say N”
-- **[Phase 6]** Read `lookup_bdev()` and `super_dev_register()` in this
-  tree; warning and mount path present
-- **[Phase 8]** Failure: WARN under DEBUG_VFS; otherwise failed open of
-  bdev 0 (`blkdev_get_no_open`)
-- **UNVERIFIED:** full lore review thread beyond the v1 patch mbox;
-  stable@ discussion
-
-The fix is small, matches a syzbot warning this 7.3 tree can hit, and
+None of the against items outweigh a contained double-free fix that
 applies cleanly.
+
+### Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — NULLing after `kfree` is
+   standard; maintainer applied v1.
+2. Fixes a real bug that affects users? **PASS** — double-free on DPM
+   parse-failure teardown.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   double-free → oops/memory corruption. Severity HIGH.
+4. Small and contained? **PASS** — +15/−6, one file.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — buggy sites present; context
+   matches.
+
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: none needed; this is a normal memory-safety bug fix.
+
+### Step 9.4: MAKE YOUR DECISION
+
+This belongs in 6.18.y. The early `kfree()`s leave dangling `dyn_state`
+pointers; `radeon_pm_fini_dpm()` always calls
+`r600_free_extended_power_table()`. NULLing makes that helper safe to
+call twice, which this driver already does on several error paths. Risk
+is negligible relative to the crash it prevents.
+
+---
+
+## What the commit solves for stable users
+
+On Radeon chips that parse ATOM extended power tables, an allocation
+failure during DPM init frees some tables but leaves the pointers set.
+Driver unload then frees them again. That is a kernel double-free. The
+patch uses the existing cleanup helper on those paths and clears every
+pointer so a second cleanup is harmless.
+
+## Stable rules / risk vs benefit
+
+Meets all six stable criteria. Benefit is preventing an oops/corruption
+on GPU init-failure teardown; risk is a 21-line, no-lock, no-API change.
+No backport rework needed in this tree.
+
+## Concerns
+
+- Does not fix ignored `radeon_dpm_init()` return (pre-existing; out of
+  scope).
+- Count fields are not zeroed (pre-existing; Sashiko note). That is not
+  a reason to withhold the double-free fix.
+- Trigger needs ENOMEM during table parse, so it is not every-boot, but
+  stable regularly takes this class of error-path double-free.
+
+## Verification
+- [Phase 1] Tags: author + Alex Deucher SOB only; no Fixes/Reported-
+  by/Cc-stable.
+- [Phase 2] Diff: +15/−6 in `r600_dpm.c`; three `kfree` → helper; twelve
+  NULL stores in `r600_free_extended_power_table()`.
+- [Phase 2] Parent still has
+  `kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries)` at the
+  three early returns.
+- [Phase 2] `r600_parse_clk_voltage_dep_table()` only fails with
+  `-ENOMEM` after assigning NULL.
+- [Phase 3] Blame: `61b7d6011054eb` (v3.11-rc1) introduced the kfrees;
+  `41cd0b3b78d83a` (v3.12) wrote the free helper without NULLs.
+- [Phase 3] Related in-tree: `20c3dffdccbd4` (ci_dpm_init only); does
+  not replace this patch.
+- [Phase 4] `b4 dig -c d3f30034f861`:
+  https://patch.msgid.link/20260608063638.24-1-ruoyuw560@gmail.com
+- [Phase 4] `b4 dig -a`: v1 only.
+- [Phase 4] `b4 dig -w`: Deucher/König/Airlie/Vetter + amd-gfx/dri-
+  devel.
+- [Phase 4] mbox: Alex Deucher “Applied. Thanks!”; Sashiko pre-existing
+  notes, no NAK.
+- [Phase 4] UNVERIFIED: lore.kernel.org and lore.kernel.org/stable HTTP
+  403.
+- [Phase 5] Callers: btc/ni/si/ci/trinity/kv `dpm_init`/`dpm_fini`.
+- [Phase 5] `radeon_pm.c:1442` ignores `radeon_dpm_init()`;
+  `radeon_pm.c:1678` always `radeon_dpm_fini()`.
+- [Phase 5] `cik.c:8620` ignores `radeon_pm_init()`; `cik.c:8712`
+  `radeon_pm_fini()` on asic fini.
+- [Phase 6] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
+  kernelversion` → 6.18.53.
+- [Phase 6] Buggy kfrees present in
+  `d3276745c87d1^:drivers/gpu/drm/radeon/r600_dpm.c`.
+- [Phase 7] `CONFIG_DRM_RADEON` still present.
+- [Phase 8] Failure mode: double-free → SLUB BUG/oops; severity HIGH.
+- UNVERIFIED: whether any user hit this in production (no Reported-by).
+  Decision does not rely on that.
+
+The fix is small, surgical, present in the local 6.18 code, and closes a
+real double-free on DPM teardown.
 
 **YES**
 
- block/bdev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/radeon/r600_dpm.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 02d7503e7c2c4..00345746e34f8 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -1209,6 +1209,18 @@ int lookup_bdev(const char *pathname, dev_t *dev)
- 	if (!may_open_dev(&path))
- 		goto out_path_put;
+diff --git a/drivers/gpu/drm/radeon/r600_dpm.c b/drivers/gpu/drm/radeon/r600_dpm.c
+index 81d58ef667dd4..2bc0bdfd11590 100644
+--- a/drivers/gpu/drm/radeon/r600_dpm.c
++++ b/drivers/gpu/drm/radeon/r600_dpm.c
+@@ -933,7 +933,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -944,8 +944,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -956,9 +955,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.mvdd_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -1298,17 +1295,29 @@ void r600_free_extended_power_table(struct radeon_device *rdev)
+ 	struct radeon_dpm_dynamic_state *dyn_state = &rdev->pm.dpm.dyn_state;
  
-+	/*
-+	 * Reject a block device inode with i_rdev == 0.  A dev_t of 0 is
-+	 * never valid for a block device: no real block device driver
-+	 * registers major 0.  Fake block device inodes (e.g. fuse with
-+	 * rootmode=S_IFBLK) can expose i_rdev == 0, and letting that
-+	 * propagate would confuse superblock lookup and trigger warnings
-+	 * in the device-to-superblock table (super_dev_register).
-+	 */
-+	error = -ENODEV;
-+	if (!inode->i_rdev)
-+		goto out_path_put;
-+
- 	*dev = inode->i_rdev;
- 	error = 0;
- out_path_put:
+ 	kfree(dyn_state->vddc_dependency_on_sclk.entries);
++	dyn_state->vddc_dependency_on_sclk.entries = NULL;
+ 	kfree(dyn_state->vddci_dependency_on_mclk.entries);
++	dyn_state->vddci_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->vddc_dependency_on_mclk.entries);
++	dyn_state->vddc_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->mvdd_dependency_on_mclk.entries);
++	dyn_state->mvdd_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->cac_leakage_table.entries);
++	dyn_state->cac_leakage_table.entries = NULL;
+ 	kfree(dyn_state->phase_shedding_limits_table.entries);
++	dyn_state->phase_shedding_limits_table.entries = NULL;
+ 	kfree(dyn_state->ppm_table);
++	dyn_state->ppm_table = NULL;
+ 	kfree(dyn_state->cac_tdp_table);
++	dyn_state->cac_tdp_table = NULL;
+ 	kfree(dyn_state->vce_clock_voltage_dependency_table.entries);
++	dyn_state->vce_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->uvd_clock_voltage_dependency_table.entries);
++	dyn_state->uvd_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->samu_clock_voltage_dependency_table.entries);
++	dyn_state->samu_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->acp_clock_voltage_dependency_table.entries);
++	dyn_state->acp_clock_voltage_dependency_table.entries = NULL;
+ }
+ 
+ enum radeon_pcie_gen r600_get_pcie_gen_support(struct radeon_device *rdev,
 -- 
 2.53.0
 
