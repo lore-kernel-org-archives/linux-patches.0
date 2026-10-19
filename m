@@ -1,66 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792443066;
-	b=ch2siFWq2p5RG+ZNqM7vFXkpXWdzMrfL54mTXqRUsuAqjTUfhJx1vEFNz/qALNXjsGTd
-	 X470JG00Mzu9oTyRFY3MRXuslkxnf6mIOMtbOf7geHFyl43p7/5U/D7UMpE+0kYPYuBU1
-	 BMI1UbHxSFGAZFnDGDueMBqt3heTe/aZr8m6/GoMBxm9VyDeIQajOV+tXo7LB5T9Sy75u
-	 lTldkYO0Pw1q20sf2V8N2psSS7Hvd0q58FvJzc/BNgn38tnnt/PXQ+NB5Ug/HDHGeRp6Y
-	 eZaWFEASYjyQ3kXmxS55qyo/w7By+f4sMWKbCmMT2hEC702+R3cFToz1SiLY/BusIhg==
+	t=1792443069;
+	b=htBff3UOQDG18WDsQk0y7Q4og3GUAGxA9ACHxpItdt+tYdQeLyYgt3zYFP2lFTW5pDz3
+	 MCObiilsGPTgcQnvt1uGmEsp8DFAFGxThJSZYr7Wzr10st+ekCFn4FIe0LIMp0v64rJb1
+	 QQfKf5cIEaSOC++CsEKzQPCK4EtvDhQvUpXcQHR+eOMsOVUMpSqkcHwqVZOttLhPujztT
+	 AeFKIrwJxJTpc8WGvGjRh9YbUoGGAYhcB6yE8FiKjU8BurwNUq6jk9Ti6CM1BPpfXRrrH
+	 LcXZ0912fsIMuJGd6rk2Is6J9Tc/YOT2mcWAM6E7fdnfKi2wI+tDQoHsfr6egVfLXtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792443066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792443069;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=O8MnCrw/uL1eSqnXleCabfh7IoVpANIESipVjJiTHUo=;
-	b=amN55hf70srd5ND2KMbCTkTqGGFsjhP3zV3tNc1Cn/8C3aK7fR4KVXhLkSGkL01BqdbE
-	 huDzvLsa6x+6CyRnITGDaKg3jfDAyukvszHut7bLBjAKk+Ms3LQj/HJV/T4R4qyPbFCwj
-	 K7ijfzGpyPCNBxPm9SpUma1CkWxcjodVpln3BlhpLYY/KeZ5dKXioGyH0tBVBoVek3R8r
-	 7UZl/n4cCj4mBtrHmhSvgwIAKFoqNl49fh6Jp/GuJrLdWYoOgQa2EqEDtsHxY7hXq0iPI
-	 9c0wFnxJ454Qpp+pG7fUkJBF7KT/lEdjNyJ4xfzbHsy8PzlJApCvmlkq0URU1oqjwfw==
+	bh=5glsYhiJQvTewTue11QClnQyXGe14nbkKIVgpnHFobk=;
+	b=dn0Y21Tl4VHqsEcA6U9eql86XZmq4g/y2xByZ8QZDTfi3N4gbx5UeVS9SwgrwZW8Qbpi
+	 aMhJrhL4MZIQgMUdYHDJ54xOXpnBcZgZB5l0SCyJdi8O+cMQ/KkPA4ItPSGVvXl0yMlAN
+	 OeDVEhHvqCPr/7KjYYlfZnMoWOBcFI0MGYyM4DtBpi8LWffhxFRZia/2fgXO4rQ0inXFx
+	 QAqEJ9DFpGWxYnz/Dl9rxaWrA7/r5f0ulCwDxKv79/0U5CsPscQYUo3JxzlO/IQlIxVU+
+	 uswRUSz74Yp/Bn4j7hn/9xSc9NwvwUkpwAAwvfi1RCsjpvg8sRhJC214O7ervZqO1Uw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ORIJjHMZ;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Th71LcTv;
 	arc=none smtp.remote-ip=198.175.65.16
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DC5606A33C
-	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 20:51:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73DC5606A33C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1A660A2615
+	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 20:50:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D1A660A2615
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ORIJjHMZ
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Th71LcTv
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792443060; x=1823979060;
+  t=1792443058; x=1823979058;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=Z5eVgcyeURbp1EBb6CVVtLj6tX+2DWokVj5q47Fgr0U=;
-  b=ORIJjHMZSfYsIkWpzl2UPprhLQswD8bjNY0KTaaM6WDfQjVEb44cpm3c
-   2bi3hNk/tGNIqZ2llck8ItNt0n8oaamHIRNhei3uqY7W4iFbDm2xkfA85
-   B5lSESABzkL9wVxe2gAwIIrPndoq3xeI4E+DZC39M08SXyoUj9jfOkvg0
-   M5olUrrIZTsy34wWxbIxpKrxApexnSm+rPb+I50EYODt7bAlXrQE+Q/xq
-   LNcSCMQj/dc8LmX6Sq0cwoINU2jQUDPC4IHHSCSzPyYyNl2kAq3upr2w+
-   hO9Hw5cNHOn4K1iqBNGqAGv5oyQpbV/rhJ53WPVn5bYyk07Du8BM8jLcg
-   A==;
-X-CSE-ConnectionGUID: 0Cj2VytgQYSYv8Mlst21tQ==
-X-CSE-MsgGUID: JBW1wZJxS7mRJrs2KaZlBw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1131261"
+  bh=coFynmodb4SSI9urQSNuuDWxQ3sofyrL/q0tMcF+blI=;
+  b=Th71LcTv8JRyB/5dXW6PwHiCKIdMoR7cvQzbC+DqZUu1zApcSbTj70ly
+   Vb6OcLfdrMg+KnoDGwO14OIPymgQfMNwNVX0RptgCQ4wOESLdaw+SWzYd
+   2933+SbuDZoXi9KmluD+rufsrmRLEbt8WioGsW+cAfLfSlYCM/Uf4gBju
+   TuvS8Z6+Jy3uMQSISdCa41JmJOvZ/kznttcN0L1/KZqfAq6S5M//gCzNi
+   vKr8O3NvFWYbXUcJgVqjyOBw75ad3hBrYtTpBomlc0VmO9MRc/w/cXZsg
+   JnlzJlUBcHB8EmTditEvwHXafuNTut6A1zXuPknqSu4OhaJ5+6CIe66Vb
+   g==;
+X-CSE-ConnectionGUID: Wn/pmBhrTeOeLPlUYbjPwA==
+X-CSE-MsgGUID: iwj/6uvsRX2AImMuT1SVVg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1131224"
 X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="1131261"
+   d="scan'208";a="1131224"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 13:50:51 -0700
-X-CSE-ConnectionGUID: vvV7bJFiQ4O9rkHS0bo/AA==
-X-CSE-MsgGUID: 2gwh/8dQR/W5fhNQ3auhRg==
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 13:50:50 -0700
+X-CSE-ConnectionGUID: noYXbo5ORu6B1dFqiuvVhw==
+X-CSE-MsgGUID: oPLdZMh3SZKefgEuN2eUog==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="3008674"
+   d="scan'208";a="3008663"
 Received: from spandruv-mobl5.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.87])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 13:50:51 -0700
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 13:50:50 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -77,9 +77,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v14 17/24] x86/resctrl: Use registered function pointers for AET enumeration
-Date: Mon, 19 Oct 2026 13:50:24 -0700
-Message-ID: <20261019205031.16977-18-tony.luck@intel.com>
+Subject: [PATCH v14 14/24] x86,fs/resctrl: Handle systems where AET is the only monitoring feature
+Date: Mon, 19 Oct 2026 13:50:21 -0700
+Message-ID: <20261019205031.16977-15-tony.luck@intel.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261019205031.16977-1-tony.luck@intel.com>
 References: <20261019205031.16977-1-tony.luck@intel.com>
@@ -94,208 +94,148 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl enumerates Application Energy Telemetry (AET) features by calling
-pmt_telemetry functions directly. pmt_telemetry now also registers these
-functions with resctrl when it is loaded.
+Application Energy Telemetry (AET) is not enumerated via CPUID. Its presence
+is discovered on the first mount of the resctrl file system by querying the
+pmt_telemetry driver. resctrl is initialized at boot only if CPUID
+enumeration finds allocation or monitoring features.
 
-Calling them directly requires pmt_telemetry to be built in.
+On a system that supports monitoring (X86_FEATURE_CQM) but no L3 monitoring
+features, get_rdt_mon_resources() reports that no monitoring is supported.
+If the system also does not support allocation, resctrl is not initialized
+and AET can never be used.
 
-In preparation for pmt_telemetry being built as a loadable module, call the
-registered functions instead. Serialize registration and unregistration
-against enumeration. Take a reference on the pmt_telemetry module before
-enumerating, so that the functions cannot be unregistered while resctrl
-uses them.
+Assume that AET may be supported whenever the system supports monitoring.
 
-AET support still requires pmt_telemetry to be built in, so it does not yet
-matter that the module reference is never dropped after a successful
-enumeration. It must be dropped on unmount before pmt_telemetry can be built
-as a module.
+If AET is not supported either, the mount finds neither allocation nor
+monitoring support. rdt_get_tree() then lets the mount succeed with nothing
+to allocate or monitor, but does not mark resctrl as mounted. Fail the mount
+with an error message instead, before any of the file system is set up.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
 v14:
-	Updates to resolve locking problems reported by Sashiko in v13.
-
-	AET is now going to use a single mutex for both registration
-	and in a later patch for device removal. So change the name
-	from aet_register_lock to just aet_lock.
-
-	Reverse locking hierarchy between AET and pmt_telemetry.
-	No longer OK to call into pmt_telemetry to enumerate
-	features with the aet_lock held. Instead, make use of
-	module pinning while holding aet_lock.
-
-	New commit message
+	New commit message.
 ---
- arch/x86/kernel/cpu/resctrl/internal.h  |  4 +-
- arch/x86/kernel/cpu/resctrl/core.c      |  2 +-
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 59 ++++++++++++++++++++++---
- 3 files changed, 57 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/resctrl/internal.h |  2 +-
+ arch/x86/kernel/cpu/resctrl/core.c     | 22 +++++++++++++---------
+ arch/x86/kernel/cpu/resctrl/monitor.c  |  4 +---
+ fs/resctrl/rdtgroup.c                  |  8 ++++++--
+ 4 files changed, 21 insertions(+), 15 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index c038b7d80ce3..8406addc05f5 100644
+index 086282a82fca..c038b7d80ce3 100644
 --- a/arch/x86/kernel/cpu/resctrl/internal.h
 +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -234,15 +234,15 @@ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
- void resctrl_arch_mbm_cntr_assign_set_one(struct rdt_resource *r);
+@@ -226,7 +226,7 @@ union l3_qos_abmc_cfg {
  
- #ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
--bool intel_aet_get_events(void);
- void __exit intel_aet_exit(void);
-+bool intel_aet_pre_mount(void);
- int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val);
- void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 				struct list_head *add_pos);
- bool intel_handle_aet_option(bool force_off, char *tok);
- #else
--static inline bool intel_aet_get_events(void) { return false; }
- static inline void __exit intel_aet_exit(void) { }
-+static inline bool intel_aet_pre_mount(void) { return false; }
- static inline int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val)
- {
- 	return -EINVAL;
+ void rdt_ctrl_update(void *arg);
+ 
+-int rdt_get_l3_mon_config(struct rdt_resource *r);
++void rdt_get_l3_mon_config(struct rdt_resource *r);
+ 
+ bool rdt_cpu_has(int flag);
+ 
 diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 0262174df7ad..ac67b4523b2d 100644
+index b32fa143283e..0262174df7ad 100644
 --- a/arch/x86/kernel/cpu/resctrl/core.c
 +++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -795,7 +795,7 @@ void resctrl_arch_pre_mount(void)
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
- 	int cpu;
- 
--	if (!intel_aet_get_events())
-+	if (!intel_aet_pre_mount())
- 		return;
- 
- 	/*
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 996a7ee544bf..26406e18d5ed 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -12,6 +12,7 @@
- #define pr_fmt(fmt)   "resctrl: " fmt
- 
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/compiler_types.h>
- #include <linux/container_of.h>
- #include <linux/cpumask.h>
-@@ -25,6 +26,7 @@
- #include <linux/io.h>
- #include <linux/minmax.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/printk.h>
- #include <linux/rculist.h>
- #include <linux/rcupdate.h>
-@@ -327,6 +329,18 @@ static enum pmt_feature_id lookup_pfid(const char *pfname)
- 	return FEATURE_INVALID;
- }
- 
-+/*
-+ * Serialises AET's view of pmt_telemetry:
-+ *   - pmt_module, get_feature, put_feature
-+ *   - every event_group's ->pfg
-+ *
-+ * Lock ordering with pmt/telemetry.c's ep_lock is ep_lock -> aet_lock.
-+ * AET therefore must not call get_feature() (which takes ep_lock) while
-+ * holding aet_lock. put_feature() does not take ep_lock and may be
-+ * invoked with aet_lock held.
-+ */
-+static DEFINE_MUTEX(aet_lock);
-+
- static struct module *pmt_module;
- static struct pmt_feature_group *(*get_feature)(enum pmt_feature_id id);
- static void (*put_feature)(struct pmt_feature_group *p);
-@@ -342,7 +356,8 @@ static void (*put_feature)(struct pmt_feature_group *p);
-  * struct pmt_feature_group to indicate that its events are successfully
-  * enabled.
-  */
--bool intel_aet_get_events(void)
-+static bool aet_get_events(struct pmt_feature_group *(*get)(enum pmt_feature_id id),
-+			   void (*put)(struct pmt_feature_group *p))
+@@ -991,7 +991,7 @@ static __init bool get_rdt_alloc_resources(void)
+ static __init bool get_rdt_mon_resources(void)
  {
- 	struct pmt_feature_group *p;
- 	enum pmt_feature_id pfid;
-@@ -351,14 +366,16 @@ bool intel_aet_get_events(void)
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+-	bool ret = false;
++	bool l3_mon_found = false;
  
- 	for_each_event_group(peg) {
- 		pfid = lookup_pfid((*peg)->pfname);
--		p = intel_pmt_get_regions_by_feature(pfid);
-+		p = get(pfid);
- 		if (IS_ERR_OR_NULL(p))
- 			continue;
- 		if (enable_events(*peg, p)) {
--			(*peg)->pfg = p;
-+			scoped_guard(mutex, &aet_lock) {
-+				(*peg)->pfg = p;
-+			}
- 			ret = true;
- 		} else {
--			intel_pmt_put_feature_group(p);
-+			put(p);
- 		}
+ 	/* Any monitoring at all? */
+ 	if (!cpu_feature_enabled(X86_FEATURE_CQM))
+@@ -1001,27 +1001,31 @@ static __init bool get_rdt_mon_resources(void)
+ 
+ 	/* Any of the L3 monitoring features? */
+ 	if (!cpu_feature_enabled(X86_FEATURE_CQM_LLC))
+-		return false;
++		goto out;
+ 
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
+ 		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		l3_mon_found = true;
  	}
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
+ 		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		l3_mon_found = true;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
+ 		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		l3_mon_found = true;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_ABMC))
+-		ret = true;
++		l3_mon_found = true;
  
-@@ -369,6 +386,7 @@ void intel_aet_register_enumeration(struct module *module,
- 				    struct pmt_feature_group *(*get)(enum pmt_feature_id id),
- 				    void (*put)(struct pmt_feature_group *p))
- {
-+	guard(mutex)(&aet_lock);
- 	get_feature = get;
- 	put_feature = put;
- 	pmt_module = module;
-@@ -377,19 +395,50 @@ EXPORT_SYMBOL_NS_GPL(intel_aet_register_enumeration, "INTEL_PMT");
+-	if (!ret)
+-		return false;
++	if (l3_mon_found)
++		rdt_get_l3_mon_config(r);
++	else
++		pr_info("CPUID reports L3 monitoring support, but no L3 monitoring features found\n");
  
- void intel_aet_unregister_enumeration(void)
- {
-+	guard(mutex)(&aet_lock);
- 	pmt_module = NULL;
- 	get_feature = NULL;
- 	put_feature = NULL;
- }
- EXPORT_SYMBOL_NS_GPL(intel_aet_unregister_enumeration, "INTEL_PMT");
- 
-+bool intel_aet_pre_mount(void)
-+{
-+	struct pmt_feature_group *(*get)(enum pmt_feature_id id);
-+	void (*put)(struct pmt_feature_group *p);
-+	struct module *mod;
-+
-+	/*
-+	 * Snapshot the callbacks and pin the pmt_telemetry module under
-+	 * aet_lock. The module reference keeps pmt_telem_exit() from
-+	 * running intel_aet_unregister_enumeration() and changing these
-+	 * pointers, so the snapshot remains valid after dropping aet_lock.
-+	 */
-+	scoped_guard(mutex, &aet_lock) {
-+		if (!get_feature || !put_feature)
-+			return false;
-+		if (!try_module_get(pmt_module))
-+			return false;
-+		mod = pmt_module;
-+		get = get_feature;
-+		put = put_feature;
-+	}
-+
-+	if (!aet_get_events(get, put)) {
-+		module_put(mod);
-+		return false;
-+	}
-+
+-	return !rdt_get_l3_mon_config(r);
++out:
++	/* Non-L3 features, e.g. AET, may be supported */
 +	return true;
-+}
-+
- void __exit intel_aet_exit(void)
- {
- 	struct event_group **peg;
+ }
  
- 	for_each_event_group(peg) {
- 		if ((*peg)->pfg) {
--			intel_pmt_put_feature_group((*peg)->pfg);
-+			put_feature((*peg)->pfg);
- 			(*peg)->pfg = NULL;
- 		}
+ static __init void __check_quirks_intel(void)
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 82a555855c1b..bd45d72d1d05 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -431,7 +431,7 @@ static void __init intel_rdt_mbm_apply_quirk(u32 num_rmid)
+ 	mbm_cf = mbm_cf_table[cf_index].cf;
+ }
+ 
+-int __init rdt_get_l3_mon_config(struct rdt_resource *r)
++void __init rdt_get_l3_mon_config(struct rdt_resource *r)
+ {
+ 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+ 	unsigned int mbm_offset;
+@@ -519,8 +519,6 @@ int __init rdt_get_l3_mon_config(struct rdt_resource *r)
+ 		intel_rdt_mbm_apply_quirk(num_rmid);
+ 
+ 	r->mon_capable = true;
+-
+-	return 0;
+ }
+ 
+ static void resctrl_abmc_set_one_amd(void *arg)
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 79d4ddc3d64d..ecdb5da50179 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -3193,6 +3193,11 @@ static int rdt_get_tree(struct fs_context *fc)
+ 		goto out;
  	}
+ 
++	if (!resctrl_alloc_capable() && !resctrl_mon_capable()) {
++		ret = invalfc(fc, "No allocation or monitoring features are available or enabled");
++		goto out;
++	}
++
+ 	ret = setup_rmid_lru_list();
+ 	if (ret)
+ 		goto out;
+@@ -3251,8 +3256,7 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	if (resctrl_mon_capable())
+ 		resctrl_arch_enable_mon();
+ 
+-	if (resctrl_alloc_capable() || resctrl_mon_capable())
+-		resctrl_mounted = true;
++	resctrl_mounted = true;
+ 
+ 	if (resctrl_is_mbm_enabled()) {
+ 		r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
 -- 
 2.56.0
 
