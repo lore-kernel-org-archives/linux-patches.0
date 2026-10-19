@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FF6554089;
-	Mon, 19 Oct 2026 13:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A17E5616AA;
+	Mon, 19 Oct 2026 13:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418125; cv=none; b=X8RiQfzrPCp2wSeTB+galzcJSPhMmqAFLZBvOOEJGEo4guJe7B0S6ucaaZ3TX/n6J7Qm6pAr2Qpjh+AKimIgAgCV+y5x0+21Knw7qKOZ39aI4xedzhnP28VDBNJQvT7np4dlaYFsxxQRAwQHuombZfgHPWzWWVPPv5twRVQ0rH4=
+	t=1792418127; cv=none; b=pP5F+77iS3fSts38OUtvTD9cizXAnMsWyVAS0lXMI7CmlKrNkd0MCILqHc5TPifvjP1DOd6P7ll1T6iM525uYC1nsHmdhEFfo2KkTf4X+AISQqaBfHU+N4GieDOekV83ihLGTak9RhlG4/noaCgcg0tLvMs1B0/XX4EqVHHG8xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418125; c=relaxed/simple;
-	bh=bP5OFjwGnwFhxNRKCKrV8InRtYrlSZbS62HCb7iAclY=;
+	s=arc-20240116; t=1792418127; c=relaxed/simple;
+	bh=RZ4LR5xduwu0elY6VhRuAfSxZS1lh3E+inpixSSxlwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EHUc2FyFsK2SVIhXLpwXXlgy6InD5Kf5D6SQXWI1Q5JaVR9r0zAVZtC93qtmHGzEUDBPo3ftslRCPZpv2PI3R6wXDzmDZg+bQv3HP3arm/gyCL2bx2hUgVnKx8h1nlBxe4PBCILzxZHWrxGIDZIYPSDE9HeP/zkwwf2cyKxJN+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XQLPIFsn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bnKkAHjINE4h3EL5JBiWVmZ4h4oAvS4mtwFG7vmPl36rz9II+cT2pEH8IDdeHTtC2j3QFphcVeIdbKZC2+bWIDHth9ezmg0eg6cSa7YBW3vgXDbO4NaPxyI7KMZtQmQPQ0DySBM78QI5EQGU5I1YgibUi1Tb3sAuMSNneVguI4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lV1nmfNp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XQLPIFsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2D01F000C4;
-	Mon, 19 Oct 2026 13:55:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lV1nmfNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0910B1F000C6;
+	Mon, 19 Oct 2026 13:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418123;
-	bh=ttHXu1rxmm47eN9mD6sVUiTLxtrzBGIfofEL2ZFh0XQ=;
+	s=k20260515; t=1792418124;
+	bh=Zm0ShvoR7y74hIRpdKCarjzbD3xiWTbycsn5sH5MJDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQLPIFsn7zVOh61/nfex4W6FFDiNrc50XWakKJ9OZNz6ZUnkaF/KdQuVEoWNLxRT2
-	 +rxVLREn22oCQW0WDBeQZZuSKbq+BCXxKwdQ2tF4UPmvS6CCEkhbjXnW9uccfa/Lfx
-	 oQ1k5GOBGH/IkZf3HcfA763LAvdJlSB0kQZqpD9kDXc/hqlGGa3l4U3mZX0kdMCnwQ
-	 RlmWDT4QUlACrSEZyJF6KkheLp9jSxdtl9eXCcL5mQG6ZwL7575OTHVECOQdna4Lvi
-	 1dCkguvHn8HofWQxEkNuWXpGh1KZxV05oazOcXJJ1ZWdpxHOCza7NfZ7HEcvNeJ7yB
-	 niAbndl+xVJAQ==
+	b=lV1nmfNppahgvceSEk+iMQ2A4JkNNQowRtmEbAqvDH5pw3Q6AonZVYHq3xDNyo2kd
+	 uATS03pFslSeSbaSX8tjbgnGCv37wm9eIWBIFYFQGYTjYqFkT7T2MRARYRMRglNLkw
+	 6m4idfjBe0IrrgD8ih/aJjQhaXc79l+jTNBPdq3mLUBWwoByHq0tMMUYIMywlpr7Rh
+	 8C+GxEY4lP3jES4U8UOdYCbBbTWHil4Wjx+NXs4eGawvbtnViDqzTOkftXSEmOPe5E
+	 xzzod8x+yNtrdfI1iCmrUmlFBWE2brXd6GBh7sNTgyoYRIGAd3WzWVOzcdtaLzxHVD
+	 oBbTa9GkHZL3w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmytro Moroziuk <dmorozyk1@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	heikki.krogerus@linux.intel.com,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/conexant: Add mute LED quirk for HP ProBook 440 G5
-Date: Mon, 19 Oct 2026 09:45:19 -0400
-Message-ID: <20261019135441.1420968-28-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] usb: typec: mux: tusb1046: add missing MODULE_DEVICE_TABLE()
+Date: Mon, 19 Oct 2026 09:45:20 -0400
+Message-ID: <20261019135441.1420968-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,120 +54,147 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmytro Moroziuk <dmorozyk1@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 191fe151eb85ff6cb24189fc88c970745497c057 ]
+[ Upstream commit 5e4eb5c96324b226220d29d025a334df28054ed3 ]
 
-The HP ProBook 440 G5 requires the CXT_FIXUP_MUTE_LED_GPIO quirk to
-properly toggle the physical mute and mic-mute LEDs via the CX8200 codec.
-Without this quirk, the LEDs remain permanently dark.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Signed-off-by: Dmytro Moroziuk <dmorozyk1@gmail.com>
-Link: https://patch.msgid.link/20260812121856.30353-1-dmorozyk1@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
+
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Romain Gantois <romain.gantois@bootlin.com>
+Link: https://patch.msgid.link/20260704124714.18404-1-pengpeng@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line Conexant mute-LED quirk for HP ProBook 440 G5 (PCI
-SSID `0x103c:0x837b`). The local tree is **6.12.111** (`pending-6.12`);
-the driver and sibling G4/G5 quirks are already here.
+The local tree is **v7.3-rc4**. The tusb1046 driver is present, and this
+is a one-line OF module-alias publication so udev can autoload the
+driver. That is a real modular-build bug, not a new feature.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: [ALSA: hda/conexant] [Add] [mute LED quirk for HP ProBook 440
-G5]
+Record: **[usb: typec: mux: tusb1046]** **[add]** missing
+`MODULE_DEVICE_TABLE()` so OF module aliases are generated.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Dmytro Moroziuk \<dmorozyk1@gmail.com\> (author)
-- Link:
-  https://patch.msgid.link/20260812121856.30353-1-dmorozyk1@gmail.com
-- Signed-off-by: Takashi Iwai \<tiwai@suse.de\> (ALSA maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable (absence is expected for this review)
-- Ignore any pipeline-added Sasha Levin SOB / Upstream commit markers
+- **Fixes:** none (expected for this review)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** Romain Gantois \<romain.gantois@bootlin.com\> (driver
+  author / listed maintainer)
+- **Acked-by:** none in the commit; mailing-list thread also has
+  **Reviewed-by: Heikki Krogerus** (USB Type-C maintainer) that did not
+  land in the commit text
+- **Link:**
+  https://patch.msgid.link/20260704124714.18404-1-pengpeng@iscas.ac.cn
+- **Cc: stable@vger.kernel.org:** absent (expected)
+- **Signed-off-by:** Pengpeng Hou (author); Greg Kroah-Hartman (USB
+  maintainer, merged)
+- Ignore any pipeline “already selected” / Sasha Levin markers (none in
+  this commit object)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: HP ProBook 440 G5 mute and mic-mute LEDs stay off because the
-  CX8200 codec is not wired to `CXT_FIXUP_MUTE_LED_GPIO`.
-- Symptom: physical mute/mic-mute LEDs remain permanently dark.
-- Root cause: missing `SND_PCI_QUIRK` for SSID `0x103c:0x837b`.
-- No stack traces, no kernel version range, no crash.
+- **Bug:** `tusb1046_match_table` is wired to `.of_match_table` but not
+  exported with `MODULE_DEVICE_TABLE(of, ...)`.
+- **Symptom:** when `CONFIG_TYPEC_MUX_TUSB1046=m`, `depmod` does not
+  emit `of:N*T*Cti,tusb1046` aliases, so udev/kmod will not autoload the
+  module when DT instantiates the I2C device.
+- **Failure mode:** Type-C mux / orientation switch stays unbound until
+  a manual `modprobe`. Built-in (`=y`) is unaffected.
+- **Version info:** none in the message.
+- **Root cause:** missing module alias publication; match table itself
+  is correct.
+- The “source-level fix / no dynamic hardware reproduction” sentence is
+  in both the sent patch and the committed message.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a hidden fix. It is an explicit hardware quirk / device-
-table addition.
+Record: Not hidden. It is an explicit autoload/alias bug. Same class as
+device-ID publication: no new behavior, just making existing OF matching
+visible to userspace module loading.
 
 ===============================================================
-PHASE 2: DIFF ANALYSIS
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- Upstream file: `sound/hda/codecs/conexant.c` (+1 / −0)
-- Function/table: `cxt5066_fixups[]`
-- Scope: single-file, one-line table insert
+- **File:** `drivers/usb/typec/mux/tusb1046.c` — **+1 / −0**
+- **Function:** none; one line after `tusb1046_match_table[]`
+- **Scope:** single-file, one-line surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Before: SSID `0x103c:0x837b` matches no quirk; GPIO mute-LED setup is
-  skipped.
-- After: match applies `CXT_FIXUP_MUTE_LED_GPIO` →
-  `cxt_fixup_mute_led_gpio()` at `HDA_FIXUP_ACT_PRE_PROBE` →
-  `cxt_setup_mute_led(codec, 0x01, 0x02)`.
-- Path: codec probe / initialization only; no error-path or hot-path
-  change.
+- **Before:** OF table exists and is used for in-kernel matching if the
+  module is already loaded; file2alias never sees it.
+- **After:** `MODULE_DEVICE_TABLE(of, tusb1046_match_table)` creates the
+  `__mod_of__tusb1046_match_table` alias consumed by
+  `scripts/mod/file2alias.c`.
+- **Path:** build-time module metadata only; probe/remove/mux paths
+  unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: [Hardware workaround / codec quirk]
-- Mechanism: missing PCI SSID in the existing Conexant quirk table.
-- Fix: add one `SND_PCI_QUIRK` using the same `CXT_FIXUP_MUTE_LED_GPIO`
-  already used by ProBook 440 G4 (`0x822e`), 455 G5 (`0x836e`), 470 G5
-  (`0x837f`), 450 G4 (`0x8231`).
+Record:
+- **Category:** hardware matching / module autoload (device-ID
+  publication), not UAF/race/leak.
+- **Mechanism:** OF compatible `ti,tusb1046` was never exported in the
+  module’s device table, so autoload could not work.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct; surgical; no API/locking/refcount change.
-Regression risk is limited to that SSID. `0x837b` is unused in this
-tree’s quirk table.
+Record:
+- Obviously correct: this is the standard macro used by sibling Type-C
+  mux drivers (`fsa4480`, `ptn36502`, `it5205`, `nb7vpq904m`, etc.).
+- Minimal; no API, locking, or runtime change.
+- Regression risk: negligible. Wrong table/type would be a build
+  concern; here type `of` matches `struct of_device_id`.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record: The new line did not exist here. Adjacent entries:
-- `0x836e` HP ProBook 455 G5 — present since at least Takashi Iwai 2021
-  (`2e6a731296be9d`)
-- `0x837f` HP ProBook 470 G5 — same
-- `0x822e` HP ProBook 440 G4 — `ba92b11428797` (Kai-Heng Feng, 2017),
-  originally `Cc: stable # v4.12+`
-`CXT_FIXUP_MUTE_LED_GPIO` itself dates to `5cd5b1bdfb013` (HP ZBook 15u
-G3, 2017).
+Record:
+- Match table introduced in **7c561b8c3e836** (“usb: typec: mux: Add
+  support for the TUSB1046 crosspoint switch”), **Romain Gantois**,
+  2024-10-24, first contained in **v6.13-rc1**.
+- Original driver had `.of_match_table = tusb1046_match_table` and
+  **no** `MODULE_DEVICE_TABLE`. Bug present from introduction.
+- Candidate: **5e4eb5c96324b226220d29d025a334df28054ed3**, first
+  contained in **v7.3-rc1**.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. The “bug” is a missing table entry, not a
-regression from a specific commit.
+Record: No `Fixes:` tag. Buggy commit is the driver intro
+**7c561b8c3e836**, which **is** an ancestor of this HEAD.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Same-file mute-LED quirks already in this tree include 440 G4,
-450 G4 (`1cce98bf41390`, backported here with `Cc: stable`), 455 G5, 470
-G5, 645 G4. Standalone, not a series.
+Record (on this file): driver add → `dev_err_probe` cleanup → include-
+header reshuffle → this alias fix. Standalone; not patch x/y. No
+prerequisite refactor required for the one-line add.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: No prior Dmytro Moroziuk commits on `sound/pci/hda/` in this
-tree. ALSA maintainer Takashi Iwai applied it the same day.
+Record: Pengpeng Hou is a contributor, not the Type-C mux maintainer.
+Nearby USB work is unrelated. Weight comes from **Romain Gantois**
+(driver maintainer) and **Heikki Krogerus** (Type-C) reviews, plus Greg
+KH merge.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Needs `CXT_FIXUP_MUTE_LED_GPIO` / `cxt_fixup_mute_led_gpio()` /
-`cxt5066_fixups[]` — all present. Standalone. Path remapped from
-`sound/hda/codecs/conexant.c` (post-6.12 move) to
-`sound/pci/hda/patch_conexant.c`.
+Record: None. `MODULE_DEVICE_TABLE` exists in `include/linux/module.h`
+in this tree. Applies standalone on any tree that has
+`tusb1046_match_table`.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -175,57 +202,64 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 191fe151eb85f` →
-  https://patch.msgid.link/20260812121856.30353-1-dmorozyk1@gmail.com
-- Single v1 series; no v2/v3
-- Thread: author submission + Takashi Iwai: “Thanks, applied to for-next
-  branch now.”
-- No NAK, no requested changes, no reviewer Cc: stable (common for one-
-  line quirks)
+- **b4 dig -c 5e4eb5c96324b:**
+  https://patch.msgid.link/20260704124714.18404-1-pengpeng@iscas.ac.cn
+- **b4 dig -a:** single **v1**, 2026-07-04, no later revision.
+- Thread (mbox): Romain Gantois “LGTM, thanks!” + R-b (2026-07-07);
+  Heikki Krogerus R-b (2026-07-13, after Greg’s 2026-07-08 commit). **No
+  NAKs, no stable discussion, no risk flags.**
+- WebFetch of lore.kernel.org returned **403**; thread recovered via `b4
+  dig -m`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc perex@perex.cz, tiwai@suse.com, linux-
-sound@vger.kernel.org. Right list and both ALSA maintainers.
+Record: **b4 dig -w** original To/Cc: Pengpeng Hou, Romain Gantois,
+Heikki Krogerus, Greg Kroah-Hartman, linux-usb, linux-kernel. Right
+maintainers were on the patch.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No bugzilla/syzbot link. User-visible hardware issue stated in
-the commit; accepted by the subsystem maintainer.
+Record: No syzbot/bugzilla/Reported-by. Justification is the missing
+macro vs an existing OF table. No in-tree DTS consumer of `ti,tusb1046`
+(only `Documentation/devicetree/bindings/usb/ti,tusb1046.yaml`). User
+impact is boards that describe this chip in DT, including out-of-tree
+DTS.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone one-patch series. Later `origin/master` conexant
-commits (headset plugin, SN6140 S3) do not touch `0x837b`.
+Record: Standalone v1. Same pattern already used in this tree:
+**15a34e5d4b23c** (“usb: typec: fix module autoloading”),
+**f27891abb7930** (“usb: typec: add missing MODULE_DEVICE_TABLE() to
+stusb160x”).
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: No stable@ discussion found for this model/ID. Sibling quirks
-historically went to stable with explicit Cc.
+Record: **UNVERIFIED** — lore.kernel.org/stable WebFetch 403; WebSearch
+failed. No stable nomination in the recovered linux-usb thread.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: Table `cxt5066_fixups[]`; applied fixup
-`cxt_fixup_mute_led_gpio()`.
+Record: No function body changed. Data: `tusb1046_match_table`; driver:
+`tusb1046_driver` / `module_i2c_driver()`.
 
 **Step 5.2: TRACE CALLERS**
-Record: `patch_conexant_auto()` → `snd_hda_pick_fixup(...,
-cxt5066_fixups, ...)` for codec IDs including default and CX8200
-(`HDA_CODEC_ENTRY(0x14f12008, "CX8200", patch_conexant_auto)` at line
-1305). Lookup is PCI subsystem vendor/device.
+Record: I2C core binds via `module_i2c_driver`. OF match is used once
+the module is loaded. Autoload is userspace (udev) using aliases from
+`modules.alias`. Reachable on DT platforms with `compatible =
+"ti,tusb1046"`.
 
 **Step 5.3: TRACE CALLEES**
-Record: `cxt_fixup_mute_led_gpio` → `cxt_setup_mute_led(codec, 0x01,
-0x02)` → `snd_hda_gen_add_mute_led_cdev` /
-`snd_hda_gen_add_micmute_led_cdev`. Existing, stable helpers.
+Record: N/A for the added line. Macro expands to a static alias
+attribute for modpost.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Codec probe on matching HP laptop. Userspace mute/mic-mute then
-drives GPIO LEDs. Reachable on that hardware; not a generic syscall
-crash path.
+Record: DT I2C instantiation → udev/kmod looks up OF alias → `tusb1046`
+module → `tusb1046_i2c_probe`. Userspace cannot trigger a crash via this
+bug; the failure is **driver never loads**.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same one-line pattern used for several HP ProBook G4/G5 Conexant
-machines; 450 G4 already backported into this 6.12 tree.
+Record: Other Type-C mux drivers already have `MODULE_DEVICE_TABLE(of,
+...)`. This driver was the one that omitted it. Semcode MCP not
+available; used `git grep`.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
@@ -233,58 +267,68 @@ PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 Record:
-- Tree: `p-6.12-3-gc504cf0baa3d8`, `make kernelversion` = 6.12.111
-- `git merge-base --is-ancestor 191fe151eb85f HEAD` → not present
-- File here: `sound/pci/hda/patch_conexant.c` (no
-  `sound/hda/codecs/conexant.c`)
-- `cxt5066_fixups[]` exists; `0x837b` / “HP ProBook 440 G5” absent
-- CX8200 codec entry exists
-- Bug is long-standing missing hardware enablement, not a post-6.12
-  regression
+- **Tree:** `git describe HEAD` = **v7.3-rc4-27-gf0100363d8c37**; `make
+  kernelversion` = **7.3.0-rc4**.
+- Driver file exists; Kconfig `TYPEC_MUX_TUSB1046` is **tristate**.
+- Bug introduced **v6.13**; this 7.3 lineage includes that driver.
+- **HEAD already contains 5e4eb5c96324b** (`git merge-base --is-
+  ancestor` succeeded). Current file already has line 181
+  `MODULE_DEVICE_TABLE(of, tusb1046_match_table)`. That is mainline
+  history, not a reason to reject on technical merit.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Path remap required. Context matches. `git apply --check` after
-remapping to `sound/pci/hda/patch_conexant.c`: “Hunk #1 succeeded at
-1105 (offset -2 lines).” Clean apply with trivial path change.
+Record: On **current HEAD**, `git apply --check` of the commit **fails**
+because the line is already present. Against the pre-fix file (parent of
+5e4eb5c96324b) the hunk is a clean one-line insert after the match
+table. Any stable tree that still has the original
+`tusb1046_match_table` without the macro would take it cleanly.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No 440 G5 / `0x837b` entry. Related G4/G5 mute-LED quirks are
-already present.
+Record: This exact fix is already in HEAD. No alternate autoload
+workaround in the driver. Sibling Type-C autoload fixes are also present
+and do not replace this line.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: [sound/pci/hda Conexant codec] [IMPORTANT for laptop audio;
-quirk is machine-specific]
+Record: **USB Type-C mux driver** (`drivers/usb/typec/mux/`).
+**PERIPHERAL** — one I2C crosspoint switch, not mm/VFS/net core. Still
+user-visible USB-C / DP altmode on boards that have the chip.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature table; regular quirk additions. Recent local commits
-include other pin/quirk updates. Typical LTS candidate.
+Record: Type-C mux is actively developed (ps883x and related churn).
+`tusb1046.c` itself is low-churn since v6.13.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / platform-specific: HP ProBook 440 G5 (SSID
-0x103c:0x837b) with CX8200, `CONFIG_SND_HDA_CODEC_CONEXANT`.
+Record: **Driver-specific + config-specific:**
+`CONFIG_TYPEC_MUX_TUSB1046=m` on OF/I2C systems with `ti,tusb1046`. Not
+universal. No in-tree DTS users found; out-of-tree / vendor DT is the
+realistic consumer.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Every boot on that laptop. Mute/mic-mute keys do not light LEDs.
-Unprivileged users see dead LEDs; not a privilege issue.
+Record: Every boot/enumeration of that DT node when the driver is a
+module. Not a race. Unprivileged users do not exploit it; they just do
+not get the mux driver.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Mute/mic-mute LEDs stay dark. Severity LOW as crash/corruption,
-but a real hardware bug that stable rules call out as a quirk.
+Record: **Failure mode:** module does not autoload; USB-C orientation/DP
+muxing does not come up until manual load. **Severity: MEDIUM**
+(functional hardware enablement, not oops/corruption/deadlock). Built-in
+builds: no bug.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- Benefit: restores LED behavior on a shipping HP ProBook still used on
-  6.12 LTS; matches sibling models already in this tree.
-- Risk: one table line, SSID-gated, existing fixup. Very low.
-- Ratio: strongly favors backport.
+- **Benefit:** high for TUSB1046 modular users (device actually probes);
+  moderate overall (narrow hardware, no in-tree board).
+- **Risk:** very low (1 line, metadata only).
+- **Ratio:** favorable — same justification as adding a device ID to an
+  existing driver.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -292,113 +336,113 @@ PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-FOR:
-- Explicit hardware quirk / PCI ID addition (stable-rules exception)
-- Fixes user-visible broken mute/mic-mute LEDs on HP ProBook 440 G5
-- One line, existing `CXT_FIXUP_MUTE_LED_GPIO`
-- Same pattern as 440 G4 / 450 G4 / 455 G5 / 470 G5 already in this tree
-- 450 G4 equivalent already backported here with Cc: stable
-- Applied by ALSA maintainer; no NAK
-- Applies here with only a path remap
-- `Documentation/process/stable-kernel-rules.rst`: “fix a real bug … or
-  just add a device ID” and “hardware quirk”
+FOR backporting:
+- Real autoload bug for a tristate driver with an OF table.
+- One line, obviously correct, no runtime path change.
+- Reviewed by the driver author and Type-C maintainer; merged by Greg
+  KH.
+- Same pattern already used in this Type-C subsystem.
+- Fits the stable exception for publishing match IDs so existing
+  hardware actually binds.
+- Driver and match table exist in this 7.3 tree (introduced v6.13).
 
 AGAINST:
-- Not a crash, UAF, or security issue
-- No Fixes:/Cc: stable (not a negative for this pipeline)
-- Author is not a regular conexant contributor (mitigated by maintainer
-  apply)
+- Not a crash, UAF, deadlock, or security issue.
+- No user `Reported-by` and no in-tree DTS enabling the compatible.
+- “Tested” is source-level, not hardware reproduction.
+- HEAD already contains the commit (expected on 7.3-rc; not a pipeline-
+  selection marker).
 
 UNRESOLVED:
-- Independently verifying the reporter’s hardware beyond SSID +
-  maintainer accept: not possible from git/lore
-- lore.kernel.org WebFetch returned 403; thread recovered via `b4 dig
-  -m`
+- Could not query lore.kernel.org/stable (HTTP 403 / search failure).
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? PASS — one-line table entry, maintainer
-   applied
-2. Fixes a real bug that affects users? PASS — LEDs stay dark on that
-   laptop
-3. Important issue? PASS as hardware quirk / device ID (not crash-level)
-4. Small and contained? PASS — +1 line
-5. No new features or APIs? PASS — existing fixup, new SSID only
-6. Can apply to the local tree? PASS — context present; remap
-   `sound/hda/codecs/conexant.c` → `sound/pci/hda/patch_conexant.c`
+1. Obviously correct and tested? **PASS** — standard macro; maintainer
+   R-b. Hardware test not claimed.
+2. Fixes a real bug that affects users? **PASS** — modular OF autoload
+   is broken.
+3. Important issue? **PASS** as hardware enablement (autoload),
+   analogous to new device IDs; not CRITICAL.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS** — exports an existing table.
+6. Can apply to the local tree? **PASS** for this codebase (driver
+   present). Re-applying on current HEAD conflicts only because the fix
+   is already merged here; a tree that still lacks the line applies
+   cleanly.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Hardware quirk / codec quirk table entry (also a device-ID-style
-addition to an existing driver).
+Record: **Device ID / module alias publication** for an existing driver
+(OF `MODULE_DEVICE_TABLE`). Also build-time metadata, not a new driver.
 
 **Step 9.4: MAKE YOUR DECISION**
-This belongs in 6.12.y. The driver, fixup, and neighboring ProBook G5
-IDs are already here; only this SSID is missing. Risk is negligible.
+This tree has the TUSB1046 driver. Missing `MODULE_DEVICE_TABLE(of,
+...)` prevents automatic loading of a modular Type-C mux, so USB-C/DP
+switching does not come up on DT systems until someone loads the module
+by hand. The fix is one obviously correct line with essentially no
+regression risk. That meets stable rules and the device-ID exception, so
+it should be backported to this tree’s stable series.
 
-------------------------------------------------
-What the commit solves and why it matters
-------------------------------------------------
-Without the quirk, CX8200 GPIO mute/mic-mute LEDs on HP ProBook 440 G5
-never toggle. That is a real hardware bug for owners of this 2018-era
-ProBook on LTS. The fix is the same one-line SSID mapping already used
-on 440 G4 and other G5 ProBooks.
+===============================================================
+What the commit solves for stable users
+===============================================================
+With `TYPEC_MUX_TUSB1046=m`, kmod never learns the `ti,tusb1046` OF
+alias, so the I2C Type-C mux never autoprobes. Distro/embedded kernels
+that ship this as a module then lose orientation switch and DisplayPort
+muxing on that hardware. The patch only emits the alias; it does not
+change probe logic.
 
-Risk vs benefit: benefit is working LEDs on one laptop model; risk is
-confined to SSID `0x103c:0x837b`. Backport needs only the file-path
-rename from the later HDA codec shuffle.
+Risk is negligible. Benefit is real for modular users of this chip. No
+extra commits are required beyond the driver that this 7.3 tree already
+has.
 
-Verification:
-- [Phase 1] Parsed tags: author SOB, Link msgid, Takashi Iwai SOB; no
-  Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x103c, 0x837b, "HP ProBook 440 G5",
-  CXT_FIXUP_MUTE_LED_GPIO)` in `cxt5066_fixups[]`
-- [Phase 2] Local `cxt_fixup_mute_led_gpio()` at
-  `sound/pci/hda/patch_conexant.c:789` calls `cxt_setup_mute_led(codec,
-  0x01, 0x02)`
-- [Phase 3] `git blame -L 1098,1115`: sibling G4/G5 quirks present; 440
-  G4 is `ba92b11428797` with original Cc: stable
-- [Phase 3] `git show 1cce98bf41390`: 450 G4 mute-LED quirk already in
-  this 6.12 tree from upstream
-- [Phase 3] `git log --author="Dmytro Moroziuk"` on `sound/pci/hda/`: no
-  prior commits
-- [Phase 4] `b4 dig -c 191fe151eb85f`: lore match; v1 only; recipients
-  perex/tiwai/linux-sound
-- [Phase 4] mbox: Iwai “Thanks, applied to for-next branch now.”; no NAK
-- [Phase 4] WebFetch lore URLs: 403; thread recovered via b4
-- [Phase 4] WebSearch stable@: no discussion of this model
-- [Phase 5] CX8200 `HDA_CODEC_ENTRY(0x14f12008, "CX8200",
-  patch_conexant_auto)` present; `snd_hda_pick_fixup` matches PCI SSID
-- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111
-- [Phase 6] `git merge-base --is-ancestor 191fe151eb85f HEAD` → not in
-  tree
-- [Phase 6] grep `0x837b` / `HP ProBook 440 G5` in conexant: no match
-- [Phase 6] remapped `git apply --check`: hunk succeeded at 1105 (offset
-  -2)
-- [Phase 6] `git log origin/master` after the commit: later conexant
-  changes do not touch `0x837b`
-- [Phase 7/8] Failure mode: dark mute/mic-mute LEDs on one HP model;
-  quirk exception applies
-- UNVERIFIED: physical confirmation of reporter’s 440 G5/CX8200 beyond
-  commit + maintainer apply
-- UNVERIFIED: lore.kernel.org HTML fetch (403); b4 mbox used instead
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Parsed commit **5e4eb5c96324b**: R-b Romain Gantois; Link
+  patch.msgid.link; no Fixes/Reported-by/Cc:stable.
+- [Phase 2] Diff: **+1** `MODULE_DEVICE_TABLE(of, tusb1046_match_table)`
+  in `drivers/usb/typec/mux/tusb1046.c`.
+- [Phase 2] Confirmed sibling mux drivers already use
+  `MODULE_DEVICE_TABLE(of, ...)`.
+- [Phase 3] `git blame`: table from **7c561b8c3e836** (v6.13-rc1);
+  original add had no `MODULE_DEVICE_TABLE`.
+- [Phase 3] `git describe --contains 7c561b8c3e836` → v6.13-rc1; `git
+  describe --contains 5e4eb5c96324b` → v7.3-rc1.
+- [Phase 3] `git merge-base --is-ancestor 5e4eb5c96324b HEAD` → yes;
+  `7c561b8c3e836` → yes.
+- [Phase 3] `git show 7c561b8c3e836` confirms OF table without the
+  macro.
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; R-b Gantois + Krogerus;
+  recipients include Type-C and USB maintainers; no NAK.
+- [Phase 4] lore WebFetch 403; used mbox instead.
+- [Phase 5] Kconfig `TYPEC_MUX_TUSB1046` is tristate; Makefile builds
+  `tusb1046.o`; DT binding `ti,tusb1046.yaml` exists.
+- [Phase 5] `git grep ti,tusb1046 arch/` → no in-tree DTS.
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-g…; kernelversion
+  7.3.0-rc4.
+- [Phase 6] HEAD already has the line; `git apply --check` of the patch
+  on HEAD fails; parent of the commit lacks the macro.
+- [Phase 7] MAINTAINERS: USB TYPEC TUSB1046 MUX DRIVER → Romain Gantois.
+- [Phase 8] Failure = missing autoload, severity MEDIUM; risk very low.
+- UNVERIFIED: stable@ discussion (lore/stable unreachable).
 
 **YES**
 
- sound/hda/codecs/conexant.c | 1 +
+ drivers/usb/typec/mux/tusb1046.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
-index ef40f1cb1158e..862fcbe74e4f0 100644
---- a/sound/hda/codecs/conexant.c
-+++ b/sound/hda/codecs/conexant.c
-@@ -1115,6 +1115,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x103c, 0x829a, "HP 800 G3 DM", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x82b4, "HP ProDesk 600 G3", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x836e, "HP ProBook 455 G5", CXT_FIXUP_MUTE_LED_GPIO),
-+	SND_PCI_QUIRK(0x103c, 0x837b, "HP ProBook 440 G5", CXT_FIXUP_MUTE_LED_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x837f, "HP ProBook 470 G5", CXT_FIXUP_MUTE_LED_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x83b2, "HP EliteBook 840 G5", CXT_FIXUP_HP_DOCK),
- 	SND_PCI_QUIRK(0x103c, 0x83b3, "HP EliteBook 830 G5", CXT_FIXUP_HP_DOCK),
+diff --git a/drivers/usb/typec/mux/tusb1046.c b/drivers/usb/typec/mux/tusb1046.c
+index 3c1a4551c2fbf..89b47aa56c7a9 100644
+--- a/drivers/usb/typec/mux/tusb1046.c
++++ b/drivers/usb/typec/mux/tusb1046.c
+@@ -179,6 +179,7 @@ static const struct of_device_id tusb1046_match_table[] = {
+ 	{.compatible = "ti,tusb1046"},
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, tusb1046_match_table);
+ 
+ static struct i2c_driver tusb1046_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
