@@ -1,52 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABFC62260E;
-	Mon, 19 Oct 2026 14:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B34623883;
+	Mon, 19 Oct 2026 14:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418691; cv=none; b=EWvug+JBYMMa56tylME7xY0lP79nYZqKhzzJf0DIlVd7touIUwy/gktEITe3xrl44ihr1FM4lNIaAsS8qRdbpvDnsXgUuM4xzj6Su9N881B0ObwSGeEn9uqKs7Dj/JM09eJuFkpu1NtiopH6iy//DLu5YiJjh+rxUuQtgmE5SGM=
+	t=1792418691; cv=none; b=pn7FlhoYmykVO8s6HkSchM6V/4SLLL2CyrPfa6JbklW76us1w+LojhcSf5De9dnc8Z3pAkksWmGw2aJcJZDQ8d5v0qFtMPT40qQyLJ8y5nADI2PPdCNT4XcY4UuseMM7SbbwAPncYQcWLjJkob//FUIg21VRR755wyBG6lx6TCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418691; c=relaxed/simple;
-	bh=A0/kukf2XXYs09IUeFpJ7xRBOpHdude9n9tvdxr6DlI=;
+	bh=F/UsXT1e7/AvWIqMK34SiQX1vfA56FuuYZ5XTjxUBKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WnNNO322bnRy1Ax4kQDhV5j0pDycv01BjMb9gnYiSXQCDBpQYVcF00VJPDenh/6z9ZIIPYIGLzyFCQ7m2y8osRvRT6/TPiDy9O0SiY/oYoCoF2SlAT1TbRKevb3B5HUcjsdQTeWCZtFtocsTxgyRNGLR9VrsAwv1peLFvKJ43hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lpQOtIuE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TYgKF78NYfR9MBeSez/VV5w546OLc21BfsQss044sRvA25MJqyXsBh0kFCcPfYHk903Jk95Yxn79jcREhFd0DCyjkQrb7QCJioGoqrVfQ75gqB7PpecA+Ti6O/wgXXBMCXjzFQlT4u3ZRIPEcdXhLH9cA0RiXmCtUZQb7K+d2HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T7TraGz+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lpQOtIuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF2A1F000C5;
-	Mon, 19 Oct 2026 14:04:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T7TraGz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBE51F000C6;
+	Mon, 19 Oct 2026 14:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418686;
-	bh=37GP2gLah2l9LWaV6Z4HyU7YDGSYfHzI1n89yuM5wqM=;
+	s=k20260515; t=1792418689;
+	bh=WTU9jE6vfY4VsFTKT81fPJrxMMr0twbpuj3cAR+x5pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lpQOtIuE6kLyWsW+yZy6ecufrml/MWrDOH6SDBmvskDMt9oetftV1XOEyFFL/Ix9r
-	 5kwl1tWimpZJlBJWK7lP3bvT7VyNSTxMRWvbiehErk4U2BQVxljzW3wHqhMblLll9y
-	 b84jN9mRfb3MmNHwGc5bV5Gy2ivcH39k8OtlR0AJHHQZs3gHQumaqvWdpJrKEMxYBe
-	 Nn0vpN9Xd0ukzZVbNSvi/guiW3JwlLWFgvn3qtuAgVlHEDJ4Yf9Q0ejz5kZk1ajsYF
-	 6Wx1EbGJr2Y5XBVGTva6uvOmkJqt5ghaB9B+CujapN/TWMUTPJPIrED2J9RnOZVJkS
-	 kREW+ydX9q7hw==
+	b=T7TraGz+mpaJ8iodszG+WiXHkxbnZYFL/7JttE5RqEtJ5ovQOvIVi/HI2OQEaekp0
+	 0AmhAxpZeiF+LX25JjO/SazdHpifz1WoHge2TIlOf/8gSuDthNur/V6T+kurmIi9ix
+	 zoNS1Gc1U51ucQJ6DF6w1/IpOgx946ZXmBo/FaCxwxj46YKLZyutqyAaywghsW+fiP
+	 xHh8mwI42AL9PK3mrSYcn+OY0AUntk+b/glX0eRvn7qET60kbQt+rpYOnnjVP8O/X0
+	 VC1L1GXnsWXJkjMk4O5Pvknq3movujmn3nCaiIVtzqBMprS+bq2NB3oeif6yj4G2Ov
+	 J28uFx3iqqqiA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Jiawen Liu <1298662399@qq.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lynxis@fe80.eu,
-	hkallweit1@gmail.com,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.6] net: pcs: mtk-lynxi: check regmap reads in mtk_pcs_lynxi_get_state()
-Date: Mon, 19 Oct 2026 09:51:55 -0400
-Message-ID: <20261019135441.1420968-424-sashal@kernel.org>
+	olteanv@gmail.com,
+	linux-spi@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] spi: fsl-dspi: clean up after failed suspend and resume
+Date: Mon, 19 Oct 2026 09:51:57 -0400
+Message-ID: <20261019135441.1420968-426-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -62,308 +54,405 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit 5cc65c01cdc577621d1320f4aa03a1382c5a4a45 ]
+[ Upstream commit 2543355f3da56a297e3803ccb5d29f4dce5f18f1 ]
 
-mtk_pcs_lynxi_get_state() ignores regmap_read()'s return value; a
-failed read leaves bm and adv holding uninitialized stack values
-which are then decoded into the reported link state. The regmaps
-backing the MT7531 SGMII PCS instances sit on an MDIO bus where
-reads can fail. Check both reads and report the link as down on
-error; phylink presets state->link before the callback, so a bare
-return would leave a failed read reported as link-up.
+dspi_suspend() disabled the IRQ before spi_controller_suspend(),
+but ignored a suspend failure and kept tearing the device down.
+Restore the IRQ and return the error if suspend fails.
 
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/fce70657fc03bbaf60a04c0fbf2f418531135c4f.1785811140.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+dspi_resume() also left the clock prepared if controller resume or
+hardware init failed. Route those failures through clock cleanup.
+
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Link: https://patch.msgid.link/tencent_427FA55E3D59112524886E9C931CA0F92F06@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real uninitialized-data bug in MediaTek LynxI PCS link
-polling, and the buggy path exists in this 6.12 tree. It should be
-backported.
+I compared the pre-image to v6.18.53: the buggy suspend/resume path is
+there unchanged, so this is a standalone fix for this tree.
 
-## Phase 1: Commit message forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1:** Record: `[net: pcs: mtk-lynxi:]` `[check]` `[validate
-regmap_read() in mtk_pcs_lynxi_get_state() so failed MDIO reads are not
-decoded as link state]`
+**Step 1.1: PARSE THE SUBJECT LINE**
+- Record: `[spi: fsl-dspi:] [clean up] [restore IRQ / clocks after
+  failed suspend and resume]`
+- Subsystem is Freescale DSPI. The verb is “clean up”, but the body
+  describes ignored errors and missing rollback.
 
-**Step 1.2:** Record: tags in the candidate message:
-- `Signed-off-by: Daniel Golle <daniel@makrotopia.org>` (author; driver
-  co-maintainer)
-- `Reviewed-by: Andrew Lunn <andrew@lunn.ch>` (netdev/DSA reviewer)
-- `Link: https://patch.msgid.link/fce70657fc03bbaf60a04c0fbf2f418531135c
-  4f.1785811140.git.daniel@makrotopia.org`
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (netdev maintainer)
-- No `Reported-by`, `Tested-by`, `Cc: stable` in the candidate text
-  (absence is expected)
-- Original mailing-list submission **did** include `Fixes: 4765a9722e09
-  ("net: pcs: add driver for MediaTek SGMII PCS")`; that tag is not in
-  the candidate body
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- Record:
+  - `Signed-off-by: Jiawen Liu <1298662399@qq.com>` (author)
+  - `Link: https://patch.msgid.link/tencent_427FA55E3D59112524886E9C931C
+    A0F92F06@qq.com`
+  - `Signed-off-by: Mark Brown <broonie@kernel.org>` (SPI maintainer)
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+    by:`, or `Cc: stable` (absence of those last two is expected for
+    this review)
+  - Pipeline-added `Signed-off-by: Sasha Levin` / `[ Upstream commit
+    2543355f3da5... ]` ignored per instructions
 
-**Step 1.3:** Record: `[Bug: ignored regmap_read() errors leave
-`bm`/`adv` uninitialized and phylink decodes them as BMSR/LPA]`
-`[Symptom: false or garbage link/speed/duplex; failed read can be
-reported as link-up because phylink presets `state->link`]` `[Version:
-bug dates to driver introduction]` `[Root cause: MDIO-backed MT7531
-SGMII PCS regmaps can fail; output is not written on error]`
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+- Record: **Bug:** `dspi_suspend()` calls `disable_irq()` then
+  `spi_controller_suspend()` but ignores a non-zero return and still
+  disables the clock and selects the sleep pin state. **Symptom:** on a
+  failed controller suspend the IRQ stays off, clocks are gated, pins go
+  to sleep, and suspend is reported as success. **Resume bug:**
+  `clk_prepare_enable()` is not undone if `spi_controller_resume()` or
+  `dspi_init()` fails. **Root cause:** missing error checks and missing
+  rollback. No version range in the message.
 
-**Step 1.4:** Record: `[Not a disguised cleanup. This is an explicit
-missing-check / uninitialized-use fix. v2 of the patch added
-`state->link = false` after review, because a bare return left phylink's
-preset link-up.]`
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+- Record: Yes. “Clean up” is error-path recovery: re-enable IRQ and
+  return the error on suspend failure; `clk_disable_unprepare()` on
+  resume failure. That is a leak/imbalance fix, not style.
 
-## Phase 2: Diff analysis
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1:** Record: `[drivers/net/pcs/pcs-mtk-lynxi.c: +5 / -2 in
-`mtk_pcs_lynxi_get_state()`]` `[single-file surgical fix]`
+**Step 2.1: INVENTORY THE CHANGES**
+- Record: `drivers/spi/spi-fsl-dspi.c` only; **+18 / −3**. Functions:
+  `dspi_suspend()`, `dspi_resume()`. Single-file surgical PM error-path
+  fix.
 
-**Step 2.2:** Record: `[Before: two unchecked `regmap_read()`s, then
-`phylink_mii_c22_pcs_decode_state()` on `bm`/`adv`. After: if either
-read fails, set `state->link = false` and return; otherwise decode as
-before. Error path only.]`
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+- Record:
+  - **suspend before:** disable IRQ → ignore `spi_controller_suspend()`
+    → always `clk_disable_unprepare()` → sleep pinctrl → return 0.
+  - **suspend after:** disable IRQ → if `spi_controller_suspend()`
+    fails, `enable_irq()` and return `ret` (clocks/pinctrl untouched).
+  - **resume before:** enable clock → ignore `spi_controller_resume()` →
+    on `dspi_init()` failure return with clock still prepared.
+  - **resume after:** those failures go to `disable_clk`
+    (`clk_disable_unprepare()` + return `ret`). IRQ is still enabled
+    only on the success path.
 
-**Step 2.3:** Record: `[Category: initialization / missing return-value
-check]` `[Mechanism: failed `regmap_read()` does not write `*val`;
-`unsigned int bm, adv` stay uninitialized;
-`phylink_mii_c22_pcs_decode_state()` does `state->link = !!(bmsr &
-BMSR_LSTATUS)` on that garbage. Fix matches
-`phylink_mii_c22_pcs_get_state()`, which already treats read errors as
-link-down.]`
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+- Record: **Error-path / resource-leak / IRQ imbalance.**
+  `spi_controller_suspend()` can return `-EBUSY` from `spi_stop_queue()`
+  after a 5s wait (`drivers/spi/spi.c`). Continuing then gates the clock
+  under a live controller and leaves the IRQ disabled. Resume can leak a
+  prepared clock.
 
-**Step 2.4:** Record: `[Obviously correct, 5-line change, no
-API/locking/refcount changes.]` `[Regression risk: very low. Worst case
-is reporting link-down on a failed register read, which is the intended
-fail-safe.]`
+**Step 2.4: ASSESS THE FIX QUALITY**
+- Record: Minimal and obviously correct; matches other SPI drivers that
+  already check these returns. Regression risk is low: only error paths
+  change. Idle suspend still returns 0 after stop-queue succeeds. Pre-
+  existing IRQ-before-stop-queue ordering is not introduced here
+  (Sashiko noted it as pre-existing). Resume still does not undo
+  `spi_controller_resume()` on later `dspi_init()` failure;
+  `dspi_init()` only fails on invalid `trans_mode` after a successful
+  probe, so that path is essentially dead.
 
-## Phase 3: Git history
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1:** Record: `[Buggy reads introduced in 4765a9722e0976 ("net:
-pcs: add driver for MediaTek SGMII PCS", Daniel Golle, 2023-03-19)]`
-`[First appeared in v6.4-rc1; present for the life of this driver]`
+**Step 3.1: BLAME THE CHANGED LINES**
+- Record: On v6.18.53, suspend/resume blame is `c5412ec5f68773`
+  (“Reinitialize DSPI regs after resuming for S32G”, 2025-05-22), which
+  kept the ignore-error pattern. That pattern already existed before
+  S32G (`git show c5412ec5f68773^`). Original driver `349ad66c0ab0b`
+  (Vybrid VF610) already ignored `spi_master_suspend()` and always
+  disabled the clock. Bug is old, not post-6.18.
 
-**Step 3.2:** Record: `[Fixes target 4765a9722e0976 is an ancestor of
-HEAD. No later lynxi get_state error-handling in this tree.]`
+**Step 3.2: FOLLOW THE FIXES: TAG**
+- Record: No `Fixes:` tag. Not applicable beyond that.
 
-**Step 3.3:** Record: `[File history on this tree: 4765a9722e097 (add
-driver), 3b2de56a146f3 (neg_mode), 90308679c297f (pcs_disable),
-be884c15de370 (MODULE_DESCRIPTION).]` `[Standalone functionally; series
-patch 1/6, other patches touch `mt7530.c` only.]` `[Prerequisite already
-here: 93d46870c5440 ("net: dsa: mt7530: check bus->read() errors in the
-MDIO regmap backend") — after that, a failed MDIO read returns an error
-and leaves the output unwritten instead of truncated garbage.]`
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+- Record: Related: `3d87b613d6a3c` (“Fix external abort on interrupt in
+  resume or exit paths”) added `disable_irq()` in suspend because a
+  shared IRQ after clocks-off caused an external abort on Vybrid. That
+  makes restoring the IRQ on suspend failure required. `9bd77a9ce31dd`
+  only fixed a NULL drvdata in PM. This patch is standalone; later
+  autosel `b6d8099e44987` only switches PM macros.
 
-**Step 3.4:** Record: `[Daniel Golle is listed as maintainer of MEDIATEK
-ETHERNET PCS DRIVER. Related MDIO error-propagation work on mt7530 is by
-the same author.]`
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+- Record: Jiawen Liu is not the SPI maintainer. Same series on this
+  tree: `spi: atcspi200`, `spi: bcmbca-hsspi`, `spi: bcm-qspi`, `spi:
+  bcm63xx-hsspi`, `spi: bcm63xx`, plus `spi: nxp-fspi` probe RPM. Each
+  driver is independent. Mark Brown applied the series.
 
-**Step 3.5:** Record: `[No missing functions. This tree's
-`mtk_pcs_lynxi_get_state()` still has the 6.12 signature (no
-`neg_mode`); the check itself is independent. Can apply standalone with
-a small context adaptation.]`
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+- Record: No new helpers. Uses `spi_controller_suspend`/`resume`,
+  `enable_irq`/`disable_irq`, `clk_disable_unprepare` already in 6.18.
+  Standalone. Series 3/4 does not need 1/4 or 2/4 for this file.
 
-## Phase 4: Mailing list
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1:** Record: `[Lore thread retrieved via b4 mbox: msgid fce7065
-7fc03bbaf60a04c0fbf2f418531135c4f.1785811140.git.daniel@makrotopia.org]`
-`[v1 of this remaining-errors series was `[PATCH net 1/4]`; v2 is
-`[PATCH net v2 1/6]`. Applied version is v2.]` `[v2 change: set
-`state->link = false` because phylink presets link-up (Sashiko
-review).]` `[Andrew Lunn Reviewed-by on v1; author kept it on v2 for the
-small in-spirit change. No NAKs.]` `[Patchwork bot: applied by Jakub
-Kicinski as netdev commit 5cc65c01cdc5.]`
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+- Record: `b4 dig -c 2543355f3da5` → https://patch.msgid.link/tencent_42
+  7FA55E3D59112524886E9C931CA0F92F06@qq.com
+- Series: v1 only, `[PATCH 3/4]`. Mark Brown applied all four to
+  `broonie/spi.git for-7.3`. No NAK on this patch. Sashiko flagged two
+  **pre-existing** ordering issues (IRQ before stop-queue; resume queue
+  before `dspi_init()`), not regressions from this diff. No reviewer
+  `Cc: stable`. Direct lore fetch returned 403; thread recovered via `b4
+  dig -m`.
 
-**Step 4.2:** Record: `[To/Cc included Andrew Lunn, Vladimir Oltean,
-Russell King, netdev, linux-mediatek, DSA and MediaTek maintainers.
-Right audience.]`
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+- Record: `b4 dig -w`: To Mark Brown; Cc linux-spi, linux-kernel, linux-
+  arm-kernel, imx@, NXP (olteanv, han.xu, haibo.chen). No human
+  Reviewed-by on this patch. Maintainer applied it.
 
-**Step 4.3:** Record: `[No syzbot/bugzilla user report. Found during
-mt7530 MDIO error-handling review. Still a concrete, reachable bug:
-`pcs.poll = true` so this runs from phylink's 1 Hz poll.]`
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+- Record: No Reported-by / bugzilla / syzbot. Bug is from code
+  inspection of ignored returns.
 
-**Step 4.4:** Record: `[Series: "fix remaining swallowed MDIO access
-errors". Patch 1 is the only pcs-mtk-lynxi change and does not depend on
-patches 2–6.]` `[Earlier companion 93d46870c5440 / 96e0f5184af69 are
-already in this tree.]`
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+- Record: 1/4 atcspi200, 2/4 bcmbca-hsspi, 3/4 this, 4/4 nxp-fspi
+  (different bug: probe RPM). This hunk does not depend on the others.
+  Frank Li replied only to 4/4.
 
-**Step 4.5:** Record: `[UNVERIFIED: lore.kernel.org/stable search
-blocked by Anubis. No stable-list discussion found via b4.]`
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+- Record: lore.kernel.org/stable search via WebFetch returned 403.
+  UNVERIFIED whether stable@ discussed this SHA. No in-tree evidence it
+  was rejected.
 
-## Phase 5: Semantic analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1:** Record: `[Modified: `mtk_pcs_lynxi_get_state`. Wired as
-`.pcs_get_state`.]`
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+- Record: `dspi_suspend()`, `dspi_resume()`. Callees of interest:
+  `spi_controller_suspend()`, `spi_controller_resume()`, `dspi_init()`.
 
-**Step 5.2:** Record: `[Callers: `phylink_mac_pcs_get_state()` → in-band
-resolve (`MLO_AN_INBAND`), ethtool `phylink_ethtool_ksettings_get()`,
-and MII emulation. `mpcs->pcs.poll = true` so `phylink_fixed_poll` runs
-`phylink_run_resolve()` every HZ.]`
+**Step 5.2: TRACE CALLERS**
+- Record: Only `SIMPLE_DEV_PM_OPS(dspi_pm, dspi_suspend, dspi_resume)`
+  on v6.18.53 → system-sleep PM for this platform device. Not a syscall
+  hot path; triggered by suspend/resume on i.MX / Vybrid / LS1021A / S32
+  / ColdFire DSPI.
 
-**Step 5.3:** Record: `[Callees: `regmap_read`,
-`phylink_mii_c22_pcs_decode_state`.]`
+**Step 5.3: TRACE CALLEES**
+- Record: `spi_controller_suspend()` → `spi_stop_queue()` (up to 500 ×
+  ~10ms, then `-EBUSY`) then `__spi_mark_suspended()`.
+  `dspi_transfer_one_message()` waits on `dspi->xfer_done` when
+  `dspi->irq` is set; completion is from `dspi_interrupt()`. DMA mode
+  waits on DMA completions, not that IRQ.
 
-**Step 5.4:** Record: `[Reachable from userspace: ethtool link settings,
-and continuously while the netdev is up in in-band
-SGMII/1000Base-X/2500Base-X.]` `[Hardware: MT7531 DSA ports 5/6
-(`mt7531_create_sgmii()` uses an MDIO-backed regmap) and MediaTek SoC
-SGMII (`mtk_eth_soc` syscon/MMIO, rarely fails). The MDIO path is the
-one that matters.]`
+**Step 5.4: FOLLOW THE CALL CHAIN**
+- Record: Userspace/system suspend → driver PM → `dspi_suspend()`.
+  Reachable whenever this hardware is present and `CONFIG_PM_SLEEP`. In-
+  flight IRQ-mode transfer at suspend can make `spi_stop_queue()` fail;
+  that is the interesting path.
 
-**Step 5.5:** Record: `[Same pattern already handled in
-`phylink_mii_c22_pcs_get_state()` and `phylink_mii_c45_pcs_get_state()`
-in this tree. Lynx PCS uses those helpers; lynxi did not.]`
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+- Record: Many SPI drivers already check `spi_controller_suspend()`
+  (omap2-mcspi, atmel, qup, rockchip, stm32, …). Same author fixed the
+  ignored-return pattern in several Broadcom SPI drivers. Systematic,
+  not one-off.
 
-## Phase 6: Local tree (6.12.111, `pending-6.12`)
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 6.1:** Record: `[Yes. `drivers/net/pcs/pcs-mtk-lynxi.c:98-99`
-still has unchecked `regmap_read()` into uninitialized `bm`/`adv`.
-Introduced v6.4, present here.]` `[Verified: `git describe HEAD` →
-p-6.12-4-gbf6fcdf761abd; `make kernelversion` → 6.12.111.]`
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+- Record: Local tree is **6.18.53** (`git describe HEAD` →
+  `v6.18.53-5049-g0f0bdc2b0dffb`, `VERSION=6 PATCHLEVEL=18
+  SUBLEVEL=53`). At **v6.18.53**, `dspi_suspend()` still ignores the
+  suspend return and `dspi_resume()` still returns from `dspi_init()`
+  failure without `clk_disable_unprepare()`. Candidate `1248ec26ed99f`
+  is **not** an ancestor of `v6.18.53`. Bug present.
 
-**Step 6.2:** Record: `[Minor context rework, not a semantic fork. This
-tree has no `mtk_pcs_lynxi_inband_caps`, no `neg_mode` argument, and
-`phylink_mii_c22_pcs_decode_state(state, bmsr, lpa)` not the later 4-arg
-form. The 5-line check ports 1:1 into the existing function body.]`
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+- Record: Pre-image on v6.18.53 matches the patch (including `#ifdef
+  CONFIG_PM_SLEEP` / `SIMPLE_DEV_PM_OPS`). Expected apply: **clean**.
+  `git apply --check` on current autosel HEAD fails only because the
+  candidate is already sitting on this working branch.
 
-**Step 6.3:** Record: `[No lynxi get_state error-check already present.
-Prerequisite MDIO backend error propagation is already here, which is
-why this follow-up is needed: failed reads no longer write `*val`.]`
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+- Record: `3d87b613d6a3c` (IRQ disable in suspend) **is** in v6.18.53.
+  No other fix for ignored `spi_controller_suspend()` on this file.
 
-## Phase 7: Subsystem context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1:** Record: `[drivers/net/pcs + consumers in net/dsa/mt7530
-and net/ethernet/mediatek]` `[IMPORTANT: common OpenWrt/router SGMII CPU
-ports, not core mm/VFS, but production networking]`
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+- Record: `drivers/spi/spi-fsl-dspi.c`. **IMPORTANT** (common
+  NXP/Freescale SPI; not core mm/vfs). `SPI_FSL_DSPI` depends on
+  `ARCH_MXC || ARCH_NXP || M5441x || COMPILE_TEST`. Kconfig: S32, VF610,
+  LS1021A, ColdFire.
 
-**Step 7.2:** Record: `[Driver is mature since v6.4; this file has only
-a handful of commits on this tree. Bug is long-standing, newly exposed
-as true uninitialized use after the MDIO backend fix.]`
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+- Record: File still gets platform and DMA work (S32G series in 2025).
+  PM error handling itself is old and stale.
 
-## Phase 8: Impact and risk
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1:** Record: `[Driver-specific: MT7531 SGMII (MDIO) and
-MediaTek SoC SGMII (MMIO).]`
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+- Record: Driver-specific: boards with Freescale DSPI that suspend.
+  Embedded/i.MX/Layerscape/S32 population, not all Linux systems.
 
-**Step 8.2:** Record: `[Trigger: failed `regmap_read` on the PCS map.
-Common on flaky/timeout MDIO; not every boot. Unprivileged userspace can
-observe the result via ethtool/carrier; the poll path runs while the
-interface is up.]`
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+- Record: System suspend while `spi_stop_queue()` cannot drain
+  (busy/queued messages for ~5s). IRQ-mode in-flight transfer is a
+  realistic trigger because `disable_irq()` runs first and
+  `dspi_transfer_one_message()` uses
+  `wait_for_completion(&dspi->xfer_done)`. Unprivileged users do not
+  call this directly; a suspend with SPI activity can. Resume clock
+  leak: `spi_controller_resume()` `-EBUSY` or `dspi_init()` `-EINVAL`
+  (latter essentially unreachable after probe).
 
-**Step 8.3:** Record: `[Failure mode: uninitialized stack decoded as
-link/speed/duplex; false carrier possible because phylink presets
-`state->link = 1`.]` `[Severity: HIGH for wrong datapath/carrier on MDIO
-error; not a panic. Uninitialized use is the same class as KMSAN-class
-bugs.]`
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+- Record: Failed suspend that still gates clocks: possible MMIO abort /
+  hang (this driver already hit “external abort on non-linefetch” when
+  the IRQ ran after clocks off — `3d87b613d6a3c`). IRQ left disabled
+  while the device is still active: SPI completions never fire → hung
+  transfers. Resume clock leak: extra power / unbalanced clk prepare.
+  **Severity: HIGH** on the suspend path (hang / abort), **MEDIUM** on
+  the resume leak.
 
-**Step 8.4:** Record: `[Benefit: high for MT7531 in-band SGMII — stops
-garbage link state after a bus error, especially now that the backend
-returns real errors.]` `[Risk: very low — 5 lines, fail-closed to link-
-down.]` `[Ratio: strongly favors backport.]`
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+- Record: **Benefit:** high for DSPI suspend users — fail suspend
+  instead of disabling clocks/IRQ incorrectly. **Risk:** low — 21 lines,
+  error paths only, no API/struct change. If stop-queue fails, aborting
+  suspend is the intended PM policy.
 
-## Phase 9: Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-**For backporting:**
-- Real bug: uninitialized `bm`/`adv` decoded into phylink link state
-- User-visible: false/garbage carrier, speed, duplex; ethtool reports it
-- Tiny, obviously correct, matches phylink's own C22 helper
-- Reviewed by Andrew Lunn, applied by Jakub Kicinski, written by the PCS
-  maintainer
-- Buggy code has been in this driver since v6.4 and is in 6.12.111
-- Companion to MDIO error-propagation already in this tree
-  (93d46870c5440); without this, a failed MT7531 PCS read now leaves
-  stack garbage instead of even truncated-but-defined data
-- No new API/feature
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Against:**
-- Not a crash/UAF/deadlock
-- Raw upstream hunk will not apply cleanly (later `neg_mode` /
-  `inband_caps` context)
-- No external user/syzbot report
-- Series 1/6, but this patch does not need 2–6
+FOR:
+- Real ignored-error bug: teardown after failed
+  `spi_controller_suspend()`.
+- IRQ not restored → hung SPI (completion in `dspi_interrupt()`).
+- Clock gated while the controller may still be busy → abort/hang; same
+  class as the already-stable `3d87b613d6a3c` abort fix.
+- Resume path clock leak on error.
+- Small, local, obviously correct; SPI maintainer applied it.
+- Buggy code is in v6.18.53; no extra prerequisites.
+- Same class of SPI PM error-path fixes already common in-tree.
 
-**Unresolved:** stable-list discussion (lore/stable fetch blocked)
+AGAINST:
+- No user/syzbot report.
+- Worded as “clean up”; failure is an error path, not every suspend.
+- `dspi_init()` resume failure is almost unreachable.
+- Sashiko pre-existing ordering notes (not introduced here).
+- Incomplete undo of `spi_controller_resume()` if `dspi_init()` failed
+  (dead in practice).
 
-**Stable rules:**
-1. Obviously correct and tested? **PASS** — same pattern as
-   `phylink_mii_c22_pcs_get_state()`; Reviewed-by Andrew Lunn; merged
-2. Fixes a real bug that affects users? **PASS** — wrong link state /
-   uninitialized data on MDIO failure for MT7531 SGMII
-3. Important issue? **PASS** — uninitialized memory used as live link
-   state on a 1 Hz poll; can keep carrier up after a failed read
-4. Small and contained? **PASS** — 5 lines, one function
-5. No new features or APIs? **PASS**
-6. Can apply to this tree? **PASS** — needs a trivial context backport,
-   not missing code
+UNRESOLVED:
+- lore.kernel.org HTTP 403; stable@ discussion not independently fetched
+  (thread was recovered with b4).
 
-**Exception category:** none (normal small correctness fix)
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — mechanical error-return
+   handling; applied by Mark Brown.
+2. Fixes a real bug that affects users? **PASS** — IRQ/clock teardown on
+   failed suspend; clk leak on resume.
+3. Important issue? **PASS** — hang / possible bus abort, not a style
+   nit.
+4. Small and contained? **PASS** — +18/−3, one file.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — v6.18.53 pre-image matches.
 
-The problem for 6.12 users is that `mtk_pcs_lynxi_get_state()` still
-consumes uninitialized stack as BMSR/LPA. Phylink presets `state->link =
-1` (`phylink.c:1328`) and this PCS polls every second. After the
-already-landed MT7530 MDIO backend fix, a failed read returns an error
-and does not fill `*val`, so this is the necessary follow-up. Benefit is
-preventing false/garbage link state; risk is a fail-closed link-down on
-I/O error.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+- Record: Not a device-ID/quirk/DT/build/doc exception. Qualifies as a
+  normal bugfix.
+
+**Step 9.4: DECISION**
+
+This should be backported to **this 6.18.53 tree**. The important part
+is suspend: do not disable clocks and leave the IRQ off when
+`spi_controller_suspend()` fails. That is a real stability bug on a
+production NXP SPI controller, small enough for stable, and it applies
+cleanly here.
+
+### What the commit solves for stable users
+On Freescale DSPI, suspend currently disables the IRQ, then ignores
+`spi_controller_suspend()`. If the message queue does not stop
+(`-EBUSY`), the driver still turns off the clock and puts pins to sleep
+while reporting success. The IRQ stays disabled. That can hang in-flight
+transfers (`wait_for_completion` never completes) or MMIO-abort if the
+hardware is still live. Resume can also leave `clk_prepare_enable()`
+unbalanced. The patch stops teardown on suspend failure and unwinds the
+clock on resume failure.
+
+### Risk vs benefit
+Benefit is preventing a broken/hung SPI device and possible abort after
+a failed controller suspend. Risk is confined to those error returns;
+successful idle suspend is unchanged.
+
+### Concerns
+No extra commits are required. Do not confuse autosel already having
+this SHA with “already selected for 6.18.y”; `v6.18.53` still has the
+bug.
 
 Verification:
-- [Phase 1] Parsed candidate tags; original lore patch had `Fixes:
-  4765a9722e09`
-- [Phase 2] Diff is 5 lines in `mtk_pcs_lynxi_get_state()` wrapping two
-  `regmap_read()`s
-- [Phase 2] Confirmed `phylink_mac_pcs_get_state()` sets `state->link =
-  1` before the callback
-- [Phase 2] Confirmed `phylink_mii_c22_pcs_decode_state()` uses `bmsr`
-  for `state->link` and that `phylink_mii_c22_pcs_get_state()` already
-  sets `state->link = false` on read failure
-- [Phase 3] `git blame` on lines 98–99: 4765a9722e0976; `git describe
-  --contains` → v6.4-rc1
-- [Phase 3] `git merge-base --is-ancestor 4765a9722e0976 HEAD` succeeded
-- [Phase 3] `git merge-base --is-ancestor 93d46870c5440 HEAD` succeeded
-  (MDIO backend now returns errors without writing `*val`)
-- [Phase 4] `b4 mbox` on the msgid: 8-message thread; series v2 1/6;
-  Andrew Lunn Reviewed-by; no NAK
-- [Phase 4] Cover letter: this check was added because a failed read can
-  now leave output unwritten
-- [Phase 4] UNVERIFIED: lore.kernel.org/stable search (Anubis 403)
-- [Phase 5] Callers: phylink in-band resolve, ethtool get, 1 Hz
-  `link_poll`; consumers `mt7530-mdio.c` and `mtk_eth_soc.c`
-- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.12.111 on
-  `pending-6.12`; unchecked reads still at `pcs-mtk-lynxi.c:98-99`
-- [Phase 6] Function signature here lacks `neg_mode`; backport is a
-  local 5-line edit
-- [Phase 8] Failure mode: uninitialized link state / possible false
-  carrier, severity HIGH, not a panic
-- UNVERIFIED: whether this SHA is already in some other stable series
-  (decision is for this tree only)
+- [Phase 1] Subject/body/tags from `git log -1` / `git show
+  1248ec26ed99f`: no Fixes/Reported-by; Link msgid; SOB Jiawen Liu +
+  Mark Brown
+- [Phase 2] Diff: +18/−3 in `dspi_suspend`/`dspi_resume` only
+- [Phase 3] `git blame` on v6.18.53: `c5412ec5f68773`; ignore-error PM
+  since `349ad66c0ab0b`; `3d87b613d6a3c` in this tree
+- [Phase 3] `git merge-base --is-ancestor 1248ec26ed99f v6.18.53` → no;
+  ancestor of HEAD (autosel) → yes
+- [Phase 3] Author series: several independent SPI PM error-path patches
+- [Phase 4] `b4 dig -c 2543355f3da5`: patch 3/4 v1, lore msgid, applied
+  to broonie for-7.3; Sashiko pre-existing notes only; no NAK
+- [Phase 4] WebFetch lore/stable: 403 — UNVERIFIED stable@ thread
+- [Phase 5] `spi_controller_suspend` → `spi_stop_queue` `-EBUSY`; DSPI
+  IRQ path `wait_for_completion` / `dspi_interrupt`; PM ops only callers
+- [Phase 6] `git describe HEAD` / Makefile: 6.18.53; v6.18.53 file
+  matches patch pre-image
+- [Phase 7] `SPI_FSL_DSPI` on ARCH_MXC/NXP
+- [Phase 8] Failure: hung SPI / possible external abort; severity HIGH
+  on suspend error path
 
 **YES**
 
- drivers/net/pcs/pcs-mtk-lynxi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/pcs/pcs-mtk-lynxi.c b/drivers/net/pcs/pcs-mtk-lynxi.c
-index 87df3a9dfc9bc..64fb17c189afc 100644
---- a/drivers/net/pcs/pcs-mtk-lynxi.c
-+++ b/drivers/net/pcs/pcs-mtk-lynxi.c
-@@ -110,8 +110,11 @@ static void mtk_pcs_lynxi_get_state(struct phylink_pcs *pcs,
- 	unsigned int bm, adv;
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index 83ea296597e94..1283a193b6fcc 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -1464,10 +1464,18 @@ static int dspi_init(struct fsl_dspi *dspi)
+ static int dspi_suspend(struct device *dev)
+ {
+ 	struct fsl_dspi *dspi = dev_get_drvdata(dev);
++	int ret;
  
- 	/* Read the BMSR and LPA */
--	regmap_read(mpcs->regmap, SGMSYS_PCS_CONTROL_1, &bm);
--	regmap_read(mpcs->regmap, SGMSYS_PCS_ADVERTISE, &adv);
-+	if (regmap_read(mpcs->regmap, SGMSYS_PCS_CONTROL_1, &bm) ||
-+	    regmap_read(mpcs->regmap, SGMSYS_PCS_ADVERTISE, &adv)) {
-+		state->link = false;
-+		return;
+ 	if (dspi->irq)
+ 		disable_irq(dspi->irq);
+-	spi_controller_suspend(dspi->ctlr);
++
++	ret = spi_controller_suspend(dspi->ctlr);
++	if (ret) {
++		if (dspi->irq)
++			enable_irq(dspi->irq);
++		return ret;
 +	}
++
+ 	clk_disable_unprepare(dspi->clk);
  
- 	phylink_mii_c22_pcs_decode_state(state, neg_mode,
- 					 FIELD_GET(SGMII_BMSR, bm),
+ 	pinctrl_pm_select_sleep_state(dev);
+@@ -1485,12 +1493,15 @@ static int dspi_resume(struct device *dev)
+ 	ret = clk_prepare_enable(dspi->clk);
+ 	if (ret)
+ 		return ret;
+-	spi_controller_resume(dspi->ctlr);
++
++	ret = spi_controller_resume(dspi->ctlr);
++	if (ret)
++		goto disable_clk;
+ 
+ 	ret = dspi_init(dspi);
+ 	if (ret) {
+ 		dev_err(dev, "failed to initialize dspi during resume\n");
+-		return ret;
++		goto disable_clk;
+ 	}
+ 
+ 	dspi_set_mtf(dspi);
+@@ -1499,6 +1510,10 @@ static int dspi_resume(struct device *dev)
+ 		enable_irq(dspi->irq);
+ 
+ 	return 0;
++
++disable_clk:
++	clk_disable_unprepare(dspi->clk);
++	return ret;
+ }
+ #endif /* CONFIG_PM_SLEEP */
+ 
 -- 
 2.53.0
 
