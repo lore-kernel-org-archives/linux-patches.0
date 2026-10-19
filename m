@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DC9592B92;
-	Mon, 19 Oct 2026 14:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED035B22E5;
+	Mon, 19 Oct 2026 14:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418428; cv=none; b=txmQCzauM66RsTb3IasDm/L+kHyd7LFl3Es5gsLNzBD9/lgdafnpx1Tc0nszkT7QFclN78iQVsc9te88wiRreraPROALvXY3XpjID19LqiruI2dWRo5DlOLCwfPmF723MSzQMFAUIWsPauD+Z0FwKcPNWpMS2AJJoL/LoyZPoV0=
+	t=1792418429; cv=none; b=UlMtaC0DYQB9OcCVgeujerhhODEpJB3kSnRMXCjXGV/mPz2cxydKFmllrgBj2Mz7UxWb57SScJPLlhmfBylT3tJd9CmVdCT3lVsDIEZbh+eoU/thg52MoGya45gC6VszorC/Wg848wVfVWkECYA5afCEz70Wd/qG/X7hbpEFnTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418428; c=relaxed/simple;
-	bh=4Rp/XM0BDoxxGDmgkvVnAlFwp5YJnh3unci5+esLcs0=;
+	s=arc-20240116; t=1792418429; c=relaxed/simple;
+	bh=M3PzNG+O285to9tkI+ssnnxPTk7gn8r8kfAlSyeXO+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KpeSgqdwgr27vvBEiw9rvnTihlJfAUVpJ7HhRYcsbHNb1NoI79Rs4BlH9ehFTAtqtZXq2oIAy71+k/FF9CmpP9Nu0jLXurlCiIzh+zOUrDeOriswYINv2DBU3nL7QBLtax5f/dwdI99bFQYJyOXsBaThBoWj+DRQi1YECpqiRdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nfd/4S/j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hYlnoCK93FYqRfQD78zFOsP65Tf2zi33LR0F4CyC7PMdi0Uzc+eBtbWVRlM+H1Lj18X2J/oTxUU1SbgQdJrM+GVXxujC01OaVzaEuJVlpPq49iS6nc94IsB1hT0louGKF8c15go9wDBFmgQOomwZ/uvSZ3UMf1giSkxE2m/UJeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LfkFchot; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nfd/4S/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6981F000C8;
-	Mon, 19 Oct 2026 14:00:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LfkFchot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196D61F000C4;
+	Mon, 19 Oct 2026 14:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418425;
-	bh=of1C+/M8BwjuAYp9FT+EIm9IrF5m8DlAapB+2n200kQ=;
+	s=k20260515; t=1792418427;
+	bh=JacI1PS0XwMOWP778EnHVdGmIAyo9cuU52auPMAJsoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nfd/4S/joHIXRf5MW3kWr62I1uJ1q/db+t0crcBZn+WZKREY+Zn3+b0cx0Xhxt90m
-	 UqOzqYWOb00gg1smcMvFMSn11YdZzNNPed7IhStyv/xQVjdHn31wMUBEVai9Zgg9gt
-	 UykFrU0KKqbwv1Dogi8Q5+HV6yLDed1fWY0dsZ2TuMmjfSSuQ1AvNa6Rp4ZsuCbuTY
-	 2lu0daYzgSekX/xYJBIUI8QhqrrX1EuFC2mW7Jtl1XDJfBrWsVu5ZRrxEIAiSSohfj
-	 9Dv5r9+6xLGbxBs3Z9Voo9VW1dhqqD05PsXBvrVR74U4f/Cn8IPNM3Y3O+30TWkgQL
-	 EQgmgoGoj8ySQ==
+	b=LfkFchotC3QxoscvW1UDJoVgkWT4XWJUrj+aW9Q5Un4OJX3bwWnLMS+INDAgac/SP
+	 Q060nztt6GHOKvvsW+4QERmfnPXkNVaQ2FSUuRhRcP4nikLvGSNcpQ0L9Mp/nUAmxd
+	 A3VPaX33sThOT0IgqMcZYZVHgw8jN9wOZo8izP0vVlHJ5aTx/qBhkynEDGjk3lxnPJ
+	 6ezA3LByQk0cnjLfhdeFh9AumjVmVRdli/AmU+oAKyK52tTnzzEvS/EOvf/bcOD4Rs
+	 mSnVaUKIJ8i/SoobJhJERlSbIBYuQkO5bem1H6K/wNi9tNF/494dhYO5tSjyRwEcxE
+	 1VP6j+ceuiE6Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yap Weei Choong <ywc8891@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Shyam-sundar.S-k@amd.com,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	khilman@baylibre.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] platform/x86/amd/pmc: Add T14 Gen2 AMD (20XL) to s2idle quirk list
-Date: Mon, 19 Oct 2026 09:48:51 -0400
-Message-ID: <20261019135441.1420968-240-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] soc: amlogic: meson-clk-measure: remove debugfs tree
+Date: Mon, 19 Oct 2026 09:48:52 -0400
+Message-ID: <20261019135441.1420968-241-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -49,479 +48,392 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yap Weei Choong <ywc8891@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e25fb2258bddbcf70df69d1358be3e1274bdc5f2 ]
+[ Upstream commit 67481152be2ec5de3529664c82054b43d6d4b9f5 ]
 
-The ThinkPad T14 Gen 2 AMD was sold under two machine types, 20XK and
-20XL, but only 20XK has been in the s2idle quirk list since the quirk
-was introduced in commit 455cd867b85b ("platform/x86: thinkpad_acpi:
-Add a s2idle resume quirk for a number of laptops").
+meson_msr_probe() creates a debugfs tree with entries that reference
+devm-managed measurement table entries and the driver's private regmap
+state. The driver has no remove callback, so unbinding the device can
+leave those debugfs entries behind after the private data is released.
 
-On 20XL machines the firmware SMI handler therefore still runs on the
-NVMe D3->D0 transition when exiting suspend-to-idle. With IOMMU
-translation enabled (the default), this intermittently stalls resume
-for ~10.25 seconds: seven devices across three root ports (nvme, both
-xhci_hcd functions, xhci-pci-renesas, snd_hda_intel x2, snd_rn_pci_acp3x)
-block in pci_pm_resume_noirq and are released simultaneously, consistent
-with all cores being held in SMM.
+Store the debugfs root and remove the subtree from a new remove callback.
 
-Add the missing 20XL machine type, mirroring the existing 20XK entry.
-This is the same class of omission fixed by commit 9a469c6dfab3
-("platform/x86: thinkpad_acpi: Add missing T14s Gen1 type to s2idle
-quirk list").
-
-Verified on a ThinkPad T14 Gen 2a (type 20XLS41C00, BIOS R1MET62W 1.32,
-kernel 6.12.95): with this entry the quirk message appears at probe and
-a 14-hour suspend resumes in ~1s with no noirq stalls, where previously
-even short suspends could hit the ~10s delay. A further two-day soak
-(short naps and two ~14-hour suspends) showed every resume clean.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221755
-Signed-off-by: Yap Weei Choong <ywc8891@gmail.com>
-Tested-by: Yap Weei Choong <ywc8891@gmail.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260717060744.1252065-2-ywc8891@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260615091531.21964-1-pengpeng@iscas.ac.cn
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local checkout is **Linux 7.3.0-rc4**
-(`v7.3-rc4-27-gf0100363d8c37`). The candidate is `e25fb2258bddb`
-(`platform/x86/amd/pmc: Add T14 Gen2 AMD (20XL) to s2idle quirk list`).
-It is an 8-line DMI hardware-quirk addition: the sibling machine type
-20XK has been quirked since 2022; 20XL was omitted, and that omission
-causes ~10s s2idle resume stalls on T14 Gen 2 AMD.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1 — Subject**
+- Record: `[soc: amlogic: meson-clk-measure]` `[remove]` `[tear down
+  leftover debugfs on driver unbind]`
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[platform/x86/amd/pmc] [Add] [T14 Gen2 AMD machine type 20XL to
-the existing s2idle DMI quirk list]`
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Link: https://bugzilla.kernel.org/show_bug.cgi?id=221755` — user-
-  filed kernel bug
+**Step 1.2 — Tags**
+- `Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>` (Amlogic SoC
+  maintainer; also committed the patch)
 - `Link:
-  https://patch.msgid.link/20260717060744.1252065-2-ywc8891@gmail.com` —
-  lore submission
-- `Signed-off-by: Yap Weei Choong <ywc8891@gmail.com>` (author)
-- `Tested-by: Yap Weei Choong <ywc8891@gmail.com>` (author verified on
-  hardware)
-- `Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>` (AMD PMC
-  author of the original quirk)
-- `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
-  (platform-drivers-x86 maintainer)
-- `Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
-  (applied)
-- No `Fixes:` tag (expected)
-- No `Cc: stable` (expected)
-- No `Reported-by:` (bugzilla Link instead)
-- Ignore any Sasha Levin SOB (none on the real commit)
+  https://patch.msgid.link/20260615091531.21964-1-pengpeng@iscas.ac.cn`
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>`
+  (maintainer)
+- No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Cc: stable`
+  (absence is expected)
+- No syzbot / bugzilla / CVE tags
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** ThinkPad T14 Gen 2 AMD shipped as machine types 20XK and
-  20XL. Only 20XK was listed when the quirk was added in `455cd867b85b`.
-- **Symptom:** On 20XL, the firmware SMI still runs on NVMe D3→D0 at
-  s2idle exit. With IOMMU on (default), resume stalls ~10.25s; seven
-  devices on three root ports (`nvme`, both `xhci_hcd`, `xhci-pci-
-  renesas`, `snd_hda_intel` x2, `snd_rn_pci_acp3x`) block in
-  `pci_pm_resume_noirq` and wake together — consistent with all cores
-  stuck in SMM.
-- **Fix:** Add DMI entry 20XL mirroring 20XK. Same class of omission as
-  `9a469c6dfab3` (missing T14s Gen1 type).
-- **Versions:** Reproduced on kernel 6.12.95, BIOS R1MET62W 1.32, type
-  20XLS41C00. After the quirk: 14-hour suspend resumes in ~1s; two-day
-  soak was clean.
-- **Root cause:** Incomplete DMI coverage of a known Lenovo firmware SMI
-  bug, not a new kernel logic bug.
+**Step 1.3 — Body**
+- Record: `[Bug: probe creates debugfs entries that point at devm-
+  managed `msr_table` and private regmap state, but the driver had no
+  remove callback.]`
+- `[Symptom: after unbind, leftover debugfs files can be used after that
+  memory is released.]`
+- `[Version info: none in the message. Driver has existed since v5.0.]`
+- `[Root cause: missing lifetime teardown for debugfs vs. devm-managed
+  private data.]`
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. Explicit hardware quirk for a
-documented firmware bug. The verb is "Add" because that is how DMI quirk
-tables are extended.
+**Step 1.4 — Hidden bug fix?**
+- Record: `[Not hidden. This is an explicit lifetime/UAF fix, even
+  though the verb is "remove".]`
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `drivers/platform/x86/amd/pmc/pmc-quirks.c` — **+8 / −0**
-- Function: none; static `fwbug_list[]` table only
-- Scope: single-file surgical DMI addition
+**Step 2.1 — Inventory**
+- Record: `[drivers/soc/amlogic/meson-clk-measure.c: +14 / −0]`
+- Functions: `struct meson_msr` (new `debugfs_root`),
+  `meson_msr_probe()`, new `meson_msr_remove()`, `meson_msr_driver`
+  table
+- Scope: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** DMI match for LENOVO/`20XK` applies
-  `quirk_s2idle_spurious_8042`. LENOVO/`20XL` does not match, so
-  `amd_pmc_quirks_init()` leaves `dev->quirks` unset for 20XL.
-- **After:** 20XL matches the same quirk. Probe logs the s2idle quirk;
-  `amd_pmc_process_restore_quirks()` runs
-  `amd_pmc_skip_nvme_smi_handler()` on s2idle restore;
-  `disable_8042_wakeup` is also set (same as 20XK).
-- Path: probe (`amd_pmc_quirks_init`) and s2idle restore
-  (`amd_pmc_s2idle_restore` → `amd_pmc_process_restore_quirks`). DMI-
-  gated; other machines unchanged.
+**Step 2.2 — Code flow**
+- Before: `meson_msr_probe()` builds `/sys/kernel/debug/meson-clk-msr/`
+  (`measure_summary` plus per-clock files). File private data is
+  `priv->data.msr_table` and `&priv->data.msr_table[i]`, with `.priv =
+  priv`. `priv`, `msr_table`, `reg`, and `regmap` are all `devm_*`
+  allocations. There was no `platform_set_drvdata()` and no `.remove`.
+- After: root dentry is stored, `platform_set_drvdata()` is set, and
+  `meson_msr_remove()` calls `debugfs_remove_recursive()` so the tree is
+  gone before devres frees private data.
+- Path: driver remove / module unload / sysfs unbind, not the normal
+  measure path.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** Hardware workaround (DMI quirk table entry)
-- **Mechanism:** Skip the Lenovo BIOS SMI on NVMe D3→D0 by clearing bit
-  0 at `FCH_PM_BASE + FCH_PM_SCRATCH` (`0xFED80380` / SI3R) before the
-  D0 transition. 20XL never got that skip.
+**Step 2.3 — Bug mechanism**
+- Record: `[Use-after-free / leftover debugfs after unbind]`
+- Mechanism: unbind runs `devres` teardown and frees `priv` /
+  `msr_table` / `regmap`. Debugfs files remain. `clk_msr_summary_show()`
+  does `msr_table->priv->data.msr_count`; `meson_measure_id()` then uses
+  `priv->regmap` and `priv->data.reg`. That is a UAF if those files are
+  read after unbind.
+- Category (c)/(d): lifetime/refcount-style teardown; memory safety.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: identical copy of the adjacent 20XK entry with
-  product name `20XL`.
-- Minimal: 8 lines, no API/locking/refactor.
-- Regression risk: very low. Only DMI-matched 20XL machines. False-
-  positive would require another Lenovo product whose DMI product name
-  contains `20XL`; Lenovo machine types are 4-character prefixes and
-  existing entries (`20XK`, `20XF`, `20XH`, …) use the same pattern.
-- Red flags: none.
+**Step 2.4 — Fix quality**
+- Record: `[Obviously correct, minimal, standard pattern.]`
+- `debugfs_remove()` itself already ignores `IS_ERR_OR_NULL`, so the
+  extra check is redundant but harmless.
+- `platform_set_drvdata()` is required for `platform_get_drvdata()` in
+  remove.
+- `.remove` is `void (*)(struct platform_device *)` in this tree,
+  matching the new callback.
+- Regression risk: low. `debugfs_remove()` uses
+  `simple_recursive_removal()`, so in-flight file users are drained
+  before return. No public API change.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- 20XK block: `e8ef8dd28c4c4` (Mario Limonciello, 2023-07-10) — moved
-  the quirk from `thinkpad_acpi` into amd-pmc.
-- 20XK `driver_data`: later `5b9e07551faa7` (2025-07-24) switched it to
-  `&quirk_s2idle_spurious_8042`.
-- 20XL block: `e25fb2258bddb` (Yap Weei Choong, 2026-07-17) — this
-  candidate.
-- Original 20XK-only list: `455cd867b85b` (2022-04-28, `thinkpad_acpi`).
-  `git show 455cd867b85b` contains `20XK` and **not** `20XL`.
-- Bug present since v5.18-era quirk introduction; still present after
-  the 2023 move into amd-pmc.
+**Step 3.1 — Blame**
+- Record: `[Buggy debugfs creation is from 2b45ebef39a2c ("soc: amlogic:
+  Add Meson Clock Measure driver"), 2018-11-28, first in v5.0-rc1.]`
+- The missing-remove bug is as old as the driver. Confirmed on the
+  parent of the fix: no `platform_set_drvdata`, no `debugfs_root`, no
+  remove callback.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Referenced history:
-- `455cd867b85b` — **is an ancestor of HEAD** (`git merge-base --is-
-  ancestor` exit 0). Introduced the quirk; listed T14 Gen2 as 20XK only.
-- `9a469c6dfab3` — **is an ancestor of HEAD**. Precedent: add the
-  missing second Lenovo machine type (T14s Gen1 20UJ beside 20UH). Same
-  8-line DMI pattern.
+**Step 3.2 — Fixes: tag**
+- Record: `[No Fixes: tag. Introducer is 2b45ebef39a2c, present in this
+  tree.]`
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `pmc-quirks.c` work is more DMI quirk rows (Legion Go 2,
-Yoga 6, MECHREVO, TUXEDO, L14 Gen3, suspend delay). No refactor that
-this depends on. `git log e25fb2258bddb..HEAD -- pmc-quirks.c` shows no
-later edits of the 20XL entry. Standalone, not patch X/Y.
+**Step 3.3 — File history**
+- Record: `[Recent commits add SoC tables (A1/T7, S4, C3) and register-
+  offset refactoring. None change debugfs lifetime.]`
+- Standalone, not patch X/Y.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Yap Weei Choong has this single commit under
-`drivers/platform/x86/amd/`. Mario Limonciello (reviewer) originated the
-quirk and maintains this table. Ilpo Järvinen applied it as platform-
-drivers-x86 maintainer.
+**Step 3.4 — Author**
+- Record: `[Pengpeng Hou: only this commit on this driver.
+  Reviewer/committer Neil Armstrong is the original driver author and
+  Amlogic maintainer.]`
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: On this tree the patch assumes `fwbug_list[]` and
-`quirk_s2idle_spurious_8042` in `pmc-quirks.c`. Both exist.
-`amd_pmc_quirks_init()` / `amd_pmc_process_restore_quirks()` exist in
-`pmc.c`. Applies standalone here.
+**Step 3.5 — Dependencies**
+- Record: `[None. Uses existing `debugfs_create_dir` /
+  `debugfs_remove_recursive` / `platform_set_drvdata`. Can apply
+  standalone to this tree.]`
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## Phase 4: Mailing list and external research
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c e25fb2258bddb` →
-  https://patch.msgid.link/20260717060744.1252065-2-ywc8891@gmail.com
-- `b4 dig -a`: **v1 only**; committed version is that v1.
-- Thread (mbox): (1) author submission, (2) Mario `Reviewed-by` with no
-  requests, (3) Ilpo applied as `[1/1]` to `review-ilpo-next`.
-- No NAK. No reviewer `Cc: stable`. Ilpo’s boilerplate: fixes usually go
-  via for-next unless they are this-cycle or a clear regression — that
-  explains missing `Cc: stable`, not unsuitability for later stable
-  backport.
-- Lore HTTP 403 from this environment; thread recovered via `b4 dig -m`
-  and Openwall/Patchew mirrors.
+**Step 4.1 — Original discussion**
+- Record: `[https://patch.msgid.link/20260615091531.21964-1-
+  pengpeng@iscas.ac.cn]`
+- `b4 dig -a`: only v1; that version was applied.
+- Maintainer review: `Reviewed-by: Neil Armstrong`.
+- Sashiko bot flagged a pre-existing probe-time race (`measure_summary`
+  created before `.priv` is filled). Armstrong replied: “Impossible the
+  driver is initialized way before userspace starts.” That race is not
+  introduced by this patch and was not treated as a blocker.
+- No NAK. No reviewer request for `Cc: stable`.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To `platform-driver-x86@vger.kernel.org`; Cc Hans,
-Ilpo, Shyam-sundar.S-k@amd.com (MAINTAINERS for AMD PMC), Mario, linux-
-kernel. Right lists and both AMD PMC and PDx86 maintainers.
+**Step 4.2 — Recipients (`b4 dig -w`)**
+- Record: `[Neil Armstrong, Kevin Hilman, Jerome Brunet, Martin
+  Blumenstingl, linux-amlogic, linux-arm-kernel, linux-kernel. Right
+  maintainers were on the patch.]`
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: Bugzilla 221755 linked; HTTP 403, so **bugzilla comments are
-UNVERIFIED**. Commit body itself is a first-hand report: machine type
-20XLS41C00, BIOS, 6.12.95, 10.25s stall, soak test. Patchew lists a
-single-patch series.
+**Step 4.3 — Bug report**
+- Record: `[No Reported-by / syzbot / bugzilla. Bug is from code
+  inspection of lifetime mismatch.]`
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: msgid `…-2` is git-send-email numbering. Ilpo applied `[1/1]`;
-Patchew: “posted 1 patch”. Standalone.
+**Step 4.4 — Series**
+- Record: `[Standalone single patch. No follow-up on this file after
+  67481152be2ec.]`
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: WebSearch of lore stable for this subject found **no**
-discussion of 20XL / this commit. No recorded reason to keep it out of
-stable.
+**Step 4.5 — Stable list**
+- Record: `[UNVERIFIED: lore.kernel.org/stable returned HTTP 403.]`
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+## Phase 5: Code semantic analysis
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: No function body edited. Table consumers:
-`amd_pmc_quirks_init()`, `amd_pmc_process_restore_quirks()`,
-`amd_pmc_skip_nvme_smi_handler()`. semcode MCP: not available; used `git
-grep`.
+**Step 5.1 — Functions**
+- Record: `[meson_msr_probe, meson_msr_remove (new), meson_msr_driver;
+  readers clk_msr_show / clk_msr_summary_show / meson_measure_id]`
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- `amd_pmc_quirks_init(dev)` from `amd_pmc_probe()` in `pmc.c` when
-  `CONFIG_SUSPEND` and `!disable_workarounds`.
-- `amd_pmc_process_restore_quirks(pdev)` from
-  `amd_pmc_s2idle_restore()`, the LPS0 `.restore` callback
-  (`acpi_register_lps0_dev`).
-- Impact: AMD notebook s2idle resume, DMI-limited to 20XL.
+**Step 5.2 — Callers**
+- Record: `[probe/remove from the platform core on bind/unbind. Debugfs
+  show via `DEFINE_SHOW_ATTRIBUTE`. `meson_msr_remove` is only the new
+  driver `.remove`.]`
 
-**Step 5.3: TRACE CALLEES**
-Record: `dmi_first_match(fwbug_list)`; on match, skip SMI via
-`request_mem_region_muxed` / `ioremap` / `iowrite8(val & ~BIT(0))` at
-FCH PM scratch. Same path 20XK already uses.
+**Step 5.3 — Callees**
+- Record: `[debugfs_create_dir/file, debugfs_remove_recursive,
+  platform_set/get_drvdata, and on read: mutex + regmap MMIO.]`
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace suspend (s2idle, default on modern AMD laptops) → ACPI
-LPS0 restore → skip SMI. Reachable on every suspend/resume of a 20XL T14
-Gen 2 AMD. Unprivileged users typically can suspend.
+**Step 5.4 — Reachability**
+- Record: `[Yes. CONFIG_MESON_CLK_MEASURE is tristate, default y on
+  ARCH_MESON. DT nodes exist for GX, Meson8/8b, AXG, G12A, SM1, C3, S4,
+  A1, T7. Unbind is `rmmod meson-clk-measure` or sysfs unbind, then
+  reading leftover debugfs. Typically root-only, but still a real kernel
+  UAF.]`
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same file already pairs Gen1 T14 as 20UD+20UE and T14s as
-20UH+20UJ. T14 Gen2 was 20XK only until this commit — same hole
-`9a469c6dfab3` fixed for T14s Gen1.
+**Step 5.5 — Similar patterns**
+- Record: `[Same teardown exists in other SoC drivers (qcom
+  smem/socinfo/aoss, ti smartreflex). This driver was the one missing
+  it.]`
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## Phase 6: This tree (v7.3-rc4)
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Tree: **7.3.0-rc4** (mainline).
-- File and `fwbug_list` exist. 20XK exists. 20XL **is present** because
-  `e25fb2258bddb` is already an ancestor of HEAD (`git merge-base --is-
-  ancestor` exit 0). That is the mainline landing, not a reason to
-  reject the fix on technical merit.
-- Pre-commit state (20XK without 20XL) is what this patch corrects. The
-  omission dates to `455cd867b85b` (2022).
+**Step 6.1 — Does the buggy code exist here?**
+- Record: `[Yes in this lineage. Driver is `drivers/soc/amlogic/meson-
+  clk-measure.c`. Bug introduced in v5.0 (2b45ebef39a2c). This checkout
+  is `v7.3-rc4-27-gf0100363d8c37` / 7.3.0-rc4. The fix landed in
+  v7.3-rc1 (`git merge-base --is-ancestor 67481152be2ec v7.3-rc1`
+  succeeded; it is not in v7.2).]`
+- Current file already has `debugfs_root` and `meson_msr_remove()`. That
+  is because the commit merged during 7.3; it is not a reason to treat
+  the bug as never existing here.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: On this tree the hunk applies cleanly against the 20XK block.
-Expected difficulty: **clean apply**. (Older stables that still keep the
-table in `thinkpad_acpi.c` would need the same 8 lines next to 20XK
-there; that is not this checkout.)
+**Step 6.2 — Backport difficulty**
+- Record: `[Clean apply on this tree. Context matches. `.remove` is
+  already void.]`
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No alternate 20XL fix. `git grep 20XL` hits only this new `pmc-
-quirks.c` entry. `9a469c6dfab3` is the analogous T14s fix, already here.
+**Step 6.3 — Related fixes already here?**
+- Record: `[This is the fix. No alternate teardown was present before
+  it.]`
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Phase 7: Subsystem context
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/platform/x86/amd/pmc/` — AMD PMC s2idle. **IMPORTANT**
-for AMD Ryzen notebooks (`CONFIG_AMD_PMC`, depends on ACPI/PCI/SUSPEND).
-Not core mm/VFS, but suspend/resume on a current ThinkPad SKU.
+**Step 7.1**
+- Record: `[Subsystem: drivers/soc/amlogic clock-measure debugfs helper.
+  Criticality: PERIPHERAL (Amlogic-only, debugfs), but UAF is still a
+  crash/memory-safety bug.]`
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained; frequent DMI quirk additions. Table is the
-supported way to fix firmware s2idle bugs. MAINTAINERS: Shyam Sundar S
-K; Mario is the quirk author and reviewed this patch.
+**Step 7.2**
+- Record: `[Mature driver (2018). Recent work is new SoC tables, not
+  lifetime redesign.]`
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 8: Impact and risk
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / DMI-specific: Lenovo ThinkPad T14 Gen 2 AMD
-machine type **20XL** (e.g. 20XLS41C00). 20XK already quirked.
-CONFIG_AMD_PMC + s2idle.
+**Step 8.1 — Who is affected**
+- Record: `[Amlogic Meson users with CONFIG_MESON_CLK_MEASURE and
+  CONFIG_DEBUG_FS, after driver unbind/unload.]`
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: s2idle suspend/resume with IOMMU (default). Intermittent but
-seen on short suspends; 10s stall. Users who close the lid trigger it.
-Not a theoretical race.
+**Step 8.2 — Trigger**
+- Record: `[Unbind or rmmod, then open leftover debugfs. Not a boot-hot
+  path. Privileged in typical debugfs setups. Deterministic UAF, not a
+  heisenrace.]`
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record:
-- Failure: ~10s resume hang; PCI noirq waiters; all cores in SMM.
-  Original quirk commit also documented IOMMU page faults and post-
-  resume instability on this firmware SMI.
-- Severity: **HIGH** (multi-second system hang on resume; possible IOMMU
-  faults). Not a panic on every resume, but a serious production laptop
-  bug.
+**Step 8.3 — Failure mode**
+- Record: `[UAF → oops / KASAN / possible memory corruption. Severity:
+  HIGH.]`
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- Benefit: **high** for 20XL owners (resume ~1s vs ~10s; matches 20XK).
-- Risk: **very low** (8 lines, DMI-gated, copies a years-old entry).
-- Ratio: strongly favors backport. Hardware-quirk exception category.
+**Step 8.4 — Risk-benefit**
+- Record: `[Benefit: high for the affected unbind path (prevents UAF).
+  Risk: very low (14 lines, standard debugfs teardown). Ratio favors
+  taking the fix.]`
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+## Phase 9: Synthesis
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 9.1 — Evidence**
 
-FOR:
-- Real firmware bug; missing second machine type of a known model
-- ~10s s2idle resume stall, PCI noirq pileup, SMM hold; original class
-  also caused IOMMU page faults
-- Hardware quirk / DMI ID — explicit stable exception
-- 8 lines, copy of 20XK, no new API
-- Tested on hardware (6.12.95, 14h suspend, two-day soak)
-- Reviewed by Mario Limonciello and Ilpo Järvinen
-- Precedent: `9a469c6dfab3` did the same for T14s Gen1
-- Bugzilla 221755; infrastructure present in this tree since 2023
-  (`e8ef8dd28c4c4`)
-- Applies cleanly beside 20XK
+For:
+- Real UAF: leftover debugfs vs. `devm` private data after unbind
+- Small (+14), obviously correct
+- Reviewed and applied by the subsystem maintainer
+- Driver and bug exist in this 7.3 tree’s history since v5.0
+- `MESON_CLK_MEASURE` is tristate, so module unload is a supported path
+- Same teardown pattern used elsewhere in `drivers/soc/`
 
-AGAINST:
-- No `Cc: stable` (expected; Ilpo routed via for-next)
-- Affects one ThinkPad SKU, not all users
-- Bugzilla page itself could not be fetched (403)
+Against:
+- No user/syzbot report
+- Debugfs, typically root-only
+- Amlogic-only helper, not core kernel
+- Maintainer did not nominate stable
 
-UNRESOLVED:
-- Full bugzilla 221755 comment thread (403)
-- Direct lore.kernel.org HTML (403); mbox + mirrors were enough
+Unresolved:
+- Could not search lore.kernel.org/stable (HTTP 403)
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — identical 20XK entry; author
-   soak-tested; AMD + PDx86 review
-2. Fixes a real bug that affects users? **PASS** — 20XL s2idle stall,
-   bugzilla, hardware verification
-3. Important issue? **PASS** — HIGH: resume hang / SMM stall; original
-   bug class includes IOMMU faults
-4. Small and contained? **PASS** — +8 lines, one table
-5. No new features or APIs? **PASS** — DMI row for existing quirk
-6. Can apply to the local tree? **PASS** — `pmc-quirks.c` + 20XK +
-   `quirk_s2idle_spurious_8042` present
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — standard remove +
+   `debugfs_remove_recursive`; maintainer Reviewed-by
+2. Real bug affecting users? **PASS** — leftover debugfs after unbind is
+   a UAF
+3. Important (crash/security/corruption/deadlock)? **PASS** — UAF oops /
+   memory-safety; HIGH, not a theoretical warning
+4. Small and contained? **PASS** — 14 lines, one file
+5. No new features/APIs? **PASS**
+6. Applies to this tree? **PASS** — driver present, void `.remove`, no
+   missing prereqs
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Hardware quirk/workaround** (DMI s2idle quirk), same class as
-USB/PCI/codec quirk table additions. Automatically stable-appropriate.
+**Step 9.3 — Exception category**
+- Record: `[None. This is a normal bugfix, not a device-
+  ID/quirk/DT/build/docs exception.]`
 
-**Step 9.4: MAKE YOUR DECISION**
-This is a textbook stable backport: a missing DMI match for a known
-firmware SMI bug on a shipping ThinkPad, eight lines, already reviewed
-and tested. It belongs in this tree’s stable lineage.
+**Step 9.4 — Decision**
+This tree is 7.3-rc4. The clock-measure driver is here, the missing-
+remove UAF has been here since v5.0, and the patch is a small, correct
+teardown. It meets stable criteria for this checkout.
 
-===============================================================
-DETAILED EXPLANATION
-===============================================================
+### What it fixes and why it matters
+`meson_msr_probe()` publishes debugfs files whose private pointers refer
+to `devm`-allocated `priv` / `msr_table` / `regmap`. Without a remove
+callback those dentries survive unbind, so a later read of
+`measure_summary` or a per-clock file uses freed memory. On 7.3 that is
+a real module-unload/unbind UAF on Amlogic boards that ship this IP.
 
-**Problem:** T14 Gen 2 AMD has two Lenovo machine types. The kernel has
-skipped a resume-time NVMe SMI on 20XK since 2022. 20XL never matched,
-so firmware still traps into SMM on s2idle resume, stalling the machine
-~10 seconds (and historically this SMI also caused IOMMU page faults).
+### Stable rules / risk
+The change is 14 lines, does not add APIs, and matches
+`debugfs_remove()` semantics already used by sibling SoC drivers.
+Benefit is preventing a UAF; regression risk is very low.
 
-**Stable rules:** Obviously correct, user-visible, small, no new API.
-Hardware-quirk exception applies.
-
-**Risk vs benefit:** Benefit is restoring normal ~1s resume on 20XL.
-Risk is a DMI match that can only fire on 20XL-like product names. No
-locking or core-path change.
-
-**Concerns:** None material on this 7.3-rc4 tree. The patch does not
-need other series members. Older stables that still keep the list in
-`thinkpad_acpi.c` would place the same row next to 20XK; that does not
-apply here.
-
-===============================================================
-VERIFICATION
-===============================================================
+### Concerns
+No public reproducer. Trigger is privileged debugfs/unbind. That lowers
+breadth, not severity. No extra commits are required on this tree.
 
 Verification:
-- [Phase 1] Subject/tags parsed from `git log -1 e25fb2258bddb`: Add DMI
-  quirk; Links bugzilla 221755 and msgid; Tested-by author; Reviewed-by
-  Mario Limonciello and Ilpo Järvinen; no Fixes/Cc-stable
-- [Phase 1] Body: 10.25s s2idle stall on 20XL; verified 20XLS41C00 /
-  BIOS R1MET62W / 6.12.95
-- [Phase 2] `git show e25fb2258bddb`: +8 lines in `fwbug_list[]` only;
-  LENOVO/`20XL` → `quirk_s2idle_spurious_8042`
-- [Phase 2] Read `pmc-quirks.c`: skip SMI in
-  `amd_pmc_skip_nvme_smi_handler()`; 20XK block immediately above
-- [Phase 3] `git blame -L 66,82 pmc-quirks.c`: 20XK from `e8ef8dd28c4c4`
-  (2023); 20XL from `e25fb2258bddb`
-- [Phase 3] `git merge-base --is-ancestor 455cd867b85b HEAD` → 0; `git
-  show` confirms original list has 20XK, not 20XL
-- [Phase 3] `git merge-base --is-ancestor 9a469c6dfab3 HEAD` → 0; same
-  8-line missing-type pattern for T14s 20UJ
-- [Phase 3] Author log: only this amd/pmc commit; no later 20XL edits
-- [Phase 4] `b4 dig -c e25fb2258bddb`: lore msgid
-  20260717060744.1252065-2
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: PDx86 list, Hans, Ilpo, Shyam, Mario
-- [Phase 4] `b4 dig -m /tmp/thread.mbox`: Mario Reviewed-by; Ilpo
-  applied [1/1]; no NAK; for-next routing note
-- [Phase 4] Openwall/Patchew mirrors confirm the same thread; Patchew “1
-  patch”
-- [Phase 4] lore.kernel.org HTTP 403; bugzilla 221755 HTTP 403
-- [Phase 4] Stable-list search: no hits for this subject
-- [Phase 5] `git grep amd_pmc_quirks_init`: probe in `pmc.c:938`;
-  restore via `amd_pmc_s2idle_restore` →
-  `amd_pmc_process_restore_quirks`
-- [Phase 5] semcode unavailable; callers from grep/read
-- [Phase 6] `make kernelversion` / `git describe HEAD`: 7.3.0-rc4 /
-  v7.3-rc4-27-gf0100363d8c37
-- [Phase 6] `git merge-base --is-ancestor e25fb2258bddb HEAD` → 0
-  (commit already in this mainline checkout)
-- [Phase 6] File and 20XK entry present; hunk would apply cleanly to the
-  pre-commit 20XK block
-- [Phase 7] Kconfig AMD_PMC: AMD Ryzen notebook s2idle; MAINTAINERS
-  Shyam / PDx86
-- [Phase 8] Failure mode from commit + `455cd867b85b`: SMM resume stall
-  / possible IOMMU faults; HIGH; DMI-limited
-- UNVERIFIED: bugzilla 221755 comment text (403)
-- UNVERIFIED: live lore HTML (403); mbox used instead
-
-The patch is a contained hardware quirk for a real s2idle hang on T14
-Gen 2 AMD 20XL and meets stable criteria on this tree.
+- [Phase 1] Parsed tags: Reviewed-by Neil Armstrong; Link to msgid
+  20260615091531.21964-1; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +14 in meson-clk-measure.c; store debugfs root, set
+  drvdata, add void remove
+- [Phase 2] Pre-fix parent 67481152be2ec^: no platform_set_drvdata, no
+  debugfs_root, no remove
+- [Phase 2] clk_msr_summary_show uses msr_table->priv; meson_measure_id
+  uses priv->regmap — UAF after unbind confirmed
+- [Phase 3] git blame: debugfs create from 2b45ebef39a2c (v5.0-rc1)
+- [Phase 3] git describe HEAD: v7.3-rc4-27-gf0100363d8c37; Makefile
+  7.3.0-rc4
+- [Phase 3] git merge-base --is-ancestor 67481152be2ec v7.3-rc1: yes;
+  not in v7.2
+- [Phase 4] b4 dig -c 67481152be2ec:
+  https://patch.msgid.link/20260615091531.21964-1-pengpeng@iscas.ac.cn
+- [Phase 4] b4 dig -a: v1 only, applied as-is
+- [Phase 4] b4 dig -w: Armstrong, Hilman, Brunet, Blumenstingl, linux-
+  amlogic
+- [Phase 4] mbox: Armstrong Reviewed-by; dismissed sashiko probe-race as
+  pre-existing/impossible
+- [Phase 5] Kconfig MESON_CLK_MEASURE tristate default ARCH_MESON; DT
+  compatibles in meson-gx/g12/axg/sm1/s4/a1/t7/c3 dtsi
+- [Phase 5] platform_driver.remove is void (*)(struct platform_device *)
+  in include/linux/platform_device.h:280
+- [Phase 5] debugfs_remove() already IS_ERR_OR_NULL-safe
+  (fs/debugfs/inode.c:778)
+- [Phase 6] File present; no later changes on this file after the fix
+- [Phase 8] Failure mode: UAF on leftover debugfs after unbind, severity
+  HIGH
+- UNVERIFIED: lore.kernel.org/stable search (HTTP 403)
 
 **YES**
 
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/soc/amlogic/meson-clk-measure.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index 74ddf1d8289a9..09a30f3337596 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -71,6 +71,14 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "20XK"),
- 		}
- 	},
-+	{
-+		.ident = "T14 Gen2 AMD",
-+		.driver_data = &quirk_s2idle_spurious_8042,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "20XL"),
-+		}
-+	},
- 	{
- 		.ident = "T14 Gen1 AMD",
- 		.driver_data = &quirk_s2idle_spurious_8042,
+diff --git a/drivers/soc/amlogic/meson-clk-measure.c b/drivers/soc/amlogic/meson-clk-measure.c
+index d862e30a244ed..7ca43bcb622a2 100644
+--- a/drivers/soc/amlogic/meson-clk-measure.c
++++ b/drivers/soc/amlogic/meson-clk-measure.c
+@@ -7,6 +7,7 @@
+ #include <linux/of_address.h>
+ #include <linux/platform_device.h>
+ #include <linux/bitfield.h>
++#include <linux/err.h>
+ #include <linux/seq_file.h>
+ #include <linux/debugfs.h>
+ #include <linux/regmap.h>
+@@ -50,6 +51,7 @@ struct meson_msr_data {
+ struct meson_msr {
+ 	struct regmap *regmap;
+ 	struct meson_msr_data data;
++	struct dentry *debugfs_root;
+ };
+ 
+ #define CLK_MSR_ID(__id, __name) \
+@@ -952,6 +954,7 @@ static int meson_msr_probe(struct platform_device *pdev)
+ 	       sizeof(struct msr_reg_offset));
+ 
+ 	root = debugfs_create_dir("meson-clk-msr", NULL);
++	priv->debugfs_root = root;
+ 	clks = debugfs_create_dir("clks", root);
+ 
+ 	debugfs_create_file("measure_summary", 0444, root,
+@@ -967,9 +970,19 @@ static int meson_msr_probe(struct platform_device *pdev)
+ 				    &priv->data.msr_table[i], &clk_msr_fops);
+ 	}
+ 
++	platform_set_drvdata(pdev, priv);
++
+ 	return 0;
+ }
+ 
++static void meson_msr_remove(struct platform_device *pdev)
++{
++	struct meson_msr *priv = platform_get_drvdata(pdev);
++
++	if (!IS_ERR_OR_NULL(priv->debugfs_root))
++		debugfs_remove_recursive(priv->debugfs_root);
++}
++
+ static const struct msr_reg_offset msr_reg_offset = {
+ 	.duty_val = 0x0,
+ 	.freq_ctrl = 0x4,
+@@ -1065,6 +1078,7 @@ MODULE_DEVICE_TABLE(of, meson_msr_match_table);
+ 
+ static struct platform_driver meson_msr_driver = {
+ 	.probe	= meson_msr_probe,
++	.remove = meson_msr_remove,
+ 	.driver = {
+ 		.name		= "meson_msr",
+ 		.of_match_table	= meson_msr_match_table,
 -- 
 2.53.0
 
