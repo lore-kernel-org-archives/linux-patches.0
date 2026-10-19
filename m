@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5729C5AA687;
-	Mon, 19 Oct 2026 14:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33CA5BC5AF;
+	Mon, 19 Oct 2026 14:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418459; cv=none; b=ILfaVhQIhrU5ma4LDdszqSda9dA/yx8evkG+jAIfRyeoxwjAjBcf0cJnagG3OGOxlNDfIpCJ0m/h8Jk1qsVzuNfuhP7RN7QDfTM46zSnCpyrf5MnJIvS8D2RxJi3cwCumaKSgze8HOfBvt2Bmc8Y1UvXgn1X4CtycxyyYgGsarA=
+	t=1792418460; cv=none; b=f+LNPwUnt1HW9ZzA2FCslAPt8CyoG7QKW9yl54hPHhftKAB76qnO4v/z1HRMuwhcGtwS2wgnoxVEXqVD5ahXyOZQYNo5aeP3zemg9R74KgcdxVreJ9iJHWu8d1WDkM8ktJdnRsQ2gauCTK6aXLbJfIC78tSHdCnNtqU8610rnOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418459; c=relaxed/simple;
-	bh=oj/PYRedChixZdNo0sWbXqQF5HOFwV2RZigFF4G3wsw=;
+	s=arc-20240116; t=1792418460; c=relaxed/simple;
+	bh=p6xL5iEyRC23PFPYnv1H0K/arg+o6dBqNWFGLi/PVuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fr3zQ38aF117av6vxV9D2ZcbjvCzVeT7C2BifZIwngSdy0DmnoPpbMfUYWuuQrLK13Ousyl6sGUYbwNix1z4+EmmCKAXSUNYeUHDq9ffDTRyKEnmcKy2KwToFveWm/BulPphIsN7LqMatZBEmFzlFCieyTxd/woQUszviPfBceI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nwQ97jbY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sexGR0UJD3GJeNBwv23Mq91We1kpbv6ndVUK+Z/YzNymsyA2Kf8FPkI67KG+BLacR07LvDVvTOD9+NHdaKT14EcTDYxBXGZlNbKtKpbmfkyFuNEu7mmi0x7w+xvx1TKjhZf7FS6z9MYn6YDnh/HmP613sjNfamet31g6l53QvJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uj7/+35V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nwQ97jbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17251F000C8;
-	Mon, 19 Oct 2026 14:00:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uj7/+35V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B9D1F000C9;
+	Mon, 19 Oct 2026 14:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418457;
-	bh=4ZOtBPIgms5nlKbJiJRido7CLqFqpIsZ01pQt1kHqMs=;
+	s=k20260515; t=1792418458;
+	bh=vmih4YEtyPerUsmZiKCYZilMhr6BxnBlF4yNVIMWQmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nwQ97jbYU5sB+c/QjBinViZs0bjP3t0Z2MM1u2tIkuqq2atiw8PUFc+/budBCvjyG
-	 sgyR5d5p7VrPk8q6+IkcLgXRJmNocJ1/FM/9vjqisiXoL78wQllt1QfJtKCCQ9aW/F
-	 YaW/QHdu7oXP/qvR4yQqbqyFOcx//G2DbXHK9Biif1A7DX5aPNqZTYX+HCuyDDOJPg
-	 GVxuJ9pLLy4MhRKeew0efFH8pb2IWezrrjGcqk0lw4OX/zAVGjA2O93A//XC4+wcJ0
-	 FV5wtH4I+UFytMKXnRFa4IMVTry0L/7lGPnWBN63bQ3BjIkV2GCIcxTEIAwciOYS/I
-	 EI4VEgl8XZtlg==
+	b=Uj7/+35VfNzAS38g7cNUnf2rixe5xVDaUp3Pd0WJr9Gwz1jtZ62ckQJ6eGqmDXYAA
+	 Wv/een0uz/B2ROt8qDfT1BLokOGHhaiTAus/JFtEx/jGsXfCswSNcxbJy8iqoV9dyX
+	 7JbdDbp9kthtpGj99GKNiPCRyoeGKejT3d6Rsict/SdA6+g29REyWylVoc1S7/X37V
+	 mLRz3FGsTzsyTUzNJfBmIPr82Vu0adDwIUiBL6V5T3lnDHTTsYkiln1DZWfo/RdGR6
+	 pvSKfZll2LKqgabUv0mp/NfDVptUlrObTe5JSY74emgwLQB1GWYcYssKJio2Gj+X2P
+	 SCmXjYxT67IGA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Junhao He <hejunhao3@h-partners.com>,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Gangliang Xie <ganglxie@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ACPI: APEI: Handle repeated SEA error storms
-Date: Mon, 19 Oct 2026 09:49:13 -0400
-Message-ID: <20261019135441.1420968-262-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/amdgpu: add check for xcp id
+Date: Mon, 19 Oct 2026 09:49:14 -0400
+Message-ID: <20261019135441.1420968-263-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,450 +57,437 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Junhao He <hejunhao3@h-partners.com>
+From: Gangliang Xie <ganglxie@amd.com>
 
-[ Upstream commit e61487226b7df39e5f4683b036ee6aa7a5039d7b ]
+[ Upstream commit fa1531170d2c96060478d697fe93f1cafc0e7ddd ]
 
-When hardware memory corruption occurs and a user process accesses the
-corrupted page, the CPU triggers a Synchronous External Abort (SEA).
-The kernel invokes do_sea() to handle the exception, which calls
-memory_failure() to handle the faulty page.
+check sel_xcp_id before its use
 
-Scenario 1: Memory Error Interrupt First, then SEA
-The page is already poisoned by the memory error interrupt path. The
-subsequent SEA handler sends a SIGBUS to the task, which accesses the
-poisoned page. This flow is correct.
-
-Scenario 2: SEA first, then memory error interrupt (problematic scenario)
-If a user task directly accesses corrupted memory through a PFNMAP-style
-mapping (e.g., devmem), the page may still be in the free-buddy state when
-SEA is handled. In this case, memory_failure() will poison the page without
-invoking kill_accessing_process(), and then takes the free-buddy recovery
-path.
-
-After the CPU returns to the task context, the task re-enters the SEA
-handler due to the same access. However, ghes_estatus_cached() suppresses
-all subsequent entries during the 10-second window, preventing
-ghes_do_proc() from being called. This suppression blocks the
-MF_ACTION_REQUIRED-based SIGBUS delivery, causing the kernel to fail to
-kill the task immediately. Consequently, the process keeps re-entering
-the SEA handler, leading to an SEA storm. Later, the memory error
-interrupt path also cannot kill the task, leaving the system stuck in
-this repeated loop.
-
-The following error logs are explained using the devmem process:
-  NOTICE:  SEA Handle
-  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
-  [Hardware Error]: event severity: recoverable
-  [Hardware Error]:   section_type: ARM processor error
-  [Hardware Error]:    physical fault address: 0x0000001000093c00
-  [T54990] Memory failure: 0x1000093: recovery action for free buddy page: Recovered
-  [ T9955] EDAC MC0: 1 UE Multi-bit ECC on unknown memory
-           (page:0x1000093 offset:0xc00 grain:1 - APEI location: ...)
-  NOTICE:  SEA Handle
-  NOTICE:  SEA Handle
-  ...
-  ...        ---> SEA storm
-  ...
-  NOTICE:  SEA Handle
-  [ T9955] Memory failure: 0x1000093: already hardware poisoned
-  ghes_print_estatus: 1 callbacks suppressed
-  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
-  [Hardware Error]: event severity: recoverable
-  [Hardware Error]:   section_type: ARM processor error
-  [Hardware Error]:    physical fault address: 0x0000001000093c00
-  [T54990] Memory failure: 0x1000093: already hardware poisoned
-  [T54990] 0x1000093: Sending SIGBUS to devmem:54990 due to hardware memory corruption
-
-To resolve this, return an error when encountering the same SEA again.
-The subsequent SEA handler invocation uses arm64_notify_die() to send a
-SIGBUS signal to the task, which terminates the process and prevents it
-from re-entering the handler loop.
-
-Signed-off-by: Junhao He <hejunhao3@h-partners.com>
-Reviewed-by: Wupeng Ma <mawupeng1@huawei.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260527082707.2013499-1-hejunhao3@h-partners.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Gangliang Xie <ganglxie@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **pending-6.18** (kernel **6.18.53**). The buggy GHES
-cache-hit path is present here, the patch applies cleanly, and this is a
-real ARM64 SEA-storm hang, so it should be backported.
+Confirmed: `ring->xcp_id` is `u32`, `AMDGPU_XCP_NO_PARTITION` is `~0`,
+and the same OOB pattern is what the XCP maintainer later called out in
+`release_sched`. The 6.18.53 function has no bounds check. Compiling the
+full analysis.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ACPI: APEI] [Handle] [Stop repeated SEA aborts from looping
-when GHES cache suppresses a duplicate error]
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record: **[drm/amdgpu]** **[add/check]** Add a bounds check on
+`sel_xcp_id` before using it as an index into `adev->xcp_mgr->xcp[]`.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- Reviewed-by: Wupeng Ma <mawupeng1@huawei.com>
-- Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com> (ACPI APEI
-  reviewer in MAINTAINERS)
-- Reviewed-by: Tony Luck <tony.luck@intel.com> (ACPI APEI reviewer /
-  RAS)
-- Link: https://patch.msgid.link/20260527082707.2013499-1-hejunhao3@h-
-  partners.com
-- Signed-off-by: Junhao He <hejunhao3@h-partners.com>
-- Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com> (ACPI
-  maintainer)
-- No Fixes: tag (expected)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / syzbot
-- Ignore pipeline SOBs such as Sasha Levin
+- **Fixes:** none (expected for this review pipeline)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** Lijo Lazar \<lijo.lazar@amd.com\> (AMD
+  XCP/partitioning reviewer; also reviewed the helper that introduced
+  this function)
+- **Acked-by:** none
+- **Link:** none in the commit message
+- **Cc: stable:** none (expected; not a negative signal)
+- **Signed-off-by:** Gangliang Xie \<ganglxie@amd.com\> (author); Alex
+  Deucher \<alexander.deucher@amd.com\> (amdgpu maintainer)
+- Ignored pipeline tags: `[Upstream commit fa1531170d2c…]`, `Signed-off-
+  by: Sasha Levin`
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- Bug: On ARM64 firmware-first SEA, if a userspace PFNMAP access
-  (devmem) hits corrupted memory while the page is still a free buddy,
-  `memory_failure()` poisons it as recovered and does not kill the task.
-  The task retries the same access. `ghes_estatus_cached()` then drops
-  duplicates for 10s (`GHES_ESTATUS_IN_CACHE_MAX_NSEC`), so
-  `ghes_do_proc()` never runs again and SIGBUS is not delivered. The CPU
-  loops in SEA. Firmware logs show a ~10s storm, then SIGBUS only after
-  the cache expires.
-- Symptom: exception storm / system stuck; related APEI commits note
-  firmware threshold reboot or hard lockup from the same class of loop.
-- Version info: none in the message. Logs are from a real ARM platform
-  (APEI GHES source 9, EDAC MC0).
-- Root cause: cache-hit path in `ghes_in_nmi_queue_one_entry()` returns
-  success (`rc == 0`), so `apei_claim_sea()` claims the abort and
-  `do_sea()` returns without `arm64_notify_die()`.
+- **Bug description:** `sel_xcp_id` is used as an array index without
+  validation.
+- **Symptom/failure mode:** not spelled out in the message (one-line
+  body: “check sel_xcp_id before its use”). From the code, the failure
+  is an out-of-bounds read/write of `xcp[sel_xcp_id]`.
+- **Version information:** none in the message.
+- **Root cause:** `amdgpu_xcp_gpu_sched_update()` indexes
+  `adev->xcp_mgr->xcp[sel_xcp_id]` even when the ID is
+  `AMDGPU_XCP_NO_PARTITION` (`~0`) or `>= MAX_XCP`.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not disguised. This is an explicit hang/storm fix, not cleanup.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: Yes — this is a memory-safety fix described as “add check”. Same
+pattern as the author’s nearby “add buf length check” / “add first
+record offset check” patches, and as Lijo Lazar’s explicit “bounds check
+xcp_id in release_sched” (“Avoid out-of-bounds xcp[] access, e.g. when
+xcp_id is AMDGPU_XCP_NO_PARTITION”).
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `drivers/acpi/apei/ghes.c` only (+9 / -1)
-- Function: `ghes_in_nmi_queue_one_entry()`
-- Scope: single-file surgical fix
+**Step 2.1: INVENTORY THE CHANGES**
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: cached estatus → `goto no_work` with `rc` still 0 → callers
-  treat it as “successfully handled.”
-- After: cached + `is_hest_sync_notify(ghes)` (HEST notify type SEA) →
-  `rc = -ECANCELED` → `ghes_notify_sea()` / `apei_claim_sea()` fail →
-  `do_sea()` falls through to `arm64_notify_die()` and SIGBUS.
-- Path affected: duplicate synchronous SEA only. NMI/SDEI cache hits
-  stay `rc = 0`.
+- **File:** `drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c` (+3 / −0)
+- **Function:** `amdgpu_xcp_gpu_sched_update()`
+- **Scope:** single-file surgical fix (3 lines)
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: logic / correctness in RAS exception handling (hang /
-  exception storm).
-- Mechanism: success-on-cache-hit hid an incomplete recovery (free-buddy
-  poison without kill). Returning an error unclaims the SEA so the arch
-  handler can kill the task.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Verified supporting code in this tree:
-- `action_result(MF_RECOVERED)` returns 0 (`mm/memory-failure.c`).
-- `memory_failure_cb()` returns without SIGBUS if `!ret`.
-- Free-buddy path never calls `kill_accessing_process()`.
-- `79a5ae3c4c5eb` only `force_sig(SIGBUS)` when `sync && !queued`; the
-  first SEA *does* queue work, so that fallback does not fire.
+Record: **Before:** the function immediately does
+`num_gpu_sched = &adev->xcp_mgr->xcp[sel_xcp_id].gpu_sched[...]` and
+writes `&ring->sched` into that slot, incrementing `num_scheds`.
+**After:** if `sel_xcp_id >= MAX_XCP` or `sel_xcp_id ==
+AMDGPU_XCP_NO_PARTITION`, it returns without touching the array. Normal
+path unchanged for IDs in `0 .. MAX_XCP-1`.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct for the single-source SEA case that matches the
-  logs.
-- Minimal; no API/data-structure change.
-- Regression risk is low: gated by `is_hest_sync_notify()` so x86 NMI /
-  SDEI behavior is unchanged.
-- Known limitation (discussed on-list, accepted by Tony Luck): if
-  several GHES SEA sources are on the list and one still returns 0,
-  `-ECANCELED` is discarded. Author: a true multi-source storm is a
-  different failure. Not a reason to withhold the single-source fix.
-- KVM: `kvm_handle_guest_sea()` currently claims a duplicate SEA
-  (`apei_claim_sea() == 0`). After this, it injects SError into the
-  guest instead of leaving the host looping. That is an improvement, not
-  a new API.
+Callers in `amdgpu_xcp_sched_list_update()`:
+1. `amdgpu_xcp_gpu_sched_update(adev, ring, ring->xcp_id)`
+2. For shared VCN: `amdgpu_xcp_gpu_sched_update(adev, ring, ring->xcp_id
+   + 1)`
+
+`amdgpu_set_xcp_id()` sets `ring->xcp_id = AMDGPU_XCP_NO_PARTITION`
+first and can leave it there (CPER/early return, unsupported ring type,
+or no matching `inst_mask`).
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **[Memory safety / out-of-bounds]** `xcp[]` has `MAX_XCP` (8)
+entries. `ring->xcp_id` is `u32`; `AMDGPU_XCP_NO_PARTITION` is `(~0)` →
+`0xffffffff`. Indexing `xcp[0xffffffff]` is a wild OOB read/write (store
+a scheduler pointer, increment `num_scheds`). The VCN `xcp_id + 1` path
+can also produce `8` when `xcp_id == 7`. The `==
+AMDGPU_XCP_NO_PARTITION` clause is redundant for unsigned `sel_xcp_id`
+(already `>= MAX_XCP`) but harmless.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record: Obviously correct 3-line guard. Skipping a ring with an invalid
+XCP id is the right behavior (that ring should not be on a partition
+sched list). Regression risk is very low: a previously valid `0..7` id
+is unaffected; a previously invalid id was already corrupting memory.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Cache skip introduced in `d9f608dc156487` (“ACPI / APEI: Only use
-  queued estatus entry during in_nmi_queue_one_entry()”, 2019-01-29).
-  Present in this tree.
-- `is_hest_sync_notify()` from `a70297d221325` (2023-12-18). Present.
+**Step 3.1: BLAME THE CHANGED LINES**
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable. The bug is interaction among the
-2019 cache, long-standing free-buddy recovery, and SEA claim returning
-success.
+Record: The unchecked index was introduced in **`4dbc17b455329`**
+(“drm/amdgpu: Convert update_partition_sched_list into a common helper
+v3”, Hawking Zhang, 2025-06-16). That commit is an ancestor of
+**v6.18.53**. XCP itself dates to **`75d1692393cb7`** (2022-09-16).
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Related commits already in this tree:
-- `a70297d221325` — MF_ACTION_REQUIRED on sync events
-- `79a5ae3c4c5eb` — SIGBUS if sync error is not queued
-- `c1f1fda141373` — run `memory_failure()` in task work for sync SEA
-This patch is a remaining hole after those two 2025 SIGBUS fixes: queued
-free-buddy recovery still does not kill, then cache blocks the retry.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-Standalone. Not “patch X/Y”.
+Record: No `Fixes:` tag. The buggy helper **is** in this tree (`git
+merge-base --is-ancestor 4dbc17b455329 v6.18.53` succeeded).
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Junhao He has HiSilicon PMU commits here, not APEI. Reviewers
-are the APEI/RAS people. Weight is from review, not authorship.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Needs `is_hest_sync_notify()` and the existing
-`ghes_in_nmi_queue_one_entry()` cache check. Both are in this tree. Can
-apply standalone.
+Record: Related nearby work on the same file: `085ef38814f01` “bounds
+check xcp ip block index”; mailing-list sibling “bounds check xcp_id in
+release_sched” (Lijo Lazar) which names the same
+`AMDGPU_XCP_NO_PARTITION` OOB. This patch is standalone; it does not
+depend on those siblings. No follow-ups after it on this function.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Gangliang Xie is an AMD contributor sending small validation
+patches (`add buf length check`, `add first record offset check`, RAS
+checksum). Not the subsystem maintainer. Weight comes from **Reviewed-
+by: Lijo Lazar** and **Signed-off-by: Alex Deucher**.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: None. It only uses `MAX_XCP` and `AMDGPU_XCP_NO_PARTITION`, both
+present in this tree (`amdgpu_xcp.h`). Can apply standalone; the
+v6.18.53 function body matches the patch parent exactly.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- v1 msgid: `20251030071321.2763224-1-hejunhao3@h-partners.com`
-  (2025-10-30), 12 messages. Returned `-EAGAIN` on every cache hit,
-  including NMI/SDEI.
-- v2 msgid: `20260527082707.2013499-1-hejunhao3@h-partners.com`
-  (2026-05-27), 10 messages. This is the applied version: only SEA via
-  `is_hest_sync_notify()`.
-- Applied version is v2 (latest).
-- No NAKs. Rafael required an APEI-reviewer ACK; Tony Luck then
-  Reviewed-by. Rafael: “Applied as 7.3 material.”
-- No reviewer Cc: stable.
+- `b4 dig -c fa1531170d2c96060478d697fe93f1cafc0e7ddd` →
+  https://patch.msgid.link/20260623024809.121196-1-ganglxie@amd.com
+- `b4 dig -a`: single **v1**, no later revisions
+- Thread: author patch + **Reviewed-by: Lijo Lazar**. No NAK, no stable
+  nomination, no crash log in the thread.
+- lore.kernel.org HTTP fetch returned 403; discussion recovered via `b4
+  dig -m` mbox (2 messages).
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: Recipients/reviewers included ACPI APEI maintainers/reviewers
-(Rafael, Tony Luck, Shuai Xue). Shuai asked for an x86 look because the
-helper is shared; v2’s SEA-only gate was the answer. Tony Luck R-b after
-that explanation.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No bugzilla/syzbot. Author included production-style firmware +
-kernel logs (`devmem` task, free buddy Recovered, then 10s of “SEA
-Handle”, then SIGBUS). Real hardware reproduction, not theoretical.
+Record: `b4 dig -w`: To `amd-gfx@lists.freedesktop.org`, Cc
+`tao.zhou1@amd.com`. Reviewed by Lijo Lazar (XCP reviewer). Merged by
+Alex Deucher.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Single patch. v2 changelog: (1) commit message per Shuai Xue,
-(2) SEA-only so other NMI-type GHES handlers are not affected.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org HTTP was 403/Anubis. Thread retrieved with `b4
-mbox`. No stable@ discussion found in those threads. UNVERIFIED: other
-independent stable-list threads beyond these two.
+Record: No syzbot/bugzilla/CVE. Web search did find the maintainer
+stating the **same** `xcp[ring->xcp_id]` pattern is OOB when id is
+`AMDGPU_XCP_NO_PARTITION` (`bounds check xcp_id in release_sched`). That
+is independent confirmation of the bug class, not a user crash report
+for this exact function.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: Standalone v1, not a numbered series. Related OOB guards in the
+same file (`release_sched`, ip-block index) are separate and not
+required for this hunk to be correct.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: No stable@ discussion found for this subject. linux-next merge
+mail listed this commit among several amdgpu_xcp.c bounds-check fixes
+(conflict was in `release_sched`, not this function).
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `ghes_in_nmi_queue_one_entry()`; uses `ghes_estatus_cached()`,
-`is_hest_sync_notify()`.
+semcode MCP is not available; callers/callees traced with grep and file
+reads.
 
-Step 5.2: TRACE CALLERS
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+
+Record: `amdgpu_xcp_gpu_sched_update` (modified); callers
+`amdgpu_xcp_sched_list_update` →
+`amdgpu_xcp_update_partition_sched_list`.
+
+**Step 5.2: TRACE CALLERS**
+
 Record:
-- `ghes_in_nmi_spool_from_list()` ← `ghes_notify_sea()` (SEA) and NMI
-  list
-- `__ghes_sdei_callback()` (SDEI)
-- `ghes_notify_sea()` ← `apei_claim_sea()` ← `do_sea()` (user_mode only)
-  and `kvm_handle_guest_sea()`
-NMI/SDEI: `is_hest_sync_notify()` is false, so no behavior change.
+- `amdgpu_xcp_init()` (partition setup / mode switch)
+- `amdgpu_device.c` after `drm_sched_init` for all rings (`if
+  (adev->xcp_mgr) amdgpu_xcp_update_partition_sched_list(adev)`)
 
-Step 5.3: TRACE CALLEES
-Record: Cache lookup, `gen_pool_free` on `no_work`, no new locks/allocs
-on the new path.
+Only **aqua_vanjaram** calls `amdgpu_xcp_mgr_init` (MI300-family
+Instinct). Consumer GPUs have `xcp_mgr == NULL` and never enter this
+path.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace load/store to poisoned PFNMAP memory → SEA → `do_sea`
-→ `apei_claim_sea` → GHES. Reachable from userspace (`/dev/mem` in the
-logs). Unprivileged trigger depends on who can map that physical page
-(typically privileged), but once it fires the host loops. Firmware-first
-ARM64 servers are the population.
+`amdgpu_xcp_sched_list_update` skips `!ring`, `!ring->sched.ready`, and
+`ring->no_scheduler`. CPER/KIQ/MES/UMSCH set `no_scheduler` and are not
+this OOB. Rings that **are** scheduled and still have `xcp_id == ~0`
+(unsupported type in `amdgpu_set_xcp_id`’s `default:`, or no `inst_mask`
+match) **are** the OOB path. Shared VCN uses `xcp_id + 1`.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: `ghes_proc()` still calls `ghes_do_proc()` even when cached (IRQ
-path). Only the NMI-queue path skips processing on cache hit. That is
-unique to this helper; no sibling copy of the same bug.
+**Step 5.3: TRACE CALLEES**
+
+Record: Array access and `dev_dbg` only. No locks, no allocation.
+Failure mode is pure memory corruption.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Device init / partition switch on Instinct GPUs with XCP enabled
+(`mode != AMDGPU_XCP_MODE_NONE`; `AMDGPU_XCP_MODE_NONE` and
+`AMDGPU_UNKNOWN_COMPUTE_PARTITION_MODE` are both `-1`, so the update is
+skipped until a real SPX/DPX/TPX/QPX/CPX mode is set). Not a syscall-hot
+path; it **is** a driver-init/mode-switch path on production HPC/AI
+GPUs. Unprivileged users do not trigger it directly.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: Same unguarded `xcp[ring->xcp_id]` in
+`amdgpu_xcp_release_sched()` in this tree. Maintainer-authored sibling
+patch exists upstream. Pattern is systematic.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. `drivers/acpi/apei/ghes.c:1373-1375` is still:
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-```
-if (ghes_estatus_cached(estatus))
-    goto no_work;
-```
+Record: **Yes.** Local tree is **6.18.53** (`git describe HEAD` →
+`v6.18.53-5049-g0f0bdc2b0dffb`; Makefile `VERSION=6 PATCHLEVEL=18
+SUBLEVEL=53`). `v6.18.53:drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c` has
+`amdgpu_xcp_gpu_sched_update` **without** the `sel_xcp_id` check
+(verified via `git show v6.18.53:...`). Bug introduced 2025-06
+(`4dbc17b455329`), present since this 6.18 branch.
 
-`is_hest_sync_notify()` exists. `CONFIG_ACPI_APEI_SEA` is default y on
-ARM64. Bug class present since the 2019 queue path; this 6.18 tree also
-has the 2025 task-work SIGBUS series that still misses free-buddy.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Exact hunk matches this file. Expected apply: clean.
+Record: **Clean apply** onto v6.18.53 — parent hunk is identical. No
+refactor of this function between 6.18.53 and the patch.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `c1f1fda141373` and `79a5ae3c4c5eb` are in HEAD; they do not
-cover this cache-hit + free-buddy case. This commit is not in HEAD (`git
-log --grep` on the file found nothing).
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: No other fix of this specific index in
+`amdgpu_xcp_gpu_sched_update` on v6.18.53. The `release_sched` OOB is
+still unfixed here; that does not replace this patch.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: ACPI APEI / GHES RAS. IMPORTANT for ARM64 firmware-first
-platforms (servers, Huawei/Kunpeng-class). Not core-mm, but memory-error
-handling on those machines.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively maintained (CXL CPER, ARM CPER bounds, task-work SEA).
-Mature SEA queue dates to 2019.
+Record: **drm/amdgpu XCP (compute partitioning).** Criticality:
+**IMPORTANT** — not core mm/fs, but MI300-class Instinct GPUs in HPC/AI.
+Not staging.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: Actively developed (partition sysfs, unique ids, kobject
+cleanup, multiple 2025–2026 XCP commits). The helper this guards has
+been in 6.18 for the whole stable cycle.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: ARM64 + ACPI APEI GHES SEA + memory failure. Driver/platform-
-specific, not universal. Typical of enterprise ARM RAS.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Hardware UE/poison + userspace access via PFNMAP while page is
-free buddy, SEA before (or instead of useful) async kill. Not every
-boot. When it hits, it repeats until the 10s cache expires or firmware
-reboots. Unprivileged users generally cannot open `/dev/mem`; still a
-host-stability bug for RAS/error-injection and any PFNMAP consumer.
+Record: **Driver/config-specific:** `CONFIG_DRM_AMDGPU` + aqua_vanjaram
+XCP (Instinct MI300 family) with partitioning actually enabled. Not
+universal; not consumer Radeon.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Exception storm / stuck task; related APEI text: firmware
-threshold reboot or hard lockup. Severity: CRITICAL/HIGH. Logs prove the
-10s storm (`1419.78` → `1429.81`).
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record: Partition sched-list rebuild during GPU init or partition-mode
+switch, when a ready scheduled ring still has `xcp_id == ~0` or `xcp_id
++ 1 >= 8`. Not an unprivileged syscall. Likelihood: uncommon if every
+ring matches a partition, but the sentinel `AMDGPU_XCP_NO_PARTITION` is
+an intentional valid state in `amdgpu_set_xcp_id`, and the VCN `+ 1`
+path is an explicit in-tree caller. Consequences if it hits are severe.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: **OOB write of a pointer + increment through that pointer.**
+Kernel oops / memory corruption. **Severity: HIGH** (crash/corruption;
+potentially worse if the write lands on live data).
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
 Record:
-- Benefit: high for ARM64 RAS — stops a documented SEA storm and
-  delivers SIGBUS immediately.
-- Risk: low — ~9 lines, SEA-only, no new ABI, clean apply.
-- Ratio: benefit ≫ risk.
+- **Benefit:** High for Instinct XCP users — prevents a wild OOB write.
+  Zero effect on other hardware (`xcp_mgr` is null).
+- **Risk:** Very low (3 lines, early return, no locking/API change).
+- **Ratio:** Strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real hang/storm with hardware logs
-- Small, obviously correct, SEA-gated
-- Applies cleanly to this 6.18 tree; helper already present
-- Prior APEI SIGBUS fixes in this tree leave this hole
-- Reviewed by APEI reviewers (Luck, Xue) and applied by Rafael
+**Step 9.1: COMPILE THE EVIDENCE**
 
-AGAINST:
-- Trigger is RAS/PFNMAP, not every machine
-- No Fixes:/Cc: stable (not a negative per rules)
-- Incomplete if multiple concurrent distinct SEA sources all stay cached
-  (accepted on-list)
+**FOR:**
+- Real OOB write: `xcp[sel_xcp_id]` with `sel_xcp_id` possibly
+  `0xffffffff` or `>= 8`.
+- `AMDGPU_XCP_NO_PARTITION` is a first-class sentinel in
+  `amdgpu_set_xcp_id`, then passed straight into this indexer.
+- Same class of bug independently described as OOB by Lijo Lazar for
+  `release_sched`.
+- Buggy helper present in **this** 6.18.53 tree since `4dbc17b455329`.
+- 3-line, obviously correct, reviewed by XCP expert, signed off by
+  amdgpu maintainer.
+- Applies cleanly; no new API/feature; no prerequisites.
 
-UNRESOLVED:
-- Could not HTTP-fetch lore (403); used `b4 mbox` instead
-- UNVERIFIED: later mainline follow-ups after this commit
-- UNVERIFIED: independent stable@ threads besides v1/v2
+**AGAINST:**
+- No user/syzbot report; commit message is one line.
+- Affects only partitioned Instinct GPUs, not all amdgpu users.
+- On current MI300 mappings, many rings get a valid id or
+  `no_scheduler`, so the crash may be uncommon.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — v2 after review; logs; R-b from
-   Luck/Xue/Ma
-2. Fixes a real bug that affects users? PASS — documented SEA storm on
-   devmem/PFNMAP
-3. Important issue? PASS — hang / exception storm / possible firmware
-   reboot
-4. Small and contained? PASS — one function, ~9 lines
-5. No new features or APIs? PASS
-6. Can apply to the local tree? PASS — hunk present, helper present, not
-   already applied
+**UNRESOLVED:** Exact production frequency of a ready ring left at
+`NO_PARTITION` on MI300 was not reproduced on hardware (analysis is from
+code). That does not change the OOB if it happens.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not a device ID/quirk/DT/build/doc exception). Qualifies
-as a normal important bugfix.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-Step 9.4: MAKE YOUR DECISION
-This should be backported to this 6.18 tree. It closes a remaining ARM64
-GHES SEA loop after the task-work SIGBUS work already in 6.18, with
-negligible regression risk.
+1. Obviously correct and tested? **PASS** — trivial bounds check;
+   Reviewed-by Lijo Lazar; in mainline via Alex Deucher.
+2. Fixes a real bug that affects users? **PASS** — OOB index on XCP
+   sched-list update for Instinct partition setups.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   OOB write → crash/corruption, HIGH.
+4. Small and contained? **PASS** — +3 lines, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — v6.18.53 has the unchecked
+   function; hunk matches.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: Not a device-ID/quirk/DT/build/docs exception. It qualifies as a
+normal memory-safety bug fix.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This is a small, correct guard against a real out-of-bounds write in
+amdgpu XCP scheduler-list updates. The buggy code is in this 6.18.53
+tree, the patch applies cleanly, and the risk of regression is
+negligible. It should be backported.
 
 Verification:
-- [Phase 1] Parsed tags: 3 Reviewed-by (Ma, Xue, Luck), Link msgid,
-  Rafael SOB; no Fixes/Cc:stable/syzbot
-- [Phase 2] Diff: +9/-1 in `ghes_in_nmi_queue_one_entry()`; `-ECANCELED`
-  only if cached && `is_hest_sync_notify()`
-- [Phase 2] Confirmed `action_result(MF_RECOVERED)` returns 0;
-  `memory_failure_cb` skips SIGBUS; free-buddy path skips
-  `kill_accessing_process`
-- [Phase 2] Confirmed `79a5ae3c4c5eb` force-kill is `sync && !queued`
-  only, so first SEA that queues work is not covered
-- [Phase 3] blame: cache skip `d9f608dc156487` (2019);
-  `is_hest_sync_notify` `a70297d221325`; both ancestors of HEAD
-- [Phase 3] `git merge-base --is-ancestor` : a70297, c1f1fda, 79a5ae3,
-  d9f608dc all in this tree
-- [Phase 3] `git log --grep='repeated SEA'` on `drivers/acpi/`: empty —
-  commit not here
-- [Phase 4] `b4 am`/`b4 mbox`: v1 12 msgs (2025-10-30), v2 10 msgs
-  (2026-05-27); v2 is applied version
-- [Phase 4] Tony Luck questioned SDEI vs SEA callers; author said SEA-
-  only; Luck R-b; Rafael applied as 7.3 material
-- [Phase 4] lore HTTP 403; discussion taken from b4 mboxes
-- [Phase 5] callers: `ghes_in_nmi_spool_from_list`,
-  `__ghes_sdei_callback`; user path `do_sea` → `apei_claim_sea`; KVM
-  `kvm_handle_guest_sea`
-- [Phase 6] `git describe HEAD` = p-6.18-1-g03b85e06ca9bf; `make
-  kernelversion` = 6.18.53
-- [Phase 6] exact old hunk still in `ghes.c:1373-1375`; new hunk absent
-- [Phase 8] Failure mode: SEA storm ~10s (log timestamps 1419 → 1429),
-  then SIGBUS; severity HIGH/CRITICAL
-- UNVERIFIED: follow-up commits after this one in later mainline; other
-  stable@ threads
+- [Phase 1] Tags: Reviewed-by Lijo Lazar; SOB Alex Deucher; no
+  Fixes/Reported-by/Cc:stable (expected).
+- [Phase 1] Body is one line; bug inferred from code, not a crash log.
+- [Phase 2] Diff: +3 lines in `amdgpu_xcp_gpu_sched_update()`; early
+  return on `sel_xcp_id >= MAX_XCP || sel_xcp_id ==
+  AMDGPU_XCP_NO_PARTITION`.
+- [Phase 2] `MAX_XCP` is 8; `AMDGPU_XCP_NO_PARTITION` is `(~0)`;
+  `ring->xcp_id` is `u32` (`amdgpu_ring.h:370`).
+- [Phase 3] Blame: unchecked index from `4dbc17b455329` (2025-06-16);
+  `git merge-base --is-ancestor 4dbc17b455329 v6.18.53` succeeded.
+- [Phase 3] No Fixes tag; no follow-up on this function after the
+  candidate.
+- [Phase 4] `b4 dig -c fa1531170d2c…`: lore/msgid
+  `20260623024809.121196-1-ganglxie@amd.com`; v1 only; Lijo Reviewed-by;
+  no NAK.
+- [Phase 4] lore.kernel.org WebFetch: 403; mbox via `b4 dig -m` used
+  instead.
+- [Phase 4] WebSearch: Lijo Lazar “bounds check xcp_id in release_sched”
+  explicitly calls `AMDGPU_XCP_NO_PARTITION` an OOB `xcp[]` access.
+- [Phase 5] Callers: `amdgpu_xcp_sched_list_update` ←
+  `amdgpu_xcp_update_partition_sched_list` ← `amdgpu_xcp_init` and
+  `amdgpu_device.c` post-`drm_sched_init`.
+- [Phase 5] Only `aqua_vanjaram.c` calls `amdgpu_xcp_mgr_init`.
+- [Phase 5] CPER/KIQ/MES/UMSCH use `no_scheduler` (verified); they are
+  not this OOB. Default/unmatched rings and VCN `xcp_id+1` are.
+- [Phase 6] `git describe HEAD` = `v6.18.53-5049-g0f0bdc2b0dffb`; `make
+  kernelversion` = 6.18.53.
+- [Phase 6] `git show v6.18.53:drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c`
+  shows the function **without** the check.
+- [Phase 6] Upstream `fa1531170d2c` is not an ancestor of HEAD (`merge-
+  base --is-ancestor` exit 1); the 6.18.53 file contents still match the
+  pre-fix hunk.
+- [Phase 7] drm/amdgpu XCP; IMPORTANT for Instinct partition users.
+- [Phase 8] Failure mode: OOB write → oops/corruption; severity HIGH;
+  backport risk very low.
+- UNVERIFIED: Hardware reproduction on MI300 of a ready ring left at
+  `NO_PARTITION`; not used as the sole basis for the decision (the OOB
+  is visible in code and the same pattern is acknowledged by the XCP
+  reviewer).
+
+The patch is a 3-line, obviously correct bounds check for a real out-of-
+bounds write in amdgpu XCP scheduler-list updates. The unchecked
+function exists in this 6.18.53 tree, the fix applies cleanly, and the
+regression risk is negligible.
 
 **YES**
 
- drivers/acpi/apei/ghes.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 5b52455d86e02..1a77aba0475be 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -1371,8 +1371,16 @@ static int ghes_in_nmi_queue_one_entry(struct ghes *ghes,
- 	ghes_clear_estatus(ghes, &tmp_header, buf_paddr, fixmap_idx);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
+index 6059227c53150..88de3ecc7f230 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
+@@ -572,6 +572,9 @@ static void amdgpu_xcp_gpu_sched_update(struct amdgpu_device *adev,
+ {
+ 	unsigned int *num_gpu_sched;
  
- 	/* This error has been reported before, don't process it again. */
--	if (ghes_estatus_cached(estatus))
-+	if (ghes_estatus_cached(estatus)) {
-+		/*
-+		 * Return failure on duplicate SEA entries so that the
-+		 * subsequent SEA handler invocation sends a SIGBUS signal to
-+		 * the task to prevent it from re-entering the handler loop.
-+		 */
-+		if (is_hest_sync_notify(ghes))
-+			rc = -ECANCELED;
- 		goto no_work;
-+	}
- 
- 	llist_add(&estatus_node->llnode, &ghes_estatus_llist);
- 
++	if (sel_xcp_id >= MAX_XCP || sel_xcp_id == AMDGPU_XCP_NO_PARTITION)
++		return;
++
+ 	num_gpu_sched = &adev->xcp_mgr->xcp[sel_xcp_id]
+ 			.gpu_sched[ring->funcs->type][ring->hw_prio].num_scheds;
+ 	adev->xcp_mgr->xcp[sel_xcp_id].gpu_sched[ring->funcs->type][ring->hw_prio]
 -- 
 2.53.0
 
