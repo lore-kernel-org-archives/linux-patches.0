@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6B05D18A0;
-	Mon, 19 Oct 2026 14:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253DC5D18BE;
+	Mon, 19 Oct 2026 14:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418491; cv=none; b=rRqicGS7KMxRc59EUBSzzMZCPYvI51xQ0SWYTIPYpQWM7XaM/w6tz3LqUxwFfadsLF8P6HCkuIGgu24f5GShV3xIyQjH9ofXajZsjSMiuoG0EGNiCYteOd3rD9Lq9jf+C8C1J5fQSNfhASaJmxdysiLQqTVUCUsizW1VsBgzyk4=
+	t=1792418492; cv=none; b=erj9n4vGbuMOJfxlIyj5qEuOabkJ6uowo5e7m3rVSywtpml1f81YByjGB5gTs0s+kAKYxKj8RtYOwNWjSoZh1bbGtd8Hp7QRdRZs3+1Q6W4ificDALng55wPSLWzeg+Cwc7DtF5X/nlAKFaKd/YR2/whSyYekTgQlCmvUITeuH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418491; c=relaxed/simple;
-	bh=U0XngmClq5ynipwJFetEN/KadKGs+p5reEPGOvYYPSY=;
+	s=arc-20240116; t=1792418492; c=relaxed/simple;
+	bh=UtGByILVLeDDVs9a4tsesfkBDJFlsIYSd1yDo+mI4xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JnITepBDTBzqK1D36lSF9WFE87Iuq6BB/396RIYI8vZz3bW+GE4+WVDNzie4g+zXQ5buxMX0KGfv3ROHarTx+b8xpyeO6jW4WjWXDB/6Y4XfPK75bOeADVjtAdj9kaxVzPZF11OOuQLiRk6qzgcRLjMMt8LOdEkchQhcetE9RIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eWpfvWx2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WTdIMfYv9Og94XwRKfU5q0J1oSHuj3dzfyH+il/6Vf8hgRkSNE8jCllLkx4B+VP7eAyaycuh3aI6dN4baM/d2SJCNuIQayPkKTxxieWRESzQTDzAsgyJ5/rj4tsjKcZ4waqzut68P5CL90Ng9ibpqrRD7VBKOZgAnSexVjVsam4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LMoPetaV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eWpfvWx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1E01F000C4;
-	Mon, 19 Oct 2026 14:01:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LMoPetaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB3F1F000C9;
+	Mon, 19 Oct 2026 14:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418488;
-	bh=BYPnPnJA1lC5apAC3z/r397eqYHitsMnh0hxAWm5NYQ=;
+	s=k20260515; t=1792418490;
+	bh=fXSy8vXI5Q3X55qaJS0tzwo7fN8/NY8JaWm6glYGfgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eWpfvWx2iuDiZ6SwWUKtGLLsJU9uCEuy4/hjTa6VvAhxIVwHycnTJEvLjdwgqhBZM
-	 I9gY1DATQb66F0oR4CSv/43dAs5KGmBF0RazWD3bc5CDs7FqRj/shE6IqXUJMV7ErW
-	 X88g44KUQIJ42e1OoeTi9ZThu5ZOvr5IsRNRpd25txbsPetsFKbn43rBetUuLWigPM
-	 jLCatueMBoihQOvFGumcKEQpskPiLSm7CapORX/cr9/wIOXB2RD330NTF8v+8NEXnI
-	 VmHSxwF/dCwamf8S74KiByxiyjwnBc3uMtIcKPxWC3Si6BYutRox2vqrzt4ihhSlPU
-	 ornXaAHX6SRxQ==
+	b=LMoPetaV3eqnwrygwrwGSkQUuE4LPhPZxP631t06heeD7/3Pa0OQA95gNKUYf0e1f
+	 0AMXVWmdqhGFKVjvyu2nwEIuBTTQNCAoSH8JwFKMKj+UyMd3RAH4l4ZXSV7zpjqNym
+	 B7um9oGcA+5LsjfIXQEIBoFMXY55reguXq3TYr/FbgIiDGTn989zSLUHDVZ9B5fahQ
+	 O93rDdtBhRymuXUGlh0iJoL2JI3YiJ/5UBbzUgkAHyAtfsYmt4zrZ2tLuu2D4aqxfg
+	 8+okA3hCeyOubW3sr084Hahoec/LvWnpw6qIf2is9pmmRKhft6gnqmHGBPgqAilNZo
+	 XATcwrN0pGjEQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Haberland <sth@linux.ibm.com>,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Thomas Zimmermann <tzimmermann@suse.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hca@linux.ibm.com,
-	gor@linux.ibm.com,
-	agordeev@linux.ibm.com,
-	linux-s390@vger.kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] s390/dasd: Snapshot intrc before freeing the request block
-Date: Mon, 19 Oct 2026 09:49:35 -0400
-Message-ID: <20261019135441.1420968-284-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/sysfb: simpledrm: Validate mmap size against framebuffer size
+Date: Mon, 19 Oct 2026 09:49:36 -0400
+Message-ID: <20261019135441.1420968-285-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -50,465 +52,529 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit dc3e3f7306cb74066f231251602b1be5aaec7bd8 ]
+[ Upstream commit 127d52f9c64b1d9aab6226c4a1f38c37fb7254dc ]
 
-__dasd_cleanup_cqr() maps the completion result to a block status by
-reading cqr->intrc, but only after discipline->free_cp() has returned the
-request block to its memory pool (dasd_eckd_free_cp() ends in
-dasd_sfree_request()). On SMP another CPU can reallocate that block and
-overwrite cqr->intrc before it is read, completing the request with the
-wrong error. proc_bytes is already snapshotted before free_cp() for the
-same reason; do the same for intrc.
+The size of the mmap'ed framebuffer could be smaller than the minimum
+required framebuffer size. Validate the resource size against the
+framebuffer size.
 
-Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://patch.msgid.link/20260805111612.1285190-5-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Buggy firmware that triggers this check should be fixed up with a quirk
+on a case-by-case base.
+
+v3:
+- fix size checks (Sashiko)
+- improve error message for alignment check (Thierry)
+- do not store aligned size value
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Suggested-by: Sashiko <sashiko-bot@kernel.org>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20260625094509.157581-6-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **5.10.270** (`pending-5.10`). The DASD cleanup path
-here still reads `cqr->intrc` after the CQR is returned to the per-
-device pool, so this is a real, self-contained race fix for this
-checkout.
+I have enough to decide: this is a 6.18.53 tree, the OOB check is
+missing there, and the patch is a small probe-time bounds fix.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Record: **[s390/dasd] [Snapshot] Snapshot `intrc` before freeing the
-  request block**
-- Subsystem: `s390/dasd` (IBM mainframe block driver). Action is
-  “snapshot”, which here means copy a field before free so it cannot be
-  overwritten — a use-after-reuse fix.
+
+Record: **[drm/sysfb / simpledrm] [Validate] [reject probe when firmware
+framebuffer size exceeds the mapped memory resource]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Record:
-  - `Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>` (DASD co-
-    maintainer)
-  - `Signed-off-by: Stefan Haberland <sth@linux.ibm.com>` (DASD
-    maintainer / author)
-  - `Link:
-    https://patch.msgid.link/20260805111612.1285190-5-sth@linux.ibm.com`
-  - `Signed-off-by: Jens Axboe <axboe@kernel.dk>` (block maintainer;
-    applied to the block tree)
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable` (absence
-    expected for this review)
-  - Ignore pipeline `Signed-off-by: Sasha Levin` if present
+
+Record:
+- **Fixes:** none (expected for this review)
+- **Cc: stable:** none (expected; sibling patches in the same series
+  *did* have it)
+- **Suggested-by:** Sashiko `<sashiko-bot@kernel.org>` — static-analysis
+  bot found the missing bounds check
+- **Reviewed-by:** Thierry Reding, Maxime Ripard, Javier Martinez
+  Canillas (DRM maintainers)
+- **Link:**
+  `https://patch.msgid.link/20260625094509.157581-6-tzimmermann@suse.de`
+  — v3 patch 5/7 of “Various improvements”
+- **Signed-off-by:** Thomas Zimmermann (author/subsystem maintainer)
+- **Reported-by / Tested-by:** none
+- Ignored pipeline tags: `[Upstream commit 127d52f9c64b…]`, `Signed-off-
+  by: Sasha Levin`
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record:
-  - **Bug:** `__dasd_cleanup_cqr()` maps completion to `blk_status_t` by
-    reading `cqr->intrc` *after* `discipline->free_cp()`.
-    `dasd_eckd_free_cp()` ends in `dasd_sfree_request()`, which returns
-    the CQR to the device CCW memory pool.
-  - **Failure mode:** On SMP another CPU can reallocate that block and
-    overwrite `intrc`; the original request is completed with the
-    **wrong error**.
-  - **Root cause:** Same class of bug already handled for `proc_bytes`
-    (snapshotted before `free_cp()`); `intrc` was left unsaved.
-  - **Version info:** None in the message. The pattern exists since
-    detailed I/O-error mapping (2013).
+
+Record:
+- **Bug:** firmware/DT can advertise width/height/stride whose product
+  is larger than the mmap’d `IORESOURCE_MEM` / reserved-memory region.
+- **Symptom:** driver maps only `resource_size(mem)` but later draws
+  `height * stride` bytes → out-of-bounds access of the mapping.
+- **Author note:** firmware that trips this should get a quirk, not a
+  silent OOB.
+- **v3:** Sashiko fixed inverted size checks; Thierry improved the ALIGN
+  error text; aligned size is no longer stored.
+- **Versions:** none stated. Driver exists since 2021 (`11e8f5fd223b`,
+  “drm: Add simpledrm driver”).
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: **Not hidden.** Explicit race / use-after-reuse. Cover letter
-  for the 19-patch series (`[PATCH 00/19] s390/dasd: ESE Performance
-  improvements`) states: “The first 4 patches are fixes for existing
-  bugs in this area.” This is patch 04/19. Later patches are ESE
-  performance features; this one is standalone.
+
+Record: Not disguised. It is an explicit bounds check. Cover letter
+groups it with “improve validation of values provided by the device
+firmware.” Sashiko’s v1/v2 review called the missing/inverted check a
+**High** OOB kernel write.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-- Record:
-  - File: `drivers/s390/block/dasd.c` only (`+8 / -2`)
-  - Function: `__dasd_cleanup_cqr()`
-  - Scope: **single-file surgical fix**
+
+Record:
+- **File:** `drivers/gpu/drm/sysfb/simpledrm.c` — **+24 / −0**
+- **Function:** `simpledrm_device_create()`
+- **Scope:** single-file surgical probe-path validation
+- Adds `#include <linux/overflow.h>` and local `u64 size`
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record:
-  - **Before:** `proc_bytes = cqr->proc_bytes;` then `status =
-    ...->free_cp(cqr, req);` then `switch (cqr->intrc)` on the failed
-    path (`status == 0`).
-  - **After:** Also `intrc = cqr->intrc;` before `free_cp()`, then
-    `switch (intrc)`.
-  - Path: block-layer completion / error mapping after I/O or ERP; not
-    an init-only path.
+
+Record:
+1. After stride is known: compute `size = height * stride` with
+   `check_mul_overflow`; fail `-EINVAL` on overflow. Then `ALIGN(size,
+   PAGE_SIZE) < PAGE_SIZE` catches wrap of page-align.
+2. System-memory path (`devm_memremap`): if `size > resource_size(mem)`,
+   fail before mapping.
+3. I/O-memory path (`devm_ioremap_wc`): same check after the optional
+   `devm_request_mem_region` fallback.
+
+Before: map whatever firmware gave, then blit using `fb_pitch`/`height`.
+After: refuse to probe if the logical FB does not fit in the mapping.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record:
-  - **Category:** Use-after-free / use-after-reuse (custom memory pool),
-    with a race.
-  - **Mechanism:** `dasd_sfree_request()` drops `device->mem_lock` after
-    `dasd_free_chunk(&device->ccw_chunks, ...)`.
-    `dasd_smalloc_request()` on another CPU takes that lock, allocates
-    the same chunk, and `memset(cqr, 0, sizeof(*cqr))`, then may set a
-    new `intrc`. Cleanup then maps garbage/zero/`intrc` from a
-    *different* request.
-  - Verified in this tree: `dasd_eckd_free_cp()`, `dasd_fba_free_cp()`,
-    and `dasd_diag_free_cp()` all call `dasd_sfree_request()` after
-    capturing `status = cqr->status == DASD_CQR_DONE`. `status` is
-    already a return value; only `intrc` was still loaded from freed
-    memory.
+
+Record: **Memory safety / out-of-bounds + integer overflow**
+- `drm_sysfb_plane_helper_atomic_update()` → `drm_fb_blit()` into
+  `sysfb->fb_addr` using `sysfb->fb_pitch`
+- `drm_sysfb_plane_helper_atomic_disable()` `memset_io` over `height`
+  lines of `fb_pitch`
+- Mapping length is `resource_size(mem)`, not `height*stride`
+- v2 had the comparison **inverted** (`resource_size(mem) > size`); v3
+  is `size > resource_size(mem)`
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-- Record:
-  - **Obviously correct:** copies the already-accepted `proc_bytes`
-    pattern.
-  - **Minimal:** one local, one assignment, switch operand change,
-    comment.
-  - **Regression risk:** very low. Does not change locking, APIs, or
-    success/fail (`status` was already snapshotted via the return
-    value).
-  - Context in this tree uses `BLK_STS_NEXUS` (not
-    `BLK_STS_RESV_CONFLICT`, renamed later in `7ba150834b840`). Backport
-    needs that context tweak only; the logic is identical.
+
+Record: Obviously correct after v3. Minimal. Probe-time only. Regression
+risk: probe fail (no simpledrm display) on undersized firmware resources
+that “worked” while writing past the map. Author documents quirks. No
+API/locking/struct changes.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-- Record:
-  - `__dasd_cleanup_cqr` since `8e09f21574ea30` (2008).
-  - `switch (cqr->intrc)` after `free_cp()`: `d1ffc1f8660e74`
-    (“block/dasd: detailed I/O errors”, 2013) then `2a842acab109f4`
-    (blk_status_t, 2017).
-  - `proc_bytes` snapshot: `5e6bdd37c5526` (2020, ESE data-corruption
-    fix, `Cc: stable`).
-  - Bug present for ~13 years; `proc_bytes` was fixed in 2020 and **is**
-    in this tree; `intrc` was not.
+
+Record: Mapping code from Thomas Zimmermann / Thierry Reding (2022–2023,
+originally `drivers/gpu/drm/tiny/simpledrm.c`). Bug is **missing
+validation since the driver was added** (`11e8f5fd223bd`, 2021-05-01),
+not a recent regression.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: No `Fixes:` tag. Introducing commits `d1ffc1f8660e74` and
-  `2a842acab109f4` **are** ancestors of HEAD (`git merge-base --is-
-  ancestor` exit 0).
+
+Record: No `Fixes:` tag. Buggy behavior is the original probe path. Not
+introduced after 6.18 branched.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record: Recent `dasd.c` work is other DASD correctness fixes (ESE,
-  hanging unbind, etc.). This patch does not depend on them. Series
-  patches 02–03 touch `dasd_erp.c` / `dasd_eckd.c`, not this hunk.
+
+Same v3 series (msgid `20260625094509.157581`):
+
+| Patch | Subject | In v6.18.53? |
+|---|---|---|
+| 1/7 | Improve framebuffer-size validation | **YES** (`8d65b8d1722d8`,
+Cc: stable v5.14+) |
+| 2/7 | Improve panel-size validation | **YES** (`54e32ad5e0c74`, Cc:
+stable v6.4+) |
+| 3/7 | Inline `simplefb_get_validated_int()` | NO — cleanup only, not
+required |
+| 4/7 | Improve stride validation | **YES** (`6892f0a2f6b59`, Cc: stable
+v6.1+) |
+| **5/7** | **This mmap-size check** | **NO** |
+| 6–7/7 | Panel orientation | new feature, not this commit |
+
+Record: Standalone vs this tree. Inline helper is not a prerequisite
+(diff vs v6.18.53 does not touch those call sites).
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Stefan Haberland is listed in MAINTAINERS for S390 DASD (`M:
-  Stefan Haberland`, `M: Jan Hoeppner`). Jan Höppner reviewed. High-
-  confidence maintainer fix.
+
+Record: Thomas Zimmermann authored simpledrm (2021) and maintains
+drm/sysfb. Related: ofdrm overflow used this same `check_mul_overflow`
+pattern.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: **Standalone.** Needs only `__dasd_cleanup_cqr` + `cqr->intrc`
-  after `free_cp()`, both present. Not blocked on ESE full-track patches
-  05–19. Applied by Axboe as `dc3e3f7306cb74066f231251602b1be5aaec7bd8`
-  (block tree); that SHA is not in this checkout, which is expected.
+
+Record: Needs `check_mul_overflow` / `overflow.h` (present in 6.18).
+Needs `simpledrm_device_create` layout after stride validation (present
+at v6.18.53). No new helpers. **Can apply standalone to this tree.**
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record:
-  - Lore/msgid: `20260805111612.1285190-5-sth@linux.ibm.com` (patch
-    04/19; msgid `-5` is 1-based including cover).
-  - `b4 mbox` retrieved a 40-message thread (WebFetch to lore returned
-    403).
-  - Cover letter: first four patches are **existing bug fixes**; rest is
-    ESE performance.
-  - Jens Axboe: “Applied, thanks!” and listed this as commit
-    `dc3e3f7306cb74066f231251602b1be5aaec7bd8`.
-  - No NAK. Sashiko flagged **pre-existing** UAFs (flush path `cqr->dq`
-    after free, `req->q` after `blk_mq_end_request`, etc.) — not
-    introduced here; author said leftover findings would be handled
-    separately.
+
+Record:
+- `b4 dig -c 127d52f9…` →
+  https://patch.msgid.link/20260625094509.157581-6-tzimmermann@suse.de
+- Series: v1 (3 patches, 2026-06-19) → v2 (6, 2026-06-22) → v3 (7,
+  2026-06-25). Committed version is v3.
+- v1: Sashiko asked to compare firmware size vs mapped resource (High:
+  OOB writes on plane update).
+- v2: check added **inverted**; Sashiko: rejects valid larger resources,
+  allows `size > resource_size`.
+- v3: comparison corrected; ALIGN value not stored.
+- lore.kernel.org / spinics WebFetch: 403/500. Content recovered via `b4
+  dig`, WebSearch snippets, and the ratatoskr thread archive.
+- No NAK. No reviewer `Cc: stable` on this specific patch (unlike 1/7,
+  2/7, 4/7).
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record: DASD maintainers (author + Reviewed-by Höppner); linux-block
-  via Axboe. Correct audience.
+
+Record (`b4 dig -w`): dri-devel; Thierry, Maxime, Javier, airlied,
+simona, Maarten Lankhorst, Neil Armstrong; Sashiko. Subsystem
+maintainers were on To/Cc and Reviewed-by.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: No user/syzbot report. Bug is pool reuse, not `kfree`, so
-  KASAN often will not fire. Analysis is from code review by the
-  maintainer.
+
+Record: No syzbot/bugzilla/user crash. Finding is Sashiko review of this
+series. Mechanism verified in tree (blit/memset past `resource_size`).
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: 19-patch ESE series. This hunk does not need patches 05–19.
-  Independent of 01–03 for apply/correctness.
+
+Record: Patches 6–7 (panel orientation) are features, not needed.
+Patches 1/2/4 already in 6.18.53. Patch 3 is unused cleanup.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: **UNVERIFIED** — lore.kernel.org/stable WebFetch returned 403.
-  No evidence in the retrieved thread of a stable NAK.
+
+Record: lore.kernel.org/stable search not available (HTTP 403).
+Unverified whether stable@ discussed this SHA. Sibling validation
+patches were already taken into 6.18.53 via `Cc: stable`.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-- Record: `__dasd_cleanup_cqr()` only.
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `simpledrm_device_create()` (modified). Callers of the mapped
+buffer: `drm_sysfb_plane_helper_atomic_update`, `atomic_disable`,
+`get_scanout_buffer`.
 
 **Step 5.2: TRACE CALLERS**
-- Record (this tree):
-  1. Block tasklet (`dasd_block_tasklet` path ~2979): `dq = cqr->dq;`
-     lock; `__dasd_cleanup_cqr(cqr);` unlock. Normal I/O completion.
-  2. `dasd_flush_block_queue()` ~3085: same cleanup during flush/unbind.
-- Called from tasklet / flush, not a rare ioctl-only path.
+
+Record:
+- `simpledrm_probe()` → `simpledrm_device_create()` — platform probe for
+  `simple-framebuffer` / sysfb
+- Plane helpers in `drm_sysfb_modeset.c` — atomic update/disable on
+  every scanout
+
+Not IRQ. Probe + modeset. Userspace DRM clients and in-kernel
+fbdev/client setup trigger blits.
 
 **Step 5.3: TRACE CALLEES**
-- Record: `dasd_profile_end` (before free), `discipline->free_cp` →
-  `dasd_sfree_request` → pool free, then `blk_mq_end_request` /
-  `blk_mq_complete_request` / `blk_update_request`.
+
+Record: `check_mul_overflow`, `ALIGN`, `resource_size`, `devm_memremap`
+/ `devm_ioremap_wc`. No new locks or allocations beyond existing probe.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: userspace I/O → `do_dasd_request` (`blk_mq_ops.queue_rq`) →
-  `build_cp` / `dasd_smalloc_request` → interrupt/tasklet →
-  `__dasd_cleanup_cqr`. **Reachable from ordinary block I/O** on DASD.
-  Default `nr_hw_queues = 4`, so cleanup on one queue does **not**
-  serialize `smalloc` on another (`do_dasd_request` only holds that
-  queue’s `dq->lock`; pool uses `device->mem_lock`). Internal CCWs also
-  `smalloc` without `dq->lock`. Race is real on SMP.
+
+Record: Reachable whenever `CONFIG_DRM_SIMPLEDRM` binds. DT `simple-
+framebuffer` (ARM/QEMU/etc.) and `sysfb_create_simplefb()` (EFI/VESA)
+both hit this function. **EFI/VESA path already checks `height*stride`
+vs VRAM in `sysfb_create_simplefb()`**
+(`drivers/firmware/sysfb_simplefb.c` lines 98–102). **DT `reg` /
+`memory-region` does not.** That is the hole.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: `proc_bytes` already snapshotted in the same function.
-  `dasd_erp.c` also snapshots `proc_bytes` around ERP. No other
-  `cqr->intrc` use after `free_cp()` in this function.
+
+Record:
+- **vesadrm / efidrm:** `drm_sysfb_get_visible_size_si(...,
+  resource_size(res))` already caps visible size.
+- **ofdrm:** `check_mul_overflow(linebytes, height, &fb_size)` —
+  **already in v6.18.53** (`ded6ad826fe0f`, Cc: stable). Message says it
+  matches simpledrm.c — i.e. this check in mainline — while 6.18.53
+  still lacks it in simpledrm.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: **Yes.** `drivers/s390/block/dasd.c` `__dasd_cleanup_cqr`
-  (around 2782–2835):
 
-```2792:2797:drivers/s390/block/dasd.c
-        proc_bytes = cqr->proc_bytes;
-        status = cqr->block->base->discipline->free_cp(cqr, req);
-        if (status < 0)
-                error = errno_to_blk_status(status);
-        else if (status == 0) {
-                switch (cqr->intrc) {
-```
-
-- `make kernelversion` / Makefile: **5.10.270**. `git describe HEAD`:
-  `p-5.10-1-gce56b7a73b64b`.
-- Introduced: 2013 (`d1ffc1f8660e74`); present for the entire 5.10
-  lifetime.
+Record:
+- `git describe HEAD` → **v6.18.53-5049-g0f0bdc2b0dffb**; `Makefile`
+  **6.18.53**
+- `git merge-base --is-ancestor 8f06389364d85 v6.18.53` → **not in
+  6.18.53**
+- At v6.18.53, `simpledrm_device_create()` maps `resource_size(mem)`
+  with **no** `height*stride` check (verified by reading that version of
+  the file)
+- Bug present since simpledrm (v5.14-era), well before 6.18
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: **Minor context only.** This tree maps `-EPERM` to
-  `BLK_STS_NEXUS` without the later reservation comment. Same function
-  shape. Expected apply: fuzz on the `case -EPERM` block, or a 3-line
-  manual edit. No structural rework.
+
+Record: **Clean apply.** v6.18.53 already has stride/width/height
+validation; insertion point after `stride = pitch` matches. `overflow.h`
+exists. Only extra autosel commit is the unused inline cleanup.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: `proc_bytes` snapshot is here (`5e6bdd37c5526`). `intrc` is
-  still read after free. No substitute fix.
+
+Record: Dimension/stride caps yes; mmap-vs-resource check **no**. No
+alternate fix for this OOB.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: `drivers/s390/block/dasd*` — **IMPORTANT** on s390 (primary
-  disk driver for IBM Z). Not core mm/VFS, but production storage for
-  every DASD user.
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: Mature driver, still receiving correctness fixes. Not staging.
+Record: **drm/sysfb / simpledrm** — generic firmware framebuffer.
+**IMPORTANT** (not core mm/net, but default/fallback display on many DT
+and some x86 firmware systems).
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Active in 2026 (validation series, ofdrm overflow, vesadrm).
+Driver itself is mature (2021).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: **Driver-specific / platform-specific:** s390 DASD
-  (`CONFIG_DASD`). Default 4 HW queues. Typical enterprise mainframe
-  disks.
+**Step 8.1: WHO IS AFFECTED**
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record:
-  - Failed block I/O (`free_cp` returns 0) **and** another CPU
-    reallocates the CQR from the 2-page `ccw_chunks` pool before `intrc`
-    is read.
-  - Window is a few instructions, but the pool is tiny and multi-queue
-    I/O makes reuse likely under load.
-  - Unprivileged users can issue disk I/O; they cannot freely choose the
-    race. Not a typical local-root primitive; it is a
-    correctness/memory-safety bug.
+Record: **Driver-specific**, `CONFIG_DRM_SIMPLEDRM`. Highest relevance:
+DT `simple-framebuffer` with mismatched `memory-region`/`reg` vs
+width/height/stride. EFI/VESA sysfb already rejects undersized VRAM
+before creating the device.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record:
-  - `status` is already captured, so success vs fail of the request
-    stays correct.
-  - Wrong `intrc` maps `-EPERM` (stolen DASD lock → `BLK_STS_NEXUS`),
-    `-ENOLINK` (failfast/transport), `-ETIMEDOUT` to whatever the reused
-    block contains (usually 0 after `memset` → `BLK_STS_IOERR`).
-  - Stolen-lock reported as generic I/O error can break HA/cluster
-    handling (retry on a volume another system owns).
-  - **Severity: HIGH** (wrong block completion status; use-after-reuse).
-    Not a panic by itself.
+**Step 8.2: TRIGGER CONDITIONS**
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Record:
-  - **Benefit:** High for s390 DASD — correct
-    timeout/transport/reservation errors; closes a real SMP reuse race.
-  - **Risk:** Very low — ~6 lines, local stack copy, same pattern as
-    `proc_bytes`.
-  - **Ratio:** Strongly favors backport.
+Record: Probe + later plane update. Trigger is **buggy/mismatched
+firmware or DT**, not a normal userspace syscall. Unprivileged users do
+not invent the resource; they can trigger the blit after a bad probe
+succeeds. Not a timing race.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record: **OOB write** into/beyond ioremap/memremap (`drm_fb_blit` /
+`memset_io`) → **HIGH** (crash, corruption, possible security). Overflow
+of `height*stride` → **HIGH** in principle; with U16 height and INT_MAX
+stride already in 6.18.53, u64 overflow is unlikely; the resource-size
+check is the real fix.
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit:** HIGH for mismatched DT/firmware; closes a hole sibling
+  drivers already close; ofdrm’s copy of the overflow check is already
+  in this tree.
+- **Risk:** LOW–MEDIUM — 24 lines, probe-only; possible **black screen**
+  if firmware resource is smaller than `height*stride` but the machine
+  still “displayed something.” Author: add quirks. That is still better
+  than kernel OOB writes.
+- **Ratio:** benefit outweighs risk for 6.18.y.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 9.1: EVIDENCE**
 
 **FOR:**
-- Real SMP use-after-reuse after `dasd_sfree_request()`.
-- Wrong `blk_status_t` on failed I/O, including stolen-lock (`-EPERM`)
-  vs generic `IOERR`.
-- Tiny, obviously correct, matches existing `proc_bytes` snapshot in
-  this file.
-- DASD maintainer + co-maintainer review; Axboe applied it.
-- Author classified it as a bug fix (series patches 1–4), not an ESE
-  feature.
-- Buggy code is in 5.10.270; default 4 HW queues make the race
-  plausible.
-- No new API/feature.
+- Real OOB on plane update when mapped size < `height*stride` (verified
+  blit/memset paths)
+- Sashiko High finding; v3 fixed inverted compare
+- 24 lines, probe-time, no APIs
+- Reviewed by DRM maintainers; author is simpledrm maintainer
+- Same validation series already partly in 6.18.53
+- ofdrm overflow backport in this tree explicitly follows simpledrm
+- Code and context exist; applies cleanly; no extra series patches
+  required
 
 **AGAINST:**
-- No `Reported-by` / syzbot / panic.
-- Typical visible effect is misclassified errors, not a crash.
-- Original patch context uses `BLK_STS_RESV_CONFLICT` (rename not in
-  5.10).
-- Related pre-existing UAFs (flush `cqr->dq`, `req->q`) are **not**
-  fixed here — separate issues, not a reason to drop this snapshot.
+- No `Fixes:` / no user crash dump (absence is not a veto per rules)
+- Author did not `Cc: stable` (sibling patches did; likely because this
+  check was added mid-series)
+- Probe failure on quirky firmware
+- No syzbot reproducer
 
 **UNRESOLVED:**
-- Stable-list discussion (lore 403).
-- How often the race hits in production (unverified; maintainer asserts
-  it).
+- lore/stable HTTP fetch failed; no confirmation of stable@ discussion
+- No evidence of a specific board that hits this today (unverified)
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — same snapshot as
-   `proc_bytes`; reviewed; in mainline block tree.
-2. Fixes a real bug that affects users? **PASS** — wrong completion
-   status on DASD I/O.
-3. Important (crash, security, corruption, deadlock)? **PASS** — use-
-   after-reuse plus misreported reservation/timeout/transport errors on
-   the s390 disk path.
-4. Small and contained? **PASS** — one function, ~6 lines of logic.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — hunk is here; map
-   `BLK_STS_RESV_CONFLICT` context to `BLK_STS_NEXUS`.
+**Step 9.2: STABLE RULES CHECKLIST**
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: Not a device-ID/quirk/DT/build/doc exception. Ordinary small
-  correctness fix.
+1. Obviously correct and tested? **PASS** — v3 comparison is correct;
+   three DRM R-bs
+2. Real bug affecting users? **PASS** — OOB if DT/firmware sizes
+   disagree with the memory resource
+3. Important (crash/security/corruption)? **PASS** — kernel OOB write,
+   severity HIGH
+4. Small and contained? **PASS** — +24 lines, one function
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** — present and matching at v6.18.53
+
+**Step 9.3: EXCEPTION CATEGORIES**
+
+Record: None (not a device ID/quirk/DT/build/doc exception). It is a
+normal memory-safety fix.
 
 **Step 9.4: DECISION**
-Backport. The bug exists in this 5.10 tree, the fix is surgical and
-independent of the ESE performance series, and the risk is negligible
-compared with completing I/O with a stale `intrc`.
+
+This is a small, reviewed bounds check for a real OOB in simpledrm’s
+probe/scanout path. The buggy code is in 6.18.53; prerequisites are
+already there; ofdrm already received the same overflow approach.
+Firmware-quirk probe failure is the main risk and is acceptable versus
+out-of-bounds kernel writes.
 
 ---
 
-## What the commit solves and why it matters here
+### What the commit solves for this tree
 
-`__dasd_cleanup_cqr()` already saves `proc_bytes` before `free_cp()`
-because that call returns the CQR to a 2-page per-device pool. It still
-reads `cqr->intrc` afterward. With default four blk-mq queues, another
-CPU can `dasd_smalloc_request()` the same chunk (`memset` to zero, then
-a new `intrc`). Failed requests then get the wrong `blk_status_t`
-(timeout, transport, or stolen lock reported as generic I/O error). That
-is a real SMP race on the main s390 disk driver, not an ESE feature.
+On **6.18.53**, `simpledrm_device_create()` still maps only
+`resource_size(mem)` and then `drm_fb_blit()` / `memset_io()` walk
+`height * stride` bytes. If DT `simple-framebuffer` (or other platform
+data not going through `sysfb_create_simplefb()`) gives a smaller
+resource, that is an out-of-bounds kernel write. This patch fails probe
+instead.
 
-## Stable rules / risk vs benefit
+### Stable rules / risk
 
-Meets the stable bar: real bug, small, no new API, applies with a
-trivial `BLK_STS_NEXUS` context tweak. Benefit is correct I/O error
-reporting and closing use-after-reuse; regression risk is a local
-integer copy.
+Meets the rules: small, obviously correct after v3, no new API, applies
+cleanly here. Benefit is preventing corruption/oops on mismatched
+firmware; risk is losing simpledrm on those same configs (quirks if
+needed).
 
-## Concerns
+### Concerns
 
-- Original diff context uses `BLK_STS_RESV_CONFLICT`; this tree still
-  has `BLK_STS_NEXUS`. Adjust context; do not pull the rename.
-- Do not pull series patches 05–19 (ESE performance).
-- Pre-existing `cqr->dq` use after free in `dasd_flush_block_queue()` is
-  out of scope.
+- Not originally `Cc: stable` (do not treat as a no).
+- Inline helper commit is **not** required.
+- ALIGN overflow check is largely redundant after U16/INT_MAX caps
+  already in 6.18.53; harmless.
 
-## Verification
+---
 
-- **[Phase 1]** Tags: Reviewed-by Höppner; SOB Haberland + Axboe; Link
-  msgid `...1285190-5`; no Fixes/Reported-by.
-- **[Phase 1]** Cover letter via `b4 mbox`: “first 4 patches are fixes
-  for existing bugs.”
-- **[Phase 2]** Diff: `intrc` snapshot in `__dasd_cleanup_cqr` only;
-  `+8/-2`.
-- **[Phase 2]** This tree: `free_cp` → `dasd_sfree_request` →
-  `dasd_free_chunk(&device->ccw_chunks)`; `smalloc` `memset`s the CQR.
-- **[Phase 3]** `git blame`: `switch (cqr->intrc)` from `2a842acab109f4`
-  / `d1ffc1f8660e74`; `proc_bytes` from `5e6bdd37c5526`.
-- **[Phase 3]** `git merge-base --is-ancestor` those SHAs vs HEAD: all
-  present.
-- **[Phase 3]** Author is MAINTAINERS DASD `M:`.
-- **[Phase 4]** `b4 mbox` 40 messages; Axboe applied as `dc3e3f7306cb`;
-  Sashiko notes are pre-existing, not this hunk.
-- **[Phase 4]** WebFetch lore/stable: 403 — UNVERIFIED.
-- **[Phase 5]** Callers: block tasklet ~2979, flush ~3085; `queue_rq =
-  do_dasd_request`; `nr_hw_queues = 4`.
-- **[Phase 6]** `make kernelversion` 5.10.270; buggy `switch
-  (cqr->intrc)` at dasd.c:2797.
-- **[Phase 6]** `BLK_STS_RESV_CONFLICT` absent here
-  (`include/linux/blk_types.h` has `BLK_STS_NEXUS` only).
-- **[Phase 8]** Failure mode verified: `status` from `free_cp` return;
-  only error *class* races.
+Verification:
+- [Phase 1] Tags: Suggested-by Sashiko; R-b Thierry, Maxime, Javier;
+  Link patch 5/7 v3; no Fixes/Cc: stable
+- [Phase 2] +24 lines in `simpledrm_device_create`: overflow + `size >
+  resource_size` on both mem paths
+- [Phase 3] `git describe`/Makefile: **6.18.53**; `merge-base --is-
+  ancestor 8f063893 v6.18.53` = not present; file at v6.18.53 lacks the
+  check
+- [Phase 3] Series 1/2/4 already in v6.18.53; patch 3 (inline) not
+  needed (`git diff v6.18.53` only inlines helpers)
+- [Phase 3] Blame: mapping from 2022–23 simpledrm; driver
+  `11e8f5fd223bd` (2021)
+- [Phase 4] `b4 dig -c 127d52f9`: lore msgid; v1→v3; inverted check in
+  v2
+- [Phase 4] WebSearch/ratatoskr: Sashiko High OOB; drm_fb_memcpy/blit
+  past map
+- [Phase 4] lore/spinics WebFetch 403/500 — UNVERIFIED full mbox;
+  substance recovered from b4 + archives
+- [Phase 4] stable@ search UNVERIFIED (lore 403)
+- [Phase 5] `simpledrm_probe` → create; blit/memset in
+  `drm_sysfb_modeset.c` use `fb_addr`/`fb_pitch`
+- [Phase 5] `sysfb_create_simplefb()` already rejects `length > size`;
+  DT `simplefb_get_memory_of()` does not
+- [Phase 5] ofdrm `check_mul_overflow` **is** in v6.18.53
+  (`ded6ad826fe0f`)
+- [Phase 6] `check_mul_overflow` in `include/linux/overflow.h` at
+  v6.18.53
+- [Phase 8] Failure: OOB write on plane update, HIGH; trigger =
+  mismatched firmware/DT
+- UNVERIFIED: specific product firmware known to undersize the resource
 
 **YES**
 
- drivers/s390/block/dasd.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/sysfb/simpledrm.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
-index e7845c8ccc9ff..f6e86692a21d7 100644
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -2736,17 +2736,23 @@ static void __dasd_cleanup_cqr(struct dasd_ccw_req *cqr)
- 	struct request *req;
- 	blk_status_t error = BLK_STS_OK;
- 	unsigned int proc_bytes;
--	int status;
-+	int status, intrc;
+diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/simpledrm.c
+index 22f8caab39be0..91f114ab99a3e 100644
+--- a/drivers/gpu/drm/sysfb/simpledrm.c
++++ b/drivers/gpu/drm/sysfb/simpledrm.c
+@@ -5,6 +5,7 @@
+ #include <linux/of_clk.h>
+ #include <linux/minmax.h>
+ #include <linux/of_reserved_mem.h>
++#include <linux/overflow.h>
+ #include <linux/platform_data/simplefb.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+@@ -626,6 +627,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 	u16 width_mm = 0, height_mm = 0;
+ 	struct device_node *panel_node;
+ 	const struct drm_format_info *format;
++	u64 size;
+ 	struct resource *res, *mem = NULL;
+ 	struct drm_plane *primary_plane;
+ 	struct drm_crtc *crtc;
+@@ -716,6 +718,14 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 		}
+ 		stride = pitch;
+ 	}
++	if (check_mul_overflow(height, stride, &size)) {
++		drm_err(dev, "framebuffer size exceeds maximum\n");
++		return ERR_PTR(-EINVAL);
++	}
++	if (ALIGN(size, PAGE_SIZE) < PAGE_SIZE) {
++		drm_err(dev, "page-aligned framebuffer exceeds maximum\n");
++		return ERR_PTR(-EINVAL);
++	}
  
- 	req = (struct request *) cqr->callback_data;
- 	dasd_profile_end(cqr->block, cqr, req);
+ 	sysfb->fb_mode = drm_sysfb_mode(width, height, width_mm, height_mm);
+ 	sysfb->fb_format = format;
+@@ -741,6 +751,13 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
  
-+	/*
-+	 * free_cp() returns the request block to its memory pool, so snapshot
-+	 * everything still needed from cqr before calling it - another CPU can
-+	 * reallocate and overwrite the block right after.
-+	 */
- 	proc_bytes = cqr->proc_bytes;
-+	intrc = cqr->intrc;
- 	status = cqr->block->base->discipline->free_cp(cqr, req);
- 	if (status < 0)
- 		error = errno_to_blk_status(status);
- 	else if (status == 0) {
--		switch (cqr->intrc) {
-+		switch (intrc) {
- 		case -EPERM:
- 			/*
- 			 * DASD doesn't implement SCSI/NVMe reservations, but it
+ 		drm_dbg(dev, "using system memory framebuffer at %pr\n", mem);
+ 
++		if (size > resource_size(mem)) {
++			drm_err(dev,
++				"framebuffer size of %llu exceeds memory range %pr\n",
++				size, mem);
++			return ERR_PTR(-EINVAL);
++		}
++
+ 		screen_base = devm_memremap(dev->dev, mem->start, resource_size(mem), MEMREMAP_WC);
+ 		if (IS_ERR(screen_base))
+ 			return screen_base;
+@@ -774,6 +791,13 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 			mem = res;
+ 		}
+ 
++		if (size > resource_size(mem)) {
++			drm_err(dev,
++				"framebuffer size of %llu exceeds memory range %pr\n",
++				size, mem);
++			return ERR_PTR(-EINVAL);
++		}
++
+ 		screen_base = devm_ioremap_wc(&pdev->dev, mem->start, resource_size(mem));
+ 		if (!screen_base)
+ 			return ERR_PTR(-ENOMEM);
 -- 
 2.53.0
 
