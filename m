@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2974FD79C;
-	Mon, 19 Oct 2026 13:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E075A52B1DD;
+	Mon, 19 Oct 2026 13:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418298; cv=none; b=KwBzdgWpP5DJcF6lpWoQ+8N9h4Chmfw55lbyCDR1I/RoljBPi7n46VelyoXMH/lQT15ZHcHHU2B2ZVeMKUVSS1Mkr965rDMSjHAnFsOgEHJoUEAnNmJBD2PckXsYBRAt9ZWrcF393HcQXwunxqr26qoExBDhig+2zBtQewp74wg=
+	t=1792418299; cv=none; b=MCwXnAGC/CnSBS+z/pz2OKqScfAXOalTrCx+5dVzxBXAjUISfCrYUGha4smeXGoiScbgJCVmFOj8Bz2kSYfyUGNgtG8eLp+6fKbNnFHk8MJwkWF8co6qf9oi43oWidq5gNJjOqFgAiYL4lV/ygQQGKrjajWCB67SiiMg5t9ZP/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418298; c=relaxed/simple;
-	bh=6sFnVbt2hLiO37r4MPLryBWnzrCgJnOWgVpC4ChUDCM=;
+	s=arc-20240116; t=1792418299; c=relaxed/simple;
+	bh=C6xBtm5Cbccb4gXMB+QrHnzcjlLQrPsvCPpOmsaiaR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qe42/5dRnNPyYTU4/8+0w/1mFjn0r3F97In3WIAwj5OqU6UcWE09GcPSliHsIowcSJjrUqwb1btlOT6xu1vAC/hq4Ae6xdcU4vWVjWAM3TOwzkDSr+HusFKLWmLmhx7VAmeDEPX15xgE2YZvJjdXMw+azuDjmg9Si+46e3S0O7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U7PWeDm4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jXPiWFG1dAcP82YSR20xHeV1QUX4wksN6vwITzx52X5Ar65WQKDaw7a0OYs1KiDEcmyrS4NRYAQ4ll/LrFvbRV1M5wglxY/LPm1jLK5/0HIx7JdHbjlSWQU3cq5GwiCLERrGIfnUkB5Gr1C5D8CMgUmx4TvXBG7GBt5fDEOihoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PfM7GFhi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U7PWeDm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33B41F000C6;
-	Mon, 19 Oct 2026 13:58:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PfM7GFhi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0461F000C7;
+	Mon, 19 Oct 2026 13:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418293;
-	bh=dVpi2Qt8rGDhkBJcCF1Rc3xlJf7dXV2WsmSTuQO/f0k=;
+	s=k20260515; t=1792418296;
+	bh=wxUqKsu4NEFXwujvewbFsEEDQ6diBIStquoc9zRvv0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7PWeDm49kuuj4jBR9R+HXh1WOSqSKYKa8y/7DOG+QBxVOaWQ0K+qqIJ8PesY5Sjk
-	 goCBno4JTE/4RoRuor5OxrixqCUV83SBZZ2jFa2LSoseFtXI3Lym7TKLEBV1RL/51v
-	 ZDUEiZfTBzSP5t2P6DFijL20EPgKJ7IJt+Ioep1n27EagqR6UmEdRy3rIS/NhnKWc1
-	 Sy3hCn3PeE7ocdzWzbw+r1yxp3h+V1mQQbC4o3JVINaOOD4j3VwZKtWCMtjkRSTgaI
-	 Qo30+W37PeEZ/u3JmWhe6yJ3YhelEUBfhObQ+Ntb+HqD9x1HK/W0cYR+dIVGrVZwIG
-	 3x0feFihulq3Q==
+	b=PfM7GFhiG/Q2aWyyibQdbMSqvAqbpdXBGFXf44Zs2RRBVdWMh9BZtZd0cK3GMhOPK
+	 /2kOn0ryYSgRsrIUaXAO5W2WabA3fN7NPyS/rSpXNu1Bbey3ZXfNx60FC3eH+82i5J
+	 aw1u25jsXzYFWN4dTixeFSPmXyE5QPEBgP7LSuOMDukJTUgKZLCbNYByXG0SJigeiQ
+	 nA4JHTC27jWQos+VdoJVUfKisuVz5BRA8qhgs27GlUclRQmzhC7WErvIK23Sx8iWpR
+	 HL0Hb912ZtONpJEHoyBP0ueguzs/Hm7COvfTlAhGOaEcw1C40n+5pscT0RWy234DqM
+	 jOGLE6NgCqQmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aviv Bakal <avivb@amazon.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Will Deacon <will@kernel.org>,
+Cc: John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mark.rutland@arm.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-perf-users@vger.kernel.org,
+	georgia.garcia@canonical.com,
+	paul@paul-moore.com,
+	jmorris@namei.org,
+	serge@hallyn.com,
+	apparmor@lists.ubuntu.com,
+	linux-security-module@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] perf/arm-cmn: Add workarounds for CMN-S3 on Graviton5
-Date: Mon, 19 Oct 2026 09:47:16 -0400
-Message-ID: <20261019135441.1420968-145-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] apparmor: fix auditing of mount binary data
+Date: Mon, 19 Oct 2026 09:47:18 -0400
+Message-ID: <20261019135441.1420968-147-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,32 +56,22 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aviv Bakal <avivb@amazon.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 9d0b1714e1af16622a2d0f7317ddaa9a4b27f353 ]
+[ Upstream commit b9f2181b90ec047488dcb4fb1c631d417aff07e0 ]
 
-Graviton5 uses a customised CMN-S3 implementation where certain
-discovery registers report zeroed fields. Add the following workarounds:
+AppArmor only mediates non-binary mount data, and should only
+audit the mount data if it is non-binary.
 
- - Introduce a dedicated ACPI HID to identify the Graviton5 CMN variant.
- - Derive the DTC domain from the XP node ID, since the unit info
-   register reports it as zero.
- - Set the DTC logical ID from the XP's logical ID, since the node info
-   register's logical ID field is also zeroed.
-
-Signed-off-by: Aviv Bakal <avivb@amazon.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4** (kernel 7.3.0-rc4). The question is
-whether `9d0b1714e1af1` (`perf/arm-cmn: Add workarounds for CMN-S3 on
-Graviton5`) belongs in **this** tree on technical merit.
+The local tree is **6.12.111** (`pending-6.12`). The buggy
+`audit_mount(..., data, ...)` call is still present, and the two-line
+change applies onto the current `match_mnt_path_str()` code.
 
 ---
 
@@ -89,41 +79,45 @@ Graviton5`) belongs in **this** tree on technical merit.
 
 **Step 1.1: PARSE THE SUBJECT LINE**
 
-Record: `[perf/arm-cmn] [Add] [workarounds for a customised CMN-S3 on
-Graviton5]`
+Record: **[apparmor] [fix] [do not audit mount data when it is binary]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
+Upstream commit: `b9f2181b90ec047488dcb4fb1c631d417aff07e0` (John
+Johansen, 2026-07-28; merged via AppArmor v7.3 pull `apparmor-
+pr-2026-08-26`).
+
 Record:
-- `Fixes:` — none (expected)
-- `Reported-by:` — none
-- `Tested-by:` — none
-- `Reviewed-by: Robin Murphy <robin.murphy@arm.com>` (arm-cmn
-  maintainer)
-- `Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>`
-- `Link:` — none in the commit
-- `Cc: stable@vger.kernel.org` — none (expected)
-- `Signed-off-by: Aviv Bakal <avivb@amazon.com>` (author)
-- `Signed-off-by: Robin Murphy <robin.murphy@arm.com>`
-- `Signed-off-by: Will Deacon <will@kernel.org>`
-- Ignored: any Sasha Levin SOB / Upstream-commit markers
+- **Fixes:** none (expected for this review pipeline)
+- **Reported-by:** none
+- **Tested-by:** none on the commit itself
+- **Reviewed-by / Acked-by:** none on the commit
+- **Link:** none
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** John Johansen `<john.johansen@canonical.com>`
+  (AppArmor maintainer). Ignore any Sasha Levin SOB.
+
+Notable pattern: no user/syzbot report; maintainer-authored correctness
+fix. The v7.3 pull lists it under **Bug Fixes** (“auditing of mount
+binary data”), not Features/Cleanups.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
 Record:
-- **Bug:** Graviton5’s CMN-S3 zeros some discovery fields (DTC domain in
-  unit info, logical ID in node info).
-- **Symptom:** Standard discovery cannot identify DTC domains or DTC
-  logical IDs; a 10×14 mesh also exceeds `CMN_MAX_DIMENSION` 12.
-- **Version info:** none in the message.
-- **Root cause:** custom silicon, not a kernel logic regression.
-  Identified via ACPI HID `AMZN0070`.
+- **Bug:** AppArmor mediates only non-binary mount data, but still
+  passes binary `data` into `audit_mount()`.
+- **Symptom:** AppArmor audit records can include an `options=` field
+  built by treating a binary blob as a C string
+  (`audit_log_untrustedstring()` → `strlen()`).
+- **Version info:** none in the message. The pattern dates to
+  `2ea3ffb7782a84` (“apparmor: add mount mediation”, v4.14-rc2).
+- **Root cause (author):** audit should follow the same `!binary` rule
+  as mediation.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
 
-Record: Not a disguised cleanup. It is an explicit hardware workaround
-plus ACPI ID. Cover letter language is “adds support”; the mechanism is
-a quirk for broken discovery registers.
+Record: Not a disguised cleanup. Subject and body both say **fix**. It
+is a real audit-path bug, not a feature.
 
 ---
 
@@ -132,41 +126,56 @@ a quirk for broken discovery registers.
 **Step 2.1: INVENTORY THE CHANGES**
 
 Record:
-- File: `drivers/perf/arm-cmn.c` (+31 / −1)
-- Functions: `arm_cmn_graviton5_dtc_domain` (new), `arm_cmn_discover`
-  (workaround + DTC logid), `arm_cmn_acpi_match[]` (HID)
-- Also: `CMN_MAX_DIMENSION` 12→14, `PART_GRAVITON5`
-- Scope: single-file, surgical, driver-local
+- File: `security/apparmor/mount.c` only (**−2 / +2**)
+- Function: `match_mnt_path_str()`
+- Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Record:
-- Dimension cap 12→14 so a 10×14 mesh is not rejected.
-- ACPI `AMZN0070` → synthetic `PART_GRAVITON5`, then treated as
-  `PART_CMN_S3`.
-- DTC domain: from unit-info register → from XP node ID `(x/5)+(y/7)*2`
-  on the 10×14 mesh (domains 0–3).
-- DTC `logid`: from node info → XP `logid` so sort order matches
-  firmware IRQ order.
+Before (this tree, lines 346–349):
+
+```346:349:security/apparmor/mount.c
+audit:
+        return audit_mount(subj_cred, profile, OP_MOUNT, mntpnt,
+devname,
+                           type, NULL,
+                           flags, data, AA_MAY_MOUNT, &perms, info,
+error);
+```
+
+After: pass `!binary ? data : NULL` instead of `data`.
+
+`match_mnt()` only wraps `match_mnt_path_str()`, so both new-mount and
+remount paths are covered. `aa_umount` / `aa_pivotroot` already pass
+NULL data.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-Record: **Hardware workaround + ACPI device ID.** Zeroed discovery
-fields would map every XP to DTC domain 0 and every DTC logid to 0. Mesh
-10×14 fails `max(mesh_x,mesh_y) > CMN_MAX_DIMENSION` (`36c0de02575ce`,
-already in this tree).
+Record: **Logic / correctness in LSM audit** (binary blob treated as a
+string).
+
+Verified mechanism:
+- `do_match_mnt()` already skips matching when `binary` is set (`data &&
+  !binary && (perms->allow & AA_MNT_CONT_MATCH)`).
+- `audit_mount()` still stores `data` if `perms->audit & AA_AUDIT_DATA`.
+- `audit_cb()` then does `audit_log_untrustedstring(ab, ad->mnt.data)`,
+  which uses `strlen()`.
+
+`FS_BINARY_MOUNTDATA` filesystems in this tree: **NFS, NFS4, Btrfs,
+Coda**.
+
+Not an unbounded OOB on the `mount(2)` path: `path_mount()` does `((char
+*)data_page)[PAGE_SIZE - 1] = 0` before `security_sb_mount()`.
+`strlen()` stays inside the `copy_mount_options()` page. The bug is
+wrong/garbled audit contents (and a possible hex dump of almost a full
+page if the blob has no interior NUL).
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 
-Record:
-- Quality: small, gated on `AMZN0070` except the dimension bump.
-  Maintainer R-b’d after review (v1 used `xp->logid`; v2 used `xp->dtc`;
-  Robin required `xp->logid` because `cmn->dtc[]` is sorted by logid to
-  match firmware IRQ order). Committed code matches that.
-- Regression risk: low. Workaround is HID-gated. `CMN_MAX_DIMENSION` 14
-  only grows per-event bitmaps (`CMN_MAX_XPS` 144→196). Domain formula
-  is Graviton5-specific; x,y are 4-bit so theoretical max domain is 7,
-  but 10×14 yields 0–3 (`CMN_MAX_DTCS` is 4).
+Record: Obviously correct; mirrors the existing `!binary` mediation
+check. Minimal. Regression risk is low: binary `options=` simply
+disappears from AppArmor mount audit records, which is the intended
+policy. No API, locking, or data-structure change.
 
 ---
 
@@ -174,40 +183,35 @@ Record:
 
 **Step 3.1: BLAME THE CHANGED LINES**
 
-Record:
-- Workaround and dimension bump introduced by `9d0b1714e1af1` itself
-  (Aviv Bakal, 2026-06-30; merged 2026-07-21).
-- Driver: long-standing. CMN-S3: `0dc2f4963f7ef` (2024-09-04). ACPI
-  `ARMHC003`: `8c138a189f6db` (2025-05-19). Mesh reject: `36c0de02575ce`
-  (2026-02-03, `Cc: stable`).
+Record: The `flags, data, AA_MAY_MOUNT` argument list is from
+**`2ea3ffb7782a84`** (John Johansen, 2017-07-18), described as
+v4.14-rc2. Wrapper cred-passing is from `90c436a64a6e20` (2022). The bug
+is old, not new 7.x code.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
 
-Record: No `Fixes:` tag. Not a regression from a specific kernel commit;
-hardware does not implement discovery as the driver expects.
+Record: No `Fixes:` tag. Buggy code is the original mount-mediation
+audit call. `git merge-base --is-ancestor 2ea3ffb7782a84 HEAD` → **yes,
+present**.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+**Step 3.3: CHECK FILE HISTORY**
 
-Record:
-- This is **v6 2/2**. Patch 1 is `56603c28d9169` (`Move DTM index data
-  out of hw_perf_event`) — **already an ancestor of HEAD**. Needed
-  because embedded `dtm_idx`/`wp_idx` in `hw_perf_event` were size-
-  capped; growing `CMN_MAX_DIMENSION` without that move would fail
-  `static_assert(sizeof(struct arm_cmn_hw_event) <= offsetof(struct
-  hw_perf_event, target))`.
-- Later 7.3 work (filter refactor, CMN S3 r2) does not revert the
-  workaround. No graviton-specific follow-up.
+Record: Recent `mount.c` commits in this tree: nosymfollow audit flags,
+move_mount detached-source fix, mount mediation regression fix. No prior
+fix for binary-data auditing. Next mainline commit after this one is
+`apparmor: refactory mount to use check_perms` (large refactor). **This
+fix is standalone and comes before that refactor.**
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-Record: Aviv Bakal (Amazon) — this is their only arm-cmn commit here.
-Robin Murphy is the driver author/maintainer and both reviewed and re-
-posted v6.
+Record: John Johansen is the AppArmor maintainer. Same-file history is
+almost entirely his. Weight: high.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-Record: Needs CMN-S3, ACPI table, mesh-size check, and the DTM-index
-move. **All are in this 7.3-rc4 tree.** Standalone on this tree.
+Record: Diff uses existing `binary` parameter and existing
+`audit_mount()` signature. No new helpers. **Applies standalone.** The
+following mount refactor is not required.
 
 ---
 
@@ -216,70 +220,78 @@ move. **All are in this 7.3-rc4 tree.** Standalone on this tree.
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
 Record:
-- `b4 dig -c 9d0b1714e1af1` → https://patch.msgid.link/e9340d3a4385e6f1a
-  6e80bda944a3ba6435472b6.1782824005.git.robin.murphy@arm.com
-- Revisions: v1 (2026-05-03) → v2 → v3 (added DTM move) → v4 → v5 → **v6
-  applied** (Robin re-post, 2026-06-30)
-- Robin on v2: use `xp->logid` not `xp->dtc`; “surprisingly pleasant and
-  unobtrusive given that it's a pretty horrible hardware issue”
-- No NAK. Applied version is latest.
-- A sashiko-bot note about unbounded DTC domain / sort order is the
-  opposite of Robin’s requested `xp->logid` behaviour; not a NAK from
-  maintainers.
+- `b4 dig -c b9f2181b90ec047488dcb4fb1c631d417aff07e0` (and `-w`) →
+  lore.kernel.org returned errors; **no thread recovered**.
+- GitHub commit page confirms message/diff match the candidate.
+- LKML pull: [GIT PULL] AppArmor updates for v7.3 (John Johansen,
+  2026-08-26) lists this under Bug Fixes and notes
+  merge/build/regression testing plus linux-next and Ubuntu kernel
+  testing.
+
+UNVERIFIED: v1/v2 review comments, NAKs, reviewer-requested `Cc:
+stable`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Record (`b4 dig -w`): Robin Murphy, Will Deacon, Mark Rutland, linux-
-arm-kernel, linux-perf-users, Amazon (zeev, blakgeof), Ilkka Koskinen.
-Right maintainers.
+Record: No Reviewed-by on the commit. Author is the subsystem
+maintainer. Recipients of the original mail **UNVERIFIED** (b4 -w
+failed).
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Record: No syzbot/bugzilla. Amazon submitted from silicon bring-up.
+Record: No Reported-by, no bugzilla/syzbot link. Likely found while
+preparing the mount refactor (same-day neighbor commits on 2026-08-10).
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-Record: Series is DTM-index move + this workaround. Patch 1 is in this
-tree. No extra ACPI docs/HID patch required (`AMZN0070` is only in `arm-
-cmn.c`).
+Record: Same pull as `refactory mount to use check_perms` (cleanup, not
+a dependency) and `add audit mode...` (feature, unused by this fix).
+Self-contained.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-Record: lore.kernel.org/stable search returned 403. **UNVERIFIED:** no
-confirmed stable-list nomination or rejection.
+Record: No evidence this was NAK’d for stable. Search did not find a
+stable-specific discussion of this title.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
+**Step 5.1: KEY FUNCTIONS**
 
-Record: `arm_cmn_graviton5_dtc_domain`, `arm_cmn_discover`,
-`arm_cmn_acpi_match`, `arm_cmn_init_node_info` (unchanged, still source
-of zeroed logid).
+Record: `match_mnt_path_str()` modified; `audit_mount()`, `audit_cb()`,
+`do_match_mnt()`, `aa_new_mount()`, `aa_remount()`,
+`apparmor_sb_mount()` involved.
 
 **Step 5.2: TRACE CALLERS**
 
-Record: `arm_cmn_discover()` ← `arm_cmn_probe()` only. Probe runs when
-ACPI matches (including `AMZN0070`). Not IRQ/syscall hot path;
-boot/device-init.
+Record:
+- `match_mnt()` → `match_mnt_path_str()`
+- `aa_new_mount()` → `match_mnt` / `match_mnt_path_str` (sets `binary`
+  from `FS_BINARY_MOUNTDATA`)
+- `aa_remount()` → `match_mnt` (same flag from superblock type)
+- `apparmor_sb_mount()` → `aa_new_mount` / `aa_remount` from
+  `security_sb_mount()` in `path_mount()`
 
 **Step 5.3: TRACE CALLEES**
 
-Record: `arm_cmn_init_node_info`, `arm_cmn_dtc_domain` / graviton5
-variant, `arm_cmn_init_dtm`, then `arm_cmn_init_dtcs` (sort by
-type+logid, `platform_get_irq` by sort index).
+Record: `audit_mount` → `aa_audit` → `audit_cb` →
+`audit_log_untrustedstring` / `strlen`. Memory alloc/locks are
+unchanged.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
 
-Record: ACPI `AMZN0070` → probe → discover (workaround) → init DTCs/IRQs
-→ register PMU. Userspace `perf` then uses the interconnect PMU.
-Reachable on Graviton5 with `CONFIG_ARM_CMN`.
+Record: Userspace `mount(2)` / remount → `path_mount` → LSM `sb_mount` →
+AppArmor. Reachable from confined tasks that can mount (typically
+`CAP_SYS_ADMIN`, or a user namespace). **Yes, userspace-reachable.**
+This tree has no AppArmor `fs_context` hooks; the classic `sb_mount`
+path is the one that matters here.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-Record: Same file already has AmpereOneX bogus-child-pointer handling
-and CMN-600AE aliasing. Same “quirks for broken discovery” pattern.
+Record: Only this `audit_mount` call passes mount `data`. Mediation
+already had the `!binary` guard; audit did not. No sibling drivers with
+the same bug.
 
 ---
 
@@ -287,69 +299,75 @@ and CMN-600AE aliasing. Same “quirks for broken discovery” pattern.
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-Record: Yes. `drivers/perf/arm-cmn.c` has CMN-S3, ACPI match, mesh-size
-reject. Without this commit, `AMZN0070` would not bind; a 10×14 mesh
-would `-ENODEV`; zeroed DTC fields would mis-program the PMU. Introduced
-as hardware behaviour, not a post-7.3 commit.
-
-`git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`. Commit is in
-v7.3-rc1 (not in v7.2). That is **not** used as “already selected”; it
-only shows 7.3 has the prerequisites.
+Record: **Yes.** `make kernelversion` = **6.12.111**; `git describe
+HEAD` = `p-6.12-3-gc504cf0baa3d8`. Exact before-context is in
+`match_mnt_path_str()`. Introduced **v4.14**. `git merge-base --is-
+ancestor b9f2181b90ec HEAD` → **not present**.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-Record: Clean on this tree. Context still matches (graviton5 flag, ACPI
-HID, dimension 14). Later S3 r2/filter refactors left the workaround in
-place.
+Record: **Clean apply.** Surrounding function signature (`subj_cred`,
+`rules->policy`, `binary`) already matches. Confirmed `old present:
+True` in the current file.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
 
-Record: No alternate Graviton5 fix. No later graviton-specific patch in
-`9d0b1714e1af1..HEAD`.
+Record: `git log --grep='auditing of mount binary'` on
+`security/apparmor/` is empty. Closest related in-tree patch is
+`33be0cfa5ba52` (“apparmor: take nosymfollow flag into account”), which
+is also AppArmor **mount audit correctness** and was already taken for
+this series.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-Record: `drivers/perf/` — Arm CMN uncore PMU. **PERIPHERAL/IMPORTANT:**
-ARM64 servers with CMN; Graviton5-specific for the HID path. Not
-mm/sched/VFS.
+Record: **AppArmor LSM** (`security/apparmor/`). **IMPORTANT** (not core
+mm/VFS; default MAC on Ubuntu and several LTS distros). Mount mediation
++ audit are user-visible security/audit paths.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+**Step 7.2: SUBSYSTEM ACTIVITY**
 
-Record: Active in 7.3 (S3 r2, filters, DTM layout). Driver itself is
-mature (~CMN-600 era).
+Record: Mature (~2017 mount mediation) with ongoing stable backports in
+this tree. Not a brand-new 7.x subsystem.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
+**Step 8.1: WHO IS AFFECTED**
 
-Record: ACPI `AMZN0070` / Graviton5 only, plus a small extra bitmap size
-for all `CONFIG_ARM_CMN` users.
+Record: Config-specific: `CONFIG_SECURITY_APPARMOR`, confined processes,
+filesystems with `FS_BINARY_MOUNTDATA` (NFS/Btrfs/Coda), and only when
+an AppArmor mount audit record is generated with `AA_AUDIT_DATA` in
+`perms->audit`.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+**Step 8.2: TRIGGER CONDITIONS**
 
-Record: Probe on Graviton5. Not unprivileged-triggerable beyond normal
-perf. Not a race. Common on that platform at boot.
+Record: Confined `mount()`/`remount` of NFS/Btrfs/Coda with non-NULL
+mount data, plus policy that produces a mount audit record with the
+data-audit bit. Not every boot; common on Ubuntu NFS/Btrfs systems with
+AppArmor. Unprivileged userns mounts can hit it if confined. Not a race.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: Missing/wrong CMN PMU (no bind, `-ENODEV`, or events on the
-wrong DTC). Not panic/corruption/deadlock. **MEDIUM** for that hardware;
-still the documented quirk/ID exception.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+**Step 8.3: FAILURE MODE SEVERITY**
 
 Record:
-- Benefit: Graviton5 CMN perf actually works (HID + discovery + 10×14
-  mesh).
-- Risk: low (~31 lines, HID-gated, maintainer-reviewed). Dimension bump
-  is small and already paired with the DTM-index move in this tree.
-- Ratio: favorable.
+- Failure: `options=` in AppArmor audit is a `strlen()` view of a binary
+  blob (garbage, early truncate at first NUL, or hex dump of up to
+  ~PAGE_SIZE-1).
+- Not a panic: VFS NUL-terminates the last byte of the options page.
+- **Severity: MEDIUM** (wrong LSM audit; possible bulky hex dump). Not
+  crash/deadlock/corruption.
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit:** medium for AppArmor+NFS/Btrfs users (correct audit; no
+  binary blob in logs). Same class as the in-tree nosymfollow audit fix.
+- **Risk:** very low (2 lines, existing `binary` flag, no locking).
+- **Ratio:** favorable.
 
 ---
 
@@ -358,205 +376,124 @@ Record:
 **Step 9.1: COMPILE THE EVIDENCE**
 
 **FOR:**
-- ACPI ID + hardware quirk on an existing driver (stable exception).
-- Real silicon: zeroed CMN-S3 discovery, 10×14 mesh.
-- Small, single-file, obviously correct after maintainer review.
-- Prerequisites present in 7.3-rc4.
-- Robin Murphy: use `xp->logid`; workaround is unobtrusive.
+- Real bug: audit disagrees with mediation on binary mount data.
+- Maintainer-authored; v7.3 pull classified it as a bug fix; tested in
+  linux-next/Ubuntu.
+- Two-line, obviously correct, clean apply on 6.12.111.
+- Buggy code present since v4.14.
+- Touches a live LSM path (NFS/Btrfs).
+- This tree already accepted a similar AppArmor mount-audit correctness
+  fix (`nosymfollow`).
+- No new APIs/features; no dependency on the later mount refactor.
 
 **AGAINST:**
-- Enablement/quirk, not a crash/security/corruption fix.
-- Cover letter is “add support”.
-- `CMN_MAX_DIMENSION` affects all CMN bitmap sizes (small).
-- Series 2/2 (patch 1 already here).
-- No `Reported-by` from production crashes.
+- No user report, syzbot, or CVE.
+- Not a crash/deadlock/corruption; gated on `AA_AUDIT_DATA`.
+- Short message; no `Fixes:`/`Cc: stable`.
+- Present since 2017 without reports (low “bothers people” signal).
 
 **UNRESOLVED:**
-- Stable list discussion (lore 403).
-- No public Tested-by (author is Amazon; hardware access is plausible
-  but unverified).
+- Original lore review thread (b4/lore 403).
+- Whether reviewers asked for `Cc: stable`.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+**Step 9.2: STABLE RULES CHECKLIST**
 
-1. Obviously correct and tested? **PASS** — maintainer R-b after v1–v6;
-   IRQ/logid issue addressed as Robin specified.
-2. Fixes a real bug that affects users? **PASS** — Graviton5 CMN PMU
-   cannot enumerate correctly without it.
-3. Important issue? **PASS** via quirk/ID exception (severity MEDIUM as
-   a PMU, not a panic).
-4. Small and contained? **PASS** — +31/−1, one file.
-5. No new features or APIs? **PASS** — no new uAPI; HID + discovery
-   workaround on existing PMU.
-6. Can apply to the local tree? **PASS** — driver, CMN-S3, DTM-index
-   move, mesh check all present.
+1. Obviously correct and tested? **PASS** — two-line mirror of existing
+   `!binary` check; maintainer + v7.3 testing.
+2. Fixes a real bug that affects users? **PASS** — AppArmor mount audit
+   of NFS/Btrfs/Coda can emit binary `options=`.
+3. Important issue? **PASS** (medium) — LSM audit correctness / “oh,
+   that’s not good”; not a panic. Precedent in this tree: nosymfollow
+   mount-audit fix.
+4. Small and contained? **PASS** — 2 lines, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS**.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+**Step 9.3: EXCEPTION CATEGORIES**
 
-Record: **ACPI device ID** (`AMZN0070`) **and hardware quirk** for
-customised CMN-S3.
+Record: None (not a device ID, quirk, DT, build, or docs fix). Qualifies
+as a normal small bug fix.
 
-**Step 9.4: MAKE YOUR DECISION**
+**Step 9.4: DECISION**
 
-This tree is 7.3-rc4, which already contains CMN-S3 and the series
-prerequisite. The patch is the standard stable shape: ID + quirk so
-existing `arm-cmn` works on shipping Graviton5. Benefit is real for that
-platform; risk is low and mostly HID-gated.
+Backport. The tree has the bug, the patch applies cleanly, it is a
+maintainer LSM audit fix with negligible regression risk, and 6.12
+AppArmor users (especially Ubuntu) mount NFS/Btrfs under confinement.
 
----
+What it solves for stable users: AppArmor will stop stuffing binary
+mount blobs into `options=` via
+`strlen()`/`audit_log_untrustedstring()`, matching the already-correct
+“don’t mediate binary data” rule.
 
-## What the commit solves and why it matters here
-
-Graviton5 implements CMN-S3 with discovery registers that read as zero
-and a 10×14 mesh. In this tree, `arm_cmn_discover()` would then put
-every XP in DTC domain 0, leave DTC logids at 0 (breaking IRQ sort
-order), and reject the mesh as larger than 12. Adding `AMZN0070` and the
-three workarounds makes the existing CMN PMU usable on that hardware
-without new APIs.
-
-It meets stable rules as a quirk/ID exception: small, reviewed, no uAPI,
-applies cleanly here because `56603c28d9169` already moved DTM arrays
-out of `hw_perf_event`.
-
-Risk vs benefit: extra bitmap bytes for all CMN users vs a working
-interconnect PMU on Graviton5. Favorable.
-
-Concerns: not a panic-class bug; depends on the DTM-index move (already
-in this tree). No stable-list confirmation (fetch failed).
+Risk vs benefit: benefit is correct MAC audit on common filesystems;
+risk is essentially zero.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: R-b Robin Murphy + Ilkka Koskinen; SOB Aviv
-  Bakal, Robin Murphy, Will Deacon; no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: `drivers/perf/arm-cmn.c` +31/−1; HID `AMZN0070`,
-  `CMN_MAX_DIMENSION` 14, DTC domain/logid workarounds
-- [Phase 2] Current tree still has graviton5 paths at `arm_cmn_discover`
-  / `arm_cmn_graviton5_dtc_domain` / ACPI table
-- [Phase 3] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 3] `git merge-base --is-ancestor 9d0b1714e1af1 HEAD` — yes; in
-  v7.3-rc1, not v7.2
-- [Phase 3] CMN-S3 `0dc2f4963f7ef` (2024-09-04) in tree; ACPI S3
-  `8c138a189f6db` in tree
-- [Phase 3] Mesh reject `36c0de02575ce` in tree; DTM move
-  `56603c28d9169` in tree (series 1/2)
-- [Phase 3] `git blame` on workaround lines → `9d0b1714e1af1`
-- [Phase 3] No graviton follow-ups in `9d0b1714e1af1..HEAD`
-- [Phase 4] `b4 dig -c 9d0b1714e1af1` → v6 2/2 msgid `e9340d3a4385e6f1a6
-  e80bda944a3ba6435472b6.1782824005.git.robin.murphy@arm.com`
-- [Phase 4] `b4 dig -a`: v1–v6; applied is v6
-- [Phase 4] `b4 dig -w`: Will/Mark/Robin, linux-arm-kernel, linux-perf-
-  users
-- [Phase 4] Robin v2 review: must use `xp->logid` for firmware IRQ order
-  (committed code does)
-- [Phase 4] UNVERIFIED: lore.kernel.org/stable (403)
-- [Phase 5] `arm_cmn_discover` only from `arm_cmn_probe`; ACPI match
-  includes `AMZN0070`
-- [Phase 6] Buggy discovery path and mesh check exist in this checkout;
-  apply is clean
-- [Phase 7] `CONFIG_ARM_CMN` depends on ARM64 || COMPILE_TEST
-- [Phase 8] Failure: missing/wrong CMN PMU on Graviton5, not
-  oops/deadlock; severity MEDIUM + quirk exception
-- UNVERIFIED: Amazon Tested-by on silicon (not in tags)
+- **[Phase 1]** Parsed tags: only author SOB; no Fixes/Reported-by/Cc
+  stable. Upstream SHA `b9f2181b90ec047488dcb4fb1c631d417aff07e0`.
+- **[Phase 1]** v7.3 pull (openwall/LKML, 2026-08-26) lists “auditing of
+  mount binary data” under Bug Fixes.
+- **[Phase 2]** Diff: `match_mnt_path_str()` passes `!binary ? data :
+  NULL`; local file still passes `data`.
+- **[Phase 2]** `do_match_mnt()` already has `data && !binary &&
+  (perms->allow & AA_MNT_CONT_MATCH)`.
+- **[Phase 2]** `audit_cb()` uses `audit_log_untrustedstring` → `strlen`
+  (`kernel/audit.c`).
+- **[Phase 2]** `path_mount()` NUL-terminates `data_page[PAGE_SIZE-1]` —
+  not an OOB on this path.
+- **[Phase 2]** `FS_BINARY_MOUNTDATA`: nfs, nfs4, btrfs, coda.
+- **[Phase 3]** `git blame`: line from `2ea3ffb7782a84` (v4.14-rc2);
+  ancestor of HEAD.
+- **[Phase 3]** `git merge-base --is-ancestor b9f2181b90ec HEAD` → not
+  in this tree.
+- **[Phase 3]** No `Fixes:` tag to follow.
+- **[Phase 3]** Follow-up mainline commit is a mount refactor, not a
+  prerequisite.
+- **[Phase 4]** `b4 dig -c/-w` failed (lore 403). UNVERIFIED: review
+  NAKs / stable nomination in the original thread.
+- **[Phase 4]** No stable-list hit for this title.
+- **[Phase 5]** Call chain: `path_mount` → `apparmor_sb_mount` →
+  `aa_new_mount`/`aa_remount` → `match_mnt_path_str` → `audit_mount`.
+- **[Phase 5]** Only one `audit_mount` site passes `data`.
+- **[Phase 6]** `git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` = 6.12.111.
+- **[Phase 6]** Python check: old snippet present, new snippet absent.
+- **[Phase 6]** `git log --grep='auditing of mount binary' --
+  security/apparmor/` empty.
+- **[Phase 7]** `CONFIG_SECURITY_APPARMOR` exists; AppArmor is
+  IMPORTANT.
+- **[Phase 8]** Failure mode: garbled/hex `options=` in AppArmor audit,
+  severity MEDIUM; not oops.
+- **UNVERIFIED:** Original lore review comments; whether `AA_AUDIT_DATA`
+  is set in typical Ubuntu mount policy (code path is real; frequency of
+  the audit bit is policy-dependent).
+
+The fix is small, surgical, present as a real bug in this 6.12 tree, and
+meets the stable criteria for an LSM audit correctness fix.
 
 **YES**
 
- drivers/perf/arm-cmn.c | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ security/apparmor/mount.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 527a953bf4744..688a94ef81c22 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -31,7 +31,8 @@
- #define CMN_CHILD_NODE_ADDR		GENMASK(29, 0)
- #define CMN_CHILD_NODE_EXTERNAL		BIT(31)
+diff --git a/security/apparmor/mount.c b/security/apparmor/mount.c
+index 2f5d918832c10..31f792817643c 100644
+--- a/security/apparmor/mount.c
++++ b/security/apparmor/mount.c
+@@ -344,8 +344,8 @@ static int match_mnt_path_str(const struct cred *subj_cred,
  
--#define CMN_MAX_DIMENSION		12
-+/* Some implementations use a mesh larger than the architectural max of 12 */
-+#define CMN_MAX_DIMENSION		14
- #define CMN_MAX_XPS			(CMN_MAX_DIMENSION * CMN_MAX_DIMENSION)
- #define CMN_MAX_DTMS			(CMN_MAX_XPS + (CMN_MAX_DIMENSION - 1) * 4)
- 
-@@ -215,6 +216,8 @@ enum cmn_part {
- 	PART_CMN700 = 0x43c,
- 	PART_CI700 = 0x43a,
- 	PART_CMN_S3 = 0x43e,
-+	/* Synthetic part number, overridden to PART_CMN_S3 during discovery */
-+	PART_GRAVITON5 = 0xa5,
- };
- 
- /* CMN-600 r0px shouldn't exist in silicon, thankfully */
-@@ -2217,6 +2220,18 @@ static unsigned int arm_cmn_dtc_domain(struct arm_cmn *cmn, void __iomem *xp_reg
- 	return FIELD_GET(CMN_DTM_UNIT_INFO_DTC_DOMAIN, readl_relaxed(xp_region + offset));
+ audit:
+ 	return audit_mount(subj_cred, profile, OP_MOUNT, mntpnt, devname,
+-			   type, NULL,
+-			   flags, data, AA_MAY_MOUNT, &perms, info, error);
++			   type, NULL, flags, !binary ? data : NULL,
++			   AA_MAY_MOUNT, &perms, info, error);
  }
  
-+static unsigned int arm_cmn_graviton5_dtc_domain(u16 xp_id)
-+{
-+	unsigned int x = (xp_id >> 7) & 0xf;
-+	unsigned int y = (xp_id >> 3) & 0xf;
-+
-+	/*
-+	 * The unit info register reads as zero; derive the DTC domain from
-+	 * the XP's mesh coordinates over the 10x14 mesh.
-+	 */
-+	return (x / 5) + (y / 7) * 2;
-+}
-+
- static void arm_cmn_init_node_info(struct arm_cmn *cmn, u32 offset, struct arm_cmn_node *node)
- {
- 	int level;
-@@ -2262,6 +2277,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 	u64 reg;
- 	int i, j;
- 	size_t sz;
-+	bool graviton5_workaround = false;
- 
- 	arm_cmn_init_node_info(cmn, rgn_offset, &cfg);
- 	if (cfg.type != CMN_TYPE_CFG)
-@@ -2272,6 +2288,13 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 	reg = readq_relaxed(cfg_region + CMN_CFGM_PERIPH_ID_01);
- 	part = FIELD_GET(CMN_CFGM_PID0_PART_0, reg);
- 	part |= FIELD_GET(CMN_CFGM_PID1_PART_1, reg) << 8;
-+
-+	/* Graviton5 has a customised CMN-S3 which needs some fixups */
-+	if (cmn->part == PART_GRAVITON5) {
-+		cmn->part = PART_CMN_S3;
-+		graviton5_workaround = true;
-+	}
-+
- 	/* 600AE is close enough that it's not really worth more complexity */
- 	if (part == PART_CMN600AE)
- 		part = PART_CMN600;
-@@ -2361,6 +2384,8 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 
- 		if (cmn->part == PART_CMN600)
- 			xp->dtc = -1;
-+		else if (graviton5_workaround)
-+			xp->dtc = arm_cmn_graviton5_dtc_domain(xp->id);
- 		else
- 			xp->dtc = arm_cmn_dtc_domain(cmn, xp_region);
- 
-@@ -2439,6 +2464,10 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 
- 			switch (dn->type) {
- 			case CMN_TYPE_DTC:
-+				if (graviton5_workaround) {
-+					/* Node info logical ID is zeroed; use the XP's */
-+					dn->logid = xp->logid;
-+				}
- 				cmn->num_dtcs++;
- 				dn++;
- 				break;
-@@ -2671,6 +2700,7 @@ static const struct acpi_device_id arm_cmn_acpi_match[] = {
- 	{ "ARMHC650" },
- 	{ "ARMHC700" },
- 	{ "ARMHC003" },
-+	{ "AMZN0070", PART_GRAVITON5 },
- 	{}
- };
- MODULE_DEVICE_TABLE(acpi, arm_cmn_acpi_match);
+ /**
 -- 
 2.53.0
 
