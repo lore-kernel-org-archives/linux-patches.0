@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79E856F596;
-	Mon, 19 Oct 2026 13:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4A5570842;
+	Mon, 19 Oct 2026 13:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418292; cv=none; b=RpOllWfsCC6VsdWr4LZ3lAJQ6JniksUBLDOqqvNbhpfNtCvuprk66BwzQq302eGV8IfrhrPURKJrL4fnxl5DXszzqJck5nGUy19YAh/nmh9jd0ALrH43WQbDgx6guKzWHOn1AbWOAqw3BrrRLY07Ngrzs/rRuWhEuEkT2Hr5FhE=
+	t=1792418293; cv=none; b=kw0GFNAnYMf4/n3wjievGQSuvNA9guDS7uDWfNixg6kOQl0GB2OZnyfOTWEKJHNw9T9yzj/XB/JtSyMWN0e05QrQXxJOsrj0IiQHoolgSUV6e0ESYe1ebfdXDY45ekTow9KtysaBQvAxh9fgMxQUu8qWg/fbzGMchkvrwo84huU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418292; c=relaxed/simple;
-	bh=YpOkIw5PdAs/6BqswdxjKokAVxgcEM9k62TOVOhU4YQ=;
+	s=arc-20240116; t=1792418293; c=relaxed/simple;
+	bh=NP3gvf6a34mwh5taukdEUml/wKzNStiNfPjD8uO1j5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nRhgq0bLmamgrWxJvJPDljJpBYwKxJvg2y5dNTwKzIzlf9A842kcnW0UG0lEtzdjQgtKSbWg5TN5YKiIHmSbMmVGmIkhmhadcyrplDQwtlWNs5g3mvCLXUODOkI7H2qB+U/ILw2aUS2RXiAo0Ag5J85ek8pMgPmJy91dQg6kb4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IdsDWIpE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MKoRPitzhIjZsKkGPvf6X1PSxIJoNEWxIzmAVeuflNZaGJIj49sd502jpL60v+s76q6qgK/FrdQyUwhxMbDAcWBkq3K77bOTMyT2S3FKGwJ/5tVG6jszkV/dF0JszMtDak7TT3k/fN7djQB9HBln050GjgYA7GWlZY6gJfGuCmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mEB57Bcf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IdsDWIpE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C9F1F000C4;
-	Mon, 19 Oct 2026 13:58:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mEB57Bcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9091F000C7;
+	Mon, 19 Oct 2026 13:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418289;
-	bh=g4t47SO9W2O0FAJkfkLRuHHaB72xfpzSs9Rvl8v0L8U=;
+	s=k20260515; t=1792418291;
+	bh=mlRDR92nhUdgHs3nQ41LKCHnUfuuZoYEUdnUm1tHsls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IdsDWIpE6/zvamRRqNIIjmMNHSyHcm3+rlDTpchawC+QqejzjlTc/QkWs1OC6g/eX
-	 dPhndyD6HAzfJ1wJXSbJcjwJmh/eW8bYen+HvCYDZi6iugYT4wm6Bd5hsYplXkfD/5
-	 z2apziAt8r9JgXT0kyqU0u14Ml+VNGwoAIuQr3i69ovRTQGGkq+9yEzu5wx3aNVlEG
-	 /lEF6AzquW5aYpk0FdWrhxTh4CFjkRWm58GZnLKzZG3KMgTzDvwczWcDWBL/kAP0/q
-	 Mjso0AMC9Ri0m1CF+LBLq356Dy3WXsp3FEVSCuxtpDW7LuxDa+m2CEEm3qdb4Dayv2
-	 caj1r9jSUPHqQ==
+	b=mEB57BcfaQQZhsK2sAlFAeNSYgiUkzmGu8QaqdY8TgsaL89Jxqto5CIbR2j5DmHAw
+	 Z6+F3sJEAEg7Hmb0jQTUjPBvMF408iyp9EaygaqblfYXaRRvY3ALPepo+kRieD0c6m
+	 6NZvrsdMoEDOZmbqPy1frD3iN4HEUYSeIhAmQzwY2PzjGASzwExUr6B4yH2c7wj4YF
+	 JQn3d+sRHzy98IhQC8mW0P8O5iXo+/1UZv5M6rsaXK8KJ+7rqB5dmig8BpWxWzgUOe
+	 i/tC8AoYftveyR+CA1AHhDzltQNGvcj8OjkBh608cXUsiJM73pB+jCzo6MPLrcw2ZT
+	 o8G6MGiWztKYQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chin-Yen Lee <timlee@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	Kyle Mahlkuch <kmahlkuc@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	njavali@marvell.com,
+	GR-QLogic-Storage-Upstream@marvell.com,
+	James.Bottomley@HansenPartnership.com,
+	mkp@kernel.org,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: rtw89: wow: add QoS control field to WoWLAN ARP response for MLO
-Date: Mon, 19 Oct 2026 09:47:13 -0400
-Message-ID: <20261019135441.1420968-142-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] scsi: qla2xxx: Handle INTx not connected while passing through
+Date: Mon, 19 Oct 2026 09:47:14 -0400
+Message-ID: <20261019135441.1420968-143-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,24 +57,32 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chin-Yen Lee <timlee@realtek.com>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-[ Upstream commit 03a963f4aeda538acad50806e94ef25d95b78743 ]
+[ Upstream commit 7268e509b43ac1734e1bdb7d18553f7e1080dfb4 ]
 
-Some MLO APs expect WoWLAN ARP response frames to be transmitted as
-QoS data frames and may discard frames that do not contain a QoS
-Control field.
+The PCI_INTERRUPT_PIN reports if the device supports the INTx.  However,
+when the device is assigned to a guest via vfio, the PCI_INTERRUPT_PIN
+is set to 0 (i.e none) if the line is not connected and/or the platform
+cannot route the interrupt.
 
-Add a QoS Control field and use the QoS Data subtype when generating
-WoWLAN ARP responses for MLD vifs. Keep the existing frame format
-unchanged for non-MLO connections.
+In such cases, the guest PCI_INTERRUPT_PIN is 0 and the port number
+becomes -1 (255, uint8_t underflow) for qla[25|27|28]xx and qla2031
+devices.  The flt_region_nvram is never set, and subsequently the LUN
+detection fails.  Below warnings show the NVRAM configuration failure:
 
-This allows WoWLAN ARP responses to be accepted by MLO APs while
-preserving compatibility with legacy APs.
+ []-0073:1: Inconsistent NVRAM checksum=0xffffffc0 id=HCAM version=0x100.
+ []-0074:1: Falling back to functioning (yet invalid -- WWPN) defaults.
+ []-0076:1: NVRAM configuration failed.
 
-Signed-off-by: Chin-Yen Lee <timlee@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260625061545.44808-10-pkshih@realtek.com
+Handle this case and set the port_no to devfn like its done everywhere
+else.
+
+Reference: commit 2bd42b03ab6b ("vfio/pci: Virtualize zero INTx PIN if no pdev->irq")
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Kyle Mahlkuch <kmahlkuc@linux.ibm.com>
+Link: https://patch.msgid.link/177885270578.1573.14283751510936407585.stgit@linux.ibm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -78,41 +91,45 @@ LLM Generated explanations, may be completely bogus:
 ## Phase 1: Commit message forensics
 
 **Step 1.1: Subject line**
-Record: **[wifi: rtw89: wow:] [add] [QoS Control field on WoWLAN ARP
-responses for MLO]**
-Subsystem is Realtek rtw89 WoWLAN. The verb is “add”, but the body is
-interoperability: MLO APs drop ARP frames that are not QoS Data.
+Record: `[scsi/qla2xxx] [Handle] Handle INTx not connected while passing
+through`
+Subsystem is the QLogic Fibre Channel driver. The verb “Handle” is a
+correctness/workaround fix, not a feature add.
 
 **Step 1.2: Tags**
 Record:
-- Signed-off-by: Chin-Yen Lee \<timlee@realtek.com\> (author)
-- Signed-off-by: Ping-Ke Shih \<pkshih@realtek.com\> (rtw89 maintainer)
-- Link:
-  https://patch.msgid.link/20260625061545.44808-10-pkshih@realtek.com
-  (msgid `…44808-10…` → patch 09/10 of a 10-patch `rtw-next` series;
-  1-based msgid index)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable (absence is expected here)
-- Ignore pipeline SOBs such as Sasha Levin (none on the real commit)
+- `Reviewed-by: Kyle Mahlkuch <kmahlkuc@linux.ibm.com>`
+- `Link: https://patch.msgid.link/177885270578.1573.14283751510936407585
+  .stgit@linux.ibm.com`
+- `Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>` (author)
+- `Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>` (SCSI
+  maintainer)
+- `Reference: commit 2bd42b03ab6b ("vfio/pci: Virtualize zero INTx PIN
+  if no pdev->irq")` (not a `Fixes:` tag)
+- No `Fixes:`, no `Cc: stable`, no `Reported-by`/`Tested-by` on the
+  committed version (those were requested on-list but not folded in)
+- Ignore pipeline-added Sasha Levin SOB if present (not on this commit)
 
 **Step 1.3: Body**
 Record:
-- **Bug:** Some MLO APs require WoWLAN ARP responses as QoS Data and
-  discard frames without a QoS Control field.
-- **Symptom:** ARP keep-alive / ARP offload during WoWLAN is ignored →
-  AP can drop the STA while suspend/WoWLAN is active.
-- **Root cause:** `rtw89_arp_response_get()` always built a non-QoS Data
-  3-address frame.
-- **Fix:** For MLD vifs, set `IEEE80211_STYPE_QOS_DATA` and insert a
-  2-byte QoS Control field; leave non-MLO frames unchanged.
-- **Versions:** none named in the message.
+- **Bug:** Guest VFIO assignment virtualizes `PCI_INTERRUPT_PIN` to 0
+  when INTx is not connected / not routable.
+- **Mechanism:** For qla25/27/28xx and qla2031, the driver does
+  `ha->port_no--` on that register. `port_no` is `uint8_t`, so 0 wraps
+  to 255.
+- **Symptom:** `flt_region_nvram` is never selected (only ports 0–3 are
+  matched). NVRAM is read from the wrong/zero flash offset. Logs:
+  - `Inconsistent NVRAM checksum=0xffffffc0 id=HCAM version=0x100`
+  - `Falling back to functioning (yet invalid -- WWPN) defaults`
+  - `NVRAM configuration failed`
+- **User-visible result:** LUN detection fails; the HBA does not present
+  storage in the guest.
+- **Fix:** If PIN is 0, set `port_no` from `PCI_FUNC(devfn)`, matching
+  other qla2xxx paths.
 
 **Step 1.4: Hidden bug fix?**
-Record: Yes. “Add QoS control field” is a protocol-format fix for an
-existing WoWLAN ARP template, not a new userspace API. Cover letter
-language (“support WoWLAN with MLO AP”) is feature-ish, but the driver
-already had MLO WoWLAN and ARP offload/keep-alive; this corrects the
-template those paths upload.
+Record: No. This is an explicit functional bug fix, not cleanup
+disguised as a fix.
 
 ---
 
@@ -120,36 +137,46 @@ template those paths upload.
 
 **Step 2.1: Inventory**
 Record:
-- File: `drivers/net/wireless/realtek/rtw89/fw.c` (+24 / −7; `git show
-  --stat` matches)
-- Function: `rtw89_arp_response_get()` only
-- Scope: single-file, single-function, surgical
+- File: `drivers/scsi/qla2xxx/qla_os.c` (+10 / −5)
+- Function: `qla2x00_set_isp_flags()`
+- Scope: single-file surgical change
 
-**Step 2.2: Control flow**
-Record (before → after):
-- Allocate skb sized for 3-addr header + security header + ARP body →
-  also reserve 2 bytes when `ieee80211_vif_is_mld(vif)`.
-- Frame control: Data+ToDS (+Protected if PTK) → same, plus QoS Data
-  subtype for MLO, Data subtype for legacy.
-- Always `skb_put_zero(sec_hdr_len)` → insert QoS Control (zeros) before
-  IV if MLO; skip security bytes when `sec_hdr_len == 0` (equivalent to
-  `skb_put_zero(0)`).
-- Debug print via `str_yes_no(with_qos)`.
+**Step 2.2: Code flow**
+Before (verified on `7268e509b43ac^`):
+```c
+pci_read_config_byte(ha->pdev, PCI_INTERRUPT_PIN, &ha->port_no);
+if (IS_QLA25XX(ha) || IS_QLA2031(ha) || IS_QLA27XX(ha) ||
+IS_QLA28XX(ha))
+    ha->port_no--;
+else
+    ha->port_no = !(ha->port_no & 1);
+```
+After: if PIN is 0, `ha->port_no = PCI_FUNC(ha->pdev->devfn)`; else keep
+the old mapping.
 
-802.11 order is correct: 3-addr MAC header, QoS Control, IV, LLC+ARP.
-QoS Control of 0 is TID 0 / normal ACK, which is appropriate for ARP.
+This is probe/init (`qla2x00_probe_one` → `qla2x00_set_isp_flags`), not
+an error path.
 
-**Step 2.3: Bug mechanism**
-Record: **Logic / protocol correctness + hardware interoperability.**
-MLO (802.11be) APs expect QoS Data; non-QoS keep-alive/offload templates
-are discarded. Not UAF, leak, race, or NULL deref.
+**Step 2.3: Bug category**
+Record: **Logic / correctness + hardware/virt workaround**, with a
+**uint8_t underflow**.
+
+Verified:
+- `qla_def.h`: `uint8_t port_no` — decrement of 0 → 255.
+- `qla_sup.c` `qla2xxx_get_flt_info()` only assigns `flt_region_nvram`
+  when `port_no` is 0, 1, 2, or 3. 255 never matches.
+- `ha` is `kzalloc`’d, so `flt_region_nvram` stays 0; NVRAM is then read
+  from flash offset 0.
+- `qla81xx`/`27xx` NVRAM path at `qla_init.c:10044–10288` emits exactly
+  log IDs 0x0073 / 0x0074 / 0x0076 from the commit message.
+- Fallback WWPNs are invalid → LUN discovery fails.
 
 **Step 2.4: Fix quality**
-Record: Obviously correct and minimal. Non-MLO path is unchanged in
-substance (`IEEE80211_STYPE_DATA` is 0). Regression risk is low and
-confined to MLO WoWLAN ARP: a wrong QoS field could still be dropped,
-but zeroed QoS Control is the standard default. No public API or struct
-layout change.
+Record: Obviously correct. PIN 0 means “no INTx”; using PCI function
+number is already how this driver sets `ha->portnum` for 83xx/82xx/etc.
+Bare-metal cards with PIN 1–4 are unchanged. Regression risk is low: the
+new branch only runs when PIN is 0, which previously produced a useless
+port number (255) on the 25/27/28/2031 path.
 
 ---
 
@@ -157,359 +184,269 @@ layout change.
 
 **Step 3.1: Blame**
 Record:
-- Function introduced in `58ed86e1666b3` (“wifi: rtw89: wow: add ARP
-  offload feature”, 2024-05-02) — contained in `v6.11-rc1` era (`git
-  describe --contains` → `x86_boot_for_v6.11_rc1~…`).
-- Link-aware `rtwvif_link` args: `2f7dae17c48cd1` (2024-09).
-- Security header: `0065199f4303bc` (2024-06).
-- Keep-alive uses this template: `dcf5c7262bffa` (2026-05-25, in
-  **v7.2-rc1**).
-- MLD MAC in ARP: parent `76edcedda6437` (same series 08/10).
-- This commit: `03a963f4aeda5`, **contained in v7.3-rc1**.
+- `pci_read_config_byte(..., PCI_INTERRUPT_PIN, &ha->port_no)`
+  introduced in `a9083016a5314b` (2010, ISP82XX support).
+- Decrement / `!(pin & 1)` mapping in `f73cb695d3eccd` (2014, ISP2071).
+- The underflow is old; it became commonly hit after VFIO started
+  virtualizing PIN as 0.
 
-**Step 3.2: Fixes: tag**
-Record: None. Buggy behavior is the original ARP template never emitting
-QoS Data for MLD vifs after MLO WoWLAN existed.
+**Step 3.2: Fixes tag**
+Record: No `Fixes:` tag. Related cause: `2bd42b03ab6b` (`vfio/pci:
+Virtualize zero INTx PIN if no pdev->irq`, 2025-04-14). That commit
+**is** an ancestor of this tree (`git merge-base --is-ancestor` exit 0).
+It was reported/tested by the same author (Shivaprasad G Bhat).
 
-**Step 3.3: Related file history**
-Record: Same-day series (msgid `20260625061545.44808-*`):
-1. MAC finish active TX
-2. pass chip version to FW
-3. lower UDM1 debug level
-4. drop pkt offload on H2C failure
-5. disable sniffer RX filter (Wi-Fi 7)
-6. PCI phy error / refclk
-7. LPS MLO link ID fix
-8. **MLD address in WoWLAN ARP** (parent)
-9. **this patch**
-10. RF init only on Wi-Fi 6 in WoW
-
-This patch does not call or require patches 1–8/10. 08/10 only changes
-ARP hw addresses; 09/10 only changes frame control + QoS bytes.
-Standalone at the code level.
+**Step 3.3: File history**
+Record: Standalone one-patch series. Later `3571ef0515640` (QLA29xx
+support) merged this PIN==0 check with an extra `IS_QLA29XX` in the
+decrement branch. No prerequisite refactor is required for the original
+hunk.
 
 **Step 3.4: Author**
-Record: Chin-Yen Lee (Realtek); maintainer Ping-Ke Shih signed off and
-applied the whole series to `rtw-next`. Nearby author work is other
-rtw89 WoWLAN/MLO fixes.
+Record: Shivaprasad G Bhat (IBM). Other nearby work is
+powerpc/vfio/iommu, not qla2xxx maintainer. Reviewer Kyle Mahlkuch is
+also IBM. SCSI maintainer Martin K. Petersen applied it.
 
-**Step 3.5: Prerequisites in this tree**
-Record: Present here:
-- `rtwvif_to_vif()` in `core.h`
-- `ieee80211_vif_is_mld()` in `include/net/mac80211.h`
-- `str_yes_no()` in `include/linux/string_choices.h`
-- ARP offload + keep-alive both call `rtw89_fw_h2c_add_general_pkt(…,
-  RTW89_PKT_OFLD_TYPE_ARP_RSP, …)`
-Can apply standalone on this tree.
+**Step 3.5: Dependencies**
+Record: Self-contained. No new APIs. Does not require vfio source
+changes; it only reacts to PIN=0 in config space. Can apply standalone
+to any tree that still has the old decrement logic.
 
 ---
 
 ## Phase 4: Mailing list / external
 
-**Step 4.1: b4 dig**
+**Step 4.1: Original discussion**
 Record:
-- Lore/msgid:
-  https://patch.msgid.link/20260625061545.44808-10-pkshih@realtek.com
-- Subject: `[PATCH rtw-next 09/10] wifi: rtw89: wow: add QoS control
-  field to WoWLAN ARP response for MLO`
-- Series: v1 only (`b4 dig -a`); no v2/v3.
-- Cover letter (`00/10`): “update some MAC, FW and WoWLAN settings”;
-  “The last three patches are related to WoWLAN, and the first two are
-  to support WoWLAN with MLO AP that uses MLD address.”
-- Only reply in the saved mbox: Ping-Ke applying all 10 to `rtw-next`
-  (no NAK, no reviewer comments on 09/10).
-- No Cc: stable in the thread.
+- `b4 dig -c 7268e509b43ac` → https://patch.msgid.link/177885270578.1573
+  .14283751510936407585.stgit@linux.ibm.com
+- `b4 dig -a`: **v1 only** (single standalone patch).
+- Thread saved to mbox (lore HTTP 403 via WebFetch; mbox succeeded).
+- Reviewer feedback:
+  - Priya A: tested, asked for `Reported-by`/`Tested-by` (not added in
+    the committed version).
+  - Kyle Mahlkuch: “look reasonable and fix a known bug” + `Reviewed-
+    by`.
+  - Madhavan Srinivasan: ping for comments; no NAK.
+  - Martin K. Petersen: applied to **7.3/scsi-queue**.
+  - Author then asked to also land in **7.2**. Martin: left it in 7.3
+    because of conflict with a large qla2xxx update that cycle, and told
+    the author they **can post a stable backport request** once Linus
+    merged SCSI.
+
+No NAKs. Maintainer explicitly treated this as stable-worthy.
 
 **Step 4.2: Recipients (`b4 dig -w`)**
-Record: Ping-Ke Shih, linux-wireless, gary.chang@realtek.com,
-timlee@realtek.com, dian_syuan0116@realtek.com, kevin_yang@realtek.com.
-Maintainer was To/Cc and applied it. No external review tags.
+Record: Marvell qla2xxx maintainers (`njavali@marvell.com`, `GR-QLogic-
+Storage-Upstream@marvell.com`), James Bottomley, Martin K. Petersen,
+`linux-scsi`, Alex Williamson (vfio), Kyle Mahlkuch.
 
 **Step 4.3: Bug report**
-Record: No Reported-by, bugzilla, or syzbot. Vendor-described AP
-behavior only. Specific AP models for *this* QoS issue are not named
-(keep-alive predecessor named TP-Link Archer BE800).
+Record: Concrete guest logs in the commit. Independent tester Priya A
+confirmed it fixes LUN detection. This is a real IBM-reported VFIO
+passthrough failure, not theoretical.
 
 **Step 4.4: Series**
-Record: Mixed MAC/FW/WoW settings. 09/10 is self-contained; 08/10 is a
-related but independent MLO ARP address fix.
+Record: Standalone `[PATCH]`, not `N/M`.
 
-**Step 4.5: stable@**
-Record: **UNVERIFIED** (lore.kernel.org/stable blocked by Anubis).
-Thread mbox has no stable discussion.
-
-WebFetch of lore/msgid also returned 403; discussion was recovered via
-`b4 dig -m`.
+**Step 4.5: Stable list**
+Record: lore.kernel.org/stable search returned HTTP 403. From the scsi
+thread, the maintainer invited a stable request; no evidence of a NAK
+against stable.
 
 ---
 
-## Phase 5: Semantic / call graph
+## Phase 5: Semantic analysis
 
 **Step 5.1: Functions**
-Record: `rtw89_arp_response_get()` only.
+Record: `qla2x00_set_isp_flags()` only.
 
 **Step 5.2: Callers**
-Record:
-- `rtw89_fw_h2c_add_general_pkt()` → `RTW89_PKT_OFLD_TYPE_ARP_RSP`
-- `rtw89_fw_h2c_keep_alive()` (WoW keep-alive enable)
-- `rtw89_fw_h2c_arp_offload()` (WoW ARP offload enable)
-- `rtw89_wow_fw_start()` in `wow.c` enables both when the interface is
-  linked
-
-Path is WoWLAN firmware start on suspend (`CONFIG_PM`), not a syscall
-hot path.
+Record: Called once from `qla2x00_probe_one()` (`qla_os.c:3090`), the
+PCI `.probe` callback (`qla_os.c:8360`). Probe context, once per
+adapter.
 
 **Step 5.3: Callees**
-Record: `rtwvif_to_vif`, `ieee80211_vif_is_mld`,
-`rtw89_wow_get_sec_hdr_len`, `dev_alloc_skb`, `skb_put_zero`,
-`cpu_to_le16`, `ether_addr_copy`, `str_yes_no` (debug only).
+Record: `pci_read_config_byte()`, `PCI_FUNC()`, ISP type macros. No
+alloc/lock changes.
 
 **Step 5.4: Reachability**
-Record: Userspace-reachable via suspend with WoWLAN on an rtw89 STA
-associated as an MLD. Not unprivileged kernel-memory corruption; it is a
-normal power-management / offload path.
+Record: Yes. Trigger: VFIO-assign a QLogic 25/27/28xx or 2031 HBA into a
+guest whose kernel runs this driver, when the platform does not connect
+INTx (`pdev->irq == 0` or `IRQ_NOTCONNECTED`). Confirmed in
+`vfio_pci_config.c:1833–1835`. Userspace (hypervisor admin) can trigger
+this; unprivileged guest users then just see missing LUNs.
 
 **Step 5.5: Similar patterns**
-Record: `rtw89_sa_query_get()` still builds a non-QoS mgmt action frame
-(correct for SA Query). No sibling ARP builders. Keep-alive commit
-`dcf5c7262bffa` is the same interoperability class (APs ignoring Null
-keep-alives).
+Record: `PCI_FUNC(ha->pdev->devfn)` is already used for `ha->portnum` in
+`qla_os.c` (83xx and others) and `qla_nx.c`. The fallback matches
+existing driver convention.
 
 ---
 
-## Phase 6: This checkout
+## Phase 6: Local tree (this checkout)
 
-**Step 6.1: Local tree and whether the bug exists**
+**Step 6.1: Does the buggy code exist here?**
 Record:
-- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
-- `make kernelversion`: **7.3.0-rc4**
-- `rtw89_arp_response_get()` exists; MLO (`ieee80211_vif_is_mld`), WoW
-  keep-alive, and ARP offload all exist.
-- Without this change, MLO ARP templates are non-QoS Data. That is the
-  bug this tree’s rtw89 WoW+MLO users hit.
-- Commit `03a963f4aeda5` is an ancestor of HEAD (`git merge-base --is-
-  ancestor` → yes) because it landed in **v7.3-rc1**. That is not used
-  as “already selected for stable”; it only confirms the code and
-  helpers are in this series.
+- Tree: **Linux 7.3.0-rc4** (`git describe HEAD` =
+  `v7.3-rc4-27-gf0100363d8c37`).
+- `qla2xxx` is present. `port_no` is still `uint8_t`. FLT NVRAM
+  selection still keys off `port_no` 0–3.
+- VFIO PIN=0 virtualization is present (`2bd42b03ab6b` is an ancestor).
+- The underflow logic **did exist** on this 7.3 line before
+  `7268e509b43ac`; that commit is already an ancestor of HEAD. Current
+  `qla2x00_set_isp_flags()` already has the PIN==0 fallback, plus a
+  later `IS_QLA29XX` merge.
 
 **Step 6.2: Backport difficulty**
-Record: Clean apply on this tree (hunk matches current `fw.c`). No
-refactor blocking it.
+Record: On this 7.3-rc4 tree the fix is already merged. Cherry-picking
+again would be a no-op / conflict with the already-applied hunk plus
+QLA29xx. For *this* tree, the code change is already in place; no extra
+backport rework is needed for 7.3.
 
-**Step 6.3: Other fixes here**
-Record: No later follow-up rewriting this QoS logic (`git log` after the
-commit on this function is unrelated fw/coex/scan work). Parent MLD-
-address fix is already here and independent.
+**Step 6.3: Related fixes already here?**
+Record: This is the fix. The only later related edit is QLA29xx
+extending the same `else if` (still keeps the PIN==0 path). No
+alternate/competing fix.
 
 ---
 
 ## Phase 7: Subsystem context
 
-**Step 7.1**
-Record: **drivers/net/wireless/realtek/rtw89** — important (common Wi-Fi
-6/7 laptops), not core mm/fs. WoWLAN is `CONFIG_PM`.
+**Step 7.1:**
+Record: `drivers/scsi/qla2xxx` — **IMPORTANT** (widely used FC HBA in
+servers/SAN, including VFIO passthrough). Not core mm/vfs, but storage
+init failure is user-visible and serious for those systems.
 
-**Step 7.2**
-Record: Very active (frequent coex/MLO/WoW commits). This is a late
-correction to existing MLO WoW, not a brand-new subsystem.
+**Step 7.2:**
+Record: Actively developed (QLA29xx series and hardening landed after
+this commit in 7.3). The buggy PIN mapping itself dates to 2010/2014.
 
 ---
 
 ## Phase 8: Impact and risk
 
-**Step 8.1: Who**
-Record: Driver-specific + config-specific: rtw89, MLO association,
-WoWLAN/suspend. Not universal.
+**Step 8.1: Who is affected**
+Record: Driver-specific + config-specific: `CONFIG_SCSI_QLA_FC` guests
+(and hosts) where `PCI_INTERRUPT_PIN` reads as 0. Primary real-world
+trigger is VFIO passthrough when INTx is not routed (IBM Power and
+similar). Dual-port 25/27/28xx and 2031 adapters.
 
 **Step 8.2: Trigger**
-Record: Suspend with WoWLAN while associated to an MLO AP that rejects
-non-QoS Data. Common for Wi-Fi 7 + lid-close. Unprivileged in the sense
-of normal laptop suspend, not an exploit primitive.
+Record: Adapter probe in the guest. Deterministic once PIN is 0 — not a
+race. Hypervisor admin can trigger it; then LUNs never appear.
 
 **Step 8.3: Failure mode**
-Record: AP discards keep-alive and/or ARP offload → association can drop
-in suspend. **Severity: MEDIUM** (connectivity / suspend Wi-Fi, not
-oops/corruption). Matches stable-rules “hardware quirk” / “oh, that’s
-not good”, not crash/UAF.
+Record: HBA comes up with invalid NVRAM/WWPN; **LUN detection fails**.
+Not a panic/UAF. Severity: **HIGH** (device non-functional, storage
+unavailable). Matches stable-rules “hardware quirk” / “oh, that's not
+good”.
 
-**Step 8.4: Risk–benefit**
+**Step 8.4: Risk-benefit**
 Record:
-- Benefit: MLO WoWLAN keep-alive and ARP offload actually accepted;
-  avoids silent disconnect on suspend for Wi-Fi 7 rtw89.
-- Risk: ~24 lines, MLO-only, no locking/API. Low.
-- Ratio: favorable for this tree, which already has MLO WoW + ARP
-  templates.
+- Benefit: high for VFIO+qla2xxx users (adapter actually works).
+- Risk: very low (10 lines, PIN==0 only, existing `PCI_FUNC`
+  convention).
+- Ratio: strongly favors including the fix in this tree.
 
 ---
 
 ## Phase 9: Synthesis
 
-**Step 9.1: Evidence**
+**Evidence FOR:**
+- Real, tested LUN-detection failure with matching driver logs.
+- uint8_t underflow is verified in this tree’s types and FLT matching.
+- Tiny, obviously correct, no new API.
+- Reviewed, maintainer-applied to 7.3; maintainer invited a stable
+  backport.
+- This 7.3 tree has both qla2xxx and the VFIO PIN=0 behavior.
 
-For:
-- Real interoperability bug on an existing path (WoW ARP template), not
-  a new driver or API.
-- This 7.3 tree has MLO, `rtw89_arp_response_get()`, keep-alive, and ARP
-  offload.
-- Small, obviously correct, non-MLO behavior preserved.
-- Maintainer SOB + applied to rtw.git.
-- Official stable rules allow hardware quirks and “oh, that’s not good”
-  issues; this is AP-side discard of malformed/non-QoS MLO data.
-- Suspend/WoWLAN disconnect is user-visible on shipping Realtek Wi-Fi 7
-  hardware.
+**Evidence AGAINST:**
+- Not a crash, UAF, or CVE.
+- Affects VFIO passthrough more than bare metal (PIN is usually 1–4 on
+  real silicon).
+- Committed message omitted the tester’s `Reported-by`/`Tested-by`
+  (quality of tags, not of the fix).
 
-Against:
-- Not oops/deadlock/corruption/security.
-- `rtw-next` series titled “update some MAC, FW and WoWLAN settings”;
-  cover letter says “support WoWLAN with MLO AP”.
-- No external reporters, Tested-by, or Fixes: tag.
-- Affects only MLO + WoWLAN.
+**Unresolved:** HTTP 403 on lore WebFetch (mbox was used instead).
+Stable-list search unverified beyond the scsi thread.
 
-Unresolved:
-- Stable-list history (lore bot wall).
-- Which exact APs need QoS (commit says “some MLO APs”).
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** (review + Priya A test +
+   maintainer apply)
+2. Real bug affecting users? **PASS** (LUN detection fails)
+3. Important? **PASS** (HBA/storage unusable in VFIO guests — HIGH)
+4. Small and contained? **PASS** (~15 lines, one function)
+5. No new features/APIs? **PASS**
+6. Applies to this local tree? **PASS** (7.3 already contains the
+   change; the surrounding driver is present)
 
-**Step 9.2: Stable rules checklist** (`Documentation/process/stable-
-kernel-rules.rst`)
-1. Obviously correct and tested? **PASS** — vendor + maintainer, tiny,
-   protocol order verified in tree.
-2. Real bug that bothers users? **PASS** — WoWLAN ARP ignored, possible
-   disconnect in suspend on MLO.
-3. Important (crash/security/corruption/deadlock **or** quirk / “oh
-   that’s not good”)? **PASS** — quirk / connectivity, not CRITICAL
-   crash.
-4. Small and contained? **PASS** — one function, well under 100 lines.
-5. No new features/APIs? **PASS** — frame format fix for existing
-   offload, no new uAPI.
-6. Applies to this tree? **PASS** — helpers and callers exist; hunk
-   matches `fw.c`.
+**Exception category:** Hardware/virt workaround (handle virtualized
+INTx PIN=0), analogous to a device quirk.
 
-**Step 9.3: Exception category**
-Record: Hardware/protocol quirk (MLO APs dropping non-QoS WoW ARP),
-analogous to other driver workarounds. Not a device-ID one-liner, but
-the same class.
-
-**Step 9.4: Decision**
-This tree is **7.3.0-rc4**. rtw89 already implements MLO WoWLAN and
-uploads ARP templates for keep-alive and ARP offload. Sending those as
-non-QoS Data is wrong for MLO APs and can drop the link in suspend. The
-patch is a small, MLO-only frame-format fix with low regression risk and
-no extra series dependencies. That is appropriate to have in this tree’s
-stable line.
-
-### What it solves for users of this tree
-WoWLAN keep-alive and ARP offload on rtw89 MLD vifs were built as
-ordinary Data frames. Some MLO APs drop those, so the AP may age out the
-STA during suspend. Adding QoS Control + QoS Data subtype makes those
-firmware-transmitted frames acceptable while leaving legacy associations
-unchanged.
-
-### Risk vs benefit
-Benefit is restoring Wi-Fi 7 WoWLAN connectivity on Realtek rtw89. Risk
-is a 2-byte header on the MLO path only. Non-MLO frame control stays
-Data+ToDS.
-
-### Concerns
-Cover letter frames this as MLO WoW “support” in a mixed `rtw-next`
-series, and there is no public reproducer. On this 7.3 tree those
-features already exist, so this is a contained correctness fix, not a
-new subsystem.
-
----
+This tree is **7.3-rc4**. The qla2xxx PIN-to-`port_no` bug and VFIO PIN
+virtualization both exist on this line. The patch is a small, tested
+correctness fix that restores NVRAM/LUN discovery for passed-through
+QLogic adapters. It meets stable-kernel rules and belongs in this tree.
 
 Verification:
-- [Phase 1] Parsed subject/tags/body from `git log -1 --format=fuller
-  03a963f4aeda5`; msgid is 09/10 of `20260625061545.44808`.
-- [Phase 2] Diff vs current `fw.c` `rtw89_arp_response_get()`; +24/−7 in
-  one function; QoS inserted after 3-addr header, before IV.
-- [Phase 3] `git merge-base --is-ancestor 03a963f4aeda5 HEAD` → yes;
-  `git describe --contains` → `v7.3-rc1~…`; blame shows intro
-  `58ed86e1666b3`; parent `76edcedda6437` is address-only.
-- [Phase 3] `git log --oneline --grep=20260625061545.44808 --
-  drivers/net/wireless/realtek/rtw89/` listed all 10 series commits.
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 `rtw-next` 10-patch series; applied
-  by Ping-Ke; no NAK; no stable Cc. WebFetch lore 403; curl stable list
-  Anubis-blocked.
-- [Phase 5] Grep: ARP_RSP used from keep-alive and ARP offload;
-  `rtw89_wow_fw_start()` enables both.
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-g…; `VERSION/PATCHLEVEL`
-  7.3.0-rc4; MLO/WoW/ARP code present.
-- [Phase 7] rtw89 Wi-Fi 6/7 driver, active history on `fw.c`.
-- [Phase 8] Failure mode: AP drops WoW ARP → disconnect in suspend; not
-  a kernel oops.
-- [Phase 9] Checked `Documentation/process/stable-kernel-rules.rst`
-  (quirk / “oh that’s not good”, ≤100 lines).
-- UNVERIFIED: lore.kernel.org/stable archives (bot challenge).
-- UNVERIFIED: exact AP models for the QoS requirement (not named in
-  commit or mbox).
+- [Phase 1] Parsed subject/tags/body from `git log -1` on
+  `7268e509b43ac`; no Fixes/Cc-stable; Reference 2bd42b03ab6b.
+- [Phase 2] Diff is 15 lines in `qla2x00_set_isp_flags`; parent blob
+  still has unconditional `--`.
+- [Phase 2] `port_no` is `uint8_t` in `qla_def.h:4319`; FLT NVRAM only
+  matches ports 0–3 in `qla_sup.c`.
+- [Phase 2] Log IDs 0x0073/0x0074/0x0076 verified in `qla_init.c`.
+- [Phase 3] Blame: PIN read `a9083016a5314b` (2010); decrement
+  `f73cb695d3eccd` (2014).
+- [Phase 3] `git merge-base --is-ancestor 2bd42b03ab6b HEAD` = yes; same
+  for `7268e509b43ac`.
+- [Phase 3] Author log: IBM powerpc/vfio contributor; one qla2xxx
+  commit.
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; scsi CCs including vfio and
+  Marvell; mbox has Priya test, Kyle R-b, Martin apply + stable-backport
+  invitation.
+- [Phase 4] lore WebFetch 403 — UNVERIFIED via HTTP; used mbox instead.
+- [Phase 5] Only caller: `qla2x00_probe_one`; VFIO sets PIN=0 at
+  `vfio_pci_config.c:1833–1835`.
+- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = 7.3.0-rc4; current `qla_os.c` already has the PIN==0
+  path.
+- [Phase 8] Failure: NVRAM fail → invalid WWPN → no LUNs; not a panic.
+- UNVERIFIED: whether a stable@vger thread was later posted (lore/stable
+  HTTP 403).
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/fw.c | 31 +++++++++++++++++++------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index c6533a085c7fe..299526220380f 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -2701,6 +2701,7 @@ static struct sk_buff *rtw89_sa_query_get(struct rtw89_dev *rtwdev,
- static struct sk_buff *rtw89_arp_response_get(struct rtw89_dev *rtwdev,
- 					      struct rtw89_vif_link *rtwvif_link)
- {
-+	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link->rtwvif);
- 	struct rtw89_vif *rtwvif = rtwvif_link->rtwvif;
- 	u8 sec_hdr_len = rtw89_wow_get_sec_hdr_len(rtwdev);
- 	struct rtw89_wow_param *rtw_wow = &rtwdev->wow;
-@@ -2708,26 +2709,42 @@ static struct sk_buff *rtw89_arp_response_get(struct rtw89_dev *rtwdev,
- 	struct rtw89_arp_rsp *arp_skb;
- 	struct arphdr *arp_hdr;
- 	struct sk_buff *skb;
--	__le16 fc;
-+	bool with_qos;
-+	u16 fc;
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 07ccfe0226c5e..5b1fb7e5e0980 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -2803,11 +2803,16 @@ qla2x00_set_isp_flags(struct qla_hw_data *ha)
+ 	else {
+ 		/* Get adapter physical port no from interrupt pin register. */
+ 		pci_read_config_byte(ha->pdev, PCI_INTERRUPT_PIN, &ha->port_no);
+-		if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
+-		    IS_QLA27XX(ha) || IS_QLA28XX(ha))
+-			ha->port_no--;
+-		else
+-			ha->port_no = !(ha->port_no & 1);
++		if (ha->port_no == 0) {
++			/* None of INT[A|B|C|D] may be virtualized by vfio */
++			ha->port_no = PCI_FUNC(ha->pdev->devfn);
++		} else {
++			if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
++			    IS_QLA27XX(ha) || IS_QLA28XX(ha))
++				ha->port_no--;
++			else
++				ha->port_no = !(ha->port_no & 1);
++		}
+ 	}
  
--	skb = dev_alloc_skb(sizeof(*hdr) + sec_hdr_len + sizeof(*arp_skb));
-+	with_qos = ieee80211_vif_is_mld(vif);
-+
-+	rtw89_debug(rtwdev, RTW89_DBG_WOW, "[arp_reply] with qos field: %s\n",
-+		    str_yes_no(with_qos));
-+
-+	skb = dev_alloc_skb(sizeof(*hdr) + sec_hdr_len + sizeof(*arp_skb) +
-+			    (with_qos ? 2 : 0));
- 	if (!skb)
- 		return NULL;
- 
- 	hdr = skb_put_zero(skb, sizeof(*hdr));
- 
-+	fc = IEEE80211_FTYPE_DATA | IEEE80211_FCTL_TODS;
-+
- 	if (rtw_wow->ptk_alg)
--		fc = cpu_to_le16(IEEE80211_FTYPE_DATA | IEEE80211_FCTL_TODS |
--				 IEEE80211_FCTL_PROTECTED);
-+		fc |= IEEE80211_FCTL_PROTECTED;
-+
-+	if (with_qos)
-+		fc |= IEEE80211_STYPE_QOS_DATA;
- 	else
--		fc = cpu_to_le16(IEEE80211_FTYPE_DATA | IEEE80211_FCTL_TODS);
-+		fc |= IEEE80211_STYPE_DATA;
-+
-+	hdr->frame_control = cpu_to_le16(fc);
- 
--	hdr->frame_control = fc;
- 	ether_addr_copy(hdr->addr1, rtwvif_link->bssid);
- 	ether_addr_copy(hdr->addr2, rtwvif_link->mac_addr);
- 	ether_addr_copy(hdr->addr3, rtwvif_link->bssid);
- 
--	skb_put_zero(skb, sec_hdr_len);
-+	if (with_qos)
-+		skb_put_zero(skb, sizeof(__le16));
-+
-+	if (sec_hdr_len)
-+		skb_put_zero(skb, sec_hdr_len);
- 
- 	arp_skb = skb_put_zero(skb, sizeof(*arp_skb));
- 	memcpy(arp_skb->llc_hdr, rfc1042_header, sizeof(rfc1042_header));
+ 	ql_dbg_pci(ql_dbg_init, ha->pdev, 0x000b,
 -- 
 2.53.0
 
