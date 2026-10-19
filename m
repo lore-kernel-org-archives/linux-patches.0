@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BBD646965;
-	Mon, 19 Oct 2026 14:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB2E646982;
+	Mon, 19 Oct 2026 14:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418791; cv=none; b=Z9uL6WNHiTrM7/lFWU73F5YrgLBBonf8TRwtNGXS83EaOIBXrfUvFLm+SDKWyOzqgniWYy+8LmMh5LEx+tr5HRs5JfKJz9Uh3ujQXTdoNrMFxwiZ+3F1zHDdVZdb35voBYPWj58mLWh1eAu2DE4SwBQfO/0XJ9O1ZrKs+SFaoWI=
+	t=1792418792; cv=none; b=s+/Nzo9pyMlxpp8PJZ8rM+9YrR+nwDPn1mnkV/y1g9yfP9bkS/QhVFPAYIt9E+fsLhDE8/t2Cyg6rInCAuzZVVhxJYLP9ZoIV6VE3LicQ/yydk3sVxf25I6yZzq/4KQIndS4k8p3nvQBhXNWQsJxDVkhYxcJLUIYFfyrUXQITtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418791; c=relaxed/simple;
-	bh=euN3SEMyyg+sbFE8FHpIlIdtBKzuSzD2XccaWxbQyCc=;
+	s=arc-20240116; t=1792418792; c=relaxed/simple;
+	bh=b970QSfivtWhXrCHnwzJxaqW6ZddRWQZLiIE8vwH3Ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aPUhPaKy0mubH8pGYlqSw4pKZCFjC9VbkwTs+Zi+D+893d16hEb/DlyMc6toGDDKmFverkPU1m6P9P39kN6egWz7t8DWo/8qP96OIK6Udh+26T+1sV3s9grK2+qnWnldjowgh2gS+GsVT7lLvMSur//ASDn83Zpc/XCIBtdhmfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o2Ut2Q70; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gUt1NaXtULie3h5q2IGpsJNMCwhueG2+c5bPxsBmnqyjlVdAPJMZ6/pD96p+o9XLHKfHXpPzLuYRwhji5vfzDywuzqx/ERg8M3r9ZbkAgZB6G+GdPPC+OvZENnAe+w7uMWfg0AUDIrKcMjy+SK2k4WZ/e2YQceEZVKopxcITKZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kjOEgefw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o2Ut2Q70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB15E1F000C7;
-	Mon, 19 Oct 2026 14:06:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kjOEgefw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031161F000C5;
+	Mon, 19 Oct 2026 14:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418788;
-	bh=0Kg+HFU/rpXqGM/k/hRWOvUWvYMJ+ZkyIGW9s0GKUQg=;
+	s=k20260515; t=1792418789;
+	bh=hOQDEz33xStZKw/+9YXAnJNUn5iUFyNgLBgNBn1kxMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o2Ut2Q70IGWmBjZogWMXKX4V+GAk5KwOPmPJCBAes2OXt1ly6xg4z9vlyyAOT/5J0
-	 PaE3KoQSW40sm2YECzgzSE39LYFcxOzRTxsmQspxACiJtHKs9/8uqmA7V4KwALfzzd
-	 KZyEiIQC4DlQ27disEWunP5nMYgv1zfc4PXzZxgi1G0g5TZAOdewrZinrnQYdGt2+g
-	 0YDDOpnjMSZ524Osas9+7mCIFfnuh86WIPCRmh12siuoG+LkL4e65bidWNjpNUylag
-	 mCPK6cpu/+yvQOrMp7MWMWgBAUgMYEXYG0UD8RJXtXWKSmZI894Gixh8ehbpb2v3jq
-	 kRcPI/OnAV4LQ==
+	b=kjOEgefwtRTl8ILkOEMAOI8kWJzovXDpvC965hB1Kcn1+3RyfdSF8kc/b3hp3XthF
+	 yfbQCb2Vm9KGc/cJpHvrUvHNquQo4VMDRP0sjYiI8Jx7cWDa8cEAsO/aWaTcgaVc+y
+	 fhicJYKn5ozuGWPJv9TOCoA9P7PeVcetxqNfzFK2RdaQWSuBnkOj8FYDLI/90w8unM
+	 dcRcq8h2UBdID4Db+vcqDdwGxUjgZvxx66yoYgG5WMzIEkfBiYiXz9ewpCtaijTRyT
+	 A2Jfn/a9eOfOQwVGiZhOzPpn8R1j07nsaS2PQydsGK18GiOmS09e5j/WuMSDQRqF4l
+	 LonZXj1x47HCA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Yun Zhou <yun.zhou@windriver.com>,
+	syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	axboe@kernel.dk,
+	linux-block@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: usb-audio: Release components on probe errors
-Date: Mon, 19 Oct 2026 09:53:08 -0400
-Message-ID: <20261019135441.1420968-497-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] block: reject block device inodes with i_rdev == 0 in lookup_bdev()
+Date: Mon, 19 Oct 2026 09:53:09 -0400
+Message-ID: <20261019135441.1420968-498-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,447 +54,465 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit 3213bf9885e3356fff12ac18b12d4c2fb4687734 ]
+[ Upstream commit 83887ad02f30c1814bed5da3ca999f7b0f3f337c ]
 
-usb_audio_probe() can create USB-audio component resources before the
-first interface is recorded in chip->num_interfaces.  If a later probe
-step fails, the error path drops chip->active and frees the card directly
-when no interfaces have been registered.
+lookup_bdev() blindly returns inode->i_rdev without validating it.
+When a FUSE filesystem exposes a root inode with S_IFBLK mode but
+i_rdev == 0 (via rootmode=060000), any subsequent mount attempt using
+that path as a block device source propagates dev_t 0 into the
+superblock machinery.  After commit 9ee5f161a4db ("fs: maintain a
+global device-to-superblock table") this triggers a WARNING in
+super_dev_register().
 
-Normal disconnect first releases USB-audio components in a fixed order
-before the card is freed.  The first-interface probe error path skipped
-that sequence, so partially initialized PCM, endpoint, MIDI, media, or
-mixer resources could be left for the card private_free path without their
-disconnect handling having run.
+Reject i_rdev == 0 early with -ENODEV since no real block device
+driver registers major 0.
 
-Move the existing normal-disconnect component release sequence into a
-helper and call it from the zero-interface probe error path before
-snd_card_free().  Keep the normal disconnect ordering unchanged: PCM
-streams, endpoint resources, MIDI 1.0 resources, MIDI 2.0 resources, media
-device cleanup, then mixer resources.
-
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260618170026.192212-1-zzzccc427@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=72fe3ea5814121fbc76e
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260703065548.1135125-1-yun.zhou@windriver.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The first-interface probe error path in this 6.18 tree still skips
-disconnect teardown, so live mixer/MIDI URBs can outlive card devices.
-That is a real UAF window, not just cleanup.
+# Stable backport analysis: `83887ad02f30c`
 
-## Phase 1: Commit message forensics
+Local tree: **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`). Both the
+device-to-superblock table (`9ee5f161a4db`) and this lookup check landed
+in the `vfs-7.3-rc1.super` pull. Verdict is for this checkout only.
 
-**Step 1.1:** Record: `[ALSA/usb-audio] [Release] [On first-interface
-probe failure, run the normal USB-audio component disconnect sequence
-before snd_card_free()]`
+---
 
-**Step 1.2:** Record: tags present:
-- `Assisted-by: Codex:gpt-5.5`
-- `Signed-off-by: Cen Zhang <zzzccc427@gmail.com>` (author)
-- `Link:
-  https://patch.msgid.link/20260618170026.192212-1-zzzccc427@gmail.com`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer applied
-  it)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable` (absence
-  expected for this review)
-- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.3:** Record: `[Bug] first-interface probe can create
-PCM/endpoint/MIDI/media/mixer state before chip->num_interfaces is
-incremented; a later failure goes to __error_no_register and calls
-snd_card_free() when num_interfaces==0. [Symptom] those objects skip the
-disconnect sequence used on unplug (URB kill, endpoint release,
-MIDI/media/mixer disconnect) and are left to card private_free.
-[Versions] none given; code is longstanding. [Root cause] probe error
-path is not equivalent to __usb_audio_disconnect().`
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-**Step 1.4:** Record: `[Not a disguised cleanup.] The message describes
-a real teardown skip. Extracting a helper is only so the existing
-disconnect sequence can be reused on that error path.`
+Record: **[block] [reject] reject block device inodes with `i_rdev == 0`
+in `lookup_bdev()`**
 
-## Phase 2: Diff analysis
+Subsystem `block:`. Verb `reject` is a defensive check, not a feature.
+Intent: stop `lookup_bdev()` from returning `dev_t` 0.
 
-**Step 2.1:** Record: `[sound/usb/card.c, ~+38/-32] [new
-usb_audio_disconnect_components(); usb_audio_probe() error path;
-__usb_audio_disconnect()] [single-file surgical refactor of existing
-teardown + one extra call site]`
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
-**Step 2.2:** Record:
-- Hunk 1: identical PCM → endpoint → MIDI 1.0 → MIDI 2.0 → media → mixer
-  release moved from `__usb_audio_disconnect()` into
-  `usb_audio_disconnect_components()`.
-- Hunk 2: `__error_no_register` with `!chip->num_interfaces` used to
-  call only `snd_card_free()`; it now calls the helper first.
-- Hunk 3: normal disconnect still does shutdown wait +
-  `snd_card_disconnect()`, then the helper. Ordering of component
-  release is unchanged.
+Record:
+- **Reported-by:**
+  `syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com` (fuzzer, C
+  repro)
+- **Closes:**
+  https://syzkaller.appspot.com/bug?extid=72fe3ea5814121fbc76e
+- **Link:** https://patch.msgid.link/20260703065548.1135125-1-
+  yun.zhou@windriver.com
+- **Signed-off-by:** Yun Zhou (author); Christian Brauner (VFS
+  maintainer; applied)
+- **Fixes:** none (expected for this review)
+- **Cc: stable:** none (expected)
+- **Tested-by / Reviewed-by / Acked-by:** none on the commit
 
-**Step 2.3:** Record: `[Error-path resource teardown / UAF] Probe
-creates live USB resources before claiming an interface.
-snd_usb_create_streams() can start MIDI 2.0 input URBs;
-snd_usb_create_mixer() submits mixer interrupt URBs. Those stay live
-until disconnect. On first-interface failure, snd_card_free() runs
-snd_device_free_all() (UMP/rawmidi, mixer, PCM) and only then
-card->private_free (snd_usb_audio_free → snd_usb_midi_v2_free_all /
-endpoint kfree). Completions can still run against objects already
-freed. The helper kills/disconnects them first, matching unplug.`
+Sasha Levin SOB is ignored per pipeline rules.
 
-**Step 2.4:** Record: `[Quality: high]` The helper is the existing,
-battle-tested disconnect body. Disconnect callbacks are already
-idempotent (`disconnected` flags; `snd_media_stream_delete()` NULL-
-guards). `[Regression risk: low]` Probe holds `register_mutex` already;
-usage_count should be zero because the card is not registered. Mainline
-uses `snd_refcount_sync()`; this 6.18 tree still uses
-`wait_event(chip->shutdown_wait, ...)`, and the candidate as applied
-here keeps that. No API change.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-## Phase 3: Git history
+Record:
+- **Bug:** `lookup_bdev()` copies `inode->i_rdev` with no check. FUSE
+  `rootmode=060000` (`S_IFBLK`) can present a block inode with `i_rdev
+  == 0`. A later mount that uses that path as a block-device source
+  feeds `dev_t` 0 into superblock setup.
+- **Symptom:** `WARNING in super_dev_register()` after `9ee5f161a4db`
+  (`VFS_WARN_ON_ONCE(!sb->s_dev)`).
+- **Root cause:** major 0 is not a real block major (`get_anon_bdev()`
+  allocates `MKDEV(0, n)` with `n >= 1`). Fake inodes can still expose
+  0.
+- **Version info:** warning is tied to `9ee5f161a4db` (2026-06-29). That
+  commit **is** an ancestor of this HEAD.
 
-**Step 3.1:** Record: `[Buggy error path] 61a6a108d15213 (Thomas Pfaff,
-2011) — if (!chip->num_interfaces) snd_card_free(). [Disconnect
-sequence] e5779998bf8b70 (2010) plus later MIDI2/media additions
-(ff49d1df79aef 2023, 66354f18fe5fbb 2019). Present for the entire 6.18
-lifetime.`
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-**Step 3.2:** Record: `[No Fixes: tag.] The skip is old, not a recent
-regression.`
+Record: **Not disguised.** It is an explicit validation fix. Not cleanup
+or API work.
 
-**Step 3.3:** Record: related commits on this tree:
-- `4c16176fc11a6` “Kill MIDI 2.0 URBs before freeing endpoints” (same
-  author, same day) — already in this tree. Fixes MIDI2 **create-
-  internal** error (`snd_usb_midi_v2_free()`). It does **not** kill URBs
-  before `snd_card_free()` when create succeeded and a later probe step
-  failed.
-- `5f8cf71258261` (2018) UAF on this same `num_interfaces==0` path (use-
-  after-free of chip->active) — shows this error path has been a real
-  UAF site before.
-- `6d3e202670b81` resume cleanup — unrelated.
+---
 
-Standalone besides sharing the MIDI2 theme with 4c16176fc11a6; not patch
-N/M.
+## PHASE 2: DIFF ANALYSIS
 
-**Step 3.4:** Record: `[Author] Cen Zhang, recent ALSA usb-audio/seq
-contributor; not the maintainer. [Maintainer] Takashi Iwai applied it.
-Sibling MIDI2 UAF fix from the same author already went to this stable
-tree.`
+**Step 2.1: INVENTORY THE CHANGES**
 
-**Step 3.5:** Record: `[Dependencies] All callees exist at v6.18:
-snd_usb_stream_disconnect, snd_usb_endpoint_release,
-snd_usbmidi_disconnect, snd_usb_midi_v2_disconnect_all,
-snd_media_device_delete, snd_usb_mixer_disconnect. No snd_refcount_sync
-requirement in this tree. Can apply standalone.`
+Record:
+- **File:** `block/bdev.c` only (`+12` comment + check, `−0`)
+- **Function:** `lookup_bdev()`
+- **Scope:** single-file surgical check on an existing error path (`goto
+  out_path_put`)
 
-## Phase 4: Mailing list / external
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-**Step 4.1:** Record: `[Lore]
-https://patch.msgid.link/20260618170026.192212-1-zzzccc427@gmail.com`
-via `b4 dig -c 3213bf9885e3356fff12ac18b12d4c2fb4687734`. `[Revisions]
-v1 only. [Review] Takashi Iwai 2026-06-29: “Applied to for-next branch
-now. Thanks.” No NAK, no requested changes, no stable nomination in-
-thread.`
+Record: **Before:** after `S_ISBLK` and `may_open_dev()`, always `*dev =
+inode->i_rdev`. **After:** if `i_rdev == 0`, return `-ENODEV` and drop
+the path. Success path unchanged for real devices.
 
-**Step 4.2:** Record: `[Recipients from b4 dig -w] Cen Zhang, Jaroslav
-Kysela, Takashi Iwai, linux-sound, linux-kernel, baijiaju1990@gmail.com.
-Subsystem maintainers were on the original To/Cc.`
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-**Step 4.3:** Record: `[No Reported-by / syzbot / bugzilla on this
-commit.] The same-day sibling MIDI2 commit documented KASAN slab-UAF in
-input_urb_complete() on a probe error path; that is the same class of
-bug, different call site.`
+Record: **Logic / correctness** (invalid `dev_t`), plus **debug
+assertion** (`WARN_ON_ONCE` under `CONFIG_DEBUG_VFS`). Mechanism: stop
+`dev_t` 0 from reaching `sget_dev()` → `set_bdev_super()` →
+`super_dev_register()`.
 
-**Step 4.4:** Record: `[Related] MIDI2 URB-kill patch (msgid
-20260618170010.191433-1), submitted ~16s earlier, already in this tree.
-This patch is still needed for the successful-create-then-later-probe-
-fail path.`
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 4.5:** Record: `[stable list] Not searched successfully via
-WebFetch (lore 403). b4 thread has no stable discussion. UNVERIFIED: no
-evidence this was NAK’d for stable.`
+Record: **Obviously correct and minimal.** Real block drivers do not
+register major 0; `get_anon_bdev()` starts minors at 1 for that reason.
+Regression risk is **low**: only rejects `i_rdev == 0`. No new API, no
+lock changes. Possible behavior change: callers that used to get `dev_t`
+0 now get `-ENODEV` instead of failing later in `blkdev_get_no_open()`
+(`-ENXIO`). That is a better error for “no such device.”
 
-## Phase 5: Code semantic analysis
+---
 
-**Step 5.1:** Record: `[usb_audio_disconnect_components (new),
-usb_audio_probe, __usb_audio_disconnect]`
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 5.2:** Record: `usb_audio_probe` is `usb_audio_driver.probe` —
-USB enumeration / hub_event. `__usb_audio_disconnect` is the unplug
-path. The new helper is also used from that path. High-frequency driver;
-CONFIG_SND_USB_AUDIO is common.
+**Step 3.1: BLAME THE CHANGED LINES**
 
-**Step 5.3:** Record: helper calls `snd_usb_stream_disconnect` (NULL
-endpoint pointers), `snd_usb_endpoint_release` → `release_urbs()`,
-`snd_usbmidi_disconnect` (kill MIDI1 URBs),
-`snd_usb_midi_v2_disconnect_all` (set disconnected, kill/drain MIDI2
-URBs), `snd_media_device_delete`, `snd_usb_mixer_disconnect`
-(`usb_kill_urb` on mixer/rc URBs).
+Record: Unchecked `*dev = inode->i_rdev` comes from `4e7b5671c6a883`
+(“block: remove i_bdev”, 2020-12-01), on top of `lookup_bdev()` back to
+`1da177e4c3f41`. The **warning** is new with `9ee5f161a4db`
+(2026-06-29). The new check is `83887ad02f30c` itself.
 
-**Step 5.4:** Record: `[Reachable] Plug a USB audio/MIDI device whose
-first interface creates streams/mixer/MIDI, then a later probe step
-fails (bad descriptor, mixer fail, snd_card_register fail, device
-yanked). No extra ioctl required. MIDI2 `start_input_streams()` runs
-inside `snd_usb_midi_v2_create()` from `snd_usb_create_stream()` before
-mixer/register. Mixer `usb_submit_urb(mixer->urb)` runs in mixer create
-before register.`
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-**Step 5.5:** Record: Same-day MIDI2 free-path UAF fix; historical UAF
-on this exact `num_interfaces==0` free path; other USB sound probe-error
-URB leaks (caiaq, line6). Pattern is systematic: probe error must stop
-URBs before freeing the card.
+Record: **No Fixes: tag.** The message names `9ee5f161a4db`. `git merge-
+base --is-ancestor 9ee5f161a4db HEAD` succeeded. That commit is in this
+tree. `git describe --contains`: both `9ee5f161a4db` and `83887ad02f30c`
+are in **v7.3-rc1**.
 
-## Phase 6: Local tree (6.18.y)
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-**Step 6.1:** Record: `[Local tree] v6.18.53 (`git describe HEAD` =
-v6.18.53-5049-g0f0bdc2b0dffb). `[Buggy code at v6.18] sound/usb/card.c
-__error_no_register: atomic_dec(&chip->active); if
-(!chip->num_interfaces) snd_card_free(chip->card);` with no component
-disconnect. MIDI2 create/start-input and mixer URB submit exist at
-v6.18.`
+Record: Recent `block/bdev.c` work is unrelated (`bdev_yield_claim`,
+unfreezable bdev, etc.). Standalone one-patch series, not `N/M`.
 
-**Step 6.2:** Record: `[Backport difficulty: clean / already matching
-this tree.] The only mainline delta vs 6.18 is `snd_refcount_sync()` vs
-`wait_event(...)` in the disconnect wait, which this tree correctly
-keeps. Helper callees and list fields (`pcm_list`, `ep_list`,
-`midi_list`, `mixer_list`) are present.`
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-**Step 6.3:** Record: `[4c16176fc11a6 is already here]` and does not
-replace this fix. No other equivalent probe-error disconnect helper.
+Record: Yun Zhou also has filesystem fixes (ext4/xfs/jfs) in this
+history; not the block maintainer. Applied by **Christian Brauner**, VFS
+maintainer.
 
-## Phase 7: Subsystem context
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-**Step 7.1:** Record: `[sound/usb-audio] [IMPORTANT]` — default USB
-sound driver on desktops, laptops, docks, headsets; not staging.
+Record: The check is self-contained in `lookup_bdev()`. The **warning**
+needs `super_dev_register()`, which this tree has. No extra helper or
+struct change required. **Can apply standalone** on this tree’s
+`lookup_bdev()`.
 
-**Step 7.2:** Record: `[Mature driver, still active.] USB MIDI 2.0
-(2023) increased the cost of skipping disconnect, because input URBs now
-start at create, not at open.`
+---
 
-## Phase 8: Impact and risk
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 8.1:** Record: `[driver-specific, but a very widely used driver]`
-CONFIG_SND_USB_AUDIO users; worse on MIDI 2.0 devices.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 8.2:** Record: `[Trigger] first-interface usb_audio_probe()
-failure after streams/mixer/MIDI construction. [Likelihood] not every
-boot, but ordinary for flaky/unplug-during-enum/bad-descriptor devices.
-[Unprivileged] plugging USB audio is enough; no extra privilege needed
-for the URB/completion race.`
+Record:
+- `b4 dig -c 83887ad02f30c` → https://patch.msgid.link/20260703065548.11
+  35125-1-yun.zhou@windriver.com
+- `b4 dig -a`: **v1 only**, 2026-07-03
+- Mbox is the patch only; **no review replies** in the saved thread
+- Openwall mirror matches; no NAK
+- Applied the same day (commit date 2026-07-03 15:12 +0200)
+- **No Cc: stable** in the submission
 
-**Step 8.3:** Record: `[Failure] use-after-free / use-during-teardown
-from in-flight mixer or MIDI2 URBs while snd_card_free() runs
-snd_device_free_all() (UMP/rawmidi private_free, mixer kctl, then chip
-private_free). Confirmed mechanism: input_urb_complete() →
-snd_ump_receive(ep->ump) while UMP is an snd_device freed before chip
-private_free. [Severity: HIGH]` crash or memory corruption on probe
-failure; same class as the already-backported MIDI2 KASAN UAF.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-**Step 8.4:** Record: `[Benefit: high] closes a real probe-error UAF
-window on a common driver. [Risk: low] ~one extra call of existing
-disconnect code, idempotent vs later free. [Ratio: favorable]`
+Record (`b4 dig -w`): To Jens Axboe and Christian Brauner; Cc linux-
+block, linux-kernel. Brauner applied it. No extra Reviewed-by.
 
-## Phase 9: Synthesis
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-**Step 9.1:**
-- FOR: real bug; first-interface probe error skips disconnect; MIDI2
-  URBs and mixer interrupt URBs are live then; snd_card_free frees ALSA
-  devices before chip private_free; helper is existing disconnect code;
-  small; maintainer applied v1; helpers exist in 6.18; sibling MIDI2 fix
-  does not cover this ordering.
-- AGAINST: no Fixes/Reported-by/syzbot on this exact commit; AI-
-  assisted; some objects also self-disconnect in their destructors
-  (mixer_free, snd_usbmidi_free), so not every component crashes every
-  time.
-- UNRESOLVED: lore.kernel.org HTTP 403 via WebFetch; no independent
-  stable-list thread found.
+Record (syzkaller):
+- Title: `WARNING in super_dev_register`
+- Label: **prio:normal**; subsystem fuse
+- C repro; first crash 2026-07-02 on linux-next
+- Stack: `mount` → `fuse_get_tree` → `get_tree_bdev_flags` → `sget_dev`
+  → `super_dev_register`
+- Warning text: `!sb->s_dev` at `super_dev_register`
+- Syzbot CI: **Unprivileged: ❌**; DenialOfService/Exploitable marked,
+  but not an unprivileged trigger
+- Status: fix listed as `83887ad02f30`
 
-**Step 9.2:** Stable rules:
-1. Obviously correct and tested? **PASS** — move-existing-sequence +
-   maintainer applied.
-2. Real user-visible bug? **PASS** — probe-error UAF/teardown skip on
-   USB audio.
-3. Important (crash/UAF)? **PASS** — HIGH; in-flight URB vs card free.
-4. Small/contained? **PASS** — one file, ~70-line net-neutral extract +
-   2-line call.
-5. No new features/APIs? **PASS**
-6. Applies to this tree? **PASS** — bug and callees present at v6.18;
-   wait_event form already matches.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-**Step 9.3:** Record: `[Not an exception category; it is a normal error-
-path UAF/resource-teardown fix.]`
+Record: Single patch. Syzbot CI series passed KASAN build/boot/fuzz. No
+follow-up fix on `lookup_bdev()` `i_rdev` in this tree.
 
-**Step 9.4:** Backport to this 6.18.y tree on technical merit.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-### Why it matters here
-`usb_audio_probe()` can build PCM, endpoints, MIDI (including MIDI 2.0
-input URBs) and mixer status URBs before `chip->num_interfaces++`. If
-that first probe fails, 6.18 only does `snd_card_free()`. ALSA then
-frees rawmidi/UMP and mixer devices while USB completions can still run,
-and only afterwards runs `snd_usb_audio_free()`. Unplug already stops
-those components first; probe error did not.
+Record: lore.kernel.org WebFetch returned **403**. Web search of
+`site:lore.kernel.org/stable` did not find a discussion of this patch.
+**UNVERIFIED:** no confirmed stable-list thread.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+
+Record: **`lookup_bdev()`** only.
+
+**Step 5.2: TRACE CALLERS**
+
+Record (this tree): `get_tree_bdev_flags()` in `fs/super.c` (mount path
+that warned); `bdev_file_open_by_path()`; hibernate; quota; nilfs2;
+btrfs; MTD; dm-table; bcache. **~26** call sites. Important path:
+**`get_tree_bdev_flags()`** from filesystem `get_tree` (including
+fuseblk).
+
+**Step 5.3: TRACE CALLEES**
+
+Record: `kern_path()`, `d_backing_inode()`, `S_ISBLK()`,
+`may_open_dev()`, `path_put()`. No alloc/lock added.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Userspace `mount()` with a FUSE `rootmode=S_IFBLK` path as
+fuseblk/block source. **Reachable from the mount syscall**, typically
+with mount privilege. Confirmed by syzbot C repro. Not a hot I/O path.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: No other `i_rdev == 0` reject in block core.
+`early_lookup_bdev()` is name/PARTUUID parsing at boot, not inode-based;
+different bug. `bdev_statx()` uses `i_rdev` via `blkdev_get_no_open()`,
+which already fails closed on missing devices.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: **Yes.**
+- `lookup_bdev()` is in `block/bdev.c`
+- `super_dev_register()` in `fs/super.c` has
+  `VFS_WARN_ON_ONCE(!sb->s_dev)`
+- `get_tree_bdev_flags()` still does `lookup_bdev(fc->source, &dev)`
+  then `sget_dev(fc, dev)`
+- Bug introduced for this warning: **`9ee5f161a4db`**, first in
+  **v7.3-rc1**, present here
+
+Current `lookup_bdev()` already contains this check because
+`83887ad02f30c` is an ancestor of HEAD (same 7.3-rc1 vfs pull). That is
+git history of this series, not a pipeline “already selected” marker.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: **Clean apply** on this tree’s `lookup_bdev()`. Surrounding code
+matches the hunk. No backport rewrite needed.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: This is the fix in this lineage. No alternate `i_rdev` check
+elsewhere.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: **block / VFS mount** (`block/bdev.c`, used by `fs/super.c`).
+**CORE** for block-backed mounts.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: Active in 7.3 (device-to-superblock table is new this cycle).
+The check is a same-cycle guard for that table.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: Anyone mounting a block-backed fs using a path that is a fake
+`S_IFBLK` inode with `i_rdev == 0` (FUSE `rootmode=S_IFBLK` is the known
+trigger). Not universal hardware. **Config-specific extra:**
+`CONFIG_DEBUG_VFS` (default **n**, `DEBUG_KERNEL`) is required for the
+**runtime WARNING**. Without it, `VFS_WARN_ON_ONCE` is
+`BUILD_BUG_ON_INVALID` (no runtime warn).
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: FUSE mount with `rootmode=060000`, then mount that path as a
+block device (fuseblk / `get_tree_bdev`). **Unprivileged: no** (syzbot).
+Not every boot; needs a crafted mount. Reproducible (C repro).
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record:
+- **With `CONFIG_DEBUG_VFS`:** `WARN_ON_ONCE(!sb->s_dev)` — **MEDIUM**
+  (WARN; panic if `panic_on_warn`)
+- **Without it:** `s_dev = 0` is still registered in the global table,
+  then `setup_bdev_super()` → `bdev_file_open_by_dev(0)` →
+  `blkdev_get_no_open(0)` fails (`NULL` → `-ENXIO`). Mount fails.
+  **LOW–MEDIUM** correctness (invalid table key; mount still fails)
+
+Not UAF, not filesystem corruption, not an unprivileged crash.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit:** Stops `dev_t` 0 from entering `sget_dev` /
+  `super_dev_register` on this 7.3 line, which has the new table.
+  Matches a syzbot C repro.
+- **Risk:** Very low (~12 lines, error-path only).
+- **Ratio:** Favorable **on this tree**, because `9ee5f161a4db` is
+  present.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**For backporting to this tree:**
+- Introducing commit `9ee5f161a4db` **is in this tree** (v7.3-rc1)
+- Syzbot C repro of `WARNING in super_dev_register`
+- Small, obviously correct `-ENODEV` check
+- Applied by VFS maintainer; syzbot CI passed
+- Call path is real: `get_tree_bdev_flags()`
+- Also avoids publishing `s_dev == 0` in the device-to-superblock table
+
+**Against:**
+- Runtime WARN is **`CONFIG_DEBUG_VFS` only** (default n)
+- Trigger is a privileged, crafted FUSE/fuseblk mount, not normal disks
+- syzbot **prio:normal**; not unprivileged
+- Production mount already fails later with `-ENXIO`
+- No Fixes/Cc-stable (not a negative by itself)
+
+**Unresolved:**
+- lore.kernel.org 403; no stable-list thread found (UNVERIFIED)
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — syzbot repro + CI; logic is
+   sound
+2. Fixes a real bug that affects users? **PASS** — warning and invalid
+   `dev_t` 0 on this 7.3 VFS
+3. Important issue? **PASS** (borderline) — WARN_ON / table invariant;
+   not UAF/corruption; still a real VFS assertion this tree has
+4. Small and contained? **PASS** — one function, +12 lines
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — `lookup_bdev()` and
+   `super_dev_register()` match
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: **None** (not a device ID, quirk, DT, build, or docs patch).
+Qualifies as a small correctness fix, not an exception class.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+On **this** v7.3-rc4 tree the warning path exists: `9ee5f161a4db` is
+here, `lookup_bdev()` can still feed 0 into `sget_dev()`, and syzbot has
+a C repro. The patch is a 12-line `-ENODEV` check with negligible
+regression risk. That meets stable rules for this checkout. It would not
+be appropriate on a tree that lacks `super_dev_register()`; that is not
+this tree.
+
+---
+
+### What the commit solves, and why it matters here
+
+Without the check, a FUSE inode with `S_IFBLK` and `i_rdev == 0` makes
+`lookup_bdev()` return 0. `get_tree_bdev_flags()` then calls
+`sget_dev(fc, 0)`, and `super_dev_register()` hits
+`VFS_WARN_ON_ONCE(!sb->s_dev)` when `CONFIG_DEBUG_VFS=y`. This tree has
+that table and that warning. Rejecting `i_rdev == 0` with `-ENODEV`
+stops the bad `dev_t` at the lookup.
 
 ### Risk vs benefit
-Benefit is avoiding oops/UAF when USB audio probe fails. Risk is low:
-the helper is the current disconnect body, and free paths already
-tolerate a prior disconnect.
+
+Benefit is silencing a reachable WARN and keeping `dev_t` 0 out of the
+superblock device table on 7.3. Risk is a slightly earlier `-ENODEV`
+instead of a later `-ENXIO` for a path that was never a real block
+device.
 
 ### Concerns
-Mainline’s `snd_refcount_sync()` is not in 6.18; it must keep
-`wait_event`. That is already how this tree’s disconnect path looks, so
-no extra prerequisite. The earlier MIDI2 URB-kill backport is necessary
-but not sufficient.
 
-Verification:
-- [Phase 1] Parsed subject/body/tags: no Fixes/Reported-by; maintainer
-  SOB; Codex assisted
-- [Phase 2] Diff: helper extracted from `__usb_audio_disconnect`, called
-  from `!num_interfaces` probe error before `snd_card_free()`
-- [Phase 2] Confirmed mixer URB submit at create
-  (`usb_submit_urb(mixer->urb)` in mixer.c); MIDI2
-  `start_input_streams()` during `snd_usb_midi_v2_create()`
-- [Phase 2] Confirmed `snd_card` release: `snd_device_free_all()` then
-  `card->private_free`; UMP is a rawmidi snd_device
-- [Phase 2] Confirmed `input_urb_complete()` uses `ep->ump` unless
-  `ep->disconnected`
-- [Phase 3] `git blame` on pre-fix error path: 61a6a108d15213 (2011)
-- [Phase 3] `git merge-base --is-ancestor 4c16176fc11a6 HEAD` — sibling
-  MIDI2 UAF fix is in this tree and does not call disconnect before
-  `snd_card_free()`
-- [Phase 3] Historical UAF on same path: 5f8cf71258261
-- [Phase 4] `b4 dig -c 3213bf9885e3356fff12ac18b12d4c2fb4687734` → msgid
-  20260618170026.192212-1; v1 only; Iwai applied; To/Cc linux-sound +
-  Iwai + Kysela
-- [Phase 4] WebFetch lore/msgid.link returned 403; discussion recovered
-  via `b4 dig -m`
-- [Phase 5] `usb_audio_probe` is the usb_driver probe; MIDI created from
-  `snd_usb_create_stream()`
-- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb; `make
-  kernelversion` = 6.18.53
-- [Phase 6] `git grep error_no_register v6.18 -- sound/usb/card.c` shows
-  bare `snd_card_free` with no disconnect
-- [Phase 6] v6.18 has `snd_usb_midi_v2_disconnect_all` and
-  `snd_usb_endpoint_release`
-- [Phase 8] Failure mode: UAF from live MIDI2/mixer URBs during
-  `snd_card_free()`, severity HIGH
-- UNVERIFIED: stable@ mailing list thread (lore HTTP 403)
+Depends on `9ee5f161a4db` for the warning; that dependency **is
+satisfied here**. No extra backport patches. lore.kernel.org could not
+be fetched (403); discussion was recovered via `b4 dig` and an openwall
+mirror.
+
+---
+
+### Verification
+
+- **[Phase 1]** Parsed tags: syzbot Reported-by, Closes syzkaller URL,
+  msgid Link, Brauner SOB; no Fixes
+- **[Phase 2]** Diff: +12 in `lookup_bdev()` in `block/bdev.c`;
+  `-ENODEV` if `!inode->i_rdev`
+- **[Phase 3]** `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` → `7.3.0-rc4`
+- **[Phase 3]** `git merge-base --is-ancestor 9ee5f161a4db HEAD` → yes
+- **[Phase 3]** `git merge-base --is-ancestor 83887ad02f30c HEAD` → yes
+  (in v7.3-rc1 vfs-super pull)
+- **[Phase 3]** `git blame -L 1259,1297 block/bdev.c`: unchecked assign
+  from `4e7b5671c6a883`; check from `83887ad02f30c`
+- **[Phase 3]** `git describe --contains 9ee5f161a4db` / `83887ad02f30c`
+  → both v7.3-rc1
+- **[Phase 4]** `b4 dig -c 83887ad02f30c` →
+  patch.msgid.link/20260703065548.1135125-1-yun.zhou@windriver.com
+- **[Phase 4]** `b4 dig -a`: v1 only; `-w`: axboe + brauner + linux-
+  block
+- **[Phase 4]** `b4 dig -m`: mbox is the patch only; no NAK
+- **[Phase 4]** WebFetch syzkaller bug: WARNING, prio:normal, C repro,
+  Unprivileged ❌
+- **[Phase 4]** lore.kernel.org WebFetch: **403**; stable-list hit:
+  **UNVERIFIED**
+- **[Phase 5]** Callers: `get_tree_bdev_flags`,
+  `bdev_file_open_by_path`, btrfs/nilfs2/dm/quota/hibernate/mtd/bcache
+- **[Phase 5]** `include/linux/vfsdebug.h`: `VFS_WARN_ON_ONCE` is
+  runtime only if `CONFIG_DEBUG_VFS`
+- **[Phase 5]** `lib/Kconfig.debug`: `DEBUG_VFS` default n, “If unsure,
+  say N”
+- **[Phase 6]** Read `lookup_bdev()` and `super_dev_register()` in this
+  tree; warning and mount path present
+- **[Phase 8]** Failure: WARN under DEBUG_VFS; otherwise failed open of
+  bdev 0 (`blkdev_get_no_open`)
+- **UNVERIFIED:** full lore review thread beyond the v1 patch mbox;
+  stable@ discussion
+
+The fix is small, matches a syzbot warning this 7.3 tree can hit, and
+applies cleanly.
 
 **YES**
 
- sound/usb/card.c | 70 ++++++++++++++++++++++++++----------------------
- 1 file changed, 38 insertions(+), 32 deletions(-)
+ block/bdev.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/usb/card.c b/sound/usb/card.c
-index 85249606a6b18..d8e096f71412a 100644
---- a/sound/usb/card.c
-+++ b/sound/usb/card.c
-@@ -904,6 +904,40 @@ static int try_to_register_card(struct snd_usb_audio *chip, int ifnum)
- 	return 0;
- }
+diff --git a/block/bdev.c b/block/bdev.c
+index 02d7503e7c2c4..00345746e34f8 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -1209,6 +1209,18 @@ int lookup_bdev(const char *pathname, dev_t *dev)
+ 	if (!may_open_dev(&path))
+ 		goto out_path_put;
  
-+static void usb_audio_disconnect_components(struct snd_usb_audio *chip)
-+{
-+	struct snd_usb_stream *as;
-+	struct snd_usb_endpoint *ep;
-+	struct usb_mixer_interface *mixer;
-+	struct list_head *p;
-+
-+	/* release the pcm resources */
-+	list_for_each_entry(as, &chip->pcm_list, list) {
-+		snd_usb_stream_disconnect(as);
-+	}
-+	/* release the endpoint resources */
-+	list_for_each_entry(ep, &chip->ep_list, list) {
-+		snd_usb_endpoint_release(ep);
-+	}
-+	/* release the midi resources */
-+	list_for_each(p, &chip->midi_list) {
-+		snd_usbmidi_disconnect(p);
-+	}
-+	snd_usb_midi_v2_disconnect_all(chip);
 +	/*
-+	 * Nice to check quirk && quirk->shares_media_device and
-+	 * then call the snd_media_device_delete(). Don't have
-+	 * access to the quirk here. snd_media_device_delete()
-+	 * accesses mixer_list
++	 * Reject a block device inode with i_rdev == 0.  A dev_t of 0 is
++	 * never valid for a block device: no real block device driver
++	 * registers major 0.  Fake block device inodes (e.g. fuse with
++	 * rootmode=S_IFBLK) can expose i_rdev == 0, and letting that
++	 * propagate would confuse superblock lookup and trigger warnings
++	 * in the device-to-superblock table (super_dev_register).
 +	 */
-+	snd_media_device_delete(chip);
++	error = -ENODEV;
++	if (!inode->i_rdev)
++		goto out_path_put;
 +
-+	/* release mixer resources */
-+	list_for_each_entry(mixer, &chip->mixer_list, list) {
-+		snd_usb_mixer_disconnect(mixer);
-+	}
-+}
-+
- /*
-  * probe the active usb device
-  *
-@@ -1076,8 +1110,10 @@ static int usb_audio_probe(struct usb_interface *intf,
- 		 * decrement before memory is possibly returned.
- 		 */
- 		atomic_dec(&chip->active);
--		if (!chip->num_interfaces)
-+		if (!chip->num_interfaces) {
-+			usb_audio_disconnect_components(chip);
- 			snd_card_free(chip->card);
-+		}
- 	}
- 	return err;
- }
-@@ -1090,49 +1126,19 @@ static bool __usb_audio_disconnect(struct usb_interface *intf,
- 				   struct snd_usb_audio *chip,
- 				   struct snd_card *card)
- {
--	struct list_head *p;
--
- 	guard(mutex)(&register_mutex);
- 
- 	if (platform_ops && platform_ops->disconnect_cb)
- 		platform_ops->disconnect_cb(chip);
- 
- 	if (atomic_inc_return(&chip->shutdown) == 1) {
--		struct snd_usb_stream *as;
--		struct snd_usb_endpoint *ep;
--		struct usb_mixer_interface *mixer;
--
- 		/* wait until all pending tasks done;
- 		 * they are protected by snd_usb_lock_shutdown()
- 		 */
- 		wait_event(chip->shutdown_wait,
- 			   !atomic_read(&chip->usage_count));
- 		snd_card_disconnect(card);
--		/* release the pcm resources */
--		list_for_each_entry(as, &chip->pcm_list, list) {
--			snd_usb_stream_disconnect(as);
--		}
--		/* release the endpoint resources */
--		list_for_each_entry(ep, &chip->ep_list, list) {
--			snd_usb_endpoint_release(ep);
--		}
--		/* release the midi resources */
--		list_for_each(p, &chip->midi_list) {
--			snd_usbmidi_disconnect(p);
--		}
--		snd_usb_midi_v2_disconnect_all(chip);
--		/*
--		 * Nice to check quirk && quirk->shares_media_device and
--		 * then call the snd_media_device_delete(). Don't have
--		 * access to the quirk here. snd_media_device_delete()
--		 * accesses mixer_list
--		 */
--		snd_media_device_delete(chip);
--
--		/* release mixer resources */
--		list_for_each_entry(mixer, &chip->mixer_list, list) {
--			snd_usb_mixer_disconnect(mixer);
--		}
-+		usb_audio_disconnect_components(chip);
- 	}
- 
- 	if (chip->quirk_flags & QUIRK_FLAG_DISABLE_AUTOSUSPEND)
+ 	*dev = inode->i_rdev;
+ 	error = 0;
+ out_path_put:
 -- 
 2.53.0
 
