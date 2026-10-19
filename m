@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED98538761;
-	Mon, 19 Oct 2026 14:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3CF628617;
+	Mon, 19 Oct 2026 14:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418701; cv=none; b=mlMSSwuEB/vR20UHU+KYHlkRDwnKD4RG3oO4k/8a40uTvNEItv/KsW83PC3TWntv4xQaj+7kyHMCBMv4i3sKACECRWIEwquXtl1ebH4AtpFguQ1fl6SAv8nruAABsQ27L80uH1DHm7sx4FXp8g/XUpSetV1SjmYX01TBH6pGWYc=
+	t=1792418703; cv=none; b=IgstNaxQhsc1dBckxA3ZMF9pDN0Do0hFnUtZOoU2IKR6YiCtPpkS44NtHRBrl6ymDh+RfNbEBtiDS8Du3rIfRnkXCKJ3BdU8jksg2InmpXaB0qxoLSqGkV8oMfu3f5W9cYT4Ol5W2p4dZdHbaF9+PINTH87tvVqyVqmKQjT7D7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418701; c=relaxed/simple;
-	bh=24d7NsJbbsGL/694baAXjNMCkaHCuUP7ioiqoBd8DRY=;
+	s=arc-20240116; t=1792418703; c=relaxed/simple;
+	bh=fsNJEv92VqApu4MDiXNnLuv16Emx+3YEMvYHfZNcigI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WYAxrjublETIQjaXrw4klyP53YhOl0d302MVWz+h92CrwArtMUkD8RMnaIOcmnmQPdJxnpenHWEcxRA5Hmn+Ma77SqSc1p9dinmB3Tjk0CXvSABakMS89LGzu5sQxhBDHCKy8C+04Cwow1BTzwgi+au9RBvTuGTzMp9W8wT/76c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UqcfdmZV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=vAsksoN2qF4IfZIAaKS9ZUCz4YVahv49mc45FTH6H2zrRkW+ZuOMl7qMqKmCakPKcLT4JdynbGmmWfhNKWXoqezH5jHePbRncc1Y6RhJ2KjJ+pSt+XVOy1gVMGOSf/q4rv1XsBJiDWyUc0a58P+C/M725Pl34TbGUNHAvC0WBxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LOdz1It6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UqcfdmZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025671F000C6;
-	Mon, 19 Oct 2026 14:04:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LOdz1It6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F80B1F000C7;
+	Mon, 19 Oct 2026 14:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418698;
-	bh=4uUYZsf7HeD1FtA/2f/cFcVEPSgoow6CLwoxLwi+h8Q=;
+	s=k20260515; t=1792418700;
+	bh=uAAs1xRU044mRxttfqo0JbA6ZXpm2L7A9MFCtgdteys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UqcfdmZVupyotCD3mZQX+swkTyWLAo80tp1uwKRZWaleWpdrMwh6yHpnTTWZgiG0W
-	 BhOfOYkxfcByj2076LvwNJ3lsFcwwl1p8wRCt7wmHueQ3j4XP2/VTLkZX3D1CTZ+CO
-	 TOAodqKansN0uanN6Qs5KX/pIigdhOtGReKzsvCnrMcjl+nivO4w7yLKcjTVbocdqn
-	 yNvB5gyjEFhdDCccof6Sa1SUuDNIcPcF8SP+RXYAn+ToYcqx9/HBKJ4/p7lcx5NeyE
-	 ut4dOqoX4m95dXpQavveWmzJgsov51HHvUNQ3tdVs9y3GEaxowldIpkJYn5b06uPz0
-	 2s+uzV4YYSh2g==
+	b=LOdz1It6o+LOIsKL/OAu0yUA+iKE7u/051aWZrFRUGoxAYLmAqlaeR3p8+9hvVdgh
+	 OzPnH0V2Okq1hZKV/SskmBG2af6H6f7jZUb0LPBJyEh0Takr03G2Ic0XL8BshXjbbr
+	 4kkEogjv774YIYhAPWEUGC5SAcRnBXnVOdQ8SZ30Po/uLTLSlX9XO5/GUTZPbROrwh
+	 qEj2bIM5WbaWsEpqU0iwo/3gbZy/u2oprWpLC/KokONuYDhpi5HmysuyYZuvx7U8Xx
+	 e6Zzge87snJmV7J8kWU5+hEB3mfwJhV0WGeRN3JHyH0w6rFwt/CLXjHTQMs7sOY5i5
+	 IUlc0vBRuktiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Frank Li <Frank.Li@nxp.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-cifs@vger.kernel.org,
+	abelvesa@kernel.org,
+	sboyd@kernel.org,
+	bmasney+clk@redhat.com,
+	jbrunet+clk@baylibre.com,
+	linux-clk@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ksmbd: reject SMB3.1.1 binding with mismatched cipher
-Date: Mon, 19 Oct 2026 09:52:04 -0400
-Message-ID: <20261019135441.1420968-433-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] clk: imx: imx8qxp-lpcg: add missing MODULE_DEVICE_TABLE()
+Date: Mon, 19 Oct 2026 09:52:05 -0400
+Message-ID: <20261019135441.1420968-434-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,24 +61,27 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 7019a11f79dc408f2b47b1027240e7f198784c9a ]
+[ Upstream commit e89485455ac49925565061733c0d73d568333fc0 ]
 
-SMB3.1.1 multichannel connections belonging to the same session must use
-the same negotiated encryption cipher.
+The driver has a match table for the of bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-ksmbd validates the dialect and client GUID during session binding, but
-does not compare the cipher negotiated by the new connection with the
-cipher used by the existing session channels. This allows a channel
-negotiated with AES-128-CCM to bind to a session using AES-128-GCM.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Compare the new connection's cipher with an existing session channel and
-return STATUS_INVALID_PARAMETER when they differ.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-This fixes smb2.session.bind_negative_smb3encGtoCs.
-
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20260704150344.59563-1-pengpeng@iscas.ac.cn
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,390 +89,337 @@ LLM Generated explanations, may be completely bogus:
 
 ## Local tree
 
-This checkout is **6.12.111** (`pending-6.12`, `git describe` =
-`p-6.12-3-gc504cf0baa3d8`). The verdict is only for this tree.
-
-Upstream commit analyzed: `7019a11f79dc408f2b47b1027240e7f198784c9a`
-(not in this tree). `git apply --check` of that diff against local
-`fs/smb/server/smb2pdu.c` succeeds.
+This checkout is **v7.3-rc4-27-gf0100363d8c37** (`VERSION=7 PATCHLEVEL=3
+SUBLEVEL=0 EXTRAVERSION=-rc4`). The candidate is `e89485455ac49` (`clk:
+imx: imx8qxp-lpcg: add missing MODULE_DEVICE_TABLE()`). The file and
+match table exist here; the one-line fix applies as written.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject**
-Record: `[ksmbd] [reject] SMB3.1.1 session binding must not succeed when
-the new connection negotiated a different encryption cipher`
+**Step 1.1 — Subject**
+- Record: `[clk: imx: imx8qxp-lpcg] [add] [export OF match table via
+  MODULE_DEVICE_TABLE so module aliases are generated]`
 
-**Step 1.2: Tags**
-Record:
-- Signed-off-by: Namjae Jeon `<linkinjeon@kernel.org>` (author and
-  committer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable`
-- Absence of `Fixes:`/`Cc: stable` is expected for this review path and
-  is not treated as a negative signal
+**Step 1.2 — Tags**
+- Record:
+  - `Reviewed-by: Frank Li <Frank.Li@nxp.com>` (i.MX)
+  - `Reviewed-by: Brian Masney <bmasney@redhat.com>` (Red Hat / clk)
+  - `Reviewed-by: Peng Fan <peng.fan@nxp.com>` (i.MX clk)
+  - `Link: https://patch.msgid.link/20260704150344.59563-1-
+    pengpeng@iscas.ac.cn`
+  - `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+  - `Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>` (clk-imx
+    maintainer, applied it)
+  - No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence expected)
+  - Ignore any Sasha Levin SOB if present (none on the real commit)
 
-**Step 1.3: Body**
-Record:
-- Bug: SMB3.1.1 multichannel session binding checks dialect and client
-  GUID, but not cipher. A connection that negotiated AES-128-CCM can
-  bind to a session whose existing channel uses AES-128-GCM.
-- Symptom: invalid bind is accepted; smbtorture
-  `smb2.session.bind_negative_smb3encGtoCs` fails (expects
-  `STATUS_INVALID_PARAMETER`).
-- Root cause: missing comparison of `conn->cipher_type` against an
-  existing session channel.
-- Fix: under `sess->chann_lock`, compare ciphers and return `-EINVAL` →
-  `STATUS_INVALID_PARAMETER`.
-- No kernel-version range in the message.
+**Step 1.3 — Body**
+- Record: The OF match table is wired into `platform_driver` but not
+  published with `MODULE_DEVICE_TABLE()`. Without that, modpost does not
+  emit `of:` aliases, so kmod/udev cannot autoload the module from DT
+  compatible strings.
+- Symptom: `CONFIG_CLK_IMX8QXP=m` → LPCG clock module does not load from
+  DT; consumers never get those clocks unless the module is loaded by
+  hand.
+- Version info: none in the message.
+- Root cause: missing alias publication, not a runtime logic bug. Author
+  states it is a source-level finding, not a live hardware repro.
 
-**Step 1.4: Hidden bug fix?**
-Record: Not hidden. Explicit protocol-validation fix for encryption-
-cipher mismatch on bind.
+**Step 1.4 — Hidden bug fix?**
+- Record: Not disguised. It is a real autoload/modalias bug stated
+  plainly. The “source-level” wording means it was found by inspection,
+  not that it is theoretical: the table is used and not exported.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-Record:
-- File: `fs/smb/server/smb2pdu.c` only (`+15` lines)
-- Function: `smb2_sess_setup()`
-- Scope: single-file surgical insertion in the existing SMB 3.x
-  multichannel binding branch, immediately after the dialect check
+**Step 2.1 — Inventory**
+- Record: `drivers/clk/imx/clk-imx8qxp-lpcg.c` — **+1 / −0**. One line
+  after `imx8qxp_lpcg_match[]`. Surgical, single-file.
 
-**Step 2.2: Code flow**
-Record:
-- Before: after `conn->dialect != sess->dialect`, binding proceeds to
-  the signed-request and GUID checks.
-- After: if dialect is SMB 3.1.1, take `down_read(&sess->chann_lock)`,
-  walk `sess->ksmbd_chann_list`, if `conn->cipher_type !=
-  chann->conn->cipher_type` set `rc = -EINVAL`, then `up_read` and `goto
-  out_err`.
-- Path: SESSION_SETUP with `SMB2_SESSION_REQ_FLAG_BINDING` on SMB 3.1.1
-  with multichannel enabled. Existing `out_err` maps `-EINVAL` to
-  `STATUS_INVALID_PARAMETER` (local lines 1916–1917).
+**Step 2.2 — Flow**
+- Record: Before: `imx8qxp_lpcg_match` is only `of_match_table` (used
+  after the module is already loaded). After: same table is also a
+  `MODULE_DEVICE_TABLE(of, …)` so file2alias/modpost emits aliases at
+  build time. No probe/runtime path change.
 
-**Step 2.3: Bug mechanism**
-Record:
-- Category: protocol/crypto correctness (logic), not UAF/leak/race.
-- Mechanism: cipher is per-connection (`conn->cipher_type`, set in
-  `decode_encrypt_ctxt()` at NEGOTIATE). Session encryption/decryption
-  keys are session-wide (`sess->smb3encryptionkey` /
-  `smb3decryptionkey`) and are **not** regenerated on bind
-  (`generate_encryptionkey` is skipped when
-  `SMB2_SESSION_REQ_FLAG_BINDING` is set, local lines 1545–1546).
-  `ksmbd_crypt_message()` then selects GCM vs CCM and 128 vs 256 from
-  **this connection’s** `cipher_type` while using those shared session
-  keys. Accepting a mismatched cipher therefore attaches a channel that
-  will encrypt/decrypt with the wrong AEAD (and possibly the wrong key
-  length) for the session keys.
-- The `break` after the first channel is intentional: one existing
-  channel is enough because all channels of a session are supposed to
-  share one cipher.
+**Step 2.3 — Bug mechanism**
+- Record: **Hardware/module autoload (OF alias publication)**. Match
+  table exists (`fsl,imx8qxp-lpcg-adma/conn/lsio` and `fsl,imx8qxp-
+  lpcg`) but is not exported. Same class as adding device IDs: userspace
+  cannot match hardware to the module.
 
-**Step 2.4: Fix quality**
-Record:
-- Obviously correct: same lock and `xa_for_each` pattern as
-  `free_channel_list()` / `ksmbd_sessions_deregister()`. Lock order
-  matches existing `smb2_sess_setup` (`ksmbd_conn_lock` then
-  `chann_lock`).
-- Minimal: 15 lines, no API/struct change.
-- Regression risk: low. Well-behaved clients already use one cipher for
-  all channels; the new path only rejects invalid binds. `chann->conn`
-  is set when the channel is allocated (`chann->conn = conn` in
-  `ntlm_authenticate`) and the channel is erased under `chann_lock`
-  before free.
+**Step 2.4 — Fix quality**
+- Record: Obviously correct; matches every other i.MX clk driver that
+  already has `MODULE_DEVICE_TABLE(of, …)` (`clk-imx8qxp.c`, `clk-
+  imx8mm.c`, etc.). No API, locking, or structural change. Regression
+  risk is negligible: `=y` ignores aliases; `=m` only adds autoload.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
-**Step 3.1: Blame**
-Record:
-- Binding path originates in `f5a544e3bab7` (“ksmbd: add support for
-  SMB3 multichannel”, 2021); it is an ancestor of this HEAD.
-- Dialect check: `af7c39d971e43c` (2022); also an ancestor.
-- Cipher field: `connection.h` `cipher_type` present in this tree.
-- Missing cipher compare has been true for as long as ksmbd had SMB
-  3.1.1 encryption + multichannel, including all of 6.12.
+**Step 3.1 — Blame**
+- Record: Match table from `1e3121bfe51a3` (“clk: imx: add imx8qxp lpcg
+  driver”, 2018, in **v5.0-rc1**). Module metadata from `e0d0d4d86c766`
+  (“Support building i.MX8QXP clock driver as module”, **v5.10-rc1**).
+  `builtin_platform_driver` → `module_platform_driver` in
+  `eee377b8f44e7` (2021, Fixes: that module-support commit). The hole
+  has been there for the whole modular lifetime of the driver.
 
-**Step 3.2: Fixes: tag**
-Record: none. No `Fixes:` follow-up required.
+**Step 3.2 — Fixes: tag**
+- Record: None. Buggy omission is the module-support work
+  (`e0d0d4d86c766` / `eee377b8f44e7`). Both are in this tree.
 
-**Step 3.3: File history**
-Record:
-- Local recent `smb2pdu.c` work is other ksmbd validation/UAF fixes;
-  none already implement this cipher compare (`git log -S 'cipher_type
-  != chann'` on this file is empty here).
-- On `origin/master`, the only commit with this compare is
-  `7019a11f79dc4` itself (no later rework).
-- Neighbor bind_negative work (`f49bca41c12f9`, `3e67423336f08`,
-  `1f12738b0ed7b`, `1c5daa2ea924be`) is **not** in this tree and is
-  about signing of rejected responses / user mismatch, not a
-  prerequisite for this hunk.
+**Step 3.3 — File history**
+- Record: Recent file commits are unrelated (pm_runtime, ioremap).
+  Sibling `cd21fdcbef3fb` does the same for `clk-imx8qxp.c`. Standalone;
+  not “patch X/Y”.
 
-**Step 3.4: Author**
-Record: Namjae Jeon is the ksmbd maintainer. Many of his protocol-
-validation commits are already in this 6.12 tree.
+**Step 3.4 — Author**
+- Record: Pengpeng Hou also added the same fix for `clk-imx8qxp.c` and
+  MediaTek mt6735 clocks. Not the clk-imx maintainer; Abel Vesa applied
+  it with three subsystem/vendor reviews.
 
-**Step 3.5: Dependencies**
-Record: Standalone. Needs `sess->chann_lock`, `sess->ksmbd_chann_list`,
-`struct channel { ... *conn }`, `conn->cipher_type`, `SMB311_PROT_ID` —
-all present locally. Not labeled `patch X/Y`. `4b706360ffb7e` (channel
-limit) is not required.
+**Step 3.5 — Dependencies**
+- Record: Needs `imx8qxp_lpcg_match`, `module_platform_driver`, and
+  `<linux/module.h>`. All present here. Applies as a single line.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST / EXTERNAL
 
-**Step 4.1: Original discussion**
-Record: `b4 dig -c 7019a11f79dc4` (and `-C`) failed: lore.kernel.org
-returned an error. WebFetch of lore URLs returned 403. Mailing-list
-review text is **UNVERIFIED**.
+**Step 4.1 — Original thread**
+- Record: `b4 dig -c e89485455ac49` →
+  https://patch.msgid.link/20260704150344.59563-1-pengpeng@iscas.ac.cn
+- `b4 dig -a`: **v1 only**, 2026-07-04.
+- Review: Peng Fan, Brian Masney, Frank Li: Reviewed-by only. Abel Vesa:
+  “Applied, thanks!” No NAK, no stable tag, no risk discussion.
 
-**Step 4.2: Recipients**
-Record: Could not run `b4 dig -w` successfully. Commit has only the
-maintainer’s SOB (author = committer).
+**Step 4.2 — Recipients (`b4 dig -w`)**
+- Record: Abel Vesa, Peng Fan, Michael Turquette, Stephen Boyd, Frank
+  Li, Sascha Hauer, Fabio Estevam; `linux-clk`, `imx@lists.linux.dev`,
+  `linux-arm-kernel`, `linux-kernel`. Right maintainers and lists.
 
-**Step 4.3: Bug report / spec / test**
-Record (verified):
-- Samba smbtorture `test_session_bind_negative_smb3encGtoCs`
-  (source4/torture/smb2/session.c): SMB 3.1.1, encryption required,
-  channel 1 AES-128-GCM, bind channel AES-128-CCM, same ClientGUID,
-  expects `NT_STATUS_INVALID_PARAMETER`.
-- Microsoft Open Specifications blog “SMB 3.1.1 Encryption in Windows
-  10”: “Session binding (multichannel) requires that all channels bound
-  to a given session negotiate the same encryption cipher as the master
-  session’s connection” and that all channels share the same encryption
-  keys.
-- MS-SMB2 3.3.5.5 (SESSION_SETUP) documents dialect/GUID/signed/state
-  checks that ksmbd already performs; the published HTML for that
-  section does **not** spell out a CipherId compare (the Windows/Samba
-  behavior and the blog do).
+**Step 4.3 — Bug report**
+- Record: No Reported-by / bugzilla / syzbot. Inspection-only, as the
+  commit says.
 
-**Step 4.4: Series**
-Record: Cluster of July 2026 `bind_negative_*` ksmbd fixes on
-`origin/master`. This commit is self-contained; it does not depend on
-the signing-response patches.
+**Step 4.4 — Series**
+- Record: Standalone 1/1. Related but independent sibling on `clk-
+  imx8qxp.c`.
 
-**Step 4.5: Stable list**
-Record: lore.kernel.org/stable search not reachable (403).
-**UNVERIFIED** whether it was previously discussed for stable.
+**Step 4.5 — Stable list**
+- Record: Thread has no stable nomination. Direct lore.kernel.org
+  fetches returned **403**; no separate stable-list discussion verified.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## PHASE 5: CODE SEMANTICS
 
-**Step 5.1: Functions**
-Record: `smb2_sess_setup()` only.
+**Step 5.1 — Functions**
+- Record: No C function changed. Macro `MODULE_DEVICE_TABLE(of,
+  imx8qxp_lpcg_match)` next to the existing `of_device_id` table. Driver
+  still uses `module_platform_driver(imx8qxp_lpcg_clk_driver)`.
 
-**Step 5.2: Callers**
-Record: `fs/smb/server/smb2ops.c` command table `[SMB2_SESSION_SETUP_HE]
-= { .proc = smb2_sess_setup }`. Invoked for every SMB2 SESSION_SETUP on
-the ksmbd server. Network-reachable.
+**Step 5.2 — “Callers”**
+- Record: Build-time: `scripts/mod/file2alias.c` looks up
+  `__mod_device_table__` and emits `of:` aliases. Runtime: kmod/udev on
+  DT `compatible`. Probe path unchanged. Makefile: `clk-imx-lpcg-
+  scu-$(CONFIG_CLK_IMX8QXP)` → aliases belong to `clk-imx-lpcg-scu.ko`.
 
-**Step 5.3: Callees**
-Record: `down_read`/`up_read`, `xa_for_each` on
-`sess->ksmbd_chann_list`. Existing error path `goto out_err`.
+**Step 5.3 — Callees**
+- Record: None at runtime. Macro only creates an aliased copy of the
+  table for modpost.
 
-**Step 5.4: Reachability**
-Record: Yes, from a remote SMB client if `CONFIG_SMB_SERVER` and
-`KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL` are enabled. Trigger: SMB 3.1.1
-session, then a second connection that negotiates a different cipher and
-sends a signed binding SESSION_SETUP. Unprivileged in the sense of “any
-client that can authenticate to ksmbd”; not a local syscall UAF.
+**Step 5.4 — Reachability**
+- Record: Yes, from userspace/DT: i.MX8QXP/8QM DTS uses `fsl,imx8qxp-
+  lpcg` (e.g. `arch/arm64/boot/dts/freescale/imx8qm-ss-*.dtsi`). With
+  `=m`, udev should load the module from that compatible. `arm64
+  defconfig` has `CONFIG_CLK_IMX8QXP=y`, so the default distro/defconfig
+  path is unaffected; custom/distro `=m` is the affected path.
 
-**Step 5.5: Similar patterns**
-Record: Dialect mismatch already rejected in the same function. Samba
-has a second test `bind_negative_smb3encGtoCd` (different GUID); this
-tree already rejects GUID mismatch via `memcmp(conn->ClientGUID,
-sess->ClientGUID)`.
+**Step 5.5 — Similar patterns**
+- Record: Same missing-table pattern fixed in `clk-imx8qxp.c` and
+  several other `drivers/clk/imx/*` files already have
+  `MODULE_DEVICE_TABLE`. This was the LPCG outlier.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST THIS TREE
+## PHASE 6: THIS TREE
 
-**Step 6.1: Buggy code present?**
-Record: Yes. Local `smb2_sess_setup()` at `fs/smb/server/smb2pdu.c`
-~1743–1757 does dialect/GUID checks and has **no** cipher compare.
-`7019a11f79dc4` is not an ancestor of HEAD.
+**Step 6.1 — Buggy code here?**
+- Record: Yes. Pre-commit parent still has the table without
+  `MODULE_DEVICE_TABLE`. Module support is in this tree. Bug dates to
+  v5.10 module support (autoload hole after v5.16
+  `module_platform_driver`).
 
-**Step 6.2: Backport difficulty**
-Record: **Clean apply** (`git apply --check` exit 0). Line-number offset
-only vs mainline.
+**Step 6.2 — Backport difficulty**
+- Record: **Clean apply**. Context around the match table matches the
+  hunk.
 
-**Step 6.3: Related fixes already here?**
-Record: No `bind_negative` ksmbd commits in this tree. No other cipher-
-on-bind check.
+**Step 6.3 — Already fixed another way?**
+- Record: No other autoload fix on this file. This commit *is* the fix
+  (already upstream in 7.3-rc). No substitute.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
 **Step 7.1**
-Record: `fs/smb/server` (ksmbd). Criticality: **IMPORTANT** — in-kernel
-SMB3 server, remote attack surface, not core mm/VFS, not staging.
+- Record: `[drivers/clk/imx — i.MX8QXP LPCG] [IMPORTANT for
+  i.MX8QXP/8QM; PERIPHERAL vs core kernel]`. Clock provider: if the
+  module never loads, LPCG-gated peripherals fail probe.
 
 **Step 7.2**
-Record: Actively maintained; this 6.12 tree already carries many ksmbd
-validation backports (`reject repeated SMB2 NEGOTIATE`, DACL bounds,
-etc.).
+- Record: clk-imx is active (7.3 pulls). This driver itself is mature
+  (2018).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK
 
-**Step 8.1: Who is affected**
-Record: Users of ksmbd with SMB3 multichannel enabled. Not universal.
+**Step 8.1 — Who**
+- Record: Config- and platform-specific: `CONFIG_CLK_IMX8QXP=m` on
+  i.MX8QXP/8QM/8DXL SCU clocks. Not universal. Defconfig `=y` does not
+  need aliases.
 
-**Step 8.2: Trigger**
-Record: Uncommon for production Windows/Samba clients (they keep one
-cipher). Fully reachable from a custom or test client. Requires an
-existing authenticated session plus a signed bind (not an
-unauthenticated bypass).
+**Step 8.2 — Trigger**
+- Record: Boot/enumeration with LPCG DT nodes and the driver as a
+  module. Unprivileged users cannot trigger it; it is bring-up/udev.
+  Common on modular distro kernels, uncommon on typical vendor `=y`
+  images.
 
-**Step 8.3: Failure mode**
-Record: Today the invalid bind **succeeds**. Later encrypt/decrypt on
-that channel uses the new connection’s AEAD with session keys derived
-for the original cipher → AEAD failure / broken encrypted I/O, not a
-demonstrated kernel oops. Spec/Windows require rejection with
-`STATUS_INVALID_PARAMETER`. Severity: **MEDIUM** (protocol/crypto
-invariant), not a panic/UAF.
+**Step 8.3 — Failure mode**
+- Record: Module not autoloaded → LPCG clocks missing → dependent
+  devices fail probe (UART/DMA/etc. depending on board). Not an
+  oops/UAF. Severity **MEDIUM** (functional miss for `=m`), **HIGH** on
+  those boards if clocks are modular.
 
-**Step 8.4: Risk–benefit**
-Record:
-- Benefit: enforces a documented SMB 3.1.1 encryption invariant on a
-  network server; matches Windows/Samba; tiny.
-- Risk: very low — 15 lines, existing locks, rejects only illegal binds.
-- Ratio: favorable for this tree because the code exists, the patch
-  applies cleanly, and ksmbd crypto protocol holes are worth closing
-  even when the trigger is rare.
+**Step 8.4 — Risk vs benefit**
+- Record: Benefit: modular i.MX8QXP clocks actually bind. Risk: **very
+  low** (one line of metadata). Ratio favors taking it; same rationale
+  as the “add a device ID” stable exception.
 
 ---
 
 ## PHASE 9: SYNTHESIS
 
-**Step 9.1: Evidence**
+**Step 9.1 — Evidence**
 
-FOR:
-- Real missing check: dialect is validated, cipher is not.
-- Session keys are shared; cipher is per-connection; mismatch is a
-  crypto/protocol bug, not cosmetic.
-- Samba negative test and Microsoft encryption blog require same cipher
-  on all bound channels.
-- 15 lines, maintainer-authored, applies cleanly to 6.12.111.
-- All data structures and the insertion site exist here; bug is old
-  (multichannel + 3.1.1 encryption).
+For:
+- Real autoload bug: match table used, aliases not published.
+- One line, obviously correct, reviewed by NXP i.MX and Red Hat.
+- DT hardware uses these compatibles.
+- Driver is tristate (`CLK_IMX8QXP`); `module_platform_driver` is
+  intentional.
+- Same pattern as device-ID publication, which stable explicitly allows.
+- Applies cleanly; no new API; no runtime behavior change for `=y`.
 
-AGAINST:
-- No crash, UAF, deadlock, or known CVE.
-- Production clients typically never send this.
-- No `Reviewed-by`; lore discussion could not be fetched.
-- Adjacent bind_negative signing patches are not in this tree (not
-  required for this hunk).
+Against:
+- No user/syzbot report; source-level only.
+- Not crash/corruption/security.
+- `arm64 defconfig` is `=y`.
+- No `Cc: stable` (not a negative by itself).
 
-UNRESOLVED:
-- Original mailing-list review / any NAK (lore unreachable).
-- Whether MS-SMB2 3.3.5.5 normative text currently names CipherId (blog
-  + Samba/Windows behavior still require the check).
+Unresolved:
+- Could not search lore.kernel.org/stable (HTTP 403). Original thread
+  had no stable discussion.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — small, same locking as
-   existing channel walks; covered by smbtorture
-   `bind_negative_smb3encGtoCs`.
-2. Real bug affecting users? **PASS** — ksmbd accepts a bind the
-   protocol forbids; encrypted traffic on that channel is then
-   inconsistent.
-3. Important (crash/security/corruption/deadlock)? **PASS** (lower end)
-   — encryption-cipher invariant on a remote SMB server, not a panic.
-   Important enough given ksmbd’s role and the size of the fix.
-4. Small and contained? **PASS** — +15 lines, one function.
-5. No new features/APIs? **PASS**.
-6. Applies to this tree? **PASS** — clean apply; buggy code present.
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — one-line, three reviews,
+   maintainer applied.
+2. Real bug that affects users? **PASS** — `=m` does not autoload; DTS
+   uses the IDs.
+3. Important? **PASS** (as device-ID/autoload class; not a panic).
+   Missing clocks on modular i.MX8 is user-visible, not trivia.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features/APIs? **PASS** — metadata only.
+6. Can apply to this tree? **PASS** —
+   file/table/`module_platform_driver` all present.
 
-**Step 9.3: Exception category**
-Record: none (not a device ID/quirk/DT/build/docs exception). Qualifies
-as a normal small protocol/crypto bugfix.
+**Step 9.3 — Exceptions**
+- Record: Device-ID / module-alias publication for an existing driver
+  (stable exception #1 in spirit).
 
-**Step 9.4: Decision**
-Backport to this 6.12 tree. The missing check is in this code, the fix
-is surgical, and rejecting mismatched SMB 3.1.1 ciphers on bind is the
-correct, low-risk behavior for stable ksmbd.
+**Step 9.4 — Decision**
+This is a one-line, reviewed autoload fix for a long-standing modular
+i.MX8QXP LPCG driver. It matches what stable already takes for device
+IDs: hardware described in DT can bind without a manual `modprobe`. Risk
+is negligible on this tree.
 
 ---
 
-## Why this matters for 6.12 stable users
+## What the commit solves for this tree
 
-ksmbd already refuses a bind when the **dialect** does not match. It
-still allows a second SMB 3.1.1 channel to join the same session with a
-**different** negotiated cipher (e.g. AES-128-CCM vs AES-128-GCM).
-Encryption keys are session-scoped and not rebuilt on bind; each
-connection then picks GCM/CCM and key length from its own `cipher_type`.
-That is a protocol and crypto consistency bug on a network-facing
-server. The patch only adds the missing compare and returns
-`STATUS_INVALID_PARAMETER`, which is what Windows/Samba tests expect.
+Without `MODULE_DEVICE_TABLE()`, `clk-imx-lpcg-scu.ko` has no
+`of:N*T*Cfsl,imx8qxp-lpcg*` aliases. kmod will not load it from DT. LPCG
+is a clock provider, so that shows up as missing clocks and failed
+consumer probe, not as a crash. The fix only publishes the table the
+driver already uses.
 
-Risk is low: correct clients are unchanged. The hunk applies here
-without prerequisites.
+It meets the stable bar: obviously correct, tiny, no new API, real
+modular-load bug, applies here.
 
-### Verification
-- [Phase 1] Parsed message/tags: maintainer SOB only; no
-  Fixes/Cc/Reported-by.
-- [Phase 2] Diff: +15 lines in `smb2_sess_setup()` binding branch;
-  `-EINVAL` already maps to `STATUS_INVALID_PARAMETER`.
-- [Phase 2] Confirmed bind skips `generate_encryptionkey` (local
-  1545–1546); `ksmbd_crypt_message()` uses `conn->cipher_type` (auth.c
-  1135–1155).
-- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.12.111. `git
-  merge-base --is-ancestor 7019a11f79dc4 HEAD` → not in tree.
-- [Phase 3] `f5a544e3bab7` and `af7c39d971e43c` are ancestors; dialect
-  check present, cipher check absent (local ~1754–1757).
-- [Phase 3] `git apply --check` of `7019a11f79dc4` → clean.
-- [Phase 3] No later origin/master rework of this compare; related
-  bind_negative signing commits are not ancestors and are not required.
-- [Phase 4] `b4 dig` lore error; lore WebFetch 403. Samba test and MS
-  encryption blog fetched successfully.
-- [Phase 5] Caller: `smb2ops.c` SESSION_SETUP proc. Channel
-  lock/list/`cipher_type` exist in this tree.
-- [Phase 6] Insertion site matches; no local substitute fix.
-- [Phase 8] Failure mode: invalid encrypted channel accepted; AEAD
-  mismatch on subsequent I/O. Severity MEDIUM, regression risk very low.
-- UNVERIFIED: lore review thread, stable@ discussion, explicit CipherId
-  sentence in current MS-SMB2 3.3.5.5 HTML.
+Risk vs benefit: benefit is correct autoload for `CONFIG_CLK_IMX8QXP=m`;
+risk is essentially zero.
+
+Concerns: no live repro, default `=y`. That does not outweigh a one-line
+alias export that other i.MX clk drivers already have.
+
+---
+
+## Verification
+- [Phase 1] `git log -1 e89485455ac49`: tags as above; no
+  Fixes/Reported-by/Cc:stable.
+- [Phase 2] `git show e89485455ac49`: +1 `MODULE_DEVICE_TABLE(of,
+  imx8qxp_lpcg_match)`.
+- [Phase 2] Read `clk-imx8qxp-lpcg.c`: table used as `.of_match_table`;
+  `module_platform_driver`.
+- [Phase 2] `include/linux/module.h`: macro creates `__mod_device_table`
+  alias for modpost.
+- [Phase 3] `git blame` 350–370: table `1e3121bfe51a3` (v5.0); line
+  `e89485455ac49`.
+- [Phase 3] `e0d0d4d86c766` in v5.10-rc1 (tristate); `eee377b8f44e7`
+  switches to `module_platform_driver`.
+- [Phase 3] `git merge-base --is-ancestor e89485455ac49 HEAD` succeeded.
+- [Phase 3] Parent file confirmed missing `MODULE_DEVICE_TABLE`.
+- [Phase 4] `b4 dig -c/-a/-w` and `b4 dig -m`: v1 thread, three R-b,
+  Abel applied; To/Cc = clk + i.MX lists.
+- [Phase 4] lore HTTP 403; stable-list search **UNVERIFIED**.
+- [Phase 5] `Kconfig`: `CLK_IMX8QXP` tristate; Makefile builds `clk-imx-
+  lpcg-scu`.
+- [Phase 5] DTS: `fsl,imx8qxp-lpcg` in imx8qm-ss-*.dtsi.
+- [Phase 5] defconfig: `CONFIG_CLK_IMX8QXP=y`.
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 7.3.0-rc4; buggy
+  table present; clean apply.
+- [Phase 6] Sibling `cd21fdcbef3fb` is a different file; not required
+  for this hunk.
+- [Phase 8] Failure mode: no autoload when `=m` — verified from code and
+  MODULE_DEVICE_TABLE semantics, not from a hardware log.
+- UNVERIFIED: live `=m` boot on i.MX8QXP; lore.kernel.org/stable
+  contents.
 
 **YES**
 
- fs/smb/server/smb2pdu.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/clk/imx/clk-imx8qxp-lpcg.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ccefd325e52e3..d64753124dd9a 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1747,6 +1747,21 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 			goto out_err;
- 		}
+diff --git a/drivers/clk/imx/clk-imx8qxp-lpcg.c b/drivers/clk/imx/clk-imx8qxp-lpcg.c
+index 1dae3410ee99a..f0cf6cf918992 100644
+--- a/drivers/clk/imx/clk-imx8qxp-lpcg.c
++++ b/drivers/clk/imx/clk-imx8qxp-lpcg.c
+@@ -354,6 +354,7 @@ static const struct of_device_id imx8qxp_lpcg_match[] = {
+ 	{ .compatible = "fsl,imx8qxp-lpcg", NULL },
+ 	{ /* sentinel */ }
+ };
++MODULE_DEVICE_TABLE(of, imx8qxp_lpcg_match);
  
-+		if (conn->dialect == SMB311_PROT_ID) {
-+			struct channel *chann;
-+			unsigned long index;
-+
-+			down_read(&sess->chann_lock);
-+			xa_for_each(&sess->ksmbd_chann_list, index, chann) {
-+				if (conn->cipher_type != chann->conn->cipher_type)
-+					rc = -EINVAL;
-+				break;
-+			}
-+			up_read(&sess->chann_lock);
-+			if (rc)
-+				goto out_err;
-+		}
-+
- 		if (!(req->hdr.Flags & SMB2_FLAGS_SIGNED)) {
- 			rc = -EINVAL;
- 			goto out_err;
+ static struct platform_driver imx8qxp_lpcg_clk_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
