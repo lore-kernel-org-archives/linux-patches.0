@@ -1,51 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55006297FB;
-	Mon, 19 Oct 2026 14:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F201B53AE99;
+	Mon, 19 Oct 2026 14:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418706; cv=none; b=u4w3zY5MXxcV3jUIh7niujdpBym9i2oqKK/jZuuW1HQZhNxhTW3rWGFJsmbzL0N9kTx07MkDWu3CKRN8WjNrUsT4JuRo78c84o3F6+tvIXl2MTYOOXc56spuvBymrwjWXUeZ5gD+W3Hz1AicZ6gd/D50kRKPcm5jWrT0PxLC3NI=
+	t=1792418707; cv=none; b=cV5CVV+ZH5sJ38gbjNId4i7JrDc0agNP0eRU9BZMwwN2sG22MPPMjgobxSAjTtHadzEJ6m/46caLbM1IQu4XU0IWU70XkAldYZ9JDc1rtV0jMRC8VYsY1WQu0QLsaJtnHIuwuWIyNK2WhFIGLfGvFt3Dmz+5haMQtA195xhm2bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418706; c=relaxed/simple;
-	bh=P70v4lbD7rijCKKYCp/Niqinta9IwzeeU3PKR/2sqCI=;
+	s=arc-20240116; t=1792418707; c=relaxed/simple;
+	bh=UcTgleR38uRA8OqF7YnJModXjOBQQcumCR4Kp99xiQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K2o70IR9yx2T2L1vcQ+QSwWAtVOBawfa8Toz4iUQ1zLFmfIGzhl9zxU6YpJwFF/OK0qs+UISDIduxwD+ZdilwOLqpWTYvqCkTENS4W5szRdw8XmPONJMSANQNOzZYy8kuSE31J9xf+4yxU+dvELhTqwKYFoi/hdFnt6+5oxVFUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XFq9dHjM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EMK/nougpm8nexVorCcFcuUzcXMq87vBjpY9GbOM2srJ4k50sODGZbZ0L1p5zX0mNNwhS7wHqrJh1brs8STe8OWpx3t6z869gmz2LoFdMZu/aj2pD8cfu1PbQL0+NnU9Lk0m7BF99xrbtMQpHWK91H8inGsBKE3UEUVtj3GiNLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KC7DPrp3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XFq9dHjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8781F000C4;
-	Mon, 19 Oct 2026 14:05:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KC7DPrp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC8D1F000C7;
+	Mon, 19 Oct 2026 14:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418703;
-	bh=KnrnkJtzxfhIMBglwJTSDpWhqf+G65Vun2GiB5efnRM=;
+	s=k20260515; t=1792418704;
+	bh=qmcsefOq0crUHlcAtS2yhycjuR5NM8dhM9iIYVK57UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFq9dHjMLVbR3oPxFTsrK1geZ/lF0d9g2uV5oTa2IMENAoGPAsMq9T/1+zl5jyNWV
-	 bzHaSar+HaNqA9XBugcevM6Rw9y6+0LZkVeWX0KtQaoNuIKXZrw1Dk2sC6URoDTuWU
-	 7lTcWW6NxpCp53WvVXfrRHLJSKp273hlmhsLlN23ZeJwP5OUIg0gOXDA78TROPlF0j
-	 nb0mo3IHfUj6N6/RXuds2N6SbeioJ3OrCkeNQslIw21ZzItfQflT4caHXRKKFQ+zOf
-	 9LnHHsIAFSy+mclpPPWpqHDUYYUSa+2WL5KcJvfaqgYHyCd5EK1OfF4cYyssiTWH5r
-	 lEw2a7oe7H6/g==
+	b=KC7DPrp3dORk1Lp7BSKBZ5nMB89nHZXrWvr3Hgh3SwrdyAvxMNBgi0ykv6kREbHN2
+	 BIGj11ZDCKIRkvlDCWa36+kgSdGHRI1tvxrcgn6C6UeJLj2I7iu15BoMHkoCLz4eR/
+	 z0wpNZX3bzyV2VjPaygMNRe1nDJVXftexxVcWxgiunoNgs8kQ0CqLbHc3lE6V9FB97
+	 GOraqeNZqJQ83DBhXlTrdLcbNeJ9VDD1sWr3MZE5kLyAHez2Tw11XpbWP22kQPbX0A
+	 wT6GUe5FlztAnmJ8sGctnk9CJ0XEwLJpp+oenKpoVJRb1adOLP6CrMZJ/CtoOyIR1V
+	 OU3+ki07unU0g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andy Moreton <andy.moreton@amd.com>,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ecree.xilinx@gmail.com,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-net-drivers@amd.com,
+	sre@kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] sfc: add X4D PF support
-Date: Mon, 19 Oct 2026 09:52:07 -0400
-Message-ID: <20261019135441.1420968-436-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] hsi: omap_ssi: remove debugfs on port creation failure
+Date: Mon, 19 Oct 2026 09:52:08 -0400
+Message-ID: <20261019135441.1420968-437-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -61,70 +52,74 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Moreton <andy.moreton@amd.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 24fedc7a569bce181728f0dd616504bef9f1513b ]
+[ Upstream commit 760318e2e69857214314e94ac477219f0c89106b ]
 
-X4D is an X4 controller instance as an IP block in an SoC.
-It has the same feature set as X4.
+ssi_probe() creates the controller debugfs tree before creating the SSI
+port child devices. If a port device cannot be created, the error path
+removes any children and tears down the controller, but leaves the
+debugfs tree behind.
 
-Signed-off-by: Andy Moreton <andy.moreton@amd.com>
-Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260916125641.12238-1-alucerop@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Remove the controller debugfs tree on the port creation failure path,
+matching the normal remove path.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260616004348.97684-1-pengpeng@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.57**. This commit is a four-line PCI ID
-addition that maps X4D PFs onto the existing X4 nic type, which is
-already in this tree.
+The local tree is **v7.3-rc4** (`7.3.0-rc4`). The change is a 3-line
+probe error-path cleanup in `drivers/hsi/controllers/omap_ssi_core.c`.
+The buggy probe path has been in this driver since 2014, and the
+leftover debugfs files hold a raw pointer that is freed on that path.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 Step 1.1: PARSE THE SUBJECT LINE
-Record: [subsystem: sfc (Solarflare/AMD ethernet)] [action verb: add]
-[intent: enable X4D PF PCI devices in the existing sfc driver]
+Record: **[hsi: omap_ssi:] [remove] [controller debugfs is not torn down
+if SSI port child creation fails in `ssi_probe()`]**
 
 Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Fixes: none (expected for a device-ID addition)
-- Reported-by: none
-- Tested-by: none
-- Reviewed-by: Pieter Jansen van Vuuren (AMD), Alejandro Lucero (AMD),
-  Simon Horman (netdev)
-- Acked-by: none
-- Link: https://patch.msgid.link/20260916125641.12238-1-alucerop@amd.com
-- Cc: stable: none (expected; not a negative signal)
-- Signed-off-by: Andy Moreton (author, AMD); Jakub Kicinski (netdev
+- **Fixes:** none (expected for this review pipeline)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none
+- **Acked-by:** none
+- **Link:**
+  `https://patch.msgid.link/20260616004348.97684-1-pengpeng@iscas.ac.cn`
+- **Cc: stable:** none (expected; not treated as a negative)
+- **Signed-off-by:** Pengpeng Hou (author); Sebastian Reichel (HSI
   maintainer)
-- Ignored pipeline tags: Upstream commit
-  24fedc7a569bce181728f0dd616504bef9f1513b; Signed-off-by: Sasha Levin
+- Pipeline SOBs such as Sasha Levin are ignored
 
-Notable: three Reviewed-by tags including a netdev regular (Horman) and
-the subsystem maintainer path via Kicinski.
+Notable: maintainer SOB, no user/syzbot report. Single standalone patch,
+not `N/M`.
 
 Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- [Bug description] Not a crash/corruption bug. X4D is an X4 controller
-  instantiated as an SoC IP block; without these PCI IDs the in-tree sfc
-  driver will not bind to that hardware.
-- [Symptom/failure mode] X4D PF devices (PCI IDs 0x8c03 and 0xac03,
-  vendor Solarflare 0x1924) are unrecognized; the NIC does not come up.
-- [Version information] None in the message. Author date 2026-09-16; not
-  in v6.18 or v6.18.57.
-- [Root cause] Missing PCI ID table entries. Feature set is stated to be
-  identical to existing X4, so no new nic_type is required.
+- **Bug:** `ssi_probe()` builds the controller debugfs tree, then
+  creates `ti,omap3-ssi-port` children. If `of_platform_device_create()`
+  fails, `out3` unregisters children and tears down the controller, but
+  does not remove debugfs.
+- **Symptom:** leftover `/sys/kernel/debug/ssiN/` after a failed probe.
+  The message describes a leak, not a crash.
+- **Version info:** none in the message. The mismatch dates to the
+  original driver.
+- **Root cause (author):** error path does not match `ssi_remove()`.
 
 Step 1.4: DETECT HIDDEN BUG FIXES
-Record: [Not a hidden bug fix.] This is an explicit hardware-enablement
-/ device-ID addition. The subject says “add … support,” but the body and
-diff make clear it is only IDs, not a new driver or API.
+Record: **Yes — error-path resource leak, and a UAF if those files are
+read.** This is not style cleanup. The body says “leaves the debugfs
+tree behind”; the code also leaves `debugfs_create_file(..., ssi, ...)`
+nodes whose private pointer is the controller that `out3` then
+unregisters and frees.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -132,63 +127,94 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 Step 2.1: INVENTORY THE CHANGES
 Record:
-- [Files] drivers/net/ethernet/sfc/efx.c: +4 / -0
-- [Functions] none modified; only the static `efx_pci_table[]`
-  initializer
-- [Scope] single-file surgical PCI ID addition
+- **File:** `drivers/hsi/controllers/omap_ssi_core.c` (**+3 / −0**)
+- **Function:** `ssi_probe()` error label `out3`
+- **Scope:** single-file, surgical, one error path
+
+```529:541:drivers/hsi/controllers/omap_ssi_core.c
+        return err;
+out3:
+        device_for_each_child(&pd->dev, NULL, ssi_remove_ports);
+#ifdef CONFIG_DEBUG_FS
+        ssi_debug_remove_ctrl(ssi);
+#endif
+out2:
+        ssi_remove_controller(ssi);
+        pm_runtime_disable(&pd->dev);
+```
 
 Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record: [hunk] Before: table lists X4 PF IDs 0x0c03 (FF/LL) and 0x2c03
-(FF only) bound to `efx_x4_nic_type`, then terminator. After: two
-additional IDs 0x8c03 and 0xac03 also bound to `efx_x4_nic_type`. Probe
-path is unchanged; PCI matching is the only difference. Normal bind path
-for new devices only.
+Record:
+- **Before:** `out3` only unregisters child port devices, then falls
+  through to `out2` → `ssi_remove_controller(ssi)` (unregister + free
+  controller). Controller debugfs created at `ssi_debug_add_ctrl()`
+  stays.
+- **After:** `out3` also calls `ssi_debug_remove_ctrl(ssi)` **before**
+  `ssi_remove_controller()`, same order as `ssi_remove()`.
+- **Path:** probe error path only; success and `ssi_remove()` unchanged.
 
 Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [category: hardware enablement / PCI device ID addition]
-[mechanism: devices 0x1924:0x8c03 and 0x1924:0xac03 would not match
-`efx_pci_table`, so `efx_pci_probe()` never runs. Mapping them to
-existing `efx_x4_nic_type` reuses the X4 implementation already in this
-tree.]
+Record:
+- **Category:** error-path resource leak **and** use-after-free of
+  debugfs private data.
+- **Mechanism:** `ssi_debug_add_ctrl()` does
+  `debugfs_create_dir(dev_name(&ssi->device), NULL)` (debugfs **root**,
+  not device-managed) and `debugfs_create_file("regs", ..., ssi,
+  &ssi_regs_fops)`. `out3` then `ssi_remove_controller()` →
+  `hsi_unregister_controller()` → `device_unregister()` →
+  `hsi_controller_release()` → `kfree(hsi)`. The dentries remain;
+  `ssi_regs_show()` / `ssi_gdd_regs_show()` still use `m->private` as
+  `ssi`.
 
 Step 2.4: ASSESS THE FIX QUALITY
-Record: [Quality: obviously correct; same pattern as the 2024 X4 ID
-entries.] [Regression risk: very low. New IDs cannot match existing X4
-or older Solarflare cards. No locking, no API, no data-structure change.
-MODULE_DEVICE_TABLE already points at this table.]
+Record:
+- **Quality:** obviously correct. Reuses the existing helper already
+  used by `ssi_remove()`, placed before free, wrapped in
+  `CONFIG_DEBUG_FS` like the add/remove paths.
+- **Regression risk:** very low. `debugfs_remove_recursive()` is already
+  used on the normal remove path. If `CONFIG_DEBUG_FS=n`, the hunk is
+  compiled out. No lock, API, or data-structure change.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 Step 3.1: BLAME THE CHANGED LINES
-Record: Adjacent X4 ID rows at v6.18.57 come from `cf06766f1525d` (“sfc:
-Add X4 PF support”, Jonathan Cooper, 2024-09-10). That commit added
-`efx_x4_nic_type` plus IDs 0x0c03/0x2c03. The table terminator dates to
-2008. X4 support has been in-tree since well before 6.18.
+Record:
+- Buggy `out3` / port-create loop / debugfs add-before-ports:
+  **`b209e047bc7432`** (“HSI: Introduce OMAP SSI driver”, 2014-05-16).
+- Later nearby fixes (OF refcount, `pm_runtime_disable` placement) did
+  **not** add debugfs teardown on `out3`.
+- Bug age: present since the driver was added (~v3.16 era).
 
 Step 3.2: FOLLOW THE FIXES: TAG
-Record: [No Fixes: tag.] Not applicable; this did not regress existing
-code.
+Record: **No Fixes: tag.** Introducer is `b209e047bc7432`, confirmed
+ancestor of this HEAD. No later alternate fix of the same hole in this
+file besides **`760318e2e6985`**.
 
 Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
 Record:
-- Related: `cf06766f1525d` added X4 PF support (prerequisite; present in
-  v6.18.57).
-- Only X4D-related commit under `drivers/net/ethernet/sfc/` is this one;
-  no follow-up X4D fixes.
-- Standalone: not patch X/Y; single net-next patch.
+- Same-file probe leak/refcount fixes: `1aff514e1d2bd` (missing
+  `hsi_put_controller`), `f5181c35ed7ba` (unbalanced
+  `pm_runtime_disable`), `9a2ea132df860` (OF node put on this same
+  failure).
+- `c3eddf5e8c30a` dropped debugfs create error checks (debugfs API is
+  error-safe); **not** a prerequisite for calling
+  `ssi_debug_remove_ctrl()`.
+- **Standalone**, not `N/M`. Follow-ups `659287caa77a7` /
+  `e81250ec6b692` are unrelated.
 
 Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Andy Moreton has other sfc commits in this history (EEPROM
-reporting, EF10 filter_table_remove). Submitter on-list was Alejandro
-Lucero (AMD). This is vendor driver work, not a random drive-by.
+Record:
+- Pengpeng Hou: this is the only `drivers/hsi/` commit in this tree.
+- Applied by **Sebastian Reichel**, HSI maintainer (`MAINTAINERS`: HSI
+  SUBSYSTEM).
 
 Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Depends on `efx_x4_nic_type`, which exists at v6.18.57 in
-`drivers/net/ethernet/sfc/ef10.c` and is already used by 0x0c03/0x2c03.
-Context around the table in v6.18.57 matches the patch. [Can apply
-standalone: yes.]
+Record:
+- Needs `ssi_debug_remove_ctrl()`, `out3`, and `ssi_debug_add_ctrl()` —
+  all from the original driver.
+- **Can apply standalone** on any tree that still has this probe layout.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -196,255 +222,251 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- [Lore/msgid]
-  https://patch.msgid.link/20260916125641.12238-1-alucerop@amd.com
-- Direct lore.kernel.org fetch returned 403; thread recovered via `b4
-  dig` and openwall mirrors.
-- [Revisions] `b4 dig -a`: single revision, v1 `[PATCH net-next] sfc:
-  add X4D PF support` (2026-09-16).
-- [Review] Simon Horman Reviewed-by with no requested changes
-  (2026-09-17).
-- [Stable nomination] none in the thread.
-- [NAKs] none.
-- Applied by Jakub Kicinski; patchwork-bot announced netdev/net.git main
-  commit `24fedc7a569b` on 2026-09-19.
+- **Lore/msgid:**
+  `https://patch.msgid.link/20260616004348.97684-1-pengpeng@iscas.ac.cn`
+- **Revisions:** v1 only (`b4 dig -a`).
+- **Review:** no technical comments, no NAK, no `Cc: stable` request.
+  Maintainer reply 2026-07-26: “Applied, thanks!” → `760318e2e6985`.
+- lore.kernel.org HTML fetch returned **403**; thread recovered via `b4
+  dig -m`.
 
 Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: Recipients (`b4 dig -w`): netdev@vger.kernel.org, davem, kuba,
-pabeni, edumazet, ecree.xilinx@gmail.com, Andy Moreton, Pieter Jansen
-van Vuuren. Appropriate netdev maintainers and sfc/AMD people were on
-Cc.
+Record (`b4 dig -w`): To/Cc were **Sebastian Reichel** and **linux-
+kernel@**. Correct maintainer; no extra reviewers.
 
 Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No bugzilla/syzbot report. This is vendor hardware enablement,
-not a user-reported crash. Syzbot CI skipped the series as having no
-functional impact on generic fuzzing (expected for an ID table).
+Record: **No bugzilla/syzbot/user report.** Code-inspection fix.
+Severity inferred from the error path, not from a crash report.
 
 Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone one-patch series. No other X4D patches in
-`drivers/net/ethernet/sfc/`. No siena/ef100 table changes needed; X4/X4D
-live in the main `efx_pci_table`.
+Record: **Standalone 1/1.** Port debugfs is added in `ssi_port_probe()`
+and already removed in `ssi_port_remove()`; `out3` already unregisters
+children. The hole is **controller** debugfs only.
 
 Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned 403. No evidence on the
-public netdev thread that this was requested for or rejected from
-stable. UNVERIFIED: whether anyone mailed stable@ about it.
+Record: lore.kernel.org/stable HTML also **403**. `b4` thread has **no**
+stable discussion. **UNVERIFIED** whether anyone asked for/against
+stable inclusion on the stable list.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No functions edited. Data: `efx_pci_table[]`. Consumers:
-`efx_pci_driver.id_table` and `MODULE_DEVICE_TABLE(pci, efx_pci_table)`.
+Record: **`ssi_probe()`** only. Helper **`ssi_debug_remove_ctrl()`** is
+called, not modified.
 
 Step 5.2: TRACE CALLERS
-Record: `pci_register_driver(&efx_pci_driver)` from `efx_init_module()`.
-Match leads to `efx_pci_probe()` → `efx_pci_probe_post_io()` →
-`efx_pci_probe_main()`. Interrupt/hot path unchanged. Impact surface:
-PCI enumeration of the two new IDs only.
+Record:
+- `ssi_probe` is `.probe` of `omap_ssi` (`compatible = "ti,omap3-ssi"`).
+- Called from platform device probe (boot / module load / DT populate).
+- Not IRQ, not a syscall hot path.
 
 Step 5.3: TRACE CALLEES
-Record: Probe uses `efx_x4_nic_type` (already defined in ef10.c):
-EF10-like ops, `efx_ef10_probe_pf`, MCDI, etc. Same as discrete X4 PFs.
+Record: `device_for_each_child(..., ssi_remove_ports)` then
+`ssi_debug_remove_ctrl()` → `debugfs_remove_recursive(omap_ssi->dir)`
+then `ssi_remove_controller()` → `hsi_unregister_controller()` /
+`device_unregister()` / `kfree(hsi)`.
 
 Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace cannot trigger this except by plugging/enumerating the
-NIC. Reachable on any machine with an X4D PF and CONFIG_SFC. Not a
-syscall-fuzz path.
+Record:
+- Reachable when `CONFIG_OMAP_SSI` probes a `ti,omap3-ssi` node (see
+  `arch/arm/boot/dts/ti/omap/omap3.dtsi`) and a `ti,omap3-ssi-port`
+  child fails `of_platform_device_create()` (typically ENOMEM /
+  `of_device_add` failure).
+- Userspace cannot force this sysfs/ioctl path; it is a **boot/probe**
+  failure. After that, **root** can open leftover debugfs and hit UAF.
+  `CONFIG_DEBUG_FS` required.
 
 Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same two-ID (FF/LL vs FF-only) pattern as X4 0x0c03/0x2c03.
-Older SFC9120/9140/9220/9250 entries use the same table style. No other
-copies of 0x8c03/0xac03 in this driver.
+Record: Port debugfs is already balanced in `ssi_port_remove()`. No
+second copy of this controller leak in `drivers/hsi/`.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Local tree is **v6.18.57** (`Makefile` VERSION=6 PATCHLEVEL=18
-SUBLEVEL=57). At v6.18.57, `efx_pci_table` has X4 IDs but not X4D
-0x8c03/0xac03. `efx_x4_nic_type` is present. The “bug” (missing IDs)
-exists here. X4 support was added in 2024 and is in v6.18.
+Record:
+- Tree: **`v7.3-rc4-27-gf0100363d8c37`**, `make kernelversion` =
+  **7.3.0-rc4**.
+- Driver and `out3` path exist. Commit **`760318e2e6985` is already an
+  ancestor of HEAD** (merged via `hsi-for-7.3` on 2026-08-21). Pre-fix
+  `out3` is still in history (`760318e2e6985^`).
+- Bug introduced **2014** (`b209e047bc7432`), long before this tree.
 
 Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: [Expected backport difficulty: clean apply.] v6.18.57 context is
-identical to the hunk. No conflicting refactor of the ID table between
-v6.18.57 and this patch.
+Record: **Clean apply** on this layout. Same `out3`/`out2` labels since
+the original driver. Context in older stables may lack later DMA-mask
+lines; the hunk itself does not depend on them.
 
 Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No other X4D ID or quirk in v6.18.57. Candidate overlay commit
-`6fd5947dd3d9d` is ignored per pipeline rules; it is not part of
-v6.18.57.
+Record: OF-put / pm_runtime / `hsi_put_controller` fixes are present and
+**do not** remove controller debugfs on `out3`. No earlier equivalent of
+this fix.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [Subsystem: drivers/net/ethernet/sfc] [Criticality: IMPORTANT
-for users of Solarflare/AMD X4-family NICs; PERIPHERAL relative to core
-mm/fs. Not staging.]
+Record: **HSI / OMAP SSI controller driver.** **PERIPHERAL.**
+`CONFIG_OMAP_SSI` depends on `HSI && OF && COMMON_CLK` and `ARCH_OMAP3
+|| COMPILE_TEST`. Legacy APE↔modem SSI (Nokia/OMAP3). Not mm/net/fs
+core.
 
 Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: sfc is actively maintained (X4 in 2024, stats/MDIO churn, AMD
-authors). Mature driver; this is incremental ID adding on a stable
-nic_type.
+Record: **Low-churn, maintained.** Recent HSI work is small fixes;
+maintainer still applying patches.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 Step 8.1: DETERMINE WHO IS AFFECTED
-Record: [Affected population: driver-specific / hardware-specific.] Only
-Solarflare X4D PF devices (SoC IP block). Existing X4 and older SFC
-users are unaffected.
+Record: **Driver-specific + config-specific:** OMAP3 boards with SSI in
+DT, `CONFIG_OMAP_SSI`, and `CONFIG_DEBUG_FS`. Not universal.
 
 Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: [Trigger: PCI probe of 0x1924:0x8c03 or 0x1924:0xac03.] Common
-on systems that ship that SoC NIC; never on others. Not an unprivileged
-software trigger.
+Record:
+- Trigger: **failed child port device create during probe** (uncommon;
+  not every boot).
+- Not a race. Unprivileged users cannot reach the create-failure
+  themselves; they also typically cannot read debugfs.
+- Reprobe after failure can also leave a stale `ssiN` debugfs name at
+  the debugfs root.
 
 Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: [Failure mode: device never bound; no Ethernet for that port.]
-[Severity: MEDIUM for those platforms (hardware dead in this kernel),
-LOW for everyone else.] Not a crash/UAF, but it is user-visible hardware
-enablement of the kind stable explicitly accepts.
+Record:
+- Leftover debugfs dentries: leak until reboot.
+- Read of leftover `regs` after `kfree(hsi)`: **UAF** (and possible MMIO
+  via a stale `sys` pointer).
+- **Severity: HIGH if triggered** (UAF), **likelihood LOW** (rare probe
+  fail + DEBUG_FS + debugfs access). Not a normal-path panic.
 
 Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- [Benefit] High for X4D SoC users on 6.18.y (NIC actually works).
-  Documented same feature set as X4 already in this tree.
-- [Risk] Very low: 4 lines, ID table only, no behavioral change for
-  other IDs.
-- [Ratio] Strongly favors backport.
+- **Benefit:** medium for affected hardware (closes leak + UAF on a real
+  error path that has been wrong since 2014); population is small.
+- **Risk:** very low (3 lines, same as `ssi_remove()`).
+- **Ratio:** favorable. Cost of backport is tiny; leaving a dangling
+  debugfs ops table is a real memory-safety bug.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
 Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Official rule in this tree: “must either fix a real bug that bothers
-  people or just add a device ID.”
-- User-instruction exception: new PCI IDs in an existing driver are YES.
-- 4-line change; maps to existing `efx_x4_nic_type` already in 6.18.57.
-- Author states X4D has the same feature set as X4.
-- Reviewed by Horman and AMD; applied by Kicinski.
-- Clean apply; no prerequisites missing; no follow-up X4D patches.
-- No risk to existing devices.
 
-AGAINST:
-- Submitted to net-next, not as a “fix.”
-- No crash/security/corruption.
-- Niche SoC NIC; no public user bug report.
-- UNVERIFIED: stable@ discussion (lore 403).
+**FOR:**
+- Real probe error-path bug: debugfs created, never removed on `out3`.
+- Verified UAF: files keep `ssi` as private; `out3` frees the controller
+  via `hsi_controller_release()`.
+- 3-line, mirrors `ssi_remove()`, helper already exists.
+- Bug in-tree since 2014; this checkout still has the driver.
+- Maintainer applied v1 with no objections.
+- Same class as other `ssi_probe()` leak/refcount stable-style fixes.
+
+**AGAINST:**
+- Niche OMAP3 SSI, `CONFIG_DEBUG_FS` only, rare
+  `of_platform_device_create()` failure.
+- No syzbot/user report; message only calls it a leak.
+- No explicit stable nomination (not a negative per pipeline rules).
+
+**UNRESOLVED:**
+- Stable-list discussion (lore/stable HTTP 403).
+- Exact rate of `of_platform_device_create()` failure on real OMAP3
+  hardware.
 
 Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? [PASS — identical to existing X4 ID
-   rows; reviewed; merged upstream]
-2. Fixes a real bug that affects users? [PASS under the device-ID
-   clause; without it X4D NICs do not probe]
-3. Important issue (crash, security, corruption, deadlock)? [PASS via
-   device-ID exception, not via crash]
-4. Small and contained? [PASS — 4 lines, one table]
-5. No new features or APIs? [PASS — no new nic_type, no new sysfs/uAPI;
-   IDs only]
-6. Can apply to the local tree? [PASS — v6.18.57 has X4 type and
-   matching table context]
+1. Obviously correct and tested? **PASS** — matches existing remove
+   path; maintainer applied.
+2. Fixes a real bug that affects users? **PASS** — leak + UAF on failed
+   SSI port create with debugfs.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   UAF is crash/memory-safety; trigger is rare, but the class is in-
+   scope for stable.
+4. Small and contained? **PASS** — +3 lines, one function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — same `out3` structure; no
+   missing helpers.
 
 Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: [Exception category: NEW DEVICE IDs to an existing driver.]
-Driver and X4 nic type already exist in 6.18.57.
+Record: **Not** an ID/quirk/DT/build/docs exception. Ordinary small
+driver bugfix.
 
 Step 9.4: MAKE YOUR DECISION
-This should be backported to this 6.18.y tree. It is the textbook PCI ID
-addition: small, obviously correct, no new APIs, and the implementation
-it binds to is already present.
+This tree contains the OMAP SSI driver and the long-standing `out3`
+hole. The patch is a minimal, obviously correct error-path teardown that
+also prevents debugfs from retaining a freed `hsi_controller`. That is
+enough for stable even though the hardware is legacy and the trigger is
+uncommon. Risk is negligible.
 
-===============================================================
-What the commit solves for stable users
-===============================================================
+What it solves for stable users: a failed `ti,omap3-ssi-port` create no
+longer leaves `/sys/kernel/debug/ssiN/` pointing at freed memory after
+`ssi_remove_controller()`.
 
-On 6.18.y, sfc already drives X4 PFs (`0x0c03` / `0x2c03`) via
-`efx_x4_nic_type`. X4D is the same controller as an SoC IP with
-different PCI IDs. Without this patch those devices never match, so the
-interface never appears. Adding the two IDs is the entire change.
+Risk vs benefit: 3 lines vs a real UAF/leak; apply should be clean.
 
-Risk vs benefit: benefit is hardware enablement for X4D PFs; risk is
-confined to those IDs. No locking, no API, no shared-path logic change.
+Concerns: none that block backport; no extra commits required. Absence
+of `Fixes:` / `Cc: stable` is expected here and was not used as a reason
+to reject.
 
-Concerns: none material. Not a series; X4 support is already here; apply
-is clean. Absence of Cc: stable is expected for this review queue.
-
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Parsed tags: Reviewed-by Pieter Jansen van Vuuren, Alejandro
-  Lucero, Simon Horman; Link msgid
-  20260916125641.12238-1-alucerop@amd.com; no Fixes/Reported-
-  by/Cc:stable
-- [Phase 1] Body: “X4D is an X4 controller instance as an IP block in an
-  SoC. It has the same feature set as X4.”
-- [Phase 2] Diff: +4 lines in `efx_pci_table[]` only; IDs 0x8c03 and
-  0xac03 → `efx_x4_nic_type`
-- [Phase 3] `git describe HEAD` / `make kernelversion` / Makefile:
-  v6.18.57
-- [Phase 3] `git merge-base --is-ancestor 6fd5947dd3d9d v6.18.57` → NOT
-  in v6.18.57 (candidate overlay ignored)
-- [Phase 3] `git merge-base --is-ancestor cf06766f1525d v6.18.57` → X4
-  support IS in this tree
-- [Phase 3] `git show v6.18.57:drivers/net/ethernet/sfc/efx.c` table has
-  X4 IDs, not X4D; terminator immediately after 0x2c03
-- [Phase 3] `git blame -L 900,911 v6.18.57 --
-  drivers/net/ethernet/sfc/efx.c`: X4 rows from cf06766f1525d (2024)
-- [Phase 3] `git grep efx_x4_nic_type v6.18.57 --
-  drivers/net/ethernet/sfc/`: ef10.c:4308, efx.c X4 IDs, nic.h extern
-- [Phase 3] `git log --grep=X4D -- drivers/net/ethernet/sfc/`: only this
-  commit
-- [Phase 4] `b4 dig -c 24fedc7a569bce181728f0dd616504bef9f1513b`: msgid
-  match; v1 only
-- [Phase 4] `b4 dig -a`: single series, no v2+
-- [Phase 4] `b4 dig -w`: netdev maintainers + AMD + Edward Cree on Cc
-- [Phase 4] Openwall: Horman Reviewed-by; patchwork applied
-  24fedc7a569b; no NAK
-- [Phase 4] lore.kernel.org WebFetch: 403 — used openwall/b4 instead
-- [Phase 5] `efx_pci_table` used as `efx_pci_driver.id_table` and
-  MODULE_DEVICE_TABLE; probe is `efx_pci_probe`
-- [Phase 5] `PCI_VENDOR_ID_SOLARFLARE` is 0x1924 in v6.18.57 pci_ids.h
-- [Phase 6] Context at v6.18.57 matches patch; clean apply
-- [Phase 7] CONFIG_SFC present: “Solarflare SFC9100/EF100-family
-  support”
-- [Phase 8] Failure mode verified as non-bind of new PCI IDs, not a
-  crash
-- [Phase 9] Documentation/process/stable-kernel-rules.rst line 15: “or
-  just add a device ID”
-- UNVERIFIED: stable@ mailing list (lore 403)
-
-This is a contained PCI ID addition to a driver and nic type that
-already exist in 6.18.y, which stable policy explicitly allows.
+Verification:
+- [Phase 1] Parsed message/tags: author Pengpeng Hou, maintainer SOB
+  Sebastian Reichel, Link msgid 20260616004348.97684-1, no
+  Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +3 lines in `ssi_probe()` `out3`; calls
+  `ssi_debug_remove_ctrl(ssi)` under `CONFIG_DEBUG_FS`
+- [Phase 2] Confirmed `ssi_debug_add_ctrl()` uses parent `NULL` and
+  private `ssi`; `ssi_regs_show()` dereferences that pointer
+- [Phase 2] Confirmed `hsi_controller_release()` `kfree`s the controller
+  after `device_unregister()`
+- [Phase 3] `git blame` on pre-fix file: `out3` from `b209e047bc7432`
+  (2014); that commit is an ancestor of HEAD
+- [Phase 3] `git merge-base --is-ancestor 760318e2e6985 HEAD` →
+  IS_ANCESTOR (source commit lives in this tree)
+- [Phase 3] `git describe HEAD` → v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` → 7.3.0-rc4
+- [Phase 3] Related probe fixes (`9a2ea132df860`, `f5181c35ed7ba`,
+  `1aff514e1d2bd`) do not cover debugfs on `out3`
+- [Phase 4] `b4 dig -c 760318e2e6985` →
+  patch.msgid.link/20260616004348.97684-1-pengpeng@iscas.ac.cn
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: To Sebastian Reichel + linux-kernel
+- [Phase 4] `b4 dig -m`: maintainer “Applied, thanks!”; no NAK; no
+  stable mention
+- [Phase 4] WebFetch lore.kernel.org → 403; used mbox instead
+- [Phase 5] `ssi_probe` is platform `.probe`; DT compatible
+  `ti,omap3-ssi` in `omap3.dtsi`
+- [Phase 6] Pre-fix `out3` verified with `git show
+  760318e2e6985^:drivers/hsi/controllers/omap_ssi_core.c`
+- [Phase 7] Kconfig: `OMAP_SSI` depends on `ARCH_OMAP3 || COMPILE_TEST`
+- [Phase 8] Failure mode: leftover debugfs + UAF on read after free;
+  severity HIGH if hit, trigger rare
+- UNVERIFIED: stable@ mailing list archive (HTTP 403)
+- UNVERIFIED: how often port `of_platform_device_create()` fails on real
+  hardware
 
 **YES**
 
- drivers/net/ethernet/sfc/efx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hsi/controllers/omap_ssi_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
-index 112e55b98ed3b..62df7b6a26fa5 100644
---- a/drivers/net/ethernet/sfc/efx.c
-+++ b/drivers/net/ethernet/sfc/efx.c
-@@ -903,6 +903,10 @@ static const struct pci_device_id efx_pci_table[] = {
- 	 .driver_data = (unsigned long)&efx_x4_nic_type},
- 	{PCI_DEVICE(PCI_VENDOR_ID_SOLARFLARE, 0x2c03),  /* X4 PF (FF only) */
- 	 .driver_data = (unsigned long)&efx_x4_nic_type},
-+	{PCI_DEVICE(PCI_VENDOR_ID_SOLARFLARE, 0x8c03),  /* X4D PF (FF/LL) */
-+	 .driver_data = (unsigned long)&efx_x4_nic_type},
-+	{PCI_DEVICE(PCI_VENDOR_ID_SOLARFLARE, 0xac03),  /* X4D PF (FF only) */
-+	 .driver_data = (unsigned long)&efx_x4_nic_type},
- 	{0}			/* end of list */
- };
- 
+diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
+index 47826315d7d62..3163a063aaa23 100644
+--- a/drivers/hsi/controllers/omap_ssi_core.c
++++ b/drivers/hsi/controllers/omap_ssi_core.c
+@@ -535,6 +535,9 @@ static int ssi_probe(struct platform_device *pd)
+ 	return err;
+ out3:
+ 	device_for_each_child(&pd->dev, NULL, ssi_remove_ports);
++#ifdef CONFIG_DEBUG_FS
++	ssi_debug_remove_ctrl(ssi);
++#endif
+ out2:
+ 	ssi_remove_controller(ssi);
+ 	pm_runtime_disable(&pd->dev);
 -- 
 2.53.0
 
