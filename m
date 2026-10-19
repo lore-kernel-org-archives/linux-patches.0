@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BA2645085;
-	Mon, 19 Oct 2026 14:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E485458BD;
+	Mon, 19 Oct 2026 14:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418798; cv=none; b=qtpJrGPXTBIwJ702b2Gj9/O2T9tn/A4NLtZf6gDD/KocNwzB8zKa04zQiu37SSAjc9oIRPRczcoFzhh/z71zww/l7bOA4XZNjwoR3AjWG4ojZnpzV1ZUZIiSP29NotxxWJG2rAPrnnkt1vqk/pT4U+yqBzrRqgfrQzpNBSAsWzc=
+	t=1792418799; cv=none; b=Q+FqIfgZf/tL/tVZGGu1qoVJaYPxdFIa2+WGqWT/FRmdVINqhblzNKEP87UuP/hkMIFqCGn8Dw84rJRTAbvBYl3HJ6nmLuRNqfl5Xab+U16XeH4UqCGcoGsV9Sgkc1up04Ioz1cs+y+Mujo+e8L9lXhaNP4XZxIKP1MMbsAQTdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418798; c=relaxed/simple;
-	bh=iQVJa5cpqjNqS+F9c6wC92Lh+Q1jXpYKZlZOVm9tXrc=;
+	s=arc-20240116; t=1792418799; c=relaxed/simple;
+	bh=Qri4XrResgnJyvy3lzzrFPrrq7csbZKJA6h23ifmimk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HJOzTHjfZ0mEmHXku44A0i5o80r9+KqBwYIlfnl3XOW1Df7j3BoyIaQlaXHLUX3QNppIsu5NvdEmI2U/PheubclzMAOm/51FT1OyolbCF74ayUe4HMjatPz5ARaLMpvxV0du6o1EFnzIdYQOXT1r3TABndAWSnVoPOc2B75uzQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mR5A9Sic; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nm+0PdwGYPisoKTb0oxFJ4et8LH/mD4ZKwx6GqwTfc8M6EunyCNe2UXJ3VrLuMaBB1b18URdds7BREUEauo6A4ic6JyZ8MZP89M2+xmqdptmRmTJK7z8nNcD96LCSwf5/2n36Xc/wfjxfJvmKy/Wf57lm1TzlnU4Gi74jcDcOkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QuJPTty5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mR5A9Sic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A081F000C4;
-	Mon, 19 Oct 2026 14:06:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QuJPTty5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4EC1F000C5;
+	Mon, 19 Oct 2026 14:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418795;
-	bh=ScaDSuke4tuvphNZSd0GKlSCBp0xpRUmHyEoy+AUDWs=;
+	s=k20260515; t=1792418797;
+	bh=tDiFVdZd6x1/FpLu1PcrtGHQ8LNj3Xzgk1lKCM43d+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mR5A9SicnnhzVX1gMXOmuJrExEUiga7i3Fn6hMwX6RaqDKUqrzorqBwPDk30eDf38
-	 b+iyLUBM2WW3m7D9CUdmk9a5lmwHkv6/gHk/OMLufczRMftXESBgwOoMyV11EJtpov
-	 9KONuTccIAoejYwmssoTK/I7RuN91tEvMqccHNdsfxECAe91PCUDM5nXWo7jfOWAI9
-	 dNLaN3gUocG1kh7YLbmZre5GyCgGiDbzhipqyzu7qj97MCrP5fuK+g24KTbcqkcGBS
-	 vHyERuENhHqgUgQAYNJnyO6Sk/Aa+OqOiLeEOAJvA2NrHYgws3fFT3LPDWsQCwl1T+
-	 8V7gxJyDV+1JA==
+	b=QuJPTty5Mq1lXSKSaGZKApcO77YuCCIskcpwnCWvKx30dzgFQNMU/I7VFkHvpoFZN
+	 X0+81gZs4xkynafE6wRZKTB40kUGmhTe6wZpAk9/BAd7/Jh9sd6NNRHYzdRmvAHcns
+	 RnKkv7Ev2W/vGUMmJl7NAy1TgR41BnMJe9a3r4DaneqO95/Hw9atYmTWG9AEz7wnBM
+	 +8eKLln32pD1jAVQox0oe4Cqg2KMlYFzCC9y5n6kj7GfDteOUhVAD8uPTW58QkTHxv
+	 RJBSECN83IDPd/R0cyO+OznEXTM44OLHrhjzqVo9bEVEr6a/O8bpAN2IM5c/vGiiX1
+	 NzxE0Hc5TgqiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Abbott <abbotti@mev.co.uk>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Eric Huang <jinhuieric.huang@amd.com>,
+	Philip Yang <philip.yang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hsweeten@visionengravers.com,
+	Felix.Kuehling@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] comedi: pcm816: Fix sanity check in interrupt handler
-Date: Mon, 19 Oct 2026 09:53:13 -0400
-Message-ID: <20261019135441.1420968-502-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] drm/amdkfd: add sanity check in svm_range_is_valid
+Date: Mon, 19 Oct 2026 09:53:14 -0400
+Message-ID: <20261019135441.1420968-503-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,403 +58,431 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Eric Huang <jinhuieric.huang@amd.com>
 
-[ Upstream commit 4fdac5090ce3616283216d9a1d2b9664e8e20747 ]
+[ Upstream commit aa7e29cf9a37092cf5057a612ee09f28df20258f ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+to prevent svm range to be overflow or underflow.
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing the devpriv->dma pointer which may be NULL if
-dev->attached is false.  Move the dereference of the devpriv->dma
-pointer after dev->attached has been checked to avoid the possible null
-pointer dereference.
-
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-8-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
+Reviewed-by: Philip Yang <philip.yang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4** (mainline 7.3.0-rc4). The change is a
-3-line IRQ-handler NULL-deref fix in the existing `pcl816` driver; the
-buggy pattern has been in-tree since v4.0.
+## Local tree
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+This checkout is **6.18.y** (`v6.18.53`, Makefile `VERSION=6` /
+`PATCHLEVEL=18` / `SUBLEVEL=53`, branch `autosel`). The verdict is only
+for this tree.
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[comedi / pcl816]** **[Fix]** sanity check in interrupt
-handler (subject says “pcm816”; the file is `pcl816.c`). Intent: stop a
-NULL dereference of `devpriv->dma` in `pcl816_interrupt()` when the IRQ
-fires before attach completes.
+`git merge-base --is-ancestor` shows the buggy SVM range math **is** in
+`v6.18.53`; the fix is **not**.
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: `[drm/amdkfd] [add] sanity check in svm_range_is_valid`
+
+Subsystem: AMD KFD SVM (HMM shared virtual memory). Verb “add” plus
+“sanity check” is a bounds/overflow guard, not a feature.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- **Fixes:** none (expected for this review pipeline)
-- **Reported-by:** none on this patch itself
-- **Tested-by:** none
-- **Reviewed-by:** none
-- **Acked-by:** none
-- **Link:**
-  `https://patch.msgid.link/20260618102949.26607-8-abbotti@mev.co.uk`
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Ian Abbott (author; COMEDI maintainer), Greg Kroah-
-  Hartman (char-misc)
-- Ignored pipeline SOBs: none of Sasha Levin’s appear on the real commit
-  `4fdac5090ce36`
+- Signed-off-by: Eric Huang (author)
+- Reviewed-by: Philip Yang (original author of `svm_range_is_valid`)
+- Signed-off-by: Alex Deucher (amdgpu/amdkfd maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable (absence is
+  expected)
 
-Cover-letter CC list (from `b4 dig -w`) also included H Hartley Sweeten
-and the SNU reporters Jaeyoung Chung, Sangyun Kim, Kyungwook Boo. Those
-reporters are on the series, not as `Reported-by:` on this specific
+Pipeline-added markers (`[Upstream commit …]`, Sasha Levin SOB) are
+ignored.
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
+Record:
+- Bug: SVM range start/size can overflow or underflow when converted to
+  byte bounds.
+- Symptom: not spelled out (no stack trace, CVE, or repro).
+- Root cause (from code + review, not from the one-line body): `end =
+  start + (size << PAGE_SHIFT)` wraps; `size == 0` makes `last = start +
+  size - 1` underflow.
+
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: Yes. “Sanity check” here is an integer overflow/underflow fix in
+range validation, not style cleanup. Philip Yang said so on list:
+overflow wrap plus `size == 0` underflow of `last = start + size - 1`.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
+Record:
+- File: `drivers/gpu/drm/amd/amdkfd/kfd_svm.c` (+7 / −1)
+- Function: `svm_range_is_valid()`
+- Scope: single-file surgical fix
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
+Before (`v6.18.53`):
+
+```c
+start <<= PAGE_SHIFT;
+end = start + (size << PAGE_SHIFT);
+do { vma_lookup... } while (start < end);
+return svm_range_check_vm(p, start_unchg, (end - 1) >> PAGE_SHIFT, ...);
+```
+
+After:
+- `size == 0` → `-EINVAL`
+- `check_add_overflow(start, size << PAGE_SHIFT, &end)` → `-EOVERFLOW`
+- Same VMA walk only if the byte range is representable
+
+Path: ioctl/CRIU validation, not a hot inner loop.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **Integer overflow / underflow (memory-safety / validation
+bypass).**
+
+Overflow: userspace `AMDKFD_IOC_SVM` can pass page-aligned `start_addr`
+and `size` whose sum wraps 64-bit. After `svm_ioctl()` shifts both into
+pages, `end` wraps. The `do/while (start < end)` then walks a
+**truncated/wrapped** range. `svm_range_check_vm()` can see `last <
+start`, where `interval_tree_iter_first()` treats a non-overlapping
+inverted interval as empty and returns success. Callers then run
+`svm_range_add()` with the original huge `start`/`size`.
+
+Underflow: `size == 0` makes `(end - 1)` wrap when `end == 0`, so
+`svm_range_check_vm()` can be asked to scan ~the whole VA tree. Philip
+Yang called that out as the reason for the extra check.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record: Obviously correct, minimal, error-path only. Regression risk is
+low: overflowing/zero ranges were never valid. `-EOVERFLOW` is a new
+errno for this ioctl; those requests were undefined before.
+`check_add_overflow()` is already provided via `linux/mm.h` (`kfd_svm.c`
+→ `kfd_svm.h` → `linux/hmm.h` → `linux/mm.h` → `linux/overflow.h`). KFD
+is 64-bit only (`HSA_AMD depends on X86_64 || ARM64 || PPC64 || …`), so
+`unsigned long end` matches `uint64_t` arithmetic.
+
+The check does not separately test `size << PAGE_SHIFT` wrap. On the
+ioctl path size is a page-aligned byte length shifted down then up, so
+the add is the real wrap. That leftover is not a reason to reject the
 patch.
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
+Record: Unchecked `end = start + (size << PAGE_SHIFT)` is from
+`42de677f799997` (“drm/amdkfd: register svm range”, Philip Yang, 2020).
+Present in this tree (`git merge-base --is-ancestor 42de677f799997
+v6.18.53` → yes). SVM landed ~5.11; the bug is old in 6.18.y.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+
+Record: No Fixes: tag. Not applicable.
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+
+Record: Recent `kfd_svm.c` work on this tree is unrelated (CRIU
+list_del, NULL in `svm_range_set_attr`, TLB, GPU reset). No prior
+overflow fix for this helper. Standalone, not patch N/M.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Eric Huang is an AMD KFD contributor (including `drm/amdkfd: fix
+a vulnerability of integer overflow in kfd debugger`, already in this
+tree with Cc: stable). Philip Yang owns this SVM code. Alex Deucher is
+the subsystem maintainer.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: None. `check_add_overflow()` and `svm_range_is_valid()` both
+exist here. Applies standalone to `v6.18.53` (same hunk as the
+candidate).
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
+`b4 dig -c aa7e29cf9a37092cf5057a612ee09f28df20258f` failed (lore HTTP
+error). Found the thread on amd-gfx:
+
+- v1: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-June/146929.html — overflow check only
+- Philip Yang: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-June/146952.html — overflow check is good; also reject `size
+  == 0` because `last = start + size - 1` underflows
+- v2 typo (`retrune`): 147063
+- v2 fixed: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-June/147065.html — committed form
+- Reviewed-by: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-June/147704.html
+- Landed in drm-next-7.3 pull (Aug 2026)
+
+No NAKs. No Cc: stable on the thread.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+
+Record: Philip Yang (SVM author) requested the size==0 check and
+Reviewed-by. Alex Deucher signed off and pulled it.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+
+Record: No syzbot/bugzilla. Author-driven hardening after review.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: Single patch, two revisions. Self-contained.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: No useful stable-list hit for this subject. Not previously
+rejected for 6.18.y (UNVERIFIED beyond search noise).
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `svm_range_is_valid()` only.
+
+**Step 5.2: TRACE CALLERS**
+
 Record:
-- **Bug:** IRQ handler is registered in `pcl816_alloc_irq_and_dma()`
-  during `pcl816_attach()`, before `dev->attached` is set (that happens
-  later in `comedi_device_postconfig()`).
-- **Symptom/failure mode:** NULL pointer dereference of `devpriv->dma` →
-  kernel oops in IRQ context.
-- **Version information:** none in the message. History shows the DMA
-  deref dates to 2015 (`bd7ea421e3f975`, in v4.0-rc1).
-- **Root cause:** the existing `dev->attached` guard runs *after*
-  `&dma->desc[dma->cur_dma]`. Between `request_irq()` and
-  `comedi_isadma_alloc()`, `dma` is NULL.
+- `svm_range_set_attr()` — `AMDKFD_IOC_SVM` SET_ATTR and CRIU restore
+- `svm_range_get_attr()` — GET_ATTR and CRIU checkpoint
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. The subject and body explicitly describe a NULL-
-deref fix. Not cleanup/refactor.
+`kfd_ioctl_svm()`: flags `0` (not `KFD_IOC_FLAG_CHECKPOINT_RESTORE`).
+Any opener of `/dev/kfd` can call it. It already rejects zero/unaligned
+byte size, then shifts into pages and calls these helpers.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 5.3: TRACE CALLEES**
 
-Step 2.1: INVENTORY THE CHANGES
+Record: `vma_lookup()`, `svm_range_check_vm()` →
+`interval_tree_iter_first()`. Overflow changes which interval is walked.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Userspace ioctl → `kfd_ioctl_svm` → `svm_ioctl` → set/get_attr →
+`svm_range_is_valid`. Reachable from userspace with KFD access (ROCm/HIP
+unified memory). Not theoretical.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: `svm_range_add()` still does `last = start + size - 1UL`, but
+only after this validator. Rejecting wrap/zero here closes that gate.
+`kfd_ioctl_svm` already rejects byte `size == 0`; the new check covers
+CRIU/`svm_range_*_attr` in page units.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: Yes. `v6.18.53` `kfd_svm.c` still has `end = start + (size <<
+PAGE_SHIFT)` at the old line 3424. Introduced 2020; in 6.18 from day
+one.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: Clean apply. Same function signature (no later `mapped`
+argument). No extra include. Surrounding SVM code matches.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: No other overflow fix for `svm_range_is_valid` on `v6.18.53`.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+
+Record: `drivers/gpu/drm/amd/amdkfd` SVM. **IMPORTANT** for AMD GPU
+compute (ROCm/HIP), not core mm/VFS. Config: `CONFIG_HSA_AMD_SVM`.
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Actively maintained; this helper itself has been stable since
+~2021 aside from `vma_lookup` and `svm_range_check_vm` tweaks.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: AMD GPU users with KFD SVM (unified/managed memory). Driver- and
+config-specific, but a common production path.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
 Record:
-- **File:** `drivers/comedi/drivers/pcl816.c` (+2/−1; 3 lines)
-- **Function:** `pcl816_interrupt()`
-- **Scope:** single-file surgical fix
+- Overflow: page-aligned `start_addr + size` wraps `uint64_t`. Easy to
+  send; not a normal HIP range.
+- Underflow: `size == 0` in pages (ioctl already blocks this;
+  CRIU/internal callers may not).
+- Unprivileged `/dev/kfd` users can hit the overflow path.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record: **Before:** `desc = &dma->desc[dma->cur_dma]` at declaration
-time, then `if (!dev->attached || !devpriv->ai_cmd_running) return;`.
-**After:** `desc` is uninitialized until after that guard, then
-assigned. Early-exit path (not attached, or command not running) no
-longer touches `dma->desc`. Normal command-complete IRQ path is
-unchanged.
+**Step 8.3: FAILURE MODE SEVERITY**
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **Category (d) memory safety / NULL pointer dereference.** `dma`
-is NULL in the window after `request_irq()` and before
-`comedi_isadma_alloc()` (and again if alloc fails, until `free_irq()`).
-Old code unconditionally indexed `dma->desc[]`. New code only does that
-after `dev->attached` is true *and* `ai_cmd_running` is set, which only
-happens from `pcl816_ai_cmd()` after DMA was successfully allocated.
+Record: Validation bypass after wrap: SVM may be applied to a range that
+was never fully VMA-checked; interval-tree overlap can be skipped; GPU
+mapping of the wrong host range or later crashes. Severity **HIGH**
+(userspace-triggerable overflow in GPU VA validation). Not a proven
+panic-on-boot, but more than a log-only issue.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct: reorder a dereference past an existing guard.
-No API, locking, or control-flow change on the success path. `desc` is
-not used on the early-return paths, so no uninitialized use. Regression
-risk is very low.
+**Step 8.4: RISK-BENEFIT RATIO**
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-Step 3.1: BLAME THE CHANGED LINES
-Record: Unconditional `desc = &dma->desc[dma->cur_dma]` came from
-**`bd7ea421e3f975`** (“staging: comedi: pcl816: remove depends on
-ISA_DMA_API limitation”, 2015-01-17), first in **v4.0-rc1**. The
-`dev->attached` check is older (`b619f5aabd1db6`, 2014). The 2015 ISA-
-DMA conversion placed the new deref *above* that check. Bug has been
-present for ~11 years.
-
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No `Fixes:` tag. Inferred buggy commit is `bd7ea421e3f975`. `git
-merge-base --is-ancestor 4fdac5090ce36 HEAD` succeeds; the fix commit is
-already an ancestor of this 7.3-rc4 checkout.
-
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Recent `pcl816.c` commits are this fix and `55e39df167cbe` (I/O
-base sanity). Same-author series of independent IRQ-guard patches in
-sibling drivers (`pcl711`, `pcl818`, `das6402`, …). This patch does not
-depend on those other files.
-
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Ian Abbott is the COMEDI maintainer. This is patch **07/11** of
-his “Add/fix sanity check in ISA drivers to avoid null-ptr-deref”
-series, merged via Greg KH’s char-misc tree.
-
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Standalone. Only uses `dev->attached`, `devpriv->dma`, and
-`pcl816_interrupt()`, all present here. No new helpers. Sibling series
-patches are per-driver and not required for this hunk.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **Lore/msgid:**
-  https://patch.msgid.link/20260618102949.26607-8-abbotti@mev.co.uk
-- **Cover:** “comedi: Add/fix sanity check in ISA drivers to avoid null-
-  ptr-deref” (`20260618102949.26607-1`)
-- **`b4 dig -a`:** only **v1**; no later revisions. Mbox has the 11
-  patches + cover, **no replies, no NAKs**.
-- Direct lore.kernel.org fetch returned HTTP 403; content confirmed via
-  `b4 dig` mbox, openwall, and lkml.iu.edu mirrors.
+- Benefit: HIGH for KFD SVM — closes wrap-around validation.
+- Risk: VERY LOW — 7 lines, reject-only, maintainer-reviewed.
+- Ratio: strongly favors backport.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: Recipients were Ian Abbott, Greg KH, H Hartley Sweeten, linux-
-kernel, and the SNU reporters. Greg signed it into char-misc. No on-list
-NAK. No explicit `Cc: stable` in review (there was no review thread
-beyond the submission).
+---
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: Original report: Jaeyoung Chung, “comedi: KASAN null-ptr-deref
-in ISA driver IRQ handlers on early IRQ”
-(https://lists.openwall.net/linux-kernel/2026/06/10/1184), Reported-by
-Sangyun Kim and Kyungwook Boo. They described KASAN NULL-deref if an IRQ
-arrives after `request_irq()` and before `read_subdev`/subdevice setup.
-They listed das6402, ni_atmio16d, aio_iiro_16, pcmmio, comedi_parport,
-pcl711. **pcl816 was not in that list**; Abbott found the same class of
-bug there (attached check exists but is too late because DMA is
-dereferenced first).
+## PHASE 9: FINAL SYNTHESIS
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: 11 independent driver patches. This one only edits `pcl816.c`.
-No functional dependency on 01–06 or 08–11.
+**Step 9.1: EVIDENCE**
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No stable@ discussion found (lore.kernel.org/stable search not
-usable here due to 403; no mention in the patch thread). UNVERIFIED
-whether anyone already requested this on stable@.
+FOR:
+- Real wrap in `end = start + (size << PAGE_SHIFT)` on a userspace ioctl
+- Wrap can make the VMA walk check the wrong range and still return 0
+- `size == 0` underflows `last` (Philip Yang)
+- 7-line, obviously correct `check_add_overflow` + zero check
+- Reviewed by the SVM author; signed off by Deucher
+- Bug present in this 6.18.y tree since original SVM
+- Applies cleanly; no new API; no prerequisites
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+AGAINST:
+- Terse commit message, no crash/CVE/syzbot
+- Ioctl already rejects byte `size == 0` (overflow still open)
+- Affects AMD KFD SVM, not every machine
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `pcl816_interrupt()` only.
+UNRESOLVED:
+- Exact post-bypass corruption vs. later `-EFAULT` not demonstrated with
+  a repro
+- lore.kernel.org/`b4 dig` failed; amd-gfx archive used instead
+- No stable-list discussion found
 
-Step 5.2: TRACE CALLERS
-Record: Registered only from `pcl816_alloc_irq_and_dma()` via
-`request_irq(irq_num, pcl816_interrupt, ...)`. IRQ context. Called when
-the Advantech PCL-814/816 (or a spurious/shared ISA IRQ) fires.
+**Step 9.2: STABLE RULES CHECKLIST**
 
-Step 5.3: TRACE CALLEES
-Record: After the guard: `comedi_bytes_to_samples`,
-`pcl816_ai_setup_dma`, `transfer_from_dma_buf`, `pcl816_ai_clear_eoc`,
-`comedi_handle_events`. Early path only `pcl816_ai_clear_eoc`. No
-alloc/lock added.
+1. Obviously correct and tested? **PASS** — review + drm-next inclusion
+2. Fixes a real bug that affects users? **PASS** — ioctl-reachable
+   overflow
+3. Important (crash/security/corruption/deadlock)? **PASS** — HIGH,
+   validation bypass
+4. Small and contained? **PASS** — 8-line hunk, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — present bug, clean apply on
+   6.18.53
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace `COMEDI_DEVCONFIG` / attach → `pcl816_attach()` →
-`pcl816_alloc_irq_and_dma()` → `request_irq()`. `dev->attached` is set
-only later in `comedi_device_postconfig()`
-(`drivers/comedi/drivers.c:833`). A premature hardware IRQ in that
-window is reachable. Not a syscall hot path; it is bind/attach plus IRQ.
+**Step 9.3: EXCEPTION CATEGORIES**
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same reorder/guard applied in `pcl711.c`, `pcl818.c`,
-`ni_at_a2150.c`, `dt2811.c`, `quatech_daqp_cs.c`; other drivers in the
-series add a missing `dev->attached` check. Systematic ISA-COMEDI issue,
-not a one-off.
+Record: Not a device ID/quirk/DT/docs case. Ordinary small overflow fix.
 
-Semcode tools: not available; used grep/read instead.
+**Step 9.4: DECISION**
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+This belongs on 6.18.y: old bug, userspace-reachable, tiny fix,
+maintainer-acked, applies as-is.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes, the driver and IRQ/DMA attach sequence exist.** Current
-`pcl816_interrupt()` already contains the post-fix form because
-`4fdac5090ce36` is an ancestor of HEAD. Pre-fix form (verified with `git
-show 4fdac5090ce36^:drivers/comedi/drivers/pcl816.c`) had the deref
-before the guard. Bug introduced in v4.0-rc1; driver left staging in
-v5.13 (`8ffdff6a8cfbd`).
+---
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Hunk is three lines in a long-stable function. Expected apply:
-**clean** on any tree that still has this `pcl816_interrupt()` shape
-(i.e. trees with this driver since the 2015 DMA conversion).
+### What it solves for stable users
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: This exact fix is already on HEAD. No alternate/earlier fix of
-the DMA-deref-before-attached bug. I/O-base check `55e39df167cbe` is
-unrelated.
+`svm_range_is_valid()` is the gate for `AMDKFD_IOC_SVM`. Without
+overflow checks, a wrapping `start+size` can skip the intended VMA
+coverage check and still proceed into SVM range insert/map. Zero size
+underflows the last-page index. Both are closed with `-EINVAL` /
+`-EOVERFLOW`.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+### Risk vs benefit
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **drivers/comedi** (data-acquisition). **PERIPHERAL** —
-`CONFIG_COMEDI_PCL816` (“Advantech PCL-814 and PCL-816 ISA card
-support”). Not mm/net/fs core, but a real in-tree (non-staging since
-5.13) driver.
+Benefit is closing a GPU SVM validation hole on hardware this tree
+already supports. Risk is rejecting inputs that were never valid.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature. File history is sparse; recent work is this IRQ-guard
-series plus I/O sanity checks. Bug is old, not a new-subsystem issue.
+---
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+### Verification
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific / config-specific:** users of
-`CONFIG_COMEDI_PCL816` with Advantech PCL-814/816 ISA cards (or a
-colliding ISA IRQ during attach).
+- [Phase 1] Tags: Eric Huang SOB, Philip Yang Reviewed-by, Alex Deucher
+  SOB; no Fixes/Reported-by
+- [Phase 2] Diff: +7/−1 in `svm_range_is_valid`; zero check +
+  `check_add_overflow`
+- [Phase 2] Pre-patch `v6.18.53` still uses `end = start + (size <<
+  PAGE_SHIFT)`
+- [Phase 3] Blame: `42de677f799997` (2020); ancestor of `v6.18.53` (exit
+  0)
+- [Phase 3] Fix not in `v6.18.53` (`merge-base --is-ancestor` of
+  upstream SHA → not ancestor, exit 1)
+- [Phase 3] No prior overflow fix in `kfd_svm.c` on this file’s 6.18.53
+  history
+- [Phase 4] `b4 dig` failed (lore error)
+- [Phase 4] amd-gfx v1 146929; Philip asked for `size==0` on 146952;
+  committed form 147065; R-b 147704
+- [Phase 5] Callers: `svm_range_set_attr` / `svm_range_get_attr` from
+  `svm_ioctl` and CRIU
+- [Phase 5] `AMDKFD_IOC_SVM` registered with flags `0` (unprivileged vs
+  CRIU)
+- [Phase 5] `kfd_ioctl_svm` already rejects `!args->size` and unaligned
+  size; overflow still possible
+- [Phase 5] `interval_tree_iter_first` returns NULL when `last < start`
+  (inverted range)
+- [Phase 6] `check_add_overflow` available via hmm.h → mm.h →
+  overflow.h; no extra include
+- [Phase 6] `HSA_AMD` is 64-bit only — `unsigned long end` is 64-bit
+- [Phase 7] Config `HSA_AMD_SVM`, AMD GPU compute
+- [Phase 8] Failure: wrap → wrong VMA walk → possible validation bypass;
+  HIGH
+- UNVERIFIED: no crash repro; lore/stable search incomplete due to HTTP
+  403
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Attach/config of the board: `request_irq()` then DMA alloc, then
-subdevice setup, then `dev->attached = true`. Trigger is a premature IRQ
-in that window. Not every boot; not unprivileged syscall spray without
-the device. Shared/spurious ISA IRQs and leftover device IRQ state make
-the window realistic. Researchers reported KASAN NPD for this class on
-related drivers.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: **NULL deref in IRQ handler → oops/panic. Severity: HIGH**
-(crash). Not silent corruption. Limited to attach of this ISA DAQ card.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** medium for those users (prevents oops); low population.
-- **Risk:** very low (3-line reorder, existing guard).
-- **Ratio:** benefit outweighs risk. Matches the common stable pattern
-  of small NPD fixes in drivers.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-Step 9.1: COMPILE THE EVIDENCE
-
-**FOR backporting:**
-- Real NULL deref in an IRQ handler (oops).
-- Same class as a KASAN-described premature-IRQ bug reported by
-  Chung/Kim/Boo (2026-06-10); maintainer confirmed pcl816 has the late-
-  guard variant.
-- Tiny, obviously correct reorder; no new API/feature.
-- Standalone; no series dependencies.
-- Bug present since v4.0; driver exists in this tree.
-- Author is the COMEDI maintainer; merged by Greg KH.
-
-**AGAINST backporting:**
-- Niche ISA DAQ hardware; small user base.
-- Race is during attach, not a hot path.
-- pcl816 was not named in the original report (maintainer-found
-  sibling).
-- No `Fixes:` / `Cc: stable` on the commit (not a negative per the
-  review rules).
-
-**UNRESOLVED:**
-- Could not read lore.kernel.org or stable@ directly (HTTP 403). Content
-  recovered from `b4` mbox and public mirrors.
-- No on-list review comments exist to quote.
-
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — reorder past an existing
-   guard; merged to mainline via char-misc.
-2. Fixes a real bug that affects users? **PASS** — NPD if IRQ fires
-   before DMA/`attached` setup.
-3. Important issue? **PASS** — kernel oops in IRQ context (HIGH, not
-   core-universal CRITICAL).
-4. Small and contained? **PASS** — 3 lines, one function, one file.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — code is present; hunk matches
-   this `pcl816_interrupt()`.
-
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None of device-ID / quirk / DT / build / docs. It is a normal
-crash-fix.
-
-Step 9.4: MAKE YOUR DECISION
-
-This tree is **7.3-rc4 mainline**. The driver and the attach/IRQ race
-exist here; the fix is already on HEAD, which does not make it a
-“prepared candidate” — it is the mainline source of a stable-worthy
-crash fix.
-
-The patch prevents a NULL deref in `pcl816_interrupt()` when a premature
-IRQ hits after `request_irq()` and before `devpriv->dma` is allocated.
-That is a real oops, the change is three lines and self-contained, and
-it does not need the rest of the 11-patch series. Niche hardware lowers
-breadth, not the fact of the bug.
-
-Verification:
-- [Phase 1] Parsed subject/tags: no Fixes/Cc-stable/Reported-by on this
-  commit; Link msgid `20260618102949.26607-8`; author Ian Abbott,
-  committer Greg KH
-- [Phase 1] Cover letter: series is “avoid null-ptr-deref”; this is
-  07/11
-- [Phase 2] Diff: `pcl816_interrupt()` moves `desc =
-  &dma->desc[dma->cur_dma]` below `if (!dev->attached ||
-  !devpriv->ai_cmd_running)`
-- [Phase 2] Confirmed `pcl816_alloc_irq_and_dma()` does `request_irq`
-  then `comedi_isadma_alloc`; DMA can be NULL in that window
-- [Phase 2] Confirmed `dev->attached = true` only in
-  `comedi_device_postconfig()` after `attach()` returns
-- [Phase 3] `git blame`: DMA deref from `bd7ea421e3f975` (v4.0-rc1,
-  2015); attached check from `b619f5aabd1db6` (2014)
-- [Phase 3] `git merge-base --is-ancestor 4fdac5090ce36 HEAD`: IS
-  ancestor
-- [Phase 3] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion`: 7.3.0-rc4
-- [Phase 3] No prerequisite commits; sibling patches are other files
-- [Phase 4] `b4 dig -c 4fdac5090ce36`: matched msgid …-8; `b4 dig -a`:
-  v1 only; `b4 dig -w`: Abbott, Greg KH, Sweeten, SNU reporters
-- [Phase 4] mbox: 12 messages, all from Abbott, no replies/NAKs
-- [Phase 4] Original report (openwall 2026/06/10/1184): KASAN NPD on
-  early IRQ in related comedi ISA drivers; pcl816 not listed there
-- [Phase 4] lore.kernel.org WebFetch: HTTP 403
-- [Phase 5] Only caller of `pcl816_interrupt` is `request_irq` in this
-  file; `ai_cmd_running` set only in `pcl816_ai_cmd` after DMA setup
-- [Phase 5] semcode: unavailable
-- [Phase 6] Pre-fix code verified via `git show 4fdac5090ce36^:...`;
-  current file has the fix
-- [Phase 6] `CONFIG_COMEDI_PCL816` present in `drivers/comedi/Kconfig`
-- [Phase 7] Driver left staging in `8ffdff6a8cfbd` (v5.13 era)
-- [Phase 8] Failure mode: IRQ-context NULL deref → oops; trigger:
-  premature IRQ during attach
-- UNVERIFIED: stable@ mailing list discussion (lore/stable unreachable)
+The patch is small, surgical, and meets the stable criteria for this
+6.18.y tree.
 
 **YES**
 
- drivers/comedi/drivers/pcl816.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/comedi/drivers/pcl816.c b/drivers/comedi/drivers/pcl816.c
-index 28d1a88c50f65..3c295647e2ed5 100644
---- a/drivers/comedi/drivers/pcl816.c
-+++ b/drivers/comedi/drivers/pcl816.c
-@@ -242,7 +242,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
- 	struct comedi_subdevice *s = dev->read_subdev;
- 	struct pcl816_private *devpriv = dev->private;
- 	struct comedi_isadma *dma = devpriv->dma;
--	struct comedi_isadma_desc *desc = &dma->desc[dma->cur_dma];
-+	struct comedi_isadma_desc *desc;
- 	unsigned int nsamples;
- 	unsigned int bufptr;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 202ed1c456320..1b29dee7948d8 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -3421,7 +3421,13 @@ svm_range_is_valid(struct kfd_process *p, uint64_t start, uint64_t size)
+ 	unsigned long start_unchg = start;
  
-@@ -257,6 +257,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
- 		return IRQ_HANDLED;
- 	}
- 
-+	desc = &dma->desc[dma->cur_dma];
- 	nsamples = comedi_bytes_to_samples(s, desc->size) -
- 		   devpriv->ai_poll_ptr;
- 	bufptr = devpriv->ai_poll_ptr;
+ 	start <<= PAGE_SHIFT;
+-	end = start + (size << PAGE_SHIFT);
++
++	if (size == 0)
++		return -EINVAL;
++
++	if (check_add_overflow(start, size << PAGE_SHIFT, &end))
++		return -EOVERFLOW;
++
+ 	do {
+ 		vma = vma_lookup(p->mm, start);
+ 		if (!vma || (vma->vm_flags & device_vma))
 -- 
 2.53.0
 
