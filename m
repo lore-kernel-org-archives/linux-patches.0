@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202C2642370;
-	Mon, 19 Oct 2026 14:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AC5544D28;
+	Mon, 19 Oct 2026 14:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418788; cv=none; b=cjNdaK4bVExQTV0hTKlGOd32/7fTP9Gh/vGG0HaKgBFwCEpRUdrm9Bq+OKy+5WGa4cLqgYpJ8js+oqlUl3oFSZ3HKJNu40w7xN7lHeEcKKZBHn6AmdJFzMjAumlmexS3RysjWDiLYdrQ4pxzoGMx9RohMcsHostlRjeyn3/aywk=
+	t=1792418790; cv=none; b=Aq3zbpV97q5+nvmDbxfPgk+cNpjnwwGItBTAPcFz4y/EjBZD6E3gObmJxP0btjjedBpVaUbi39RZYxluXBl/b9A37rOAd5CaR4hv3D2zmuaF4q1zmSAbERsw+bDtJaeQG+57MPwlrj7KGNjF/aPQoxtI0gqaj0qLobb8Xp7/1Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418788; c=relaxed/simple;
-	bh=ULzBuNsp5/KA8f2xhXz2slDWPCzWt/1H3q+Yw2VtfRw=;
+	s=arc-20240116; t=1792418790; c=relaxed/simple;
+	bh=fJkha6LmVu5H1yOlJ6i3ErBwlIkdlgBqVadbQbV8ue0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gD/DYsI8ssxwwpgJ7+9xVepU7u+PuDgCLl4WIw5l+Oln5j98/Jsv6r6m+ZOIRIymep9jbnUrwTyq+lcsZrDG7qHmK9FzKJrJXHunIjWeZ3R3Cc6kGPcsGgSPliA72kt+lwXZOM50IwwRKARSDvM4yHoYy1I46PhBQNpGqqMR6io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n8SbzL3X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tbo1yu7LlE/mkhyi1QN4xl6zGR1IcH2K+iXP4WB4bsNOQSeVzho70hlTpqLq5ZdVNcXEPEhIfZTVl5O39kN5PFyWDgNlhqaPRPSjjIng924U4lBMYfC+S21O2dUASPOynp/jaHk4nIrlgGQWLBuy4vxYLwudkq0eNF6YdULXCl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zr+1J2Tc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n8SbzL3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197801F000C6;
-	Mon, 19 Oct 2026 14:06:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zr+1J2Tc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628C71F000C4;
+	Mon, 19 Oct 2026 14:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418786;
-	bh=y/vPFOG9Gr5B2/yachfszVsHJr0+zaqYK/PdeN07960=;
+	s=k20260515; t=1792418787;
+	bh=Mn8rlLN/UqIMZ9eBAzfdjMCtR985Ve3IyGFbKAbplhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8SbzL3XxBv2TjzBq0hLhXLoXPkpGQUncPcGvJGA8yYkY3n7TmhMrubOhvoqk9a6e
-	 NtLOMen2dT49iFtcRNCzIXXbsXtlkwpCLXlOmLuvOiZEyt1AUJebb7CNABI0QoWjTI
-	 wYgmvvDaMD5lclDQhHMd5twmZ+CF7A0WIsNarJDXx4JoUfeAjwb0qTEtgyy//8Ands
-	 w7vbhnufviQJc0z9xiiRqm1ZAzl1M67M/9LlU5lKtkyqGOSXI0XNuEtDWr90+HVwUd
-	 9BRMzZR1LYf+khz6f0VR0TBCdbFmrOT9yUUEK99BhNfc8F1aqHmscbafvtoJtH9TWH
-	 YNHw1MhZS4U0g==
+	b=Zr+1J2Tc4zduqbpJXRAB3XzWj1fVVlTtiF1ZrIsIRa8x9bx5X9lZR+KCOPdRrT0aS
+	 MW6FgrAEQTPCUyrB/0sMq22ltzlFsO6RA/0wZBeRdh/GLd/lb65OqxyXT5zsKfAv0M
+	 1HF5tjohdXPv1WG4MfdCKKr1xzacqwTd7+UqmLnxf/iu4SZ9Q2JWXNOHjgZOgSiV/y
+	 qvHaEBxhLcstZwWujZZn+vIt5lHE/fzF3vxcxbsJp6fnqhLk2wb3ZG7rWYC5sjwYEX
+	 2/MzSt49DT2mN7KsEhBFihzBZFvroM0QQyhu4kW9WFUkJBKlAvWiqVQmIrAeKJ8PFe
+	 yBClqJU8HwC4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shahar Tzarfati <shahar.tzarfati@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	sre@kernel.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mac80211: ibss: read deauth reason_code after frame length check
-Date: Mon, 19 Oct 2026 09:53:06 -0400
-Message-ID: <20261019135441.1420968-495-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] power: supply: cros_pchg: unregister EC notifier
+Date: Mon, 19 Oct 2026 09:53:07 -0400
+Message-ID: <20261019135441.1420968-496-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,385 +54,398 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shahar Tzarfati <shahar.tzarfati@intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit aa4c0a649903567762edf2bbc7fff608953b3ca4 ]
+[ Upstream commit 631adfa03595c63b2a621cdc62db60bb1ce5f91c ]
 
-The function was reading reason_code from the frame before validating
-that the frame is at least IEEE80211_DEAUTH_FRAME_LEN bytes long.
+cros_pchg_probe() registers an EC event notifier whose callback uses the
+devm-allocated charger_data via container_of().  The driver has no
+remove callback and does not unregister the notifier, so the notifier
+chain can retain a pointer to freed driver state after unbind or probe
+cleanup.
 
-Move the reason_code read to after the length check so the field is
-guaranteed to be present before it is accessed.
+Register a devm cleanup action immediately after the notifier is
+installed so the notifier is unregistered before the driver state is
+released.  Also fail probe if the notifier cannot be registered, instead
+of leaving a charger device that cannot receive EC events.
 
-Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715212706.db26604650bd.I2caa73c396b8c9d357224b9334d5df3cafac498e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260615063105.39152-1-pengpeng@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[mac80211/ibss] [read / reorder] Move IBSS deauth `reason_code`
-access to after the existing frame-length check.`
+**Step 1.1: Subject line**
+Record: `[power: supply: cros_pchg]` `[unregister]` `[stop leaving an EC
+event notifier pointing at freed charger state]`
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2: Tags**
 Record:
-- `Fixes:` — none (expected)
-- `Reported-by:` — none
-- `Tested-by:` — none
-- `Reviewed-by:` — none on the commit
-- `Acked-by:` — none
-- `Link:` `https://patch.msgid.link/20260715212706.db26604650bd.I2caa73c
-  396b8c9d357224b9334d5df3cafac498e@changeid`
-- `Cc: stable@vger.kernel.org` — none (expected)
-- `Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>` (author)
-- `Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>`
-  (Intel wireless)
-- `Signed-off-by: Johannes Berg <johannes.berg@intel.com>` (mac80211
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>` (Chrome OS platform
   maintainer)
+- `Link:
+  https://patch.msgid.link/20260615063105.39152-1-pengpeng@iscas.ac.cn`
+- `Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>`
+  (power-supply maintainer; applied the patch)
+- No `Fixes:`, no `Cc: stable`, no `Reported-by`, no `Tested-by`, no
+  syzbot/CVE tags (absence is expected)
 
-No syzbot, no CVE, no multi-user reports. Maintainer SOB is the main
-trust signal.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3: Body**
 Record:
-- **Bug:** `ieee80211_rx_mgmt_deauth_ibss()` read
-  `mgmt->u.deauth.reason_code` before checking `len >=
-  IEEE80211_DEAUTH_FRAME_LEN`.
-- **Symptom/failure mode:** 2-byte read past the validated frame on a
-  truncated deauth. Value is then discarded if the length check fails.
-- **Version info:** none in the message.
-- **Root cause (author):** field access before the length check; move
-  the read after the check.
+- **Bug:** `cros_pchg_probe()` registers `charger->notifier` on the
+  parent Chrome OS EC `event_notifier` chain. The callback uses
+  `container_of()` to recover `struct charger_data`, which is
+  `devm_kzalloc()`’d. The platform driver has no `.remove` and never
+  unregisters the notifier.
+- **Symptom:** After unbind/module unload (and, as claimed, probe
+  unwind), the parent EC chain still holds a pointer into freed driver
+  state. The next EC MKBP event can call into that freed object.
+- **Root cause:** Notifier lifetime is tied to the parent
+  `cros_ec_device`, not to the child pchg platform device.
+- **Fix:** `devm_add_action_or_reset()` immediately after successful
+  register; also fail probe if register fails instead of leaving a
+  charger that cannot receive events.
+- **Versions:** none stated in the message.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit bounds-check-before-
-access fix. The length check already existed; only the premature read
-was wrong.
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. This is an explicit use-after-free / dangling-
+notifier fix. The “fail probe on register failure” part is a real
+correctness fix, not a feature.
 
----
+## Phase 2: Diff analysis
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
-
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1: Inventory**
 Record:
-- File: `net/mac80211/ibss.c` (+3 / −1)
-- Function: `ieee80211_rx_mgmt_deauth_ibss()`
+- File: `drivers/power/supply/cros_peripheral_charger.c` (`+11 / -2`)
+- Functions: new `cros_pchg_unregister_notifier()`; `cros_pchg_probe()`
+  changed
 - Scope: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record: Before: initialize `reason` from `mgmt->u.deauth.reason_code`,
-then return if `len < 26`. After: declare `reason`, length-check first,
-then read the field. `ibss_dbg()` and `sta_info_destroy_addr()` are
-unchanged and remain after the check.
+**Step 2.2: Code flow**
+Record, from the pre-fix file (`631adfa03595c^`):
+- **Before:** After registering ports, probe does
+  `blocking_notifier_chain_register(&ec_dev->ec_dev->event_notifier,
+  nb)`. On failure it only logs and still `return 0`. There is no
+  `.remove`. `charger` is released by devm on unbind.
+- **After:** Register failure returns `dev_err_probe(...)`. On success,
+  `devm_add_action_or_reset(dev, cros_pchg_unregister_notifier,
+  charger)` unregisters from `charger->ec_device->event_notifier` before
+  other devm resources (including `charger`) are freed.
+  `devm_add_action_or_reset()` also runs the unregister callback if
+  adding the action itself fails.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Memory safety / out-of-bounds read.**
-`IEEE80211_DEAUTH_FRAME_LEN` is `(24 /* hdr */ + 2 /* reason */)`.
-`reason_code` sits at offset 24 in `struct ieee80211_mgmt`. RX already
-drops mgmt frames shorter than the 802.11 header (`skb->len <
-ieee80211_hdrlen(fc)` in `ieee80211_rx()`), so 24- and 25-byte deauths
-can still reach this handler. Those frames do not contain the reason
-field; the old code always read it anyway. On the short-frame path the
-value is unused (immediate `return`).
+**Step 2.3: Bug mechanism**
+Record: **Use-after-free / dangling notifier (memory safety + ref-
+lifetime).** Secondary logic fix: probe no longer succeeds without a
+working notifier. Not a leak-only cleanup.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct: same pattern as
-`ieee80211_rx_mgmt_auth_ibss()` in the same file and as
-`ieee80211_rx_mgmt_deauth()` in `mlme.c` (`4a360c6e18dfa`). Minimal, no
-API/locking/structure changes. Regression risk is negligible (debug
-print still sees a valid reason on well-formed frames).
+Verified mechanism:
+- `cros_ec_notify()` does `container_of(nb, struct charger_data,
+  notifier)` then `cros_pchg_event(charger)`.
+- Parent EC IRQ path `cros_ec_handle_event()` /
+  `cros_ec_report_events_during_suspend()` call
+  `blocking_notifier_call_chain(&ec_dev->event_notifier, ..., ec_dev)`
+  in `drivers/platform/chrome/cros_ec.c`.
+- The pchg device is an MFD child (`cros-ec-pchg` in
+  `drivers/mfd/cros_ec_dev.c`), added when `EC_CMD_PCHG_COUNT` reports
+  ports. The chain lives on the parent `cros_ec_device`, which outlives
+  a child unbind / `rmmod` of `CHARGER_CROS_PCHG`.
 
----
+**Step 2.4: Fix quality**
+Record: Obviously correct and the same pattern already used by
+`cros_usbpd-charger.c`. Minimal. Regression risk is low: `devm` LIFO
+order unregisters before `charger` is freed; unregister is only
+scheduled after a successful register. Failing probe when notifier
+registration fails is stricter but matches sibling Chrome EC drivers
+(`rtc-cros-ec`, `cros_ec_keyb`, `extcon-usbc-cros-ec`).
+`blocking_notifier_chain_register()` rarely fails.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: Function introduced in `2cc59e784b54` (Antonio Quartulli,
-2012-09-07, “mac80211: reply to AUTH with DEAUTH if sta allocation fails
-in IBSS”). The premature `reason_code` read was in the original
-function. Present for ~14 years, including this 7.3 tree’s lineage.
+**Step 3.1: Blame**
+Record: Notifier registration and the missing remove hook come from
+`56d629af09b9d` (“power: supply: PCHG: Peripheral device charger”,
+2021-07-16). That commit is an ancestor of `v5.15` (`git merge-base
+--is-ancestor` exit 0 for v5.15, 1 for v5.14). The bug is old, not last-
+month code.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Buggy commit is `2cc59e784b54`, which `git
-merge-base --is-ancestor` confirms is in this tree.
+**Step 3.2: Fixes: tag**
+Record: None. Introducer is `56d629af09b9d`, present in this tree.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `ibss.c` work is unrelated (TX-on-disconnect, rx_nss).
-Same-day series patch 2/2 was mlme deauth length checking; that path was
-already fixed by `4a360c6e18dfa` (“wifi: mac80211: validate deauth frame
-length before reason access”, Zhao Li, 2026-06-13). This IBSS patch is
-standalone.
+**Step 3.3: File history**
+Record (recent, this file): `631adfa03595c` (this fix), `d6486a13665e9`
+(ID table), `97dd69b1ade16` (resume sync). No prerequisite refactor.
+Standalone, not `patch X/Y`.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Shahar Tzarfati is an Intel wireless contributor (iwlwifi
-bounds-check fixes plus this IBSS change). Not the mac80211 maintainer;
-Johannes Berg applied it.
+**Step 3.4: Author**
+Record: Pengpeng Hou has one other power-supply commit here
+(`cw2015_battery` MODULE_DEVICE_TABLE). Not the subsystem maintainer.
+Weight comes from reviewer Tzung-Bi Shih (Chrome platform) and applier
+Sebastian Reichel (power-supply).
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. Uses existing `IEEE80211_DEAUTH_FRAME_LEN` (defined 2012
-in `net/mac80211/ieee80211_i.h`). Applies standalone.
+**Step 3.5: Dependencies**
+Record: Uses `devm_add_action_or_reset()` and `dev_err_probe()`, both
+long-standing. No new helpers. Can apply standalone. No revert of this
+commit found.
 
----
+## Phase 4: Mailing list
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 4.1: Original discussion**
+Record: `b4 dig -c 631adfa03595c` matched
+https://patch.msgid.link/20260615063105.39152-1-pengpeng@iscas.ac.cn
+(v1 only; subject used `cros_peripheral_charger`, maintainer retitled to
+`cros_pchg`). Thread saved via `b4 dig -m`.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c aa4c0a649903`: https://patch.msgid.link/20260715212706.db26
-  604650bd.I2caa73c396b8c9d357224b9334d5df3cafac498e@changeid
-- `b4 dig -a`: single revision, `[PATCH wireless-next 1/2]`
-- Thread (mbox): no replies, no NAK, no `Cc: stable` request. Johannes
-  applied v1.
+**Step 4.2: Recipients / review**
+Record (`b4 dig -w`): To/Cc included Sebastian Reichel, linux-pm, linux-
+kernel, Benson Leung, Tzung-Bi Shih, Guenter Roeck, chrome-platform.
+Tzung-Bi’s only comment was a subject-line nit; `Reviewed-by` “with or
+without this”. Sebastian applied it (“Applied, thanks!”). No NAKs, no
+stable nomination in-thread.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To Johannes Berg; Cc `linux-wireless@`, Shahar
-Tzarfati, sent by Miri Korenblit. No extra reviewer tags; maintainer
-merge is the review signal.
+**Step 4.3: Bug report**
+Record: No user crash/syzbot report. A later duplicate submission
+(Hongyan Xu / Patchew) says the same hole was found by static analysis.
+That still describes a real UAF, not a style nit.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No Reported-by, syzbot, or bugzilla. Sibling `4a360c6e18dfa` on
-the STA deauth path is the same class of bug (LLM-assisted). No user
-crash report found.
+**Step 4.4: Series**
+Record: Single standalone patch (`[1/1]`).
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 2/2 was `wifi: mac80211: mlme: read deauth reason_code after
-frame length check`. It was not committed (mlme already had
-`4a360c6e18dfa`). 1/2 does not depend on 2/2.
+**Step 4.5: Stable list**
+Record: lore.kernel.org/stable search returned HTTP 403. UNVERIFIED
+whether anyone already asked for this on stable@. No evidence it was
+rejected.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org search was blocked (Anubis 403). UNVERIFIED
-whether linux-stable discussed this. No local `ibss.c` history indicates
-a prior stable rejection.
+## Phase 5: Semantic / call graph
 
----
+**Step 5.1: Functions**
+Record: `cros_pchg_unregister_notifier` (new), `cros_pchg_probe`
+(modified). Callback still `cros_ec_notify` → `cros_pchg_event`.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 5.2: Callers**
+Record: `cros_pchg_probe` is the platform `.probe` for `cros-ec-pchg`.
+Instantiated from `ec_device_probe()` in `cros_ec_dev.c` when the EC
+reports PCHG ports. `cros_ec_notify` is invoked from the parent EC
+IRQ/event path (`cros_ec_irq_thread` → `cros_ec_handle_event` →
+`blocking_notifier_call_chain`). That is a live interrupt/event path,
+not init-only.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `ieee80211_rx_mgmt_deauth_ibss()`
+**Step 5.3: Callees**
+Record: `blocking_notifier_chain_register/unregister`,
+`devm_add_action_or_reset`, `dev_err_probe`. No new allocations or locks
+beyond the notifier API.
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- `ieee80211_ibss_rx_queued_mgmt()` → `IEEE80211_STYPE_DEAUTH` case,
-  `mgmt = skb->data`, `len = skb->len`
-- `ieee80211_iface_work()` in `iface.c` for `NL80211_IFTYPE_ADHOC`
-- Frames queued from `ieee80211_rx_h_mgmt()` in `rx.c` (IBSS deauth
-  allowed)
+**Step 5.4: Reachability**
+Record: Userspace can trigger unbind (`/sys/bus/platform/drivers/cros-
+ec-pchg/unbind`) or `rmmod` when `CONFIG_CHARGER_CROS_PCHG=m`. After
+that, any EC MKBP event on the still-live parent walks the dangling
+notifier. Unprivileged users cannot usually unbind, but module unload,
+sysfs unbind, and parent teardown are real. After UAF,
+`cros_pchg_event()` walks `charger->ports[]` and may call
+`power_supply_changed()` — crash or memory corruption.
 
-Workqueue / wiphy context, not hardirq. Reachable from over-the-air RX.
+**Step 5.5: Similar patterns**
+Record: Sibling `cros_usbpd-charger.c` already uses
+`devm_add_action_or_reset(..., cros_usbpd_charger_unregister_notifier,
+...)`. Other Chrome EC clients (`rtc-cros-ec`, `cros_ec_keyb`, `extcon-
+usbc-cros-ec`) unregister in `.remove`. This driver was the outlier.
 
-**Step 5.3: TRACE CALLEES**
-Record: `le16_to_cpu()`, `ibss_dbg()` (`MAC80211_IBSS_DEBUG` only),
-`sta_info_destroy_addr()`. Functional work was already after the length
-check.
+## Phase 6: This checkout
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Wireless NIC RX → `ieee80211_rx()` (drops `skb->len < hdrlen`) →
-`ieee80211_rx_h_mgmt()` → iface work → `ieee80211_ibss_rx_queued_mgmt()`
-→ deauth handler. A peer on the IBSS can send a 24-byte deauth.
-Unprivileged local userspace cannot inject this without packet
-injection; a radio neighbor can. `ibss_dbg` does not gate the old read:
-`reason` was initialized before the debug macro.
+**Step 6.1: Buggy code in this tree?**
+Record: Local tree is **v7.3-rc4** (`git describe HEAD` =
+`v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+EXTRAVERSION=-rc4`). File exists. Driver introduced in v5.15; notifier
+bug present from that introduction. Pre-fix probe (shown via `git show
+631adfa03595c^`) matches the candidate diff. `git merge-base --is-
+ancestor 631adfa03595c HEAD` succeeds (the fix is already on this
+mainline branch, as expected for a candidate sourced from it).
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same bug on STA deauth (`mlme.c`, fixed in `4a360c6e18dfa`).
-IBSS auth already checks `len < 24 + 6` before reading auth fields.
-Probe-req path checks `len < 24 + 2`. This was the remaining IBSS deauth
-hole.
+**Step 6.2: Backport difficulty**
+Record: Clean apply on this file. Surrounding probe logic is the
+original 2021 structure plus later resume/ID-table work; this hunk does
+not depend on those.
 
----
+**Step 6.3: Related fixes already here**
+Record: This is the fix. No earlier alternate fix on the file. No
+revert.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 7: Subsystem context
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Local tree is **v7.3-rc4-27-gf0100363d8c37** (`VERSION=7
-PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`).
-`ieee80211_rx_mgmt_deauth_ibss()` exists in `net/mac80211/ibss.c`. Bug
-introduced 2012 (`2cc59e784b54`), long before this branch. Current file
-already has the fixed order (commit is an ancestor of HEAD). Evaluation
-is of the pre-fix bug in this lineage, not “already selected.”
+**Step 7.1:**
+Record: `drivers/power/supply/` Chrome OS EC peripheral charger.
+**IMPORTANT** (not core mm/vfs, but default-on for
+`CONFIG_MFD_CROS_EC_DEV` Chromebooks with stylus/WLC ports).
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply. Surrounding function matches the pre-image; no
-conflicting refactor of this handler.
+**Step 7.2:**
+Record: File is mature; few commits since 2021. Not a newly landed
+subsystem.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No earlier IBSS-specific version of this fix. `4a360c6e18dfa`
-only covers `mlme.c`. No duplicate IBSS patch.
+## Phase 8: Impact and risk
 
----
+**Step 8.1: Who is affected**
+Record: Chrome OS EC machines with peripheral charge ports
+(`EC_CMD_PCHG_COUNT` > 0). `CONFIG_CHARGER_CROS_PCHG` defaults to
+`MFD_CROS_EC_DEV`. Driver-specific, not universal.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 8.2: Trigger**
+Record: Successful probe, then unbind/rmmod/MFD child removal while the
+parent EC device (and its IRQ) remain. Not every boot. Timing-dependent
+once the dangling notifier is left on the chain: the next PCHG (or any)
+EC event walks the chain. `cros_ec_notify` returns `NOTIFY_DONE` for
+non-PCHG events but **after** `container_of()` — so *any* EC event after
+unbind is already a UAF.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `net/mac80211` IBSS/ad-hoc RX. **IMPORTANT** for IBSS users,
-**PERIPHERAL** vs core mm/VFS. IBSS is built with mac80211 (only
-`MAC80211_IBSS_DEBUG` is extra). Less common than infrastructure STA,
-but real (ad-hoc, some embedded/industrial).
+**Step 8.3: Failure mode**
+Record: Use-after-free in notifier callback → kernel oops or memory
+corruption. **Severity: HIGH.**
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: mac80211 is actively developed; this IBSS handler has been
-stable since 2012. Long-lived bug, not churn from new code.
+**Step 8.4: Risk/benefit**
+Record: **Benefit: high** for Chromebooks that unbind or unload this
+driver (and for teardown races). **Risk: very low** (13 lines,
+established `devm` pattern, Chrome maintainer review). Ratio favors
+backport.
 
----
+## Phase 9: Synthesis
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 9.1: Evidence**
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / config-specific: mac80211 IBSS
-(`NL80211_IFTYPE_ADHOC`). Not all wifi users; IBSS is a minority of
-deployments.
+For:
+- Real dangling-notifier UAF: parent EC chain keeps `notifier_block`
+  inside `devm`-freed `charger_data`
+- Any post-unbind EC event is UAF (even events this driver ignores)
+- Small, obviously correct, matches `cros_usbpd-charger.c`
+- Reviewed by Chrome platform maintainer; applied by power-supply
+  maintainer
+- Driver present since v5.15; no extra dependencies
+- Fail-probe-on-register-failure avoids a half-working charger
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Truncated deauth (len 24 or 25) on an IBSS interface. Not every
-boot; needs IBSS up plus a short frame (malformed or hostile). Remote
-on-air trigger. Local unprivileged trigger only with injection.
+Against:
+- No `Reported-by` / syzbot / production crash (static analysis)
+- Affects only Chrome OS PCHG hardware
+- Unbind is not the common path on always-on Chromebooks
+- Slightly stricter probe (register failure now fails the device)
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: 2-byte read past `skb->len` into a local that is discarded on
-the short-frame path. No leak through `ibss_dbg` (return happens first).
-Crash only if the skb has no tailroom past 24 bytes (often it does).
-KASAN may or may not fire depending on allocator vs `skb->len`.
-Severity: **MEDIUM** (CWE-125 / packet-parser OOB), not a demonstrated
-oops or UAF.
+Unresolved:
+- Stable@ discussion (lore 403)
+- How often users actually unbind this device in the field
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** Closes a real, remotely reachable OOB in frame parsing.
-  Modest user-visible impact (IBSS, discarded 2 bytes).
-- **Risk:** Very low (3 lines, no locking/API, same pattern as mlme).
-- **Ratio:** Favorable. Cheap to take; cost of skipping is leaving a
-  parser OOB in long-lived code.
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — pattern is standard;
+   maintainer Reviewed-by + applied
+2. Real bug affecting users? **PASS** — UAF after unbind/unload while
+   parent EC is live
+3. Important (crash/security/corruption)? **PASS** — UAF →
+   oops/corruption, HIGH
+4. Small and contained? **PASS** — 13 lines, one file
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** — file and APIs exist; hunk is self-
+   contained
 
----
+**Step 9.3: Exception category**
+Record: None needed; this is a normal UAF bugfix.
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 9.4: Decision**
+This is a classic stable-worthy UAF: the child’s notifier is left on a
+parent-owned chain. The local 7.3 tree has this driver; the fix is small
+and matches existing Chrome EC practice. Trigger is unbind/teardown
+rather than every boot, but the failure mode is a kernel UAF, which
+stable takes.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+What it solves for stable users: Chromebooks with peripheral chargers no
+longer keep a freed `charger_data` on the EC event chain after driver
+unbind, module unload, or MFD child removal, so a later EC interrupt
+cannot oops or corrupt memory in `cros_ec_notify()`.
 
-FOR:
-- Real OOB: `reason_code` at offset 24 read when `len` can be 24–25
-- Read is not debug-gated; it always ran
-- Over-the-air reachable on IBSS
-- 4-line, obviously correct, tested by landing in wireless-next via
-  Johannes Berg
-- Same class already fixed in STA mlme (`4a360c6e18dfa`)
-- No new features/APIs; no prerequisites
-- Applies cleanly; bug present since 2012 in this tree’s code
-- Buffer OOB is a documented stable category
-
-AGAINST:
-- No crash/syzbot/CVE/user report
-- `reason` unused on the short path; `sta_info_destroy_addr()` was
-  already guarded
-- IBSS is uncommon vs infrastructure
-- Practical crash likely rare (skb tailroom)
-- No explicit stable nomination
-
-UNRESOLVED:
-- lore.kernel.org HTML search blocked; no independent stable-list
-  confirmation
-- Exact KASAN behavior on `skb->len` vs kmalloc size not demonstrated
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — reorder after an existing
-   check; maintainer merged v1
-2. Fixes a real bug that affects users? **PASS** — OOB on truncated IBSS
-   deauth
-3. Important issue (crash, security, corruption, deadlock)? **PASS**
-   (low–medium) — remote 2-byte overread in a parser; not a known oops,
-   but memory-safety
-4. Small and contained? **PASS** — +3/−1, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — matching pre-image in
-   `ibss.c`
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device ID, quirk, DT, build, or docs patch).
-Qualifies as a normal small bugfix.
-
-**Step 9.4: MAKE YOUR DECISION**
-This is a surgical bounds-check fix for a long-standing, remotely
-reachable out-of-bounds read in mac80211 IBSS deauth parsing. The
-functional destroy path was already safe; the bug is the unconditional
-2-byte overread. That is still a real memory-safety defect, the same one
-already corrected on the STA deauth path. Risk of the change is
-essentially zero. For this 7.3 tree, the code exists and the patch
-applies cleanly, so it should be taken.
-
-**What it solves for stable users:** A truncated IBSS deauth no longer
-reads past the frame before the length check. That avoids undefined/OOB
-behavior on a path a radio neighbor can hit.
-
-**Risk vs benefit:** Benefit is modest but real; risk is negligible.
-Take it.
+Risk vs benefit: very low risk, high benefit on the machines that hit
+teardown. No prerequisites beyond the driver itself.
 
 ---
 
-### Verification
-- [Phase 1] Parsed commit `aa4c0a649903`; tags: Link + three SOBs
-  (Tzarfati, Korenblit, Berg); no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: `ieee80211_rx_mgmt_deauth_ibss()` +3/−1; read moved
-  after `IEEE80211_DEAUTH_FRAME_LEN` (26 = 24+2)
-- [Phase 2] Confirmed `reason` only used in `ibss_dbg`;
-  `sta_info_destroy_addr()` already after the check
-- [Phase 3] `git blame`: function from `2cc59e784b54` (2012); `git
-  merge-base --is-ancestor 2cc59e784b54 HEAD` succeeded
-- [Phase 3] Pre-image shown via `git show
-  aa4c0a649903^:net/mac80211/ibss.c`
-- [Phase 3] Author log: Intel wifi bounds-check work; series 2/2 did not
-  land
-- [Phase 4] `b4 dig -c/-a/-w/-m`: wireless-next 1/2, v1 only, no review
-  replies; 2/2 was mlme duplicate of `4a360c6e18dfa`
-- [Phase 4] `git show 4a360c6e18dfa`: same bug on STA deauth, already in
-  this tree
-- [Phase 4] lore HTML/WebFetch: 403/Anubis — UNVERIFIED for linux-stable
-  archive
-- [Phase 5] Callers: `ieee80211_ibss_rx_queued_mgmt` ← `iface.c` ADHOC ←
-  `ieee80211_rx_h_mgmt`
-- [Phase 5] `ieee80211_rx()` drops mgmt if `skb->len <
-  ieee80211_hdrlen(fc)` (~24), so 24–25 byte frames still reach the
-  handler
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = 7.3.0-rc4; buggy function present; apply would be
-  clean
-- [Phase 8] Failure mode: discarded 2-byte overread; severity MEDIUM;
-  IBSS-specific
-- UNVERIFIED: whether KASAN fires on this skb overread; whether linux-
-  stable already discussed it
+Verification:
+- [Phase 1] Parsed tags: Reviewed-by Tzung-Bi Shih; Link to msgid; no
+  Fixes/stable/syzbot
+- [Phase 1] Body describes dangling notifier after unbind; verified
+  against pre-fix source
+- [Phase 2] Diff: +11/-2 in `cros_pchg_probe` plus
+  `cros_pchg_unregister_notifier`; fail probe on register error
+- [Phase 2] Pre-fix file from `git show 631adfa03595c^`: register then
+  `return 0`; no `.remove`
+- [Phase 2] Post-fix file: `devm_add_action_or_reset` after successful
+  register
+- [Phase 3] `git blame`: notifier register from `56d629af09b9d` (2021);
+  `git merge-base --is-ancestor` → in v5.15, not v5.14
+- [Phase 3] `git log --oneline -20 --
+  drivers/power/supply/cros_peripheral_charger.c`: standalone, not a
+  series
+- [Phase 3] No revert of this commit
+- [Phase 4] `b4 dig -c 631adfa03595c`: lore thread found; v1 only
+- [Phase 4] `b4 dig -w`: Chrome/power-supply maintainers CC’d
+- [Phase 4] `b4 dig -m`: Tzung-Bi Reviewed-by (subject nit only);
+  Sebastian applied; no NAK
+- [Phase 4] Duplicate later patch (Hongyan Xu) notes static-analysis
+  origin
+- [Phase 4] lore.kernel.org WebFetch 403 — stable@ history UNVERIFIED
+- [Phase 5] `cros_ec_handle_event` / resume path call
+  `blocking_notifier_call_chain` on the same `event_notifier`
+- [Phase 5] MFD cell `cros-ec-pchg` in `drivers/mfd/cros_ec_dev.c` when
+  `pchg_count.port_count != 0`
+- [Phase 5] Sibling `cros_usbpd-charger.c` already uses the same `devm`
+  unregister pattern
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 6] Driver and APIs present; fix is self-contained on this tree
+- [Phase 8] UAF on any EC event after unbind: `container_of` happens
+  before the PCHG event-type check
+- UNVERIFIED: field frequency of unbind; whether stable@ already
+  discussed it
 
-The patch is small, correct, and fixes a real parser OOB in code this
-tree has had since 2012.
+The fix is small, surgical, and meets the stable criteria for a real
+UAF.
 
 **YES**
 
- net/mac80211/ibss.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/power/supply/cros_peripheral_charger.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
-index 6ca2ff354e768..4dc748a667a72 100644
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -910,11 +910,13 @@ static void ieee80211_rx_mgmt_deauth_ibss(struct ieee80211_sub_if_data *sdata,
- 					  struct ieee80211_mgmt *mgmt,
- 					  size_t len)
- {
--	u16 reason = le16_to_cpu(mgmt->u.deauth.reason_code);
-+	u16 reason;
+diff --git a/drivers/power/supply/cros_peripheral_charger.c b/drivers/power/supply/cros_peripheral_charger.c
+index 962a6fd298323..48e10e872d1bd 100644
+--- a/drivers/power/supply/cros_peripheral_charger.c
++++ b/drivers/power/supply/cros_peripheral_charger.c
+@@ -259,6 +259,14 @@ static int cros_ec_notify(struct notifier_block *nb,
+ 	return cros_pchg_event(charger);
+ }
  
- 	if (len < IEEE80211_DEAUTH_FRAME_LEN)
- 		return;
- 
-+	reason = le16_to_cpu(mgmt->u.deauth.reason_code);
++static void cros_pchg_unregister_notifier(void *data)
++{
++	struct charger_data *charger = data;
 +
- 	ibss_dbg(sdata, "RX DeAuth SA=%pM DA=%pM\n", mgmt->sa, mgmt->da);
- 	ibss_dbg(sdata, "\tBSSID=%pM (reason: %d)\n", mgmt->bssid, reason);
- 	sta_info_destroy_addr(sdata, mgmt->sa);
++	blocking_notifier_chain_unregister(&charger->ec_device->event_notifier,
++					   &charger->notifier);
++}
++
+ static int cros_pchg_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -346,9 +354,10 @@ static int cros_pchg_probe(struct platform_device *pdev)
+ 	ret = blocking_notifier_chain_register(&ec_dev->ec_dev->event_notifier,
+ 					       nb);
+ 	if (ret < 0)
+-		dev_err(dev, "Failed to register notifier (err:%d)\n", ret);
++		return dev_err_probe(dev, ret, "Failed to register notifier\n");
+ 
+-	return 0;
++	return devm_add_action_or_reset(dev, cros_pchg_unregister_notifier,
++					charger);
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
 -- 
 2.53.0
 
