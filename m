@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA305A0AC2;
-	Mon, 19 Oct 2026 13:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A9C5AA66D;
+	Mon, 19 Oct 2026 13:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418136; cv=none; b=daOriezcbecSYswAwd+yKiYpxIai5ea1CxScQBULt05qZpNaTFfAjwoDjRsyJA6doMLCZ+OMre0rYhaLZjFehWTJpikYR1wKXGbwJAr7Zl3xhVt8qnh5sQDy1XTuiu+nhQHApeeLhyq8/looxzoimpOoit1FJda/FTF+tKQdAHA=
+	t=1792418137; cv=none; b=txFi0TSR1QifF/fnJ/Knm0kW7HLeBzaEasDlzM81Kssci/aqKF9ZHld0qsRavhPpcgtreIWg2aB32tLYqsbk8sl8IwC36f4Wquexznx1T13DtuCon2FlpJnLBRTpLpFe5WephR2qD9/o2LqiAhZS36M53/5FYjhPyCnXRIGiHZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418136; c=relaxed/simple;
-	bh=wEBBmhxucJ3n5jb832F4l1kVSLkrTKPyrndN37O3NeE=;
+	s=arc-20240116; t=1792418137; c=relaxed/simple;
+	bh=xtaCHAOAz4a2OS6Vk1eD9fzhFcP81bK6rp40371+RqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K5ohQ6zLvhNdguIKQpNFvdOzLLv3GnLuAngIYk4ISk0s4MCTdcucmI4kFy0RTvnkIP0P/u5eMla7m2/hMDvGupFnV2XBfF0D3/gGOORTCvYGmyNNcre/SUv2qcbpngraOvH3oNEKPaH7PYn9sd8CfkwCTMjFkbWnbGHxe8laIew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RucyaPFT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aY5BfLsq5fe3oGzngJX3S63qi8C25IIRWF0ozVZIXxwsU6VAc+GzN2CbhBJUYBunAOPemUmiGel3PykACN4JU52r87qo4rGOXR9knW767L759V9p9nSTO4Kcv1TFX8VlHjEtrF15Cqe4K0s1GfSN0Dh5f+zTTSobgRaxOS31lH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JPYoV5Iq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RucyaPFT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6251F000C6;
-	Mon, 19 Oct 2026 13:55:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JPYoV5Iq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2FD1F000C4;
+	Mon, 19 Oct 2026 13:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418133;
-	bh=Clz/JsIAWIaB4hcXgGGWbflHNAFrM7MQmWlusGb1bFM=;
+	s=k20260515; t=1792418134;
+	bh=hqu6bHS4m3fKvIVckbvIo05gJFOI2yEzudMV5O4M1Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RucyaPFTMTNAJM149WTgzqCF11+VYLmD9HqEmU9pe8iWxw8iTnygZi0euDdxQqBax
-	 T6/QEBJdVNcJgAZ5VxxgCKT04yte4lhbsvCuvsv4Q5XyWjL5WwbJswIACtdQUzsZqB
-	 Q37qMbKRaVw6WVlhTceMvqse0n7R0y1ns7KeLKlRf6zbRhIyc/0Ilrlwb8IdTuRmKn
-	 xsLHyEDQ7/U5d6WlBxmeaEfQtKfidnxHOgpS25G12xSXceBgg5VFgDd192bSWxJyL9
-	 ReTTXNKjb5/ENdGpfDACXF0SUxTEuD7l9BrxwXwyNZ8YSYPFebUFDpkUJPlnmVO/OM
-	 cuAevt0VB2KqQ==
+	b=JPYoV5IqRvb9+i2V8Prl931C6LPPev7UHTZe5vTQk7f8quTagExytIcgED/Vy1yN0
+	 kIer4zMil8qt+CU3D1YUnrQDUIE2MMFjfulMti35INr5fo5HLDnprvfzWdEnjvrlgk
+	 oPt3fzC4FwyOK73j9IPVUDMu3qAL1O/G2BJbSstdNN/pSkkYo9HncsCai4jkzIeFpY
+	 pLflZA4B9nMBJYwVufHD/67dGe+qdfWSZoN/Om5fYk+/ejb9U0cufkUbF6nBiEkLXQ
+	 crknB0LJtJMhN/0M7kvdEU44mWJDoA6HL/HLPEM4soIPGpaEmgssTeOLW8WA17Dcik
+	 y+qU1bgCMCreA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Renninger <trenn@suse.de>,
-	Michal Suchanek <msuchanek@suse.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Robert Leussler <robert.leussler@leica-geosystems.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	linux-rtc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ACPI: sysfs: Properly map BERT and CCEL data to their ACPI tables
-Date: Mon, 19 Oct 2026 09:45:26 -0400
-Message-ID: <20261019135441.1420968-35-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] rtc: ds1307: fix RX8130 wakeup alarm WADA bit for day-of-month mode
+Date: Mon, 19 Oct 2026 09:45:27 -0400
+Message-ID: <20261019135441.1420968-36-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,545 +52,408 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Renninger <trenn@suse.de>
+From: Robert Leussler <robert.leussler@leica-geosystems.com>
 
-[ Upstream commit e45ee607ca6f9f97a2f97be356d844a912971a16 ]
+[ Upstream commit 878d93aaa596a861dbc8d71f7c38e62a2e805f01 ]
 
-In the case of multiple BERT ACPI tables, one gets:
+The RX8130 wakeup alarm never fired when set via
+/sys/class/rtc/rtc0/wakealarm. The root cause is that the WADA bit
+(bit 3) in the Extension register (0x1c) was never set before
+programming the alarm registers.
 
-sysfs: cannot create duplicate filename '/firmware/acpi/tables/data/BERT'
+Per the RX8130 datasheet:
+WADA=0 - Week alarm: register 0x19 is compared against day-of-week
+WADA=1 - Day alarm:  register 0x19 is compared against day-of-month
 
-This is because both:
+rx8130_set_alarm() always writes a BCD day-of-month value to alarm
+register 0x19, so WADA must be 1. With WADA=0 the hardware matched the
+day-of-month value (e.g. 15) as a day-of-week index, which is always
+out of range (valid weekdays are 0-6), so the alarm interrupt was never
+asserted.
 
-/firmware/acpi/tables/BERT1
-/firmware/acpi/tables/BERT2
+Fix by setting the WADA bit in rx8130_set_alarm() before writing the
+Extension register back to the device.
 
-are attempted to be mapped to the same data table:
+This is consistent with rx8130_read_alarm(), which decodes the same
+register under the same assumption (24-hour and day-of-month mode).
 
-/firmware/acpi/tables/data/BERT
-
-Address this problem by passing and using the same filename for data
-tables.
-
-Signed-off-by: Thomas Renninger <trenn@suse.de>
-Reported-by: Michal Suchanek <msuchanek@suse.com>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1270211
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20260717065129.72924-3-trenn@suse.de
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Robert Leussler <robert.leussler@leica-geosystems.com>
+Link: https://patch.msgid.link/20260721081907.3518648-1-robert.leussler@leica-geosystems.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Local tree
-
-This checkout is **mainline 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`,
-`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`). The commit under
-review is already an ancestor of `HEAD` as `e45ee607ca6f9`. The verdict
-is whether this fix is suitable to backport, based on the code and
-history in this tree.
+This is a one-line RX8130 wakeup-alarm fix. The buggy `&=` is present in
+this 6.12.111 tree, the datasheet matches the new polarity, and the
+patch applies cleanly.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: **[rtc/ds1307] [fix] RX8130 wakeup alarm never fires because
+WADA is not set for day-of-month mode**
 
-Record: **[ACPI sysfs] [Properly map] BERT and CCEL data sysfs names to
-the same instance filenames as the parent ACPI tables.** Subsystem
-prefix `ACPI: sysfs:`. “Properly map” is a correctness/fix verb even
-without “fix”.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- **Fixes:** none (expected for this review pipeline)
-- **Reported-by:** Michal Suchanek `<msuchanek@suse.com>` (real distro
-  report)
-- **Closes:** `https://bugzilla.suse.com/show_bug.cgi?id=1270211`
-- **Link:**
-  `https://patch.msgid.link/20260717065129.72924-3-trenn@suse.de` (patch
-  2/2 of a series)
-- **Cc: stable:** absent (expected; not a negative signal)
-- **Signed-off-by:** Thomas Renninger `<trenn@suse.de>` (author); Rafael
-  J. Wysocki `<rafael.j.wysocki@intel.com>` (ACPI maintainer)
-- **[ rjw: Subject and changelog edits ]** — maintainer edited the
-  changelog before applying
-- No Tested-by, Reviewed-by, Acked-by, or syzbot tags
+- **Fixes:** none (expected for this review)
+- **Reported-by:** none
+- **Tested-by:** none (author is from Leica Geosystems; they hit this on
+  hardware)
+- **Reviewed-by:** none
+- **Acked-by:** none
+- **Link:** `https://patch.msgid.link/20260721081907.3518648-1-
+  robert.leussler@leica-geosystems.com`
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Robert Leussler (author); Alexandre Belloni (RTC
+  maintainer). Ignore any Sasha Levin SOB if later added by the
+  pipeline.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** With more than one BERT table, sysfs tries to create
-  `/firmware/acpi/tables/data/BERT` twice.
-- **Symptom:** `sysfs: cannot create duplicate filename
-  '/firmware/acpi/tables/data/BERT'`. Table files are `BERT1`/`BERT2`;
-  data files were all named `BERT`.
-- **Failure mode:** `sysfs_warn_dup()` prints that warning and calls
-  `dump_stack()` at boot. The second BERT (or CCEL) error region is
-  never exported.
-- **Version info:** none in the message.
-- **Root cause:** `acpi_bert_data_init` / `acpi_ccel_data_init` hard-
-  coded the bin-attribute name to `"BERT"` / `"CCEL"` instead of using
-  the instance filename already computed for the table.
+- **Bug:** RX8130 wakeup alarm never fires when set via
+  `/sys/class/rtc/rtc0/wakealarm`.
+- **Symptom:** scheduled RTC wakeup does not occur; `/IRQ` is never
+  asserted.
+- **Root cause:** `rx8130_set_alarm()` writes BCD day-of-month to alarm
+  register 0x19 but never sets WADA (Extension 0x1c bit 3). With WADA=0
+  the chip compares 0x19 as a week alarm.
+- **Version info:** none in the message. Code has been in-tree since
+  RX8130 support (v4.13); the current `&=` form dates to 2019.
+- **Author’s fix:** `ctl[0] &= WADA` → `ctl[0] |= WADA` so WADA=1 (day-
+  of-month), matching `rx8130_read_alarm()`.
 
-Cover letter (from the lore mbox) shows real firmware with two BERT
-tables:
-
-```
-ACPI: BERT ... (v01 AMD    AMD BERT ...)
-ACPI: BERT ... (v01 AMI    AMI.BERT ...)
-sysfs: cannot create duplicate filename
-'/firmware/acpi/tables/data/BERT'
-```
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: **Not hidden.** This is an explicit sysfs-name collision fix. It
-is not cleanup, refactor, or a new feature.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. Explicit hardware-logic fix. The `&=` → `|=` change
+also stops wiping other Extension bits (FSEL/USEL/TE/TSEL), which is
+extra correctness, not a drive-by refactor.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: INVENTORY THE CHANGES**
-
+### Step 2.1: INVENTORY THE CHANGES
 Record:
-- **File:** `drivers/acpi/sysfs.c` only — **+5 / −4** (9 lines).
-- **Functions:** `acpi_bert_data_init`, `acpi_ccel_data_init`,
-  `acpi_table_data_init`, `acpi_tables_sysfs_init`.
-- **Struct:** `acpi_data_attr` gains `filename[]`.
-- **Scope:** single-file surgical fix.
+- File: `drivers/rtc/rtc-ds1307.c` — **1 line changed** (`&=` → `|=`)
+- Function: `rx8130_set_alarm()`
+- Scope: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Before:** `acpi_table_attr_init()` already builds `BERT` vs
-  `BERT1`/`BERT2`. `acpi_table_data_init()` then created data files with
-  a hard-coded `"BERT"` / `"CCEL"` name.
-- **After:** `acpi_table_data_init(th, table_attr)` copies
-  `table_attr->filename` into `data_attr->filename` and uses that as the
-  sysfs name. Data nodes match table nodes (`BERT`, or `BERT1`/`BERT2`).
-- **Path:** boot-time ACPI sysfs init only (`acpi_tables_sysfs_init`).
-  Return value of `acpi_table_data_init` is still ignored (pre-
-  existing).
+- **Before:** after reading Extension/Flag/Control0, `ctl[0] &= BIT(3)`
+  keeps only the current WADA bit (typically 0 from POR) and **clears
+  every other Extension bit**, then writes it back, then programs
+  min/hour/**mday**.
+- **After:** `ctl[0] |= BIT(3)` **sets WADA=1** and **preserves**
+  FSEL/USEL/TE/TSEL, then programs the same mday alarm.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **[Logic / correctness]** Hard-coded sysfs names collide when
-ACPI has multiple tables of the same signature. Fix: reuse the already-
-instanced filename. Same pattern for BERT and CCEL.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
+### Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- **Quality:** obviously correct. `acpi_table_attr_init()` runs first
-  and fills `table_attr->filename`; then `acpi_table_data_init()` copies
-  it. `attr.name` points at the heap `data_attr->filename` buffer, which
-  lives as long as the bin attribute (same lifetime as the old string-
-  literal names).
-- **Single-table ABI:** unchanged. Instance suffix is added only when a
-  second table exists (`instance > 1` or `acpi_get_table(..., 2, ...)`
-  succeeds), so a lone BERT still appears as
-  `/firmware/acpi/tables/data/BERT`.
-- **Regression risk:** very low. No locking, no public API, no new sysfs
-  files in the common case.
-- **Not introduced here:** if `sysfs_create_bin_file()` fails,
-  `data_attr` is still leaked (return value ignored). This patch avoids
-  the duplicate-name failure; it does not add that leak.
+- **Category:** logic / hardware-programming correctness (wrong alarm
+  mode bit).
+- **Mechanism:** RX8130 WADA selects week vs day comparison for register
+  0x19. Driver always writes `bin2bcd(tm_mday)` to 0x19, so WADA must be
+  1. WADA=0 makes the chip treat that BCD value as a week-alarm bitmap,
+  so the alarm either never matches or matches the wrong weekdays.
+
+Verified from Epson RX8130CE application manual (Table 23):
+- WADA=0 → WEEK is the alarm target
+- WADA=1 → DAY (day-of-month) is the alarm target
+- Example “Day” settings explicitly use WADA=1
+
+### Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- **Quality:** obviously correct. One operator change; polarity matches
+  the datasheet and the existing read path (`tm_mday`, comment “day-of-
+  month modes”).
+- **Regression risk:** very low. Only RX8130 `set_alarm`. `|=` is the
+  correct RMW (old `&= BIT(3)` was also clobbering FSEL/TE/TSEL). No
+  API/lock/struct change.
+- The author’s “valid weekdays are 0-6, so mday 15 never matches” is
+  slightly imprecise: week mode is a **bitmap**, so some BCD mday values
+  can match the wrong weekdays. Failure mode is still “alarm broken,”
+  possibly worse than “never fires.”
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: BLAME THE CHANGED LINES**
-
+### Step 3.1: BLAME THE CHANGED LINES
 Record:
-- BERT data sysfs: **`7dae6326ed764`** (“ACPI / sysfs: Extend ACPI sysfs
-  to provide access to boot error region”), Tony Luck, **v4.14-rc1**.
-  Hard-coded `"BERT"` is from that commit.
-- CCEL: **`4f855dcead6c5`** (“ACPI: sysfs: Enable ACPI sysfs support for
-  CCEL records”), **v6.4-rc1**. Copied the same hard-coded-name pattern.
-- Table instance filenames: `acpi_table_attr.filename` since
-  **`1c8fce27e275fd`** (v2.6.36-era sysfs) / **`3278675567dfb9`**
-  (ACPI_NAMESEG_SIZE rename, 2019).
-- Buggy pattern has been in tree for years, not last-month code.
+- Buggy line `ctl[0] &= RX8130_REG_EXTENSION_WADA` introduced by
+  **3f929cad94338** (“rtc: ds1307: rx8130: Fix alarm handling”, Uwe
+  Kleine-König, 2019-01-25).
+- First appeared: **v5.1-rc1**. Present in this tree (`git merge-base
+  --is-ancestor` succeeded).
+- RX8130 support itself: **ee0981be77045** (v4.13-rc1), which used
+  `ctl[0] &= ~WADA` (explicitly **cleared** WADA).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
+### Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Historical introducer is 3f929cad94338, which is
+in this tree.
 
-Record: **No Fixes: tag.** Introducer is `7dae6326ed764` (BERT, v4.14)
-and `4f855dcead6c5` (CCEL, v6.4). Both are ancestors of this HEAD (`git
-merge-base --is-ancestor` exit 0).
+That 2019 commit **intended** to “clear WADA for day-of-month,” but:
+1. Its datasheet polarity was inverted vs Epson (it treated WADA=1 as
+   weekdays).
+2. Its diff changed `&= ~WADA` to `&= WADA` (dropped `~`), which does
+   **not** clear WADA; it preserves WADA and zeros other Extension bits.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Original 2017 code already chose the wrong polarity for mday. The 2019
+change left WADA at POR 0 and made Extension clobber worse.
 
-Record:
-- Immediate parent: **`f45c999e67120`** — series patch 1/2, BERT
-  `sizeof` check (`acpi_hest_generic_status` → `acpi_bert_region`).
-  Independent; this patch does not need it.
-- No later commits on `drivers/acpi/sysfs.c` after `e45ee607ca6f9` (no
-  follow-up revert or fix).
-- **Standalone** as a 2/2 series member: patch 1 is a separate size-
-  check fix.
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record (recent on this file in this tree):
+- `e0e6ddc431177` rtc: ds1307: Fix off-by-one issue with wday for rx8130
+  — **time** wday encoding, not alarm WADA. Independent; already here.
+- `204756f016726` rtc: ds1307: Fix wday settings for rx8130 — also time,
+  not alarm.
+- `3f929cad94338` — the buggy alarm handling change.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Standalone one-line fix; not patch X/Y.
 
-Record: Thomas Renninger is a long-time ACPI contributor (SUSE). Same-
-day sibling is only the BERT sizeof patch. Merged by ACPI maintainer
-Rafael J. Wysocki.
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Robert Leussler has no other rtc commits in this tree. Alexandre
+Belloni (RTC maintainer) signed off and applied it. Weight comes from
+maintainer application + hardware report, not from a regular-contributor
+history.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: **None required for the naming fix.** It uses existing
-`table_attr->filename`, `strscpy`, and `acpi_table_attr_init`.
-`kzalloc_obj` in surrounding lines is later mainline allocation API and
-is **not** introduced by this diff. On older trees the same hunks apply
-around `kzalloc`. `strscpy` has been in the kernel since v4.3.
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: None. Diff only needs `rx8130_set_alarm()` and
+`RX8130_REG_EXTENSION_WADA`, both present. `git show 878d93aaa596 | git
+apply --check` **succeeded** on this tree.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **b4 dig:** series at
-  `https://patch.msgid.link/20260717065129.72924-3-trenn@suse.de`
-- Cover: `[PATCH 0/2] Fix sysfs duplicate filename if multiple BERT
-  tables exist`
-- This commit is **[PATCH 2/2]** (msgid `...72924-3...`). Subject on the
-  list differed slightly from the applied subject (rjw edited it).
-- **v2:** cover says previously sent to linux-pm; v2 stopped using
-  `acpi_get_table` inside data init and instead passes `table_attr`.
-  Applied version is that v2.
-- **Reviewer:** Rafael: “Applied (with some modifications in
-  subjects/changelogs) as 7.3 material, thanks!” No NAK.
-- **Stable nomination in review:** none found.
-- lore.kernel.org WebFetch returned **403**; thread recovered via `b4
-  dig -m`.
+- `b4 dig -c 878d93aaa596` → https://patch.msgid.link/20260721081907.351
+  8648-1-robert.leussler@leica-geosystems.com
+- `b4 dig -a`: **v1 only** (no v2/v3)
+- Thread: submission (2026-07-21) → Sashiko AI note on pre-existing FLAG
+  RMW → author reply (2026-08-10): FLAG issue is pre-existing and out of
+  scope → **Alexandre Belloni: “Applied, thanks!”** (2026-08-20), no NAK
+- lore.kernel.org WebFetch returned 403; thread recovered via `b4 dig
+  -m` and openwall/spinics
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To/Cc were Alexandre Belloni, linux-rtc, linux-
+kernel. Maintainer applied it. No other human Reviewed-by.
 
-Record: **b4 dig -w** recipients: Thomas Renninger, `linux-
-acpi@vger.kernel.org`, Saket Dumbre (Intel ACPI), Michal Suchanek
-(reporter). ACPI maintainer applied it. No separate Reviewed-by.
+### Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No bugzilla/syzbot. Concrete userspace trigger in the message
+(`/sys/class/rtc/rtc0/wakealarm`). Author is an RX8130 user (Leica
+Geosystems). Sashiko flagged a **pre-existing** write-0-to-clear FLAG
+RMW (VLF); author correctly kept that separate. That does not weaken
+this WADA fix.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone 1/1. Not part of a multi-patch series.
 
-Record: SUSE bugzilla 1270211 WebFetch **403** (likely login-walled).
-Cover letter includes the reporter’s dmesg: two BERT tables (AMD + AMI)
-and the exact sysfs duplicate warning. That is enough to treat it as a
-real distro hit, not theoretical.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: 2-patch series. Patch 1/2 (`f45c999e67120`) is an independent
-BERT region-size check. This 2/2 patch does not depend on it.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: No stable@ discussion found (lore WebFetch 403; web search did
-not turn up a stable thread). **UNVERIFIED** whether anyone later asked
-for or rejected it on stable@.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable WebFetch 403. No other evidence of a
+stable NAK. Absence of prior stable discussion is not a negative.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: KEY FUNCTIONS**
+### Step 5.1: IDENTIFY KEY FUNCTIONS
+Record: `rx8130_set_alarm()` only.
 
-Record: `acpi_bert_data_init`, `acpi_ccel_data_init`,
-`acpi_table_data_init`, `acpi_tables_sysfs_init`. Struct field added on
-`acpi_data_attr`.
-
-**Step 5.2: TRACE CALLERS**
-
+### Step 5.2: TRACE CALLERS
 Record:
-- `acpi_table_data_init` — only caller: `acpi_tables_sysfs_init`
-- `acpi_tables_sysfs_init` — only caller: `acpi_sysfs_init`
-  (`drivers/acpi/sysfs.c`)
-- `acpi_sysfs_init` — called from `acpi_bus_init()` in
-  `drivers/acpi/bus.c` during ACPI boot
-- `acpi_sysfs_table_handler` (hot-added tables) does **not** call
-  `acpi_table_data_init`; BERT/CCEL data nodes are boot-only. Confirmed
-  with grep: only those two sites.
+- Wired as `rx8130_rtc_ops.set_alarm` in `drivers/rtc/rtc-ds1307.c`
+- RTC core: `rtc_set_alarm()` / `__rtc_set_alarm()` in
+  `drivers/rtc/interface.c`
+- Userspace: `drivers/rtc/sysfs.c` (`wakealarm`), plus `RTC_WKALM_SET` /
+  `RTC_ALM_SET` ioctls
+- Reachable whenever RX8130 alarm IRQ or `wakeup-source` is enabled
+  (chip desc has `.alarm = 1`)
 
-**Step 5.3: TRACE CALLEES**
+### Step 5.3: TRACE CALLEES
+Record: `regmap_bulk_read/write` of Extension+Flag+Control0 and alarm
+min/hour/day, then optional Control0 AIE write. No alloc/locking in this
+function.
 
-Record: `kzalloc_obj` / `sysfs_attr_init` / `strscpy` /
-`sysfs_create_bin_file` / `acpi_os_map_iomem` (read path). Init-time
-sysfs creation, then userspace reads of BERT/CCEL error regions.
+### Step 5.4: FOLLOW THE CALL CHAIN
+Record: `echo T > /sys/class/rtc/rtc0/wakealarm` or `rtcwake` →
+`rtc_set_alarm` → `rx8130_set_alarm`. Unprivileged access depends on rtc
+device node permissions; typical embedded images use this for suspend
+wakeup. **Yes, userspace-reachable.**
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: ACPI boot → `acpi_bus_init` → `acpi_sysfs_init` →
-`acpi_tables_sysfs_init` → per-table `acpi_table_data_init`. Triggered
-on every ACPI boot that has BERT or CCEL. Userspace RAS tools read
-`/sys/firmware/acpi/tables/data/`. Unprivileged users typically cannot
-read these (mode `0400`). The **warning/dump_stack** happens in kernel
-init regardless.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Only BERT and CCEL are in `acpi_data_objs[]`. Both had the same
-hard-coded name. No other ACPI data table types in this file.
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Sibling Epson/MicroCrystal chips also program WADA, with **chip-
+specific polarity** (RX8010 clears WADA while writing mday;
+RV8803/RV3028/RV3032 set WADA). Not a copy-paste of those; RX8130
+datasheet is the authority. No second broken copy in `rtc-ds1307.c`.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- Tree: **`git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`**, **`make
+  kernelversion` = 6.12.111**
+- Buggy code is here at `drivers/rtc/rtc-ds1307.c:665`: `ctl[0] &=
+  RX8130_REG_EXTENSION_WADA;`
+- `git merge-base --is-ancestor 878d93aaa596 HEAD` → **not an ancestor**
+  (fix not in this tree)
+- `git merge-base --is-ancestor 3f929cad94338 HEAD` → **yes** (bug is in
+  this tree)
+- Bug introduced v5.1 (wrong `&=` form); wrong polarity since v4.13
 
-Record: **Yes.** BERT data sysfs since v4.14 (`7dae6326ed764`,
-ancestor). CCEL since v6.4 (`4f855dcead6c5`, ancestor). The fix is
-already applied here as `e45ee607ca6f9`. The bug is old, not introduced
-after 7.3 branched.
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: **Clean apply** (`git apply --check` exit 0). Surrounding
+`rx8130_set_alarm()` matches the mainline hunk. No rework needed.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Clean / minor context.** Hunks are localized. Older trees may
-still use `kzalloc` instead of `kzalloc_obj` (adjacent lines only).
-Pre-v6.4 trees have no CCEL function; BERT hunks still apply. `strscpy`
-and `filename` on `acpi_table_attr` are present in long-term stables.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: This is the fix. No earlier equivalent. No later follow-up on
-this file.
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: wday off-by-one (`e0e6ddc431177`) is already here and is a
+different bug. No existing WADA `|=` fix.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM**
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: **drivers/rtc** (Epson RX8130 in rtc-ds1307). Criticality:
+**PERIPHERAL** for the kernel as a whole, **IMPORTANT** for boards that
+use this RTC as the wake source.
 
-Record: **ACPI sysfs** (`drivers/acpi/sysfs.c`). **IMPORTANT** (not
-mm/core, but ACPI boot sysfs on essentially all x86 and many ARM
-servers). BERT is RAS/boot-error; CCEL is confidential-computing event
-log.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Mature. BERT data mapping has been stable since 2017. Occasional
-sysfs/BERT/CCEL fixes, not high churn.
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: rtc-ds1307 still gets real fixes in this tree (OSF, max clock
+rate, wday). Mature driver; this is a long-standing programming error,
+not churn from new code.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: WHO IS AFFECTED**
+### Step 8.1: DETERMINE WHO IS AFFECTED
+Record: **Driver-specific / config-specific** — `CONFIG_RTC_DRV_DS1307`
++ Epson RX8130 (`epson,rx8130` / `rx8130`) with alarm/wakeup wired.
 
-Record: **Firmware-specific.** Systems with **two or more BERT** (or
-CCEL) tables. Cover letter shows a real AMD + AMI dual-BERT OEM
-firmware. Single-table systems are unaffected (same sysfs name as
-before). CONFIG_ACPI.
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Any `set_alarm` / `wakealarm` / `rtcwake` on RX8130. Common on
+embedded systems that sleep and wake on RTC. Not a rare error path.
 
-**Step 8.2: TRIGGER CONDITIONS**
-
-Record: **Every boot** on affected firmware. Not a race. Not
-unprivileged-triggerable for the data read (0400), but the kernel
-`dump_stack()` is automatic at init.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
 Record:
-- `sysfs_warn_dup()` → `pr_warn` + **`dump_stack()`**
-  (`fs/sysfs/dir.c`). Looks like a kernel bug in dmesg; `panic_on_warn`
-  would panic (unverified whether any of these machines set that).
-- Second BERT/CCEL error region is not in sysfs, so RAS tools can miss
-  boot errors.
-- Boot continues; `acpi_table_data_init` return is ignored.
-- **Severity: MEDIUM** (boot warning + missing diagnostic RAS data). Not
-  oops/corruption/deadlock, but a real distro-reported “oh, that’s not
-  good” bug.
+- Failure: RTC alarm IRQ/`/IRQ` does not fire as intended → **system
+  fails to wake from suspend** at the scheduled time (or wakes on the
+  wrong weekday if the BCD mday happens to look like a week bitmap).
+- Severity: **HIGH** for those devices (lost wakeup; device can stay
+  asleep). Not a KASAN/UAF/panic.
 
-**Step 8.4: RISK-BENEFIT RATIO**
-
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- **Benefit:** medium-high for dual-BERT firmware (every boot warning
-  gone; both error regions exported). Zero change for the common single-
-  table case.
-- **Risk:** very low (5 insertions / 4 deletions, init-only naming).
-- **Ratio:** favorable.
+- **Benefit:** high for RX8130 users — restores the documented
+  alarm/wakeup path.
+- **Risk:** very low — 1 line, polarity confirmed by datasheet,
+  maintainer applied, no locking/API change.
+- **Ratio:** strongly favors backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: COMPILE THE EVIDENCE**
+### Step 9.1: COMPILE THE EVIDENCE
 
-**For backporting:**
-- Real bug on real hardware (AMD BERT + AMI BERT), SUSE bugzilla +
-  dmesg.
-- `dump_stack()` on every boot; second error region missing from sysfs.
-- Tiny, obviously correct, ACPI-maintainer merged, v2 after review.
-- Bug present since v4.14 (BERT) / v6.4 (CCEL).
-- No new APIs; single-table sysfs ABI unchanged.
-- Standalone; does not need series patch 1/2.
-- Matches stable-kernel-rules: a real bug that bothers distro users, and
-  an “oh, that’s not good” sysfs warning.
+**FOR:**
+- Real user-visible bug: RX8130 `wakealarm` does not work
+- Datasheet-confirmed WADA polarity (0=week, 1=day)
+- Driver always writes `tm_mday`; WADA must be 1
+- Buggy `&=` is in this 6.12.111 tree; fix is not
+- 1-line, obviously correct; apply-check clean
+- RTC maintainer applied after review window; no NAK
+- Also stops Extension-register clobber of FSEL/TE/TSEL
+- Standalone; no prerequisites missing here
 
-**Against:**
-- Not a panic, UAF, deadlock, or data-corruption bug in normal configs.
-- Only dual BERT/CCEL firmware hits it (uncommon, but not fictional).
-- No `Cc: stable` (not a negative signal here).
-- Rafael called it “7.3 material” without mentioning stable.
+**AGAINST:**
+- Not a crash/security/corruption issue
+- Only RX8130, not all rtc-ds1307 chips
+- No Fixes:/Cc:stable (expected; not a negative)
+- No second independent reporter beyond the author
 
-**Unresolved:**
-- SUSE bugzilla body (403).
-- Whether stable@ ever discussed this (403 / no hits).
-- Whether affected machines use `panic_on_warn`.
+**UNRESOLVED:**
+- Could not fetch lore.kernel.org or lore.kernel.org/stable (403);
+  thread recovered via b4/openwall
+- Did not re-test on hardware (author did; commit describes
+  `/sys/class/rtc/rtc0/wakealarm`)
 
-**Step 9.2: STABLE RULES CHECKLIST**
+### Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — datasheet + maintainer apply
+   + hardware report
+2. Fixes a real bug that affects users? **PASS** — wakeup alarm broken
+   on RX8130
+3. Important issue? **PASS** — failed RTC wakeup / wrong-day match; HIGH
+   for this hardware
+4. Small and contained? **PASS** — 1 line, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — clean apply; buggy code
+   present
 
-1. Obviously correct and tested? **PASS** — naming logic is local and
-   matches existing instance filenames; maintainer applied v2; reporter
-   provided dmesg.
-2. Fixes a real bug that affects users? **PASS** — distro report,
-   dump_stack, missing BERT data node.
-3. Important issue? **PASS** (medium) — boot `dump_stack` plus
-   inaccessible RAS region; rules explicitly include “oh, that’s not
-   good” and distro-reported issues.
-4. Small and contained? **PASS** — 9 lines, one file.
-5. No new features or APIs? **PASS** — corrects names of existing sysfs
-   nodes.
-6. Can apply to the local tree? **PASS** — already in this 7.3-rc4 tree;
-   backport to older stables is clean or BERT-only on pre-CCEL trees.
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary
+contained driver bugfix.
 
-**Step 9.3: EXCEPTION CATEGORIES**
+### Step 9.4: MAKE YOUR DECISION
+This 6.12.111 tree has the 2019 `&= WADA` bug. The fix is the smallest
+possible correction so the chip compares day-of-month the way the driver
+already programs it. That is exactly the kind of hardware bug stable
+users of this RTC need.
 
-Record: None (not a device ID, quirk, DT, build, or docs patch).
-Qualifies as a normal small bugfix.
-
-**Step 9.4: DECISION**
-
-This is a small, correct fix for a user-visible boot warning and a real
-RAS sysfs hole on multi-BERT firmware. The code has been wrong since
-v4.14, the patch is surgical, and the common single-table ABI is
-unchanged. That meets stable criteria.
-
----
-
-## What the commit solves (for stable users)
-
-On machines whose firmware publishes **two BERT tables** (seen with AMD
-+ AMI), the kernel already creates `/sys/firmware/acpi/tables/BERT1` and
-`BERT2`, but both data mappings used the name `BERT`.
-`sysfs_create_bin_file()` fails, `sysfs_warn_dup()` dumps a stack at
-every boot, and the second boot-error region is never exposed. The same
-bug exists for multiple CCEL tables. The fix copies the table’s instance
-filename onto the data node.
-
-## Risk vs benefit
-
-Benefit is removing a boot `dump_stack` and exporting all BERT/CCEL
-regions on affected firmware. Risk is negligible: init-only string copy,
-no locking, no ABI change when there is only one table.
-
-## Concerns
-
-Older stables without CCEL need the CCEL hunk dropped; BERT hunks still
-apply. Adjacent `kzalloc_obj` is not part of this patch. Series patch
-1/2 is optional, not a prerequisite.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed tags: Reported-by Michal Suchanek (SUSE), Closes
-  bugzilla 1270211, Link patch 2/2, SOB author + Rafael; no
-  Fixes/stable/syzbot.
-- **[Phase 2]** `git show e45ee607ca6f9`: `drivers/acpi/sysfs.c` +5/−4;
-  add `filename`, stop hard-coding `"BERT"`/`"CCEL"`, pass `table_attr`.
-- **[Phase 2]** Read `acpi_table_attr_init` (instance suffix) and
-  `acpi_tables_sysfs_init` (attr_init then data_init).
-- **[Phase 2]** Read `sysfs_warn_dup` in `fs/sysfs/dir.c`: `pr_warn` +
-  `dump_stack()`.
-- **[Phase 3]** Blame: BERT data `7dae6326ed764` (v4.14-rc1), CCEL
-  `4f855dcead6c5` (v6.4-rc1).
-- **[Phase 3]** `git merge-base --is-ancestor 7dae6326ed764 HEAD` and
-  `4f855dcead6c5 HEAD` and `e45ee607ca6f9 HEAD`: all 0 (present).
-- **[Phase 3]** Sibling `f45c999e67120` is independent sizeof fix; no
-  later sysfs.c commits after this one.
-- **[Phase 4]** `b4 dig -c e45ee607ca6f9`: lore thread; v2 cover +
-  dmesg; Rafael applied as 7.3 material; no NAK.
-- **[Phase 4]** `b4 dig -w`: linux-acpi, Saket Dumbre, reporter on CC.
-- **[Phase 4]** `b4 dig -m`: full mbox; WebFetch lore/bugzilla 403.
-- **[Phase 5]** grep: `acpi_table_data_init` only from
-  `acpi_tables_sysfs_init`; `acpi_sysfs_init` from `acpi_bus_init`.
-- **[Phase 6]** `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`;
-  `make kernelversion` → 7.3.0-rc4; buggy BERT/CCEL code in this
-  lineage.
-- **[Phase 8]** Failure mode: boot dump_stack + missing second data
-  node; severity MEDIUM.
-- **UNVERIFIED:** full SUSE bugzilla text; stable@ archives;
-  `panic_on_warn` on affected hosts.
-
-The patch is obviously correct, fixes a real distro-reported boot
-warning and missing RAS sysfs data, is nine lines in one file, and does
-not add features.
+Verification:
+- [Phase 1] Parsed tags: Link to patch.msgid.link; SOBs Leussler +
+  Belloni; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: 1 line in `rx8130_set_alarm()`, `&=` → `|=` on
+  `RX8130_REG_EXTENSION_WADA`
+- [Phase 2] Datasheet (Epson RX8130CE app manual Table 23): WADA=0 week,
+  WADA=1 day — matches the patch
+- [Phase 3] git blame: line from 3f929cad94338 (v5.1-rc1); original
+  support ee0981be77045 (v4.13) used `&= ~WADA`
+- [Phase 3] git show 3f929cad94338: dropped `~`, inverted polarity vs
+  datasheet
+- [Phase 3] git merge-base --is-ancestor 3f929cad94338 HEAD: yes;
+  878d93aaa596 HEAD: no
+- [Phase 4] b4 dig -c 878d93aaa596: lore msgid 20260721081907.3518648-1
+- [Phase 4] b4 dig -a: v1 only
+- [Phase 4] b4 dig -w: Belloni + linux-rtc + linux-kernel
+- [Phase 4] b4 mbox: Belloni “Applied, thanks!”; Sashiko FLAG note pre-
+  existing, not a NAK
+- [Phase 5] `rx8130_set_alarm` is `rtc_class_ops.set_alarm`; sysfs
+  `wakealarm` calls `rtc_set_alarm()`
+- [Phase 6] git describe HEAD: p-6.12-3-gc504cf0baa3d8; kernelversion
+  6.12.111; line 665 still `&=`
+- [Phase 6] `git apply --check` of 878d93aaa596: clean
+- [Phase 8] Failure mode: RTC wakeup does not fire (or fires on wrong
+  weekdays); HIGH for RX8130 boards
+- UNVERIFIED: live lore.kernel.org/stable HTML (HTTP 403); hardware
+  retest in this environment
 
 **YES**
 
- drivers/acpi/sysfs.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/rtc/rtc-ds1307.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/sysfs.c b/drivers/acpi/sysfs.c
-index e596224302f4c..d8d04437f63d6 100644
---- a/drivers/acpi/sysfs.c
-+++ b/drivers/acpi/sysfs.c
-@@ -316,6 +316,7 @@ struct acpi_table_attr {
- struct acpi_data_attr {
- 	struct bin_attribute attr;
- 	u64	addr;
-+	char filename[ACPI_NAMESEG_SIZE+ACPI_INST_SIZE];
- };
+diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
+index 9ba5958ca7a6e..d9a8e5045e37d 100644
+--- a/drivers/rtc/rtc-ds1307.c
++++ b/drivers/rtc/rtc-ds1307.c
+@@ -662,7 +662,7 @@ static int rx8130_set_alarm(struct device *dev, struct rtc_wkalrm *t)
+ 	if (ret < 0)
+ 		return ret;
  
- static ssize_t acpi_table_show(struct file *filp, struct kobject *kobj,
-@@ -453,7 +454,6 @@ static int acpi_bert_data_init(void *th, struct acpi_data_attr *data_attr)
- 	}
- 	data_attr->addr = bert->address;
- 	data_attr->attr.size = bert->region_length;
--	data_attr->attr.attr.name = "BERT";
+-	ctl[0] &= RX8130_REG_EXTENSION_WADA;
++	ctl[0] |= RX8130_REG_EXTENSION_WADA;
+ 	ctl[1] &= ~RX8130_REG_FLAG_AF;
+ 	ctl[2] &= ~RX8130_REG_CONTROL0_AIE;
  
- 	return sysfs_create_bin_file(tables_data_kobj, &data_attr->attr);
- }
-@@ -469,7 +469,6 @@ static int acpi_ccel_data_init(void *th, struct acpi_data_attr *data_attr)
- 	}
- 	data_attr->addr = ccel->log_area_start_address;
- 	data_attr->attr.size = ccel->log_area_minimum_length;
--	data_attr->attr.attr.name = "CCEL";
- 
- 	return sysfs_create_bin_file(tables_data_kobj, &data_attr->attr);
- }
-@@ -484,7 +483,7 @@ static struct acpi_data_obj {
- 
- #define NUM_ACPI_DATA_OBJS ARRAY_SIZE(acpi_data_objs)
- 
--static int acpi_table_data_init(struct acpi_table_header *th)
-+static int acpi_table_data_init(struct acpi_table_header *th, struct acpi_table_attr *table_attr)
- {
- 	struct acpi_data_attr *data_attr;
- 	int i;
-@@ -497,6 +496,8 @@ static int acpi_table_data_init(struct acpi_table_header *th)
- 			sysfs_attr_init(&data_attr->attr.attr);
- 			data_attr->attr.read = acpi_data_show;
- 			data_attr->attr.attr.mode = 0400;
-+			strscpy(data_attr->filename, table_attr->filename);
-+			data_attr->attr.attr.name = data_attr->filename;
- 			return acpi_data_objs[i].fn(th, data_attr);
- 		}
- 	}
-@@ -543,7 +544,7 @@ static int acpi_tables_sysfs_init(void)
- 			return ret;
- 		}
- 		list_add_tail(&table_attr->node, &acpi_table_attr_list);
--		acpi_table_data_init(table_header);
-+		acpi_table_data_init(table_header, table_attr);
- 	}
- 
- 	kobject_uevent(tables_kobj, KOBJ_ADD);
 -- 
 2.53.0
 
