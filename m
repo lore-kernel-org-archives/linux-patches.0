@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FABE56060E;
-	Mon, 19 Oct 2026 13:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32274FFA23;
+	Mon, 19 Oct 2026 13:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418249; cv=none; b=cQQuVdgoCYoVsTnUSPx6XXzKgDr4gcdCPICVPVYli+L4osAqYnNHz8IES8VKWJj3KDgj56pR9DUfiit945xbCF4xI47pjy+KCcZNXT2YYQJrb6Hw4MTyMClMiIzevLfbOXZGzg92SQzkpFw4e6y6S1y08XUCEXdGoqJr/wtH5Vw=
+	t=1792418250; cv=none; b=kGHqx3EzMQ8mZRQ4pcX9bz4eO/X7Rb4ht24jbwcy8rcI79ZnI7x3/rwK4tpV8L+ekxDzXpcsW+e+A7evmzusO5PF09tfDjJyEWWuDWbmXxFAMNVcaJqUbnCsmeo8FK+e4Eald6n5YS/YZRhJ7TXTHYzU9qT2NfdmA7+3dPrRr6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418249; c=relaxed/simple;
-	bh=ZurOGsfyONY0BT3+yL2fwTxVMYH4sihGfdJZcmpDjUE=;
+	s=arc-20240116; t=1792418250; c=relaxed/simple;
+	bh=O3LaxiIuL0cy7v6sHAR1GYWghevGkkV2CcWLonf89oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q9dkYSMvUoXQyjz5gjenlPIjY5Y0+F5oy2QdP0+OEVutV0GOdaIfklAbm98JFRBaxbLmWx+sGOrRlz+y+GXczJooe3mvix8gtRRWQyeOWqN0DJn3KMuY2YHtsSI8QERgAXO13qrrjZqpl45d08hk83+7sWbFNeSXCh1yLB8Enyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OYMNfXwf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pt1NASJXjsioHYfAocwCPqw2WiVlNGtLKDoXmIeqD/fsjOMl8saSL+aRRN4MYG6SpbYA52YhM7UW9lPOsqhjLD1uRPhS6xWckaE+dgLTv0EtKHz+6/row4YhwbiR5UxrikbOWykZUqN+tgJ5PJqgTc/L0WwoJkyytO/3oBOfHPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DL57TVDN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OYMNfXwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA421F000C8;
-	Mon, 19 Oct 2026 13:57:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DL57TVDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D2B1F000C5;
+	Mon, 19 Oct 2026 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418246;
-	bh=5dfLBhlJU9dTFBKNxV+OINhjJmjUkAJbcLNa6+f0iac=;
+	s=k20260515; t=1792418247;
+	bh=kakytPNLY+AAC3VufQx8vQdmpbFyKM5AqZpi8YYg6KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OYMNfXwf00fBgkKpjK7W7IpbyBUm/LCuHowlQVX4p6qaPwyHMa/GvUq4xS6cP1NCu
-	 p2fmUVachrCDBVwPrcHx71F2xyfZlQoQviBkOTGOwHbGFj0xNDRDqkZOGW/f9MALYF
-	 77HkX+QUQ0JJV7R4fpldKnR4XSvRxuB+1oyebd3zosyWcY/KljTqsytLNUpDhFYL14
-	 HTn5XDJ5a7gIluaEEBSnQjSwtqn9xumPQz/gDm1w3iImb4Yrs7pii+ApqaJgoSLTYI
-	 RmBn6vWhQPpAWHneDYDZoy3EiWpVXali6cGjoUCxStY2QQrX/ZPoRkea0jbU97x6Ci
-	 xrsLZ3uLCpqBQ==
+	b=DL57TVDNCQKYrHfaRTcoTBGaZwp3IVsxOK2mkcggezVONOUNML6CkjODs/d5hsqSC
+	 wr5wGTS3PCpmNyye+vJoFrrQsJH7s/n+l7/UpneJ+bxvqshVKD0GTfD3D9Ejwq92Ab
+	 rea7Bfvzgzn6+reR7fhL46cbHYvKk8jrdVfByLw2oBgcXAT9JES+ojjzhn3bQgzpeb
+	 VKzrI/0xiQdoaIY9PZMFmOMLjWZCBgCaWrY/dCIV9XwQt5BjiAwrL3a462hFi31m6I
+	 fwHlxmhScyAcQYffn59JwX3vn1qesgkGtFUFy0hl2FtVfpC7l09tXkBGYMYiW68/df
+	 9zFrgQcOPZorw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiubo Li <xiubo.li@clyso.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	sashiko-bot@kernel.org,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	amarkuze@redhat.com,
-	ceph-devel@vger.kernel.org,
+	mfd@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] ceph: fix use-after-dereference of NULL ci in __ceph_remove_cap()
-Date: Mon, 19 Oct 2026 09:46:47 -0400
-Message-ID: <20261019135441.1420968-116-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] mfd: ipaq-micro: Fix out-of-bounds stack read in ipaq_micro_str
+Date: Mon, 19 Oct 2026 09:46:48 -0400
+Message-ID: <20261019135441.1420968-117-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,67 +53,76 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit a354d7eaa1a57f1532c8072a424cc2d339a73cc0 ]
+[ Upstream commit da3a98c941753255418616d249e5b40db0927c26 ]
 
-The NULL check for "ci" in __ceph_remove_cap() was dead code because
-ci was dereferenced via &ci->netfs.inode before the check, and
-cap->session was dereferenced via session->s_mdsc->fsc->client even
-earlier.  On a double-remove, both cap->ci and cap->session are set
-to NULL by the first call, so the second call would crash before
-ever reaching the guard.
+ipaq_micro_str() decodes a UTF-16LE string into an ASCII string.
+It copies characters to a stack buffer retstr, but fails to
+null-terminate it. When kstrdup() is called on retstr, it can read past
+the buffer into uninitialized stack memory, potentially leaking stack
+contents.
 
-Move ci, session, cl, and inode initializations after the NULL check
-so that the early-return actually works.
+Fix this by initializing retstr to zero.
 
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: sashiko-bot@kernel.org
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/aintJF4X5tWDW-Ej@google.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a real NULL-deref regression in this
-6.12 tree, the hunk matches locally, and the original crash was
-production-confirmed.
+The local tree is **v7.3-rc4** (`7.3.0-rc4`). The bug is in
+`ipaq_micro_str()`: it copies UTF-16LE bytes into an uninitialized
+256-byte stack buffer and then `kstrdup()`/`strlen()` can walk off the
+end of that buffer. That is a real out-of-bounds stack read and a
+kernel-stack leak into dmesg, introduced in 2014, with a one-line zero-
+init fix that applies here with no prerequisites.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 Step 1.1: PARSE THE SUBJECT LINE
-Record: [ceph] [fix] restore a dead NULL-ci guard in
-`__ceph_remove_cap()` so a second remove does not crash
+Record: **[mfd / ipaq-micro] [Fix] out-of-bounds stack read in
+ipaq_micro_str**
+- Subsystem prefix: `mfd: ipaq-micro:`
+- Action verb: **Fix** (explicit bug-fix language)
+- Claimed intent: stop `ipaq_micro_str()` from reading past a stack
+  buffer
 
 Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Signed-off-by: Xiubo Li <xiubo.li@clyso.com> (author; Ceph FS
-  maintainer)
-- Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-- Signed-off-by: Ilya Dryomov <idryomov@gmail.com> (Ceph maintainer who
-  applied it)
-- No Fixes: tag (expected for this review pipeline)
-- No Reported-by / Tested-by / Link / Cc: stable
-- Ignore any pipeline “Upstream commit” / “Signed-off-by: Sasha Levin”
-  markers; they are not part of this evaluation
+- **Reported-by:** `sashiko-bot@kernel.org` (automated analysis bot, not
+  syzbot, not a user crash report)
+- **Assisted-by:** `Antigravity:gemini-3.5-flash` (LLM-assisted)
+- **Signed-off-by:** Dmitry Torokhov (author)
+- **Link:** https://patch.msgid.link/aintJF4X5tWDW-Ej@google.com
+- **Signed-off-by:** Lee Jones (MFD maintainer)
+- **No Fixes:** tag (expected for this review pipeline)
+- **No Cc: stable@vger.kernel.org** (expected; not treated as a
+  negative)
+- **No Tested-by / Reviewed-by / Acked-by**
+- No Sasha Levin SOB and no `[Upstream commit ...]` marker on the commit
+  itself
 
 Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: the `if (!ci)` early-return in `__ceph_remove_cap()` is dead.
-  `ci` is used as `&ci->netfs.inode` before the check, and
-  `cap->session` is used as `session->s_mdsc->fsc->client` even earlier.
-- Symptom/failure mode: on a second remove, `cap->ci` (and often
-  `cap->session`) are already NULL, so the second call NULL-derefs and
-  oopses before the guard.
-- Version info in the message: none.
-- Root cause (author): initializers were placed before the NULL check,
-  so the check cannot run.
+- **Bug:** `ipaq_micro_str()` decodes UTF-16LE into ASCII in stack
+  buffer `retstr` and never NUL-terminates it.
+- **Symptom/failure mode:** `kstrdup(retstr)` uses `strlen()`, which can
+  read past `retstr` into uninitialized stack, **leaking stack
+  contents**.
+- **Version information:** none in the message.
+- **Root cause (author):** missing terminator on a stack buffer before a
+  C-string API.
 
 Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not disguised. Explicit crash fix: move loads after the existing
-“already removed” guard.
+Record: **Not a hidden fix.** Subject and body state an OOB read / stack
+leak. The one-line zero-init matches that claim.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -122,48 +130,39 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `fs/ceph/caps.c` only (+10 / -7; net ~3 lines of real change)
-- Function: `__ceph_remove_cap()`
-- Scope: single-function surgical fix
+- **File:** `drivers/mfd/ipaq-micro.c` — 1 insertion, 1 deletion
+- **Function:** `ipaq_micro_str()`
+- **Scope:** single-file, single-line surgical fix
 
 Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before (this tree, `fs/ceph/caps.c` 1142–1155):
-  - `session = cap->session`
-  - `cl = session->s_mdsc->fsc->client`  (deref session)
-  - `ci = cap->ci`
-  - `inode = &ci->netfs.inode`           (deref ci)
-  - then `if (!ci) return;`
-- After:
-  - declare the locals
-  - `ci = cap->ci; if (!ci) return;`
-  - then load `session`, `cl`, `inode`
-- Path: second/concurrent remove of the same `struct ceph_cap`. Normal
-  first remove is unchanged.
+- **Before:** `char retstr[256];` is uninitialized. Loop writes `len/2`
+  ASCII bytes at `retstr[0 .. len/2-1]` and never writes a terminator.
+  `kstrdup(retstr)` calls `strlen()` (verified in `mm/util.c`).
+- **After:** `char retstr[256] = { 0 };` zero-fills the buffer, so the
+  first unused byte is NUL and `kstrdup` stays inside the array.
+- **Path:** `__init` probe dump only (`ipaq_micro_eeprom_dump()` →
+  `ipaq_micro_str()`), not a hot path.
 
 Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- Category: NULL pointer dereference (memory-safety), restoring a
-  race/double-remove guard
-- Mechanism: first `__ceph_remove_cap()` always does `cap->ci = NULL`
-  and, unless `s_cap_iterator == cap`, also `cap->session = NULL`. A
-  second call then hits NULL `session` or NULL `ci` during initializer
-  evaluation. Moving the check first makes the early-return real again.
+- **Categories:** uninitialized data **and** out-of-bounds stack read;
+  possible kernel-stack leak to dmesg.
+- **Mechanism:** C-string API on a non-terminated stack buffer. Callers
+  pass `len` of 10/40/20/10, so 5–20 bytes are written and 236–251 bytes
+  stay uninitialized. If those leftover bytes contain no NUL, `strlen()`
+  reads **past** the 256-byte array.
+- **Fix:** full zero-init; `len` is `u8` so `len/2 <= 127`, always room
+  for a terminator.
 
 Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- Obviously correct: C initializers must not run before the pointer they
-  depend on is checked.
-- Minimal: only reorders existing locals; no API/lock/data-structure
-  change.
-- Regression risk: very low. The only behavioral change on the already-
-  removed path is dropping `doutc(cl, "inode is NULL\n")`, which could
-  not run safely anyway because `cl` comes from `session`.
-- Residual: `session` is still not NULL-checked after `ci` is confirmed
-  non-NULL. In this tree `cap->session` is only set to NULL in
-  `__ceph_remove_cap()` (non-iterator case) and in
-  `iterate_session_caps()` after `!cap->ci`, so session-NULL with ci-
-  non-NULL is not a current assignment pattern.
+- **Quality:** obviously correct. Equivalent to `retstr[i] = '\0'` after
+  the loop; zero-init is simpler and covers every `len`.
+- **Regression risk:** very low. Only this helper; no locking, APIs, or
+  control-flow change. Extra zeros cannot make a well-formed EEPROM
+  string worse; they only stop the over-read.
+- **Red flags:** none (1 line, one driver, no public API).
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
@@ -171,43 +170,38 @@ PHASE 3: GIT HISTORY INVESTIGATION
 
 Step 3.1: BLAME THE CHANGED LINES
 Record:
-- Function exists since Sage Weil 2009 (`a8599bd821d084`).
-- Real NULL-ci guard added in `e5cafce3ad0f8` (“ceph: fix race in
-  concurrent __ceph_remove_cap invocations”, Luis Henriques, 2020; in
-  v5.11-rc1). That commit *moved* `mdsc` init *after* `if (!ci)` for
-  this exact crash.
-- Regression: `38d46409c4639` (“ceph: print cluster fsid and client
-  global_id in all debug logs”, Xiubo Li, 2023; in v6.7-rc1) added `cl =
-  session->s_mdsc->fsc->client` and `inode = &ci->netfs.inode` *before*
-  the check so `doutc()` could use them. That made the 2020 guard dead
-  again.
+- **Buggy function introduced by:** `dcc21cc09e3c22` — “mfd: Add driver
+  for Atmel Microcontroller on iPaq h3xxx” (Linus Walleij, 2014-04-03;
+  merged 2014-06-03).
+- **First appeared:** `v3.16-rc1` (`git describe --contains
+  dcc21cc09e3c22` → `v3.16-rc1~82^2~6^2~20`).
+- The `char retstr[256];` / `kstrdup` pattern was unchanged from
+  introduction until this fix.
 
 Step 3.2: FOLLOW THE FIXES: TAG
-Record: no Fixes: tag. The commit that reintroduced the crash is
-`38d46409c4639`, which **is** an ancestor of this tree (`git merge-base
---is-ancestor` exit 0). Original 2020 fix `e5cafce3ad0f8` is also here.
+Record: **No Fixes: tag.** Introducer identified by blame:
+`dcc21cc09e3c22`, present in this tree (`git merge-base --is-ancestor`
+not needed for HEAD history; the file and function are here).
 
 Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
 Record:
-- `ea60ed6fcf29e` — UAF in `__ceph_remove_cap()` (rb_erase ordering);
-  already here.
-- `a76d0a9c288ea` — wrapper `ceph_remove_cap()` with its own `if (!ci)`
-  check; already here.
-- Recent `fs/ceph/caps.c` work is unrelated (revoke, UAF in
-  kick_flushing, deadcode).
-- Standalone; subject is not “patch X/Y”. A later mainline series
-  proposing `RB_CLEAR_NODE()` instead of `ci=NULL` is **not** in this
-  tree (`ceph_cap_is_removed` does not exist) and is not required for
-  this fix.
+- Recent file commits are style/helpers (`str_enable_disable`, `%*ph`,
+  missing `break`, etc.), not a competing terminator fix.
+- **Standalone**, not `patch X/Y`. No follow-up on this helper after
+  `da3a98c941753`.
 
 Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Xiubo Li is listed in MAINTAINERS for Ceph FS and is a regular
-`fs/ceph/` contributor in this history. Ilya Dryomov (other Ceph
-maintainer) committed it.
+Record:
+- Author **Dmitry Torokhov** is a long-time input/MFD contributor, not
+  the iPAQ driver original author.
+- Nearby MFD work is unrelated (rohm, ucb1x00, mt6397). This looks like
+  a bot-found one-off, not a series.
 
 Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: none. It only reorders locals against code this tree already has
-(`ci->netfs.inode`, `doutc`, `lockdep_assert_held`). Applies standalone.
+Record:
+- **No dependencies.** Changes only `char retstr[256];` → `= { 0 }`.
+  Pre-fix function in this tree’s parent of the fix is identical to the
+  candidate hunk. **Applies standalone.**
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -215,272 +209,270 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- Mainline SHA: `a354d7eaa1a57f1532c8072a424cc2d339a73cc0` (not an
-  ancestor of HEAD; object exists locally).
-- `b4 dig -c a354d7eaa1a5`: https://patch.msgid.link/20260714-ceph-fix-
-  remove-cap-v1-1-27b5bc6ee2f6@clyso.com
-- `b4 dig -a`: single v1, no v2/v3.
-- Thread is two messages: the patch and Dubeyko “Makes sense.” +
-  Reviewed-by. No NAK, no requested respin.
-- Applied by Ilya Dryomov (CommitDate Wed Aug 26 2026).
+- **b4 dig -c da3a98c941753:** https://patch.msgid.link/aintJF4X5tWDW-
+  Ej@google.com
+- **b4 dig -a:** single **v1** only (2026-06-10); no v2/v3.
+- Thread (saved via `b4 dig -m`): Dmitry’s patch + Lee Jones “Applied,
+  thanks!” (2026-06-18). **No NAK, no stable nomination, no risk
+  discussion.**
+- lore.kernel.org WebFetch returned **403**; discussion recovered from
+  the mbox instead.
 
 Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): Xiubo Li, Ilya Dryomov, Alex Markuze, Viacheslav
-Dubeyko, ceph-devel, linux-kernel. Right maintainers were on To/Cc.
+Record: **b4 dig -w** original recipients: Dmitry Torokhov, **Lee
+Jones** (`lee@kernel.org`, MFD maintainer), `linux-
+kernel@vger.kernel.org`. Maintainer applied it. No other review mail in
+the thread.
 
 Step 4.3: SEARCH FOR THE BUG REPORT
-Record:
-- This 2026 patch itself has no new syzbot/bugzilla link.
-- The guard it restores was for a **production oops**: Ceph tracker
-  43272, “unable to handle kernel NULL pointer at
-  `__ceph_remove_cap+0x2a`”. Stack: `trim_caps_cb` →
-  `iterate_session_caps` → `dispatch`, with `evict`/`destroy_inode` in
-  the trace; MDS reconnect/stale-caps workload. Ilya identified NULL
-  `cap->ci`. That is the same function and the same check
-  `e5cafce3ad0f8` added (Cc: stable).
+Record: Reporter is **sashiko-bot**, not syzbot. No bugzilla/syzkaller
+link. No user “I hit this on hardware” report found in the thread.
+Severity from the author: stack OOB + possible stack leak.
 
 Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: standalone one-patch series (`change-id: 20260714-ceph-fix-
-remove-cap-cf7d8a7a242a`). Unrelated later `RB_CLEAR_NODE` RFC is not a
-prerequisite for 6.12.
+Record: **Standalone v1.** Not part of a multi-patch series.
 
 Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: UNVERIFIED for lore.kernel.org/stable HTML (Anubis 403). Full
-review thread was recovered via `b4 dig -m`. No reviewer asked to skip
-stable; no NAK.
+Record: **UNVERIFIED** for lore.kernel.org/stable (HTTP 403). No stable
+discussion in the captured mbox.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `__ceph_remove_cap()` only.
+Record: **`ipaq_micro_str()`** only.
 
 Step 5.2: TRACE CALLERS
-Record (this tree):
-- `ceph_remove_cap()` in `fs/ceph/caps.c` — wrapper; already has a safe
-  `if (!ci) return` using caller `mdsc`, then calls
-  `__ceph_remove_cap()`.
-- `ceph_purge_inode_cap()` in `fs/ceph/caps.c` — **direct** call, no
-  inner NULL check.
-- `ceph_purge_inode_cap()` callers: `remove_session_caps_cb()`
-  (`fs/ceph/mds_client.c`), `ceph_inode_shutdown()` (`fs/ceph/inode.c`).
-- Wrapper callers include `__ceph_remove_caps()` from
-  `ceph_evict_inode()`, `trim_caps_cb()`, and cap import/export in
-  `caps.c`.
-- Context: inode eviction, session teardown, cap trim, MDS dispatch /
-  `ceph_con_workfn` workqueue — not a one-time init path.
+Record: (semcode unavailable; `git grep` / file read)
+- Only caller: `ipaq_micro_eeprom_dump()` with `(dump, 10)`, `(dump+10,
+  40)`, `(dump+50, 20)`, `(dump+70, 10)`.
+- That dump is `__init` and is called from **`micro_probe()`** after MFD
+  cells are added.
+- Results go to `dev_info()` and, for the serial-number string,
+  `add_device_randomness()`.
 
 Step 5.3: TRACE CALLEES
-Record: `lockdep_assert_held`, `rb_erase`,
-`spin_lock(&session->s_cap_lock)`, `__ceph_queue_cap_release`,
-`ceph_put_cap`, `ceph_change_snap_realm`, `__cap_delay_cancel`.
-Unchanged by this patch.
+Record: loop assignment; **`kstrdup()`** → `strlen()` + `kmalloc` +
+`memcpy` (`mm/util.c`). That is what turns missing NUL into an over-read
+and a heap copy of whatever `strlen` walked.
 
 Step 5.4: FOLLOW THE CALL CHAIN
-Record: reachable from CephFS runtime: MDS reconnect/trim
-(`trim_caps_cb` / `iterate_session_caps`) and inode eviction. Userspace
-mounts CephFS; MDS recovery and memory reclaim trigger cap trim.
-Unprivileged users do not need a special syscall beyond using a mounted
-CephFS.
+Record:
+- `builtin_platform_driver_probe(..., micro_probe)` →
+  `ipaq_micro_eeprom_dump` → `ipaq_micro_str`.
+- **Reachable only when this platform device probes**, i.e. Compaq iPAQ
+  h3xxx with `CONFIG_MFD_IPAQ_MICRO` / `SA1100_H3600`.
+- Not a syscall-reachable path for unprivileged users on generic
+  hardware. Requires that board.
 
 Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: wrapper `ceph_remove_cap()` already does the check correctly.
-`__ceph_remove_cap()` is the remaining broken copy after
-`38d46409c4639`. Direct `ceph_purge_inode_cap()` still needs the inner
-guard.
+Record: No other `ipaq_micro_str`-style helper in-tree. Sibling iPAQ
+drivers (keys/ts/battery) do not duplicate this decoder.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: YES. Local tree is **pending-6.12 / 6.12.111** (`git describe
-HEAD` = `p-6.12-3-gc504cf0baa3d8`, Makefile VERSION=6 PATCHLEVEL=12
-SUBLEVEL=111). Current `fs/ceph/caps.c:1142-1155` is exactly the pre-
-patch code. Candidate `a354d7eaa1a5` is **not** an ancestor of HEAD.
-Regression `38d46409c4639` (v6.7-rc1) **is** an ancestor.
+Record:
+- **Yes.** File and helper exist. Pre-fix form (`char retstr[256];` +
+  `kstrdup`) is in this lineage from `dcc21cc09e3c22` (v3.16) through
+  the parent of `da3a98c941753`.
+- Current HEAD already contains the zero-init line (commit is an
+  ancestor of HEAD). That is **not** used as “already selected for
+  stable”; it only confirms the surrounding code is the same.
+- Local version: **7.3.0-rc4** / `v7.3-rc4-27-gf0100363d8c37`.
 
 Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: clean apply. The old hunk in this checkout matches the commit
-diff exactly (verified by matching the current function prologue). No
-`netfs.inode` mismatch.
+Record: **Clean apply.** Hunk context (`ipaq_micro_eeprom_read` /
+`ipaq_micro_str` / loop / `kstrdup`) is unchanged besides this one
+initializer. No refactor of this function in this tree.
 
 Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `e5cafce3ad0f8` is here but is ineffective because of
-`38d46409c4639`. No later equivalent reorder exists in this `caps.c`.
+Record: No earlier alternate terminator fix. `3d1c3272a8095` is an
+unrelated missing-`break` change.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [fs/ceph — CephFS client] [IMPORTANT: production distributed
-filesystem; not core VFS for every machine, but crash/data-path for all
-CONFIG_CEPH_FS users]
+Record:
+- **Subsystem:** MFD driver `drivers/mfd/ipaq-micro.c` (Compaq iPAQ
+  Atmel companion).
+- **Criticality: PERIPHERAL.** `MFD_IPAQ_MICRO` depends on
+  `SA1100_H3600` (StrongARM iPAQ H3100/H3600/H3700). `SA1100_H3600` is
+  still a real board option (not `UNUSED_BOARD_FILES`, unlike several
+  other sa1100 boards).
 
 Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: actively maintained (recent cap UAF/revoke fixes). This
-particular guard dates to 2020 and was broken by 2023 debug logging, not
-by new 6.12-only infrastructure.
+Record: **Mature / low churn.** Driver added 2014; later commits are
+small cleanups. Bug is long-standing, not a new-subsystem issue.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 Step 8.1: DETERMINE WHO IS AFFECTED
-Record: CephFS client users (`CONFIG_CEPH_FS`). Enterprise/HPC/cloud
-deployments commonly run this.
+Record: **Platform-specific / config-specific** — only kernels built for
+Compaq iPAQ H3xxx (`SA1100_H3600` selects `MFD_IPAQ_MICRO`). Not
+universal, not enterprise-default hardware.
 
 Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: concurrent `__ceph_remove_cap()` on the same cap — historically
-`iterate_session_caps` (`trim_caps_cb` / `remove_session_caps_cb`) vs
-inode eviction, especially around MDS reconnect/stale caps. Timing-
-dependent; documented as a real oops, not a lab-only theory. Trigger is
-kernel Ceph client activity, not a raw unprivileged syscall to an unused
-subsystem.
+Record:
+- **Trigger:** once per boot, in `__init` `micro_probe()`, when the
+  microcontroller EEPROM is dumped.
+- **How common:** every probe on that hardware; never on other machines.
+- **Unprivileged userspace:** cannot trigger this without the device
+  (not a syzbot-style syscall bug). If dmesg is readable, leaked stack
+  bytes in `dev_info` lines are the exposure.
 
 Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: NULL deref → kernel oops in `__ceph_remove_cap`. Severity
-**CRITICAL**. Tracker 43272 is exactly that oops.
+Record:
+- **Failure mode:** `strlen`/`kstrdup` over-read of stack; copy of extra
+  stack bytes into a heap string; print via `dev_info` (kernel log info
+  leak); oversized `add_device_randomness()` on the serial path.
+  Possible large `kmalloc` if no NUL is found soon; crash only if the
+  scan hits an unmapped guard (possible, not demonstrated).
+- **Severity: HIGH** for memory safety / info leak on that platform;
+  **LOW population**. Not a guaranteed panic on every boot.
 
 Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- Benefit: high — restores a stable-worthy crash guard that 6.12 still
-  has on paper but cannot execute.
-- Risk: very low — ~10-line local reorder, no locking/API change, first-
-  remove path identical.
-- Ratio: strongly favors backport.
+- **Benefit:** stops a real OOB stack read and stack leak for every iPAQ
+  micro probe. Code has been wrong since v3.16.
+- **Risk:** very low (one initializer, no behavior change for terminated
+  strings).
+- **Ratio:** benefit modest in user count, risk near zero. For a 1-line
+  memory-safety fix that is obviously correct, that still favors
+  inclusion.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
 Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real NULL deref / oops, not cleanup.
-- Production crash already recorded (tracker 43272); 2020 fix was Cc:
-  stable.
-- 6.12 contains the v6.7 debug-log regression that killed that guard.
-- Tiny, obviously correct, applies cleanly here.
-- Written and applied by Ceph maintainers; reviewed with no NAK.
-- Direct caller `ceph_purge_inode_cap()` still bypasses the wrapper
-  check.
+**FOR backporting to this tree:**
+- Real bug: missing NUL + `kstrdup`/`strlen` → OOB stack read; leftover-
+  buffer chance of no NUL is high (~35–40% if leftover bytes are
+  random), so this is not a purely theoretical race.
+- Failure includes kernel-stack contents in dmesg (info leak) and a
+  possibly oversized allocation.
+- One-line, obviously correct, no new API/feature.
+- Present in this tree’s code since v3.16; no missing prerequisites.
+- MFD maintainer Lee Jones applied v1 with no objections.
+- Matches stable patterns: uninitialized data, OOB, small surgical fix.
 
-AGAINST:
-- No Fixes:/Cc: stable on this 2026 commit (not a negative under these
-  rules).
-- Affects only CephFS, not every kernel.
-- Double-remove is a race, not every cap remove.
+**AGAINST:**
+- Extremely niche 2000-era PDA; not a core/enterprise path.
+- Probe/`__init` only; not a hot-path leak or a syscall UAF.
+- Reporter is sashiko-bot + LLM assist, not a hardware user or syzbot
+  repro.
+- No `Cc: stable` in review (not a negative per pipeline rules).
 
-UNRESOLVED:
-- lore.kernel.org/stable HTML search blocked (Anubis). Review mbox was
-  obtained via b4.
+**UNRESOLVED:**
+- Could not query lore.kernel.org/stable (403).
+- No runtime crash log; analysis is from code + commit text.
 
 Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — reorder after the pointer
-   check; maintainer review + mainline apply.
-2. Fixes a real bug that affects users? **PASS** — oops; same class as
-   tracker 43272.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   kernel NULL deref / oops.
-4. Small and contained? **PASS** — one function, one file, 17-line diff.
+1. Obviously correct and tested? **PASS** — zero-init makes `kstrdup`
+   well-defined; maintainer applied it. (No extra Tested-by; correctness
+   is visible from the code.)
+2. Fixes a real bug that affects users? **PASS** — OOB read + stack leak
+   on this driver’s probe path. Affected users are iPAQ H3xxx owners
+   only, but the bug is real.
+3. Important issue? **PASS** — out-of-bounds stack read and kernel-stack
+   leak, not a style cleanup. Severity HIGH on that platform, not a core
+   panic.
+4. Small and contained? **PASS** — 1 line, one static helper.
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — buggy code present; hunk
-   matches 6.12.111.
+6. Can apply to the local tree? **PASS** — same function, same callers,
+   no refactor required.
 
 Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: not an ID/quirk/DT/build/docs exception. Ordinary crash fix;
-qualifies on the main rules.
+Record: **None** (not a device ID, quirk, DT, build, or docs exception).
+It qualifies as a normal small memory-safety bug fix.
 
 Step 9.4: MAKE YOUR DECISION
-This 6.12 tree still evaluates `session->s_mdsc` and `&ci->netfs.inode`
-before `if (!ci)`. That is a crash on a second remove. The patch
-restores the 2020 guard with no extra dependencies. It should be
-backported.
+This tree contains the buggy helper and can take the one-line terminator
+fix with essentially no regression risk. Niche hardware lowers the user
+count; it does not make an OOB stack read + log leak ineligible. The
+patch meets the stable-rule checklist for **this** 7.3-rc4 tree.
 
-What the commit solves and why it matters here:
-`__ceph_remove_cap()` is supposed to no-op when `cap->ci` is already
-NULL (first remove already ran, including the iterate_session_caps
-delayed-remove case). In 6.12 those loads happen first, so the second
-call oopses. CephFS hits this on cap trim/session teardown versus
-eviction.
+===============================================================
+What the commit solves for this tree
+===============================================================
+`ipaq_micro_str()` fills a 256-byte stack buffer and then treats it as a
+C string. Without a terminator, `kstrdup()` → `strlen()` can read off
+the end of `retstr` and copy leftover stack into a heap string that is
+printed (`dev_info`) and, for the serial number, passed to
+`add_device_randomness()`. Zero-initializing `retstr` terminates the
+string inside the array. That is the whole fix.
 
-Risk vs benefit: benefit is avoiding a Ceph client oops; risk is a few
-lines of initializer movement.
+Risk vs benefit: benefit is limited to Compaq iPAQ H3xxx probe, but the
+defect is a genuine memory-safety / info-leak bug present since v3.16.
+Risk of the change is negligible. No series, no extra commits, no
+backport rework.
 
-Concerns: none for this tree. No missing prerequisites; no conflicting
-`RB_CLEAR_NODE` conversion.
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Parsed tags: Reported-by sashiko-bot; Assisted-by LLM; SOB
+  Dmitry Torokhov + Lee Jones; Link patch.msgid.link/aintJF4X5tWDW-
+  Ej@google.com; no Fixes/Cc-stable
+- [Phase 2] Diff: 1 line in `ipaq_micro_str()`: `char retstr[256]` → `=
+  { 0 }`
+- [Phase 2] `kstrdup` in `mm/util.c` uses `strlen(s)+1` then `memcpy` —
+  confirms OOB if unterminated
+- [Phase 2] Callers in `ipaq_micro_eeprom_dump` pass len 10/40/20/10;
+  `len` is `u8` so `len/2 <= 127`
+- [Phase 3] `git blame`: function from `dcc21cc09e3c22` (2014);
+  initializer from `da3a98c941753`
+- [Phase 3] `git describe --contains dcc21cc09e3c22` → v3.16-rc1; bug
+  long predates this tree
+- [Phase 3] `git log -15 --author=Dmitry Torokhov -- drivers/mfd/`: this
+  commit is an isolated ipaq-micro change
+- [Phase 3] No related follow-up on `ipaq_micro_str`
+- [Phase 4] `b4 dig -c da3a98c941753`: lore URL found; `-a` only v1;
+  `-w` Lee Jones + lkml; `-m` thread is patch + “Applied, thanks!”
+- [Phase 4] WebFetch lore/all and lore/stable: **403** — UNVERIFIED via
+  HTTP
+- [Phase 5] grep: only `ipaq_micro_eeprom_dump` / `micro_probe` call
+  this helper; `__init` probe path
+- [Phase 6] `git describe HEAD` / `make kernelversion`: **v7.3-rc4 /
+  7.3.0-rc4**
+- [Phase 6] `git merge-base --is-ancestor da3a98c941753 HEAD`: yes
+  (commit is in this checkout; not used as circular “already selected”)
+- [Phase 6] Pre-fix snippet from `da3a98c941753^` matches the candidate
+  diff exactly
+- [Phase 7] Kconfig: `MFD_IPAQ_MICRO depends on SA1100_H3600`; H3600 not
+  under UNUSED_BOARD_FILES
+- [Phase 8] Failure mode: stack OOB + dmesg leak on iPAQ probe, severity
+  HIGH on that platform
+- UNVERIFIED: whether anyone discussed this on stable@; whether strlen
+  walking off-stack actually hits a guard page on SA1100
 
-Verification:
-- [Phase 1] Tags: author/reviewer/maintainer SOBs only; no
-  Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: `__ceph_remove_cap()` in `fs/ceph/caps.c`, +10/-7,
-  move ci/session/cl/inode after `if (!ci)`
-- [Phase 3] `git blame fs/ceph/caps.c` 1142–1160: guard from
-  `e5cafce3ad0f8` (v5.11); bad inits from `38d46409c4639` (v6.7-rc1)
-- [Phase 3] `git show e5cafce3ad0f8`: original stable-bound NULL-ci fix
-  moved mdsc after the check
-- [Phase 3] `git show 38d46409c4639`: added `cl = session->...` and
-  `inode = &ci->netfs.inode` before `if (!ci)`
-- [Phase 3] `git merge-base --is-ancestor 38d46409c4639 HEAD` → yes;
-  `e5cafce3ad0f8` → yes; `a354d7eaa1a5` → no
-- [Phase 4] `b4 dig -c a354d7eaa1a5`: lore
-  https://patch.msgid.link/20260714-ceph-fix-remove-
-  cap-v1-1-27b5bc6ee2f6@clyso.com
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: Dryomov/Markuze/Dubeyko/ceph-devel CC’d
-- [Phase 4] mbox: Dubeyko Reviewed-by, no NAK
-- [Phase 4] tracker.ceph.com/issues/43272: production NULL deref in
-  `__ceph_remove_cap` from `trim_caps_cb`
-- [Phase 5] Callers: wrapper `ceph_remove_cap()` (safe) and
-  `ceph_purge_inode_cap()` (unsafe direct)
-- [Phase 6] `git describe HEAD`: p-6.12-3-gc504cf0baa3d8; `make
-  kernelversion`: 6.12.111; buggy prologue present at caps.c:1144–1155
-- [Phase 6] Current function text matches the patch’s old hunk exactly
-- [Phase 8] Failure mode: kernel oops on NULL session/ci, severity
-  CRITICAL
-- UNVERIFIED: lore.kernel.org/stable HTML search (Anubis); not used for
-  the verdict
+The fix is small, surgical, and meets the stable criteria for this tree.
 
 **YES**
 
- fs/ceph/caps.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/mfd/ipaq-micro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index 7f4bb62df3def..91cb305815cbd 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1141,18 +1141,21 @@ int ceph_is_any_caps(struct inode *inode)
-  */
- void __ceph_remove_cap(struct ceph_cap *cap, bool queue_release)
+diff --git a/drivers/mfd/ipaq-micro.c b/drivers/mfd/ipaq-micro.c
+index 4b757d8472825..5146a6eb0e5a6 100644
+--- a/drivers/mfd/ipaq-micro.c
++++ b/drivers/mfd/ipaq-micro.c
+@@ -221,7 +221,7 @@ static void ipaq_micro_eeprom_read(struct ipaq_micro *micro,
+ 
+ static char *ipaq_micro_str(u8 *wchar, u8 len)
  {
--	struct ceph_mds_session *session = cap->session;
--	struct ceph_client *cl = session->s_mdsc->fsc->client;
--	struct ceph_inode_info *ci = cap->ci;
--	struct inode *inode = &ci->netfs.inode;
-+	struct ceph_mds_session *session;
-+	struct ceph_client *cl;
-+	struct ceph_inode_info *ci;
-+	struct inode *inode;
- 	struct ceph_mds_client *mdsc;
- 	int removed = 0;
+-	char retstr[256];
++	char retstr[256] = { 0 };
+ 	u8 i;
  
- 	/* 'ci' being NULL means the remove have already occurred */
--	if (!ci) {
--		doutc(cl, "inode is NULL\n");
-+	ci = cap->ci;
-+	if (!ci)
- 		return;
--	}
-+
-+	session = cap->session;
-+	cl = session->s_mdsc->fsc->client;
-+	inode = &ci->netfs.inode;
- 
- 	lockdep_assert_held(&ci->i_ceph_lock);
- 
+ 	for (i = 0; i < len / 2; i++)
 -- 
 2.53.0
 
