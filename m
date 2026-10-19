@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C654558703;
-	Mon, 19 Oct 2026 13:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200D655A28A;
+	Mon, 19 Oct 2026 13:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418231; cv=none; b=G+eeubZjuwwgrMesq4uFNXr1VPUzFgvswfG+gbcOj9HUuXYlLqU1Ej3j4Rih0RVai0M7eOU5ydAW/wq0sBPyvS470rfqrH6OoCYSastU1kvoDAJ5vENZWtdA2RZyXlsHpvAZJwE+A3IlSvNVjxt1iGCSZWQA/OkWaJ2d1ZYftNI=
+	t=1792418232; cv=none; b=Ns7Wu7f2LGiV6JAGEpNFzvb4UbYtAD8am8VMys8peds0JnIVXeYYQN05McnBxNu3Aq2KJoP/ERMc8MjAmUXV8RQtvL8MRRCSscI//tw6HQNAPkyjYHqkkC8CRbjXtVbWZrnpO9qFRwL1nGUZE63fi1rRDcxYqaAvsH9XXj2qByk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418231; c=relaxed/simple;
-	bh=aHgLq/tebAINb5gYHKI0k1iGNAU4UAK6jtVtJx1xs3A=;
+	s=arc-20240116; t=1792418232; c=relaxed/simple;
+	bh=AZXjxsCPS4rNmUCm7QddDv2NNVQGPMq77xilEpD8Zdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a0YtO4YTvO9aGGyjc/HvYD34LpNML3rqac+gMArI/1hZeU/Q/bzB3Jdm5XskDg97akMNSREDiSIo01R4cSMpNgdwz5Yo3sMbCr3hS+Aqpw3kejbYgQve1t2wYvvGqGc6uNsZNfDPVjr/TuBiLe/6dT1EEWx16spftlpP8tICzm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ddtRi9mQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KUEP8c2IoqJprOAIC7gPQXKJ7oozXoMPDjYmR/0eh9dRweZK1eDtPS9CQkgSLG7WP78ouQDeensNaqdV98Xx/jtkKB4qG8P4IOlOpwvLMNJcCh4KTjehtSUbn69Ifg7dmWZE2AZ3lhdrLodF6xgagFhIYgQEB5nozSJVlP/yu5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IFF4ou3J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ddtRi9mQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BDB1F000C8;
-	Mon, 19 Oct 2026 13:57:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFF4ou3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10BB1F000C4;
+	Mon, 19 Oct 2026 13:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418228;
-	bh=0r/8Lb/WBrvIXryyNi1s30vdlPNeUoD+N6RqN8PvK/o=;
+	s=k20260515; t=1792418229;
+	bh=Uq1pZL5AqR1p29pZAp1Vr7oZbLYXhdL3FVLTMJ5eOP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ddtRi9mQh5Pr9pwqwQjf+1sIz2QQZ9eCiMa4mn42OG9tqNS1dcn8HORBCervIwuPz
-	 lStlOf5cuu5/W+0wbJMs29u+RaG0i6psAuUtgz1Qj7+ZKW56d7NyncGuU9q/uDYyIO
-	 Hx4bO/y8QooRdXdPWq2PxrYQLr+fEDKFDobNnnHg3Bzil6UWyNRoCZwEjLCZ/z9Njx
-	 QhkctS071vQGxrvjhAEMDz2Ar6WXnM4VZiOCbBbPowCEpt9/Cj+whnUasGDQEn1wAq
-	 cJYf3kHPNvv1M9Q0/o+a5B8opqbWxladQ4j+xV0iNLQ7vDyW0hnsxCygElP0O+V+ZC
-	 lzDSIULJPN1bQ==
+	b=IFF4ou3JYsRg0lvbOa+7o0/TqQfbaWkQ+RId3k0xVkwQDQgoEfjGc1udkYxqvaOZi
+	 HXRe+k/zIlGK4TDQQWnmk2mY08/4U5RLB/2XQiBK1hE+tx7RSEHIN20PjKOn+Mnyh4
+	 DpJkHkiybfMLs6FrWn1uZeAnAVpGr1XnxvhDI4uTssMAA2hlcsj50FI04a6HK4pNCt
+	 WwfOus6GBUZRumdvCr2113ekPmS8f8RbZyYgxsI5FomNLVrGEG1T2caXIcEy7V0Oxp
+	 sDGM/NdcWL/5/8bLAtzKslElEltYP3gEnQtqbq2JW6qeZeP2alI3JupDJ3JVQMqMV5
+	 ZeyKnCxJcZSkg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-cifs@vger.kernel.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ksmbd: notify parent directory leases on child create
-Date: Mon, 19 Oct 2026 09:46:34 -0400
-Message-ID: <20261019135441.1420968-103-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] media: em28xx: use vb2_video_unregister_device
+Date: Mon, 19 Oct 2026 09:46:35 -0400
+Message-ID: <20261019135441.1420968-104-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,539 +53,437 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit abe5acb34282206c2a6303d0e09b3165b1addf0e ]
+[ Upstream commit 7c8bf63b79371f5b57da1bd1401bd420180ac6e6 ]
 
-BVT_DirectoryLeasing_ReadWriteHandleCaching requires a parent directory
-lease break notification when another client creates a child in the
-leased directory. A child CREATE without a lease context did not notify
-the parent lease holders because the notification path expected a
-non-NULL lease context.
+Use vb2_video_unregister_device instead of video_unregister_device
+to ensure any streaming is correctly stopped at unregister time.
 
-Allow the parent lease notification helper to handle a NULL child lease
-context and notify matching parent leases. Invoke it after a child is
-created without a lease context while preserving the existing lease-key
-filtering for requests that provide one.
-
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). Directory leasing is
-already advertised here, and this patch fills a hole in that existing
-notification path.
+## Phase 1: Commit message forensics
 
----
+**Step 1.1: Subject line**
+Record: `[media: em28xx] [use] switch unregister to
+vb2_video_unregister_device so streaming is stopped at unbind`
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[ksmbd] [notify] parent directory leases on child create**
-
-- Subsystem: `ksmbd` (kernel SMB3 server)
-- Verb: “notify” — protocol-correctness / missing-event fix, not a
-  feature add
-- Claimed intent: send a parent directory lease break when a child is
-  created
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Verified from `git log -1 --format='%B' abe5acb342822`:
-
-- **Signed-off-by: Namjae Jeon** `<linkinjeon@kernel.org>` (author and
-  committer; ksmbd maintainer)
-- **No Fixes:** tag (expected for this review pipeline)
-- **No Cc: stable** (expected)
-- **No Reported-by / Tested-by / Reviewed-by / Acked-by / Link**
-- Ignore pipeline-added Sasha Levin SOB / `[Upstream commit …]` if
-  present on a candidate copy
-
-Notable: maintainer-authored, no external review tags. The body cites
-Microsoft BVT `BVT_DirectoryLeasing_ReadWriteHandleCaching`.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+**Step 1.2: Tags**
 Record:
-- **Bug:** A child CREATE with no lease context never notifies holders
-  of a parent directory lease, because
-  `smb_send_parent_lease_break_noti()` assumed `lctx` was non-NULL.
-- **Symptom:** Windows BVT `BVT_DirectoryLeasing_ReadWriteHandleCaching`
-  fails; SMB3 clients with a directory lease keep a stale directory
-  cache after another client creates a child.
-- **Version info:** None in the message. Introducing code is from
-  v6.7-rc6 (`d47d9886aeef7`).
-- **Root cause:** Notification only ran on CREATE-with-lease-context;
-  the helper immediately used `lctx->version`.
+- `Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (author;
+  V4L2/videobuf2 maintainer)
+- `Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (author tested;
+  not an independent tester)
+- `Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>`
+  (media maintainer)
+- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable`, `Reviewed-by:`, or
+  `Acked-by:`
+- Absence of `Fixes:` / `Cc: stable` is expected for this review and is
+  not treated as a negative
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: **Not a disguised cleanup.** This is an explicit protocol bug
-fix: missing lease-break on a common CREATE path. Not a refactor or new
-API.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
-
+**Step 1.3: Body**
 Record:
-- `fs/smb/server/oplock.c`: +5/−4 in
-  `smb_send_parent_lease_break_noti()`
-- `fs/smb/server/smb2pdu.c`: +3 in `smb2_open()`
-- **Scope:** 8 insertions, 4 deletions; single-subsystem surgical fix
+- Bug: `video_unregister_device()` does not stop an active vb2 queue, so
+  streaming can continue after the video node is unregistered.
+- Symptom: capture still running across USB unbind / module unload /
+  probe rollback.
+- Root cause (from message + helper docs): drivers that use
+  `_vb2_fop_release()` must use `vb2_video_unregister_device()` so the
+  queue is released at unregister time.
+- No stack trace, reproducer, or version range in the message.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 1.4: Hidden bug fix?**
+Record: Yes. “Use helper X” is a correctness fix, not a feature. The
+cover letter for the series is titled “fix lifecycle issues” and says
+this patch “ensures all streaming is stopped when the video device is
+unregistered.”
 
-Verified against local `smb_send_parent_lease_break_noti()`
-(`fs/smb/server/oplock.c` ~1214) and `smb2_open()` (~3521):
+## Phase 2: Diff analysis
 
-Hunk 1 (helper guard):
-- **Before:** `if (lctx->version != 2) return;` — NULL `lctx` would
-  crash; callers never passed NULL.
-- **After:** `if (lctx && lctx->version != 2) return;` — NULL means
-  “notify matching parent leases”.
-
-Hunk 2 (filter condition):
-- **Before:** Always used `lctx->flags` / `lctx->parent_lease_key` to
-  skip the same parent lease.
-- **After:** `!lctx || (existing parent-key filter)` — NULL child
-  context breaks all active parent directory leases; lease-key filtering
-  is unchanged when `lctx` is present.
-
-Hunk 3 (`smb2_open`):
-- **Before:** Parent notify only inside `if (req_op_level ==
-  SMB2_OPLOCK_LEVEL_LEASE && lc)`.
-- **After:** Also `if (created && !lc)
-  smb_send_parent_lease_break_noti(fp, NULL);` in the oplocks-enabled
-  branch.
-
-`created` is set when `smb2_creat()` succeeds (`smb2pdu.c` ~3301–3313).
-`lc` is only set when a lease create context is parsed (~3017, ~3061).
-The two notify sites are mutually exclusive (`!lc` vs `lc`).
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **[Logic / protocol correctness]** Directory leasing is
-advertised (`SMB2_GLOBAL_CAP_DIRECTORY_LEASING` in `smb2ops.c`; docs say
-“Directory leases(v2 lease) Supported”). CREATE without a lease context
-never broke the parent directory lease. The helper change is a NULL-safe
-call convention so that path can notify. Not UAF/leak/race/overflow by
-itself; the failure mode is stale client directory cache.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
+**Step 2.1: Inventory**
 Record:
-- Obviously correct: short-circuit `!lctx` avoids `lctx->flags` deref;
-  reuses the existing break helper.
-- Minimal; no unrelated edits.
-- Regression risk **low**: extra breaks only on real child create with
-  no lease context, which MS-SMB2 requires. Locking matches the existing
-  `smb_send_parent_lease_break_noti(fp, lc)` call a few lines later
-  (`p_ci->m_lock` then `oplock_break_drain_none()`).
-- No public API / data-structure change.
+- File: `drivers/media/usb/em28xx/em28xx-video.c` (+6 / -6)
+- Functions: `em28xx_v4l2_fini()`, `em28xx_v4l2_init()` error path
+  `unregister_dev`
+- Six call sites: radio / VBI / video, in both fini and probe-error
+  teardown
+- Scope: single-file surgical substitution
 
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
+**Step 2.2: Code flow**
 Record:
-- Buggy helper and the lease-context-only call site: **`d47d9886aeef7`**
-  (“ksmbd: send v2 lease break notification for directory”, Namjae Jeon,
-  2023-12-08).
-- First contained in **`v6.7-rc6`**. Present in this 6.12 tree (`git
-  merge-base --is-ancestor d47d9886aeef7 HEAD` → yes).
-- Directory leasing capability: **`18dd1c367c31d`** (“ksmbd: set v2
-  lease capability”), also in this tree.
+- Before: `video_unregister_device()` only removes the node; the vb2
+  queue can remain in STREAMING.
+- After: `vb2_video_unregister_device()` unregisters, then
+  `vb2_queue_release()` (under the queue lock) which runs
+  `stop_streaming` and returns buffers.
+- Paths: USB disconnect / module unload (`em28xx_v4l2_fini`) and init
+  failure (`unregister_dev`).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
+**Step 2.3: Bug mechanism**
+Record: `[logic / lifecycle] [use-after-unbind]`
+Verified disconnect order in this tree:
 
-Record: **No Fixes: tag.** The incomplete behavior was introduced by
-`d47d9886aeef7`, which is in this tree.
+1. `em28xx_usb_disconnect()` sets `disconnected`, then
+   `em28xx_close_extension()` → `em28xx_v4l2_fini()`.
+2. fini already calls `em28xx_uninit_usb_xfer()`, then unregisters
+   nodes.
+3. Then `em28xx_release_resources()` unregisters I2C and
+   `usb_put_dev()`.
+4. Userspace may still hold the fd. Close calls `em28xx_v4l2_close()` →
+   `_vb2_fop_release()` → `vb2_queue_release()` →
+   `em28xx_stop_streaming()`.
+5. `em28xx_stop_streaming()` does `v4l2_device_call_all(..., video,
+   s_stream, 0)` and `em28xx_uninit_usb_xfer()`. That runs **after**
+   I2C/USB teardown if the queue was not stopped in fini.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Stopping the queue in fini keeps `stop_streaming` on the unbind side of
+I2C/USB teardown.
 
+**Step 2.4: Fix quality**
 Record:
-- Same class already in this tree: `3fc74c65b3674` “send lease break
-  notification on FILE_RENAME_INFORMATION” (smb2.lease.v2_epoch2);
-  `7f58458e9db92` “break RH leases before delete-on-close”.
-- Later on `all-next`, `0e753899627b5` only changes
-  `oplock_break_drain_none(&brk_list)` → `(&brk_list, p_ci)` — **already
-  present locally** via `5de0527f78243`. Not a prerequisite of this
-  patch.
-- `git log all-next -S 'created && !lc'` shows **only** `abe5acb342822`
-  — no follow-up rewrite of this call.
+- For video and VBI this is the documented vb2 pattern
+  (`include/media/videobuf2-v4l2.h`: drivers using `_vb2_fop_release()`
+  should use this helper). `em28xx_v4l2_close()` does call
+  `_vb2_fop_release()`.
+- Video/VBI set `vdev->queue` (`vb_vidq` / `vb_vbiq`).
+- Radio never sets `vdev->queue`. The helper does
+  `WARN_ON(!vdev->queue)` then still calls `video_unregister_device()`.
+  Two boards have radio (`EM2820_BOARD_LEADTEK_WINFAST_USBII_DELUXE`,
+  `EM2860_BOARD_KAIOMY_TVNPC_U2`).
+- Probe error path: `vdev->queue` is assigned **before**
+  `em28xx_vb2_setup()` / `vb2_queue_init()`. `unregister_dev` after a
+  later `video_register_device()` or media-graph failure can call
+  `vb2_queue_release()` on a zeroed queue (`mutex_lock(&q->mmap_lock)`
+  in `vb2_core_queue_release()`). That is a real, but rare, teardown
+  hazard.
+- No API/feature additions. Regression risk is low on the disconnect
+  path (queue is initialized); radio WARN_ON and probe-error queue
+  release are the main nits.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+## Phase 3: Git history
 
-Record: Namjae Jeon is listed as **KERNEL SMB3 SERVER (KSMBD)**
-maintainer in `MAINTAINERS`. Recent local ksmbd lease work includes
-lease lookup, RH lease break, lease context validation.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: **Standalone.** Uses existing
-`smb_send_parent_lease_break_noti()`, `created`, and `lc`. `git show
-abe5acb342822 | git apply --check` **succeeds** on this tree (oplock.c
-offset −232, smb2pdu.c offset −1136).
-
-Candidate SHA on `all-next`: **`abe5acb342822`** (in `ksmbd-
-for-7.3-rc1`, described as `v7.3-rc1~77^2~20`). **Not** in HEAD.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
+**Step 3.1: Blame**
 Record:
-- `b4 dig -c abe5acb342822`: lore search returned server errors; **no
-  thread URL**.
-- lore.kernel.org WebFetch: **403**.
-- Found via LKML: [GIT PULL] ksmbd server update for 7.3-rc1 (Namjae
-  Jeon, 2026-08-23) lists this commit and calls out **“parent directory
-  lease notifications”** among protocol-compatibility fixes.
-- Linus merge `61a09cfc12147` uses the same wording.
+- `video_unregister_device()` on these nodes comes from the
+  embedded-`video_device` era (`d4352f3639d780`, 2015) and older Mauro
+  unregister paths (2008/2013).
+- Bug is long-standing, not new in 7.3.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+**Step 3.2: Fixes: tag**
+Record: None. Helper introduced in `f729ef5796d82` (2020, around v5.10).
+`git merge-base --is-ancestor f729ef5796d82 HEAD` succeeds.
 
-Record: No Reviewed-by. Author is the maintainer and committed it to the
-ksmbd tree. Recipients of the original mail **unverified** (lore 403 /
-b4 failure).
+**Step 3.3: File history**
+Record: Same-day series on this file:
+1. `288254383674b` media: em28xx: use v4l2_device release callback
+2. `de626073dfcbb` media: em28xx: drop 'users' field
+3. `7c8bf63b79371` **this commit**
+4. Later: `c132b07f7e585` (use-after-free of `dev->intf` in free),
+   `67f87b104f4ef` (requeue on start_streaming failure)
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
+This is standalone at the diff level (only a symbol change). Series
+context: patch 1 deferred `v4l2_device_unregister()` until last close,
+which makes a late `stop_streaming()` after I2C teardown more likely.
+This tree already contains patches 1 and 2.
 
-Record: No syzbot/bugzilla. Trigger is Microsoft BVT
-**BVT_DirectoryLeasing_ReadWriteHandleCaching** (Windows protocol test:
-client A holds a directory RWH lease; client B creates a child without a
-lease context; A must get a break).
+**Step 3.4: Author**
+Record: Hans Verkuil is the V4L2/videobuf2 maintainer. He added the
+helper in 2020 and converted au0828/usbtv/cxusb then (`24b5836dbd45b`).
+em28xx was not in that conversion.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+**Step 3.5: Prerequisites**
+Record: Needs `vb2_video_unregister_device()` (present). Needs em28xx
+vb2 video/VBI (present). `em28xx.h` already includes `videobuf2-v4l2.h`.
+Can apply standalone. This tree already has the helper and the driver.
 
-Record: Not labeled `N/M`. Adjacent commits are AppInstanceVersion
-takeover / durable reconnect — unrelated. Independent.
+## Phase 4: Mailing list / external
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+**Step 4.1: Original discussion**
+Record: `b4 dig -c 7c8bf63b79371` → https://patch.msgid.link/ad61b2c30cd
+477599312e9d5c12045dcd05c8ecd.1779191683.git.hverkuil+cisco@kernel.org
+Saved thread: `/tmp/em28xx-thread.mbox` (cover + 3 patches, **no
+replies**).
+`b4 dig -a`: **v1 only**. Cover: `[PATCH 0/3] media: em28xx: fix
+lifecycle issues`. Quote: “the last patch switches
+video_unregister_device to vb2_video_unregister_device: this ensures all
+streaming is stopped when the video device is unregistered.” Also: “All
+this still needs to be tested on real hardware” at send time; the merged
+commit later has `Tested-by: Hans Verkuil`. No NAK, no `Cc: stable` in
+review (there was no review mail).
 
-Record: **UNVERIFIED** (lore 403). No evidence it was rejected for
-stable. Absence of Cc: stable is expected here.
+WebFetch of lore returned 403. Thread content was recovered via `b4 dig
+-m`.
 
----
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: Hans Verkuil, `linux-media@vger.kernel.org`, Mauricio Faria de
+Oliveira `<mfo@igalia.com>`. No review mail in the mbox. Mauro applied
+it.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.3: Bug report**
+Record: No `Reported-by` / syzbot / bugzilla. No independent user report
+found in the thread.
 
-**Step 5.1: KEY FUNCTIONS**
+**Step 4.4: Series**
+Record: Explicit 3/3 of a lifecycle series. This hunk does not need
+patches 1–2 to compile. Those two are already in this tree.
 
-Record: `smb_send_parent_lease_break_noti()`, `smb2_open()`.
+**Step 4.5: Stable list**
+Record: UNVERIFIED. lore.kernel.org/stable was blocked (Anubis bot-
+check). No stable discussion in the captured media thread.
 
-**Step 5.2: TRACE CALLERS**
+## Phase 5: Semantic / call graph
 
-Record (this tree, `git grep`):
-- `smb_send_parent_lease_break_noti` — only `smb2_open()`.
-- After the patch: two sites in `smb2_open` (`created && !lc`, and
-  existing lease-context path).
-- `smb2_open` is the SMB2 CREATE handler — authenticated SMB clients.
+**Step 5.1: Functions**
+Record: `em28xx_v4l2_fini`, `em28xx_v4l2_init` (`unregister_dev`).
+Callee: `vb2_video_unregister_device` → `video_unregister_device` +
+`vb2_queue_release` → `em28xx_stop_streaming` /
+`em28xx_stop_vbi_streaming`.
 
-Related: `smb_lazy_parent_lease_break_close()` on close after write
-(`reserve_lease_break`); not this CREATE gap.
-
-**Step 5.3: TRACE CALLEES**
-
-Record: `ksmbd_inode_lookup_lock(parent)`, `down_read(p_ci->m_lock)`,
-walk `m_op_list`, `compare_guid_key()`, `oplock_break_add()`,
-`oplock_break_drain_none()`, `ksmbd_inode_put()`. Same as today’s
-helper.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Userspace SMB2 CREATE → `smb2_open` → (new) parent lease break.
-Reachable whenever ksmbd is running with leases/`smb2 leases` and a
-client holds a directory lease. Windows 8+ SMB3 clients request
-directory leases by default. **Yes, client-triggerable.**
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same missing-break pattern already fixed for rename
-(`3fc74c65b3674`, in this tree). Unlink/close uses
-`smb_lazy_parent_lease_break_close`. This patch is the CREATE-without-
-lease counterpart.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.**
-
-```1221:1236:fs/smb/server/oplock.c
-        if (lctx->version != 2)
-                return;
-        // ...
-                    (!(lctx->flags &
-SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE) ||
-                     !compare_guid_key(opinfo, fp->conn->ClientGUID,
-                                      lctx->parent_lease_key))) {
-```
-
-```3530:3541:fs/smb/server/smb2pdu.c
-                if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE && lc) {
-                        // ...
-                        smb_send_parent_lease_break_noti(fp, lc);
-```
-
-Bug introduced **v6.7** (`d47d9886aeef7`). Capability advertised in
-`init_smb3_0_server()` / `init_smb3_02_server()`. Docs: “Directory
-leases(v2 lease) Supported.”
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Clean apply with offset.** Local helper already has
-`oplock_break_drain_none(&brk_list, p_ci)` from `5de0527f78243`; that
-line is outside the candidate hunks. `git apply --check` succeeded.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: Rename/delete-on-close lease-break fixes are here. **This
-CREATE-without-lease notify is not.** Subject grep found no equivalent.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: **[ksmbd / fs/smb/server] [IMPORTANT]** — in-kernel SMB3 server
-for NAS/embedded. Not core VFS; not staging. Config `SMB_SERVER`,
-default n.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: **Actively developed.** This pending 6.12 tree already carries
-many ksmbd protocol and lease fixes (partial responses, RH lease break,
-lease context validation, oplock UAF). Mature enough that directory
-leasing has been “Supported” since ~6.7.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: **Config/driver-specific:** `CONFIG_SMB_SERVER` with SMB2 leases
-and SMB3 directory leasing. Affects Windows/SMB3 clients that cache
-directories against ksmbd.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
+**Step 5.2: Callers**
 Record:
-- Client A holds a v2 directory lease.
-- Client B creates a child **without** a lease create context (`created
-  && !lc`).
-- Common for a second client or simple SMB CREATE; exactly the BVT
-  setup.
-- Authenticated SMB client, not a local unprivileged syscall.
+- `em28xx_v4l2_fini` ← `em28xx_close_extension()` (`em28xx-core.c`) ←
+  `em28xx_usb_disconnect()` (unplug) and `em28xx_unregister_extension()`
+  (module unload).
+- `unregister_dev` ← probe/init failures after a node is registered.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+**Step 5.3: Callees**
+Record: queue release, `stop_streaming`, `em28xx_uninit_usb_xfer`,
+`v4l2_device_call_all(..., s_stream, 0)`.
 
-Record: **Stale directory cache / protocol violation.** Not
-oops/deadlock/fs corruption. Clients can miss newly created names until
-some other break. **Severity: MEDIUM** (interoperability / user-visible
-wrong directory contents), same class as the rename lease-break fix
-already in this tree.
+**Step 5.4: Reachability**
+Record: Yes. Unplug or `rmmod` while an analog capture app is streaming
+is a normal USB-TV / webcam path. Unprivileged userspace can hold the
+device open; unplug is a physical event.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+**Step 5.5: Similar patterns**
+Record: Same helper is used across USB/PCI/platform V4L2 drivers (uvc,
+au0828, usbtv, saa7134, vivid, …). em28xx was a leftover vs the 2020 USB
+conversion.
 
+semcode MCP tools: not available; used `git grep` / file reads.
+
+## Phase 6: This tree
+
+**Step 6.1: Local tree and buggy code**
 Record:
-- **Benefit:** High for ksmbd+Windows SMB3: advertised directory leasing
-  actually invalidates on child create.
-- **Risk:** Very low — ~8 lines, existing helper, applies cleanly, no
-  new locks/APIs.
-- **Ratio:** Favor backport.
+- `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`
+- `make kernelversion` / Makefile → **7.3.0-rc4** (mainline, not an LTS
+  branch)
+- `git merge-base --is-ancestor 7c8bf63b79371 HEAD` → yes (already in
+  this checkout)
+- Driver, helper, and `_vb2_fop_release()` close path all exist here
+- Bug class (unregister without stopping vb2) has been in em28xx since
+  ~2015; it was not introduced after this tree
 
----
+**Step 6.2: Backport difficulty**
+Record: Clean apply on this codebase (already applied). Helper and
+includes are present. No conflicting refactor of these call sites beyond
+the same series.
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 6.3: Related fixes already here**
+Record: Lifetime callback + drop-`users` are already here. No alternate
+fix of these six call sites. Follow-up `67f87b104f4ef` is a different
+start_streaming WARN, not a replacement for this change.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+## Phase 7: Subsystem
 
-**FOR:**
-- Real protocol bug in **advertised** directory leasing (docs +
-  `SMB2_GLOBAL_CAP_DIRECTORY_LEASING`).
-- User-visible: stale Windows directory cache; Microsoft BVT failure.
-- Buggy code in this 6.12 tree since v6.7.
-- Small, obviously correct, applies cleanly.
-- Same class as `3fc74c65b3674` already in this tree.
-- Maintainer-authored; in `ksmbd-for-7.3-rc1` as a protocol-
-  compatibility fix.
-- No extra prerequisites.
+**Step 7.1**
+Record: `[drivers/media/usb/em28xx] [IMPORTANT]` — USB analog capture,
+not core mm/net, but a long-lived in-tree driver with real hardware
+users (`CONFIG_VIDEO_EM28XX` / `VIDEO_EM28XX_V4L2`).
 
-**AGAINST:**
-- Not a crash, UAF, or security issue.
-- No Fixes:/Cc: stable (expected; not a negative).
-- No public user bugzilla; test-suite driven.
-- `SMB_SERVER` is optional.
+**Step 7.2**
+Record: Mature driver; recent work is lifecycle/vb2 correctness from the
+V4L2 maintainer, not a new subsystem.
 
-**UNRESOLVED:** Original lore review thread (b4/lore 403). No NAK found
-in the 7.3-rc1 pull.
+## Phase 8: Impact and risk
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+**Step 8.1: Who is affected**
+Record: Users of em28xx USB capture sticks (Hauppauge, Empia, etc.),
+analog video/VBI. Radio-only extra is two board entries.
 
-1. Obviously correct and tested? **PASS** — logic is clear; cited BVT;
-   maintainer committed it.
-2. Fixes a real bug that affects users? **PASS** — missing required
-   lease break; stale listings.
-3. Important issue? **PASS** at protocol-correctness / “oh, that's not
-   good” — not CRITICAL crash, but user-visible on an advertised file-
-   server feature. Matches other ksmbd lease-break backports in this
-   tree.
-4. Small and contained? **PASS** — 2 files, ~8 lines.
-5. No new features or APIs? **PASS** — completes existing notify helper;
-   no new uAPI.
-6. Can apply to the local tree? **PASS** — `git apply --check`
-   succeeded.
+**Step 8.2: Trigger**
+Record: Unplug or unload while `/dev/video*` or VBI is streaming (or
+open with a live queue). Common for USB TV/webcam. Unprivileged process
+can keep the fd; disconnect is the trigger.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+**Step 8.3: Failure mode**
+Record: `stop_streaming` after I2C unregister / `usb_put_dev` → use of
+torn-down USB/I2C, hung DQBUF, possible UAF. Severity **HIGH**. Not a
+guaranteed panic on every unplug (URBs are already killed in fini), but
+the decoder `s_stream(0)` and second uninit run too late.
 
-Record: None (not a device ID/quirk/DT/build/docs exception). Qualifies
-as a normal contained bugfix.
+**Step 8.4: Risk/benefit**
+Record:
+- Benefit: high for em28xx users who unplug while capturing; matches the
+  documented vb2 unbind contract.
+- Risk: low on the disconnect path (6 substitutions, helper used since
+  2020). Medium-low on probe-error (uninitialized queue) and radio
+  (`WARN_ON`).
+- Ratio: benefit of stopping the queue at unbind outweighs those edge
+  nits.
 
-**Step 9.4: MAKE YOUR DECISION**
+## Phase 9: Synthesis
 
-This should be backported to **this 6.12 tree**. Directory leasing is
-already on; CREATE without a lease context is a hole in the existing
-break path; the fix is tiny and applies cleanly. Treating it as a new
-feature would be wrong: the feature is already shipped and documented as
-supported.
+**Step 9.1: Evidence**
 
----
+FOR:
+- Real unbind/lifecycle bug: vb2 stays STREAMING after node unregister;
+  `stop_streaming` can run after I2C/USB teardown.
+- Driver already uses `_vb2_fop_release()`; helper is the required API.
+- Small (6 lines), no new API, helper present in this tree since 2020.
+- V4L2 maintainer authored and tested; media maintainer applied.
+- USB unplug while capturing is a realistic user path.
+- Same conversion already done for sibling USB drivers.
 
-## What the commit solves (and why it matters here)
+AGAINST:
+- No user crash log / syzbot.
+- Patch 3/3 of a lifecycle series (self-contained, but series-scoped).
+- Radio `WARN_ON(!queue)` on two boards.
+- Probe `unregister_dev` can `vb2_queue_release()` before
+  `vb2_queue_init()`.
+- Cover letter originally said hardware testing was still pending (later
+  `Tested-by` is the author).
 
-On 6.12, ksmbd advertises SMB3 directory leasing. Parent breaks were
-only sent when the **child CREATE included a lease context**. A second
-client creating a file the usual way (no lease context) left the
-directory lease intact, so Windows clients could keep a cached listing
-that omitted the new name. That fails
-`BVT_DirectoryLeasing_ReadWriteHandleCaching` and breaks real SMB3
-directory caching.
+UNRESOLVED:
+- lore.kernel.org HTTP 403 / stable list Anubis block; no independent
+  stable-thread confirmation beyond the mbox (which had no replies).
 
-The patch (1) lets the existing helper accept `lctx == NULL` and break
-active parent leases, and (2) calls it after a successful create when
-`!lc`. Lease-key filtering for CREATE-with-lease is unchanged.
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** for video/VBI disconnect; nits
+   on radio/probe-error do not make the core change wrong. Tested-by
+   author.
+2. Real bug affecting users? **PASS** — verified disconnect vs close
+   ordering.
+3. Important (crash/UAF/unbind)? **PASS** — HIGH, use-after-unbind /
+   late `s_stream` on torn-down I2C/USB.
+4. Small and contained? **PASS** — 6 lines, one file.
+5. No new features/APIs? **PASS**.
+6. Applies to this tree? **PASS** — helper, includes, and call sites
+   exist here.
 
-## Risk vs benefit
+**Step 9.3: Exception category**
+Record: None (not an ID/quirk/DT/build/docs exception). It is a normal
+small bugfix.
 
-Benefit is correct directory invalidation for ksmbd users with
-Windows/SMB3 clients. Risk is extra lease breaks only when a child is
-actually created — required by the protocol. No new locking scheme; same
-helper already used in `smb2_open`.
+**Step 9.4: Decision**
+This tree is 7.3-rc4 and already contains the helper and em28xx vb2
+video. The change is a small, maintainer-tested fix for a real USB-
+unbind lifecycle hole: without it, analog streaming is not stopped when
+the node is unregistered, so `stop_streaming` can run after I2C/USB
+teardown. That is in scope for this codebase and meets the stable bar.
+Radio WARN_ON and a rare probe-error queue release are residual nits,
+not reasons to keep the disconnect bug.
 
-## Concerns
+### What the commit solves for this tree
+On em28xx analog capture, `em28xx_v4l2_fini()` (USB disconnect / module
+unload) unregisters video/VBI with `video_unregister_device()` while the
+vb2 queue can still be STREAMING. Close later stops the queue via
+`_vb2_fop_release()`, but by then `em28xx_release_resources()` has
+already dropped I2C and the USB device. Switching to
+`vb2_video_unregister_device()` stops streaming during fini, while those
+objects are still valid.
 
-- Context offset vs mainline (`oplock_break_drain_none` already takes
-  `p_ci` here) — **does not block apply**.
-- Remaining gap (pre-existing): CREATE with a **v1** lease still returns
-  early (`lctx->version != 2`). This patch correctly does not expand
-  that; it only adds the NULL-context path the BVT hits.
-- Not a panic/UAF; still appropriate because this tree already backports
-  the same kind of ksmbd lease-break completeness fixes.
+### Risk vs benefit
+Benefit is a real unbind UAF/use-after-teardown hole on a commonly
+unplugged USB capture driver. Risk is six call-site substitutions
+through a helper that has been in this tree for years. Residual radio
+WARN_ON and probe-error queue release are limited.
 
----
-
-## Verification
-
-- **[Phase 1]** `git log -1 --format='%B' abe5acb342822`: only Namjae
-  SOB; BVT named; no Fixes/Cc/Reported-by.
-- **[Phase 1]** `git describe HEAD` / Makefile: **p-6.12-3 / 6.12.111**.
-- **[Phase 2]** Read local `smb_send_parent_lease_break_noti` and
-  `smb2_open`; confirmed NULL deref assumption and lease-context-only
-  call.
-- **[Phase 2]** Confirmed `created` set after `smb2_creat`; `lc` only
-  from `parse_lease_state`.
-- **[Phase 3]** `git blame`: helper/call site from `d47d9886aeef7`
-  (2023-12-08); `git describe --contains` → **v6.7-rc6**.
-- **[Phase 3]** `git merge-base --is-ancestor d47d9886aeef7 HEAD` → yes;
-  `abe5acb342822` → **not** in HEAD.
-- **[Phase 3]** `git show abe5acb342822 | git apply --check --verbose` →
-  both files apply (offsets −232 / −1136).
-- **[Phase 3]** `git log all-next -S 'created && !lc'` → only this
-  commit; no follow-up.
-- **[Phase 4]** `b4 dig -c abe5acb342822` → lore errors, no match.
-- **[Phase 4]** WebFetch lore.kernel.org → 403.
-- **[Phase 4]** LKML GIT PULL 7.3-rc1 lists this commit; merge
-  `61a09cfc12147` mentions parent directory lease notifications.
-- **[Phase 5]** `git grep smb_send_parent_lease_break_noti` → only
-  `smb2_open` + declaration.
-- **[Phase 5]** `smb2ops.c`: `SMB2_GLOBAL_CAP_DIRECTORY_LEASING` set for
-  SMB3.0/3.02 when leases enabled.
-- **[Phase 6]** Docs `ksmbd.rst`: “Directory leases(v2 lease)
-  Supported.”
-- **[Phase 6]** Similar fix `3fc74c65b3674` is already an ancestor of
-  HEAD.
-- **[Phase 7]** `MAINTAINERS`: Namjae Jeon is ksmbd maintainer.
-- **[Phase 8]** Failure mode verified from code + BVT name: stale
-  directory lease, not a kernel oops.
-- **UNVERIFIED:** Original lore review comments / NAKs (lore
-  unavailable). Not used to drive the verdict; maintainer merge is
-  verified.
-
-The fix is small, applies to this tree, and closes a real hole in
-advertised SMB3 directory leasing.
+### Verification
+- [Phase 1] Tags: author SOB + Tested-by Hans Verkuil, Mauro SOB; no
+  Fixes/Reported-by/Link/Cc:stable
+- [Phase 2] Diff: 6 `video_unregister_device` →
+  `vb2_video_unregister_device` in `em28xx_v4l2_fini` and
+  `unregister_dev`
+- [Phase 2] Helper: `vb2_video_unregister_device()` unregisters then
+  `vb2_queue_release()`; `WARN_ON(!vdev->queue)` confirmed
+- [Phase 2] `radio_dev` never assigns `.queue`; video/VBI do (`em28xx-
+  video.c` init)
+- [Phase 2] `em28xx_v4l2_close()` calls `_vb2_fop_release(filp, NULL)`
+- [Phase 2] `em28xx_stop_streaming()` calls `s_stream(0)` and
+  `em28xx_uninit_usb_xfer()`
+- [Phase 3] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
+  kernelversion 7.3.0-rc4
+- [Phase 3] Commit `7c8bf63b79371` is ancestor of HEAD; helper
+  `f729ef5796d82` is ancestor
+- [Phase 3] Series: `288254383674b`, `de626073dfcbb`, this commit; 2020
+  USB conversion `24b5836dbd45b` skipped em28xx
+- [Phase 4] `b4 dig -c 7c8bf63b79371`: lore msgid
+  ad61b2c30cd477599312e9d5c12045dcd05c8ecd…; v1-only 3-patch “fix
+  lifecycle issues”
+- [Phase 4] mbox: cover + 3 patches, zero replies; `b4 dig -w`: linux-
+  media + Mauricio Faria de Oliveira
+- [Phase 4] WebFetch lore 403; stable lore Anubis-blocked — UNVERIFIED
+  beyond mbox
+- [Phase 5] fini callers: `em28xx_close_extension` ←
+  `em28xx_usb_disconnect` / `em28xx_unregister_extension`
+- [Phase 6] `em28xx.h` includes `videobuf2-v4l2.h`; radio boards Leadtek
+  Winfast USB II Deluxe, Kaiomy TVnPC U2
+- [Phase 8] Disconnect then `em28xx_release_resources()` does
+  `em28xx_i2c_unregister` + `usb_put_dev` before last close
+- UNVERIFIED: independent hardware test besides author’s Tested-by; any
+  stable@ thread
 
 **YES**
 
- fs/smb/server/oplock.c  | 9 +++++----
- fs/smb/server/smb2pdu.c | 3 +++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/media/usb/em28xx/em28xx-video.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 08e3e4504b03f..7d78d4ae43acb 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1271,7 +1271,7 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- 	struct ksmbd_inode *p_ci = NULL;
- 	LIST_HEAD(brk_list);
+diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
+index e0a69309687b0..e2907b56220b7 100644
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -2243,17 +2243,17 @@ static int em28xx_v4l2_fini(struct em28xx *dev)
+ 	if (video_is_registered(&v4l2->radio_dev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->radio_dev));
+-		video_unregister_device(&v4l2->radio_dev);
++		vb2_video_unregister_device(&v4l2->radio_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vbi_dev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->vbi_dev));
+-		video_unregister_device(&v4l2->vbi_dev);
++		vb2_video_unregister_device(&v4l2->vbi_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vdev)) {
+ 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->vdev));
+-		video_unregister_device(&v4l2->vdev);
++		vb2_video_unregister_device(&v4l2->vdev);
+ 	}
  
--	if (lctx->version != 2)
-+	if (lctx && lctx->version != 2)
- 		return;
+ 	v4l2_ctrl_handler_free(&v4l2->ctrl_handler);
+@@ -2901,19 +2901,19 @@ static int em28xx_v4l2_init(struct em28xx *dev)
+ 		dev_info(&dev->intf->dev,
+ 			 "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->radio_dev));
+-		video_unregister_device(&v4l2->radio_dev);
++		vb2_video_unregister_device(&v4l2->radio_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vbi_dev)) {
+ 		dev_info(&dev->intf->dev,
+ 			 "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->vbi_dev));
+-		video_unregister_device(&v4l2->vbi_dev);
++		vb2_video_unregister_device(&v4l2->vbi_dev);
+ 	}
+ 	if (video_is_registered(&v4l2->vdev)) {
+ 		dev_info(&dev->intf->dev,
+ 			 "V4L2 device %s deregistered\n",
+ 			 video_device_node_name(&v4l2->vdev));
+-		video_unregister_device(&v4l2->vdev);
++		vb2_video_unregister_device(&v4l2->vdev);
+ 	}
  
- 	p_ci = ksmbd_inode_lookup_lock(fp->filp->f_path.dentry->d_parent);
-@@ -1284,9 +1284,10 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
- 			continue;
- 
- 		if (opinfo->o_lease->state != SMB2_OPLOCK_LEVEL_NONE &&
--		    (!(lctx->flags & SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE) ||
--		     !compare_guid_key(opinfo, fp->conn->ClientGUID,
--				      lctx->parent_lease_key))) {
-+		    (!lctx ||
-+		     (!(lctx->flags & SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE) ||
-+		      !compare_guid_key(opinfo, fp->conn->ClientGUID,
-+			       lctx->parent_lease_key)))) {
- 			if (!atomic_inc_not_zero(&opinfo->refcount))
- 				continue;
- 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e7b1cab45ab2d..7d9c8246edfd6 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3565,6 +3565,9 @@ int smb2_open(struct ksmbd_work *work)
- 			goto err_out1;
- 		}
- 	} else {
-+		if (created && !lc)
-+			smb_send_parent_lease_break_noti(fp, NULL);
-+
- 		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE && lc) {
- 			if (S_ISDIR(file_inode(filp)->i_mode)) {
- 				lc->req_state &= ~SMB2_LEASE_WRITE_CACHING_LE;
+ 	v4l2_ctrl_handler_free(&v4l2->ctrl_handler);
 -- 
 2.53.0
 
