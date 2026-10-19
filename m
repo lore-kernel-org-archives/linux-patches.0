@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BF156DCCC;
-	Mon, 19 Oct 2026 13:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993D656DCF7;
+	Mon, 19 Oct 2026 13:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418286; cv=none; b=bVVCi79WI0CNj3x2pMcm+Ivf3vT7xpPPML54DEmtiIMtZ30vUJ9QDudB1Bk0rS+IFjXsv/r2WSQevYzh8zPWZqWXRCXk2qt1TKUgbYeVtNNF7OoqZO3ygYWc7KaZHr2rlGGZ7QQmQC7nyxuJvg3RQ+2mJWpLAiSxpoMQcaQ0Jr4=
+	t=1792418288; cv=none; b=MTZ70Q1iBfrJsYpfW3c+iT/AkE8yutP/puxZRRWjdnN2sQRZXml/kRv0AFaSKDo4oZv1y1WjF6i7+8Ir8V9jHmIhXGlg9cKzn22Khxb6NYy98vOJUpvdkUnL2CYuz0I2+0dqnmiZbspHC1+WFiKOsYCX/mAWku8g4TlfYH2/OLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418286; c=relaxed/simple;
-	bh=3QGg+1T51XI+6ErIgq7haAN3iJcqq4509MpqRcj74Es=;
+	s=arc-20240116; t=1792418288; c=relaxed/simple;
+	bh=bLx0EQsBaXAXk0+xThbR7drkUFeTbjNjD0PZXC/Jtkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qIKSOvXSdJLL/6G3nWE5fVb03TCr2MFy7iiw0MtGbx1I4fbo2uqRGGijx/KrXUizy1os8JahicfCT0FlhkNjpj8Nknk80Bwe1w7jSAOCdseWAgoANLs3zwHqepqgw8i/evko4JO4gFAiK318TxWK9W1VFmNs9hyEUxu1DykiYbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l2lWsD3/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IrBu3r/bB0qyMnGSLbhB2Dw/oR75Lny9EuisodQ7bOdZgFetmPZMLdxy51Ju63ZjUIyGxzUYeIpfxYCQIA1NXrVsAQ/MIFlR0GV/4CgHgPWKl/jhaqFf2LoFRwWqo9cynu4OImZ3ChiV8bTJeSw4LSCRHvnlT9XYWEow6+hn8xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W/M4geZ8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l2lWsD3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C433F1F000C6;
-	Mon, 19 Oct 2026 13:58:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W/M4geZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC931F000C4;
+	Mon, 19 Oct 2026 13:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418283;
-	bh=Dv3twa7zYOB3knqGrwOntSkkwfPWGCbTt5dOVIhc7Fc=;
+	s=k20260515; t=1792418285;
+	bh=h+RSvhysTAdXPwkQrhApMbjMyRbW3GW1nw+xVeDm3+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l2lWsD3/9dHeUKkLyg+Z6WFUrxPIulOKlijIB69wU2fTw7mbnD0ceHmMy6CTOWqXv
-	 NxpOM9SDBm/HUsSBGDXGfmn4WvoM6lDD7How7yVRn12lcb+uDb7p7tZd4z2NRvtvZu
-	 IdQTJPqRcnHgPZZ7hzYOfphQGBgpkcwBwc6n9nyARAlswKmBmpC64+srtMQwJcXfsQ
-	 Ahd7IyUCF9+sJnuHyrM7o8Wfnxgm2//KAjhAsPYPLJcKdRBpCkTRwFW60CV6rU6zMc
-	 AUf1NEOc9VJ4SGbnBo695HH+pGwVBCHYH/vHxYr/f+7NTKXaMFpQbontv/0JZ0jN09
-	 TgbTaxKq7SKyw==
+	b=W/M4geZ8f89XXHrgeVDzu3Dpxlg6+v1BpnPKTUTEgvM5aWG6Ghl4N5i2Or4vIzy36
+	 p81uTEsDhuVsyoSnQrkl1rDMHh4KmyWUFnbJLNmreCDmkFaEmIOhBkYKcGo09M9g5l
+	 2cn/ML+O3++cZsK8C1ACkxTRdjjyS7MAWOi+JWCrJqrU5K5A8a8tArzx419iNKsjpa
+	 dvKIH59f3pJcZWYriD6c7puwXkWhZZxXNIT48dy+kyBeo7z37a9f63hi4xiLrhCAZ8
+	 OHxfNq/VShsjlOR7jqKEoy1LhA0r8pKr0AVJ3nFa+nQKOWLepGuLA4NSJlsrl0t/0c
+	 L6VRyHF4CTQRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jenson Johnathon Reggentin <mail@jregg.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+Cc: Benjamin Coddington <ben.coddington@hammerspace.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>,
-	axboe@kernel.dk,
-	linux-block@vger.kernel.org,
-	linux-doc@vger.kernel.org,
+	trondmy@kernel.org,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] docs: block: fix dead http link in blk-mq.rst
-Date: Mon, 19 Oct 2026 09:47:09 -0400
-Message-ID: <20261019135441.1420968-138-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] pNFS: honor clora_changed when recalling a layout
+Date: Mon, 19 Oct 2026 09:47:10 -0400
+Message-ID: <20261019135441.1420968-139-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,378 +55,558 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jenson Johnathon Reggentin <mail@jregg.de>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-[ Upstream commit b40a680ea4efe4ef2addada63e304a94d19500d1 ]
+[ Upstream commit aceaa5991bdf744e9c3fa1e5ad73405b1801eaab ]
 
-The current link http://kernel.dk/blk-mq.pdf leads to a 404 error page.
-https://www.kernel.dk/blk-mq.pdf leads to the correct document.
+When the metadata server recalls a layout with clora_changed FALSE, the
+layout is not changing and the client may complete its modified writes to
+the storage devices before returning the layout (RFC 8881, Section
+20.3.3).  Only when clora_changed is TRUE -- the server is restriping, or
+a storage device has failed -- should the client stop writing to the
+storage devices and redirect through the metadata server.
 
-v2 to add the missing www. prefix in the actual file change.
+Since commit b739a5bd9d9f ("NFSv4/flexfiles: Cancel I/O if the layout is
+recalled or revoked") the client cancels in-flight I/O on every recall,
+regardless of clora_changed.  For an unchanged recall this abandons
+writes whose data may already have reached the storage device; such a
+write can then land after the LAYOUTRETURN, which the server sees as a
+write without a layout.
 
-Signed-off-by: Jenson Johnathon Reggentin <mail@jregg.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260819192422.42189-1-mail@jregg.de>
+Pass the recall's clora_changed value through
+pnfs_mark_matching_lsegs_return() and only cancel in-flight I/O when the
+layout is actually changing.  When it is not, the existing deferred
+return path waits for the in-flight writes to drain before sending the
+LAYOUTRETURN.  Other callers, which are tearing down or returning the
+layout for their own reasons, continue to cancel as before.
+
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the tree identity, the dead URL in-tree, review history, and a
-clean apply. Next I’ll finish call-site and stable-rule checks, then
-give the backport verdict.
+The local tree is **6.12.111** (`pending-6.12`). The buggy cancel-on-
+every-recall path is present here; the fix is not. It is a small
+protocol/data-integrity correction and applies cleanly.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: `[docs: block:]` `[fix]` `[dead HTTP link in blk-mq.rst]` —
-documentation URL correction in the block multi-queue overview.
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record: **[pNFS] [honor] honor `clora_changed` when recalling a layout**
+
+Subsystem: NFS pNFS client. Verb “honor” is a correctness/protocol fix,
+not a feature add.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- Signed-off-by: Jenson Johnathon Reggentin `<mail@jregg.de>` (author)
-- Acked-by: Randy Dunlap `<rdunlap@infradead.org>` (docs reviewer)
-- Signed-off-by: Jonathan Corbet `<corbet@lwn.net>` (docs maintainer,
-  applied it)
-- Message-ID: `<20260819192422.42189-1-mail@jregg.de>` (v2 submission)
-- No Fixes: tag (expected)
-- No Reported-by / Tested-by / Reviewed-by on the committed form (v1 had
-  Reviewed-by: Md Haris Iqbal; that tag was not carried to v2)
-- No Cc: stable (expected; not a negative)
-- Ignore any pipeline “Upstream commit” / “Signed-off-by: Sasha Levin”
-  markers if present
+- **Signed-off-by:** Benjamin Coddington `<bcodding@hammerspace.com>`
+  (author; Hammerspace)
+- **Signed-off-by:** Trond Myklebust `<trond.myklebust@hammerspace.com>`
+  (NFS client maintainer)
+- **No Fixes:** (expected; body names `b739a5bd9d9f`)
+- **No Cc: stable** (expected)
+- **No Reported-by / Tested-by / Reviewed-by / Link / Acked-by**
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Mainline SHA (verified on `origin/master`):
+`aceaa5991bdf744e9c3fa1e5ad73405b1801eaab`
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- Bug: `http://kernel.dk/blk-mq.pdf` in the “Further reading” section
-  returns 404.
-- Symptom: readers of blk-mq documentation cannot open the canonical
-  blk-mq paper.
-- Fix: switch to `https://www.kernel.dk/blk-mq.pdf`.
-- v2 note: v1 used `https://kernel.dk/blk-mq.pdf` (missing `www.`),
-  which still 404’d / had a bad cert; v2 adds `www.`.
-- No kernel version range given; no crash/trace.
+- **Bug:** Since `b739a5bd9d9f`, CB_LAYOUTRECALL always cancels in-
+  flight DS I/O, including when `clora_changed` is FALSE.
+- **RFC 8881 §20.3.3:** FALSE means the layout is not changing; the
+  client may finish modified writes to storage before LAYOUTRETURN. TRUE
+  means restriping/device failure; cancel and go through the MDS.
+- **Failure mode:** Cancelled writes may already have reached the DS,
+  then complete after LAYOUTRETURN → server sees a write with no layout.
+- **Fix:** Pass `clora_changed` into
+  `pnfs_mark_matching_lsegs_return()`; cancel only when the layout is
+  changing. Unchanged recalls use the existing drain-then-return path.
+  Other callers still cancel.
+- **Version info:** Bug since the 2022 cancel-I/O commit (`v6.1-rc1`).
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a hidden runtime fix. It is exactly what it says: a
-documentation hyperlink correction. Not a leak/race/UAF disguised as
-cleanup.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: **Not a disguised cleanup.** It is an explicit
+protocol/correctness fix. The extra `bool cancel_io` on other call sites
+preserves existing teardown behavior.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File: `Documentation/block/blk-mq.rst` — 1 line changed (`-1/+1`)
-- Functions: none
-- Scope: single-file, surgical documentation edit
+- `fs/nfs/callback_proc.c`: +2 / −1 (`initiate_file_draining`)
+- `fs/nfs/pnfs.c`: +13 / −9 (declaration, all callers, cancel gate)
+- `fs/nfs/pnfs.h`: +1 / −1 (prototype)
+- **Net: +16 / −11**, three files. Surgical, single-subsystem.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Functions: `initiate_file_draining`, `nfs4_layout_refresh_old_stateid`,
+`pnfs_mark_layout_stateid_return`, `pnfs_layout_io_set_failed`,
+`_pnfs_return_layout`, `pnfs_layout_process`,
+`pnfs_mark_matching_lsegs_return`, `pnfs_mark_layout_for_return`,
+`pnfs_layout_return_unused_byserver`.
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- Before: RST link target `http://kernel.dk/blk-mq.pdf`
-- After: RST link target `https://www.kernel.dk/blk-mq.pdf`
-- Path affected: documentation “Further reading” only; no execution path
+- **Recall path (`initiate_file_draining`):** passes
+  `args->cbl_layoutchanged` instead of always cancelling.
+- **`pnfs_mark_matching_lsegs_return`:** `pnfs_lseg_cancel_io()` only if
+  `cancel_io`.
+- **All other callers:** pass `true` → same as today.
+- **Unchanged recall with I/O in flight:** still marks lsegs for return,
+  returns `-EBUSY`, callback still `NFS4_OK`; deferred return waits for
+  refs to drop (existing `pnfs_put_lseg` / LAYOUTRETURN path).
+  `nfs_commit_inode()` after unlock is unchanged.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: Not a memory-safety/locking/refcount bug. Category:
-documentation correctness (dead external URL). Mechanism: site now
-requires HTTPS + `www.` hostname.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct once v2 uses the working URL.
-- Minimal; no unrelated edits.
-- Regression risk: none at runtime. Residual risk is only that the
-  remote host could move again (same class of risk as any external
-  link).
-- v1 was wrong (Randy Dunlap reported continued 404 / bad SSL);
-  committed v2 addresses that.
+Record: **[Logic / protocol correctness]** Unconditional I/O cancel on
+every recall. That races completed-on-wire writes vs LAYOUTRETURN. The
+fix restores RFC drain-before-return when `clora_changed` is false.
 
-Verified live:
-- `http://kernel.dk/blk-mq.pdf` → 404
-- `https://www.kernel.dk/blk-mq.pdf` → PDF retrieved (51.5 KB)
+Not a leak, UAF, lock, or new API.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record: **Obviously correct and minimal.** Only the CB_LAYOUTRECALL file
+path changes behavior. `cbl_layoutchanged` is already decoded
+(`callback_xdr.c`). Risk: unchanged recalls return the layout more
+slowly if DS I/O is stuck (RFC-intended; server may recall again). Tear-
+down still cancels. `pnfs_mark_matching_lsegs_invalid()` still always
+cancels (revoke). No public API change.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Introduced in `46e906144c3f4b` (“docs: block: Create blk-mq
-  documentation”, André Almeida, 2020-06-19)
-- First appeared: `v5.9-rc1` (`git describe --contains` →
-  `v5.9-rc1~150^2~141`)
-- Present in this tree for the entire 6.12 lifetime
+**Step 3.1: BLAME THE CHANGED LINES**
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. The introducing commit is the original
-documentation add, not a later regression in C code.
+Record: Unconditional `pnfs_lseg_cancel_io()` at `fs/nfs/pnfs.c:2678` is
+from **`b739a5bd9d9f`** (“NFSv4/flexfiles: Cancel I/O if the layout is
+recalled or revoked”), 2022-10-05. `git describe --contains`:
+**`v6.1-rc1`**. Present for the whole 6.12 lifetime.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record (this tree, `-- Documentation/block/blk-mq.rst`):
-- `41bd33df4e180` docs: correct places → place
-- `c19430eec84f7` Fix small typo
-- `2bc602cb0e0d9` correct drive → driver
-- `8ac867340bd8c` / `9303c9d5e9883` Sphinx `:c:type` cleanup
-- `46e906144c3f4b` create the file
-No later URL rewrite in this checkout. Standalone; not patch X/Y of a
-functional series.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: `git log --author="Jenson Johnathon Reggentin"` /
-`mail@jregg.de` on this tree: no hits. One-off docs contributor, not the
-block maintainer. Applied by Jonathan Corbet; Acked-by Randy Dunlap.
+Record: No `Fixes:` tag. Named commit **`b739a5bd9d9f` is an ancestor of
+HEAD** (`git merge-base --is-ancestor` exit 0). That commit added cancel
+in both `pnfs_mark_matching_lsegs_return` and
+`pnfs_mark_matching_lsegs_invalid`; this patch only gates the return
+path.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: No new helpers, structs, or APIs. The hunk matches the current
-file byte-for-byte. Can apply standalone.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+
+Record: Recent 6.12 pNFS work (`layout segment leak`, `EBUSY check`,
+DRAIN wakeups) does not replace this fix. On `origin/master` this is
+**v2 2/3** of “pNFS/flexfiles: honor clora_changed and report cancelled
+I/O”:
+- 1/3 `ba0f097418c7d` — tracepoint only; **not required**
+- 2/3 **this commit**
+- 3/3 `4a013b0e881e0` — report cancelled I/O as LAYOUTERROR; **not
+  required** for this behavior
+
+Standalone for the recall-cancel bug.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Benjamin Coddington is a regular NFS/pNFS contributor
+(Hammerspace). Trond applied it. Anna’s v1 comments (kerneldoc,
+`FILE_INODE`) were addressed in v2.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: Needs existing `cbl_layoutchanged`, `pnfs_lseg_cancel_io()`, and
+`cancel_io` on flexfiles — all in this tree. No new helpers. **Applies
+standalone.**
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `b4 mbox 20260819192422.42189-1-mail@jregg.de` saved 12-message thread
-  (lore HTTP 403 from WebFetch; b4 succeeded).
-- v1: `https://kernel.dk/blk-mq.pdf` (no www)
-- v2 (applied): `https://www.kernel.dk/blk-mq.pdf`
-- Randy Dunlap: v1 still 404 + invalid SSL; confirmed `www.` works;
-  Acked-by on v2; asked changelog-after-`---` nit
-- Haris Iqbal: Reviewed-by on v1; spotted missing `www.`
-- Jonathan Corbet: asked for a version that actually works; applied v2
-  (“Applied, thanks.”)
-- No NAK. No reviewer asked for Cc: stable.
-- Included in Corbet’s `[GIT PULL] Documentation stragglers for 7.3`
-  (`docs-7.3-2`), described as late-arriving docs fixes, not a stable-
-  critical runtime fix.
-- Syzbot CI skipped both versions: “AI determined the patch has no
-  functional impact”
+- Lore/msgid: https://patch.msgid.link/05e93230d2f58d9d8b23b083d8d89b21c
+  b9f5184.1782388900.git.bcodding@hammerspace.com
+- **v1 → v2**; applied version is v2.
+- Cover: client has decoded `cbl_layoutchanged` but ignored it since
+  `b739a5bd9d9f`; cancel can leave a DS write incomplete with no write
+  layout.
+- Saved mbox: cover + 1/3 + 2/3 + 3/3 only; **no NAK, no extra review
+  mail in that match**.
+- Trond’s `nfs-for-7.3-1` pull listed it as *“Avoid cancelling in-flight
+  I/O during a layout recall if the server doesn't require it”* under
+  **Other bugfixes** (not the Cc:stable subset). That is tagging, not a
+  NAK.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (syzbot CI Cc + thread):
-- To/Cc: Jens Axboe, Jonathan Corbet, linux-block, linux-doc
-- Reviewers who spoke: Randy Dunlap (ack), Md Haris Iqbal (v1 r-b),
-  Jonathan Corbet (applied)
-- Block maintainer was copied; no Axboe reply in the 12-message thread
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No bugzilla/syzbot crash. Author observed a 404. Confirmed
-independently in this analysis.
+Record (`b4 dig -w`): To/Cc Trond Myklebust, Anna Schumaker, `linux-
+nfs@vger.kernel.org`. Maintainer SOB on the commit.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone. v1→v2 only to correct the hostname. No sibling
-functional patches required.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable WebFetch returned 403. UNVERIFIED that
-stable@ discussed this specific URL. No evidence in the docs thread of a
-stable nomination or of a reason to exclude it.
+Record: No syzbot/bugzilla. Vendor/protocol analysis (Hammerspace), not
+a crash repro.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: 1/3 observability, 3/3 error reporting when cancel still
+happens. Neither is a functional prerequisite. Follow-ups on `pnfs.c`
+after this SHA (`2035820177749` EBUSY, `ee5a386cfe60f` lseg leak) are
+independent.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: **UNVERIFIED** — `lore.kernel.org/stable/?q=clora_changed`
+returned 403. No evidence this was rejected for stable.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-Step 5.1: KEY FUNCTIONS
-Record: None. Only an RST hyperlink.
+**Step 5.1: KEY FUNCTIONS**
 
-Step 5.2: TRACE CALLERS
-Record: N/A — not callable kernel code. Consumers are humans (and Sphinx
-HTML on kernel.org / distro doc packages).
+Record: listed in 2.1. Behavioral change is
+**`pnfs_mark_matching_lsegs_return` + `initiate_file_draining`**.
 
-Step 5.3: TRACE CALLEES
-Record: N/A.
+**Step 5.2: TRACE CALLERS**
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Not reachable from syscalls. User impact is documentation-only.
-kernel.org `v6.12` HTML is built from this tree, so the 404 is user-
-visible for people reading 6.12 docs.
+Record:
+- File recall: `nfs4_callback_layoutrecall` → `do_callback_layoutrecall`
+  → `initiate_file_draining` (MDS CB_LAYOUTRECALL, RETURN_FILE).
+- Only flexfiles implements `cancel_io` (`ff_layout_cancel_io` →
+  `rpc_cancel_tasks` / `rpc_clnt_disconnect`). Other layout types: no-op
+  today.
+- Remaining callers keep `cancel_io=true` (return/teardown/failure/new
+  stateid).
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: `kernel.dk/blk-mq` appears only in `Documentation/block/blk-
-mq.rst` in this tree. Other `kernel.dk` hits are emails/copyrights, not
-this PDF.
+**Step 5.3: TRACE CALLEES**
+
+Record: `pnfs_match_lseg_recall`, `mark_lseg_invalid`,
+`pnfs_lseg_cancel_io` → layout-driver `cancel_io`. Flexfiles cancels
+matching RPCs with `-EAGAIN` and disconnects the DS client.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Reachable in production: MDS sends CB_LAYOUTRECALL while the
+client has DS writes in flight. Common for pNFS flexfiles (layout recall
+on close, space management, etc.). Not a rare debug path. Unprivileged
+write traffic plus server recall.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: Second cancel site in `pnfs_mark_matching_lsegs_invalid()` is
+left unconditional (correct for invalidate/revoke). `cbl_layoutchanged`
+is stored but otherwise unused in this tree — this patch is the first
+user for I/O policy.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`
-- `make kernelversion` / Makefile → **6.12.111**, branch `pending-6.12`
-- Line 142 of `Documentation/block/blk-mq.rst` still has
-  `http://kernel.dk/blk-mq.pdf`
-- `git merge-base --is-ancestor 46e906144c3f4b HEAD` → yes
-- Bug introduced v5.9-rc1 (2020); present here
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Surrounding hunk is identical to the patch context. Expected
-apply: **clean**. `git log v6.12..HEAD -- Documentation/block/blk-
-mq.rst` is empty (no conflicting stable edits).
+Record: **Yes.** `pending-6.12` / **6.12.111**. `pnfs_lseg_cancel_io()`
+is unconditional in `pnfs_mark_matching_lsegs_return()`.
+`cbl_layoutchanged` is decoded. `git merge-base --is-ancestor
+aceaa5991bdf7 HEAD` → **not an ancestor**. Bug since **v6.1-rc1**.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: Replacement URL not present. No alternate rewrite of this link.
-Comparable docs-link backports **do** exist after v6.12 in this tree,
-e.g.:
-- `b23111ec50d86` `docs: hwmon: fix link to g762 devicetree binding`
-- `a7f28636da6f9` `docs: media: update location of the media patches`
-  (explicit Cc: stable)
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: `git show aceaa5991bdf7 | git apply --check` **succeeded** (hunk
+offsets only). **Clean apply.** All current callers are updated by the
+patch.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: No `honor clora_changed` commit. No alternate fix. 6.12 already
+has later unrelated pNFS fixes (`2ef79f5aa107a` EBUSY, `7c5b0e813efd9`
+lseg leak).
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-Step 7.1: SUBSYSTEM AND CRITICALITY
-Record:
-- Subsystem: Documentation for the block layer (`Documentation/block/`,
-  MAINTAINERS: BLOCK LAYER, Jens Axboe; docs tree via Corbet)
-- Criticality of **blk-mq itself**: IMPORTANT (common block I/O)
-- Criticality of **this change**: documentation-only, not the I/O path
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
 
-Step 7.2: SUBSYSTEM ACTIVITY
-Record: `Documentation/block/` is mature; this file’s last change in-
-tree is a 2023 typo fix. The URL has been wrong/stale for years; the
-site layout change is what made `http://kernel.dk/...` a hard 404.
+Record: **fs/nfs pNFS client**. **IMPORTANT** for NFSv4.1 pNFS
+(especially flexfiles). `PNFS_FLEXFILE_LAYOUT` **defaults to `NFS_V4`**.
+Not core mm/VFS, but production clustered NFS.
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Actively maintained; this is a targeted fix in mature recall
+code, not churn in new code.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-Step 8.1: WHO IS AFFECTED
-Record: Anyone reading in-tree or generated blk-mq docs (developers,
-distro doc packages, kernel.org HTML for 6.12). Not a
-runtime/driver/config population.
+**Step 8.1: WHO IS AFFECTED**
 
-Step 8.2: TRIGGER CONDITIONS
-Record: Opening the “Further reading” PDF link. Common for people
-studying blk-mq; never triggered by unprivileged syscalls. Not a race.
+Record: **Config/driver-specific:** NFSv4.1 pNFS flexfiles clients under
+CB_LAYOUTRECALL with in-flight DS writes. Enterprise/scale-out NFS (e.g.
+Hammerspace). Filesystems/block/files layouts without `cancel_io` are
+unchanged.
 
-Step 8.3: FAILURE MODE SEVERITY
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record: Server file layout recall with `clora_changed=FALSE` while DS
+writes are in flight. Common operational recall, not only device
+failure. Userspace writes plus MDS callback; timing-dependent.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record: **Write-after-LAYOUTRETURN / write with no layout** → protocol
+violation, possible rejected/unaccounted DS write, MDS/DS inconsistency.
+Cover letter: incomplete DS write with no write layout. **Severity:
+HIGH** (data integrity), not a panic.
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
 Record:
-- Failure: HTTP 404 / cannot open the referenced paper
-- Severity: **LOW** (incorrect documentation, no crash/corruption/hang)
-- No kernel oops, leak, or security effect
-
-Step 8.4: RISK-BENEFIT RATIO
-Record:
-- Benefit: working further-reading link in 6.12 docs; small but real for
-  doc users
-- Risk: **very low** (one RST URL; no code, locks, APIs)
-- Ratio: favorable *if* documentation corrections are in scope; not a
-  stability win
+- **Benefit: high** for pNFS flexfiles — stops abandoning in-flight
+  writes on unchanged recalls.
+- **Risk: low** — ~16 lines, one gated call, other paths unchanged, RFC-
+  aligned, maintainer-acked, applies cleanly.
+- **Ratio: favorable.**
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: COMPILE THE EVIDENCE**
 
-FOR backporting:
-- Dead link is real (404 verified); replacement URL works
-- One-line, obviously correct v2 after review
-- Docs maintainer applied it; Randy Dunlap Acked-by
-- Buggy line exists in this 6.12.111 tree since v5.9; applies cleanly
-- User-facing exception: documentation/comment fixes with zero runtime
-  regression
-- This same 6.12 tree already took other documentation link-location
-  fixes
+**FOR:**
+- Real protocol/data-integrity bug in this 6.12 tree
+- Introduced v6.1, still present
+- Small, obviously correct, RFC 8881 §20.3.3
+- Maintainer SOB; described as a bugfix in nfs-for-7.3-1
+- Clean apply; no prerequisites
+- Flexfiles enabled by default with NFS v4
 
-AGAINST backporting:
-- Not a crash, deadlock, corruption, UAF, or security bug
-- Official rule 3 (“important issue”) is not met in the runtime sense
-- No functional kernel impact (syzbot CI skipped it for that reason)
-- No Cc: stable; landed as docs-7.3 stragglers, not a hotfix
-- Stable rules also discourage purely trivial edits; this is adjacent to
-  that class
-- Benefit is only to documentation readers, not production uptime
+**AGAINST:**
+- No crash/syzbot; pNFS-specific
+- Series 2/3 (siblings not required)
+- Not in the pull’s “Stable fixes” list (no Cc: stable)
+- Unchanged recalls return the layout more slowly if DS I/O is stuck
+  (intended)
 
-UNRESOLVED:
-- Could not fetch lore.kernel.org or lore stable search via WebFetch
-  (403); thread recovered via b4
-- Commit SHA is not in this checkout’s `master` (that tip is ~7.2; patch
-  went in docs-7.3-2)
+**UNRESOLVED:** Stable-list archives (HTTP 403); no public review
+replies beyond v1→v2.
 
-Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — v2 URL verified; Acked-by +
-   maintainer apply
-2. Fixes a real bug that affects users? **PASS** — 404 in
-   shipped/generated docs, not a runtime bug
-3. Important issue (crash, security, corruption, deadlock)? **FAIL** as
-   runtime severity; **LOW** doc defect only
-4. Small and contained? **PASS** — 1 line, one file
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — context identical, URL still
-   old
+**Step 9.2: STABLE RULES CHECKLIST**
 
-Step 9.3: EXCEPTION CATEGORIES
-Record: **Documentation fix** (incorrect/obsolete external link). That
-exception is why a LOW-severity, zero-runtime patch can still be
-appropriate for this tree.
+1. Obviously correct and tested? **PASS** — RFC behavior, maintainer
+   SOB, mainline
+2. Real bug affecting users? **PASS** — writes after LAYOUTRETURN on
+   flexfiles
+3. Important (crash/security/corruption/deadlock)? **PASS** —
+   data/protocol integrity (HIGH)
+4. Small and contained? **PASS** — +16/−11, three NFS files
+5. No new features/APIs? **PASS** — uses existing decoded flag
+6. Can apply to this tree? **PASS** — `git apply --check` clean
 
-Step 9.4: DECISION
-The change does not stabilize running 6.12 systems, but it is a
-contained, verified correction of documentation this tree still ships,
-with no regression surface and with precedent for similar doc-link
-backports here. That matches the documentation exception, not a “new
-feature” or refactor.
+**Step 9.3: EXCEPTION CATEGORIES**
 
-What it solves for stable users: kernel.org / distro HTML for 6.12
-currently points “Further reading” at a 404; after backport it points at
-Jens Axboe’s actual blk-mq PDF.
+Record: None (not a device ID/quirk/DT/build/doc-only patch). Qualifies
+as a normal important bugfix.
 
-Risk vs benefit: negligible risk, modest doc benefit. No dependencies or
-backport rework.
+**Step 9.4: DECISION**
+
+Backport to this 6.12 tree. The cancel-always path is here; the fix is
+small and restores RFC drain-before-return for unchanged recalls, which
+otherwise can complete DS writes after LAYOUTRETURN.
 
 ---
 
-## Verification
-- [Phase 1] Tags: author SOB, Randy Dunlap Acked-by, Jonathan Corbet
-  SOB, Message-ID v2; no Fixes/Reported-by/Cc-stable
-- [Phase 2] Diff: single RST URL `http://kernel.dk/blk-mq.pdf` →
-  `https://www.kernel.dk/blk-mq.pdf`
-- [Phase 2] WebFetch: old URL 404; new URL returns the PDF
-- [Phase 3] `git blame` line 142: `46e906144c3f4b` (2020); `git describe
-  --contains` → v5.9-rc1
-- [Phase 3] `git merge-base --is-ancestor 46e906144c3f4b HEAD` succeeded
-- [Phase 3] Author has no other commits in this tree; file history is
-  typo/Sphinx-only
-- [Phase 4] `b4 mbox`: 12-message v1/v2 thread; Randy caught v1 404/SSL;
-  Corbet applied v2
-- [Phase 4] LKML pull: included in Documentation stragglers for 7.3
-- [Phase 4] Syzbot CI: skipped, no functional impact
-- [Phase 4] UNVERIFIED: lore.kernel.org/stable search (HTTP 403)
-- [Phase 5] No functions/callers; only docs consumers
-- [Phase 6] `git describe HEAD` = p-6.12-3-gc504cf0baa3d8; kernelversion
-  6.12.111; dead URL still at blk-mq.rst:142
-- [Phase 6] Apply would be clean; no post-v6.12 edits to this file
-- [Phase 6] Precedent: `docs: hwmon: fix link to g762...` and `docs:
-  media: update location...` already in this 6.12 tree
-- [Phase 8] Failure mode: documentation 404, severity LOW; runtime risk
-  none
+### What the commit solves for 6.12 users
+
+On pNFS flexfiles, every layout recall currently cancels in-flight DS
+I/O (`ff_layout_cancel_io`). For `clora_changed=FALSE` that is wrong:
+those writes may already be on the DS and then finish after
+LAYOUTRETURN, which the server treats as I/O without a layout. The patch
+only stops cancelling in that recall case and lets the existing deferred
+LAYOUTRETURN wait for I/O to drain.
+
+### Risk vs benefit
+
+Benefit is data/protocol correctness for a default NFSv4.1 layout type.
+Risk is low: teardown still cancels; only the already-decoded recall
+flag changes the file-recall path; the patch applies without rework.
+
+---
+
+### Verification
+
+- **[Phase 1]** Parsed tags: two SOBs (Coddington, Myklebust); no
+  Fixes/Cc:stable; mainline `aceaa5991bdf7`
+- **[Phase 2]** Diff: 16 insertions / 11 deletions; cancel gated; recall
+  passes `cbl_layoutchanged`; other callers pass `true`
+- **[Phase 3]** Blame: cancel line from `b739a5bd9d9f` (`v6.1-rc1`);
+  ancestor of HEAD
+- **[Phase 3]** `git merge-base --is-ancestor aceaa5991bdf7 HEAD` → not
+  in this tree
+- **[Phase 4]** `b4 dig -c aceaa5991bdf7`: v2 2/3, msgid above; v1→v2
+  (Anna: kerneldoc/FILE_INODE)
+- **[Phase 4]** `b4 dig -w`: Trond, Anna, linux-nfs
+- **[Phase 4]** `b4 dig -m`: series only, no NAK
+- **[Phase 4]** Trond pull nfs-for-7.3-1 lists this under Other bugfixes
+- **[Phase 5]** Call chain: CB_LAYOUTRECALL → `initiate_file_draining`;
+  cancel only implemented in flexfiles
+- **[Phase 5]** `cbl_layoutchanged` decoded in `callback_xdr.c`, unused
+  for I/O policy in this tree
+- **[Phase 6]** `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion`: 6.12.111
+- **[Phase 6]** `git apply --check` of `aceaa5991bdf7`: success
+- **[Phase 6]** 1/3 and 3/3 not required
+- **[Phase 7]** `PNFS_FLEXFILE_LAYOUT` default `NFS_V4`
+- **[Phase 8]** Failure: write without layout / incomplete DS write;
+  HIGH integrity, not panic
+- **UNVERIFIED:** lore.kernel.org/stable search (403)
 
 **YES**
 
- Documentation/block/blk-mq.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/callback_proc.c |  3 ++-
+ fs/nfs/pnfs.c          | 22 +++++++++++++---------
+ fs/nfs/pnfs.h          |  2 +-
+ 3 files changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/block/blk-mq.rst b/Documentation/block/blk-mq.rst
-index fc06761b6ea90..2798761efe0d6 100644
---- a/Documentation/block/blk-mq.rst
-+++ b/Documentation/block/blk-mq.rst
-@@ -139,7 +139,7 @@ completed.
- Further reading
- ---------------
+diff --git a/fs/nfs/callback_proc.c b/fs/nfs/callback_proc.c
+index 4f41986b875e8..72c25b8864fe5 100644
+--- a/fs/nfs/callback_proc.c
++++ b/fs/nfs/callback_proc.c
+@@ -288,7 +288,8 @@ static u32 initiate_file_draining(struct nfs_client *clp,
+ 	pnfs_set_layout_stateid(lo, &args->cbl_stateid, NULL, true);
+ 	switch (pnfs_mark_matching_lsegs_return(lo, &free_me_list,
+ 				&args->cbl_range,
+-				be32_to_cpu(args->cbl_stateid.seqid))) {
++				be32_to_cpu(args->cbl_stateid.seqid),
++				args->cbl_layoutchanged)) {
+ 	case 0:
+ 	case -EBUSY:
+ 		/* There are layout segments that need to be returned */
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index cf0dcf9e35d75..e2c723e21cb72 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -432,7 +432,8 @@ bool nfs4_layout_refresh_old_stateid(nfs4_stateid *dst,
+ 			goto out;
+ 		}
+ 		/* Try to update the seqid to the most recent */
+-		err = pnfs_mark_matching_lsegs_return(lo, &head, &range, 0);
++		err = pnfs_mark_matching_lsegs_return(lo, &head, &range, 0,
++						      true);
+ 		if (err != -EBUSY) {
+ 			dst->seqid = lo->plh_stateid.seqid;
+ 			*dst_range = range;
+@@ -486,7 +487,7 @@ static int pnfs_mark_layout_stateid_return(struct pnfs_layout_hdr *lo,
+ 		.length = NFS4_MAX_UINT64,
+ 	};
  
--- `Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems <http://kernel.dk/blk-mq.pdf>`_
-+- `Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems <https://www.kernel.dk/blk-mq.pdf>`_
+-	return pnfs_mark_matching_lsegs_return(lo, lseg_list, &range, seq);
++	return pnfs_mark_matching_lsegs_return(lo, lseg_list, &range, seq, true);
+ }
  
- - `NOOP scheduler <https://en.wikipedia.org/wiki/Noop_scheduler>`_
+ static int
+@@ -524,7 +525,7 @@ pnfs_layout_io_set_failed(struct pnfs_layout_hdr *lo, u32 iomode)
  
+ 	spin_lock(&inode->i_lock);
+ 	pnfs_layout_set_fail_bit(lo, pnfs_iomode_to_fail_bit(iomode));
+-	pnfs_mark_matching_lsegs_return(lo, &head, &range, 0);
++	pnfs_mark_matching_lsegs_return(lo, &head, &range, 0, true);
+ 	spin_unlock(&inode->i_lock);
+ 	pnfs_free_lseg_list(&head);
+ 	dprintk("%s Setting layout IOMODE_%s fail bit\n", __func__,
+@@ -1461,7 +1462,7 @@ _pnfs_return_layout(struct inode *ino)
+ 	}
+ 	valid_layout = pnfs_layout_is_valid(lo);
+ 	pnfs_clear_layoutcommit(ino, &tmp_list);
+-	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0);
++	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0, true);
+ 
+ 
+ 	/* Don't send a LAYOUTRETURN if list was initially empty */
+@@ -2603,7 +2604,7 @@ pnfs_layout_process(struct nfs4_layoutget *lgp)
+ 			.iomode = IOMODE_ANY,
+ 			.length = NFS4_MAX_UINT64,
+ 		};
+-		pnfs_mark_matching_lsegs_return(lo, &free_me, &range, 0);
++		pnfs_mark_matching_lsegs_return(lo, &free_me, &range, 0, true);
+ 		goto out_forget;
+ 	} else {
+ 		/* We have a completely new layout */
+@@ -2635,6 +2636,7 @@ pnfs_layout_process(struct nfs4_layoutget *lgp)
+  * @tmp_list: list header to be used with pnfs_free_lseg_list()
+  * @return_range: describe layout segment ranges to be returned
+  * @seq: stateid seqid to match
++ * @cancel_io: signal io be cancelled
+  *
+  * This function is mainly intended for use by layoutrecall. It attempts
+  * to free the layout segment immediately, or else to mark it for return
+@@ -2649,7 +2651,7 @@ int
+ pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
+ 				struct list_head *tmp_list,
+ 				const struct pnfs_layout_range *return_range,
+-				u32 seq)
++				u32 seq, bool cancel_io)
+ {
+ 	struct pnfs_layout_segment *lseg, *next;
+ 	struct nfs_server *server = NFS_SERVER(lo->plh_inode);
+@@ -2675,7 +2677,8 @@ pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
+ 				continue;
+ 			remaining++;
+ 			set_bit(NFS_LSEG_LAYOUTRETURN, &lseg->pls_flags);
+-			pnfs_lseg_cancel_io(server, lseg);
++			if (cancel_io)
++				pnfs_lseg_cancel_io(server, lseg);
+ 		}
+ 
+ 	if (remaining) {
+@@ -2710,7 +2713,8 @@ pnfs_mark_layout_for_return(struct inode *inode,
+ 	 * segments at hand when sending layoutreturn. See pnfs_put_lseg()
+ 	 * for how it works.
+ 	 */
+-	if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs, range, 0) != -EBUSY) {
++	if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs, range, 0,
++					    true) != -EBUSY) {
+ 		const struct cred *cred;
+ 		nfs4_stateid stateid;
+ 		enum pnfs_iomode iomode;
+@@ -2825,7 +2829,7 @@ static int pnfs_layout_return_unused_byserver(struct nfs_server *server,
+ 		pnfs_get_layout_hdr(lo);
+ 		pnfs_set_plh_return_info(lo, range->iomode, 0);
+ 		if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs,
+-						    range, 0) != 0 ||
++						    range, 0, true) != 0 ||
+ 		    !pnfs_prepare_layoutreturn(lo, &stateid, &cred, &iomode)) {
+ 			spin_unlock(&inode->i_lock);
+ 			rcu_read_unlock();
+diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
+index 7b3ba2e64e6f3..14d2a91250f24 100644
+--- a/fs/nfs/pnfs.h
++++ b/fs/nfs/pnfs.h
+@@ -301,7 +301,7 @@ int pnfs_mark_matching_lsegs_invalid(struct pnfs_layout_hdr *lo,
+ int pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
+ 				struct list_head *tmp_list,
+ 				const struct pnfs_layout_range *recall_range,
+-				u32 seq);
++				u32 seq, bool cancel_io);
+ int pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
+ 		struct list_head *lseg_list);
+ bool pnfs_roc(struct inode *ino, struct nfs4_layoutreturn_args *args,
 -- 
 2.53.0
 
