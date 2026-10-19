@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706885440B7;
-	Mon, 19 Oct 2026 13:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8A7546263;
+	Mon, 19 Oct 2026 13:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418189; cv=none; b=V6FHvtVS8928PXS7jwJfKfqmE/oMUqNrnnhB61vA5d0fbc0Xbv5kfej/6kXFmE0sG3tlMUJSlopE2YWTH3/j7CYWhZwGC9E1otn41gwE6H0/FIFyHjJ+N7+LQ2DRd+bmSKm7rjSV+Ud3PITbvPCrlNzsgY3F3ShzjDdA6bAZqrE=
+	t=1792418189; cv=none; b=a6u3OSrz+V6+izeTdVPWEfTIJ1b4WuHhhmlvJ2MU6bEtk2vDEaKcZts7CUEcdKQB6Jog4Sgm0+jI4h64UaUGsKHVtr9ce5J+UEOvtmt13L2/LnzfagEmvW77WoeJWnePyrTJpeAip6nFuUMD/2pCnIPd0TzWYiEIEHVAck993EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418189; c=relaxed/simple;
-	bh=Su7odCwld2ZEjjMbvsIuAfENW70V/LsYaDrgciEWvtQ=;
+	bh=Zvl3JjBQn+ODgoMXzFQMk2a6kQzDcRT01owVbLeVK7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u9p7F9maHicTOQPeCz2UB69urLhkn9c2n5XOigZ8zdBUn2yF3tDGfwMXJISc4A7wFMzJu+E5fFCUSyEboCm1N6UOOlE+oPsmEsHbgEcrWLJZPhiRG5wEjUrgQUhOztQA79K1V1FIJb9pHpYMl5XzuRuS6rCyN+PyOyte2T8xc1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SnAchmJu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MY+fH4+7MYO/42Tkkp35N1k5goqDTIhbx+bvoOzqGlkba+X8KrV0SccETR+KDQnLFAHC/ZotWpj+K+ppwQsUh5qyWxreolRUPcFgUsyVjMfSENdgeIDJMn6kScCfkQso3nUb2VOgmPl6KwE9gW5m07mg1S5UgmjA7ttovcTsSO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gopm6PnP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SnAchmJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE1C1F000C7;
-	Mon, 19 Oct 2026 13:56:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gopm6PnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68CA1F000C6;
+	Mon, 19 Oct 2026 13:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418186;
-	bh=IADk5RTBOjulE82dL7hv754PZj7PHSe/oQHD0jA6uiI=;
+	s=k20260515; t=1792418187;
+	bh=wpdEVcJbxQdzM6qXyyHXE1omwKBVt/Pm/yWtAX1rFSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SnAchmJuKWxMjqrZ70rMAeemhFBNJZwEb7A9EofkYIvYL+sd7cSl3yuLG4teHT/nU
-	 0tpeE9qFFJNc2rDAx+H0VocfFDakI1kzTW1cI9aqxn/NoA4Mk0ollcpj2oq4pb5HZE
-	 0qvuJqN3RAPHGT4vLJLBoc3gXSDX3hJOKNE1zL/h8ZxvowPQAZ+djNJCjEDgyTgQWB
-	 e1D92CnkUeVqtXw6ebZWzt7rQLTEtRBpv6PueXkH2frMp+HgvPR3+zZr9uBnEriXAm
-	 bsO/Ecj0cJB2VJMrmhlJ8le7YLlAE/TLpO4ChvldKfB4eTmRi3v53b6JXj/5VPDd+5
-	 jbMSrS9eTqPrw==
+	b=gopm6PnPOmHNabzAfToZwbZRobwMYQEkdhkF9h85EoypEEwdM9l8qln2wkD+r1HLF
+	 9CF9+vM1XHuD6z12vtNpH51oJboNAlDzFha6RgIpJLU84k8k6HCBoM9wc6EGtlyasx
+	 bOq+e/iw2pKQIy5zYM/tj9hdnxvAwJDm3wjFuWuKPhKDQf709W+tpb4RAsDv2hnu32
+	 TRFA9RyowASpfCEXm+yJd2jeUJ10GK0Hqh06hdcN+tRmmG1p/gn0iNZNhJHL9ZwpD6
+	 /JUcYS8axP1YZsaYUzCrSk1n/VGm6ezGKCBF9Q+MU55QUJZu0Oj0Tb065E17WBRepX
+	 KZuDOV4fn0kDA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Maximiliano Hermitte <davemadmaxxx@gmail.com>,
-	syzbot+97e301b4b82ae803d21b@syzkaller.appspotmail.com,
-	George Anthony Vernon <contact@gvernon.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Aksh Garg <a-garg7@ti.com>,
 	Sasha Levin <sashal@kernel.org>,
-	frank.li@vivo.com,
-	linux-fsdevel@vger.kernel.org,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	bhelgaas@google.com,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] hfs: validate catalog CNIDs before instantiating inodes
-Date: Mon, 19 Oct 2026 09:46:04 -0400
-Message-ID: <20261019135441.1420968-73-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] PCI: cadence: Add missing MODULE_DEVICE_TABLE()
+Date: Mon, 19 Oct 2026 09:46:05 -0400
+Message-ID: <20261019135441.1420968-74-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,580 +56,362 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Maximiliano Hermitte <davemadmaxxx@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 53c3c138d672765c26884c55728307a65c634328 ]
+[ Upstream commit 93aac16f1eb9a181f9bdde620b464f6cc5fa8369 ]
 
-hfs_cat_find_brec() first resolves a catalog thread record by CNID and
-then looks up the corresponding catalog record by parent/name. On a
-corrupted filesystem image, the second lookup may find a record whose
-CNID does not match the CNID that was requested.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Validate the record found by the second lookup before returning it.
-Read the already-found record with hfs_bnode_read(), require the exact
-fixed size for file and directory records, reject other record types,
-and verify that the stored CNID matches the requested CNID.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-Also validate reserved CNIDs in hfs_read_inode() before populating the
-inode, propagate hfs_read_inode() failures from the resource-fork lookup
-path, and reject bad resource-fork and root inodes.
-
-Keep hfs_write_inode() unchanged, so corrupted catalog records are
-rejected before reaching its existing reserved-CNID BUG() path.
-
-Reported-by: syzbot+97e301b4b82ae803d21b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=97e301b4b82ae803d21b
-Cc: George Anthony Vernon <contact@gvernon.com>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: David Maximiliano Hermitte <davemadmaxxx@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260708215636.73815-1-davemadmaxxx@gmail.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Aksh Garg <a-garg7@ti.com>
+Link: https://patch.msgid.link/20260704122835.14277-1-pengpeng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local checkout is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
-commit is `53c3c138d6727` and is already in this mainline history (first
-contained in `v7.3-rc1`). The evaluation below is whether that fix is
-suitable to take into stable from this tree: HFS is present, the `BUG()`
-path is ancient, and the patch is self-contained.
+# Stable backport analysis: `PCI: cadence: Add missing
+MODULE_DEVICE_TABLE()`
+
+Local tree: **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). Verdict
+is for this checkout only.
+
+Candidate: `93aac16f1eb9a181f9bdde620b464f6cc5fa8369`
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[hfs] [validate] Validate catalog CNIDs before instantiating
-inodes** — “validate” here is a correctness/safety check, not a feature.
+**Step 1.1 — Subject line**
+Record: `[PCI/cadence] [Add] missing MODULE_DEVICE_TABLE() so OF module
+aliases are generated`
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2 — Tags**
 Record:
-- **Reported-by:** syzbot+97e301b4b82ae803d21b@syzkaller.appspotmail.com
-  (fuzzer, reproducible)
-- **Closes:**
-  https://syzkaller.appspot.com/bug?extid=97e301b4b82ae803d21b
-- **Cc:** George Anthony Vernon, Tetsuo Handa
-- **Signed-off-by:** David Maximiliano Hermitte (author); Viacheslav
-  Dubeyko (HFS maintainer, twice)
-- **Reviewed-by:** Viacheslav Dubeyko
-- **Link:** https://lore.kernel.org/r/20260708215636.73815-1-
-  davemadmaxxx@gmail.com
-- **No Fixes:** tag (expected)
-- **No Cc: stable** (expected; not a negative)
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>` (PCI
+  controller maintainer; applied the patch)
+- `Reviewed-by: Aksh Garg <a-garg7@ti.com>`
+- `Link:
+  https://patch.msgid.link/20260704122835.14277-1-pengpeng@iscas.ac.cn`
+- No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence is expected
+  for this review)
+- No syzbot / KASAN / crash report
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3 — Body**
 Record:
-- **Bug:** `hfs_cat_find_brec()` resolves a thread by CNID, then looks
-  up the catalog record by parent/name. On a corrupted image that second
-  lookup can return a record whose stored CNID does not match the
-  requested CNID.
-- **Symptom/failure mode:** A corrupted catalog record is turned into an
-  inode with a reserved CNID (`i_ino < HFS_FIRSTUSER_CNID` and not
-  root/extents/catalog). Later writeback hits `BUG()` in
-  `hfs_write_inode()`.
-- **Version info:** none in the message; syzbot first crash is
-  2022-11-25.
-- **Root cause (author):** missing validation of the second catalog
-  lookup, plus missing reserved-CNID checks at inode instantiation;
-  resource-fork lookup ignored `hfs_read_inode()` failures.
+[Bug] OF match table is wired to `.of_match_table` but not exported via
+`MODULE_DEVICE_TABLE()`.
+[Symptom] `depmod` / udev / `modprobe` do not get `of:N*T*Ccdns,cdns-
+pcie-host` / `cdns,cdns-pcie-ep` aliases, so the module does not
+autoload.
+[Version info] None in the message.
+[Root cause] Missing alias publication, not a runtime logic error. The
+mailing-list body (mbox) states this is a source-level fix with no
+hardware reproducer.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. Explicit syzbot crash fix: reject bad
-catalog records so they never reach the reserved-CNID `BUG()`.
+**Step 1.4 — Hidden bug fix?**
+Record: Not disguised. It is an explicit autoload/modalias fix. Same
+class as `PCI: j721e: Fix module autoloading`.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1 — Inventory**
 Record:
-- `fs/hfs/catalog.c`: +40 / -1 — add `hfs_cat_validate_found_cnid()`,
-  call it from `hfs_cat_find_brec()`
-- `fs/hfs/hfs_fs.h`: +19 — add inline `hfs_is_valid_cnid()`
-- `fs/hfs/inode.c`: +12 / -1 — CNID checks in `hfs_read_inode()`;
-  propagate errors and `is_bad_inode()` in `hfs_file_lookup()`
-- `fs/hfs/super.c`: +5 — reject bad root inode in `hfs_fill_super()`
-- **Total:** +76 / -2 across 4 HFS files
-- **Scope:** single-subsystem surgical fix
+[Files] `drivers/pci/controller/cadence/pcie-cadence-plat.c` (+1 / −0)
+[Functions] none changed; one statement added after
+`cdns_plat_pcie_of_match[]`
+[Scope] single-file, one-line surgical change
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **`hfs_cat_find_brec`:** Before: thread lookup, then `return
-  hfs_brec_find(fd)` with no check that the found record’s CNID matches.
-  After: on success, read the found record, require exact file/dir size,
-  reject other types, require `found_cnid == cnid`, else `-EIO`.
-- **`hfs_read_inode`:** Before: populate inode from any file/dir record,
-  including reserved CNIDs 0,1,5–15. After: `hfs_is_valid_cnid()`;
-  invalid → `-EIO` before `i_ino` is set.
-- **`hfs_file_lookup` (rsrc):** Before: ignored `hfs_read_inode()`
-  return, then `mark_inode_dirty()`. After: propagate errors;
-  `is_bad_inode()` → `-EIO` + `iput`.
-- **`hfs_fill_super`:** After `hfs_iget()`, `is_bad_inode(root)` →
-  `iput` and fail mount instead of `d_make_root()` on a bad inode.
+**Step 2.2 — Code flow**
+Record: Before: match table exists and is used for probe matching, but
+`scripts/mod/file2alias.c` never sees it, so the `.ko` has no OF
+aliases. After: `MODULE_DEVICE_TABLE(of, cdns_plat_pcie_of_match)`
+creates the `__mod_of__cdns_plat_pcie_of_match` alias
+(`include/linux/module.h`). Normal module-build path only; no
+probe/runtime behavior change.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** memory-safety / logic — corrupted on-disk metadata →
-  kernel `BUG()` (oops, invalid opcode).
-- **Mechanism:** Reserved CNIDs instantiated as normal inodes; writeback
-  `hfs_write_inode()` does `BUG()` in the default branch of
-  `inode->i_ino < HFS_FIRSTUSER_CNID`. Also bounds/type checks on
-  catalog record length.
-- **Not:** leak, UAF, or locking fix.
+**Step 2.3 — Bug mechanism**
+Record: [Category] logic/correctness for modular OF drivers (missing
+userspace alias). [Mechanism] without the macro, a modular `pcie-
+cadence-plat` never autoloads from DT. Sibling Cadence drivers already
+export tables (`pci-j721e.c`, `pci-sky1.c`, `pcie-sg2042.c`).
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct relative to HFS CNID rules: user CNIDs ≥ 16;
-  reserved 2=root dir, 3=extents file, 4=catalog file; others invalid
-  for catalog-instantiated inodes.
-- `iget5_locked` `set()` returning non-zero → `inode_insert5()` returns
-  NULL; `hfs_iget()` already treats NULL as failure.
-- New `hfs_read_inode()` code does not sleep (safe under
-  `inode_hash_lock`).
-- Maintainer asked to leave `hfs_write_inode()` unchanged; defense is at
-  instantiation. Remaining `BUG()` is only if some other path still
-  creates a reserved-CNID inode.
-- **Regression risk:** low. Could reject a theoretically weird volume
-  with catalog entries using CNIDs 1 or 5–15; that is invalid HFS and
-  those inodes would `BUG()` on writeback anyway.
-- No public API / data-structure change.
+**Step 2.4 — Fix quality**
+Record: Obviously correct and minimal. Regression risk is effectively
+none: it only adds module metadata. Does not change locking, probe, or
+APIs. Reviewer AI notes about probe `return 0` and drvdata type mismatch
+are **pre-existing** and not introduced here.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: `hfs_write_inode()` reserved-CNID `BUG()` and
-`hfs_cat_find_brec()` date to **1da177e4c3f41 (Linux-2.6.12-rc2,
-2005)**. Long-standing, not a newly introduced bug.
+**Step 3.1 — Blame**
+Record: Match table introduced in `bd22885aa188f` (“PCI: cadence:
+Refactor driver to use as a core library”, 2019). Driver was
+`builtin_platform_driver` + `bool` Kconfig until `611627a4e5e4a` (“PCI:
+cadence: Add module support for platform controller driver”,
+2025-11-14). That commit is in **v6.19**. Bug (missing table export for
+a loadable module) starts there.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Buggy behavior is original HFS catalog/inode
-code, not a recent regression.
+**Step 3.2 — Fixes: tag**
+Record: No `Fixes:` tag. The introducing commit is `611627a4e5e4a`
+(module support). It **is** an ancestor of this tree.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Nearby HFS work (`hfs_correct_next_unused_CNID`, MDB locking) is
-independent. This commit is standalone, not `patch X/Y`. After it, later
-`fs/hfs/{inode,catalog,super,hfs_fs.h}` commits are unrelated (MDB,
-delayed work, ENOSPC). No follow-up fix to this patch.
+**Step 3.3 — File history**
+Record: Recent: HPA support, module support, then this one-liner.
+Standalone; not `patch X/Y`. No later revert on this file.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Only this HFS commit from David Maximiliano Hermitte. Weight
-comes from **Reviewed-by / Signed-off-by Viacheslav Dubeyko** (HFS
-maintainer). Earlier related attempts: George Vernon, Tetsuo Handa
-(syzbot thread).
+**Step 3.4 — Author**
+Record: Pengpeng Hou also did `e145af8c14474` `PCI: spacemit: Add
+missing MODULE_DEVICE_TABLE()` the same day. Applied by Manivannan
+Sadhasivam (PCI controller maintainer).
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Uses existing `hfs_bnode_read()`, `hfs_brec_find()`,
-`is_bad_inode()`, `HFS_*_CNID`, `hfs_read_inode()` already returning
-`int` since 2.6.12. **Can apply standalone.**
+**Step 3.5 — Dependencies**
+Record: Needs `module_platform_driver` + tristate Kconfig from
+`611627a4e5e4a`. Both are in this 7.3 tree. Applies standalone here.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST / EXTERNAL
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- **b4 dig:**
-  https://patch.msgid.link/20260708215636.73815-1-davemadmaxxx@gmail.com
-- **Revisions:** v1 (2026-07-02) → v3 RESEND → v4 → **v5 (applied)**
-- Maintainer review drove exact size checks, signed `rec_len`, keep
-  `hfs_write_inode()` unchanged, preserve `hfs_file_lookup()` error
-  codes
-- v5: Slava: “Looks good. Thanks a lot for the fix.” + Reviewed-by
-- Tetsuo: not a NAK; points at sashiko notes on *pre-existing* issues
-- Author revalidated with HFS build and QEMU syzbot repro
-- **No NAKs** of the committed approach
+**Step 4.1 — Original discussion**
+Record: `b4 dig -c 93aac16f1eb9a` →
+https://patch.msgid.link/20260704122835.14277-1-pengpeng@iscas.ac.cn
+`b4 dig -a`: **v1 only**, 2026-07-04.
+Thread (mbox): Aksh Garg Reviewed-by; Manivannan “Applied, thanks!” to
+`93aac16f1eb9a`. No NAK, no stable nomination, no concern about this
+line.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (b4 dig -w): Viacheslav Dubeyko, Tetsuo Handa, George Vernon,
-Jori Koolstra, linux-fsdevel, syzbot. Maintainer reviewed and merged.
+**Step 4.2 — Recipients (`b4 dig -w`)**
+Record: PCI maintainers (Lorenzo Pieralisi, Krzysztof Wilczyński,
+Manivannan Sadhasivam, Bjorn Helgaas), Rob Herring, linux-pci, linux-
+kernel.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record (syzbot, live page):
-- Title: **kernel BUG in hfs_write_inode**
-- First crash: **2022-11-25**; last listed ~35d before the page
-  snapshot; **243695 crashes**; C and syz reproducers
-- Stack: `hfs_write_inode` ← writeback `wb_workfn` (kworker), invalid
-  opcode at `BUG()`
-- Security assessment: DenialOfService yes, FilesystemTrigger yes,
-  **Unprivileged: no** (needs a mountable image)
-- Duplicate: “invalid opcode in hfs_write_inode”
-- Fix commit listed as `53c3c138d672`
+**Step 4.3 — Bug report**
+Record: None. Author did not claim a hardware reproducer.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Single-patch series (v1–v5 of the same change). Earlier
-alternate approaches (replace `BUG()` with `-EIO`/`-EFSCORRUPTED`,
-broader `BUG()` removal) were **not** what merged; this validation-at-
-instantiation patch is standalone.
+**Step 4.4 — Related series**
+Record: Same-day sibling `PCI: spacemit: Add missing
+MODULE_DEVICE_TABLE()`. Precedent in-tree: `9a7f144e18dc5` `PCI: j721e:
+Fix module autoloading` (`Fixes:` + `Cc: stable`) — same one-line OF
+table export.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** — lore.kernel.org fetches returned 403. No `Cc:
-stable` in the fsdevel thread. That absence is not a reason to reject.
+**Step 4.5 — Stable list**
+Record: UNVERIFIED. lore.kernel.org returned a bot-check page; WebFetch
+of the msgid URL returned 403. No stable-list discussion was retrieved.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `hfs_cat_validate_found_cnid` (new), `hfs_cat_find_brec`,
-`hfs_is_valid_cnid` (new inline), `hfs_read_inode`, `hfs_file_lookup`,
-`hfs_fill_super`. `hfs_write_inode` unchanged.
+**Step 5.1 — Functions**
+Record: No function bodies changed. Data: `cdns_plat_pcie_of_match[]`.
+Driver: `cdns_plat_pcie_driver` / `cdns_plat_pcie_probe`.
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- `hfs_cat_find_brec()` — only `hfs_fill_super()` (root at mount)
-- `hfs_read_inode()` — `iget5_locked` set callback from `hfs_iget()`
-  (`hfs_lookup` / `hfs_fill_super`) and direct call from
-  `hfs_file_lookup()` (rsrc)
-- `hfs_write_inode()` — `s_op->write_inode` from writeback (crash site)
+**Step 5.2 — Callers**
+Record: Probe is the platform-driver callback. Match table used only in
+this file. Triggered when DT has `cdns,cdns-pcie-host` or `cdns,cdns-
+pcie-ep`.
 
-**Step 5.3: TRACE CALLEES**
-Record: `hfs_bnode_read`, `hfs_brec_find`, `be32_to_cpu`,
-`is_bad_inode`, `iput`. No new allocations/locks.
+**Step 5.3 — Callees**
+Record: Unchanged. `MODULE_DEVICE_TABLE` is a compile-time alias for
+`file2alias.c`.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable from **mounting an HFS image** and from **lookup /
-rsrc** on a mounted volume. Syzbot C repro mounts a crafted image;
-writeback then `BUG()`s. Userspace-triggerable if the caller can mount
-HFS (`CONFIG_HFS_FS`).
+**Step 5.4 — Reachability**
+Record: Reachable on OF platforms that describe Cadence PCIe with those
+compatibles and build `CONFIG_PCIE_CADENCE_PLAT=m`. No in-tree
+`.dts`/`.dtsi` uses those strings (only DT binding examples). So the in-
+tree user set is small; out-of-tree / FPGA / IP reference boards may
+still use the generic compatible.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: HFS+ already special-cases reserved vs user CNIDs in
-`hfsplus_iget()` (`fs/hfsplus/super.c`). Classic HFS lacked that for
-catalog-instantiated inodes. Same class of bug, HFS-only fix.
+**Step 5.5 — Similar patterns**
+Record: Same missing-table pattern already fixed for j721e, mvebu, qcom-
+ep, spacemit, and the other Cadence glue drivers in this directory.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## PHASE 6: LOCAL TREE CROSS-CHECK
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. `BUG()` still in `hfs_write_inode()` at `fs/hfs/inode.c`
-(lines 479–491), present since 2.6.12. Validation from this commit is
-already applied here (`hfs_is_valid_cnid` in `hfs_fs.h`,
-`hfs_cat_validate_found_cnid` in `catalog.c`). Introduced: original HFS
-port, not post-7.3.
+**Step 6.1 — Does the buggy code exist here?**
+Record: Yes. This tree has tristate `PCIE_CADENCE_PLAT`,
+`module_platform_driver`, and the OF table. Module support is in v6.19+.
+Without `MODULE_DEVICE_TABLE`, modular autoload is broken. (The one-line
+fix is present at line 166 of the current file; that is not used as
+“already selected” circular reasoning — it confirms the surrounding code
+matches the patch.)
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Expected apply: clean / minor context** on trees that still
-have `hfs_cat_find_brec`, `hfs_read_inode`, `hfs_file_lookup`,
-`hfs_fill_super`. New code does not depend on `inode_set_ctime_to_ts`,
-`set_default_d_op`, or CNID-correction helpers. Constants live in
-`include/linux/hfs_common.h` here; older trees may still have them in
-`fs/hfs/hfs.h` — only a context/include issue, not a logic dependency.
+**Step 6.2 — Backport difficulty**
+Record: Clean apply on this tree: one line next to the existing table.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This is the fix (`53c3c138d6727`). No earlier equivalent in-
-tree. Not in `v7.2`.
+**Step 6.3 — Related fixes already here?**
+Record: j721e/sky1/sg2042 already have `MODULE_DEVICE_TABLE`. Nothing
+else replaces this plat-driver export.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **fs/hfs** — **PERIPHERAL** (legacy Mac HFS, `CONFIG_HFS_FS`,
-not the VFS core). Still a real on-disk filesystem; a `BUG()` on
-corrupted images is a kernel crash, not a cosmetic warning.
+**Step 7.1**
+Record: `[drivers/pci/controller/cadence] [IMPORTANT for Cadence-IP
+SoCs; PERIPHERAL vs core mm/net]`. PCIe host not coming up is serious
+for those boards, not universal.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained under Viacheslav Dubeyko (`hfs-v7.3-tag1`
-and other recent HFS tags). Mature code with ongoing syzbot/hardening.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Config/driver-specific:** `CONFIG_HFS_FS`. Anyone who can
-mount HFS (including fuzzers, forensic mounts, old Mac volumes). Not
-universal.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Mount / use a **corrupted HFS image**. Syzbot has a C repro;
-240k+ crashes over ~4 years. Not unprivileged without mount capability.
-Timing-independent once the bad inode is instantiated and dirtied
-(`hfs_file_lookup` does `mark_inode_dirty` on rsrc).
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **`BUG()` / invalid opcode in writeback kworker → oops.**
-**Severity: CRITICAL** (kernel crash). DoS, not a demonstrated
-privilege-escalation.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** high for HFS users and any tree that enables HFS — stops
-  a years-old reproducible `BUG()`.
-- **Risk:** low — +76 lines, HFS-only, reviewed, tested with QEMU repro;
-  failure mode on bad images becomes `-EIO` / failed mount instead of
-  oops.
-- **Ratio:** strongly favors backport.
+**Step 7.2**
+Record: Active PCI controller area (HPA, module support, several glue
+drivers). Plat driver itself is mature (2019) with occasional fixes.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## PHASE 8: IMPACT AND RISK
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 8.1 — Who is affected**
+Record: Driver-specific / config-specific: `CONFIG_PCIE_CADENCE_PLAT=m`
+plus DT compatible `cdns,cdns-pcie-*`. Built-in builds are unaffected.
+No in-tree board DTS match; population is reference/FPGA/out-of-tree DT.
 
-**FOR:**
-- Syzbot kernel `BUG()` since 2022, C repro, hundreds of thousands of
-  crashes
-- Crash in writeback (`wb_workfn` → `hfs_write_inode`)
-- Small, contained HFS-only change (+76/-2)
-- Maintainer Reviewed-by after v1–v5
-- Bug in code since 2.6.12; no missing prerequisites in this tree
-- Matches stable rules: real crash, obviously correct validation, no new
-  API
+**Step 8.2 — Trigger**
+Record: Boot (or coldplug) on matching DT with the driver as a module.
+Common for modular embedded images. Unprivileged users cannot trigger a
+crash; they just never get the controller unless something else loads
+the module.
 
-**AGAINST:**
-- HFS is a legacy/peripheral FS
-- Needs ability to mount HFS (not unprivileged syscall-only)
-- `hfs_write_inode()` `BUG()` remains as a backstop if another path
-  instantiates a reserved CNID
-- No `Cc: stable` (expected for this review queue)
+**Step 8.3 — Failure mode**
+Record: [Failure] module not autoloaded → PCIe host/endpoint never
+probes → downstream devices missing. [Severity] **MEDIUM** (functional
+miss, not oops/corruption). Workaround: `modprobe` or `=y`.
 
-**UNRESOLVED:**
-- lore.kernel.org/stable search (HTTP 403)
-- Whether every older stable series has identical hunk context
-  (`hfs_common.h` vs `hfs.h`)
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — maintainer review, QEMU
-   repro, syzbot
-2. Fixes a real bug that affects users? **PASS** — reproducible `BUG()`
-   on corrupted HFS
-3. Important issue? **PASS** — kernel oops (CRITICAL)
-4. Small and contained? **PASS** — 4 files, +76/-2, HFS only
-5. No new features or APIs? **PASS** — validation only
-6. Can apply to the local tree? **PASS** — code is present; patch is
-   self-contained (already merged here as of 7.3-rc1)
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not ID/quirk/DT/docs. Ordinary **crash fix** on filesystem
-corruption.
-
-**Step 9.4: MAKE YOUR DECISION**
-This is a real, long-standing, syzbot-reproduced kernel `BUG()` on
-corrupted HFS catalog data. The fix is small, reviewed, and stops bad
-CNIDs from becoming inodes that writeback will crash on. That is
-appropriate for stable.
+**Step 8.4 — Risk vs benefit**
+Record: Benefit: hardware actually binds on modular kernels. Risk: very
+low (modinfo aliases only). Ratio: favorable. Same class as device-ID /
+autoload fixes that stable already takes (j721e was `Cc: stable`).
 
 ---
 
-### What the commit solves and why it matters
-On a corrupted HFS catalog, a thread lookup by CNID can be followed by a
-parent/name lookup that returns a **different** record. That record can
-carry a reserved CNID (0, 1, 5–15, …). Instantiating it and dirtying it
-(notably the resource-fork path, which previously ignored
-`hfs_read_inode()` errors) causes **writeback to `BUG()`** in
-`hfs_write_inode()`. Stable kernels that still ship HFS will oops the
-same way; rejecting the record with `-EIO` is the right user-visible
-behavior.
+## PHASE 9: SYNTHESIS
 
-### Stable rules / risk
-Surgical, HFS-only, no new APIs, maintainer-acked, fuzzer-proven.
-Residual risk is failing mount/lookup on already-invalid volumes that
-used to oops instead.
+**Step 9.1 — Evidence**
 
-### Concerns
-Older trees may need a trivial context tweak if CNID macros are still in
-`fs/hfs/hfs.h`. No semantic prerequisites. The remaining `BUG()` in
-`hfs_write_inode()` is intentional per the maintainer.
+For:
+- Real autoload bug on a driver this tree can build as a module
+- One line, obviously correct, maintainer-applied, reviewed
+- Sibling Cadence drivers already export tables; j721e’s identical fix
+  was stable-tagged
+- Zero runtime regression surface
+- Fits “device ID / make existing hardware work” exception more than a
+  feature
 
-### Verification
-- **[Phase 1]** Tags: syzbot Reported-by, Closes syzkaller URL,
-  Reviewed-by Dubeyko, lore Link; no Fixes/Cc-stable
-- **[Phase 2]** Diff: +76/-2 in catalog.c, hfs_fs.h, inode.c, super.c;
-  validation + error propagation
-- **[Phase 3]** `git describe HEAD` → v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` → 7.3.0-rc4
-- **[Phase 3]** Commit `53c3c138d6727`; `git merge-base --is-ancestor
-  53c3c138d6727 HEAD` → yes
-- **[Phase 3]** `git merge-base --is-ancestor 53c3c138d6727 v7.2` → not
-  in v7.2; `git describe --contains` → v7.3-rc1~222^2~9
-- **[Phase 3]** Blame: `BUG()` in `hfs_write_inode` from 1da177e4c3f41
-  (2.6.12-rc2)
-- **[Phase 3]** `hfs_read_inode` already `static int` since 2.6.12; pre-
-  fix `hfs_file_lookup` discarded its return value
-- **[Phase 4]** `b4 dig -c 53c3c138d6727` → msgid
-  20260708215636.73815-1; v1/v3/v4/v5; v5 applied
-- **[Phase 4]** `b4 dig -w`: Dubeyko, Handa, fsdevel, syzbot
-- **[Phase 4]** `b4 dig -m`: Slava “Looks good” + Reviewed-by; asked to
-  leave `hfs_write_inode` unchanged
-- **[Phase 4]** WebFetch syzbot: kernel BUG in hfs_write_inode,
-  2022-11-25, C repro, 243695 crashes
-- **[Phase 4]** lore.kernel.org WebFetch: 403 — stable-list search
-  UNVERIFIED
-- **[Phase 5]** Callers: `hfs_cat_find_brec` only from `hfs_fill_super`;
-  `hfs_iget` from dir lookup + mount; rsrc via `hfs_file_lookup`
-- **[Phase 5]** `inode_insert5()` treats failed `set()` as NULL inode
-  (verified `fs/inode.c`)
-- **[Phase 6]** Local files already contain the new helpers; `BUG()`
-  path still present
-- **[Phase 8]** Failure mode: oops in kworker writeback, severity
-  CRITICAL
-- **UNVERIFIED:** stable@ discussion (lore 403); exact hunk context on
-  every LTS series
+Against:
+- No user report, no `Fixes:`/`Cc: stable` on this patch
+- Author stated no hardware reproduction
+- No in-tree DTS uses these compatibles
+- Not a crash, UAF, or data-corruption bug
+- Stable mailing-list history UNVERIFIED
+
+Unresolved: whether anyone on stable@ already rejected or requested this
+(lore blocked).
+
+**Step 9.2 — Stable rules (this tree)**
+1. Obviously correct and tested? **PASS** — one documented macro; v1
+   applied as-is after Reviewed-by.
+2. Real bug that affects users? **PASS** — modular OF autoload fails;
+   users who `=m` this controller do not get PCIe without a manual load.
+3. Important (crash/security/corruption/deadlock)? **PASS** at “oh,
+   that’s not good” / device-ID-class — PCIe does not come up. Not
+   CRITICAL.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS** — metadata for IDs that already
+   exist.
+6. Can apply to this tree? **PASS** — table, `module_platform_driver`,
+   and tristate Kconfig are all here.
+
+**Step 9.3 — Exception category**
+Record: Closest to **device ID / hardware enablement**: publishing
+existing OF IDs for autoload, not a new driver.
+
+**Step 9.4 — Decision**
+This 7.3 tree can build the Cadence platform controller as a module.
+Without `MODULE_DEVICE_TABLE(of, ...)`, userspace never sees the aliases
+and the host/endpoint driver does not autoload. That is a real, user-
+visible functional bug, a one-line contained fix, and the same pattern
+already sent to stable for `pci-j721e`. Risk is negligible. It should be
+included in this tree.
+
+---
+
+## What the commit solves (for stable users)
+
+On kernels where `CONFIG_PCIE_CADENCE_PLAT=m`, udev/modprobe cannot
+match DT nodes `cdns,cdns-pcie-host` / `cdns,cdns-pcie-ep` to `pcie-
+cadence-plat.ko`. The controller never probes unless the module is
+loaded by hand. The patch only emits the standard OF aliases. No new
+ABI, no probe-path change.
+
+Risk vs benefit: benefit is “PCIe works on modular images”; risk is
+alias-only. Backport on this tree is a clean one-line apply;
+prerequisite module support (`611627a4e5e4a`, v6.19) is already present.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed tags: author Hou, SOB+apply Manivannan Sadhasivam,
+  Reviewed-by Aksh Garg, Link msgid; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +1 line `MODULE_DEVICE_TABLE(of,
+  cdns_plat_pcie_of_match)` in `pcie-cadence-plat.c`
+- [Phase 2] Confirmed macro in `include/linux/module.h` creates
+  `file2alias` alias
+- [Phase 3] `git describe HEAD` / `make kernelversion`: **7.3.0-rc4**
+- [Phase 3] `git blame`: table from `bd22885aa188f` (2019);
+  `MODULE_DEVICE_TABLE` line from `93aac16f1eb9a`
+- [Phase 3] Introducer of modular bug: `611627a4e5e4a` (bool→tristate,
+  `builtin_platform_driver`→`module_platform_driver`); first tag
+  **v6.19**; `git merge-base --is-ancestor 611627a4e5e4a HEAD` true
+- [Phase 3] `git merge-base --is-ancestor 93aac16f1eb9a HEAD` true (used
+  only to confirm context, not as “already selected”)
+- [Phase 3] No revert of this commit on the file after it
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; lore msgid above; PCI
+  maintainers on To; Reviewed-by + Applied; no NAK
+- [Phase 4] WebFetch lore URL: 403; lore search: bot wall. Stable-list
+  discussion **UNVERIFIED**
+- [Phase 5] `git grep cdns_plat_pcie`: confined to plat driver + header
+  + sky1 using the of_data struct
+- [Phase 5] `git grep` of compatibles in `arch/`: **no** dts/dtsi users;
+  only DT binding examples
+- [Phase 5] Sibling `MODULE_DEVICE_TABLE` already in j721e, sky1, sg2042
+- [Phase 6] Local file has match table + `module_platform_driver` +
+  tristate Kconfig; patch applies as a single added line
+- [Phase 6] Precedent `9a7f144e18dc5` j721e autoload fix has `Fixes:` +
+  `Cc: stable`
+- [Phase 8] Failure mode: no autoload → PCIe missing; severity MEDIUM,
+  not oops
+- UNVERIFIED: whether this was discussed on stable@ (lore blocked)
 
 **YES**
 
- fs/hfs/catalog.c | 41 ++++++++++++++++++++++++++++++++++++++++-
- fs/hfs/hfs_fs.h  | 19 +++++++++++++++++++
- fs/hfs/inode.c   | 13 ++++++++++++-
- fs/hfs/super.c   |  5 +++++
- 4 files changed, 76 insertions(+), 2 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence-plat.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/hfs/catalog.c b/fs/hfs/catalog.c
-index ccdbbffaaf7c1..f3fd84cffed5f 100644
---- a/fs/hfs/catalog.c
-+++ b/fs/hfs/catalog.c
-@@ -182,6 +182,40 @@ int hfs_cat_keycmp(const btree_key *key1, const btree_key *key2)
- 			  key2->cat.CName.name, key2->cat.CName.len);
- }
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-plat.c b/drivers/pci/controller/cadence/pcie-cadence-plat.c
+index 0456845dabb96..0f9cf2a9f0034 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-plat.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-plat.c
+@@ -167,6 +167,7 @@ static const struct of_device_id cdns_plat_pcie_of_match[] = {
+ 	},
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, cdns_plat_pcie_of_match);
  
-+static int hfs_cat_validate_found_cnid(struct hfs_find_data *fd, u32 cnid)
-+{
-+	hfs_cat_rec rec;
-+	u32 found_cnid;
-+	int rec_len;
-+
-+	rec_len = fd->entrylength;
-+	if (rec_len <= 0 || (size_t)rec_len > sizeof(rec))
-+		return -EIO;
-+
-+	memset(&rec, 0, sizeof(rec));
-+	hfs_bnode_read(fd->bnode, &rec, fd->entryoffset, rec_len);
-+
-+	switch (rec.type) {
-+	case HFS_CDR_FIL:
-+		if ((size_t)rec_len != sizeof(struct hfs_cat_file))
-+			return -EIO;
-+		found_cnid = be32_to_cpu(rec.file.FlNum);
-+		break;
-+	case HFS_CDR_DIR:
-+		if ((size_t)rec_len != sizeof(struct hfs_cat_dir))
-+			return -EIO;
-+		found_cnid = be32_to_cpu(rec.dir.DirID);
-+		break;
-+	default:
-+		return -EIO;
-+	}
-+
-+	if (found_cnid != cnid)
-+		return -EIO;
-+
-+	return 0;
-+}
-+
- /* Try to get a catalog entry for given catalog id */
- // move to read_super???
- int hfs_cat_find_brec(struct super_block *sb, u32 cnid,
-@@ -208,7 +242,12 @@ int hfs_cat_find_brec(struct super_block *sb, u32 cnid,
- 		return -EIO;
- 	}
- 	memcpy(fd->search_key->cat.CName.name, rec.thread.CName.name, len);
--	return hfs_brec_find(fd);
-+
-+	res = hfs_brec_find(fd);
-+	if (res)
-+		return res;
-+
-+	return hfs_cat_validate_found_cnid(fd, cnid);
- }
- 
- static inline
-diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
-index 86b5ae62247be..724b28bb8c6c4 100644
---- a/fs/hfs/hfs_fs.h
-+++ b/fs/hfs/hfs_fs.h
-@@ -156,6 +156,25 @@ extern int hfs_cat_move(u32 cnid, struct inode *src_dir,
- extern void hfs_cat_build_key(struct super_block *sb, btree_key *key,
- 			      u32 parent, const struct qstr *name);
- 
-+/*
-+ * Validate the CNID of a catalog record.
-+ */
-+static inline bool hfs_is_valid_cnid(u32 cnid, u8 type)
-+{
-+	if (likely(cnid >= HFS_FIRSTUSER_CNID))
-+		return true;
-+
-+	switch (cnid) {
-+	case HFS_ROOT_CNID:
-+		return type == HFS_CDR_DIR;
-+	case HFS_EXT_CNID:
-+	case HFS_CAT_CNID:
-+		return type == HFS_CDR_FIL;
-+	default:
-+		return false;
-+	}
-+}
-+
- /* dir.c */
- extern const struct file_operations hfs_dir_operations;
- extern const struct inode_operations hfs_dir_inode_operations;
-diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
-index f1796e4b07e83..e815e9a8ac6f2 100644
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -365,6 +365,9 @@ static int hfs_read_inode(struct inode *inode, void *data)
- 	rec = idata->rec;
- 	switch (rec->type) {
- 	case HFS_CDR_FIL:
-+		if (!hfs_is_valid_cnid(be32_to_cpu(rec->file.FlNum), rec->type))
-+			return -EIO;
-+
- 		if (!HFS_IS_RSRC(inode)) {
- 			hfs_inode_read_fork(inode, rec->file.ExtRec, rec->file.LgLen,
- 					    rec->file.PyLen, be16_to_cpu(rec->file.ClpSize));
-@@ -386,6 +389,9 @@ static int hfs_read_inode(struct inode *inode, void *data)
- 		inode->i_mapping->a_ops = &hfs_aops;
- 		break;
- 	case HFS_CDR_DIR:
-+		if (!hfs_is_valid_cnid(be32_to_cpu(rec->dir.DirID), rec->type))
-+			return -EIO;
-+
- 		inode->i_ino = be32_to_cpu(rec->dir.DirID);
- 		inode->i_size = be16_to_cpu(rec->dir.Val) + 2;
- 		HFS_I(inode)->fs_blocks = 0;
-@@ -565,13 +571,18 @@ static struct dentry *hfs_file_lookup(struct inode *dir, struct dentry *dentry,
- 	res = hfs_brec_read(&fd, &rec, sizeof(rec));
- 	if (!res) {
- 		struct hfs_iget_data idata = { NULL, &rec };
--		hfs_read_inode(inode, &idata);
-+		res = hfs_read_inode(inode, &idata);
- 	}
- 	hfs_find_exit(&fd);
- 	if (res) {
- 		iput(inode);
- 		return ERR_PTR(res);
- 	}
-+
-+	if (is_bad_inode(inode)) {
-+		iput(inode);
-+		return ERR_PTR(-EIO);
-+	}
- 	HFS_I(inode)->rsrc_inode = dir;
- 	HFS_I(dir)->rsrc_inode = inode;
- 	igrab(dir);
-diff --git a/fs/hfs/super.c b/fs/hfs/super.c
-index 97546d6b41f47..933aa04480899 100644
---- a/fs/hfs/super.c
-+++ b/fs/hfs/super.c
-@@ -372,6 +372,11 @@ static int hfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	if (!root_inode)
- 		goto bail_no_root;
- 
-+	if (is_bad_inode(root_inode)) {
-+		iput(root_inode);
-+		goto bail_no_root;
-+	}
-+
- 	set_default_d_op(sb, &hfs_dentry_operations);
- 	res = -ENOMEM;
- 	sb->s_root = d_make_root(root_inode);
+ static struct platform_driver cdns_plat_pcie_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
