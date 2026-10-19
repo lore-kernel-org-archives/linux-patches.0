@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1A9619B71;
-	Mon, 19 Oct 2026 14:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF55A533D0E;
+	Mon, 19 Oct 2026 14:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418662; cv=none; b=EMl80q61umtPTFF2Nk6ZeGwWgjMnTdTPmE478HnZMZs40n8HXtY8xEMrz+YDCzJj6MC1kuoaIBocUdEB0UMQUuk7BI5zYaiVDfLW1S2q9M26P4kE1kmJ4cxBON/4fQcX8jOhSTfebB2y+foY557104NRTyC01RLAm45zKi0vv1w=
+	t=1792418663; cv=none; b=GS7AGb2RNdJWVBrJBznxKQF9WrPWHgeZLXdMvkb6zfGV3PImP3x66r87g+wT1CVAfqFcbYhYyhzuoZhzJXsHEpziljaLbrSI0nKAxLIJTfY1cBi7es7xMlRaKcfMNHqnB9YnQsW+VYpyW/B75lrUbwdlX0Po2hcYNXcY49y/mHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418662; c=relaxed/simple;
-	bh=0z2iNy/UGHSs+7ImtgF7sSJNQTg60k+TwDSx8ikolsQ=;
+	s=arc-20240116; t=1792418663; c=relaxed/simple;
+	bh=73Er7CSmyPYNsNtQwb48dnVF30gvsfxqvGylHaXB6XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J88hNT4M9HbGiY/1tfqBiWwNWUzu4q0a8k0lhx/U4QCxZjwrvaEDD124d8Uz494cZVWwb2T5PBN/UBb3tL6PEmU+CdQDD6lHoGTXTo9YIivDOe48mFlLr0J5jf0VuYLxZMW94VRWTLgKZCx+kmbjvTA/hJM3Ry9/i6CZnJNuUvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NsSd3XlL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=utg7WkH6yncsbAAdq6YW+AiwRv8eft4bl5lKLw8MxXPH8CyBKa5hfusegWiGkACGvWaOqGbwOjVVlGqR+SOmK1obg212M+8th1ucWWuDD/iEZUNusD1ho688eKqDzfuurt5HTNuavq8jow+l754axW3qmqf4r+omM3qhcsvXff0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ads9PKHn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NsSd3XlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0D61F000C4;
-	Mon, 19 Oct 2026 14:04:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ads9PKHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233E31F000C6;
+	Mon, 19 Oct 2026 14:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418659;
-	bh=5kPxBXRDhMTx10Ww1KxDFhz4iNc8EED+NixLdBgCM7I=;
+	s=k20260515; t=1792418660;
+	bh=P/eMcIIduO6+WWMSsiM96gYRHQfbpYWBqVtuTT4A2qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NsSd3XlLsbv2rDVf2+pVRwUK91moTzV5oPKEL3hEWdwWWhqWEkZbyY/QdJvtry62P
-	 5CHNSGmZrYEx5NVF4VmJWRNbiY8/9iLDp8Rj9JrSoZtnE4uonYXx7L0OfoLIpwwvmJ
-	 SpAlM5SmoytSCMeivTOeNk3OGDyXBBV07JzJS4hOrWrk7trFU4RywsGDidwDf2BK0v
-	 YhvpxjRHz8ijPK3U63zoSNX9nCyut1DYki1iUPQ9YSKcWHXxVRxM+vjp1LZeDqsC5H
-	 GPCT2sGRRibXJzncCJ6uQPXzIy2qfmKefGmOy0PdHFtz0y1XuxxEl21Usu61juSjGg
-	 C4ncoVwxY2N5Q==
+	b=Ads9PKHnq2x883PiU8PqM0SBOq0q8H+5kPPUbw+jDI8hwLjAmNDP84oiTfOTyrTS0
+	 nvnyheTuw3FWjjE1zg6XMM5CMgpHMh0DAmD+C2LLvJ3vUIQSB8+7HMI6Fkzl+gyGT9
+	 bytBoFYXyWSh7vtzDrH81PyFSNaSkHSil4HjgRRdFvNdcu1jOmPbVh2JyX/XXhTSeG
+	 N4XV7CZw48KDwyXMda6q4+jzKXOXXp/DEpQnG0iCKdE7JQ10NRpE342t1APrn/vMOJ
+	 LHvt7WMlP4xFeOPgg0bCKjqqYRaBvf4PPK5Bzs1JyX1gQ7D4YkggUm4wlgNX2dBH67
+	 HPDOxR8ylAyyw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "David C.C.M. Gall" <david.ccm.gall@googlemail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	linux-crypto@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] crypto: sa2ul - use crypto_memneq() to compare AEAD tag
-Date: Mon, 19 Oct 2026 09:51:37 -0400
-Message-ID: <20261019135441.1420968-406-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: validate UEFI reduced-power SKU TLV length
+Date: Mon, 19 Oct 2026 09:51:38 -0400
+Message-ID: <20261019135441.1420968-407-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,480 +52,372 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "David C.C.M. Gall" <david.ccm.gall@googlemail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 7064af16d2b418d61571dba9bb0116a547ade124 ]
+[ Upstream commit f051995c539582b05276abda4c5874fd4cafd2a5 ]
 
-Use crypto_memneq() for a constant-time comparison.
+iwl_uefi_reduce_power_parse() reads an iwl_sku_id from an
+IWL_UCODE_TLV_PNVM_SKU payload after only checking that the generic TLV
+payload is present.
 
-sa_aead_dma_in_callback() compares the computed authentication tag
-against the received tag with memcmp(), which short-circuits on the
-first differing byte. An attacker who can submit decrypt requests and
-observe completion latency could recover the expected tag byte by byte.
+A short type-specific payload can therefore make the three data[] reads
+extend beyond the TLV. Reject SKU TLVs shorter than the structure before
+accessing it.
 
-Valid tag forgery for AEAD breaks the INT-CTXT guarantee.
-
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: David C.C.M. Gall <david.ccm.gall@googlemail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260715135916.24417-2-pengpeng@iscas.ac.cn
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The buggy `memcmp()` of
-the AEAD tag is present in `sa_aead_dma_in_callback()`, and this one-
-line constant-time swap should be backported here.
+This checkout is **v7.3-rc4** (mainline `7.3.0-rc4`). The analysis below
+is only for this tree.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Step 1.1: PARSE THE SUBJECT LINE
+Record: **[iwlwifi / wifi]** **[validate]** — reject a UEFI reduced-
+power `IWL_UCODE_TLV_PNVM_SKU` payload shorter than `struct iwl_sku_id`
+before reading it. “Validate” here is a bounds check, not a feature add.
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[crypto: sa2ul]** **[use]** use `crypto_memneq()` to compare
-AEAD tag. Subsystem is the TI K3 SA2UL hardware crypto driver. The verb
-is “use” with an explicit constant-time replacement; the body describes
-a timing leak.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- **Fixes:** none (expected for this review pipeline)
+- **Fixes:** none (expected for this review path)
 - **Reported-by:** none
 - **Tested-by:** none
-- **Reviewed-by:** none
+- **Reviewed-by:** none on the commit; v1 was reviewed on-list by the
+  iwlwifi maintainer
 - **Acked-by:** none
-- **Link:** none in the commit; lore found via `b4 dig`
+- **Link:**
+  `https://patch.msgid.link/20260715135916.24417-2-pengpeng@iscas.ac.cn`
 - **Cc: stable:** none (expected)
-- **Assisted-by:** `gregkh_clanker_t1000` (tool-assisted; not a quality
-  tag)
-- **Signed-off-by:** David C.C.M. Gall (author); Herbert Xu (crypto
-  maintainer)
-- Ignore any pipeline “Upstream commit” / Sasha Levin SOB if present —
-  they are not a selection signal
+- **Signed-off-by:** Pengpeng Hou (author); Miri Korenblit (iwlwifi
+  maintainer, applied it)
+- Ignore pipeline SOBs. Pattern: two-patch series (`24417-1` PNVM
+  parser, `24417-2` this UEFI parser); no syzbot.
 
-Notable: crypto maintainer SOB after applying v1 unchanged. No syzbot,
-no multi-user reports.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `sa_aead_dma_in_callback()` compares the computed AEAD
-  authentication tag to the received tag with `memcmp()`, which returns
-  on the first mismatched byte.
-- **Symptom / failure mode:** An attacker who can submit decrypts and
-  observe completion latency can recover the expected tag byte-by-byte
-  (timing side channel).
-- **Consequence:** Valid tag forgery breaks AEAD **INT-CTXT** (integrity
-  of ciphertext).
+- **Bug:** `iwl_uefi_reduce_power_parse()` treats a PNVM SKU TLV as
+  `struct iwl_sku_id` after only checking that the generic TLV payload
+  fits in the remaining buffer.
+- **Symptom:** three `data[]` reads can extend past the TLV; if
+  remaining bytes after the header are also `< 12`, that is a real out-
+  of-bounds read of the UEFI blob.
 - **Version info:** none in the message.
-- **Root cause:** non-constant-time tag compare on the AEAD decrypt
-  completion path.
+- **Root cause:** missing type-specific minimum length vs `sizeof(struct
+  iwl_sku_id)` (`__le32 data[3]`, 12 bytes).
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not disguised. It is an explicit length check before the three
+SKU word reads.
 
-Record: Not a hidden fix. This is an explicit crypto-security (timing)
-fix, same class as historical `crypto_memneq()` ICV/tag conversions.
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
----
-
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
-
-**Step 2.1: INVENTORY THE CHANGES**
-
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/crypto/sa2ul.c` — **+2 / −1** (net +1, 3-line change)
-- Functions: include block; `sa_aead_dma_in_callback()`
-- Scope: **single-file surgical fix**
+- **File:** `drivers/net/wireless/intel/iwlwifi/fw/uefi.c` — **+6 / −0**
+- **Function:** `iwl_uefi_reduce_power_parse()`
+- **Scope:** single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Hunk 1 (include):** add `#include <crypto/utils.h>` so
-  `crypto_memneq()` is declared. `include/crypto/utils.h` exists in this
-  tree; `crypto/internal/aead.h` already pulls `crypto/algapi.h` →
-  `crypto/utils.h`, so the include is explicit but not a functional
-  dependency.
-- **Hunk 2 (decrypt completion):** on decrypt (`!rxd->enc`), after
-  copying the received tag, replace
-  `err = memcmp(&mdptr[4], auth_tag, authsize) ? -EBADMSG : 0`
-  with
-  `err = crypto_memneq(&mdptr[4], auth_tag, authsize) ? -EBADMSG : 0`.
-- Encrypt path is unchanged (it writes the tag out).
-  Error/free/`aead_request_complete()` are unchanged.
+- **Before:** loop requires `len >= sizeof(*tlv)` (8-byte header). After
+  subtracting the header it checks `len < tlv_len` (payload vs remaining
+  buffer), then on `IWL_UCODE_TLV_PNVM_SKU` casts the payload to `struct
+  iwl_sku_id` and reads `data[0..2]` even if `tlv_len` is 0–11.
+- **After:** if `tlv_len < sizeof(*tlv_sku_id)` log and return `-EINVAL`
+  before those reads.
+- **Path:** firmware/UEFI parse during Intel WiFi PNVM/reduce-power
+  load, not a hot datapath.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: **Memory safety / out-of-bounds read.** Outer check only proves
+the claimed TLV payload is inside the remaining buffer, not that it is
+12 bytes. If `tlv_len=4` and remaining `len=8`, `8 < 4` is false, then
+12 bytes are read from an 8-byte remainder → **allocation OOB**. If
+remaining `len >= 12` but `tlv_len < 12`, the reads stay in the
+allocation but past this TLV.
 
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Obviously correct and minimal (same pattern as the sibling PNVM
+check). Regression risk is low: a too-short SKU TLV cannot be used
+anyway; `-EINVAL` makes `iwl_pnvm_load_reduce_power_to_trans()` set
+`failed_to_load_reduce_power_image` and skip the table. No API or lock
+changes.
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+Step 3.1: BLAME THE CHANGED LINES
+Record: The parser dates to **9dad325f9d575** (“iwlwifi: support loading
+the reduced power table from UEFI”, 2021-06-21), first in **v5.14-rc1**.
+SKU access was later adjusted by **3a68ae0fa2ec13** (“wifi: iwlwifi:
+remove sku_id from trans”, 2025-05-04). The six new lines are this
+commit (**f051995c53958**, 2026-07-15). The missing min-length check has
+been there since the parser was added.
+
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No `Fixes:` tag. Introduction commit **9dad325f9d575** is an
+ancestor of this HEAD. No intermediate SKU-length check on this function
+before this patch.
+
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Immediate parent is sibling **7410e4548a17b** (“wifi: iwlwifi:
+validate PNVM SKU TLV length”) — same author, same date, same check in
+`iwl_pnvm_parse()`. Independent; this UEFI patch does not need that
+hunk. Nearby **daec24a5ed5da** is a different length check in
+`iwl_pnvm_complete_fn()`. Standalone as a 2/2 series member.
+
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Pengpeng Hou has these two iwlwifi validation commits in this
+tree. Applied by **Miri Korenblit**, listed iwlwifi maintainer in
+MAINTAINERS.
+
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Uses existing `tlv_sku_id`, `tlv_len`, `IWL_ERR`, `-EINVAL`. No
+new helpers. Can apply standalone wherever
+`iwl_uefi_reduce_power_parse()` still has this loop.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **Category:** memory-safety / crypto correctness — **timing side
-  channel** on AEAD tag compare (not UAF/leak/lock).
-- **Mechanism:** `memcmp()` short-circuits; `crypto_memneq()` is
-  documented as comparing without leaking timing
-  (`include/crypto/utils.h`). Same boolean sense: 0 = equal, nonzero =
-  not equal, so `-EBADMSG` vs `0` is preserved.
+- **v2 (applied):**
+  https://patch.msgid.link/20260715135916.24417-2-pengpeng@iscas.ac.cn
+- **v1:** 2026-06-30,
+  https://lore.kernel.org/all/2026063008051412.5-ccfa108-0020-wifi-
+  iwlwifi-validate-UEFI--pengpeng@iscas.ac.cn/
+- v1 used `tlv_len < 3 * sizeof(__le32)`; Miri asked for
+  `sizeof(*tlv_sku_id)`; v2 did that. No NAK. b4 mbox for v2 is the
+  patch only (no further replies).
 
-**Step 2.4: ASSESS THE FIX QUALITY**
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: To/Cc: Miri Korenblit, linux-wireless, linux-kernel. Maintainer
+reviewed v1 and applied v2.
 
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot, bugzilla, or user crash report. Author-found parser
+hole. Syzbot CI on v2: KASAN build/boot passed; fuzz skipped.
+
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Pair with **7410e4548a17b** (`24417-1`, `iwl_pnvm_parse()`).
+Same bug class, different file. This patch does not depend on that one.
+
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: No stable-list discussion found for this subject. Absence of
+`Cc: stable` is expected here.
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `iwl_uefi_reduce_power_parse()` only.
+
+Step 5.2: TRACE CALLERS
 Record:
-- Obviously correct: drop-in replacement used throughout the crypto
-  stack and other HW AEAD drivers (`talitos`, `atmel-aes`, `nx`, `ccp`,
-  etc.).
-- Minimal; no API/struct/locking changes.
-- Regression risk: **very low**. Slightly more work per decrypt
-  (constant-time over `authsize`, typically 12–32 bytes) is negligible
-  vs DMA/IRQ.
+- Declared in `fw/uefi.h` under `#ifdef CONFIG_EFI` (stub `-EOPNOTSUPP`
+  otherwise).
+- Only caller: `iwl_pnvm_load_reduce_power_to_trans()` in `fw/pnvm.c`.
+- That is called from `iwl_pnvm_load()`, exported and used from
+  `mvm/fw.c` and `mld/fw.c` during firmware/PNVM init.
+- Not IRQ; process context during WiFi bring-up.
 
----
+Step 5.3: TRACE CALLEES
+Record: Reads UEFI blob from `iwl_uefi_get_reduced_power()` →
+`iwl_uefi_get_verified_variable()` (`kmalloc`/`kmemdup` of EFI var). On
+SKU match, `iwl_uefi_reduce_power_section()`. Fix only adds a length
+check and error return.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Device probe / firmware start → `iwl_pnvm_load()` → reduce-power
+UEFI parse. Not a syscall parser. Trigger needs Intel iwlwifi,
+`CONFIG_EFI`, runtime EFI `GetVariable`, and a Reduced Power variable
+with a short PNVM_SKU TLV. Unprivileged userspace cannot normally forge
+that; root/firmware can. Still a kernel OOB on bad firmware/BIOS data.
 
-**Step 3.1: BLAME THE CHANGED LINES**
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Identical hole and fix in `iwl_pnvm_parse()` (`pnvm.c` lines
+208–212 in this tree). Same systematic miss.
 
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. `iwl_uefi_reduce_power_parse()` is in `uefi.c` from v5.14.
+This tree is **v7.3-rc4**; the fix itself is already an ancestor (`git
+merge-base --is-ancestor f051995c53958 HEAD` succeeded) and first
+appeared in **v7.3-rc1**. The parser and the OOB path exist in this
+lineage.
+
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: **Clean apply** on this tree’s pre-image (original commit).
+Context is the long-standing TLV loop; no local conflicts.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: This is the fix. Sibling PNVM check is also here. No earlier
+substitute for the UEFI parser.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: **iwlwifi** (`drivers/net/wireless/intel/iwlwifi/`).
+**IMPORTANT** — common Intel WiFi driver, not core mm/VFS, not staging.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively developed (UEFI/PNVM/regulatory churn through 2026).
+The missing check is old (2021); this is hardening of mature parse
+logic, not a bug in brand-new code.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: **Driver-specific + config-specific:** Intel iwlwifi +
+`CONFIG_EFI` + platforms that expose the Reduced Power UEFI variable.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: WiFi firmware/PNVM load with a short `IWL_UCODE_TLV_PNVM_SKU` in
+that UEFI blob. Uncommon on good OEM tables; realistic with
+corrupt/malicious EFI data. Not a normal unprivileged syscall.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Out-of-bounds **read** of up to ~12 bytes. Can KASAN/oops if the
+SKU TLV sits near the end of the `kmemdup` buffer; otherwise reads the
+next TLV and can mis-match SKU / skip reduce-power. **HIGH** for the
+true OOB case (crash on probe), not data corruption of user files.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- Buggy `memcmp()` introduced in **`d2c8ac187fc92`** (“crypto: sa2ul -
-  Add AEAD algorithm support”, Keerthy, 2020-07-23).
-- Present since **v5.9-era** driver addition; in this 6.12 tree (`git
-  merge-base --is-ancestor d2c8ac187fc92 HEAD` succeeded).
-- Blame on the callback still shows that 2020 origin for the compare.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. The introducing commit is `d2c8ac187fc92`, and
-it **is** in this tree.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: Recent `sa2ul.c` work here is unrelated (probe pool failure,
-fallback names, MODULE_DESCRIPTION, setkey errors). No prerequisite
-refactor of the tag compare. Standalone.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Author is not the subsystem maintainer. Same-day sibling patches
-on origin/master: keembay CCM/GCM `crypto_memneq()` conversions
-(`353b3a85136f2`, `ff2ac77a034e0`). Herbert Xu applied this series.
-Historical precedent in **this** tree: `79960943fdc11` (talitos) and
-`cb8affb55c7e6` (nx) — same bug class, both **Cc: stable**.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: None. `crypto_memneq()` lives in `lib/crypto/memneq.c`
-(`CRYPTO_LIB_UTILS`, selected by `CRYPTO`). Driver already `select
-CRYPTO_ALGAPI`. Patch applies standalone. `git show 7064af16d2b41 | git
-apply --check` **exit 0** on this tree. Commit **not** already an
-ancestor of HEAD.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- `b4 dig -c 7064af16d2b418d61571dba9bb0116a547ade124` →
-  https://patch.msgid.link/anX9UKJ66Aak4ICV@fudgebox
-- **v1 only** (`b4 dig -a`); committed version is v1.
-- Thread: author submission (2026-08-07); Herbert Xu “Patch applied.
-  Thanks.” (2026-08-15). **No NAK, no review risk comments, no Cc:
-  stable suggestion.**
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record (`b4 dig -w`): To/Cc Herbert Xu, David S. Miller, linux-crypto,
-linux-kernel, gregkh@linuxfoundation.org. Subsystem maintainer applied
-it.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No Reported-by / Link / bugzilla / syzbot. Bug is from code
-review of the `memcmp()` decrypt path, not a field crash.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Same author, same day: keembay GCM/CCM `crypto_memneq()`
-patches. This sa2ul patch is self-contained; keembay is a different
-driver and is **not** a prerequisite. keembay is also not in this 6.12
-tree.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: **UNVERIFIED** — lore.kernel.org/stable returned an Anubis bot
-challenge (HTTP 403 / JS gate). Original linux-crypto thread had no
-stable discussion.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-
-Record: `sa_aead_dma_in_callback()`; `crypto_memneq()` (callee).
-
-**Step 5.2: TRACE CALLERS**
-
-Record:
-- Callback assigned in `sa_aead_run()` (`sa_req.callback =
-  sa_aead_dma_in_callback`).
-- `sa_aead_run()` called from `sa_aead_encrypt()` / `sa_aead_decrypt()`.
-- Those are `.encrypt` / `.decrypt` for
-  `authenc(hmac(sha1),cbc(aes))-sa2ul` and
-  `authenc(hmac(sha256),cbc(aes))-sa2ul` (priority **3000**).
-- Completes in DMA RX callback context, then `aead_request_complete()`.
-
-**Step 5.3: TRACE CALLEES**
-
-Record: `sa_sync_from_device`, `dmaengine_desc_get_metadata_ptr`,
-`scatterwalk_map_and_copy`, `sa_free_sa_rx_data`,
-`aead_request_complete`. After the change, decrypt also calls
-`crypto_memneq()`. No new locks or allocations.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Reachable from the kernel crypto AEAD API. Algorithms have
-`CRYPTO_ALG_KERN_DRIVER_ONLY` but **not** `CRYPTO_ALG_INTERNAL`.
-`KERN_DRIVER_ONLY` means “HW offload, not a CPU ISA helper”
-(`include/linux/crypto.h`); AF_ALG even allows that bit in
-`salg_feat`/`salg_mask`. Userspace **can** bind these algs when
-`CRYPTO_USER_API_AEAD` is enabled. Kernel users (e.g. IPsec ESP with
-authenc) can also select this high-priority driver.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same `memcmp`→`crypto_memneq` tag/ICV pattern already used in
-`drivers/crypto/talitos.c`, `atmel-aes.c`, `nx-aes-gcm.c`, `nx-aes-
-ccm.c`, `ccp-ops.c`, etc. Remaining `memcmp` of auth material in this
-tree: `drivers/crypto/qce/aead.c` (different driver). sa2ul had the last
-such compare in this file.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.** `drivers/crypto/sa2ul.c` line 1722:
-
-`err = memcmp(&mdptr[4], auth_tag, authsize) ? -EBADMSG : 0;`
-
-Introduced 2020 (`d2c8ac187fc92`); still here. Tree is 6.12.111.
-Upstream fix `7064af16d2b41` is **not** an ancestor of HEAD.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Clean apply** (`git apply --check` succeeded). Include site
-and callback context match origin. `include/crypto/utils.h` exists
-(moved in `c616fb0cbae8a`, long before 6.12).
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: No `crypto_memneq` sa2ul commit in this tree. No alternate tag-
-compare fix. nx/talitos timing-leak fixes are already present; they do
-not cover sa2ul.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: **drivers/crypto/sa2ul.c** — TI K3 Security Accelerator.
-**IMPORTANT** for those platforms (crypto offload used by
-IPsec/VPN/etc.), **not CORE**. `CONFIG_CRYPTO_DEV_SA2UL` depends on
-`ARCH_K3 || COMPILE_TEST`; **`CONFIG_CRYPTO_DEV_SA2UL=m` is in
-`arch/arm64/configs/defconfig`**.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Mature driver (added 2020). Modest ongoing fixes in 6.12. This
-is a long-standing compare bug, not a regression from recent refactor.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: **Driver-specific / platform-specific:** TI K3 SoCs
-(AM62/AM64/AM65, J721e, etc.) with SA2UL AEAD offload enabled. Not
-universal.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: Trigger is **every hardware AEAD decrypt** that takes the non-
-fallback path (`sa_aead_dma_in_callback` decrypt branch). Userspace can
-hit it via AF_ALG if user-API AEAD is enabled; kernel IPsec/authenc can
-hit it without userspace crypto. Timing exploitation needs many decrypts
-plus latency observation — classic, not a one-shot crash. Unprivileged
-trigger is possible where AF_ALG AEAD is exposed.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record:
-- **Failure mode:** timing leak of the expected authentication tag →
-  theoretical **tag forgery**, breaking AEAD integrity.
-- **Severity: HIGH** (crypto integrity / security). Not a panic/UAF.
-  DMA/IRQ noise makes a practical oracle harder than a userspace
-  `memcmp` of a hot buffer, but the kernel crypto API treats non-
-  constant-time ICV checks as real bugs (talitos/nx were Cc: stable for
-  the same reason). `crypto_memneq()` exists specifically for this.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit:** closes a known AEAD INT-CTXT hole on a defconfig-enabled
-  ARM64 HW driver; matches established crypto policy.
-- **Risk:** very low (one compare + include; return-value polarity
-  matches).
-- **Ratio:** benefit > risk for this stable tree.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-- Real AEAD tag compare uses variable-time `memcmp()` on decrypt
-  complete.
-- Breaks INT-CTXT if exploited; same class previously backported
-  (talitos, nx) with Cc: stable.
-- Buggy code has been in this file since 2020 and is in 6.12.111.
-- 3-line, obviously correct, applies cleanly; `crypto_memneq()` already
-  in this tree.
-- Crypto maintainer applied v1 with no objections.
-- Driver is in arm64 defconfig; path is a real decrypt completion, not
-  dead code.
-
-**AGAINST:**
-- No user report / CVE / syzbot.
-- Practical timing through DMA+IRQ is noisy (harder oracle than a tight
-  userspace loop).
-- Affects TI K3 SA2UL users, not all 6.12 systems.
-- No explicit Cc: stable (not a negative per the review rules).
-
-**UNRESOLVED:**
-- Whether this SHA was already discussed on stable@ (lore blocked).
-- No measured exploit against sa2ul specifically.
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — drop-in `crypto_memneq()`;
-   maintainer applied; API used kernel-wide.
-2. Fixes a real bug that affects users? **PASS** — non-constant-time
-   AEAD tag verify on HW decrypt.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   security (AEAD integrity / timing). Severity HIGH, not a panic.
-4. Small and contained? **PASS** — 3 lines, one file, one function.
+- **Benefit:** high for affected laptops/APs — avoids OOB during WiFi
+  init on bad UEFI data; check is cheap.
+- **Risk:** very low — 6 lines, error path only, maintainer-acked form.
+- **Ratio:** favorable.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+**For:**
+- Real type-specific length hole; OOB read of `iwl_sku_id` (12 bytes) is
+  visible in the code.
+- Six-line, obviously correct check; v2 matches maintainer review
+  (`sizeof(*tlv_sku_id)`).
+- iwlwifi maintainer applied it; same fix already used in
+  `iwl_pnvm_parse()`.
+- Parser present since v5.14; this tree has it.
+- Applies cleanly; no new API; no extra dependency for *this* hunk.
+
+**Against:**
+- No user/syzbot report; trigger is malformed UEFI, not a common
+  syscall.
+- Reduce-power table is not the data path; failed parse already degrades
+  to skipping the image.
+- `CONFIG_EFI` only.
+
+**Unresolved:** lore.kernel.org HTML fetch returned 403; discussion
+recovered via b4 mbox, msgid.link, and LKML mirrors. No stable-list
+thread found.
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — size check before
+   `data[0..2]`; v2 from maintainer review; in iwlwifi-next then
+   mainline.
+2. Fixes a real bug that affects users? **PASS** — OOB read of a kernel
+   buffer parsed at WiFi init.
+3. Important issue? **PASS** — OOB can oops; severity HIGH, not LOW
+   cosmetics.
+4. Small and contained? **PASS** — +6 lines, one function.
 5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — clean apply; helpers present.
+6. Can apply to the local tree? **PASS** — this tree already contains
+   the original commit; pre-image matches.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
+fix.
 
-Record: Not a device-ID / quirk / DT / build / docs exception. Qualifies
-as a **small security correctness fix**.
+Step 9.4: MAKE YOUR DECISION
+This tree’s iwlwifi UEFI reduce-power parser has the hole; the patch is
+a small, reviewed bounds check that prevents a real OOB read. That meets
+stable rules for **this** checkout.
 
-**Step 9.4: MAKE YOUR DECISION**
+What it solves for this tree: `iwl_uefi_reduce_power_parse()` can read
+12 bytes from a PNVM SKU TLV whose declared length is shorter, and can
+walk off the UEFI blob when remaining length is also `< 12`. That
+matters on Intel WiFi + EFI machines with a bad Reduced Power variable
+(crash/KASAN on init). The change is six lines, no new ABI, no extra
+commits required, and the sibling PNVM check is independent.
 
-This is a surgical, low-risk fix for a real AEAD tag timing leak in code
-that exists in 6.12.111. Stable policy has historically taken this exact
-class of change. Backport to this tree.
-
----
-
-### What the commit solves for stable users
-
-On TI K3 boards using SA2UL AEAD offload, decrypt completion compared
-the computed MAC to the packet tag with `memcmp()`. That can leak how
-many leading tag bytes matched via completion latency and, in the
-standard model, enable tag forgery (INT-CTXT failure). Replacing it with
-`crypto_memneq()` makes the compare constant-time without changing
-success/failure semantics.
-
-### Stable rules / risk vs benefit
-
-Meets all six criteria: small, obviously correct, no new API, applies
-cleanly here, fixes a crypto-integrity bug. Risk is essentially the cost
-of a 16–32 byte constant-time XOR loop. Benefit is aligning this long-
-lived driver with the rest of the crypto stack.
-
-### Concerns
-
-None that block backport: no missing prereqs, no follow-up that rewrote
-the callback, include header already in 6.12. Practical exploitability
-is not proven in the field; that does not make the compare correct.
-
----
+Risk vs benefit: very low regression risk vs preventing an OOB on a
+widely used driver. Main caveat is the uncommon trigger; that does not
+make the hole theoretical in the code.
 
 Verification:
-- [Phase 1] Parsed subject/tags/body from `git show 7064af16d2b41`; no
-  Fixes/Reported-by/Cc: stable; SOB Herbert Xu; Assisted-by
-  gregkh_clanker_t1000
-- [Phase 2] Diff: `drivers/crypto/sa2ul.c` +2/−1; include
-  `crypto/utils.h`; `memcmp` → `crypto_memneq` in
-  `sa_aead_dma_in_callback` decrypt branch
-- [Phase 2] Confirmed `crypto_memneq` returns 0 if equal, 1 otherwise
-  (`include/crypto/utils.h` lines 56–70) — same ternary as `memcmp`
-- [Phase 3] `git describe HEAD` / Makefile: **6.12.111**, branch
-  `pending-6.12`
-- [Phase 3] `git merge-base --is-ancestor 7064af16d2b41 HEAD` → not
-  ancestor; `d2c8ac187fc92` **is** ancestor
-- [Phase 3] `git log origin/master -S 'memcmp(&mdptr[4]' --
-  drivers/crypto/sa2ul.c` → intro `d2c8ac187fc92`, fix `7064af16d2b41`
-- [Phase 3] Blame on local callback: memcmp path from 2020 AEAD add
-- [Phase 3] Same-class stable precedent in this tree: `79960943fdc11`
-  (talitos), `cb8affb55c7e6` (nx), both Cc: stable
-- [Phase 3] `git apply --check` of `7064af16d2b41` → success
-- [Phase 4] `b4 dig -c/-a/-w/-m`: lore
-  https://patch.msgid.link/anX9UKJ66Aak4ICV@fudgebox ; v1 only; Herbert
-  “Patch applied”; To linux-crypto + Herbert
-- [Phase 4] WebFetch lore 403; stable@ search blocked by Anubis —
-  UNVERIFIED for stable-list history
-- [Phase 5] Callers: `sa_aead_run` ←
-  `sa_aead_encrypt`/`sa_aead_decrypt`; algs
-  `authenc(hmac(sha1|sha256),cbc(aes))-sa2ul`
-- [Phase 5] `CRYPTO_ALG_KERN_DRIVER_ONLY` is not `CRYPTO_ALG_INTERNAL`;
-  AF_ALG allows that flag (`crypto/af_alg.c`)
-- [Phase 5] Other drivers already use `crypto_memneq` for AEAD tags
-  under `drivers/crypto/`
-- [Phase 6] Local line 1722 still `memcmp`; `include/crypto/utils.h`
-  present; `CRYPTO` selects `CRYPTO_LIB_UTILS`; `lib/crypto/memneq.c`
-  exports `__crypto_memneq`
-- [Phase 6] `arch/arm64/configs/defconfig` has
-  `CONFIG_CRYPTO_DEV_SA2UL=m`
-- [Phase 7] Driver added 2020 (`7694b6ca649fe`); Kconfig
-  `CRYPTO_DEV_SA2UL` depends on `ARCH_K3`
-- [Phase 8] Failure mode: AEAD tag timing leak / INT-CTXT, severity
-  HIGH; apply risk very low
-- UNVERIFIED: stable@ mailing list discussion; real-world exploit of
-  this specific DMA-callback timing channel
+- [Phase 1] Subject/body/tags: validate SKU TLV length; SOB Hou +
+  Korenblit; Link `24417-2`; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +6 in `iwl_uefi_reduce_power_parse()`; `if (tlv_len <
+  sizeof(*tlv_sku_id)) return -EINVAL`
+- [Phase 2] `struct iwl_sku_id` is `__le32 data[3]` in `fw/api/alive.h`;
+  `iwl_ucode_tlv` is 8-byte header + `data[]` in `fw/file.h`
+- [Phase 3] `git describe HEAD` / Makefile: v7.3-rc4 / 7.3.0-rc4
+- [Phase 3] `git merge-base --is-ancestor f051995c53958 HEAD` → yes
+- [Phase 3] Blame: parser from 9dad325f9d575 (v5.14-rc1); fix lines from
+  f051995c53958 (v7.3-rc1)
+- [Phase 3] Sibling 7410e4548a17b is patch 1/2 on `pnvm.c`, not a apply-
+  prereq
+- [Phase 4] `b4 dig -c f051995c53958`: v1 2026-06-30, v2 2026-07-15;
+  mbox is the patch
+- [Phase 4] LKML mirror: Miri “Please use sizeof(*tlv_sku_id)”; no NAK
+- [Phase 4] Stable lore search: no discussion of this subject
+- [Phase 5] Only caller `iwl_pnvm_load_reduce_power_to_trans` ←
+  `iwl_pnvm_load` ← mvm/mld fw init; gated on CONFIG_EFI
+- [Phase 5] Buffer from `iwl_uefi_get_reduced_power` / verified EFI
+  variable (`kmalloc` then `kmemdup`)
+- [Phase 6] Buggy parser present; fix already in this tree; would apply
+  cleanly
+- [Phase 7] iwlwifi, maintainer Miri Korenblit
+- [Phase 8] Failure: OOB read / possible oops on WiFi init; HIGH;
+  trigger EFI-malformed
+- UNVERIFIED: lore.kernel.org HTTP 403 on direct thread fetch; content
+  recovered from b4 and LKML mirrors
 
 **YES**
 
- drivers/crypto/sa2ul.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/uefi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
-index 73034aeb63862..4a766e4351970 100644
---- a/drivers/crypto/sa2ul.c
-+++ b/drivers/crypto/sa2ul.c
-@@ -22,6 +22,7 @@
- 
- #include <crypto/aes.h>
- #include <crypto/authenc.h>
-+#include <crypto/utils.h>
- #include <crypto/des.h>
- #include <crypto/internal/aead.h>
- #include <crypto/internal/hash.h>
-@@ -1688,7 +1689,7 @@ static void sa_aead_dma_in_callback(void *data)
- 		scatterwalk_map_and_copy(auth_tag, req->src, start, authsize,
- 					 0);
- 
--		err = memcmp(&mdptr[4], auth_tag, authsize) ? -EBADMSG : 0;
-+		err = crypto_memneq(&mdptr[4], auth_tag, authsize) ? -EBADMSG : 0;
- 	}
- 
- 	sa_free_sa_rx_data(rxd);
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
+index 4ae4d215e633e..395973c3f2bf8 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
+@@ -248,6 +248,12 @@ int iwl_uefi_reduce_power_parse(struct iwl_trans *trans,
+ 			IWL_DEBUG_FW(trans,
+ 				     "Got IWL_UCODE_TLV_PNVM_SKU len %d\n",
+ 				     tlv_len);
++			if (tlv_len < sizeof(*tlv_sku_id)) {
++				IWL_ERR(trans, "invalid PNVM SKU TLV len: %u\n",
++					tlv_len);
++				return -EINVAL;
++			}
++
+ 			IWL_DEBUG_FW(trans, "sku_id 0x%0x 0x%0x 0x%0x\n",
+ 				     le32_to_cpu(tlv_sku_id->data[0]),
+ 				     le32_to_cpu(tlv_sku_id->data[1]),
 -- 
 2.53.0
 
