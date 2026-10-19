@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3683D546288;
-	Mon, 19 Oct 2026 13:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD285548361;
+	Mon, 19 Oct 2026 13:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418191; cv=none; b=CBT+XvEmyOZ9x5L7WUUNi0mr1Dk8yHOxwKXy2MAGcP63KvMyR5P2vi/vhgpOa3LC9YBrIcOdHOSdeutbhrO3qykw77YZ14s5fjxc8sp2Vx47CZtUYEnZwEbUIBJkFr4Xt8I0wWSpHRpChgarIUSfT+QpikeCBqQtBsjCQb+u8wk=
+	t=1792418192; cv=none; b=Ov4ZJ1po31c7b3E6cv+qZruTFT4hkn+8WnQLzrF/fMRKNILMQgFXr5hBvWFVazf3ZYd5CiPq5VOSdNKBEasTwjylV9Cby9YUNPJ8VM9xTetD3eAFg1DI1sSIDymTTCgweV0BaEzNslTcTcGgBx3Qd9akf/G/Ibem8f8NaDwXfFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418191; c=relaxed/simple;
-	bh=AX4G5M/l4pEn3tkdmVigvCkYkKoXoaKsb4/sjzEYnwc=;
+	s=arc-20240116; t=1792418192; c=relaxed/simple;
+	bh=YIgvDSLFUYaxwCXW75fGzmzMToDiAVGmeTXCss3DLEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O8nDTFga1Gs2I85KnU24++dActqztEjqQT8i9D3+nttRT+VMi5boeo07v3WxX2OXSmCPwYdO14tE+jmCGnZg1kMKk2HKDxYoIvyAfv3IufEsFJ2DiWtdVIyTcFsYrlzb30AlRboPWxmeBDJI9w3QcdrvRbSufFySTNvoYj+QsUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SAfbooNo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G/Dty8cP20U6/v36meMuYuRujjxywgXby+5jqMeiihph7LR33wXknxaVsYJ/H+luINyn8jHwNBupCGcU2F8JxCd+526HXlXf0KVvrsKhX7T12Bv3RseV417I17aBL8yM0S9OmNDFtfi55d4PEPLS3IqkrzwQ4fn7Np68CaZn0/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ViOgBH/J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SAfbooNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D1C1F000C9;
-	Mon, 19 Oct 2026 13:56:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ViOgBH/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7881F000C4;
+	Mon, 19 Oct 2026 13:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418189;
-	bh=UQlDHQUdb/bd+gCQro2HwgqSCPn9jpzGKnGKL2csRHo=;
+	s=k20260515; t=1792418190;
+	bh=GBDQnJH235L1jol/o3nhffq/7PZ9JTvYNaSZcRr7Cpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SAfbooNotILCYa5eiTOutjebDTa1BWTuJbbynknjLoSTEc2/M2Ln8T10ZKbu1haGw
-	 7tI1odBvG68DW33j1Rk/orn1z3L1ubm83mdWIjE1FOXM0cAKmU5FFrI5HPzbMKYW4w
-	 PfjY2EHw0jFgz32OqV9TAYNi+w++rqr/LUuVUEYL8c0pWUs+Cj3s3iDPNwW/Pz021A
-	 R6TnPPWwG2jUEMSIGso5YMh6pRaARGVG/BmHzYU5XcMAozqmzaR/KacYwWgeRG6mK8
-	 Ofdh56YXzR1gyE2bC33AtQggx0gl+HqNDQbiOMoLip6IGt6LObuWaekloVy7qOqhDk
-	 8PX62F1+1stJg==
+	b=ViOgBH/JD9oEtouHZ7LboM7mCl/oTm9IC9Bz20zzr+YZAvXiQy2Wpz9Eh8Q1yqb82
+	 pvNGKETY/gyKpRv6Q23pq7Oi15CIrIIL47nxsWkwz3IVG2zdYAqdmOpL+uVZkBqkq2
+	 LEdHsV6xG/bTRcOGh84/306v8FY6dgksqvOhKPWdVePcl1fzJtBMvKMNSmm9Mnles7
+	 cpQqziWPSeZ3NNVvcluRm6vovOXzGHY7+YZ5k2mwwIXEXLZ/0GmEEHo1lvqKvHthZQ
+	 ZEfwlDDhahzMs8ZEp/ekkyBGuIu81+KxF9hzBIPCPwpM2ogYI97SQwVoUVOxhOcUVo
+	 nrYnWxqYqt93Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+Cc: =?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jh80.chung@samsung.com,
-	linux-mmc@vger.kernel.org,
+	eddyz87@gmail.com,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	memxor@gmail.com,
+	bpf@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] mmc: dw_mmc: stop and complete DMA also in STATE_DATA_BUSY state
-Date: Mon, 19 Oct 2026 09:46:06 -0400
-Message-ID: <20261019135441.1420968-75-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] libbpf: Fix ring buffer consumer loop on 32-bit position wrap
+Date: Mon, 19 Oct 2026 09:46:07 -0400
+Message-ID: <20261019135441.1420968-76-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -48,316 +50,438 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Israel Téllez García <i.tellez@btesa.com>
 
-[ Upstream commit cb3fcb8d118b874178251d1f02613f60d25e4ddc ]
+[ Upstream commit fdd4fad0bbbd08501465c5f9b556963093c5d58a ]
 
-When transfer was stopped in STATE_DATA_BUSY state, there was no call to
-dma_ops->cleanup function, so the DMA mapped buffer was never properly
-unmapped. Fix this by calling dw_mci_stop_dma() function also in that
-state to ensure proper cleanup call when DMA transfer was used.
+ringbuf_process_ring() walks the records between the consumer and the
+producer with an ordering comparison:
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+	while (cons_pos < prod_pos) {
+
+cons_pos and prod_pos mirror the kernel's ring positions and are
+unsigned long here too, so on 32-bit they wrap at 2^32 bytes of traffic.
+When producer_pos has wrapped and consumer_pos has not, prod_pos is the
+smaller of the two, the loop body never runs and no record is consumed.
+Since consumer_pos only advances inside that loop, it never wraps either
+and the consumer stops delivering samples for good, with no error
+returned to the caller: ring_buffer__poll() keeps reporting zero
+records while the kernel side fills up and starts dropping.
+
+Compare the distance instead. The consumer never runs ahead of the
+producer, so prod_pos - cons_pos is the amount of unconsumed data and
+stays correct across the wrap.
+
+64-bit hosts are unaffected in practice: the counters would need 16 EiB
+to wrap. This is the userspace counterpart of the kernel-side walk fixed
+in "bpf: Fix pending_pos walk on 32-bit ring position wrap"; a 32-bit
+consumer hits whichever of the two comes first.
+
+Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260814124843.22041-5-i.tellez@btesa.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local checkout is mainline **v7.3-rc4** (`origin/master`). The
-candidate is `cb3fcb8d118b8` (`mmc: dw_mmc: stop and complete DMA also
-in STATE_DATA_BUSY state`): a one-line DMA-cleanup hole in a host used
-on Exynos, Rockchip, and similar SoCs.
-
 ## Phase 1: Commit message forensics
 
-**Step 1.1 — Subject**
-Record: **[mmc/dw_mmc] [stop and complete] Call DMA stop/cleanup in
-`STATE_DATA_BUSY` so mapped buffers are unmapped.**
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[libbpf] [Fix] ring buffer consumer loop on 32-bit position
+wrap**
 
-**Step 1.2 — Tags**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Marek Szyprowski (author; DMA-mapping maintainer)
-- Reviewed-by: Shawn Lin (dw_mmc co-maintainer)
-- Signed-off-by: Ulf Hansson (MMC maintainer)
-- No Fixes:, Reported-by, Tested-by, Link:, or Cc: stable (absence is
-  expected here)
+- **Signed-off-by:** Israel Téllez García `<i.tellez@btesa.com>`
+  (author)
+- **Signed-off-by:** Andrii Nakryiko `<andrii@kernel.org>` (libbpf/BPF
+  maintainer)
+- **Link:** `https://lore.kernel.org/bpf/20260814124843.22041-5-
+  i.tellez@btesa.com`
+- No `Reported-by`, `Tested-by`, `Reviewed-by`, `Acked-by`, or `Cc:
+  stable` on the original patch
+- Original submission had **no `Fixes:` tag**. `b4 am` later attached a
+  lore trailer: `Fixes: bf99c936f947 ("libbpf: Add BPF ring buffer
+  support")` (DKIM/kernel.org). That SHA is the 2020 introduction of BPF
+  ringbuf in libbpf, and it is in this tree.
 
-**Step 1.3 — Body**
-Record: **Bug:** finishing a transfer in `STATE_DATA_BUSY` never called
-`dma_ops->cleanup`, so a DMA-mapped SG list was left mapped.
-**Symptom:** DMA mapping leak (DMA-API/IOMMU leftover mappings). **Root
-cause:** `dw_mci_stop_dma()` already runs in the sending-data / error
-paths, but not in `STATE_DATA_BUSY` before `host->data = NULL`.
-**Versions:** none stated.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** `ringbuf_process_ring()` uses `while (cons_pos < prod_pos)`
+  on `unsigned long` positions. On 32-bit those wrap at 2^32 bytes.
+  After producer wrap, `prod_pos` is small and `cons_pos` is still
+  large, so the loop never runs.
+- **Symptom:** `ring_buffer__poll()` / consume APIs keep returning 0
+  with no error; the kernel ring fills and drops samples permanently.
+- **Root cause:** ordering comparison is not wrap-safe; consumer_pos
+  only advances inside that loop, so it never wraps either.
+- **Version info:** 64-bit is unaffected in practice (16 EiB to wrap).
+  Explicitly the userspace counterpart of the kernel `pending_pos` walk.
+  Field data for that sibling: four armv7 i.MX7 Dual devices on 6.6.52
+  stalled after exactly 4295491360 bytes (~2^32 + one 512 KiB ring).
+- **Author’s fix:** `prod_pos - cons_pos > 0` (unsigned distance).
 
-**Step 1.4 — Hidden bug fix?**
-Record: **No disguise.** It is an explicit resource-cleanup fix.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. Subject and body describe a real wrap-induced stall.
+Not cleanup/refactor.
+
+---
 
 ## Phase 2: Diff analysis
 
-**Step 2.1 — Inventory**
-Record: `drivers/mmc/host/dw_mmc.c` **+1 / −0**. Function:
-`dw_mci_work_func()`. **Single-file, one-line surgical fix.**
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `tools/lib/bpf/ringbuf.c` — **1 line changed** (`+1 / -1`)
+- Function: `ringbuf_process_ring()`
+- Scope: single-file surgical fix
 
-**Step 2.2 — Flow**
-Record: In `case STATE_DATA_BUSY:`, after `EVENT_DATA_COMPLETE` and
-`dw_mci_stop_fault_timer()`, **before** `host->data = NULL`, the code
-now calls `dw_mci_stop_dma(host)`. That function stops the DMA engine if
-`host->using_dma` and then runs `dma_ops->cleanup()`. Previously this
-state only nulled `host->data` and completed the request.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- **Before:** `while (cons_pos < prod_pos)` — fails after producer wrap
+  on 32-bit.
+- **After:** `while (prod_pos - cons_pos > 0)` — unsigned modular
+  distance; stays true while unconsumed data exists.
+- Path: normal consume path (`ring_buffer__poll` / `__consume` /
+  `__consume_n` / `ring__consume*`), not an error/init-only path.
 
-**Step 2.3 — Bug mechanism**
-Record: **Resource leak / DMA mapping leak.** `dw_mci_dma_cleanup()`
-unmaps only when `host->data` is set and `host_cookie == COOKIE_MAPPED`.
-Clearing `host->data` first made later cleanup a no-op.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record:
+- **Category:** logic/correctness (32-bit wrap / unsigned comparison)
+- **Mechanism:** same class as kernel `pending_pos`. Unsigned `unsigned
+  long` counters are documented to wrap
+  (`Documentation/bpf/ringbuf.rst`). Distance arithmetic is already used
+  in this tree in `ring__avail_data_size()` (`return prod_pos -
+  cons_pos`) and kernel `ringbuf_avail_data_sz()`.
 
-Verified paths:
-- Success: IDMAC/EDMAC `dw_mci_dmac_complete_dma()` already calls
-  cleanup, then `EVENT_XFER_COMPLETE` moves the machine into
-  `STATE_DATA_BUSY`. Second cleanup is a no-op (`COOKIE_UNMAPPED`).
-- Error from `STATE_SENDING_DATA`: already calls `dw_mci_stop_dma()`.
-- **DMA start failure then PIO fallback:** `dw_mci_submit_data_dma()`
-  sets `using_dma = 1` after a successful map, then on
-  `dma_ops->start()` failure calls `stop()` but **not** cleanup, and
-  **does not** clear `using_dma`. PIO then completes via
-  `STATE_DATA_BUSY`. Without this line the mapping is left. Verified:
-  `using_dma` is assigned only at lines 998 and 1010; PIO fallback
-  (lines 1070–1103) never clears it.
-- `COOKIE_PRE_MAPPED` block I/O still unmaps in `dw_mci_post_req()`;
-  this change does not double-unmap that path.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- Obviously correct: matches the kernel-side pattern already in this
+  tree (`while (prod_pos - pend_pos > 0)` in `kernel/bpf/ringbuf.c`).
+- Minimal: one condition.
+- Regression risk: low. On 64-bit equivalent until astronomical wrap. If
+  consumer ever ran ahead of producer, the new check would wrap and keep
+  looping; the author and kernel invariant say that does not happen.
+  Same assumption the kernel pending_pos fix already shipped here.
 
-**Step 2.4 — Fix quality**
-Record: **Obviously correct** and matches the other data-path states.
-Cleanup is idempotent. `dw_mci_start_request()` zeros `pending_events`,
-so the extra `EVENT_XFER_COMPLETE` bit from `dw_mci_stop_dma()` does not
-leak into the next request. **Regression risk: low.**
-`dmaengine_terminate_async()` / IDMAC reset after a completed transfer
-is the same stop used on errors; IDMAC start already resets the engine.
+---
 
-## Phase 3: Git history
+## Phase 3: Git history investigation
 
-**Step 3.1 — Blame**
-Record: `host->data = NULL` in `STATE_DATA_BUSY` is from
-**f95f3850f7a9e1** (Will Newton, 2011-01-02), first in **v2.6.38**. The
-hole is old.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: Buggy `while (cons_pos < prod_pos)` introduced in
+**`bf99c936f9478`** (“libbpf: Add BPF ring buffer support”, 2020-06-01)
+by Andrii Nakryiko. Present since BPF ringbuf existed. Surrounding `cnt
+>= n` bits are later (`13e8125a22763`, 2024) and unrelated.
 
-**Step 3.2 — Fixes: tag**
-Record: **None.** Related older fix **faecf41106123** (“fix unmap sg
-twice when finding data err”, 2016) made cleanup skip IDMAC complete
-when `EVENT_DATA_ERROR` is set, so `stop_dma()` is the unmap path on
-errors. That makes missing `stop_dma()` in `STATE_DATA_BUSY` more
-important, not less.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: Original mail had no `Fixes:`. Trailer names `bf99c936f947`,
+which **is in this tree**. Kernel sibling `19de99ea47e3c` (“bpf: Fix
+pending_pos walk on 32-bit ring position wrap”) **is already in this
+tree**; its `Fixes:` target `cfa1a2329a691` is also here.
 
-**Step 3.3 — File history**
-Record: Recent dw_mmc work is refactor (board struct, PM macros). This
-commit is standalone, not `N/M`. No follow-up in `cb3fcb8d118b8..HEAD`
-except an unrelated `dw_mci_pmops` move.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Recent `tools/lib/bpf/ringbuf.c` commits are consume_n
+overflow/return-value fixes, not wrap handling. This is standalone:
+series patch 4/4. Cover letter: patches 1–3 are kernel; 4 is libbpf.
+Patches 2–3 are overwrite-mode `ringbuf_avail_data_sz()` —
+**overwrite_pos does not exist in this 6.12 tree**. Nakryiko dropped
+patch 3 anyway.
 
-**Step 3.4 — Author**
-Record: Marek Szyprowski is the DMA-mapping maintainer; first dw_mmc
-commit in this file. Shawn Lin (dw_mmc maintainer) reviewed it. Ulf
-Hansson applied it.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Israel Téllez García authored the kernel wrap fix already on
+this branch (`19de99ea47e3c`). Andrii Nakryiko (libbpf maintainer)
+applied both.
 
-**Step 3.5 — Dependencies**
-Record: **None.** It only calls existing `dw_mci_stop_dma()`. Applies
-standalone.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: No code dependency. One-line condition change in a function that
+already exists. `git apply --check` on the original mbox succeeded (exit
+0). Does not need overwrite-mode patches.
 
-## Phase 4: Mailing list
+---
 
-**Step 4.1**
-Record: https://patch.msgid.link/20260603083935.3201411-1-
-m.szyprowski@samsung.com
-**v1 only** (no v2/v3). Thread (3 messages via `b4 dig -m`):
-1. Patch (3 Jun 2026)
-2. Shawn Lin: Reviewed-by
-3. Ulf Hansson: “Applied for next, thanks! Please, let me know if you
-   think there is reason to tag this for stable kernels too.” **No
-   reply** in the thread.
+## Phase 4: Mailing list and external research
 
-**Step 4.2**
-Record: CCs were linux-mmc, Jaehoon Chung, Shawn Lin, Ulf Hansson — the
-right maintainers.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- Series: **[PATCH v2 bpf 0/4] bpf: Fix ring buffer position wrap
+  handling on 32-bit**
+- Lore: `https://lore.kernel.org/bpf/20260814124843.22041-1-
+  i.tellez@btesa.com`
+- This patch: `...22041-5-i.tellez@btesa.com` (4/4)
+- v1: `https://lore.kernel.org/bpf/20260806130214.66028-1-
+  i.tellez@btesa.com/` (kernel pending_pos only; v2 added sites 2–4)
+- v2 change for patch 1: drop `(long)` cast per Nakryiko; unsigned
+  difference is enough
+- Cover: patch 1 was the field-observed stall; patch 4 is the userspace
+  counterpart. “A 32-bit consumer hits whichever of the two comes
+  first.”
+- No NAK on patch 4. Patch 3 was dropped by both author and Nakryiko
+  (ordering of overwrite_pos loads).
 
-**Step 4.3**
-Record: No syzbot/bugzilla. Author describes a mapping leak, not a crash
-log.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): To/Cc included Andrii Nakryiko, Alexei
+Starovoitov, Daniel Borkmann, Eduard Zingerman, Martin KaFai Lau, Song
+Liu, Jiri Olsa, `bpf@vger.kernel.org`. Applied by Nakryiko.
 
-**Step 4.4**
-Record: Standalone, not part of a series.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla for the libbpf loop itself. Field evidence is
+on the kernel sibling: four armv7 devices, exact 2^32-byte trigger, 8–17
+h uptime, one patched device then passed 10 GiB. Cover: “Userspace kept
+consuming normally until the producer stopped” — meaning the kernel
+stall fired first. Once that kernel fix is in (it is, here), this libbpf
+loop is the next wrap failure.
 
-**Step 4.5**
-Record: **UNVERIFIED** — lore.kernel.org/stable is behind bot protection
-(403/Anubis). linux-mmc thread has Ulf’s open stable question and no
-nomination.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record:
+1. Kernel pending_pos — **already in this tree**
+2. Overwrite-mode avail-data — **N/A here** (no overwrite_mode)
+3. producer_pos vs overwrite_pos load order — dropped; **N/A here**
+4. **This libbpf loop** — candidate
+- User-ringbuf peek (`u64` locals, `cons_pos >= prod_pos`) was called
+  out as a separate issue and is **not** this commit. Confirmed still
+  present at `kernel/bpf/ringbuf.c:687`.
 
-## Phase 5: Code semantics
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: **UNVERIFIED** — lore.kernel.org/stable returned Anubis bot-
+challenge (403/HTML). No stable-list discussion retrieved.
 
-**Step 5.1**
-Record: Modified: `dw_mci_work_func`. Callee: `dw_mci_stop_dma` →
-`dma_ops->stop` / `dma_ops->cleanup` (`dw_mci_idmac_stop_dma` or
-`dw_mci_edmac_stop_dma`, then `dw_mci_dma_cleanup`).
+---
 
-**Step 5.2**
-Record: `dw_mci_work_func` is the host BH work (`host->bh_work`), queued
-from IRQ/timeout/DMA complete. Reachable on every data transfer for this
-host.
+## Phase 5: Code semantic analysis
 
-**Step 5.3**
-Record: Completes MMC requests (`dw_mci_data_complete`,
-`dw_mci_request_end` → `mmc_request_done`).
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `ringbuf_process_ring()` only. (semcode MCP not available; used
+hunk headers + grep.)
 
-**Step 5.4**
-Record: Userspace (block I/O, ioctl, card init) triggers it via the MMC
-core. **Yes, reachable from userspace** on DW MMC hardware.
+**Step 5.2: TRACE CALLERS**
+Record: All in-tree callers of `ringbuf_process_ring()`:
+- `ring_buffer__consume_n()`
+- `ring_buffer__consume()`
+- `ring_buffer__poll()`
+- `ring__consume_n()` / `ring__consume()`
 
-**Step 5.5**
-Record: Same `dw_mci_stop_dma()` already used in `STATE_SENDING_CMD`
-(cmd+data error) and twice in `STATE_SENDING_DATA`. This fills the
-missing sibling.
+These are the public libbpf ringbuf consume APIs. Reachable from any
+userspace consumer of `BPF_MAP_TYPE_RINGBUF` (tracing, networking,
+etc.). `bpftool` in this tree links `tools/lib/bpf`.
 
-## Phase 6: This tree
+**Step 5.3: TRACE CALLEES**
+Record: `smp_load_acquire` on positions/len, `roundup_len()`,
+`r->sample_cb()`, `smp_store_release` of consumer_pos. No
+allocation/locking in the changed condition.
 
-**Step 6.1**
-Record: Tree is **v7.3-rc4** (`git describe`:
-`v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3`). Candidate **is
-an ancestor of HEAD**. Buggy pattern existed here before that commit;
-introduced in v2.6.38.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace path: app/bpftool → `ring_buffer__poll/consume` →
+`ringbuf_process_ring`. Trigger: ~4 GiB cumulative ring traffic on
+32-bit. Unprivileged if the process already has the map fd (typical
+tracing daemon). Not a kernel oops, but permanent event loss.
 
-**Step 6.2**
-Record: **Clean apply** on this tree (already applied). Context
-(`dw_mci_stop_fault_timer` then `host->data = NULL`) is present.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record:
+- Same buggy compare in
+  `tools/testing/selftests/bpf/benchs/bench_ringbufs.c:305` (benchmark
+  only; not this commit).
+- Wrap-safe distance already in `ring__avail_data_size()` and kernel
+  `ringbuf_avail_data_sz()`.
+- Kernel pending_pos already converted to distance in this tree.
 
-**Step 6.3**
-Record: No other fix for this hole. faecf41106123 is a related double-
-unmap fix, not a substitute.
+---
 
-## Phase 7: Subsystem
+## Phase 6: Cross-referencing against the local tree
 
-**Step 7.1**
-Record: **MMC host (Synopsys DesignWare).** **IMPORTANT** — eMMC/SD on
-Exynos, Rockchip, Hisilicon, StarFive, BlueField, K3 (`MMC_DW_*` in
-Kconfig). Not core mm/VFS, not staging.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** Local tree is **6.12.111** (`git describe`:
+`p-6.12-3-gc504cf0baa3d8`, Makefile `VERSION=6 PATCHLEVEL=12
+SUBLEVEL=111`).
 
-**Step 7.2**
-Record: File is actively maintained (refactors in 2026 plus this fix).
-The state machine itself is old and stable.
+```247:247:tools/lib/bpf/ringbuf.c
+                while (cons_pos < prod_pos) {
+```
 
-## Phase 8: Impact and risk
+`struct ring` uses `unsigned long *consumer_pos` / `*producer_pos`
+(lines 29–30). Bug introduced in v5.8-era libbpf ringbuf
+(`bf99c936f9478`), long before 6.12. Positions are still `unsigned long`
+in kernel `struct bpf_ringbuf`.
 
-**Step 8.1**
-Record: **Driver-specific / config-specific** (`CONFIG_MMC_DW`). Large
-ARM/embedded population.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply.** `git apply --check` on the original patch mbox
+exited 0. Function shape matches the hunk (`ringbuf_process_ring(struct
+ring *r, size_t n)` with `cons_pos`/`prod_pos` as `unsigned long`).
 
-**Step 8.2**
-Record: Hits whenever `STATE_DATA_BUSY` finishes a DMA-using request
-that did not already go through `stop_dma()`. Common path still unmaps
-via the DMA complete callback or `post_req`. The leak is real on **DMA-
-submit failure → PIO**, and on any DATA_BUSY completion that never ran
-complete/stop. Unprivileged block I/O can reach the host.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: Kernel pending_pos wrap fix **is** here (`19de99ea47e3c`).
+Userspace loop still has `cons_pos < prod_pos`. No alternate libbpf wrap
+fix in this file.
 
-**Step 8.3**
-Record: **DMA mapping leak.** Leftover mappings: DMA-API warnings, IOMMU
-table growth, coherency issues if pages are reused while still mapped.
-**Severity: HIGH** on the leak path, **MEDIUM** overall because the hot
-success path already unmaps.
+---
 
-**Step 8.4**
-Record: **Benefit: high** for DW MMC users (correct DMA lifetime, stop
-IDMAC after data-complete). **Risk: very low** (1 line, idempotent
-cleanup). **Ratio: favorable.**
+## Phase 7: Subsystem and maintainer context
 
-## Phase 9: Synthesis
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **libbpf** (`tools/lib/bpf/`) — userspace helper shipped with
+the kernel, used by bpftool and in-tree BPF tools. Criticality:
+**IMPORTANT** for BPF users, especially 32-bit embedded collectors. Not
+core mm/sched, but this tree already backports libbpf ringbuf fixes
+(`087d757fb4736`, `00f0e08f23fc0`).
 
-**For backporting**
-- Real DMA-mapping leak; author is the DMA-mapping maintainer.
-- One line, same helper already used in sibling states.
-- dw_mmc co-maintainer Reviewed-by; MMC maintainer applied it.
-- Hardware is common; bug dates to v2.6.38.
-- Cleanup is idempotent; next request clears pending events.
-- No series dependency, no follow-up revert.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively maintained; libbpf ringbuf APIs grew through 6.12
+(`ring__consume_n`, etc.). The wrap bug is old (2020), not a new-feature
+leftover.
 
-**Against**
-- No Fixes:/Cc: stable (expected in this pipeline).
-- Ulf explicitly asked whether it belonged in stable; author never
-  answered.
-- No crash/syzbot report; success-path unmap often already happened.
-- Leak is most clearly proven on the DMA-start-failure → PIO path, not
-  every transfer.
+---
 
-**Unresolved**
-- No stable@ discussion found (lore blocked).
-- Exact reproducer Marek hit is not in the mail (only the mechanism).
+## Phase 8: Impact and risk assessment
 
-**Stable rules**
-1. Obviously correct and tested? **PASS** — 1-line, reviewed, in
-   mainline since 2026-07-06.
-2. Real user-affecting bug? **PASS** — leftover DMA mappings on DW MMC.
-3. Important (crash/security/corruption/deadlock)? **PASS** — mapping
-   leak can WARN, exhaust IOMMU, and cause coherency bugs; not a panic,
-   but it is a real DMA-lifetime bug, not style.
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features/APIs? **PASS**.
-6. Applies to this tree? **PASS**.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Config/platform-specific:** 32-bit hosts using in-tree libbpf
+to consume `BPF_MAP_TYPE_RINGBUF` (armv7/i.MX and similar LTS/embedded).
+64-bit unaffected in practice.
 
-**Exception category:** none (not a device ID / quirk / DT / build / doc
-patch). It is a normal contained bugfix.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: After ~4 GiB of ring traffic, if producer wraps while consumer
+still has unconsumed bytes. Common with epoll/batching. Timing-dependent
+at the wrap, then **sticky forever**. Unprivileged if the process
+already holds the map. The sibling bug was reproduced at 441–862
+records/s over hours — not a theoretical corner.
 
-Ulf’s “tag for stable?” question is caution, not a NAK. The instructions
-say missing stable tags must not drive a NO. On technical merit this
-belongs in stable: tiny, correct, and it closes a DMA unmap hole in a
-widely deployed MMC host.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Permanent silent stop of sample delivery; kernel then drops
+events; APIs return 0 with no error. **HIGH** data/event loss (not a
+kernel oops). Restart of the consumer is required.
 
-Verification:
-- [Phase 1] Parsed tags: Marek SOB, Shawn Lin R-b, Ulf SOB; no
-  Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: +1 line `dw_mci_stop_dma(host)` in `STATE_DATA_BUSY`
-  before `host->data = NULL`
-- [Phase 2] `dw_mci_stop_dma`/`dw_mci_dma_cleanup` read; cleanup gated
-  on `COOKIE_MAPPED`
-- [Phase 2] IDMAC/EDMAC complete path already calls cleanup; `using_dma`
-  not cleared on DMA-start failure (lines 998, 1010, 1039–1045, 1070)
-- [Phase 3] blame: f95f3850f7a9e1 (v2.6.38); candidate cb3fcb8d118b8;
-  related faecf41106123 double-unmap
-- [Phase 3] `git merge-base --is-ancestor cb3fcb8d118b8 HEAD` — true; no
-  follow-up fix on dw_mmc.c
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; Shawn R-b; Ulf applied and
-  asked about stable; no author reply
-- [Phase 4] lore WebFetch 403; mbox used instead
-- [Phase 5] callers: BH work from IRQ/DTO/DMA complete; userspace via
-  MMC core
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 7] MAINTAINERS: Jaehoon Chung, Shawn Lin; Kconfig MMC_DW_*
-  platforms
-- [Phase 8] Failure mode: DMA mapping leak, severity HIGH on leak path
-- UNVERIFIED: stable@ archive search (Anubis); exact runtime stack Marek
-  saw
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit: high for 32-bit BPF consumers.** Kernel producer wrap is
+  already fixed here, so this is now the remaining stall. Same class as
+  a field-proven 6.6.52 armv7 outage.
+- **Risk: very low.** One comparison, same idiom as kernel code already
+  on this branch.
+- Ratio: strongly favors backport.
+
+---
+
+## Phase 9: Final synthesis
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR:**
+- Real wrap bug; documented that 32-bit positions wrap
+- Permanent silent event loss, no error
+- One-line, obviously correct, applies cleanly
+- Kernel counterpart already in this 6.12.y tree — without this,
+  producer keeps going and userspace is the next stall
+- Field-proven sibling on armv7 (core LTS/embedded)
+- Maintainer SOB (Nakryiko); v2 reviewed
+- No new APIs; no overwrite-mode dependency
+
+**AGAINST:**
+- Userspace libbpf (some distros use github libbpf, not in-tree)
+- 32-bit only in practice
+- Original field report hit kernel pending_pos first
+- No `Cc: stable` on the original mail (expected for this review queue;
+  not a negative)
+
+**UNRESOLVED:**
+- Could not query lore.kernel.org/stable (bot wall)
+- Could not confirm whether standalone libbpf already carries this
+  (irrelevant: verdict is for in-tree `tools/lib/bpf`)
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — same unsigned-distance idiom
+   as kernel code already here; series tested on armv7 for the sibling;
+   maintainer applied it.
+2. Fixes a real bug that affects users? **PASS** — 32-bit ringbuf
+   consumers stall after wrap.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** at
+   HIGH — permanent silent event loss, not an oops, but equivalent
+   operational failure for tracing/telemetry.
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — `git apply --check`
+   succeeded; buggy loop present.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/docs exception. Ordinary small bugfix.
+
+**Step 9.4: DECISION**
+
+This belongs on **this** 6.12.y tree. The buggy `cons_pos < prod_pos`
+loop is here; the matching kernel wrap fix is already here; the one-line
+change applies cleanly and closes the remaining 32-bit stall for in-tree
+libbpf consumers.
+
+### What the commit solves and why it matters here
+
+On 32-bit, ring positions are 32-bit `unsigned long` and are documented
+to wrap. After producer wrap, the consumer loop never runs, never
+advances `consumer_pos`, and never recovers. `ring_buffer__poll()`
+reports 0 forever while the kernel drops samples. 6.12.y already
+contains the kernel `pending_pos` wrap fix, so a 32-bit producer can now
+wrap; this userspace loop is the next failure. 32-bit ARM collectors are
+a real LTS audience (the sibling was seen on i.MX7 Dual).
+
+### Risk vs benefit
+
+Benefit is high for 32-bit BPF ringbuf users; risk is a one-line
+comparison already used in-kernel on this branch.
+
+---
+
+### Verification
+- **[Phase 1]** Parsed subject/tags/body from the candidate and from
+  `/tmp/ringbuf-mbox/wrap-p5`; `Fixes:` only as a later lore trailer to
+  `bf99c936f947`
+- **[Phase 2]** Diff is one condition in `ringbuf_process_ring()`;
+  current tree still has `while (cons_pos < prod_pos)` at line 247
+- **[Phase 3]** `git blame` → `bf99c936f9478` (2020); `git merge-base
+  --is-ancestor` confirms that SHA, `cfa1a2329a691`, and kernel wrap fix
+  `19de99ea47e3c` are in HEAD
+- **[Phase 3]** `git log --oneline -- tools/lib/bpf/ringbuf.c` — no
+  userspace wrap fix present
+- **[Phase 4]** `b4 dig -c 19de99ea47e3c -a/-w` → v2 4-patch series;
+  this is 4/4
+- **[Phase 4]** Cover letter and patches from `/tmp/ringbuf-
+  series/*.cover` and `.mbx`; Nakryiko dropped patch 3 (`/tmp/ringbuf-
+  mbox/nakryiko`)
+- **[Phase 4]** lore.kernel.org HTTP 403 / Anubis; used `b4` mboxes
+  instead
+- **[Phase 5]** grep callers of `ringbuf_process_ring` in
+  `tools/lib/bpf/ringbuf.c`; public consume/poll APIs
+- **[Phase 6]** `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → `6.12.111`
+- **[Phase 6]** `git apply --check /tmp/ringbuf-mbox/wrap-p5` exit 0
+- **[Phase 6]** `overwrite_pos` / `overwrite_mode` absent from
+  `kernel/bpf/ringbuf.c` in this tree
+- **[Phase 7/8]** `Documentation/bpf/ringbuf.rst` documents 32-bit wrap;
+  kernel sibling commit describes four armv7 devices
+- **UNVERIFIED:** stable@ lore discussion; whether distro standalone
+  libbpf already has this
 
 **YES**
 
- drivers/mmc/host/dw_mmc.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/bpf/ringbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
-index c5db92bbb0946..90cc41901edaa 100644
---- a/drivers/mmc/host/dw_mmc.c
-+++ b/drivers/mmc/host/dw_mmc.c
-@@ -2213,6 +2213,7 @@ static void dw_mci_work_func(struct work_struct *t)
- 			}
+diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
+index 00ec4837a06de..c8fe57401a8b5 100644
+--- a/tools/lib/bpf/ringbuf.c
++++ b/tools/lib/bpf/ringbuf.c
+@@ -244,7 +244,7 @@ static int64_t ringbuf_process_ring(struct ring *r, size_t n)
+ 	do {
+ 		got_new_data = false;
+ 		prod_pos = smp_load_acquire(r->producer_pos);
+-		while (cons_pos < prod_pos) {
++		while (prod_pos - cons_pos > 0) {
+ 			len_ptr = r->data + (cons_pos & r->mask);
+ 			len = smp_load_acquire(len_ptr);
  
- 			dw_mci_stop_fault_timer(host);
-+			dw_mci_stop_dma(host);
- 			host->data = NULL;
- 			set_bit(EVENT_DATA_COMPLETE, &host->completed_events);
- 			err = dw_mci_data_complete(host, data);
 -- 
 2.53.0
 
