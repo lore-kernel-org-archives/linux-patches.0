@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5038C596EA8;
-	Mon, 19 Oct 2026 13:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E09B54A7CD;
+	Mon, 19 Oct 2026 13:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418348; cv=none; b=fK4diy5K85F/BdeTxnFEmpNXp99so6vC4BiwYLJ5wmCyMgIG2BcEhnP1dr/ADGWjZmYsZKfOif0JUPNBVY3r5R2gz+vfKzmXsMjjXqZ9ekwYqieoqs+P5jU8qLofedUExePD4plLT+rp8fiCypUXTvhmyK+J5+zNR5VW8AIYiKw=
+	t=1792418349; cv=none; b=NyO73vMpmkVW2QMdeA0JVnG22U11WXrZapUs8aiC3vx6UzbLFySxcu38MjU8V7yJeYNoTch/VKDZZNVtfiwE5xFU+wlnA9vvIENxkewRAsWgtGUZD4Jqmva0VNIHV5AZucl1X7/DpqBexKHNPaO1YBy1aT+fO5TD9e+WMmf13+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418348; c=relaxed/simple;
-	bh=F24kcNkfWDJLq8TruH7HPiQ4zsPX2FXXcHbq9lsX72c=;
+	s=arc-20240116; t=1792418349; c=relaxed/simple;
+	bh=K2RiwUF1eNc+cDvv2jRsI15bb8kyWj12rXnxwKJqLPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t0bOpGm1gEfI88RdQ3mNaxugci2jexVI2rWVwowcJAipPvix6bjxH+LGSA+SECzyxnEz3A9j8hGYANxhih8hD+9Iznz6UdFf3bNX4Pzq/FH/n+zOLDc6k5+jtRMwvPkjmGQWu7LcTaWwL1Ys8oVhc3l2eMQOufNY9vulPH5pGFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U/+NFhMg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Y8eN4paqE2XgSklu+dBokkAP81LLEc1CWDDJhbmdK1D/XeaeiQblccqJTbeUWvF/deHK+JKGbxl/Fy+Q8TYjAMAZBxGF/v1hqHa6pGZIQ/dSRx/9YzvRO0hJAo6ymRZc9l2MAvQuvjEpCWj1DBTYGh+XwViyLpwxZzslQTCe6Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fOBBtFtw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U/+NFhMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8071F000C7;
-	Mon, 19 Oct 2026 13:59:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fOBBtFtw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966481F000C8;
+	Mon, 19 Oct 2026 13:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418345;
-	bh=reLorp6E8UuH9HUYnacpZqI1G6WEWU1dQvNeLGOAOi8=;
+	s=k20260515; t=1792418346;
+	bh=KA6JCDuNsm8NO4SKgFBTKWfceVaeNt4AGqZZ8ySWaXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U/+NFhMgWDfPRD1Nxe8fwIq5DvoKOeUiEioDp1hwsom76cEdLltT0WwM58ps6Uuo2
-	 vYZk3rYXIoOO/1Mmd9tNbUbceOIUfMZKKYJsWD7N2EquS8MIHzdXZHUeBHNkE6OvyV
-	 YdPnLIEjvdBnJn3ElWpSgnRsHoSKaCjkAVk3Wnx4LqE42u1SBSmdn4C2+p5DP81vRG
-	 5CiBUAUjSlil6lADDDcFCOw9sbwgPGwFGsDezBKonBYkPf6R3k0JUuAwR5He4toyfa
-	 p5orHLzjoGUcOElv1bvOxKvBJVddXDvfR9rJ2SKggV3WYCR0hVElA52SDlvvssq4cU
-	 Yp68Xl3RxH9gA==
+	b=fOBBtFtwPXFGa/GSQoDPldBoAxhrxeGH6386vhAsUqW37Jwy3UwO8H1RTPBm7p5IM
+	 hf258HOJQhvYUhawzZ8hA08fODwC6+X6uUIjf7kNc2sWS8PmMLme0nmlLsyBVP37fj
+	 f3n81fGZDZ2TFOXwsMbOCbC85R4NdYwmmy0FEtgJVU86XnykkFXELNrp8C83k1NlEd
+	 GJjJf8oejpg8xLudyTGS+aOospFACNlMeLKF4962a83UTrCpbUU3jzLJWwvh5aLPM4
+	 40dXF9hBZZeb3iaKYtc0twUtn6YufzylhHTh8BoLmt1miVsUwx9dG3DLeHLaHRpVpl
+	 veh8vuSWgKeMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xu Rao <raoxu@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Richard Weinberger <richard@nod.at>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	cassel@kernel.org,
+	linux-ide@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda: Add Lisuan HDMI controller and codec support
-Date: Mon, 19 Oct 2026 09:47:52 -0400
-Message-ID: <20261019135441.1420968-181-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ata: libata-sff: don't busy-wait for PIO data-in command completion
+Date: Mon, 19 Oct 2026 09:47:53 -0400
+Message-ID: <20261019135441.1420968-182-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,470 +53,601 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Richard Weinberger <richard@nod.at>
 
-[ Upstream commit ceaebef91d1aff671a512d5f003766ea41152d94 ]
+[ Upstream commit 4a2e5409472e8a0e3e2817e149c55c1d5f803742 ]
 
-Lisuan GPUs expose an HD-audio controller at PCI ID 4c54:5010 and an
-HDMI/DP codec with codec ID 0x4c545020.  Neither ID is currently matched
-by the HDA stack, leaving HDMI/DP audio unavailable on these devices.
+Unlike PIO data-out, the PIO data-in protocol raises no completion
+interrupt, the last interrupt announces the final data block, and once
+the host has drained it from the data register the ending status must
+be obtained synchronously.  ata_sff_hsm_move() does this by spinning
+in ata_wait_idle() for up to 10ms.
 
-The existing downstream support uses the generic HDMI codec path and
-attaches no Lisuan-specific capability flags to the controller.  Its
-dedicated AZX driver type only changes the short driver name.
+Usually this is not a big deal unless the device is slow.  In my case
+it's a CF card which keeps BSY asserted for multiple milliseconds(!)
+after the final data block.  Since the waiting happens in the
+interrupt handler, under the port lock with interrupts disabled, the
+CPU is hogged for milliseconds on every read command.
 
-Use the corresponding generic upstream paths instead: bind 4c54:5010 to
-AZX_DRIVER_GENERIC, register 0x4c545020 as MODEL_GENERIC, and add the
-Lisuan codec vendor name.  This keeps the enablement minimal and avoids
-a vendor-only AZX driver type with no vendor-specific behavior.
+To improve the situation, bound the inline wait to ~100us.  If the
+device is still busy after that, mark the command ATA_TFLAG_POLLING,
+so the interrupt handler won't race for it, and obtain the ending
+status via ata_sff_pio_task(), which sleeps between status checks
+instead of spinning with the lock held.
 
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/DE1B62191D573D37+20260817085531.992573-1-raoxu@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Since ata_sff_pio_task() may now finish a data-in command, it must
+wait for both BSY and DRQ to clear at HSM_ST_LAST, matching what
+ata_wait_idle() enforced.
+
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide. This is a four-line device-ID enablement; the
-6.12 HDA driver already has the matching tables under the older paths.
+# Stable backport analysis: `ata: libata-sff: don't busy-wait for PIO
+data-in command completion`
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+Local tree: **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`). Candidate:
+`4a2e5409472e8` (Damien Le Moal, 2026-07-21). The buggy PIO completion
+wait has been in `drivers/ata/libata-sff.c` since 2008; this change is a
+small HSM latency fix for that path.
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ALSA: hda] [Add] [Lisuan HDMI controller PCI ID 4c54:5010 and
-codec ID 0x4c545020 so HDMI/DP audio binds on existing generic HDA
-paths]
+---
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Fixes: none (expected)
-- Reported-by: none
-- Tested-by: none
-- Reviewed-by: none
-- Acked-by: none
-- Link: https://patch.msgid.link/DE1B62191D573D37+20260817085531.992573-
-  1-raoxu@uniontech.com
-- Cc: stable: none (expected)
-- Signed-off-by: Xu Rao <raoxu@uniontech.com> (author)
-- Signed-off-by: Takashi Iwai <tiwai@suse.de> (ALSA maintainer; applied
-  the patch)
-- Ignore Signed-off-by: Sasha Levin if present (pipeline)
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Notable: no syzbot, no crash report. This is hardware enablement, not a
-sanitizer fix. Maintainer SOB is present.
+**Step 1.1: PARSE THE SUBJECT LINE**
+- Subsystem: `ata: libata-sff`
+- Action verb: **don't busy-wait** (prevent / stop incorrect spinning)
+- Intent: stop spinning in the SFF interrupt handler for PIO data-in
+  completion
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug/problem: Lisuan GPUs expose HD-audio at PCI 4c54:5010 and HDMI/DP
-  codec 0x4c545020. Neither ID is matched, so HDMI/DP audio is
-  unavailable.
-- Symptom: no HDMI/DP audio on these devices.
-- Version info: none in the message. Lore shows this was pulled for
-  7.3-rc1 (Takashi's "sound updates for 7.3-rc1" on 2026-08-19).
-- Root cause: missing ID table entries. Downstream already used the
-  generic HDMI codec path and attached no Lisuan-specific AZX capability
-  flags; a dedicated AZX driver type would only change the short name.
-- Fix: bind PCI ID to AZX_DRIVER_GENERIC, register codec as
-  MODEL_GENERIC, add vendor name "Lisuan".
+Record: `[ata/libata-sff] [don't busy-wait] [cap IRQ-context wait for
+PIO data-in; defer remaining wait to sleeping pio task]`
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a hidden UAF/race/leak fix. It is a device-ID addition:
-hardware does not bind without the IDs. That is the stable exception for
-PCI/codec IDs on an existing driver, not a disguised cleanup.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- `Signed-off-by: Richard Weinberger <richard@nod.at>` (author)
+- `Signed-off-by: Damien Le Moal <dlemoal@kernel.org>` (libata
+  maintainer; applied to for-7.3)
+- No `Fixes:`
+- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:`
+- No `Link:` / `Cc: stable`
+- No syzbot / sanitizer tags
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Absence of `Fixes:` / `Cc: stable` is expected for this review and is
+not a negative signal.
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- sound/hda/codecs/hdmi/hdmi.c: +1 (codec ID 0x4c545020, "Lisuan
-  HDMI/DP", MODEL_GENERIC)
-- sound/hda/controllers/intel.c: +2 (comment + PCI_DEVICE(0x4c54,
-  0x5010) → AZX_DRIVER_GENERIC)
-- sound/hda/core/device.c: +1 (vendor 0x4c54 → "Lisuan")
-- Total: +4 lines, 0 removals
-- Functions/tables: snd_hda_id_generichdmi[], azx_ids[],
-  hda_vendor_ids[]
-- Scope: single-driver ID-table addition (three tables in one subsystem)
+Record: `[tags: two SOBs (author + ATA maintainer); no Fixes/Reported-
+by/Link/stable Cc]`
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- HDMI codec table: unmatched 0x4c545020 did not hit the generic HDMI
-  driver by explicit ID. After: it matches MODEL_GENERIC /
-  patch_generic_hdmi.
-- PCI table: 4c54:5010 was not in azx_ids and this tree has no
-  vendor/class catch-all for 0x4c54, so snd-hda-intel did not probe.
-  After: it probes as AZX_DRIVER_GENERIC with no extra DCAPS.
-- Vendor table: unnamed vendor used "Generic 4c54". After: name is
-  "Lisuan" (cosmetic for mixer/proc).
-- Paths: probe/init only. No hot-path, locking, or API change.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+PIO data-in does not raise a completion IRQ. The last IRQ means “final
+data block”; after the host drains it, ending status must be read
+synchronously. `ata_sff_hsm_move()` used `ata_wait_idle()`, spinning up
+to **10ms**.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Hardware enablement / device ID] Controller and codec never
-matched. PCI ID is required for bind. Codec ID selects the generic HDMI
-parser. Vendor string is display-only. Not UAF, leak, race, or overflow.
+On a CompactFlash card that keeps BSY asserted for several milliseconds
+after the last block, that wait runs in the **interrupt handler**, under
+the **port lock**, with **IRQs disabled**, on **every read**.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Minimal and consistent with VIA/VMware/RDC generic HDMI IDs.
-Author says downstream used generic path with no vendor DCAPS.
-Regression risk is the usual new-ID risk (hardware might later need
-NO_MSI / POSFIX_LPIB / etc.). No new AZX_DRIVER type, no new API.
-Quality is high for an ID add.
+Fix: bound the inline wait to ~100µs (`ata_sff_busy_wait(..., 10)`). If
+still busy, set `ATA_TFLAG_POLLING` and finish via `ata_sff_pio_task()`,
+which sleeps between checks. That task must wait for both BSY and DRQ at
+`HSM_ST_LAST`, matching `ata_wait_idle()`.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+Record: `[Bug: IRQ-context 10ms busy-wait on PIO data-in] [Symptom: CPU
+hogged for ms per read, lock held, IRQs off] [Root cause:
+ata_wait_idle() in hsm_move after last PIO-in block] [Trigger: slow
+CF/PATA that holds BSY after last DRQ]`
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: This tree has no Lisuan entries. Insertion point in 6.12 HDMI
-table is beside Glenfly Arise IDs from c51e431052e2e (2023). PCI table
-terminator at azx_ids[] is original (Linus 1da177e4c3f41); last entries
-are Loongson (28bd137a3c8e1, 2023). Vendor table around 0x434d/0x8086 is
-Takashi Iwai 7639a06c23c7d4 (2015). The HDA ID tables have been stable
-for years; this is not a bug in newly added 6.12 code.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Wording is “improve the situation,” but the failure is a real IRQ-
+context stall, not a cleanup. That matches the “oh, that's not good”
+class in `Documentation/process/stable-kernel-rules.rst`, and the
+hardware-quirk / interactivity class for slow CF.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable. Missing IDs were never introduced
-by a prior commit; they were never added.
+Record: `[Hidden bug fix: yes — IRQ busy-wait / latency stall, not style
+cleanup]`
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Same files already received ID adds in this 6.12 tree, e.g.
-2b331e7b6cc57 "ALSA: hda: Add new pci id for AMD GPU display HD audio
-controller" (in HEAD), e8336a63de03e Intel BMG, e9481d9b83f8d Intel PTL
-HDMI codec, c51e431052e2e Glenfly. Standalone; not patch X/Y. No Lisuan
-follow-ups on lore.
+---
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: git log --author='Xu Rao' on sound/ in this tree is empty.
-UnionTech contributor; not the ALSA maintainer. Takashi Iwai applied it
-the same day. Weight comes from maintainer accept, not author history
-here.
+## PHASE 2: DIFF ANALYSIS
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Needs existing snd-hda-intel + HDMI codec + AZX_DRIVER_GENERIC.
-All present. Does not need a new driver type, Hygon entries, or
-MODEL_GENERIC (6.12 uses HDA_CODEC_ENTRY(..., patch_generic_hdmi)).
-Standalone with a path/macro translation. No DRM Lisuan driver in this
-tree; HDA PCI bind does not require it.
+**Step 2.1: INVENTORY THE CHANGES**
+- File: `drivers/ata/libata-sff.c` only
+- Stat: **17 insertions, 7 deletions** (24 lines)
+- Functions: `ata_sff_hsm_move()`, `ata_sff_pio_task()`
+- Scope: single-file surgical HSM change
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+Record: `[1 file, +17/-7] [ata_sff_hsm_move, ata_sff_pio_task]
+[surgical]`
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- b4 dig -c HEAD failed (lore server error; this tree's HEAD is
-  unrelated).
-- Lore (linux-sound and all): exactly one series, v1 only.
-  - Patch: https://lore.kernel.org/linux-
-    sound/DE1B62191D573D37+20260817085531.992573-1-raoxu@uniontech.com/
-  - Also mirrored at https://lists.openwall.net/linux-
-    kernel/2026/08/17/647
-- b4 dig -a: not obtained (b4/lore error). Lore search shows no v2/v3.
-- Feedback: Takashi Iwai: "Applied now. Thanks." No NAK, no requested
-  changes, no Cc: stable in review.
-- Pulled in "[GIT PULL] sound updates for 7.3-rc1".
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: Recipients from the openwall/lkml copy: perex@perex.cz, tiwai,
-peter.ujfalusi, kai.vehmanen, tglx, broonie, linux-sound, linux-kernel,
-plus a few others. Subsystem list and ALSA maintainer were on To/Cc.
-Maintainer applied v1 immediately.
+Hunk 1 (`ata_sff_hsm_move`, `HSM_ST`, PIO data-in last block):
+- Before: `status = ata_wait_idle(ap)` (up to 1000×10µs = 10ms), then
+  `goto fsm_start`.
+- After: `ata_sff_busy_wait(ap, ATA_BUSY|ATA_DRQ, 10)` (~100µs). If
+  still busy and status ≠ 0xff: set `ATA_TFLAG_POLLING`,
+  `ata_sff_queue_pio_task(link, 0)`, return 0. Else same `goto
+  fsm_start`.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No bugzilla/syzbot. Evidence is the commit text plus "existing
-downstream support". Hardware impact is real for Lisuan GPU HDMI audio
-users; no public crash report.
+Hunk 2 (`ata_sff_pio_task`):
+- Before: always wait only for `ATA_BUSY`.
+- After: `wait_mask = ATA_BUSY`, and at `HSM_ST_LAST` also `ATA_DRQ`.
+  Both short spins and the “still busy → requeue” test use `wait_mask`.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone 4-line patch. lore.kernel.org/all/?q=Lisuan returns
-only this patch, Takashi's apply, and the 7.3-rc1 pull. No companion DRM
-or quirk series on lore.
+Record: `[IRQ path: 10ms spin → 100µs then optional poll work] [wq path:
+wait BSY, or BSY|DRQ at LAST]`
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable/?q=Lisuan returned no hits. Not discussed
-on stable@ yet.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Category: **logic/latency in IRQ** (busy-wait with IRQs disabled), plus
+**hardware delay on slow CF**.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+Mechanism: last PIO-in IRQ still needs BSY/DRQ to drop. Spinning in
+hardirq with the port lock held stalls the CPU. The fix uses the
+existing polling workqueue, which already drops the lock and
+`ata_msleep()`s.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS
-Record: No function bodies changed. Tables: snd_hda_id_generichdmi[] /
-snd_hda_id_hdmi[], azx_ids[], hda_vendor_ids[]. Consumers: azx_probe
-(PCI match), hda_codec_match / snd_hda_codec_configure (codec match),
-get_codec_vendor_name().
+`ATA_TFLAG_POLLING` is the existing “IRQ must not complete this qc”
+flag. `__ata_sff_interrupt()` skips `port_intr()` when it is set.
 
-Step 5.2: TRACE CALLERS
-Record:
-- azx_ids is MODULE_DEVICE_TABLE(pci) for snd-hda-intel; probe is
-  azx_probe on PCI enumeration.
-- Codec table is MODULE_DEVICE_TABLE(hdaudio); hda_codec_match()
-  compares vendor_id.
-- codec_bind_generic() can still fall back to HDA_CODEC_ID_GENERIC_HDMI
-  via is_likely_hdmi_codec() if the controller is bound and the codec
-  looks like HDMI-only. PCI match is the gating bind. Codec ID is
-  explicit matching/naming, not the only possible codec path.
-- Context: device probe, not IRQ/hot path.
+Record: `[category: IRQ busy-wait / latency] [fix: short wait + existing
+pio_task polling; LAST waits BSY|DRQ]`
 
-Step 5.3: TRACE CALLEES
-Record: ID tables do not call allocators or locks. AZX_DRIVER_GENERIC in
-this tree is already used (VIA 0x9170/0x9140, RDC, VMware, some AMD).
-Stream-count fallback treats AZX_DRIVER_GENERIC like the default ICH6
-counts (hda_intel.c ~1987).
+**Step 2.4: ASSESS THE FIX QUALITY**
+Verified against current code:
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: PCI enumeration → azx_probe → codec discovery → HDMI parser.
-Reachable whenever the Lisuan HDMI audio function is present.
-Unprivileged userspace cannot create the device; plug-in hardware users
-are affected. HDMI audio is a user-visible function.
+- `ata_wait_idle()` is `ata_sff_busy_wait(..., ATA_BUSY|ATA_DRQ, 1000)`
+  with a debug print. New max=10 is the same bits, 100× shorter.
+- Status 0xff (no device) is **not** deferred; it still goes to
+  `fsm_start`, same as a disconnected `ata_wait_idle()` result.
+- `ata_hsm_ok_in_wq()` returns 1 when `ATA_TFLAG_POLLING` is set, so the
+  `WARN_ON_ONCE(in_wq != ata_hsm_ok_in_wq())` stays consistent when the
+  workqueue later calls `ata_sff_hsm_move(..., 1)`.
+- `pio_task` clears `sff_pio_task_link` **before** `hsm_move`. If the
+  IRQ path queued work and the wq path hits the new wait, requeue via
+  `ata_sff_queue_pio_task` is the existing delayed-work pattern.
+- Fast devices that drop BSY/DRQ within ~100µs still complete in IRQ;
+  only slow devices take the workqueue.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same pattern as Glenfly HDMI IDs, Loongson HDMI, AMD GPU display
-HDA PCI IDs, Intel BMG/PTL HDMI IDs — all already in this 6.12 tree. No
-other 0x4c54 / 0x4c545020 / "Lisuan" matches in the tree.
+Regression risk is real but contained: HSM is sensitive, and the patch
+does not call `ata_qc_set_polling()` (no nIEN). For PIO data-in that is
+acceptable: the protocol does not raise a completion IRQ after the last
+block, which is why the synchronous wait existed.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+Record: `[quality: small, uses existing polling HSM] [risk: low-medium
+HSM timing; nIEN not set, which matches this protocol]`
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- Local tree: pending-6.12, kernel 6.12.111 (git describe
-  p-6.12-3-gc504cf0baa3d8; Makefile VERSION=6 PATCHLEVEL=12
-  SUBLEVEL=111).
-- git log --grep=Lisuan -- sound/: empty. IDs are not here.
-- Mainline paths sound/hda/codecs/hdmi/hdmi.c,
-  sound/hda/controllers/intel.c, sound/hda/core/device.c do not exist
-  (post-6.12 HDA split).
-- Equivalents do exist:
-  - sound/pci/hda/hda_intel.c azx_ids[] — AZX_DRIVER_GENERIC at line
-    244, table ends at Loongson then {0,}
-  - sound/pci/hda/patch_hdmi.c snd_hda_id_hdmi[] — HDA_CODEC_ENTRY +
-    patch_generic_hdmi
-  - sound/hda/hdac_device.c hda_vendor_ids[] — same vendor list, no
-    0x4c54
-- SND_HDA_INTEL and SND_HDA_CODEC_HDMI exist (sound/pci/hda/Kconfig).
-- "Bug" is missing IDs, not a regression introduced after 6.12. Lisuan
-  hardware on 6.12 still fails to bind.
+---
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Will not apply as a raw mainline diff (wrong paths,
-HDA_CODEC_ID_MODEL vs HDA_CODEC_ENTRY). Mechanical 3-site remap:
-  1. patch_hdmi.c: HDA_CODEC_ENTRY(0x4c545020, "Lisuan HDMI/DP",
-     patch_generic_hdmi)
-  2. hda_intel.c: { PCI_DEVICE(0x4c54, 0x5010), .driver_data =
-     AZX_DRIVER_GENERIC }
-  3. hdac_device.c: { 0x4c54, "Lisuan" }
-Same class of backport as 2b331e7b6cc57 (AMD PCI ID into hda_intel.c on
-this branch). Difficulty: minor / needs small backport, not a rework.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No Lisuan IDs. No alternate Lisuan HDA quirk. Nothing to
-conflict besides inserting three table rows.
+**Step 3.1: BLAME THE CHANGED LINES**
+- Surrounding `if (hsm_task_state == HSM_ST_LAST && !WRITE)` /
+  `ata_wait_idle()`: **`624d5c514eed18`** (Tejun Heo, 2008-03-25),
+  “libata: reorganize SFF related stuff” — move-only; the wait was
+  already the SFF HSM.
+- `git describe 624d5c514eed18`: **v2.6.25-18**; contained in
+  **v2.6.26-rc1**.
+- New lines blamed on `4a2e5409472e8` (this commit).
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+Record: `[buggy wait present since ~v2.6.26 (2008)] [long-lived, all
+LTS-class trees have it]`
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [ALSA HD-audio / HDMI codec + PCI controller] [IMPORTANT for
-HDMI audio users; PERIPHERAL in that only Lisuan 4c54:5010 is newly
-matched; core HDA stack is mature]
+**Step 3.2: FOLLOW THE FIXES: TAG**
+No `Fixes:` tag. Not applicable beyond that. The wait itself was not
+introduced by a recent buggy commit.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: sound/pci/hda/ is actively receiving ID and quirk backports in
-this tree (AMD GPU ID, ThinkPad PM denylist, Panther Lake, etc.). Mature
-tables, routine ID churn. Matches stable practice.
+Record: `[no Fixes tag; bug is decades-old HSM behavior]`
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Recent `libata-sff.c` (path-limited): this commit is the latest on the
+file. No later follow-up on this wait. Older related HSM work
+(`ce7514526742c`, `8eee1d3ed5b6f`) is already in this tree. Not part of
+a numbered series.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / hardware-specific: owners of Lisuan GPUs with
-HD-audio 4c54:5010. No effect on other devices. Population is smaller
-than Intel/AMD HDMI, but that is normal for vendor ID adds (Glenfly,
-Loongson, etc.).
+Record: `[standalone] [no post-commit fix on this file] [no missing HSM
+locking prereq]`
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Trigger is having the PCI function present (boot/hotplug GPU).
-Common for those machines; zero for everyone else. Not an unprivileged
-syscall attack. HDMI audio is the user-visible feature.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Path-limited `git log --author="Richard Weinberger" -- drivers/ata/`:
+only this commit. Author is a long-time embedded/UML maintainer (sigma
+star); CF is typical for that hardware. Damien Le Moal is the libata
+maintainer and applied it.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: [HDMI/DP audio never appears] [MEDIUM for affected users:
-functional gap, not oops/corruption]. Stable still takes these as
-device-ID exceptions. Without the PCI ID, snd-hda-intel never binds
-(verified: no 0x4c54 class catch-all in azx_ids[]).
+Record: `[author: one-off ATA contributor, real CF user] [applied by
+subsystem maintainer]`
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: HDMI/DP audio on Lisuan using the existing generic HDA path.
-  High for those users; none for others.
-- Risk: 4 lines, probe-only, AZX_DRIVER_GENERIC already used. Residual
-  risk is missing hardware quirks; author/downstream say none are
-  needed.
-- Ratio: favorable. Same as other HDA PCI/codec ID backports already on
-  6.12.y.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Uses existing `ata_sff_busy_wait`, `ATA_TFLAG_POLLING`,
+`ata_sff_queue_pio_task`, `ata_sff_pio_task`, `ATA_SHORT_PAUSE`. No new
+helpers. Parent hunks match 2008-era HSM structure.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+Record: `[no extra dependencies; standalone apply]`
 
-Step 9.1: COMPILE THE EVIDENCE
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+`b4 dig -c 4a2e5409472e8`:
+- https://patch.msgid.link/20260717090404.857078-1-richard@nod.at
+- Single revision: `[PATCH] [RFC] libata: Don't busy-wait...`
+- Damien: “Looks OK to me, but the patch title should be: ata: libata-
+  sff: …”
+- Richard: agreed; Damien applied with the title change.
+- No NAK, no stable nomination, no race objections in the retrieved
+  thread (openwall/lkml/patchew). lore.kernel.org fetch returned 403;
+  discussion recovered from patchew, openwall, and lkml.
+
+Record: `[lore/msgid: 20260717090404.857078-1-richard@nod.at] [v1 RFC
+only] [maintainer OK, title-only change] [no NAK]`
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+`b4 dig -w` recipients: Richard Weinberger, linux-ide, linux-kernel,
+`upstream+linux@sigma-star.at`, `cassel@kernel.org` (Niklas Cassel),
+`dlemoal@kernel.org`.
+
+Visible review: Damien only (“Looks OK” / Applied). No Niklas reply
+found. No `Reviewed-by`.
+
+Record: `[CC: linux-ide + Cassel + Le Moal] [reviewer: Damien Le Moal
+applied]`
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+No bugzilla/syzbot. Author is the reporter: CF card, BSY held for
+milliseconds after last data block, IRQ busy-wait on every read.
+
+Record: `[one real-hardware report (author, CF)] [no distro bugzilla]`
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Standalone RFC, not `m/n`. No sibling patches required.
+
+Record: `[standalone series]`
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Web search of lore.kernel.org/stable for this subject found **no**
+stable-list discussion.
+
+Record: `[no stable@ discussion found]`
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+`ata_sff_hsm_move`, `ata_sff_pio_task`. Helpers used:
+`ata_sff_busy_wait`, `ata_sff_queue_pio_task`, `ata_pio_sectors`.
+
+Record: `[modified: ata_sff_hsm_move, ata_sff_pio_task]`
+
+**Step 5.2: TRACE CALLERS**
+`ata_sff_hsm_move`:
+- `ata_sff_pio_task` (workqueue, `in_wq=1`)
+- `__ata_sff_port_intr` → `ata_sff_port_intr` / `ata_sff_interrupt`
+  (hardirq, `in_wq=0`) — **this is the spinning path**
+- `sata_sil.c`, `sata_dwc_460ex.c`, `pata_octeon_cf.c` (CF)
+
+`ata_sff_pio_task`: delayed work on `ata_sff_wq`, queued from
+`ata_sff_qc_issue` (PIO polling / writes) and now from the new data-in
+completion path.
+
+Record: `[IRQ HSM is the hot path for interrupt-driven PIO-in] [also
+used by octeon CF]`
+
+**Step 5.3: TRACE CALLEES**
+`ata_pio_sectors` → `ata_pio_sector` sets `HSM_ST_LAST` on last sector.
+Then the wait. `ata_sff_queue_pio_task` queues delayed work (delay 0).
+`ata_hsm_qc_complete` from wq calls `ata_sff_irq_on` +
+`ata_qc_complete`.
+
+Record: `[callees: existing PIO xfer + pio_task + qc complete]`
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Userspace read on PATA/CF/PIO → SCSI/libata → `ata_sff_qc_issue` (PIO-
+in, `HSM_ST`) → device IRQ → `ata_sff_interrupt` → `ata_sff_hsm_move` →
+last `ata_pio_sectors` → **old: 10ms `ata_wait_idle` in hardirq**.
+
+Reachable from ordinary block reads on PIO ATA. Unprivileged if the
+device is mounted/readable.
+
+Record: `[reachable from userspace I/O on PIO/CF] [common on embedded,
+rare on AHCI DMA desktops]`
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Error path at lines 1083–1086 still uses `ata_wait_idle(ap)` for PIO-in
++ ERR/DF. Unchanged. Other drivers (`pata_octeon_cf`, `pata_via`, …)
+still use `ata_wait_idle` in tf_load / issue, not this HSM completion
+wait.
+
+Record: `[no sibling copy of this exact last-block wait; error-path
+wait_idle left as-is]`
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Yes in this lineage. Pre-commit parent still has `status =
+ata_wait_idle(ap)` after last PIO-in. Current HEAD already contains
+`4a2e5409472e8` (`git merge-base --is-ancestor` succeeded).
+`ata_sff_hsm_move` / `ata_sff_pio_task` / `ata_wait_idle` all exist.
+
+Record: `[bug introduced ~v2.6.26; this 7.3-rc4 tree has the fix; pre-
+fix code is the long-standing HSM wait]`
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+The HSM last-block `ata_wait_idle` hunk is unchanged from 2008 until
+this commit. No conflicting refactor in this file after the candidate.
+Expected apply on older trees that still have that hunk: **clean**.
+
+Record: `[clean apply on trees that still have ata_wait_idle in that HSM
+branch]`
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+This exact commit is already an ancestor of HEAD. That is not used as a
+reason to reject: the pipeline forbids “already selected” circular
+reasoning. No *different* fix for the same IRQ wait.
+
+Record: `[no alternate fix; this is the fix]`
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+`drivers/ata/libata-sff.c` — libata SFF (legacy IDE/PATA/BMDMA/CF PIO).
+
+Record: `[libata SFF] [IMPORTANT for PATA/CF/PIO; not core mm/net;
+unused on typical AHCI-only machines]`
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Mature. HSM wait logic sat still for ~18 years. Recent ATA work is
+EH/SCSI, not this completion wait.
+
+Record: `[mature/stable HSM; bug is old, not a new-subsystem issue]`
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+PIO data-in on SFF: CompactFlash, PATA in PIO, some embedded `pata_*` /
+`pata_octeon_cf`, fallback PIO. Not AHCI DMA.
+
+Record: `[driver/hardware-specific: SFF PIO-in, especially slow CF]`
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Every PIO read whose device holds BSY/DRQ > ~100µs after the last block.
+Author: multiple milliseconds, every read. Unprivileged I/O on that
+device is enough. Not a race.
+
+Record: `[trigger: PIO read on slow SFF/CF] [per-command] [userspace
+I/O]`
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Hardirq + port lock + IRQs off for up to 10ms **per command**.
+Sequential 512-byte reads can stall the CPU for long stretches (lost
+IRQs, timer/network/audio latency; possible watchdog on a very slow
+device). Not a documented oops/UAF/corruption.
+
+Official stable text also allows an **“oh, that's not good”** issue and
+notable interactivity problems. This is IRQ stall, not a micro-
+optimization.
+
+Record: `[failure: IRQ/CPU stall and latency] [severity: HIGH for
+CF/PATA PIO; LOW for AHCI-only]`
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+- Benefit: stops multi-ms IRQ spin on every slow PIO-in read; real CF
+  report; embedded LTS users still have this hardware.
+- Risk: ~17 lines, existing polling flag + workqueue; fast devices
+  unchanged (~100µs still in IRQ); ~2 months in mainline with no follow-
+  up revert/fix on this file.
+
+Record: `[benefit: high for CF/PATA] [risk: low-medium] [ratio:
+favorable]`
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
 FOR:
-- Classic PCI + codec ID add to an existing driver (snd-hda-intel + HDMI
-  codec present in 6.12).
-- Explicit stable exception: "NEW DEVICE IDs".
-- +4 lines, no new API, no new AZX_DRIVER type, no new module param.
-- Without PCI ID, controller does not bind in this tree.
-- ALSA maintainer applied v1 immediately.
-- Same pattern already backported here (AMD GPU HDA PCI ID, Intel HDMI
-  codec IDs, Glenfly).
-- Downstream already used generic HDMI with no extra DCAPS.
+- Real hardware: CF holds BSY for milliseconds; author hit it.
+- Busy-wait is in hardirq, port lock held, IRQs disabled — system-wide
+  latency, not a comment-only cleanup.
+- Small (+17/-7), one file, existing `ATA_TFLAG_POLLING` +
+  `ata_sff_pio_task`.
+- Maintainer applied after review (“Looks OK”).
+- Bug present since v2.6.26; no extra prereqs.
+- Fast path unchanged if the device idles within ~100µs.
 
 AGAINST:
-- Not a crash/UAF/security fix.
-- Raw diff does not apply (HDA tree split after 6.12).
-- No Tested-by / Reported-by on the list.
-- No in-tree Lisuan DRM driver; ELD/display integration may be limited
-  without a GPU driver (HDA still needs the PCI ID).
-- Possible later quirks if generic AZX flags are wrong (unverified
-  beyond author's downstream claim).
+- Worded as an improvement, not a crash/CVE.
+- One reporter; no syzbot/bugzilla; no `Cc: stable`.
+- Performance/interactivity bar in stable-rules prefers distro
+  maintainers + bugzilla; this did not go that route.
+- HSM changes can regress odd controllers (residual IRQs because nIEN is
+  not set).
+- Affects a shrinking hardware set (PATA/CF), not all machines.
 
 UNRESOLVED:
-- Mainline SHA not in this checkout; merge-base --is-ancestor of the
-  upstream commit was not run (commit absent).
-- b4 dig failed on lore; thread recovered via lore/openwall instead.
-- Could not independently test Lisuan hardware.
+- lore.kernel.org HTTP 403; thread reconstructed from b4 + mirrors.
+- No public confirmation from a second user.
+- No lockup-detector trace in the message (severity inferred from 10ms×N
+  in hardirq, not from a posted stack).
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — four table rows; maintainer
-   applied; downstream generic path described.
-2. Fixes a real bug that affects users? PASS — HDMI/DP audio never binds
-   without the PCI ID.
-3. Important issue (crash, security, corruption, deadlock)? FAIL on that
-   strict list; PASS under the documented device-ID exception (hardware
-   enablement).
-4. Small and contained? PASS — +4 lines, three ID tables.
-5. No new features or APIs? PASS — no new driver, syscall, or userspace
-   API; IDs only.
-6. Can apply to the local tree? PASS with a small backport (patch_hdmi.c
-   / hda_intel.c / hdac_device.c). Equivalent tables and
-   AZX_DRIVER_GENERIC exist.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — matches `ata_wait_idle`
+   bits; author tested on CF; maintainer applied.
+2. Fixes a real bug that affects users? **PASS** — IRQ CPU hog on real
+   CF reads.
+3. Important issue? **PASS** — “oh, that's not good” / interactivity:
+   multi-ms hardirq spin per read is a stall, not a cosmetic tweak. Not
+   a UAF/panic.
+4. Small and contained? **PASS** — 24 lines, one file.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — same HSM functions and flags;
+   pre-fix hunk is the classic `ata_wait_idle` sequence.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Device ID addition to an existing driver (PCI ID + HDMI codec ID
-+ vendor label). This is the standard YES exception. Vendor string is
-documentation-level.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Not a device ID, DT, build, or doc patch. Closest: **hardware
+workaround** for slow CF BSY, implemented as a bounded IRQ wait +
+existing polling.
 
-Step 9.4: MAKE YOUR DECISION
-This belongs in 6.12.y. The HDA controller/codec drivers are here; only
-the Lisuan IDs are missing. The mainline file move is a mechanical
-remap, not missing infrastructure. Risk is low; benefit is making
-HDMI/DP audio work on that GPU.
+Record: `[quasi-quirk: slow device BSY after last PIO-in block]`
 
-What the commit solves for stable users: 6.12.y systems with a Lisuan
-GPU HD-audio function 4c54:5010 currently do not bind snd-hda-intel.
-Adding the PCI ID (and codec/vendor rows) enables the existing generic
-HDMI path.
+**Step 9.4: MAKE YOUR DECISION**
+This tree’s libata-sff HSM still has (and had for ~18 years) the 10ms
+IRQ wait. The patch is a small, maintainer-acked correction that stops
+hogging the CPU with IRQs off on every slow PIO-in completion. That is
+in-scope for stable: real user-visible stall, surgical, no new API, no
+missing prereqs.
 
-Risk vs benefit: four probe-only table entries vs silent non-function of
-HDMI audio. Same class as ID adds already on this branch.
+---
 
-Concerns: backport must retarget 6.12 paths and use HDA_CODEC_ENTRY(...,
-patch_generic_hdmi) instead of HDA_CODEC_ID_MODEL(..., MODEL_GENERIC).
-No other prerequisites.
+### What the commit solves for stable users
+On interrupt-driven SFF PIO reads, after the last data block the host
+must wait for BSY/DRQ to clear with no completion IRQ. The kernel spun
+in `ata_wait_idle()` for up to 10ms in hardirq under the port lock. Slow
+CF (and similar) keeps BSY for milliseconds, so **every read** stalls
+the CPU. The fix waits ~100µs in IRQ, then uses the existing PIO polling
+workqueue, which sleeps instead of spinning.
+
+### Stable rules
+Meets “obviously correct,” real user-visible bug, small scope, no new
+API, applies to this codebase. Importance is IRQ stall / interactivity,
+which stable-rules explicitly allow as “oh, that's not good,” not only
+oops/corruption.
+
+### Risk vs benefit
+Benefit is high for CF/PATA PIO (embedded, industrial, some laptops).
+Risk is a modest HSM timing change, mitigated by reusing
+`ATA_TFLAG_POLLING` (IRQ handler already ignores those commands) and by
+leaving fast devices on the old complete-in-IRQ path.
+
+### Concerns
+No `Fixes:`/second reporter; nIEN not set when flipping to polling
+(acceptable for this protocol); HSM always has some controller risk.
+None of those outweigh the stall fix.
+
+---
 
 Verification:
-- [Phase 1] Parsed tags: author Xu Rao; Link msgid
-  DE1B62191D573D37+20260817085531.992573-1-raoxu@uniontech.com; SOB
-  Takashi Iwai; no Fixes/Reported-by/Cc: stable
-- [Phase 1] Body: missing 4c54:5010 and codec 0x4c545020; downstream
-  generic HDMI, no extra DCAPS
-- [Phase 2] Diff: +1 codec ID, +2 PCI ID/comment, +1 vendor name; 3
-  files, +4/-0
-- [Phase 3] git describe / Makefile: this tree is 6.12.111 pending-6.12
-  (p-6.12-3-gc504cf0baa3d8)
-- [Phase 3] git log --grep=Lisuan -- sound/: not in this tree
-- [Phase 3] Equivalent files: sound/pci/hda/hda_intel.c,
-  sound/pci/hda/patch_hdmi.c, sound/hda/hdac_device.c
-- [Phase 3] AZX_DRIVER_GENERIC exists (hda_intel.c:244, used e.g. VIA
-  0x9170)
-- [Phase 3] HDA_CODEC_ID_MODEL absent; HDA_CODEC_ENTRY in
-  include/sound/hda_codec.h:86
-- [Phase 3] Precedent in tree: 2b331e7b6cc57 AMD GPU HDA PCI ID (git
-  merge-base --is-ancestor: yes)
-- [Phase 3] Blame: HDMI Arise IDs c51e431052e2e (2023); azx_ids
-  terminator 1da177e4c3f41; vendor table 7639a06c23c7d4 (2015)
-- [Phase 4] lore linux-sound: 3 hits only (patch, apply, 7.3-rc1 pull);
-  v1 only; Takashi "Applied now"
-- [Phase 4] b4 dig -c HEAD: lore server error; used lore/openwall
-  instead
-- [Phase 4] lore.kernel.org/stable/?q=Lisuan: no discussion
-- [Phase 5] azx_ids has Intel/NVIDIA/ATI/Glenfly class catch-alls, not
-  vendor 0x4c54 — PCI ID required
-- [Phase 5] hda_bind.c codec_bind_generic() can fall back to generic
-  HDMI after controller bind; PCI ID remains the bind gate
-- [Phase 5] grep Lisuan/0x4c545020/PCI_DEVICE(0x4c54: no matches
-- [Phase 6] No sound/hda/codecs/hdmi/hdmi.c or
-  sound/hda/controllers/intel.c here (split after 6.12)
-- [Phase 6] SND_HDA_INTEL / SND_HDA_CODEC_HDMI present in
-  sound/pci/hda/Kconfig
-- [Phase 8] Failure mode: no HDMI/DP audio device, not a panic
-- UNVERIFIED: live Lisuan hardware; whether later quirks are needed
-  beyond author's downstream statement; exact mainline SHA (not in this
-  checkout)
+- [Phase 1] Subject/body/tags from `git log -1 --format=fuller
+  4a2e5409472e8`: two SOBs, no Fixes/Reported-by/Link/stable.
+- [Phase 1] Body describes CF + multi-ms BSY + IRQ/`ata_wait_idle` 10ms
+  spin.
+- [Phase 2] `git show --stat`: `drivers/ata/libata-sff.c` +17/-7; hunks
+  in `ata_sff_hsm_move` and `ata_sff_pio_task`.
+- [Phase 2] `ata_wait_idle` in `include/linux/libata.h`:
+  `ata_sff_busy_wait(..., ATA_BUSY|ATA_DRQ, 1000)` = 10ms; new wait uses
+  max=10 (~100µs).
+- [Phase 2] `__ata_sff_interrupt` skips `port_intr` when
+  `ATA_TFLAG_POLLING` is set (verified in `libata-sff.c`).
+- [Phase 2] `ata_hsm_ok_in_wq()` returns 1 if `ATA_TFLAG_POLLING` — WARN
+  consistency checked.
+- [Phase 3] `git blame` on wait site: Tejun `624d5c514eed18` (2008);
+  `git describe` → v2.6.25-18 / contained in v2.6.26-rc1.
+- [Phase 3] `git log HEAD -- drivers/ata/libata-sff.c`: no later commit
+  on this file after 4a2e5409472e8.
+- [Phase 3] Path-limited author log: only this ATA commit.
+- [Phase 4] `b4 dig -c 4a2e5409472e8`: msgid
+  20260717090404.857078-1-richard@nod.at.
+- [Phase 4] `b4 dig -a`: v1 RFC only.
+- [Phase 4] `b4 dig -w`: linux-ide, Cassel, Le Moal CCd.
+- [Phase 4] Damien “Looks OK” / “Applied to for-7.3” via lkml/openwall;
+  no NAK.
+- [Phase 4] lore.kernel.org WebFetch: 403. Thread taken from b4 +
+  patchew/openwall/lkml.
+- [Phase 4] No stable@ hits for this subject.
+- [Phase 5] Callers of `ata_sff_hsm_move`: `ata_sff_pio_task`,
+  `__ata_sff_port_intr`, `sata_sil.c`, `sata_dwc_460ex.c`,
+  `pata_octeon_cf.c`.
+- [Phase 6] `git describe HEAD` / `make kernelversion` / Makefile:
+  **7.3.0-rc4**.
+- [Phase 6] `git merge-base --is-ancestor 4a2e5409472e8 HEAD`: yes.
+- [Phase 6] Parent file still has `status = ata_wait_idle(ap)` in the
+  last PIO-in branch.
+- [Phase 8] Failure mode: hardirq busy-wait up to 10ms per PIO-in, not
+  UAF/panic.
+- UNVERIFIED: second independent user report; live NMI/softlockup log
+  (not in the message).
+
+The patch is small, correct against the SFF HSM, and fixes a real IRQ-
+context stall on hardware that still shows up on stable/embedded
+systems.
 
 **YES**
 
- sound/hda/codecs/hdmi/hdmi.c  | 1 +
- sound/hda/controllers/intel.c | 2 ++
- sound/hda/core/device.c       | 1 +
- 3 files changed, 4 insertions(+)
+ drivers/ata/libata-sff.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/sound/hda/codecs/hdmi/hdmi.c b/sound/hda/codecs/hdmi/hdmi.c
-index 42e4dc0949ec9..480d1c5f129fd 100644
---- a/sound/hda/codecs/hdmi/hdmi.c
-+++ b/sound/hda/codecs/hdmi/hdmi.c
-@@ -2348,6 +2348,7 @@ static const struct hda_device_id snd_hda_id_generichdmi[] = {
- 	HDA_CODEC_ID_MODEL(0x1d179f8e, "KX-7000 HDMI/DP",	MODEL_GF),
- 	HDA_CODEC_ID_MODEL(0x1d179f8f, "KX-7000 HDMI/DP",	MODEL_GF),
- 	HDA_CODEC_ID_MODEL(0x1d179f90, "KX-7000 HDMI/DP",	MODEL_GF),
-+	HDA_CODEC_ID_MODEL(0x4c545020, "Lisuan HDMI/DP",	MODEL_GENERIC),
- 	HDA_CODEC_ID_MODEL(0x67663d82, "Arise 82 HDMI/DP",	MODEL_GF),
- 	HDA_CODEC_ID_MODEL(0x67663d83, "Arise 83 HDMI/DP",	MODEL_GF),
- 	HDA_CODEC_ID_MODEL(0x67663d84, "Arise 84 HDMI/DP",	MODEL_GF),
-diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
-index 3ed33cba7d83f..fd61dc8e21a53 100644
---- a/sound/hda/controllers/intel.c
-+++ b/sound/hda/controllers/intel.c
-@@ -2830,6 +2830,8 @@ static const struct pci_device_id azx_ids[] = {
- 	/* Hygon HDAudio */
- 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_HYGON_18H_M05H_HDA),
- 	  .driver_data = AZX_DRIVER_HYGON | AZX_DCAPS_POSFIX_LPIB | AZX_DCAPS_NO_MSI },
-+	/* Lisuan HD-audio */
-+	{ PCI_DEVICE(0x4c54, 0x5010), .driver_data = AZX_DRIVER_GENERIC },
- 	{ 0, }
- };
- MODULE_DEVICE_TABLE(pci, azx_ids);
-diff --git a/sound/hda/core/device.c b/sound/hda/core/device.c
-index ebaa106d0f018..010dd38007a99 100644
---- a/sound/hda/core/device.c
-+++ b/sound/hda/core/device.c
-@@ -664,6 +664,7 @@ static const struct hda_vendor_id hda_vendor_ids[] = {
- 	{ 0x1af4, "QEMU" },
- 	{ 0x1fa8, "Senarytech" },
- 	{ 0x434d, "C-Media" },
-+	{ 0x4c54, "Lisuan" },
- 	{ 0x8086, "Intel" },
- 	{ 0x8384, "SigmaTel" },
- 	{} /* terminator */
+diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
+index 1e2a2c33cdc80..416e1239ed56d 100644
+--- a/drivers/ata/libata-sff.c
++++ b/drivers/ata/libata-sff.c
+@@ -1114,8 +1114,14 @@ int ata_sff_hsm_move(struct ata_port *ap, struct ata_queued_cmd *qc,
+ 
+ 			if (ap->hsm_task_state == HSM_ST_LAST &&
+ 			    (!(qc->tf.flags & ATA_TFLAG_WRITE))) {
+-				/* all data read */
+-				status = ata_wait_idle(ap);
++				status = ata_sff_busy_wait(ap,
++						ATA_BUSY | ATA_DRQ, 10);
++				if (status != 0xff &&
++				    (status & (ATA_BUSY | ATA_DRQ))) {
++					qc->tf.flags |= ATA_TFLAG_POLLING;
++					ata_sff_queue_pio_task(link, 0);
++					return 0;
++				}
+ 				goto fsm_start;
+ 			}
+ 		}
+@@ -1213,7 +1219,7 @@ static void ata_sff_pio_task(struct work_struct *work)
+ 		container_of(work, struct ata_port, sff_pio_task.work);
+ 	struct ata_link *link = ap->sff_pio_task_link;
+ 	struct ata_queued_cmd *qc;
+-	u8 status;
++	u8 status, wait_mask;
+ 	int poll_next;
+ 
+ 	spin_lock_irq(ap->lock);
+@@ -1229,6 +1235,10 @@ static void ata_sff_pio_task(struct work_struct *work)
+ fsm_start:
+ 	WARN_ON_ONCE(ap->hsm_task_state == HSM_ST_IDLE);
+ 
++	wait_mask = ATA_BUSY;
++	if (ap->hsm_task_state == HSM_ST_LAST)
++		wait_mask |= ATA_DRQ;
++
+ 	/*
+ 	 * This is purely heuristic.  This is a fast path.
+ 	 * Sometimes when we enter, BSY will be cleared in
+@@ -1236,14 +1246,14 @@ static void ata_sff_pio_task(struct work_struct *work)
+ 	 * or something.  Snooze for a couple msecs, then
+ 	 * chk-status again.  If still busy, queue delayed work.
+ 	 */
+-	status = ata_sff_busy_wait(ap, ATA_BUSY, 5);
+-	if (status & ATA_BUSY) {
++	status = ata_sff_busy_wait(ap, wait_mask, 5);
++	if (status & wait_mask) {
+ 		spin_unlock_irq(ap->lock);
+ 		ata_msleep(ap, 2);
+ 		spin_lock_irq(ap->lock);
+ 
+-		status = ata_sff_busy_wait(ap, ATA_BUSY, 10);
+-		if (status & ATA_BUSY) {
++		status = ata_sff_busy_wait(ap, wait_mask, 10);
++		if (status & wait_mask) {
+ 			ata_sff_queue_pio_task(link, ATA_SHORT_PAUSE);
+ 			goto out_unlock;
+ 		}
 -- 
 2.53.0
 
