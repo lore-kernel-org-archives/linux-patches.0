@@ -1,44 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE3553875B;
-	Mon, 19 Oct 2026 14:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98F6621505;
+	Mon, 19 Oct 2026 14:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418681; cv=none; b=M/O0ZSdK3K50IYKthoXdXUZbxEWcxPvwBN/xuPrvcdlLJIYv8sJQoVfXYDJuuRCtDKEC9P/c8ul9w+q9+wMatXOYYOomrMOBZ14KoOL+9oZU7MtcbwN6aXf3zYBDRLatr7OTR3FtcbI7qNShd/OMKNuTs3P3S9gClD40c447LSc=
+	t=1792418683; cv=none; b=l70Qf47RsxSFARAZg7JXuKFemmUpqHJIIXmb+WmqFD216lPoeOCom78Br+/8xbMHXLraCTMPfgiZxui/OyJ5ujLkKFZS1C2zTisjYHNwAUYwcloxUdRd5srPGequAXywYLQ6rxZT6He6m05zznZqirAEWDsB8/U9or2GRFnd8Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418681; c=relaxed/simple;
-	bh=jrQMOA/SM4mc01xbFxhcMqq6uwiY2uRcd+zxTo7vtqc=;
+	s=arc-20240116; t=1792418683; c=relaxed/simple;
+	bh=GBPku60R2y3boWA+imjMNAAs0VVD1lQgUGv/Vo/Fyp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mdydJ9MFpZ6Bw+hwXyXUQgwaLRB1VM7T/92dqgVYQSYCd2p6hU+10eU0QRtp8dyidQH0j+3EsX5lM5HS/GGTRUhqEEBnH28/DmqSTZ7nZHkQCZpCjPhLhRFpvD/dIDPnWJcGnUfzZDsWFHiIjkDpqb0/3FytJMkkSfAgq9r1r9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FYh1Z35Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GsLVszVshuXAFbcMfNYev5eu0GAOzgopx9yoEk2js+CSGksGEI0f/OxHc5FixbphrGLY7gnGt2DDI6i/XgBY0Zx/xiNS+Y+HjbyeW0CMnUnwjGqVQJZ4hMEMThKAOtLnO6Rxi/VdR2ZG11rOJJnMdBnQL/JYp1uP6lM1C//TjHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HmmUh9J5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FYh1Z35Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43161F000C4;
-	Mon, 19 Oct 2026 14:04:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HmmUh9J5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2C41F000C5;
+	Mon, 19 Oct 2026 14:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418678;
-	bh=1GBZygteAOTn7BJ5HKhZvdqg98ATeVmYxOHQkitqReU=;
+	s=k20260515; t=1792418680;
+	bh=w9tYo1ePiywHlsnDPw2BYj7IYsINTi3MQ626nFcaKGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FYh1Z35YrvPMr2AKY+hn/4u/rj/z6BSpBvwvu4oQ8uI4SWQjnUvKVmMfT3obnVV6K
-	 oHFlE+k63RpPibpVOpFkxfpSnSWOZT7FRgL7sfwqkRMoKAnNXLT7d9yFT4EshAEEt4
-	 7Nz160dkmxxIqUtm59AXwzGWiNoEJML6HEd2X45E1LVLRBe/ipCfWOEMd19rj0iXLk
-	 2qQNy7ksTh4/i8r1E2INXkSCLXQMl7Cg/rmnDLvwj2KK0+oJJvjryOf/YnShz/1I+7
-	 /wTMl68j5BxbnECrM/0j+seFpxwcqHaCZ3KLS26hAZuhaqqsKJDzfj0iGduq5lr4I4
-	 Kci6n3q9y9AGw==
+	b=HmmUh9J5MNelStFykMUhj8x9GoR8t9pqXQ+TRzVvBg7Jowxk6Y4lBiP1AjjGU5in0
+	 fXCeEpTldbAd5Shby84u9tvZii/CPJXf4o+5ilEFCQMQ5fXNRT+3XkWAptxjBdgdPb
+	 cHLcNvIGFVoNakjji/Y2SZ+N3GLLJ3wHOXJy2X5BHE3MaANQJK3SRtnd4tlh+5jVFj
+	 UIcp7aEgM2JMPWIlaij7PYj4i5O6M9M8/g7ViiLjdRK0S+tMxHOJ3gzPR8nPlAP+eA
+	 gv6zle60pL+VzFTSrhv/WPs/voXxw+ar7vMEjx9Fqrdcgmnkhgx6Xk4n1bZU0hWy9d
+	 i2QS0q3ZfEikQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Johan Alvarado <contact@c127.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	maxime.chevallier@bootlin.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@kernel.org,
+	pabeni@redhat.com,
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] ALSA: hda/realtek: Fix speakers on ASUS PM3406CHA
-Date: Mon, 19 Oct 2026 09:51:50 -0400
-Message-ID: <20261019135441.1420968-419-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] net: stmmac: raise TX completion interrupt at the end of an xmit burst
+Date: Mon, 19 Oct 2026 09:51:51 -0400
+Message-ID: <20261019135441.1420968-420-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,449 +61,493 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>
+From: Johan Alvarado <contact@c127.dev>
 
-[ Upstream commit 0eee030c2c09c7a44be778de5f451d9e7a2f09c1 ]
+[ Upstream commit d21a374995df9d7cfd193427748a19dcc87956a9 ]
 
-The ASUS ExpertBook PM3406CHA uses an ALC256 codec with subsystem
-ID 1043:1664. On Linux boot, the internal speakers are silent even
-though playback is routed to the codec and the speaker pin is
-configured for output.
+The TX mitigation logic only sets the Interrupt on Completion bit once
+every tx_coal_frames descriptors (STMMAC_TX_FRAMES = 25), with the
+tx_coal_timer hrtimer (STMMAC_COAL_TX_TIMER = 5000 us) as the only
+fallback. TX skbs are freed exclusively from the TX completion path,
+so any flow that keeps fewer than 25 frames in flight has all of its
+skbs held for up to 5 ms after transmission.
 
-The codec starts with coefficient 0x10 set to 0x1d20. Writing 0x7f20
-to coefficient 0x10 immediately restores internal speaker output.
+Paced flows never queue enough frames to reach the frame threshold:
+TCP Small Queues caps the amount of unfreed data at roughly two pacing
+intervals worth, which at moderate pacing rates is only a couple of
+packets. Every small burst then stalls until the coalesce timer fires,
+and throughput collapses to approximately tsq_limit / tx_coal_timer
+regardless of link capacity.
 
-This was reproduced on the affected hardware from a fresh boot using
-hda-verb. Reducing a larger initialization sequence showed that this
-coefficient write alone is sufficient; no GPIO, EAPD, pin-control, or
-other coefficient changes are required. After applying the coefficient
-in userspace, speaker output also remains functional across suspend
-and resume.
+This is easily reproducible with BBR, which paces its output and thus
+keeps only a few frames in flight at a time. On a YT6801
+(dwmac-motorcomm) equipped Orange Pi 5 Pro, a BBR upload over a ~23 ms
+RTT path is capped at 5.24 Mbit/s, while CUBIC reaches 207 Mbit/s on
+the same path. BBR measures the stalled send rate as the path
+bandwidth and locks its estimate near the floor, so the connection
+never recovers. Lowering the coalesce settings with ethtool -C
+(tx-usecs 100 tx-frames 1) lifts the same transfer to 447 Mbit/s,
+confirming the mechanism.
 
-Add a machine-specific HDA fixup that writes the required coefficient.
+Fix this by setting the IC bit on the last descriptor of every xmit
+burst, i.e. whenever netdev_xmit_more() reports that no further frames
+are pending in the current dequeue batch. Frame-based coalescing still
+applies within a burst, bulk traffic keeps batching through qdisc bulk
+dequeue and NAPI polling, and the coalesce timer becomes a pure
+fallback instead of the primary completion mechanism for lightly
+queued flows.
 
-The fixup has been compile-tested, but could not be boot-tested because
-the affected hardware is no longer available.
+tx-frames 0 keeps its meaning of timer-based mitigation only.
 
-Closes: https://bugs.launchpad.net/ubuntu/+source/alsa-driver/+bug/2162718
-Signed-off-by: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>
-Link: https://patch.msgid.link/20260924144512.3989-1-muhtaseem2005@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Johan Alvarado <contact@c127.dev>
+Link: https://patch.msgid.link/20260731194522.55069-1-contact@c127.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a machine-specific Realtek HDA quirk for silent speakers on one
-ASUS laptop. The local tree is **6.18.57**; the ALC256 driver and quirk
-tables are already here, and the SSID entry is not.
+The local tree is **6.12.111**. The TX-coalesce stall is in this
+checkout; the four-line IC-on-burst-end change is a real, tested fix for
+a severe paced-TCP collapse on stmmac.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[ALSA: hda/realtek]** **[Fix]** **[restore internal speakers
-on ASUS ExpertBook PM3406CHA]**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [net: stmmac] [raise] [set TX Interrupt-on-Completion on the
+last descriptor of each xmit burst so lightly queued/paced flows are not
+stuck on the 5 ms coalesce timer]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Closes: https://bugs.launchpad.net/ubuntu/+source/alsa-
-  driver/+bug/2162718` — Ubuntu bug with a real user report
-- `Link: https://patch.msgid.link/20260924144512.3989-1-
-  muhtaseem2005@gmail.com` — original submission
-- `Signed-off-by: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>` —
-  author
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA maintainer
-  applied it
-- No `Fixes:` tag (expected: this is a missing hardware quirk, not a
-  regression)
-- No `Cc: stable@vger.kernel.org` (expected for this review queue)
-- No `Reported-by:` / `Tested-by:` in the git message; the Launchpad
-  thread supplies both in practice
-- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+- Link: https://patch.msgid.link/20260731194522.55069-1-contact@c127.dev
+- Signed-off-by: Johan Alvarado \<contact@c127.dev\> (author)
+- Signed-off-by: Jakub Kicinski \<kuba@kernel.org\> (netdev maintainer,
+  applied)
+- No Reported-by / Tested-by / Reviewed-by / Acked-by / Cc: stable in
+  the committed message
+- No Fixes: in the committed message (expected for this pipeline)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Original mailing-list submission (v1 and RESEND) DID carry:
+- Fixes: da2024510031 ("net: stmmac: Tune-up default coalesce settings")
+That tag is treated as technical evidence of the introducing commit, not
+as a “already selected for stable” marker.
+
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** ASUS ExpertBook PM3406CHA (ALC256, SSID `1043:1664`) boots
-  with internal speakers silent even though ALSA routes playback to the
-  codec and the speaker pin is an output.
-- **Symptom:** no audible speaker output; HDMI/Bluetooth still work
-  (Launchpad).
-- **Root cause:** vendor coefficient `0x10` comes up as `0x1d20`.
-  Writing `0x7f20` restores output. Isolated with `hda-verb` from a
-  larger init sequence; GPIO/EAPD/pin-control/other coeffs were not
-  required. After the userspace write, audio still worked across
-  suspend/resume.
-- **Version info:** Launchpad reporter: Ubuntu 24.04.4, kernel
-  `7.0.0-28-generic`; author also tested on `7.2.6-arch2-1`.
-- **Caveat in the message:** author compile-tested the kernel patch but
-  no longer had the laptop for a kernel boot-test.
+- Bug: TX IC is set only every `tx_coal_frames` descriptors (default
+  25). The 5 ms `tx_coal_timer` is the only fallback. TX skbs are freed
+  only from the completion path, so a flow with fewer than 25 frames in
+  flight holds those skbs for up to 5 ms.
+- Symptom: TCP Small Queues + pacing (BBR) never queues 25 frames. Each
+  small burst waits for the timer. Throughput collapses to ~tsq_limit /
+  tx_coal_timer. BBR then treats that stalled rate as path bandwidth and
+  never recovers.
+- Measured on Orange Pi 5 Pro / YT6801: BBR 5.24 Mbit/s vs CUBIC 207
+  Mbit/s; ethtool `-C tx-usecs 100 tx-frames 1` raises the same transfer
+  to 447 Mbit/s.
+- Root cause: coalescing designed for deep queues; lightly queued flows
+  only complete via the timer.
+- Fix: set IC when `!netdev_xmit_more()` (end of current dequeue batch).
+  Frame coalescing still applies inside a burst; `tx-frames 0` stays
+  timer-only.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. This is an explicit hardware-quirk bug
-fix.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. Submitted as `[PATCH net]` (bugfix
+tree, not net-next). It is a logic/correctness fix for TX completion
+starvation interacting with TSQ, not a style change.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `sound/hda/codecs/realtek/alc269.c`  **+10 / -0**
-- Functions/tables: `enum { ... }` (add `ALC256_FIXUP_ASUS_PM3406CHA`),
-  `alc269_fixups[]`, `alc269_fixup_tbl[]`
-- Scope: **single-file surgical hardware quirk**
+- File: `drivers/net/ethernet/stmicro/stmmac/stmmac_main.c`
+- +4 / −0 (two identical two-line insertions)
+- Functions: `stmmac_tso_xmit()`, `stmmac_xmit()`
+- Scope: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-1. Enum: add a new fixup ID used as an index into `alc269_fixups[]`.
-2. Fixup table: `HDA_FIXUP_VERBS` writing nid `0x20`
-   `AC_VERB_SET_COEF_INDEX 0x10` then `AC_VERB_SET_PROC_COEF 0x7f20`.
-3. Quirk table: `SND_PCI_QUIRK(0x1043, 0x1664, "ASUS ExpertBook
-   PM3406CHA", ALC256_FIXUP_ASUS_PM3406CHA)`.
+- Before (both functions): set_ic if HW timestamp, else if
+  `tx_coal_frames==0` never set IC, else if this skb’s descriptor count
+  exceeds the threshold, else if the running modulo wrapped, else false.
+  Then arm the 5 ms timer.
+- After: same, plus `else if (!netdev_xmit_more()) set_ic = true`
+  immediately after the `tx_coal_frames==0` check, so the last skb of a
+  dequeue batch gets IC unless the user asked for timer-only (`tx-frames
+  0`).
+- Path: normal `ndo_start_xmit`, not an error/init path.
 
-Before: `alc269_probe()` has no PCI-SSID match for `1043:1664`.
-Launchpad shows a pin-match fallback (`"ALC256: picked fixup (pin
-match)"` with empty name) that does not enable speakers.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record:
+- Category: logic / correctness (TX completion starvation vs TCP Small
+  Queues)
+- Mechanism: IC density was bounded by frame count only. Paced flows
+  never reach 25 in-flight frames, so completion waits for the hrtimer.
+  TSQ will not queue more until skbs are freed, so send rate is timer-
+  capped. Setting IC on burst end completes those skbs promptly; intra-
+  burst coalescing and the timer remain as fallback.
 
-After: PCI SSID match wins (`snd_hda_pick_fixup` runs first;
-`snd_hda_pick_pin_fixup` returns immediately if `fixup_id` is already
-set). Verbs are queued at `HDA_FIXUP_ACT_PROBE` via
-`snd_hda_add_verbs()` and executed in `alc_init()` after Realtek init,
-including resume.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **[Hardware workaround / codec quirk]**
-Broken: ALC256 coef `0x10` left at `0x1d20` on this SKU, so the internal
-amp/output path stays muted.
-Fix: machine-specific init/resume verb write of `0x7f20`. Same pattern
-as `ALC269_FIXUP_DELL_M101Z` (speaker enable via coef verbs).
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct for this class of fix: one SSID, two verbs,
-existing `HDA_FIXUP_VERBS` machinery. Isolated to `1043:1664`. ALSA
-maintainer accepted it. Low regression risk for other machines. Residual
-risk is headphone routing on this one SKU if coef `0x10` is also a
-HP/speaker switch on ALC256 (GX502/GU502 comments use `0x10` that way
-with different values). That is unverified on this SKU; Takashi still
-applied the patch, and the Launchpad reporter confirmed speakers work.
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Obviously correct: `netdev_xmit_more()` is the standard “more packets
+  in this dequeue” signal; many other NIC drivers already use it this
+  way. Placement after `!tx_coal_frames` preserves timer-only mode.
+- Minimal: four lines, no API/data-structure change.
+- Regression risk: more TX IRQs on short bursts. Author measured ~3.3k
+  IRQs/s (~12 packets/IRQ) at 447 Mbit/s. Bulk traffic still coalesces
+  inside qdisc bulk dequeue / TSO. XSK/XDP paths intentionally unchanged
+  (`netdev_xmit_more()` is not meaningful there; no TSQ). Maciej
+  Fijalkowski asked whether coalescing could be dropped entirely; the
+  author kept the frame bound so a bulk batch larger than the ring
+  cannot drain with zero IC bits. Low regression risk.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: There is no “introduced-by” regression. The bug is a **missing
-quirk**. Surrounding table entries (`0x1043:0x1663` / `0x1683`,
-`ALC269_FIXUP_DELL_M101Z`) already exist at `v6.18.57`. ALC256
-(`0x10ec0256`) is a first-class ID in this file
-(`HDA_CODEC_ID(0x10ec0256, "ALC256")`).
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable. This is new-hardware quirk
-coverage, not a revert of a bad change.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- Related: `0156c22fb0ca8` “Add support for ASUS Commercial laptops
-  using CS35L41 HDA” adds **PM3406CKA** (`0x1043:0x1454`) with
-  `ALC287_FIXUP_CS35L41_I2C_2`. That is a **different SKU** with Cirrus
-  companion amps. Copying it to CHA would be wrong.
-- Similar silent-speaker quirk already in this tree: `e561c2740b628`
-  Higole F9B.
-- Standalone 10-line patch, not `X/Y` of a series. No follow-up on this
-  SSID after the candidate.
+- Core IC logic: c2837423cb5455 (“net: stmmac: Rework TX Coalesce
+  logic”, 2019-11-14)
+- `!tx_coal_frames` / per-queue threshold: db2f2842e6f560 (2021-03-17)
+- Default TX_FRAMES 1→25: da2024510031 (v5.5-rc1, 2019-11) — this is
+  what made “every frame gets IC” into “every 25 descriptors”
+- Timer 1 ms→5 ms: 039550960a223 (2023-10-19), present in this tree —
+  same stall, worse ceiling
+- Buggy pattern has been in tree since ~v5.5; this is long-standing, not
+  new-in-6.13+ code
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Only this commit by Muhtasham Nawr al-Mahmud under `sound/hda/`.
-Not the subsystem maintainer. Applied by Takashi Iwai (`MAINTAINERS`:
-sound maintainer).
+Step 3.2: FOLLOW THE FIXES: TAG
+Record:
+- Original submission tagged Fixes: da2024510031
+- `git merge-base --is-ancestor da2024510031 HEAD` → yes (exit 0)
+- That commit only retuned defaults (`STMMAC_TX_FRAMES` 1→25). Combined
+  with timer-only fallback, that is exactly the stall.
+- Intermediate related work already in this tree: c2837423cb5455
+  (rework), 2d1a42cf7f77c (timer arm vs NAPI, 2023), 039550960a223 (5 ms
+  timer). None of those set IC at burst end.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. Uses `HDA_FIXUP_VERBS`, `SND_PCI_QUIRK`,
-`alc269_fixups[]`, `alc269_fixup_tbl[]` — all present at `v6.18.57`. Can
-apply standalone.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- Recent `stmmac_main.c` work is TSO descriptor checks, PTP lock init,
+  XDP, etc. Nothing equivalent to this IC-on-burst-end change.
+- `git log --grep=netdev_xmit_more --
+  drivers/net/ethernet/stmicro/stmmac/` → empty; the helper is unused in
+  stmmac here.
+- Standalone 4-line fix, not patch N/M.
+
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record:
+- Johan Alvarado has no prior stmmac commits in this tree (end-user
+  reporter/fixer, not the subsystem maintainer).
+- Maintainers CC’d on the list: Alexandre Torgue, Jose Abreu. Applied by
+  Jakub Kicinski.
+
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record:
+- Needs `netdev_xmit_more()` — present in `include/linux/netdevice.h`
+  (this tree).
+- Needs the existing `set_ic` / `stmmac_set_tx_ic` / `tx_coal_frames`
+  block — present in both xmit paths.
+- Mainline context uses `CIRC_CNT` / `stmmac_get_tx_desc`; those helpers
+  are not required. The added lines sit in context that is identical
+  here:
+  `else if (!priv->tx_coal_frames[queue]) set_ic = false;`
+- Applies standalone.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c 0eee030c2c09…` matched msgid
-  `20260924144512.3989-1-muhtaseem2005@gmail.com`
-- Series: **v1 RFC only** (no v2/v3)
-- LKML: https://lkml.iu.edu/2609.3/01658.html (patch),
-  https://lkml.iu.edu/2609.3/11978.html (reply)
-- Takashi Iwai: “The code change looks OK, so I applied this now.” **No
-  NAK, no requested changes.**
-- lore.kernel.org fetches returned 403; discussion recovered via `b4
-  dig`, Patchew, and LKML IU.
+- b4 dig on the msgid did not resolve a local commit (this SHA is not in
+  the 6.12 checkout). Fallback: openwall + patchew.
+- v1: 2026-07-06, Message-ID `0100019f35ea26e0-42ad009c-01ab-4a8f-b126-
+  fa65fbacae5c-000000@email.amazonses.com`
+- RESEND: 2026-07-31, msgid `20260731194522.55069-1-contact@c127.dev`
+  after netdev queue overflow (Jakub asked for a repost). Author: no
+  code changes vs v1.
+- Reviewer Maciej Fijalkowski: agreed each TX batch should get IC at the
+  end; asked if coalescing could be dropped. Author explained why the
+  frame bound must stay (ring-full with xmit_more set on every frame
+  until the queue stops → zero IC → timer stall on the bulk path). Kept
+  the patch minimal for `net`.
+- No NAK. No reviewer concern that the change is unsafe for the IC-on-
+  burst-end approach.
+- No explicit “Cc: stable” in the thread. Submitted to `net` as a
+  bugfix.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): Muhtasham Nawr al-Mahmud; Jaroslav Kysela; Takashi
-Iwai; Kailang Yang (Realtek); `linux-sound@vger.kernel.org`; `linux-
-kernel@vger.kernel.org`. Subsystem maintainer reviewed and applied.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record:
+- To/Cc: netdev maintainers (Kicinski, Abeni, Dumazet, Daleck, Lunn),
+  stmmac (Torgue, Abreu, Coquelin), Pavel Machek (historical reporter),
+  linux-stm32, linux-arm-kernel.
+- Substantive review: Maciej Fijalkowski. Applied by Jakub Kicinski.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record (Launchpad #2162718):
-- Reporter: Nguyễn Trọng Tuyền, 2026-08-03, ASUS ExpertBook P3
-  PM3406CHA, Ryzen 7 8840HS, ALC256, SSID `1043:1664`.
-- Thought it was the same as PM3406CKA (#2133791, `1043:1454`); that SKU
-  needed CS35L41, this one does not.
-- Author isolated coef `0x10` on the hardware; reporter later: “It works
-  perfectly on my laptop (Ubuntu 24.04.4, kernel 7.0.0-28). My speakers
-  are finally working again!”
-- Independent user confirmation of the userspace workaround. Kernel-
-  patch `Tested-by` was offered but not in the commit.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record:
+- Concrete iperf3 numbers from the author on real hardware (Orange Pi 5
+  Pro).
+- Historical same class of bug: Pavel Machek 2016 UDP burst pauses (40
+  ms low-res timer); his “disable coalescing” patch was rejected in
+  favor of a real solution. hrtimer conversion later fixed resolution
+  but left timer-as-only-completion for light flows.
+- Severity from reporter: BBR unusable (~5 Mbit/s vs hundreds).
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone RFC. Not part of a multi-patch series. PM3406CKA
-CS35L41 quirk is a different machine and must not be reused.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Single standalone patch. Author deferred any coalescing rework
+to net-next. XSK/XDP IC logic deliberately not included.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: No stable-list hit for PM3406CHA (lore.kernel.org/stable 403;
-web search did not show a stable NAK or prior rejection). UNVERIFIED
-that it was ever discussed on stable@; absence is not a negative.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search returned 403. No evidence on
+openwall/patchew that stable rejected this. UNVERIFIED that it was
+discussed on stable@ specifically.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: No function bodies changed. Data: `ALC256_FIXUP_ASUS_PM3406CHA`,
-`alc269_fixups[]`, `alc269_fixup_tbl[]`. Consumers: `alc269_probe()` →
-`snd_hda_pick_fixup()` → `snd_hda_apply_fixup()`; `alc_init()` →
-`snd_hda_apply_verbs()`.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `stmmac_tso_xmit`, `stmmac_xmit`. Helper used:
+`netdev_xmit_more`. Callee already present: `stmmac_set_tx_ic`.
 
-**Step 5.2: TRACE CALLERS**
+Step 5.2: TRACE CALLERS
 Record:
-- `alc269_probe()` calls `snd_hda_pick_fixup(..., alc269_fixup_tbl,
-  alc269_fixups)` then `snd_hda_apply_fixup(..., HDA_FIXUP_ACT_PROBE)`.
-- `alc_init()` (codec `.init`, including resume) calls
-  `snd_hda_apply_verbs()` then `HDA_FIXUP_ACT_INIT`.
-- `HDA_FIXUP_VERBS` are applied only at `HDA_FIXUP_ACT_PROBE` to
-  **register** the list; documented to run at init and resume
-  (`snd_hda_add_verbs` comment in `auto_parser.c`).
-- Path: HD-audio codec probe on this laptop, then PCM playback. Not IRQ-
-  hot.
+- `stmmac_xmit` is `ndo_start_xmit` (`stmmac_netdev_ops` at line 7155).
+- `stmmac_tso_xmit` is called from `stmmac_xmit` for TSO/GSO packets
+  (lines 4529/4531).
+- Context: process / softirq xmit (BH off). Userspace sockets, not
+  probe-only.
 
-**Step 5.3: TRACE CALLEES**
-Record: `snd_hda_sequence_write()` of two vendor verbs on nid `0x20`
-(Realtek vendor processing node). No alloc/lock/API change.
+Step 5.3: TRACE CALLEES
+Record: `stmmac_set_tx_ic` sets the hardware IC bit;
+`stmmac_tx_timer_arm` still runs after xmit (lines 4461 and 4750). Timer
+remains the fallback if IC is not set or NAPI is not scheduled.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Unprivileged playback on this laptop triggers the silent path
-today. After the quirk, probe/init writes the coef. Userspace-reachable
-on the affected SKU.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: userspace send/write → TCP → qdisc → `ndo_start_xmit` →
+`stmmac_xmit` / `stmmac_tso_xmit`. Reachable on every stmmac Ethernet
+device. Unprivileged users who can send on the interface (typical
+networked host) trigger it. BBR/pacing makes it easy to hit.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same file already uses coef-`0x10` verbs
-(`ALC269_FIXUP_ASUS_N7601ZM`, `ALC274_FIXUP_ASUS_ZEN_AIO_27`) and
-speaker-enable verbs (`ALC269_FIXUP_DELL_M101Z`). This matches
-established Realtek practice.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: `netdev_xmit_more()` is already used for doorbell/IC batching in
+many drivers in this tree (r8169, mlx5, virtio_net, qede, ionic, sfc,
+forcedeth, …). stmmac is the outlier. XSK/XDP in the same file still use
+frame-count-only IC; that is intentional and not a missed copy of this
+bug (no TSQ).
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- `git describe HEAD` → `v6.18.57-155-gcdf239ca885b2`
-- `make kernelversion` / Makefile → **6.18.57**
-- `git merge-base --is-ancestor 97902f970e5cd v6.18.57` → **not an
-  ancestor** (the quirk is **not** in the 6.18.57 baseline)
-- At `v6.18.57`, `alc269_fixup_tbl` goes `0x1663` then `0x1683`; **no
-  `0x1664` / PM3406CHA**
-- File `sound/hda/codecs/realtek/alc269.c` exists (split in
-  `aeeb85f26c3bb`, long before 6.18)
-- ALC256 ID table present at v6.18.57
-- Bug is the missing SSID quirk; it exists on this 6.18.y tree
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. `stmmac_tso_xmit` ~4380–4390 and `stmmac_xmit` ~4645–4655:
+same if/else IC logic, no `netdev_xmit_more()` branch. Defaults in this
+tree: `STMMAC_TX_FRAMES` 25, `STMMAC_COAL_TX_TIMER` 5000 (`common.h`).
+`git describe HEAD` → `p-6.12-2-gd38d58a4e0359`; `make kernelversion` →
+6.12.111.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply expected.** Insertion points at v6.18.57:
-- enum: `ALC269_FIXUP_DELL_M101Z` then `ALC269_FIXUP_SKU_IGNORE`
-- `alc269_fixups[]`: same pair of entries
-- quirk table: `0x1663` then `0x1683`
-No struct/API mismatch.
+dwmac-motorcomm / YT6801 is not in this tree; that was only the
+reporter’s NIC. The bug lives in common `stmmac_main.c`, which 6.12
+already uses for dwmac-rk, dwmac-sunxi, dwmac-stm32, dwmac-intel, dwmac-
+imx, dwmac-qcom-ethqos, dwmac-ipq806x, dwmac-meson, etc.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No other `PM3406CHA` / `0x1043:0x1664` fix. PM3406CKA CS35L41
-entry is a different SSID and amp topology.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Expected apply: clean for the four added lines. Surrounding
+mainline helpers (`CIRC_CNT`, `stmmac_get_tx_desc`) differ, but they are
+not part of this hunk. Insertion context matches 6.12 exactly.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: 2d1a42cf7f77c (don’t re-arm timer while NAPI is scheduled) and
+039550960a223 (5 ms timer) are in this tree. They do not set burst-end
+IC. No equivalent fix present.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **ALSA HD-audio Realtek codec** (`sound/hda/codecs/realtek/`).
-**IMPORTANT** for laptop audio, not core mm/VFS. Quirk-table maintenance
-is routine in stable.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [net / stmmac Ethernet] [IMPORTANT — not mm/core, but the common
+DWMAC driver for a large set of ARM/x86 embedded and laptop NICs]
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: High churn of per-machine quirks (mute LEDs, SSIDs, silent
-speakers). Mature driver, new rows for new laptops. That is the intended
-stable pattern.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively maintained (recent TSO, XDP, PTP, FPE fixes). Coalesce
+core has been stable since 2019 with only timer-arm tweaks in 2023.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific / SSID-specific.** Only ASUS ExpertBook
-PM3406CHA (`PCI SSID 1043:1664`, ALC256). No effect on other machines.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific, but a widely used driver. Anyone using stmmac
+with default coalescing and paced/TSQ-limited TCP (BBR is
+`CONFIG_TCP_CONG_BBR` in this tree). CUBIC is less affected because it
+queues more deeply (207 vs 5 Mbit/s in the report).
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Every boot / every speaker playback on that laptop. Not a race.
-Unprivileged user playing audio. Reported on Ubuntu 24.04.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Normal TCP upload with pacing/TSQ and default ethtool coalesce
+(tx-frames 25, tx-usecs 5000). Common on WAN/RTT paths, not a rare error
+path. Unprivileged users sending data can trigger it. Workaround exists
+(`ethtool -C`) but is not discoverable for most users.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Internal speakers completely silent while the stack looks
-healthy. Not a panic/UAF. **MEDIUM–HIGH functional** for owners of that
-laptop (device unusable for built-in audio). HDMI/BT still work.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: [TCP TX completion stall / order-of-magnitude throughput
+collapse; BBR bandwidth lock-in] [HIGH for affected workloads — not a
+panic/UAF/corruption, but the NIC is effectively unusable for paced TCP]
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- **Benefit:** High for that SKU (speakers work). Matches the stable
-  hardware-quirk exception. User-confirmed.
-- **Risk:** Very low: +10 lines, one SSID, existing verb mechanism,
-  maintainer-acked. Possible headphone interaction on this SKU only
-  (unverified).
-- **Ratio:** Strongly favors backport.
+- Benefit: high for stmmac + BBR/pacing (5 → 447 Mbit/s in the report);
+  restores TSQ-friendly completion.
+- Risk: low (4 lines, well-known helper, coalescing preserved in-burst,
+  `tx-frames 0` unchanged). 2023 ipq806x pain was timer-arm frequency
+  under bulk load; this patch does not change timer arming and keeps the
+  25-descriptor IC bound so a full ring cannot drain with zero IC.
+- Ratio: benefit clearly outweighs risk.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real user-visible bug: silent internal speakers
-- Ubuntu Launchpad #2162718; original reporter confirmed the coef
-  workaround
-- Isolated, machine-specific `HDA_FIXUP_VERBS` + `SND_PCI_QUIRK`
-- +10 lines, one file, no new API
-- Driver, ALC256 support, and quirk tables already in 6.18.57
-- Same pattern as existing speaker/coef quirks
-- Takashi Iwai applied the RFC as-is
-- Explicit stable exception: hardware quirk / SSID enablement for an
-  existing driver
+- Real, measured bug: BBR ~5 Mbit/s vs CUBIC ~207 Mbit/s; ethtool
+  experiment confirms mechanism.
+- TSQ/pacing vs delayed TX completion is a known correctness class, not
+  a micro-optimization.
+- Introducing change da2024510031 (TX_FRAMES 1→25) is in this tree since
+  v5.5; 5 ms timer (039550960a223) is also here.
+- Four-line, obviously correct change; `netdev_xmit_more()` already in
+  this tree.
+- Applies on identical context in `stmmac_xmit` / `stmmac_tso_xmit`.
+- `[PATCH net]`, reviewed, applied by netdev maintainer; reviewer agreed
+  IC belongs at batch end.
+- Workaround requires non-default ethtool; default shipped settings are
+  the broken ones.
 
 AGAINST:
-- Not a crash, UAF, or security bug
-- Author could not boot-test the kernel patch after losing the laptop
-  (userspace path was tested; reporter confirmed it)
-- Unverified headphone behavior if coef `0x10` is a HP/speaker mux on
-  this SKU
+- Not a crash, UAF, deadlock, or security bug.
+- Changes IRQ pattern (more interrupts on short bursts).
+- Test NIC (dwmac-motorcomm) is not in 6.12 (common-path bug still is).
+- Original thread did not Cc stable@.
+- 2023 work raised the timer specifically to cut IRQ rate on some SoCs —
+  theoretical regression if burst-end IC is too aggressive under bulk
+  load. Mitigated by remaining in-burst coalescing and author’s IRQ
+  measurements.
 
 UNRESOLVED:
-- lore.kernel.org HTTP 403 (discussion recovered elsewhere)
-- No stable@ thread found
-- Headphone path on this SKU not documented
+- Could not fetch lore.kernel.org (403) or spinics (500); used
+  openwall/patchew instead.
+- Could not search stable@ archives (403).
+- No follow-up fix SHA in this tree (expected; this commit is not here).
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — standard quirk; hda-verb
-   isolation; Launchpad confirmation; maintainer applied
-2. Fixes a real bug that affects users? **PASS** — silent speakers,
-   filed and confirmed
-3. Important issue? **PASS** for this class (hardware quirk / broken
-   audio on a shipping laptop), not CRITICAL crash
-4. Small and contained? **PASS** — 10 lines, one SSID
-5. No new features or APIs? **PASS** — quirk only
-6. Can apply to the local tree? **PASS** — 6.18.57 has the file and
-   insertion context; SSID not already present
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — 4 lines, list review,
+   before/after iperf3, IRQ rate reported.
+2. Fixes a real bug that affects users? PASS — paced TCP/TSQ stall with
+   measured multi-10x drop.
+3. Important issue? PASS — HIGH functional failure of a standard
+   congestion controller on a common NIC; not a panic, but the device is
+   unusable for that workload at default settings.
+4. Small and contained? PASS — +4 lines, one file, two functions.
+5. No new features or APIs? PASS — uses existing `netdev_xmit_more()` /
+   IC bit.
+6. Can apply to the local tree? PASS — buggy code and helper exist;
+   insertion context matches.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Hardware quirk / existing-driver SSID enablement.** Automatic
-YES category in the stable rules given in the prompt.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: None of device-ID / quirk / DT / build / docs. Qualifies as a
+normal small net driver correctness fix.
 
-**Step 9.4: MAKE YOUR DECISION**
-
-This belongs on 6.18.y. The ALC256 Realtek driver already enumerates
-this laptop; without the SSID row, speakers stay silent. The change is a
-two-verb init/resume write gated to `1043:1664`, the same style as other
-Realtek speaker quirks already in this file. It applies cleanly to this
-tree and does not need the unrelated PM3406CKA CS35L41 patch.
+Step 9.4: MAKE YOUR DECISION
+This is a small, tested fix for a long-standing TX completion stall that
+makes paced TCP (notably BBR) collapse on stmmac at default coalesce
+settings. The buggy path and the only dependency (`netdev_xmit_more`)
+are in 6.12.y. Benefit to stable users is large; regression risk is low.
 
 Verification:
-- [Phase 1] Parsed tags: `Closes:` Launchpad 2162718; `Link:` patch
-  msgid; SOB author + Takashi Iwai; no `Fixes:`/`Cc: stable`
-- [Phase 1] Body: silent speakers; coef `0x10` `0x1d20`→`0x7f20`; hda-
-  verb isolation
-- [Phase 2] Diff: +10 in `alc269.c`; enum + `HDA_FIXUP_VERBS` +
-  `SND_PCI_QUIRK(0x1043,0x1664)`
-- [Phase 2] `auto_parser.c`: `HDA_FIXUP_VERBS` registered at PROBE, run
-  from `alc_init()` after codec init and on resume
-- [Phase 3] No `Fixes:` tag; missing-quirk, not a regression
-- [Phase 3] Related `0156c22fb0ca8` is PM3406CKA CS35L41 (`0x1454`),
-  different hardware
-- [Phase 3] Author has only this hda commit; Takashi applied it
-- [Phase 4] `b4 dig -c 0eee030c2c09…`: RFC v1 only; recipients include
-  Iwai/Kysela/Realtek/linux-sound
-- [Phase 4] Takashi: “The code change looks OK, so I applied this now.”
-  No NAK
-- [Phase 4] Launchpad: reporter confirmed speakers work with the coef
-  write
-- [Phase 4] lore.kernel.org direct fetch: 403; used b4/Patchew/LKML IU
-  instead
-- [Phase 5] Call chain: `alc269_probe` → `snd_hda_pick_fixup` → verbs →
-  `alc_init`/`snd_hda_apply_verbs`
-- [Phase 5] Pin-match cannot override once PCI SSID is set
-  (`snd_hda_pick_pin_fixup` early return)
-- [Phase 6] `git describe HEAD` = `v6.18.57-155-gcdf239ca885b2`;
-  kernelversion 6.18.57
-- [Phase 6] `git merge-base --is-ancestor 97902f970e5cd v6.18.57` failed
-  → quirk **not** in 6.18.57 baseline
-- [Phase 6] `git show v6.18.57:…alc269.c` has `0x1663` then `0x1683`, no
-  `0x1664`; DELL_M101Z/SKU_IGNORE insertion points exist
-- [Phase 6] ALC256 `0x10ec0256` present at v6.18.57
-- [Phase 7] ALSA Realtek; Takashi Iwai in MAINTAINERS
-- [Phase 8] Failure mode: silent speakers on one laptop SSID; severity
-  MEDIUM–HIGH functional; risk very low
-- UNVERIFIED: headphone interaction of coef `0x10` on this SKU; no
-  stable@ discussion recovered
+- [Phase 1] Parsed subject/body/tags from the candidate message; Link
+  msgid used to find the original `[PATCH net]` / RESEND threads.
+- [Phase 1] Original list post (openwall/patchew) still had Fixes:
+  da2024510031; committed copy in the pipeline does not.
+- [Phase 2] Diff is +4 lines in `stmmac_tso_xmit` and `stmmac_xmit`
+  only; both insertions are `else if (!netdev_xmit_more()) set_ic =
+  true` after the `tx_coal_frames==0` check.
+- [Phase 2] Read local `stmmac_main.c` 4380–4390 and 4645–4667: same IC
+  ladder, no xmit_more branch; timer still armed at 4461 and 4750.
+- [Phase 2] `STMMAC_TX_FRAMES` 25 and `STMMAC_COAL_TX_TIMER` 5000
+  confirmed in `common.h`.
+- [Phase 3] `git blame` on those lines: c2837423cb5455 (2019) and
+  db2f2842e6f560 (2021).
+- [Phase 3] `git merge-base --is-ancestor da2024510031 HEAD` exit 0;
+  `git show da2024510031` changed TX_FRAMES 1→25.
+- [Phase 3] `git merge-base --is-ancestor 039550960a223 HEAD` exit 0 (5
+  ms timer present).
+- [Phase 3] `git log --grep=netdev_xmit_more --
+  drivers/net/ethernet/stmicro/stmmac/` empty.
+- [Phase 3] `git describe HEAD` → p-6.12-2-gd38d58a4e0359; kernelversion
+  6.12.111.
+- [Phase 4] b4 dig on msgid: no local matching commit (expected).
+- [Phase 4] Openwall RESEND and patchew v1: Maciej Fijalkowski review,
+  Jakub apply-after-RESEND, no NAK; author kept frame coalescing for
+  ring-full IC bound.
+- [Phase 4] lore.kernel.org and stable@ fetches: 403. UNVERIFIED on
+  stable@ specifically.
+- [Phase 5] `stmmac_xmit` is `ndo_start_xmit`; `stmmac_tso_xmit` called
+  from it; `netdev_xmit_more()` defined in `include/linux/netdevice.h`
+  4989–5002.
+- [Phase 5] Grep: many other NIC drivers already use
+  `netdev_xmit_more()`; stmmac does not.
+- [Phase 6] Grep `netdev_xmit_more` under stmmac: no matches. Grep
+  YT6801/dwmac-motorcomm: no matches. Glob `dwmac-*.c`: 25 platform
+  files including dwmac-rk, dwmac-ipq806x, dwmac-intel, dwmac-stm32.
+- [Phase 6] Insertion context in 6.12 matches the patch;
+  CIRC_CNT/get_tx_desc differences are mainline-only context, not
+  required.
+- [Phase 7] MAINTAINERS: STMMAC ETHERNET DRIVER, Alexandre Torgue / Jose
+  Abreu.
+- [Phase 8] `CONFIG_TCP_CONG_BBR` exists in `net/ipv4/Kconfig`.
+- UNVERIFIED: whether a later mainline follow-up refined this patch (not
+  in this tree; lore search blocked).
+
+The stall is in this 6.12 tree, the fix is four obviously correct lines,
+and paced TCP is a real user-visible failure at default coalesce
+settings.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index fa5bc54ff083d..a40b85fbaf393 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3678,6 +3678,7 @@ enum {
- 	ALC269_FIXUP_SONY_VAIO,
- 	ALC275_FIXUP_SONY_VAIO_GPIO2,
- 	ALC269_FIXUP_DELL_M101Z,
-+	ALC256_FIXUP_ASUS_PM3406CHA,
- 	ALC269_FIXUP_SKU_IGNORE,
- 	ALC269_FIXUP_ASUS_G73JW,
- 	ALC269_FIXUP_ASUS_N7601ZM_PINS,
-@@ -4089,6 +4090,14 @@ static const struct hda_fixup alc269_fixups[] = {
- 			{}
- 		}
- 	},
-+	[ALC256_FIXUP_ASUS_PM3406CHA] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x10 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x7f20 },
-+			{}
-+		}
-+	},
- 	[ALC269_FIXUP_SKU_IGNORE] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc_fixup_sku_ignore,
-@@ -7184,6 +7193,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1652, "ASUS ROG Zephyrus Do 15 SE", ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x1664, "ASUS ExpertBook PM3406CHA", ALC256_FIXUP_ASUS_PM3406CHA),
- 	SND_PCI_QUIRK(0x1043, 0x1683, "ASUS UM3402YAR", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x16a3, "ASUS UX3402VA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x16b2, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 63c045616c9b7..7dbb5e9bcb54b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4400,6 +4400,8 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		set_ic = true;
+ 	else if (!priv->tx_coal_frames[queue])
+ 		set_ic = false;
++	else if (!netdev_xmit_more())
++		set_ic = true;
+ 	else if (tx_packets > priv->tx_coal_frames[queue])
+ 		set_ic = true;
+ 	else if ((tx_q->tx_count_frames %
+@@ -4687,6 +4689,8 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		set_ic = true;
+ 	else if (!priv->tx_coal_frames[queue])
+ 		set_ic = false;
++	else if (!netdev_xmit_more())
++		set_ic = true;
+ 	else if (tx_packets > priv->tx_coal_frames[queue])
+ 		set_ic = true;
+ 	else if ((tx_q->tx_count_frames %
 -- 
 2.53.0
 
