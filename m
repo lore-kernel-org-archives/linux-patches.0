@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5508538742;
-	Mon, 19 Oct 2026 14:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175F861F3EF;
+	Mon, 19 Oct 2026 14:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418672; cv=none; b=TDBxirpgMK/08r/VvYL2G+I2gqfA6XW/C/SrUw3i+unTap43+K41tQGMw9xcEfMTPUa62Yje1HE9gGMPhXUewwO05xurfKa+aM8PQC4dy+gzdGA5DpN5g1oLFGiw00Z/r7B6Sz8VFi3zngA4nshBCGhpZF1Z5F+8cNClp1mkoA4=
+	t=1792418673; cv=none; b=qQTBnIVa7X0P/6EgW0S3pg58wWjkstywFFn5a/HFze8N98rNIxshEDTYEHfNiDcGq5iDneizOT6cLNDKie4D6e1ck6cdaqJOI1tVRb7zg/yiFH0PDHhYV6GooMx9UwW6KllKzSXxM9CVqSfaS5xbBoI1Fue3v4oBTtJzqUdEvf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418672; c=relaxed/simple;
-	bh=EjxSlmTy8JFvikV8qJgUd9kIyeYFf0PdCJaInFSd+qg=;
+	s=arc-20240116; t=1792418673; c=relaxed/simple;
+	bh=wBT+UpiCNd4y3nsEHiyxuV0pRS8k2vPEQBoWPB6bhAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hm4uMTn/yVLFA4H8JJBl2yzOdp26wVK/DTkzxDOmF7mezIUl/MO3W7i0Mqd47LNIDv6193+La4EA4SZjoNMVK1WJWKa8Unpbz/Z842uIXOBSFP+oBpL5kFXlLdayvdfoWMFD3ZLDc9Wi95NQ1lHE7l0JfCp4avcud34xZN9mB1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gkFPUXSi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JUQtfq5qMkdSidrpZVvOJta6LykVAEOhvhyBAxHqWIVK8RbA7N0jJIYNy72XPVfgAX88R68IwN8pVirOVQENyhnxwUp5WHgUr894qk1L3eSjLYViNqG1CnCB1nYNonAZiGFm2CNBRc8gLyb2DYkgtgvnbvV5QSucw7zMoEX233I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h+7vYlvf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gkFPUXSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A20C1F000C7;
-	Mon, 19 Oct 2026 14:04:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h+7vYlvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AE01F000C5;
+	Mon, 19 Oct 2026 14:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418669;
-	bh=VVOn2L6cDpT/VKFx7pY3LlwVkiNm3fP6OW1haLqz78I=;
+	s=k20260515; t=1792418671;
+	bh=JV/rBGGY22lnyRZ5ZT3jhnPWdk4mM9JkDPdi8J0tE0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gkFPUXSiTje2U3lObNxX6lsKRjuRrpl7glnojo4BwGWYG61hmQ7yQL6F+CpbRY5nv
-	 LNZpEigxLpCRwwTCtJTlP3JXXD+x8Xa9TY6n7h5dlrU2KJPqsJHobfu9bcvXdKMb26
-	 vImQt6WO6krl17UqS8ZTgRpDlu6or3nW4V5CLWUmZncqe4N1eOnt3rXIaVvpyJAxe8
-	 vjAb5nmMmkLDoSqiz/kB0quSItaBJJ9rcnEcVprUIGB0i1bZaoFUXn5NPhFPcKriKx
-	 jqDijUyJJ5LrL5OTq0o9ya1BR/ijrHHRsePcC9Q5zmyE9jVae6fi+T+1t3rtwMcdPU
-	 HnK7nudsmSfrw==
+	b=h+7vYlvfiHDWznQ15+mnb3nNpM99gMJFcKnsqVSxGkeQHcT4mBbbHeJPsHNcdH0NK
+	 isb7PpFimJI9sda4fgGkxCyDI5hWqFav0icC1r6UMhjgpKM7p2KQ58+BHPH+H/BVCu
+	 19OONQm8xvqOcA1HT23eLx2gaK5x5UKgfqaojuOMnbwbVkBGlaVrOqoyiiW71Lmy42
+	 tfFbJ/XABXd5q0IR1lrTmE7aFrs1ITQGmsuev6gQN3VActVikRBHGPXlN86nBzWhVr
+	 /HtMDMfbHQch+l/M1Q1J0Q+l9zVqpAcWBQJkJt5LfVC+1LLDRCZDiBdzh/6Y6U3gSF
+	 i5uiQlACrh5Ww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kenneth.feng@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] drm/amd/pm: Validate OD DPM triples before mutating tables
-Date: Mon, 19 Oct 2026 09:51:44 -0400
-Message-ID: <20261019135441.1420968-413-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] ksmbd: honor byte-range locks for zero data
+Date: Mon, 19 Oct 2026 09:51:45 -0400
+Message-ID: <20261019135441.1420968-414-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -59,486 +51,430 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b390cb9d776039fc4f0be13b2649299079227d12 ]
+[ Upstream commit 8b57448a147d2378088e63cd473e7f2a967d6802 ]
 
-vega10_odn_edit_dpm_table() and smu7_odn_edit_dpm_table() could mutate
-the live ODN table for valid triples, then return 0 after detecting a
-truncated buffer or out-of-range index. Validate all (index, clock,
-voltage) triples first and return -EINVAL on any failure; only then
-apply updates.
+FSCTL_SET_ZERO_DATA changes file allocation state and must respect
+byte-range locks over the affected part of the file. Check the requested
+range, clipped to EOF, before issuing the fallocate operation.
 
-v2: Use distinct message for different error case, removed unused
-input_level from validation loop (Lijo)
+Return STATUS_FILE_LOCK_CONFLICT when the range conflicts with an
+existing lock. Ranges starting past EOF are left untouched by the lock
+check so they continue to succeed.
 
-v3: Reject negative level indices, input[] is long but was compared only
-against unsigned table bounds, so negative values could pass and truncate
-when assigned to uint32_t input_level.
-
-Set DPMTABLE_OD_UPDATE_SCLK/MCLK only after validation passes,
-so a failed sysfs write does not leave need_update_dpm_table set for a
-later commit.
-
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.53**. The buggy SMU7/Vega10 OverDrive edit path
-is present on that series, and the patch applies cleanly.
+The local tree is **6.12.111** (`pending-6.12`). The buggy
+`FSCTL_SET_ZERO_DATA` path is present here, the lock helper already
+exists, and the patch applies cleanly. This is a real lock-bypass data-
+integrity bug, not a new feature.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[drm/amd/pm] [Validate] [reject invalid OD DPM (index, clock,
-voltage) triples before writing live tables]**
+Record: `[ksmbd] [honor] honor byte-range locks for FSCTL_SET_ZERO_DATA`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `[Upstream commit b390cb9d776039fc4f0be13b2649299079227d12]` —
-  pipeline marker, ignored
-- No `Fixes:` tag (expected)
-- No `Reported-by:` / `Tested-by:` / `Link:` / `Cc: stable`
-- `Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>`
-- `Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>`
-- `Signed-off-by: Asad Kamal <asad.kamal@amd.com>` (author)
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+Original commit: `8b57448a147d2378088e63cd473e7f2a967d6802` (Namjae
+Jeon, 2026-08-17)
+
+Tags present:
+- `Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>` (author + ksmbd
   maintainer)
-- `Signed-off-by: Sasha Levin` — pipeline marker, ignored
+- No `Fixes:`, `Cc: stable`, `Reported-by`, `Tested-by`, `Reviewed-by`,
+  `Acked-by`, or `Link:` (absence of Fixes/Cc:stable is expected for
+  this review)
+
+Record: Maintainer-authored; no user/syzbot report tags.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `vega10_odn_edit_dpm_table()` and `smu7_odn_edit_dpm_table()`
-  apply valid triples immediately, then on a later truncated buffer or
-  out-of-range index they `return 0`.
-- **Symptom:** a failed `pp_od_clk_voltage` write can still change live
-  clock/voltage tables, report success, and (Vega10) leave
-  `need_update_dpm_table` set so a later `echo c` commits the partial
-  change.
-- **v3 extra:** `input[]` is `long`; comparing only against unsigned
-  table size lets negative indices through, then assignment to `uint32_t
-  input_level` truncates and indexes off the array.
-- **Version info:** none in the message. Introducing code is from 2018
-  (v4.17/v4.18).
-- **Root cause:** validate-and-mutate in one loop; wrong error return;
-  missing signed-index check; Vega10 dirty-flag set before validation.
+- Bug: `FSCTL_SET_ZERO_DATA` changes allocation (punch-hole / zero-
+  range) without checking SMB byte-range locks.
+- Symptom: a client can zero or punch a range another handle has locked;
+  the locker does not get `STATUS_FILE_LOCK_CONFLICT`.
+- Root cause: `ksmbd_vfs_zero_data()` calls `vfs_fallocate()` with no
+  `check_lock_range()`.
+- Intentional edge: ranges starting past EOF skip the lock check so they
+  still succeed.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. Explicit correctness/safety fix (partial update +
-false success + OOB index). Not cleanup-only.
+Record: Not a disguised cleanup. Explicit protocol/correctness fix:
+missing lock enforcement on a mutating FSCTL.
 
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- `smu7_hwmgr.c`: +20/−14 in `smu7_odn_edit_dpm_table()`
-- `vega10_hwmgr.c`: +23/−14 in `vega10_odn_edit_dpm_table()`
-- Total: **43 insertions, 28 deletions**, two files, single-function
-  surgical change per file.
+- `fs/smb/server/vfs.c`: +12 in `ksmbd_vfs_zero_data()`
+- `fs/smb/server/smb2pdu.c`: +6/-1 in `smb2_ioctl()`
+  `FSCTL_SET_ZERO_DATA`
+- Total: 18 insertions, 1 deletion
+- Scope: single-subsystem, two-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record (same pattern in both):
-- **Before:** one loop: on truncated/out-of-range input, print and
-  `return 0` after earlier triples already wrote `entries[]` /
-  `dpm_levels[]`. Invalid clock/voltage still returned `-EINVAL` but
-  only after mutating that iteration’s predecessors. Vega10 ORs
-  `DPMTABLE_OD_UPDATE_SCLK/MCLK` before the loop.
-- **After:** first loop validates every triple (`i+3 > size`, `input[i]
-  < 0 || index >= count`, clock/voltage via existing checkers) and
-  returns `-EINVAL` with no writes. Only then set dirty flags (Vega10)
-  and apply updates in a second loop.
+Record:
+- **vfs.c before:** break Level II oplocks, then
+  `vfs_fallocate(PUNCH_HOLE or ZERO_RANGE | KEEP_SIZE)` with no lock
+  check.
+- **vfs.c after:** same, but for non-POSIX shares, if `off < i_size`,
+  call `check_lock_range(filp, off, min(off+len, size)-1, WRITE)` and
+  return `-EAGAIN` on conflict.
+- **smb2pdu.c before:** any `ret < 0` goes to ioctl `out`, which maps
+  unknown errors to `STATUS_INVALID_PARAMETER`.
+- **smb2pdu.c after:** `-EAGAIN` sets `STATUS_FILE_LOCK_CONFLICT`, `ret
+  = 0`, then `goto out` so the generic mapper does not overwrite the
+  status.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
 Record:
-- **Category:** memory safety (OOB write) + logic/correctness (partial
-  live-table mutation, false success, dirty-flag leak).
-- **Mechanism:** `long` index vs `uint32_t` bound: on 64-bit, `-1 >=
-  count` is false, then `input_level = (uint32_t)-1` indexes
-  `entries[0xFFFFFFFF]`. Arrays are 8 entries (`MAX_REGULAR_DPM_NUMBER`
-  / `phm_odn_clock_levels.entries[8]`). Truncated writes previously
-  returned 0 so `amdgpu_set_pp_od_clk_voltage()` treated them as success
-  (`return count`).
+- Category: logic / protocol correctness, with data-integrity impact.
+- Mechanism: SMB byte-range locks in ksmbd are POSIX locks;
+  `vfs_fallocate()` does not consult them (verified in `fs/open.c`:
+  permission/lease/overflow checks only). Read, write, truncate, and
+  copychunk already call `check_lock_range()`; zero-data did not. A
+  WRITE lock on another handle, or a READ lock vs this WRITE, is ignored
+  and the range is zeroed/punched.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct two-pass validate-then-commit. Checker
-polarity preserved (`smu7_check_clk_voltage_valid` /
-`vega10_check_clk_voltage_valid` return true when valid; new code uses
-`if (!check())`). No API change. Regression risk is low: invalid writes
-now fail instead of succeeding-with-partial-state; valid writes still
-apply the same stores. Slight behavior change for tools that treated
-truncated writes as success is the intended fix.
+Record:
+- Quality: high. Same pattern as `ksmbd_vfs_write()` /
+  `ksmbd_vfs_truncate()` / `ksmbd_vfs_copy_file_ranges()`.
+- `posix_extensions` skip matches those callers.
+- Clipping to EOF avoids `start > end` if the request extends past EOF.
+- Regression risk: low. Only behavioral change is rejecting previously-
+  illegal zeroing of locked ranges. `ret = 0` plus pre-set status is a
+  bit awkward versus adding `-EAGAIN` in the ioctl `out` mapper, but it
+  works: `out` only overwrites status when `ret < 0 || Status == 0`, so
+  `STATUS_FILE_LOCK_CONFLICT` is preserved and `smb2_set_err_rsp()`
+  still runs.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- SMU7 loop: `5e4d4fbea5573` (“drm/amd/pp: Implement edit_dpm_table on
-  smu7”, 2018-02-19) — first in **v4.17-rc1**.
-- Vega10 loop: `c5a4484941be5` (“drm/amd/pp: Add OVERDRIVE support on
-  Vega10”, 2018-05-15) — first in **v4.18-rc1**.
-- Both ancestors of v6.18.53. Bug has been in this series since the
-  branch point.
+- `ksmbd_vfs_zero_data()` introduced by Namjae Jeon in 2021
+  (`fs/cifsd/vfs.c`, blame `f44158485826c0` / `64b39f4a2fd293`).
+- Never had a lock check. Present throughout 6.12.
+- `override_creds` wrapper already in this tree via `fb1cae6302d58`
+  (`ksmbd: use opener credentials for FSCTL mutations`).
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Introducing commits identified by blame; both
-present in this tree.
+Record: No `Fixes:` tag. Buggy code is the original zero-data
+implementation, not a later regression.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record (on v6.18.53, those two files): recent powerplay work is
-unrelated (voltage lookup bounds, Hawaii SCLK cap, etc.). Related:
-`d27252b5706e5` “amdgpu/pm: prevent array underflow in
-vega20_odn_edit_dpm_table()” (2022) — **already in v6.18.53**. Same
-class of sysfs-fed negative index. Standalone patch, not `X/Y`.
+Record:
+- Already in this tree: `f751d6e39d4c9` “Do not skip lock checks for
+  single-byte ranges”; `ca53bb17f4e82` “add a permission check for
+  FSCTL_SET_ZERO_DATA”; `fe20d492a69a6` lock-owner tracking.
+- On `origin/master`, parent `3c707d4b3f926` (“fix permission checks for
+  file allocation ioctls”) is independent (SPARSE/QUERY_ALLOCATED_RANGES
+  access bits), not required for this lock check.
+- No `patch X/Y` in the subject. Standalone.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Asad Kamal is an AMD contributor; not the tree maintainer. Alex
-Deucher applied it. Lijo Lazar / Hawking Zhang reviewed (AMD PM). No
-other OD-triple commits by this author on v6.18.53 in this path.
+Record: Namjae Jeon is the ksmbd maintainer (`Signed-off-by` on both
+authorship and merge). This tree already carries many of his ksmbd
+stable fixes.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Uses existing helpers and structs. No new functions. `git apply
---check` of this diff onto v6.18.53 copies of both files: **clean**.
-Standalone.
+Record: None. `check_lock_range()` is `static` in the same `vfs.c`
+(lines 325–358). `STATUS_FILE_LOCK_CONFLICT` already exists.
+`posix_extensions` and `i_size_read`/`min()` are present. `git apply
+--check` of `8b57448a147d2` succeeded (smb2pdu offset −1234, vfs.c
+offset +71).
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- Lore/msgid:
-  https://patch.msgid.link/20260604091915.1012329-1-asad.kamal@amd.com
-- Revisions: v1 (2026-05-29) → v2 (2026-06-03) → **v3 applied**
-  (2026-06-04)
-- v1 Lijo: distinct error strings; unused `input_level` in the validate
-  loop (style, addressed)
-- v2 Lijo: `Reviewed-by`
-- v3 Hawking: `Reviewed-by`
-- No NAK. v3 added the negative-index check (the OOB hole). No reviewer
-  `Cc: stable` in the saved threads.
+- `b4 dig -c 8b57448a147d2`: lore returned server errors; no thread URL.
+- WebFetch of lore.kernel.org search URLs: HTTP 403.
+- UNVERIFIED: reviewer comments, v2/v3 history, explicit Cc:stable in
+  review.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: To/Cc: amd-gfx, Lijo Lazar, Hawking Zhang, Le Ma, Shiwu Zhang,
-Alex Deucher, Kevin Yang Wang. Right maintainers; two AMD R-b plus
-maintainer SOB.
+Record: UNVERIFIED via b4. Commit is maintainer-authored and merged to
+`origin/master`.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No `Reported-by`, syzbot, or bugzilla. Bug is described from
-code inspection. Direct lore HTTP search was bot-blocked; discussion
-recovered via `b4`.
+Record: No `Reported-by` / bugzilla / syzbot. Bug is identified from
+protocol analysis, not a crash report.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone three-revision single patch, not a series. Later
-autosel commit `42ba4b5ff5278` (“validate vega10 profile mode inputs”)
-is a different function, not a prerequisite.
+Record: Nearby `origin/master` ksmbd FSCTL work (`support file level
+trim`, allocation ioctl permission, allocated-range holes) is related
+thematically, not a hard dependency. Samba’s `fsctl_zero_data()` takes a
+WRITE strict lock and returns `NT_STATUS_FILE_LOCK_CONFLICT` on failure
+(source3/smbd/smb2_ioctl_filesys.c). That matches this fix.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search was bot-walled. **UNVERIFIED**
-whether stable@ already discussed this; no in-tree evidence it was
-rejected.
+Record: UNVERIFIED (lore 403). No local evidence this was rejected for
+stable.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `smu7_odn_edit_dpm_table()`, `vega10_odn_edit_dpm_table()`.
-Helpers used unchanged: `smu7_check_clk_voltage_valid()`,
-`vega10_check_clk_voltage_valid()`, `vega10_odn_update_soc_table()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `ksmbd_vfs_zero_data()`, `smb2_ioctl()` (`FSCTL_SET_ZERO_DATA`),
+callee `check_lock_range()`.
 
 **Step 5.2: TRACE CALLERS**
 Record:
-- Registered as `.odn_edit_dpm_table` in each hwmgr func table
-- `pp_odn_edit_dpm_table()` in `amd_powerplay.c`
-- `amdgpu_dpm_odn_edit_dpm_table()` under `adev->pm.mutex`
-- `amdgpu_set_pp_od_clk_voltage()` sysfs store for `pp_od_clk_voltage`
+- `ksmbd_vfs_zero_data()`: only `smb2_ioctl()` FSCTL_SET_ZERO_DATA
+  (`fs/smb/server/smb2pdu.c:8548`).
+- `smb2_ioctl()`: SMB2 command table `SMB2_IOCTL_HE` in
+  `fs/smb/server/smb2ops.c`.
+- Reachable from authenticated SMB clients issuing ioctl on an open
+  writable handle.
 
 **Step 5.3: TRACE CALLEES**
-Record: table writes, clock/voltage range checks, Vega10
-`vega10_odn_update_soc_table()`. No alloc/lock added.
+Record: `check_lock_range()` walks `flc_posix` under `flc_lock`;
+conflicts if overlapping READ lock vs WRITE, or WRITE lock owned by
+another `filp`. `vfs_fallocate()` does not check those locks.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace `echo "s 0 900 820" > pp_od_clk_voltage` (documented
-in `amdgpu_pm.c`). Sysfs is `S_IRUGO | S_IWUSR` (root write). Path
-requires `hwmgr->od_enabled`, set only if `PP_OVERDRIVE_MASK` (0x4000).
-Default `amdgpu_pp_feature_mask = 0xfff7bfff` **clears** that bit; OD is
-opt-in (`ppfeaturemask`), and enabling it taints the kernel. Still a
-real sysfs path for overclockers.
+Record: SMB2 IOCTL → `smb2_ioctl` → `ksmbd_vfs_zero_data` →
+`vfs_fallocate` (punch/zero). Userspace/network reachable on any ksmbd
+share without POSIX extensions (the common Windows-client case).
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Vega20 already rejects bad indices (`d27252b5706e5`, in this
-tree). Newer swsmu ppt files have their own OD parsers. This patch only
-covers the two powerplay implementations that still mutate-then-`return
-0`.
+Record: Same `!posix_extensions` + `check_lock_range` + `-EAGAIN`
+pattern in `ksmbd_vfs_read` (396–400), `ksmbd_vfs_write` (521–527),
+`ksmbd_vfs_truncate` (835–849), `ksmbd_vfs_copy_file_ranges`
+(1854–1866). Zero-data was the missing sibling. Read/write/setinfo
+already map `-EAGAIN` to `STATUS_FILE_LOCK_CONFLICT`; ioctl did not,
+which is why smb2pdu.c is patched.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes, on **v6.18.53**. Blame on that tag still has `return 0` on
-truncated/out-of-range input and Vega10 dirty flags before the loop.
-Candidate `25b12527acd6c` is **not** an ancestor of v6.18.53 (`merge-
-base --is-ancestor` exit 1). Introduced v4.17/v4.18.
+Record: Yes. Local `ksmbd_vfs_zero_data()` at
+`fs/smb/server/vfs.c:995-1013` has no lock check. `git merge-base --is-
+ancestor 8b57448a147d2 HEAD` failed (not in this tree). Bug present
+since ksmbd’s 2021 introduction; well before 6.12.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply** (`git apply --check` of this diff on v6.18.53
-copies of both files, exit 0). Surrounding functions match the hunk
-context.
+Record: Clean apply with line offset. Local ioctl `out` mapper still
+lacks `-EAGAIN`, so both hunks are required. No refactor blocking the
+patch.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: Vega20 underflow fix is present. No equivalent two-pass
-validation for SMU7/Vega10 on v6.18.53.
+Record: Permission check for SET_ZERO_DATA is here (`ca53bb17f4e82`);
+lock-check skip-for-1-byte fix is here (`f751d6e39d4c9`). Neither
+implements this FSCTL lock check. No duplicate fix.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **drm/amd/pm powerplay** (SMU7 / Vega10 OverDrive).
-**IMPORTANT** for those GPUs, not core mm/scheduler. Polaris/Vega-class
-AMD GPUs still in production use.
+Record: ksmbd (`fs/smb/server`, `CONFIG_SMB_SERVER`, default n).
+Criticality: IMPORTANT for ksmbd deployments (NAS, distros), not core
+mm/VFS. File-server data path.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Files still receive bounds-check and PM fixes on 6.18.y. OD edit
-logic itself has been stable since 2018.
+Record: Actively maintained; this 6.12 tree already backports many ksmbd
+protocol, lock, and UAF fixes. Mature enough that missing lock checks
+are long-standing, not new-code churn.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific, config-specific: AMD SMU7 (CI/VI/Polaris) and
-Vega10 users with OverDrive enabled who write `pp_od_clk_voltage`.
+Record: ksmbd users, non-POSIX SMB shares, clients that use byte-range
+locks and `FSCTL_SET_ZERO_DATA` (Windows sparse/zero APIs, some
+databases/backup tools).
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Malformed or truncated sysfs payload (e.g. incomplete triple,
-negative level, mix of good then bad triples). Common for tools/scripts.
-Unprivileged users cannot write the attr (root/owner only). Not a
-default-boot path; OD is off unless `ppfeaturemask` sets bit 14.
+Record: Handle A holds an SMB lock; handle B (or another client) issues
+`FSCTL_SET_ZERO_DATA` overlapping that range with `FILE_WRITE_DATA`. Not
+every I/O, but a realistic multi-client/multi-handle case. Authenticated
+SMB user; not unprivileged local syscall.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record:
-- Negative index → **OOB write** into 8-entry arrays → memory
-  corruption. **HIGH** (gated by OD + root).
-- Partial table mutation + `return 0` → userspace thinks commit-ready
-  state is good; later `c` can program inconsistent clocks/voltages.
-  **HIGH** for hardware (instability / out-of-spec clocks), **MEDIUM**
-  as a kernel crash.
-- Vega10 dirty-flag leak: failed write still causes a later commit to
-  push SCLK/MCLK. **MEDIUM–HIGH**.
-Overall: **HIGH**, not a panic-on-boot, but real memory safety + live PM
-table corruption.
+Record: Locked file data can be silently zeroed or punched. Failure
+mode: data corruption / lock-semantics violation. Severity: HIGH (not a
+kernel oops).
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** medium–high for OD users (OOB + wrong clocks); low for
-  default configs.
-- **Risk:** very low (small, local, validate-then-write, maintainer-
-  reviewed, applies cleanly).
-- **Ratio:** favor backport. Same class as the Vega20 underflow already
-  on this tree.
+- Benefit: high for ksmbd — restores lock integrity on a data-destroying
+  FSCTL; aligns with Samba/Windows.
+- Risk: very low — 18 lines, existing helper, applies cleanly, only
+  rejects operations that should have failed.
+- Ratio: strongly favors backport.
 
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real OOB write (negative `long` index → `uint32_t` wrap)
-- Partial mutation of live DPM tables with success return
-- Vega10 can commit stale/partial OD state after a failed write
-- Small, obviously correct, two-pass fix
-- Reviewed by Lijo Lazar and Hawking Zhang; applied by Alex Deucher
-- Applies cleanly to v6.18.53; no missing structs/helpers
-- Bug present since v4.17/v4.18
-- Precedent: Vega20 OD index underflow already in this tree
+- Real bug: SET_ZERO_DATA ignores byte-range locks while
+  read/write/truncate/copychunk do not.
+- User-visible: silent zero/punch of locked ranges (data integrity).
+- Samba returns `NT_STATUS_FILE_LOCK_CONFLICT` for the same FSCTL.
+- Small, obviously correct, maintainer-authored.
+- Helpers and surrounding lock policy already in 6.12; patch applies
+  cleanly.
+- This tree already backported the same class (`f751d6e39d4c9`) and
+  SET_ZERO_DATA access control (`ca53bb17f4e82`).
 
 AGAINST:
-- OverDrive off by default
-- Sysfs store is root-only
-- No syzbot/CVE/user crash report
-- No `Fixes:` / `Cc: stable` (not a negative per the review rules)
+- No crash/UAF/syzbot report.
+- ksmbd is optional (`CONFIG_SMB_SERVER`).
+- No mailing-list confirmation (lore unreachable).
+- Slightly weaker than Samba on past-EOF ranges (intentional per commit
+  message).
 
 UNRESOLVED:
-- Whether stable@ already discussed this (lore stable search blocked)
-- Unprivileged trigger only if something remaps sysfs mode (not
-  verified; default is `S_IWUSR`)
+- Original lore thread / reviewer NAKs (b4 and lore failed).
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — two-pass validation; R-b
-   from AMD PM; polarity of existing checkers verified in tree
-2. Fixes a real bug that affects users? **PASS** — OOB + false-success
-   partial OD updates via documented sysfs
-3. Important issue? **PASS** — OOB write and inconsistent GPU
-   DPM/voltage tables (HIGH, gated)
-4. Small and contained? **PASS** — ~70 line-churn, two functions
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean on v6.18.53
+1. Obviously correct and tested? **PASS** — matches existing ksmbd lock
+   checks; maintainer SOB. (No extra Tested-by.)
+2. Fixes a real bug that affects users? **PASS** — lock bypass on a
+   mutating FSCTL.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   data corruption / exclusive-lock violation. HIGH, not panic.
+4. Small and contained? **PASS** — 18/+1 lines, two files, one FSCTL.
+5. No new features or APIs? **PASS** — enforces existing SMB lock rules.
+6. Can apply to the local tree? **PASS** — `git apply --check`
+   succeeded.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device ID / quirk / DT / build / doc fix). Qualifies
-as a normal bugfix.
+Record: None (not a device-ID/quirk/DT/build/doc exception). Qualifies
+as a normal important bugfix.
 
 **Step 9.4: MAKE YOUR DECISION**
-This belongs on 6.18.53. The local tree still has the 2018 validate-
-while-mutating loops. The patch closes an OOB write and stops failed
-OverDrive sysfs writes from leaving live SCLK/MCLK tables and Vega10
-update flags half-applied. It is small, reviewed, and applies without
-prerequisites.
+Backport. The 6.12 tree has the buggy path, the same
+`check_lock_range()` policy, and already takes ksmbd lock-correctness
+fixes. Benefit is lock-integrity on a data-destroying ioctl; risk is
+minimal.
 
-### What the commit solves for this tree
-On 6.18.53, writing `pp_od_clk_voltage` can (1) store valid triples,
-then succeed on a truncated/out-of-range rest of the buffer; (2) turn a
-negative level into a huge `uint32_t` index and write off the 8-entry
-ODN arrays; (3) on Vega10, mark DPM tables dirty even when the write
-fails, so a later commit programs incomplete settings.
+### What the commit solves
+On this 6.12 tree, `FSCTL_SET_ZERO_DATA` breaks oplocks and calls
+`vfs_fallocate()` without `check_lock_range()`. POSIX/SMB locks are not
+enforced by `vfs_fallocate()`, so another handle can zero or punch a
+locked range. The patch checks the range clipped to EOF and returns
+`STATUS_FILE_LOCK_CONFLICT`, matching Samba and ksmbd’s other mutating
+paths.
 
-### Stable rules / risk
-Meets all six criteria. Risk is a behavior change only for previously
-accepted-but-invalid writes. Benefit is memory safety and not
-programming a GPU with a half-edited OD table.
+### Stable rules
+Surgical, no new API, applies here, fixes real data-integrity/protocol
+failure. Not a feature add.
+
+### Risk vs benefit
+Benefit: prevent silent destruction of locked file data on ksmbd. Risk:
+low; only newly failed requests are ones that violated locks.
 
 ### Concerns
-OD is opt-in and the node is root-writable, so this is not a default-
-boot crash. That does not make the OOB or live-table corruption unworthy
-of 6.18.y; the analogous Vega20 underflow is already here.
+Mailing-list review could not be fetched. Parent permission-ioctl commit
+is not required. `ret = 0` before `goto out` is slightly unusual but
+correct given this ioctl error mapper.
 
 Verification:
-- [Phase 1] Tags: R-b Lijo Lazar, R-b Hawking Zhang, SOB Alex Deucher;
-  no Fixes/Reported-by
-- [Phase 2] Diff: two-pass validate-then-mutate in
-  `smu7_odn_edit_dpm_table` / `vega10_odn_edit_dpm_table`; `-EINVAL`
-  instead of `return 0`; Vega10 dirty flags moved after validation;
-  `input[i] < 0` added
-- [Phase 2] Checkers return true when valid (`smu7_hwmgr.c` ~5582–5616)
-- [Phase 3] Blame v6.18.53: `5e4d4fbea5573` (v4.17-rc1), `c5a4484941be5`
-  (v4.18-rc1); both ancestors of v6.18.53
-- [Phase 3] `git merge-base --is-ancestor 25b12527acd6c v6.18.53` → not
-  present; `d27252b5706e5` Vega20 underflow **is** present
-- [Phase 4] `b4 dig -c b390cb9d7760`: v1–v3; v3 msgid
-  20260604091915.1012329-1; Lijo then Hawking R-b; no NAK
-- [Phase 4] UNVERIFIED: stable@ thread (HTTP 403/bot wall)
-- [Phase 5] Call chain: sysfs `amdgpu_set_pp_od_clk_voltage` →
-  `amdgpu_dpm_odn_edit_dpm_table` → hwmgr; attr `S_IRUGO|S_IWUSR`; OD
-  mask 0x4000 cleared in default `0xfff7bfff`
-- [Phase 5] Arrays: `entries[8]` / `MAX_REGULAR_DPM_NUMBER 8`
-- [Phase 6] `git describe HEAD` / Makefile: **6.18.53**; apply-check on
-  v6.18.53 file copies: exit 0
-- [Phase 8] Failure: OOB write + partial OD table / dirty-flag leak;
-  severity HIGH (gated)
-- UNVERIFIED: whether udev/distro remaps `pp_od_clk_voltage` to non-root
-  write
+- [Phase 1] Parsed tags on `8b57448a147d2`: only Namjae Jeon SOB; no
+  Fixes/Cc:stable/Reported-by
+- [Phase 1] `git describe HEAD` / Makefile: `p-6.12-3-gc504cf0baa3d8`,
+  VERSION 6.12.111, branch `pending-6.12`
+- [Phase 2] Diff: +12 vfs.c `ksmbd_vfs_zero_data`, +6/-1 smb2pdu.c
+  FSCTL_SET_ZERO_DATA
+- [Phase 2] Local `smb2_ioctl` `out` (8694–8708) maps unknown errors to
+  `STATUS_INVALID_PARAMETER`, not lock conflict — smb2pdu hunk required
+- [Phase 2] `vfs_fallocate()` in `fs/open.c:246` has no posix-lock check
+- [Phase 3] Blame: zero_data from 2021 cifsd; no lock check ever; `git
+  merge-base --is-ancestor 8b57448a147d2 HEAD` → not ancestor
+- [Phase 3] Related in-tree: `f751d6e39d4c9` (1-byte lock skip),
+  `ca53bb17f4e82` (SET_ZERO_DATA FILE_WRITE_DATA)
+- [Phase 3] Parent `3c707d4b3f926` is independent permission tweak, not
+  a prerequisite
+- [Phase 3] `git apply --check` of `8b57448a147d2`: both hunks apply
+  (offsets −1234 / +71)
+- [Phase 4] `b4 dig -c 8b57448a147d2`: lore errors, no thread —
+  UNVERIFIED review discussion
+- [Phase 4] lore WebFetch 403 — UNVERIFIED stable-list discussion
+- [Phase 4] Samba `fsctl_zero_data` uses STRICT_LOCK WRITE and returns
+  `NT_STATUS_FILE_LOCK_CONFLICT` (web/source confirmation)
+- [Phase 5] Only caller of `ksmbd_vfs_zero_data` is `smb2_ioctl`;
+  dispatched via `SMB2_IOCTL_HE`
+- [Phase 5] `check_lock_range` already used for
+  read/write/truncate/copychunk in this tree
+- [Phase 6] Local `ksmbd_vfs_zero_data` (vfs.c:995–1013) matches pre-
+  patch; bug exists here
+- [Phase 8] Failure mode: zero/punch of locked ranges → data integrity
+  HIGH
+- UNVERIFIED: original lore review comments and whether anyone nominated
+  this for stable on the list
 
 **YES**
 
- .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 34 ++++++++++-------
- .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 37 ++++++++++++-------
- 2 files changed, 43 insertions(+), 28 deletions(-)
+ fs/smb/server/smb2pdu.c |  7 ++++++-
+ fs/smb/server/vfs.c     | 12 ++++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index ba953654a0206..cf008ed409552 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -5661,23 +5661,29 @@ static int smu7_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	}
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index c18590d8ee2b9..6b3cf2dadeecd 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8665,8 +8665,13 @@ int smb2_ioctl(struct ksmbd_work *work)
  
- 	for (i = 0; i < size; i += 3) {
--		if (i + 3 > size || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
--			pr_info("invalid clock voltage input \n");
--			return 0;
-+		if (i + 3 > size) {
-+			pr_info("truncated clock/voltage input\n");
-+			return -EINVAL;
+ 			ret = ksmbd_vfs_zero_data(work, fp, off, len);
+ 			ksmbd_fd_put(work, fp);
+-			if (ret < 0)
++			if (ret == -EAGAIN) {
++				rsp->hdr.Status = STATUS_FILE_LOCK_CONFLICT;
++				ret = 0;
+ 				goto out;
++			} else if (ret < 0) {
++				goto out;
++			}
  		}
--		input_level = input[i];
--		input_clk = input[i+1] * 100;
--		input_vol = input[i+2];
--
--		if (smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
--			podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
--			podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
--			podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
--			podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
--			podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
--		} else {
-+		if (input[i] < 0 || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
-+			pr_info("invalid clock/voltage level\n");
- 			return -EINVAL;
- 		}
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		if (!smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
-+			return -EINVAL;
+ 		break;
+ 	}
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 47c289ad9c3dc..f894092901bc5 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1003,6 +1003,18 @@ int ksmbd_vfs_zero_data(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 	int err;
+ 
+ 	smb_break_all_levII_oplock(work, fp, 1);
++	if (!work->tcon->posix_extensions) {
++		loff_t size = i_size_read(file_inode(fp->filp));
++
++		if (off < size) {
++			err = check_lock_range(fp->filp, off,
++					       min(off + len, size) - 1,
++					       WRITE);
++			if (err)
++				return -EAGAIN;
++		}
 +	}
 +
-+	for (i = 0; i < size; i += 3) {
-+		input_level = input[i];
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
-+		podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
-+		podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
-+		podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
-+		podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
- 	}
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index b3fed2a478aab..d6aaba0b3613d 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -5645,11 +5645,9 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	if (PP_OD_EDIT_SCLK_VDDC_TABLE == type) {
- 		dpm_table = &data->dpm_table.gfx_table;
- 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_sclk;
--		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
- 	} else if (PP_OD_EDIT_MCLK_VDDC_TABLE == type) {
- 		dpm_table = &data->dpm_table.mem_table;
- 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_mclk;
--		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
- 	} else if (PP_OD_RESTORE_DEFAULT_TABLE == type) {
- 		memcpy(&(data->dpm_table), &(data->golden_dpm_table), sizeof(struct vega10_dpm_table));
- 		vega10_odn_initial_default_setting(hwmgr);
-@@ -5667,21 +5665,32 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	}
- 
- 	for (i = 0; i < size; i += 3) {
--		if (i + 3 > size || input[i] >= podn_vdd_dep_table->count) {
--			pr_info("invalid clock voltage input\n");
--			return 0;
-+		if (i + 3 > size) {
-+			pr_info("truncated clock/voltage input\n");
-+			return -EINVAL;
- 		}
--		input_level = input[i];
--		input_clk = input[i+1] * 100;
--		input_vol = input[i+2];
--
--		if (vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
--			dpm_table->dpm_levels[input_level].value = input_clk;
--			podn_vdd_dep_table->entries[input_level].clk = input_clk;
--			podn_vdd_dep_table->entries[input_level].vddc = input_vol;
--		} else {
-+		if (input[i] < 0 || input[i] >= podn_vdd_dep_table->count) {
-+			pr_info("invalid clock/voltage level\n");
- 			return -EINVAL;
- 		}
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		if (!vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
-+			return -EINVAL;
-+	}
-+
-+	if (type == PP_OD_EDIT_SCLK_VDDC_TABLE)
-+		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
-+	else
-+		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
-+
-+	for (i = 0; i < size; i += 3) {
-+		input_level = input[i];
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		dpm_table->dpm_levels[input_level].value = input_clk;
-+		podn_vdd_dep_table->entries[input_level].clk = input_clk;
-+		podn_vdd_dep_table->entries[input_level].vddc = input_vol;
- 	}
- 	vega10_odn_update_soc_table(hwmgr, type);
- 	return 0;
+ 	saved_cred = override_creds(fp->filp->f_cred);
+ 	if (fp->f_ci->m_fattr & FILE_ATTRIBUTE_SPARSE_FILE_LE)
+ 		err = vfs_fallocate(fp->filp,
 -- 
 2.53.0
 
