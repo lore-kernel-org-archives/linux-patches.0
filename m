@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A57526597;
-	Mon, 19 Oct 2026 14:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF64527FB1;
+	Mon, 19 Oct 2026 14:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418573; cv=none; b=kk4cELhDuiolgN0dwbZBBmLILGRsKcV2we/y0eBq9aSfwq+oFVI7VuiVQmI/45rC5HmO7c0KyHVt9CgXAWcSx12eZe8PmieHKaCggpEOHjPPEv1EpOtoFN9DiaTdOIR6eMP2+vfNLqcFnj9awFXqT6064xD7p5IflHJY1dRPmYk=
+	t=1792418574; cv=none; b=qyPWc/8Y3bn/LYQmQm8H94dburBBvNjoEcBSLO7I6FJ0eclN6cjckoztKaoIKiwFPyO33Q0Uay73UOK04LhNvD4hprV3VbLem0OCK4qsS3NQ+IPi6vsZC4JD9rinjacfvE3s4wkbgd8TpBAZjj11O9EGhcARqxtF/Lf1bfSFCCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418573; c=relaxed/simple;
-	bh=QF1eQoIqa08aJYjuOaD3cOfQFUsXGmH5ogs9SHg25ys=;
+	s=arc-20240116; t=1792418574; c=relaxed/simple;
+	bh=+1ZWmQmS7jC1pco+Ozx6kg7JXui4zpUeJ0lalaES/0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kBDyuupke+rkpxX5AUZ5bwT67uQ81WsyUrknJ7q8QvGvL0vHxr8wNFoqaPdvzqSeVGL2iEn4dTSexdwOnglzXZr+tVSLtiWrOZDb+VpjLk5lnDPgp8HKQG/B4J6LAyXNr1l26Bo2P/x7280s+O234bJh2UzIRqa5DPZLvIDcZaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F3ab/Beh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QKNcRLJ6DsCnzu0nNrfl9u6WZFzGABXj6sBiDOTvzl5VxUxL3OxUEZdjE8osTcaGhLnzwP3wKMFEed+m7JZOEiuU9GSD85cV4MqsLjtaaOeiwB4OjuRaE0h2E4sltSmeWZqup7Qut6M3lPy/fzVxI3WwaSct2BaOSrGx+b8DYdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DqXoXndN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F3ab/Beh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030591F000C9;
-	Mon, 19 Oct 2026 14:02:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DqXoXndN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F86A1F000C4;
+	Mon, 19 Oct 2026 14:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418569;
-	bh=EXOEt8iWCksbEuOcUGPJXw9M2YosVwX4WoL1niqqiAo=;
+	s=k20260515; t=1792418571;
+	bh=kvnjUFG/xYwm+NO+qD6stlC04XHUVrYTPecZAg78TVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F3ab/BehDzOhAQAYE+CefBEKbWSvcwvuYFz0d8aLyr4q0mo/yt0fHDmXb2sHfLAC5
-	 WHlyOUXIBtqFm3kQZpM/1EfxtprtibZHkGsNMj5ouzU3wTIvklm2996e3vPPxEEl3L
-	 aULBWUh1caCYR7mzkDCHsrPgG+uWSpZz7GlUzCFfDm2HiBx8chAwGJUsVloZLnkbSR
-	 pBS3umQ2a1ea9Yl6cSJncKV5m54O7ho1fg27USieI1t0GMlvf1bnOh1IeRWoYIOU6h
-	 Q/rnKwFXxcH18fq3Yc4tqqd8dLk3CuJ6YxiADRlPXoRg0U/Q8VSFgYty2velSM2o/l
-	 26GHB/oduPHPQ==
+	b=DqXoXndNKnS8fnPbfriMzHZ+67xbnT+aM4apZ4mCSmVhejV08Btca1t0aLb/BzPK8
+	 MKkfNKtn+BJh2P5re4b/Q2WSKc/jsYWbzZwXlmYtTwyjHE1QXMKJU2e1EaeMcUYfHd
+	 XDp39gUf+Alh8xwIVxGgrZ8f8iCRSNvRFzsxXZGxV65F7+NavVTPsTDelD2XxOrFIU
+	 4J2W42vFcqaTDRUK9sc6syMq0vd+PGhws6I78Ipc8KfUPvtd1F9Fsan3BMeSQ4qDRm
+	 4GBQWhxWqxr4rY0gwtI+9q97fRyG8qqe2QmOgmmh5CBQF61ExTPQMlw8HUYtPRjEY1
+	 wCvnSpb3Zy30g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yashraj Ghule <yashrajghule.221@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	robin.clark@oss.qualcomm.com,
+	joro@8bytes.org,
+	iommu@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Fix mute LED for HP Victus 15-fa1xxx (MB 8C3F)
-Date: Mon, 19 Oct 2026 09:50:32 -0400
-Message-ID: <20261019135441.1420968-341-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] iommu/qcom: Check pm_runtime_resume_and_get() return in probe
+Date: Mon, 19 Oct 2026 09:50:33 -0400
+Message-ID: <20261019135441.1420968-342-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,469 +57,436 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yashraj Ghule <yashrajghule.221@gmail.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 19b02fecd8f857909af779afe3816e487ac10cd0 ]
+[ Upstream commit e910315ae08a23bc953daed10b1c518abac1df49 ]
 
-The HP Victus 15-fa1xxx with motherboard 8C3F is missing the
-existing mute LED quirk for ALC245 codecs.
+The SMMU_INTR_SEL_NS register write in qcom_iommu_device_probe() uses
+pm_runtime_get_sync() without checking the return value. If runtime
+resume fails the subsequent writel_relaxed() would access hardware with
+clocks potentially disabled.
 
-Add the 103c:8c3f subsystem ID to the existing
-ALC245_FIXUP_HP_MUTE_LED_COEFBIT quirk.
+Switch to pm_runtime_resume_and_get() which handles the usage-count
+cleanup on failure, check the return value, and unwind the already
+registered iommu device on error.
 
-Tested on HP Victus 15-fa1xxx (MB 8C3F). The mute LED works
-as intended.
-
-Signed-off-by: Yashraj Ghule <yashrajghule.221@gmail.com>
-Link: https://patch.msgid.link/20260816110655.11592-1-yashrajghule.221@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Confirmed: this is a one-line HDA subsystem-ID quirk, the existing
-ALC245 mute-LED fixup is already in 6.12, and 0x8c3f is not. Writing the
-full nine-phase analysis.
+I have the tree version, the probe path, series context, and review
+thread. Compiling the nine-phase analysis and verdict next.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
 
-Record: **[ALSA: hda/realtek]** **[Fix]** mute LED for HP Victus
-15-fa1xxx motherboard 8C3F by adding PCI/HDA subsystem ID `103c:8c3f` to
-an existing quirk.
+Record: **[iommu/qcom]** **[Check]** Check `pm_runtime_resume_and_get()`
+return in probe. “Check” here is a missing-error-handling fix, not a
+feature.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
 Record:
-- **Fixes:** none (expected for this review pipeline)
-- **Reported-by:** none
-- **Tested-by:** none as a tag; the body states the author tested it on
-  the matching machine
-- **Reviewed-by:** none
-- **Acked-by:** none
-- **Link:** `https://patch.msgid.link/20260816110655.11592-1-
-  yashrajghule.221@gmail.com`
-- **Cc: stable:** none (expected; not a negative signal)
-- **Signed-off-by:** Yashraj Ghule `<yashrajghule.221@gmail.com>`
-  (author); Takashi Iwai `<tiwai@suse.de>` (ALSA maintainer)
-- Ignore any Sasha Levin SOB if present in candidate packaging
-
-Notable: ALSA maintainer SOB; author-tested; no syzbot/crash report (not
-expected for a hardware quirk).
+- **Reviewed-by:** Konrad Dybcio \<konrad.dybcio@oss.qualcomm.com\>
+  (Qualcomm reviewer)
+- **Signed-off-by:** Mukesh Ojha \<mukesh.ojha@oss.qualcomm.com\>
+  (author)
+- **Signed-off-by:** Will Deacon \<will@kernel.org\> (IOMMU/SMMU
+  maintainer who applied it)
+- **No Fixes:** tag (expected for this review pipeline)
+- **No Cc: stable** (expected)
+- **No Reported-by / Tested-by / Link / Acked-by**
+- Ignore any pipeline “Signed-off-by: Sasha Levin” / “[Upstream commit
+  …]” markers (none in the real commit)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
 Record:
-- **Bug:** HP Victus 15-fa1xxx with motherboard ID 8C3F does not match
-  the existing ALC245 mute-LED quirk, so the mute LED does not follow
-  mute state.
-- **Symptom:** mute LED stays wrong / does not work.
-- **Version info:** none in the message.
-- **Root cause:** missing `SND_PCI_QUIRK` for SSID `103c:8c3f`. Same
-  product line already has other SSIDs (this tree already has
-  `103c:8bc8` "HP Victus 15-fa1xxx").
-- **Fix:** add that SSID to `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`.
+- **Bug:** `qcom_iommu_device_probe()` does `pm_runtime_get_sync()` then
+  `writel_relaxed()` to `SMMU_INTR_SEL_NS` without checking the PM call.
+- **Symptom:** If runtime resume fails, MMIO is written with clocks
+  possibly off. On Qualcomm that can hang the interconnect / SError, and
+  probe still returns success so interrupt routing may be wrong.
+- **Root cause:** ignored `pm_runtime_get_sync()` return; that API also
+  leaves the usage count up on failure (the new API drops it).
+- **Fix:** `pm_runtime_resume_and_get()`, check `ret`, unwind
+  `iommu_device_unregister` + existing sysfs remove.
+- **Version info:** none in the message. Code dates to the original
+  driver (v4.14).
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
 
-Record: Not a hidden fix. It is an explicit hardware quirk / device-ID
-addition. The verb "Fix" is accurate: the LED hardware is already there;
-the driver never maps this SSID onto the existing coefbit LED helper.
+Record: Not disguised. Explicit error-path / unclocked-access fix. The
+“usage-count cleanup” wording is slightly overstated at this site
+because the old code always called `pm_runtime_put_sync()` after the
+write; the real bugs are the unclocked `writel` and probe succeeding
+after a failed resume.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+---
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
 
 Record:
-- File in the candidate: `sound/hda/codecs/realtek/alc269.c` (+1 / −0)
-- This 6.12 tree still uses `sound/pci/hda/patch_realtek.c` (codec split
-  not present)
-- Function/table: `alc269_fixup_tbl[]`
-- Scope: single-file, one-line surgical quirk addition
+- File: `drivers/iommu/arm/arm-smmu/qcom_iommu.c` (+5 / −1)
+- Function: `qcom_iommu_device_probe()`
+- Scope: single-file surgical probe error path
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Record:
-- **Before:** `snd_hda_pick_fixup()` during Realtek ALC269-family probe
-  walks `alc269_fixup_tbl` by PCI SSID. `103c:8c3f` does not match.
-  Probe then may fall through to pin fixups and the vendor-wide HP entry
-  `SND_PCI_QUIRK_VENDOR(0x103c, "HP", ALC269_FIXUP_HP_MUTE_LED)`
-  (`alc269_fixup_vendor_tbl`). That generic HP LED path is not the
-  ALC245 coefbit path used by other Victus 15-fa/fb machines.
-- **After:** SSID `103c:8c3f` matches
-  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`, so
-  `alc245_fixup_hp_mute_led_coefbit()` runs at `HDA_FIXUP_ACT_PRE_PROBE`
-  and registers the mute LED via coef index 0x0b.
-- Path affected: codec probe / mute-LED setup on that one HP SSID only.
+Record: Before (only when `qcom_iommu->local_base` is set):
+`pm_runtime_get_sync` → always `writel_relaxed(0xffffffff, local_base +
+SMMU_INTR_SEL_NS)` → `pm_runtime_put_sync` → return 0. After:
+`pm_runtime_resume_and_get`; on failure `goto err_iommu_unregister`
+(unregister IOMMU, remove sysfs, return error); on success same write +
+put as before.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
 
 Record:
-- **Category:** hardware workaround / device ID addition (stable
-  exception).
-- **Mechanism:** HP reused the Victus 15-fa1xxx name across motherboard
-  SSIDs (`8bc8` already in this tree; mainline also has `8c2d`, `8c3f`,
-  and later `8bb1`). Quirk matching is exact vendor:device. Missing ID →
-  LED not driven by the ALC245 coefbit helper.
-- Not UAF, leak, race, or crash.
+- **Category:** (a) error-path unwind + (g) missing return check, which
+  prevents unclocked MMIO.
+- **Mechanism:** `qcom_iommu_resume()` enables iface/bus/tbu clocks via
+  `clk_bulk_prepare_enable()`. If that (or SCM restore) fails, the old
+  path still wrote `SMMU_INTR_SEL_NS`. Switch to
+  `pm_runtime_resume_and_get()` is required: `pm_runtime_get_sync()` can
+  return `1` (already active), so `if (ret)` on get_sync would mis-
+  handle success.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 
-Record:
-- Obviously correct: one `SND_PCI_QUIRK` using the same fixup already
-  used by many Victus SKUs in this file (`8a4f`, `8a50`, `8bc8`, `8c30`,
-  `8c99`, `8c9c`, …).
-- Minimal; no unrelated edits.
-- Regression risk is very low: the new entry is SSID-specific. Wrong
-  SSID would not match. Same helper is already production-used on this
-  tree.
-- v2 reordering (SSID sort) does not change runtime (the table is a
-  match list, not order-dependent beyond uniqueness).
+Record: Minimal and correct. `pm_runtime_resume_and_get()` returns 0 or
+negative (`include/linux/pm_runtime.h`). Unwind matches
+`qcom_iommu_device_remove()`. Regression risk is low: only the RPM-
+failure path starts failing probe instead of succeeding after a possibly
+unclocked write. If clocks cannot be enabled, failing probe is the right
+outcome.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
 
-Record:
-- Insertion sits next to `SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus
-  15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT)` — blamed to
-  `b474f60f6a0c9` (Adam Queler, 2024-09-03), already in this tree,
-  originally `Cc: stable`.
-- The fixup enum/function `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` /
-  `alc245_fixup_hp_mute_led_coefbit()` exists here (`patch_realtek.c`
-  around 4778 and 10522).
-- Helper was brought in via `c4cc8f6c31263` ("ALSA: hda/realtek -
-  Support mute led function for HP platform", upstream `22c7f77247a8`),
-  ancestor of HEAD.
-- Same product line: `96fe253552c26` already added `103c:8bc8` "HP
-  Victus 15-fa1xxx" to this tree (upstream `a0914bf56e26`, `Cc:
-  stable`).
+Record: The `if (qcom_iommu->local_base)` write was added in
+**0ae349a0f33fb0** (“iommu/qcom: Add qcom_iommu”, Rob Clark,
+2017-08-09), first in **v4.14-rc1**. Present in this tree (`git merge-
+base --is-ancestor 0ae349a0f33fb0 HEAD`). Long-lived bug, not new code.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
 
-Record: No `Fixes:` tag. N/A. The "bug" is a missing table entry, not a
-regression from a specific prior commit.
+Record: No Fixes: tag. Buggy code is the original 2017 driver, not a
+recent regression.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-Record:
-- This tree already contains many of the same class of patches (git log
-  `--grep='mute LED' -- sound/pci/hda/patch_realtek.c` returned 166
-  commits).
-- Recent examples: Victus 16-e0xxx MB 88ED (`faee5b4612c26`), Victus
-  15-fa0xxx MB 8A50 (`0ecc9d81b46b1`), Victus 16-s0xxx, 16-r0xxx,
-  15-fb1xxx (`b474f60f6a0c9`).
-- Mainline context line `103c:8c2d` "HP Victus 15-fa1xxx (MB 8C2D)" is
-  **not** in this tree (`git log --grep='8C2D' --
-  sound/pci/hda/patch_realtek.c` empty). That is neighboring context,
-  not a functional prerequisite.
-- Standalone: yes. Not patch X/Y.
+Record: Same-day IOMMU pull (Will Deacon, 2026-07-22):
+- `c579f18e79599` — adds `err_sysfs_remove` (**soft prerequisite** for
+  the new goto)
+- `bf69e515b1802` — `devm_pm_runtime_enable()` (series 2/6; changes
+  nearby error labels)
+- **`e910315ae08a2`** — this commit (series 3/6)
+- Later 4/6–6/6 are other bugs in the same file, not needed for this
+  hunk
+
+Standalone for the probe RPM check, but the hunk assumes
+`err_sysfs_remove` exists. That label is in this tree.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-Record: `git log --author='Yashraj Ghule' -- sound/pci/hda/` is empty in
-this tree. Author is an end-user contributor, not the subsystem
-maintainer. Weight comes from Takashi Iwai applying it, plus the well-
-worn quirk pattern.
+Record: Mukesh Ojha (Qualcomm) sent the “iommu/qcom: Misc Fixes” series.
+Not the file’s listed maintainer (Rob Clark); Konrad reviewed, Will
+applied. Related author commits on this file are the rest of that
+series.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-Record:
-- Needs `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` and `alc269_fixup_tbl` — both
-  present.
-- Does **not** need the later `alc269.c` file split.
-- Does **not** need the 8C2D quirk.
-- Can apply standalone with path remap to
-  `sound/pci/hda/patch_realtek.c` and insertion after the existing
-  `0x8c30` line.
+Record: Needs `err_sysfs_remove` from `c579f18e79599` (cover letter:
+series sits on Haoxiang Li’s sysfs cleanup).
+`pm_runtime_resume_and_get()` exists in this tree. Can apply standalone
+**on this checkout**. Does not need 4/6–6/6.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
 Record:
-- `b4 dig -c <HEAD>` cannot match this commit; it is not in this
-  checkout.
-- `b4 mbox` on Message-ID
-  `20260816110655.11592-1-yashrajghule.221@gmail.com` found **4
-  messages**.
-- Thread: v1 (15 Aug 2026) → Takashi review → v2 (16 Aug 2026) → Takashi
-  "Applied now."
-- v1 issues (not technical risk of the quirk): SOB must use a real name;
-  table must stay in PCI SSID order (`8c3f` belongs after `8c30`, not
-  before).
-- v2 addressed both; that is the committed form.
-- No NAK. No reviewer concern about the quirk itself. No `Cc: stable` in
-  the thread.
-- lore.kernel.org HTTP fetch returned 403; thread recovered from lore
-  via `b4 mbox`.
+- **b4 dig:** v2 3/6, https://patch.msgid.link/20260717144608.3216274-4-
+  mukesh.ojha@oss.qualcomm.com
+- **Revisions:** v1 3/8 (2026-06-23) → v2 3/6 (2026-07-17). Same hunk;
+  v1 still had `err_pm_disable` (removed by 2/6).
+- Konrad R-b on v1 with no requested changes: Message-ID
+  `f636b144-807f-4a10-bf44-d06b169fce21@oss.qualcomm.com`
+- Will applied the whole v2 series 2026-07-22; no NAKs
+- No reviewer asked for Cc: stable
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Record (from mbox, equivalent of `b4 dig -w`):
-- To: Jaroslav Kysela `perex@perex.cz`
-- Cc: Takashi Iwai `tiwai@suse.de`, `linux-sound@vger.kernel.org`
-- Reviewer/applier: Takashi Iwai (ALSA/HDA maintainer)
+Record: To/Cc included Rob Clark, Will Deacon, Joerg Roedel, Robin
+Murphy, `iommu@lists.linux.dev`, `linux-arm-msm`. Konrad R-b; Will
+merged.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Record: No bugzilla/syzbot link. Evidence of user impact is the author
-test on HP Victus 15-fa1xxx (MB 8C3F). Same model family already needed
-extra SSIDs (8bc8 here; 8C2D and 8BB1 in later/mainline discussion),
-which matches HP shipping multiple board IDs under one marketing name.
+Record: No Reported-by, syzbot, or bugzilla. Author analysis of the
+error path, not a user crash report.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-Record: Standalone v1→v2, not a multi-patch series. Related but
-independent: 8C2D (Eren Demir) and 8BB1 (Krish Gulati / bugzilla 221982)
-add other fa1xxx SSIDs. None of those replace 8C3F.
+Record: Cover: “[PATCH v2 0/6] iommu/qcom: Misc Fixes”. Independent
+fixes in one file. This patch does not need 4/6 (pgtbl leak), 5/6 (mutex
+publish), or 6/6 (ctx_probe clocks). 2/6 only shifts nearby labels.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-Record: No stable-list discussion found for 8C3F specifically. Closely
-related 8bc8 and 8c30 quirks in this tree **did** carry `Cc: stable` and
-were backported. That is the established policy for this exact pattern,
-not evidence this commit was already selected.
+Record: gnuweeb `/stable/?q=qcom_iommu+pm_runtime_resume_and_get` had no
+discussion of this fix. Not previously rejected for stable.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+---
 
-**Step 5.1: KEY FUNCTIONS**
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-Record: table `alc269_fixup_tbl`; runtime helper
-`alc245_fixup_hp_mute_led_coefbit()` (unchanged); picker
-`snd_hda_pick_fixup()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+
+Record: `qcom_iommu_device_probe()`; new label `err_iommu_unregister`
+calling `iommu_device_unregister()`.
 
 **Step 5.2: TRACE CALLERS**
 
-Record:
-- Realtek ALC269-family probe in `patch_realtek.c` (~12583) calls
-  `snd_hda_pick_fixup(..., alc269_fixup_tbl, alc269_fixups)`.
-- Then `snd_hda_apply_fixup(codec, HDA_FIXUP_ACT_PRE_PROBE)` (~12606).
-- Context: codec probe (device enumeration), not IRQ/hot path.
+Record: `.probe = qcom_iommu_device_probe` on `qcom-iommu`. Triggered by
+DT `qcom,msm-iommu-v1` / `v2` during boot (or bind). Not a syscall.
+`local_base` is optional (first MEM resource); the RPM get/write runs
+only if that resource exists.
 
 **Step 5.3: TRACE CALLEES**
 
-Record: `alc245_fixup_hp_mute_led_coefbit()` sets `spec->mute_led_coef`
-(idx 0x0b, mask/on/off bits) and `snd_hda_gen_add_mute_led_cdev(codec,
-coef_mute_led_set)`.
+Record: `pm_runtime_resume_and_get` → `qcom_iommu_resume` →
+`clk_bulk_prepare_enable` and possibly `qcom_scm_restore_sec_cfg`. Then
+`writel_relaxed` to `SMMU_INTR_SEL_NS` (0x2000), `pm_runtime_put_sync`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
 
-Record: userspace/hw mute → HDA mixer/LED classdev → coef write.
-Reachable on this laptop at boot + mute key. Not a syscall security
-path.
+Record: Boot/device probe on MSM8916-class SoCs. Unprivileged users can
+rebind if they can unbind the driver; typical trigger is boot. Path is
+real on those boards.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-Record: many `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` rows for Victus SSIDs
-already in this file (including `0x8bc8` 15-fa1xxx and `0x8c30`
-15-fb1xxx). Same bug, different board ID — systematic HP SSID
-fragmentation.
+Record: Same file still uses unchecked `pm_runtime_get_sync` in
+`domain_free`, `attach_dev`, `identity_attach`, `unmap`,
+`flush_iotlb_all`. Comments there already warn about unclocked TLB
+access. This commit only fixes probe. Sibling 6/6 adds a checked resume
+around ctx-bank FSR access.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-Record:
-- Tree: `pending-6.12` / `git describe` `p-6.12-3-gc504cf0baa3d8` /
-  `make kernelversion` **6.12.111**.
-- `sound/hda/codecs/realtek/alc269.c` does **not** exist.
-- Equivalent table: `sound/pci/hda/patch_realtek.c` `alc269_fixup_tbl`.
-- `0x8c3f` is **absent** (`grep` on that file: no match).
-- `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` **is** present.
-- Nearby `0x8c30` **is** present (line 11088).
-- Nearby mainline `0x8c2d` is **absent**.
-- Bug is a missing ID, not a post-6.12 logic regression. The machine and
-  the helper both exist for 6.12 users.
+Record: Local tree is **v7.3-rc4** (`git describe HEAD` =
+`v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+EXTRAVERSION=-rc4`). Driver is present. The unclocked-write pattern
+existed here from v4.14 until `e910315ae08a2`. HEAD already has the
+fixed form in `qcom_iommu_device_probe()` (lines 866–880). Evaluation is
+technical merit for this tree’s code, not “already landed.”
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-Record: **minor path/context adjustment**, not a rework.
-- Remap file to `sound/pci/hda/patch_realtek.c`.
-- Insert after `0x8c30` (8c2d context from mainline is missing, so a
-  verbatim git-apply of the mainline hunk may not be fully clean).
-- No API/data-structure change.
+Record: **Clean apply** on this tree: `err_sysfs_remove` and
+`devm_pm_runtime_enable` are present. Hunk matches current/pre-fix
+context.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
 
-Record: `0x8bc8` covers a different fa1xxx SSID, not 8C3F. Exact PCI
-SSID match only. No substitute for this ID.
+Record: No alternate fix for this probe RPM check. Sysfs unwind
+(`c579f18e79599`) is here and is what this goto chains into.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+---
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-Record: ALSA HD-audio / Realtek codec (`sound/pci/hda/`). **IMPORTANT**
-for laptop audio users, **PERIPHERAL** in blast radius (one HP SSID).
-Not mm/fs/net core.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
+Record: **IOMMU / Qualcomm legacy SMMU** (`drivers/iommu/arm/arm-
+smmu/qcom_iommu.c`). **IMPORTANT** for MSM8916/8917/8937/8939/8953/8976
+(DT still uses `qcom,msm-iommu-v1`). Not core MM/VFS; IOMMU failures
+break DMA/display/modem on those SoCs.
 
-Record: High churn of device quirks; this file is the standard place for
-HP mute-LED IDs. Mature helper, incremental table growth.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+Record: Mature “legacy qcom_iommu” (author’s words). Occasional
+correctness fixes in 2026, not heavy churn. Long-lived bug, more
+relevant for stable.
 
-**Step 8.1: WHO IS AFFECTED**
+---
 
-Record: **driver-specific / hardware-specific** — only HP SSID
-`103c:8c3f` (Victus 15-fa1xxx MB 8C3F). CONFIG_SND_HDA_CODEC_REALTEK
-(standard laptop configs).
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.2: TRIGGER CONDITIONS**
+**Step 8.1: DETERMINE WHO IS AFFECTED**
 
-Record: every boot + mute on that SKU. Not a race. Unprivileged user can
-observe the LED; not a privilege-escalation path.
+Record: **Driver/platform-specific**, `CONFIG_QCOM_IOMMU`, older
+Qualcomm ARM64 boards listed above. Not universal.
 
-**Step 8.3: FAILURE MODE SEVERITY**
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
 
-Record: mute LED does not track mute. **MEDIUM** functionally (no
-oops/corruption). Still a real hardware bug. Stable rules explicitly
-include device IDs and hardware quirks.
+Record: Probe, and only if `local_base` is mapped **and** runtime resume
+fails (`clk_bulk_prepare_enable` or SCM restore). Uncommon on healthy
+hardware; realistic on clock/GDSC/SCM failure. Not a normal userspace
+trigger.
 
-**Step 8.4: RISK-BENEFIT RATIO**
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: Unclocked MMIO → possible **bus hang / SError** (**HIGH** if it
+fires). Otherwise probe succeeds with `SMMU_INTR_SEL_NS` not programmed
+(**MEDIUM** functional). Trigger rarity → overall **MEDIUM–HIGH**, still
+a real hang class, not cosmetic.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 
 Record:
-- **Benefit:** restores mute LED on a shipping HP Victus SKU for 6.12
-  users; same class already backported here many times.
-- **Risk:** very low (one SSID-guarded line, existing helper).
-- **Ratio:** strongly favors backport.
+- **Benefit:** Avoid hang/abort and false-successful probe when clocks
+  cannot come up; fail cleanly and unwind registration.
+- **Risk:** Very low (6-line error path, reviewed, standard API).
+- **Ratio:** Favorable.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
+
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-FOR:
-- Stable rules: "fix a real bug … **or just add a device ID**" and
-  "**hardware quirk**" (`Documentation/process/stable-kernel-rules.rst`
-  lines 15–20).
-- One-line addition to an existing driver/fixup.
-- Target SSID missing; helper and table present in 6.12.111.
-- Author tested on the exact machine; ALSA maintainer applied v2.
-- Same Victus 15-fa1xxx family already has `8bc8` in this tree; 8C3F is
-  another board ID.
-- Dozens of identical mute-LED quirk backports already in this file.
+**FOR:**
+- Real unclocked MMIO on a documented-sensitive Qualcomm path
+- Small (+5/−1), obviously correct
+- `pm_runtime_resume_and_get` is the right API (get_sync’s `1` is
+  success)
+- Konrad R-b, Will merged; no NAKs
+- Driver in this tree since v4.14; DT still ships for several SoCs
+- Same-file comments treat unclocked access as a real hang risk
+- Prerequisites (`err_sysfs_remove`, `pm_runtime_resume_and_get`) are in
+  this tree
+- Matches stable’s “oops, hang, … or some ‘oh, that’s not good’ issue”
 
-AGAINST:
-- Not a crash/security/data-corruption fix.
-- Mainline path differs (`alc269.c` vs `patch_realtek.c`); 8c2d context
-  line missing (trivial).
-- No `Cc: stable` on the original (expected here; similar quirks often
-  still go to stable).
+**AGAINST:**
+- No user/syzbot report; error path is uncommon
+- Series patch 3/6 (but functionally independent)
+- Other `get_sync` sites in the file remain unchecked
+- Usage-count leak at this site was already balanced by `put_sync`
 
-UNRESOLVED:
-- Direct lore.kernel.org HTTP was 403; discussion was recovered via `b4
-  mbox`.
-- Could not `b4 dig -c` an upstream SHA because that commit is not in
-  this checkout.
-- No independent bugzilla for 8C3F (author is the tester).
+**UNRESOLVED:** lore.kernel.org HTTP 403; discussion recovered via `b4
+dig` mbox, gnuweeb, and openwall. No evidence of a field crash, only
+code-path analysis.
 
-**Step 9.2: STABLE RULES CHECKLIST**
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-1. Obviously correct and tested? **PASS** — one table entry; author
-   tested; maintainer applied.
-2. Fixes a real bug that affects users? **PASS** — mute LED dead on that
-   SKU.
-3. Important issue? **PASS** as hardware quirk / device ID (severity
-   MEDIUM, allowed exception).
-4. Small and contained? **PASS** — +1 line.
-5. No new features or APIs? **PASS** — enables existing fixup for one
-   SSID.
-6. Can apply to the local tree? **PASS** — helper+table exist; needs
-   path remap and insert after `0x8c30`.
+1. Obviously correct and tested? **PASS** — API contract matches;
+   maintainer applied after R-b
+2. Fixes a real bug that affects users? **PASS** — unclocked write and
+   successful probe after failed resume on shipped MSM8916-class IOMMU
+3. Important issue? **PASS** — hang/SError class; trigger is rare but
+   severity is not “trivial”
+4. Small and contained? **PASS** — 6 lines, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — code and labels exist here
 
-**Step 9.3: EXCEPTION CATEGORIES**
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
 
-Record: **Device ID addition to an existing driver** and **hardware
-quirk/workaround** (HDA `SND_PCI_QUIRK`).
+Record: None (not a device ID, quirk table, DT, build, or doc fix).
+Qualifies as a normal small bugfix.
 
-**Step 9.4: DECISION**
+**Step 9.4: MAKE YOUR DECISION**
 
-This should be backported to **this** 6.12 tree. The bug is present
-(missing `103c:8c3f`), the fix is the standard Realtek mute-LED quirk,
-and it is self-contained aside from a trivial file-path/context tweak.
+This is a small, reviewed probe-path fix that stops a `writel` to SMMU
+MMIO when runtime resume (clocks) has failed, and fails probe instead of
+continuing. That is a real stability bug on a still-used Qualcomm IOMMU,
+the change is contained, and this checkout has the driver plus the sysfs
+unwind label the hunk uses. Benefit outweighs risk.
 
-What it solves for stable users: HP Victus 15-fa1xxx systems with
-motherboard SSID 8C3F get a working mute LED, matching other
-fa1xxx/fb1xxx board IDs already quirked here.
+---
 
-Risk vs benefit: one SSID-specific line vs a user-visible LED bug on a
-current consumer laptop. Benefit dominates.
+### What the commit solves for this tree
 
-Concerns: apply to `sound/pci/hda/patch_realtek.c`, not `alc269.c`; do
-not require the absent 8C2D row.
+`qcom_iommu_device_probe()` programmed `SMMU_INTR_SEL_NS` after
+`pm_runtime_get_sync()` with no check. Resume enables the IOMMU clocks;
+on failure the write can hit unclocked hardware (hang/SError) and probe
+still returned 0. The fix uses `pm_runtime_resume_and_get()`, returns
+the error, and unregisters the IOMMU device.
 
-Verification:
-- [Phase 1] Parsed subject/tags/body from the candidate message; Link
-  msgid `20260816110655.11592-1-yashrajghule.221@gmail.com`; SOBs Ghule
-  + Iwai; no Fixes/syzbot/stable Cc.
-- [Phase 2] Diff is +1 `SND_PCI_QUIRK(0x103c, 0x8c3f, ...,
-  ALC245_FIXUP_HP_MUTE_LED_COEFBIT)` in `alc269_fixup_tbl`.
-- [Phase 3] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111; branch `pending-6.12`.
-- [Phase 3] `alc269.c` missing; quirk table in
-  `sound/pci/hda/patch_realtek.c`.
-- [Phase 3] `grep 0x8c3f` in that file: no match.
-  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` present (enum ~8222, fixup ~10522,
-  function ~4778).
-- [Phase 3] `0x8c30` present (blame `b474f60f6a0c9`); `0x8bc8` present
-  (`96fe253552c26`); `0x8c2d` absent.
-- [Phase 3] `git merge-base --is-ancestor` for `b474f60f6a0c9` and
-  `c4cc8f6c31263`: both ancestors of HEAD.
-- [Phase 3] `git log --grep='mute LED' --
-  sound/pci/hda/patch_realtek.c`: 166 commits of the same class.
-- [Phase 4] `b4 mbox` on the msgid: v1, Takashi review (SOB name + SSID
-  sort), v2, "Applied now."
-- [Phase 4] Recipients: perex, tiwai, linux-sound. No NAK.
-- [Phase 4] lore WebFetch 403; discussion taken from the saved mbox.
-- [Phase 5] Probe path `snd_hda_pick_fixup` ~12583 →
-  `snd_hda_apply_fixup` PRE_PROBE ~12606; vendor HP fallback
-  `ALC269_FIXUP_HP_MUTE_LED` at `alc269_fixup_vendor_tbl`.
-- [Phase 6] Backport difficulty: path remap + insert after 8c30 (8c2d
-  context missing).
-- [Phase 7] ALSA HDA Realtek; quirk-table activity high.
-- [Phase 8] Failure: mute LED inoperative on one HP SSID; severity
-  MEDIUM; risk very low.
-- UNVERIFIED: upstream mainline SHA of this commit (not in this
-  checkout; `b4 dig -c HEAD` cannot match it).
+It meets stable rules: obviously correct, real hang-class bug, ~6 lines,
+no new API. Risk is confined to the already-broken clock-failure path.
+
+---
+
+### Verification
+
+- **[Phase 1]** Parsed `e910315ae08a2`: R-b Konrad Dybcio; SOB Mukesh
+  Ojha, Will Deacon; no Fixes/Reported-by/stable Cc
+- **[Phase 2]** Diff: +5/−1 in `qcom_iommu_device_probe()`;
+  `pm_runtime_get_sync` → checked `pm_runtime_resume_and_get` +
+  `err_iommu_unregister`
+- **[Phase 2]** Confirmed `pm_runtime_resume_and_get()` returns 0 or
+  negative (`include/linux/pm_runtime.h`); `get_sync` may return 1
+- **[Phase 2]** Confirmed resume path: `qcom_iommu_resume()` →
+  `clk_bulk_prepare_enable()`
+- **[Phase 3]** Blame: write from `0ae349a0f33fb0` (v4.14-rc1); `merge-
+  base --is-ancestor` true
+- **[Phase 3]** `c579f18e79599` and `bf69e515b1802` are ancestors of
+  HEAD
+- **[Phase 4]** `b4 dig -c e910315ae08a2`: v2 3/6 of “Misc Fixes”; v1
+  3/8 same hunk
+- **[Phase 4]** `b4 dig -a/-w/-m`: Konrad R-b, Will applied 1/6–6/6;
+  recipients were IOMMU/QCOM lists; no NAK
+- **[Phase 4]** Stable-list search: no prior discussion of this fix
+- **[Phase 5]** Probe is platform driver for `qcom,msm-iommu-v1/v2`; DT
+  hits in msm8916/8917/8937/8939/8953/8976
+- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
+  Makefile 7.3.0-rc4; driver present; hunk matches
+- **[Phase 8]** Failure mode: unclocked MMIO hang/SError if RPM resume
+  fails at probe; severity HIGH if hit, trigger uncommon
+- **UNVERIFIED:** lore.kernel.org 403 (mbox/mirrors used instead); no
+  field reproducer found
+
+The fix is small, surgical, and meets the stable criteria for this tree.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 9ec18f779a700..bc33930e83b9f 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6974,6 +6974,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8c2d, "HP Victus 15-fa1xxx (MB 8C2D)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
-+	SND_PCI_QUIRK(0x103c, 0x8c3f, "HP Victus 15-fa1xxx (MB 8C3F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8c46, "HP EliteBook 830 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c47, "HP EliteBook 840 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c48, "HP EliteBook 860 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 9bee85259c69e..fbe4bd3ec0c42 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -863,13 +863,17 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	if (qcom_iommu->local_base) {
+-		pm_runtime_get_sync(dev);
++		ret = pm_runtime_resume_and_get(dev);
++		if (ret)
++			goto err_iommu_unregister;
+ 		writel_relaxed(0xffffffff, qcom_iommu->local_base + SMMU_INTR_SEL_NS);
+ 		pm_runtime_put_sync(dev);
+ 	}
+ 
+ 	return 0;
+ 
++err_iommu_unregister:
++	iommu_device_unregister(&qcom_iommu->iommu);
+ err_sysfs_remove:
+ 	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+ err_pm_disable:
 -- 
 2.53.0
 
