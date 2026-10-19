@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461994C8472;
-	Mon, 19 Oct 2026 13:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A944C8492;
+	Mon, 19 Oct 2026 13:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418143; cv=none; b=O1YWpfH2JE6cBU/UMDFLX+BQ1hz9mkJEOuh25pAxhWxsMH/i5wTNNOMPuLMDSwwGTMxal8j2FA+k03s8s/lzU2FSdIlR2rDOMHi/ZQTL+qtBmC8iqQsBb+uHMh0VyugRGqk2xjcgLWZVz21W7tp0d41ucNR1JjzM6EXMctPpLm8=
+	t=1792418144; cv=none; b=cv5wmZPWt1Apn2CEM3UBbPb/y4XYrpCbQvr5vaI2dc3zW3Yv0+D22vktFTz/SHglVWHMG1p7ljzRHRHonkH25vO/t8TkznCcm+P1XgCUXCFDDGrYGsntQ99zfmWWgPlyOTApZ5rGTnRwfLNsZwOgrgT5PL5DXybqlbmHa4i5r5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418143; c=relaxed/simple;
-	bh=ZkXaKlUyhiS+fvLIj9i2IUobo1CeYA99D47HxTX72Qc=;
+	s=arc-20240116; t=1792418144; c=relaxed/simple;
+	bh=KoCqBh4ZMbVOaPb383b2yMYthlaUGhUA6/S0Z5PuA0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dwtrkOfE7CzvG8w9yn+AjPF7rzMZ7KOlL62GOXnIOD5OYrksWQJoQ2ZJoNbXVjiTlO3v2BdH+WdshUaNnTNfF2o4FAhKvTB94iFDOQdki3fPjwSN8mavAWLgx4LJ4z9e1Jj+e9RmjYYkCkSJsRr1LdQPV3t18VM5EInaBiBuVgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YqNpPYpj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jgkj1LCSQL+avwVZ042e2RkRkslMPpTmq/jBTnDPWfEtUI49i8LS4dj/tgK+SX+RXmc0bnp4qdLNnio3RBT2S6aYSjmqoE4zTBXkUAChUJw3qWEfXrES5DPWMj1JgYiYonaMj3oGJfUaErQwfov4B8qz/UtBt/For1DqOzi11N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pp5HnVg8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YqNpPYpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BDE1F000C7;
-	Mon, 19 Oct 2026 13:55:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pp5HnVg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9174B1F000C4;
+	Mon, 19 Oct 2026 13:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418141;
-	bh=ypyiSk7m1tN2St+TQ9gw6JLtzzjoLOMXeA2Bwty7kUE=;
+	s=k20260515; t=1792418142;
+	bh=Tc20pTL7q6jmIQhtxrQ1Hu90HiPPdMpquY7s3JWz3Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YqNpPYpj0Z7D95H69wGyZDNyXwZfQqb/XD9tABfjvSXDLL7TgpHRKY3thQn14XU2K
-	 a4vN8JK48uTYrkUGPU42H8ywffSTBa0500NBJ9WwyWJzEd354JsYnn5QOBT6c0JaM4
-	 iYH1vD0hAwHQF9Vd0qr/oHjyrGKwX+iZ6d7p+ofvXUaWNLhcIV3h1Q6WfykARwsBcZ
-	 H1kfksigDOhmD+M6mrAjY23U6rEZInTBs1QkJybFKa+5kog0gv/9ww5vrAX6UQx27l
-	 ftw30IGG0lyGQbhO80/Hm5JeciNVD8CccVXvu1TUPajvbUkCXylYdkjmUjk5LdEJdP
-	 kgGa3TIW0MNvw==
+	b=Pp5HnVg8QDme211qE8Ypdl86W34/OyQmnGnmLxfS7YWvg+zZ5nP2fiMd7XL0ZBctK
+	 S8b+XKZT3aeU7M9Ikxvp8eH4wzjErxTNwJyVqQETmm/UZPnqJZr7zZWpaSu4GVSGp8
+	 H/Jvx4vRQnTLPWrtr4KpCTo2WoX6+al3cTHYbwwooIZKoX7VjkC4w92Kk5xkjxbU9M
+	 SzQRMsyb/CVpBBI+38zEXN+CXUmVreMJDgeRLBIbsSVMJWYYuNua3bFbkK/724v21y
+	 j5aXjbccLlNzUPXO5+oZBMIUECjYTbTFaNz7igwiTaG5ssQ2UCgzkMOETr2wgCm8Vr
+	 iX8SFkfw1ThfA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hari Mishal <harimishal1@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	axboe@kernel.dk,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	mathieu.poirier@linaro.org,
+	linux-remoteproc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] nvme: clamp FDP nruhsd to allocated RUH status descriptor count
-Date: Mon, 19 Oct 2026 09:45:32 -0400
-Message-ID: <20261019135441.1420968-41-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] remoteproc: qcom: Check subdev start status in rproc_stop()
+Date: Mon, 19 Oct 2026 09:45:33 -0400
+Message-ID: <20261019135441.1420968-42-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,391 +53,398 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 
-[ Upstream commit 29261f8bb41662f2a660c479e5cf592942b53f78 ]
+[ Upstream commit f44ae8ce156a387b07d40e2d6a0ef979a2748aa1 ]
 
-nvme_query_fdp_info() allocates the RUH status buffer for at most S8_MAX
-- 1 descriptors, and then copies ruhs->ruhsd[] into head->plids[] using
-the controller reported ruhs->nruhsd directly as the loop bound.
-However, that count wasn't taken into account for the actual buffer's
-size, so there was a chance for a controller reporting a larger nruhsd
-to cause the copy to overflow the buffer.  Clamp nr_plids to the same
-bound used for the allocation.
+For rproc that doing attach, rproc_start_subdevices() is called only when
+attach successfully. If rproc_report_crash() is called in the attach
+function, rproc_boot_recovery()->rproc_stop()->rproc_stop_subdevices()->
+glink_subdev_stop() could be called and cause NULL pointer dereference:
 
-Assisted-by: gkh_clanker_t1000
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+ Unable to handle kernel NULL pointer dereference at virtual address 0000000000000300
+ Mem abort info:
+ ...
+ pc : qcom_glink_smem_unregister+0x14/0x48 [qcom_glink_smem]
+ lr : glink_subdev_stop+0x1c/0x30 [qcom_common]
+ ...
+ Call trace:
+  qcom_glink_smem_unregister+0x14/0x48 [qcom_glink_smem] (P)
+  glink_subdev_stop+0x1c/0x30 [qcom_common]
+  rproc_stop+0x58/0x17c
+  rproc_trigger_recovery+0xb0/0x150
+  rproc_crash_handler_work+0xa4/0xc4
+  process_scheduled_works+0x18c/0x2d8
+  worker_thread+0x144/0x280
+  kthread+0x124/0x138
+  ret_from_fork+0x10/0x20
+ Code: a9be7bfd 910003fd a90153f3 aa0003f3 (b9430000)
+ ---[ end trace 0000000000000000 ]---
+
+Introduce "subdevs_started" flag to indicate rproc_start_subdevices() has
+been called successfully. Ensure subdevices are only stopped if they have
+been started.
+
+Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260623-rproc-attach-issue-v3-2-8e24310707ce@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line out-of-bounds-read clamp in NVMe FDP setup. The local
-tree is **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`).
-`nvme_query_fdp_info()` exists here; the overflow is real; the change is
-surgical.
+This tree is **v7.3-rc4** (`7.3.0-rc4`). The change is a real NULL-deref
+fix on the remoteproc attach/recovery path, and the triggering code is
+present here.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[nvme]** **[clamp]** clamp FDP `nruhsd` to the allocated RUH
-status descriptor count. “Clamp” is a bounds-fix verb.
+**Step 1.1: Subject**
+Record: `[remoteproc/qcom] [Check] Check subdev start status in
+rproc_stop()` — despite the `qcom:` prefix, the diff is in remoteproc
+core, not a Qualcomm-only file.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2: Tags**
 Record:
-- **Reviewed-by:** Christoph Hellwig `<hch@lst.de>`
-- **Assisted-by:** gkh_clanker_t1000
-- **Signed-off-by:** Hari Mishal (author), Greg Kroah-Hartman
-  (submitter), Keith Busch (NVMe maintainer)
-- **No Fixes:** tag (expected)
-- **No Reported-by / Tested-by / Link / Cc: stable**
-- Ignore pipeline SOBs; Greg’s SOB is from the actual submission, not a
-  stable-prep marker
+- `Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>` (author)
+- `Link: https://lore.kernel.org/r/20260623-rproc-attach-
+  issue-v3-2-8e24310707ce@oss.qualcomm.com`
+- `Signed-off-by: Bjorn Andersson <andersson@kernel.org>` (subsystem
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable` (absence is expected for this review)
+- Ignore any pipeline `Signed-off-by: Sasha Levin` — none present on
+  this commit
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3: Body**
 Record:
-- **Bug:** `nvme_query_fdp_info()` allocates a RUH-status buffer for at
-  most `S8_MAX - 1` descriptors, then copies `ruhs->ruhsd[]` using
-  controller-reported `ruhs->nruhsd` as the loop bound.
-- **Symptom:** a controller that reports `nruhsd` larger than the
-  allocated descriptor count overflows that buffer on the copy into
-  `head->plids[]`.
-- **Root cause:** allocation size and copy bound were not the same.
-- **Fix:** clamp `nr_plids` to the same bound used for allocation.
-- **Version info in message:** none.
+- **Bug:** On attach, `rproc_start_subdevices()` runs only after attach
+  succeeds. If `rproc_report_crash()` fires during attach, recovery
+  calls `rproc_stop()` → `rproc_stop_subdevices()` →
+  `glink_subdev_stop()` while GLINK was never started.
+- **Symptom:** kernel NULL deref / oops (`qcom_glink_smem_unregister` at
+  `pc` offset into a NULL `smem` pointer). Full stack in the message.
+- **Root cause:** stop is not paired with a successful start.
+- **Fix:** `subdevs_started` flag; skip stop unless start completed.
+- **Version info:** none in the message. Link id `v3-2` = patch 2 of a
+  3-patch series.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. This is an explicit buffer-overflow / OOB-read fix.
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. Explicit crash + stack trace. Cover letter: “Failure
+in rproc_attach() path can cause issues like NULL pointer dereference
+when doing recovery.”
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1: Inventory**
 Record:
-- **File:** `drivers/nvme/host/core.c` — 1 insertion, 1 deletion
-- **Function:** `nvme_query_fdp_info()`
-- **Scope:** single-file, one-line surgical fix
+- `drivers/remoteproc/remoteproc_core.c`: +7 (set flag on successful
+  start; bail/clear on stop)
+- `include/linux/remoteproc.h`: +2 (doc + `bool subdevs_started` in
+  `struct rproc`)
+- Functions: `rproc_start_subdevices()`, `rproc_stop_subdevices()`
+- Scope: single-subsystem, surgical, 9 insertions
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record: Before: `head->nr_plids = le16_to_cpu(ruhs->nruhsd);` then
-`kcalloc(head->nr_plids, …)` and `for (i = 0; i < head->nr_plids; i++)
-head->plids[i] = le16_to_cpu(ruhs->ruhsd[i].pid);`. After: `nr_plids` is
-`min(reported, S8_MAX - 1)`, so the copy cannot walk past the allocated
-`ruhs` buffer. Path is namespace-head init when the controller
-advertises FDP.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **(g) logic/correctness + (d) memory safety — out-of-bounds
-read.** `nruhsd` is a `__le16` from the device (0..65535). Allocation
-used `struct_size(ruhs, ruhsd, S8_MAX - 1)` (126 descriptors, 4048
-bytes). Verified layout in `include/linux/nvme.h`: 16-byte header +
-32-byte `nvme_fdp_ruh_status_desc`. If `nruhsd == 65535`, the loop reads
-~2MB past the buffer. `plids` is sized from `nr_plids`, so the overflow
-is an OOB **read** of `ruhs`, not a write into `plids`.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct: clamp matches the allocation bound. Minimal.
-Regression risk is low: extra reported placement IDs are dropped instead
-of overflowing. Later mainline commit `53cdaeab2e30e` raised that cap to
-`U8_MAX` / `NVME_MAX_PLIDS`; that is a follow-up improvement, not a sign
-this clamp is wrong.
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
+**Step 2.2: Code flow**
 Record:
-- Allocation `struct_size(..., S8_MAX - 1)` introduced in
-  `30b5f20bb2dda` (“nvme: register fdp parameters with the block layer”,
-  Keith Busch, 2025-05-06).
-- Unclamped `nr_plids` assignment plus the `ruhsd[]` copy loop:
-  `38e8397dde633` (“nvme: use fdp streams if write stream is provided”).
-- Both first appear in **v6.16-rc1** (`git describe --contains --match
-  'v*'`).
+- **Before:** `rproc_stop_subdevices()` always walked `rproc->subdevs`
+  and called `stop()`. `glink_subdev_stop()` always called
+  `qcom_glink_smem_unregister(glink->edge)` with `edge` still NULL if
+  start never ran.
+- **After:** flag set only after a full successful start loop; stop is a
+  no-op until then; flag cleared after stop.
+- Path: attach failure + crash recovery (not the normal successful boot
+  path).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Introducing commits identified by blame, not by
-tag.
+**Step 2.3: Bug mechanism**
+Record: **NULL pointer dereference (memory safety).**
+Verified in this tree: `qcom_glink_smem_unregister()` does `smem->glink`
+with no NULL check. Crash VA `0x300` matches a field access through
+NULL. Same pattern in `smd_subdev_stop()`
+(`qcom_smd_unregister_edge(smd->edge)`).
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+**Step 2.4: Fix quality**
+Record: Obviously correct. `rproc_alloc()` uses `kzalloc`, so the flag
+starts false. Partial start failure already unrolls via
+`unroll_registration` and does not set the flag. Start/stop run under
+`rproc->lock` (`rproc_boot`, `rproc_trigger_recovery`,
+`__rproc_shutdown`). Regression risk is low; the flag is not a new UAPI.
+
+## Phase 3: Git history
+
+**Step 3.1: Blame**
+Record: Subdevice start/stop dates to `7bdc9650f03604` (2016, “Introduce
+subdevices”). The missing start-vs-stop pairing is old. This commit only
+adds the flag.
+
+**Step 3.2: Fixes tag**
+Record: No `Fixes:` tag. Concrete trigger in this tree is
+`qcom_pas_attach()` from `16472c99f4699` (“Add late attach support”,
+2026-07-01), which calls `rproc_report_crash()` when the coprocessor
+already crashed. That commit is an ancestor of HEAD.
+
+**Step 3.3: Related file history**
+Record: Same series, same author:
+- `026a3fada4326` — [PATCH v3 1/3] async attach via `schedule_work()`
+  (immediate parent)
+- `f44ae8ce156a3` — this commit, 2/3
+- `0ec167625b4fe` — [PATCH v3 3/3] cancel `crash_handler` on
+  `rproc_add()` error
+
+This patch does not use `attach_work`; it stands alone. Patch 1 makes
+failed attach keep the rproc registered so recovery actually runs; patch
+2 stops that recovery from oopsing.
+
+**Step 3.4: Author**
+Record: Jingyi Wang (Qualcomm). Subsystem maintainers Bjorn Andersson
+and Mathieu Poirier were To:’d; Bjorn applied the series.
+
+**Step 3.5: Dependencies**
+Record: No new helpers. Needs existing `rproc_start_subdevices` /
+`rproc_stop_subdevices` / `struct rproc` — all present. Can apply
+without patch 1. This tree already has patch 1 and late-attach, so the
+crash path is live here.
+
+## Phase 4: Mailing list
+
+**Step 4.1: Original discussion**
 Record:
-- `29261f8bb4166` — this clamp (candidate)
-- `53cdaeab2e30e` — raise cap to `U8_MAX` and introduce `NVME_MAX_PLIDS`
-  (depends on the clamp being present)
-- `56e1c6bbe4bb0` — race on the plids array (independent locking fix)
-- Series partner `3c568b35a0d30` — NS descriptor bounds (different
-  function, not a prerequisite)
+- `b4 dig -c f44ae8ce156a3` → https://patch.msgid.link/20260623-rproc-
+  attach-issue-v3-2-8e24310707ce@oss.qualcomm.com
+- Series: `[PATCH v3 0/3] remoteproc: improve robustness for
+  rproc_attach fail cases`
+- v1 used a NULL check; v2 introduced `subdevs_started`; v3 moved the
+  flag into start/stop. Applied version is v3.
+- No NAK in the saved thread. Bjorn: “Applied, thanks!”
 
-Standalone. Labeled `[PATCH 2/2]` but 1/2 is an independent bounds check
-in `nvme_identify_ns_descs()`.
+**Step 4.2: Recipients**
+Record: To Bjorn Andersson and Mathieu Poirier (REMOTEPROC maintainers);
+Cc linux-remoteproc. Right people.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Hari Mishal also authored sibling overflow fixes (`nvme: bound
-ns descriptor header…`, `nvmet: passthru: fix OOB reads…`). Submitted
-via Greg; merged by NVMe maintainer Keith Busch. Christoph Hellwig
-reviewed.
+**Step 4.3: Bug report**
+Record: No syzbot/bugzilla. Evidence is the oops in the commit (Qualcomm
+attach/crash). Trigger is also in-tree: `qcom_pas_attach()` reports
+crash if fatal IRQ is already high.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None for the clamp itself. It only needs `nvme_query_fdp_info()`
-with `S8_MAX - 1` allocation and the copy loop — present since v6.16. No
-new helpers or APIs.
+**Step 4.4: Series**
+Record: 2/3. 1/3 is robustness (async attach). 3/3 is a UAF-style cancel
+of crash work on `rproc_add()` failure. This patch is self-contained.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 4.5: Stable list**
+Record: lore.kernel.org/stable was blocked (Anubis). UNVERIFIED whether
+anyone nominated this on stable@. No `Cc: stable` on the patch itself.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+## Phase 5: Semantic / call graph
+
+**Step 5.1: Functions**
+Record: `rproc_start_subdevices`, `rproc_stop_subdevices`.
+
+**Step 5.2: Callers**
 Record:
-- `b4 dig -c 29261f8bb4166` → https://patch.msgid.link/2026070932-fried-
-  frying-9c36@gregkh
-- **v1 only** (`b4 dig -a`): `[PATCH 1/2] nvme: bound ns descriptor…` +
-  `[PATCH 2/2]` this clamp
-- Full thread saved via `b4 dig -m`; lore HTTP fetch returned 403, so
-  discussion is from the mbox, not lore HTML
-- Christoph: “Looks good: Reviewed-by: Christoph Hellwig”
-- Keith Busch: “Thanks, series applied to nvme-7.3.”
-- No NAK, no stable discussion in-thread, no reviewer risk flags
+- `rproc_start_subdevices`: `rproc_start()` (firmware boot),
+  `__rproc_attach()` (attach)
+- `rproc_stop_subdevices`: `rproc_stop()` (recovery/`__rproc_shutdown`),
+  `__rproc_detach()` (attach recovery)
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): linux-nvme, linux-kernel, Keith Busch, Jens Axboe,
-Christoph Hellwig, Sagi Grimberg. Appropriate maintainers were on Cc.
-Christoph reviewed; Keith applied.
+**Step 5.3: Callees**
+Record: `subdev->start` / `subdev->stop` (GLINK, SMD, SSR, virtio).
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla/`Reported-by`. Bug is from code review /
-static analysis (Greg/clanker-assisted). Still a concrete OOB from
-device-provided `nruhsd`.
+**Step 5.4: Reachability**
+Record: Yes. Qualcomm PAS attach: `rproc_add` → auto-boot attach work →
+`rproc_boot` → `rproc_attach` → `qcom_pas_attach` → `rproc_report_crash`
+→ `rproc_crash_handler_work` → `rproc_trigger_recovery` →
+`rproc_boot_recovery` → `rproc_stop`. Matches the posted stack.
+Coprocessor already crashed at probe is a real boot-time case.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 2/2 is independent of 1/2. Follow-up `53cdaeab2e30e` changes the
-numeric cap but does not replace the need to clamp. Race fix
-`56e1c6bbe4bb0` is separate.
+**Step 5.5: Similar patterns**
+Record: `smd_subdev_stop()` has the same NULL-edge unregister. Core flag
+covers all subdevs, which is why v2 dropped a GLINK-only NULL check.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned 403. **UNVERIFIED**
-whether stable@ already discussed this. No evidence in the nvme thread
-of a stable NAK.
+## Phase 6: This tree
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 6.1: Buggy code here?**
+Record: Yes. `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+kernelversion` = `7.3.0-rc4`. Attach, late-attach crash report, GLINK
+stop-without-NULL-check, and recovery all exist. The fix is already an
+ancestor of HEAD (`git merge-base --is-ancestor f44ae8ce156a3 HEAD`
+succeeded); that is apply-evidence, not the reason to accept it.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `nvme_query_fdp_info()` only.
+**Step 6.2: Backport difficulty**
+Record: Clean apply on this tree (already applied). No conflicting
+refactor of those two functions.
 
-**Step 5.2: TRACE CALLERS**
-Record: Only caller is `nvme_alloc_ns_head()` in
-`drivers/nvme/host/core.c`:
+**Step 6.3: Alternate fix already here?**
+Record: No other start/stop guard. Later commits (`0ec167625b4fe`,
+`74ee3b2f57674`) address crash-work vs teardown, not this pairing.
 
-```4043:4047:drivers/nvme/host/core.c
-        if (ctrl->ctratt & NVME_CTRL_ATTR_FDPS) {
-                ret = nvme_query_fdp_info(ns, info);
-                if (ret < 0)
-                        goto out_cleanup_srcu;
-        }
-```
+## Phase 7: Subsystem
 
-Triggered during namespace-head creation when Identify Controller
-`ctratt` has `NVME_CTRL_ATTR_FDPS`. That is probe/scan, not a hot I/O
-path, but it runs for every FDP-capable namespace.
+**Step 7.1:** Record: `drivers/remoteproc` — **IMPORTANT** (Qualcomm
+DSP/modem/WiFi remoteprocs; not core mm/vfs, but widely used on
+phones/embedded).
 
-**Step 5.3: TRACE CALLEES**
-Record: `nvme_get_features()`, `nvme_query_fdp_granularity()`,
-`kzalloc`/`kcalloc`, `nvme_submit_sync_cmd()` (device fills `ruhs`),
-then the copy loop.
+**Step 7.2:** Record: Actively developed (late attach, async attach,
+crash-handler races in 2026).
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Device probe / namespace scan → `nvme_init_ns_head` →
-`nvme_alloc_ns_head` → `nvme_query_fdp_info`. Reachable from attaching
-an NVMe device, including NVMe over Fabrics. A malicious or buggy target
-can set FDPS and return a huge `nruhsd`. Not a direct unprivileged
-syscall, but device/Fabrics-controlled and kernel-reachable.
+## Phase 8: Impact and risk
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same author series also bounded NS identify descriptors. Follow-
-up kept the clamp and only raised the cap. No second unclamped `nruhsd`
-copy found.
+**Step 8.1:** Record: Qualcomm (and any rproc) users who attach to an
+already-running remoteproc. Config: `CONFIG_REMOTEPROC` plus QCOM
+PAS/GLINK. Not universal, but a large device population.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+**Step 8.2:** Record: Trigger = attach while the remote CPU already
+crashed (fatal IRQ high) or crash during attach. Seen in the field (oops
+dump). Not a pure theoretical race; crash work vs `rproc->lock` is
+ordered, then stop runs on unstarted subdevs.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes, in this lineage.** This checkout is **v7.3-rc4** (`make
-kernelversion` → `7.3.0-rc4`). FDP query exists. Bug introduced
-**v6.16-rc1**, before 7.3. Candidate `29261f8bb4166` is already an
-ancestor of HEAD (`git merge-base --is-ancestor` succeeded; first
-contained in **v7.3-rc1**). Current HEAD already clamps:
+**Step 8.3:** Record: Kernel oops / NULL deref. **HIGH/CRITICAL**.
 
-```2371:2371:drivers/nvme/host/core.c
-        head->nr_plids = min(le16_to_cpu(ruhs->nruhsd), NVME_MAX_PLIDS);
-```
+**Step 8.4:** Record: Benefit high (avoids oops during subsystem
+recovery). Risk very low (9 lines, internal bool, kzalloc-zeroed, lock-
+held).
 
-That is this fix plus `53cdaeab2e30e` (`NVME_MAX_PLIDS` = `U8_MAX`). The
-unclamped assignment is gone at HEAD because the fix landed in 7.3-rc1;
-the overflow pattern is still the code this tree maintains.
+## Phase 9: Synthesis
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Against **current HEAD**, the original hunk would not apply
-(`S8_MAX - 1` vs `NVME_MAX_PLIDS`). Against the pre-fix function (parent
-of `29261f8bb4166` in this history), it is a one-line change on
-`head->nr_plids = le16_to_cpu(ruhs->nruhsd)` with matching `S8_MAX - 1`
-allocation. **Expected backport difficulty: clean apply** on trees that
-still have that allocation; this 7.3 checkout already has the later
-form.
+**Step 9.1: Evidence**
+**For:**
+- Real oops with stack; `qcom_glink_smem_unregister(NULL)` is visible in
+  code
+- In-tree trigger: `qcom_pas_attach()` + recovery
+- This tree has late attach and async attach, so the path is reachable
+- Small, obviously correct, maintainer-applied (v3)
+- No new UAPI
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This clamp and the `NVME_MAX_PLIDS` follow-up are both in HEAD.
-That is this tree already containing the upstream fix, not a different
-substitute.
+**Against:**
+- Part of a 3-patch series (1/3 is behavioral); this hunk does not need
+  1/3
+- No `Fixes:` / `Cc: stable` (not a negative per rules)
+- Adds a `struct rproc` field (in-tree only; kzalloc-safe)
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Unresolved:** Stable mailing-list discussion (lore/stable fetch
+blocked).
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **NVMe host core** (`drivers/nvme/host/`). **IMPORTANT** —
-common storage stack, not staging. Overflow is in host core during
-namespace setup.
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — pairing is clear; oops is
+   the test evidence; maintainer applied v3
+2. Real user-visible bug? **PASS** — NULL deref oops
+3. Important (crash/security/corruption/deadlock)? **PASS** — oops on
+   attach/recovery
+4. Small and contained? **PASS** — 9 lines, two functions + one bool
+5. No new features/APIs? **PASS** — internal flag
+6. Applies to this tree? **PASS** — files and call paths exist; would
+   apply cleanly
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Active (recent FDP, multipath, scan, SRCU fixes). FDP streams
-themselves date to v6.16; this is not brand-new experimental code in
-7.3.
+**Step 9.3: Exception category**
+Record: None. Ordinary crash fix.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 9.4: Decision**
+This tree needs the fix: attach can report a crash before subdevices
+start, and `rproc_stop_subdevices()` would then oops. The change is
+minimal and correct.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific / config-specific:** NVMe controllers with FDP
-(`NVME_CTRL_ATTR_FDPS` + `FDPCFG_FDPE`). Includes local NVMe and Fabrics
-targets that advertise FDP.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Namespace scan/probe on an FDP-enabled controller that returns
-`nruhsd >` allocated descriptor count. Not every boot. A buggy SSD can
-hit it; an untrusted NVMe/TCP target can hit it on purpose. Unprivileged
-local users cannot trigger it without a device.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **Kernel out-of-bounds read** of `ruhs->ruhsd[]` → KASAN/oops or
-infoleak of adjacent heap. **Severity: HIGH.**
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record: **Benefit: high** (stops device-triggered OOB). **Risk: very
-low** (one `min()`, same bound as allocation). **Ratio: strongly
-favorable.**
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-- Real OOB read from device-controlled `nruhsd` vs a 126-descriptor
-  buffer
-- One-line, obviously correct clamp
-- Reviewed by Christoph Hellwig; applied by Keith Busch
-- No new API/feature
-- Self-contained; series 1/2 is not required
-- FDP path exists in this tree; bug dates to v6.16
-
-**AGAINST:**
-- No public user/syzbot report (code-analysis find)
-- Only FDP-capable devices
-- HEAD already has this clamp (and a later cap raise), so this exact
-  hunk is not what HEAD’s source line looks like
-- Lore stable@ search could not be fetched (403)
-
-**UNRESOLVED:**
-- Whether stable@ already queued it (lore/stable HTTP 403)
-- No runtime reproducer in the message (mechanism is still verified in
-  code)
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — clamp equals allocation
-   bound; reviewed and merged to nvme-7.3
-2. Fixes a real bug that affects users? **PASS** — OOB read on FDP
-   namespace setup
-3. Important issue (crash/security/corruption/deadlock)? **PASS** —
-   HIGH, kernel OOB from device data
-4. Small and contained? **PASS** — 1 line, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** for this codebase’s pre-fix
-   form (`S8_MAX - 1` allocation + unclamped `nruhsd`). HEAD already has
-   the evolved clamp; that does not make the fix inapplicable to this
-   lineage.
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device-ID/quirk/DT/build/docs exception). It is a
-normal memory-safety fix.
-
-**Step 9.4: MAKE YOUR DECISION**
-This tree’s NVMe host core has the FDP RUH-status query, and using the
-controller’s `nruhsd` as the copy bound without capping it to the
-allocated descriptor count is a real overflow. The fix is the smallest
-correct change. This 7.3 checkout already contains that logic (then
-raised the cap to `U8_MAX`); that is the upstream landing, not a reason
-to treat the overflow as unworthy of stable. Benefit vs risk is strongly
-in favor of backporting.
-
-### What the commit solves, and why it matters
-A Flexible Data Placement controller returns how many Reclaim Unit
-Handle status descriptors it has (`nruhsd`). The driver only allocated
-room for 126, then indexed `ruhs->ruhsd[i]` up to the raw reported
-count. That is a kernel heap OOB read during namespace setup, including
-from a remote NVMe/TCP target.
-
-### Stable rules
-Small, obviously correct, no new API, real memory-safety bug.
+### What it solves for this tree
+If a Qualcomm remoteproc is already crashed when Linux attaches (or
+crashes during attach), recovery calls `rproc_stop()` while GLINK/SMD
+were never started. That is a kernel oops, not a soft failure. The flag
+makes stop a no-op until start has succeeded.
 
 ### Risk vs benefit
-One `min()` vs device-triggered OOB: take the fix.
+Benefit: prevent a boot/recovery oops on common Qualcomm attach
+hardware. Risk: negligible; flag is zero-initialized and only mutated
+under `rproc->lock`.
 
 ### Concerns
-Patch 2/2 does not need patch 1/2. Trees that already switched
-allocation to `NVME_MAX_PLIDS` should keep clamp and allocation in sync
-(already true here via `53cdaeab2e30e`). Trees still on `S8_MAX - 1`
-should get this commit as-is.
+Patch 1/3 is not required for this hunk. Patch 3/3 is a separate
+teardown UAF. Neither blocks applying this commit here. No `Fixes:` tag;
+the late-attach crash report (`16472c99f4699`) is in this tree and is
+the practical introducer of the reported path.
 
-Verification:
-- [Phase 1] Parsed tags: Reviewed-by Christoph Hellwig; SOBs Hari
-  Mishal, Greg KH, Keith Busch; no Fixes/Reported-by/Cc stable
-- [Phase 2] Diff: 1 line in `nvme_query_fdp_info()`;
-  `le16_to_cpu(ruhs->nruhsd)` → `min(..., S8_MAX - 1)`
-- [Phase 2] Struct sizes verified in `include/linux/nvme.h`: 16-byte
-  header + 32-byte descriptors; 126 descriptors → 4048-byte buffer;
-  `nruhsd` up to 65535
-- [Phase 3] Blame: allocation `30b5f20bb2dda`, copy loop
-  `38e8397dde633`; both `git describe --contains --match 'v*'` →
-  v6.16-rc1
-- [Phase 3] `git merge-base --is-ancestor 29261f8bb4166 HEAD` → commit
-  is in this tree; `describe --contains` → v7.3-rc1
-- [Phase 3] Parent of candidate still has `size = struct_size(ruhs,
-  ruhsd, S8_MAX - 1)` and unclamped `nr_plids`
-- [Phase 4] `b4 dig -c` → msgid 2026070932-fried-frying-9c36@gregkh;
-  `-a` v1 only; `-w` nvme maintainers; `-m` full thread
-- [Phase 4] mbox: Christoph R-b; Keith “applied to nvme-7.3”; no NAK
-- [Phase 4] lore.kernel.org and patch.msgid.link HTTP 403; LKML mirrors
-  agree with mbox
-- [Phase 5] grep callers: only `nvme_alloc_ns_head()` when
-  `NVME_CTRL_ATTR_FDPS`
-- [Phase 6] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
-  7.3.0-rc4; current clamp is `min(..., NVME_MAX_PLIDS)` from
-  `53cdaeab2e30e`
-- [Phase 8] Failure mode: OOB read of `ruhs->ruhsd[]`, severity HIGH
-- UNVERIFIED: stable@ mailing-list history (HTTP 403); no runtime
-  reproducer in the commit message
+## Verification
+- [Phase 1] Parsed tags: author SOB, maintainer SOB, lore Link v3-2; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +7 core, +2 header; flag on successful start; early
+  return in stop
+- [Phase 2] `qcom_glink_smem_unregister()`: `smem->glink` with no NULL
+  check — matches oops at VA `0x300`
+- [Phase 3] `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion`: `7.3.0-rc4`
+- [Phase 3] `git merge-base --is-ancestor f44ae8ce156a3 HEAD`: yes
+  (applies/is present)
+- [Phase 3] Parent `026a3fada4326` is series 1/3 (async attach); 3/3 is
+  `0ec167625b4fe`
+- [Phase 3] Blame: start/stop from 2016; flag from this commit
+- [Phase 3] Trigger `qcom_pas_attach` crash report from `16472c99f4699`
+  (in this tree, before this fix)
+- [Phase 4] `b4 dig -c f44ae8ce156a3`: lore thread; v1→v3; Bjorn
+  applied; no NAK
+- [Phase 4] `b4 dig -w`: To Andersson + Poirier
+- [Phase 4] Cover letter v2: flag replaced a GLINK-only NULL check
+- [Phase 4] UNVERIFIED: stable@ discussion (lore/stable Anubis 403)
+- [Phase 5] Call chain verified: `qcom_pas_attach` →
+  `rproc_report_crash` → `rproc_crash_handler_work` →
+  `rproc_trigger_recovery` → `rproc_stop` → `rproc_stop_subdevices`
+- [Phase 5] `rproc_alloc()` uses `kzalloc` — flag starts false
+- [Phase 5] `rproc_boot` / `rproc_trigger_recovery` / `__rproc_shutdown`
+  hold `rproc->lock` around start/stop
+- [Phase 6] Buggy stop-without-start exists conceptually; this tree has
+  attach + late-attach trigger
+- [Phase 8] Failure mode: NULL deref oops, severity HIGH/CRITICAL
 
 **YES**
 
- drivers/nvme/host/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/remoteproc_core.c | 7 +++++++
+ include/linux/remoteproc.h           | 2 ++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 5ed62e070f715..ad725e346c94e 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2313,7 +2313,7 @@ static int nvme_query_fdp_info(struct nvme_ns *ns, struct nvme_ns_info *info)
- 		goto free;
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 2336c55eb021d..068a3ef467f78 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1104,6 +1104,8 @@ static int rproc_start_subdevices(struct rproc *rproc)
+ 		}
  	}
  
--	head->nr_plids = le16_to_cpu(ruhs->nruhsd);
-+	head->nr_plids = min(le16_to_cpu(ruhs->nruhsd), S8_MAX - 1);
- 	if (!head->nr_plids)
- 		goto free;
++	rproc->subdevs_started = true;
++
+ 	return 0;
  
+ unroll_registration:
+@@ -1119,10 +1121,15 @@ static void rproc_stop_subdevices(struct rproc *rproc, bool crashed)
+ {
+ 	struct rproc_subdev *subdev;
+ 
++	if (!rproc->subdevs_started)
++		return;
++
+ 	list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
+ 		if (subdev->stop)
+ 			subdev->stop(subdev, crashed);
+ 	}
++
++	rproc->subdevs_started = false;
+ }
+ 
+ static void rproc_unprepare_subdevices(struct rproc *rproc)
+diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+index de98462d58889..ef711a5b1a7f2 100644
+--- a/include/linux/remoteproc.h
++++ b/include/linux/remoteproc.h
+@@ -273,6 +273,7 @@ enum rproc_features {
+  * @has_iommu: flag to indicate if remote processor is behind an MMU
+  * @auto_boot: flag to indicate if remote processor should be auto-started
+  * @sysfs_read_only: flag to make remoteproc sysfs files read only
++ * @subdevs_started: flag to indicate if subdevs have started
+  * @dump_segments: list of segments in the firmware
+  * @nb_vdev: number of vdev currently handled by rproc
+  * @elf_class: firmware ELF class
+@@ -317,6 +318,7 @@ struct rproc {
+ 	bool has_iommu;
+ 	bool auto_boot;
+ 	bool sysfs_read_only;
++	bool subdevs_started;
+ 	struct list_head dump_segments;
+ 	int nb_vdev;
+ 	u8 elf_class;
 -- 
 2.53.0
 
