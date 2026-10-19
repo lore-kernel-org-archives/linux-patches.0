@@ -1,49 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411E94FC330;
-	Mon, 19 Oct 2026 14:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE02A50B390;
+	Mon, 19 Oct 2026 14:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418745; cv=none; b=s5CqgDxMn6aTB1A9eYt7aBFqWoaBv4EBdrKEEtmUsU/FZHelg1lzASl48xG/GrcHrplwWmqmEcyECcHVhJYTyf9CwSOcLvoqycZvzARAn0pToo9SEdnbb3jFLVsl3H/fxIvg+zz5xtARwDgCFaEA+mQajzljDPkpSifD2eotglY=
+	t=1792418746; cv=none; b=X0DoOlJDuUezr+s9JAO4iIdTtZC2jCE3UgYUQHm3gCjpY369TaXCuWx8bQ4xJgWoLew9KUnHqO+1RFHg3t36f/f4Z+NTKwcgBeilYxs9NKwvvSzLJhEMCNDscv9SYG/6S3IkXNw9MyRtAx3itk/7JQV/+NXvlbpk7hK+Ka1sRzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418745; c=relaxed/simple;
-	bh=/jn0gULFWbMrwJjmayeNpkDr63HxLyEcKNnDZCIm2Eg=;
+	s=arc-20240116; t=1792418746; c=relaxed/simple;
+	bh=OKR8MfhjCT4d494Ibm69L1jmkmuwbzzvmUPQL48nEQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PrwiLz391RuQA6ikUOb6TLr/LF+X1zRqhtYvlhR5hwN9LapiDPUjaKJ6XyqI29ZFJ+xTwkF0hpNjplDZ3ms9AWM3JhYROfcuZtiKumsPigMMjNlKXGUdeNUU4NylZ58o7545EikiKdV0r1r5QqqHCGaTd3JiGRr26bRAoXS1apc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eRZ3wlGL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Lv/ZbwVToFeY4uHLawN9N9WwT4WEsKiNa2sgjsGMzMMom7KL6VSHSIIBwODKcF06Gu4qUQj2phS4ElHYrhpXCUTBNOHrOXINOa9IxhCCOZ0ilIXGl96w/8+8y8fUdPYO3LHUl+fSGmi7ZdkVpkVsxpWvgNBJbU2MFnQPcw8yQPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zz2k3LNS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eRZ3wlGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E901F000C5;
-	Mon, 19 Oct 2026 14:05:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zz2k3LNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B631F000C7;
+	Mon, 19 Oct 2026 14:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418742;
-	bh=vAjPh0K/1xcc1UTcvd4vlu2Zj2eAFfcETHWsmqpxz3Q=;
+	s=k20260515; t=1792418743;
+	bh=eqR8+KOPZ8pnk+K+E0eR+FyydimkvuSbCbmBAmeToow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eRZ3wlGLO3BU1O0vvlpNY8ddCzRqkBWvP/1jPaQHXSe8m8rs9pxaHRGyWskr7eIxn
-	 bQUbqeQLse0wDzV2lvnMe6vosEl+WtrMdxy9m/5JVVfRaXhjyw88qOMeT6iFGwxeTO
-	 6UM/Rg2aruyoIWGsWnmr8wa10bXaSbDFO5iXsDbDyRPvXey2JOm+zeYTTtVWzFXfcV
-	 QQ7KBMIBrlqVVSFSTI9c8v8BWrNQzbLNabyccFx2bV1NqfJ6KlKJMmgkHLI467vjX5
-	 NRd3TFCDliv7OjBlC3MKWD+LuuaqxkMzOFi9JhHA9eH0Yw+7j0AoFONpitaJgozpvB
-	 S+cRidOtSd90Q==
+	b=Zz2k3LNSG+Lv80/ElMbkkFOzBEwLn+W64zWbxH7AIsXE+yPQKH6Eu9CPt3dIgS5gg
+	 1wAwl/qnH44iTvDfJVV2ub1suR8v6cTSpxwOcvidEB74AZdtQnRyQU21sMphXUluyl
+	 jaOuBzzvAWRRZhhEp3z2ml0VTzHD+HccxchaovNIMf/T4JblJ1UTb5r/9gFCJ9lf49
+	 DuNMcrXwWeSexOj06APVGEghOb8YfgtKreNpsle5dnRwz+3rHRJ8aaQQZ2LLeYiXjb
+	 Z02RePIpxhYZuvvqPvd/8cWzaCdGjhQoog7YaQEYnIoeEyiF4cZOCIvp9GJ3jrEAiS
+	 /XXhham7UurVg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	acme@kernel.org,
-	namhyung@kernel.org,
-	tglx@kernel.org,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	linux-perf-users@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] perf/x86/intel: Fallback to sw branch type decoding if no hw decoding
-Date: Mon, 19 Oct 2026 09:52:34 -0400
-Message-ID: <20261019135441.1420968-463-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/amdgpu/gfx12: set KMD_QUEUE for kernel gfx queues
+Date: Mon, 19 Oct 2026 09:52:35 -0400
+Message-ID: <20261019135441.1420968-464-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -59,433 +56,334 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885 ]
+[ Upstream commit 9fe5745f9d8eca38d31d9b672a1998edf856f651 ]
 
-intel_pmu_lbr_filter() currently assumes arch-LBR provides hardware
-branch-type decoding and skips software decoding on that path.
+Set KMD_QUEUE in the GFX MQD and kernel ring control registers so CP
+preserves kernel IB VMIDs instead of replacing them with the queue VMID.
+Use prop->kernel_queue to distinguish kernel and user MQDs.
 
-However, arch-LBR may not always expose branch-type information. In
-that case, treating entries as hardware-decoded can misclassify sampled
-branches (for example, defaulting to JCC), which breaks branch-type
-filtering results.
-
-Fix this by using software branch-type decoding when hardware
-branch-type decoding is unavailable (that is, when x86_lbr_type is not
-enabled). This keeps branch classification and filtering behavior
-correct across arch-LBR configurations.
-
-Since x86_lbr_type is only set to true when arch-LBR is supported,
-it's unnecessary to check if the CPU has the arch-LBR feature.
-
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260616044654.3468742-4-dapeng1.mi@linux.intel.com
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 14741c01680a803050e949744089b57fa53e02f7)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: the 6.18.53 tree still has the JCC
-misclassification, and this is a one-line, already-reviewed correction
-of that path.
+I have enough tree, diff, and caller evidence to judge this for 6.18.57.
+Lore lookups failed with 403, so mailing-list review is limited to the
+amd-gfx archive title and the commit tags.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## Phase 1: Commit message forensics
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [perf/x86/intel] [Fallback] [Use software branch-type decoding
-when Arch LBR does not provide hardware type]
+**Step 1.1 — Subject**
+- Record: `[drm/amdgpu/gfx12] [set] [program KMD_QUEUE on kernel GFX
+  queues so CP keeps kernel IB VMIDs]`
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com> (author, Intel)
-- Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org> (perf/x86
-  maintainer; applied to tip)
-- Link: https://patch.msgid.link/20260616044654.3468742-4-
-  dapeng1.mi@linux.intel.com
-- No Fixes: tag (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by / Cc: stable
-- Ignore pipeline tags: [Upstream commit
-  170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885], Signed-off-by: Sasha Levin
+**Step 1.2 — Tags**
+- Record:
+  - `Reviewed-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+    maintainer)
+  - `Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>` (author)
+  - `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>`
+    (maintainer)
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable`
+    (absence expected for this review)
+  - Pipeline-only markers ignored: `[Upstream commit ...]`, `(cherry
+    picked from ...)`, `Signed-off-by: Sasha Levin`
 
-Notable: msgid `-4` is patch 3/8 of “perf/x86: Miscellaneous PMU bug
-fixes” (cover letter is `-1`). Independent patches grouped for
-review/backport, not a tightly coupled series.
+**Step 1.3 — Body**
+- Record:
+  - Bug: CP replaces kernel IB VMIDs with the queue VMID unless
+    `KMD_QUEUE` is set
+  - Symptom: kernel IBs run in the wrong VM (queue VMID, typically 0)
+  - Root cause: GFX MQD and `CP_RB0_CNTL` never programmed `KMD_QUEUE`
+  - Fix: set the bit from `prop->kernel_queue` (MQD) and hard-set 1 on
+    the kernel ring
+  - No stack trace, repro, or version range in the message
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: `intel_pmu_lbr_filter()` treats Arch LBR as always having
-  hardware branch-type decode and skips software decode.
-- Reality: Arch LBR CPUID leaf 28H ECX bit 2 (`lbr_br_type`) is
-  optional. If it is clear, `get_lbr_br_type()` returns 0.
-- Symptom: type 0 is `ARCH_LBR_BR_TYPE_JCC`, so sampled branches are
-  classified as JCC. Branch-type filters (`PERF_SAMPLE_BRANCH_*`) and
-  saved types are wrong (calls/returns dropped or shown as
-  conditionals).
-- Root cause: gate is `static_cpu_has(X86_FEATURE_ARCH_LBR)` instead of
-  “hardware type actually present”.
-- Fix: gate on `static_branch_likely(&x86_lbr_type)`, which is enabled
-  only when `x86_pmu.lbr_br_type` is set in `intel_pmu_arch_lbr_init()`.
-- Version info in message: none.
+**Step 1.4 — Hidden bug fix?**
+- Record: Not disguised. It is an explicit hardware-programming
+  correctness fix.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. Explicit correctness fix for misclassification. Not
-style/cleanup.
+## Phase 2: Diff analysis
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 2.1 — Inventory**
+- Record: `drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c` only; `+2 / -0`
+- Functions: `gfx_v12_0_cp_gfx_resume()`, `gfx_v12_0_gfx_mqd_init()`
+- Scope: single-file surgical fix
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `arch/x86/events/intel/lbr.c` — 1 insertion, 1 deletion
-- Function: `intel_pmu_lbr_filter()`
-- Scope: single-file, one-line surgical change
+**Step 2.2 — Control-flow change**
+- Hunk 1 (`gfx_v12_0_cp_gfx_resume`): `CP_RB0_CNTL` was built with
+  `RB_BUFSZ`/`RB_BLKSZ` only (base 0). After: `KMD_QUEUE=1` on kernel
+  gfx ring 0. Init/resume path, used when `amdgpu_async_gfx_ring` is 0.
+- Hunk 2 (`gfx_v12_0_gfx_mqd_init`): `CP_GFX_HQD_CNTL` was built from
+  `regCP_GFX_HQD_CNTL_DEFAULT` (0x00f00000). After:
+  `KMD_QUEUE=prop->kernel_queue`. This is the default MQD path
+  (`amdgpu_async_gfx_ring` defaults to 1).
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: if CPU has Arch LBR and `type <= ARCH_LBR_BR_TYPE_KNOWN_MAX`
-  (0–5), map via `arch_lbr_br_type_map[]`. Else `branch_type()` software
-  decode.
-- After: same hardware map only if `x86_lbr_type` is enabled (HW type
-  field present). Otherwise software decode.
-- Path: LBR sample filtering after PMI / branch-stack snapshot, not
-  probe/init-only.
+**Step 2.3 — Bug mechanism**
+- Record: `[logic / hardware programming] [CP overwrites IB VMID unless
+  KMD_QUEUE; fix sets that bit on kernel queues only]`
+- `KMD_QUEUE` is bit 29 (`0x20000000`). Default `0x00f00000` does not
+  include it. `CP_RB0_CNTL` starts from 0, so it was also clear.
+- Same file already sets `KMD_QUEUE` for compute kernel queues in
+  `gfx_v12_0_compute_mqd_init()`. GFX was the missing counterpart.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: logic/correctness (wrong classifier when optional HW field
-  is absent)
-- Mechanism: `get_lbr_br_type()` is:
+**Step 2.4 — Fix quality**
+- Record: Minimal and obviously correct. User MQDs keep `KMD_QUEUE=0`
+  because `mes_userq_mqd_create()` `kzalloc`s `amdgpu_mqd_prop`. Kernel
+  rings set `prop->kernel_queue = true` in `amdgpu_ring_to_mqd_prop()`.
+  Regression risk is low: it matches the existing compute-queue
+  programming.
 
-```866:873:arch/x86/events/intel/lbr.c
-static __always_inline int get_lbr_br_type(u64 info)
-{
-        int type = 0;
+## Phase 3: Git history
 
-        if (static_branch_likely(&x86_lbr_type))
-                type = (info & LBR_INFO_BR_TYPE) >>
-LBR_INFO_BR_TYPE_OFFSET;
+**Step 3.1 — Blame**
+- Record: Surrounding GFX resume/MQD setup comes from `52cb80c12e8a64`
+  (`drm/amdgpu: Add gfx v12_0 ip block support (v6)`, 2023-07-04). The
+  missing bit has been absent since GFX12 was added.
 
-        return type;
-}
-```
+**Step 3.2 — Fixes: tag**
+- Record: No `Fixes:` tag. Bug is the original GFX12 bring-up omitting
+  `KMD_QUEUE`. That bring-up commit is an ancestor of this tree.
 
-When `x86_lbr_type` is off, stored type is 0. Old filter still took the
-Arch LBR map because `0 <= ARCH_LBR_BR_TYPE_KNOWN_MAX`, so every entry
-became JCC. Fix uses the same static key as the reader.
+**Step 3.3 — File history**
+- Record: Prerequisite already here: `7b9110f289795` (`drm/amdgpu/gfx12:
+  set MQD as appriopriate for queue types`) added `prop->kernel_queue` /
+  `RB_NON_PRIV` and compute `KMD_QUEUE`. Present in v6.18.57. This
+  commit is standalone, not patch 2/3 of that older series.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: one condition aligned with how type is populated.
-- Minimal; no unrelated edits.
-- Regression risk: low on CPUs with `lbr_br_type` (common Arch LBR) —
-  same HW path.
-- On Arch LBR without HW type: software decode in NMI (existing
-  `branch_type()` path). Sashiko flagged extra NMI cost because
-  `intel_pmu_setup_hw_lbr_filter()` always sets `X86_BR_TYPE_SAVE` for
-  Arch LBR, so the filter never early-returns. That is the cost of
-  correct types, not a change to already-correct behavior. Peter merged
-  this form anyway.
-- No public API / data-structure change.
+**Step 3.4 — Author**
+- Record: Jesse Zhang is a regular amdgpu contributor. Same-day sibling:
+  `drm/amdgpu/gfx11: set KMD_QUEUE for kernel gfx queues`. Maintainer
+  reviewed both.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 3.5 — Dependencies**
+- Record: Needs `bool kernel_queue` in `amdgpu_mqd_prop`
+  (`284d4dfe850e6`, in v6.18.57) and `CP_*_KMD_QUEUE` masks in
+  `gc_12_0_0_sh_mask.h` (present). Can apply standalone. No new helpers.
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Buggy `if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&` introduced in
-  `47125db27e47e9` (“perf/x86/intel/lbr: Support Architectural LBR”, Kan
-  Liang, 2020-07-08). Contained in `perf-core-2020-08-03` (~v5.9).
-  Present in this tree.
-- `x86_lbr_type` added in `6b19788ddc593` (“perf/x86/intel/lbr: Add
-  static_branch for LBR INFO flags”, 2022-01-18, ~v5.17). Present here.
-- `X86_BR_TYPE_SAVE` forced for Arch LBR in `32ba156df1b1c` (2022, Cc:
-  stable). Present here.
+## Phase 4: Mailing list / external
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Functionally this is a late correction of
-`47125db27e47e9`, which is in v6.18.53.
+**Step 4.1 — Original discussion**
+- Record: `b4 dig -c 14741c01680a` / `9fe5745f9d8e` / `53db34aed371`
+  failed (lore returned an error). Fallback: amd-gfx September 2026
+  archive lists `[PATCH 09/21] drm/amdgpu/gfx12: set KMD_QUEUE for
+  kernel gfx queues` next to hung-queue / pipe-reset patches. No NAK
+  found. No later conflicting revision found.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- `3c492c8eba026` “Fix kernel address leakages in LBR stack” is already
-  in v6.18.53 (same series, patch 4/8). Surrounding filter already has
-  `from_plm` kernel-from dropping.
-- Candidate `906dbeecfa0ff` is this patch on autosel; **not** in
-  `v6.18.53` (`git merge-base --is-ancestor 906dbeecfa0ff v6.18.53`
-  failed).
-- v6.18.53 still has `static_cpu_has(X86_FEATURE_ARCH_LBR)` at the
-  filter. Bug is live on the baseline.
-- Standalone vs series: cover letter: “several independent PMU fixes to
-  simplify review and backporting.” This hunk does not need 1/8, 2/8,
-  5–8. 4/8 is already here.
+**Step 4.2 — Reviewers**
+- Record: `b4 dig -w` failed (same lore error). Commit has `Reviewed-by`
+  / `Signed-off-by` from Alex Deucher.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Dapeng Mi is a regular Intel perf/x86 contributor. Peter
-Zijlstra applied it. Nearby same-series work: leakage fix already in
-this stable tree.
+**Step 4.3 — Bug report**
+- Record: No `Reported-by` / syzbot / bugzilla link. Mechanism is stated
+  by the AMD author.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record:
-- Needs `x86_lbr_type` — in this tree since ~v5.17.
-- Does not need other v4 patches.
-- Applies standalone: v6.18.53 already has the exact one-line context
-  (candidate applied as 1 line).
+**Step 4.4 — Series**
+- Record: Submitted as 09/21 in a hung-queue/reset series. This hunk
+  does not call any of those new helpers; it is self-contained register
+  programming.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.5 — Stable list**
+- Record: No useful stable-list hit for this subject. UNVERIFIED whether
+  anyone already requested or rejected it for stable.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885` → https://patch.m
-  sgid.link/20260616044654.3468742-4-dapeng1.mi@linux.intel.com
-- Subject: `[Patch v4 3/8] perf/x86/intel: Fallback to sw branch type
-  decoding if no hw decoding`
-- Series: v1 2026-06-05, v2 2026-06-09, v3 2026-06-12, v4 2026-06-16;
-  tip-bot2 applied 2026-06-30.
-- v3→v4: unrelated patches; Peter asked to drop markdown in changelogs.
-- v2→v3: “Patch 3/8: Only keep x86_lbr_type check … (Peter).” Committed
-  form is what the maintainer asked for.
-- v1→v2: software fallback added after Sashiko review of v1.
-- Cover: “independent PMU fixes to simplify review and backporting.”
-- Human NAKs: none in the saved thread.
-- Sashiko AI on v4: High — always-on `X86_BR_TYPE_SAVE` plus software
-  decode can add NMI cost if HW type is missing. Not addressed in the
-  merged patch; maintainer still took it.
-- WebFetch to lore.kernel.org: 403. Thread recovered via `b4 dig -m`.
+## Phase 5: Semantic / call-chain
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To/Cc included Peter Zijlstra, Ingo Molnar,
-Arnaldo Carvalho de Melo, Namhyung Kim, Ian Rogers, Adrian Hunter,
-Alexander Shishkin, Andi Kleen, Stephane Eranian, linux-perf-users, Zide
-Chen, Thomas Falcon, Xudong Hao. Peter signed off. No extra Reviewed-by
-on the commit.
+**Step 5.1 — Functions**
+- Record: `gfx_v12_0_cp_gfx_resume`, `gfx_v12_0_gfx_mqd_init`
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No Reported-by, bugzilla, or syzbot. Looks Intel-internal / code
-review. Unverified which SKU has Arch LBR without `lbr_br_type`; CPUID
-documents it as optional (`union cpuid28_ecx.lbr_br_type`).
+**Step 5.2 — Callers**
+- Record:
+  - `gfx_v12_0_cp_gfx_resume` ← GFX hw init when
+    `!amdgpu_async_gfx_ring` (module param default is 1, so this is the
+    fallback)
+  - `gfx_v12_0_gfx_mqd_init` ← `adev->mqds[AMDGPU_HW_IP_GFX].init_mqd` ←
+    `amdgpu_ring_init_mqd()` ← `gfx_v12_0_kgq_init_queue()` (default
+    async KGQ path) and `mes_userq_mqd_create()` (user queues,
+    `kernel_queue==false`)
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: v4 8 independent fixes. 4/8 (kernel LBR address leak) already in
-this tree. This 3/8 is self-contained.
+**Step 5.3 — Callees**
+- Record: `REG_SET_FIELD`, `WREG32_SOC15`. No alloc/lock/API change.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned 403. Cover letter still
-states the series was meant to be easy to backport. UNVERIFIED: no
-stable-list NAK found (could not query the list).
+**Step 5.4 — Reachability**
+- Record: Yes. Default GFX12 init uses KGQ MQD init.
+  `gfx_v12_0_ring_emit_ib_gfx()` writes `control |= ib->length_dw |
+  (vmid << 24)` with `AMDGPU_JOB_GET_VMID(job)`. Userspace CS on a
+  kernel gfx ring therefore depends on CP honoring that IB VMID.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 5.5 — Similar patterns**
+- Record: Compute MQD in the same file already sets `KMD_QUEUE` for
+  kernel queues. GFX11 sibling does the same two-line change. KFD MQD
+  managers also set `KMD_QUEUE` for kernel queues.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `intel_pmu_lbr_filter()` only. Uses `x86_lbr_type`,
-`arch_lbr_br_type_map`, `branch_type()`, `common_branch_type()`.
+## Phase 6: This tree (6.18.57)
 
-Step 5.2: TRACE CALLERS
-Record:
-- `intel_pmu_lbr_read()` → `intel_pmu_lbr_filter()`
-  - `__intel_pmu_snapshot_branch_stack()` (irq-off snapshot)
-  - Intel PMI handler in `intel/core.c` (~line 3375, NMI)
-- `intel_pmu_store_pebs_lbrs()` → store then filter (PEBS LBR)
+**Step 6.1 — Does the bug exist here?**
+- Record: Local tree is **v6.18.57** (`git describe HEAD` =
+  `v6.18.57-155-gcdf239ca885b2`, Makefile 6.18.57).
+- `git merge-base --is-ancestor 14741c01680a HEAD` → not an ancestor.
+- `v6.18.57:drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c` does **not** set
+  `KMD_QUEUE` in `gfx_v12_0_cp_gfx_resume` / `gfx_v12_0_gfx_mqd_init`.
+  The compute path already does. GFX12 IP has been in this line since
+  `52cb80c12e8a64`.
 
-Step 5.3: TRACE CALLEES
-Record: `kernel_ip()`, `arch_lbr_br_type_map[]`, `branch_type()` (insn
-decode in `arch/x86/events/utils.c`), `common_branch_type()`.
-`branch_type()` already used for non-Arch LBR and OTHER_BRANCH.
+**Step 6.2 — Backport difficulty**
+- Record: Clean apply. v6.18.57 context matches the hunks exactly.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace `perf_event_open` with `PERF_SAMPLE_BRANCH_STACK` →
-PMI/PEBS → LBR read → filter. Reachable from perf. Needs Intel PMU +
-Arch LBR without HW type to hit the bug; with HW type the new check
-matches old behavior.
+**Step 6.3 — Related fixes already here?**
+- Record: `7b9110f289795` is in v6.18.57 and handles compute `KMD_QUEUE`
+  / GFX `RB_NON_PRIV`. It does not set GFX `KMD_QUEUE`. No equivalent
+  GFX12 fix is in v6.18.57.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: AMD `arch/x86/events/amd/lbr.c` has its own filter; not this
-bug. Same file already uses `x86_lbr_type` in `get_lbr_br_type()`; the
-filter was the inconsistent check.
+## Phase 7: Subsystem context
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 7.1**
+- Record: `[drm/amdgpu GFX12] [IMPORTANT — common AMD GPU driver, RDNA4
+  / RX 9000 class]`
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
-  kernelversion` → 6.18.53; branch `autosel`.
-- v6.18.53 `intel_pmu_lbr_filter()` still uses
-  `static_cpu_has(X86_FEATURE_ARCH_LBR)`.
-- Bug introduced ~v5.9; still present on this 6.18 baseline.
+**Step 7.2**
+- Record: Active but mature GFX12 support in 6.18. This is a leftover
+  bring-up omission, not a brand-new subsystem.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply. Candidate is a 1-line replace on the v6.18.53 line.
-Leakage extra checks around it do not conflict.
+## Phase 8: Impact and risk
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No other fallback to `x86_lbr_type` in the filter on v6.18.53.
-Leakage fix is separate and already present.
+**Step 8.1 — Who is affected**
+- Record: GFX12 amdgpu users (config/driver-specific). Not universal.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 8.2 — Trigger**
+- Record: Device init (MQD/`CP_RB0_CNTL` programming), then any kernel
+  gfx IB whose VMID ≠ queue VMID. Unprivileged users trigger this via
+  normal command submission. Default path is async KGQ
+  (`amdgpu_async_gfx_ring=1`).
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: perf/x86 Intel LBR (`arch/x86/events/intel/lbr.c`). IMPORTANT:
-Intel PMU branch recording, not core mm/VFS. Widely used on x86 via
-perf.
+**Step 8.3 — Failure mode**
+- Record: Wrong GPU VMID → GFXHUB page fault, ring timeout, GPU reset,
+  or access in the wrong address space. Severity: **HIGH** (GPU hang /
+  fault; possible wrong-VM access).
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively maintained (Kan Liang, Dapeng Mi, Peter Zijlstra). Arch
-LBR path is mature (since 2020), not brand-new.
+**Step 8.4 — Risk vs benefit**
+- Record: Benefit high for GFX12 boxes. Risk very low (2 lines, kernel
+  queues only, same pattern as compute). Ratio favors backport.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 9: Synthesis
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Intel x86 with Arch LBR (Ice Lake+) when CPUID leaf 28H does not
-set branch-type. Users of `perf record -j` / `PERF_SAMPLE_BRANCH_STACK`
-with type filters or type save. Not universal; driver/PMU-specific.
+**Evidence for**
+- Real CP programming bug: kernel IB VMIDs can be replaced with queue
+  VMID 0
+- `gfx_v12_0_ring_emit_ib_gfx()` puts the job VMID in the IB; that path
+  is live
+- Compute KGQ already sets `KMD_QUEUE`; GFX did not
+- 2-line, obviously correct, maintainer-reviewed
+- Bug and prerequisites exist in v6.18.57; applies cleanly
+- No new API/feature
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Normal LBR sampling when HW type is absent. Unprivileged users
-can open perf events if `perf_event_paranoid` allows; typically needs
-profiling access. Not a rare error-path-only bug.
+**Evidence against**
+- No public repro, syzbot, or `Fixes:` tag
+- Everyday GFX12 has worked since bring-up, so firmware or privilege
+  bits may mask this in some cases
+- Submitted as 09/21 in a larger reset series (but this hunk is
+  independent)
+- Lore/b4 review thread could not be fetched (server 403)
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- Failure: wrong branch types; type filters drop real calls/returns or
-  keep everything as JCC; saved types lie.
-- Not oops, deadlock, or filesystem corruption.
-- Severity: MEDIUM (silent wrong samples). Important for perf
-  correctness; same class as other LBR type fixes that already went to
-  stable (e.g. `32ba156df1b1c`).
+**Unresolved**
+- Full reviewer discussion beyond `Reviewed-by: Alex Deucher`
+- Whether a specific firmware version started enforcing VMID replacement
+- Stable-list history for this exact subject
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: correct LBR classification/filtering on Arch LBR without HW
-  type; no-op where HW type exists.
-- Risk: very low (1 line). Extra software decode only on the previously
-  wrong config; `branch_type()` is already used in NMI.
-- Ratio: favorable.
+**Stable rules**
+1. Obviously correct and tested? **PASS** — two `REG_SET_FIELD`s;
+   maintainer reviewed
+2. Real user-facing bug? **PASS** — wrong IB VMID on kernel GFX queues
+3. Important (fault/hang/wrong VM)? **PASS** — HIGH, not cosmetic
+4. Small and contained? **PASS** — +2 lines, one file
+5. No new features/APIs? **PASS**
+6. Applies to this tree? **PASS** — v6.18.57 has the buggy code and
+   prerequisites
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Exception category:** hardware programming / quirk-like register bit
+on an existing driver. Not a new driver or API.
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real misclassification (all branches as JCC) when Arch LBR lacks HW
-  type.
-- Bug exists on this 6.18.53 baseline.
-- One-line, obviously correct, matches `get_lbr_br_type()`.
-- Maintainer (Peter Zijlstra) requested this check and signed off.
-- Independent of the rest of the series; cover letter aimed at
-  backporting.
-- Prerequisites (`x86_lbr_type`, Arch LBR filter) are in this tree.
-- Applies cleanly; sibling 4/8 already in 6.18.53.
+This belongs on 6.18.57. The tree has GFX12, still omits GFX
+`KMD_QUEUE`, and the fix is a two-line register correction with the same
+`kernel_queue` distinction already used for compute MQDs.
 
-AGAINST:
-- Not a crash, UAF, or security hole (leak is a different commit already
-  here).
-- No user Reported-by / syzbot.
-- Sashiko NMI-overhead note not addressed; only matters if HW type is
-  missing.
-- Which production SKUs omit `lbr_br_type` is unverified.
+### What the commit solves for this tree
+On GFX12, kernel gfx rings submit `PACKET3_INDIRECT_BUFFER` with a job
+VMID. Without `KMD_QUEUE`, CP is specified to replace that VMID with the
+queue VMID (0). That is a GPU address-space bug: faults, hangs, or
+wrong-VM access. v6.18.57 already has the `kernel_queue` flag and
+compute `KMD_QUEUE`; this only fills the GFX gap.
 
-UNRESOLVED:
-- Exact CPU/VMM configs with Arch LBR and `lbr_br_type=0`.
-- Stable-list discussion (lore 403).
-
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — one-line, maintainer-shaped, in
-   tip/mainline.
-2. Fixes a real bug that affects users? PASS — wrong LBR types/filters.
-3. Important issue? PASS (MEDIUM) — silent wrong branch samples on Intel
-   LBR; not a panic, but user-visible PMU corruption.
-4. Small and contained? PASS — 1 line, one function.
-5. No new features or APIs? PASS.
-6. Can apply to the local tree? PASS — v6.18.53 has the buggy line and
-   `x86_lbr_type`.
-
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not a device ID, quirk, DT, build, or doc fix). Qualifies
-as a normal small correctness fix.
-
-Step 9.4: MAKE YOUR DECISION
-This 6.18.53 tree still has the Arch LBR filter assuming hardware types
-whenever `X86_FEATURE_ARCH_LBR` is set. That is wrong when CPUID does
-not advertise the type field: types collapse to JCC and filters lie. The
-fix is the same static key already used to read the field, applies
-cleanly, and does not change the common HW-type path. That is
-appropriate for this stable tree.
-
-What it solves for stable users: Intel perf LBR branch-type
-filtering/classification on Arch LBR configs without hardware type,
-instead of silently tagging everything as conditional jumps.
-
-Risk vs benefit: one line vs wrong samples; remaining risk is extra
-software decode only on the previously broken config.
+### Risk vs benefit
+Benefit is correct VMID handling on RDNA4 kernel gfx queues. Risk is a
+two-line bit set on kernel queues only; user queues stay unset.
 
 Verification:
-- [Phase 1] Parsed tags: SOB Dapeng Mi + Peter Zijlstra; Link msgid
-  3468742-4; no Fixes/Reported-by/Cc stable
-- [Phase 1] Cover letter (mbox): independent PMU fixes “to simplify
-  review and backporting”; this is v4 3/8
-- [Phase 2] Diff: 1 line in `intel_pmu_lbr_filter()`,
-  `static_cpu_has(X86_FEATURE_ARCH_LBR)` →
-  `static_branch_likely(&x86_lbr_type)`
-- [Phase 2] Confirmed `get_lbr_br_type()` returns 0 when `x86_lbr_type`
-  is off; 0 maps to JCC
-- [Phase 3] `git blame` on parent: buggy check from `47125db27e47e9`
-  (2020 Arch LBR)
-- [Phase 3] `git merge-base --is-ancestor 47125db27e47e9 v6.18.53` →
-  yes; `6b19788ddc593` (x86_lbr_type) → yes
-- [Phase 3] `git merge-base --is-ancestor 906dbeecfa0ff v6.18.53` → no
-  (not in baseline)
-- [Phase 3] `git show v6.18.53:arch/x86/events/intel/lbr.c` still has
-  `static_cpu_has(X86_FEATURE_ARCH_LBR)` in the filter
-- [Phase 3] Leakage fix `3c492c8eba026` is already in v6.18.53
-- [Phase 4] `b4 dig -c 170cc6b02e3d5`: lore thread
-  20260616044654.3468742-4; v1–v4; Peter asked for x86_lbr_type-only
-  check in v3
-- [Phase 4] `b4 dig -w`: Peter, Ingo, acme, Namhyung, Eranian, linux-
-  perf-users CC’d
-- [Phase 4] Sashiko v4: NMI software-decode cost if TYPE_SAVE always
-  set; unverified product impact
-- [Phase 4] WebFetch lore/stable: 403; UNVERIFIED stable-list discussion
-- [Phase 5] Callers: `intel_pmu_lbr_read()` from PMI and snapshot;
-  `intel_pmu_store_pebs_lbrs()` from PEBS
-- [Phase 6] `git describe HEAD`: v6.18.53-5049-g0f0bdc2b0dffb; `make
-  kernelversion`: 6.18.53
-- [Phase 8] Failure: misclassified LBR samples, severity MEDIUM
-- UNVERIFIED: concrete CPUID dumps with Arch LBR and `lbr_br_type=0`
+- [Phase 1] Parsed tags: Reviewed-by/SOB Alex Deucher; no
+  Fixes/Reported-by/Link
+- [Phase 2] Diff: +2 lines in `gfx_v12_0_cp_gfx_resume` and
+  `gfx_v12_0_gfx_mqd_init`
+- [Phase 2] `regCP_GFX_HQD_CNTL_DEFAULT` is `0x00f00000`; `KMD_QUEUE`
+  mask is `0x20000000` — default does not set the bit
+- [Phase 2] Userq path: `mes_userqueue.c` kzallocs props, so
+  `kernel_queue` stays false
+- [Phase 2] Kernel rings: `amdgpu_ring.c` sets `prop->kernel_queue =
+  true`
+- [Phase 3] Blame: GFX12 setup from `52cb80c12e8a64` (2023); `KMD_QUEUE`
+  never set on GFX
+- [Phase 3] Prerequisite `7b9110f289795` / `284d4dfe850e6` are ancestors
+  of v6.18.57
+- [Phase 3] `git merge-base --is-ancestor 14741c01680a HEAD` → not
+  present as that SHA
+- [Phase 4] `b4 dig` failed (lore server error) — UNVERIFIED full thread
+  text
+- [Phase 4] amd-gfx Sept 2026 archive: `[PATCH 09/21] drm/amdgpu/gfx12:
+  set KMD_QUEUE for kernel gfx queues`
+- [Phase 4] lore.kernel.org WebFetch 403; no stable-list discussion
+  found
+- [Phase 5] Default init: `amdgpu_async_gfx_ring=1` →
+  `gfx_v12_0_kgq_init_queue` → `gfx_v12_0_gfx_mqd_init`
+- [Phase 5] `gfx_v12_0_ring_emit_ib_gfx` encodes VMID at bit 24
+- [Phase 6] `git describe HEAD`: v6.18.57-155-gcdf239ca885b2; Makefile
+  6.18.57
+- [Phase 6] `git show v6.18.57:drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c`:
+  GFX `KMD_QUEUE` missing; compute path present
+- [Phase 8] Failure mode: GPU VM fault / hang / wrong address space —
+  HIGH
+- UNVERIFIED: exact firmware interaction that kept some GFX12 systems
+  working without this bit
 
 **YES**
 
- arch/x86/events/intel/lbr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
-index 44f5556440223..bbfd6ffbdd68a 100644
---- a/arch/x86/events/intel/lbr.c
-+++ b/arch/x86/events/intel/lbr.c
-@@ -1230,7 +1230,7 @@ intel_pmu_lbr_filter(struct cpu_hw_events *cpuc)
- 		 * Doesn't support OTHER_BRANCH decoding for now.
- 		 * OTHER_BRANCH branch type still rely on software decoding.
- 		 */
--		if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&
-+		if (static_branch_likely(&x86_lbr_type) &&
- 		    type <= ARCH_LBR_BR_TYPE_KNOWN_MAX) {
- 			to_plm = kernel_ip(to) ? X86_BR_KERNEL : X86_BR_USER;
- 			type = arch_lbr_br_type_map[type] | to_plm;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+index 433381f806b2b..06fde713b9229 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -2733,6 +2733,7 @@ static int gfx_v12_0_cp_gfx_resume(struct amdgpu_device *adev)
+ 	rb_bufsz = order_base_2(ring->ring_size / 8);
+ 	tmp = REG_SET_FIELD(0, CP_RB0_CNTL, RB_BUFSZ, rb_bufsz);
+ 	tmp = REG_SET_FIELD(tmp, CP_RB0_CNTL, RB_BLKSZ, rb_bufsz - 2);
++	tmp = REG_SET_FIELD(tmp, CP_RB0_CNTL, KMD_QUEUE, 1);
+ 	WREG32_SOC15(GC, 0, regCP_RB0_CNTL, tmp);
+ 
+ 	/* Initialize the ring buffer's write pointers */
+@@ -3025,6 +3026,7 @@ static int gfx_v12_0_gfx_mqd_init(struct amdgpu_device *adev, void *m,
+ 	tmp = regCP_GFX_HQD_CNTL_DEFAULT;
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, RB_BUFSZ, rb_bufsz);
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, RB_BLKSZ, rb_bufsz - 2);
++	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, KMD_QUEUE, prop->kernel_queue);
+ #ifdef __BIG_ENDIAN
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, BUF_SWAP, 1);
+ #endif
 -- 
 2.53.0
 
