@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0276A56CE34;
-	Mon, 19 Oct 2026 13:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDDE51DAE6;
+	Mon, 19 Oct 2026 13:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418283; cv=none; b=FyySsQis1w7Eq9D7Bp+BqqF9v/qT0iuvA6gBdOxKJLutaO6+7k3Vp9WiE9xNzc9/8xmIzU2EFUZ3mrWxnQ3CDzUjNpwaPWZwaIhM2XsgRDsM8kDey//p63Llz7yoYkH9nPo6I4YxPezvV7RDKVqe1LjZb9ckjjfrg/qYvyjbeik=
+	t=1792418285; cv=none; b=nH66x190PT4JVxVQKahXuDWdEnQ1pyHdV7iDyHuPrfsiw5Kmrh4RHzQD8T4xnyn/7+5mQmM6lI/ArGtJeaZ26uQ5BWVuMzhaptFyRSivO+ax98Wj+RB5r+sZC3E8E+xZw1H7+cAMFgOzdqpLVrCUoPodhhvCjDVjEUjbUyufkzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418283; c=relaxed/simple;
-	bh=W+Hlaab2fBIP0gIc86zYYaBsA4mTOK9u10R9OqKw6RA=;
+	s=arc-20240116; t=1792418285; c=relaxed/simple;
+	bh=Gv6k1C/39ggz7wO/3bNh8gJiH5NU5JV0k6IW8N9JWMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PLw0NJCS8PynYRccrt9HG3PALRZLdWmDkORXi7AHAJjKbZPpwvtd/mN0KefF8kLKunLtpG3pfFmVIhlyZa5v54FBA7x7vNFIlskfE6cQVREApGd9FSar22qAfqoY98mT7L7m3AV/ivwQq0hjIaqh+9fmoKmIxx9IH4pwP6kLXe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WRkWoKDn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CGJ2jBhon/c8bLlOFYTPHGFgB+9twBoR8JVW5tTSo28SxsfeaRH6n6Ov76AHpAFYtZcNvGKa1yU7vOEfHun3yILZaQNnrEf3j+imxD5pGSqgatnBccIm8J5p3DpkfPhcyaqFY2gVRnJT15CWNRt1eEv3NIe9Vh/qwR4K5lc7cK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=am+o/k7+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WRkWoKDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1443A1F000C4;
-	Mon, 19 Oct 2026 13:57:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="am+o/k7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421FA1F000C8;
+	Mon, 19 Oct 2026 13:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418280;
-	bh=PX6PyxMl4vNcaqRQnGeOld55AoziJEjAbGnzlj4OKJU=;
+	s=k20260515; t=1792418282;
+	bh=cUgDBXxJlx6W2o3Tcn+WyqZtO/tJR3ZczkJTDItOmjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WRkWoKDnr01ZQH1A11I8KzSv6bEGh2+tl4IjtxOFlTwJK6cWk8Gnmt8kBdhceDIWR
-	 yHmeczAIl5EpmGUGB4v6xbST+bJl/kfZhP8qik1YWihU8xqQaUu/mNAcH6K8O6K3Cy
-	 sSpAideJa3ii51E3/fMfp5kdCLqcsQGw5HGLX9QbWaLEY2XlQv3xNdNLRcq3BAAJGI
-	 y0uJjAEhPjOX7lldUcPbfE3jFKXy8z52kzhm/DXMEu+H9B67oKpP3CPmgHesyVeUMO
-	 q6zFxCMx+R/QjcHE6QWHpsFwpWFBbGojjfiRy+qOktK0rojIOOqzL4+MOzykTawTgw
-	 J1jEGArWoCNYA==
+	b=am+o/k7+BFnkfbe/shplaYggAYQOJpBR1LQY9GUwvjSw5ILaxTfBEwrV8STf8Nzc+
+	 oZaTom7BqvI9RU0XqIkhYzh8pSBw6YQ3Q7DZd7p+u+41YT8eHrVv3+3f3OuByUgnz0
+	 vgEPwabuTvlO8h/1vbYFLfxmQYzVjkXafWXzz5dRDTu51TSdioYvdaS+q9Wm7KEuJb
+	 gda/8JYIg6g76yHCCUPhDuMRDV/yYENXnQrCWHVLEPTQQ9P4ibiwIszwuj5ynJHrrl
+	 PD6sVyadESvJe0eQ2G1ul29RQUteKZD9MUzQZaktltyVxv/O2cHvS2NfS5b7lgpEs5
+	 a4kWMRGmIWUGA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lucas Martins Alves <lucas.alves@lumal21.com.br>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Daniel Schaefer <dhs@frame.work>,
+	=?UTF-8?q?Sven=20Vaink=C3=BCla?= <sven@xn--vainkla-r2a.ee>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	b-liu@ti.com,
-	linux-usb@vger.kernel.org,
+	jikos@kernel.org,
+	jic23@kernel.org,
+	linux-input@vger.kernel.org,
+	linux-iio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] usb: musb: host: clear stale RX interrupt on three-strikes error
-Date: Mon, 19 Oct 2026 09:47:07 -0400
-Message-ID: <20261019135441.1420968-136-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] iio: hid-sensor: als: scale each channel individually
+Date: Mon, 19 Oct 2026 09:47:08 -0400
+Message-ID: <20261019135441.1420968-137-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -47,493 +51,517 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas Martins Alves <lucas.alves@lumal21.com.br>
+From: Daniel Schaefer <dhs@frame.work>
 
-[ Upstream commit 3a3a48487344a653f46a4aadc9ba296386eb3541 ]
+[ Upstream commit cad928dad9a4c26aa56b4223dc2a29bca517fb5f ]
 
-Unplugging a busy USB Ethernet adapter can leave a stale RX interrupt
-pending while the host handles MUSB_RXCSR_H_ERROR. On AM335x/DSPS
-platforms this can retrigger the same three-strikes error before the
-disconnect path completes, flooding the log and potentially leaving the
-host port stuck until reboot.
+Some sensors have multiple channels (not just brightness but color ALS
+sensors) with different scaling factors.
 
-Clear the pending endpoint RX interrupt when aborting the transfer so
-the error storm is broken, and rate limit the error message to avoid
-spamming the log while the fault path completes.
-
-Signed-off-by: Lucas Martins Alves <lucas.alves@lumal21.com.br>
-Link: https://patch.msgid.link/20260714134941.18508-1-lucas.alves@lumal21.com.br
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Link: https://gitlab.freedesktop.org/hadess/iio-sensor-proxy/-/merge_requests/413
+Tested-by: Sven Vainküla <sven@xn--vainkla-r2a.ee> #Asus ProArt PX13 laptop.
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Local tree
-
-This checkout is **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`),
-i.e. current mainline, not a `-stable` branch. The candidate is already
-in this history as `3a3a48487344a`. The verdict below is whether
-**this** tree’s code still has the bug and whether the fix is a suitable
-stable backport of that code — not whether some other series should take
-it.
-
----
-
-## Phase 1: Commit message forensics
-
-**Step 1.1 — Subject**
-- Subsystem: `usb: musb: host:`
-- Action verbs: **clear** (stale IRQ), plus body **rate limit**
-- Intent: stop a leftover RX IRQ from re-firing the three-strikes error
-  path after unplug
-
-Record: `[usb/musb host] [clear] [ACK leftover RX IRQ on three-strikes
-so unplug cannot storm/wedge the host]`
-
-**Step 1.2 — Tags**
-- `Signed-off-by: Lucas Martins Alves <lucas.alves@lumal21.com.br>`
-  (author)
-- `Link: https://patch.msgid.link/20260714134941.18508-1-
-  lucas.alves@lumal21.com.br`
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (USB
-  maintainer merge)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence is expected for this pipeline)
-
-Record: author SOB + lore msgid + Greg KH SOB. No syzbot, no Fixes tag.
-
-**Step 1.3 — Body**
-- Bug: unplug of a **busy USB Ethernet adapter** leaves a pending RX
-  interrupt while `MUSB_RXCSR_H_ERROR` is handled.
-- Symptom: on **AM335x/DSPS**, the same three-strikes error retriggers
-  before disconnect finishes → **log flood** and **host port stuck until
-  reboot**.
-- Root cause (author): stale endpoint RX interrupt not cleared on abort.
-- Fix: `musb_platform_clear_ep_rxintr()` plus `dev_err_ratelimited`.
-
-Record: `[interrupt storm / wedged MUSB host port on unplug] [log spam +
-port dead until reboot] [AM335x/DSPS] [stale RX IRQ reasserts H_ERROR]`
-
-**Step 1.4 — Hidden bug fix?**
-Not hidden. It is an explicit hardware-IRQ abort fix. Rate-limit is
-secondary hardening for the same storm.
-
-Record: `[Not a disguised cleanup; it is a stated interrupt-storm / hang
-fix]`
-
----
-
-## Phase 2: Diff analysis
-
-**Step 2.1 — Inventory**
-- File: `drivers/usb/musb/musb_host.c` only (`+13 / -1`)
-- Function: `musb_host_rx()`
-- Scope: single-file, one error branch
-
-Record: `[musb_host.c +13/-1] [musb_host_rx] [surgical single-file]`
-
-**Step 2.2 — Flow**
-Before: on `MUSB_RXCSR_H_ERROR`, log with `dev_err`, set `-ESHUTDOWN`,
-zero RX interval, clear `H_ERROR` in RXCSR, then fall through to the
-existing fault abort (`musb_h_flush_rxfifo` / giveback).
-After: same abort, but (1) `dev_err_ratelimited` with a trailing `\n`,
-and (2) `musb_platform_clear_ep_rxintr(musb, epnum)` after clearing
-RXCSR.
-
-Record: `[H_ERROR branch: abort URB as before → also ACK platform RX IRQ
-and rate-limit the printk]`
-
-**Step 2.3 — Bug mechanism**
-Category: **hardware interrupt storm / stale IRQ** (same family as
-resource-leak-on-error, but the resource is a latched IRQ).
-
-Verified mechanism:
-1. `dsps_interrupt()` reads `epintr_status`, ACKs it, then calls
-   `musb_interrupt()` → `musb_host_rx()`.
-2. If the Mentor core re-latches RX while `H_ERROR` is still being
-   unwound, DSPS delivers another RX IRQ before disconnect.
-3. `dsps_musb_clear_ep_rxintr()` writes `(1 << epnum) <<
-   wrp->rxep_shift` to `epintr_status` — the same ACK used in
-   `musb_cleanup_urb()` (“clear the endpoint's irq status here to avoid
-   bogus irqs”).
-4. The helper is a **no-op** unless `ops->clear_ep_rxintr` is set; only
-   DSPS implements it.
-
-Record: `[stale IRQ storm] [ACK DSPS ep RX status after H_ERROR so
-musb_host_rx is not re-entered]`
-
-**Step 2.4 — Fix quality**
-Obviously correct: it reuses a 2017 platform hook already used for the
-same “bogus RX IRQ” class. No API/data-structure change. Regression risk
-is low: non-DSPS platforms no-op; DSPS only ACKs the endpoint whose
-error was just handled. Rate-limit cannot change USB behavior. Adding
-`\n` only fixes printk formatting.
+The local tree is **Linux 7.3-rc4** (mainline). Color ALS channels exist
+here (since v6.9), and this is a small per-channel IIO scale correctness
+fix with a real user report. Full phase walkthrough follows.
+
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[iio/hid-sensor-als] [scale] scale each ALS channel
+individually rather than using one illuminance scale for every channel**
+
+- Subsystem: `iio: hid-sensor: als`
+- Verb: “scale” (correctness of IIO `in_*_scale`, not a refactor)
+- Claimed intent: color ALS sensors have per-channel scaling factors;
+  the driver used a single shared scale
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
+Record: tags (ignoring pipeline `Signed-off-by: Sasha Levin` /
+`[Upstream commit …]`):
+- **Signed-off-by:** Daniel Schaefer `<dhs@frame.work>` (author,
+  Framework)
+- **Link:** `https://gitlab.freedesktop.org/hadess/iio-sensor-
+  proxy/-/merge_requests/413`
+- **Tested-by:** Sven Vainküla (Asus ProArt PX13)
+- **Acked-by:** Srinivas Pandruvada (HID sensor hub maintainer)
+- **Signed-off-by:** Jonathan Cameron (IIO maintainer)
+- **No Fixes:** (expected for this review)
+- **No Cc: stable:** (expected)
+- **No Reported-by / syzbot / KASAN**
+
+Notable: real hardware Tested-by, userspace (iio-sensor-proxy) link,
+maintainer Ack.
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
+Record:
+- **Bug:** some HID ALS devices are color ALS (illuminance + color
+  temperature + chromaticity), not brightness-only, and those extra
+  channels have different HID unit/exponent than illuminance.
+- **Symptom:** userspace (iio-sensor-proxy, compositors) applies the
+  illuminance scale to color-temp/chromaticity raw values → wrong
+  physical units (night light / color management broken or nonsense).
+- **Version info:** none in the message. Color/chromaticity channels
+  themselves landed in v6.9.
+- **Root cause:** `hid_sensor_format_scale()` was called only on
+  `als[CHANNEL_SCAN_INDEX_INTENSITY]` and that one scale was returned
+  for every channel.
+
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: **Not a hidden cleanup.** It is an explicit correctness fix:
+wrong IIO SCALE sysfs values for extra ALS channels. Same class as
+`8b518cdb03f5f` (“iio: hid-sensor-prox: support multi-channel SCALE
+calculation”), which had `Cc: stable` and `Fixes:`.
+
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+
+**Step 2.1: INVENTORY THE CHANGES**
+
+Record:
+- **File:** `drivers/iio/light/hid-sensor-als.c` only
+- **Size:** 12 insertions, 10 deletions (net +2)
+- **Functions:** `struct als_state`, `als_read_raw()`,
+  `als_parse_report()`
+- **Scope:** single-file surgical driver fix
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
+Record:
+1. **State:** `scale_pre_decml` / `scale_post_decml` / `scale_precision`
+   become arrays of `CHANNEL_SCAN_INDEX_MAX`.
+2. **`als_read_raw` IIO_CHAN_INFO_SCALE:** used to return the one
+   illuminance scale for any channel; now indexes by `chan->scan_index`,
+   with a bounds check.
+3. **`als_parse_report`:** scale is computed **inside** the per-usage
+   loop with `st->als[i]` (that channel’s units/exponent), instead of
+   once afterward from intensity only.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **[Logic / correctness]** IIO SCALE ABI wrong for color ALS.
+
+`hid_sensor_format_scale()` (verified in `hid-sensor-attributes.c`)
+matches `usage_id` (still the ALS sensor usage `0x200041`) **and**
+`attr_info->units`, then applies `attr_info->unit_expo`. The per-channel
+difference is those HID attribute fields. Intensity/illuminance share
+`HID_USAGE_SENSOR_LIGHT_ILLUM`; color-temp and chromaticity have
+different attributes, so they must not reuse intensity’s exponent.
+
+Classic brightness-only ALS is unchanged: both intensity and illum still
+use the same HID usage and therefore the same scale.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record:
+- **Quality:** obviously correct; same pattern as hid-sensor-prox
+  (`scale_pre_decml[index]` + format_scale in the parse loop).
+- **Minimal:** no unrelated edits.
+- **Regression risk:** low. Traditional ALS behavior is preserved.
+  Color-temp/chromaticity SCALE sysfs values change from wrong to
+  correct (intended).
+- **Known limitation (discussed on-list, not a NAK):**
+  `IIO_CHAN_INFO_SCALE` stays `info_mask_shared_by_type`, so
+  chromaticity X and Y share one sysfs scale. Jonathan Cameron: that
+  only matters if X and Y scales differ; the reported bug is illuminance
+  vs color-temp. Author: “in practice it's probably not needed and the
+  patch works as is.” No v2 was required; v1 was applied.
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
+Record:
+- Shared scale fields date to **`36783d09f1a5c`** (“iio: hid-sensors:
+  ALS: adjust scale and offset”, 2014) — correct when there was only
+  illuminance.
+- Extra channels: **`3765d426fe864`** color temperature,
+  **`2ec17b1950bb8`** chromaticity, both **v6.9-rc1**. That is when one
+  scale became wrong.
+- Dynamic channel assignment: **`f2a71ebdf2312`** (v6.9).
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+
+Record: **No Fixes: tag.** Closest introduction of the bug is the v6.9
+color-temp/chromaticity additions. Those commits **are** ancestors of
+this 7.3-rc4 tree (`git merge-base --is-ancestor` not required for each;
+`git describe --contains` shows `v6.9-rc1`).
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-Record: `[minimal, matches existing abort path] [low regression risk]`
+Record: recent ALS history includes channel init refactor, timestamp
+alignment, probe race fix. **No prerequisite series** for this patch
+(standalone v1). **No follow-ups** on this file after `cad928dad9a4c`.
 
----
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-## Phase 3: Git history
+Record: Daniel Schaefer has this single IIO commit in-tree. Not the
+subsystem maintainer. Weight comes from **Acked-by Srinivas Pandruvada**
+and **SOB Jonathan Cameron**.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: needs existing `als[]` per-channel attribute array,
+`CHANNEL_SCAN_INDEX_*`, and `hid_sensor_format_scale()` — all present
+here since v6.9 / much earlier. **Applies standalone.** Prox analog
+`8b518cdb03f5f` is a sibling pattern, not a dependency.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
+Record:
+- **b4 dig:** https://patch.msgid.link/20260723-chromaticity-v1-1-
+  5ef5746ace2a@frame.work
+- **Series:** v1 only (no v2/v3 despite author briefly offering a v2 for
+  `info_mask_separate`)
+- **Jonathan Cameron (2026-07-26):** SCALE shared-by-type is OK unless
+  chromaticity X/Y differ; “the change here looks fine”; queued on
+  iio.git testing.
+- **Srinivas Pandruvada:** Acked-by.
+- **David Lechner:** explained testing-branch means accepted/applied.
+- **No NAK.** No reviewer asked for Cc: stable.
+- **Sashiko bot:** flagged shared-by-type (addressed in discussion) and
+  a **pre-existing** buffer-layout concern, not introduced by this
+  patch.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+
+Record: To/Cc included Jonathan Cameron, Srinivas Pandruvada, David
+Lechner, Nuno Sá, Andy Shevchenko, linux-iio, linux-input. Right
+maintainers were in the loop.
 
-**Step 3.1 — Blame**
-- `H_ERROR` handling exists since `550a7375fe720` (Felipe Balbi, 2008).
-- `-ESHUTDOWN` / “three-strikes” comment: `1b967691ecdcf` (Bin Liu,
-  2020-05-25, v5.7-rc6 era) — same disconnect/storm class.
-- This patch only owns the new call and the ratelimited log.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Record: `[buggy H_ERROR path: 2008; incomplete storm mitigation:
-1b967691ecdcf ~v5.7] [long-lived]`
+Record: GitLab iio-sensor-proxy MR 413 returned **HTTP 403** (UNVERIFIED
+beyond the Link tag). Hardware evidence that **is** verified: Tested-by
+on Asus ProArt PX13; Framework author; iio-sensor-proxy is the standard
+userspace for laptop ALS.
 
-**Step 3.2 — Fixes: tag**
-None. The incomplete predecessor is `1b967691ecdcf` (“return -ESHUTDOWN
-… three-strikes”), present in this tree (`git merge-base --is-ancestor`
-succeeded).
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-Record: `[no Fixes tag; predecessor 1b967691ecdcf is in this tree]`
+Record: standalone, not N/M. Prox multi-channel SCALE (`8b518cdb03f5f`,
+v6.15-rc6) is the same bug class and **was** `Cc: stable`.
 
-**Step 3.3 — File history**
-Related:
-- `dbac5d07d13e3` (2016): don’t start next RX URB on failure — **system
-  freeze** on USB-UART unplug / RX IRQ flood.
-- `6def85a396ce7` + `c48400baa0215` (2017, v4.10): add/implement
-  `clear_ep_rxintr` for bogus RX IRQ during DMA teardown; **already Cc:
-  stable # 4.1+**.
-- No later `musb_host.c` commits after this candidate.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-Record: `[standalone; same storm family as 2016/2017/2020 musb host
-fixes] [no later conflicting musb_host.c commits]`
+Record: no “stable” in the lore mbox. UNVERIFIED whether linux-stable@
+discussed it separately (no lore.kernel.org/stable hit via b4 thread).
 
-**Step 3.4 — Author**
-Lucas Martins Alves has only this USB commit in-tree. Merge via Greg KH.
-Recipients included Bin Liu (`b-liu@ti.com`, long-time MUSB/DSPS
-author).
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-Record: `[outside contributor; Greg KH merged; TI musb maintainer was on
-Cc]`
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
 
-**Step 3.5 — Prerequisites**
-Needs `musb_platform_clear_ep_rxintr()` / `ops->clear_ep_rxintr`. Both
-are ancestors of HEAD (`6def85a396ce7`, `c48400baa0215`). Call site in
-`musb_cleanup_urb()` already exists. Applies standalone.
+Record: `als_read_raw`, `als_parse_report`; struct `als_state`. Probe
+path: `hid_als_probe` → `als_parse_report`. Sysfs/read path: IIO core →
+`als_info.read_raw` → `als_read_raw`.
 
-Record: `[depends on 2017 helper, present here] [standalone apply yes]`
+**Step 5.2: TRACE CALLERS**
 
----
+Record:
+- `als_parse_report`: only from `hid_als_probe` (HID-SENSOR-200041 /
+  LISS-0041 platform devices).
+- `als_read_raw`: IIO `read_raw` for sysfs (`in_illuminance_scale`,
+  `in_colortemp_scale`, `in_chromaticity_x_scale`, etc.) and buffered
+  metadata. **Userspace-reachable**, not IRQ-hot.
 
-## Phase 4: Mailing list / external
+**Step 5.3: TRACE CALLEES**
 
-**Step 4.1**
-`b4 dig -c 3a3a48487344a` → v1 only:
-https://patch.msgid.link/20260714134941.18508-1-
-lucas.alves@lumal21.com.br
-Submitted 2026-07-14, merged 2026-07-17. Saved mbox is **only the
-patch**; no replies, NAKs, or `Cc: stable` discussion. WebFetch to lore
-returned **403** (verified).
+Record: `hid_sensor_format_scale()` → unit table +
+`adjust_exponent_nano()`; `sensor_hub_input_get_attribute_info()` fills
+per-channel `units`/`unit_expo`.
 
-Record: `[lore msgid above] [v1 only, no review comments in thread] [no
-NAK]`
+**Step 5.4: FOLLOW THE CALL CHAIN**
 
-**Step 4.2**
-`b4 dig -w`: To/Cc Lucas, `b-liu@ti.com`, `gregkh@linuxfoundation.org`,
-`linux-usb`, `linux-kernel`.
+Record: unprivileged users can read IIO sysfs on a system with this HID
+ALS. Color ALS on recent AMD/laptop HID sensor hubs (v6.9+ channels).
+**Reachable from userspace.**
 
-Record: `[USB maintainer + TI musb author + linux-usb were on the
-original To/Cc]`
-
-**Step 4.3**
-No `Reported-by` / bugzilla / syzbot. Body reads as first-hand AM335x
-unplug. User-count beyond the author is **unverified**.
-
-Record: `[no public bugzilla/syzbot] [UNVERIFIED: how many users besides
-the author]`
-
-**Step 4.4**
-`b4 dig -a`: single standalone v1, not a series.
-
-Record: `[standalone, not patch X/Y]`
-
-**Step 4.5**
-lore.kernel.org/stable WebFetch: **403**. No stable-list discussion
-verified.
-
-Record: `[UNVERIFIED: stable@ discussion]`
-
----
-
-## Phase 5: Semantic / call graph
-
-**Step 5.1**
-Modified: `musb_host_rx()`. New call: `musb_platform_clear_ep_rxintr()`
-→ `dsps_musb_clear_ep_rxintr()` on DSPS.
-
-**Step 5.2 — Callers** (from `drivers/usb/musb/musb_core.c`)
-- `musb_interrupt()`: host IRQ, `for_each_set_bit` on `int_rx`
-- `musb_dma_completion()`: DMA completion RX path
-
-Called from hardirq / DMA completion under `musb->lock`. Common host RX
-path, not init-only.
-
-**Step 5.3 — Callees in the hunk**
-`dev_err_ratelimited`, `musb_writeb` (interval), `musb_writew` (RXCSR),
-`musb_platform_clear_ep_rxintr`. Fault path still does
-`musb_h_flush_rxfifo` when `status != 0`.
-
-**Step 5.4 — Reachability**
-Yes: USB Ethernet bulk IN while the device is yanked. Unprivileged
-physical unplug. DSPS glue is `CONFIG_USB_MUSB_DSPS` (`ARCH_OMAP2PLUS` —
-AM335x BeagleBone / Sitara class).
-
-**Step 5.5 — Similar pattern**
-Same helper already used in `musb_cleanup_urb()` for DMA abort. TX
-`H_ERROR` still uses `musb_dbg` and does **not** clear RX IRQ (TX path;
-out of this patch’s scope). Historical RX-flood fixes: `dbac5d07d13e3`,
-`1b967691ecdcf`.
-
-Record: `[musb_host_rx from IRQ/DMA] [userspace-triggerable unplug]
-[same helper as cleanup_urb]`
-
----
-
-## Phase 6: This checkout
-
-**Step 6.1**
-Buggy `H_ERROR` branch is in `musb_host_rx()` here. Helper and DSPS
-callback exist. Bug class dates to 2008; `-ESHUTDOWN` mitigation from
-~5.7 did not clear the DSPS RX IRQ.
-
-Record: `[yes, musb_host.c H_ERROR path] [introduced 2008 / incomplete
-2020]`
-
-**Step 6.2**
-Context around the hunk matches the candidate 1:1.
-`musb_platform_clear_ep_rxintr` already declared. Expected apply:
-**clean**.
-
-Record: `[clean apply on this tree]`
-
-**Step 6.3**
-No later musb_host.c commit supersedes this. 2016/2020 patches are
-related but **not** equivalent (they stop URB resubmit / next URB start;
-they do not ACK `epintr_status`).
-
-Record: `[no substitute fix already covering the stale DSPS RX IRQ]`
-
----
-
-## Phase 7: Subsystem
-
-**Step 7.1**
-`drivers/usb/musb` — Mentor USB OTG host on TI DSPS/AM335x. Criticality:
-**IMPORTANT** for those platforms (USB host), **PERIPHERAL** globally.
-Not staging.
-
-**Step 7.2**
-Mature driver (2008+), still getting probe/UAF/of_node fixes. This is a
-late bug in old code, not a new-subsystem feature.
-
-Record: `[usb/musb] [IMPORTANT for AM335x/DSPS host] [mature]`
-
----
-
-## Phase 8: Impact and risk
-
-**Step 8.1**
-Affected: MUSB **host** on platforms with `clear_ep_rxintr`
-(DSPS/AM335x). Rate-limit also helps any MUSB host that hits three-
-strikes. Trigger is USB Ethernet (and similar always-IN gadgets) unplug.
-
-Record: `[driver/platform-specific: USB_MUSB_DSPS / AM335x; logging on
-all musb host]`
-
-**Step 8.2**
-Trigger: unplug busy USB-Ethernet while IN URBs are posted — realistic.
-Timing-dependent vs disconnect. Unprivileged user can do it physically.
-
-Record: `[common unplug of busy NIC] [not a theoretical race only]
-[physical unplug]`
-
-**Step 8.3**
-Failure: IRQ retrigger → printk flood + **host port unusable until
-reboot**. Same family previously described as **system freeze**
-(`dbac5d07d13e3`: hub never reports disconnect because RX ISR never
-yields).
-
-Record: `[hang / wedged USB host (+ log flood)] [HIGH, hang-class]`
-
-**Step 8.4**
-Benefit: high for AM335x/BeagleBone/industrial Sitara USB hosts.
-Risk: very low (13 lines, existing no-op-safe hook, error path only).
-
-Record: `[high benefit / very low risk]`
-
----
-
-## Phase 9: Synthesis
-
-**Step 9.1 — Evidence**
-
-FOR:
-- Real, user-visible hang: USB host stuck until reboot after unplugging
-  a busy USB Ethernet adapter.
-- Interrupt storm on a path already known to freeze the machine
-  (2016/2020 musb host history).
-- 13-line change in one function; reuses
-  `musb_platform_clear_ep_rxintr()` from 2017 (stable-bound then).
-- No-op on glues without the ops hook.
-- Merged by Greg KH; TI musb author was CCd.
-- Prerequisites exist in this tree; no series dependency.
-
-AGAINST:
-- No `Reported-by` / public repro beyond the commit text.
-- Affects DSPS/AM335x, not every USB user.
-- Thread had no review replies (Greg merged v1 quickly).
-
-UNRESOLVED:
-- Could not fetch lore HTML (403); mbox had no replies.
-- Could not search stable@ (403).
-- Number of independent reporters unverified.
-
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — same ACK used in
-   `musb_cleanup_urb`; merged to mainline.
-2. Real bug affecting users? **PASS** — unplug of busy USB Ethernet on
-   AM335x.
-3. Important (crash/security/corruption/deadlock)? **PASS** — host port
-   hang until reboot / IRQ storm (HIGH).
-4. Small and contained? **PASS** — +13/-1, one file, one branch.
-5. No new features/APIs? **PASS** — uses existing ops hook; rate-limit
-   is logging only.
-6. Applies to this tree? **PASS** — helper, DSPS callback, and hunk
-   context all present.
-
-**Step 9.3 — Exceptions**
-Not a device-ID/DT/build/docs exception. Closest: **hardware
-workaround** (ACK platform IRQ the Mentor core leaves asserted).
-Qualifies on ordinary bug-fix rules anyway.
-
-**Step 9.4 — Decision**
-This is a small, contained fix for a real disconnect-time IRQ storm that
-can leave MUSB host unusable until reboot. It matches prior musb stable-
-worthy storm fixes and uses an already-stable helper. Benefit outweighs
-risk.
-
----
-
-### What it solves for stable users
-
-On TI DSPS/AM335x, yanking a busy USB Ethernet adapter can re-assert
-endpoint RX IRQ while `musb_host_rx()` is still handling
-`MUSB_RXCSR_H_ERROR`. The host keeps taking the same three-strikes
-error, floods the log, and can leave the port dead until reboot.
-Clearing the platform RX IRQ (and rate-limiting the error) breaks that
-loop so disconnect can finish.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: hid-sensor-prox already uses per-channel scale arrays. Other
+hid-sensor drivers (accel, gyro, press, temp) still use a single scale
+because they are not mixed-unit multi-channel in the same way. ALS was
+the leftover mismatch after v6.9 extra channels.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record:
+- **Tree:** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = **7.3.0-rc4** (Linus mainline, not an LTS branch).
+- Color ALS channels **are** in `hid-sensor-als.c`.
+- Commit **`cad928dad9a4c` is already an ancestor of HEAD** (working
+  tree already has per-channel arrays). That is the mainline landing of
+  this fix during 7.3, **not** a reason to reject it on technical merit
+  (pipeline “already selected” markers ignored).
+- Bug introduced **v6.9** (2024), long before this tree.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: against **this** 7.3 tree the change is already applied / would
+apply cleanly. Context in the submitted v1 still used
+`als_adjust_channel_bit_mask`; this tree uses `iio_scan_type`
+initializer (`cded217233845`). For **this** checkout that is already
+resolved. No extra commits required for the logic of the fix.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: this exact commit is in HEAD. No later revert or competing fix.
+No other ALS scale fix in `git log cad928dad9a4c..HEAD --
+drivers/iio/light/hid-sensor-als.c`.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: **IIO light / HID sensor hub ALS** — **PERIPHERAL to IMPORTANT**
+depending on hardware. Laptop ambient/color light (Framework, Asus
+ProArt, HID sensor hubs). Not mm/net/fs core, but commonly used on
+notebooks via iio-sensor-proxy.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: mature driver (2012), still getting channel and race fixes.
+Color ALS is several years old (v6.9), not brand-new staging code.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: **driver-specific / config-specific** (`CONFIG_HID_SENSOR_ALS`).
+Users of HID color ALS (not every illuminance-only ALS). Confirmed: Asus
+ProArt PX13; likely other color-ALS HID laptops.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: **Every read of IIO SCALE** for color-temp/chromaticity, and
+every userspace conversion of those raw values. Not a race. Unprivileged
+users with IIO device node/sysfs access can observe it. Common on
+affected laptops at session start (iio-sensor-proxy).
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: **Wrong sensor physical values** (color temperature /
+chromaticity), not oops/UAF/deadlock. Userspace brightness for classic
+ALS is unaffected (same HID usage). Compositor color/night-light using
+color ALS can be wrong. **Severity: MEDIUM** — real, user-visible, “oh
+that’s not good,” not CRITICAL.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit:** correct IIO scale on color ALS; unbreaks iio-sensor-
+  proxy/hardware that already exists in this lineage.
+- **Risk:** very low (≈20-line, one file, no locking/API).
+- **Ratio:** favorable. Same class already taken for stable in prox.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR backporting**
+- Real userspace-visible bug: mixed-unit color ALS channels reused
+  illuminance scale.
+- Hit on real hardware (Asus ProArt PX13 Tested-by); iio-sensor-proxy MR
+  linked.
+- Small, obviously correct, acked by HID-sensor maintainer, applied by
+  IIO maintainer.
+- Identical prox bug was explicitly `Cc: stable`.
+- This tree **has** the v6.9 color/chromaticity channels, so the bug
+  class exists in this lineage.
+- Traditional ALS unchanged; only extra channels’ SCALE change.
+- Fits documented stable bar: “real bug that bothers people” / “oh,
+  that’s not good.”
+
+**AGAINST**
+- Not a crash, UAF, deadlock, or security issue.
+- No Fixes:/Cc: stable (not a negative per review rules).
+- SCALE still shared-by-type for chromaticity X/Y (accepted by
+  maintainer as OK for the reported bug).
+- Peripheral driver, not core kernel.
+- GitLab MR body UNVERIFIED (403).
+
+**UNRESOLVED**
+- Exact HID unit/exponent values on the PX13 (not in-tree).
+- Whether chromaticity X vs Y ever differ on some firmware (maintainers
+  assumed no).
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — Tested-by, Acked-by, IIO
+   maintainer queued v1.
+2. Fixes a real bug that affects users? **PASS** — wrong IIO scale on
+   color ALS; userspace conversion broken.
+3. Important issue? **PASS** (medium “oh that’s not good,” not CRITICAL
+   crash) — wrong physical units for sensors userspace actually uses.
+4. Small and contained? **PASS** — one file, +12/−10.
+5. No new features or APIs? **PASS** — corrects SCALE for channels that
+   already exist; no new sysfs ABI.
+6. Can apply to the local tree? **PASS** — affected code is in 7.3-rc4;
+   change is already the current code here.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: not a device-ID/quirk/DT/build/docs exception. Ordinary driver
+correctness fix.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This tree’s ALS driver includes color-temperature and chromaticity
+channels added in v6.9 but, until this change, advertised a single
+illuminance-derived IIO scale for all of them. That is a real, tested
+userspace bug (wrong color ALS readings via iio-sensor-proxy), not a
+feature or cleanup. The patch is small, matches the already-stable-
+worthy prox multi-channel SCALE fix, and does not change classic
+illuminance ALS. Benefit outweighs the low regression risk.
+
+### What the commit solves and why it matters here
+
+Color HID ALS devices expose extra channels with different HID
+units/exponents. The driver formatted scale only from the intensity
+attribute, so `in_colortemp_scale` / chromaticity scale were wrong. On
+this 7.3-rc4 tree those channels exist, so the fix is applicable and is
+the right stable-style correctness change for that hardware.
 
 ### Risk vs benefit
 
-Very low risk (no-op elsewhere, existing helper, error path only) versus
-high benefit (avoid a wedged USB host on a widely deployed SoC class).
+Benefit: correct sensor units for color ALS on laptops that already use
+this driver. Risk: a few array/index changes on the sysfs read path;
+illuminance-only devices keep the same scale.
 
 ### Concerns
 
-None that block backport on this tree: no missing helpers, no series, no
-API change. User-count beyond the author is unverified and does not
-outweigh the hang severity plus the 2016/2020 precedent.
+No crash-level severity; chromaticity X/Y still share type-wide scale
+(explicitly accepted). Neither blocks backport of this contained fix.
 
----
-
-## Verification
-
-- [Phase 1] Parsed tags: author SOB, msgid Link, Greg KH SOB; no
-  Fixes/Reported-by/Cc stable
-- [Phase 1] `git log -1 --format` on `3a3a48487344a`: subject/body match
-  the candidate
-- [Phase 2] Diff: +13/-1 in `musb_host_rx()` H_ERROR branch; `dev_err` →
-  `dev_err_ratelimited`; add `musb_platform_clear_ep_rxintr`
-- [Phase 2] Read `musb_host.c` fault path: `status = -ESHUTDOWN` still
-  leads to flush/abort
-- [Phase 2] Read `musb_core.h`: helper no-ops if ops hook NULL
-- [Phase 2] Read `dsps_musb_clear_ep_rxintr`: writes endpoint bit to
-  `epintr_status`
-- [Phase 2] Read `dsps_interrupt`: ACK all epintr then
-  `musb_interrupt()` → re-latch can retrigger
-- [Phase 2] `musb_cleanup_urb` already calls the same helper “to avoid
-  bogus irqs”
-- [Phase 3] `git blame -L 1770,1810 musb_host.c`: H_ERROR from 2008;
-  ESHUTDOWN from `1b967691ecdcf`
-- [Phase 3] `git merge-base --is-ancestor` 6def85a396ce7 / c48400baa0215
-  / 1b967691ecdcf / 3a3a48487344a vs HEAD: all true
-- [Phase 3] `git show` 6def85a396ce7 / c48400baa0215: helper added for
-  bogus RX IRQ; Cc stable 4.1+
-- [Phase 3] `git show` dbac5d07d13e3: earlier RX ISR flood freeze on
-  unplug
-- [Phase 3] `git log 3a3a48487344a..HEAD -- musb_host.c`: empty (no
-  follow-up)
-- [Phase 3] `git log --author='Lucas Martins Alves' -- drivers/usb/`:
-  only this commit
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 msgid, recipients Bin Liu + Greg KH
-  + linux-usb, mbox has patch only
-- [Phase 4] WebFetch lore/stable: 403 — UNVERIFIED HTML thread beyond
-  mbox
-- [Phase 5] `git grep musb_host_rx`: callers `musb_interrupt`,
-  `musb_dma_completion`
-- [Phase 5] `git grep clear_ep_rxintr`: only DSPS implements the ops
-- [Phase 6] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
-  7.3.0-rc4
-- [Phase 6] Pre-patch hunk via `git show
-  3a3a48487344a^:drivers/usb/musb/musb_host.c`: helper already existed
-- [Phase 7] `Kconfig USB_MUSB_DSPS`: ARCH_OMAP2PLUS / TI DSPS
-- [Phase 8] Failure mode from commit text + 2016 freeze commit: IRQ
-  storm / wedged host, HIGH
-- UNVERIFIED: independent user count; stable@ mailing list discussion;
-  lore HTML (403)
-
-The fix is small, uses an existing platform ACK, and prevents a real
-USB-host hang on unplug.
+Verification:
+- [Phase 1] Parsed tags: Tested-by Sven Vainküla (Asus ProArt PX13);
+  Acked-by Srinivas Pandruvada; SOB Jonathan Cameron; Link to iio-
+  sensor-proxy MR 413; no Fixes/Cc:stable
+- [Phase 2] Diff: 12+/10- in hid-sensor-als.c; scalar scale → per-
+  scan_index arrays; format_scale moved into parse loop over
+  `st->als[i]`
+- [Phase 2] Verified `hid_sensor_format_scale()` uses `attr_info->units`
+  and `unit_expo`; ALS unit table only has ALS+0 and ALS+LUX
+- [Phase 3] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
+  kernelversion 7.3.0-rc4
+- [Phase 3] `git merge-base --is-ancestor cad928dad9a4c HEAD` → already
+  in this tree (mainline landing)
+- [Phase 3] Color temp `3765d426fe864` and chromaticity `2ec17b1950bb8`
+  contained in v6.9-rc1
+- [Phase 3] Prox analog `8b518cdb03f5f` had Cc: stable + Fixes
+- [Phase 3] No follow-up commits on hid-sensor-als.c after cad928dad9a4c
+- [Phase 4] `b4 dig -c cad928dad9a4c`: lore https://patch.msgid.link/202
+  60723-chromaticity-v1-1-5ef5746ace2a@frame.work
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: IIO + HID-sensor maintainers on To/Cc
+- [Phase 4] mbox: Jonathan OK with shared-by-type; Srinivas Ack; no NAK;
+  no stable nomination in thread
+- [Phase 4] GitLab MR fetch: 403, body UNVERIFIED
+- [Phase 5] semcode: not available; grep shows als_read_raw only from
+  als_info; hid_als_probe only caller of als_parse_report
+- [Phase 6] Working tree already has per-channel scale arrays at lines
+  36–38 and 332–334
+- [Phase 8] Failure mode: wrong IIO SCALE for color ALS → incorrect
+  userspace conversion; severity MEDIUM
+- UNVERIFIED: exact PX13 HID unit/exponent values; linux-stable@
+  discussion outside this thread
 
 **YES**
 
- drivers/usb/musb/musb_host.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/iio/light/hid-sensor-als.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/musb/musb_host.c b/drivers/usb/musb/musb_host.c
-index 6b4481a867c5e..40f51c388ef59 100644
---- a/drivers/usb/musb/musb_host.c
-+++ b/drivers/usb/musb/musb_host.c
-@@ -1774,7 +1774,8 @@ void musb_host_rx(struct musb *musb, u8 epnum)
- 		status = -EPIPE;
+diff --git a/drivers/iio/light/hid-sensor-als.c b/drivers/iio/light/hid-sensor-als.c
+index 384572844162c..232cb58e0a9ff 100644
+--- a/drivers/iio/light/hid-sensor-als.c
++++ b/drivers/iio/light/hid-sensor-als.c
+@@ -33,9 +33,9 @@ struct als_state {
+ 		u32 illum[CHANNEL_SCAN_INDEX_MAX];
+ 		aligned_s64 timestamp;
+ 	} scan;
+-	int scale_pre_decml;
+-	int scale_post_decml;
+-	int scale_precision;
++	int scale_pre_decml[CHANNEL_SCAN_INDEX_MAX];
++	int scale_post_decml[CHANNEL_SCAN_INDEX_MAX];
++	int scale_precision[CHANNEL_SCAN_INDEX_MAX];
+ 	int value_offset;
+ 	int num_channels;
+ 	s64 timestamp;
+@@ -186,9 +186,11 @@ static int als_read_raw(struct iio_dev *indio_dev,
+ 		ret_type = IIO_VAL_INT;
+ 		break;
+ 	case IIO_CHAN_INFO_SCALE:
+-		*val = als_state->scale_pre_decml;
+-		*val2 = als_state->scale_post_decml;
+-		ret_type = als_state->scale_precision;
++		if (chan->scan_index >= CHANNEL_SCAN_INDEX_MAX)
++			return -EINVAL;
++		*val = als_state->scale_pre_decml[chan->scan_index];
++		*val2 = als_state->scale_post_decml[chan->scan_index];
++		ret_type = als_state->scale_precision[chan->scan_index];
+ 		break;
+ 	case IIO_CHAN_INFO_OFFSET:
+ 		*val = als_state->value_offset;
+@@ -338,6 +340,10 @@ static int als_parse_report(struct platform_device *pdev,
+ 		als_adjust_channel_bit_mask(channels, index, st->als[i].size);
+ 		++index;
  
- 	} else if (rx_csr & MUSB_RXCSR_H_ERROR) {
--		dev_err(musb->controller, "ep%d RX three-strikes error", epnum);
-+		dev_err_ratelimited(musb->controller,
-+				    "ep%d RX three-strikes error\n", epnum);
- 
- 		/*
- 		 * The three-strikes error could only happen when the USB
-@@ -1788,6 +1789,17 @@ void musb_host_rx(struct musb *musb, u8 epnum)
- 		rx_csr &= ~MUSB_RXCSR_H_ERROR;
- 		musb_writew(epio, MUSB_RXCSR, rx_csr);
- 
-+		/*
-+		 * Unplugging a USB-Ethernet adapter while it is busy can make
-+		 * the controller keep re-asserting the three-strikes error for
-+		 * this endpoint before the disconnect is processed. That floods
-+		 * the log and can wedge the host port until reboot. Drop the
-+		 * stale pending RX interrupt on platforms that support it (e.g.
-+		 * AM335x/DSPS) to break the storm; the transfer is still
-+		 * aborted below via the fault path.
-+		 */
-+		musb_platform_clear_ep_rxintr(musb, epnum);
++		st->scale_precision[i] = hid_sensor_format_scale(usage_id,
++					&st->als[i], &st->scale_pre_decml[i],
++					&st->scale_post_decml[i]);
 +
- 	} else if (rx_csr & MUSB_RXCSR_DATAERROR) {
+ 		dev_dbg(&pdev->dev, "als %x:%x\n", st->als[i].index,
+ 			st->als[i].report_id);
+ 	}
+@@ -347,10 +353,6 @@ static int als_parse_report(struct platform_device *pdev,
+ 	if (index)
+ 		ret = 0;
  
- 		if (USB_ENDPOINT_XFER_ISOC != qh->type) {
+-	st->scale_precision = hid_sensor_format_scale(usage_id,
+-				&st->als[CHANNEL_SCAN_INDEX_INTENSITY],
+-				&st->scale_pre_decml, &st->scale_post_decml);
+-
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
