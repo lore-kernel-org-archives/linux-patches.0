@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5609A5A874C;
-	Mon, 19 Oct 2026 13:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4154A5A8767;
+	Mon, 19 Oct 2026 13:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418396; cv=none; b=cKmFoIIYi6b/xlzTVN9ImbYSZR+Ol3UKwffnka1kcL/jKG5kTBVhOSC5GETkDGogWcN3sxaPTcXzPbtMflKXcOBM9NeVCrcoRuZXv2colutKKJlLpbzMWkyT98G64vkeQz50qRe3l21OKI2Wk+FX2uGUWegwKdp3XeS+HhmWMi8=
+	t=1792418397; cv=none; b=qC1a1C776UDMAd8N3en4uTdxqJd66RLLi0hwZOdsjgewhBrsCyL9cgwKW01+pP11rV2YuSQsUVR0JmTN4zRAvDy0MeP2/Jp/nUi8D8am71QyDg4/s4IqvcGsIYaTNMHNRbu9meEOqG+/3u5y8J581kEF5ZHvMyy6F2wPOWEjTck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418396; c=relaxed/simple;
-	bh=IUHvC2eVWuoAKR3ZpmygdGMK18/wVIpi8H0NEynEIg4=;
+	s=arc-20240116; t=1792418397; c=relaxed/simple;
+	bh=lXAEDhNCr2vsjmfDWLRZ8UrqZWYjFwAPdewqndj9g24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RskB6tV1zCU43ap5nA+b+wWnV9ppwD0nlP6aMwxie+30TP06p8cAjwWws0w1NxiacAJDb8lW9X6bSTG/duvYkoUHg3nSFcexeGrIUnJUKWToeemucTJnVbuHzWIDBe9ZA/ITBMJyVjd1f7PqkHGsUL4wmy/yNK1loV+P7eItxG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Igd5f8lE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XqYV7QGR0vbN2DeD7Q2IO3h6cEpD8m9pat/0erUIHBYDnnKkpr5EaFDEmuUy8u2/5sU2c4DUbNiAoiFfVc2Rx39Onw6XOaXJNN2ZikbUIT+EsaO56gK+Il/ypFLoIr80iN6k3XxxZDKu8QK3qOOITQFDuvDvPywIQuUfvU3kvSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ll3rkweG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Igd5f8lE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F24A1F000C7;
-	Mon, 19 Oct 2026 13:59:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ll3rkweG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAD01F000C4;
+	Mon, 19 Oct 2026 13:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418394;
-	bh=63KAFSVioMvmPAu9MJRGj2FZ+H5J2Cg2KBDtQ3FryQ8=;
+	s=k20260515; t=1792418395;
+	bh=Hohi6tC2hi2Y/Me0I+YLX5SX56omrwG9apCpo34mcI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Igd5f8lEIQX7bw8KBMQCBhdf4/QuqUNrX2HEDADmWvp1zd19obyNMdqhvtkq5Zak2
-	 Vtc3qJCkSUp/zZRaDqlq0wWNSApwTpnD/LzKO7P51hOfk10QQflL7AffK4CfomP7jc
-	 ElQmBsz8rB0hce2InUOSFmCjGV3LJHf+nNJERRpugaEg9dw0VvOw1LW6bdlJJ6M6UR
-	 zDDDcvPBHCUVl2BuitDlg/mhJOTMVbLu5T1dv/TiG9RdrkFXAIDgHHRxUcGiy+dJVz
-	 vKm71WuugP2XD4MR1BMQQ60le4GULM+S5VgMglMdw5cXa7wI/xP5NsySRANTlR34gW
-	 w80Pesm8nyAxg==
+	b=ll3rkweGxJmw2LoiZpLRrr0lAIEEr3EPMPu+DYV5xSTbGUQulczmon9fxqpr3SdnS
+	 BffvjaoYSMQ0qvv9ojAWUSbdcc8O5KukoHN/36HUTjYNTqJ7kPHsarCzVEM9bwRHRu
+	 2r0s54zLtI4Xfi6d9d4y8ss5UXcWOe47aAlqsAQ9PKiTNjYgqKVS2ZMTVohY7xUYkR
+	 S9MHigOCSK50eUGx5ixkkr5MhqTPcMAAB0p2+t0kZgC+vjKErjSJpNzZIBmgl3uEhU
+	 ObA/Sz8DlLkQYQQ+dOwzc9I6Ki9yr2UcIzWepXZApJHu01vQHllmOxIZuHX5vKV1Fi
+	 npna5EbigB4wA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Qiang <liqiang01@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] Bluetooth: hci_bcsp: validate received packet lengths
-Date: Mon, 19 Oct 2026 09:48:29 -0400
-Message-ID: <20261019135441.1420968-218-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] ksmbd: allow I/O on directory named streams
+Date: Mon, 19 Oct 2026 09:48:30 -0400
+Message-ID: <20261019135441.1420968-219-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,380 +51,371 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit ceea75ad8925425ee6520ead964b55888fe871ec ]
+[ Upstream commit 8184c425a19d44f138d42b44cc363917c08e5f1c ]
 
-The BCSP transmit path reads an HCI command header when an extension
-packet has only been tested for a nonzero length. Its LE configuration
-packet handler also indexes bytes through offset seven without a length
-check.
+Named streams are stored as extended attributes on the base inode. The
+VFS read and write helpers reject directory inodes before or together
+with checking whether the handle represents a stream.
 
-Validate the complete command and LE configuration packet headers
-before accessing their fields.
+Permit read and write operations when a directory-backed handle is a
+named stream. Continue rejecting direct I/O on ordinary directory
+handles.
 
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This fixes creation of the directory stream in smb2.getinfo.complex.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`p-6.12-3-g710455e2077bb`). The buggy
-BCSP length handling is in this checkout; the candidate is not. The
-verdict is for this tree only.
-
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## Phase 1: Commit message forensics
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[Bluetooth / hci_bcsp] [validate] [check command and LE-config
-packet lengths before field access]`
+Record: `[ksmbd] [allow] permit read/write on named streams whose base
+inode is a directory`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Signed-off-by: Li Qiang <liqiang01@kylinos.cn>` (author)
-- `Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>`
-  (Bluetooth maintainer)
+- `Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>` (ksmbd
+  maintainer; author)
 - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable@vger.kernel.org`
-- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
-  markers
-- Absence of `Fixes:`/`Cc: stable` is expected for this review and is
-  **not** a negative signal
+  by:`, `Link:`, or `Cc: stable@`
+- Absence of `Fixes:`/`Cc: stable` is expected for this review pipeline
+  and is not a negative signal
+- Ignore any later `[Upstream commit ...]` / `Signed-off-by: Sasha
+  Levin` markers; they are candidate-prep, not selection
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** BCSP TX reads an HCI command header without a full-header
-  length check; LE config RX indexes through offset 7 without a length
-  check.
-- **Symptom:** Out-of-bounds read of skb/payload bytes on truncated
-  packets (cover letter: “out-of-bounds accesses … when data is
-  truncated”).
-- **Version info:** none in the commit; code dates to git origin (2005).
-- **Root cause (author):** fields are used before the complete header is
-  known to be present.
+- **Bug:** Named streams are stored as xattrs on the base inode.
+  `ksmbd_vfs_read()` and `ksmbd_vfs_write()` reject directory inodes
+  before (read) or together with (write) the stream-handle check, so a
+  directory-backed stream never reaches `ksmbd_vfs_stream_read()` /
+  `ksmbd_vfs_stream_write()`.
+- **Symptom:** SMB read/write of a named stream on a directory fails
+  (`-EISDIR` / `-EACCES`). Samba smbtorture `smb2.getinfo.complex`
+  cannot create `DNAME:streamtwo`.
+- **Version info in the message:** none.
+- **Root cause:** directory inode check is applied to the base inode,
+  not to whether the handle is a stream.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is a bounds-check / OOB fix, even
-though the series is titled “harden packet and transport parsing.”
+Record: Not disguised. This is an explicit protocol-correctness fix for
+existing ADS I/O. “Allow” here means “stop rejecting a path that already
+exists,” not a new API.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/bluetooth/hci_bcsp.c` only (`+4 / -1`)
-- Functions: `bcsp_prepare_pkt()`, `bcsp_handle_le_pkt()`
+- File: `fs/smb/server/vfs.c` — 3 insertions, 2 deletions
+- Functions: `ksmbd_vfs_read()`, `ksmbd_vfs_write()`
 - Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Hunk 1 (`bcsp_prepare_pkt`):** before: if `hciextn && chan == 5`,
-  always read `hci_command_hdr.opcode` and `data[HCI_COMMAND_HDR_SIZE]`.
-  after: only if `len > HCI_COMMAND_HDR_SIZE` (3). Short commands skip
-  vendor-extension rewrite and are slipped as-is.
-- **Hunk 2 (`bcsp_handle_le_pkt`):** before: `data[1]`, `data[2]`,
-  `memcmp(&data[4], …, 4)` with no `skb->len` check. after: return if
-  `rx_skb->len < 8`.
+- **Read, before:** `S_ISDIR(inode)` → immediate `-EISDIR`, so
+  `ksmbd_stream_fd()` is never reached.
+- **Read, after:** reject only `S_ISDIR && !ksmbd_stream_fd(fp)`. Stream
+  handles fall through to `ksmbd_vfs_stream_read()` (xattr).
+- **Write, before:** inside the SMB access check, `S_ISDIR` forces
+  `-EACCES` even for stream fds.
+- **Write, after:** same access check, but directory rejection is
+  skipped for `ksmbd_stream_fd(fp)`, then the existing stream-write
+  branch runs.
+- Ordinary directory I/O is still rejected. Stream I/O still never calls
+  `kernel_read()` / `kernel_write()`.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Memory safety / out-of-bounds read (category d).**
-- TX: `HCI_COMMAND_HDR_SIZE` is 3. Userspace HCI sockets accept `len >=
-  4` (1 type byte + 3-byte command). After `skb_pull(1)`, `skb->len` can
-  be **exactly 3**. For vendor OGF `0x3f`, the driver then does `*(data
-  + 3)` — one byte past `skb->len`.
-- If that byte has high nibble `0xc0`, `len -= 4` makes `len == -1`, and
-  the BCSP header is built with a bogus length (`hdr[1]/hdr[2]` from a
-  signed `-1`).
-- RX: `memcmp` of bytes 4–7 with no `len` check. The receive state
-  machine normally makes that path in-bounds when the header length
-  field is 4; the extra check is defensive.
+Record: **Logic / protocol correctness.** Directory ADS is valid SMB.
+The VFS helpers treated the base directory inode as “no I/O allowed” and
+never used the xattr stream path.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct and minimal. Skipping extension parsing on
-short packets is the safe default. Early-return on short LE frames does
-not drop valid conf/sync packets (those are 4-byte hdr + 4-byte payload
-= 8). Regression risk is very low. No API/data-structure change.
+Record: Obviously correct and minimal. `ksmbd_stream_fd()` is an
+existing inline (`fp->stream.name != NULL`). After the exemption, both
+functions still take the stream branch and `goto out` / return before
+VFS file I/O, so the `__kernel_write_iter` WARNING that motivated the
+earlier directory-write ban is not reintroduced. Regression risk is very
+low.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## Phase 3: Git history investigation
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record: Buggy TX/RX logic is from `1da177e4c3f41` (Linux-2.6.12-rc2,
-2005), with later style/API churn only (`c5ec514016d1a6`,
-`8083ad1cf910dc`, `59ae1d127ac0ae`). Present for the entire life of this
-driver, including 6.12.
+Record:
+- Read `S_ISDIR` check: `f44158485826c0` (“cifsd: add file operations”,
+  2021). Directory stream **reads** have been broken since ksmbd’s
+  original file ops.
+- Write `S_ISDIR` check: `2a879da5c34a1` (“ksmbd: fix the warning from
+  __kernel_write_iter”), upstream `b37f2f332b40`, present here as
+  `v6.12.25~99`. That stable backport banned all directory writes to
+  avoid `WARNING: CPU: ... at fs/read_write.c:599 __kernel_write_iter`.
+  It sits **before** the stream-fd check, so it also blocked directory
+  **stream** writes that previously went through xattrs.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable.
+Record: No `Fixes:` tag. The write-side bug is a follow-on to
+`2a879da5c34a1` / `b37f2f332b40`, which **is** in this tree.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent 6.12 BCSP work includes `b420a4c7f915f` (syzbot NULL
-deref in `bcsp_recv`), timer/kfree fixes. No prior length check. This
-commit is **standalone** (series 3/5; other patches touch `bfusb.c`,
-`btmrvl_main.c`, `hci_ldisc.c`, `hci_qca.c`).
+Record: Stream I/O already exists here (`ksmbd_vfs_stream_read/write`,
+`d62ba16563a86` OOB check, `5c54a557bde18` empty-stream write fix,
+`a8f5d39971bba` opener creds for ADS). Neighboring 7.3 stream patches
+(copychunk, AAPL FinderInfo, stream delete, `::$DATA` validation) are
+**not** prerequisites for this 3-line change. Standalone.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Li Qiang has no other `drivers/bluetooth/` commits in this 6.12
-tree. Luiz von Dentz is a listed Bluetooth driver maintainer and applied
-the series to bluetooth-next (`a4c72c8c7cef`).
+Record: Namjae Jeon is the ksmbd maintainer. This landed in the ksmbd
+7.3-rc1 pull among other ADS/protocol fixes. Same author previously
+landed `2fb9b5dc80cab` (“allow write with FILE_APPEND_DATA”) on stable
+for a similar client-visible I/O rejection.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. Uses existing `HCI_COMMAND_HDR_SIZE` and `rx_skb->len`. A
-surgical patch against this file applied cleanly (`git apply --check`
-exit 0).
+Record: Uses only `ksmbd_stream_fd()`, already in
+`fs/smb/server/vfs_cache.h` and included from `vfs.c`. Parent
+`4ea46ea602fc7` (“protect private extended attributes”) is **not** in
+this tree and is not required. `git show 8184c425a19d4 | git apply
+--check` succeeds on this tree.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## Phase 4: Mailing list and external research
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c a4c72c8c7cef` → https://patch.msgid.link/6fb9de3e499424f798
-  0a158798ea02b040b73b8f.1784191283.git.liqiang01@kylinos.cn
-- Cover: `[PATCH 0/5] Bluetooth: harden packet and transport parsing`
-  (2026-07-16)
-- `b4 dig -a`: **v1 only** (no v2/v3)
-- Applied 2026-07-20 by Luiz to bluetooth-next as `a4c72c8c7cef`
-- No NAK on patch 3/5. BlueZ CI failed **patch 5/5** (`hci_qca.c`
-  context), not this file.
-- Patch 2/5 (`btmrvl`) later caused a Chromebook regression (Marek
-  Szyprowski). That is a **different** patch; not this one.
+Record: `b4 dig -c 8184c425a19d4` failed (lore.kernel.org returned an
+error / Anubis bot wall). Same for lore search URLs. Fallback: the
+commit is listed in Namjae’s **[GIT PULL] ksmbd server update for
+7.3-rc1** (2026-08-23) as `ksmbd: allow I/O on directory named streams`,
+under “Correct alternate-data-stream and named-stream handling,” not
+under “New features.”
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc `linux-bluetooth@vger.kernel.org`, Marcel
-Holtmann, Luiz von Dentz, LKML. Maintainer applied it. No extra
-Reviewed-by on 3/5.
+Record: UNVERIFIED at patch-thread level (lore unreachable). The pull is
+from the subsystem maintainer to Linus.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla report for this specific OOB. Cover letter
-describes truncated-header OOB as the failure mode. Trigger
-reconstructed from this tree’s `hci_sock_sendmsg` + `bcsp_prepare_pkt`.
+Record: Samba `smb2.getinfo.complex` (`source4/torture/smb2/getinfo.c`)
+does:
+- `torture_setup_complex_dir(..., DNAME)`
+- `torture_setup_complex_file(..., DNAME ":streamtwo")`
+Historically noted as “streams on directories does not work.” That is a
+real client/test failure, not a theoretical one.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Series of five independent driver/transport bounds checks. 3/5
-does not depend on 1/2/4/5. Do not pull the others as prerequisites.
+Record: Part of the large 7.3 ksmbd dump, but this hunk is self-
+contained. Later stream patches improve enumeration, delete, copychunk,
+AAPL; they are not needed for this I/O gate.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org WebFetch returned 403. No stable-thread hit via
-`b4`/openwall for this subject. UNVERIFIED whether anyone already asked
-stable@ for this SHA.
+Record: UNVERIFIED (lore blocked). No in-tree discussion of rejecting
+this fix.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+## Phase 5: Code semantic analysis
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `bcsp_prepare_pkt`, `bcsp_handle_le_pkt`
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `ksmbd_vfs_read()`, `ksmbd_vfs_write()`, helper
+`ksmbd_stream_fd()`.
 
 **Step 5.2: TRACE CALLERS**
 Record:
-- `bcsp_prepare_pkt`: `bcsp_dequeue()` (unrel, rel, and ACK). Dequeue is
-  `hci_uart_proto.dequeue` → `hci_uart_tx_wakeup` / TTY write worker.
-- `bcsp_handle_le_pkt`: `bcsp_complete_rx_pkt()` when BCSP channel 1,
-  unreliable → `bcsp_recv()` → `hci_uart_tty_receive`. Syzbot has
-  already reached `bcsp_recv` via TTY (`TIOCSTI`) in this tree.
+- `ksmbd_vfs_read()` ← `smb2_read()` (`smb2pdu.c`)
+- `ksmbd_vfs_write()` ← `smb2_write()` and `smb2_write_rdma_channel()`
+Reachable from normal SMB2 READ/WRITE on a connected share.
+`connection_type` is set from the negotiated dialect, so the write-side
+directory check applies to SMB2/SMB3.
 
 **Step 5.3: TRACE CALLEES**
-Record: TX reads `hci_opcode_ogf` / raw `data[]`, then `alloc_skb` +
-SLIP. RX uses `memcmp`, `alloc_skb`, `skb_queue_head`,
-`hci_uart_tx_wakeup`.
+Record: Stream path uses `ksmbd_vfs_getcasexattr` / `ksmbd_vfs_setxattr`
+on the dentry. Directories support xattrs; no `kernel_write()` on the
+directory inode.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: TX is reachable from userspace `sendmsg` on an HCI RAW/USER
-socket bound to a BCSP UART device. RAW vendor OGF 0x3f needs
-`CAP_NET_RAW` (`ogf > HCI_SFLT_MAX_OGF`); USER channel bind needs
-`CAP_NET_ADMIN`. Not unprivileged, but a real kernel OOB on a live HCI
-UART. RX is reachable from the UART/TTY receive path (including
-fuzzing).
+Record: Userspace SMB client → SMB2 CREATE of `dir:streamtwo` (open
+already allowed when `s_type` is not explicit `$DATA`) → SMB2 WRITE →
+`ksmbd_vfs_write()` currently returns `-EACCES`. Triggerable by any
+client with streams enabled (`KSMBD_SHARE_FLAG_STREAMS`).
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same series adds analogous header-length checks in
-bfusb/btmrvl/qca. H5 (`hci_h5.c`) does not implement this vendor-
-extension rewrite. No duplicate BCSP fix in this tree.
+Record: Other `S_ISDIR` checks in ksmbd (oplock, setattr, query info)
+are separate. No duplicate I/O gate that would still block this path
+after the patch.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## Phase 6: Cross-referencing against the local tree
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes.
-- `drivers/bluetooth/hci_bcsp.c:197` `if (hciextn && chan == 5)` with no
-  length check
-- `drivers/bluetooth/hci_bcsp.c:405-406` LE handler indexes `data[4]`
-  without `len < 8`
-- Bug introduced in 2.6.12-era origin; not post-6.12
+Record: Yes. Local tree is **6.12.111** (`pending-6.12`,
+`p-6.12-3-gc504cf0baa3d8`). Current code:
+
+```377:378:fs/smb/server/vfs.c
+        if (S_ISDIR(inode->i_mode))
+                return -EISDIR;
+```
+
+```503:505:fs/smb/server/vfs.c
+        if (work->conn->connection_type) {
+                if (!(fp->daccess & (FILE_WRITE_DATA_LE |
+FILE_APPEND_DATA_LE)) ||
+                    S_ISDIR(file_inode(fp->filp)->i_mode)) {
+```
+
+`8184c425a19d4` is **not** an ancestor of HEAD. Write-side regression
+introduced in **v6.12.25**.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply** for the actual edits (`git apply --check`
-succeeded). Nearby mainline context uses `timer_delete`; 6.12 still has
-`del_timer` in `bcsp_pkt_cull`. That is unused context for a tight hunk.
-No semantic rework needed.
+Record: Clean apply (`git apply --check` exit 0). Surrounding functions
+match the upstream hunk context. `ksmbd_stream_fd()` already present.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: `git log --grep='validate received'` on this file: empty. No
-earlier equivalent check.
+Record: No equivalent directory-stream I/O exemption. Stream write
+OOB/empty-xattr fixes are present but do not address `S_ISDIR`.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Phase 7: Subsystem and maintainer context
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: Bluetooth HCI UART BCSP (`CONFIG_BT_HCIUART_BCSP`) — CSR
-BlueCore UART. **IMPORTANT** for those devices, not core mm/VFS. Still a
-production protocol path, and this file is actively fuzzed.
+Record: `fs/smb/server` (ksmbd). **IMPORTANT** — in-kernel SMB3 server
+used by NAS/embedded/distro images. Not core mm/VFS, not staging.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Bluetooth in this tree is active (many btusb/btintel/hci_bcsp
-stable fixes). BCSP itself is mature; this is an old bug, not a new-
-feature fallout.
+Record: Actively maintained; this tree already carries many ksmbd
+protocol and memory-safety backports. Mature ADS support has existed
+since the cifsd era (2021).
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 8: Impact and risk assessment
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Config-specific (`BT_HCIUART_BCSP`) + HCI UART BCSP hardware. TX
-trigger also needs an HCI socket send of a short vendor command.
+Record: ksmbd users with `KSMBD_SHARE_FLAG_STREAMS` who have
+Windows/Samba/macOS clients using named streams on directories (Explorer
+ADS, smbtorture, some backup/metadata workflows).
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- TX: HCI command packet, `hciextn` (default true), `len == 3` after
-  type byte, OGF 0x3f. Constructible from userspace with
-  `CAP_NET_RAW`/`CAP_NET_ADMIN`.
-- RX: truncated LE frame; `memcmp` path is likely already in-bounds if
-  the state machine honors the header length field.
-- Not a hot every-packet path for well-formed kernel-generated commands
-  (`hci_cmd_sync_alloc` always includes the 3-byte header).
+Record: SMB2 WRITE/READ on a handle opened as `dir:stream`. Common in
+protocol tests; less common than file ADS, but a supported SMB feature.
+Unprivileged share users can trigger it if they can create streams.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: One-byte (or more, if `data` is short) read past `skb->len` on
-TX; possible wrong BCSP channel/length if the spilled byte looks like an
-HCI extension. May stay inside skb tailroom (not always a KASAN crash).
-**Severity: HIGH** (memory safety / OOB), not a guaranteed panic.
+Record: Client I/O fails (`STATUS` derived from `-EISDIR`/`-EACCES`);
+not a panic, UAF, or silent corruption. **MEDIUM**
+functional/interoperability, **HIGH** as a **stable-to-stable write
+regression** since v6.12.25.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record: Benefit medium-high (closes a long-standing OOB in a fuzzed UART
-protocol). Risk very low (4 lines, skip-on-short-packet). Ratio favors
-backport.
+Record:
+- **Benefit:** Restores directory ADS I/O; undoes over-broad fallout
+  from the `__kernel_write_iter` stable fix; unblocks
+  `smb2.getinfo.complex`.
+- **Risk:** Very low (3 lines, existing helper, stream path still
+  bypasses `kernel_write`).
+- **Ratio:** favorable.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+## Phase 9: Final synthesis
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real OOB read in `bcsp_prepare_pkt` when a 3-byte vendor HCI command
-  is sent on BCSP
-- RX handler indexes through byte 7 with no length guard
-- 4 insertions / 1 deletion, obviously correct
-- Code present in this 6.12 tree since origin
-- No prerequisites; applies here
-- Bluetooth maintainer applied it to bluetooth-next
-- Same class as other packet-length checks already landing in this tree
+- Real SMB protocol bug: named streams live in xattrs; directory base
+  inodes must still allow stream I/O.
+- Write path is a **regression** from `2a879da5c34a1` (v6.12.25) already
+  on this 6.12.y tree.
+- Existing ADS stack is in this tree; this only opens the gate to it.
+- 3-line, obviously correct, applies cleanly.
+- Maintainer-authored; validated via smbtorture `smb2.getinfo.complex`.
+- Does not restore the directory `kernel_write` WARNING.
 
 AGAINST:
-- No syzbot/user crash report for this exact bug
-- TX trigger is privileged
-- RX `len < 8` check is likely redundant given the BCSP RX state machine
-- Sister patch 2/5 in the same series had a regression (different
-  driver)
-- Framed as “hardening”
+- Not a crash/security/corruption issue.
+- Directory ADS is a narrower client feature than file ADS.
+- Read-side rejection has existed since 2021 (enabling reads is
+  correctness, not a 6.12.y regression).
 
 UNRESOLVED:
-- lore.kernel.org WebFetch 403; no confirmed stable@ discussion
-- Whether skb tailroom would make the 1-byte TX OOB a KASAN hit on this
-  kernel’s allocator
+- Original lore review thread (b4/lore blocked).
+- Whether reviewers asked for `Cc: stable`.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — maintainer-applied; logic is
-   local and readable
-2. Fixes a real bug that affects users? **PASS** — OOB on truncated
-   vendor commands over BCSP UART
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   OOB / memory-safety (HIGH, not proven panic)
-4. Small and contained? **PASS** — one file, five lines
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — buggy code present; surgical
-   apply succeeded
+1. Obviously correct and tested? **PASS** — logic is local and was
+   exercised by smbtorture.
+2. Fixes a real bug that affects users? **PASS** — SMB clients cannot
+   I/O directory named streams.
+3. Important issue? **PASS** — interoperability failure plus a write-
+   side regression from a prior stable commit. Not a panic, but user-
+   visible and already shipped in 6.12.y.
+4. Small and contained? **PASS** — 3 lines, one file.
+5. No new features or APIs? **PASS** — no new syscall/sysfs; streams
+   already advertised.
+6. Can apply to the local tree? **PASS** — clean apply; helpers exist.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/docs exception. Ordinary small memory-
-safety fix.
+Record: None of device-ID / quirk / DT / build / docs. Qualifies on
+ordinary bug-fix rules.
 
 **Step 9.4: MAKE YOUR DECISION**
-This belongs on 6.12. The TX length check closes a real out-of-bounds
-field access on a path that HCI sockets can hit; the RX check is cheap
-and harmless. Scope, risk, and local applicability all fit stable rules.
+This tree already contains ksmbd named-stream I/O and the v6.12.25
+directory-write ban. The ban is correct for ordinary directory handles
+but incorrectly covers stream handles, which never use `kernel_write()`.
+Backporting this exemption restores intended ADS behavior with
+negligible risk.
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Parsed subject/body/tags: author Li Qiang, SOB Luiz von
-  Dentz; no Fixes/syzbot/Cc-stable
-- [Phase 2] Diff: `hci_bcsp.c` +4/-1 in `bcsp_prepare_pkt` and
-  `bcsp_handle_le_pkt`
-- [Phase 2] `HCI_COMMAND_HDR_SIZE` is 3 in `include/net/bluetooth/hci.h`
-- [Phase 2] `hciextn` defaults to true (`module_param`)
-- [Phase 3] `git blame`: lines from `1da177e4c3f41` (2.6.12-rc2)
-- [Phase 3] `git merge-base --is-ancestor a4c72c8c7cef HEAD` → not in
-  this tree (exit 1); object exists as a commit
-- [Phase 3] `git log --grep='validate received' --
-  drivers/bluetooth/hci_bcsp.c` → empty
-- [Phase 4] `b4 dig -c a4c72c8c7cef`: lore msgid 6fb9de3e…; v1-only
-  series; applied to bluetooth-next
-- [Phase 4] `b4 dig -w`: linux-bluetooth, Holtmann, von Dentz
-- [Phase 4] mbox: no NAK on 3/5; CI fail was qca 5/5; btmrvl 2/5 later
-  regressed Chromebooks
-- [Phase 4] UNVERIFIED: stable@ mailing list (lore WebFetch 403)
-- [Phase 5] Callers: `bcsp_dequeue` → UART TX; `bcsp_complete_rx_pkt` →
-  `bcsp_recv`
-- [Phase 5] `hci_sock_sendmsg`: `len < 4` rejected; after type pull,
-  `skb->len` can be 3; OGF 0x3f on RAW needs `CAP_NET_RAW`
-- [Phase 6] `git describe HEAD` / Makefile: 6.12.111; buggy `if (hciextn
-  && chan == 5)` still present
-- [Phase 6] `git apply --check` of the two hunks: success
-- [Phase 8] Failure mode: OOB read past `skb->len` on TX vendor-
-  extension parse; severity HIGH
-- UNVERIFIED: whether this 1-byte read is always inside skb tailroom vs
-  KASAN-poisoned
+---
 
-The TX path can read past a 3-byte HCI command; the fix is four lines
-and applies to this 6.12 tree without extra commits.
+What this solves for 6.12.y: Windows/Samba clients that write a named
+stream on a directory (as `smb2.getinfo.complex` does with
+`DNAME:streamtwo`) currently get `-EACCES` on write and `-EISDIR` on
+read. After v6.12.25 that write failure is a regression from a WARNING
+fix. The patch is a 3-line predicate change; stream I/O still goes
+through xattrs, so the WARNING does not come back.
+
+Verification:
+- [Phase 1] Parsed tags: only maintainer SOB; no Fixes/Reported-by/Cc:
+  stable
+- [Phase 2] Diff: 3 lines in `ksmbd_vfs_read`/`ksmbd_vfs_write`; exempts
+  `ksmbd_stream_fd()` from `S_ISDIR`
+- [Phase 3] `git blame`: read check from `f44158485826c0` (2021); write
+  check from `2a879da5c34a1` (`v6.12.25~99`)
+- [Phase 3] `git merge-base --is-ancestor 2a879da5c34a1 HEAD` → yes;
+  `8184c425a19d4` → no
+- [Phase 3] `git apply --check` of `8184c425a19d4` → clean
+- [Phase 4] `b4 dig -c 8184c425a19d4` failed (lore error)
+- [Phase 4] 7.3-rc1 GIT PULL lists this under ADS handling, not new
+  features
+- [Phase 4] Samba `getinfo.c` creates `DNAME ":streamtwo"` in
+  `smb2.getinfo.complex`
+- [Phase 5] Callers: `smb2_read` / `smb2_write` / RDMA write; stream
+  callees are xattr helpers
+- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → 6.12.111; buggy `S_ISDIR` present
+- [Phase 8] Failure mode: failed SMB stream I/O, plus write regression
+  since v6.12.25; not a panic
+- UNVERIFIED: lore review comments / stable ML discussion (lore blocked)
 
 **YES**
 
- drivers/bluetooth/hci_bcsp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/vfs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
-index 591abe6d63ddb..6461492cf653b 100644
---- a/drivers/bluetooth/hci_bcsp.c
-+++ b/drivers/bluetooth/hci_bcsp.c
-@@ -194,7 +194,7 @@ static struct sk_buff *bcsp_prepare_pkt(struct bcsp_struct *bcsp, u8 *data,
- 		return NULL;
- 	}
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 3ac5f3f48121d..47c289ad9c3dc 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -372,7 +372,7 @@ int ksmbd_vfs_read(struct ksmbd_work *work, struct ksmbd_file *fp, size_t count,
+ 	ssize_t nbytes = 0;
+ 	struct inode *inode = file_inode(filp);
  
--	if (hciextn && chan == 5) {
-+	if (hciextn && chan == 5 && len > HCI_COMMAND_HDR_SIZE) {
- 		__le16 opcode = ((struct hci_command_hdr *)data)->opcode;
+-	if (S_ISDIR(inode->i_mode))
++	if (S_ISDIR(inode->i_mode) && !ksmbd_stream_fd(fp))
+ 		return -EISDIR;
  
- 		/* Vendor specific commands */
-@@ -402,6 +402,9 @@ static void bcsp_handle_le_pkt(struct hci_uart *hu)
- 	u8 sync_pkt[4]     = { 0xda, 0xdc, 0xed, 0xed };
+ 	if (unlikely(count == 0))
+@@ -500,7 +500,8 @@ int ksmbd_vfs_write(struct ksmbd_work *work, struct ksmbd_file *fp,
  
- 	/* spot "conf" pkts and reply with a "conf rsp" pkt */
-+	if (bcsp->rx_skb->len < 8)
-+		return;
-+
- 	if (bcsp->rx_skb->data[1] >> 4 == 4 && bcsp->rx_skb->data[2] == 0 &&
- 	    !memcmp(&bcsp->rx_skb->data[4], conf_pkt, 4)) {
- 		struct sk_buff *nskb = alloc_skb(4, GFP_ATOMIC);
+ 	if (work->conn->connection_type) {
+ 		if (!(fp->daccess & (FILE_WRITE_DATA_LE | FILE_APPEND_DATA_LE)) ||
+-		    S_ISDIR(file_inode(fp->filp)->i_mode)) {
++		    (S_ISDIR(file_inode(fp->filp)->i_mode) &&
++		     !ksmbd_stream_fd(fp))) {
+ 			pr_err("no right to write(%pD)\n", fp->filp);
+ 			err = -EACCES;
+ 			goto out;
 -- 
 2.53.0
 
