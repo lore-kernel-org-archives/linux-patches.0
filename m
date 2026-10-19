@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF55A533D0E;
-	Mon, 19 Oct 2026 14:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E751538417;
+	Mon, 19 Oct 2026 14:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418663; cv=none; b=GS7AGb2RNdJWVBrJBznxKQF9WrPWHgeZLXdMvkb6zfGV3PImP3x66r87g+wT1CVAfqFcbYhYyhzuoZhzJXsHEpziljaLbrSI0nKAxLIJTfY1cBi7es7xMlRaKcfMNHqnB9YnQsW+VYpyW/B75lrUbwdlX0Po2hcYNXcY49y/mHQ=
+	t=1792418664; cv=none; b=AdsOr6r45XydT1+DilJPYXtVAC7uNl70J6DtJWbFKAyDyrk1jc+Qa1wdbkTG6/tH9KfD2fDn4DxyPe2aDrv/fby9WzU/e7UqALQp0OYH6fvTWQn0M31o+aPgZYqm4CJOKPIJH0xjm8JxfxASkGwrrZSrK/qGLT7x+wUjqvSv71E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418663; c=relaxed/simple;
-	bh=73Er7CSmyPYNsNtQwb48dnVF30gvsfxqvGylHaXB6XM=;
+	s=arc-20240116; t=1792418664; c=relaxed/simple;
+	bh=LE3JPqDGwGhoRfpPz0vwGuQ6HNGK9eJCkU92GHD2l0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=utg7WkH6yncsbAAdq6YW+AiwRv8eft4bl5lKLw8MxXPH8CyBKa5hfusegWiGkACGvWaOqGbwOjVVlGqR+SOmK1obg212M+8th1ucWWuDD/iEZUNusD1ho688eKqDzfuurt5HTNuavq8jow+l754axW3qmqf4r+omM3qhcsvXff0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ads9PKHn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hPuDMXnCCl1XEzrSmBAz6TrhntYvXTkDXFTwF8z4BSU80i7ikXJBqZ7Acr46HbFWUkveSkVWi6LrbirxHXV3alTRRqYSz+fCMKSWgHcQqg5dd/sAV4FKJGD47YaLa/zlDk72s4PaNupnfdP+/Ik7KkNA1Vg2GUmi+1DmasEtpxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yp6uKwub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ads9PKHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233E31F000C6;
-	Mon, 19 Oct 2026 14:04:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yp6uKwub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B031F000C5;
+	Mon, 19 Oct 2026 14:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418660;
-	bh=P/eMcIIduO6+WWMSsiM96gYRHQfbpYWBqVtuTT4A2qI=;
+	s=k20260515; t=1792418662;
+	bh=UwV13SqKp8xXq1YdgsdEkpN3Vi9YtAHZxUsmJFad4cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ads9PKHnq2x883PiU8PqM0SBOq0q8H+5kPPUbw+jDI8hwLjAmNDP84oiTfOTyrTS0
-	 nvnyheTuw3FWjjE1zg6XMM5CMgpHMh0DAmD+C2LLvJ3vUIQSB8+7HMI6Fkzl+gyGT9
-	 bytBoFYXyWSh7vtzDrH81PyFSNaSkHSil4HjgRRdFvNdcu1jOmPbVh2JyX/XXhTSeG
-	 N4XV7CZw48KDwyXMda6q4+jzKXOXXp/DEpQnG0iCKdE7JQ10NRpE342t1APrn/vMOJ
-	 LHvt7WMlP4xFeOPgg0bCKjqqYRaBvf4PPK5Bzs1JyX1gQ7D4YkggUm4wlgNX2dBH67
-	 HPDOxR8ylAyyw==
+	b=Yp6uKwubcXyYDtYYYASynp5rQO//L/3YYkfXk41YhI845aif/mZgjpIlMeyloaLwo
+	 SkBLqzi4X1wbq7WYKcQ9wuJmxnuOVPWEFrdxeJsEB53WBYq6z+4qEBTEtAlys66OYm
+	 pjvnEg2mURvpckEIS1sBIjKieylGtH1/h+PfmXaozwBj/cCUdKUkChqIojkhPplF3d
+	 BunHA3zqvT+6OZa5UkFtdiWxKVTj9KkTD8gAO24WKBAoOUz9nVCgiOI+R7wY0KRuds
+	 crz1ebPeI1aR7Kc/8xKKEqGJeCO0BFw0qC6TXKLhRML5Je1q4Tz6XtoCQcX2+gcTJ6
+	 DJoLCgM+xQEag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: validate UEFI reduced-power SKU TLV length
-Date: Mon, 19 Oct 2026 09:51:38 -0400
-Message-ID: <20261019135441.1420968-407-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: validate wake packet crypto overhead
+Date: Mon, 19 Oct 2026 09:51:39 -0400
+Message-ID: <20261019135441.1420968-408-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,372 +52,506 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit f051995c539582b05276abda4c5874fd4cafd2a5 ]
+[ Upstream commit c5cb9dd220ba9fdcf4ba485ce3d1d36ca32ac00b ]
 
-iwl_uefi_reduce_power_parse() reads an iwl_sku_id from an
-IWL_UCODE_TLV_PNVM_SKU payload after only checking that the generic TLV
-payload is present.
+Wake packet parsing only accounted for FCS and missed per-key
+IV/ICV overhead for protected data frames.
 
-A short type-specific payload can therefore make the three data[] reads
-extend beyond the TLV. Reject SKU TLVs shorter than the structure before
-accessing it.
+Prevent size underflow and bad packet trimming when
+notifications are malformed or truncated.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260715135916.24417-2-pengpeng@iscas.ac.cn
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260717172958.e06595623533.Ie09494b7e34e5872b750fd90e325648ee469d0da@changeid
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This checkout is **v7.3-rc4** (mainline `7.3.0-rc4`). The analysis below
-is only for this tree.
+The local checkout is **Linux 7.3.0-rc4**. The iwlwifi MLD WoWLAN path
+is present here, and this commit is a real memory-safety plus wake-
+packet correctness fix for that path.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[iwlwifi / wifi]** **[validate]** — reject a UEFI reduced-
-power `IWL_UCODE_TLV_PNVM_SKU` payload shorter than `struct iwl_sku_id`
-before reading it. “Validate” here is a bounds check, not a feature add.
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[iwlwifi/mld]** **[validate]** — account for per-key IV/ICV
+when parsing WoWLAN wake packets, and reject truncated/malformed sizes.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Fixes:** none (expected for this review path)
-- **Reported-by:** none
-- **Tested-by:** none
-- **Reviewed-by:** none on the commit; v1 was reviewed on-list by the
-  iwlwifi maintainer
-- **Acked-by:** none
-- **Link:**
-  `https://patch.msgid.link/20260715135916.24417-2-pengpeng@iscas.ac.cn`
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Pengpeng Hou (author); Miri Korenblit (iwlwifi
-  maintainer, applied it)
-- Ignore pipeline SOBs. Pattern: two-patch series (`24417-1` PNVM
-  parser, `24417-2` this UEFI parser); no syzbot.
+- `Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>`
+  (author; long-time iwlwifi developer)
+- `Link: https://patch.msgid.link/20260717172958.e06595623533.Ie09494b7e
+  34e5872b750fd90e325648ee469d0da@changeid`
+- `Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>`
+  (iwlwifi maintainer, committer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` (absence of Fixes/Cc:stable is expected for this
+  review)
+- No syzbot / KASAN / user crash tags
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `iwl_uefi_reduce_power_parse()` treats a PNVM SKU TLV as
-  `struct iwl_sku_id` after only checking that the generic TLV payload
-  fits in the remaining buffer.
-- **Symptom:** three `data[]` reads can extend past the TLV; if
-  remaining bytes after the header are also `< 12`, that is a real out-
-  of-bounds read of the UEFI blob.
-- **Version info:** none in the message.
-- **Root cause:** missing type-specific minimum length vs `sizeof(struct
-  iwl_sku_id)` (`__le32 data[3]`, 12 bytes).
+- **Bug:** wake-packet parsing only subtracted FCS (4 bytes). It did not
+  add the PTK/GTK IV and ICV lengths for protected data frames.
+- **Symptom:** size underflow and incorrect trimming when the firmware
+  wake-packet notification is malformed or truncated; userspace can get
+  a bad or missing wakeup packet.
+- **Version info:** none in the message. Code was introduced with iwlmld
+  (`d1e879ec600f9`, v6.15).
+- **Root cause (author):** missing per-key crypto overhead in
+  `iwl_mld_set_wake_packet()`.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not disguised. It is an explicit length check before the three
-SKU word reads.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not disguised. It is an explicit validation/correctness fix.
+“Validate” plus “prevent size underflow” is a memory-safety fix, not a
+cleanup.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+---
 
-Step 2.1: INVENTORY THE CHANGES
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- **File:** `drivers/net/wireless/intel/iwlwifi/fw/uefi.c` — **+6 / −0**
-- **Function:** `iwl_uefi_reduce_power_parse()`
-- **Scope:** single-file surgical fix
+- File: `drivers/net/wireless/intel/iwlwifi/mld/d3.c` — **+57 / −6**
+- New: `struct iwl_mld_wake_pkt_iter_data`,
+  `iwl_mld_wake_pkt_key_iter()`
+- Modified: `iwl_mld_set_wake_packet()`
+- Scope: **single-file surgical fix** in the MLD D3/WoWLAN resume path
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** loop requires `len >= sizeof(*tlv)` (8-byte header). After
-  subtracting the header it checks `len < tlv_len` (payload vs remaining
-  buffer), then on `IWL_UCODE_TLV_PNVM_SKU` casts the payload to `struct
-  iwl_sku_id` and reads `data[0..2]` even if `tlv_len` is 0–11.
-- **After:** if `tlv_len < sizeof(*tlv_sku_id)` log and return `-EINVAL`
-  before those reads.
-- **Path:** firmware/UEFI parse during Intel WiFi PNVM/reduce-power
-  load, not a hot datapath.
+1. **Header size:** previously cast `wake_packet` to `ieee80211_hdr`
+   with no length check. Now `IWL_FW_CHECK` if `pkt_bufsize <
+   sizeof(*hdr)` and return.
+2. **Protected data frames:** previously `ivlen = 0`, `icvlen = 4` (FCS
+   only). Now, if `ieee80211_has_protected()`, iterate keys and add
+   `key->iv_len` / `key->icv_len`.
+3. **Before `skb_put_data`:** new check `pkt_bufsize <= hdrlen + ivlen +
+   icvlen`; skip copy if the buffer is too small.
+4. **Non-data frames:** new check `pkt_bufsize <= fcslen` before
+   subtracting FCS.
+5. **Types:** `pkt_bufsize` / `expected_pktlen` / `truncated` changed
+   from `int` to `u32` so underflow cannot go negative and then be
+   passed as a huge `unsigned int` length.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **Memory safety / out-of-bounds read.** Outer check only proves
-the claimed TLV payload is inside the remaining buffer, not that it is
-12 bytes. If `tlv_len=4` and remaining `len=8`, `8 < 4` is false, then
-12 bytes are read from an 8-byte remainder → **allocation OOB**. If
-remaining `len >= 12` but `tlv_len < 12`, the reads stay in the
-allocation but past this TLV.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **Memory safety (OOB / integer underflow) + logic/correctness**
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct and minimal (same pattern as the sibling PNVM
-check). Regression risk is low: a too-short SKU TLV cannot be used
-anyway; `-EINVAL` makes `iwl_pnvm_load_reduce_power_to_trans()` set
-`failed_to_load_reduce_power_image` and skip the table. No API or lock
-changes.
+Before, `skb_put_data()` takes `unsigned int len`. A signed
+`pkt_bufsize` that goes negative after `pkt_bufsize -= hdrlen` or `-=
+ivlen + icvlen` becomes a huge copy. `skb_put()` panics if `hdrlen`
+exceeds the skb tailroom (`alloc_skb(pkt_bufsize)` then
+`skb_put_data(..., hdrlen)`). Unchecked `hdr->frame_control` is an OOB
+read if the firmware buffer is shorter than an 802.11 header.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+Missing IV/ICV on protected frames (the common WPA2/WPA3 case) also mis-
+trims the packet: `ieee80211_data_to_8023()` can fail, or userspace gets
+a corrupted wake packet.
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: The parser dates to **9dad325f9d575** (“iwlwifi: support loading
-the reduced power table from UEFI”, 2021-06-21), first in **v5.14-rc1**.
-SKU access was later adjusted by **3a68ae0fa2ec13** (“wifi: iwlwifi:
-remove sku_id from trans”, 2025-05-04). The six new lines are this
-commit (**f051995c53958**, 2026-07-15). The missing min-length check has
-been there since the parser was added.
+The fix matches the long-standing MVM path in
+`drivers/net/wireless/intel/iwlwifi/mvm/d3.c` (IV/ICV from PTK vs GTK,
+plus `IWL_FW_CHECK` on size). MLD uses `ieee80211_iter_keys()` because
+it does not cache `gtk_ivlen`/`ptk_ivlen` like MVM.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No `Fixes:` tag. Introduction commit **9dad325f9d575** is an
-ancestor of this HEAD. No intermediate SKU-length check on this function
-before this patch.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: **Obviously correct, minimal, low regression risk.** It copies
+proven MVM logic. `ieee80211_iter_keys()` requires the wiphy mutex;
+`iwl_mld_wowlan_resume()` already has `lockdep_assert_wiphy()`, and the
+same resume path already calls `ieee80211_iter_keys()` in
+`iwl_mld_update_sec_keys()`. If no matching key is found, `ivlen` stays
+0 and `icvlen` stays 4 — same as the old path. Early return after
+`alloc_skb` still sets `*_pkt`, and the caller `kfree_skb()`s it. No
+public API change.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Immediate parent is sibling **7410e4548a17b** (“wifi: iwlwifi:
-validate PNVM SKU TLV length”) — same author, same date, same check in
-`iwl_pnvm_parse()`. Independent; this UEFI patch does not need that
-hunk. Nearby **daec24a5ed5da** is a different length check in
-`iwl_pnvm_complete_fn()`. Standalone as a 2/2 series member.
+---
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Pengpeng Hou has these two iwlwifi validation commits in this
-tree. Applied by **Miri Korenblit**, listed iwlwifi maintainer in
-MAINTAINERS.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Uses existing `tlv_sku_id`, `tlv_len`, `IWL_ERR`, `-EINVAL`. No
-new helpers. Can apply standalone wherever
-`iwl_uefi_reduce_power_parse()` still has this loop.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: Buggy `iwl_mld_set_wake_packet()` came in **`d1e879ec600f9`**
+(“wifi: iwlwifi: add iwlmld sub-driver”, 2025-02-16). Present since
+**v6.15**. Not recent one-off code.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Introduction commit is `d1e879ec600f9`. `git
+merge-base --is-ancestor d1e879ec600f9 HEAD` succeeds. Related later fix
+in the same file: `c5aeb11489150` (“fix read in wake packet notification
+handler”) is an **ancestor** of this commit and is independent (it only
+reorders a length check in `iwl_mld_handle_wake_pkt_notif()`).
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Nearby D3 validation commits (`validate WoWLAN notif header`,
+`validate D3_END notif size`) are separate. This patch is **1/8** of an
+iwlwifi-next “updates” series; the other seven patches are unrelated
+(scan-abort init, time-sync, BIOS move, MCC v2, etc.). **Standalone.**
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Emmanuel Grumbach is a core iwlwifi author. Same week he also
+fixed MVM D3 FCS truncation (`9119aeeddc210`). Miri Korenblit committed
+the patch. Strong maintainer provenance.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Needs existing `IWL_FW_CHECK`, `ieee80211_iter_keys()`, and
+`iwl_mld_set_wake_packet()`. All exist in this tree. **Can apply
+standalone.**
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- **v2 (applied):**
-  https://patch.msgid.link/20260715135916.24417-2-pengpeng@iscas.ac.cn
-- **v1:** 2026-06-30,
-  https://lore.kernel.org/all/2026063008051412.5-ccfa108-0020-wifi-
-  iwlwifi-validate-UEFI--pengpeng@iscas.ac.cn/
-- v1 used `tlv_len < 3 * sizeof(__le32)`; Miri asked for
-  `sizeof(*tlv_sku_id)`; v2 did that. No NAK. b4 mbox for v2 is the
-  patch only (no further replies).
+- `b4 dig -c c5cb9dd220ba9` → https://patch.msgid.link/20260717172958.e0
+  6595623533.Ie09494b7e34e5872b750fd90e325648ee469d0da@changeid
+- `b4 dig -a`: **v1 only** (`[PATCH iwlwifi-next 1/8]`)
+- Cover: “A couple of fixes, features and cleanups.” This patch is one
+  of the fixes.
+- Saved mbox: **9 messages = cover + 8 patches, no review replies, no
+  NAKs, no Cc: stable**
+- HTTP lore fetch returned 403 (Anubis); discussion taken from the b4
+  mbox instead
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: To/Cc: Miri Korenblit, linux-wireless, linux-kernel. Maintainer
-reviewed v1 and applied v2.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): Miri Korenblit, Johannes Berg
+(`johannes@sipsolutions.net`), `linux-wireless@vger.kernel.org`,
+Emmanuel Grumbach. Right lists/maintainers. Committed by Korenblit.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot, bugzilla, or user crash report. Author-found parser
-hole. Syzbot CI on v2: KASAN build/boot passed; fuzz skipped.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No `Reported-by:` or bugzilla/syzbot link. Bug is described from
+code inspection, not a user crash.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Pair with **7410e4548a17b** (`24417-1`, `iwl_pnvm_parse()`).
-Same bug class, different file. This patch does not depend on that one.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Mixed 8-patch iwlwifi-next series. This hunk does not depend on
+2/8–8/8. Related but independent: `c5aeb11489150` (wake-pkt notif
+length), MVM D3 FCS fix `9119aeeddc210`.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No stable-list discussion found for this subject. Absence of
-`Cc: stable` is expected here.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned **403**. **UNVERIFIED**
+whether stable@ already discussed this.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+---
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `iwl_uefi_reduce_power_parse()` only.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-Step 5.2: TRACE CALLERS
+**Step 5.1: KEY FUNCTIONS**
+Record: `iwl_mld_wake_pkt_key_iter` (new), `iwl_mld_set_wake_packet`
+(modified).
+
+**Step 5.2: TRACE CALLERS**
 Record:
-- Declared in `fw/uefi.h` under `#ifdef CONFIG_EFI` (stub `-EOPNOTSUPP`
-  otherwise).
-- Only caller: `iwl_pnvm_load_reduce_power_to_trans()` in `fw/pnvm.c`.
-- That is called from `iwl_pnvm_load()`, exported and used from
-  `mvm/fw.c` and `mld/fw.c` during firmware/PNVM init.
-- Not IRQ; process context during WiFi bring-up.
+- `iwl_mld_set_wake_packet()` ← `iwl_mld_report_wowlan_wakeup()` ←
+  `iwl_mld_process_wowlan_status()` ← D3/WoWLAN resume
+- Driver resume: `iwl_mld_resume()` → `iwl_mld_wowlan_resume()`
+- mac80211: `ieee80211_reconfig()` → `drv_resume()` under
+  `lockdep_assert_wiphy()`
+- Context: process context on suspend/resume, not hardirq
 
-Step 5.3: TRACE CALLEES
-Record: Reads UEFI blob from `iwl_uefi_get_reduced_power()` →
-`iwl_uefi_get_verified_variable()` (`kmalloc`/`kmemdup` of EFI var). On
-SKU match, `iwl_uefi_reduce_power_section()`. Fix only adds a length
-check and error return.
+**Step 5.3: TRACE CALLEES**
+Record: `ieee80211_iter_keys`, `ieee80211_hdrlen`,
+`ieee80211_has_protected`, `alloc_skb` / `skb_put_data`,
+`ieee80211_data_to_8023`, `IWL_FW_CHECK` (log + boolean).
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Device probe / firmware start → `iwl_pnvm_load()` → reduce-power
-UEFI parse. Not a syscall parser. Trigger needs Intel iwlwifi,
-`CONFIG_EFI`, runtime EFI `GetVariable`, and a Reduced Power variable
-with a short PNVM_SKU TLV. Unprivileged userspace cannot normally forge
-that; root/firmware can. Still a kernel OOB on bad firmware/BIOS data.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Reachable from userspace via WoWLAN (suspend with wowlan
+enabled, then a wake packet). Needs `CONFIG_IWLMLD` and
+`CONFIG_PM_SLEEP` (`iwlmld-$(CONFIG_PM_SLEEP) += d3.o`). Intel WiFi 7 /
+MLD hardware. Not a syscall fuzz path; **laptop suspend/resume**.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Identical hole and fix in `iwl_pnvm_parse()` (`pnvm.c` lines
-208–212 in this tree). Same systematic miss.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: MVM `mvm/d3.c` already applied IV/ICV + size check. MLD was a
+port that omitted that logic.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+---
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. `iwl_uefi_reduce_power_parse()` is in `uefi.c` from v5.14.
-This tree is **v7.3-rc4**; the fix itself is already an ancestor (`git
-merge-base --is-ancestor f051995c53958 HEAD` succeeded) and first
-appeared in **v7.3-rc1**. The parser and the OOB path exist in this
-lineage.
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply** on this tree’s pre-image (original commit).
-Context is the long-standing TLV loop; no local conflicts.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** Tree is `v7.3-rc4-27-gf0100363d8c37` / `7.3.0-rc4`.
+File `drivers/net/wireless/intel/iwlwifi/mld/d3.c` exists. Bug present
+from v6.15 (`d1e879ec600f9`) until this fix. `git merge-base --is-
+ancestor d1e879ec600f9 HEAD` is true. `v7.2` has MLD but **not** this
+fix (`c5cb9dd220ba9` is not an ancestor of `v7.2`).
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: This is the fix. Sibling PNVM check is also here. No earlier
-substitute for the UEFI parser.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply** on this tree. Surrounding
+`iwl_mld_set_wake_packet()` matches the parent hunk. `IWL_FW_CHECK`
+already used in this file.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: `c5aeb11489150` is in HEAD (notif length). No alternate fix for
+IV/ICV in MLD `set_wake_packet`.
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **iwlwifi** (`drivers/net/wireless/intel/iwlwifi/`).
-**IMPORTANT** — common Intel WiFi driver, not core mm/VFS, not staging.
+---
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively developed (UEFI/PNVM/regulatory churn through 2026).
-The missing check is old (2021); this is hardening of mature parse
-logic, not a bug in brand-new code.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+Record: **drivers/net/wireless/intel/iwlwifi/mld** — **IMPORTANT** (not
+core mm/fs, but a widely used Intel WiFi opmode for current silicon).
+WoWLAN is a production laptop path.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific + config-specific:** Intel iwlwifi +
-`CONFIG_EFI` + platforms that expose the Reduced Power UEFI variable.
+**Step 7.2: SUBSYSTEM ACTIVITY**
+Record: **Active.** Many 2026 iwlwifi mld/mvm firmware-validation fixes.
+Mature enough that MVM already had this logic; MLD lagged.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: WiFi firmware/PNVM load with a short `IWL_UCODE_TLV_PNVM_SKU` in
-that UEFI blob. Uncommon on good OEM tables; realistic with
-corrupt/malicious EFI data. Not a normal unprivileged syscall.
+---
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Out-of-bounds **read** of up to ~12 bytes. Can KASAN/oops if the
-SKU TLV sits near the end of the `kmemdup` buffer; otherwise reads the
-next TLV and can mis-match SKU / skip reduce-power. **HIGH** for the
-true OOB case (crash on probe), not data corruption of user files.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Step 8.1: WHO IS AFFECTED**
+Record: **Driver-specific / config-specific:** `CONFIG_IWLMLD=y/m` +
+`CONFIG_PM_SLEEP`, Intel MLD firmware devices, WoWLAN users.
+
+**Step 8.2: TRIGGER CONDITIONS**
 Record:
-- **Benefit:** high for affected laptops/APs — avoids OOB during WiFi
-  init on bad UEFI data; check is cheap.
-- **Risk:** very low — 6 lines, error path only, maintainer-acked form.
-- **Ratio:** favorable.
+- Common functional bug: WoWLAN wakeup by a **protected data frame**
+  (typical on WPA2/WPA3). Unprivileged users do not inject firmware
+  notifications; they can suspend with wowlan.
+- Memory-safety path: truncated/malformed `WOWLAN_WAKE_PKT` notification
+  (buggy firmware or short DMA). Intel FW is signed, so this is
+  robustness vs. firmware bugs, not a generic local exploit.
+- How common: every encrypted wake-packet resume hits the IV/ICV miss;
+  overflow needs a short/inconsistent notification.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 8.3: FAILURE MODE SEVERITY**
+Record:
+- Short buffer + `skb_put_data(hdrlen)` → **skb over-panic / OOB** —
+  **HIGH**
+- Signed underflow into `skb_put_data` → **memory corruption** —
+  **HIGH**
+- Unchecked header parse → **OOB read** — **HIGH**
+- Wrong/missing wakeup packet to cfg80211 — **MEDIUM** (userspace WoWLAN
+  diagnostics)
 
-Step 9.1: COMPILE THE EVIDENCE
-**For:**
-- Real type-specific length hole; OOB read of `iwl_sku_id` (12 bytes) is
-  visible in the code.
-- Six-line, obviously correct check; v2 matches maintainer review
-  (`sizeof(*tlv_sku_id)`).
-- iwlwifi maintainer applied it; same fix already used in
-  `iwl_pnvm_parse()`.
-- Parser present since v5.14; this tree has it.
-- Applies cleanly; no new API; no extra dependency for *this* hunk.
+**Step 8.4: RISK-BENEFIT RATIO**
+Record: **Benefit: high** for Intel MLD WoWLAN (crash/corruption
+avoided, correct packet). **Risk: low** (one file, ~60 lines, same
+pattern as MVM, wiphy lock already held). Ratio favors backport.
 
-**Against:**
-- No user/syzbot report; trigger is malformed UEFI, not a common
-  syscall.
-- Reduce-power table is not the data path; failed parse already degrades
-  to skipping the image.
-- `CONFIG_EFI` only.
+---
 
-**Unresolved:** lore.kernel.org HTML fetch returned 403; discussion
-recovered via b4 mbox, msgid.link, and LKML mirrors. No stable-list
-thread found.
+## PHASE 9: FINAL SYNTHESIS
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — size check before
-   `data[0..2]`; v2 from maintainer review; in iwlwifi-next then
-   mainline.
-2. Fixes a real bug that affects users? **PASS** — OOB read of a kernel
-   buffer parsed at WiFi init.
-3. Important issue? **PASS** — OOB can oops; severity HIGH, not LOW
-   cosmetics.
-4. Small and contained? **PASS** — +6 lines, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — this tree already contains
-   the original commit; pre-image matches.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
-fix.
+**FOR:**
+- Real underflow/OOB in firmware wake-packet parsing (`skb_put` /
+  `memcpy`)
+- Protected-frame IV/ICV omitted since iwlmld was added (v6.15)
+- Same logic already used and proven in MVM `d3.c`
+- Small, one file, no new APIs
+- Maintainer-authored and maintainer-committed
+- Standalone (1/8 of a mixed series, no deps on the rest)
+- Code exists in this 7.3-rc4 tree; `IWL_FW_CHECK` and
+  `ieee80211_iter_keys` already used on this path
 
-Step 9.4: MAKE YOUR DECISION
-This tree’s iwlwifi UEFI reduce-power parser has the hole; the patch is
-a small, reviewed bounds check that prevents a real OOB read. That meets
-stable rules for **this** checkout.
+**AGAINST:**
+- No user `Reported-by` / syzbot
+- WoWLAN-only; overflow needs a bad/truncated notification
+- ~57 lines, new helper (still contained)
+- Cover letter mixed fixes with features (this patch itself is a fix)
 
-What it solves for this tree: `iwl_uefi_reduce_power_parse()` can read
-12 bytes from a PNVM SKU TLV whose declared length is shorter, and can
-walk off the UEFI blob when remaining length is also `< 12`. That
-matters on Intel WiFi + EFI machines with a bad Reduced Power variable
-(crash/KASAN on init). The change is six lines, no new ABI, no extra
-commits required, and the sibling PNVM check is independent.
+**UNRESOLVED:**
+- lore.kernel.org HTTP 403; no extra review mail beyond the b4 mbox
+- Whether stable@ already discussed it
 
-Risk vs benefit: very low regression risk vs preventing an OOB on a
-widely used driver. Main caveat is the uncommon trigger; that does not
-make the hole theoretical in the code.
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — mirrors MVM; maintainer SOB;
+   used `IWL_FW_CHECK` consistently
+2. Fixes a real bug that affects users? **PASS** — wrong crypto
+   stripping on encrypted wake packets; OOB on short buffers
+3. Important issue? **PASS** — skb overflow / underflow is crash or
+   memory corruption; HIGH
+4. Small and contained? **PASS** — one file, +57/−6
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — file and helpers present,
+   hunk matches
 
-Verification:
-- [Phase 1] Subject/body/tags: validate SKU TLV length; SOB Hou +
-  Korenblit; Link `24417-2`; no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +6 in `iwl_uefi_reduce_power_parse()`; `if (tlv_len <
-  sizeof(*tlv_sku_id)) return -EINVAL`
-- [Phase 2] `struct iwl_sku_id` is `__le32 data[3]` in `fw/api/alive.h`;
-  `iwl_ucode_tlv` is 8-byte header + `data[]` in `fw/file.h`
-- [Phase 3] `git describe HEAD` / Makefile: v7.3-rc4 / 7.3.0-rc4
-- [Phase 3] `git merge-base --is-ancestor f051995c53958 HEAD` → yes
-- [Phase 3] Blame: parser from 9dad325f9d575 (v5.14-rc1); fix lines from
-  f051995c53958 (v7.3-rc1)
-- [Phase 3] Sibling 7410e4548a17b is patch 1/2 on `pnvm.c`, not a apply-
-  prereq
-- [Phase 4] `b4 dig -c f051995c53958`: v1 2026-06-30, v2 2026-07-15;
-  mbox is the patch
-- [Phase 4] LKML mirror: Miri “Please use sizeof(*tlv_sku_id)”; no NAK
-- [Phase 4] Stable lore search: no discussion of this subject
-- [Phase 5] Only caller `iwl_pnvm_load_reduce_power_to_trans` ←
-  `iwl_pnvm_load` ← mvm/mld fw init; gated on CONFIG_EFI
-- [Phase 5] Buffer from `iwl_uefi_get_reduced_power` / verified EFI
-  variable (`kmalloc` then `kmemdup`)
-- [Phase 6] Buggy parser present; fix already in this tree; would apply
-  cleanly
-- [Phase 7] iwlwifi, maintainer Miri Korenblit
-- [Phase 8] Failure: OOB read / possible oops on WiFi init; HIGH;
-  trigger EFI-malformed
-- UNVERIFIED: lore.kernel.org HTTP 403 on direct thread fetch; content
-  recovered from b4 and LKML mirrors
+**Step 9.3: EXCEPTION CATEGORIES**
+Record: None (not a device ID/quirk/DT/build/doc exception). Ordinary
+driver bugfix.
+
+**Step 9.4: DECISION**
+This tree has the buggy MLD D3 path. The patch is a small, correct fix
+for integer underflow and bad wake-packet trimming. It should be applied
+here.
+
+---
+
+### What the commit solves for users of this tree
+
+On Intel MLD (WiFi 7) WoWLAN resume, `iwl_mld_set_wake_packet()` treated
+every data frame as having only a 4-byte FCS and never skipped 802.11
+IV/ICV. Encrypted wake packets were mis-trimmed. Short or inconsistent
+firmware notifications could make `pkt_bufsize` go negative (`int`) and
+then be passed to `skb_put_data(..., unsigned int)`, or `skb_put` more
+than `alloc_skb` reserved — kernel panic or memory corruption. The patch
+adds per-key IV/ICV (via `ieee80211_iter_keys`) and `IWL_FW_CHECK` size
+guards, matching MVM.
+
+### Risk vs benefit
+
+Low risk: one file, existing primitives, wiphy lock already asserted.
+Benefit: avoid resume-path memory corruption and deliver a correct
+wakeup packet on encrypted networks.
+
+### Concerns
+
+No external reproducer; trigger for the overflow is a truncated FW
+notification. The IV/ICV miss still hits normal encrypted WoWLAN. No
+series dependency. Apply is clean on this tree.
+
+---
+
+### Verification
+- **[Phase 1]** Parsed commit `c5cb9dd220ba9`: SOB Grumbach + Korenblit;
+  Link msgid; no Fixes/Reported-by/Cc:stable
+- **[Phase 2]** Diff: `mld/d3.c` +57/−6; new key iterator; size checks;
+  `int`→`u32`; IV/ICV from `key->iv_len`/`icv_len` (`u8` in
+  `ieee80211_key_conf`)
+- **[Phase 2]** Confirmed `skb_put_data()` uses `unsigned int len` and
+  `skb_put()` (`include/linux/skbuff.h`)
+- **[Phase 2]** Compared to `mvm/d3.c` ~1516–1555: same IV/ICV +
+  `IWL_FW_CHECK` pattern
+- **[Phase 3]** `git blame` on parent: buggy function from
+  `d1e879ec600f9` (2025-02-16)
+- **[Phase 3]** `git merge-base --is-ancestor d1e879ec600f9 HEAD` true;
+  `c5cb9dd220ba9` not in `v7.2`; MLD present from `v6.15`
+- **[Phase 3]** `c5aeb11489150` is ancestor, independent notif-length
+  fix
+- **[Phase 4]** `b4 dig -c/-a/-w/-m`: v1 1/8 iwlwifi-next; recipients
+  Korenblit/Berg/linux-wireless; mbox has no replies/NAKs
+- **[Phase 4]** WebFetch/curl lore: 403 — UNVERIFIED extra
+  review/stable@ mail
+- **[Phase 5]** Call chain: `ieee80211_reconfig` → `drv_resume` →
+  `iwl_mld_wowlan_resume` (`lockdep_assert_wiphy`) →
+  `iwl_mld_set_wake_packet`
+- **[Phase 5]** `ieee80211_iter_keys` docs: wiphy mutex; already used in
+  `iwl_mld_update_sec_keys()`
+- **[Phase 6]** `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` → `7.3.0-rc4`; file present; `d3.o` behind
+  `CONFIG_PM_SLEEP`
+- **[Phase 7]** `CONFIG_IWLMLD` “Intel Wireless WiFi MLD Firmware
+  support”
+- **[Phase 8]** Failure mode verified from parent source: no
+  `pkt_bufsize < sizeof(*hdr)` check; signed subtract then
+  `skb_put_data`
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/fw/uefi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mld/d3.c | 63 +++++++++++++++++++--
+ 1 file changed, 57 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-index 4ae4d215e633e..395973c3f2bf8 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-@@ -248,6 +248,12 @@ int iwl_uefi_reduce_power_parse(struct iwl_trans *trans,
- 			IWL_DEBUG_FW(trans,
- 				     "Got IWL_UCODE_TLV_PNVM_SKU len %d\n",
- 				     tlv_len);
-+			if (tlv_len < sizeof(*tlv_sku_id)) {
-+				IWL_ERR(trans, "invalid PNVM SKU TLV len: %u\n",
-+					tlv_len);
-+				return -EINVAL;
-+			}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/d3.c b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+index 73fd4c69357ca..b75936125b46d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+@@ -53,6 +53,30 @@ struct iwl_mld_suspend_key_iter_data {
+ 	__le32 bigtk_cipher;
+ };
+ 
++struct iwl_mld_wake_pkt_iter_data {
++	bool multicast;
++	u32 ivlen;
++	u32 icvlen;
++};
 +
- 			IWL_DEBUG_FW(trans, "sku_id 0x%0x 0x%0x 0x%0x\n",
- 				     le32_to_cpu(tlv_sku_id->data[0]),
- 				     le32_to_cpu(tlv_sku_id->data[1]),
++static void
++iwl_mld_wake_pkt_key_iter(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
++			  struct ieee80211_sta *sta,
++			  struct ieee80211_key_conf *key, void *_data)
++{
++	struct iwl_mld_wake_pkt_iter_data *data = _data;
++	bool is_group_key = !sta;
++
++	/* ignore anything that is not a PTK / GTK */
++	if (key->keyidx > 3)
++		return;
++	if (is_group_key != data->multicast)
++		return;
++
++	data->ivlen = key->iv_len;
++	data->icvlen = key->icv_len;
++}
++
+ struct iwl_mld_mcast_key_data {
+ 	u8 key[WOWLAN_KEY_MAX_SIZE];
+ 	u8 len;
+@@ -707,11 +731,17 @@ iwl_mld_set_wake_packet(struct iwl_mld *mld,
+ 			struct cfg80211_wowlan_wakeup *wakeup,
+ 			struct sk_buff **_pkt)
+ {
+-	int pkt_bufsize = wowlan_status->wake_packet_bufsize;
+-	int expected_pktlen = wowlan_status->wake_packet_length;
++	u32 pkt_bufsize = wowlan_status->wake_packet_bufsize;
++	u32 expected_pktlen = wowlan_status->wake_packet_length;
+ 	const u8 *pktdata = wowlan_status->wake_packet;
+ 	const struct ieee80211_hdr *hdr = (const void *)pktdata;
+-	int truncated = expected_pktlen - pkt_bufsize;
++	u32 truncated;
++
++	if (IWL_FW_CHECK(mld, pkt_bufsize < sizeof(*hdr),
++			 "pkt_bufsize is too short: %u\n", pkt_bufsize))
++		return;
++
++	truncated = expected_pktlen - pkt_bufsize;
+ 
+ 	if (ieee80211_is_data(hdr->frame_control)) {
+ 		int hdrlen = ieee80211_hdrlen(hdr->frame_control);
+@@ -722,9 +752,18 @@ iwl_mld_set_wake_packet(struct iwl_mld *mld,
+ 		if (!pkt)
+ 			return;
+ 
+-		skb_put_data(pkt, pktdata, hdrlen);
+-		pktdata += hdrlen;
+-		pkt_bufsize -= hdrlen;
++		if (ieee80211_has_protected(hdr->frame_control)) {
++			struct iwl_mld_wake_pkt_iter_data iter_data = {
++				.multicast =
++					is_multicast_ether_addr(hdr->addr1),
++			};
++
++			ieee80211_iter_keys(mld->hw, vif,
++					    iwl_mld_wake_pkt_key_iter,
++					    &iter_data);
++			ivlen = iter_data.ivlen;
++			icvlen += iter_data.icvlen;
++		}
+ 
+ 		/* if truncated, FCS/ICV is (partially) gone */
+ 		if (truncated >= icvlen) {
+@@ -735,6 +774,13 @@ iwl_mld_set_wake_packet(struct iwl_mld *mld,
+ 			truncated = 0;
+ 		}
+ 
++		if (IWL_FW_CHECK(mld, pkt_bufsize <= hdrlen + ivlen + icvlen,
++				 "pkt_bufsize is too small %u\n", pkt_bufsize))
++			return;
++
++		skb_put_data(pkt, pktdata, hdrlen);
++		pktdata += hdrlen;
++		pkt_bufsize -= hdrlen;
+ 		pkt_bufsize -= ivlen + icvlen;
+ 		pktdata += ivlen;
+ 
+@@ -756,6 +802,11 @@ iwl_mld_set_wake_packet(struct iwl_mld *mld,
+ 			fcslen -= truncated;
+ 			truncated = 0;
+ 		}
++
++		if (IWL_FW_CHECK(mld, pkt_bufsize <= fcslen,
++				 "pkt_bufsize is too small %u\n", pkt_bufsize))
++			return;
++
+ 		pkt_bufsize -= fcslen;
+ 		wakeup->packet = wowlan_status->wake_packet;
+ 		wakeup->packet_present_len = pkt_bufsize;
 -- 
 2.53.0
 
