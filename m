@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB9E638AEE;
-	Mon, 19 Oct 2026 14:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C8F639AAB;
+	Mon, 19 Oct 2026 14:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418754; cv=none; b=stATRH+jArRZwb3+rEjFmUk5gSKRYJ8J/kQLGz8gudqp6T9mdi+1pv+REQtS4ohXliwz/npdsEz0Eaeq51SU19wj8XB48rjX1AxkwAG2+CGTMOUrehWS1ZDyXi/e1anJEz44DggTcrR0dP2M/Nc2EIS8Y1LAjFFNbmSMglldpo4=
+	t=1792418756; cv=none; b=VExgKVKpJzfGRAvs1q4TCW3yZygjRxj5l9LZsrbxNj1NLDW/VE6OuVAGPjroZPxUsrTvU3z1YbEJj7Zf5eBePwTeytPUT1Qonxx0tlY0g1+C1TKg74Unai4I/Vt2SycMGhNJ4IGr7xF+6ibDZriACZxivvMrQpEZk1+OLc6xaT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418754; c=relaxed/simple;
-	bh=CsUbPH3jTacXCVO8MlogOfaQDmir9kkrSVKFVFzIRPw=;
+	s=arc-20240116; t=1792418756; c=relaxed/simple;
+	bh=qVj1hlIzv0Y7Cin3VmfBLoNYR+gBjZgmloAz1AxvKEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=il6wu4hTDIeNIy2RrkuszsM2pe+gMNDJwbN77kBOUTyJBb7m7GFGcNlMFDB0YKnMprrg/tV957VyBlELgj7qxx0a1awkFCK1q7rnzNUA0th5aQYy48R2h1QxEYPiWxfeQwIQ+WEi1gU42vuzSUe8gD8nBLD9RObhB2Dd35gaNXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oDvnWbov; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KcvCzm2rAz7stMIfT+Hqr8mb27v3AqxiJ6DG5VSBBTpWq7prfTDjkRB/tJQwgN5T85bnel9bpdeaWYMf7q3cANWJV3nczal4nz8U4aQ5jzhFBXDu9XiCiohE90y1FPsYX4HLrSnJJDcC2ZLVGymtD2PGWXmTU5vn//ZDLcNrPmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EUr1sDZp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oDvnWbov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24291F000C9;
-	Mon, 19 Oct 2026 14:05:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EUr1sDZp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB8A1F000C5;
+	Mon, 19 Oct 2026 14:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418751;
-	bh=IJ6/zTLwp21/j+Ltkgr4uo8k0Js/leTHH4yBKPlXV08=;
+	s=k20260515; t=1792418752;
+	bh=KL3D0vdQrNQmZyqnFmU6/oHDPqOB/+N8eeKRdzDLW1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDvnWbovA1SsJpGApMt1M/fyz1gE7tXtAOXu3Jlt/MURAIdtVkgN/ZF1svdq36MjM
-	 ZKUBgs2eY6dKuj59rkIs/6hUDn098wqHEreRfWzim/BTEhsKFrL9TN90CdTok+CS4d
-	 daq5ySCHeRnpPIuzRuiozVbFQBGByDiT1Q25XQQFmHaRbuHDAMlsw2eRozxMlhUok0
-	 jdRAtu9mNSbEDdaefj1m1gKa2zlsasya8ZtQhh8LbZGz0I2CX7SdFLAZ+HDrZvyP6f
-	 t9FtEOyvKqjWWkqDqs10OJQJrOjvN7lOHy7rGH9ZDyKRymd0CCdH429bgJ3KtBr6jH
-	 zlJEKzFIA2zug==
+	b=EUr1sDZpovtcrLbHwYYNSbJTQ46dUXbC7URPwdUKNMOFTqHodltL/B2cYPZKvE0Lz
+	 Rv1WMJjtwZ0NNX+JacuY5IArUMf9ISYyThE1L0qsFxMBn4wZY6uhKk4Tti656pmRVz
+	 lvva7C4hPjCPiBnTwZADjPzfxvMcTKqFJIa9eOounQv9BWBzfneyzW3JZYef48BoTi
+	 rSFMI0SvIFfj7lzd9FchZ+Hn4OfBl4MQTsTBHdku5Ert236l9kmM6hLrUquE4IZk/n
+	 GcQ0/hML7p/ztr58mUupzofihtd6OSGyTBhaG/buN0a2+8c0xf7nyzR8a7fA+qNzSy
+	 HxOBq2n/yRexg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Hansson <newbyte@postmarketos.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Armin Wolf <W_Armin@gmx.de>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	hansg@kernel.org,
+	Dell.Client.Kernel@dell.com,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] wifi: rsi: Fix types to appease CFI
-Date: Mon, 19 Oct 2026 09:52:41 -0400
-Message-ID: <20261019135441.1420968-470-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] platform/x86: dell-smbios-wmi: Fix chardev resource management
+Date: Mon, 19 Oct 2026 09:52:42 -0400
+Message-ID: <20261019135441.1420968-471-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -46,512 +49,649 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Hansson <newbyte@postmarketos.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit da308f6e471252ae5e8009dcea16bc5e9c9dc5dd ]
+[ Upstream commit 41427211f663c6eb36986ca2ea68d7e87aac52e9 ]
 
-Avoids errors like:
+When unbinding the WMI driver while a userspace application has
+an open file descriptor for the character device, a UAF occurs:
 
-    CFI failure at kthread+0x124/0x1cc (target: rsi_coex_scheduler_thread+0x0/0x1b4 [redpine_91x]; expected type: 0x89fb613d)
+KASAN: slab-use-after-free in _copy_to_user from platform/x86/dell-smbios-wmi
 
-As seen in the aforementioned error this was tested using the downstream
-redpine_91x driver found in the Librem 5's downstream source tree.
-However, it appears that this driver is a modified version of the rsi
-driver found in mainline Linux and as such I decided to port the changes
-here too.
+The reason for this is that even after calling misc_deregister(),
+userspace appications can still call read() and/or ioctl() on open
+file descriptors associated with the already unregistered character
+device. This causes a UAF by attempting to access the already freed
+state container of the WMI driver.
 
-Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
-Link: https://patch.msgid.link/20260804-rsi-cfi-fix-v2-1-59679a520240@postmarketos.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by no longer storing the state container inside
+filp->private_data. Instead retrieve the state container using
+get_first_smbios_priv() and return -ENODEV if the state container
+does not exist anymore.
+
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/platform-driver-x86/178144969601.60470.13396800403157907003@gmail.com/
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20260720131921.368000-2-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a 6.12 tree, the mismatched kthread
-types are present, and a CFI failure here is a default kernel BUG.
+This is a real KASAN use-after-free in `dell-smbios-wmi` on this
+v7.3-rc4 tree. The buggy `filp->private_data` path exists in the pre-fix
+code, the fix is small and self-contained, and it should be backported
+here.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [wifi: rsi] [Fix] [Correct kthread callback types so Clang CFI
-accepts them]
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[platform/x86 / dell-smbios-wmi] [fix] [chardev UAF after
+unbind while fd still open]**
+
+- Subsystem: `platform/x86: dell-smbios-wmi`
+- Action verb: **Fix**
+- Intent: stop a use-after-free in the misc chardev after the WMI driver
+  is unbound
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- Signed-off-by: Stefan Hansson &lt;newbyte@postmarketos.org&gt;
-  (author)
-- Link: https://patch.msgid.link/20260804-rsi-cfi-
-  fix-v2-1-59679a520240@postmarketos.org
-- Signed-off-by: Johannes Berg &lt;johannes.berg@intel.com&gt; (linux-
-  wireless maintainer)
-- No Fixes: tag (expected)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by on the committed
-  message
-- Ignore any pipeline “Upstream commit” / “Signed-off-by: Sasha Levin”
-  markers (none present in the provided message)
+- **Reported-by:** Shuangpeng Bai `<shuangpeng.kernel@gmail.com>` — real
+  user/tester report
+- **Closes:** https://lore.kernel.org/platform-
+  driver-x86/178144969601.60470.13396800403157907003@gmail.com/
+- **Link:**
+  https://patch.msgid.link/20260720131921.368000-2-W_Armin@gmx.de (v2
+  series, patch 1/3)
+- **Reviewed-by:** Ilpo Järvinen (pdx86 maintainer)
+- **Signed-off-by:** Armin Wolf (author; ACPI WMI maintainer), Ilpo
+  Järvinen
+- **Fixes:** absent in the committed message (expected). **v1** on the
+  list had `Fixes: 93885e85a77f ("platform/x86: dell-smbios-wmi: Stop
+  using WMI chardev")` — verified
+- **Cc: stable:** absent (expected; not a negative)
+- Ignore pipeline SOBs (none of Sasha Levin’s in the real commit)
 
-Notable: maintainer SOB; author is from postmarketOS; testing mentioned
-in the body, not as Tested-by.
+Notable: Greg KH and Arnd Bergmann were on the original To/Cc. Not
+syzbot; a human KASAN report with a gist reproducer.
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- Bug: CFI type mismatch when kthread starts
-  `rsi_coex_scheduler_thread`.
-- Symptom: `CFI failure at kthread+0x124/0x1cc (target:
-  rsi_coex_scheduler_thread+0x0/0x1b4 [redpine_91x]; expected type:
-  0x89fb613d)`
-- Version info: none. Tested on Librem 5 downstream `redpine_91x`,
-  described as a modified rsi driver; author ported the same type fix to
-  mainline rsi.
-- Root cause (from message + code): thread helpers are not `int (*)(void
-  *)` as `kthread_run()` requires; `rsi_create_kthread()` takes `void
-  *func_ptr`, so the compiler cannot catch it.
+- **Bug:** After `misc_deregister()`, open fds can still
+  `read()`/`ioctl()`. Those ops used `filp->private_data` pointing at
+  `wmi_smbios_priv`, which `devm` already freed.
+- **Symptom:** `KASAN: slab-use-after-free in _copy_to_user` from this
+  driver
+- **Root cause:** chardev state stored in `filp->private_data`; unbind
+  frees that object without waiting for in-flight fops
+- **Fix:** stop caching priv in `private_data`; look it up under an
+  rwsem via `get_first_smbios_priv()`; return `-ENODEV` if gone
+- **Version info in message:** none. Introducing commit is 93885e85a77f2
+  (2023-12, ~v6.8). Report was on `e8c2f9fdadee` (2026-05-25)
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. The subject says “Fix types”; it is a
-real CFI/runtime type-check failure, not style-only.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Record: **Not hidden.** Subject and body are an explicit UAF fix. Not
+cleanup-as-fix.
 
-Step 2.1: INVENTORY THE CHANGES
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- `drivers/net/wireless/rsi/rsi_91x_coex.c` —
-  `rsi_coex_scheduler_thread`
-- `drivers/net/wireless/rsi/rsi_91x_main.c` — `rsi_tx_scheduler_thread`
-- `drivers/net/wireless/rsi/rsi_91x_sdio_ops.c` — `rsi_sdio_rx_thread`
-- `drivers/net/wireless/rsi/rsi_91x_usb_ops.c` — `rsi_usb_rx_thread`
-- `drivers/net/wireless/rsi/rsi_common.h` — `rsi_create_kthread`
-- `drivers/net/wireless/rsi/rsi_sdio.h` / `rsi_usb.h` — prototypes
-- Scope: 7 files, 15 insertions / 11 deletions. Single-driver surgical
-  type fix.
+- File: `drivers/platform/x86/dell/dell-smbios-wmi.c` — **+34 / -33**
+- Functions: `dell_smbios_wmi_call`, `dell_smbios_wmi_open` (removed),
+  `dell_smbios_wmi_read`, `dell_smbios_wmi_ioctl`,
+  `dell_smbios_wmi_probe`, `dell_smbios_wmi_remove`;
+  `dell_smbios_wmi_fops`
+- Scope: **single-file surgical locking/lifetime fix**
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- Before: thread functions are `void foo(struct rsi_common *common)` and
-  are passed through `void *func_ptr` into `kthread_run()`.
-- After: they are `int foo(void *data)` with `struct rsi_common *common
-  = data;`. `rsi_create_kthread()` takes `int (*func_ptr)(void *data)`.
-- Bodies are unchanged. They still end in
-  `kthread_complete_and_exit(...)`, which is `__noreturn`.
-- Path: kthread creation at driver init / coex attach, not an error-only
-  path.
+1. **Includes / locks:** drop global `call_mutex`/`list_mutex`; add
+   `cleanup.h`, `rwsem.h`, per-priv `call_lock`,
+   `DECLARE_RWSEM(list_lock)`
+2. **`dell_smbios_wmi_call`:** `guard(rwsem_read)(&list_lock)` then
+   lookup; `guard(mutex)(&priv->call_lock)` around the SMBIOS buffer
+3. **open:** removed. Previously `container_of(filp->private_data, ...,
+   char_dev)` then stored priv in `private_data` for the fd lifetime
+4. **read/ioctl:** lookup under `list_lock`; `-ENODEV` if list empty;
+   ioctl also takes `priv->call_lock`
+5. **probe:** `devm_mutex_init` for `call_lock`; list add under write
+   rwsem
+6. **remove:** unregister SMBIOS backend, then `list_del` under write
+   rwsem (so in-flight readers finish before priv can be freed)
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Type / CFI mismatch]
-- `kthread()` does `ret = threadfn(data)` with type `int (*)(void *)`
-  (`kernel/kthread.c`).
-- Clang CFI hashes that type. `void (*)(struct rsi_common *)` has a
-  different hash → CFI failure.
-- Default `CONFIG_CFI_CLANG` (non-permissive) treats that as
-  `BUG_TRAP_TYPE_BUG` (`kernel/cfi.c`).
-- Fix: match the kthread callback ABI so the type hash matches.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-Step 2.4: ASSESS THE FIX QUALITY
+Record: **[UAF / lifetime / race]**
+`misc_deregister()` does not drain existing fds. `open()` pinned a
+pointer to a `devm_kzalloc` object. Unbind (`unbind_store` →
+`devres_release_all` → `kfree`) freed it. Later `read()` used that
+pointer in `simple_read_from_buffer` → `_copy_to_user`. Confirmed by
+KASAN: free stack is `unbind_store`, use stack is `vfs_read`.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
 Record:
-- Obviously correct: this is the documented kthread callback type.
-- Minimal: signatures + one local cast; no locking/API/behavior change.
-- Regression risk: very low. `kthread_complete_and_exit` is
-  `__noreturn`, so no missing `return 0`. Johannes initially worried
-  about “control reaches end of non-void function”; that does not apply.
-- Red flags: none.
+- **Obviously correct:** lookup-under-lock is the standard pattern when
+  chardev outlives driver unbind
+- **Minimal:** one file, no API change
+- **Regression risk: low.** Lock order is consistent (`list_lock` then
+  `call_lock`). Write side waits for readers, then `list_del`, then
+  `devm` frees priv
+- **Not a public API change.** Userspace sees `-ENODEV` after unbind
+  instead of UAF
+- Follow-up patches 2/3 in the same series are cleanup only; author said
+  patch 1 alone stops the UAF
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
 
-Step 3.1: BLAME THE CHANGED LINES
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
+Record: Buggy `filp->private_data` path introduced in **93885e85a77f2**
+(`platform/x86: dell-smbios-wmi: Stop using WMI chardev`, 2023-12-11,
+~**v6.8**). Present in this tree (`git merge-base --is-ancestor
+93885e85a77f2 HEAD` succeeded). Long-lived, not last-month code.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+
+Record: Committed message has no Fixes tag. v1 did: **93885e85a77f2**.
+That commit is an ancestor of HEAD. No later “this patch was wrong” fix;
+08d31d42b054e and b844001890c5b are the rest of the same series
+(callback signature + list→single pointer).
+
+**Step 3.3: CHECK FILE HISTORY**
+
+Record: Nearby file commits: `6f918e3d95c9b` (new WMI buffer API,
+already in this tree), then this fix, then series 2/3. Not “patch 2/3 of
+a required functional series” for the UAF — this **is** 1/3 and is
+standalone.
+
+**Step 3.4: CHECK THE AUTHOR**
+
+Record: **Armin Wolf** is listed as maintainer for ACPI WMI / related
+Dell WMI drivers. He diagnosed the report and tested on a Dell Inspiron
+3505. Related commits in this file are his WMI API conversions; this is
+not a drive-by.
+
+**Step 3.5: DEPENDENT/PREREQUISITE COMMITS**
+
+Record: Needs `guard()`, `linux/cleanup.h`, `devm_mutex_init`,
+`get_first_smbios_priv()`, `wmi_list`. All present in this 7.3 tree.
+Applies on the pre-fix file (parent of 41427211f663c). **Standalone.**
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- `rsi_tx_scheduler_thread` / `rsi_create_kthread`: `dad0d04fa7ba41`
-  (“rsi: Add RS9113 wireless driver”, 2014-03-17) — present since the
-  driver was added.
-- `rsi_coex_scheduler_thread`: `2108df3c4b1856` (“rsi: add coex
-  support”, 2018-03-13).
-- Long-lived bug, not recent churn.
+- **b4 dig:**
+  https://patch.msgid.link/20260720131921.368000-2-W_Armin@gmx.de
+- **v1:** 2026-07-16
+  https://patch.msgid.link/20260716053337.112533-2-W_Armin@gmx.de
+- **v2:** 2026-07-20 — applied version
+- v2 change vs v1: move rwsem next to `wmi_list` and add a comment
+  (Ilpo’s request). No change to the UAF logic
+- Cover letter: UAF reported by a user; **first patch fixes it**;
+  remaining two clean up; **tested on Dell Inspiron 3505**; author
+  **verified the UAF no longer reproduces** after patch 1
+- **No NAKs.** Ilpo applied it to pdx86 for-next (Linus policy: not a
+  current-cycle regression, so not -rc; that is merge-window routing,
+  not a stable NAK)
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Buggy pattern is original driver code, not a
-later regression.
+**Step 4.2: CHECK WHO REVIEWED**
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record (**b4 dig -w**): Armin Wolf, Ilpo Järvinen, Hans de Goede,
+Dell.Client.Kernel, Shuangpeng Bai, platform-driver-x86, LKML,
+**gregkh@linuxfoundation.org**, Arnd Bergmann. Maintainer reviewed
+(`Reviewed-by: Ilpo Järvinen`).
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+
+Record: https://lkml.iu.edu/2606.1/13509.html
+Shuangpeng Bai, 2026-06-14, KASAN slab-UAF in `_copy_to_user`, task
+`dell_smbios_wmi`.
+Use: `simple_read_from_buffer` ← `vfs_read`.
+Free: `kfree` ← `devres_release_all` ← `unbind_store`.
+Reproducer + config:
+https://gist.github.com/shuangpengbai/f5b15c099e80897486b4238ddb91df79
+Armin confirmed: open fd → unbind frees `devm_kzalloc` priv → read UAF.
+WMI core unbind as well as sysfs unbind.
+
+Greg KH: unbind is typically root and “best effort.” That does **not**
+make the UAF fictional; stable still takes driver-unbind UAFs. WMI core
+can unbind without a user poking sysfs.
+
+**Step 4.4: RELATED PATCHES AND SERIES**
+
+Record: 3-patch series. Patches 2–3 (pass device to callbacks; replace
+list with `chardev_priv`) are **not required** for the UAF. Author
+stated patch 1 is sufficient; he retested after it.
+
+**Step 4.5: STABLE MAILING LIST HISTORY**
+
+Record: No stable@ thread found. Greg was on the bug thread (char/misc
+maintainer), not a stable rejection. **UNVERIFIED:**
+lore.kernel.org/stable HTML returned 403; searched via b4 +
+openwall/lkml.iu.edu instead.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `dell_smbios_wmi_read`, `dell_smbios_wmi_ioctl`,
+`dell_smbios_wmi_call`, `dell_smbios_wmi_probe`,
+`dell_smbios_wmi_remove`; removed `dell_smbios_wmi_open`.
+
+**Step 5.2: TRACE CALLERS**
+
 Record:
-- Related in-tree: `16d9f674c6198` “wifi: rsi: fix kthread lifetime race
-  between self-exit and external-stop” (already in this tree). That
-  changes stop/wait, not signatures. No prerequisite conflict.
-- This CFI fix is not in the tree (`git log --grep` on
-  `drivers/net/wireless/rsi` found nothing).
-- Standalone; v2 only added kernel-doc, not extra code deps.
+- **read/ioctl:** VFS on `/dev/wmi/dell-smbios` (miscdevice, mode
+  `0444`)
+- **Example userspace:** `tools/wmi/dell-smbios-example.c` opens that
+  node and issues `DELL_WMI_SMBIOS_CMD`
+- **`dell_smbios_wmi_call`:** registered via
+  `dell_smbios_register_device()`; in-kernel SMBIOS backend for Dell
+  platform code
+- Reachable from syscalls: **yes** (`read`, `ioctl`)
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Stefan Hansson is not the rsi maintainer; patch is from
-postmarketOS/Librem 5. Applied by Johannes Berg. No other rsi CFI
-commits by this author in this tree.
+**Step 5.3: TRACE CALLEES**
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: None. Uses existing `kthread_run` / `kthread_complete_and_exit`.
-Can apply standalone.
+Record: `get_first_smbios_priv`, `simple_read_from_buffer`,
+`dell_smbios_wmi_do_ioctl` → `run_smbios_call` → `wmidev_invoke_method`,
+`copy_from_user`/`copy_to_user`. Ioctl talks to firmware.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 5.4: CALL CHAIN / REACHABILITY**
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record: `open("/dev/wmi/dell-smbios")` → `read`/`ioctl` while another
+task writes the WMI device `unbind` sysfs (or WMI core unbinds).
+Reproducer exists. Unprivileged users can **open/read** (0444); unbind
+is privileged. Still a real kernel UAF on Dell machines with this driver
+(Kconfig: `DELL_SMBIOS` default `m`, `DELL_SMBIOS_WMI` default `y` for
+Dell >2007).
+
+**Step 5.5: SIMILAR PATTERNS**
+
+Record: Classic miscdevice vs `devm` lifetime bug. Follow-up in-tree
+(`b844001890c5b`) tightens to a single `chardev_priv` +
+`dell_smbios_wmi_clear_chardev`; that is cleanup on top of this fix, not
+a replacement that this patch needs.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: **Yes.** Local tree is **v7.3-rc4** (`7.3.0-rc4`). Parent of the
+candidate still has:
+
+```c
+priv = container_of(filp->private_data, struct wmi_smbios_priv,
+char_dev);
+filp->private_data = priv;
+...
+struct wmi_smbios_priv *priv = filp->private_data;
+```
+
+Bug since ~v6.8 (`93885e85a77f2`), not after this tree branched.
+
+**Step 6.2: BACKPORT COMPLICATIONS**
+
+Record: **Clean apply** onto this tree’s pre-fix `dell-smbios-wmi.c`.
+`guard(rwsem_read/write)`, `guard(mutex)`, `devm_mutex_init` all exist
+(`include/linux/rwsem.h`, `include/linux/cleanup.h`,
+`include/linux/mutex.h`). No missing helpers.
+
+**Step 6.3: RELATED FIXES ALREADY HERE**
+
+Record: This is the first UAF fix for this path. Later series patches
+refactor further; they are not a substitute if this patch is the one
+under review. No earlier alternate UAF fix for this chardev.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+
+Record: **platform/x86 Dell WMI SMBIOS** — **IMPORTANT** for Dell
+laptops (firmware/SMBIOS userspace), not core mm/net. Default-on for
+Dell hardware.
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Active in 7.3 (WMI buffer API, this series). Driver itself dates
+to 2017; the chardev UAF is in the 2023 misc reimplementation.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: **Driver-specific / Dell x86** with `CONFIG_DELL_SMBIOS_WMI`.
+Large laptop population, not universal.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record: Open `/dev/wmi/dell-smbios`, then unbind the WMI device (sysfs
+or WMI core) and `read`/`ioctl`. Timing race with a published
+reproducer. Open is unprivileged; unbind is typically root/core.
+**Verified** via KASAN free/use stacks.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record: **KASAN slab-use-after-free → kernel oops / potential memory
+corruption.** Severity **HIGH** (UAF). Not a WARN-only issue.
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
 Record:
-- `b4 dig -c &lt;sha&gt;` not usable (candidate SHA not in this
-  checkout).
-- `b4 mbox` on msgid `20260804-rsi-cfi-
-  fix-v2-1-59679a520240@postmarketos.org`: v2, 1-message thread.
-- v1: https://patch.msgid.link/20260802-rsi-cfi-
-  fix-v1-1-5821d2cb54ee@postmarketos.org
-- v2 vs v1: kernel-doc only (`@common` → `@data`, `Return: 0`).
-- Reviewers: Jeff Johnson (kernel-doc / From: vs SOB mismatch; said he
-  was going to R-B after fixing many Android CFI type bugs). Johannes
-  Berg first complained about nipa kernel-doc, then confirmed it builds,
-  then applied v2. No NAK. No Cc: stable in review.
+- **Benefit: high** — stops a confirmed UAF on a default Dell driver,
+  with a reproducer and hardware test
+- **Risk: low** — ~67-line churn in one file, scoped locking, returns
+  `-ENODEV` after removal
+- **Ratio: strongly favors backport**
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: Recipients: linux-wireless, linux-kernel, phone-devel,
-postmarketos/upstreaming. Maintainer Johannes Berg applied it. Jeff
-Johnson (Qualcomm/ath) reviewed v1.
+Greg’s “root unbind is best effort” lowers *exploitability from
+unprivileged userspace*, not the fact of a crashable UAF. Stable
+routinely takes this class of driver-lifetime bugs.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Concrete CFI log from Librem 5 downstream
-`redpine_91x`. Same mismatch exists in mainline rsi (verified in this
-tree).
+---
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Single patch, v1→v2 kernel-doc only. Not a multi-patch series.
+## PHASE 9: FINAL SYNTHESIS
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned 403. Web search found no
-stable-list discussion of this CFI fix. No evidence it was rejected for
-stable.
+**Step 9.1: EVIDENCE**
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**For:**
+- Confirmed KASAN UAF, reproducer, call traces
+- User report + maintainer confirmation and hardware test
+- Small, single-file, obviously correct lifetime fix
+- Bug in this tree since ~v6.8
+- Helpers present; applies to this tree’s pre-fix code
+- Reviewed by pdx86 maintainer; author is WMI maintainer
+- Standalone as patch 1/3
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `rsi_coex_scheduler_thread`, `rsi_tx_scheduler_thread`,
-`rsi_sdio_rx_thread`, `rsi_usb_rx_thread`, `rsi_create_kthread`.
+**Against:**
+- Trigger usually needs privileged unbind (Greg: “best effort”)
+- Dell-specific, not core kernel
+- Series has two follow-up cleanups (not required for the UAF)
 
-Step 5.2: TRACE CALLERS
-Record:
-- `rsi_create_kthread()` → `kthread_run(func_ptr, common, ...)`
-- Callers: `rsi_91x_init` (Tx-Thread), `rsi_coex_attach` (Coex-Tx-
-  Thread), SDIO probe (`rsi_sdio_rx_thread`), USB init
-  (`rsi_usb_rx_thread`).
-- Context: process context at probe/init, not IRQ.
+**Unresolved:**
+- lore.kernel.org HTML 403; discussion recovered via b4 + lkml.iu.edu /
+  openwall
+- Did not download the gist reproducer source (stacks + maintainer
+  write-up are enough)
 
-Step 5.3: TRACE CALLEES
-Record: `rsi_wait_event` / `rsi_reset_event`, TX/RX processing, then
-`kthread_complete_and_exit`. No alloc/lock changes.
+**Step 9.2: STABLE RULES CHECKLIST**
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace-reachable via loading the rsi USB/SDIO module and
-bringing the interface up. With CFI, failure is at kthread start
-(`threadfn(data)` in `kthread()`), i.e. as soon as the driver creates
-its threads.
+1. Obviously correct and tested? **PASS** — lookup-under-rwsem; tested
+   on Inspiron 3505; UAF gone after this patch
+2. Real bug affecting users? **PASS** — KASAN UAF + gist reproducer
+3. Important (crash/security/corruption)? **PASS** — UAF / oops, HIGH
+4. Small and contained? **PASS** — +34/-33, one file
+5. No new features/APIs? **PASS**
+6. Can apply to this local tree? **PASS** — buggy code and prerequisites
+   present
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: All four rsi kthread entry points had the same wrong type; this
-patch fixes all of them. Precedent in-tree: `e1ea6db35fc3b` “wifi:
-brcmsmac: avoid function pointer casts” (KCFI / clang-16). Jeff Johnson
-noted many similar Android CFI callback-type fixes.
+**Step 9.3: EXCEPTION CATEGORIES**
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+Record: None (not a device ID/quirk/DT/build/doc exception). Qualifies
+as a normal UAF bugfix.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Local tree is **6.12.111** (`git describe`:
-`p-6.12-2-gd38d58a4e0359`). Current signatures are still `void
-foo(struct rsi_common *)` and `void *func_ptr`. Introduced 2014/2018;
-both are ancestors of HEAD. CFI exists here: `CONFIG_CFI_CLANG` in
-`arch/Kconfig`; arm64/x86_64/arm select `ARCH_SUPPORTS_CFI_CLANG`.
+**Step 9.4: DECISION**
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Context matches the patch hunks. Expected apply: **clean**.
-Nearby `16d9f674c6198` does not touch these signatures.
+This is a textbook stable candidate: KASAN UAF, small locking/lifetime
+change, present in this 7.3 tree, no missing deps.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: Kthread lifetime UAF fix is here; this CFI type fix is not. No
-alternate CFI workaround in rsi.
+---
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+### What the commit solves for this tree
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [wifi rsi / `drivers/net/wireless/rsi`] [PERIPHERAL] —
-Redpine/Silabs RS911x USB/SDIO. Used on some phones/SBCs (Librem 5). Not
-core mm/net. No dedicated MAINTAINERS entry; linux-wireless (Johannes
-Berg) applied it.
+On v7.3-rc4, `dell-smbios-wmi` still has (in the pre-fix file) a misc
+chardev that stores `wmi_smbios_priv *` in `filp->private_data`.
+Unbinding the WMI device frees that `devm` object while userspace can
+still `read()` `/dev/wmi/dell-smbios`. That is a real oops/UAF for Dell
+systems (driver default-enabled).
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature, low-churn driver with occasional stable-worthy fixes
-(OOB, kthread UAF). Bug is old, not from recent refactor.
+It meets stable rules: real bug, important failure mode, ~one-file
+surgical change, no new API, applies here.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+Risk vs benefit: low risk vs stopping a confirmed UAF. Follow-up series
+patches are cleanup and are not required.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific + config-specific: `CONFIG_RSI_91X` and
-`CONFIG_CFI_CLANG`. Default CFI is not permissive. CFI is common on
-Android GKI and hardened/mobile builds; not in this tree’s arch
-defconfigs.
+Concerns: unbind is usually privileged; Greg called it best-effort. That
+is not a reason to leave a KASAN UAF in a default Dell driver. v1’s
+`Fixes: 93885e85a77f2` is already in this tree.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Driver probe / thread create. Common if you have the hardware
-and CFI. Unprivileged users do not set this up; loading the driver
-(boot/hotplug) is enough. Not a race.
+### Verification
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Non-permissive CFI → `BUG_TRAP_TYPE_BUG` → kernel oops/panic
-when the thread starts. WiFi (and coex BT) does not come up. Severity:
-**HIGH** for CFI+rsi; **none** without CFI (wrong types happen to work
-on normal ABIs).
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: prevents CFI panics on rsi probe; restores WiFi on CFI
-  kernels.
-- Risk: very low (~15 lines, type-only, no behavior change without CFI).
-- Ratio: favorable. Small correctness fix, real crash for the configs
-  that hit it.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real CFI failure log; default CFI is a kernel BUG.
-- Buggy signatures are in this 6.12 tree and date to 2014/2018.
-- Tiny, obviously correct ABI match to `kthread_run`.
-- Applies cleanly; no deps.
-- Johannes Berg applied v2; Jeff Johnson reviewed v1.
-- Same class as other KCFI function-type fixes (e.g. brcmsmac).
-- Real hardware path (Librem 5 / postmarketOS).
-
-AGAINST:
-- Only crashes with `CONFIG_CFI_CLANG`; most generic 6.12 distro configs
-  leave CFI off.
-- Niche driver; tested on downstream `redpine_91x`, not a mainline rsi
-  repro (mainline still has the same types).
-- No Fixes:/Cc: stable (not a negative by itself).
-- No syzbot.
-
-UNRESOLVED:
-- Could not `b4 dig -c` a mainline SHA (commit not in this checkout).
-- lore.kernel.org fetches returned 403; reviews recovered from
-  openwall/lkml.iu.edu/spinics.
-- No stable-list discussion found.
-
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — types match kthread API; CFI
-   failure observed; maintainer applied v2.
-2. Fixes a real bug that affects users? **PASS** — CFI kernels panic at
-   rsi thread start.
-3. Important issue? **PASS** — kernel BUG/panic (HIGH for CFI+rsi).
-4. Small and contained? **PASS** — 7 files, ~26 lines, one driver.
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — 6.12.111 has the buggy code;
-   context matches.
-
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/docs exception. Closest: type-
-correctness / CFI crash fix (normal stable bugfix).
-
-Step 9.4: MAKE YOUR DECISION
-This is a real, user-visible panic on CFI-enabled 6.12 systems that use
-rsi, not a compiler-warning cleanup. The local tree has CFI and the
-mismatched callbacks. The change is a surgical signature fix with
-negligible regression risk. That meets the stable bar for this tree.
-
-===============================================================
-What the commit solves (for this tree)
-===============================================================
-
-On 6.12, `kthread()` indirectly calls the thread function as `int
-(*)(void *)`. rsi hid `void (*)(struct rsi_common *)` behind `void
-*func_ptr`. With `CONFIG_CFI_CLANG`, that is a type-hash mismatch and a
-kernel BUG as soon as Tx/Rx/coex threads start. The patch makes the
-callbacks match the kthread ABI. Without CFI the mismatch is latent;
-with CFI it is a crash. Benefit vs risk is strongly in favor of
-backporting.
-
-Verification:
-- [Phase 1] Parsed subject/tags/body: CFI failure log; SOB Hansson +
-  Johannes Berg; Link to v2 msgid; no Fixes/Cc:stable/Reported-by
-- [Phase 2] Diff: four thread fns `void (struct rsi_common *)` → `int
-  (void *)`; `rsi_create_kthread` `void *` → `int (*)(void *)`; ~15/+11
-  lines
-- [Phase 2] `include/linux/kthread.h`: `kthread_run` /
-  `kthread_create_on_node` take `int (*threadfn)(void *data)`
-- [Phase 2] `kernel/kthread.c:389`: `ret = threadfn(data);` — CFI-
-  checked indirect call
-- [Phase 2] `kernel/cfi.c`: default non-permissive path returns
-  `BUG_TRAP_TYPE_BUG`; `CFI_PERMISSIVE` is warn-only
-- [Phase 2] `kthread_complete_and_exit` is `__noreturn` in
-  `include/linux/kthread.h:101`
-- [Phase 3] blame: `dad0d04fa7ba41` (2014) and `2108df3c4b1856` (2018);
-  both ancestors of HEAD
-- [Phase 3] `git log --grep='wifi: rsi: Fix types to appease CFI' --
-  drivers/net/wireless/rsi`: not in this tree
-- [Phase 3] Related `16d9f674c6198` kthread lifetime fix is already
-  here; no signature overlap
-- [Phase 4] `b4 mbox` msgid: v2 saved; v2 changelog = kernel-doc only;
-  v1 Link in changelog
-- [Phase 4] Jeff Johnson v1 review (openwall): kernel-doc; would R-B;
-  Android CFI type-fix experience
-- [Phase 4] Johannes Berg (lkml.iu.edu): nipa kernel-doc confusion, then
-  confirmed build, applied
-- [Phase 4] lore.kernel.org WebFetch: 403; stable-list discussion
-  UNVERIFIED via lore
-- [Phase 5] Callers: `rsi_91x_init`, `rsi_coex_attach`, SDIO probe, USB
-  init — all `rsi_create_kthread`
-- [Phase 6] `git describe HEAD` = `p-6.12-2-gd38d58a4e0359`; `make
-  kernelversion` = 6.12.111
-- [Phase 6] Current rsi files still have the old signatures; patch
-  context matches
-- [Phase 6] `CONFIG_CFI_CLANG` present; arm64/x86_64/arm support CFI
-- [Phase 7] rsi has no MAINTAINERS stanza; linux-wireless took the patch
-- [Phase 8] Failure mode: CFI BUG at kthread start, HIGH for CFI+rsi
-- UNVERIFIED: mainline SHA (not in this checkout); whether Android GKI
-  6.12 enables rsi; live mainline rsi CFI repro (same types verified
-  here)
+- **[Phase 1]** Tags: Reported-by Shuangpeng Bai; Closes lore; Reviewed-
+  by Ilpo; v1 had Fixes: 93885e85a77f2
+- **[Phase 2]** Diff: +34/-33 in `dell-smbios-wmi.c`; drop
+  `private_data`; rwsem + per-priv mutex
+- **[Phase 3]** `git log -- drivers/platform/x86/dell/dell-smbios-
+  wmi.c`: bug from 93885e85a77f2 (2023-12); ancestor of HEAD
+- **[Phase 3]** Parent of 41427211f663c still has `filp->private_data` /
+  `dell_smbios_wmi_open`
+- **[Phase 4]** `b4 dig -c 41427211f663c`: v2 1/3 at
+  patch.msgid.link/20260720131921.368000-2
+- **[Phase 4]** `b4 dig -a`: v1 2026-07-16, v2 2026-07-20 (comment
+  placement only)
+- **[Phase 4]** `b4 dig -w`: Ilpo, Hans, Greg, Arnd, Dell, pdx86 on Cc
+- **[Phase 4]** Bug report (lkml.iu.edu): KASAN UAF; free via
+  `unbind_store`/`devres_release_all`; use via `simple_read_from_buffer`
+- **[Phase 4]** Cover letter: patch 1 fixes UAF; tested on Inspiron 3505
+- **[Phase 4]** Ilpo v1 review: comment + place rwsem next to list
+  (addressed in v2); no NAK
+- **[Phase 5]** Callers: VFS read/ioctl on `/dev/wmi/dell-smbios`;
+  example in `tools/wmi/dell-smbios-example.c`
+- **[Phase 6]** `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- **[Phase 6]** `guard(rwsem_*)` in `include/linux/rwsem.h`;
+  `devm_mutex_init` in `include/linux/mutex.h`
+- **[Phase 7]** `DELL_SMBIOS_WMI` default y; Dell >2007
+- **[Phase 8]** Failure: slab-UAF → oops; severity HIGH
+- **UNVERIFIED:** gist reproducer source not fetched; lore.kernel.org
+  HTML 403 (mbox via b4 succeeded)
 
 **YES**
 
- drivers/net/wireless/rsi/rsi_91x_coex.c     | 3 ++-
- drivers/net/wireless/rsi/rsi_91x_main.c     | 7 ++++---
- drivers/net/wireless/rsi/rsi_91x_sdio_ops.c | 3 ++-
- drivers/net/wireless/rsi/rsi_91x_usb_ops.c  | 7 ++++---
- drivers/net/wireless/rsi/rsi_common.h       | 2 +-
- drivers/net/wireless/rsi/rsi_sdio.h         | 2 +-
- drivers/net/wireless/rsi/rsi_usb.h          | 2 +-
- 7 files changed, 15 insertions(+), 11 deletions(-)
+ drivers/platform/x86/dell/dell-smbios-wmi.c | 67 +++++++++++----------
+ 1 file changed, 34 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_coex.c b/drivers/net/wireless/rsi/rsi_91x_coex.c
-index 372eaaa2b9efc..05525d5e2edb1 100644
---- a/drivers/net/wireless/rsi/rsi_91x_coex.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_coex.c
-@@ -50,8 +50,9 @@ static void rsi_coex_sched_tx_pkts(struct rsi_coex_ctrl_block *coex_cb)
- 	} while (coex_q != RSI_COEX_Q_INVALID);
+diff --git a/drivers/platform/x86/dell/dell-smbios-wmi.c b/drivers/platform/x86/dell/dell-smbios-wmi.c
+index a7dca8c59d602..0729c5a1945c7 100644
+--- a/drivers/platform/x86/dell/dell-smbios-wmi.c
++++ b/drivers/platform/x86/dell/dell-smbios-wmi.c
+@@ -6,6 +6,7 @@
+  */
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
++#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/dmi.h>
+ #include <linux/fs.h>
+@@ -13,14 +14,13 @@
+ #include <linux/miscdevice.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
++#include <linux/rwsem.h>
+ #include <linux/uaccess.h>
+ #include <linux/wmi.h>
+ #include <uapi/linux/wmi.h>
+ #include "dell-smbios.h"
+ #include "dell-wmi-descriptor.h"
+ 
+-static DEFINE_MUTEX(call_mutex);
+-static DEFINE_MUTEX(list_mutex);
+ static int wmi_supported;
+ 
+ struct misc_bios_flags_structure {
+@@ -32,6 +32,7 @@ struct misc_bios_flags_structure {
+ #define DELL_WMI_SMBIOS_GUID "A80593CE-A997-11DA-B012-B622A1EF5492"
+ 
+ struct wmi_smbios_priv {
++	struct mutex call_lock; /* Protects the content of the SMBIOS buffer */
+ 	struct dell_wmi_smbios_buffer *buf;
+ 	struct list_head list;
+ 	struct wmi_device *wdev;
+@@ -39,6 +40,8 @@ struct wmi_smbios_priv {
+ 	u64 req_buf_size;
+ 	struct miscdevice char_dev;
+ };
++
++static DECLARE_RWSEM(list_lock);	/* Protects access to wmi_list */
+ static LIST_HEAD(wmi_list);
+ 
+ static inline struct wmi_smbios_priv *get_first_smbios_priv(void)
+@@ -93,40 +96,35 @@ static int dell_smbios_wmi_call(struct calling_interface_buffer *buffer)
+ 	size_t size;
+ 	int ret;
+ 
+-	mutex_lock(&call_mutex);
++	guard(rwsem_read)(&list_lock);
++
+ 	priv = get_first_smbios_priv();
+-	if (!priv) {
+-		ret = -ENODEV;
+-		goto out_wmi_call;
+-	}
++	if (!priv)
++		return -ENODEV;
+ 
+ 	size = sizeof(struct calling_interface_buffer);
+ 	difference = priv->req_buf_size - sizeof(u64) - size;
+ 
++	guard(mutex)(&priv->call_lock);
++
+ 	memset(&priv->buf->ext, 0, difference);
+ 	memcpy(&priv->buf->std, buffer, size);
+ 	ret = run_smbios_call(priv->wdev);
+ 	memcpy(buffer, &priv->buf->std, size);
+-out_wmi_call:
+-	mutex_unlock(&call_mutex);
+ 
+ 	return ret;
  }
  
--static void rsi_coex_scheduler_thread(struct rsi_common *common)
-+static int rsi_coex_scheduler_thread(void *data)
+-static int dell_smbios_wmi_open(struct inode *inode, struct file *filp)
++static ssize_t dell_smbios_wmi_read(struct file *filp, char __user *buffer, size_t length,
++				    loff_t *offset)
  {
-+	struct rsi_common *common = data;
- 	struct rsi_coex_ctrl_block *coex_cb = common->coex_cb;
- 	u32 timeout = EVENT_WAIT_FOREVER;
+ 	struct wmi_smbios_priv *priv;
  
-diff --git a/drivers/net/wireless/rsi/rsi_91x_main.c b/drivers/net/wireless/rsi/rsi_91x_main.c
-index 2112d8d277a99..0b4d691580054 100644
---- a/drivers/net/wireless/rsi/rsi_91x_main.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_main.c
-@@ -246,12 +246,13 @@ EXPORT_SYMBOL_GPL(rsi_read_pkt);
- /**
-  * rsi_tx_scheduler_thread() - This function is a kernel thread to send the
-  *			       packets to the device.
-- * @common: Pointer to the driver private structure.
-+ * @data: Pointer to the driver private structure.
-  *
-- * Return: None.
-+ * Return: 0.
-  */
--static void rsi_tx_scheduler_thread(struct rsi_common *common)
-+static int rsi_tx_scheduler_thread(void *data)
+-	priv = container_of(filp->private_data, struct wmi_smbios_priv, char_dev);
+-	filp->private_data = priv;
++	guard(rwsem_read)(&list_lock);
+ 
+-	return nonseekable_open(inode, filp);
+-}
+-
+-static ssize_t dell_smbios_wmi_read(struct file *filp, char __user *buffer, size_t length,
+-				    loff_t *offset)
+-{
+-	struct wmi_smbios_priv *priv = filp->private_data;
++	priv = get_first_smbios_priv();
++	if (!priv)
++		return -ENODEV;
+ 
+ 	return simple_read_from_buffer(buffer, length, offset, &priv->req_buf_size,
+ 				       sizeof(priv->req_buf_size));
+@@ -173,22 +171,24 @@ static long dell_smbios_wmi_do_ioctl(struct wmi_smbios_priv *priv,
+ static long dell_smbios_wmi_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
  {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	u32 timeout = EVENT_WAIT_FOREVER;
+ 	struct dell_wmi_smbios_buffer __user *input = (struct dell_wmi_smbios_buffer __user *)arg;
+-	struct wmi_smbios_priv *priv = filp->private_data;
+-	long ret;
++	struct wmi_smbios_priv *priv;
  
-diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c b/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-index 597b238e22949..18a28aa974460 100644
---- a/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-@@ -62,8 +62,9 @@ int rsi_sdio_master_access_msword(struct rsi_hw *adapter, u16 ms_word)
+ 	if (cmd != DELL_WMI_SMBIOS_CMD)
+ 		return -ENOIOCTLCMD;
  
- static void rsi_rx_handler(struct rsi_hw *adapter);
+-	mutex_lock(&call_mutex);
+-	ret = dell_smbios_wmi_do_ioctl(priv, input);
+-	mutex_unlock(&call_mutex);
++	guard(rwsem_read)(&list_lock);
  
--void rsi_sdio_rx_thread(struct rsi_common *common)
-+int rsi_sdio_rx_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	struct rsi_91x_sdiodev *sdev = adapter->rsi_dev;
- 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_usb_ops.c b/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-index 25c2b232394a6..e899631b9aed2 100644
---- a/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-@@ -21,12 +21,13 @@
- /**
-  * rsi_usb_rx_thread() - This is a kernel thread to receive the packets from
-  *			 the USB device.
-- * @common: Pointer to the driver private structure.
-+ * @data: Pointer to the driver private structure.
-  *
-- * Return: None.
-+ * Return: 0.
-  */
--void rsi_usb_rx_thread(struct rsi_common *common)
-+int rsi_usb_rx_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	struct rsi_91x_usbdev *dev = adapter->rsi_dev;
- 	int status;
-diff --git a/drivers/net/wireless/rsi/rsi_common.h b/drivers/net/wireless/rsi/rsi_common.h
-index c40f8101febcb..4f6738ba72be2 100644
---- a/drivers/net/wireless/rsi/rsi_common.h
-+++ b/drivers/net/wireless/rsi/rsi_common.h
-@@ -58,7 +58,7 @@ static inline void rsi_reset_event(struct rsi_event *event)
- 
- static inline int rsi_create_kthread(struct rsi_common *common,
- 				     struct rsi_thread *thread,
--				     void *func_ptr,
-+				     int (*func_ptr)(void *data),
- 				     u8 *name)
- {
- 	init_completion(&thread->completion);
-diff --git a/drivers/net/wireless/rsi/rsi_sdio.h b/drivers/net/wireless/rsi/rsi_sdio.h
-index 7c91b126b350f..eb2b7f36a7e4c 100644
---- a/drivers/net/wireless/rsi/rsi_sdio.h
-+++ b/drivers/net/wireless/rsi/rsi_sdio.h
-@@ -134,5 +134,5 @@ int rsi_sdio_master_access_msword(struct rsi_hw *adapter, u16 ms_word);
- void rsi_sdio_ack_intr(struct rsi_hw *adapter, u8 int_bit);
- int rsi_sdio_determine_event_timeout(struct rsi_hw *adapter);
- int rsi_sdio_check_buffer_status(struct rsi_hw *adapter, u8 q_num);
--void rsi_sdio_rx_thread(struct rsi_common *common);
-+int rsi_sdio_rx_thread(void *data);
- #endif
-diff --git a/drivers/net/wireless/rsi/rsi_usb.h b/drivers/net/wireless/rsi/rsi_usb.h
-index 961851748bc4c..78067eaffe8b1 100644
---- a/drivers/net/wireless/rsi/rsi_usb.h
-+++ b/drivers/net/wireless/rsi/rsi_usb.h
-@@ -81,5 +81,5 @@ static inline int rsi_usb_event_timeout(struct rsi_hw *adapter)
- 	return EVENT_WAIT_FOREVER;
+-	return ret;
++	priv = get_first_smbios_priv();
++	if (!priv)
++		return -ENODEV;
++
++	guard(mutex)(&priv->call_lock);
++
++	return dell_smbios_wmi_do_ioctl(priv, input);
  }
  
--void rsi_usb_rx_thread(struct rsi_common *common);
-+int rsi_usb_rx_thread(void *data);
- #endif
+ static const struct file_operations dell_smbios_wmi_fops = {
+ 	.owner		= THIS_MODULE,
+-	.open		= dell_smbios_wmi_open,
+ 	.read		= dell_smbios_wmi_read,
+ 	.unlocked_ioctl	= dell_smbios_wmi_ioctl,
+ 	.compat_ioctl	= compat_ptr_ioctl,
+@@ -260,6 +260,10 @@ static int dell_smbios_wmi_probe(struct wmi_device *wdev, const void *context)
+ 	if (!priv->buf)
+ 		return -ENOMEM;
+ 
++	ret = devm_mutex_init(&wdev->dev, &priv->call_lock);
++	if (ret)
++		return ret;
++
+ 	ret = dell_smbios_wmi_register_chardev(priv);
+ 	if (ret)
+ 		return ret;
+@@ -268,9 +272,8 @@ static int dell_smbios_wmi_probe(struct wmi_device *wdev, const void *context)
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&list_mutex);
++	guard(rwsem_write)(&list_lock);
+ 	list_add_tail(&priv->list, &wmi_list);
+-	mutex_unlock(&list_mutex);
+ 
+ 	return 0;
+ }
+@@ -279,12 +282,10 @@ static void dell_smbios_wmi_remove(struct wmi_device *wdev)
+ {
+ 	struct wmi_smbios_priv *priv = dev_get_drvdata(&wdev->dev);
+ 
+-	mutex_lock(&call_mutex);
+-	mutex_lock(&list_mutex);
+-	list_del(&priv->list);
+-	mutex_unlock(&list_mutex);
+ 	dell_smbios_unregister_device(&wdev->dev);
+-	mutex_unlock(&call_mutex);
++
++	guard(rwsem_write)(&list_lock);
++	list_del(&priv->list);
+ }
+ 
+ static const struct wmi_device_id dell_smbios_wmi_id_table[] = {
 -- 
 2.53.0
 
