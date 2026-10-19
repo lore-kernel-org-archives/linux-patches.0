@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28878598BF3;
-	Mon, 19 Oct 2026 13:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C01599A51;
+	Mon, 19 Oct 2026 13:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418132; cv=none; b=L9u5Z+nOF+/11eM4HntVBMNMGGL3CEEGp1bFHXOiN5OItn9jvDaECTB0+X/uk5O7lVSBhpNUq9+FPsf81uzx3B0+PuKVYZgTDXc2NATW6h8pS1QSYkqF4FiDq6XUYKAASnXh/WOwxqxTSEi1rDxbLMefBYMXUAN/LrwzMWC+Uv0=
+	t=1792418133; cv=none; b=VlZMyF/nmDPUqVRoPfeZsvRj+6gQg5Zkcc7VxXdX5nAY2zDlNHdEkxWV8L/g2fWE1J2s7AMF7Za+N3N0lgltp1/ip79qYMsHnYG47rX8+hBD3nfkx6QHEpMURBD51yBkLXcaMqM6aDohoA76Dsq5XzNOa6O44UUbQeqxdVQjseA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418132; c=relaxed/simple;
-	bh=Aygo043rp4XYGEyuz1/HXdvWZtti0kRaRTSuN1TxxSA=;
+	s=arc-20240116; t=1792418133; c=relaxed/simple;
+	bh=Se+GY3063rskGGloNTcFDRZ9Qm69oGaLB3ewpOJ7+0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dcrF+IvkYq8u0UbXXEN3wvB+bwcYHAjy2k2MEPYxBc/s1cKFrKt++OLgdwUeKK84RVBQekqLcGIypRs/n8wI8rB6o3If6i0b+LjTWTJ7R/IM9C/uZ661L1MGyuSz0AL3CJet6ThaVMM4hVbpAChlv7/MGnpcxvNmCWxI6avXzL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hN8AuCAu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=e5scirNJER9DKgP57EtQNlkDmwIAAcIZMyRfyqemfe3WBw+0CxUzLixtBzZGdhXmQp5XYspXcN6PkUx4gKSQZS10to5vH3SJa+qQBvKOr8vOA/CkyT9y2TBUbGxw7DS30WYJyUavwLw4zcqy9+1tF3uUcAI/2QMzMxQbzfRfupc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WyRNdDr6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hN8AuCAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146C41F000C8;
-	Mon, 19 Oct 2026 13:55:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WyRNdDr6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629421F000C4;
+	Mon, 19 Oct 2026 13:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418129;
-	bh=SJw99qlKEMQ/mL5JfxB15WQrx2ca90eJRKQjczSUWkE=;
+	s=k20260515; t=1792418130;
+	bh=N1WBpvUT1LBft8j2MisXNoz9KQD7JeZYoan8e1V+zi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hN8AuCAup1jPxPoPn9i0Avwavt95sfDsczJv2R8FQ+SxeXiUV0+X3UxcHKwc/cJjD
-	 hrzo55W2VNBPhYEEIZ0Wwh5p1tM8ouVrY+fdzMaP9w59HWDVwRFmY8VQpiDvFivmIi
-	 ZfS3RSApivRloC9vVHYxbh8G9qyGFTYanRbtjkkiWz/8b55v75BVrsr2dqCdsp67UE
-	 +mB49VRSsN06DYTlFM9p0b2ilM7Kz4dm3MLI+DMQ/eVJzzgI3EfamavEkDBqJObblN
-	 gJ0Nq0vXYh1IHLlw/aBJv0/HAXKLNW6t8FYgXE5AZqq3Xp8HkCW8UrKpsqej4bxgRs
-	 zuovsF5+8IVPg==
+	b=WyRNdDr6Uho0TIQDKXuSdZjl++k+99uYnvmNTX0tOxkRctEgQrm/OYCfBtdNRKFch
+	 tZglBtSLRoSrysTXZDLPLqdSDQjHPnXEen3GzC8EGjf4AO9ER+hmAojq0Jp0GKqdCe
+	 T+wJvykXXJY8mZSfV5KIGurFudNlB0lIwIQotgSh/i6iqc62P/UcVFmE9uUCrwBtxj
+	 QZxEoxnMJKhIxITxvNuOszDrGIdeOOKdKGe33gFSDWnSn8ArCS+N2SXzFZiu2VAl7X
+	 kKMJfDAAhSpUlw6kxzSzY+gfVh5ULIT8ZIs1RP7xZn4/WEc+GfL9Gzju4bUA8QrqF/
+	 PLnRJxrupBq4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Heiko Schocher <hs@nabladev.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/conexant: Add pin config quirk for Huawei Matebook
-Date: Mon, 19 Oct 2026 09:45:23 -0400
-Message-ID: <20261019135441.1420968-32-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/panel: simple: Add Kyocera tcg070wvlq panel
+Date: Mon, 19 Oct 2026 09:45:24 -0400
+Message-ID: <20261019135441.1420968-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,430 +57,261 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Heiko Schocher <hs@nabladev.com>
 
-[ Upstream commit d152afd1cd7a69c752236b6e825c4e62a74788eb ]
+[ Upstream commit 900517da69afca6f72dacf14278aee3b65275507 ]
 
-The headphone jack is not detected on this Huawei Matebook (Conexant
-SN6140 codec). The BIOS incorrectly marks Pin 0x18 as [N/A], causing
-the driver to report hp_outs=0 and no "Headphones" output appears.
+Commit 922fb2db0287 ("dt-bindings: display: simple: Add Kyocera
+tcg070wvlq panel") added the compatible string for the Kyocera
+tcg070wvlq panel to the devicetree bindings documentation
+(panel-simple.yaml), but the corresponding entry was not added
+to the panel-simple driver.
 
-Override the pin configuration for NID 0x18 to set it as a headphone
-jack, which restores proper detection and audio routing.
+Add the missing compatible entry to the driver.
 
-Link: https://github.com/thesofproject/sof/issues/10687
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260807125857.678297-4-zhangheng@kylinos.cn
+Signed-off-by: Heiko Schocher <hs@nabladev.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260721041935.757240-1-hs@nabladev.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Local tree is **6.12.111** (`pending-6.12`). This is a Conexant SN6140
-pin-config quirk for one Huawei PCI/codec SSID; the driver and SN6140
-support are already here.
+The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). This
+commit is a 3-line `of_device_id` addition to the existing `panel-
+simple` driver. Official stable rules allow that class of change.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[ALSA hda/conexant] [Add] pin config quirk for Huawei Matebook`
+**Step 1.1:** Record: `[drm/panel: simple] [Add] [register OF compatible
+kyo,tcg070wvlq, reusing existing lg_lb070wv8 descriptor]`
 
-Subsystem: ALSA HD-audio Conexant codec. Action: add a hardware quirk
-(not a feature). Intent: restore headphone jack detection on a specific
-laptop whose BIOS marks the jack pin as N/A.
+**Step 1.2:** Record: tags present:
+- Reviewed-by: Neil Armstrong (drm/panel maintainer)
+- Signed-off-by: Heiko Schocher (author); Neil Armstrong (applied to
+  drm-misc)
+- Link: https://patch.msgid.link/20260721041935.757240-1-hs@nabladev.com
+- No Fixes:, Reported-by, Tested-by, Cc: stable, or syzbot (absence
+  expected)
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Link: https://github.com/thesofproject/sof/issues/10687` — user bug
-  report with codec dump
-- `Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>` — author
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA maintainer
-  applied it
-- `Link:
-  https://patch.msgid.link/20260807125857.678297-4-zhangheng@kylinos.cn`
-  — lore msgid; **patch 4/4** of a series
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-  stable` (absence expected for this review)
-- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-  …]`
+Ignored pipeline markers: none in the provided text beyond the usual
+evaluation context.
 
-Notable: GitHub issue is a concrete user report, not syzbot. Maintainer
-SOB is a strong quality signal.
+**Step 1.3:** Record:
+- Bug: commit `922fb2db0287` (v5.12-rc1) documented `kyo,tcg070wvlq` in
+  `panel-simple.yaml` but never added the matching `of_device_id` entry.
+- Symptom: a DT node whose only compatible is `kyo,tcg070wvlq` does not
+  bind to `panel-simple`.
+- Version info: bindings since v5.12; driver entry added 2026-07-22.
+- Root cause: incomplete match-table vs documented binding, not a crash
+  path.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** Huawei Matebook, Conexant SN6140. BIOS marks pin NID 0x18 as
-  `[N/A]`.
-- **Symptom:** driver reports `hp_outs=0`; no "Headphones" sink; sound
-  stays on internal speakers when a 3.5mm jack is plugged in.
-- **Root cause:** wrong pin default so autoconfig never classifies a
-  headphone output.
-- **Fix:** override NID 0x18 to pin config `0x03211020` (headphone
-  jack).
-- **Version info in message:** none. GitHub issue (followed in Phase 4)
-  used **Debian 13, kernel 6.12.73**.
+**Step 1.4:** Record: Not a hidden crash/UAF/leak fix. It is hardware-ID
+enablement. The 2021 bindings commit said the panel “seems to be
+compatible with `lg,lb070wv8`” and added the string “only to the dt-
+binding documentation to fix the checkpatch warnings.”
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a hidden fix. It is an explicit hardware quirk for a broken
-BIOS pin config. That is the documented stable exception for codec/PCI
-quirks.
+## Phase 2: Diff analysis
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 2.1:** Record: `drivers/gpu/drm/panel/panel-simple.c` +3/−0.
+Function/table: `platform_of_match[]`. Scope: single-file surgical
+match-table insert.
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File in the commit: `sound/hda/codecs/conexant.c` (+9 / −0)
-- Local 6.12 path: `sound/pci/hda/patch_conexant.c` (codecs had not been
-  moved yet)
-- Functions/data: `enum { … }` last entry; `cxt_fixups[]`;
-  `cxt5066_fixups[]`
-- Scope: single-file surgical quirk; three tiny hunks
+**Step 2.2:** Record: Before, `kyo,tcg070wvlq` was not in
+`platform_of_match`. After, it matches and uses `&lg_lb070wv8` (same
+timings/size/bus as `lg,lb070wv8`).
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-1. Enum: add `CXT_FIXUP_HUAWEI_MATEBOOK_HP` after
-   `CXT_FIXUP_ACER_SWIFT_HP` (already the last entry in this tree at
-   line 309).
-2. `cxt_fixups[]`: `HDA_FIXUP_PINS` table `{ 0x18, 0x03211020 }`.
-3. `cxt5066_fixups[]`: `SND_PCI_QUIRK(0x19e5, 0x3289, …)` inserted after
-   the Lenovo vendor catch-all and before Lemote `0x1c06`.
+**Step 2.3:** Record: category **h) hardware / device ID**. Mechanism:
+documented OF compatible now matches the existing panel descriptor.
 
-Before: SN6140 probe hits `default:` in `patch_conexant_auto()`, picks
-`cxt5066_fixups`, no Huawei entry, BIOS pin 0x18 (`0x40f001f0`,
-connectivity N/A) is parsed, `hp_outs=0`.
-After: SSID `19e5:3289` selects the new fixup.
-`snd_hda_apply_fixup(PRE_PROBE)` calls `snd_hda_apply_pincfgs()` and
-overrides pin 0x18 before `snd_hda_parse_pin_defcfg()`.
+**Step 2.4:** Record: Obviously correct (alias of an existing
+descriptor). Minimal. Regression risk very low: in-tree `imx6dl-
+prtmvt.dts` already has fallback `lg,lb070wv8` pointing at the same
+data, so probe behavior is unchanged there.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Hardware quirk / pin-config workaround (category h).** BIOS
-advertises the headphone pin as unconnected. The driver then never
-creates a Headphones path or jack-based speaker mute. Override is the
-standard HDA fix (`HDA_FIXUP_PINS`), same pattern as Acer Swift SF314
-and Lenovo IdeaPad Slim 5 already in this file.
+## Phase 3: Git history
 
-Pin default `0x03211020` = Jack, external left, HP Out, 1/8" stereo,
-black, association 2. Matches the GitHub user’s working `hda-jack-
-retask` firmware.
+**Step 3.1:** Record: Missing driver ID is the gap left by
+`922fb2db0287` (v5.12-rc1). `lg_lb070wv8` itself is `dd0150026901b`
+(v4.2-rc1). In-tree DTS usage is `f3604ba14bd75e` (v5.12-rc1):
+`compatible = "kyo,tcg070wvlq", "lg,lb070wv8"`.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct and minimal. Scoped to one SSID.
-`SND_PCI_QUIRK_VENDOR(0x17aa, …)` cannot match Huawei `0x19e5`.
-Regression risk is limited to machines that share `19e5:3289` and need a
-*different* pin 0x18 role — standard quirk risk, same as other SSID
-entries. No locking, no API, no extra module parameter.
+**Step 3.2:** Record: No Fixes: tag. The referenced bindings commit is
+an ancestor of HEAD.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 3.3:** Record: Standalone; not `patch X/Y`. Nearby `panel-simple`
+commits are other panel IDs, not prerequisites.
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: The bug is missing a table entry, not a newly introduced logic
-bug. SN6140 IDs exist since `ca348e7fe1ab9` ("add a new hda codec
-SN6140") — **ancestor of this HEAD**. Pin parse / `HDA_FIXUP_PINS` is
-old (2011-era enum terminator still blamed on Takashi Iwai). Insertion
-neighbors: Acer Swift (Feb 2026, already backported here as
-`ab6a494abecb8b`), Lemote quirks from 2012.
+**Step 3.4:** Record: Heiko originally added `lg_lb070wv8` (2015) and
+this ID (2026). Neil Armstrong reviewed and applied it. Maintainer-
+acked.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Expected. Nothing to follow. The “bug” is a
-BIOS pin default, not a kernel regression SHA.
+**Step 3.5:** Record: Depends only on `lg_lb070wv8` and
+`platform_of_match`, both present here. Applies standalone.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record (this tree, `sound/pci/hda/patch_conexant.c`):
-- `775911e09ec28` pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
-  (SN6140)
-- `ab6a494abecb8b` Acer Swift headphone pin tweak
-- `6e1664116a9609` MECHREVO headset-mic quirk
-Same class of backports already landed in 6.12.y.
+## Phase 4: Mailing list / external
 
-Standalone vs series: submitted as **4/4**. Patches 1–3 are Realtek
-`alc269.c` quirks for unrelated SSIDs. This hunk does not use any of
-them.
+**Step 4.1:** Record: `b4 dig` → v1 only,
+https://patch.msgid.link/20260721041935.757240-1-hs@nabladev.com.
+Thread: Heiko submit → Neil `Reviewed-by` → applied to drm-misc-next as
+`900517da69afc`. No NAK, no stable discussion, no requested revisions.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Zhang Heng has other ALSA quirk work in this tree (Realtek +
-Conexant mic-bias). Not the subsystem maintainer. Takashi Iwai applied
-the patch. That is the usual path for HDA quirks.
+**Step 4.2:** Record: Recipients included Neil Armstrong, Maxime Ripard,
+dri-devel, DRM maintainers, original bindings author Oleksij Rempel.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Needs existing `HDA_FIXUP_PINS`, `cxt_fixups[]`,
-`cxt5066_fixups[]`, SN6140 `0x14f11f87`, and `snd_hda_pick_fixup()`. All
-present. Does **not** need `CXT_FIXUP_LENOVO_XPAD_ACPI` (mainline
-context only). Can apply standalone with a path rename plus one-line
-context fuzz on the Lenovo vendor quirk string.
+**Step 4.3:** Record: No bugzilla/syzbot. Motivation is binding/driver
+mismatch, not a crash report.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.4:** Record: Single-patch series.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 am` on msgid `20260807125857.678297-4-zhangheng@kylinos.cn`
-  matched the series:
-  https://patch.msgid.link/20260807125857.678297-1-zhangheng@kylinos.cn
-- Public copies: https://lists.openwall.net/linux-kernel/2026/08/07/1129
-  and https://lkml.iu.edu/hypermail/linux/kernel/2608.0/13447.html
-- Single revision of this series (no v2 of 4/4 in the thread `b4`
-  analyzed)
-- `b4 dig -c` on this SHA was not possible: the commit is not in this
-  6.12 object graph
-- No NAK in the saved series mbox. Applied by Takashi (SOB on the commit
-  under review)
-- Lore HTTP fetch returned 403; used `b4` + openwall/lkml mirrors
-  instead
+**Step 4.5:** Record: lore.kernel.org/stable search returned 403; no
+stable-list discussion verified. LKML mirrors confirm review-only
+thread.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 am` headers): To `tiwai@suse.com`; Cc `linux-
-sound@vger.kernel.org`, `linux-kernel@vger.kernel.org`. Correct
-maintainer and list. No extra Reviewed-by on the patch itself;
-maintainer SOB is the review signal.
+## Phase 5: Code semantics
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record — GitHub thesofproject/sof#10687 (closed):
-- Author ciniap, 2026-04-07; **Kernel 6.12.73+deb13-amd64**, Intel Alder
-  Lake-P Huawei, SOF `sof-hda-generic-2ch.tplg`
-- Codec dump: Node 0x18 Pin Default `0x40f001f0: [N/A]`; dmesg
-  `hp_outs=0`
-- User fixed it with firmware pin override `{ 0x18 0x03211020 }` —
-  **same value as this patch**
-- Impact: speakers stay on with headphones; no private listening
-- Zhang Heng later commented that the upstream patch was sent
+**Step 5.1:** Record: `platform_of_match[]` only.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 1/4 Acer Nitro Realtek headset mic; 2/4 Acer Gadget E10 speaker
-pin; 3/4 ASUS Vivobook Realtek headset mic; 4/4 this Conexant Huawei
-pincfg. Independent table rows. 4/4 does not need 1–3.
+**Step 5.2:** Record: Used as `.of_match_table` of
+`panel_simple_platform_driver` (`panel_simple_platform_probe`). Probe
+path on DT match.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned 403. No evidence in-tree
-that this Huawei SSID was already selected. Similar Conexant pin quirks
-**were** already pulled into this 6.12 branch.
+**Step 5.3:** Record: Match data is existing `lg_lb070wv8` (`panel_desc`
++ LVDS timings). No new alloc/lock/API.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 5.4:** Record: Reachable when a DT node uses `kyo,tcg070wvlq`.
+In-tree board `imx6dl-prtmvt` already matches via fallback. Userspace
+does not trigger this except by using that panel.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: No function bodies edited. Data consumed by
-`snd_hda_pick_fixup()`, `__snd_hda_apply_fixup()` / `HDA_FIXUP_PINS`,
-`snd_hda_apply_pincfgs()`, `patch_conexant_auto()`.
+**Step 5.5:** Record: Same file already has `kyo,tcg121xglp` and
+`lg,lb070wv8`. This is the standard panel-simple ID pattern.
 
-**Step 5.2: TRACE CALLERS**
-Record: `patch_conexant_auto()` is the SN6140 probe
-(`HDA_CODEC_ENTRY(0x14f11f87, "SN6140", patch_conexant_auto)`). Default
-branch uses `cxt5066_fixups`. Probe-time only, not IRQ/hot path.
+## Phase 6: This checkout
 
-**Step 5.3: TRACE CALLEES**
-Record: `snd_hda_codec_set_pincfg()` per pin; then
-`snd_hda_parse_pin_defcfg()` / `snd_hda_gen_parse_auto_config()` build
-Headphones and auto-mute.
+**Step 6.1:** Record: Tree is 7.3.0-rc4. `panel-simple.c`,
+`lg_lb070wv8`, bindings `kyo,tcg070wvlq`, and DTS fallback all exist.
+Commit `900517da69afc` is already an ancestor of HEAD (merged via drm-
+misc-next → drm-next before v7.3-rc1). The **match table and descriptor
+this patch needs are in this tree**.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace-visible on boot of that laptop (codec probe). Original
-report is plugging headphones. Unprivileged user can trigger the broken
-behavior; the quirk itself is not a syscall attack surface.
+**Step 6.2:** Record: Clean apply (already applied here). Insertion sits
+alphabetically between `koe,tx31d200vm0baa` and `kyo,tcg121xglp`.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same file already has `CXT_FIXUP_ACER_SWIFT_HP` (`{ 0x16,
-0x0321403f }`) and Lenovo Slim 5 SN6140 pincfg. Realtek uses
-`0x03211020` widely for HP Out. Pattern is established.
+**Step 6.3:** Record: No alternate fix. This *is* the driver-side
+completion of the v5.12 binding.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## Phase 7: Subsystem context
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** Tree is `v6.12.111` (`pending-6.12`).
-- Driver: `sound/pci/hda/patch_conexant.c`
-- SN6140: `HDA_CODEC_ENTRY(0x14f11f87, "SN6140", patch_conexant_auto)`
-  and `is_cx11880_sn6140` for `0x14f11f87`
-- No `CXT_FIXUP_HUAWEI_MATEBOOK_HP`, no `0x19e5` in this file
-- Reporter’s kernel was **6.12.73** — this series
+**Step 7.1:** Record: `drivers/gpu/drm/panel` — **PERIPHERAL** (one LVDS
+panel / Protonic MVT i.MX6 board).
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Minor conflicts, not a rewrite.**
-- Path: `sound/hda/codecs/conexant.c` → `sound/pci/hda/patch_conexant.c`
-- Enum/fixup table context matches (`CXT_FIXUP_ACER_SWIFT_HP` is last)
-- Quirk-table context: 6.12 still has `SND_PCI_QUIRK_VENDOR(0x17aa,
-  "Thinkpad", CXT_FIXUP_THINKPAD_ACPI)` vs mainline `Thinkpad/Ideapad` +
-  `CXT_FIXUP_LENOVO_XPAD_ACPI`. Insert still goes before
-  `SND_PCI_QUIRK(0x1c06, 0x2011, "Lemote A1004", …)`.
+**Step 7.2:** Record: `panel-simple` is mature and still gets ID
+additions; this is normal hardware enablement, not a new subsystem.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No Huawei Matebook Conexant pincfg. Acer Swift / IdeaPad Slim 5
-/ MECHREVO are different SSIDs. Not a duplicate.
+## Phase 8: Impact and risk
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 8.1:** Record: Driver/board-specific (`CONFIG_DRM_PANEL_SIMPLE`,
+DT with this compatible). Not universal.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `sound/pci/hda` Conexant codec. **IMPORTANT** (common laptop
-audio), not core mm/VFS. User-visible breakage for that hardware.
+**Step 8.2:** Record: Trigger is panel probe. Common for that one
+industrial board; otherwise only if DT lists `kyo,tcg070wvlq`. Not a
+syscall/security path.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Active enough that 6.12 already received several Conexant quirks
-in 2026. Mature table; this is another row, not a redesign.
+**Step 8.3:** Record: Without the ID, a **primary-only**
+`kyo,tcg070wvlq` node fails to bind (no display). In-tree DTS still
+works via `lg,lb070wv8`. Severity **LOW** as a crash; **hardware
+enablement** under the device-ID rule.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 8.4:** Record: Benefit = correct match for a documented
+compatible / existing panel. Risk = very low (3 lines, existing
+descriptor). Ratio favors taking it: official rules explicitly allow
+device IDs.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / SSID-specific: Huawei machines with PCI or
-codec SSID **19e5:3289** and SN6140. `snd_hda_pick_fixup()` matches PCI
-SSID first, then codec SSID, so the GitHub codec SSID `0x19e53289` is
-covered even on SOF (`ehdaudio0D0`).
+## Phase 9: Synthesis
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Every boot on that SKU; 100% repro in the bug report when
-plugging 3.5mm headphones. Not a race. Unprivileged user hits it by
-using the jack.
+**Evidence FOR:**
+- `Documentation/process/stable-kernel-rules.rst` in this tree: “It must
+  either fix a real bug that bothers people **or just add a device
+  ID**.”
+- Device-ID exception in the review criteria: ID-only change in an
+  existing driver.
+- 3 lines, reuses `lg_lb070wv8` since v4.2, reviewed by the panel
+  maintainer.
+- Completes a compatible documented since v5.12.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Headphones not enumerated; speakers keep playing. Not an
-oops/UAF. **MEDIUM** functional/hardware-enablement failure, the class
-stable already takes as audio quirks. Privacy impact (cannot mute
-speakers via jack) is real.
+**Evidence AGAINST:**
+- Not a crash, UAF, deadlock, or corruption fix.
+- In-tree `imx6dl-prtmvt.dts` already falls back to `lg,lb070wv8`, so
+  this tree’s in-tree board already probes.
+- 2021 bindings commit intentionally omitted the driver entry at first.
+- No user/syzbot report.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- Benefit: high for that SKU (headphones/auto-mute restored); reporter
-  was on 6.12.
-- Risk: very low (≈9 lines, one SSID, existing `HDA_FIXUP_PINS`
-  machinery).
-- Ratio: strongly favors backport.
+**Unresolved:** Could not fetch lore.kernel.org/stable (403). No
+evidence this was rejected for stable.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Stable checklist:**
+1. Obviously correct and tested — **PASS** (maintainer Reviewed-by,
+   applied to drm-misc-next)
+2. Real bug that affects users — **PASS** as device ID (documented
+   compatible did not match); in-tree fallback means limited user-
+   visible delta
+3. Important issue — **PASS via device-ID exception**, not via
+   crash/security
+4. Small and contained — **PASS** (+3)
+5. No new features/APIs — **PASS** (no new descriptor, timings, or uAPI;
+   match-table ID only)
+6. Can apply to this tree — **PASS** (`lg_lb070wv8` and
+   `platform_of_match` present)
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Exception category:** New device ID (OF compatible) on an existing
+driver.
 
-FOR:
-- Real hardware bug with codec dump and 100% repro
-- Reporter on **6.12.73**, this tree’s series
-- Same pin value the user already verified via jack retask
-- Textbook HDA pin quirk (stable exception)
-- ~9 lines, no new API
-- SN6140 + quirk tables already in 6.12
-- Maintainer SOB (Takashi Iwai)
-- Sibling Conexant pin quirks already in this branch
-- Independent of series patches 1–3
-
-AGAINST:
-- Not a crash/security issue
-- Path + one-line context need a trivial backport
-- SSID-wide pin override could theoretically mis-configure another board
-  sharing `19e5:3289` (normal quirk caveat; no such report found)
-
-UNRESOLVED:
-- Full lore thread replies (`b4 mbox` failed to write the file); no NAK
-  found in the series mbox
-- Stable list 403; no prior rejection found
-- Exact Matebook marketing name beyond SSID `19e5:3289`
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — standard pincfg; user-
-   validated override; maintainer applied
-2. Fixes a real bug that affects users? **PASS** — GitHub #10687, Debian
-   6.12
-3. Important issue? **PASS** as hardware-enablement/quirk (headphones
-   dead; speakers stay on), not CRITICAL oops
-4. Small and contained? **PASS** — 9 lines, one file
-5. No new features or APIs? **PASS** — table entry only
-6. Can apply to the local tree? **PASS** — content matches; remap path
-   to `patch_conexant.c`; fuzz the 17aa vendor line
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Hardware quirk/workaround** (HDA pin-config / PCI SSID quirk).
-Also the “device ID / quirk table” class used constantly in stable
-audio.
-
-**Step 9.4: MAKE YOUR DECISION**
-This belongs in this 6.12 tree. The Conexant SN6140 driver is here, the
-BIOS bug is here, and the original report is this stable series.
-Backport with the usual path adjustment.
+This is not a stability fix, but it is exactly the “just add a device
+ID” case the stable rules call out. Risk is negligible.
 
 Verification:
-- [Phase 1] Tags: GitHub sof#10687, msgid 4/4, SOB Zhang Heng + Takashi
-  Iwai; no Fixes/Cc:stable
-- [Phase 1] Body: BIOS pin 0x18 N/A → hp_outs=0; override 0x03211020
-- [Phase 2] Diff: +9 lines, enum + `cxt_fixups` + `cxt5066_fixups`;
-  `HDA_FIXUP_PINS`
-- [Phase 3] `git merge-base --is-ancestor ca348e7fe1ab9 HEAD` → SN6140
-  in tree (exit 0)
-- [Phase 3] `git log` on `patch_conexant.c`: Acer Swift, IdeaPad Slim 5,
-  MECHREVO already backported
-- [Phase 3] Series 1–3 are Realtek-only; 4/4 standalone
-- [Phase 4] `b4 am` found 4-patch series; openwall/lkml copies of 4/4;
-  no NAK in series mbox
-- [Phase 4] sof#10687: kernel 6.12.73, pin dump 0x40f001f0, working
-  override 0x03211020
-- [Phase 4] lore.kernel.org WebFetch 403; `b4 dig -c` N/A (commit not in
-  this repo); `b4 mbox` traceback on output path
-- [Phase 5] `patch_conexant_auto` default → `cxt5066_fixups`; PRE_PROBE
-  `snd_hda_apply_pincfgs`
-- [Phase 5] `snd_hda_pick_fixup` matches PCI SSID then codec SSID
-- [Phase 6] `git describe HEAD` → `p-6.12-3-g710455e2077bb`; Makefile
-  6.12.111; file `sound/pci/hda/patch_conexant.c`
-- [Phase 6] No `0x19e5` / `CXT_FIXUP_HUAWEI` in local conexant driver
-- [Phase 6] Enum last entry is `CXT_FIXUP_ACER_SWIFT_HP` (clean insert);
-  quirk insert before Lemote 0x1c06
-- [Phase 8] Failure: missing Headphones + no auto-mute; severity MEDIUM;
-  SSID-scoped
-- UNVERIFIED: complete lore reply set after maintainer apply; whether
-  any other SKU shares 19e5:3289 with a different pin 0x18 role
-
-The patch is a small, SSID-scoped HDA pin quirk for a real headphone-
-detection failure that was reproduced on 6.12. It matches stable’s
-hardware-quirk exception and applies here with only a path remap.
+- [Phase 1] Parsed tags: Reviewed-by Neil Armstrong; Link msgid
+  20260721041935.757240-1; no Fixes/syzbot
+- [Phase 2] Diff: +3 in `platform_of_match[]`; `.data = &lg_lb070wv8`
+- [Phase 3] `git name-rev --tags 922fb2db02871` → v5.12-rc1;
+  `dd0150026901b` → v4.2-rc1; `f3604ba14bd75e` DTS fallback
+- [Phase 3] `git merge-base --is-ancestor 922fb2db0287 HEAD` exit 0;
+  `900517da69afc` ancestor of HEAD
+- [Phase 4] `b4 dig -c 900517da69afc` / `-a` / `-w` / `-m`: v1 only;
+  Neil review + apply; dri-devel CCd
+- [Phase 4] lore.kernel.org WebFetch 403; LKML mirrors used instead
+- [Phase 5] `platform_of_match` →
+  `panel_simple_platform_driver.of_match_table`
+- [Phase 6] `git describe HEAD` → v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` → 7.3.0-rc4
+- [Phase 6] Grep: `kyo,tcg070wvlq` in driver, yaml, and `imx6dl-
+  prtmvt.dts`
+- [Phase 8] Failure mode: unmatched compatible → no panel probe; in-tree
+  DTS still matches fallback
+- [Phase 9] Read `Documentation/process/stable-kernel-rules.rst` lines
+  15–16: device IDs are allowed
+- UNVERIFIED: stable@vger discussion (HTTP 403)
 
 **YES**
 
- sound/hda/codecs/conexant.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/panel/panel-simple.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
-index 56d6fbdd9b06d..ef40f1cb1158e 100644
---- a/sound/hda/codecs/conexant.c
-+++ b/sound/hda/codecs/conexant.c
-@@ -298,6 +298,7 @@ enum {
- 	CXT_PINCFG_TOP_SPEAKER,
- 	CXT_FIXUP_HP_A_U,
- 	CXT_FIXUP_ACER_SWIFT_HP,
-+	CXT_FIXUP_HUAWEI_MATEBOOK_HP,
- };
- 
- /* for hda_fixup_thinkpad_acpi() */
-@@ -1043,6 +1044,13 @@ static const struct hda_fixup cxt_fixups[] = {
- 			{ }
- 		},
- 	},
-+	[CXT_FIXUP_HUAWEI_MATEBOOK_HP] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x18, 0x03211020 }, /* Headphone */
-+			{ }
-+		},
-+	},
- };
- 
- static const struct hda_quirk cxt5045_fixups[] = {
-@@ -1143,6 +1151,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo G50-70", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x397b, "Lenovo S205", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad/Ideapad", CXT_FIXUP_LENOVO_XPAD_ACPI),
-+	SND_PCI_QUIRK(0x19e5, 0x3289, "Huawei Matebook", CXT_FIXUP_HUAWEI_MATEBOOK_HP),
- 	SND_PCI_QUIRK(0x1c06, 0x2011, "Lemote A1004", CXT_PINCFG_LEMOTE_A1004),
- 	SND_PCI_QUIRK(0x1c06, 0x2012, "Lemote A1205", CXT_PINCFG_LEMOTE_A1205),
- 	SND_PCI_QUIRK(0x1d05, 0x3012, "MECHREVO Wujie 15X Pro", CXT_FIXUP_HEADSET_MIC),
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 878a5dc7748fb..c784f67f58fa4 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -5245,6 +5245,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "koe,tx31d200vm0baa",
+ 		.data = &koe_tx31d200vm0baa,
++	}, {
++		.compatible = "kyo,tcg070wvlq",
++		.data = &lg_lb070wv8,
+ 	}, {
+ 		.compatible = "kyo,tcg121xglp",
+ 		.data = &kyo_tcg121xglp,
 -- 
 2.53.0
 
