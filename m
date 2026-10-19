@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E485458BD;
-	Mon, 19 Oct 2026 14:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14F15458D2;
+	Mon, 19 Oct 2026 14:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418799; cv=none; b=Q+FqIfgZf/tL/tVZGGu1qoVJaYPxdFIa2+WGqWT/FRmdVINqhblzNKEP87UuP/hkMIFqCGn8Dw84rJRTAbvBYl3HJ6nmLuRNqfl5Xab+U16XeH4UqCGcoGsV9Sgkc1up04Ioz1cs+y+Mujo+e8L9lXhaNP4XZxIKP1MMbsAQTdg=
+	t=1792418801; cv=none; b=BQNd4m8BkS7RygiRyDFYb5R+MHAIvd9mKPFbzbKD8XxVYM3fcirTMK7h19LyOhfQY9U5hUezssZDf8GMo+dnlQ9DtOhRnBgvdbZzA9IvJ2GqFN2KUXyttLVR0usnibgm5HkunxdGA9pwBpudCER5uzfw1xnSaSzqKkLo3uWTk3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418799; c=relaxed/simple;
-	bh=Qri4XrResgnJyvy3lzzrFPrrq7csbZKJA6h23ifmimk=;
+	s=arc-20240116; t=1792418801; c=relaxed/simple;
+	bh=95qOH47L2e8gemey/UZsgmcWb0tqdDJwAaVk7WWxsC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nm+0PdwGYPisoKTb0oxFJ4et8LH/mD4ZKwx6GqwTfc8M6EunyCNe2UXJ3VrLuMaBB1b18URdds7BREUEauo6A4ic6JyZ8MZP89M2+xmqdptmRmTJK7z8nNcD96LCSwf5/2n36Xc/wfjxfJvmKy/Wf57lm1TzlnU4Gi74jcDcOkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QuJPTty5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BsAf/KQqv5GEvBOmhpVUh6pzA06eJCtC5bYsTID+mF4frFg3Fs9kgvqiHpA5ClyTZaIlKuhPUbLZJm0tQE9jrUjsqsVSDyt6EIEnte2lcMbzZSiJFrHxJQREvjXwXOlykNNZyrkXeHtr8RQ6PNHyAv85jIUD4+P7dZhUQSE8lvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dK8YCNLl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QuJPTty5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4EC1F000C5;
-	Mon, 19 Oct 2026 14:06:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dK8YCNLl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846B61F000C8;
+	Mon, 19 Oct 2026 14:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418797;
-	bh=tDiFVdZd6x1/FpLu1PcrtGHQ8LNj3Xzgk1lKCM43d+Q=;
+	s=k20260515; t=1792418798;
+	bh=qt8rAXV5w9aLTSVZK04czmnAvYtGQvH2a2vUMCv+/Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QuJPTty5Mq1lXSKSaGZKApcO77YuCCIskcpwnCWvKx30dzgFQNMU/I7VFkHvpoFZN
-	 X0+81gZs4xkynafE6wRZKTB40kUGmhTe6wZpAk9/BAd7/Jh9sd6NNRHYzdRmvAHcns
-	 RnKkv7Ev2W/vGUMmJl7NAy1TgR41BnMJe9a3r4DaneqO95/Hw9atYmTWG9AEz7wnBM
-	 +8eKLln32pD1jAVQox0oe4Cqg2KMlYFzCC9y5n6kj7GfDteOUhVAD8uPTW58QkTHxv
-	 RJBSECN83IDPd/R0cyO+OznEXTM44OLHrhjzqVo9bEVEr6a/O8bpAN2IM5c/vGiiX1
-	 NzxE0Hc5TgqiQ==
+	b=dK8YCNLlgN+U2dOydTM0q5VqujOSLIiPPqjCRCoO5BpYmxwdWIZwL2TEnnyDSO0oY
+	 L2ihe3XKyVPN6Wn04ZsxlEqJWVGlT3lHQ3IIwOXQPZRMcD/Ikkt0wkiSfaEq3Z1T54
+	 rN16OT5Ky/5wi5pHR4CEO6ns69CwTlM52Fh2H9zarseAN01tCz2jbzkTOXX3I5El3Z
+	 Vl1wgI+mU+V8Qr1FegTOI+U4vPEznmgrzwG/y3jgYRzkUkATMVWPYkBkYf1Qyx+G0m
+	 nt00PPr9RropVWvJbIFXsZhChkEhEhGYiXHN+qkgCXOPjN3/PkjN3iEBQjTKSPLJOi
+	 0292q9rxQLnjg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Huang <jinhuieric.huang@amd.com>,
-	Philip Yang <philip.yang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Haoxiang Li <haoxiang_li2024@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] drm/amdkfd: add sanity check in svm_range_is_valid
-Date: Mon, 19 Oct 2026 09:53:14 -0400
-Message-ID: <20261019135441.1420968-503-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: hdac_hdmi: Fix resource cleanup on probe failure
+Date: Mon, 19 Oct 2026 09:53:15 -0400
+Message-ID: <20261019135441.1420968-504-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,431 +55,401 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Huang <jinhuieric.huang@amd.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit aa7e29cf9a37092cf5057a612ee09f28df20258f ]
+[ Upstream commit 785903b7770f19ea05b8a76081dff691c56fa771 ]
 
-to prevent svm range to be overflow or underflow.
+hdac_hdmi_dev_probe() gets the HDA link before allocating and
+initializing the HDMI codec private data. Several later error
+paths return directly without dropping the link reference,
+leaving the hlink refcount unbalanced.
 
-Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
-Reviewed-by: Philip Yang <philip.yang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Release the link reference on probe failures. Also turn display
+power off if the failure happens after it has been enabled.
+
+This issue was dicussed in:
+https://lore.kernel.org/all/s5h1s0esk8o.wl-tiwai@suse.de/
+I think the paths fixed here are probe failure paths: the device
+has not been fully initialized or bound, and runtime PM suspend
+cannot be relied on to balance the reference taken during probe.
+
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260622151127.1198196-1-haoxiang_li2024@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Local tree
+This is a small probe-error-path leak fix in the Intel HDMI HDAC codec.
+The buggy code is present in this 6.18.53 tree, the change is surgical,
+and it should be backported.
 
-This checkout is **6.18.y** (`v6.18.53`, Makefile `VERSION=6` /
-`PATCHLEVEL=18` / `SUBLEVEL=53`, branch `autosel`). The verdict is only
-for this tree.
+## Phase 1: Commit message forensics
 
-`git merge-base --is-ancestor` shows the buggy SVM range math **is** in
-`v6.18.53`; the fix is **not**.
+**Step 1.1 — Subject**
+Record: `[ASoC / hdac_hdmi] [Fix] resource cleanup on probe failure`
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: `[drm/amdkfd] [add] sanity check in svm_range_is_valid`
-
-Subsystem: AMD KFD SVM (HMM shared virtual memory). Verb “add” plus
-“sanity check” is a bounds/overflow guard, not a feature.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+**Step 1.2 — Tags**
 Record:
-- Signed-off-by: Eric Huang (author)
-- Reviewed-by: Philip Yang (original author of `svm_range_is_valid`)
-- Signed-off-by: Alex Deucher (amdgpu/amdkfd maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable (absence is
-  expected)
+- No `Fixes:` tag (expected for this review queue)
+- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
+  stable`
+- `Link: https://patch.msgid.link/20260622151127.1198196-1-
+  haoxiang_li2024@163.com`
+- Body also cites `https://lore.kernel.org/all/s5h1s0esk8o.wl-
+  tiwai@suse.de/` (Takashi Iwai, 2019)
+- `Signed-off-by: Haoxiang Li` (author)
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` (ASoC maintainer)
+- Ignore pipeline `Signed-off-by: Sasha Levin` and `[Upstream commit
+  785903b7770f...]`
 
-Pipeline-added markers (`[Upstream commit …]`, Sasha Levin SOB) are
-ignored.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+**Step 1.3 — Body**
 Record:
-- Bug: SVM range start/size can overflow or underflow when converted to
-  byte bounds.
-- Symptom: not spelled out (no stack trace, CVE, or repro).
-- Root cause (from code + review, not from the one-line body): `end =
-  start + (size << PAGE_SHIFT)` wraps; `size == 0` makes `last = start +
-  size - 1` underflow.
+- **Bug:** `hdac_hdmi_dev_probe()` takes an HDAC link ref
+  (`snd_hdac_ext_bus_link_get`) then returns on later errors without
+  `snd_hdac_ext_bus_link_put`. After `snd_hdac_display_power(...,
+  true)`, parse failure also leaves display power held.
+- **Symptom:** Unbalanced `hlink->ref_count` (link stays powered) and
+  possibly a stuck i915/display audio power well.
+- **Root cause (author):** Probe-failure paths never bind the driver, so
+  runtime PM suspend cannot drop the probe-time ref.
+- **Version info:** None in the message. History puts the leak in this
+  driver since link management was added (~v4.7).
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
+**Step 1.4 — Hidden bug fix?**
+Record: Not hidden. Explicit leak fix on error paths.
 
-Record: Yes. “Sanity check” here is an integer overflow/underflow fix in
-range validation, not style cleanup. Philip Yang said so on list:
-overflow wrap plus `size == 0` underflow of `last = start + size - 1`.
+## Phase 2: Diff analysis
 
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
-
+**Step 2.1 — Inventory**
 Record:
-- File: `drivers/gpu/drm/amd/amdkfd/kfd_svm.c` (+7 / −1)
-- Function: `svm_range_is_valid()`
-- Scope: single-file surgical fix
+- File: `sound/soc/codecs/hdac_hdmi.c` (+8 / −2)
+- Function: `hdac_hdmi_dev_probe()`
+- Scope: single-file surgical error-path fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 2.2 — Flow change**
+Record (verified against v6.18.53 and the patch):
+1. After `snd_hdac_ext_bus_link_get()`:
+   - **ENOMEM** (`devm_kzalloc` fails): was `return -ENOMEM` → now
+     `link_put` then return
+   - **`!hdac_id`:** was `return -ENODEV` → now `link_put` then return
+   - **`hdac_hdmi_parse_and_map_nid()` fails:** was log + `return ret`
+     after `snd_hdac_display_power(..., true)` → now `link_put` +
+     `snd_hdac_display_power(..., false)` then return
+2. Success / `devm_snd_soc_register_component` path already did
+   `link_put`. Unchanged.
 
-Before (`v6.18.53`):
+**Step 2.3 — Bug mechanism**
+Record: **Error-path resource leak** (link refcount + display power
+ref). `snd_hdac_ext_bus_link_get()` increments `hlink->ref_count` and
+powers the link at 0→1. Matching `put` powers it down at 1→0. Probe
+failure skipped that put. `snd_hdac_display_power(..., true)` sets
+`display_power_status` and may call DRM `get_power`; without `false`,
+that well can stay on.
 
-```c
-start <<= PAGE_SHIFT;
-end = start + (size << PAGE_SHIFT);
-do { vma_lookup... } while (start < end);
-return svm_range_check_vm(p, start_unchg, (end - 1) >> PAGE_SHIFT, ...);
-```
+**Step 2.4 — Fix quality**
+Record: Obviously correct: every new `put`/`display_power(false)` is on
+a path that already took the matching get/enable and does not reach the
+existing success-path `put`. No API/lock/structure changes. Remaining
+gap (not introduced here): if `devm_snd_soc_register_component()` fails,
+`link_put` already runs but display power is still left on. That does
+not make this patch wrong.
 
-After:
-- `size == 0` → `-EINVAL`
-- `check_add_overflow(start, size << PAGE_SHIFT, &end)` → `-EOVERFLOW`
-- Same VMA walk only if the byte range is representable
+## Phase 3: Git history
 
-Path: ioctl/CRIU validation, not a hot inner loop.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **Integer overflow / underflow (memory-safety / validation
-bypass).**
-
-Overflow: userspace `AMDKFD_IOC_SVM` can pass page-aligned `start_addr`
-and `size` whose sum wraps 64-bit. After `svm_ioctl()` shifts both into
-pages, `end` wraps. The `do/while (start < end)` then walks a
-**truncated/wrapped** range. `svm_range_check_vm()` can see `last <
-start`, where `interval_tree_iter_first()` treats a non-overlapping
-inverted interval as empty and returns success. Callers then run
-`svm_range_add()` with the original huge `start`/`size`.
-
-Underflow: `size == 0` makes `(end - 1)` wrap when `end == 0`, so
-`svm_range_check_vm()` can be asked to scan ~the whole VA tree. Philip
-Yang called that out as the reason for the extra check.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record: Obviously correct, minimal, error-path only. Regression risk is
-low: overflowing/zero ranges were never valid. `-EOVERFLOW` is a new
-errno for this ioctl; those requests were undefined before.
-`check_add_overflow()` is already provided via `linux/mm.h` (`kfd_svm.c`
-→ `kfd_svm.h` → `linux/hmm.h` → `linux/mm.h` → `linux/overflow.h`). KFD
-is 64-bit only (`HSA_AMD depends on X86_64 || ARM64 || PPC64 || …`), so
-`unsigned long end` matches `uint64_t` arithmetic.
-
-The check does not separately test `size << PAGE_SHIFT` wrap. On the
-ioctl path size is a page-aligned byte length shifted down then up, so
-the add is the real wrap. That leftover is not a reason to reject the
-patch.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record: Unchecked `end = start + (size << PAGE_SHIFT)` is from
-`42de677f799997` (“drm/amdkfd: register svm range”, Philip Yang, 2020).
-Present in this tree (`git merge-base --is-ancestor 42de677f799997
-v6.18.53` → yes). SVM landed ~5.11; the bug is old in 6.18.y.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No Fixes: tag. Not applicable.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: Recent `kfd_svm.c` work on this tree is unrelated (CRIU
-list_del, NULL in `svm_range_set_attr`, TLB, GPU reset). No prior
-overflow fix for this helper. Standalone, not patch N/M.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Eric Huang is an AMD KFD contributor (including `drm/amdkfd: fix
-a vulnerability of integer overflow in kfd debugger`, already in this
-tree with Cc: stable). Philip Yang owns this SVM code. Alex Deucher is
-the subsystem maintainer.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: None. `check_add_overflow()` and `svm_range_is_valid()` both
-exist here. Applies standalone to `v6.18.53` (same hunk as the
-candidate).
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-`b4 dig -c aa7e29cf9a37092cf5057a612ee09f28df20258f` failed (lore HTTP
-error). Found the thread on amd-gfx:
-
-- v1: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-June/146929.html — overflow check only
-- Philip Yang: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-June/146952.html — overflow check is good; also reject `size
-  == 0` because `last = start + size - 1` underflows
-- v2 typo (`retrune`): 147063
-- v2 fixed: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-June/147065.html — committed form
-- Reviewed-by: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-June/147704.html
-- Landed in drm-next-7.3 pull (Aug 2026)
-
-No NAKs. No Cc: stable on the thread.
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: Philip Yang (SVM author) requested the size==0 check and
-Reviewed-by. Alex Deucher signed off and pulled it.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot/bugzilla. Author-driven hardening after review.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Single patch, two revisions. Self-contained.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: No useful stable-list hit for this subject. Not previously
-rejected for 6.18.y (UNVERIFIED beyond search noise).
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: KEY FUNCTIONS**
-
-Record: `svm_range_is_valid()` only.
-
-**Step 5.2: TRACE CALLERS**
-
+**Step 3.1 — Blame**
 Record:
-- `svm_range_set_attr()` — `AMDKFD_IOC_SVM` SET_ATTR and CRIU restore
-- `svm_range_get_attr()` — GET_ATTR and CRIU checkpoint
+- Link get in this probe: `b2047e996cd88` (“ASoC: hdac_hdmi: add link
+  management”), contained in **v4.7-rc1**. Error returns after get were
+  already unbalanced.
+- Display power enable: `4f799e734094f0` (Takashi Iwai), contained in
+  **v5.0-rc1**.
+- Buggy pattern has been in this file for many years, including this
+  6.18.y tree.
 
-`kfd_ioctl_svm()`: flags `0` (not `KFD_IOC_FLAG_CHECKPOINT_RESTORE`).
-Any opener of `/dev/kfd` can call it. It already rejects zero/unaligned
-byte size, then shifts into pages and calls these helpers.
+**Step 3.2 — Fixes: tag**
+Record: None. Introducer is `b2047e996cd88` (link get without error-path
+put). That commit is an ancestor of this tree.
 
-**Step 5.3: TRACE CALLEES**
+**Step 3.3 — File history**
+Record: Recent `hdac_hdmi.c` work is lock `guard()` conversion, enum
+validation, logging. No prerequisite refactor for this fix. `git diff
+v6.18.53 0754884332e60^ -- sound/soc/codecs/hdac_hdmi.c` is empty: probe
+text at v6.18.53 matches the pre-patch parent.
 
-Record: `vma_lookup()`, `svm_range_check_vm()` →
-`interval_tree_iter_first()`. Overflow changes which interval is walked.
+**Step 3.4 — Author**
+Record: Haoxiang Li has several ASoC probe-leak fixes here, including
+`e8ea01a045708` (“ASoC: hdac_hda: Fix hlink refcount leak on component
+registration failure”), which **did** carry `Fixes:` + `Cc: stable` and
+is already in this tree. Same bug class, sibling driver.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
+**Step 3.5 — Dependencies**
+Record: None. Uses existing `snd_hdac_ext_bus_link_put` /
+`snd_hdac_display_power`. Standalone.
 
-Record: Userspace ioctl → `kfd_ioctl_svm` → `svm_ioctl` → set/get_attr →
-`svm_range_is_valid`. Reachable from userspace with KFD access (ROCm/HIP
-unified memory). Not theoretical.
+## Phase 4: Mailing list / external
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: `svm_range_add()` still does `last = start + size - 1UL`, but
-only after this validator. Rejecting wrap/zero here closes that gate.
-`kfd_ioctl_svm` already rejects byte `size == 0`; the new check covers
-CRIU/`svm_range_*_attr` in page units.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: Yes. `v6.18.53` `kfd_svm.c` still has `end = start + (size <<
-PAGE_SHIFT)` at the old line 3424. Introduced 2020; in 6.18 from day
-one.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: Clean apply. Same function signature (no later `mapped`
-argument). No extra include. Surrounding SVM code matches.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: No other overflow fix for `svm_range_is_valid` on `v6.18.53`.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-
-Record: `drivers/gpu/drm/amd/amdkfd` SVM. **IMPORTANT** for AMD GPU
-compute (ROCm/HIP), not core mm/VFS. Config: `CONFIG_HSA_AMD_SVM`.
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-
-Record: Actively maintained; this helper itself has been stable since
-~2021 aside from `vma_lookup` and `svm_range_check_vm` tweaks.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-
-Record: AMD GPU users with KFD SVM (unified/managed memory). Driver- and
-config-specific, but a common production path.
-
-**Step 8.2: TRIGGER CONDITIONS**
-
+**Step 4.1 — Original thread**
 Record:
-- Overflow: page-aligned `start_addr + size` wraps `uint64_t`. Easy to
-  send; not a normal HIP range.
-- Underflow: `size == 0` in pages (ioctl already blocks this;
-  CRIU/internal callers may not).
-- Unprivileged `/dev/kfd` users can hit the overflow path.
+- `b4 dig -c 785903b7770f`: https://patch.msgid.link/20260622151127.1198
+  196-1-haoxiang_li2024@163.com
+- Single revision (v1 only, `-a`)
+- Thread: patch + Mark Brown apply to `for-7.3`. No NAK, no requested
+  respin.
 
-**Step 8.3: FAILURE MODE SEVERITY**
+**Step 4.2 — Recipients (`b4 dig -w`)**
+Record: Liam Girdwood, Mark Brown, Jaroslav Kysela, Takashi Iwai,
+Cirrus, Kuninori Morimoto, `linux-sound`, `linux-kernel`. Right
+ASoC/ALSA maintainers.
 
-Record: Validation bypass after wrap: SVM may be applied to a range that
-was never fully VMA-checked; interval-tree overlap can be skipped; GPU
-mapping of the wrong host range or later crashes. Severity **HIGH**
-(userspace-triggerable overflow in GPU VA validation). Not a proven
-panic-on-boot, but more than a log-only issue.
+**Step 4.3 — Cited 2019 discussion**
+Record: MARC copy of `s5h1s0esk8o.wl-tiwai@suse.de` (2019-05-31).
+Ranjani Sridharan noted hdac_hdmi had a similar unbalanced link ref.
+Takashi said hdac_hdmi is different because it balances via runtime PM
+(put in suspend, get in resume), and he was unsure about removal vs
+suspend. He called the code “a bit too fragile.” This 2026 patch
+correctly treats **probe failure** as unbound, so runtime suspend cannot
+be assumed. That matches `hdmi_codec_probe()`, which documents relying
+on `pm_runtime_put` only after a successful component probe.
 
-**Step 8.4: RISK-BENEFIT RATIO**
+**Step 4.4 — Series**
+Record: Standalone `[PATCH]`, not `n/m`. Sibling hdac_hda leak fix sent
+the same day.
 
+**Step 4.5 — stable@**
+Record: **UNVERIFIED** (lore.kernel.org returns 403 here). No stable
+nomination in the saved mbox.
+
+## Phase 5: Code semantics
+
+**Step 5.1 — Functions**
+Record: `hdac_hdmi_dev_probe()` only.
+
+**Step 5.2 — Callers**
+Record: `hdmi_driver.probe`, registered by `hdmi_init()` →
+`snd_hda_ext_driver_register()`. Runs on HDAC enumeration of Intel HDMI
+IDs 0x80862809–0x8086280d (Skylake / Broxton / Kaby Lake / Cannon Lake /
+Gemini Lake). Boot/device-probe path, not a syscall hot path.
+
+**Step 5.3 — Callees**
+Record: `snd_hdac_ext_bus_get_hlink_by_name`,
+`snd_hdac_ext_bus_link_get/put`, `snd_hdac_display_power`,
+`hdac_hdmi_parse_and_map_nid` (can return `-EINVAL`/`-EIO`/`-ENOMEM` on
+bad topology or alloc failure), `devm_snd_soc_register_component`.
+
+**Step 5.4 — Reachability**
+Record: Yes, if `CONFIG_SND_SOC_HDAC_HDMI` is built and the module
+binds. Parse failure is a real probe error (`HDMI: failed to get afg sub
+nodes`, `Bad pin/cvt setup`). Unprivileged users do not trigger it
+directly; boot/bind does.
+
+**Step 5.5 — Similar patterns**
+Record: Same leak class in `hdac_hda_dev_probe` (already fixed with Cc:
+stable). `hdmi_codec_probe()` still has its own error-path link_get
+without put if widget map / notifier registration fails; that is **not**
+this commit.
+
+## Phase 6: This tree (6.18.53)
+
+**Step 6.1 — Buggy code present?**
+Record: **Yes.** `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`;
+`Makefile` is 6.18.53. At `v6.18.53`, `hdac_hdmi_dev_probe()` gets the
+link then returns on ENOMEM / `!hdac_id` / parse failure with no put
+(and no display power off on parse failure). Bug introduced ~v4.7, not
+after 6.18 branched.
+
+**Step 6.2 — Backport difficulty**
+Record: **Clean apply.** `patch --dry-run` of this diff onto
+`v6.18.53:sound/soc/codecs/hdac_hdmi.c` succeeded. No intervening probe
+rewrite.
+
+**Step 6.3 — Related fixes already here?**
+Record: No other hdac_hdmi probe-leak fix. Sibling `hdac_hda` leak fix
+is already in this tree; it does not cover this file.
+
+## Phase 7: Subsystem context
+
+**Step 7.1**
+Record: ASoC codec driver (`sound/soc/codecs/hdac_hdmi.c`).
+**IMPORTANT** for Intel HDMI audio on SKL–GLK, not core mm/net.
+`SND_SOC_HDAC_HDMI` is a hidden `tristate` implied by
+`SND_SOC_ALL_CODECS`; this tree has no board `select SND_SOC_HDAC_HDMI`
+(SOF uses `SND_SOC_HDAC_HDA`). Distros that enable all codecs still ship
+the module, and it still matches those HDMI codec IDs.
+
+**Step 7.2**
+Record: File is mature (2015–); recent commits are small fixes, not a
+rewrite.
+
+## Phase 8: Impact and risk
+
+**Step 8.1 — Who**
+Record: Users of this HDMI HDAC codec (Intel SKL/BXT/KBL/CNL/GLK ASoC
+HDMI), and only when **probe fails**. Not universal.
+
+**Step 8.2 — Trigger**
+Record: Failed `hdac_hdmi_dev_probe` after `link_get`: ENOMEM, ID lookup
+miss, or `hdac_hdmi_parse_and_map_nid` failure. Once per failed bind,
+not a hot path. Not a userspace-triggered security issue.
+
+**Step 8.3 — Failure mode**
+Record: HDAC link ref never drops → link stays powered; display power
+bit/get_power may stay held → GPU/audio power well may not idle.
+**Severity: MEDIUM–HIGH** (power-management leak / stuck resource, not
+oops/corruption). HDMI audio already failed on that path; leftover refs
+can still affect the controller and display PM.
+
+**Step 8.4 — Risk vs benefit**
 Record:
-- Benefit: HIGH for KFD SVM — closes wrap-around validation.
-- Risk: VERY LOW — 7 lines, reject-only, maintainer-reviewed.
-- Ratio: strongly favors backport.
+- Benefit: balances refs on real probe-error paths; prevents stuck
+  link/display power.
+- Risk: very low (error path only, matching put/power-off, no locking
+  change).
+- Ratio: favorable for stable.
 
----
+## Phase 9: Synthesis
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 9.1 — Evidence**
 
-**Step 9.1: EVIDENCE**
+For:
+- Real unbalanced `hlink` refcount and display-power hold on probe
+  failure (verified in v6.18.53 source and `link_get`/`display_power`
+  implementations).
+- Probe failure cannot rely on runtime suspend (verified: PM
+  enable/`pm_runtime_put` is in `hdmi_codec_probe`, after successful
+  bind).
+- Tiny (+8/−2), obviously correct, applies cleanly here.
+- ASoC maintainer applied it; 2019 maintainer thread already flagged the
+  fragility.
+- Same-week sibling hdac_hda leak fix was treated as stable material.
 
-FOR:
-- Real wrap in `end = start + (size << PAGE_SHIFT)` on a userspace ioctl
-- Wrap can make the VMA walk check the wrong range and still return 0
-- `size == 0` underflows `last` (Philip Yang)
-- 7-line, obviously correct `check_add_overflow` + zero check
-- Reviewed by the SVM author; signed off by Deucher
-- Bug present in this 6.18.y tree since original SVM
-- Applies cleanly; no new API; no prerequisites
+Against:
+- Probe-error path only; no crash/corruption/CVE.
+- No `Reported-by` of a field failure.
+- Display power still leaked if component registration fails (pre-
+  existing, incomplete).
+- Driver is less central in 6.18 than in Skylake-SST days (SOF uses
+  hdac_hda).
 
-AGAINST:
-- Terse commit message, no crash/CVE/syzbot
-- Ioctl already rejects byte `size == 0` (overflow still open)
-- Affects AMD KFD SVM, not every machine
+Unresolved:
+- Could not search lore.kernel.org/stable (HTTP 403).
+- No direct evidence of how often parse-and-map fails on shipping
+  SKL–GLK machines.
 
-UNRESOLVED:
-- Exact post-bypass corruption vs. later `-EFAULT` not demonstrated with
-  a repro
-- lore.kernel.org/`b4 dig` failed; amd-gfx archive used instead
-- No stable-list discussion found
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — mechanical matching
+   put/power-off; maintainer applied. No extra Tested-by.
+2. Real bug affecting users? **PASS** — leftover link/display power
+   after failed HDMI codec probe.
+3. Important (crash/security/corruption/deadlock)? **PASS** (lower end)
+   — not an oops, but a stuck PM ref that can keep an HDA link and
+   display audio power well on; same class as other probe-path leak
+   backports.
+4. Small and contained? **PASS** — one function, 10 lines.
+5. No new features/APIs? **PASS**
+6. Applies to this tree? **PASS** — buggy code in 6.18.53, clean apply.
 
-**Step 9.2: STABLE RULES CHECKLIST**
+**Step 9.3 — Exception category**
+Record: None (not a device ID/quirk/DT/build/doc-only change). Ordinary
+error-path leak fix.
 
-1. Obviously correct and tested? **PASS** — review + drm-next inclusion
-2. Fixes a real bug that affects users? **PASS** — ioctl-reachable
-   overflow
-3. Important (crash/security/corruption/deadlock)? **PASS** — HIGH,
-   validation bypass
-4. Small and contained? **PASS** — 8-line hunk, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — present bug, clean apply on
-   6.18.53
-
-**Step 9.3: EXCEPTION CATEGORIES**
-
-Record: Not a device ID/quirk/DT/docs case. Ordinary small overflow fix.
-
-**Step 9.4: DECISION**
-
-This belongs on 6.18.y: old bug, userspace-reachable, tiny fix,
-maintainer-acked, applies as-is.
-
----
+**Step 9.4 — Decision**
+The leak is real in this checkout, the fix is minimal and correct, and
+regression risk is confined to paths that already failed probe. That is
+appropriate for 6.18.y.
 
 ### What it solves for stable users
-
-`svm_range_is_valid()` is the gate for `AMDKFD_IOC_SVM`. Without
-overflow checks, a wrapping `start+size` can skip the intended VMA
-coverage check and still proceed into SVM range insert/map. Zero size
-underflows the last-page index. Both are closed with `-EINVAL` /
-`-EOVERFLOW`.
+On Intel HDMI HDAC probe failure, this tree currently leaves
+`snd_hdac_ext_bus_link_get()` unmatched and can leave
+`snd_hdac_display_power(..., true)` unmatched. That keeps the HDAC link
+(and possibly the i915 audio power well) up for the life of the boot.
+The patch drops those refs on the failing paths.
 
 ### Risk vs benefit
-
-Benefit is closing a GPU SVM validation hole on hardware this tree
-already supports. Risk is rejecting inputs that were never valid.
+Benefit is restoring power/ref balance when HDMI codec init fails. Risk
+is very low: no success-path or locking change.
 
 ---
 
-### Verification
-
-- [Phase 1] Tags: Eric Huang SOB, Philip Yang Reviewed-by, Alex Deucher
-  SOB; no Fixes/Reported-by
-- [Phase 2] Diff: +7/−1 in `svm_range_is_valid`; zero check +
-  `check_add_overflow`
-- [Phase 2] Pre-patch `v6.18.53` still uses `end = start + (size <<
-  PAGE_SHIFT)`
-- [Phase 3] Blame: `42de677f799997` (2020); ancestor of `v6.18.53` (exit
-  0)
-- [Phase 3] Fix not in `v6.18.53` (`merge-base --is-ancestor` of
-  upstream SHA → not ancestor, exit 1)
-- [Phase 3] No prior overflow fix in `kfd_svm.c` on this file’s 6.18.53
-  history
-- [Phase 4] `b4 dig` failed (lore error)
-- [Phase 4] amd-gfx v1 146929; Philip asked for `size==0` on 146952;
-  committed form 147065; R-b 147704
-- [Phase 5] Callers: `svm_range_set_attr` / `svm_range_get_attr` from
-  `svm_ioctl` and CRIU
-- [Phase 5] `AMDKFD_IOC_SVM` registered with flags `0` (unprivileged vs
-  CRIU)
-- [Phase 5] `kfd_ioctl_svm` already rejects `!args->size` and unaligned
-  size; overflow still possible
-- [Phase 5] `interval_tree_iter_first` returns NULL when `last < start`
-  (inverted range)
-- [Phase 6] `check_add_overflow` available via hmm.h → mm.h →
-  overflow.h; no extra include
-- [Phase 6] `HSA_AMD` is 64-bit only — `unsigned long end` is 64-bit
-- [Phase 7] Config `HSA_AMD_SVM`, AMD GPU compute
-- [Phase 8] Failure: wrap → wrong VMA walk → possible validation bypass;
-  HIGH
-- UNVERIFIED: no crash repro; lore/stable search incomplete due to HTTP
-  403
-
-The patch is small, surgical, and meets the stable criteria for this
-6.18.y tree.
+Verification:
+- [Phase 1] Parsed tags: no Fixes/Cc-stable/Reported-by; Link to msgid
+  20260622151127; Mark Brown SOB; body cites Takashi 2019 thread
+- [Phase 2] Diff: +8/−2 in `hdac_hdmi_dev_probe()`; puts on ENOMEM,
+  !hdac_id, parse failure; display_power(false) on parse failure
+- [Phase 2] Confirmed `snd_hdac_ext_bus_link_get/put` in
+  `sound/hda/core/ext/controller.c` power the link on 0↔1 refcount
+- [Phase 2] Confirmed `snd_hdac_display_power()` in
+  `sound/hda/core/component.c` holds DRM get_power while bits are set
+- [Phase 3] `git describe HEAD`: v6.18.53-5049-g0f0bdc2b0dffb; `make
+  kernelversion` / Makefile: 6.18.53
+- [Phase 3] Blame: link get from `b2047e996cd88` (v4.7); display power
+  from `4f799e734094f0` (v5.0)
+- [Phase 3] `git show v6.18.53:sound/soc/codecs/hdac_hdmi.c`: buggy
+  returns present; parent of candidate identical to v6.18.53 for this
+  file
+- [Phase 3] Sibling `e8ea01a045708` (hdac_hda leak) is an ancestor of
+  HEAD and had Cc: stable
+- [Phase 4] `b4 dig -c 785903b7770f`: v1 only; applied by Mark Brown to
+  for-7.3; no NAK in mbox
+- [Phase 4] MARC: Takashi 2019 mail `s5h1s0esk8o.wl-tiwai@suse.de` on
+  runtime-PM vs hdac_hdmi link refs
+- [Phase 5] `hdac_hdmi_dev_probe` is `hdmi_driver.probe`; IDs
+  0x80862809–0x8086280d
+- [Phase 5] `hdac_hdmi_parse_and_map_nid` can return -EINVAL/-EIO and
+  alloc errors
+- [Phase 6] `patch --dry-run` onto v6.18.53 file: success
+- [Phase 6] Upstream `785903b7770f` is not an ancestor of v6.18.53 (fix
+  not already in the stable base)
+- [Phase 8] Failure mode: stuck HDAC link / display power after failed
+  probe, not oops
+- UNVERIFIED: lore.kernel.org WebFetch/curl 403; no stable@ archive
+  search
+- UNVERIFIED: field frequency of `hdac_hdmi_parse_and_map_nid` failures
+  on 6.18 hardware
 
 **YES**
 
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 202ed1c456320..1b29dee7948d8 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -3421,7 +3421,13 @@ svm_range_is_valid(struct kfd_process *p, uint64_t start, uint64_t size)
- 	unsigned long start_unchg = start;
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 2385e18127a33..1ca5e7aa42aca 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -1861,8 +1861,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
+ 	snd_hdac_ext_bus_link_get(hdev->bus, hlink);
  
- 	start <<= PAGE_SHIFT;
--	end = start + (size << PAGE_SHIFT);
-+
-+	if (size == 0)
-+		return -EINVAL;
-+
-+	if (check_add_overflow(start, size << PAGE_SHIFT, &end))
-+		return -EOVERFLOW;
-+
- 	do {
- 		vma = vma_lookup(p->mm, start);
- 		if (!vma || (vma->vm_flags & device_vma))
+ 	hdmi_priv = devm_kzalloc(&hdev->dev, sizeof(*hdmi_priv), GFP_KERNEL);
+-	if (hdmi_priv == NULL)
++	if (hdmi_priv == NULL) {
++		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 		return -ENOMEM;
++	}
+ 
+ 	snd_hdac_register_chmap_ops(hdev, &hdmi_priv->chmap);
+ 	hdmi_priv->chmap.ops.get_chmap = hdac_hdmi_get_chmap;
+@@ -1871,8 +1873,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
+ 	hdmi_priv->chmap.ops.get_spk_alloc = hdac_hdmi_get_spk_alloc;
+ 	hdmi_priv->hdev = hdev;
+ 
+-	if (!hdac_id)
++	if (!hdac_id) {
++		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 		return -ENODEV;
++	}
+ 
+ 	if (hdac_id->driver_data)
+ 		hdmi_priv->drv_data =
+@@ -1897,6 +1901,8 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
+ 	if (ret < 0) {
+ 		dev_err(&hdev->dev,
+ 			"Failed in parse and map nid with err: %d\n", ret);
++		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
++		snd_hdac_display_power(hdev->bus, hdev->addr, false);
+ 		return ret;
+ 	}
+ 	snd_hdac_refresh_widgets(hdev);
 -- 
 2.53.0
 
