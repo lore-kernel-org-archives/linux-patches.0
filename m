@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B34623883;
-	Mon, 19 Oct 2026 14:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A386238A0;
+	Mon, 19 Oct 2026 14:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418691; cv=none; b=pn7FlhoYmykVO8s6HkSchM6V/4SLLL2CyrPfa6JbklW76us1w+LojhcSf5De9dnc8Z3pAkksWmGw2aJcJZDQ8d5v0qFtMPT40qQyLJ8y5nADI2PPdCNT4XcY4UuseMM7SbbwAPncYQcWLjJkob//FUIg21VRR755wyBG6lx6TCY=
+	t=1792418693; cv=none; b=s5dDmhQhy3bUfs50TQyFQtBlBhjDqPwHGuaXRu28zbePy8RcQgDW+HwudXwRUCsvwrkaOW0jRX5MwKaveL/v/MIESvSnQWJUwmz9pQI4654eV6KmAEZVNkGYsk9Xx55IeWTngRuiB3NQCJjgLcp0k4DIwuUAlMfEFnWEMM4Clus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418691; c=relaxed/simple;
-	bh=F/UsXT1e7/AvWIqMK34SiQX1vfA56FuuYZ5XTjxUBKs=;
+	s=arc-20240116; t=1792418693; c=relaxed/simple;
+	bh=ft629vtileep1FfktRDH0L4etrkbJbrC8XDK3cHHkWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TYgKF78NYfR9MBeSez/VV5w546OLc21BfsQss044sRvA25MJqyXsBh0kFCcPfYHk903Jk95Yxn79jcREhFd0DCyjkQrb7QCJioGoqrVfQ75gqB7PpecA+Ti6O/wgXXBMCXjzFQlT4u3ZRIPEcdXhLH9cA0RiXmCtUZQb7K+d2HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T7TraGz+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EfvDvdrPCDUtr9h2hKc3IqRLrVRTsSk9eAsdPVKDWi3PwGavVLvypLIxdZHq+pFwlM2wgwjt80AfUrIWy4ltGceCCZFZwXIuhO3wi2WPMVng835jcyXx+I9i8YIRMpyLFlwE7Cn+LB5VtPMwyklbQxK2GiLlwNgwbiKhsevKm/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOfWy+Bu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T7TraGz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBE51F000C6;
-	Mon, 19 Oct 2026 14:04:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOfWy+Bu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681EE1F000C9;
+	Mon, 19 Oct 2026 14:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418689;
-	bh=WTU9jE6vfY4VsFTKT81fPJrxMMr0twbpuj3cAR+x5pk=;
+	s=k20260515; t=1792418690;
+	bh=4amEEY/Xct1faar7l9czoxlKhgGqkKJbq754RzhoEmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T7TraGz+mpaJ8iodszG+WiXHkxbnZYFL/7JttE5RqEtJ5ovQOvIVi/HI2OQEaekp0
-	 0AmhAxpZeiF+LX25JjO/SazdHpifz1WoHge2TIlOf/8gSuDthNur/V6T+kurmIi9ix
-	 zoNS1Gc1U51ucQJ6DF6w1/IpOgx946ZXmBo/FaCxwxj46YKLZyutqyAaywghsW+fiP
-	 xHh8mwI42AL9PK3mrSYcn+OY0AUntk+b/glX0eRvn7qET60kbQt+rpYOnnjVP8O/X0
-	 VC1L1GXnsWXJkjMk4O5Pvknq3movujmn3nCaiIVtzqBMprS+bq2NB3oeif6yj4G2Ov
-	 J28uFx3iqqqiA==
+	b=jOfWy+BuXrTl8vItMCjvJtfMgVCfoAfYqcU0HA9oQ5a4DVxgwzVc5tp42HmkE80Qf
+	 p8adFBF6IGGWG1ZBEx4YBVGl3oq9DhvGKJxqqqX3DPCOmMhTrMcxTUOwmWdQpedWws
+	 2b2IWbPzdWrq4yMP1VBGt5GQCBKetUeT8YaAo9kyJKdxwarmWEqjTLXkF17ieo7XNK
+	 Mru+hBkOTMDqHc5V1X1cG6dxuZ6ZnA3/Jdm2Qg8Z8zNKcgiECbI0DSkxjo3H6kWU2v
+	 1TCnkqH81BHmW1xQaVR+pQ2/TRJDtrh3ZbJHqgaisyXLT9m87y0TFPMm+j1z74Uf0K
+	 CROb5LuYAIl4A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiawen Liu <1298662399@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Daeho Jeong <daehojeong@google.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	olteanv@gmail.com,
-	linux-spi@vger.kernel.org,
-	imx@lists.linux.dev,
+	linux-f2fs-devel@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] spi: fsl-dspi: clean up after failed suspend and resume
-Date: Mon, 19 Oct 2026 09:51:57 -0400
-Message-ID: <20261019135441.1420968-426-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] f2fs: avoid setting SBI_NEED_FSCK on transient resize failure
+Date: Mon, 19 Oct 2026 09:51:58 -0400
+Message-ID: <20261019135441.1420968-427-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,405 +54,439 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 2543355f3da56a297e3803ccb5d29f4dce5f18f1 ]
+[ Upstream commit 258c95150c26a30db1896eacd3bdef26314f2ca1 ]
 
-dspi_suspend() disabled the IRQ before spi_controller_suspend(),
-but ignored a suspend failure and kept tearing the device down.
-Restore the IRQ and return the error if suspend fails.
+When free_segment_range() fails in f2fs_resize_fs(), no on-disk
+superblock or filesystem metadata has been modified yet, and
+free_segment_range() safely restores all in-memory counters before
+returning.
 
-dspi_resume() also left the clock prepared if controller resume or
-hardware init failed. Route those failures through clock cleanup.
+However, the current error recovery path unconditionally sets the
+SBI_NEED_FSCK flag and prints a scary error message on any error,
+forcing an unnecessary and time-consuming fsck.f2fs repair on the
+subsequent mount/reboot.
 
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Link: https://patch.msgid.link/tencent_427FA55E3D59112524886E9C931CA0F92F06@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by separating the error recovery path with a dedicated
+recover_user_blocks label to bypass setting SBI_NEED_FSCK on
+free_segment_range() failures.
+
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I compared the pre-image to v6.18.53: the buggy suspend/resume path is
-there unchanged, so this is a standalone fix for this tree.
+I have the local 6.12 code, the introducer, and the mailing-list review.
+Compiling the full nine-phase analysis next.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Record: `[spi: fsl-dspi:] [clean up] [restore IRQ / clocks after
-  failed suspend and resume]`
-- Subsystem is Freescale DSPI. The verb is “clean up”, but the body
-  describes ignored errors and missing rollback.
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [f2fs] [avoid setting] Avoid setting `SBI_NEED_FSCK` when
+`f2fs_resize_fs()` fails in `free_segment_range()` before any on-disk
+metadata is modified.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Record:
-  - `Signed-off-by: Jiawen Liu <1298662399@qq.com>` (author)
-  - `Link: https://patch.msgid.link/tencent_427FA55E3D59112524886E9C931C
-    A0F92F06@qq.com`
-  - `Signed-off-by: Mark Brown <broonie@kernel.org>` (SPI maintainer)
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-    by:`, or `Cc: stable` (absence of those last two is expected for
-    this review)
-  - Pipeline-added `Signed-off-by: Sasha Levin` / `[ Upstream commit
-    2543355f3da5... ]` ignored per instructions
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record:
+- Signed-off-by: Daeho Jeong <daehojeong@google.com> (author,
+  Google/Android f2fs)
+- Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+- Reviewed-by: Chao Yu <chao@kernel.org> (primary f2fs reviewer)
+- Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org> (f2fs maintainer)
+- No Fixes: tag (expected)
+- No Cc: stable (expected)
+- No Reported-by / Tested-by / Link / syzbot
+- Ignore pipeline-added Sasha Levin SOB / Upstream commit markers if
+  present
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record: **Bug:** `dspi_suspend()` calls `disable_irq()` then
-  `spi_controller_suspend()` but ignores a non-zero return and still
-  disables the clock and selects the sleep pin state. **Symptom:** on a
-  failed controller suspend the IRQ stays off, clocks are gated, pins go
-  to sleep, and suspend is reported as success. **Resume bug:**
-  `clk_prepare_enable()` is not undone if `spi_controller_resume()` or
-  `dspi_init()` fails. **Root cause:** missing error checks and missing
-  rollback. No version range in the message.
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Record:
+- Bug: `f2fs_resize_fs()` error recovery sets `SBI_NEED_FSCK` on any
+  error after `free_segment_range()`, including failures that happen
+  before `update_sb_metadata()` / `f2fs_commit_super()`.
+- Symptom: scary `f2fs_err` plus a persistent “need fsck” mark, so the
+  next mount/reboot runs a long `fsck.f2fs` even though the filesystem
+  is still consistent.
+- Root cause: one shared `recover_out` label for both “GC/segment-free
+  failed, nothing committed” and “superblock/checkpoint already
+  changed.”
+- Version info: none in the message. Code has been this way since online
+  resize was added.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: Yes. “Clean up” is error-path recovery: re-enable IRQ and
-  return the error on suspend failure; `clk_disable_unprepare()` on
-  resume failure. That is a leak/imbalance fix, not style.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. It is an explicit error-path correctness fix: stop
+treating a transient resize failure as filesystem corruption.
 
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
-- Record: `drivers/spi/spi-fsl-dspi.c` only; **+18 / −3**. Functions:
-  `dspi_suspend()`, `dspi_resume()`. Single-file surgical PM error-path
-  fix.
+Step 2.1: INVENTORY THE CHANGES
+Record:
+- File: `fs/f2fs/gc.c` only (~6 insertions / 3 deletions in
+  `f2fs_resize_fs()`)
+- Functions: `f2fs_resize_fs()`
+- Scope: single-file surgical error-path change
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record:
-  - **suspend before:** disable IRQ → ignore `spi_controller_suspend()`
-    → always `clk_disable_unprepare()` → sleep pinctrl → return 0.
-  - **suspend after:** disable IRQ → if `spi_controller_suspend()`
-    fails, `enable_irq()` and return `ret` (clocks/pinctrl untouched).
-  - **resume before:** enable clock → ignore `spi_controller_resume()` →
-    on `dspi_init()` failure return with clock still prepared.
-  - **resume after:** those failures go to `disable_clk`
-    (`clk_disable_unprepare()` + return `ret`). IRQ is still enabled
-    only on the success path.
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record (verified against local `fs/f2fs/gc.c`):
+- Before: `free_segment_range()` error → `goto recover_out` → always
+  `set_sbi_flag(SBI_NEED_FSCK)` + restore `user_block_count`.
+- After: `free_segment_range()` error → `goto recover_user_blocks` →
+  restore `user_block_count` / clear `SBI_IS_RESIZEFS` only.
+- `recover_out` still used after `f2fs_commit_super()` /
+  `f2fs_write_checkpoint()` failures (on-disk metadata already touched).
+  It now also `f2fs_bug_on(sbi, err == -EAGAIN)` then sets
+  `SBI_NEED_FSCK`, then falls through to restore `user_block_count`.
+- Success path still falls through both labels with `err == 0`; no extra
+  NEED_FSCK, no counter restore.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record: **Error-path / resource-leak / IRQ imbalance.**
-  `spi_controller_suspend()` can return `-EBUSY` from `spi_stop_queue()`
-  after a 5s wait (`drivers/spi/spi.c`). Continuing then gates the clock
-  under a live controller and leaves the IRQ disabled. Resume can leak a
-  prepared clock.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record:
+- Category: logic / error-path correctness (false-positive corruption
+  flag)
+- Mechanism: `free_segment_range()` restores `MAIN_SECS` on every return
+  (`MAIN_SECS(sbi) += secs` at its `out:` label). Callers have not yet
+  called `update_sb_metadata()`. Marking NEED_FSCK is wrong for that
+  path.
+- Common trigger in this tree: `f2fs_gc_range()` returns `-EAGAIN` when
+  valid blocks remain after one GC pass (`gc.c` “if (!dry_run &&
+  get_valid_blocks(...)) return -EAGAIN”).
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Record: Minimal and obviously correct; matches other SPI drivers that
-  already check these returns. Regression risk is low: only error paths
-  change. Idle suspend still returns 0 after stop-queue succeeds. Pre-
-  existing IRQ-before-stop-queue ordering is not introduced here
-  (Sashiko noted it as pre-existing). Resume still does not undo
-  `spi_controller_resume()` on later `dspi_init()` failure;
-  `dspi_init()` only fails on invalid `trans_mode` after a successful
-  probe, so that path is essentially dead.
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Obviously correct: splits “no metadata written” vs “metadata already
+  updated.”
+- Minimal; no API/data-structure change.
+- Regression risk low. `f2fs_bug_on(err == -EAGAIN)` on `recover_out` is
+  an invariant: with `CONFIG_F2FS_CHECK_FS=n` it WARNs and sets
+  NEED_FSCK (already being set); with CHECK_FS it BUG_ONs only if
+  checkpoint/super commit returned `-EAGAIN`, which that path should
+  not.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
-- Record: On v6.18.53, suspend/resume blame is `c5412ec5f68773`
-  (“Reinitialize DSPI regs after resuming for S32G”, 2025-05-22), which
-  kept the ignore-error pattern. That pattern already existed before
-  S32G (`git show c5412ec5f68773^`). Original driver `349ad66c0ab0b`
-  (Vybrid VF610) already ignored `spi_master_suspend()` and always
-  disabled the clock. Bug is old, not post-6.18.
+Step 3.1: BLAME THE CHANGED LINES
+Record:
+- Unconditional NEED_FSCK on resize failure introduced in
+  `04f0b2eaa3b3ee` (“f2fs: ioctl for removing a range from F2FS”,
+  Qiuyang Sun, 2019).
+- `recover_out` label from `b4b10061ef98c5` (Jaegeuk Kim, 2020).
+- Present in this 6.12 tree (`git merge-base --is-ancestor
+  04f0b2eaa3b3ee HEAD` succeeded).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: No `Fixes:` tag. Not applicable beyond that.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Introducer is the 2019 online-resize ioctl,
+confirmed in-tree.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record: Related: `3d87b613d6a3c` (“Fix external abort on interrupt in
-  resume or exit paths”) added `disable_irq()` in suspend because a
-  shared IRQ after clocks-off caused an external abort on Vybrid. That
-  makes restoring the IRQ on suspend failure required. `9bd77a9ce31dd`
-  only fixed a NULL drvdata in PM. This patch is standalone; later
-  autosel `b6d8099e44987` only switches PM macros.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- Related in-tree: `3b85edf3391f3` (migrate all curseg types in
+  `free_segment_range`), `28fc4e9077ce5` (SBI_IS_RESIZEFS locking),
+  `3ab0598e6d860` (resize panic). None already skip NEED_FSCK on
+  `free_segment_range()` failure.
+- Later mainline (f2fs-for-7.3-rc1, after this patch): “accurately
+  adjust free_sections during free_segment_range” — separate accounting
+  fix, not a prerequisite.
+- Standalone.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Jiawen Liu is not the SPI maintainer. Same series on this
-  tree: `spi: atcspi200`, `spi: bcmbca-hsspi`, `spi: bcm-qspi`, `spi:
-  bcm63xx-hsspi`, `spi: bcm63xx`, plus `spi: nxp-fspi` probe RPM. Each
-  driver is independent. Mark Brown applied the series.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Daeho Jeong is a regular Google/Android f2fs contributor in this
+tree (gc/zoned/sysfs work). Co-author Samsung. Maintainer Jaegeuk
+applied it.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: No new helpers. Uses `spi_controller_suspend`/`resume`,
-  `enable_irq`/`disable_irq`, `clk_disable_unprepare` already in 6.18.
-  Standalone. Series 3/4 does not need 1/4 or 2/4 for this file.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: No new helpers. Uses existing `set_sbi_flag` / `f2fs_bug_on` /
+`recover_out`. Surrounding mainline context uses `f2fs_down_write_trace`
+and 3-arg `thaw_super`, which this tree does not have; those are context
+only, not dependencies of the logic change. Can apply standalone with a
+trivial context tweak.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record: `b4 dig -c 2543355f3da5` → https://patch.msgid.link/tencent_42
-  7FA55E3D59112524886E9C931CA0F92F06@qq.com
-- Series: v1 only, `[PATCH 3/4]`. Mark Brown applied all four to
-  `broonie/spi.git for-7.3`. No NAK on this patch. Sashiko flagged two
-  **pre-existing** ordering issues (IRQ before stop-queue; resume queue
-  before `dspi_init()`), not regressions from this diff. No reviewer
-  `Cc: stable`. Direct lore fetch returned 403; thread recovered via `b4
-  dig -m`.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c <sha>` not used: candidate SHA is not in this checkout (`b4
+  dig` on the f2fs-for-7.3-rc1 merge 115bd364 rejected as a merge
+  commit).
+- `b4 mbox` msgid `20260818170535.3190869-1-daeho43@gmail.com`:
+  5-message v1 thread saved.
+- v1 (18 Aug 2026): skip NEED_FSCK only when `err != -EAGAIN`.
+- Chao Yu: don’t key off `-EAGAIN` globally; it might come from other
+  sites later.
+- Daeho: any `free_segment_range()` error is pre-metadata; use a
+  separate label.
+- Chao: add `f2fs_bug_on(sbi, err == -EAGAIN)` on `recover_out`.
+- v2 (20 Aug 2026): matches this candidate. Chao Reviewed-by. No NAKs.
+  No Cc: stable in the thread.
+- Landed in f2fs-for-7.3-rc1 (merged to mainline as 115bd364, “f2fs:
+  avoid setting SBI_NEED_FSCK on transient resize failure”).
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record: `b4 dig -w`: To Mark Brown; Cc linux-spi, linux-kernel, linux-
-  arm-kernel, imx@, NXP (olteanv, han.xu, haibo.chen). No human
-  Reviewed-by on this patch. Maintainer applied it.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: linux-f2fs-devel, linux-kernel, kernel-team@android.com.
+Reviewed by Chao Yu; applied by Jaegeuk Kim.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: No Reported-by / bugzilla / syzbot. Bug is from code
-  inspection of ignored returns.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Authors are Android/Samsung; the message
+describes forced fsck after a failed resize. No separate user bug URL
+found.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: 1/4 atcspi200, 2/4 bcmbca-hsspi, 3/4 this, 4/4 nxp-fspi
-  (different bug: probe RPM). This hunk does not depend on the others.
-  Frank Li replied only to 4/4.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone (v1 then v2 of the same idea). Same 7.3 pull has
+other `free_segment_range` fixes; this one does not depend on them.
+“migrate all curseg types” is already here.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: lore.kernel.org/stable search via WebFetch returned 403.
-  UNVERIFIED whether stable@ discussed this SHA. No in-tree evidence it
-  was rejected.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: Web search of lore.kernel.org/stable for this subject found no
+prior stable discussion or rejection. UNVERIFIED that no one privately
+requested it.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-- Record: `dspi_suspend()`, `dspi_resume()`. Callees of interest:
-  `spi_controller_suspend()`, `spi_controller_resume()`, `dspi_init()`.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `f2fs_resize_fs()`; closely related callees
+`free_segment_range()`, `update_sb_metadata()`, `f2fs_commit_super()`,
+`f2fs_write_checkpoint()`.
 
-**Step 5.2: TRACE CALLERS**
-- Record: Only `SIMPLE_DEV_PM_OPS(dspi_pm, dspi_suspend, dspi_resume)`
-  on v6.18.53 → system-sleep PM for this platform device. Not a syscall
-  hot path; triggered by suspend/resume on i.MX / Vybrid / LS1021A / S32
-  / ColdFire DSPI.
+Step 5.2: TRACE CALLERS
+Record:
+- `f2fs_ioc_resize_fs()` in `fs/f2fs/file.c` (F2FS_IOC_RESIZE_FS and
+  compat). Requires `CAP_SYS_ADMIN`.
+- Not interrupt/hot-path. Userspace-triggered admin ioctl (Android
+  update_engine/vold online shrink is the main production use).
 
-**Step 5.3: TRACE CALLEES**
-- Record: `spi_controller_suspend()` → `spi_stop_queue()` (up to 500 ×
-  ~10ms, then `-EBUSY`) then `__spi_mark_suspended()`.
-  `dspi_transfer_one_message()` waits on `dspi->xfer_done` when
-  `dspi->irq` is set; completion is from `dspi_interrupt()`. DMA mode
-  waits on DMA completions, not that IRQ.
+Step 5.3: TRACE CALLEES
+Record: `free_segment_range()` temporarily drops `MAIN_SECS`, may move
+cursegs and GC, then always `MAIN_SECS += secs` before return. Only
+after success does `f2fs_resize_fs()` call `update_sb_metadata()` /
+`f2fs_commit_super()`.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: Userspace/system suspend → driver PM → `dspi_suspend()`.
-  Reachable whenever this hardware is present and `CONFIG_PM_SLEEP`. In-
-  flight IRQ-mode transfer at suspend can make `spi_stop_queue()` fail;
-  that is the interesting path.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: ioctl → `f2fs_resize_fs` → freeze → `user_block_count -=
+shrunk_blocks` → `free_segment_range`. `-EAGAIN` when tail sections
+still have valid blocks is reachable and expected. After NEED_FSCK is
+set, a later resize hits `is_sbi_flag_set(sbi, SBI_NEED_FSCK)` and
+returns `-EFSCORRUPTED`. Checkpoint persists `CP_FSCK_FLAG`; remount
+restores NEED_FSCK.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: Many SPI drivers already check `spi_controller_suspend()`
-  (omap2-mcspi, atmel, qup, rockchip, stm32, …). Same author fixed the
-  ignored-return pattern in several Broadcom SPI drivers. Systematic,
-  not one-off.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: NEED_FSCK is used widely for real corruption. This was the only
+resize path that set it on a fully rolled-back in-memory failure. In-
+tree “f2fs: remove false alarm on iget failure during GC” is the same
+class of false NEED_FSCK.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: Local tree is **6.18.53** (`git describe HEAD` →
-  `v6.18.53-5049-g0f0bdc2b0dffb`, `VERSION=6 PATCHLEVEL=18
-  SUBLEVEL=53`). At **v6.18.53**, `dspi_suspend()` still ignores the
-  suspend return and `dspi_resume()` still returns from `dspi_init()`
-  failure without `clk_disable_unprepare()`. Candidate `1248ec26ed99f`
-  is **not** an ancestor of `v6.18.53`. Bug present.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Local tree is `pending-6.12`, `git describe HEAD` =
+`p-6.12-3-gc504cf0baa3d8`, `make kernelversion` = 6.12.111.
+```
+2364:   set_sbi_flag(sbi, SBI_IS_RESIZEFS);
+2365:   err = free_segment_range(sbi, secs, false);
+2366:   if (err)
+2367:           goto recover_out;
+...
+2388:recover_out:
+2390:   if (err) {
+2391:           set_sbi_flag(sbi, SBI_NEED_FSCK);
+```
+Bug present since 2019 resize ioctl. `recover_user_blocks` is absent.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: Pre-image on v6.18.53 matches the patch (including `#ifdef
-  CONFIG_PM_SLEEP` / `SIMPLE_DEV_PM_OPS`). Expected apply: **clean**.
-  `git apply --check` on current autosel HEAD fails only because the
-  candidate is already sitting on this working branch.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Functional hunk matches. Mainline context uses
+`f2fs_down_write_trace` (not in 6.12) and `thaw_super(...,
+FREEZE_HOLDER_KERNEL, NULL)` vs local two-arg `FREEZE_HOLDER_USERSPACE`.
+Expected difficulty: minor context adjustment, not a rework.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: `3d87b613d6a3c` (IRQ disable in suspend) **is** in v6.18.53.
-  No other fix for ignored `spi_controller_suspend()` on this file.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No. `git log --grep` on gc.c for this subject is empty. Resize-
+related commits here do not skip NEED_FSCK on `free_segment_range()`
+failure.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: `drivers/spi/spi-fsl-dspi.c`. **IMPORTANT** (common
-  NXP/Freescale SPI; not core mm/vfs). `SPI_FSL_DSPI` depends on
-  `ARCH_MXC || ARCH_NXP || M5441x || COMPILE_TEST`. Kconfig: S32, VF610,
-  LS1021A, ColdFire.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: f2fs (`fs/f2fs/`). IMPORTANT: not core VFS, but the default
+Android userdata filesystem; 6.12 LTS is used there.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: File still gets platform and DMA work (S32G series in 2025).
-  PM error handling itself is old and stale.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Active (recent gc.c history is busy), but this bug is in long-
+stable resize recovery, not new 6.12-only code.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: Driver-specific: boards with Freescale DSPI that suspend.
-  Embedded/i.MX/Layerscape/S32 population, not all Linux systems.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: f2fs users of `F2FS_IOC_RESIZE_FS` (Android virtual A/B /
+dynamic partitions, some embedded). Not universal. Config:
+`CONFIG_F2FS_FS`.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record: System suspend while `spi_stop_queue()` cannot drain
-  (busy/queued messages for ~5s). IRQ-mode in-flight transfer is a
-  realistic trigger because `disable_irq()` runs first and
-  `dspi_transfer_one_message()` uses
-  `wait_for_completion(&dspi->xfer_done)`. Unprivileged users do not
-  call this directly; a suspend with SPI activity can. Resume clock
-  leak: `spi_controller_resume()` `-EBUSY` or `dspi_init()` `-EINVAL`
-  (latter essentially unreachable after probe).
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Shrink ioctl while tail sections still have valid blocks
+(`-EAGAIN`), or other `free_segment_range()` errors (`-EIO`,
+`-ERESTARTSYS`, allocate-segment failures). Common on a busy/full
+filesystem. Privileged only (`CAP_SYS_ADMIN`). Not a race; deterministic
+on that error path.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record: Failed suspend that still gates clocks: possible MMIO abort /
-  hang (this driver already hit “external abort on non-linefetch” when
-  the IRQ ran after clocks off — `3d87b613d6a3c`). IRQ left disabled
-  while the device is still active: SPI completions never fire → hung
-  transfers. Resume clock leak: extra power / unbalanced clk prepare.
-  **Severity: HIGH** on the suspend path (hang / abort), **MEDIUM** on
-  the resume leak.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record:
+- False `SBI_NEED_FSCK` → next checkpoint writes `CP_FSCK_FLAG` →
+  remount restores the flag → userspace `fsck.f2fs`.
+- Further resize immediately `-EFSCORRUPTED`.
+- `fstrim` warns and returns `-EFSCORRUPTED`; discard thread backs off.
+- Severity: HIGH operational (forced long fsck, resize stuck). Not a
+  panic, silent corruption, or UAF.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Record: **Benefit:** high for DSPI suspend users — fail suspend
-  instead of disabling clocks/IRQ incorrectly. **Risk:** low — 21 lines,
-  error paths only, no API/struct change. If stop-queue fails, aborting
-  suspend is the intended PM policy.
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: high for Android/embedded f2fs-resize users on 6.12; stops a
+  common `-EAGAIN` from pinning NEED_FSCK until fsck.
+- Risk: very low (few lines, error path only, maintainer-acked).
+- Ratio: favorable.
 
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Real ignored-error bug: teardown after failed
-  `spi_controller_suspend()`.
-- IRQ not restored → hung SPI (completion in `dspi_interrupt()`).
-- Clock gated while the controller may still be busy → abort/hang; same
-  class as the already-stable `3d87b613d6a3c` abort fix.
-- Resume path clock leak on error.
-- Small, local, obviously correct; SPI maintainer applied it.
-- Buggy code is in v6.18.53; no extra prerequisites.
-- Same class of SPI PM error-path fixes already common in-tree.
+- Real, long-standing bug (2019) still in 6.12.111.
+- Common `-EAGAIN` from GC during shrink is treated as corruption.
+- Sticky NEED_FSCK blocks resize and can force a large-partition fsck.
+- Small, obviously correct, reviewed by Chao Yu, applied by Jaegeuk.
+- Google/Samsung authors; Android team on Cc.
+- No missing helpers in this tree.
 
 AGAINST:
-- No user/syzbot report.
-- Worded as “clean up”; failure is an error path, not every suspend.
-- `dspi_init()` resume failure is almost unreachable.
-- Sashiko pre-existing ordering notes (not introduced here).
-- Incomplete undo of `spi_controller_resume()` if `dspi_init()` failed
-  (dead in practice).
+- Not a crash, UAF, or on-disk corruption (it over-reports corruption).
+- Privileged ioctl, not unprivileged.
+- Exact mainline hunk needs trivial context (lock wrappers /
+  thaw_super).
+- No Fixes:/Cc: stable (not a negative per the rules).
 
 UNRESOLVED:
-- lore.kernel.org HTTP 403; stable@ discussion not independently fetched
-  (thread was recovered with b4).
+- Exact mainline SHA not in this checkout (present in 7.3-rc1 f2fs
+  pull).
+- No stable-list thread found.
+- Daeho mentioned restoring `free_sections`; 6.12 `free_segment_range()`
+  only restores `MAIN_SECS`. That does not weaken the NEED_FSCK split.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — mechanical error-return
-   handling; applied by Mark Brown.
-2. Fixes a real bug that affects users? **PASS** — IRQ/clock teardown on
-   failed suspend; clk leak on resume.
-3. Important issue? **PASS** — hang / possible bus abort, not a style
-   nit.
-4. Small and contained? **PASS** — +18/−3, one file.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — v6.18.53 pre-image matches.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — review-driven v2; logic matches
+   `free_segment_range()` rollback.
+2. Fixes a real bug that affects users? PASS — false NEED_FSCK / forced
+   fsck / resize stuck.
+3. Important issue? PASS — not a panic, but persistent false corruption
+   flag plus `-EFSCORRUPTED` on later resize/fstrim is a serious
+   availability bug on Android f2fs.
+4. Small and contained? PASS — one function, ~9 lines.
+5. No new features or APIs? PASS
+6. Can apply to the local tree? PASS — buggy code present; needs only
+   context adjustment.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: Not a device-ID/quirk/DT/build/doc exception. Qualifies as a
-  normal bugfix.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: None of device-ID / quirk / DT / build / docs. Ordinary bugfix.
 
-**Step 9.4: DECISION**
+Step 9.4: MAKE YOUR DECISION
+This belongs on 6.12. The bug exists here, the fix is surgical, and
+leaving it out keeps a production Android path where a retryable shrink
+failure marks the filesystem corrupted until fsck.
 
-This should be backported to **this 6.18.53 tree**. The important part
-is suspend: do not disable clocks and leave the IRQ off when
-`spi_controller_suspend()` fails. That is a real stability bug on a
-production NXP SPI controller, small enough for stable, and it applies
-cleanly here.
+What it solves for stable users: a failed `F2FS_IOC_RESIZE_FS` that
+never committed superblock/FS metadata currently sets `SBI_NEED_FSCK`.
+That flag is checkpointed as `CP_FSCK_FLAG`, blocks later resize with
+`-EFSCORRUPTED`, and forces a long `fsck.f2fs`. The usual trigger is
+`-EAGAIN` from GC when the tail is not empty yet.
 
-### What the commit solves for stable users
-On Freescale DSPI, suspend currently disables the IRQ, then ignores
-`spi_controller_suspend()`. If the message queue does not stop
-(`-EBUSY`), the driver still turns off the clock and puts pins to sleep
-while reporting success. The IRQ stays disabled. That can hang in-flight
-transfers (`wait_for_completion` never completes) or MMIO-abort if the
-hardware is still live. Resume can also leave `clk_prepare_enable()`
-unbalanced. The patch stops teardown on suspend failure and unwinds the
-clock on resume failure.
+Risk vs benefit: a few error-path lines, fall-through restore preserved,
+NEED_FSCK still set after real super/checkpoint failures. Benefit is
+large for f2fs resize users on this LTS.
 
-### Risk vs benefit
-Benefit is preventing a broken/hung SPI device and possible abort after
-a failed controller suspend. Risk is confined to those error returns;
-successful idle suspend is unchanged.
-
-### Concerns
-No extra commits are required. Do not confuse autosel already having
-this SHA with “already selected for 6.18.y”; `v6.18.53` still has the
-bug.
+Concerns: apply with 6.12 lock/thaw context, not the mainline
+`f2fs_down_write_trace` / 3-arg `thaw_super` lines.
 
 Verification:
-- [Phase 1] Subject/body/tags from `git log -1` / `git show
-  1248ec26ed99f`: no Fixes/Reported-by; Link msgid; SOB Jiawen Liu +
-  Mark Brown
-- [Phase 2] Diff: +18/−3 in `dspi_suspend`/`dspi_resume` only
-- [Phase 3] `git blame` on v6.18.53: `c5412ec5f68773`; ignore-error PM
-  since `349ad66c0ab0b`; `3d87b613d6a3c` in this tree
-- [Phase 3] `git merge-base --is-ancestor 1248ec26ed99f v6.18.53` → no;
-  ancestor of HEAD (autosel) → yes
-- [Phase 3] Author series: several independent SPI PM error-path patches
-- [Phase 4] `b4 dig -c 2543355f3da5`: patch 3/4 v1, lore msgid, applied
-  to broonie for-7.3; Sashiko pre-existing notes only; no NAK
-- [Phase 4] WebFetch lore/stable: 403 — UNVERIFIED stable@ thread
-- [Phase 5] `spi_controller_suspend` → `spi_stop_queue` `-EBUSY`; DSPI
-  IRQ path `wait_for_completion` / `dspi_interrupt`; PM ops only callers
-- [Phase 6] `git describe HEAD` / Makefile: 6.18.53; v6.18.53 file
-  matches patch pre-image
-- [Phase 7] `SPI_FSL_DSPI` on ARCH_MXC/NXP
-- [Phase 8] Failure: hung SPI / possible external abort; severity HIGH
-  on suspend error path
+- [Phase 1] Tags: Chao Reviewed-by, Jaegeuk SOB, Google+Samsung; no
+  Fixes/syzbot
+- [Phase 2] Diff: `goto recover_user_blocks` on `free_segment_range()`
+  error; NEED_FSCK only on `recover_out`
+- [Phase 2] Local `free_segment_range()`: `MAIN_SECS += secs` on all
+  exits before `update_sb_metadata()`
+- [Phase 2] Local `f2fs_gc_range()`: `-EAGAIN` if valid blocks remain
+- [Phase 3] blame: NEED_FSCK from 04f0b2eaa3b3ee (2019); ancestor of
+  HEAD
+- [Phase 3] `git merge-base --is-ancestor 04f0b2eaa3b3ee HEAD` succeeded
+- [Phase 3] No `recover_user_blocks` in this tree
+- [Phase 4] `b4 mbox` msgid 20260818170535.3190869-1-daeho43@gmail.com:
+  v1, Chao review, label split
+- [Phase 4] v2 + Chao Reviewed-by via lkml/openwall; no NAK
+- [Phase 4] Pull f2fs-for-7.3-rc1 lists this subject
+- [Phase 4] lore.kernel.org WebFetch 403; used b4 mbox + lkml mirrors
+  instead
+- [Phase 5] Caller: `f2fs_ioc_resize_fs`, `CAP_SYS_ADMIN`; NEED_FSCK
+  blocks resize (`gc.c:2293`) and fstrim (`segment.c:3400`); checkpoint
+  writes `CP_FSCK_FLAG` (`checkpoint.c:1386-1387`); remount restores it
+  (`super.c:4642-4643`)
+- [Phase 6] `git describe HEAD` p-6.12-3-gc504cf0baa3d8; `make
+  kernelversion` 6.12.111
+- [Phase 6] `f2fs_down_write_trace` absent; `thaw_super` is 2-arg
+- [Phase 8] Failure: false NEED_FSCK, not oops; HIGH operational impact
+- UNVERIFIED: exact mainline SHA (not in this checkout); no stable-list
+  hit
 
 **YES**
 
- drivers/spi/spi-fsl-dspi.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ fs/f2fs/gc.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index 83ea296597e94..1283a193b6fcc 100644
---- a/drivers/spi/spi-fsl-dspi.c
-+++ b/drivers/spi/spi-fsl-dspi.c
-@@ -1464,10 +1464,18 @@ static int dspi_init(struct fsl_dspi *dspi)
- static int dspi_suspend(struct device *dev)
- {
- 	struct fsl_dspi *dspi = dev_get_drvdata(dev);
-+	int ret;
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 02bd008d79b5c..e85d7f239e7d0 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2415,7 +2415,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
+ 	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	err = free_segment_range(sbi, secs, false);
+ 	if (err)
+-		goto recover_out;
++		goto recover_user_blocks;
  
- 	if (dspi->irq)
- 		disable_irq(dspi->irq);
--	spi_controller_suspend(dspi->ctlr);
-+
-+	ret = spi_controller_suspend(dspi->ctlr);
-+	if (ret) {
-+		if (dspi->irq)
-+			enable_irq(dspi->irq);
-+		return ret;
-+	}
-+
- 	clk_disable_unprepare(dspi->clk);
+ 	update_sb_metadata(sbi, -secs);
  
- 	pinctrl_pm_select_sleep_state(dev);
-@@ -1485,12 +1493,15 @@ static int dspi_resume(struct device *dev)
- 	ret = clk_prepare_enable(dspi->clk);
- 	if (ret)
- 		return ret;
--	spi_controller_resume(dspi->ctlr);
-+
-+	ret = spi_controller_resume(dspi->ctlr);
-+	if (ret)
-+		goto disable_clk;
- 
- 	ret = dspi_init(dspi);
- 	if (ret) {
- 		dev_err(dev, "failed to initialize dspi during resume\n");
--		return ret;
-+		goto disable_clk;
+@@ -2437,11 +2437,14 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
+ 		f2fs_commit_super(sbi, false);
  	}
- 
- 	dspi_set_mtf(dspi);
-@@ -1499,6 +1510,10 @@ static int dspi_resume(struct device *dev)
- 		enable_irq(dspi->irq);
- 
- 	return 0;
-+
-+disable_clk:
-+	clk_disable_unprepare(dspi->clk);
-+	return ret;
- }
- #endif /* CONFIG_PM_SLEEP */
- 
+ recover_out:
+-	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	if (err) {
++		f2fs_bug_on(sbi, err == -EAGAIN);
+ 		set_sbi_flag(sbi, SBI_NEED_FSCK);
+ 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
+-
++	}
++recover_user_blocks:
++	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
++	if (err) {
+ 		spin_lock(&sbi->stat_lock);
+ 		sbi->user_block_count += shrunk_blocks;
+ 		spin_unlock(&sbi->stat_lock);
 -- 
 2.53.0
 
