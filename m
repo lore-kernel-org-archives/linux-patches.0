@@ -1,45 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA8850CBA4;
-	Mon, 19 Oct 2026 14:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DDC5432ED;
+	Mon, 19 Oct 2026 14:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418764; cv=none; b=DjpFo5WAgi7Nwm/0bhZHWIQgocdK+De2Y003DS8qTCzPpU8mLK5M9qzexFCLuT02GqJUNvw9bOzMgnouoPWojBHF/hzg8HBAn71Xb7J5HyZhErArnAaHEy4WWXi0hYBLZ5j5Gkxj6vv6zdJnx7yuHCyhjkjcd7RR96EZ4gkmpnA=
+	t=1792418766; cv=none; b=VvgQvnbxPeQXfQjhtme8GRh+NYZxNiCj/VXRCsoW7xnBgswU+E+yH8CG8ORgMkewPL11HfptoiF5xa2NjSZL6kG0H22rMmjceDJMAhlXt31IPWuLt+1dx4Ff7vE2Z2/z2XwKuSSfFbkO84+UufQKgWtX7zdK88Ehmgh89ofj3ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418764; c=relaxed/simple;
-	bh=BVGJV32PwKi4P0vAzeDgfAs21HeyRwnOL+MLqqLN4oc=;
+	s=arc-20240116; t=1792418766; c=relaxed/simple;
+	bh=yu2MuGHm1FaRE8vsG0Ysv/5p86UK3dzAw/ie4BXiA0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NVJ+Hy9yEgml/9Tp6ral30KJDFpUdwEeRo+IHLbIDPjyAnR2LwYWsPdDSNF+PFnF+fLY47hxSDr3PT+0Rsxtwe93qMIm6/0USj8hJ7NUaXENzpL97+U6vAI1evxETePIjtd6jrLl0rSrqeVF6y0FBLvjK2UdR5mEZiOQOtfnYHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mVeiPshd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=b+jMz2ghyVL2vzygT7QW33Y2ad2kf535Cp4703HIOYql4hooguKuJn6V1yFam6P+/IEpEOoxRz9pd4LvUFN7cOgXC6/XWGJiHzsM315hKYtepSpBNVnolZG64OjsRcgbFOh22ezlA83/p5/pIS0BL3hS0oeDaUtJxB9ha12JtxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K/xu3MXy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mVeiPshd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A222A1F000C4;
-	Mon, 19 Oct 2026 14:06:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K/xu3MXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC1A1F000D0;
+	Mon, 19 Oct 2026 14:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418761;
-	bh=19SrjI/tRZUlcgCCmFpdJW/gTF/AXwCdC6X5z0tCrtI=;
+	s=k20260515; t=1792418763;
+	bh=j0uQS4vSaxc/yio3qUhmLXjUkn3ACaDPz7vnrn8DEOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVeiPshdkuNVUD6cZXc3qPn/xGhPpjUdqDcTDimn+3fNqX/3okkw2xI5L1+EGek0A
-	 2aql2JIUugs1afyUIp5KrkPXQFBG1XKILhSg+i7fD/dRhBzlPgUgkqtJUoJUosdORh
-	 Xkj1SaCicag0Qx3zVFEjBZaF2VIllcKH514aa3hG5nhYSEczOSgNrPlaWJjrqWLWj2
-	 w8LmoxXuC67axTuWfWsV5bsH05f4ieXgs4DgC3rIfYsbFp119nl2akOzxZUpq2Oi2b
-	 bFrZxQTzQ1i1HQs5ogePASAOX78sexejQ4xohrqKCmB/Gr15B1/W6HtMRPYtnCSc26
-	 QmjajIK9h7YtQ==
+	b=K/xu3MXyRtVWD5MRzDNO3aY83t6umkUoVjiVCO9dqGSd65uWSKG5K0bRZ1QpOpQBX
+	 c7fbT1Bb/zE5/cIjzfd+5GD6yyPrjQuiqKz2+zPGyFB7Z3M9bkcWJNg6RTwkbXoNdD
+	 I+cUBpVYxT0B37sJiHmQAfnAdBRQ6eD/ycVI9a9k2yG7yOyHHHZ3KWIvl8M6SMXNZ1
+	 gTuBPu8nqY07zEU5Fij8//c5e1TfRbWKz49+YeXTv7Ttvv0Ztkw4YnXlZ6dytTJWp4
+	 pSEsrD4WdkjYTa5kAew1DYaVZde6ez2xOwPhmBZUDtaVQ+OKP4OwOfwCXirNvQXPQ1
+	 brTc0u+xmvNtg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Abbott <abbotti@mev.co.uk>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hsweeten@visionengravers.com,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	eddyz87@gmail.com,
+	luke.r.nels@gmail.com,
+	xi.wang@gmail.com,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	bpf@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] comedi: aio_iiro_16: Add sanity check to interrupt handler
-Date: Mon, 19 Oct 2026 09:52:48 -0400
-Message-ID: <20261019135441.1420968-477-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] riscv, bpf: Add support for BPF_MOVSX in RV32 JIT
+Date: Mon, 19 Oct 2026 09:52:49 -0400
+Message-ID: <20261019135441.1420968-478-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,376 +63,443 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 1ca44751915134f19e8627768159781e75b5da50 ]
+[ Upstream commit c6a08afdfe3a81b1a54e921921e9481dd6c78f8a ]
 
-The driver requests an interrupt handler for the device, after setting
-device registers to disable interrupt generation.  The interrupt handler
-should not be called prematurely unless the user-configured I/O port
-base address and/or IRQ number are incorrect or the hardware is bad.
+The current rv32 bpf jit compiler incorrectly treats BPF_MOVSX as a
+standard zero-extended move operation. The bpf instruction set allows
+sign-extension moves by reusing the BPF_MOV opcode with the instruction
+offset set to 8, 16, or 32.
 
-For safety, check the dev->attached flag in the interrupt handler to
-ensure the device has been fully set up, avoiding a possible null
-pointer dereference of dev->read_subdev.
+Update the bpf_jit_emit_insn() function to check the offset field for
+both ALU and ALU64 MOV operations. If the offset is non-zero, emit the
+correct slli and srai instructions to perform the sign extension.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-2-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Before this patch:
+[   19.549705] test_bpf: #82 ALU_MOVSX | BPF_B jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+[   19.551354] test_bpf: #83 ALU_MOVSX | BPF_H jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+[   19.552576] test_bpf: #84 ALU64_MOVSX | BPF_B jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+[   19.553542] test_bpf: #85 ALU64_MOVSX | BPF_H jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+[   19.554807] test_bpf: #86 ALU64_MOVSX | BPF_W jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+
+After this patch:
+[   17.931172] test_bpf: #82 ALU_MOVSX | BPF_B jited:1 125 PASS
+[   17.932198] test_bpf: #83 ALU_MOVSX | BPF_H jited:1 124 PASS
+[   17.933039] test_bpf: #84 ALU64_MOVSX | BPF_B jited:1 124 PASS
+[   17.933918] test_bpf: #85 ALU64_MOVSX | BPF_H jited:1 124 PASS
+[   17.934751] test_bpf: #86 ALU64_MOVSX | BPF_W jited:1 122 PASS
+
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Link: https://lore.kernel.org/bpf/20260714002451.4091139-3-visitorckw@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+This is a real RV32 eBPF JIT miscompilation of an existing CPU-v4
+instruction, not a new userspace API. On this 7.3-rc4 tree the RV32 JIT
+and BPF_MOVSX ISA are both present, the patch is small and tested, and
+it should be included.
 
-**Step 1.1 — Subject**
-Record: `[comedi: aio_iiro_16:] [Add] sanity check to interrupt handler`
-— add a guard in the IRQ handler of the ACCES I/O 104-IIRO-16 Comedi
-driver.
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2 — Tags**
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: [riscv, bpf] [Add support] [RV32 JIT was compiling BPF_MOVSX as
+a plain zero-extending MOV; emit slli/srai sign-extend when insn->off is
+8/16/32]
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>`
-- `Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>`
-- `Reported-by: Kyungwook Boo <bookyungwook@gmail.com>`
-- `Link: https://lore.kernel.org/lkml/20260610115912.780131-1-
-  jjy600901@snu.ac.kr/` (original bug report)
-- `Link:
-  https://patch.msgid.link/20260618102949.26607-2-abbotti@mev.co.uk`
-  (patch 01/11 of the series; msgid `...-2` is the first code patch
-  after the cover letter)
-- `Signed-off-by: Ian Abbott <abbotti@mev.co.uk>` (COMEDI maintainer)
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
-- No `Fixes:` tag (expected)
-- No `Cc: stable` (expected; not a negative signal)
-- Three independent reporters — real-world/research report, not a drive-
-  by cleanup
+- Reviewed-by: Pu Lehui <pulehui@huawei.com> (RISC-V BPF JIT reviewer;
+  also authored RV64 MOVSX in 694896ad3ca79)
+- Link: https://lore.kernel.org/bpf/20260714002451.4091139-3-
+  visitorckw@gmail.com
+- Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com> (author)
+- Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com> (BPF
+  maintainer, applied to bpf-next)
+- No Fixes:, no Reported-by, no Cc: stable, no syzbot (absence expected)
+- Ignore pipeline SOBs/Upstream markers: none present on the real commit
+  c6a08afdfe3a8
 
-**Step 1.3 — Body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** IRQ handler `aio_iiro_16_cos()` can run before the device is
-  fully set up.
-- **Symptom:** possible NULL dereference of `dev->read_subdev`.
-- **Root cause (author):** `request_irq()` is issued after hardware IRQ
-  generation is disabled, so a premature IRQ should only happen with a
-  wrong user-configured I/O base and/or IRQ, or bad hardware. Attach
-  still registers the handler before `read_subdev` is assigned and
-  before `dev->attached` is set.
-- **Version info:** none in the message. The IRQ path dates to 2015.
+- Bug: RV32 JIT treats BPF_MOVSX as a normal zero-extended move. BPF
+  reuses BPF_MOV with off=8/16/32 for sign-extending moves.
+- Symptom: test_bpf cases #82–#86 fail with `jited:1 ret 2 != 1` (JIT
+  ran, produced the wrong return).
+- After: those five tests PASS.
+- Root cause: `bpf_jit_emit_insn()` did not inspect `insn->off` on
+  ALU/ALU64 MOV|X, so it fell through into `emit_alu_r64`/`emit_alu_r32`
+  BPF_MOV (plain copy).
+- No version range in the message. ISA support dates to v6.6-era
+  (8100928c88148, 2023).
 
-**Step 1.4 — Hidden fix?**
-Record: Not hidden. It is an explicit NULL-deref guard, even though the
-verb is “Add” rather than “fix”.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Yes. The subject says “Add support”, but the body is explicit
+miscompilation. Cover letter for the series: the JIT “ignor[es] the
+instruction offset field and treat[s] them as unsigned or zero-
+extended.” v1 was titled “Fix support…”. v2 added Fixes: tags; v3
+“Remove the Fixes: tag and update title” for bpf-next process, not
+because it stopped being a bug. Unlike patch 3/3 (atomics), which *does*
+fall back to the interpreter, MOVSX is a supported opcode that emits the
+wrong code.
 
-## Phase 2: Diff analysis
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 — Inventory**
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/comedi/drivers/aio_iiro_16.c` (+3 / −0)
-- Function: `aio_iiro_16_cos()`
-- Scope: single-file, 3-line surgical change
+- File: `arch/riscv/net/bpf_jit_comp32.c` (+32 / −0)
+- Function: `bpf_jit_emit_insn()` only
+- Scope: single-file surgical JIT codegen
 
-**Step 2.2 — Control flow**
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** handler always takes `s = dev->read_subdev`, reads STATUS,
-  and on `IRQE` calls `comedi_buf_write_samples(s, &val, 1)` then
-  `comedi_handle_events(dev, s)`.
-- **After:** if `!dev->attached`, return `IRQ_NONE` before using `s`.
-- Path: interrupt / attach window, not the steady-state command path.
+- Hunk 1 (`BPF_ALU64 | BPF_MOV | BPF_X`): before, always fell through to
+  `emit_alu_r64()` which copies lo/hi. After, if `off != 0`, sign-extend
+  lo (slli/srai 24 for byte, 16 for half, or copy lo for word) then
+  `srai hi, lo, 31` to fill the upper 32 bits of the RV32 register pair.
+- Hunk 2 (`BPF_ALU | BPF_MOV | BPF_X`): after the existing `imm == 1`
+  zext special case, if `off != 0` sign-extend lo for off 8 or 16, then
+  `bpf_put_reg32()` (which still zero-extends hi unless
+  `verifier_zext`).
+- Normal `off == 0` MOV is unchanged (`fallthrough`).
 
-**Step 2.3 — Bug mechanism**
-Record: **NULL pointer dereference (memory safety).**
-- `aio_iiro_16_attach()` does `aio_iiro_enable_irq(dev, false)`, then
-  `request_irq()`, then `comedi_alloc_subdevices()`, then
-  `dev->read_subdev = s`.
-- `dev->attached` is set later in `comedi_device_postconfig()`.
-- If the handler runs in that window, `read_subdev` is still NULL.
-  `comedi_buf_write_samples(s, ...)` calls
-  `comedi_get_is_subdevice_running(s)`, which does
-  `spin_lock_irqsave(&s->spin_lock, flags)` — a confirmed NULL deref,
-  not a theoretical one.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: [Logic / correctness — JIT miscompilation]
+- Broken: BPF_MOVSX shares the MOV opcode; offset was ignored, so sign-
+  extend became a full register copy. test_bpf then compares against the
+  sign-extended expected value and fails (`ret 2`).
+- Fix: emit the same slli/srai pattern other 32-bit JITs use (see arm32
+  `emit_a32_movsx_r64`).
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct and matches the existing Comedi IRQ idiom (`if
-(!dev->attached) return IRQ_NONE;`) used in many sibling drivers.
-Regression risk is very low: a premature IRQ is ignored until attach
-finishes. The load of `s` still happens before the check, but `s` is not
-dereferenced until after it; that is the same pattern as `das6402` /
-`comedi_parport`. No API or locking-order change.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct relative to the ISA and to RV64 (`switch
+(insn->off)` at bpf_jit_comp64.c:1408). Minimal. Regression risk is low:
+only the previously-wrong `off != 0` path changes. ALU32 does not handle
+off==32, which matches the ISA (MOVSX32 is 8 or 16 only). ALU64’s `else`
+treats any other non-zero off as word sign-extend (off==32); the
+verifier should not emit other values. No API/data-structure change.
 
-## Phase 3: Git history
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 — Blame**
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: The MOV|X fallthrough and `emit_alu_r64` BPF_MOV copy were
+introduced in 5f316b65e99f1 (“riscv, bpf: Add RV32G eBPF JIT”, 2020,
+v5.6). That was correct until BPF_MOVSX existed. ISA commit
+8100928c88148 (“bpf: Support new sign-extension mov insns”,
+v6.5-rc2-583, in 6.6). RV64 JIT got MOVSX in 694896ad3ca79 (2023). RV32
+was left emitting the old MOV path until this commit.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: on the landed commit. v2 of the series had Fixes:
+tags; they were dropped in v3 when the series was retitled for bpf-next.
+The semantically “buggy” point is 8100928c88148 (MOVSX added, RV32 JIT
+not updated). That commit is an ancestor of this tree.
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Same-day series on the same file:
+- 2e0fa2389c50f — BPF_SDIV/SMOD (patch 1/3)
+- c6a08afdfe3a8 — this commit (patch 2/3)
+- a1b37972efc0b — 32-bit atomics (patch 3/3)
+MOVSX does not use the SDIV `emit_alu_r32()` signature change and does
+not use the atomic helper. Standalone.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Kuan-Wei Chiu’s only RV32 JIT work in this tree is this 3-patch
+series. Reviewer Pu Lehui maintains RISC-V BPF JIT (RV64 MOVSX, later
+kfunc sign-extend fix f2aaa62159109). Applied by Kartikeya. Strong
+maintainer path.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Uses `bpf_get_reg64`/`bpf_put_reg64`/`bpf_get_reg32`/`bpf_put_re
+g32`/`rv_slli`/`rv_srai`/`rv_addi` — all from the original 2020 JIT. No
+new helpers. Can apply standalone.
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- IRQ handler introduced in `ad7a370c8be472` (“staging: comedi:
-  aio_iiro_16: add command support for change of state detection”),
-  2015-01-09, contained in v4.0-rc1.
-- Driver left staging in `8ffdff6a8cfbd` (2021).
-- The missing `attached` check is the bug; it has been present for the
-  life of this IRQ handler.
+- b4 dig:
+  https://patch.msgid.link/20260714002451.4091139-3-visitorckw@gmail.com
+- Series: bpf-next v1→v4, “signed operations and 32-bit atomics”
+- v1 (2026-04-29): “Fix support for BPF_SDIV and BPF_SMOD”
+- v2: “Add missing Fixes tags”
+- v3: “Remove the Fixes: tag and update title”
+- v4 (applied): this version
+- No NAKs. Pu Lehui Reviewed-by on this patch; Tested-by on the series
+  (test_bpf failures drop).
+- No reviewer asked for Cc: stable.
 
-**Step 3.2 — Fixes: tag**
-Record: none. Introducer is `ad7a370c8be472` (v4.0), present in this
-tree.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: To/Cc included bpf@vger, linux-riscv, ast, daniel, andrii,
+eddyz87, memxor, palmer, aou, pulehui, yonghong.song (original MOVSX ISA
+author), alex@ghiti.fr. Appropriate lists. Applied by Kartikeya to bpf-
+next.
 
-**Step 3.3 — File history**
-Record (recent, path-limited):
-- `1ca4475191513` this commit
-- `81c2e0c8b7933` I/O-base sanity checks (different msgid series, not a
-  prerequisite)
-- `66acb1586737a` bit-shift bounds fix
-This patch does not depend on those.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No external bugzilla/syzbot. Evidence is in-tree
+`lib/test_bpf.c` ALU_MOVSX tests (from daabb2b098e04, cpuv4 tests).
+Failure is `jited:1` with wrong R0.
 
-**Step 3.4 — Author**
-Record: Ian Abbott is listed in MAINTAINERS as COMEDI maintainer
-(`COMEDI DRIVERS`, status Odd Fixes). Around the same time he landed an
-11-patch series of the same IRQ `attached` guards, plus earlier
-`17221216ae8ce` (`comedi_parport: deal with premature interrupt`) which
-*was* tagged `Cc: stable` and `Reported-by: syzbot` for a GPF in
-`comedi_get_is_subdevice_running()`.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 3/3 series. 1/3 is the same class of bug (SDIV/SMOD as
+unsigned). 3/3 is a feature (atomics already interpreter-fallback). This
+patch does not depend on either.
 
-**Step 3.5 — Dependencies**
-Record: Cover letter is `comedi: Add/fix sanity check in ISA drivers to
-avoid null-ptr-deref` (11 patches, one driver each). This patch is self-
-contained; it does not need the other 10. Applies standalone.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org returned 403 to WebFetch. b4 mbox of the matched
+thread has no stable@ discussion. UNVERIFIED: no independent
+confirmation from lore.kernel.org/stable/.
 
-## Phase 4: Mailing list / external
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 4.1 — Original submission**
+**Step 5.1: KEY FUNCTIONS**
+Record: `bpf_jit_emit_insn()` (modified). Helpers used, not modified:
+`bpf_get_reg64`, `bpf_put_reg64`, `bpf_get_reg32`, `bpf_put_reg32`,
+`emit`.
+
+**Step 5.2: TRACE CALLERS**
+Record: `build_body()` in `arch/riscv/net/bpf_jit_core.c` calls
+`bpf_jit_emit_insn()` for every instruction when a program is JIT-
+compiled. That is the eBPF load/attach path (tracing, networking,
+cgroup, seccomp, etc.), not init-only.
+
+**Step 5.3: TRACE CALLEES**
+Record: Emits RISC-V ALU (slli/srai/addi) and the existing stacked-
+register get/put. No allocation, no locking.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: userspace bpf(2) / `BPF_PROG_LOAD` → verifier (accepts MOVSX
+since 8100928c88148) → `bpf_int_jit_compile` → `build_body` →
+`bpf_jit_emit_insn`. RISC-V selects `HAVE_EBPF_JIT if MMU`. JIT is used
+when enabled; tests ran with `jited:1`. Reachable from program load.
+Typically CAP_BPF/CAP_SYS_ADMIN; not a syzbot-style unprivileged UAF,
+but verifier/JIT mismatch is still a sandbox correctness issue.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: RV64 already handled off 8/16/32 (694896ad3ca79). arm32:
+fc832653fa0db then c6f48506ba30c. LoongArch had a later “Fix sign-
+extension mov” (772cbe948fb07). Same bug class: MOV|X with nonzero off
+must sign-extend.
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 Record:
-- `b4 dig -c 1ca4475191513` →
-  https://patch.msgid.link/20260618102949.26607-2-abbotti@mev.co.uk
-- `b4 dig -a`: v1 only; committed version is that v1.
-- Cover letter: several ISA Comedi drivers register the IRQ handler
-  before the subdevice exists; premature IRQ → NULL deref. aio_iiro_16
-  is named in the report.
-- Mbox of the series: 12 messages (cover + 11 patches). No NAK, no
-  reviewer objections in that thread.
+- Local tree: v7.3-rc4-27-gf0100363d8c37, `VERSION=7 PATCHLEVEL=3
+  SUBLEVEL=0 EXTRAVERSION=-rc4`.
+- RV32 JIT file exists; MOVSX macros exist in `include/linux/filter.h`;
+  tests exist in `lib/test_bpf.c`.
+- Commit c6a08afdfe3a8 *is* an ancestor of HEAD (landed in 7.3 via `bpf-
+  next-7.3`, merge 5a8cd539ac19f). Not in v7.2.
+- Without this change, the 2020 MOV fallthrough is still the codegen for
+  MOVSX. The bug is in this lineage from 6.6 through 7.2.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: Ian Abbott, Greg Kroah-Hartman, H Hartley Sweeten (other COMEDI
-maintainer), linux-kernel, and the three reporters. Right people were on
-the patch.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply on this tree. Surrounding MOV cases and get/put
+helpers match the patch. Expected difficulty: clean apply.
 
-**Step 4.3 — Bug report**
-Record: Subject `comedi: KASAN null-ptr-deref in ISA driver IRQ handlers
-on early IRQ`. Explicitly lists `aio_iiro_16.c` / `aio_iiro_16_cos()`.
-Failure: KASAN NULL deref / kernel panic. Suggested fix: move
-`request_irq()` later **or** guard the handler. This commit takes the
-guard (the established Comedi pattern).
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This is the RV32 MOVSX fix. No earlier substitute on
+bpf_jit_comp32.c. RV64 already had support. No competing fix.
 
-**Step 4.4 — Series**
-Record: 11 independent per-driver patches. This one does not need the
-rest.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 4.5 — stable@**
-Record: lore.kernel.org/stable search returned HTTP 403 from this
-environment. **UNVERIFIED** whether this hash was discussed on stable@.
-Sibling `comedi_parport` fix of the same class *was* explicitly `Cc:
-stable`.
+**Step 7.1: IDENTIFY THE SUBSYSTEM**
+Record: [arch/riscv BPF JIT] [IMPORTANT for RV32 + BPF users; PERIPHERAL
+vs core mm/net — 32-bit RISC-V is a real but smaller population]
 
-## Phase 5: Semantic analysis
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Active enough (atomics, arena, CFI, kfunc sign-extend) but the
+MOV path itself was untouched since 2020. Long-standing gap, not a
+brand-new subsystem.
 
-**Step 5.1 — Functions**
-Record: `aio_iiro_16_cos()` only.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 5.2 — Callers**
-Record: registered via `request_irq(it->options[1], aio_iiro_16_cos, 0,
-...)` in `aio_iiro_16_attach()`. Hard-IRQ context. IRQ is optional (user
-config option [1]).
+**Step 8.1: WHO IS AFFECTED**
+Record: RV32 kernels with eBPF JIT (HAVE_EBPF_JIT && MMU) running
+programs that use CPU-v4 sign-extending moves (clang casts to
+s8/s16/s32). Not universal; not staging.
 
-**Step 5.3 — Callees**
-Record: `inb()`, `aio_iiro_16_read_inputs()`,
-`comedi_buf_write_samples()`, `comedi_handle_events()`. The crash is in
-`comedi_get_is_subdevice_running()` → `spin_lock_irqsave(&s->spin_lock,
-...)`.
+**Step 8.2: TRIGGER CONDITIONS**
+Record: Loading/attaching a BPF program that contains MOVSX, with JIT
+on. Common for cpu v4 compiles. Privileged load in default configs. Not
+a timing race. test_bpf reproduces it every run.
 
-**Step 5.4 — Reachability**
-Record: Attach of a legacy Comedi device goes through
-`comedi_device_attach()` / `COMEDI_DEVCONFIG` and requires
-`CAP_SYS_ADMIN` when not already attached (`comedi_fops.c`). Not an
-unprivileged syscall smash, but a privileged configure/load path that
-can panic the kernel. Same class syzbot actually hit on
-`comedi_parport`.
+**Step 8.3: FAILURE MODE SEVERITY**
+Record: [Wrong JIT results / verifier-vs-JIT mismatch] [HIGH]
+- Not an oops/deadlock.
+- JIT returns different register values than the interpreter and than
+  the verifier’s sign-extended ranges (test: expected 1, got 2).
+- If the verifier pruned a bounds check on the assumption that MOVSX
+  ran, runtime can see a non-sign-extended value. That is BPF sandbox
+  incorrectness, not a cosmetic test fail.
 
-**Step 5.5 — Similar patterns**
-Record: dozens of Comedi IRQ handlers already check `dev->attached`
-first. This driver was a missing instance. Same series patched das6402,
-dt2811, ni_at_a2150, ni_atmio16d, pcl711, pcl816, pcl818, pcmmio,
-pcmuio, quatech_daqp_cs.
+**Step 8.4: RISK-BENEFIT RATIO**
+Record: Benefit high for RV32+BPF (correct JIT, closes verifier
+mismatch). Risk very low (32 lines, one switch, existing emit helpers,
+test_bpf before/after in the message, RISC-V BPF reviewer Tested-by).
+Ratio favors taking it.
 
-## Phase 6: Local tree
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 6.1 — Does the buggy code exist here?**
-Record:
-- Local tree: `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = `7.3.0-rc4`.
-- File and IRQ handler exist. Pre-fix parent of `1ca4475191513` has the
-  unguarded handler. Bug introduced v4.0 (2015), long before this tree.
-- `git merge-base --is-ancestor 1ca4475191513 HEAD` is true (the fix is
-  already in this checkout). That is not treated as “already selected
-  for stable”; it only confirms the code exists here.
-
-**Step 6.2 — Backport difficulty**
-Record: clean apply. Hunk is three lines in a handler whose surrounding
-code has been stable since 2015. Does not depend on
-`comedi_check_request_region` or other recent helpers.
-
-**Step 6.3 — Related fixes already here?**
-Record: `17221216ae8ce` (comedi_parport premature IRQ) is in this tree
-and is the same bug class. No earlier aio_iiro_16-specific guard.
-
-## Phase 7: Subsystem context
-
-**Step 7.1**
-Record: `drivers/comedi/` — data-acquisition. **PERIPHERAL** for this
-specific PC/104 ISA board (`CONFIG_COMEDI_AIO_IIRO_16`), but the failure
-is a kernel oops, not a device quirk.
-
-**Step 7.2**
-Record: Comedi is mature (“Odd Fixes”). This is an old missing check,
-not churn in new code. Driver comment still says `Status: experimental`;
-that does not make a panic in the IRQ handler ineligible.
-
-## Phase 8: Impact and risk
-
-**Step 8.1 — Who is affected**
-Record: users of ACCES I/O 104-IIRO-16 with `CONFIG_COMEDI_AIO_IIRO_16`,
-typically industrial/DAQ. Driver-specific, not universal.
-
-**Step 8.2 — Trigger**
-Record: attach with an IRQ configured, then a premature IRQ before
-`attached` is set. Author: wrong I/O base/IRQ or bad hardware (disable
-write may not hit the real board, STATUS `inb` can look like `IRQE`).
-Requires `CAP_SYS_ADMIN` to attach. Unprivileged users cannot hit it on
-a default system.
-
-**Step 8.3 — Failure mode**
-Record: KASAN null-ptr-deref / kernel panic in hard-IRQ context.
-**Severity: CRITICAL** (oops/panic). Not data corruption.
-
-**Step 8.4 — Benefit vs risk**
-Record:
-- Benefit: prevents a documented panic on a real attach/IRQ window.
-  Medium for this hardware’s users, high given crash severity.
-- Risk: very low (3 lines, established pattern, early return only).
-- Ratio: favorable.
-
-## Phase 9: Synthesis
-
-**Step 9.1 — Evidence**
+**Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real KASAN NULL deref / panic, named in the SNU report for this exact
-  driver
-- Three reporters
-- 3-line, obviously correct guard matching existing Comedi IRQ style
-- Maintainer-authored; Greg KH applied it
-- Same class as `comedi_parport` GPF that was `Cc: stable` + syzbot
-- Bug in code since v4.0; present in this tree
-- Standalone; no series dependency
-- Driver exists here; patch applies cleanly
+- Concrete miscompilation: JIT runs and produces the wrong value
+  (`jited:1 ret 2 != 1`).
+- BPF_MOVSX has been in the ISA/verifier/interpreter since ~6.6; RV32
+  JIT never honored `insn->off`.
+- Interpreter is correct; only the JIT is wrong — classic “supported
+  opcode, wrong codegen.”
+- 32-line, single-function, no new APIs.
+- Reviewed and tested by Pu Lehui; applied by BPF maintainer.
+- Independent of the other two series patches.
+- Helpers and MOV cases exist in this tree since 5.6.
 
 AGAINST:
-- Niche ISA/PC104 board; experimental driver
-- Privileged trigger; premature IRQ only if config/hardware is wrong
-  (author’s own caveat)
-- No `Fixes:` / `Cc: stable` on this commit
-- No review replies in the v1 mbox (quality still supported by
-  maintainer + Greg KH)
+- Subject/process treated it as bpf-next “Add support”; Fixes: tags were
+  deliberately removed in v3.
+- RV32 is a smaller user base than RV64.
+- Failure is wrong results, not a panic.
+- Series patch 3/3 is a genuine feature (do not bundle it).
 
 UNRESOLVED:
-- stable@ discussion (HTTP 403)
-- Whether reporters had a hardware repro vs static/KASAN analysis
-  (report is KASAN-framed)
+- Could not fetch lore.kernel.org/stable/ (HTTP 403). Thread mbox had no
+  stable discussion.
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — standard `dev->attached`
-   guard; applied to char-misc/mainline.
-2. Fixes a real bug that affects users? **PASS** — KASAN null-ptr-deref
-   in IRQ; reported; attach path is how this board is used.
-3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
-   panic in IRQ. Not a security hole for unprivileged users, but it is a
-   serious crash.
-4. Small and contained? **PASS** — +3 lines, one function.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS** — driver and hunk exist; no missing
-   helpers.
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — slli/srai matches the ISA;
+   test_bpf #82–#86; reviewer Tested-by.
+2. Fixes a real bug that affects users? **PASS** — JIT’d MOVSX is wrong
+   on RV32; userspace can load such programs.
+3. Important issue? **PASS** — verifier/JIT mismatch on sign extension
+   is sandbox/correctness, not a style issue. Severity HIGH, not a dead-
+   code WARN.
+4. Small and contained? **PASS** — +32 lines, one file, one function.
+5. No new features or APIs? **PASS** — does not add a new opcode to BPF;
+   it compiles an opcode the verifier already accepts. (Title is “Add
+   support”; semantically it is fixing ignored `off`.)
+6. Can apply to the local tree? **PASS** — file, helpers, and MOV cases
+   are here.
 
-**Step 9.3 — Exceptions**
-Record: none (not an ID/quirk/DT/build/doc exception). It is a straight
-bug fix.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary
+correctness fix.
 
-**Step 9.4 — Decision**
-This tree is **7.3.0-rc4**. The IIRO-16 IRQ handler and the attach-
-before-`attached` window are here. The patch is a minimal, maintainer-
-written guard against a reported IRQ-time NULL deref/panic. Niche
-hardware and a privileged trigger do not outweigh a 3-line crash fix of
-a pattern already used across Comedi and already `Cc: stable` for the
-sibling parport case.
+**Step 9.4: DECISION**
+This tree is 7.3-rc4: it has the RV32 JIT and BPF_MOVSX. The bug is
+“MOV|X ignores off,” which is user-visible wrong BPF execution and a
+verifier/JIT disagreement. The patch is small, obviously correct,
+tested, and self-contained. bpf-next dropping Fixes: is process, not a
+finding that the codegen was fine. It should be backported to this tree.
 
-### What it solves for users of this tree
-If the 104-IIRO-16 driver is loaded and attached with an IRQ, a
-premature interrupt (wrong I/O/IRQ or bad hardware) used to call
-`comedi_buf_write_samples(NULL, ...)` and panic. After the guard, that
-IRQ is ignored until attach completes.
+### What it solves for stable users
+RV32 eBPF JIT compiled sign-extending moves as ordinary copies. Any
+JIT’d program using BPF_MOVSX (cpu v4 / compiler casts) gets wrong
+register values. That breaks test_bpf and can disagree with verifier
+range tracking.
 
-Risk is negligible; benefit is avoiding an oops.
+### Risk vs benefit
+Benefit: correct JIT and closed verifier mismatch on a real ISA
+instruction. Risk: very low, localized ALU emit.
+
+### Concerns
+Do not pull series 3/3 (atomics feature). 1/3 (SDIV/SMOD) is the same
+miscompilation class but is not required for this patch. No backport
+rework needed on this tree.
 
 Verification:
-- [Phase 1] Parsed tags: three Reported-by (SNU), two Link URLs, Ian
-  Abbott + Greg KH SOB; no Fixes/Cc:stable
-- [Phase 1] Fetched bug report: KASAN null-ptr-deref, aio_iiro_16 named
-- [Phase 2] Diff: +3 lines in `aio_iiro_16_cos()`; `if (!dev->attached)
-  return IRQ_NONE;`
-- [Phase 2] Confirmed crash: `comedi_get_is_subdevice_running()` locks
-  `&s->spin_lock`
-- [Phase 2] Confirmed attach order: disable IRQ → `request_irq` → alloc
-  subdevices → `read_subdev`; `attached` set in
-  `comedi_device_postconfig()`
-- [Phase 3] blame: handler from `ad7a370c8be472` (v4.0-rc1, 2015)
-- [Phase 3] `git merge-base --is-ancestor 1ca4475191513 HEAD` succeeded
-- [Phase 3] Author is COMEDI maintainer; 11-patch series, this patch
-  standalone
-- [Phase 3] Sibling `17221216ae8ce` (comedi_parport) had syzbot GPF +
-  `Cc: stable`
-- [Phase 4] `b4 dig -c 1ca4475191513`: lore msgid
-  `20260618102949.26607-2`; v1 only
-- [Phase 4] Cover letter: ISA IRQ-before-subdevice NULL deref series
-- [Phase 4] `b4 dig -w`: Greg KH + Hartley Sweeten + reporters on Cc
-- [Phase 4] UNVERIFIED: stable@ archive (403)
-- [Phase 5] Only caller is `request_irq` in attach; `CAP_SYS_ADMIN`
-  required to attach
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; kernel
-  7.3.0-rc4; buggy handler in parent of the commit; clean 3-line apply
-- [Phase 8] Failure: KASAN NULL deref → panic, severity CRITICAL;
-  trigger privileged + misconfig/bad HW
-- UNVERIFIED: hardware vs static reproduction by the SNU reporters
+- [Phase 1] Tags: Reviewed-by Pu Lehui, Link lore/bpf, SOB author +
+  Kartikeya; no Fixes/syzbot/Cc:stable
+- [Phase 1] Body: test_bpf #82–#86 `jited:1 ret 2 != 1` before, PASS
+  after
+- [Phase 2] Diff: +32 in `bpf_jit_emit_insn()`, two MOV|X cases,
+  slli/srai sign-extend
+- [Phase 2] Confirmed `emit_alu_r64` BPF_MOV is lo/hi copy;
+  `emit_alu_r32` BPF_MOV is lo copy (pre-fix path)
+- [Phase 3] blame: MOV fallthrough from 5f316b65e99f1 (v5.6); ISA
+  8100928c88148 (~6.6); RV64 694896ad3ca79
+- [Phase 3] `git merge-base --is-ancestor c6a08afdfe3a8 HEAD` yes; not
+  ancestor of v7.2; is ancestor of v7.3-rc1
+- [Phase 3] Series patches 2e0fa2389c50f / c6a08afdfe3a8 /
+  a1b37972efc0b; this one independent
+- [Phase 4] `b4 dig -c c6a08afdfe3a8`: v4 2/3, msgid
+  20260714002451.4091139-3
+- [Phase 4] `b4 dig -a`: v1–v4; v3 removed Fixes: and retitled
+- [Phase 4] `b4 dig -m`: 7 messages; Pu Lehui R-b/T-b; no NAK; no stable
+  Cc
+- [Phase 4] WebFetch lore: 403 — UNVERIFIED via HTTP; thread recovered
+  via b4 mbox
+- [Phase 5] Caller: `build_body()` → every JIT’d insn; `HAVE_EBPF_JIT if
+  MMU`
+- [Phase 5] Tests in lib/test_bpf.c ALU_MOVSX / ALU64_MOVSX
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 6] bpf_jit_comp32.c and BPF_MOVSX64_REG present; helpers from
+  original JIT
+- [Phase 8] Failure: wrong JIT output / verifier mismatch, HIGH; not a
+  panic
+- UNVERIFIED: stable@ mailing list archive (HTTP 403)
 
 **YES**
 
- drivers/comedi/drivers/aio_iiro_16.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/riscv/net/bpf_jit_comp32.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/comedi/drivers/aio_iiro_16.c b/drivers/comedi/drivers/aio_iiro_16.c
-index 739cc4db52ac7..fe75b7e1ddcac 100644
---- a/drivers/comedi/drivers/aio_iiro_16.c
-+++ b/drivers/comedi/drivers/aio_iiro_16.c
-@@ -59,6 +59,9 @@ static irqreturn_t aio_iiro_16_cos(int irq, void *d)
- 	unsigned int status;
- 	unsigned int val;
+diff --git a/arch/riscv/net/bpf_jit_comp32.c b/arch/riscv/net/bpf_jit_comp32.c
+index 89153946a4e46..39e2b0b907dc3 100644
+--- a/arch/riscv/net/bpf_jit_comp32.c
++++ b/arch/riscv/net/bpf_jit_comp32.c
+@@ -972,6 +972,24 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
+ 	switch (code) {
+ 	case BPF_ALU64 | BPF_MOV | BPF_X:
++		if (insn->off != 0) {
++			const s8 *rd = bpf_get_reg64(dst, tmp1, ctx);
++			const s8 *rs = bpf_get_reg64(src, tmp2, ctx);
 +
- 	status = inb(dev->iobase + AIO_IIRO_16_STATUS);
- 	if (!(status & AIO_IIRO_16_STATUS_IRQE))
- 		return IRQ_NONE;
++			if (insn->off == 8) {
++				emit(rv_slli(lo(rd), lo(rs), 24), ctx);
++				emit(rv_srai(lo(rd), lo(rd), 24), ctx);
++			} else if (insn->off == 16) {
++				emit(rv_slli(lo(rd), lo(rs), 16), ctx);
++				emit(rv_srai(lo(rd), lo(rd), 16), ctx);
++			} else {
++				emit(rv_addi(lo(rd), lo(rs), 0), ctx);
++			}
++			emit(rv_srai(hi(rd), lo(rd), 31), ctx);
++			bpf_put_reg64(dst, rd, ctx);
++			break;
++		}
++		fallthrough;
+ 
+ 	case BPF_ALU64 | BPF_ADD | BPF_X:
+ 	case BPF_ALU64 | BPF_ADD | BPF_K:
+@@ -1022,6 +1040,20 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 			emit_zext64(dst, ctx);
+ 			break;
+ 		}
++		if (insn->off != 0) {
++			const s8 *rd = bpf_get_reg32(dst, tmp1, ctx);
++			const s8 *rs = bpf_get_reg32(src, tmp2, ctx);
++
++			if (insn->off == 8) {
++				emit(rv_slli(lo(rd), lo(rs), 24), ctx);
++				emit(rv_srai(lo(rd), lo(rd), 24), ctx);
++			} else if (insn->off == 16) {
++				emit(rv_slli(lo(rd), lo(rs), 16), ctx);
++				emit(rv_srai(lo(rd), lo(rd), 16), ctx);
++			}
++			bpf_put_reg32(dst, rd, ctx);
++			break;
++		}
+ 		fallthrough;
+ 
+ 	case BPF_ALU | BPF_ADD | BPF_X:
 -- 
 2.53.0
 
