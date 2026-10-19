@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD00645085;
-	Mon, 19 Oct 2026 14:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202C2642370;
+	Mon, 19 Oct 2026 14:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418786; cv=none; b=hg7G/Tggf/jGPQra/b7OcSNplTo5yxM/wPlQW99GL0CyxaqYDU5zmmBmCsRZvib2/wKo7NGgQNUN56a3yhydrpv5M9uGnCyoPYM2eQGEdhkbaHMr+nVK1JeqjYi/mwkgQWc4oen5q24NRxWRThOMtkPHDbdOBR6xQazMWRC6WYI=
+	t=1792418788; cv=none; b=cjNdaK4bVExQTV0hTKlGOd32/7fTP9Gh/vGG0HaKgBFwCEpRUdrm9Bq+OKy+5WGa4cLqgYpJ8js+oqlUl3oFSZ3HKJNu40w7xN7lHeEcKKZBHn6AmdJFzMjAumlmexS3RysjWDiLYdrQ4pxzoGMx9RohMcsHostlRjeyn3/aywk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418786; c=relaxed/simple;
-	bh=fpbUBSic+Y0uy5UHJ532+VtLkF+liEMy0afhOOEyUj0=;
+	s=arc-20240116; t=1792418788; c=relaxed/simple;
+	bh=ULzBuNsp5/KA8f2xhXz2slDWPCzWt/1H3q+Yw2VtfRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tHH0sSX/MU8PVgO7kAb1yxvBIStWZXZRMtzRhmleNhfMSSjs2OHVwQNI/MaPIMpfAkwUtxSXRDr2ESxVWum55G5l87g2Cy7o9KDwcB+mEhFUqMm/4q5KVQcSwuNjiGDgaa9Ri9vzeaBaDjEu3rklNz83VTw1jLD5axzla9Mf8uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E9/nQD7S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gD/DYsI8ssxwwpgJ7+9xVepU7u+PuDgCLl4WIw5l+Oln5j98/Jsv6r6m+ZOIRIymep9jbnUrwTyq+lcsZrDG7qHmK9FzKJrJXHunIjWeZ3R3Cc6kGPcsGgSPliA72kt+lwXZOM50IwwRKARSDvM4yHoYy1I46PhBQNpGqqMR6io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n8SbzL3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E9/nQD7S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D641E1F000C5;
-	Mon, 19 Oct 2026 14:06:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n8SbzL3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197801F000C6;
+	Mon, 19 Oct 2026 14:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418784;
-	bh=2Cqt/StO5wJRmyuqhqdQe+vFzWCcT9Y1VHmZC4EWq60=;
+	s=k20260515; t=1792418786;
+	bh=y/vPFOG9Gr5B2/yachfszVsHJr0+zaqYK/PdeN07960=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E9/nQD7StqWbgAGRjAOY28lNWp7VlJALTWwOSu9hVt2wguy76/Db8F85SL70PoRbf
-	 Wm8bIVD5JHKkI6I8+qENXxIedNbBnNQr6/OxMxkyALuTWJyiIUOfYcJ+2WbNa8vP6Z
-	 Bm3QKYJGW/B/HIQnikepUrX90/wfL6iXuxcODTR3ri0lNAReehMIf7Tvm/btlD4kj7
-	 04JwFw01TrCjj4Aro2qgQIYKtuFnxoSFojzGoJyx2IMkszhQAjZVmTu4tMMOKqmhGP
-	 LTK9VyC4cg/x7Tg+zLnhZ1wA8XfUUO8OiVydRuIqq0auJNWkciqLcoq45lPesHQuGx
-	 nPb9VXWTX23bA==
+	b=n8SbzL3XxBv2TjzBq0hLhXLoXPkpGQUncPcGvJGA8yYkY3n7TmhMrubOhvoqk9a6e
+	 NtLOMen2dT49iFtcRNCzIXXbsXtlkwpCLXlOmLuvOiZEyt1AUJebb7CNABI0QoWjTI
+	 wYgmvvDaMD5lclDQhHMd5twmZ+CF7A0WIsNarJDXx4JoUfeAjwb0qTEtgyy//8Ands
+	 w7vbhnufviQJc0z9xiiRqm1ZAzl1M67M/9LlU5lKtkyqGOSXI0XNuEtDWr90+HVwUd
+	 9BRMzZR1LYf+khz6f0VR0TBCdbFmrOT9yUUEK99BhNfc8F1aqHmscbafvtoJtH9TWH
+	 YNHw1MhZS4U0g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andreas Haufler <andreas@haufler.info>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+Cc: Shahar Tzarfati <shahar.tzarfati@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-pm@vger.kernel.org,
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] tools/lib/thermal: Fix misplaced extern "C" closing brace
-Date: Mon, 19 Oct 2026 09:53:05 -0400
-Message-ID: <20261019135441.1420968-494-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mac80211: ibss: read deauth reason_code after frame length check
+Date: Mon, 19 Oct 2026 09:53:06 -0400
+Message-ID: <20261019135441.1420968-495-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,524 +54,385 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Haufler <andreas@haufler.info>
+From: Shahar Tzarfati <shahar.tzarfati@intel.com>
 
-[ Upstream commit cb0ec27efac2aaf92393ad563a35fb6f00d0a6cd ]
+[ Upstream commit aa4c0a649903567762edf2bbc7fff608953b3ca4 ]
 
-The public libthermal header opens the C++ 'extern "C" {' block inside
-the __LIBTHERMAL_H include guard, but places the closing brace after
-the guard has already ended:
+The function was reading reason_code from the frame before validating
+that the frame is at least IEEE80211_DEAUTH_FRAME_LEN bytes long.
 
-	#endif /* __LIBTHERMAL_H */
+Move the reason_code read to after the length check so the field is
+guaranteed to be present before it is accessed.
 
-	#ifdef __cplusplus
-	}
-	#endif
-
-On a single inclusion the braces still balance, so the problem is
-invisible. On the second inclusion of the header in the same C++
-translation unit the include guard skips the opening 'extern "C" {',
-while the closing '}' lives outside the guard and is emitted anyway.
-This leaves a stray '}' and breaks compilation for any C++ consumer
-that includes the header more than once.
-
-Move the closing block inside the include guard so both halves of the
-'extern "C"' declaration are guarded consistently.
-
-Signed-off-by: Andreas Haufler <andreas@haufler.info>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info
+Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715212706.db26604650bd.I2caa73c396b8c9d357224b9334d5df3cafac498e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Local tree
-
-This checkout is **pending-6.18**, kernel **6.18.53**
-(`p-6.18-1-g03b85e06ca9bf`). The verdict is only about this tree.
-
-Mainline commit: `cb0ec27efac2aaf92393ad563a35fb6f00d0a6cd` (landed
-after v6.18; `git describe` reports `v7.2-rc2-24-gcb0ec27efac2a`). It is
-**not** an ancestor of HEAD.
-
----
-
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[mac80211/ibss] [read / reorder] Move IBSS deauth `reason_code`
+access to after the existing frame-length check.`
 
-- **Subsystem:** `tools/lib/thermal` (userspace libthermal, not
-  `drivers/thermal`)
-- **Action verb:** Fix
-- **Claimed intent:** Put the C++ `extern "C"` closing brace inside the
-  include guard
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record:
+- `Fixes:` — none (expected)
+- `Reported-by:` — none
+- `Tested-by:` — none
+- `Reviewed-by:` — none on the commit
+- `Acked-by:` — none
+- `Link:` `https://patch.msgid.link/20260715212706.db26604650bd.I2caa73c
+  396b8c9d357224b9334d5df3cafac498e@changeid`
+- `Cc: stable@vger.kernel.org` — none (expected)
+- `Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>` (author)
+- `Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>`
+  (Intel wireless)
+- `Signed-off-by: Johannes Berg <johannes.berg@intel.com>` (mac80211
+  maintainer)
 
-**Record:** `[tools/lib/thermal] [fix] [move misplaced extern "C" }
-inside include guard]`
+No syzbot, no CVE, no multi-user reports. Maintainer SOB is the main
+trust signal.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** `ieee80211_rx_mgmt_deauth_ibss()` read
+  `mgmt->u.deauth.reason_code` before checking `len >=
+  IEEE80211_DEAUTH_FRAME_LEN`.
+- **Symptom/failure mode:** 2-byte read past the validated frame on a
+  truncated deauth. Value is then discarded if the length check fails.
+- **Version info:** none in the message.
+- **Root cause (author):** field access before the length check; move
+  the read after the check.
 
-From `git show cb0ec27efac2a` and the lore thread:
-
-| Tag | Value |
-|-----|--------|
-| Signed-off-by | Andreas Haufler \<andreas@haufler.info\> (author) |
-| Signed-off-by | Daniel Lezcano \<daniel.lezcano@kernel.org\> (thermal
-maintainer) |
-| Link |
-https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info |
-
-**Absent (expected):** Fixes, Reported-by, Tested-by, Reviewed-by,
-Acked-by, Cc: stable.
-
-**Record:** Author + maintainer SOB; one lore Link. No syzbot, no Fixes,
-no stable tag.
-
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-
-The header opens `extern "C" {` **inside** `#ifndef __LIBTHERMAL_H`, but
-closes `}` **after** `#endif`.
-
-- First include: braces balance, so C++ compiles.
-- Second include in the same C++ TU: the guard skips the opening brace,
-  but the closing `}` is still emitted → stray `}` → **compile error**.
-
-**Record:**
-- **Bug:** include-guard / `extern "C"` mismatch
-- **Symptom:** C++ compile failure on the second include of `thermal.h`
-- **Versions:** none stated; intro commit is in this tree since v5.19
-- **Root cause:** closing `}` lives outside the guard
-
-### Step 1.4: DETECT HIDDEN BUG FIXES
-
-Not disguised. Subject and body describe a real compile break.
-
-**Record:** Not a hidden fix. Explicit userspace header compile bug.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a disguised cleanup. It is an explicit bounds-check-before-
+access fix. The length check already existed; only the premature read
+was wrong.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-### Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `net/mac80211/ibss.c` (+3 / −1)
+- Function: `ieee80211_rx_mgmt_deauth_ibss()`
+- Scope: single-file surgical fix
 
-```
-tools/lib/thermal/include/thermal.h | 4 ++--
-```
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record: Before: initialize `reason` from `mgmt->u.deauth.reason_code`,
+then return if `len < 26`. After: declare `reason`, length-check first,
+then read the field. `ibss_dbg()` and `sta_info_destroy_addr()` are
+unchanged and remain after the check.
 
-One file. Two lines moved: `#endif /* __LIBTHERMAL_H */` is placed after
-the `extern "C"` close. No functions changed (header-only).
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **Memory safety / out-of-bounds read.**
+`IEEE80211_DEAUTH_FRAME_LEN` is `(24 /* hdr */ + 2 /* reason */)`.
+`reason_code` sits at offset 24 in `struct ieee80211_mgmt`. RX already
+drops mgmt frames shorter than the 802.11 header (`skb->len <
+ieee80211_hdrlen(fc)` in `ieee80211_rx()`), so 24- and 25-byte deauths
+can still reach this handler. Those frames do not contain the reason
+field; the old code always read it anyway. On the short-frame path the
+value is unused (immediate `return`).
 
-**Record:** `[thermal.h +2/-2] [no functions] [single-file surgical]`
-
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-
-**Before** (this tree, lines 178–182):
-
-```178:182:tools/lib/thermal/include/thermal.h
-#endif /* __LIBTHERMAL_H */
-
-#ifdef __cplusplus
-}
-#endif
-```
-
-**After:** `#ifdef __cplusplus` / `}` / `#endif` stay inside
-`__LIBTHERMAL_H`, then the guard ends.
-
-**Record:** `[header guard close moved after extern "C" close; second
-C++ include no longer emits a stray }]`
-
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-
-**Category:** (g) logic/correctness + (h) not hardware; this is a
-**build / include-file** defect.
-
-**Mechanism:** On re-include, the guard suppresses `extern "C" {` but
-not `}`.
-
-**Record:** `[build/include-guard] [closing brace outside guard]`
-
-### Step 2.4: ASSESS THE FIX QUALITY
-
-Matches the correct pattern in `tools/lib/bpf/libbpf.h` (close `extern
-"C"` **then** `#endif /* __LIBBPF_LIBBPF_H */`). Minimal, no API change,
-no runtime code. Regression risk is effectively none.
-
-**Record:** `[obviously correct] [no meaningful regression risk]`
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct: same pattern as
+`ieee80211_rx_mgmt_auth_ibss()` in the same file and as
+`ieee80211_rx_mgmt_deauth()` in `mlme.c` (`4a360c6e18dfa`). Minimal, no
+API/locking/structure changes. Regression risk is negligible (debug
+print still sees a valid reason on well-formed frames).
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: Function introduced in `2cc59e784b54` (Antonio Quartulli,
+2012-09-07, “mac80211: reply to AUTH with DEAUTH if sta allocation fails
+in IBSS”). The premature `reason_code` read was in the original
+function. Present for ~14 years, including this 7.3 tree’s lineage.
 
-```
-47c4b0de080adc (Daniel Lezcano 2022-04-20)  #endif /* __LIBTHERMAL_H */
-47c4b0de080adc (Daniel Lezcano 2022-04-20)  #ifdef __cplusplus
-47c4b0de080adc (Daniel Lezcano 2022-04-20)  }
-```
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Buggy commit is `2cc59e784b54`, which `git
+merge-base --is-ancestor` confirms is in this tree.
 
-Introduced with the library itself. Present since v5.19 (`git merge-base
---is-ancestor 47c4b0de080ad v5.19`; not in v5.18).
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Recent `ibss.c` work is unrelated (TX-on-disconnect, rx_nss).
+Same-day series patch 2/2 was mlme deauth length checking; that path was
+already fixed by `4a360c6e18dfa` (“wifi: mac80211: validate deauth frame
+length before reason access”, Zhao Li, 2026-06-13). This IBSS patch is
+standalone.
 
-**Record:** `[47c4b0de080ad "tools/lib/thermal: Add a thermal library"]
-[v5.19]`
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Shahar Tzarfati is an Intel wireless contributor (iwlwifi
+bounds-check fixes plus this IBSS change). Not the mac80211 maintainer;
+Johannes Berg applied it.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-
-No Fixes tag. The buggy code is the original header layout from
-47c4b0de080ad, which **is** in this tree.
-
-**Record:** `[no Fixes tag; intro commit is in this tree]`
-
-### Step 3.3: CHECK FILE HISTORY
-
-Only two commits on this file in this tree:
-
-- `47c4b0de080ad` — add library
-- `a262672486287` — threshold netlink ABI (does not touch the
-  guard/`extern "C"`)
-
-No later local fix. `git log v6.18..HEAD --
-tools/lib/thermal/include/thermal.h` is empty. File at v6.18 and HEAD
-still has the misplaced `}`.
-
-**Record:** `[no related local fixes] [standalone] [not a series]`
-
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-
-`git log --author="Andreas Haufler" -- tools/` is empty in this tree.
-Author is an external contributor. Maintainer Daniel Lezcano committed
-it (`CommitDate: Fri Aug 7 17:18:51 2026`) after “Applied, thanks for
-the fix”.
-
-**Record:** `[external author; thermal maintainer applied]`
-
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-
-Diff assumes only `#endif` / `#ifdef __cplusplus` / `}`. Those lines
-exist unchanged. Standalone.
-
-**Record:** `[no dependencies] [applies standalone]`
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None. Uses existing `IEEE80211_DEAUTH_FRAME_LEN` (defined 2012
+in `net/mac80211/ieee80211_i.h`). Applies standalone.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c aa4c0a649903`: https://patch.msgid.link/20260715212706.db26
+  604650bd.I2caa73c396b8c9d357224b9334d5df3cafac498e@changeid
+- `b4 dig -a`: single revision, `[PATCH wireless-next 1/2]`
+- Thread (mbox): no replies, no NAK, no `Cc: stable` request. Johannes
+  applied v1.
 
-`b4 dig -c cb0ec27efac2a` matched by patch-id:
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): To Johannes Berg; Cc `linux-wireless@`, Shahar
+Tzarfati, sent by Miri Korenblit. No extra reviewer tags; maintainer
+merge is the review signal.
 
-- **Lore:**
-  https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info
-- **v1 only** (`b4 dig -a`): no v2/v3
-- Thread: patch + Daniel Lezcano reply: **“Applied, thanks for the
-  fix”**
-- No NAK, no stable nomination, no requested rework
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No Reported-by, syzbot, or bugzilla. Sibling `4a360c6e18dfa` on
+the STA deauth path is the same class of bug (LLM-assisted). No user
+crash report found.
 
-WebFetch to lore returned 403; thread was recovered via `b4 mbox`.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 2/2 was `wifi: mac80211: mlme: read deauth reason_code after
+frame length check`. It was not committed (mlme already had
+`4a360c6e18dfa`). 1/2 does not depend on 2/2.
 
-**Record:** `[v1 accepted as-is] [maintainer Applied] [no stable
-mention] [no NAKs]`
-
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-
-`b4 dig -w` recipients: Rafael Wysocki, Daniel Lezcano, Zhang Rui,
-Lukasz Luba, linux-pm, linux-kernel. Those are the THERMAL
-maintainers/reviewers in MAINTAINERS.
-
-**Record:** `[thermal maintainers on To/Cc; Lezcano applied]`
-
-### Step 4.3: SEARCH FOR THE BUG REPORT
-
-No Reported-by, bugzilla, or syzbot. Author found it by inspecting the
-public header.
-
-**Record:** `[no external bug report] [author-discovered compile
-defect]`
-
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-
-Standalone `[PATCH]`, msgid `...91246-1`, no `-2`. `git log
-origin/master cb0ec27efac2a^.. -- tools/lib/thermal/include/thermal.h`
-shows only this commit.
-
-**Record:** `[standalone; no follow-up on the header]`
-
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-
-lore.kernel.org/stable WebFetch returned 403. No Cc: stable on the
-patch. No local `git log --grep=extern -- tools/lib/thermal/` hits.
-
-**Record:** `[no stable-list discussion verified; lore/stable fetch
-failed with 403]`
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org search was blocked (Anubis 403). UNVERIFIED
+whether linux-stable discussed this. No local `ibss.c` history indicates
+a prior stable rejection.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-semcode MCP is not available. Grep/read used instead.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `ieee80211_rx_mgmt_deauth_ibss()`
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS
+**Step 5.2: TRACE CALLERS**
+Record:
+- `ieee80211_ibss_rx_queued_mgmt()` → `IEEE80211_STYPE_DEAUTH` case,
+  `mgmt = skb->data`, `len = skb->len`
+- `ieee80211_iface_work()` in `iface.c` for `NL80211_IFTYPE_ADHOC`
+- Frames queued from `ieee80211_rx_h_mgmt()` in `rx.c` (IBSS deauth
+  allowed)
 
-No functions modified. Change is preprocessor layout at the bottom of
-`thermal.h`.
+Workqueue / wiphy context, not hardirq. Reachable from over-the-air RX.
 
-**Record:** `[none; include guard / extern "C" only]`
+**Step 5.3: TRACE CALLEES**
+Record: `le16_to_cpu()`, `ibss_dbg()` (`MAC80211_IBSS_DEBUG` only),
+`sta_info_destroy_addr()`. Functional work was already after the length
+check.
 
-### Step 5.2: TRACE CALLERS
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Wireless NIC RX → `ieee80211_rx()` (drops `skb->len < hdrlen`) →
+`ieee80211_rx_h_mgmt()` → iface work → `ieee80211_ibss_rx_queued_mgmt()`
+→ deauth handler. A peer on the IBSS can send a 24-byte deauth.
+Unprivileged local userspace cannot inject this without packet
+injection; a radio neighbor can. `ibss_dbg` does not gate the old read:
+`reason` was initialized before the debug macro.
 
-In-tree includes of this header:
-
-- `tools/lib/thermal/{thermal,events,commands,thermal_nl,sampling}.c`
-- `tools/thermal/thermal-engine/thermal-engine.c` (`thermal_init`,
-  `thermal_events_handle`)
-
-All **C**. `find tools/thermal tools/lib/thermal -name '*.cpp'` is
-empty. The header is still a **public installed API** (`install_headers`
-installs `include/thermal.h`; `libthermal.pc`).
-
-**Record:** `[in-tree users are C; public header is C++-aware and
-installed]`
-
-### Step 5.3: TRACE CALLEES
-
-N/A for a brace move.
-
-**Record:** `[N/A]`
-
-### Step 5.4: FOLLOW THE CALL CHAIN
-
-Trigger is **userspace C++** including `thermal.h` twice (direct or via
-two headers). Not a syscall/kernel path. Reachable for anyone who
-installs libthermal and uses it from C++.
-
-**Record:** `[userspace C++ re-include] [not kernel runtime]`
-
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-
-`tools/lib/bpf/libbpf.h` and `libbpf_legacy.h` close `extern "C"`
-**inside** the guard. This patch matches that.
-
-**Record:** `[libbpf already uses the correct pattern; libthermal was
-the outlier]`
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same bug on STA deauth (`mlme.c`, fixed in `4a360c6e18dfa`).
+IBSS auth already checks `len < 24 + 6` before reading auth fields.
+Probe-req path checks `len < 24 + 2`. This was the remaining IBSS deauth
+hole.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Local tree is **v7.3-rc4-27-gf0100363d8c37** (`VERSION=7
+PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`).
+`ieee80211_rx_mgmt_deauth_ibss()` exists in `net/mac80211/ibss.c`. Bug
+introduced 2012 (`2cc59e784b54`), long before this branch. Current file
+already has the fixed order (commit is an ancestor of HEAD). Evaluation
+is of the pre-fix bug in this lineage, not “already selected.”
 
-Yes. `tools/lib/thermal/include/thermal.h` lines 178–182 still have
-`#endif` before the closing `}`. Introduced in v5.19; present at v6.18
-and HEAD.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply. Surrounding function matches the pre-image; no
+conflicting refactor of this handler.
 
-`git merge-base --is-ancestor cb0ec27efac2a HEAD` → **not in this
-tree**.
-
-**Record:** `[bug present at thermal.h:178-182] [since v5.19] [fix not
-applied]`
-
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-
-Context around the hunk is identical to the mainline diff. No churn on
-this file after v6.18. Clean apply.
-
-**Record:** `[clean apply]`
-
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-
-No. File history has no other extern-C/guard fix.
-
-**Record:** `[no existing equivalent fix]`
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No earlier IBSS-specific version of this fix. `4a360c6e18dfa`
+only covers `mlme.c`. No duplicate IBSS patch.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `net/mac80211` IBSS/ad-hoc RX. **IMPORTANT** for IBSS users,
+**PERIPHERAL** vs core mm/VFS. IBSS is built with mac80211 (only
+`MAC80211_IBSS_DEBUG` is extra). Less common than infrastructure STA,
+but real (ad-hoc, some embedded/industrial).
 
-`tools/lib/thermal/` — userspace thermal netlink library (THERMAL in
-MAINTAINERS: Rafael Wysocki, Daniel Lezcano).
-
-**Criticality:** PERIPHERAL for kernel runtime; IMPORTANT as a **public
-installed userspace API** for thermal tools. Not mm/fs/net core.
-
-**Record:** `[tools/lib/thermal] [PERIPHERAL kernel / public userspace
-header]`
-
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-
-Low churn: library add (2022), threshold ABI (2024), a few
-build/leak/symbol fixes. Mature header layout, not a moving target.
-
-**Record:** `[low activity; header layout stable since 2022]`
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: mac80211 is actively developed; this IBSS handler has been
+stable since 2012. Long-lived bug, not churn from new code.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver-specific / config-specific: mac80211 IBSS
+(`NL80211_IFTYPE_ADHOC`). Not all wifi users; IBSS is a minority of
+deployments.
 
-C++ programs that include the installed `thermal.h` more than once. In-
-tree C tools (`thermal-engine`) are unaffected. Kernel image/build is
-unaffected.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Truncated deauth (len 24 or 25) on an IBSS interface. Not every
+boot; needs IBSS up plus a short frame (malformed or hostile). Remote
+on-air trigger. Local unprivileged trigger only with injection.
 
-**Record:** `[config/userspace-specific: C++ libthermal consumers]`
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: 2-byte read past `skb->len` into a local that is discarded on
+the short-frame path. No leak through `ibss_dbg` (return happens first).
+Crash only if the skb has no tailroom past 24 bytes (often it does).
+KASAN may or may not fire depending on allocator vs `skb->len`.
+Severity: **MEDIUM** (CWE-125 / packet-parser OOB), not a demonstrated
+oops or UAF.
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-
-Second `#include <thermal.h>` in one C++ translation unit (common with
-umbrella headers). Unprivileged userspace compile-time only. Not a race.
-
-**Record:** `[double include from C++] [uncommon but valid] [compile-
-time only]`
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-
-Compile failure (`stray '}'`), not oops/corruption/UAF. Stable rules
-still list **build errors** and **include-file fixes** as in-scope.
-
-**Record:** `[C++ compile break] [MEDIUM as a build bug; HIGH as
-include-file correctness; not a kernel crash]`
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-
-- **Benefit:** C++ consumers of the public header compile; long-standing
-  defect (v5.19+).
-- **Risk:** 4-line preprocessor move, no runtime, no ABI change.
-
-**Record:** `[moderate benefit for C++ libthermal users] [near-zero
-risk] [favorable]`
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** Closes a real, remotely reachable OOB in frame parsing.
+  Modest user-visible impact (IBSS, discarded 2 bytes).
+- **Risk:** Very low (3 lines, no locking/API, same pattern as mlme).
+- **Ratio:** Favorable. Cheap to take; cost of skipping is leaving a
+  parser OOB in long-lived code.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR:**
-- Real, well-explained compile break for a public C++-aware header
-- Obviously correct; matches libbpf
-- 4 lines; zero runtime/API risk
-- Buggy code is in this 6.18.53 tree; fix is not
-- Applies cleanly; no prerequisites
-- Maintainer applied v1 with “thanks for the fix”
-- Fits the **build / include-file** exception in stable-kernel-rules
+FOR:
+- Real OOB: `reason_code` at offset 24 read when `len` can be 24–25
+- Read is not debug-gated; it always ran
+- Over-the-air reachable on IBSS
+- 4-line, obviously correct, tested by landing in wireless-next via
+  Johannes Berg
+- Same class already fixed in STA mlme (`4a360c6e18dfa`)
+- No new features/APIs; no prerequisites
+- Applies cleanly; bug present since 2012 in this tree’s code
+- Buffer OOB is a documented stable category
 
-**AGAINST:**
-- Not a kernel oops, UAF, deadlock, or security hole
-- In-tree tools are C and already build
-- No multi-user Reported-by
-- libthermal is a small audience
+AGAINST:
+- No crash/syzbot/CVE/user report
+- `reason` unused on the short path; `sta_info_destroy_addr()` was
+  already guarded
+- IBSS is uncommon vs infrastructure
+- Practical crash likely rare (skb tailroom)
+- No explicit stable nomination
 
-**UNRESOLVED:**
-- Could not search lore.kernel.org/stable (HTTP 403). Unverified whether
-  anyone asked for this on the stable list.
+UNRESOLVED:
+- lore.kernel.org HTML search blocked; no independent stable-list
+  confirmation
+- Exact KASAN behavior on `skb->len` vs kmalloc size not demonstrated
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-
-1. Obviously correct and tested? **PASS** — mechanical brace move;
-   maintainer applied
-2. Fixes a real bug that affects users? **PASS** — C++ double-include of
-   the installed header fails
-3. Important issue? **PASS** — build/include-file error (explicitly
-   allowed); not a crash, but in-scope
-4. Small and contained? **PASS** — 4 lines, one header
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — reorder after an existing
+   check; maintainer merged v1
+2. Fixes a real bug that affects users? **PASS** — OOB on truncated IBSS
+   deauth
+3. Important issue (crash, security, corruption, deadlock)? **PASS**
+   (low–medium) — remote 2-byte overread in a parser; not a known oops,
+   but memory-safety
+4. Small and contained? **PASS** — +3/−1, one function
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — context matches HEAD
+6. Can apply to the local tree? **PASS** — matching pre-image in
+   `ibss.c`
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not a device ID, quirk, DT, build, or docs patch).
+Qualifies as a normal small bugfix.
 
-**Build / include-file fix.** Not a device ID, quirk, DT, or docs-only
-change.
+**Step 9.4: MAKE YOUR DECISION**
+This is a surgical bounds-check fix for a long-standing, remotely
+reachable out-of-bounds read in mac80211 IBSS deauth parsing. The
+functional destroy path was already safe; the bug is the unconditional
+2-byte overread. That is still a real memory-safety defect, the same one
+already corrected on the STA deauth path. Risk of the change is
+essentially zero. For this 7.3 tree, the code exists and the patch
+applies cleanly, so it should be taken.
 
-### Step 9.4: DECISION
+**What it solves for stable users:** A truncated IBSS deauth no longer
+reads past the frame before the length check. That avoids undefined/OOB
+behavior on a path a radio neighbor can hit.
 
-This tree ships the buggy public header. The fix is a 4-line, zero-risk
-compile repair that mainline already took. That meets stable rules for
-this 6.18 tree.
-
----
-
-## What the commit solves for this tree
-
-`thermal.h` advertises C++ support (`extern "C"`) and is installed
-(`make install` → `include/thermal.h`). The closing `}` sits outside
-`__LIBTHERMAL_H`, so a second include in one C++ file emits a stray
-brace and fails the build. Moving `#endif` below the close matches every
-other well-formed kernel userspace header. Kernel runtime is untouched.
-
-Risk vs benefit: benefit is restoring a header that this tree already
-ships; risk is none.
+**Risk vs benefit:** Benefit is modest but real; risk is negligible.
+Take it.
 
 ---
 
-## Verification
+### Verification
+- [Phase 1] Parsed commit `aa4c0a649903`; tags: Link + three SOBs
+  (Tzarfati, Korenblit, Berg); no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: `ieee80211_rx_mgmt_deauth_ibss()` +3/−1; read moved
+  after `IEEE80211_DEAUTH_FRAME_LEN` (26 = 24+2)
+- [Phase 2] Confirmed `reason` only used in `ibss_dbg`;
+  `sta_info_destroy_addr()` already after the check
+- [Phase 3] `git blame`: function from `2cc59e784b54` (2012); `git
+  merge-base --is-ancestor 2cc59e784b54 HEAD` succeeded
+- [Phase 3] Pre-image shown via `git show
+  aa4c0a649903^:net/mac80211/ibss.c`
+- [Phase 3] Author log: Intel wifi bounds-check work; series 2/2 did not
+  land
+- [Phase 4] `b4 dig -c/-a/-w/-m`: wireless-next 1/2, v1 only, no review
+  replies; 2/2 was mlme duplicate of `4a360c6e18dfa`
+- [Phase 4] `git show 4a360c6e18dfa`: same bug on STA deauth, already in
+  this tree
+- [Phase 4] lore HTML/WebFetch: 403/Anubis — UNVERIFIED for linux-stable
+  archive
+- [Phase 5] Callers: `ieee80211_ibss_rx_queued_mgmt` ← `iface.c` ADHOC ←
+  `ieee80211_rx_h_mgmt`
+- [Phase 5] `ieee80211_rx()` drops mgmt if `skb->len <
+  ieee80211_hdrlen(fc)` (~24), so 24–25 byte frames still reach the
+  handler
+- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = 7.3.0-rc4; buggy function present; apply would be
+  clean
+- [Phase 8] Failure mode: discarded 2-byte overread; severity MEDIUM;
+  IBSS-specific
+- UNVERIFIED: whether KASAN fires on this skb overread; whether linux-
+  stable already discussed it
 
-- **[Phase 1]** `git show cb0ec27efac2a`: tags are author SOB, Lezcano
-  SOB, Link; no Fixes/Reported-by/Cc: stable
-- **[Phase 1]** Body describes second-include stray `}` — matches the
-  current header
-- **[Phase 2]** Diff is `#endif` moved after `#ifdef __cplusplus` / `}`
-  / `#endif`
-- **[Phase 2]** `tools/lib/bpf/libbpf.h` uses the same close-then-guard-
-  end order
-- **[Phase 3]** `git blame tools/lib/thermal/include/thermal.h` lines
-  178–182 → `47c4b0de080ad`
-- **[Phase 3]** `git merge-base --is-ancestor 47c4b0de080ad v5.19` yes;
-  `v5.18` no
-- **[Phase 3]** `git log --oneline --
-  tools/lib/thermal/include/thermal.h`: only add + threshold ABI
-- **[Phase 3]** `git merge-base --is-ancestor cb0ec27efac2a HEAD` → not
-  in this tree
-- **[Phase 4]** `b4 dig -c cb0ec27efac2a`: lore URL + v1 only
-- **[Phase 4]** `b4 dig -a`: single revision 2026-07-21
-- **[Phase 4]** `b4 dig -w`: Rafael, Lezcano, Zhang Rui, Lukasz Luba,
-  linux-pm, linux-kernel
-- **[Phase 4]** `b4 mbox`: Lezcano “Applied, thanks for the fix”
-  (2026-08-07)
-- **[Phase 4]** WebFetch lore/all, patch.msgid.link, lore/linux-pm,
-  lore/stable → 403
-- **[Phase 5]** No `*.cpp` under `tools/thermal` or `tools/lib/thermal`
-- **[Phase 5]** In-tree include sites are C; `thermal-engine.c` calls
-  `thermal_init`
-- **[Phase 5]** Makefile `install_headers` installs `include/thermal.h`
-- **[Phase 6]** `make kernelversion` / Makefile → 6.18.53; `git describe
-  HEAD` → `p-6.18-1-g03b85e06ca9bf`
-- **[Phase 6]** HEAD `thermal.h` still has `#endif` before `}`
-- **[Phase 6]** `git log v6.18..HEAD --
-  tools/lib/thermal/include/thermal.h` empty
-- **[Phase 7]** MAINTAINERS THERMAL covers `tools/lib/thermal/`
-- **[Phase 8]** Failure mode verified as C++ compile-time only, not
-  kernel oops
-- **UNVERIFIED:** stable@ mailing-list archive (HTTP 403); does not
-  change the verdict
-
-The local 6.18.53 tree has the bug, the fix is small and correct, and it
-applies cleanly.
+The patch is small, correct, and fixes a real parser OOB in code this
+tree has had since 2012.
 
 **YES**
 
- tools/lib/thermal/include/thermal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/ibss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/thermal/include/thermal.h b/tools/lib/thermal/include/thermal.h
-index 818ecdfb46e50..d9097271d9fad 100644
---- a/tools/lib/thermal/include/thermal.h
-+++ b/tools/lib/thermal/include/thermal.h
-@@ -175,8 +175,8 @@ LIBTHERMAL_API thermal_error_t thermal_sampling_handle(struct thermal_handler *t
+diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
+index 6ca2ff354e768..4dc748a667a72 100644
+--- a/net/mac80211/ibss.c
++++ b/net/mac80211/ibss.c
+@@ -910,11 +910,13 @@ static void ieee80211_rx_mgmt_deauth_ibss(struct ieee80211_sub_if_data *sdata,
+ 					  struct ieee80211_mgmt *mgmt,
+ 					  size_t len)
+ {
+-	u16 reason = le16_to_cpu(mgmt->u.deauth.reason_code);
++	u16 reason;
  
- LIBTHERMAL_API int thermal_sampling_fd(struct thermal_handler *th);
+ 	if (len < IEEE80211_DEAUTH_FRAME_LEN)
+ 		return;
  
--#endif /* __LIBTHERMAL_H */
--
- #ifdef __cplusplus
- }
- #endif
++	reason = le16_to_cpu(mgmt->u.deauth.reason_code);
 +
-+#endif /* __LIBTHERMAL_H */
+ 	ibss_dbg(sdata, "RX DeAuth SA=%pM DA=%pM\n", mgmt->sa, mgmt->da);
+ 	ibss_dbg(sdata, "\tBSSID=%pM (reason: %d)\n", mgmt->bssid, reason);
+ 	sta_info_destroy_addr(sdata, mgmt->sa);
 -- 
 2.53.0
 
