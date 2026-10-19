@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA2663DB34;
-	Mon, 19 Oct 2026 14:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DFC63DB5C;
+	Mon, 19 Oct 2026 14:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418769; cv=none; b=I3P09GLtobCg59A4tU/Ce5OIXsD88lw3XD6oHnI36ltyz7v1Fz79FyAq0U7xGhBhjZaPZKL1Q344PYZO8kFx5eF4Q2JwASqQZSqtE0+qCDqmoAk4PLSXiyC3ShFBPT0iACsq6EAbwUp8n0jIuqs/1JxElbvQjjZxtg06GQxzkDM=
+	t=1792418770; cv=none; b=WPiss4Lk9LWVUjB9ZA5Zv9Mnh7+zn+qlF9lOoMgYor6TxWipyS8cO/woPSsC0F/RWW9J+jhL6fLxAVVP0C9W1N22P8uln7oBZDeThbeNdmoEPlp5N1+LMg+nsUjvSJ6AfI9an2t3pa5r/SVzYJ1RouUIW5sEWzkwOZl9Xlgg4mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418769; c=relaxed/simple;
-	bh=JpIOdMdUqqqsLHeKs4c1NWOHSQJbekSIoZpUBHsn6mA=;
+	s=arc-20240116; t=1792418770; c=relaxed/simple;
+	bh=Tve3eLng/1NxsN3ahkLKaF2/k4aK1FH/bs13xFaU6Ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lg0K81iM2W307Hlua3mBsmLjdlkTVTb8PJGfOgXIxCEt2tRYBBry8ZnEKHdx20uE0AAsNdOVQT+MA4KuoA/qQzfBr96lx+ncDe5OlpIifGwW0HcBB9m2Ss87tOxO4SL+DtlAIL+Wm569+Ngp26mhgG5fB+VSaRh9VSScwaF6gA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i1VZCZ6S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mILrszFp+C9d3QL4WqfxVmfBh+3cvcQTw99Mi4Y/PLD9erU+BDRF8juadFIZIQTkqhflZUvIGdMa7qGQ1R0wXfX0z8J6D9z2nuueLKdURl574FHcK6pn2Aw2AflOzaidxLdcX6oevYQw4d/rhJQokV9VX8eyRBWlcllaUJb3hTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O9l01LMg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i1VZCZ6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEE21F000C6;
-	Mon, 19 Oct 2026 14:06:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O9l01LMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9262D1F000C4;
+	Mon, 19 Oct 2026 14:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418766;
-	bh=8Un+t9UHQoa2+aMNN+qjSUAj1SPh0+dl3IWX8+UPWnM=;
+	s=k20260515; t=1792418767;
+	bh=WVdthEYcxHl8cn/x2J1zllQeLKilCWicvaEWOCuh3bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i1VZCZ6SFoEf5cLUGjof/Y++jzxeMPeNflQovH2/s+v2sjngLpDX7OoONQhnpmg0K
-	 yuyj00LqcRZa20DPXTV5k7xCUSvwrY6x51uSsVh+Xw1AXnqQhhLOquHp2RppVM8A+A
-	 HNpvvfASllkqI9z/prxThyEyDM4pQn2ayAfN0hAnJorI2zqm/EyB+ovtBziBs0MP2f
-	 dGEtR9g84RHJ5JrH9gAdhZvT+iuh4mE6ixk+X9L0QwVgYX0a7SUl4FLTc6HGJYUg5d
-	 trTckcTnK9DhPus1IQDNxrxQVCYfk2ylAn7j+Afz26GvsNaHwbSdVfeiVJIC/e1X5O
-	 /2w4rNoh57CXQ==
+	b=O9l01LMgglyVVBNjC2RXALkDx47bTfJNZIV5aY2tYK6Ue/4M6UW6BMfS2sKc17NCI
+	 +7DIYyLf/uDeauoe28t79DnqZITuiXIdK/IPj5MrgJTSKfU0kCou+Nf7c2LqMN0A9H
+	 7RVCQlCeDQgF3/J2EIpqUPeTyCdd4YqmEWMC9l2y4SBBJbcZqSo+i19rs+zCjnEBw6
+	 IbsgkEIsW236v6532ZXEmFyVJfgjgFpW6+7JLD1K5zIINhl+owrYI824+OJgYgKnpy
+	 MjAA8ziJdJTkZk90DRUYfVjvxfHZjalw2gz/evXRvt1oiBrmsFIJhlQQ+ptcKZtpMy
+	 Owo94nRnI6tRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: renpanpan <renpanpan@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: David Strahan <David.Strahan@microchip.com>,
+	David Strahan <david.strahan@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	James.Bottomley@HansenPartnership.com,
+	mkp@kernel.org,
+	storagedev@microchip.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 14-dv1001TU
-Date: Mon, 19 Oct 2026 09:52:51 -0400
-Message-ID: <20261019135441.1420968-480-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] scsi: smartpqi: Add new PCI device-ids
+Date: Mon, 19 Oct 2026 09:52:52 -0400
+Message-ID: <20261019135441.1420968-481-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,355 +57,422 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: renpanpan <renpanpan@kylinos.cn>
+From: David Strahan <David.Strahan@microchip.com>
 
-[ Upstream commit ece609abc95cc0f75e633d93f3d868b030d9a8fe ]
+[ Upstream commit 1a220e6e87a31c2572cd07ff47023e5cd92ac80f ]
 
-The HP Pavilion 14-dv1001TU (subsystem ID 103c:8987) uses a Realtek
-ALC287 codec. The mute LED on this machine is controlled by GPIO bit
-0x10, which was verified via hda-verb, but the subsystem ID is missing
-from the quirk table. As a result, the ALC287_FIXUP_HP_GPIO_LED fixup
-that drives GPIO 0x10 is never applied and the mute LED stays off even
-though the associated LED class device toggles correctly.
+All PCI ID entries in Hex.
 
-Add the missing SND_PCI_QUIRK entry to map this subsystem ID to
-ALC287_FIXUP_HP_GPIO_LED so the mute LED works as expected.
+Add PCI IDs for Hurray Data controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 207d / 4246
+                                            9005 / 028f / 207d / 4256
+                                            9005 / 028f / 207d / 4356
+                                            9005 / 028f / 207d / 4940
+                                            9005 / 028f / 207d / 4a46
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221810
-Signed-off-by: renpanpan <renpanpan@kylinos.cn>
-Link: https://patch.msgid.link/20260930065504.24151-1-rppxj178543@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add PCI IDs for ZTE controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 1cf2 / 5451
+                                            9005 / 028f / 1cf2 / 5452
+                                            9005 / 028f / 1cf2 / 5453
+
+Add PCI ID for Ramaxel controller:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 1f3f / 0670
+
+Signed-off-by: David Strahan <david.strahan@microchip.com>
+Reviewed-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/linux-scsi/20260722220401.6357-1-david.strahan@microchip.com/
+Link: https://patch.msgid.link/20260722220401.6357-4-david.strahan@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line HP ALC287 mute-LED quirk for this 6.18.y tree. The
-SSID is missing from `alc269_fixup_tbl`, GPIO 0x10 was verified on the
-machine, and the existing `ALC287_FIXUP_HP_GPIO_LED` fixup is already
-present.
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 1)...
+Retry attempt 1...
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1 — Subject**
+- Record: `[scsi: smartpqi] [Add] new PCI device-ids for Hurray Data,
+  ZTE, and Ramaxel OEM boards`
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ALSA/hda/realtek] [Add] [mute LED quirk for HP Pavilion
-14-dv1001TU]
-Subsystem prefix `ALSA: hda/realtek`. Action verb is “Add”, but the body
-is a missing-quirk hardware workaround, not a new feature.
+**Step 1.2 — Tags**
+- Record:
+  - `Reviewed-by: Don Brace <don.brace@microchip.com>` (listed smartpqi
+    maintainer in MAINTAINERS)
+  - `Link: https://lore.kernel.org/linux-
+    scsi/20260722220401.6357-1-david.strahan@microchip.com/` (cover
+    letter)
+  - `Link: https://patch.msgid.link/20260722220401.6357-4-
+    david.strahan@microchip.com/` (this patch)
+  - `Signed-off-by: David Strahan <david.strahan@microchip.com>`
+  - `Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>`
+    (SCSI maintainer)
+  - No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence expected)
+  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+    ...]` markers
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Link: https://bugzilla.kernel.org/show_bug.cgi?id=221810 (user bug
-  report)
-- Signed-off-by: renpanpan &lt;renpanpan@kylinos.cn&gt; (author)
-- Link:
-  https://patch.msgid.link/20260930065504.24151-1-rppxj178543@163.com
-- Signed-off-by: Takashi Iwai &lt;tiwai@suse.de&gt; (ALSA/HDA
-  maintainer)
-- No Fixes: tag (expected for this review)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by / Cc: stable
-- Ignore pipeline-added “[Upstream commit …]” and “Signed-off-by: Sasha
-  Levin”
+**Step 1.3 — Body**
+- Record: Adds nine `PCI_DEVICE_SUB` entries (VID `9005` / DID `028f`)
+  for:
+  - Hurray Data SVID `207d`: SDIDs `4246`, `4256`, `4356`, `4940`,
+    `4a46`
+  - ZTE SVID `1cf2`: SDIDs `5451`, `5452`, `5453`
+  - Ramaxel SVID `1f3f`: SDID `0670`
+- Symptom/failure mode: those OEM SKUs are not in the explicit ID table,
+  so they only bind via the `PCI_ANY_ID` wildcard. With
+  `disable_device_id_wildcards=1`, probe returns `-ENODEV`.
+- Version info: submitted against Martin Petersen’s `7.2/scsi-queue`;
+  applied to `7.3/scsi-staging` / `7.3/scsi-queue`.
+- Root cause: missing OEM subsystem IDs, not a logic bug.
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: HP Pavilion 14-dv1001TU (SSID 103c:8987, Realtek ALC287) never
-  matches a quirk, so `ALC287_FIXUP_HP_GPIO_LED` is not applied.
-- Symptom: speaker mute works; physical mute LED stays off. LED class
-  device `/sys/class/leds/hda::mute` still toggles.
-- Root cause: GPIO bit 0x10 drives the LED (verified with hda-verb);
-  that GPIO is what `alc287_fixup_hp_gpio_led()` programs, but 103c:8987
-  is absent from the table.
-- Version info in the message: none. Bugzilla reporter used kernel
-  7.1.5-arch1-2; the omission is in this 6.18 tree as well.
+**Step 1.4 — Hidden bug fix?**
+- Record: Not a disguised crash/UAF fix. Cover letter says “No
+  functional changes.” It is still a hardware-enablement ID table
+  update, which is an explicit stable exception.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit hardware quirk
-addition for a missing SSID.
+## Phase 2: Diff analysis
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 2.1 — Inventory**
+- Record: `drivers/scsi/smartpqi/smartpqi_init.c` only; `+36 / -0`.
+  Function/object: `pqi_pci_id_table[]`. Surgical, single-file.
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `sound/hda/codecs/realtek/alc269.c` (+1 / −0)
-- Function/table: `alc269_fixup_tbl[]`
-- Scope: single-file, one-line surgical quirk
+**Step 2.2 — Flow change**
+- Record: Before: those nine subsystem IDs were absent; match fell
+  through to the table’s `PCI_ANY_ID` catch-all. After: they match
+  specific `PCI_DEVICE_SUB` rows first. No probe/remove/ioctl logic
+  changes.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record: Before, `snd_hda_pick_fixup()` in the ALC269 probe path did not
-match 103c:8987, so no GPIO mute-LED hook ran. After, that SSID maps to
-`ALC287_FIXUP_HP_GPIO_LED`, which calls `alc287_fixup_hp_gpio_led()` →
-`alc_fixup_hp_gpio_led(codec, action, 0x10, 0)` (mute mask 0x10, no
-micmute mask). Only this SSID is affected.
+**Step 2.3 — Bug mechanism**
+- Record: Category **hardware workaround / device ID addition**. Not
+  UAF, leak, race, etc.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Hardware workaround / codec quirk] Missing `SND_PCI_QUIRK`
-meant GPIO 0x10 was never configured as the mute LED. The fix adds that
-table entry. Not a UAF, leak, race, or crash.
+**Step 2.4 — Fix quality**
+- Record: Obviously correct copies of adjacent `PCI_DEVICE_SUB` rows. No
+  `driver_data`. No API or locking change. Regression risk is negligible
+  (table grows; PCI match still first-match). Duplicate IDs were grepped
+  and are not present.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct and minimal. Neighboring HP Pavilion entries
-already use the same fixup (e.g. 0x898a “HP Pavilion 15-eg100”).
-Matching is by PCI subsystem ID only, so other machines are untouched.
-Regression risk is very low; wrong GPIO on this one SKU would at worst
-leave the LED still broken.
+## Phase 3: Git history
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 3.1 — Blame / introduction**
+- Record: Driver added in `6c223761eb548` (2016-08-12), `smartpqi:
+  initial commit of Microsemi smartpqi driver`. Catch-all
+  `PCI_DEVICE_SUB(..., PCI_ANY_ID, PCI_ANY_ID)` is from that same
+  commit. Vendor blocks already exist: Hurray `0x207d` (e.g.
+  `48e6b7e708029`, `01b8bdddcfab0`), ZTE `0x1cf2` (since
+  `09d9968a8eff8`, 2021), Ramaxel `0x1f3f` (`01b8bdddcfab0` /
+  `dab5378485f60`).
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: The bug is a missing row, not a bad existing line. Neighbors
-0x8981 and 0x898a come from `aeeb85f26c3bb` (“ALSA: hda: Split Realtek
-HD-audio codec driver”, 2025-07-11), which is an ancestor of this tree.
-`ALC287_FIXUP_HP_GPIO_LED` / `alc287_fixup_hp_gpio_led()` exist in that
-split and at the parent of this patch.
+**Step 3.2 — Fixes: tag**
+- Record: None. Not applicable.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable. The defect is an omitted SSID for
-a laptop that already uses the long-standing ALC287 GPIO-LED fixup.
+**Step 3.3 — File history**
+- Record: Recent same-file work is a 4-patch series:
+  1. `225548863f0a2` AIO retry marker
+  2. `c64b2ab2ff516` `CCISS_BIG_PASSTHRU` ioctl
+  3. `1a220e6e87a31` this ID patch
+  4. `913337c48e6aa` version string
+- This patch only inserts ID rows; it does not use the ioctl or AIO
+  changes. Standalone.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Same file has many one-line mute-LED quirks (Pavilion 15-eg0xxx,
-15-eg3xxx, Victus, etc.). This is standalone, not patch X/Y. No extra
-refactor is required.
+**Step 3.4 — Author**
+- Record: David Strahan is a regular Microchip smartpqi contributor
+  (many prior PCI ID commits). Reviewed by Don Brace, the listed
+  maintainer.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: `git log --author=renpanpan -- sound/hda/codecs/realtek/` shows
-only this commit in this tree. Author is not the ALSA maintainer;
-Takashi Iwai applied it the same day.
+**Step 3.5 — Prerequisites**
+- Record: Needs existing `pqi_pci_id_table` and neighboring `0x207d` /
+  `0x1cf2` / `0x1f3f` rows for a clean apply. Those exist in this
+  checkout. No new helpers or structs.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Parent already has `alc287_fixup_hp_gpio_led()`, enum
-`ALC287_FIXUP_HP_GPIO_LED`, table entry for 0x898a, and
-`alc_fixup_hp_gpio_led()` in `realtek.c`. Applies standalone.
+## Phase 4: Mailing list / external
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.1 — Original discussion**
+- Record: `b4 dig -c 1a220e6e87a31` → https://patch.msgid.link/202607222
+  20401.6357-4-david.strahan@microchip.com
+- Cover: `[PATCH v1 0/4] smartpqi: fixes and updates for 2.1.42-011`
+- This patch is `[PATCH v1 3/4] smartpqi: add new pci device-ids`
+- `b4 dig -a` shows one v1 of this ID patch (other “v2/v3/v4” labels are
+  sibling patches in the same send, not later ID-table revisions).
+  Applied version is that v1.
+- Martin K. Petersen: “Applied to 7.3/scsi-staging, thanks!” then
+  “Applied to 7.3/scsi-queue” listing `[3/4] ... 1a220e6e87a3`. No NAKs,
+  no stable nomination, no risk comments on the ID patch. Thread replies
+  were about patches 1/4 and 2/4, not IDs.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 66ab53f7fac5a` →
-  https://patch.msgid.link/20260930065504.24151-1-rppxj178543@163.com
-- `b4 dig -a`: single v1 series, no later revision
-- Thread: Takashi Iwai replied “Applied now. Thanks.” No NAK, no
-  requested changes, no stable note
-- Lore WebFetch returned 403; the full thread was recovered via `b4 dig
-  -m`
+**Step 4.2 — Recipients (`b4 dig -w`)**
+- Record: David Strahan, `linux-scsi@vger.kernel.org`, Don Brace.
+  Correct list and maintainer.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: `b4 dig -w` recipients: tiwai@suse.de, perex@perex.cz, alsa-
-devel, linux-kernel, author. Subsystem maintainer was To: and merged it.
+**Step 4.3 — Bug report**
+- Record: No `Reported-by` / bugzilla / syzbot. Hardware enablement from
+  the vendor.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: Bugzilla 221810, title “ALC287: HP Pavilion 14-dv1001TU
-(103c:8987) missing mute LED quirk”. Reporter (Arch, kernel 7.1.5)
-documented Product ID 50N47PA#ACJ, SOF TGL driver, ALC287, and hda-verb
-GPIO 0x10 on/off. They could not rebuild the module on that machine.
-Patch author confirmed the analysis and posted the quirk. No Tested-by
-of the kernel patch itself; hardware GPIO behavior is verified.
+**Step 4.4 — Series**
+- Record: Patches 1–2 are independent (retry-marker callback; new
+  ioctl). Patch 4 is a version string. This ID commit does not depend on
+  them.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone one-patch series. Same pattern as `8db3663d3c3e2`
-(Pavilion 15-eg0xxx, GPIO 0x10, `ALC287_FIXUP_HP_GPIO_LED`), which is
-already in this series (`v6.18.24~178`).
+**Step 4.5 — Stable list**
+- Record: lore.kernel.org/stable fetch returned HTTP 403. mbox has no
+  “stable” / “NAK” hits. UNVERIFIED: whether anyone already asked
+  stable@ about this hash.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned 403. UNVERIFIED whether
-anyone discussed this hash on stable@. No evidence it was rejected.
+## Phase 5: Code semantics
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 5.1 — Functions**
+- Record: `pqi_pci_id_table` only (not a function). Consumed by
+  `MODULE_DEVICE_TABLE(pci, pqi_pci_id_table)` and
+  `pqi_pci_driver.id_table`.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No function body edited. Added one entry in
-`alc269_fixup_tbl[]`, consumed by `snd_hda_pick_fixup()`. Downstream:
-`alc287_fixup_hp_gpio_led` → `alc_fixup_hp_gpio_led`.
+**Step 5.2 — Callers**
+- Record: `pci_register_driver(&pqi_pci_driver)` from `pqi_init()`.
+  Probe is `pqi_pci_probe()`. Path is PCI enumeration / module autoload,
+  not a syscall hot path.
 
-Step 5.2: TRACE CALLERS
-Record: `alc269_fixup_tbl` is passed from ALC269-family probe
-(`alc269.c` around the `snd_hda_pick_fixup(codec, alc269_fixup_models,
-alc269_fixup_tbl, alc269_fixups)` call). Codec probe / device
-enumeration, not IRQ or a syscall hot path.
+**Step 5.3 — Callees**
+- Record: Probe uses the matched `pci_device_id`. Relevant logic:
 
-Step 5.3: TRACE CALLEES
-Record: `alc_fixup_hp_gpio_led()` sets `gpio_mute_led_mask` and
-registers the mute LED cdev with `gpio_mute_led_set`. mute_mask=0x10
-matches the reporter’s SET_GPIO_MASK/DIR/DATA 0x10.
+```9468:9478:drivers/scsi/smartpqi/smartpqi_init.c
+        if (pqi_disable_device_id_wildcards &&
+                id->subvendor == PCI_ANY_ID &&
+                id->subdevice == PCI_ANY_ID) {
+                dev_warn(&pci_dev->dev,
+                        "controller not probed because device ID
+wildcards are disabled\n");
+                return -ENODEV;
+        }
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace mute → HDA generic LED cdev → GPIO. Reachable on this
-laptop whenever the Realtek HDA codec probes. Unprivileged unmute/mute
-of speakers is enough once the quirk is applied; today the LED class
-device already toggles, but GPIO is never programmed.
+        if (id->subvendor == PCI_ANY_ID || id->subdevice == PCI_ANY_ID)
+                dev_warn(&pci_dev->dev,
+                        "controller device ID matched using
+wildcards\n");
+```
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Multiple HP SSIDs already use `ALC287_FIXUP_HP_GPIO_LED`
-(0x87c8, 0x87cb, 0x87cc, 0x88d0, 0x8919, 0x898a, 0x8a0f, …). Same bug
-class: new HP SKU omitted from the table.
+**Step 5.4 — Reachability**
+- Record: Yes. Plug-in / boot with `CONFIG_SCSI_SMARTPQI`. Default:
+  catch-all already binds `9005:028f`. With
+  `disable_device_id_wildcards=1`, only explicit rows bind — these nine
+  SKUs need the new entries.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 5.5 — Similar patterns**
+- Record: Same file has a long history of OEM ID additions (`Add new PCI
+  IDs`, Hurray/ZTE/Ramaxel). This matches that pattern.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Local tree is `v6.18.57` (Makefile 6.18.57). Parent of the
-candidate has 0x8981 then 0x898a with **no** 0x8987. File path
-`sound/hda/codecs/realtek/alc269.c` exists (post-split). Fixup enum and
-function exist. The laptop is a consumer HP Pavilion 14-dv1xxx; the
-omission is old, not introduced after 6.18.
+## Phase 6: Local tree
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply. Context lines match. No conflicting 0x8987 entry.
-Expected difficulty: clean apply.
+**Step 6.1 — Does the target code exist here?**
+- Record: Local tree is **v7.3-rc4** (`7.3.0-rc4`).
+  `drivers/scsi/smartpqi/` exists (`CONFIG_SCSI_SMARTPQI`). Neighboring
+  Hurray/ZTE/Ramaxel rows exist. The nine IDs are already in the table
+  because `1a220e6e87a31` is an ancestor of HEAD. The code this commit
+  touches is present.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No other 103c:8987 quirk. Similar GPIO-LED quirks for other HP
-models are present; they do not cover this SSID.
+**Step 6.2 — Backport difficulty**
+- Record: In this tree: already applied / would apply cleanly. Older
+  stables may need context tweak if some neighboring IDs are missing;
+  still a mechanical table insert.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 6.3 — Related fixes already here?**
+- Record: Earlier Hurray/ZTE/Ramaxel IDs are here; these nine SDIDs were
+  new in this commit. No alternate fix.
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [sound/hda/realtek] [IMPORTANT] — common laptop audio, not core
-mm/fs. Impact is one HP SKU’s mute LED.
+## Phase 7: Subsystem context
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Very active quirk table; recent log is mostly per-model
-`SND_PCI_QUIRK` additions. Mature driver, ongoing hardware ID
-maintenance.
+**Step 7.1**
+- Record: SCSI hardware driver `drivers/scsi/smartpqi/`. Criticality
+  **IMPORTANT** (storage RAID/HBA on servers; not core mm/VFS). Not
+  staging.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 7.2**
+- Record: Actively maintained by Microchip; frequent ID and bugfix
+  updates. Driver itself is mature (2016).
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / platform-specific: owners of HP Pavilion
-14-dv1001TU (PCI SSID 103c:8987, ALC287).
+## Phase 8: Impact and risk
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every boot/probe on that machine. Mute key / userspace mute. Not
-a race. No extra privilege needed. Audio mute itself already works.
+**Step 8.1 — Who is affected**
+- Record: Driver-specific: Hurray Data, ZTE, and Ramaxel boards using
+  Adaptec2/Microchip `9005:028f`.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: [Mute LED stays off] [MEDIUM/LOW as a crash class, but a real
-hardware bug]. Not panic, deadlock, or data corruption. User-visible
-broken LED on a shipping laptop.
+**Step 8.2 — Trigger**
+- Record: Device present at enumeration. Common for those machines.
+  Unprivileged users do not trigger it; missing IDs mean the RAID
+  controller never binds (especially with wildcards disabled).
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record: Benefit: restores mute LED on this SKU using the same fixup
-already used on sibling Pavilion models. Risk: one SSID-guarded line;
-very low. Ratio strongly favors backport.
+**Step 8.3 — Failure mode**
+- Record: Controller not claimed (or only via wildcard, which some
+  deployments disable). Severity **MEDIUM** as a “bug,” **HIGH** as
+  hardware enablement for those boxes (boot disks can sit unused). Not a
+  panic/UAF.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 8.4 — Risk vs benefit**
+- Record: Benefit: OEM HBAs work / are explicitly supported, including
+  `disable_device_id_wildcards=1`. Risk: very low (36-line ID table
+  only). Ratio strongly favors backport.
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real, user-reported hardware bug (bugzilla 221810) with hda-verb proof
-  of GPIO 0x10
-- Existing, already-used fixup; only the SSID was missing
-- One-line `SND_PCI_QUIRK` — the documented audio-codec quirk exception
-- ALSA maintainer merged v1 the same day; no NAKs
-- Applies cleanly; fixup and table exist in 6.18.57
-- Same pattern as other HP mute-LED quirks already in this series (e.g.
-  15-eg0xxx in v6.18.24)
-AGAINST:
-- Not a crash, security hole, or data-corruption bug
-- No Tested-by of the built module (reporter used hda-verb only)
-- Affects one laptop SKU
-UNRESOLVED:
-- Stable@ discussion (lore/stable 403)
-- Original reporter never confirmed the kernel module on that machine
+## Phase 9: Synthesis
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? [PASS] — GPIO verified on hardware;
-   maintainer applied; kernel-module Tested-by missing but the mapping
-   is the standard ALC287 GPIO-LED path
-2. Fixes a real bug that affects users? [PASS] — mute LED never lights
-   on this Pavilion
-3. Important issue? [PASS under hardware-quirk exception] — not
-   crash/corruption; codec quirk / broken LED on real hardware
-4. Small and contained? [PASS] — +1 line, one table
-5. No new features or APIs? [PASS] — no new API; enables existing fixup
-   for one SSID
-6. Can apply to the local tree? [PASS] — file, neighbors, and
-   `ALC287_FIXUP_HP_GPIO_LED` all present
+**Step 9.1 — Evidence**
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Audio codec quirk (`SND_PCI_QUIRK` for a specific laptop).
-Explicitly treated as stable material.
+For:
+- Explicit stable exception: PCI IDs on an existing driver
+- Nine OEM SKUs; same VID/DID as the rest of the table
+- `disable_device_id_wildcards` makes explicit IDs actually required
+- 36 lines, one file, no logic/API change
+- Reviewed by Don Brace; applied by Martin K. Petersen
+- Standalone vs the rest of the 4-patch series
+- Driver and vendor blocks exist in this tree
 
-Step 9.4: MAKE YOUR DECISION
-This is a contained hardware quirk for a machine this tree already
-supports (ALC287 + `ALC287_FIXUP_HP_GPIO_LED`). The bug is real and
-user-visible; the change cannot affect other SSIDs. It should be
-backported to this 6.18.y tree.
+Against:
+- Cover letter: “No functional changes”
+- Catch-all already matches `9005:028f` when wildcards stay enabled
+- Not a crash/security/corruption fix
+- No `Cc: stable` (not a negative per the review rules)
+
+Unresolved:
+- Stable@ search 403; no independent confirmation of a prior stable
+  request
+
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** (mechanical ID rows;
+   maintainer Reviewed-by)
+2. Real user-facing issue? **PASS** (hardware bind / explicit support)
+3. Important? **PASS** under the PCI-ID exception (storage HBA
+   enablement)
+4. Small and contained? **PASS** (+36, one table)
+5. No new features/APIs? **PASS** (IDs only; ioctl/version patches are
+   separate)
+6. Can apply to this tree? **PASS** (driver + table present; insertion
+   points exist)
+
+**Step 9.3 — Exception**
+- Record: **NEW DEVICE IDs** to an existing driver.
+
+**Step 9.4 — Decision**
+This is the standard PCI ID stable case. It should be backported to this
+tree: the smartpqi driver and ID table are here, the change is self-
+contained, and it enables known OEM controllers (including when wildcard
+matching is disabled).
+
+### What it solves for stable users
+Without these rows, Hurray/ZTE/Ramaxel `9005:028f` boards only match the
+wildcard. Default kernels still probe them; kernels using
+`disable_device_id_wildcards` refuse them. Listing the IDs is how this
+driver declares supported SKUs and how those machines get a bound HBA.
+
+### Risk vs benefit
+Benefit is hardware enablement; risk is essentially nil. No dependency
+on the AIO or `CCISS_BIG_PASSTHRU` patches.
 
 Verification:
-- [Phase 1] Parsed tags: bugzilla 221810; msgid link; SOB renpanpan and
-  Takashi Iwai; no Fixes/Cc-stable/Tested-by
-- [Phase 1] `git describe HEAD` / `make kernelversion` / Makefile:
-  v6.18.57-155-gcdf239ca885b2, 6.18.57
-- [Phase 2] Diff: +1 line in `alc269_fixup_tbl[]` mapping 0x103c:0x8987
-  → `ALC287_FIXUP_HP_GPIO_LED`
-- [Phase 2] `alc287_fixup_hp_gpio_led()` at alc269.c:1386 uses mute_mask
-  0x10, matching the report
-- [Phase 2] `alc_fixup_hp_gpio_led()` in realtek.c:2223 sets
-  `gpio_mute_led_mask` and registers the mute LED cdev
-- [Phase 3] Parent `git grep 0x8987` empty; neighbors 0x8981/0x898a
-  present
-- [Phase 3] `git merge-base --is-ancestor aeeb85f26c3bb HEAD` succeeded
-  (codec split / file path in this tree)
-- [Phase 3] `alc287_fixup_hp_gpio_led` present at `66ab53f7fac5a^`
-- [Phase 3] Author has no other realtek commits in this tree
-- [Phase 4] `b4 dig -c 66ab53f7fac5a`: v1 only; lore
-  patch.msgid.link/20260930065504.24151-1-rppxj178543@163.com
-- [Phase 4] `b4 dig -w`: To tiwai, Cc perex/alsa-devel/lkml
-- [Phase 4] mbox: Iwai “Applied now. Thanks.” No NAK
-- [Phase 4] curl bugzilla 221810: GPIO 0x10 verified; reporter on 7.1.5;
-  could not test rebuilt module
-- [Phase 4] lore/stable search: 403, UNVERIFIED
-- [Phase 5] `snd_hda_pick_fixup(..., alc269_fixup_tbl, ...)` at
-  alc269.c:8557 during codec probe
-- [Phase 6] No duplicate 103c:8987; context applies cleanly
-- [Phase 6] Similar quirk `8db3663d3c3e2` is in this series
-  (`v6.18.24~178`) — same fixup, different SSID
-- [Phase 8] Failure mode: mute LED stuck off, audio mute still works;
-  SSID-scoped
-- UNVERIFIED: whether the compiled quirk was tested on 14-dv1001TU (hda-
-  verb only)
-- UNVERIFIED: stable@ thread contents (HTTP 403)
-
-The patch is a one-line SSID quirk onto an existing ALC287 GPIO mute-LED
-fixup. That is the standard audio-codec exception, it matches verified
-hardware, and it applies cleanly to this 6.18.57 tree.
+- [Phase 1] Parsed tags: Reviewed-by Don Brace; Links to cover
+  `...6357-1` and patch `...6357-4`; SOBs Strahan and Martin Petersen;
+  no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +36 in `pqi_pci_id_table` only; nine `PCI_DEVICE_SUB`
+  entries; grep showed no duplicate SDIDs
+- [Phase 3] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` → `7.3.0-rc4`
+- [Phase 3] Commit SHA `1a220e6e87a31`; `git merge-base --is-ancestor
+  1a220e6e87a31 HEAD` succeeded
+- [Phase 3] Driver intro `6c223761eb548` (2016); catch-all from that
+  commit; prior Hurray `48e6b7e708029` / `01b8bdddcfab0`; ZTE
+  `09d9968a8eff8`; Ramaxel `dab5378485f60`
+- [Phase 3] Parent of ID commit still has neighbors `0x4240`, `0x4840`,
+  `0x544f`, `0x54da`, `0x0610`
+- [Phase 4] `b4 dig -c 1a220e6e87a31` → msgid `20260722220401.6357-4`;
+  `-w` CC linux-scsi + Don Brace; `-a` single v1 of this ID patch; `-m`
+  saved `/tmp/smartpqi-ids.mbox`
+- [Phase 4] Cover letter: “Adds PCI IDs … No functional changes.”
+  Martin: applied 1/4–4/4 to 7.3/scsi-queue. No NAK on IDs
+- [Phase 4] lore.kernel.org WebFetch 403; stable@ discussion UNVERIFIED
+- [Phase 5] `pqi_pci_probe` wildcard-disable path verified at lines
+  9468–9478; `module_param_named(disable_device_id_wildcards, ...)`
+- [Phase 6] Grep of current `smartpqi_init.c` found all nine new IDs;
+  `CONFIG_SCSI_SMARTPQI` in `drivers/scsi/smartpqi/Kconfig`
+- [Phase 7] MAINTAINERS: Don Brace, Supported
+- [Phase 8] Failure: `-ENODEV` when wildcards disabled; otherwise
+  wildcard match + warning
+- UNVERIFIED: whether older stable branches need context adjustment
+  around missing neighboring IDs (not this checkout)
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/smartpqi/smartpqi_init.c | 36 +++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index a40b85fbaf393..2a466ef894697 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6902,6 +6902,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8975, "HP EliteBook x360 840 Aero G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x897d, "HP mt440 Mobile Thin Client U74", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8981, "HP Elite Dragonfly G3", ALC245_FIXUP_CS35L41_SPI_4),
-+	SND_PCI_QUIRK(0x103c, 0x8987, "HP Pavilion 14-dv1001TU", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x898e, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x898f, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 88cffb1fb59ce..3f5fabf723c3e 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -10152,10 +10152,30 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x207d, 0x4240)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4246)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4256)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4356)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x207d, 0x4840)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4940)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4a46)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_ADVANTECH, 0x8312)
+@@ -10340,6 +10360,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1cf2, 0x544f)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5451)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5452)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5453)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1cf2, 0x54da)
+@@ -10380,6 +10412,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1f3f, 0x0610)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1f3f, 0x0670)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_LENOVO, 0x0220)
 -- 
 2.53.0
 
