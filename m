@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14F15458D2;
-	Mon, 19 Oct 2026 14:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B81C6498E5;
+	Mon, 19 Oct 2026 14:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418801; cv=none; b=BQNd4m8BkS7RygiRyDFYb5R+MHAIvd9mKPFbzbKD8XxVYM3fcirTMK7h19LyOhfQY9U5hUezssZDf8GMo+dnlQ9DtOhRnBgvdbZzA9IvJ2GqFN2KUXyttLVR0usnibgm5HkunxdGA9pwBpudCER5uzfw1xnSaSzqKkLo3uWTk3c=
+	t=1792418804; cv=none; b=IBdFcD0Uh4fq1uo7N8UhTDVJfFFqL4Xd4DVcWMJAc2Jc4U60WsXtFyXJB+Y90PYjW11dn4qF36c2UwbCfmsB7/q9ZZ4LvOQpaHGegnejxnqzWgEC6+73jzggDVTrV5P4BxiGMrUF6knOjEEjx/+faAZwNvvs+N0MPa6w1x7DAt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418801; c=relaxed/simple;
-	bh=95qOH47L2e8gemey/UZsgmcWb0tqdDJwAaVk7WWxsC4=;
+	s=arc-20240116; t=1792418804; c=relaxed/simple;
+	bh=nt+AO/ghutLObfF6OY/X8l9WW5XkkHqwfjimIgOTP0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BsAf/KQqv5GEvBOmhpVUh6pzA06eJCtC5bYsTID+mF4frFg3Fs9kgvqiHpA5ClyTZaIlKuhPUbLZJm0tQE9jrUjsqsVSDyt6EIEnte2lcMbzZSiJFrHxJQREvjXwXOlykNNZyrkXeHtr8RQ6PNHyAv85jIUD4+P7dZhUQSE8lvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dK8YCNLl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=If9IMeFtASZBcFgfxrBiXen9iTKaBuX3T1UFXWEYeg9935vYxJxdwA+xRo1WSDXPss/dpw15S2XETJ3+QlbtNT/eaard/b5c3kDRQZTlEsMZYYFK3FydImCYb6TQ38dhzyiPoKlqmTdue018ply0lXgsP778vHS0fEqkrRR/8ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kNrGwj2y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dK8YCNLl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846B61F000C8;
-	Mon, 19 Oct 2026 14:06:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kNrGwj2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05111F000C4;
+	Mon, 19 Oct 2026 14:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418798;
-	bh=qt8rAXV5w9aLTSVZK04czmnAvYtGQvH2a2vUMCv+/Hs=;
+	s=k20260515; t=1792418800;
+	bh=ZMRJUcIVaGsiHeUnipdtBhMjjrZG7IlLuALxVE80EOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dK8YCNLlgN+U2dOydTM0q5VqujOSLIiPPqjCRCoO5BpYmxwdWIZwL2TEnnyDSO0oY
-	 L2ihe3XKyVPN6Wn04ZsxlEqJWVGlT3lHQ3IIwOXQPZRMcD/Ikkt0wkiSfaEq3Z1T54
-	 rN16OT5Ky/5wi5pHR4CEO6ns69CwTlM52Fh2H9zarseAN01tCz2jbzkTOXX3I5El3Z
-	 Vl1wgI+mU+V8Qr1FegTOI+U4vPEznmgrzwG/y3jgYRzkUkATMVWPYkBkYf1Qyx+G0m
-	 nt00PPr9RropVWvJbIFXsZhChkEhEhGYiXHN+qkgCXOPjN3/PkjN3iEBQjTKSPLJOi
-	 0292q9rxQLnjg==
+	b=kNrGwj2y/0hyQOoGJ8O0wlU3AfFEAEnNI+BLQRu2jLyXUavHmTanNxTTquB0NjMoy
+	 +83FWwkaeLN1K4hBGIHvg6GZol6xSw7fD3kkTEbGZ5S8iYiiWfvwRn7dDMNQm031FZ
+	 Gk9Zw1jZJn+19FYfscrx9ITDx/lJrUducZ/TD4+TplnaZVQ/X8tEbH6gGapssmr/vn
+	 mi/0MbznA4IhCBh1MIbIu+jFD9/zBQfq/uLxEMNFH7CRJ7kjGknOZrjK8tXYjz+zjv
+	 mkuwEQUrKk1fwwHYHGxQdfn52WX5k31YJwflwwEo+3fKp4n7fGyGPQ9h8khtFPpOtT
+	 unAuZwrWKAD5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Haoxiang Li <haoxiang_li2024@163.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: hdac_hdmi: Fix resource cleanup on probe failure
-Date: Mon, 19 Oct 2026 09:53:15 -0400
-Message-ID: <20261019135441.1420968-504-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/amdgpu/gfx11: set KMD_QUEUE for kernel gfx queues
+Date: Mon, 19 Oct 2026 09:53:16 -0400
+Message-ID: <20261019135441.1420968-505-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,401 +56,394 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 785903b7770f19ea05b8a76081dff691c56fa771 ]
+[ Upstream commit 8228688eb40cc116127e80394cb8157417854c70 ]
 
-hdac_hdmi_dev_probe() gets the HDA link before allocating and
-initializing the HDMI codec private data. Several later error
-paths return directly without dropping the link reference,
-leaving the hlink refcount unbalanced.
+Set KMD_QUEUE in the GFX MQD and kernel ring control registers so CP
+preserves kernel IB VMIDs instead of replacing them with the queue VMID.
+Use prop->kernel_queue to distinguish kernel and user MQDs.
 
-Release the link reference on probe failures. Also turn display
-power off if the failure happens after it has been enabled.
-
-This issue was dicussed in:
-https://lore.kernel.org/all/s5h1s0esk8o.wl-tiwai@suse.de/
-I think the paths fixed here are probe failure paths: the device
-has not been fully initialized or bound, and runtime PM suspend
-cannot be relied on to balance the reference taken during probe.
-
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622151127.1198196-1-haoxiang_li2024@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 893642e0e3b2f5aa818e0ee4a49e2d401d541e3a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a small probe-error-path leak fix in the Intel HDMI HDAC codec.
-The buggy code is present in this 6.18.53 tree, the change is surgical,
-and it should be backported.
+I have the local-tree, history, and mailing-list evidence. Compiling the
+nine-phase analysis and the backport verdict next.
 
 ## Phase 1: Commit message forensics
 
-**Step 1.1 — Subject**
-Record: `[ASoC / hdac_hdmi] [Fix] resource cleanup on probe failure`
+**Step 1.1:**
+Record: `[drm/amdgpu/gfx11] [set] [program KMD_QUEUE on kernel GFX
+MQDs/rings so CP keeps kernel IB VMIDs]`
 
-**Step 1.2 — Tags**
+**Step 1.2:**
+Record: tags on the upstream commit
+`893642e0e3b2f5aa818e0ee4a49e2d401d541e3a`:
+- Signed-off-by: Jesse Zhang `<Jesse.Zhang@amd.com>` (author)
+- Reviewed-by: Alex Deucher `<alexander.deucher@amd.com>` (amdgpu
+  maintainer)
+- Signed-off-by: Alex Deucher `<alexander.deucher@amd.com>`
+- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable (absence
+  expected)
+
+Pipeline-only tags ignored: `[Upstream commit ...]`, Sasha Levin SOB,
+cherry-pick marker.
+
+**Step 1.3:**
 Record:
-- No `Fixes:` tag (expected for this review queue)
-- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-  stable`
-- `Link: https://patch.msgid.link/20260622151127.1198196-1-
-  haoxiang_li2024@163.com`
-- Body also cites `https://lore.kernel.org/all/s5h1s0esk8o.wl-
-  tiwai@suse.de/` (Takashi Iwai, 2019)
-- `Signed-off-by: Haoxiang Li` (author)
-- `Signed-off-by: Mark Brown <broonie@kernel.org>` (ASoC maintainer)
-- Ignore pipeline `Signed-off-by: Sasha Levin` and `[Upstream commit
-  785903b7770f...]`
+- Bug: CP overwrites the VMID in kernel GFX IBs with the queue VMID
+  unless `KMD_QUEUE` is set.
+- Symptom/failure mode: IBs run in the wrong VM (queue VMID, typically
+  0) instead of the IB VMID encoded by `gfx_v11_0_ring_emit_ib_gfx()`.
+  That is a GPU page-fault / hang / wrong-address-space class failure.
+- Version info: none in the message.
+- Root cause (author): kernel GFX MQD and `CP_RB0_CNTL` never set
+  `KMD_QUEUE`; `prop->kernel_queue` is the kernel-vs-user discriminator.
 
-**Step 1.3 — Body**
-Record:
-- **Bug:** `hdac_hdmi_dev_probe()` takes an HDAC link ref
-  (`snd_hdac_ext_bus_link_get`) then returns on later errors without
-  `snd_hdac_ext_bus_link_put`. After `snd_hdac_display_power(...,
-  true)`, parse failure also leaves display power held.
-- **Symptom:** Unbalanced `hlink->ref_count` (link stays powered) and
-  possibly a stuck i915/display audio power well.
-- **Root cause (author):** Probe-failure paths never bind the driver, so
-  runtime PM suspend cannot drop the probe-time ref.
-- **Version info:** None in the message. History puts the leak in this
-  driver since link management was added (~v4.7).
-
-**Step 1.4 — Hidden bug fix?**
-Record: Not hidden. Explicit leak fix on error paths.
+**Step 1.4:**
+Record: Not a hidden cleanup. The subject uses “set”, but the body
+describes a concrete CP mis-program. This is a hardware-programming
+correctness fix.
 
 ## Phase 2: Diff analysis
 
-**Step 2.1 — Inventory**
+**Step 2.1:**
 Record:
-- File: `sound/soc/codecs/hdac_hdmi.c` (+8 / −2)
-- Function: `hdac_hdmi_dev_probe()`
-- Scope: single-file surgical error-path fix
+- File: `drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c` (+2 / -0)
+- Functions: `gfx_v11_0_cp_gfx_resume()`, `gfx_v11_0_gfx_mqd_init()`
+- Scope: single-file surgical fix
 
-**Step 2.2 — Flow change**
-Record (verified against v6.18.53 and the patch):
-1. After `snd_hdac_ext_bus_link_get()`:
-   - **ENOMEM** (`devm_kzalloc` fails): was `return -ENOMEM` → now
-     `link_put` then return
-   - **`!hdac_id`:** was `return -ENODEV` → now `link_put` then return
-   - **`hdac_hdmi_parse_and_map_nid()` fails:** was log + `return ret`
-     after `snd_hdac_display_power(..., true)` → now `link_put` +
-     `snd_hdac_display_power(..., false)` then return
-2. Success / `devm_snd_soc_register_component` path already did
-   `link_put`. Unchanged.
+**Step 2.2:**
+Record:
+- Hunk 1 (`gfx_v11_0_cp_gfx_resume`): `CP_RB0_CNTL` was built from 0
+  (`RB_BUFSZ`/`RB_BLKSZ` only). After: `KMD_QUEUE=1` on the kernel GFX
+  ring 0 path.
+- Hunk 2 (`gfx_v11_0_gfx_mqd_init`): `CP_GFX_HQD_CNTL` started from
+  `regCP_GFX_HQD_CNTL_DEFAULT` (0x00a00000). After:
+  `KMD_QUEUE=prop->kernel_queue` (1 for kernel MQDs, 0 for user MQDs).
+- Both are init/resume paths, not error paths.
 
-**Step 2.3 — Bug mechanism**
-Record: **Error-path resource leak** (link refcount + display power
-ref). `snd_hdac_ext_bus_link_get()` increments `hlink->ref_count` and
-powers the link at 0→1. Matching `put` powers it down at 1→0. Probe
-failure skipped that put. `snd_hdac_display_power(..., true)` sets
-`display_power_status` and may call DRM `get_power`; without `false`,
-that well can stay on.
+**Step 2.3:**
+Record:
+- Category: hardware workaround / logic correctness (queue privilege
+  bit).
+- Mechanism: `KMD_QUEUE` is bit 29 of `CP_RB0_CNTL` / `CP_GFX_HQD_CNTL`
+  (`0x20000000`). The default value `0x00a00000` does **not** include
+  that bit. Compute kernel MQDs already set `KMD_QUEUE` when
+  `prop->kernel_queue`; GFX MQDs only set `RB_NON_PRIV` for user queues
+  and left kernel GFX `KMD_QUEUE` clear.
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct: every new `put`/`display_power(false)` is on
-a path that already took the matching get/enable and does not reach the
-existing success-path `put`. No API/lock/structure changes. Remaining
-gap (not introduced here): if `devm_snd_soc_register_component()` fails,
-`link_put` already runs but display power is still left on. That does
-not make this patch wrong.
+**Step 2.4:**
+Record:
+- Quality: obviously correct and minimal. Kernel rings
+  (`amdgpu_ring_to_mqd_prop`) set `kernel_queue=true`; userq props are
+  `kzalloc`’d so the bit stays 0.
+- Regression risk: low. Same privilege bit already used for compute/KFD
+  kernel queues. User MQDs are unchanged.
+- Residual gap (not a reject): ring 1 (`CP_RB1_CNTL`) is not updated.
+  That path is only `!amdgpu_async_gfx_ring && num_gfx_rings > 1`;
+  default `amdgpu_async_gfx_ring=1`.
 
 ## Phase 3: Git history
 
-**Step 3.1 — Blame**
+**Step 3.1:**
 Record:
-- Link get in this probe: `b2047e996cd88` (“ASoC: hdac_hdmi: add link
-  management”), contained in **v4.7-rc1**. Error returns after get were
-  already unbalanced.
-- Display power enable: `4f799e734094f0` (Takashi Iwai), contained in
-  **v5.0-rc1**.
-- Buggy pattern has been in this file for many years, including this
-  6.18.y tree.
+- `CP_RB0_CNTL` programming: `3d879e81f0f9e` (“drm/amdgpu: add init
+  support for GFX11 (v2)”, 2022-05-04).
+- GFX MQD `CP_GFX_HQD_CNTL` setup: same commit; later `e27b36ea6ba5f2`
+  switched the start value to `regCP_GFX_HQD_CNTL_DEFAULT`;
+  `063d668320872` added `RB_NON_PRIV` for user queues.
+- Bug is a long-standing omission on GFX11, present through v6.18.57.
 
-**Step 3.2 — Fixes: tag**
-Record: None. Introducer is `b2047e996cd88` (link get without error-path
-put). That commit is an ancestor of this tree.
+**Step 3.2:**
+Record: No `Fixes:` tag. Closest related change is `063d668320872` (“set
+MQD as appriopriate for queue types”), already in v6.18.57. That commit
+set compute `KMD_QUEUE` only for kernel queues and GFX `RB_NON_PRIV` for
+user queues; it did not set GFX `KMD_QUEUE`.
 
-**Step 3.3 — File history**
-Record: Recent `hdac_hdmi.c` work is lock `guard()` conversion, enum
-validation, logging. No prerequisite refactor for this fix. `git diff
-v6.18.53 0754884332e60^ -- sound/soc/codecs/hdac_hdmi.c` is empty: probe
-text at v6.18.53 matches the pre-patch parent.
+**Step 3.3:**
+Record: Recent `gfx_v11_0.c` on this tree includes KGQ reset/wptr fixes
+and a gfx11 userq firmware-version bump (`b7cb1b6696137`). Sibling:
+`53db34aed3716` (gfx12, same author/intent; pipeline-applied, ignored
+for selection). This commit is standalone at the code level.
 
-**Step 3.4 — Author**
-Record: Haoxiang Li has several ASoC probe-leak fixes here, including
-`e8ea01a045708` (“ASoC: hdac_hda: Fix hlink refcount leak on component
-registration failure”), which **did** carry `Fixes:` + `Cc: stable` and
-is already in this tree. Same bug class, sibling driver.
+**Step 3.4:**
+Record: Jesse Zhang is a regular amdgpu contributor (reset/userq/MQD).
+Alex Deucher (maintainer) reviewed and applied it.
 
-**Step 3.5 — Dependencies**
-Record: None. Uses existing `snd_hdac_ext_bus_link_put` /
-`snd_hdac_display_power`. Standalone.
+**Step 3.5:**
+Record: Needs `prop->kernel_queue` (`284d4dfe850e6`, in v6.18.57),
+`gfx_v11_0_gfx_mqd_init`, and `KMD_QUEUE` masks in gc_11 headers — all
+present. No new helpers. Can apply standalone.
 
-## Phase 4: Mailing list / external
+## Phase 4: Mailing list / external research
 
-**Step 4.1 — Original thread**
+**Step 4.1:**
 Record:
-- `b4 dig -c 785903b7770f`: https://patch.msgid.link/20260622151127.1198
-  196-1-haoxiang_li2024@163.com
-- Single revision (v1 only, `-a`)
-- Thread: patch + Mark Brown apply to `for-7.3`. No NAK, no requested
-  respin.
+- `b4 dig -c 893642e0e3b2…` and `8228688eb40cc…`: lore.kernel.org
+  returned errors; no b4 match.
+- Found original series: [PATCH 10/21]
+  https://lists.freedesktop.org/archives/amd-
+  gfx/2026-September/153407.html
+- Sibling [PATCH 09/21] gfx12:
+  https://lists.freedesktop.org/archives/amd-
+  gfx/2026-September/153406.html
+- No 00/21 cover letter; series starts at 01/21 (`detect_hung_queue`).
+- This is patches 09/10 of a 21-patch gfx pipe-reset / hung-queue series
+  (Sep 21, 2026).
+- No v2 of this hunk; committed text matches the mailed diff.
+- No NAK on 09/10. No reviewer `Cc: stable` on this patch.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: Liam Girdwood, Mark Brown, Jaroslav Kysela, Takashi Iwai,
-Cirrus, Kuninori Morimoto, `linux-sound`, `linux-kernel`. Right
-ASoC/ALSA maintainers.
+**Step 4.2:**
+Record: Posted to amd-gfx. Alex Deucher reviewed the **entire series**
+(https://lists.freedesktop.org/archives/amd-
+gfx/2026-September/153488.html): “Patches 11 and 12 look like bug fixes.
+Maybe move them to the start… Other than that, the series is: Reviewed-
+by: Alex Deucher”. He did **not** call 09/10 out as the urgent
+standalone fixes.
 
-**Step 4.3 — Cited 2019 discussion**
-Record: MARC copy of `s5h1s0esk8o.wl-tiwai@suse.de` (2019-05-31).
-Ranjani Sridharan noted hdac_hdmi had a similar unbalanced link ref.
-Takashi said hdac_hdmi is different because it balances via runtime PM
-(put in suspend, get in resume), and he was unsure about removal vs
-suspend. He called the code “a bit too fragile.” This 2026 patch
-correctly treats **probe failure** as unbound, so runtime suspend cannot
-be assumed. That matches `hdmi_codec_probe()`, which documents relying
-on `pm_runtime_put` only after a successful component probe.
+**Step 4.3:**
+Record: No bugzilla/syzbot/user crash report attached. Severity is
+inferred from the CP VMID description, not from a reproducer.
 
-**Step 4.4 — Series**
-Record: Standalone `[PATCH]`, not `n/m`. Sibling hdac_hda leak fix sent
-the same day.
+**Step 4.4:**
+Record: Series is pipe-reset enablement (`detect_hung_queue`, MES
+collateral restore, userq VMID for MMIO reset, pipe reset helpers).
+Those later patches are **not** in this 6.18.57 tree
+(`detect_hung_queue` / `amdgpu_gfx_mqd_reset_restore` grep: no matches).
+This 2-line hunk does not implement pipe reset; it only programs
+`KMD_QUEUE`.
 
-**Step 4.5 — stable@**
-Record: **UNVERIFIED** (lore.kernel.org returns 403 here). No stable
-nomination in the saved mbox.
+**Step 4.5:**
+Record: UNVERIFIED — lore.kernel.org/stable search returned 403. No
+local evidence this was discussed on stable@.
 
-## Phase 5: Code semantics
+## Phase 5: Code semantic analysis
 
-**Step 5.1 — Functions**
-Record: `hdac_hdmi_dev_probe()` only.
+**Step 5.1:**
+Record: `gfx_v11_0_cp_gfx_resume`, `gfx_v11_0_gfx_mqd_init`.
 
-**Step 5.2 — Callers**
-Record: `hdmi_driver.probe`, registered by `hdmi_init()` →
-`snd_hda_ext_driver_register()`. Runs on HDAC enumeration of Intel HDMI
-IDs 0x80862809–0x8086280d (Skylake / Broxton / Kaby Lake / Cannon Lake /
-Gemini Lake). Boot/device-probe path, not a syscall hot path.
+**Step 5.2:**
+Record:
+- `gfx_v11_0_cp_gfx_resume`: called from CP resume when
+  `!amdgpu_async_gfx_ring`. Default `amdgpu_async_gfx_ring=1`
+  (`amdgpu_drv.c`), so this is the uncommon path.
+- `gfx_v11_0_gfx_mqd_init`: registered as
+  `adev->mqds[AMDGPU_HW_IP_GFX].init_mqd`. Callers:
+  - `amdgpu_ring_init_mqd()` ← `gfx_v11_0_kgq_init_queue()` (default
+    async KGQ resume)
+  - `mes_userq_mqd_create()` ← userqueue create (`AMDGPU_USERQ` ioctl)
 
-**Step 5.3 — Callees**
-Record: `snd_hdac_ext_bus_get_hlink_by_name`,
-`snd_hdac_ext_bus_link_get/put`, `snd_hdac_display_power`,
-`hdac_hdmi_parse_and_map_nid` (can return `-EINVAL`/`-EIO`/`-ENOMEM` on
-bad topology or alloc failure), `devm_snd_soc_register_component`.
+**Step 5.3:**
+Record: Callees are `REG_SET_FIELD` / `WREG32_SOC15`. No alloc, no locks
+added.
 
-**Step 5.4 — Reachability**
-Record: Yes, if `CONFIG_SND_SOC_HDAC_HDMI` is built and the module
-binds. Parse failure is a real probe error (`HDMI: failed to get afg sub
-nodes`, `Bad pin/cvt setup`). Unprivileged users do not trigger it
-directly; boot/bind does.
+**Step 5.4:**
+Record: Reachable from GPU init (every GFX11 device) and from userq
+create. `gfx_v11_0_ring_emit_ib_gfx()` writes `vmid << 24` into
+`PACKET3_INDIRECT_BUFFER`. That is the VMID the commit says CP will
+replace without `KMD_QUEUE`. Userspace command submission uses this
+path.
 
-**Step 5.5 — Similar patterns**
-Record: Same leak class in `hdac_hda_dev_probe` (already fixed with Cc:
-stable). `hdmi_codec_probe()` still has its own error-path link_get
-without put if widget map / notifier registration fails; that is **not**
-this commit.
+**Step 5.5:**
+Record: Same bit already set for gfx11 compute kernel MQDs, MES v11/v12,
+gfx7–10 compute, and KFD MQD managers. GFX11/12 GFX HQD was the missing
+counterpart. Sibling gfx12 patch is the same change.
 
-## Phase 6: This tree (6.18.53)
+## Phase 6: Cross-reference against this tree
 
-**Step 6.1 — Buggy code present?**
-Record: **Yes.** `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`;
-`Makefile` is 6.18.53. At `v6.18.53`, `hdac_hdmi_dev_probe()` gets the
-link then returns on ENOMEM / `!hdac_id` / parse failure with no put
-(and no display power off on parse failure). Bug introduced ~v4.7, not
-after 6.18 branched.
+**Step 6.1:**
+Record: Local tree is **6.18.57** (`make kernelversion`, `git describe
+HEAD` → `v6.18.57-155-gcdf239ca885b2`).
+v6.18.57 `gfx_v11_0.c` does **not** set `KMD_QUEUE` in either site.
+GFX11 support and `prop->kernel_queue` are in this tree. The bug exists
+here.
 
-**Step 6.2 — Backport difficulty**
-Record: **Clean apply.** `patch --dry-run` of this diff onto
-`v6.18.53:sound/soc/codecs/hdac_hdmi.c` succeeded. No intervening probe
-rewrite.
+**Step 6.2:**
+Record: Expected apply: **clean**. Context around both
+`REG_SET_FIELD(..., RB_BLKSZ, ...)` sites matches the patch. Register
+masks exist in `gc_11_*_sh_mask.h`.
 
-**Step 6.3 — Related fixes already here?**
-Record: No other hdac_hdmi probe-leak fix. Sibling `hdac_hda` leak fix
-is already in this tree; it does not cover this file.
+**Step 6.3:**
+Record: `063d668320872` is present (partial MQD privilege split). No
+other commit in v6.18.57 sets GFX `KMD_QUEUE`. The checkout copy at
+`7bb279e35c0e1` is the autosel candidate (Sasha Levin), ignored as
+selection evidence.
 
 ## Phase 7: Subsystem context
 
-**Step 7.1**
-Record: ASoC codec driver (`sound/soc/codecs/hdac_hdmi.c`).
-**IMPORTANT** for Intel HDMI audio on SKL–GLK, not core mm/net.
-`SND_SOC_HDAC_HDMI` is a hidden `tristate` implied by
-`SND_SOC_ALL_CODECS`; this tree has no board `select SND_SOC_HDAC_HDMI`
-(SOF uses `SND_SOC_HDAC_HDA`). Distros that enable all codecs still ship
-the module, and it still matches those HDMI codec IDs.
+**Step 7.1:**
+Record: `[drm/amdgpu GFX11] [IMPORTANT]` — RDNA3 (RX 7000 / Phoenix /
+etc.), not core mm/fs, but a very common GPU driver.
 
-**Step 7.2**
-Record: File is mature (2015–); recent commits are small fixes, not a
-rewrite.
+**Step 7.2:**
+Record: Active. Recent 6.18 work includes KGQ reset, userq firmware
+versions, MQD priority.
 
 ## Phase 8: Impact and risk
 
-**Step 8.1 — Who**
-Record: Users of this HDMI HDAC codec (Intel SKL/BXT/KBL/CNL/GLK ASoC
-HDMI), and only when **probe fails**. Not universal.
+**Step 8.1:**
+Record: Driver-specific: amdgpu GFX11. Default 6.18 still uses kernel
+GFX queues (`amdgpu_user_queue=-1` → `disable_uq=true`). User queues
+exist and can be enabled (`user_queue=1/2`).
 
-**Step 8.2 — Trigger**
-Record: Failed `hdac_hdmi_dev_probe` after `link_get`: ENOMEM, ID lookup
-miss, or `hdac_hdmi_parse_and_map_nid` failure. Once per failed bind,
-not a hot path. Not a userspace-triggered security issue.
-
-**Step 8.3 — Failure mode**
-Record: HDAC link ref never drops → link stays powered; display power
-bit/get_power may stay held → GPU/audio power well may not idle.
-**Severity: MEDIUM–HIGH** (power-management leak / stuck resource, not
-oops/corruption). HDMI audio already failed on that path; leftover refs
-can still affect the controller and display PM.
-
-**Step 8.4 — Risk vs benefit**
+**Step 8.2:**
 Record:
-- Benefit: balances refs on real probe-error paths; prevents stuck
-  link/display power.
-- Risk: very low (error path only, matching put/power-off, no locking
-  change).
-- Ratio: favorable for stable.
+- Trigger: GFX11 init (MQD/KGQ) and any kernel GFX IB with a non-queue
+  VMID.
+- How common: every GFX11 boot programs the MQD; every gfx IB encodes a
+  VMID.
+- Unprivileged trigger: yes, via normal render/compute submit.
+- Caveat: GFX11 has worked since ~5.19 without this bit, so either older
+  CP/MES ignored it, or firmware already special-cased kernel queues.
+  The bit becomes more important once user GFX queues share the same MQD
+  path and newer FW consults `KMD_QUEUE`.
 
-## Phase 9: Synthesis
+**Step 8.3:**
+Record: Failure mode: CP forces IB VMID = queue VMID → GPUVM fault,
+hang/reset, or execution in the wrong VM. Severity: **HIGH** when it
+fires (GPU hang / possible wrong-VM access). Everyday 6.18 default may
+still appear fine if firmware papers over the missing bit.
 
-**Step 9.1 — Evidence**
+**Step 8.4:**
+Record:
+- Benefit: medium-high — correct kernel-queue privilege on widely
+  deployed GFX11, completes an already-stable MQD split, prevents wrong-
+  VMID IBs.
+- Risk: very low — two `REG_SET_FIELD` lines, no API/locking/data-
+  structure change.
+- Ratio: favorable.
 
-For:
-- Real unbalanced `hlink` refcount and display-power hold on probe
-  failure (verified in v6.18.53 source and `link_get`/`display_power`
-  implementations).
-- Probe failure cannot rely on runtime suspend (verified: PM
-  enable/`pm_runtime_put` is in `hdmi_codec_probe`, after successful
-  bind).
-- Tiny (+8/−2), obviously correct, applies cleanly here.
-- ASoC maintainer applied it; 2019 maintainer thread already flagged the
-  fragility.
-- Same-week sibling hdac_hda leak fix was treated as stable material.
+## Phase 9: Final synthesis
 
-Against:
-- Probe-error path only; no crash/corruption/CVE.
-- No `Reported-by` of a field failure.
-- Display power still leaked if component registration fails (pre-
-  existing, incomplete).
-- Driver is less central in 6.18 than in Skylake-SST days (SOF uses
-  hdac_hda).
+**Step 9.1:**
+Evidence FOR:
+- Real CP programming bug: missing `KMD_QUEUE` lets CP replace kernel IB
+  VMIDs.
+- Two-line, obviously correct, applies cleanly to v6.18.57.
+- All prerequisites exist (`kernel_queue`, GFX11 MQD, register masks).
+- Completes `063d668320872`, which already went to stable for kernel-vs-
+  user MQD privileges.
+- Compute/KFD already set this bit; GFX11 was inconsistent.
+- Maintainer Reviewed-by.
+- Wrong VMID is hang/fault/wrong-VM — important if triggered.
+- Hardware-programming / quirk-like change, not a feature.
+
+Evidence AGAINST:
+- Landed as 10/21 of a pipe-reset series; later patches are not in
+  6.18.57.
+- Alex called out 11/12 as the “bug fixes,” not this one.
+- No user report, syzbot, Fixes, or crash log.
+- Omission dates to 2022; default 6.18 GFX11 is usable without the bit.
+- Ring 1 `CP_RB1_CNTL` left unchanged (rare path).
 
 Unresolved:
-- Could not search lore.kernel.org/stable (HTTP 403).
-- No direct evidence of how often parse-and-map fails on shipping
-  SKL–GLK machines.
+- Exact firmware versions that started replacing IB VMIDs (UNVERIFIED).
+- Whether MES already ORs `KMD_QUEUE` when mapping KGQ (UNVERIFIED).
+- stable@ discussion (lore 403 / b4 failed).
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — mechanical matching
-   put/power-off; maintainer applied. No extra Tested-by.
-2. Real bug affecting users? **PASS** — leftover link/display power
-   after failed HDMI codec probe.
-3. Important (crash/security/corruption/deadlock)? **PASS** (lower end)
-   — not an oops, but a stuck PM ref that can keep an HDA link and
-   display audio power well on; same class as other probe-path leak
-   backports.
-4. Small and contained? **PASS** — one function, 10 lines.
-5. No new features/APIs? **PASS**
-6. Applies to this tree? **PASS** — buggy code in 6.18.53, clean apply.
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — 2 lines, maintainer
+   reviewed, matches existing compute/KFD pattern.
+2. Fixes a real bug that affects users? **PASS** — missing privilege bit
+   on kernel GFX queues; CP VMID overwrite is a real HW behavior the
+   author states.
+3. Important issue? **PASS** — wrong VMID is GPU fault/hang / wrong
+   address space (HIGH), not a style cleanup.
+4. Small and contained? **PASS** — +2 lines, one file.
+5. No new features or APIs? **PASS** — only sets an existing register
+   field.
+6. Can apply to the local tree? **PASS** — v6.18.57 has the buggy sites
+   and dependencies.
 
-**Step 9.3 — Exception category**
-Record: None (not a device ID/quirk/DT/build/doc-only change). Ordinary
-error-path leak fix.
+**Step 9.3:**
+Record: Fits the **hardware workaround / register programming**
+exception. Not a new driver or API.
 
-**Step 9.4 — Decision**
-The leak is real in this checkout, the fix is minimal and correct, and
-regression risk is confined to paths that already failed probe. That is
-appropriate for 6.18.y.
+**Step 9.4:**
+This is a self-contained GFX11 hardware-programming fix. The local
+6.18.57 tree has the buggy code and the `kernel_queue` split, and the
+patch applies cleanly. Being mailed inside a pipe-reset series does not
+make the two lines a feature: they do not enable pipe reset, and they
+correct kernel GFX MQD privilege that compute already had. Benefit vs
+risk favors backport.
 
-### What it solves for stable users
-On Intel HDMI HDAC probe failure, this tree currently leaves
-`snd_hdac_ext_bus_link_get()` unmatched and can leave
-`snd_hdac_display_power(..., true)` unmatched. That keeps the HDAC link
-(and possibly the i915 audio power well) up for the life of the boot.
-The patch drops those refs on the failing paths.
+### What the commit solves for this tree
+On GFX11, kernel GFX IBs put a process VMID in
+`PACKET3_INDIRECT_BUFFER`. Without `KMD_QUEUE`, CP is specified to
+replace that with the queue VMID (0). This tree already distinguishes
+user vs kernel MQDs for compute/`RB_NON_PRIV` but never sets GFX
+`KMD_QUEUE`. That is a real, small correctness hole on a widely used GPU
+generation.
 
 ### Risk vs benefit
-Benefit is restoring power/ref balance when HDMI codec init fails. Risk
-is very low: no success-path or locking change.
+Two register-field writes; user MQDs stay 0; no API change. Residual
+risk is a firmware-specific privilege change, which is the intended
+kernel-queue behavior already used on compute.
 
----
+### Concerns
+No public reproducer; later pipe-reset patches are not in 6.18.57; ring1
+legacy path not updated. None of those block a clean 2-line apply.
 
 Verification:
-- [Phase 1] Parsed tags: no Fixes/Cc-stable/Reported-by; Link to msgid
-  20260622151127; Mark Brown SOB; body cites Takashi 2019 thread
-- [Phase 2] Diff: +8/−2 in `hdac_hdmi_dev_probe()`; puts on ENOMEM,
-  !hdac_id, parse failure; display_power(false) on parse failure
-- [Phase 2] Confirmed `snd_hdac_ext_bus_link_get/put` in
-  `sound/hda/core/ext/controller.c` power the link on 0↔1 refcount
-- [Phase 2] Confirmed `snd_hdac_display_power()` in
-  `sound/hda/core/component.c` holds DRM get_power while bits are set
-- [Phase 3] `git describe HEAD`: v6.18.53-5049-g0f0bdc2b0dffb; `make
-  kernelversion` / Makefile: 6.18.53
-- [Phase 3] Blame: link get from `b2047e996cd88` (v4.7); display power
-  from `4f799e734094f0` (v5.0)
-- [Phase 3] `git show v6.18.53:sound/soc/codecs/hdac_hdmi.c`: buggy
-  returns present; parent of candidate identical to v6.18.53 for this
-  file
-- [Phase 3] Sibling `e8ea01a045708` (hdac_hda leak) is an ancestor of
-  HEAD and had Cc: stable
-- [Phase 4] `b4 dig -c 785903b7770f`: v1 only; applied by Mark Brown to
-  for-7.3; no NAK in mbox
-- [Phase 4] MARC: Takashi 2019 mail `s5h1s0esk8o.wl-tiwai@suse.de` on
-  runtime-PM vs hdac_hdmi link refs
-- [Phase 5] `hdac_hdmi_dev_probe` is `hdmi_driver.probe`; IDs
-  0x80862809–0x8086280d
-- [Phase 5] `hdac_hdmi_parse_and_map_nid` can return -EINVAL/-EIO and
-  alloc errors
-- [Phase 6] `patch --dry-run` onto v6.18.53 file: success
-- [Phase 6] Upstream `785903b7770f` is not an ancestor of v6.18.53 (fix
-  not already in the stable base)
-- [Phase 8] Failure mode: stuck HDAC link / display power after failed
-  probe, not oops
-- UNVERIFIED: lore.kernel.org WebFetch/curl 403; no stable@ archive
-  search
-- UNVERIFIED: field frequency of `hdac_hdmi_parse_and_map_nid` failures
-  on 6.18 hardware
+- [Phase 1] Parsed tags: author Jesse Zhang; Reviewed-by/SOB Alex
+  Deucher; no Fixes/Reported-by/Link/Cc:stable
+- [Phase 2] Diff: +2 lines in `gfx_v11_0_cp_gfx_resume` and
+  `gfx_v11_0_gfx_mqd_init`
+- [Phase 2] `regCP_GFX_HQD_CNTL_DEFAULT=0x00a00000`; `KMD_QUEUE` mask
+  `0x20000000` — default does not set the bit
+- [Phase 3] Blame: GFX11 init `3d879e81f0f9e` (2022); `063d668320872`
+  and `284d4dfe850e6` are ancestors of v6.18.57
+- [Phase 3] `git merge-base --is-ancestor 893642e0e3b2… v6.18.57` → not
+  ancestor (fix not in 6.18.57)
+- [Phase 4] `b4 dig` failed (lore server error)
+- [Phase 4] lore URL: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-September/153407.html (10/21)
+- [Phase 4] Alex series review:
+  https://lists.freedesktop.org/archives/amd-
+  gfx/2026-September/153488.html
+- [Phase 5] Callers: KGQ `amdgpu_ring_init_mqd`; userq
+  `mes_userq_mqd_create`; IB VMID in `gfx_v11_0_ring_emit_ib_gfx`
+- [Phase 5] semcode unavailable; used grep/read
+- [Phase 6] `make kernelversion` / `git describe`: 6.18.57 /
+  `v6.18.57-155-gcdf239ca885b2`
+- [Phase 6] v6.18.57 file confirmed missing both `KMD_QUEUE` assignments
+- [Phase 8] Failure mode: wrong IB VMID → GPU fault/hang; severity HIGH
+  when triggered
+- UNVERIFIED: firmware versions that require the bit; whether MES
+  already sets it; stable@ history (lore 403)
 
 **YES**
 
- sound/soc/codecs/hdac_hdmi.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index 2385e18127a33..1ca5e7aa42aca 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -1861,8 +1861,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	snd_hdac_ext_bus_link_get(hdev->bus, hlink);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index a78e8f98f4d00..5ade48c8d43f8 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -3737,6 +3737,7 @@ static int gfx_v11_0_cp_gfx_resume(struct amdgpu_device *adev)
+ 	rb_bufsz = order_base_2(ring->ring_size / 8);
+ 	tmp = REG_SET_FIELD(0, CP_RB0_CNTL, RB_BUFSZ, rb_bufsz);
+ 	tmp = REG_SET_FIELD(tmp, CP_RB0_CNTL, RB_BLKSZ, rb_bufsz - 2);
++	tmp = REG_SET_FIELD(tmp, CP_RB0_CNTL, KMD_QUEUE, 1);
+ 	WREG32_SOC15(GC, 0, regCP_RB0_CNTL, tmp);
  
- 	hdmi_priv = devm_kzalloc(&hdev->dev, sizeof(*hdmi_priv), GFP_KERNEL);
--	if (hdmi_priv == NULL)
-+	if (hdmi_priv == NULL) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENOMEM;
-+	}
- 
- 	snd_hdac_register_chmap_ops(hdev, &hdmi_priv->chmap);
- 	hdmi_priv->chmap.ops.get_chmap = hdac_hdmi_get_chmap;
-@@ -1871,8 +1873,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	hdmi_priv->chmap.ops.get_spk_alloc = hdac_hdmi_get_spk_alloc;
- 	hdmi_priv->hdev = hdev;
- 
--	if (!hdac_id)
-+	if (!hdac_id) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENODEV;
-+	}
- 
- 	if (hdac_id->driver_data)
- 		hdmi_priv->drv_data =
-@@ -1897,6 +1901,8 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	if (ret < 0) {
- 		dev_err(&hdev->dev,
- 			"Failed in parse and map nid with err: %d\n", ret);
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
-+		snd_hdac_display_power(hdev->bus, hdev->addr, false);
- 		return ret;
- 	}
- 	snd_hdac_refresh_widgets(hdev);
+ 	/* Initialize the ring buffer's write pointers */
+@@ -4145,6 +4146,7 @@ static int gfx_v11_0_gfx_mqd_init(struct amdgpu_device *adev, void *m,
+ 	tmp = regCP_GFX_HQD_CNTL_DEFAULT;
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, RB_BUFSZ, rb_bufsz);
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, RB_BLKSZ, rb_bufsz - 2);
++	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, KMD_QUEUE, prop->kernel_queue);
+ #ifdef __BIG_ENDIAN
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, BUF_SWAP, 1);
+ #endif
 -- 
 2.53.0
 
