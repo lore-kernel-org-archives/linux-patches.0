@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0F952F9A2;
-	Mon, 19 Oct 2026 14:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F0F508800;
+	Mon, 19 Oct 2026 14:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418628; cv=none; b=NNAFGHBsISr1zBpsO0uBplHHu8vFNeN85x99DwfLaOiURZyJz/W8xdmTyxi7WaYTnfAIAkZDKGBDxCFrUX4keaIIQETD1KJf0F+74FMMZcPZXpKvRqZGnXMvdVsq9xLlFVWQ3A8/qGjL5PyoqoDwDNuwikaJQnOpK1s3Q7+9mgE=
+	t=1792418629; cv=none; b=ekvQzMaZaBlt78p4HETNlWSrNAXF/YvxP+0EFXwpwKXtvp0J8xm/uzbz5YmqApFkFY4nkPOWI8OqJGkQuX0CFni8dF7tXTaKoFfRviyLpXdOzkuNl0AZSHJiOjeVNVmkX09q4QANLuMlrfgWezQNz1KTDuA/I3sTIvaU5DPUlh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418628; c=relaxed/simple;
-	bh=lEe040fMAo+CPU8jdV6O5Z2V4KBYzQ6++iuPEVT39zQ=;
+	s=arc-20240116; t=1792418629; c=relaxed/simple;
+	bh=bm9Gdpbxk1rse/hfQ6B+QQZK0vyyeVJszoacihvHotc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bQzzmwz1ucF9iYCs9WPjH4eDh47RbUoN+6e3GMSXp56MjajFMmMgw6X2p163iBdp7qTY9F/XtUfnO/FTmtzxp2ESYwoqf9t8rBb2Uc7fQPf8o4Pxp+qkot76LMKqBSkSdAwd5KeiQ3cUvgxxL1TZe9yN4LotgrlR0x6ivjAsL1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZVRkXTD9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=haOWWj8i+0GP8mTjbsE14QezPuT0cLJNCax0I+TZHVPjQgYAzfTd45ONoqlj2iAV7e9Hk6Tis/xsiidPouWUyq+6hA115L65CmecD+pYat+3UhfrG/+ukf8AUMQGH5hfMOxGY+B334uqFiJBgNkNeYChvFwj/rgTxNzt+KC9FTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tyq6u8Xi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZVRkXTD9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA57E1F000C8;
-	Mon, 19 Oct 2026 14:03:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tyq6u8Xi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E515C1F000C4;
+	Mon, 19 Oct 2026 14:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418625;
-	bh=7BDK+crvFAJNRkrf+kIBvqU5VWEEIrHWQysBFcfsRbA=;
+	s=k20260515; t=1792418626;
+	bh=v6VJZysxWNqOdYvAuxEGLvWeQ2oCHmmcg+RKHXpH5v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZVRkXTD9LSHNTi8xhIrw5YWaS183AG/rZ0vWfEO4A4yeh5UD5dcXKWBYAjW5OVqgc
-	 29ws4s9+WGjjlQYE31KQGu1/uEQ/y6MxUHQvsocTCciXuvT5bSmdeQyJRnRTWj0c4f
-	 nogw6N8D9L2ePtuib2asgrqL0i24DcY0U4JqEa1qxA/XUoZlzR6uAeKStkBAHqfOQC
-	 4vOUBRsiEARZIYLvVPwcivC0sDxA0bI0apxFzJ4KVnFg8wcVZ4PvApa9ZSVbYznRrx
-	 ZRmNaXOUXSPSSvKvgZfK5+gA8Y/FzHyiqk4utMSOndHpyj2BMNB97L4TEzH7PRjxFU
-	 vunGNAj2zKWkQ==
+	b=Tyq6u8XiuXcV5JDNIbavLHwdO9l5eMmwTeSVLn54pTn/wYpk1zr/z7gVkaPIpU1S9
+	 /F5AiISjs8adMVFPtVgTXylELbfwWEX5dIe9aY6dkrC4UQ5RLjyPtI8m4MYceVzFRj
+	 M8HJp2Uke0BkaSE4xopm1Q+AGiJ4rmjzo3OJw4mcHt4F1Q6trsokyKcE9I6Quk7n53
+	 evGfq9XOTRKE0sH8eebUwbqR1FRkGOx2FOuvDjXcDFFQYHyt2JcUbWFI5QHwruZq2i
+	 bJAsEZQ/ZxNKeJiXQhdbAzQL+WDI30p22bxDA8JJURdDvpYDWIxcPAX6rfsYKZuzwO
+	 hFmTbseXvkzpg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Avraham Stern <avraham.stern@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: support aborting an ongoing ftm request
-Date: Mon, 19 Oct 2026 09:51:13 -0400
-Message-ID: <20261019135441.1420968-382-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Add quirk for Acer Nitro ANV16-42 headset mic
+Date: Mon, 19 Oct 2026 09:51:14 -0400
+Message-ID: <20261019135441.1420968-383-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,410 +54,386 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit ef704fc32ae1a519801ac4a06aa290fece5f403c ]
+[ Upstream commit e00a6a89900dfa4cda3669558d2f3581cd41a656 ]
 
-Add support for aborting an ongoing FTM request.
+The Acer Nitro ANV16-42 (subsystem 0x1025:0x1909, Realtek ALC245)
+does not detect the headset microphone jack. Adding the
+ALC2XX_FIXUP_HEADSET_MIC quirk resolves the issue and restores
+proper headset mic functionality.
 
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715220243.340040bdc6a3.Ifbbf70021e42bf1d59db6ec45a73f1806a1c2289@changeid
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221623
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260807125857.678297-1-zhangheng@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The locally checked-out tree at decision time is **pending-6.12**
+(`p-6.12-3-g710455e2077bb`, kernel **6.12.111**). The candidate is
+mainline `e00a6a89900dfa4cda3669558d2f3581cd41a656` and is not an
+ancestor of `HEAD`.
 
-**Step 1.1: Subject line**
-Record: **[iwlwifi/mld]** **[support]** add abort for an in-flight FTM
-(Fine Timing Measurement / peer measurement) request.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2: Tags**
-Record:
-- Signed-off-by: Avraham Stern <avraham.stern@intel.com> (author)
-- Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-  (iwlwifi maintainer)
-- Link: https://patch.msgid.link/20260715220243.340040bdc6a3.Ifbbf70021e
-  42bf1d59db6ec45a73f1806a1c2289@changeid
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable (absence of the last two is expected for this review)
+Step 1.1: PARSE THE SUBJECT LINE
+- Subsystem prefix: `ALSA: hda/realtek`
+- Action verb: **Add** (quirk)
+- Claimed intent: enable headset-mic detection on Acer Nitro ANV16-42
+Record: [ALSA/hda/realtek] [add] [PCI quirk so ANV16-42 headset mic is
+detected]
 
-**Step 1.3: Body**
-Record:
-- Bug description from message: none. One sentence: “Add support for
-  aborting an ongoing FTM request.”
-- Symptom/failure mode: not stated
-- Version information: none
-- Root-cause explanation: none
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221623
+- Signed-off-by: Zhang Heng \<zhangheng@kylinos.cn\> (author)
+- Signed-off-by: Takashi Iwai \<tiwai@suse.de\> (ALSA/HDA maintainer,
+  applied)
+- Link:
+  https://patch.msgid.link/20260807125857.678297-1-zhangheng@kylinos.cn
+- No Fixes:, no Cc: stable, no Reported-by, no Tested-by, no Reviewed-
+  by, no Acked-by
+- (Ignore any Sasha Levin SOB / Upstream commit markers if present in
+  candidates)
+Record: [Closes bugzilla 221623] [author Zhang Heng] [maintainer SOB
+Takashi Iwai] [msgid link] [no Fixes/Cc-stable — expected]
 
-**Step 1.4: Hidden bug fix?**
-Record: **Yes.** The wording is feature-like, but the MLD path already
-stores `mld->ftm_initiator.req` and later dereferences it. cfg80211
-frees that object on abort whether or not the driver implements
-`abort_pmsr`. Missing abort is a use-after-free / stuck-FTM hole, not a
-new userspace API.
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The Acer Nitro ANV16-42 (SSID 0x1025:0x1909, Realtek ALC245) does not
+detect the headset microphone jack. `ALC2XX_FIXUP_HEADSET_MIC` restores
+it.
+Bugzilla 221623 (verified): reporter samuelrenault37, 2026-06-08; status
+NEW; product Drivers / Sound(ALSA). Reporter states analog-input-
+headset-mic does not appear without this quirk, points at the same table
+line, cites sibling Acer Nitro entries, and says it was tested on Fedora
+44, kernel 7.0.11. Zhang Heng replied 2026-08-06 that he would submit
+the patch.
+Record: [Bug: headset mic jack not enumerated] [Symptom: no analog-
+input-headset-mic] [Root cause: missing PCI quirk for SSID 1025:1909]
+[User-tested]
 
-## Phase 2: Diff analysis
+Step 1.4: DETECT HIDDEN BUG FIXES
+Not hidden. Explicit hardware quirk matching the documented stable
+exception for HDA codec quirks.
+Record: [Not a disguised cleanup; it is a hardware quirk]
 
-**Step 2.1: Inventory**
-Record:
-- `drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c`: +21 (new
-  `iwl_mld_ftm_abort`)
-- `drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h`: +1
-  (prototype)
-- `drivers/net/wireless/intel/iwlwifi/mld/mac80211.c`: +10
-  (`iwl_mld_abort_pmsr` + `.abort_pmsr` ops)
-- Total: **+32 / −0**, single-driver surgical change
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.2: Code flow**
-Record:
-- Before: `.start_pmsr` was wired; `.abort_pmsr` was NULL. On netlink
-  close or wdev teardown, cfg80211 still `kfree()`s the request while
-  the driver keeps the pointer and firmware keeps ranging.
-- After: abort sends `TOF_RANGE_ABORT_CMD`, cancels queued FTM RX
-  notifications, then `iwl_mld_ftm_reset()` NULLs `req`/`req_wdev`.
-- Path: abort/teardown only, not the normal completion path.
+Step 2.1: INVENTORY THE CHANGES
+Mainline diff: `sound/hda/codecs/realtek/alc269.c` +1 line.
+This 6.12 tree uses the pre-split file `sound/pci/hda/patch_realtek.c`.
+Function: `alc269_fixup_tbl[]` (one `SND_PCI_QUIRK` entry).
+Record: [1 file, +1 line] [alc269_fixup_tbl] [single-file surgical
+quirk]
 
-**Step 2.3: Bug mechanism**
-Record: **Use-after-free + leftover firmware ranging**, fixed by
-implementing the existing mac80211 `abort_pmsr` op (same pattern as
-MVM). Also prevents the next `iwl_mld_ftm_start()` from returning
-`-EBUSY` forever because `ftm_initiator.req` stayed non-NULL after the
-object was freed.
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Before: SSID 0x1025:0x1909 has no table match; pin parse does not treat
+the jack as a headset mic.
+After: `snd_hda_pick_fixup()` in `patch_alc269()` selects
+`ALC2XX_FIXUP_HEADSET_MIC`, which on this tree calls
+`alc_fixup_headset_mic()` at `HDA_FIXUP_ACT_PRE_PROBE`.
+That function (verified identical to later `alc2xx_fixup_headset_mic`):
+- applies pin 0x19 config `0x03a1103c`
+- updates coef 0x45
+- sets `HDA_PINCFG_HEADSET_MIC`
+Record: [probe-time pin/coef fixup for this SSID only]
 
-**Step 2.4: Fix quality**
-Record: Obviously correct relative to `iwl_mvm_ftm_abort()`. Minimal.
-Regression risk is low: new code runs only on abort; on firmware abort
-failure it still resets local state (the UAF-critical part). Helpers it
-calls already exist in this tree.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Category (h): hardware workaround — PCI quirk table entry for a laptop
+whose BIOS pin config omits the headset mic.
+Record: [Hardware quirk] [SSID 1025:1909 → existing
+ALC2XX_FIXUP_HEADSET_MIC]
 
-## Phase 3: Git history
+Step 2.4: ASSESS THE FIX QUALITY
+Obviously correct: same pattern already used in this tree for Acer Nitro
+5 AN515-57/58 and AN517-55. Scope is one table row keyed by SSID, so it
+cannot affect other machines. Regression risk is very low.
+Record: [Surgical, matches existing Acer Nitro entries] [Regression
+risk: very low]
 
-**Step 3.1: Blame / introduction**
-Record: Buggy pattern came in with **`d1e879ec600f9`** (“wifi: iwlwifi:
-add iwlmld sub-driver”, 2025-02-16). FTM start stored `req` and
-registered `RX_HANDLER_OF_FTM_REQ` / `IWL_MLD_OBJECT_TYPE_FTM_REQ` from
-day one, but never called cancel/abort. MVM has had abort since
-**`fc36ffda32670`** (2019, “support FTM initiator”).
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.2: Fixes: tag**
-Record: None. Not applicable.
+Step 3.1: BLAME THE CHANGED LINES
+There is no “buggy line” to blame. The gap is a missing SSID. The fixup
+ID and function have been in this tree since `1c643c600407d` (“Add new
+alc2xx-fixup-headset-mic model”, upstream 50db91fccea0, in 6.12.y as of
+2025-01-09). `alc_fixup_headset_mic` dates to `c8c0a03ec1be6`.
+Record: [Missing SSID, not a regression in existing code] [Fixup
+infrastructure present since early 6.12.y]
 
-**Step 3.3: File history**
-Record: Recent FTM-initiator commits are unrelated (location BW
-encoding, switch indentation). Neighbor **`71ac392d8b5c2`** (FW recovery
-reset) is a different path. No prerequisite refactor for this hunk.
+Step 3.2: FOLLOW THE FIXES: TAG
+No Fixes: tag. Expected. This is enablement for a specific machine, not
+a revert of a bad commit.
+Record: [No Fixes: tag; N/A]
 
-**Step 3.4: Author**
-Record: Avraham Stern is a regular iwlwifi FTM contributor. Maintainer
-Miri Korenblit signed off. Related later Stern commits in this tree are
-MEI length checks, not FTM abort follow-ups. **No follow-up fix** to
-`iwl_mld_ftm_abort` after this commit.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+This tree already contains the same class of backports:
+- `db8799e80cb73` ALSA: hda/realtek: Enable headset mic for Acer Nitro 5
+- `04818a914fdce` ALSA: hda/realtek: Add quirk for Acer Nitro AN517-55
+Recent `patch_realtek.c` history is dominated by other one-line HDA
+quirks.
+Record: [Standalone] [Precedent: sibling Acer Nitro headset-mic quirks
+already in 6.12.y]
 
-**Step 3.5: Dependencies**
-Record: Standalone. Uses existing `iwl_mld_send_cmd_pdu`,
-`iwl_mld_cancel_notifications_of_object`, `IWL_MLD_OBJECT_TYPE_FTM_REQ`,
-`iwl_mld_ftm_reset`, `TOF_RANGE_ABORT_CMD`. Series membership is **01/15
-of an iwlwifi-next “updates” dump**; other patches (MEI, WoWLAN, LARI,
-etc.) are unrelated. Can apply alone.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Zhang Heng has other Realtek quirk commits in this tree (e.g.
+`2362e35c63cae` Samsung 750XBE/730XBE, `63a5bca438cfb` ASUS UM6702RC).
+Regular HDA quirk contributor. Applied by Takashi Iwai.
+Record: [Regular quirk contributor] [Maintainer applied]
 
-## Phase 4: Mailing list / external
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Submitted as patch 1/4 with three unrelated quirks (Acer Gadget E10
+speaker, ASUS Vivobook S5406SA mic, Huawei Matebook Conexant). No shared
+code. On 6.12, `ALC2XX_FIXUP_HEADSET_MIC` already exists and points at
+`alc_fixup_headset_mic`, whose body matches mainline
+`alc2xx_fixup_headset_mic`. ALC245 (`0x10ec0245`) is already handled in
+`patch_alc269()`.
+Record: [Standalone] [No missing prerequisites in this tree]
 
-**Step 4.1: Original discussion**
-Record:
-- `b4 dig -c ef704fc32ae1a`: https://patch.msgid.link/20260715220243.340
-  040bdc6a3.Ifbbf70021e42bf1d59db6ec45a73f1806a1c2289@changeid
-- Cover: `[PATCH iwlwifi-next 00/15] wifi: iwlwifi: updates -
-  07-15-2026` — “Cleanups, features, and fixes from our internal tree.”
-- `b4 dig -a`: **v1 only**, this is the applied version
-- No reviewer comments, NAKs, or Cc: stable on this patch in the saved
-  thread
-- lore.kernel.org WebFetch returned 403; thread recovered via `b4 dig
-  -m`
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.2: Recipients**
-Record: To Johannes Berg; Cc linux-wireless, Avraham Stern. Subsystem
-maintainer (Miri) submitted the series.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+`b4 dig -c e00a6a89900dfa4cda3669558d2f3581cd41a656` matched
+https://patch.msgid.link/20260807125857.678297-1-zhangheng@kylinos.cn
+`b4 dig -a`: only v1 (`[PATCH 1/4]`). Thread saved to mbox.
+Takashi Iwai reply (`874ih5bxrt.wl-tiwai@suse.de`): “Applied all four
+patches now. Thanks.” No NAK, no requested changes, no Cc: stable
+discussion.
+Record: [lore/msgid above] [v1 only, applied as submitted] [maintainer
+applied] [no NAKs]
 
-**Step 4.3: Bug report**
-Record: None. No syzbot/bugzilla.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+`b4 dig -w`: To tiwai@suse.com; Cc linux-sound@vger.kernel.org, linux-
+kernel@vger.kernel.org.
+Record: [ALSA maintainer was the To: recipient and applied the patch]
 
-**Step 4.4: Series**
-Record: Mixed iwlwifi-next batch. This patch does not depend on 02–15.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Bugzilla 221623 fetched (HTTP 200 XML). Real user report, codec dump
+attached (dump itself is only the HDMI codec; the text still names
+ALC245 / 1025:1909). Author confirmed intent to patch. Reporter claimed
+the quirk works on their machine.
+Record: [One user + author] [Severity: headset mic missing] [Tested by
+reporter]
 
-**Step 4.5: Stable list**
-Record: No stable-list discussion found (search did not surface this
-subject).
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Series 1–4 are independent device quirks. This commit does not need
+2/4–4/4.
+Record: [Standalone despite 1/4 numbering]
 
-## Phase 5: Semantic / call-chain
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+lore.kernel.org/stable search returned HTTP 403.
+Record: [UNVERIFIED: no stable-list discussion retrieved]
 
-**Step 5.1: Functions**
-Record: `iwl_mld_ftm_abort` (new), `iwl_mld_abort_pmsr` (new),
-`iwl_mld_hw_ops.abort_pmsr` assignment.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.2: Callers**
-Record:
-- `cfg80211_release_pmsr()` from `nl80211.c` on netlink port release
-- `cfg80211_pmsr_wdev_down()` from `net/wireless/core.c` on wdev
-  teardown
-- both → `cfg80211_pmsr_process_abort()` → `rdev_abort_pmsr()` →
-  `ieee80211_abort_pmsr()` → `drv_abort_pmsr()` → `iwl_mld_abort_pmsr()`
-- `drv_abort_pmsr` only calls the driver if `local->ops->abort_pmsr` is
-  set; cfg80211 **always kfree()s** afterward (`pmsr.c` around the abort
-  loop)
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: [alc269_fixup_tbl entry only] [runtime: alc_fixup_headset_mic
+via ALC2XX_FIXUP_HEADSET_MIC]
 
-**Step 5.3: Callees**
-Record: firmware abort PDU; `iwl_mld_cancel_notifications_of_object()`;
-`iwl_mld_ftm_reset()`.
+Step 5.2: TRACE CALLERS
+`patch_alc269()` (`sound/pci/hda/patch_realtek.c:12416`) calls
+`snd_hda_pick_fixup(..., alc269_fixup_tbl, alc269_fixups)` then
+`snd_hda_apply_fixup(..., HDA_FIXUP_ACT_PRE_PROBE)`. That is the
+ALC269-family probe path, which includes ALC245 (`0x10ec0245` at line
+445).
+Record: [Codec probe / device enumeration] [Only SSID 1025:1909]
 
-**Step 5.4: Reachability**
-Record: Yes, from userspace: start peer measurement
-(`NL80211_CMD_PEER_MEASUREMENT_START`), then close the netlink socket or
-take the interface down while ranging is in progress. Typically
-privileged (`nl80211`), but a crashing location/RTT helper is a
-realistic trigger (Android Wi-Fi RTT uses this API).
+Step 5.3: TRACE CALLEES
+`alc_fixup_headset_mic` → `snd_hda_apply_pincfgs`,
+`alc_update_coef_idx`, set `spec->parse_flags |= HDA_PINCFG_HEADSET_MIC`
+(defined in `sound/pci/hda/hda_auto_parser.h`).
+Record: [Pin override + headset-mic parse flag]
 
-**Step 5.5: Similar patterns**
-Record: Only iwlwifi MVM/MLD and mac80211_hwsim implement `.abort_pmsr`.
-MVM has had it since FTM was added; MLD start without abort was the
-incomplete copy.
+Step 5.4: FOLLOW THE CALL CHAIN
+Userspace does not trigger a special syscall; plugging a headset on this
+laptop hits the already-probed HDA jack path. Without the quirk the
+headset mic control never appears.
+Record: [Reachable on this laptop at codec probe] [User-visible audio
+input]
 
-Verified UAF path in this tree:
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Same SSID vendor 0x1025 already has three `ALC2XX_FIXUP_HEADSET_MIC`
+Acer Nitro rows in this tree (0x1539, 0x159c, 0x1597).
+Record: [Systematic Acer Nitro headset-mic pin-config bug; this is
+another SSID]
 
-```246:247:drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
-        if (mld->ftm_initiator.req)
-                return -EBUSY;
-```
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-```267:270:drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
-        if (!ret) {
-                mld->ftm_initiator.req = req;
-                mld->ftm_initiator.req_wdev =
-ieee80211_vif_to_wdev(vif);
-        }
-```
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Yes, functionally: quirk table + `ALC2XX_FIXUP_HEADSET_MIC` + ALC245
+support are in `sound/pci/hda/patch_realtek.c`. The 0x1909 row is absent
+(`git grep 0x1909` on that file: no match). `git merge-base --is-
+ancestor e00a6a89900df HEAD` failed.
+Record: [Bug/gap exists here] [Introduced as missing hardware
+description, not by a post-6.12 commit]
 
-```340:342:drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
-        if (IWL_FW_CHECK(mld, !mld->ftm_initiator.req,
-                         "FTM response without a pending request\n"))
-                return;
-```
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Mainline path is `sound/hda/codecs/realtek/alc269.c` (post-split). 6.12
+still has `sound/pci/hda/patch_realtek.c`. Insertion context also
+differs: 6.12’s last Acer 0x1025 rows are 0x1597 / 0x169a, then Dell
+0x1028:0x0470; mainline inserts after 0x1844 Helios ZPS. Needs a trivial
+path + context backport, not a semantic rework. Exact insert in this
+tree: after the 0x169a Acer Swift SFG16 line, before Dell M101z.
+Record: [Minor conflicts: file path + nearby rows] [Otherwise clean one-
+liner]
 
-That NULL check does not save a dangling pointer.
-`cfg80211_pmsr_process_abort()` kfree’s the request after the (optional)
-abort op.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+No 0x1909 / ANV16-42 entry. Sibling Nitro quirks are present; they do
+not cover this SSID.
+Record: [No existing fix for 1025:1909]
 
-## Phase 6: This checkout
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 6.1: Local tree and buggy code**
-Record:
-- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
-- `make kernelversion`: **7.3.0-rc4**
-- MLD FTM initiator **is present**. Bug introduced with MLD
-  (`d1e879ec600f9`), long before 7.3 branched.
-- Candidate SHA **`ef704fc32ae1a`**; `git merge-base --is-ancestor
-  ef704fc32ae1a HEAD` → already in this mainline snapshot (landed in
-  **7.3-rc1**, not in 7.2). Evaluation is still on technical merit, not
-  “already selected.”
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [ALSA HD-audio Realtek codec] [IMPORTANT: common laptop audio;
+quirk is machine-specific]
 
-**Step 6.2: Backport difficulty**
-Record: Clean apply on this tree. Structures and helpers match the hunk.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+`patch_realtek.c` is actively receiving quirk backports on this branch
+(HP mute LED, Samsung, Victus, etc.). Mature table, high quirk churn by
+design.
+Record: [Mature driver, active quirk additions — expected for stable]
 
-**Step 6.3: Related fixes already here**
-Record: `iwl_mld_ftm_restart_cleanup()` covers FW restart only, not
-userspace abort. No earlier abort implementation.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-## Phase 7: Subsystem context
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: [Driver-specific / DMI-SSID-specific: Acer Nitro ANV16-42 only]
 
-**Step 7.1**
-Record: **iwlwifi MLD** (Intel Wi-Fi 7 opmode). Criticality:
-**IMPORTANT** (common client Wi-Fi driver), not core mm/VFS. FTM itself
-is a subset of users (RTT / indoor location).
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: [Every boot/probe on that laptop with a headset jack] [Common
+for owners of that model] [Unprivileged users hit it via
+Pulse/PipeWire/ALSA]
 
-**Step 7.2**
-Record: Actively developed; MLD is the current Intel path. This is a
-missing piece from the original MLD port, not a brand-new subsystem.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Not a panic. Headset microphone is missing/unusable. That is a real
+functional regression versus Windows/firmware intent for that SKU.
+Severity MEDIUM for the platform, HIGH for affected users (basic audio
+input broken).
+Record: [Failure: headset mic not detected] [Severity: MEDIUM (important
+hardware bug, not crash)]
 
-## Phase 8: Impact and risk
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Benefit: restores headset mic on a shipping Acer Nitro using an
+existing, tested fixup. Risk: one SSID-keyed table entry; no API, no
+lock, no parser change for other IDs.
+Record: [Benefit: high for that SKU] [Risk: very low] [Favor backport]
 
-**Step 8.1: Who is affected**
-Record: Intel MLD devices using nl80211 peer measurement (FTM
-initiator). Not universal.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 8.2: Trigger**
-Record: Start FTM, then abort via socket close or iface down before
-firmware completes. Not every boot; realistic for location stacks and
-interface teardown. Unprivileged trigger: unverified (nl80211 PMSR is
-typically admin-capable).
-
-**Step 8.3: Failure mode**
-Record:
-- Firmware response after abort: **UAF** of `cfg80211_pmsr_request`
-  (crash / KASAN / potential memory corruption)
-- Without a later notification: FTM stays “busy” (`-EBUSY`) until driver
-  reset
-- Firmware keeps ranging until timeout
-Severity: **HIGH** (UAF), not a panic on every probe.
-
-**Step 8.4: Risk/benefit**
-Record: Benefit medium-high for MLD FTM users (UAF + stuck session).
-Risk **low** (32 lines, abort path only, same design as MVM). Ratio
-favors taking it.
-
-## Phase 9: Synthesis
-
-**Step 9.1: Evidence**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Verified UAF: driver borrows cfg80211’s request; abort path frees it
-  without clearing the driver pointer
-- Also stuck `-EBUSY` on later FTM starts
-- Small, self-contained, copies a long-standing MVM abort
-- Cancel infrastructure (`IWL_MLD_OBJECT_TYPE_FTM_REQ`) was already
-  registered; abort was the missing caller
-- Maintainer-signed; applies cleanly here
-- Same class of “missing stop/abort op” that stable routinely takes
-
+- Documented user bug (bugzilla 221623) with claimed test of this exact
+  quirk
+- Textbook hardware quirk / PCI ID exception for stable
+- One line, existing `ALC2XX_FIXUP_HEADSET_MIC` /
+  `alc_fixup_headset_mic`
+- ALC245 already supported; sibling Acer Nitro quirks already in 6.12.y
+- Applied by ALSA maintainer; no review objections
+- Independent of the rest of the 4-patch series
 AGAINST:
-- Message sells it as “add support,” no crash report, no Fixes/syzbot
-- Sent to **iwlwifi-next** in a mixed updates series
-- FTM is not a hot path for most desktops
-- Adds a new ops pointer (looks like a feature if you only read the
-  subject)
-
+- File path/context need a trivial backport (driver split after 6.12)
+- Bugzilla codec attachment is only HDMI (incomplete dump);
+  identification still given in the report text
+- lore.kernel.org/stable search was blocked (403)
 UNRESOLVED:
-- Could not fetch lore HTML (403); used `b4` mbox instead
-- No evidence of a real-world crash report
-- Unverified whether unprivileged users can start PMSR on typical
-  distros
+- Could not read stable mailing-list archives (HTTP 403)
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** (MVM analogue; Intel-authored)
-2. Real user-visible bug? **PASS** (UAF / stuck FTM after abort)
-3. Important (crash/security/corruption)? **PASS** (UAF is crash/memory-
-   safety; FTM-specific but real)
-4. Small and contained? **PASS** (32 lines, one driver)
-5. No new features/APIs? **PASS** — implements an existing mac80211 op;
-   not a new syscall/uAPI
-6. Can apply to this tree? **PASS** (MLD FTM code is here; helpers
-   exist)
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — same fixup as other Nitro
+   rows; reporter tested; maintainer applied
+2. Fixes a real bug that affects users? **PASS** — headset mic not
+   enumerated
+3. Important issue? **PASS** — hardware unusable (mic), not a crash;
+   still the documented quirk exception
+4. Small and contained? **PASS** — +1 line
+5. No new features or APIs? **PASS** — existing quirk ID on existing
+   driver
+6. Can apply to the local tree? **PASS** — needs path/context adjustment
+   only; semantics exist here
 
-**Step 9.3: Exception category**
-Record: Not ID/quirk/DT/build/docs. Ordinary driver correctness fix.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: [Hardware quirk/workaround — SND_PCI_QUIRK in Realtek HDA table]
 
-**Step 9.4: Decision**
-This is a missing abort handler on a driver that caches a cfg80211-owned
-object. That is a UAF fix, even though the subject says “support.” It is
-small, applies here, and does not need the rest of the 15-patch series.
-
-### What it solves for this tree
-On 7.3-rc4, iwlwifi MLD FTM start stores `req` and handles firmware
-range responses. Without abort, closing the measurement netlink socket
-or taking the wdev down frees `req` while the driver and firmware still
-use it. That is a use-after-free and can pin FTM at `-EBUSY`. The patch
-aborts firmware, drops queued FTM notifs, and clears driver state.
-
-### Risk vs benefit
-Low risk, high severity if the abort path is hit. Benefit is limited to
-Intel MLD + FTM users, which is enough given UAF.
+Step 9.4: MAKE YOUR DECISION
+This is a one-line Realtek HDA PCI quirk for a user-reported broken
+headset mic, using a fixup already in 6.12.y. It should be backported to
+this tree.
 
 Verification:
-- [Phase 1] Parsed tags: SOB Stern + Korenblit; Link msgid; no
-  Fixes/Reported-by/Cc stable
-- [Phase 2] Diff: +32 lines, `iwl_mld_ftm_abort` + `.abort_pmsr`
-- [Phase 3] `git show ef704fc32ae1a`; ancestor of HEAD; introduced with
-  `d1e879ec600f9`; MVM abort `fc36ffda32670`
-- [Phase 3] `git merge-base --is-ancestor ef704fc32ae1a 8d3ae59288f1e` →
-  not in 7.2; in 7.3-rc1
-- [Phase 3] No follow-ups on `ftm-initiator.c` after this commit
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 iwlwifi-next 01/15, To Johannes, no
-  review replies in mbox
-- [Phase 4] WebFetch lore/msgid.link → 403; used local mbox
-- [Phase 5] Call chain: `cfg80211_release_pmsr` /
-  `cfg80211_pmsr_wdev_down` → kfree after optional abort;
-  `iwl_mld_handle_ftm_resp_notif` derefs `ftm_initiator.req`
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37;
-  kernelversion 7.3.0-rc4; MLD FTM present
-- [Phase 8] Failure mode: UAF on FTM abort + `-EBUSY` stuck state,
-  severity HIGH
-- UNVERIFIED: unprivileged PMSR start; no user crash report
+- [Phase 1] Subject/tags: Closes bugzilla 221623; SOB Zhang Heng +
+  Takashi Iwai; msgid 20260807125857.678297-1; no Fixes/Cc-stable
+- [Phase 1] Bugzilla XML HTTP 200: reporter samuelrenault37, ALC245
+  1025:1909, claimed test on Fedora 44 / 7.0.11
+- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x1025, 0x1909, ...,
+  ALC2XX_FIXUP_HEADSET_MIC)`
+- [Phase 2] 6.12 fixup at patch_realtek.c:10552 uses
+  `alc_fixup_headset_mic`; body matches later `alc2xx_fixup_headset_mic`
+  (pin 0x19, coef 0x45, HDA_PINCFG_HEADSET_MIC)
+- [Phase 3] `git merge-base --is-ancestor e00a6a89900df HEAD` → not in
+  this tree
+- [Phase 3] `git grep 0x1909 -- sound/pci/hda/patch_realtek.c` → no
+  match
+- [Phase 3] ALC2XX_FIXUP_HEADSET_MIC present; sibling Nitro quirks
+  0x1539/0x159c/0x1597 present
+- [Phase 3] `1c643c600407d` already in 6.12.y (alc2xx-fixup-headset-mic
+  model)
+- [Phase 3] ALC245 `0x10ec0245` handled in patch_realtek.c:445
+- [Phase 4] `b4 dig -c e00a6a89900df` →
+  patch.msgid.link/20260807125857.678297-1; v1 only
+- [Phase 4] `b4 dig -w`: To tiwai@suse.com, Cc linux-sound
+- [Phase 4] mbox: Iwai “Applied all four patches now”; series 2/4–4/4
+  are unrelated machines
+- [Phase 4] lore.kernel.org and patch.msgid.link HTTP 403 from
+  curl/WebFetch; used b4 mbox instead
+- [Phase 4] UNVERIFIED: stable@ lore search (HTTP 403)
+- [Phase 5] Caller: `patch_alc269()` → `snd_hda_pick_fixup(...,
+  alc269_fixup_tbl, ...)`
+- [Phase 6] `git describe HEAD` / Makefile: pending-6.12, 6.12.111; file
+  is patch_realtek.c not alc269.c
+- [Phase 6] Insertion point: after 0x169a Acer Swift SFG16, before Dell
+  0x1028:0x0470
+- [Phase 8] Failure mode: missing headset mic on one laptop SKU, not a
+  panic
+- UNVERIFIED: bugzilla attachment is HDMI-only, so pin dump for ALC245
+  was not independently re-checked from that file
 
 **YES**
 
- .../intel/iwlwifi/mld/ftm-initiator.c         | 21 +++++++++++++++++++
- .../intel/iwlwifi/mld/ftm-initiator.h         |  1 +
- .../net/wireless/intel/iwlwifi/mld/mac80211.c | 10 +++++++++
- 3 files changed, 32 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c b/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
-index 3464b32687124..6e174c4d8b75e 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.c
-@@ -449,3 +449,24 @@ void iwl_mld_ftm_restart_cleanup(struct iwl_mld *mld)
- 			       mld->ftm_initiator.req, GFP_KERNEL);
- 	iwl_mld_ftm_reset(mld);
- }
-+
-+void iwl_mld_ftm_abort(struct iwl_mld *mld, struct cfg80211_pmsr_request *req)
-+{
-+	struct iwl_tof_range_abort_cmd cmd = {
-+		.request_id = req->cookie,
-+	};
-+
-+	lockdep_assert_wiphy(mld->wiphy);
-+
-+	if (req != mld->ftm_initiator.req)
-+		return;
-+
-+	if (iwl_mld_send_cmd_pdu(mld, WIDE_ID(LOCATION_GROUP,
-+					      TOF_RANGE_ABORT_CMD),
-+				 &cmd))
-+		IWL_ERR(mld, "failed to abort FTM process\n");
-+
-+	iwl_mld_cancel_notifications_of_object(mld, IWL_MLD_OBJECT_TYPE_FTM_REQ,
-+					       mld->ftm_initiator.req->cookie);
-+	iwl_mld_ftm_reset(mld);
-+}
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h b/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h
-index 3fab25a52508a..e82237b314673 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/ftm-initiator.h
-@@ -25,5 +25,6 @@ int iwl_mld_ftm_start(struct iwl_mld *mld, struct ieee80211_vif *vif,
- void iwl_mld_handle_ftm_resp_notif(struct iwl_mld *mld,
- 				   struct iwl_rx_packet *pkt);
- void iwl_mld_ftm_restart_cleanup(struct iwl_mld *mld);
-+void iwl_mld_ftm_abort(struct iwl_mld *mld, struct cfg80211_pmsr_request *req);
- 
- #endif /* __iwl_mld_ftm_initiator_h__ */
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-index 69a066904a808..5234229a070a7 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-@@ -2609,6 +2609,15 @@ static int iwl_mld_start_pmsr(struct ieee80211_hw *hw,
- 	return iwl_mld_ftm_start(mld, vif, request);
- }
- 
-+static void iwl_mld_abort_pmsr(struct ieee80211_hw *hw,
-+			       struct ieee80211_vif *vif,
-+			       struct cfg80211_pmsr_request *request)
-+{
-+	struct iwl_mld *mld = IWL_MAC80211_GET_MLD(hw);
-+
-+	iwl_mld_ftm_abort(mld, request);
-+}
-+
- static enum ieee80211_neg_ttlm_res
- iwl_mld_can_neg_ttlm(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 		     struct ieee80211_neg_ttlm *neg_ttlm)
-@@ -2696,5 +2705,6 @@ const struct ieee80211_ops iwl_mld_hw_ops = {
- 	.prep_add_interface = iwl_mld_prep_add_interface,
- 	.set_hw_timestamp = iwl_mld_set_hw_timestamp,
- 	.start_pmsr = iwl_mld_start_pmsr,
-+	.abort_pmsr = iwl_mld_abort_pmsr,
- 	.can_neg_ttlm = iwl_mld_can_neg_ttlm,
- };
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 05e7fcc2f67e6..9ec18f779a700 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6595,6 +6595,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1025, 0x182c, "Acer Helios ZPD", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1025, 0x1844, "Acer Helios ZPS", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x1025, 0x1909, "Acer Nitro ANV16-42", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
+ 	SND_PCI_QUIRK(0x1028, 0x053c, "Dell Latitude E5430", ALC292_FIXUP_DELL_E7X),
+ 	SND_PCI_QUIRK(0x1028, 0x054b, "Dell XPS one 2710", ALC275_FIXUP_DELL_XPS),
 -- 
 2.53.0
 
