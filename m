@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D957952F98C;
-	Mon, 19 Oct 2026 14:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0C1532EF2;
+	Mon, 19 Oct 2026 14:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418636; cv=none; b=X2Sz300L/LQVrLbOwoXL8Pra2FHIKkN0GCZT8DR7VznOJv01xOm6oLAmEz6/AFlmd62BjFc428c3oZubVsCI6M3EadyXQvYaXoCn5Hc/1Biat49XKzDLgEA2ELOgcL3PM1YKuq2nd0dSeixnd+OU+r/mni+TS2krRQGedeqcCCo=
+	t=1792418638; cv=none; b=YBMRFsenyExdDjwhtYz7hFup58HI+aKbbiSY36bO9Eqx/8qtbm7VjSApX1r7umpg4H6yMeNE00wPUpl7zwlQK2bpEQD/hTKIihnUQn+qNbPlO7IT41BkwpNgDbih4uiRBjM1OkMNEVIzNDeXkgm9noQoxmUC6W9juZVK8+q6HN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418636; c=relaxed/simple;
-	bh=bTc1qBHfgTSoYHzG7x3073cPrk6kgrauXDhkJDaA0Y4=;
+	s=arc-20240116; t=1792418638; c=relaxed/simple;
+	bh=kGbG52fGB96t4UqheDP3dTe/12gUgpf66muy9TI/pHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CKxr30jZSG0+iZhEqPUduBahMskAZLHD+1UPCBawQUijuGQbpuTXJ/iKNQiI6mqjEYV3DO5D9ay7LLJjrLfsi1dkprJ/SENvr0miunSKAKQB882iM2aQZ3OyuwiP/p0aocUY2Af48gNVpayi63aVrZgbUGGpNFNP+2ZfEoJDRVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GkbAUAU/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kLRlALDmgViqEahlH8p5AhVlNL+dXH/73+qqBcW04WRYrMwHfmKwYYQZOt5qWFKHvrQFS+j6gcB1VswDg/PN26UoGE+u5O6KhQHkx0keog4lhdCoctMTcSSTst4roqIAVbauQvwcH2MES7s/OGO/iW/7VUr2nNQ2CfzyvFXpFD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MLyR3Wh5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GkbAUAU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03461F000C6;
-	Mon, 19 Oct 2026 14:03:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MLyR3Wh5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27AA81F000C5;
+	Mon, 19 Oct 2026 14:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418633;
-	bh=2R+14GBXQ1xxzDa5XM9aYzE2xq95R2rakb0WYwEYDqI=;
+	s=k20260515; t=1792418635;
+	bh=SH4egVIVR2Di7WSXJDQxMgEss9OGBBJVaE18I3MZHRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GkbAUAU/AHUASgQJtforypprMby+AZKGCIDmfYTvycm680UpOddGgw1q7WFnUEyYX
-	 IVddqDZre6YetYPttlRWzdOC0je9RFDe5NHtr06GBenWjZFU/Ow8vDmJg7ewnvz/bq
-	 1uhkyAZpcz24tDrtZJQNMpFX56K+ubkuR1PgwTtZY8y1wHrkn+h6TwQhwAZ5EaWejM
-	 LlfHPDdut8an5Hf4hnU8zcO1xmcVh8TGQc2PuB+wquOVO+lylmN/dFmD1cmfMyLRSX
-	 DKnJNYQATPP3KlrXocADrSwwlVTJ5vZAnXaSWlj9tyUkUzGkYieZ07YurL+rUc8ZHi
-	 F2DonNncb0+LA==
+	b=MLyR3Wh5rl94rIl35PjQp+siuJux1zgxj6f7vK50iNx6fxu1B3wgMV+NxRB3vvZhm
+	 ULlbF8VsTMJ1Dg6H10Pjg8qZzoSlrVIl4pM+UaEv0BoKjN9h6vrdL2nQPS3LZoUgJl
+	 ngSX9hiD1sT0wE4bZI3lRAf7pmiQVVXcW2yA51DyyIuozN0dOj7oxqnTSze0bGBlH8
+	 cOyRhsKmbWfWeI42155fg78m7pCVeQh8O+kk38S4oL6MObT2WtGK3dDyqXUwVokhdl
+	 zDExYv2yphY2SIFtUec7cHPjsPx7NW8foR5Ux65zhYjarrCDylp/cEHad9nstM2Utr
+	 Dn0zCCJ5mqsLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tarun Noonemunthala <ntarun2000@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	shenghao-ding@ti.com,
+	kevin-lu@ti.com,
+	baojun.xu@ti.com,
+	sen@ti.com,
+	lgirdwood@gmail.com,
 	perex@perex.cz,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: Add quirk for HP ENVY 13-aq1xxx
-Date: Mon, 19 Oct 2026 09:51:19 -0400
-Message-ID: <20261019135441.1420968-388-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: tlv320aic26: remove keyclick sysfs file
+Date: Mon, 19 Oct 2026 09:51:20 -0400
+Message-ID: <20261019135441.1420968-389-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,439 +59,448 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tarun Noonemunthala <ntarun2000@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a01a223bd685be42e908d970de32eeb3646097f3 ]
+[ Upstream commit ae375f8d063d71e598c0d7e14fc056154c84d7a7 ]
 
-The HP ENVY Laptop 13-aq1xxx (PCI SSID 103c:86ad) uses an ALC285 codec
-with two speaker pairs: front (pin 0x14) and bottom (pin 0x17).
+aic26_probe() creates the keyclick sysfs file on the component device.
+The file callback uses the ASoC component pointer stored in the driver
+private data.
 
-The BIOS leaves pin 0x14 as [N/A] ("not connected"), so the generic
-parser never enables the front pair and only the bottom speakers are
-audible.  The vendor driver (RTKVHD64.sys) programs that pin with the
-value 0x90170150 and runs the HP amplifier initialization, which is
-already implemented in the driver as ALC285_FIXUP_HP_GPIO_AMP_INIT.
+There is no matching remove callback, so the sysfs file can remain after
+the component is removed while its backing component state is gone.
 
-Add a board fixup that applies the pin configuration for 0x14 and chains
-to the existing amplifier init fixup.
+Add a component remove callback that removes the keyclick file.
 
-The pin value was recovered from the vendor driver's own configuration
-data.  The patch and this changelog were prepared with an AI coding
-assistant (see the Assisted-by tag below); the change was reviewed and
-tested by the submitter on the affected machine.
-
-Tested on an HP ENVY 13-aq1xxx by rebuilding snd-hda-codec-alc269 from
-the Fedora 7.1.10 source and loading it: the codec now reports
-"line_outs=2 (0x14/0x17)", pin 0x14 comes up as an output (Pin-ctls
-0x40) with its amplifier unmuted, and both speaker pairs play.
-
-Assisted-by: OpenCode:deepseek-v4.1-flash checkpatch
-Signed-off-by: Tarun Noonemunthala <ntarun2000@gmail.com>
-Link: https://patch.msgid.link/20260923094014.58867-1-ntarun2000@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260615064549.34110-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a scoped Realtek pin/amp quirk for one
-HP SSID, the 6.18.57 driver already has the helpers it needs, and the
-patch applies cleanly.
+The local tree is **6.18.53**. The buggy `device_create_file()` path is
+present in `v6.18.53`; this 6-line remove-side cleanup is a real
+UAF/NULL-deref fix and applies cleanly here.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[ALSA/hda/realtek] [Add] [PCI SSID quirk so HP ENVY 13-aq1xxx
-front speakers are enabled]`
+Record: **[ASoC / tlv320aic26] [remove] [tear down the keyclick sysfs
+attribute on component remove]**
+
+The subject says “remove keyclick sysfs file”; the body is more precise:
+the file is **not** deleted as a feature. A matching `.remove` callback
+is added so the existing debug attribute is unregistered when the
+component goes away.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Assisted-by: OpenCode:deepseek-v4.1-flash checkpatch`
-- `Signed-off-by: Tarun Noonemunthala <ntarun2000@gmail.com>` (author)
-- `Link:
-  https://patch.msgid.link/20260923094014.58867-1-ntarun2000@gmail.com`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
-- No `Fixes:` tag (expected; this is a BIOS/hardware workaround, not a
-  regression from a prior kernel commit)
-- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-  stable@vger.kernel.org`
-- Pipeline markers (`[Upstream commit
-  a01a223bd685be42e908d970de32eeb3646097f3]`, `Signed-off-by: Sasha
-  Levin`) ignored per instructions
+- **Link:**
+  `https://patch.msgid.link/20260615064549.34110-1-pengpeng@iscas.ac.cn`
+- **Signed-off-by:** Pengpeng Hou `<pengpeng@iscas.ac.cn>` (author)
+- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (ASoC maintainer)
+- **No Fixes:** tag (expected for this review)
+- **No Cc: stable@vger.kernel.org** (expected)
+- **No Reported-by / Tested-by / Reviewed-by / Acked-by / syzbot**
+- Ignored pipeline tags (`[Upstream commit …]`, Sasha Levin SOB) per
+  instructions
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** HP ENVY Laptop 13-aq1xxx, PCI SSID `103c:86ad`, ALC285, two
-  speaker pairs (front pin `0x14`, bottom pin `0x17`). BIOS marks pin
-  `0x14` as `[N/A]` / not connected.
-- **Symptom:** Generic parser never enables the front pair; only bottom
-  speakers play.
-- **Root cause:** Broken BIOS pin config. Vendor Windows driver
-  (`RTKVHD64.sys`) programs pin `0x14` as `0x90170150` and runs HP amp
-  init already present as `ALC285_FIXUP_HP_GPIO_AMP_INIT`.
-- **Fix:** New board fixup applying that pin config and chaining to the
-  existing amp-init fixup.
-- **Version info:** Tested by rebuilding `snd-hda-codec-alc269` from
-  Fedora 7.1.10 source on the affected machine; codec then reports
-  `line_outs=2 (0x14/0x17)`, pin `0x14` output (`Pin-ctls 0x40`), amp
-  unmuted, both pairs play.
-- No stack traces (not a crash). No kernel-version range beyond “this
-  laptop + this codec driver”.
+- **Bug:** `aic26_probe()` creates `keyclick` on `component->dev`.
+  `keyclick_show` / `keyclick_store` use `dev_get_drvdata()` and then
+  `aic26->component`. There is no matching remove.
+- **Symptom:** After the ASoC component is removed, the sysfs file can
+  still be there while the component / driver private state is gone.
+- **Failure mode:** use of stale `aic26` / `aic26->component` from sysfs
+  (UAF or NULL deref).
+- **Version info:** none in the message. The create-file path dates to
+  the original 2008 driver.
+- **Fix:** add `aic26_remove()` that calls `device_remove_file()` and
+  wire it to `snd_soc_component_driver.remove`.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit hardware quirk: pin
-override plus existing amp-init chain. That is the documented Realtek
-HDA workaround pattern.
+Record: **Yes — a real lifetime bug, not a feature deletion.** The
+subject is slightly misleading; this is the standard “create in probe,
+never remove” sysfs teardown hole.
 
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `sound/hda/codecs/realtek/alc269.c` (`+11` lines, 0 removed)
-- Functions/tables: `enum { ... }` (add `ALC285_FIXUP_HP_ENVY_13AQ`),
-  `alc269_fixups[]`, `alc269_fixup_tbl[]`
-- Scope: single-file surgical hardware quirk
+- **File:** `sound/soc/codecs/tlv320aic26.c` (**+6 / −0**)
+- **Functions:** new `aic26_remove()`; `aic26_soc_component_dev` gets
+  `.remove`
+- **Scope:** single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-1. Enum: add `ALC285_FIXUP_HP_ENVY_13AQ` after
-   `ALC285_FIXUP_HP_ENVY_X360`.
-2. `alc269_fixups[]`: new `HDA_FIXUP_PINS` entry `{ 0x14, 0x90170150 }`,
-   chained to `ALC285_FIXUP_HP_GPIO_AMP_INIT`.
-3. `alc269_fixup_tbl[]`: `SND_PCI_QUIRK(0x103c, 0x86ad, "HP ENVY
-   13-aq1xxx", ALC285_FIXUP_HP_ENVY_13AQ)` between `0x869d` and
-   `0x86c1`.
-
-Before: SSID `103c:86ad` has no match; generic parser skips unused pin
-`0x14`.
-After: probe applies the speaker pin and the existing HP GPIO amp-init
-(and its existing LED chain).
+- **Before:** `aic26_probe()` (card bind) does
+  `device_create_file(component->dev, &dev_attr_keyclick)` and returns 0
+  even if create fails. No `.remove`.
+- **After:** card/component teardown calls `aic26_remove()` →
+  `device_remove_file()`.
+- **Path:** component remove / card unbind / codec unregister — not the
+  playback hot path.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Hardware workaround (category h)** plus pin-config
-correctness. `0x90170150` decodes as fixed-function internal speaker
-(`AC_JACK_PORT_FIXED` + `AC_JACK_SPEAKER` + analog +
-`AC_DEFCFG_MISC_NO_PRESENCE`, assoc 5). Same speaker pincfg already used
-for HP Envy x360 pin `0x14` (`B&O soundbar speakers`) in
-`alc285_fixup_hp_envy_x360()`.
+Record: **[UAF / NULL deref from leftover sysfs] [probe creates an
+unmanaged attribute; remove never tears it down]**
+
+Verified mechanics in this tree:
+
+1. `component->dev` is the SPI device (`snd_soc_component_initialize()`
+   sets `component->dev = dev`; SPI probe passes `&spi->dev`).
+2. `keyclick_show` / `keyclick_store` do `dev_get_drvdata(dev)` then
+   `snd_soc_component_read/update_bits(aic26->component, …)`.
+3. `aic26_probe()` is only run from `soc_probe_component()` when a card
+   binds.
+4. `soc_remove_component()` calls `snd_soc_component_remove()` →
+   `driver->remove` if set. Without this patch that is NULL, so the
+   attribute stays on the still-live SPI device.
+5. On SPI driver unbind, `device_unbind_cleanup()` runs
+   `devres_release_all()` (frees `aic26` via `devm_kzalloc`, unregisters
+   the component) then `dev_set_drvdata(dev, NULL)`.
+   `device_create_file()` is **not** a managed resource, so `keyclick`
+   remains.
+6. Later sysfs access: NULL deref if drvdata is already NULL; UAF in the
+   window while `aic26` is freed and drvdata is not yet cleared; or
+   concurrent show/store vs teardown because `device_remove_file()` is
+   what waits out in-flight sysfs ops.
+
+Sibling codecs already pair create/remove the same way (`wm8962.c`,
+`cs42l52.c`, `cs42l56.c`).
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Minimal, table-driven, SSID-scoped. Uses existing
-`HDA_FIXUP_PINS` and `ALC285_FIXUP_HP_GPIO_AMP_INIT`. Regression risk is
-low and confined to PCI SSID `103c:86ad`. Chain to
-`ALC285_FIXUP_HP_GPIO_AMP_INIT` also chains to
-`ALC285_FIXUP_HP_GPIO_LED` (`alc_fixup_hp_gpio_led(..., 0x04, 0x01)`);
-that is the established HP ALC285 amp-init pattern (same as Envy x360).
-Submitter tested both speaker pairs on the machine. No public API or
-data-structure change.
+Record:
+- **Obviously correct:** matches the established ASoC pattern;
+  `device_remove_file()` is the matching API.
+- **Minimal:** 6 lines, no API/behavior change for working hardware.
+- **Regression risk:** very low. If `device_create_file()` failed,
+  `device_remove_file()` may emit a kernfs “failed to remove” warning;
+  that is the same pattern as the sibling beep drivers and only on the
+  already-failed create path. No new locking.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record: Insertion points sit next to HP ALC285 fixups from
-`aeeb85f26c3bb` (“ALSA: hda: Split Realtek HD-audio codec driver”,
-Takashi Iwai, 2025-07-09). No prior `0x86ad` entry; the “bug” is a
-missing quirk for BIOS-broken pin config, not a later regression. SSID
-`0x86ad` is absent from `v6.18.57`.
+Record:
+- **Introduced by:** `d8e3bb7385da0` (“ALSA: ASoC: Add Texas Instruments
+  TLV320AIC26 codec driver”, 2008-07-29)
+- **Kernel version:** v2.6.27-era; present for the entire life of this
+  6.18 tree
+- Sysfs create itself has been stable; later commits only reworked ASoC
+  helpers (`1514613a7a448` codec→component, `2eadc04d83f6c`
+  `DEVICE_ATTR_RW`, `1218d67d37615` `sysfs_emit`)
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable. This does not revert or patch a
-specific earlier commit.
+Record: **No Fixes: tag.** Blame is sufficient: the hole is the original
+driver, not a recent regression.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: `alc269.c` regularly gets SSID quirks. Nearby HP entries already
-use `ALC285_FIXUP_HP_GPIO_AMP_INIT` (ZBook 17 G6 `0x860c`, ZBook 15 G6
-`0x860f`, Elite Dragonfly G1 `0x861f`). Standalone, not `patch X/Y`.
+Record:
+- Recent on this file at `v6.18.53`: `sysfs_emit`, DAI naming,
+  `DEVICE_ATTR_RW` — none add remove.
+- Same author, same day: `02b2a3058912d` / upstream `ce3733792d38`
+  “ASoC: sma1303: remove fault-check sysfs group on remove” —
+  **parallel** fix in another codec, different msgid, not a
+  prerequisite.
+- **Standalone.**
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Only this Realtek commit from Tarun Noonemunthala in this tree.
-Maintainer Takashi Iwai applied it (`Signed-off-by` + “Applied now.
-Thanks.”).
+Record: Pengpeng Hou is a regular ASoC codec contributor (error-path /
+lifetime fixes). Not the subsystem maintainer. Maintainer **Mark Brown**
+applied the patch.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Depends on `ALC285_FIXUP_HP_GPIO_AMP_INIT` /
-`alc285_fixup_hp_gpio_amp_init()`, `alc269_fixups[]`,
-`alc269_fixup_tbl[]`, and `snd_hda_pick_fixup()`. All present in
-`v6.18.57`. Applies standalone.
+Record: **None.** `.remove` is already `void (*remove)(struct
+snd_soc_component *)` in `include/sound/soc-component.h` on this tree.
+No new helpers.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c a01a223bd685be42e908d970de32eeb3646097f3` matched patch-id
-  `273d83204a2340faba5eada8e1765ed331574a12`
-- Lore/msgid:
-  https://patch.msgid.link/20260923094014.58867-1-ntarun2000@gmail.com
-- `b4 dig -a`: single **v1**, no later revisions
-- Takashi Iwai, 2026-09-28: “Applied now. Thanks.” No NAK, no requested
-  changes, no `Cc: stable` in the thread
-- `lore.kernel.org` WebFetch returned 403; thread confirmed via `b4
-  dig`, openwall, and IU LKML mirrors
+- **b4 dig:**
+  https://patch.msgid.link/20260615064549.34110-1-pengpeng@iscas.ac.cn
+- **Revisions:** v1 only (no v2/v3)
+- **Thread (mbox via `b4 dig -m`):** 2 messages — submission and Mark
+  Brown’s apply to `broonie/sound.git for-7.3`
+- **No NAK, no review comments, no Cc: stable in-thread**
+- Direct lore HTTP fetch returned **403**; discussion was recovered from
+  the mbox, not from the web UI
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To Takashi Iwai; Cc Jaroslav Kysela, `linux-
-sound@vger.kernel.org`, `linux-kernel@vger.kernel.org`. Subsystem
-maintainer received and applied it.
+Record (`b4 dig -w`): To/Cc included Mark Brown, Liam Girdwood, Takashi
+Iwai, Jaroslav Kysela, TI codec contacts, `linux-sound`, `linux-kernel`.
+Applied by the ASoC maintainer. No extra Reviewed-by.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No bugzilla/syzbot link. Evidence is the submitter’s hardware
-test (codec dump + both speaker pairs). Web search did not find a
-separate public user-report thread beyond this patch.
+Record: **No user/syzbot/bugzilla report.** Code-analysis fix. No
+evidence of a field crash report.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone v1. Not part of a multi-patch series.
+Record: Same-day sma1303 sysfs-remove patch is a sibling, not a
+dependency. This patch is `[PATCH]` (not `n/N`).
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: No stable-list discussion of this SSID/quirk found. Unverified
-whether anyone previously declined it; no evidence of a NAK.
+Record: **UNVERIFIED** for lore.kernel.org/stable (HTTP 403). No in-tree
+discussion of a reason to skip this on 6.18.y.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.1: KEY FUNCTIONS**
-Record: No new functions. Tables: `alc269_fixups[]`,
-`alc269_fixup_tbl[]`. Runtime path uses `snd_hda_pick_fixup()`,
-`__snd_hda_apply_fixup()`, `snd_hda_apply_pincfgs()`,
-`alc285_fixup_hp_gpio_amp_init()`, `alc285_fixup_hp_gpio_led()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `aic26_remove` (new), `aic26_soc_component_dev` table; related
+existing: `aic26_probe`, `keyclick_show`, `keyclick_store`,
+`aic26_spi_probe`
 
 **Step 5.2: TRACE CALLERS**
-Record: Codec probe in `alc269.c` (~line 8557) calls
-`snd_hda_pick_fixup(codec, alc269_fixup_models, alc269_fixup_tbl,
-alc269_fixups)`. Match is PCI subsystem ID via `SND_PCI_QUIRK`.
-`HDA_FIXUP_PINS` runs at `HDA_FIXUP_ACT_PRE_PROBE` (`auto_parser.c`).
-Amp init runs at `HDA_FIXUP_ACT_INIT` (`msleep(100)` then
-`alc_write_coef_idx(codec, 0x65, 0x0)`). Path is module/codec probe, not
-a hot syscall.
+Record:
+- `aic26_probe` ← `snd_soc_component_probe()` ← `soc_probe_component()`
+  (card bind)
+- `aic26_remove` ← `snd_soc_component_remove()` ←
+  `soc_remove_component()` ← `soc_remove_link_components()` / error
+  unwind; also via card unbind when the component is unregistered
+  (`snd_soc_del_component_unlocked()` → `snd_soc_unbind_card()`)
+- Sysfs callbacks: userspace read/write of `keyclick` (mode 0644 via
+  `DEVICE_ATTR_RW`)
 
 **Step 5.3: TRACE CALLEES**
-Record: `snd_hda_codec_set_pincfg()` for pin `0x14`; coef write `0x65`;
-GPIO LED helper. No allocations, no new locks.
+Record: `device_remove_file()` only. Show/store use
+`snd_soc_component_read` / `update_bits` on `aic26->component`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Boot / `snd-hda-codec-realtek` load → ALC269/ALC285 probe → SSID
-match `103c:86ad` → pin override → generic parser sees a speaker at
-`0x14` → amp init. Reachable on that laptop without special userspace.
-Unprivileged users cannot trigger it on other machines (SSID match).
+Record:
+- Bind: SPI probe → `devm_snd_soc_register_component` → later card bind
+  → `aic26_probe` → sysfs create
+- Unbind: card/component teardown should drop the file; SPI unbind then
+  frees `aic26` and clears drvdata
+- **Reachable from userspace:** yes, via sysfs after bind. After broken
+  unbind, any reader of that 0644 file can oops. Unprivileged read is
+  possible; write is typically root. Trigger is teardown (rmmod / unbind
+  / card removal), not every PCM period.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same `0x90170150` speaker pincfg appears multiple times in
-`alc269.c`. Envy x360 uses it on pin `0x14` and also chains
-`ALC285_FIXUP_HP_GPIO_AMP_INIT`. This patch is the same class of fix,
-smaller (one pin, no extra coef/headset logic).
+Record: In-tree ASoC codecs that create device sysfs files already
+remove them (wm8962, cs42l52, cs42l56). This driver was the outlier.
+sma1303 got the same class of fix the same day.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Tree: `git describe HEAD` = `v6.18.57-155-gcdf239ca885b2`; `make
-  kernelversion` = `6.18.57`
-- `sound/hda/codecs/realtek/alc269.c` exists (split is in `v6.18.57`)
-- `v6.18.57` has no `0x86ad` / `ALC285_FIXUP_HP_ENVY_13AQ`; BIOS-broken
-  pin path is unquirked there
-- Candidate overlay on current HEAD is ignored as selection evidence;
-  the 6.18.57 baseline still needs the quirk
+Record: **Yes.** `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`;
+`make kernelversion` → **6.18.53**.
+- `git grep aic26_remove v6.18.53 -- sound/soc/codecs/tlv320aic26.c` →
+  **not present**
+- `v6.18.53:sound/soc/codecs/tlv320aic26.c` still has create in
+  `aic26_probe()` and no `.remove`
+- Bug introduced in 2008; present for all of 6.18.y
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: `git apply --check` of this diff onto the `v6.18.57` copy of
-`alc269.c` succeeded (exit 0). Insertion context (enum after
-`ALC285_FIXUP_HP_ENVY_X360`, fixup after that entry, quirk between
-`0x869d` and `0x86c1`) matches. Expected backport difficulty: **clean
-apply**.
+Record: **Clean apply** to the `v6.18.53` copy of the file (`patch
+--dry-run` return code 0). Surrounding probe/driver table matches the
+hunk. `.remove` is already `void` here.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No other `0x86ad` quirk. `ALC285_FIXUP_HP_ENVY_X360` is a
-different SSID (`0x85de`) with extra pin/coef work. No alternate fix for
-13-aq1xxx.
+Record: No earlier tlv320aic26 sysfs-remove fix at `v6.18.53`.
+`sysfs_emit` conversion does not close the lifetime hole.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: ALSA HD-audio Realtek codec (`sound/hda/codecs/realtek/`).
-**IMPORTANT** for laptop audio; **PERIPHERAL** in blast radius (one PCI
-SSID). Driver is common; this table entry is model-specific.
+Record: **ASoC codec driver (`sound/soc/codecs/`)** — **PERIPHERAL**
+- `CONFIG_SND_SOC_TLV320AIC26` is a **promptless** tristate, `depends on
+  SPI`
+- Only in-tree `imply` is `SND_SOC_ALL_CODECS`, which **`depends on
+  COMPILE_TEST`**
+- Grep of the whole tree: no machine driver, DTS, or defconfig selects
+  this codec
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained; frequent `Add quirk` commits. Pattern is
-mature: append enum + fixup + `SND_PCI_QUIRK`.
+Record: ASoC is active; **this file is mature/quiet**. Last functional
+churn is ASoC API modernization, not new features. Long-lived bug.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.1: WHO IS AFFECTED**
-Record: Driver-specific / platform-specific: HP ENVY 13-aq1xxx with HDA
-SSID `103c:86ad` (vendor `0x103c` = HP). No other `0x86ad` uses in this
-tree.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Driver-specific / config-specific.** Production 6.18 configs
+will not enable this unless they set the hidden
+`CONFIG_SND_SOC_TLV320AIC26` (out-of-tree board, explicit fragment).
+Compile-test “all codecs” builds can include it.
 
-**Step 8.2: TRIGGER CONDITIONS**
-Record: Every codec probe on that laptop. Common for owners of that
-model; impossible for everyone else. Not a race. Not an unprivileged
-attack path.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-Record: Front speakers stay silent; bottom pair still works. Not a
-panic/UAF. User-visible broken audio on shipping hardware. Severity
-**MEDIUM** as a crash, **HIGH** as a hardware-quirk enablement (laptop
-audio half-dead). Stable rules list “hardware quirk” as an accepted
-class.
-
-**Step 8.4: RISK-BENEFIT RATIO**
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
 Record:
-- **Benefit:** Restores front speakers on a real ALC285 HP laptop;
-  tested on hardware; maintainer-applied.
-- **Risk:** Very low — 11 lines, SSID-scoped, existing helpers only.
-- **Ratio:** Strongly favors backport.
+- Requires the codec bound to a card (so probe created the file), then
+  component/driver teardown, then sysfs access — or concurrent access
+  during unbind
+- Not every-boot; **module unload / card unbind**
+- Unprivileged users can **read** the leftover 0644 file (DoS oops), not
+  typically write
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: **NULL deref / UAF → kernel oops** — **HIGH** (crash;
+theoretically memory-safety). Not silent corruption. No syzbot/CVE.
 
-**Step 9.1: EVIDENCE**
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** medium-low population, high severity *if* the driver is
+  used; prevents oops/UAF on teardown
+- **Risk:** very low (6 lines, standard API, no locking/ABI)
+- **Ratio:** favorable for stable — cheap crash fix
 
-For:
-- Hardware quirk / pin override for existing Realtek HDA driver (stable-
-  rules exception)
-- Real user-visible bug: BIOS leaves pin `0x14` disconnected; front
-  speakers silent
-- Pin value taken from vendor driver; same `0x90170150` already used as
-  HP internal speaker
-- Chains to existing `ALC285_FIXUP_HP_GPIO_AMP_INIT` already in 6.18.57
-- 11 lines, one file, SSID-scoped
-- Tested on the affected machine (codec state + playback)
-- Applied by Takashi Iwai after v1; no NAK
-- Applies cleanly to this tree’s `alc269.c`
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-Against:
-- Not a crash, UAF, or security fix
-- Affects one laptop SSID
-- Changelog mentions AI assistance (mitigated by maintainer apply +
-  hardware test)
-- No independent second reporter / bugzilla (unverified beyond
-  submitter)
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Unresolved:
-- Direct `lore.kernel.org` fetch 403 (thread recovered via `b4` and
-  mirrors)
-- No stable-list discussion found
-- GPIO LED chain side-effect on this exact SKU not independently
-  documented; same chain as other HP ALC285 amp-init boards, and the
-  submitter tested playback
+FOR:
+- Real probe/remove mismatch: unmanaged sysfs vs component/driver
+  lifetime
+- Failure is oops/UAF, a class stable regularly takes
+- 6 lines, obviously correct, same pattern as wm8962/cs42l52/cs42l56
+- Bug present since 2008; code exists in this 6.18.53 tree; patch
+  applies cleanly
+- No prerequisites; `void (*remove)` already matches
+- ASoC maintainer applied v1 with no objections
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — standard pin table +
-   existing chain; hardware-tested; maintainer applied
-2. Fixes a real bug that affects users? **PASS** — silent front speakers
-   on HP ENVY 13-aq1xxx
-3. Important issue? **PASS** — hardware quirk (explicitly allowed);
-   broken onboard speakers
-4. Small and contained? **PASS** — +11 lines, one file
-5. No new features or APIs? **PASS** — SSID quirk only; no new UAPI
-6. Can apply to the local tree? **PASS** — file, enum, tables, and
-   `ALC285_FIXUP_HP_GPIO_AMP_INIT` exist in 6.18.57; `git apply --check`
-   clean
+AGAINST:
+- No field report / syzbot / Fixes / Cc: stable
+- Obscure codec: no in-tree card, hidden Kconfig, only implied under
+  `COMPILE_TEST`
+- Debug sysfs, not the PCM path
+- Tiny warning risk if create failed and remove still runs
 
-**Step 9.3: EXCEPTION CATEGORIES**
-Record: **Hardware quirk / audio codec quirk** (and effectively a
-device-ID table addition to an existing driver). Automatic yes-class for
-stable.
+UNRESOLVED:
+- Stable-list discussion (lore HTTP 403)
+- Whether any distro/out-of-tree 6.18 config actually sets
+  `CONFIG_SND_SOC_TLV320AIC26`
 
-**Step 9.4: DECISION**
-This tree is 6.18.57. The Realtek ALC269/ALC285 quirk tables are
-present; SSID `103c:86ad` is not. The patch is the usual HP pin+amp
-workaround, scoped to one subsystem ID, already used elsewhere in this
-driver. That is exactly the class of change stable is meant to take.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — standard
+   `device_remove_file` pairing; maintainer applied; in-tree siblings
+   already do this
+2. Fixes a real bug that affects users? **PASS** — leftover sysfs after
+   remove is a real lifetime bug (population is small, but the bug is
+   real)
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   UAF/NULL deref oops on a world-readable sysfs file after unbind
+4. Small and contained? **PASS** — +6 lines, one codec
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — applies to `v6.18.53`
+   tlv320aic26.c; `.remove` type matches
 
-### What it solves for stable users
-On HP ENVY 13-aq1xxx, BIOS marks the front-speaker pin unused, so Linux
-only drives the bottom pair. The quirk programs pin `0x14` as an
-internal speaker and runs the existing HP amp init so both pairs work.
-Without it, 6.18.y users of that laptop keep broken speaker output for
-the life of the LTS tree.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: **Not** an ID/quirk/DT/build/doc exception. Ordinary small
+bugfix.
 
-### Risk vs benefit
-Benefit is real, hardware-tested audio on a shipping laptop. Risk is a
-11-line SSID-local table addition with no locking, allocation, or API
-change.
+**Step 9.4: MAKE YOUR DECISION**
+This is a small, correct teardown fix for a use-after-free / NULL deref.
+The driver is obscure, but the rules and the usual stable practice still
+take this class of probe/remove hole: crash on unbind, surgical change,
+no dependencies, clean apply to **this** 6.18.53 tree. Benefit is
+limited by who enables the codec; risk is negligible. That is a YES.
 
-### Concerns
-None that block backport. GPIO LED chaining is inherited from
-`ALC285_FIXUP_HP_GPIO_AMP_INIT` and is the existing HP ALC285 pattern.
-No extra prerequisite commits are required.
+------------------------------------------------
+What the commit solves for stable users
+------------------------------------------------
+`aic26_probe()` publishes `keyclick` on the SPI device. Show/store use
+driver private data and `aic26->component`. Nothing ever calls
+`device_remove_file()`. After card/component teardown or `rmmod`, the
+attribute can remain while `aic26` is freed and drvdata is cleared. A
+later read oopses. The patch adds the missing component `.remove`.
 
-Verification:
-- [Phase 1] Parsed tags: author SOB, Takashi Iwai SOB, msgid Link; no
-  Fixes/Reported-by/Cc: stable
-- [Phase 1] Body: BIOS pin 0x14 N/A; vendor pincfg 0x90170150; tested
-  line_outs=2 on HP ENVY 13-aq1xxx
-- [Phase 2] Diff: +11 lines in `alc269.c` — enum, `alc269_fixups[]` pin
-  table, `SND_PCI_QUIRK(0x103c, 0x86ad, ...)`
-- [Phase 2] Pin 0x90170150 verified as fixed internal speaker via
-  `include/sound/hda_verbs.h`; same value at Envy x360 pin 0x14
-- [Phase 2] Chain target `ALC285_FIXUP_HP_GPIO_AMP_INIT` at lines
-  5704–5708; func `alc285_fixup_hp_gpio_amp_init` at 2827–2835
-- [Phase 3] `git describe HEAD` = `v6.18.57-155-gcdf239ca885b2`; `make
-  kernelversion` = 6.18.57
-- [Phase 3] `git merge-base --is-ancestor 2c9247c1739db v6.18.57` — not
-  in v6.18.57 baseline
-- [Phase 3] `git grep 0x86ad v6.18.57 -- alc269.c` — absent;
-  `ALC285_FIXUP_HP_GPIO_AMP_INIT` present
-- [Phase 3] Blame insertion neighbors: `aeeb85f26c3bb` (Realtek split),
-  ancestor of v6.18.57
-- [Phase 4] `b4 dig -c a01a223bd685...`: v1 only; maintainer To/Cc;
-  Takashi “Applied now”
-- [Phase 4] lore WebFetch 403; IU/openwall used instead
-- [Phase 4] No stable-list hit for this model
-- [Phase 5] Probe calls `snd_hda_pick_fixup(..., alc269_fixup_tbl,
-  alc269_fixups)` ~line 8557; `HDA_FIXUP_PINS` in
-  `auto_parser.c:841-847`
-- [Phase 5] `0x86ad` unique in tree
-- [Phase 6] `git apply --check` of this diff onto v6.18.57 `alc269.c`:
-  exit 0
-- [Phase 8] Failure mode: silent front speakers on one HP SSID, not a
-  kernel oops
-- UNVERIFIED: GPIO mute-LED wiring on this exact SKU (same inherited
-  chain as other HP ALC285 amp-init boards; playback was tested)
+------------------------------------------------
+Stable rules / risk vs benefit
+------------------------------------------------
+Meets the bar: obviously correct, real crash-class bug, tiny, no new
+API, applies here. User set is small (hidden Kconfig, no in-tree
+machine), but regression risk is near zero. No extra commits needed.
 
-This is a small, maintainer-applied hardware quirk that restores
-speakers on an existing Realtek codec in this 6.18.57 tree, with clean
-apply and SSID-local risk.
+------------------------------------------------
+Verification
+------------------------------------------------
+- **[Phase 1]** Tags: Link msgid, SOB Hou + Brown; no Fixes/Reported-
+  by/syzbot/Cc:stable
+- **[Phase 2]** Diff: +6 lines, `aic26_remove` + `.remove =
+  aic26_remove`
+- **[Phase 2]** `keyclick_show`/`store` use `dev_get_drvdata` then
+  `aic26->component` (file read)
+- **[Phase 2]** Siblings wm8962/cs42l52/cs42l56 already
+  `device_remove_file` in remove
+- **[Phase 3]** Blame: create-file from `d8e3bb7385da0` (2008); no Fixes
+  tag
+- **[Phase 3]** Author also fixed sma1303 sysfs on remove the same day;
+  independent
+- **[Phase 4]** `b4 dig -c ae375f8d063d…`: lore msgid
+  20260615064549.34110-1; v1 only
+- **[Phase 4]** `b4 dig -w`: Brown, Girdwood, Iwai, Kysela, linux-sound
+  CC’d
+- **[Phase 4]** `b4 dig -m`: 2-message thread; Brown applied to for-7.3;
+  no NAK
+- **[Phase 4]** lore.kernel.org / patch.msgid.link HTTP **403**; used
+  mbox instead
+- **[Phase 5]** probe via `soc_probe_component`; remove via
+  `soc_remove_component`
+- **[Phase 5]** `device_unbind_cleanup` (`drivers/base/dd.c`):
+  `devres_release_all` then `dev_set_drvdata(NULL)`
+- **[Phase 5]** `DEVICE_ATTR_RW` → 0644 (`include/linux/device.h`)
+- **[Phase 6]** `git describe HEAD` = `v6.18.53-5049-g0f0bdc2b0dffb`;
+  kernelversion 6.18.53
+- **[Phase 6]** `aic26_remove` **absent** from `v6.18.53`; patch dry-run
+  against that file **succeeds**
+- **[Phase 6]** `git merge-base --is-ancestor ae375f8d063d HEAD` → not
+  ancestor (upstream 7.3 material)
+- **[Phase 7]** `CONFIG_SND_SOC_TLV320AIC26` promptless; only `imply`
+  from `SND_SOC_ALL_CODECS` (`depends on COMPILE_TEST`); no
+  DTS/board/defconfig
+- **[Phase 8]** Failure mode: oops/UAF after unbind; severity HIGH;
+  population small
+- **UNVERIFIED:** stable@ lore discussion (HTTP 403); whether any 6.18
+  distro enables this hidden symbol
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/codecs/tlv320aic26.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 1fcf2ba795e8a..0a3df8b78aae6 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3774,6 +3774,7 @@ enum {
- 	ALC285_FIXUP_HP_SPECTRE_X360_EB1,
- 	ALC285_FIXUP_HP_SPECTRE_X360_DF1,
- 	ALC285_FIXUP_HP_ENVY_X360,
-+	ALC285_FIXUP_HP_ENVY_13AQ,
- 	ALC288_FIXUP_DELL_HEADSET_MODE,
- 	ALC288_FIXUP_DELL1_MIC_NO_PRESENCE,
- 	ALC288_FIXUP_DELL_XPS_13,
-@@ -5981,6 +5982,15 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC285_FIXUP_HP_GPIO_AMP_INIT,
- 	},
-+	[ALC285_FIXUP_HP_ENVY_13AQ] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x14, 0x90170150 }, /* front speakers */
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC285_FIXUP_HP_GPIO_AMP_INIT,
-+	},
- 	[ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc285_fixup_ideapad_s740_coef,
-@@ -6794,6 +6804,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x864f, "HP Laptop 15-dy0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x86ad, "HP ENVY 13-aq1xxx", ALC285_FIXUP_HP_ENVY_13AQ),
- 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x86c8, "HP Laptop 14s-dr1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+diff --git a/sound/soc/codecs/tlv320aic26.c b/sound/soc/codecs/tlv320aic26.c
+index e5dfb3d752a3a..84e954311c1b2 100644
+--- a/sound/soc/codecs/tlv320aic26.c
++++ b/sound/soc/codecs/tlv320aic26.c
+@@ -320,8 +320,14 @@ static int aic26_probe(struct snd_soc_component *component)
+ 	return 0;
+ }
+ 
++static void aic26_remove(struct snd_soc_component *component)
++{
++	device_remove_file(component->dev, &dev_attr_keyclick);
++}
++
+ static const struct snd_soc_component_driver aic26_soc_component_dev = {
+ 	.probe			= aic26_probe,
++	.remove			= aic26_remove,
+ 	.controls		= aic26_snd_controls,
+ 	.num_controls		= ARRAY_SIZE(aic26_snd_controls),
+ 	.dapm_widgets		= tlv320aic26_dapm_widgets,
 -- 
 2.53.0
 
