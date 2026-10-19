@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993D656DCF7;
-	Mon, 19 Oct 2026 13:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6C756F591;
+	Mon, 19 Oct 2026 13:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418288; cv=none; b=MTZ70Q1iBfrJsYpfW3c+iT/AkE8yutP/puxZRRWjdnN2sQRZXml/kRv0AFaSKDo4oZv1y1WjF6i7+8Ir8V9jHmIhXGlg9cKzn22Khxb6NYy98vOJUpvdkUnL2CYuz0I2+0dqnmiZbspHC1+WFiKOsYCX/mAWku8g4TlfYH2/OLQ=
+	t=1792418290; cv=none; b=LlzCq65K7MwQkj9lyhsnCWVQo4KL4GA+PrSrvHKq7YEtzoFiZrLN3QwSc/hUjs80KJOvdSIPVAE35r3ujP40df6+/cvUwHCnTqDlV8pB/DxJXkXjP0fwO+HwSxdRQJbYbfGwdW15pyoZ28qFKeqPmrxeGDZW66/GzHOOn3JzUuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418288; c=relaxed/simple;
-	bh=bLx0EQsBaXAXk0+xThbR7drkUFeTbjNjD0PZXC/Jtkw=;
+	s=arc-20240116; t=1792418290; c=relaxed/simple;
+	bh=iBg+oZBMe0ZVl4r9/ARDaUlsxqYdZf1/rQ9ZuV04FJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IrBu3r/bB0qyMnGSLbhB2Dw/oR75Lny9EuisodQ7bOdZgFetmPZMLdxy51Ju63ZjUIyGxzUYeIpfxYCQIA1NXrVsAQ/MIFlR0GV/4CgHgPWKl/jhaqFf2LoFRwWqo9cynu4OImZ3ChiV8bTJeSw4LSCRHvnlT9XYWEow6+hn8xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W/M4geZ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=o0ffyQkXTnG4NxCUPIuDm34f7C7h60UwbNKOFNUPivde4iMrbeC94a3TLiNyATdCLT5mtQRGhI9rgGyw1+pwDi7CVVbTkl/n5rSrugcjGIAr3v1jG5f0G0g7BCwnZoB+R/Zb0l4bkgS7dAB52DIaktJ2Jh607Kggq6QIfnwJMM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h0GO22ur; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W/M4geZ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC931F000C4;
-	Mon, 19 Oct 2026 13:58:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h0GO22ur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFE01F000C8;
+	Mon, 19 Oct 2026 13:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418285;
-	bh=h+RSvhysTAdXPwkQrhApMbjMyRbW3GW1nw+xVeDm3+w=;
+	s=k20260515; t=1792418287;
+	bh=Ff21cRgZ8MvA5CDC/2+VpN0VjGBg1z2VwpeEj2orLlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/M4geZ8f89XXHrgeVDzu3Dpxlg6+v1BpnPKTUTEgvM5aWG6Ghl4N5i2Or4vIzy36
-	 p81uTEsDhuVsyoSnQrkl1rDMHh4KmyWUFnbJLNmreCDmkFaEmIOhBkYKcGo09M9g5l
-	 2cn/ML+O3++cZsK8C1ACkxTRdjjyS7MAWOi+JWCrJqrU5K5A8a8tArzx419iNKsjpa
-	 dvKIH59f3pJcZWYriD6c7puwXkWhZZxXNIT48dy+kyBeo7z37a9f63hi4xiLrhCAZ8
-	 OHxfNq/VShsjlOR7jqKEoy1LhA0r8pKr0AVJ3nFa+nQKOWLepGuLA4NSJlsrl0t/0c
-	 L6VRyHF4CTQRQ==
+	b=h0GO22urMcdHOGNafsxfp1ycROIVdVoinJlMg17ucDY07dF+RZBGQ/tEmKrTWCQsu
+	 EpkXE/mq0PGGDEAfXRdUJgOWmtKKuu2Znbx7PCK/k1NUqvvTpgWukgRGkq/xEqM0e7
+	 OihqhirPT3mprGCS2VQSq3vngaUsUiLlj61DkUu9s2hy7LmhU73DNlAZyooDEU1DTk
+	 iiCDXLPs6aLVM9yRzl1zmHOV0eT8nWtw5khI8GarroHXbr+01erpADYIRqZZuiDJgE
+	 kdCrUxDjIS7dgJ8wq76E0xQGr8Gv/+wUSwiDTPhfuarQ5dveVR2pDDJEU+SaHHYw+n
+	 bPNRwHW5be4cw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Benjamin Coddington <ben.coddington@hammerspace.com>,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+Cc: Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	trondmy@kernel.org,
-	anna@kernel.org,
-	linux-nfs@vger.kernel.org,
+	thierry.reding@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] pNFS: honor clora_changed when recalling a layout
-Date: Mon, 19 Oct 2026 09:47:10 -0400
-Message-ID: <20261019135441.1420968-139-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] gpu: host1x: Wait for timeout worker completion on channel free
+Date: Mon, 19 Oct 2026 09:47:11 -0400
+Message-ID: <20261019135441.1420968-140-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,558 +56,484 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit aceaa5991bdf744e9c3fa1e5ad73405b1801eaab ]
+[ Upstream commit 7a39b9856acccc8e9b05845ca2bf62494fcd3dfa ]
 
-When the metadata server recalls a layout with clora_changed FALSE, the
-layout is not changing and the client may complete its modified writes to
-the storage devices before returning the layout (RFC 8881, Section
-20.3.3).  Only when clora_changed is TRUE -- the server is restriping, or
-a storage device has failed -- should the client stop writing to the
-storage devices and redirect through the metadata server.
+cdma_timeout_destroy() used cancel_delayed_work() to cancel pending
+timeout work when destroying the CDMA. Usually this is fine, but
+there is a narrow race condition where the timeout handler has started
+execution but has not taken cdma->lock; the channel is freed causing
+cdma_stop to take cdma->lock and flush the channel; host1x_cdma_deinit
+then proceeds with deinitializing cdma while the handler is waiting to
+take cdma->lock.
 
-Since commit b739a5bd9d9f ("NFSv4/flexfiles: Cancel I/O if the layout is
-recalled or revoked") the client cancels in-flight I/O on every recall,
-regardless of clora_changed.  For an unchanged recall this abandons
-writes whose data may already have reached the storage device; such a
-write can then land after the LAYOUTRETURN, which the server sees as a
-write without a layout.
+Therefore change cdma_timeout_destroy to use cancel_delayed_work_sync
+instead to ensure any pending timeout work completes before proceeding.
 
-Pass the recall's clora_changed value through
-pnfs_mark_matching_lsegs_return() and only cancel in-flight I/O when the
-layout is actually changing.  When it is not, the existing deferred
-return path waits for the in-flight writes to drain before sending the
-LAYOUTRETURN.  Other callers, which are tearing down or returning the
-layout for their own reasons, continue to cancel as before.
-
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260609-b4-host1x-small-fixes-a-v1-1-7c1131c0b3ad@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The buggy cancel-on-
-every-recall path is present here; the fix is not. It is a small
-protocol/data-integrity correction and applies cleanly.
+The local tree is **v7.3-rc4** (`7.3.0-rc4`). The host1x CDMA timeout
+path is present, and this is a one-line `cancel_delayed_work` →
+`cancel_delayed_work_sync` race/UAF fix that is standalone and meets
+stable criteria.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[pNFS] [honor] honor `clora_changed` when recalling a layout**
-
-Subsystem: NFS pNFS client. Verb “honor” is a correctness/protocol fix,
-not a feature add.
+Record: **[gpu/host1x] [Wait / ensure completion] [Wait for timeout
+worker completion on channel free]**
+Subsystem prefix `gpu: host1x:`. The verb is “Wait … on channel free”,
+i.e. synchronize teardown with a running work item. That is a teardown-
+race fix, not a feature.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
 Record:
-- **Signed-off-by:** Benjamin Coddington `<bcodding@hammerspace.com>`
-  (author; Hammerspace)
-- **Signed-off-by:** Trond Myklebust `<trond.myklebust@hammerspace.com>`
-  (NFS client maintainer)
-- **No Fixes:** (expected; body names `b739a5bd9d9f`)
-- **No Cc: stable** (expected)
-- **No Reported-by / Tested-by / Reviewed-by / Link / Acked-by**
-
-Mainline SHA (verified on `origin/master`):
-`aceaa5991bdf744e9c3fa1e5ad73405b1801eaab`
+- **Fixes:** none (expected for this review path)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none on the commit itself
+- **Acked-by:** none
+- **Link:** `https://patch.msgid.link/20260609-b4-host1x-small-fixes-
+  a-v1-1-7c1131c0b3ad@nvidia.com`
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Mikko Perttunen `<mperttunen@nvidia.com>` (author);
+  Thierry Reding `<treding@nvidia.com>` (Tegra/host1x maintainer).
+  Ignored any Sasha Levin SOB (none on this commit).
+- Series marker in the msgid: **patch 1/6** of `host1x-small-fixes-a`.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
 Record:
-- **Bug:** Since `b739a5bd9d9f`, CB_LAYOUTRECALL always cancels in-
-  flight DS I/O, including when `clora_changed` is FALSE.
-- **RFC 8881 §20.3.3:** FALSE means the layout is not changing; the
-  client may finish modified writes to storage before LAYOUTRETURN. TRUE
-  means restriping/device failure; cancel and go through the MDS.
-- **Failure mode:** Cancelled writes may already have reached the DS,
-  then complete after LAYOUTRETURN → server sees a write with no layout.
-- **Fix:** Pass `clora_changed` into
-  `pnfs_mark_matching_lsegs_return()`; cancel only when the layout is
-  changing. Unchanged recalls use the existing drain-then-return path.
-  Other callers still cancel.
-- **Version info:** Bug since the 2022 cancel-I/O commit (`v6.1-rc1`).
+- **Bug:** `cdma_timeout_destroy()` used `cancel_delayed_work()`, which
+  does not wait if the timeout work is already running.
+- **Mechanism:** timeout handler has started but has not yet taken
+  `cdma->lock`; channel free runs `cdma_stop` (takes the lock, flushes),
+  then `host1x_cdma_deinit()` tears CDMA down while the handler is still
+  waiting for that lock.
+- **Symptom/failure mode:** use-after-free / use of a destroyed mutex
+  and CDMA state from the timeout worker. That is a kernel crash /
+  memory-safety bug, not a cosmetic issue.
+- **Version info:** none in the message. The call has existed since
+  host1x channel support.
+- **Author’s root cause:** async cancel vs running work vs lock/deinit
+  order.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. It is an explicit race/UAF fix. Cover letter (see
+Phase 4) calls patches 1–4 “logic issues that are unlikely to happen but
+technically possible.” Unlikely trigger does not make a UAF inapplicable
+to stable.
 
-Record: **Not a disguised cleanup.** It is an explicit
-protocol/correctness fix. The extra `bool cancel_io` on other call sites
-preserves existing teardown behavior.
-
----
-
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
-
 Record:
-- `fs/nfs/callback_proc.c`: +2 / −1 (`initiate_file_draining`)
-- `fs/nfs/pnfs.c`: +13 / −9 (declaration, all callers, cancel gate)
-- `fs/nfs/pnfs.h`: +1 / −1 (prototype)
-- **Net: +16 / −11**, three files. Surgical, single-subsystem.
-
-Functions: `initiate_file_draining`, `nfs4_layout_refresh_old_stateid`,
-`pnfs_mark_layout_stateid_return`, `pnfs_layout_io_set_failed`,
-`_pnfs_return_layout`, `pnfs_layout_process`,
-`pnfs_mark_matching_lsegs_return`, `pnfs_mark_layout_for_return`,
-`pnfs_layout_return_unused_byserver`.
+- File: `drivers/gpu/host1x/hw/cdma_hw.c` — **1 insertion, 1 deletion**
+- Function: `cdma_timeout_destroy()`
+- Scope: **single-file surgical fix** (one call-site change)
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
 Record:
-- **Recall path (`initiate_file_draining`):** passes
-  `args->cbl_layoutchanged` instead of always cancelling.
-- **`pnfs_mark_matching_lsegs_return`:** `pnfs_lseg_cancel_io()` only if
-  `cancel_io`.
-- **All other callers:** pass `true` → same as today.
-- **Unchanged recall with I/O in flight:** still marks lsegs for return,
-  returns `-EBUSY`, callback still `NFS4_OK`; deferred return waits for
-  refs to drop (existing `pnfs_put_lseg` / LAYOUTRETURN path).
-  `nfs_commit_inode()` after unlock is unchanged.
+- **Before:** if `cdma->timeout.initialized`,
+  `cancel_delayed_work(&cdma->timeout.wq)` then `initialized = false`.
+  Pending work is cancelled; **running** work is not waited for.
+- **After:** `cancel_delayed_work_sync()` — cancel pending work **and
+  wait** if the handler is executing.
+- **Path:** channel teardown / CDMA destroy, not the submit hot path.
+
+Verified teardown order in this tree:
+
+```102:113:drivers/gpu/host1x/channel.c
+static void release_channel(struct kref *kref)
+{
+        ...
+        host1x_hw_cdma_stop(host, &channel->cdma);
+        host1x_cdma_deinit(&channel->cdma);
+        clear_bit(channel->id, chlist->allocated_channels);
+}
+```
+
+```528:541:drivers/gpu/host1x/cdma.c
+int host1x_cdma_deinit(struct host1x_cdma *cdma)
+{
+        ...
+        host1x_pushbuffer_destroy(pb);
+        host1x_hw_cdma_timeout_destroy(host1x, cdma);
+        return 0;
+}
+```
+
+`cdma_stop()` takes `cdma->lock`, may wait for an empty sync queue, then
+unlocks. `host1x_cdma_deinit()` then runs **without** `cdma->lock`. That
+matches the commit’s race: stop can finish and deinit can proceed while
+`cdma_timeout_handler()` is between start and `mutex_lock(&cdma->lock)`.
+
+The window is larger than “a few instructions.” The handler dumps debug
+state **before** taking the lock:
+
+```291:305:drivers/gpu/host1x/hw/cdma_hw.c
+static void cdma_timeout_handler(struct work_struct *work)
+{
+        ...
+        host1x_debug_dump(cdma_to_host1x(cdma));
+        mutex_lock(&cdma->lock);
+```
+
+`host1x_debug_dump()` walks every channel and dumps FIFOs
+(`show_all(..., true)`). A GPU timeout is also when userspace/driver
+often closes the channel. That is a realistic overlap, not only a one-
+instruction race.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record:
+- **Category:** race + use-after-free / use of destroyed CDMA (mutex,
+  push buffer, channel).
+- **Mechanism:** non-synchronous delayed-work cancel on destroy. Fix is
+  the standard `cancel_*_sync` teardown pattern.
+- **Not** a leak, NULL check, or new API.
 
-Record: **[Logic / protocol correctness]** Unconditional I/O cancel on
-every recall. That races completed-on-wire writes vs LAYOUTRETURN. The
-fix restores RFC drain-before-return when `clora_changed` is false.
+Related code that correctly stays **non-sync** (would deadlock if
+changed, because it runs under `cdma->lock`, which the handler also
+takes):
 
-Not a leak, UAF, lock, or new API.
+```293:297:drivers/gpu/host1x/cdma.c
+static void stop_cdma_timer_locked(struct host1x_cdma *cdma)
+{
+        cancel_delayed_work(&cdma->timeout.wq);
+        cdma->timeout.client = NULL;
+}
+```
 
 **Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- **Quality:** obviously correct for the stated race.
+  `cancel_delayed_work_sync()` is the documented way to wait for delayed
+  work before freeing the object that work touches.
+- **Minimal:** one identifier change.
+- **Regression risk:**
+  - `_sync` can sleep. Callers of `host1x_channel_put()` →
+    `release_channel()` are process-context (DRM ioctls/file close,
+    client `exit`/unbind, debugfs). Sleeping is valid there.
+  - `_sync` is **not** called while holding `cdma->lock` (`cdma_stop`
+    drops it first). No lock-vs-work deadlock on the free path described
+    in the commit.
+  - Residual risk: if the timeout handler’s `host1x_debug_dump()` →
+    `host1x_channel_put()` dropped the **last** channel ref,
+    `release_channel()` would run on the same work and `_sync` could
+    wait on itself. That path was already unsafe with async cancel (UAF
+    after dump returns). No mailing-list NAK of this patch; maintainer
+    applied it.
 
-Record: **Obviously correct and minimal.** Only the CB_LAYOUTRECALL file
-path changes behavior. `cbl_layoutchanged` is already decoded
-(`callback_xdr.c`). Risk: unchanged recalls return the layout more
-slowly if DS I/O is stuck (RFC-intended; server may recall again). Tear-
-down still cancels. `pnfs_mark_matching_lsegs_invalid()` still always
-cancels (revoke). No public API change.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-
-Record: Unconditional `pnfs_lseg_cancel_io()` at `fs/nfs/pnfs.c:2678` is
-from **`b739a5bd9d9f`** (“NFSv4/flexfiles: Cancel I/O if the layout is
-recalled or revoked”), 2022-10-05. `git describe --contains`:
-**`v6.1-rc1`**. Present for the whole 6.12 lifetime.
+Record:
+- Buggy `cancel_delayed_work()` in `cdma_timeout_destroy()` comes from
+  **`6579324a41cc41`** (“gpu: host1x: Add channel support”, Terje
+  Bergstrom, 2013-03-22).
+- First contained in **`v3.10-rc1`**. This is old, long-lived driver
+  code, not a last-month addition.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. Named commit **`b739a5bd9d9f` is an ancestor of
-HEAD** (`git merge-base --is-ancestor` exit 0). That commit added cancel
-in both `pnfs_mark_matching_lsegs_return` and
-`pnfs_mark_matching_lsegs_invalid`; this patch only gates the return
-path.
+Record: No `Fixes:` tag. The introducing commit is identified by blame,
+not by the message. `git merge-base --is-ancestor 6579324a41cc41 HEAD`
+succeeds — the introducing commit is in this checkout.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: Recent 6.12 pNFS work (`layout segment leak`, `EBUSY check`,
-DRAIN wakeups) does not replace this fix. On `origin/master` this is
-**v2 2/3** of “pNFS/flexfiles: honor clora_changed and report cancelled
-I/O”:
-- 1/3 `ba0f097418c7d` — tracepoint only; **not required**
-- 2/3 **this commit**
-- 3/3 `4a013b0e881e0` — report cancelled I/O as LAYOUTERROR; **not
-  required** for this behavior
-
-Standalone for the recall-cancel bug.
+Record (recent `drivers/gpu/host1x/hw/cdma_hw.c`):
+- `7a39b9856accc` — this fix
+- `60bca008dd789` — Tegra264 support (does not revert the `_sync`
+  change; current file still has `cancel_delayed_work_sync`)
+No prerequisite refactor. Standalone.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Benjamin Coddington is a regular NFS/pNFS contributor
-(Hammerspace). Trond applied it. Anna’s v1 comments (kerneldoc,
-`FILE_INODE`) were addressed in v2.
+Record: Mikko Perttunen is a regular NVIDIA host1x contributor (UAF,
+refcount, iommu, MLOCK, etc.). Same-series follow-ups are independent
+(double `device_add`, trace offset, debug stack over-read, `pin_job`
+return type, syncpoint wrap annotation). This patch does not depend on
+them.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: Needs existing `cbl_layoutchanged`, `pnfs_lseg_cancel_io()`, and
-`cancel_io` on flexfiles — all in this tree. No new helpers. **Applies
+Record: None. It only needs `cdma_timeout_destroy()` +
+`cancel_delayed_work()` / `_sync`, present since 2013. **Can apply
 standalone.**
 
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
 Record:
-- Lore/msgid: https://patch.msgid.link/05e93230d2f58d9d8b23b083d8d89b21c
-  b9f5184.1782388900.git.bcodding@hammerspace.com
-- **v1 → v2**; applied version is v2.
-- Cover: client has decoded `cbl_layoutchanged` but ignored it since
-  `b739a5bd9d9f`; cancel can leave a DS write incomplete with no write
-  layout.
-- Saved mbox: cover + 1/3 + 2/3 + 3/3 only; **no NAK, no extra review
-  mail in that match**.
-- Trond’s `nfs-for-7.3-1` pull listed it as *“Avoid cancelling in-flight
-  I/O during a layout recall if the server doesn't require it”* under
-  **Other bugfixes** (not the Cc:stable subset). That is tagging, not a
-  NAK.
+- `b4 dig -c 7a39b9856accc` matched **v1 only** (no v2/v3).
+- Lore: https://patch.msgid.link/20260609-b4-host1x-small-fixes-
+  a-v1-1-7c1131c0b3ad@nvidia.com
+- Cover letter: https://patch.msgid.link/20260609-b4-host1x-small-fixes-
+  a-v1-0-7c1131c0b3ad@nvidia.com — “Miscellaneous fixes”; patches 1–4
+  “unlikely to happen but technically possible.”
+- Thierry Reding, 2026-07-16: **“Applied to drm-misc-next, thanks.”** No
+  NAK, no stable discussion, no request for a different approach.
+- `sashiko-bot` replied with **pre-existing** issues (`update_work` not
+  cancelled in deinit; non-sync cancel in `stop_cdma_timer_locked()`).
+  It did **not** reject this change. Those are separate bugs, not
+  regressions of this one-liner.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record (`b4 dig -w`): To/Cc Trond Myklebust, Anna Schumaker, `linux-
-nfs@vger.kernel.org`. Maintainer SOB on the commit.
+Record (`b4 dig -w`): To/Cc included Thierry Reding, David Airlie,
+Simona Vetter, `dri-devel`, `linux-tegra`, `linux-kernel`. Subsystem
+maintainer applied the series. No extra Reviewed-by on the commit.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot/bugzilla. Vendor/protocol analysis (Hammerspace), not
-a crash repro.
+Record: No syzbot, bugzilla, or user crash report. Author-found race
+from code inspection. Severity still UAF if it hits.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: 1/3 observability, 3/3 error reporting when cancel still
-happens. Neither is a functional prerequisite. Follow-ups on `pnfs.c`
-after this SHA (`2035820177749` EBUSY, `ee5a386cfe60f` lseg leak) are
-independent.
+Record: Series is 6 independent small fixes. This is patch 1/6 and does
+not need 2–6.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: WebFetch to `lore.kernel.org/stable/` returned 403.
+**UNVERIFIED** whether stable@ already discussed this specific commit.
+No `Cc: stable` on the patch.
 
-Record: **UNVERIFIED** — `lore.kernel.org/stable/?q=clora_changed`
-returned 403. No evidence this was rejected for stable.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
 **Step 5.1: KEY FUNCTIONS**
-
-Record: listed in 2.1. Behavioral change is
-**`pnfs_mark_matching_lsegs_return` + `initiate_file_draining`**.
+Record: `cdma_timeout_destroy` (changed). Related:
+`cdma_timeout_handler`, `cdma_timeout_init`, `host1x_cdma_deinit`,
+`release_channel`, `cdma_stop`.
 
 **Step 5.2: TRACE CALLERS**
-
 Record:
-- File recall: `nfs4_callback_layoutrecall` → `do_callback_layoutrecall`
-  → `initiate_file_draining` (MDS CB_LAYOUTRECALL, RETURN_FILE).
-- Only flexfiles implements `cancel_io` (`ff_layout_cancel_io` →
-  `rpc_cancel_tasks` / `rpc_clnt_disconnect`). Other layout types: no-op
-  today.
-- Remaining callers keep `cancel_io=true` (return/teardown/failure/new
-  stateid).
+- `cdma_timeout_destroy` via `host1x_cdma_ops.timeout_destroy` →
+  `host1x_hw_cdma_timeout_destroy()` → **`host1x_cdma_deinit()`** only.
+- `host1x_cdma_deinit()` from **`release_channel()`** (last
+  `host1x_channel_put()`).
+- `host1x_channel_put()` call sites (all process context):
+  - `drivers/gpu/drm/tegra/uapi.c` — channel close / ioctl error
+  - `drm/tegra` gr2d/gr3d/vic/nvdec — client exit / context close
+  - `drivers/crypto/tegra/tegra-se-main.c` — SE driver
+  - `drivers/gpu/host1x/debug.c` — debugfs dump
 
 **Step 5.3: TRACE CALLEES**
-
-Record: `pnfs_match_lseg_recall`, `mark_lseg_invalid`,
-`pnfs_lseg_cancel_io` → layout-driver `cancel_io`. Flexfiles cancels
-matching RPCs with `-EAGAIN` and disconnects the DS client.
+Record: `cancel_delayed_work_sync()` only. Can sleep; flushes the
+delayed work.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Reachable in production: MDS sends CB_LAYOUTRECALL while the
-client has DS writes in flight. Common for pNFS flexfiles (layout recall
-on close, space management, etc.). Not a rare debug path. Unprivileged
-write traffic plus server recall.
+Record: Userspace on Tegra DRM can trigger it: submit a job with a
+timeout → timeout work queued → close channel (`DRM_TEGRA` channel close
+/ process exit) while the handler runs. Unprivileged on devices that
+expose tegra DRM. **Reachable from userspace.**
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: `stop_cdma_timer_locked()` still uses unsynchronized cancel
+**under the lock** (correct). `cdma->update_work` is still not cancelled
+in deinit (pre-existing, called out by sashiko-bot; **not** this patch).
 
-Record: Second cancel site in `pnfs_mark_matching_lsegs_invalid()` is
-left unconditional (correct for invalidate/revoke). `cbl_layoutchanged`
-is stored but otherwise unused in this tree — this patch is the first
-user for I/O policy.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.** `pending-6.12` / **6.12.111**. `pnfs_lseg_cancel_io()`
-is unconditional in `pnfs_mark_matching_lsegs_return()`.
-`cbl_layoutchanged` is decoded. `git merge-base --is-ancestor
-aceaa5991bdf7 HEAD` → **not an ancestor**. Bug since **v6.1-rc1**.
+Record:
+- `git describe HEAD` = **v7.3-rc4-27-gf0100363d8c37**; `make
+  kernelversion` = **7.3.0-rc4**.
+- Commit **`7a39b9856acccc8e9b05845ca2bf62494fcd3dfa` is already an
+  ancestor of HEAD** (`git merge-base --is-ancestor` succeeded). Current
+  `cdma_timeout_destroy()` already calls `cancel_delayed_work_sync()`.
+- The **bug** existed here until that commit: same function, same
+  `cancel_delayed_work()`, since **v3.10**. This is mainline, so the fix
+  is already applied; the question is whether the same change belongs on
+  this tree’s stable-style policy given the code is the host1x driver
+  this tree ships.
+- Introducing commit **is** in this tree. This is not “bug added after
+  this tree branched.”
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: `git show aceaa5991bdf7 | git apply --check` **succeeded** (hunk
-offsets only). **Clean apply.** All current callers are updated by the
-patch.
+Record: **Clean apply.** Surrounding function is still the 2013
+structure plus later whitespace. One-line identifier swap; no data-
+structure or API change.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This exact fix is already in HEAD (mainline). No alternate fix,
+no revert. No other commit on this file addresses the same cancel-vs-
+running-work race.
 
-Record: No `honor clora_changed` commit. No alternate fix. 6.12 already
-has later unrelated pNFS fixes (`2ef79f5aa107a` EBUSY, `7c5b0e813efd9`
-lseg leak).
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
 **Step 7.1: SUBSYSTEM AND CRITICALITY**
-
-Record: **fs/nfs pNFS client**. **IMPORTANT** for NFSv4.1 pNFS
-(especially flexfiles). `PNFS_FLEXFILE_LAYOUT` **defaults to `NFS_V4`**.
-Not core mm/VFS, but production clustered NFS.
+Record: **drivers/gpu/host1x** (NVIDIA Tegra host1x DMA/sync engine).
+**IMPORTANT** for Tegra (Android, Jetson, embedded), **PERIPHERAL** for
+generic x86. `CONFIG_TEGRA_HOST1X` depends on `ARCH_TEGRA ||
+COMPILE_TEST`.
 
 **Step 7.2: SUBSYSTEM ACTIVITY**
+Record: Actively maintained (Tegra264, context devices, multiple 2026
+fixes). Author is a core contributor; Thierry Reding applied the series.
 
-Record: Actively maintained; this is a targeted fix in mature recall
-code, not churn in new code.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
 **Step 8.1: WHO IS AFFECTED**
-
-Record: **Config/driver-specific:** NFSv4.1 pNFS flexfiles clients under
-CB_LAYOUTRECALL with in-flight DS writes. Enterprise/scale-out NFS (e.g.
-Hammerspace). Filesystems/block/files layouts without `cancel_io` are
-unchanged.
+Record: **Driver-specific / platform-specific** — Tegra SoCs using
+host1x (DRM 2D/3D/VIC/NVDEC, Tegra SE crypto). Not universal mm/net.
 
 **Step 8.2: TRIGGER CONDITIONS**
-
-Record: Server file layout recall with `clora_changed=FALSE` while DS
-writes are in flight. Common operational recall, not only device
-failure. Userspace writes plus MDS callback; timing-dependent.
+Record:
+- Job timeout work is running (or sitting in `host1x_debug_dump` before
+  the lock).
+- Concurrent last `host1x_channel_put()` (channel close, client unbind,
+  process exit).
+- Timing-dependent. Author: “narrow” / cover letter “unlikely” — but
+  timeout + channel teardown is a real recovery path.
+- Unprivileged userspace on Tegra DRM can close a channel; timeout is a
+  driver-internal delayed work.
 
 **Step 8.3: FAILURE MODE SEVERITY**
-
-Record: **Write-after-LAYOUTRETURN / write with no layout** → protocol
-violation, possible rejected/unaccounted DS write, MDS/DS inconsistency.
-Cover letter: incomplete DS write with no write layout. **Severity:
-HIGH** (data integrity), not a panic.
+Record: Timeout handler runs against CDMA/channel that
+`host1x_cdma_deinit()` already tore down: destroyed mutex, freed push
+buffer, stale channel. **UAF / kernel oops.** Severity: **HIGH** (crash;
+possible memory-safety issue). Not a log-only bug.
 
 **Step 8.4: RISK-BENEFIT RATIO**
-
 Record:
-- **Benefit: high** for pNFS flexfiles — stops abandoning in-flight
-  writes on unchanged recalls.
-- **Risk: low** — ~16 lines, one gated call, other paths unchanged, RFC-
-  aligned, maintainer-acked, applies cleanly.
-- **Ratio: favorable.**
+- **Benefit:** High for Tegra users — prevents UAF on channel free vs
+  timeout. Low for everyone else (config-gated).
+- **Risk:** Very low — 1 line, standard API, no lock held, process
+  context.
+- **Ratio:** Benefit outweighs risk for any tree that still has the
+  unsynchronized cancel.
 
----
-
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR:**
-- Real protocol/data-integrity bug in this 6.12 tree
-- Introduced v6.1, still present
-- Small, obviously correct, RFC 8881 §20.3.3
-- Maintainer SOB; described as a bugfix in nfs-for-7.3-1
-- Clean apply; no prerequisites
-- Flexfiles enabled by default with NFS v4
+**FOR backporting:**
+- Real race: running timeout work vs CDMA/channel destroy.
+- Failure mode is UAF / oops, not style.
+- One-line, obviously correct `cancel_delayed_work_sync`.
+- Bug in code since **v3.10**; no missing helpers.
+- Standalone; series mates not required.
+- Maintainer (Thierry Reding) applied v1 with no objections.
+- Teardown is reachable from userspace channel close on Tegra.
+- `debug_dump` before the lock makes the window practical during GPU
+  timeout recovery.
 
 **AGAINST:**
-- No crash/syzbot; pNFS-specific
-- Series 2/3 (siblings not required)
-- Not in the pull’s “Stable fixes” list (no Cc: stable)
-- Unchanged recalls return the layout more slowly if DS I/O is stuck
-  (intended)
+- No `Reported-by` / syzbot / production stack trace.
+- Author called it unlikely.
+- Tegra-only.
+- Cover letter grouped it with “miscellaneous” logic issues.
+- sashiko-bot noted other incomplete teardown (`update_work`); this
+  patch does not fix that (and does not need to).
+- This checkout already contains the commit (it is mainline 7.3-rc4).
+  That is not a reason the **fix** is wrong for trees that still have
+  async cancel.
 
-**UNRESOLVED:** Stable-list archives (HTTP 403); no public review
-replies beyond v1→v2.
+**UNRESOLVED:**
+- Stable@ archive search via WebFetch: 403.
+- No empirical reproduction here.
+- Self-flush if last kref is dropped from inside `debug_dump`: analyzed
+  from code, not discussed on list.
 
 **Step 9.2: STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — RFC behavior, maintainer
-   SOB, mainline
-2. Real bug affecting users? **PASS** — writes after LAYOUTRETURN on
-   flexfiles
-3. Important (crash/security/corruption/deadlock)? **PASS** —
-   data/protocol integrity (HIGH)
-4. Small and contained? **PASS** — +16/−11, three NFS files
-5. No new features/APIs? **PASS** — uses existing decoded flag
-6. Can apply to this tree? **PASS** — `git apply --check` clean
+1. Obviously correct and tested? **PASS** — standard workqueue teardown;
+   maintainer applied; in mainline since 2026-07.
+2. Fixes a real bug that affects users? **PASS** — UAF on channel free
+   vs timeout handler.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   UAF/oops; **HIGH**.
+4. Small and contained? **PASS** — 1 line, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — host1x CDMA timeout code is
+   here; the change is trivial. (HEAD already has the post-image because
+   this is the originating mainline tree.)
 
 **Step 9.3: EXCEPTION CATEGORIES**
-
-Record: None (not a device ID/quirk/DT/build/doc-only patch). Qualifies
-as a normal important bugfix.
+Record: None (not a device ID, quirk, DT, build, or docs exception). It
+qualifies as a normal small crash-class fix.
 
 **Step 9.4: DECISION**
+This tree has host1x and the historical bug. The fix is a textbook
+cancel-vs-running-work UAF close, one line, no prerequisites, no new
+API. Stable rules are satisfied. Unlikely trigger does not outweigh an
+oops/UAF on a path userspace can hit after a GPU timeout.
 
-Backport to this 6.12 tree. The cancel-always path is here; the fix is
-small and restores RFC drain-before-return for unchanged recalls, which
-otherwise can complete DS writes after LAYOUTRETURN.
+### What the commit solves
+`cdma_timeout_destroy()` cancelled timeout work asynchronously. If
+`cdma_timeout_handler()` was already running (especially in
+`host1x_debug_dump()` before `cdma->lock`), `release_channel()` could
+`cdma_stop` + `host1x_cdma_deinit()` and free CDMA while the handler
+still used it. `cancel_delayed_work_sync()` waits for that worker first.
 
----
+### Stable rules / risk
+Meets all six stable criteria. Risk is a possible extra wait on channel
+free (correct). Benefit is avoiding a kernel UAF on Tegra host1x.
 
-### What the commit solves for 6.12 users
-
-On pNFS flexfiles, every layout recall currently cancels in-flight DS
-I/O (`ff_layout_cancel_io`). For `clora_changed=FALSE` that is wrong:
-those writes may already be on the DS and then finish after
-LAYOUTRETURN, which the server treats as I/O without a layout. The patch
-only stops cancelling in that recall case and lets the existing deferred
-LAYOUTRETURN wait for I/O to drain.
-
-### Risk vs benefit
-
-Benefit is data/protocol correctness for a default NFSv4.1 layout type.
-Risk is low: teardown still cancels; only the already-decoded recall
-flag changes the file-recall path; the patch applies without rework.
-
----
+### Concerns
+No user report; Tegra-only; leftover `update_work` teardown is a
+separate bug. None of those block this one-liner.
 
 ### Verification
-
-- **[Phase 1]** Parsed tags: two SOBs (Coddington, Myklebust); no
-  Fixes/Cc:stable; mainline `aceaa5991bdf7`
-- **[Phase 2]** Diff: 16 insertions / 11 deletions; cancel gated; recall
-  passes `cbl_layoutchanged`; other callers pass `true`
-- **[Phase 3]** Blame: cancel line from `b739a5bd9d9f` (`v6.1-rc1`);
-  ancestor of HEAD
-- **[Phase 3]** `git merge-base --is-ancestor aceaa5991bdf7 HEAD` → not
-  in this tree
-- **[Phase 4]** `b4 dig -c aceaa5991bdf7`: v2 2/3, msgid above; v1→v2
-  (Anna: kerneldoc/FILE_INODE)
-- **[Phase 4]** `b4 dig -w`: Trond, Anna, linux-nfs
-- **[Phase 4]** `b4 dig -m`: series only, no NAK
-- **[Phase 4]** Trond pull nfs-for-7.3-1 lists this under Other bugfixes
-- **[Phase 5]** Call chain: CB_LAYOUTRECALL → `initiate_file_draining`;
-  cancel only implemented in flexfiles
-- **[Phase 5]** `cbl_layoutchanged` decoded in `callback_xdr.c`, unused
-  for I/O policy in this tree
-- **[Phase 6]** `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion`: 6.12.111
-- **[Phase 6]** `git apply --check` of `aceaa5991bdf7`: success
-- **[Phase 6]** 1/3 and 3/3 not required
-- **[Phase 7]** `PNFS_FLEXFILE_LAYOUT` default `NFS_V4`
-- **[Phase 8]** Failure: write without layout / incomplete DS write;
-  HIGH integrity, not panic
-- **UNVERIFIED:** lore.kernel.org/stable search (403)
+- **[Phase 1]** Parsed subject/tags/body from `git log -1` + `git show
+  7a39b9856accc`; no Fixes/Reported-by/Cc-stable; Link msgid present.
+- **[Phase 2]** Diff is one token in `cdma_timeout_destroy`; read
+  handler, `cdma_stop`, `host1x_cdma_deinit`, `release_channel`.
+- **[Phase 2]** Confirmed handler calls `host1x_debug_dump()` before
+  `mutex_lock`; dump uses `show_all(..., true)`.
+- **[Phase 3]** `git blame` on parent: `6579324a41cc41` (2013); `git
+  describe --contains` → `v3.10-rc1`.
+- **[Phase 3]** `git merge-base --is-ancestor 6579324a41cc41 HEAD` and
+  `7a39b9856accc HEAD` both true.
+- **[Phase 3]** `git log --oneline` on `drivers/gpu/host1x/` for author
+  and series; patch is standalone.
+- **[Phase 4]** `b4 dig -c/-a/-w/-m`: v1 only; recipients include
+  Thierry; mbox cover letter + “Applied to drm-misc-next”.
+- **[Phase 4]** WebFetch lore/stable: 403 — listed UNVERIFIED.
+- **[Phase 5]** `git grep host1x_channel_put` — DRM/crypto/debugfs,
+  process context.
+- **[Phase 6]** `git describe HEAD` / `make kernelversion` → v7.3-rc4;
+  current file already has `_sync`.
+- **[Phase 7]** `drivers/gpu/host1x/Kconfig` → `CONFIG_TEGRA_HOST1X`.
+- **[Phase 8]** Failure mode from code: handler vs deinit = UAF; trigger
+  = timeout work + last channel put.
 
 **YES**
 
- fs/nfs/callback_proc.c |  3 ++-
- fs/nfs/pnfs.c          | 22 +++++++++++++---------
- fs/nfs/pnfs.h          |  2 +-
- 3 files changed, 16 insertions(+), 11 deletions(-)
+ drivers/gpu/host1x/hw/cdma_hw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/callback_proc.c b/fs/nfs/callback_proc.c
-index 4f41986b875e8..72c25b8864fe5 100644
---- a/fs/nfs/callback_proc.c
-+++ b/fs/nfs/callback_proc.c
-@@ -288,7 +288,8 @@ static u32 initiate_file_draining(struct nfs_client *clp,
- 	pnfs_set_layout_stateid(lo, &args->cbl_stateid, NULL, true);
- 	switch (pnfs_mark_matching_lsegs_return(lo, &free_me_list,
- 				&args->cbl_range,
--				be32_to_cpu(args->cbl_stateid.seqid))) {
-+				be32_to_cpu(args->cbl_stateid.seqid),
-+				args->cbl_layoutchanged)) {
- 	case 0:
- 	case -EBUSY:
- 		/* There are layout segments that need to be returned */
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index cf0dcf9e35d75..e2c723e21cb72 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -432,7 +432,8 @@ bool nfs4_layout_refresh_old_stateid(nfs4_stateid *dst,
- 			goto out;
- 		}
- 		/* Try to update the seqid to the most recent */
--		err = pnfs_mark_matching_lsegs_return(lo, &head, &range, 0);
-+		err = pnfs_mark_matching_lsegs_return(lo, &head, &range, 0,
-+						      true);
- 		if (err != -EBUSY) {
- 			dst->seqid = lo->plh_stateid.seqid;
- 			*dst_range = range;
-@@ -486,7 +487,7 @@ static int pnfs_mark_layout_stateid_return(struct pnfs_layout_hdr *lo,
- 		.length = NFS4_MAX_UINT64,
- 	};
- 
--	return pnfs_mark_matching_lsegs_return(lo, lseg_list, &range, seq);
-+	return pnfs_mark_matching_lsegs_return(lo, lseg_list, &range, seq, true);
- }
- 
- static int
-@@ -524,7 +525,7 @@ pnfs_layout_io_set_failed(struct pnfs_layout_hdr *lo, u32 iomode)
- 
- 	spin_lock(&inode->i_lock);
- 	pnfs_layout_set_fail_bit(lo, pnfs_iomode_to_fail_bit(iomode));
--	pnfs_mark_matching_lsegs_return(lo, &head, &range, 0);
-+	pnfs_mark_matching_lsegs_return(lo, &head, &range, 0, true);
- 	spin_unlock(&inode->i_lock);
- 	pnfs_free_lseg_list(&head);
- 	dprintk("%s Setting layout IOMODE_%s fail bit\n", __func__,
-@@ -1461,7 +1462,7 @@ _pnfs_return_layout(struct inode *ino)
- 	}
- 	valid_layout = pnfs_layout_is_valid(lo);
- 	pnfs_clear_layoutcommit(ino, &tmp_list);
--	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0);
-+	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0, true);
- 
- 
- 	/* Don't send a LAYOUTRETURN if list was initially empty */
-@@ -2603,7 +2604,7 @@ pnfs_layout_process(struct nfs4_layoutget *lgp)
- 			.iomode = IOMODE_ANY,
- 			.length = NFS4_MAX_UINT64,
- 		};
--		pnfs_mark_matching_lsegs_return(lo, &free_me, &range, 0);
-+		pnfs_mark_matching_lsegs_return(lo, &free_me, &range, 0, true);
- 		goto out_forget;
- 	} else {
- 		/* We have a completely new layout */
-@@ -2635,6 +2636,7 @@ pnfs_layout_process(struct nfs4_layoutget *lgp)
-  * @tmp_list: list header to be used with pnfs_free_lseg_list()
-  * @return_range: describe layout segment ranges to be returned
-  * @seq: stateid seqid to match
-+ * @cancel_io: signal io be cancelled
-  *
-  * This function is mainly intended for use by layoutrecall. It attempts
-  * to free the layout segment immediately, or else to mark it for return
-@@ -2649,7 +2651,7 @@ int
- pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
- 				struct list_head *tmp_list,
- 				const struct pnfs_layout_range *return_range,
--				u32 seq)
-+				u32 seq, bool cancel_io)
+diff --git a/drivers/gpu/host1x/hw/cdma_hw.c b/drivers/gpu/host1x/hw/cdma_hw.c
+index 3f3f0018eee0d..ab714d221120c 100644
+--- a/drivers/gpu/host1x/hw/cdma_hw.c
++++ b/drivers/gpu/host1x/hw/cdma_hw.c
+@@ -355,7 +355,7 @@ static int cdma_timeout_init(struct host1x_cdma *cdma)
+ static void cdma_timeout_destroy(struct host1x_cdma *cdma)
  {
- 	struct pnfs_layout_segment *lseg, *next;
- 	struct nfs_server *server = NFS_SERVER(lo->plh_inode);
-@@ -2675,7 +2677,8 @@ pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
- 				continue;
- 			remaining++;
- 			set_bit(NFS_LSEG_LAYOUTRETURN, &lseg->pls_flags);
--			pnfs_lseg_cancel_io(server, lseg);
-+			if (cancel_io)
-+				pnfs_lseg_cancel_io(server, lseg);
- 		}
+ 	if (cdma->timeout.initialized)
+-		cancel_delayed_work(&cdma->timeout.wq);
++		cancel_delayed_work_sync(&cdma->timeout.wq);
  
- 	if (remaining) {
-@@ -2710,7 +2713,8 @@ pnfs_mark_layout_for_return(struct inode *inode,
- 	 * segments at hand when sending layoutreturn. See pnfs_put_lseg()
- 	 * for how it works.
- 	 */
--	if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs, range, 0) != -EBUSY) {
-+	if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs, range, 0,
-+					    true) != -EBUSY) {
- 		const struct cred *cred;
- 		nfs4_stateid stateid;
- 		enum pnfs_iomode iomode;
-@@ -2825,7 +2829,7 @@ static int pnfs_layout_return_unused_byserver(struct nfs_server *server,
- 		pnfs_get_layout_hdr(lo);
- 		pnfs_set_plh_return_info(lo, range->iomode, 0);
- 		if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs,
--						    range, 0) != 0 ||
-+						    range, 0, true) != 0 ||
- 		    !pnfs_prepare_layoutreturn(lo, &stateid, &cred, &iomode)) {
- 			spin_unlock(&inode->i_lock);
- 			rcu_read_unlock();
-diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
-index 7b3ba2e64e6f3..14d2a91250f24 100644
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -301,7 +301,7 @@ int pnfs_mark_matching_lsegs_invalid(struct pnfs_layout_hdr *lo,
- int pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
- 				struct list_head *tmp_list,
- 				const struct pnfs_layout_range *recall_range,
--				u32 seq);
-+				u32 seq, bool cancel_io);
- int pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
- 		struct list_head *lseg_list);
- bool pnfs_roc(struct inode *ino, struct nfs4_layoutreturn_args *args,
+ 	cdma->timeout.initialized = false;
+ }
 -- 
 2.53.0
 
