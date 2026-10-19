@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CB65ABF57;
-	Mon, 19 Oct 2026 14:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA855ABF7B;
+	Mon, 19 Oct 2026 14:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418410; cv=none; b=XbLa0htQ1qjEr5yDBvSRKfr4drLYiukV70naRiXCvaYfVmEnWqE7kfky2LhkvOlaZJD0SyBos+FbTxcDBI2xfT+5T5dWFpz9Z5WHGl0uCAtor9y91xdt9qXWQ4Mpr7TV9eLFKoCWZkLMMLpSWVXpvZ+03YqZS3yD+CYw5809Yzo=
+	t=1792418410; cv=none; b=NcHOm8SoCzqtoMZVBw0L98W4QUHOEFoApbgfhCidzB2jGlKIqB8KSE060YpdytOA6QvrPa3o8mgA5hVf8+ygGn384VcCbR0b5/821yc9DxQDu9rljgXj0qR5NJjCaIimmCIgR70IJJwqBtpx9svFDUB9Zzid1KHxVlS9WETGm48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418410; c=relaxed/simple;
-	bh=w8MMvD8nuyV7HTbVsYofizP6+RG0NXnACTlYELIEzuI=;
+	bh=QQb5amkX+AoAq9d9FpG+JxLlgkobSQTpCg30XPhuhWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rbmpBYbJw2KkKdQg6OIci4v+yC4m5pWmq9BmMc7Ua4a3UoFN1eG9AbWSoNoAGXhEtrkkrKKS7mj84dVmeLFt2esaiF6l+9dPh8SFynrkaGxoiKUGPXVUBpSrVMwIco8Af01NI8UfvKrARj4OmA4zPZ39fuAomNEVnAMH4WSI6vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nqnE55RI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RYbNpWf2CepVS+HI6G7miWYkkpdC3Fcf91yA+MBcldE8nt4+21ZH2hpRc35gv+esT3kTz2+4VoU0NH60axfIaWRCiE1YAbfsLrWqH49inZ8Nt4BfaWSMk7QqgAkiwbKX5xvjY9kT4vc7sYemBNg0wwizZIpVMAUtd5AihoSp7RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nAgK0xFI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nqnE55RI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FA41F000C4;
-	Mon, 19 Oct 2026 14:00:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nAgK0xFI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A56D1F000C8;
+	Mon, 19 Oct 2026 14:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418406;
-	bh=DpCdTVynjeHLjjg28liknfkVKuaYWI+hiXDXG9A63B4=;
+	s=k20260515; t=1792418408;
+	bh=xoTKV3M8GmmqDWmsLODWYpzc55wzjxje2rpf/1XPiWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nqnE55RIKM/GOvhy+uIS7crS/bUcFdCzW9HsUm6tABlGmJGKk+Y3l6qSgDvdH9tZt
-	 vahjSzAO38nql9YLd2RIo5ZadRpp5D1zTiPq6g14Cskz8srd4pY/2yycN9BLF6FLEd
-	 B2NKVefs77BWnCYI3TU2rsoO6d8Ph+vs3fpg89tAV8XXWVUK/7xw/zHgh9oS2hyata
-	 59vzs07zMUYfOOYs2AnunczAgcBiQpMjDS8reRibu6maELWigdCE1/GUfyS1kSByYT
-	 Jt5a9lrn2DHdTP2UxzyuTyjMgywFevDLUycIg3UB62dm7TpQiTzNLgXAdZ0kP/Y6z9
-	 XmA2q7VIH2ApA==
+	b=nAgK0xFI7HrYYBkg+0FEKlN+nrNdP9hNcrA1ElvTAt7igYSoXnYvap2p9TUFEuEBy
+	 faqaCq1aYr6Os1+Qk2D41A8P8TjNSWmhBRtWr69/aXooGkQhT7Qe78M4qnNN+plWBj
+	 IaqTIga8XhqEYbdIuCuP0BasBW//It/RP1Wj+T7SESDU2AjUJg80ToPvmlAddKzNTF
+	 ivso4etOdQoNhWZohEmyZC4HlTiM6kaTre2f5RDycYNKIYwz0sp9XEx8yNVOlemowt
+	 Yr5Ky8Al3y8Il9oN9mAFTSWf0c6gDuibDjhQwmro63qGgfgIIyi08TTzUmkWYQZ4iO
+	 btta96EY0mqMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Felix Fietkau <nbd@nbd.name>,
+Cc: Eckhart Mohr <e.mohr@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.6] wifi: mt76: mt7603: file buffered frames under the TID reported to mac80211
-Date: Mon, 19 Oct 2026 09:48:38 -0400
-Message-ID: <20261019135441.1420968-227-sashal@kernel.org>
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: Add quirk for ASRock NUC BOX-358H
+Date: Mon, 19 Oct 2026 09:48:39 -0400
+Message-ID: <20261019135441.1420968-228-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,384 +55,383 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Eckhart Mohr <e.mohr@tuxedocomputers.com>
 
-[ Upstream commit 0bbd6c52dfff62b319963f54cd9370f9486e59d2 ]
+[ Upstream commit 9a44b828dd7c0be1d0d6d6cf178d9727ceb6da6e ]
 
-The PS queue filed redirected frames under the TID taken from the TXD,
-while mac80211 was told about the TID taken from the QoS header, or TID 0
-for anything that is not a QoS data frame. When the two disagree,
-mt7603_release_buffered_frames() skips the frame because it does not
-match the requested TIDs, so it stays in the PS queue until the station
-wakes up. Buffered MMPDUs hit this whenever they were sent on a
-non-zero TID.
+Fix headphone jack detection for some devices
 
-Use one TID for both.
-
-Link: https://patch.msgid.link/20260801145334.1166751-8-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20261001183403.103990-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **6.12.111** (`p-6.12-2`). The mt7603 PS-queue TID mismatch
-is present here, the two-line fix applies cleanly, and it is a real AP-
-mode buffering bug.
+This is a one-line Realtek HDA hardware quirk for the ASRock NUC
+BOX-358H. The local tree is **6.18.57**. The same jack-detect fixup
+already exists here; only the new PCI SSID is missing.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[wifi: mt76: mt7603]** **[file]** buffered frames under the
-TID reported to mac80211. “File” here means enqueue/classify; the body
-is a correctness fix so mac80211 and the driver PS queue use the same
-TID.
+Record: `[ALSA/hda/realtek] [Add] quirk for ASRock NUC BOX-358H`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Link:**
-  `https://patch.msgid.link/20260801145334.1166751-8-nbd@nbd.name`
-  (patch 08/10)
-- **Signed-off-by:** Felix Fietkau (mt76 maintainer; ignore any Sasha
-  Levin SOB)
-- **No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable** (absence expected for this review)
+- `Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>` (author)
+- `Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>` (Tuxedo;
+  submitted the patch)
+- `Link: https://patch.msgid.link/20261001183403.103990-1-
+  wse@tuxedocomputers.com`
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, or `Cc:
+  stable` on the committed message
+- Ignore pipeline tags (`[Upstream commit 9a44b828...]`, `Signed-off-by:
+  Sasha Levin`)
+
+Notable: no `Cc: stable` on the commit itself. That is expected for this
+review queue. On-list, Werner later asked for stable (Phase 4).
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** Redirected PS frames are queued under the TXD TID, while
-  `ieee80211_sta_set_buffered()` is told the QoS-header TID, or TID 0
-  for non-QoS data / MMPDUs.
-- **Symptom:** `mt7603_release_buffered_frames()` skips the skb (`tids &
-  BIT(skb->priority)` fails). The frame sits in `msta->psq` until the
-  station fully wakes (`mt7603_sta_ps()` splices the whole queue).
-  Buffered MMPDUs hit this whenever the TXD TID is non-zero.
-- **Root cause:** Two different TID sources for the same frame.
-- **Fix:** Use the same `tid` for both `skb->priority` and
-  `ieee80211_sta_set_buffered()`.
+- Bug: headphone jack detection fails on some devices (the ASRock NUC
+  BOX-358H)
+- Symptom: jack not detected / audio jack unusable until the codec is
+  quirked
+- Version info: none in the message
+- Root cause (from this message): not spelled out beyond “fix headphone
+  jack detection”
+- The sibling 2021 quirk for ASRock NUC Box 1100 (`174a7fb3859ae`)
+  documents the mechanism: cold boot leaves COEF values that hide the
+  jack; warm reboot from another OS preserves working COEF dumps. This
+  commit reuses that same `ALC233_FIXUP_NO_AUDIO_JACK` for a new SSID.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit protocol/correctness
-fix.
+Record: Not a disguised cleanup. It is an explicit hardware quirk. The
+“Add quirk” wording is the standard ALSA form for a real device bug.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- **File:** `drivers/net/wireless/mediatek/mt76/mt7603/dma.c` (+1 / −1)
-- **Function:** `mt7603_rx_loopback_skb()`
-- **Scope:** single-file surgical fix
+- File: `sound/hda/codecs/realtek/alc269.c` (`+1 / -0`)
+- Function/data: `alc269_fixup_tbl[]`
+- Scope: single-file, one-line table entry
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** `skb->priority = FIELD_GET(MT_TXD1_TID, val)` (3-bit TXD
-  field), then later `ieee80211_sta_set_buffered(sta, tid, true)` with
-  `tid` from the QoS header or 0.
-- **After:** `skb->priority = tid` after that classification.
-- **Path:** hardware PS redirect → MCU RX loopback → driver PS queue.
-  Not an init-only path.
+- Before: PCI SSID `0x1849:0x6256` has no match in `alc269_fixup_tbl`,
+  so `snd_hda_pick_fixup()` does not apply `ALC233_FIXUP_NO_AUDIO_JACK`
+- After: that SSID maps to `alc233_fixup_no_audio_jack()`, which writes
+  the existing COEF table via `alc_process_coef_fw()`
+- Path: codec probe / init, not an error path
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Logic / correctness.** Enqueue key (`skb->priority`) and
-mac80211 TIM/TID bitmap disagree, so `release_buffered_frames` never
-dequeues those skbs during PS-Poll/U-APSD.
+Record:
+- Category: **(h) Hardware workaround** — `SND_PCI_QUIRK` for ASRock
+  (`0x1849`) product `0x6256`
+- Mechanism: same COEF default programming already used for ASRock NUC
+  Box 1100 (`0x1849:0x1233`)
+- No leak, race, UAF, or locking change
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct and minimal. `tid` is already 0–7
-(`IEEE80211_QOS_CTL_TAG1D_MASK` or 0). No new locks, APIs, or data
-structures. Regression risk is very low: release matching becomes
-consistent with what mac80211 was already told.
+Record:
+- Quality: obviously correct as a SSID-scoped reuse of an existing fixup
+- Minimal: one table line, no unrelated edits
+- Regression risk: very low. `SND_PCI_QUIRK` matches PCI subsystem
+  vendor/device only. `0x6256` does not appear on any other HDA quirk in
+  this tree
+- Residual (not a reason to reject): the 358H ships a Realtek ALC256;
+  the fixup name is ALC233. That is pre-existing reuse of the 1100 COEF
+  dump. Tuxedo submitted it and Takashi applied it with no objection
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- `skb->priority = FIELD_GET(MT_TXD1_TID, val)` comes from the original
-  driver (`c8846e1015022`, 2018).
-- Split vs mac80211 TID: `e004b700660025` (2019,
-  `ieee80211_sta_set_buffered`) and `d55aa5e17461b8` (2019, QoS-only
-  TID, default 0).
-- Current if/else (QoS / data / bufferable MMPDU) is `b473c0e47f04d`
-  (2024, “fix tx queue of loopback packets”), **already in this 6.12
-  tree**.
+- Insertion sits next to the 1100 entry from `174a7fb3859ae` (Werner
+  Sembach, 2021-11-12, `Cc: stable`)
+- Surrounding table came into `alc269.c` via `aeeb85f26c3bb`
+  (2025-07-11, “Split Realtek HD-audio codec driver”), which is an
+  ancestor of `v6.18.57`
+- The buggy *behavior* is missing SSID coverage, not a recently
+  introduced logic bug. The 1100 workaround has been in-tree since
+  v5.16-era (Nov 2021)
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. Buggy split has been in the driver since 2019;
-MMPDU TID-0 reporting since `d55aa5e17461b8` / `b473c0e47f04d`.
+Record: No `Fixes:` tag. Not applicable. The analogous original commit
+is `174a7fb3859ae` (“Add quirk for ASRock NUC Box 1100”), present in
+this tree.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `dma.c` history includes `b473c0e47f04d` and
-`9b8d932053b8b`. This commit is **not** in HEAD (`git merge-base --is-
-ancestor 0bbd6c52dfff62b319963f54cd9370f9486e59d2 HEAD` → not ancestor).
-Standalone vs later 2026 PS series (see 3.5).
+Record:
+- Recent `alc269.c` history is full of similar one-line/small quirk
+  additions (HP mute LEDs, ASUS speakers, Lenovo SSIDs, etc.), including
+  several already in 6.18.y
+- No later follow-up in this tree mentioning `358H` or `0x6256`
+- Standalone, not `patch X/Y`
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Felix Fietkau is the mt76 maintainer. Nearby author work on this
-driver is unrelated (chainmask, EEPROM, WPDMA EOF). Same 10-patch series
-contains other mt7603 PS fixes he wrote.
+Record:
+- Eckhart Mohr / Werner Sembach (Tuxedo Computers) regularly submit
+  Realtek quirks
+- Takashi Iwai applied this; he is the ALSA HD-audio maintainer
+- Same authors shipped the 1100 quirk that this extends
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Upstream SHA `0bbd6c52dfff62b319963f54cd9370f9486e59d2`. Series
-08/10. Needed context `b473c0e47f04d` **is** in this tree. Later series
-patches are **not** in this tree and are **not** required for this two-
-line change:
-- `697badc27a9b3` U-APSD EOSP
-- `d5001f493fefd` clear buffered-TID when psq empty
-- `636a883e2feef` re-arm HW PS after service period
-Those fix other PS bugs; this patch only aligns enqueue TID with
-`ieee80211_sta_set_buffered()`. It can apply standalone.
+Record:
+- Needs `ALC233_FIXUP_NO_AUDIO_JACK`, `alc233_fixup_no_audio_jack()`,
+  and `alc269_fixup_tbl` — all present on `v6.18.57` and on the
+  candidate’s parent
+- Parent of `8fa1cfe41877d` does **not** contain `0x1849, 0x6256`
+- Applies standalone
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 0bbd6c52dfff6` →
-  https://patch.msgid.link/20260801145334.1166751-8-nbd@nbd.name
-- Single series revision (v1 only; `-a` showed only this series)
-- Thread: 11 messages = 10 patches + kernel test robot on **patch 10
-  only** (mt7996 OOB, unrelated)
-- No NAK, no reviewer risk comments, no Cc: stable on this patch
+- `b4 dig -c 8fa1cfe41877d`: match at https://patch.msgid.link/202610011
+  83403.103990-1-wse@tuxedocomputers.com
+- `b4 dig -a`: **v1 only**, no later revisions
+- LKML: Takashi: “Applied now. Thanks.” (2026-10-03)
+- Werner: “again i forgot to add cc stable can you add that in your
+  branch?” (2026-10-03)
+- Takashi: “Just send a post again to stable once when the commit is
+  merged to Linus tree.” (2026-10-04)
+- No NAKs, no risk flags
+- lore.kernel.org direct fetches returned HTTP 403; thread recovered via
+  `b4 dig` + lkml.iu.edu
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: `b4 dig -w`: To `linux-wireless@vger.kernel.org`, From Felix
-Fietkau. No extra Reviewed-by. Author is the subsystem maintainer and
-applied it himself.
+Record (`b4 dig -w`):
+- To/Cc: Werner Sembach, Eckhart Mohr, Jaroslav Kysela, Takashi Iwai,
+  linux-sound, linux-kernel
+- Right maintainers and list were on the original recipients
+- Applied by Takashi Iwai
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No Reported-by / bugzilla / syzbot. Failure mode is code-
-derived. Related series patch 07 mentions U-APSD retry storms/packet
-loss; that is a **different** bug.
+Record:
+- No syzbot/bugzilla link
+- Vendor hardware is real: ASRock Industrial NUC BOX-358H (Intel Core
+  Ultra Series 3 / Panther Lake-H), front combo jack, Realtek ALC256
+  (asrockind.com)
+- ServeTheHome even has a photo titled around the 358H audio jack
+- User impact is that specific mini-PC’s headphone/mic jack
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: `[PATCH 01/10]` adds `MT_DRV_HW_PS_BUFFERING` for firmware-TIM
-chips (mt7915/mt7996), not mt7603 loopback. mt7603 patches 05–07 are
-sibling PS fixes, not semantic prerequisites of 08.
+Record: Standalone v1. Only related in-tree work is the 2021 1100 quirk,
+already present.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: No useful stable-list hit for this subject (lore.kernel.org
-fetch 403; web search returned unrelated archives). UNVERIFIED that
-anyone already requested/rejected it for stable.
+Record: lore.kernel.org/stable search did not turn up a dedicated stable
+thread for this SSID. Absence of an auto `Cc: stable` is why this is in
+manual review. The author still requested stable on the original thread.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `mt7603_rx_loopback_skb()` only.
+Record: No function body changes. Data: `alc269_fixup_tbl[]`. Runtime
+effect goes through existing `alc233_fixup_no_audio_jack()` →
+`alc_process_coef_fw()`.
 
 **Step 5.2: TRACE CALLERS**
 Record:
-- Called only from `mt7603_queue_rx_skb()` when `q == MT_RXQ_MCU` and
-  the packet is not `PKT_TYPE_RX_EVENT` (HW-redirected TX).
-- `mt7603_queue_rx_skb` is `.rx_skb` in
-  `drivers/net/wireless/mediatek/mt76/mt7603/init.c`.
-- Release path: mac80211 `drv_release_buffered_frames` →
-  `mt7603_release_buffered_frames()` which filters on
-  `BIT(skb->priority)` (verified at `main.c:458`).
+- `alc269_fixup_tbl` is passed to `snd_hda_pick_fixup()` in the
+  ALC269-family probe path (`alc269.c` ~8557)
+- `snd_hda_pick_fixup()` matches PCI subsystem vendor/device first
+  (`sound/hda/common/auto_parser.c`)
+- Called at codec init for Realtek ALC269-family devices (includes
+  ALC256, vendor id `0x10ec0256`)
 
 **Step 5.3: TRACE CALLEES**
-Record: `ieee80211_is_data_qos` / `ieee80211_is_data` /
-`ieee80211_is_bufferable_mmpdu(skb)` (present in this tree’s
-`ieee80211.h`), `ieee80211_sta_set_buffered`, `skb_queue` under
-`ps_lock`.
+Record:
+- `alc_process_coef_fw()` writes the COEF firmware table (`WRITE_COEF`
+  for indices 0x1a, 0x1b, 0x37, 0x38, 0x45, 0x46, 0x49)
+- No allocations, no locks added
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable in AP mode when a station is in PS and the PSE
-redirects TX. Userspace/network traffic plus sleeping clients trigger
-it. Not a syscall crash path; it is a common AP operation on this
-hardware.
+Record:
+- Reachable when this NUC’s HDA codec probes (boot / module load)
+- Userspace does not need a special syscall; plugging headphones is the
+  user-visible path
+- Not a security/syzbot path; it is a device init quirk
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Other mt76 chips use `mt76_release_buffered_frames()`; mt7603
-has its own `psq`. No duplicate of this exact TXD-vs-QoS TID split
-elsewhere in this driver.
+Record: Identical pattern already used for `0x1849:0x1233` (NUC Box
+1100). Many other `SND_PCI_QUIRK` rows in the same table. `0x6256` is
+unique in ALSA HDA.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** `dma.c` still has:
-
-```42:75:drivers/net/wireless/mediatek/mt76/mt7603/dma.c
-        skb->priority = FIELD_GET(MT_TXD1_TID, val);
-        ...
-        ieee80211_sta_set_buffered(sta, tid, true);
-```
-
-`MT_TXD1_TID` is `GENMASK(22, 20)`. `mt7603_release_buffered_frames()`
-still skips on `!(tids & BIT(skb->priority))`. Bug introduced 2019;
-still here in 6.12.111. Upstream commit is **not** an ancestor of HEAD.
+Record:
+- Local tree: `git describe HEAD` = `v6.18.57-155-gcdf239ca885b2`; `make
+  kernelversion` = `6.18.57`
+- `v6.18.57:sound/hda/codecs/realtek/alc269.c` has
+  `ALC233_FIXUP_NO_AUDIO_JACK` and the 1100 SSID
+- `v6.18.57` does **not** contain `0x1849, 0x6256`
+- Context around the 1100 row on `v6.18.57` matches the patch (verified
+  by string match)
+- Candidate commit `8fa1cfe41877d` is an ancestor of current HEAD
+  because this autosel checkout already contains evaluation commits;
+  that is **not** treated as “already selected”
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply.** `git apply --check` of `0bbd6c52dfff6`
-succeeded. This tree still uses `rcu_dereference(dev->mt76.wcid[idx])`
-rather than `mt76_wcid_ptr()`; that is unused context, not a conflict.
+Record: Expected **clean apply** onto 6.18.57. File path and surrounding
+table rows match. No refactor needed.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No equivalent TID alignment. `git log --grep='buffered frames
-under the TID'` on this path is empty. Sibling 2026 PS series patches
-are not in this tree.
+Record: The 1100 quirk is here. There is no alternate 358H fix. No
+follow-up revert/correction in this tree.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **wifi / mt76 / mt7603** (`CONFIG_MT7603E`: MT7603E PCIe and
-MT7628/MT7688 SoC WLAN). **IMPORTANT** (widely used AP/router silicon),
-not core mm/net.
+Record:
+- Subsystem: ALSA HD-audio / Realtek codec (`sound/hda/codecs/realtek/`)
+- Criticality: **IMPORTANT** for users of this hardware; **PERIPHERAL**
+  for everyone else (SSID-gated)
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature driver, still receiving maintainer fixes. Not staging.
+Record: Mature, actively maintained quirk table. Frequent small
+hardware-quirk backports in 6.18.y.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific:** AP (and any PS-buffering) users of
-MT7603/MT7628/MT7688. Not universal.
+Record: Driver-specific / platform-specific: ASRock NUC BOX-358H (`PCI
+SSID 1849:6256`). Other machines unchanged.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Station in power-save; HW redirects frames into the driver PS
-queue; mac80211 later releases by TID (PS-Poll / U-APSD). Common on APs
-with phones/IoT clients. Unprivileged Wi-Fi clients can trigger it by
-sleeping. MMPDUs with non-zero TXD TID are the documented always-hit
-case.
+Record:
+- Trigger: boot on that NUC, then use the front combo jack
+- Common for owners of that box; zero for others
+- Unprivileged users hit it (jack detect), but this is not an exploit
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Frames are not released during the service period. They wait
-until the station leaves PS, or they can be dropped if `psq` hits 64.
-That delays bufferable management (deauth/disassoc/action) and
-mismatched-TID data. **Severity: HIGH** for AP connectivity; not a
-kernel oops.
+Record:
+- Failure: headphone/headset jack not detected (broken analog audio I/O
+  on a machine that has a jack)
+- Severity: **MEDIUM** for functional impact (not a panic/UAF), **HIGH**
+  for that device’s usability
+- Matches the documented 1100 failure: jack dead on cold boot
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record: **Benefit: high** for this hardware (PS buffering actually works
-for the TIDs mac80211 asked for). **Risk: very low** (2 lines, no
-locking/API change, applies cleanly). Ratio strongly favors backport.
+Record:
+- Benefit: high for 358H users on 6.18.y (this series is still current
+  as of Oct 2026; this is a 2026 Panther Lake NUC)
+- Risk: very low (1 line, existing fixup, SSID-matched)
+- Ratio: strongly favors backport
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real, explained bug; mechanism confirmed in this tree’s `dma.c` and
-  `main.c`
-- User-visible AP PS failure (stuck/delayed frames, possible psq
-  overflow drops)
-- 2-line, obviously correct, maintainer-authored
-- Applies cleanly to 6.12.111
-- Prerequisite loopback-queue rewrite (`b473c0e47f04d`) already present
-- Does not need the rest of the 10-patch series
+- Textbook stable exception: hardware quirk / PCI ID on an existing
+  driver
+- Real user-visible bug: jack detection
+- 1-line, existing fixup, no new API
+- Prerequisites present in 6.18.57; applies cleanly
+- ALSA maintainer applied it
+- Submitter explicitly asked for stable
+- Same pattern as the 2021 1100 quirk, which was `Cc: stable`
+- Tuxedo-tested on the named device
 
 AGAINST:
-- Not a crash, UAF, or CVE
-- No reporter / Tested-by / Fixes tag
-- Other mt7603 PS bugs in the same series remain unfixed here (does not
-  make this patch wrong)
+- Short commit body
+- No `Fixes:` / no sanitizer report (expected for a quirk)
+- COEF table originally dumped for the 1100 (ALC233-named); 358H is
+  ALC256 per vendor specs — accepted by maintainer, SSID-limited
 
 UNRESOLVED:
-- No stable-list discussion found (lore 403 / search noise)
-- No independent user report for this exact TID mismatch
+- Could not fetch lore.kernel.org HTML (403); discussion recovered via
+  `b4 dig` and LKML archives
+- Did not independently dump COEFs on a 358H (not available)
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — two-line alignment; in
-   mainline from the maintainer
-2. Real bug affecting users? **PASS** — PS-buffered frames not released
-   until wake
-3. Important issue? **PASS** — AP power-save correctness / delayed
-   MMPDUs; HIGH not panic
-4. Small and contained? **PASS** — 2 lines, one function
+1. Obviously correct and tested? **PASS** — one SSID row; Tuxedo
+   authors; maintainer applied
+2. Fixes a real bug that affects users? **PASS** — jack detection on a
+   shipping NUC
+3. Important issue? **PASS** as a hardware quirk (broken jack; not a
+   panic, but the documented exception class)
+4. Small and contained? **PASS** — +1 line
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean apply on 6.12.111
+6. Can apply to the local tree? **PASS** — clean on 6.18.57
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device ID / quirk / DT / build / docs exception).
-Qualifies as a normal contained bugfix.
+Record: **Hardware quirk / PCI ID addition to an existing driver.**
+Automatic YES class.
 
 **Step 9.4: MAKE YOUR DECISION**
-Backport. This 6.12 tree has the exact buggy split, the fix is surgical,
-and it restores mac80211-driven release of buffered frames (especially
-MMPDUs) for a still-deployed wireless SoC.
+Backport. The 6.18.57 tree already has the fixup and the 1100 SSID; it
+only lacks `0x1849:0x6256`. That is exactly the class of change stable
+exists to take.
 
-------------------------------------------------
-What the commit solves for stable users
-------------------------------------------------
-On MT7603/MT7628 APs, hardware-redirected PS frames are advertised to
-mac80211 under one TID and stored under another. Service-period release
-then skips them, so management and some data stay in the driver queue
-until the client fully wakes (or the 64-entry queue drops them). Using
-one TID for both makes `release_buffered_frames` find those skbs.
+What it solves for stable users: on ASRock NUC BOX-358H, the Realtek
+jack is not detected unless this COEF quirk runs. Without it, the combo
+headphone/mic jack stays broken on cold boot.
 
-Risk vs benefit: two lines, no API/locking change, clean apply; benefit
-is correct PS delivery on real AP hardware.
+Risk vs benefit: one SSID-matched table line, no structural change,
+benefit is working analog audio on that NUC.
 
-Concerns: sibling U-APSD/PS-rearm fixes are separate commits and not
-required. No backport rewrite needed on this tree.
+### Verification
+- [Phase 1] Parsed tags: author Eckhart Mohr; SOB Werner Sembach,
+  Takashi Iwai; Link msgid; no Fixes/Cc:stable on the commit
+- [Phase 1] Ignored `[Upstream commit 9a44b828…]` and Sasha Levin SOB as
+  pipeline markers
+- [Phase 2] Diff: +1 line in `alc269_fixup_tbl[]` —
+  `SND_PCI_QUIRK(0x1849, 0x6256, …, ALC233_FIXUP_NO_AUDIO_JACK)`
+- [Phase 2] Confirmed fixup body at `alc233_fixup_no_audio_jack()`
+  writes `alc233_fixup_no_audio_jack_coefs`
+- [Phase 3] `git show 174a7fb3859ae`: 2021 1100 quirk, `Cc: stable`,
+  same fixup; `git merge-base --is-ancestor` vs parent of candidate =
+  present
+- [Phase 3] `git log --author='Eckhart Mohr'` / Werner: regular Realtek
+  quirk contributors
+- [Phase 3] No follow-up `358H`/`0x6256` commits in this tree
+- [Phase 4] `b4 dig -c 8fa1cfe41877d`: lore msgid
+  `20261001183403.103990-1-wse@tuxedocomputers.com`
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: Takashi Iwai, Jaroslav Kysela, linux-sound
+- [Phase 4] LKML: Takashi applied; Werner requested Cc:stable; Takashi
+  said to send to stable after Linus merge
+- [Phase 4] lore.kernel.org WebFetch: 403 (UNVERIFIED via direct lore
+  HTML)
+- [Phase 5] `snd_hda_pick_fixup()` matches PCI SSID; probe calls it with
+  `alc269_fixup_tbl`
+- [Phase 5] `git grep 0x6256` in HDA: only this new quirk
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.57
+- [Phase 6] `git grep` on `v6.18.57`: 1100 quirk present, 358H SSID
+  absent; insertion context matches
+- [Phase 8] Vendor spec: NUC BOX-358H has a front combo jack and ALC256
+- UNVERIFIED: independent COEF dump on 358H hardware; lore.kernel.org
+  HTML body
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Tags: Link msgid `20260801145334.1166751-8-nbd@nbd.name`;
-  SOB Felix Fietkau; no Fixes/Reported-by/Cc stable
-- [Phase 2] Diff: move `skb->priority` from `MT_TXD1_TID` to classified
-  `tid` in `mt7603_rx_loopback_skb` (+1/−1)
-- [Phase 3] `git describe` / Makefile: **6.12.111**
-  (`p-6.12-2-gd38d58a4e0359`)
-- [Phase 3] Blame/history: TXD priority from `c8846e1015022`; mac80211
-  TID from `e004b700660025` / `d55aa5e17461b8`; MMPDU/queue split
-  `b473c0e47f04d` **is** ancestor of HEAD
-- [Phase 3] `git merge-base --is-ancestor
-  0bbd6c52dfff62b319963f54cd9370f9486e59d2 HEAD` → not present
-- [Phase 3] Related series SHAs `697badc27a9b3`, `d5001f493fefd`,
-  `636a883e2feef` → not in HEAD; not required
-- [Phase 4] `b4 dig -c 0bbd6c52dfff6`: lore match, v1 only; `-w`: linux-
-  wireless + author; robot reply only on patch 10
-- [Phase 4] UNVERIFIED: stable@ discussion (lore 403)
-- [Phase 5] Caller: `mt7603_queue_rx_skb` MCU loopback; release uses
-  `BIT(skb->priority)` at `main.c:458`
-- [Phase 6] Local `dma.c:42` still assigns priority from TXD; `git apply
-  --check` of upstream diff **exit 0**
-- [Phase 8] Failure mode: PS frames skipped until wake / possible psq
-  drop; HIGH connectivity, not oops
+This is a small, SSID-scoped hardware quirk that restores jack detection
+on a real machine, with the required fixup already in 6.18.57.
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/mt7603/dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/dma.c b/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
-index e26cc78fff949..25009e49e7771 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/dma.c
-@@ -39,7 +39,6 @@ mt7603_rx_loopback_skb(struct mt7603_dev *dev, struct sk_buff *skb)
- 
- 	val = le32_to_cpu(txd[1]);
- 	idx = FIELD_GET(MT_TXD1_WLAN_IDX, val);
--	skb->priority = FIELD_GET(MT_TXD1_TID, val);
- 
- 	if (idx >= MT7603_WTBL_STA - 1)
- 		goto free;
-@@ -72,6 +71,7 @@ mt7603_rx_loopback_skb(struct mt7603_dev *dev, struct sk_buff *skb)
- 		hwq = MT_TX_HW_QUEUE_MGMT;
- 	}
- 
-+	skb->priority = tid;
- 	ieee80211_sta_set_buffered(sta, tid, true);
- 
- 	val = le32_to_cpu(txd[0]);
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 2a466ef894697..0bfa64bee9d3b 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7640,6 +7640,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x9e56, "Lenovo ZhaoYang CF4620Z", ALC286_FIXUP_SONY_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1849, 0x0269, "Positivo Master C6400", ALC269VB_FIXUP_ASUS_ZENBOOK),
+ 	SND_PCI_QUIRK(0x1849, 0x1233, "ASRock NUC Box 1100", ALC233_FIXUP_NO_AUDIO_JACK),
++	SND_PCI_QUIRK(0x1849, 0x6256, "ASRock NUC Box 358H", ALC233_FIXUP_NO_AUDIO_JACK),
+ 	SND_PCI_QUIRK(0x1849, 0xa233, "Positivo Master C6300", ALC269_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1854, 0x0440, "LG CQ6", ALC256_FIXUP_HEADPHONE_AMP_VOL),
+ 	SND_PCI_QUIRK(0x1854, 0x0441, "LG CQ6 AIO", ALC256_FIXUP_HEADPHONE_AMP_VOL),
 -- 
 2.53.0
 
