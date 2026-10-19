@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6F45B0622;
-	Mon, 19 Oct 2026 14:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1ADC5B0649;
+	Mon, 19 Oct 2026 14:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418423; cv=none; b=pVb4k8md95TQgF2JBbD/Wq5jfTH14Zb0GFL+bp9HaIXFRIhePgsD6RzL+Qi+uJAIZIHEh9kmLlFF9ly/yxcuW+CulwsG0Zfssbbdb9yWfy6SujZG95WsPs4vw6I/QoSQHwgDf90ytZ2vaSC1G64I++K4KlbAGjaplsxGevYV7qo=
+	t=1792418424; cv=none; b=lsYRXoeLcJmPrzNTdgyOvnk4chrouE4KUnvbnqcwshYANboZF3WDlTt3KS/ENQDeJzVcFcHq1bAi0dNzylUmE9mubVYURJhVf7WpPBTup4wf1vzAvhW0MTwQVY4Xnhz0zxMgVpmpAfz+wORksgeSTzdgWrOQmavnWHw2SEqHx1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418423; c=relaxed/simple;
-	bh=+FlKxuhacd7NRpYtXfslnzo9m0fuF1eNvg4eUGav4eM=;
+	s=arc-20240116; t=1792418424; c=relaxed/simple;
+	bh=DH1bph/ZHzpv5mQ+EDceKJUymowJx5xsSPDLBMJMY4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qWE6ekXUoj2fX5jLa6QmrpGotRPu3dm1j+F06qsViQUy4JeU6XJpSYyPXpTwYhQmgb3QitaQWnYXLSNJgW/3zpZYjOGPnYHo0vJeRaFLSj2sbsmzWAD2QmYINhiwYrd7iG2acgc4yez2wJkGgJZM1LcvjJKzfnT6eAp6m5zVG+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=df94oUW8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nW537/RUqs5FWV2b8Aldqvp8eF4FGt8K90ehYw3ROSsSwwzlbYHORvFQMrei23gfUT0r+w5wTWnC+AcxOSr7uVu904QPHfHNckv100M2hhx3XtvWo2D+/Uo3q1RroeVsJBeTBWNGTNHuAUGcVa32l/n4ee6kU8EYZbEBZYAKzuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=euRUvoFj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="df94oUW8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CCF1F000CA;
-	Mon, 19 Oct 2026 14:00:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="euRUvoFj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463D21F000C9;
+	Mon, 19 Oct 2026 14:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418419;
-	bh=pLa3Aan2ET0EDHss61T2wkoqQI56vgVGp8lag2OXteo=;
+	s=k20260515; t=1792418421;
+	bh=HhP0ck/U0ZuxUzCSDns2N0bWfjBU5WBSekm48YEvXjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=df94oUW8o5xdAqDAK0WjUjhnDDBXBlzCbaR72MWKDXefNZp8xPoJCsY6lGbtQrVmh
-	 JjJ+v6fy7hrs+gB7fpGjlO7BwVvgF+6ZlbOSMA9wSTuRVCKvWuneNiE9QzWvDfdysA
-	 vH1f0YJqVtucH6km19sqeTVqiWFZbFz423uwWP1eqtU1DZyibW+abc6yqqHbDc31I0
-	 ar95+IwZ/qApveo+lhXUFQdrxFuHsueL3ZeA/c/zObqb97goXHYFbCpkE/RwwKkqh0
-	 0t0iiPk8/2es21EJK8K/G3uHrAXkTa/BzixZYGibVyjcbNq6uBZGv/vApdKNt0DrnZ
-	 dgG+2rnqjOMcQ==
+	b=euRUvoFjq0R3sAUV3ehDp7ayjGlrI7XJ+eK1C5QLHSpVDqmCZ39jK3Kxcdw0707jp
+	 O4ax8xoAmO9ZGeYSBGXCoTodlQc3DAfArtVfFIOTpjFb/x96hLcop6ym8nuZu/mjpl
+	 DzB2ziB6Er4Zf7nShE9BJXaj4iK6M9ewa+PXiRqSib/513jAROaoFRPxpJx1bo4N+S
+	 jq5s4LW2n3MGC2A9bVIQ/tXL53ikN7UwLygZwH0deTNVASDtqFSCWZysvj2YgkvWRK
+	 aS8iFrGhtamut/KLBzJIOW56fhrqrsSKcFZsMfqKS8gH6Ll+gmiftnDVic/145l5kH
+	 IGJoGZvgHIXJQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Pu Lehui <pulehui@huawei.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	daniel.lezcano@kernel.org,
-	linux-pm@vger.kernel.org,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	memxor@gmail.com,
+	bpf@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] thermal: intel: int340x: clean up RFIM groups on DVFS failure
-Date: Mon, 19 Oct 2026 09:48:47 -0400
-Message-ID: <20261019135441.1420968-236-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] bpf: Reject callback subprogs invoke tailcall
+Date: Mon, 19 Oct 2026 09:48:48 -0400
+Message-ID: <20261019135441.1420968-237-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -48,30 +52,31 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 28f34d7dafa6dfa657efd6760b7c78e98c9b2f6a ]
+[ Upstream commit a41d0c30d764e086c62b049e806fd12df4f4acfc ]
 
-proc_thermal_rfim_add() can create the FIVR and DLVR sysfs groups
-before creating the DVFS group.
+Some JIT compilers, such as x86_64, rely on a register to pass the TCC.
+When subprograms of synchronous callback invoke tailcall, C helpers
+invoking bpf callback clobber this register, and the corrupted TCC may
+bypass the TCC limit, leading to infinite tailcall.
 
-If DVFS group creation fails while both earlier groups are enabled, the
-current error handling removes only one group: the FIVR branch returns
-before the DLVR cleanup branch can run.  This leaves the DLVR group
-behind even though RFIM setup fails.
+Fix this by rejecting tailcall inside all subprogs of sync callback.
+This also cleanly consolidates the existing async and exception callback
+checks into a single unified `is_cb` check.
 
-Use one DVFS failure path that removes all previously created RFIM
-groups before returning the error.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260615065245.84252-1-pengpeng@iscas.ac.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Reported-by: Björn Töpel <bjorn@kernel.org>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/20260716120157.835937-3-pulehui@huaweicloud.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -79,343 +84,443 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[thermal/intel/int340x] [clean up] incomplete RFIM sysfs-group
-unwind when DVFS group creation fails`
+**Step 1.1 — Subject line**
+Record: `[bpf]` `[Reject]` Reject callback subprogs that invoke tailcall
+(verifier hardening against TCC clobber / infinite tailcall).
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2 — Tags**
 Record:
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Link:
-  https://patch.msgid.link/20260615065245.84252-1-pengpeng@iscas.ac.cn`
-- `Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>`
-  (thermal maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence of the last two is expected for this
-  review)
+- `Reported-by: Sashiko <sashiko-bot@kernel.org>` — BPF fuzzer found
+  this
+- `Reported-by: Björn Töpel <bjorn@kernel.org>` — independently reported
+  by a BPF JIT developer
+- `Acked-by: Eduard Zingerman <eddyz87@gmail.com>` — BPF verifier
+  maintainer
+- `Link: https://patch.msgid.link/20260716120157.835937-3-
+  pulehui@huaweicloud.com` — v3 2/3 of a 3-patch series
+- `Signed-off-by: Pu Lehui <pulehui@huawei.com>`
+- `Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>`
+- No `Fixes:` tag (expected)
+- No `Cc: stable` (expected)
+- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+  if present — none on the original commit
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3 — Body**
 Record:
-- Bug: `proc_thermal_rfim_add()` may create FIVR and DLVR sysfs groups,
-  then fail creating DVFS.
-- Symptom: on DVFS failure with both earlier groups enabled, the FIVR
-  cleanup branch returns immediately, so the DLVR group is never
-  removed.
-- Failure mode: leftover sysfs group after RFIM setup reports failure
-  (resource leak; probe of the Intel processor thermal PCI device
-  fails).
-- Root cause: two sequential `if (ret && FEATURE_*) { remove; return; }`
-  blocks instead of one failure path that removes every group that was
-  created.
-- Version info in the message: none.
+- **Bug:** Some JITs (x86-64) pass the tail-call counter (TCC) in a
+  register. A sync callback is invoked from a C helper, which clobbers
+  that register. If a callback subprog then tail-calls, TCC is garbage
+  and the limit can be bypassed.
+- **Symptom:** Infinite tailcall (CPU hang / soft lockup).
+- **Root cause:** Verifier only rejected tailcalls inside exception
+  callbacks (`is_exception_cb`), not sync callbacks (`bpf_loop`,
+  `bpf_for_each_map_elem`, etc.).
+- **Fix:** Reject tailcall on any callback frame via unified `is_cb`.
+  Also drop the special async-cb `verifier_bug` in favor of that same
+  check.
+- **Version:** Landed in v7.3-rc1 (2026-07-16); this checkout is
+  v7.3-rc4.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Yes. The subject says “clean up”, but the body and the diff are
-an error-path leak fix (missing `sysfs_remove_group` for DLVR).
+**Step 1.4 — Hidden bug fix?**
+Record: Not hidden. Explicit security/correctness fix (infinite
+tailcall), plus a small consolidation of existing callback checks. Not
+cleanup-only.
+
+---
 
 ## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1 — Inventory**
 Record:
-- File: `drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c`
-  (+5 / −6)
-- Function: `proc_thermal_rfim_add()`
-- Scope: single-file surgical error-path change
+- File: `kernel/bpf/verifier.c` (`+2 / -6`, 8 lines)
+- Function: `check_max_stack_depth_subprog()`
+- Scope: single-file surgical verifier change
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record: Before, DVFS `sysfs_create_group()` failure did:
+**Step 2.2 — Code flow**
+Record:
+1. **Removed** `if (subprog[sidx].is_async_cb && has_tail_call)
+   verifier_bug; return -EFAULT`. Async callbacks with a tailcall are no
+   longer a verifier BUG; they fall through to the unified reject.
+2. **Changed** the stack-walk guard from `is_exception_cb` (“cannot tail
+   call within exception cb”) to `is_cb` (“cannot tail call within
+   callback”). Any callback on the bpf2bpf stack of a tailcall-reachable
+   subprog is rejected with `-EINVAL`.
 
-```c
-if (ret && FIVR) { sysfs_remove_group(fivr); return ret; }
-if (ret && DLVR) { sysfs_remove_group(dlvr); return ret; }
-```
+**Step 2.3 — Bug mechanism**
+Record: **Logic / correctness** in the BPF verifier, with a **hang**
+failure mode.
+- `is_cb` is set in `push_callback_call()` for every helper/kfunc
+  callback, including sync ones.
+- `has_tail_call` is set in `check_subprogs()` when a subprog contains
+  `BPF_FUNC_tail_call`.
+- x86-64 JIT (`emit_prologue_tail_call`) uses `%rax` as TCC / TCC
+  pointer. Callback entry is a C ABI call, so `%rax` is clobbered.
+- Corrupted TCC can skip `MAX_TAIL_CALL_CNT` and loop forever.
 
-If both FIVR and DLVR bits are set, the first branch returns and DLVR is
-never removed. After, a single `if (ret)` removes DLVR and/or FIVR
-according to the feature mask, then returns.
+**Step 2.4 — Fix quality**
+Record: Minimal and obviously correct. Same pattern already used for
+exception callbacks (b9ae0c9dd0aca, 2023). Regression risk is **verifier
+tightening**: programs that do `callback → subprog → tailcall` now fail
+to load. Those programs were dangerous. Series patch 1 is required to
+avoid false rejects of unrelated tailcall branches (see Phase 3). No
+API/feature additions.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: `[error path / resource leak]` Incomplete unwind.
-`sysfs_create_group(&pdev->dev.kobj, &dvfs_attribute_group)` failure
-leaked `dlvr_attribute_group` when FIVR+DLVR+DVFS were all enabled.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct. Groups are only removed if the corresponding
-feature bit is set, and those bits are the same ones that caused the
-groups to be created earlier in this function. No API, locking, or data-
-structure changes. Regression risk is very low: `sysfs_remove_group` on
-a group that this function just created.
+---
 
 ## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
+**Step 3.1 — Blame**
 Record:
-- Original FIVR-only DVFS unwind: `473be51142adba` (“Add RFIM driver”,
-  2020; first in v5.11-rc1).
-- Incomplete DLVR branch: `5bc6b1df65c87f` (“Add DLVR support for RFIM
-  control”, 2023-04-13; first in v6.4-rc1). That commit added the second
-  `if (ret && DLVR) return` after the existing FIVR early-return, which
-  is the bug.
+- `is_cb` field: 406a6fa44bfbc (2023-12, bitfield conversion);
+  assignment in `push_callback_call()`: ab5cfac139ab85 (2023-11)
+- Exception-only tailcall reject: b9ae0c9dd0aca (2023-09, “bpf: Add
+  support for custom exception callbacks”)
+- Async `has_tail_call` verifier_bug: 7ddc80a476c2d (2021-07, “Teach
+  stack depth check about async callbacks”)
+- `has_tail_call` tracking: 7f6e4312e15a5 (2020)
+- `bpf_loop`: e6f2dd0f80674 (2021-11); CAP_BPF: 5679ff2f138f7 (2022-08)
+- x86 TCC-in-register: ebf7d1f508a7 (cited by series patch 1)
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable beyond that. The introducing
-commit is `5bc6b1df65c87f`, and `git merge-base --is-ancestor
-5bc6b1df65c87f HEAD` succeeded.
+The hole (sync callbacks + tailcall) has been present for years; this
+tree is far newer.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+**Step 3.2 — Fixes: tag**
+Record: None on this commit. Related: series patch 1 has `Fixes:
+ebf7d1f508a7`. GitHub CI suggested `Fixes: b9ae0c9dd0ac` for this patch
+(that commit only covered exception callbacks).
+
+**Step 3.3 — Related file history**
+Record: v3 series “Fixes for tailcall with subprog and callback”:
+1. `3513ea9dab6c1` bpf: Sync tail_call_reachable with callee state on
+   entry
+2. `a41d0c30d764e` **this commit**
+3. `42bfd21a8b701` selftests/bpf: Add testcases for callback with
+   tailcall
+
+Follow-up already in this tree: `266aa4ad0b2e8` (“Reject tail calls
+directly from callback frames”) — extra reject in `check_helper_call()`
+to avoid a verifier WARN; it comments that stack-depth validation
+already rejects this.
+
+**Step 3.4 — Author**
+Record: Pu Lehui is a regular BPF contributor (JIT/verifier). Acked and
+applied by Eduard Zingerman (verifier maintainer).
+
+**Step 3.5 — Prerequisites**
+Record: **Not fully standalone.** Patch 1 must come first. Without it,
+`tail_call_reachable` leaks across branches, so patch 2 can reject valid
+programs that mix a tailcall subprog with a no-tailcall callback
+(`tailcall_callback_2` selftest). Both 3513ea9dab6c1 and 42bfd21a8b701
+**are ancestors of this HEAD**. `is_cb` is present. Can apply on this
+tree (already applied).
+
+---
+
+## Phase 4: Mailing list / external research
+
+**Step 4.1 — Original discussion**
 Record:
-- `15176b818e048c` (“Fix sysfs group leak on DLVR registration failure”)
-  — same class of bug for the *DLVR create* path leaking FIVR; already
-  in this tree (v7.0-rc1).
-- This patch is standalone, not `patch X/Y`. Same author later did a
-  similar ODVP probe-unwind fix (`d83dc9ce57a74`) in a different file;
-  not a prerequisite.
+- Lore: https://patch.msgid.link/20260716120157.835937-3-
+  pulehui@huaweicloud.com
+- Cover: https://patch.msgid.link/20260716120157.835937-1-
+  pulehui@huaweicloud.com
+- Revisions: v1 (2 patches, 2026-07-11) → v2 (2026-07-14) → **v3 (3
+  patches, 2026-07-16)** applied
+- v3 added patch 1 after Sashiko found the `tail_call_reachable` leak
+- Applied to **bpf-next** (not bpf fixes) by Eduard Zingerman on
+  2026-07-17
+- Sashiko AI review flagged removing the async `verifier_bug`. Author
+  replied: async/exception tailcalls are meaningless (ctx not passed);
+  sync callbacks are subprogs so `is_cb` fires; direct tailcall in a
+  callback is already rejected earlier in `check_helper_call` via
+  unknown R0 vs callback return range
+- No NAKs. Eduard acked. Patchwork applied v3 as latest.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Pengpeng Hou is not the subsystem maintainer. Thermal maintainer
-Rafael J. Wysocki applied the patch. Driver author Srinivas Pandruvada
-was on the original To/Cc list.
+**Step 4.2 — Recipients (`b4 dig -w`)**
+Record: bpf@vger, Alexei, Andrii, Daniel Borkmann, Martin KaFai Lau,
+Kartikeya, Yonghong, Song Liu, Jiri Olsa, Björn Töpel, Eduard. Right
+maintainers.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. The fix only reorders existing `sysfs_remove_group()`
-calls on `fivr_attribute_group` / `dlvr_attribute_group`, both present
-in this tree. Can apply standalone.
+**Step 4.3 — Bug report**
+Record: Two independent reports:
+- Sashiko fuzzer
+- Björn Töpel, in review of RISC-V JIT bpf2bpf+tailcall: callback
+  entered from C ABI with clobbered TCC, then subprog tailcall. He
+  confirmed the verifier accepted `callback → subprog → tailcall`.
 
-## Phase 4: Mailing list and external research
+**Step 4.4 — Series**
+Record: 3 patches; 1+2 are kernel, 3 is selftests. Patch 1 is a
+correctness prerequisite for patch 2. Both are in this tree.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c 28f34d7dafa6d` →
-  https://patch.msgid.link/20260615065245.84252-1-pengpeng@iscas.ac.cn
-- `b4 dig -a`: v1 only
-- Thread (mbox): no NAKs. Rafael: “Applied as 7.3 material, thanks!”
-- No reviewer `Cc: stable` suggestion
+**Step 4.5 — Stable list**
+Record: lore.kernel.org/stable search returned 403. UNVERIFIED whether
+it was discussed on stable@. No `Cc: stable` on the patch. Submitted to
+bpf-next during the 7.2 cycle, so it was aimed at 7.3, not 7.2-rc.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included Rafael J. Wysocki, Daniel Lezcano,
-Zhang Rui, Srinivas Pandruvada, linux-pm. Applied by the thermal
-maintainer. No separate Reviewed-by.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No `Reported-by` / bugzilla / syzbot. This is a code-inspection
-leak, not a user crash report.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone v1. Sibling leak fix is `15176b818e048c` (already
-here). Author’s ODVP cleanup is a different driver file.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org HTTP 403. `b4 dig` thread has no stable-list
-discussion. UNVERIFIED: whether linux-stable@ ever discussed this
-subject independently.
+---
 
 ## Phase 5: Code semantic analysis
 
-**Step 5.1: KEY FUNCTIONS**
-Record: `proc_thermal_rfim_add()` (modified). Uses `sysfs_create_group`
-/ `sysfs_remove_group`.
+**Step 5.1 — Functions**
+Record: `check_max_stack_depth_subprog()` only.
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- `proc_thermal_mmio_add()` in `processor_thermal_device.c` (only
-  caller)
-- That is called from `proc_thermal_pci_probe()` and
-  `proc_thermal_pci_legacy` probe
-- Probe / device-enumeration path, not IRQ or a hot syscall path
+**Step 5.2 — Callers**
+Record: `check_max_stack_depth()` → `do_check` finalization
+(`kernel/bpf/verifier.c` ~21334). Runs on every successful
+`BPF_PROG_LOAD` before JIT. Called for main (`i==0`) and every
+`is_async_cb` subprog.
 
-**Step 5.3: TRACE CALLEES**
-Record: `sysfs_create_group`, `sysfs_remove_group` on the PCI device
-kobject.
+**Step 5.3 — Callees**
+Record: Walks insns, `bpf_find_subprog()`, `bpf_pseudo_call` /
+`bpf_pseudo_func`. Sets `tail_call_reachable` from callee
+`has_tail_call`, then marks `tail_call_reachable` on the frame stack for
+the JIT.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: PCI probe → `proc_thermal_mmio_add()` →
-`proc_thermal_rfim_add()`. On RFIM failure, `proc_thermal_mmio_add()`
-does `goto err_rem_ptc` and **does not** call
-`proc_thermal_rfim_remove()`. `proc_thermal_pci_probe()` then `return
-ret` without `proc_thermal_mmio_remove()`. The leaked DLVR group
-therefore stays on `pdev->dev.kobj`. Reachable whenever this Intel
-thermal PCI device is probed (common on Intel laptops/SoCs with
-INT340x). Trigger still requires `sysfs_create_group(dvfs)` to fail.
+**Step 5.4 — Reachability**
+Record: Userspace `BPF_PROG_LOAD`. Typical trigger: TC/XDP/cgroup
+program with `bpf_loop` (or similar) whose callback calls a subprog that
+tail-calls. `bpf_loop` is CAP_BPF-gated (`kernel/bpf/helpers.c`). Not
+fully unprivileged; reachable by any CAP_BPF loader (Cilium, systemd,
+containers with CAP_BPF). **Yes, reachable from userspace.**
 
-Verified hardware with all three bits (the only way both groups exist at
-DVFS failure): Meteor Lake `MTLP_THERMAL` is `FIVR | DVFS | DLVR`
-(`processor_thermal_device_pci.c`). `5bc6b1df65c87f` is what OR’d
-`PROC_THERMAL_FEATURE_DLVR` onto that ID.
+**Step 5.5 — Similar patterns**
+Record: Same `is_cb` walk used for:
+- BPF_LD_ABS/IND in callbacks (`e7d28823c6621`)
+- `bpf_throw` from callbacks
+Later `266aa4ad0b2e8` added a matching reject in `check_helper_call()`.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same incomplete-unwind pattern was already fixed for DLVR-
-create-fails-after-FIVR (`15176b818e048c`). `fs/sysfs/group.c` returns
-`-EEXIST` (and warns) if the named group already exists, so a leaked
-DLVR group can make a later re-bind fail even after the original
-transient error is gone.
+---
 
-## Phase 6: Cross-referencing against the local tree
+## Phase 6: This tree
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Local tree: `v7.3-rc4-27-gf0100363d8c37`, `make kernelversion` →
-  7.3.0-rc4
-- RFIM, DLVR, FIVR, DVFS, and MTLP FIVR+DLVR+DVFS are all present
-- Bug introduced in v6.4 (`5bc6b1df65c87f`), well before this 7.3 branch
-- Parent of the candidate still has the two early-return blocks
+**Step 6.1 — Does the buggy code exist?**
+Record: **Yes, in this lineage, and the fix is already merged.**
+- Tree: **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`)
+- `git merge-base --is-ancestor a41d0c30d764e HEAD` → true
+- `git describe --contains a41d0c30d764e` → `v7.3-rc1~134^2~141^2~1`
+- Not in v7.2 (`merge-base --is-ancestor` failed)
+- Before this commit, `check_max_stack_depth_subprog()` only tested
+  `is_exception_cb`. Sync callbacks were unprotected. That is the 7.3
+  code this commit fixed.
+- Reverse `git apply --check` of the commit succeeds: working tree
+  already has the after-state.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply. Surrounding `proc_thermal_rfim_add()` in this tree
-matches the hunk (Nova Lake DLVR switch and the earlier FIVR leak fix
-are already here).
+**Step 6.2 — Backport difficulty**
+Record: **Already applied** on this tree. `is_cb`,
+`check_max_stack_depth_subprog()`, and series patch 1 are present. Would
+apply cleanly to the pre-commit parent; no extra rework for 7.3.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: `15176b818e048c` is in this tree and fixes a *different* leak
-(DLVR create vs FIVR). It does not fix DVFS-create leaking DLVR. No
-other substitute for this patch.
+**Step 6.3 — Related fixes already here**
+Record: Series 1/3 and 3/3, plus follow-up `266aa4ad0b2e8`. No alternate
+fix that would make this redundant; the follow-up depends on this
+diagnostic.
 
-## Phase 7: Subsystem and maintainer context
+---
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `[drivers/thermal/intel/int340x] [IMPORTANT]` — Intel laptop/SoC
-processor thermal / RFIM sysfs, not core mm/fs, but used on shipping
-Meteor Lake platforms. `CONFIG_INT340X_THERMAL`.
+## Phase 7: Subsystem context
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained (Nova Lake, Wildcat Lake, Panther Lake IDs
-and DLVR tables in recent history). Maintainer applied this patch.
+**Step 7.1**
+Record: **BPF verifier** (`kernel/bpf/verifier.c`). **IMPORTANT** (core
+BPF safety; all BPF loaders). Not mm/scheduler, but verifier bugs are
+security-relevant.
+
+**Step 7.2**
+Record: Highly active in 7.3. This is a mature path
+(`check_max_stack_depth` has existed for years), not new infrastructure.
+
+---
 
 ## Phase 8: Impact and risk
 
-**Step 8.1: WHO IS AFFECTED**
-Record: Driver-specific / config-specific: Intel INT340x processor
-thermal PCI, specifically IDs with FIVR+DLVR+DVFS (Meteor Lake in this
-tree).
+**Step 8.1 — Who is affected**
+Record: Config-specific / BPF users. Needs JIT that passes TCC in a
+register (x86-64 is the cited case; Björn noted RISC-V too). Sync
+callbacks (`bpf_loop`, for-each helpers) plus tailcall.
 
-**Step 8.2: TRIGGER CONDITIONS**
-Record: Device probe, after FIVR and DLVR groups succeed, when DVFS
-`sysfs_create_group()` fails (ENOMEM, duplicate name, etc.). Not
-unprivileged-syscall reachable except via driver bind. Uncommon, but
-deterministic when it happens. Re-probe can then hit `-EEXIST` on the
-leaked DLVR group (`internal_create_group()` in `fs/sysfs/group.c`).
+**Step 8.2 — Trigger**
+Record: Load and run a BPF program: callback subprog tail-calls. Timing-
+independent. Needs CAP_BPF (and usually CAP_NET_ADMIN/PERFMON for the
+program type). Confirmed accepted by the old verifier.
 
-**Step 8.3: FAILURE MODE SEVERITY**
-Record: `[sysfs group leak on PCI device after failed probe; possible
-sticky re-bind failure] [MEDIUM]` — not a panic or filesystem
-corruption. Stale `dlvr` attributes can remain on the PCI device kobject
-after the driver has reported probe failure.
+**Step 8.3 — Failure mode**
+Record: **Infinite tailcall → CPU hang / soft lockup.** Severity
+**HIGH** (DoS / hang). Not a verified memory-corruption UAF, but a real
+stability/security issue.
 
-**Step 8.4: RISK-BENEFIT RATIO**
-Record: Benefit medium (correct unwind on a real shipping platform’s
-probe error path; avoids leftover sysfs and sticky `-EEXIST`). Risk very
-low (5-line error-path-only change, no locking/API). Ratio favors taking
-the fix.
+**Step 8.4 — Risk-benefit**
+Record:
+- **Benefit:** Stops a hang/DoS in a common BPF pattern (loop callback +
+  tailcall) on x86-64.
+- **Risk:** Low. 8-line verifier reject. Can break previously accepted
+  (unsafe) programs. False-positive risk is handled by patch 1, already
+  in this tree.
+- **Ratio:** High benefit / low risk.
 
-## Phase 9: Final synthesis
+---
 
-**Step 9.1: EVIDENCE**
+## Phase 9: Synthesis
 
-FOR:
-- Real, deterministic incomplete unwind; DLVR group leaked when
-  FIVR+DLVR+DVFS are set
-- Meteor Lake actually sets all three feature bits
-- Caller does not call `proc_thermal_rfim_remove()` on
-  `proc_thermal_rfim_add()` failure
-- Same bug class as `15176b818e048c`, which this tree already contains
-- Tiny, obviously correct, no new API
-- Thermal maintainer applied it; right people were CCed; no NAKs
-- Bug present since v6.4; code exists in this 7.3 tree
+**Step 9.1 — Evidence**
 
-AGAINST:
-- Trigger is a failed `sysfs_create_group()` (rare)
-- No user/syzbot report
-- Not a crash, UAF, or data-corruption bug
-- Rafael queued it as 7.3 material, not as a stable-cc’d hotfix
+For backporting / keeping this in this tree:
+- Real hang: TCC clobber → infinite tailcall (x86-64 JIT, independently
+  described by Töpel)
+- Two reporters (Sashiko + Björn Töpel)
+- Verifier maintainer Acked-by and applied
+- 8-line, obviously correct extension of an existing guard
+- Selftests in 42bfd21a8b701
+- Call path is `BPF_PROG_LOAD` (userspace)
+- This tree has the code, patch 1, and `is_cb`
 
-UNRESOLVED:
-- Direct lore.kernel.org / stable-list HTTP search returned 403; thread
-  content recovered via `b4 dig -m` instead
+Against:
+- Sent to bpf-next, not bpf fixes; no `Fixes:` / `Cc: stable`
+- Tightens verifier (rejects previously valid programs)
+- Series member 2/3; needs patch 1 (present here)
+- Original commit already in v7.3-rc1, so this checkout already contains
+  the fix
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — control flow is local and
-   clear; maintainer applied v1 with no further revisions.
-2. Fixes a real bug that affects users? **PASS** — leftover sysfs on the
-   PCI device after failed RFIM setup on Meteor Lake.
-3. Important issue? **PASS** (medium) — resource leak with a possible
-   sticky re-bind failure, not a panic; still the error-path leak class
-   stable regularly takes.
-4. Small and contained? **PASS** — one function, +5/−6 lines.
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — file and both sysfs groups
-   exist; hunk matches.
+Unresolved: whether anyone asked for it on stable@ (lore/stable 403).
 
-**Step 9.3: EXCEPTION CATEGORIES**
-Record: None (not a device ID, quirk, DT, build, or docs exception). It
-is a normal small leak fix.
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — Acked, applied, selftests,
+   follow-up confirms the check
+2. Real bug affecting users? **PASS** — accepted programs can hang a CPU
+3. Important (crash/security/corruption/deadlock)? **PASS** — hang/DoS;
+   HIGH
+4. Small and contained? **PASS** — 8 lines, one function
+5. No new features/APIs? **PASS** — verifier reject only
+6. Can apply to this tree? **PASS** — already in v7.3-rc1; prerequisites
+   present
 
-**Step 9.4: DECISION**
-This tree is 7.3.0-rc4. The buggy unwind, DLVR/FIVR/DVFS groups, and
-Meteor Lake FIVR+DLVR+DVFS mask are all here. The patch is a minimal,
-correct error-path leak fix with negligible regression risk. It should
-be in this tree.
+**Step 9.3 — Exceptions**
+Record: None (not a device ID / quirk / DT / build / docs patch).
+Qualifies as a normal important bugfix.
 
-Verification:
-- [Phase 1] Tags: author SOB, Rafael SOB, lore Link; no Fixes/Reported-
-  by/Cc: stable
-- [Phase 2] Diff: `proc_thermal_rfim_add()` DVFS failure path; two
-  early-returns collapsed into one unwind of DLVR then FIVR
-- [Phase 3] `git blame` on parent: FIVR unwind from `473be51142adba`
-  (v5.11); DLVR early-return from `5bc6b1df65c87f` (v6.4-rc1)
-- [Phase 3] `git merge-base --is-ancestor 5bc6b1df65c87f HEAD` → yes;
-  related leak fix `15176b818e048c` also in HEAD
-- [Phase 3] `git log --author='Pengpeng Hou'` on thermal: this RFIM fix
-  plus a later independent ODVP unwind
-- [Phase 4] `b4 dig -c 28f34d7dafa6d`:
-  https://patch.msgid.link/20260615065245.84252-1-pengpeng@iscas.ac.cn
-- [Phase 4] `b4 dig -a`: v1 only; `b4 dig -w`: linux-pm +
-  Pandruvada/Wysocki/Lezcano
-- [Phase 4] mbox: Rafael “Applied as 7.3 material”; no NAK, no stable
-  nomination
-- [Phase 4] lore.kernel.org WebFetch: 403; stable-list search UNVERIFIED
-  via HTTP
-- [Phase 5] Callers: `proc_thermal_mmio_add` → PCI probe; RFIM failure
-  jumps to `err_rem_ptc`, skipping `proc_thermal_rfim_remove`
-- [Phase 5] MTLP ID: `FIVR | DVFS | DLVR` in
-  `processor_thermal_device_pci.c`; DLVR bit added in `5bc6b1df65c87f`
-- [Phase 5] `sysfs_create_group` / `internal_create_group`: `-EEXIST` if
-  named group already exists
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 6] Parent function still has the buggy two-branch return; this
-  tree has the needed groups and IDs
-- [Phase 8] Failure mode: leaked `dlvr` sysfs group after probe failure;
-  severity MEDIUM
+**Step 9.4 — Decision**
+This tree is **v7.3-rc4**. The bug is in this series’ BPF verifier/JIT,
+the fix is small and correct, and the only dependency (patch 1) is
+already here. Already merged in 7.3-rc1 is not a reason to treat it as
+unsuitable; it is evidence it belongs in this tree. Technical merit
+supports including it.
 
-The fix is small, surgical, and meets the stable criteria for an error-
-path resource leak on hardware this tree already supports.
+---
+
+### What the commit solves, and why it matters here
+
+x86-64 (and similar JITs) pass the tail-call counter in a register. Sync
+BPF callbacks run from C helpers, which clobber that register. If a
+callback’s subprogram tail-calls, the counter can be garbage, the
+33-call limit is skipped, and the CPU can tail-call forever.
+
+The verifier only blocked that for exception callbacks. This patch uses
+the existing `is_cb` bit so **all** callbacks are rejected. That is a
+real hang/DoS for CAP_BPF program loaders on this kernel.
+
+It meets stable rules: obviously correct, important, 8 lines, no new
+API. Patch 1 of the same series is already in this tree, so the false-
+reject leak is not an issue here.
+
+### Risk vs benefit
+
+Benefit is high (prevents hang). Risk is low (reject unsafe programs).
+The only behavioral change is failing `BPF_PROG_LOAD` for
+callback+tailcall, which is the intended safety net.
+
+### Concerns
+
+- Needs series patch 1 (`3513ea9dab6c1`) — **already in this tree**
+- Selftests (`42bfd21a8b701`) are nice-to-have, not required for the
+  kernel fix — **already in this tree**
+- Follow-up `266aa4ad0b2e8` is a separate WARN-avoidance fix, not a
+  prerequisite for this one
+
+---
+
+### Verification
+
+- **[Phase 1]** Parsed tags: Sashiko + Björn Töpel Reported-by; Eduard
+  Acked-by/SOB; Link msgid `835937-3` (v3 2/3); no Fixes/Cc-stable
+- **[Phase 1]** `git show a41d0c30d764e --format=full`: infinite
+  tailcall from TCC clobber; reject via `is_cb`
+- **[Phase 2]** Diff: `kernel/bpf/verifier.c` +2/-6 in
+  `check_max_stack_depth_subprog()`; `is_exception_cb` → `is_cb`; remove
+  async `verifier_bug`
+- **[Phase 2]** Current code at 5480–5482 already has `if
+  (subprog[tmp].is_cb)` / `"cannot tail call within callback"`
+- **[Phase 3]** `git describe HEAD` / `make kernelversion`:
+  **v7.3-rc4**, 7.3.0-rc4
+- **[Phase 3]** `git merge-base --is-ancestor a41d0c30d764e HEAD`: yes
+  (already in this tree, v7.3-rc1)
+- **[Phase 3]** `git merge-base --is-ancestor a41d0c30d764e v7.2`: no
+  (7.2 does not have it; not used as a split verdict)
+- **[Phase 3]** Parent `3513ea9dab6c1` is series 1/3; `git merge-base
+  --is-ancestor 3513ea9dab6c1 HEAD`: yes
+- **[Phase 3]** Blame: exception check b9ae0c9dd0aca (2023); async bug
+  7ddc80a476c2d (2021); `is_cb` 406a6fa44bfbc / ab5cfac139ab85 (2023)
+- **[Phase 3]** Follow-up `266aa4ad0b2e8` already in tree; extra reject
+  in `check_helper_call()` at 11320
+- **[Phase 4]** `b4 dig -c a41d0c30d764e`: lore msgid
+  20260716120157.835937-3
+- **[Phase 4]** `b4 dig -a`: v1→v2→v3; v3 applied; v3 added patch 1
+  after Sashiko
+- **[Phase 4]** `b4 dig -w`: bpf maintainers CC’d (Alexei, Eduard,
+  Daniel, Andrii, Björn, Kartikeya)
+- **[Phase 4]** mbox: Eduard applied to bpf-next; Sashiko AI concern
+  answered by author; no NAK
+- **[Phase 4]** WebSearch: Töpel RISC-V thread confirms verifier
+  accepted callback→subprog→tailcall
+- **[Phase 4]** lore.kernel.org/stable: **UNVERIFIED** (403)
+- **[Phase 5]** `check_max_stack_depth()` at 5552 calls this; verifier
+  finalize at 21334 on every successful load
+- **[Phase 5]** `push_callback_call()` sets `is_cb` at 9847;
+  `check_subprogs()` sets `has_tail_call` at 3031
+- **[Phase 5]** x86 JIT `emit_prologue_tail_call` uses `%rax` for TCC
+  (arch/x86/net/bpf_jit_comp.c:500–526)
+- **[Phase 5]** `bpf_loop` behind CAP_BPF (`kernel/bpf/helpers.c:2124`)
+- **[Phase 5]** Selftest
+  `tools/testing/selftests/bpf/progs/tailcall_callback.c` expects
+  `"cannot tail call within callback"`
+- **[Phase 6]** Reverse `git apply --check` of this commit: success (fix
+  already present)
+- **[Phase 8]** Failure mode: infinite tailcall hang, severity HIGH;
+  trigger CAP_BPF BPF_PROG_LOAD
+- **UNVERIFIED:** Stable mailing-list discussion (HTTP 403)
+
+The local tree is v7.3-rc4. The buggy verifier path exists in this
+series, the 8-line reject is a real hang fix, prerequisites are present,
+and the change belongs in this tree.
 
 **YES**
 
- .../intel/int340x_thermal/processor_thermal_rfim.c    | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ kernel/bpf/verifier.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
-index 635bc8fded1e9..2f32b230a4b15 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
-@@ -460,12 +460,11 @@ int proc_thermal_rfim_add(struct pci_dev *pdev, struct proc_thermal_device *proc
- 
- 	if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_DVFS) {
- 		ret = sysfs_create_group(&pdev->dev.kobj, &dvfs_attribute_group);
--		if (ret && proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_FIVR) {
--			sysfs_remove_group(&pdev->dev.kobj, &fivr_attribute_group);
--			return ret;
--		}
--		if (ret && proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_DLVR) {
--			sysfs_remove_group(&pdev->dev.kobj, &dlvr_attribute_group);
-+		if (ret) {
-+			if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_DLVR)
-+				sysfs_remove_group(&pdev->dev.kobj, &dlvr_attribute_group);
-+			if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_FIVR)
-+				sysfs_remove_group(&pdev->dev.kobj, &fivr_attribute_group);
- 			return ret;
- 		}
- 	}
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index b89a5d717e422..5cc3e9a990ef7 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6808,10 +6808,6 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
+ 		if (verifier_bug_if(sidx < 0, env, "callee not found at insn %d", next_insn))
+ 			return -EFAULT;
+ 		if (subprog[sidx].is_async_cb) {
+-			if (subprog[sidx].has_tail_call) {
+-				verifier_bug(env, "subprog has tail_call and async cb");
+-				return -EFAULT;
+-			}
+ 			/* async callbacks don't increase bpf prog stack size unless called directly */
+ 			if (!bpf_pseudo_call(insn + i))
+ 				continue;
+@@ -6852,8 +6848,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
+ 	 */
+ 	if (tail_call_reachable)
+ 		for (tmp = idx; tmp >= 0; tmp = dinfo[tmp].caller) {
+-			if (subprog[tmp].is_exception_cb) {
+-				verbose(env, "cannot tail call within exception cb\n");
++			if (subprog[tmp].is_cb) {
++				verbose(env, "cannot tail call within callback\n");
+ 				return -EINVAL;
+ 			}
+ 			subprog[tmp].tail_call_reachable = true;
 -- 
 2.53.0
 
