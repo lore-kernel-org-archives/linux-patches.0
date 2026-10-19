@@ -1,509 +1,550 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.246.77.92
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792422562;
+	b=tg/Vzi36Dw8/aTmq9qBwsHaEo05MLrB7RkgTx5QXPqBu3NPCOxTZ/PG3+Kuh5NsWQbBb
+	 ezb5DlCF/9Sf98ThsKz3apjiId5vSvfPcMb0Fw1AfR3SzC6IxGsXKPqrBa4IXgefH7dZF
+	 dviufmEl4nPEAl16M08lq2IPuiOGjl0ah7THEMu7Wh2Ii1KhVVBq2cRaHh0RxkmAS93Yg
+	 YpBXSKYtXEwfUrC+B2WE+37cr7qcKg0TobGT4IAKc7Wc/j2N5ATftYxw9XiogGhAXHTp/
+	 7jTCnLq3KaKmj/9Yaco7nP/fdrfxLOjiVI4tNKNIq4fgT2ZC7rsfTBo+54hmECvSMDw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792422562;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:Received:Received:X-Farcaster-Flow-ID:Received:Received:
+	 Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:Content-Transfer-Encoding:
+	 In-Reply-To:User-Agent:X-Originating-IP:X-ClientProxiedBy;
+	bh=WrrR15jRnWUAVDJRDzl05AVVs6tL+gb6m5MNmqs+X7M=;
+	b=FxBvUg+mJc/VzobKGBPdCCuz/l2E6f1DDpJwIO+niD/rJwLDZOB/YpBhx1mN8w4wAcu6
+	 omZzll3+SKoJvMnlwBQaEwtcQEL8dpZu2FnK5q0XzEwMv/0O45xFlD+Djq14+mXBYsAFW
+	 pSIK9PAi0/BjJD61yxv6i48/dfBdQ8//n1ust+T56SfgEsuI6wpzMmqEadEuAkZlYD0xs
+	 0dSYgf7jhOQZfjCjL+0YqIXo/ina7bkM2QquoaeaMrMTpErQoR1PYu40dP2eIQ+GzRUNd
+	 RJwBEUrRhXH/XMOX7PjWKxl6LJYKeBiS742xxJ0I1n0WXc9mrQNu/qllCWhvD8VwB4w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amazon.com;
+	spf=pass smtp.mailfrom=amazon.com;
+	dkim=pass header.d=amazon.com header.i=@amazon.com header.a=rsa-sha256 header.s=amazoncorp2 header.b=YYslpHhW;
+	arc=none smtp.remote-ip=44.246.77.92
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com [44.246.77.92])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F0764C40A;
-	Mon, 19 Oct 2026 14:06:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418826; cv=none; b=uujvO9FRifzsit4gXvLUwIZSPyTG5REikOmVF6rOb3F4mMhh+hC/D1RCMxTU4uPRZIH2rg+YvYR2geaLasvrDGcA1q7R/dWYdfOsdqlYFgT/McVSK/yTO0AnAbcdLq2swMswGq0cAby4mydJTDtuufvek+iTdu1VxRM0itidFS4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418826; c=relaxed/simple;
-	bh=sqcL0GY2ywTF8aRJH9sYcEsSs2ajLx9ikcBAEZe8QD4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CDySn3Kqy2vhWrraP6b0jO1ZZFI3CenFEAzZgGaDGRT5pfs3UWKKf4qGUcIWe1HmXXSqCLIqdQaVNm0LdSTDBQJL2XU6G+Mayl0u+4EgcziGZF1lA40/sB0nV2ZYg64HsdV7z7KjAOqjamisJPWL0n2Qh7aTKx53I5mw48FrNTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=heA2iMeC; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0851F608607B
+	for <patches@lists.linux.dev>; Mon, 19 Oct 2026 15:09:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0851F608607B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="heA2iMeC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3531F000C4;
-	Mon, 19 Oct 2026 14:06:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418814;
-	bh=4qTdWVxFt0wuCUbw/btJFkq2aKk1a3vWXLWgJiiJKhc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=heA2iMeC8fEX72nlmG7AgA9O/qM79S1zO0MeNZCfY6g90ay4agQrKfCPiHJO+nrVB
-	 jD6gI1OhNHIMCDQSm6faNpeavdwR/j5Zi0R4kn973m922KoXQ3PxDB0nGXP1AWAjNt
-	 oTdQZl1CCWCB8UoCDJwCUnC8B1MS88WmYt5x/EZ815abqy/YrKNEOeXneyRTshC8F0
-	 dUHNlpLGAcBo2fk1mC21TIQVRgMZpcYNihVR9G5FZpvmnDl4wXQc0+dxJNiPT+PBNR
-	 z3isPKbtiFF1T3up5OQp79jaeLE22IoYs3641vDqa3bXK6k/cquSMQ1ONYG1edArFg
-	 VA0b0xVX1bwnw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA
-Date: Mon, 19 Oct 2026 09:53:27 -0400
-Message-ID: <20261019135441.1420968-516-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=amazon.com header.i=@amazon.com header.a=rsa-sha256 header.s=amazoncorp2 header.b=YYslpHhW
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1792422561; x=1823958561;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=WrrR15jRnWUAVDJRDzl05AVVs6tL+gb6m5MNmqs+X7M=;
+  b=YYslpHhW4BgBxyslhWJrpdWlb2lN7wz+gicuO3xesGtlpNcmVd5b4QSB
+   pzl127xR+D5KQrJxlNiVV5uVMCd+rAcJO71CNXZUXfNh7UFNWig5IdrTb
+   SrlHs/v4aJpOpOjq4MSh+i2HxcAubOLYNTp3XBiu/y5Qi0y+NHkEclxVj
+   HReX0neidwDgpuAcWWEjQHDxS5FLFnNOR2rQiUAJ+AkZd54kx55ks6lnv
+   BPEnYhWp1ppzGzMU6EBk7n7S3I10plk+r0a/OICwh3ZQvZJjOLHvujdKD
+   zn3oVGnZ/pT4AK57Ykalbfg0FCZSm8AMOPL3ydRs0mu+J4DbNBjgQP5+U
+   Q==;
+X-CSE-ConnectionGUID: zjZifBsoSMuFw4Yv8V/ezg==
+X-CSE-MsgGUID: bSOnYweBTQSKr3wdf6qB+g==
+X-IronPort-AV: E=Sophos;i="6.27,167,1787011200"; 
+   d="scan'208";a="31648770"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+  by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 15:09:20 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:24734]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.54.1:2525] with esmtp (Farcaster)
+ id 325b1013-9340-4195-af8b-eb18188487d2; Mon, 19 Oct 2026 15:09:20 +0000 (UTC)
+X-Farcaster-Flow-ID: 325b1013-9340-4195-af8b-eb18188487d2
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.49;
+ Mon, 19 Oct 2026 15:09:19 +0000
+Received: from dev-dsk-mrgolin-1c-b2091117.eu-west-1.amazon.com
+ (10.253.103.172) by EX19D001UWA001.ant.amazon.com (10.13.138.214) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.53; Mon, 19 Oct 2026
+ 15:09:18 +0000
+Date: Mon, 19 Oct 2026 15:09:05 +0000
+From: Michael Margolin <mrgolin@amazon.com>
+To: Sasha Levin <sashal@kernel.org>
+CC: <patches@lists.linux.dev>, <stable@vger.kernel.org>, Anas Mousa
+	<anasmous@amazon.com>, Leon Romanovsky <leon@kernel.org>,
+	<linux-rdma@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH AUTOSEL 6.18-6.12] RDMA/efa: Add EFA 0xefa4 PCI ID
+Message-ID: <20261019150905.GA8110@dev-dsk-mrgolin-1c-b2091117.eu-west-1.amazon.com>
 References: <20261019135441.1420968-1-sashal@kernel.org>
-Precedence: bulk
+ <20261019135441.1420968-330-sashal@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
+List-Post: <mailto:patches@lists.linux.dev>
+List-Help: <mailto:patches+help@lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+List-Owner: <mailto:patches+owner@lists.linux.dev>
+Precedence: list
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-
-From: Zhang Heng <zhangheng@kylinos.cn>
-
-[ Upstream commit f2d08f3651fb12634347fef2c41687a807a7dcba ]
-
-On the ASUS Vivobook S14 S5406SA (subsystem 0x104310c4, Lunar Lake
-platform) with an ALC294 codec, the headset microphone (3.5mm jack)
-fails to capture any audio. Adding the ALC2XX_FIXUP_HEADSET_MIC
-quirk resolves the issue and restores proper headset mic recording.
-
-Link: https://github.com/thesofproject/linux/issues/5729
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260807125857.678297-3-zhangheng@kylinos.cn
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-I have enough to decide for this 6.12 tree: the quirk and insertion
-point exist, the 0x10c4 entry does not.
-
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[ALSA/hda/realtek] [Fix] [headset microphone capture on ASUS
-Vivobook S14 S5406SA]**
-
-Subsystem prefix is `ALSA: hda/realtek`. Action verb is **Fix**. Claimed
-intent is restoring 3.5mm headset-mic capture on one ASUS laptop by
-adding a PCI subsystem quirk.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Record:
-- **Link:** https://github.com/thesofproject/linux/issues/5729 (user bug
-  report; later confirmed fixed by the model/quirk)
-- **Link:**
-  https://patch.msgid.link/20260807125857.678297-3-zhangheng@kylinos.cn
-  (alsa-devel submission; patch 3/4)
-- **Signed-off-by:** Zhang Heng \<zhangheng@kylinos.cn\> (author)
-- **Signed-off-by:** Takashi Iwai \<tiwai@suse.de\> (ALSA maintainer;
-  applied the series)
-- **Fixes:** none (expected)
-- **Cc: stable:** none (expected)
-- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none in the
-  commit message
-
-Notable: msgid `-3` shows this was patch 3 of a 4-patch batch of
-independent hardware quirks, not a dependent refactor series.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
-Record:
-- **Bug:** On ASUS Vivobook S14 S5406SA, PCI subsystem `0x1043:0x10c4`,
-  Lunar Lake + ALC294, the 3.5mm headset microphone captures silence.
-  Headset speakers work; internal DMIC works.
-- **Symptom:** Userspace sees a “Headphones Stereo Microphone” source
-  that records silence; analog capture mixer controls are missing.
-- **Root cause (from message + issue):** BIOS leaves headset-mic pin
-  0x19 as `0x411111f0` (N/A). `ALC2XX_FIXUP_HEADSET_MIC` overrides that
-  pin and sets `HDA_PINCFG_HEADSET_MIC`.
-- **Version info in message:** Lunar Lake platform; GitHub reporter was
-  on 6.17, but that does not limit this tree.
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: **Not a hidden fix.** It is an explicit hardware-quirk bug fix:
-one `SND_PCI_QUIRK` line. No cleanup/refactor disguise.
-
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
-
-**Step 2.1: INVENTORY THE CHANGES**
-
-Record:
-- **File in upstream commit:** `sound/hda/codecs/realtek/alc269.c` (+1 /
-  −0)
-- **File in this tree:** `sound/pci/hda/patch_realtek.c` (Realtek codec
-  not yet split)
-- **Function / table:** `alc269_fixup_tbl[]`
-- **Scope:** single-file, one-line surgical hardware quirk
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record:
-- **Before:** SSID `0x1043:0x10c4` has no PCI quirk. `patch_alc269()`
-  still calls `snd_hda_pick_fixup()` on `alc269_fixup_tbl`. Existing
-  ASUS ALC294 *pin* quirks do not match this machine’s pin 0x12
-  (`0x40000000` vs required `0x90a60130`), so no headset-mic fixup is
-  applied. Pin 0x19 stays N/A; analog headset mic is never parsed.
-- **After:** That SSID selects `ALC2XX_FIXUP_HEADSET_MIC` at PRE_PROBE.
-- **Path:** codec probe / jack autoconfig only; not a hot path, error
-  path, or API change.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: **[Hardware workaround / pin-config quirk]**
-
-In this tree `ALC2XX_FIXUP_HEADSET_MIC` is:
-
-```10552:10555:sound/pci/hda/patch_realtek.c
-        [ALC2XX_FIXUP_HEADSET_MIC] = {
-                .type = HDA_FIXUP_FUNC,
-                .v.func = alc_fixup_headset_mic,
-        },
-```
-
-`alc_fixup_headset_mic()` (same body as later
-`alc2xx_fixup_headset_mic`) does:
-1. Override pin 0x19 to `0x03a1103c` (headset mic)
-2. Update coef 0x45
-3. Set `spec->parse_flags |= HDA_PINCFG_HEADSET_MIC`
-
-That matches the GitHub dump: pin 0x19 was `0x411111f0` with VREF_HIZ.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record: **Obviously correct and minimal.** One PCI ID, existing fixup
-already used for Acer Nitro 5, ASUS Vivobook 15 X1504VAP, Gigabyte,
-Huawei, Clevo, TongFang, HONOR. Regression surface is only SSID
-`0x1043:0x10c4`. No locking, no API, no new code. **Regression risk:
-very low.**
-
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record: The new line is an addition. Neighboring entries exist in this
-tree at:
-
-```11192:11193:sound/pci/hda/patch_realtek.c
-        SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA",
-ALC256_FIXUP_ASUS_MIC),
-        SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ",
-ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
-```
-
-The *bug* is missing pin config from BIOS, not a regression in a
-specific old commit. The reusable fixup was added by `1c643c600407d`
-(“Add new alc2xx-fixup-headset-mic model”, 2024-12-07), which is **in
-this tree** (`git merge-base --is-ancestor 1c643c600407d HEAD`
-succeeded). That is the stable backport of upstream `50db91fccea0d`
-(first contained in v6.13-rc3; original SHA is **not** an ancestor of
-this 6.12 branch, but the equivalent change is present).
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: **No Fixes: tag.** Not applicable. The hardware never had a
-working pin default for this SSID in this tree.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: `sound/pci/hda/patch_realtek.c` is actively receiving similar
-one-line quirks (mute LEDs, speakers, headset mics). Recent history is
-the same class of change. **No prerequisite series for this one line.**
-Similar in-tree uses of `ALC2XX_FIXUP_HEADSET_MIC` include Acer Nitro 5
-(`0x1025:0x1539/159c/1597`) and ASUS Vivobook 15 X1504VAP
-(`0x1043:0x1e1f`).
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Zhang Heng has multiple Realtek quirk commits in this tree
-(Samsung, ASUS UM6702RC, Inspur, Conexant). Regular ALSA hda
-contributor; this patch was applied by maintainer Takashi Iwai. Related
-same-day patches are other independent quirks (Acer Nitro ANV16-42, Acer
-Gadget E10, Huawei Matebook Conexant), not dependencies.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: **Standalone.** Needs only `ALC2XX_FIXUP_HEADSET_MIC` /
-`alc_fixup_headset_mic()`, both present. Series 1/4, 2/4, and 4/4 touch
-different SSIDs/files. File path in the upstream diff (`alc269.c`) must
-be rewritten to `patch_realtek.c` here; the hunk context around
-`0x10c0`/`0x10d0` matches.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- **Lore msgid:** `20260807125857.678297-3-zhangheng@kylinos.cn`
-- **b4 mbox:** 5 messages; series is four independent quirks
-  (2026-08-07)
-- **Revisions:** single submission (`[PATCH 3/4]`); no v2/v3 in the
-  thread
-- **Maintainer:** Takashi Iwai: “Applied all four patches now. Thanks.”
-  — no NAK, no requested changes, no stable-risk comments
-- Direct lore.kernel.org HTTP fetches returned 403; thread was recovered
-  via `b4 mbox`
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: **To:** tiwai@suse.com. **Cc:** linux-sound@vger.kernel.org,
-linux-kernel@vger.kernel.org. Subsystem maintainer received and applied
-it. `b4 dig -w` was not used (no upstream SHA in this checkout);
-recipients came from the mbox.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: GitHub thesofproject/linux#5729 (closed):
-- Hardware: ASUS Vivobook S14 S5406SA, ALC294, SSID `0x104310c4`, Intel
-  Lunar Lake, driver `sof-audio-pci-intel-lnl`
-- Symptom: headset speakers OK, headset mic silent; pin 0x19 =
-  `0x411111f0`
-- Pierre-Louis Bossart: ALC294 config issue, not SOF
-- Zhang Heng / Kailang Yang: try model `alc2xx-fixup-headset-mic`
-- Reporter **confirmed** `hda_model=alc2xx-fixup-headset-mic` on the
-  same machine: dmesg `Headset Mic=0x19`, jack detect works, `pw-record`
-  captures real audio
-- Also referenced Arch forum thread for the same SSID
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Batch of four independent hardware quirks. This patch does not
-need the others. Other patches are not required for this SSID to work.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: lore.kernel.org/stable search returned HTTP 403. **UNVERIFIED**
-whether someone already asked stable@ for this specific commit. No in-
-tree evidence it was rejected.
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-
-Record: No function body changed. Touches `alc269_fixup_tbl[]`. Runtime
-effect is via `alc_fixup_headset_mic()` selected as
-`ALC2XX_FIXUP_HEADSET_MIC`.
-
-**Step 5.2: TRACE CALLERS**
-
-Record:
-- `HDA_CODEC_ENTRY(0x10ec0294, "ALC294", patch_alc269)` at line 13992
-- `patch_alc269()` → `snd_hda_pick_fixup(..., alc269_fixup_tbl,
-  alc269_fixups)` at 12583–12584
-- Called at codec probe (HDA/SOF HDA generic), not IRQ/syscall hot path
-- Impact surface: **only** PCI subsystem `0x1043:0x10c4`
-
-**Step 5.3: TRACE CALLEES**
-
-Record: `alc_fixup_headset_mic` → `snd_hda_apply_pincfgs`,
-`alc_update_coef_idx`, sets `HDA_PINCFG_HEADSET_MIC`. Same pattern
-already used on other laptops in this file.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Plug headset → HDA jack parse/probe → if quirk matches, pin 0x19
-becomes a headset mic. **Reachable from userspace** on that laptop
-(PipeWire/ALSA capture). Reporter confirmed it.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same `ALC2XX_FIXUP_HEADSET_MIC` already applied to multiple
-vendors in `alc269_fixup_tbl`. This is the standard pattern for “BIOS
-left headset mic pin as 0x411111f0”.
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.** This tree is **6.12.111** (`pending-6.12`, `git
-describe HEAD` = `p-6.12-3-g710455e2077bb`). Makefile: VERSION=6
-PATCHLEVEL=12 SUBLEVEL=111.
-
-- Quirk `0x1043:0x10c4` / “S5406SA” is **absent** (`git grep` found no
-  matches).
-- Realtek driver, ALC294 `patch_alc269`, `ALC2XX_FIXUP_HEADSET_MIC`, and
-  Lunar Lake SOF (`sound/soc/sof/intel/pci-lnl.c`) **are present**.
-- The machine is a 2024/2025 Lunar Lake laptop; 6.12 is an LTS that runs
-  that hardware.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Minor path remap, otherwise clean.** Upstream hunk is against
-`sound/hda/codecs/realtek/alc269.c`; here the table is
-`sound/pci/hda/patch_realtek.c`. Context lines `0x10c0` then `0x10d0`
-match exactly. Enum name is the same. **Expected difficulty: trivial
-backport** (standard for HD-audio quirks on 6.12).
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: Subject grep for S5406SA / this title found nothing. Pin quirks
-for ASUS ALC294 do not match this pin dump (0x12 is `0x40000000`, not
-`0x90a60130`). **No existing fix for this SSID.**
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: **[sound/pci/hda Realtek codec] [IMPORTANT]** — common laptop
-audio, not mm/core, but HD-audio quirks are a large fraction of stable
-backports. Affects users of this ASUS model.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: **Active but mature quirk table.** Recent commits are almost all
-device-specific `SND_PCI_QUIRK` additions — the same class as this
-patch.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: **Driver/hardware-specific** — only ASUS SSID `0x1043:0x10c4`
-(Vivobook S14 S5406SA, ALC294). Other machines unchanged.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: **Every use of the 3.5mm headset mic** on that laptop. Not a
-race. Unprivileged user hits it by recording from the headset. Internal
-DMIC still works, so some users workaround; headset-mic users do not.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: **[Headset analog capture silently fails] [MEDIUM functional /
-HIGH for affected hardware]** — not a panic/UAF, but the combo-jack mic
-is unusable, which is exactly what hardware-quirk stable exceptions
-cover. Confirmed by a real user; second report on Arch for the same
-SSID.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit:** High for owners of this laptop on 6.12 LTS (headset mic
-  works without a modprobe model override).
-- **Risk:** Very low — one table entry, existing fixup, SSID-matched,
-  maintainer-applied, user-tested.
-- **Ratio:** Strongly favors backport.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-- Real, user-confirmed hardware bug (GitHub #5729; model param proven on
-  the same machine)
-- Classic HD-audio PCI quirk — stable exception category
-- One line, existing `ALC2XX_FIXUP_HEADSET_MIC` already in 6.12
-- ALC294 and Lunar Lake SOF support exist here
-- Isolated to one SSID; no API/feature
-- Applied by Takashi Iwai; no NAKs
-- Insertion context `0x10c0`/`0x10d0` matches this file
-
-**AGAINST:**
-- Upstream path is `alc269.c`; this tree still uses `patch_realtek.c`
-  (trivial remap)
-- Not a crash/security issue (quirks are still accepted)
-- Original patch had no Cc: stable (not a negative per the rules)
-
-**UNRESOLVED:**
-- lore.kernel.org HTTP 403; stable@ discussion not fetched (thread
-  recovered via b4)
-- No upstream SHA in this checkout for `b4 dig -c`
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — same fixup already in tree;
-   reporter confirmed `alc2xx-fixup-headset-mic`; maintainer applied it
-2. Fixes a real bug that affects users? **PASS** — silent headset-mic
-   capture on a shipping Lunar Lake ASUS
-3. Important issue? **PASS** under the hardware-quirk exception (device
-   feature broken; not cosmetic)
-4. Small and contained? **PASS** — +1 line
-5. No new features or APIs? **PASS** — existing quirk ID only
-6. Can apply to the local tree? **PASS** — needs path change to
-   `sound/pci/hda/patch_realtek.c`; context matches
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: **Hardware quirk/workaround** (and PCI-ID-style table addition
-to an existing driver). Automatic YES class per the stable quirk rules.
-
-**Step 9.4: MAKE YOUR DECISION**
-
-This belongs on 6.12. The bug is present, the fixup infrastructure is
-present, Lunar Lake audio is present, and the change is a one-line SSID
-quirk that only enables headset-mic pin parsing on that laptop.
-
-Verification:
-- [Phase 1] Parsed subject/tags: Fix + GitHub issue + msgid 3/4; no
-  Fixes/Cc:stable (expected)
-- [Phase 1] Body: ALC294 SSID 0x104310c4 headset mic silent; quirk
-  ALC2XX_FIXUP_HEADSET_MIC
-- [Phase 2] Diff: +1 SND_PCI_QUIRK(0x1043, 0x10c4, ...) in
-  alc269_fixup_tbl
-- [Phase 2] This tree implements that ID via alc_fixup_headset_mic():
-  pin 0x19 → 0x03a1103c + HDA_PINCFG_HEADSET_MIC
-- [Phase 3] 1c643c600407d (alc2xx-fixup-headset-mic model) is in HEAD;
-  upstream 50db91fccea0d is not an ancestor (expected 6.12 vs 6.13)
-- [Phase 3] git log --grep=S5406SA -- sound/pci/hda/: no matches; quirk
-  not already applied
-- [Phase 3] Series 1/4–4/4 are independent quirks; 3/4 is standalone
-- [Phase 4] b4 mbox 20260807125857.678297-3: Takashi Iwai applied all
-  four; no NAK
-- [Phase 4] GitHub #5729: reporter confirmed hda_model=alc2xx-fixup-
-  headset-mic restores capture
-- [Phase 4] lore.kernel.org WebFetch: 403 — UNVERIFIED via HTTP;
-  recovered via b4
-- [Phase 5] ALC294 → patch_alc269 →
-  snd_hda_pick_fixup(alc269_fixup_tbl); caller is codec probe
-- [Phase 5] ASUS ALC294 pin quirks do not match this machine (0x12 is
-  0x40000000)
-- [Phase 6] git describe HEAD: p-6.12-3-g710455e2077bb; make
-  kernelversion 6.12.111
-- [Phase 6] File is sound/pci/hda/patch_realtek.c; 0x10c0/0x10d0
-  neighbors match; 0x10c4 absent
-- [Phase 6] sound/soc/sof/intel/pci-lnl.c present (Lunar Lake SOF)
-- [Phase 8] Failure mode: silent analog headset mic, SSID-scoped;
-  severity medium functionally, high for that hardware
-- UNVERIFIED: whether stable@ already discussed this commit (lore 403)
-
-The one-line quirk is the standard stable HD-audio backport: it restores
-headset-mic capture on one confirmed laptop with negligible risk.
-
-**YES**
-
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 97ab2269dc472..8fdfe1bbe7aff 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7101,6 +7101,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1154, "ASUS TP3607SH", ALC287_FIXUP_TAS2781_I2C),
--- 
-2.53.0
-
+In-Reply-To: <20261019135441.1420968-330-sashal@kernel.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-ClientProxiedBy: EX19D031UWA002.ant.amazon.com (10.13.139.96) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
+
+On Mon, Oct 19, 2026 at 09:50:21AM -0400, Sasha Levin wrote:
+> From: Anas Mousa <anasmous@amazon.com>
+> 
+> [ Upstream commit 6a57af838b1a56405a9bde9030de16df901ae2ca ]
+> 
+> Add support for 0xefa4 devices.
+> 
+> Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+> Signed-off-by: Anas Mousa <anasmous@amazon.com>
+> Link: https://patch.msgid.link/20260712134413.19226-3-mrgolin@amazon.com
+> Signed-off-by: Leon Romanovsky <leon@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+> 
+> LLM Generated explanations, may be completely bogus:
+> 
+> This is a two-line PCI ID addition to the existing Amazon EFA RDMA
+> driver. That matches the stable-tree device-ID exception, and the local
+> 7.3-rc4 tree already has the driver and ID table.
+>
+
+The 0xefa4 device support requires previous changes introduced in 7.3.
+Please do not apply this patch on stable kernels.
+
+> ---
+> 
+> ## PHASE 1: COMMIT MESSAGE FORENSICS
+> 
+> **Step 1.1: PARSE THE SUBJECT LINE**
+> - Subsystem: `RDMA/efa`
+> - Action verb: **Add**
+> - Claimed intent: register PCI device ID `0xefa4` so the in-tree EFA
+>   driver binds new Amazon Elastic Fabric Adapter hardware.
+> 
+> Record: `[RDMA/efa] [add] [PCI ID 0xefa4 for next-gen EFA VF]`
+> 
+> **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+> - `Reviewed-by: Michael Margolin <mrgolin@amazon.com>` (Amazon EFA
+>   contributor; 20 commits in this driver)
+> - `Signed-off-by: Anas Mousa <anasmous@amazon.com>` (author)
+> - `Link:
+>   https://patch.msgid.link/20260712134413.19226-3-mrgolin@amazon.com`
+> - `Signed-off-by: Leon Romanovsky <leon@kernel.org>` (RDMA maintainer,
+>   committer)
+> - No `Fixes:` tag (expected)
+> - No `Cc: stable@vger.kernel.org` (expected)
+> - No `Reported-by:`, `Tested-by:`, `Acked-by:`
+> - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+>   ...]` markers (none in the real commit)
+> 
+> Record: Maintainer-applied PCI ID patch; Amazon internal review; lore
+> link present; no syzbot/bug report (not applicable).
+> 
+> **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+> Body is one sentence: “Add support for 0xefa4 devices.” Cover letter
+> (mbox): “Make a minor device interface change needed for new EFA devices
+> and enable support for 0xefa4 PCI ID.” No crash, no reproducer — this is
+> hardware enablement.
+> 
+> Record: `[Bug description: none — new PCI ID] [Symptom: 0xefa4 adapters
+> unbound / unused by in-tree efa] [Version info: none] [Root cause: ID
+> missing from pci_device_id table]`
+> 
+> **Step 1.4: DETECT HIDDEN BUG FIXES**
+> Not a disguised leak/race/UAF fix. It is exactly a device-ID addition.
+> 
+> Record: `[Not a hidden bug fix. Explicit PCI ID enablement.]`
+> 
+> ---
+> 
+> ## PHASE 2: DIFF ANALYSIS
+> 
+> **Step 2.1: INVENTORY THE CHANGES**
+> - File: `drivers/infiniband/hw/efa/efa_main.c` — **+2 / -0**
+> - `#define PCI_DEV_ID_EFA4_VF 0xefa4`
+> - `{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA4_VF) }` in `efa_pci_tbl[]`
+> - Scope: single-file surgical ID addition
+> 
+> Record: `[efa_main.c +2] [pci_device_id table] [surgical single-file]`
+> 
+> **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+> Before: PCI core matches Amazon vendor `0x1d0f` with IDs
+> `0xefa0`–`0xefa3` only. `0xefa4` is ignored (no probe).
+> After: `0xefa4` matches `efa_pci_driver`, `efa_probe()` runs the same
+> path as older generations.
+> 
+> `efa_probe(struct pci_dev *pdev, const struct pci_device_id *ent)` does
+> not use `ent` for generation-specific branching. `vendor_part_id` is
+> taken from `pdev->device`. Capabilities come from admin query
+> (`page_size_cap`, etc.).
+> 
+> Record: `[PCI match table: 4 IDs -> 5 IDs; probe path unchanged]`
+> 
+> **Step 2.3: IDENTIFY THE BUG MECHANISM**
+> Category **(h) Hardware workarounds / device ID additions**. Without the
+> ID, new EFA VFs never bind.
+> 
+> Record: `[Device ID addition] [Missing 0xefa4 in efa_pci_tbl prevented
+> driver bind]`
+> 
+> **Step 2.4: ASSESS THE FIX QUALITY**
+> Obviously correct. Same pattern as `0xefa2` (`b75927cff13e0`) and
+> `0xefa3` (`346d2fc606a85`). Does not change locking, APIs, or existing-
+> ID behavior. Regression risk is confined to `1d0f:efa4` hardware.
+> 
+> Record: `[Minimal, obviously correct] [Regression risk: only 0xefa4
+> devices]`
+> 
+> ---
+> 
+> ## PHASE 3: GIT HISTORY INVESTIGATION
+> 
+> **Step 3.1: BLAME THE CHANGED LINES**
+> ```
+> efa0/efa1: d4f9cb5c5b224 (Gal Pressman, 2020)
+> efa2:     b75927cff13e0 (Michael Margolin, 2022) → v6.1-rc4
+> efa3:     346d2fc606a85 (Michael Margolin, 2024) → present in v6.11 /
+> v7.2.7
+> efa4:     6a57af838b1a5 (Anas Mousa, 2026-07-12)
+> Driver:   b7f5e880f3774 (2019) → v5.2-rc1
+> ```
+> The table has been the enablement mechanism since the driver was added.
+> 
+> Record: `[ID table since v5.2; this ID added 2026-07-12 / 7.3 merge
+> window]`
+> 
+> **Step 3.2: FOLLOW THE FIXES: TAG**
+> No `Fixes:` tag. Not a regression fix.
+> 
+> Record: `[N/A — device ID, not a regression]`
+> 
+> **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+> Same msgid series `20260712134413`:
+> 1. `4266547bdce74` RDMA/efa: Extend page-shift field in MR registration
+>    (`19226-2`)
+> 2. `6a57af838b1a5` RDMA/efa: Add EFA 0xefa4 PCI ID (`19226-3`) — this
+>    commit
+> 
+> Cover letter: 2-patch `for-next` series. Patch 1 widens
+> `EFA_ADMIN_REG_MR_CMD_PHYS_PAGE_SIZE_SHIFT_MASK` from `GENMASK(4,0)` to
+> `GENMASK(5,0)` for **>4GB page sizes** on 0xefa4. That is extra
+> capability, not required for PCI bind/probe. `efa_probe` does not depend
+> on that mask.
+> 
+> Record: `[Series of 2; this patch is standalone for bind] [page-shift is
+> feature, not probe prerequisite]`
+> 
+> **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+> Anas Mousa: this is the only in-tree EFA commit. Reviewed by Michael
+> Margolin (regular EFA author). Applied by Leon Romanovsky.
+> 
+> Record: `[First-time author; reviewed by EFA regular; applied by RDMA
+> maintainer]`
+> 
+> **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+> Local tree already has `PCI_DEV_ID_EFA3_VF`, `PCI_VDEVICE(AMAZON, ...)`,
+> and `efa_pci_tbl`. No new helpers. Companion page-shift commit is
+> already in this tree (`git merge-base --is-ancestor 4266547bdce74
+> HEAD`).
+> 
+> Record: `[Applies standalone] [No missing structs/APIs in this tree]`
+> 
+> ---
+> 
+> ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+> 
+> **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+> `b4 dig -c 6a57af838b1a5` →
+> https://patch.msgid.link/20260712134413.19226-3-mrgolin@amazon.com
+> `b4 dig -a`: **v1 only** (no v2/v3).
+> Thread saved to mbox (6 messages).
+> 
+> Key review (on patch 1/2, not this ID patch): Leon asked how non-0xefa4
+> devices handle the extra page-shift bit. Michael: kernel uses device-
+> reported `page_size_cap` with `ib_umem_find_best_pgsz()`, so the extra
+> bit is not set on older devices; device also validates. Leon then
+> **Applied, thanks!** both patches. No NAK on the PCI ID patch. No `Cc:
+> stable` request.
+> 
+> Record: `[lore via patch.msgid.link/20260712134413.19226-3] [v1 only]
+> [no NAK on ID patch] [no stable nomination]`
+> 
+> **Step 4.2: CHECK WHO REVIEWED THE PATCH**
+> `b4 dig -w` recipients: `jgg@nvidia.com`, `leon@kernel.org`, `linux-
+> rdma@vger.kernel.org`, Amazon EFA engineers (`sleybo`, `matua`,
+> `gal.pressman`). Right lists and maintainers.
+> 
+> Record: `[RDMA maintainers + linux-rdma CC'd; Leon applied]`
+> 
+> **Step 4.3: SEARCH FOR THE BUG REPORT**
+> No bugzilla/syzbot. External confirmation that 0xefa4 is real hardware:
+> - DeviceHunt: PCI `1D0F:EFA4` Amazon Elastic Fabric Adapter
+> - Amazon out-of-tree `efa_linux_3.3.0`: “Add 0xefa4 device support”
+> - rdma-core: `efa: Add EFA 0xefa4 PCI ID`
+> 
+> Record: `[Real shipping device; userspace + out-of-tree driver already
+> list the ID]`
+> 
+> **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+> 2/2 of “Add support for 0xefa4 devices”. Evaluating only the ID patch:
+> self-contained for enumeration. Full >4GB MR pages needs patch 1/2
+> (already in this tree).
+> 
+> Record: `[Standalone for bind; series mate is optional extra
+> capability]`
+> 
+> **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+> lore.kernel.org WebFetch returned 403. `b4 dig` mbox has no stable-list
+> traffic. No evidence this ID was rejected for stable.
+> 
+> Record: `[No stable-list discussion found (lore HTTP 403; mbox has
+> none)]`
+> 
+> ---
+> 
+> ## PHASE 5: CODE SEMANTIC ANALYSIS
+> 
+> **Step 5.1: KEY FUNCTIONS**
+> No function body changed. Data: `PCI_DEV_ID_EFA4_VF`, `efa_pci_tbl[]`.
+> Consumers: `MODULE_DEVICE_TABLE(pci, efa_pci_tbl)` and
+> `efa_pci_driver.id_table`.
+> 
+> Record: `[efa_pci_tbl / efa_pci_driver only]`
+> 
+> **Step 5.2: TRACE CALLERS**
+> PCI core `pci_device_probe` → `efa_probe` → `efa_probe_device` /
+> `efa_ib_device_add`. Userspace-visible once the VF is assigned (typical
+> AWS EFA instance).
+> 
+> Record: `[PCI enumeration; bind on matching VF]`
+> 
+> **Step 5.3: TRACE CALLEES**
+> Unchanged. Probe still does BAR map, MSI-X, admin queues, IB register.
+> 
+> Record: `[Probe callees unchanged]`
+> 
+> **Step 5.4: FOLLOW THE CALL CHAIN**
+> Reachable when `CONFIG_INFINIBAND_EFA` is set (`PCI_MSI && 64BIT &&
+> !CPU_BIG_ENDIAN && INFINIBAND_USER_ACCESS`) and `1d0f:efa4` is present.
+> Common on AWS HPC/ML instances, not a syscall fuzzer path.
+> 
+> Record: `[Reachable from device hotplug/boot on EFA instances]`
+> 
+> **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+> Identical ID adds for efa2/efa3. No `switch (pdev->device)` /
+> `driver_data` generation quirks in `drivers/infiniband/hw/efa/`.
+> 
+> Record: `[Same pattern as prior EFA IDs; no per-ID code]`
+> 
+> ---
+> 
+> ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+> 
+> **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+> Local tree: **v7.3-rc4-27-gf0100363d8c37**, `make kernelversion` =
+> **7.3.0-rc4**.
+> `INFINIBAND_EFA` and `efa_pci_tbl` exist. `0xefa0`–`0xefa3` exist.
+> Without this change, `0xefa4` would not match.
+> 
+> `git merge-base --is-ancestor 6a57af838b1a5 HEAD` → yes (landed by
+> **v7.3-rc1**). Not in **v7.2.7**. Introduced in the 7.3 window, not
+> after this branch point.
+> 
+> Record: `[Driver and ID table present in this 7.3-rc4 tree] [ID added in
+> 7.3-rc1]`
+> 
+> **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+> Hunk is two lines next to `PCI_DEV_ID_EFA3_VF`. Would apply cleanly to
+> this file’s table. No refactor of the ID table.
+> 
+> Record: `[Expected apply: clean]`
+> 
+> **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+> No alternate 0xefa4 enablement. This is the only `0xefa4` PCI table
+> change.
+> 
+> Record: `[No other 0xefa4 bind fix]`
+> 
+> ---
+> 
+> ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+> 
+> **Step 7.1: SUBSYSTEM AND CRITICALITY**
+> `drivers/infiniband/hw/efa/` — Amazon EFA RDMA NIC.
+> Criticality: **IMPORTANT** for AWS EFA users; **PERIPHERAL** globally.
+> Not core mm/net.
+> 
+> Record: `[RDMA/efa] [IMPORTANT for EFA hardware, otherwise peripheral]`
+> 
+> **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+> Actively maintained (completion counters, 128B admin SQ, IRQ lifetime
+> fixes in 2026). ID adds are a long-standing pattern, not a new
+> subsystem.
+> 
+> Record: `[Active but mature ID-table pattern]`
+> 
+> MAINTAINERS: “AMAZON RDMA EFA DRIVER”.
+> 
+> ---
+> 
+> ## PHASE 8: IMPACT AND RISK ASSESSMENT
+> 
+> **Step 8.1: WHO IS AFFECTED**
+> Users of Amazon EFA VF `1d0f:efa4` with `CONFIG_INFINIBAND_EFA`. Older
+> EFA IDs unchanged.
+> 
+> Record: `[driver-specific / config-specific (INFINIBAND_EFA)]`
+> 
+> **Step 8.2: TRIGGER CONDITIONS**
+> Boot or VF assignment of 0xefa4. Not a race. Unprivileged users cannot
+> trigger a crash; they just get a working RDMA device after bind.
+> 
+> Record: `[Hotplug/boot of 0xefa4] [Likely on new EFA instances] [Not a
+> UAF/syscall crash]`
+> 
+> **Step 8.3: FAILURE MODE SEVERITY**
+> Without the ID: device unused by in-tree driver (lost HPC/RDMA). Not
+> panic/corruption. For affected hardware this is functional breakage.
+> 
+> Record: `[Device not bound] [Severity: HIGH for 0xefa4 users, LOW for
+> everyone else]`
+> 
+> **Step 8.4: RISK-BENEFIT RATIO**
+> Benefit: enables real hardware on an existing driver (stable-kernel-
+> rules explicitly allow this).
+> Risk: two lines, ID-table only, no API/lock/hot-path change.
+> 
+> Record: `[Benefit: high for EFA 0xefa4] [Risk: very low] [Favorable]`
+> 
+> ---
+> 
+> ## PHASE 9: FINAL SYNTHESIS
+> 
+> **Step 9.1: COMPILE THE EVIDENCE**
+> 
+> FOR:
+> - `Documentation/process/stable-kernel-rules.rst`: “must either fix a
+>   real bug that bothers people **or just add a device ID**.”
+> - Canonical PCI ID exception: driver already in tree; only the ID is
+>   new.
+> - +2 lines, obviously correct, same as efa2/efa3.
+> - No per-ID branching; probe is generation-agnostic.
+> - Real device (`1d0f:efa4`); Amazon out-of-tree and rdma-core already
+>   list it.
+> - Reviewed and applied by RDMA maintainer Leon Romanovsky.
+> - Applies cleanly; no new APIs.
+> 
+> AGAINST:
+> - Not a crash/security/corruption fix (not required for device IDs).
+> - Submitted as `for-next`, no `Cc: stable` (absence is expected).
+> - Series mate extends page-shift for >4GB MRs; not needed for bind.
+> - Author is a first-time in-tree EFA contributor (offset by Margolin
+>   review + Leon apply).
+> 
+> UNRESOLVED:
+> - Direct lore.kernel.org HTTP fetches returned 403; thread recovered via
+>   `b4 dig -m`.
+> - Stable mailing list search via WebFetch also 403; no stable discussion
+>   in the rdma mbox.
+> 
+> **Step 9.2: STABLE RULES CHECKLIST**
+> 1. Obviously correct and tested? **PASS** — 2-line ID table; maintainer
+>    applied after review.
+> 2. Fixes a real bug that affects users? **PASS** — device ID exception;
+>    otherwise 0xefa4 never binds.
+> 3. Important issue? **PASS** under the documented device-ID exception
+>    (not a panic).
+> 4. Small and contained? **PASS** — +2 lines, one file.
+> 5. No new features or APIs? **PASS** — existing driver, new ID only
+>    (page-shift is a different commit).
+> 6. Can apply to the local tree? **PASS** — `efa_main.c` ID table
+>    present; hunk matches.
+> 
+> **Step 9.3: EXCEPTION CATEGORY**
+> **Device ID addition to existing driver** — automatic stable qualifier.
+> 
+> **Step 9.4: DECISION**
+> This tree is **7.3.0-rc4**. The EFA driver and PCI table are here.
+> Adding `0xefa4` is the standard, low-risk hardware-enablement backport.
+> The companion page-shift change is a separate feature and is not
+> required for this ID patch to be correct.
+> 
+> ### What it solves for users of this tree
+> Without `0xefa4` in `efa_pci_tbl`, new Amazon EFA adapters are invisible
+> to the in-tree driver. With it, the existing probe path binds them. That
+> is exactly what stable trees take PCI IDs for.
+> 
+> ### Risk vs benefit
+> Benefit is hardware enablement for EFA 0xefa4. Risk is two lines that
+> cannot affect other devices.
+> 
+> ---
+> 
+> ### Verification
+> - [Phase 1] Parsed commit `6a57af838b1a56405a9bde9030de16df901ae2ca`:
+>   Reviewed-by Margolin, SOB Anas Mousa + Leon Romanovsky, Link msgid
+>   `20260712134413.19226-3`
+> - [Phase 2] Diff: +2 lines in `efa_pci_tbl` / `PCI_DEV_ID_EFA4_VF` only
+> - [Phase 2] `efa_probe()` does not branch on `ent`/`pdev->device` for
+>   quirks (verified in `efa_main.c`)
+> - [Phase 3] `git blame -L 16,29 efa_main.c`: efa0–efa3 older; efa4 is
+>   this commit
+> - [Phase 3] Prior IDs: efa2 `b75927cff13e0`, efa3 `346d2fc606a85` — same
+>   2-line pattern
+> - [Phase 3] Series mate `4266547bdce74` is page-shift GENMASK only, not
+>   a probe dependency
+> - [Phase 4] `b4 dig -c 6a57af838b1a5`: matched lore thread; v1 only
+> - [Phase 4] `b4 dig -w`: linux-rdma, jgg, leon CC’d
+> - [Phase 4] mbox: Leon question on patch 1/2 only; both patches applied
+>   2026-07-14; no NAK on ID patch
+> - [Phase 4] WebFetch lore/stable: HTTP 403 — UNVERIFIED via HTTP;
+>   covered by b4 mbox
+> - [Phase 5] Call path: PCI `id_table` → `efa_probe`; `page_size_cap`
+>   used in `efa_verbs.c` for MR pages
+> - [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+>   kernelversion` = 7.3.0-rc4
+> - [Phase 6] `git merge-base --is-ancestor 6a57af838b1a5 HEAD` = yes; not
+>   ancestor of `v7.2.7`
+> - [Phase 6] Driver added `b7f5e880f3774` (v5.2-rc1); present in this
+>   tree
+> - [Phase 7] `Documentation/process/stable-kernel-rules.rst` line 15:
+>   device ID explicitly allowed
+> - [Phase 8] Failure mode: device not bound on 0xefa4; no panic path
+> - UNVERIFIED: stable@vger archive contents (HTTP 403)
+> 
+> The change is a contained PCI ID addition to a driver this tree already
+> ships, which stable policy explicitly accepts.
+> 
+> **YES**
+> 
+>  drivers/infiniband/hw/efa/efa_main.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/infiniband/hw/efa/efa_main.c b/drivers/infiniband/hw/efa/efa_main.c
+> index fdaf88f0122db..b1f3e7ce2c65e 100644
+> --- a/drivers/infiniband/hw/efa/efa_main.c
+> +++ b/drivers/infiniband/hw/efa/efa_main.c
+> @@ -17,12 +17,14 @@
+>  #define PCI_DEV_ID_EFA1_VF 0xefa1
+>  #define PCI_DEV_ID_EFA2_VF 0xefa2
+>  #define PCI_DEV_ID_EFA3_VF 0xefa3
+> +#define PCI_DEV_ID_EFA4_VF 0xefa4
+>  
+>  static const struct pci_device_id efa_pci_tbl[] = {
+>  	{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA0_VF) },
+>  	{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA1_VF) },
+>  	{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA2_VF) },
+>  	{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA3_VF) },
+> +	{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA4_VF) },
+>  	{ }
+>  };
+>  
+> -- 
+> 2.53.0
+> 
