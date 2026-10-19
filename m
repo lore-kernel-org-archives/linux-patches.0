@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA855ABF7B;
-	Mon, 19 Oct 2026 14:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DCF59C972;
+	Mon, 19 Oct 2026 14:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418410; cv=none; b=NcHOm8SoCzqtoMZVBw0L98W4QUHOEFoApbgfhCidzB2jGlKIqB8KSE060YpdytOA6QvrPa3o8mgA5hVf8+ygGn384VcCbR0b5/821yc9DxQDu9rljgXj0qR5NJjCaIimmCIgR70IJJwqBtpx9svFDUB9Zzid1KHxVlS9WETGm48=
+	t=1792418412; cv=none; b=m1HuITmjih+sE7/YvKFDPlpnh8DN81KCd/RJZyeDUZd02Tnf+k2cgOoY1CKHIC41eLhHD8BcobVqjvJ6RiJAYrxQA5WEi7N9VTY0gFU8j9iyh6XYR26Ob0NRDS+CYA8sRrRTN9OxP0TdNxczDvOfAUEC0QSVsTuiRiI+YuYPtNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418410; c=relaxed/simple;
-	bh=QQb5amkX+AoAq9d9FpG+JxLlgkobSQTpCg30XPhuhWM=;
+	s=arc-20240116; t=1792418412; c=relaxed/simple;
+	bh=gwhDFfaANps3UNfzDYozKCH+2w55PoBIK+sjCeHj9/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RYbNpWf2CepVS+HI6G7miWYkkpdC3Fcf91yA+MBcldE8nt4+21ZH2hpRc35gv+esT3kTz2+4VoU0NH60axfIaWRCiE1YAbfsLrWqH49inZ8Nt4BfaWSMk7QqgAkiwbKX5xvjY9kT4vc7sYemBNg0wwizZIpVMAUtd5AihoSp7RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nAgK0xFI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k6jKjk7YP8VMlJ/RqnhLANDc6JMX8429Ptiu24sCl6Sfl6YoCuGZCZGNzHb627efu5R+Bc4H6xVA62yS/S/32uU6ctfRyC5pzw2KwxRCixn2dir6EYeaDNbCwyBp8TQkmxsyx6F9GvutbanZQ4kpR/d/OX5B1fmc0ln7+Bbn0bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CzoOb6xp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nAgK0xFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A56D1F000C8;
-	Mon, 19 Oct 2026 14:00:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CzoOb6xp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C711F000C6;
+	Mon, 19 Oct 2026 14:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418408;
-	bh=xoTKV3M8GmmqDWmsLODWYpzc55wzjxje2rpf/1XPiWU=;
+	s=k20260515; t=1792418409;
+	bh=JgiHzBkzyS7FDTEmPwxdWyzH5N6tMzeSOTJia8FLgVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nAgK0xFI7HrYYBkg+0FEKlN+nrNdP9hNcrA1ElvTAt7igYSoXnYvap2p9TUFEuEBy
-	 faqaCq1aYr6Os1+Qk2D41A8P8TjNSWmhBRtWr69/aXooGkQhT7Qe78M4qnNN+plWBj
-	 IaqTIga8XhqEYbdIuCuP0BasBW//It/RP1Wj+T7SESDU2AjUJg80ToPvmlAddKzNTF
-	 ivso4etOdQoNhWZohEmyZC4HlTiM6kaTre2f5RDycYNKIYwz0sp9XEx8yNVOlemowt
-	 Yr5Ky8Al3y8Il9oN9mAFTSWf0c6gDuibDjhQwmro63qGgfgIIyi08TTzUmkWYQZ4iO
-	 btta96EY0mqMg==
+	b=CzoOb6xpW5RNnHTk4aMypOfuaer/+x//lw+hVHoDGCgLbvuSzRE+6dp2n1Qq7fVW8
+	 TrP3dNmZzRhZ3b5GuVjtJcupTTFUPEvxSbUnECB55S5mvCQx2bkLqtxwBa53/+pjjn
+	 JE6ISc9hMr8AEWu2UQ7c90C0uCyKotmSmcNSYP1YJ1mNSuCxCjf5zNPsi6EAWP0QiI
+	 TdQLZxMw1hX3GOrV51tKi6YMd4GnaqFdlL5TlWq9k0UOifqsYgAl2yT0PCvmIyDIWR
+	 gl1B+qZ77BQlJw90oP71r7Fi5hprBh9gGi6Z8NFU66gRf2t0ivbsde9zPUKCqBQEls
+	 cCMcQwIs0qR+Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eckhart Mohr <e.mohr@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: Add quirk for ASRock NUC BOX-358H
-Date: Mon, 19 Oct 2026 09:48:39 -0400
-Message-ID: <20261019135441.1420968-228-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mt76: mt7603: fix U-APSD service period termination
+Date: Mon, 19 Oct 2026 09:48:40 -0400
+Message-ID: <20261019135441.1420968-229-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,383 +57,528 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eckhart Mohr <e.mohr@tuxedocomputers.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 9a44b828dd7c0be1d0d6d6cf178d9727ceb6da6e ]
+[ Upstream commit 697badc27a9b3b2a8d86092abeed767714f735a2 ]
 
-Fix headphone jack detection for some devices
+Frames released from the driver PS queue were all tagged with MORE_DATA
+and none of them ever carried the EOSP bit, so from the client's point of
+view a U-APSD service period was started but never finished. Clients that
+keep their receiver on until EOSP arrives stop sending trigger frames,
+and all downlink traffic for that station stalls until they give up.
+ieee80211_sta_eosp() only cleared the service period state inside
+mac80211, which is why the mismatch went unnoticed.
 
-Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20261001183403.103990-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assign MORE_DATA per frame and set the wire EOSP bit on the last one. If
+the last released frame is a bufferable MMPDU it has no QoS control field
+to carry EOSP, so let mac80211 append a QoS-Null frame instead.
+
+Also stop handing the remaining frame budget to
+mt76_release_buffered_frames() once frames have been released from the PS
+queue: both would signal the end of the same service period. Releasing
+fewer frames than requested is allowed, and MORE_DATA tells the client to
+trigger again.
+
+Link: https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line Realtek HDA hardware quirk for the ASRock NUC
-BOX-358H. The local tree is **6.18.57**. The same jack-detect fixup
-already exists here; only the new PCI SSID is missing.
+The local tree is **5.15.221** (`pending-5.15`). The buggy mt7603 U-APSD
+path is present here and matches mainline before `697badc27a9b3`. This
+is a real protocol fix for a stall, and it should be backported.
+
+---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[ALSA/hda/realtek] [Add] quirk for ASRock NUC BOX-358H`
+Record: **[wifi/mt76/mt7603] [fix] [U-APSD service period never ends on
+the wire]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>` (author)
-- `Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>` (Tuxedo;
-  submitted the patch)
-- `Link: https://patch.msgid.link/20261001183403.103990-1-
-  wse@tuxedocomputers.com`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, or `Cc:
-  stable` on the committed message
-- Ignore pipeline tags (`[Upstream commit 9a44b828...]`, `Signed-off-by:
-  Sasha Levin`)
-
-Notable: no `Cc: stable` on the commit itself. That is expected for this
-review queue. On-list, Werner later asked for stable (Phase 4).
+- `Link: https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name`
+  — patch **05/10** of Felix Fietkau’s series
+- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` (mt76 maintainer)
+- No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Reviewed-by:`, no
+  `Cc: stable` (absence of the last two is expected in this pipeline)
+- Ignore any `Signed-off-by: Sasha Levin` / `[Upstream commit ...]` if
+  present; they are candidate-prep markers
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: headphone jack detection fails on some devices (the ASRock NUC
-  BOX-358H)
-- Symptom: jack not detected / audio jack unusable until the codec is
-  quirked
-- Version info: none in the message
-- Root cause (from this message): not spelled out beyond “fix headphone
-  jack detection”
-- The sibling 2021 quirk for ASRock NUC Box 1100 (`174a7fb3859ae`)
-  documents the mechanism: cold boot leaves COEF values that hide the
-  jack; warm reboot from another OS preserves working COEF dumps. This
-  commit reuses that same `ALC233_FIXUP_NO_AUDIO_JACK` for a new SSID.
+- **Bug:** Frames pulled from the driver PS queue all get `MORE_DATA`
+  and never `EOSP`. A U-APSD SP starts and never ends on the air.
+- **Symptom:** Clients that stay awake until EOSP stop sending trigger
+  frames; **all downlink traffic for that STA stalls** until they give
+  up.
+- **Root cause:** `ieee80211_sta_eosp()` only clears mac80211’s
+  `WLAN_STA_SP`. mac80211 documents that a driver implementing
+  `.release_buffered_frames` must set the **wire** EOSP bit itself.
+- **Second bug in the same function:** leftover `nframes` is handed to
+  `mt76_release_buffered_frames()`, which ends the **same** SP a second
+  time.
+- **Fix:** assign `MORE_DATA`/`EOSP` per frame; QoS-Null via
+  `ieee80211_send_eosp_nullfunc()` if the last frame is a bufferable
+  MMPDU; do not forward leftover budget once PS-queue frames were
+  released.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit hardware quirk. The
-“Add quirk” wording is the standard ALSA form for a real device bug.
+Record: **Not hidden.** Subject and body describe a concrete protocol
+failure with a user-visible stall.
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+---
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `sound/hda/codecs/realtek/alc269.c` (`+1 / -0`)
-- Function/data: `alc269_fixup_tbl[]`
-- Scope: single-file, one-line table entry
+- File: `drivers/net/wireless/mediatek/mt76/mt7603/main.c` (**+63 /
+  −11**)
+- Functions: `mt7603_ps_skb_hdr()` (new), `mt7603_ps_set_more_data` →
+  `mt7603_ps_set_flags`, `mt7603_release_buffered_frames`
+- Scope: **single-file surgical fix**
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Before: PCI SSID `0x1849:0x6256` has no match in `alc269_fixup_tbl`,
-  so `snd_hda_pick_fixup()` does not apply `ALC233_FIXUP_NO_AUDIO_JACK`
-- After: that SSID maps to `alc233_fixup_no_audio_jack()`, which writes
-  the existing COEF table via `alc_process_coef_fw()`
-- Path: codec probe / init, not an error path
+- **Before:** every released PS-queue frame unconditionally ORs
+  `IEEE80211_FCTL_MOREDATA`; never sets/clears EOSP;
+  `ieee80211_sta_eosp()` is called if the list is non-empty, then
+  leftover `nframes` still go to `mt76_release_buffered_frames()`.
+- **After:**
+  1. Walk remaining PS queue under `ps_lock` and build a pending-TID
+     bitmap.
+  2. If nothing was dequeued, fall through to
+     `mt76_release_buffered_frames()` (unchanged).
+  3. If anything was dequeued, **do not** also release from mac80211
+     TXQs.
+  4. `MORE_DATA` = not-last **or** more frames remain (mac80211
+     `more_data` or pending matching TIDs).
+  5. Wire `EOSP` only on the last frame and only for
+     `IEEE80211_FRAME_RELEASE_UAPSD`.
+  6. Last frame not QoS data → `ieee80211_send_eosp_nullfunc()`; else
+     `ieee80211_sta_eosp()`.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
 Record:
-- Category: **(h) Hardware workaround** — `SND_PCI_QUIRK` for ASRock
-  (`0x1849`) product `0x6256`
-- Mechanism: same COEF default programming already used for ASRock NUC
-  Box 1100 (`0x1849:0x1233`)
-- No leak, race, UAF, or locking change
+- **Category:** protocol / correctness (U-APSD SP termination), not
+  UAF/leak/race.
+- **Mechanism:** driver never put EOSP on the air; clients that wait for
+  EOSP stop triggering; downlink stalls.
+- Also: `MORE_DATA` was only set, never cleared. Recycled frames from
+  `mt7603_filter_tx()` can keep a stale bit; the new helper assigns both
+  bits.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- Quality: obviously correct as a SSID-scoped reuse of an existing fixup
-- Minimal: one table line, no unrelated edits
-- Regression risk: very low. `SND_PCI_QUIRK` matches PCI subsystem
-  vendor/device only. `0x6256` does not appear on any other HDA quirk in
-  this tree
-- Residual (not a reason to reject): the 358H ships a Realtek ALC256;
-  the fixup name is ALC233. That is pre-existing reuse of the 1100 COEF
-  dump. Tuxedo submitted it and Takashi applied it with no objection
+- Matches mac80211’s `.release_buffered_frames` contract
+  (`include/net/mac80211.h`: driver must set EOSP in the QoS header;
+  sending fewer frames than requested is allowed).
+- `IEEE80211_QOS_CTL_EOSP` (0x0010) on the first QoS-control byte is the
+  correct on-wire bit.
+- `ieee80211_send_eosp_nullfunc()` uses `IEEE80211_TX_STATUS_EOSP` on
+  the NDP; TX status then clears `WLAN_STA_SP`. iwlwifi already calls
+  this from BH/TX context; `.release_buffered_frames` must be atomic,
+  and `ieee80211_send_null_response()` uses `dev_alloc_skb` (GFP_ATOMIC)
+  + `ieee80211_xmit`.
+- Regression risk: **low–medium**. Logic is contained; PS-Poll does not
+  set wire EOSP (`uapsd` is false). Companion series patches 06–08 make
+  TIM / HW buffering / TID filing more complete but are not required for
+  this EOSP fix to compile or to be correct on its own.
+
+---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Insertion sits next to the 1100 entry from `174a7fb3859ae` (Werner
-  Sembach, 2021-11-12, `Cc: stable`)
-- Surrounding table came into `alc269.c` via `aeeb85f26c3bb`
-  (2025-07-11, “Split Realtek HD-audio codec driver”), which is an
-  ancestor of `v6.18.57`
-- The buggy *behavior* is missing SSID coverage, not a recently
-  introduced logic bug. The 1100 workaround has been in-tree since
-  v5.16-era (Nov 2021)
+- `mt7603_release_buffered_frames`: `c8846e101502` (2018-11, **mt76: add
+  driver for MT7603E and MT7628/7688**)
+- Unconditional MORE_DATA: `b126c8897435` (2019-03)
+- `ieee80211_sta_eosp()` without wire EOSP: `b7001f46085e` (2019-03)
+- All three are ancestors of this 5.15 tree.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable. The analogous original commit
-is `174a7fb3859ae` (“Add quirk for ASRock NUC Box 1100”), present in
-this tree.
+Record: **No `Fixes:` tag.** Buggy behavior dates to driver introduction
+/ 2019 PS-queue helpers, all in this tree.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Recent `alc269.c` history is full of similar one-line/small quirk
-  additions (HP mute LEDs, ASUS speakers, Lenovo SSIDs, etc.), including
-  several already in 6.18.y
-- No later follow-up in this tree mentioning `358H` or `0x6256`
-- Standalone, not `patch X/Y`
+Record: Mainline follow-ups on the same function (not in this tree):
+- `d5001f493fef` — tell mac80211 when the PS queue is empty
+  (`ieee80211_sta_set_buffered(..., false)`)
+- `636a883e2feef` — restore hardware PS buffering after an SP
+These are related U-APSD bugs, not prerequisites for this diff.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record:
-- Eckhart Mohr / Werner Sembach (Tuxedo Computers) regularly submit
-  Realtek quirks
-- Takashi Iwai applied this; he is the ALSA HD-audio maintainer
-- Same authors shipped the 1100 quirk that this extends
+Record: Felix Fietkau is the mt76 maintainer and original author of this
+driver. This is a maintainer fix.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- Needs `ALC233_FIXUP_NO_AUDIO_JACK`, `alc233_fixup_no_audio_jack()`,
-  and `alc269_fixup_tbl` — all present on `v6.18.57` and on the
-  candidate’s parent
-- Parent of `8fa1cfe41877d` does **not** contain `0x1849, 0x6256`
-- Applies standalone
+Record: Patch **05/10**. Patches 01–03/09–10 target mt7915/mt7996 / MLO
+/ new HW TIM — **not needed**. Patch 04 sets wire EOSP in generic
+`mt76_release_buffered_frames()` (`tx.c`); mt7603 has its **own**
+`.release_buffered_frames` and only calls the generic helper when the
+driver PS queue is empty. This patch does not use new APIs or struct
+fields. **Can apply standalone.**
+
+---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 8fa1cfe41877d`: match at https://patch.msgid.link/202610011
-  83403.103990-1-wse@tuxedocomputers.com
-- `b4 dig -a`: **v1 only**, no later revisions
-- LKML: Takashi: “Applied now. Thanks.” (2026-10-03)
-- Werner: “again i forgot to add cc stable can you add that in your
-  branch?” (2026-10-03)
-- Takashi: “Just send a post again to stable once when the commit is
-  merged to Linus tree.” (2026-10-04)
-- No NAKs, no risk flags
-- lore.kernel.org direct fetches returned HTTP 403; thread recovered via
-  `b4 dig` + lkml.iu.edu
+- `b4 dig -c 697badc27a9b3` →
+  https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name
+- **v1 only** (no v2/v3)
+- Thread is the 10-patch series plus a kernel-test-robot mail
+- Robot error is on **patch 10 / patch 1** (`ieee80211_txq_aql_pending`
+  missing) — **unrelated** to this patch
+- No NAKs, no reviewer risk flags, no `Cc: stable` suggestion in the
+  thread
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`):
-- To/Cc: Werner Sembach, Eckhart Mohr, Jaroslav Kysela, Takashi Iwai,
-  linux-sound, linux-kernel
-- Right maintainers and list were on the original recipients
-- Applied by Takashi Iwai
+Record: `b4 dig -w`: To/Cc were **Felix Fietkau** and **linux-
+wireless@**. No extra reviewer SOB. Maintainer self-applied into
+wireless-next (listed in the 2026-08-06 wireless-next pull).
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record:
-- No syzbot/bugzilla link
-- Vendor hardware is real: ASRock Industrial NUC BOX-358H (Intel Core
-  Ultra Series 3 / Panther Lake-H), front combo jack, Realtek ALC256
-  (asrockind.com)
-- ServeTheHome even has a photo titled around the 358H audio jack
-- User impact is that specific mini-PC’s headphone/mic jack
+Record: OpenWrt mt76 users reported U-APSD stalls / **iPhone freezes**
+on MT7603 APs (openwrt/mt76#1080 / PR #1084). Testers said an EOSP-
+related change made iPhone freezes go away; remaining TX-retry/loss is
+the separate HW-buffering bug (series patch 07).
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone v1. Only related in-tree work is the 2021 1100 quirk,
-already present.
+Record: Series 01–10 as above. This commit is self-contained. Patch 06
+should be considered as a follow-up candidate (TIM never cleared); it is
+not required for this hunk.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search did not turn up a dedicated stable
-thread for this SSID. Absence of an auto `Cc: stable` is why this is in
-manual review. The author still requested stable on the original thread.
+Record: No evidence this fix was discussed on stable@ or previously
+rejected. UNVERIFIED that every stable archive was searchable
+(lore.kernel.org returned 403 for some URLs); `b4`/openwall/syzbot CI
+were used instead.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: No function body changes. Data: `alc269_fixup_tbl[]`. Runtime
-effect goes through existing `alc233_fixup_no_audio_jack()` →
-`alc_process_coef_fw()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `mt7603_release_buffered_frames`, `mt7603_ps_set_flags`,
+`mt7603_ps_skb_hdr`
 
 **Step 5.2: TRACE CALLERS**
-Record:
-- `alc269_fixup_tbl` is passed to `snd_hda_pick_fixup()` in the
-  ALC269-family probe path (`alc269.c` ~8557)
-- `snd_hda_pick_fixup()` matches PCI subsystem vendor/device first
-  (`sound/hda/common/auto_parser.c`)
-- Called at codec init for Realtek ALC269-family devices (includes
-  ALC256, vendor id `0x10ec0256`)
+Record: Assigned as `ieee80211_ops.release_buffered_frames` in this
+file. mac80211 calls it for **PS-Poll and U-APSD** from the RX/PS path
+(atomic). Reachable whenever an AP-mode STA uses power save.
 
 **Step 5.3: TRACE CALLEES**
-Record:
-- `alc_process_coef_fw()` writes the COEF firmware table (`WRITE_COEF`
-  for indices 0x1a, 0x1b, 0x37, 0x38, 0x45, 0x46, 0x49)
-- No allocations, no locks added
+Record: `mt7603_wtbl_set_ps`, `mt7603_ps_tx_list` /
+`mt76_tx_queue_skb_raw`, `mt76_release_buffered_frames` (empty-PS-queue
+only), `ieee80211_sta_eosp`, `ieee80211_send_eosp_nullfunc` — all exist
+in this tree.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record:
-- Reachable when this NUC’s HDA codec probes (boot / module load)
-- Userspace does not need a special syscall; plugging headphones is the
-  user-visible path
-- Not a security/syzbot path; it is a device init quirk
+Record: Client trigger (QoS-Null/PS-Poll) → mac80211 →
+`mt7603_release_buffered_frames`. **Yes, userspace/STA traffic triggers
+it.** Typical clients: phones with U-APSD.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Identical pattern already used for `0x1849:0x1233` (NUC Box
-1100). Many other `SND_PCI_QUIRK` rows in the same table. `0x6256` is
-unique in ALSA HDA.
+Record: Generic `mt76_queue_ps_skb()` in this tree still only sets
+`IEEE80211_TX_STATUS_EOSP` + MORE_DATA, not wire EOSP (mainline patch
+04). `mt7603_rx_loopback_skb()` sets `ieee80211_sta_set_buffered(...,
+true)` and never clears it (mainline patch 06). Same U-APSD family,
+different bugs.
+
+---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Local tree: `git describe HEAD` = `v6.18.57-155-gcdf239ca885b2`; `make
-  kernelversion` = `6.18.57`
-- `v6.18.57:sound/hda/codecs/realtek/alc269.c` has
-  `ALC233_FIXUP_NO_AUDIO_JACK` and the 1100 SSID
-- `v6.18.57` does **not** contain `0x1849, 0x6256`
-- Context around the 1100 row on `v6.18.57` matches the patch (verified
-  by string match)
-- Candidate commit `8fa1cfe41877d` is an ancestor of current HEAD
-  because this autosel checkout already contains evaluation commits;
-  that is **not** treated as “already selected”
+Record: **Yes.** `mt7603_ps_set_more_data` and
+`mt7603_release_buffered_frames` in
+`drivers/net/wireless/mediatek/mt76/mt7603/main.c` are **byte-for-byte
+identical** to the parent of `697badc27a9b3`. Bug since ~2018/2019.
+
+Local tree: `p-5.15-2-g6703e5d2f3a29`, **5.15.221**. `git merge-base
+--is-ancestor 697badc27a9b3 HEAD` → **not in this tree**.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Expected **clean apply** onto 6.18.57. File path and surrounding
-table rows match. No refactor needed.
+Record: **Clean apply.** Same function bodies; needed APIs
+(`ieee80211_send_eosp_nullfunc`, `ieee80211_get_qos_ctl`,
+`IEEE80211_QOS_CTL_EOSP`, `IEEE80211_FRAME_RELEASE_UAPSD`) are in 5.15.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: The 1100 quirk is here. There is no alternate 358H fix. No
-follow-up revert/correction in this tree.
+Record: No related U-APSD EOSP/TIM/HW-rearm fixes on this file in this
+tree.
+
+---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record:
-- Subsystem: ALSA HD-audio / Realtek codec (`sound/hda/codecs/realtek/`)
-- Criticality: **IMPORTANT** for users of this hardware; **PERIPHERAL**
-  for everyone else (SSID-gated)
+Record: **wifi / mt76 / mt7603** (`CONFIG_MT7603E`). Criticality:
+**IMPORTANT** for users of that hardware (MT7603E / MT7628/MT7688 APs —
+very common home routers), not core mm/net.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature, actively maintained quirk table. Frequent small
-hardware-quirk backports in 6.18.y.
+Record: Mature driver (since 5.0-era). This is a long-standing bug, not
+a regression in new code.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific / platform-specific: ASRock NUC BOX-358H (`PCI
-SSID 1849:6256`). Other machines unchanged.
+Record: **Driver-specific:** AP (or GO) mode on MT7603/MT7628 with
+U-APSD (or PS-Poll) clients.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Trigger: boot on that NUC, then use the front combo jack
-- Common for owners of that box; zero for others
-- Unprivileged users hit it (jack detect), but this is not an exploit
+Record: STA enters power save; hardware redirects frames into
+`msta->psq`; STA sends a U-APSD trigger. Common for phones. Unprivileged
+wireless clients can trigger it.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record:
-- Failure: headphone/headset jack not detected (broken analog audio I/O
-  on a machine that has a jack)
-- Severity: **MEDIUM** for functional impact (not a panic/UAF), **HIGH**
-  for that device’s usability
-- Matches the documented 1100 failure: jack dead on cold boot
+Record: **Downlink stall / client freeze** until the STA gives up
+(disconnect/retry). Not a kernel oops. Severity: **HIGH** for affected
+APs (connectivity loss), not CRITICAL kernel crash.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- Benefit: high for 358H users on 6.18.y (this series is still current
-  as of Oct 2026; this is a 2026 Panther Lake NUC)
-- Risk: very low (1 line, existing fixup, SSID-matched)
-- Ratio: strongly favors backport
+- **Benefit:** high for MT7603 AP users — restores U-APSD SP completion
+  so phones keep triggering.
+- **Risk:** low–medium (contained ~50-line logic in one ops callback; no
+  API/lock/core changes).
+- **Ratio:** benefit outweighs risk.
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-FOR:
-- Textbook stable exception: hardware quirk / PCI ID on an existing
-  driver
-- Real user-visible bug: jack detection
-- 1-line, existing fixup, no new API
-- Prerequisites present in 6.18.57; applies cleanly
-- ALSA maintainer applied it
-- Submitter explicitly asked for stable
-- Same pattern as the 2021 1100 quirk, which was `Cc: stable`
-- Tuxedo-tested on the named device
+**FOR:**
+- Real, user-visible stall (U-APSD SP never ends on the air)
+- Matches mac80211 driver contract
+- Present in this 5.15 tree since driver introduction
+- Functions identical to mainline parent → clean apply
+- Small, one file, no new APIs
+- Maintainer-authored, merged to mainline as `697badc27a9b3`
+- Corroborated by OpenWrt MT7603/iPhone freeze reports
 
-AGAINST:
-- Short commit body
-- No `Fixes:` / no sanitizer report (expected for a quirk)
-- COEF table originally dumped for the 1100 (ALC233-named); 358H is
-  ALC256 per vendor specs — accepted by maintainer, SSID-limited
+**AGAINST:**
+- Not crash/UAF/security
+- Series 05/10 (other patches are separate bugs/chips)
+- Follow-ups 06–08 still missing here (incomplete *overall* U-APSD, but
+  this patch is a complete EOSP fix)
+- No extra reviewer tags
 
-UNRESOLVED:
-- Could not fetch lore.kernel.org HTML (403); discussion recovered via
-  `b4 dig` and LKML archives
-- Did not independently dump COEFs on a 358H (not available)
+**UNRESOLVED:**
+- Direct lore.kernel.org HTTP often 403; thread recovered via `b4`
+- No explicit stable@ discussion found
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one SSID row; Tuxedo
-   authors; maintainer applied
-2. Fixes a real bug that affects users? **PASS** — jack detection on a
-   shipping NUC
-3. Important issue? **PASS** as a hardware quirk (broken jack; not a
-   panic, but the documented exception class)
-4. Small and contained? **PASS** — +1 line
+1. Obviously correct and tested? **PASS** — protocol-correct; maintainer
+   merged; consistent with mac80211 docs and iwlwifi’s
+   `ieee80211_send_eosp_nullfunc` usage
+2. Fixes a real bug that affects users? **PASS** — stall / client freeze
+   on common AP chipsets
+3. Important issue? **PASS** — serious connectivity failure for U-APSD
+   STAs (not a panic, but production-breaking for those devices)
+4. Small and contained? **PASS** — one file, +63/−11
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean on 6.18.57
+6. Can apply to the local tree? **PASS** — clean; APIs present
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Hardware quirk / PCI ID addition to an existing driver.**
-Automatic YES class.
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a **driver
+protocol bugfix**.
 
-**Step 9.4: MAKE YOUR DECISION**
-Backport. The 6.18.57 tree already has the fixup and the 1100 SSID; it
-only lacks `0x1849:0x6256`. That is exactly the class of change stable
-exists to take.
+**Step 9.4: DECISION**
+Backport to this 5.15 tree. The bug exists here; the fix is self-
+contained and applies cleanly. Companion commits `d5001f493fef` and
+`636a883e2feef` are worth later evaluation but are not required for this
+one.
 
-What it solves for stable users: on ASRock NUC BOX-358H, the Realtek
-jack is not detected unless this COEF quirk runs. Without it, the combo
-headphone/mic jack stays broken on cold boot.
+---
 
-Risk vs benefit: one SSID-matched table line, no structural change,
-benefit is working analog audio on that NUC.
+### What the commit solves, and why it matters here
 
-### Verification
-- [Phase 1] Parsed tags: author Eckhart Mohr; SOB Werner Sembach,
-  Takashi Iwai; Link msgid; no Fixes/Cc:stable on the commit
-- [Phase 1] Ignored `[Upstream commit 9a44b828…]` and Sasha Levin SOB as
-  pipeline markers
-- [Phase 2] Diff: +1 line in `alc269_fixup_tbl[]` —
-  `SND_PCI_QUIRK(0x1849, 0x6256, …, ALC233_FIXUP_NO_AUDIO_JACK)`
-- [Phase 2] Confirmed fixup body at `alc233_fixup_no_audio_jack()`
-  writes `alc233_fixup_no_audio_jack_coefs`
-- [Phase 3] `git show 174a7fb3859ae`: 2021 1100 quirk, `Cc: stable`,
-  same fixup; `git merge-base --is-ancestor` vs parent of candidate =
+mt7603 implements its own `.release_buffered_frames` because hardware
+redirects frames into a driver PS queue. That path tagged every frame
+with `MORE_DATA` and never set EOSP on the air. mac80211 only saw
+`ieee80211_sta_eosp()`, so the stack thought the SP ended while phones
+waiting for EOSP stopped triggering. On 5.15 APs using `CONFIG_MT7603E`,
+that is a real stall, not a cleanup.
+
+### Stable rules / risk vs benefit
+
+Surgical, obviously correct vs the documented U-APSD contract, no new
+APIs, clean apply. Risk is limited to this driver’s PS release path.
+Benefit is restoring downlink for power-save clients on a widely
+deployed chipset.
+
+### Concerns
+
+Patches 06–08 (TIM clear, HW PS re-arm, TID filing) address **other**
+remaining PS bugs. They are not compile or semantic prerequisites for
+this hunk. Patch 04 is the analogous EOSP fix for chips that use generic
+`mt76_release_buffered_frames`; mt7603 only hits that when its PS queue
+is empty.
+
+---
+
+Verification:
+- [Phase 1] Parsed subject/body/tags: Link is 05/10; author Felix
+  Fietkau; no Fixes/Reported-by/Cc stable
+- [Phase 2] Diff: +63/−11 in `mt7603_release_buffered_frames`;
+  MORE_DATA+EOSP assignment; stop double SP end; QoS-Null for MMPDU
+- [Phase 2] Confirmed `IEEE80211_QOS_CTL_EOSP` is 0x0010 and
+  `ieee80211_get_qos_ctl()` returns `u8 *` to the first QoS byte
+- [Phase 2] Confirmed `ieee80211_send_eosp_nullfunc()` in 5.15 sets
+  `IEEE80211_TX_STATUS_EOSP` on the NDP; TX status clears `WLAN_STA_SP`
+- [Phase 3] blame: `c8846e101502` / `b126c8897435` / `b7001f46085e`; all
+  ancestors of HEAD
+- [Phase 3] `git merge-base --is-ancestor 697badc27a9b3 HEAD` → not
   present
-- [Phase 3] `git log --author='Eckhart Mohr'` / Werner: regular Realtek
-  quirk contributors
-- [Phase 3] No follow-up `358H`/`0x6256` commits in this tree
-- [Phase 4] `b4 dig -c 8fa1cfe41877d`: lore msgid
-  `20261001183403.103990-1-wse@tuxedocomputers.com`
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: Takashi Iwai, Jaroslav Kysela, linux-sound
-- [Phase 4] LKML: Takashi applied; Werner requested Cc:stable; Takashi
-  said to send to stable after Linus merge
-- [Phase 4] lore.kernel.org WebFetch: 403 (UNVERIFIED via direct lore
-  HTML)
-- [Phase 5] `snd_hda_pick_fixup()` matches PCI SSID; probe calls it with
-  `alc269_fixup_tbl`
-- [Phase 5] `git grep 0x6256` in HDA: only this new quirk
-- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.57
-- [Phase 6] `git grep` on `v6.18.57`: 1100 quirk present, 358H SSID
-  absent; insertion context matches
-- [Phase 8] Vendor spec: NUC BOX-358H has a front combo jack and ALC256
-- UNVERIFIED: independent COEF dump on 358H hardware; lore.kernel.org
-  HTML body
-
-This is a small, SSID-scoped hardware quirk that restores jack detection
-on a real machine, with the required fixup already in 6.18.57.
+- [Phase 3] Follow-ups on origin/master: `d5001f493fef`, `636a883e2feef`
+  only; no revert
+- [Phase 4] `b4 dig -c 697badc27a9b3`: v1 series, msgid
+  `20260801145334.1166751-5-nbd@nbd.name`
+- [Phase 4] `b4 dig -w`: linux-wireless@ + author only
+- [Phase 4] `b4 mbox`: 11 messages; robot fail is patch
+  10/`ieee80211_txq_aql_pending`, unrelated
+- [Phase 4] OpenWrt mt76#1084: EOSP-related change reported to stop
+  iPhone freezes
+- [Phase 5] ops hook `.release_buffered_frames =
+  mt7603_release_buffered_frames`; callers are mac80211 PS-Poll/U-APSD
+- [Phase 5] `ieee80211_send_eosp_nullfunc` exists and is exported in
+  this tree; iwlwifi calls it from TX/BH
+- [Phase 6] `make kernelversion` → 5.15.221; `git describe HEAD` →
+  p-5.15-2-g6703e5d2f3a29
+- [Phase 6] Byte-for-byte match of both functions vs `697badc27a9b3^`
+- [Phase 7] `CONFIG_MT7603E` present for MT7603E/MT7628
+- [Phase 8] Failure mode: downlink stall / client freeze, severity HIGH
+  for that hardware
+- UNVERIFIED: exhaustive stable@ archive search (lore HTTP 403); no
+  evidence of a prior stable rejection
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../net/wireless/mediatek/mt76/mt7603/main.c  | 74 ++++++++++++++++---
+ 1 file changed, 63 insertions(+), 11 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 2a466ef894697..0bfa64bee9d3b 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7640,6 +7640,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x9e56, "Lenovo ZhaoYang CF4620Z", ALC286_FIXUP_SONY_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1849, 0x0269, "Positivo Master C6400", ALC269VB_FIXUP_ASUS_ZENBOOK),
- 	SND_PCI_QUIRK(0x1849, 0x1233, "ASRock NUC Box 1100", ALC233_FIXUP_NO_AUDIO_JACK),
-+	SND_PCI_QUIRK(0x1849, 0x6256, "ASRock NUC Box 358H", ALC233_FIXUP_NO_AUDIO_JACK),
- 	SND_PCI_QUIRK(0x1849, 0xa233, "Positivo Master C6300", ALC269_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1854, 0x0440, "LG CQ6", ALC256_FIXUP_HEADPHONE_AMP_VOL),
- 	SND_PCI_QUIRK(0x1854, 0x0441, "LG CQ6 AIO", ALC256_FIXUP_HEADPHONE_AMP_VOL),
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/main.c b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
+index 0d7c84941cd0a..f8a43d9f72f95 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
+@@ -423,13 +423,33 @@ mt7603_sta_ps(struct mt76_dev *mdev, struct ieee80211_sta *sta, bool ps)
+ 	mt7603_ps_tx_list(dev, &list);
+ }
+ 
++static struct ieee80211_hdr *
++mt7603_ps_skb_hdr(struct sk_buff *skb)
++{
++	return (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
++}
++
++/*
++ * Buffered frames can be recycled into the PS queue by mt7603_filter_tx(), so
++ * both bits have to be assigned, not just set.
++ */
+ static void
+-mt7603_ps_set_more_data(struct sk_buff *skb)
++mt7603_ps_set_flags(struct sk_buff *skb, bool more_data, bool eosp)
+ {
+-	struct ieee80211_hdr *hdr;
++	struct ieee80211_hdr *hdr = mt7603_ps_skb_hdr(skb);
++
++	if (more_data)
++		hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++	else
++		hdr->frame_control &= ~cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++
++	if (!ieee80211_is_data_qos(hdr->frame_control))
++		return;
+ 
+-	hdr = (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
+-	hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++	if (eosp)
++		*ieee80211_get_qos_ctl(hdr) |= IEEE80211_QOS_CTL_EOSP;
++	else
++		*ieee80211_get_qos_ctl(hdr) &= ~IEEE80211_QOS_CTL_EOSP;
+ }
+ 
+ static void
+@@ -442,7 +462,10 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
+ 	struct mt7603_dev *dev = hw->priv;
+ 	struct mt7603_sta *msta = (struct mt7603_sta *)sta->drv_priv;
+ 	struct sk_buff_head list;
+-	struct sk_buff *skb, *tmp;
++	struct sk_buff *skb, *tmp, *last;
++	bool eosp_null, uapsd;
++	u16 pending = 0;
++	u8 last_tid;
+ 
+ 	__skb_queue_head_init(&list);
+ 
+@@ -458,20 +481,49 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
+ 
+ 		skb_set_queue_mapping(skb, MT_TXQ_PSD);
+ 		__skb_unlink(skb, &msta->psq);
+-		mt7603_ps_set_more_data(skb);
+ 		__skb_queue_tail(&list, skb);
+ 		nframes--;
+ 	}
++
++	skb_queue_walk(&msta->psq, skb)
++		pending |= BIT(skb->priority);
+ 	spin_unlock_bh(&dev->ps_lock);
+ 
+-	if (!skb_queue_empty(&list))
+-		ieee80211_sta_eosp(sta);
++	last = skb_peek_tail(&list);
++	if (!last) {
++		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
++					     more_data);
++		return;
++	}
++
++	/*
++	 * End the service period here instead of passing the remaining frame
++	 * budget on to mt76_release_buffered_frames(), which would signal the
++	 * end of the same service period a second time.
++	 */
++	uapsd = reason == IEEE80211_FRAME_RELEASE_UAPSD;
++	more_data |= !!(pending & tids);
++
++	skb_queue_walk(&list, skb)
++		mt7603_ps_set_flags(skb, skb != last || more_data,
++				    skb == last && uapsd);
++
++	/*
++	 * EOSP lives in the QoS control field, so a bufferable MMPDU cannot
++	 * terminate a U-APSD service period on its own. In that case mac80211
++	 * has to append a QoS-Null frame, which ends the SP through its tx
++	 * status.
++	 */
++	eosp_null = uapsd &&
++		    !ieee80211_is_data_qos(mt7603_ps_skb_hdr(last)->frame_control);
++	last_tid = __fls(tids);
+ 
+ 	mt7603_ps_tx_list(dev, &list);
+ 
+-	if (nframes)
+-		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
+-					     more_data);
++	if (eosp_null)
++		ieee80211_send_eosp_nullfunc(sta, last_tid);
++	else
++		ieee80211_sta_eosp(sta);
+ }
+ 
+ static int
 -- 
 2.53.0
 
