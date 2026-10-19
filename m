@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2675D3C4D;
-	Mon, 19 Oct 2026 14:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B999D5D3C44;
+	Mon, 19 Oct 2026 14:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418501; cv=none; b=cxFIYVEuDeNyYaXxXI6+l9iDlfen3NJgainygQFBPn+7w3hBCpRlA6FJUKAvRoN8dfpxopbFCuqeIIohBNk0n10DLrhnff3l/jG64FFqHxy+Oj6abLg7K8SBt5WVccTaqa3O90/KwULAOCAMSIURZ2CbLkOv9NDtPT3Qi6D/tSY=
+	t=1792418502; cv=none; b=LognfyZGvOv91UcRJufILyM0BcOFFRKFFZkmKOQN27ezlmDidIrLSMnVXgTYLPsEwyK+NHjcIHBpjvlnzjUQ+pzefzDapYTbIkmwKlzAI0kTR3MCKL55dfMqaNBMm0VhMI13nqso7bKxwN3D0rnsUegQuxojjv7gdoqpXQFJ0tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418501; c=relaxed/simple;
-	bh=PDp5LZvazXyrNB/2aonb8uKGUSGUhcRxBgOuvMtx82k=;
+	s=arc-20240116; t=1792418502; c=relaxed/simple;
+	bh=9uEfvAuOiYOJcHxMy0F3ENWFF6EcCpNXoDLQ2cXBcbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RQpnbSj2dm+6UvX5a3CzN5vvHbqi1IkhwUiCT91EAH5cp9YXIPZYAMCCx9OZraiLL2G4Xq7SlhUQpScc33J5yvL0kf/uNuTgIH6aeMyKBzP8Ln+2pqB3F7LstJ7Rmu9INgEMZh1szxy7BBHiMMrQeYQZEO0D9Z4LGVTJY39I1Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KnFOqkf4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ufhbF6w2+PLSmc2I5qCgf83oNakggjV+LQWQFaD9HaQ+693Pn67JCUHtOFnAqsQi1QDC5q564Su3TrhUpEoDTSut/KE+djmY8DzTSKSFLLdgTsvBGWoS8NstGbEz8NwS3kSnHaKv92gtQQPBMUoA8lXhvQRiSko7yYi45Z1R/oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f1TrjllH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KnFOqkf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F19F1F000C4;
-	Mon, 19 Oct 2026 14:01:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f1TrjllH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10321F000C6;
+	Mon, 19 Oct 2026 14:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418498;
-	bh=cTneUewtWVKH46JGXVd6T4WZqiHe8a2SZhide+W0/sA=;
+	s=k20260515; t=1792418499;
+	bh=brGJVCCR968UDegg086AWZ0DWO31Q6p+SXo1Qipf9ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KnFOqkf46yHJzpOCGy0Oj5WgjLCbWHnll4uXk9qMu/KdTqnt9gZD6AngmeHGXAKEF
-	 hK6jtSpHRO9Mlw1jeilSnrr8Brt2OOqKk9CZAvC/cIpUeORhlBDgSwZgjIEGLuoJbw
-	 ULAfPJVLub0QFrhA7Zlulj28EgTjJE6ziPHLK63aHLSnW24ojLmr6z8qhlYvvwRYJq
-	 OK0S1nH9R9GBbfcrm6WOXyvJMuh5ZK1lCqprecJRGD1CsYbCQp2rOmiQZjmFBVjnp6
-	 fPkQXs4kZ7i4k7ov/GRAV7gdiOF1Dzo4pzbkBPLhU92RYrLUr7j+4mBVbhsz3taYFL
-	 Mpw2TfCgLo3fQ==
+	b=f1TrjllHaHDtc4iZw20WqO7wlw3GbOnNR40JMr+9UCsk2xMNgijd5nVSQTWy8iOtc
+	 gja6vNESHpUU4PePFKd09lliq4kdzfNhKWDFIzVEUMoYSZh6T10ZR4evgRrpugkb+R
+	 HzY8dn4LfSnbZzr1Ktnrc1KYaw70zy9Z4Z9QEptxk4kypOr+Mqy8TkPARA/KDW3dJ+
+	 42dEIkTIW+U4QchwoMQo7MPVrvGkBbOYkfC4/BVAQL7/C2dtZCcnHt8Fzql8j2LbDd
+	 kwE7mH9gR7LjhlgTOZKAdYwm+fhTJD2GU2II1xbBZt27R9lgcyy0hx1WemdQHyRWZF
+	 ehAo79G1acymg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Griffin Kroah-Hartman <griffin@kroah.com>,
-	David Heidelberg <david@ixit.cz>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	oe-linux-nfc@lists.linux.dev,
+	linusw@kernel.org,
+	brgl@kernel.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] nfc: mrvl: spi: Unregister dev on allocation fail
-Date: Mon, 19 Oct 2026 09:49:42 -0400
-Message-ID: <20261019135441.1420968-291-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] gpio: pca9570: Use I2C match data
+Date: Mon, 19 Oct 2026 09:49:43 -0400
+Message-ID: <20261019135441.1420968-292-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,402 +54,378 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit d832b95697384a2b67f20b35106bbf925358cde9 ]
+[ Upstream commit 415c63896b76fd98883e190bc7518383cb01779c ]
 
-Call nfcmrvl_nci_unregister_dev() if nci_spi_allocate_spi() fails,
-unwrapping the previous call to nfcmrvl_nci_register_dev() during the
-nfcmrvl_spi_probe() function.
+The driver stores chip metadata in both the OF match table and the I2C
+id table, but probe currently reads it with device_get_match_data().
+That helper only returns firmware-node match data, so an I2C-id/modalias
+match can leave chip_data NULL before the driver dereferences it to read
+ngpio.
 
-Assisted-by: gkh-clanker-2000
-Cc: David Heidelberg <david@ixit.cz>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Use i2c_get_match_data() so the I2C id table driver_data is consumed
+when firmware match data is not present.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260624053744.72612-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a four-line probe error-path fix for a real NULL-deref in the
-Marvell NFC-over-SPI driver. The buggy code is in this 6.12 tree and has
-been there since v4.4.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1: Subject line**
+- Record: `[gpio/pca9570] [Use] Switch probe from firmware-only match
+  data to I2C match data so I2C-id/modalias binds get chip metadata`
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [nfc: mrvl: spi:] [Unregister] [On `nci_spi_allocate_spi()`
-failure, unregister the NCI device previously registered in probe]
+**Step 1.2: Tags**
+- Record:
+  - `Fixes:`: none (expected for this review)
+  - `Reported-by:`: none
+  - `Tested-by:`: none
+  - `Reviewed-by:`: none
+  - `Acked-by:`: none
+  - `Link:` `https://patch.msgid.link/20260624053744.72612-1-
+    pengpeng@iscas.ac.cn`
+  - `Cc: stable`: none (expected)
+  - `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+  - `Signed-off-by: Bartosz Golaszewski
+    <bartosz.golaszewski@oss.qualcomm.com>` (GPIO maintainer)
+  - Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+    415c63896b76...]` ignored per instructions
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record: Tags from `d832b95697384` (`git show --format=fuller`):
-- Assisted-by: gkh-clanker-2000 (AI-assisted)
-- Cc: David Heidelberg <david@ixit.cz>
-- Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com> (author)
-- Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-- Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
-- Signed-off-by: David Heidelberg <david@ixit.cz> (applied)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable (absence expected)
+**Step 1.3: Body**
+- Record: `[Bug] Probe uses device_get_match_data() while chip metadata
+  lives in both OF and I2C id tables. That helper only returns firmware-
+  node data.` `[Symptom] I2C-id/modalias bind leaves chip_data NULL;
+  probe then reads chip_data->ngpio.` `[Versions] None stated.` `[Root
+  cause] Wrong match-data helper; I2C id table driver_data is never
+  consumed.`
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: `nfcmrvl_spi_probe()` calls `nfcmrvl_nci_register_dev()`, then
-  `nci_spi_allocate_spi()`, and ignores a NULL return.
-- Symptom: probe still returns 0, so the SPI driver binds with
-  `drv_data->nci_spi == NULL`. The NCI device stays registered.
-  IRQ/`nci_send` then dereference NULL.
-- Version info: none in the message. Introducer is `caf6e49bf6d02e`
-  ("NFC: nfcmrvl: add spi driver"), first in v4.4-rc1.
-- Root cause: missing failure check after `nci_spi_allocate_spi()`. The
-  unregister is required because returning `-ENOMEM` skips
-  `nfcmrvl_spi_remove()`.
+**Step 1.4: Hidden bug fix?**
+- Record: This is an explicit bug fix, not cleanup. The subject says
+  “Use” rather than “fix”, but the body describes a NULL dereference on
+  probe.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not disguised. It is an explicit error-path fix: missing
-allocation check plus missing rollback of `nfcmrvl_nci_register_dev()`.
+## Phase 2: Diff analysis
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 2.1: Inventory**
+- Record: `[Files] drivers/gpio/gpio-pca9570.c: 1 insertion, 1 deletion`
+  `[Function] pca9570_probe()` `[Scope] Single-file, one-line surgical
+  change`
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `drivers/nfc/nfcmrvl/spi.c` (+4 / -0)
-- Function: `nfcmrvl_spi_probe()`
-- Scope: single-file surgical error-path fix
+The candidate as applied on this tree is exactly that one-line swap.
+Mainline context around `devm_mutex_init()` is not in 6.18.y
+(`mutex_init()` is still used here); it does not affect the hunk.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record: Current local probe (lines 160–174 of
-`drivers/nfc/nfcmrvl/spi.c`):
+**Step 2.2: Code flow**
+- Record: `[Before] gpio->chip_data =
+  device_get_match_data(&client->dev); then gpio->chip.ngpio =
+  gpio->chip_data->ngpio;` `[After] Same dereference, but chip_data
+  comes from i2c_get_match_data(client).` Path: probe / initialization,
+  not an error path.
 
-```160:174:drivers/nfc/nfcmrvl/spi.c
-        drv_data->priv = nfcmrvl_nci_register_dev(NFCMRVL_PHY_SPI,
-                                                  drv_data, &spi_ops,
-                                                  &drv_data->spi->dev,
-                                                  pdata);
-        if (IS_ERR(drv_data->priv))
-                return PTR_ERR(drv_data->priv);
+**Step 2.3: Bug mechanism**
+- Record: `[Category] Memory safety — NULL pointer dereference`
+  `[Mechanism] device_get_match_data() is fwnode-only
+  (drivers/base/property.c). i2c_device_match() can still bind via
+  i2c_match_id() when there is no OF/ACPI data. Probe then dereferences
+  NULL. i2c_get_match_data() tries firmware data first, then
+  id_table->driver_data.`
 
-        drv_data->priv->support_fw_dnld = true;
+Verified helper:
 
-        drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
-                                                 drv_data->priv->ndev);
+```121:137:drivers/i2c/i2c-core-base.c
+const void *i2c_get_match_data(const struct i2c_client *client)
+{
+        struct i2c_driver *driver = to_i2c_driver(client->dev.driver);
+        const struct i2c_device_id *match;
+        const void *data;
 
-        /* Init completion for slave handshake */
-        init_completion(&drv_data->handshake_completion);
-        return 0;
+        data = device_get_match_data(&client->dev);
+        if (!data) {
+                match = i2c_match_id(driver->id_table, client);
+                if (!match)
+                        return NULL;
+
+                data = (const void *)match->driver_data;
+        }
+
+        return data;
+}
 ```
 
-Before: NULL from `nci_spi_allocate_spi()` is ignored; probe returns 0.
-After: if NULL, call `nfcmrvl_nci_unregister_dev(drv_data->priv)` and
-return `-ENOMEM`.
-Path: probe error path only, after a successful
-`nfcmrvl_nci_register_dev()`.
+The id table already stores the pointers probe needs:
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: (a) error-path resource leak + (d) memory safety (NULL
-  deref)
-- Mechanism: `nci_spi_allocate_spi()` (`net/nfc/nci/spi.c:124-143`) is
-  `devm_kzalloc()` and returns NULL on failure. The only caller is this
-  probe. IRQ thread `nfcmrvl_spi_int_irq_thread_fn` does
-  `nci_spi_read(drv_data->nci_spi)` with no NULL check;
-  `__nci_spi_read()` then uses `nspi->acknowledge_mode`.
-  `nfcmrvl_spi_nci_send()` / `nfcmrvl_spi_nci_update_config()` likewise
-  dereference `nci_spi`. Returning `-ENOMEM` without unregister would
-  leak the NCI device, GPIO, fw_dnld state, and `kzalloc`'d
-  `nfcmrvl_private` (not devm-managed).
+```158:163:drivers/gpio/gpio-pca9570.c
+static const struct i2c_device_id pca9570_id_table[] = {
+        { "pca9570", (kernel_ulong_t)&pca9570_gpio},
+        { "pca9571", (kernel_ulong_t)&pca9571_gpio },
+        { "slg7xl45106", (kernel_ulong_t)&slg7xl45106_gpio },
+        { /* sentinel */ }
+};
+```
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct and minimal. Same
-`nfcmrvl_nci_unregister_dev()` already used in `nfcmrvl_spi_remove()`.
-IRQ is `devm_request_threaded_irq`, so it is released on probe failure.
-Regression risk is low. Residual window: IRQ can still fire between
-unregister and devm unwind (same pattern as remove). That is better than
-binding with a permanent NULL `nci_spi`.
+**Step 2.4: Fix quality**
+- Record: `[Quality] Obviously correct; this is the I2C-core helper used
+  by pca953x/pcf857x in this tree.` `[Regression risk] Very low.
+  Firmware path is unchanged (helper still calls device_get_match_data
+  first). No locking, API, or data-structure change. Still no NULL check
+  after the lookup; that is not a regression versus the OF path.`
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## Phase 3: Git history
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: `git blame` on `drivers/nfc/nfcmrvl/spi.c` lines 160–174: all
-from `caf6e49bf6d02e` (Vincent Cuissard, 2015-10-26), "NFC: nfcmrvl: add
-spi driver". First tagged in v4.4-rc1. Present and unchanged in this
-tree.
+**Step 3.1: Blame**
+- Record: `[Introduced] Pointer dereference of match data: b8a34582c7f7f
+  (“gpio: pca9570: add a platform data structure”, 2022-10-27, contained
+  in v6.2-rc1).` Before that, 16d44b6085c1d (2020) used
+  `(uintptr_t)device_get_match_data()`, so a missing firmware match set
+  `ngpio = 0` instead of oopsing. The crash exists from v6.2 onward.
+  Helper `i2c_get_match_data()`: 564d73c4d9201, contained in v6.5-rc1;
+  present in this tree.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Introducer identified by blame: `caf6e49bf6d02e`.
-`git merge-base --is-ancestor caf6e49bf6d02e HEAD` → in this tree. `git
-merge-base --is-ancestor d832b95697384 HEAD` → not in this tree.
+**Step 3.2: Fixes: tag**
+- Record: No `Fixes:` tag. Buggy commit `b8a34582c7f7f` is an ancestor
+  of HEAD.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Recent local history of `spi.c` is style/DT/SPI-remove-void only
-(`e3c95d56190c9`, `5a478a653b4cc`, `a0386bba70934`). No prior attempt to
-check `nci_spi_allocate_spi()`. Standalone; not patch X/Y. Follow-ups on
-origin/master after this commit are only ID-table style (`777fd2dab4460`
-etc.), not corrections of this fix.
+**Step 3.3: File history**
+- Record: Recent file commits are GPIO callback renames, kerneldoc,
+  probe-style switch, chip_data rename, slg7xl45106/pca9571 support. No
+  prerequisite refactor is required for this one-line swap. Standalone,
+  not patch X/Y.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Griffin Kroah-Hartman is not the NFC maintainer. Same-day
-sibling: `56345cea6a30d` "nfc: nxp-nci: Add remove on IRQ error" (same
-AI assist, same applier). This 6.12 MAINTAINERS NFC entry is Krzysztof
-Kozlowski. The commit landed via `Merge tag 'nfc-net-next-20260817'`
-from codeberg.org/linux-nfc (David Heidelberg SOB).
+**Step 3.4: Author**
+- Record: Pengpeng Hou has several GPIO fixes on this branch
+  (MODULE_DEVICE_TABLE, probe-failure handling). Not the GPIO
+  maintainer. Maintainer Bartosz Golaszewski applied the patch.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Uses only `nfcmrvl_nci_unregister_dev()` and
-`nci_spi_allocate_spi()`, both present here. `git apply --check` of
-`d832b95697384` on this tree succeeded. Standalone.
+**Step 3.5: Dependencies**
+- Record: Depends only on `i2c_get_match_data()`, which exists in
+  v6.18.53 (`include/linux/i2c.h` and `drivers/i2c/i2c-core-base.c`).
+  Can apply standalone. Applied commit `f191ba12096a2` is a clean 2-line
+  change on this tree.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## Phase 4: Mailing list / external
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record: `b4 dig -c d832b95697384` →
-https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
-- `b4 dig -a`: v1 only, 2026-07-07, from Greg Kroah-Hartman
-- Saved mbox: only the original patch email; no replies, NAKs, or
-  reviewer-requested Cc: stable
-- Applied as submitted
+**Step 4.1: Original discussion**
+- Record: `[Lore]
+  https://patch.msgid.link/20260624053744.72612-1-pengpeng@iscas.ac.cn`
+  `[Revisions] v1 only, single patch` `[Feedback] Maintainer reply:
+  “Applied, thanks!” No NAK, no requested changes, no Cc: stable
+  suggestion.` Direct lore.kernel.org fetch returned 403; full thread
+  recovered via `b4 dig -m`.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: `b4 dig -w` recipients: Greg Kroah-Hartman, oe-linux-
-nfc@lists.linux.dev, linux-kernel@vger.kernel.org, Griffin Kroah-
-Hartman, David Heidelberg. No Reviewed-by. David Heidelberg's SOB is the
-maintainer apply. Krzysztof Kozlowski was not on this patch's To/Cc (he
-was on the sibling nxp-nci patch).
+**Step 4.2: Recipients (`b4 dig -w`)**
+- Record: Linus Walleij, Bartosz Golaszewski, linux-gpio@, linux-
+  kernel@. Correct GPIO maintainers and list. Applied by Bartosz.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No Reported-by, bugzilla, or syzbot. No user-filed report found.
-Bug is from code inspection.
+**Step 4.3: Bug report**
+- Record: No Reported-by / bugzilla / syzbot. Bug is deduced from the
+  code: I2C-id bind + firmware-only helper.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Same-day Griffin/Greg NFC error-path patch `56345cea6a30d` for
-nxp-nci. Not a functional dependency. `nci_spi_allocate_spi()` has no
-other callers.
+**Step 4.4: Series**
+- Record: Standalone v1. Sibling GPIO conversions already in this tree:
+  `ea05787136256` (pca953x) and `db3b16dcc7e4f` (pcf857x). Not
+  prerequisites.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: UNVERIFIED. lore.kernel.org/stable is behind Anubis (bot
-challenge). No stable discussion in the b4 mbox.
+**Step 4.5: Stable list**
+- Record: Original submission did not Cc stable. lore.kernel.org/stable
+  search could not be fetched (HTTP 403). No stable-specific discussion
+  in the recovered thread.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+## Phase 5: Semantic analysis
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `nfcmrvl_spi_probe()` only. Calls added:
-`nfcmrvl_nci_unregister_dev()`.
+**Step 5.1: Functions**
+- Record: `pca9570_probe()` only.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `nfcmrvl_spi_probe` ← `spi_driver.probe` (`nfcmrvl_spi_driver`),
-  device enumeration for `marvell,nfc-spi` / `nfcmrvl_spi`
-- `nfcmrvl_nci_unregister_dev` already called from `nfcmrvl_spi_remove`,
-  and from uart/i2c/usb counterparts
-- IRQ `nfcmrvl_spi_int_irq_thread_fn` is the crash path if `nci_spi` is
-  NULL after a “successful” probe
+**Step 5.2: Callers**
+- Record: Only `pca9570_driver.probe`. Invoked from I2C core on client
+  bind (boot DT, ACPI, `i2c_new_client_device()`, sysfs `new_device`).
+  Not IRQ/hot-path.
 
-Step 5.3: TRACE CALLEES
-Record: `nfcmrvl_nci_unregister_dev()` (`main.c:182-197`) calls
-`nci_unregister_device`, optional `nfcmrvl_fw_dnld_abort`,
-`nfcmrvl_fw_dnld_deinit`, GPIO free, `nci_free_device`, `kfree(priv)`.
-Appropriate after a successful register.
+**Step 5.3: Callees**
+- Record: After the lookup, probe still uses `chip_data->ngpio`,
+  `devm_mutex_init`/`mutex_init`, `pca9570_read`,
+  `devm_gpiochip_add_data`. The only behavioral change is where match
+  data comes from.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Probe of DT/SPI Marvell NFC (8897-class). Not a syscall. After a
-buggy successful probe, NFC netlink/userspace I/O and the falling-edge
-IRQ are live. Unprivileged trigger of the OOM itself: no. Crash after
-bind: yes, if the chip asserts SPI_INT or userspace talks to the NFC
-device.
+**Step 5.4: Reachability**
+- Record: DT boards with `compatible = "nxp,pca9570"` (imx95-15x15-evk,
+  imx8mp-dhcom-pdk3, stm32mp157c-lxa-tac-gen1) already get firmware
+  match data and do not hit the bug. The broken path is I2C-id/modalias:
+  sysfs `new_device`, board-info, or any client without a firmware node.
+  That is a supported I2C instantiation method (`new_device_store` in
+  i2c-core). Needs privileges to write sysfs; still a deterministic
+  probe oops for that path.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: i2c/usb/uart register last in probe, so they do not have this
-post-register allocation. This SPI path is unique. Same class of NFC
-error-path leaks already in this tree: `8a4d480702b71`, `e204ead35401a`,
-`bb55dc2ae4367`.
+**Step 5.5: Similar patterns**
+- Record: Same class of I2C GPIO expanders already use
+  `i2c_get_match_data()` (`gpio-pca953x.c`, `gpio-pcf857x.c`). pca953x
+  also NULL-checks; this patch does not add that check.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## Phase 6: Local tree (this checkout only)
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Tree is 6.12.111 (`p-6.12-3-gc504cf0baa3d8`). Buggy
-sequence is in `drivers/nfc/nfcmrvl/spi.c:169-174`. Introduced v4.4-rc1.
-Fix `d832b95697384` is not an ancestor of HEAD (landed in v7.3-rc1).
+**Step 6.1: Does the bug exist here?**
+- Record: Local tree is **6.18.53** (`git describe HEAD`:
+  `v6.18.53-5049-g0f0bdc2b0dffb`; Makefile `VERSION=6 PATCHLEVEL=18
+  SUBLEVEL=53`). At `v6.18.53`, probe still does
+  `device_get_match_data()` then `chip_data->ngpio`. Bug present.
+  Candidate is **not** an ancestor of `v6.18.53`. Crash-introducing
+  commit `b8a34582c7f7f` (v6.2) is in this tree.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply. `git apply --check` succeeded. Later mainline ID-
-table style commits do not touch this hunk.
+**Step 6.2: Backport difficulty**
+- Record: Clean apply. On this tree the change is exactly one call swap;
+  no `devm_mutex_init` conflict.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No equivalent check. `git log --grep` on this path found no
-prior “nci_spi_allocate_spi fails” fix.
+**Step 6.3: Related fixes already here?**
+- Record: No earlier pca9570 match-data fix. pca953x/pcf857x already
+  converted; this driver was left on the firmware-only helper.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Phase 7: Subsystem context
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [drivers/nfc/nfcmrvl] [PERIPHERAL] — Marvell NFC-over-SPI
-(`CONFIG_NFC_MRVL_SPI`), DT compatible `marvell,nfc-spi`. Not core
-mm/net, but a shipped production driver.
+**Step 7.1**
+- Record: `[Subsystem] drivers/gpio (I2C GPO expander)` `[Criticality]
+  PERIPHERAL / driver-specific` — NXP PCA9570/PCA9571 and Dialog
+  SLG7XL45106. Not core MM/VFS, but in-tree boards and
+  `CONFIG_GPIO_PCA9570` users exist.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature/low-churn. Driver added 2015; 6.12 changes are mostly
-style and small fixes. Bug is long-standing, not a new-code race.
+**Step 7.2**
+- Record: GPIO I2C expanders are mature. This file is low-churn except
+  callback API updates. Long-standing bug (since v6.2), not churn from a
+  new subsystem.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 8: Impact and risk
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / config-specific: `CONFIG_NFC_MRVL_SPI` users
-with Marvell NFC SPI hardware (embedded/ARM boards using `marvell,nfc-
-spi`).
+**Step 8.1: Who is affected**
+- Record: Driver-specific / config-specific (`CONFIG_GPIO_PCA9570`). DT
+  users are fine. Users instantiating via I2C id/modalias oops in probe.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: `devm_kzalloc(sizeof(struct nci_spi))` failure during probe
-(GFP_KERNEL). Rare except under memory pressure. Not unprivileged-OOM-
-as-exploit in the usual sense; once bound, IRQ or NFC I/O oopses.
+**Step 8.2: Trigger**
+- Record: `[Trigger] Bind pca9570/pca9571/slg7xl45106 without firmware
+  match data.` `[Likelihood] Uncommon vs DT, but 100% on that path (not
+  a race).` `[Unprivileged?] No; sysfs new_device is privileged. Not a
+  local-priv-esc issue.`
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- Failure: kernel oops (NULL `nci_spi` in
-  IRQ/`nci_spi_send`/`nci_spi_read`)
-- Secondary: if probe were failed without unregister, leaked registered
-  NCI device + GPIO + `priv`
-- Severity: HIGH on trigger (oops); trigger likelihood LOW
+**Step 8.3: Failure mode**
+- Record: `[Failure] NULL deref in pca9570_probe → kernel oops`
+  `[Severity] HIGH (crash on probe for a supported bind method). Not
+  data corruption or unprivileged security.`
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: medium for affected hardware (prevents oops and a leftover
-  NFC device); population is small
-- Risk: very low (4 lines, established unregister helper, error path
-  only)
-- Ratio: favorable — cheap, obviously correct crash/leak fix
+**Step 8.4: Risk vs benefit**
+- Record: `[Benefit] Prevents a deterministic probe oops; makes the
+  existing I2C id table actually work.` `[Risk] Very low: one line,
+  established helper, firmware path unchanged.` `[Ratio] Favorable.`
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+## Phase 9: Synthesis
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real bug in this tree: ignored NULL from `nci_spi_allocate_spi()`,
-  probe returns 0
-- Verified crash path: IRQ and send dereference `nci_spi` with no NULL
-  check
-- Unregister is required once probe fails, matching `remove()`
-- 4 lines, applies cleanly, no new API, no prerequisites
-- Bug present since v4.4
-- Same unregister helper already in this tree (`d270453a0d9ec`
-  reordering already applied)
+**Step 9.1: Evidence**
 
-AGAINST:
-- Niche SPI NFC driver
-- Trigger is a small GFP_KERNEL alloc failure
-- No Reported-by / syzbot / Tested-by
-- AI-assisted; mailing list thread has no review replies
-- Not a hot path for most 6.12 users
+For:
+- Real NULL deref when I2C-id matching; helper and dereference verified
+  in this tree
+- One-line, obviously correct; GPIO maintainer applied v1 with no
+  objections
+- `i2c_get_match_data()` already in 6.18.y; applies cleanly
+- Same pattern already used by sibling GPIO I2C expanders
+- In-tree DT users exist, so the driver is not dead; the I2C id table
+  with `driver_data` is currently unused/wrong
 
-UNRESOLVED:
-- No stable-list discussion (lore Anubis)
-- No public user report of this oops
+Against:
+- No user/syzbot report
+- In-tree boards use DT, so they do not hit it
+- Peripheral driver, not core
+- Probe still does not NULL-check `chip_data` (pre-existing)
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — logic matches `remove()`;
-   applied upstream by the NFC tree. No extra runtime test evidence.
-2. Fixes a real bug that affects users? PASS — missing alloc check
-   leaves a bound driver with NULL `nci_spi`.
-3. Important issue? PASS — kernel oops on IRQ/send after a failed alloc;
-   also a registered-device leak if probe is failed without rollback.
-   Severity HIGH on trigger, rare.
-4. Small and contained? PASS — +4 lines, one function.
-5. No new features or APIs? PASS
-6. Can apply to the local tree? PASS — `git apply --check` clean; buggy
-   code present
+Unresolved:
+- lore.kernel.org HTTP 403 for live HTML; thread recovered via b4 mbox
+- No stable@ discussion found
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not an ID/quirk/DT/build/docs exception). Qualifies as a
-normal small bugfix.
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — one helper swap; maintainer
+   applied; helper semantics verified
+2. Fixes a real bug that affects users? **PASS** — NULL deref on a
+   supported I2C bind path
+3. Important (crash/security/corruption/deadlock)? **PASS** — probe oops
+   (HIGH, not universal CRITICAL)
+4. Small and contained? **PASS** — 1 line, one file
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** — clean on 6.18.53; helper present
 
-Step 9.4: MAKE YOUR DECISION
-This is a small, obviously correct error-path fix for a NULL dereference
-that exists in 6.12. Rarity of the alloc failure does not make the oops
-fictional, and the rollback is the same path `remove()` already uses.
-Benefit outweighs risk.
+**Step 9.3: Exception category**
+- Record: None (not a device ID/quirk/DT/build/docs exception). It is a
+  normal small crash fix.
 
-What it solves for stable users: if `nci_spi_allocate_spi()` fails
-during Marvell NFC SPI probe, 6.12 currently treats probe as success.
-The IRQ thread and NCI send path then oops on NULL. The patch fails
-probe with `-ENOMEM` and unregisters the NCI device so
-`priv`/GPIO/`nci_dev` are not left behind.
+**Step 9.4: Decision**
+This belongs in this 6.18.y tree: the buggy code is here, the helper is
+here, and the fix is a one-line swap that stops a NULL deref on I2C-id
+probe.
 
-Risk vs benefit: four lines on an error path; apply is clean; no locking
-or API change. Niche hardware, but the failure mode is a crash, which
-stable is meant to take.
+## What the commit solves
 
-Verification:
-- [Phase 1] `git show d832b95697384 --format=fuller`: tags listed above;
-  no Fixes/Reported-by/Cc stable
-- [Phase 1] `make kernelversion` / Makefile: 6.12.111; `git describe
-  HEAD`: p-6.12-3-gc504cf0baa3d8
-- [Phase 2] Read `drivers/nfc/nfcmrvl/spi.c` probe/IRQ/send; confirmed
-  no NULL check on `nci_spi`
-- [Phase 2] Read `net/nfc/nci/spi.c` `nci_spi_allocate_spi`: only
-  failure is `devm_kzalloc` → NULL
-- [Phase 2] Read `nci_spi_read`/`__nci_spi_read`: dereference
-  `nspi->acknowledge_mode` with no NULL guard
-- [Phase 2] Read `nfcmrvl_nci_register_dev`/`unregister_dev`: priv is
-  `kzalloc`, not devm; unregister is the correct rollback
-- [Phase 3] `git blame -L 140,200 drivers/nfc/nfcmrvl/spi.c`: introducer
-  `caf6e49bf6d02e` (2015)
-- [Phase 3] `git describe --contains caf6e49bf6d02e`: v4.4-rc1
-- [Phase 3] `git merge-base --is-ancestor caf6e49bf6d02e HEAD`: yes;
-  `d832b95697384 HEAD`: no
-- [Phase 3] `git describe --contains --match 'v*' d832b95697384`:
-  v7.3-rc1~133^2~2^2~15
-- [Phase 3] `git log origin/master --oneline --grep="Unregister dev on
-  allocation fail" -- drivers/nfc/nfcmrvl/spi.c`: found `d832b95697384`
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1-only thread, no replies in mbox
-- [Phase 4] lore.kernel.org/stable via curl: Anubis challenge,
-  UNVERIFIED
-- [Phase 5] `git grep nci_spi_allocate_spi`: sole caller is this probe
-- [Phase 6] `git show d832b95697384 -- drivers/nfc/nfcmrvl/spi.c | git
-  apply --check`: clean
-- [Phase 6] `git diff HEAD origin/master -- drivers/nfc/nfcmrvl/spi.c`:
-  only this hunk plus later ID-table style
-- [Phase 8] Failure mode: NULL deref → oops after probe “succeeds”;
-  severity HIGH, trigger LOW
-- UNVERIFIED: whether this SHA was discussed on stable@; no user-visible
-  oops report found
+`pca9570_probe()` treats `device_get_match_data()` as the source of
+`struct pca9570_chip_data`, then immediately reads `->ngpio`. That
+helper only consults firmware nodes. I2C matching can still succeed from
+`id_table` (sysfs `new_device`, board info, modalias). `chip_data` is
+then NULL and probe oopses. `i2c_get_match_data()` keeps the DT path and
+consumes the id-table pointers this driver already stores.
+
+For 6.18 stable users this is a small crash fix, not a feature. DT
+boards keep working; non-firmware instantiation stops oopsing.
+
+## Verification
+- [Phase 1] Parsed tags: author + GPIO maintainer SOB, lore Link; no
+  Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: 1 line in `pca9570_probe()`; `device_get_match_data` →
+  `i2c_get_match_data`
+- [Phase 2] `device_get_match_data()` is fwnode-only
+  (`drivers/base/property.c:1346`)
+- [Phase 2] `i2c_get_match_data()` falls back to `id_table->driver_data`
+  (`i2c-core-base.c:121`)
+- [Phase 2] `i2c_device_match()` binds OF, then ACPI, then I2C id
+  (`i2c-core-base.c:140`)
+- [Phase 3] Blame: crash introduced by `b8a34582c7f7f` (v6.2-rc1);
+  helper from `564d73c4d9201` (v6.5-rc1)
+- [Phase 3] `git merge-base --is-ancestor b8a34582c7f7f HEAD` → yes;
+  helper ancestor → yes
+- [Phase 4] `b4 dig -c 415c63896b76`: v1 only; recipients GPIO
+  maintainers; mbox: “Applied, thanks!”
+- [Phase 4] lore.kernel.org WebFetch: HTTP 403; used b4 mbox instead
+- [Phase 5] `pca9570_probe` only used as `i2c_driver.probe`
+- [Phase 5] DT users: imx95-15x15-evk, imx8mp-dhcom-pdk3,
+  stm32mp157c-lxa-tac-gen1
+- [Phase 6] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
+  kernelversion` → 6.18.53
+- [Phase 6] `v6.18.53:drivers/gpio/gpio-pca9570.c` still uses
+  `device_get_match_data`; candidate not in `v6.18.53`
+- [Phase 6] Applied form on this branch: clean 2-line change
+  (`f191ba12096a2`)
+- [Phase 8] Failure mode: NULL deref in probe → oops; DT path unaffected
+- UNVERIFIED: live lore.kernel.org/stable HTML search (HTTP 403)
+
+The patch is obviously correct, fixes a real probe oops, is one line,
+and applies cleanly to this 6.18.y tree.
 
 **YES**
 
- drivers/nfc/nfcmrvl/spi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpio/gpio-pca9570.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/nfcmrvl/spi.c b/drivers/nfc/nfcmrvl/spi.c
-index 9c8cde1250fb5..dad07c8e13b84 100644
---- a/drivers/nfc/nfcmrvl/spi.c
-+++ b/drivers/nfc/nfcmrvl/spi.c
-@@ -168,6 +168,10 @@ static int nfcmrvl_spi_probe(struct spi_device *spi)
+diff --git a/drivers/gpio/gpio-pca9570.c b/drivers/gpio/gpio-pca9570.c
+index c5a1287079a06..f7cc3fbf45336 100644
+--- a/drivers/gpio/gpio-pca9570.c
++++ b/drivers/gpio/gpio-pca9570.c
+@@ -128,7 +128,7 @@ static int pca9570_probe(struct i2c_client *client)
+ 	gpio->chip.get = pca9570_get;
+ 	gpio->chip.set = pca9570_set;
+ 	gpio->chip.base = -1;
+-	gpio->chip_data = device_get_match_data(&client->dev);
++	gpio->chip_data = i2c_get_match_data(client);
+ 	gpio->chip.ngpio = gpio->chip_data->ngpio;
+ 	gpio->chip.can_sleep = true;
  
- 	drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
- 						 drv_data->priv->ndev);
-+	if (!drv_data->nci_spi) {
-+		nfcmrvl_nci_unregister_dev(drv_data->priv);
-+		return -ENOMEM;
-+	}
- 
- 	/* Init completion for slave handshake */
- 	init_completion(&drv_data->handshake_completion);
 -- 
 2.53.0
 
