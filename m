@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE14528DD9;
-	Mon, 19 Oct 2026 14:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8583E527FAA;
+	Mon, 19 Oct 2026 14:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418585; cv=none; b=ROXDJMHKeF8Mhm8pIQTHNwulcm16JGcyz+YZ6nqsHEyiGKrqYVbjxFTw4ceIRoAN4/at7RuYmgs8SlkudfwBThJVv2LaFHbYQ6llam6FsSRXV8nuVLEVUpyODJ9/k8tjTqY1wogT9+tzSTaUZjd+Nk9vSzwDPgJE1R+pa7MxmF0=
+	t=1792418587; cv=none; b=j+OkeiCOa28UbS8kJPtXxtNmWGKhbmS+u5xoOHn5VWwNmmLUz2z4t0toHphZg6jz0+N4g3Rme3sCftPIsgBnHK0e990izhDBFjC+8ccnC4WZgouPvuRF/RgjxhkhKIIkJhe8WYGAoLKgh85SIBZkPYjEXrnrdcckxzndTGJRef4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418585; c=relaxed/simple;
-	bh=mQITwMWKBiKAgP34t0D6onZiPL8vWkWKKsJkcSCc/Jc=;
+	s=arc-20240116; t=1792418587; c=relaxed/simple;
+	bh=d9eepzugWI0eUsprizuLyTYM4VZZkzItQzOh5hLgaR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tv//EsuAoXnl7Gkflky7ueFrsY1Ay5F7nwapHVMmj7aXyDuHhefTTXxUBtvZdqy49O68hOdmO1pi5R1dXJHLIy9P8Oa+ApraGoEKptyzDmC2OuK7wBHpipJ1eWIAouPgcm+Z85NFHuMJN3lEkYVd+4vhdmBHiVNkm0euxZ4k0vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U2asbGwr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jLH6rNbRCoaxgbThfT8rly9I8ThNX+bDyo1f7prHhIZ4+wjkb6QqceLo0KXLEHksDRhOU2xyoHKvKeKxIW7QSTgheTwFc0c8xE+atLuBawHu9ijZQyNj42AQc6f9Jew4nBM+K+UtKHD92Gx3yqJQ2fa/i7nf6yzUEmCZA1yQQe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jcz1ymW9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U2asbGwr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682191F000C6;
-	Mon, 19 Oct 2026 14:03:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jcz1ymW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D225F1F000C8;
+	Mon, 19 Oct 2026 14:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418582;
-	bh=wLdPCGvUXNvRoYDMbpd0S/lpiMhlBoSYMlhEUM3aMd0=;
+	s=k20260515; t=1792418584;
+	bh=CDjR9sIeBIVMIP3tYtRtKI3jJr7u4QaCOiCocgrDXlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U2asbGwrkyzRN3s7Ybz0IN1CdeHSfHxC21kzSqHXZphIJ0M2ZplxyFQfecGBbpDgP
-	 nWiVdvykX+5lqAYYNN6/rkOqxIrbfdn5KjozwpjtP25f8OBKhZmyyt5N36H90t54WF
-	 VGddnr9TjVUDgABoPO1WXg6u6eYVntfF6tjKDKS57DWvjkJ2oi0EII0KLNjRXcg55O
-	 1KjNaBXIEoimdbd4Ce4w2nVyXx+scPF7DGN0LrAmRpMYATVl07+1JLHOFt0lLbRVgi
-	 z310bmIjPrA3bNcreBN2dehaB0W9n3vSjnpuMMpaTKMhxRssExqT3HkoktyslaOyIL
-	 s+EsrKpLhHdiA==
+	b=Jcz1ymW912+DbiFVhANSyAxx+I2dAnTeYIqh349+wMkT94s90GK0ENPikGvJ2nzfM
+	 BFKNI6MESCeNglQajoV8GzSggDxe/Pa76IYoY2Fs+1YsNZegGzAkqaJHdVUt55jqRj
+	 PjXbIdoi1SVLF8aPdL0+ZBgASlgyGhGPnUpSkzCiAPWnrPT5Nb1zSmab2R+6eDWU6i
+	 S6FQU+xWtq93ZYqsKPgBmOsCgIxoRpwW7s+DGdumnocg/5q+LMa/j7Pds2eQb+tmVx
+	 8X10o2IEFNndvU653YSwFZdQIe2woAfKlsjx7cGLkZ1ar8Is5lEKpeN4vynEjMvix9
+	 5reAvoCIzC7eg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>,
-	Denis Benato <denis.benato@linux.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	corentin.chary@gmail.com,
-	luke@ljones.dev,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] platform/x86: asus-nb-wmi: map ProArt key (0x8b) to KEY_PROG3
-Date: Mon, 19 Oct 2026 09:50:41 -0400
-Message-ID: <20261019135441.1420968-350-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/amdgpu: Gate debugfs MMIO access on kernel lockdown
+Date: Mon, 19 Oct 2026 09:50:42 -0400
+Message-ID: <20261019135441.1420968-351-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -50,31 +51,34 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 6303451189a6d8f304221065c44ccd597e0acbe5 ]
+[ Upstream commit 17ac73b24006700f50972d37e297dec1f523c14a ]
 
-The dedicated "ProArt" key on the ASUS ProArt PX13 (HN7306) emits ASUS
-WMI event code 0x8b. This code is absent from the asus-nb-wmi sparse
-keymap, so pressing the key only produces a "Unknown key code 0x8b"
-message and does nothing in userspace.
+amdgpu_regs, amdgpu_regs2, and related debugfs nodes allow
+arbitrary MMIO read/write via RREG32/WREG32 without checking
+security_locked_down(). On kernel_lockdown=integrity systems
+this bypasses the same restrictions as /dev/mem and PCI config
+space sysfs.
 
-On this model the key is exposed solely through the WMI interface and has
-no HID scancode, so it can only be handled inside asus-nb-wmi. Map 0x8b
-to KEY_PROG3 so the key emits a bindable event, consistent with the
-existing KEY_PROG3 mapping used for the ASUS programmable/Armoury key.
+Check LOCKDOWN_PCI_ACCESS (matching pci-sysfs) at the entry of every
+debugfs handler that performs direct register access.
 
-Signed-off-by: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Link: https://patch.msgid.link/20260719090843.66777-1-nizar.m.kabbani@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+v2: Use consistent check as per previous check to use
+LOCKDOWN_DEBUGFS(Lijo)
+
+v3: Do not create any entry from amdgpu_debugfs_regs_init() if
+LOCKDOWN_PCI_ACCESS is active and log once. (Lijo)
+
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -82,325 +86,397 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit message forensics
 
-**Step 1.1 — Subject**
-Record: **[platform/x86: asus-nb-wmi:] [map] dedicated ProArt WMI event
-0x8b to KEY_PROG3**
-Subsystem: `platform/x86` (`asus-nb-wmi`). Verb: **map** — hardware-key
-enablement, not a refactor.
+**Step 1.1 — Subject line**
+Record: `[drm/amdgpu] [Gate] Restrict debugfs MMIO register nodes when
+kernel lockdown is active`
 
-**Step 1.2 — Tags** (ignoring pipeline `Signed-off-by: Sasha Levin` /
-`[Upstream commit …]` as instructed)
-
-- **Fixes:** none (expected)
-- **Reported-by:** none
-- **Tested-by:** none in the commit; the lore `From` host is `proart-
-  px13.tail9ecfc0.ts.net`, so the author submitted from the affected
-  machine
-- **Reviewed-by:** Denis Benato `<denis.benato@linux.dev>`; Ilpo
-  Järvinen `<ilpo.jarvinen@linux.intel.com>` (platform/x86 maintainer)
-- **Acked-by:** none
-- **Link:** `https://patch.msgid.link/20260719090843.66777-1-
-  nizar.m.kabbani@gmail.com`
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Nizar Al-Kabbani (author); Ilpo Järvinen
-  (maintainer application)
-
-Record: Maintainer + ASUS-WMI reviewer sign-off. No syzbot, no crash
-report.
+**Step 1.2 — Tags**
+Record:
+- `Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>` (AMD drm/amdgpu
+  reviewer)
+- `Signed-off-by: Asad Kamal <asad.kamal@amd.com>` (author)
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+  maintainer)
+- No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence expected)
+- No syzbot / CVE / bugzilla link
+- Changelog notes: v2 suggested `LOCKDOWN_DEBUGFS`; v3 switched to
+  skipping node creation under `LOCKDOWN_PCI_ACCESS`
 
 **Step 1.3 — Body**
-Record: **Bug:** ASUS ProArt PX13 (HN7306) ProArt key emits WMI 0x8b,
-which is missing from `asus_nb_wmi_keymap[]`.
-**Symptom:** `pr_info("Unknown key code 0x8b")` and no EV_KEY in
-userspace.
-**Root cause:** key is WMI-only on this model (no HID scancode), so only
-this driver can report it.
-**Fix:** map 0x8b → `KEY_PROG3`, matching Armoury/programmable-key
-practice.
-**Version info:** none in the message.
+Record:
+- **Bug:** `amdgpu_regs`, `amdgpu_regs2`, and related debugfs nodes
+  allow arbitrary GPU MMIO via `RREG32`/`WREG32` with no
+  `security_locked_down()` check.
+- **Symptom:** On `lockdown=integrity` (Secure Boot distros), this
+  bypasses the same class of restriction as `/dev/mem` and PCI BAR
+  sysfs.
+- **Claimed fix:** Check `LOCKDOWN_PCI_ACCESS` on every MMIO debugfs
+  handler.
+- **Actual v3:** Do not create those nodes at init if lockdown is
+  already active; log once.
+- Body still describes v1 (per-handler checks). That is stale vs the
+  committed patch.
 
 **Step 1.4 — Hidden bug fix?**
-Record: **No disguise.** This is an explicit missing-keymap fix /
-hardware enablement, not cleanup dressed as a fix.
+Record: Not hidden. It is an explicit security-policy fix (lockdown
+bypass). The “gate/do not create” wording is the fix, not cleanup.
 
 ---
 
 ## Phase 2: Diff analysis
 
 **Step 2.1 — Inventory**
-Record: **1 file**, `drivers/platform/x86/asus-nb-wmi.c`, **+1 / −0**.
-Function/object: static table `asus_nb_wmi_keymap[]`. **Single-file
-surgical table insertion.**
+Record:
+- File: `drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c`
+- `+7` lines (include + 5-line early return)
+- Function: `amdgpu_debugfs_regs_init()`
+- Scope: single-file surgical change
 
-**Step 2.2 — Flow**
-Record: **Before:** WMI notify → `sparse_keymap_report_event()` misses
-0x8b → log + drop.
-**After:** same path reports `KEY_PROG3` (code 202) as a bindable key.
-Path: firmware WMI event on key press (normal input path, not
-error/init).
+**Step 2.2 — Code flow**
+Record:
+- **Before:** Probe always creates `amdgpu_regs`, `amdgpu_regs2`,
+  `amdgpu_regs_{didt,pcie,smc}`, `amdgpu_gprwave`, `amdgpu_wave`,
+  `amdgpu_gpr`, `amdgpu_gca_config`, `amdgpu_sensors`, `amdgpu_gfxoff*`
+  under the DRM debugfs root, mode `0400`.
+- **After:** If `security_locked_down(LOCKDOWN_PCI_ACCESS)` is true at
+  init, skip creation, log, return 0.
+- Path: driver probe / debugfs init, not a hot path.
 
 **Step 2.3 — Bug mechanism**
-Record: **Hardware workaround / keymap gap** (same family as device-ID /
-input quirk table rows). Not UAF, leak, race, or crash. Unmapped sparse-
-keymap code is ignored.
+Record: **Security / lockdown bypass**, not UAF/leak/race.
+
+Verified in `fs/debugfs/file.c` `debugfs_locked_down()`:
+- Files whose mode has only read bits (`0400`/`0444`), opened O_RDONLY,
+  with no ioctl/mmap, are **allowed even under lockdown**.
+- `amdgpu_debugfs_regs_fops` (and didt/pcie/smc) have `.read`/`.write`
+  but **no** ioctl/mmap, so a read open is allowed.
+- The read handler then does `RREG32()`. With bit 62/61 in the offset it
+  also calls `amdgpu_gfx_select_se_sh()` /
+  `amdgpu_gfx_select_me_pipe_q()`, which **write GPU index registers**
+  as a side effect of a read.
+- Writes through debugfs are already blocked: `FMODE_WRITE` fails the
+  heuristic and `LOCKDOWN_DEBUGFS` denies the open.
+- `amdgpu_regs2` / `amdgpu_gprwave` have `.unlocked_ioctl`, so generic
+  debugfs lockdown already blocks those; the hole is the plain MMIO read
+  files.
+
+This matches PCI BAR mmap (`pci_mmap_resource()` checks
+`LOCKDOWN_PCI_ACCESS`) and `/dev/mem` (`LOCKDOWN_DEV_MEM`). PCI config
+**reads** are not blocked; BAR/MMIO is.
 
 **Step 2.4 — Fix quality**
-Record: **Obviously correct** for a static `key_entry`. Minimal. No API,
-lock, or alloc change.
-**Regression risk:** low. Theoretical: some other ASUS model could emit
-WMI 0x8b for a different function. 0x8b sat in a hole between 0x8A
-(2012) and 0x8C (2012) with no mapping for ~14 years, so that is
-unlikely.
-**Note (not a blocker):** `hid-asus.c` maps HID usage 0x8b to
-`KEY_PROG1` (“ProArt Creator Hub”). This commit uses `KEY_PROG3` and
-states PX13 has no HID scancode, so this model should not double-report.
+Record:
+- Obviously correct for the boot-time Secure Boot case (lockdown is
+  already on before amdgpu probes).
+- Incomplete if lockdown is raised later via
+  `/sys/kernel/security/lockdown` after the driver loaded (init-time
+  only). Lockdown is one-way and Secure Boot enables it at boot, so the
+  common case is covered.
+- Slightly broad: also skips sensors/gfxoff/gca_config, not only MMIO.
+- Regression risk is low: only locked-down systems lose debugfs register
+  nodes. UMR already warns when lockdown is not `none`.
+- No new APIs or data structures.
 
 ---
 
 ## Phase 3: Git history
 
 **Step 3.1 — Blame**
-Record: Neighbor entries 0x8A / 0x8C from **a935eaecef2b20 /
-24c8a4c4ba6cfe (2012)**. Driver table since **b229ece9911cc (2011)**.
-The 0x8b row is **6303451189a6d** (this commit, 2026-07-19).
-`KEY_PROG3` for Armoury: **f56e676a7f1ca** (`v5.19-rc7~…`).
+Record:
+- `amdgpu_debugfs_regs_init()` introduced in `75758255dc0fae` (Alex
+  Deucher, 2017-12-14, “move debugfs functions to their own file”).
+- Mode `0444` → `0400` in `c0cfd2e652553` (2024-10-23); that only
+  dropped world-read. `0400` still passes the debugfs lockdown read
+  heuristic.
+- The missing lockdown check is as old as the interface itself.
 
 **Step 3.2 — Fixes: tag**
-Record: **N/A** — no `Fixes:`. This fills a table gap for hardware, not
-a regression from a prior commit.
+Record: None. Not applicable.
 
-**Step 3.3 — File history**
-Record: Recent related work: DMI quirks, display-toggle keymap
-(`e521dc1687834`), ExpertBook keys (`3c75dc44ad11c`). Pattern of one-
-line keymap rows is established. **Standalone**, not `N/M`.
+**Step 3.3 — Related file history**
+Record: Recent debugfs work is additive (gfxoff, pagetable, sched
+masks). No prerequisite refactor. Standalone. v1 was per-handler checks;
+v3 is self-contained.
 
 **Step 3.4 — Author**
-Record: Nizar Al-Kabbani’s only hit under `drivers/platform/x86/` here
-is this commit (hardware owner, not maintainer). Weight comes from
-**Denis Benato** and **Ilpo Järvinen**.
+Record: Asad Kamal is an AMD contributor (other amdgpu/pm fixes in this
+tree). Reviewed by Lijo Lazar; merged by Alex Deucher.
 
 **Step 3.5 — Dependencies**
-Record: **None.** Needs existing `asus_nb_wmi_keymap[]`, `KEY_PROG3`,
-and `sparse_keymap_setup()`. All present. **Applies standalone.**
-
-Commit **6303451189a6d** is an ancestor of HEAD (`git merge-base --is-
-ancestor` succeeded). First contained in **v7.3-rc1**
-(`v7.3-rc1~63^2~75`). **Not in v7.2.** Merged via `platform-
-drivers-x86-v7.3-1`.
+Record: Needs `security_locked_down()`, `LOCKDOWN_PCI_ACCESS`,
+`drm_info()`, `amdgpu_debugfs_regs_init()`. All exist in this tree.
+`linux/security.h` stub returns 0 when `CONFIG_SECURITY` is off. Can
+apply standalone.
 
 ---
 
 ## Phase 4: Mailing list / external
 
-**Step 4.1 — b4 dig**
-Record: Lore: `https://patch.msgid.link/20260719090843.66777-1-
-nizar.m.kabbani@gmail.com`
-**v1 only** (single `[PATCH]`, applied as submitted).
-Denis: `Reviewed-by` only, no NAK.
-Ilpo: applied to `review-ilpo-next`; noted for-next routing (not a same-
-cycle regression). **No Cc: stable in review.**
+**Step 4.1 — Original discussion**
+Record:
+- `b4 dig -c 17ac73b24006700f50972d37e297dec1f523c14a` →
+  https://patch.msgid.link/20260603114459.938031-1-asad.kamal@amd.com
+- v1 2026-05-29 (per-handler `LOCKDOWN_PCI_ACCESS`)
+- v2 2026-06-03 (Lijo: `LOCKDOWN_DEBUGFS`)
+- v3 2026-06-03 (Lijo: skip creating nodes; log once) — this is what
+  landed
+- lore.kernel.org fetch returned 403; discussion read via mail-
+  archive/search
 
 **Step 4.2 — Recipients (`b4 dig -w`)**
-Record: Corentin Chary, Luke D. Jones, Denis Benato, Hans de Goede, Ilpo
-Järvinen, `platform-driver-x86@`, `linux-kernel@`. Right maintainers.
+Record: `amd-gfx@lists.freedesktop.org`, Lijo Lazar, Hawking Zhang, Le
+Ma, Shiwu Zhang, Alex Deucher, Kevin Yang Wang, Tom StDenis. Right
+maintainers.
 
 **Step 4.3 — Bug report**
-Record: No bugzilla/syzbot. Author describes the unknown-key log from
-the PX13. WebFetch of lore URLs returned **403**; thread recovered via
-`b4 dig -m`.
+Record: No external reporter/CVE. Author analysis plus list review.
+Nicolas Bouchinet (lockdown LSM, ANSSI) confirmed the read-path gap vs
+`debugfs_locked_down()`, then argued reads belong at
+**confidentiality**, not `LOCKDOWN_PCI_ACCESS`. Asad kept PCI_ACCESS by
+analogy to `pci_mmap_resource()` and `/dev/mem`. Patch still merged.
 
 **Step 4.4 — Series**
-Record: **Standalone v1.** No companion patches.
+Record: Standalone, not patch N/M. No follow-up on this file except
+unrelated gfxoff message IDs.
 
-**Step 4.5 — stable@**
-Record: No stable-list discussion found for this subject.
+**Step 4.5 — Stable list**
+Record: No lore.kernel.org/stable discussion found for this subject.
 
 ---
 
 ## Phase 5: Semantic / call graph
 
 **Step 5.1 — Functions**
-Record: Table `asus_nb_wmi_keymap[]` only (not a function body).
+Record: `amdgpu_debugfs_regs_init()` only.
 
 **Step 5.2 — Callers**
-Record: `.keymap = asus_nb_wmi_keymap` on `asus_nb_wmi_driver`.
-`asus_wmi_input_init()` → `sparse_keymap_setup(..., keymap)`.
-`asus_wmi_notify()` → `sparse_keymap_report_event()`; miss → `"Unknown
-key code 0x%x"`.
+Record: `amdgpu_debugfs_init()` → `amdgpu_debugfs_init()` in
+`amdgpu_drv.c` (~2477) during device init. One probe-time path.
 
 **Step 5.3 — Callees**
-Record: `sparse_keymap_report_event` / `sparse_keymap_setup` only. No
-alloc/lock/I/O in the new row.
+Record: `security_locked_down(LOCKDOWN_PCI_ACCESS)`, `drm_info()`, then
+(if allowed) `debugfs_create_file()`.
 
 **Step 5.4 — Reachability**
-Record: Firmware WMI interrupt/notify on physical ProArt key. Userspace
-sees an evdev event after the fix. Not a syscall bug. Unprivileged user
-with the laptop can press the key.
+Record: Needs `CONFIG_DEBUG_FS`, mounted debugfs, and a privileged open
+of `0400` nodes. Lockdown’s model is uid-0 vs ring-0, so root-only is
+the intended attacker. Distro Secure Boot kernels enable
+lockdown=integrity at boot.
 
 **Step 5.5 — Similar patterns**
-Record: Same driver: 0x86 `KEY_PROG1` (MyASUS), 0x38 /
-`ASUS_WMI_KEY_ARMOURY` `KEY_PROG3`, many other `KE_KEY` rows. hid-asus
-HID 0x8b → `KEY_PROG1` for PX Creator Hub (different transport).
+Record: Same hook in `drivers/pci/pci-sysfs.c` (mmap/write),
+`drivers/pci/proc.c`, `drivers/cxl/core/mbox.c`. No other drm driver in
+this tree uses it.
 
 ---
 
-## Phase 6: This checkout
+## Phase 6: This tree (6.18.y)
 
-**Step 6.1 — Local tree**
-Record: `git describe HEAD` = **v7.3-rc4-27-gf0100363d8c37**. `make
-kernelversion` = **7.3.0-rc4**. Makefile `VERSION=7 PATCHLEVEL=3
-SUBLEVEL=0 EXTRAVERSION=-rc4`.
-Driver and keymap **exist**. Line 635 already has `{ KE_KEY, 0x8B, {
-KEY_PROG3 } }`. The pre-fix gap (0x8A then 0x8C) exists in **v7.2**;
-this 7.3-rc tree already includes the row because the commit landed in
-**v7.3-rc1**. That is mainline history, not a “already selected for
-stable” marker.
+**Step 6.1 — Buggy code present?**
+Record: **Yes.** This checkout is **6.18.53** (`git describe HEAD` →
+`v6.18.53-5049-g0f0bdc2b0dffb`, `VERSION=6` `PATCHLEVEL=18`
+`SUBLEVEL=53`).
+- `amdgpu_debugfs_regs_init()` exists and (without this patch) creates
+  MMIO nodes with no lockdown check.
+- `LOCKDOWN_PCI_ACCESS` is in `include/linux/security.h`.
+- Generic debugfs lockdown is in `fs/debugfs/file.c`.
+- The hole is not something introduced after 6.18 branched.
 
 **Step 6.2 — Backport difficulty**
-Record: **Clean apply** on a tree with this keymap (context around
-0x8A/0x8C is the same as v7.2). One-line insert.
+Record: **Clean apply.** Parent context matches: no `linux/security.h`,
+same `for` loop and `S_IFREG | 0400`. User-supplied mainline context
+mentioned `amdgpu_userq.h`; that header is **not** required here.
 
-**Step 6.3 — Related fixes here**
-Record: No alternate fix. This is the mapping. No other 0x8b WMI
-handling in `asus-nb-wmi.c`.
+**Step 6.3 — Related fixes already here?**
+Record: No other lockdown check on these nodes besides this change.
+Generic debugfs lockdown does **not** cover `amdgpu_regs` reads.
 
 ---
 
-## Phase 7: Subsystem
+## Phase 7: Subsystem context
 
 **Step 7.1**
-Record: **platform/x86 laptop hotkeys**. **PERIPHERAL / vendor-driver**,
-but `CONFIG_ASUS_NB_WMI` is common on ASUS x86 notebooks.
+Record: `drivers/gpu/drm/amd/amdgpu` — **IMPORTANT** (very common GPU
+driver). Security impact is lockdown policy, not all users of amdgpu.
 
 **Step 7.2**
-Record: **Active** (recent DMI quirks and keymap rows through 2026).
-Table format itself is mature (2011).
+Record: Actively developed, but this function dates to 2017. Mature
+interface, late lockdown hole.
 
 ---
 
 ## Phase 8: Impact and risk
 
 **Step 8.1 — Who**
-Record: **Driver-specific / hardware-specific:** ASUS notebooks that
-emit WMI 0x8b (documented: ProArt PX13 HN7306). Harmless no-op elsewhere
-(code never generated).
+Record: AMD GPU systems with `CONFIG_DEBUG_FS`, debugfs mounted, and
+kernel lockdown (Secure Boot integrity is the usual distro case).
 
 **Step 8.2 — Trigger**
-Record: Press the ProArt key. Common for owners of that model; **not** a
-race. Physical access only.
+Record: Root reads `/sys/kernel/debug/dri/0/amdgpu_regs` (or siblings)
+while lockdown=integrity. Not unprivileged. Timing-independent.
 
 **Step 8.3 — Failure mode**
-Record: **Dead key + `pr_info`**. No oops, hang, corruption, or UAF.
-**Severity: LOW** as a crash class; **real functional hardware miss**
-for that laptop.
+Record: **HIGH** security-policy bypass (not a panic). Arbitrary GPU
+MMIO read; bank-select path writes GRBM/SRBM. Same class of access
+lockdown blocks for PCI BAR mmap and `/dev/mem`.
 
-**Step 8.4 — Ratio**
-Record: **Benefit: moderate for those users** (key becomes bindable;
-only kernel path that can do it). **Risk: very low** (1 line, static
-table). **Ratio: favorable**, same as device-ID / keymap rows stable
-already takes.
+**Step 8.4 — Risk/benefit**
+Record:
+- **Benefit:** Closes a real uid-0 lockdown hole on common Secure Boot +
+  amdgpu boxes.
+- **Risk:** Very low (7 lines, probe-only, no-op without lockdown).
+  Worst case: debug/UMR register nodes missing under lockdown, which is
+  intended.
+- **Ratio:** Favorable.
 
 ---
 
 ## Phase 9: Synthesis
 
-**For backporting**
-- One-line keymap row; reviewed by pdx86 maintainer and ASUS-WMI
-  reviewer; v1 applied unchanged
-- Real user-visible miss: unknown WMI code, key does nothing; WMI-only
-  on this model
-- Same shape as device IDs / input quirks / historical `asus-nb-wmi`
-  keymap additions (`33e21e56243eb` MyASUS, `e521dc1687834` display
-  toggle, `f56e676a7f1ca` Armoury `KEY_PROG3`)
-- `Documentation/process/stable-kernel-rules.rst`: hardware quirk / “oh,
-  that’s not good”, and device-ID-class table additions
-- No new API (`KEY_PROG3` already in uapi); no series dependency
-- Surrounding driver/keymap exist in this tree; patch applies cleanly
+**Step 9.1 — Evidence**
 
-**Against**
-- Not a crash, security hole, deadlock, or data corruption
-- Enablement for one model, not a regression
-- Ilpo took it via for-next, not as an urgent regression
-- hid-asus uses `KEY_PROG1` for HID 0x8b ProArt Creator Hub (userspace
-  binding may differ across models; reviewers accepted `KEY_PROG3`)
+**For:**
+- Real lockdown bypass: debugfs heuristic allows read of `0400` MMIO
+  files; handlers then `RREG32` and can write index registers.
+- Same restriction as PCI BAR mmap / `/dev/mem`.
+- Small, obviously correct, maintainer-reviewed (Lijo + Alex).
+- All symbols exist in 6.18.53; applies cleanly.
+- Lockdown is an important production security feature (Secure Boot
+  distros).
 
-**Unresolved**
-- Lore HTML 403; mbox contents were used instead
-- Cannot prove no other ASUS SKU uses WMI 0x8b for something else (long-
-  standing hole makes that unlikely)
-- No stable@ thread
+**Against:**
+- Not a crash/UAF/corruption.
+- debugfs + root.
+- Init-time check misses lockdown enabled after probe.
+- Disables some non-MMIO nodes in the same array.
+- LSM reviewer preferred confidentiality-level for pure reads; commit
+  message still describes v1.
+- No CVE / no in-the-wild report.
 
-**Stable rules checklist**
-1. Obviously correct and tested? **PASS** — one table row; maintainer
-   review; author on PX13
-2. Real bug that affects users? **PASS** — dedicated key dead without
-   the mapping
-3. Important (crash/security/corruption/deadlock)? **PASS as hardware
-   quirk / device-ID-class**, not as a panic
-4. Small and contained? **PASS** — +1 line, one file
-5. No new features/APIs? **PASS** — existing `KEY_PROG3`; no new
-   syscall/sysfs
-6. Can apply to this tree? **PASS** — keymap context matches; no extra
-   commits needed
+**Unresolved:** Full last Nicolas reply after Asad kept PCI_ACCESS was
+not fetched (403 on lore). Does not change the code or that it was
+merged.
 
-**Exception:** hardware keymap / input quirk table entry (device-ID
-analogue).
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — 7-line early return; UMR
+   impact acked on list.
+2. Real bug affecting users? **PASS** — lockdown bypass on Secure Boot +
+   amdgpu + debugfs.
+3. Important (crash/security/corruption/deadlock)? **PASS** — security
+   policy hole (HIGH, not panic).
+4. Small and contained? **PASS** — one file, +7.
+5. No new features/APIs? **PASS** — restricts existing debugfs under
+   existing lockdown.
+6. Applies to this tree? **PASS** — 6.18.53 has the nodes, APIs, and
+   matching context.
 
-This tree is **7.3-rc4**, which already contains the row via v7.3-rc1.
-That does not change technical merit: the driver is here, the change is
-a one-line hardware table fix, and it is the kind of addition stable
-accepts. It is not a new driver, not an API, and not a refactor.
+**Step 9.3 — Exception category**
+Record: None (not a device ID/quirk/DT/build/docs fix). Qualifies as a
+security bug fix.
 
-### What it solves for stable users
-ProArt PX13 owners on a stable kernel with `asus-nb-wmi` get a working,
-bindable ProArt key instead of a dmesg-only unknown code. Risk is a
-single unused WMI code gaining `KEY_PROG3` globally in this driver.
+**Step 9.4 — Decision**
+This should be backported to **this** 6.18.53 tree. The hole is in code
+that has been here for years, the APIs are present, and the patch is a
+minimal lockdown check at the existing init site. Residual limits (init-
+time vs open-time; slightly wide node list) are not reasons to keep the
+bypass on locked-down production kernels.
 
-### Verification
-- **[Phase 1]** Parsed commit `6303451189a6d`; tags as above; no
-  Fixes/stable/syzbot
-- **[Phase 2]** `git show`: +1 line in `asus_nb_wmi_keymap[]`
-- **[Phase 3]** blame 0x8A/0x8C = 2012; `git merge-base --is-ancestor
-  6303451189a6d HEAD` = yes; `git describe --contains` =
-  `v7.3-rc1~63^2~75`; not in v7.2
-- **[Phase 3]** `git log --oneline --author='Nizar Al-Kabbani' --
-  drivers/platform/x86/` = this commit only
-- **[Phase 4]** `b4 dig -c/-a/-w/-m`: v1, lore msgid above, recipients
-  listed, mbox has Denis Rb and Ilpo apply mail
-- **[Phase 4]** WebFetch lore = 403; stable search = no thread for this
-  patch
-- **[Phase 5]** keymap used in `asus_nb_wmi_driver`; report path
-  `asus_wmi_notify` @ `asus-wmi.c:4692`; unknown log @ 4694
-- **[Phase 5]** hid-asus `case 0x8b` → `KEY_PROG1` (Amit Chaudhari,
-  `831f70a5b93bd`)
-- **[Phase 6]** `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; line
-  635 already has the mapping; v7.2 file has 0x8A then 0x8C, no 0x8B
-- **[Phase 7]** `CONFIG_ASUS_NB_WMI` in `drivers/platform/x86/Kconfig`
-- **[Phase 8]** Failure = unknown key log + no evdev; severity LOW as
-  crash, real as hardware enablement
-- **UNVERIFIED:** whether any other ASUS model emits WMI 0x8b; lore HTML
-  (403)
+---
 
-The change meets stable rules as a small, reviewed hardware
-keymap/quirk, not as a crash fix.
+## What the commit solves for stable users
+
+On kernels with lockdown=integrity (typical Secure Boot), generic
+debugfs still allows reading `amdgpu_regs` because mode `0400` looks
+“read-only.” That file is not a log; it is unmediated GPU BAR MMIO,
+including index-register writes on crafted reads. Stable users on
+locked-down distro kernels should not have that path.
+
+## Risk vs benefit
+
+Benefit is closing a lockdown hole for a widely used GPU driver. Risk is
+a probe-time skip of debugfs register nodes only when lockdown is
+already on.
+
+## Concerns
+
+- Does not re-check on each open if lockdown is enabled after probe.
+- Commit text still talks about per-handler checks.
+- Those do not block a clean backport to this tree.
+
+---
+
+## Verification
+- [Phase 1] Parsed tags: Reviewed-by Lijo Lazar; SOB Asad Kamal + Alex
+  Deucher; no Fixes/Reported-by/Cc:stable
+- [Phase 1] Body vs v3: claimed per-handler checks; committed code is
+  init-time skip
+- [Phase 2] Diff: +`#include <linux/security.h>` and 5-line
+  `LOCKDOWN_PCI_ACCESS` guard in `amdgpu_debugfs_regs_init()`
+- [Phase 2] `debugfs_locked_down()` in `fs/debugfs/file.c:267-283`:
+  `0400` + O_RDONLY + no ioctl allows open; writes blocked via
+  `FMODE_WRITE`
+- [Phase 2] `amdgpu_debugfs_regs_fops` has read/write, no ioctl;
+  `regs2`/`gprwave` have `unlocked_ioctl`
+- [Phase 2] Read path `amdgpu_debugfs_process_reg_op()`: `RREG32`;
+  bank/ring bits call `amdgpu_gfx_select_se_sh` /
+  `amdgpu_gfx_select_me_pipe_q`
+- [Phase 2] `pci_mmap_resource()` and `pci_write_resource_io()` use
+  `LOCKDOWN_PCI_ACCESS`; `pci_read_config` does not
+- [Phase 3] `git blame`: `amdgpu_debugfs_regs_init` from
+  `75758255dc0fae` (2017); mode `0400` from `c0cfd2e652553` (2024)
+- [Phase 3] No `Fixes:` tag
+- [Phase 3] Author has other amdgpu commits; no series dependency
+- [Phase 4] `b4 dig -c 17ac73b240067…`: v1/v2/v3; landed v3 msgid
+  `20260603114459.938031-1-asad.kamal@amd.com`
+- [Phase 4] `b4 dig -w`: amd-gfx + Deucher/Lijo/StDenis
+- [Phase 4] mail-archive: Lijo R-b; StDenis UMR OK; Bouchinet read-path
+  analysis + confidentiality debate
+- [Phase 4] lore.kernel.org WebFetch: 403; stable search: no hits
+- [Phase 5] Caller: `amdgpu_debugfs_init()` ← `amdgpu_drv.c:2477` probe
+- [Phase 6] `git describe HEAD`: `v6.18.53-5049-g0f0bdc2b0dffb`; `make
+  kernelversion`: 6.18.53
+- [Phase 6] Parent of the change has the same loop/`0400` and no
+  `security.h` — clean apply
+- [Phase 6] `security_locked_down` / `LOCKDOWN_PCI_ACCESS` / `drm_info`
+  present; stub returns 0 without `CONFIG_SECURITY`
+- [Phase 8] Failure: lockdown bypass, severity HIGH (security), not
+  crash
+- UNVERIFIED: complete last Bouchinet mail after Asad’s “keep
+  PCI_ACCESS” reply (lore 403)
+
+The fix is small, surgical, applies to this 6.18 tree, and closes a real
+kernel-lockdown bypass.
 
 **YES**
 
- drivers/platform/x86/asus-nb-wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index 8dad7bdb8f612..a840d16e063e0 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -622,6 +622,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
- 	{ KE_KEY, 0x86, { KEY_PROG1 } }, /* MyASUS Key */
- 	{ KE_KEY, 0x88, { KEY_RFKILL  } }, /* Radio Toggle Key */
- 	{ KE_KEY, 0x8A, { KEY_PROG1 } }, /* Color enhancement mode */
-+	{ KE_KEY, 0x8B, { KEY_PROG3 } }, /* ProArt key (PX13/HN7306) */
- 	{ KE_KEY, 0x8C, { KEY_SWITCHVIDEOMODE } }, /* SDSP DVI only */
- 	{ KE_KEY, 0x8D, { KEY_SWITCHVIDEOMODE } }, /* SDSP LCD + DVI */
- 	{ KE_KEY, 0x8E, { KEY_SWITCHVIDEOMODE } }, /* SDSP CRT + DVI */
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index cda4696d2dd49..1679ad7d39780 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -26,6 +26,7 @@
+ #include <linux/kthread.h>
+ #include <linux/pci.h>
+ #include <linux/uaccess.h>
++#include <linux/security.h>
+ #include <linux/pm_runtime.h>
+ 
+ #include "amdgpu.h"
+@@ -1661,6 +1662,12 @@ int amdgpu_debugfs_regs_init(struct amdgpu_device *adev)
+ 	struct dentry *ent, *root = minor->debugfs_root;
+ 	unsigned int i;
+ 
++	if (security_locked_down(LOCKDOWN_PCI_ACCESS)) {
++		drm_info(adev_to_drm(adev),
++			 "amdgpu: HW debugfs nodes disabled (kernel lockdown)\n");
++		return 0;
++	}
++
+ 	for (i = 0; i < ARRAY_SIZE(debugfs_regs); i++) {
+ 		ent = debugfs_create_file(debugfs_regs_names[i],
+ 					  S_IFREG | 0400, root,
 -- 
 2.53.0
 
