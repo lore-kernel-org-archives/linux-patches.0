@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64165938A1;
-	Mon, 19 Oct 2026 13:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5694B5938D9;
+	Mon, 19 Oct 2026 13:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418337; cv=none; b=VLGLUbW1zuCoMyrTZivBKAwHEyTNBa7iHwaCAujVPLSa+GEGoxrv18khazfKe+shYQhCqZCxS+4/4qBrPl6Xs3OnM1//0htfavRXwo9umr3qnUd4vqnDeRPG9XCSniHLqjZCJXQC87rg5Jdj7SONP57Xm3m/R8pnybzjkMusPeA=
+	t=1792418339; cv=none; b=ak3brZTXH11fjST4tU/qVO5Gr8g4thzM/J3h/NWi04IErqRY3sK0ox6aT08X3R0eHCGpAigDgWOa17QYRIeSAJArsQJGZFqlaPI1W9l5m4UyvTFFWziQNXa3uTkplZ8Yil17ltu42ADsm9c3XnAVpjaS2O737q6mOYzynt8FMJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418337; c=relaxed/simple;
-	bh=bT3u0ml0R3Y0Kb4s1tT9sFu/HeQUpRwvtWKkgy2VdjU=;
+	s=arc-20240116; t=1792418339; c=relaxed/simple;
+	bh=p+4oUslT8JyTnI5db81Mz0p1bCz3UbZGm6komxtnaDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gDMOi93gJcOZXFqzgglS4zeIMABIYT+aq1B9IOf6wxQCQ44cpgmFFEabm92OL9HCV13xDo/gPWlWbUzZIeqDIdgbv1unsGMCbMYlU/lgW825Xzjp0SmVbTWvHN8o92m0h1iGWYNl2zxjVmrvnwqO6k78LVzi85/jEO+qbgmVaxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X+44V+UY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=vER+7CshB9hImWo3vndfC1q8ICjHBs/hq02gjQhsDqlL5vpTVvGqznGM4qi1bs4giwHodKGw615N+U57QVI5cilKro5sPeCIbxtMeMuXfDe3Fy7ZjthaEjWMjWTCCALVDwqbB7GlqR18kIi1cUWmxVvPxWWr+K6EEEcy6iKRajM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GCumNmWB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X+44V+UY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDCF1F000C7;
-	Mon, 19 Oct 2026 13:58:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GCumNmWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D5D1F000C9;
+	Mon, 19 Oct 2026 13:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418334;
-	bh=NfE3wKi/vWXI5Wn/P+ZAA3BY3B/je2LljBAGpFdwS1E=;
+	s=k20260515; t=1792418336;
+	bh=MS8pmardBEX2l3RcjTmGxnUsx1lLEKzZ591tCruACIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+44V+UYyAfSmjtEoAaLb0XEskmUK3iEnvyVyvtTJgGZaW4H8EA+DjdxFxItnqSxC
-	 Y5Em2UoftWRUy06/FRS6D+B9f92KaGK4yMHbSlx28C3tVDYY9rC0jprNcXB+MtwByA
-	 rzTSzHPuT7TdfyqL3AFicehZDuY9fSJEhvgAWCx/LftD5kuFStJDmAGntBzFhBCen+
-	 XMJjs3eCc/U+s+RmkZUgJnXiU1tvnWTB6hsz2RhKT7PpOObAKb4Jb3yp85/keIW36C
-	 /jPTfHJKRrFjsA1VXfG0BnqM/aS0GuIXDubgMi29lC3QMZGw+75pa5mi3K/mZKbInw
-	 2CR51JqufDQRQ==
+	b=GCumNmWBlaGuj7DfutqjSE+YoOA57c6YFPT9Yqpfd0/zHFKas1Uvayn2FXO0K3iO9
+	 3EaPbmM0LdB5X9uoeeVevi3Nr33PNkb5rsB5RWKSFqCEBs0Hrs2TY8bonU5bTx5ggS
+	 WrzcMstwg6qwBY/Vj81zXwX1FihSDbKTzF3WnqF0Q+AkOrHjSLRAofIoFvtTQg2mOe
+	 ic6XsgkO07XEb+B2svnnrdK3v1+XqngBaDKPsbeae31f/ON7xHzi3cH55UNqNJcggS
+	 DzRmrHbAxBztaTmvvFlYFcER6hVBb5/v46mu8T3pp2iPfvxJ6bcZasOVTCon86U0cq
+	 EyHpGrNNKtrNQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Changcheng <chenchangcheng@kylinos.cn>,
-	Narsimhulu Musini <nmusini@cisco.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+Cc: Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kartilak@cisco.com,
-	sebaddel@cisco.com,
-	James.Bottomley@HansenPartnership.com,
-	linux-scsi@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] scsi: snic: Fix SCSI host leak on workqueue allocation failure
-Date: Mon, 19 Oct 2026 09:47:45 -0400
-Message-ID: <20261019135441.1420968-174-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/amdgpu: Fix kobject cleanup in xcp sysfs
+Date: Mon, 19 Oct 2026 09:47:46 -0400
+Message-ID: <20261019135441.1420968-175-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,119 +56,62 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 12e67eb89eb2b9516685c744d3f7de0a2d1bd701 ]
+[ Upstream commit 62d8b452615fd7a61976a1372bb81937807968c3 ]
 
-In snic_add_host(), if scsi_add_host() succeeds but
-alloc_ordered_workqueue() fails, the function returns -ENOMEM with
-shost->work_q left as NULL. The caller's error path then calls
-snic_del_host(), which returns early when !shost->work_q without calling
-scsi_remove_host(). The Scsi_Host remains registered in sysfs as a zombie
-device even after the probe has failed. This causes:
+Fix the indexing issue. Release the kobject whose init/add failed, and
+unwind the successfully added ones.
 
- - The leaked host remains visible in /sys/class/scsi_host/ after probe
-   failure, with state "running".
-
- - Subsequent SCSI host numbering is permanently shifted (the leaked host
-   ID from ida_alloc() is never reclaimed).
-
- - Memory leak: the Scsi_Host allocation can never be freed because
-   device_add() took a reference that can only be released by device_del()
-   inside scsi_remove_host().
-
-Fix by adding scsi_remove_host() in the workqueue allocation failure path
-inside snic_add_host(), undoing the successful scsi_add_host() before
-returning the error. This is cleaner than modifying snic_del_host() because
-snic_del_host() is called from a shared error label that also serves paths
-where snic_add_host() was never invoked.
-
-Reproducer (requires no real SNIC hardware):
-
- - Build CONFIG_SCSI_SNIC=y (built-in)
-
- - Add snic.test_mode=1 snic.inject_wq_fail=1 to kernel cmdline
-
- - Boot with a PCI device matching the snic driver (e.g. QEMU edu device,
-   PCI ID 0x1234:0x11e8, temporarily added to the driver's PCI ID table)
-
-Before the fix:
-
-  # /sys/class/scsi_host/ contains a zombie host0:
-  $ cat /sys/class/scsi_host/host0/proc_name
-  snic_scsi
-  $ cat /sys/class/scsi_host/host0/state
-  running
-  # ata_piix gets host1, host2 (host0 stuck):
-  scsi host1: ata_piix
-  scsi host2: ata_piix
-
-After the fix:
-
-  # host0 is properly freed and reused by ata_piix:
-  scsi host0: ata_piix
-  scsi host1: ata_piix
-  # No zombie host in /sys/class/scsi_host/
-
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Acked-by: Narsimhulu Musini <nmusini@cisco.com>
-Link: https://patch.msgid.link/20260727073438.209673-1-chenchangcheng@kylinos.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The buggy
-`snic_add_host()` / `snic_del_host()` error path is present here and the
-one-line fix applies cleanly.
+The local tree is **6.18.53**. The buggy XCP sysfs cleanup is present
+here; the patch is a small, obviously-correct error-path kobject
+leak/WARN fix, so it should be backported.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[scsi: snic:] [Fix] [SCSI host leak when workqueue allocation
-fails after scsi_add_host() succeeds]`
+Record: **[drm/amdgpu] [Fix] kobject cleanup in xcp sysfs** — intended
+to correct failed/partial kobject teardown for compute-partition sysfs.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Fixes:` **absent** (expected for this review pipeline)
-- `Cc: stable@vger.kernel.org` **absent** (expected)
-- `Acked-by: Narsimhulu Musini <nmusini@cisco.com>` — original SNIC
-  driver author / Cisco maintainer
-- `Link: https://patch.msgid.link/20260727073438.209673-1-
-  chenchangcheng@kylinos.cn`
-- `Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>` (author)
-- `Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>` (SCSI
+- **Reviewed-by:** Alex Deucher `<alexander.deucher@amd.com>` (amdgpu
   maintainer)
-- `Reported-by:` none
-- `Tested-by:` none (author included a concrete reproducer in the body)
-- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
-  if present
+- **Signed-off-by:** Lijo Lazar `<lijo.lazar@amd.com>` (author)
+- **Signed-off-by:** Alex Deucher `<alexander.deucher@amd.com>`
+- Ignore pipeline tags: `[Upstream commit
+  62d8b452615fd7a61976a1372bb81937807968c3]`, `Signed-off-by: Sasha
+  Levin`
+- **No Fixes:, Reported-by, Tested-by, Link:, or Cc: stable** (absence
+  is expected for this review)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `scsi_add_host()` succeeds, then `alloc_ordered_workqueue()`
-  fails. `snic_add_host()` returns `-ENOMEM` with `shost->work_q ==
-  NULL`. Probe goes to a shared error label that calls
-  `snic_del_host()`, which returns immediately when `!shost->work_q` and
-  **never** calls `scsi_remove_host()`.
-- **Symptoms:** zombie `/sys/class/scsi_host/hostN` with state
-  `running`; SCSI host ID from `ida_alloc()` never reclaimed (later
-  hosts are numbered higher); `Scsi_Host` never freed because
-  `device_add()`’s reference is only dropped by `device_del()` inside
-  `scsi_remove_host()`.
-- **Version info:** none in the message. Code dates to the original
-  driver (v4.2).
-- **Root cause:** error-path rollback does not undo a successful
-  `scsi_add_host()` when workqueue alloc fails. Author correctly avoids
-  changing `snic_del_host()` because that helper is also used on paths
-  that never called `snic_add_host()`.
+- **Bug:** “indexing issue” in XCP sysfs kobject unwind; failed
+  `kobject_init_and_add()` is not released; successfully added kobjects
+  are not unwound.
+- **Symptom:** leaked kobjects / leftover sysfs on the init error path;
+  extra `kobject_put()` on the failed object when the loop runs with `i
+  >= 2`.
+- **Version info in message:** none.
+- **Root cause (author):** wrong index in the cleanup loop, plus missing
+  `kobject_put()` for the kobject whose init/add failed.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. Explicit leak/rollback fix with a documented
-failure mode and a reproducer.
+Record: Not disguised. Subject and body state a real cleanup bug. The
+original loop `for (j = 0; j < i; j++) { xcp_res = &xcp_cfg->xcp_res[i];
+... }` using **`i` instead of `j`** is a copy-paste error, not style
+cleanup.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -176,85 +119,77 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/scsi/snic/snic_main.c` — **+1 line**
-- Function: `snic_add_host()`
-- Scope: single-file surgical error-path fix
+- **File:** `drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c` — **+5 / −3** (net
+  +2)
+- **Function:** `amdgpu_xcp_cfg_sysfs_init()`
+- **Scope:** single-file surgical error-path fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** on `!shost->work_q`, log, set `ret = -ENOMEM`, return.
-  Host stays registered.
-- **After:** same path also calls `scsi_remove_host(shost)` before
-  returning `-ENOMEM`.
-- Path: probe error path only (`snic_probe()` → `snic_add_host()` after
-  `scsi_add_host()` succeeded).
-
-Verified call chain in this tree:
-
-```642:649:drivers/scsi/snic/snic_main.c
-        ret = snic_add_host(shost, pdev);
-        if (ret) {
-                ...
-                goto err_get_conf;
-        }
-```
-
-`err_get_conf` later calls `snic_del_host()` (line 690). That helper
-still early-returns on `!shost->work_q`, so after this fix it will not
-call `scsi_remove_host()` a second time.
+Record (verified against parent `6a08c18ac122` / `v6.18.53`):
+1. Drop unused `j` after the loop rewrite.
+2. On `kobject_init_and_add()` failure: **before** `goto err` with no
+   put; **after** `kobject_put(&xcp_res->kobj)` then `goto err` (matches
+   `kobject_init_and_add()` docs: put is required even on failure
+   because `kobject_init()` already ran).
+3. Unwind loop: **before** `for (j = 0; j < i; j++)` always uses
+   `xcp_res[i]` (the failed slot), never `xcp_res[j]`; **after** `while
+   (i--)` puts indices `i-1 … 0` (the successfully added ones).
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Error-path / resource leak.** Missing undo of
-`scsi_add_host()` when workqueue allocation fails. Adding
-`scsi_remove_host()` is the matching rollback. Also reclaims the host ID
-(`ida_free()` in `scsi_host_dev_release()` after `device_del()`).
+Record: **Error-path resource leak + incorrect kobject put** (refcount
+WARN / leak).
+- `kobject_init_and_add()` always inits; a failed add still needs one
+  `kobject_put()`.
+- The old loop used `i` instead of `j`, so it never released successful
+  children and, when `i >= 2`, put the **same** failed kobject `i`
+  times.
+- `num_res` is `ARRAY_SIZE(max_res)` = `AMDGPU_XCP_RES_MAX` = **4**
+  (`aqua_vanjaram_get_xcp_res_info()`), so `i` can be 2 or 3.
+- First extra put: `kref` hits 0 → `kobject_cleanup()` (name freed).
+  Further puts: `refcount_dec_and_test()` on 0 → **refcount underflow
+  WARN**. Successful children and the parent `xcp_cfg` leak because
+  those child refs are never dropped.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: one matching rollback for the successful
-  `scsi_add_host()`.
-- Not changing `snic_del_host()` avoids calling `scsi_remove_host()` on
-  hosts that were never added (`err_get_conf` is also used when
-  `snic_get_conf()` fails **before** `snic_add_host()`).
-- Regression risk: very low. `scsi_remove_host()` is the documented
-  pairing of `scsi_add_host()`. No double-remove: `snic_del_host()`
-  still skips when `work_q` is NULL. No lock, API, or data-structure
-  change.
+Record: Obviously correct and minimal. Success path unchanged. `while
+(i--)` after putting the failed index is the usual pattern (`i=0` does
+not unwind further). Regression risk is **low** (error path only; no
+API/lock/hot-path change). `xcp_cfg_res_sysfs_ktype` has no `.release`
+(embedded kobject); putting it only cleans kobject state, it does not
+`kfree` the parent — that is correct.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Buggy control flow introduced in `c8806b6c9e824f` (“snic: driver for
-  Cisco SCSI HBA”, Narsimhulu Musini, 2015-05-29).
-- First appeared: **v4.2-rc1**. Present in this tree (`git merge-base
-  --is-ancestor c8806b6c9e824f HEAD` succeeded).
-- Nearby `alloc_ordered_workqueue()` rewrite: `6411307b63286e`
-  (v6.12-rc1) — formatting only; the leak predates that.
+Record: Buggy loop introduced in **`4ae86dc878504`** (“drm/amdgpu: Add
+sysfs nodes to get xcp details”, Lijo Lazar, 2024-09-09). `git describe`
+→ `v6.11-rc7-1469-g4ae86dc878504`; contained in **v6.12**. Present in
+this 6.18 tree (`git merge-base --is-ancestor 4ae86dc878504 HEAD`
+succeeded).
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Introducer is the original driver commit above,
-which **is** in this tree.
+Record: No `Fixes:` tag. The introducing commit is in this tree. No
+later same-file fix for this indexing bug besides this candidate.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `snic_main.c` history is workqueue-name cleanup
-(`6411307b63286`, `b97c0741c7dcc`), slab-name uniqueness, const
-template, SPDX. **No prior leak fix.** Standalone one-line patch, not
-“X/Y” of a series (msgid `...-1` is a single patch).
+Record: Nearby history is XCP sysfs feature work (`10072642541bd`,
+`04e9101766dfe`, `cbbab29246c8b`) plus unrelated RAS/bounds fixes. This
+is **standalone**, not `patch X/Y`. No extra prerequisite refactor is
+required for the hunk.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: `git log --author="Chen Changcheng" -- drivers/scsi/` in this
-tree is empty (author is not a historical SNIC contributor here). Weight
-instead: **Acked-by original driver author** Musini, and SCSI maintainer
-Martin K. Petersen applied it.
+Record: Lijo Lazar is a regular amdgpu/XCP contributor and authored the
+original sysfs nodes. Alex Deucher (maintainer) reviewed and signed off.
+Related author work on this file is XCP feature/fix traffic, not a
+hidden series dependency for this hunk.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None. Uses existing `scsi_remove_host()`. Reproducer mentions
-`snic.test_mode` / `snic.inject_wq_fail`; those parameters **do not
-exist in this tree** (local test harness only). The fix itself does not
-depend on them.
+Record: Diff only uses existing `kobject_init_and_add` / `kobject_put`
+and the existing `err` label. **Applies standalone.** Upstream SHA
+`62d8b452615fd7a61976a1372bb81937807968c3` is **not** an ancestor of
+this 6.18 HEAD (expected; it is a later mainline commit).
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -262,153 +197,132 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c <sha>` cannot be used: the candidate is **not** in this
-  checkout (and the first SHA tried was an unrelated merge).
-- Submission: msgid `20260727073438.209673-1-chenchangcheng@kylinos.cn`,
-  2026-07-27.
-- Thread: https://lists.openwall.net/linux-kernel/2026/07/27/428 and
-  https://lkml.iu.edu/hypermail/linux/kernel/2607.3/06578.html
-- Single revision (no v2/v3). Diff matches the candidate (1 line).
-- No NAK. Cisco maintainer Acked-by in-thread. No reviewer asked for
-  `Cc: stable`.
-- lore.kernel.org fetches returned HTTP 403 from this environment.
+- `b4 dig -c 62d8b452…` →
+  https://patch.msgid.link/20260617085435.723531-1-lijo.lazar@amd.com
+- `b4 dig -a`: **v1 only** (2026-06-17), no v2/v3.
+- Thread (mbox): body matches the committed message; **Alex Deucher
+  Reviewed-by**; **no NAK**.
+- WebFetch of lore.kernel.org returned **403**; discussion recovered via
+  `b4 dig -m`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: To/Cc included Cisco SNIC maintainers (`nmusini`, `kartilak`,
-`sebaddel`), James Bottomley, Martin K. Petersen, linux-scsi. Ack from
-Musini; applied by Petersen.
+Record (`b4 dig -w`): To `amd-gfx@lists.freedesktop.org`; Cc Hawking
+Zhang, Alexander Deucher, Asad Kamal, Candice Li. Maintainer reviewed.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Author-found with an injected workqueue-fail
-reproducer. Before/after sysfs and host-numbering evidence is in the
-message.
+Record: No Reported-by / syzbot / bugzilla. Found by code inspection of
+the unwind path. No user crash log.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone `[PATCH]`, not part of a multi-patch series.
+Record: Standalone single patch, not a multi-patch series.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** — `https://lore.kernel.org/stable/?q=...`
-returned 403. No evidence of a prior stable NAK.
+Record: **UNVERIFIED** — lore.kernel.org/stable WebFetch returned 403.
+No `Cc: stable` in the amd-gfx mbox.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `snic_add_host()` (modified). Related: `snic_del_host()`,
-`snic_probe()`, `scsi_add_host()`, `scsi_remove_host()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `amdgpu_xcp_cfg_sysfs_init()` only.
 
 **Step 5.2: TRACE CALLERS**
 Record:
-- `snic_add_host()` — only from `snic_probe()` (PCI probe).
-- `snic_del_host()` — `snic_probe()` error path (`err_get_conf`) and
-  `snic_remove()`.
-- Reachable on Cisco SNIC PCI probe, including under memory pressure
-  when `alloc_ordered_workqueue()` fails.
+- `amdgpu_xcp_cfg_sysfs_init()` ← `amdgpu_xcp_sysfs_init()`
+  (`amdgpu_xcp.c`)
+- ← `amdgpu_device.c` (~line 4948) during device init, with other amdgpu
+  sysfs setup
+- Early-out if `!adev->xcp_mgr`
 
 **Step 5.3: TRACE CALLEES**
-Record: `scsi_add_host()`, `alloc_ordered_workqueue()`,
-`scsi_remove_host()` (new). `scsi_remove_host()` sets host state,
-unregisters transport, `device_unregister(&shost->shost_dev)`,
-`device_del(&shost->shost_gendev)`. Final free and
-`ida_free(&host_index_ida, shost->host_no)` happen in
-`scsi_host_dev_release()` once refs drop.
+Record: `kobject_init_and_add`,
+`sysfs_create_files`/`sysfs_create_file`, `amdgpu_xcp_get_res_info`,
+`kobject_put`, `sysfs_remove_*`. No new locks or allocations besides
+existing ones.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: PCI probe (`snic_probe` → `snic_add_host`). Not a syscall hot
-path. Userspace-visible effect when it fires: leftover
-`/sys/class/scsi_host/` entry and shifted host numbers for **other**
-SCSI drivers (author showed `ata_piix` taking host1/host2 because host0
-was stuck).
+Record: GPU probe/init for devices that create `xcp_mgr`. That is
+**`aqua_vanjaram_init_soc_config()`**, only for **GC IP 9.4.3, 9.4.4,
+9.5.0** (MI300/MI325/MI350-class Instinct). Userspace cannot directly
+call this; trigger is `kobject_init_and_add()` failure (ENOMEM / name
+collision) during driver load. Function is `void`; probe **continues**
+even on failure, so leaked objects live until unload/reboot.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: This `if (!shost->work_q) return;` before `scsi_remove_host()`
-is unique to snic. Sibling Cisco `fnic` adds the host later and has a
-dedicated `err_out_scsi_add_host` label. No duplicate snic copy of this
-bug.
+Record: No remaining `for (j = 0; j < i; j++)` in this file.
+`amdgpu_xcp_cfg_sysfs_fini()` iterates `0 .. num_res-1` correctly. Bug
+is local to this init unwind.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** Local tree: `p-6.12-3-gc504cf0baa3d8`, **6.12.111**,
-branch `pending-6.12`.
-
-```305:323:drivers/scsi/snic/snic_main.c
-        if (!shost->work_q) {
-                SNIC_HOST_ERR(shost, "Failed to Create ScsiHost wq.\n");
-
-                ret = -ENOMEM;
-        }
-
-        return ret;
-} /* end of snic_add_host */
-
-static void
-snic_del_host(struct Scsi_Host *shost)
-{
-        if (!shost->work_q)
-                return;
-
-        destroy_workqueue(shost->work_q);
-        shost->work_q = NULL;
-        scsi_remove_host(shost);
-}
-```
-
-Bug present since v4.2.
+Record: **Yes.** Tree is `v6.18.53-5049-g0f0bdc2b0dffb` (`Makefile`
+6.18.53, branch `autosel`). `v6.18.53:amdgpu_xcp.c` still has `int i, r,
+j, rid, mode;`, `if (r) goto err;` without put, and `for (j = 0; j < i;
+j++)` using `xcp_res[i]`. Introduced in v6.12-era commit
+`4ae86dc878504`, ancestor of 6.18.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply.** Surrounding hunk matches the candidate exactly
-(`old found: True`, `new already applied: False`).
+Record: **Clean apply.** Same function, same loop, same identifiers.
+Context in 6.18 uses `kzalloc(sizeof(*xcp_cfg), GFP_KERNEL)` rather than
+a later `kzalloc_obj` helper; that is outside the hunk. No conflicting
+refactor in this file for these lines.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: `git log --grep` for this leak / `snic_add_host` / “workqueue
-allocation failure” under `drivers/scsi/` found **no** prior fix.
+Record: No other commit on this file fixes this indexing/put bug.
+`v6.18.53` does not contain the fix (`git merge-base --is-ancestor
+4fbcdfa45e537 v6.18.53` failed).
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: SCSI driver `drivers/scsi/snic/` (Cisco PCI-Express SCSI HBA,
-`CONFIG_SCSI_SNIC`). **PERIPHERAL** hardware, but host-number leak is
-**system-wide** for SCSI host IDs.
+Record: **drm/amdgpu XCP (compute partition) sysfs.** Criticality:
+**IMPORTANT** for MI300-class GPU servers; **PERIPHERAL** for typical
+desktop/laptop amdgpu. Not mm/VFS/net core.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature/quiet. Driver added 2015; recent churn is mechanical
-SCSI-wide workqueue cleanup. Long-standing bug, not a new-code issue.
+Record: amdgpu/XCP is actively developed in this tree, but this
+particular unwind has been wrong since the 6.12-era feature landed — a
+long-standing bug, not last-month code.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific trigger (Cisco SNIC), **plus** any other SCSI
-host on the same machine (permanent host ID shift). Config:
-`CONFIG_SCSI_SNIC`.
+Record: **Driver/platform-specific** — AMD Instinct GC 9.4.3/9.4.4/9.5.0
+with `xcp_mgr`. Consumer GPUs without XCP are unaffected (`if
+(!adev->xcp_mgr) return`).
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Probe-time `alloc_ordered_workqueue()` failure (ENOMEM /
-workqueue creation failure). Uncommon, not a hot path, not unprivileged-
-syscall. Once it happens, the zombie host and ID leak persist until
-reboot.
+Record: `kobject_init_and_add()` failure while creating
+`compute_partition_config/{xcc,dma,dec,jpeg}` during probe. **Uncommon**
+(ENOMEM or sysfs name clash). Not a hot path; not directly triggerable
+by an unprivileged syscall except via memory pressure during driver
+load. Timing race: no.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
 Record:
-- Failure: unreclaimable `Scsi_Host`, zombie sysfs device in
-  `SHOST_RUNNING`, leaked host ID.
-- Severity: **HIGH** for leak class (not a panic). Worse than a one-shot
-  `kfree` leak because the object stays in sysfs and shifts numbering
-  for later hosts.
+- Leak of child kobjects + parent `xcp_cfg` (sysfs leftovers; `xcp_cfg`
+  never stored so `fini` cannot recover it).
+- If failure is at `i >= 2`: **refcount underflow WARN** on repeated put
+  of the failed kobject.
+- Not a happy-path oops, deadlock, or filesystem corruption.
+- Severity: **MEDIUM–HIGH** on that error path (WARN + leak), **LOW**
+  frequency.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** medium for SNIC users under memory pressure; also
-  prevents global SCSI host-id skew.
-- **Risk:** very low (1 line, error path only, standard SCSI rollback).
-- **Ratio:** favorable.
+- **Benefit:** medium for affected GPUs — correct teardown, no leftover
+  sysfs, no refcount WARN; zero effect on the success path.
+- **Risk:** very low — 5-line error-path-only change, maintainer-
+  reviewed.
+- **Ratio:** favorable for stable.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -417,107 +331,135 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real error-path leak with concrete sysfs + host-ID consequences,
-  reproduced by the author
-- Buggy code is in this 6.12 tree (since v4.2)
-- One-line, obviously correct pairing of `scsi_remove_host()` with
-  successful `scsi_add_host()`
-- No double-remove on the shared `err_get_conf` path
-- Applies cleanly; no prerequisites
-- Acked by original driver author; applied by SCSI maintainer
-- Probe-path resource leaks are a common, accepted stable class
+- Real, obvious bug: cleanup loop uses `i` not `j`.
+- Missing `kobject_put()` after failed `kobject_init_and_add()`
+  (documented API contract in `lib/kobject.c`).
+- Can leak kobjects/sysfs and, for `i >= 2` of 4 resources, trigger
+  refcount underflow WARN.
+- Tiny (+5/−3), success path untouched.
+- Buggy code has been in tree since ~v6.12 and **is in 6.18.53**.
+- Reviewed-by amdgpu maintainer; standalone; applies cleanly.
 
 AGAINST:
-- Trigger is rare (workqueue alloc fail during probe)
-- SNIC is a specialized Cisco HBA (small population)
-- Not a crash, UAF, or security bug
-- Reproducer uses out-of-tree inject knobs (does not affect the patch)
+- Error path only; `kobject_init_and_add()` rarely fails.
+- Init function is `void`; probe does not fail, so users may not notice.
+- Limited to XCP-capable Instinct GPUs.
+- No syzbot/user report, no Fixes:/Cc: stable (not a negative by
+  itself).
+- One-time probe leak, not a hot-path leak.
 
 UNRESOLVED:
-- Stable-list discussion (lore 403)
-- Upstream SHA not in this checkout (`b4 dig` on a local commit was not
-  possible)
+- Could not query lore.kernel.org/stable (HTTP 403).
+- Could not use semcode (namespace not present).
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — 1-line rollback; author
-   showed before/after; maintainer Ack
-2. Fixes a real bug that affects users? **PASS** — zombie sysfs host +
-   leaked ID + unreclaimable `Scsi_Host`
-3. Important issue? **PASS** — unrecoverable resource leak that also
-   skews SCSI host numbering for other drivers
-4. Small and contained? **PASS** — +1 line, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — code matches; clean apply
+1. Obviously correct and tested? **PASS** — logic matches kobject rules;
+   maintainer Reviewed-by.
+2. Fixes a real bug that affects users? **PASS** — wrong unwind is in
+   6.18; MI300-class systems hit this init.
+3. Important issue? **PASS** — leak plus possible kernel refcount WARN;
+   not a universal panic, but a real stability/correctness bug on a
+   production GPU path.
+4. Small and contained? **PASS** — 8-line hunk, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — buggy code is in `v6.18.53`;
+   context matches.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary error-
-path leak fix.
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
+bugfix.
 
 **Step 9.4: MAKE YOUR DECISION**
-This is a real, long-standing probe rollback bug in this 6.12 tree. The
-fix is minimal, already reviewed, and undoes `scsi_add_host()` exactly
-when that call succeeded and the workqueue did not. Risk of regression
-is negligible; leaving it out leaves a zombie SCSI host and a leaked
-host ID if SNIC probe hits ENOMEM.
+This should be backported to **this** 6.18.y tree. The indexing bug is
+unambiguous, the missing put is required by the kobject API, the change
+is surgical, and the code has been wrong for the entire lifetime of this
+sysfs feature in 6.18.
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Parsed tags: Acked-by Musini; Link msgid
-  `20260727073438.209673-1`; no Fixes/stable Cc (expected)
-- [Phase 2] Diff: +1 line in `snic_add_host()` error path;
-  `scsi_remove_host(shost)` before `-ENOMEM`
-- [Phase 2] Confirmed `snic_probe` uses shared `err_get_conf` which
-  calls `snic_del_host()` even when `snic_add_host()` was never invoked
-  (lines 630–690)
-- [Phase 2] Confirmed `snic_del_host()` early-return on `!work_q` skips
-  `scsi_remove_host()` — the leak mechanism
-- [Phase 3] `git blame`: buggy code from `c8806b6c9e824f` (v4.2-rc1);
-  ancestor of HEAD
-- [Phase 3] `git log --oneline -20 -- drivers/scsi/snic/snic_main.c`: no
-  prior leak fix
-- [Phase 3] `git log --grep` for this leak under `drivers/scsi/`: empty
-- [Phase 3] `git log --author="Chen Changcheng" -- drivers/scsi/`: no
-  prior commits in this tree
-- [Phase 4] `b4 dig -c` on a tree SHA: not applicable (candidate not in
-  checkout); used msgid/openwall/lkml instead
-- [Phase 4] Openwall/lkml: single-version patch, Acked-by Musini, no NAK
-- [Phase 4] lore.kernel.org and lore stable search: HTTP 403 —
-  UNVERIFIED
-- [Phase 5] Callers: `snic_add_host` only from `snic_probe`;
-  `snic_del_host` from probe error + remove
-- [Phase 5] `scsi_remove_host()` → `device_del()`;
-  `scsi_host_dev_release()` does `ida_free(host_no)`
-- [Phase 5] `test_mode`/`inject_wq_fail` not in this tree (reproducer-
-  only)
-- [Phase 6] `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion`: 6.12.111
-- [Phase 6] Surrounding code identical to candidate hunk; patch not
-  already applied
-- [Phase 8] Failure mode: zombie sysfs SCSI host + permanent host-ID
-  leak; severity HIGH for leak class, rare trigger
-- UNVERIFIED: whether this was already discussed on stable@ (lore 403)
+**What it solves for stable users:** On MI300-class amdgpu probe, if
+creating a partition-config resource kobject fails, 6.18 currently leaks
+the kobjects that did get added (and can WARN on extra puts of the
+failed one). The fix releases the failed kobject and actually unwinds
+`0..i-1`.
 
-This meets stable-kernel rules for this tree: real leak, small contained
-fix, clean apply, no new API.
+**Risk vs benefit:** Benefit is correct error-path teardown with no
+success-path behavior change; risk is negligible.
+
+**Concerns:** Trigger is uncommon; impact is limited to XCP GPUs. That
+does not make the patch unsuitable — it applies cleanly and does not
+need other commits.
+
+Verification:
+- [Phase 1] Tags: Reviewed-by Alex Deucher; SOB Lijo Lazar + Deucher; no
+  Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: `amdgpu_xcp_cfg_sysfs_init()` +5/−3; add `kobject_put`
+  on failed init/add; `for (j=0;j<i;j++)` + `xcp_res[i]` → `while (i--)`
+- [Phase 2] Parent dump of `amdgpu_xcp.c` confirmed the `i`-instead-
+  of-`j` bug
+- [Phase 2] `lib/kobject.c`: `kobject_init_and_add()` inits then adds;
+  comments require `kobject_put()` on error
+- [Phase 2] Extra puts hit `refcount_dec_and_test()` underflow WARN
+  (`include/linux/refcount.h`)
+- [Phase 3] `git blame` on parent: lines from `4ae86dc878504` (v6.12
+  era)
+- [Phase 3] `git merge-base --is-ancestor 4ae86dc878504 HEAD` → yes;
+  `62d8b452` not ancestor of this 6.18 HEAD
+- [Phase 3] `git log --oneline -20 -- amdgpu_xcp.c`: standalone, not a
+  series
+- [Phase 4] `b4 dig -c 62d8b452`: lore msgid
+  20260617085435.723531-1-lijo.lazar@amd.com
+- [Phase 4] `b4 dig -a`: v1 only; `b4 dig -w`: amd-gfx + Deucher et al.
+- [Phase 4] mbox: Deucher Reviewed-by; no NAK; no stable nomination
+- [Phase 4] lore.kernel.org WebFetch 403 — UNVERIFIED for stable@
+  archive
+- [Phase 5] callers: `amdgpu_xcp_sysfs_init` ← `amdgpu_device.c` probe;
+  `xcp_mgr` only from `aqua_vanjaram_init_soc_config` for GC
+  9.4.3/9.4.4/9.5.0
+- [Phase 5] `num_res = ARRAY_SIZE(max_res)` = `AMDGPU_XCP_RES_MAX` = 4
+- [Phase 5] no semcode — used grep/read
+- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb; `make
+  kernelversion` 6.18.53
+- [Phase 6] `git show v6.18.53:amdgpu_xcp.c` still has the buggy loop
+- [Phase 8] Failure: leak + possible refcount WARN on probe error path;
+  not a common-path oops
+- UNVERIFIED: whether stable@ ever discussed this commit (lore 403)
 
 **YES**
 
- drivers/scsi/snic/snic_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/snic/snic_main.c b/drivers/scsi/snic/snic_main.c
-index 1c24517e4e650..912f9f15dddc3 100644
---- a/drivers/scsi/snic/snic_main.c
-+++ b/drivers/scsi/snic/snic_main.c
-@@ -305,6 +305,7 @@ snic_add_host(struct Scsi_Host *shost, struct pci_dev *pdev)
- 	if (!shost->work_q) {
- 		SNIC_HOST_ERR(shost, "Failed to Create ScsiHost wq.\n");
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
+index 1083db8cea2eb..6059227c53150 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
+@@ -901,7 +901,7 @@ static void amdgpu_xcp_cfg_sysfs_init(struct amdgpu_device *adev)
+ {
+ 	struct amdgpu_xcp_res_details *xcp_res;
+ 	struct amdgpu_xcp_cfg *xcp_cfg;
+-	int i, r, j, rid, mode;
++	int i, r, rid, mode;
  
-+		scsi_remove_host(shost);
- 		ret = -ENOMEM;
+ 	if (!adev->xcp_mgr)
+ 		return;
+@@ -947,14 +947,16 @@ static void amdgpu_xcp_cfg_sysfs_init(struct amdgpu_device *adev)
+ 					 &xcp_cfg_res_sysfs_ktype,
+ 					 &xcp_cfg->kobj, "%s",
+ 					 xcp_res_names[rid]);
+-		if (r)
++		if (r) {
++			kobject_put(&xcp_res->kobj);
+ 			goto err;
++		}
  	}
  
+ 	adev->xcp_mgr->xcp_cfg = xcp_cfg;
+ 	return;
+ err:
+-	for (j = 0; j < i; j++) {
++	while (i--) {
+ 		xcp_res = &xcp_cfg->xcp_res[i];
+ 		kobject_put(&xcp_res->kobj);
+ 	}
 -- 
 2.53.0
 
