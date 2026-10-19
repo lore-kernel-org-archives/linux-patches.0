@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8EE4D1F8B;
-	Mon, 19 Oct 2026 14:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715894D1FB0;
+	Mon, 19 Oct 2026 14:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418503; cv=none; b=SCSGRteuEuVdmmuIR0nXq2icIk4+L3oORrLXcBMA86EK83BGXk9lDbNR/dcBF0sDfbwqfUme8+PNZ8+LezBIJVrPyXDN8M7QJgGacHCCPb94FUfhCPh2+Xwwcle39C/FcsmaeOmHIvoM2duHrVNhLAVEer4P9AalCZhxLjAPokk=
+	t=1792418505; cv=none; b=VkV8aRh/Y706+mlcLzMTX8b0w0GaVt1vG65D2cov69cE+KvkwVgFvOVxhKHsYURHyJd53Q26cpbcSYnZRFFD56kfOO3adUurt2VqkuZ3G7bOVFVAlZKG9CCL5SggYrHVr8cAk6dwuaGal0O3CiK9qnyxDlmZa/cWcZBGC5yiHlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418503; c=relaxed/simple;
-	bh=Pw16NMBKp4Tb7RpBxtRLoXIQzsakfGEM8SLKudZ+8JE=;
+	s=arc-20240116; t=1792418505; c=relaxed/simple;
+	bh=2VNeTNAdkZexvUQYw/aV00PLJtaFV4LY36AdV6DvVoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cNomdWyhUh1mtzIgymZsFFsWtOM3DouuOJSNAUnD+p81c3Dfd/fq+3y9zoCFQbNnlMDMOhIJXMd2Nq/dJ6mEP/fVpfn39S22oRtuwRZzpo+FVkmjONczgG7Ub7mLtHJj2UJqqNm0BZU06/XlsxQTJWrYEIwyAPmqEfjv95Y5DVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bb0BZXX+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eowR8MQXbpK6Bau4ZWcNiEo4tOfYrpliQd/4XjAy15+OeZH8g6PjQqkOMvsNiGsgE3ODyESvHb6TqLHr/FoTRa2Rxtwox8A/hjND37YV1cxgY3tYMHpbOBw3hpVrKtONLNcVitGsk3aaehKFWMOE2OqhqhtKrM/8s/COTwpBgVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C8ngBZQI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bb0BZXX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0992C1F000C9;
-	Mon, 19 Oct 2026 14:01:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C8ngBZQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A401F000C4;
+	Mon, 19 Oct 2026 14:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418500;
-	bh=vCYSX0KAdzMp4LUoB36agPXg/WOb5Qw+5T8Kzg7aaEc=;
+	s=k20260515; t=1792418502;
+	bh=nHFBcSULm0DfhTGaqeLamMS07HlHbJMEAnLLd80NT9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bb0BZXX+XXSb2TK8BkM7gxBi954yujRm0UpD3MDPufSsrMxxU/FkEf4gu+H1SvsJY
-	 YxdNc/MAcEYDhFXezh0wSMyDCpo6gbKE743Ww/+m0Gy58Oy1ggZymCWzZndOEb+sSn
-	 jLpLUivEEQFfxGm2pFEKMZOJH5vXPRKMv3nW/N+rmq2sU+pl934FjfiDN92DVH5X88
-	 xI34YrU499JZoCvDPYclaD4TUKF9XXkF0qZLnzjF7cUuAAYyjzE2Tw6eFMb+dEStqU
-	 Otw48UlEh+5rvgKZpHBbilza91rCTFgxl1Q0PuuQDiyMhnCmLxh+2m17XrYULJuO69
-	 ixAMwR6X9F5HQ==
+	b=C8ngBZQIr6tkVxb8tPjskOBAsDAjHlaWW2s7mre/eLFNUe1zr8eI4AKPwDF/ipK5j
+	 GghYOqmB3LwchxtBQIuNXum0KCo3D9mRiFCk3Z6oU0RgDhZQMhcxnUtC1fYq9DPXq7
+	 Uj1FeJdC/KlfeeeoEYW8LEEFWmt4sPw6kxxzdmsz9fSm8aGmxY71/iVjz9EWkytmgb
+	 pWJBQsTKp4F5BfaFRlJUxIOHvCue/aFSWbqsgWHqGWRryVKlXh5QKnXOtMxN6odDp4
+	 Xc4+vnPDUAeFGTjKl3wjIVo9zs4+x/ORWN05bYtkZLZ5/NneH+9REvGnyZOyfw5bVl
+	 fZK6o5zOcfHUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Huth <thuth@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Ruoyu Wang <ruoyuw560@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] smb: server: Free session data in user_session.c with kfree_sensitive()
-Date: Mon, 19 Oct 2026 09:49:44 -0400
-Message-ID: <20261019135441.1420968-293-sashal@kernel.org>
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18] memory: stm32_omm: initialize ret in stm32_omm_set_amcr
+Date: Mon, 19 Oct 2026 09:49:45 -0400
+Message-ID: <20261019135441.1420968-294-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,380 +56,421 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Huth <thuth@redhat.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 9a4bd6507c21f66e84dc021705a4b9d84773111e ]
+[ Upstream commit 1527acf2295cf2d6e11e3e9b121d63709667e6e7 ]
 
-struct ksmbd_session contains some arrays with sensitive information, like
-sess_key, smb3encryptionkey, smb3decryptionkey and smb3signingkey. Thus
-let's make sure that this information cannot leak via the heap and use
-kfree_sensitive() to free it.
+stm32_omm_set_amcr() returns ret after checking whether the AMCR value
+matches the device tree description. On the normal matching path ret is
+not otherwise assigned, so initialize it to 0 before the checks.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Link: https://patch.msgid.link/20260617182202.961843-1-ruoyuw560@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the local 6.12.111 code, the upstream commit, and the mailing-
-list thread. Compiling the nine-phase analysis next.
+The local tree is **6.18.53**. `stm32_omm_set_amcr()` in that tree still
+returns uninitialized `ret` on the AMCR-match path, and the one-line
+init is a real probe/resume correctness fix.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: Subject line**
-- Record: `[smb/ksmbd server] [Free / use kfree_sensitive] Wipe ksmbd
-  session objects (and Preauth_HashValue) so session keys cannot remain
-  in freed heap memory`
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[memory / stm32_omm] [initialize] [set ret=0 in
+stm32_omm_set_amcr so the AMCR-match success path does not return an
+uninitialized stack value]`
 
-**Step 1.2: Tags** (from upstream
-`d4a6d1c94f7a383c16fd5f5e912a39a640d1cb9d`; ignore pipeline SOBs)
-- No `Fixes:`
-- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Cc: stable`
-- `Acked-by: Namjae Jeon <linkinjeon@kernel.org>` (ksmbd maintainer)
-- `Signed-off-by: Thomas Huth <thuth@redhat.com>` (author)
-- `Signed-off-by: Steve French <stfrench@microsoft.com>` (CIFS
-  maintainer; present on the merged commit)
-- Candidate-prep copy also had `Signed-off-by: Namjae Jeon`; merged form
-  uses Acked-by instead
-- Record: Maintainer ack, no user report, no syzbot, no CVE tag
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record:
+- `Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>` (driver
+  maintainer; MAINTAINERS lists him for ST STM32 OCTO MEMORY MANAGER)
+- `Link:
+  https://patch.msgid.link/20260617182202.961843-1-ruoyuw560@gmail.com`
+- `Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>` (author)
+- `Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>` (memory-
+  controller maintainer; applied the patch)
+- No `Fixes:` tag (expected)
+- No `Cc: stable` (expected)
+- No `Reported-by:` / `Tested-by:` / syzbot / kernel test robot tags
+- Pipeline-only tags (`[Upstream commit ...]`, `Signed-off-by: Sasha
+  Levin`) ignored
 
-**Step 1.3: Body**
-- Record: `[Bug] ksmbd_session holds sess_key, smb3encryptionkey,
-  smb3decryptionkey, smb3signingkey and a Preauth_HashValue buffer, then
-  frees them with kfree(), so those secrets can remain in the slab.
-  [Symptom] Potential heap disclosure of SMB session/crypto keys after
-  session teardown. [Versions] None stated. [Root cause] Sensitive
-  material is returned to the allocator without memzero_explicit.]`
-- Cover letter (series v2 0/5): “It's good security practice to clear
-  sensitive data… and to use kfree_sensitive() for data that is returned
-  to the heap.”
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- Bug: `stm32_omm_set_amcr()` returns `ret` after the AMCR vs DT check.
+  On the matching (success) path, `ret` is not assigned `-EINVAL` and
+  may never have been assigned at all.
+- Symptom: the function can return a leftover stack value as an errno to
+  probe/configure/resume. Callers treat any non-zero as failure, so
+  garbage can fail device bring-up or resume; a lucky 0 would hide the
+  mismatch path’s intent.
+- Version info: none in the message.
+- Root cause (author): success path does not initialize `ret` before
+  `return ret`.
 
-**Step 1.4: Hidden bug fix?**
-- Record: Not disguised cleanup. It is an explicit secret-wipe / heap-
-  disclosure hardening change. Functional behavior of session teardown
-  is unchanged except the object is zeroed before free.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not disguised. This is an explicit uninitialized-variable fix
+(`int ret` → `int ret = 0`). Same class as KMSAN/compiler “used
+uninitialized” fixes even without a sanitizer tag.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: Inventory**
-- Record: `[fs/smb/server/mgmt/user_session.c: 2 insertions, 2
-  deletions] [function: ksmbd_session_destroy] [scope: single-file, two-
-  call-site surgical change]`
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `drivers/memory/stm32_omm.c` (`1` insertion, `1` deletion)
+- Function: `stm32_omm_set_amcr`
+- Scope: single-file, one-line surgical fix
 
-**Step 2.2: Code flow**
-- Record: Before, `ksmbd_session_destroy()` calls
-  `kfree(sess->Preauth_HashValue)` then `kfree(sess)` after logoff/file-
-  table/user/RPC/channel teardown. After, those two frees use
-  `kfree_sensitive()`, which `memzero_explicit`s the whole allocation
-  then `kfree`s. Normal teardown path only; not an error-path
-  restructure.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record: Before, `int ret, idx;` then the loop may assign `ret` from
+`of_address_to_resource()`, mismatch sets `ret = -EINVAL`, and the
+function always `return ret`. After, `ret` starts at `0`, so AMCR match
+returns success unless an earlier path already returned an error.
 
-Verified in this tree at:
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: Category **uninitialized data / logic correctness**. Mechanism:
+`ret` is assigned only by a successful `of_address_to_resource()`
+(inside a loop that can `continue`) or by `ret = -EINVAL` on AMCR
+mismatch. The success `return ret` is therefore undefined if the loop
+never assigned `ret`. Fix: default `ret = 0`.
 
-```159:175:fs/smb/server/mgmt/user_session.c
-void ksmbd_session_destroy(struct ksmbd_session *sess)
-{
-        if (!sess)
-                return;
+Verified from the pre-fix function (v6.18.53 and the original driver):
 
-        ksmbd_tree_conn_session_logoff(sess);
-        ksmbd_destroy_file_table(sess);
-        if (sess->user)
-                ksmbd_free_user(sess->user);
-        ksmbd_launch_ksmbd_durable_scavenger();
-        ksmbd_session_rpc_clear_list(sess);
-        free_channel_list(sess);
-        kfree(sess->Preauth_HashValue);
-        ksmbd_release_id(&session_ida, sess->id);
-        ida_destroy(&sess->tree_conn_ida);
-        kfree(sess);
-}
+```50:50:drivers/memory/stm32_omm.c
+        int ret = 0, idx;
 ```
 
-Sensitive fields verified in `struct ksmbd_session` (`user_session.h`):
-`sess_key`, `smb3encryptionkey`, `smb3decryptionkey`, `smb3signingkey`,
-plus `Preauth_HashValue`.
+(v6.18.53 still has `int ret, idx;` — confirmed via `git show
+v6.18.53:drivers/memory/stm32_omm.c`.)
 
-**Step 2.3: Bug mechanism**
-- Record: `[Memory safety / cryptographic material leftover] [kfree()
-  does not clear; kfree_sensitive() zeros via memzero_explicit then
-  frees. Category: information leak / CWE-226 class, not UAF/crash.]`
+Mismatch path:
 
-**Step 2.4: Fix quality**
-- Record: `[Obviously correct drop-in. kfree_sensitive() is NULL-safe
-  like kfree(). Session is kzalloc'd, so ksize/kfree_sensitive is the
-  right API. No API/lock/struct change.] [Regression risk: very low.
-  Docs warn kfree_sensitive is not for hot paths; session destroy is
-  logoff/expire/teardown, not a packet hot path.]`
+```116:121:drivers/memory/stm32_omm.c
+        if (amcr != read_amcr) {
+                dev_err(dev, "AMCR value not coherent with DT memory-map
+areas\n");
+                ret = -EINVAL;
+        }
 
-## Phase 3: Git history
+        return ret;
+```
 
-**Step 3.1: Blame**
-- Record: `ksmbd_session_destroy` and `kfree(sess->Preauth_HashValue)`
-  from `e2f34481b24db2` (“cifsd: add server-side procedures for SMB3”),
-  contained in `v5.15-rc1`. `kfree(sess)` from `822bc8ea514ecd` (2021).
-  Encryption key fields from `5a0ca7700591a5` (2021). Bug has been in
-  this code since ksmbd entered mainline.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct. Error returns in the loop are unchanged
+(`return ret` / `return -EFAULT`). AMCR mismatch still returns
+`-EINVAL`. Risk is negligible: initializing an errno to 0 cannot
+deadlock, cannot change a public API, and matches the intended success
+code.
 
-**Step 3.2: Fixes: tag**
-- Record: No `Fixes:` tag. Not applicable. Introducer is the original
-  ksmbd session code, which is in this tree (`git merge-base --is-
-  ancestor` of those SHAs vs HEAD succeeded).
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.3: File history**
-- Record: Recent 6.12.y ksmbd session work is lifetime/UAF/ida (e.g.
-  `9d58ac0643e5b` destroy tree_conn_ida, session leak/UAF fixes). None
-  already switches these two `kfree`s. Not blocked by later refactor in
-  this file.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: `int ret, idx;` and the `return ret` were introduced in
+`8181d061dcff1` (“memory: Add STM32 Octo Memory Manager driver”,
+2025-04-28 / committed 2025-05-07). Present from the first version of
+the driver. Driver first appears in **v6.16**; still present in v6.17
+and v6.18.
 
-**Step 3.4: Author**
-- Record: Thomas Huth (Red Hat); not the ksmbd maintainer. Series of
-  five independent kfree_sensitive conversions. Maintainer Namjae Jeon
-  acked and applied to `#ksmbd-for-next-next`. Steve French signed off
-  on the merge.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. The introducing commit is `8181d061dcff1`,
+which **is** an ancestor of v6.18 (`git merge-base --is-ancestor
+8181d061dcff1 v6.18` succeeded).
 
-**Step 3.5: Dependencies**
-- Record: Patch 3/5 of “Clear sensitive data before freeing it”. Sibling
-  patches touch `auth.c`, `user_config.c`, `connection.c`, `smb2pdu.c`.
-  This hunk does not call new helpers and does not depend on those other
-  diffs. `linux/slab.h` already included. `kfree_sensitive()` exists in
-  this tree (`mm/slab_common.c`, exported). Standalone apply: yes.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record (path-limited `git log --oneline -- drivers/memory/stm32_omm.c`):
+driver add, spelling, several probe/error-handling fixes,
+`syscon_regmap_lookup_by_phandle_args`, req2ack test fix. Intermediate
+commit `6d8b18ae647bb` changed syscon lookup but left `int ret, idx;`
+and `return ret` in place. This init patch is standalone, not “patch
+X/Y”.
 
-## Phase 4: Mailing list / external
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Ruoyu Wang has only this commit under `drivers/memory/`. The
+driver maintainer (Patrice Chotard) reviewed it. Memory-controller
+maintainer (Krzysztof Kozlowski) applied it.
 
-**Step 4.1: Original discussion**
-- Record: `[Lore]
-  https://patch.msgid.link/20260811154620.2425851-4-thuth@redhat.com`
-- Series: v1 (4 patches, 2026-08-10) → v2 (5 patches, 2026-08-11). This
-  file hunk is unchanged v1→v2.
-- v1 review (Namjae): also wipe `struct preauth_session` in
-  `ksmbd_preauth_session_destroy()`. That was handled in v2 patch 5
-  (`smb2pdu.c` session-setup paths), not in this commit. This commit is
-  still self-contained.
-- No NAK. No reviewer asked for `Cc: stable`. Maintainer: “Applied them
-  to #ksmbd-for-next-next.”
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None. The hunk only changes a local `int ret` declaration. No
+new helpers, types, or APIs. Can apply standalone.
 
-**Step 4.2: Recipients (b4 dig -w)**
-- Record: Thomas Huth; Namjae Jeon; Steve French; Sergey Senozhatsky;
-  Tom Talpey; linux-kernel@. Subsystem maintainers were on To/Cc and the
-  ksmbd maintainer acked.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.3: Bug report**
-- Record: No syzbot/bugzilla/CVE for this change. Author framed it as
-  hygiene; spots “identified with AI” then written by hand.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 1527acf2295cf2d6e11e3e9b121d63709667e6e7` →
+  https://patch.msgid.link/20260617182202.961843-1-ruoyuw560@gmail.com
+- `b4 dig -a`: single revision **v1 only**; committed version is that v1
+- Thread: author submission; Patrice Chotard `Reviewed-by`; Krzysztof
+  “Applied, thanks!” (mem-ctrl commit
+  `1527acf2295cf2d6e11e3e9b121d63709667e6e7`)
+- No NAK, no risk flags, no reviewer request for `Cc: stable`
+- lore.kernel.org WebFetch returned 403; discussion recovered via `b4
+  dig -m` and openwall/lkml mirrors
 
-**Step 4.4: Series context**
-- Record: Five independent wipe sites. This one wipes the session object
-  that actually embeds the SMB3 keys. Related remaining `kfree(chann)`
-  of `struct channel` (contains `smb3signingkey`) is not part of this
-  commit; that does not make this hunk incorrect.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): To/Cc included Patrice Chotard (driver
+maintainer), Krzysztof Kozlowski (memory controllers), Maxime Coquelin,
+Alexandre Torgue, linux-kernel, linux-stm32, linux-arm-kernel.
+Appropriate maintainers were on the patch and it was reviewed/applied.
 
-**Step 4.5: Stable list**
-- Record: No stable@ discussion found for this subject. Unverified that
-  it was previously rejected for stable.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No `Reported-by`, no bugzilla/syzbot link. No verified kernel-
+test-robot mail in the thread. The author describes the uninit return
+from code inspection.
 
-Upstream SHA (not in this branch):
-`d4a6d1c94f7a383c16fd5f5e912a39a640d1cb9d`. `git merge-base --is-
-ancestor d4a6d1c94f7a3 HEAD` failed (exit 1).
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone `[PATCH]`, not a series. No sibling patches required.
 
-## Phase 5: Semantic analysis
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: **UNVERIFIED** for lore.kernel.org/stable (HTTP 403). Web search
+and the saved mbox show no stable-list discussion of this subject.
 
-**Step 5.1: Functions**
-- Record: `ksmbd_session_destroy` only.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.2: Callers**
-- Record: Same file: `ksmbd_expire_session`, `ksmbd_sessions_deregister`
-  (two sites), `ksmbd_user_session_put`, `__session_create` error path.
-- `ksmbd_user_session_put` is used from `smb2pdu.c` (session
-  setup/logoff), `server.c`, `auth.c`, and register failure.
-- Context: SMB session lifetime (logoff, expire, connection teardown,
-  create failure). Not IRQ. Reachable from a connected SMB client.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `stm32_omm_set_amcr` only. (semcode MCP not available; used hunk
+headers + `rg`.)
 
-**Step 5.3: Callees**
-- Record: tree-connect logoff, file table destroy, `ksmbd_free_user`,
-  durable scavenger, RPC clear, `free_channel_list`, then the two frees.
-  Side effect of the patch is only the wipe-before-free.
+**Step 5.2: TRACE CALLERS**
+Record (verified with `rg` on `drivers/memory/stm32_omm.c`):
+1. `stm32_omm_configure()` → `stm32_omm_set_amcr(dev, true)` then
+   returns that `ret` (probe, full firewall access)
+2. `stm32_omm_probe()` → `stm32_omm_set_amcr(dev, false)` when OMM
+   access is not granted; `if (ret) return ret`
+3. `stm32_omm_resume()` → `stm32_omm_set_amcr(dev, true)`; `if (ret)
+   return ret`
 
-**Step 5.4: Reachability**
-- Record: Yes. Any ksmbd login then logoff/disconnect/expire hits this.
-  CONFIG_SMB_SERVER (default n), module `ksmbd`. Network-facing when
-  enabled.
+All three are driver probe / system-resume paths, not an obscure debug
+hook.
 
-**Step 5.5: Similar patterns**
-- Record: CIFS client already uses `kfree_sensitive` widely for session
-  keys/passwords in this tree. ksmbd server only uses it in `auth.c`
-  (`kfree_sensitive(ctx_arc4)`). `free_channel_list`/`ksmbd_chann_del`
-  still `kfree` channel objects that embed `smb3signingkey`.
-  `ksmbd_preauth_session_destroy` still `kfree`s `preauth_session` (hash
-  embedded). Same class of leftover secrets; this patch still covers the
-  primary session key material.
+**Step 5.3: TRACE CALLEES**
+Record: `of_property_match_string`, `of_parse_phandle`,
+`of_address_to_resource`, `syscon_regmap_lookup_by_phandle_args`,
+`regmap_update_bits` / `regmap_read`. Side effects are DT parse + AMCR
+syscon R/W.
 
-## Phase 6: This tree (6.12.111)
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Platform probe of `compatible = "st,stm32mp25-omm"` (SoC node in
+`arch/arm64/boot/dts/st/stm32mp251.dtsi`, enabled on
+`stm32mp257f-ev1.dts`). Reachable on STM32MP25 boot and suspend/resume.
+Not a syscall fuzzer path; hardware/DT driven.
 
-**Step 6.1: Buggy code present?**
-- Record: Yes. `pending-6.12` / `make kernelversion` = 6.12.111. Exact
-  `kfree(sess->Preauth_HashValue)` and `kfree(sess)` still in
-  `ksmbd_session_destroy`. Introduced with ksmbd (v5.15), long before
-  6.12.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: No second copy of this AMCR helper. Binding example uses both
+`ospi1` and `ospi2` regions; in-tree board `stm32mp257f-ev1.dts` only
+sets `memory-region-names = "ospi1"`. Binding **does not require**
+`memory-region` (required list is
+compatible/reg/clocks/resets/`st,syscfg-amcr`/ranges). Omitting `memory-
+region-names` is a valid DT; the loop then never assigns `ret`.
 
-**Step 6.2: Backport difficulty**
-- Record: Clean apply. Mailing-list hunk context
-  (`ksmbd_launch_ksmbd_durable_scavenger` … `ida_destroy`) matches this
-  tree. Upstream later added `delete_proc_session(sess)` above these
-  lines; that symbol is absent here but is not in the 3-line context of
-  the actual change. `kfree_sensitive` already declared in
-  `include/linux/slab.h`.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 6.3: Related fixes already here?**
-- Record: No equivalent wipe of these two allocations. `git log
-  --grep=kfree_sensitive -- fs/smb/server` has no matching session-
-  destroy commit.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record:
+- `git describe HEAD` / `make kernelversion`: **v6.18.53** (branch
+  `autosel`)
+- `git show v6.18.53:drivers/memory/stm32_omm.c` has `int ret, idx;` and
+  `return ret` after the AMCR compare
+- Driver exists in v6.18 (`git cat-file -e
+  v6.18:drivers/memory/stm32_omm.c`)
+- Bug introduced with the driver in v6.16 (`8181d061dcff1`)
 
-## Phase 7: Subsystem context
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply. The one-line `int ret, idx;` → `int ret = 0, idx;`
+is present exactly once in v6.18.53. Surrounding function matches the
+upstream hunk. No rework needed.
 
-**Step 7.1**
-- Record: `[ksmbd / fs/smb/server] [IMPORTANT for systems with
-  CONFIG_SMB_SERVER: NAS/embedded SMB3 server; not CORE for every 6.12
-  user]`
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: `git log --oneline --grep='stm32_omm' -- drivers/memory/` on
+this history shows other stm32_omm error-handling fixes, but none
+initialize `ret` in `stm32_omm_set_amcr` in v6.18.53. No alternate fix
+for this uninit.
 
-**Step 7.2**
-- Record: Actively maintained; this 6.12.y branch already carries many
-  ksmbd security/UAF backports. Code path itself is mature (since 5.15).
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## Phase 8: Impact and risk
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `drivers/memory/` STM32 Octo Memory Manager (OSPI mux / 256MB
+map split on STM32MP25). Criticality: **PERIPHERAL** (SoC-specific), but
+it sits under flash/OSPI bring-up for that platform, so probe/resume
+failure is user-visible there.
 
-**Step 8.1: Who is affected**
-- Record: Config-specific (`CONFIG_SMB_SERVER`). Users running ksmbd
-  (SMB3 kernel server).
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Modest, mature-enough driver (added v6.16, a handful of follow-
+up fixes). Not a staging driver. Maintainer-reviewed.
 
-**Step 8.2: Trigger**
-- Record: Session destroy on logoff, idle expire, connection teardown,
-  or failed session create. Common on any real ksmbd workload.
-  Triggering the leftover keys does not require a race; the wipe
-  omission is deterministic. Reading the leftover keys does require
-  another info leak, a dump, or similar.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.3: Failure mode**
-- Record: `[Residual SMB session/encryption/signing keys and preauth
-  hash in slab after free] [Severity: MEDIUM as a standalone disclosure
-  (needs another read of freed/reused heap), HIGH in combination with an
-  uninitialized-kmalloc leak or memory dump because the secrets can
-  decrypt prior SMB3 traffic or expose session key material]`
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Config-specific / platform-specific: `CONFIG_STM32_OMM` on
+STM32MP25 (`st,stm32mp25-omm`). Not universal.
 
-**Step 8.4: Risk-benefit**
-- Record: `[Benefit: medium for ksmbd deployments — clears the actual
-  SMB3 key material on every session end] [Risk: very low — 2 lines,
-  dedicated API, teardown path only] [Ratio: favorable]`
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record:
+- Always runs during OMM probe (and again on system resume if
+  `restore_omm`).
+- Uninitialized `return ret` is **guaranteed** if the memory-region loop
+  never assigns `ret` (optional DT property missing or names do not
+  match `ospi1`/`ospi2`) **and** AMCR equals computed `amcr` (0 when no
+  ospi2 region).
+- On the in-tree ev1 board, `ospi1` is present, so
+  `of_address_to_resource` typically sets `ret = 0` before the AMCR
+  check; the uninit is then a maybe-uninitialized / custom-DT / failed-
+  phandle path. Compilers still cannot prove assignment because of the
+  `continue`s.
+- Not an unprivileged syscall trigger.
 
-## Phase 9: Synthesis
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Returning uninitialized `int` as errno. Callers abort probe or
+resume on non-zero. Failure mode: OSPI/OMM device fails to probe or
+fails to resume (flash/memory-map unavailable). Severity **MEDIUM**
+(wrong control-plane result / possible resume failure; not a documented
+oops, but C undefined behavior). Garbage zero would incorrectly look
+like success on a path that never validated regions.
 
-**Evidence FOR**
-- Deterministic failure to clear SMB3 session keys, signing keys,
-  encryption/decryption keys, and Preauth_HashValue on session destroy.
-- `kfree_sensitive()` exists specifically for this; CIFS client in this
-  tree already uses it for the same class of secrets.
-- Two-line, obviously correct, maintainer-acked, already merged
-  upstream.
-- Applies cleanly to 6.12.111; no new API; no lock/data-structure
-  change.
-- ksmbd is a network-facing file server; leftover keys after logoff are
-  real cryptographic material, not a style nit.
-- Official stable rules include “a real security issue”; this is secret
-  leftover in heap (CWE-226), not a feature.
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- Benefit: prevents UB and spurious probe/resume failures on STM32MP25
+  OMM; makes the success path well-defined. Medium benefit for that
+  platform, low global blast radius.
+- Risk: **very low** (one initializer, no locking/API/data-structure
+  change).
+- Ratio: strongly favors backport.
 
-**Evidence AGAINST**
-- Cover letter calls it “good security practice,” not a demonstrated
-  crash/CVE. No `Reported-by`, no exploit write-up.
-- Official rule: no “this could be a problem” without how it is
-  exploited. Direct userspace leak is not shown; it is residual data
-  until slab reuse or a dump.
-- Incomplete hygiene: channel objects and
-  `ksmbd_preauth_session_destroy()` still use `kfree` in this file.
-- `CONFIG_SMB_SERVER` defaults to n.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Unresolved**
-- No stable@ thread found (search quality limited;
-  lore.kernel.org/stable returned unrelated hits).
-- Semcode MCP not available; callers traced with `git grep`.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Stable rules checklist**
-1. Obviously correct and tested? **PASS** — drop-in `kfree` →
-   `kfree_sensitive`; maintainer ack; applied upstream.
-2. Fixes a real bug that affects users? **PASS** — session objects with
-   live SMB3 keys are freed without wiping; that is leftover secret
-   material on a path every ksmbd session takes.
-3. Important issue? **PASS** (security: key leftover; not
-   oops/deadlock). Severity is secret wipe, not a panic.
-4. Small and contained? **PASS** — 2 lines, one function.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS** — same function body aside from
-   later `delete_proc_session`, which this hunk does not need.
+FOR:
+- Real uninitialized return in a function whose callers treat `ret` as
+  errno
+- Reachable on probe and system resume
+- DT binding leaves `memory-region` optional, so the loop is allowed to
+  assign nothing
+- 1-line, obviously correct, reviewed by the driver maintainer, applied
+  by the subsystem maintainer
+- Driver and buggy code exist in this 6.18.53 tree since the driver
+  landed in v6.16
+- Clean apply; no prerequisites
+- Matches the uninitialized-data class that stable routinely takes
 
-**Exception category:** None of ID/quirk/DT/build/docs. Security wipe of
-existing allocations.
+AGAINST:
+- STM32MP25-only (narrow user set)
+- No crash log, syzbot, or user `Reported-by`
+- On the one in-tree board with `memory-region-names = "ospi1"`, `ret`
+  is often already 0 from `of_address_to_resource`
+- Not CORE mm/net/fs
 
-This is not a crash fix, but it is a small, obviously correct wipe of
-real SMB3 key material on session teardown, the code is present in
-6.12.111, and regression risk is negligible. That meets the stable bar
-for a real security issue on ksmbd.
+UNRESOLVED:
+- Could not query lore.kernel.org/stable (403)
+- No confirmed compiler-warning/KMSAN report in the thread (web-search
+  snippets that mentioned kernel test robot were not backed by the
+  actual mails)
 
-Verification:
-- [Phase 1] Parsed subject/body/tags from candidate text and `git log -1
-  d4a6d1c94f7a3`; maintainer Acked-by; no Fixes/Reported-by/Cc: stable
-- [Phase 2] Read `ksmbd_session_destroy` and `struct ksmbd_session` in
-  this tree; confirmed two `kfree` sites and key arrays
-- [Phase 2] Read `kfree_sensitive()` in `mm/slab_common.c` (zeros via
-  `memzero_explicit`, then `kfree`)
-- [Phase 3] `git blame -L 159,175` user_session.c; introducer
-  `e2f34481b24db2` contained in v5.15-rc1
-- [Phase 3] `git merge-base --is-ancestor` of introducer and of
-  `d4a6d1c94f7a3` vs HEAD: introducer yes, this fix no
-- [Phase 3] `git log --oneline -20 --
-  fs/smb/server/mgmt/user_session.c`: no prior equivalent wipe
-- [Phase 4] `b4 dig -c d4a6d1c94f7a3` / `-a` / `-w`: v1 then v2; lore
-  https://patch.msgid.link/20260811154620.2425851-4-thuth@redhat.com;
-  Namjae applied v2; no NAK; no stable nomination
-- [Phase 4] Cover letter and v1 review (preauth_session) fetched from
-  openwall/lkml/patchew
-- [Phase 5] `git grep ksmbd_session_destroy` / `ksmbd_user_session_put`:
-  session logoff/expire/teardown/create-error
-- [Phase 5] Confirmed `__session_create` uses `kzalloc`;
-  `user_session.c` includes `linux/slab.h`
-- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111
-- [Phase 6] `delete_proc_session` absent here; does not block the two-
-  line hunk
-- [Phase 7] `CONFIG_SMB_SERVER` in `fs/smb/server/Kconfig`, default n
-- [Phase 8] Failure mode: leftover session keys in slab after destroy
-- UNVERIFIED: no dedicated stable@ discussion located
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — one initializer; maintainer
+   Reviewed-by; applied upstream
+2. Fixes a real bug that affects users? **PASS** — uninitialized errno
+   on OMM probe/resume
+3. Important issue? **PASS** at MEDIUM — probe/resume malfunction and
+   UB, not a documented panic; still a user-visible device failure mode
+4. Small and contained? **PASS** — 1 line, 1 function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — v6.18.53 has the uninit
+   declaration unchanged
 
-The two-line `kfree_sensitive()` conversion belongs in this 6.12 tree:
-the buggy frees are here, the API is here, and it wipes real SMB3
-session keys on teardown with negligible risk.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/docs patch. Closest extra: it also
+silences a typical `-Wmaybe-uninitialized` shape, but the decision is on
+the runtime uninit return, not on the build-fix exception.
+
+**Step 9.4: MAKE YOUR DECISION**
+Backport. The local 6.18.53 tree contains the driver and the bug; the
+fix is a one-line initialization of a returned errno with essentially no
+regression risk.
+
+What this does for 6.18.y users: STM32MP25 Octo Memory Manager probe and
+resume no longer return a stack-garbage error code when AMCR matches DT
+and `ret` was never written. That is a real, contained correctness fix.
+
+Risk vs benefit: benefit is defined success (`0`) vs undefined errno;
+risk is a single `= 0`.
+
+### Verification
+- [Phase 1] Parsed tags: Reviewed-by Patrice Chotard, Link msgid, SOBs
+  Wang + Kozlowski; no Fixes/Cc-stable/Reported-by
+- [Phase 2] Diff: `int ret, idx` → `int ret = 0, idx` in
+  `stm32_omm_set_amcr` only
+- [Phase 2] Pre-fix function: loop may skip all `ret =
+  of_address_to_resource` stores; mismatch sets `-EINVAL`; success falls
+  through to `return ret`
+- [Phase 3] `git blame` on parent: uninit from `8181d061dcff1` (driver
+  add, 2025)
+- [Phase 3] Driver in v6.16+; `git merge-base --is-ancestor
+  8181d061dcff1 v6.18` true
+- [Phase 3] No series/prereqs; later `6d8b18ae647bb` did not fix `ret`
+- [Phase 4] `b4 dig -c 1527acf2295cf2d6e11e3e9b121d63709667e6e7`: lore
+  msgid 20260617182202.961843-1
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: Chotard, Kozlowski, STM32/ARM lists CC’d
+- [Phase 4] mbox: Reviewed-by Chotard; Applied by Kozlowski; no NAK
+- [Phase 4] lore.kernel.org WebFetch 403; used openwall + mbox instead
+- [Phase 5] Callers verified: `stm32_omm_configure`, `stm32_omm_probe`,
+  `stm32_omm_resume`
+- [Phase 5] Binding `st,stm32mp25-omm.yaml`: `memory-region` not in
+  `required:`
+- [Phase 5] Board DT `stm32mp257f-ev1.dts` has only `ospi1` memory-
+  region
+- [Phase 6] `git describe HEAD` / Makefile: v6.18.53; `git show
+  v6.18.53:drivers/memory/stm32_omm.c` still has `int ret, idx;`
+- [Phase 6] Python check: old pattern present once in v6.18.53;
+  initialized form absent
+- [Phase 7] MAINTAINERS: Patrice Chotard owns
+  `drivers/memory/stm32_omm.c`
+- [Phase 8] Failure mode: garbage errno → probe/resume fail on STM32MP25
+  OMM
+- UNVERIFIED: stable@ mailing-list thread (lore 403); no verified
+  kernel-test-robot report
 
 **YES**
 
- fs/smb/server/mgmt/user_session.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/memory/stm32_omm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 3a2591434b5f8..973db0466575e 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -168,10 +168,10 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
- 	ksmbd_launch_ksmbd_durable_scavenger();
- 	ksmbd_session_rpc_clear_list(sess);
- 	free_channel_list(sess);
--	kfree(sess->Preauth_HashValue);
-+	kfree_sensitive(sess->Preauth_HashValue);
- 	ksmbd_release_id(&session_ida, sess->id);
- 	ida_destroy(&sess->tree_conn_ida);
--	kfree(sess);
-+	kfree_sensitive(sess);
- }
+diff --git a/drivers/memory/stm32_omm.c b/drivers/memory/stm32_omm.c
+index 5d06623f3f689..2a1af229d2444 100644
+--- a/drivers/memory/stm32_omm.c
++++ b/drivers/memory/stm32_omm.c
+@@ -47,7 +47,7 @@ static int stm32_omm_set_amcr(struct device *dev, bool set)
+ 	struct device_node *node;
+ 	struct resource res, res1;
+ 	unsigned int syscon_args[2];
+-	int ret, idx;
++	int ret = 0, idx;
+ 	unsigned int i, amcr, read_amcr;
  
- struct ksmbd_session *__session_lookup(unsigned long long id)
+ 	for (i = 0; i < omm->nb_child; i++) {
 -- 
 2.53.0
 
