@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6000657DF37;
-	Mon, 19 Oct 2026 13:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B552B57DF56;
+	Mon, 19 Oct 2026 13:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418316; cv=none; b=I8fVJR76ygQRFzyfo53MOo4TyxCUezXj3q1RgguzALz8L2ra6gYWTeB13YVFrMv3gzKbtg8zq4rP/wUyQ16ATV3PwQ1n5wGbGLUXvcrVXPaRFQ+xkRrLQjNPk9fNdEVsQZKvj5/AvVEPy3po8d/BoFHZC7OlQoXncOrk8mwJz/o=
+	t=1792418318; cv=none; b=FtB9s/1G5AWISae9FaCsYg/HoYRcf9aa0d4DRca+6zeSE+G+g9Dt+er8Cwu8Ob348SME5S2QmvumfzJ5gn2RpdDLleuOdRIfNdFrNgucnrNdsOuA0FJhTZg51DhvrAM0gXw8RqWn08C7EZtEU73TFQ1idv6uwLg3IuyufMWpoyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418316; c=relaxed/simple;
-	bh=3x91CE8kXBoAW2q2NqNwulyU8jH32SmJ80oWoUgPHdY=;
+	s=arc-20240116; t=1792418318; c=relaxed/simple;
+	bh=TByxiAa87WS+0dfP+PTPC56jYerIQi/Vl0JP/+iO7Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H38UW04owc3s43t6teDJSccScIYm0/cde64qQ1c9gsDM77QN+nmHv0uMa33+LCzbMx3Ym36VhPGjsfjmUSR7Zo4hGIaL/7Xtv1rjIZ1l+eM9+b8Srw7C9Ypld5IUEJ+vLc/1nZ/dxiDgb4sZ5nQZdHcKM/nh+zdBBt3+xvglly0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aWYUOgmR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sBT5sycsG/ywQAPts898othtfomvaIoTOH/R5kDrT68MmwiV4nkPfnSyKuGpzJUo6remHQ3vpmfIIBM1m4qepJksWINScWzSXzSOfEk5nCf0dRriRmj7OE4MO8E2oF2TIHiPUSepUBhAHygh4rBFotHv/dyUj3QjkYhL1S4Tdgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RDpzZOoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aWYUOgmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9F81F000C9;
-	Mon, 19 Oct 2026 13:58:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RDpzZOoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24F61F000C7;
+	Mon, 19 Oct 2026 13:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418313;
-	bh=IFJLhZd7yDmRR51EKDyr6ZIn8xIWLMqCxDkGS5Xyc/A=;
+	s=k20260515; t=1792418314;
+	bh=KRme9n4h5hg79JHHCTeZvcrZGH9RVtyMTsRB4ixU1CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aWYUOgmRP3ZqP6m+mSdcOdJ2RA9bRCGJ1ZASfhfoUz5PI6/n40cb9QXwIdv58/SPX
-	 Sfs8924HMkY4YT+dpFxXjWGwiYrrc4o4Z8KWN+N6KC0nI9e4uWzM6HmnOcF8vq7OUy
-	 yMj0ybmZoTuv7JVBPUKbk6SSiWwUGIT1/8ZguDyx7a/UFcqr1K9o3NddrUMIsFypK8
-	 o+DAeZLhCiQ4+BjyaCg51698rF26vzmujGIOmNalEN4LLhddiCTQWhZOXeyV3HFjMR
-	 y5UJVbgW9glmz4DNMctC/oKdqeI3KgBcwZNPJ0LXESOm25oUEU+1vfjpwJjzF3gDXH
-	 JCLEQcUOD7xTw==
+	b=RDpzZOoEiEg5UpIcJYyJkc3nrFP8G80fs3fwW709N7RM2ikjFSF/P0CYcCYflqp1V
+	 Fizs6amBwHIMsMynUKg144eiN9cH9qq6CbNZ33AzFivkkq1KX1rpiSEMWBeMYH0yRd
+	 ihPOtmj9dz+eZRW/+UOJTCYHm165SAux9SKt8h/wEp31mQfHq7B8xVQMryPhZIKxlG
+	 aO4NbcuXLmvX/iUvIvSDA8FZcEKAXTw1UCA8WUzv7jI1RSqMi8fLA9Uja+K4vZ84oj
+	 iv4lrXOYbcdzizGHZAqBp+yKdlMLIT8Et7HxjyP6VnVAdKDKGY5eaC7G4Nq8j1LeTX
+	 knZM4G9QH/twg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiong Weimin <xiongweimin@kylinos.cn>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+Cc: Qingtao Cao <qingtao.cao.au@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jasowangio@gmail.com,
-	eperezma@redhat.com,
-	virtualization@lists.linux.dev,
+	mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] vdpa_sim: hold iommu_lock across dma_unmap passthrough transition
-Date: Mon, 19 Oct 2026 09:47:30 -0400
-Message-ID: <20261019135441.1420968-159-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] bus: mhi: core: Fix sys error transition latency
+Date: Mon, 19 Oct 2026 09:47:31 -0400
+Message-ID: <20261019135441.1420968-160-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,572 +54,455 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiong Weimin <xiongweimin@kylinos.cn>
+From: Qingtao Cao <qingtao.cao.au@gmail.com>
 
-[ Upstream commit 7b411448c668bfab0d0e572cee5a592cea396ce7 ]
+[ Upstream commit 22568e8f13a42ab69b7d624741768cbf15dded74 ]
 
-vdpasim_dma_map() updates the IOTLB and the passthrough (iommu_pt)
-state under iommu_lock.  vdpasim_dma_unmap() clears iommu_pt and
-resets the IOTLB before taking iommu_lock, then deletes the mapping
-while holding the lock.
+Bring forward the idea to fix the power down latency in
+mhi_pm_disable_transition() further to mhi_pm_sys_error_transition()
+so that the transition into system error (triggered by AT!RESET) in the
+modems won't have to return only after the timeout of up to 24 seconds.
 
-A concurrent dma_map(), dma_unmap(), or reset path that also touches
-the same address space can therefore observe or modify the IOTLB and
-iommu_pt state without consistent locking.
+Once the device gets reset, there is no guarantee that it will send an
+interrupt to indicate the state transition. So polling is the sensible
+option here.
 
-Perform the passthrough transition and range deletion under the same
-iommu_lock scope, matching dma_map().
-
-Tested-on: openEuler VM (6.16.8, /usr/src/linux-6.16.8)
-Tested-by: Xiong Weimin <xiongweimin@kylinos.cn>
-
-Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260626020545.607600-3-15927021679@163.com>
+Signed-off-by: Qingtao Cao <qingtao.cao.au@gmail.com>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260603011333.3306102-2-qingtao.cao.au@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to judge this for 6.12: the buggy unlocked `dma_unmap`
-path is present, the race with the simulator datapath is real, and the
-fix is a one-lock-move. Compiling the nine-phase analysis next.
+I have the mailing-list thread, the 2021 sibling fix, and the local
+7.3-rc4 code. Next I’ll write the full nine-phase verdict.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit message forensics
 
 **Step 1.1: PARSE THE SUBJECT LINE**
 
-Record: **[vdpa_sim] [hold] [take `iommu_lock` for the full `dma_unmap`
-passthrough-to-custom IOTLB transition]**
-
-- Subsystem: `vdpa_sim` (vDPA device simulator)
-- Verb: “hold” — locking/correctness, not a feature
-- Intent: make `vdpasim_dma_unmap()` lock the same way
-  `vdpasim_dma_map()` already does
+Record: `[bus: mhi: core:]` `[Fix]` `[sys error transition latency]` —
+MHI host power-management: after a device SYSERR/RESET, the host was
+waiting on an interrupt-driven event that may never arrive, so recovery
+sat until `timeout_ms` (up to 24s).
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
 Record:
-- **Tested-on:** openEuler VM (6.16.8, `/usr/src/linux-6.16.8`)
-- **Tested-by:** Xiong Weimin `<xiongweimin@kylinos.cn>` (author; not
-  independent)
-- **Signed-off-by:** Xiong Weimin `<xiongweimin@kylinos.cn>` (author)
-- **Signed-off-by:** Michael S. Tsirkin `<mst@redhat.com>` (vhost/vdpa
-  maintainer; applied the patch)
-- **Message-ID:** `<20260626020545.607600-3-15927021679@163.com>`
-
-Absent (expected for this review pipeline, not a negative):
-- No `Fixes:`
-- No `Cc: stable@vger.kernel.org`
-- No `Reported-by:` / syzbot
-- No `Reviewed-by:` / `Acked-by:`
-- No `Link:`
-
-Ignored per instructions: any `[Upstream commit …]` / `Signed-off-by:
-Sasha Levin` pipeline markers.
+- `Signed-off-by: Qingtao Cao <qingtao.cao.au@gmail.com>` (author)
+- `[mani: commit log]` then `Signed-off-by: Manivannan Sadhasivam
+  <mani@kernel.org>` (MHI maintainer applied it and rewrote the log)
+- `Reviewed-by: Krishna Chaitanya Chundru
+  <krishna.chundru@oss.qualcomm.com>` (Qualcomm MHI reviewer)
+- `Link: https://patch.msgid.link/20260603011333.3306102-2-
+  qingtao.cao.au@gmail.com`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc:
+  stable@vger.kernel.org`, or syzbot tags (absence of Fixes/Cc:stable is
+  expected here)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
 Record:
-- **Bug:** `vdpasim_dma_map()` updates IOTLB + `iommu_pt` under
-  `iommu_lock`. `vdpasim_dma_unmap()` clears `iommu_pt` and calls
-  `vhost_iotlb_reset()` *before* taking the lock, then deletes the range
-  under the lock.
-- **Symptom / failure mode:** concurrent `dma_map` / `dma_unmap` / reset
-  can observe or mutate IOTLB and `iommu_pt` without consistent locking.
-  That is interval-tree mutation vs walk → corruption / UAF / crash, not
-  a log-only issue.
-- **Version info:** tested on 6.16.8; no “introduced in vX” text. The
-  buggy passthrough logic is from v6.3 (see Phase 3).
-- **Root cause (author):** passthrough-exit in `dma_unmap` is outside
-  the lock that `dma_map` already uses.
+- **Bug:** `mhi_pm_sys_error_transition()` waits with
+  `wait_event_timeout()` for the MHI RESET bit to clear. After RESET,
+  the device is not guaranteed to raise an interrupt, so the wait often
+  runs to the full controller timeout.
+- **Symptom:** SYSERR handling triggered by modem `AT!RESET` does not
+  finish until timeout (commit text: up to 24 seconds).
+- **Root cause:** interrupt-driven wait is the wrong primitive after
+  RESET; polling the RESET bit is the correct approach (already used in
+  `mhi_pm_disable_transition()`).
+- **Version info in the message:** none. Thread later names a 5.17 test
+  kernel and Sierra EM9291; the same wait lives in this tree.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
 
-Record: **Not disguised.** This is an explicit locking/race fix. Subject
-uses “hold … across”, body describes a concurrent IOTLB/`iommu_pt`
-inconsistency. Hidden-fix heuristics are N/A.
+Record: Not a disguised cleanup. Subject and body both say “Fix”. It is
+a real timeout/hang-style bug, the same class as `44b1eba44dc53` (“Fix
+power down latency”), which had `Cc: stable`.
 
----
-
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## Phase 2: Diff analysis
 
 **Step 2.1: INVENTORY THE CHANGES**
 
 Record:
-- **File:** `drivers/vdpa/vdpa_sim/vdpa_sim.c` only
-- **Scope:** ~1 insertion, ~2 deletions (move `spin_lock` up, drop a
-  blank line)
-- **Function:** `vdpasim_dma_unmap()`
-- **Classification:** single-file surgical locking fix
+- File: `drivers/bus/mhi/host/pm.c` — 3 insertions, 11 deletions (net
+  −8)
+- Function: `mhi_pm_sys_error_transition()`
+- Scope: single-file surgical wait-primitive swap; error-path structure
+  (`MHI_PM_SYS_ERR_FAIL`, `BHI_INTVEC` reprogram) unchanged
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-Record — this tree today (`vdpasim_dma_unmap`):
+Record: Inside `if (reset_device)` after `mhi_set_mhi_state(...,
+MHI_STATE_RESET)`:
 
-```725:743:drivers/vdpa/vdpa_sim/vdpa_sim.c
-static int vdpasim_dma_unmap(struct vdpa_device *vdpa, unsigned int
-asid,
-                             u64 iova, u64 size)
-{
-        struct vdpasim *vdpasim = vdpa_to_sim(vdpa);
+- **Before:** `wait_event_timeout(state_event, mhi_read_reg_field(...)
+  || !in_reset, timeout)`. `wait_event_timeout()` only rechecks on
+  wakeup or timeout. After RESET, MSI is not expected, so the wait
+  typically sleeps the full `timeout_ms`.
+- **After:** `mhi_poll_reg_field(..., MHICTRL_RESET_MASK, 0, 25000,
+  mhi_cntrl->timeout_ms)` — poll every 25ms until RESET clears or
+  timeout. Failure still uses `if (ret)` → `MHI_PM_SYS_ERR_FAIL`.
 
-        if (asid >= vdpasim->dev_attr.nas)
-                return -EINVAL;
-
-        if (vdpasim->iommu_pt[asid]) {
-                vhost_iotlb_reset(&vdpasim->iommu[asid]);
-                vdpasim->iommu_pt[asid] = false;
-        }
-
-        spin_lock(&vdpasim->iommu_lock);
-        vhost_iotlb_del_range(&vdpasim->iommu[asid], iova, iova + size -
-1);
-        spin_unlock(&vdpasim->iommu_lock);
-
-        return 0;
-}
-```
-
-- **Before:** if still in passthrough (`iommu_pt[asid]`), reset the
-  whole IOTLB interval tree and clear `iommu_pt` with **no lock**; then
-  take `iommu_lock` only for `vhost_iotlb_del_range()`.
-- **After:** one `spin_lock` covers passthrough-exit
-  (`vhost_iotlb_reset` + `iommu_pt = false`) **and**
-  `vhost_iotlb_del_range()`, then unlock. Same shape as
-  `vdpasim_dma_map()`.
-- **Path:** vhost-vdpa IOTLB invalidate / AS teardown
-  (`ops->dma_unmap`), not probe init.
+Path: SYSERR recovery / RESET, not probe init.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-Record: **[Synchronization / race] [IOTLB interval tree and `iommu_pt`
-mutated without `iommu_lock`]**
+Record: **Logic / correctness (wrong wait primitive after hardware
+RESET)** — not UAF/leak/race.
 
-`vhost_iotlb_reset()` is `vhost_iotlb_del_range(iotlb, 0, ~0ULL)` — it
-walks and frees the rbtree (`drivers/vhost/iotlb.c`). The datapath walks
-that tree under `iommu_lock` via `iotlb_translate()` in
-`drivers/vhost/vringh.c` (`spin_lock(vrh->iotlb_lock)` then
-`vhost_iotlb_itree_first()`).
-
-Unlocked reset vs locked walk is concurrent rbtree mutation → UAF /
-corruption / oops.
-
-Same lock is used by `vdpasim_dma_map()`, `vdpasim_set_map()`,
-`vdpasim_reset_map()`, and `vdpasim_do_reset()`.
+Mechanism: RESET drops device interrupt context; host waited for
+`state_event`. Nobody wakes it, so SYSERR recovery is delayed by the
+full timeout even though the device already cleared RESET. Polling
+matches power-down and power-up.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
 
 Record:
-- **Quality:** obviously correct. It only moves an existing `spin_lock`
-  so the passthrough block matches `dma_map`. No new APIs, no new state.
-- **Regression risk:** very low. Same lock already used on the sibling
-  path; no lock-order change vs `vdpasim->mutex` (unmap still does not
-  take that mutex). No new sleep under spinlock
-  (`vhost_iotlb_reset`/`del_range` are tree ops).
-- **Red flags:** none. Independent of series patch 1/2 (`pending_kick`);
-  cover letter calls them independent.
+- Obviously correct: same helper/interval already used in
+  `mhi_pm_disable_transition()` and `mhi_ready_state_transition()` in
+  this tree.
+- Minimal: only the wait is replaced.
+- Regression risk: low. Polling `fsleep(25000)` on a workqueue is the
+  established pattern. Worst case is still `timeout_ms`, same as before.
+  Does not change APIs or PM state machine.
 
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git history
 
 **Step 3.1: BLAME THE CHANGED LINES**
 
-Record:
-- Unlocked `iommu_pt` / `vhost_iotlb_reset` in `dma_unmap`:
-  **`6c3d329e6486dd`** — `vdpa_sim: get rid of DMA ops` (Jason Wang,
-  committed 2023-02-20).
-- First in **v6.3-rc1** (`git describe --contains` →
-  `v6.3-rc1~84^2~23`).
-- `spin_lock` around `del_range`: **`0ea9ee430e74b1`** (Max Gurtovoy,
-  2020).
-- Present in this 6.12 tree for the whole lifetime of 6.12.y.
+Record: Pre-fix `wait_event_timeout` block blamed to `556bbb442bbb44`
+(“Separate system error and power down handling”, 2020-11-18, first in
+**v5.11-rc1**). That split copied the wait into the new
+`mhi_pm_sys_error_transition()`. Surrounding reset-decision code later
+touched by `4d92e7c5ccadc` (2025) and `bce3f770684cc`
+(`MHI_PM_SYS_ERR_FAIL`, 2024); those are not required for this hunk.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
 
-Record: **No `Fixes:` tag.** The introducing change is still
-**`6c3d329e6486dd`**, and `git merge-base --is-ancestor 6c3d329e6486dd
-HEAD` succeeded. No later fix of this lock split was found on this file.
+Record: No `Fixes:` tag. The incomplete sibling is `44b1eba44dc53`
+(2021-06-24, “Fix power down latency”) with `Cc: stable` and `Fixes:
+a6e2e3522f29`. That commit converted **disable/power-down** to
+`mhi_poll_reg_field` and left **sys_error** on `wait_event_timeout`.
+This commit finishes that leftover.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+**Step 3.3: CHECK FILE HISTORY**
 
-Record (recent `drivers/vdpa/vdpa_sim/vdpa_sim.c`):
-- `05ddc94afb69e` vdpa_sim: fix cleanup after worker creation failure
-- `9588e7fc511f9` vdpa_sim: reset must not run
-- `86f6c224c9791` vdpa_sim: implement `.reset_map` support
-- `6c3d329e6486d` vdpa_sim: get rid of DMA ops (introducer)
-
-This commit is **standalone**. Cover letter: “[PATCH 0/2] vdpa_sim: fix
-suspend/reset and dma_unmap locking” — two independent bugs. Sibling
-`clear pending_kick on device reset` is **not** a prerequisite and is
-**not** in this tree.
+Record: Recent `pm.c` commits (`753aa72545ce0` no-M3, `aa1a0e93ed21a`
+SYS_ERR power-up, `4d92e7c5ccadc` power_up vs SYSERR) are unrelated.
+Standalone; not patch 2/N of a functional series.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-Record: **Xiong Weimin** has no other `vdpa_sim` commits in this tree.
-Maintainer of record is **Michael S. Tsirkin** (SOB on apply) /
-historical authors Jason Wang, Eugenio Pérez, Si-Wei Liu. Author is a
-contributor, not the subsystem maintainer; MST still took the patch.
+Record: Qingtao Cao has this single MHI commit in this tree. Applied by
+maintainer Manivannan Sadhasivam; reviewed by Krishna Chaitanya Chundru
+(Qualcomm).
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-Record: **None.** Needs only `iommu_lock`, `iommu_pt`,
-`vhost_iotlb_reset`, `vhost_iotlb_del_range` — all present. Applies as a
-lock-line move. **Can apply standalone.**
+Record: Needs `mhi_poll_reg_field(..., delayus, timeout_ms)` as in
+`drivers/bus/mhi/host/main.c` (this tree). Signature came from
+`1a42aef258805` plus later bitfield/timeout updates (`d28cab4d4aa06`,
+`6ab3d50b106c9`). All present here. Applies standalone.
 
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing list and external research
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
 Record:
-- `b4 mbox` for `20260626020545.607600-3-15927021679@163.com` saved the
-  thread (3 messages).
-- Cover: `[PATCH 0/2] vdpa_sim: fix suspend/reset and dma_unmap locking`
-- This patch is **2/2** (`-3` is cover+two patches).
-- **No replies in the thread** (no NAK, no `Cc: stable` from reviewers,
-  no v2).
-- Committed Message-ID matches this v1 2/2; applied version is the
-  submitted version.
-- Lore HTML via WebFetch/curl: **403** — could not read lore web UI;
-  thread content came from `b4 mbox`.
+- `b4 dig -c 22568e8f13a42`: https://patch.msgid.link/20260603011333.330
+  6102-2-qingtao.cao.au@gmail.com
+- `b4 dig -a`: single **v1**, subject `[v1 PATCH 1/1] bus: mhi: core:
+  fix sys error handling latency` (msgid `-2` is numbering, not a
+  2-patch series)
+- Thread (5 messages via `b4 mbox`):
+  1. Qingtao: 24s SYSERR wait on `AT!RESET`
+  2. Krishna: initially “we should not see this delay”
+  3. Qingtao: Sierra Wireless EM9291, reused EM919x config (`timeout_ms
+     = 24000`); without patch ~24s, with patch ~11s; 5.17 test kernel
+  4. Krishna: device **does** clear RESET; **MSI is not expected after
+     MHI RESET**; `Reviewed-by`
+  5. Qingtao: same issue as `44b1eba44dc53`
+  6. Mani: applied as `22568e8f13a42`
+- No NAK. No reviewer `Cc: stable`. Maintainer improved the commit log
+  (polling rationale).
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Record: Thread is author-only. **Michael S. Tsirkin** SOBed on merge
-(vhost/vdpa maintainer). No `Reviewed-by` on the list copy. Recipients
-of the original mail were not dumped (`b4 dig -w` needs a local commit
-SHA; this SHA is not in this tree).
+Record: `b4 dig -w`: To/Cc included `mani@kernel.org` (maintainer),
+`mhi@lists.linux.dev`, `linux-arm-msm@vger.kernel.org`, `linux-
+kernel@vger.kernel.org`, Krishna (review), Vivek Pernamitta. Right lists
+and maintainer.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
 
-Record: **No external bug report.** No syzbot, bugzilla, or `Reported-
-by`. Evidence is code inspection plus author test that the module still
-loads on 6.16.8 — that does **not** prove the race was reproduced.
+Record: No bugzilla/syzbot. Report is the patch author on real hardware
+(EM9291 / `AT!RESET`). Krishna confirmed it is generic MHI RESET
+behavior, not one broken device.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-Record: Two-patch series, independent. Patch 1/2 (`pending_kick`) is a
-different bug and is not required. No other series members needed.
+Record: Standalone 1/1. Related historical fix `44b1eba44dc53` already
+in this tree.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-Record: `curl` to `lore.kernel.org/stable/?q=vdpa_sim+iommu_lock`
-returned **403**. **UNVERIFIED:** whether stable@ already discussed
-this. No local `git log --grep` hit for this subject on this file.
+Record: **UNVERIFIED** — lore.kernel.org WebFetch returned 403; no
+stable@ discussion in the mbox. No evidence it was NAK’d for stable.
 
----
+## Phase 5: Code semantic analysis
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-
-Record: **`vdpasim_dma_unmap()`** only. Registered as `.dma_unmap` in
-`vdpasim_config_ops` / `vdpasim_batch_config_ops`.
+Record: `mhi_pm_sys_error_transition()`; helper `mhi_poll_reg_field()`.
 
 **Step 5.2: TRACE CALLERS**
 
 Record:
-- `vhost_vdpa_general_unmap()` → `ops->dma_unmap()`
-  (`drivers/vhost/vdpa.c`)
-- Called from `vhost_vdpa_pa_unmap()` / `vhost_vdpa_va_unmap()` →
-  `vhost_vdpa_iotlb_unmap()` → `vhost_vdpa_unmap()`
-- Userspace: `vhost_vdpa_process_iotlb_msg()` `VHOST_IOTLB_INVALIDATE`
-  under `dev->mutex`
-- Teardown: `vhost_vdpa_remove_as()` → `vhost_vdpa_iotlb_unmap()`
-  (release/cleanup, also under `dev->mutex`)
+- `mhi_pm_st_worker()` → `DEV_ST_TRANSITION_SYS_ERR` →
+  `mhi_pm_sys_error_transition()`
+- `mhi_pm_sys_err_handler()` queues that transition
+- `mhi_pm_sys_err_handler()` from `drivers/bus/mhi/host/main.c`: SYSERR
+  in intvec, ctrl event ring `MHI_STATE_SYS_ERR`, IRQ with no events
 
-No other `ops->dma_unmap` users for this simulator in-tree.
+Call path: device SYSERR / host RESET processing on the MHI high-prio
+workqueue. Reachable when a WWAN modem hits SYSERR or `AT!RESET`.
 
 **Step 5.3: TRACE CALLEES**
 
-Record: `vhost_iotlb_reset()` → `vhost_iotlb_del_range()` → interval-
-tree delete/free; `spin_lock`/`unlock` on `iommu_lock`.
+Record: `mhi_set_mhi_state(RESET)`, `mhi_poll_reg_field` →
+`mhi_read_reg_field` + `fsleep`, `mhi_tryset_pm_state`,
+`mhi_write_reg(BHI_INTVEC)`. No new locks or allocations.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
 
-Record:
-- Reachable from **vhost-vdpa character-device IOTLB messages**
-  (privileged userspace: QEMU/DPDK with vhost-vdpa).
-- Simulator datapath: `vdpasim_kick_vq()` → kthread `vdpasim_work_fn()`
-  → `vdpa_sim_net`/`blk` `vringh_getdesc_iotlb()` /
-  `vringh_iov_{pull,push}_iotlb()` → `iotlb_translate()` under
-  `iommu_lock`.
-- **Yes, userspace can trigger both sides:** IOTLB invalidate vs running
-  virtqueue processing.
-
-**Nuance (verified):** vhost serializes `dma_map`, `dma_unmap`, and
-`vdpa_reset` with `vdev.mutex`. So **map vs unmap vs reset from vhost
-ioctls do not run together**. The commit text overstates that pair. The
-**verified** concurrent party is the **simulator worker**, which does
-**not** take `vdev.mutex` and walks the IOTLB under `iommu_lock` only.
-
-This tree also advertises `VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK`
-(`vdpasim` getter at line 436), so DRIVER_OK / kicks can happen while
-still in passthrough (`iommu_pt == true`). First `dma_unmap` then takes
-the unlocked reset path while the worker may be in `iotlb_translate()`.
+Record: Userspace (`AT!RESET` or modem crash) → device SYSERR → host
+IRQ/event → workqueue → this function. Unprivileged users typically
+cannot issue `AT!RESET` without modem access; operators and WWAN stacks
+can. Not a theoretical path.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-Record: `dma_map`, `set_map`, `reset_map`, and `do_reset` already take
-`iommu_lock` around `iommu_pt` and IOTLB updates. **`dma_unmap` is the
-only passthrough-exit that does not.** No sibling driver has this exact
-split; mlx5 has a different `iommu_lock`.
+Record: Same poll already in `mhi_pm_disable_transition()`,
+`mhi_ready_state_transition()`, and `mhi_async_power_up()` SYS_ERR
+reset. Remaining `wait_event_timeout()` uses are M0/M2/M3-style waits
+that still get IRQs — correctly left alone.
 
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 6: Cross-referencing against the local tree
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
 Record:
-- Tree: **Linux 6.12.111** (`Makefile` VERSION=6 PATCHLEVEL=12
-  SUBLEVEL=111; `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; branch
-  `pending-6.12`).
-- Buggy code is in `vdpasim_dma_unmap()` as cited above.
-- Introduced **v6.3**, so **before** 6.12 branched. Bug **does** exist
-  here.
-- This exact fix is **not** already applied (`git log --grep` empty for
-  this subject).
+- Local tree: **v7.3-rc4** (`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+  EXTRAVERSION=-rc4`, `HEAD` `f0100363d8c37`)
+- File `drivers/bus/mhi/host/pm.c` exists;
+  `mhi_pm_sys_error_transition()` exists
+- Buggy `wait_event_timeout` present from v5.11 through parent of
+  `22568e8f13a42`; this commit is already on `HEAD` as a mainline merge
+  (`git merge-base --is-ancestor 22568e8f13a42 HEAD` succeeded)
+- EM929x uses `modem_sierra_em919x_config` with `.timeout_ms = 24000` in
+  `pci_generic.c` — same 24s the reporter hit
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-Record: **Clean apply.** Surrounding function matches the hunk exactly.
-No refactor of this path after 6.12. Expected difficulty: **clean
-apply**.
+Record: Clean apply on this tree. `mhi_poll_reg_field()` 6-argument form
+matches. No conflicting refactor of this hunk.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
 
-Record: Other `vdpa_sim` bugfixes are in this pending tree (worker-
-creation cleanup, sim_blk sector check, sim_net TX-pull check).
-**Nothing already fixes this lock split.** Sibling `pending_kick` fix is
-not here and is not required.
+Record: Power-down poll fix `44b1eba44dc53` is here. No other equivalent
+sys_error poll fix besides this commit.
 
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 7: Subsystem and maintainer context
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
 
-Record:
-- **Subsystem:** `drivers/vdpa/vdpa_sim` — vDPA **simulator** (net/blk
-  loopback for testing).
-- **Kconfig:** `CONFIG_VDPA_SIM` “vDPA device simulator core”,
-  **`depends on RUNTIME_TESTING_MENU`**, help text: “testing,
-  prototyping and development of vDPA”.
-- **Criticality:** **PERIPHERAL** (not mm/VFS/net core). Not a
-  production NIC/block driver. Still in-tree and used with vhost-vdpa in
-  labs/CI (author: openEuler).
+Record: `drivers/bus/mhi/host/` — MHI host bus for Qualcomm/Sierra/Telit
+WWAN modems. **IMPORTANT** (not core mm/VFS): common on laptops,
+embedded, Android with WWAN. Maintainer: Manivannan Sadhasivam.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
 
-Record: Mature-but-active. Core simulator from ~2020; 6.12 still
-receives sim bugfixes (including 2026 worker-cleanup). Not a dead file.
+Record: Actively maintained (recent no-M3, SYSERR/power_up, tracing,
+pci_generic). The wait itself is old (2020); this is a long-standing
+leftover, not churn in new code.
 
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 8: Impact and risk
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
 
-Record: **config-specific / driver-specific.** Only `CONFIG_VDPA_SIM`
-(and `_NET`/`_BLOCK`) plus vhost-vdpa IOTLB programming. Not universal.
-Production kernels often leave the module off; anyone who loads it (QEMU
-vDPA sim, distro debug kernels) can hit it.
+Record: Driver-specific: MHI host users (WWAN PCI modems). EM919x/EM929x
+and any controller that takes SYSERR + RESET. RDDM controllers skip
+`mhi_pm_sys_err_handler()`, so they are not on this path.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
 
-Record:
-- **Trigger:** IOTLB invalidate / unmap while `iommu_pt[asid]` is true,
-  overlapping simulator worker IOTLB walk.
-- **Likelihood:** not every boot; realistic with
-  `ENABLE_AFTER_DRIVER_OK` and live IOTLB updates while VQs run. Hard to
-  hit, timing-dependent.
-- **Privilege:** vhost-vdpa + creating a sim device is typically
-  **root**, not an unprivileged syscall primitive. Not a generic
-  syzbot/LPE story.
+Record: Modem SYSERR or `AT!RESET`. Not every boot; common for modem
+recovery/reset. Krishna: **no MSI after RESET is expected** — so the
+full-timeout wait is the normal case, not a rare race. Unprivileged
+trigger only with modem AT access.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
 
-Record:
-- **Failure mode:** concurrent interval-tree reset vs walk → use-after-
-  free / memory corruption / oops.
-- **Severity:** **HIGH** (crash/UAF) on that config path; not a
-  production-wide panic.
-- Unlocked `iommu_pt` store vs locked readers is also a data race; the
-  tree walk is the severe part.
+Record: Host sleeps in SYSERR recovery until `timeout_ms` (8s–24s
+typical, 50s–120s on some `pci_generic` configs) even after RESET has
+cleared. Not oops/corruption/UAF. User-visible: WWAN reset/recovery
+stalled for tens of seconds. **Severity: MEDIUM-HIGH** (hang-like
+timeout on a real device path). Measured: 24s → ~11s on EM9291.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 
 Record:
-- **Benefit:** medium for sim users (prevents crash/UAF); low for
-  generic 6.12 fleet that never loads `vdpa_sim`.
-- **Risk:** **very low** (1–2 line lock move, matches existing `dma_map`
-  protocol).
-- **Ratio:** benefit exceeds risk. A no-op on systems without the
-  module; cannot change unrelated drivers.
+- **Benefit:** high for MHI modem users — removes a systematic multi-
+  second stall on SYSERR/RESET. Same class as the 2021 stable-bound
+  power-down fix.
+- **Risk:** very low — 3 lines added / 11 removed, proven helper, error
+  handling unchanged.
+- **Ratio:** benefit ≫ risk.
 
----
-
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final synthesis
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR backporting:**
-- Real locking bug: IOTLB rbtree reset without the lock the walker uses
-- Crash/UAF-class, not style
-- Tiny, obviously correct, matches `dma_map`
-- Buggy code present since v6.3; in this 6.12 tree
-- Applies cleanly; no prerequisites
-- Maintainer (MST) applied it in mainline
-- This pending-6.12 tree already takes other `vdpa_sim` correctness
-  fixes
-- Race window is real against the kthread datapath (verified call chain)
+**FOR:**
+- Real, user-reported stall (Sierra EM9291 `AT!RESET`, 24s vs ~11s)
+- Qualcomm reviewer: MSI after RESET is not expected — generic protocol
+  bug
+- Identical 2021 power-down fix (`44b1eba44dc53`) was `Cc: stable`
+- Small, obviously correct, already used on the disable path in this
+  tree
+- Maintainer applied; Reviewed-by from Qualcomm
+- Buggy wait present since v5.11; EM929x + 24000ms timeout exist in this
+  tree
+- `mhi_poll_reg_field` already here; applies cleanly
 
 **AGAINST:**
-- Simulator behind `RUNTIME_TESTING_MENU`, not production hardware
-- No syzbot / third-party crash report; `Tested-by` is the author
-- No list review beyond maintainer SOB
-- Commit’s “concurrent dma_map/dma_unmap/reset” is **overstated** given
-  vhost `dev->mutex`
-- Peripheral impact population
+- Not oops/UAF/corruption/security
+- No `Fixes:` / `Cc: stable` (not a negative per the review rules)
+- Author’s measurements were on 5.17; logic is unchanged in this tree
+- Krishna first questioned the delay, then agreed and reviewed
 
 **UNRESOLVED:**
-- Lore/stable HTML 403; no public stable@ discussion found
-- Whether the author actually reproduced the race vs only smoke-tested
-  module load
-- `b4 dig -w` recipients (no local mainline SHA)
+- Whether stable@ ever discussed this (lore 403)
+- Cover letter `3306102-1` body not fetched; series is 1/1 from b4
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-1. Obviously correct and tested? **PASS** — lock move mirrors `dma_map`;
-   author + maintainer SOB. Testing is light but the change is
-   reviewable by inspection.
-2. Fixes a real bug that affects users? **PASS** — unlocked IOTLB reset
-   vs datapath walk. Affects `vdpa_sim` + vhost-vdpa users, which this
-   tree already treats as in-scope.
+1. Obviously correct and tested? **PASS** — copies existing poll; author
+   measured; maintainer + Qualcomm review
+2. Fixes a real bug that affects users? **PASS** — 24s SYSERR recovery
+   on real modem hardware
 3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   UAF/oops on IOTLB tree; severity HIGH on that path.
-4. Small and contained? **PASS** — ~2 lines, one function.
+   hang-like timeout on RESET; stable rules also cover hangs and “oh,
+   that’s not good”; sibling fix was stable material
+4. Small and contained? **PASS** — 14-line hunk, one function
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — context identical in 6.12.111
+6. Can apply to the local tree? **PASS** — code, helper, and signature
+   all present
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
 
-Record: **None** (not a device ID, quirk, DT, build, or doc-only
-change). It qualifies as a normal small race/crash fix.
+Record: None (not a device ID, quirk table, DT, build, or docs patch).
+Qualifies as a normal bugfix.
 
 **Step 9.4: MAKE YOUR DECISION**
 
-This should be backported to **this** 6.12 tree. The bug is in this
-checkout, the fix is surgical, and the failure mode is memory-safety on
-a path this tree already ships. Simulator-only scope lowers fleet-wide
-benefit but does not make a 2-line IOTLB UAF fix inappropriate for
-stable, especially with near-zero regression risk.
+This tree is v7.3-rc4. The SYSERR path still used interrupt wait after
+RESET until this change. That wait is wrong for MHI RESET, stalls
+recovery for the full controller timeout, and was already fixed the same
+way for power-down in 2021 (and sent to stable). The leftover in
+`mhi_pm_sys_error_transition()` is a small, proven, user-visible fix and
+belongs in this tree.
 
----
+### What the commit solves for this tree
 
-### What the commit solves (for this tree)
+`mhi_pm_sys_error_transition()` issued MHI RESET then used
+`wait_event_timeout()` on `state_event`. After RESET the device drops
+interrupt context and does not send MSI, so the host slept until
+`timeout_ms` (24s on EM919x/EM929x). Switching to `mhi_poll_reg_field()`
+watches the RESET bit directly, which is what disable/power-up already
+do here.
 
-`vdpasim_dma_unmap()` drops the whole passthrough IOTLB
-(`vhost_iotlb_reset`) and clears `iommu_pt` without `iommu_lock`, while
-`dma_map` and the vringh translator use that lock. A vhost-vdpa IOTLB
-unmap can therefore tear down the interval tree while the simulator
-worker is in `iotlb_translate()`. That is a kernel oops/UAF, not a
-benign inconsistency. Holding `iommu_lock` across that transition closes
-the hole.
+### Stable rules / risk
 
-### Stable rules / risk vs benefit
-
-Meets the rules: real bug, small, no new API, applies here. Benefit is
-crash prevention for `CONFIG_VDPA_SIM`; risk is negligible. The missing
-`Fixes:`/`Cc: stable` tags are irrelevant to this pipeline.
+Meets the rules: real hang-style bug, tiny, no new API, applies cleanly.
+Risk is a 25ms poll loop already used on adjacent paths. Benefit is much
+shorter modem SYSERR/`AT!RESET` recovery.
 
 ### Concerns
 
-- No independent repro; vhost mutex means map/unmap/reset do not race
-  with each other — the datapath race is the one that matters and is
-  verified.
-- Patch 1/2 of the series is unrelated and must not be treated as a
-  dependency.
-- Peripheral testing driver; still in this tree and already receiving
-  similar backports.
+None that block this tree: helper signature matches; no series deps. Not
+a crash/CVE, but a systematic tens-of-seconds stall on a production WWAN
+path.
 
----
-
-### Verification
-
-- **[Phase 1]** Parsed subject/body/tags from the provided message and
-  from `b4 mbox` (cover + 2/2). Tags: Tested-on/Tested-by/SOB author,
-  SOB MST, Message-ID. No Fixes/Cc stable/Reported-by/Reviewed-by.
-- **[Phase 2]** Read `vdpasim_dma_unmap`/`vdpasim_dma_map` in this tree;
-  compared to the diff. Confirmed unlocked reset vs locked `dma_map`.
-- **[Phase 2]** Read `vhost_iotlb_reset`/`vhost_iotlb_del_range` in
-  `drivers/vhost/iotlb.c` (interval tree free).
-- **[Phase 3]** `git blame -L 725,743` → introducer `6c3d329e6486dd`
-  (Jason Wang, v6.3-rc1).
-- **[Phase 3]** `git merge-base --is-ancestor 6c3d329e6486dd HEAD` →
-  yes. `git describe --contains` → `v6.3-rc1~84^2~23`.
-- **[Phase 3]** `git show 6c3d329e6486dd` — “get rid of DMA ops” added
-  `iommu_pt` passthrough; unmap’s reset was left outside the lock.
-- **[Phase 3]** `git log --oneline -20 --
-  drivers/vdpa/vdpa_sim/vdpa_sim.c`; `--grep` for this subject /
-  `pending_kick` → fix not present; sibling not present.
-- **[Phase 3]** `git log --author="Xiong Weimin" -- drivers/vdpa/` — no
-  vdpa_sim commits in this tree.
-- **[Phase 4]** `b4 mbox` Message-ID → 3-message v1 series; no review
-  replies; cover says issues are independent.
-- **[Phase 4]** WebFetch/curl lore.kernel.org → 403. UNVERIFIED: stable@
-  archives and HTML lore UI.
-- **[Phase 5]** Callers: `ops->dma_unmap` only from
-  `drivers/vhost/vdpa.c`. Datapath: `vdpa_sim_net.c`/`vdpa_sim_blk.c`
-  `vringh_*_iotlb` → `iotlb_translate` + `iommu_lock`.
-- **[Phase 5]** `vhost_vdpa_process_iotlb_msg` holds `dev->mutex` —
-  map/unmap/reset from vhost do not interleave (commit text overstated;
-  datapath race still real).
-- **[Phase 5]** `VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK` offered in this
-  file (line 436).
-- **[Phase 6]** `head Makefile` / `git describe HEAD` / `make
-  kernelversion` → **6.12.111**, branch `pending-6.12`.
-- **[Phase 6]** File context matches the hunk; fix not in tree.
-- **[Phase 7]** `drivers/vdpa/Kconfig`: `VDPA_SIM` depends on
-  `RUNTIME_TESTING_MENU`; testing/prototyping help text.
-- **[Phase 8]** Failure mode: IOTLB rbtree UAF/oops, HIGH on that
-  config; trigger: IOTLB unmap in passthrough vs worker.
-- **UNVERIFIED:** lore web discussion beyond b4 mbox; whether author
-  reproduced the race vs module-load smoke test; `b4 dig -w` recipient
-  list.
-
-The fix is small, correct, already matched by `dma_map` in this 6.12
-tree, and prevents a real IOTLB UAF race on a driver this tree ships.
+Verification:
+- [Phase 1] Tags: SOB Qingtao + Mani, R-b Krishna, Link msgid; no
+  Fixes/Cc:stable/syzbot
+- [Phase 2] Diff: `pm.c` `mhi_pm_sys_error_transition()`,
+  `wait_event_timeout` → `mhi_poll_reg_field`, 3+/11-
+- [Phase 3] blame: `556bbb442bbb44` (v5.11-rc1) introduced the wait;
+  `44b1eba44dc53` (2021, Cc:stable) fixed only disable
+- [Phase 3] `git merge-base --is-ancestor 22568e8f13a42 HEAD`: yes;
+  `44b1eba44dc53` and `556bbb442bbb44` also ancestors
+- [Phase 3] `mhi_poll_reg_field` in `main.c` takes `(mask, val, delayus,
+  timeout_ms)` matching the patch
+- [Phase 4] `b4 dig -c 22568e8f13a42`: lore msgid
+  `20260603011333.3306102-2`; v1 only
+- [Phase 4] `b4 dig -a`: 1/1 series; `b4 dig -w`: maintainer +
+  mhi/linux-arm-msm lists
+- [Phase 4] `b4 mbox`: Krishna confirmed no MSI after RESET; EM9291
+  24s→11s; Mani applied
+- [Phase 4] WebFetch lore/patch.msgid.link: 403 — thread recovered via
+  b4
+- [Phase 5] callers: `mhi_pm_st_worker` / `mhi_pm_sys_err_handler` from
+  SYSERR IRQ/event in `main.c`
+- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4
+- [Phase 6] `pci_generic.c`: EM929x shares EM919x config, `timeout_ms =
+  24000`
+- [Phase 8] Failure: SYSERR recovery blocked until timeout; severity
+  hang-like, not oops
+- UNVERIFIED: stable@ lore discussion (HTTP 403)
+- UNVERIFIED: cover letter body `3306102-1`
 
 **YES**
 
- drivers/vdpa/vdpa_sim/vdpa_sim.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/bus/mhi/host/pm.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-index 9df300c467452..44055778b6940 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-@@ -736,12 +736,11 @@ static int vdpasim_dma_unmap(struct vdpa_device *vdpa, unsigned int asid,
- 	if (asid >= vdpasim->dev_attr.nas)
- 		return -EINVAL;
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index b4ef115189b50..71bcb0f98ce6a 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -651,21 +651,13 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
  
-+	spin_lock(&vdpasim->iommu_lock);
- 	if (vdpasim->iommu_pt[asid]) {
- 		vhost_iotlb_reset(&vdpasim->iommu[asid]);
- 		vdpasim->iommu_pt[asid] = false;
- 	}
+ 	/* Trigger MHI RESET so that the device will not access host memory */
+ 	if (reset_device) {
+-		u32 in_reset = -1;
+-		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
 -
--	spin_lock(&vdpasim->iommu_lock);
- 	vhost_iotlb_del_range(&vdpasim->iommu[asid], iova, iova + size - 1);
- 	spin_unlock(&vdpasim->iommu_lock);
+ 		dev_dbg(dev, "Triggering MHI Reset in device\n");
+ 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
  
+ 		/* Wait for the reset bit to be cleared by the device */
+-		ret = wait_event_timeout(mhi_cntrl->state_event,
+-					 mhi_read_reg_field(mhi_cntrl,
+-							    mhi_cntrl->regs,
+-							    MHICTRL,
+-							    MHICTRL_RESET_MASK,
+-							    &in_reset) ||
+-					!in_reset, timeout);
+-		if (!ret || in_reset) {
++		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
++				 MHICTRL_RESET_MASK, 0, 25000, mhi_cntrl->timeout_ms);
++		if (ret) {
+ 			dev_err(dev, "Device failed to exit MHI Reset state\n");
+ 			write_lock_irq(&mhi_cntrl->pm_lock);
+ 			cur_state = mhi_tryset_pm_state(mhi_cntrl,
 -- 
 2.53.0
 
