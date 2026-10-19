@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C12503913;
-	Mon, 19 Oct 2026 14:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49C750B3B5;
+	Mon, 19 Oct 2026 14:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418749; cv=none; b=p3xBeT/Rh2DRVIKr1PHrm1GsptiXm+qlALV3VvqP1iLFJ31tD3nW3xPcB4Pb25s5at72W9VwZKqBTiz0Xp+x+l5wf4VVMsTk0MXupRmwy6p+GsAxl7Dk41UvBkbCl3f9c2UwayytXSeT30ELIcQt7AcEwE51JGaLPu0r73wWHik=
+	t=1792418751; cv=none; b=trVmU6AM4TfCXQAzx7mR2/OQGXOrHzSID+zoiO4yDKl+K++jabTDYQcf53+08Gb2pLgKgvHsnzUvtbN0W7/grcyNsq9qYCxDfWjTbVBXub2bIlqxKjYwIyhg4fd5oH4cl52rHzqtTk/Cm/mzh/pcNTW7H4qcG86R2959FNUHExc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418749; c=relaxed/simple;
-	bh=y8wdHJg2sOaw1nJ+HEFkmKGkxO6fbX3AEEouhO4/uwA=;
+	s=arc-20240116; t=1792418751; c=relaxed/simple;
+	bh=/5RjBPUuYHuoAi4FygzDJ6RkC17xlrOylmKGZ0czhEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j3qrhDuQ/OuX9NOrspdetUaIL/FI/N4EEznNYdeHREQ1O2Ugob1jAXOt3HpThXJWhYf8PXjDmgc2+GBVBTbGi9VKwheJsHsPrDHPDujccbYMd5Cp4ZGvxDCAYeEZWV4E8cPUlRRnxMK5JRe6De9aQUfyXyoIkPEG/2xsLXS+0+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WhieVU7z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fWGAfZtizdNTyvGvH/WAotWdo3ApuAoT3NM4VAmMPtxdzRLNPZZa3dI7fuEb6ptHY1P7L4VuhCJZ79aX287nNmRfYmenvsgX2XnLHq8SM7d8F3Y9kMDxCscpTXza/eIAkaDrnmMA7/6KJN5YLw0pPScyh/IbgdTbePD19lf+wNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TWSl6jDe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WhieVU7z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256131F000C4;
-	Mon, 19 Oct 2026 14:05:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TWSl6jDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6EA1F000C5;
+	Mon, 19 Oct 2026 14:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418746;
-	bh=VEhvWpSBuuOgsR6j1PDhVuySMCC2OyAu0N0as+4w6MU=;
+	s=k20260515; t=1792418747;
+	bh=xL5gRDFc7YMEPr92ywowGO8zMnBcNQC7WwUWBW61RzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WhieVU7zU7BL9EWxz581XbaKsng5RBaa4xo6OsMjb5JsUzSE/4o+kQSykFxiKL4Xe
-	 6A7L6NE6277xk2LpjfZZCccgxz6e1l8Re8yoNVlc999Qcfh8eqHi4OIcKzGbeDvTf6
-	 MhwIos7lIO/jO3/b5pHNveU62Jxk9TCbS64kY18dGLsqwTRr744oyu1ZVW7CHZgrLh
-	 oziuxvhTmEAmTHd9Hcc3b9iP/7Yblteaqw8h5g6LQgGoPPUhmOed509QFixB+My8/j
-	 N9e4Ew3FAPwwUtsIQXxk91BfOOqo/nHT9nEIIjsvALxRR+YgQ8yOQi3FjqAN55RcRT
-	 YqtRAqY+a9YqA==
+	b=TWSl6jDea+3qUGnRqbwcPPK5vWcNQjMjP/w6nXmAAx7BQ1+QVLLUdwGtSdiYepSiP
+	 0fPi6SEHKuP0TyCZHQtIP4RRJZC1/Ma+qIuyLikyGQx1BF4yKn+4WGaOCfEu+wPUcE
+	 EFlmyNTFZdOKMoYBNL3KXHcpqgFp0pqH7jmBqYN9oFGfv6LW79UMr3j2V+uzAzGLpC
+	 CLxzSPoqClSRMPne+Xuhnlv+GJJW2mmcMLlh4ryhsAlxsuV2GQInKnX4WPPMscOcyT
+	 5KcxJIeHDYeHOxjp3DYnlmv0jzbS59BeuaRweaTLl+6//TI0ehP7wra+3KCg4x0Ixa
+	 rkplXStW+26gw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Carlos Song <carlos.song@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	aisheng.dong@nxp.com,
+	linux-i2c@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] drm/amdgpu: Guard reads in pcie state readout
-Date: Mon, 19 Oct 2026 09:52:37 -0400
-Message-ID: <20261019135441.1420968-466-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] i2c: imx-lpi2c: properly unwind resources on probe failure
+Date: Mon, 19 Oct 2026 09:52:38 -0400
+Message-ID: <20261019135441.1420968-467-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,443 +56,450 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit 230753e46a4a9d04dad6a9b5dbaeb7fd52add7d0 ]
+[ Upstream commit cbd043b00ee3f542c115c8809c4d9a67465c07d5 ]
 
-Internal US/DS switch may not be exposed in passthrough. Guard the
-upstream port reads to avoid a NULL dereference.
+When probe fails at devm_clk_rate_exclusive_get() or clk_get_rate(),
+which occur before runtime PM is initialized, the clocks enabled by
+clk_bulk_prepare_enable() are never disabled.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+When probe fails after runtime PM is initialized, the previous error
+path called pm_runtime_put_sync(), which triggers the runtime suspend
+callback. However, due to different clock management strategies on
+different SoCs[1] (to avoid deadlocks between the global prepare_lock
+and runtime PM), the callback may only disable clocks without
+unpreparing them, causing an incomplete unwind.
+
+Introduce a new error label 'clk_disable' to explicitly invoke
+clk_bulk_disable_unprepare(). Replace pm_runtime_put_sync() with the
+sequence of pm_runtime_disable(), pm_runtime_set_suspended() and
+pm_runtime_put_noidle() to bypass the runtime suspend callback during
+error recovery. During the LPI2C driver probe phase, clock APIs are
+used exclusively to manage clocks. Once probing succeeds, clock
+management is handed over to the runtime PM core.
+
+[1] https://lore.kernel.org/all/20251125084718.2156168-1-carlos.song@nxp.com/
+
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260716071957.2670263-2-carlos.song@oss.nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a NULL-deref on a sysfs read for MI300
-passthrough, the buggy code is in 6.18.53, and the patch is small and
-already reviewed.
+The local tree is **6.12.111** (`pending-6.12`). The buggy probe unwind
+is present here; the later SoC-specific clock strategy is not. The leak
+is real and the fix is a small error-path change.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## Phase 1: Commit message forensics
+Step 1.1: PARSE THE SUBJECT LINE
+Record: **[i2c: imx-lpi2c]** **[properly unwind]** probe resources are
+not released when `lpi2c_imx_probe()` fails. “Properly unwind” is fix
+language (missing cleanup), not a feature.
 
-**Step 1.1: Subject line**
-Record: `[drm/amdgpu] [Guard] Guard reads in PCIe state readout` —
-“Guard” here is a missing-NULL-check / skip-on-missing-hardware fix, not
-a feature.
-
-**Step 1.2: Tags**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>` (author; AMD amdgpu
-  contributor)
-- `Acked-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
-  maintainer)
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (maintainer
-  merge)
-- No `Fixes:`, `Reported-by:`, `Cc: stable`, `Link:`, `Tested-by:`, or
-  `Reviewed-by:` (absence of Fixes/Cc-stable is expected for this
-  review)
-- Ignore `[Upstream commit 230753e46a4a...]` and `Signed-off-by: Sasha
-  Levin` (pipeline)
+- **Fixes:** none (expected for this review queue)
+- **Reported-by / Tested-by / Acked-by / Cc: stable:** none
+- **Reviewed-by:** Frank Li &lt;Frank.Li@nxp.com&gt;
+- **Signed-off-by:** Carlos Song &lt;carlos.song@nxp.com&gt; (author);
+  Andi Shyti &lt;andi.shyti@kernel.org&gt; (I2C maintainer, merger)
+- **Link:** https://lore.kernel.org/r/20260716071957.2670263-2-
+  carlos.song@oss.nxp.com
+- **Inline [1]:** https://lore.kernel.org/all/20251125084718.2156168-1-
+  carlos.song@nxp.com/ (later SoC clock/IRQ RPM split)
+- Ignore any pipeline SOBs / “Upstream commit” markers
 
-**Step 1.3: Body**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: internal US/DS PCIe switch may not be visible in passthrough
-- Symptom: NULL dereference when reading upstream-port config
-- Root cause: `pci_upstream_bridge()` can return NULL; the code still
-  uses the pointer
-- No stack trace, no version list, no reproducer in the message
+- **Bug:** After `clk_bulk_prepare_enable()`, two classes of probe
+  failure leak clocks.
+  1. Failures **before** RPM init (`devm_clk_rate_exclusive_get()`,
+     `clk_get_rate()`): early `return` leaves clocks prepared **and**
+     enabled.
+  2. Failures **after** RPM init: `pm_runtime_put_sync()` runs
+     `lpi2c_runtime_suspend()`, which on this tree only
+     `clk_bulk_disable()`s (no unprepare), so the prepare count is left
+     elevated.
+- **Symptom:** Unbalanced clock prepare/enable. On `-EPROBE_DEFER` the
+  prepare count grows on every retry.
+- **Root cause:** Probe uses clock APIs; after success, RPM owns
+  enable/disable. Error paths mixed the two and did not fully unwind.
+- **Version info in message:** none for 6.12. `[1]` is the later
+  i.MX8QXP/8QM RPM split (`949f647eff76a`, **not** in this tree).
 
-**Step 1.4: Hidden bug fix?**
-Record: Not hidden. Explicit NULL-deref fix. Extra vendor/type checks
-also avoid treating a hypervisor virtual bridge as the GPU’s internal
-switch.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. Explicit resource-leak / incomplete error-path
+unwind. Not style cleanup.
 
----
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-## Phase 2: Diff analysis
-
-**Step 2.1: Inventory**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c` only
-- ~42 insertions, ~17 deletions (59-line churn)
-- New helper `aqua_vanjaram_get_us_pdev()`;
-  `aqua_vanjaram_read_pcie_state()` updated
-- Classification: single-file surgical fix
+- **File:** `drivers/i2c/busses/i2c-imx-lpi2c.c` (+14 / −7)
+- **Function:** `lpi2c_imx_probe()` only
+- **Scope:** single-file, error-path only
 
-**Step 2.2: Code flow**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Before:** `ds_pdev = pci_upstream_bridge(adev->pdev); us_pdev =
-  pci_upstream_bridge(ds_pdev);` then unconditional
-  `pcie_capability_read_word(us_pdev, ...)`,
-  `pci_find_ext_capability(us_pdev, ...)`,
-  `pci_read_config_dword(us_pdev, ...)`.
-- **After:** helper requires ATI downstream port then ATI/AMD upstream
-  port; if either walk fails, skip those config reads. SMN register dump
-  still runs.
-- Path: sysfs `reg_state` read (normal userspace debug path), not
-  probe/error-only.
+- **Hunk 1 (pre-RPM errors):** `return dev_err_probe(...)` after
+  exclusive-get / `clk_get_rate()` failure → `goto clk_disable` so
+  `clk_bulk_disable_unprepare()` runs.
+- **Hunk 2 (post-RPM errors):** `rpm_disable` no longer
+  `pm_runtime_put_sync()`. It now `pm_runtime_disable()`,
+  `pm_runtime_set_suspended()`, `pm_runtime_put_noidle()`, then falls
+  through to `clk_disable` for `clk_bulk_disable_unprepare()`.
+- **Success path:** unchanged (`pm_runtime_put_autosuspend()` still
+  hands clocks to RPM).
 
-**Step 2.3: Bug mechanism**
-Record: **NULL pointer dereference** (memory safety).
-- `pci_upstream_bridge()` in `include/linux/pci.h` returns NULL on a
-  root bus.
-- `pci_upstream_bridge(NULL)` calls `pci_physfn(dev)` which does
-  `dev->is_virtfn` — immediate oops if the GPU has no parent.
-- Typical VFIO topology (GPU under a QEMU root port): `ds_pdev` is non-
-  NULL, `us_pdev` is NULL, then `pcie_capability_read_word(NULL, ...)`
-  oopses.
-- Helper matches the existing pattern in
-  `amdgpu_device_cache_switch_state()` /
-  `amdgpu_device_get_aspm_pdev()`.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: **Error-path resource leak (clock prepare/enable).**
+- Missing `clk_bulk_disable_unprepare()` on early probe failure.
+- RPM suspend used as unwind, but in **this** tree
+  `lpi2c_runtime_suspend()` is only `clk_bulk_disable()` (since
+  `fa39065833dbd`), so prepare is never reversed.
+- `clk_disable` is an added put/unprepare, not a double-free: RPM
+  suspend is skipped, then clocks are disabled and unprepared once.
 
-**Step 2.4: Fix quality**
-Record: Obviously correct; same topology checks already used nearby.
-Residual: skipped fields are not zeroed (AER fields were already
-conditional). That is much less severe than an oops. No new API, no
-lock, no ABI change. Low regression risk.
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Surgical and correct for this tree. Same pattern as other probe-
+fail RPM unwinds. Success path untouched. Regression risk is low; the
+only real risk is pairing `put_sync` with `disable_unprepare` (double-
+disable). This patch removes `put_sync` and does one explicit unwind.
 
----
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-## Phase 3: Git history
+Step 3.1: BLAME THE CHANGED LINES
+Record (this checkout):
+- Early leak: `4268254a39484` (“Avoid calling clk_get_rate during
+  transfer”, 2024-05-06) — **in v6.12**.
+- RPM enable/disable-only callbacks: `fa39065833dbd` (2023) — **in
+  v6.12**.
+- `rpm_disable` + `put_sync`: `4f4388a55019d` / upstream `b1852c5de2f2a`
+  (“Fix clock count when probe defers”) — **already in this 6.12 tree**.
+  That only fixed the **enable** count; prepare still leaks.
+- `-EPROBE_DEFER` from recovery pinctrl: `188542964e782` — **in this
+  tree**.
 
-**Step 3.1: Blame**
-Record: Unguarded walk introduced in `081a6eda2b2509` (“drm/amdgpu: Read
-aquavanjaram PCIE register state”, 2023-11-29, Lijo Lazar). In this tree
-since well before v6.18. Contained in v6.8-era history
-(`locking_urgent_for_v6.8_rc2~...`).
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No `Fixes:` tag. Bug-introducing history above is in this tree.
+`cbd043b00ee3f` is **not** an ancestor of HEAD.
 
-**Step 3.2: Fixes: tag**
-Record: No `Fixes:` tag. Introducer `081a6eda2b2509` **is** an ancestor
-of `v6.18.53` (`git merge-base --is-ancestor` exit 0).
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Latest local change is `4f4388a55019d` (the incomplete enable-
+count fix). This commit is the missing prepare-count half of that
+unwind. Standalone for 6.12; does not need DMA, `hwdata`, or
+`need_prepare_unprepare_clk`.
 
-**Step 3.3: File history**
-Record: Related NULL-guard already in this tree: `9b608fe94870f`
-“drm/amdgpu: Check swus/ds for switch state save” (in v6.18.53; GitLab
-drm/amd#4602). Same topology bug, different path (reset/save). This
-patch is the sysfs readout counterpart. Standalone, not `N/M`.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Carlos Song is an NXP LPI2C contributor (GPIO recovery in this
+tree). Frank Li reviewed. Andi Shyti merged. Series v6 patch 2
+(`a4c419356a333`, controller reset) is independent and not required.
 
-**Step 3.4: Author**
-Record: Lijo Lazar is a regular amdgpu author of this file. Maintainer
-Alex Deucher acked and applied.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Message cites later SoC clock strategies (`949f647eff76a`,
+2026-01-19) — **not in 6.12**. The **code** of this fix does not use
+`hwdata` / `need_prepare_unprepare_clk`. Needed APIs
+(`clk_bulk_disable_unprepare`, `pm_runtime_put_noidle`,
+`pm_runtime_set_suspended`) exist in 6.12. **Can be backported
+standalone** with context tweaks.
 
-**Step 3.5: Dependencies**
-Record: None. Uses existing `pci_upstream_bridge`,
-`PCI_VENDOR_ID_ATI/AMD`, `pci_pcie_type`. No new helpers from later
-series. Can apply standalone.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
----
-
-## Phase 4: Mailing list / external
-
-**Step 4.1: Original discussion**
-Record: `b4 dig -c 230753e46a4a9d04dad6a9b5dbaeb7fd52add7d0` →
-https://patch.msgid.link/20260617093518.753118-1-lijo.lazar@amd.com
-`b4 dig -a`: **v1 only**, 2026-06-17. No later rewrite.
-
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: `amd-gfx@lists.freedesktop.org`, Hawking Zhang, Alex Deucher,
-Asad Kamal, Candice Li. Right list and maintainer.
-
-**Step 4.3: Review (mbox `/tmp/pcie-guard.mbox`)**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- Kevin Wang: under VFIO the guest topology is virtualized; suggested
-  hiding the whole interface in PT/SRIOV.
-- Lijo: SMN/endpoint reads still useful; this patch only skips the
-  physical-link (US port) reads that need real switch ports.
-- Alex Deucher: `Acked-by` (2026-06-19). No NAK. No `Cc: stable` in
-  review.
+- SHA: `cbd043b00ee3f542c115c8809c4d9a67465c07d5`
+- `b4 dig -c`: https://patch.msgid.link/20260716071957.2670263-2-
+  carlos.song@oss.nxp.com
+- Series: **v6 1/2** “fix probe error handling and reset controller”
+  (v4/v5/v6 of the same subject)
+- Andi Shyti: merged to `i2c/i2c-2` (2026-07-28). No NAK.
+- Cover letter: v3 replaced `put_sync` with disable + set_suspended +
+  put_noidle specifically to avoid the suspend callback during error
+  recovery.
 
-**Step 4.4: Series**
-Record: Single standalone patch.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): linux-i2c, imx@lists, linux-arm-kernel; Andi
+Shyti; Dong Aisheng (LPI2C maintainer in MAINTAINERS); Frank Li
+(Reviewed-by); Pengutronix i.MX folks. Right audience.
 
-**Step 4.5: Stable list**
-Record: lore.kernel.org/stable fetch returned 403. UNVERIFIED whether
-stable@ discussed it. Does not change the technical verdict.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Bug is from code review / NXP analysis, not
+a crash report. Still a concrete leak with a documented `-EPROBE_DEFER`
+path.
 
----
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Patch 2/2 (reset in probe) is a separate hang-on-boot issue; not
+a dependency. Earlier `b1852c5`/`4f4388a55019d` is the related
+incomplete stable fix already here.
 
-## Phase 5: Semantic / call chain
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable returned HTTP 403. No stable nomination
+on the patch itself. Related defer clock-count fix **was** `Cc: stable #
+v4.16+` and is already in this tree.
 
-**Step 5.1: Functions**
-Record: `aqua_vanjaram_get_us_pdev` (new),
-`aqua_vanjaram_read_pcie_state` (modified).
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.2: Callers**
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `lpi2c_imx_probe()` only. Unwind interacts with
+`lpi2c_runtime_suspend()` (not edited).
+
+Step 5.2: TRACE CALLERS
+Record: `.probe = lpi2c_imx_probe` on the platform driver. Called from
+driver core on DT devices (`fsl,imx7ulp-lpi2c`) and on deferred retry.
+Not a syscall hot path.
+
+Step 5.3: TRACE CALLEES
+Record: `clk_bulk_prepare_enable` / `clk_bulk_disable_unprepare`,
+`devm_clk_rate_exclusive_get`, `clk_get_rate`, RPM helpers,
+`lpi2c_imx_init_recovery_info()` (`devm_pinctrl_get` → `-EPROBE_DEFER`),
+`i2c_add_adapter()`.
+
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Reachable at boot and on probe defer.
+`lpi2c_imx_init_recovery_info()` is a real `-EPROBE_DEFER` source when
+pinctrl is not ready. Unprivileged userspace does not need to trigger
+it.
+
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Other I2C drivers use `clk_disable:` /
+`clk_bulk_disable_unprepare` on probe fail (`i2c-qcom-geni.c`,
+`i2c-qcom-cci.c`). This driver was the odd one out after RPM callbacks
+stopped unpreparing.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: **Yes.** `lpi2c_imx_probe()` in `drivers/i2c/busses/i2c-imx-
+lpi2c.c` still does:
+
+```609:625:drivers/i2c/busses/i2c-imx-lpi2c.c
+        ret = clk_bulk_prepare_enable(lpi2c_imx->num_clks,
+lpi2c_imx->clks);
+        if (ret)
+                return ret;
+        ...
+        if (ret)
+                return dev_err_probe(...);  /* exclusive_get: leak */
+        ...
+        if (!lpi2c_imx->rate_per)
+                return dev_err_probe(...);  /* rate 0: leak */
+```
+
+```654:657:drivers/i2c/busses/i2c-imx-lpi2c.c
+rpm_disable:
+        pm_runtime_dont_use_autosuspend(&pdev->dev);
+        pm_runtime_put_sync(&pdev->dev);
+        pm_runtime_disable(&pdev->dev);
+```
+
+```672:679:drivers/i2c/busses/i2c-imx-lpi2c.c
+static int __maybe_unused lpi2c_runtime_suspend(struct device *dev)
+{
+        ...
+        clk_bulk_disable(lpi2c_imx->num_clks, lpi2c_imx->clks);
+```
+
+No `hwdata` / `need_prepare_unprepare_clk` here, so **every** SoC only
+disables in RPM. The prepare leak on `rpm_disable` is unconditional.
+
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: **`git apply --check` fails** because context includes
+`hwdata->need_prepare_unprepare_clk` and later DMA probe code. Logical
+change maps 1:1 onto this probe (same exclusive-get returns, same
+`rpm_disable` + `put_sync`). Difficulty: **minor context backport**, not
+a rewrite.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: `4f4388a55019d` is here and only switched `pm_runtime_put()` to
+`put_sync()`. It does **not** unprepare. No other unwind of this leak in
+this tree.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: I2C bus driver for i.MX LPI2C (`CONFIG_I2C_IMX_LPI2C`,
+`ARCH_MXC`). **IMPORTANT** for i.MX boards (PMIC, audio, sensors on that
+bus), not core MM/VFS. Maintainer: Dong Aisheng; I2C maintainer merged
+it.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature driver (since ~2016). This tree’s recent churn is small
+fixes, not a rewrite. The big SoC RPM split landed after 6.12.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: **Driver-specific / platform-specific** — i.MX systems using
+LPI2C. Common on i.MX7ULP / i.MX8 class boards, not all Linux users.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
 Record:
-- `aqua_vanjaram_read_pcie_state` ← `aqua_vanjaram_get_reg_state` (PCIE
-  case)
-- ← `amdgpu_asic_get_reg_state` ← `amdgpu_sysfs_reg_state_get`
-- Sysfs bin attr `reg_state` mode **0444**, offset
-  `AMDGPU_SYS_REG_STATE_PCIE = 0x2000`
-- `get_reg_state` is only on `aqua_vanjaram_asic_funcs` (`soc15.c`)
+- Exclusive-get / zero clock rate: uncommon hard errors.
+- **`-EPROBE_DEFER` from pinctrl in recovery init:** normal boot race;
+  retries leak another prepare each time.
+- `i2c_add_adapter()` failure: less common.
+- Not a userspace-triggered security path.
 
-**Step 5.3: Callees**
-Record: `pci_upstream_bridge`, `pcie_capability_read_word`,
-`pci_find_ext_capability`, `pci_read_config_dword`, plus existing SMN
-reads (`aqua_read_smn` / `RREG32_PCIE`).
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Clock prepare leak (and enable leak on the pre-RPM returns).
+Repeated defer can unbalance the clock tree, keep parents prepared, and
+block low power. Not an oops/corruption/CVE. **Severity: MEDIUM**,
+higher if defer retries pile up.
 
-**Step 5.4: Reachability**
-Record: Userspace-reachable: `read()` on `/sys/devices/.../reg_state` at
-offset 0x2000 (or via drm sysfs). Not interrupt/hot path. Any process
-that can read that 0444 file can trigger it.
-
-**Step 5.5: Similar patterns**
-Record: Same US/DS walk in `amdgpu_device_cache_switch_state()` (already
-NULL-checked in this tree) and `amdgpu_device_get_aspm_pdev()`.
-
----
-
-## Phase 6: Local tree (v6.18.53)
-
-**Step 6.1: Does the bug exist here?**
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- `git describe HEAD`: `v6.18.53-5049-g0f0bdc2b0dffb`;
-  `VERSION/PATCHLEVEL/SUBLEVEL` = 6.18.53
-- `git merge-base --is-ancestor 9bd596d9e90da v6.18.53` → **no** (fix
-  not in 6.18.53)
-- `git merge-base --is-ancestor 081a6eda2b2509 v6.18.53` → **yes** (bug
-  is in 6.18.53)
-- At `v6.18.53` lines 653–670: unguarded `pci_upstream_bridge` + config
-  reads
+- **Benefit:** Completes the unwind that `4f4388a55019d` only half-
+  fixed; stops prepare-count growth on defer. Medium benefit for i.MX
+  LPI2C users.
+- **Risk:** ~20-line error-path change; success path unchanged. Low risk
+  if backported without keeping `put_sync`.
+- **Ratio:** Favorable.
 
-**Step 6.2: Backport difficulty**
-Record: `git apply --check` of both the candidate and upstream diffs
-onto the v6.18.53 file **succeeds** (hunk offset only). Context around
-`pcie_reg_addrs` / `aqua_vanjaram_read_pcie_state` matches. **Clean
-apply.**
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 6.3: Related fixes already here?**
-Record: Switch-state save is guarded (`9b608fe94870f` in v6.18.53).
-Sysfs PCIe readout is **not**. No earlier version of this helper in
-6.18.53.
+Step 9.1: COMPILE THE EVIDENCE
 
----
+**FOR backporting:**
+- Real clock leak on probe failure, including a documented
+  `-EPROBE_DEFER` path.
+- Buggy code is in this 6.12 tree (exclusive-get + disable-only RPM +
+  `put_sync` unwind).
+- This tree already took the enable-count half (`4f4388a55019d`); this
+  is the remaining prepare-count fix.
+- Small, probe-error only; reviewed and merged by the I2C maintainer.
+- No new API/feature; no `hwdata` dependency in the changed lines.
 
-## Phase 7: Subsystem context
+**AGAINST:**
+- Does not apply with `git apply` as-is (later DMA/`hwdata` context).
+- Not a crash/security/corruption bug.
+- No `Cc: stable` / syzbot / user crash report.
+- Message talks about later per-SoC clock strategies that 6.12 does not
+  have (the leak is still real here, and simpler).
 
-**Step 7.1**
-Record: amdgpu / Aqua Vanjaram (Instinct MI300 family: GC 9.4.3, 9.4.4,
-9.5.0). **IMPORTANT** (datacenter GPU driver), not core mm/VFS, not
-staging.
+**UNRESOLVED:**
+- Stable list search was blocked (HTTP 403). Unverified whether anyone
+  already NAK’d this for stable.
 
-**Step 7.2**
-Record: File is actively developed, but this readout path has been
-unchanged since 2023. Mature buggy code, not a brand-new feature.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — explicit unwind; merged
+   after v4–v6 review.
+2. Fixes a real bug that affects users? **PASS** — clock leak on probe
+   fail/defer.
+3. Important issue? **PASS** at medium — not panic-level, but resource
+   leak on a normal defer path; sister fix already went to stable.
+4. Small and contained? **PASS** — one function, error labels only.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS with backport** — code is here;
+   context needs a small edit. Not “code missing / bug introduced after
+   branch.”
 
----
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: None (not an ID/quirk/DT/build/docs exception). Qualifies as a
+normal small bugfix.
 
-## Phase 8: Impact and risk
+Step 9.4: MAKE YOUR DECISION
+Backport to **this** 6.12 tree. The later SoC RPM split is not required.
+Drop `hwdata`/DMA context and apply the same `goto clk_disable` + RPM-
+bypass + `clk_bulk_disable_unprepare()` sequence to `lpi2c_imx_probe()`.
 
-**Step 8.1: Who is affected**
-Record: Driver-specific: MI300/MI308/MI350 (`IP_VERSION(9,4,3/4)` and
-`(9,5,0)`). Highest impact: **VFIO/QEMU passthrough guests** where the
-internal US/DS switch is hidden. Bare metal with the real AMD switch is
-unaffected.
+Verification:
+- [Phase 1] Tags: Reviewed-by Frank Li; SOB Andi Shyti; Link to v6 1/2;
+  no Fixes/Cc:stable/syzbot
+- [Phase 2] Diff: +14/−7 in `lpi2c_imx_probe()`; two early returns →
+  `clk_disable`; `put_sync` → disable/set_suspended/put_noidle +
+  `clk_bulk_disable_unprepare`
+- [Phase 3] Blame: leak from `4268254a39484` (in v6.12); RPM disable-
+  only from `fa39065833dbd` (in v6.12); incomplete enable fix
+  `4f4388a55019d` already in HEAD
+- [Phase 3] `git merge-base --is-ancestor cbd043b00ee3f HEAD` → not in
+  this tree
+- [Phase 3] `949f647eff76a` (`need_prepare_unprepare_clk`) → **not** in
+  this tree
+- [Phase 4] `b4 dig -c cbd043b00ee3f`: lore v6 1/2; Andi merged to
+  i2c-2; no NAK
+- [Phase 4] Cover: v3 introduced the RPM-bypass unwind; patch 2/2 is
+  independent
+- [Phase 4] UNVERIFIED: stable@ lore (403)
+- [Phase 5] Probe is platform `.probe`; `-EPROBE_DEFER` from
+  `devm_pinctrl_get` in recovery init
+- [Phase 6] `git describe` / Makefile: 6.12.111; buggy returns and
+  `rpm_disable` present; `git apply --check` fails on `hwdata` context
+- [Phase 8] Failure mode: clock prepare leak, worse on deferred probe;
+  severity MEDIUM; risk low
 
-**Step 8.2: Trigger**
-Record: Reading sysfs `reg_state` at PCIE offset. Common for AMD
-debug/RAS dumps; also trivial to hit (`dd`/`pread` at 0x2000).
-Unprivileged users can read 0444 sysfs. Not a boot-every-time path.
-
-**Step 8.3: Failure mode**
-Record: Kernel oops / NULL deref. **Severity: HIGH** (crash; local DoS
-from sysfs). Not silent corruption.
-
-**Step 8.4: Risk-benefit**
-Record:
-- Benefit: stops a real oops on MI300 passthrough when diagnostics read
-  PCIe state — production cloud/HPC setup.
-- Risk: ~25-line helper + `if (us_pdev)` around existing reads; mirrors
-  code already in this tree. **Low.**
-- Ratio: strongly favors backport.
-
----
-
-## Phase 9: Synthesis
-
-**Step 9.1: Evidence**
-
-For:
-- Real NULL deref, reachable from sysfs
-- Buggy code in this 6.18.53 tree since 2023
-- Passthrough is a stated, realistic trigger
-- Same topology already caused a user-visible bug (drm/amd#4602) on the
-  sibling path
-- Small, obviously correct, maintainer-acked
-- Applies cleanly to v6.18.53
-- No new features/APIs
-
-Against:
-- Affects one ASIC family, debug sysfs, not a universal path
-- No `Reported-by` / public crash log on *this* function
-- Kevin argued for hiding the whole interface (not a NAK of the NULL
-  check)
-- Skipped struct fields left uninitialized (minor, pre-existing for AER)
-
-Unresolved:
-- Stable@ discussion (lore 403)
-- Whether a specific production crash dump exists for this sysfs path
-  (unverified; mechanism is still verified in code)
-
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** (mirror of existing checks;
-   maintainer Acked-by)
-2. Real bug affecting users? **PASS** (oops on MI300 passthrough sysfs
-   read)
-3. Important (crash/security/corruption/deadlock)? **PASS** — oops /
-   local DoS, HIGH
-4. Small and contained? **PASS** — one file, one helper + guard
-5. No new features/APIs? **PASS**
-6. Applies to local tree? **PASS** — clean apply; buggy code present
-
-**Step 9.3: Exceptions**
-Record: None (not a device-ID/quirk/DT/build/doc-only change). Qualifies
-as a normal crash fix.
-
-**Step 9.4: Decision**
-Backport. This tree is 6.18.53; the unguarded walk is present; the fix
-is a small NULL-deref guard for a userspace-reachable path on hardware
-this kernel already supports.
-
----
-
-### What the commit solves for this tree
-`aqua_vanjaram_read_pcie_state()` walks to the GPU’s internal upstream
-switch and reads PCIe/AER config with no NULL or topology check. In
-passthrough that switch is often missing, so `pci_upstream_bridge()`
-returns NULL and the kernel oopses. The helper skips those reads when
-the ATI/AMD US/DS chain is not there, while still dumping SMN regs.
-
-### Risk vs benefit
-Benefit is avoiding a reproducible oops on Instinct MI300-class GPUs in
-VFIO guests. Risk is a narrow, identical-to-existing-pattern check.
-Applies cleanly to 6.18.53.
-
-### Verification
-- [Phase 1] Parsed tags: author SOB, Alex Deucher Acked-by + SOB; no
-  Fixes/Reported-by/Cc-stable
-- [Phase 2] Diff: helper + `if (us_pdev)` around config reads in
-  `aqua_vanjaram.c`; SMN loop unchanged
-- [Phase 2] `pci_upstream_bridge()` / `pci_physfn()` read: NULL parent →
-  NULL deref
-- [Phase 3] `git blame v6.18.53`: lines from `081a6eda2b2509` (2023)
-- [Phase 3] `git merge-base --is-ancestor 081a6eda2b2509 v6.18.53`: yes
-  (bug in this tree)
-- [Phase 3] `git merge-base --is-ancestor 9bd596d9e90da v6.18.53`: no
-  (fix not in 6.18.53)
-- [Phase 3] Related `9b608fe94870f` already in v6.18.53 (switch-state
-  save)
-- [Phase 4] `b4 dig -c 230753e46a4a...`: lore thread; v1 only
-- [Phase 4] mbox: Kevin design comment; Lijo kept SMN reads; Alex Acked-
-  by; no NAK
-- [Phase 4] lore.kernel.org/stable: **UNVERIFIED** (HTTP 403)
-- [Phase 5] Callers: sysfs `reg_state` 0444 → PCIE offset 0x2000; only
-  `aqua_vanjaram_asic_funcs`
-- [Phase 6] `git describe HEAD` / Makefile: 6.18.53; unguarded code at
-  v6.18.53:653–670
-- [Phase 6] `git apply --check` of candidate and upstream patches onto
-  v6.18.53 file: success (offset only)
-- [Phase 8] Failure mode: NULL deref oops on sysfs read in passthrough,
-  HIGH
-- UNVERIFIED: no public crash log specifically for this sysfs function
-  (mechanism still verified)
+The leak exists on this 6.12 branch, the fix is small and correct, and
+it finishes an unwind this tree already started.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c | 59 +++++++++++++++-------
- 1 file changed, 42 insertions(+), 17 deletions(-)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-index 15e70415c35b4..b73e114206cc1 100644
---- a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-+++ b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-@@ -613,6 +613,29 @@ static struct aqua_reg_list pcie_reg_addrs[] = {
- 	{ smreg_0x1A380088, 6, DW_ADDR_INCR },
- };
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index 24c70ea371bb9..7c560a4f68319 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -1500,14 +1500,18 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
+ 	 * each transfer
+ 	 */
+ 	ret = devm_clk_rate_exclusive_get(&pdev->dev, lpi2c_imx->clks[0].clk);
+-	if (ret)
+-		return dev_err_probe(&pdev->dev, ret,
+-				     "can't lock I2C peripheral clock rate\n");
++	if (ret) {
++		ret = dev_err_probe(&pdev->dev, ret,
++				    "can't lock I2C peripheral clock rate\n");
++		goto clk_disable;
++	}
  
-+/*
-+ * Return the GPU's internal US switch port, or NULL if it is not visible
-+ * (e.g. passthrough) or the EP is parented under an unrelated bridge.
-+ */
-+static struct pci_dev *aqua_vanjaram_get_us_pdev(struct amdgpu_device *adev)
-+{
-+	struct pci_dev *ds_pdev, *us_pdev;
-+
-+	ds_pdev = pci_upstream_bridge(adev->pdev);
-+	if (!ds_pdev || ds_pdev->vendor != PCI_VENDOR_ID_ATI ||
-+	    pci_pcie_type(ds_pdev) != PCI_EXP_TYPE_DOWNSTREAM)
-+		return NULL;
-+
-+	us_pdev = pci_upstream_bridge(ds_pdev);
-+	if (!us_pdev ||
-+	    (us_pdev->vendor != PCI_VENDOR_ID_ATI &&
-+	     us_pdev->vendor != PCI_VENDOR_ID_AMD) ||
-+	    pci_pcie_type(us_pdev) != PCI_EXP_TYPE_UPSTREAM)
-+		return NULL;
-+
-+	return us_pdev;
-+}
-+
- static ssize_t aqua_vanjaram_read_pcie_state(struct amdgpu_device *adev,
- 					     void *buf, size_t max_size)
- {
-@@ -620,7 +643,7 @@ static ssize_t aqua_vanjaram_read_pcie_state(struct amdgpu_device *adev,
- 	uint32_t start_addr, incrx, num_regs, szbuf;
- 	struct amdgpu_regs_pcie_v1_0 *pcie_regs;
- 	struct amdgpu_smn_reg_data *reg_data;
--	struct pci_dev *us_pdev, *ds_pdev;
-+	struct pci_dev *us_pdev;
- 	int aer_cap, r, n;
+ 	lpi2c_imx->rate_per = clk_get_rate(lpi2c_imx->clks[0].clk);
+-	if (!lpi2c_imx->rate_per)
+-		return dev_err_probe(&pdev->dev, -EINVAL,
+-				     "can't get I2C peripheral clock rate\n");
++	if (!lpi2c_imx->rate_per) {
++		ret = dev_err_probe(&pdev->dev, -EINVAL,
++				    "can't get I2C peripheral clock rate\n");
++		goto clk_disable;
++	}
  
- 	if (!buf || !max_size)
-@@ -652,25 +675,27 @@ static ssize_t aqua_vanjaram_read_pcie_state(struct amdgpu_device *adev,
- 		}
- 	}
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, I2C_PM_TIMEOUT);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+@@ -1545,8 +1549,11 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
  
--	ds_pdev = pci_upstream_bridge(adev->pdev);
--	us_pdev = pci_upstream_bridge(ds_pdev);
-+	us_pdev = aqua_vanjaram_get_us_pdev(adev);
-+	if (us_pdev) {
-+		pcie_capability_read_word(us_pdev, PCI_EXP_DEVSTA,
-+					  &pcie_regs->device_status);
-+		pcie_capability_read_word(us_pdev, PCI_EXP_LNKSTA,
-+					  &pcie_regs->link_status);
-+
-+		aer_cap = pci_find_ext_capability(us_pdev, PCI_EXT_CAP_ID_ERR);
-+		if (aer_cap) {
-+			pci_read_config_dword(us_pdev,
-+					      aer_cap + PCI_ERR_COR_STATUS,
-+					      &pcie_regs->pcie_corr_err_status);
-+			pci_read_config_dword(us_pdev,
-+					      aer_cap + PCI_ERR_UNCOR_STATUS,
-+					      &pcie_regs->pcie_uncorr_err_status);
-+		}
+ rpm_disable:
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+-	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++clk_disable:
++	clk_bulk_disable_unprepare(lpi2c_imx->num_clks, lpi2c_imx->clks);
  
--	pcie_capability_read_word(us_pdev, PCI_EXP_DEVSTA,
--				  &pcie_regs->device_status);
--	pcie_capability_read_word(us_pdev, PCI_EXP_LNKSTA,
--				  &pcie_regs->link_status);
--
--	aer_cap = pci_find_ext_capability(us_pdev, PCI_EXT_CAP_ID_ERR);
--	if (aer_cap) {
--		pci_read_config_dword(us_pdev, aer_cap + PCI_ERR_COR_STATUS,
--				      &pcie_regs->pcie_corr_err_status);
--		pci_read_config_dword(us_pdev, aer_cap + PCI_ERR_UNCOR_STATUS,
--				      &pcie_regs->pcie_uncorr_err_status);
-+		pci_read_config_dword(us_pdev, PCI_PRIMARY_BUS,
-+				      &pcie_regs->sub_bus_number_latency);
- 	}
- 
--	pci_read_config_dword(us_pdev, PCI_PRIMARY_BUS,
--			      &pcie_regs->sub_bus_number_latency);
--
- 	pcie_reg_state->common_header.structure_size = szbuf;
- 	pcie_reg_state->common_header.format_revision = 1;
- 	pcie_reg_state->common_header.content_revision = 0;
+ 	return ret;
+ }
 -- 
 2.53.0
 
