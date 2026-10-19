@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7762256CE04;
-	Mon, 19 Oct 2026 13:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4A256CE20;
+	Mon, 19 Oct 2026 13:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418280; cv=none; b=ArLc2kVp079IDvSycHytREHYfX+ut9vjN3H69uNrqN6RPxmlWWrAgfgwtQdXYzchRH4r4SnWWch3JrKj/HKuyjLxgRQOSI6Ozpbfx15Kal0H00kjPoi2dirvNHtitQuD3cnwYVhzYCxjkGzPlhqf93/EXWgajViJ/TtfRs12sBU=
+	t=1792418283; cv=none; b=YZRixITc2ZhloTxuRmLrMKdud+iknhAUfh2v6gBuFY4xaNuYP/mIZzmhPIy3QgjFivDWqNooxb9apgnrpBMNC4Gw+o2x2r2qt+6Yu3JazeDbetmyqge/uJL+WeRFiNKas+66jwBsubtLlzSrC1OvLo1CJAdODZCxeJJ6bridK2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418280; c=relaxed/simple;
-	bh=p7XwU1Cmktg71iLWiSqZGVHzdkqB53V+abIuVga9KAA=;
+	s=arc-20240116; t=1792418283; c=relaxed/simple;
+	bh=de3eDLS7qmBPaPKiZdyRQShbPn6YRvSjGFk1pxma31Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j/zFei94h7iKJ8L6f//N06c4Iaq1r02L1f6yLvpd3DyjhKFgRBW7y7UZjj0kOArjtMoaaFHQu9gSmfTIQL87FjkGWMiTcAYlumN2bGnikfdpPgmQZxdp34sBpTBNHKjIUpjbvWIGBMVbHI3llbzydjvs4U7T5gG3V83Wc39b0qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QzBbMgz6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=i2Wm0Tg8FcSLcLotWiCjB/91qV7rb6h9aNJmlouvPVqZVGIxdUjFQ5TxxO5cbijNBrZUmyvcKqseDAPQZgUOkpd4YWFpTnKe3Wwm/GbbUcxh4uJlu0V8FaqZMlNFj1X+tp0bRC0seLWbkqKFn6+pv0CI4bZYGR45Y8gvyrA3LZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TpMczUZ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QzBbMgz6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA751F000C6;
-	Mon, 19 Oct 2026 13:57:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TpMczUZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AE81F000C7;
+	Mon, 19 Oct 2026 13:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418278;
-	bh=ZePzfD06LTtY9SuocAapOamZxhL1BzMjFtw4kmvDVuI=;
+	s=k20260515; t=1792418279;
+	bh=+8NqKn6uNWtbTSb6EmjgDYhq5VdfpwBYEPmX5T+PrgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QzBbMgz6ZQkbYTQQDL3XPiDvofPaOy93nh7jRztpHNWgb2M0AWhoXFMOdAr1TXHJC
-	 RxD2+LOeOO7JR3UMiKqXFN6HysV2yUJ5fZSXcnzZawMJ5VQZxWs8qESK12tQNC2IBk
-	 BXUXaWz0DgCKLwnAQDdtNzzFlYFa/qaPBmlv3PSQPxHNMCR9InCmrtifWs+axdizmi
-	 E1e1CepSIxyu5tFRdQ9GWlxaXtz+4ObuB0v9kN92xfmwvXIo8dyJSoCg5+H+3t3ei6
-	 YBpXVoqZiOjQBpaujZsl6DBRC2c1z5pNqB/lM2zRqspktlioNkpgJhanrSGwkqbXpH
-	 ugkwOBw6+ZMPA==
+	b=TpMczUZ1YzjUUwxab9jQQC2xGp2/YSbuBUCUoaDSJ+psnObrQsAI1Wz2qz0kYtBgc
+	 5FKSRMeZlg4RcA0K+n17Lqp3VFuPi3k5Jz9N+Ah9lsd42Alkl9pRLz/8cfQASICBUS
+	 Tgt41GHdhFfuCURR2AG0AxBjK3aMEWyCU07rdPF3LgYF7c/WGWp8lDtClMnYwc62Dy
+	 5mMLTWYEGc/O5nLYJvBRzEv6pX6TybeXQ+y8uXrTGpc818UevqkXVL/HAESderhIF1
+	 zq2TH+YUDenr9uALJBGspwHHrp/Io6IXOMRvEevnxsFaRiLvX8eEkPRwFxNhOkUR1c
+	 0BYCRp05060PQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Csaba Budai <ilyr73@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	yung-chuan.liao@linux.intel.com,
+	perex@perex.cz,
+	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] soundwire: dmi-quirks: Disable ghost Realtek on Asus Expertbook
-Date: Mon, 19 Oct 2026 09:47:05 -0400
-Message-ID: <20261019135441.1420968-134-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Fix ALC700 audio on Intel Hades Canyon
+Date: Mon, 19 Oct 2026 09:47:06 -0400
+Message-ID: <20261019135441.1420968-135-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,66 +54,84 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Csaba Budai <ilyr73@gmail.com>
 
-[ Upstream commit 90af3209742db61a7f9d7d054a16165818cfc6d8 ]
+[ Upstream commit 1fcccdc20a76b4639b00124cf2a379b837bd2bf7 ]
 
-The Asus Expertbook B9406CAA also has a Realtek device in the ACPI that
-doesn't exist in the physical hardware. This confuses the machine driver
-into attempting to create DAI links for the device. Add a quirk to
-remove this device.
+On Intel Hades Canyon systems with an ALC700 codec, analog audio can
+become unusable after rebooting from Windows into Linux.
 
-Closes: https://github.com/thesofproject/linux/issues/5828
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260630081132.3294488-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The affected system uses codec subsystem ID 8086:2073. In the broken
+state, Realtek coefficient 0x1b has value 0x4a4b. Setting bit 0x0400
+changes it to 0x4e4b and immediately restores normal analog playback.
+
+The BIOS also sets this bit after disabling and re-enabling onboard
+audio, while Windows may leave it cleared. Linux currently does not
+restore it during codec initialization.
+
+Add a machine-specific fixup for Intel Hades Canyon which sets only
+bit 0x0400 of coefficient 0x1b during HDA_FIXUP_ACT_INIT.
+
+The fix has been verified across Windows -> Linux reboots on an Intel
+NUC8i7HNB with an ALC700 codec.
+
+Signed-off-by: Csaba Budai <ilyr73@gmail.com>
+Link: https://patch.msgid.link/20260821102514.11194-1-ilyr73@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a DMI hardware quirk for a user-
-confirmed “no sound” failure, and the `ghost_realtek` machinery already
-exists in this 7.3 tree.
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 1)...
+Retry attempt 1...
+This is a machine-specific ALSA Realtek quirk for Intel Hades Canyon.
+The local tree is **6.12.111**; the same Realtek tables exist here, just
+in `sound/pci/hda/patch_realtek.c` instead of later `alc269.c`.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 Step 1.1: PARSE THE SUBJECT LINE
-Record: [soundwire: dmi-quirks] [Disable] [DMI quirk to hide a ghost
-Realtek SoundWire device on Asus Expertbook B9406CAA]
+Record: **[ALSA: hda/realtek]** **[Fix]** **ALC700 analog audio unusable
+on Intel Hades Canyon after Windows reboot**
 
 Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Closes: https://github.com/thesofproject/linux/issues/5828 (user-filed
-  SOF audio bug)
-- Signed-off-by: Charles Keepax (author)
-- Link: https://patch.msgid.link/20260630081132.3294488-1-
-  ckeepax@opensource.cirrus.com
-- Signed-off-by: Vinod Koul (SoundWire maintainer)
-- No Fixes: tag (expected)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by in the committed
-  message
-- Ignore pipeline SOBs: none present (no Sasha Levin marker)
+- **Signed-off-by:** Csaba Budai \<ilyr73@gmail.com\> (author)
+- **Link:**
+  https://patch.msgid.link/20260821102514.11194-1-ilyr73@gmail.com
+- **Signed-off-by:** Takashi Iwai \<tiwai@suse.de\> (ALSA maintainer,
+  applied the patch)
+- **No Fixes:** tag (expected)
+- **No Cc: stable** (expected)
+- **No Reported-by / Tested-by / Reviewed-by / Acked-by**
+  - Author states the fix was verified on an Intel NUC8i7HNB (in the
+    body, not a Tested-by tag)
+- Ignore any pipeline-added Sasha Levin SOB / Upstream-commit markers if
+  present
 
 Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: ACPI lists a Realtek SoundWire device that is not physically
-  present on Asus Expertbook B9406CAA.
-- Symptom: the machine driver tries to create DAI links for that ghost
-  device; audio probe fails (dummy output / no card).
-- Version info in the GitHub issue (not the commit body): worked on 7.0,
-  broken since 7.1 after function-topology matching.
-- Root cause: firmware/ACPI advertises RT722 on link 3; function
-  topology builds the card from ACPI, so the ghost device breaks card
-  creation.
+- **Bug:** On Intel Hades Canyon (codec SSID **8086:2073**, ALC700),
+  analog audio can become unusable after rebooting from Windows into
+  Linux.
+- **Symptom:** Analog playback does not work until a BIOS-level audio
+  disable/enable or until coef 0x1b bit 0x0400 is set.
+- **Root cause:** Windows may leave Realtek coefficient 0x1b as
+  **0x4a4b** (bit 0x0400 clear). BIOS sets that bit (value becomes
+  **0x4e4b**). Linux never restores it at codec init.
+- **Fix:** Machine-specific HDA fixup that sets only bit 0x0400 of coef
+  0x1b at `HDA_FIXUP_ACT_INIT`.
+- **Version info:** None in the message. Hardware is the 2018 Intel
+  NUC8i7HNB; ALC700 support has been in-tree since 2016.
 
 Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit hardware quirk. The
-“add a table entry” form is the standard stable-acceptable quirk
-pattern.
+Record: **Not a hidden fix.** The subject and body are an explicit
+hardware-quirk bug fix. It is not cleanup, refactoring, or a new
+feature.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -120,61 +139,94 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/soundwire/dmi-quirks.c` (+7 / −0)
-- Function/data: `adr_remap_quirk_table[]` only (no new functions)
-- Scope: single-file surgical DMI match addition
+- **File (upstream):** `sound/hda/codecs/realtek/alc269.c` (**+20 /
+  -0**)
+- **Functions/tables:**
+  1. Enum: add `ALC700_FIXUP_INTEL_HADES_CANYON`
+  2. New `alc700_fixup_intel_hades_canyon()`
+  3. `alc269_fixups[]` entry (`HDA_FIXUP_FUNC`)
+  4. `alc269_fixup_tbl[]` PCI quirk `SND_PCI_QUIRK(0x8086, 0x2073, ...)`
+- **Scope:** Single-file surgical hardware quirk. No API, no data-
+  structure, no locking changes.
 
 Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: B9406CAA did not match `adr_remap_quirk_table`, so ACPI `_ADR`
-  0x000330025d072201 (RT722 on link 3) stayed visible.
-- After: DMI match `ASUS` + board `B9406CAA` uses existing
-  `ghost_realtek[]`, remapping that `_ADR` to 0.
-- Path: SoundWire ACPI slave discovery (`find_slave()`), not a hot path
-  or a new API.
+- **Before:** SSID 8086:2073 has no match in `alc269_fixup_tbl`.
+  `patch_alc269()` still probes ALC700 (`0x10ec0700`) but never restores
+  coef 0x1b bit 0x0400. After a Windows boot that left the bit clear,
+  analog playback stays broken across Linux boot.
+- **After:** `snd_hda_pick_fixup()` matches 8086:2073. During
+  `alc_init()` → `snd_hda_apply_fixup(..., HDA_FIXUP_ACT_INIT)`, the new
+  function does `alc_update_coef_idx(codec, 0x1b, 0x0400, 0x0400)`,
+  which is `(val & ~0x0400) | 0x0400` — set one bit, leave the rest.
+- **Path:** Codec init (probe and resume), not an error path. Gated to
+  this SSID only.
 
 Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Hardware workaround / DMI quirk]
-Mechanism: `ghost_realtek[]` remaps `0x000330025d072201` → `0`.
-`find_slave()` does `if (!addr) return false;`, so the ghost device is
-not registered and sof_sdw does not build DAI links for it.
+Record:
+- **Category:** Hardware quirk / logic correctness (missing codec-init
+  restore of a vendor coefficient).
+- **Mechanism:** Windows leaves a vendor bit cleared; Linux did not put
+  it back. The fix is the standard Realtek INIT coef update used by many
+  existing fixups (e.g. `alc269vb_fixup_aspire_e1_coef`).
 
 Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct and minimal. Same pattern as UX5406AA / Lenovo
-83QK / 83SF. Regression risk is very low: only that DMI pair is
-affected; other machines are unchanged.
+Record:
+- **Quality:** Obviously correct and matches existing INIT-coef fixups.
+  Mask/set of a single bit is the intended `alc_update_coef_idx` usage
+  (verified in `__alc_update_coefex_idx`: `(val & ~mask) | bits_set`).
+- **Regression risk:** Very low. Only SSID 8086:2073 is changed. Other
+  machines are untouched. Worst case on this SKU is a wrong vendor bit;
+  author and BIOS both indicate that bit should be set.
+- **No public API / no locking / no refcount changes.**
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 Step 3.1: BLAME THE CHANGED LINES
-Record: The new B9406CAA block is this commit (`90af3209742db`,
-2026-06-30). `ghost_realtek[]` and the PTL comment come from
-`4dab2b904414f` (“Disable ghost Realtek devices”, 2026-05-20, in v7.2).
-`dmi-quirks.c` itself dates to `f6594cdfec4cd` (v5.13).
+Record:
+- Surrounding enum: `ALC700_FIXUP_INTEL_REFERENCE` from
+  **b84e843644f211** (PeiSen Hou, 2017-09-01).
+- Neighboring NUC 8 quirk 8086:2074 from **d1ee66c5d3c5a0** (2021, "fix
+  mic boost on Intel NUC 8") — already in this tree.
+- ALC700 codec ID `HDA_CODEC_ENTRY(0x10ec0700, "ALC700", patch_alc269)`
+  from **6fbae35a3170c** (2016-05-30).
+- The “buggy” state is missing a quirk that was never present; the codec
+  path has existed since **v4.8-era / 2016**.
 
 Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. The user-visible regression was function topology
-in 7.1 (`e0fb794d67f86` / `45cf24da0a10` pair, present in v7.1). This
-commit does not revert those; it adds a device-specific ACPI workaround.
-`git merge-base --is-ancestor e0fb794d67f86 v7.1` is true.
+Record: **No Fixes: tag.** Not applicable. This is a missing machine
+quirk, not a regression from a specific earlier commit.
 
 Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Same-file siblings: `4dab2b904414f` (base table), then B9406CAA,
-then UX8407AA / GX651AR / GX651AX. Standalone: one extra DMI row.
-Prerequisite is only `ghost_realtek[]`, which is in this tree.
+Record:
+- This tree already carries many Realtek `Add quirk` backports in
+  `patch_realtek.c`.
+- Related ALC700 history in-tree: 6fbae35a3170c (add ALC700),
+  2d7fe6185722b (ALC700 no-sound), b84e843644f21 (ALC700 jack detect).
+- Upstream file split **aeeb85f26c3bb** (“ALSA: hda: Split Realtek HD-
+  audio codec driver”, 2025-07-11) is **not** an ancestor of this 6.12
+  tree — that is why the path differs.
+- **Standalone** patch (not X/Y). No later follow-up on origin/master
+  targeting Hades Canyon / 8086:2073.
 
 Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Charles Keepax has 30 SoundWire commits here; he introduced
-`ghost_realtek`. Vinod Koul (maintainer) applied it. Pierre-Louis
-Bossart (reviewer in MAINTAINERS) was CCed.
+Record: Csaba Budai has this one ALSA commit on origin/master. Not the
+subsystem maintainer. **Takashi Iwai** (ALSA maintainer) applied it with
+“Applied now. Thanks.”
 
 Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Depends on `ghost_realtek[]` (`4dab2b904414f`, in v7.2 and in
-this 7.3 tree) and on remap-to-zero skip in `find_slave()` (`if (!addr)
-return false;` in `drivers/soundwire/slave.c`). Both exist here. Applies
-standalone on this tree.
+Record:
+- Required pieces **are already here:** `alc_update_coef_idx`,
+  `HDA_FIXUP_ACT_INIT`, `alc269_fixups[]`, `alc269_fixup_tbl[]`,
+  `ALC700_FIXUP_INTEL_REFERENCE`, `patch_alc269` for 0x10ec0700,
+  `alc_init()` calling `snd_hda_apply_fixup(..., HDA_FIXUP_ACT_INIT)`.
+- **No functional prerequisites.** Only a path rewrite (`alc269.c` →
+  `patch_realtek.c`). Insertion anchors exist: enum after
+  `ALC700_FIXUP_INTEL_REFERENCE`, quirk table immediately before
+  `0x8086, 0x2074`. `alc287_fixup_lenovo_yoga_book_9i()` (the function
+  above the new helper upstream) **does** exist in this tree.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -182,245 +234,291 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- b4 dig: https://patch.msgid.link/20260630081132.3294488-1-
-  ckeepax@opensource.cirrus.com
-- Series: v1 only (no v2/v3)
-- Cover note: follow-up quirk after a previous one proved unnecessary
-- Vinod Koul: “Applied, thanks!” → `90af3209742db`
-- No NAK, no review concerns, no Cc: stable in the thread
+- **b4 dig -c 1fcccdc20a76b:**
+  https://patch.msgid.link/20260821102514.11194-1-ilyr73@gmail.com
+- **b4 dig -a:** single **v1**, no later revisions.
+- Maintainer reply (Takashi Iwai, 2026-08-23): **“Applied now.
+  Thanks.”** No NAK, no requested changes, no stable discussion.
+- Direct lore.kernel.org WebFetch returned **403**; thread recovered via
+  `b4 dig -m`.
 
 Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (b4 dig -w): To Vinod Koul; Cc Pierre-Louis Bossart, Bard Liao,
-linux-sound, linux-kernel, Cirrus patches. Maintainer applied it. No
-extra Reviewed-by on this follow-up (the base table had Reviewed-by:
-Pierre-Louis Bossart).
+Record (**b4 dig -w**): Csaba Budai, Jaroslav Kysela, Takashi Iwai,
+linux-sound@, linux-kernel@. Right maintainers were on To/Cc. Applied by
+Takashi.
 
 Step 4.3: SEARCH FOR THE BUG REPORT
-Record: GitHub thesofproject/linux#5828, closed.
-- Reporter q66: no sound on ExpertBook B9406CAA since 7.1 (dummy output;
-  `snd_soc_register_card failed -517`, later duplicate sysfs).
-- Charles identified ACPI ghost: `link 3 mfg_id 0x025d part_id 0x0722`.
-- Reporter confirmed DMI `ASUS` / `B9406CAA` and that this exact quirk
-  restored sound (downstream Chimera Linux kernel).
-- Charles: “Yeah that is the correct fix.”
-- Separate later UCM/mute-LED discussion is unrelated to this quirk.
+Record: No bugzilla/syzbot link. Evidence is the author’s dual-boot
+report plus BIOS/Windows coefficient comparison (0x4a4b vs 0x4e4b).
+Severity from the reporter: analog audio unusable until the bit is set.
 
 Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone 1/1. Same family as `4dab2b904414f` and later laptop
-rows. No other patches required for this DMI entry.
+Record: Standalone v1. No series companions. No later origin/master
+commits touching this SSID.
 
 Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable WebFetch returned 403. UNVERIFIED whether
-it was discussed on stable@. On the GitHub issue, Charles said the
-original ghost-Realtek table should be forwarded to stable because 7.1
-already had the topology switch. That is context, not a substitute for
-this patch’s own merit.
+Record: lore.kernel.org/stable WebFetch returned **403**. No stable-list
+discussion recovered via b4. **UNVERIFIED:** whether anyone already
+requested this on stable@ (does not change the technical merit).
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No function body changes. Data only: `adr_remap_quirk_table[]`
-using existing `ghost_realtek[]`. Consumer: `sdw_dmi_override_adr()`.
+Record: New `alc700_fixup_intel_hades_canyon()`. Tables: enum,
+`alc269_fixups[]`, `alc269_fixup_tbl[]`. Semcode MCP not available;
+identified from hunks and grep.
 
 Step 5.2: TRACE CALLERS
 Record:
-- `sdw_dmi_override_adr()` is `bus->ops->override_adr` for Intel
-  (`drivers/soundwire/intel_auxdevice.c`).
-- Called from `find_slave()` in `drivers/soundwire/slave.c` during ACPI
-  enumeration.
-- Context: device probe / SoundWire bus init, not IRQ.
+- `snd_hda_pick_fixup()` in `patch_alc269()`
+  (`sound/pci/hda/patch_realtek.c` ~12583) selects the quirk from
+  PCI/codec SSID.
+- `alc_init()` (`spec->init` / `.init = alc_init`) calls
+  `snd_hda_apply_fixup(codec, HDA_FIXUP_ACT_INIT)` (~954). That runs on
+  codec init (probe and resume).
+- Impact surface: **only** devices matching **8086:2073**.
 
 Step 5.3: TRACE CALLEES
-Record: `dmi_first_match()`, then table walk. If ADR matches, replace
-with remapped value (0 for ghost Realtek).
+Record: `alc_update_coef_idx` → `alc_update_coefex_idx` (NID 0x20,
+mutex) → `__alc_update_coefex_idx`: read-modify-write vendor coef.
+Standard, already used throughout this file.
 
 Step 5.4: FOLLOW THE CALL CHAIN
-Record: Boot/probe of Intel SOF SoundWire (Panther Lake Expertbook).
-Userspace cannot trigger it except by using the laptop. Reachable on
-that hardware every boot. Confirmed by dmesg in the issue.
+Record: Userspace does not need a special syscall. Booting Linux on this
+NUC (especially after Windows) enumerates HDA → `patch_alc269` → INIT
+fixup. **Reachable from normal device use.** Dual-boot is a realistic
+trigger.
 
 Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same `ghost_realtek` DMI rows for UX5406AA, 83QK, 83SF, later
-UX8407AA / GX651AR / GX651AX. Systematic ACPI ghost-device problem, not
-a one-off.
+Record: Many INIT-time `alc_update_coef_idx` fixups already exist
+(`alc269_fixup_hweq`, `alc269vb_fixup_aspire_e1_coef`,
+`alc269_fixup_stereo_dmic`). Same pattern. No other 8086:2073 / Hades
+Canyon quirk in this tree.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Local tree is v7.3-rc4 (`7.3.0-rc4`). `ghost_realtek[]` and
-remap-to-zero skip are present. Function topology on PTL
-(`snd_soc_acpi_intel_no_function_topology` in `soc-acpi-intel-ptl-
-match.c`) is present — that is what made the ghost ACPI entry fatal from
-7.1. The B9406CAA row is already in this checkout at lines 189–195 of
-`dmi-quirks.c` (`git merge-base --is-ancestor 90af3209742db HEAD`
-succeeded). The bug class exists here; this tree already contains the
-fix because it is 7.3 mainline.
+Record:
+- **Yes.** Local tree: **pending-6.12**, `git describe`
+  **p-6.12-3-gc504cf0baa3d8**, `make kernelversion` **6.12.111**.
+- ALC700 + `patch_alc269` present since 6fbae35a3170c (in this tree).
+- **No** `ALC700_FIXUP_INTEL_HADES_CANYON` and **no**
+  `SND_PCI_QUIRK(0x8086, 0x2073, ...)`.
+- `git merge-base --is-ancestor 1fcccdc20a76b HEAD` → **not present**.
+- Bug is a long-standing missing restore, not something introduced after
+  6.12 branched.
 
 Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply on this tree. Same table layout as the patch. No
-rework needed. (Would need `ghost_realtek[]` on a tree older than v7.2.)
+Record: **Minor path rewrite, otherwise clean.** Upstream file
+`sound/hda/codecs/realtek/alc269.c` is the post-2025 split; 6.12 still
+has `sound/pci/hda/patch_realtek.c`. All four hunks have matching
+context (enum order, `ALC700_FIXUP_INTEL_REFERENCE` verbs, 8086:2074
+quirk). This is the same class of adjustment already used for other
+Realtek quirk backports in this tree.
 
 Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: Base table `4dab2b904414f` is here. No alternate B9406CAA fix
-besides this row. Later extra laptops are independent.
+Record: **No.** Grep found no Hades Canyon / 0x2073 /
+`ALC700_FIXUP_INTEL_HADES_CANYON`. Neighboring NUC 8 quirk (2074) is
+unrelated (mic boost on a different SKU).
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [SoundWire DMI quirks / Intel SOF audio] [IMPORTANT for affected
-laptops, PERIPHERAL globally]. Not core mm/net, but complete audio loss
-on a shipping Panther Lake laptop.
+Record: **ALSA HD-audio / Realtek codec** (`sound/pci/hda/`).
+**IMPORTANT** for users of this hardware (common laptop/NUC audio
+stack), **PERIPHERAL** in the sense that only one SSID is affected. Not
+core mm/VFS.
 
 Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Active: multiple 2026 ghost-Realtek DMI additions. Maintainer-
-applied. Mature quirk file since v5.13.
+Record: Very active: this 6.12 tree already has a long stream of Realtek
+quirk backports. The pattern is mature and well-understood.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver/platform-specific: Asus Expertbook B9406CAA (DMI board
-name). CONFIG_SOUNDWIRE_INTEL + SOF PTL machine driver.
+Record: **Driver/platform-specific:** Intel Hades Canyon NUC (NUC8i7HNB
+/ SSID 8086:2073) with ALC700. Dual-boot Windows→Linux users are the
+ones who hit the broken coefficient. Other machines unchanged.
 
 Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every boot on that laptop once function topology is used (7.1+).
-Not a race. Not unprivileged-attack surface. Reporter reproduced on
-7.1.1.
+Record: Reboot from Windows into Linux (Windows left coef 0x1b bit
+0x0400 clear). Not every boot if BIOS left the bit set. Not a race.
+Unprivileged users do not need a special exploit; they just have no
+analog sound.
 
 Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: [No audio / card probe failure] [HIGH for that hardware]. Not a
-panic. User-visible: dummy output, deferred probe `-517`, or failed
-DAI/sysfs setup. Confirmed in issue 5828.
+Record: Analog audio **unusable** (no playback) until BIOS toggle or
+this coef write. **MEDIUM** for the kernel as a whole, **HIGH** for
+those users (device functionally broken). Not a panic/UAF, but a real
+hardware functional failure — the exact class stable regularly takes as
+HDA quirks.
 
 Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record: Benefit high for those users (restores sound). Risk very low:
-7-line DMI entry, existing remap table, DMI-gated. Ratio strongly favors
-applying it on trees that already have `ghost_realtek`.
+Record:
+- **Benefit:** Restores analog audio on a shipping Intel NUC after dual-
+  boot. Matches BIOS. Tested on the machine.
+- **Risk:** Very low (20 lines, SSID-gated, one bit set, standard
+  helper).
+- **Ratio:** Strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
 Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Hardware quirk / DMI workaround — listed as a stable exception.
-- Real user bug: complete audio failure; reporter tested this exact
-  match.
-- Maintainer applied; SOF issue closed with this approach.
-- 7 lines, existing `ghost_realtek[]`, no new API.
-- `ghost_realtek` and remap-to-0 skip exist in this 7.3 tree.
-- Same pattern as other accepted laptop rows.
 
-AGAINST:
-- Not a crash/UAF/security bug (audio probe failure).
-- Affects one laptop model.
-- No Fixes:/Cc: stable (expected for this review pipeline).
-- This 7.3-rc4 checkout already contains the commit (mainline source,
-  not a reason to reject on merit).
+**FOR backporting:**
+- Real user-visible bug: analog playback dead after Windows→Linux
+  reboot.
+- Explicit hardware quirk (SSID + INIT coef), the documented stable
+  exception.
+- Small (+20), obviously correct, SSID-scoped.
+- ALC700 and all helpers exist in 6.12; bug is not post-branch.
+- Maintainer Takashi Iwai applied v1 with no objections.
+- Same style as many quirks already in this tree.
 
-UNRESOLVED:
-- lore.kernel.org WebFetch 403; stable@ discussion not independently
-  confirmed beyond GitHub.
+**AGAINST backporting:**
+- Affects one NUC SKU, mainly dual-boot.
+- Upstream path differs; cherry-pick needs a file-path adjustment.
+- No syzbot/CVE/crash.
+
+**UNRESOLVED:**
+- Could not read lore.kernel.org/stable (403). No evidence it was
+  rejected for stable.
 
 Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — same remap table; user confirmed
-   on B9406CAA; maintainer applied.
-2. Fixes a real bug that affects users? PASS — no sound since 7.1 on
-   that Expertbook.
-3. Important issue? PASS — HIGH: total audio loss, not a panic; still a
-   serious hardware enablement/regression for that machine.
-4. Small and contained? PASS — +7 lines, one file, one DMI entry.
-5. No new features or APIs? PASS — table row only.
-6. Can apply to the local tree? PASS — `ghost_realtek` and
-   `sdw_dmi_override_adr` exist; patch matches current table form.
+1. Obviously correct and tested? **PASS** — bit set matches measured
+   0x4a4b→0x4e4b; verified on NUC8i7HNB; maintainer applied.
+2. Fixes a real bug that affects users? **PASS** — analog audio unusable
+   after dual-boot.
+3. Important issue? **PASS** — hardware-quirk class; functional audio
+   failure on a real product (not a crash, but in-scope for stable
+   quirks).
+4. Small and contained? **PASS** — 20 lines, one file, one SSID.
+5. No new features or APIs? **PASS** — quirk only.
+6. Can apply to the local tree? **PASS** — needs path rewrite to
+   `patch_realtek.c`; context matches.
 
 Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Hardware quirk / DMI workaround for broken ACPI. Automatically
-qualifies.
+Record: **Hardware quirk / workaround** (HDA/Realtek codec quirk table).
+This is an automatic YES category in the stable rules given above.
 
 Step 9.4: MAKE YOUR DECISION
-This tree (v7.3-rc4) has the buggy ACPI path, function topology, and
-`ghost_realtek`. The change is a one-row DMI quirk that restores audio
-on a shipping laptop. That is exactly the stable-acceptable quirk class.
+This should be backported to this 6.12 tree. The ALC700 path is old;
+only the Hades Canyon restore is missing. The upstream split into
+`alc269.c` is after 6.12, so the backport is the same hunks in
+`sound/pci/hda/patch_realtek.c`.
 
-What it solves: ACPI advertises a non-existent RT722; sof_sdw then fails
-to build the card. The quirk remaps that `_ADR` to 0 so discovery skips
-it.
+------------------------------------------------
+What problem it solves and why it matters
+------------------------------------------------
+On Intel Hades Canyon (SSID 8086:2073), Windows can leave Realtek coef
+0x1b with bit 0x0400 clear. Linux never sets it, so analog playback
+stays dead across boot. Dual-boot NUC users on 6.12 hit this today. The
+fix restores that one BIOS bit at codec INIT.
 
-Risk vs benefit: benefit is restoring sound; risk is a DMI-gated no-op
-on every other machine.
+Risk vs benefit
+------------------------------------------------
+Benefit is restoring audio on that SKU. Risk is a one-bit vendor coef
+write gated by PCI quirk, using an existing helper. Path rewrite is
+mechanical.
 
-No missing prerequisites on this tree.
-
-Verification:
-- [Phase 1] Tags: Closes GitHub 5828; SOB Charles Keepax + Vinod Koul;
-  lore msgid link; no Fixes/Cc: stable
-- [Phase 2] Diff: +7 lines in `adr_remap_quirk_table` matching
-  ASUS/B9406CAA → `ghost_realtek`
-- [Phase 2] `ghost_realtek` remaps 0x000330025d072201 → 0;
-  `find_slave()` skips `!addr`
-- [Phase 3] `git describe HEAD` → v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` → 7.3.0-rc4
-- [Phase 3] `git merge-base --is-ancestor 90af3209742db HEAD` → already
-  in this tree (7.3-rc1+)
-- [Phase 3] `4dab2b904414f` (`ghost_realtek`) is ancestor of v7.2 and of
-  HEAD; not in v7.1
-- [Phase 3] `90af3209742db` is in v7.3-rc1, not in v7.2 / v7.2.7
-- [Phase 3] Topology commits `e0fb794d67f86` / `45cf24da0a10` are in
-  v7.1 (issue’s regression window)
-- [Phase 3] blame: B9406CAA block is 90af3209742db; table intro
-  4dab2b904414f
-- [Phase 4] b4 dig: lore patch-id match, v1 only, Vinod “Applied,
-  thanks!”
-- [Phase 4] b4 dig -w: Vinod, Pierre-Louis Bossart, Bard Liao, linux-
-  sound
-- [Phase 4] GitHub 5828: reporter confirmed quirk; Charles: correct fix;
-  dmesg shows ghost 0x025d:0x0722 on link 3
-- [Phase 4] lore.kernel.org WebFetch 403 — stable@ search UNVERIFIED
-- [Phase 5] callers: `intel_auxdevice` `.override_adr` → `find_slave()`
-  ACPI enum
-- [Phase 6] local `dmi-quirks.c` already has B9406CAA and
-  `ghost_realtek`
-- [Phase 7] SOUNDWIRE maintainers Vinod Koul / Bard Liao; reviewer
-  Pierre-Louis Bossart
-- [Phase 8] Failure: no audio on one Asus PTL laptop; severity HIGH;
-  risk very low
-- UNVERIFIED: stable@ mailing list archive contents (HTTP 403)
-
-This is a hardware quirk for a real, user-confirmed audio failure. It is
-small, already the established `ghost_realtek` pattern, and the
-supporting code is in this tree.
+------------------------------------------------
+Verification
+------------------------------------------------
+- [Phase 1] Parsed tags: SOB Csaba Budai, Link msgid, SOB Takashi Iwai;
+  no Fixes/Cc-stable/Reported-by.
+- [Phase 2] Diff: +20 in one file; enum + INIT func + fixup table +
+  SND_PCI_QUIRK(0x8086, 0x2073).
+- [Phase 2] `__alc_update_coefex_idx`: `(val & ~mask) | bits_set` with
+  mask=bits_set=0x0400 sets one bit.
+- [Phase 3] `git describe HEAD` / `make kernelversion`: p-6.12-3,
+  **6.12.111**.
+- [Phase 3] `git merge-base --is-ancestor 1fcccdc20a76b HEAD`: **not in
+  this tree**.
+- [Phase 3] `git merge-base --is-ancestor 6fbae35a3170c HEAD`: ALC700
+  support **is** in this tree (2016).
+- [Phase 3] `git merge-base --is-ancestor aeeb85f26c3bb HEAD`: codec
+  split **not** in this tree (old path).
+- [Phase 3] Blame: `ALC700_FIXUP_INTEL_REFERENCE` from b84e843644f211;
+  8086:2074 from d1ee66c5d3c5a0.
+- [Phase 4] `b4 dig -c 1fcccdc20a76b`: lore/msgid match; v1 only;
+  Takashi “Applied now. Thanks.”
+- [Phase 4] `b4 dig -w`: linux-sound + Takashi Iwai + Jaroslav Kysela.
+- [Phase 4] WebFetch lore: **403**; thread via `b4 dig -m /tmp/hades-
+  canyon.mbox`.
+- [Phase 5] Callers: `patch_alc269` → `snd_hda_pick_fixup` → `alc_init`
+  → `HDA_FIXUP_ACT_INIT`.
+- [Phase 6] Grep: no 0x2073 / Hades Canyon / HADES_CANYON in
+  `patch_realtek.c`; insertion points present.
+- [Phase 8] Failure: analog playback unusable; SSID-scoped; not a crash.
+- UNVERIFIED: stable@ mailing list discussion (HTTP 403).
 
 **YES**
 
- drivers/soundwire/dmi-quirks.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 32a46a2d90f7c..2a98fc8c104d6 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -178,6 +178,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		.driver_data = (void *)hp_omen_16,
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index bc33930e83b9f..8196235c31d2b 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3820,6 +3820,7 @@ enum {
+ 	ALC225_FIXUP_DELL_WYSE_MIC_NO_PRESENCE,
+ 	ALC225_FIXUP_S3_POP_NOISE,
+ 	ALC700_FIXUP_INTEL_REFERENCE,
++	ALC700_FIXUP_INTEL_HADES_CANYON,
+ 	ALC274_FIXUP_DELL_BIND_DACS,
+ 	ALC274_FIXUP_DELL_AIO_LINEOUT_VERB,
+ 	ALC298_FIXUP_TPT470_DOCK_FIX,
+@@ -4040,6 +4041,19 @@ static void alc287_fixup_lenovo_yoga_book_9i(struct hda_codec *codec,
+ 	__snd_hda_apply_fixup(codec, id, action, 0);
+ }
+ 
++static void alc700_fixup_intel_hades_canyon(struct hda_codec *codec,
++					    const struct hda_fixup *fix,
++					    int action)
++{
++	/*
++	 * Windows may leave coef 0x1b bit 0x0400 cleared, causing broken
++	 * analog playback after rebooting into Linux.  Restore the bit
++	 * during codec initialization.
++	 */
++	if (action == HDA_FIXUP_ACT_INIT)
++		alc_update_coef_idx(codec, 0x1b, 0x0400, 0x0400);
++}
++
+ static const struct hda_fixup alc269_fixups[] = {
+ 	[ALC233_FIXUP_WUJIE_SPEAKERS] = {
+ 		.type = HDA_FIXUP_PINS,
+@@ -5092,6 +5106,10 @@ static const struct hda_fixup alc269_fixups[] = {
+ 			{}
+ 		}
  	},
- 	/* PTL devices */
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
-+			DMI_MATCH(DMI_BOARD_NAME, "B9406CAA"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
++	[ALC700_FIXUP_INTEL_HADES_CANYON] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc700_fixup_intel_hades_canyon,
 +	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
+ 	[ALC274_FIXUP_DELL_BIND_DACS] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc274_fixup_bind_dacs,
+@@ -7653,6 +7671,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x2782, 0xa128, "Positivo N15RPE-S", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0xa212, "Lunnen Ground 14", ALC269VC_FIXUP_LUNNEN_GROUND_14),
+ 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
++	SND_PCI_QUIRK(0x8086, 0x2073, "Intel NUC 8 Hades Canyon",
++		      ALC700_FIXUP_INTEL_HADES_CANYON),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
 -- 
 2.53.0
 
