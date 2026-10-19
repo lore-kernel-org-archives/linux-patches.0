@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79F259C97E;
-	Mon, 19 Oct 2026 13:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA305A0AC2;
+	Mon, 19 Oct 2026 13:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418134; cv=none; b=nAPAHotlRJhh4PikSnYh9NWa+pxxVWsY0HHFlQPDIr50hPbtl8Q1ikQsV3eSw6XMiLZNukLjRpukl45it6KqipSmRFLPBiQtHOl/IsS9yD47jxYL+dtXhvczZRag8REdV+yOb3j4Sg3XMEFM+0KSYSbxYaPa9Hjg5fAGnFaqJBI=
+	t=1792418136; cv=none; b=daOriezcbecSYswAwd+yKiYpxIai5ea1CxScQBULt05qZpNaTFfAjwoDjRsyJA6doMLCZ+OMre0rYhaLZjFehWTJpikYR1wKXGbwJAr7Zl3xhVt8qnh5sQDy1XTuiu+nhQHApeeLhyq8/looxzoimpOoit1FJda/FTF+tKQdAHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418134; c=relaxed/simple;
-	bh=JWY5s0NzcznvEVRMUF3g5WOssud80Rtf+A6mv0FrZqs=;
+	s=arc-20240116; t=1792418136; c=relaxed/simple;
+	bh=wEBBmhxucJ3n5jb832F4l1kVSLkrTKPyrndN37O3NeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WmGgbotuz7RQLjS9LBXRdz3z/jVDJ8aeWx6yHpWtlwhcuX6ut/BtsmnbI+chQ/wg3tFXWQy+8rtKcWKCbNHz3D4rKkx540j3PDspVZgij5IAOPHuvIIbctnNfYMP/DP8eDwWDNRmfx5ixiTC+1pDt/ETf6fYoZjemJjyPpdhq5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j0UIiDn/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=K5ohQ6zLvhNdguIKQpNFvdOzLLv3GnLuAngIYk4ISk0s4MCTdcucmI4kFy0RTvnkIP0P/u5eMla7m2/hMDvGupFnV2XBfF0D3/gGOORTCvYGmyNNcre/SUv2qcbpngraOvH3oNEKPaH7PYn9sd8CfkwCTMjFkbWnbGHxe8laIew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RucyaPFT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j0UIiDn/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52791F000C5;
-	Mon, 19 Oct 2026 13:55:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RucyaPFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6251F000C6;
+	Mon, 19 Oct 2026 13:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418131;
-	bh=C1vYIvOtaEKvoC6yTdxbg6zObEHO1NwVmzi4NAD+J+w=;
+	s=k20260515; t=1792418133;
+	bh=Clz/JsIAWIaB4hcXgGGWbflHNAFrM7MQmWlusGb1bFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j0UIiDn/V5DKMckg1Y+rTrf/FMbOX36IRZsVpVaL/uuEqFy64agi8nRSSzH6grmuH
-	 7wap1AatCcC/QFVAggO/50JOWAkgWI0GGRD3J8W2pRUJAbxYNtYSJlS6PNa3cWVuAj
-	 rRbkNMdFAPth6eJpnrMq53DHTPk4o9jG8WDmM7DlBkatWgFOut7yWN4fq+rV3HsTOr
-	 f2WEt5Qp4C9begWbKGht93kNNdERm8mxEukB++csUXtpRgMZsYBFu+UfxbnZktwZxr
-	 DoNOa6KXzSfEVorSSMZcImv8PBFN4JRSGuvRyHeq9tn9jrNoQzjZoSbCO2ZRVQ7kLw
-	 jVqAMxA3dHcYw==
+	b=RucyaPFTMTNAJM149WTgzqCF11+VYLmD9HqEmU9pe8iWxw8iTnygZi0euDdxQqBax
+	 T6/QEBJdVNcJgAZ5VxxgCKT04yte4lhbsvCuvsv4Q5XyWjL5WwbJswIACtdQUzsZqB
+	 Q37qMbKRaVw6WVlhTceMvqse0n7R0y1ns7KeLKlRf6zbRhIyc/0Ilrlwb8IdTuRmKn
+	 xsLHyEDQ7/U5d6WlBxmeaEfQtKfidnxHOgpS25G12xSXceBgg5VFgDd192bSWxJyL9
+	 ReTTXNKjb5/ENdGpfDACXF0SUxTEuD7l9BrxwXwyNZ8YSYPFebUFDpkUJPlnmVO/OM
+	 cuAevt0VB2KqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+Cc: Thomas Renninger <trenn@suse.de>,
+	Michal Suchanek <msuchanek@suse.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	rafael@kernel.org,
 	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ACPI: FPDT: validate table and record lengths
-Date: Mon, 19 Oct 2026 09:45:25 -0400
-Message-ID: <20261019135441.1420968-34-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] ACPI: sysfs: Properly map BERT and CCEL data to their ACPI tables
+Date: Mon, 19 Oct 2026 09:45:26 -0400
+Message-ID: <20261019135441.1420968-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,434 +54,545 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Thomas Renninger <trenn@suse.de>
 
-[ Upstream commit 458b40fcdd04a9a0334830de5a536d8425454e4b ]
+[ Upstream commit e45ee607ca6f9f97a2f97be356d844a912971a16 ]
 
-FPDT records are supplied by firmware and are walked through
-length fields stored in the table itself.
+In the case of multiple BERT ACPI tables, one gets:
 
-Check the main-table entry length before reading an entry, check
-the mapped subtable length before remapping it, and check each
-record length before saving a typed record pointer for sysfs.
+sysfs: cannot create duplicate filename '/firmware/acpi/tables/data/BERT'
 
-This keeps malformed firmware records from being interpreted as
-complete resume, suspend, or boot records when the current item
-is shorter than the structure consumed by the driver.
+This is because both:
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706094141.82438-1-pengpeng@iscas.ac.cn
+/firmware/acpi/tables/BERT1
+/firmware/acpi/tables/BERT2
+
+are attempted to be mapped to the same data table:
+
+/firmware/acpi/tables/data/BERT
+
+Address this problem by passing and using the same filename for data
+tables.
+
+Signed-off-by: Thomas Renninger <trenn@suse.de>
+Reported-by: Michal Suchanek <msuchanek@suse.com>
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1270211
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20260717065129.72924-3-trenn@suse.de
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough verified history, diff, and review context to judge this
-against the local 7.3-rc4 tree.
+## Local tree
 
-## Phase 1: Commit message forensics
+This checkout is **mainline 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`,
+`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`). The commit under
+review is already an ancestor of `HEAD` as `e45ee607ca6f9`. The verdict
+is whether this fix is suitable to backport, based on the code and
+history in this tree.
 
-**Step 1.1: Subject line**
-Record: **[ACPI / FPDT] [validate] check firmware-supplied FPDT
-table/record lengths before walking them or exposing typed records via
-sysfs**
+---
 
-**Step 1.2: Tags**
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[ACPI sysfs] [Properly map] BERT and CCEL data sysfs names to
+the same instance filenames as the parent ACPI tables.** Subsystem
+prefix `ACPI: sysfs:`. “Properly map” is a correctness/fix verb even
+without “fix”.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Link:
-  https://patch.msgid.link/20260706094141.82438-1-pengpeng@iscas.ac.cn`
-- `Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>` (ACPI
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence expected here)
-- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-  ...]` markers
+- **Fixes:** none (expected for this review pipeline)
+- **Reported-by:** Michal Suchanek `<msuchanek@suse.com>` (real distro
+  report)
+- **Closes:** `https://bugzilla.suse.com/show_bug.cgi?id=1270211`
+- **Link:**
+  `https://patch.msgid.link/20260717065129.72924-3-trenn@suse.de` (patch
+  2/2 of a series)
+- **Cc: stable:** absent (expected; not a negative signal)
+- **Signed-off-by:** Thomas Renninger `<trenn@suse.de>` (author); Rafael
+  J. Wysocki `<rafael.j.wysocki@intel.com>` (ACPI maintainer)
+- **[ rjw: Subject and changelog edits ]** — maintainer edited the
+  changelog before applying
+- No Tested-by, Reviewed-by, Acked-by, or syzbot tags
 
-**Step 1.3: Body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- **Bug:** FPDT entries/records are walked using length fields supplied
-  by firmware. The driver previously trusted those lengths.
-- **Symptom:** A truncated/malformed record can be treated as a full
-  resume, suspend, or boot record. Sysfs then consumes a larger C struct
-  than the firmware item actually occupies.
-- **Root cause:** Missing bounds checks before mapping the subtable,
-  before advancing the walker, and before storing typed pointers.
-- **Versions:** none stated. Introduced with FPDT support, not by a
-  later feature.
+- **Bug:** With more than one BERT table, sysfs tries to create
+  `/firmware/acpi/tables/data/BERT` twice.
+- **Symptom:** `sysfs: cannot create duplicate filename
+  '/firmware/acpi/tables/data/BERT'`. Table files are `BERT1`/`BERT2`;
+  data files were all named `BERT`.
+- **Failure mode:** `sysfs_warn_dup()` prints that warning and calls
+  `dump_stack()` at boot. The second BERT (or CCEL) error region is
+  never exported.
+- **Version info:** none in the message.
+- **Root cause:** `acpi_bert_data_init` / `acpi_ccel_data_init` hard-
+  coded the bin-attribute name to `"BERT"` / `"CCEL"` instead of using
+  the instance filename already computed for the table.
 
-**Step 1.4: Hidden bug fix?**
-Record: Not hidden. It is an explicit firmware bounds-check plus a
-signature-mismatch unmap. That is a real OOB/leak fix, not style
-cleanup.
+Cover letter (from the lore mbox) shows real firmware with two BERT
+tables:
 
-## Phase 2: Diff analysis
+```
+ACPI: BERT ... (v01 AMD    AMD BERT ...)
+ACPI: BERT ... (v01 AMI    AMI.BERT ...)
+sysfs: cannot create duplicate filename
+'/firmware/acpi/tables/data/BERT'
+```
 
-**Step 2.1: Inventory**
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: **Not hidden.** This is an explicit sysfs-name collision fix. It
+is not cleanup, refactor, or a new feature.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File: `drivers/acpi/acpi_fpdt.c` only (`+47 / -6`)
-- Functions: `fpdt_process_subtable()`, `acpi_init_fpdt()`
-- Scope: single-file surgical fix
+- **File:** `drivers/acpi/sysfs.c` only — **+5 / −4** (9 lines).
+- **Functions:** `acpi_bert_data_init`, `acpi_ccel_data_init`,
+  `acpi_table_data_init`, `acpi_tables_sysfs_init`.
+- **Struct:** `acpi_data_attr` gains `filename[]`.
+- **Scope:** single-file surgical fix.
 
-**Step 2.2: Code flow**
-Record (verified against parent `458b40fcdd04a^`):
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-1. **Signature mismatch:** mapped header was returned without unmap →
-   now unmaps (fixes ioremap leak).
-2. **Subtable remap:** `length` from firmware was passed to
-   `acpi_os_map_memory()` with no lower bound → reject if `length <
-   sizeof(*subtable_header)`.
-3. **Record walk:** header was read and `offset +=
-   record_header->length` before checking remaining space; only zero
-   length was rejected (`a83c68a3bf7c4`) → require a full header,
-   `length >= sizeof(header)`, and `length <= remaining`; zero is still
-   rejected because `sizeof(*record_header)` is 4.
-4. **Typed records:** `RECORD_S3_RESUME` / `SUSPEND` / `BOOT` stored
-   pointers used by sysfs (`sizeof` 24 / 20 / 48) with no size check →
-   reject if the firmware length is smaller than the struct.
-5. **Main FPDT table:** walker did `offset += sizeof(*subtable)` with no
-   leftover-bytes check → reject truncated/invalid entry lengths, then
-   advance by `subtable->length` (spec length field).
-
-**Step 2.3: Bug mechanism**
 Record:
-- **Category:** memory safety (OOB read) + resource leak
-- **Mechanism:** firmware-controlled lengths were used as cursor and as
-  justification to treat a short blob as a full
-  `resume_performance_record` / `suspend_performance_record` /
-  `boot_performance_record`. Sysfs `*_show` helpers then read fields
-  past the real record. Truncated headers could also read past the
-  mapped subtable.
+- **Before:** `acpi_table_attr_init()` already builds `BERT` vs
+  `BERT1`/`BERT2`. `acpi_table_data_init()` then created data files with
+  a hard-coded `"BERT"` / `"CCEL"` name.
+- **After:** `acpi_table_data_init(th, table_attr)` copies
+  `table_attr->filename` into `data_attr->filename` and uses that as the
+  sysfs name. Data nodes match table nodes (`BERT`, or `BERT1`/`BERT2`).
+- **Path:** boot-time ACPI sysfs init only (`acpi_tables_sysfs_init`).
+  Return value of `acpi_table_data_init` is still ignored (pre-
+  existing).
 
-**Step 2.4: Fix quality**
-Record: Obviously correct, localized, no API/feature change. Regression
-risk is low. The one behavioral change is walking the main table by
-`subtable->length` instead of a fixed 16-byte stride. Spec pointer
-records are 16 bytes (`struct fpdt_subtable_entry` /
-`acpi_fpdt_boot_pointer`). Firmware with a garbage non-zero length in an
-otherwise packed 16-byte table could now skip or fail FPDT init instead
-of parsing later entries; that fails closed (no FPDT sysfs), not a
-kernel crash. No follow-up on this file after `458b40fcdd04a`.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-## Phase 3: Git history
+Record: **[Logic / correctness]** Hard-coded sysfs names collide when
+ACPI has multiple tables of the same signature. Fix: reuse the already-
+instanced filename. Same pattern for BERT and CCEL.
 
-**Step 3.1: Blame**
-Record: Buggy walker comes from `d1eb86e59be09` (“ACPI: tables:
-introduce support for FPDT table”, 2021-01-29), first in **v5.12-rc1**.
-Zero-length hang was later fixed by `a83c68a3bf7c4` (2023), which did
-**not** check truncated non-zero lengths or typed-struct size.
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 3.2: Fixes: tag**
-Record: none. The incomplete predecessor is `a83c68a3bf7c4` (`Fixes:
-d1eb86e59be0`, `Cc: stable`). That confirms the class (malformed FPDT
-firmware) is real; this commit finishes the length checks.
+Record:
+- **Quality:** obviously correct. `acpi_table_attr_init()` runs first
+  and fills `table_attr->filename`; then `acpi_table_data_init()` copies
+  it. `attr.name` points at the heap `data_attr->filename` buffer, which
+  lives as long as the bin attribute (same lifetime as the old string-
+  literal names).
+- **Single-table ABI:** unchanged. Instance suffix is added only when a
+  second table exists (`instance > 1` or `acpi_get_table(..., 2, ...)`
+  succeeds), so a lone BERT still appears as
+  `/firmware/acpi/tables/data/BERT`.
+- **Regression risk:** very low. No locking, no public API, no new sysfs
+  files in the common case.
+- **Not introduced here:** if `sysfs_create_bin_file()` fails,
+  `data_attr` is still leaked (return value ignored). This patch avoids
+  the duplicate-name failure; it does not add that leak.
 
-**Step 3.3: File history**
-Record (newest first):
-- `458b40fcdd04a` this commit
-- `8dcb4485e7672` expose FBPT/S3PT via sysfs (already in this tree;
-  ancestor of the fix)
-- `a83c68a3bf7c4` zero-length / invalid subtables
-- `211391bf04b3c` invalid phys address
-- `d1eb86e59be09` introduce driver
+---
 
-Standalone length-validation patch, not `N/M`.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.4: Author**
-Record: Pengpeng Hou; same period also `2c50ffdc73f3a` “ACPI: processor:
-validate MADT IOAPIC entry bounds” (same firmware-table bounds pattern).
-Not the ACPI maintainer; Rafael applied it.
+**Step 3.1: BLAME THE CHANGED LINES**
 
-**Step 3.5: Dependencies**
-Record: No extra helpers. Needs the FPDT driver (`d1eb86e59be09`),
-present here. `8dcb4485e7672` is already an ancestor (`git merge-base
---is-ancestor` succeeded). Can apply in this tree; it is already an
-ancestor of HEAD.
+Record:
+- BERT data sysfs: **`7dae6326ed764`** (“ACPI / sysfs: Extend ACPI sysfs
+  to provide access to boot error region”), Tony Luck, **v4.14-rc1**.
+  Hard-coded `"BERT"` is from that commit.
+- CCEL: **`4f855dcead6c5`** (“ACPI: sysfs: Enable ACPI sysfs support for
+  CCEL records”), **v6.4-rc1**. Copied the same hard-coded-name pattern.
+- Table instance filenames: `acpi_table_attr.filename` since
+  **`1c8fce27e275fd`** (v2.6.36-era sysfs) / **`3278675567dfb9`**
+  (ACPI_NAMESEG_SIZE rename, 2019).
+- Buggy pattern has been in tree for years, not last-month code.
 
-## Phase 4: Mailing list / external
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-**Step 4.1:** `b4 dig -c 458b40fcdd04a` →
-https://patch.msgid.link/20260706094141.82438-1-pengpeng@iscas.ac.cn
-`b4 dig -a`: **v1 only**. Thread saved to mbox (2 messages).
-Rafael: **“Applied as 7.3 material, thanks!”** No NAK, no requested
-respin, no `Cc: stable` in review.
+Record: **No Fixes: tag.** Introducer is `7dae6326ed764` (BERT, v4.14)
+and `4f855dcead6c5` (CCEL, v6.4). Both are ancestors of this HEAD (`git
+merge-base --is-ancestor` exit 0).
 
-**Step 4.2:** `b4 dig -w` recipients: Pengpeng Hou, Rafael J. Wysocki,
-Len Brown, linux-acpi, linux-kernel. Maintainer was on To/Cc and merged
-it.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-**Step 4.3:** No bugzilla/syzbot/Reported-by. No extra crash report
-beyond the commit text. Related real hardware: `a83c68a3bf7c4` already
-documented buggy FPDT BIOS tables (zero-length S3PT record, duplicated
-FBPT signature).
+Record:
+- Immediate parent: **`f45c999e67120`** — series patch 1/2, BERT
+  `sizeof` check (`acpi_hest_generic_status` → `acpi_bert_region`).
+  Independent; this patch does not need it.
+- No later commits on `drivers/acpi/sysfs.c` after `e45ee607ca6f9` (no
+  follow-up revert or fix).
+- **Standalone** as a 2/2 series member: patch 1 is a separate size-
+  check fix.
 
-**Step 4.4:** Not a multi-patch series.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-**Step 4.5:** lore.kernel.org/stable search returned HTTP 403.
-**UNVERIFIED:** whether stable@ discussed this hash.
+Record: Thomas Renninger is a long-time ACPI contributor (SUSE). Same-
+day sibling is only the BERT sizeof patch. Merged by ACPI maintainer
+Rafael J. Wysocki.
 
-## Phase 5: Semantic / reachability
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-**Step 5.1:** `fpdt_process_subtable`, `acpi_init_fpdt`.
+Record: **None required for the naming fix.** It uses existing
+`table_attr->filename`, `strscpy`, and `acpi_table_attr_init`.
+`kzalloc_obj` in surrounding lines is later mainline allocation API and
+is **not** introduced by this diff. On older trees the same hunks apply
+around `kzalloc`. `strscpy` has been in the kernel since v4.3.
 
-**Step 5.2:** `acpi_init_fpdt` is `fs_initcall`; only caller of
-`fpdt_process_subtable` is that init function. Boot path, not
-interrupt/hot path.
+---
 
-**Step 5.3:** `acpi_get_table` / `acpi_os_map_memory` /
-`acpi_os_unmap_memory` / `sysfs_create_group`. Records are later read by
-sysfs `*_show` using `record_boot` / `record_suspend` / `record_resume`.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 5.4:** Reachable when `CONFIG_ACPI_FPDT=y` and firmware publishes
-FPDT. Userspace cannot craft the ACPI table on a locked-down platform;
-VMs and broken BIOS can. Sysfs is the consumer of the typed pointers.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 5.5:** Same pattern as the author’s MADT IOAPIC length checks.
-Prior FPDT fix only handled length==0.
+Record:
+- **b4 dig:** series at
+  `https://patch.msgid.link/20260717065129.72924-3-trenn@suse.de`
+- Cover: `[PATCH 0/2] Fix sysfs duplicate filename if multiple BERT
+  tables exist`
+- This commit is **[PATCH 2/2]** (msgid `...72924-3...`). Subject on the
+  list differed slightly from the applied subject (rjw edited it).
+- **v2:** cover says previously sent to linux-pm; v2 stopped using
+  `acpi_get_table` inside data init and instead passes `table_attr`.
+  Applied version is that v2.
+- **Reviewer:** Rafael: “Applied (with some modifications in
+  subjects/changelogs) as 7.3 material, thanks!” No NAK.
+- **Stable nomination in review:** none found.
+- lore.kernel.org WebFetch returned **403**; thread recovered via `b4
+  dig -m`.
 
-## Phase 6: This checkout
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-**Step 6.1:** `git describe HEAD` → **v7.3-rc4-27-gf0100363d8c37**.
-`make kernelversion` → **7.3.0-rc4**.
-`git merge-base --is-ancestor 458b40fcdd04a HEAD` → yes.
-Current `drivers/acpi/acpi_fpdt.c` already contains the new checks
-(lines 190–219, 223–226, 243–246, 262–265, 347–360, 374).
-Buggy walker has existed in this lineage since v5.12.
+Record: **b4 dig -w** recipients: Thomas Renninger, `linux-
+acpi@vger.kernel.org`, Saket Dumbre (Intel ACPI), Michal Suchanek
+(reporter). ACPI maintainer applied it. No separate Reviewed-by.
 
-**Step 6.2:** Backport difficulty **clean apply** here (already merged).
-No later conflicting edits on this file.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-**Step 6.3:** Related fix `a83c68a3bf7c4` is present (zero-length only).
-It does not replace this patch.
+Record: SUSE bugzilla 1270211 WebFetch **403** (likely login-walled).
+Cover letter includes the reporter’s dmesg: two BERT tables (AMD + AMI)
+and the exact sysfs duplicate warning. That is enough to treat it as a
+real distro hit, not theoretical.
 
-## Phase 7: Subsystem
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-**Step 7.1:** ACPI FPDT driver under `drivers/acpi/`. **IMPORTANT**
-(common x86_64/ARM64/LOONGARCH firmware table), not mm/core.
-`CONFIG_ACPI_FPDT` is opt-in (`bool`, not `default y`); local `.config`
-has it unset. Not staging.
+Record: 2-patch series. Patch 1/2 (`f45c999e67120`) is an independent
+BERT region-size check. This 2/2 patch does not depend on it.
 
-**Step 7.2:** File is mature (2021–2026, few commits). This is hardening
-of long-standing parse code, not a brand-new subsystem.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-## Phase 8: Impact and risk
+Record: No stable@ discussion found (lore WebFetch 403; web search did
+not turn up a stable thread). **UNVERIFIED** whether anyone later asked
+for or rejected it on stable@.
 
-**Step 8.1:** Users who enable `CONFIG_ACPI_FPDT` on
-x86_64/ARM64/LOONGARCH and whose firmware exposes FPDT. Not universal.
+---
 
-**Step 8.2:** Trigger is boot-time FPDT parse (`fs_initcall`) with a
-malformed table. Unprivileged userspace cannot normally inject ACPI
-tables; broken BIOS and untrusted VM firmware can. Real malformed FPDT
-firmware is already documented.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 8.3:** Failure mode:
-- Read past mapped subtable → possible oops during boot
-  (**HIGH/CRITICAL** if it faults)
-- Short record accepted → sysfs reads adjacent firmware bytes (wrong
-  data / info leak, **HIGH** memory-safety)
-- Signature-mismatch ioremap leak at init (**LOW**, one-shot)
+**Step 5.1: KEY FUNCTIONS**
 
-Severity: **HIGH** (firmware-controlled OOB on an enabled driver).
+Record: `acpi_bert_data_init`, `acpi_ccel_data_init`,
+`acpi_table_data_init`, `acpi_tables_sysfs_init`. Struct field added on
+`acpi_data_attr`.
 
-**Step 8.4:** Benefit high for FPDT-enabled systems with bad tables;
-risk low (47 lines, fail closed, maintainer-acked, no revert).
+**Step 5.2: TRACE CALLERS**
 
-## Phase 9: Synthesis
+Record:
+- `acpi_table_data_init` — only caller: `acpi_tables_sysfs_init`
+- `acpi_tables_sysfs_init` — only caller: `acpi_sysfs_init`
+  (`drivers/acpi/sysfs.c`)
+- `acpi_sysfs_init` — called from `acpi_bus_init()` in
+  `drivers/acpi/bus.c` during ACPI boot
+- `acpi_sysfs_table_handler` (hot-added tables) does **not** call
+  `acpi_table_data_init`; BERT/CCEL data nodes are boot-only. Confirmed
+  with grep: only those two sites.
 
-**For backporting**
-- Firmware-supplied lengths used as walk cursor and as struct size:
-  classic OOB.
-- Completes a known FPDT firmware-bug class (`a83c68a3bf7c4` already
-  proved bad BIOSes and was sent to stable).
-- Also fixes a real `acpi_os_map_memory` leak on signature mismatch.
-- Small, single-file, obviously correct; Rafael merged it.
-- Driver and buggy code exist in this tree; no missing prerequisites.
+**Step 5.3: TRACE CALLEES**
 
-**Against**
-- No crash log / syzbot / `Fixes:` / explicit stable nomination.
-- `CONFIG_ACPI_FPDT` is opt-in, not defconfig.
-- Rafael labeled it “7.3 material,” not stable, but that is merge-window
-  wording, not a NAK of the bug.
-- Main-table walk-by-length could hide later entries if firmware lies
-  about length; fail-closed.
+Record: `kzalloc_obj` / `sysfs_attr_init` / `strscpy` /
+`sysfs_create_bin_file` / `acpi_os_map_iomem` (read path). Init-time
+sysfs creation, then userspace reads of BERT/CCEL error regions.
 
-**Unresolved**
-- UNVERIFIED: stable@ thread (lore 403).
-- UNVERIFIED: which distros set `CONFIG_ACPI_FPDT=y`.
+**Step 5.4: FOLLOW THE CALL CHAIN**
 
-**Stable rules**
-1. Obviously correct and tested? **PASS** (v1 applied as-is by ACPI
-   maintainer; in 7.3-rc4 with no follow-up revert).
-2. Real user-affecting bug? **PASS** (OOB + leak on firmware tables;
-   prior FPDT BIOS bugs in the wild).
-3. Important (crash/security/corruption/deadlock)? **PASS** (OOB read
-   from firmware lengths; possible oops or sysfs leak).
-4. Small/contained? **PASS** (`+47/-6`, one file).
-5. No new features/APIs? **PASS**.
-6. Applies to this tree? **PASS**.
+Record: ACPI boot → `acpi_bus_init` → `acpi_sysfs_init` →
+`acpi_tables_sysfs_init` → per-table `acpi_table_data_init`. Triggered
+on every ACPI boot that has BERT or CCEL. Userspace RAS tools read
+`/sys/firmware/acpi/tables/data/`. Unprivileged users typically cannot
+read these (mode `0400`). The **warning/dump_stack** happens in kernel
+init regardless.
 
-**Exception category:** none required (not a device-
-ID/quirk/DT/build/doc exception). It is a straightforward memory-safety
-fix.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-This tree is **7.3.0-rc4**. The FPDT walker has been here since v5.12,
-so the bug is in this lineage. The patch is small, correct, and prevents
-firmware-controlled out-of-bounds reads (and an ioremap leak) in
-`acpi_init_fpdt`. That meets stable criteria for this checkout.
+Record: Only BERT and CCEL are in `acpi_data_objs[]`. Both had the same
+hard-coded name. No other ACPI data table types in this file.
 
-### Verification
-- [Phase 1] Parsed tags: author SOB, Rafael SOB, msgid Link; no
-  Fixes/Reported-by/Cc stable
-- [Phase 2] `git show 458b40fcdd04a`: +47/-6 in
-  `drivers/acpi/acpi_fpdt.c`; parent walker lacked remaining/size
-  checks; signature path leaked the map
-- [Phase 2] Struct sizes: header 4, resume 24, suspend 20, boot 48,
-  subtable entry 16
-- [Phase 3] `git blame`: checks from `458b40fcdd04a`; original walker
-  `d1eb86e59be09` (v5.12-rc1)
-- [Phase 3] `git merge-base --is-ancestor 458b40fcdd04a HEAD` → 0
-  (present)
-- [Phase 3] `a83c68a3bf7c4` only handled zero length; `Cc: stable` on
-  that older hang fix
-- [Phase 3] `8dcb4485e7672` is ancestor; no later commits on this file
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; Rafael “Applied as 7.3
-  material, thanks!”; lists linux-acpi + Rafael + Len Brown
-- [Phase 4] lore.kernel.org WebFetch/curl → 403; stable@ discussion
-  UNVERIFIED
-- [Phase 5] `acpi_init_fpdt` is `fs_initcall`; only caller of
-  `fpdt_process_subtable`
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; current
-  file already has the validation
-- [Phase 7] `CONFIG_ACPI_FPDT` depends on X86_64||ARM64||LOONGARCH, not
-  default y
-- [Phase 8] Failure mode: firmware OOB on FPDT parse / sysfs typed reads
-- UNVERIFIED: distro `CONFIG_ACPI_FPDT` defaults; stable@ mailing-list
-  history
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: **Yes.** BERT data sysfs since v4.14 (`7dae6326ed764`,
+ancestor). CCEL since v6.4 (`4f855dcead6c5`, ancestor). The fix is
+already applied here as `e45ee607ca6f9`. The bug is old, not introduced
+after 7.3 branched.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: **Clean / minor context.** Hunks are localized. Older trees may
+still use `kzalloc` instead of `kzalloc_obj` (adjacent lines only).
+Pre-v6.4 trees have no CCEL function; BERT hunks still apply. `strscpy`
+and `filename` on `acpi_table_attr` are present in long-term stables.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: This is the fix. No earlier equivalent. No later follow-up on
+this file.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM**
+
+Record: **ACPI sysfs** (`drivers/acpi/sysfs.c`). **IMPORTANT** (not
+mm/core, but ACPI boot sysfs on essentially all x86 and many ARM
+servers). BERT is RAS/boot-error; CCEL is confidential-computing event
+log.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: Mature. BERT data mapping has been stable since 2017. Occasional
+sysfs/BERT/CCEL fixes, not high churn.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: **Firmware-specific.** Systems with **two or more BERT** (or
+CCEL) tables. Cover letter shows a real AMD + AMI dual-BERT OEM
+firmware. Single-table systems are unaffected (same sysfs name as
+before). CONFIG_ACPI.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record: **Every boot** on affected firmware. Not a race. Not
+unprivileged-triggerable for the data read (0400), but the kernel
+`dump_stack()` is automatic at init.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record:
+- `sysfs_warn_dup()` → `pr_warn` + **`dump_stack()`**
+  (`fs/sysfs/dir.c`). Looks like a kernel bug in dmesg; `panic_on_warn`
+  would panic (unverified whether any of these machines set that).
+- Second BERT/CCEL error region is not in sysfs, so RAS tools can miss
+  boot errors.
+- Boot continues; `acpi_table_data_init` return is ignored.
+- **Severity: MEDIUM** (boot warning + missing diagnostic RAS data). Not
+  oops/corruption/deadlock, but a real distro-reported “oh, that’s not
+  good” bug.
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit:** medium-high for dual-BERT firmware (every boot warning
+  gone; both error regions exported). Zero change for the common single-
+  table case.
+- **Risk:** very low (5 insertions / 4 deletions, init-only naming).
+- **Ratio:** favorable.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**For backporting:**
+- Real bug on real hardware (AMD BERT + AMI BERT), SUSE bugzilla +
+  dmesg.
+- `dump_stack()` on every boot; second error region missing from sysfs.
+- Tiny, obviously correct, ACPI-maintainer merged, v2 after review.
+- Bug present since v4.14 (BERT) / v6.4 (CCEL).
+- No new APIs; single-table sysfs ABI unchanged.
+- Standalone; does not need series patch 1/2.
+- Matches stable-kernel-rules: a real bug that bothers distro users, and
+  an “oh, that’s not good” sysfs warning.
+
+**Against:**
+- Not a panic, UAF, deadlock, or data-corruption bug in normal configs.
+- Only dual BERT/CCEL firmware hits it (uncommon, but not fictional).
+- No `Cc: stable` (not a negative signal here).
+- Rafael called it “7.3 material” without mentioning stable.
+
+**Unresolved:**
+- SUSE bugzilla body (403).
+- Whether stable@ ever discussed this (403 / no hits).
+- Whether affected machines use `panic_on_warn`.
+
+**Step 9.2: STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — naming logic is local and
+   matches existing instance filenames; maintainer applied v2; reporter
+   provided dmesg.
+2. Fixes a real bug that affects users? **PASS** — distro report,
+   dump_stack, missing BERT data node.
+3. Important issue? **PASS** (medium) — boot `dump_stack` plus
+   inaccessible RAS region; rules explicitly include “oh, that’s not
+   good” and distro-reported issues.
+4. Small and contained? **PASS** — 9 lines, one file.
+5. No new features or APIs? **PASS** — corrects names of existing sysfs
+   nodes.
+6. Can apply to the local tree? **PASS** — already in this 7.3-rc4 tree;
+   backport to older stables is clean or BERT-only on pre-CCEL trees.
+
+**Step 9.3: EXCEPTION CATEGORIES**
+
+Record: None (not a device ID, quirk, DT, build, or docs patch).
+Qualifies as a normal small bugfix.
+
+**Step 9.4: DECISION**
+
+This is a small, correct fix for a user-visible boot warning and a real
+RAS sysfs hole on multi-BERT firmware. The code has been wrong since
+v4.14, the patch is surgical, and the common single-table ABI is
+unchanged. That meets stable criteria.
+
+---
+
+## What the commit solves (for stable users)
+
+On machines whose firmware publishes **two BERT tables** (seen with AMD
++ AMI), the kernel already creates `/sys/firmware/acpi/tables/BERT1` and
+`BERT2`, but both data mappings used the name `BERT`.
+`sysfs_create_bin_file()` fails, `sysfs_warn_dup()` dumps a stack at
+every boot, and the second boot-error region is never exposed. The same
+bug exists for multiple CCEL tables. The fix copies the table’s instance
+filename onto the data node.
+
+## Risk vs benefit
+
+Benefit is removing a boot `dump_stack` and exporting all BERT/CCEL
+regions on affected firmware. Risk is negligible: init-only string copy,
+no locking, no ABI change when there is only one table.
+
+## Concerns
+
+Older stables without CCEL need the CCEL hunk dropped; BERT hunks still
+apply. Adjacent `kzalloc_obj` is not part of this patch. Series patch
+1/2 is optional, not a prerequisite.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed tags: Reported-by Michal Suchanek (SUSE), Closes
+  bugzilla 1270211, Link patch 2/2, SOB author + Rafael; no
+  Fixes/stable/syzbot.
+- **[Phase 2]** `git show e45ee607ca6f9`: `drivers/acpi/sysfs.c` +5/−4;
+  add `filename`, stop hard-coding `"BERT"`/`"CCEL"`, pass `table_attr`.
+- **[Phase 2]** Read `acpi_table_attr_init` (instance suffix) and
+  `acpi_tables_sysfs_init` (attr_init then data_init).
+- **[Phase 2]** Read `sysfs_warn_dup` in `fs/sysfs/dir.c`: `pr_warn` +
+  `dump_stack()`.
+- **[Phase 3]** Blame: BERT data `7dae6326ed764` (v4.14-rc1), CCEL
+  `4f855dcead6c5` (v6.4-rc1).
+- **[Phase 3]** `git merge-base --is-ancestor 7dae6326ed764 HEAD` and
+  `4f855dcead6c5 HEAD` and `e45ee607ca6f9 HEAD`: all 0 (present).
+- **[Phase 3]** Sibling `f45c999e67120` is independent sizeof fix; no
+  later sysfs.c commits after this one.
+- **[Phase 4]** `b4 dig -c e45ee607ca6f9`: lore thread; v2 cover +
+  dmesg; Rafael applied as 7.3 material; no NAK.
+- **[Phase 4]** `b4 dig -w`: linux-acpi, Saket Dumbre, reporter on CC.
+- **[Phase 4]** `b4 dig -m`: full mbox; WebFetch lore/bugzilla 403.
+- **[Phase 5]** grep: `acpi_table_data_init` only from
+  `acpi_tables_sysfs_init`; `acpi_sysfs_init` from `acpi_bus_init`.
+- **[Phase 6]** `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` → 7.3.0-rc4; buggy BERT/CCEL code in this
+  lineage.
+- **[Phase 8]** Failure mode: boot dump_stack + missing second data
+  node; severity MEDIUM.
+- **UNVERIFIED:** full SUSE bugzilla text; stable@ archives;
+  `panic_on_warn` on affected hosts.
+
+The patch is obviously correct, fixes a real distro-reported boot
+warning and missing RAS sysfs data, is nine lines in one file, and does
+not add features.
 
 **YES**
 
- drivers/acpi/acpi_fpdt.c | 53 +++++++++++++++++++++++++++++++++++-----
- 1 file changed, 47 insertions(+), 6 deletions(-)
+ drivers/acpi/sysfs.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/acpi_fpdt.c b/drivers/acpi/acpi_fpdt.c
-index 271092f2700a1..058d1ad47699a 100644
---- a/drivers/acpi/acpi_fpdt.c
-+++ b/drivers/acpi/acpi_fpdt.c
-@@ -165,7 +165,7 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
- 	struct fpdt_subtable_header *subtable_header;
- 	struct fpdt_record_header *record_header;
- 	char *signature = (subtable_type == SUBTABLE_FBPT ? "FBPT" : "S3PT");
--	u32 length, offset;
-+	u32 length, offset, remaining;
- 	int result;
+diff --git a/drivers/acpi/sysfs.c b/drivers/acpi/sysfs.c
+index e596224302f4c..d8d04437f63d6 100644
+--- a/drivers/acpi/sysfs.c
++++ b/drivers/acpi/sysfs.c
+@@ -316,6 +316,7 @@ struct acpi_table_attr {
+ struct acpi_data_attr {
+ 	struct bin_attribute attr;
+ 	u64	addr;
++	char filename[ACPI_NAMESEG_SIZE+ACPI_INST_SIZE];
+ };
  
- 	if (!fpdt_address_valid(address)) {
-@@ -179,10 +179,17 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
- 
- 	if (strncmp((char *)&subtable_header->signature, signature, 4)) {
- 		pr_info(FW_BUG "subtable signature and type mismatch!\n");
-+		acpi_os_unmap_memory(subtable_header, sizeof(*subtable_header));
- 		return -EINVAL;
+ static ssize_t acpi_table_show(struct file *filp, struct kobject *kobj,
+@@ -453,7 +454,6 @@ static int acpi_bert_data_init(void *th, struct acpi_data_attr *data_attr)
  	}
+ 	data_attr->addr = bert->address;
+ 	data_attr->attr.size = bert->region_length;
+-	data_attr->attr.attr.name = "BERT";
  
- 	length = subtable_header->length;
-+	if (length < sizeof(*subtable_header)) {
-+		pr_err(FW_BUG "Invalid FPDT subtable length %u.\n", length);
-+		acpi_os_unmap_memory(subtable_header, sizeof(*subtable_header));
-+		return -EINVAL;
-+	}
-+
- 	acpi_os_unmap_memory(subtable_header, sizeof(*subtable_header));
+ 	return sysfs_create_bin_file(tables_data_kobj, &data_attr->attr);
+ }
+@@ -469,7 +469,6 @@ static int acpi_ccel_data_init(void *th, struct acpi_data_attr *data_attr)
+ 	}
+ 	data_attr->addr = ccel->log_area_start_address;
+ 	data_attr->attr.size = ccel->log_area_minimum_length;
+-	data_attr->attr.attr.name = "CCEL";
  
- 	subtable_header = acpi_os_map_memory(address, length);
-@@ -191,17 +198,29 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
+ 	return sysfs_create_bin_file(tables_data_kobj, &data_attr->attr);
+ }
+@@ -484,7 +483,7 @@ static struct acpi_data_obj {
  
- 	offset = sizeof(*subtable_header);
- 	while (offset < length) {
--		record_header = (void *)subtable_header + offset;
--		offset += record_header->length;
-+		remaining = length - offset;
-+		if (remaining < sizeof(*record_header)) {
-+			pr_err(FW_BUG "Truncated FPDT record header.\n");
-+			result = -EINVAL;
-+			goto err;
-+		}
+ #define NUM_ACPI_DATA_OBJS ARRAY_SIZE(acpi_data_objs)
  
--		if (!record_header->length) {
--			pr_err(FW_BUG "Zero-length record found in FPTD.\n");
-+		record_header = (void *)subtable_header + offset;
-+		if (record_header->length < sizeof(*record_header) ||
-+		    record_header->length > remaining) {
-+			pr_err(FW_BUG "Invalid FPDT record length %u.\n",
-+			       record_header->length);
- 			result = -EINVAL;
- 			goto err;
+-static int acpi_table_data_init(struct acpi_table_header *th)
++static int acpi_table_data_init(struct acpi_table_header *th, struct acpi_table_attr *table_attr)
+ {
+ 	struct acpi_data_attr *data_attr;
+ 	int i;
+@@ -497,6 +496,8 @@ static int acpi_table_data_init(struct acpi_table_header *th)
+ 			sysfs_attr_init(&data_attr->attr.attr);
+ 			data_attr->attr.read = acpi_data_show;
+ 			data_attr->attr.attr.mode = 0400;
++			strscpy(data_attr->filename, table_attr->filename);
++			data_attr->attr.attr.name = data_attr->filename;
+ 			return acpi_data_objs[i].fn(th, data_attr);
  		}
-+		offset += record_header->length;
- 
- 		switch (record_header->type) {
- 		case RECORD_S3_RESUME:
-+			if (record_header->length < sizeof(*record_resume)) {
-+				result = -EINVAL;
-+				goto err;
-+			}
- 			if (subtable_type != SUBTABLE_S3PT) {
- 				pr_err(FW_BUG "Invalid record %d for subtable %s\n",
- 				     record_header->type, signature);
-@@ -218,6 +237,10 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
- 				goto err;
- 			break;
- 		case RECORD_S3_SUSPEND:
-+			if (record_header->length < sizeof(*record_suspend)) {
-+				result = -EINVAL;
-+				goto err;
-+			}
- 			if (subtable_type != SUBTABLE_S3PT) {
- 				pr_err(FW_BUG "Invalid %d for subtable %s\n",
- 				     record_header->type, signature);
-@@ -233,6 +256,10 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
- 				goto err;
- 			break;
- 		case RECORD_BOOT:
-+			if (record_header->length < sizeof(*record_boot)) {
-+				result = -EINVAL;
-+				goto err;
-+			}
- 			if (subtable_type != SUBTABLE_FBPT) {
- 				pr_err(FW_BUG "Invalid %d for subtable %s\n",
- 				     record_header->type, signature);
-@@ -289,7 +316,21 @@ static int __init acpi_init_fpdt(void)
  	}
- 
- 	while (offset < header->length) {
-+		if (header->length - offset < sizeof(*subtable)) {
-+			pr_err(FW_BUG "Truncated FPDT subtable entry.\n");
-+			result = -EINVAL;
-+			goto err_subtable;
-+		}
-+
- 		subtable = (void *)header + offset;
-+		if (subtable->length < sizeof(*subtable) ||
-+		    subtable->length > header->length - offset) {
-+			pr_err(FW_BUG "Invalid FPDT subtable entry length %u.\n",
-+			       subtable->length);
-+			result = -EINVAL;
-+			goto err_subtable;
-+		}
-+
- 		switch (subtable->type) {
- 		case SUBTABLE_FBPT:
- 		case SUBTABLE_S3PT:
-@@ -302,7 +343,7 @@ static int __init acpi_init_fpdt(void)
- 			/* Other types are reserved in ACPI 6.4 spec. */
- 			break;
+@@ -543,7 +544,7 @@ static int acpi_tables_sysfs_init(void)
+ 			return ret;
  		}
--		offset += sizeof(*subtable);
-+		offset += subtable->length;
+ 		list_add_tail(&table_attr->node, &acpi_table_attr_list);
+-		acpi_table_data_init(table_header);
++		acpi_table_data_init(table_header, table_attr);
  	}
- 	return 0;
- err_subtable:
+ 
+ 	kobject_uevent(tables_kobj, KOBJ_ADD);
 -- 
 2.53.0
 
