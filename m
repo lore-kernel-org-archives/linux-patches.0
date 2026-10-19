@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D955AEC66;
-	Mon, 19 Oct 2026 14:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77095D7CA1;
+	Mon, 19 Oct 2026 14:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418513; cv=none; b=lJNHoDb3PdkgtlPIlhTIoD/92llhyheNazNZrXjwdxlPzmW+LfSiKLdtwuqCdsXRscTYKvvXHkkULG8PeCmkdSSUe+mUZHR9n6gD78VemahX5Dr0lWHZev+tPWz8J7kSSfnazyrFHJb7mpQWoKLXgmvE2b2B26KZLJYsjoEuqt8=
+	t=1792418515; cv=none; b=BaMiOc+e3T00CCMAAvWZAMFWe8aNm2RKM4q77hRRSE3Kd9/Reb4WFuwgqCQRgJWulFasS3aX3aQ/6cF1lpDs013xQFbBcK88E22q5PTnS3PM8381WtJm1/Ny0VFLkFPb9vi3B+ZrOqmKgsUfy9i+OlvpTTZDAt+d/6pn3nlcXts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418513; c=relaxed/simple;
-	bh=e4spfmLej0LJn/PLxt+k1zT8YDPCKUhYiCaG+TAVRQg=;
+	s=arc-20240116; t=1792418515; c=relaxed/simple;
+	bh=ySLNsBrlRCzTR2nLg8mBh6uqeGNK2/UeG9mxjqFVSak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YxRmtfL5zp94WHA9E1gvuxjwL0BJAzXbXTzKROdlPAB8qZSTgAwU6AZETi1A9i7HZviREtWK5T/6Dq9twVwgJlK5e+Li9V/LW5Q2frkPrrw2DfaWKVrf8MJ3MK1L2Qe7bDGhsgzBEjv9h7KOENoD8DtsPiu7wvQ0dRN5B4mHCr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qb6PW6PL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XPHFkwRvliZmkhh6orZdIfrVGOaUUhcc15lC8sqF4N366QwmVsYhQgGpeP1YyPONt08+6UE3Pd9U6XE4bQwOsN07/EizahP/z0vdPWyDI5kgC4bZ24ALTb7X2+kZXmcuyWaLapRB954AvDhYQbenSSSZJMnpD7Ep8N4KobOERu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K6ibStXY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qb6PW6PL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8591F000C4;
-	Mon, 19 Oct 2026 14:01:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K6ibStXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785EB1F000C6;
+	Mon, 19 Oct 2026 14:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418511;
-	bh=l22djysCyKDJNS3uoV8CRlZhZzAYaynwJDAFk8wMj4Q=;
+	s=k20260515; t=1792418512;
+	bh=8RndOT4KZvRzJ72Zs4ghL3mZz03S5UyfL5M7Fa9CMsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qb6PW6PLcS/zR+gvx2SjYoKSexCatEEaEw1jOvklDtgXCC69XzR7r8YjD6ujR85Md
-	 z4UyGLiHRdHChcmaMDA+9t5Pd+i5RFf/9DAnwBgboijbWFBNAVACETEGJCc0n5KOe2
-	 aOG3LVhjWd8fLd6gM8mgphGkyYKgaHtcw/kmn+WCERHck0vLTdiRJWgYglhmyRnX2C
-	 dIG1kuGsphCrC6AWxatMer1SWbA5P+0fsRMGlSyHyKMdVfsiG7X1dTZx+AjFKUoMfL
-	 mFpAdfAmVwRWNtgFbOlB0HOPevIlHkHpqNFAf60HKPd7/rbKzhZuBI7EJ7OAb8L+Ix
-	 oK9g33UlTOEKQ==
+	b=K6ibStXYBdEzKqH2BBGv0rQ//0OnSlv7ieQlXb/KIDmm1PrN1tS7u1ZQOE+wyZ+zh
+	 /8S3fGTB2RXCp3RHguIsSBR5cUJantnewmtS7fwRRX3nVi87LkjpqInRU+8hT6wwJK
+	 Ou4dQ398VBaCZ1IBgJ66SaX1bkp/J+f8FqRE0oFcftjcUcov9IbY4siX6OLHLf3Sod
+	 eEskyNcxZGG2/eqpQseho/6zGumlzR4EJiiiUH1d6L7lkrf6FvUZA7q+2GBysZ2Rna
+	 uw9+n4Plo4yD0K3Gt5l7JyYHTfzU3cB0MSskAWoj6nLSxWUMZdHrWsy57NoncvpjUj
+	 qECmHY0DRb4ZA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Takashi Iwai <tiwai@suse.de>,
-	syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com,
-	syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com,
+Cc: Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	neil.armstrong@linaro.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/intel: Add sanity check for BAR0 size
-Date: Mon, 19 Oct 2026 09:49:51 -0400
-Message-ID: <20261019135441.1420968-300-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] drm/panel-edp: Support MB116AS01'3 edp panel
+Date: Mon, 19 Oct 2026 09:49:52 -0400
+Message-ID: <20261019135441.1420968-301-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,403 +58,405 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>
 
-[ Upstream commit 9895573b0185f922be4cf500a0f2e5b9560ab1c3 ]
+[ Upstream commit 844e71ba7d7a50c5ffa29d147afaeaafb19b39e4 ]
 
-The recent reports from syzkaller showed that we can bind any wild PCI
-device to HD-audio controller, and if PCI BAR of the device is too
-small, it may lead to a crash, as the driver believes as if the full
-register range were accessible.
+MB116AS01'3 raw edid:
+00 ff ff ff ff ff ff 00 21 63 03 12 00 00 00 00
+00 23 01 04 95 1a 0e 78 23 e7 05 9c 5b 56 93 27
+21 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 36 1c 56 92 50 00 1c 30 60 18
+a8 00 00 90 10 00 00 18 00 00 00 fd 00 28 3c 30
+30 07 01 0a 20 20 20 20 20 20 00 00 00 fe 00 48
+4b 43 20 4d 59 20 20 20 20 0a 20 20 00 00 00 fe
+00 4d 42 31 31 36 41 53 30 31 27 33 20 20 01 cb
 
-For avoiding such a problem, add a safeguard before the actual probe
-to check the available BAR0 size.
+70 20 79 02 00 22 00 14 1c 1a 01 84 55 05 91 00
+5f 00 17 00 ff 02 1b 00 09 00 07 00 2b 00 06 27
+00 28 3b 00 00 81 00 13 72 1a 00 00 03 01 28 3c
+00 00 00 00 00 00 3c 00 00 00 00 25 01 09 1c 1a
+01 1c 1a 01 28 3c 80 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 e7 90
 
-Note that the threshold (0x200) is chosen to cover all needed
-registers at probing.  But this doesn't mean that it would cover fully
-for all features including the extended ones.
-
-Reported-by: syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=10cd2d1efe8eeb604bee
-Reported-by: syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5ebe7cd17e48b4293660
-Link: https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260701013018.2621972-1-zhouhaikun5@huaqin.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+Local tree is **6.18.y** (`v6.18.53`, `VERSION=6 PATCHLEVEL=18`). The
+MB116AS01'3 table entry is **not** in `v6.18.53`. The driver, HKC table,
+`delay_200_500_e80`, and unknown-panel `WARN_ON` path are present. This
+is a one-line panel ID / quirk for an existing driver.
 
-**Step 1.1: Subject line**
-Record: `[ALSA: hda/intel] [Add] sanity check for BAR0 size` — safeguard
-in the Intel HD-audio PCI probe path.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2: Tags**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: `[drm/panel-edp] [Support] [add MB116AS01'3 eDP panel table
+entry]`
+- Subsystem: `drm/panel-edp`
+- Verb: "Support" — hardware enablement / ID addition, not a refactor
+
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Reported-by: syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com`
-- `Closes: https://syzkaller.appspot.com/bug?extid=10cd2d1efe8eeb604bee`
-- `Reported-by: syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com`
-- `Closes: https://syzkaller.appspot.com/bug?extid=5ebe7cd17e48b4293660`
-- `Link: https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer;
-  applied his own patch)
-- No `Fixes:` tag (expected)
-- No `Cc: stable` (expected)
-- No `Reviewed-by` / `Tested-by` / `Acked-by`
+- `Signed-off-by: Haikun Zhou <zhouhaikun5@huaqin.corp-
+  partner.google.com>` (author; Huaqin/Google partner)
+- `Reviewed-by: Douglas Anderson <dianders@chromium.org>` (panel-edp
+  reviewer in MAINTAINERS)
+- `Signed-off-by: Douglas Anderson <dianders@chromium.org>` (maintainer
+  applied it)
+- `Link: https://patch.msgid.link/20260701013018.2621972-1-
+  zhouhaikun5@huaqin.corp-partner.google.com`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable` (absence
+  expected for this review)
+- Ignored: `Signed-off-by: Sasha Levin` and `[Upstream commit ...]`
+  (pipeline markers)
 
-Notable: two independent syzbot reports with C reproducers.
-
-**Step 1.3: Body**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** binding a non-HD-audio / undersized-BAR PCI device to `snd-
-  hda-intel` lets the driver treat BAR0 as a full HD-audio register
-  window.
-- **Symptom:** kernel paging oops while reading controller registers.
-- **Root cause:** no check of `pci_resource_len(pci, 0)` before
-  `pcim_iomap_regions` + MMIO reads.
-- **Fix:** reject probe if BAR0 < `0x200`.
-- **Caveat:** `0x200` covers probe-time registers (GCAP at `0x00`, LLCH
-  at `0x14`), not the full extended register set.
-- No version range given.
+- Bug description: the panel is missing from `edp_panels[]`. The body is
+  the raw EDID (base block + extension), not a crash log.
+- Symptom: unmatched generic `edp-panel` uses conservative delays and
+  hits `WARN_ON(!detected_panel)` at probe.
+- Version info: none in the message. Author date is 2026-07-01; `v6.18`
+  is 2025-11-30, so this landed after this series branched.
+- Root cause: HKC ID `0x1203` was not in the delay/quirk table.
 
-**Step 1.4: Hidden bug fix?**
-Record: Not hidden. It is an explicit crash-prevention check, even
-though the verb is “Add”.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. It is an explicit panel ID / power-
+sequencing quirk. That is the same class as PCI/USB ID additions.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: Inventory**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- Upstream file: `sound/hda/controllers/intel.c` (+9 / −0)
-- Function: `azx_probe()`
-- Scope: single-file surgical check before `snd_card_new()`
+- File: `drivers/gpu/drm/panel/panel-edp.c` (`+1 / -0`)
+- Function/table: `edp_panels[]`
+- Scope: single-file, one-line surgical addition
 
-**Step 2.2: Code flow**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-Before: after the `dmic_detect` / DSP-driver selection block, probe
-continues into `snd_card_new()` → `azx_create()` → later
-`azx_first_init()`, which iomaps BAR0 and reads registers with no size
-check.
-After: if BAR0 length < 512 bytes, log `"Too small PCI BAR0"` and return
-`-EINVAL` before allocating a card.
+- Before: HKC `0x1203` is not in `edp_panels[]`. `find_edp_panel()`
+  returns NULL.
+- After: match `EDP_PANEL_ENTRY('H', 'K', 'C', 0x1203,
+  &delay_200_500_e80, "MB116AS01'3")`.
+- Path: `panel_edp_probe()` → compatible `"edp-panel"` →
+  `generic_edp_panel_probe()` → EDID panel ID lookup.
+- After match: `desc->delay = *detected_panel->delay` (`hpd_absent=200`,
+  `unprepare=500`, `enable=80`).
+- Unmatched: `WARN_ON` plus `panel_edp_set_conservative_timings()`
+  (`unprepare=2000`, `enable=200`).
 
-**Step 2.3: Bug mechanism**
-Record: **Memory safety / out-of-bounds MMIO**. `pcim_iomap_regions()`
-maps whatever BAR0 exists. `azx_readw(GCAP)` and
-`snd_hdac_bus_parse_capabilities()` then `readw` past the mapping →
-`#PF` / oops. Category (g)+(h): logic/correctness guard plus a
-hardware/binding sanity check.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: **Hardware workaround / device ID** (category h).
+- Mechanism: EDID mfg `HKC` (bytes `21 63`) and product `0x1203` (bytes
+  `03 12`) were not mapped to delays. The panel name in EDID descriptor
+  0xFE is `MB116AS01'3` (`0x27` = `'`).
+- Fix: add the existing `delay_200_500_e80` preset (already used by many
+  11.6" BOE/CMN entries).
 
-**Step 2.4: Fix quality**
-Record: Obviously correct. `pci_resource_len()` is the standard helper.
-`0x200` is well below a real HD-audio BAR (typically 16KB / `0x4000` per
-spec); legitimate devices will not be rejected. Regression risk is very
-low: only devices with BAR0 < 512 bytes fail probe, which could not work
-anyway. Incomplete vs. every later register (author notes that); still
-sufficient for the reported oops.
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Obviously correct: one table row, sorted under existing HKC entries
+  (`0x1203` before `0x2d51`).
+- Minimal; no unrelated edits.
+- Regression risk: very low. Lookup is ID-specific; other panels
+  unchanged.
+- `delay_200_500_e80` already exists in this tree (verified at `panel-
+  edp.c:1760` on `v6.18.53`).
 
-## Phase 3: Git history
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.1: Blame**
-Record: Insertion point is immediately before `snd_card_new()` in
-`azx_probe()`, blamed to Takashi Iwai 2014 (`60c5772b50fe`) / original
-driver era (`e58de7baf7de`, `^1da177e4c3f41`). The missing BAR check is
-not a recent regression; the driver has always assumed a full controller
-BAR.
+Step 3.1: BLAME THE CHANGED LINES
+Record:
+- Table introduced with `panel-edp` split: `5f04e7ce392db` ("Split eDP
+  panels out of panel-simple").
+- HKC rows already in `v6.18` / `v6.18.53` (`0x2d51`, `0x2d5b`
+  MB116AN01, `0x2d5c` MB116AN01-2).
+- `delay_200_500_e80` from `4d53cf8147950` ("Add several generic edp
+  panels"), present in this tree.
+- This ID is new; the table and delay helper are old.
 
-**Step 3.2: Fixes: tag**
-Record: None. The “bug” is long-standing missing validation, not a
-single introducing commit.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No `Fixes:` tag. N/A. The gap is a missing table row, not a
+later regression.
 
-**Step 3.3: File history**
-Record: Recent `hda_intel.c` commits in this tree are device IDs,
-denylist, and PM quirks. No prior BAR0 size check, no conflicting
-refactor of `azx_probe()`. Standalone, not patch X/Y.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- `v6.18..v6.18.53` already contains many similar one-line panel adds
+  (AUO, BOE, CSW, LG, Sharp, mt8189 Chromebook panels).
+- Standalone; not `patch X/Y`.
 
-**Step 3.4: Author**
-Record: Takashi Iwai is the ALSA/HDA maintainer. He authored and
-committed the patch the same day (2026-08-13). Strong maintainer signal.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record:
+- Haikun Zhou has other `panel-edp` ID/delay commits (`CSW MNB601LS1-4`,
+  `CMN N116BCJ-EAK`).
+- Reviewer Douglas Anderson is `R:` for "DRM DRIVER FOR GENERIC EDP
+  PANELS" in MAINTAINERS.
 
-**Step 3.5: Dependencies**
-Record: None. Uses `pci_resource_len()` (`include/linux/pci.h` in this
-tree). Surrounding `azx_probe()` context (dmic_detect warning, then
-`snd_card_new`) matches this checkout. Standalone.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: None. Needs only `EDP_PANEL_ENTRY`, HKC table, and
+`delay_200_500_e80`, all in `v6.18.53`. Dry-run against the `v6.18.53`
+blob: hunk applied (offset -5). Standalone apply: yes.
 
-Upstream SHA `9895573b0185` exists as an object but is **not** an
-ancestor of HEAD (`git merge-base --is-ancestor` exit 1).
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-## Phase 4: Mailing list / external
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c 9e55b14301666`: V2 at https://patch.msgid.link/202607010130
+  18.2621972-1-zhouhaikun5@huaqin.corp-partner.google.com
+- `b4 dig -a`:
+  - v1 2026-06-29: `MB116AS01-3` (hyphen), msgid
+    `20260629012200.248066-1-...`
+  - v2 2026-07-01: `MB116AS01'3` (apostrophe, matches EDID)
+- Applied version is v2.
+- Doug Anderson: Reviewed-by and pushed to drm-misc-next as
+  `844e71ba7d7a`.
+- No NAK found.
+- UNVERIFIED: exact v1 review text (lore 403, MARC 404). Name change
+  v1→v2 is verified from the two patches.
 
-**Step 4.1: Original discussion**
-Record: `b4 dig -c 9895573b0185` →
-https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de
-`b4 dig -a`: **v1 only**, no later revisions.
-`b4 dig -m`: thread is the single patch email; **no replies, no NAK, no
-Cc: stable suggestion**. Maintainer self-applied (~1 hour later).
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`):
+- To/Cc: `dianders@chromium.org`, `neil.armstrong@linaro.org`,
+  `sam@ravnborg.org`, `dri-devel@lists.freedesktop.org`, `linux-
+  kernel@vger.kernel.org`, `daniel@ffwll.ch`, `airlied@gmail.com`
+- Subsystem reviewer included and signed off.
 
-Lore WebFetch returned 403; discussion was recovered from the b4 mbox
-instead.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Evidence is the EDID dump in the patch.
+Author is a hardware partner, typical for ChromeOS panel IDs.
 
-**Step 4.2: Recipients**
-Record (`b4 dig -w`): `Takashi Iwai`, `linux-sound@vger.kernel.org`
-only. Appropriate list; author is the maintainer.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone 1/1. drm-misc pull for 7.3-rc1 lists it under
+**panel-edp: quirks** with MB116AS01 (https://lists.openwall.net/linux-
+kernel/2026/08/20/246).
 
-**Step 4.3: Bug reports**
-Record (syzkaller, both marked **prio:high**, C repro, fix commit
-`9895573b0185`):
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search returned 403. UNVERIFIED: no
+stable-list thread found. Official `v6.18.53` already took the same
+class of panel-edp ID patches, so there is no local policy against this
+type.
 
-1. `extid=10cd2d1efe8eeb604bee` — `BUG: unable to handle kernel paging
-   request in snd_hdac_bus_parse_capabilities`
-  RIP: `readw` of LLCH (`+0x14`) in `snd_hdac_bus_parse_capabilities`;
-  caller `azx_first_init` → `azx_probe_work`.
-  Security notes: DenialOfService yes, Exploitable yes, Unprivileged no,
-  PeripheralTrigger yes, VMHostTrigger yes.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-2. `extid=5ebe7cd17e48b4293660` — `BUG: unable to handle kernel paging
-   request in azx_probe_work`
-  RIP: `azx_readw(GCAP)` in `azx_first_init`. Same workqueue path. DoS
-  yes, unprivileged no.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: No function body change. Data: `edp_panels[]`. Consumers:
+`find_edp_panel()`, `generic_edp_panel_probe()`.
 
-**Step 4.4: Series**
-Record: Standalone v1. No sibling patches required.
+Step 5.2: TRACE CALLERS
+Record:
+- `find_edp_panel()` ← `generic_edp_panel_probe()`
+- `generic_edp_panel_probe()` ← `panel_edp_probe()` when OF compatible
+  is `"edp-panel"`
+- `panel_edp_probe()` ← `panel_edp_platform_probe()` /
+  `panel_edp_dp_aux_ep_probe()`
+- Context: device probe / display bring-up, not IRQ-hot.
 
-**Step 4.5: Stable list**
-Record: lore.kernel.org/stable WebFetch 403. UNVERIFIED: no independent
-confirmation of a prior stable request/rejection. Absence of `Cc:
-stable` is expected for this review pipeline.
+Step 5.3: TRACE CALLEES
+Record: Table is data only. Probe reads EDID, matches ID, copies
+`panel_delay`. Delays used in `panel_edp_prepare_once()` (`hpd_absent`)
+and `panel_edp_enable()` (`enable`).
 
-## Phase 5: Semantic / call-chain
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Userspace does not call this directly. Plug in the panel
+(Chromebook/laptop DT `edp-panel` on DP AUX) and it runs at
+probe/resume. Reachable on machines with this HKC panel.
 
-**Step 5.1: Functions**
-Record: `azx_probe()` only (new early return). Crash site functions
-unchanged: `azx_first_init()`, `snd_hdac_bus_parse_capabilities()`.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same file is a long ID table. HKC already has three entries.
+Many sibling "Add … panel" commits are already in official 6.18.y.
 
-**Step 5.2: Callers**
-Record: `azx_probe` is `azx_driver.probe`
-(`module_pci_driver(azx_driver)`). Invoked on PCI bind of matching IDs,
-including the generic Intel class match:
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-```2595:2599:sound/pci/hda/hda_intel.c
-        /* Generic Intel */
-        { PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_ANY_ID),
-          .class = PCI_CLASS_MULTIMEDIA_HD_AUDIO << 8,
-          .class_mask = 0xffffff,
-          .driver_data = AZX_DRIVER_ICH | AZX_DCAPS_NO_ALIGN_BUFSIZE },
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. `v6.18.53` has `edp_panels[]`, HKC rows,
+`find_edp_panel()`, and:
 ```
+if (WARN_ON(!panel->detected_panel)) {
+    ... "Unknown panel ... using conservative timings"
+```
+`MB116AS01` / `0x1203` is **not** in `v6.18` or `v6.18.53`. Bug =
+missing quirk for hardware that this driver already enumerates.
 
-Similar class catch-alls exist for NVIDIA/ATI/AMD. Binding also works
-via sysfs `new_id` / `driver_override` (privileged).
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply to `v6.18.53` (dry-run succeeded, offset -5).
+Surrounding HKC context matches. Difficulty: clean apply.
 
-**Step 5.3: Callees of the crash path (this tree)**
-Record: `azx_first_init()` does `pcim_iomap_regions(pci, 1 << 0, ...)`,
-then `snd_hdac_bus_parse_capabilities(bus)` for SKL, then
-`azx_readw(chip, GCAP)` at offset `0x00`.
-`snd_hdac_bus_parse_capabilities()` starts with
-`snd_hdac_chip_readw(bus, LLCH)` at `0x14`. `pcim_iomap_regions()` does
-**not** require a minimum size.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No other MB116AS01'3 / HKC `0x1203` fix in this series. Nearby
+HKC MB116AN01 entries do not cover `0x1203`.
 
-**Step 5.4: Reachability**
-Record: PCI probe / `azx_probe_work` workqueue. Reachable from:
-- automatic bind of class `0x0403` devices (including fuzzed/malformed
-  PCI devices)
-- privileged `new_id` / `driver_override`
-Not a normal unprivileged syscall. Still a real kernel oops, including
-in VMs (syzbot’s environment).
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 5.5: Similar patterns**
-Record: Other ALSA PCI drivers already reject tiny BARs (e.g.
-`sound/pci/oxygen/oxygen_lib.c` compares `pci_resource_len(pci, 0) <
-OXYGEN_IO_SIZE`). HDA Intel was missing that class of check. This commit
-does not touch `hda_tegra.c`.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: `drivers/gpu/drm/panel/` — DRM panel. Criticality: **IMPORTANT**
+for devices with this panel (blank/slow display, boot `WARN_ON`);
+**PERIPHERAL** for everyone else (ID match is a no-op).
 
-## Phase 6: This tree (6.12.y)
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature table, still getting ID/quirk adds. Official 6.18.y
+already backports them. Not a new subsystem.
 
-**Step 6.1: Buggy code present?**
-Record: **Yes.** Local tree is **6.12.111** (`p-6.12-3-gc504cf0baa3d8`).
-File is `sound/pci/hda/hda_intel.c` (pre-rename). `azx_probe()` at 2116
-has the same dmic_detect block and goes straight to `snd_card_new()`
-with **no** BAR0 check. `azx_first_init()` at 1854 performs the same
-iomap + GCAP/capability MMIO. `"Too small PCI BAR0"` is absent.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 6.2: Backport difficulty**
-Record: **Clean apply after path remap**
-(`sound/hda/controllers/intel.c` → `sound/pci/hda/hda_intel.c`). Hunk
-context is identical. No data-structure or helper prerequisites.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific / hardware-specific: machines whose eDP EDID is
+HKC `0x1203` (MB116AS01'3), typically ChromeOS/partner laptops. No
+effect on other panels.
 
-**Step 6.3: Related fixes already here?**
-Record: No. `git log --grep` on those paths found no BAR0 sanity check.
-`9895573b0185` is not an ancestor of HEAD.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Every probe of `"edp-panel"` with that EDID (boot and often
+resume). Not a race. Unprivileged users do not trigger it except by
+using the device.
 
-## Phase 7: Subsystem context
-
-**Step 7.1**
-Record: ALSA HD-audio PCI controller (`sound/pci/hda`). **IMPORTANT** —
-default audio driver on essentially all x86 laptops/desktops
-(`CONFIG_SND_HDA_INTEL`).
-
-**Step 7.2**
-Record: Mature, actively maintained. Probe path itself is old and
-stable; recent churn is IDs/quirks, not `azx_probe()` structure.
-
-## Phase 8: Impact and risk
-
-**Step 8.1: Who is affected**
-Record: Users of `snd-hda-intel` (very common), plus anyone who can bind
-a PCI function with a tiny BAR0 (VM/PCI fuzzing, `new_id`,
-malformed/class-matching devices).
-
-**Step 8.2: Trigger**
-Record: PCI bind of a device whose BAR0 is smaller than the offsets the
-driver reads. Common in syzkaller/QEMU; uncommon on real ICH/PCH
-hardware (those BARs are ~16KB). Typically needs a matching class/ID or
-CAP_SYS_ADMIN for `new_id`. Unprivileged userspace cannot trigger it
-directly (syzbot: Unprivileged: no). Peripheral/VM-host injection is in
-the syzbot assessment.
-
-**Step 8.3: Failure mode**
-Record: Kernel oops (`BUG: unable to handle kernel paging request`) in
-`azx_probe_work`. **Severity: CRITICAL** (host/guest crash). DoS; one
-report also marked exploitable. Not filesystem corruption.
-
-**Step 8.4: Risk-benefit**
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
 Record:
-- **Benefit:** High — prevents a documented, reproducible oops in a
-  widely enabled driver.
-- **Risk:** Very low — 9 lines, fail-closed on impossible hardware, no
-  locking/API change.
-- **Ratio:** Strongly favors backport.
+- Without the entry: `WARN_ON` stack on probe (noisy, can trip panic-on-
+  warn) **plus** conservative delays (2s unprepare vs 500ms; 200ms
+  enable vs 80ms). Conservative path is designed so the panel still
+  usually works.
+- Failure mode: boot warning + slower power sequencing, not a universal
+  oops.
+- Severity: **MEDIUM** for affected hardware (warning + wrong timings);
+  **LOW** globally.
+- Still qualifies under the device-ID / quirk exception.
 
-## Phase 9: Synthesis
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: high for that panel (correct T3/T12-style delays, no
+  `WARN_ON`); zero for others.
+- Risk: very low (1 line, existing delay struct, ID-gated).
+- Ratio: strongly favors backport.
 
-**Step 9.1: Evidence**
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Two syzbot reports, C repros, prio:high, paging oops
-- Real crash in `azx_first_init` / `snd_hdac_bus_parse_capabilities` —
-  both exist here
-- 9-line, obviously correct check
-- ALSA maintainer authored and applied it
-- Same probe context in 6.12; only the filename differs
-- Spec-sized HD-audio BARs are far larger than `0x200`
+- One-line ID/quirk in an existing driver (`panel-edp.c` /
+  `edp_panels[]`).
+- Matches stable exceptions: **device ID** and **hardware quirk** (drm-
+  misc pull even labeled it "panel-edp: quirks").
+- Avoids `WARN_ON` and 2s conservative unprepare on this panel.
+- `delay_200_500_e80`, HKC table, and lookup path exist in this 6.18
+  tree.
+- Reviewed and applied by the panel-edp maintainer.
+- Official 6.18.y already contains many identical panel-edp ID
+  backports.
+- Applies cleanly to `v6.18.53`.
 
 AGAINST:
-- Trigger is not the everyday laptop codec path (needs a tiny BAR / wild
-  bind)
-- `0x200` is a floor, not full MMIO coverage
-- No mailing-list review besides the maintainer
-- Lore/stable-list HTTP 403 (discussion recovered via b4)
+- Not a UAF/crash/corruption fix for all users; unmatched panels usually
+  still work with conservative delays.
+- No `Reported-by` from end users; vendor EDID add.
 
 UNRESOLVED:
-- Could not WebFetch lore.kernel.org or git.kernel.org (403/bot wall);
-  b4 mbox and syzbot pages were sufficient
-- No independent stable-list discussion found
+- Exact v1 review comments (lore/MARC fetch failed).
+- Whether this was discussed on stable@ (lore/stable 403).
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — maintainer patch; syzbot
-   lists it as the fix commit and patched on upstream CI.
-2. Real bug affecting users? **PASS** — reproducible kernel oops.
-3. Important (crash/security/corruption/deadlock)? **PASS** — oops / DoS
-   (CRITICAL).
-4. Small and contained? **PASS** — +9 lines, one function.
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — path remap only; context matches.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — one sorted table row;
+   maintainer Reviewed-by and merged.
+2. Fixes a real bug that affects users? **PASS** — missing quirk:
+   `WARN_ON` + wrong power delays on this panel.
+3. Important issue? **PASS** under the device-ID/quirk exception (boot
+   warning + incorrect sequencing on real hardware). Not a core panic.
+4. Small and contained? **PASS** — +1 line, one file.
+5. No new features or APIs? **PASS** — no new driver, syscall, or
+   userspace API; only a table ID.
+6. Can apply to the local tree? **PASS** — dry-run against `v6.18.53`
+   succeeded.
 
-**Step 9.3: Exception category**
-Record: Not an ID/quirk/DT/docs exception. It is a normal crash-
-prevention bugfix.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: **Device ID addition to existing driver** and **hardware
+quirk/workaround**. Automatic YES class.
 
-**Step 9.4: Decision**
-This tree has the vulnerable probe path. The patch is a small, correct
-guard that stops a syzbot-proven oops. It should be backported to this
-6.12 tree.
+Step 9.4: MAKE YOUR DECISION
+This tree is 6.18.y. The driver already identifies unknown eDP panels
+and warns. Adding HKC `0x1203` is the same kind of ID/quirk 6.18.y
+already takes. Benefit is real for that hardware; risk is negligible.
 
----
+What it solves for stable users: Chromebook/laptop panels with EDID HKC
+`0x1203` get the intended 200/500/80 ms sequencing and stop hitting the
+unknown-panel `WARN_ON`.
 
-### What the commit solves, and why it matters here
+Risk vs benefit: one ID-gated line vs boot warning and multi-second
+conservative delays. Favor backport.
 
-`snd-hda-intel` maps BAR0 and then reads HD-audio registers (GCAP at
-`0x00`, LLCH at `0x14`, later stream descriptors). If BAR0 is too small
-— syzkaller binds a wild PCI function, or a class-`0x0403` device has a
-truncated BAR — those `readw`s walk off the iomap and oops the kernel in
-`azx_probe_work`. On 6.12 that is still `azx_probe()` in
-`sound/pci/hda/hda_intel.c` with no size check. The patch rejects BAR0 <
-512 bytes before `snd_card_new()`, which is enough to stop the reported
-crash and will not reject real controllers.
-
-### Stable-rules / risk vs benefit
-
-Meets the rules: real oops, tiny diff, no API, applies with a filename
-change. Benefit is preventing a kernel crash in a default x86 audio
-driver; risk is an early `-EINVAL` only for hardware that could not
-function.
-
-### Concerns
-
-Need to drop the patch onto `sound/pci/hda/hda_intel.c` instead of
-`sound/hda/controllers/intel.c`. No other prerequisites. The `0x200`
-floor is incomplete for later registers; that is documented and does not
-block the oops fix.
-
-### Verification
-- [Phase 1] Parsed tags: two syzbot Reported-by/Closes, maintainer SOB,
-  no Fixes/Cc:stable
-- [Phase 2] Diff: +9 lines in `azx_probe()`, `pci_resource_len(pci, 0) <
-  0x200` → `-EINVAL`
-- [Phase 3] `git describe HEAD` / `make kernelversion`: **6.12.111**
-  (`p-6.12-3-gc504cf0baa3d8`)
-- [Phase 3] `git merge-base --is-ancestor 9895573b0185 HEAD` → not
-  ancestor (exit 1); object exists
-- [Phase 3] Blame around insertion: `snd_card_new` path dates to
-  2008–2014; no existing BAR check
-- [Phase 3] `git log --oneline -20 -- sound/pci/hda/hda_intel.c`:
-  IDs/quirks only; no related fix
-- [Phase 4] `b4 dig -c 9895573b0185`: lore URL
-  `20260813150354.763502-1-tiwai@suse.de`
-- [Phase 4] `b4 dig -a`: v1 only; `b4 dig -w`: linux-sound + maintainer
-- [Phase 4] b4 mbox: single email, no NAK/review replies
-- [Phase 4] syzbot: paging oops in `snd_hdac_bus_parse_capabilities` and
-  `azx_probe_work`; C repro; prio:high; fix `9895573b0185`
-- [Phase 4] WebFetch lore/stable/git.kernel.org: 403 — UNVERIFIED via
-  HTTP; b4/syzbot used instead
-- [Phase 5] Callers: PCI `.probe = azx_probe`; Intel/NVIDIA/ATI/AMD HD-
-  audio class catch-alls
-- [Phase 5] This tree `azx_first_init`: `pcim_iomap_regions` then
-  `azx_readw(GCAP)` / `snd_hdac_bus_parse_capabilities` (LLCH `0x14`)
-- [Phase 5] `pcim_iomap_regions()` maps BAR as-is; no minimum size
-- [Phase 6] Local `azx_probe()` at `sound/pci/hda/hda_intel.c:2116`
-  lacks the check; grep found no `"Too small PCI BAR0"`
-- [Phase 6] Surrounding lines 2149–2160 match the upstream hunk — clean
-  path-remap apply
-- [Phase 8] Failure: kernel oops on probe workqueue; severity CRITICAL;
-  unprivileged trigger not shown
+Verification:
+- [Phase 1] Tags: Haikun Zhou SOB, Douglas Anderson Reviewed-by + SOB,
+  lore msgid link; no Fixes/Reported-by/Cc:stable
+- [Phase 1] Body is raw EDID; decoded mfg HKC (`0x2163`) product
+  `0x1203`; name `MB116AS01'3`
+- [Phase 2] Diff: +1 `EDP_PANEL_ENTRY` in `edp_panels[]`; delay
+  `&delay_200_500_e80`
+- [Phase 2] Unmatched path: `WARN_ON` + `unprepare=2000`/`enable=200` in
+  `generic_edp_panel_probe()` (verified in this tree and `v6.18.53`)
+- [Phase 3] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
+  kernelversion` → 6.18.53
+- [Phase 3] `git merge-base --is-ancestor 9e55b14301666 v6.18.53` → NO
+  (not in official 6.18.53)
+- [Phase 3] `git grep MB116AS01 v6.18.53 -- panel-edp.c` → not present;
+  HKC `0x2d51/0x2d5b/0x2d5c` present
+- [Phase 3] `delay_200_500_e80` present at line 1760 on `v6.18.53`
+- [Phase 3] `v6.18..v6.18.53` already has multiple `drm/panel-edp: Add …
+  panel` commits
+- [Phase 4] `b4 dig -c`: V2 lore URL; `b4 dig -a`: v1 hyphen name, v2
+  apostrophe; `b4 dig -w`: dianders, dri-devel, drm maintainers
+- [Phase 4] LKML: Doug Reviewed-by, pushed `844e71ba7d7a` to drm-misc-
+  next
+- [Phase 4] drm 7.3-rc1 pull lists MB116AS01 under panel-edp quirks
+- [Phase 4] UNVERIFIED: v1 review text; stable@ discussion (HTTP
+  403/404)
+- [Phase 5] Call chain: `panel_edp_probe` → `generic_edp_panel_probe` →
+  `find_edp_panel`; delays used in prepare/enable
+- [Phase 6] Dry-run `patch --dry-run` of this commit onto `v6.18.53`
+  `panel-edp.c`: succeeded (offset -5)
+- [Phase 7] MAINTAINERS: Douglas Anderson is `R:` for panel-edp.c
+- [Phase 8] Severity: WARN_ON + wrong delays on this panel; ID-gated so
+  other hardware unaffected
 
 **YES**
 
- sound/hda/controllers/intel.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
-index f07fc5dc5cede..3ed33cba7d83f 100644
---- a/sound/hda/controllers/intel.c
-+++ b/sound/hda/controllers/intel.c
-@@ -2155,6 +2155,15 @@ static int azx_probe(struct pci_dev *pci,
- 		dev_warn(&pci->dev, "dmic_detect option is deprecated, pass snd-intel-dspcfg.dsp_driver=1 option instead\n");
- 	}
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index f2ae333a32d8c..0da04d75e4e96 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -2061,6 +2061,7 @@ static const struct edp_panel_entry edp_panels[] = {
  
-+	/* A sanity check against wild device binding;
-+	 * here the range 0x200 is enough for the registers used at probe,
-+	 * but it doesn't mean covering all HD-audio registers
-+	 */
-+	if (pci_resource_len(pci, 0) < 0x200) {
-+		dev_err(&pci->dev, "Too small PCI BAR0\n");
-+		return -EINVAL;
-+	}
-+
- 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
- 			   0, &card);
- 	if (err < 0) {
+ 	EDP_PANEL_ENTRY('E', 'T', 'C', 0x0000, &delay_50_500_e200_d200_po2e335, "LP079QX1-SP0V"),
+ 
++	EDP_PANEL_ENTRY('H', 'K', 'C', 0x1203, &delay_200_500_e80, "MB116AS01'3"),
+ 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d51, &delay_200_500_e200, "Unknown"),
+ 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d5b, &delay_200_500_e200, "MB116AN01"),
+ 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d5c, &delay_200_500_e200, "MB116AN01-2"),
 -- 
 2.53.0
 
