@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3074164A875;
-	Mon, 19 Oct 2026 14:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BEC503BE9;
+	Mon, 19 Oct 2026 14:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418808; cv=none; b=LqkmBRROU/19HJXuASdQqp0bU2q/YL2tdqAvDrzK+lXt6xvyuywwvvVH+cxgOA1+d2lwMLBlFY70nEDTmfew6aM9vhGjD3eYLXoNpCAVtb2hAdKIe3AWL49asQ5aMsw643tFQ0hTbpu2xh/TghwXDH3fU+8S8Xdjwf14FbPrRcE=
+	t=1792418809; cv=none; b=U1xzzXOlRJ0oYoQL2u6cq5AzythkH05kVYfZn17cVmNLEx7y3N+maZxlY91/fIFbBLGG8P3rzVu9Ij9kXrZr7Nxufb4khxJoRqzK5+iKjTWzJKqCadE6YG1Va6E+nQLfZgG6yr05GXjF/p2R8T7Q7cAy3O2pj+hhOeixri7zSpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418808; c=relaxed/simple;
-	bh=aISxnCal5n++tChH+QVmU064sZT6GETF+i9liZ6pjJw=;
+	s=arc-20240116; t=1792418809; c=relaxed/simple;
+	bh=8HTGKz/1NgVU+pDsV/Bim2NeNHfDYKv/D+EClCVs6Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wnv7DT/okiQTdN/rn6hk1+4pTQgmX83K8gnZIQG7Dz0uMqxbhiVybMu0L63M1cMXEpO6FMOqRBbJbKeqtf9NmnyTl7kZm3JdY3c0RzrivVNjzSbsSrixXE8Cn0hWAX/6c9XKsoY7RQ/8HOWkV3ZsIcBoAhqZJhWPbUQ5CIDwOvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O76lS/KK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Nke4RCeJyZ0++QaY+ju5P7zn6gcJpBGD9oJUGOsSlqh7GMPf5pLng4CxVeWWa+QngoRNE9WLM3AgvuyxPTaLvbNQLMknv9fGE56oxHC72vh4nAXnW+q0mFgBbTXfeLJaIxrUiUeuBVIEY9jhg4k240kC6e3SgSKMqU2dmBxHD3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YVS9jDb7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O76lS/KK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43191F000CD;
-	Mon, 19 Oct 2026 14:06:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YVS9jDb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BC41F000C6;
+	Mon, 19 Oct 2026 14:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418805;
-	bh=yQu/sakkYOBaQWWxQz5VILvUfek9BvuHnlIow+z0Hs8=;
+	s=k20260515; t=1792418803;
+	bh=WI7wYpsNMkdXcklVicKth9S9t37805X7PofsGlT4fB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O76lS/KK2teE7CTgIdZuWEecVXdisUyoOXIUVayKoeTb/mYVpKSS92I3vrGBUyBln
-	 dFigPebfW2A/nC9WgBWFqPG0RMceC7qdXdivCzzheabsT3E2qctwnwcV4idbACMuI5
-	 bGXHN3LliXnQyEOl0Z5xWyVKkj3pKvomP43eCRKejKlQamSnHR5TBgJyv8wdsJzgSd
-	 ZiiUDSFlnobifOBuJ7ogehBWksJZZNWi4DXDTCvd4OZAnbc2b+MJczKKkAZcef4Mzg
-	 fHQmeUG4gDDT7IkU8nmb89ukg6p279fq/J60tr0M7WyW1P37Q6SP8ZGLZMvJTLcrNn
-	 /HUl7+Il/64Kw==
+	b=YVS9jDb7x1yRx0hBUr2N6Ud9RJWEikoPVpNghCh2HJEnWCPi/d3jA42fzeiiuD9sK
+	 MlnX70NgtKFM+xmahYs0TjiUckNZdjEqfgYp3jvFMVx/eohlROLIeovC6v2aIc1Fen
+	 YyCgNEA/Rmxdq/6OwNe1OUi5Mkunww824JCWq4NOzW5oTvvhsfBPTUjKhRiWgCW6Q2
+	 HDxfd5wH1XIJ3JZnxdhzfLjkHUZRb3ki6kT2IV5gzfs/I1zAjDX3AvvAapNtTwdYUY
+	 tWreaMnzqxupa7oT9zqZwzlibbr8kg6pGI0cCtR9w1QFvVwK9YJr6o5t30uC302T1K
+	 VaUHGaGGe38Og==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuho Choi <dbgh9129@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: wangdicheng <wangdicheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	dakr@kernel.org,
-	driver-core@lists.linux.dev,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] driver core: attribute_container: Unwind device_add() on attr failure
-Date: Mon, 19 Oct 2026 09:53:20 -0400
-Message-ID: <20261019135441.1420968-509-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/conexant: Add NULL check for dc_mode_path
+Date: Mon, 19 Oct 2026 09:53:18 -0400
+Message-ID: <20261019135441.1420968-507-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,394 +54,514 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 8cfe7ad274bb42c4653b645267410d4a3a23db98 ]
+[ Upstream commit 273806f38ce95c95c288a03d3de1e423cd3e5543 ]
 
-attribute_container_add_class_device() first calls device_add() and then
-creates the container attributes. If attribute_container_add_attrs() fails,
-the helper returns the error with the class device still registered.
+snd_hda_add_new_path() returns NULL when no path exists between the
+given NIDs, but olpc_xo_update_mic_pins() passes dc_mode_path
+straight to snd_hda_activate_path() which dereferences it without
+checking. Add the missing NULL guards, same as the local path
+variable already has in the same function.
 
-Callers use an error from this helper as a failed add and do not call
-device_del() on that path. Undo the successful device_add() before
-returning the attribute creation error.
-
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260608172717.88657-1-dbgh9129@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 1)...
+Retry attempt 1...
+# Stable backport analysis: `ALSA: hda/conexant: Add NULL check for
+dc_mode_path`
 
-**Step 1.1: Subject line**
-Record: **[driver core / attribute_container] [Unwind] [on
-`device_add()` success, roll back if attribute creation fails]**
+Local tree: **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). Evaluation is
+for this checkout only. The conexant OLPC XO path exists here; the
+change is a two-site NULL guard in `olpc_xo_update_mic_pins()`.
 
-**Step 1.2: Tags**
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+- Subsystem: `ALSA: hda/conexant`
+- Action verb: **Add** (NULL check)
+- Claimed intent: stop passing a possibly-NULL `dc_mode_path` into
+  `snd_hda_activate_path()`
+
+Record: `[ALSA/hda/conexant] [add] [NULL-check dc_mode_path before
+snd_hda_activate_path]`
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- `Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>` (author)
+- `Link:
+  https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com`
+  (patch 2/2)
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer;
+  applied)
+- No `Fixes:`
+- No `Reported-by` / `Tested-by` / `Reviewed-by` / `Acked-by`
+- No `Cc: stable` (expected for this review pipeline)
+- Pipeline `Signed-off-by: Sasha Levin` is absent from the real commit
+  and is ignored anyway
+
+Record: Maintainer SOB only; no crash reporter, syzbot, or Fixes tag.
+Msgid `-2` shows this is **patch 2/2**.
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+The body says `snd_hda_add_new_path()` can return NULL when no path
+exists between the given NIDs, and `olpc_xo_update_mic_pins()` passes
+`spec->dc_mode_path` to `snd_hda_activate_path()` with no check. The
+local `path` variable in the same function is already NULL-checked. No
+stack trace, reproducer, or version range.
+
 Record:
-- **Link:**
-  `https://patch.msgid.link/20260608172717.88657-1-dbgh9129@gmail.com`
-- **Signed-off-by:** Yuho Choi (author)
-- **Signed-off-by:** Greg Kroah-Hartman (driver-core maintainer)
-- **Committer:** Danilo Krummrich
-- **No** `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence of the last two is expected for this
-  review)
-- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-  …]` markers; they are not in the real commit
+- [Bug] Unchecked NULL from `snd_hda_add_new_path()` used later
+- [Symptom] NULL deref / oops in `snd_hda_activate_path()`
+  (`path->active = enable`)
+- [Version info] none in the message
+- [Root cause] missing NULL guards, unlike the sibling `path` checks
 
-**Step 1.3: Body**
-Record:
-- **Bug:** `attribute_container_add_class_device()` does `device_add()`
-  then `attribute_container_add_attrs()`. If attrs fail, the helper
-  returns the error while the class device stays registered.
-- **Symptom:** Callers treat the helper error as a failed add and do
-  **not** `device_del()` that classdev.
-- **Root cause:** Missing unwind of a successful `device_add()` on a
-  later failure (classic probe-style leak).
-- **Version info:** None in the message. History shows this pattern
-  since 2005/2008.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Not disguised. It is an explicit NULL-deref guard. Not a feature or
+refactor.
 
-**Step 1.4: Hidden bug fix?**
-Record: **Not hidden.** This is an explicit error-path unwind /
-leftover-registered-device fix, not a style cleanup.
+Record: `[Not a hidden fix; stated NULL deref guard]`
 
 ---
 
-## Phase 2: Diff analysis
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-**Step 2.1: Inventory**
-Record:
-- **File:** `drivers/base/attribute_container.c` — **+6 / −1**
-- **Function:** `attribute_container_add_class_device()`
-- **Scope:** single-file, surgical, error path only
+**Step 2.1: INVENTORY THE CHANGES**
+- File: `sound/hda/codecs/conexant.c` (+4 / -2)
+- Function: `olpc_xo_update_mic_pins()`
+- Classification: single-file surgical fix
 
-**Step 2.2: Code flow**
-Record: **Before:** `device_add()` success → `return
-attribute_container_add_attrs()` (classdev stays registered on attr
-failure). **After:** store attr error; on failure call
-`device_del(classdev)`; return that error. Normal success path
-unchanged.
+Record: `[conexant.c +4-2] [olpc_xo_update_mic_pins] [surgical]`
 
-**Step 2.3: Bug mechanism**
-Record: **[error-path resource leak / incomplete unwind]**
-`device_add()` publishes the classdev (sysfs, parent child list,
-kobject). `attribute_container_add_attrs()` can fail via
-`sysfs_create_group()` or `device_create_file()` (typically `-ENOMEM`,
-also `-EEXIST` / other sysfs errors). Returning that error without
-`device_del()` leaves a live classdev. Pairing is correct: callers
-`device_initialize()` + this helper’s `device_add()`, so unwind is
-`device_del()`, not `device_unregister()`.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Hunk 1 (`!spec->dc_enable`, default path): always called
+`snd_hda_activate_path(..., dc_mode_path, false, false)` to disable the
+DC path → now skipped if `dc_mode_path` is NULL.
 
-**Step 2.4: Fix quality**
-Record: **Obviously correct, textbook unwind, no API/data-structure
-change.** Regression risk is low. Verified callers of this helper do
-**not** `device_del(classdev)` on this error (they go to
-`tclass->remove` only). `tclass->remove` implementations
-(`sas_host_remove`, `fc_host_remove`, `iscsi_remove_host`,
-`raid_remove`) do not `device_del` the classdev. No double-`device_del`.
+Hunk 2 (`spec->dc_enable`): always activated the DC path → now skipped
+if NULL.
 
----
+Both are the normal OLPC mic-pin update path (init, jack, capture,
+mixer), not a new error-handling framework.
 
-## Phase 3: Git history
+Record: `[unconditional activate_path → NULL-guarded activate_path on
+both branches]`
 
-**Step 3.1: Blame**
-Record: Missing unwind is original behavior.
-- Function in `1da177e4c3f41` (Linux 2.6.12-rc2, 2005) as
-  `class_device_add` + attrs.
-- `ee959b00c335d7` (2008) converted it to `device_add` (`SCSI: convert
-  struct class_device to struct device`).
-- Bug present for ~18 years. This tree’s current lines 428–433 are this
-  commit.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Category: **memory safety / NULL pointer dereference**.
 
-**Step 3.2: Fixes: tag**
-Record: **None.** Equivalent historical target would be `1da177e4c3f41`
-/ `ee959b00c335d7`. Both are ancestors of this tree.
+`cxt_fixup_olpc_xo()` does:
 
-**Step 3.3: File history**
-Record (recent, this file): related error-path work already here:
-- `e5da06b27ff5a` (2023) — `transport_class`: call `->remove()` if
-  `transport_add_device()` fails (Fixes: `1da177e4c3f4`)
-- `cd7ea70bb00aa` — propagate transport add errors
-- `6e328b4a208f7` — unwind statistics group if encryption group create
-  fails
-This commit is **standalone** (not `n/m`). It complements those; it does
-not depend on `6e328b4a208f7`.
+```c
+spec->dc_mode_path = snd_hda_add_new_path(codec, 0x1e, 0x14, 0);
+```
 
-**Step 3.4: Author**
-Record: Yuho Choi is not the subsystem maintainer (a few driver-
-core/regmap error-path patches). Weight comes from **Greg Kroah-Hartman
-SOB** and **Danilo Krummrich** committing it.
+`snd_hda_add_new_path()` is documented to return NULL if no valid path
+is found, and also returns NULL if `is_reachable_path()` fails,
+`snd_array_new()` fails, or `snd_hda_parse_nid_path()` fails.
+`snd_hda_activate_path()` immediately does `path->active = enable` with
+no NULL check.
 
-**Step 3.5: Dependencies**
-Record: **None.** Needs only `device_add` / `device_del` /
-`attribute_container_add_attrs()`, all long-standing. Applies
-standalone. `git merge-base --is-ancestor 8cfe7ad274bb4 HEAD` → **yes**
-(commit is already in this checkout).
+Record: `[NULL deref] [add_new_path NULL stored, later deref in
+activate_path]`
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Obviously correct and matches the existing `if (path)` pattern in the
+same function. Minimal. Skipping activate on NULL cannot activate a
+missing path anyway, so behavior is “don’t oops” rather than a new
+feature. Regression risk is very low: no locking, no API, no data-
+structure change.
+
+Record: `[obviously correct, 2 ifs] [regression risk: very low]`
 
 ---
 
-## Phase 4: Mailing list / external
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 4.1:**
-Record: `b4 dig -c 8cfe7ad274bb4` →
-https://patch.msgid.link/20260608172717.88657-1-dbgh9129@gmail.com
-`b4 dig -a`: **v1 only**, 2026-06-08. Saved mbox: **one message** (the
-patch), **no replies**. Direct lore fetch returned **403**. No NAKs
-found. No public reviewer request for `Cc: stable`.
+**Step 3.1: BLAME THE CHANGED LINES**
+Unchecked `snd_hda_activate_path(codec, spec->dc_mode_path, ...)` and
+the assignment of `dc_mode_path` come from `3a00c6605b7709` (“ALSA:
+hda/conexant - Re-implement OLPC XO workarounds via fixup”), Takashi
+Iwai, 2014-01-27, first contained in **v3.15-rc1**. Present as an
+ancestor of this HEAD.
 
-**Step 4.2:**
-Record: `b4 dig -w` recipients: Greg Kroah-Hartman, Rafael J. Wysocki,
-Danilo Krummrich, `driver-core@lists.linux.dev`, `linux-
-kernel@vger.kernel.org`. Right maintainers were on the original To/Cc.
+Record: `[3a00c6605b7709, v3.15-rc1] [code present ~12 years]`
 
-**Step 4.3:**
-Record: **No bugzilla/syzbot/user report.** Looks like code inspection,
-not a production crash report.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+No `Fixes:` tag. Introducer verified by blame as above. `git merge-base
+--is-ancestor 3a00c6605b7709 HEAD` succeeded.
 
-**Step 4.4:**
-Record: Standalone v1, not a multi-patch series.
+Record: `[no Fixes tag] [buggy code exists in this tree since v3.15]`
 
-**Step 4.5:**
-Record: Web search of lore/stable for this subject/author found **no**
-stable-list discussion (search results were unrelated). **UNVERIFIED:**
-whether anyone previously rejected it for stable.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Recent `conexant.c` work is headset/LED/pin quirks. Only related hit for
+`dc_mode_path` is this commit. Standalone relative to later conexant
+changes.
 
----
+Record: `[no prerequisites in recent file history] [standalone vs later
+work]`
 
-## Phase 5: Semantic / call graph
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+wangdicheng is a regular ALSA contributor, not the subsystem maintainer.
+Nearby work includes other defensive checks. Same-day series: this patch
+plus `[PATCH 1/2] ALSA: hda/conexant: Fix EAPD pin array overflow`.
 
-**Step 5.1:**
-Record: Modified function: `attribute_container_add_class_device()`.
+Record: `[regular contributor] [2/2 series; patch 1 was rejected]`
 
-**Step 5.2: Callers**
-Record (this tree):
-1. `transport_add_class_device()` in `drivers/base/transport_class.c` —
-   **the live caller**. On helper error → `err_remove` →
-   `tclass->remove` only, **not**
-   `attribute_container_class_device_del()`.
-2. Default `fn == NULL` path in `attribute_container_add_device()` —
-   still present; **no in-tree caller passes NULL**
-   (`attribute_container_add_device` is only used from
-   `transport_setup_device()` with `transport_setup_classdev`).
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Needs `olpc_xo_update_mic_pins`, `dc_mode_path`, and
+`snd_hda_activate_path` — all present. Patch 1/2 is **not** a
+dependency; Takashi NAK’d it (“No, it checks right after the increment…
+overwrite won't happen”), and this tree still has the original EAPD
+write-then-check order. This NULL-check applies standalone.
 
-`transport_add_device()` / `transport_register_device()` are used by
-SCSI (SAS/FC/iSCSI/SRP/SPI, `scsi_sysfs.c`) and **libata**. Always-
-built: `drivers/base/Makefile` lists `attribute_container.o` and
-`transport_class.o`.
-
-**Step 5.3: Callees**
-Record: `device_add`, `attribute_container_add_attrs` →
-`sysfs_create_group` / `device_create_file`, and on failure
-`device_del`.
-
-**Step 5.4: Reachability**
-Record: **Yes, from normal storage bring-up**, not a syscall gadget.
-Path: SCSI/ATA device add → `transport_add_device()` →
-`transport_add_class_device()` → this helper. Trigger is **attr creation
-failure**, not every boot. Unprivileged users cannot typically force it
-except via memory pressure / device hotplug.
-
-**Step 5.5: Similar patterns**
-Record: Same file already uses `attribute_container_class_device_del()`
-= remove attrs + `device_del`. `e5da06b27ff5a` is the sibling leak on
-the transport `->setup()`/`->remove()` side. This fills the remaining
-`device_add` hole.
+Record: `[no functional dependency on 1/2] [applies standalone]`
 
 ---
 
-## Phase 6: This checkout
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 6.1:**
-Record: **Local tree: `v7.3-rc4-27-gf0100363d8c37`, `make kernelversion`
-= 7.3.0-rc4** (mainline, VERSION 7 / PATCHLEVEL 3).
-Buggy pre-image exists as parent of `8cfe7ad274bb4`; the **fix is
-already in HEAD**. Surrounding helper and SCSI/ATA callers exist and
-match the commit’s claim. Bug introduced ~2.6.12 / 2008 conversion —
-**long before this tree**.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+`b4 dig -c 273806f38ce95` matched:
+https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com
 
-**Step 6.2:**
-Record: Function body before the commit is exactly the diff context.
-**Clean apply** on this lineage. No conflicting refactor of this helper.
+`b4 dig -a`: **v1 only** (no v2/v3). Thread saved to mbox.
 
-**Step 6.3:**
-Record: Related transport unwind (`e5da06b27ff5a`, `6e328b4a208f7`) is
-already here. **No alternate fix** of this specific
-`device_add`/`add_attrs` hole besides `8cfe7ad274bb4`.
+Takashi on 2/2: “Applied to for-next branch now. Thanks.” No NAK, no
+stable nomination, no concern about this patch.
 
----
+Takashi on 1/2: explicit rejection — the claimed EAPD overflow does not
+happen.
 
-## Phase 7: Subsystem context
+Record: `[lore msgid 20260729070935.548050-2] [v1 only] [2/2 applied;
+1/2 NAK’d] [no Cc: stable in review]`
 
-**Step 7.1:**
-Record: **driver core (`drivers/base/`)** used by SCSI/ATA transport
-classes. Criticality: **IMPORTANT** (not mm/scheduler, but common on
-servers/storage). Not staging.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+`b4 dig -w` recipients: `tiwai@suse.com`, `broonie@kernel.org`, `linux-
+sound@`, `linux-kernel@`, author. Subsystem maintainer was To: and
+applied the patch.
 
-**Step 7.2:**
-Record: File is mature (2005); recent commits are small fixes and
-treewide alloc changes, not a rewrite. Fits a long-standing error-path
-hole, not a new-API follow-up.
+Record: `[Takashi Iwai applied; Mark Brown CC’d; linux-sound CC’d]`
 
----
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+No `Reported-by`, no bugzilla, no syzbot. HTTP fetch of lore.kernel.org
+returned 403; discussion recovered via `b4 dig -m` instead. No evidence
+of a user-reported oops.
 
-## Phase 8: Impact and risk
+Record: `[no user/syzbot report found] [static/code-review style
+finding]`
 
-**Step 8.1:**
-Record: **Driver-core + SCSI/ATA/iSCSI/FC/SAS users** (large storage
-population). Not universal for every kernel, but a default
-`drivers/base` object.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+2/2 of “conexant defensive fixes”. Patch 1 was a false positive. Patch 2
+does not depend on patch 1.
 
-**Step 8.2:**
-Record: Trigger = `attribute_container_add_attrs()` failure after
-successful `device_add()`. Uncommon (mostly ENOMEM / sysfs errors)
-during host/target/rport/phy add. Not a race. Not a normal unprivileged
-syscall.
+Record: `[series 2/2; sibling not needed and not in tree]`
 
-**Step 8.3:**
-Record: **Failure mode: leftover registered classdev** (sysfs node,
-parent child, refs). Callers that then `device_del()` the **parent**
-(verified: `ata_tport_add`, `sas_phy_add`) can tear down a parent while
-the classdev child is still registered. That is sysfs/kobject
-inconsistency, leak, and possible later `-EEXIST` / warnings — **HIGH**,
-not a panic on the happy path. Not a CVE-class issue from the evidence
-found.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+lore.kernel.org/stable HTTP search: **UNVERIFIED** (403). No
+`dc_mode_path` discussion in this tree’s git history besides this
+commit.
 
-**Step 8.4:**
-Record: **Benefit: medium-high** for storage error paths (correct
-unwind, avoids stale classdev). **Risk: very low** (5 net lines, error
-path, pairing `device_add`/`device_del`). Ratio favors inclusion.
+Record: `[UNVERIFIED: stable list search via HTTP] [no in-tree stable
+discussion]`
 
 ---
 
-## Phase 9: Synthesis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 9.1: Evidence**
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+- Modified: `olpc_xo_update_mic_pins()`
+- Related: `cxt_fixup_olpc_xo()`, `olpc_xo_automic()`,
+  `olpc_xo_capture_hook()`, `olpc_xo_dc_mode_put()`,
+  `olpc_xo_dc_bias_enum_put()`, `snd_hda_add_new_path()`,
+  `snd_hda_activate_path()`
 
-**For:**
-- Real incomplete unwind: registered device returned as failure
-- Callers verified not to `device_del(classdev)` on that error
-- Parent `device_del` after this failure is a concrete consistency
-  hazard (libata/SAS)
-- Tiny, obviously correct; Greg KH signed off
-- Same class as `e5da06b27ff5a`, which treated this area as a real leak
-  (`Fixes: 1da177e4c3f4`)
-- Code and callers exist in this tree; no extra commits required
-- Always-built driver core, SCSI/ATA bring-up
+Record: `[olpc_xo_update_mic_pins only in the diff]`
 
-**Against:**
-- No `Reported-by` / syzbot / crash log
-- Error path only; not a guaranteed oops
-- No public review comments in the matched thread
-- No `Fixes:` (author omission, not a reason to reject)
+**Step 5.2: TRACE CALLERS**
+`olpc_xo_update_mic_pins()` is called from:
+1. `olpc_xo_automic` — `mic_autoswitch_hook`
+2. `olpc_xo_capture_hook` — PCM PREPARE/CLEANUP (capture start/stop)
+3. `olpc_xo_dc_mode_put` — “DC Mode Enable Switch” mixer
+4. `olpc_xo_dc_bias_enum_put` — if `dc_enable`
 
-**Unresolved:** lore HTTP 403; no stable-list hit; how often
-`add_attrs()` fails in the field.
+`olpc_xo_automic` is invoked from `call_mic_autoswitch()` in generic
+HDA, including `update_automute_all()` from **codec init**
+(`snd_hda_gen_init` path at generic.c:6029). So a NULL `dc_mode_path`
+oopses on the **default** `!dc_enable` branch during init or jack
+handling, not only when DC mode is turned on.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — pairing is standard; merged
-   by driver-core (no extra test tags).
-2. Real user-affecting bug? **PASS** — leftover classdev on SCSI/ATA add
-   failure.
-3. Important (crash/security/corruption/deadlock)? **PASS** at leak /
-   kobject-inconsistency severity (HIGH, not panic). Matches error-path
-   leak fixes stable routinely takes.
-4. Small and contained? **PASS** — one function, +6/−1.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS** — context matches; already ancestor
-   of HEAD, so no backport conflict here.
+Record: `[init, jack, capture, mixer] [reachable without enabling DC
+mode]`
 
-**Step 9.3: Exception category**
-Record: **None** (not a device ID/quirk/DT/build/doc exception). It is a
-normal small bugfix.
+**Step 5.3: TRACE CALLEES**
+`update_mic_pin` / `snd_hda_codec_write_cache`,
+`snd_hda_get_path_from_idx`, `snd_hda_activate_path`, pin-target
+helpers. The dangerous callee is `snd_hda_activate_path` → `path->active
+= enable`.
 
-**Step 9.4: Decision**
-This tree is **mainline 7.3-rc4**, which already contains the fix. That
-does not make the change “already selected for stable”; it means the
-buggy helper and the SCSI/ATA callers this commit talks about **are this
-tree’s code**. The patch is a self-contained unwind of a leaked
-registered class device. It should be treated as stable-worthy for this
-codebase.
+Record: `[activate_path dereferences path unconditionally]`
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Quirk `SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO)`
+plus model hint `olpc-xo`. Probe sets the hook and path; gen init calls
+automute; userspace capture/mixer also reach it. Unprivileged capture on
+that machine can hit it if the pointer is NULL.
+
+Record: `[userspace-reachable on OLPC XO-1.5 and model=olpc-xo] [init
+also hits it]`
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Same function already NULL-checks `snd_hda_get_path_from_idx()` results.
+`snd_hda_activate_path()` itself does not check NULL (generic helper;
+callers must).
+
+Record: `[inconsistent NULL check vs local path; helper assumes non-
+NULL]`
 
 ---
 
-## What the commit solves for this tree
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-`attribute_container_add_class_device()` is the helper behind SCSI/ATA
-transport class devices. It published the classdev, then created
-attributes, and on attribute failure returned an error while leaving the
-classdev registered. `transport_add_class_device()` treats that as a
-failed add and only runs `tclass->remove()` (bsg/raid cleanup), not
-`device_del()`. ATA/SAS callers then `device_del()` the **parent**. That
-is a real leak and a parent/child sysfs mismatch on a failed add.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Yes. `sound/hda/codecs/conexant.c`: `dc_mode_path` on the spec,
+assignment in `cxt_fixup_olpc_xo`, use in `olpc_xo_update_mic_pins`.
+Introduced v3.15, long before 7.3. (Current HEAD already contains
+273806f38ce95; that is the original upstream commit, not used as a
+“already selected for stable” argument.)
 
-The fix is five lines: `device_del()` if
-`attribute_container_add_attrs()` fails. No new API, no series
-dependency, low regression risk.
+Record: `[buggy pattern exists in this lineage; file present at
+sound/hda/codecs/conexant.c] [since v3.15]`
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+On **this** 7.3-rc4 tree the path and context match the candidate diff.
+Codec drivers were moved in `6014e9021b28e` (v6.17 era); that does not
+block this tree. No conflicting local edits.
+
+Record: `[clean apply on this tree]`
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+No earlier alternate fix for `dc_mode_path`. Patch 1/2 is not in the
+tree (correctly, it was wrong).
+
+Record: `[no alternate fix] [EAPD sibling correctly absent]`
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+ALSA HD-audio, Conexant codec, **OLPC XO-1.5-only** fixup. Criticality:
+**PERIPHERAL** (one PCI quirk / one model hint), but still a real
+shipped platform.
+
+Record: `[ALSA HDA conexant / OLPC XO] [PERIPHERAL]`
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+conexant.c still gets headset/LED/pin quirks. The OLPC block itself has
+been stable since 2014.
+
+Record: `[driver active; OLPC XO block mature]`
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+OLPC XO-1.5 (`0x152d:0x0833`) and anyone forcing `model=olpc-xo` on a
+Conexant codec. Not a generic conexant bug.
+
+Record: `[driver/platform-specific; tiny population]`
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+NULL only if `snd_hda_add_new_path(0x1e, 0x14)` fails: unreachable NIDs
+(wrong hardware + olpc-xo fixup) or `snd_array_new()` ENOMEM. On real
+XO-1.5 the path was designed to exist; **no oops reports in ~12 years**.
+If it is NULL, codec init or first jack/capture hits it on the default
+`!dc_enable` branch. Unprivileged capture can trigger it once the
+pointer is NULL.
+
+Record: `[rare: ENOMEM or wrong model] [init/jack/capture] [unprivileged
+if already NULL]`
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+NULL deref in `snd_hda_activate_path` → kernel oops. Not data corruption
+or a security hole by itself.
+
+Record: `[oops] [HIGH if triggered; LOW likelihood on intended
+hardware]`
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+- Benefit: prevents oops on a real (if narrow) error path; same pattern
+  already used for `path`.
+- Risk: two extra NULL tests; no API/lock/behavior change when the
+  pointer is valid.
+- Ratio: **low benefit, very low risk**. The crash-prevention bias still
+  favors taking it.
+
+Record: `[benefit: modest] [risk: very low] [favorable for a 4-line oops
+guard]`
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Verified unconditional deref in `snd_hda_activate_path()`
+  (`path->active = enable`)
+- `snd_hda_add_new_path()` documented to return NULL; return is stored
+  unchecked
+- Default `!dc_enable` path also calls activate, including codec init
+  via `update_automute_all()`
+- 4-line, obviously correct, matches existing `if (path)` in the same
+  function
+- No new API/feature; no dependency on the NAK’d 1/2
+- Buggy code has been in this tree’s lineage since v3.15; file exists
+  here
+- ALSA maintainer applied it
+- Crash-class failure if the pointer is NULL
+
+AGAINST:
+- No `Reported-by`, syzbot, or stack trace in 12 years
+- Only OLPC XO-1.5 / `model=olpc-xo`
+- Same series’ patch 1 was a false positive NAK’d by Takashi (static-
+  analysis/LLM-style noise)
+- On intended hardware the 0x1e→0x14 path is expected to exist
+- Not nominated for stable in review
+
+UNRESOLVED:
+- HTTP lore.kernel.org/stable search (403); thread itself was recovered
+  with `b4`
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — correct by inspection;
+   maintainer applied (no extra Tested-by)
+2. Fixes a real bug that affects users? **PASS** — real NULL-deref
+   defect; user population is small
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   oops if triggered (HIGH, narrow)
+4. Small and contained? **PASS** — 2 if-statements, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — matching file and function in
+   7.3-rc4
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+None (not a device ID, quirk table add, DT, build, or docs fix).
+Qualifies as a normal crash-prevention bugfix.
+
+**Step 9.4: MAKE YOUR DECISION**
+The hardware audience is tiny and there is no field report, but the
+defect is a real oops on a reachable init/capture path, the patch is two
+NULL tests with essentially no regression surface, and it does not need
+the rejected sibling. For this tree, that meets stable rules. Borderline
+impact is resolved in favor of including a crash fix.
+
+---
+
+## What the commit solves and why it matters here
+
+`cxt_fixup_olpc_xo()` stores `snd_hda_add_new_path(codec, 0x1e, 0x14,
+0)` in `spec->dc_mode_path` and never checks it.
+`olpc_xo_update_mic_pins()` later passes that pointer into
+`snd_hda_activate_path()`, which writes `path->active` immediately. That
+runs on codec init, jack autoswitch, and capture — even with DC mode
+off. If the path is missing (ENOMEM or `model=olpc-xo` on a codec
+without 0x1e→0x14), the result is an oops, not a clean skip.
+
+Stable users of this 7.3 line who have that quirk get a 4-line guard
+already used for the other path in the same function. Risk is
+negligible; the only real caveat is limited hardware, which is not a
+reason to leave a verified NULL deref unfixed.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed `8cfe7ad274bb4`: Link + two SOBs (Yuho Choi, Greg
-  KH); committer Danilo Krummrich; no Fixes/Reported-by/Cc:stable
-- **[Phase 2]** Diff: `attribute_container_add_class_device()` +6/−1;
-  `device_del` on attr error only
-- **[Phase 2]** Read `transport_add_class_device()`: helper error →
-  `err_remove`, not `err_del` / `attribute_container_class_device_del`
-- **[Phase 2]** Read `sas_host_remove` / `fc_host_remove` /
-  `iscsi_remove_host` / `raid_remove`: no `device_del(classdev)`
-- **[Phase 3]** `git blame`: hole from `1da177e4c3f41` (2005) /
-  `ee959b00c335d7` (2008)
-- **[Phase 3]** `git show 8cfe7ad274bb4^`: pre-image is `return
-  attribute_container_add_attrs(classdev);`
-- **[Phase 3]** Related: `e5da06b27ff5a` (2023 transport remove-on-add-
-  fail), already in this tree
-- **[Phase 3]** `git merge-base --is-ancestor 8cfe7ad274bb4 HEAD` → yes
-- **[Phase 4]** `b4 dig -c/-a/-w/-m`: v1 only; maintainers CC’d; mbox
-  has patch only, no replies
-- **[Phase 4]** WebFetch lore: 403; stable search: no matching thread
-- **[Phase 5]** Callers: `transport_class.c` + unused-looking NULL-fn
-  path with no in-tree NULL caller
-- **[Phase 5]** `transport_add_device` used from SCSI transports +
-  `libata-transport.c` + `scsi_sysfs.c`
-- **[Phase 5]** Confirmed `ata_tport_add` / `sas_phy_add` `device_del()`
-  the parent on `transport_add_device()` error
-- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
-  `make kernelversion` = 7.3.0-rc4
-- **[Phase 6]** `drivers/base/Makefile`: `attribute_container.o` always
-  built
-- **[Phase 8]** Failure mode: leftover registered classdev / parent-
-  child unwind bug, severity HIGH not panic
-- **UNVERIFIED:** in-field hit rate of `add_attrs()` failure; any
-  private review beyond the empty lore thread
+- [Phase 1] Parsed tags: author SOB, maintainer SOB, msgid Link
+  `...548050-2`; no Fixes/Reported-by/Cc stable
+- [Phase 2] Diff: two `if (spec->dc_mode_path)` wrappers in
+  `olpc_xo_update_mic_pins()`; +4/-2
+- [Phase 2] Read `snd_hda_activate_path()`: first use is `path->active =
+  enable` with no NULL check
+- [Phase 2] Read `snd_hda_add_new_path()`: documented NULL; also NULL on
+  unreachable path, `snd_array_new` failure, parse failure
+- [Phase 3] `git blame`: introducer `3a00c6605b7709` (2014); `git
+  describe --contains` → v3.15-rc1
+- [Phase 3] `git merge-base --is-ancestor 3a00c6605b7709 HEAD`: yes
+- [Phase 3] `git show 273806f38ce95^:sound/hda/codecs/conexant.c`:
+  confirmed unguarded calls before the fix
+- [Phase 3] No `Fixes:` tag to follow
+- [Phase 3] Author log on `sound/`: regular ALSA contributor; 2/2 series
+- [Phase 4] `b4 dig -c 273806f38ce95`:
+  https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: tiwai, broonie, linux-sound, linux-kernel
+- [Phase 4] `b4 dig -m`: Takashi applied 2/2; NAK’d 1/2 EAPD overflow as
+  incorrect
+- [Phase 4] WebFetch lore.kernel.org: 403 — discussion taken from mbox
+  instead
+- [Phase 5] Callers of `olpc_xo_update_mic_pins`: automic, capture hook,
+  two mixer puts
+- [Phase 5] `update_automute_all()` → `call_mic_autoswitch()` from gen
+  init (generic.c:6029)
+- [Phase 5] Quirk: `SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5",
+  CXT_FIXUP_OLPC_XO)`; model `olpc-xo`
+- [Phase 6] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
+  7.3.0-rc4
+- [Phase 6] File present at `sound/hda/codecs/conexant.c`; pre-fix code
+  in parent of 273806f38ce95
+- [Phase 6] `git merge-base --is-ancestor 273806f38ce95 HEAD`: original
+  commit is in this history
+- [Phase 8] Failure mode: NULL deref oops; severity HIGH if hit,
+  population OLPC XO-1.5 / model override
+- UNVERIFIED: lore.kernel.org/stable HTTP search (403)
+- UNVERIFIED: whether 0x1e→0x14 is reachable on every CX codec if
+  someone forces `model=olpc-xo` (not required for the decision; ENOMEM
+  and missing-path cases are already documented in
+  `snd_hda_add_new_path()`)
+
+The fix is small, surgical, and meets the stable criteria for this tree.
 
 **YES**
 
- drivers/base/attribute_container.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/hda/codecs/conexant.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/attribute_container.c b/drivers/base/attribute_container.c
-index b6f941a6ab693..b1d6eb6ab46b5 100644
---- a/drivers/base/attribute_container.c
-+++ b/drivers/base/attribute_container.c
-@@ -427,7 +427,12 @@ attribute_container_add_class_device(struct device *classdev)
+diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
+index fe7445fabb887..56d6fbdd9b06d 100644
+--- a/sound/hda/codecs/conexant.c
++++ b/sound/hda/codecs/conexant.c
+@@ -457,7 +457,8 @@ static void olpc_xo_update_mic_pins(struct hda_codec *codec)
+ 	if (!spec->dc_enable) {
+ 		/* disable DC bias path and pin for port F */
+ 		update_mic_pin(codec, 0x1e, 0);
+-		snd_hda_activate_path(codec, spec->dc_mode_path, false, false);
++		if (spec->dc_mode_path)
++			snd_hda_activate_path(codec, spec->dc_mode_path, false, false);
  
- 	if (error)
- 		return error;
--	return attribute_container_add_attrs(classdev);
-+
-+	error = attribute_container_add_attrs(classdev);
-+	if (error)
-+		device_del(classdev);
-+
-+	return error;
+ 		/* update port B (ext mic) and C (int mic) */
+ 		/* OLPC defers mic widget control until when capture is
+@@ -493,7 +494,8 @@ static void olpc_xo_update_mic_pins(struct hda_codec *codec)
+ 		update_mic_pin(codec, 0x1b, 0);
+ 		/* enable DC bias path and pin */
+ 		update_mic_pin(codec, 0x1e, spec->recording ? PIN_IN : 0);
+-		snd_hda_activate_path(codec, spec->dc_mode_path, true, false);
++		if (spec->dc_mode_path)
++			snd_hda_activate_path(codec, spec->dc_mode_path, true, false);
+ 	}
  }
  
- /**
 -- 
 2.53.0
 
