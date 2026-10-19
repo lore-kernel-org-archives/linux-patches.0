@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD5E50CBBD;
-	Mon, 19 Oct 2026 13:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC9E54408D;
+	Mon, 19 Oct 2026 13:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418185; cv=none; b=Jt+VCYIPj/ObTvHDWsP2t9ioVTS0UhXjb9MxBU1+zIyyO4zEVU5VG326PA74BmDEdRU7F8G51nXnEPOHUahr1DOJlQLTRpodIC9+MG8rMBFGd9JC5Ag1pYGc2xubvPjW9zC8Bzd9dQOLtNyJPyAOlZk+ZtdYzCIAyQUU00R3b/Y=
+	t=1792418186; cv=none; b=YWH1kcn/i8JVAT7+qAgsd9cX5PKx0PdRRyZSWA2HnmHscslk7Sa165tbvwzWH/Y2PKNFP7UlrqWYLGPtBLN0FdVDOprs9wWXhz9apQ/sBAudNT4Gii35Dy1tPzg1Fs0tGGhObDCvpcGhzphrLz1Hyrj+ofq3Xn6LQfcPb6U7lbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418185; c=relaxed/simple;
-	bh=oRSgi9m6tNVev+RV35gtRhQDlaLVGxMlbKfvGN9Gn2E=;
+	s=arc-20240116; t=1792418186; c=relaxed/simple;
+	bh=WPytO5mj3Kz6s0pbUcHQ9xPaUjyuzpcKV6wnMQPYkMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D89ACGoWyKS6XNsZUHgBsd6cnOUXLFot36C4b3N+M360+7+b6fLuBvaHdhW7IZNnObModDt3hf8SR+6oQUMwbbiROEMbT51xt1oB4LC4l8zAZPukS9694LqDL7S50yxhwOof+RP2NSKVsk54F270fIRSw95hHv6kzOXVBPoIoRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GJCvPCYV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fGAehLpwFRFBgtR4O91py6VHww2RPzcBAQ/PT46pCxEXXmsAg797rD4tcdYOfDZvARq8f8J7QrP+yNxuvF7undbmfYybSwEQEzHZjNLdhSUoNroQCaaWP4xvRGmnawEdxPD6L5Kdsrl0SD49dor2yoKYH5Bjv1qkcS4tM88fyi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPpfUFPm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GJCvPCYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141EF1F000C9;
-	Mon, 19 Oct 2026 13:56:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPpfUFPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDF81F000C5;
+	Mon, 19 Oct 2026 13:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418183;
-	bh=AFyxxzpR/USn3B7USGX27xITd1JY7TPKw3RoZo3vEug=;
+	s=k20260515; t=1792418184;
+	bh=dc6SFE22Qvk6YfiBY+bv4S7Ucp5hbJOxKN83Amem+GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJCvPCYV9mP8qRS1uAwB0NB5Z5VLEjbyOhid1CGqDf8RWOgyOW4Dd/IGaw3hoJgqT
-	 zYjMmWuhgIA6kXIRncph2WV7iVIIyQczQA4mlTtfkHL8rHTT0X9Mv0bXZm7QGuSgwN
-	 yvpKRBXA4iL41/wXXSVxEWPIABAPKTb2n0VAuBuuJGgJ28oiqWzRNBd4N2RqAOZB6w
-	 lfwTBzvSKArUguTpCjzWtXAccq4izJ2DtjnITzwcSfQvJYehDi+59p0IaLDEJFV2e2
-	 nki9ZHZHU6IQS+L1lPoumQBOI/jvanT3iL5Rt0sRm9M9EmiQZYxk4XVoOpqUpJb6gD
-	 0DL7D+LvFM8yw==
+	b=hPpfUFPmgyhblvtLfSkQp1tBmtTfoVRGXKT9hZb30Ib1XmHmYLBcS/kIdVlkKtd2R
+	 UIi6oJ6SlTv+gnDfc2S+AF4X/fZwh2PP5NQNMzKBUTTPqEbXQ5XoKg8LJm3lrIiM8M
+	 FwHW39mxXneBpkctnLPdvsLXrsa/GDT9Bbor6CYYmeO7EkLrBgCDboQKOFa1Bg1L6d
+	 NVPHUCsrui7Eoz/1iiS9yIJEKOerBoJ3/jYUaO3Mj3DV0aNNQJA55xBDlU+2Suupxw
+	 Wk0hoWqEutW3mIQMvp+WqYBfsZ3vFz2+XdYhXulJhhJ2Z8kzMjEv384hK5hQCsDFF7
+	 vC1Tc/LIwXz5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Tomer Maimon <tmaimon77@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	robin.clark@oss.qualcomm.com,
-	joro@8bytes.org,
-	iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	andrew@codeconstruct.com.au,
+	avifishman70@gmail.com,
+	tali.perry1@gmail.com,
+	openbmc@lists.ozlabs.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] iommu/qcom: Publish pgtbl_ops before releasing init_mutex
-Date: Mon, 19 Oct 2026 09:46:02 -0400
-Message-ID: <20261019135441.1420968-71-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] pinctrl: npcm8xx: move GPIO IRQ setup into request_resources
+Date: Mon, 19 Oct 2026 09:46:03 -0400
+Message-ID: <20261019135441.1420968-72-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,435 +56,416 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Tomer Maimon <tmaimon77@gmail.com>
 
-[ Upstream commit a05b67cd45ad09a19f41b2d37255da714512e0ca ]
+[ Upstream commit b8edfde12e355030e708394c0fa11632559c7ac5 ]
 
-qcom_domain->pgtbl_ops was assigned after mutex_unlock(). Another thread
-calling qcom_iommu_init_domain() would see qcom_domain->iommu already set
-(domain fully initialized) and skip re-initialization under the mutex.
-If it then called qcom_iommu_map() before the first thread set pgtbl_ops,
-it would observe a NULL ops pointer and return -ENODEV for valid mappings.
+npcmgpio_irq_startup() calls pinctrl_gpio_direction_input(), which may
+sleep while taking the pinctrl core mutex. That makes IRQ startup trip
+lockdep when CONFIG_PROVE_LOCKING is enabled.
 
-Move the assignment to before mutex_unlock() so that once the mutex is
-released the domain is fully visible to concurrent operations.
+Move the direction change into irq_request_resources() and keep startup
+limited to the ack and unmask operations that are safe in atomic
+context.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **7.3-rc4** (mainline). The driver is present, the
-race is real, and the fix is a five-line lock-ordering correction. Below
-is the full nine-phase review.
+The local tree is **v7.3-rc4** (`7.3.0-rc4`). The NPCM8XX pinctrl driver
+is present, and this change is a real sleep-in-atomic IRQ fix, not a
+feature add.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Step 1.1: PARSE THE SUBJECT LINE
+Record: **[pinctrl/npcm8xx] [move] move GPIO IRQ setup into
+request_resources**
+Subsystem `pinctrl: npcm8xx`. Verb is “move”, but the body is a
+correctness fix: take a may-sleep call out of `irq_startup`.
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[iommu/qcom] [Publish] Publish pgtbl_ops before releasing
-init_mutex`
-Subsystem: Qualcomm IOMMU (`drivers/iommu/arm/arm-smmu/qcom_iommu.c`).
-Verb “Publish … before” is a visibility/ordering fix (equivalent to
-“ensure” / “prevent”).
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>`
-- `Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>` (author)
-- `Signed-off-by: Will Deacon <will@kernel.org>` (IOMMU/SMMU maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable`
-  (absence expected; not a negative)
+- Signed-off-by: Tomer Maimon `<tmaimon77@gmail.com>` (author; NPCM
+  maintainer)
+- Signed-off-by: Linus Walleij `<linusw@kernel.org>` (pinctrl
+  maintainer)
+- No Fixes, Reported-by, Tested-by, Reviewed-by, Acked-by, Link, or Cc:
+  stable
+Absence of Fixes/Cc: stable is expected for this review and is not a
+negative signal.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `qcom_domain->pgtbl_ops` was stored after
-  `mutex_unlock(&init_mutex)`.
-- **Symptom:** A concurrent `qcom_iommu_init_domain()` sees
-  `qcom_domain->iommu` already set, skips init, then `qcom_iommu_map()`
-  reads a NULL ops pointer and returns `-ENODEV` for valid mappings.
-- **Root cause:** The “domain initialized” flag (`iommu`) is published
-  under the mutex; page-table ops are published after the mutex is
-  dropped, so the domain is only half-visible.
-- **Version info:** None in the message. Blame shows the unlock-then-
-  assign pattern dates to the original driver (2017).
+- Bug: `npcmgpio_irq_startup()` calls `pinctrl_gpio_direction_input()`,
+  which takes the pinctrl mutex and may sleep.
+- Symptom: lockdep splat with `CONFIG_PROVE_LOCKING` on IRQ startup.
+- Root cause: IRQ startup runs in atomic context; mutex_lock there is
+  illegal.
+- Fix: do the direction change in `irq_request_resources()`; leave
+  startup as ack+unmask only.
+- No version range, stack trace, or reproducer in the message.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. Explicit race with a concrete failure (`-ENODEV`
-on map). Not cleanup/refactor.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a hidden fix. It is an explicit locking/context bug. Cover
+letter of the v1 series called the set a “cleanup” from a Nuvoton tree
+comparison, but this patch itself describes a real sleep-in-atomic
+problem.
 
----
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `drivers/iommu/arm/arm-smmu/qcom_iommu.c` — 2 insertions, 3
-  deletions
-- Function: `qcom_iommu_init_domain()`
-- Scope: single-file surgical reorder of three statements
+- File: `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` (+23 / -6, 29 lines)
+- Functions: `npcmgpio_irq_startup` (changed),
+  `npcmgpio_irq_request_resources` (added),
+  `npcmgpio_irq_release_resources` (added), `npcmgpio_irqchip` (changed)
+- Scope: single-file surgical irqchip callback change
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-**Before:** program context banks → `mutex_unlock(init_mutex)` →
-`pgtbl_ops = …` → `return 0`.
-**After:** program context banks → `pgtbl_ops = …` →
-`mutex_unlock(init_mutex)` → `return 0`.
-Error paths (`out_clear_iommu` / `out_unlock`) are unchanged. This is
-the success-path publication of domain state.
+- Before: `irq_startup` called `npcmgpio_direction_input()` then
+  ack/unmask. Resource helpers came from `GPIOCHIP_IRQ_RESOURCE_HELPERS`
+  (`gpiochip_irq_reqres` / `gpiochip_irq_relres`).
+- After: `irq_startup` only ack+unmask. New `irq_request_resources` does
+  `npcmgpio_direction_input()` then `gpiochip_reqres_irq()`. New
+  `irq_release_resources` calls `gpiochip_relres_irq()`. Macro helpers
+  removed because custom callbacks replace them.
+- Path: GPIO `request_irq()` setup, not a probe-only path.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **[Synchronization / race]**.
-`qcom_domain->iommu` is set near the start of init (under the mutex) and
-is the “already initialized” flag:
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: **Synchronization / illegal sleep in atomic context**
+`irq_startup()` is invoked from `__setup_irq()` while `desc->lock` is
+held via `raw_spin_lock_irqsave()` (`kernel/irq/manage.c`: lock at 1589,
+`irq_startup()` at 1766, unlock at 1807).
+`pinctrl_gpio_direction_input()` takes `pinctrldev_list_mutex` and
+`pctldev->mutex` (`drivers/pinctrl/core.c`). Mutex in that context is
+sleep-in-atomic. `irq_request_resources()` runs before that spinlock and
+is allowed to sleep.
 
-```227:229:drivers/iommu/arm/arm-smmu/qcom_iommu.c
-        mutex_lock(&qcom_domain->init_mutex);
-        if (qcom_domain->iommu)
-                goto out_unlock;
-```
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Quality is high. Same pattern as `pinctrl-ingenic.c` and
+`pinctrl-st.c`. Resource get/put is preserved. Direction-input errors
+are now returned instead of ignored. Regression risk is low: startup no
+longer re-applies input on later startups, which matches other drivers;
+first `request_irq()` still sets input before unmask. No API or data-
+structure change.
 
-`qcom_iommu_map()` does not take `init_mutex`; it only checks
-`pgtbl_ops`:
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-```436:439:drivers/iommu/arm/arm-smmu/qcom_iommu.c
-        struct io_pgtable_ops *ops = qcom_domain->pgtbl_ops;
+Step 3.1: BLAME THE CHANGED LINES
+Record: Buggy `npcmgpio_irq_startup()` / `GPIOCHIP_IRQ_RESOURCE_HELPERS`
+came from `acf4884a571709` (“pinctrl: nuvoton: add NPCM8XX pinctrl and
+GPIO driver”, 2023-08-28), first in **v6.7-rc1**. The bug is as old as
+the driver.
 
-        if (!ops)
-                return -ENODEV;
-```
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Introducer is the original driver commit above.
+`git merge-base --is-ancestor acf4884a571709 HEAD` is true in this tree.
 
-Unlocking before the store lets another attach skip init and then map
-with a NULL ops pointer. The fix publishes ops while still holding the
-mutex so that once waiters proceed, the domain is fully usable.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Submitted as **[PATCH v1 6/8]** “pinctrl: npcm8xx: fix pinmuxing
+and configuration handling”. Siblings (bmcuart1 pins, RMII, RG2 drive
+strength, event clear, rename, JM1/SMB7 flags, debounce) do not change
+the irqchip callbacks this patch needs. Standalone. No follow-up on
+these IRQ helpers after this commit.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct publish-under-lock. Minimal. No new locks,
-APIs, or control flow besides statement order. Regression risk is very
-low: the assignment is a plain pointer store of a fully constructed
-object; holding the mutex a few extra instructions does not create
-deadlock (map/unmap use `pgtbl_lock`, not `init_mutex`).
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Tomer Maimon is listed under ARM/NUVOTON NPCM ARCHITECTURE in
+MAINTAINERS. Recent npcm8xx work is this same 8-patch set plus earlier
+pin-table updates. Maintainer-authored.
 
----
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Needs existing `gpiochip_reqres_irq` / `gpiochip_relres_irq` and
+`GPIOCHIP_IRQ_RESOURCE_HELPERS`, both present here. No series
+prerequisite for this hunk. Can apply standalone to this driver.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: Unlock-then-assign was introduced in `0ae349a0f33fb`
-(“iommu/qcom: Add qcom_iommu”, Rob Clark, 2017-08-09), first in
-**v4.14-rc1**. The bug is ~9 years old in this driver, not a recent
-regression.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record: `b4 dig -c b8edfde12e355` →
+https://patch.msgid.link/20260715122923.1938327-7-tmaimon77@gmail.com
+Only **v1**. Lore HTTP fetch returned 403; full thread was saved with
+`b4 dig -m`. Linus Walleij (24 Jul 2026): “No comments so patches
+applied.” No NAK, no stable nomination, no requested respin.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Buggy code is the original 2017 driver, which
-is an ancestor of this tree.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: `b4 dig -w` To/Cc: Tomer Maimon, Andrew Jeffery, Linus Walleij,
+Bartosz Golaszewski, openbmc, linux-gpio, linux-kernel, Avi Fishman,
+Tali Perry, Patrick Venture, Nancy Yuen, Benjamin Fair. Right lists and
+maintainers. Only explicit reply is Walleij applying the series.
 
-**Step 3.3: CHECK FILE HISTORY**
-Record: Same-day series from Mukesh Ojha (applied 2026-07-22 by Will
-Deacon):
-- `3c748a5554f96` — leak of `pgtbl_ops` on error (patch 4/6)
-- `a05b67cd45ad0` — this commit (patch 5/6)
-- `cb776a03a5342` — clocks before ctx probe (patch 6/6)
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No Reported-by, syzbot, or bugzilla. Issue was found by
+comparing upstream with Nuvoton’s tree. Symptom claimed is lockdep with
+`CONFIG_PROVE_LOCKING`. No public user crash report found.
 
-This patch only reorders unlock vs assignment. It does **not** depend on
-the leak fix.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: 8-patch pinmux/config series. This IRQ move does not depend on
+the others. npcm7xx still calls `npcmgpio_direction_input()` from
+`irq_startup()` — same class of bug, different driver, not a dependency.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Mukesh Ojha (Qualcomm) submitted a “Misc Fixes” series for the
-legacy qcom_iommu driver. Not the IOMMU subsystem maintainer; Will
-Deacon applied it. Konrad Dybcio (Qualcomm) reviewed.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search via curl returned 403. UNVERIFIED
+whether stable@ already discussed this. No evidence in the gpio thread
+of a stable NAK.
 
-**Step 3.5: DEPENDENT/PREREQUISITE COMMITS**
-Record: Standalone. v2 series is 6 patches; this one has no code
-dependency on the others. Can apply alone.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
----
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `npcmgpio_irq_startup`, `npcmgpio_irq_request_resources`,
+`npcmgpio_irq_release_resources`, plus `npcmgpio_irqchip` initializer.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 5.2: TRACE CALLERS
 Record:
-- Lore (from `b4 dig -c a05b67cd45ad0`): https://patch.msgid.link/202607
-  17144608.3216274-6-mukesh.ojha@oss.qualcomm.com
-- **v1:** `[PATCH 5/8]` 2026-06-23 — https://patch.msgid.link/2026062312
-  2034.1166295-6-mukesh.ojha@oss.qualcomm.com
-- **v2:** `[PATCH v2 5/6]` 2026-07-17 (applied version; same diff as v1
-  for this patch)
-- Konrad on v1: `Reviewed-by` plus a non-blocking note that a
-  `guard(mutex)` wrapper would also work. No NAK.
-- Will Deacon applied the whole v2 series to `iommu (arm/smmu/updates)`
-  on 2026-07-22. No stable nomination, no risk flags.
+- irqchip ops invoked from IRQ core: `irq_request_resources()` /
+  `irq_release_resources()` / `irq_startup()` in `kernel/irq/manage.c`
+  and `kernel/irq/chip.c`
+- Chip registered in `npcm8xx_gpio_register()` via `girq->chip`
+- Reachable from `request_irq()` / `gpiod_to_irq()` users on NPCM8XX
+  GPIO banks
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): Mukesh Ojha, Rob Clark, Will Deacon, Joerg Roedel,
-Alex Williamson, Robin Murphy, Konrad Dybcio; lists
-`iommu@lists.linux.dev`, `linux-arm-msm`, `linux-arm-kernel`.
-Appropriate maintainers were on Cc. Konrad reviewed; Will applied.
+Step 5.3: TRACE CALLEES
+Record: `npcmgpio_direction_input` → `pinctrl_gpio_direction_input`
+(mutex) + generic `bank->direction_input`; `npcmgpio_irq_ack` / `unmask`
+(MMIO); `gpiochip_reqres_irq` / `gpiochip_relres_irq`.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No `Reported-by`, syzbot, or bugzilla. Author analysis only.
-UNVERIFIED whether anyone hit this in the field.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: userspace or driver `request_irq` on a GPIO line → `__setup_irq`
+→ `irq_request_resources` (sleep OK) →
+`raw_spin_lock_irqsave(&desc->lock)` → `irq_startup` (atomic). Path is
+reachable whenever GPIO IRQs are used (BMC buttons, hotplug, etc.). Not
+an obscure config-only path if `PINCTRL_NPCM8XX` is enabled (`depends on
+ARCH_NPCM || COMPILE_TEST`).
 
-**Step 4.4: RELATED PATCHES AND SERIES**
-Record: Part of “iommu/qcom: Misc Fixes”. Other patches (fault-log
-polarity, pm_runtime, leak, clocks) are independent. v1 patches 6/8 and
-8/8 were dropped after review; this patch was unchanged.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same “direction_input in irq_request_resources” pattern in
+ingenic and ST pinctrl. Sibling `pinctrl-npcm7xx.c` still has the old
+startup-time `direction_input` call.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search for `pgtbl_ops qcom` did not show
-this patch. Hits were unrelated (`arm-smmu-qcom` power-up). No evidence
-it was rejected for stable.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
----
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Driver is `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c`.
+Introduced v6.7 (`acf4884a571709`). `git merge-base --is-ancestor
+acf4884a571709 HEAD` succeeded. Pre-fix startup still present at parent
+`b8edfde12e355^`. Local kernel: **v7.3-rc4** (`7.3.0-rc4`).
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Expected apply: **clean**. Hunks are local to the irqchip struct
+and two small callbacks. `GPIOCHIP_IRQ_RESOURCE_HELPERS` and
+`gpiochip_reqres_irq()` exist here. Reverse-apply of the committed diff
+checked cleanly against current file.
 
-**Step 5.1: KEY FUNCTIONS**
-Record: `qcom_iommu_init_domain()` (modified). Related:
-`qcom_iommu_attach_dev()`, `qcom_iommu_map()`, `qcom_iommu_unmap()`,
-`qcom_iommu_iova_to_phys()`.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No earlier alternate fix for this irq_startup sleep. Current
+HEAD already contains `b8edfde12e355` because this checkout is mainline
+after the pinctrl-v7.3 pull; that is the upstream commit under review,
+not a prior independent fix. No later corrective commit.
 
-**Step 5.2: TRACE CALLERS**
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: **pinctrl / GPIO irqchip for Nuvoton NPCM8XX (Arbel BMC)**.
+Criticality: **PERIPHERAL** for general kernels, **IMPORTANT** for
+OpenBMC/NPCM845 systems. Not mm/fs/net core.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: File is actively updated (pin tables, debounce, RMII, this IRQ
+fix). Driver is mature since v6.7, not brand-new staging code.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: **driver-specific / platform-specific**: NPCM8XX
+(`CONFIG_PINCTRL_NPCM8XX`), typically OpenBMC on NPCM845. Not universal.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Trigger is GPIO IRQ request (`request_irq` / irqchip startup).
+Common for BMC GPIO IRQs. Unprivileged userspace can hit it if a GPIO
+irq is exported; typical path is kernel drivers during bring-up. Not a
+rare race: with lockdep it fires on every such startup. Mutex contention
+can turn it into a real sleep-under-spinlock.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Failure mode: mutex_lock while `desc->lock` is held and IRQs are
+off.
+- With `CONFIG_PROVE_LOCKING` / `DEBUG_ATOMIC_SLEEP`: lockdep/WARN
+  (always)
+- If `pctldev->mutex` is contended: **scheduling while atomic** → BUG
+Severity: **HIGH** (illegal atomic sleep; crash if contended), not a
+silent data-corruption bug.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- `qcom_iommu_init_domain()` is only called from
-  `qcom_iommu_attach_dev()`.
-- `attach_dev` is the IOMMU `.attach_dev` op
-  (`qcom_iommu_ops.default_domain_ops`).
-- Core path: `__iommu_attach_device()` → `domain->ops->attach_dev()`.
-- This driver `select ARM_DMA_USE_IOMMU`. `arm_iommu_attach_device()`
-  documents that more than one client may share a mapping, and calls
-  `iommu_attach_device()`. Parallel probe of two devices sharing a
-  mapping is a realistic concurrent `init_domain` on the same
-  `qcom_domain`. Group mutex serializes attach **within** a group;
-  `generic_device_group` means one device per group, so two devices are
-  two groups and are **not** serialized against each other.
+- Benefit: medium-high for NPCM8XX/OpenBMC (correct IRQ request, no
+  lockdep/sleep-in-atomic); zero for other platforms
+- Risk: **low** (~20 net lines, irqchip callbacks only, established
+  pattern)
+- Ratio: favorable
 
-**Step 5.3: TRACE CALLEES**
-Record: `alloc_io_pgtable_ops()`, `qcom_scm_restore_sec_cfg()`, context-
-bank MMIO, `mutex_lock/unlock`. SCM and register programming make the
-critical section long; waiters pile up on `init_mutex` and then race the
-post-unlock store.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable from device probe / DMA attach on Qualcomm “B family”
-SMMU platforms (MSM8916/8937/8939/8953/8976, etc.). Not a syscall fuzzer
-path; it is a normal boot/probe path. Userspace-triggered concurrent
-attach is also possible via the ARM DMA mapping API / VFIO-style attach
-of separate groups to one domain.
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Real sleep-in-atomic: `pinctrl_gpio_direction_input()` takes mutexes;
+  `irq_startup()` runs under `raw_spin_lock_irqsave(&desc->lock)`
+- Deterministic on GPIO IRQ request with lockdep
+- Can BUG if the pinctrl mutex is contended
+- Small, obviously correct, matches ingenic/ST
+- Keeps `gpiochip_reqres_irq` / `gpiochip_relres_irq`
+- Driver exists in this tree since v6.7
+- Author is NPCM maintainer; applied by Linus Walleij
+- Standalone vs the rest of the 8-patch series
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: `init_mutex` comment is “Protects iommu pointer” — the original
-code treated `iommu` as the publication point and left `pgtbl_ops`
-outside the lock. No sibling qcom function has the same bug.
-`map`/`unmap`/`iova_to_phys` all NULL-check `pgtbl_ops` and return
-`-ENODEV`/0 rather than crashing — so the race fails mappings instead of
-oopsing.
+AGAINST:
+- No user crash report / syzbot / Fixes tag
+- Author framed the user-visible issue as lockdep, not production oops
+- NPCM8XX-only
+- Cover letter called the series a vendor-tree cleanup
+- npcm7xx still has the same pattern (does not make this patch wrong)
 
-semcode MCP: not available; used git grep and reads.
+UNRESOLVED:
+- lore.kernel.org HTTP 403; stable@ discussion not independently fetched
+  (thread itself was retrieved via b4)
 
----
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — context split is the
+   documented irqchip model; applied by pinctrl maintainer. No extra
+   Tested-by.
+2. Fixes a real bug that affects users? **PASS** — illegal mutex in IRQ
+   startup on GPIO `request_irq`.
+3. Important issue? **PASS** — sleep-in-atomic / lockdep; possible BUG
+   if mutex contended. Not a new feature.
+4. Small and contained? **PASS** — one file, ~29 lines.
+5. No new features or APIs? **PASS** — only irqchip callback placement.
+6. Can apply to the local tree? **PASS** — driver and helpers exist;
+   hunks match.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: None (not a device ID, quirk, DT, build, or docs-only change).
+Qualifies as a normal bugfix.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Tree: `v7.3-rc4-27-gf0100363d8c37`, `make kernelversion` =
-  **7.3.0-rc4**.
-- File exists at `drivers/iommu/arm/arm-smmu/qcom_iommu.c`.
-- `git merge-base --is-ancestor a05b67cd45ad0 HEAD` succeeds: this
-  commit is already in this checkout (landed as
-  `v7.2-rc2-7-ga05b67cd45ad0`).
-- Pre-fix code existed here from v4.14 until that commit. The race is in
-  this driver’s design, not in code added after this tree branched.
+Step 9.4: MAKE YOUR DECISION
+This tree has the NPCM8XX driver and the buggy startup path. The patch
+is a small, correct move of a may-sleep call to
+`irq_request_resources()`, which is the sleepable side of
+`request_irq()`. That meets stable rules for this checkout.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Five-line reorder around a pattern present since 2017. File
-moved in `e86d1aa8b60f7` (v5.8) from `drivers/iommu/qcom_iommu.c`; this
-tree already uses the new path. Expected apply: **clean**. No
-conflicting churn around the unlock.
-
-**Step 6.3: RELATED FIXES ALREADY HERE**
-Record: The leak fix `3c748a5554f96` is also here and is independent. No
-alternate fix for this race.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-Record: `[iommu / Qualcomm legacy SMMU] [IMPORTANT]`
-Not mm/core, but IOMMU DMA for a family of Qualcomm SoCs still in DT
-(phones, Dragonboard-class boards, embedded). Mapping failures break DMA
-for those devices.
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-Record: Legacy driver (“Misc Fixes” cover letter). Recent Qualcomm
-fixes; not a new subsystem. Mature code, long-present bug.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-Record: **driver-specific / config-specific** — `CONFIG_QCOM_IOMMU` on
-`ARCH_QCOM` (MSM8916, MSM8937, MSM8939, MSM8953, MSM8976, …). Not
-universal.
-
-**Step 8.2: TRIGGER CONDITIONS**
-Record: Two threads attaching the same `qcom_iommu_domain` (shared ARM
-DMA mapping, or two groups attached to one domain). After the first
-drops `init_mutex` and before it stores `pgtbl_ops`, the second skips
-init and maps. Window is a few instructions, but **preemption after
-unlock** makes it realistic; SCM-held init also means waiters are ready
-to run immediately. Not triggerable by an unprivileged syscall alone in
-the usual case; it is a probe/attach race. No field `Reported-by`
-(UNVERIFIED in production).
-
-**Step 8.3: FAILURE MODE SEVERITY**
-Record: **Failed IOMMU map (`-ENODEV`) for valid mappings** → DMA setup
-failure / device non-functional. Not a KASAN UAF or panic (`map` NULL-
-checks). **Severity: HIGH** (device DMA broken), not CRITICAL (no
-oops/corruption).
-
-**Step 8.4: RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** Prevents a real attach/map race on Qualcomm IOMMU;
-  devices keep working under concurrent attach.
-- **Risk:** Very low (3-statement reorder, no API/locking change).
-- **Ratio:** Favorable.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-- Real race: initialized flag published under lock, ops pointer
-  published after unlock.
-- User-visible failure: valid maps return `-ENODEV` (DMA/device
-  failure).
-- Bug in the driver since v4.14; this tree’s driver still has that
-  design.
-- 5-line, obviously correct publish-under-lock.
-- Reviewed by Konrad Dybcio; applied by Will Deacon.
-- Self-contained; not a new feature.
-- Used on real Qualcomm SoCs that still ship on LTS-class kernels.
-
-**AGAINST:**
-- No `Reported-by` / syzbot / crash log.
-- Window is small; needs concurrent attach to the **same** domain.
-- Failure is `-ENODEV`, not oops/UAF/corruption.
-- Cover letter calls the series “Misc Fixes”; nobody Cc’d stable.
-- Peripheral vs core (legacy qcom_iommu, not arm-smmu-v3).
-
-**UNRESOLVED:**
-- No confirmed production hit.
-- lore.kernel.org HTML fetch returned 403; discussion recovered via `b4
-  dig`/`b4 mbox`.
-- How often qcom platforms share one `dma_iommu_mapping` across devices
-  is not fully quantified; the ARM DMA API and `init_mutex` exist
-  specifically for that case.
-
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — reorder is locally
-   checkable; Konrad R-b; Will applied; in mainline since v7.2-rc2.
-2. Fixes a real bug that affects users? **PASS** — concurrent attach can
-   fail valid DMA maps.
-3. Important issue? **PASS** — DMA map failure can take devices out; not
-   a panic, but not cosmetic.
-4. Small and contained? **PASS** — 5 lines, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — same file/function; already
-   the current code here.
-
-**Step 9.3: EXCEPTION CATEGORIES**
-Record: None (not a device-ID/quirk/DT/build/doc exception). It is a
-normal small race fix.
-
-**Step 9.4: DECISION**
-
-This tree is **7.3-rc4**. The Qualcomm IOMMU driver is here, and the
-race is in the original 2017 init/map split, not in later architecture.
-The patch is a correct, tiny publication-order fix: once `init_mutex` is
-dropped, `pgtbl_ops` must already be visible so a concurrent attach
-cannot skip init and then fail `qcom_iommu_map()`.
-
-It meets stable rules: real bug, user-visible DMA failure, surgical
-change, no new API, no prerequisites. Benefit outweighs the tiny race
-window and lack of a field report.
-
----
-
-## Verification
-- [Phase 1] Parsed tags: Reviewed-by Konrad Dybcio; SOB Mukesh Ojha +
-  Will Deacon; no Fixes/Reported-by/Cc-stable
-- [Phase 2] Diff: 2+/3- in `qcom_iommu_init_domain()`; move `pgtbl_ops`
-  store before `mutex_unlock`
-- [Phase 2] Confirmed `map()` NULL-checks ops and returns `-ENODEV`;
-  `init_domain` early-outs on `qcom_domain->iommu`
-- [Phase 3] `git blame`: unlock-then-assign from `0ae349a0f33fb`
-  (v4.14-rc1, Rob Clark)
-- [Phase 3] No Fixes tag; leak fix `3c748a5554f96` is independent
-- [Phase 3] `git merge-base --is-ancestor a05b67cd45ad0 HEAD` → yes
-  (already in this 7.3-rc4 checkout)
-- [Phase 3] `git describe a05b67cd45ad0` → `v7.2-rc2-7-ga05b67cd45ad0`
-- [Phase 4] `b4 dig -c a05b67cd45ad0`: v2 5/6 at
-  patch.msgid.link/20260717144608.3216274-6-…
-- [Phase 4] `b4 dig -a`: v1 5/8 (2026-06-23) → v2 5/6 (2026-07-17); this
-  hunk unchanged
-- [Phase 4] `b4 dig -w`: iommu maintainers + linux-arm-msm Cc’d
-- [Phase 4] Konrad v1 review: R-b; optional `guard(mutex)` suggestion
-  only; Will applied v2
-- [Phase 4] lore.kernel.org WebFetch 403; used b4 mbox instead
-- [Phase 4] stable@ search: this commit not discussed; unrelated arm-
-  smmu-qcom hits
-- [Phase 5] Callers: only `qcom_iommu_attach_dev` ← IOMMU `.attach_dev`
-  ← `__iommu_attach_device`
-- [Phase 5] `ARM_DMA_USE_IOMMU` / `arm_iommu_attach_device()` allows
-  shared mappings across devices
-- [Phase 5] semcode unavailable; used git grep + file reads
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 6] Current file already has assignment before unlock (this
-  commit)
-- [Phase 7] DT: msm8916/8937/8939/8953/8976 use `qcom,msm-iommu-v1/v2`
-- [Phase 8] Failure: `-ENODEV` on valid map, severity HIGH; not oops
-- UNVERIFIED: production reproduction; exact share-mapping frequency on
-  qcom boards
-
-The fix is small, surgical, and meets the stable criteria for this
-tree’s Qualcomm IOMMU driver.
+Verification:
+- [Phase 1] Tags: only Tomer Maimon and Linus Walleij SOBs; no
+  Fixes/Reported-by/stable Cc
+- [Phase 2] Diff: 23 insertions, 6 deletions in `pinctrl-npcm8xx.c`;
+  direction_input moved; GPIOCHIP_IRQ_RESOURCE_HELPERS replaced by
+  custom reqres/relres
+- [Phase 2] `pinctrl_gpio_direction()` locks `pctldev->mutex`;
+  `pinctrl_get_device_gpio_range()` locks `pinctrldev_list_mutex`
+- [Phase 2] `__setup_irq()`: `irq_request_resources()` before
+  `desc->lock`; `irq_startup()` while lock held (`manage.c` 1574–1766,
+  unlock 1807)
+- [Phase 3] Blame: bug from `acf4884a571709` (v6.7-rc1); `git merge-base
+  --is-ancestor` true for intro and for `b8edfde12e355`
+- [Phase 3] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4
+- [Phase 3] Series 1/8–8/8 identified; this patch does not depend on the
+  others
+- [Phase 4] `b4 dig -c b8edfde12e355`: lore msgid
+  20260715122923.1938327-7; v1 only
+- [Phase 4] `b4 dig -w`: Walleij, Golaszewski, Andrew Jeffery, openbmc,
+  linux-gpio
+- [Phase 4] mbox: Walleij “No comments so patches applied”; no
+  NAK/stable Cc
+- [Phase 4] UNVERIFIED: stable@ archive (HTTP 403)
+- [Phase 5] Same pattern in `ingenic_gpio_irq_request` and
+  `st_gpio_irq_request_resources`; npcm7xx still uses startup-time
+  direction_input
+- [Phase 6] File present; reverse `git apply --check` of the commit diff
+  succeeded
+- [Phase 8] Failure mode: lockdep always; scheduling-while-atomic if
+  mutex contended — HIGH for this SoC, not universal
+- UNVERIFIED: whether an unprivileged gpiochip ioctl is the common
+  trigger vs kernel drivers (both reach `request_irq`)
 
 **YES**
 
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 29 ++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 792585321bd11..1a046122fca0d 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -306,13 +306,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 		ctx->domain = domain;
- 	}
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+index 28464463ff833..0347a471f9226 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+@@ -295,17 +295,33 @@ static void npcmgpio_irq_unmask(struct irq_data *d)
  
--	mutex_unlock(&qcom_domain->init_mutex);
+ static unsigned int npcmgpio_irq_startup(struct irq_data *d)
+ {
+-	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+-	unsigned int gpio = irqd_to_hwirq(d);
 -
- 	/* Publish page table ops for map/unmap */
- 	qcom_domain->pgtbl_ops = pgtbl_ops;
+-	/* active-high, input, clear interrupt, enable interrupt */
+-	npcmgpio_direction_input(gc, gpio);
+ 	npcmgpio_irq_ack(d);
+ 	npcmgpio_irq_unmask(d);
  
--	return 0;
-+	mutex_unlock(&qcom_domain->init_mutex);
+ 	return 0;
+ }
  
-+	return 0;
- out_clear_iommu:
- 	qcom_domain->iommu = NULL;
- out_unlock:
++static int npcmgpio_irq_request_resources(struct irq_data *d)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	unsigned int gpio = irqd_to_hwirq(d);
++	int ret;
++
++	ret = npcmgpio_direction_input(gc, gpio);
++	if (ret)
++		return ret;
++
++	return gpiochip_reqres_irq(gc, gpio);
++}
++
++static void npcmgpio_irq_release_resources(struct irq_data *d)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	unsigned int gpio = irqd_to_hwirq(d);
++
++	gpiochip_relres_irq(gc, gpio);
++}
++
+ static struct irq_chip npcmgpio_irqchip = {
+ 	.name = "NPCM8XX-GPIO-IRQ",
+ 	.irq_ack = npcmgpio_irq_ack,
+@@ -313,8 +329,9 @@ static struct irq_chip npcmgpio_irqchip = {
+ 	.irq_mask = npcmgpio_irq_mask,
+ 	.irq_set_type = npcmgpio_set_irq_type,
+ 	.irq_startup = npcmgpio_irq_startup,
++	.irq_request_resources = npcmgpio_irq_request_resources,
++	.irq_release_resources = npcmgpio_irq_release_resources,
+ 	.flags =  IRQCHIP_MASK_ON_SUSPEND | IRQCHIP_IMMUTABLE,
+-	GPIOCHIP_IRQ_RESOURCE_HELPERS,
+ };
+ 
+ static const int gpi36_pins[] = { 36 };
 -- 
 2.53.0
 
