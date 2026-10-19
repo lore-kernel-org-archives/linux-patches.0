@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A8D6167AE;
-	Mon, 19 Oct 2026 14:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FFD6167C4;
+	Mon, 19 Oct 2026 14:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418649; cv=none; b=Eln4/3ubGi5v/WQ5o2KW1ZRQ5USQ+x7lrPGWB/yJXp0KaZ6WOGlyE7HBgWzrboEqFLXyQMfQwMFTtBrnwKb1Bqti9VKWO/LIzI47UewJVD5OSbfIsqmcRsqPhC86kVkjynQkCsCFAchh+tLA07cotnB2GhiD3WjAgPbYmpzTj3o=
+	t=1792418650; cv=none; b=LOTxQhMZFpUQQjj361iM6aW6QaT/NZy5ArtCpUU22mn2otJG7tB5zTIZ4+KPd+xSOnLFUhbmbNAzcOOVBSYgrIaXfNDUAvTFGTTkzoAxppBB5uw/s43fjNHVIpDbrtMmvxlv0FOPnkLd1i4K1XwDDxS5Qb5lhjiwkOFtsVkdEZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418649; c=relaxed/simple;
-	bh=h28QfuKQW0s/T3nHUNG4IwJWf6u0RYiVoNZv09vhwZc=;
+	s=arc-20240116; t=1792418650; c=relaxed/simple;
+	bh=d4KjLF+6Ky29BRDAE3GrCI48JQ++OwEMJQV3NzTurgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oqlaQy3R1JGaWM5RZkArDn4Pp2H5gJI+ywR6NmHHJ7tArc/omDSTKeZ0uuu68TiNE0tn2JPpW7PbYitBOnHoLxhEb6T/28UKrU6JfjDcaWCt3UFQSYdNlssG7rnH3T9PQt6/LEDm0MI6s5pttvnp8Gx2VXGw0Igd1aQ/l3p+gJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ag4e60XY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UluHfaDquCY0foHvPL8iA6SJLRqXnpPDONxWVcaRBgsiGXK00btKBDDlr7dwIOJDU981I55v6/duEOhrZWAOpsNpUYR9gg5Z/Nb4C9YnUpQYCnfH+H/EkwAPH9A77pLiuS2ZJVLq8SBpP1Cf98uyD/kmi9wTSlAveQPqECBYoVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RPbvqWED; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ag4e60XY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF94F1F000C5;
-	Mon, 19 Oct 2026 14:04:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RPbvqWED"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9711F000C6;
+	Mon, 19 Oct 2026 14:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418646;
-	bh=3OZNVVxxdQo5rbx1RXIX1Z+cH2R3fiOyYgS+oEmHadE=;
+	s=k20260515; t=1792418648;
+	bh=xtfpE39WRfrVjcfSIGjhuyowlpgu8qhBwS2Mm5HbFwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ag4e60XYGLakfiLnkR1ZfYt0vJIS0UmPeza5E/PlMj1sTGbkUTsTre5eHOXLeIyao
-	 O//xl0ZUiDbJK+FosZ4Y7dobI+qp5wOL7c5Fzscwl3mbmezx6LfpeB5BxvbU3dd4xU
-	 65Dm3qOTk5uhsth0siHeaKF/j+aduEf21VsxcCE02oey1WAudSbJb4en8nNZmtq1ix
-	 8iqbkU/J1yAUENpV34asIpqURdGBU8jZRmJmW+gXQx6xsu7C8lKAFcPNXXreBstwB9
-	 JM6nlec+CLxybQ2yfKXzcsLt9ehK6HjTZoSC5Hd+JYYlph9cwmRzzb+NP9sghEd1nO
-	 V6JdXa2zmQkOQ==
+	b=RPbvqWEDkNhBebSe2zm+/9xrECMJYF42+DhF0n4wwRgnHq3dNt4rzLZNvrCG/NNdP
+	 yEki2+y/bu1JCoH8s9jLC4ql+GJYCeU1o5UB6+HCJPQSkXZUVg7keZd2y8aRYM02cQ
+	 xznAeHQCtg80dRItisCR9Hhg+CvRCLG1mYHjH0PdMR+nTgWkMcbcPkY6XwAV1sCyyD
+	 Pmdz4fyFY/nD5C0X3XlIuaivdB0xPZp487MYI79EmbvWnVzOT8EuLwdsSIqov9h6kD
+	 5ZnF3fIQU92dPLoc4UlSEih6wqMkorjlVtrFJ0WlXSGOuP66snSYqGG8MQpG0JOx0z
+	 YjD8NRAaXmF7g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Huth <thuth@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+Cc: John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-cifs@vger.kernel.org,
+	axboe@kernel.dk,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] smb: server: Make sure that passkey is not leaked on the heap in user_config.c
-Date: Mon, 19 Oct 2026 09:51:28 -0400
-Message-ID: <20261019135441.1420968-397-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] nvme: don't reference NS after unlocking in nvme_ns_head_ctrl_ioctl()
+Date: Mon, 19 Oct 2026 09:51:29 -0400
+Message-ID: <20261019135441.1420968-398-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,537 +55,444 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Huth <thuth@redhat.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 2c5a176882695f73b52482df03b0017b006ef2d1 ]
+[ Upstream commit 77c57daf98a2ad95ec9ac1371caeff8939cc1f58 ]
 
-Use kfree_sensitive() to free the user->passkey (and the struct
-ksmbd_login_response in ksmbd_login_user() that contains the same
-information) to avoid that this information could leak somewhere
-else via the heap.
+In nvme_ns_head_ctrl_ioctl(), once we drop the SRCU read lock we should
+not reference the NS to lookup the controller, so use the available
+controller pointer directly.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: the NTLM passkey wipe is present in this 6.12
-tree, the helpers already exist, and the change is a three-line secret-
-clearing fix. Fetching the series cover letter wrapped up the remaining
-mailing-list context.
+The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+candidate is a one-line use-after-unlock fix in the NVMe multipath ioctl
+path; the rest of this write-up is the forensic check of whether that
+fix belongs here as a stable backport.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[smb: server:] [Make sure] [passkey is not leaked on the heap
-in user_config.c]**
-
-- Subsystem: `smb: server:` (ksmbd in-kernel SMB3 server)
-- Action verb: “Make sure” — safety/correctness language, not a feature
-- Claimed intent: wipe `user->passkey` (and the IPC login response that
-  holds the same hash) before returning the memory to the heap
+Record: `[nvme] [don't reference] Avoid using the namespace object after
+dropping the SRCU lock in nvme_ns_head_ctrl_ioctl()`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
 Record:
-- **Fixes:** none (expected for this review pipeline)
-- **Reported-by:** none
-- **Tested-by:** none
-- **Reviewed-by:** none on the commit itself
-- **Acked-by:** none
-- **Link:** none in the commit message
-- **Cc: stable:** none (expected; not a negative signal)
-- **Signed-off-by:** Thomas Huth \<thuth@redhat.com\> (author); Namjae
-  Jeon \<linkinjeon@kernel.org\> (ksmbd maintainer). Ignore any Sasha
-  Levin SOB from candidate preparation.
+- `Reviewed-by: Christoph Hellwig <hch@lst.de>` (NVMe co-maintainer)
+- `Signed-off-by: John Garry <john.g.garry@oracle.com>` (author)
+- `Signed-off-by: Keith Busch <kbusch@kernel.org>` (NVMe maintainer;
+  applied the patch)
+- No `Fixes:` tag (expected for this review pipeline)
+- No `Cc: stable@vger.kernel.org` (expected)
+- No `Reported-by:`, `Tested-by:`, `Link:`, or syzbot tags
 
-Notable pattern: no syzbot/CVE/reporter tags. This came from a
-maintainer-applied hardening series, not a crash report.
+Later mailing-list review also produced `Reviewed-by: Hannes Reinecke
+<hare@kernel.org>` (not copied into the committed message).
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
 Record:
-- **Bug:** `user->passkey` and `struct ksmbd_login_response` (which
-  contains `hash[]`) are freed with ordinary `kfree()`/`kvfree()`, so
-  the NTLM password hash remains in the slab until the object is reused.
-- **Symptom/failure mode:** heap leftover of authentication secret
-  material; a later kmalloc of the same cache can return pages still
-  holding the hash (classic kfree-vs-kfree_sensitive info leak).
-- **Version information:** none in the message.
-- **Root cause (author):** passkey-bearing objects were not cleared
-  before free.
+- **Bug:** After `srcu_read_unlock(&head->srcu)`, the code still did
+  `nvme_ctrl_ioctl(ns->ctrl, ...)`.
+- **Symptom/failure mode:** Use of `ns` after the SRCU critical section
+  ends. `nvme_find_path()` does not take an `ns` kref; SRCU is what
+  keeps `ns` alive. After unlock, `nvme_ns_remove()` can finish
+  `synchronize_srcu(&ns->head->srcu)` and `nvme_put_ns()` → `kfree(ns)`.
+  Loading `ns->ctrl` is then a use-after-free.
+- **Version info:** None in the message. History shows the pattern dates
+  to `48145b62563a9` (v5.13-rc1 era, 2021).
+- **Root cause:** The function already saved `struct nvme_ctrl *ctrl =
+  ns->ctrl` and used it for `nvme_put_ctrl(ctrl)`, but the ioctl call
+  still went through `ns->ctrl` after unlock.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. The subject is explicit. This is a real lifetime/UAF
+fix, not style cleanup. The local `ctrl` variable existed specifically
+to survive the unlock; the ioctl call was the leftover unsafe use.
 
-Record: Not a disguised cleanup. The message is explicit about a secret
-leak. It is a security hygiene fix (wipe-before-free), not a crash/UAF.
-Still a real bug class the kernel already treats as such via
-`kfree_sensitive()`.
+---
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-
 Record:
-- File: `fs/smb/server/mgmt/user_config.c` only
-- Scope: **3 substitutions, ~3 lines**, single-file surgical
-- Functions: `ksmbd_login_user()`, `ksmbd_alloc_user()` error path,
-  `ksmbd_free_user()`
-- Surrounding mainline context in the candidate (hash_sz bounds check,
-  `kmalloc_obj`) is **not** part of this commit’s semantic change; it is
-  later-tree context.
+- File: `drivers/nvme/host/ioctl.c` — 1 insertion, 1 deletion
+- Function: `nvme_ns_head_ctrl_ioctl()`
+- Scope: single-file, one-line surgical fix under
+  `CONFIG_NVME_MULTIPATH`
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
 Record:
-1. `ksmbd_login_user()` `out:` path: `kvfree(resp)` →
-   `kvfree_sensitive(resp, sizeof(*resp))`. This is the **normal** login
-   path (and the login-failure path). `resp` is the IPC login response
-   from ksmbd.mountd and contains `hash[]`.
-2. `ksmbd_alloc_user()` `err_free:`: `kfree(user->passkey)` →
-   `kfree_sensitive(user->passkey)`. **Error** path after the hash was
-   copied into `user->passkey`.
-3. `ksmbd_free_user()`: same `kfree` → `kfree_sensitive` for
-   `user->passkey`. **Normal** session teardown / reauth mismatch path.
+Before:
+```
+struct nvme_ctrl *ctrl = ns->ctrl;
+nvme_get_ctrl(ns->ctrl);          /* still under SRCU — OK */
+srcu_read_unlock(&head->srcu, srcu_idx);
+ret = nvme_ctrl_ioctl(ns->ctrl, ...);  /* ns used after unlock — BUG */
+nvme_put_ctrl(ctrl);
+```
+After:
+```
+ret = nvme_ctrl_ioctl(ctrl, ...);  /* uses the pointer saved under SRCU
+*/
+```
+The `nvme_get_ctrl()` before unlock keeps the controller object alive;
+only the namespace object was left unprotected.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-
 Record:
-- **Category:** security / sensitive-data leak (heap residual), not
-  UAF/race/crash
-- **Mechanism:** `resp->hash` is the NT hash (`KSMBD_REQ_MAX_HASH_SZ` is
-  18; auth uses `CIFS_ENCPWD_SIZE` of 16 as HMAC-MD5 key in
-  `calc_ntlmv2_hash()`). After `kfree`/`kvfree`, that hash stays in the
-  slab. `kfree_sensitive()` does `memzero_explicit()` over `ksize()`
-  then `kfree()`. `kvfree_sensitive()` does `memzero_explicit(addr,
-  len)` then `kvfree()`.
+- **Category:** use-after-free / lifetime (memory safety), SRCU
+  protection dropped too early relative to `ns` use
+- **Mechanism:** Path lookup is SRCU-only. Callers drop SRCU *on
+  purpose* before controller ioctls so a Delete Namespace passthrough
+  cannot deadlock on `synchronize_srcu` (comment at the
+  `nvme_ns_head_ioctl` call site). Concurrent `nvme_ns_remove()` can
+  then free `ns` while the old code still loaded `ns->ctrl`.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-
 Record:
-- Obviously correct: drop-in replacement; `kfree_sensitive(NULL)` is a
-  documented no-op (needed on `err_free` when `passkey` alloc failed);
-  `kvfree_sensitive` skips `ZERO_OR_NULL_PTR`.
-- Minimal: three call-site changes, no API/structure change.
-- Regression risk: **very low**. Same free, plus a small
-  `memzero_explicit`. `passkey` is ~16 bytes; `sizeof(*resp)` is a fixed
-  login-response struct. No lock/order/API change.
-- Incomplete vs the rest of ksmbd (auth.c still `kvfree(resp)` on the
-  SPNEGO path) — that is a **sibling** series patch, not a dependency of
-  this one.
+- Obviously correct: use the already-captured, refcounted `ctrl`.
+- Minimal: one identifier change; no API, locking, or control-flow
+  change.
+- Regression risk: very low. `ctrl` is assigned under SRCU and pinned
+  with `nvme_get_ctrl()` before unlock.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-
 Record:
-- `kvfree(resp)`: introduced as cifsd code in `79f6b11a104f3a` (“cifsd:
-  remove wrappers of kvmalloc/kvfree”, 2021) on top of `e2f34481b24db2`
-  (“cifsd: add server-side procedures for SMB3”, 2021-05-10).
-- `kfree(user->passkey)` in `ksmbd_free_user()`: `822bc8ea514ecd`
-  (“cifsd: use kfree to free memory allocated by kmalloc or kzalloc”,
-  2021) — switched from kvfree wrappers to `kfree`.
-- `kfree(user->passkey)` on `err_free`: `a77e0e02af1c2` (“ksmbd: add
-  support for supplementary groups”, 2024-10-11).
-- The leak has been in the SMB server **since cifsd/ksmbd was merged
-  (~v5.15 era)**. Present in this 6.12 tree.
+- Buggy `nvme_ctrl_ioctl(ns->ctrl, ...)` after unlock introduced in
+  `48145b62563a9` (`nvme: fix controller ioctl through ns_head`, Minwoo
+  Im, 2021-04-22).
+- First appeared around **v5.13** (`tags/v5.13-rc1~19^2~1^2~6`).
+- `struct nvme_ctrl *ctrl = ns->ctrl` was added in that same commit —
+  they saved `ctrl` for `nvme_put_ctrl()` but still passed `ns->ctrl`
+  into the ioctl.
+- The SRCU unlock in this function has been there since `3e7d1a55165bd`
+  / the 2021 rewrite. This is long-lived buggy code, not a recent
+  regression.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. Not applicable. The buggy free sites predate
-this tree’s branch point and are in HEAD.
+Record: No `Fixes:` tag. The introducing commit is `48145b62563a9`, and
+`git merge-base --is-ancestor 48145b62563a9 HEAD` succeeded, so the
+buggy code is in this lineage.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record (this tree, `-- fs/smb/server/mgmt/user_config.c`):
-- `c9f2872e91b9f` — leak of `ksmbd_ipc_login_request_ext()` buffer
-  (already in this tree; candidate context includes `kvfree(resp_ext)`).
-- `7dd0c858e1909` — ipc_validate_msg size checks
-- `a77e0e02af1c2` — supplementary groups
-- No existing `kfree_sensitive` conversion in this file.
-- Standalone relative to later hash_sz/`kmalloc_obj` work (those strings
-  are **absent** here).
+Record:
+- Nearby John Garry commits (`627e8bb91a8fd` requeue/SRCU order,
+  `a11e0a4cb4189` / `9952f3882ecba` cdev lifetime) are **separate**
+  bugs. This diff does not depend on them.
+- Not labeled `patch X/Y`. Standalone one-liner.
+- Later `86f9536c2d8f4` only changes the sparse annotation `__releases`
+  → `__releases_shared`; not a prerequisite.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Thomas Huth has **no** other commits under `fs/smb/` in this
-checkout (series is newer than 6.12). Namjae Jeon is the ksmbd
-maintainer and signed the patch off. Cover letter: 5-patch series “Clear
-sensitive data before freeing it”; this is **v2 2/5**.
+Record: John Garry is a regular NVMe contributor (Oracle). Around this
+date he also fixed related lifetime issues, but this patch is
+independent. Maintainers Christoph Hellwig, Keith Busch, and Hannes
+Reinecke all reviewed/acked it.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None. The preimage already has `ctrl`, `nvme_get_ctrl`, and
+`srcu_read_unlock`. The patch applies standalone.
 
-Record:
-- Needs `kfree_sensitive()` / `kvfree_sensitive()` — both exist in this
-  tree (`include/linux/slab.h`, implemented in `mm/slab_common.c` /
-  `mm/util.c`).
-- Does **not** need `kmalloc_obj` or the hash_sz guard (those are only
-  nearby mainline context).
-- Other patches in the series (auth.c, user_session.c, connection.c,
-  smb2pdu.c) are independent per-file wipes. This file’s change applies
-  **standalone**.
-- `user_config.c` already includes `<linux/slab.h>`.
+---
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
 Record:
-- `b4 dig -c <sha>`: **not run** — the candidate SHA is not in this
-  checkout (evaluating a candidate, not an in-tree commit).
-- Found via search: **[PATCH v2 2/5]** Message-ID
-  `20260811154620.2425851-3-thuth@redhat.com`
-- Cover:
-  https://patchew.org/linux/20260811154620.2425851-1-thuth@redhat.com/
-- Openwall: https://lists.openwall.net/linux-kernel/2026/08/11/1820
-- v2 vs v1: cover letter says v2 fixed `kvfree_sensitive` **size in
-  patch 1 (auth.c)**, added a connection.c hunk, and added the smb2pdu.c
-  patch. **This user_config.c patch was not the one that needed a size-
-  calculation fix.**
-- Namjae Jeon: “Applied them to #ksmbd-for-next-next.” No NAK found.
-- Author framed it as “good security practice”; spots found with AI,
-  patches written by hand; asked for careful review. Maintainer still
-  applied the series.
-- No reviewer `Cc: stable` found.
+- `b4 dig -c 77c57daf98a2ad`: https://patch.msgid.link/20260706125402.61
+  5277-1-john.g.garry@oracle.com
+- `b4 dig -a`: **v1 only**; committed version is that v1.
+- Thread (saved via `b4 dig -m`):
+  - Christoph Hellwig: “Looks good:” + `Reviewed-by`
+  - Keith Busch: “Thanks, applied to nvme-7.3.”
+  - Hannes Reinecke: `Reviewed-by: Hannes Reinecke <hare@kernel.org>`
+- No NAKs, no requests for a v2, no reviewer concern about the approach.
+- No explicit `Cc: stable` in the thread (not a negative; this pipeline
+  expects that).
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: To/Cc from the v2 mail: Namjae Jeon (ksmbd maintainer), Steve
-French (CIFS/SMB maintainer), linux-kernel, Sergey Senozhatsky, Tom
-Talpey. Maintainer applied it. No separate Reviewed-by on this patch.
+Record (`b4 dig -w`): To/Cc were `hch@lst.de`, `kbusch@kernel.org`,
+`sagi@grimberg.me`, `axboe@fb.com`, `linux-nvme@lists.infradead.org`.
+Subsystem maintainers were on the original mail and reviewed it.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot, bugzilla, or user crash. This is proactive secret-
-wipe, not a reported oops. Severity from the author: heap leftover of
-passkey/hash.
+Record: No `Reported-by` / syzbot / bugzilla. Found by code inspection
+(same author was auditing NVMe lifetime vs SRCU around the same time).
+The race is still concrete: ioctl + path removal.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Series of 5 independent kfree_sensitive/memzero_explicit
-patches:
-1. auth.c stack/heap
-2. **user_config.c passkey (this one)**
-3. user_session.c
-4. connection.c
-5. smb2pdu.c Preauth_HashValue
-
-This patch does not depend on 1/3/4/5 applying first.
+Record: Standalone `[PATCH]`, not a numbered series. Sibling lifetime
+patches are independent.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org `/stable/` returned HTTP 403 from this
+environment. **UNVERIFIED:** no confirmed stable@ discussion. That is
+expected for a candidate that has not been auto-selected.
 
-Record: No stable-list hit for this passkey wipe (search did not turn up
-a prior stable request or a rejection). UNVERIFIED that a later stable
-thread exists beyond what search returned. lore.kernel.org fetches
-returned 403 in this environment; discussion was recovered from
-patchew/openwall.
+---
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+semcode MCP tools are not available; callers/callees were traced with
+grep and file reads.
 
-Record: `ksmbd_login_user`, `ksmbd_alloc_user`, `ksmbd_free_user`
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `nvme_ns_head_ctrl_ioctl()` only.
 
 **Step 5.2: TRACE CALLERS**
-
-Record (this tree):
-- `ksmbd_login_user()` ← `session_user()` in `fs/smb/server/smb2pdu.c` ←
-  SMB2 SESSION_SETUP / `ntlm_authenticate()`. **Network-reachable** on
-  every NTLM login.
-- `ksmbd_alloc_user()` ← `ksmbd_login_user()` and
-  `ksmbd_krb5_authenticate()` in `auth.c` (CONFIG_SMB_SERVER_KERBEROS5).
-- `ksmbd_free_user()` ← session teardown in `user_session.c`; reauth
-  mismatch / anonymous reuse in `smb2pdu.c`; kerberos reauth in
-  `auth.c`.
+Record:
+- `nvme_ns_head_ioctl()` — `block_device_operations.ioctl` for the
+  multipath ns-head disk (`/dev/nvmeXnY`)
+- `nvme_ns_head_chr_ioctl()` — `file_operations.unlocked_ioctl` for the
+  generic ns-head char device (`/dev/ngXnY`)
+Both call it when `is_ctrl_ioctl(cmd)` is true: `NVME_IOCTL_ADMIN_CMD`,
+`NVME_IOCTL_ADMIN64_CMD`, or SED/opal ioctls.
 
 **Step 5.3: TRACE CALLEES**
-
-Record:
-- `ksmbd_ipc_login_request()` → netlink to ksmbd.mountd; response
-  allocated with `kvzalloc(sz)` in `handle_response()`
-  (`transport_ipc.c:294`), so `kvfree`/`kvfree_sensitive` is the right
-  family.
-- `user->passkey = kmalloc(resp->hash_sz, ...)` then `memcpy` from
-  `resp->hash` — `kfree_sensitive` is the right family.
-- `calc_ntlmv2_hash()` uses `user_passkey()` as HMAC-MD5 key
-  (`CIFS_ENCPWD_SIZE`). Confirmed: this is the NT hash, not a username.
+Record: `nvme_get_ctrl` / `nvme_put_ctrl` (`get_device`/`put_device` on
+`ctrl->device`), `srcu_read_unlock`, `nvme_ctrl_ioctl` (admin
+passthrough / SED).
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Unprivileged SMB client sends SESSION_SETUP → kernel looks up
-user via IPC → hash lives in `resp` then `user->passkey` → on
-logout/free, hash is currently left in the slab. Path is **reachable
-from the network** whenever ksmbd is enabled and serving NTLM users. Not
-a syscall-from-unprivileged-local-only issue; it is a **server-side
-credential residual**.
+Record: Userspace ioctl on a multipath NVMe ns-head device. Reachable
+from userspace. Admin commands typically need privileges, but that does
+not make a kernel UAF acceptable; privileged management tools and path
+teardown are exactly the production workload.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Non-multipath `nvme_ioctl()` / `nvme_ns_chr_ioctl()` use
+`ns->ctrl` without this SRCU drop; those `ns` objects are tied to the
+open disk/cdev, so they are a different lifetime model. No second copy
+of this exact post-unlock `ns->ctrl` load in `nvme_ns_head_ctrl_ioctl`.
 
-Record: The SMB **client** in this same tree already uses
-`kfree_sensitive` widely for passwords/`auth_key`
-(`fs/smb/client/smb2pdu.c`, `sess.c`, `fs_context.c`, `misc.c`, …).
-ksmbd server side in this tree still uses plain `kfree`/`kvfree` for
-passkey (only `auth.c` has one `kfree_sensitive(ctx_arc4)`). Same bug
-class, server lagging the client.
+---
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record:
+- Tree: **7.3.0-rc4** (`git describe HEAD` =
+  `v7.3-rc4-27-gf0100363d8c37`)
+- `git merge-base --is-ancestor 77c57daf98a2ad HEAD` → yes (the fix is
+  already on this mainline snapshot)
+- Preimage (`77c57daf98a2ad^`) still has `nvme_ctrl_ioctl(ns->ctrl,
+  ...)` after unlock
+- Introducing commit `48145b62563a9` is an ancestor; the bug has been in
+  this lineage since ~v5.13
+- Current `ioctl.c` already uses `nvme_ctrl_ioctl(ctrl, ...)`
 
-Record: **Yes.** Local tree is **6.12.111** (`pending-6.12`,
-`p-6.12-3-gc504cf0baa3d8`).
-
-```31:31:fs/smb/server/mgmt/user_config.c
-        kvfree(resp);
-```
-
-```74:74:fs/smb/server/mgmt/user_config.c
-        kfree(user->passkey);
-```
-
-```84:84:fs/smb/server/mgmt/user_config.c
-        kfree(user->passkey);
-```
-
-No `kvfree_sensitive` / `kfree_sensitive` in this file today. Bug
-introduced with cifsd (2021), long before 6.12.
+This is a mainline 7.3-rc checkout, not a 6.x.y stable branch. The
+question is still whether the *fix* is stable-worthy for this codebase.
+The touched function, the `ctrl` local, and the SRCU unlock are all
+present. The bug was not introduced after this tree branched.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Minor context, not semantic.** This tree has
-`kmalloc(sizeof(struct ksmbd_user), ...)` not `kmalloc_obj`, and **no**
-`hash_sz > sizeof(resp->hash)` guard. The three substitution sites exist
-verbatim (`kvfree(resp);` ×1, `kfree(user->passkey);` ×2). A 3-line
-backport applies; a raw mainline patch with 41-line context around
-`ksmbd_alloc_user` would conflict. `kvfree(resp_ext)` from
-`c9f2872e91b9f` is already here, matching the candidate’s
-`ksmbd_login_user` shape.
+Record: Clean apply on this code. The hunk is one argument change. Would
+also apply cleanly to any tree that still has the 2021
+`nvme_ns_head_ctrl_ioctl` shape (the `ctrl` local + post-unlock ioctl).
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This is the fix. No alternate older fix of the same `ns->ctrl`
+load. Related commits fix different lifetime bugs.
 
-Record: No passkey wipe already in this file. Client-side
-`kfree_sensitive` does not cover ksmbd server objects.
+---
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: **ksmbd (CONFIG_SMB_SERVER)** under `fs/smb/server/`.
-**IMPORTANT** (not core mm/VFS): optional in-kernel SMB3 server used on
-NAS/embedded; default `n`. Network-facing auth path.
+Record: `drivers/nvme/host` — NVMe host ioctl/multipath. **IMPORTANT**
+(common storage stack; not core mm/vfs, but widely deployed). Gated on
+`CONFIG_NVME_MULTIPATH` (Kconfig: “If unsure, say Y.”).
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Active (io_uring passthrough, multipath, ioctl hardening). This
+particular function body has been stable in shape since 2021.
 
-Record: Actively maintained (many recent ksmbd fixes on this branch:
-OOB, ACL, session, credit). Mature enough that the passkey free path has
-been stable since 2021.
+---
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: **config-specific / driver-specific:** systems with
-`CONFIG_SMB_SERVER` (ksmbd) and live SMB sessions. Distros that ship
-ksmbd for NAS (openSUSE, some embedded, ksmbd-tools users).
+Record: NVMe **multipath** users who issue controller ioctls on the ns-
+head block or char device (`NVME_IOCTL_ADMIN_CMD` / `ADMIN64` / SED).
+Datacenter NVMe-oF / dual-ported SSD setups.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
 Record:
-- Trigger: **every successful NTLM login** (`ksmbd_login_user` always
-  frees `resp` containing the hash) and **every `ksmbd_free_user`**
-  (session destroy / failed reauth).
-- Common on any ksmbd server with password auth.
-- Local unprivileged userspace does not need to call a special syscall;
-  a remote SMB client causes the kernel to hold then free the hash.
-  Recovering the leftover bytes still needs another heap-read primitive
-  or slab reuse that exposes old contents — that is the usual
-  `kfree_sensitive` threat model.
+- `srcu_read_lock` → `nvme_find_path` → controller ioctl →
+  **intentional** `srcu_read_unlock` (to avoid deadlock with namespace
+  delete) → old code loads `ns->ctrl`
+- Concurrent `nvme_ns_remove()` (path loss, controller delete, admin
+  Delete NS)
+- Timing-dependent. Not every ioctl hits it; when it hits, it is a real
+  UAF.
+- Triggerable from userspace ioctl; typically privileged admin ioctls.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: **Failure mode:** NT hash residual in kmalloc/kvmalloc heap.
-**Severity: HIGH** (credential/info leak; pass-the-hash material). Not a
-panic. Not theoretical-only in kind: this is why `kfree_sensitive`
-exists, and the CIFS client already wipes the same class of secrets.
+Record: Use-after-free of `struct nvme_ns` → KASAN report / oops /
+potential memory corruption. **Severity: HIGH** (UAF in a production
+ioctl path).
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
 Record:
-- **Benefit:** HIGH for ksmbd users — wipes NTLM hashes that currently
-  survive free on a hot auth path.
-- **Risk:** VERY LOW — 3 lines, existing helpers, NULL-safe, no behavior
-  change except zeroing freed secret bytes.
-- **Ratio:** strongly favors backport.
+- **Benefit:** High — closes a UAF that has existed since v5.13 in a
+  standard multipath ioctl path.
+- **Risk:** Very low — one-line substitution of an already-saved,
+  refcounted pointer.
+- **Ratio:** Strongly favors backporting.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
+
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR:**
-- Real leftover NT hash (`resp->hash` / `user->passkey`) on heap after
-  login IPC and session free
-- Reachable from SMB SESSION_SETUP on deployed ksmbd
-- 3-line, obviously correct, uses APIs that exist in 6.12
-- Buggy frees present in this tree since 2021
-- Maintainer (Namjae Jeon) applied the series
-- Same pattern already used by `fs/smb/client/` in this tree
-- `kfree_sensitive(NULL)` safe on the alloc-failure path
+FOR:
+- Real UAF: `ns` is SRCU-protected only; used after `srcu_read_unlock`
+- `nvme_find_path()` does not take an `ns` kref (verified)
+- `nvme_ns_remove()` does `synchronize_srcu(&ns->head->srcu)` then
+  `nvme_put_ns()` → `kfree(ns)` (verified)
+- Callers drop SRCU early on purpose so namespace delete can proceed —
+  the window is intentional
+- One-line, obviously correct, uses the pointer the original 2021 code
+  already saved
+- Reviewed by Hellwig, Busch, Reinecke; applied to nvme-7.3
+- Bug present since ~v5.13; no extra prerequisites
+- Userspace-reachable ioctl on common NVMe multipath hardware
 
-**AGAINST:**
-- Hardening / defense-in-depth, no CVE/syzbot/user report
-- Part of a 5-patch series (others also wipe secrets; this file does not
-  need them)
-- ksmbd is optional (`default n`)
-- Raw mainline hunk context includes later `kmalloc_obj` / hash_sz check
-  (needs a tiny backport, not the later features)
+AGAINST:
+- No crash log / syzbot in the commit message (inspection-found)
+- No `Fixes:`/`Cc: stable` (expected here; not a reason to reject)
+- Gated on `CONFIG_NVME_MULTIPATH`
+- This 7.3-rc4 snapshot already contains the commit (it landed for 7.3);
+  that does **not** reduce technical merit for selecting it as a stable
+  candidate
 
-**UNRESOLVED:**
-- Could not run `b4 dig` against a local SHA (candidate not in this git
-  object store)
-- lore.kernel.org HTTP 403; discussion recovered from patchew/openwall
-- No evidence this was previously rejected for stable
+UNRESOLVED:
+- Could not fetch lore.kernel.org in the browser (403); thread was
+  recovered via `b4 dig -m`
+- Could not search lore `/stable/` (403)
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — drop-in sensitive-free;
-   maintainer applied v2.
-2. Fixes a real bug that affects users? **PASS** — NTLM hash left in
-   slab after ksmbd login/logout.
-3. Important issue? **PASS** — security info leak of auth material
-   (HIGH, not a crash).
-4. Small and contained? **PASS** — 3 lines, one file.
+1. Obviously correct and tested? **PASS** — one identifier; reviewed by
+   three NVMe maintainers
+2. Fixes a real bug that affects users? **PASS** — UAF on ns-head
+   controller ioctl vs path removal
+3. Important issue (crash/security/corruption/deadlock)? **PASS** — UAF
+   → oops/corruption; HIGH
+4. Small and contained? **PASS** — 1 line, one function
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — sites and helpers exist;
-   context tweak only (no `kmalloc_obj` required).
+6. Can apply to the local tree? **PASS** — function and `ctrl` local
+   exist; hunk is the existing post-fix form
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: Not a device-ID/quirk/DT/build/docs exception. Qualifies as a
-**small security fix** (secret wipe), which stable regularly takes.
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a normal
+memory-safety bugfix.
 
 **Step 9.4: MAKE YOUR DECISION**
+This is a textbook stable candidate: a long-standing, small, obviously
+correct UAF fix in NVMe multipath ioctl handling, with maintainer review
+and no dependencies.
 
-This should be backported to **this** 6.12 tree. The bug is here, the
-helpers are here, and the change is a surgical wipe of NTLM passkeys
-that ksmbd currently leaves in the heap after every login IPC and
-session free. Risk is negligible; benefit is wiping high-value
-credential material on a network-facing path.
+---
 
-### What the commit solves for this tree
-
-On 6.12.111 ksmbd still does `kvfree(resp)` on the login response (which
-includes `hash[KSMBD_REQ_MAX_HASH_SZ]`) and `kfree(user->passkey)` after
-copying that hash. Those bytes are the NT hash used as the NTLMv2 HMAC
-key. Switching to `kvfree_sensitive` / `kfree_sensitive` zeros them
-before the slab can reuse the object. That matches what the SMB client
-in this same tree already does for passwords.
+### What the commit solves (for stable users)
+On `CONFIG_NVME_MULTIPATH`, controller ioctls on the namespace-head
+device drop `head->srcu` before running the ioctl so a Delete Namespace
+passthrough cannot deadlock. The namespace pointer is not refcounted
+across that unlock. Passing `ns->ctrl` into `nvme_ctrl_ioctl()` after
+unlock can dereference a freed `nvme_ns` if a path is removed
+concurrently. Using the `ctrl` pointer saved under SRCU (already pinned
+with `nvme_get_ctrl()`) closes that hole.
 
 ### Risk vs benefit
-
-Benefit is wiping secrets on a common ksmbd auth path. Risk is a few
-extra `memzero_explicit` bytes on free. No locking, no API, no control-
-flow change.
+Benefit is a UAF/crash fix on a real ioctl path used with NVMe
+multipath. Risk is essentially nil.
 
 ### Concerns
+None for applicability on this tree’s NVMe ioctl code. Nearby Garry
+lifetime patches are not required.
 
-A verbatim mainline apply may need a 3-line backport because this tree
-lacks `kmalloc_obj` and the later `hash_sz` cap; those are **not**
-prerequisites. Sibling series patches (auth.c SPNEGO `kvfree(resp)`,
-session/connection/preauth) are independent and do not block this file’s
-fix.
+---
 
 Verification:
-- [Phase 1] Parsed subject/body/tags: no Fixes/Reported-by/Cc:stable;
-  SOBs Thomas Huth + Namjae Jeon
-- [Phase 2] Diff: 3 substitutions in user_config.c; `kvfree(resp)` and
-  two `kfree(user->passkey)`
-- [Phase 2] Confirmed `KSMBD_REQ_MAX_HASH_SZ` is 18 and
-  `calc_ntlmv2_hash()` uses `user_passkey()` as HMAC-MD5 key
-  (`CIFS_ENCPWD_SIZE` 16)
-- [Phase 3] `git blame`: `kvfree(resp)` from 2021 cifsd
-  (`79f6b11a104f3a` / `e2f34481b24db2`); passkey `kfree` from
-  `822bc8ea514ecd` / `a77e0e02af1c2`
-- [Phase 3] `git merge-base --is-ancestor` of those SHAs vs HEAD: all
-  present (exit 0)
-- [Phase 3] `git log --author="Thomas Huth" -- fs/smb/`: empty in this
-  tree (series is newer)
-- [Phase 4] Patchew/openwall: v2 2/5 of “Clear sensitive data before
-  freeing it”; Namjae applied to ksmbd-for-next-next; no NAK
-- [Phase 4] lore.kernel.org WebFetch: 403; b4 dig: no local candidate
-  SHA — discussion recovered from patchew/openwall
-- [Phase 5] Callers: `smb2pdu.c` SESSION_SETUP
-  `session_user()`/`ntlm_authenticate()`, `auth.c` krb5 path,
-  `user_session.c` teardown
-- [Phase 5] `handle_response()` uses `kvzalloc` — `kvfree_sensitive` is
-  the correct free family
-- [Phase 6] `git describe HEAD` / `make kernelversion`: **6.12.111**
-  (`pending-6.12`); buggy kfree/kvfree still in file;
-  `kfree_sensitive`/`kvfree_sensitive` declared in
-  `include/linux/slab.h`
-- [Phase 6] Local file has no `kmalloc_obj` / hash_sz cap; three target
-  call sites exist verbatim
-- [Phase 8] Failure mode: NT-hash residual in heap after login/free;
-  severity HIGH; regression risk very low
-- UNVERIFIED: full lore mailbox / b4 patch-id match; whether a later CVE
-  was assigned
+- [Phase 1] Parsed commit `77c57daf98a2ad`: subject, Hellwig Reviewed-
+  by, Garry/Busch SOBs; no Fixes/Reported-by/Cc:stable
+- [Phase 1] Body: only describes not using NS after SRCU unlock
+- [Phase 2] `git show 77c57daf98a2ad`: 1 line in
+  `nvme_ns_head_ctrl_ioctl`, `ns->ctrl` → `ctrl` after unlock
+- [Phase 2] Read current `drivers/nvme/host/ioctl.c`: fix present;
+  caller comment documents early SRCU drop to avoid delete-namespace
+  deadlock
+- [Phase 3] `git blame -L 729,743 drivers/nvme/host/ioctl.c`: buggy
+  ioctl-through-ns-head from `48145b62563a9` (2021)
+- [Phase 3] `git name-rev --tags 48145b62563a9`:
+  `tags/v5.13-rc1~19^2~1^2~6`
+- [Phase 3] `git merge-base --is-ancestor 48145b62563a9 HEAD`: yes
+- [Phase 3] Parent `627e8bb91a8fd` is a different requeue/SRCU bug; not
+  a dependency of this hunk
+- [Phase 4] `b4 dig -c 77c57daf98a2ad`: lore at
+  patch.msgid.link/20260706125402.615277-1-john.g.garry@oracle.com
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: linux-nvme + Hellwig/Busch/Grimberg/Axboe
+- [Phase 4] `b4 dig -m /tmp/nvme-ns-unlock.mbox`: Hellwig R-b, Busch
+  applied to nvme-7.3, Reinecke R-b; no NAK
+- [Phase 4] WebFetch lore.kernel.org: 403 — UNVERIFIED via HTTP; thread
+  recovered from mbox
+- [Phase 5] grep: callers are `nvme_ns_head_ioctl` and
+  `nvme_ns_head_chr_ioctl`; wired from `multipath.c` fops
+- [Phase 5] `nvme_find_path()` returns path under SRCU only; no
+  `nvme_get_ns()`
+- [Phase 5] `nvme_free_ns()` kfree’s `ns`; `nvme_ns_remove()`
+  synchronize_srcu then `nvme_put_ns()`
+- [Phase 6] `make kernelversion` / Makefile: 7.3.0-rc4; `git describe
+  HEAD`: v7.3-rc4-27-gf0100363d8c37
+- [Phase 6] `git merge-base --is-ancestor 77c57daf98a2ad HEAD`: fix
+  already in this mainline snapshot
+- [Phase 6] Preimage `git show
+  77c57daf98a2ad^:drivers/nvme/host/ioctl.c`: confirmed
+  `nvme_ctrl_ioctl(ns->ctrl, ...)` after unlock
+- [Phase 7] `drivers/nvme/host/Kconfig`: `NVME_MULTIPATH` “If unsure,
+  say Y”
+- [Phase 8] Failure mode: UAF of `struct nvme_ns` on controller ioctl vs
+  path remove — HIGH
+- UNVERIFIED: stable@ mailing-list history (lore /stable/ HTTP 403)
+- UNVERIFIED: no public crash reproducer attached to the patch (does not
+  override the verified lifetime hole)
+
+The patch is obviously correct, fixes a real UAF, is one line, and
+applies to this tree’s NVMe ioctl code.
 
 **YES**
 
- fs/smb/server/mgmt/user_config.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvme/host/ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
-index 0e5fcd6f95c15..909f219c79faa 100644
---- a/fs/smb/server/mgmt/user_config.c
-+++ b/fs/smb/server/mgmt/user_config.c
-@@ -28,7 +28,7 @@ struct ksmbd_user *ksmbd_login_user(const char *account)
- 	user = ksmbd_alloc_user(resp, resp_ext);
- 	kvfree(resp_ext);
- out:
--	kvfree(resp);
-+	kvfree_sensitive(resp, sizeof(*resp));
- 	return user;
- }
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index fb8533127116a..b3e58de6f5cc5 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -727,7 +727,7 @@ static int nvme_ns_head_ctrl_ioctl(struct nvme_ns *ns, unsigned int cmd,
  
-@@ -82,7 +82,7 @@ struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp,
+ 	nvme_get_ctrl(ns->ctrl);
+ 	srcu_read_unlock(&head->srcu, srcu_idx);
+-	ret = nvme_ctrl_ioctl(ns->ctrl, cmd, argp, open_for_write);
++	ret = nvme_ctrl_ioctl(ctrl, cmd, argp, open_for_write);
  
- err_free:
- 	kfree(user->name);
--	kfree(user->passkey);
-+	kfree_sensitive(user->passkey);
- 	kfree(user);
- 	return NULL;
- }
-@@ -92,7 +92,7 @@ void ksmbd_free_user(struct ksmbd_user *user)
- 	ksmbd_ipc_logout_request(user->name, user->flags);
- 	kfree(user->sgid);
- 	kfree(user->name);
--	kfree(user->passkey);
-+	kfree_sensitive(user->passkey);
- 	kfree(user);
- }
- 
+ 	nvme_put_ctrl(ctrl);
+ 	return ret;
 -- 
 2.53.0
 
