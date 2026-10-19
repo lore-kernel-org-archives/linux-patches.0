@@ -1,50 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959F6555470;
-	Mon, 19 Oct 2026 13:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C0855549E;
+	Mon, 19 Oct 2026 13:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418225; cv=none; b=chqTz0yyhc9rG96hW58YkPPfsIDCjPyoeBYtrv0EORMyX5wliZgM71DebMgO0R3RwNnOBztUWcjls2anZXW4m0BEJ/OpttVN4R1/yx6IlBdp/lN1X2X+smVGtv+rGs94xaySm3b7Fa4lwUxcjlsC+3bIsNCXQEgIc/bUC41/kqs=
+	t=1792418226; cv=none; b=RlFneO9vSQ/Y/WNtZ71WeJDiKUJELq+q3UHxel9cEJco7AjQfD15o8m9qeNn28p8S5zElKjhzCf4xoc/qlbCptMxAUg4u5TbKmRZa3cjjtjxkYozWs+AKvlqkG+0JTQ2U3IDaugl9CpIjq7HX2EGnG/g+AV0od2QCuvpk3wk4V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418225; c=relaxed/simple;
-	bh=cqRu7aTK5ekNPk/YqtTLqNnHQjvfyCr2SQsLYogN15U=;
+	s=arc-20240116; t=1792418226; c=relaxed/simple;
+	bh=O2QtGfa2GeyAFBg0995Q8tsqoiLqdE9ObXYSpyt8mvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HMeyx5pHA0X5fqdMJ7wCeBVXqW/h5yGmeWah6Am8vEYQsBF11zt7FmuxAeSuVK0XTCkGiIT5uSpNSAXK5AOVzy6JEw/RT0X7v/3TOfXXI2TOMEuJMoApSdUeb/JU8NWOdVpXFg1uxtVD3DWm4YVzQRn/34v22uCeSjO4OQF8Y4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3LE11jy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=m1DYmtTqVPrtkJn5Df8bNYhQBuJfvrPIUREjpYd0bEwANrWJz0FCOW894p2zJ33dYVOaoEV9MWV0pCHTL0fc79KDCQQRyRMD367q99VpG4vYJy2+WIkU7dRuk3TUWyOw38oeBqgMls4EWM5aIH9EODBG7D9X3Syjo+L6oe103NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFcUA9YB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d3LE11jy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7341F000C5;
-	Mon, 19 Oct 2026 13:57:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFcUA9YB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8CD1F000C6;
+	Mon, 19 Oct 2026 13:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418222;
-	bh=+yk4mejZsOHQ1PXvKPrh9FOXwfljT9MoJukQVJod748=;
+	s=k20260515; t=1792418224;
+	bh=bs6aoZXnd5UwjNLgDzr9Pe3S4ulbOQWFZpgOL2xcaMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d3LE11jyKD0BwdB5nGm4911vgNzfccxz6vAC2dgLxajYgExFjtXPi62GzeqkAKpFH
-	 p/aqmSMZ/CMZ4ab+aWFKMDZ5sn+YJkdHuRxUo+an2AX9uFyrsiRCPKXvOSNwn1x9Nm
-	 2vJIbBs9XOCO6nOe/fEOm1eJv3m2+Bj6Rueo83kZHOWgGkA/BdYdgKRq1O8H5g97Ye
-	 +T3PxxGodK2bduiCY7fiosdRgEjtHi/FlG0rEx0tULdwX2d7bpUx2tlnYokKTi0hZ2
-	 F3AeSntXe8eJjdq8/oORJsqhJaJ2VT/9tR2N4PusEGubW4+GZkwGLqS0rSvr3Lofqr
-	 ZyG6Q3Im7VfZQ==
+	b=jFcUA9YBU/F4AFQSJuygeGZ2enrNHPBNUXgJ5tNDpMwiUyMjTkgmONQi0rek2+PdL
+	 F5xRMTNIdOLSUjpa/+OEnqoyvXU8AyJlOzDDLJPV66iJ/dSBK8lwmSUE6zAdHviRJW
+	 Mpszar0wP/TmODBd7sKXoaXv/lz94zESOWqbWFPnU6b5oxAIQkET6rQwcjf2n9pshw
+	 V2DcEgnTUsCROMFBYO9DjgSDjXnlBlGF9kZDTQumuzrO47HgTRqjN8oLxShjC1PLrV
+	 VvBYqN0frRFKttfxi+i1E0H/NOe2T3uzqE4mn39PHxzSBuIEvGfzsHjxk87Tea/bl/
+	 X1BIoHoNU8H5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
-	Jianjun Chen <jianjun@tsinghua.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+Cc: Manikanta Pubbisetty <manikanta.pubbisetty@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
-	netdev@vger.kernel.org,
+	jjohnson@kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath10k@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] netfilter: conntrack: tcp: use UNACK timeout for non-closing RST packets
-Date: Mon, 19 Oct 2026 09:46:30 -0400
-Message-ID: <20261019135441.1420968-99-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: ath10k: trigger hardware recovery upon rx failures
+Date: Mon, 19 Oct 2026 09:46:31 -0400
+Message-ID: <20261019135441.1420968-100-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -60,457 +56,430 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
+From: Manikanta Pubbisetty <manikanta.pubbisetty@oss.qualcomm.com>
 
-[ Upstream commit bf80e6802273a900311b44e47c9b1a59c6d2473c ]
+[ Upstream commit f78210dd4bea09090b828adc2733cad4b9916306 ]
 
-Commit be0502a3f2e9 ("netfilter: conntrack: tcp: only close if RST
-matches exact sequence") keeps an established conntrack entry in
-ESTABLISHED when an in-window RST does not match the expected sequence
-number exactly, so the endpoint can validate the RST with a challenge
-ACK.
+When an error occurs during RX packet processing (e.g., MSDU done
+failure), the driver sets rx_confused and drops all subsequent RX
+packets until a Wi-Fi ON/OFF cycle clears the flag. This can leave
+the device in a bad state where it cannot process RX data traffic.
 
-The timeout selection nevertheless uses the CLOSE timeout for every RST
-packet.  The bug is that timeout selection is based on the packet type,
-not on the state transition result: even when RST validation keeps
-new_state in ESTABLISHED, the timeout is still forced to
-TCP_CONNTRACK_CLOSE.
+Instead of leaving the device in such a state, trigger hardware
+recovery so that such an error state can be reset and the device
+can function again normally.
 
-Linux TCP independently rate limits challenge ACKs per socket.  A second
-non-exact RST can therefore arrive after the first challenge ACK has
-restored the timeout but before the rate limit expires.  The second RST
-lowers the timeout to 10 seconds again while the endpoint suppresses the
-second challenge ACK, allowing the conntrack entry to expire while both
-TCP endpoints remain established.
+Tested-on: WCN3990 hw1.0 WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00288-QCARMSWPZ-1
+Tested-on: QCA6174 hw3.2 SDIO WLAN.RMH.4.4.1-00189
 
-Using the ESTABLISHED timeout for such RSTs would avoid this short
-expiration window, but it could also retain stale entries for the
-five-day default because conntrack cannot reliably match the endpoint's
-exact TCP state.
-
-Use the UNACK timeout for RST packets that leave the conntrack entry in
-TCP_CONNTRACK_ESTABLISHED.  Exact-match RSTs and accepted RST packet
-trains still fall through to timeouts[new_state], which preserves the
-CLOSE timeout when conntrack accepts the RST as closing the flow.
-
-This avoids the aggressive 10-second expiration window for non-exact
-RSTs while preserving the short timeout for RSTs that conntrack accepts
-as closing the flow.
-
-Suggested-by: Florian Westphal <fw@strlen.de>
-Reported-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
-Reported-by: Jianjun Chen <jianjun@tsinghua.edu.cn>
-Signed-off-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Manikanta Pubbisetty <manikanta.pubbisetty@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260710060406.3323260-1-manikanta.pubbisetty@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The evaluation is for the **6.6.y** tree this session opened on
-(`pending-6.6` / 6.6.157). The bug is present there; the patch is a
-small, real conntrack timeout fix.
+The local tree is **Linux 7.3-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+surrounding ath10k RX and recovery code is present, and this is a small,
+real device-hang fix.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Record: **[netfilter/conntrack/tcp] [use] use UNACK timeout for non-
-  closing RST packets**
-- Subsystem: `netfilter: conntrack: tcp:`
-- Verb: “use” here is a timeout-policy correction after RST validation
-  already keeps the entry ESTABLISHED.
+Record: **[wifi/ath10k] [trigger] [start hardware recovery when RX
+processing fails instead of leaving the device stuck]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Record:
-  - **Suggested-by:** Florian Westphal `<fw@strlen.de>` (conntrack
-    maintainer)
-  - **Reported-by:** Minghao Zhang `<zhangmh25@mails.tsinghua.edu.cn>`
-  - **Reported-by:** Jianjun Chen `<jianjun@tsinghua.edu.cn>` (two
-    reporters)
-  - **Signed-off-by:** Minghao Zhang; Pablo Neira Ayuso (netfilter
-    maintainer)
-  - **No Fixes: / Cc: stable in the committed text** (expected for this
-    review queue)
-  - **v1 and v2 on the list both had** `Fixes: be0502a3f2e9 ("netfilter:
-    conntrack: tcp: only close if RST matches exact sequence")`. That
-    tag was dropped when the patch was folded into an nf-next pull.
+Record:
+- **Fixes:** none (expected)
+- **Reported-by:** none
+- **Tested-on:** WCN3990 hw1.0; QCA6174 hw3.2 PCI; QCA6174 hw3.2 SDIO
+  (three hardware/firmware combinations)
+- **Reviewed-by:** Rameshkumar Sundaram, Baochen Qiang (Qualcomm ath
+  reviewers)
+- **Acked-by:** none
+- **Link:** https://patch.msgid.link/20260710060406.3323260-1-
+  manikanta.pubbisetty@oss.qualcomm.com
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Manikanta Pubbisetty (author); Jeff Johnson (ath
+  maintainer). Ignoring Sasha Levin SOB if present in pipeline copies;
+  the tree copy has none.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record:
-  - **Bug:** After `be0502a3f2e9`, an in-window RST that does not match
-    `td_maxack` leaves conntrack in ESTABLISHED so the peer can
-    challenge-ACK. Timeout selection still keys off packet type
-    (`TCP_RST_SET`) and always applies **CLOSE (10s)**.
-  - **Symptom:** A second non-exact RST can land after the first
-    challenge ACK restored the timer, but while Linux still rate-limits
-    challenge ACKs. The second RST drops the timer to 10s again; the
-    suppressed challenge ACK never refreshes it; the conntrack entry
-    expires while both TCP endpoints stay established. NAT/firewall then
-    drop a live flow.
-  - **Root cause:** Timeout is chosen from the RST flag, not from the
-    resulting state.
-  - **Fix:** RST that leaves `new_state == TCP_CONNTRACK_ESTABLISHED`
-    uses **UNACK (5 min)**. Exact-match / RST-train RSTs still fall
-    through to `timeouts[new_state]` (CLOSE).
-  - **Version info:** Tied to `be0502a3f2e9` (2019-03-01), which is in
-    this 6.6 tree.
+Record:
+- **Bug:** On RX processing errors (e.g. MSDU_DONE not set), the driver
+  sets `htt->rx_confused` and then drops all further RX until a Wi-Fi
+  ON/OFF cycle.
+- **Symptom:** Device stays in a bad state and cannot process RX data
+  traffic; connectivity is dead until the user toggles the interface.
+- **Version info:** none in the message. The FIXME this removes dates to
+  2014 (`e0bd7513bbc85`, v3.19-rc1).
+- **Root cause:** Error paths mark the ring confused but never reset
+  hardware, so the device stays inoperable.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: **Not hidden.** It is a real timeout/state mismatch. v1/v2
-  called the 10s window **“exploitable”**. Pablo’s nf-next cover letter
-  softened that to “more conservative timeout”; the failure mode is
-  still live-session teardown through conntrack/NAT.
+Record: Not a disguised cleanup. It is an explicit functional fix:
+replace “leave device inoperable” with the existing recovery path. The
+removed FIXME said the same thing since 2014.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-- Record: **one file**, `net/netfilter/nf_conntrack_proto_tcp.c`; **~3
-  lines** in `nf_conntrack_tcp_packet()`. Surgical single-file logic
-  fix.
+Record:
+- File: `drivers/net/wireless/ath/ath10k/htt_rx.c` — **3 insertions, 3
+  deletions** (`git show --stat`: 6 lines changed).
+- Functions: `ath10k_htt_rx_handle_amsdu()`,
+  `ath10k_htt_rx_in_ord_ind()` (two sites).
+- Scope: single-file surgical error-path change.
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record: After window validation, timeout selection:
-  - **Before:** any `index == TCP_RST_SET` →
-    `timeouts[TCP_CONNTRACK_CLOSE]` (10s), even if `new_state` was
-    forced back to ESTABLISHED (`new_state = old_state` at the non-exact
-    RST path).
-  - **After:** only RST **and** `new_state == TCP_CONNTRACK_ESTABLISHED`
-    → UNACK (5 min). Closing RSTs (`tcp_conntracks[][]` maps
-    ESTABLISHED+RST → CLOSE, exact-seq / RST-train `break` without
-    restoring ESTABLISHED) still get CLOSE.
+Record:
+1. `ath10k_htt_rx_handle_amsdu()` when `ath10k_htt_rx_amsdu_pop()`
+   returns `< 0`: previously purged skbs, set `rx_confused`, returned.
+   Now also calls `ath10k_core_start_recovery(ar)`. FIXME removed.
+2. `ath10k_htt_rx_in_ord_ind()` when pop-paddr-list fails: same recovery
+   call after `rx_confused = true`.
+3. Same function when `ath10k_htt_rx_extract_amsdu()` fails: same
+   recovery call after purge + `rx_confused`.
+
+All three are **error paths only**. Normal RX is unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record: **[Logic / correctness]** plus a **security-relevant NAT
-  teardown window**. Timeout no longer contradicts the RFC 5961 “stay
-  ESTABLISHED for challenge ACK” path from `be0502a3f2e9`.
+Record: **Logic / hardware-stuck recovery.** After RX ring corruption
+the driver permanently refuses RX (`if (htt->rx_confused) return -EIO`).
+Recovery queues `restart_work` → `ath10k_halt()` →
+`ieee80211_restart_hw()` → `ath10k_start()` → `ath10k_core_start()` →
+`ath10k_htt_rx_alloc()`, which sets `htt->rx_confused = false`. That is
+the same recovery used on firmware crash and WMI timeout.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-- Record: **Obviously correct** for defaults (ESTABLISHED=5 days,
-  UNACK=5 min, CLOSE=10s). Minimal. Regression risk is low:
-  - Dead flows after a bogus RST linger **5 min instead of 10s** (same
-    UNACK used for unacked data / out-of-window FIN|RST).
-  - If sysctl sets ESTABLISHED **below** UNACK (e.g. 120s NAT boxes),
-    this commit can **extend** the timer. Follow-up `73df81b38cb7f`
-    (`timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK]`) closes that.
-    Pablo: “Not a big deal… only affect timeout configurations where
-    unack timeout is longer than established.” Defaults on 6.6 are fine.
+Record: Obviously correct and minimal. `ath10k_core_start_recovery()`
+only queues work (`queue_work(ar->workqueue_aux,
+&ar->recovery_check_work)` in this tree), so it is safe from NAPI.
+Existing consecutive-failure logic can WEDGE the device, so this does
+not create an infinite restart loop. Risk is a brief firmware restart on
+a path that was already dead. No API or data-structure changes.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-- Record: The unconditional RST→CLOSE timeout was added in
-  **`be0502a3f2e9`** (Florian Westphal, 2019-03-01, v5.1 era). It is an
-  ancestor of `pending-6.6`. Long-lived 6.6 code, not a new-mainline-
-  only bug.
+Record:
+- Confused-without-reboot behavior introduced in **`e0bd7513bbc85`**
+  (“ath10k: refactor htt->rx_confused”, 2014-11-20), first in
+  **v3.19-rc1**.
+- `handle_amsdu` error path from **`18235664e7f9a`** (Rajkumar
+  Manoharan, 2016).
+- In-order pop/extract error paths from **`c545070e404bf`** (“ath10k:
+  implement rx reorder support”, 2015), v4.1 era.
+- Recovery calls added by this commit **`f78210dd4bea0`**.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: Committed message has **no Fixes:**. Submissions targeted
-  **`be0502a3f2e9`**, which **is** in this tree (`git merge-base --is-
-  ancestor be0502a3f2e9 pending-6.6` → YES). That commit documented
-  CLOSE timeout for non-exact RSTs as intentional; this patch revises
-  that because challenge-ACK rate limiting makes the 10s window drop
-  live flows.
+Record: No `Fixes:` tag. Historical introducer is `e0bd7513bbc85`
+(ancestor of HEAD). `git merge-base --is-ancestor e0bd7513bbc85 HEAD` is
+true.
 
 **Step 3.3: CHECK FILE HISTORY**
-- Record (on `pending-6.6`): related RST work includes `2bb6d82b586ea`
-  (invalid-seq RST direction check) and `628d694344a02` (UNACK for out-
-  of-window FIN/RST). **Standalone** timeout change; not patch 2/N.
-  Follow-up `73df81b38cb7f` is **not** in `pending-6.6` and should ride
-  along once this is applied (it has `Fixes: bf80e6802273`).
+Record: Related but independent: `7393878255e49` (skb leak on incomplete
+MSDU pop) is a different patch/date/msgid. This commit is standalone
+`1/1`. No prerequisite refactor in htt_rx.c.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Minghao Zhang / Jianjun Chen (Tsinghua) —
-  reporters/researchers, not netfilter maintainers. Weight comes from
-  **Suggested-by Florian** and **SOB Pablo**. No other Minghao commits
-  on this file in 6.6.
+Record: Manikanta Pubbisetty is a Qualcomm ath10k contributor (leak fix
+on the same file shortly before). Not the listed maintainer; maintainer
+Jeff Johnson applied it.
 
-**Step 3.5: DEPENDENT/PREREQUISITE COMMITS**
-- Record: Needs the `be0502` non-exact-RST ESTABLISHED path (present).
-  Uses existing `TCP_CONNTRACK_UNACK`. **Applies standalone** on 6.6.
-  Optional follow-up for inverted sysctl timeouts.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record:
+- `ath10k_core_start_recovery()` exists since **`5dadbe4e3718`**
+  (v5.11-rc1) — ancestor of HEAD.
+- Current implementation from **`f35a07a4842a8`** (Oct 2025) — ancestor
+  of HEAD; queues work, does not block in the caller.
+- Can apply standalone on this tree: the function, `rx_confused`, and
+  both RX handlers exist.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record:
-  - `b4 dig -c bf80e6802273a` → v2: https://patch.msgid.link/20260729154
-    654.3599616-1-zhangmh25@mails.tsinghua.edu.cn
-  - **v1** (2026-07-29): explicit CLOSE branch + UNACK fallback;
-    **Fixes:** + “exploitable 10-second expiration window”
-  - **v2:** Pablo/Florian simplification; UNACK only if `new_state ==
-    ESTABLISHED`
-  - Florian (https://patch.msgid.link/amoXj6UGRW8SQXBT@strlen.de): asked
-    to drop redundant CLOSE assignment and test a narrower condition.
-    Author tested ESTABLISHED-only UNACK and sent v2.
-  - **No NAK.** Queued in Pablo’s nf-next pull (patch 9/9), 2026-07-31:
-    https://lists.openwall.net/netdev/2026/07/31/313
-  - Jakub forwarded an AI review
-    (https://lists.openwall.net/netdev/2026/08/05/12): should have
-    Fixes:; CLOSE-for-inexact-RST was intentional in 2019; missing “only
-    lower, never extend” guard; closing-RST CLOSE timeout not preserved
-    for some non-default sysctls. The **extend** issue is exactly what
-    `73df81b38cb7f` later fixed.
+Record:
+- Lore/msgid: https://patch.msgid.link/20260710060406.3323260-1-
+  manikanta.pubbisetty@oss.qualcomm.com
+- `b4 dig -a`: **v1 only**, single patch, no v2/v3.
+- Reviews: Baochen Qiang Reviewed-by; Rameshkumar Sundaram “Actual
+  change looks fine” + Reviewed-by. No NAKs, no stable nomination, no
+  risk flags.
+- Jeff Johnson: “Applied, thanks!” (`da5d73e12af2` in ath.git; mainline
+  sha `f78210dd4bea0`).
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record (`b4 dig -w`): To/Cc **netfilter-devel**,
-  **pablo@netfilter.org**, **fw@strlen.de**, Jianjun Chen. Right
-  maintainers. Florian reviewed v1; Pablo merged.
+Record: `b4 dig -w` original To/Cc: author,
+`ath10k@lists.infradead.org`, `linux-wireless@vger.kernel.org`. Applied
+by **Jeff Johnson**, listed ATH10K maintainer.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: Dual Reported-by from Tsinghua. v1/v2 text: **exploitable**
-  10s window via RST + challenge-ACK rate limit. Concrete trigger, not
-  syzbot. Syzbot CI on the series: **passed**
-  (https://ci.syzbot.org/series/36445e46-2abc-4e64-93d2-bb558ec1f53b).
+Record: No syzbot/bugzilla. Qualcomm Tested-on on three chipsets implies
+they hit RX-stuck in product testing, not a theoretical FIXME-only
+cleanup.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: Standalone nf-next patch (not a 9-patch dependency; the other
-  8 were unrelated flowtable/conncount work). Follow-up: `73df81b38cb7f`
-  / https://lists.openwall.net/netdev/2026/08/10/387 — “Reported by
-  sashiko”.
+Record: Standalone `[ath-next] 1/1`. The earlier skb-leak patch is not
+required for this change.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: **No useful stable-list discussion found** for this subject
-  (lore.kernel.org/stable search did not surface this patch). Not
-  previously rejected for 6.6.
+Record: lore.kernel.org HTTP fetch returned 403. `b4 dig` thread has no
+stable discussion. **UNVERIFIED** whether linux-stable ever discussed
+this specific patch; no evidence it was rejected.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 **Step 5.1: KEY FUNCTIONS**
-- Record: **`nf_conntrack_tcp_packet()`** only.
+Record: `ath10k_htt_rx_handle_amsdu`, `ath10k_htt_rx_in_ord_ind`; callee
+`ath10k_core_start_recovery`.
 
 **Step 5.2: TRACE CALLERS**
-- Record: `pending-6.6:net/netfilter/nf_conntrack_core.c:1897` — every
-  tracked TCP packet. Softirq/hook path, not init-only.
+Record: Both called from `ath10k_htt_txrx_compl_task()` (NAPI poll): in-
+order queue then `num_mpdus_ready` loop. On `-EIO` it stops processing.
+That is the normal data RX completion path, not init-only.
 
 **Step 5.3: TRACE CALLEES**
-- Record: `nf_ct_timeout_lookup()`, `tn->timeouts[]`, later
-  `nf_ct_refresh_acct()`. Writes entry expiry.
+Record: `ath10k_core_start_recovery()` → `queue_work(workqueue_aux,
+recovery_check_work)` → may `queue_work(workqueue, restart_work)` → halt
++ `ieee80211_restart_hw()`. No lock taken in `start_recovery`.
+`in_ord_ind` holds `rx_ring.lock` while queuing work; that is safe.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: Userspace/network reachable whenever `CONFIG_NF_CONNTRACK`
-  tracks TCP (iptables/nftables/NAT, Docker, Kubernetes, firewalls).
-  **High impact.** An on-path or in-window RST injector can hit it.
-  Unprivileged remote: needs in-window (not exact) SEQ; that is the RFC
-  5961 threat model.
+Record: Userspace/network RX → mac80211 → NAPI → htt_rx. Reachable on
+any associated ath10k interface when firmware/DMA delivers a bad MSDU or
+corrupted ring. Unprivileged traffic can contribute; the actual trigger
+is firmware/hardware RX error, not a crafted syscall.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: Sibling branches already only **lower** timeout
-  (RETRANS/UNACK/zero-window). This RST branch was the odd one-out.
-  `nf_tcp_handle_invalid()` also uses UNACK for out-of-window FIN/RST
-  (`628d694`).
+Record: Same `ath10k_core_start_recovery()` already used in `pci.c`
+(firmware crash), `wmi.c` (command timeout), `sdio.c`/`snoc.c`,
+`debug.c`. This patch extends that pattern to RX ring failure. All
+`rx_confused = true` sites in htt_rx.c are covered.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: **Yes on `pending-6.6` / 6.6.157:**
-
-```
-else if (unlikely(index == TCP_RST_SET))
-    timeout = timeouts[TCP_CONNTRACK_CLOSE];
-```
-
-at `nf_conntrack_proto_tcp.c` ~1327–1328. Non-exact RST still does
-`new_state = old_state` (~1260). `be0502a3f2e9` is an ancestor.
-Candidate **`bf80e6802273a` is not** an ancestor of `pending-6.6`.
-Introduced with `be0502` (2019), present for the whole 6.6 lifetime.
-
-*(HEAD later detached at `v7.3-rc4-70` during this session; that
-mainline tree already contains the fix. The stable tree this review is
-for remains 6.6.157 / `pending-6.6`, where the bug is still open.)*
+Record:
+- `git describe HEAD` / `make kernelversion`: **7.3.0-rc4**.
+- File and functions exist. `rx_confused` still used. Recovery API
+  present.
+- Bug introduced v3.19; long present in this lineage.
+- Working tree already contains `f78210dd4bea0` (`git merge-base --is-
+  ancestor` exit 0). That is the mainline commit under review, not a
+  reason to treat the bug as absent from this series’ code.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: **Clean apply.** Exact before-image on `pending-6.6`. No
-  refactor of this hunk vs the candidate.
+Record: Hunks match this tree’s htt_rx.c. Recovery is the non-blocking
+workqueue form. Expected apply: **clean** on a 7.3-era tree that still
+has the pre-image; current HEAD is already post-image.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: `2bb6d82b586ea` is a **different** RST CLOSE issue (SYN/RST
-  direction). It does **not** change RST timeout selection. No earlier
-  UNACK-for-non-closing-RST fix in 6.6.
+Record: No earlier alternative fix for “reboot on rx_confused”.
+`51fc7d74ce4a1` only clears the flag on load. This is the fix that
+actually starts recovery.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: SUBSYSTEM AND CRITICALITY**
-- Record: **netfilter conntrack TCP** — **IMPORTANT**. Core firewall/NAT
-  path on virtually every router, distro firewall, and container host.
+Record: **drivers/net/wireless/ath/ath10k** — **IMPORTANT** (not core
+mm/fs, but QCA6174/WCN3990 are common laptop/phone Wi-Fi). Status in
+MAINTAINERS: Supported; maintainer Jeff Johnson.
 
 **Step 7.2: SUBSYSTEM ACTIVITY**
-- Record: Mature tracker; this file still gets targeted RST/timeout
-  fixes. Bug is old (`be0502`), not churn from a new subsystem.
+Record: Actively maintained (Qualcomm patches through 2026). The stuck-
+RX behavior itself is old; the recovery helper is mature.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: WHO IS AFFECTED**
-- Record: **Conntrack/NAT users** (`CONFIG_NF_CONNTRACK`) — default on
-  most distro kernels. Not arch-specific.
+Record: **Driver-specific**, `CONFIG_ATH10K*`. QCA6174 is widely used in
+PCs; WCN3990 on Qualcomm platforms.
 
 **Step 8.2: TRIGGER CONDITIONS**
-- Record: In-window, non-exact RST on an ESTABLISHED tracked flow. 6.6
-  still **per-socket** rate-limits challenge ACKs via
-  `__tcp_oow_rate_limited()` and `sysctl_tcp_invalid_ratelimit = HZ/2`
-  (500ms), even with global `tcp_challenge_ack_limit = INT_MAX`. A
-  second RST inside that window matches the commit’s scenario. Also:
-  single RST + lost/unseen challenge ACK (asymmetric routing) leaves a
-  10s expiry. **On-path attacker or sequence-in-window injection.**
+Record: RX ring pop/extract failure (incomplete MSDU, corrupted ring).
+Not every packet; when it hits, RX stays dead until iface toggle. Not a
+userspace exploit path.
 
 **Step 8.3: FAILURE MODE SEVERITY**
-- Record: **Live TCP dropped through NAT/firewall** after ~10s;
-  endpoints stay ESTABLISHED. Not a panic. **HIGH** (session disruption
-  / DoS on middleboxes). Authors called it **exploitable**.
+Record: **Wi-Fi RX permanently stopped** until ON/OFF. Not a panic/UAF,
+but the device is inoperable — the 2014 FIXME called it that. Severity
+**HIGH** (driver hang / loss of connectivity). Consecutive recovery
+failures can WEDGE, which is existing policy, not new.
 
 **Step 8.4: RISK-BENEFIT RATIO**
-- Record: **Benefit high** (stops silent NAT teardown of established
-  sessions). **Risk low** (3-line, default UNACK < ESTABLISHED).
-  Residual risk: short ESTABLISHED sysctl vs longer UNACK — mitigated by
-  a one-line follow-up, not a reason to skip this fix.
+Record:
+- **Benefit:** Restores Wi-Fi after RX ring confusion without a manual
+  toggle; uses the same recovery as firmware crash.
+- **Risk:** Very low (3 calls to an existing queue_work helper; error
+  paths only). Worst case is a restart of an already-dead radio.
+- **Ratio:** Strongly favors taking the fix.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: EVIDENCE**
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR:**
-- Real, user-visible bug: conntrack expires while TCP stays up.
-- Security-relevant (in-window RST + challenge-ACK throttle); v1/v2 said
-  “exploitable”; had `Fixes: be0502a3f2e9`.
-- `be0502` and the buggy CLOSE timeout are in 6.6.
-- Challenge-ACK **per-socket** throttle exists in 6.6 (`HZ/2`).
-- Tiny, obviously correct for default timeouts; Florian suggested, Pablo
-  merged, author tested v2.
-- Applies cleanly to `pending-6.6`.
+FOR:
+- Real user-visible bug: all RX dropped until Wi-Fi toggle.
+- Acknowledged since 2014 in-tree FIXME.
+- Small (3 calls, one file), obviously correct.
+- Uses existing, NAPI-safe recovery.
+- Tested on three chip/bus combinations.
+- Reviewed and applied by ath maintainers; no NAKs.
+- All `rx_confused = true` sites updated.
+- Code and `ath10k_core_start_recovery()` exist in this 7.3-rc4 tree.
 
-**AGAINST:**
-- Merged via **nf-next**, not nf; committed text dropped Fixes: and
-  “exploitable”.
-- `be0502` originally **meant** CLOSE timeout for non-exact RSTs (policy
-  shift 10s → 5 min).
-- Follow-up needed for ESTABLISHED < UNACK sysctl.
-- Not a crash/corruption/deadlock.
+AGAINST:
+- Not a crash, UAF, or security bug; workaround exists (iface bounce).
+- Trigger is firmware/hardware RX error, not every boot.
+- No `Fixes:`/`Cc: stable` (not a negative per the rules).
 
-**UNRESOLVED:** Full lore.kernel.org HTML was 403 (used `b4` + openwall
-+ local mbox instead). No CVE number found.
+UNRESOLVED:
+- lore.kernel.org WebFetch 403; thread recovered via `b4 dig -m`.
+- No independent end-user bugzilla; product Tested-on only.
 
 **Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — v2 tested by author;
-   Florian/Pablo; syzbot CI passed.
-2. Fixes a real bug that affects users? **PASS** — NAT/firewall drop of
-   live TCP.
-3. Important (crash/security/corruption/deadlock)? **PASS** —
-   exploitable middlebox teardown / DoS, not a panic.
-4. Small and contained? **PASS** — ~3 lines, one function.
-5. No new features or APIs? **PASS** — existing UNACK timeout.
-6. Can apply to this tree? **PASS** — exact match on `pending-6.6`.
+1. Obviously correct and tested? **PASS** — three Tested-on lines, two
+   Reviewed-by, maintainer applied.
+2. Fixes a real bug that affects users? **PASS** — RX stays dead until
+   ON/OFF.
+3. Important issue? **PASS** — device inoperable / connectivity hang,
+   HIGH.
+4. Small and contained? **PASS** — 3/3 lines, one file.
+5. No new features or APIs? **PASS** — only calls existing recovery.
+6. Can apply to the local tree? **PASS** — htt_rx.c and
+   `ath10k_core_start_recovery()` match; this tree is 7.3-rc4.
 
 **Step 9.3: EXCEPTION CATEGORIES**
-- Record: None (not a device ID/quirk/DT/build/doc exception). Ordinary
-  netfilter bugfix.
+Record: None (not a device ID/quirk/DT/build/doc). Qualifies as a normal
+bugfix.
 
 **Step 9.4: DECISION**
-Backport. 6.6 has the 2019 RST-validation change **and** the 10s CLOSE
-timeout that undermines it. The 5-minute UNACK value is the same
-compromise already used for other “conntrack and endpoints disagree”
-cases. Take follow-up `73df81b38cb7f` with it when possible; this commit
-is still right on default 6.6 timeouts without it.
+This tree has the ath10k RX confused paths and the recovery helper.
+Leaving `rx_confused` set without restart makes the radio unusable;
+kicking `ath10k_core_start_recovery()` is the same response already used
+for firmware crash and is safe from NAPI. That is a contained, tested
+hang fix appropriate for this tree.
 
 ---
 
-## What the commit solves for stable users
+## What the commit solves for this tree
 
-On 6.6 firewalls/NAT, an in-window RST that is **not** the exact next
-SEQ leaves conntrack ESTABLISHED (RFC 5961) but still arms a **10s**
-timer. Linux then rate-limits challenge ACKs (~500ms per socket). A
-second such RST re-arms 10s with no refresh ACK, so conntrack deletes a
-flow that both endpoints still consider established. That is a real
-production failure and a plausible DoS on NAT.
+When htt RX pop/extract fails, ath10k previously set `rx_confused` and
+discarded all later RX until a full Wi-Fi cycle. Users see a dead
+receive path. The patch queues the existing hardware restart so
+`ath10k_htt_rx_alloc()` clears the flag and the device can RX again.
 
-## Stable rules / risk vs benefit
-
-Meets the rules: small, tested, no new API, applies cleanly, fixes an
-important conntrack bug. Benefit is high for a common config; regression
-risk is a slightly longer hold of *stale* entries (5 min vs 10s), which
-is acceptable.
-
-## Concerns
-
-- Pair with `73df81b38cb7f` so sysctl ESTABLISHED < UNACK cannot extend
-  lifetime.
-- Behavior change vs 2019 “intentional CLOSE timeout” is the point of
-  the fix, not a blocker.
+It meets stable rules: obviously correct, real hang, ~3 lines, no new
+API. Benefit is restoring Wi-Fi after ring confusion; risk is a restart
+of an already-stuck device.
 
 ---
 
 ## Verification
-- **[Phase 1]** Tags: Suggested-by Florian, two Reported-by, Pablo SOB;
-  committed text has no Fixes:/Cc:stable; v1/v2 mbox **did** include
-  `Fixes: be0502a3f2e9` and “exploitable”.
-- **[Phase 2]** Diff: 3-line change in `nf_conntrack_tcp_packet()` RST
-  timeout arm; CLOSE preserved when `new_state != ESTABLISHED`.
-- **[Phase 3]** `be0502a3f2e9` is ancestor of `pending-6.6`; candidate
-  is not. Blame: CLOSE-on-every-RST from `be0502`. Follow-up
-  `73df81b38cb7f` not in 6.6.
-- **[Phase 3]** `git show
-  pending-6.6:net/netfilter/nf_conntrack_proto_tcp.c` lines 1327–1328:
-  buggy `index == TCP_RST_SET` → CLOSE.
-- **[Phase 4]** `b4 dig -c bf80e6802273a`: v1+v2; Florian review
-  `amoXj6UGRW8SQXBT@strlen.de`; Pablo nf-next 9/9; Jakub AI review
-  2026-08-05; follow-up 2026-08-10 “Reported by sashiko”.
-- **[Phase 4]** `b4 dig -w`: netfilter-devel, pablo, fw. `b4 dig -a`:
-  v1→v2 only.
-- **[Phase 4]** lore.kernel.org WebFetch: **403**; used b4 mbox +
-  openwall. Stable list: no hit on this subject.
-- **[Phase 5]** Caller: `nf_conntrack_core.c:1897` on every tracked TCP
-  packet.
-- **[Phase 6]** First probe: `pending-6.6`, `make kernelversion`
-  6.6.157. Later HEAD detached at `v7.3-rc4-70` (mainline already has
-  the fix). Re-checked **`pending-6.6`**: VERSION 6.6.157, buggy timeout
-  present, exact before-image, candidate not ancestor.
-- **[Phase 6]** 6.6 challenge ACK: `__tcp_oow_rate_limited` +
-  `sysctl_tcp_invalid_ratelimit = HZ/2`; global limit INT_MAX does
-  **not** disable per-socket limit.
-- **[Phase 6]** Defaults on 6.6: ESTABLISHED 5 days, UNACK 5 min, CLOSE
-  10s.
-- **[Phase 8]** Failure: NAT/conntrack drop of live TCP; severity HIGH /
-  security-relevant.
-- **UNVERIFIED:** CVE id (none found). Could not fetch lore HTML
-  directly.
+
+- **[Phase 1]** Tags: Tested-on ×3, Reviewed-by ×2, Link msgid; no
+  Fixes/Reported-by/Cc:stable.
+- **[Phase 2]** `git show --stat f78210dd4bea0`: htt_rx.c +3/-3; three
+  `ath10k_core_start_recovery()` calls on error paths; FIXME removed.
+- **[Phase 2]** Read `ath10k_core_start_recovery()` at core.c:2534 —
+  `queue_work` only.
+- **[Phase 2]** Read restart path: `ath10k_core_restart` →
+  `ieee80211_restart_hw` → `ath10k_start` → `ath10k_core_start` →
+  `ath10k_htt_rx_alloc()` sets `rx_confused = false` (htt_rx.c:796).
+- **[Phase 3]** `git log -S` / `git describe --contains e0bd7513bbc85`:
+  FIXME from v3.19-rc1.
+- **[Phase 3]** `ath10k_core_start_recovery` added in `5dadbe4e3718`
+  (v5.11-rc1); ancestor of HEAD.
+- **[Phase 3]** `git merge-base --is-ancestor` for f35a07a4842a8,
+  5dadbe4e3718, c545070e404bf, e0bd7513bbc85: all 0.
+- **[Phase 3]** Related leak commit `7393878255e49` is a separate patch,
+  not a prerequisite.
+- **[Phase 4]** `b4 dig -c f78210dd4bea0`: msgid
+  20260710060406.3323260-1.
+- **[Phase 4]** `b4 dig -a`: v1 only.
+- **[Phase 4]** `b4 dig -w`: linux-wireless + ath10k lists.
+- **[Phase 4]** `b4 dig -m`: Baochen/Rameshkumar Reviewed-by; Jeff
+  Johnson applied; no NAK; no Cc:stable in thread.
+- **[Phase 4]** WebFetch lore.kernel.org: 403. UNVERIFIED via HTTP;
+  thread obtained via b4.
+- **[Phase 5]** Callers: `ath10k_htt_txrx_compl_task`
+  (htt_rx.c:4382–4395).
+- **[Phase 5]** Grep: all three `rx_confused = true` sites got recovery;
+  other start_recovery users are pci/wmi/sdio/snoc/debug.
+- **[Phase 6]** `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4.
+- **[Phase 6]** `git merge-base --is-ancestor f78210dd4bea0 HEAD`: 0
+  (commit is in this tree’s history).
+- **[Phase 7]** MAINTAINERS: ATH10K Supported, Jeff Johnson.
+- **[Phase 8]** Failure mode: RX hung until iface toggle; recovery
+  already rate-limited to WEDGED.
+- **UNVERIFIED:** linux-stable mailing list (HTTP 403); no public non-
+  Qualcomm reproducer.
+
+The fix is small, surgical, and meets the stable criteria for this
+7.3-rc4 tree.
 
 **YES**
 
- net/netfilter/nf_conntrack_proto_tcp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/htt_rx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index 91da35e2b0d8d..456721e40ed0c 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -1325,8 +1325,9 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
- 	if (ct->proto.tcp.retrans >= tn->tcp_max_retrans &&
- 	    timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
- 		timeout = timeouts[TCP_CONNTRACK_RETRANS];
--	else if (unlikely(index == TCP_RST_SET))
--		timeout = timeouts[TCP_CONNTRACK_CLOSE];
-+	else if (unlikely(index == TCP_RST_SET &&
-+			  new_state == TCP_CONNTRACK_ESTABLISHED))
-+		timeout = timeouts[TCP_CONNTRACK_UNACK];
- 	else if ((ct->proto.tcp.seen[0].flags | ct->proto.tcp.seen[1].flags) &
- 		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
- 		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
+diff --git a/drivers/net/wireless/ath/ath10k/htt_rx.c b/drivers/net/wireless/ath/ath10k/htt_rx.c
+index d7e429041065a..e4162d2faae66 100644
+--- a/drivers/net/wireless/ath/ath10k/htt_rx.c
++++ b/drivers/net/wireless/ath/ath10k/htt_rx.c
+@@ -2345,10 +2345,8 @@ static int ath10k_htt_rx_handle_amsdu(struct ath10k_htt *htt)
+ 	if (ret < 0) {
+ 		ath10k_warn(ar, "rx ring became corrupted: %d\n", ret);
+ 		__skb_queue_purge(&amsdu);
+-		/* FIXME: It's probably a good idea to reboot the
+-		 * device instead of leaving it inoperable.
+-		 */
+ 		htt->rx_confused = true;
++		ath10k_core_start_recovery(ar);
+ 		return ret;
+ 	}
+ 
+@@ -3313,6 +3311,7 @@ static int ath10k_htt_rx_in_ord_ind(struct ath10k *ar, struct sk_buff *skb)
+ 	if (ret < 0) {
+ 		ath10k_warn(ar, "failed to pop paddr list: %d\n", ret);
+ 		htt->rx_confused = true;
++		ath10k_core_start_recovery(ar);
+ 		return -EIO;
+ 	}
+ 
+@@ -3346,6 +3345,7 @@ static int ath10k_htt_rx_in_ord_ind(struct ath10k *ar, struct sk_buff *skb)
+ 			ath10k_warn(ar, "failed to extract amsdu: %d\n", ret);
+ 			htt->rx_confused = true;
+ 			__skb_queue_purge(&list);
++			ath10k_core_start_recovery(ar);
+ 			return -EIO;
+ 		}
+ 	}
 -- 
 2.53.0
 
