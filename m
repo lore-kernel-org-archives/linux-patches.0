@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C585D2A09;
-	Mon, 19 Oct 2026 14:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B9B5D2A15;
+	Mon, 19 Oct 2026 14:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418495; cv=none; b=p+xLMaHUPGmFamnhLCai78sXJRKA28K7P01OXn74a2WD5vpNCvdS6LszrBeuSeffl4x0eNzcIMIVhJO1/Qo28nQ8FDHrIcJWZB1pp0KHIcjJTrCFMlJiV6TbNQogNR1/EP7PK3OnH/fjucrSAaaqsXGWrwgwTlX6SIJMWBTTH5I=
+	t=1792418497; cv=none; b=EM3KGdSTvmZx50X1CVE66vdhYjmNoYqC8F/NYo3kg0cKRi1BH8JhFBiwVhtpZxIQdNhDpgEeeH1FAG15GDVlBG5t5x4UfQjJlqjyl9EgIH1UM7FYEAP5eYCAo8BxdDpJKnJ6LWSmPNZR8LXJMejWVhaq4I7GDW+QP1ymEPQjA0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418495; c=relaxed/simple;
-	bh=FTo0tuqmLtaoXV1Ps7QVMNzMAHQZnrxv5rcQCfXaVEI=;
+	s=arc-20240116; t=1792418497; c=relaxed/simple;
+	bh=RbSzruvk7tdPZGBe2uxzDrFkG4eYkkVPyWyLNyqEUfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JKrFLN0fsVk7KJr4l8MJvtnjdPA5xbDKzAmmSygPOE2tn65i8e5yHJYmfA+8rs7BqBMEpmgY7MJJlODZeplDO54+b6YKHQKGLGn5SUMxmgl3ucqcXmmKY2qEBTKrON2dF74UH3x5HoIKn38p9uV/lUucrXMIGs+EHg7q2o9ejoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mzBPbMoP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=s1NQI/EU+PHXIv8GDGkTkZuwC0PGpPAN6n/uiSXUjEev5fLF13oQGfhRyBD6k4IyvUcRpAl/wengjUB+NWFaU9SZheGql8jgAOYZH0rPWwZKJtGSJKXc4MNMl5lvxmfN5VNiyr1Wi+chuz6UACdR3pu6mKi0idClxKcslGfQvi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ku55ul+Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mzBPbMoP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866961F000C4;
-	Mon, 19 Oct 2026 14:01:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ku55ul+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF8A1F000C8;
+	Mon, 19 Oct 2026 14:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418492;
-	bh=qIx0oMbMGkNxA0B5LE0snzLqyXZgwPDKrBhNTml/zNs=;
+	s=k20260515; t=1792418494;
+	bh=C4uLmbh3UY4Wvc/ua3+aKR6tqdcVCGj3zhapadbwh/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mzBPbMoPD1ux0ii5v8qFtUoLQ79s6HMzxWiSGoJaTbQbNRCVs+DfLG3qK+WnCP4p8
-	 i3mtcQrnqQqQFOw82lWUHKPh8f+D8JOXPvMtwik8vUoRwGsBIx7XJyLfCAJp2aNeAl
-	 7yJtBc/LkrUXef5zvK8X8ETlkwa3QBdDa6eeDJShIn2Fd7BnDxwjPcCdm1Q3EWamot
-	 jaZryFxTVr+PQZMjcXfF75eXqReinNr60f+bgaaidbwi6jJoZ71Fta4EYw2j4K51DW
-	 fslb2kxTtCWC/TNI6dbtapJ+p0a9SPDXhYyKwfeAgCAksGCFMBq6VDZayXgMlzkpap
-	 i9OG+PbEkKp1A==
+	b=Ku55ul+YpKeAWoCfIDFM70b/xeErKDSm28cs/wmFhTJFW8SrrZKjSSKhNLC6CXIyz
+	 HCep7TQ4FMHzMNr/4K9x8M0xohyn7+2TacrT1CzpcptxsLb1wQOUMprF6stpeOpL1q
+	 LtuuQJ5yAJ38xrTldpPvocEGjo36MbD2v2ajeXx4y72r0o8chatabYxI99OpP4t5BE
+	 Y/NRPGQPcnNsIO7FlmYXL6m4GxZ6WP/NVrm0RosmmWhk/LQsDNVHwkGxE53ndKKx3B
+	 H9/1A5luRpI71nwXkwbFsQGl+hFn6aKbUXg2xfkQFTz/91atTISxrZ1G07I6M9WBL7
+	 9uWMQAZmUaPCg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ahmed Naseef <naseefkm@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+Cc: Ali Alaei <ali.alaei.tabatabaei@gmail.com>,
+	Lin Mohan <linmhwork@outlook.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-5.15] wifi: mt76: mt7603: add 0x7592 EEPROM chip ID
-Date: Mon, 19 Oct 2026 09:49:38 -0400
-Message-ID: <20261019135441.1420968-287-sashal@kernel.org>
+	nirmal.patel@linux.intel.com,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] PCI: vmd: Handle BUS_RESTRICT_CFG value 3 for Arrow Lake-HX
+Date: Mon, 19 Oct 2026 09:49:39 -0400
+Message-ID: <20261019135441.1420968-288-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,379 +57,503 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ahmed Naseef <naseefkm@gmail.com>
+From: Ali Alaei <ali.alaei.tabatabaei@gmail.com>
 
-[ Upstream commit d16447d7470502e998d82e806ca7ed49d1baa853 ]
+[ Upstream commit 72b32eccbcd591b9606edacf3bd7c455176d7660 ]
 
-Some EcoNet based routers ship an on-flash EEPROM whose chip-id is
-0x7592 instead of the expected 0x7603. The device probes as PCI
-14c3:7603 and the hardware MT_HW_CHIPID register reports 0x7603,
-independent of the EEPROM value.
+On Intel Arrow Lake-HX systems (e.g. Core Ultra 9 275HX on Acer Predator
+PH16-73), the VMD controller reports BUS_RESTRICT_CFG = 3 in the VMCONFIG
+register. The existing switch statement only handled values 0, 1, and 2,
+causing vmd_get_bus_number_start() to return -ENODEV and aborting the
+entire VMD probe. This leaves NVMe drives behind the VMD controller
+invisible to the kernel.
 
-This is seen across multiple EcoNet EN751221 and EN7528 based devices
-(for example the Genexis Platinum 4410).
+Hardware registers (VMCAP/VMCONFIG at offsets 0x40/0x44):
 
-Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
-Link: https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  VMD 0000:00:0e.0 (8086:ad0b): VMCAP=0x000f, VMCONFIG=0x03b8
+  BUS_RESTRICT_CFG(0x03b8) = (0x03b8 >> 8) & 0x3 = 3
+
+Add cfg=3 as a fallthrough to cfg=2, setting busn_start=224, which is
+the correct bus number base for this hardware.
+
+Also add a PCI_POSSIBLE_ERROR() guard after reading VMCONFIG: a failed
+config space read returns 0xFFFF, and BUS_RESTRICT_CFG(0xFFFF) = 3,
+so without this guard a removed or errored device would falsely match
+the new case 3 instead of being caught as an error.
+
+Reported-by: Lin Mohan <linmhwork@outlook.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221137 # Arrow-Lake-S
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221136 # Arrow-Lake-S
+Signed-off-by: Ali Alaei <ali.alaei.tabatabaei@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260628143450.92492-1-ali.alaei.tabatabaei@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The evaluation target is **pending-6.6 (6.6.157)**. The mt7603 driver is
-present; the 0x7592 EEPROM ID is not. This is a one-line ID addition to
-an existing driver, which is a standard stable exception.
+The local tree is **7.3.0-rc4**. This commit is a three-line VMD
+hardware workaround: Arrow Lake reports `BUS_RESTRICT_CFG=3`, probe used
+to abort with `-ENODEV`, and NVMe behind VMD disappeared. That is a
+real, user-visible bug and is appropriate for this tree.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [wifi: mt76: mt7603] [add] [accept EEPROM chip ID 0x7592 in
-mt7603_check_eeprom]
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[PCI: vmd]** **[Handle]** Handle `BUS_RESTRICT_CFG` value 3
+for Arrow Lake-HX so VMD probe no longer fails.
+
+Subsystem: PCI VMD controller (`drivers/pci/controller/vmd.c`). Verb
+“Handle” is a bug-fix verb: previously-unhandled hardware encoding.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- Signed-off-by: Ahmed Naseef \<naseefkm@gmail.com\> (author)
-- Link:
-  https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
-- Signed-off-by: Felix Fietkau \<nbd@nbd.name\> (mt76 maintainer,
-  applied the patch)
-- No Fixes: tag (expected for this review queue)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by
-- No syzbot / KASAN tags
-- Sasha Levin SOB not present on this commit
+- **Reported-by:** Lin Mohan `<linmhwork@outlook.com>` (real user; also
+  the bugzilla reporter)
+- **Closes:** https://bugzilla.kernel.org/show_bug.cgi?id=221137 (Arrow-
+  Lake-S)
+- **Closes:** https://bugzilla.kernel.org/show_bug.cgi?id=221136 (Arrow-
+  Lake-S)
+- **Signed-off-by:** Ali Alaei (author); Manivannan Sadhasivam (PCI
+  host/endpoint maintainer, applied); Bjorn Helgaas (PCI subsystem
+  maintainer, committed)
+- **Link:** https://patch.msgid.link/20260628143450.92492-1-
+  ali.alaei.tabatabaei@gmail.com
+- **No Fixes:** tag (expected for this review)
+- **No Cc: stable** (expected)
+- Ignored pipeline SOBs if present; none from Sasha Levin on this commit
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Notable: two independent Closes tags plus a Reported-by, plus PCI
+maintainer SOBs.
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- Bug: EcoNet routers store chip-id 0x7592 in on-flash EEPROM instead of
-  0x7603/0x7628/0x7600.
-- Hardware identity is still MT7603: PCI 14c3:7603, and MT_HW_CHIPID
-  reads 0x7603.
-- Symptom: driver treats a valid factory EEPROM as invalid.
-- Devices: EcoNet EN751221 and EN7528, e.g. Genexis Platinum 4410.
-- No stack trace; this is hardware recognition, not a crash fix.
-- Root cause: mt7603_check_eeprom() whitelist is incomplete.
+- **Bug:** On Arrow Lake-HX (Core Ultra 9 275HX, Acer Predator PH16-73),
+  VMD `8086:ad0b` reports `VMCONFIG=0x03b8` so `BUS_RESTRICT_CFG =
+  (0x03b8 >> 8) & 0x3 = 3`. The switch only handled 0/1/2, so
+  `vmd_get_bus_number_start()` returned `-ENODEV` and probe aborted.
+- **Symptom:** NVMe behind VMD is invisible.
+- **Root cause:** New 2-bit encoding (value 3) treated as unknown.
+  `BUS_RESTRICT_CFG` is only 2 bits, so 3 is a legal value, not
+  “reserved garbage.”
+- **Fix:** Treat cfg=3 like cfg=2 (`busn_start=224`). Guard
+  `pci_read_config_word()` with `PCI_POSSIBLE_ERROR()` because a failed
+  read is `0xFFFF` and `BUS_RESTRICT_CFG(0xFFFF)=3`, which would now
+  look valid.
+- **Version info in message:** none beyond Arrow Lake-HX/S hardware.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit EEPROM ID addition.
-When the ID is rejected and OTP exists, mt7603_eeprom_init() memcpy()s
-OTP over the flash EEPROM, so MAC/calibration from flash are discarded.
-That is a real functional bug for those boards, not a new API.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Record: Not hidden. Explicit hardware-handling bug: probe fails, disks
+missing. The error-read guard is a real correctness fix that became
+necessary once case 3 was valid.
 
-Step 2.1: INVENTORY THE CHANGES
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File: drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-- +1 line, 0 removed
-- Function: mt7603_check_eeprom()
-- Scope: single-file, one-line surgical change
+- File: `drivers/pci/controller/vmd.c` (+3 lines)
+- Function: `vmd_get_bus_number_start()`
+- Scope: **single-file surgical fix**
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- Before: switch accepts 0x7628, 0x7603, 0x7600; anything else returns
-  -EINVAL.
-- After: also accepts 0x7592.
-- Path: probe → mt7603_register_device() → mt7603_init_hardware() →
-  mt7603_eeprom_init().
-- If check succeeds and OTP exists: apply cal-free OTP overlay onto
-  flash EEPROM.
-- If check fails and OTP exists: overwrite entire flash EEPROM with OTP
-  (MAC, TX power, xtal data from flash lost).
-- Probe does not fail on unknown EEPROM ID.
+- **Before:** After `pci_read_config_word(VMCONFIG)`, switch on bits
+  [9:8]. 0→bus 0, 1→128, 2→224, anything else (including 3) → `pci_err`
+  + `-ENODEV`.
+- **After:** If the word is `0xFFFF`, return `-ENODEV`. Case 3 falls
+  through to case 2 (`busn_start=224`).
+- Path: VMD probe / domain setup, not a hot path and not an optional
+  debug path.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Hardware ID / quirk] [Whitelist used to decide whether on-flash
-EEPROM is trusted. Missing 0x7592 caused valid EcoNet EEPROMs to be
-discarded in favor of OTP.]
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- Obviously correct: same pattern as the existing 0x7600 case.
-- Minimal: one case label.
-- Regression risk: very low. A random EEPROM whose first LE16 is 0x7592
-  would be trusted; that is the same risk as the existing IDs.
-- No API or data-structure change.
+- **Category:** Hardware workaround / logic correctness (unhandled
+  register encoding), plus error-path guard.
+- **Mechanism:** Firmware programs Dynamic Bus Offset / restriction mode
+  3. Driver rejected it, so the VMD domain never came up and child NVMe
+  never enumerated.
+- **Secondary:** Without the `PCI_POSSIBLE_ERROR()` check, a dead device
+  (`0xFFFF`) would now be accepted as mode 3.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-Step 3.1: BLAME THE CHANGED LINES
 Record:
-- mt7603_check_eeprom() introduced in c8846e1015022 ("mt76: add driver
-  for MT7603E and MT7628/7688"), 2018, first released in v5.1-rc1.
-- 0x7600 added by bf4a938ab2cf8 ("mt76: mt7603: add additional EEPROM
-  chip ID"), 2020, same one-line pattern for TP-Link Archer C50 v4.
-- Both commits are ancestors of pending-6.6.
+- **Quality:** Minimal and locally obvious. Mask is `& 0x3`, so 3 is the
+  last encoding; mapping it to the existing 224–255 window matches cfg=2
+  and matches the author’s dump plus tester reports.
+- **Regression risk:** Low. Only devices that actually report cfg=3
+  change behavior (they used to fail probe). Other encodings unchanged.
+  The `0xFFFF` guard restores the old “abort on bad read” behavior for
+  the new case.
+- **Caveat (verified, not blocking):** An older Intel series treated
+  cfg=3 as a *second* root bus (BUS0=224, BUS1=225). That series is
+  **not** in this tree (`bus1_rootbus` / `VMD_FEAT_HAS_BUS1_ROOTBUS`
+  absent). This 3-line mapping was tested on real Arrow Lake-HX and
+  confirmed by the Arrow Lake-S bugzilla reporter. PCI maintainers
+  merged it.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Buggy whitelist dates to the original driver
-(v5.1), which is in this tree.
+---
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
 Record:
-- Related: bf4a938ab2cf8 already in 6.6 (precedent).
-- Candidate d16447d747050 is not an ancestor of pending-6.6.
-- Standalone; not patch X/Y.
+- Switch and helper: **`2e1224183b1bec`** (“PCI: vmd: Create bus offset
+  configuration helper”, Jon Derrick, 2020) — first in **v5.10-rc1**.
+- Even earlier, **`51f939b11cb1c`** / related bus-restriction decode
+  treated case 3 as `"Unknown Bus Offset Setting"` + `-ENODEV` on
+  purpose.
+- Buggy “3 is unknown” behavior has been in the driver for years; it
+  only bit users once Arrow Lake firmware started programming 3.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Step 3.2: FOLLOW THE FIXES: TAG**
+
+Record: **No Fixes: tag.** Not applicable. Introduction of the
+incomplete switch is `2e1224183b1bec` (v5.10). Device ID `8086:ad0b`
+added in **`57a128acaba02`** (“Add DID 8086:7D0B and 8086:AD0B for Intel
+MTL SKUs”, ~v6.0). `PCI_POSSIBLE_ERROR` from **`57bdeef471668`**
+(~v5.17).
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+
 Record:
-- Author Ahmed Naseef has no other mt76 commits on pending-6.6.
-- Applied by Felix Fietkau, listed maintainer of MEDIATEK MT76.
+- Later on the same file: `2162572d34c50` (_OSC flags in guests),
+  `55aa45154fe48` (Nova Lake / Dunlow IDs). Neither is a prerequisite or
+  a revert.
+- Parent `b030905bf5a64` (BIOS-enumerated devices) does **not** change
+  this switch; this commit is standalone.
+- Not a “patch X/Y” series.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Ali Alaei’s only commit under `drivers/pci/controller/` is this
+one. Applied by Mani, committed by Bjorn. Intel VMD maintainers (Nirmal
+Patel, Jonathan Derrick) were CCed on v3; no NAK in the thread.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: None required. Uses existing `vmd_get_bus_number_start()`,
+existing `BUS_RESTRICT_CFG()`, existing `PCI_POSSIBLE_ERROR()`. Can
+apply standalone on this tree.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- No new helpers or struct fields.
-- pending-6.6 vs patch parent only differs in SPDX and later
-  chainmask/return of mt76_eeprom_override(); the switch hunk is
-  identical.
-- Can apply standalone with a clean hunk.
+- **Lore (via b4 dig):** https://patch.msgid.link/20260628143450.92492-
+  1-ali.alaei.tabatabaei@gmail.com
+- **Revisions:** v1 (2026-06-04, case 3 only) → v2 (same day, add
+  `PCI_POSSIBLE_ERROR`) → **v3 applied** (changelog placement + CC VMD
+  maintainers)
+- v1 review (sashiko-bot) flagged exactly the `0xFFFF` → case 3 issue;
+  v2/v3 addressed it.
+- Mani: style/CC nits on v2; **“Applied, thanks!”** on v3.
+- Bjorn: asked whether it closes bugzilla 221136, noted lack of public
+  spec, wanted Intel VMD maintainers to comment; still merged and added
+  Reported-by/Closes.
+- **No NAK.** No reviewer asked for Cc: stable (absence expected).
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record (b4 dig -w): linux-pci, Bjorn Helgaas, Lorenzo Pieralisi, Nirmal
+Patel, Jonathan Derrick, Krzysztof Wilczyński, Manivannan Sadhasivam,
+Rob Herring. Right lists and maintainers.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+
 Record:
-- b4 dig -c d16447d747050 →
-  https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
-- b4 dig -a: single v1 series, no v2/v3.
-- Thread mbox is the patch only; no replies, no NAK, no Cc: stable in
-  review.
-- Included in wireless-next-2026-08-06 pull (Johannes Berg).
-- Syzbot CI: build/boot passed; fuzz skipped.
+- Bugzilla fetches returned **403**; full bug text **UNVERIFIED**.
+- On-list, Lin Mohan confirmed both 221137 and 221136 are the same Mode
+  3 / Dynamic Bus Offset issue, including on `8086:09ab` Arrow Lake-S,
+  and asked for Closes tags after merge.
+- Author tested Acer Predator PH16-73 / Core Ultra 9 275HX /
+  `8086:ad0b`.
+- Multiple users/platforms: **HX laptop + S desktop**.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: Standalone 1/1. Older Intel “second rootbus” series on spinics
+is a large new feature and is **not** in this tree; not a dependency of
+this 3-line workaround.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: lore.kernel.org/stable search returned **403**. **UNVERIFIED**
+whether stable@ already discussed it. No evidence in the pci thread of a
+reason to keep it out of stable.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+
+Record: `vmd_get_bus_number_start()` only.
+
+**Step 5.2: TRACE CALLERS**
+
 Record:
-- b4 dig -w: Felix Fietkau, Lorenzo Bianconi, Ryder Lee, Shayne Chen,
-  Sean Wang, linux-wireless, linux-mediatek, linux-kernel.
-- Applied by Felix Fietkau (maintainer SOB). No separate Reviewed-by.
+- Called from `vmd_prepare_offsets_and_bus()` when
+  `VMD_FEAT_HAS_BUS_RESTRICTIONS`.
+- That is called from `vmd_enable_domain()`.
+- That is called from `vmd_probe()`.
+- Probe path during PCI enumeration of the VMD device. Not IRQ/hot path.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
+`VMD_FEATS_CLIENT` includes `VMD_FEAT_HAS_BUS_RESTRICTIONS`. Device
+`0xad0b` uses `VMD_FEATS_CLIENT`. Several other client IDs do too, so
+any of those that firmware sets to cfg=3 hit this.
+
+**Step 5.3: TRACE CALLEES**
+
+Record: `pci_read_config_word()` (VMCAP 0x40, VMCONFIG 0x44),
+`PCI_POSSIBLE_ERROR()`, `pci_err()` on unknown values.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Boot / device probe. Reachable whenever VMD is enabled (RST/VMD
+in firmware) on affected Intel client platforms. Unprivileged users do
+not trigger it via a syscall; they just lose NVMe. **User-visible and
+common on those laptops.**
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: Same `PCI_POSSIBLE_ERROR()` pattern already used in
+`vmd_get_phys_offsets()` for VMLOCK. No other unhandled
+`BUS_RESTRICT_CFG` sites.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
 Record:
-- No bugzilla/syzbot link.
-- Commit cites multiple EcoNet EN751221/EN7528 devices, example Genexis
-  Platinum 4410.
-- OpenWrt mt76 tree already contains case 0x7592.
-- No independent public crash report found (UNVERIFIED beyond the commit
-  text and OpenWrt tree).
+- `git describe HEAD` → **v7.3-rc4-27-gf0100363d8c37**
+- `make kernelversion` → **7.3.0-rc4**
+- `vmd_get_bus_number_start()` is present; `0xad0b` is in `vmd_ids[]`;
+  `PCI_POSSIBLE_ERROR` is in `include/linux/pci.h`.
+- Bug introduced with the 0/1/2-only switch (v5.10 helper); manifests on
+  Arrow Lake once those IDs exist (~v6.0+).
+- **Yes, the bug exists in this lineage.**
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone one-patch series. Same pattern as bf4a938ab2cf8.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable returned 403. No stable discussion found
-via b4/mbox. UNVERIFIED whether anyone requested/rejected this for
-stable.
+Record: **Clean apply** on this tree. Hunk is isolated to the helper;
+surrounding refactor (`vmd_prepare_offsets_and_bus`) does not overlap.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: mt7603_check_eeprom() only.
+Record: No other commit implements cfg=3. No revert. No dual-rootbus
+substitute.
 
-Step 5.2: TRACE CALLERS
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: **PCI controller / Intel VMD.** Criticality **IMPORTANT** (not
+core mm/vfs, but VMD is how many Intel laptops expose NVMe).
+`CONFIG_VMD` depends on `PCI_MSI && X86_64`.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: Actively maintained (new device IDs, BIOS-scan feature, _OSC
+guest fix). The **switch itself** has been stable since 2020; this is a
+late hardware encoding, not churn in the helper.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: **Driver-specific / platform-specific:** x86_64 systems with
+Intel VMD and firmware `BUS_RESTRICT_CFG=3` (Arrow Lake-HX confirmed;
+Arrow Lake-S reporter confirmed). Not universal.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: Every boot on affected machines with VMD enabled. Not a race.
+Not unprivileged-exploit; **storage simply missing.**
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: VMD probe fails (`-ENODEV`); NVMe behind VMD never appears.
+**HIGH** (loss of boot/root/data disks on common Intel client hardware).
+Not a panic, but production-breaking.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
 Record:
-- Only caller: mt7603_eeprom_init() (same file).
-- mt7603_eeprom_init() ← mt7603_init_hardware() ←
-  mt7603_register_device()
-- mt7603_register_device() ← mt76pci_probe() (PCI 14c3:7603) and
-  mt76_wmac_probe() (mediatek,mt7628-wmac).
-- Probe/init path, not hot path or IRQ.
+- **Benefit:** High for affected users (NVMe works).
+- **Risk:** Very low (3 lines, probe-only, existing mapping, error-read
+  guard).
+- **Ratio:** Strongly in favor of applying it on this tree.
 
-Step 5.3: TRACE CALLEES
-Record: get_unaligned_le16() on eeprom.data[0]. No alloc, lock, or I/O
-in the changed function.
+---
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record:
-- Reachable when an MT7603 PCI device or MT7628 WMAC probes with
-  CONFIG_MT7603E.
-- Not a syscall-triggered memory bug; firmware/EEPROM contents decide
-  the branch.
-- Unprivileged users cannot trigger it except by plugging/using the
-  device.
+## PHASE 9: FINAL SYNTHESIS
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record:
-- Sibling drivers use the same EEPROM-ID switch (mt7615, mt76x0,
-  mt76x2).
-- This tree already backported other mt76 ID adds, e.g. efd75512e38ac
-  (mt76x2u TP-Link USB ID).
+**Step 9.1: COMPILE THE EVIDENCE**
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**For:**
+- Real bug: VMD probe abort, NVMe invisible.
+- Confirmed on Arrow Lake-HX (author) and Arrow Lake-S (bugzilla
+  reporter).
+- 3-line, obviously correct mapping of a 2-bit field.
+- Extra `PCI_POSSIBLE_ERROR()` prevents a new false-positive on
+  `0xFFFF`.
+- PCI maintainers applied/committed; v1 review hole fixed in v2/v3.
+- Fits the stable **hardware quirk / existing-device enablement**
+  exception.
+- All helpers and IDs exist in **this** 7.3.0-rc4 tree; no missing
+  prerequisites.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- Tree under evaluation: pending-6.6, 6.6.157 (git describe
-  p-6.6-3-g04810563abb71).
-- Yes. pending-6.6 eeprom.c switch has 0x7628/0x7603/0x7600 only.
-- git merge-base --is-ancestor d16447d747050 pending-6.6 → not present.
-- Bug present since v5.1 driver introduction.
+**Against:**
+- Not a crash/UAF/security bug.
+- No public VMD spec for mode 3; Bjorn noted a “new mode” might someday
+  need more than a fallthrough (dual-rootbus series never landed here).
+- Intel VMD maintainers were CCed but did not ack in the saved thread.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply. Switch context matches. Later chainmask/license
-diffs are outside the hunk.
+**Unresolved:**
+- Full bugzilla pages (HTTP 403).
+- stable@ archive search (HTTP 403).
+- Whether every cfg=3 platform only needs bus 224 (empirically yes for
+  the reported machines).
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: 0x7600 ID is present. 0x7592 is not. No alternate fix.
+Those gaps do not outweigh the hardware reports and the size of the fix.
 
-Note: EcoNet SoC support landed in 6.16 (arch/mips/econet), not in 6.6.
-That lowers vanilla-6.6 user count; it does not remove the driver or the
-ID check. PCI 14c3:7603 still exists in this tree.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+1. Obviously correct and tested? **PASS** — register dump, author test,
+   reporter confirmation, v3 review.
+2. Fixes a real bug that affects users? **PASS** — NVMe missing on
+   shipping Arrow Lake systems.
+3. Important issue? **PASS** — HIGH: boot/storage devices not enumerated
+   (not a panic, but not cosmetic).
+4. Small and contained? **PASS** — +3 lines, one function.
+5. No new features or APIs? **PASS** — no new ABI; handles a value the
+   existing 2-bit field can already produce.
+6. Can apply to the local tree? **PASS** — helper, IDs, and
+   `PCI_POSSIBLE_ERROR` all present; apply is clean.
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [drivers/net/wireless/mediatek/mt76/mt7603] [IMPORTANT for
-MT7603/MT7628 users; PERIPHERAL relative to core kernel]
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature driver since v5.1. 6.6 still receives mt76 fixes.
-Maintainer is Felix Fietkau.
+Record: **Hardware quirk/workaround** (and the same class as device-ID
+enablement): existing driver, existing PCI ID, firmware encoding the
+driver rejected, so the device did not work.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 9.4: MAKE YOUR DECISION**
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / config-specific (CONFIG_MT7603E). Documented
-users are EcoNet EN751221/EN7528 routers with MT7603 PCI WiFi. Vanilla
-6.6 cannot boot EcoNet SoCs; downstream 6.6 kernels and any other board
-with this EEPROM still benefit.
+This tree is 7.3.0-rc4. The VMD driver, Arrow Lake DID `0xad0b`, bus-
+restriction feature flag, and the old 0/1/2-only switch all exist here.
+The patch is a small, tested workaround that restores NVMe on affected
+Intel VMD systems. It should be applied to this tree.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record:
-- Trigger: probe of MT7603 when flash EEPROM starts with 0x7592 and OTP
-  is present.
-- Every boot on those devices, not a race.
-- Not exploitable by unprivileged software alone.
+### What the commit solves
+`BUS_RESTRICT_CFG` is two bits. Arrow Lake programs **3**. The driver
+treated 3 as unknown, failed VMD probe, and hid NVMe. Mapping 3 to the
+existing bus-224 window, and rejecting `0xFFFF` config reads, is the
+correct local fix.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: [Wrong EEPROM source: factory MAC/calibration replaced by OTP]
-[Severity: MEDIUM for those devices — broken/degraded WiFi or wrong MAC,
-not oops/corruption]
+### Stable rules
+Meets all six criteria. It is a hardware workaround, not a new API.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: medium for affected hardware (WiFi uses intended EEPROM);
-  lower on vanilla 6.6 because EcoNet platform is later, but this is the
-  usual device-ID case.
-- Risk: very low (one case label, no locking/API).
-- Ratio: favorable. Device-ID additions are accepted in stable for this
-  reason.
+### Risk vs benefit
+Benefit is high (disks appear). Risk is very low (three lines, probe-
+only).
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+### Concerns
+Dual-rootbus would be a large new feature and is not in this tree; it is
+not required for the reported machines. `PCI_POSSIBLE_ERROR` is already
+here, so no extra backport of that helper is needed on this tree.
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- One-line EEPROM/chip ID addition to an existing driver (stable
-  exception).
-- Same pattern as 0x7600, already in 6.6.
-- Real boards named; hardware already binds as PCI 14c3:7603.
-- Without it, valid flash EEPROM is discarded for OTP (MAC/cal).
-- Maintainer applied it; applies cleanly here; no new API.
-- This tree already contains similar mt76 ID backports.
+---
 
-AGAINST:
-- Not a crash/security/deadlock.
-- No Tested-by/Reviewed-by; mailing list had no discussion.
-- EcoNet platform is not in 6.6, so vanilla 6.6 user count is small.
-- No Fixes:/Cc: stable (expected, not a negative).
-
-UNRESOLVED:
-- Could not search lore.kernel.org/stable (403).
-- No independent public repro beyond the commit and OpenWrt mt76 tree.
-
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — one-line whitelist, maintainer-
-   applied, syzbot CI build/boot passed.
-2. Fixes a real bug that affects users? PASS — those boards trust OTP
-   instead of factory EEPROM.
-3. Important issue? PASS under the device-ID/quirk exception (functional
-   WiFi/MAC on real hardware), even though not a panic.
-4. Small and contained? PASS — +1 line, one file.
-5. No new features or APIs? PASS — existing driver, additional ID only.
-6. Can apply to the local tree? PASS — hunk matches pending-6.6.
-
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Device ID addition to an existing driver (EEPROM chip ID,
-analogous to PCI/USB ID). Also a hardware quirk for boards whose EEPROM
-ID does not match MT_HW_CHIPID.
-
-Step 9.4: MAKE YOUR DECISION
-This belongs in 6.6.y. The driver and the incomplete whitelist are in
-this tree; the fix is the standard one-line ID addition stable already
-takes for mt76. EcoNet SoC support arriving later reduces vanilla-6.6
-exposure but does not make the patch a new feature or a dependency-heavy
-backport.
-
-What it solves for stable users: MT7603 devices whose flash EEPROM ID is
-0x7592 keep factory MAC and calibration instead of having them replaced
-by OTP on probe.
-
-Risk vs benefit: essentially no regression risk; benefit is enabling
-correct EEPROM use on existing hardware.
-
-Verification:
-- [Phase 1] Tags: author SOB, Felix Fietkau SOB, msgid link; no Fixes/Cc
-  stable/Reported-by
-- [Phase 2] Diff: +1 `case 0x7592:` in mt7603_check_eeprom()
-- [Phase 2] Confirmed eeprom_init: fail → memcpy OTP over flash; success
-  → cal-free overlay only
-- [Phase 3] blame: function from c8846e1015022 (v5.1); 0x7600 from
-  bf4a938ab2cf8; both in pending-6.6
-- [Phase 3] git merge-base --is-ancestor d16447d747050 pending-6.6 → not
-  in 6.6
-- [Phase 3] git diff pending-6.6 vs parent: switch identical; only
-  SPDX/chainmask elsewhere
-- [Phase 4] b4 dig -c d16447d747050: lore msgid
-  20260719082530.3879831-1-naseefkm@gmail.com
-- [Phase 4] b4 dig -a: v1 only; mbox has no replies
-- [Phase 4] b4 dig -w: mt76 maintainers + linux-wireless CC'd; Felix
-  applied
-- [Phase 4] wireless-next-2026-08-06 pull lists this commit
-- [Phase 5] callers: mt7603_eeprom_init → init_hardware →
-  register_device → pci/soc probe
-- [Phase 6] pending-6.6 Makefile 6.6.157; switch lacks 0x7592; would
-  apply cleanly
-- [Phase 6] EcoNet arch not in 6.6 (added ~6.16) — lowers vanilla user
-  count, code still present
-- [Phase 7] MAINTAINERS: Felix Fietkau maintains mt76
-- [Phase 8] Failure: OTP replaces flash EEPROM (MAC/cal); not oops
-- UNVERIFIED: stable@ lore search (HTTP 403); no independent field crash
-  report
+## Verification
+- **[Phase 1]** Parsed commit `72b32eccbcd59`: Reported-by Lin Mohan;
+  Closes 221137/221136; SOB Ali Alaei, Mani, Bjorn Helgaas; Link to
+  msgid 20260628143450.92492-1; no Fixes/Cc-stable.
+- **[Phase 2]** Diff: +3 lines in `vmd_get_bus_number_start()`:
+  `PCI_POSSIBLE_ERROR` + `case 3:` fallthrough to `busn_start=224`.
+- **[Phase 2]** Confirmed `BUS_RESTRICT_CFG` is `((vmcfg >> 8) & 0x3)`
+  in `vmd.c:32`; `0xFFFF` → 3.
+- **[Phase 3]** `git blame`: switch from `2e1224183b1bec` (v5.10-rc1);
+  case 3 lines from this commit.
+- **[Phase 3]** `0xad0b` added in `57a128acaba02`; `PCI_POSSIBLE_ERROR`
+  in `57bdeef471668` (~v5.17); present in `include/linux/pci.h:179`.
+- **[Phase 3]** `git log --oneline -20 -- drivers/pci/controller/vmd.c`:
+  no revert; later commits are IDs/_OSC only.
+- **[Phase 3]** Author has no other VMD commits.
+- **[Phase 4]** `b4 dig -c 72b32eccbcd59`: v3 at
+  patch.msgid.link/20260628143450.92492-1-ali.alaei.tabatabaei@gmail.com
+- **[Phase 4]** `b4 dig -a`: v1 → v2 → v3; v3 is what was applied.
+- **[Phase 4]** `b4 dig -w`: linux-pci + Helgaas, Pieralisi, Patel,
+  Derrick, Wilczyński, Sadhasivam, Herring.
+- **[Phase 4]** mbox: Mani applied; Bjorn discussed bugzilla; Lin Mohan
+  confirmed both bugs; sashiko-bot caught the `0xFFFF` issue on v1.
+- **[Phase 4]** Bugzilla WebFetch 403 — full bug text UNVERIFIED;
+  reporter confirmation verified from mbox.
+- **[Phase 4]** lore.kernel.org/stable 403 — UNVERIFIED.
+- **[Phase 5]** Call chain: `vmd_probe` → `vmd_enable_domain` →
+  `vmd_prepare_offsets_and_bus` → `vmd_get_bus_number_start`.
+- **[Phase 5]** `0xad0b` in `vmd_ids[]` with `VMD_FEATS_CLIENT`
+  including `VMD_FEAT_HAS_BUS_RESTRICTIONS`.
+- **[Phase 5]** No `bus1_rootbus` in this tree.
+- **[Phase 6]** `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4.
+- **[Phase 6]** `git merge-base --is-ancestor 72b32eccbcd59 HEAD`: yes;
+  first contained in **v7.3-rc1**; not in v7.2.
+- **[Phase 7]** `CONFIG_VMD` in `drivers/pci/controller/Kconfig`;
+  MAINTAINERS: Nirmal Patel / Jonathan Derrick.
+- **[Phase 8]** Failure mode: VMD probe `-ENODEV` → NVMe not enumerated;
+  severity HIGH.
+- **UNVERIFIED:** Full bugzilla 221136/221137 bodies; any stable@
+  thread; whether cfg=3 ever needs a second root bus on unreported SKUs.
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/vmd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-index 88382b537a33b..06f61988655e5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-@@ -142,6 +142,7 @@ static int mt7603_check_eeprom(struct mt76_dev *dev)
- 	case 0x7628:
- 	case 0x7603:
- 	case 0x7600:
-+	case 0x7592:
- 		return 0;
- 	default:
- 		return -EINVAL;
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index b4b62b9ccc45a..5d3e6cc7e4feb 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -656,6 +656,8 @@ static int vmd_get_bus_number_start(struct vmd_dev *vmd)
+ 	pci_read_config_word(dev, PCI_REG_VMCAP, &reg);
+ 	if (BUS_RESTRICT_CAP(reg)) {
+ 		pci_read_config_word(dev, PCI_REG_VMCONFIG, &reg);
++		if (PCI_POSSIBLE_ERROR(reg))
++			return -ENODEV;
+ 
+ 		switch (BUS_RESTRICT_CFG(reg)) {
+ 		case 0:
+@@ -664,6 +666,7 @@ static int vmd_get_bus_number_start(struct vmd_dev *vmd)
+ 		case 1:
+ 			vmd->busn_start = 128;
+ 			break;
++		case 3:
+ 		case 2:
+ 			vmd->busn_start = 224;
+ 			break;
 -- 
 2.53.0
 
