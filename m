@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD175649E6;
-	Mon, 19 Oct 2026 13:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959F655F624;
+	Mon, 19 Oct 2026 13:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418256; cv=none; b=Svo3EXtUaIuFHP1B45uOXIvvb+LJK+kmoADlbJpn9rK0ljTRwZfSUWE5YJyEr72Jh6xC7RN40LaTWW0mxqSfIXuxM0ZUQgQ+SgsmQxVbu9SXuME2WOh94/8ta/U+qSVq9Hc99D2pDBDHPIkag2dDRbZ1Vg3qgsSQcWFfQHZEIzo=
+	t=1792418257; cv=none; b=J9moGr1PHWEV/KiyzAzhkEjOauPu3aKAiNum3arFY9uny3veNja/c7mHZ6XKU+i89malDf9tfFhqikw8lhNXJVW7peI0eCUM2m3CZbKpIsTTV8hneAmtuOqxUkTO4jJ6x1xkcvMfvJsM34Z149aFKtqOxY8is85Rsp9aRZm0al8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418256; c=relaxed/simple;
-	bh=BNhNsQmaXwNiVrbxLU475n6RzUFg9AVVU338Vk7f6R8=;
+	s=arc-20240116; t=1792418257; c=relaxed/simple;
+	bh=MM+AaQHsp4wpgAhHNkA8vM0Fly5Ksy7GWA4iSSoDAZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DGqYUOcGOKMhpHbYpwsaH7foF5eYqV9Yws+AkFJnZUmJW4jgjcFh0eb9eoQYTYQd4DCk1qwS4apBp46BEL7XwvQEk/bXcuNzsBM1KOL7N8M8ab+j8UlAWsscbAQ/jB7nYnaI/g1Dy0YG9Zmv72LYPJOkgMg6jjbiwDLCTP9/Gq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D8NtNGoA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=L7xKYS1MOEzJDA6UKiw01gfXgZxdKr6PqwYxZRKGyaAGLIigVkssGgGx7/sae69fSBUub8JNQa+FjyKWKPT3A0N8v7uzxjvTU116EhIgrJgz8DgIGp/DfFl7AdGAN9qpnQGe243ayLbCsFbLsy2qGSIA1JICh/KHnR4MAPUzv1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PBQziWuH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8NtNGoA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C211F000C7;
-	Mon, 19 Oct 2026 13:57:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PBQziWuH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC6F1F000C4;
+	Mon, 19 Oct 2026 13:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418253;
-	bh=n7+Oe27eSt/CYawxJQEUCht00laB/j73DqAE8wC3WOc=;
+	s=k20260515; t=1792418254;
+	bh=wx9Mb4QsaVFHtSfVFCf4Mf+XgS6xKgB1lDQXb9H3s5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8NtNGoAFZ0TCZ6QZKcy3kPtd6jlKC+Q2GKoojRYOFRD6Bv+6wrvg4mV1jN+1QkbR
-	 JKkYO5n4+nwiZSbiVLLefK+dT913itaShCeezg/xSBdIQu/S1M1RjBuVGLsHgA7E06
-	 KdeVbLb4O7i9WJobThb6Rwdw8i12LsnO1aQuNZVqKZ6s41BsTE3Az3aNtqZXCc78bm
-	 caNjghOAvYVxbkOYe2ygfHpaqcNzURLFu4srffyRxEvkZaHmQPrRGNgwrwUmPSXVxj
-	 eosrroJR21F9fSG3WcHoFY6I84mVoeBMOBl5r0hQhqDKdteQBFiMutX8m0Wl+Z8wgg
-	 QaKiQ9Toj4Ozg==
+	b=PBQziWuHfr3bfy+ejeY4kT9ZGxeU93eLsOlIzTc7Z26oAf3etFgU2AdHR3RewfIlu
+	 XybQSCmmDu8g/ni5e8H505j90YhvqSgv3Poh/cdRWkVzNRO0OY3gFSa+vCKEDns3Gy
+	 XLlbNg1Kfcw3ueZyoW5dotRStmv/IL71mnWmKqhp8b79vlXw+iZXDa/eWHOge/y7Rn
+	 YA25XYqIZZ6G215LxXCIUyeDs9TtthEAKkw2uHQZr1Zo4YlsFn10WhBI5MLt3UyhGb
+	 4T28hnjHhc3sDWnL0PVym4A6rkwQL5BdP1Bxm0xW8yQjptBBvJEEHeFULZYVmImDBO
+	 o+RXHpz71x++Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: liulhong617 <liulhong617@gmail.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	catalin.marinas@arm.com,
-	linux-arm-kernel@lists.infradead.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] arm64: mm: fix accidental linear mapping of no-map reserved memory
-Date: Mon, 19 Oct 2026 09:46:52 -0400
-Message-ID: <20261019135441.1420968-121-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: codec: max98926: fixup invert setup mask
+Date: Mon, 19 Oct 2026 09:46:53 -0400
+Message-ID: <20261019135441.1420968-122-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -47,494 +49,473 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: liulhong617 <liulhong617@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 7ace06a01efaba1ec585630aa4c98ac39b38452a ]
+[ Upstream commit dd0ae9a2e19a24c532c9aa80a44f572b4907bcdf ]
 
-When reserved-memory regions with the "no-map" property are not
-page-aligned, the kernel may accidentally map them into the linear
-mapping, contradicting the no-map semantics.
+invert might have both WCI/BCI mask, but regmap_update_bits() masks
+BCI only. It needs both mask. Fixup it.
 
-The root cause is a mismatch between /proc/iomem's address boundaries
-and the actual page table mapping boundaries:
+	static int max98926_dai_set_fmt(...)
+	{
+		...
+		switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+		case SND_SOC_DAIFMT_NB_NF:
+			break;
+		case SND_SOC_DAIFMT_NB_IF:
+=>			invert = MAX98926_DAI_WCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^
+		case SND_SOC_DAIFMT_IB_NF:
+=>			invert = MAX98926_DAI_BCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^
+		case SND_SOC_DAIFMT_IB_IF:
+=>			invert = MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		default:
+			...
+		}
+		...
+		regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+				MAX98926_DAI_BCI_MASK, invert);
+		...		^^^^^^^^^^^^^^^^^^^^^
+	}
 
-1. /proc/iomem derives its ranges from memblock via
-   memblock_region_reserved_base_pfn/memblock_region_reserved_end_pfn,
-   which perform PFN rounding so the displayed boundaries are
-   page-aligned. This gives the impression that the no-map region
-   occupies whole pages.
-
-2. However, memblock_mark_nomap() splits memblock.memory regions at
-   exact byte boundaries (memblock_isolate_range preserves raw DT
-   base/size with no alignment). When for_each_mem_range iterates the
-   non-NOMAP regions adjacent to a no-map region, it returns start/end
-   values that are NOT page-aligned — they are the precise byte
-   boundaries from the memblock split.
-
-3. These sub-page-aligned values are passed to
-   __create_pgd_mapping_locked(), which does:
-     phys &= PAGE_MASK;
-     addr = virt & PAGE_MASK;
-     end = PAGE_ALIGN(virt + size);
-   The downward rounding of phys via PAGE_MASK extends the mapped
-   range backward into the adjacent no-map region, effectively
-   including no-map memory in the linear mapping.
-
-For example, with 64K pages, reserved_region@A2000000 (base=0xA2000000,
-size=0x8000, no-map) causes for_each_mem_range to return
-start=0xA2008000 for the next mappable region. After phys &= PAGE_MASK,
-the actual mapping starts at 0xA2000000 — the entire no-map region is
-incorrectly mapped.
-
-Fix this by rounding the mappable range inward to PAGE_SIZE boundaries
-before passing it to __map_memblock: start is rounded UP and end is
-rounded DOWN. This ensures the mapped area never overlaps with adjacent
-no-map regions. The cost is at most one page of unmapped gap at each
-boundary, which is preferable to violating no-map semantics.
-
-Signed-off-by: liulhong617 <liulhong617@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87wltomc97.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **6.12.111** (`pending-6.12`). The candidate is
-`7ace06a01efab` (“arm64: mm: fix accidental linear mapping of no-map
-reserved memory”). It is not in this checkout. The buggy path is, and
-the original patch was written against this `map_mem()` shape.
+This is a **6.12.111** tree (`pending-6.12`, `p-6.12-3-gc504cf0baa3d8`).
+The candidate is `dd0ae9a2e19a2` (“ASoC: codec: max98926: fixup invert
+setup mask”). It is **not** in this checkout; the buggy
+`regmap_update_bits()` mask **is**.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: `[arm64: mm:] [fix] [do not linearly map sub-page-aligned DT no-
-map reserved memory]`
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- `Signed-off-by: liulhong617 <liulhong617@gmail.com>` (author)
-- `Signed-off-by: Will Deacon <will@kernel.org>` (arm64 maintainer;
-  applied to for-next/mm)
-- No `Fixes:`
-- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:` /
-  `Link:` / `Cc: stable`
-- Absence of `Fixes:`/`Cc: stable` is expected for this review and is
-  not a negative signal
+**Step 1.1: PARSE THE SUBJECT LINE**
+- Subsystem: `ASoC: codec: max98926`
+- Action verb: `fixup`
+- Claimed intent: correct the invert-mode bit mask written to the
+  MAX98926 FORMAT register
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- **Bug:** `no-map` reserved-memory that is not page-aligned can still
-  land in the arm64 linear map.
-- **Symptom:** `/proc/iomem` looks page-aligned (PFN rounding), but page
-  tables map the no-map bytes because `memblock_mark_nomap()` splits at
-  byte precision and `__create_pgd_mapping_locked()` does `phys &=
-  PAGE_MASK` (start rounded down into the hole).
-- **Example:** 64K pages, `reserved_region@A2000000` size `0x8000`; next
-  mappable start `0xA2008000` becomes mapping start `0xA2000000`.
-- **Root cause:** byte-precise NOMAP split + PAGE_MASK downward
-  rounding.
-- **Fix:** round the mappable range inward (`PAGE_ALIGN(start)`, `end &
-  PAGE_MASK`) before `__map_memblock`. Cost: at most one unmapped page
-  per boundary.
-- **Version info in message:** none. Mailing-list follow-up (verified)
-  was on v6.1.177-rt, 64K pages.
+Record: **[ASoC/max98926] [fixup] [WCI invert bit never programmed
+because update mask is BCI-only]**
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. Explicit isolation/correctness fix, not cleanup.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- `Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>`
+  (author)
+- `Link: https://patch.msgid.link/87wltomc97.wl-
+  kuninori.morimoto.gx@renesas.com`
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` (ASoC maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` (absence of the last two is expected for this
+  review)
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Record: **Author + ASoC maintainer SOB; lore Link; no user/syzbot
+report**
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `arch/arm64/mm/mmu.c` (+14 / −0)
-- Function: `map_mem()` / `map_mem(pgd_t *pgdp)` in this tree
-- Scope: single-file surgical change in the boot-time linear-map loop
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+The body shows `max98926_dai_set_fmt()` building `invert` as:
+- `NB_IF` → `MAX98926_DAI_WCI_MASK`
+- `IB_NF` → `MAX98926_DAI_BCI_MASK`
+- `IB_IF` → `BCI | WCI`
 
-Committed hunk (origin/master `map_mem(void)`):
+then calling `regmap_update_bits(..., MAX98926_DAI_BCI_MASK, invert)`.
+`regmap_update_bits()` only changes bits in the mask, so WCI is never
+written.
+
+Record: **[Bug: WCI invert bit dropped] [Symptom: inverted frame clock
+not applied] [No version info] [Root cause: BCI-only mask]**
+
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+This is an explicit register-programming bug, not a disguised cleanup.
+
+Record: **Not a hidden fix; it is a real DAI-format bug**
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+- File: `sound/soc/codecs/max98926.c` (`1 insertion, 1 deletion`)
+- Function: `max98926_dai_set_fmt()`
+- Scope: single-file, one-line surgical fix
+
+Record: **[max98926.c +1/-1] [max98926_dai_set_fmt] [surgical]**
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Before (this tree, lines 360–363):
+
+```360:364:sound/soc/codecs/max98926.c
+        regmap_write(max98926->regmap,
+                        MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
+        regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+                        MAX98926_DAI_BCI_MASK, invert);
+        return 0;
 ```
-for_each_mem_range(i, &start, &end) {
-+       start = PAGE_ALIGN(start);
-+       end = end & PAGE_MASK;
-+       if (start >= end)
-+               continue;
-        __map_memblock(...);
-}
+
+`regmap_write()` sets FORMAT to only `DAI_DLY_MASK` (WCI and BCI
+cleared). Then update_bits can set BCI, but never WCI.
+
+After: mask is `MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK`, so both
+invert bits can be set.
+
+Record: **[BCI-only update → BCI|WCI update on DAI set_fmt path]**
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Header bits in this tree:
+
+```525:528:sound/soc/codecs/max98926.h
+#define MAX98926_DAI_WCI_MASK           (1<<3)
+...
+#define MAX98926_DAI_BCI_MASK           (1<<2)
 ```
 
-The mailing-list v1 was against `map_mem(pgd_t *pgdp)` and kept this
-tree’s existing `if (start >= end) break;` before the new inward
-rounding — that is the 6.12 shape.
+This is a logic/correctness bug: wrong `regmap` mask, so advertised
+invert modes do not take effect.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- **Before:** `for_each_mem_range` skips `MEMBLOCK_NOMAP` via
-  `should_skip_region()`, but adjacent ranges keep raw byte boundaries.
-  Those go to `__map_memblock` → `__create_pgd_mapping_locked()`, which
-  rounds `phys` down and `end` up, pulling no-map bytes into
-  `PAGE_KERNEL`.
-- **After:** start rounded up, end rounded down; empty leftover skipped.
-  Linear map never overlaps the no-map hole.
-- Path: boot-time linear map only (`paging_init` → `map_mem`).
+Record: **[Logic/correctness] [WCI never written for NB_IF/IB_IF]**
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- **Category:** logic/correctness + hardware isolation (linear-map over-
-  coverage).
-- **Mechanism:** unaligned NOMAP split + `phys &= PAGE_MASK` over-maps.
-  Verified in this tree at `arch/arm64/mm/mmu.c:443-445`:
-  `phys &= PAGE_MASK; addr = virt & PAGE_MASK; end = PAGE_ALIGN(virt +
-  size);`
-- DT `no-map` (this tree, `reserved-memory.yaml`): OS must not create a
-  standard mapping **and** must not allow speculative access except
-  under the owning driver.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Obviously correct: it matches sibling `max98925.c` (already uses `BCI |
+WCI`). Minimal. No API/locking/refcount change. Regression risk is near
+zero: NB_NF still writes 0 into both bits; IB_NF still sets only BCI.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct for the stated failure: inward rounding matches
-  buddy `__free_memory_core()` (`PFN_UP(start)` / `PFN_DOWN(end)` in
-  `mm/memblock.c` of this tree). Those slivers were never allocator RAM.
-- Minimal; comment-only plus three functional lines.
-- Regression risk: low. Worst case is one unmapped page at a no-map
-  boundary (memory the buddy already does not own). Ard noted a
-  theoretical firmware hazard if something like initramfs sat in that
-  wasted page; Will still applied it after Ard confirmed
-  `for_each_mem_range()` coalesces sub-page *mappable* pieces.
+Record: **[Obviously correct, 1-line] [Very low regression risk]**
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- `phys &= PAGE_MASK`: `9c4e08a3022b6` (Mark Rutland, 2015, “allow
-  sections for unaligned bases”)
-- Linear-map bank loop: `98d2e1539b84a` (2017) / `b10d6bca87204`
-  (`for_each_mem_range`, 2020)
-- This is old code, present long before 6.12.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No `Fixes:` tag. Bug is the long-standing interaction of NOMAP
-byte splits + page-table rounding, not a single recent commit.
+**Step 3.1: BLAME THE CHANGED LINES**
+`git blame -L 343,363 -- sound/soc/codecs/max98926.c`: the buggy mask is
+from `a2e2876aa0bab` (“ASoC: Add max98926 codec driver”, Anish Kumar,
+2016-01-14). `git describe --contains a2e2876aa0bab` → `v4.6-rc1~...`.
+Present for ~10 years.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- This tree: no commit on `arch/arm64/mm/mmu.c` already doing inward
-  `PAGE_ALIGN` in `map_mem`.
-- `7ace06a01efab` is **not** an ancestor of HEAD (`git merge-base --is-
-  ancestor` exit 1).
-- Upstream later dropped the `pgd_t *` argument (`2e527667a3b9b`,
-  2026-06-02) — **not** in this tree, **not** required for the fix.
-- Follow-up `fb0f3ef5601a6` (unmap data/bss from linear map) is
-  independent.
+Record: **[a2e2876aa0bab, v4.6] [long-standing bug]**
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Only this arm64 commit on `origin/master`. Applied by Will
-Deacon (arm64 maintainer). Ard Biesheuvel reviewed on-list and called it
-conceptually sound.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+No `Fixes:` tag. The introducing commit is in this tree (`git merge-base
+--is-ancestor a2e2876aa0bab HEAD` succeeded).
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Standalone. Needs `for_each_mem_range`, `__map_memblock`,
-`__create_pgd_mapping_locked` — all present. The committed diff does not
-apply byte-for-byte (later `map_mem(void)` / no `if (start >= end)
-break;`); the **original** patch context matches this tree. Backport is
-a small context adaptation, not a missing-API rewrite.
+The **identical** bug in the sibling driver was already treated as
+stable material:
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+```
+0b51601d4504f4 ASoC: max98925: Fix mask for setting DAI invert mode
+...
+Cc: stable@vger.kernel.org
+```
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 7ace06a01efab` →
-  https://patch.msgid.link/20260513010255.3764038-1-liulhong617@163.com
-- Single revision (v1 only). `b4 dig -a`: only that v1.
-- Thread saved to mbox and read in full.
-- Will (16 Jul 2026): worried firmware with many tiny adjacent regions
-  could leave pages unmapped; preferred warn-and-do-nothing; asked for
-  practical symptoms.
-- Author (27 Jul): 64K pages, debugger showed `phys` rounded from
-  `0xa2008000` to `0xa2000000`.
-- Will (4 Aug): not convinced by that reply.
-- Ard (4 Aug): change is conceptually sound; `for_each_mem_range()`
-  coalesces; only sane handling is to round no-map **outward** (i.e.
-  linear map **inward**). Suggested maybe moving rounding into
-  `__create_pgd_mapping_locked()` later.
-- Will (6 Aug): “Aha, that's the part I was missing.” Applied v1: “I can
-  take this patch for now.”
-- Apply mail: https://git.kernel.org/arm64/c/7ace06a01efa (`for-
-  next/mm`).
-- Author (9 Aug, after apply): real platform is Cortex-A78AE,
-  **v6.1.177-rt**, 64K pages; two sub-page no-map TEE regions; DStream
-  showed them folded into one `PAGE_KERNEL` span; cache prefetcher hit
-  TEE and firmware raised “REE accessed secure memory” faults.
-- No NAK of the applied patch. No `Cc: stable` in review.
+That 2015 fix is in this tree. max98926 (2016) reintroduced the same
+mistake.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To Catalin Marinas, Will Deacon; Cc linux-arm-
-kernel, linux-kernel. Ard added later. Maintainer applied it.
+Record: **[No Fixes tag; sibling max98925 fix was Cc: stable]
+[Introducing commit is in this 6.12 tree]**
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Evidence is the author’s debugger dump and
-firmware faults (mbox, 9 Aug 2026). Severity from reporter: isolation
-break + spurious secure-memory faults.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Recent `max98926.c` history in this tree is probe/OF/DAI-terminology
+churn, not invert-mask work. No prerequisite refactor. Standalone 1-line
+change.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone 1/1. Ard/Will mentioned a possible later rounding
-cleanup in `__create_pgd_mapping_locked()`; `origin/master` still has
-this loop-local fix only (no follow-up required).
+Record: **[No prerequisites] [Standalone]**
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable WebFetch returned 403. UNVERIFIED whether
-stable@ already discussed it. Not used as a NO reason.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Kuninori Morimoto is a regular ASoC contributor. Nearby work includes
+`alc5623` invert tidyup (different driver, “tidyup” not this bug). This
+patch is a standalone `[PATCH]`, not patch X/Y.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+Record: **[Core ASoC contributor] [Standalone invert-mask fix, not a
+series]**
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `map_mem()` (this tree: `static void __init map_mem(pgd_t
-*pgdp)` at `arch/arm64/mm/mmu.c:623`).
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+The hunk matches this tree exactly. `git show dd0ae9a2e19a2 | git apply
+--check` → **APPLY_CLEAN**. No new helpers or structs.
 
-Step 5.2: TRACE CALLERS
-Record: `paging_init()` → `map_mem(swapper_pg_dir)` (`mmu.c:812-814` in
-this tree). Boot-time, all arm64 configs. Not a syscall path; result is
-the linear map used by the whole kernel.
+Record: **[No dependencies] [Applies standalone and cleanly]**
 
-Step 5.3: TRACE CALLEES
-Record: `for_each_mem_range` → `__next_mem_range` / `should_skip_region`
-(skips NOMAP unless `MEMBLOCK_NOMAP` requested). Then `__map_memblock` →
-`__create_pgd_mapping` → `__create_pgd_mapping_locked`.
-`memblock_mark_nomap` → `memblock_isolate_range` (byte splits, no page
-align) — verified in `mm/memblock.c`.
+---
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Reachable on every arm64 boot. User/firmware trigger is a sub-
-page `no-map` reserved-memory node (common with 16K/64K pages).
-Unprivileged userspace does not need to do anything after boot; the bad
-mapping already exists. Speculative CPU access of TEE pages is enough.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Second `for_each_mem_range` in this file is
-`validate_bootmem_online()` under `CONFIG_DEBUG_VM` — not page-table
-creation. No sibling fix already in this tree.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+`b4 dig -c dd0ae9a2e19a2` → https://patch.msgid.link/87wltomc97.wl-
+kuninori.morimoto.gx@renesas.com
+`b4 dig -a`: single v1, no later revisions.
+Mbox (2 messages): submission + Mark Brown “Applied to for-7.3”. No NAK,
+no review concerns, no `Cc: stable` request. Included in the “sound
+fixes for 7.3-rc1” pull.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+Record: **[v1 only] [Applied by ASoC maintainer] [No objections]
+[Treated as a fix in the rc1 pull]**
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes.**
-- `map_mem()` loop: `mmu.c:660-670` passes raw `start`/`end` to
-  `__map_memblock`.
-- Rounding-down: `mmu.c:443-445`.
-- NOMAP skip: `should_skip_region()` in `mm/memblock.c:1081-1083`.
-- Byte isolate: `memblock_isolate_range()`.
-- Introduced: rounding 2015, loop 2017/2020 — well before 6.12.
-- `7ace06a01efab` not in HEAD.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+`b4 dig -w` recipients: Jaroslav Kysela, Liam Girdwood, Mark Brown,
+Takashi Iwai, linux-sound@. Maintainer applied it the same day.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Minor adaptation, not a rewrite.** Committed patch fails `git
-apply --check` because this tree still has `if (start >= end) break;`
-and `map_mem(pgd_t *pgdp)`. That is exactly v1’s context. Insert the
-three rounding lines after the existing `break`. No need for
-`2e527667a3b9b`.
+Record: **[ASoC/ALSA maintainers on To; Mark Brown applied]**
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: None. `git log --grep="accidental linear mapping"` /
-`--grep="no-map"` on this file in HEAD does not contain this fix.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+No `Reported-by` / bugzilla / syzbot. Found by code inspection (same
+class as Axel Lin’s 2015 max98925 fix).
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+Record: **[No user report; bug is visible from the code and sibling
+driver]**
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: `arch/arm64/mm` linear map. **CORE for arm64** (every arm64
-boot). `no-map` is how firmware hides TEE/DSP/GPU carveouts.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Standalone `[PATCH]`. No follow-ups on `all-next` after this commit for
+`max98926.c`.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature; this file still changes, but the bank-mapping loop has
-been stable for years in 6.12. Bug is old, not a new-subsystem leftover.
+Record: **[Standalone; no later superceding patch]**
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Search for this title on lore stable did not find a prior stable
+discussion (unrelated hits only).
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: arm64 systems whose DT/firmware has **sub-page-aligned `no-map`
-reserved-memory**. More likely with 16K/64K pages. Author hit it on
-6.1.rt; 6.12 has the same mapping logic.
+Record: **[No stable-list discussion found]**
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Boot + unaligned `no-map` region. No extra userspace trigger.
-Cache prefetch can then touch TEE. Commonness: not every board, but real
-on 64K TEE/embedded SoCs.
+---
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- Isolation break: `no-map` (including TEE) mapped `PAGE_KERNEL`.
-- Speculative access / firmware “REE accessed secure memory” faults
-  (verified report).
-- DT forbids speculative access to `no-map`.
-- Severity: **HIGH** (security isolation + platform faults). Not a
-  universal oops, but it is an important real bug, not a nit.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** high for affected boards (TEE/firmware faults, linear-map
-  leak of carveouts).
-- **Risk:** low (≤1 unused page per boundary; matches buddy PFN
-  rounding; maintainer-acked).
-- Ratio favors backport.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: **[`max98926_dai_set_fmt`]**
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 5.2: TRACE CALLERS**
+Wired as `.set_fmt` in `max98926_dai_ops`. ASoC core
+`snd_soc_dai_set_fmt()` in `sound/soc/soc-dai.c` calls
+`dai->driver->ops->set_fmt`. `sound/soc/soc-core.c` applies DAI format
+from the card/DAI link at setup.
 
-Step 9.1: COMPILE THE EVIDENCE
+Record: **[Called from ASoC DAI format setup, not a hot IRQ path]**
+
+**Step 5.3: TRACE CALLEES**
+`regmap_write` / `regmap_update_bits` on `MAX98926_FORMAT`.
+
+Record: **[Register programming only]**
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Reachable when a MAX98926 card configures DAI format (DT `dai-format` /
+machine driver). Unprivileged users typically cannot change invert
+flags, but boot/stream setup hits this. `NB_IF` / `IB_IF` are the broken
+cases (`soc-dai.h`: inverted frame).
+
+Record: **[Reachable on DAI setup for this codec] [Broken for inverted
+frame clock]**
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+This tree: only `max98926.c` still uses BCI-only. `max98925.c` already
+uses `BCI | WCI`.
+
+Record: **[Sibling already fixed; this is the remaining copy of the same
+bug]**
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Yes. `git merge-base --is-ancestor dd0ae9a2e19a2 HEAD` failed (fix not
+present). Surrounding code in this tree matches the parent of the
+candidate commit. Introduced in v4.6, still here in 6.12.111.
+
+Record: **[Buggy code present at max98926_dai_set_fmt] [Since v4.6]**
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Context is identical; `git apply --check` is clean.
+
+Record: **[Clean apply]**
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+No invert-mask fix for max98926 in this tree. max98925’s equivalent fix
+**is** already here.
+
+Record: **[No prior max98926 invert fix; sibling fix already present]**
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+`sound/soc/codecs/max98926.c` — Maxim MAX98926 speaker amplifier.
+`CONFIG_SND_SOC_MAX98926` is selected via `SND_SOC_ALL_CODECS` imply; DT
+compatible `maxim,max98926` exists. No in-tree board file found that
+hard-codes this codec.
+
+Record: **[ASoC codec driver] [PERIPHERAL, but real hardware]**
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Codec file is mature; little recent functional change.
+
+Record: **[Mature driver; bug is old, not a new-feature regression]**
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Users of MAX98926 whose DAI link requests inverted word/frame clock
+(`NB_IF` or `IB_IF`). Default `NB_NF` is unaffected.
+
+Record: **[Driver-specific; only inverted-frame configurations]**
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Triggered at DAI format setup (card bring-up / PCM start). Common I2S is
+`NB_NF` (works). Inverted frame is less common but is a documented,
+handled mode in this function. Not a userspace-triggered security issue.
+
+Record: **[DAI setup] [Uncommon invert modes] [Not unprivileged-
+exploitable]**
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+WCI never programmed → LRCLK/frame polarity wrong → swapped channels,
+DAI desync, or unusable playback. Not a panic/UAF/deadlock.
+
+Record: **[Incorrect audio DAI polarity] [Severity: MEDIUM-HIGH for
+affected devices; not CRITICAL crash]**
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+- Benefit: makes advertised invert modes actually work; same class of
+  fix max98925 already shipped to stable.
+- Risk: 1-line mask OR, no API/locking change, applies cleanly.
+
+Record: **[Benefit: medium for this hardware] [Risk: very low]
+[Favorable]**
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real bug in this tree’s `map_mem()` / `__create_pgd_mapping_locked()`.
-- Hardware report: Cortex-A78AE, 64K, TEE `no-map`, firmware faults;
-  also seen conceptually on 6.1, so 6.12 is in range.
-- DT `no-map` contract violated (must not map, must not speculate).
-- 14-line, single-function, no new API.
-- Will applied; Ard endorsed the approach.
-- Original patch context matches 6.12 `map_mem(pgd_t *pgdp)`.
-- Inward rounding matches `__free_memory_core()` so it does not unmap
-  buddy-owned pages.
+- Real, obvious register bug: WCI invert is computed then discarded
+- One-line, obviously correct; matches max98925
+- Identical max98925 fix (`0b51601d4504f4`) was `Cc: stable`
+- Bug present since v4.6 and in this 6.12 tree
+- Applies cleanly; no dependencies or new APIs
+- Applied by Mark Brown; landed in a sound **fixes** pull
+- User-visible: inverted frame clock does not work
 
 AGAINST:
-- Trigger is firmware/DT-dependent (unaligned `no-map`), not every arm64
-  box.
-- Committed mainline hunk needs a trivial context tweak (`break` still
-  present here).
-- Will first preferred warn-only; that was withdrawn after Ard’s
-  coalescing point, not a standing NAK.
-- Theoretical firmware footgun if a needed image lived in the discarded
-  page remainder (Ard); sliver is already not buddy memory.
+- Not a crash, UAF, deadlock, or security issue
+- Peripheral codec; no in-tree machine driver found
+- No `Reported-by` / `Tested-by`
+- Common `NB_NF` path already works
 
 UNRESOLVED:
-- lore.kernel.org/stable search 403; whether stable@ already took it is
-  UNVERIFIED.
+- Direct user reports of broken MAX98926 inverted-frame setups were not
+  found
+- lore.kernel.org WebFetch returned 403; discussion recovered via `b4
+  dig -m`
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — mechanism verified in-tree;
-   debugger + maintainer apply.
-2. Fixes a real bug that affects users? **PASS** — TEE/linear-map
-   isolation break and firmware faults.
-3. Important issue? **PASS** — security isolation / platform abort, not
-   a log nit.
-4. Small and contained? **PASS** — +14 lines, one loop.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — bug present; v1 context
-   matches; committed diff needs only local `map_mem` context.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — 1-line mask, sibling
+   precedent, maintainer applied
+2. Fixes a real bug that affects users? **PASS** — advertised invert
+   modes do not program WCI
+3. Important issue? **PASS** — hardware misconfiguration / broken audio
+   for inverted frame (same bar as the 2015 max98925 stable fix), not a
+   panic
+4. Small and contained? **PASS** — 1 line, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — `git apply --check` clean;
+   context matches
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not ID/quirk/DT-board/build/docs. Ordinary important bugfix.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Not a device-ID/quirk/DT/build/docs exception. It is a normal small
+driver correctness fix.
 
-Step 9.4: MAKE YOUR DECISION
-Backport to this 6.12 tree. The bug is here, the fix is small, and
-leaving `no-map` (especially TEE) in the linear map is a real isolation
-and stability failure on 64K systems.
+**Step 9.4: MAKE YOUR DECISION**
+This belongs in **this** 6.12 tree. The buggy code is here, the fix is
+trivial and already proven on the sibling codec (including an explicit
+stable nomination there), and the only cost is flipping one register
+mask bit that the driver already intended to set.
 
-------------------------------------------------
-What the commit solves for stable users
-------------------------------------------------
-On this 6.12 tree, boot builds the linear map in `map_mem()` from
-`for_each_mem_range()`. NOMAP regions are skipped, but neighbors keep
-byte-accurate edges. `__create_pgd_mapping_locked()` then rounds
-physical start **down** to `PAGE_MASK`, so a 32KiB `no-map` hole on a
-64K page is mapped as normal RAM. That contradicts DT `no-map` and can
-let the CPU speculate into firmware/TEE memory.
+### What the commit solves for stable users
+On MAX98926, `set_fmt` claims to support word-clock invert (`NB_IF` /
+`IB_IF`) but `regmap_update_bits()` only allows the BCI bit to change,
+so LRCLK invert never reaches the chip. That is broken DAI polarity for
+those boards, not a style change.
 
-Rounding the mapped range inward before `__map_memblock` stops that
-overlap. At most one page per boundary stays unmapped; those bytes were
-already excluded from the buddy allocator.
+### Risk vs benefit
+Very low risk (one OR into an existing mask) versus a real, long-
+standing hardware-config bug that already met the stable bar on
+max98925.
 
-------------------------------------------------
-Stable rules / risk
-------------------------------------------------
-Surgical, no API, code is in 6.12, original submission matches this
-`map_mem(pgd_t *)` loop. Benefit is isolation and avoiding firmware
-aborts; risk is a conservative hole the allocator already does not use.
+### Concerns
+None for this tree: no prerequisites, no conflict, no follow-up needed.
+Impact is limited to MAX98926 with inverted frame clock.
 
-------------------------------------------------
-Verification
-------------------------------------------------
-- [Phase 1] `git describe HEAD` / `make kernelversion`:
-  `p-6.12-3-g88406e77611c6`, **6.12.111**. Tags: author SOB + Will
-  Deacon SOB only.
-- [Phase 2] `git show 7ace06a01efab`: +14 in `map_mem`; this tree
-  `Read`/`Grep`: `phys &= PAGE_MASK` at `mmu.c:443`; loop at
-  `mmu.c:660-670`.
-- [Phase 2] `reserved-memory.yaml`: `no-map` forbids standard mapping
-  and speculative access.
-- [Phase 2] `__free_memory_core()`: `PFN_UP`/`PFN_DOWN` in
-  `mm/memblock.c:2153-2158`.
-- [Phase 3] blame: `9c4e08a3022b6` (2015) PAGE_MASK; `98d2e1539b84a`
-  (2017) / `b10d6bca87204` (2020) loop.
-- [Phase 3] `git merge-base --is-ancestor 7ace06a01efab HEAD` → not in
-  tree (exit 1).
-- [Phase 3] `2e527667a3b9b` (drop `pgd_t*`) not in HEAD; not a
-  prerequisite.
-- [Phase 3] `git log origin/master --grep="accidental linear mapping" --
-  arch/arm64/mm/mmu.c`: `7ace06a01efab`; `git describe --contains
-  --match 'v*'`: `v7.3-rc1~...`
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; lore msgid
-  `20260513010255.3764038-1-liulhong617@163.com`; Will + Ard discussion;
-  applied 6 Aug 2026; author follow-up on v6.1.177-rt TEE faults.
-- [Phase 4] lore WebFetch 403 on lore.kernel.org/all and /stable —
-  thread recovered via `b4 dig -m`.
-- [Phase 5] `paging_init()` calls `map_mem(swapper_pg_dir)`;
-  `should_skip_region()` skips NOMAP.
-- [Phase 6] `git apply --check` of committed diff **fails** (context);
-  6.12 loop still has `if (start >= end) break;` matching v1.
-- [Phase 6] `origin/master` `map_mem` still has `PAGE_ALIGN(start)` /
-  `end & PAGE_MASK`.
-- [Phase 8] Failure mode from mbox + DT: TEE mapped, prefetcher,
-  firmware abort — HIGH.
-- UNVERIFIED: whether stable@ already queued it (HTTP 403).
+---
+
+## Verification
+- [Phase 1] Parsed tags: author SOB, Mark Brown SOB, lore Link; no
+  Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: 1 line in `max98926_dai_set_fmt()`; mask `BCI` → `BCI
+  | WCI`
+- [Phase 2] Header verified: WCI is bit 3, BCI is bit 2 in `max98926.h`
+- [Phase 3] `git blame`: buggy line from `a2e2876aa0bab` (2016, v4.6)
+- [Phase 3] `git merge-base --is-ancestor a2e2876aa0bab HEAD`:
+  introducing commit **is** in this tree
+- [Phase 3] Sibling fix `0b51601d4504f4` (“Fix mask for setting DAI
+  invert mode”) had `Cc: stable@vger.kernel.org` and is in this tree
+- [Phase 3] `git log` on `max98926.c`: no invert-mask prerequisite
+- [Phase 4] `b4 dig -c dd0ae9a2e19a2`: lore URL `87wltomc97.wl-
+  kuninori.morimoto.gx@renesas.com`
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: Kysela, Girdwood, Brown, Iwai, linux-sound
+- [Phase 4] mbox: Mark Brown applied to for-7.3; no NAKs
+- [Phase 4] WebFetch lore/msgid: 403; discussion taken from b4 mbox
+  instead
+- [Phase 4] Stable lore search: no prior discussion of this patch
+- [Phase 5] Callers: `snd_soc_dai_set_fmt()` → dai ops `.set_fmt`; used
+  from `soc-core.c` DAI setup
+- [Phase 5] `git grep`: only max98926 still has BCI-only invert update
+- [Phase 6] `make kernelversion` / Makefile: **6.12.111**; `git describe
+  HEAD`: `p-6.12-3-gc504cf0baa3d8`
+- [Phase 6] `git merge-base --is-ancestor dd0ae9a2e19a2 HEAD`: fix
+  **not** in this tree
+- [Phase 6] Parent context of candidate matches local `max98926.c` lines
+  360–363
+- [Phase 6] `git apply --check`: APPLY_CLEAN
+- [Phase 7] No in-tree machine driver hard-coding max98926; DT
+  compatible `maxim,max98926` exists
+- [Phase 8] Failure mode: WCI not programmed → wrong frame polarity /
+  broken audio; not a crash
+- UNVERIFIED: specific MAX98926 products using `NB_IF`/`IB_IF` in the
+  field (driver still implements those cases)
 
 **YES**
 
- arch/arm64/mm/mmu.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/soc/codecs/max98926.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index 71841b5c31928..7c3f560df6529 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -1179,6 +1179,20 @@ static void __init map_mem(pgd_t *pgdp)
- 	for_each_mem_range(i, &start, &end) {
- 		if (start >= end)
- 			break;
-+		/*
-+		 * for_each_mem_range may return sub-page-aligned boundaries
-+		 * after memblock_mark_nomap() splits regions at byte precision.
-+		 * __create_pgd_mapping_locked aligns phys down to PAGE_MASK,
-+		 * which could accidentally map no-map memory on the boundary.
-+		 * Round the mappable range inward: start UP, end DOWN, so
-+		 * that the mapped area never overlaps with adjacent no-map
-+		 * regions. The cost is at most one page of unmapped gap at
-+		 * each boundary.
-+		 */
-+		start = PAGE_ALIGN(start);
-+		end = end & PAGE_MASK;
-+		if (start >= end)
-+			continue;
- 		/*
- 		 * The linear map must allow allocation tags reading/writing
- 		 * if MTE is present. Otherwise, it has the same attributes as
+diff --git a/sound/soc/codecs/max98926.c b/sound/soc/codecs/max98926.c
+index ae962bda163eb..8f48f702d5621 100644
+--- a/sound/soc/codecs/max98926.c
++++ b/sound/soc/codecs/max98926.c
+@@ -360,7 +360,7 @@ static int max98926_dai_set_fmt(struct snd_soc_dai *codec_dai,
+ 	regmap_write(max98926->regmap,
+ 			MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
+ 	regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+-			MAX98926_DAI_BCI_MASK, invert);
++			MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK, invert);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
