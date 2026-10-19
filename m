@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AF0529F38;
-	Mon, 19 Oct 2026 13:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2795C533CFC;
+	Mon, 19 Oct 2026 13:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418170; cv=none; b=kUqEAf3S0c9wJomeN+T0wltFWOz5e0ELa52q9DqDPHb+rHmlALSEtJ+WRcbrTO8A4aUm20szjTGLAwg+7zunI8kpRpM/fAETm/+z2bwp7HuRwhU0D9+u0wUj9LdVQz9K4/Jfqmjduh2UAFhkVbZzF6ekikhBKZs5hHrbgt/2wXk=
+	t=1792418171; cv=none; b=qdnUZEp0cPSn0aEMQ+TM7tD6hPXRVVpEA6/9Mh6tC82IUlUdvlS6gijM5I7B5RrweucCGPx/FkU+fsLRnBow4tdk0X5fxERPR+WO65qGEU5kTuDCnG/8IaY9OCZErfDN0ShpRCk66lq7krAZuAHzZuo9lL8HNuMxO7LRqaQRh8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418170; c=relaxed/simple;
-	bh=gp6L2SLZLQSVAsFSrzv4BkAxb7JCVmh4SxNRmDD+fIc=;
+	s=arc-20240116; t=1792418171; c=relaxed/simple;
+	bh=JVnMUyYCFP8Kl/qChmzFxwajTO8+cKtIE2QnyNtFB7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=luzXTXWfbkOwbe58FtrFcUVRPmPsTBZh6IZ/p1ziph+gLY41OE2LBHDwWnS9MZbW2wNRdOeN2eUTnF9/Mfa2Rz5bbNFCRfFipFXcvs1YQXD0itb8RFCzBi7F1d/ppRp7m09QauxdbfTE6qFbArPF9JOWxh4FgqV6fzwGuxdcROQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BZMt5TLK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tBAbbjM6Ucu60HBU/Kw04ZHk91bnFAaEdqbvc88Uqnnf9GGAFv6b7Noh/4v6JFw7is4cm1HHUFMNDVlVWq5ANLHJyUNPxMVprncWnbRIoGGvwOQLzOrkXVffTa/aI9HgyI6L0RrBNEyr7Ed2yFEcouHqgLbk0Zo32Pt9Z/ZKGVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W7ssvKoY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BZMt5TLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CA11F000C9;
-	Mon, 19 Oct 2026 13:56:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W7ssvKoY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F051F1F000C8;
+	Mon, 19 Oct 2026 13:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418166;
-	bh=3fvkY4iGTxDb4k+17WCCVeBqJl78KDBhzfpsQEyiF9g=;
+	s=k20260515; t=1792418168;
+	bh=jHdCrDtDzd0B4HxFNPxlVm2gyHM/CHn/y1BW3PpG5ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BZMt5TLKLdvi5nu+5aAKh8ebWcSnKzqoNhY8yUzjixPMS22SB2OgARo+fbdQUlIQV
-	 0yj0gvcqfYObLlZ3azFkqSvg27CbBBN7hJYoTtY4TcZBMQOiPYCj79wCG3WZ8HaCin
-	 4N6YATOinbdOPcjgI0Ma2UhPL+DbyKcNpSEno+0/YGVUiIxbEeLWm1Cw2ylG+qBO2e
-	 PM2iLG2wAebtqpzYj7q3mo6r7Lc1YL37FEYvRphdNHv7L2FOd8WxyX/TW82Wei4KZW
-	 heAMCW9xNI5JJlLen0/rK2BqimEHOIYpfMz+s0DFOC4pHUO3FcXIvQR7IuDucyk/TL
-	 Ud+4c4zsZor5A==
+	b=W7ssvKoYLRR6He4eMNJBwK+ClcdJ/LoxMDhsDprLP4M/5b0P89hKwWTQ1kla9GNpy
+	 Auf2DeP+DLj+3/pINjHFnuT0J7eTOwwGjYI1iTqT8t202KU9V1Bw8PjsffsCzMkJ4T
+	 tgkN9b7J9VER5o49ryGcuWutfIBg6hEX+0AFJ3m6a8UcB5CeIEOj52w2IsC8byGZ0m
+	 fvChwamCBXw3SsFBlIhAQ++Gqf/kinbclUGR4SAkyJKHOKJLOwojExPahMWVFXHAFv
+	 czVUSppKJMJwc7V1z5JFQQ5I6RyVr5q3l0+aRyj87N2mASDcV0OsakOeP1OedUfMF+
+	 ZJRTxfYNj1qIg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jimmy Zuber <jamz@amazon.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+Cc: Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	miklos@szeredi.hu,
-	fuse-devel@lists.linux.dev,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] fuse: zero the partial EOF page when extending a file
-Date: Mon, 19 Oct 2026 09:45:50 -0400
-Message-ID: <20261019135441.1420968-59-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/amdgpu: Add checks to vbios fetch through ATRM
+Date: Mon, 19 Oct 2026 09:45:51 -0400
+Message-ID: <20261019135441.1420968-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,486 +56,396 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Zuber <jamz@amazon.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 34b5c4a6e4fb9dbb3f9d87f3b0fb0372105c8302 ]
+[ Upstream commit 8c3fcfc14fc1320a1155acb2dd7656fce7003bc0 ]
 
-Extending a fuse file past a non-page-aligned EOF does not zero the tail of
-the old last page.  When that page is cached and has been mmap-dirtied beyond
-the old EOF, the now in-bounds tail is served to later reads as stale data
-rather than zeros, which violates POSIX file-extension semantics.
+Check if a valid buffer object is returned after ATRM call. Also, match
+the buffer length against requested size before copying.
 
-Some file systems get this zeroing automatically at writeback time
-(block_write_full_folio() / iomap_writeback_handle_eof() zero the tail of the
-folio straddling i_size).  A non-writeback caching fuse file system uses neither
-path, so it has to zero the tail itself from the size-extending paths, like
-XFS (xfs_file_write_zero_eof()) and ext4 (ext4_block_zero_eof()) do.
-
-Call truncate_pagecache_range() over the newly-exposed range up front from the
-three paths that extend a file, before the new size is published:
-
-  - a buffered write whose position is past the old EOF (fuse_perform_write());
-  - a size-extending setattr/truncate (fuse_do_setattr());
-  - a size-extending fallocate (fuse_file_fallocate()).
-
-This unmaps the stale mappings and zeroes the partial tail of the old EOF
-folio, so a later read returns zeros.  Truncating [old EOF, write start) before
-a buffered write keeps the dropped range disjoint from the written data, so a
-write that lands inside the old EOF folio is preserved.
-
-writeback_cache connections are unaffected, as their writes go through
-iomap_file_buffered_write(), which zeroes post-EOF folios.  The bug is
-observable on a non-writeback_cache server that returns FOPEN_KEEP_CACHE on
-writable files (without FOPEN_DIRECT_IO), and is caught by the new
-write_extend_eof fuse selftest.
-
-Signed-off-by: Jimmy Zuber <jamz@amazon.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The buggy FUSE size-
-extend paths are present here; the fix is not. This is a small
-POSIX/data-integrity fix that belongs in this tree.
+This 6.18.53 tree still copies an untrusted ATRM ACPI buffer with no
+type or length check, which is a real heap overflow / NULL-deref during
+dGPU probe. The patch is a small, self-contained memory-safety fix and
+belongs in this tree.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [drm/amdgpu] [Add] [checks on ATRM ACPI return before copying
+VBIOS data]
+Subsystem prefix `drm/amdgpu`. Verb is “Add checks,” which here means
+adding missing validation, not a feature.
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[fuse]** **[zero]** zero the partial EOF page when extending a
-file. “Zero” here is a correctness fix (fill a hole that should read as
-zeros), not a feature.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Signed-off-by: Jimmy Zuber \<jamz@amazon.com\> (author)
-- Signed-off-by: Miklos Szeredi \<mszeredi@redhat.com\> (FUSE
-  maintainer; applied the patch)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Link:, or Cc:
-  stable (absence of Fixes/Cc: stable is expected for this pipeline)
-- Ignore any “[Upstream commit …]” / Sasha Levin SOB if present —
-  candidate-prep only
+- Signed-off-by: Lijo Lazar \<lijo.lazar@amd.com\> (author)
+- Reviewed-by: Alex Deucher \<alexander.deucher@amd.com\> (amdgpu
+  maintainer)
+- Signed-off-by: Alex Deucher \<alexander.deucher@amd.com\>
+- No Fixes:, Reported-by, Tested-by, Link:, or Cc: stable (absence
+  expected)
+- Ignore pipeline-added “Upstream commit …” and “Signed-off-by: Sasha
+  Levin”
 
-Notable: maintainer SOB. Cover letter (v4 0/2) also names testing under
-UML plus libfuse `passthrough_ll`. Recipients included Jan Kara, Joanne
-Koong, Brian Foster (author of the analogous ext4/XFS EOF-zeroing work).
+Notable: maintainer Reviewed-by + SOB. No fuzzer or user crash report.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** Extending a FUSE file past a non-page-aligned EOF does not
-  zero the tail of the old last page.
-- **Symptom:** If that page is cached and mmap-dirtied past the old EOF,
-  later reads of the newly in-bounds tail return stale bytes instead of
-  zeros (POSIX file-extension violation).
-- **Root cause:** Writeback-style filesystems get this from
-  `block_write_full_folio()` / `iomap_writeback_handle_eof()`. A non-
-  writeback caching FUSE fs uses neither, so it must zero on extend,
-  like XFS/ext4.
-- **Fix:** `truncate_pagecache_range()` over the newly exposed range on
-  write, setattr/truncate, and fallocate, before publishing the new size
-  (write/fallocate; setattr still publishes `i_size` first, as it
-  already did).
-- **Scope note:** writeback_cache writes are claimed unaffected on
-  mainline because they go through `iomap_file_buffered_write()`.
-  Observable on non-writeback_cache + `FOPEN_KEEP_CACHE` without
-  `FOPEN_DIRECT_IO`. Caught by `write_extend_eof` selftest.
-- **Version info:** none in the message. Cover letter base-commit
-  `7d87a5a284bb34edb3f4e7e312ef403b3385a7b7` is post-6.12.
+- Bug: ATRM ACPI evaluation result used without checking it is a buffer,
+  and without capping copy size to the requested length.
+- Symptom: NULL deref if `buffer.pointer` is NULL; type-confused access
+  if the object is not `ACPI_TYPE_BUFFER`; `memcpy` of firmware-
+  controlled `obj->buffer.length` into a 4 KiB slot of a 256 KiB
+  kmalloc, i.e. heap overflow especially on the last 4 KiB page.
+- Version info: none in the message. Code dates to amdgpu core (v4.2).
+- Root cause (author): ATRM can return a non-buffer or oversized buffer;
+  copy must be validated first.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. Explicit POSIX/data-integrity bug with a regression
-test. v1 originally zeroed from `fuse_write_update_attr()` after the
-fact; v3/v4 moved zeroing to the extend paths so a write inside the old
-EOF folio is preserved.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Yes. “Add checks” is defensive language for a memory-safety bug:
+missing type check + unbounded memcpy from ACPI firmware data. Same
+pattern as this author’s ATIF/ATPX buffer validation commits.
 
----
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
-
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- `fs/fuse/dir.c`: +3 in `fuse_do_setattr()`
-- `fs/fuse/file.c`: +4 in `fuse_perform_write()`, +5 in
-  `fuse_file_fallocate()`
-- **~12 insertions, 0 deletions.** Single-subsystem surgical fix (FUSE
-  only). Companion selftest (series 2/2) is not part of this commit.
+- File: `drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c` (+8 / -2)
+- Function: `amdgpu_atrm_call()`
+- Scope: single-function surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **`fuse_perform_write()`:** Snapshot `old_size`. If `pos > old_size`,
-  `truncate_pagecache_range(inode, old_size, pos-1)` before filling
-  pages. Hole `[old EOF, write start)` is unmapped/zeroed; the write
-  range itself is left intact.
-- **`fuse_do_setattr()`:** On size change, if extending, range-truncate
-  `[oldsize, newsize-1]` then the existing `truncate_pagecache()` +
-  `invalidate_inode_pages2()`.
-- **`fuse_file_fallocate()`:** If not `FALLOC_FL_KEEP_SIZE` and
-  `offset+length > oldsize`, range-truncate `[oldsize, offset+length-1]`
-  before `fuse_write_update_attr()` publishes the new size. Punch/zero
-  still has its own existing range truncate.
+Before: after `acpi_evaluate_object` success, `obj = buffer.pointer`
+then `memcpy(bios+offset, obj->buffer.pointer, obj->buffer.length)` and
+`return obj->buffer.length`.
+After: reject NULL or non-buffer objects (`kfree` + `-EINVAL`); `len =
+min_t(size_t, obj->buffer.length, len)`; copy that many bytes; return
+the capped length.
+Path: dGPU VBIOS fetch via ATRM during probe (`amdgpu_atrm_get_bios` →
+`amdgpu_get_bios_dgpu` → `amdgpu_get_bios`).
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Logic/correctness + memory-contents (stale page-cache data).**
-mmap may dirty the last page past `i_size`. Extending makes that tail
-in-bounds. Without zeroing, reads return mmap garbage instead of zeros.
-`truncate_pagecache_range()` unmaps full pages in the hole and
-`truncate_inode_partial_folio()` / `folio_zero_range()` zeros the
-partial old-EOF folio (`mm/truncate.c`).
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: Minimal, matches XFS/ext4. Uses a long-standing helper. v4
-dropped a custom `fuse_zero_partial_eof_folio()` after Miklos/Jan noted
-`folio_mkclean()`/`folio_mark_dirty()` is a buffer-head concern;
-`truncate_pagecache_range()` already zeros. Regression risk is low:
-extra truncate of a hole that must read as zeros. Failed write after
-hole-zeroing only clears post-EOF cache, which is still past `i_size`.
-Does not add APIs or features.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- setattr size-change block: `8373200b124d03` (“fuse: Trust kernel
-  i_size only”, 2014) wrapping `truncate_pagecache` from
-  `7caef26767c172` (2013). Comment around the invalidate goes back to
-  Miklos 2008 (`3be5a52b30aa5c`).
-- `fuse_perform_write()`: writethrough extend path since at least
-  `ea9b9907b82a09` (2008); `FUSE_I_SIZE_UNSTABLE` from `06a7c3c2781409`
-  (2013).
-- fallocate extend: `bee6c307800bbb` / `b0aa7606521790` (2013).
-Bug is old, long predating 6.12.
+- Category: memory safety (NULL deref + out-of-bounds write) on an
+  ACPI/firmware path.
+- Mechanism: `union acpi_object` is type-tagged. Using `.buffer.length`
+  / `.buffer.pointer` when type is INTEGER/PACKAGE/etc. reads the wrong
+  union members. Even with a real buffer, firmware can return length \>
+  requested 4096. Destination is `adev->bios` (`kmalloc(256*1024)`),
+  `offset = i * 4096`. Last page (`i == 63`) overflow writes past the
+  allocation.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. Introducing commit is “FUSE never zeroed this on
-extend,” not a recent regression.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent 6.12 fuse work is lock leaks, DIO cache, virtiofs UAF —
-unrelated. This is standalone, not a prep patch. Series 2/2 is a
-selftest only.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Jimmy Zuber has no other fuse commits in this tree. Applied by
-Miklos Szeredi (maintainer). Analogous ext4 fix `b6ce2dbe984bc` (“ext4:
-partial zero eof block on unaligned inode size extension”) **is already
-in this tree**.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Added calls are only `i_size_read()` +
-`truncate_pagecache_range()`, both present. No new helpers. The mainline
-hunk context mentions `fuse_folios_alloc`; this tree still uses
-`fuse_pages_alloc` / `ap->pages`, so the **write hunk may need a trivial
-context backport**. setattr and fallocate hunks match 6.12. Standalone:
-yes.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record: Could not `b4 dig -c <sha>` (commit not in this checkout).
-Retrieved thread via msgid `20260824143052.1546163-2-jamz@amazon.com`.
-- Lore/LWN cover: `[PATCH v4 0/2] fuse: zero the partial EOF page when
-  extending a file`
-- Openwall: https://lists.openwall.net/linux-kernel/2026/08/24/1447
-  (1/2), 1443 (2/2)
-- Revisions: v1 (2026-07-31) zeroed from `fuse_write_update_attr()`
-  (would clobber in-page extending writes); v2/v3 moved zeroing to
-  extend paths; v4 dropped the helper per Miklos/Jan. Applied version is
-  v4.
-- Miklos reply 2026-08-24: **“Applied, thanks.”** No NAK, no stable
-  objection.
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: To: Miklos Szeredi, Shuah Khan. Cc: fuse-devel, linux-kselftest,
-Jan Kara, Joanne Koong, Brian Foster. Maintainer applied v4 after
-review-driven simplification.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Author reproduced vs libfuse
-`passthrough_ll` and added a selftest that fails without the fix. Same
-mmap-beyond-EOF pattern as the ext4 case (`xfs_io`
-pwrite/mmap/mwrite/truncate).
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 2-patch series. 2/2 is `write_extend_eof_test.c` only. Kernel
-fix does not depend on it. 6.12 has no
-`tools/testing/selftests/filesystems/fuse/` (no need to backport the
-test).
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** — lore.kernel.org returned 403 (Anubis). Patch is
-from Aug 2026; no evidence it was rejected for stable. Absence of Cc:
-stable is not a negative signal here.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `fuse_perform_write()`, `fuse_do_setattr()`,
-`fuse_file_fallocate()`. Helper used: `truncate_pagecache_range()`.
-
-**Step 5.2: TRACE CALLERS**
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- `fuse_perform_write()` ← `fuse_cache_write_iter()` (under
-  `inode_lock`) ← `fuse_file_write_iter()` (`.write_iter`). Userspace
-  `write`/`pwrite` on cached FUSE files. Direct-IO and DAX do not use
-  this function.
-- `fuse_do_setattr()` ← `fuse_setattr()` / open `O_TRUNC` path.
-  Userspace `ftruncate`/`truncate`.
-- `fuse_file_fallocate()` ← `.fallocate`. Userspace `fallocate()`.
+- Obviously correct: type check is the standard ACPI pattern (ATIF
+  already does `obj->type != ACPI_TYPE_BUFFER`; nouveau `acpi_read_bios`
+  already does `min(length, obj->buffer.length)`).
+- Minimal; no unrelated churn; no API change.
+- Regression risk low: well-behaved ATRM still copies ≤ requested size.
+  Oversize/wrong-type now fails this chunk; caller already treats `ret <
+  ATRM_BIOS_PAGE` as end-of-data and then `check_atom_bios()`. `-EINVAL`
+  is `< 4096`, so the loop stops and BIOS validation fails instead of
+  overflowing.
+- Remaining gap (not a reason to reject): no check that
+  `obj->buffer.pointer` is non-NULL when type is BUFFER; ACPI normally
+  provides one. ACPI_FAILURE path still does not `kfree` (pre-existing).
 
-**Step 5.3: TRACE CALLEES**
-Record: `truncate_pagecache_range()` → optional `unmap_mapping_range()`
-for full pages in the hole → `truncate_inode_pages_range()` →
-`truncate_inode_partial_folio()` / `folio_zero_range()` for the partial
-EOF folio. Confirmed in `mm/truncate.c` in this tree.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Reachable from ordinary syscalls on a common FUSE mount. Default
-no-open flags are `FOPEN_KEEP_CACHE` (`fs/fuse/file.c` ~line 151). Non-
-writeback is the usual libfuse default. Unprivileged apps that mmap then
-extend trigger it.
+Step 3.1: BLAME THE CHANGED LINES
+Record: Unchecked `memcpy` comes from `d38ceaf99ed015` (“drm/amdgpu: add
+core driver (v4)”, 2015-04-20), first in v4.2-rc1. Present for the
+entire life of amdgpu, including this 6.18 tree.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same class as ext4 `ext4_zero_partial_blocks()` on unaligned
-extend (already in this tree) and XFS `xfs_file_write_zero_eof()`.
-Remaining FUSE holes not covered here: `copy_file_range` (truncates only
-the copied range), getattr-driven remote size growth in
-`fuse_change_attributes()`. Incomplete coverage is not a reason to skip
-the three primary paths.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Introducer is the original amdgpu core commit,
+which is in this tree.
 
----
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Recent `amdgpu_bios.c` work is VBIOS source selection (ROM BAR,
+VFCT, shadow ROM), not ATRM copy logic. ATRM skip for removable devices
+is `432e664e7c98c`. This patch is standalone, not “X/Y”. Sibling
+hardening (not prerequisites): `c8373721c3e54` ATIF buffer validation,
+`9d367fab451d9` ATPX buffer validation (same author, May 2026). No
+follow-ups on this file after the candidate.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Lijo Lazar is a regular AMD amdgpu contributor. Same-era ACPI
+object validation: ATIF and ATPX. Maintainer Alex Deucher reviewed.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.**
-- `fuse_do_setattr()`: `fs/fuse/dir.c` ~2061–2065 — size change →
-  `truncate_pagecache` + `invalidate_inode_pages2` only (no hole zero on
-  extend). Dirty mmap pages can survive invalidate.
-- `fuse_perform_write()`: `fs/fuse/file.c` ~1294–1305 — no
-  `truncate_pagecache_range`.
-- `fuse_file_fallocate()`: `fs/fuse/file.c` ~3223–3230 — extend updates
-  `i_size` only; range truncate is punch/zero only.
-Introduced years before 6.12 (2008–2014). `git log --grep="zero the
-partial EOF"` on `fs/fuse/` is empty here.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: None. Uses existing `acpi_evaluate_object`, `ACPI_TYPE_BUFFER`,
+`min_t`, `memcpy`. `git diff v6.18.53 <candidate> -- amdgpu_bios.c` is
+exactly this hunk. Applies standalone.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Minor context only.** setattr/fallocate match. Write function
-exists with the same `pos` / `FUSE_I_SIZE_UNSTABLE` shape; later in the
-function 6.12 still uses pages, not folios. No semantic rework required.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This fix is not present. No earlier FUSE EOF-tail zeroing. ext4
-analog is present (`b6ce2dbe984bc`).
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c 8c3fcfc14fc1320a1155acb2dd7656fce7003bc0` →
+  https://patch.msgid.link/20260615053911.59876-1-lijo.lazar@amd.com
+- `b4 dig -a`: v1 only, 2026-06-15, no later revisions.
+- Thread: patch from Lijo Lazar; Alex Deucher Reviewed-by. No NAK, no
+  stable nomination, no risk flags.
+- lore.kernel.org WebFetch returned 403; thread recovered via `b4 dig
+  -m`.
 
-Note: the commit’s “writeback_cache uses `iomap_file_buffered_write()`”
-is mainline. **6.12 writeback still uses `generic_file_write_iter` →
-`fuse_write_begin`/`fuse_write_end`.** That does not remove the
-writethrough bug this patch fixes (`fuse_cache_write_iter` non-wb path
-still calls `fuse_perform_write()`). setattr/fallocate changes still
-apply to both modes.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To/Cc Lijo Lazar, amd-gfx@lists.freedesktop.org,
+Hawking Zhang, Alexander Deucher, Asad Kamal, Candice Li. Subsystem
+maintainer reviewed.
 
----
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No Reported-by / Link. No public crash report found. Bug is from
+code inspection of untrusted ACPI length.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone v1. Related ATIF/ATPX validation patches are
+independent files (`amdgpu_acpi.c`, `amdgpu_atpx_handler.c`). radeon
+`radeon_atrm_call()` still has the old memcpy (separate driver; not
+required for this backport).
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **fs/fuse — IMPORTANT.** Not mm/VFS-core, but FUSE is widely
-used (sshfs, fuse-overlayfs, ntfs-3g, virtiofs, container/user mounts).
-Data served from the page cache is wrong.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable WebFetch 403. `b4 dig` showed only amd-
+gfx. No evidence this was rejected for stable. Absence of prior stable
+discussion is not a negative.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained (Miklos). This is a long-standing hole, not
-churn from a brand-new API.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
----
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `amdgpu_atrm_call()` only.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+Step 5.2: TRACE CALLERS
+Record:
+- `amdgpu_atrm_call` ← `amdgpu_atrm_get_bios` (CONFIG_ACPI)
+- `amdgpu_atrm_get_bios` ← `amdgpu_get_bios_dgpu`
+- `amdgpu_get_bios_dgpu` ← `amdgpu_get_bios` (non-APU)
+- `amdgpu_get_bios` ← `amdgpu_device.c` during COMMON IP `early_init` /
+  device init
+Context: process context, driver probe, hybrid/PX dGPU laptops. Not IRQ.
+Userspace cannot call it directly; it runs when amdgpu binds.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **FUSE users with page cache kept and without writeback_cache**
-(common). Config-specific (`CONFIG_FUSE_FS`), not a single obscure
-driver.
+Step 5.3: TRACE CALLEES
+Record: `acpi_evaluate_object`, `acpi_format_exception`, `memcpy`,
+`kfree`, `min_t`, `DRM_ERROR`. ACPI allocates with
+`ACPI_ALLOCATE_BUFFER`.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Mid-page EOF + mmap store past EOF (legal on the last page) +
-extend via `pwrite`/`ftruncate`/`fallocate`. Not every write; well-known
-and reproducible (selftest + libfuse passthrough). Unprivileged if the
-user can mmap/write the file.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Reachable on boot/module load for discrete AMD GPUs on PX
+platforms with an ATRM ACPI method (on-platform only; removable devices
+skipped). Failure of ATRM can make `amdgpu_get_bios()` fail and probe
+return `-EINVAL` unless VBIOS is optional. Heap overflow is reachable
+whenever ATRM returns a too-large buffer.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **Stale data returned as file contents / POSIX hole not zero —
-HIGH (data integrity).** Not a panic. Same class stable already took for
-ext4.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same unfixed pattern in `drivers/gpu/drm/radeon/radeon_bios.c`.
+Nouveau already caps length. ATIF/ATPX in amdgpu already validate
+type/length. Systematic ACPI-buffer issue; this commit fixes amdgpu ATRM
+only.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record: **Benefit high** (wrong reads on a common FUSE config). **Risk
-low** (~12 lines, existing helper, maintainer-applied, selftest). Ratio
-strongly favors backport.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
----
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Local tree is 6.18.53 (`git describe HEAD` →
+`v6.18.53-5049-g0f0bdc2b0dffb`, `VERSION=6 PATCHLEVEL=18 SUBLEVEL=53`).
+`v6.18.53:drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c` still has:
+```
+memcpy(bios+offset, obj->buffer.pointer, obj->buffer.length);
+```
+Bug since v4.2 (`d38ceaf99ed015`).
 
-## PHASE 9: FINAL SYNTHESIS
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply. Diff vs v6.18.53 is only this hunk. Surrounding
+`amdgpu_atrm_call` matches the patch context.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No other ATRM copy-size fix in this tree. ATIF/ATPX validation
+does not cover ATRM.
 
-For:
-- Real POSIX/data-integrity bug; selftest fails without the fix
-- Small, surgical, no new API
-- Buggy code present in 6.12 for years
-- Same pattern as ext4, already backported here
-- Maintainer applied v4 after review
-- Default `FOPEN_KEEP_CACHE`; userspace-reachable
-- Failed-write side effect is only clearing post-EOF cache
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-Against:
-- Trigger needs mmap-past-EOF then extend (not every I/O)
-- Does not cover `copy_file_range` / getattr size updates
-- Write hunk may need a one-line context tweak (pages vs folios)
-- No explicit Cc: stable (expected)
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [drm/amdgpu VBIOS/ACPI] [IMPORTANT] — not mm/core, but a widely
+used GPU driver; probe-time heap overflow can oops or corrupt kernel
+memory.
 
-Unresolved:
-- Exact mainline SHA (not in this tree; git.kernel.org blocked)
-- stable@ thread (lore 403)
-- Follow-ups after Miklos applied (none seen in the 4-message v4 thread)
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: amdgpu is actively developed; this ATRM helper has been
+unchanged since 2015 aside from log-string tweaks. Long-lived bug, not a
+new-code issue.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — helper is standard; UML
-   selftest; maintainer applied
-2. Fixes a real bug that affects users? **PASS** — stale reads vs zeros
-3. Important (crash/security/corruption/deadlock)? **PASS** — data
-   integrity / POSIX hole semantics
-4. Small and contained? **PASS** — 12 lines, two files, three call sites
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — logic applies; write hunk may
-   need trivial context
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-id/quirk/DT/build/docs exception. Qualifies as a
-normal important bugfix.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific: discrete AMD GPUs on hybrid/PX systems with
+ATRM (typical laptop mux). CONFIG_ACPI. Not APUs (`amdgpu_get_bios_apu`
+does not call ATRM). Still a real, common laptop class.
 
-**Step 9.4: MAKE YOUR DECISION**
-Backport. The bug exists in this 6.12 tree, the fix is small and already
-the form the maintainer wanted, and the user-visible failure is wrong
-file data.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Device probe when ATRM is present. Unprivileged users do not
+invoke it directly; broken/malicious ACPI (buggy laptop firmware, or
+attacker-controlled tables in some virt setups) can trigger overflow.
+Well-behaved 4 KiB ATRM responses are unaffected.
 
----
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Kernel heap out-of-bounds write and/or NULL deref oops during
+GPU init. Severity HIGH (crash; potential memory corruption). Not a
+guaranteed panic on every AMD system.
 
-### What the commit solves for stable users
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: HIGH for ATRM systems — prevents overflow/oops; zero behavior
+  change for correct firmware.
+- Risk: VERY LOW — 8 lines, error-path + bounds cap, maintainer-
+  reviewed.
+- Ratio: strongly favors backport.
 
-On cached, non-writeback FUSE, extending a file (write past EOF,
-`ftruncate` up, `fallocate` without `KEEP_SIZE`) leaves mmap-dirtied
-bytes in the old last page. Those bytes become part of the file and are
-returned to `read` instead of zeros. That is a data-integrity / POSIX
-violation. 6.12’s three extend paths match the buggy mainline code.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-### Risk vs benefit
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Unbounded `memcpy` from ACPI-controlled length into a fixed kmalloc
+  (heap OOB).
+- Missing type check → type-confused union access / NULL deref.
+- Present in this 6.18.y tree since amdgpu introduction (v4.2).
+- Small, obviously correct, applies cleanly.
+- Maintainer Reviewed-by.
+- Same class as ATIF/ATPX ACPI buffer validation.
 
-Benefit is preventing stale data on a common FUSE configuration. Risk is
-a few `truncate_pagecache_range()` calls on a hole that must be zeros
-anyway. Companion selftest is optional and this tree lacks the fuse
-selftest directory.
+AGAINST:
+- No user/syzbot report; described as “add checks.”
+- Only hybrid/PX ATRM path, not all amdgpu users.
+- radeon sibling left unfixed (out of scope).
 
----
+UNRESOLVED:
+- Could not fetch lore/stable HTML (403); mbox via b4 was sufficient.
+- No public reproducer; overflow depends on ATRM returning a bad object
+  (verified in code, not in a crash log).
 
-### Verification
-- **[Phase 1]** Tags: author Jimmy Zuber; Miklos Szeredi SOB; no
-  Fixes/Reported-by/Cc: stable
-- **[Phase 1]** Cover letter v4: msgid
-  `20260824143052.1546163-1-jamz@amazon.com`; tested UML + libfuse
-  passthrough_ll
-- **[Phase 2]** Diff: +3 dir.c setattr, +4 perform_write, +5 fallocate;
-  12 lines
-- **[Phase 2]** `truncate_pagecache_range()` /
-  `truncate_inode_partial_folio()` / `folio_zero_range()` read in
-  `mm/truncate.c`
-- **[Phase 3]** blame: setattr guard `8373200b124d03` (2014); write path
-  `ea9b9907b82a09` (2008); fallocate `bee6c307800bbb` (2013)
-- **[Phase 3]** No Fixes: tag; `git log --grep="zero the partial EOF" --
-  fs/fuse/` empty in this tree
-- **[Phase 3]** ext4 analog `b6ce2dbe984bc` is an ancestor of HEAD
-- **[Phase 4]** `b4 mbox` msgid
-  `20260824143052.1546163-2-jamz@amazon.com`: 4 messages; Miklos
-  “Applied, thanks.”
-- **[Phase 4]** v1→v4: moved zeroing off `fuse_write_update_attr`;
-  dropped custom helper
-- **[Phase 4]** lore.kernel.org search 403 — UNVERIFIED stable@
-  discussion
-- **[Phase 5]** Callers: `fuse_file_write_iter` →
-  `fuse_cache_write_iter` → `fuse_perform_write` under `inode_lock`;
-  setattr; `.fallocate`
-- **[Phase 5]** Default `FOPEN_KEEP_CACHE` at `fs/fuse/file.c:151`
-- **[Phase 6]** `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111
-- **[Phase 6]** Buggy snippets present at dir.c:2061–2065,
-  file.c:1294–1305, file.c:3223–3230
-- **[Phase 6]** 6.12 uses `fuse_pages_alloc`, not `fuse_folios_alloc` —
-  minor apply context
-- **[Phase 6]** 6.12 writeback_cache uses `fuse_write_begin`, not
-  `iomap_file_buffered_write` (commit text is mainline-specific)
-- **[Phase 8]** Failure mode: stale page-cache data on read after
-  extend; severity HIGH
-- **UNVERIFIED:** exact mainline SHA; post-apply follow-ups beyond the
-  v4 thread; copy_file_range/getattr as extra bugs (not used to vote NO)
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — type check + min length;
+   maintainer review; caller already handles short reads.
+2. Fixes a real bug that affects users? PASS — firmware-supplied length
+   used as memcpy size on a real probe path.
+3. Important issue? PASS — heap overflow / oops, HIGH.
+4. Small and contained? PASS — one function, +8/-2.
+5. No new features or APIs? PASS.
+6. Can apply to the local tree? PASS — identical context on v6.18.53.
+
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: None (not a device ID/quirk/DT/build/doc exception). Qualifies
+as a normal memory-safety bug fix.
+
+Step 9.4: MAKE YOUR DECISION
+YES. This tree still has the unchecked ATRM copy. The patch is a
+contained, high-value memory-safety fix with negligible regression risk.
+
+===============================================================
+What the commit solves for this tree
+===============================================================
+
+`amdgpu_atrm_call()` fetches VBIOS in 4 KiB ATRM pages into a 256 KiB
+buffer. Before this change it memcpy’d `obj->buffer.length` with no
+check that ACPI returned a buffer or that length ≤ 4096. Bad firmware
+(wrong type or oversized buffer) can NULL-deref or smash the heap during
+amdgpu probe on PX laptops. The fix rejects invalid objects and caps the
+copy. That matches stable rules: real bug, important, small, no new API,
+clean apply to 6.18.53.
+
+Risk vs benefit: benefit is preventing overflow/oops; risk is a tighter
+copy that only changes broken ATRM responses. No prerequisites.
+
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Parsed tags: author Lijo Lazar; Reviewed-by/SOB Alex
+  Deucher; no Fixes/Reported-by/Cc:stable.
+- [Phase 2] Diff: `amdgpu_atrm_call()` +8/-2; type check + `min_t`
+  before memcpy.
+- [Phase 2] Pre-fix at `e0d5ff3ff014b^` and at `v6.18.53`: raw memcpy of
+  `obj->buffer.length`.
+- [Phase 2] `union acpi_object` in `include/acpi/actypes.h`: INTEGER vs
+  BUFFER overlay confirms type confusion.
+- [Phase 2] Caller loop: `ATRM_BIOS_PAGE` 4096, `size` 256*1024; last
+  chunk overflow is past kmalloc.
+- [Phase 3] `git blame` on parent: `d38ceaf99ed015` (2015), `git
+  describe --contains` → v4.2-rc1.
+- [Phase 3] No Fixes: tag; introducer is in this tree.
+- [Phase 3] ATIF/ATPX validation commits are sibling files, not
+  prerequisites.
+- [Phase 3] `git log e0d5ff3ff014b..HEAD -- amdgpu_bios.c`: no follow-
+  ups.
+- [Phase 4] `b4 dig -c 8c3fcfc14fc1…`: lore msgid
+  20260615053911.59876-1-lijo.lazar@amd.com.
+- [Phase 4] `b4 dig -a`: v1 only.
+- [Phase 4] `b4 dig -w`: amd-gfx + Deucher/Zhang/Kamal/Li.
+- [Phase 4] mbox: Deucher Reviewed-by; no NAK.
+- [Phase 4] WebFetch lore/stable: 403; treated as UNVERIFIED for HTML,
+  covered by b4 mbox.
+- [Phase 5] Callers: `amdgpu_atrm_get_bios` → `amdgpu_get_bios_dgpu` →
+  `amdgpu_get_bios` → `amdgpu_device.c` probe.
+- [Phase 5] radeon still unfixed; nouveau already mins length.
+- [Phase 6] `git describe HEAD`: v6.18.53-5049-g0f0bdc2b0dffb; `make
+  kernelversion` 6.18.53.
+- [Phase 6] `git diff v6.18.53 <candidate> -- amdgpu_bios.c`: this hunk
+  only → clean apply.
+- [Phase 8] Failure mode: heap OOB / NULL deref on ATRM probe, HIGH.
+- UNVERIFIED: live ATRM firmware that returns oversized buffers (no
+  crash report); stable-list HTML search (403).
 
 **YES**
 
- fs/fuse/dir.c  | 3 +++
- fs/fuse/file.c | 9 +++++++++
- 2 files changed, 12 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index a013fad843b2c..9e20bc9dbdac4 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -2095,6 +2095,9 @@ int fuse_do_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	 */
- 	if ((is_truncate || !is_wb) &&
- 	    S_ISREG(inode->i_mode) && oldsize != outarg.attr.size) {
-+		if (outarg.attr.size > oldsize)
-+			truncate_pagecache_range(inode, oldsize,
-+						 outarg.attr.size - 1);
- 		truncate_pagecache(inode, outarg.attr.size);
- 		invalidate_inode_pages2(mapping);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+index dec312b0f3b0a..f28dec3630de5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -280,8 +280,14 @@ static int amdgpu_atrm_call(acpi_handle atrm_handle, uint8_t *bios,
  	}
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index 0812eee881519..a7a3ac5b34f42 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -1290,9 +1290,13 @@ static ssize_t fuse_perform_write(struct kiocb *iocb, struct iov_iter *ii)
- 	struct fuse_conn *fc = get_fuse_conn(inode);
- 	struct fuse_inode *fi = get_fuse_inode(inode);
- 	loff_t pos = iocb->ki_pos;
-+	loff_t old_size = i_size_read(inode);
- 	int err = 0;
- 	ssize_t res = 0;
  
-+	if (pos > old_size)
-+		truncate_pagecache_range(inode, old_size, pos - 1);
+ 	obj = (union acpi_object *)buffer.pointer;
+-	memcpy(bios+offset, obj->buffer.pointer, obj->buffer.length);
+-	len = obj->buffer.length;
++	if (!obj || obj->type != ACPI_TYPE_BUFFER) {
++		DRM_ERROR("ATRM returned an invalid object\n");
++		kfree(buffer.pointer);
++		return -EINVAL;
++	}
 +
- 	if (inode->i_size < pos + iov_iter_count(ii))
- 		set_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
- 
-@@ -2952,6 +2956,11 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
- 
- 	/* we could have extended the file */
- 	if (!(mode & FALLOC_FL_KEEP_SIZE)) {
-+		loff_t oldsize = i_size_read(inode);
-+
-+		if (offset + length > oldsize)
-+			truncate_pagecache_range(inode, oldsize,
-+						 offset + length - 1);
- 		if (fuse_write_update_attr(inode, offset + length, length))
- 			file_update_time(file);
- 	}
++	len = min_t(size_t, obj->buffer.length, len);
++	memcpy(bios+offset, obj->buffer.pointer, len);
+ 	kfree(buffer.pointer);
+ 	return len;
+ }
 -- 
 2.53.0
 
