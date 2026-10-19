@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4A5570842;
-	Mon, 19 Oct 2026 13:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA5557086A;
+	Mon, 19 Oct 2026 13:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418293; cv=none; b=kw0GFNAnYMf4/n3wjievGQSuvNA9guDS7uDWfNixg6kOQl0GB2OZnyfOTWEKJHNw9T9yzj/XB/JtSyMWN0e05QrQXxJOsrj0IiQHoolgSUV6e0ESYe1ebfdXDY45ekTow9KtysaBQvAxh9fgMxQUu8qWg/fbzGMchkvrwo84huU=
+	t=1792418294; cv=none; b=GRg8VzC3NE0G6OKc1Uw+RcrOcYswYfijEbj6khBVwqcR4LW1Lj2HBQOt1q3YfCcDIDLPuIB7QpNEohlUzrDUF5SEZV11nErMw1anbUNW2Qc+vVhrXp7qjGU5rMq0y4UOhQR8WsNqrJCmK9UVDemi0Zzjnnho2LUYWroB08X118w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418293; c=relaxed/simple;
-	bh=NP3gvf6a34mwh5taukdEUml/wKzNStiNfPjD8uO1j5E=;
+	s=arc-20240116; t=1792418294; c=relaxed/simple;
+	bh=tWZ+SrgwjhSqdrM6eLFjjriXbRk6Tgp6qsG1MoCzuvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MKoRPitzhIjZsKkGPvf6X1PSxIJoNEWxIzmAVeuflNZaGJIj49sd502jpL60v+s76q6qgK/FrdQyUwhxMbDAcWBkq3K77bOTMyT2S3FKGwJ/5tVG6jszkV/dF0JszMtDak7TT3k/fN7djQB9HBln050GjgYA7GWlZY6gJfGuCmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mEB57Bcf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kLiJFoHn3XXkmbSVSydgMuYr+LvTXfgCs6aiINUUYCjCuppRiCIvNIlayr5Re/IZma249qWRBVQYfF3I4Syt1BdBQPpiT81if908W4RdEIi3Guj1CQAL143MgUmUo8PndiztwegNRDS96J7rOO2B2pCeSs07HTQOXPdzBgSiGeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=izhsPaI+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mEB57Bcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9091F000C7;
-	Mon, 19 Oct 2026 13:58:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="izhsPaI+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815E71F000C9;
+	Mon, 19 Oct 2026 13:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418291;
-	bh=mlRDR92nhUdgHs3nQ41LKCHnUfuuZoYEUdnUm1tHsls=;
+	s=k20260515; t=1792418292;
+	bh=F5nV6LG/nrnrWDtY2zxsAs5yjNJsJLwaEFJzaLqkRrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mEB57BcfaQQZhsK2sAlFAeNSYgiUkzmGu8QaqdY8TgsaL89Jxqto5CIbR2j5DmHAw
-	 Z6+F3sJEAEg7Hmb0jQTUjPBvMF408iyp9EaygaqblfYXaRRvY3ALPepo+kRieD0c6m
-	 6NZvrsdMoEDOZmbqPy1frD3iN4HEUYSeIhAmQzwY2PzjGASzwExUr6B4yH2c7wj4YF
-	 JQn3d+sRHzy98IhQC8mW0P8O5iXo+/1UZv5M6rsaXK8KJ+7rqB5dmig8BpWxWzgUOe
-	 i/tC8AoYftveyR+CA1AHhDzltQNGvcj8OjkBh608cXUsiJM73pB+jCzo6MPLrcw2ZT
-	 o8G6MGiWztKYQ==
+	b=izhsPaI+a+VXI3+GHcTF500d/Lf4V+fROLC6UTeZyGVrPDTJTG31MeOyuqWDYXIKm
+	 pATbNXydC2gBVax/XE6bjL9poVeKF4Ckm+m3RwNNhKJjJ1MSy9vNQRtxWBDfX2wkxI
+	 rzu0MmzUNuiaiIJLyi6yrYxAjRe9pMJFT9OUyKNkkn5o2eAQHY6l3gTiB210+cCm/c
+	 15RkAPFwdLezCHuHIAiSI1Mmtps1j/N3l+cFv/p0j0JATAhaMMG0VM3QQ4R7GFCL1N
+	 8M9YYmbD/L5K4B1fkXJea6T0yFSL98Je3QN/eG4vZfd9SL6GwOSOUOXIWx8gB/DPay
+	 RHgbJsET1ac9Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Kyle Mahlkuch <kmahlkuc@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Ian Abbott <abbotti@mev.co.uk>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	njavali@marvell.com,
-	GR-QLogic-Storage-Upstream@marvell.com,
-	James.Bottomley@HansenPartnership.com,
-	mkp@kernel.org,
-	linux-scsi@vger.kernel.org,
+	hsweeten@visionengravers.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] scsi: qla2xxx: Handle INTx not connected while passing through
-Date: Mon, 19 Oct 2026 09:47:14 -0400
-Message-ID: <20261019135441.1420968-143-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] comedi: pcmuio: Add sanity check to interrupt handler
+Date: Mon, 19 Oct 2026 09:47:15 -0400
+Message-ID: <20261019135441.1420968-144-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,32 +52,26 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 7268e509b43ac1734e1bdb7d18553f7e1080dfb4 ]
+[ Upstream commit 6f6f6644e011fa910db744e9978127a443b94001 ]
 
-The PCI_INTERRUPT_PIN reports if the device supports the INTx.  However,
-when the device is assigned to a guest via vfio, the PCI_INTERRUPT_PIN
-is set to 0 (i.e none) if the line is not connected and/or the platform
-cannot route the interrupt.
+The driver requests an interrupt handler for the device, after setting
+device registers to disable interrupt generation.  The interrupt handler
+should not be called prematurely unless the user-configured I/O port
+base address and/or IRQ number are incorrect or the hardware is bad.
 
-In such cases, the guest PCI_INTERRUPT_PIN is 0 and the port number
-becomes -1 (255, uint8_t underflow) for qla[25|27|28]xx and qla2031
-devices.  The flt_region_nvram is never set, and subsequently the LUN
-detection fails.  Below warnings show the NVRAM configuration failure:
+For safety, check the dev->attached flag in the interrupt handler
+pcmuio_interrupt() to ensure the device has been fully set up, avoiding
+a possible null pointer dereference of dev->subdevices by
+pcmuio_handle_asic_interrupt().
 
- []-0073:1: Inconsistent NVRAM checksum=0xffffffc0 id=HCAM version=0x100.
- []-0074:1: Falling back to functioning (yet invalid -- WWPN) defaults.
- []-0076:1: NVRAM configuration failed.
+Also make use of the IRQ_HANDLED(x) macro for the normal return path of
+the interrupt handler.
 
-Handle this case and set the port_no to devfn like its done everywhere
-else.
-
-Reference: commit 2bd42b03ab6b ("vfio/pci: Virtualize zero INTx PIN if no pdev->irq")
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Kyle Mahlkuch <kmahlkuc@linux.ibm.com>
-Link: https://patch.msgid.link/177885270578.1573.14283751510936407585.stgit@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-11-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -91,362 +80,296 @@ LLM Generated explanations, may be completely bogus:
 ## Phase 1: Commit message forensics
 
 **Step 1.1: Subject line**
-Record: `[scsi/qla2xxx] [Handle] Handle INTx not connected while passing
-through`
-Subsystem is the QLogic Fibre Channel driver. The verb “Handle” is a
-correctness/workaround fix, not a feature add.
+- Record: `[comedi: pcmuio:]` `[Add]` sanity check to interrupt handler.
+  Intent: guard `pcmuio_interrupt()` so it does not run against a device
+  that is not fully attached.
 
 **Step 1.2: Tags**
-Record:
-- `Reviewed-by: Kyle Mahlkuch <kmahlkuc@linux.ibm.com>`
-- `Link: https://patch.msgid.link/177885270578.1573.14283751510936407585
-  .stgit@linux.ibm.com`
-- `Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>` (author)
-- `Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>` (SCSI
-  maintainer)
-- `Reference: commit 2bd42b03ab6b ("vfio/pci: Virtualize zero INTx PIN
-  if no pdev->irq")` (not a `Fixes:` tag)
-- No `Fixes:`, no `Cc: stable`, no `Reported-by`/`Tested-by` on the
-  committed version (those were requested on-list but not folded in)
-- Ignore pipeline-added Sasha Levin SOB if present (not on this commit)
+- Record:
+  - `Signed-off-by: Ian Abbott <abbotti@mev.co.uk>` (COMEDI maintainer)
+  - `Link:
+    https://patch.msgid.link/20260618102949.26607-11-abbotti@mev.co.uk`
+  - `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
+  - No `Fixes:`, no `Cc: stable`, no `Reported-by` on this specific
+    commit (expected for this review pipeline)
+  - Original submission CCs: Greg KH, H Hartley Sweeten, Jaeyoung Chung,
+    Sangyun Kim, Kyungwook Boo
+  - The series cover letter and patch 01/11 carry `Reported-by` for
+    those SNU reporters; this pcmuio patch inherited them only as CCs,
+    not as tags
 
 **Step 1.3: Body**
-Record:
-- **Bug:** Guest VFIO assignment virtualizes `PCI_INTERRUPT_PIN` to 0
-  when INTx is not connected / not routable.
-- **Mechanism:** For qla25/27/28xx and qla2031, the driver does
-  `ha->port_no--` on that register. `port_no` is `uint8_t`, so 0 wraps
-  to 255.
-- **Symptom:** `flt_region_nvram` is never selected (only ports 0–3 are
-  matched). NVRAM is read from the wrong/zero flash offset. Logs:
-  - `Inconsistent NVRAM checksum=0xffffffc0 id=HCAM version=0x100`
-  - `Falling back to functioning (yet invalid -- WWPN) defaults`
-  - `NVRAM configuration failed`
-- **User-visible result:** LUN detection fails; the HBA does not present
-  storage in the guest.
-- **Fix:** If PIN is 0, set `port_no` from `PCI_FUNC(devfn)`, matching
-  other qla2xxx paths.
+- Record: `[Bug]` IRQ handler can run after `request_irq()` but before
+  the device is fully set up. `[Symptom]` possible NULL deref of
+  `dev->subdevices` in `pcmuio_handle_asic_interrupt()`. `[Trigger]`
+  premature IRQ unless I/O base and/or IRQ are wrong or hardware is bad.
+  `[Root cause]` handler registered before subdevices exist / before
+  `dev->attached` is set. Also switches the return to `IRQ_RETVAL()`
+  (commit text says `IRQ_HANDLED(x)`; that is a typo — the diff uses
+  `IRQ_RETVAL`).
 
 **Step 1.4: Hidden bug fix?**
-Record: No. This is an explicit functional bug fix, not cleanup
-disguised as a fix.
-
----
+- Record: Not hidden. Cover letter is explicit: “avoid null-ptr-deref”.
+  The `IRQ_RETVAL` swap is cosmetic and equivalent.
 
 ## Phase 2: Diff analysis
 
 **Step 2.1: Inventory**
-Record:
-- File: `drivers/scsi/qla2xxx/qla_os.c` (+10 / −5)
-- Function: `qla2x00_set_isp_flags()`
-- Scope: single-file surgical change
+- Record: `drivers/comedi/drivers/pcmuio.c` only; +4/−1. Function:
+  `pcmuio_interrupt()`. Single-file surgical fix.
 
 **Step 2.2: Code flow**
-Before (verified on `7268e509b43ac^`):
-```c
-pci_read_config_byte(ha->pdev, PCI_INTERRUPT_PIN, &ha->port_no);
-if (IS_QLA25XX(ha) || IS_QLA2031(ha) || IS_QLA27XX(ha) ||
-IS_QLA28XX(ha))
-    ha->port_no--;
-else
-    ha->port_no = !(ha->port_no & 1);
-```
-After: if PIN is 0, `ha->port_no = PCI_FUNC(ha->pdev->devfn)`; else keep
-the old mapping.
+- Record: Before: handler always calls `pcmuio_handle_asic_interrupt()`
+  if the IRQ matches `dev->irq` / `devpriv->irq2`. After: if
+  `!dev->attached`, return `IRQ_NONE` immediately. Then `return
+  IRQ_RETVAL(handled)` instead of `handled ? IRQ_HANDLED : IRQ_NONE`
+  (same meaning: `#define IRQ_RETVAL(x) ((x) ? IRQ_HANDLED :
+  IRQ_NONE)`).
 
-This is probe/init (`qla2x00_probe_one` → `qla2x00_set_isp_flags`), not
-an error path.
-
-**Step 2.3: Bug category**
-Record: **Logic / correctness + hardware/virt workaround**, with a
-**uint8_t underflow**.
-
-Verified:
-- `qla_def.h`: `uint8_t port_no` — decrement of 0 → 255.
-- `qla_sup.c` `qla2xxx_get_flt_info()` only assigns `flt_region_nvram`
-  when `port_no` is 0, 1, 2, or 3. 255 never matches.
-- `ha` is `kzalloc`’d, so `flt_region_nvram` stays 0; NVRAM is then read
-  from flash offset 0.
-- `qla81xx`/`27xx` NVRAM path at `qla_init.c:10044–10288` emits exactly
-  log IDs 0x0073 / 0x0074 / 0x0076 from the commit message.
-- Fallback WWPNs are invalid → LUN discovery fails.
+**Step 2.3: Bug mechanism**
+- Record: `[NULL pointer dereference]` in IRQ context. `pcmuio_attach()`
+  does `request_irq()` at lines 549–567, then
+  `comedi_alloc_subdevices()` at line 570. `dev->attached` is set only
+  later in `comedi_device_postconfig()`.
+  `pcmuio_handle_asic_interrupt()` does `s = &dev->subdevices[asic * 2]`
+  and `pcmuio_handle_intr_subdev()` then uses `s->index` and `s->async`.
 
 **Step 2.4: Fix quality**
-Record: Obviously correct. PIN 0 means “no INTx”; using PCI function
-number is already how this driver sets `ha->portnum` for 83xx/82xx/etc.
-Bare-metal cards with PIN 1–4 are unchanged. Regression risk is low: the
-new branch only runs when PIN is 0, which previously produced a useless
-port number (255) on the 25/27/28/2031 path.
-
----
+- Record: Obviously correct and matches the established comedi pattern
+  (`if (!dev->attached) return IRQ_NONE`). Minimal. Regression risk is
+  low: returning `IRQ_NONE` during attach/detach is the intended safe
+  path, and this IRQ is requested with flags `0` (not shared).
+  `IRQ_RETVAL` is behavior-preserving.
 
 ## Phase 3: Git history
 
 **Step 3.1: Blame**
-Record:
-- `pci_read_config_byte(..., PCI_INTERRUPT_PIN, &ha->port_no)`
-  introduced in `a9083016a5314b` (2010, ISP82XX support).
-- Decrement / `!(pin & 1)` mapping in `f73cb695d3eccd` (2014, ISP2071).
-- The underflow is old; it became commonly hit after VFIO started
-  virtualizing PIN as 0.
+- Record: Handler/`request_irq` before `comedi_alloc_subdevices` dates
+  to Hartley Sweeten, 2013 (`04426acfb86ad1`). Subdevice indexing in the
+  handler: `741ba8cdf0e938` (2013-12-06). Driver added in 2009
+  (`6baef150380d56`). Long-standing.
 
-**Step 3.2: Fixes tag**
-Record: No `Fixes:` tag. Related cause: `2bd42b03ab6b` (`vfio/pci:
-Virtualize zero INTx PIN if no pdev->irq`, 2025-04-14). That commit
-**is** an ancestor of this tree (`git merge-base --is-ancestor` exit 0).
-It was reported/tested by the same author (Shivaprasad G Bhat).
+**Step 3.2: Fixes: tag**
+- Record: None. Bug is structural in the attach vs IRQ order, not a
+  recent regression.
 
 **Step 3.3: File history**
-Record: Standalone one-patch series. Later `3571ef0515640` (QLA29xx
-support) merged this PIN==0 check with an extra `IS_QLA29XX` in the
-decrement branch. No prerequisite refactor is required for the original
-hunk.
+- Record: Recent: `3d4ab5484aa24` (I/O-base sanity checks) then this
+  commit. I/O-base patch is a different series and is not required for
+  this hunk. Standalone.
 
 **Step 3.4: Author**
-Record: Shivaprasad G Bhat (IBM). Other nearby work is
-powerpc/vfio/iommu, not qla2xxx maintainer. Reviewer Kyle Mahlkuch is
-also IBM. SCSI maintainer Martin K. Petersen applied it.
+- Record: Ian Abbott is listed as COMEDI maintainer in `MAINTAINERS`.
+  This is one of an 11-patch “Add/fix sanity check in ISA drivers to
+  avoid null-ptr-deref” series.
 
 **Step 3.5: Dependencies**
-Record: Self-contained. No new APIs. Does not require vfio source
-changes; it only reacts to PIN=0 in config space. Can apply standalone
-to any tree that still has the old decrement logic.
-
----
+- Record: None. Touches only `pcmuio_interrupt()`. `IRQ_RETVAL` has long
+  existed in `include/linux/irqreturn.h`. Applies standalone.
 
 ## Phase 4: Mailing list / external
 
 **Step 4.1: Original discussion**
-Record:
-- `b4 dig -c 7268e509b43ac` → https://patch.msgid.link/177885270578.1573
-  .14283751510936407585.stgit@linux.ibm.com
-- `b4 dig -a`: **v1 only** (single standalone patch).
-- Thread saved to mbox (lore HTTP 403 via WebFetch; mbox succeeded).
-- Reviewer feedback:
-  - Priya A: tested, asked for `Reported-by`/`Tested-by` (not added in
-    the committed version).
-  - Kyle Mahlkuch: “look reasonable and fix a known bug” + `Reviewed-
-    by`.
-  - Madhavan Srinivasan: ping for comments; no NAK.
-  - Martin K. Petersen: applied to **7.3/scsi-queue**.
-  - Author then asked to also land in **7.2**. Martin: left it in 7.3
-    because of conflict with a large qla2xxx update that cycle, and told
-    the author they **can post a stable backport request** once Linus
-    merged SCSI.
-
-No NAKs. Maintainer explicitly treated this as stable-worthy.
+- Record: `b4 dig -c 6f6f6644e011f` →
+  https://patch.msgid.link/20260618102949.26607-11-abbotti@mev.co.uk
+  (`[PATCH 10/11]`). `b4 dig -a`: single v1 series, no later revisions.
+  Mbox has the 11 patches + cover letter and **no replies/NAKs**. Cover
+  letter: several ISA drivers register the IRQ handler before subdevices
+  are initialized → null deref on a premature IRQ.
 
 **Step 4.2: Recipients (`b4 dig -w`)**
-Record: Marvell qla2xxx maintainers (`njavali@marvell.com`, `GR-QLogic-
-Storage-Upstream@marvell.com`), James Bottomley, Martin K. Petersen,
-`linux-scsi`, Alex Williamson (vfio), Kyle Mahlkuch.
+- Record: Ian Abbott, Greg KH, Hartley Sweeten, linux-kernel, plus the
+  SNU reporters. Right maintainers were on the patch.
 
 **Step 4.3: Bug report**
-Record: Concrete guest logs in the commit. Independent tester Priya A
-confirmed it fixes LUN detection. This is a real IBM-reported VFIO
-passthrough failure, not theoretical.
+- Record: Original report https://lore.kernel.org/lkml/20260610115912.78
+  0131-1-jjy600901@snu.ac.kr/ — subject “comedi: KASAN null-ptr-deref in
+  ISA driver IRQ handlers on early IRQ”. Lists das6402, ni_atmio16d,
+  aio_iiro_16, pcmmio, comedi_parport, pcl711. **pcmuio was not in that
+  list**; Abbott added it as the same pattern. Related `comedi_parport`
+  fix (`17221216ae8ce`) was syzbot + `Cc: stable`.
 
 **Step 4.4: Series**
-Record: Standalone `[PATCH]`, not `N/M`.
+- Record: 11 independent per-driver patches. This one does not need the
+  others.
 
 **Step 4.5: Stable list**
-Record: lore.kernel.org/stable search returned HTTP 403. From the scsi
-thread, the maintainer invited a stable request; no evidence of a NAK
-against stable.
-
----
+- Record: lore.kernel.org/stable search returned HTTP 403. UNVERIFIED
+  whether this hash was discussed on stable@. The parport sibling was
+  explicitly nominated.
 
 ## Phase 5: Semantic analysis
 
 **Step 5.1: Functions**
-Record: `qla2x00_set_isp_flags()` only.
+- Record: `pcmuio_interrupt()`; callee `pcmuio_handle_asic_interrupt()`.
 
 **Step 5.2: Callers**
-Record: Called once from `qla2x00_probe_one()` (`qla_os.c:3090`), the
-PCI `.probe` callback (`qla_os.c:8360`). Probe context, once per
-adapter.
+- Record: Only `request_irq(..., pcmuio_interrupt, ...)` in
+  `pcmuio_attach()` (IRQ 1 and optional IRQ 2). IRQ context after
+  userspace `COMEDI_DEVCONFIG` attach.
 
 **Step 5.3: Callees**
-Record: `pci_read_config_byte()`, `PCI_FUNC()`, ISP type macros. No
-alloc/lock changes.
+- Record: `pcmuio_handle_asic_interrupt()` → `inb()` of pending
+  register, then `pcmuio_handle_intr_subdev()` which touches `s->async`
+  / `s->index`.
 
 **Step 5.4: Reachability**
-Record: Yes. Trigger: VFIO-assign a QLogic 25/27/28xx or 2031 HBA into a
-guest whose kernel runs this driver, when the platform does not connect
-INTx (`pdev->irq == 0` or `IRQ_NOTCONNECTED`). Confirmed in
-`vfio_pci_config.c:1833–1835`. Userspace (hypervisor admin) can trigger
-this; unprivileged guest users then just see missing LUNs.
+- Record: Yes. `CONFIG_COMEDI_PCMUIO`, `comedi_config` options `[0]` I/O
+  base, `[1]`/`[2]` IRQ. Attach ioctl is typically privileged, but a
+  wrong I/O/IRQ (or syzkaller-style config) can fire the handler before
+  `comedi_alloc_subdevices()`.
 
 **Step 5.5: Similar patterns**
-Record: `PCI_FUNC(ha->pdev->devfn)` is already used for `ha->portnum` in
-`qla_os.c` (83xx and others) and `qla_nx.c`. The fallback matches
-existing driver convention.
+- Record: Dozens of comedi drivers already check `dev->attached` in IRQ
+  handlers. Same series adds/fixes aio_iiro_16, das6402, pcmmio,
+  ni_atmio16d, etc.
 
----
+## Phase 6: This tree
 
-## Phase 6: Local tree (this checkout)
-
-**Step 6.1: Does the buggy code exist here?**
-Record:
-- Tree: **Linux 7.3.0-rc4** (`git describe HEAD` =
-  `v7.3-rc4-27-gf0100363d8c37`).
-- `qla2xxx` is present. `port_no` is still `uint8_t`. FLT NVRAM
-  selection still keys off `port_no` 0–3.
-- VFIO PIN=0 virtualization is present (`2bd42b03ab6b` is an ancestor).
-- The underflow logic **did exist** on this 7.3 line before
-  `7268e509b43ac`; that commit is already an ancestor of HEAD. Current
-  `qla2x00_set_isp_flags()` already has the PIN==0 fallback, plus a
-  later `IS_QLA29XX` merge.
+**Step 6.1: Local tree / buggy code**
+- Record: `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = `7.3.0-rc4`. File and attach-vs-IRQ order are
+  present. `git merge-base --is-ancestor 6f6f6644e011f HEAD` is true
+  (commit is in 7.3-rc1, not in v7.2). Evaluating technical need: the
+  driver and the race exist on this lineage.
 
 **Step 6.2: Backport difficulty**
-Record: On this 7.3-rc4 tree the fix is already merged. Cherry-picking
-again would be a no-op / conflict with the already-applied hunk plus
-QLA29xx. For *this* tree, the code change is already in place; no extra
-backport rework is needed for 7.3.
+- Record: Clean apply on this tree (hunk is isolated). No refactor of
+  `pcmuio_interrupt()` between the 2013 code and this patch.
 
-**Step 6.3: Related fixes already here?**
-Record: This is the fix. The only later related edit is QLA29xx
-extending the same `else if` (still keeps the PIN==0 path). No
-alternate/competing fix.
-
----
+**Step 6.3: Related fixes already here**
+- Record: This exact check is already the current code (because 7.3
+  already contains the commit). No alternate fix for pcmuio. That is not
+  used as “already selected” circular reasoning; it only confirms the
+  change matches the tree.
 
 ## Phase 7: Subsystem context
 
-**Step 7.1:**
-Record: `drivers/scsi/qla2xxx` — **IMPORTANT** (widely used FC HBA in
-servers/SAN, including VFIO passthrough). Not core mm/vfs, but storage
-init failure is user-visible and serious for those systems.
+**Step 7.1**
+- Record: `[comedi / pcmuio ISA-PC/104 DIO]` `[PERIPHERAL]` — Winsystems
+  PCM-UIO48A/96A. Not core mm/net, but a real in-tree driver (out of
+  staging).
 
-**Step 7.2:**
-Record: Actively developed (QLA29xx series and hardening landed after
-this commit in 7.3). The buggy PIN mapping itself dates to 2010/2014.
-
----
+**Step 7.2**
+- Record: COMEDI status in MAINTAINERS: “Odd Fixes”. Recent burst is
+  this ISA sanity-check series. Driver itself is mature (2009/2013).
 
 ## Phase 8: Impact and risk
 
 **Step 8.1: Who is affected**
-Record: Driver-specific + config-specific: `CONFIG_SCSI_QLA_FC` guests
-(and hosts) where `PCI_INTERRUPT_PIN` reads as 0. Primary real-world
-trigger is VFIO passthrough when INTx is not routed (IBM Power and
-similar). Dual-port 25/27/28xx and 2031 adapters.
+- Record: Users of `CONFIG_COMEDI_PCMUIO` who pass an IRQ into attach.
+  Driver-specific, not universal.
 
 **Step 8.2: Trigger**
-Record: Adapter probe in the guest. Deterministic once PIN is 0 — not a
-race. Hypervisor admin can trigger it; then LUNs never appear.
+- Record: Window after `request_irq()`, before
+  `comedi_alloc_subdevices()` / `dev->attached = true`. Also
+  misconfigured I/O base (garbage `inb` of pending bits) or bad
+  hardware. Not every boot; attach-time. Usually requires CAP_SYS_ADMIN
+  for comedi attach; still a kernel oops, and the same class was
+  KASAN/syzbot-reachable on sibling drivers.
 
 **Step 8.3: Failure mode**
-Record: HBA comes up with invalid NVRAM/WWPN; **LUN detection fails**.
-Not a panic/UAF. Severity: **HIGH** (device non-functional, storage
-unavailable). Matches stable-rules “hardware quirk” / “oh, that's not
-good”.
+- Record: KASAN/NULL deref in IRQ handler → oops/panic. `[Severity:
+  HIGH/CRITICAL]` for that path. `pcmuio_reset()` clears
+  `PCMUIO_PAGE_ENAB` first, so a well-configured board is less likely to
+  fire; wrong I/O/IRQ still makes pending-bit checks unsafe.
 
 **Step 8.4: Risk-benefit**
-Record:
-- Benefit: high for VFIO+qla2xxx users (adapter actually works).
-- Risk: very low (10 lines, PIN==0 only, existing `PCI_FUNC`
-  convention).
-- Ratio: strongly favors including the fix in this tree.
-
----
+- Record: Benefit: prevents IRQ-time oops on a reachable attach path.
+  Risk: four lines, established pattern, no API/locking change. Ratio is
+  favorable.
 
 ## Phase 9: Synthesis
 
-**Evidence FOR:**
-- Real, tested LUN-detection failure with matching driver logs.
-- uint8_t underflow is verified in this tree’s types and FLT matching.
-- Tiny, obviously correct, no new API.
-- Reviewed, maintainer-applied to 7.3; maintainer invited a stable
-  backport.
-- This 7.3 tree has both qla2xxx and the VFIO PIN=0 behavior.
+**Step 9.1: Evidence**
+- FOR: Real NULL deref in IRQ context; KASAN-class bug reported for this
+  ISA attach pattern; maintainer-authored; 4-line check used across
+  comedi; sibling parport fix had syzbot + stable CC; driver and race
+  exist in this tree; no series dependency.
+- AGAINST: Peripheral PC/104 driver; IRQ support commented “untested”;
+  pcmuio not named in the original SNU list (same bug, extra driver); no
+  `Fixes:`/`Cc: stable` on this commit (not a negative per the rules);
+  attach is typically privileged.
+- UNRESOLVED: stable@ thread 403; no mailing-list replies in the saved
+  mbox.
 
-**Evidence AGAINST:**
-- Not a crash, UAF, or CVE.
-- Affects VFIO passthrough more than bare metal (PIN is usually 1–4 on
-  real silicon).
-- Committed message omitted the tester’s `Reported-by`/`Tested-by`
-  (quality of tags, not of the fix).
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — standard `dev->attached`
+   guard; `IRQ_RETVAL` equivalent.
+2. Real user-visible bug? **PASS** — NULL deref / oops if IRQ runs
+   before subdevices exist.
+3. Important (crash/security/corruption/deadlock)? **PASS** — IRQ-
+   context oops.
+4. Small and contained? **PASS** — +4/−1, one function.
+5. No new features/APIs? **PASS**.
+6. Applies to this tree? **PASS** — code is here; hunk is independent.
 
-**Unresolved:** HTTP 403 on lore WebFetch (mbox was used instead).
-Stable-list search unverified beyond the scsi thread.
+**Step 9.3: Exception category**
+- Record: None needed; it is a normal crash fix.
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** (review + Priya A test +
-   maintainer apply)
-2. Real bug affecting users? **PASS** (LUN detection fails)
-3. Important? **PASS** (HBA/storage unusable in VFIO guests — HIGH)
-4. Small and contained? **PASS** (~15 lines, one function)
-5. No new features/APIs? **PASS**
-6. Applies to this local tree? **PASS** (7.3 already contains the
-   change; the surrounding driver is present)
-
-**Exception category:** Hardware/virt workaround (handle virtualized
-INTx PIN=0), analogous to a device quirk.
-
-This tree is **7.3-rc4**. The qla2xxx PIN-to-`port_no` bug and VFIO PIN
-virtualization both exist on this line. The patch is a small, tested
-correctness fix that restores NVRAM/LUN discovery for passed-through
-QLogic adapters. It meets stable-kernel rules and belongs in this tree.
+**Step 9.4: Decision**
+This tree is Linux 7.3.0-rc4. The pcmuio attach path registers
+`pcmuio_interrupt` before `comedi_alloc_subdevices()`, so a premature
+IRQ can take `dev->subdevices` while it is still NULL and oops in
+`pcmuio_handle_intr_subdev()`. The patch is a four-line `dev->attached`
+guard plus an equivalent `IRQ_RETVAL` return — the same pattern already
+used throughout comedi, written by the subsystem maintainer after a
+KASAN null-deref report on this ISA class. It is small, obviously
+correct, and worth having on this tree.
 
 Verification:
-- [Phase 1] Parsed subject/tags/body from `git log -1` on
-  `7268e509b43ac`; no Fixes/Cc-stable; Reference 2bd42b03ab6b.
-- [Phase 2] Diff is 15 lines in `qla2x00_set_isp_flags`; parent blob
-  still has unconditional `--`.
-- [Phase 2] `port_no` is `uint8_t` in `qla_def.h:4319`; FLT NVRAM only
-  matches ports 0–3 in `qla_sup.c`.
-- [Phase 2] Log IDs 0x0073/0x0074/0x0076 verified in `qla_init.c`.
-- [Phase 3] Blame: PIN read `a9083016a5314b` (2010); decrement
-  `f73cb695d3eccd` (2014).
-- [Phase 3] `git merge-base --is-ancestor 2bd42b03ab6b HEAD` = yes; same
-  for `7268e509b43ac`.
-- [Phase 3] Author log: IBM powerpc/vfio contributor; one qla2xxx
-  commit.
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; scsi CCs including vfio and
-  Marvell; mbox has Priya test, Kyle R-b, Martin apply + stable-backport
-  invitation.
-- [Phase 4] lore WebFetch 403 — UNVERIFIED via HTTP; used mbox instead.
-- [Phase 5] Only caller: `qla2x00_probe_one`; VFIO sets PIN=0 at
-  `vfio_pci_config.c:1833–1835`.
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = 7.3.0-rc4; current `qla_os.c` already has the PIN==0
-  path.
-- [Phase 8] Failure: NVRAM fail → invalid WWPN → no LUNs; not a panic.
-- UNVERIFIED: whether a stable@vger thread was later posted (lore/stable
-  HTTP 403).
+- [Phase 1] Parsed tags: Ian Abbott SOB, Greg KH SOB, lore Link; no
+  Fixes/Cc stable/Reported-by on this commit
+- [Phase 1] Cover letter (mbox MSG 7): explicit null-ptr-deref series
+  for ISA IRQ handlers
+- [Phase 2] Diff: +4/−1 in `pcmuio_interrupt()`; `IRQ_RETVAL` confirmed
+  in `include/linux/irqreturn.h`
+- [Phase 2] `pcmuio_attach()`: `request_irq` at 551/563,
+  `comedi_alloc_subdevices` at 570
+- [Phase 2] `comedi_device_postconfig()` sets `dev->attached = true`
+  only after attach returns
+- [Phase 3] blame: request_irq-before-alloc from `04426acfb86ad1` (2013)
+- [Phase 3] `git merge-base --is-ancestor 6f6f6644e011f HEAD` → yes; not
+  ancestor of v7.2; is ancestor of v7.3-rc1
+- [Phase 4] `b4 dig -c 6f6f6644e011f`: patch 10/11, msgid
+  20260618102949.26607-11
+- [Phase 4] `b4 dig -a`: v1 only; `b4 dig -w`: Greg KH + Hartley Sweeten
+  + SNU reporters
+- [Phase 4] Original report fetched: KASAN null-ptr-deref in ISA IRQ
+  handlers; pcmuio not listed, same attach order
+- [Phase 4] lore.kernel.org/stable 403 — UNVERIFIED stable@ discussion
+- [Phase 5] only caller is `request_irq` in `pcmuio_attach`
+- [Phase 6] local tree `v7.3-rc4-27-gf0100363d8c37` / 7.3.0-rc4; driver
+  present
+- [Phase 8] failure mode: NULL deref in IRQ handler → oops
+- UNVERIFIED: whether anyone requested this exact hash on stable@
 
 **YES**
 
- drivers/scsi/qla2xxx/qla_os.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/comedi/drivers/pcmuio.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
-index 07ccfe0226c5e..5b1fb7e5e0980 100644
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -2803,11 +2803,16 @@ qla2x00_set_isp_flags(struct qla_hw_data *ha)
- 	else {
- 		/* Get adapter physical port no from interrupt pin register. */
- 		pci_read_config_byte(ha->pdev, PCI_INTERRUPT_PIN, &ha->port_no);
--		if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
--		    IS_QLA27XX(ha) || IS_QLA28XX(ha))
--			ha->port_no--;
--		else
--			ha->port_no = !(ha->port_no & 1);
-+		if (ha->port_no == 0) {
-+			/* None of INT[A|B|C|D] may be virtualized by vfio */
-+			ha->port_no = PCI_FUNC(ha->pdev->devfn);
-+		} else {
-+			if (IS_QLA25XX(ha) || IS_QLA2031(ha) ||
-+			    IS_QLA27XX(ha) || IS_QLA28XX(ha))
-+				ha->port_no--;
-+			else
-+				ha->port_no = !(ha->port_no & 1);
-+		}
- 	}
+diff --git a/drivers/comedi/drivers/pcmuio.c b/drivers/comedi/drivers/pcmuio.c
+index 33b24dbbb9199..1c5fe065a91f5 100644
+--- a/drivers/comedi/drivers/pcmuio.c
++++ b/drivers/comedi/drivers/pcmuio.c
+@@ -362,12 +362,15 @@ static irqreturn_t pcmuio_interrupt(int irq, void *d)
+ 	struct pcmuio_private *devpriv = dev->private;
+ 	int handled = 0;
  
- 	ql_dbg_pci(ql_dbg_init, ha->pdev, 0x000b,
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	if (irq == dev->irq)
+ 		handled += pcmuio_handle_asic_interrupt(dev, 0);
+ 	if (irq == devpriv->irq2)
+ 		handled += pcmuio_handle_asic_interrupt(dev, 1);
+ 
+-	return handled ? IRQ_HANDLED : IRQ_NONE;
++	return IRQ_RETVAL(handled);
+ }
+ 
+ /* chip->spinlock is already locked */
 -- 
 2.53.0
 
