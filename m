@@ -1,50 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B939555E45C;
-	Mon, 19 Oct 2026 13:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F715187E4;
+	Mon, 19 Oct 2026 13:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418243; cv=none; b=C+EprV2881Fs2XsNBqxJq8LKhNUh+9p5NdM3jdufnmgTyo2HbgVwnTwYicue6RUDYooMlMwdIq6+SO6iwctp0u+5r1YMCi7iGNIs8pYCEmJlqC2rPjYSteVggQ4qyaMVromvMFjNWENRfkt5Qxt9UU2EiWkELadPxW7ixzxf36s=
+	t=1792418244; cv=none; b=J6kduHkXEzq1qLgvSZSvtz/lFc46BfQlH98otL8BUSs/XU5j5CUZRJVvtV5+xH9bRPvwDHdFhP3gFmFcMbpdNZMtB+Lr77yxxpko6ZrkAGr7pLl5e43yrbOHvtBAGIuV9nHTS4fnBxmwQ4+8G/j9C9nIxIIlOK94HaOk6Cf7R7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418243; c=relaxed/simple;
-	bh=LGNognZZSPk5KxXtYXwvKz/Sv6yIv8jF7CMptWLrPHs=;
+	s=arc-20240116; t=1792418244; c=relaxed/simple;
+	bh=jUztPm7uRIP0iS8KOShw58cKzKvgh4GCAlFQpSpBT2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MNbbp5oXxf9TGnz2Q2Lc8lphl9nYO/oWLISYeHseRtrCCBmAIMK7sQpMr8hMKbSXsyv+Vf5Nft5/MbpIdhmsF+AGyUDCU9xVaGmKWMtxIWPZhD6yNmjhupMUl0Zo9BZSHSO2x6Qn521PPEq7tJ0m+tyCqaOT1cgDfHseYb8Abx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F3ULxGUZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kCdlkGSf8AkALHrLiB2C+dGCeES47b/1t+8UrtPs2Pdb1uEiiRBKKJ7bUhm1Ceyjr1YrEKnCNeaCErY+u/qQlFjy3a51N/c/kCphf7SQ3OItG3kyHMP1FTudPijcEnKeXaK5QFocDdRgyqxXYReApKSyoJj0aXF3CzZ7hAYs3/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DkzAPO9o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F3ULxGUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2531F000C7;
-	Mon, 19 Oct 2026 13:57:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DkzAPO9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE5D1F000C6;
+	Mon, 19 Oct 2026 13:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418240;
-	bh=xQwHrwplptV7+b5NgWL9BkfxeUoS4UgcnIR4cVBDzdw=;
+	s=k20260515; t=1792418242;
+	bh=3niE0IEl9FIKpMw7hfLbJ8+0tI0fo/18nEVzpD2/Y60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F3ULxGUZD7Tok/Ty8AujFedYtqZn9aO/FKQSw/gHBRaaU2Ga2FiaE36szDy0G3TM9
-	 PWtw4/9Si85KoYTdRfJ14VWwfnkLTU3MvJuFHw524MyRwSceg2WbxfdxskSfO3PJ1H
-	 wnf8GkD8KpzhjTUlA83KBnF8UDNtJ9CpfGSG41TLBbfI9tH1N2xLRW7n25niXzoe6p
-	 5zpI6Z3FZERNK2LYgX55QKzvyvNuM1rMBt7nlzTeVnu9TO2pfgMeOeVKiO3lpr79Pj
-	 zgSE+VcxyRVm/7m/4A5BBC56ClFL+9VgjuTeUws5UO0itAItoc4iiqxTXlJchJQk3v
-	 MF4/q8kZk5DJA==
+	b=DkzAPO9ov196v2n7rWlFpw+TCtUx8Lp76oV2WK7GPYnEwFR2JbJ+DW/gfeonlC9ME
+	 M7tun86WKiyZl0/nXSBDzg+0cYixHFDo2MhdQe3gpBpymuwhm8gQrfeJjQWSbZ/A+H
+	 9+Ozqg53jrguvmSbfmoNAyS9d7SB2PhDWxykeV6B3Ha/Z6YtOBYe3ECoom7/Rucm4p
+	 qdHW62od5aU4CHtX7FSQwhPxKWlUcnj+pvkAifJP3+qQslSZgNT0+Zx4T2O4oI3yhz
+	 VGyVgMpmWysGS2SB0W20C+9lMkjQMGsA7taGmP7y0Ef+nGQ8qMHyOQclMdUw/2hB0L
+	 YUYuhQZGec24g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com,
-	Petko Manolov <petkan@nucleusys.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Andrew Onyshchuk <andryk.rv@gmail.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	kuba@kernel.org,
-	linux-usb@vger.kernel.org,
-	netdev@vger.kernel.org,
+	derekjohn.clark@gmail.com,
+	hmh@hmh.eng.br,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	ibm-acpi-devel@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net: usb: rtl8150: handle link status read failures
-Date: Mon, 19 Oct 2026 09:46:43 -0400
-Message-ID: <20261019135441.1420968-112-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] platform/x86: thinkpad_acpi: Fix fan speed reporting on Edge E330
+Date: Mon, 19 Oct 2026 09:46:44 -0400
+Message-ID: <20261019135441.1420968-113-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,326 +51,435 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Andrew Onyshchuk <andryk.rv@gmail.com>
 
-[ Upstream commit 8c9c5b9a689612dcb92a04a4218c975cd19f19d8 ]
+[ Upstream commit 8d840dad456f88374d8a3b03851452a280d6ee50 ]
 
-set_carrier() ignores the result of the USB control transfer and tests
-the stack variable supplied as its receive buffer. If the device rejects
-or aborts the request, that variable remains uninitialized and the driver
-chooses an arbitrary carrier state.
+The ThinkPad Edge E330 with H3 firmware uses the non-standard EC fan
+register block. Without a matching quirk, thinkpad_acpi reads the legacy
+tachometer registers and reports 0 RPM.
 
-Leave the existing carrier state unchanged when the link status cannot be
-read. A transient USB error should not be treated as link loss.
+Add the H3 BIOS family to TPACPI_FAN_NS so the driver reads the fan
+period from EC register 0x95 using the existing non-standard reporting
+path.
 
-Reported-by: syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9db6c624635564ad813c
-Suggested-by: Petko Manolov <petkan@nucleusys.com>
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260630101216.10365-1-alhouseenyousef@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested on a ThinkPad Edge E330 with BIOS H3ET77WW and EC H3EC35WW.
+
+Signed-off-by: Andrew Onyshchuk <andryk.rv@gmail.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://patch.msgid.link/20260806154417.618575-1-andryk.rv@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+## Local tree
 
-**Step 1.1 — Subject**
-Record: `[net: usb: rtl8150] [handle] ignore USB register-read errors in
-set_carrier() so an uninitialized stack value is not used as link
-status`
+This checkout is **pending-6.12** (`p-6.12-3-gc504cf0baa3d8`), kernel
+**6.12.111**. The verdict is only for this tree.
 
-**Step 1.2 — Tags**
+The driver is still `drivers/platform/x86/thinkpad_acpi.c` (not yet
+moved to `drivers/platform/x86/lenovo/`). The H3 `TPACPI_FAN_NS` quirk
+is **not** present. The non-standard fan path that the quirk selects
+**is** present.
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[platform/x86 thinkpad_acpi] [Fix] [fan speed reporting on
+ThinkPad Edge E330]**
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Reported-by: syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com`
-  (KMSAN, reproducible)
-- `Closes: https://syzkaller.appspot.com/bug?extid=9db6c624635564ad813c`
-- `Suggested-by: Petko Manolov <petkan@nucleusys.com>` (original rtl8150
-  author)
-- `Reviewed-by: Andrew Lunn <andrew@lunn.ch>`
-- `Link: https://patch.msgid.link/20260630101216.10365-1-
-  alhouseenyousef@gmail.com`
-- `Signed-off-by: Yousef Alhouseen` (author), `Paolo Abeni` (netdev)
-- No `Fixes:` on the committed form (dropped in v4 at reviewer request;
-  v1/v2 had `Fixes: 1da177e4c3f4` and `Cc: stable`)
-- Sasha Levin SOB ignored as pipeline noise
+- `Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>` (Lenovo
+  thinkpad_acpi reviewer)
+- `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
+  (platform/x86 maintainer)
+- `Signed-off-by: Andrew Onyshchuk <andryk.rv@gmail.com>` (author)
+- `Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
+  (maintainer)
+- `Link:
+  https://patch.msgid.link/20260806154417.618575-1-andryk.rv@gmail.com`
+- No `Fixes:` tag (expected)
+- No `Reported-by:` / `Tested-by:` tags (testing is described in the
+  body instead)
+- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+  if present
 
-**Step 1.3 — Body**
-Record: `set_carrier()` ignores `get_registers()` and then tests stack
-`tmp`. On USB reject/abort, `tmp` is uninitialized, so carrier is chosen
-from garbage. Failure mode: arbitrary `netif_carrier_on/off`. Fix: keep
-the current carrier if the CSCR read fails. No version range given.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** Edge E330 with H3 firmware uses the non-standard EC fan
+  register block.
+- **Symptom:** without a quirk, the driver reads the legacy tachometer
+  registers and reports **0 RPM**.
+- **Root cause:** missing BIOS-family match in `fan_quirk_table`.
+- **Fix:** add `TPACPI_Q_LNV('H', '3', TPACPI_FAN_NS)` so the existing
+  NS path reads period from EC **0x95**.
+- **Version info:** tested on BIOS **H3ET77WW**, EC **H3EC35WW**. No
+  kernel-version range given.
+- **Failure mode:** wrong hwmon/procfs fan speed (always 0), not a
+  crash.
 
-**Step 1.4 — Hidden bug fix?**
-Record: Not hidden. This is an explicit uninitialized-use / ignored-
-error fix, confirmed by KMSAN.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a disguised cleanup. It is an explicit hardware-quirk bug
+fix.
 
-## Phase 2: Diff analysis
+---
 
-**Step 2.1 — Inventory**
-Record: one file, `drivers/net/usb/rtl8150.c`; `set_carrier()` only; +3
-/ −1; surgical single-function change.
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.2 — Flow**
-Record: Before: always `get_registers(dev, CSCR, 2, &tmp)` then `tmp &
-CSCR_LINK_STATUS` → carrier on/off. After: non-zero return from
-`get_registers()` returns immediately; carrier is unchanged. Path:
-`rtl8150_open()` (interface up).
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- One file: `drivers/platform/x86/lenovo/thinkpad_acpi.c` in the
+  submitted patch; local equivalent is
+  `drivers/platform/x86/thinkpad_acpi.c`.
+- **+1 line**, 0 removed.
+- Function/data: `fan_quirk_table[]`.
+- Scope: **single-file surgical hardware quirk**.
 
-**Step 2.3 — Bug mechanism**
-Record: **uninitialized data** (KMSAN). `usb_control_msg_recv()` only
-`memcpy`s into the caller buffer on a full successful transfer
-(`drivers/usb/core/message.c`); on error it returns negative and leaves
-`tmp` untouched. `short tmp` is uninitialized, then used as a bit test.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- **Before:** `tpacpi_check_quirks(fan_quirk_table)` does not match BIOS
+  family `H3`. `fan_init()` uses `TPACPI_FAN_RD_TPEC` and reads
+  `fan_rpm_offset` **0x84/0x85**. On this EC those registers are unused,
+  so speed is 0.
+- **After:** BIOS `H3` matches `TPACPI_FAN_NS`. `fan_init()` sets
+  `fan_with_ns_addr`, selects `TPACPI_FAN_RD_TPEC_NS`, and
+  `fan_get_speed()` reads `fan_rpm_status_ns` (**0x95**) and converts
+  period to RPM via `FAN_RPM_CAL_CONST / lo`.
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct. Three lines. No API/lock/refcount change.
-Regression risk is low: a failed CSCR read no longer flips carrier. That
-matches the original author’s review (transient USB errors should not
-look like link loss).
+Verified in this tree:
 
-## Phase 3: Git history
+```8156:8162:drivers/platform/x86/thinkpad_acpi.c
+        case TPACPI_FAN_RD_TPEC_NS:
+                if (!acpi_ec_read(fan_rpm_status_ns, &lo))
+                        return -EIO;
 
-**Step 3.1 — Blame**
-Record: Unchecked `get_registers()` + `tmp & CSCR_LINK_STATUS` dates to
-`1da177e4c3f4` (Linux 2.6.12-rc2, 2005). The uninit became hard after
-`b2a0f274e3f7e` (“Use the new usb control message API”, in `v5.10-rc1`):
-`usb_control_msg_recv()` does not fill the buffer on failure.
+                if (speed)
+                        *speed = lo ? FAN_RPM_CAL_CONST / lo : 0;
+                break;
+```
 
-**Step 3.2 — Fixes tag**
-Record: Committed patch has no `Fixes:`. v1/v2 used `Fixes:
-1da177e4c3f4`. That SHA is in this tree. The USB API switch
-`b2a0f274e3f7e` is also in this tree (`v5.10-rc1`).
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **(h) Hardware workaround** — quirk-table entry enabling an
+existing EC register path. Same class as the X120e TPR and L13/X13 Yoga
+NS fan quirks already in this file.
 
-**Step 3.3 — Related file history**
-Record: Same driver already has `fba383985354e` (“fix unintiatilzed
-variables in rtl8150_get_link_ksettings”), a sibling KMSAN
-ignored-`get_registers()` fix, present in `v6.18.53`. Other recent
-rtl8150 work is UAF/leak/padding, not a substitute for this carrier
-check. Standalone, not patch X/Y.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- Obviously correct: one table entry, existing matcher, existing NS
+  reader.
+- BIOS matching is right: `H3ET77WW` is the 8-char `xxyTkkWW` form, so
+  `tpacpi_parse_fw_id()` stores `TPID('H','3')`, which is exactly what
+  `TPACPI_Q_LNV('H','3', ...)` matches (`ec = TPACPI_MATCH_ANY`).
+- Minimal; no API/data-structure change.
+- Regression risk is limited to H3-family machines. FAN_NS also marks
+  host fan control as undefined (`fan_ctrl_status_undef = 1`) and uses
+  NS status register 0x93. That is the same behavior already used for
+  L13/X13 Yoga, L380/L390, 11e Gen5. Mark Pearson noted the platform is
+  ~14 years old and he could not independently confirm; the author
+  tested it. Overmatch of unrelated H3 BIOS families is possible in
+  theory but H3ET is the E330/E335 firmware family.
 
-**Step 3.4 — Author**
-Record: Yousef Alhouseen; this is their only rtl8150 commit here.
-Suggested-by Petko Manolov (driver author). Reviewed-by Andrew Lunn.
+---
 
-**Step 3.5 — Dependencies**
-Record: None. Uses existing `get_registers()` return value. `git diff
-v6.18.53 6a6d945b860b3^ -- drivers/net/usb/rtl8150.c` is empty —
-preimage matches 6.18.y.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-## Phase 4: Mailing list / external
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: The insertion sits among NS quirks added by:
+- `66e92e23a7276` (2023-12-14) Vishnu Sankar — introduced
+  `TPACPI_FAN_NS` (L13 Yoga Gen 2, X13 Yoga Gen 2)
+- `a6dcd3f1725e0` (2024-02-29) Vishnu Sankar — more NS models (L380,
+  L390, 11e Gen5, …)
 
-**Step 4.1 — Discussion**
-Record: `b4 dig` → https://patch.msgid.link/20260628165033.17842-1-
-alhouseenyousef@gmail.com
-Revisions: v1 (carrier-off on error) → v2 (return on error) → net-next
-v4 (applied).
-Petko: do not force carrier off; USB messages can be lost while the
-device still works.
-Andrew Lunn (v2): pointed at stable-kernel-rules, asked “Does this issue
-bother people?”, asked for net-next, Suggested-by, and no version
-threading.
-v4 changelog: “Target net-next and drop the Fixes tag as requested.”
-Andrew Reviewed-by v4. Applied to netdev/net-next as `8c9c5b9a6896`. No
-NAK of the code.
+Both **are ancestors of this HEAD**. The E330 bug is the missing table
+row, not a newly introduced regression. This machine has been mis-
+reported for as long as the default 0x84/0x85 path has been used.
 
-**Step 4.2 — Recipients**
-Record: Petko, Lunn, davem, Dumazet, Kicinski, Abeni, linux-usb, netdev,
-syzbot. Right lists and maintainers.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Not applicable.
 
-**Step 4.3 — Bug report**
-Record: syzbot “KMSAN: uninit-value in rtl8150_open (2)”, prio:high.
-Stack: `set_carrier` ← `rtl8150_open` ← `__dev_open` ← ioctl (dhcpcd).
-Local `tmp`. Console: `usb 2-1: device reset failed`. First crash ~186d
-before the report page, last ~113d. Security workflow: PeripheralTrigger
-yes; DoS/exploitable/unprivileged no. Five KMSAN crashes on dummy USB.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Related fan quirks already in this 6.12 tree:
+- `f92324135f09e` — X120e TPR fan-speed quirk (stable-style backport
+  already here)
+- `1be765b292577` — L480 `TPACPI_FAN_DECRPM` incorrect RPM
+- `a6dcd3f1725e0` / `66e92e23a7276` — NS fan register path
+- `48792ab445529` — T495/E560 ACPI fan quirk
 
-**Step 4.4 — Series**
-Record: Single patch. Not part of a multi-patch series.
+Standalone one-line table add; not patch X/Y.
 
-**Step 4.5 — Stable list**
-Record: lore.kernel.org HTTP 403; no extra stable-list thread retrieved.
-v1/v2 were Cc: stable; Andrew redirected to net-next. That is process,
-not a technical NAK.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: `git log --author='Onyshchuk'` on `drivers/platform/x86/` in
+this tree is empty. Author is an outside contributor with Lenovo +
+maintainer review, not the subsystem maintainer.
 
-## Phase 5: Semantics / call graph
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Depends only on `TPACPI_FAN_NS` / `fan_rpm_status_ns` /
+`TPACPI_Q_LNV`, all present here. Can apply standalone (path tweak
+only).
 
-**Step 5.1**
-Record: `set_carrier()` only.
+---
 
-**Step 5.2**
-Record: Only caller is `rtl8150_open()` (`drivers/net/usb/rtl8150.c`).
-Link is also updated later from `intr_callback()` via `MSR_LINK`
-(independent path, 100 ms interrupt URB).
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 5.3**
-Record: `get_registers()` → `usb_control_msg_recv()`; then
-`netif_carrier_on` / `netif_carrier_off`.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 051292bf7697e72a760401b6883c55a98beecc5b` failed: SHA is
+  not in this tree (`Not a valid commit name`).
+- `b4 mbox` for msgid `20260806154417.618575-1-andryk.rv@gmail.com`
+  returned 404.
+- lore.kernel.org fetches returned 403.
+- Recovered the thread from Patchew and LKML mirrors:
+  - https://patchew.org/linux/20260806154417.618575-1-
+    andryk.rv@gmail.com/
+  - https://lkml.iu.edu/2608.0/11369.html
+- Single `[PATCH]`, not a series. Applied by Ilpo as
+  `051292bf7697e72a760401b6883c55a98beecc5b`.
+- No NAK. Ilpo noted Linus’s policy that even fixes usually go via for-
+  next unless they are current-cycle regressions — that is merge-window
+  routing, not a stable NAK.
+- No reviewer asked for `Cc: stable`.
 
-**Step 5.4**
-Record: Reachable from userspace bringing the iface up (`SIOCSIFFLAGS` /
-`dev_change_flags` / `__dev_open`). Needs the USB device (or a gadget).
-Typically `CAP_NET_ADMIN`. Syzbot hit it via dhcpcd on a dummy device.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: Mark Pearson (Lenovo) Reviewed-by; Ilpo Järvinen applied it.
+Recipients from Openwall copy: platform-driver-x86, ibm-acpi-devel,
+linux-kernel, plus Pearson / Clark / Holschuh / Hans.
 
-**Step 5.5**
-Record: Same ignored-return pattern exists elsewhere in this file
-(`read_mii_word`, `rtl8150_reset`, `enable_net_traffic`,
-`get_link_ksettings`). `get_link_ksettings` was already hardened by
-initializing locals (`fba383985354e`). This commit only fixes
-`set_carrier()`.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla. Evidence is the author’s hardware test
+(H3ET77WW / H3EC35WW). Mark Pearson: platform is ~14 years old; he could
+not confirm but was glad the author figured it out.
 
-## Phase 6: This tree (6.18.y)
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone. Same pattern as earlier NS fan quirk additions.
+E330/E335 share the H3ET BIOS family; the 2-char `H3` match is the
+driver’s normal family match.
 
-**Step 6.1**
-Record: Local tree is **6.18.53** (`git describe HEAD` →
-`v6.18.53-5049-g0f0bdc2b0dffb`, `VERSION=6 PATCHLEVEL=18 SUBLEVEL=53`).
-`v6.18.53:drivers/net/usb/rtl8150.c` still has the unchecked
-`get_registers(dev, CSCR, 2, &tmp)`. Bug is present. Introduced in
-practice with `usb_control_msg_recv` in v5.10; the ignore-return pattern
-is ancient.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned 403. No evidence this was
+already requested or rejected on stable. UNVERIFIED beyond that.
 
-**Step 6.2**
-Record: Clean apply. Parent of the candidate matches `v6.18.53` for this
-file (0-line diff).
+---
 
-**Step 6.3**
-Record: No other commit in 6.18.y checks `set_carrier()`’s CSCR read.
-`fba383985354e` is related but only ethtool ksettings.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-## Phase 7: Subsystem
+semcode MCP is not available; used grep/read.
 
-**Step 7.1**
-Record: USB net driver `CONFIG_USB_RTL8150`. Criticality: **PERIPHERAL**
-(legacy Realtek USB 10/100 dongle; not core mm/net). Still a supported
-in-tree driver, not staging.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: No function body change. Touches `fan_quirk_table`, consumed by
+`fan_init()`. Downstream: `fan_get_speed()`, `fan_get_status()`,
+`fan_read()`, sysfs `fan1_input`.
 
-**Step mar 7.2**
-Record: Low-churn mature driver. Occasional syzbot fixes. Stable-
-relevant bugs do still land here.
+**Step 5.2: TRACE CALLERS**
+Record:
+- `fan_get_speed()` → `fan_fan1_input_show()` (hwmon `fan1_input`) and
+  `fan_read()` (`/proc/acpi/ibm/fan`).
+- Userspace: lm-sensors, thinkfan, TLP, etc., on ThinkPads with
+  `CONFIG_THINKPAD_ACPI`.
+- Init-time quirk match only; no IRQ path.
 
-## Phase 8: Impact / risk
+**Step 5.3: TRACE CALLEES**
+Record: Existing `acpi_ec_read(0x95)` and RPM conversion. No new
+allocation/locking.
 
-**Step 8.1**
-Record: Users of `CONFIG_USB_RTL8150` only, plus KMSAN/syzbot coverage.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Reachable from userspace sysfs/proc reads on E330 with
+thinkpad_acpi loaded. Unprivileged read of hwmon is typical. Not a
+syscall crash path.
 
-**Step 8.2**
-Record: Trigger: CSCR USB control read fails during `rtl8150_open()`
-(device reset failure, disconnect, bus noise). Uncommon on working
-hardware; easy with a dummy/failing USB device. Not a general
-unprivileged attack path.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Nine existing `TPACPI_FAN_NS` rows in the same table; this is
+the tenth. Thermal NS table for the Yoga/11e set is **not** extended
+here (E330 was not claimed to need thermal NS).
 
-**Step 8.3**
-Record: Production: wrong carrier (link up/down from stack garbage). Not
-a panic/UAF. Under KMSAN: `BUG: KMSAN: uninit-value`. Interrupt path can
-correct carrier within ~100 ms if the device still works. Severity:
-**HIGH** as uninitialized memory (KMSAN); **MEDIUM** as user-visible
-wrong link state on USB error.
+---
 
-**Step 8.4**
-Record: Benefit: stops UB and random carrier on open failure; matches a
-prior stable fix in the same file. Risk: very low (3 lines, error path
-only, no locking). Ratio favors backport.
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-## Phase 9: Synthesis
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. `fan_quirk_table` in `drivers/platform/x86/thinkpad_acpi.c`
+(lines 8805–8837) has NS entries through 11e Gen5 and then jumps to
+`TPACPI_FAN_NOFAN`. No `'H','3'` row. Default TPEC RPM path is used → 0
+RPM on E330. Infrastructure needed for the fix is here since
+`66e92e23a7276`.
 
-**For backporting**
-- Real ignored-error / uninitialized-stack bug, not cleanup.
-- Syzbot + KMSAN, reproducible from iface open.
-- Same class as `fba383985354e`, already in this 6.18.y tree.
-- Three-line, reviewed, Suggested-by the driver author.
-- Buggy code is in `v6.18.53`; applies cleanly; no prerequisites.
-- Wrong carrier on `ifup` is user-visible if the control read fails.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Minor path adjustment only.** Surrounding context in this tree
+matches the hunk exactly (same 11e Gen5 / X1 Tablet / L480 / x120e
+neighbors). File move to `lenovo/` happened after 6.12. Expected apply:
+change path, otherwise clean.
 
-**Against**
-- Andrew Lunn asked whether it “bothers people” and sent it to net-next,
-  not `net`.
-- Not a production oops, deadlock, or security hole (syzbot: not
-  exploitable/DoS).
-- Legacy USB adapter; trigger is a failed control transfer.
-- Interrupt callback often repairs carrier shortly after.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: NS path and other model quirks are here. This specific H3/E330
+line is not. `git merge-base --is-ancestor 051292bf7697… HEAD` fails
+because that SHA is not in this object store.
 
-**Unresolved**
-- Could not fetch lore.kernel.org/stable (HTTP 403). Discussion is taken
-  from `b4` mboxes instead.
+---
 
-**Stable-rules checklist**
-1. Obviously correct and tested? **PASS** — 3 lines, Reviewed-by Lunn,
-   Suggested-by Petko, syzbot-confirmed.
-2. Real bug affecting users? **PASS** — uninit `tmp` used for carrier;
-   KMSAN + ioctl path.
-3. Important (crash/security/corruption/deadlock)? **PASS** — KMSAN
-   uninitialized use is a real memory-safety bug; production symptom is
-   incorrect carrier, not a panic. Bar is met for sanitizer-class fixes
-   this pipeline treats as backport-worthy.
-4. Small and contained? **PASS** — one function, +3/−1.
-5. No new features/APIs? **PASS**.
-6. Applies to this tree? **PASS** — 6.18.y has the bug and matching
-   preimage.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Exception category:** none (not an ID/quirk/DT/build/doc exception).
-It is a normal small bugfix.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **platform/x86 thinkpad_acpi** — **PERIPHERAL/IMPORTANT for
+ThinkPad users**. Fan sysfs is widely used; not core mm/fs/net.
 
-The net-next routing only dropped tags for netdev process. It does not
-remove the bug from 6.18.y. The patch is self-contained, applies
-cleanly, and is the same error-check this driver already needed in
-ethtool.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively maintained; recent 6.12 backports already include other
+thinkpad_acpi fan quirks (X120e TPR, T495 NOACPI). Mature driver, long-
+lived quirk table.
 
-Verification:
-- [Phase 1] Tags: syzbot Reported-by, Closes syzkaller URL, Suggested-by
-  Petko, Reviewed-by Andrew Lunn, Paolo Abeni SOB.
-- [Phase 2] Diff: `set_carrier()` adds `if (get_registers(...))
-  return;`.
-- [Phase 2] `usb_control_msg_recv()` in `drivers/usb/core/message.c`
-  only copies into the caller buffer when `ret == size`; errors skip
-  that copy.
-- [Phase 3] Blame: logic since `1da177e4c3f4`; `usb_control_msg_recv`
-  since `b2a0f274e3f7e` (`v5.10-rc1`).
-- [Phase 3] `git diff v6.18.53 6a6d945b860b3^ --
-  drivers/net/usb/rtl8150.c` is empty.
-- [Phase 3] Sibling KMSAN fix `fba383985354e` is in `v6.18.53`.
-- [Phase 4] `b4 dig -c 8c9c5b9a6896`: v1–v4; Petko requested leave-
-  carrier-unchanged; Lunn asked for net-next; v4 applied to net-next.
-- [Phase 4] Syzkaller: KMSAN uninit-value in `rtl8150_open`, prio:high,
-  dhcpcd ioctl, `device reset failed`.
-- [Phase 5] Only caller: `rtl8150_open`; `intr_callback` updates carrier
-  separately.
-- [Phase 6] `git describe HEAD` = `v6.18.53-5049-g0f0bdc2b0dffb`; `make
-  kernelversion` = 6.18.53; buggy code present at `v6.18.53`.
-- [Phase 6] `git merge-base --is-ancestor 6a6d945b860b3 v6.18.53` → not
-  in the release tag (candidate only).
-- [Phase 8] Failure: uninitialized stack → arbitrary carrier; KMSAN BUG
-  under sanitizer.
-- UNVERIFIED: lore.kernel.org WebFetch 403; stable@ archive not searched
-  via HTTP.
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Driver-specific / DMI-specific.** Only Lenovo machines whose
+BIOS parses as family `H3` (E330 H3ET; likely E335 siblings). Everyone
+else is unchanged.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Every read of `fan1_input` or `/proc/acpi/ibm/fan` on those
+machines. Common for anyone monitoring fans. Unprivileged sysfs read.
+Not a race.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: Incorrect fan RPM (always 0). **MEDIUM** for affected users
+(broken monitoring; thinkfan/sensors may treat the fan as stopped). Not
+panic, UAF, or corruption. Still a real hardware bug with a standard
+quirk fix.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** Makes fan tachometer work on E330 (and H3-family
+  siblings) on 6.12 LTS. Same class of fix already accepted in this tree
+  for X120e/L480/Yoga.
+- **Risk:** Very low — one line, model-gated, existing code path.
+- **Ratio:** Favorable.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Real, tested hardware bug: E330 reports 0 RPM.
+- Classic stable-eligible **hardware quirk** (one `TPACPI_Q_LNV` row).
+- Existing NS path already in 6.12; no new feature/API.
+- 1-line, obviously correct; Lenovo + pdx86 review.
+- Analogous fan quirks already live in this tree.
+- Applies here with a trivial path change.
+
+AGAINST:
+- Not crash/security/corruption.
+- Old niche laptop; small population.
+- Maintainer sent it via for-next, not as a current-cycle regression.
+- Author-only test; Pearson could not independently verify.
+
+UNRESOLVED:
+- Stable-list discussion (lore 403).
+- Whether every H3 BIOS SKU (e.g. E335) truly uses 0x95; family-level
+  match is the driver’s normal pattern.
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — 1-line quirk; tested on E330
+   H3ET77WW; two Reviewed-by.
+2. Fixes a real bug that affects users? **PASS** — fan speed stuck at 0.
+3. Important issue? **PASS** under the hardware-quirk exception;
+   severity MEDIUM, not CRITICAL.
+4. Small and contained? **PASS** — +1 line, one table.
+5. No new features or APIs? **PASS** — enables existing NS path for one
+   BIOS family.
+6. Can apply to the local tree? **PASS** — NS path present; path rename
+   only.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: **Hardware quirk/workaround** — qualifies even though it adds a
+table row.
+
+**Step 9.4: DECISION**
+This is the same kind of thinkpad_acpi fan quirk this 6.12 tree already
+carries. The bug exists here, the fix is surgical, and the risk is
+confined to H3-family ThinkPads.
+
+---
+
+### What the commit solves for this tree
+
+On ThinkPad Edge E330 (BIOS family H3), thinkpad_acpi reads the standard
+EC tachometer at 0x84/0x85 and always reports 0 RPM. Adding
+`TPACPI_FAN_NS` for `H3` switches that model onto the existing 0x95
+period reader so hwmon/`/proc/acpi/ibm/fan` show a real speed. 6.12
+already has that reader; it is only missing this DMI row.
+
+### Risk vs benefit
+
+Benefit is correct fan monitoring on those laptops. Risk is a one-line,
+model-gated change. Backport needs only retargeting the path from
+`lenovo/thinkpad_acpi.c` to `drivers/platform/x86/thinkpad_acpi.c`.
+
+---
+
+### Verification
+- [Phase 1] Parsed subject/tags/body from the provided commit message;
+  Link msgid `20260806154417.618575-1-andryk.rv@gmail.com`.
+- [Phase 2] Diff is +1 `TPACPI_Q_LNV('H','3', TPACPI_FAN_NS)` in
+  `fan_quirk_table`.
+- [Phase 2] Read `fan_get_speed()` NS case (0x95) and `fan_init()` NS
+  setup in this tree.
+- [Phase 2] Read `tpacpi_parse_fw_id()`: `H3ET77WW` → `TPID('H','3')`,
+  matches `TPACPI_Q_LNV`.
+- [Phase 3] `git blame -L 8822,8837`: NS rows from `66e92e23a7276` and
+  `a6dcd3f1725e0`.
+- [Phase 3] `git merge-base --is-ancestor 66e92e23a7276 HEAD` and
+  `a6dcd3f1725e0 HEAD`: both in tree.
+- [Phase 3] `git log --author=Onyshchuk` on platform/x86: no local
+  commits.
+- [Phase 4] `b4 dig`/`b4 mbox`/lore.kernel.org failed (missing SHA / 404
+  / 403). Thread recovered from Patchew + lkml.iu.edu + Openwall:
+  Pearson Reviewed-by, Ilpo applied as `051292bf7697`.
+- [Phase 4] Web search: H3ET is E330/E335 BIOS family; author tested
+  H3ET77WW.
+- [Phase 5] semcode unavailable; `grep fan_get_speed` → sysfs
+  `fan1_input` and `fan_read()`.
+- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → 6.12.111.
+- [Phase 6] Grep: no `'H', '3'` / Edge E330 in local file; NS table ends
+  at 11e Gen5.
+- [Phase 6] File exists only at `drivers/platform/x86/thinkpad_acpi.c`.
+- [Phase 6] `051292bf7697` is not a valid object in this repo.
+- [Phase 7] `CONFIG_THINKPAD_ACPI` in `drivers/platform/x86/Kconfig`.
+- [Phase 8] Failure mode: 0 RPM reporting, not oops.
+- UNVERIFIED: stable@ lore discussion (HTTP 403); independent
+  confirmation on E335.
 
 **YES**
 
- drivers/net/usb/rtl8150.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/lenovo/thinkpad_acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index 647f28b367b99..8c739d898e57d 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -734,7 +734,9 @@ static void set_carrier(struct net_device *netdev)
- 	rtl8150_t *dev = netdev_priv(netdev);
- 	short tmp;
- 
--	get_registers(dev, CSCR, 2, &tmp);
-+	if (get_registers(dev, CSCR, 2, &tmp))
-+		return;
-+
- 	if (tmp & CSCR_LINK_STATUS)
- 		netif_carrier_on(netdev);
- 	else
+diff --git a/drivers/platform/x86/lenovo/thinkpad_acpi.c b/drivers/platform/x86/lenovo/thinkpad_acpi.c
+index 075543cd0e77e..f3b2e3c794571 100644
+--- a/drivers/platform/x86/lenovo/thinkpad_acpi.c
++++ b/drivers/platform/x86/lenovo/thinkpad_acpi.c
+@@ -8854,6 +8854,7 @@ static const struct tpacpi_quirk fan_quirk_table[] __initconst = {
+ 	TPACPI_Q_LNV3('R', '0', 'T', TPACPI_FAN_NS),	/* 11e Gen5 GL */
+ 	TPACPI_Q_LNV3('R', '1', 'D', TPACPI_FAN_NS),	/* 11e Gen5 GL-R */
+ 	TPACPI_Q_LNV3('R', '0', 'V', TPACPI_FAN_NS),	/* 11e Gen5 KL-Y */
++	TPACPI_Q_LNV('H', '3', TPACPI_FAN_NS),		/* Edge E330 */
+ 	TPACPI_Q_LNV3('N', '1', 'O', TPACPI_FAN_NOFAN),	/* X1 Tablet (2nd gen) */
+ 	TPACPI_Q_LNV3('R', '0', 'Q', TPACPI_FAN_DECRPM),/* L480 */
+ 	TPACPI_Q_LNV('8', 'F', TPACPI_FAN_TPR),		/* ThinkPad x120e */
 -- 
 2.53.0
 
