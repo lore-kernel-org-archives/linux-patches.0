@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F86526AA7;
-	Mon, 19 Oct 2026 13:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102BA52CCCB;
+	Mon, 19 Oct 2026 13:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418116; cv=none; b=Os1SARQcMAoJr71zYCRRXNl+r3qVSskI1gvtuAU706VYAm/SuhdcC9sfHMk9Ck8v9+HlKDjYF2LLv+Q98HL+dtvFrTGDgOtXzh7mBZchaI/LAesqL7mKsA7Rf7R5Qug0Jd02PYy6pg4mxIExv4f9LXniLI2P0wA49RMIoXRPZ0k=
+	t=1792418118; cv=none; b=sdi9ZXNx12OW1tjiDrqSBIYCjuoWA8lG8FtXNbyXfaesP32U7PlOTyXtU1t0fYWSgz6nz9nwuXt/dp1Wto+HjZv0hWBmFBE1yNW6InmmKwV5fjLa5OISy8CwGTSJdmrxKQONhNJPKJKSQyKz3nCWfDKNBB7ytHxaNZyLtW0pjwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418116; c=relaxed/simple;
-	bh=HgEzeT6Mr78ZEamzC2MqHYhO15gU07acDgEjWshBVpg=;
+	s=arc-20240116; t=1792418118; c=relaxed/simple;
+	bh=PmudlrudLdAanj58C1sWrtQ/fZfqREqyylf0yGvFvf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CVRsEAHnN+AIzcOcFK5rlUfY/2IySRETXFufiEC9XbzysJ5TTFxGsPRoSdY6sKxe9B3OSJw5OV/CVcbRoRyrm9C8kZJXW0dzTrP0oKAuNld9/0UZ7sFrkLMimNaohNKMs9bp+eGmtjxD3ZYe1axY1u2YO07fTj3qpj8zQx71PJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ouvdB+UK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aLDye5jcMwLcL7iliZOR/AbNXGb7xmTpXqMGQTv/VvQK043p7kTWz3euRo1J2aEQxnq/QGfUvPi9Fy6Mal5fJVsP8d//+VBSVWVIlwGHw0vFE2+dEWohMsbXqsXh1XRfiI8r2PymPjOLnV6RUvetQpdGpuU+qGuxrsIpolbi1Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NVxRvnLE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ouvdB+UK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C52D1F000C4;
-	Mon, 19 Oct 2026 13:55:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NVxRvnLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F050C1F000C7;
+	Mon, 19 Oct 2026 13:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418114;
-	bh=EyIl4QBNRI9HhEDt82gCnr1Cn7DA2ICqP3yMVbYsJbg=;
+	s=k20260515; t=1792418116;
+	bh=eRKh27WTcim/71bt1Dd3x9aJZ+WOlDtE80dMKQu2svo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ouvdB+UKjzfrUg4qQkDEHAaV28m++NYbJDgCRFpU1GcZS715N8jVEC9mqAj2wlgN9
-	 euKTK9edrCxyr8/4hOqYDbjcuTwTkGVlkJUGp7rJiHgW9Qpry+aP1HxX6uA2w9GiK4
-	 J8m24NggKmTCIrWkr3nuEOBX4sR5nZU5b+0p4HNXCJ50Colp3E+1tqkNFhD2gM8PCt
-	 aAbaiEYGaBUIb3JZWIFBBSRHr4W91a8pvHnF5g2WOlP7wUJY92poDFg+RVCv0QlOGS
-	 hPWRu5LjxWfvOSSRi0WI9BpQarKO2Amg3zBTdfQoxdUGAgEXrPQF+5tkOv1jaOl84M
-	 Lj9h2VYaFA5Rw==
+	b=NVxRvnLEU37Mv4ym6Vsq9IzWSNudFKIcsmvWvXdgpikbZqEg7MJfhdbIesDMuIgST
+	 MGvcoI91X6znr6oma4Y10Ud2PgpG84UVOwIClkq3RiUdWYj2l/tZDqeyfFQGi0KWTY
+	 VMt3JTAIs3a5cVrPhXS6MB67eihtwfjgJ7IBzDGx7u3Gooe2YfM+iDDxWh+cyEA81M
+	 mHi/uuysJSW4czCNnyoU+I4dct/XTJMbu42gjre9olyH+X5ApBL0pr4npME6lGmQNX
+	 4UBty7o+C22G8r41A1kdVoPUQfSvsQNgd00vurMRZRFjTFLHCVh0YmgpRlPcof5gsE
+	 YvM8NFZOA9YYw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/amdgpu: validate XCP topology counts before division
-Date: Mon, 19 Oct 2026 09:45:12 -0400
-Message-ID: <20261019135441.1420968-21-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Add quirk for Lenovo IdeaPad Slim 3 15ABR8
+Date: Mon, 19 Oct 2026 09:45:13 -0400
+Message-ID: <20261019135441.1420968-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,418 +54,435 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 0eda57ee303b4392057b7d4c32e8fda9d14cffad ]
+[ Upstream commit be79a45e2ec289eb9fad519e8f5a3d4fc3789dd0 ]
 
-In aqua_vanjaram_get_xcp_res_info(), max_res[i] can be zero.
-When res_lt_xcp is true the code divides num_xcp by max_res[i],
-causing a divide fault.
+The internal microphone on Lenovo IdeaPad Slim 3 15ABR8 (subsystem
+17aa:3862) exhibits severe distortion at default gain levels. The
+Capture Volume is fixed at 63 (max) and cannot be lowered without
+explicit userspace intervention. The existing fixup
+ALC269_FIXUP_LIMIT_INT_MIC_BOOST limits the gain range and resolves
+the issue.
 
-Skip the loop body for absent resources.
-
-v2: Remove redundant checks (Lijo)
-
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221891
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260824123752.525173-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a divide-by-zero oops in MI300 XCP sysfs init. The buggy loop is
-in this 6.18.y tree; the fix is a 3-line skip for a zero resource count.
+This is a one-line Realtek HDA hardware quirk for a specific Lenovo
+laptop. The local tree is **6.12.111** (`pending-6.12`). The Realtek
+quirk table and `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` already exist here;
+SSID `17aa:3862` does not.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Subsystem: `drm/amdgpu`
-- Action verb: `validate` (defensive correctness; body is an explicit
-  divide-fault fix)
-- Claimed intent: do not divide XCP topology counts when a resource
-  count is zero
-
-Record: `[drm/amdgpu] [validate] [skip XCP resource loop when
-max_res[i]==0 to avoid divide-by-zero]`
+- Record: **[ALSA/hda/realtek] [Add] [quirk for Lenovo IdeaPad Slim 3
+  15ABR8]**
+- Subsystem prefix: `ALSA: hda/realtek`
+- Action verb: **Add** (hardware quirk table entry, not a new feature)
+- Claimed intent: map PCI subsystem `17aa:3862` to an existing internal-
+  mic boost limit fixup
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- No `Fixes:` tag (expected for this review pipeline)
-- No `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable@`
-- `Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>` — original author of
-  this function
-- `Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>`
-- `Signed-off-by: Asad Kamal <asad.kamal@amd.com>` (author)
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
-  maintainer)
-- Ignored pipeline tags: `[Upstream commit 0eda57ee…]`, `Signed-off-by:
-  Sasha Levin`
-
-Record: Author + two AMD reviewers + maintainer SOB. No syzbot/user
-report tag.
+- Record:
+  - `Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221891` — user-
+    filed kernel.org bug
+  - `Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>` — author
+  - `Link: https://patch.msgid.link/20260824123752.525173-1-
+    zhangheng@kylinos.cn` — original submission msgid
+  - `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA HDA maintainer
+    applied it
+  - No `Fixes:`, no `Cc: stable`, no `Reported-by`, no `Tested-by`, no
+    `Reviewed-by` (absence of `Fixes:`/`Cc: stable` is expected for this
+    review)
+- Notable: maintainer SOB plus a `Closes:` bugzilla link
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Bug: in `aqua_vanjaram_get_xcp_res_info()`, `max_res[i]` can be 0.
-  When `res_lt_xcp` is true the code does `num_xcp / max_res[i]`.
-- Symptom: kernel divide fault (oops/exception).
-- Fix: skip the loop body for absent resources.
-- `v2: Remove redundant checks (Lijo)` — review-driven simplification.
-
-Record: `[Bug: division by zero on zero resource counts] [Failure:
-divide fault] [No version range stated] [Root cause: max_res[i]==0 with
-res_lt_xcp true]`
+- Record:
+  - **Bug:** Internal mic on IdeaPad Slim 3 15ABR8 (`17aa:3862`) has
+    severe distortion at default gain
+  - **Symptom:** Capture Volume stuck at 63 (max); cannot be lowered
+    without explicit userspace intervention; captured audio is badly
+    distorted
+  - **Root cause (author):** default amp/boost range is too high for
+    this hardware
+  - **Fix:** reuse existing `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`
+  - **Version info:** none in the message; laptop is a 2023 AMD IdeaPad,
+    so 6.12 users are in the affected population
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Not hidden. The message names the divide fault and the skip.
+- Record: Not a hidden fix. It is an explicit hardware quirk. The “Add”
+  verb is the standard form for `SND_PCI_QUIRK` table entries that make
+  existing hardware usable.
 
-Record: `[Not a disguised cleanup; explicit divide-by-zero fix]`
-
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
-- File: `drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c` (+3/−1)
-- Function: `aqua_vanjaram_get_xcp_res_info()`
-- Scope: single-file, surgical
-
-Record: `[1 file, +3/-1, one function, surgical]`
+- Record:
+  - File in the commit: `sound/hda/codecs/realtek/alc269.c` (**+1 /
+    −0**)
+  - Function/table: `alc269_fixup_tbl[]`
+  - Scope: **single-file surgical** — one `SND_PCI_QUIRK` line
+  - Local tree equivalent file: `sound/pci/hda/patch_realtek.c` (HDA
+    codecs were not yet split out of `sound/pci/hda/` in 6.12)
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Before (v6.18.53):
-```
-for each resource:
-    res_lt_xcp = max_res[i] < num_xcp;
-    set id;
-    num_inst = res_lt_xcp ? 1 : max_res[i] / num_xcp;
-    num_shared = res_lt_xcp ? num_xcp / max_res[i] : 1;
-```
-After:
-```
-for each resource:
-    set id;
-    if (!max_res[i]) continue;   // leave num_inst/num_shared at 0
-    ... same arithmetic ...
-```
-The `continue` is on the per-resource fill path used at sysfs init and
-on partition-mode store.
-
-Record: `[zero count: divide -> skip and keep zeros]`
+- Record: **Before** — SSID `17aa:3862` matches no quirk; probe uses
+  generic auto-config; internal mic boost stays at the default wide
+  range, Capture Volume sits at max, audio is distorted.
+  **After** — `snd_hda_pick_fixup()` matches
+  `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`. At `HDA_FIXUP_ACT_PROBE`,
+  `alc269_fixup_limit_int_mic_boost()` walks auto-config inputs, and for
+  internal mic pins overrides amp caps to 0 offset, 1 step, step size
+  `0x2f` (boost limited to 0 or 1). Only the probe path for this SSID is
+  affected.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Category: logic / memory-safety adjacent (integer divide-by-zero).
-
-`max_res[]` is `= {}` then filled from:
-- XCC: `NUM_XCC(adev->gfx.xcc_mask)`
-- DMA: `adev->sdma.num_instances`
-- DEC: `adev->vcn.num_vcn_inst`
-- JPEG: `adev->jpeg.num_jpeg_inst`
-
-`aqua_vanjaram_init_soc_config()` sets VCN/JPEG counts from
-`hweight32(inst_mask)`. Discovery starts `vcn.inst_mask` /
-`jpeg.inst_mask` at 0 and only sets bits when VCN IPs exist; harvest can
-clear those bits. If a count is 0 and `num_xcp > 0` (SPX=1, DPX=2,
-TPX=3, QPX=4, CPX=XCC count), then `res_lt_xcp` is true and `num_xcp /
-max_res[i]` is a divide fault.
-
-Record: `[divide-by-zero] [absent VCN/JPEG/SDMA/XCC count vs non-zero
-partition count]`
+- Record: **[Hardware workaround / audio codec quirk]**
+  - Mechanism: Realtek codec exposes boost steps 2 and 3 that are too
+    noisy on this chassis. The existing helper comments: “The mic boosts
+    on level 2 and 3 are too noisy on the internal mic input. Therefore
+    limit the boost to 0 or 1.”
+  - The new line only *selects* that already-present helper for one PCI
+    subsystem ID.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Obviously correct: skip the division when the divisor is 0. `xcp_cfg` is
-`kzalloc`’d in `amdgpu_xcp_cfg_sysfs_init()`, so skipped entries keep
-`num_inst`/`num_shared` = 0, which matches “absent”. Sysfs still creates
-the `dec`/`jpeg` kobjects (id is still set); they report 0 instead of
-oopsing.
+- Record: Obviously correct and minimal. Same pattern already used for
+  ThinkPad T480, Positivo ARN50/N14AP7, several Asus/VAIO machines, etc.
+  - Regression risk: **very low**. Match is vendor+device SSID
+    `17aa:3862` only. `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` also chains to
+    `ALC269_FIXUP_THINKPAD_ACPI`, but `hda_fixup_thinkpad_acpi()`
+    returns immediately unless ACPI IDs `LEN0068`/`LEN0268`/`IBM0068`
+    exist, so LED binding does not run on an IdeaPad.
+    `alc_fixup_no_shutup()` still runs (reduces click noise); that same
+    chain is already used by other non-ThinkPad LIMIT_INT_MIC_BOOST
+    quirks in this tree.
+  - No public API, no new fixup enum, no new module parameter.
 
-Regression risk is very low. No API/locking/refcount change. v2 dropped
-extra checks at Lijo’s request.
-
-Record: `[minimal, correct] [very low regression risk]`
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-On v6.18.53, the loop is from `f501057aff3357` (`drm/amdgpu: Add
-callback get xcp resource info`, Lijo Lazar, 2024-09-09). Present in
-v6.13; not in v6.12. Wrapper/NPS split later in `3aa37922c66a63` /
-`e5ad71779df6f4`; the divide itself is original.
-
-Record: `[f501057aff3357, first in v6.13; in this 6.18.y tree]`
+- Record: There is no “buggy line” in the table; the bug is a
+  **missing** entry. Neighboring rows in this tree:
+  - `0x3855` Legion 7 16ITHG6 — `1e24881d8b2a7c` (2022)
+  - `0x3865` Lenovo 13X — `25f46354dca912` (2024)
+  - Insertion sits in a long-stable Lenovo SSID block. The helper
+    `alc269_fixup_limit_int_mic_boost()` was introduced in
+    `3e0d611b2045b` (2013-04-22, “Limit internal mic boost for a few
+    Asus machines”) and has been in-tree for years.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-No `Fixes:` tag.
+- Record: No `Fixes:` tag. Not applicable. The “bug” is hardware that
+  never had a quirk, not a regression from a prior commit.
 
-Record: `[N/A — no Fixes tag; buggy commit identified by blame]`
-
-**Step 3.3: CHECK FILE HISTORY**
-Recent v6.18.53 history on this file is XCP/NPS/partition work. No prior
-zero-divisor guard in this loop. Later autosel commit `9bd596d9e90da`
-(`Guard reads in pcie state readout`) is unrelated.
-
-Record: `[standalone; no prerequisite series for this skip]`
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+- Record: Recent `patch_realtek.c` history is almost entirely other
+  `SND_PCI_QUIRK` additions (HP mute LED, Legion, Yoga, etc.). Same-
+  fixup examples already in this 6.12 tree:
+  - `85981dfd6b0a0` Limit mic boost on T480 (`Cc: stable`)
+  - `86a433862912f` Limit mic boost on N14AP7 (`Cc: stable`)
+  - `d44418f5024f6` Limit mic boost on Positivo ARN50 (already
+    backported here as `[ Upstream commit 76b0a22d4cf7... ]`)
+- Standalone. Not patch X/Y.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Asad Kamal is an AMD amdgpu contributor. Lijo Lazar has 20 commits on
-this file in 6.18.y and wrote the function; his Reviewed-by is strong.
-
-Record: `[AMD author; reviewed by function author and amdgpu
-maintainer]`
+- Record: Zhang Heng has other sound quirks in this tree (ASUS UM6702RC,
+  Inspur S14-G1, Samsung 750XBE, AMD YC DMI quirks). Regular hardware-
+  quirk contributor, not the subsystem maintainer. Maintainer Takashi
+  Iwai applied it.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Uses existing `max_res[]` loop only. Sibling mainline patch `guard zero
-divisors in soc_v1_0 partition code` is a different ASIC file;
-`soc_v1_0` is **not** in this tree. This patch is self-contained.
+- Record: None. Depends only on `SND_PCI_QUIRK`,
+  `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`, and `alc269_fixup_tbl[]`, all
+  present in 6.12. Can apply standalone with a path remap (`alc269.c` →
+  `patch_realtek.c`).
 
-Record: `[no local dependencies; applies standalone]`
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-`b4 dig -c 0eda57ee…` failed: lore.kernel.org returned an error.
-Fallback: amd-gfx archives.
-
-- v2 submission: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-June/146963.html
-- Hawking Reviewed-by: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-June/146976.html
-- May–July 2026 archives: only v2, no public v1 (v1 likely internal;
-  message says Lijo asked to drop redundant checks)
-- No NAK
-
-Record: `[amd-gfx v2 + Hawking RB; no NAK; v1 not on the public list]`
+- Record: `b4 dig -c` could not be used: this SHA is not in the local
+  tree. Recovered via msgid
+  `20260824123752.525173-1-zhangheng@kylinos.cn`.
+  - Submission: https://lists.openwall.net/linux-kernel/2026/08/24/1126
+    (also lkml.iu.edu/2608.3/00949.html)
+  - Single-patch v1 only; diff is the same one-line quirk as committed
+  - To: `tiwai@suse.de`; Cc: `linux-sound`, `linux-kernel`
+  - Maintainer reply (Takashi Iwai, 2026-08-25): **“Applied now.
+    Thanks.”** (lkml.iu.edu/2608.3/02564.html)
+  - No NAK, no requested respin, no stable discussion in the thread
+  - Lore.kernel.org itself returned Anubis/403 to automated fetch
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-v2 To/Cc: amd-gfx, Lijo Lazar, Hawking Zhang, Le Ma, Morris Zhang, Alex
-Deucher, Yang Wang. Right maintainers.
-
-Record: `[Lijo + Hawking reviewed; Deucher merged]`
+- Record: Sent directly to Takashi Iwai (ALSA HDA maintainer) and linux-
+  sound. Maintainer applied v1 as-is. No other reviewer comments found.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-No bugzilla/syzbot/Link. Hardware-path analysis by AMD, not a fuzzer ID.
-
-Record: `[no public crash dump; AMD-described divide fault]`
+- Record: Bugzilla 221891 was 403/Anubis; full comments **UNVERIFIED**.
+  The `Closes:` tag plus the commit body (SSID, Capture Volume 63,
+  distortion) are the verified description.
+  - Related real-world report: Ask Ubuntu “Audio issues on Lenovo
+    Ideapad Slim 3 **16ABR8** — microphone distortion” (sibling ABR8
+    chassis, same symptom class). That report is 16ABR8, not
+    15ABR8/`17aa:3862`, so it does **not** prove this SSID, only that
+    the product family has this class of mic problem.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Standalone `[PATCH v2]`, not `n/N`. Related only as the same round of
-divisor guards (`soc_v1_0` not in 6.18.y).
-
-Record: `[standalone; soc_v1_0 sibling N/A here]`
+- Record: Standalone 1/1. No series. No extra Realtek patches required.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-lore.kernel.org/stable/?q=… returned 403. No evidence this was rejected
-for stable.
+- Record: lore.kernel.org/stable search blocked (Anubis). No evidence in
+  this tree that this SSID was already requested or rejected. Identical
+  LIMIT_INT_MIC_BOOST quirks have been accepted into this 6.12 tree
+  before.
 
-Record: `[UNVERIFIED: stable list discussion (HTTP 403)]`
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: KEY FUNCTIONS**
-Record: `[aqua_vanjaram_get_xcp_res_info]`
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+- Record: No function body changed. New table entry in
+  `alc269_fixup_tbl[]`. Runtime functions involved:
+  `snd_hda_pick_fixup()` → `alc269_fixup_limit_int_mic_boost()` (and
+  chained `alc_fixup_thinkpad_acpi()`).
 
 **Step 5.2: TRACE CALLERS**
-Callback `.get_xcp_res_info` in `aqua_vanjaram_xcp_funcs`. Only call
-sites of `amdgpu_xcp_get_res_info()`:
-1. `amdgpu_xcp_cfg_sysfs_init()` — `amdgpu_xcp_sysfs_init()` ←
-   `amdgpu_device.c` during device init
-2. `xcp_config_store()` — sysfs `xcp_config` (`__ATTR_RW_MODE(...,
-   0644)`), typically CAP_SYS_ADMIN/root
+- Record: `alc269_fixup_tbl` is passed from the ALC269-family probe
+  path:
 
-Record: `[GPU probe sysfs init + privileged sysfs store]`
+```12583:12584:sound/pci/hda/patch_realtek.c
+        snd_hda_pick_fixup(codec, alc269_fixup_models,
+                       alc269_fixup_tbl, alc269_fixups);
+```
+
+That runs during codec probe (device enumeration / module load), not a
+syscall hot path. Reachable on every boot for machines with a Realtek
+ALC269-family HDA codec.
 
 **Step 5.3: TRACE CALLEES**
-`__aqua_vanjaram_get_px_mode_info()` sets `num_xcp` to 1/2/3/4 or
-`NUM_XCC`. No alloc/lock in the changed loop.
-
-Record: `[fills xcp_cfg for sysfs; no new side effects]`
+- Record: `alc269_fixup_limit_int_mic_boost()` uses
+  `snd_hda_codec_get_pincfg()`, `snd_hda_get_input_pin_attr()`,
+  `snd_hda_override_amp_caps()`. Probe-time mixer cap override only; no
+  allocation, no new locks.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Probe: discovery → `aqua_vanjaram_init_soc_config()` (GC 9.4.3 / 9.4.4 /
-9.5.0) → later `amdgpu_xcp_sysfs_init()` → this function. Userspace can
-also write `compute_partition_config/xcp_config`.
-
-Record: `[reachable on MI300-class probe and partition sysfs; not a dead
-path]`
+- Record: Userspace does not need a special trigger. Opening the capture
+  device at default volume is enough. Unprivileged users of this laptop
+  hit it (PulseAudio/PipeWire default capture). High user visibility,
+  hardware-specific.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Only implementation of `get_xcp_res_info` in this tree. Mainline
-`soc_v1_0` guard is a sibling, not present here.
+- Record: Many `SND_PCI_QUIRK(..., ALC269_FIXUP_LIMIT_INT_MIC_BOOST)`
+  entries already in this file (ThinkPads
+  `0x2215`/`0x225d`/`0x5013`/`0x5026`/`0x5109`, Asus
+  `0x106d`/`0x115d`/`0x1c23`, Positivo, VAIO). This is a systematic,
+  well-worn workaround, not a one-off invention.
 
-Record: `[no other local copy of this loop]`
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Local tree: **v6.18.53** (`VERSION=6 PATCHLEVEL=18 SUBLEVEL=53`, `git
-describe HEAD` = `v6.18.53-5049-g0f0bdc2b0dffb`, branch `autosel`).
-
-v6.18.53 `aqua_vanjaram_get_xcp_res_info()` still does `num_xcp /
-max_res[i]` with no zero check. Upstream `0eda57ee` is **not** an
-ancestor of HEAD. Introducing commit `f501057aff3357` **is** an ancestor
-of v6.18.53.
-
-Record: `[YES, buggy loop is in v6.18.53] [bug from v6.13 /
-f501057aff3357]`
+- Record: **Yes, as a missing quirk.** Local tree:
+  `p-6.12-3-gc504cf0baa3d8`, `VERSION=6 PATCHLEVEL=12 SUBLEVEL=111`.
+  - `sound/hda/codecs/realtek/` does **not** exist (split is post-6.12).
+  - `sound/pci/hda/patch_realtek.c` **does** exist; `alc269_fixup_tbl[]`
+    at line 10675; LIMIT_INT_MIC_BOOST at 8711–8716 and function at
+    6661–6691.
+  - `git grep 0x3862 -- sound/pci/hda/` : **no match**. Between 0x3855
+    and 0x3865 there is a hole exactly where the new line goes (lines
+    11565–11566).
+  - Bug “introduced”: never fixed here; hardware existed well before
+    v6.12 (released 2024-11-17).
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-v6.18.53 loop matches the patch preimage exactly. Clean apply; no
-refactor in the way.
-
-Record: `[clean apply]`
+- Record: **Minor path remap, otherwise clean.** Neighboring context in
+  this tree is identical to the mainline hunk (`0x3855` Legion then
+  `0x3865` Lenovo 13X). Need to apply to `sound/pci/hda/patch_realtek.c`
+  instead of `sound/hda/codecs/realtek/alc269.c`. No conflicting SSID,
+  no missing helper.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-No other zero-divisor fix for this loop in v6.18.53.
+- Record: No `IdeaPad Slim 3 15ABR8` and no `17aa:3862` in
+  `sound/pci/hda/`. Sibling IdeaPad Slim 9i 14ITL5 is a different
+  SSID/fixup. No earlier version of this fix.
 
-Record: `[no substitute fix in this tree]`
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+- Record: **[sound/pci/hda Realtek codec] [IMPORTANT]** — not core
+  mm/vfs, but the default laptop audio stack.
+  `CONFIG_SND_HDA_CODEC_REALTEK` is a standard distro config.
+  Criticality is hardware-specific, not peripheral/staging.
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-`drivers/gpu/drm/amd/amdgpu` — AMD GPU driver, Aqua Vanjaram XCP
-(MI300/MI325/MI350-class, GC 9.4.3/9.4.4/9.5.0).
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+- Record: Very active: recent history is a stream of model quirks.
+  Mature table, mature helper (2013). Quirk additions are the normal
+  stable-friendly change in this file.
 
-Record: `[amdgpu XCP] [IMPORTANT — datacenter Instinct GPUs, not core
-mm/fs]`
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
-File is actively maintained (partition/NPS/XCP changes). The divide is
-old (6.13), not a last-week feature.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+- Record: **driver-specific / hardware-specific** — only PCI SSID
+  `17aa:3862` (Lenovo IdeaPad Slim 3 15ABR8). Everyone else unchanged.
 
-Record: `[active driver; bug has been in-tree since v6.13]`
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+- Record: Trigger is default capture on this laptop (every
+  VoIP/recording session). Common for owners of this model. Unprivileged
+  users can trigger it. Not a race.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+- Record: **[Internal mic unusable / severe distortion] [MEDIUM
+  functionally; HIGH for that hardware]**
+  - Not panic, UAF, or data corruption
+  - Internal microphone is effectively broken at default settings;
+    userspace volume workarounds are the only current escape
+  - This is the documented audio-codec quirk class, routinely taken into
+    stable
 
-**Step 8.1: WHO IS AFFECTED**
-Users of amdgpu on Aqua Vanjaram ASICs (MI300A/X, MI325, GC 9.5.0) with
-XCP sysfs. Not universal.
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+- Record:
+  - **Benefit:** High for 15ABR8 owners on 6.12; mic works without mixer
+    hacks
+  - **Risk:** Very low — 1 line, SSID-gated, helper used for a decade,
+    same pattern already backported here
+  - **Ratio:** strongly in favor of backport
 
-Record: `[driver-specific / platform-specific (MI300-class)]`
-
-**Step 8.2: TRIGGER CONDITIONS**
-Always runs at XCP sysfs init if `xcp_mgr` exists. Faults when any
-`max_res[i]` is 0 — verified possible for VCN/JPEG via `inst_mask==0`
-after discovery/harvest. Also on writing partition mode. Unprivileged
-users do not normally write that sysfs node (0400 resource attrs; store
-is 0644 on a root-owned kobject). Probe path does not need a user
-trigger.
-
-Record: `[probe + partition sysfs] [likely on harvested/no-VCN configs]
-[unprivileged write not required]`
-
-**Step 8.3: FAILURE MODE SEVERITY**
-x86 `#DE` in kernel → oops. During device init this can fail GPU bring-
-up or panic if `panic_on_oops`. Not silent corruption.
-
-Record: `[kernel oops / GPU init crash] [CRITICAL/HIGH]`
-
-**Step 8.4: RISK-BENEFIT RATIO**
-Benefit: stop a real divide oops on MI300-class XCP sysfs. Risk: 3
-lines, skip-only, zeros already from kzalloc.
-
-Record: `[high benefit for affected GPUs] [very low risk] [favorable]`
-
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real divide-by-zero; oops on XCP sysfs init / partition store
-- Buggy code is in this v6.18.53 tree
-- Counts can be 0 (VCN/JPEG `inst_mask` from discovery/harvest)
-- 3-line skip; obviously correct; v2 reviewed by the function author and
-  Hawking; merged by Deucher
-- Clean apply; no new API; no series dependency
+- Real hardware bug with a kernel.org bugzilla `Closes:` (221891)
+- Severe mic distortion; capture stuck at max gain
+- Classic `SND_PCI_QUIRK` exception (explicitly stable-appropriate)
+- 1 line, existing fixup from 2013
+- Helper and table present in 6.12; SSID absent
+- Maintainer (Takashi Iwai) applied v1 with no objections
+- Identical LIMIT_INT_MIC_BOOST quirks already in this 6.12 tree (T480,
+  N14AP7, Positivo ARN50)
 
 AGAINST:
-- Affects only MI300-class XCP, not all machines
-- No public reproducer/syzbot
-- v1 mailing-list text not found
+- Not a crash/security/deadlock (strict reading of “important issue”)
+- Mainline path differs (`alc269.c` vs `patch_realtek.c`) — trivial
+  remap
+- Full bugzilla text could not be fetched (403)
+- `b4 dig` could not run without a local SHA
 
 UNRESOLVED:
-- Stable-list discussion (lore 403)
-- Exact public v1 diff
-- How often production MI300 SKUs have `num_vcn_inst==0` (AMD still
-  treated it as real)
+- Full bugzilla 221891 comments
+- Whether any other chassis silently shares SSID `17aa:3862` (no in-tree
+  collision)
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — skip on zero divisor; two
-   AMD R-b, maintainer SOB
-2. Real bug that affects users? **PASS** — divide fault in driver
-   init/sysfs
-3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
-   oops
-4. Small and contained? **PASS** — +3/−1, one function
-5. No new features or APIs? **PASS**
-6. Can apply to local tree? **PASS** — v6.18.53 preimage matches
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — one SSID line to a long-used
+   helper; maintainer applied; same pattern proven in this tree
+2. Fixes a real bug that affects users? **PASS** — unusable/distorted
+   internal mic; bugzilla + concrete SSID
+3. Important issue? **PASS via hardware-quirk exception** — not a kernel
+   oops, but a device-breaking audio defect of the class stable already
+   takes (`SND_PCI_QUIRK` in `patch_realtek.c`)
+4. Small and contained? **PASS** — +1 line
+5. No new features or APIs? **PASS** — table entry only
+6. Can apply to the local tree? **PASS** — remap path to
+   `sound/pci/hda/patch_realtek.c`; context around 0x3855/0x3865 matches
 
-**Step 9.3: EXCEPTION CATEGORIES**
-Not ID/quirk/DT/docs. Direct crash fix.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+- Record: **AUDIO CODEC QUIRK / hardware workaround** — `SND_PCI_QUIRK`
+  in the Realtek HDA table. This is an automatic YES category.
 
-**Step 9.4: DECISION**
-Backport. It is a small, obviously correct oops fix for code this tree
-actually runs.
+**Step 9.4: MAKE YOUR DECISION**
+Backport. The bug exists on 6.12 for this laptop, the fix is the
+standard one-line quirk, and the only adjustment is the post-6.12
+filename change.
 
-### Why this matters for this tree
-v6.18.y ships Aqua Vanjaram XCP resource sysfs. If VCN/JPEG/SDMA/XCC
-count is 0, `num_xcp / max_res[i]` oopses during
-`amdgpu_xcp_cfg_sysfs_init()` or a partition-mode store. Skipping empty
-resources stops the fault and reports 0 instances.
+------------------------------------------------
+What the commit solves and why it matters here
+------------------------------------------------
+On IdeaPad Slim 3 15ABR8 the Realtek internal mic boost range is too
+high, so Capture Volume sits at 63 and recordings are badly distorted.
+6.12 already has `alc269_fixup_limit_int_mic_boost()`; it just never
+binds it to `17aa:3862`. Adding that binding restores usable capture for
+that model without touching any other machine.
 
-### Risk vs benefit
-Benefit is avoiding a GPU-init oops on MI300-class systems. Risk is a
-continue that leaves kzalloc zeros. No locking or ABI change.
+Risk vs benefit: one SSID-gated line vs a broken laptop microphone.
+Benefit dominates. Backport applies to `patch_realtek.c` between the
+existing `0x3855` and `0x3865` rows.
 
-### Concerns
-None material. `soc_v1_0` sibling is not needed here. No follow-up on
-this loop in this tree.
-
-Verification:
-- [Phase 1] Tags: Reviewed-by Lijo Lazar, Hawking Zhang; SOB Alex
-  Deucher; no Fixes/syzbot
-- [Phase 2] Diff: +3/−1 in `aqua_vanjaram_get_xcp_res_info()`; `if
-  (!max_res[i]) continue` before `num_xcp / max_res[i]`
-- [Phase 3] `git blame` v6.18.53: loop from `f501057aff3357` (in v6.13;
-  not v6.12); `git merge-base --is-ancestor f501057aff3357 v6.18.53`
-  succeeded
-- [Phase 3] No Fixes tag; no later related fix on this loop in v6.18.53
-- [Phase 4] `b4 dig -c 0eda57ee…`: lore error; found v2 at
-  lists.freedesktop.org/amd-gfx/2026-June/146963.html; Hawking RB
-  146976.html; no NAK
-- [Phase 4] UNVERIFIED: stable@ thread (lore 403); public v1 body
-- [Phase 5] Callers: `amdgpu_xcp_cfg_sysfs_init` (device init) and
-  `xcp_config_store` (sysfs)
-- [Phase 5] `adev->vcn.inst_mask` starts 0 in `amdgpu_discovery.c`;
-  harvest can clear bits; `aqua_vanjaram_init_soc_config` sets
-  `num_vcn_inst = hweight32(inst_mask)`
-- [Phase 6] `git describe HEAD`: v6.18.53-5049-g0f0bdc2b0dffb; `make
-  kernelversion`: 6.18.53
-- [Phase 6] v6.18.53 file has the unfixed loop (`has skip? False`);
-  `0eda57ee` is not an ancestor of HEAD
-- [Phase 8] Failure mode: kernel divide fault / oops on XCP sysfs init,
-  severity HIGH/CRITICAL
-- UNVERIFIED: frequency of zero VCN/JPEG on shipping MI300 SKUs (does
-  not override the verified divide path)
+------------------------------------------------
+Verification
+------------------------------------------------
+- [Phase 1] Parsed tags: `Closes: bugzilla 221891`, msgid link, SOB
+  Zhang Heng + Takashi Iwai; no Fixes/Cc-stable
+- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x17aa, 0x3862, ...,
+  ALC269_FIXUP_LIMIT_INT_MIC_BOOST)` in `alc269_fixup_tbl`
+- [Phase 2] Read `alc269_fixup_limit_int_mic_boost()` at
+  `patch_realtek.c:6661-6691` — probe-time amp-cap override for internal
+  mic pins
+- [Phase 2] Read `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` at 8711-8716 —
+  chains to THINKPAD_ACPI
+- [Phase 2] Read `hda_fixup_thinkpad_acpi()` / `is_thinkpad()` in
+  `thinkpad_helper.c` — LED path skipped without ThinkPad ACPI IDs
+- [Phase 3] `git log -S ALC269_FIXUP_LIMIT_INT_MIC_BOOST --
+  sound/pci/hda/patch_realtek.c`: introduced `3e0d611b2045b` (2013)
+- [Phase 3] Similar quirks already in this tree: T480 `85981dfd6b0a0`,
+  N14AP7 `86a433862912f`, Positivo ARN50 `d44418f5024f6`
+- [Phase 3] `git log --grep='IdeaPad Slim 3 15ABR8' -- sound/pci/hda/`:
+  empty
+- [Phase 4] Openwall + IU LKML: v1 patch identical to commit; Takashi
+  “Applied now. Thanks.”
+- [Phase 4] lore.kernel.org and bugzilla HTML/REST: 403 Anubis — full
+  bugzilla body UNVERIFIED
+- [Phase 4] `b4 dig -c`: not run; commit SHA not in this checkout
+- [Phase 5] Caller: `snd_hda_pick_fixup(..., alc269_fixup_tbl, ...)` at
+  probe (`patch_realtek.c:12583`)
+- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → 6.12.111
+- [Phase 6] `sound/hda/codecs/realtek` missing;
+  `sound/pci/hda/patch_realtek.c` present
+- [Phase 6] `git grep 0x3862 -- sound/pci/hda/`: no hits; hole between
+  0x3855 and 0x3865 at lines 11565-11566
+- [Phase 8] Failure mode: distorted/unusable internal mic, SSID-
+  specific; severity medium globally, high for that laptop
+- UNVERIFIED: full text of bugzilla 221891; whether any other product
+  silently uses SSID 17aa:3862
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-index f9e2edf5260bc..15e70415c35b4 100644
---- a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-+++ b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-@@ -295,8 +295,10 @@ static int aqua_vanjaram_get_xcp_res_info(struct amdgpu_xcp_mgr *xcp_mgr,
- 	xcp_cfg->num_res = ARRAY_SIZE(max_res);
- 
- 	for (i = 0; i < xcp_cfg->num_res; i++) {
--		res_lt_xcp = max_res[i] < num_xcp;
- 		xcp_cfg->xcp_res[i].id = i;
-+		if (!max_res[i])
-+			continue;
-+		res_lt_xcp = max_res[i] < num_xcp;
- 		xcp_cfg->xcp_res[i].num_inst =
- 			res_lt_xcp ? 1 : max_res[i] / num_xcp;
- 		xcp_cfg->xcp_res[i].num_inst =
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 8196235c31d2b..bc87062f86da7 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7515,6 +7515,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
++	SND_PCI_QUIRK(0x17aa, 0x3862, "Lenovo IdeaPad Slim 3 15ABR8", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x17aa, 0x3865, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3866, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
 -- 
 2.53.0
 
