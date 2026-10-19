@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D0C60C138;
-	Mon, 19 Oct 2026 14:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5E460CDBE;
+	Mon, 19 Oct 2026 14:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418615; cv=none; b=j7co9hAhO4OyNuIT0wf0eNhQnO3SYBG/RhyUd7N45QSgumcVs55vI3rZPY1s3xn+j+ZyMvldryb5bDyZftyeqz/VuTh7W65S1hamPeDXKm74bX9n+2lz9JhAG/KuMg5kpmpT+/47Ef44vS8zvE+40DUzU5L67Uo9NC84Ku8tA/4=
+	t=1792418617; cv=none; b=V8UNsNL3yvucQX37F8f/14ddkCRH7YTRMfkIa9Vjamy4+zxNYhjyfbWrgsCHhuaj3x7sW82eYB/wM2wXoSMrHbiyV5THW2zxew0uaMCdAN/PzkhvVrCzrRsg1SeHeMB/i02I7xFEObdmL5aIAfACKLEUif2ZiWWOiNjwEVjRGbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418615; c=relaxed/simple;
-	bh=+f7AxBQ/GFqMQOqpSVOnMUjhTseUYo1rSUcfmMZiITw=;
+	s=arc-20240116; t=1792418617; c=relaxed/simple;
+	bh=fCUTEl0b1W8KLxi4E4CkZep17k0SiVhk41S214XJOs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p6HCz6Lp26M4tuYrtOfplkgMMJPO9TWAnDyrGw1UlGCPHqc/Hj3NVdCuCCSATc2kdvZ1Tl7ACyk62lwTbmnusyY4N1RBAmVyWh0RfqK5BRSFxdm646nMLBuWVp63/J3Gs/ot2d0Inu8xg8Q2TFDFBN+rxfm6pHbbbbyoqwLaQnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dDa1qS3A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Iy4/ZxRH0713duHzoKT7GaiS0c/ucfdQpA9Bw95ghST7nFeCU3EOqSGrg8Rbm5e444OlYuK3iGNRUNqo+gjNQtiQcrNvWLeJ27N0UUipZ0/dgj9u4Ip+pLD2kHDsuCKKEjnEzwyoVkTR3J4IsiQyy8YKE968351cXm8b+T3GwRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dEqNycs6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dDa1qS3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70181F000C9;
-	Mon, 19 Oct 2026 14:03:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dEqNycs6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA211F000CC;
+	Mon, 19 Oct 2026 14:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418611;
-	bh=O/7nKuZZTTXKrqGgjsu53ErwkFI4GPu3p0+a9Gj7TDs=;
+	s=k20260515; t=1792418613;
+	bh=NCXnOb/Qt6E1FqyI644FJZPlqfJtKu2NgUfugrMeSWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dDa1qS3AnqKoCwvSpaP+OPTgda4UVC5CZEWUKKSlKjnF+YNQC40UwQVSU8lOISzlL
-	 lWl4kyqj8h0/HlIpmSheUR+fDuXQhqVCNJVOpyQx0qxP5m0IGdq89f1D5WAFejubBA
-	 sMAwcLCqY2/lmXF4MkjtvURmlYicnm34Io7nS8TN5f8AXwrJk3/1voGbxuL+/7amLT
-	 fKS0+Fqjldzi4vtgYOuh/o0RWB/8HnGcUUARARwVGvPEZQMf7gWb17IC1d+UZb/1et
-	 wBf6gHzlzBFMdoi3zh32NALmBhtwqut43ulBGlbtDa+rFvTzpV7+Lk9N+RAITQ0GAl
-	 8qX6IKE8FG1BQ==
+	b=dEqNycs65360LlXzW/yYv+CCsfOGXluyNNhuZ8wGkIELQ08Y0rsfFjiGUZJA/+vLl
+	 3xWf4NAQEM0IP/Cn0vtoZoH/0a8Cs17dyP1HYNr/rlTVPTNgf8pDLN2pZnWnUwmPoJ
+	 kxQs+K1ro1c+DLdrboULgqkJMbeBwyVXxqNZ5h2+K6E8BxLaPgm2A6pXfV/EBTARmH
+	 N4fKnO3N868tuaEPz7bXp3oq3GGHgtKEG49B41oJj/wESjxjN72yPI2sOLsdGsawGg
+	 D8GZ8GA0ZxzISpQyA9aD1j7RfPOQWKPt6XhiK7BcDP/PLLiqHJM3vMs4q28qkq5sMt
+	 IskYIubG8arMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Yun Zhou <yun.zhou@windriver.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	awalls@md.metrocast.net,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	marcin.s.wojtas@gmail.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@kernel.org,
+	kuba@kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: cx18: stop VBI start-code scan before short tail
-Date: Mon, 19 Oct 2026 09:51:03 -0400
-Message-ID: <20261019135441.1420968-372-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] net: mvneta_bm: add suspend/resume support to prevent crash after resume
+Date: Mon, 19 Oct 2026 09:51:04 -0400
+Message-ID: <20261019135441.1420968-373-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,448 +57,630 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit bf533acaaa7dee21d49bcaabf8e813ea36bddcd8 ]
+[ Upstream commit 140be217df577961bea1ca36240439a463026cbd ]
 
-compress_sliced_buf() scans one byte at a time while testing a four-byte
-VBI start code.  The final iterations can read beyond the remaining
-buffer tail.
+The mvneta driver uses the hardware Buffer Manager (BM) for RX buffer
+allocation. During suspend, mvneta disables its clock, causing BM to
+lose all buffer address state. On resume, mvneta_bm_port_init() re-
+attaches the BM pool to the NIC, but BM hardware returns stale/garbage
+buffer addresses. When NAPI poll processes these buffers, DMA cache
+sync hits an invalid virtual address causing a kernel panic:
 
-Stop the scan once fewer than four bytes remain.
+ Unable to handle kernel paging request at virtual address b0000080
+ PC is at v7_dma_inv_range
+ Call trace:
+  v7_dma_inv_range from arch_sync_dma_for_cpu+0x94/0x158
+  arch_sync_dma_for_cpu from __dma_sync_single_for_cpu+0xc4/0x15c
+  __dma_sync_single_for_cpu from mvneta_rx_swbm+0x6c8/0xf48
+  mvneta_rx_swbm from mvneta_poll+0x6fc/0x70c
+  mvneta_poll from __napi_poll.constprop.0+0x2c/0x1e0
+  __napi_poll.constprop.0 from net_rx_action+0x160/0x2c4
+  net_rx_action from handle_softirqs+0xd8/0x2b8
+  handle_softirqs from run_ksoftirqd+0x30/0x94
+  run_ksoftirqd from smpboot_thread_fn+0x100/0x204
+  smpboot_thread_fn from kthread+0xf4/0x110
+  kthread from ret_from_fork+0x14/0x28
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fix by adding suspend/resume callbacks to the BM driver:
+
+- suspend: drain all buffers (with DMA unmapping), free the BPPE
+  regions, and reset pool state to FREE before stopping BM and gating
+  the clock.
+
+- resume: enable the clock, reinitialize BM defaults, and restore pool
+  read/write pointers and size registers. Pool allocation and buffer
+  refill are handled by mvneta_resume() through the normal
+  mvneta_bm_port_init() path, which sees pools as FREE and performs
+  full initialization identical to probe.
+
+Add a device_link (DL_FLAG_AUTOREMOVE_CONSUMER) in mvneta_probe to
+guarantee BM resumes before mvneta and suspends after mvneta. If the
+link cannot be created, fall back to SW buffer management to avoid a
+potential crash on resume due to unordered PM transitions.
+
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260630060311.4072140-1-yun.zhou@windriver.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4** (mainline `7.3.0-rc4`). The candidate is
-`bf533acaaa7de` (“media: cx18: stop VBI start-code scan before short
-tail”). It is a one-line bounds fix for a four-byte VBI start-code scan
-that can read past `bytesused`.
+This is a real resume panic in an existing driver, and the local 7.3-rc4
+tree already has the affected `mvneta`/`mvneta_bm` code. The patch is a
+contained PM completion, not a new API.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[media/cx18] [stop] [stop VBI start-code scan before a short
-4-byte tail]**
-- Subsystem: `media: cx18`
-- Verb: **stop** (prevent incorrect continuation) — a bug-fix verb even
-  without “fix”
-- Intent: do not scan a 4-byte EAV/start code when fewer than 4 bytes
-  remain
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[net/mvneta_bm] [add] add suspend/resume support to prevent
+crash after resume`
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Subsystem prefix is `net: mvneta_bm`. The verb is “add”, but the rest of
+the subject names a crash after resume. That is a bug fix framed as
+adding the missing PM callbacks.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- **Signed-off-by:** Pengpeng Hou &lt;pengpeng@iscas.ac.cn&gt; (author)
-- **Signed-off-by:** Hans Verkuil &lt;hverkuil+cisco@kernel.org&gt;
-  (media maintainer; applied the patch)
-- **No Fixes:**
-- **No Reported-by / Tested-by / Reviewed-by / Acked-by / Link / Cc:
-  stable**
-- Absence of Fixes/Cc:stable is expected for this pipeline and is not a
-  negative signal
-- Ignored: any Sasha Levin SOB / “[Upstream commit …]” (none in the real
-  commit)
+- `Signed-off-by: Yun Zhou <yun.zhou@windriver.com>` (author)
+- `Link: https://patch.msgid.link/20260630060311.4072140-1-
+  yun.zhou@windriver.com`
+- `Signed-off-by: Paolo Abeni <pabeni@redhat.com>` (netdev maintainer,
+  applied it)
+- No `Fixes:` tag (expected for this review)
+- No `Cc: stable@vger.kernel.org` (expected)
+- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, or `Acked-by:`
+- Notable: author is Wind River, so this came from a commercial embedded
+  product, not a theoretical cleanup
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `compress_sliced_buf()` walks one byte at a time and tests
-  `buf[0]..buf[3]`. The last iterations can read past the remaining
-  tail.
-- **Symptom:** out-of-bounds **read** of 1–3 bytes past `size` (the
-  caller’s `buf->bytesused`).
-- **Failure mode:** memory-safety defect (possible slab/page over-read
-  if `bytesused` equals the allocation; otherwise a logical over-read of
-  DMA payload).
-- **Version info:** none in the message. History shows the loop since
-  2008/2009.
-- **Root cause (author):** loop condition `i < size` does not leave four
-  readable bytes.
+- **Bug:** Marvell NETA hardware Buffer Manager (BM) has no
+  suspend/resume. `mvneta_suspend()` gates the NETA clock; BM loses
+  buffer-address state. On resume, `mvneta_bm_port_init()` reattaches
+  pools while BM still returns stale/garbage addresses.
+- **Symptom:** kernel panic: `Unable to handle kernel paging request at
+  virtual address b0000080` in `v7_dma_inv_range` ←
+  `arch_sync_dma_for_cpu` ← `__dma_sync_single_for_cpu` ←
+  `mvneta_rx_swbm` ← `mvneta_poll`.
+- **Version info:** none in the message. BM exists since v4.6; `mvneta`
+  PM exists since v4.12.
+- **Root cause (author):** clock gating drops BM register/pool state;
+  resume reuses that garbage in NAPI RX DMA sync.
+- **Fix:** BM suspend drains/unmaps/frees pools and sets type `FREE`; BM
+  resume re-clocks and restores registers; `mvneta_resume()` then re-
+  inits pools via the existing `mvneta_bm_port_init()` path. A
+  `device_link` orders BM before `mvneta` on resume.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: **Not disguised.** It is an explicit bounds fix. Not
-cleanup/refactor.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a hidden fix. The subject says “add … support”, but the body
+is an oops-on-resume report with a full ARM stack. Adding PM callbacks
+here is completing missing power-management, which is an allowed stable
+class (hardware/PM workaround), not a new userspace feature.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- **File:** `drivers/media/pci/cx18/cx18-vbi.c` — **1 insertion, 1
-  deletion** (`2 +-`)
-- **Function:** `compress_sliced_buf()`
-- **Scope:** single-file, single-line surgical fix
+- `drivers/net/ethernet/marvell/mvneta.c`: +18 (probe only)
+- `drivers/net/ethernet/marvell/mvneta_bm.c`: +72
+- Total: **90 insertions, 0 deletions** (under the stable ~100-line
+  guideline)
+- Functions: `mvneta_probe`; new `mvneta_bm_suspend`,
+  `mvneta_bm_resume`; `mvneta_bm_pool_create` error paths;
+  `mvneta_bm_driver.driver.pm`
+- Scope: single-subsystem surgical change (Marvell NETA + its BM
+  companion)
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** `for (i = hdr_size, buf += hdr_size; i < size; i++,
-  buf++)` then `buf[0]..buf[3]`. When `i` is `size-3`, `size-2`, or
-  `size-1`, `buf[3]` is at `size`, `size+1`, or `size+2` — past the
-  valid tail.
-- **After:** `i + 3 < size` so the last readable index is `i+3 <=
-  size-1`.
-- **Path:** sliced-VBI start-code search (not probe init). Only the “no
-  start code until EOF” path actually hits the tail; a successful match
-  `break`s earlier.
+1. **`mvneta_probe` BM attach:** after successful
+   `mvneta_bm_port_init()`, add `device_link_add(mvneta, BM,
+   DL_FLAG_AUTOREMOVE_CONSUMER)`. On failure, destroy long/short pools,
+   `mvneta_bm_put()`, clear `pp->bm_priv` and fall back to SW BM.
+   Before: HW BM could be used with unordered PM vs BM.
+2. **`mvneta_bm_pool_create` error paths:** after `dma_free_coherent()`,
+   set `bm_pool->virt_addr = NULL`. Before: dangling pointer; suspend’s
+   `dma_free_coherent()` could double-free.
+3. **New `mvneta_bm_suspend`:** for each non-FREE pool,
+   `mvneta_bm_bufs_free()`, disable pool, free BPPE,
+   `mutex_destroy(&buf_lock)`, set type `FREE`; then
+   `MVNETA_BM_STOP_MASK` and `clk_disable_unprepare()`. Before: BM had
+   no suspend; clock/state left live or stale.
+4. **New `mvneta_bm_resume`:** `clk_prepare_enable()`,
+   `mvneta_bm_default_set()`, restore per-pool read/write pointers and
+   size, `MVNETA_BM_START_MASK`. Pool refill stays in existing
+   `mvneta_resume()` → `mvneta_bm_port_init()`.
+5. **Driver `.pm`:** `DEFINE_SIMPLE_DEV_PM_OPS` + `pm_sleep_ptr()`.
+   Before: no PM ops on the BM platform driver.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- **Category:** **(d) memory safety** — buffer over-read / out-of-bounds
-- **Mechanism:** 4-byte peek with a 1-byte stride and an exclusive
-  `size` bound.
-- **Fix:** require four remaining bytes (`i + 3 < size`), the same
-  pattern as the sibling ivtv change.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: `[Hardware PM / stale DMA addresses after resume]` plus a small
+`[double-free hardening]` on `virt_addr`.
 
-If no start code is found:
-- Old: `i == size`, then `size -= (i - hdr_size)` → remaining `hdr_size`
-  (12)
-- New: `i == size - 3` (when `size` is large enough), remaining
-  `hdr_size + 3` (15)
-Both are still `< line_size` (272/284), so the function still returns 0.
-A 4-byte code cannot sit in the last 3 bytes, so no false negative.
+Mechanism: BM hardware state does not survive clock/power loss. Resume
+still programmed the NIC to consume BM buffers, so NAPI DMA-synced
+garbage (`b0000080`) and oopsed. Suspend now tears pools down to `FREE`;
+resume brings BM up first (device_link); `mvneta_bm_pool_use()` sees
+`FREE` and does full probe-style alloc/fill.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- **Obviously correct.** Classic `need N bytes remaining` bound.
-- **Minimal.** One condition, no API/locking/structure change.
-- **Regression risk: very low.** False match in the old over-read tail
-  still left remaining size ≪ `line_size`. `i` starts at `hdr_size` (12)
-  and only increments; `i + 3 < size` with `u32 size` is safe for
-  realistic DMA sizes.
-- **Red flags:** none.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Quality is good after v2–v6. Drain + unmap, BPPE free, type
+reset, clock error check, register restore, device_link with SW-BM
+fallback, `mutex_destroy` paired with `mutex_init` in
+`mvneta_bm_pool_use()`, and `virt_addr` NULL on alloc failure are all
+consistent with existing `mvneta_bm_pool_destroy()` / probe paths.
+
+Regression risk is **low–medium**: new PM callbacks can leak if drain is
+incomplete (`dev_warn` if `buf_num` remains), and `mutex_destroy`
+assumes no concurrent `hwbm_pool_add()` (the device_link is what makes
+that true). No public API or core-kernel change. Paolo applied it; no
+NAK in the thread.
+
+Verified call order with the link (consumer=`mvneta`, supplier=`BM`):
+mvneta suspends first, BM suspends second; BM resumes first, mvneta
+resumes second. That matches the code: `mvneta_suspend()` does **not**
+destroy BM pools; `mvneta_bm_suspend()` does; `mvneta_resume()` calls
+`mvneta_bm_port_init()` only after BM resume.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Loop introduced in **`1c1e45d17b663d`** (Hans Verkuil, 2008-04-28) —
-  original cx18 driver, `for (i = 0; i < size; i++, buf++)`.
-- Current form (`i = hdr_size, buf += hdr_size; i < size`) from
-  **`4ab9b256b5908a`** (Andy Walls, 2009-03-14) — “Optimize processing
-  of VBI buffers”.
-- Bug present ~17 years. Bound fixed in **`bf533acaaa7de`** (Pengpeng
-  Hou, 2026-06-30; Hans Verkuil commit).
+- BM attach in probe: `dc35a10f68d37` (Marcin Wojtas, 2016-03-14) “net:
+  mvneta: bm: add support for hardware buffer management”, **v4.6-rc1**
+- Probe BM get/init structure: `965cbbec7f207` (Gregory CLEMENT,
+  2018-07-18)
+- `mvneta` suspend/resume: `9768b45ceb0bc` “net: mvneta: support suspend
+  and resume”, **v4.12-rc1**
+- Buggy situation (PM on neta, none on BM) has been in tree since
+  **v4.12** (~2017)
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: **No Fixes: tag.** N/A. Introducer is `4ab9b256b5908a` /
-original `1c1e45d17b663d`, both ancestors of this tree.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. The missing BM PM has been there since
+`9768b45ceb0bc` (v4.12) against BM from `dc35a10f68d37` (v4.6). Both are
+ancestors of this checkout (`git merge-base --is-ancestor` not needed
+for those; they are in file history here).
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 Record:
-- Recent cx18-vbi.c: this fix, email/SPDX/typo/whitespace. No refactor
-  of the scan.
-- **Sibling (same author, same day, same maintainer):** `f373cf17fb8e7`
-  `media: ivtv: stop VBI start-code scan before short tail` — same one-
-  line change in `drivers/media/pci/ivtv/ivtv-vbi.c`.
-- **Standalone.** Not “patch X/Y”. ivtv is a parallel clone, not a
-  prerequisite.
+- Same author, nearby: `fd398d6480987` “net: mvneta: re-enable percpu
+  interrupt on resume” (independent resume IRQ bug, already in this
+  tree)
+- After this commit: `ede0f99cef53a` “net: mvneta: bm: fix device
+  reference leak on failed lookup” — different `mvneta_bm_get()` leak,
+  not a revert/fix of this PM code
+- No “patch X/Y” on this commit. Standalone.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Yun Zhou is not the mvneta maintainer; two recent mvneta resume
+fixes in this tree. Original BM author Marcin Wojtas was on Cc. Applied
+by Paolo Abeni.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 Record:
-- Pengpeng Hou: several small media correctness patches (ivtv twin, cec,
-  v4l2-ctrls, stm32 resume errors). Not the cx18 maintainer.
-- **Andy Walls** is listed maintainer for CX18; **Hans Verkuil** applied
-  this (media co-maintainer). That is a strong apply-path signal.
-
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: **None.** Touches only the for-condition. Parent still has
-`compress_sliced_buf()`, `sliced_vbi_eav_rp[]`, and `i < size`. Applies
-standalone.
+- `mutex_destroy` on `hwbm_pool.buf_lock` needs the mutex conversion
+  `6dcdd884e2a4b` (**v5.3-rc1**). Present here (`include/net/hwbm.h` has
+  `struct mutex buf_lock`).
+- `DEFINE_SIMPLE_DEV_PM_OPS` / `pm_sleep_ptr`: `1a3c7bb088266`
+  (**v5.17**). Present here.
+- `DL_FLAG_AUTOREMOVE_CONSUMER`: renamed in **v4.19**. Present here.
+- `priv->pdev` is set in `mvneta_bm_probe()` before drvdata is
+  published, so `pp->bm_priv->pdev->dev` in `device_link_add` is valid.
+- Can apply standalone **in this tree**. No missing helpers.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- **b4 dig -c bf533acaaa7de:** match
-  https://patch.msgid.link/2026063007035519.3-ccfa108-0014-media-
-  cx18-stop-VBI-start-c-pengpeng@iscas.ac.cn
-- **b4 dig -a:** **v1 only** (2026-06-30). Applied version is that v1.
-- **b4 dig -m:** mbox is the original submission only — commit body +
-  1-line diff. **No replies, NAK, or on-list review.**
-- lore.kernel.org HTTP: Anubis 403. Discussion beyond the mbox is
-  **UNVERIFIED** via WebFetch.
-- Hans Verkuil’s SOB is the review/apply signal.
+- `b4 dig -c 140be217df577`: https://patch.msgid.link/20260630060311.407
+  2140-1-yun.zhou@windriver.com
+- Series: **v2 → v6** (no v1 in b4’s match list)
+  - v2 2026-06-14, v3 06-16, v4 06-18, v5 06-25, v6 06-30
+- Changelog (from v6 mbox): v2 added drain/device_link; v3 restored pool
+  registers and `DEFINE_SIMPLE_DEV_PM_OPS`; v4 SW-BM fallback if link
+  fails; v5 disable-before-free; v6 `mutex_destroy` + `virt_addr = NULL`
+- Applied to **netdev/net-next.git**, not `net` (feature-sized PM
+  addition, but still a crash fix)
+- No NAK. Paolo’s only follow-up: sashiko flagged **pre-existing**
+  issues, asked for a later follow-up — not a NAK of this patch
+- No reviewer `Cc: stable` in the v6 thread
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (**b4 dig -w**):
-- To: Andy Walls (CX18 maintainer), Mauro Carvalho Chehab
-- Cc: linux-media, linux-kernel
-- Applied by Hans Verkuil. Right lists/maintainers were CCd.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): Yun Zhou; Marcin Wojtas; Andrew Lunn; Dave Miller;
+Eric Dumazet; Jakub Kicinski; Paolo Abeni; netdev; linux-kernel. Right
+lists/maintainers. Human review of earlier versions was mostly sashiko
+notes forwarded by Simon Horman (v2) and Jakub Kicinski (v5) as
+“plausible”. Paolo applied v6.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: **No Reported-by, no syzbot, no bugzilla Link.** Looks like
-static/code inspection, not a user crash. Twin ivtv patch supports that.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No bugzilla/syzbot link. Evidence is the ARM oops in the commit
+and Wind River authorship. lore.kernel.org HTTP fetch returned 403;
+thread was recovered via `b4 dig -m`.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Independent `[PATCH]` plus independent ivtv twin (`…-0015-media-
-ivtv-…`). No hidden series dependency. This commit is self-contained.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Single-patch series. Related but independent: `fd398d6480987`
+(percpu IRQ on resume). Not a prerequisite for this diff.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: **UNVERIFIED** (lore/stable search blocked). Local history has
-no stable-discussion commit for this subject. No evidence it was
-rejected for stable.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable HTTP 403. Local `git log` on these files
+shows no stable-list discussion of this subject. UNVERIFIED whether
+anyone already requested/rejected it on stable@.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: **`compress_sliced_buf()`** only.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `mvneta_probe`, `mvneta_bm_pool_create`, `mvneta_bm_suspend`
+(new), `mvneta_bm_resume` (new), `mvneta_bm_driver` pm pointer.
 
-Step 5.2: TRACE CALLERS
-Record (grep, not semcode — semcode MCP not available):
-- `compress_sliced_buf()` ← `_cx18_process_vbi_data()` when **not** raw
-  VBI
-- `_cx18_process_vbi_data()` ← `cx18_process_vbi_data()` per buffer on a
-  VBI MDL
-- `cx18_process_vbi_data()` ← `cx18_fileops.c` on userspace read of VBI,
-  or internal VBI while reading MPEG (`CX18_F_S_INTERNAL_USE`)
-- **Context:** process context, V4L2 read/DQBUF — not IRQ. User-
-  reachable with sliced VBI capture on cx18.
-
-Step 5.3: TRACE CALLEES
-Record: start-code compare; later `v4l2_subdev_call(...,
-decode_vbi_line)` and `memcpy` of 42 bytes. The changed loop only
-searches; it does not decode until a full line is found.
-
-Step 5.4: FOLLOW THE CALL CHAIN
+**Step 5.2: TRACE CALLERS**
 Record:
-`VIDIOC_QBUF/read` → `cx18_dequeue` → `cx18_process_vbi_data` →
-`_cx18_process_vbi_data` → `compress_sliced_buf`
-- **Userspace-reachable:** yes, with this card and sliced VBI.
-- Unprivileged: only with access to the V4L device node (typical video
-  group / capture app).
+- `mvneta_bm_suspend`/`resume`: platform PM via `dev_pm_ops` (system
+  suspend/hibernate)
+- `mvneta_bm_port_init` ← `mvneta_probe` and `mvneta_resume` (verified
+  in `mvneta.c`)
+- `mvneta_bm_pool_use` ← only `mvneta_bm_port_init` (long and short
+  pools)
+- `mvneta_poll` ← NAPI; chooses `mvneta_rx_hwbm` if `pp->bm_priv` else
+  `mvneta_rx_swbm`
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same bug in **ivtv** `compress_sliced_buf()`; already fixed with
-`i + 3 < size`. No other `i + 3 < size` hits under `drivers/media`.
-Systematic cloned-driver bug, both fixed.
+**Step 5.3: TRACE CALLEES**
+Record: suspend uses `mvneta_bm_bufs_free` (DMA unmap +
+`hwbm_buf_free`), `mvneta_bm_pool_disable`, `dma_free_coherent`,
+`mutex_destroy`, `clk_disable_unprepare`. Resume uses
+`clk_prepare_enable`, `mvneta_bm_default_set`, register writes, BM
+START.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace/system suspend on Armada 38x/XP with
+`CONFIG_MVNETA_BM` and a DT `buffer-manager` phandle. Reachable on real
+HW (Wind River). Not a syscall fuzz path; it is a common S2R path on
+those boards.
+
+Note on the stack naming: `mvneta_poll` uses `mvneta_rx_hwbm` when
+`bm_priv` is set. The oops shows `mvneta_rx_swbm`. Verified that
+`mvneta_swbm_rx_frame()` does `dma_sync_single_for_cpu(...,
+rx_desc->buf_phys_addr, ...)` and can be inlined into `mvneta_rx_swbm`.
+That matches DMA-sync-of-garbage if resume fell back to SW BM
+(`mvneta_resume` clears `bm_priv` when `mvneta_bm_port_init` fails)
+while RX descriptors still held stale phys addrs, or if the reporter’s
+kernel named the RX path differently. The BM clock-loss story is still
+consistent with “invalid address in DMA sync after resume”.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: `mvneta` already had `SIMPLE_DEV_PM_OPS(mvneta_pm_ops, ...)`. BM
+was the missing half. No sibling Marvell BM driver in this path.
+`device_link_add` is used only in this probe site under
+`drivers/net/ethernet/marvell/`.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- **Tree:** `git describe HEAD` = **v7.3-rc4-27-gf0100363d8c37**; `make
-  kernelversion` = **7.3.0-rc4**
-- Driver and function exist: `drivers/media/pci/cx18/cx18-vbi.c`
-- **This commit is already an ancestor of HEAD** (`git merge-base --is-
-  ancestor bf533acaaa7de HEAD` succeeded)
-- First mainline tag containing it: **`v7.3-rc1`** (`git describe
-  --contains --match 'v*'`)
-- **Buggy bound `i < size` is in the parent** `bf533acaaa7de^`; it is
-  not a post-7.3 invention
-- Introduced **2008/2009**, so every current stable series that still
-  has cx18 has the bug unless this commit was backported
-- Already-in-HEAD on **mainline 7.3-rc4** is expected; it is not
-  “already selected for stable”
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. Tree is **v7.3-rc4** (`git describe HEAD` =
+`v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
+EXTRAVERSION=-rc4`).
+- `140be217df577` **is** an ancestor of HEAD (`git merge-base --is-
+  ancestor` succeeded).
+- Files `drivers/net/ethernet/marvell/mvneta.c` and `mvneta_bm.c` exist;
+  BM probe/remove, `mvneta_suspend`/`mvneta_resume`, and
+  `mvneta_bm_port_init` are present.
+- Bug class (BM without PM while neta has PM) dates to v4.12.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply.** Surrounding function is stable since 2009 aside
-from macros/email/SPDX. Stable trees with `i < size` get a 1-line
-conflict-free change.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean in this tree** — the commit is already applied. Probe BM
+block has been stable in shape since 2018. Helpers used by the patch
+exist here.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: This is the fix. No earlier alternate bound check. ivtv twin is
-a different driver.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This fix is already on HEAD. No alternate older fix for BM
+resume. Follow-up `ede0f99cef53a` is a different `mvneta_bm_get()` ref
+leak, not a replacement for this change.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record:
-- **Subsystem:** media / PCI V4L2 — Conexant CX23418 (Hauppauge HVR-1600
-  and similar)
-- **Criticality: PERIPHERAL** — old PCI capture card, not mm/net/VFS
-- `CONFIG_VIDEO_CX18`; maintainer Andy Walls; list linux-media
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `[net/ethernet/marvell mvneta + mvneta_bm] [IMPORTANT]` — not
+core mm/VFS, but the onboard NIC on Armada 370/38x/XP/3700. BM is
+**32-bit only** (`depends on !64BIT`), Armada 38x/XP. Crash takes down
+networking after resume on those SoCs.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: **Mature/quiet.** Recent cx18 commits are treewide/API; this is
-one of the few real local bugfixes. Long-lived bug, not churn from a
-rewrite.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Mature driver (2016 BM, 2017 PM). Recent churn is resume fixes
+(`fd398d6480987`, this commit), not a rewrite. Long-present bug, not a
+brand-new subsystem.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific / config-specific:** `CONFIG_VIDEO_CX18`,
-sliced VBI (not raw). Population is small (HVR-1600-class cards) but
-real.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **driver-specific / config-specific / platform-specific** —
+`CONFIG_MVNETA` + `CONFIG_MVNETA_BM` on 32-bit Armada 38x/XP with DT
+`buffer-manager`. That is exactly Wind River / NAS / router class
+hardware. SW-BM-only boards are unaffected except for the new
+device_link failure path (falls back to SW BM).
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: System suspend/resume with HW BM in use. Common on embedded
+devices that sleep. Not unprivileged-syscall; still a production resume
+path. Not a tiny race window.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: `[Kernel paging request / panic in NAPI RX] [CRITICAL]`
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- Trigger: sliced VBI processing when the 4-byte EAV (`0xff 00 00
-  {0xb0,0xf0}`) is not found before the tail — then the loop runs to EOF
-  and over-reads
-- How common: every sliced-VBI buffer that lacks a match in-range; with
-  valid hardware the match is usually early
-- Unprivileged: only via the V4L node, not a generic syscall primitive
-- Not a race
-
-Default buffer sizing (verified):
-- `stream_buf_size[VBI] = VBI_ACTIVE_SAMPLES * 36` = **1444 × 36 =
-  51984**
-- Sliced MDL: NTSC **9792**, PAL **12496**; `bufs_per_mdl = 1`
-- `buf->buf = kmalloc(s->buf_size)` (51984); DMA/`bytesused` ≈ mdl_size
-  (~10–12K)
-- Default: 1–3 bytes past `bytesused` are **still inside the kmalloc
-  object** (not a KASAN slab redzone hit)
-- If `bytesused == buf_size` (full buffer), it **would** be a true
-  allocation over-read
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- **Failure mode:** 1–3 byte read past valid DMA `bytesused` while
-  matching start codes (result not copied to userspace)
-- Default config: no crash, no leak to userspace, no functional change
-  (tail false-match still leaves size ≪ line_size)
-- Edge: true slab/page OOB / oops if used size equals allocation
-- **Severity: MEDIUM** as memory-safety/correctness; **not CRITICAL**
-  (no demonstrated panic/corruption). Still a real OOB class bug.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- **Benefit:** closes a long-standing OOB read on a live capture path;
-  low user count
-- **Risk: very low** (1 line, loop bound only)
-- **Ratio:** favorable — tiny risk, real bounds bug, same pattern
-  already used on ivtv
+- **Benefit: high** — prevents oops and dead NIC after resume on
+  affected Marvell SoCs.
+- **Risk: low–medium** — 90 lines, two files, new PM callbacks but they
+  mirror existing destroy/probe; device_link fallback is fail-safe (SW
+  BM).
+- **Ratio:** benefit outweighs risk. Fits “oops / hardware PM” stable
+  policy.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
-**FOR backporting:**
-- Real 4-byte peek past `size`; classic OOB-read class used in stable
-- One line, obviously correct, no API/feature
-- Code has been in-tree since 2008/2009; no missing prereqs
-- Userspace-reachable sliced VBI on cx18
-- Applied by Hans Verkuil; CX18 maintainer CCd
-- Twin ivtv fix confirms the pattern
-- Regression risk essentially zero
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**AGAINST:**
-- No syzbot/user/crash report
-- Peripheral 2008 PCI encoder, small population
-- Default kmalloc (52K) ≫ typical `bytesused` (~10K), so default may not
-  oops
-- No Fixes/Cc:stable (not a veto here)
-- Not core mm/fs/net
+FOR:
+- Documented kernel panic with stack after resume
+- Real product kernel (Wind River)
+- Bug present since v4.12; code is in this tree
+- 90 lines, two files, no new UAPI
+- Completes PM that `mvneta` already had; allowed hardware/PM class
+- v6 addressed drain, ordering, mutex, dangling `virt_addr`
+- Accepted by Paolo Abeni; no NAK
+- Under the documented ~100-line stable size cap
 
-**UNRESOLVED:**
-- lore/stable threads beyond b4 mbox (Anubis)
-- No sanitizer report found
+AGAINST:
+- Landed in **net-next**, not `net` (looks feature-sized)
+- “add support” wording; new callbacks rather than a 5-line tweak
+- Six revisions; not trivial at v1
+- No `Tested-by` besides the author
+- Oops symbol is `mvneta_rx_swbm` while HW BM poll uses `mvneta_rx_hwbm`
+  (explained above, not a reason to drop a panic fix)
+- Sashiko noted other pre-existing issues (not shown to break this
+  patch)
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — bound is locally checkable;
-   accepted by media maintainer (no extra Tested-by)
-2. Fixes a real bug that affects users? **PASS** — over-read of the VBI
-   payload bound on a real capture path
-3. Important issue? **PASS** (medium) — memory-safety OOB; crash only if
-   used size equals allocation; still the OOB class stable takes as
-   small driver fixes
-4. Small and contained? **PASS** — 1 line, 1 function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — already in this 7.3-rc4 tree;
-   parent form applies cleanly wherever `i < size` remains
+UNRESOLVED:
+- Could not read lore.kernel.org/stable (HTTP 403)
+- Could not open sashiko’s full pre-existing-issue list (Paolo linked
+  it; described as pre-existing)
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **None** (not ID/quirk/DT/build/doc). Qualifies as a normal
-small bugfix.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — v6 matches existing
+   destroy/probe; author hit the panic; maintainer applied it.
+2. Fixes a real bug that affects users? **PASS** — resume oops on Armada
+   + BM.
+3. Important issue? **PASS** — kernel panic / paging request (CRITICAL).
+4. Small and contained? **PASS** — 90 insertions, 2 files, one driver
+   pair.
+5. No new features or APIs? **PASS** — no UAPI; PM ops are the missing
+   half of existing suspend/resume (hardware/PM workaround exception).
+6. Can apply to the local tree? **PASS** — already in v7.3-rc4; helpers
+   exist.
 
-Step 9.4: MAKE YOUR DECISION
-This tree is mainline **7.3-rc4**, which already contains the fix
-(landed in **v7.3-rc1**). The evaluation is technical merit for stable,
-not “re-apply on 7.3”.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Hardware/PM workaround (missing suspend/resume causing a crash).
+Not a new driver, not a new userspace API.
 
-The bug is a one-byte-stride scan of a four-byte start code with `i <
-size`, present since 2008/2009. The patch is the standard remaining-
-bytes fix. It does not add features, does not need other commits, and
-will not regress the later line parser.
-
-Default cx18 VBI buffers make a crash unlikely, but it is still a real
-bounds bug on a user-triggerable path, with ~zero backport risk. That is
-enough for YES on this tree’s stable-candidate criteria.
+**Step 9.4: MAKE YOUR DECISION**
+This tree is v7.3-rc4 and already contains the mvneta BM driver, mvneta
+PM, and this commit’s helpers. The change fixes a user-visible panic on
+resume, is contained, and is the correct completion of PM for a driver
+that already suspends. It should be backported.
 
 ------------------------------------------------
-What the commit solves for stable users
-`compress_sliced_buf()` must see `buf[0]..buf[3]`. With `i < size`, the
-last three iterations read past `bytesused`. Stopping at `i + 3 < size`
-prevents that. Users with Hauppauge HVR-1600-class cx18 cards doing
-sliced VBI (or MPEG with inserted VBI) no longer walk off the valid DMA
-tail.
+What problem it solves for stable users
+------------------------------------------------
+On 32-bit Marvell Armada boards that use hardware buffer management,
+suspend gates clocks and the BM forgets buffer addresses. Resume
+reattaches the NIC to that hardware and NAPI DMA-syncs garbage,
+panicking in `v7_dma_inv_range`. After resume, Ethernet is dead and the
+kernel has oopsed. Stable users of these SoCs (embedded, NAS, Wind
+River-style products) hit this on ordinary S2R.
 
-Stable rules / risk
-Meets the rules: obvious, small, no new API, real OOB. Benefit is modest
-(niche driver, default alloc has slack); risk is negligible. Prefer
-taking a 1-line memory-safety fix over leaving a 17-year over-read.
+------------------------------------------------
+Risk vs benefit
+------------------------------------------------
+Benefit is a panic fix on a real resume path. Risk is a modest amount of
+new PM code, already iterated through v6 and aligned with
+`mvneta_bm_pool_destroy()` / `mvneta_bm_pool_use()`. Device-link failure
+falls back to SW BM instead of leaving a crashy configuration.
 
-Concerns
-None for apply/prereqs. Not a sanitizer/CVE-backed crash. ivtv twin is
-separate. This 7.3-rc4 checkout already has the commit; older stables
-still on `i < size` are the backport targets.
-
-Verification:
-- [Phase 1] Subject/tags: media/cx18 “stop”; SOBs Hou + Verkuil; no
-  Fixes/Reported-by/Link/Cc:stable
-- [Phase 2] Diff: `drivers/media/pci/cx18/cx18-vbi.c`
-  `compress_sliced_buf()` `i < size` → `i + 3 < size` (1/1)
-- [Phase 2] Confirmed `buf[0]..buf[3]` vs exclusive `size`; post-loop
-  `size < line_size` still holds if no match
-- [Phase 3] `git blame`: loop from `1c1e45d17b663d` (2008) /
-  `4ab9b256b5908a` (2009); fix `bf533acaaa7de`
-- [Phase 3] `git show bf533acaaa7de^`: parent still has `i < size`
-- [Phase 3] Sibling `f373cf17fb8e7` ivtv same change; author log shows
-  both
-- [Phase 4] `b4 dig -c`: lore msgid `2026063007035519.3-ccfa108-0014-…`;
-  v1 only; mbox = patch, no replies
-- [Phase 4] `b4 dig -w`: Walls, Chehab, linux-media, linux-kernel
-- [Phase 4] WebFetch/WebSearch lore: **UNVERIFIED** (Anubis 403)
-- [Phase 5] Callers: `_cx18_process_vbi_data` ← `cx18_process_vbi_data`
-  ← `cx18-fileops.c` VBI/MPEG read
-- [Phase 5] `i + 3 < size` only in cx18-vbi.c and ivtv-vbi.c
-- [Phase 6] `git describe HEAD` v7.3-rc4-27; kernel 7.3.0-rc4; `merge-
-  base --is-ancestor bf533acaaa7de HEAD` true; `--contains` v7.3-rc1
-- [Phase 6] File present; apply would be clean on `i < size`
-- [Phase 7] CONFIG_VIDEO_CX18; MAINTAINERS Andy Walls; mature driver
-- [Phase 8] buf_size 1444*36=51984; sliced mdl_size 9792/12496;
-  kmalloc(buf_size) so default over-read stays in-object
-- [Phase 8] Failure: OOB read, severity MEDIUM; risk very low
-- UNVERIFIED: on-list review beyond Hans’s SOB; stable@ discussion;
-  KASAN/syzbot report
+------------------------------------------------
+Verification
+------------------------------------------------
+- [Phase 1] Parsed tags: Yun Zhou SOB, Paolo Abeni SOB, msgid.link; no
+  Fixes/Cc-stable/Reported-by
+- [Phase 1] Body: ARM paging oops in DMA sync during `mvneta_poll` after
+  resume
+- [Phase 2] Diff: +18 `mvneta.c` (device_link + SW BM fallback), +72
+  `mvneta_bm.c` (PM ops + virt_addr NULL)
+- [Phase 2] `mvneta_poll` HW vs SW split and `dma_sync_single_for_cpu`
+  in `mvneta_swbm_rx_frame` verified in source
+- [Phase 3] BM introduced `dc35a10f68d37` (v4.6-rc1); mvneta PM
+  `9768b45ceb0bc` (v4.12-rc1)
+- [Phase 3] `git merge-base --is-ancestor 140be217df577 HEAD` → IS
+  ancestor
+- [Phase 3] hwbm mutex: `6dcdd884e2a4b` (v5.3);
+  DEFINE_SIMPLE_DEV_PM_OPS: `1a3c7bb088266` (v5.17)
+- [Phase 3] Follow-up `ede0f99cef53a` is a different leak, not a
+  fix/revert of this patch
+- [Phase 4] `b4 dig -c 140be217df577`: v2–v6, applied to net-next; no
+  NAK; Paolo asked about pre-existing sashiko issues
+- [Phase 4] `b4 dig -w`: netdev maintainers on To/Cc
+- [Phase 4] `b4 dig -m`: v6 changelog + Paolo reply parsed from mbox
+- [Phase 4] lore HTTP 403; stable@ search UNVERIFIED via WebFetch
+- [Phase 5] Callers: `mvneta_bm_port_init` from probe and
+  `mvneta_resume` only
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 6] BM and mvneta PM files present; commit already on this
+  branch
+- [Phase 7] Kconfig: `MVNETA_BM` depends on `!64BIT`; Armada 38x/XP
+- [Phase 8] Failure mode: kernel paging request in RX NAPI after resume,
+  CRITICAL
+- UNVERIFIED: full sashiko finding list; whether stable@ already
+  discussed this patch
 
 **YES**
 
- drivers/media/pci/cx18/cx18-vbi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/mvneta.c    | 18 ++++++
+ drivers/net/ethernet/marvell/mvneta_bm.c | 72 ++++++++++++++++++++++++
+ 2 files changed, 90 insertions(+)
 
-diff --git a/drivers/media/pci/cx18/cx18-vbi.c b/drivers/media/pci/cx18/cx18-vbi.c
-index 8dc4ce3259353..3a8430f3259eb 100644
---- a/drivers/media/pci/cx18/cx18-vbi.c
-+++ b/drivers/media/pci/cx18/cx18-vbi.c
-@@ -135,7 +135,7 @@ static u32 compress_sliced_buf(struct cx18 *cx, u8 *buf, u32 size,
- 				    : VBI_HBLANK_SAMPLES_50HZ;
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index 71ace291a8bff..2cb6723fe801c 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -5684,6 +5684,24 @@ static int mvneta_probe(struct platform_device *pdev)
+ 					 "use SW buffer management\n");
+ 				mvneta_bm_put(pp->bm_priv);
+ 				pp->bm_priv = NULL;
++			} else if (!device_link_add(&pdev->dev,
++						    &pp->bm_priv->pdev->dev,
++						    DL_FLAG_AUTOREMOVE_CONSUMER)) {
++				/*
++				 * Link guarantees BM resumes before mvneta.
++				 * Without it, BM may not be ready when
++				 * mvneta_bm_port_init() runs on resume,
++				 * causing stale buffer addresses and a crash.
++				 * Fall back to SW management to be safe.
++				 */
++				dev_warn(&pdev->dev,
++					 "failed to link to BM, use SW buffer management\n");
++				mvneta_bm_pool_destroy(pp->bm_priv,
++						       pp->pool_long, 1 << pp->id);
++				mvneta_bm_pool_destroy(pp->bm_priv,
++						       pp->pool_short, 1 << pp->id);
++				mvneta_bm_put(pp->bm_priv);
++				pp->bm_priv = NULL;
+ 			}
+ 		}
+ 		/* Set RX packet offset correction for platforms, whose
+diff --git a/drivers/net/ethernet/marvell/mvneta_bm.c b/drivers/net/ethernet/marvell/mvneta_bm.c
+index 6bb3804949190..e0c693c0a9106 100644
+--- a/drivers/net/ethernet/marvell/mvneta_bm.c
++++ b/drivers/net/ethernet/marvell/mvneta_bm.c
+@@ -129,6 +129,7 @@ static int mvneta_bm_pool_create(struct mvneta_bm *priv,
+ 	if (!IS_ALIGNED((u32)bm_pool->virt_addr, MVNETA_BM_POOL_PTR_ALIGN)) {
+ 		dma_free_coherent(&pdev->dev, size_bytes, bm_pool->virt_addr,
+ 				  bm_pool->phys_addr);
++		bm_pool->virt_addr = NULL;
+ 		dev_err(&pdev->dev, "BM pool %d is not %d bytes aligned\n",
+ 			bm_pool->id, MVNETA_BM_POOL_PTR_ALIGN);
+ 		return -ENOMEM;
+@@ -139,6 +140,7 @@ static int mvneta_bm_pool_create(struct mvneta_bm *priv,
+ 	if (err < 0) {
+ 		dma_free_coherent(&pdev->dev, size_bytes, bm_pool->virt_addr,
+ 				  bm_pool->phys_addr);
++		bm_pool->virt_addr = NULL;
+ 		return err;
+ 	}
  
- 	/* find the first valid line */
--	for (i = hdr_size, buf += hdr_size; i < size; i++, buf++) {
-+	for (i = hdr_size, buf += hdr_size; i + 3 < size; i++, buf++) {
- 		if (buf[0] == 0xff && !buf[1] && !buf[2] &&
- 		    (buf[3] == sliced_vbi_eav_rp[0] ||
- 		     buf[3] == sliced_vbi_eav_rp[1]))
+@@ -477,6 +479,75 @@ static void mvneta_bm_remove(struct platform_device *pdev)
+ 	clk_disable_unprepare(priv->clk);
+ }
+ 
++static int mvneta_bm_suspend(struct device *dev)
++{
++	struct mvneta_bm *priv = dev_get_drvdata(dev);
++	int i;
++
++	/* Drain buffers and free pool resources while BM is still clocked */
++	for (i = 0; i < MVNETA_BM_POOLS_NUM; i++) {
++		struct mvneta_bm_pool *bm_pool = &priv->bm_pools[i];
++		int size_bytes;
++
++		if (bm_pool->type == MVNETA_BM_FREE)
++			continue;
++
++		mvneta_bm_bufs_free(priv, bm_pool, bm_pool->port_map);
++		if (bm_pool->hwbm_pool.buf_num)
++			dev_warn(&priv->pdev->dev,
++				 "pool %d: %d buffers not freed\n",
++				 bm_pool->id, bm_pool->hwbm_pool.buf_num);
++
++		mvneta_bm_pool_disable(priv, bm_pool->id);
++
++		if (bm_pool->virt_addr) {
++			size_bytes = sizeof(u32) * bm_pool->hwbm_pool.size;
++			dma_free_coherent(&priv->pdev->dev, size_bytes,
++					  bm_pool->virt_addr,
++					  bm_pool->phys_addr);
++			bm_pool->virt_addr = NULL;
++		}
++		/*
++		 * Safe to destroy: device_link guarantees all mvneta ports
++		 * have already suspended, so no hwbm_pool_add() can be in
++		 * progress holding buf_lock.  Pairs with mutex_init() in
++		 * mvneta_bm_pool_use() on resume.
++		 */
++		mutex_destroy(&bm_pool->hwbm_pool.buf_lock);
++		bm_pool->type = MVNETA_BM_FREE;
++	}
++
++	mvneta_bm_write(priv, MVNETA_BM_COMMAND_REG, MVNETA_BM_STOP_MASK);
++	clk_disable_unprepare(priv->clk);
++	return 0;
++}
++
++static int mvneta_bm_resume(struct device *dev)
++{
++	struct mvneta_bm *priv = dev_get_drvdata(dev);
++	int i, err;
++
++	err = clk_prepare_enable(priv->clk);
++	if (err)
++		return err;
++
++	/* Reinitialize BM hardware; pools are refilled by mvneta_resume() */
++	mvneta_bm_default_set(priv);
++
++	/* Restore pool registers lost during clock gating */
++	for (i = 0; i < MVNETA_BM_POOLS_NUM; i++) {
++		mvneta_bm_write(priv, MVNETA_BM_POOL_READ_PTR_REG(i), 0);
++		mvneta_bm_write(priv, MVNETA_BM_POOL_WRITE_PTR_REG(i), 0);
++		mvneta_bm_write(priv, MVNETA_BM_POOL_SIZE_REG(i),
++				priv->bm_pools[i].hwbm_pool.size);
++	}
++
++	mvneta_bm_write(priv, MVNETA_BM_COMMAND_REG, MVNETA_BM_START_MASK);
++	return 0;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(mvneta_bm_pm_ops, mvneta_bm_suspend, mvneta_bm_resume);
++
+ static const struct of_device_id mvneta_bm_match[] = {
+ 	{ .compatible = "marvell,armada-380-neta-bm" },
+ 	{ }
+@@ -489,6 +560,7 @@ static struct platform_driver mvneta_bm_driver = {
+ 	.driver = {
+ 		.name = MVNETA_BM_DRIVER_NAME,
+ 		.of_match_table = mvneta_bm_match,
++		.pm = pm_sleep_ptr(&mvneta_bm_pm_ops),
+ 	},
+ };
+ 
 -- 
 2.53.0
 
