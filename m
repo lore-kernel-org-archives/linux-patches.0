@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512325E0E41;
-	Mon, 19 Oct 2026 14:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6482B5E0E2A;
+	Mon, 19 Oct 2026 14:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418546; cv=none; b=mTIyZUmHlGP6g42rAcVtNzn32Cieq/BEHLT8wNjMOeQ3zSqL6esaqBbyNo2xuvchIUYfxNmWdH7oKCaU9fDHZdJOcNrCsF6OP7s73GlnkpJL4K0FNLbtLDcs8MlV/IpflQBwtK1j2JyCxY+Kep8UEV8wM5D54CPSUjBRpQG4rys=
+	t=1792418546; cv=none; b=K84wleMIFxNVSQWpxoJRcvRZhKh9Y6PLBbhCBJx/qKHRUE97PU8ywfW8hkOyUWbFrJfOLUYOhsaO3/GJbH/9k/sMBYoD9tp3r/N2zczwEEO3O2bhR/niwPL8o+TDNubscFnhXmg9diGCsWkpWjZ7v1eJRqUn5LjDG7Z1AlK/nWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418546; c=relaxed/simple;
-	bh=uVUBf5y86ozP98jwAO+Z6HEpVjq0Nyj+KC1UFavyYBo=;
+	bh=rvJWQyr0WEfy6/AzCKYHXnWOaMUK+fe8bFgowxnOjPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JVKJys3HK/M6QCdR12aMxn8NOEG7rw2jhuLrd4rU98CSmLHekSDKp35TsogAm5CKFPHixNE6V8a1qrQK9Ov/xzWJVpNcsMJuayr5G9vCxRiAhG8JxMGiXVvn4/RKiprY4JT2zFBYiNNqm+lBFwHz2Zje2moSRRw3FaH/Q/I20Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eOnMEagv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KDBPJkPKXz9n3VsXHTXRzf1eGY7rBtgCHPdjQF9W5MYzQQxVVb0B7Je2h1IExlEVthPpuoSGfpnsAzm10VFfBqUQNovn5po/gW0hj/Bf1xoa4nU44Nlx6WJIfapOXGAFhh6VKURUIWeXGjSzJ2gwrLb4KpTJnbTIJ3qQeqlkgis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HGX8RH+F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eOnMEagv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C0E1F000C6;
-	Mon, 19 Oct 2026 14:02:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HGX8RH+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75511F000C4;
+	Mon, 19 Oct 2026 14:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418543;
-	bh=0M7zuchmywfdUImy6+SRCax1nzOIJYIdgMIg780jPMc=;
+	s=k20260515; t=1792418542;
+	bh=/+myPmVbI9znAEmr8DN9yfg2ABmzWBxhiHOVL+nrSUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOnMEagviYDDhz5364wQ17abpwlgPx4BlqY++42N0gxLSBmPWqngRS4o4XU74+m7k
-	 7ErmMALKeCqpj/ST1wNXLdQ+afF5V8f6LRGq21XGoTxFOyKsoWKl8VgNWRGg6+vCwj
-	 ns2jadL87hx5vjRCUvR7JVcYqTkt/25N4fg2pZPuqAs+lfE4skeX2PWlfXLaPFAnkk
-	 gYz6QemySRg1vKBKjAu6NM4sry1NA5BlZkRZxe4B2ZcQB/RaVRkvKtX3TPnkdcjxWb
-	 /HPkBlc/nhhwCkw0qTVQdIEJ5QQy7Ti60FnUX+yzq7icBdnCHC+oXhVk4Dzv8hK/g0
-	 XI7aB8lew/fUg==
+	b=HGX8RH+FeTCN2UZjI/Z5ESIL7pESDs+/pui29FyQp77K6D57pF8EfZPLvMe7ewqt0
+	 W5X5QFIiRoF2M5NiGQJdxvJQA6/FkauuMd9l/ttaY5QSS0I7Iii0i6XuI0kqvjE1DQ
+	 JzQoL6HVDLaggBKHt80zh2NDSlyNeUZB+HBCluB/vQW1+3bjtxMe2gRinrNLbUeXuJ
+	 5qeEozYqwalDztYZM6dbAay97INrcuZvNQGL9PJyL1FKXArThshpdoWzFi55r3XRd7
+	 0NM00w1eTekQFlkvRMoiJxEOcku31H5gJlvYnfjKuxMYnQV9JTUyCTU5mLNWbpnLl1
+	 bJf2mN1wyCC9Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Jun <lijun01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	zhuyinbo@loongson.cn,
-	linux-spi@vger.kernel.org,
+	jjohnson@kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath11k@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] spi: loongson: pm: add .freeze .poweroff .thaw .restore
-Date: Mon, 19 Oct 2026 09:50:14 -0400
-Message-ID: <20261019135441.1420968-323-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: ath11k: validate regulatory capability phy_id
+Date: Mon, 19 Oct 2026 09:50:13 -0400
+Message-ID: <20261019135441.1420968-322-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,487 +56,416 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Jun <lijun01@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a9c2f0d401fd1e11ce59e4243946a59bd818e8c5 ]
+[ Upstream commit f8729a40ebcc94d164be8f154483a21669f3ab52 ]
 
-after execute s4, the spi error,
-[ 1104.754246][ 4] [    T1] tpm_tis_spi spi-SMO0768:00: SPI transfer failed: -110
-[ 1104.761503][ 4] [    T1] spi_master spi1: failed to transfer one message from queue
-[ 1104.769201][ 4] [    T1] spi_master spi1: noqueue transfer failed
-[ 1104.776344][ 4] [    T1] tpm_tis_spi spi-SMO0768:00: SPI transfer failed: -110
-[ 1104.783609][ 4] [    T1] spi_master spi1: failed to transfer one message from queue
-[ 1104.791308][ 4] [    T1] spi_master spi1: noqueue transfer failed
-[ 1104.797446][ 4] [    T1] gttadd tpm_chip_start1 ret = -110
-and in s4 the loongson_spi_resume&suspend are not
-called at all. use DEFINE_SIMPLE_DEV_PM_OPS() add .freeze .poweroff
-.thaw .restore, after s4 the spi communication is normal.
+ath11k_wmi_tlv_ext_hal_reg_caps() copies firmware regulatory
+capability records into soc->hal_reg_cap[] using reg_cap.phy_id as
+the destination index.  The loop count is bounded by num_phy, but the
+phy_id embedded in each record is not checked against the fixed
+MAX_RADIOS-sized destination array.
 
-Signed-off-by: Li Jun <lijun01@kylinos.cn>
-Link: https://patch.msgid.link/20260820092351.101605-1-lijun01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reject firmware records whose phy_id does not fit soc->hal_reg_cap[]
+before copying the parsed capability.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260704011040.26233-1-pengpeng@iscas.ac.cn
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The buggy PM ops are
-present here; the candidate is not. The rest of the write-up is the full
-nine-phase review for this tree only.
+This tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The candidate
+is a 6-line firmware `phy_id` bounds check in ath11k WMI parsing. The
+buggy `memcpy` has been in this driver since v5.6; the check is
+obviously correct and belongs here.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[spi: loongson: pm] [add] [hibernation callbacks
-.freeze/.poweroff/.thaw/.restore]**
-
-The verb is “add”, but the body is a hibernation bug report (S4 SPI
-timeout), not a feature.
+Record: **[wifi: ath11k] [validate] [reject firmware `phy_id` that is
+out of range for `soc->hal_reg_cap[]`]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
 Record:
-- **Fixes:** none (expected for this review)
+- **Fixes:** none (expected for this review pipeline)
 - **Reported-by:** none
-- **Tested-by:** none (author states it was tested after S4)
-- **Reviewed-by:** none on the committed message
+- **Tested-by:** none
+- **Reviewed-by:** Rameshkumar Sundaram
+  `<rameshkumar.sundaram@oss.qualcomm.com>`; Baochen Qiang
+  `<baochen.qiang@oss.qualcomm.com>` (Qualcomm ath11k reviewers)
 - **Acked-by:** none
 - **Link:**
-  https://patch.msgid.link/20260820092351.101605-1-lijun01@kylinos.cn
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Li Jun \<lijun01@kylinos.cn\> (author); Mark Brown
-  \<broonie@kernel.org\> (SPI maintainer)
-- **Ignored pipeline tags:** none present in the provided message beyond
-  the usual evaluation context
-
-Notable: SPI maintainer SOB; mailing-list Link; no syzbot.
+  `https://patch.msgid.link/20260704011040.26233-1-pengpeng@iscas.ac.cn`
+- **Cc: stable:** none (expected; not a negative signal)
+- **Signed-off-by:** Pengpeng Hou (author); Jeff Johnson (ath11k
+  maintainer)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
 Record:
-- **Bug:** After S4 (hibernate), Loongson SPI transfers fail with **-110
-  (`ETIMEDOUT`)**. `tpm_tis_spi` device `spi-SMO0768:00` cannot talk to
-  the controller; `tpm_chip_start` returns -110.
-- **Symptom:** SPI master `spi1` “failed to transfer one message from
-  queue” / “noqueue transfer failed”.
-- **Root cause (author):** `loongson_spi_suspend`/`loongson_spi_resume`
-  are **not called at all during S4**, because only `.suspend`/`.resume`
-  were registered.
-- **Fix:** `DEFINE_SIMPLE_DEV_PM_OPS()` so the same save/restore path is
-  also used for `.freeze`, `.poweroff`, `.thaw`, `.restore`.
-- **Version info:** none in the message; dmesg is a real hibernate-
-  resume failure.
-- **Author test:** “after s4 the spi communication is normal.”
+- **Bug:** `ath11k_wmi_tlv_ext_hal_reg_caps()` copies firmware HAL
+  regulatory-capability records into `soc->hal_reg_cap[]` using
+  **`reg_cap.phy_id` as the destination index**. The loop is bounded by
+  `num_phy`, but **`phy_id` inside each record is not checked** against
+  `MAX_RADIOS`.
+- **Symptom/failure mode:** out-of-bounds write into `struct
+  ath11k_base` (memory corruption).
+- **Version information:** none in the message.
+- **Root cause:** firmware-controlled `u32 phy_id` used as an array
+  index without a bounds check.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: **Not disguised.** This is an explicit firmware-index validation
+/ OOB-write fix. Verb “validate” is a bounds check, not cleanup.
 
-Record: **Not hidden.** It is a real hibernation PM bug. “add …
-callbacks” is the usual wording for filling missing `dev_pm_ops` slots;
-it is not a new API or new driver.
+---
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-
 Record:
-- **File:** `drivers/spi/spi-loongson-core.c`
-- **Scope:** ~2 insertions, ~4 deletions (single struct rewrite)
-- **Functions:** `loongson_spi_suspend` / `loongson_spi_resume`
-  unchanged; only `loongson_spi_dev_pm_ops` definition changes
-- **Classification:** single-file surgical fix
+- **File:** `drivers/net/wireless/ath/ath11k/wmi.c` — **+6 / -0**
+- **Function:** `ath11k_wmi_tlv_ext_hal_reg_caps()`
+- **Scope:** single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record:
-- **Before:** `dev_pm_ops` has only `.suspend` and `.resume`. Kernel
-  hibernation uses `.freeze`/`.thaw`/`.poweroff`/`.restore`
-  (`include/linux/pm.h`). Those were NULL, so S4 never saved/restored
-  SPI registers or called
-  `spi_controller_suspend`/`spi_controller_resume`.
-- **After:** `DEFINE_SIMPLE_DEV_PM_OPS` → `SYSTEM_SLEEP_PM_OPS`, which
-  sets all six sleep callbacks to the existing suspend/resume pair via
-  `pm_sleep_ptr()`.
-- **Path affected:** system hibernation (S4) and poweroff-after-image.
-  S3 still uses the same functions.
+Record (verified in this tree at `wmi.c:4862-4880`):
+- **Before:** `ath11k_pull_reg_cap_svc_rdy_ext()` fills `reg_cap` from
+  firmware TLV `ext_reg_cap[i].phy_id`, then
+  `memcpy(&soc->hal_reg_cap[reg_cap.phy_id], &reg_cap, sizeof(reg_cap))`
+  with no check that `phy_id < MAX_RADIOS`.
+- **After:** if `reg_cap.phy_id >= ARRAY_SIZE(soc->hal_reg_cap)`, log a
+  warning and return `-EINVAL`; otherwise copy as before.
+- **Path:** firmware `WMI_SERVICE_READY_EXT` event during ath11k bring-
+  up (probe/init), not a hot datapath.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-
 Record:
-- **Category:** logic/correctness in PM ops (missing hibernation
-  callbacks); hardware state not restored after S4
-- **Mechanism:** After hibernate, SPI controller registers are not
-  rewritten (`SPCR`/`SPER`/`SPSR`/`PARA`/`SFCS`/`TIMI`). Transfers time
-  out. TPM on that bus (`SMO0768`) fails.
-- **Not** UAF/leak/race/overflow.
+- **Category:** **(d) memory safety — buffer overflow / out-of-bounds
+  write**
+- **Mechanism:** `phy_id` is a firmware `u32`
+  (`wmi_hal_reg_capabilities_ext.phy_id`). Destination is
+  `hal_reg_cap[MAX_RADIOS]` with **`MAX_RADIOS == 3`** (`core.h:242`,
+  `core.h:971`). Loop bound `num_phy` is also firmware-supplied and is
+  **not** the same as `phy_id`. A record with `phy_id >= 3` writes
+  `sizeof(struct ath11k_hal_reg_capabilities_ext)` (10 × `u32` = 40
+  bytes) past the array into following `ath11k_base` fields
+  (`free_vdev_map`, `tbl_mtx_lock`, peer rhashtables).
+- The parse helper only checks TLV count vs `num_phy`
+  (`n_ext_hal_reg_caps >= param.num_phy` → `-ENOBUFS`); it does **not**
+  validate `phy_id`.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-
 Record:
-- **Quality:** Obviously correct. Same pattern as `SYSTEM_SLEEP_PM_OPS`
-  / `SET_SYSTEM_SLEEP_PM_OPS` used across `drivers/spi/` (e.g. `spi-
-  sifive.c`, `spi-bcm63xx.c`, many `SET_SYSTEM_SLEEP_PM_OPS` users).
-- **Minimal:** no unrelated edits.
-- **Regression risk:** Low. S3 still uses the same two functions.
-  Hibernation now runs the save/restore that S3 already used.
-  `RUNTIME_PM_OPS(NULL,NULL,NULL)` matches the old struct (no runtime
-  PM).
-- **Style note (not a blocker):** `include/linux/pm.h` prefers
-  `EXPORT_NS_GPL_SIMPLE_DEV_PM_OPS` when the symbol is exported.
-  Mainline kept `DEFINE_SIMPLE_DEV_PM_OPS` + existing
-  `EXPORT_SYMBOL_NS_GPL`. Functionally equivalent on this tree: the
-  macro is non-static `const struct dev_pm_ops`.
+- **Obviously correct:** `ARRAY_SIZE(soc->hal_reg_cap)` is the real
+  destination size; reject-and-return is the right failure mode.
+- **Minimal:** 6 lines, one check, no API/struct changes.
+- **Regression risk:** **very low**. Well-formed firmware with `phy_id`
+  0–2 is unchanged. Invalid `phy_id` now fails WMI parse instead of
+  corrupting memory. That is the intended probe failure, not a behavior
+  change for working hardware.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-
 Record:
-- Buggy ops introduced in **`6c7a864007b66`** (“spi: loongson: add bus
-  driver for the loongson spi controller”, Yinbo Zhu, 2023-06-13;
-  committed 2023-07-31).
-- **`git merge-base --is-ancestor 6c7a864007b66 HEAD`** succeeded.
-- Present since **v6.6** (`v6.5` does not contain it; `v6.6` does).
-  Unchanged since then (`git blame` on lines 232–276 is entirely that
-  commit).
+- Loop + `memcpy`: **`d5c65159f28953`** — “ath11k: driver for Qualcomm
+  IEEE 802.11ax devices” (Kalle Valo, 2019-11-25).
+- Bounds check: **`f8729a40ebcc9`** (this commit).
+- Introducer is in **v5.6**, not v5.5 (`git merge-base --is-ancestor`).
+  Bug has been in every tree with ath11k since then.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. The introducing commit is the original driver,
-and it **is** in this tree.
+Record: **No Fixes: tag.** Not applicable. Introducer identified by
+blame: `d5c65159f28953` (original driver).
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
 Record:
-- `git log --oneline -- drivers/spi/spi-loongson-core.c` shows **only**
-  `6c7a864007b66`.
-- No later refactor of these PM ops in this tree.
-- Standalone; subject is `[PATCH v3]`, not `X/Y`.
+- Recent `wmi.c` work is other firmware TLV hardening (overread, stride,
+  leak) — related thematically, **not prerequisites**.
+- Earlier `84eee3c845d37` (“refine the phy_id check in
+  ath11k_reg_chan_list_event”) is a **different** event path.
+- **Standalone**, not patch N/M. Maintainer applied it as `[1/1]`.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record:
-- Author Li Jun (Kylinos) has **no** other commits under `drivers/spi/`
-  in this checkout.
-- Original driver author is Yinbo Zhu (Loongson). Maintainer who applied
-  the fix is Mark Brown.
+Record: Pengpeng Hou has this one ath11k commit here. Weight comes from
+**Qualcomm reviewers** and **maintainer Jeff Johnson** (MAINTAINERS:
+ATH11K).
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: **None.** Uses existing `ARRAY_SIZE`, `ath11k_warn`, `-EINVAL`,
+`soc->hal_reg_cap`. Can apply standalone on any tree with this 2019
+function.
 
-Record:
-- Needs `DEFINE_SIMPLE_DEV_PM_OPS` — present at `include/linux/pm.h:418`
-  in this tree.
-- Needs existing `loongson_spi_suspend`/`loongson_spi_resume` — present.
-- **Standalone.** No new helpers.
+---
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
 Record:
-- **v1:** https://lore.kernel.org/linux-
-  spi/20260818104241.850042-1-lijun01@kylinos.cn/ — manually added four
-  callback pointers.
-- **v2:** https://lore.kernel.org/linux-
-  spi/20260819014552.1986077-1-lijun01@kylinos.cn/ —
-  `SIMPLE_DEV_PM_OPS()` after review.
-- **v3 (committed):** https://lore.kernel.org/linux-
-  spi/20260820092351.101605-1-lijun01@kylinos.cn/ —
-  `DEFINE_SIMPLE_DEV_PM_OPS()` (non-deprecated helper).
-- **`b4 mbox -c`** on v3: no newer revision.
-- **Reviewer:** Mark Brown on v1: “This could be done using
-  SIMPLE_DEV_PM_OPS().” No NAK. He applied v3 to `broonie/spi.git
-  for-7.3` (`a9c2f0d401fd`).
-- No `Cc: stable` in review (not a negative signal).
+- **Lore URL (b4 dig):**
+  `https://patch.msgid.link/20260704011040.26233-1-pengpeng@iscas.ac.cn`
+- **Revisions:** **v1 only** (`b4 dig -a`); committed v1.
+- **Thread (saved via `b4 dig -m`):**
+  - Baochen Qiang: `Reviewed-by`
+  - Rameshkumar Sundaram: `Reviewed-by`
+  - Jeff Johnson: “Applied, thanks!” `[1/1]`
+- **No NAKs, no stable nomination, no requested revisions.**
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record:
-- **To/Cc:** Li Jun, Yinbo Zhu (original driver author), Mark Brown,
-  linux-spi.
-- SPI maintainer reviewed and applied. Original driver author was CCed;
-  no objection in the threads retrieved.
+Record (`b4 dig -w`): To/Cc were Jeff Johnson, `linux-wireless`,
+`ath11k@lists.infradead.org`, `linux-kernel`. Right lists and
+maintainer.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record:
-- No bugzilla/syzbot. Evidence is the author’s dmesg plus “after s4 …
-  normal.”
-- ACPI id **SMO0768** is in this tree:
-  `drivers/char/tpm/tpm_tis_spi_main.c` (`acpi_tis_spi_match`). `-110`
-  is `ETIMEDOUT` (`include/uapi/asm-generic/errno.h`).
+Record: **No user/syzbot/bugzilla report.** Found by code review of
+firmware TLV parsing. Severity is from the mechanism (OOB write), not
+from a crash log.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Three revisions of **one** patch. v3 is the applied form. No
-other patches in the series.
+Record: Standalone `[PATCH]`, not a series. ath12k still has an
+analogous unguarded `soc->hal_reg_cap[reg_cap.phy_id] = reg_cap` in
+`ath12k/wmi.c` — sibling issue, **not a dependency**.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: **UNVERIFIED** for lore.kernel.org/stable (HTTP 403). Local
+history has no stable-specific discussion of this subject.
 
-Record: lore.kernel.org/stable search for “loongson spi freeze” returned
-only unrelated “freeze” hits in stable review series. **No dedicated
-stable discussion** of this bug (search via lore `?q=` HTML, HTTP 200).
+---
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-
-Record: Symbol `loongson_spi_dev_pm_ops` only. Call targets
-`loongson_spi_suspend` and `loongson_spi_resume` are unchanged.
+**Step 5.1: KEY FUNCTIONS**
+Record: `ath11k_wmi_tlv_ext_hal_reg_caps()`; helpers
+`ath11k_pull_reg_cap_svc_rdy_ext()`,
+`ath11k_wmi_tlv_ext_hal_reg_caps_parse()`.
 
 **Step 5.2: TRACE CALLERS**
-
-Record:
-- `drivers/spi/spi-loongson-plat.c`: platform `.driver.pm =
-  &loongson_spi_dev_pm_ops`
-- `drivers/spi/spi-loongson-pci.c`: PCI `.driver.pm =
-  &loongson_spi_dev_pm_ops`
-- Invoked by the PM core on system sleep/hibernation, not from a syscall
-  directly.
+Record (verified with grep/read):
+- `ath11k_wmi_tlv_ext_hal_reg_caps()` ←
+  `ath11k_wmi_tlv_svc_rdy_ext_parse()` (`WMI_TAG_ARRAY_STRUCT` after hw-
+  mode and mac-phy TLVs)
+- ← `ath11k_service_ready_ext_event()`
+- ← WMI event switch `WMI_SERVICE_READY_EXT_EVENTID`
 
 **Step 5.3: TRACE CALLEES**
-
-Record (`loongson_spi_suspend`/`resume` in this tree):
-- Suspend: `spi_controller_suspend()`, then read 6 controller registers
-  into `struct loongson_spi`.
-- Resume: write those 6 registers back, then `spi_controller_resume()`.
-- `spi_controller_suspend` (`drivers/spi/spi.c`) stops a queued
-  controller and sets `SPI_CONTROLLER_SUSPENDED`.
+Record: `ath11k_wmi_tlv_iter()`, `ath11k_pull_reg_cap_svc_rdy_ext()`
+(copies firmware `phy_id`), `memcpy()`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record:
-- Userspace (typically root): `echo disk > /sys/power/state` or distro
-  hibernate.
-- PM core → driver `.freeze`/`.poweroff`/`.restore` → save/restore SPI
-  HW → later `tpm_tis_spi` transfers.
-- **Reachable** on Loongson machines that hibernate with this controller
-  and an SPI TPM (or any SPI child).
+Record: Reachable on **ath11k device init** when firmware sends service-
+ready-ext. Not a syscall hot path. Trigger needs **CONFIG_ATH11K** +
+Qualcomm 802.11ax hardware + firmware that puts `phy_id >= 3` (or
+otherwise ≥ `ARRAY_SIZE`). Unprivileged users cannot poke this WMI path
+directly; **buggy or malicious firmware** can. That is still a real
+kernel OOB write.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same driver already bounds other firmware indices (e.g. `phy_idx
+>= reg_caps->num_phy` in the pull helper). This copy site was the hole.
+ath12k has the same hole unfixed.
 
-Record: In this tree, almost every other SPI driver uses
-`SET_SYSTEM_SLEEP_PM_OPS` or `DEFINE_SIMPLE_DEV_PM_OPS`. Loongson was an
-outlier with only `.suspend`/`.resume`. That matches the S4-only
-failure.
+---
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.** `drivers/spi/spi-loongson-core.c` lines 272–275:
-
-```c
-const struct dev_pm_ops loongson_spi_dev_pm_ops = {
-        .suspend = loongson_spi_suspend,
-        .resume = loongson_spi_resume,
-};
-```
-
-Bug since driver addition (**v6.6**). This tree is **6.12.111**.
-Candidate not in HEAD (`git log --grep='add .freeze' -- drivers/spi/spi-
-loongson-core.c` empty).
+Record: **Yes.** `ath11k_wmi_tlv_ext_hal_reg_caps()` and
+`hal_reg_cap[MAX_RADIOS]` are present. The unguarded `memcpy` was here
+from v5.6 until `f8729a40ebcc9`. **Bug introduced in v5.6, long before
+7.3.** `git merge-base --is-ancestor f8729a40ebcc9 HEAD` is true (fix is
+in 7.3-rc1+); that is mainline merge, not “already selected for stable.”
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Minor context, clean functional apply.**
-- This tree still has `__maybe_unused` on suspend/resume; the upstream
-  hunk context dropped it.
-- This tree exports `SPI_LOONGSON_CORE` unquoted; upstream uses
-  `"SPI_LOONGSON_CORE"`.
-- **`git apply --check` of the verbatim upstream hunk failed.**
-- An adapted hunk using local context **applied cleanly** (`git apply
-  --check` exit 0).
-- `DEFINE_SIMPLE_DEV_PM_OPS` exists here.
+Record: **Clean apply.** Surrounding function body is still the 2019
+structure plus this 6-line check. No refactor of this function in
+between.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No alternate fix for this memcpy. Other nearby TLV fixes address
+different bugs.
 
-Record: No other loongson SPI PM/hibernation fix in this file’s history.
+---
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+Record: **ath11k (Qualcomm 802.11ax)** under
+`drivers/net/wireless/ath/ath11k/`. **IMPORTANT** — not core mm/fs, but
+a widely used Wi-Fi driver (laptops, AP SoCs, Chromebooks, phones).
+CONFIG: `ATH11K` / `ATH11K_PCI` / `ATH11K_AHB`.
 
+**Step 7.2: SUBSYSTEM ACTIVITY**
+Record: Actively maintained (Jeff Johnson). Recent WMI work is firmware-
+message validation, consistent with this patch.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+Record: **Driver-specific / config-specific:** `CONFIG_ATH11K` users.
+Impact only if firmware sends a `phy_id` that does not fit
+`hal_reg_cap[]`.
+
+**Step 8.2: TRIGGER CONDITIONS**
+Record: Device init / firmware service-ready-ext. **Not** every packet.
+Needs bad `phy_id` in the WMI record (firmware bug or hostile firmware).
+Unprivileged userspace cannot fire it without controlling firmware.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+Record: **Out-of-bounds write** of 40 bytes into `struct ath11k_base`
+after `hal_reg_cap[]` — can corrupt `free_vdev_map`, mutexes, peer
+tables → crash, deadlock, or further memory corruption. **Severity:
+HIGH** (OOB write / memory corruption). Not a panic on every boot with
+good firmware.
+
+**Step 8.4: RISK-BENEFIT RATIO**
 Record:
-- **Subsystem:** SPI controller driver (`drivers/spi/`),
-  Loongson/LoongArch.
-- **Criticality:** **PERIPHERAL** for the kernel as a whole,
-  **IMPORTANT** for Loongson users (SPI TPM after hibernate).
-- Kconfig: `SPI_LOONGSON_CORE` / `_PCI` / `_PLATFORM`, `depends on
-  LOONGARCH || COMPILE_TEST`.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: This driver is **mature/quiet** in 6.12 (single commit). The bug
-is long-standing, not a new-subsystem race.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Record: **Platform-specific / driver-specific:** LoongArch systems with
-Loongson SPI (`loongson,ls2k1000-spi` or PCI 0x7a0b/0x7a1b) that
-hibernate. Reporter path includes Infineon SPI TPM ACPI `SMO0768`. Not
-universal.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record:
-- Trigger: **hibernate (S4)**, then resume. Not every boot; every
-  successful S4 on this hardware.
-- Unprivileged users cannot normally hibernate (needs CAP_SYS_BOOT /
-  root). Not a local-DoS from unprivileged userspace.
-- Not a timing race; deterministic missing callbacks.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record:
-- **Failure:** SPI I/O timeouts; TPM start fails (`tpm_chip_start`
-  -110). Controller left unrestored after image restore.
-- **Severity: HIGH** (not a panic, but broken SPI/TPM after hibernate is
-  a serious PM regression). TPM unusable can break measured boot / TPM-
-  backed secrets after S4.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit: high** for affected Loongson/S4 users (restores SPI after
-  hibernate).
-- **Risk: very low** (~2-line helper swap, standard PM pattern, S3 path
-  unchanged).
+- **Benefit:** High for ath11k — stops a real OOB write on a long-
+  standing path (v5.6+).
+- **Risk:** Very low — 6 lines, error-path reject, no lock/API change,
+  good firmware unaffected.
 - **Ratio:** strongly favors backport.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
+
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 **FOR:**
-- Real S4 failure with dmesg; author confirmed fix.
-- Buggy incomplete `dev_pm_ops` present in this 6.12 tree since v6.6.
-- Tiny, standard `DEFINE_SIMPLE_DEV_PM_OPS` change; SPI maintainer
-  requested the helper and applied v3.
-- TPM (`SMO0768`) is a real child device in-tree.
-- `DEFINE_SIMPLE_DEV_PM_OPS` exists here; adapted patch applies.
+- Real OOB write: firmware `u32 phy_id` used as index into a 3-element
+  array.
+- Small, obviously correct check (`ARRAY_SIZE` + `-EINVAL`).
+- Present in this tree’s ath11k code; bug dates to original driver
+  (v5.6).
+- Reviewed by Qualcomm ath11k developers; applied by the maintainer.
+- Standalone; no new APIs; no series dependencies.
+- Matches stable pattern: buffer overflow / firmware TLV validation.
 
 **AGAINST:**
-- LoongArch/Loongson-only; hibernate-only (not every boot).
-- Subject says “add”; no `Fixes:`/`Cc: stable` (not used as a no).
-- Verbatim upstream hunk needs a one-line context tweak (namespace
-  quotes / `__maybe_unused`).
-- Could have used `EXPORT_NS_GPL_SIMPLE_DEV_PM_OPS` (style only).
+- No `Reported-by` / syzbot / production crash.
+- Trigger is firmware-supplied data at probe, not a generic syscall.
+- No explicit `Cc: stable` (not a negative per pipeline rules).
 
-**UNRESOLVED:** Could not open lore via WebFetch (403); threads were
-retrieved with `b4 mbox` and lore HTML search instead. Exact mainline
-SHA of the evaluation candidate was not in this checkout (`a9c2f0d401fd`
-is Mark’s spi.git apply of v3).
+**UNRESOLVED:**
+- Could not query lore.kernel.org/stable (403).
+- No public report that shipping firmware actually sent `phy_id >= 3`.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — local review + two Qualcomm
+   Reviewed-by + maintainer apply.
+2. Fixes a real bug that affects users? **PASS** — OOB write on firmware
+   parse; ath11k users are real users.
+3. Important issue? **PASS** — OOB write / memory corruption (**HIGH**),
+   not style.
+4. Small and contained? **PASS** — +6 lines, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — same function/context; no
+   missing prerequisites.
 
-1. Obviously correct and tested? **PASS** — standard helper; author
-   tested S4; maintainer applied.
-2. Fixes a real bug that affects users? **PASS** — SPI/TPM broken after
-   hibernate.
-3. Important issue? **PASS** — HIGH: I/O failure and TPM unusable after
-   S4 (not a panic, still production-breaking PM).
-4. Small and contained? **PASS** — one struct, one file.
-5. No new features or APIs? **PASS** — missing hibernation ops, not a
-   new API.
-6. Can apply to the local tree? **PASS** — with trivial context
-   adjustment; macros and driver exist.
+**Step 9.3: EXCEPTION CATEGORIES**
+Record: None (not a device ID / quirk / DT / build / doc exception).
+Qualifies as a normal bugfix.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+**Step 9.4: DECISION**
 
-Record: Not a device-ID/quirk/DT/build/docs exception. It is a normal
-small PM bugfix.
+This is a surgical firmware-index bounds check that stops a memcpy past
+`hal_reg_cap[MAX_RADIOS]`. The destination array and unguarded copy
+exist in this 7.3 tree’s ath11k code; the bug is older than this branch.
+Risk is negligible; the failure mode is memory corruption. That meets
+stable criteria for **this** tree.
 
-**Step 9.4: MAKE YOUR DECISION**
+---
 
-This should be backported to **this 6.12 tree**. The driver has only
-`.suspend`/`.resume`, so hibernation never restores the controller; that
-matches the S4 TPM timeouts. The fix is the usual
-`DEFINE_SIMPLE_DEV_PM_OPS` mapping, already used by other SPI drivers
-here, with very low regression risk.
+### What the commit solves for this tree
+`ath11k_wmi_tlv_ext_hal_reg_caps()` trusted firmware `phy_id` as an
+index into a 3-slot array. A bad `phy_id` overwrites the rest of `struct
+ath11k_base`. The patch rejects those records before the copy.
 
-The problem for 6.12 users is that Loongson SPI (and the SPI TPM on that
-bus) stays dead after hibernate because hibernation callbacks were never
-wired. That is a real, tested, important PM bug. It meets the stable
-rules: small, obviously correct, no new API, and it applies here with a
-trivial context tweak.
+### Stable rules
+Small, obviously correct, no new APIs, applies cleanly, fixes a real OOB
+write.
+
+### Risk vs benefit
+Benefit is preventing kernel memory corruption on ath11k bring-up with
+bad firmware. Risk is an early `-EINVAL` only when `phy_id` is already
+invalid.
+
+### Concerns
+No in-the-wild crash report; trigger is firmware, not unprivileged
+syscalls. That does not make an OOB write unsuitable for stable. No
+backport rework needed here.
+
+---
 
 Verification:
-- [Phase 1] Parsed subject/tags/body from the provided commit and v1–v3
-  mboxes; no Fixes/Reported-by/Cc:stable; Link msgid
-  `20260820092351.101605-1-lijun01@kylinos.cn`
-- [Phase 2] Diff: replace 4-line `dev_pm_ops` with
-  `DEFINE_SIMPLE_DEV_PM_OPS`; functions unchanged
-- [Phase 2] Confirmed `SYSTEM_SLEEP_PM_OPS` sets
-  suspend/resume/freeze/thaw/poweroff/restore
-  (`include/linux/pm.h:312-318`); `-110` is `ETIMEDOUT`
-- [Phase 3] `git blame` lines 232–276 → `6c7a864007b66`; `git merge-base
-  --is-ancestor 6c7a864007b66 HEAD` true; `v6.5` no, `v6.6` yes
-- [Phase 3] `git log --oneline -- drivers/spi/spi-loongson*.c` only the
-  original driver commit
-- [Phase 4] `b4 mbox` v1/v2/v3; Mark Brown asked for
-  `SIMPLE_DEV_PM_OPS()` on v1; v3 uses `DEFINE_SIMPLE_DEV_PM_OPS`; `b4
-  mbox -c` no newer rev
-- [Phase 4] lore.kernel.org/stable `?q=loongson+spi+freeze` HTTP 200, no
-  dedicated thread
-- [Phase 5] Callers: `spi-loongson-plat.c:39`, `spi-loongson-pci.c:48`;
-  ACPI `SMO0768` in `tpm_tis_spi_main.c:342`
-- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → `6.12.111`; buggy ops at `spi-loongson-
-  core.c:272-275`
-- [Phase 6] Original hunk `git apply --check` failed; adapted hunk
-  (unquoted ns + `__maybe_unused` context) succeeded
-- [Phase 7] Kconfig `SPI_LOONGSON_*` depends on `LOONGARCH ||
-  COMPILE_TEST`
-- [Phase 8] Failure: SPI timeout / TPM start -110 after S4; severity
-  HIGH; risk very low
-- UNVERIFIED: WebFetch to lore/git.kernel.org returned 403; used `b4`
-  and curl HTML instead
-- UNVERIFIED: Did not boot-test hibernate on Loongson hardware; relied
-  on author’s dmesg and code
+- **[Phase 1]** Parsed tags: two Qualcomm Reviewed-by, maintainer
+  SOB/Link; no Fixes/Reported-by/Cc:stable
+- **[Phase 2]** Diff: +6 in `ath11k_wmi_tlv_ext_hal_reg_caps()`;
+  `ARRAY_SIZE` check before `memcpy(&soc->hal_reg_cap[reg_cap.phy_id],
+  ...)`
+- **[Phase 2]** `MAX_RADIOS` is 3; `hal_reg_cap[MAX_RADIOS]` in
+  `core.h:971`; `phy_id` is firmware `u32`
+- **[Phase 3]** `git blame`: memcpy from `d5c65159f28953` (2019); check
+  from `f8729a40ebcc9`
+- **[Phase 3]** Introducer in v5.6, not v5.5; fix in v7.3-rc1, not v7.2
+- **[Phase 3]** `git merge-base --is-ancestor f8729a40ebcc9 HEAD` → yes
+  (mainline already has the fix; ignored as “already selected”)
+- **[Phase 3]** No series/prereqs; author has only this ath11k commit
+  here
+- **[Phase 4]** `b4 dig -c f8729a40ebcc9`: v1 at
+  patch.msgid.link/20260704011040.26233-1-pengpeng@iscas.ac.cn
+- **[Phase 4]** `b4 dig -a`: v1 only; `b4 dig -w`: maintainer + linux-
+  wireless + ath11k list
+- **[Phase 4]** mbox: Reviewed-by Baochen Qiang + Rameshkumar Sundaram;
+  Jeff Johnson applied `[1/1]`; no NAK
+- **[Phase 4]** lore HTTP fetch 403; used `b4 dig -m` instead
+- **[Phase 5]** Call chain: WMI `SERVICE_READY_EXT` →
+  `ath11k_service_ready_ext_event` → TLV parse → this function
+- **[Phase 5]** ath12k has the same unguarded pattern (sibling, not a
+  prereq)
+- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` = 7.3.0-rc4; buggy function present
+- **[Phase 6]** Surrounding code still matches 2019 introducer → clean
+  apply
+- **[Phase 7]** MAINTAINERS: Jeff Johnson, Supported
+- **[Phase 8]** Failure mode: 40-byte OOB write into `ath11k_base` after
+  `hal_reg_cap[]` → HIGH
+- **UNVERIFIED:** stable@ lore search (HTTP 403); whether any shipping
+  firmware actually sent `phy_id >= 3`
 
 **YES**
 
- drivers/spi/spi-loongson-core.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/spi/spi-loongson-core.c b/drivers/spi/spi-loongson-core.c
-index b46f072a0387b..f07ee432f96b5 100644
---- a/drivers/spi/spi-loongson-core.c
-+++ b/drivers/spi/spi-loongson-core.c
-@@ -270,10 +270,8 @@ static int __maybe_unused loongson_spi_resume(struct device *dev)
- 	return 0;
- }
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 3305ec66ddbf2..c6b9e84b169c9 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -4816,6 +4816,12 @@ static int ath11k_wmi_tlv_ext_hal_reg_caps(struct ath11k_base *soc,
+ 			return ret;
+ 		}
  
--const struct dev_pm_ops loongson_spi_dev_pm_ops = {
--	.suspend = loongson_spi_suspend,
--	.resume = loongson_spi_resume,
--};
-+DEFINE_SIMPLE_DEV_PM_OPS(loongson_spi_dev_pm_ops, loongson_spi_suspend, loongson_spi_resume);
++		if (reg_cap.phy_id >= ARRAY_SIZE(soc->hal_reg_cap)) {
++			ath11k_warn(soc, "invalid reg cap phy_id %u\n",
++				    reg_cap.phy_id);
++			return -EINVAL;
++		}
 +
- EXPORT_SYMBOL_NS_GPL(loongson_spi_dev_pm_ops, "SPI_LOONGSON_CORE");
- 
- MODULE_DESCRIPTION("Loongson SPI core driver");
+ 		memcpy(&soc->hal_reg_cap[reg_cap.phy_id],
+ 		       &reg_cap, sizeof(reg_cap));
+ 	}
 -- 
 2.53.0
 
