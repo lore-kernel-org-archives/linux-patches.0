@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1BE4FFA48;
-	Mon, 19 Oct 2026 13:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03224FFA3B;
+	Mon, 19 Oct 2026 13:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418252; cv=none; b=ZiRm43vvCOjpG87tuNjeQKCKKwEBjR9RweU9Q14zZDc2z+aE7sJBe9bdsHR1IDSWUDSkOZP3gV8MaIulDMoiLFLEhO+vbFivJXRGj+pjQX5yFIf6ta6EV9cRV9yRP6fxOdN9YeoT6mECsXwcZL/78HkuUA0L4jn3JkBdnb5T7YA=
+	t=1792418253; cv=none; b=QL/1lcRr6uyPmIL5nh6Z/HZJEK6y9zLbqHgwGYLSOJizaaaQyu+qzkuuvZUM3IdncCM0J+Amzu3WByC582zavphvYc1/RnnZCRQm+ZJiWHp1GRdf4XEy1NGDtEMftVpMVB6StpW7seJDe2RpSa3JCkkCMzw5fQic3KbK6UBXD9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418252; c=relaxed/simple;
-	bh=Wh9qhL8mCgT5QJA6GF6krnahySZ6C+OVWUpRqBcJP6Y=;
+	s=arc-20240116; t=1792418253; c=relaxed/simple;
+	bh=9I6Qj3KGzI3Rj55mhFNfIEuedzmI3EHxt3iNOaGDPXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lbdkTslnH2Lq8ba6Ada9KRfOsNp3mb7vjVF7qNpgiW2o2z+mb6AraSb73Hgx4iNDTI45nttsjXNMgnEpYxyllYYrnWXEDr/DsiyQ6j1rS32rsYbJaiDPQXkqE3PXYzhVLlPOr+0DvgKBzNOoA4/B2BVmVug8FQu28h4Obq+Ob0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M725uWws; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UYfIprTcE2ApHLbSmZdbA4syEEnUYpCg0c3fK48IcrGGLEQ6SemovqUMwSCFzedK8e0MuqasBz6wEXfEUeCTaP2OXoFEDpO7os3GJWyVSvlC7ET64H/O+tyJ6OufKYgsWeZc0dQELDD14jq/wW1/la7vjtTQtT/uVBK1Av44j8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hb3TYJgw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M725uWws"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D231F000C6;
-	Mon, 19 Oct 2026 13:57:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hb3TYJgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18F81F000C4;
+	Mon, 19 Oct 2026 13:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418249;
-	bh=wE1RMnUDMMnvpx7rc/PtXVu9rOvIEpslybb3iEFRjXM=;
+	s=k20260515; t=1792418250;
+	bh=qHCip7GAWu4TxX5S5wZLFFEX1xL5XSXXVwerPQCjQPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M725uWwsj1cRTG9dlepKZGKCbKlT+pQxQ1bmvu6kd6At8mUHoS0CKsYa7lCGndK6A
-	 LrCOeQMqmQWi7mP0nuQFIVsY7+AvrUGsrW3LYKPgGN0gStxehGWs43Oimh84msw6Pc
-	 Rjzp7XQl9sfvSZLBzwbq3x27tNbBDLLpklfcWEex/OW8KugWC+kwaCKeqjcDU2zuio
-	 ctNgle8cbWordTQ0VtpUPQUvw7m+gcYCufEnYZ3ft4c8exiGx/QUuetdXSAHThB9c2
-	 d5bAoPDI460llKrGeicKi2CX3e1b6QzSjLabypBqHBUsamh7iFSwUekkDZgWMYuoHO
-	 fA9n5qKdqM14A==
+	b=Hb3TYJgwDyGSi2hw04c8QIjGFZ0KQXwm4cX9j95C5t46BvC6Q5ZEbiQAYlTCPpGX5
+	 ij0Lm1Rv2uPU4JOFxEObkbkcq16sEerJRUBk/TO2cabtelJLOkggSj67Vi/U9fQMiX
+	 ymNytKlmx4lUobPBgcpFuZPI5HZsGWYXX+IxL5nNgnUamLP5q2hPBowbbpTVbCJRyA
+	 wNLRtkf70RGwpovIl4YS3MvI8/C0qYOQ1ssV9EtZHVi65s3EyX+tcuZYH5N0GJayCG
+	 Zx876hNCzn5fDvsPGer2nHC5zRaBN7/1aP5KmmsyCvfxyel6QMOxzaZJG+3orG598V
+	 2aUU9n4mlNJgg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhi-Jun You <hujy652@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18] wifi: mt76: wed: fix kernel panic on non-DBDC MT7986
-Date: Mon, 19 Oct 2026 09:46:49 -0400
-Message-ID: <20261019135441.1420968-118-sashal@kernel.org>
+	keng-yu.lin@hpe.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] misc: hpilo: validate device queue entries before use
+Date: Mon, 19 Oct 2026 09:46:50 -0400
+Message-ID: <20261019135441.1420968-119-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,134 +52,67 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhi-Jun You <hujy652@gmail.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 8a177dabeeead47dda4d4f91331282790eed0097 ]
+[ Upstream commit 7bf6940d7cf41f1f0330a9bae4b7a886e18fd8e3 ]
 
-In mt76_wed_init_rx_buf, it's hardcoded to use MT_RXQ_MAIN.
-But for non-DBDC MT7986 MT_RXQ_BAND1 is used for RX data queue which
-leads to kernel panic when attaching WED.
+ilo_pkt_dequeue() trusts descriptor IDs and lengths read from the shared
+FIFO entry. A bad entry can select a descriptor outside the allocated
+queue memory or report a packet length larger than one descriptor.
 
-Use the correct RX queue by checking WED version and band_idx.
+Reject entries whose descriptor index or packet length exceeds the queue
+layout before deriving the packet pointer returned to read and write
+paths.
 
-v2 and band 1 -> MT_RXQ_BAND1
-Others -> MT_RXQ_MAIN
-
-Kernel panic:
-
-Unable to handle kernel access to user memory outside uaccess routines at virtual address 0000000000000000
-Mem abort info:
-  ESR = 0x0000000096000005
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x05: level 1 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-Internal error: Oops: 0000000096000005 [#1]  SMP
-CPU: 1 UID: 0 PID: 925 Comm: kmodloader Tainted: G           O        6.18.26 #0 NONE
-Tainted: [O]=OOT_MODULE
-Hardware name: Acer Connect Vero W6m (DT)
-pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : page_pool_alloc_frag_netmem+0x1c/0x1bc
-lr : page_pool_alloc_frag+0xc/0x34
-sp : ffffffc081dab660
-x29: ffffffc081dab660 x28: ffffffc081dabc60 x27: ffffff80091af040
-x26: 0000008000000000 x25: ffffff80091a8898 x24: ffffff80091a5440
-x23: 0000000000001000 x22: 0000000140000000 x21: ffffff80091a2040
-x20: ffffff8003f1d780 x19: 0000000000000000 x18: 0000000000000020
-x17: ffffffbfbf0ac000 x16: ffffffc080ee0000 x15: ffffff80049d47ca
-x14: 000000000000037b x13: 000000000000037b x12: 0000000000000001
-x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-x8 : ffffff8003f1d7c0 x7 : 0000000000000000 x6 : ffffff8003f1d780
-x5 : 0000000000000680 x4 : 0000000000000000 x3 : 0000000000002824
-x2 : 0000000000000000 x1 : ffffffc081dab71c x0 : 0000000000000000
-Call trace:
- page_pool_alloc_frag_netmem+0x1c/0x1bc (P)
- page_pool_alloc_frag+0xc/0x34
- mt76_wed_init_rx_buf+0xf8/0x2ac [mt76]
- mtk_wed_start+0x79c/0x12ac
- mt7915_dma_start+0x274/0x63c [mt7915e]
- mt7915_dma_start+0x5b4/0x63c [mt7915e]
- mt7915_dma_init+0x49c/0x81c [mt7915e]
- mt7915_register_device+0x24c/0x530 [mt7915e]
- mt7915_mmio_probe+0x91c/0x1980 [mt7915e]
- platform_probe+0x58/0xa0
- really_probe+0xb8/0x2a8
- __driver_probe_device+0x74/0x118
- driver_probe_device+0x3c/0xe0
- __driver_attach+0x88/0x154
- bus_for_each_dev+0x60/0xb0
- driver_attach+0x20/0x28
- bus_add_driver+0xdc/0x200
- driver_register+0x64/0x118
- __platform_driver_register+0x20/0x30
- init_module+0x74/0x1000 [mt7915e]
- do_one_initcall+0x4c/0x1f8
- do_init_module+0x50/0x210
- load_module+0x15f8/0x1b10
- __do_sys_init_module+0x1a8/0x260
- __arm64_sys_init_module+0x18/0x20
- invoke_syscall.constprop.0+0x4c/0xd0
- do_el0_svc+0x3c/0xd0
- el0_svc+0x18/0x60
- el0t_64_sync_handler+0x98/0xdc
- el0t_64_sync+0x158/0x15c
-Code: aa0003f3 a9025bf5 a90363f7 d2820017 (b9400000)
-
-Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
-Link: https://patch.msgid.link/20260715152113.553-1-hujy652@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260624190919.3432-1-alhouseenyousef@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **6.6.157** (`pending-6.6`). The panic is real here, but
-the mainline patch has to be rewritten onto `mt7915/mmio.c` because
-`wed.c` does not exist yet.
+The local checkout is mainline **v7.3-rc4**. The hpilo driver has been
+here since 2008, and this is a small bounds check on device-shared FIFO
+fields used as a pointer and a copy length.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[wifi: mt76: wed:] [fix] [kernel panic on non-DBDC MT7986 when
-attaching WED because RX buf init used the wrong queue]`
+Record: **[misc: hpilo:] [validate] [reject out-of-range device FIFO
+descriptor IDs and packet lengths before use]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Signed-off-by: Zhi-Jun You <hujy652@gmail.com>` (author)
-- `Link:
-  https://patch.msgid.link/20260715152113.553-1-hujy652@gmail.com` (v2
-  1/2 of a 2-patch series)
-- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` (mt76 maintainer)
-- No `Fixes:` tag (expected for this review)
-- No `Cc: stable@vger.kernel.org` (expected)
-- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:`
-- Sibling patch 2/2 has the same msgid stem `20260715152113.553-2` and
-  **is already in this 6.6 tree** as `8eae5e5aa09da` (`wifi: mt76:
-  mt7915: fix net_fill_forward_path for non-DBDC mt7986`)
+- Signed-off-by: Yousef Alhouseen \<alhouseenyousef@gmail.com\> (author)
+- Link: https://patch.msgid.link/20260624190919.3432-1-
+  alhouseenyousef@gmail.com
+- Signed-off-by: Greg Kroah-Hartman \<gregkh@linuxfoundation.org\> (misc
+  maintainer; applied the patch)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable (absence of Fixes/Cc:stable is expected for this review)
+- Pipeline markers (Sasha Levin SOB / Upstream commit) are not treated
+  as selection evidence
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `mt76_wed_init_rx_buf` always uses `MT_RXQ_MAIN`. Non-DBDC
-  MT7986 uses `MT_RXQ_BAND1` for the RX data queue.
-- **Symptom:** NULL deref oops while attaching WED, in
-  `page_pool_alloc_frag_netmem`. Full oops from **Acer Connect Vero
-  W6m**, kernel 6.18.26, PID `kmodloader` during `mt7915e` probe.
-- **Root cause:** wrong RX queue → uninitialized `page_pool` (NULL) →
-  fault at `page_pool_alloc_frag*`.
-- **Fix:** `wed->version == 2 && dev->phy.band_idx` → `MT_RXQ_BAND1`,
-  else `MT_RXQ_MAIN`.
-- Crash taint includes `O` (OOT module), but the call trace is in-tree
-  `mt76` / `mt7915e` / `mtk_wed_start`.
+- Bug: `ilo_pkt_dequeue()` uses descriptor ID and length from a FIFO
+  shared with the HP iLO device with no bounds check.
+- Symptom/failure mode: a bad ID indexes a descriptor outside the
+  allocated queue; a bad length is larger than one descriptor. Those
+  values feed `ilo_read()`/`ilo_write()`
+  `copy_to_user`/`copy_from_user`.
+- Version info: none in the message. The unvalidated path is from the
+  original 2008 driver.
+- Root cause (author): device-provided FIFO fields are trusted; the fix
+  rejects ID ≥ `NR_QENTRY` or length > one descriptor before forming the
+  packet pointer.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. Explicit panic fix with a stack trace. Not
-cleanup/refactor.
+Record: Not a disguised cleanup. It is an explicit missing-validation /
+OOB fix.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -193,231 +120,197 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/net/wireless/mediatek/mt76/wed.c` (+6 / −1)
-- Function: `mt76_wed_init_rx_buf`
-- Scope: single-file, surgical (~5 lines of logic)
+- File: `drivers/misc/hpilo.c` (+6 / −1)
+- Function: `ilo_pkt_dequeue()`
+- Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** `q = &dev->q_rx[MT_RXQ_MAIN]` always, then
-  `mt76_get_page_pool_buf(q, ...)`.
-- **After:** pick `MT_RXQ_BAND1` for WED v2 + band 1; otherwise
-  `MT_RXQ_MAIN`.
-- Path: WED RX buffer init during `mtk_wed_start` from
-  `mt7915_dma_start` (probe / DMA start), not a rare error path.
+Record: After a successful `fifo_dequeue()`, the old code took `pkt_id =
+get_entry_id(entry)` and used it as `desc + desc_mem_sz(pkt_id)`, and
+passed `get_entry_len(entry)` out as `*len`. The new code stores the
+length, returns 0 (dequeue failed) if `pkt_id >= NR_QENTRY` or `pkt_len
+> desc_mem_sz(1)`, and only then fills `*id`/`*len`/`*pkt`. Normal path
+for in-range entries is unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- Category: **NULL pointer dereference** (memory safety) from **wrong-
-  queue logic**.
-- Mechanism: for non-DBDC MT7986, `mt7915_band_config` sets `band_idx =
-  1` and DMA only allocates `q_rx[MT_RXQ_BAND1]`. `MT_RXQ_MAIN` is left
-  with `page_pool == NULL`. `mt76_get_page_pool_buf` →
-  `page_pool_dev_alloc_frag(NULL)` → oops.
+Record: **Memory safety / OOB (category d)** plus **logic correctness
+(category g)**.
+- `get_entry_id()` is a 12-bit field (0–4095). `NR_QENTRY` is 4.
+  `desc_mem_sz(id)` is `id << 12`, so an ID of 5 already walks off the
+  4×4KiB descriptor array; 4095 is a ~16MiB miss.
+- `get_entry_len()` is a 10-bit qword count shifted by 3, so up to 8184
+  bytes. One descriptor is 4096 bytes (`L2_QENTRY_SZ` 12). Recv
+  descriptors sit at the end of the DMA allocation; a length of 8184 on
+  the last slot reads/writes past `dma_size`.
+- Callers: `ilo_read()` does `copy_to_user(buf, pkt, min(len,
+  pkt_len))`; `ilo_write()` does `copy_from_user(pkt, buf, min(len,
+  pkt_len))`. That is a host kernel OOB read or write, not just a bad
+  error code.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct given DMA queue allocation in `mt7915/dma.c`.
-- Minimal; no API/locking/refcount changes.
-- Regression risk low: DBDC and band-0 devices still use `MT_RXQ_MAIN`.
-- Backport caveat: in 6.6 the same logic lives in
-  `mt7915_mmio_wed_init_rx_buf` (`dev` is `struct mt7915_dev *`), so the
-  condition must use `dev->mt76.phy.band_idx` (or
-  `dev->phy.mt76->band_idx`), not `dev->phy.band_idx`.
+Record: The checks match the layout from `ilo_ccb_setup()` (`NR_QENTRY`
+descriptors of `desc_mem_sz(1)`). Open-time recv enqueue uses
+`desc_mem_sz(1)` exactly, and `>` (not `>=`) still allows a full
+4096-byte packet. Zero-length send packets used at open still pass.
+Regression risk on working firmware is low: in-range entries are
+unchanged. One caveat: `fifo_dequeue()` already advanced the head, so a
+rejected entry is dropped and not re-queued; that can shrink the 4-slot
+queue until close/reopen. That is acceptable fail-closed behavior, not a
+behavior change for valid hardware.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Hardcoded `MT_RXQ_MAIN` in 6.6: `mt7915/mmio.c:635`, from
-  `2f5c3c77fc9b6` (`wifi: mt76: switch to page_pool allocator`,
-  2023-02-03). Present in this tree.
-- WED RX itself: `4f831d18d12da` (`wifi: mt76: mt7915: enable WED RX
-  support`, 2022-12-01). Present.
-- MT7986 one-A-die `band_idx = 1`: `mt7915_band_config` in `init.c`.
-  Present.
+Record: Unvalidated dequeue is from **89bcb05d9bbf8** (“HP iLO driver”,
+David Altobelli, 2008-07-02). Present since v2.6.27-era. The validation
+lines are this commit.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Bug is the hardcoded MAIN queue vs MT7986
-band-1 mapping, present since WED RX + page_pool.
+Record: No Fixes: tag. Not applicable. The introducing commit is the
+original driver, which is an ancestor of this tree.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- `wed.c` added later by `8a7386e787ef4` (`wifi: mt76: move wed common
-  utilities in wed.c`, 2024-02-22). **Not in pending-6.6** (`git merge-
-  base --is-ancestor` → not ancestor).
-- Related 6.6 history: WED enable for MT7986, WED RX, page_pool switch,
-  several WED robustness fixes.
+Record: Recent `drivers/misc/hpilo.c` work is device-number, class, DMA
+API, and blacklist changes. No prerequisite refactor of the FIFO. After
+this commit only a treewide `*_device_id` style change
+(`f06bae4ddc70d`). Standalone.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record:
-- Author is not the mt76 maintainer; maintainer Felix Fietkau signed
-  off.
-- Same author, same series date: `8eae5e5aa09da` already on pending-6.6
-  (patch 2/2).
-- Felix has many mt7915/WED fixes on this branch.
+Record: Author is not the hpilo maintainer (that is Keng-Yu Lin, HPE,
+MAINTAINERS “Supported”). Same-day misc validation patches include
+ibmvmc, xilinx_sdfec, bcm-vk, fastrpc — part of a large audit flood.
+That is a quality-process note, not a substitute for reading this diff.
+Greg Kroah-Hartman still applied this one.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- Standalone logic; does **not** need the `wed.c` move.
-- Needed in 6.6: `wed->version` (exists, `u8 version` in
-  `mtk_wed_device`), `phy.band_idx`, `MT_RXQ_BAND1`, page_pool RX — all
-  present.
-- Series 1/2; 2/2 is independent (forward-path queue) and already
-  applied.
+Record: Uses existing `NR_QENTRY`, `desc_mem_sz()`, `get_entry_id()`,
+`get_entry_len()`. No new helpers. Applies standalone.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig` on sibling `8eae5e5aa09da` matched msgid
-  `20260715152113.553-*`.
-- RFC (2026-06-13): “single band MT7986”
-- v1 (2026-06-30):
-  https://patch.msgid.link/20260630150649.1629-1-hujy652@gmail.com (and
-  1629-2)
-- v2 (2026-07-15, applied):
-  https://patch.msgid.link/20260715152113.553-1-hujy652@gmail.com
-- v2 1/2 is the committed version. Change vs RFC: “single band” → “non-
-  DBDC”.
-- lore.kernel.org fetches returned 403; thread text confirmed via
-  ratatoskr mirrors.
-- No NAK found. Merged by Felix Fietkau (2026-07-31) as `8a177dabeeead`.
+Record: `b4 dig -c 7bf6940d7cf41` →
+https://patch.msgid.link/20260624190919.3432-1-alhouseenyousef@gmail.com
+- `b4 dig -a`: single v1, no later revisions
+- lore.kernel.org fetches returned 403; body confirmed via openwall and
+  lkml.iu.edu mirrors
+- LKML index for late June 2026 lists the submission and **no** “Re:”
+  for this hpilo patch (no NAK, no Cc: stable suggestion, no review
+  thread)
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w` on sibling): Zhi-Jun You; Felix Fietkau
-(`nbd@nbd.name`); Lorenzo Bianconi; Ryder Lee / Shayne Chen / Sean Wang
-(MediaTek); `linux-wireless`; `linux-mediatek`; Benjamin Larsson
-(Suggested-by on 2/2). Maintainer merged it.
+Record: `b4 dig -w` recipients: Keng-Yu Lin (hpilo maintainer), Arnd
+Bergmann, Greg Kroah-Hartman, linux-kernel. No Reviewed-by/Acked-by on
+the commit. Greg’s SOB is the apply-to-char-misc path.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Concrete oops from Acer Connect Vero W6m
-(MT7986). Real hardware, probe-time crash with WED.
+Record: No Reported-by, syzbot, bugzilla, or CVE in the commit or the
+submission. Issue is identified by code inspection of the shared FIFO.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 2-patch v2 series. 1/2 = this panic. 2/2 =
-`net_fill_forward_path` wrong WDMA queue; already in 6.6. Independent;
-1/2 is the crash fix.
+Record: Standalone `[PATCH]`, not `n/m`. Same-day author flood of
+similar bounds checks; this patch does not depend on those.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable returned 403. **UNVERIFIED** whether
-anyone mailed stable@. 2/2 of the same series is already in this 6.6
-tree, so the series is treated as 6.6-relevant.
+Record: UNVERIFIED for stable@ lore (HTTP 403). No evidence in the v1
+mail that anyone nominated or rejected it for stable.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: Mainline `mt76_wed_init_rx_buf`. In this tree:
-`mt7915_mmio_wed_init_rx_buf`.
+Record: `ilo_pkt_dequeue()` only.
 
 **Step 5.2: TRACE CALLERS**
-Record:
-- Assigned as `wed->wlan.init_rx_buf` in `mt7915_mmio_wed_init`.
-- Called from `mtk_wed_rx_buffer_alloc` → `dev->wlan.init_rx_buf(dev,
-  dev->wlan.rx_npkt)` (`mtk_wed.c`).
-- That runs from `mtk_wed_start` ← `mt7915_dma_start` ←
-  `mt7915_dma_init` ← `mt7915_register_device` ← probe.
-- Reachable on device probe when WED is attached (`wed_enable` module
-  param).
+Record (from `drivers/misc/hpilo.c`):
+- `ilo_ccb_verify()` — open path, SENDQ, uses id only
+- `ilo_read()` — `read(2)` on `/dev/hpilo/dXccbN`, RECVQ, uses id, len,
+  pkt
+- `ilo_write()` — `write(2)`, SENDQ, uses id, len, pkt
 
 **Step 5.3: TRACE CALLEES**
-Record: `mt76_get_rxwi`, `mt76_get_page_pool_buf` →
-`page_pool_dev_alloc_frag(q->page_pool)`, `mt76_rx_token_consume`. First
-page_pool alloc is the crash site.
+Record: `fifo_dequeue()` (consumes a C-bit entry under `fifo_lock`),
+`get_entry_id()`, `get_entry_len()`, `desc_mem_sz()`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record:
-```
-module load mt7915e
-  → mt7915_mmio_probe / register_device
-  → mt7915_dma_init → mt7915_dma_start
-  → mtk_wed_device_start → mtk_wed_rx_buffer_alloc
-  → mt7915_mmio_wed_init_rx_buf
-  → mt76_get_page_pool_buf(uninitialized MT_RXQ_MAIN)
-  → oops
-```
-Userspace-reachable via loading the driver (typically root). Not a
-syscall fuzz path; it is a boot/probe crash on affected hardware.
+Record: Userspace `read`/`write` on the char device → dequeue → copy.
+FIFO payload is written by iLO firmware in shared DMA memory, then
+marked consumed. An unprivileged process cannot poke FIFO fields
+directly; it needs the device node **and** a bad/malicious iLO entry. On
+ProLiant this driver is used by host management agents. Reachable in
+production, not a dead path.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: `mt7915/testmode.c` already uses `q = phy->mt76->band_idx ?
-MT_RXQ_BAND1 : MT_RXQ_MAIN`. DMA init uses the same band_idx split. Same
-author’s 2/2 fixes the matching forward-path mistake.
+Record: This is the only dequeue that turns FIFO id/len into a host
+pointer and copy size. No sibling copy of the same bug in this driver.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** Tree is 6.6.157 (`pending-6.6`). `wed.c` is absent.
-Equivalent bug:
-
-```
-mt7915_mmio_wed_init_rx_buf:
-    q = &dev->mt76.q_rx[MT_RXQ_MAIN];   /* mmio.c:635 */
-```
-
-`mt7915_dma.c`: allocate `MT_RXQ_MAIN` only if
-`!dev->phy.mt76->band_idx`; allocate `MT_RXQ_BAND1` if `dbdc_support ||
-band_idx`. `mt7915_band_config` sets `band_idx = 1` for MT7986 one-A-die
-(non-DBDC). Introduced with WED RX + page_pool (2022–2023), well before
-6.6.
-
-`git merge-base --is-ancestor 8a177dabeeead pending-6.6` → **not
-present**.
+Record: Yes. Tree is **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`).
+`drivers/misc/hpilo.c`/`hpilo.h` are present. `CONFIG_HP_ILO` exists.
+Unvalidated dequeue is from 89bcb05d9bbf8 (2008). `git merge-base --is-
+ancestor 7bf6940d7cf41 HEAD` is true — this checkout already contains
+the fix because it is mainline after the char-misc merge, not because
+the bug is absent.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Needs a small backport**, not a clean apply. Same if/else in
-`mt7915/mmio.c`, with `dev->mt76.phy.band_idx` /
-`dev->phy.mt76->band_idx`. `wed->version` exists and is set to 2 for
-non-netsys-v1 (MT7986) in `mtk_wed.c`. Minor conflict, not a rewrite.
+Record: Expected apply: **clean**. `ilo_pkt_dequeue()` around the
+dequeue site matches the parent of 7bf6940d7cf41 aside from this hunk.
+No conflicting local churn.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No equivalent RX-buf queue selection. 2/2 (`8eae5e5aa09da`) is
-here and addresses the same hardware mapping, not this NULL deref.
+Record: No earlier equivalent bounds check. This commit is the fix.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/net/wireless/mediatek/mt76` + MediaTek WED.
-**IMPORTANT** (common Filogic/MT7986 WiFi, OpenWrt/embedded), not core
-mm/VFS.
+Record: **drivers/misc/hpilo** — HP iLO CHIF channel on ProLiant.
+Criticality: **PERIPHERAL** for generic desktops, **IMPORTANT** for HP
+enterprise servers that use `/dev/hpilo` (common on LTS/distro kernels).
+Not mm/net/fs core.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature and actively fixed on 6.6 (WED null-ptr, register
-mapping, MT7981, chainmask for non-DBDC band 1).
+Record: Mature, low-churn driver (2008), still Supported by HPE. Bug is
+long-standing, not a brand-new API.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific: MT7986 (and similar mt798x) **non-DBDC**
-(single A-die) with `CONFIG_NET_MEDIATEK_SOC_WED` and `wed_enable`. Real
-product: Acer Connect Vero W6m. Default `wed_enable` is false, but WED
-is used on these SoCs.
+Record: **driver-specific / config-specific** (`CONFIG_HP_ILO`, PCI
+iLO). HP ProLiant hosts running management userspace.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Every probe with WED attached on that SKU. Not a race. Needs
-privilege to load the module; typical as a platform driver at boot.
+Record: Dequeue of a FIFO entry whose id or length is out of layout. The
+device is expected to update recv length; a firmware length bug is the
+realistic trigger. Malicious/compromised BMC is the security trigger.
+Not a hot every-syscall path for machines without iLO. Unprivileged
+users cannot inject FIFO fields without the device and a bad iLO entry.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Kernel oops/panic on WiFi/WED attach. **CRITICAL** for those
-devices (WiFi unusable; can panic the box).
+Record: Kernel OOB read (`copy_to_user` in `ilo_read`) or OOB write
+(`copy_from_user` in `ilo_write`) → oops, info leak, or memory
+corruption. **Severity: HIGH** (crash/corruption; security-relevant if
+firmware is untrusted). Not a guaranteed unprivileged LPE by itself.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** high for MT7986 non-DBDC + WED (prevents probe oops).
-- **Risk:** low (5-line queue index; other SKUs unchanged).
-- **Ratio:** benefit ≫ risk. Backport must retarget `mmio.c`.
+- Benefit: **high for iLO users** — prevents host OOB from a bad FIFO
+  entry on a long-lived production driver.
+- Risk: **very low** — 6 lines, fail-closed, no API/lock/structure
+  change; valid packets unaffected.
+- Ratio: benefit outweighs risk.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -426,121 +319,116 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Documented oops: NULL `page_pool` in WED RX init.
-- Same bug in this tree (`mt7915_mmio_wed_init_rx_buf` + DMA not
-  allocating MAIN when `band_idx == 1`).
-- Small, obviously correct queue selection.
-- mt76 maintainer signed off; RFC → v1 → v2.
-- Sibling 2/2 already on 6.6.
-- MT7986 + WED RX + page_pool all exist here.
-- `wed->version` and `band_idx` exist.
+- Real missing bounds check on device-shared FIFO id/len used as pointer
+  and copy length (verified in `ilo_read`/`ilo_write`).
+- Failure mode is kernel OOB, not cosmetic.
+- Driver and bug exist in this tree since 2008.
+- 6-line, obviously correct check matching `NR_QENTRY` and
+  `desc_mem_sz(1)`.
+- No prerequisites; clean apply.
+- Greg KH applied it; HPE maintainer was on Cc.
+- HP iLO is real hardware on enterprise stable kernels.
 
 AGAINST:
-- Patch file `wed.c` is not in 6.6 (moved in 6.8-era `8a7386e787ef4`).
-- Needs a few-line context backport.
-- WED off by default; subset of MT7986 boards.
-- Crash log tainted OOT; still in-tree frames.
+- No user report, syzbot, or CVE.
+- Author is not the subsystem maintainer; patch is from a large same-day
+  “validate X” sweep.
+- No mailing-list review comments found.
+- Official stable text dislikes unexplained “this could be a problem”
+  issues; trigger depends on firmware producing a bad entry.
+- Rejected entries are consumed and not recycled (queue-slot leak until
+  reopen) — only if the device already posted garbage.
 
 UNRESOLVED:
-- Stable ML discussion (lore/stable 403).
-- Whether every reviewer asked for Cc: stable (not seen on v2 1/2).
+- Full lore.kernel.org / stable@ thread fetch (403).
+- Whether Keng-Yu Lin privately acked (no Acked-by on the commit).
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — matches DMA allocation;
-   maintainer merged; oops on real HW.
-2. Fixes a real bug that affects users? **PASS** — probe oops on non-
-   DBDC MT7986 + WED.
-3. Important issue? **PASS** — kernel oops, severity CRITICAL for that
-   hardware.
-4. Small and contained? **PASS** — ~5 lines, one function.
+1. Obviously correct and tested? **PASS** — layout math matches the
+   allocator; Greg merged it. No extra Tested-by.
+2. Fixes a real bug that affects users? **PASS** — unchecked device
+   length/index on the read/write path. Not style.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   OOB copy, oops/corruption; HIGH not a soft lockup.
+4. Small and contained? **PASS** — +6/−1, one function.
 5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** with a backport to
-   `mt7915/mmio.c` (stable rule: apply cleanly **or come with a
-   backport**). Not a missing-feature case.
+6. Can apply to the local tree? **PASS** — same `ilo_pkt_dequeue()`
+   structure; driver present.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device ID/quirk/DT/build/doc). Ordinary crash fix.
+Record: None (not a device ID, quirk, DT, build, or doc-only change).
+Qualifies as a normal small memory-safety fix.
 
 **Step 9.4: MAKE YOUR DECISION**
-The 6.6 tree has the same panic path under a pre-`wed.c` name. Selecting
-this for 6.6 is justified; apply the same `version == 2 && band_idx`
-check in `mt7915_mmio_wed_init_rx_buf`.
-
----
-
-**What the commit solves for this tree:** On non-DBDC MT7986, the main
-phy is band 1, so only `MT_RXQ_BAND1` is allocated. WED RX init still
-pulls from `MT_RXQ_MAIN`, whose `page_pool` is NULL, and the kernel
-oopses in `page_pool_alloc_frag` during `mt7915e` probe. That mapping is
-already in 6.6 `init.c`/`dma.c`; only the RX-buf picker is wrong.
-
-**Stable rules:** Real, important crash; tiny logic fix; no new API.
-File path changed after 6.6, so it needs a short backport, not a NAK.
-
-**Risk vs benefit:** Low risk, high benefit on Filogic devices that
-enable WED (including the reported Acer Vero W6m class).
-
-**Concerns:** Must edit
-`drivers/net/wireless/mediatek/mt76/mt7915/mmio.c` and use
-`dev->mt76.phy.band_idx` (or `dev->phy.mt76->band_idx`) because `dev` is
-`struct mt7915_dev *` here. Do not require `8a7386e787ef4`.
+This tree has the hpilo char device and the long-standing unvalidated
+dequeue. The patch stops a bad device FIFO entry from becoming a kernel
+pointer/length for `copy_{to,from}_user`. That is a real, contained OOB
+fix with negligible regression risk on working iLO firmware. It meets
+the stable rules for this checkout.
 
 Verification:
-- [Phase 1] Subject/tags: fix panic; SOB Zhi-Jun You + Felix Fietkau;
-  Link `20260715152113.553-1`; no Fixes/Cc-stable
-- [Phase 1] Series: v2 1/2; 2/2 already `8eae5e5aa09da` on pending-6.6
-- [Phase 2] Diff: 6 insertions in `mt76_wed_init_rx_buf`; queue MAIN vs
-  BAND1
-- [Phase 3] Blame on 6.6: `q = &dev->mt76.q_rx[MT_RXQ_MAIN]` from
-  `2f5c3c77fc9b6` (page_pool); present
-- [Phase 3] `8a7386e787ef4` (wed.c split) **not** ancestor of
-  pending-6.6
-- [Phase 3] Fix `8a177dabeeead` **not** ancestor of pending-6.6
-- [Phase 4] b4 dig: RFC → v1 → v2; applied v2; Felix merged 2026-07-31
-- [Phase 4] Recipients: mt76 maintainers + linux-wireless/mediatek
-- [Phase 4] UNVERIFIED: lore.kernel.org and lore.kernel.org/stable HTTP
-  403; used ratatoskr mirrors
-- [Phase 5] Caller: `mtk_wed_rx_buffer_alloc` → `wlan.init_rx_buf` from
-  `mtk_wed_start` / probe
-- [Phase 6] `git show pending-6.6:Makefile`: VERSION 6 / PATCHLEVEL 6 /
-  SUBLEVEL 157
-- [Phase 6] `git cat-file` pending-6.6 `wed.c`: path does not exist
-- [Phase 6] pending-6.6 `mmio.c:635`: hardcoded `MT_RXQ_MAIN`; `init.c`
-  sets `band_idx = 1` for one-A-die MT7986
-- [Phase 6] DMA: MAIN allocated only if `!band_idx`; BAND1 if
-  `dbdc_support || band_idx`
-- [Phase 6] `wed->version` exists; set to 2 for MT7986-class WED
-- [Phase 8] Failure: NULL page_pool deref → oops; CRITICAL for that
-  SKU+WED
-- UNVERIFIED: whether an out-of-tree module contributed besides in-tree
-  frames (taint `O`)
+- [Phase 1] Tags: author SOB, Link msgid, Greg KH SOB; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +6/−1 in `ilo_pkt_dequeue()`; reject `pkt_id >= 4` or
+  `pkt_len > 4096`
+- [Phase 2] Callers: `ilo_read` copy_to_user, `ilo_write`
+  copy_from_user, `ilo_ccb_verify`
+- [Phase 2] Bitfields: ID 12 bits (0–4095), len up to 8184, descriptor
+  4096, `NR_QENTRY` 4
+- [Phase 3] git blame: buggy dequeue from 89bcb05d9bbf8 (2008)
+- [Phase 3] git log -- drivers/misc/hpilo.c: no FIFO refactor
+  prerequisite; no follow-up fix
+- [Phase 3] Author also submitted ibmvmc/xilinx_sdfec/bcm-vk validation
+  patches; not hpilo maintainer
+- [Phase 4] b4 dig: v1 only, lore msgid 20260624190919.3432-1; To/Cc
+  includes Keng-Yu Lin, Arnd, Greg
+- [Phase 4] openwall + lkml.iu.edu: patch body matches commit; no public
+  Re: for hpilo
+- [Phase 4] lore.kernel.org WebFetch: 403 — UNVERIFIED beyond mirrors
+- [Phase 5] Call chain: userspace read/write on `/dev/hpilo/dXccbN`
+  after device marks FIFO consumed
+- [Phase 6] git describe HEAD: v7.3-rc4-27-gf0100363d8c37; kernelversion
+  7.3.0-rc4
+- [Phase 6] merge-base --is-ancestor 7bf6940d7cf41 HEAD: yes (fix
+  already on this mainline checkout)
+- [Phase 6] Parent of fix: unvalidated `ilo_pkt_dequeue()` still in
+  7bf6940d7cf41^
+- [Phase 7] MAINTAINERS: HEWLETT PACKARD ENTERPRISE ILO CHIF DRIVER,
+  Keng-Yu Lin, Supported
+- [Phase 8] Failure mode: OOB read/write → oops/corruption, HIGH;
+  trigger is bad iLO FIFO entry
+- UNVERIFIED: stable@ mailing list discussion (fetch denied)
+
+The fix is small, matches the queue layout in this tree, and prevents a
+host OOB from a bad iLO FIFO entry.
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/wed.c | 7 ++++++-
+ drivers/misc/hpilo.c | 7 ++++++-
  1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/wed.c b/drivers/net/wireless/mediatek/mt76/wed.c
-index fbd7e59c73aaf..2ebf4edc689e9 100644
---- a/drivers/net/wireless/mediatek/mt76/wed.c
-+++ b/drivers/net/wireless/mediatek/mt76/wed.c
-@@ -33,10 +33,15 @@ u32 mt76_wed_init_rx_buf(struct mtk_wed_device *wed, int size)
- {
- 	struct mtk_wed_bm_desc *desc = wed->rx_buf_ring.desc;
- 	struct mt76_dev *dev = mt76_wed_to_dev(wed);
--	struct mt76_queue *q = &dev->q_rx[MT_RXQ_MAIN];
- 	struct mt76_txwi_cache *t = NULL;
-+	struct mt76_queue *q;
- 	int i;
+diff --git a/drivers/misc/hpilo.c b/drivers/misc/hpilo.c
+index 04bd34c8c5069..9368edf8c4a32 100644
+--- a/drivers/misc/hpilo.c
++++ b/drivers/misc/hpilo.c
+@@ -160,11 +160,16 @@ static int ilo_pkt_dequeue(struct ilo_hwinfo *hw, struct ccb *ccb,
  
-+	if (wed->version == 2 && dev->phy.band_idx)
-+		q = &dev->q_rx[MT_RXQ_BAND1];
-+	else
-+		q = &dev->q_rx[MT_RXQ_MAIN];
+ 	ret = fifo_dequeue(hw, fifobar, &entry);
+ 	if (ret) {
++		int pkt_len;
 +
- 	for (i = 0; i < size; i++) {
- 		dma_addr_t addr;
- 		u32 offset;
+ 		pkt_id = get_entry_id(entry);
++		pkt_len = get_entry_len(entry);
++		if (pkt_id >= NR_QENTRY || pkt_len > desc_mem_sz(1))
++			return 0;
+ 		if (id)
+ 			*id = pkt_id;
+ 		if (len)
+-			*len = get_entry_len(entry);
++			*len = pkt_len;
+ 		if (pkt)
+ 			*pkt = (void *)(desc + desc_mem_sz(pkt_id));
+ 	}
 -- 
 2.53.0
 
