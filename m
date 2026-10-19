@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DFC63DB5C;
-	Mon, 19 Oct 2026 14:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDB7543C3D;
+	Mon, 19 Oct 2026 14:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418770; cv=none; b=WPiss4Lk9LWVUjB9ZA5Zv9Mnh7+zn+qlF9lOoMgYor6TxWipyS8cO/woPSsC0F/RWW9J+jhL6fLxAVVP0C9W1N22P8uln7oBZDeThbeNdmoEPlp5N1+LMg+nsUjvSJ6AfI9an2t3pa5r/SVzYJ1RouUIW5sEWzkwOZl9Xlgg4mY=
+	t=1792418772; cv=none; b=HEa0Io+/zRN6UuW+fOBXvz3d5RJ8oWTr9Op98VX0EmaiSJpeiq15fdBHThAcyk+4KX8iaclH4Tpw4LedwAc7eTblrbAuqKn2MpPKssrPhbY7QUuKR9ADsQ1zh4wRSKJwFpYUEK/M4MkPfLyxEzwLiBrMcEEq7/u3DfxTRp7qulM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418770; c=relaxed/simple;
-	bh=Tve3eLng/1NxsN3ahkLKaF2/k4aK1FH/bs13xFaU6Ug=;
+	s=arc-20240116; t=1792418772; c=relaxed/simple;
+	bh=EoudlL7YwgDi7sJK8VzGj1yFIiwPZ1prbOJ2prvU8OY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mILrszFp+C9d3QL4WqfxVmfBh+3cvcQTw99Mi4Y/PLD9erU+BDRF8juadFIZIQTkqhflZUvIGdMa7qGQ1R0wXfX0z8J6D9z2nuueLKdURl574FHcK6pn2Aw2AflOzaidxLdcX6oevYQw4d/rhJQokV9VX8eyRBWlcllaUJb3hTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O9l01LMg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hoIH/s8VzSKQItYuc98HiwchSnHsCLtSFB61JW3tbsyoC4HioqY7vptc90ir+JneSYu1nd/PwKfr5tu9CR1VxmmEOO2SNEIYU12qNZM6k1AQjYAlPnVFG5OKDpMoV3RjDtEJhipbXOHBvU6nH2L8IHdkkky5KYwV788lNOlzCbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TankBjgE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O9l01LMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9262D1F000C4;
-	Mon, 19 Oct 2026 14:06:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TankBjgE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EFF1F000CD;
+	Mon, 19 Oct 2026 14:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418767;
-	bh=WVdthEYcxHl8cn/x2J1zllQeLKilCWicvaEWOCuh3bY=;
+	s=k20260515; t=1792418769;
+	bh=G9Y99oW6oDHR0wfYeVH1Lh3TE8TZx3h9bjl3n725Kc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O9l01LMgglyVVBNjC2RXALkDx47bTfJNZIV5aY2tYK6Ue/4M6UW6BMfS2sKc17NCI
-	 +7DIYyLf/uDeauoe28t79DnqZITuiXIdK/IPj5MrgJTSKfU0kCou+Nf7c2LqMN0A9H
-	 7RVCQlCeDQgF3/J2EIpqUPeTyCdd4YqmEWMC9l2y4SBBJbcZqSo+i19rs+zCjnEBw6
-	 IbsgkEIsW236v6532ZXEmFyVJfgjgFpW6+7JLD1K5zIINhl+owrYI824+OJgYgKnpy
-	 MjAA8ziJdJTkZk90DRUYfVjvxfHZjalw2gz/evXRvt1oiBrmsFIJhlQQ+ptcKZtpMy
-	 Owo94nRnI6tRQ==
+	b=TankBjgE+rvs3Fdy8m+pFKQgCpHVycaQzXHTy6bsLTSAaVqzCLLU/yKbV5eZLOy1W
+	 gXZVpSqKmTXIx5a+GmjdOnZRjPTdfHXu+EBkuQRWa/LqSCiKh69C3i6Hv2vlIvsQmA
+	 vd4Hxvo+mLHfjngRBJHf9VbLo8knTDbaP3QKLUByXW+WlqT1kq7uwD+SX5Balyargi
+	 Mty0IS8RpzEJD8pezKCGmlM+uXKJ6DZQ3u3oHZPnR/6FIxawGYElZ9IKpiO+EEa8//
+	 Sp50WJAeYl50rIdjXRVwfWGcZR5R/t/hfX01g7zOT9lbqft7FQqllcHqjnEeeE8zK6
+	 1QBRCL7m1MRpQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Strahan <David.Strahan@microchip.com>,
-	David Strahan <david.strahan@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	James.Bottomley@HansenPartnership.com,
-	mkp@kernel.org,
-	storagedev@microchip.com,
-	linux-scsi@vger.kernel.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] scsi: smartpqi: Add new PCI device-ids
-Date: Mon, 19 Oct 2026 09:52:52 -0400
-Message-ID: <20261019135441.1420968-481-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] media: em28xx: dev_info->pr_info since dev has been freed
+Date: Mon, 19 Oct 2026 09:52:53 -0400
+Message-ID: <20261019135441.1420968-482-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,422 +53,450 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Strahan <David.Strahan@microchip.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit 1a220e6e87a31c2572cd07ff47023e5cd92ac80f ]
+[ Upstream commit c132b07f7e5853c0df35a9b94b8e204cdc6afdef ]
 
-All PCI ID entries in Hex.
+In em28xx_free_device() dev_info passed &dev->intf->dev,
+but that device can be freed already.
 
-Add PCI IDs for Hurray Data controllers:
-                                            VID  / DID  / SVID / SDID
-                                            ----   ----   ----   ----
-                                            9005 / 028f / 207d / 4246
-                                            9005 / 028f / 207d / 4256
-                                            9005 / 028f / 207d / 4356
-                                            9005 / 028f / 207d / 4940
-                                            9005 / 028f / 207d / 4a46
+Just use pr_info instead.
 
-Add PCI IDs for ZTE controllers:
-                                            VID  / DID  / SVID / SDID
-                                            ----   ----   ----   ----
-                                            9005 / 028f / 1cf2 / 5451
-                                            9005 / 028f / 1cf2 / 5452
-                                            9005 / 028f / 1cf2 / 5453
-
-Add PCI ID for Ramaxel controller:
-                                            VID  / DID  / SVID / SDID
-                                            ----   ----   ----   ----
-                                            9005 / 028f / 1f3f / 0670
-
-Signed-off-by: David Strahan <david.strahan@microchip.com>
-Reviewed-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/linux-scsi/20260722220401.6357-1-david.strahan@microchip.com/
-Link: https://patch.msgid.link/20260722220401.6357-4-david.strahan@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-## Phase 1: Commit message forensics
+This is a one-line use-after-free fix in a USB disconnect/teardown path.
+The local tree is mainline **v7.3-rc4** (`7.3.0-rc4`); the driver and
+the delayed-free path are present, and the change is independently
+correct.
 
-**Step 1.1 — Subject**
-- Record: `[scsi: smartpqi] [Add] new PCI device-ids for Hurray Data,
-  ZTE, and Ramaxel OEM boards`
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2 — Tags**
-- Record:
-  - `Reviewed-by: Don Brace <don.brace@microchip.com>` (listed smartpqi
-    maintainer in MAINTAINERS)
-  - `Link: https://lore.kernel.org/linux-
-    scsi/20260722220401.6357-1-david.strahan@microchip.com/` (cover
-    letter)
-  - `Link: https://patch.msgid.link/20260722220401.6357-4-
-    david.strahan@microchip.com/` (this patch)
-  - `Signed-off-by: David Strahan <david.strahan@microchip.com>`
-  - `Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>`
-    (SCSI maintainer)
-  - No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence expected)
-  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-    ...]` markers
+**Step 1.1: PARSE THE SUBJECT LINE**
+- Subsystem: `media: em28xx`
+- Action verb: implicit fix (`dev_info->pr_info since dev has been
+  freed`)
+- Claimed intent: stop logging through a USB `struct device` that may
+  already have been freed.
 
-**Step 1.3 — Body**
-- Record: Adds nine `PCI_DEVICE_SUB` entries (VID `9005` / DID `028f`)
-  for:
-  - Hurray Data SVID `207d`: SDIDs `4246`, `4256`, `4356`, `4940`,
-    `4a46`
-  - ZTE SVID `1cf2`: SDIDs `5451`, `5452`, `5453`
-  - Ramaxel SVID `1f3f`: SDID `0670`
-- Symptom/failure mode: those OEM SKUs are not in the explicit ID table,
-  so they only bind via the `PCI_ANY_ID` wildcard. With
-  `disable_device_id_wildcards=1`, probe returns `-ENODEV`.
-- Version info: submitted against Martin Petersen’s `7.2/scsi-queue`;
-  applied to `7.3/scsi-staging` / `7.3/scsi-queue`.
-- Root cause: missing OEM subsystem IDs, not a logic bug.
+Record: **[media/em28xx] [replace logging helper] [do not use freed USB
+device in em28xx_free_device()]**
 
-**Step 1.4 — Hidden bug fix?**
-- Record: Not a disguised crash/UAF fix. Cover letter says “No
-  functional changes.” It is still a hardware-enablement ID table
-  update, which is an explicit stable exception.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- No `Fixes:` tag (expected for this review)
+- No `Reported-by:` / syzbot
+- `Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>` — author tested
+  on real hardware
+- No `Reviewed-by:` / `Acked-by:` on the committed message
+- No `Link:`
+- No `Cc: stable@vger.kernel.org` (expected)
+- `Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (author;
+  V4L2 maintainer)
+- `Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>`
+  (media maintainer)
 
-## Phase 2: Diff analysis
+Record: **Author+media maintainer SOBs; Tested-by from author; no
+Fixes/Cc stable (not a negative).**
 
-**Step 2.1 — Inventory**
-- Record: `drivers/scsi/smartpqi/smartpqi_init.c` only; `+36 / -0`.
-  Function/object: `pqi_pci_id_table[]`. Surgical, single-file.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Body: `em28xx_free_device()` passed `&dev->intf->dev` to `dev_info`, but
+that USB interface device can already be gone. Replace with `pr_info`
+using `dev->name`.
 
-**Step 2.2 — Flow change**
-- Record: Before: those nine subsystem IDs were absent; match fell
-  through to the table’s `PCI_ANY_ID` catch-all. After: they match
-  specific `PCI_DEVICE_SUB` rows first. No probe/remove/ioctl logic
-  changes.
+Record:
+- Bug: use of `dev->intf->dev` after the USB interface may have been
+  freed
+- Symptom: kernel UAF / oops while printing “Freeing device”
+- Version info: none in the message; history shows the log line since
+  v4.10
+- Root cause: delayed `kref_put` after USB disconnect tears down `intf`
 
-**Step 2.3 — Bug mechanism**
-- Record: Category **hardware workaround / device ID addition**. Not
-  UAF, leak, race, etc.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Not hidden. Cover letter for the series says explicitly: “The fifth
+patch fixes a use-after-freed”.
 
-**Step 2.4 — Fix quality**
-- Record: Obviously correct copies of adjacent `PCI_DEVICE_SUB` rows. No
-  `driver_data`. No API or locking change. Regression risk is negligible
-  (table grows; PCI match still first-match). Duplicate IDs were grepped
-  and are not present.
+Record: **[Explicit UAF fix, not cleanup]**
 
-## Phase 3: Git history
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 3.1 — Blame / introduction**
-- Record: Driver added in `6c223761eb548` (2016-08-12), `smartpqi:
-  initial commit of Microsemi smartpqi driver`. Catch-all
-  `PCI_DEVICE_SUB(..., PCI_ANY_ID, PCI_ANY_ID)` is from that same
-  commit. Vendor blocks already exist: Hurray `0x207d` (e.g.
-  `48e6b7e708029`, `01b8bdddcfab0`), ZTE `0x1cf2` (since
-  `09d9968a8eff8`, 2021), Ramaxel `0x1f3f` (`01b8bdddcfab0` /
-  `dab5378485f60`).
+**Step 2.1: INVENTORY THE CHANGES**
+- File: `drivers/media/usb/em28xx/em28xx-cards.c` (1 insertion, 1
+  deletion)
+- Function: `em28xx_free_device()`
+- Scope: single-file surgical fix
 
-**Step 3.2 — Fixes: tag**
-- Record: None. Not applicable.
+Record: **[em28xx-cards.c ±1] [em28xx_free_device] [surgical]**
 
-**Step 3.3 — File history**
-- Record: Recent same-file work is a 4-patch series:
-  1. `225548863f0a2` AIO retry marker
-  2. `c64b2ab2ff516` `CCISS_BIG_PASSTHRU` ioctl
-  3. `1a220e6e87a31` this ID patch
-  4. `913337c48e6aa` version string
-- This patch only inserts ID rows; it does not use the ioctl or AIO
-  changes. Standalone.
-
-**Step 3.4 — Author**
-- Record: David Strahan is a regular Microchip smartpqi contributor
-  (many prior PCI ID commits). Reviewed by Don Brace, the listed
-  maintainer.
-
-**Step 3.5 — Prerequisites**
-- Record: Needs existing `pqi_pci_id_table` and neighboring `0x207d` /
-  `0x1cf2` / `0x1f3f` rows for a clean apply. Those exist in this
-  checkout. No new helpers or structs.
-
-## Phase 4: Mailing list / external
-
-**Step 4.1 — Original discussion**
-- Record: `b4 dig -c 1a220e6e87a31` → https://patch.msgid.link/202607222
-  20401.6357-4-david.strahan@microchip.com
-- Cover: `[PATCH v1 0/4] smartpqi: fixes and updates for 2.1.42-011`
-- This patch is `[PATCH v1 3/4] smartpqi: add new pci device-ids`
-- `b4 dig -a` shows one v1 of this ID patch (other “v2/v3/v4” labels are
-  sibling patches in the same send, not later ID-table revisions).
-  Applied version is that v1.
-- Martin K. Petersen: “Applied to 7.3/scsi-staging, thanks!” then
-  “Applied to 7.3/scsi-queue” listing `[3/4] ... 1a220e6e87a3`. No NAKs,
-  no stable nomination, no risk comments on the ID patch. Thread replies
-  were about patches 1/4 and 2/4, not IDs.
-
-**Step 4.2 — Recipients (`b4 dig -w`)**
-- Record: David Strahan, `linux-scsi@vger.kernel.org`, Don Brace.
-  Correct list and maintainer.
-
-**Step 4.3 — Bug report**
-- Record: No `Reported-by` / bugzilla / syzbot. Hardware enablement from
-  the vendor.
-
-**Step 4.4 — Series**
-- Record: Patches 1–2 are independent (retry-marker callback; new
-  ioctl). Patch 4 is a version string. This ID commit does not depend on
-  them.
-
-**Step 4.5 — Stable list**
-- Record: lore.kernel.org/stable fetch returned HTTP 403. mbox has no
-  “stable” / “NAK” hits. UNVERIFIED: whether anyone already asked
-  stable@ about this hash.
-
-## Phase 5: Code semantics
-
-**Step 5.1 — Functions**
-- Record: `pqi_pci_id_table` only (not a function). Consumed by
-  `MODULE_DEVICE_TABLE(pci, pqi_pci_id_table)` and
-  `pqi_pci_driver.id_table`.
-
-**Step 5.2 — Callers**
-- Record: `pci_register_driver(&pqi_pci_driver)` from `pqi_init()`.
-  Probe is `pqi_pci_probe()`. Path is PCI enumeration / module autoload,
-  not a syscall hot path.
-
-**Step 5.3 — Callees**
-- Record: Probe uses the matched `pci_device_id`. Relevant logic:
-
-```9468:9478:drivers/scsi/smartpqi/smartpqi_init.c
-        if (pqi_disable_device_id_wildcards &&
-                id->subvendor == PCI_ANY_ID &&
-                id->subdevice == PCI_ANY_ID) {
-                dev_warn(&pci_dev->dev,
-                        "controller not probed because device ID
-wildcards are disabled\n");
-                return -ENODEV;
-        }
-
-        if (id->subvendor == PCI_ANY_ID || id->subdevice == PCI_ANY_ID)
-                dev_warn(&pci_dev->dev,
-                        "controller device ID matched using
-wildcards\n");
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Before:
+```
+dev_info(&dev->intf->dev, "Freeing device\n");
+```
+After:
+```
+pr_info("%s: Freeing device\n", dev->name);
 ```
 
-**Step 5.4 — Reachability**
-- Record: Yes. Plug-in / boot with `CONFIG_SCSI_SMARTPQI`. Default:
-  catch-all already binds `9005:028f`. With
-  `disable_device_id_wildcards=1`, only explicit rows bind — these nine
-  SKUs need the new entries.
+This runs at the start of the kref release callback, **before**
+`kfree(dev)`. `dev->name` is an embedded `unsigned char name[32]` in
+`struct em28xx`, still valid. `&dev->intf->dev` is not, if USB core
+already dropped the interface.
 
-**Step 5.5 — Similar patterns**
-- Record: Same file has a long history of OEM ID additions (`Add new PCI
-  IDs`, Hurray/ZTE/Ramaxel). This matches that pattern.
+Record: **[dev_info on possibly-freed usb_interface -> pr_info on still-
+live em28xx::name]**
 
-## Phase 6: Local tree
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Category: **memory safety / use-after-free**.
 
-**Step 6.1 — Does the target code exist here?**
-- Record: Local tree is **v7.3-rc4** (`7.3.0-rc4`).
-  `drivers/scsi/smartpqi/` exists (`CONFIG_SCSI_SMARTPQI`). Neighboring
-  Hurray/ZTE/Ramaxel rows exist. The nine IDs are already in the table
-  because `1a220e6e87a31` is an ancestor of HEAD. The code this commit
-  touches is present.
+Call path (verified in this tree):
+1. `em28xx_usb_disconnect()` sets `dev->disconnected = 1`, calls
+   `em28xx_close_extension()`, then `em28xx_release_resources()`
+   (`usb_put_dev`), then `kref_put(&dev->ref, em28xx_free_device)`.
+2. Extensions hold extra refs. Audio PCM close still does `kref_put`
+   (`em28xx-audio.c`); v4l2 defers the last `kref_put` until
+   `em28xx_free_v4l2()` after the last userspace close.
+3. If a capture/audio handle is still open at unplug, the last
+   `kref_put` happens **after** USB `disconnect()` returns. USB core
+   then unregisters/frees `usb_interface`. `dev->intf` is dangling.
+4. `dev_info(&dev->intf->dev, ...)` dereferences that freed `struct
+   device`.
 
-**Step 6.2 — Backport difficulty**
-- Record: In this tree: already applied / would apply cleanly. Older
-  stables may need context tweak if some neighboring IDs are missing;
-  still a mechanical table insert.
+This delayed-free path is not new: even before the 2026 v4l2-release-
+callback series, open/close took `kref_get`/`kref_put` on `dev->ref`, so
+the last put could already run after unplug.
 
-**Step 6.3 — Related fixes already here?**
-- Record: Earlier Hurray/ZTE/Ramaxel IDs are here; these nine SDIDs were
-  new in this commit. No alternate fix.
+Record: **[UAF] [printk through freed usb_interface after delayed kref
+release]**
 
-## Phase 7: Subsystem context
+**Step 2.4: ASSESS THE FIX QUALITY**
+Obviously correct: stop touching `intf` once it may be gone; log via a
+field inside `dev` that has not been freed yet. No API change.
+Regression risk is negligible (log prefix loses the kernel device name;
+`dev->name` is set in probe via `snprintf`).
 
-**Step 7.1**
-- Record: SCSI hardware driver `drivers/scsi/smartpqi/`. Criticality
-  **IMPORTANT** (storage RAID/HBA on servers; not core mm/VFS). Not
-  staging.
+Record: **[minimal, correct] [regression risk very low]**
 
-**Step 7.2**
-- Record: Actively maintained by Microchip; frequent ID and bugfix
-  updates. Driver itself is mature (2016).
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-## Phase 8: Impact and risk
+**Step 3.1: BLAME THE CHANGED LINES**
+Buggy `dev_info` line: `29b05e22f5c68c` (“[media] em28xx: use
+usb_interface for dev_foo() calls”, Mauro, 2016-12-07). `git describe`
+on that commit: `v4.9-rc6-495-g29b05e22f5c68`; `git describe
+--contains`: `v4.10-rc1~71^2^2~4`. `em28xx_free_device()` itself is from
+`47677e51e2a404` (2014).
 
-**Step 8.1 — Who is affected**
-- Record: Driver-specific: Hurray Data, ZTE, and Ramaxel boards using
-  Adaptec2/Microchip `9005:028f`.
+Record: **[29b05e22f5c68c, first in v4.10] [long-standing]**
 
-**Step 8.2 — Trigger**
-- Record: Device present at enumeration. Common for those machines.
-  Unprivileged users do not trigger it; missing IDs mean the RAID
-  controller never binds (especially with wildcards disabled).
+**Step 3.2: FOLLOW THE FIXES: TAG**
+No `Fixes:` tag.
 
-**Step 8.3 — Failure mode**
-- Record: Controller not claimed (or only via wildcard, which some
-  deployments disable). Severity **MEDIUM** as a “bug,” **HIGH** as
-  hardware enablement for those boxes (boot disks can sit unused). Not a
-  panic/UAF.
+Record: **[N/A — no Fixes tag; introducing commit identified via
+blame]**
 
-**Step 8.4 — Risk vs benefit**
-- Record: Benefit: OEM HBAs work / are explicitly supported, including
-  `disable_device_id_wildcards=1`. Risk: very low (36-line ID table
-  only). Ratio strongly favors backport.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+This commit is **patch 5/6** of Hans Verkuil’s “media: em28xx: fix
+lifecycle issues” series (v2, 2026-06-16), applied next to:
+- `288254383674b` use v4l2_device release callback
+- `de626073dfcbb` drop `users` field
+- `7c8bf63b79371` use `vb2_video_unregister_device` (immediate parent)
+- `67f87b104f4ef` requeue buffers if start_streaming fails
 
-## Phase 9: Synthesis
+Those other patches are lifetime/refactor/WARN_ON work. **This hunk does
+not use any of that new machinery**; it only edits a log line that has
+existed since 2016.
 
-**Step 9.1 — Evidence**
+Record: **[part of a series, but this patch is standalone]**
 
-For:
-- Explicit stable exception: PCI IDs on an existing driver
-- Nine OEM SKUs; same VID/DID as the rest of the table
-- `disable_device_id_wildcards` makes explicit IDs actually required
-- 36 lines, one file, no logic/API change
-- Reviewed by Don Brace; applied by Martin K. Petersen
-- Standalone vs the rest of the 4-patch series
-- Driver and vendor blocks exist in this tree
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Hans Verkuil is the V4L2 maintainer; Mauro is listed as em28xx
+maintainer in `MAINTAINERS`. Cover letter: tested on Hans’s em28xx
+device.
 
-Against:
-- Cover letter: “No functional changes”
-- Catch-all already matches `9005:028f` when wildcards stay enabled
-- Not a crash/security/corruption fix
-- No `Cc: stable` (not a negative per the review rules)
+Record: **[subsystem maintainer-level author; related lifecycle series
+exists but is not a hard dep]**
 
-Unresolved:
-- Stable@ search 403; no independent confirmation of a prior stable
-  request
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+The replacement uses existing `pr_info` and `dev->name`. No new helpers.
+Applies on the pre-series `em28xx_free_device()` as well.
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** (mechanical ID rows;
-   maintainer Reviewed-by)
-2. Real user-facing issue? **PASS** (hardware bind / explicit support)
-3. Important? **PASS** under the PCI-ID exception (storage HBA
-   enablement)
-4. Small and contained? **PASS** (+36, one table)
-5. No new features/APIs? **PASS** (IDs only; ioctl/version patches are
-   separate)
-6. Can apply to this tree? **PASS** (driver + table present; insertion
-   points exist)
+Record: **[no prerequisites] [can apply standalone]**
 
-**Step 9.3 — Exception**
-- Record: **NEW DEVICE IDs** to an existing driver.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 9.4 — Decision**
-This is the standard PCI ID stable case. It should be backported to this
-tree: the smartpqi driver and ID table are here, the change is self-
-contained, and it enables known OEM controllers (including when wildcard
-matching is disabled).
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+`b4 dig -c c132b07f7e585` → https://patch.msgid.link/4f25383b64139feb0a6
+4a07c20b1776d13301f9c.1781615432.git.hverkuil+cisco@kernel.org
 
-### What it solves for stable users
-Without these rows, Hurray/ZTE/Ramaxel `9005:028f` boards only match the
-wildcard. Default kernels still probe them; kernels using
-`disable_device_id_wildcards` refuse them. Listing the IDs is how this
-driver declares supported SKUs and how those machines get a bound HBA.
+`b4 dig -a`:
+- v1: 3-patch series (2026-05-19), this change was not in v1
+- v2: `[PATCHv2 0/6] media: em28xx: fix lifecycle issues` (2026-06-16) —
+  this is 5/6
 
-### Risk vs benefit
-Benefit is hardware enablement; risk is essentially nil. No dependency
-on the AIO or `CCISS_BIG_PASSTHRU` patches.
+Cover letter (from saved mbox): “The fifth patch fixes a use-after-
+freed”. No NAK on 5/6. Review discussion in the matched thread was about
+1/6 (`v4l2-async`), not this patch.
+
+Record: **[lore/msgid above] [v1 then v2/6] [no NAK on this patch]
+[author described it as UAF]**
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+`b4 dig -w`: Hans Verkuil; `linux-media@vger.kernel.org`; Mauricio Faria
+de Oliveira; Sakari Ailus. Sakari reviewed 1/6 only. Mauro applied it.
+
+Record: **[media list + Sakari on a different patch; Mauro merged]**
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+No syzbot/bugzilla for this specific log-line UAF. Author found it while
+fixing em28xx lifecycle and tested on hardware.
+
+Record: **[no public crash report; maintainer-found UAF]**
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Series mates are separate bugs (v4l2-async crash, lifetime refactor, vb2
+unregister, start_streaming WARN_ON). Not required for this one-liner.
+
+Record: **[standalone among the 6]**
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+lore.kernel.org/stable search was blocked (Anubis bot challenge). No
+stable discussion in the saved media thread.
+
+Record: **[UNVERIFIED: no stable@ thread retrieved]**
+
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+`em28xx_free_device()` (exported `EXPORT_SYMBOL_GPL`).
+
+**Step 5.2: TRACE CALLERS**
+`kref_put(&dev->ref, em28xx_free_device)` from:
+- `em28xx_usb_disconnect()` (`em28xx-cards.c`)
+- `em28xx_free_v4l2()` (`em28xx-video.c`) — after last v4l2 user
+- `em28xx_audio_fini()` and PCM close (`em28xx-audio.c`)
+- `em28xx_dvb` fini (`em28xx-dvb.c`)
+- `em28xx-input.c` fini
+
+The dangerous caller is a **late** `kref_put` after USB disconnect has
+returned.
+
+**Step 5.3: TRACE CALLEES**
+`kref_to_dev`, `pr_info`, optional `em28xx_release_resources()` only if
+`!dev->disconnected` (that path still has a live interface), `kfree`.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Userspace-reachable: unplug an em28xx USB capture stick while v4l2/ALSA
+still has it open, then close the app. Common physical-unplug path, not
+an obscure config.
+
+Record: **[reachable from USB unplug + close] [yes, from
+userspace/device removal]**
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Many other `dev_info(&dev->intf->dev, ...)` calls exist, but they run
+while the interface is still bound (probe, streaming, disconnect
+itself). The unique one in the post-disconnect free callback was this
+“Freeing device” line.
+
+Record: **[only this log site in the free callback]**
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Local tree: `v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3
+SUBLEVEL=0 EXTRAVERSION=-rc4`.
+
+`git merge-base --is-ancestor c132b07f7e585 HEAD` → yes. Current source
+already has `pr_info("%s: Freeing device\n", dev->name);`.
+
+The **bug** existed here before that commit; the **buggy pattern**
+(`em28xx_free_device` + `dev->intf` + delayed kref) is still the
+lifetime model. For any stable tree that branched with the 2016
+`dev_info` line and without this commit, the bug is present.
+
+Record: **[driver present; fix already in this mainline checkout; bug
+introduced v4.10]**
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Hunk is one line in a function whose shape has been stable since 2014.
+Would apply cleanly to trees still using `dev_info`.
+
+Record: **[clean apply on pre-fix trees / already applied here]**
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+This is the fix. No earlier alternate fix of this log site.
+
+Record: **[no other fix of this UAF]**
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+`drivers/media/usb/em28xx/` — USB analog/DVB capture (Hauppauge,
+Terratec, etc.).
+
+Record: **[media USB driver] [IMPORTANT / driver-specific, not
+staging]**
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+Actively maintained (IDs, lifecycle, syzbot list-corruption fixes in the
+same files). Mature driver, bug is old.
+
+Record: **[mature, still active]**
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: WHO IS AFFECTED**
+Users of em28xx USB sticks (`CONFIG_VIDEO_EM28XX`). Not universal, but
+real consumer hardware.
+
+**Step 8.2: TRIGGER CONDITIONS**
+Unplug (or USB reset) while a v4l2/ALSA/DVB client still holds the
+device, then close. Timing-dependent on refcount, but the window is the
+entire time the app stays open after unplug — not a one-instruction
+race.
+
+Unprivileged users can trigger it by unplugging hardware.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+`dev_info()` → `dev_printk()` walks a freed `struct device`. UAF: oops /
+KASAN report, possible panic. Not data corruption, but a real crash on a
+common unplug path.
+
+Record: **[UAF oops] [HIGH]**
+
+**Step 8.4: RISK-BENEFIT RATIO**
+- Benefit: prevent oops on device removal for em28xx users
+- Risk: 1-line log change, no locking/API/lifetime change
+
+Record: **[high benefit for those devices] [very low risk] [favorable]**
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Confirmed UAF: delayed `em28xx_free_device()` after USB interface
+  teardown
+- Cover letter calls it a use-after-free
+- One-line, obviously correct
+- Tested by V4L2 maintainer on real em28xx hardware; merged by Mauro
+- Bug in code since v4.10; delayed kref existed long before the 2026
+  series
+- No new API/feature
+- Standalone; other series patches not required
+
+AGAINST:
+- No `Fixes:` / `Cc: stable` / syzbot (not a reason to reject)
+- Driver-specific, not core mm/net
+- This mainline checkout already contains the commit (expected for a
+  mainline candidate)
+- UNVERIFIED: stable@ mailing list history (lore bot-blocked)
+
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — one-line; Tested-by Hans;
+   cover letter explains UAF
+2. Fixes a real bug that affects users? **PASS** — UAF on unplug-while-
+   open
+3. Important issue? **PASS** — UAF oops, HIGH (not theoretical)
+4. Small and contained? **PASS** — 1 line, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — surrounding
+   `em28xx_free_device()` matches; trees that still have `dev_info` get
+   a clean apply. This checkout already has the after-state because it
+   *is* mainline including the fix.
+
+**Step 9.3: EXCEPTION CATEGORIES**
+Not a device-ID/quirk/DT/build/doc exception. It is a normal memory-
+safety fix.
+
+**Step 9.4: DECISION**
+This should be backported. It is a small, tested UAF fix in a teardown
+path users hit when they unplug a capture device. It does not depend on
+the rest of the lifecycle series.
+
+What it solves for stable users: kernel oops from
+`dev_info(&dev->intf->dev)` after USB core has freed the interface, when
+the last em28xx kref is dropped from v4l2/audio close. Risk is
+essentially zero.
 
 Verification:
-- [Phase 1] Parsed tags: Reviewed-by Don Brace; Links to cover
-  `...6357-1` and patch `...6357-4`; SOBs Strahan and Martin Petersen;
-  no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +36 in `pqi_pci_id_table` only; nine `PCI_DEVICE_SUB`
-  entries; grep showed no duplicate SDIDs
-- [Phase 3] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` → `7.3.0-rc4`
-- [Phase 3] Commit SHA `1a220e6e87a31`; `git merge-base --is-ancestor
-  1a220e6e87a31 HEAD` succeeded
-- [Phase 3] Driver intro `6c223761eb548` (2016); catch-all from that
-  commit; prior Hurray `48e6b7e708029` / `01b8bdddcfab0`; ZTE
-  `09d9968a8eff8`; Ramaxel `dab5378485f60`
-- [Phase 3] Parent of ID commit still has neighbors `0x4240`, `0x4840`,
-  `0x544f`, `0x54da`, `0x0610`
-- [Phase 4] `b4 dig -c 1a220e6e87a31` → msgid `20260722220401.6357-4`;
-  `-w` CC linux-scsi + Don Brace; `-a` single v1 of this ID patch; `-m`
-  saved `/tmp/smartpqi-ids.mbox`
-- [Phase 4] Cover letter: “Adds PCI IDs … No functional changes.”
-  Martin: applied 1/4–4/4 to 7.3/scsi-queue. No NAK on IDs
-- [Phase 4] lore.kernel.org WebFetch 403; stable@ discussion UNVERIFIED
-- [Phase 5] `pqi_pci_probe` wildcard-disable path verified at lines
-  9468–9478; `module_param_named(disable_device_id_wildcards, ...)`
-- [Phase 6] Grep of current `smartpqi_init.c` found all nine new IDs;
-  `CONFIG_SCSI_SMARTPQI` in `drivers/scsi/smartpqi/Kconfig`
-- [Phase 7] MAINTAINERS: Don Brace, Supported
-- [Phase 8] Failure: `-ENODEV` when wildcards disabled; otherwise
-  wildcard match + warning
-- UNVERIFIED: whether older stable branches need context adjustment
-  around missing neighboring IDs (not this checkout)
+- [Phase 1] Parsed tags: Tested-by Hans Verkuil; SOBs Hans + Mauro; no
+  Fixes/Cc stable/Reported-by
+- [Phase 1] Cover letter (mbox): “The fifth patch fixes a use-after-
+  freed”
+- [Phase 2] Diff: 1 line in `em28xx_free_device()`;
+  `dev_info(&dev->intf->dev)` → `pr_info("%s: ...", dev->name)`
+- [Phase 2] Call path: `em28xx_usb_disconnect` → `kref_put`; extra puts
+  from `em28xx_free_v4l2`, audio PCM close (`kref_put` at em28xx-
+  audio.c:312)
+- [Phase 3] git blame parent: `29b05e22f5c68c` (v4.10) introduced
+  `dev_info`; `git merge-base --is-ancestor 29b05e22f5c68c HEAD` true
+- [Phase 3] No Fixes tag; standalone vs series confirmed by reading
+  `288254383674b` (does not change this log line)
+- [Phase 3] `git merge-base --is-ancestor c132b07f7e585 HEAD` true
+  (original commit is in this mainline tree)
+- [Phase 4] `b4 dig -c c132b07f7e585`: msgid 4f25383b64139feb… ; v2 5/6
+  of lifecycle series
+- [Phase 4] `b4 dig -a`: v1 (3 patches) then v2 (6 patches); this UAF
+  patch added in v2
+- [Phase 4] `b4 dig -w`: linux-media, Sakari Ailus, Mauricio Faria de
+  Oliveira
+- [Phase 4] mbox: no NAK on 5/6; Sakari comments only on 1/6
+- [Phase 4] lore WebFetch 403; stable search Anubis-blocked — UNVERIFIED
+  stable@ discussion
+- [Phase 5] Callers of `em28xx_free_device` enumerated via grep of
+  `kref_put`
+- [Phase 5] `dev->name` is `unsigned char name[32]` in `struct em28xx`;
+  set in probe (`snprintf(dev->name, 28, "em28xx")`)
+- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = `7.3.0-rc4`
+- [Phase 6] Current file already has `pr_info` (fix present in this
+  checkout)
+- [Phase 7] MAINTAINERS: EM28XX VIDEO4LINUX DRIVER, Mauro Chehab
+- [Phase 8] Failure mode: UAF in `dev_printk` on freed `usb_interface` →
+  oops; trigger = unplug while open
+- UNVERIFIED: whether a dedicated stable@ thread exists (lore bot)
 
 **YES**
 
- drivers/scsi/smartpqi/smartpqi_init.c | 36 +++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/media/usb/em28xx/em28xx-cards.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 88cffb1fb59ce..3f5fabf723c3e 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -10152,10 +10152,30 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x207d, 0x4240)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4246)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4256)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4356)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x207d, 0x4840)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4940)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4a46)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_ADVANTECH, 0x8312)
-@@ -10340,6 +10360,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1cf2, 0x544f)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1cf2, 0x5451)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1cf2, 0x5452)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1cf2, 0x5453)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1cf2, 0x54da)
-@@ -10380,6 +10412,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1f3f, 0x0610)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1f3f, 0x0670)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_LENOVO, 0x0220)
+diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
+index b8e207443770e..af2c06a05084d 100644
+--- a/drivers/media/usb/em28xx/em28xx-cards.c
++++ b/drivers/media/usb/em28xx/em28xx-cards.c
+@@ -3556,7 +3556,7 @@ void em28xx_free_device(struct kref *ref)
+ {
+ 	struct em28xx *dev = kref_to_dev(ref);
+ 
+-	dev_info(&dev->intf->dev, "Freeing device\n");
++	pr_info("%s: Freeing device\n", dev->name);
+ 
+ 	if (!dev->disconnected)
+ 		em28xx_release_resources(dev);
 -- 
 2.53.0
 
