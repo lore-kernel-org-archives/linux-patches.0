@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA63565E40;
-	Mon, 19 Oct 2026 13:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971594FFA5E;
+	Mon, 19 Oct 2026 13:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418258; cv=none; b=Y3kmtWowbKHgp0oGo7aZOtiVMntj+RSMuR2uhjxp7+TW7gBj1jgEzQYehy1d71rX3fsgmq5dDKaDP2dY05tVnDwznuaQRVUoKgohrAxzn8XJpc7Rukl1xw2F0lPXfW9vcbx5HBHZKTOVpaOpIyb5fdbbKY1bZmm1RIyS5SoAr2I=
+	t=1792418259; cv=none; b=A7tNpR+YqGOWFAao92DLcGD3MkaudT86gI8ekxAs+i0Or4hRrub0CcUFjd0LmC8Iok0+s3cFcZQEzWvKLlTLNwKExdI6+Qjs9U/wdc1qqMKFFNycdOExNeCshF8J0dieOVFOkJOMpxT2MvOuwgyInxM+AsO4VIi35vP0qjYj2To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418258; c=relaxed/simple;
-	bh=M5XM9HaoQiGM9BZJH+jPgXy2su8hIgg6upvggy9PP5k=;
+	s=arc-20240116; t=1792418259; c=relaxed/simple;
+	bh=GRa+adR9gcEu36dxBTH2LE/PC300d6J8yKkAixZ13cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cQzUvCYw1cZeH8foTYqylV2fA5/twwelOFDL/q15OPe3N7cOVKFO+oqUWGBqqr7nW0scVKATRl0COBwZlUJW+e/IV8hKnU5Cl5npQQzzi3t8+oc93M9poWdIijH0HH8qBPOiUUzLipI6c9EpeQBAJa7oIArrJESMvwOswtIYrUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VDoNx92P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EI9roHrFESdV7H3RFpJL+i0ADCKGHyKUKQfS1QADWuGUGxCpX+/X2b58U5FbyJd+q8/JQOUGUjNNEEC27jlijtVExgF6OKjGkhYv9Zb2XTEo6DpjxCIdLFPmaIIuW0TFVZESJ8p+UhFT95Ac9ic7ms4IvTpfaGld/dY0+2DuNp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FnagN85g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VDoNx92P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69FB1F000C8;
-	Mon, 19 Oct 2026 13:57:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FnagN85g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AB61F000C5;
+	Mon, 19 Oct 2026 13:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418255;
-	bh=aMcfynlMOHxkyjhDuUZ8R9aOY86TSgCExMN0NKpOhlE=;
+	s=k20260515; t=1792418257;
+	bh=Yf4wDzeS/mnKuQFF/RJEmEwysZgxQ9lxEjWcYlcYlcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VDoNx92PDxyJlMtJaAEtWyx0DQcNk8BOPisLn1zZ91DLR9j8d4hvW77xqFRnxHdur
-	 Van+w9MJF8QEhTz/4IK/K32IJNUeh12/TeHVvzG34Y1wJt5Cq1KdnIwG9mPXK3E5Fv
-	 sHyb2iWG4+0l/CySFVwgzApXtcGW8XLPlKwBD1Moj9T43aPnDRBt2f0cJXQxqlwvD4
-	 kZ+IcJ+2Huxu00zFDjdG/p8RdGuCagZY4Y9UN2MUkKe86mzxoOPDmd9xzEENFwdiXT
-	 AygALZyLbMyRGNzqHoW2r8p07N04uzZdp5GVI2EcLtvnLQqgKrhj4qX+GfwkgRHtm6
-	 oCBvaY5dhL1Fg==
+	b=FnagN85gyy5TgysYhyW5mE7kbbIhGl7UzF/GWdCmeJvB9JXOsQJqpQZdwYg1TO6Md
+	 sDp73CZ8G4vU4STzwIvDKn3jexmBOBC1SZtdb6eXRXoeIWw67lsnW5CjU4Ukr+oSmn
+	 cZaPtYxfgxoja/ey8Q20vinYTtA4Bs5h+JovcIwnCbSeMOJ7CGchkmUcI1jtjQ8ApR
+	 fPb/RuOXx4hYXC2B8G1kydXl5vq18vYLlw9IyvFUQxBpRo3ctBpzOSErpDa7cmoOJU
+	 TQPbBFSYQnDvQUcAxf5kjvBs12G7/OpDuTaYzfSXM8EjkFa0ffVzPQM/mqnWYNDzZt
+	 4ETxF0KOf0+/g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Even Xu <even.xu@intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	xinpeng.sun@intel.com,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	thomas.hellstrom@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	intel-xe@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] HID: Intel-thc-hid: Intel-quicki2c: Fix buffer overflow
-Date: Mon, 19 Oct 2026 09:46:54 -0400
-Message-ID: <20261019135441.1420968-123-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] drm/xe: only resume exec queues that were actually suspended
+Date: Mon, 19 Oct 2026 09:46:55 -0400
+Message-ID: <20261019135441.1420968-124-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,395 +57,471 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Even Xu <even.xu@intel.com>
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 
-[ Upstream commit 5e5c3b9db1c5910d6a9175c97b76a95566e4dc32 ]
+[ Upstream commit 65f40fa5022bcdb90d3a39e4948adf2aa16732a3 ]
 
-The input and output buffers are used to store complete HID-over-I2C
-packets, including their protocol headers. However, their sizes are
-currently calculated from the payload length only.
+A consumer-issued suspend() can fail (e.g. the queue is killed, banned
+or wedged), leaving the queue un-suspended. The consumer must then not
+issue the matching resume(): resuming a queue that was never suspended
+is incorrect.
 
-Allocate enough space for both the payload and the packet header to
-prevent a buffer overflow when the payload reaches its maximum size.
+Add an lr.suspended flag to struct xe_exec_queue that records whether a
+consumer suspend() succeeded and a matching resume() is still owed. Set
+it on a successful suspend() in the preempt-fence path, clear it on
+resume(), and only resume queues that have it set.
 
-Signed-off-by: Even Xu <even.xu@intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+In resume_and_reinstall_preempt_fences() also skip queues that have
+since been reset/killed/banned/wedged: such a queue's suspend may not
+have completed (suspend_pending can still be set, e.g. a preempt fence
+signalled with -ENOENT without waiting), so resuming it would trip the
+!suspend_pending assert in the backend. Leave it marked suspended and
+let teardown resolve its state.
+
+A queue is only ever suspended by a single consumer at a time
+(preempt-fence mode and hw engine group fault mode are mutually
+exclusive), so a single flag is sufficient.
+
+Assisted-by: Github-Copilot:Claude-opus-4.8
+Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260713202317.2187787-9-niranjana.vishwanathapura@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a two-line allocation-size fix for a real HID-over-I2C buffer
-overflow in a driver that already exists on this 6.18.y tree. It should
-be backported.
+This tree is **v7.3-rc4** (mainline). The Xe preempt-fence path this
+patch touches is present, and the change is a small, self-contained
+pairing fix for a real GuC suspend/resume protocol bug.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Record: **[HID / Intel-thc-hid / Intel-quicki2c] [Fix] [buffer
-  overflow]**
-- Subsystem prefix: `HID: Intel-thc-hid: Intel-quicki2c`
-- Action verb: **Fix**
-- Claimed intent: prevent overflow of HID-over-I2C input/output buffers
+**Step 1.1: Subject line**
+- Record: `[drm/xe] [only resume] only resume exec queues that were
+  actually suspended`
+- Subsystem: Intel Xe DRM. Verb “only resume” is a restriction/guard: do
+  not resume a queue that was never successfully suspended.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2: Tags**
 - Record:
-  - `Signed-off-by: Even Xu <even.xu@intel.com>` (author; listed
-    maintainer of INTEL THC)
-  - `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID maintainer)
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-    by:`, `Link:`, or `Cc: stable` (absence of those tags is expected
-    for this review)
-  - Pipeline-only tags ignored per instructions
+  - `Assisted-by: Github-Copilot:Claude-opus-4.8`
+  - `Signed-off-by: Niranjana Vishwanathapura` (author)
+  - `Reviewed-by: Matthew Brost` (Xe maintainer)
+  - `Link: https://patch.msgid.link/20260713202317.2187787-9-
+    niranjana.vishwanathapura@intel.com`
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable` (absence is
+    expected)
+  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+    …]` markers; none were on the real commit
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3: Body**
+- Record: `[Bug] Consumer `suspend()` can fail (killed/banned/wedged)
+  leaving the queue un-suspended; the matching `resume()` was still
+  issued. A second case: suspend started but the preempt fence was
+  signalled `-ENOENT` without `suspend_wait()`, so `suspend_pending` can
+  still be set; `resume()` then trips the backend `!suspend_pending`
+  assert.`
+- `[Symptom]` Incorrect resume pairing; GuC backend assert; scheduling
+  state left inconsistent.
+- `[Version]` None stated. Series title: “balance exec queue
+  suspend/resume”.
+- `[Root cause]` Resume was unconditional. Fix: `lr.suspended` set only
+  on successful `suspend()`, cleared on `resume()`, and skip
+  reset/killed/banned/wedged queues.
+
+**Step 1.4: Hidden bug fix?**
+- Record: Not disguised. Explicit correctness fix. Covering letter also
+  calls the series “fixes and hardens”; this patch is the pairing fix,
+  not a pure cleanup.
+
+## Phase 2: Diff analysis
+
+**Step 2.1: Inventory**
+- Record: 3 files, **+36 / -1**
+  - `xe_exec_queue_types.h`: add `bool lr.suspended` (+12)
+  - `xe_preempt_fence.c`: `preempt_fence_enable_signaling()` (+7)
+  - `xe_vm.c`: `resume_and_reinstall_preempt_fences()` (+17 / -1)
+- Scope: single-subsystem surgical fix.
+
+**Step 2.2: Code flow**
 - Record:
-  - **Bug:** `input_buf` and `report_buf` hold complete HID-over-I2C
-    packets (`__le16 len` + payload), but they are allocated from
-    payload length only (`max_input_len` / `max_output_len`, floored at
-    4K).
-  - **Symptom/failure mode:** buffer overflow when the payload reaches
-    that maximum (2 bytes past the end: `HIDI2C_LENGTH_LEN ==
-    sizeof(__le16)`).
-  - **Version info:** none in the message.
-  - **Root cause:** allocation size omitted the 2-byte HID-over-I2C
-    length header.
+  - **Before:** `suspend()` return stored in `pfence->error`;
+    `resume_and_reinstall_preempt_fences()` always called
+    `q->ops->resume(q)` for every queue on `vm->preempt.exec_queues`.
+  - **After:** successful `suspend()` does `WRITE_ONCE(q->lr.suspended,
+    true)`; resume only if `READ_ONCE(q->lr.suspended) &&
+    !q->ops->reset_status(q)`, then clears the flag.
+- Path: compute/long-running VM rebind worker (preempt-fence mode), not
+  probe/init.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: Not a hidden fix. The subject and body state a buffer overflow
-  and the diff matches that claim.
+**Step 2.3: Bug mechanism**
+- Record: `[Logic / state-machine pairing]` plus `[debug assert]`
+- At the parent of this commit, GuC resume was:
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+```2248:2254:drivers/gpu/drm/xe/xe_guc_submit.c
+// parent: 65f40fa5022bc^
+xe_gt_assert(guc_to_gt(guc), !q->guc->suspend_pending);
+guc_exec_queue_try_add_msg(q, msg, RESUME);
+```
 
-**Step 2.1: INVENTORY THE CHANGES**
-- Record:
-  - File: `drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c` (+4
-    / −2; net +2)
-  - Function: `quicki2c_alloc_report_buf()`
-  - Scope: **single-file surgical fix**
+- Failed `suspend()` returns `-EINVAL` *before* setting
+  `suspend_pending`. Unconditional `resume()` still queues a GuC RESUME.
+- `preempt_fence_work_func()` on `reset_status()` signals `-ENOENT`
+  without `suspend_wait()`, so `suspend_pending` can still be true when
+  resume runs.
+- `guc_exec_queue_allowed_to_change_state()` is `!killed/banned/wedged
+  && registered` — it does **not** check RESET. A reset-but-not-yet-
+  killed queue can take the resume path and call `enable_scheduling()`.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record:
-  - **Hunk 1 (input_buf):** `devm_kzalloc(..., max_report_len)` →
-    `devm_kzalloc(..., HIDI2C_PACKET_LEN(max_report_len))`
-  - **Hunk 2 (report_buf):** same change
-  - Path: probe-time allocation (`quicki2c_probe` →
-    `quicki2c_alloc_report_buf`). Runtime use of those buffers is
-    unchanged.
+**Step 2.4: Fix quality**
+- Record: Obviously correct pairing (resume only if suspend succeeded
+  and queue is not in reset/kill). Minimal. Adds an internal flag only.
+  WRITE_ONCE/READ_ONCE match the comment that only one consumer suspends
+  at a time (preempt-fence vs hw-engine-group fault mode). Regression
+  risk: low; skipping resume is limited to queues already failing, which
+  the commit says teardown owns.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record:
-  - **Category:** memory safety / buffer overflow (out-of-bounds write)
-  - **Mechanism:** packets are `struct hidi2c_report_packet { __le16
-    len; u8 data[]; }`. `HIDI2C_PACKET_LEN(data_len)` is `(data_len) +
-    HIDI2C_LENGTH_LEN`. Allocation used payload size only.
-  - Verified consumers:
-    - `handle_input_report()` DMA-copies into `input_buf` via
-      `thc_rxdma_read()` → `sg_copy_to_buffer(..., read_buff, mes_len)`
-      with **no destination-size argument**.
-    - `quicki2c_get_report()` SWDMA-reads into `input_buf`.
-    - `quicki2c_init_write_buf()` / `write_cmd_to_txdma()` build framed
-      packets in `report_buf` (length field + payload, plus command
-      bytes).
-  - This is **not** a lock/refcount/init/API change.
+## Phase 3: Git history
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Record:
-  - **Quality:** obviously correct. Uses an existing macro from
-    `include/linux/hid-over-i2c.h` that this tree already has.
-  - **Minimal:** two allocation sizes in one function.
-  - **Regression risk:** very low. Extra 2 bytes per buffer; no API,
-    locking, or control-flow change.
-  - **Caveat (not a reason to reject):** `qcdev->report_len` is still
-    set to `max_report_len`, not `HIDI2C_PACKET_LEN(max_report_len)`.
-    The write-side bound check (`if (buf_len > write_buf_len) return
-    -EINVAL`) can still reject a max-sized SET_REPORT. That is fail-safe
-    (no overflow), pre-existing, and not a regression. Command framing
-    can need more than +2 bytes; this commit only claims the 2-byte
-    packet length header, which is what `HIDI2C_PACKET_LEN` adds.
+**Step 3.1: Blame / introduction**
+- Record: Unconditional `q->ops->resume(q)` in
+  `resume_and_reinstall_preempt_fences()` dates to `dd08ebf6c3525`
+  (“drm/xe: Introduce a new DRM driver for Intel GPUs”), i.e. Xe’s
+  introduction (v6.8-era). Long-standing, not last-month code.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.2: Fixes: tag**
+- Record: No `Fixes:` tag. Buggy resume site is original Xe code, not a
+  recent regression-only commit.
 
-**Step 3.1: BLAME THE CHANGED LINES**
-- Record: buggy allocations introduced by `66b59bfce6d93` (“HID: intel-
-  thc-hid: intel-quicki2c: Complete THC QuickI2C driver”, Even Xu,
-  2025-01-06). Present since the driver became functional. Driver
-  skeleton: `61bb2714dc3a1`. First appeared around **v6.13**, so it is
-  in this 6.18 tree.
+**Step 3.3: Related file history**
+- Record: This is **patch 1/6** of “drm/xe: balance exec queue
+  suspend/resume”. Later commits in this tree that use `lr.suspended` /
+  continue the series:
+  - `dad2af2da9ead` ban on suspend timeout
+  - `412c885692cad` uninterruptible suspend wait
+  - `c373eaaada2fe` hw_engine_group propagate suspend failures (sets
+    `lr.suspended` there)
+  - `3c316b09072c2` suspend refcount
+  - `5d5a729cc9780` multi-queue preempt primary
+- Patch 1 is standalone for the preempt-fence path. Later patches are
+  not required for this hunk to be correct.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: no `Fixes:` tag. Not applicable. The introducing commit is in
-  this tree (`git merge-base --is-ancestor 66b59bfce6d93 v6.18.57`
-  succeeded).
+**Step 3.4: Author**
+- Record: Niranjana Vishwanathapura, regular Xe contributor. Reviewed by
+  Matthew Brost, Xe maintainer (`MAINTAINERS`: INTEL DRM XE DRIVER).
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record: recent work on this file is driver completion, ACPI, PM,
-  device IDs, WOT. Related but distinct: `d08a1049659aa` (ACPI u16
-  truncation, not this overflow). Sibling series patch: `HID: Intel-thc-
-  hid: Intel-quickspi: Fix buffer overflow` (different file). This
-  commit is **standalone**; it does not need the QuickSPI patch.
+**Step 3.5: Dependencies**
+- Record: Needs existing `q->ops->suspend`, `resume`, `reset_status`,
+  and `struct xe_exec_queue` `lr` — all present here. No new helper from
+  later series patches. Can apply standalone.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Even Xu is listed in MAINTAINERS as maintainer of `INTEL TOUCH
-  HOST CONTROLLER (THC) DRIVER` (`drivers/hid/intel-thc-hid/`). This is
-  a maintainer fix, not drive-by.
+## Phase 4: Mailing list / external
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: `HIDI2C_PACKET_LEN` was added in `6fc761385bcf6` (“Add HIDI2C
-  protocol implementation”) and is present on **v6.18.57** in
-  `include/linux/hid-over-i2c.h`. No missing helpers. Patch applies
-  cleanly to the v6.18.57 blob (`patch --dry-run` exit 0).
+**Step 4.1: Original discussion**
+- Record: `b4 dig -c 65f40fa5022bc` → https://patch.msgid.link/202607132
+  02317.2187787-9-niranjana.vishwanathapura@intel.com
+- Revisions: v1 (2026-06-24, 1/5) → v2 → v3 (1/6) → v5 covering letter
+  2026-07-13. Applied version is v5 1/6.
+- Covering letter: consumers issued resume even when suspend never took
+  effect; “with the GuC backend it can trip the `!suspend_pending`
+  assertion or leave scheduling state inconsistent.”
+- No NAKs in the saved thread mbox (series posts only; `Reviewed-by` was
+  already on the submission).
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 4.2: Recipients (`b4 dig -w`)**
+- Record: `intel-xe@lists.freedesktop.org`, Matthew Brost, Thomas
+  Hellström (both Xe maintainers). Right list and maintainers.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record:
-  - `b4 dig -c 5e5c3b9db1c5910d6a9175c97b76a95566e4dc32` →
-    https://patch.msgid.link/20260922024638.932865-2-even.xu@intel.com
-  - Cover: `[PATCH 0/2] HID: Intel-thc-hid: Fix potential buffer
-    overflow` (`20260922024638.932865-1`)
-  - `b4 dig -a`: **v1 only** (no v2/v3). Applied as submitted.
-  - Jiri Kosina (2026-09-23): “Applied to hid.git#for-7.3/upstream-
-    fixes, thanks.” No NAK.
-  - No human reviewer asked for `Cc: stable`. An automated review noted
-    `report_len` not updated and SET_REPORT framing possibly needing
-    more than 2 bytes. HID maintainer applied the series as-is.
+**Step 4.3: Bug report**
+- Record: No syzbot, bugzilla, or user `Reported-by`. Author-driven
+  correctness fix.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record (`b4 dig -w`): To/Cc `bentiss@kernel.org`, `jikos@kernel.org`,
-  `srinivas.pandruvada@linux.intel.com`, `linux-input@vger.kernel.org`.
-  HID maintainers were on the original mail. Jiri applied it.
+**Step 4.4: Series**
+- Record: 6 patches. Patch 1 = this commit (preempt-fence pairing).
+  Patch 4 applies the same flag to hw engine group. Patch 6 is multi-
+  queue GuC preempt behavior. This commit does not depend on 2–6.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: no `Reported-by` / syzbot / bugzilla. Author-found from code
-  inspection (“potential buffer overflow”). No user crash log in the
-  thread.
+**Step 4.5: Stable list**
+- Record: lore.kernel.org/stable search for this subject did not show a
+  dedicated stable request or rejection (unrelated 7.2/6.18 review mails
+  matched generic words).
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: 2/2 is the QuickSPI analogue (`HIDSPI_INPUT_BODY_SIZE`).
-  Independent file; this I2C patch does not depend on it.
+## Phase 5: Semantic / call-chain
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: lore.kernel.org HTTP fetch returned 403. **UNVERIFIED**
-  whether linux-stable discussed this SHA. Decision does not rely on
-  that.
+**Step 5.1: Functions**
+- Record: `preempt_fence_enable_signaling`,
+  `resume_and_reinstall_preempt_fences`. New field
+  `xe_exec_queue.lr.suspended`.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 5.2: Callers**
+- Record: `resume_and_reinstall_preempt_fences()` is called once from
+  the preempt rebind worker after `arm_preempt_fences()` (“point of no
+  return”). `preempt_fence_enable_signaling` is the dma-fence
+  `enable_signaling` callback for Xe preempt fences.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-- Record: `quicki2c_alloc_report_buf()` only.
+**Step 5.3: Callees**
+- Record: `q->ops->suspend` / `resume` / `reset_status` (GuC backend is
+  the real one; execlist ops are NIY stubs).
 
-**Step 5.2: TRACE CALLERS**
-- Record: single caller, `quicki2c_probe()` (after reading the HID-
-  over-I2C device descriptor). Probe of Intel THC I2C-port PCI devices
-  (Lunar Lake, Panther Lake, Wildcat Lake IDs in `quicki2c_pci_tbl`).
-  Not a hot path, but every successful probe allocates these buffers,
-  then IRQ/DMA/HID traffic uses them.
+**Step 5.4: Reachability**
+- Record: Yes from userspace. `xe_vm_in_preempt_fence_mode()` is long-
+  running compute VMs (`XE_VM_FLAG_LR_MODE` and not fault mode).
+  Triggered when the VM rebind worker runs (BO moves, userptr
+  invalidation, eviction) while compute exec queues are attached.
+  Concurrent GPU reset/kill of a queue during that window is the bad
+  path.
 
-**Step 5.3: TRACE CALLEES**
-- Record: `devm_kzalloc()`, `le16_to_cpu()`, `HIDI2C_PACKET_LEN()`. No
-  new callees.
+**Step 5.5: Similar patterns**
+- Record: Same `lr.suspended` discipline later in `xe_hw_engine_group.c`
+  (series patch 4). Confirms this is the intended pairing primitive, not
+  a one-off hack.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: PCI probe → descriptor read → alloc → DMA init → HID
-  registration → `handle_input_report()` on IRQ. Reachable on machines
-  with Intel THC + HID-over-I2C touch. Unprivileged HID input does not
-  size the kernel buffer; overflow is on kernel DMA/copy into an
-  undersized `input_buf` when the device sends a max-sized packet.
+## Phase 6: This tree
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: same author applied the same header-vs-payload fix to
-  QuickSPI. Confirms a systematic off-by-header bug, not a one-off typo.
+**Step 6.1: Buggy code in this tree?**
+- Record: Yes. Tree is `v7.3-rc4-27-gf0100363d8c37`, `VERSION=7
+  PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`. Xe files exist. Parent of
+  `65f40fa5022bc` still has unconditional `q->ops->resume(q)`. Bug
+  introduced with Xe (`dd08ebf6c3525`), well before 7.3.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+**Step 6.2: Backport difficulty**
+- Record: For this tree, the surrounding structs/ops match the diff:
+  clean apply. (This commit is already an ancestor of HEAD; that is used
+  only to inspect the code, not as a “already selected” reason.)
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: **Yes.** Local tree is **6.18.57** (`git describe HEAD` →
-  `v6.18.57-155-gcdf239ca885b2`; Makefile `VERSION=6 PATCHLEVEL=18
-  SUBLEVEL=57`).
-- On **v6.18.57** (this series’ base), `quicki2c_alloc_report_buf()`
-  still does:
-  - `input_buf = devm_kzalloc(..., max_report_len)`
-  - `report_buf = devm_kzalloc(..., max_report_len)`
-- `HIDI2C_PACKET_LEN` already exists in this tree’s header. Driver is
-  `CONFIG_INTEL_QUICKI2C` under `INTEL_THC_HID` (`X86_64 && PCI &&
-  ACPI`).
+**Step 6.3: Related fixes already here**
+- Record: No earlier alternate fix of this pairing. Later series patches
+  extend the same flag to other callers; they do not replace this
+  preempt-fence fix.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: **clean apply** on the v6.18.57 file. Surrounding function
-  matches the patch. No refactor in the way.
+## Phase 7: Subsystem context
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: no other commit on this file in 6.18.y enlarges these two
-  allocations. The 4K floor (`max(..., SZ_4K)`) is a workaround for
-  devices that under-declare max length; it does **not** add the 2-byte
-  header. When `max_input_len`/`max_output_len` is ≥ 4K (HID max buffer
-  is 16K), that floor provides no slack.
+**Step 7.1**
+- Record: `[drivers/gpu/drm/xe] [IMPORTANT]` — Intel Xe (Lunar Lake and
+  newer). Not core mm/net, but a supported production GPU driver.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 7.2**
+- Record: High activity (many Xe commits in this tree). The bug itself
+  is old pairing, not a brand-new subsystem.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: **HID Intel THC QuickI2C** (`drivers/hid/intel-thc-hid/`).
-  **IMPORTANT** for Intel laptops/tablets with THC touch (LNL/PTL/WCL),
-  not core mm/VFS. Still production input hardware.
+## Phase 8: Impact and risk
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: actively maintained through 6.18 (device IDs, WOT, ACPI
-  advanced features). Bug is in original 2025 driver completion, not
-  brand-new 7.x-only code.
+**Step 8.1: Who is affected**
+- Record: Xe users with long-running/compute exec queues in preempt-
+  fence mode (Intel compute / Level Zero style workloads), during VM
+  rebind plus queue reset/kill/ban/wedge.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 8.2: Trigger**
+- Record: Not every boot. Concurrent rebind + queue failure/reset.
+  Userspace-reachable via compute VM + memory movement + hang/reset or
+  queue destroy. Timing-dependent.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: **driver-specific / config-specific:** `CONFIG_INTEL_QUICKI2C`
-  on x86_64 with Intel THC HID-over-I2C devices.
+**Step 8.3: Failure mode**
+- Record: `xe_gt_assert` is **debug-only** (`CONFIG_DRM_XE_DEBUG`);
+  production distro kernels will not WARN there. Production still queues
+  GuC RESUME without a completed suspend. For killed queues,
+  `allowed_to_change_state` makes the resume handler mostly a no-op. For
+  **RESET but not yet killed** queues, resume can `enable_scheduling()`
+  on a context hang recovery is tearing down — GPU scheduling
+  inconsistency / possible hang of that engine, not a kernel oops.
+- Severity: **HIGH** for the reset-window GuC protocol break; **MEDIUM**
+  if only dead queues are poked (mostly no-op + debug WARN).
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record: HID-over-I2C input/feature/output packet whose payload equals
-  the allocated max (`max(declared max, 4K)`). Typical small touch
-  reports may not hit it; max-sized reports and devices that declare
-  large `wMaxInputLength` can. Not a userspace-crafted syscall overflow;
-  it is device-facing DMA/copy. Still a kernel memory-safety bug on a
-  standard probe/IRQ path.
+**Step 8.4: Risk-benefit**
+- Record: Benefit: medium-high for Xe compute (prevents illegal resume /
+  enable on reset queues). Risk: low (36 lines, error/teardown path, no
+  UAPI). Ratio favors taking it.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record: **buffer overflow (2 bytes) into heap** via
-  `sg_copy_to_buffer` / packet construction. **HIGH** (memory
-  corruption; crash or worse). Not a panic on every boot, but it is a
-  real overflow, not a warning.
+## Phase 9: Synthesis
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Record:
-  - **Benefit:** high for THC HID-over-I2C users — closes a heap
-    overflow the driver author and HID maintainer treated as real.
-  - **Risk:** very low — +2 bytes on two `devm_kzalloc`s, existing
-    macro, no behavior change except not writing past the buffer.
-  - **Ratio:** strongly favors backport.
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 9.1: Evidence**
 
 FOR:
-- Real buffer overflow: complete HID-over-I2C packets stored in buffers
-  sized from payload only
-- DMA copy into `input_buf` has no dest-size check
-- Small, obviously correct (+2 bytes via existing `HIDI2C_PACKET_LEN`)
-- Driver and macro exist in this 6.18.57 tree; introducing commit is in
-  this tree
-- Applies cleanly
-- Written by the THC maintainer; applied by HID maintainer
-- Same class of bug independently fixed in QuickSPI
+- Real pairing bug: resume of never-suspended or still-pending-suspend
+  queues.
+- Concrete backend contract: `guc_exec_queue_resume()` asserts
+  `!suspend_pending` and (in production) still submits RESUME.
+- Reset vs kill mismatch: `reset_status` includes RESET;
+  `allowed_to_change_state` does not — so old resume can re-enable a
+  reset context.
+- Small, obviously correct, maintainer-reviewed (Matthew Brost).
+- Self-contained for preempt-fence; this tree has the code.
+- No new userspace API.
 
 AGAINST:
-- No public reproducer / syzbot report (author-found “potential”)
-- 4K floor hides the overflow for devices with small `max_input_len`
-- `report_len` not updated; write path may still `-EINVAL` at max size
-  (fail-safe, not a new bug)
-- Affects only Intel THC QuickI2C, not all machines
+- Series 1/6; later patches continue related hardening (not required
+  here).
+- No `Reported-by` / syzbot.
+- Healthy queues on the success path are unchanged; the skip is for
+  already-failing queues.
+- Primary wording in the commit is the debug assert.
 
 UNRESOLVED:
-- Could not query lore.kernel.org/stable (HTTP 403)
+- No public user crash report proving a full-device GPU hang in the
+  wild.
+- Stable list had no explicit ACK/NAK for this subject.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — two allocation sizes; HID
-   maintainer applied v1; macro already in tree
-2. Fixes a real bug that affects users? **PASS** — overflow on max-sized
-   HID-over-I2C packets in a shipping Intel touch driver
-3. Important issue? **PASS** — heap buffer overflow / memory corruption
-   (**HIGH**)
-4. Small and contained? **PASS** — one function, two sites, ~4 lines
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean on v6.18.57;
-   `HIDI2C_PACKET_LEN` already present
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — pairing is straightforward;
+   v1–v5 review; maintainer `Reviewed-by`.
+2. Real bug affecting users? **PASS** — reachable compute rebind +
+   reset/kill path; illegal GuC RESUME.
+3. Important (crash/security/corruption/deadlock)? **PASS** — not a
+   kernel oops in production, but GuC protocol violation and
+   `enable_scheduling()` on a reset queue is a serious GPU-driver
+   failure (hang / inconsistent scheduling), which is in the “etc.”
+   class for driver stability.
+4. Small and contained? **PASS** — 36 lines, 3 Xe files.
+5. No new features/APIs? **PASS** — internal flag only. (Series patch 6
+   is a feature; this patch is not.)
+6. Can apply to this tree? **PASS** — Xe preempt-fence path and ops
+   exist; hunk is against the local structures.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: none needed. This is a normal memory-safety bug fix, not a
-  device-ID/quirk/DT/build/docs exception.
+**Step 9.3: Exception category**
+- Record: None (not a device ID, quirk, DT, build, or docs fix).
+  Qualifies as a normal bugfix.
 
-**Step 9.4: MAKE YOUR DECISION**
-Backport. The bug is in this 6.18.y driver, the fix is surgical, and
-leaving a 2-byte heap overflow in a HID DMA path is worse than adding
-two bytes to the buffers.
+**Step 9.4: Decision**
+This is a small, reviewed correctness fix for a real suspend/resume
+imbalance on a supported Intel GPU compute path. It does not add
+features, applies to this tree’s Xe code, and the production risk of the
+bug is illegal GuC resume (including re-enabling a reset context), not
+merely a debug WARN. That meets stable rules for this checkout.
 
-## What the commit solves for this tree
+### What it solves for users of this tree
+On Xe long-running (preempt-fence) VMs, the rebind worker always resumed
+every attached exec queue. If `suspend()` had failed or the queue was
+reset before suspend finished, that resume violated the GuC backend
+contract. This patch records a successful suspend and only resumes those
+queues, so already-failed queues are left to teardown instead of getting
+a spurious RESUME.
 
-On 6.18.57, QuickI2C still allocates `input_buf`/`report_buf` as
-`max(payload, 4K)` and then stores HID-over-I2C packets that include a
-2-byte length header. When the payload is that maximum,
-`thc_rxdma_read()` / SWDMA copies past the end of the kmalloc buffer.
-The fix allocates `HIDI2C_PACKET_LEN(max_report_len)` instead.
+### Risk vs benefit
+Benefit is avoiding GuC protocol errors and possible engine re-enable
+during reset. Risk is low: one flag, two call sites, no UAPI, skip
+limited to reset/killed queues.
 
-That matches stable rules: real overflow, tiny diff, no new API, applies
-cleanly, no missing prerequisites.
+### Concerns
+It is patch 1/6; hw-engine-group pairing is a later commit and is not
+required for this hunk. No in-the-wild report. Debug asserts are
+compiled out of production, so the user-visible production issue is the
+protocol/state bug, not a WARN.
 
-Risk vs benefit: +2 bytes of allocation vs heap corruption on Intel THC
-HID-over-I2C devices (Lunar Lake / Panther Lake / Wildcat Lake). Benefit
-dominates. The unfixed `report_len` bound is conservative, not a
-regression.
-
-## Verification
-- [Phase 1] Parsed subject/body/tags: overflow fix; Even Xu + Jiri
-  Kosina SOBs; no Fixes/Reported-by
-- [Phase 2] Diff: two `devm_kzalloc` sizes in
-  `quicki2c_alloc_report_buf()` wrap `HIDI2C_PACKET_LEN`
-- [Phase 2] `include/linux/hid-over-i2c.h`: `HIDI2C_PACKET_LEN(data_len)
-  = data_len + sizeof(__le16)`
-- [Phase 2] `handle_input_report()` / `read_dma_buffer()`:
-  `sg_copy_to_buffer` into `input_buf` without dest capacity
-- [Phase 3] `git blame` on v6.18.57: allocations from `66b59bfce6d93`
-  (2025-01, driver completion)
-- [Phase 3] `git merge-base --is-ancestor 66b59bfce6d93 v6.18.57`:
-  introducing commit is in this tree
-- [Phase 3] `HIDI2C_PACKET_LEN` added in `6fc761385bcf6`; present on
-  v6.18.57
-- [Phase 3] Author Even Xu is MAINTAINERS owner of `drivers/hid/intel-
-  thc-hid/`
-- [Phase 4] `b4 dig -c 5e5c3b9db1c5910d6a9175c97b76a95566e4dc32`: lore
-  thread found; v1 only
-- [Phase 4] mbox: Jiri Kosina applied to hid.git#for-7.3/upstream-fixes;
-  no NAK
-- [Phase 4] `b4 dig -w`: HID maintainers on original To/Cc
-- [Phase 4] UNVERIFIED: lore.kernel.org/stable HTTP 403
-- [Phase 5] Single caller `quicki2c_probe()`; PCI IDs LNL/PTL/WCL THC
-  I2C ports
-- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.57
-- [Phase 6] `git show v6.18.57:drivers/hid/intel-thc-hid/intel-
-  quicki2c/pci-quicki2c.c`: buggy sizes still present
-- [Phase 6] `patch --dry-run` of this commit onto the v6.18.57 file:
-  exit 0
-- [Phase 8] Failure mode: 2-byte heap overflow on max-sized HID-over-I2C
-  packets; severity HIGH
+### Verification
+- [Phase 1] Parsed commit `65f40fa5022bc`: tags as listed; no
+  Fixes/Reported-by/Cc-stable.
+- [Phase 2] Diff: +36/-1 in three Xe files; resume became conditional on
+  `lr.suspended && !reset_status()`.
+- [Phase 2] Parent `guc_exec_queue_suspend` returns `-EINVAL` for
+  killed/banned/wedged without setting `suspend_pending`; parent
+  `guc_exec_queue_resume` asserts `!suspend_pending` then
+  `try_add_msg(RESUME)`.
+- [Phase 2] `xe_assert.h`: `xe_gt_assert` effective only with
+  `CONFIG_DRM_XE_DEBUG`.
+- [Phase 2] `guc_exec_queue_allowed_to_change_state()` ignores RESET;
+  `guc_exec_queue_reset_status()` includes RESET;
+  `xe_guc_exec_queue_reset_handler()` sets reset then `trigger_cleanup`
+  — window verified in `xe_guc_submit.c`.
+- [Phase 3] `git log -S 'resume_and_reinstall_preempt_fences' --
+  drivers/gpu/drm/xe/xe_vm.c` → `dd08ebf6c3525`.
+- [Phase 3] Series neighbors confirmed via `git log --author=Niranjana
+  Vishwanathapura -- drivers/gpu/drm/xe/`.
+- [Phase 3] `git merge-base --is-ancestor 65f40fa5022bc HEAD` succeeds
+  (used to inspect, not as a selection argument). `git merge-base --is-
+  ancestor 65f40fa5022bc v7.2` fails; present since `v7.3-rc1`.
+- [Phase 4] `b4 dig -c 65f40fa5022bc` / `-a` / `-w` / `-m /tmp/xe-
+  suspend.mbox`: v5 1/6, maintainers CC’d, covering letter quoted above;
+  mbox had no NAK replies.
+- [Phase 4] lore.kernel.org/stable search: no dedicated discussion of
+  this patch.
+- [Phase 5] Only caller of `resume_and_reinstall_preempt_fences` is the
+  rebind worker in `xe_vm.c` (~line 569).
+- [Phase 6] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` → `7.3.0-rc4`.
+- [Phase 7] `MAINTAINERS`: Matthew Brost is Xe maintainer; he reviewed
+  the patch.
+- [Phase 8] Failure mode: production GuC RESUME without completed
+  suspend; debug WARN only if `CONFIG_DRM_XE_DEBUG`.
+- UNVERIFIED: no public user GPU-hang log for this exact race.
 
 **YES**
 
- drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_exec_queue_types.h | 12 ++++++++++++
+ drivers/gpu/drm/xe/xe_preempt_fence.c    |  7 +++++++
+ drivers/gpu/drm/xe/xe_vm.c               | 18 +++++++++++++++++-
+ 3 files changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c b/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
-index c6ba6886072ad..4588c55cf255d 100644
---- a/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
-+++ b/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
-@@ -586,7 +586,8 @@ static int quicki2c_alloc_report_buf(struct quicki2c_device *qcdev)
- 	 */
- 	max_report_len = max(le16_to_cpu(qcdev->dev_desc.max_input_len), SZ_4K);
+diff --git a/drivers/gpu/drm/xe/xe_exec_queue_types.h b/drivers/gpu/drm/xe/xe_exec_queue_types.h
+index 38906cb7608ca..c5024acf4aaf0 100644
+--- a/drivers/gpu/drm/xe/xe_exec_queue_types.h
++++ b/drivers/gpu/drm/xe/xe_exec_queue_types.h
+@@ -139,6 +139,18 @@ struct xe_exec_queue {
+ 		u32 seqno;
+ 		/** @lr.link: link into VM's list of exec queues */
+ 		struct list_head link;
++		/**
++		 * @lr.suspended: Tracks whether the consumer-issued suspend()
++		 * succeeded and a matching resume() is still owed. suspend() can
++		 * fail (e.g. killed/banned/wedged), leaving the queue
++		 * un-suspended, so consumers must only resume() queues that were
++		 * actually suspended. Set by the suspend caller on success and
++		 * cleared by the resume caller. A queue is only ever suspended by
++		 * a single consumer at a time (preempt-fence mode and hw engine
++		 * group fault mode are mutually exclusive), so a single flag is
++		 * sufficient.
++		 */
++		bool suspended;
+ 	} lr;
  
--	qcdev->input_buf = devm_kzalloc(qcdev->dev, max_report_len, GFP_KERNEL);
-+	qcdev->input_buf = devm_kzalloc(qcdev->dev,
-+					HIDI2C_PACKET_LEN(max_report_len), GFP_KERNEL);
- 	if (!qcdev->input_buf)
- 		return -ENOMEM;
+ #define XE_EXEC_QUEUE_TLB_INVAL_PRIMARY_GT	0
+diff --git a/drivers/gpu/drm/xe/xe_preempt_fence.c b/drivers/gpu/drm/xe/xe_preempt_fence.c
+index 83fbeea5aa201..014a5980febd0 100644
+--- a/drivers/gpu/drm/xe/xe_preempt_fence.c
++++ b/drivers/gpu/drm/xe/xe_preempt_fence.c
+@@ -63,6 +63,13 @@ static bool preempt_fence_enable_signaling(struct dma_fence *fence)
+ 	struct xe_exec_queue *q = pfence->q;
  
-@@ -596,7 +597,8 @@ static int quicki2c_alloc_report_buf(struct quicki2c_device *qcdev)
- 	max_report_len = max(le16_to_cpu(qcdev->dev_desc.max_output_len),
- 			     max_report_len);
+ 	pfence->error = q->ops->suspend(q);
++	/*
++	 * Record a successful suspend so the rebind worker only resumes queues
++	 * that were actually suspended; a failed suspend() leaves the queue
++	 * un-suspended and must not be paired with a resume().
++	 */
++	if (!pfence->error)
++		WRITE_ONCE(q->lr.suspended, true);
+ 	queue_work(q->vm->xe->preempt_fence_wq, &pfence->preempt_work);
+ 	return true;
+ }
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index a4272bc248ec7..b139ee46208ad 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -195,7 +195,23 @@ static void resume_and_reinstall_preempt_fences(struct xe_vm *vm,
+ 	xe_vm_assert_held(vm);
  
--	qcdev->report_buf = devm_kzalloc(qcdev->dev, max_report_len, GFP_KERNEL);
-+	qcdev->report_buf = devm_kzalloc(qcdev->dev,
-+					 HIDI2C_PACKET_LEN(max_report_len), GFP_KERNEL);
- 	if (!qcdev->report_buf)
- 		return -ENOMEM;
+ 	list_for_each_entry(q, &vm->preempt.exec_queues, lr.link) {
+-		q->ops->resume(q);
++		/*
++		 * Only resume queues whose suspend() actually succeeded. A
++		 * failed suspend() (e.g. killed/banned/wedged) leaves the queue
++		 * un-suspended, so it must not be resumed.
++		 *
++		 * Also skip queues that have since been reset/killed/banned/
++		 * wedged: their suspend may not have completed (suspend_pending
++		 * can still be set, e.g. a preempt fence signalled with -ENOENT
++		 * without waiting), so resuming would trip the !suspend_pending
++		 * assert in the backend. Such queues are being torn down anyway,
++		 * so leave them marked suspended and let teardown resolve their
++		 * state.
++		 */
++		if (READ_ONCE(q->lr.suspended) && !q->ops->reset_status(q)) {
++			WRITE_ONCE(q->lr.suspended, false);
++			q->ops->resume(q);
++		}
  
+ 		drm_gpuvm_resv_add_fence(&vm->gpuvm, exec, q->lr.pfence,
+ 					 DMA_RESV_USAGE_BOOKKEEP, DMA_RESV_USAGE_BOOKKEEP);
 -- 
 2.53.0
 
