@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74DC60405F;
-	Mon, 19 Oct 2026 14:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D616050A3;
+	Mon, 19 Oct 2026 14:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418598; cv=none; b=YqIE5cUI1cKqw1YfbwnP9oSTJlYwflGfb+IaUaXneQHtvSonZ36MaAu6uRWN5Z5Ox4vGG4f2fGKLF41h+brI2etJsHiUQh0f0PUGxK/0dGehRW5B40O4/4ONa7Qxn8CcXWHOZ9OF0fhBfEwC1Kr1Ze3QfhU16W4XCby+saxJhb8=
+	t=1792418598; cv=none; b=EMj8C1kQQ9ul1qoL5QDcmNcpN1GPup26YMdhDsn/A+WC6x/6gtETFMsIVr8JuXqRYpuaLWfGJxTJY+gongjvYxbVfVxatVctlKJzR2AmkzAIefSgMiNWMeKdDOQIzmEIy8LpuI2FfSHjEOl5WlT/fSRQJv+B/l27KOEGnP+Wv6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418598; c=relaxed/simple;
-	bh=YBo5zmd88spl13QBuS8ZcFRMMMHz5pOjOCoZNbVAQTU=;
+	bh=k7uw0K4tIKoECCxLLfNlKCLh8dptzEKDhqhNok8A4Us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kjzVrlFqSHPVpNKxKGsDji+rTGE0Czd1t/S1f+jpC9SCD4oyeK7QSiEjIBMZay3PYoyzTllpAgGyJYFIVcfx28ykojjbowx/T+ixTcNzMPhhOlXYoaSueL++3sVIYM0yxz6xsXwJeA6pcdGUdLsLxrpIujVazsmDyzS6Yl6CRps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cmmg7EPn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mJ1HtGyOLbQ1u4iwji/XSDmBBnp7C/AJy0re4DAj7u4AfM34R/dFNnEnXbHw2m7RgfahbWrRkv/nuc88+kwTIp5FusXaggPzx/1GbwIOMlVcAZicfoIaOR33sNsBvMJgzMs7vLNW/Mu3hDF2dy7ca9xFSgoqsj52vzMDuPm3wdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GMdu1m0J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cmmg7EPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056B61F000C5;
-	Mon, 19 Oct 2026 14:03:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GMdu1m0J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30931F000C7;
+	Mon, 19 Oct 2026 14:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418595;
-	bh=D/nMetE7AC9AwvuL9ehIST2RhDWAAZmzIy6F26VmNhM=;
+	s=k20260515; t=1792418594;
+	bh=gpac75BMATzt9YGi6lrESx49XbXRDzTsYj+TX3qYF4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cmmg7EPnPHvtjTYW13W85VjUkYLEbOMdZxb4vsdlWP2GIwBGwEYR2UsSQio/Ei7dj
-	 lOc9gUCVegaei/qpIfWkUkZ3pbgR10PUv25jLmOpLouvzsmf+j2slIP/MeBc6ZSqHs
-	 VKuKM9pYjXt8nC/l/klWDnq8aspjgA174yCO2MI0gqAIveXBiaz3K6nUwkzgIU1M5E
-	 qaLALqRXPFacGihpP/mYTJ//RVpX5xjCwnreQ00C3VnokTqvQ38GgpTm3VnkkfQoHK
-	 vYGf8he5SHJSEMgKB4nMHYphMQzeKbzfW8UvfAxq8qKfBUR1tjqyXjW9urzXHXoO3Z
-	 IVbbHnJNpkDig==
+	b=GMdu1m0JaHfu+yrlAiXnYuOZ3TpENLw7AXj7Oq9Zs7P0cek4w1Ybavc0y9a6vL0oO
+	 p1tkn6Lb3ziDYyvOdgppGnnRTzSC/+cOQUvkt6MkfDKrg7mC6kxKBRm1GfyjpBExVu
+	 SeID9MFGptw5pBcA0eGfS81aCXWqao13qWJEZJ3/0BUIkO/iXoiRFj6jlb/EeqV7A0
+	 zMr2edR2ik+rSDjaaxJD7LOJMoMf6o3r2GwWVYcYeQZClKjp35upjGvisl3yiuiWz7
+	 eb5NeVEPTcv+3iIDHvI3wMDaeXuNIoBP7gNg9QLFQbzGG3H/MMWW1mOqXoIF/Cr6dE
+	 J4Ju6yEtYvo0w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gabriel Prostitis <prostitisgabriel@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: =?UTF-8?q?Federico=20Valent=C3=ADn=20Andrade?= <fandrade@frba.utn.edu.ar>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] USB: gadget: inode: fix mm lifetime handling
-Date: Mon, 19 Oct 2026 09:50:51 -0400
-Message-ID: <20261019135441.1420968-360-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: usb-audio: Skip mixer creation on M-Audio Venom
+Date: Mon, 19 Oct 2026 09:50:50 -0400
+Message-ID: <20261019135441.1420968-359-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -47,508 +48,448 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gabriel Prostitis <prostitisgabriel@gmail.com>
+From: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
 
-[ Upstream commit a1c33c80e11ecd5c3310a38c4be324095dd85ac5 ]
+[ Upstream commit 4c0ec35e011309bd7091053ad5bbc01420967a66 ]
 
-priv stores a pointer to the submitting task's mm_struct,
-but does not currently hold a reference to it while async
-requests are pending.
+The M-Audio Venom (0763:2084) does not answer any GET_CUR request
+of its feature units, hanging up the USB microcontroller and
+"responding" with timeouts. So the mixer building lasts around 47
+seconds, and the device does not stream at all.
 
-This can result in a use-after-free if the task exits before
-completion handling finishes.
+The same GET_CUR requests issued through libusb (with no kernel
+driver bound) complete correctly and blazingly fast. So it seems
+to only happen during the initial probe.
 
-Take a reference with mmgrab() when queuing the read request
-and release it with mmdrop() on request completion.
+I defined an explicit composite quirk to bypass the mixer creation,
+as it is not needed (the synth already comes with volume controls).
 
-Reported-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
-Signed-off-by: Gabriel Prostitis <prostitisgabriel@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260601-mm-uaf-fix-v2-2-3c942a707bce@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+With both this and the device flag applied, the synth works
+flawlessly.
+
+Signed-off-by: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
+Link: https://patch.msgid.link/20260824140211.17003-3-fandrade@frba.utn.edu.ar
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+I have enough to decide: this is a device-specific usb-audio quirk, the
+local 6.12 tree has the same table and macros, and the companion flag
+patch is independent.
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-Record: **[USB gadget / gadgetfs] [fix] [hold an `mm_struct` reference
-for pending async endpoint I/O so completion cannot use a freed mm]**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [ALSA usb-audio] [Skip] [Do not build the mixer for M-Audio
+Venom 0763:2084 because GET_CUR on feature units hangs the device]
 
-- Subsystem prefix: `USB: gadget: inode:`
-- Action verb: **fix**
-- Intent: correct mm lifetime in the legacy gadgetfs AIO path
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- **Reported-by:** Gabriel Prostitis (author reported it)
-- **Signed-off-by:** Gabriel Prostitis (author)
-- **Acked-by:** Alan Stern (USB gadget reviewer)
-- **Link:** https://patch.msgid.link/20260601-mm-uaf-
-  fix-v2-2-3c942a707bce@gmail.com
-- **Signed-off-by:** Greg Kroah-Hartman (USB maintainer; merged)
-- **Fixes:** none (expected for this review path)
-- **Cc: stable:** none (expected)
-- Ignored pipeline markers: none in the real commit (`a1c33c80e11ec`)
+- Signed-off-by: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
+  (author)
+- Link: https://patch.msgid.link/20260824140211.17003-3-
+  fandrade@frba.utn.edu.ar (v3 series; msgid `-3` is patch 2/2 after the
+  cover)
+- Signed-off-by: Takashi Iwai <tiwai@suse.de> (ALSA maintainer; applied)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable (absence expected)
+- Ignore pipeline markers (Upstream commit / Sasha Levin) if present
 
-Notable: single reporter (the author), but **Acked-by Alan Stern** and
-merge by Greg KH. Cover letter (v2 0/2) states KASAN confirmed the UAF.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `kiocb_priv` stores `current->mm` while async USB requests
-  are pending, with no `mm_count` pin.
-- **Symptom / failure mode:** use-after-free if the submitting task
-  exits before completion handling. Cover letter (lore): KASAN UAF in
-  the workqueue path; possible **memory corruption in another process’s
-  address space** if the freed `mm_struct` is reused. Trigger: async
-  reads on OUT endpoints (io_uring called out for FunctionFS; gadgetfs
-  has the same `read_iter` AIO path).
-- **Version info:** none in the commit; buggy `priv->mm = current->mm`
-  dates to 2013 (`a80bf61ef36da4`, contained in v3.10-rc1).
-- **Root cause (author):** stored mm pointer without `mmgrab()`;
-  completion uses it via `kthread_use_mm()`.
+- Bug: Venom does not answer GET_CUR on feature units during probe; the
+  USB microcontroller hangs and later transfers time out.
+- Symptom: mixer build ~47 seconds; device does not stream.
+- Contrast: same GET_CUR via libusb with no kernel driver is fast — hang
+  is probe-path specific.
+- Fix: composite quirk ignores interface 0 (AudioControl/mixer);
+  interfaces 1–2 stay standard audio; 3 stays standard MIDI. Hardware
+  already has volume knobs.
+- Author: “With both this and the device flag applied, the synth works
+  flawlessly.”
+- Cover letter (v1 0/2): device has never worked over USB on Linux;
+  users reported the port useless for years. dmesg without quirks:
+  `cannot get freq at ep 0x2`, then many `failed to get current value` /
+  `cannot get min/max` with `-110` (ETIMEDOUT), then looping
+  `usb_set_interface failed (-110)`. Flags alone list the card but
+  produce no sound. Mixer skip is what made audio work.
+- Tested on 7.1.8-arch1-3 xHCI (Intel PCH); alsa-info linked from v1.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. Explicit hardware workaround: skip mixer creation so
+probe does not issue the GET_CUR sequence that wedges the MCU.
 
-Record: **Not hidden.** Subject and body are an explicit UAF/lifetime
-fix. The extra `mmget_not_zero()` around `kthread_use_mm()` matches the
-documented `mmgrab()` contract in `include/linux/sched/mm.h`.
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
-
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- **File:** `drivers/usb/gadget/legacy/inode.c` — **+13 / −4** (17 lines
-  changed)
-- **Functions:** `ep_user_copy_worker()`, `ep_aio_complete()`,
-  `ep_aio()`
-- **Scope:** single-file surgical fix
+- File: `sound/usb/quirks-table.h` only (+22 lines, 0 removed)
+- Function: none; one `usb_device_id` / `snd_usb_audio_quirk` table
+  entry
+- Scope: single-file surgical hardware quirk
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-1. **`ep_aio()` (queue):** still stores `priv->mm = current->mm`; now
-   **`mmgrab(priv->mm)`**. Fail path after that **`mmdrop(priv->mm)`**.
-2. **`ep_aio_complete()` (USB complete, writes / zero-length reads):**
-   completes immediately; now **`mmdrop(priv->mm)`** before freeing
-   `priv`.
-3. **`ep_user_copy_worker()` (async read copy):** previously
-   `kthread_use_mm(mm)` on an unpinned pointer. Now `mmget_not_zero(mm)`
-   → copy → `mmput` → always **`mmdrop(mm)`**. If the address space is
-   already gone, return `-EFAULT` instead of touching a dying mm.
+- Before: 0763:2084 is not in the quirk table. Generic class match in
+  `usb_audio_ids` (`USB_CLASS_AUDIO` / `USB_SUBCLASS_AUDIOCONTROL`,
+  `card.c` 1171–1173) claims it. Probe calls `snd_usb_create_streams()`
+  then `snd_usb_create_mixer()` (`card.c` 899–903). Mixer build issues
+  GET_MIN/GET_MAX/GET_CUR (`get_min_max_with_quirks`, `init_cur_mix_raw`
+  in `mixer.c`).
+- After: `USB_DEVICE_VENDOR_SPEC(0x0763, 0x2084)` + composite:
+  `QUIRK_DATA_IGNORE(0)` → `ignore_interface_quirk()` returns 0 (no
+  mixer); `QUIRK_DATA_STANDARD_AUDIO(1/2)` →
+  `create_standard_audio_quirk()` → `snd_usb_parse_audio_interface()`;
+  `QUIRK_DATA_STANDARD_MIDI(3)`. Because `snd_usb_create_quirk()`
+  returns 0, `card.c` does not take the generic `snd_usb_create_mixer()`
+  path.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Hardware workaround] Feature-unit GET_CUR during mixer init
+hangs the device MCU; skipping AudioControl interface 0 avoids those
+control messages. Same pattern as existing M-Audio entries (e.g. Quattro
+`QUIRK_DATA_IGNORE(0)` at ~1496).
 
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- **Category:** use-after-free / reference counting
-  (`mm_struct.mm_count` / `mm_users`)
-- **Mechanism:** `priv->mm` was a raw pointer. `kthread_use_mm()` itself
-  does `mmgrab(mm)` (`kernel/kthread.c`), which is a UAF if `mm` is
-  already freed. Classic AIO `exit_aio()` does **not** cover io_uring.
-  Cover letter: process exit while a request is pending frees mm while
-  the worker still holds the pointer.
-- **Fix:** pin with `mmgrab()` for the struct lifetime;
-  `mmget_not_zero()` before using the address space, as documented.
+- Obviously correct: VID/PID-scoped; uses macros already in this tree;
+  ignore-iface-0 is a long-standing pattern.
+- Minimal: one table entry, no API/data-structure change.
+- Regression risk: very low — only 0763:2084. Worst case if matching
+  were wrong: that one device stays broken (current behavior).
+- Companion: patch 1/2 adds `DEVICE_FLG(0x0763, 0x2084,
+  QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_DISABLE_AUTOSUSPEND)`. Parse
+  still calls `snd_usb_init_sample_rate()` (`stream.c:1255` →
+  `set_sample_rate_v1` GET_CUR). Full device function needs both; this
+  patch still compiles and is safe alone.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- **Quality:** obviously correct and matches
-  `mmgrab()`/`mmget_not_zero()` docs. Refcounts are balanced: grab on
-  queue; drop on fail, immediate complete, and worker.
-- **Minimal:** no unrelated edits.
-- **Regression risk:** low. Worst case after process exit is `-EFAULT`
-  instead of a copy into a dead mm. No new API, no lock-order change.
-  `mmgrab(NULL)` is not a realistic syscall path
-  (`ep_read_iter`/`ep_write_iter` from userspace).
+- Insertion is after M-Audio Fast Track Ultra 8R `0x2081` (Felix Homann,
+  2010, `fca5bca48759c`) and before Casio (2006).
+- Buggy path is generic mixer creation, not a recent regression. Class
+  match dates to `e5779998bf8b70` (2010).
+- Venom has been broken on Linux since USB support was expected; not a
+  new-subsystem bug.
 
----
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. N/A. Bug is device firmware vs generic UAC mixer,
+not a specific introducing commit.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
 Record:
-- Buggy store `priv->mm = current->mm` and worker: **`a80bf61ef36da4`**
-  (“gadget: remove only user of aio retry”, Zach Brown, **2013-05-07**,
-  **v3.10-rc1**).
-- `kthread_use_mm`/`kthread_unuse_mm`: `f5678e7f2ac31c` (2020).
-- Pattern has been in tree for many years, including this 7.3 checkout.
+- Recent same-file quirks already in this tree: YAMAHA CDS3000, Novation
+  Mininova, RME Digiface, Pioneer DDJ-800, M-Audio Micro, etc.
+- This entry is not present (`rg` found no `0x2084` / Venom).
+- Series is standalone 2/2: this file vs `quirks.c` flags. No refactor
+  prerequisite.
+- Macros (`QUIRK_DATA_IGNORE`, `QUIRK_DATA_COMPOSITE`,
+  `USB_DEVICE_VENDOR_SPEC`) from `0c3ad39b791c2` / `d79e13f8e8abb`,
+  already here.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: No Andrade commits in `sound/` on this tree. First-time ALSA
+contributor (cover: “first ever patch”). Weight is the maintainer apply,
+not author history.
 
-Record: **No `Fixes:` tag.** Not applicable. Introducer is
-`a80bf61ef36da4`, present in this tree (blame on the parent of the fix).
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
 Record:
-- Related: **`5eb5c72c72fef`** “USB: gadget: ffs: fix mm lifetime
-  handling” (patch 1/2, parent of this commit). Different file
-  (`f_fs.c`); **not a code dependency**.
-- After this commit on `inode.c`: only `dd0eed9e165b1` (unrelated ioctl
-  NULL deref).
-- **Standalone** for gadgetfs.
+- Code dependency: none. Applies without patch 1/2.
+- Functional dependency: patch 1/2 recommended so sample-rate GET_CUR /
+  autosuspend do not hang the device. Flags used there
+  (`QUIRK_FLAG_GET_SAMPLE_RATE`, `QUIRK_FLAG_DISABLE_AUTOSUSPEND`)
+  already exist in `usbaudio.h` on this tree. Nearby mainline context
+  uses `QUIRK_FLAG_MIXER_GET_CUR_BROKEN` (not in 6.12) — that is only a
+  context line for patch 1, not this patch.
+- Can apply standalone: yes.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-Record: Gabriel Prostitis has these two USB gadget mm-lifetime commits.
-Not the subsystem maintainer. **Alan Stern Acked-by** on this inode
-patch; Greg KH merged both.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: Uses `mmgrab`/`mmdrop`/`mmget_not_zero`/`kthread_use_mm`, all
-present here. No new helpers. Patch 1/2 is a sibling, not a
-prerequisite. **Applies standalone.**
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **b4 dig:** https://patch.msgid.link/20260601-mm-uaf-
-  fix-v2-2-3c942a707bce@gmail.com
-- **Series:** v1 (2026-05-31), v2 (2026-06-01). v2 cover: “Fix swapped
-  lines in `inode.c`”; v2 is what was merged.
-- Cover letter: UAF in FunctionFS **and** gadgetfs; `kthread_use_mm()`
-  in workqueue; KASAN; io_uring-style async read + exit; possible cross-
-  process corruption.
-- **No NAKs.** Ping 2026-06-30; Greg KH replied that the merge window
-  delayed review, then merged 2026-07-10.
-- **No explicit Cc: stable** in the thread (mbox).
+- `b4 dig -c` not run: commit is not in this checkout (no SHA to give
+  b4).
+- Thread via msgid `20260824140211.17003-3-fandrade@frba.utn.edu.ar`:
+  - Cover: https://lists.openwall.net/linux-kernel/2026/08/24/1347
+  - 1/2 flags: https://lists.openwall.net/linux-kernel/2026/08/24/1354
+  - 2/2 this patch: https://lists.openwall.net/linux-
+    kernel/2026/08/24/1356
+  - v1 cover: https://lists.openwall.net/linux-kernel/2026/08/22/126
+- Revisions: v1 (22 Aug) → v2 (23 Aug, extra SOB) → v3 (24 Aug, drop
+  duplicate SOB). Diff of this hunk unchanged across versions.
+- Takashi Iwai on v3 1/2 (25 Aug 2026): “Applied both patches now.
+  Thanks.” (https://lkml.iu.edu/2608.3/02561.html)
+- No NAK. v2 comment was only “a single Signed-off-by is enough.”
+- No reviewer Cc: stable; hardware quirks are still the documented
+  exception.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: To/Cc: linux-sound, linux-kernel, perex@perex.cz, tiwai@suse.com
+(maintainer, applied), plus unrelated Ccs (kuba, deucher). No extra
+Reviewed-by; maintainer apply is the review.
 
-Record: **b4 dig -w** recipients: author, Greg KH, linux-usb, linux-
-kernel, **Alan Stern**. Stern’s Acked-by is on the inode.c patch.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No bugzilla/syzbot. Author is the reporter; cover cites years of
+“USB useless on Linux.” dmesg + USBPcap + pyusb repro. Severity from
+reporter: device never streams.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Two-patch series, both hardware quirks, independent files. This
+commit is 2/2 (mixer). 1/2 is the flags entry. Both needed for a working
+synth; neither is a code prerequisite of the other.
 
-Record: Author is the reporter. Cover letter cites KASAN on the
-workqueue completion path. Direct lore HTTP fetches returned **403**;
-thread body recovered via **`b4 dig -m`**.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search for this VID/subject returned no
+Venom discussion. Not previously rejected for stable.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-Record: **v2 1/2** `USB: gadget: ffs: fix mm lifetime handling`
-(`5eb5c72c72fef`) is the FunctionFS analogue. Independent file. This 2/2
-is self-contained for gadgetfs.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: No function bodies edited. Runtime path uses
+`create_composite_quirk`, `ignore_interface_quirk`,
+`create_standard_audio_quirk`, `create_any_midi_quirk` (`quirks.c`).
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: lore.kernel.org/stable search returned **403**. **UNVERIFIED**
-whether stable@ discussed this. No Cc: stable on the patch itself (not a
-negative signal here).
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: KEY FUNCTIONS**
-
-Record: `ep_aio()`, `ep_aio_complete()`, `ep_user_copy_worker()`.
-(semcode MCP not available.)
-
-**Step 5.2: TRACE CALLERS**
-
+Step 5.2: TRACE CALLERS
 Record:
-- `ep_aio()` ← `ep_read_iter()` / `ep_write_iter()` when
-  `!is_sync_kiocb(iocb)`
-- Those are `ep_io_operations.read_iter` / `.write_iter` (gadgetfs
-  endpoint files)
-- `ep_aio_complete()` ← USB gadget `usb_request.complete` (often
-  IRQ/softirq)
-- `ep_user_copy_worker()` ← `schedule_work()` from that complete path
+- `usb_audio_ids[]` includes `quirks-table.h` (`card.c:1169–1170`).
+- Match → `usb_audio_probe` → `snd_usb_create_quirk` → composite walk.
+- Context: USB enumeration / driver probe, not IRQ/hot path.
 
-Reachable from **io_submit / io_uring** on gadgetfs endpoint fds, plus
-USB completion.
+Step 5.3: TRACE CALLEES
+Record: IGNORE: no I/O. STANDARD_AUDIO: `snd_usb_parse_audio_interface`
+(may `snd_usb_init_sample_rate`). STANDARD_MIDI:
+`snd_usb_midi_v2_create`. No new alloc/lock.
 
-**Step 5.3: TRACE CALLEES**
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Plug in Venom → snd-usb-audio probe. Userspace not required.
+Reachable on any machine with CONFIG_SND_USB_AUDIO and this hardware.
 
-Record: `mmgrab`/`mmdrop`/`mmget_not_zero`/`mmput`,
-`kthread_use_mm`/`kthread_unuse_mm`, `copy_to_iter`,
-`usb_ep_queue`/`usb_ep_alloc_request`/`usb_ep_free_request`,
-`ki_complete`.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Many `QUIRK_DATA_IGNORE(0)` entries (19+), including other
+M-Audio 0x0763 devices. Established, not a new mechanism.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-Record: userspace AIO/io_uring on gadgetfs ep file → `ep_aio` stores mm
-→ USB complete → worker `kthread_use_mm` + `copy_to_iter`. **Userspace-
-reachable** if gadgetfs is mounted and configured (typically privileged
-USB gadget role).
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same bug in `drivers/usb/gadget/function/f_fs.c`
-(`io_data->mm`), fixed by sibling `5eb5c72c72fef`. Systematic copy of
-the 2013 “stash mm, copy in worker” pattern.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
 Record:
-- **Tree:** `git describe HEAD` = **v7.3-rc4-27-gf0100363d8c37**; `make
-  kernelversion` = **7.3.0-rc4**
-- File and AIO path exist. Pre-fix code is in `a1c33c80e11ec^`.
-  Introduced **v3.10** (`a80bf61ef36da4`). **Bug exists in this
-  lineage.**
-- `git merge-base --is-ancestor a1c33c80e11ec HEAD` → yes (used only to
-  inspect the candidate, not as “already selected”).
+- Tree: `p-6.12-3-gc504cf0baa3d8`, `make kernelversion` = 6.12.111.
+- Generic mixer/probe path is present (`card.c`, `mixer.c`).
+- No Venom / 0x2084 entry (`rg` over `sound/usb`).
+- Bug is the generic UAC path vs this firmware, present for many years.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply. Local `quirks-table.h` 1816–1818 is the same Fast
+Track Ultra 8R end / Casio start as the diff. All macros exist. Expected
+difficulty: clean apply.
 
-Record: **Clean apply on this tree.** Surrounding code matches the diff.
-`mmgrab`/`mmdrop`/`mmget_not_zero`/`kthread_use_mm` are present.
-`inode.c` does not include `linux/sched/mm.h` directly; `mmgrab` is
-visible via existing includes (e.g. `pagemap.h` → `mmap_lock.h` →
-`sched/mm.h`) in **this** tree.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No Venom mixer or flags entry. No alternate fix.
+`QUIRK_FLAG_MIXER_GET_CUR_BROKEN` is not in 6.12 (unused by this patch).
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-Record: No earlier alternate gadgetfs mm-lifetime fix. Sibling
-FunctionFS fix is separate. No competing fix for this inode.c UAF.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [sound/usb / ALSA usb-audio] [IMPORTANT] — common USB audio
+stack; this change is one VID/PID.
 
----
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Active (recent CDS3000/Mininova quirks, resume cleanup). Quirk-
+table additions are routine and already land in this 6.12 tree.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM**
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific — M-Audio Venom (0763:2084) owners.
+CONFIG_SND_USB_AUDIO. No effect on other devices.
 
-Record: **USB gadgetfs** (`drivers/usb/gadget/legacy/`).
-**IMPORTANT/PERIPHERAL:** not core mm/VFS, but a supported (non-staging)
-USB gadget userspace API. FunctionFS is more common; gadgetfs is still
-shipped and has the same UAF.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Plug in / probe. Certain. Unprivileged user can trigger by
+attaching the USB synth. Not a race.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: File is mature (code from 2005–2013 with occasional fixes). Low
-churn. Long-lived bug, not a brand-new subsystem.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-
-Record: **Config-specific / driver-specific:** `CONFIG_USB_GADGETFS`,
-async I/O on gadgetfs endpoints, process exit before USB complete. Not
-all machines, but real gadgetfs userspace drivers.
-
-**Step 8.2: TRIGGER CONDITIONS**
-
-Record: Async read (or write, for the pin) on a gadgetfs endpoint, then
-the submitting task exits before `ep_aio_complete` / worker. Cover
-letter: io_uring-style async + exit. Timing-dependent but realistic.
-Typically needs gadgetfs access (usually privileged), **not** a random
-unprivileged syscall on a default desktop.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-
-Record: **Use-after-free of `mm_struct`** → KASAN crash or **cross-
-process memory corruption**. **Severity: HIGH** (UAF / security-adjacent
-corruption). Not a log-only issue.
-
-**Step 8.4: RISK-BENEFIT RATIO**
-
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
 Record:
-- **Benefit: HIGH** for gadgetfs AIO users — stops UAF/corruption.
-- **Risk: LOW** — 13 insertions, 4 deletions, refcount pin matching
-  documented API, Acked-by Stern.
-- **Ratio:** benefit clearly outweighs risk.
+- Failure: MCU hang, ~47s probe, ETIMEDOUT, no PCM/MIDI stream, repeated
+  `usb_set_interface` failures.
+- Severity: HIGH for those users (device unusable). Not a kernel
+  panic/UAF. USB control timeout is 5000 ms (`USB_CTRL_GET_TIMEOUT`);
+  many GET_CUR/GET_MIN/GET_MAX calls match the ~47s story.
 
----
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: high for Venom owners (first working Linux USB audio/MIDI).
+  Matches “hardware quirk” exception. Cover letter: flags alone were not
+  enough; this skip is what produced sound.
+- Risk: very low (22 lines, one ID, existing macros).
+- Ratio: strongly favors backport.
 
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Real hardware bug: GET_CUR during mixer init hangs the MCU; no
+  streaming.
+- Author dmesg, USBPcap, libusb/pyusb, and “works with both quirks.”
+- Device never worked on Linux; users have asked for years.
+- Small VID/PID table entry; same pattern as other M-Audio quirks
+  already in this tree.
+- Maintainer Takashi Iwai applied v3.
+- All macros and insertion context exist in 6.12.111.
+- Hardware quirks / workarounds are an explicit stable exception.
+- Does not change APIs or other devices.
 
-**FOR:**
-- Real UAF of `mm_struct` when async gadgetfs I/O outlives the task
-- Cover letter: KASAN; possible corruption of another process’s mm
-- Small, contained, refcounts balanced
-- Matches `mmgrab()` documentation
-- Acked-by Alan Stern; merged by Greg KH
-- Code and APIs exist in this v7.3-rc4 tree; bug dates to v3.10
-- Standalone (patch 2/2 does not need 1/2)
+AGAINST:
+- Part of a 2/2 series; sample-rate + autosuspend flags are also needed
+  for a fully working device.
+- Niche synth, not a core-path crash.
+- First-time contributor (offset by maintainer apply).
 
-**AGAINST:**
-- Gadgetfs is a narrower, legacy userspace gadget API
-- Trigger needs gadgetfs + async I/O + exit-before-complete
-- No `Fixes:` / `Cc: stable` (not a negative for this process)
+UNRESOLVED:
+- Could not run `b4 dig -c` (commit not in this repo). Threads recovered
+  from msgid/openwall/lkml.
+- Did not independently attach a Venom (author + maintainer evidence
+  used).
 
-**UNRESOLVED:**
-- lore.kernel.org HTTP 403; stable@ discussion not independently
-  confirmed beyond the mbox from `b4 dig`
-- No public syzbot hash in the commit (KASAN is from the cover letter)
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — table-only, existing macros,
+   author tested, maintainer applied.
+2. Fixes a real bug that affects users? PASS — probe hang and
+   silent/broken USB audio.
+3. Important issue? PASS — HIGH: device freeze and total loss of
+   function (not panic).
+4. Small and contained? PASS — +22 lines, one file, one ID.
+5. No new features or APIs? PASS — quirk for existing snd-usb-audio.
+6. Can apply to the local tree? PASS — clean apply on 6.12.111.
 
-**Step 9.2: STABLE RULES CHECKLIST**
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Hardware quirk/workaround (ALSA usb-audio quirk table).
+Qualifies on that exception alone.
 
-1. Obviously correct and tested? **PASS** — API-correct pin; v2 after a
-   v1 line-swap mistake; Stern ack
-2. Fixes a real bug that affects users? **PASS** — UAF on gadgetfs async
-   completion
-3. Important (crash, security, corruption, deadlock)? **PASS** — UAF /
-   possible cross-process corruption (**HIGH**)
-4. Small and contained? **PASS** — one file, +13/−4
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — context and helpers exist
-   here
+Step 9.4: MAKE YOUR DECISION
+This should be backported to this 6.12 tree. It is a contained, VID/PID-
+scoped workaround that stops mixer GET_CUR from wedging the Venom so the
+existing driver can stream. The companion flags patch is a separate two-
+line quirk and is not a apply/compile dependency.
 
-**Step 9.3: EXCEPTION CATEGORIES**
+What it solves for stable users: without it, plugging in 0763:2084 runs
+generic mixer init, burns ~47s of USB timeouts, hangs the MCU, and never
+streams. With it, AudioControl is ignored and standard PCM/MIDI
+interfaces are used — the path the author verified.
 
-Record: none (not a device ID / quirk / DT / build / docs exception).
-Qualifies as a normal important bugfix.
+Risk vs benefit: benefit is a working device for Venom owners; risk is
+limited to that ID. 6.12 already has the same table style and macros, so
+no rework.
 
-**Step 9.4: DECISION**
+Concerns: take the sample-rate/autosuspend flags patch too for full
+function; this commit is still correct and safe on its own.
 
-This is a small, reviewed UAF fix for code that exists in this tree.
-Process exit during gadgetfs AIO can free `mm_struct` while
-`ep_user_copy_worker()` still calls `kthread_use_mm()`. That is a real
-stability/security bug, not cleanup. Risk of the pin itself is low.
+Verification:
+- [Phase 1] Parsed subject/tags/body: Skip mixer; SOB Andrade + Iwai;
+  msgid 17003-3; no Fixes/stable Cc
+- [Phase 1] Cover letter: never worked on Linux; dmesg -110; flags
+  insufficient; mixer skip enabled sound
+- [Phase 2] Diff: +22 in `sound/usb/quirks-table.h`;
+  IGNORE(0)+STANDARD_AUDIO(1,2)+STANDARD_MIDI(3)
+- [Phase 2] `card.c` 899–903: generic path creates mixer; quirk return 0
+  skips it
+- [Phase 2] `mixer.c` `get_min_max_with_quirks` / `init_cur_mix_raw`:
+  GET_CUR/GET_MIN/GET_MAX on probe
+- [Phase 2] `ignore_interface_quirk` returns 0;
+  `create_standard_audio_quirk` parses then returns 0
+- [Phase 3] Blame: insert after 0x2081 (2010) / before Casio (2006)
+- [Phase 3] `rg` 0x2084/Venom: absent in this tree
+- [Phase 3] Macros present (`quirks-table.h` 20–81)
+- [Phase 3] No Andrade history in `sound/` here
+- [Phase 3] Companion flags: GET_SAMPLE_RATE + DISABLE_AUTOSUSPEND
+  exist; MIXER_GET_CUR_BROKEN does not (irrelevant to this hunk)
+- [Phase 4] lore/openwall v1–v3; technical diff unchanged; Iwai “Applied
+  both patches”
+- [Phase 4] v2 feedback: duplicate SOB only
+- [Phase 4] stable list: no prior Venom discussion found
+- [Phase 4] UNVERIFIED: `b4 dig -c` (no local SHA)
+- [Phase 5] Call chain: `usb_audio_ids` → probe →
+  `create_composite_quirk`
+- [Phase 5] `stream.c:1255` `snd_usb_init_sample_rate` on parse (why
+  flags patch also matters)
+- [Phase 5] 19+ existing `QUIRK_DATA_IGNORE(0)` including M-Audio
+  Quattro
+- [Phase 6] `git describe` p-6.12-3-gc504cf0baa3d8; `make kernelversion`
+  6.12.111
+- [Phase 6] Insertion context matches; clean apply
+- [Phase 7] SOUND maintainers Iwai/Kysela; quirk additions already in
+  this 6.12 tree
+- [Phase 8] Trigger: USB plug-in; timeout 5000 ms; severity HIGH for
+  that device
+- UNVERIFIED: live Venom reproduce
 
-### What the commit solves for this tree
-
-`ep_aio()` saved `current->mm` without an `mm_count` reference.
-Completion may run after the task is gone (especially io_uring, which is
-not `exit_aio()`). The worker then used a dangling `mm_struct`. Pinning
-with `mmgrab()` and using `mmget_not_zero()` before the copy closes that
-window.
-
-### Risk vs benefit
-
-Benefit is preventing kernel UAF/corruption on a reachable gadgetfs AIO
-path. Risk is a few refcount operations on a slow path. No structural or
-API change.
-
-### Concerns
-
-Patch 2/2 of a series, but independent of FunctionFS. v1 had swapped
-lines; merged v2 is the one to use. Direct lore HTTP was blocked;
-discussion was recovered with `b4 dig -m`.
-
----
-
-### Verification
-- **[Phase 1]** `git log -1 a1c33c80e11ec`: subject/tags as above; no
-  Fixes/Cc:stable
-- **[Phase 2]** `git show a1c33c80e11ec`: +13/−4 in `inode.c`; mmgrab on
-  queue; mmdrop on fail, immediate complete, and worker; mmget_not_zero
-  around copy
-- **[Phase 2]** Read `ep_aio`/`ep_aio_complete`/`ep_user_copy_worker` in
-  this tree: refcounts balanced
-- **[Phase 2]** `include/linux/sched/mm.h`: mmgrab docs require
-  mmget_not_zero before using the address space
-- **[Phase 2]** `kernel/kthread.c` `kthread_use_mm()`: mmgrab on the
-  passed mm — UAF if mm already freed
-- **[Phase 3]** `git blame` on parent: `priv->mm` from `a80bf61ef36da4`
-  (v3.10-rc1, 2013)
-- **[Phase 3]** `git describe --contains a80bf61ef36da4` →
-  `v3.10-rc1~50^2~20`
-- **[Phase 3]** Sibling `5eb5c72c72fef` is f_fs.c only; not required for
-  inode.c
-- **[Phase 3]** `git log --author="Gabriel Prostitis" -- drivers/usb/`:
-  only these two mm-lifetime commits
-- **[Phase 3]** `git merge-base --is-ancestor a1c33c80e11ec HEAD`: is
-  ancestor (inspection only)
-- **[Phase 4]** `b4 dig -c a1c33c80e11ec`: v2 2/2 lore URL
-- **[Phase 4]** `b4 dig -a`: v1 then v2; v2 cover notes inode.c swapped-
-  line fix
-- **[Phase 4]** `b4 dig -w`: Greg KH, linux-usb, Alan Stern
-- **[Phase 4]** `b4 dig -m /tmp/gadget-mm-uaf.mbox`: KASAN, io_uring
-  trigger, cross-process corruption; Stern ack; no NAK; Greg delay-then-
-  merge
-- **[Phase 4]** WebFetch/curl lore: **403** — UNVERIFIED via HTTP; mbox
-  used instead
-- **[Phase 4]** stable@ search: **403** — UNVERIFIED
-- **[Phase 5]** grep: `ep_aio` only from `ep_read_iter`/`ep_write_iter`;
-  those are `ep_io_operations`
-- **[Phase 5]** Same mm stash in `f_fs.c`, fixed separately
-- **[Phase 6]** `git describe HEAD` / `make kernelversion`: **v7.3-rc4**
-  / **7.3.0-rc4**
-- **[Phase 6]** Buggy path present before `a1c33c80e11ec`; helpers
-  present
-- **[Phase 7]** `USB_GADGETFS` in `drivers/usb/gadget/legacy/Kconfig`
-- **[Phase 8]** Failure mode: mm UAF → oops or cross-process corruption;
-  HIGH
-- **UNVERIFIED:** whether stable@ already discussed this (lore 403); no
-  syzbot ID in the commit
+This is a small, tested hardware quirk for existing snd-usb-audio. It
+belongs on this 6.12 tree.
 
 **YES**
 
- drivers/usb/gadget/legacy/inode.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ sound/usb/quirks-table.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/usb/gadget/legacy/inode.c b/drivers/usb/gadget/legacy/inode.c
-index 7c72267c0c53b..a46b6a6b1f836 100644
---- a/drivers/usb/gadget/legacy/inode.c
-+++ b/drivers/usb/gadget/legacy/inode.c
-@@ -473,11 +473,17 @@ static void ep_user_copy_worker(struct work_struct *work)
- 	struct kiocb *iocb = priv->iocb;
- 	size_t ret;
- 
--	kthread_use_mm(mm);
--	ret = copy_to_iter(priv->buf, priv->actual, &priv->to);
--	kthread_unuse_mm(mm);
--	if (!ret)
-+	if (mmget_not_zero(mm)) {
-+		kthread_use_mm(mm);
-+		ret = copy_to_iter(priv->buf, priv->actual, &priv->to);
-+		kthread_unuse_mm(mm);
-+		mmput(mm);
-+		if (!ret)
-+			ret = -EFAULT;
-+	} else {
- 		ret = -EFAULT;
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index d783dae1850a0..061d21da91fbe 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -1814,6 +1814,28 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 		}
+ 	}
+ },
++{
++	/*
++	 * M-Audio Venom
++	 *
++	 * The AudioControl interface times out on every GET_CUR request,
++	 * which adds around 47 seconds to the card registration and
++	 * freezes the device, blocking streaming.
++	 * Using an explicit composite quirk to skip the mixer entirely.
++	 */
++	USB_DEVICE_VENDOR_SPEC(0x0763, 0x2084),
++	QUIRK_DRIVER_INFO {
++		.vendor_name = "M-Audio",
++		.product_name = "Venom",
++		QUIRK_DATA_COMPOSITE {
++			{ QUIRK_DATA_IGNORE(0) },
++			{ QUIRK_DATA_STANDARD_AUDIO(1) },
++			{ QUIRK_DATA_STANDARD_AUDIO(2) },
++			{ QUIRK_DATA_STANDARD_MIDI(3) },
++			QUIRK_COMPOSITE_END
++		}
 +	}
-+	mmdrop(mm);
++},
  
- 	/* completing the iocb can drop the ctx and mm, don't touch mm after */
- 	iocb->ki_complete(iocb, ret);
-@@ -503,6 +509,7 @@ static void ep_aio_complete(struct usb_ep *ep, struct usb_request *req)
- 	 * complete the aio request immediately.
- 	 */
- 	if (priv->to_free == NULL || unlikely(req->actual == 0)) {
-+		mmdrop(priv->mm);
- 		kfree(req->buf);
- 		kfree(priv->to_free);
- 		kfree(priv);
-@@ -543,6 +550,7 @@ static ssize_t ep_aio(struct kiocb *iocb,
- 	priv->epdata = epdata;
- 	priv->actual = 0;
- 	priv->mm = current->mm; /* mm teardown waits for iocbs in exit_aio() */
-+	mmgrab(priv->mm);
- 
- 	/* each kiocb is coupled to one usb_request, but we can't
- 	 * allocate or submit those if the host disconnected.
-@@ -572,6 +580,7 @@ static ssize_t ep_aio(struct kiocb *iocb,
- 
- fail:
- 	spin_unlock_irq(&epdata->dev->lock);
-+	mmdrop(priv->mm);
- 	kfree(priv->to_free);
- 	kfree(priv);
- 	put_ep(epdata);
+ /* Casio devices */
+ {
 -- 
 2.53.0
 
