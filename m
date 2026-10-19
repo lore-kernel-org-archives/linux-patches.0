@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7D55CFA4B;
-	Mon, 19 Oct 2026 14:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033EC4FECCB;
+	Mon, 19 Oct 2026 14:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418485; cv=none; b=AF/m9yseKxKekVDJ4jSl91TqQkckyEN0cNDLxThzoUzk34G5MNRA9RcxyQhrUv1DYQjAhwuuFP4XabtteZ5FU1WFT1iJbVFzGssoCcMY67XbUYggZjp7QCA3jXPJxYL8eJBksOahJbSITzb/UJ5TghJ/r6QZkcP8tkB+4HdyU8Y=
+	t=1792418486; cv=none; b=BMCuz1jjJJgX9TRs2DOyx1gd8g/jhAIWAmklCbmC1/cv0h/EQLx0l01WszNm7cFgy00R6XnuPwTDpEKwM6WQmG0hP23ht73WL/7WL8FXed080OICqxgD8mJ2v3FbwBjU2XQ8KppToskV5JJA9pvNJr4Gmd2C3jx6hrxlup0svI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418485; c=relaxed/simple;
-	bh=3zkUz8vKBzJk2PcRoTlwHiicQys/aPwdESXGrkdBgUg=;
+	s=arc-20240116; t=1792418486; c=relaxed/simple;
+	bh=T+SJQKkQNkV1odb+u0fSYiUhhiFBgAgqiN5Ku20W6zE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ATFh1j9o1ZabuGDVEITe8BJZyN3yVH8Cd5BLKjJCJsvZURpcbsT0tptveWSa/aAdHhJgMq8NPQqe7VXeEZToulGY6A6WxjrqLfRoKfmjMdJ1V2v2LxfZ6eqj2NgNh4MJcQFTl2vjI04iaa+sHg6eURo5tNPVw4wtjPyMX7qQ8pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iLaW5l9M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=obD8l0V0jLntfRg6iq1eSDueaxjdE0p+x4LyvnRq04aPA/VxV/RnlxvTDvRfSa0eU2Xk4jX46jX16XZR0X3sXqLL608QCKtcEVljPLlwEmxfnV42dsX+ttSJEYpISzQgooK2HrqoSoDB9XofgUUl+luJHTNwohO3kT8/OGcSttI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ij+aj8iS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iLaW5l9M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41AF1F000C9;
-	Mon, 19 Oct 2026 14:01:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ij+aj8iS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36781F000C4;
+	Mon, 19 Oct 2026 14:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418482;
-	bh=DTgVlcXPob2+dJEyJG/7iG8jOR3jrppL3zma4P8Fiac=;
+	s=k20260515; t=1792418483;
+	bh=dSAE443ekBLb4DzBFWNQVF7AV2ZjnexmVnurg1YZebY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iLaW5l9Me1Tf9sLH0wnpLAMLPMxpWzrirJZldUHpvhH9GaF5HegleTxLQe6zaxZi9
-	 cZQESWAZRhZeKtdpwURKL2YIRuyp1l76wSq90CNI43yyyrPARQAkfrlgMlM+mg7cVP
-	 G+qVfZVhcFmHbd8MUpGuEz9/AlX+IbordWwvJsDEeJpJaSnDYia8O/NvNFLJXnV618
-	 VkkYoDtQu8gK5gamlr7FP5MFWAhLNBn6sZsQZ46yTouP+WYc0o15/KkM/hNVfZS1jK
-	 PDzSl96YTWNGGaj9okDOmj873whBLusCfv8HJ96VI8Rf1hS+Syshugr2vpOZtRo3sc
-	 nMbeULERc0XXA==
+	b=ij+aj8iS74TSoGkRUTIW3mKTmSs/b0sT95ovZx+DDXcmUjJmUMfO4aRdUl5XajKUl
+	 K8cU7Amdcnhz9qQmHEAwBSniRXt+ow5FJfCkIRgjICzCnb7hx+EhW0ePXCwGcGYGSK
+	 BY6x0yociDvpuGaHaAVdQrnRTmVYZM06PfcJXfwX+LFkMzx5AejqiZQId2AHddeFPo
+	 OnEbjXPpTLbNit/yTGnNlmUG7WCPGLcwDKmold6Hfl83WFdLz/qooSKlyQF/sc8R7w
+	 IQJ1z+oHn4Z9lP5jOb/253zl1NAcjyY65KSZek0yJgZi5g0Yy7vam/PDcnjImyC5IN
+	 Q3kucUqmmBgsQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xu Rao <raoxu@uniontech.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-mmc@vger.kernel.org,
+	yung-chuan.liao@linux.intel.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] mmc: block: reject invalid perdev_minors before division
-Date: Mon, 19 Oct 2026 09:49:31 -0400
-Message-ID: <20261019135441.1420968-280-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] soundwire: dmi-quirks: Disable ghost Realtek on Asus Zenbook Duo
+Date: Mon, 19 Oct 2026 09:49:32 -0400
+Message-ID: <20261019135441.1420968-281-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,392 +54,389 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 5253aee00a4383cb0482d5e99bde48b8054ae2c0 ]
+[ Upstream commit ca02ffd4975ca5249abf0cfb750a495d23b453ee ]
 
-The mmcblk.perdev_minors module parameter is parsed as a signed int and
-is used during mmc_blk_init() to compute the number of supported block
-devices.
+The Asus Zenbook Duo also has a Realtek device in the ACPI that
+doesn't exist in the physical hardware. This confuses the machine
+driver into attempting to create DAI links for the device. Add a
+quirk to remove this device.
 
-Passing perdev_minors=0 makes the init path divide by zero when it
-computes max_devices. Negative values are invalid as well and would make
-max_devices negative before it is later used as an IDA limit.
-
-Reject non-positive perdev_minors values before registering any mmcblk
-resources.
-
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260720095741.3592825-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the bug mechanism, history, and review thread. Compiling the
-nine-phase verdict for this 7.3-rc4 tree.
+This is a DMI hardware quirk for this 6.12 tree. The `ghost_realtek`
+remap table is already here; the commit only adds board `UX8407AA`.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1: Subject line**
-- Record: **[mmc/block] [reject] reject invalid `perdev_minors` before
-  division**
-- Subsystem: `mmc: block:`. Verb: **reject** (guard / prevent invalid
-  input). Intent: do not use a non-positive module parameter as a
-  divisor.
+Step 1.1: PARSE THE SUBJECT LINE
+Record: **[soundwire / dmi-quirks] [Disable] Disable ghost Realtek on
+Asus Zenbook Duo.** “Disable” is a bug-fix verb: stop enumerating a non-
+existent ACPI codec.
 
-**Step 1.2: Tags**
-- Record:
-  - `Signed-off-by: Xu Rao <raoxu@uniontech.com>` (author)
-  - `Signed-off-by: Ulf Hansson <ulfh@kernel.org>` (MMC maintainer;
-    committed 2026-07-10)
-  - **No** `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`,
-    `Acked-by:`, `Link:`, or `Cc: stable@vger.kernel.org`
-  - Absence of `Fixes:` / `Cc: stable` is expected for this review and
-    is not a negative signal
-- SHA in this tree: `5253aee00a4383cb0482d5e99bde48b8054ae2c0`
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record:
+- Signed-off-by: Charles Keepax (author)
+- Reviewed-by: Pierre-Louis Bossart (SoundWire/Intel audio)
+- Link: https://patch.msgid.link/20260720095741.3592825-1-
+  ckeepax@opensource.cirrus.com
+- Signed-off-by: Vinod Koul (SoundWire maintainer; applied as
+  `ca02ffd4975c`)
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable (absence expected)
+- Ignore pipeline SOBs/Upstream markers
 
-**Step 1.3: Body**
-- Record:
-  - **Bug:** `mmcblk.perdev_minors` is a signed `int` module parameter.
-    `mmc_blk_init()` computes `max_devices` as `(1 << MINORBITS) /
-    perdev_minors`.
-  - **Symptoms:** `perdev_minors=0` → divide-by-zero in init. Negative
-    values → negative `max_devices`, later used as an IDA upper bound.
-  - **Version info:** none in the message.
-  - **Root cause:** no validation before division / IDA use. Fix: reject
-    `<= 0` before registering any mmcblk resources.
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Record:
+- Bug: Asus Zenbook Duo ACPI lists a Realtek SoundWire device that is
+  not on the board.
+- Symptom: machine driver tries to create DAI links for that ghost codec
+  → wrong/broken sound card.
+- Root cause: firmware _ADR for a phantom RT722 (same class as UX5406AA
+  / Lenovo entries already in this tree).
+- No stack trace; hardware/firmware description.
 
-**Step 1.4: Hidden bug fix?**
-- Record: **No disguise.** This is an explicit crash/UB fix, not
-  cleanup-as-fix.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. It is an explicit hardware quirk.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: Inventory**
-- Record:
-  - File: `drivers/mmc/core/block.c` — **+5 / −0**
-  - Function: `mmc_blk_init()`
-  - Scope: **single-file surgical fix**
+Step 2.1: INVENTORY THE CHANGES
+Record:
+- File: `drivers/soundwire/dmi-quirks.c` (+7 / −0)
+- Function/data: `adr_remap_quirk_table[]` only
+- Scope: single-file surgical DMI entry
+- New match: `DMI_SYS_VENDOR "ASUS"` + `DMI_BOARD_NAME "UX8407AA"` →
+  existing `ghost_realtek`
 
-**Step 2.2: Code flow**
-- Record: **Before:** `mmc_blk_init()` registers the RPMB bus and chrdev
-  region, then does `max_devices = min(MAX_DEVICES, (1 << MINORBITS) /
-  perdev_minors)` with no check. **After:** if `perdev_minors <= 0`, log
-  and `return -EINVAL` **before** any of those registrations (no leak on
-  the new error path).
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record: Before, UX8407AA was not in the table, so ACPI _ADR
+`0x000330025d072201` (RT722 on link3) was used as-is. After, that _ADR
+is remapped to `0`, so `find_slave()` skips the device.
 
-Verified parent of the fix (no check):
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: **Hardware workaround (DMI quirk).** Same `ghost_realtek` map
+already in tree:
 
+```97:104:drivers/soundwire/dmi-quirks.c
+static const struct adr_remap ghost_realtek[] = {
+        /* rt722 on link3 */
+        {
+                0x000330025d072201ull,
+                0x0000000000000000ull
+        },
+        {}
+};
 ```
-max_devices = min(MAX_DEVICES, (1 << MINORBITS) / perdev_minors);
+
+`sdw_dmi_override_adr()` applies that map. `find_slave()` then drops a
+zero address:
+
+```109:113:drivers/soundwire/slave.c
+        if (bus->ops->override_adr)
+                addr = bus->ops->override_adr(bus, addr);
+
+        if (!addr)
+                return false;
 ```
 
-**Step 2.3: Bug mechanism**
-- Record: **Logic / correctness + memory-safety (div-by-zero, invalid
-  IDA limit)**
-  - `perdev_minors == 0`: integer division by zero in `mmc_blk_init()`
-    (oops / exception on init).
-  - `perdev_minors < 0`: signed division yields a negative
-    `max_devices`; `ida_alloc_max(..., max_devices - 1, ...)` takes
-    `unsigned int max`, so the negative value **wraps** to a huge limit
-    (`include/linux/idr.h`). Probe then uses `devidx * perdev_minors`
-    for `first_minor`.
-  - Same divisor is also used in `mmc_get_devidx()` (`disk->first_minor
-    / perdev_minors`).
+Intel ops already wire this (`override_adr = sdw_dmi_override_adr` in
+`intel_auxdevice.c`). `intel_init.c` builds `ctx->ids` from registered
+slaves, so SOF machine select in `hda_sdw_machine_select()` never sees
+the ghost.
 
-**Step 2.4: Fix quality**
-- Record: **Obviously correct and minimal.** Matches Kconfig
-  (`MMC_BLOCK_MINORS` range 4–256). Valid defaults (8) unchanged.
-  Regression risk **very low**: only rejects values that already crash
-  or mis-size the IDA. Early return happens before `bus_register`, so no
-  new leak.
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Copy of existing ASUS/Lenovo rows; DMI-gated; no
+API/locking/hot-path change. Regression risk is limited to mis-matched
+board strings on UX8407AA only.
 
-## Phase 3: Git history
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.1: Blame**
-- Record:
-  - `perdev_minors` module param: `5e71b7a64cb4c` (“mmc: make number of
-    mmcblk minors configurable”, Olof Johansson, 2010) —
-    **v2.6.37-rc1**.
-  - Division `(1 << MINORBITS) / perdev_minors`: `a26eba614afff0` (“mmc:
-    block: Increase max_devices”, Ben Hutchings, 2014) — **v3.19-rc1**.
-  - Bug is over a decade old in this lineage, not new 7.x code.
+Step 3.1: BLAME THE CHANGED LINES
+Record: PTL `ghost_realtek` rows come from `30e7fb61a64ba` (“Disable
+ghost Realtek devices”), backport of upstream `4dab2b904414` (Charles
+Keepax, 2026-05-20). Already in this tree. UX8407AA is not.
 
-**Step 3.2: Fixes: tag**
-- Record: **No `Fixes:` tag.** Introducing commits above are in this
-  tree (ancient ancestors of HEAD).
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Introduced bug is firmware, not a kernel commit.
 
-**Step 3.3: File history**
-- Record: Recent `block.c` work is unrelated (RPMB unregister, MQ
-  retry). `git log --grep=perdev_minors -- drivers/mmc/` shows only this
-  fix plus old param/prefix commits. **Standalone, not a series.** No
-  follow-ups on `block.c` after `5253aee`.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Recent `dmi-quirks.c` history is quirk additions. Sibling IDs
+already here: UX5406AA, Lenovo 83QK, 83SF. Upstream context also has
+B9406CAA; that ID is **not** in this tree and is **not** required for
+UX8407AA.
 
-**Step 3.4: Author**
-- Record: Xu Rao has one other recent MMC commit (`mmc: spi: reset
-  bytes_xfered...`). Not the subsystem maintainer. **Ulf Hansson** (MMC
-  maintainer) applied it.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Charles Keepax is a regular SoundWire/ASoC contributor (Cirrus).
+Same author added the original `ghost_realtek` table. Reviewed by
+Pierre-Louis Bossart; applied by Vinod Koul.
 
-**Step 3.5: Dependencies**
-- Record: **None.** The check uses existing `perdev_minors` and
-  `pr_err`. Applies on its own.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Needs `ghost_realtek` + `sdw_dmi_override_adr` + Intel
+`override_adr`. All present (`30e7fb61a64ba`). Standalone; not patch
+x/y. Original May 2026 series (ptl-match Chrome matches, then
+ghost_realtek) is independent of this July follow-up.
 
-## Phase 4: Mailing list / external
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.1: Original discussion**
-- Record: `b4 dig -c 5253aee00a438` matched patch-id
-  `291b9622c960b2f250c74c590d7e9916013372a3`.
-  - Lore/msgid: `https://patch.msgid.link/C7A17066496D0ABA+2026070609250
-    1.853376-1-raoxu@uniontech.com`
-  - **v1 only** (`b4 dig -a`); committed version is that v1.
-  - Ulf Hansson (10 Jul 2026): **“Applied for next, thanks!”** — no NAK,
-    no requested respin.
-  - Direct lore.kernel.org fetch returned **403**; thread confirmed via
-    b4 + LKML/openwall mirrors.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c ca02ffd4975c` → https://patch.msgid.link/20260720095741.359
+  2825-1-ckeepax@opensource.cirrus.com
+- `b4 dig -a`: single v1, no later revision
+- Pierre-Louis Bossart: Reviewed-by; noted this will keep happening as
+  more BIOS bugs ship; not a NAK
+- Vinod Koul: Applied, thanks
+- No NAKs, no Cc: stable in review (not a negative)
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-- Record: `ulfh@kernel.org`, `linux-mmc@vger.kernel.org`, Avri Altman,
-  Bean Huo, Shawn Lin, Jens Wiklander, **Kees Cook**, plus others.
-  Maintainer was To: and merged the patch. No reviewer `Reviewed-by` in
-  git.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: To Vinod Koul; Cc Yung-Chuan Liao, Pierre-Louis Bossart, linux-
+sound, linux-kernel, Cirrus patches. Appropriate maintainers.
 
-**Step 4.3: Bug report**
-- Record: **No `Reported-by` / syzbot / bugzilla.** Author describes the
-  mechanism; no public crash log found.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Author report of shipping ACPI. Same
+firmware class as quirks already in 6.12. Related AUTOSEL for 6.12:
+`platform/x86: asus-nb-wmi: add DMI quirk for ASUS Zenbook Duo UX8407AA`
+— this SKU is already treated as 6.12-relevant.
 
-**Step 4.4: Series**
-- Record: **Standalone single patch**, not N/M.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone 1/1. Follow-up to `4dab2b904414` / `30e7fb61a64ba`,
+already here.
 
-**Step 4.5: Stable list**
-- Record: Web search of `lore.kernel.org/stable` for `perdev_minors` did
-  **not** turn up a nomination or a rejection of this patch. Direct lore
-  fetch was 403. **UNVERIFIED** that nobody ever asked stable@; no
-  evidence of a known NAK for stable either.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: **UNVERIFIED** — lore.kernel.org/stable returned 403. No
+evidence this was rejected for stable.
 
-## Phase 5: Semantic / call graph
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.1: Functions**
-- Record: **`mmc_blk_init` only** (plus it protects later use of
-  `perdev_minors` in `mmc_get_devidx`, `mmc_blk_alloc_req`,
-  `mmc_blk_alloc_rpmb_part`).
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: No function body change. Data: `adr_remap_quirk_table`.
+Consumer: `sdw_dmi_override_adr()`.
 
-**Step 5.2: Callers**
-- Record: `module_init(mmc_blk_init)` only — boot (builtin,
-  `CONFIG_MMC_BLOCK=y` default) or `modprobe mmcblk`. Not a hot path,
-  not IRQ, not a syscall except via privileged module load / kernel
-  cmdline.
+Step 5.2: TRACE CALLERS
+Record:
+- `sdw_dmi_override_adr` ← Intel `sdw_intel_ops.override_adr`
+- `find_slave()` during ACPI slave walk
+- Boot/probe only, Intel SoundWire platforms with matching DMI
 
-**Step 5.3: Callees**
-- Record: After the new check: `bus_register`, `alloc_chrdev_region`,
-  `register_blkdev`, `mmc_register_driver`. The new path calls none of
-  these.
+Step 5.3: TRACE CALLEES
+Record: `dmi_first_match()`, remap loop, `dev_dbg()`. No alloc/locks.
 
-**Step 5.4: Reachability**
-- Record: **Yes, from admin/boot configuration.**
-  `module_param(perdev_minors, int, 0444)` — set at load
-  (`mmcblk.perdev_minors=0`) or on the kernel command line if builtin.
-  **Not** writable later (0444). **Unprivileged users cannot set it** on
-  a normal system. Kconfig `range 4 256` cannot produce 0; only the
-  module/boot param can.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Reachable at SoundWire probe on UX8407AA. Not a syscall UAF;
+broken audio on that laptop. `hda_sdw_machine_select()` uses
+`hdev->sdw->ids` from registered slaves, so skipping the ghost changes
+machine matching and DAI-link construction.
 
-**Step 5.5: Similar patterns**
-- Record: `perdev_minors` exists only in this file. No sibling mmc
-  driver with the same hole. Pattern is the usual “signed module_param
-  used as divisor without a positivity check.”
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same pattern already used for UX5406AA and two Lenovo SKUs. This
+extends that list.
 
-## Phase 6: This checkout
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 6.1: Buggy code in this tree?**
-- Record:
-  - `git describe HEAD` → **`v7.3-rc4-27-gf0100363d8c37`**
-  - `make kernelversion` → **7.3.0-rc4**
-  - The mmc block driver and the division **are present**. The
-    **unfixed** sequence is the parent of `5253aee`; **HEAD already
-    contains the fix** (`git merge-base --is-ancestor 5253aee00a438
-    HEAD` → yes).
-  - Commit first landed via MMC for **v7.3** (`git describe 5253aee` →
-    `v7.2-rc2-25-g5253aee00a438`; **not** an ancestor of `v7.2`). Bug
-    **introduction** is v3.19-era, long before this branch.
-  - Being an ancestor of this mainline/rc HEAD is expected for a
-    candidate; it is not “already selected for stable.”
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- Tree: **pending-6.12**, `make kernelversion` = **6.12.111**
+  (`p-6.12-2-gd38d58a4e0359`)
+- `drivers/soundwire/dmi-quirks.c` present; `ghost_realtek` present;
+  UX8407AA **absent**
+- PTL SOF support present (`pci-ptl.c`, `soc-acpi-intel-ptl-match.c`
+  with RT722 link0/link3)
+- Mechanism that makes a zero _ADR drop the slave is present
+- Candidate `ca02ffd4975c` is **not** an ancestor of HEAD (expected)
 
-**Step 6.2: Backport difficulty**
-- Record: **Clean apply on this tree** (hunk matches `mmc_blk_init`
-  exactly). No extra helpers required.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Lore hunk (insert before first LENOVO `ghost_realtek` row)
+**`git apply --check` clean**. Full upstream context mentioning B9406CAA
+is not required. Difficulty: **clean apply**.
 
-**Step 6.3: Related fixes already here**
-- Record: This **is** the fix. No alternate/earlier validation of
-  `perdev_minors`. No follow-up revert.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: Generic ghost-Realtek table yes; this board ID no. No substitute
+UX8407AA SoundWire quirk.
 
-## Phase 7: Subsystem context
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 7.1:**
-- Record: **`drivers/mmc/core` (MMC block)** — **IMPORTANT** (eMMC/SD
-  block devices; `CONFIG_MMC_BLOCK` defaults to `y`). Not core mm/VFS,
-  not staging.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: **soundwire DMI quirks** (Intel laptop audio). **IMPORTANT** for
+those machines; DMI-gated so not CORE-wide.
 
-**Step 7.2:**
-- Record: File is actively maintained (RPMB, MQ recovery, etc.). The
-  **bug site** (`max_devices = … / perdev_minors`) has been stable since
-  2014.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature quirk table (since ~2021) with ongoing DMI additions.
+This is the usual enablement pattern, not a new subsystem.
 
-## Phase 8: Impact and risk
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.1: Who is affected**
-- Record: Users of `mmcblk` who pass **`mmcblk.perdev_minors=0` or a
-  negative value** (cmdline or `modprobe`). Default Kconfig path is
-  fine. Population: **config/admin-specific**, not universal.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: **Driver/platform-specific**: ASUS board UX8407AA (Zenbook Duo).
+Everyone else unchanged.
 
-**Step 8.2: Trigger**
-- Record: One-shot at `mmc_blk_init`. **Not** timing-dependent. **Not**
-  triggerable by an unprivileged syscall on a typical system.
-  Commonness: **low** (must override a param whose Kconfig range is
-  already 4–256).
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Every boot/probe on that DMI. No race. Unprivileged users get
+broken audio; they cannot trigger it on other machines.
 
-**Step 8.3: Failure mode**
-- Record:
-  - `= 0`: divide-by-zero → **oops / exception during MMC block init**.
-    Builtin + `panic_on_oops` → boot failure; otherwise mmcblk fails and
-    eMMC/SD never appear (root-on-eMMC can fail to boot).
-  - `< 0`: negative `max_devices` → **unsigned wrap in
-    `ida_alloc_max`**, wrong minors, possible further corruption of
-    device numbering.
-  - Severity: **HIGH** if triggered (crash / failed storage), **MEDIUM
-    overall** because the trigger is an invalid privileged parameter.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Wrong DAI links / wrong SOF machine (e.g. matching
+`ptl_rt722_l3` on a ghost RT722) or probe of a codec that is not there.
+**HIGH** for that SKU (no/wrong audio), not a panic.
 
-**Step 8.4: Risk–benefit**
-- Record: **Benefit: high for a tiny hardening/crash fix** (prevents
-  init oops; clean `-EINVAL`). **Risk: very low** (5 lines, error path
-  only, no API/lock/struct change). Ratio: **favorable**.
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: audio enumeration correct on a shipping PTL laptop; same
+  class as quirks already in 6.12
+- Risk: very low (7 lines, DMI-gated, existing table)
+- Ratio: strongly favors backport
 
-## Phase 9: Synthesis
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 9.1: Evidence**
+Step 9.1: COMPILE THE EVIDENCE
 
-**For backporting**
-- Real divide-by-zero in `mmc_blk_init` when `perdev_minors=0`.
-- Negative values produce a negative `max_devices` and wrap in
-  `ida_alloc_max()`.
-- 5-line, obviously correct check before any resource registration.
-- Bug in code since ~v3.19; param since v2.6.37; MMC block present in
-  this 7.3-rc4 tree.
-- No dependencies; standalone; maintainer applied it with no objections.
-- `CONFIG_MMC_BLOCK` is default y — driver is widely built.
+FOR:
+- Hardware quirk / DMI ID on an existing driver — stable exception
+- Real firmware bug: ghost Realtek in ACPI
+- User-visible: machine driver builds DAI links for hardware that does
+  not exist
+- +7 lines, copy of existing entries
+- `ghost_realtek` + Intel override path already in 6.12.111
+- Applies cleanly
+- Reviewed by Bossart, applied by Koul
+- Same author/table as UX5406AA already in this tree
+- PTL SoundWire/SOF present
+- Zero blast radius off that DMI match
 
-**Against**
-- No `Reported-by` / syzbot; no evidence of production hits.
-- Trigger is privileged (boot arg / `modprobe`), param is 0444.
-- No `Reviewed-by`; v1 merged as-is.
-- Not a hot-path race or unprivileged UAF.
+AGAINST:
+- One laptop SKU
+- No Reported-by/syzbot (normal for DMI quirks)
+- PTL match table in 6.12 is still mostly RT711/RT722 (function-topology
+  DAI building is stronger on later/ARL paths); the skip still prevents
+  ghost-slave probe and false `ptl_rt722_l3` match
+- lore.kernel.org/stable search 403
 
-**Unresolved**
-- lore.kernel.org HTTP 403; used b4 + LKML mirrors.
-- No hit on stable@ for this subject (search quality limited).
+UNRESOLVED:
+- Exact UX8407AA DMI strings not independently dumped
+- Stable-list discussion not fetched (HTTP 403)
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — trivial positivity check;
-   maintainer merged to MMC next. No extra Tested-by, but the change is
-   reviewable by inspection.
-2. Fixes a real bug that affects users? **PASS** — div-by-zero / invalid
-   IDA limit if the param is set wrong.
-3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
-   oops on init; storage devices never register. Not unprivileged
-   security.
-4. Small and contained? **PASS** — +5 lines, one function.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS** — same file/function; no missing
-   prereqs.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — identical to existing rows;
+   maintainer Reviewed-by/applied
+2. Fixes a real bug that affects users? **PASS** — ghost ACPI codec
+   breaks card/DAI setup
+3. Important issue? **PASS** — broken audio on a shipping laptop (HIGH
+   for that SKU)
+4. Small and contained? **PASS** — 7 lines, one table
+5. No new features or APIs? **PASS** — DMI quirk only
+6. Can apply to the local tree? **PASS** — lore hunk applies;
+   prerequisites present
 
-**Step 9.3: Exception category**
-- Record: **None** (not a device ID/quirk/DT/docs-only change). It is a
-  normal small bugfix.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: **Hardware quirk / DMI workaround** on an existing SoundWire
+quirk table.
 
-**Step 9.4: Decision**
+Step 9.4: MAKE YOUR DECISION
+This belongs on 6.12.y. The bug exists here, the fix is the established
+DMI pattern, and it does not depend on B9406CAA or later function-
+topology work.
 
-This tree is **7.3.0-rc4**. The MMC block driver and the unvalidated
-division exist here; the patch is self-contained and matches local
-`mmc_blk_init()`. A 5-line reject of non-positive `perdev_minors`
-prevents a real init-time divide-by-zero and a broken IDA limit, with
-negligible regression risk. That meets stable-kernel-rules for this
-checkout.
+------------------------------------------------
+What problem it solves for this tree
+------------------------------------------------
+Asus Zenbook Duo UX8407AA ships ACPI for a Realtek RT722 on SoundWire
+link3 that is not physically present. Without the quirk, Intel SoundWire
+registers that slave, SOF machine select can treat it as real, and
+`sof_sdw` can create DAI links for it. Remapping that _ADR to 0 drops
+the ghost device. The remap table and call path are already in 6.12.111;
+this only names the board.
 
-### Why it matters here
-Invalid `mmcblk.perdev_minors` is enough to oops while bringing up
-mmcblk (or to wrap the IDA max). On systems with builtin mmcblk (the
-default), that is boot-time. The fix fails init with `-EINVAL` instead.
+Risk vs benefit
+------------------------------------------------
+Benefit is working (or at least not mis-probed) audio on that SKU. Risk
+is a DMI-only table row. No new APIs, no locking, no cross-subsystem
+change.
 
-### Risk vs benefit
-Benefit is avoiding a crash/failed MMC probe; risk is a check that does
-not run for any Kconfig-legal default.
+Concerns
+------------------------------------------------
+None that block backport. B9406CAA in some upstream context is a
+different board and is not a prerequisite. Apply is clean with the lore
+hunk.
 
-### Concerns
-No in-the-wild report; trigger needs a bad privileged param. That lowers
-urgency but does not make the patch unsafe or feature-like. No backport
-rework needed on this tree.
+Verification:
+- [Phase 1] Parsed subject/tags from the provided message; no
+  Fixes/syzbot; Reviewed-by Bossart; Link msgid 20260720095741.3592825-1
+- [Phase 2] Diff is +7 lines in `adr_remap_quirk_table`; `ghost_realtek`
+  maps RT722 link3 `_ADR` to 0
+- [Phase 2] Confirmed `find_slave()` returns false on `!addr`; Intel ops
+  set `override_adr`
+- [Phase 3] `git blame` PTL block → `30e7fb61a64ba` (backport of
+  `4dab2b904414`); UX8407AA not present
+- [Phase 3] `git merge-base --is-ancestor 30e7fb61a64ba HEAD` → yes;
+  `ca02ffd4975c` → no
+- [Phase 3] Author history in `drivers/soundwire/` includes the original
+  ghost-Realtek quirk
+- [Phase 4] `b4 dig -c ca02ffd4975c` → lore msgid; `-a` v1 only; `-w`
+  Vinod/Bossart/linux-sound
+- [Phase 4] Patchew/openwall: Bossart Reviewed-by; Vinod applied
+  `ca02ffd4975c`
+- [Phase 4] WebSearch: related 6.12 AUTOSEL asus-nb-wmi quirk for
+  UX8407AA
+- [Phase 5] Callers: `sdw_dmi_override_adr` ← `find_slave` ← Intel
+  probe; `ctx->ids` from registered slaves
+- [Phase 6] `git describe HEAD` p-6.12-2; `make kernelversion` 6.12.111;
+  PTL SOF files present
+- [Phase 6] `git apply --check` of lore hunk: clean
+- [Phase 8] Failure mode: wrong DAI links / ghost codec probe; DMI-gated
+- UNVERIFIED: lore.kernel.org/stable search (403); live DMI dump of
+  UX8407AA
 
----
-
-**Verification:**
-- [Phase 1] Parsed message/tags: author + Ulf SOB only; no
-  Fixes/Reported-by/Cc stable. SHA `5253aee00a438`.
-- [Phase 2] Diff: +5 in `mmc_blk_init()`; `git show
-  5253aee^:drivers/mmc/core/block.c` confirmed unvalidated `(1 <<
-  MINORBITS) / perdev_minors`.
-- [Phase 2] `ida_alloc_max()` in `include/linux/idr.h` takes `unsigned
-  int max` — negative `max_devices - 1` wraps (verified).
-- [Phase 2] `MINORBITS` is 20 in `include/linux/kdev_t.h` (verified).
-- [Phase 2] Kconfig `MMC_BLOCK_MINORS` `range 4 256`, `default 8`;
-  `CONFIG_MMC_BLOCK` `default y` (verified).
-- [Phase 3] `git blame`: param `5e71b7a64cb4c` (v2.6.37-rc1); division
-  `a26eba614afff0` (v3.19-rc1).
-- [Phase 3] `git log --grep=perdev_minors -- drivers/mmc/`: this commit
-  + old param commits only; no series/follow-up.
-- [Phase 3] `git log --author='Xu Rao' -- drivers/mmc/`: this + one
-  unrelated spi fix.
-- [Phase 4] `b4 dig -c 5253aee00a438`: msgid
-  `C7A17066496D0ABA+20260706092501.853376-1-raoxu@uniontech.com`; v1
-  only; Ulf CC’d.
-- [Phase 4] LKML: Ulf “Applied for next, thanks!” — no NAK.
-- [Phase 4] lore.kernel.org WebFetch: **403**. Stable@ search: **no
-  relevant thread found**.
-- [Phase 5] `mmc_blk_init` only via `module_init`; `module_param(...,
-  0444)` — admin/boot only (verified in `block.c`).
-- [Phase 5] Call sites of `perdev_minors`: init division,
-  `mmc_get_devidx`, `md->disk->minors` / `first_minor` (grep verified).
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = `7.3.0-rc4`.
-- [Phase 6] `git merge-base --is-ancestor 5253aee00a438 HEAD` = yes;
-  `git merge-base --is-ancestor 5253aee00a438 v7.2` = not in v7.2.
-- [Phase 6] HEAD already has the `if (perdev_minors <= 0)` block at
-  `block.c:3340` (this is the mainline commit under review, not a
-  stable-queue marker).
-- [Phase 8] Failure mode: div-by-zero oops at mmcblk init, or IDA limit
-  wrap for negatives.
-- UNVERIFIED: full lore.kernel.org thread HTML (403); whether stable@
-  ever discussed this hash.
+The patch is a small, existing-pattern DMI quirk; prerequisites are in
+this tree and it applies cleanly.
 
 **YES**
 
- drivers/mmc/core/block.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/soundwire/dmi-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index e8e45b161a398..5077842b286fe 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -3407,6 +3407,11 @@ static int __init mmc_blk_init(void)
- {
- 	int res;
- 
-+	if (perdev_minors <= 0) {
-+		pr_err("mmcblk: invalid minors per device: %d\n", perdev_minors);
-+		return -EINVAL;
-+	}
-+
- 	res  = bus_register(&mmc_rpmb_bus_type);
- 	if (res < 0) {
- 		pr_err("mmcblk: could not register RPMB bus type\n");
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 62cee6e2179da..f738e547a1f30 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -200,6 +200,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)ghost_realtek,
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++			DMI_MATCH(DMI_BOARD_NAME, "UX8407AA"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
 -- 
 2.53.0
 
