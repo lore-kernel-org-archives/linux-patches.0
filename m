@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9B0596E86;
-	Mon, 19 Oct 2026 13:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5038C596EA8;
+	Mon, 19 Oct 2026 13:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418346; cv=none; b=HSbhRBiJmwy8c7ZLRIoBtgoIeoUvSu84rBJKZqI7cy71KBfEJNdkYzvgRMuTqXrxfIWe+reFaHB6SFvbGhZS8lbbv4I6qu0OW7BB76I0Y7ImEKtbcfgc33871qlPeVAd2G1FDhdPhov+3lQSv8EDRY+QzeHgf3o24cjBd1i3h/E=
+	t=1792418348; cv=none; b=fK4diy5K85F/BdeTxnFEmpNXp99so6vC4BiwYLJ5wmCyMgIG2BcEhnP1dr/ADGWjZmYsZKfOif0JUPNBVY3r5R2gz+vfKzmXsMjjXqZ9ekwYqieoqs+P5jU8qLofedUExePD4plLT+rp8fiCypUXTvhmyK+J5+zNR5VW8AIYiKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418346; c=relaxed/simple;
-	bh=C9NWfxuEA2cMfz50KywijBboyeDr+E31tD6u+5sY7ww=;
+	s=arc-20240116; t=1792418348; c=relaxed/simple;
+	bh=F24kcNkfWDJLq8TruH7HPiQ4zsPX2FXXcHbq9lsX72c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rqXfD752E6UnUDF4vB/01+lf/puDFM4SlCZBaC7sfF6r3Sy2ZAYP6sNdxnkl1ewmGnXMMdLOh2dSKkiHRnslvARzS/M2mfYadgKnlqxmCrIUymqpgrd5qVIamrBe+YSqlm/aMHxdcZa7+1e+j+pBU2qfEJuDVam56RG6bTCT0eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z3JD3CE6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=t0bOpGm1gEfI88RdQ3mNaxugci2jexVI2rWVwowcJAipPvix6bjxH+LGSA+SECzyxnEz3A9j8hGYANxhih8hD+9Iznz6UdFf3bNX4Pzq/FH/n+zOLDc6k5+jtRMwvPkjmGQWu7LcTaWwL1Ys8oVhc3l2eMQOufNY9vulPH5pGFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U/+NFhMg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z3JD3CE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61E41F000C6;
-	Mon, 19 Oct 2026 13:59:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U/+NFhMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8071F000C7;
+	Mon, 19 Oct 2026 13:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418343;
-	bh=5qXRc1pChq8c2rbghpVxms4satxts1jPmhPnSOFpmWA=;
+	s=k20260515; t=1792418345;
+	bh=reLorp6E8UuH9HUYnacpZqI1G6WEWU1dQvNeLGOAOi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z3JD3CE6aVNOAAfQPOLqmsg9xQqp83YAH9SvXt12CwjbW2gQEDvv+zHFHqjlBDIxS
-	 Zm3RMrk4oh7ICigwQbKpO70d6lpGEAHg83iyxOZCcuNbSiUce5af3C7V5FiClUXlMo
-	 2q6bwV9KGDTWu4fa3PwqJdtYrzpzPCABMSE0Yi2UuPddyHh30UWXWGvVfpMRZC7O3R
-	 vaAeeNmCdH0lNK4ruyDuc/rifUNIzBY7VWgZ9brka7Ts9lMxLlCaJS07C5BKka/+Hn
-	 SW212Io5luwcfvVZitcf6Uz1/f3j7eibXm4QqGxtbX9EJeEp5XEghRNQrA9ryvzQkT
-	 2D/JRXmZOG36g==
+	b=U/+NFhMgWDfPRD1Nxe8fwIq5DvoKOeUiEioDp1hwsom76cEdLltT0WwM58ps6Uuo2
+	 vYZk3rYXIoOO/1Mmd9tNbUbceOIUfMZKKYJsWD7N2EquS8MIHzdXZHUeBHNkE6OvyV
+	 YdPnLIEjvdBnJn3ElWpSgnRsHoSKaCjkAVk3Wnx4LqE42u1SBSmdn4C2+p5DP81vRG
+	 5CiBUAUjSlil6lADDDcFCOw9sbwgPGwFGsDezBKonBYkPf6R3k0JUuAwR5He4toyfa
+	 p5orHLzjoGUcOElv1bvOxKvBJVddXDvfR9rJ2SKggV3WYCR0hVElA52SDlvvssq4cU
+	 Yp68Xl3RxH9gA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Matus Gajdos <matuszpd@gmail.com>,
+Cc: Xu Rao <raoxu@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
 	perex@perex.cz,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ALSA: usb-audio: Add native DSD support for Cambridge Audio streamers
-Date: Mon, 19 Oct 2026 09:47:51 -0400
-Message-ID: <20261019135441.1420968-180-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: hda: Add Lisuan HDMI controller and codec support
+Date: Mon, 19 Oct 2026 09:47:52 -0400
+Message-ID: <20261019135441.1420968-181-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,430 +54,470 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matus Gajdos <matuszpd@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 4e1462e7cd6a9b920f441842726cc2b9d232673e ]
+[ Upstream commit ceaebef91d1aff671a512d5f003766ea41152d94 ]
 
-The Cambridge Audio streamer advertises the UAC2 RAW_DATA format on
-altsetting 2 of its playback interface, but without the DSD_RAW quirk
-flag the driver exposes it only as a SPECIAL format that cannot be
-used.
+Lisuan GPUs expose an HD-audio controller at PCI ID 4c54:5010 and an
+HDMI/DP codec with codec ID 0x4c545020.  Neither ID is currently matched
+by the HDA stack, leaving HDMI/DP audio unavailable on these devices.
 
-Add QUIRK_FLAG_DSD_RAW for the device (USB ID 22e8:ca10), so the
-altsetting is exposed as DSD_U32_BE, enabling native DSD64/128/256
-playback.
+The existing downstream support uses the generic HDMI codec path and
+attaches no Lisuan-specific capability flags to the controller.  Its
+dedicated AZX driver type only changes the short driver name.
 
-Tested with: gst-launch-1.0 filesrc location=file.dsf ! \
-                            avdemux_dsf ! dsdconvert ! \
-                            alsasink device=hw:2,0
+Use the corresponding generic upstream paths instead: bind 4c54:5010 to
+AZX_DRIVER_GENERIC, register 0x4c545020 as MODEL_GENERIC, and add the
+Lisuan codec vendor name.  This keeps the enablement minimal and avoids
+a vendor-only AZX driver type with no vendor-specific behavior.
 
-Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
-Link: https://patch.msgid.link/20261002125237.82188-1-matuszpd@gmail.com
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/DE1B62191D573D37+20260817085531.992573-1-raoxu@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a two-line USB quirk that enables native DSD on an existing
-device. The local tree is **6.18.57** (`v6.18.57-155-gcdf239ca885b2`).
-The DSD_RAW machinery is already here; only the Cambridge Audio ID is
-missing.
+I have enough to decide. This is a four-line device-ID enablement; the
+6.12 HDA driver already has the matching tables under the older paths.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [ALSA: hda] [Add] [Lisuan HDMI controller PCI ID 4c54:5010 and
+codec ID 0x4c545020 so HDMI/DP audio binds on existing generic HDA
+paths]
 
-Record: `[ALSA/usb-audio] [add] Add native DSD support for Cambridge
-Audio streamers`
-
-Subsystem is ALSA USB-audio. The verb is “Add”, but the body is a
-device-specific quirk, not a new driver or API.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- `Signed-off-by: Matus Gajdos <matuszpd@gmail.com>` (author)
-- `Link:
-  https://patch.msgid.link/20261002125237.82188-1-matuszpd@gmail.com`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
-- No `Fixes:` tag (expected)
-- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-  stable`
-- Ignored: `[Upstream commit ...]` and `Signed-off-by: Sasha Levin`
-  (pipeline)
+- Fixes: none (expected)
+- Reported-by: none
+- Tested-by: none
+- Reviewed-by: none
+- Acked-by: none
+- Link: https://patch.msgid.link/DE1B62191D573D37+20260817085531.992573-
+  1-raoxu@uniontech.com
+- Cc: stable: none (expected)
+- Signed-off-by: Xu Rao <raoxu@uniontech.com> (author)
+- Signed-off-by: Takashi Iwai <tiwai@suse.de> (ALSA maintainer; applied
+  the patch)
+- Ignore Signed-off-by: Sasha Levin if present (pipeline)
 
-Notable: maintainer SOB; author included a concrete `gst-launch` test
-command in the body.
+Notable: no syzbot, no crash report. This is hardware enablement, not a
+sanitizer fix. Maintainer SOB is present.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: device `22e8:ca10` advertises UAC2 `RAW_DATA` on playback
-  altsetting 2, but without `QUIRK_FLAG_DSD_RAW` the driver exposes that
-  altsetting only as `SPECIAL`, which userspace cannot use.
-- Symptom: native DSD64/128/256 playback is unavailable on Cambridge
-  Audio streamers.
-- Root cause: UAC has no dedicated DSD bit; the driver only remaps
-  `RAW_DATA` to `DSD_U32_BE` when `QUIRK_FLAG_DSD_RAW` is set and
-  `fp->dsd_raw` is true.
-- Version info: none in the message.
-- Tested with an explicit GStreamer DSD playback pipeline.
+- Bug/problem: Lisuan GPUs expose HD-audio at PCI 4c54:5010 and HDMI/DP
+  codec 0x4c545020. Neither ID is matched, so HDMI/DP audio is
+  unavailable.
+- Symptom: no HDMI/DP audio on these devices.
+- Version info: none in the message. Lore shows this was pulled for
+  7.3-rc1 (Takashi's "sound updates for 7.3-rc1" on 2026-08-19).
+- Root cause: missing ID table entries. Downstream already used the
+  generic HDMI codec path and attached no Lisuan-specific AZX capability
+  flags; a dedicated AZX driver type would only change the short name.
+- Fix: bind PCI ID to AZX_DRIVER_GENERIC, register codec as
+  MODEL_GENERIC, add vendor name "Lisuan".
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: Not a disguised cleanup. It is a hardware quirk / device-ID
-addition so advertised DSD actually works. That is the standard ALSA
-usb-audio DSD_RAW pattern.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a hidden UAF/race/leak fix. It is a device-ID addition:
+hardware does not bind without the IDs. That is the stable exception for
+PCI/codec IDs on an existing driver, not a disguised cleanup.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
-
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `sound/usb/quirks.c` (+2 / -0)
-- Function/data: `quirk_flags_table[]` only
-- Scope: single-file, two-line table insertion
+- sound/hda/codecs/hdmi/hdmi.c: +1 (codec ID 0x4c545020, "Lisuan
+  HDMI/DP", MODEL_GENERIC)
+- sound/hda/controllers/intel.c: +2 (comment + PCI_DEVICE(0x4c54,
+  0x5010) → AZX_DRIVER_GENERIC)
+- sound/hda/core/device.c: +1 (vendor 0x4c54 → "Lisuan")
+- Total: +4 lines, 0 removals
+- Functions/tables: snd_hda_id_generichdmi[], azx_ids[],
+  hda_vendor_ids[]
+- Scope: single-driver ID-table addition (three tables in one subsystem)
 
-```2376:2383:sound/usb/quirks.c
-        DEVICE_FLG(0x21b4, 0x0230, /* Ayre QB-9 Twenty */
-                   QUIRK_FLAG_DSD_RAW),
-        DEVICE_FLG(0x21b4, 0x0232, /* Ayre QX-5 Twenty */
-                   QUIRK_FLAG_DSD_RAW),
-        DEVICE_FLG(0x22e8, 0xca10, /* Cambridge Audio streamers */
-                   QUIRK_FLAG_DSD_RAW),
-        DEVICE_FLG(0x2522, 0x0007, /* LH Labs Geek Out HD Audio 1V5 */
-                   QUIRK_FLAG_SET_IFACE_FIRST),
-```
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Before: `22e8:ca10` has no table entry. Probe does not set
-  `QUIRK_FLAG_DSD_RAW`. UAC2 `RAW_DATA` stays
-  `SNDRV_PCM_FMTBIT_SPECIAL`.
-- After: exact VID:PID match ORs `QUIRK_FLAG_DSD_RAW`.
-  `snd_usb_interface_dsd_format_quirks()` then returns
-  `SNDRV_PCM_FMTBIT_DSD_U32_BE` when `fp->dsd_raw` is set.
-- Path: device probe / format parse (init), not an error path.
+- HDMI codec table: unmatched 0x4c545020 did not hit the generic HDMI
+  driver by explicit ID. After: it matches MODEL_GENERIC /
+  patch_generic_hdmi.
+- PCI table: 4c54:5010 was not in azx_ids and this tree has no
+  vendor/class catch-all for 0x4c54, so snd-hda-intel did not probe.
+  After: it probes as AZX_DRIVER_GENERIC with no extra DCAPS.
+- Vendor table: unnamed vendor used "Generic 4c54". After: name is
+  "Lisuan" (cosmetic for mixer/proc).
+- Paths: probe/init only. No hot-path, locking, or API change.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Hardware enablement / device ID] Controller and codec never
+matched. PCI ID is required for bind. Codec ID selects the generic HDMI
+parser. Vendor string is display-only. Not UAF, leak, race, or overflow.
 
-Record: `[Hardware workaround / USB quirk ID]`
-Mechanism: UAC2 `RAW_DATA` is only treated as native DSD when the
-existing `QUIRK_FLAG_DSD_RAW` flag is set. This device advertises that
-format but was missing from the allow-list.
-
-Verified in this tree:
-- `format.c` sets `fp->dsd_raw = true` and `SNDRV_PCM_FMTBIT_SPECIAL`
-  for `UAC2_FORMAT_TYPE_I_RAW_DATA`
-- `quirks.c:2078-2079` remaps only if `(chip->quirk_flags &
-  QUIRK_FLAG_DSD_RAW) && fp->dsd_raw`
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record: Obviously correct and minimal. Same `DEVICE_FLG(...,
-QUIRK_FLAG_DSD_RAW)` pattern already used for Ayre, ddHiFi, XMOS,
-McIntosh, HEM, etc. No API, lock, or struct change. Regression risk is
-confined to `22e8:ca10`; other devices are untouched. Matching is exact
-VID:PID (`snd_usb_init_quirk_flags_table()` returns on first match;
-there is no `VENDOR_FLG(0x22e8)`).
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Minimal and consistent with VIA/VMware/RDC generic HDMI IDs.
+Author says downstream used generic path with no vendor DCAPS.
+Regression risk is the usual new-ID risk (hardware might later need
+NO_MSI / POSFIX_LPIB / etc.). No new AZX_DRIVER type, no new API.
+Quality is high for an ID add.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
+Step 3.1: BLAME THE CHANGED LINES
+Record: This tree has no Lisuan entries. Insertion point in 6.12 HDMI
+table is beside Glenfly Arise IDs from c51e431052e2e (2023). PCI table
+terminator at azx_ids[] is original (Linus 1da177e4c3f41); last entries
+are Loongson (28bd137a3c8e1, 2023). Vendor table around 0x434d/0x8086 is
+Takashi Iwai 7639a06c23c7d4 (2015). The HDA ID tables have been stable
+for years; this is not a bug in newly added 6.12 code.
 
-Record:
-- New lines are this commit. Surrounding DSD_RAW entries date to
-  `f7fea075edfa08` (Jussi Laako, 2023) and `c84bd6c810d188` (2024).
-- The DSD_RAW mechanism itself is `68e851ee4cfd2` (“Move generic DSD raw
-  detection into quirk_flags”), 2021-07-29, first appeared in
-  **v5.15-rc1**. `git merge-base --is-ancestor 68e851ee4cfd2 HEAD` →
-  yes.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Not applicable. Missing IDs were never introduced
+by a prior commit; they were never added.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Same files already received ID adds in this 6.12 tree, e.g.
+2b331e7b6cc57 "ALSA: hda: Add new pci id for AMD GPU display HD audio
+controller" (in HEAD), e8336a63de03e Intel BMG, e9481d9b83f8d Intel PTL
+HDMI codec, c51e431052e2e Glenfly. Standalone; not patch X/Y. No Lisuan
+follow-ups on lore.
 
-Record: No `Fixes:` tag. Not applicable. The “bug” is a missing device
-allow-list entry, not a regression from a specific commit.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: git log --author='Xu Rao' on sound/ in this tree is empty.
+UnionTech contributor; not the ALSA maintainer. Takashi Iwai applied it
+the same day. Weight comes from maintainer accept, not author history
+here.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: Recent `sound/usb/quirks.c` history is full of the same class of
-patches (JBL FIXED_RATE, Audient IGNORE_CTL_ERROR,
-LEAK/PureAudio/Comtrue DSD_RAW, etc.). This commit is standalone, not
-`patch X/Y`.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: `git log --author="Matus Gajdos" -- sound/usb/` shows only this
-commit. Author is a hardware user, not the subsystem maintainer.
-Maintainer Takashi Iwai applied it the next day.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: No prerequisites. Parent of this tree already has `DEVICE_FLG`,
-`QUIRK_FLAG_DSD_RAW`, `fp->dsd_raw`, and the Ayre / LH Labs insertion
-context. Applies standalone.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Needs existing snd-hda-intel + HDMI codec + AZX_DRIVER_GENERIC.
+All present. Does not need a new driver type, Hygon entries, or
+MODEL_GENERIC (6.12 uses HDA_CODEC_ENTRY(..., patch_generic_hdmi)).
+Standalone with a path/macro translation. No DRM Lisuan driver in this
+tree; HDA PCI bind does not require it.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c 8a762801bd078` →
-  https://patch.msgid.link/20261002125237.82188-1-matuszpd@gmail.com
-- `b4 dig -a`: **v1 only**, 2026-10-02, Matus Gajdos. No v2/v3.
-- Thread (mbox, 2 messages): submission + Takashi Iwai “Applied now.
-  Thanks.”
-- No NAK, no requested changes, no reviewer `Cc: stable`.
+- b4 dig -c HEAD failed (lore server error; this tree's HEAD is
+  unrelated).
+- Lore (linux-sound and all): exactly one series, v1 only.
+  - Patch: https://lore.kernel.org/linux-
+    sound/DE1B62191D573D37+20260817085531.992573-1-raoxu@uniontech.com/
+  - Also mirrored at https://lists.openwall.net/linux-
+    kernel/2026/08/17/647
+- b4 dig -a: not obtained (b4/lore error). Lore search shows no v2/v3.
+- Feedback: Takashi Iwai: "Applied now. Thanks." No NAK, no requested
+  changes, no Cc: stable in review.
+- Pulled in "[GIT PULL] sound updates for 7.3-rc1".
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: Recipients from the openwall/lkml copy: perex@perex.cz, tiwai,
+peter.ujfalusi, kai.vehmanen, tglx, broonie, linux-sound, linux-kernel,
+plus a few others. Subsystem list and ALSA maintainer were on To/Cc.
+Maintainer applied v1 immediately.
 
-Record (`b4 dig -w`): To/Cc were Jaroslav Kysela, Takashi Iwai, linux-
-sound, linux-kernel. Correct ALSA maintainers. Iwai applied it.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No bugzilla/syzbot. Evidence is the commit text plus "existing
+downstream support". Hardware impact is real for Lisuan GPU HDMI audio
+users; no public crash report.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone 4-line patch. lore.kernel.org/all/?q=Lisuan returns
+only this patch, Takashi's apply, and the 7.3-rc1 pull. No companion DRM
+or quirk series on lore.
 
-Record: No external bugzilla/syzbot report. The author is the reporter
-and tester. USB ID `22e8:ca10` is Cambridge Audio (vendor `22e8` is CA;
-Windows INF lists `VID_22E8&PID_CA10` as Cambridge Audio USB Audio).
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Standalone single patch. Not part of a series.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: No stable-list discussion found for this ID/subject. lore HTML
-fetches returned 403; search did not turn up a prior rejection. Similar
-DSD_RAW ID additions **have** been sent to stable historically (`Cc:
-stable` on McIntosh `99248c8902f50`, HEM `122e2cb7e1a30`, LEAK
-`c83fc13960643`).
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable/?q=Lisuan returned no hits. Not discussed
+on stable@ yet.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Step 5.1: IDENTIFY KEY FUNCTIONS
+Record: No function bodies changed. Tables: snd_hda_id_generichdmi[] /
+snd_hda_id_hdmi[], azx_ids[], hda_vendor_ids[]. Consumers: azx_probe
+(PCI match), hda_codec_match / snd_hda_codec_configure (codec match),
+get_codec_vendor_name().
 
-Record: No function body changed. Data: `quirk_flags_table[]`.
-Consumers: `snd_usb_init_quirk_flags_table()`,
-`snd_usb_interface_dsd_format_quirks()`.
-
-**Step 5.2: TRACE CALLERS**
-
+Step 5.2: TRACE CALLERS
 Record:
-- `snd_usb_init_quirk_flags()` in `sound/usb/card.c:728` →
-  `snd_usb_init_quirk_flags_table()` during USB-audio probe
-- `parse_audio_format_i()` in `sound/usb/format.c:157` →
-  `snd_usb_interface_dsd_format_quirks()`
+- azx_ids is MODULE_DEVICE_TABLE(pci) for snd-hda-intel; probe is
+  azx_probe on PCI enumeration.
+- Codec table is MODULE_DEVICE_TABLE(hdaudio); hda_codec_match()
+  compares vendor_id.
+- codec_bind_generic() can still fall back to HDA_CODEC_ID_GENERIC_HDMI
+  via is_likely_hdmi_codec() if the controller is bound and the codec
+  looks like HDMI-only. PCI match is the gating bind. Codec ID is
+  explicit matching/naming, not the only possible codec path.
+- Context: device probe, not IRQ/hot path.
 
-Probe/format-parse path, not IRQ/hot path.
+Step 5.3: TRACE CALLEES
+Record: ID tables do not call allocators or locks. AZX_DRIVER_GENERIC in
+this tree is already used (VIA 0x9170/0x9140, RDC, VMware, some AMD).
+Stream-count fallback treats AZX_DRIVER_GENERIC like the default ICH6
+counts (hda_intel.c ~1987).
 
-**Step 5.3: TRACE CALLEES**
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: PCI enumeration → azx_probe → codec discovery → HDMI parser.
+Reachable whenever the Lisuan HDMI audio function is present.
+Unprivileged userspace cannot create the device; plug-in hardware users
+are affected. HDMI audio is a user-visible function.
 
-Record: Table walk + `chip->quirk_flags |= p->flags`. Later, DSD remap
-returns a format bit. No alloc, no lock in the new code (lock already
-exists around flag init in `card.c`).
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: USB plug-in → `snd_usb_audio` probe → quirk flags → format parse
-→ PCM device with `DSD_U32_BE` on altsetting 2 → userspace (`alsasink`,
-etc.). Reachable whenever this streamer is connected. Unprivileged
-playback once the device node is accessible.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Dozens of identical `QUIRK_FLAG_DSD_RAW` table entries in the
-same file. This is the standard allow-list, not a one-off.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same pattern as Glenfly HDMI IDs, Loongson HDMI, AMD GPU display
+HDA PCI IDs, Intel BMG/PTL HDMI IDs — all already in this 6.12 tree. No
+other 0x4c54 / 0x4c545020 / "Lisuan" matches in the tree.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- Local tree: pending-6.12, kernel 6.12.111 (git describe
+  p-6.12-3-gc504cf0baa3d8; Makefile VERSION=6 PATCHLEVEL=12
+  SUBLEVEL=111).
+- git log --grep=Lisuan -- sound/: empty. IDs are not here.
+- Mainline paths sound/hda/codecs/hdmi/hdmi.c,
+  sound/hda/controllers/intel.c, sound/hda/core/device.c do not exist
+  (post-6.12 HDA split).
+- Equivalents do exist:
+  - sound/pci/hda/hda_intel.c azx_ids[] — AZX_DRIVER_GENERIC at line
+    244, table ends at Loongson then {0,}
+  - sound/pci/hda/patch_hdmi.c snd_hda_id_hdmi[] — HDA_CODEC_ENTRY +
+    patch_generic_hdmi
+  - sound/hda/hdac_device.c hda_vendor_ids[] — same vendor list, no
+    0x4c54
+- SND_HDA_INTEL and SND_HDA_CODEC_HDMI exist (sound/pci/hda/Kconfig).
+- "Bug" is missing IDs, not a regression introduced after 6.12. Lisuan
+  hardware on 6.12 still fails to bind.
 
-Record: Yes. This is 6.18.57. `QUIRK_FLAG_DSD_RAW` and `fp->dsd_raw`
-have been here since v5.15. Parent of the candidate has **no** `0x22e8`
-entry. Without this patch, Cambridge Audio `22e8:ca10` still exposes
-`SPECIAL` instead of DSD. The device is not new-to-6.19 infrastructure;
-only the ID is new.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Will not apply as a raw mainline diff (wrong paths,
+HDA_CODEC_ID_MODEL vs HDA_CODEC_ENTRY). Mechanical 3-site remap:
+  1. patch_hdmi.c: HDA_CODEC_ENTRY(0x4c545020, "Lisuan HDMI/DP",
+     patch_generic_hdmi)
+  2. hda_intel.c: { PCI_DEVICE(0x4c54, 0x5010), .driver_data =
+     AZX_DRIVER_GENERIC }
+  3. hdac_device.c: { 0x4c54, "Lisuan" }
+Same class of backport as 2b331e7b6cc57 (AMD PCI ID into hda_intel.c on
+this branch). Difficulty: minor / needs small backport, not a rework.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: Clean apply. Parent context is exactly Ayre QX-5 Twenty then LH
-Labs Geek Out. No refactor of the table in 6.18.y.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: No other Cambridge Audio / `0x22e8` quirk. No alternate DSD fix
-for this ID. `git grep 0x22e8 -- sound/usb` only hits this new line.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No Lisuan IDs. No alternate Lisuan HDA quirk. Nothing to
+conflict besides inserting three table rows.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [ALSA HD-audio / HDMI codec + PCI controller] [IMPORTANT for
+HDMI audio users; PERIPHERAL in that only Lisuan 4c54:5010 is newly
+matched; core HDA stack is mature]
 
-Record: `[sound/usb (ALSA USB-audio)] [IMPORTANT]` — common driver, but
-this change is device-specific.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Actively maintained. Frequent small quirk-table updates from
-Takashi Iwai and hardware vendors. Mature pattern, low churn in the
-matching logic itself.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: sound/pci/hda/ is actively receiving ID and quirk backports in
+this tree (AMD GPU ID, ThinkPad PM denylist, Panther Lake, etc.). Mature
+tables, routine ID churn. Matches stable practice.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific / hardware-specific: owners of Lisuan GPUs with
+HD-audio 4c54:5010. No effect on other devices. Population is smaller
+than Intel/AMD HDMI, but that is normal for vendor ID adds (Glenfly,
+Loongson, etc.).
 
-Record: Driver-specific / device-specific. Only USB `22e8:ca10`
-(Cambridge Audio streamers). PCM users of that device are unchanged; DSD
-users gain a working format.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Trigger is having the PCI function present (boot/hotplug GPU).
+Common for those machines; zero for everyone else. Not an unprivileged
+syscall attack. HDMI audio is the user-visible feature.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: [HDMI/DP audio never appears] [MEDIUM for affected users:
+functional gap, not oops/corruption]. Stable still takes these as
+device-ID exceptions. Without the PCI ID, snd-hda-intel never binds
+(verified: no 0x4c54 class catch-all in azx_ids[]).
 
-Record: Trigger is plugging in that streamer and opening the
-RAW_DATA/DSD altsetting. Common for owners of that hardware; impossible
-for everyone else. Not a race.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: `[Missing hardware capability / unusable advertised format]
-[MEDIUM as a bug; YES as a quirk exception]`
-Not a panic, UAF, or corruption. Without the quirk, advertised DSD is
-unusable (`SPECIAL`). With it, native DSD works. That is the same class
-as USB/codec/SFP quirks the stable rules call out.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- Benefit: high for owners of these streamers (DSD actually works); zero
-  effect elsewhere.
-- Risk: very low (2 lines, exact VID:PID, existing flag, maintainer-
-  applied, hardware-tested).
-- Ratio: strongly favors backport.
+- Benefit: HDMI/DP audio on Lisuan using the existing generic HDA path.
+  High for those users; none for others.
+- Risk: 4 lines, probe-only, AZX_DRIVER_GENERIC already used. Residual
+  risk is missing hardware quirks; author/downstream say none are
+  needed.
+- Ratio: favorable. Same as other HDA PCI/codec ID backports already on
+  6.12.y.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
-
+Step 9.1: COMPILE THE EVIDENCE
 FOR:
-- Hardware quirk / USB ID addition — explicit stable exception
-- 2-line, obviously correct, no API change
-- Infrastructure present in this 6.18.y tree since v5.15
-- Applies cleanly
-- Author tested real DSD64/128/256 playback
-- Applied by ALSA maintainer Takashi Iwai; no objections
-- Same pattern already used (and historically Cc:stable) for other DACs
-- Only `22e8:ca10` is affected
+- Classic PCI + codec ID add to an existing driver (snd-hda-intel + HDMI
+  codec present in 6.12).
+- Explicit stable exception: "NEW DEVICE IDs".
+- +4 lines, no new API, no new AZX_DRIVER type, no new module param.
+- Without PCI ID, controller does not bind in this tree.
+- ALSA maintainer applied v1 immediately.
+- Same pattern already backported here (AMD GPU HDA PCI ID, Intel HDMI
+  codec IDs, Glenfly).
+- Downstream already used generic HDMI with no extra DCAPS.
 
 AGAINST:
-- Not a crash, security hole, or data-corruption fix
-- Enables a capability rather than stopping an oops
-- Author is not a regular subsystem contributor (mitigated by maintainer
-  apply)
+- Not a crash/UAF/security fix.
+- Raw diff does not apply (HDA tree split after 6.12).
+- No Tested-by / Reported-by on the list.
+- No in-tree Lisuan DRM driver; ELD/display integration may be limited
+  without a GPU driver (HDA still needs the PCI ID).
+- Possible later quirks if generic AZX flags are wrong (unverified
+  beyond author's downstream claim).
 
 UNRESOLVED:
-- Could not fetch lore HTML (403); full thread recovered via `b4 dig -m`
-- No independent second-user report beyond the author
-- usb-ids listing for `22e8` confirms Cambridge Audio; `ca10` is in
-  Windows CA USB-audio INF, not in every public usb-ids dump
+- Mainline SHA not in this checkout; merge-base --is-ancestor of the
+  upstream commit was not run (commit absent).
+- b4 dig failed on lore; thread recovered via lore/openwall instead.
+- Could not independently test Lisuan hardware.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — four table rows; maintainer
+   applied; downstream generic path described.
+2. Fixes a real bug that affects users? PASS — HDMI/DP audio never binds
+   without the PCI ID.
+3. Important issue (crash, security, corruption, deadlock)? FAIL on that
+   strict list; PASS under the documented device-ID exception (hardware
+   enablement).
+4. Small and contained? PASS — +4 lines, three ID tables.
+5. No new features or APIs? PASS — no new driver, syscall, or userspace
+   API; IDs only.
+6. Can apply to the local tree? PASS with a small backport (patch_hdmi.c
+   / hda_intel.c / hdac_device.c). Equivalent tables and
+   AZX_DRIVER_GENERIC exist.
 
-1. Obviously correct and tested? **PASS** — 2-line allow-list; author
-   `gst-launch` test; maintainer applied
-2. Fixes a real bug that affects users? **PASS** — advertised DSD
-   altsetting is unusable without the flag
-3. Important issue? **PASS via quirk exception** — not a crash; hardware
-   enablement for existing devices
-4. Small and contained? **PASS** — +2 lines, one table
-5. No new features or APIs? **PASS** — no new syscall/API/driver;
-   existing `QUIRK_FLAG_DSD_RAW` only
-6. Can apply to the local tree? **PASS** — clean context in 6.18.57
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Device ID addition to an existing driver (PCI ID + HDMI codec ID
++ vendor label). This is the standard YES exception. Vendor string is
+documentation-level.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Step 9.4: MAKE YOUR DECISION
+This belongs in 6.12.y. The HDA controller/codec drivers are here; only
+the Lisuan IDs are missing. The mainline file move is a mechanical
+remap, not missing infrastructure. Risk is low; benefit is making
+HDMI/DP audio work on that GPU.
 
-Record: **Hardware quirk / USB device-ID addition to an existing
-driver.** Automatic YES category.
+What the commit solves for stable users: 6.12.y systems with a Lisuan
+GPU HD-audio function 4c54:5010 currently do not bind snd-hda-intel.
+Adding the PCI ID (and codec/vendor rows) enables the existing generic
+HDMI path.
 
-**Step 9.4: MAKE YOUR DECISION**
+Risk vs benefit: four probe-only table entries vs silent non-function of
+HDMI audio. Same class as ID adds already on this branch.
 
-This belongs on 6.18.y. The tree already has the DSD_RAW path; the
-commit only names one USB ID so that device’s advertised RAW_DATA
-altsetting becomes usable DSD. That is the same class of stable material
-as other ALSA usb-audio DSD and USB quirks.
+Concerns: backport must retarget 6.12 paths and use HDA_CODEC_ENTRY(...,
+patch_generic_hdmi) instead of HDA_CODEC_ID_MODEL(..., MODEL_GENERIC).
+No other prerequisites.
 
 Verification:
-- [Phase 1] Parsed tags: author SOB, Link to msgid, Takashi Iwai SOB; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 1] Body: UAC2 RAW_DATA on altsetting 2 exposed as SPECIAL
-  without DSD_RAW; tested gst-launch DSD pipeline
-- [Phase 2] Diff: +2 lines in `quirk_flags_table[]` only —
-  `DEVICE_FLG(0x22e8, 0xca10, QUIRK_FLAG_DSD_RAW)`
-- [Phase 2] `format.c:59-62` sets `fp->dsd_raw` on UAC2 RAW_DATA;
-  `quirks.c:2078-2079` remaps only with the flag
-- [Phase 2] `snd_usb_init_quirk_flags_table()` exact VID:PID match; no
-  `VENDOR_FLG(0x22e8)`
-- [Phase 3] `68e851ee4cfd2` introduced DSD_RAW in v5.15-rc1; ancestor of
-  this HEAD
-- [Phase 3] Author has no other `sound/usb` commits; not a series
-- [Phase 3] Parent of candidate has Ayre then LH Labs context and no
-  `0x22e8`
-- [Phase 4] `b4 dig -c 8a762801bd078`: lore msgid
-  `20261002125237.82188-1-matuszpd@gmail.com`
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: Iwai, Kysela, linux-sound
-- [Phase 4] mbox: Iwai “Applied now. Thanks.” No NAK, no stable
-  nomination
-- [Phase 4] WebFetch lore HTML: 403; discussion recovered from mbox
-- [Phase 4] Similar historical DSD_RAW quirks carried `Cc: stable`
-  (McIntosh, HEM, LEAK)
-- [Phase 5] Callers: `card.c:728` probe; `format.c:157` format parse
-- [Phase 6] `git describe HEAD` = v6.18.57-155-gcdf239ca885b2; `make
-  kernelversion` = 6.18.57
-- [Phase 6] `git merge-base --is-ancestor v6.18 HEAD` yes; candidate not
-  in v6.18 release
-- [Phase 6] Clean apply in this tree
-- [Phase 7] ALSA USB-audio, actively quirk-maintained
-- [Phase 8] Failure mode: unusable DSD format on one USB ID; severity
-  medium, quirk-exception YES
-- UNVERIFIED: live lore.kernel.org/stable thread contents (HTTP 403 /
-  unhelpful search)
+- [Phase 1] Parsed tags: author Xu Rao; Link msgid
+  DE1B62191D573D37+20260817085531.992573-1-raoxu@uniontech.com; SOB
+  Takashi Iwai; no Fixes/Reported-by/Cc: stable
+- [Phase 1] Body: missing 4c54:5010 and codec 0x4c545020; downstream
+  generic HDMI, no extra DCAPS
+- [Phase 2] Diff: +1 codec ID, +2 PCI ID/comment, +1 vendor name; 3
+  files, +4/-0
+- [Phase 3] git describe / Makefile: this tree is 6.12.111 pending-6.12
+  (p-6.12-3-gc504cf0baa3d8)
+- [Phase 3] git log --grep=Lisuan -- sound/: not in this tree
+- [Phase 3] Equivalent files: sound/pci/hda/hda_intel.c,
+  sound/pci/hda/patch_hdmi.c, sound/hda/hdac_device.c
+- [Phase 3] AZX_DRIVER_GENERIC exists (hda_intel.c:244, used e.g. VIA
+  0x9170)
+- [Phase 3] HDA_CODEC_ID_MODEL absent; HDA_CODEC_ENTRY in
+  include/sound/hda_codec.h:86
+- [Phase 3] Precedent in tree: 2b331e7b6cc57 AMD GPU HDA PCI ID (git
+  merge-base --is-ancestor: yes)
+- [Phase 3] Blame: HDMI Arise IDs c51e431052e2e (2023); azx_ids
+  terminator 1da177e4c3f41; vendor table 7639a06c23c7d4 (2015)
+- [Phase 4] lore linux-sound: 3 hits only (patch, apply, 7.3-rc1 pull);
+  v1 only; Takashi "Applied now"
+- [Phase 4] b4 dig -c HEAD: lore server error; used lore/openwall
+  instead
+- [Phase 4] lore.kernel.org/stable/?q=Lisuan: no discussion
+- [Phase 5] azx_ids has Intel/NVIDIA/ATI/Glenfly class catch-alls, not
+  vendor 0x4c54 — PCI ID required
+- [Phase 5] hda_bind.c codec_bind_generic() can fall back to generic
+  HDMI after controller bind; PCI ID remains the bind gate
+- [Phase 5] grep Lisuan/0x4c545020/PCI_DEVICE(0x4c54: no matches
+- [Phase 6] No sound/hda/codecs/hdmi/hdmi.c or
+  sound/hda/controllers/intel.c here (split after 6.12)
+- [Phase 6] SND_HDA_INTEL / SND_HDA_CODEC_HDMI present in
+  sound/pci/hda/Kconfig
+- [Phase 8] Failure mode: no HDMI/DP audio device, not a panic
+- UNVERIFIED: live Lisuan hardware; whether later quirks are needed
+  beyond author's downstream statement; exact mainline SHA (not in this
+  checkout)
 
 **YES**
 
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/hdmi/hdmi.c  | 1 +
+ sound/hda/controllers/intel.c | 2 ++
+ sound/hda/core/device.c       | 1 +
+ 3 files changed, 4 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 8dcba375bd4a3..be80d9d14e0ad 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2379,6 +2379,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x21b4, 0x0232, /* Ayre QX-5 Twenty */
- 		   QUIRK_FLAG_DSD_RAW),
-+	DEVICE_FLG(0x22e8, 0xca10, /* Cambridge Audio streamers */
-+		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2522, 0x0007, /* LH Labs Geek Out HD Audio 1V5 */
- 		   QUIRK_FLAG_SET_IFACE_FIRST),
- 	DEVICE_FLG(0x262a, 0x9302, /* ddHiFi TC44C */
+diff --git a/sound/hda/codecs/hdmi/hdmi.c b/sound/hda/codecs/hdmi/hdmi.c
+index 42e4dc0949ec9..480d1c5f129fd 100644
+--- a/sound/hda/codecs/hdmi/hdmi.c
++++ b/sound/hda/codecs/hdmi/hdmi.c
+@@ -2348,6 +2348,7 @@ static const struct hda_device_id snd_hda_id_generichdmi[] = {
+ 	HDA_CODEC_ID_MODEL(0x1d179f8e, "KX-7000 HDMI/DP",	MODEL_GF),
+ 	HDA_CODEC_ID_MODEL(0x1d179f8f, "KX-7000 HDMI/DP",	MODEL_GF),
+ 	HDA_CODEC_ID_MODEL(0x1d179f90, "KX-7000 HDMI/DP",	MODEL_GF),
++	HDA_CODEC_ID_MODEL(0x4c545020, "Lisuan HDMI/DP",	MODEL_GENERIC),
+ 	HDA_CODEC_ID_MODEL(0x67663d82, "Arise 82 HDMI/DP",	MODEL_GF),
+ 	HDA_CODEC_ID_MODEL(0x67663d83, "Arise 83 HDMI/DP",	MODEL_GF),
+ 	HDA_CODEC_ID_MODEL(0x67663d84, "Arise 84 HDMI/DP",	MODEL_GF),
+diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
+index 3ed33cba7d83f..fd61dc8e21a53 100644
+--- a/sound/hda/controllers/intel.c
++++ b/sound/hda/controllers/intel.c
+@@ -2830,6 +2830,8 @@ static const struct pci_device_id azx_ids[] = {
+ 	/* Hygon HDAudio */
+ 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_HYGON_18H_M05H_HDA),
+ 	  .driver_data = AZX_DRIVER_HYGON | AZX_DCAPS_POSFIX_LPIB | AZX_DCAPS_NO_MSI },
++	/* Lisuan HD-audio */
++	{ PCI_DEVICE(0x4c54, 0x5010), .driver_data = AZX_DRIVER_GENERIC },
+ 	{ 0, }
+ };
+ MODULE_DEVICE_TABLE(pci, azx_ids);
+diff --git a/sound/hda/core/device.c b/sound/hda/core/device.c
+index ebaa106d0f018..010dd38007a99 100644
+--- a/sound/hda/core/device.c
++++ b/sound/hda/core/device.c
+@@ -664,6 +664,7 @@ static const struct hda_vendor_id hda_vendor_ids[] = {
+ 	{ 0x1af4, "QEMU" },
+ 	{ 0x1fa8, "Senarytech" },
+ 	{ 0x434d, "C-Media" },
++	{ 0x4c54, "Lisuan" },
+ 	{ 0x8086, "Intel" },
+ 	{ 0x8384, "SigmaTel" },
+ 	{} /* terminator */
 -- 
 2.53.0
 
