@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959F655F624;
-	Mon, 19 Oct 2026 13:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA63565E40;
+	Mon, 19 Oct 2026 13:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418257; cv=none; b=J9moGr1PHWEV/KiyzAzhkEjOauPu3aKAiNum3arFY9uny3veNja/c7mHZ6XKU+i89malDf9tfFhqikw8lhNXJVW7peI0eCUM2m3CZbKpIsTTV8hneAmtuOqxUkTO4jJ6x1xkcvMfvJsM34Z149aFKtqOxY8is85Rsp9aRZm0al8=
+	t=1792418258; cv=none; b=Y3kmtWowbKHgp0oGo7aZOtiVMntj+RSMuR2uhjxp7+TW7gBj1jgEzQYehy1d71rX3fsgmq5dDKaDP2dY05tVnDwznuaQRVUoKgohrAxzn8XJpc7Rukl1xw2F0lPXfW9vcbx5HBHZKTOVpaOpIyb5fdbbKY1bZmm1RIyS5SoAr2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418257; c=relaxed/simple;
-	bh=MM+AaQHsp4wpgAhHNkA8vM0Fly5Ksy7GWA4iSSoDAZI=;
+	s=arc-20240116; t=1792418258; c=relaxed/simple;
+	bh=M5XM9HaoQiGM9BZJH+jPgXy2su8hIgg6upvggy9PP5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L7xKYS1MOEzJDA6UKiw01gfXgZxdKr6PqwYxZRKGyaAGLIigVkssGgGx7/sae69fSBUub8JNQa+FjyKWKPT3A0N8v7uzxjvTU116EhIgrJgz8DgIGp/DfFl7AdGAN9qpnQGe243ayLbCsFbLsy2qGSIA1JICh/KHnR4MAPUzv1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PBQziWuH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cQzUvCYw1cZeH8foTYqylV2fA5/twwelOFDL/q15OPe3N7cOVKFO+oqUWGBqqr7nW0scVKATRl0COBwZlUJW+e/IV8hKnU5Cl5npQQzzi3t8+oc93M9poWdIijH0HH8qBPOiUUzLipI6c9EpeQBAJa7oIArrJESMvwOswtIYrUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VDoNx92P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PBQziWuH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC6F1F000C4;
-	Mon, 19 Oct 2026 13:57:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VDoNx92P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69FB1F000C8;
+	Mon, 19 Oct 2026 13:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418254;
-	bh=wx9Mb4QsaVFHtSfVFCf4Mf+XgS6xKgB1lDQXb9H3s5w=;
+	s=k20260515; t=1792418255;
+	bh=aMcfynlMOHxkyjhDuUZ8R9aOY86TSgCExMN0NKpOhlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PBQziWuHfr3bfy+ejeY4kT9ZGxeU93eLsOlIzTc7Z26oAf3etFgU2AdHR3RewfIlu
-	 XybQSCmmDu8g/ni5e8H505j90YhvqSgv3Poh/cdRWkVzNRO0OY3gFSa+vCKEDns3Gy
-	 XLlbNg1Kfcw3ueZyoW5dotRStmv/IL71mnWmKqhp8b79vlXw+iZXDa/eWHOge/y7Rn
-	 YA25XYqIZZ6G215LxXCIUyeDs9TtthEAKkw2uHQZr1Zo4YlsFn10WhBI5MLt3UyhGb
-	 4T28hnjHhc3sDWnL0PVym4A6rkwQL5BdP1Bxm0xW8yQjptBBvJEEHeFULZYVmImDBO
-	 o+RXHpz71x++Q==
+	b=VDoNx92PDxyJlMtJaAEtWyx0DQcNk8BOPisLn1zZ91DLR9j8d4hvW77xqFRnxHdur
+	 Van+w9MJF8QEhTz/4IK/K32IJNUeh12/TeHVvzG34Y1wJt5Cq1KdnIwG9mPXK3E5Fv
+	 sHyb2iWG4+0l/CySFVwgzApXtcGW8XLPlKwBD1Moj9T43aPnDRBt2f0cJXQxqlwvD4
+	 kZ+IcJ+2Huxu00zFDjdG/p8RdGuCagZY4Y9UN2MUkKe86mzxoOPDmd9xzEENFwdiXT
+	 AygALZyLbMyRGNzqHoW2r8p07N04uzZdp5GVI2EcLtvnLQqgKrhj4qX+GfwkgRHtm6
+	 oCBvaY5dhL1Fg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Even Xu <even.xu@intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	xinpeng.sun@intel.com,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: codec: max98926: fixup invert setup mask
-Date: Mon, 19 Oct 2026 09:46:53 -0400
-Message-ID: <20261019135441.1420968-122-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] HID: Intel-thc-hid: Intel-quicki2c: Fix buffer overflow
+Date: Mon, 19 Oct 2026 09:46:54 -0400
+Message-ID: <20261019135441.1420968-123-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,466 +55,394 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Even Xu <even.xu@intel.com>
 
-[ Upstream commit dd0ae9a2e19a24c532c9aa80a44f572b4907bcdf ]
+[ Upstream commit 5e5c3b9db1c5910d6a9175c97b76a95566e4dc32 ]
 
-invert might have both WCI/BCI mask, but regmap_update_bits() masks
-BCI only. It needs both mask. Fixup it.
+The input and output buffers are used to store complete HID-over-I2C
+packets, including their protocol headers. However, their sizes are
+currently calculated from the payload length only.
 
-	static int max98926_dai_set_fmt(...)
-	{
-		...
-		switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
-		case SND_SOC_DAIFMT_NB_NF:
-			break;
-		case SND_SOC_DAIFMT_NB_IF:
-=>			invert = MAX98926_DAI_WCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^
-		case SND_SOC_DAIFMT_IB_NF:
-=>			invert = MAX98926_DAI_BCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^
-		case SND_SOC_DAIFMT_IB_IF:
-=>			invert = MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK;
-			break;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		default:
-			...
-		}
-		...
-		regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
-				MAX98926_DAI_BCI_MASK, invert);
-		...		^^^^^^^^^^^^^^^^^^^^^
-	}
+Allocate enough space for both the payload and the packet header to
+prevent a buffer overflow when the payload reaches its maximum size.
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87wltomc97.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Even Xu <even.xu@intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a **6.12.111** tree (`pending-6.12`, `p-6.12-3-gc504cf0baa3d8`).
-The candidate is `dd0ae9a2e19a2` (“ASoC: codec: max98926: fixup invert
-setup mask”). It is **not** in this checkout; the buggy
-`regmap_update_bits()` mask **is**.
-
----
+This is a two-line allocation-size fix for a real HID-over-I2C buffer
+overflow in a driver that already exists on this 6.18.y tree. It should
+be backported.
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Subsystem: `ASoC: codec: max98926`
-- Action verb: `fixup`
-- Claimed intent: correct the invert-mode bit mask written to the
-  MAX98926 FORMAT register
-
-Record: **[ASoC/max98926] [fixup] [WCI invert bit never programmed
-because update mask is BCI-only]**
+- Record: **[HID / Intel-thc-hid / Intel-quicki2c] [Fix] [buffer
+  overflow]**
+- Subsystem prefix: `HID: Intel-thc-hid: Intel-quicki2c`
+- Action verb: **Fix**
+- Claimed intent: prevent overflow of HID-over-I2C input/output buffers
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- `Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>`
-  (author)
-- `Link: https://patch.msgid.link/87wltomc97.wl-
-  kuninori.morimoto.gx@renesas.com`
-- `Signed-off-by: Mark Brown <broonie@kernel.org>` (ASoC maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence of the last two is expected for this
-  review)
-
-Record: **Author + ASoC maintainer SOB; lore Link; no user/syzbot
-report**
+- Record:
+  - `Signed-off-by: Even Xu <even.xu@intel.com>` (author; listed
+    maintainer of INTEL THC)
+  - `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID maintainer)
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+    by:`, `Link:`, or `Cc: stable` (absence of those tags is expected
+    for this review)
+  - Pipeline-only tags ignored per instructions
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-The body shows `max98926_dai_set_fmt()` building `invert` as:
-- `NB_IF` → `MAX98926_DAI_WCI_MASK`
-- `IB_NF` → `MAX98926_DAI_BCI_MASK`
-- `IB_IF` → `BCI | WCI`
-
-then calling `regmap_update_bits(..., MAX98926_DAI_BCI_MASK, invert)`.
-`regmap_update_bits()` only changes bits in the mask, so WCI is never
-written.
-
-Record: **[Bug: WCI invert bit dropped] [Symptom: inverted frame clock
-not applied] [No version info] [Root cause: BCI-only mask]**
+- Record:
+  - **Bug:** `input_buf` and `report_buf` hold complete HID-over-I2C
+    packets (`__le16 len` + payload), but they are allocated from
+    payload length only (`max_input_len` / `max_output_len`, floored at
+    4K).
+  - **Symptom/failure mode:** buffer overflow when the payload reaches
+    that maximum (2 bytes past the end: `HIDI2C_LENGTH_LEN ==
+    sizeof(__le16)`).
+  - **Version info:** none in the message.
+  - **Root cause:** allocation size omitted the 2-byte HID-over-I2C
+    length header.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-This is an explicit register-programming bug, not a disguised cleanup.
+- Record: Not a hidden fix. The subject and body state a buffer overflow
+  and the diff matches that claim.
 
-Record: **Not a hidden fix; it is a real DAI-format bug**
-
----
-
-## PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 **Step 2.1: INVENTORY THE CHANGES**
-- File: `sound/soc/codecs/max98926.c` (`1 insertion, 1 deletion`)
-- Function: `max98926_dai_set_fmt()`
-- Scope: single-file, one-line surgical fix
-
-Record: **[max98926.c +1/-1] [max98926_dai_set_fmt] [surgical]**
+- Record:
+  - File: `drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c` (+4
+    / −2; net +2)
+  - Function: `quicki2c_alloc_report_buf()`
+  - Scope: **single-file surgical fix**
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Before (this tree, lines 360–363):
-
-```360:364:sound/soc/codecs/max98926.c
-        regmap_write(max98926->regmap,
-                        MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
-        regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
-                        MAX98926_DAI_BCI_MASK, invert);
-        return 0;
-```
-
-`regmap_write()` sets FORMAT to only `DAI_DLY_MASK` (WCI and BCI
-cleared). Then update_bits can set BCI, but never WCI.
-
-After: mask is `MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK`, so both
-invert bits can be set.
-
-Record: **[BCI-only update → BCI|WCI update on DAI set_fmt path]**
+- Record:
+  - **Hunk 1 (input_buf):** `devm_kzalloc(..., max_report_len)` →
+    `devm_kzalloc(..., HIDI2C_PACKET_LEN(max_report_len))`
+  - **Hunk 2 (report_buf):** same change
+  - Path: probe-time allocation (`quicki2c_probe` →
+    `quicki2c_alloc_report_buf`). Runtime use of those buffers is
+    unchanged.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Header bits in this tree:
-
-```525:528:sound/soc/codecs/max98926.h
-#define MAX98926_DAI_WCI_MASK           (1<<3)
-...
-#define MAX98926_DAI_BCI_MASK           (1<<2)
-```
-
-This is a logic/correctness bug: wrong `regmap` mask, so advertised
-invert modes do not take effect.
-
-Record: **[Logic/correctness] [WCI never written for NB_IF/IB_IF]**
+- Record:
+  - **Category:** memory safety / buffer overflow (out-of-bounds write)
+  - **Mechanism:** packets are `struct hidi2c_report_packet { __le16
+    len; u8 data[]; }`. `HIDI2C_PACKET_LEN(data_len)` is `(data_len) +
+    HIDI2C_LENGTH_LEN`. Allocation used payload size only.
+  - Verified consumers:
+    - `handle_input_report()` DMA-copies into `input_buf` via
+      `thc_rxdma_read()` → `sg_copy_to_buffer(..., read_buff, mes_len)`
+      with **no destination-size argument**.
+    - `quicki2c_get_report()` SWDMA-reads into `input_buf`.
+    - `quicki2c_init_write_buf()` / `write_cmd_to_txdma()` build framed
+      packets in `report_buf` (length field + payload, plus command
+      bytes).
+  - This is **not** a lock/refcount/init/API change.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Obviously correct: it matches sibling `max98925.c` (already uses `BCI |
-WCI`). Minimal. No API/locking/refcount change. Regression risk is near
-zero: NB_NF still writes 0 into both bits; IB_NF still sets only BCI.
-
-Record: **[Obviously correct, 1-line] [Very low regression risk]**
-
----
+- Record:
+  - **Quality:** obviously correct. Uses an existing macro from
+    `include/linux/hid-over-i2c.h` that this tree already has.
+  - **Minimal:** two allocation sizes in one function.
+  - **Regression risk:** very low. Extra 2 bytes per buffer; no API,
+    locking, or control-flow change.
+  - **Caveat (not a reason to reject):** `qcdev->report_len` is still
+    set to `max_report_len`, not `HIDI2C_PACKET_LEN(max_report_len)`.
+    The write-side bound check (`if (buf_len > write_buf_len) return
+    -EINVAL`) can still reject a max-sized SET_REPORT. That is fail-safe
+    (no overflow), pre-existing, and not a regression. Command framing
+    can need more than +2 bytes; this commit only claims the 2-byte
+    packet length header, which is what `HIDI2C_PACKET_LEN` adds.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-`git blame -L 343,363 -- sound/soc/codecs/max98926.c`: the buggy mask is
-from `a2e2876aa0bab` (“ASoC: Add max98926 codec driver”, Anish Kumar,
-2016-01-14). `git describe --contains a2e2876aa0bab` → `v4.6-rc1~...`.
-Present for ~10 years.
-
-Record: **[a2e2876aa0bab, v4.6] [long-standing bug]**
+- Record: buggy allocations introduced by `66b59bfce6d93` (“HID: intel-
+  thc-hid: intel-quicki2c: Complete THC QuickI2C driver”, Even Xu,
+  2025-01-06). Present since the driver became functional. Driver
+  skeleton: `61bb2714dc3a1`. First appeared around **v6.13**, so it is
+  in this 6.18 tree.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-No `Fixes:` tag. The introducing commit is in this tree (`git merge-base
---is-ancestor a2e2876aa0bab HEAD` succeeded).
-
-The **identical** bug in the sibling driver was already treated as
-stable material:
-
-```
-0b51601d4504f4 ASoC: max98925: Fix mask for setting DAI invert mode
-...
-Cc: stable@vger.kernel.org
-```
-
-That 2015 fix is in this tree. max98926 (2016) reintroduced the same
-mistake.
-
-Record: **[No Fixes tag; sibling max98925 fix was Cc: stable]
-[Introducing commit is in this 6.12 tree]**
+- Record: no `Fixes:` tag. Not applicable. The introducing commit is in
+  this tree (`git merge-base --is-ancestor 66b59bfce6d93 v6.18.57`
+  succeeded).
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Recent `max98926.c` history in this tree is probe/OF/DAI-terminology
-churn, not invert-mask work. No prerequisite refactor. Standalone 1-line
-change.
-
-Record: **[No prerequisites] [Standalone]**
+- Record: recent work on this file is driver completion, ACPI, PM,
+  device IDs, WOT. Related but distinct: `d08a1049659aa` (ACPI u16
+  truncation, not this overflow). Sibling series patch: `HID: Intel-thc-
+  hid: Intel-quickspi: Fix buffer overflow` (different file). This
+  commit is **standalone**; it does not need the QuickSPI patch.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Kuninori Morimoto is a regular ASoC contributor. Nearby work includes
-`alc5623` invert tidyup (different driver, “tidyup” not this bug). This
-patch is a standalone `[PATCH]`, not patch X/Y.
-
-Record: **[Core ASoC contributor] [Standalone invert-mask fix, not a
-series]**
+- Record: Even Xu is listed in MAINTAINERS as maintainer of `INTEL TOUCH
+  HOST CONTROLLER (THC) DRIVER` (`drivers/hid/intel-thc-hid/`). This is
+  a maintainer fix, not drive-by.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-The hunk matches this tree exactly. `git show dd0ae9a2e19a2 | git apply
---check` → **APPLY_CLEAN**. No new helpers or structs.
-
-Record: **[No dependencies] [Applies standalone and cleanly]**
-
----
+- Record: `HIDI2C_PACKET_LEN` was added in `6fc761385bcf6` (“Add HIDI2C
+  protocol implementation”) and is present on **v6.18.57** in
+  `include/linux/hid-over-i2c.h`. No missing helpers. Patch applies
+  cleanly to the v6.18.57 blob (`patch --dry-run` exit 0).
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-`b4 dig -c dd0ae9a2e19a2` → https://patch.msgid.link/87wltomc97.wl-
-kuninori.morimoto.gx@renesas.com
-`b4 dig -a`: single v1, no later revisions.
-Mbox (2 messages): submission + Mark Brown “Applied to for-7.3”. No NAK,
-no review concerns, no `Cc: stable` request. Included in the “sound
-fixes for 7.3-rc1” pull.
-
-Record: **[v1 only] [Applied by ASoC maintainer] [No objections]
-[Treated as a fix in the rc1 pull]**
+- Record:
+  - `b4 dig -c 5e5c3b9db1c5910d6a9175c97b76a95566e4dc32` →
+    https://patch.msgid.link/20260922024638.932865-2-even.xu@intel.com
+  - Cover: `[PATCH 0/2] HID: Intel-thc-hid: Fix potential buffer
+    overflow` (`20260922024638.932865-1`)
+  - `b4 dig -a`: **v1 only** (no v2/v3). Applied as submitted.
+  - Jiri Kosina (2026-09-23): “Applied to hid.git#for-7.3/upstream-
+    fixes, thanks.” No NAK.
+  - No human reviewer asked for `Cc: stable`. An automated review noted
+    `report_len` not updated and SET_REPORT framing possibly needing
+    more than 2 bytes. HID maintainer applied the series as-is.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-`b4 dig -w` recipients: Jaroslav Kysela, Liam Girdwood, Mark Brown,
-Takashi Iwai, linux-sound@. Maintainer applied it the same day.
-
-Record: **[ASoC/ALSA maintainers on To; Mark Brown applied]**
+- Record (`b4 dig -w`): To/Cc `bentiss@kernel.org`, `jikos@kernel.org`,
+  `srinivas.pandruvada@linux.intel.com`, `linux-input@vger.kernel.org`.
+  HID maintainers were on the original mail. Jiri applied it.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-No `Reported-by` / bugzilla / syzbot. Found by code inspection (same
-class as Axel Lin’s 2015 max98925 fix).
-
-Record: **[No user report; bug is visible from the code and sibling
-driver]**
+- Record: no `Reported-by` / syzbot / bugzilla. Author-found from code
+  inspection (“potential buffer overflow”). No user crash log in the
+  thread.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Standalone `[PATCH]`. No follow-ups on `all-next` after this commit for
-`max98926.c`.
-
-Record: **[Standalone; no later superceding patch]**
+- Record: 2/2 is the QuickSPI analogue (`HIDSPI_INPUT_BODY_SIZE`).
+  Independent file; this I2C patch does not depend on it.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Search for this title on lore stable did not find a prior stable
-discussion (unrelated hits only).
-
-Record: **[No stable-list discussion found]**
-
----
+- Record: lore.kernel.org HTTP fetch returned 403. **UNVERIFIED**
+  whether linux-stable discussed this SHA. Decision does not rely on
+  that.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: **[`max98926_dai_set_fmt`]**
+- Record: `quicki2c_alloc_report_buf()` only.
 
 **Step 5.2: TRACE CALLERS**
-Wired as `.set_fmt` in `max98926_dai_ops`. ASoC core
-`snd_soc_dai_set_fmt()` in `sound/soc/soc-dai.c` calls
-`dai->driver->ops->set_fmt`. `sound/soc/soc-core.c` applies DAI format
-from the card/DAI link at setup.
-
-Record: **[Called from ASoC DAI format setup, not a hot IRQ path]**
+- Record: single caller, `quicki2c_probe()` (after reading the HID-
+  over-I2C device descriptor). Probe of Intel THC I2C-port PCI devices
+  (Lunar Lake, Panther Lake, Wildcat Lake IDs in `quicki2c_pci_tbl`).
+  Not a hot path, but every successful probe allocates these buffers,
+  then IRQ/DMA/HID traffic uses them.
 
 **Step 5.3: TRACE CALLEES**
-`regmap_write` / `regmap_update_bits` on `MAX98926_FORMAT`.
-
-Record: **[Register programming only]**
+- Record: `devm_kzalloc()`, `le16_to_cpu()`, `HIDI2C_PACKET_LEN()`. No
+  new callees.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Reachable when a MAX98926 card configures DAI format (DT `dai-format` /
-machine driver). Unprivileged users typically cannot change invert
-flags, but boot/stream setup hits this. `NB_IF` / `IB_IF` are the broken
-cases (`soc-dai.h`: inverted frame).
-
-Record: **[Reachable on DAI setup for this codec] [Broken for inverted
-frame clock]**
+- Record: PCI probe → descriptor read → alloc → DMA init → HID
+  registration → `handle_input_report()` on IRQ. Reachable on machines
+  with Intel THC + HID-over-I2C touch. Unprivileged HID input does not
+  size the kernel buffer; overflow is on kernel DMA/copy into an
+  undersized `input_buf` when the device sends a max-sized packet.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-This tree: only `max98926.c` still uses BCI-only. `max98925.c` already
-uses `BCI | WCI`.
-
-Record: **[Sibling already fixed; this is the remaining copy of the same
-bug]**
-
----
+- Record: same author applied the same header-vs-payload fix to
+  QuickSPI. Confirms a systematic off-by-header bug, not a one-off typo.
 
 ## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Yes. `git merge-base --is-ancestor dd0ae9a2e19a2 HEAD` failed (fix not
-present). Surrounding code in this tree matches the parent of the
-candidate commit. Introduced in v4.6, still here in 6.12.111.
-
-Record: **[Buggy code present at max98926_dai_set_fmt] [Since v4.6]**
+- Record: **Yes.** Local tree is **6.18.57** (`git describe HEAD` →
+  `v6.18.57-155-gcdf239ca885b2`; Makefile `VERSION=6 PATCHLEVEL=18
+  SUBLEVEL=57`).
+- On **v6.18.57** (this series’ base), `quicki2c_alloc_report_buf()`
+  still does:
+  - `input_buf = devm_kzalloc(..., max_report_len)`
+  - `report_buf = devm_kzalloc(..., max_report_len)`
+- `HIDI2C_PACKET_LEN` already exists in this tree’s header. Driver is
+  `CONFIG_INTEL_QUICKI2C` under `INTEL_THC_HID` (`X86_64 && PCI &&
+  ACPI`).
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Context is identical; `git apply --check` is clean.
-
-Record: **[Clean apply]**
+- Record: **clean apply** on the v6.18.57 file. Surrounding function
+  matches the patch. No refactor in the way.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-No invert-mask fix for max98926 in this tree. max98925’s equivalent fix
-**is** already here.
-
-Record: **[No prior max98926 invert fix; sibling fix already present]**
-
----
+- Record: no other commit on this file in 6.18.y enlarges these two
+  allocations. The 4K floor (`max(..., SZ_4K)`) is a workaround for
+  devices that under-declare max length; it does **not** add the 2-byte
+  header. When `max_input_len`/`max_output_len` is ≥ 4K (HID max buffer
+  is 16K), that floor provides no slack.
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-`sound/soc/codecs/max98926.c` — Maxim MAX98926 speaker amplifier.
-`CONFIG_SND_SOC_MAX98926` is selected via `SND_SOC_ALL_CODECS` imply; DT
-compatible `maxim,max98926` exists. No in-tree board file found that
-hard-codes this codec.
-
-Record: **[ASoC codec driver] [PERIPHERAL, but real hardware]**
+- Record: **HID Intel THC QuickI2C** (`drivers/hid/intel-thc-hid/`).
+  **IMPORTANT** for Intel laptops/tablets with THC touch (LNL/PTL/WCL),
+  not core mm/VFS. Still production input hardware.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Codec file is mature; little recent functional change.
-
-Record: **[Mature driver; bug is old, not a new-feature regression]**
-
----
+- Record: actively maintained through 6.18 (device IDs, WOT, ACPI
+  advanced features). Bug is in original 2025 driver completion, not
+  brand-new 7.x-only code.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Users of MAX98926 whose DAI link requests inverted word/frame clock
-(`NB_IF` or `IB_IF`). Default `NB_NF` is unaffected.
-
-Record: **[Driver-specific; only inverted-frame configurations]**
+- Record: **driver-specific / config-specific:** `CONFIG_INTEL_QUICKI2C`
+  on x86_64 with Intel THC HID-over-I2C devices.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Triggered at DAI format setup (card bring-up / PCM start). Common I2S is
-`NB_NF` (works). Inverted frame is less common but is a documented,
-handled mode in this function. Not a userspace-triggered security issue.
-
-Record: **[DAI setup] [Uncommon invert modes] [Not unprivileged-
-exploitable]**
+- Record: HID-over-I2C input/feature/output packet whose payload equals
+  the allocated max (`max(declared max, 4K)`). Typical small touch
+  reports may not hit it; max-sized reports and devices that declare
+  large `wMaxInputLength` can. Not a userspace-crafted syscall overflow;
+  it is device-facing DMA/copy. Still a kernel memory-safety bug on a
+  standard probe/IRQ path.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-WCI never programmed → LRCLK/frame polarity wrong → swapped channels,
-DAI desync, or unusable playback. Not a panic/UAF/deadlock.
-
-Record: **[Incorrect audio DAI polarity] [Severity: MEDIUM-HIGH for
-affected devices; not CRITICAL crash]**
+- Record: **buffer overflow (2 bytes) into heap** via
+  `sg_copy_to_buffer` / packet construction. **HIGH** (memory
+  corruption; crash or worse). Not a panic on every boot, but it is a
+  real overflow, not a warning.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Benefit: makes advertised invert modes actually work; same class of
-  fix max98925 already shipped to stable.
-- Risk: 1-line mask OR, no API/locking change, applies cleanly.
-
-Record: **[Benefit: medium for this hardware] [Risk: very low]
-[Favorable]**
-
----
+- Record:
+  - **Benefit:** high for THC HID-over-I2C users — closes a heap
+    overflow the driver author and HID maintainer treated as real.
+  - **Risk:** very low — +2 bytes on two `devm_kzalloc`s, existing
+    macro, no behavior change except not writing past the buffer.
+  - **Ratio:** strongly favors backport.
 
 ## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real, obvious register bug: WCI invert is computed then discarded
-- One-line, obviously correct; matches max98925
-- Identical max98925 fix (`0b51601d4504f4`) was `Cc: stable`
-- Bug present since v4.6 and in this 6.12 tree
-- Applies cleanly; no dependencies or new APIs
-- Applied by Mark Brown; landed in a sound **fixes** pull
-- User-visible: inverted frame clock does not work
+- Real buffer overflow: complete HID-over-I2C packets stored in buffers
+  sized from payload only
+- DMA copy into `input_buf` has no dest-size check
+- Small, obviously correct (+2 bytes via existing `HIDI2C_PACKET_LEN`)
+- Driver and macro exist in this 6.18.57 tree; introducing commit is in
+  this tree
+- Applies cleanly
+- Written by the THC maintainer; applied by HID maintainer
+- Same class of bug independently fixed in QuickSPI
 
 AGAINST:
-- Not a crash, UAF, deadlock, or security issue
-- Peripheral codec; no in-tree machine driver found
-- No `Reported-by` / `Tested-by`
-- Common `NB_NF` path already works
+- No public reproducer / syzbot report (author-found “potential”)
+- 4K floor hides the overflow for devices with small `max_input_len`
+- `report_len` not updated; write path may still `-EINVAL` at max size
+  (fail-safe, not a new bug)
+- Affects only Intel THC QuickI2C, not all machines
 
 UNRESOLVED:
-- Direct user reports of broken MAX98926 inverted-frame setups were not
-  found
-- lore.kernel.org WebFetch returned 403; discussion recovered via `b4
-  dig -m`
+- Could not query lore.kernel.org/stable (HTTP 403)
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — 1-line mask, sibling
-   precedent, maintainer applied
-2. Fixes a real bug that affects users? **PASS** — advertised invert
-   modes do not program WCI
-3. Important issue? **PASS** — hardware misconfiguration / broken audio
-   for inverted frame (same bar as the 2015 max98925 stable fix), not a
-   panic
-4. Small and contained? **PASS** — 1 line, one function
+1. Obviously correct and tested? **PASS** — two allocation sizes; HID
+   maintainer applied v1; macro already in tree
+2. Fixes a real bug that affects users? **PASS** — overflow on max-sized
+   HID-over-I2C packets in a shipping Intel touch driver
+3. Important issue? **PASS** — heap buffer overflow / memory corruption
+   (**HIGH**)
+4. Small and contained? **PASS** — one function, two sites, ~4 lines
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — `git apply --check` clean;
-   context matches
+6. Can apply to the local tree? **PASS** — clean on v6.18.57;
+   `HIDI2C_PACKET_LEN` already present
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Not a device-ID/quirk/DT/build/docs exception. It is a normal small
-driver correctness fix.
+- Record: none needed. This is a normal memory-safety bug fix, not a
+  device-ID/quirk/DT/build/docs exception.
 
 **Step 9.4: MAKE YOUR DECISION**
-This belongs in **this** 6.12 tree. The buggy code is here, the fix is
-trivial and already proven on the sibling codec (including an explicit
-stable nomination there), and the only cost is flipping one register
-mask bit that the driver already intended to set.
+Backport. The bug is in this 6.18.y driver, the fix is surgical, and
+leaving a 2-byte heap overflow in a HID DMA path is worse than adding
+two bytes to the buffers.
 
-### What the commit solves for stable users
-On MAX98926, `set_fmt` claims to support word-clock invert (`NB_IF` /
-`IB_IF`) but `regmap_update_bits()` only allows the BCI bit to change,
-so LRCLK invert never reaches the chip. That is broken DAI polarity for
-those boards, not a style change.
+## What the commit solves for this tree
 
-### Risk vs benefit
-Very low risk (one OR into an existing mask) versus a real, long-
-standing hardware-config bug that already met the stable bar on
-max98925.
+On 6.18.57, QuickI2C still allocates `input_buf`/`report_buf` as
+`max(payload, 4K)` and then stores HID-over-I2C packets that include a
+2-byte length header. When the payload is that maximum,
+`thc_rxdma_read()` / SWDMA copies past the end of the kmalloc buffer.
+The fix allocates `HIDI2C_PACKET_LEN(max_report_len)` instead.
 
-### Concerns
-None for this tree: no prerequisites, no conflict, no follow-up needed.
-Impact is limited to MAX98926 with inverted frame clock.
+That matches stable rules: real overflow, tiny diff, no new API, applies
+cleanly, no missing prerequisites.
 
----
+Risk vs benefit: +2 bytes of allocation vs heap corruption on Intel THC
+HID-over-I2C devices (Lunar Lake / Panther Lake / Wildcat Lake). Benefit
+dominates. The unfixed `report_len` bound is conservative, not a
+regression.
 
 ## Verification
-- [Phase 1] Parsed tags: author SOB, Mark Brown SOB, lore Link; no
-  Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: 1 line in `max98926_dai_set_fmt()`; mask `BCI` → `BCI
-  | WCI`
-- [Phase 2] Header verified: WCI is bit 3, BCI is bit 2 in `max98926.h`
-- [Phase 3] `git blame`: buggy line from `a2e2876aa0bab` (2016, v4.6)
-- [Phase 3] `git merge-base --is-ancestor a2e2876aa0bab HEAD`:
-  introducing commit **is** in this tree
-- [Phase 3] Sibling fix `0b51601d4504f4` (“Fix mask for setting DAI
-  invert mode”) had `Cc: stable@vger.kernel.org` and is in this tree
-- [Phase 3] `git log` on `max98926.c`: no invert-mask prerequisite
-- [Phase 4] `b4 dig -c dd0ae9a2e19a2`: lore URL `87wltomc97.wl-
-  kuninori.morimoto.gx@renesas.com`
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: Kysela, Girdwood, Brown, Iwai, linux-sound
-- [Phase 4] mbox: Mark Brown applied to for-7.3; no NAKs
-- [Phase 4] WebFetch lore/msgid: 403; discussion taken from b4 mbox
-  instead
-- [Phase 4] Stable lore search: no prior discussion of this patch
-- [Phase 5] Callers: `snd_soc_dai_set_fmt()` → dai ops `.set_fmt`; used
-  from `soc-core.c` DAI setup
-- [Phase 5] `git grep`: only max98926 still has BCI-only invert update
-- [Phase 6] `make kernelversion` / Makefile: **6.12.111**; `git describe
-  HEAD`: `p-6.12-3-gc504cf0baa3d8`
-- [Phase 6] `git merge-base --is-ancestor dd0ae9a2e19a2 HEAD`: fix
-  **not** in this tree
-- [Phase 6] Parent context of candidate matches local `max98926.c` lines
-  360–363
-- [Phase 6] `git apply --check`: APPLY_CLEAN
-- [Phase 7] No in-tree machine driver hard-coding max98926; DT
-  compatible `maxim,max98926` exists
-- [Phase 8] Failure mode: WCI not programmed → wrong frame polarity /
-  broken audio; not a crash
-- UNVERIFIED: specific MAX98926 products using `NB_IF`/`IB_IF` in the
-  field (driver still implements those cases)
+- [Phase 1] Parsed subject/body/tags: overflow fix; Even Xu + Jiri
+  Kosina SOBs; no Fixes/Reported-by
+- [Phase 2] Diff: two `devm_kzalloc` sizes in
+  `quicki2c_alloc_report_buf()` wrap `HIDI2C_PACKET_LEN`
+- [Phase 2] `include/linux/hid-over-i2c.h`: `HIDI2C_PACKET_LEN(data_len)
+  = data_len + sizeof(__le16)`
+- [Phase 2] `handle_input_report()` / `read_dma_buffer()`:
+  `sg_copy_to_buffer` into `input_buf` without dest capacity
+- [Phase 3] `git blame` on v6.18.57: allocations from `66b59bfce6d93`
+  (2025-01, driver completion)
+- [Phase 3] `git merge-base --is-ancestor 66b59bfce6d93 v6.18.57`:
+  introducing commit is in this tree
+- [Phase 3] `HIDI2C_PACKET_LEN` added in `6fc761385bcf6`; present on
+  v6.18.57
+- [Phase 3] Author Even Xu is MAINTAINERS owner of `drivers/hid/intel-
+  thc-hid/`
+- [Phase 4] `b4 dig -c 5e5c3b9db1c5910d6a9175c97b76a95566e4dc32`: lore
+  thread found; v1 only
+- [Phase 4] mbox: Jiri Kosina applied to hid.git#for-7.3/upstream-fixes;
+  no NAK
+- [Phase 4] `b4 dig -w`: HID maintainers on original To/Cc
+- [Phase 4] UNVERIFIED: lore.kernel.org/stable HTTP 403
+- [Phase 5] Single caller `quicki2c_probe()`; PCI IDs LNL/PTL/WCL THC
+  I2C ports
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.57
+- [Phase 6] `git show v6.18.57:drivers/hid/intel-thc-hid/intel-
+  quicki2c/pci-quicki2c.c`: buggy sizes still present
+- [Phase 6] `patch --dry-run` of this commit onto the v6.18.57 file:
+  exit 0
+- [Phase 8] Failure mode: 2-byte heap overflow on max-sized HID-over-I2C
+  packets; severity HIGH
 
 **YES**
 
- sound/soc/codecs/max98926.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/max98926.c b/sound/soc/codecs/max98926.c
-index ae962bda163eb..8f48f702d5621 100644
---- a/sound/soc/codecs/max98926.c
-+++ b/sound/soc/codecs/max98926.c
-@@ -360,7 +360,7 @@ static int max98926_dai_set_fmt(struct snd_soc_dai *codec_dai,
- 	regmap_write(max98926->regmap,
- 			MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
- 	regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
--			MAX98926_DAI_BCI_MASK, invert);
-+			MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK, invert);
- 	return 0;
- }
+diff --git a/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c b/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
+index c6ba6886072ad..4588c55cf255d 100644
+--- a/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
++++ b/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
+@@ -586,7 +586,8 @@ static int quicki2c_alloc_report_buf(struct quicki2c_device *qcdev)
+ 	 */
+ 	max_report_len = max(le16_to_cpu(qcdev->dev_desc.max_input_len), SZ_4K);
+ 
+-	qcdev->input_buf = devm_kzalloc(qcdev->dev, max_report_len, GFP_KERNEL);
++	qcdev->input_buf = devm_kzalloc(qcdev->dev,
++					HIDI2C_PACKET_LEN(max_report_len), GFP_KERNEL);
+ 	if (!qcdev->input_buf)
+ 		return -ENOMEM;
+ 
+@@ -596,7 +597,8 @@ static int quicki2c_alloc_report_buf(struct quicki2c_device *qcdev)
+ 	max_report_len = max(le16_to_cpu(qcdev->dev_desc.max_output_len),
+ 			     max_report_len);
+ 
+-	qcdev->report_buf = devm_kzalloc(qcdev->dev, max_report_len, GFP_KERNEL);
++	qcdev->report_buf = devm_kzalloc(qcdev->dev,
++					 HIDI2C_PACKET_LEN(max_report_len), GFP_KERNEL);
+ 	if (!qcdev->report_buf)
+ 		return -ENOMEM;
  
 -- 
 2.53.0
