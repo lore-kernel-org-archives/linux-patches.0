@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518AA5649D1;
-	Mon, 19 Oct 2026 13:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD175649E6;
+	Mon, 19 Oct 2026 13:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418255; cv=none; b=nhNP4Jjr3KYNOdRtg5Xvbn/nZ6vTZlZGEOYIJTqsVsMXQqXU/W2JGLI7lcIk+CSc8/Nh4vM+zOTqMO0YuZKYjBRDLZ07DZxNfKXvi91jHAd7MEtCIcFlqXc2Evvu+tFF8LefrjFHB5EQTZUjzuwwtkUWl0xEwarpYW1pioF41Hc=
+	t=1792418256; cv=none; b=Svo3EXtUaIuFHP1B45uOXIvvb+LJK+kmoADlbJpn9rK0ljTRwZfSUWE5YJyEr72Jh6xC7RN40LaTWW0mxqSfIXuxM0ZUQgQ+SgsmQxVbu9SXuME2WOh94/8ta/U+qSVq9Hc99D2pDBDHPIkag2dDRbZ1Vg3qgsSQcWFfQHZEIzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418255; c=relaxed/simple;
-	bh=g4PTO7lnP6jmMLinerXH5KGJQ1+uOwXMR5HVPq3zdJU=;
+	s=arc-20240116; t=1792418256; c=relaxed/simple;
+	bh=BNhNsQmaXwNiVrbxLU475n6RzUFg9AVVU338Vk7f6R8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ca3YAQAn/agdbJdjuuVAcP5kbgas1VJIcYngxVVUHfVtJe0Q5oKaqgPT4d5spQa8pDK+A/6F3QBMkn4LW/vEv8gziiFs5+WNpFeP76S8TyuPAZf9eu2OgjJAuVv/yhl6hnOjuARu35FH922/7xniBaLspa0efExYwEVKIPzO8UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O6kVQQSn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DGqYUOcGOKMhpHbYpwsaH7foF5eYqV9Yws+AkFJnZUmJW4jgjcFh0eb9eoQYTYQd4DCk1qwS4apBp46BEL7XwvQEk/bXcuNzsBM1KOL7N8M8ab+j8UlAWsscbAQ/jB7nYnaI/g1Dy0YG9Zmv72LYPJOkgMg6jjbiwDLCTP9/Gq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D8NtNGoA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O6kVQQSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5331F000C5;
-	Mon, 19 Oct 2026 13:57:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8NtNGoA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C211F000C7;
+	Mon, 19 Oct 2026 13:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418251;
-	bh=i1Qy+90BenJPcLfIAdefa7A1eHguDbzBBjH+pknHFrw=;
+	s=k20260515; t=1792418253;
+	bh=n7+Oe27eSt/CYawxJQEUCht00laB/j73DqAE8wC3WOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6kVQQSnnJ6TXx+oBnL+F+9bkLWT/rY2LPBGa/Aeh4CoLW5cl5NJuSjm5Mc5ywJN2
-	 YgPE9h8gpsTqwjK3Tl+Kd3FURww9RHtkPoTMuE/3A1SKxBR+zasVB97O7VnnsAoEUW
-	 92YoUIVjeZ7qPKDdGkJwMO/or3d0T53kzb+cmEB73QY6tL/ocGlMpkDFzO3Wg3Qb6E
-	 fZZd+bnvrTxQ9gPacvRkiNu+/CHrqZzxrwUvEI/H1rYBweC05Iak50L2/3t0rhnPio
-	 FT50QfgAOb8iHcVEU6DuP2QuvC4Q/U/v47VtRrx4CeaQp453/WgyHd++7oTKr/1dHE
-	 aGXDOu285dzDQ==
+	b=D8NtNGoAFZ0TCZ6QZKcy3kPtd6jlKC+Q2GKoojRYOFRD6Bv+6wrvg4mV1jN+1QkbR
+	 JKkYO5n4+nwiZSbiVLLefK+dT913itaShCeezg/xSBdIQu/S1M1RjBuVGLsHgA7E06
+	 KdeVbLb4O7i9WJobThb6Rwdw8i12LsnO1aQuNZVqKZ6s41BsTE3Az3aNtqZXCc78bm
+	 caNjghOAvYVxbkOYe2ygfHpaqcNzURLFu4srffyRxEvkZaHmQPrRGNgwrwUmPSXVxj
+	 eosrroJR21F9fSG3WcHoFY6I84mVoeBMOBl5r0hQhqDKdteQBFiMutX8m0Wl+Z8wgg
+	 QaKiQ9Toj4Ozg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Benjamin Marzinski <bmarzins@redhat.com>,
-	Yury Norov <ynorov@nvidia.com>,
+Cc: liulhong617 <liulhong617@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	yury.norov@gmail.com,
-	linux-arch@vger.kernel.org,
+	catalin.marinas@arm.com,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] bitops: make the *_bit_le functions use unsigned long
-Date: Mon, 19 Oct 2026 09:46:51 -0400
-Message-ID: <20261019135441.1420968-120-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] arm64: mm: fix accidental linear mapping of no-map reserved memory
+Date: Mon, 19 Oct 2026 09:46:52 -0400
+Message-ID: <20261019135441.1420968-121-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -47,492 +47,494 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: liulhong617 <liulhong617@gmail.com>
 
-[ Upstream commit 1c61b0a6e5c472737619f74f79c390363ee258df ]
+[ Upstream commit 7ace06a01efaba1ec585630aa4c98ac39b38452a ]
 
-The *_bit_le functions use a signed integer for the bit number.
-However, the *_bit functions can use an unsigned long. This causes
-problems if there is a large bitmap and a bit number > 0x80000000 is
-passed in. Since that is a negative int, it will get sign extended to a
-long when getting passed to the *_bit function, turning it into a huge
-bit number. This usually ends up with the memory address wrapping around
-and the function accessing memory before the start of the bitmap.
+When reserved-memory regions with the "no-map" property are not
+page-aligned, the kernel may accidentally map them into the linear
+mapping, contradicting the no-map semantics.
 
-Avoid this by making the *_bit_le functions take an unsigned long.
+The root cause is a mismatch between /proc/iomem's address boundaries
+and the actual page table mapping boundaries:
 
-This can be triggered by faking an almost 4TB dm-mirror device, which
-uses bitmaps to track the mirror regions:
+1. /proc/iomem derives its ranges from memblock via
+   memblock_region_reserved_base_pfn/memblock_region_reserved_end_pfn,
+   which perform PFN rounding so the displayed boundaries are
+   page-aligned. This gives the impression that the no-map region
+   occupies whole pages.
 
-$ dmsetup create bigzero --table '0 8589934590 zero'
-$ dmsetup create mymirror --table '0 8589934590 mirror core 2 2 nosync 2 /dev/mapper/bigzero 0 /dev/mapper/bigzero 0'
+2. However, memblock_mark_nomap() splits memblock.memory regions at
+   exact byte boundaries (memblock_isolate_range preserves raw DT
+   base/size with no alignment). When for_each_mem_range iterates the
+   non-NOMAP regions adjacent to a no-map region, it returns start/end
+   values that are NOT page-aligned — they are the precise byte
+   boundaries from the memblock split.
 
-This will access memory before the start of the sync_bits bitmap, and
-likely hit the guard page of the previously allocated clean_bits bitmap,
-causing a kernel panic with the old code.
+3. These sub-page-aligned values are passed to
+   __create_pgd_mapping_locked(), which does:
+     phys &= PAGE_MASK;
+     addr = virt & PAGE_MASK;
+     end = PAGE_ALIGN(virt + size);
+   The downward rounding of phys via PAGE_MASK extends the mapped
+   range backward into the adjacent no-map region, effectively
+   including no-map memory in the linear mapping.
 
-I looked and didn't see any crazy code using the signed int to
-intentionally try and access bits before some address within the bitmap.
+For example, with 64K pages, reserved_region@A2000000 (base=0xA2000000,
+size=0x8000, no-map) causes for_each_mem_range to return
+start=0xA2008000 for the next mappable region. After phys &= PAGE_MASK,
+the actual mapping starts at 0xA2000000 — the entire no-map region is
+incorrectly mapped.
 
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
+Fix this by rounding the mappable range inward to PAGE_SIZE boundaries
+before passing it to __map_memblock: start is rounded UP and end is
+rounded DOWN. This ensures the mapped area never overlaps with adjacent
+no-map regions. The cost is at most one page of unmapped gap at each
+boundary, which is preferable to violating no-map semantics.
+
+Signed-off-by: liulhong617 <liulhong617@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+This tree is **6.12.111** (`pending-6.12`). The candidate is
+`7ace06a01efab` (“arm64: mm: fix accidental linear mapping of no-map
+reserved memory”). It is not in this checkout. The buggy path is, and
+the original patch was written against this `map_mem()` shape.
 
-**Step 1.1: Subject line**
-Record: `[bitops] [make] make the *_bit_le helpers take unsigned long
-instead of signed int`
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-Subsystem is generic bitops. The verb is “make”, but the body is a sign-
-extension / out-of-bounds panic fix, not an API feature.
+Step 1.1: PARSE THE SUBJECT LINE
+Record: `[arm64: mm:] [fix] [do not linearly map sub-page-aligned DT no-
+map reserved memory]`
 
-**Step 1.2: Tags**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- Signed-off-by: Benjamin Marzinski \<bmarzins@redhat.com\> (author)
-- Signed-off-by: Yury Norov \<ynorov@nvidia.com\> (bitmap maintainer,
-  applied the patch)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
-  or Cc: stable (absence of Fixes:/Cc: stable is expected here)
+- `Signed-off-by: liulhong617 <liulhong617@gmail.com>` (author)
+- `Signed-off-by: Will Deacon <will@kernel.org>` (arm64 maintainer;
+  applied to for-next/mm)
+- No `Fixes:`
+- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:` /
+  `Link:` / `Cc: stable`
+- Absence of `Fixes:`/`Cc: stable` is expected for this review and is
+  not a negative signal
 
-**Step 1.3: Body**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: `*_bit_le()` takes `int nr` while `*_bit()` takes a wider
-  unsigned/long index. A bit number \> `0x80000000` becomes a negative
-  `int`, then sign-extends to a huge `long`.
-- Symptom: address wrap, access *before* the bitmap, kernel panic (often
-  on the guard page of a prior vmalloc).
-- Reproducer: ~4TB `dm-zero` + `dm-mirror` with region size 2 (`dmsetup
-  create mymirror --table '0 8589934590 mirror core 2 2 nosync ...'`),
-  hitting `sync_bits` before the start of the bitmap.
-- Root cause: signed `int` bit index vs unsigned/long bitops; author
-  found no callers that intentionally used a negative index.
+- **Bug:** `no-map` reserved-memory that is not page-aligned can still
+  land in the arm64 linear map.
+- **Symptom:** `/proc/iomem` looks page-aligned (PFN rounding), but page
+  tables map the no-map bytes because `memblock_mark_nomap()` splits at
+  byte precision and `__create_pgd_mapping_locked()` does `phys &=
+  PAGE_MASK` (start rounded down into the hole).
+- **Example:** 64K pages, `reserved_region@A2000000` size `0x8000`; next
+  mappable start `0xA2008000` becomes mapping start `0xA2000000`.
+- **Root cause:** byte-precise NOMAP split + PAGE_MASK downward
+  rounding.
+- **Fix:** round the mappable range inward (`PAGE_ALIGN(start)`, `end &
+  PAGE_MASK`) before `__map_memblock`. Cost: at most one unmapped page
+  per boundary.
+- **Version info in message:** none. Mailing-list follow-up (verified)
+  was on v6.1.177-rt, 64K pages.
 
-**Step 1.4: Hidden bug fix?**
-Record: Not hidden. It is a type-signature change whose purpose is to
-stop OOB access and a panic. Not cleanup or a new feature.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden. Explicit isolation/correctness fix, not cleanup.
 
----
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-## Phase 2: Diff analysis
-
-**Step 2.1: Inventory**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- File: `include/asm-generic/bitops/le.h` — 9 insertions, 9 deletions
-  (parameter type only)
-- Functions: `test_bit_le`, `set_bit_le`, `clear_bit_le`,
-  `__set_bit_le`, `__clear_bit_le`, `test_and_set_bit_le`,
-  `test_and_clear_bit_le`, `__test_and_set_bit_le`,
-  `__test_and_clear_bit_le`
-- Scope: single-file surgical type fix
+- File: `arch/arm64/mm/mmu.c` (+14 / −0)
+- Function: `map_mem()` / `map_mem(pgd_t *pgdp)` in this tree
+- Scope: single-file surgical change in the boot-time linear-map loop
 
-**Step 2.2: Flow change**
-Record: Before, each helper took `int nr` and passed `nr ^
-BITOP_LE_SWIZZLE` into `test_bit`/`set_bit`/etc. After, `nr` is
-`unsigned long`. Bodies are unchanged. Normal path only; no new control
-flow.
-
-**Step 2.3: Bug mechanism**
-Record: `[Type / integer conversion] [Memory safety / OOB]`
-
-On 64-bit, `unsigned int`/`unsigned long` bit `0x80000000` converted to
-`int` is negative, then sign-extends into `set_bit(long nr)` /
-`_test_bit(unsigned long nr)` as `0xffffffff80000000`. `BIT_WORD(nr)`
-then yields a pointer *before* `addr` (wrap). Confirmed in
-`generic___set_bit()`:
-
-```28:33:include/asm-generic/bitops/generic-non-atomic.h
-generic___set_bit(unsigned long nr, volatile unsigned long *addr)
-{
-        unsigned long mask = BIT_MASK(nr);
-        unsigned long *p = ((unsigned long *)addr) + BIT_WORD(nr);
+Committed hunk (origin/master `map_mem(void)`):
+```
+for_each_mem_range(i, &start, &end) {
++       start = PAGE_ALIGN(start);
++       end = end & PAGE_MASK;
++       if (start >= end)
++               continue;
+        __map_memblock(...);
+}
 ```
 
-**Step 2.4: Fix quality**
-Record: Obviously correct and minimal. Widening `int` → `unsigned long`
-matches `find_*_bit_le()` (already `unsigned long` in
-`include/linux/find.h`) and the generic bitops. Negative callers would
-still sign-extend into `unsigned long`; the author grepped and found
-none. Regression risk is very low: inline helpers, no ABI, no locking,
-no new behavior for in-range bits.
+The mailing-list v1 was against `map_mem(pgd_t *pgdp)` and kept this
+tree’s existing `if (start >= end) break;` before the new inward
+rounding — that is the 6.12 shape.
 
-Note: atomic `set_bit()` in this tree takes `long nr` (signed), not
-`unsigned long`. That does not undo the fix: values in `2^31 .. 2^32-1`
-fit in 64-bit `long` after zero-extension. The bug was 32-bit `int` →
-64-bit `long` sign extension.
-
----
-
-## Phase 3: Git history
-
-**Step 3.1: Blame**
-Record: Signed `int nr` dates to `a56560b3b2332` (“asm-generic: change
-little-endian bitops to take any pointer types”, 2011-03-23, contained
-in v2.6.39-rc1). The type was stable for ~15 years. Commit
-`1c61b0a6e5c47` (2026-07-06, applied 2026-07-22) is the change under
-review.
-
-**Step 3.2: Fixes: tag**
-Record: None. Buggy signature is ancient generic bitops, not a recent
-regression.
-
-**Step 3.3: File history**
-Record: Recent `le.h` work is old (`6b8ecb84f8f64` moved find_*_le to
-find.h in 2021). No later commits on this file after `1c61b0a6e5c47`.
-Standalone, not patch N/M.
-
-**Step 3.4: Author**
-Record: Benjamin Marzinski is a device-mapper contributor (many
-`drivers/md/` commits), not the bitmap maintainer. Yury Norov (BITMAP
-API maintainer) applied it. Related nearby dm-log work: `c20e36b7631d8`
-(region_count overflow, similar ~4TB mirror reproducer) and
-`9743132a41f4d` (bitset_size overflow on 32-bit). Those are separate
-bugs; this patch does not depend on them.
-
-**Step 3.5: Prerequisites**
-Record: None. Only `include/asm-generic/bitops/le.h`. No new helpers.
-`git merge-base --is-ancestor 1c61b0a6e5c47 HEAD` succeeded (commit is
-already in this checkout).
-
----
-
-## Phase 4: Mailing list
-
-**Step 4.1: Original discussion**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- v1: https://lore.kernel.org/linux-
-  arch/20260702194307.1805533-1-bmarzins@redhat.com/
-- v2 (committed): https://lore.kernel.org/linux-
-  arch/20260706202324.1949190-1-bmarzins@redhat.com/
-- v1→v2: commit message only (wrong “unsigned int” wording; missing
-  reproducer commands). Code unchanged.
-- Yury Norov: “Taking the patch in bitmap-for-next.” Asked for a
-  reproducer and whether this is production.
-- Benjamin: explicit `dmsetup` panic reproducer; LVM default region size
-  is 4096 sectors, so default LVM would need ~4PB devices; “I doubt that
-  anyone has hit this on a production system,” but “This will crash the
-  machine without the fix.”
-- No NAKs.
+- **Before:** `for_each_mem_range` skips `MEMBLOCK_NOMAP` via
+  `should_skip_region()`, but adjacent ranges keep raw byte boundaries.
+  Those go to `__map_memblock` → `__create_pgd_mapping_locked()`, which
+  rounds `phys` down and `end` up, pulling no-map bytes into
+  `PAGE_KERNEL`.
+- **After:** start rounded up, end rounded down; empty leftover skipped.
+  Linear map never overlaps the no-map hole.
+- Path: boot-time linear map only (`paging_init` → `map_mem`).
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: Yury Norov, Arnd Bergmann, Rasmus Villemoes, linux-arch, linux-
-kernel. Bitmap maintainer was To: and applied the patch.
-
-**Step 4.3: Bug report**
-Record: No syzbot/bugzilla. Author-discovered with a concrete panic
-reproducer. Not a theoretical-only issue.
-
-**Step 4.4: Series**
-Record: Standalone v1/v2. Not part of a multi-patch series. Related dm-
-log overflow fixes are independent.
-
-**Step 4.5: Stable list**
-Record: UNVERIFIED. lore.kernel.org returned 403; gnuweeb `/stable/`
-search 404. linux-arch thread had no Cc: stable and no stable-list
-discussion.
-
----
-
-## Phase 5: Call graph / impact
-
-**Step 5.1: Functions**
-Record: The nine `*_bit_le` inlines listed in 2.1.
-
-**Step 5.2: Callers**
-Record (verified via `git grep`):
-- `drivers/md/dm-log.c` — `log_test_bit`/`log_set_bit`/`log_clear_bit`
-  (`unsigned int bit`); this is the documented panic path
-- `drivers/md/md-bitmap.c` — RAID bitmaps
-- `virt/kvm/kvm_main.c` — `set_bit_le(rel_gfn, memslot->dirty_bitmap)`
-  with `unsigned long rel_gfn`
-- Filesystems: ext4/ext2/f2fs/ocfs2/exfat/ntfs3/minix (on-disk LE
-  bitmaps)
-- Also: RDS congestion, NVDIMM labels, some net drivers
-
-dm-log and KVM are the large-index paths. Filesystem group bitmaps are
-typically far below 2^31 bits.
-
-**Step 5.3: Callees**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-`test_bit`/`set_bit`/`clear_bit`/`__set_bit`/`__clear_bit`/`test_and_*`
-plus `BITOP_LE_SWIZZLE` (0 on LE; low-bit swap on BE).
+- **Category:** logic/correctness + hardware isolation (linear-map over-
+  coverage).
+- **Mechanism:** unaligned NOMAP split + `phys &= PAGE_MASK` over-maps.
+  Verified in this tree at `arch/arm64/mm/mmu.c:443-445`:
+  `phys &= PAGE_MASK; addr = virt & PAGE_MASK; end = PAGE_ALIGN(virt +
+  size);`
+- DT `no-map` (this tree, `reserved-memory.yaml`): OS must not create a
+  standard mapping **and** must not allow speculative access except
+  under the owning driver.
 
-**Step 5.4: Reachability**
-Record: Yes. Privileged `dmsetup` of a large mirror (author’s
-reproducer) panics. KVM dirty logging with `rel_gfn >= 2^31` (memslot ≳
-8TiB at 4K pages) would hit the same conversion. Unprivileged users
-cannot run `dmsetup`; a VM tenant does not set host memslot size.
-
-**Step 5.5: Similar patterns**
-Record: `find_*_bit_le` already use `unsigned long`. This aligns the
-set/test/clear LE helpers. No other `le.h` copies; arches include the
-generic header (x86, arm64, powerpc, s390, …).
-
----
-
-## Phase 6: This checkout
-
-**Step 6.1: Does the buggy code exist here?**
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- Tree: `v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
-  EXTRAVERSION=-rc4` (7.3.0-rc4)
-- Live `le.h` already has `unsigned long nr` (this commit is an
-  ancestor, merged via `bitmap-for-7.3`)
-- Pre-fix `int nr` existed in this lineage from v2.6.39 through the
-  parent of `1c61b0a6e5c47`
-- Helpers still exist; the bug class is in this codebase’s history, not
-  a post-branch feature
+- Obviously correct for the stated failure: inward rounding matches
+  buddy `__free_memory_core()` (`PFN_UP(start)` / `PFN_DOWN(end)` in
+  `mm/memblock.c` of this tree). Those slivers were never allocator RAM.
+- Minimal; comment-only plus three functional lines.
+- Regression risk: low. Worst case is one unmapped page at a no-map
+  boundary (memory the buddy already does not own). Ard noted a
+  theoretical firmware hazard if something like initramfs sat in that
+  wasted page; Will still applied it after Ard confirmed
+  `for_each_mem_range()` coalesces sub-page *mappable* pieces.
 
-**Step 6.2: Backport difficulty**
-Record: Clean apply to any tree whose `le.h` still has `int nr`. Same
-9-line signature change since 2011. No conflicting local edits.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 6.3: Related fixes already here**
-Record: This exact fix is already in HEAD. Independent dm-log overflow
-fixes (`c20e36b7631d8`, `9743132a41f4d`) do not replace it: they cap
-`region_count` / bitset size; they do not stop sign extension for bits
-in `2^31 .. UINT_MAX-1` (the 8589934590 / region-size-2 case is
-`region_count = 4294967295`).
-
----
-
-## Phase 7: Subsystem context
-
-**Step 7.1**
-Record: `[bitops / asm-generic] [CORE]` — used by filesystems, DM, KVM,
-networking.
-
-**Step 7.2**
-Record: Bitmap API is actively maintained (bitmap-for-7.3 pull). `le.h`
-itself is mature; this is a long-standing type bug, not churn from a
-rewrite.
-
----
-
-## Phase 8: Impact and risk
-
-**Step 8.1: Who is affected**
-Record: Anyone using `*_bit_le` on a bitmap with index \> `INT_MAX`.
-Concrete: large dm-mirror with tiny region size; theoretically huge KVM
-dirty bitmaps / large md bitmaps. Not universal.
-
-**Step 8.2: Trigger**
-Record: Not every boot. Needs a bitmap \> 256MiB (2^31 bits). Author’s
-case: ~4TB device, region size 2 sectors. LVM default 4096-sector
-regions would need ~4PB. Root/`dmsetup` required. Timing-independent;
-deterministic OOB.
-
-**Step 8.3: Failure mode**
-Record: `[OOB before bitmap → kernel panic] [Severity: CRITICAL if
-triggered, LOW likelihood in default configs]`
-
-**Step 8.4: Risk-benefit**
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- Benefit: medium — real panic with a reproducer; production default
-  configs unlikely; still a memory-safety bug in core helpers
-- Risk: very low — 9-line type widen, no logic/locking/API userspace
-  change
-- Ratio: favorable. Cheap, correct panic fix in generic bitops
+- `phys &= PAGE_MASK`: `9c4e08a3022b6` (Mark Rutland, 2015, “allow
+  sections for unaligned bases”)
+- Linear-map bank loop: `98d2e1539b84a` (2017) / `b10d6bca87204`
+  (`for_each_mem_range`, 2020)
+- This is old code, present long before 6.12.
 
----
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No `Fixes:` tag. Bug is the long-standing interaction of NOMAP
+byte splits + page-table rounding, not a single recent commit.
 
-## Phase 9: Synthesis
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- This tree: no commit on `arch/arm64/mm/mmu.c` already doing inward
+  `PAGE_ALIGN` in `map_mem`.
+- `7ace06a01efab` is **not** an ancestor of HEAD (`git merge-base --is-
+  ancestor` exit 1).
+- Upstream later dropped the `pgd_t *` argument (`2e527667a3b9b`,
+  2026-06-02) — **not** in this tree, **not** required for the fix.
+- Follow-up `fb0f3ef5601a6` (unmap data/bss from linear map) is
+  independent.
 
-**Step 9.1: Evidence**
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Only this arm64 commit on `origin/master`. Applied by Will
+Deacon (arm64 maintainer). Ard Biesheuvel reviewed on-list and called it
+conceptually sound.
 
-For:
-- Reproducible kernel panic from OOB before a vmalloc bitmap
-- Mechanism is standard 32→64 sign extension; the diff matches it
-- 9 lines, one header, no new APIs
-- Bitmap maintainer took it; v2 only fixed the commit message
-- Matches `find_*_bit_le` (`unsigned long`)
-- Applies to this tree’s `le.h` with no prerequisites
-- dm-log, md-bitmap, and KVM dirty logging are real callers of large
-  indexes
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Standalone. Needs `for_each_mem_range`, `__map_memblock`,
+`__create_pgd_mapping_locked` — all present. The committed diff does not
+apply byte-for-byte (later `map_mem(void)` / no `if (start >= end)
+break;`); the **original** patch context matches this tree. Backport is
+a small context adaptation, not a missing-API rewrite.
 
-Against:
-- Author doubts production hits with LVM defaults
-- Needs a huge device and a tiny region size (or an enormous KVM slot)
-- No syzbot, no Cc: stable, no Fixes:
-- This 7.3-rc4 checkout already contains the commit
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-Unresolved:
-- Stable mailing list (HTTP 403/404)
-- Whether any caller relied on negative `int` indexes (author searched;
-  not independently exhaustively proven)
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c 7ace06a01efab` →
+  https://patch.msgid.link/20260513010255.3764038-1-liulhong617@163.com
+- Single revision (v1 only). `b4 dig -a`: only that v1.
+- Thread saved to mbox and read in full.
+- Will (16 Jul 2026): worried firmware with many tiny adjacent regions
+  could leave pages unmapped; preferred warn-and-do-nothing; asked for
+  practical symptoms.
+- Author (27 Jul): 64K pages, debugger showed `phys` rounded from
+  `0xa2008000` to `0xa2000000`.
+- Will (4 Aug): not convinced by that reply.
+- Ard (4 Aug): change is conceptually sound; `for_each_mem_range()`
+  coalesces; only sane handling is to round no-map **outward** (i.e.
+  linear map **inward**). Suggested maybe moving rounding into
+  `__create_pgd_mapping_locked()` later.
+- Will (6 Aug): “Aha, that's the part I was missing.” Applied v1: “I can
+  take this patch for now.”
+- Apply mail: https://git.kernel.org/arm64/c/7ace06a01efa (`for-
+  next/mm`).
+- Author (9 Aug, after apply): real platform is Cortex-A78AE,
+  **v6.1.177-rt**, 64K pages; two sub-page no-map TEE regions; DStream
+  showed them folded into one `PAGE_KERNEL` span; cache prefetcher hit
+  TEE and firmware raised “REE accessed secure memory” faults.
+- No NAK of the applied patch. No `Cc: stable` in review.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — type-only; author reproduced
-   panic; maintainer applied it
-2. Real bug that affects users? **PASS** — panic on a documented dm-
-   mirror table; also reachable from other large LE bitmaps
-3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
-   panic / OOB. Likelihood is low; severity if hit is high
-4. Small and contained? **PASS** — 9 lines, one file
-5. No new features/APIs? **PASS** — same helpers, wider index type only
-6. Can apply to this tree? **PASS** — file and functions exist;
-   identical hunk. (Already applied here; still a clean backport to any
-   tree with `int nr`.)
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To Catalin Marinas, Will Deacon; Cc linux-arm-
+kernel, linux-kernel. Ard added later. Maintainer applied it.
 
-**Step 9.3: Exceptions**
-Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
-panic fix.
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Evidence is the author’s debugger dump and
+firmware faults (mbox, 9 Aug 2026). Severity from reporter: isolation
+break + spurious secure-memory faults.
 
-**Step 9.4: Decision**
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone 1/1. Ard/Will mentioned a possible later rounding
+cleanup in `__create_pgd_mapping_locked()`; `origin/master` still has
+this loop-local fix only (no follow-up required).
 
-This is a small, obviously correct fix for a real panic: signed `int`
-bit indexes sign-extend into the generic bitops and walk off the front
-of the bitmap. The helpers live in this tree, there are no missing
-prerequisites, and the change does not add features. Rare default-config
-exposure does not outweigh a zero-logic-change panic fix in core bitops.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable WebFetch returned 403. UNVERIFIED whether
+stable@ already discussed it. Not used as a NO reason.
 
-The commit is already in this 7.3-rc4 history; that is not used as a
-reason to reject it. Technical merit supports taking it on this lineage.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
----
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `map_mem()` (this tree: `static void __init map_mem(pgd_t
+*pgdp)` at `arch/arm64/mm/mmu.c:623`).
 
-## What the commit solves for stable users
+Step 5.2: TRACE CALLERS
+Record: `paging_init()` → `map_mem(swapper_pg_dir)` (`mmu.c:812-814` in
+this tree). Boot-time, all arm64 configs. Not a syscall path; result is
+the linear map used by the whole kernel.
 
-On 64-bit, `*_bit_le(int nr)` turns bit numbers ≥ 2^31 into a negative
-`int`, which becomes a huge `long` in `test_bit`/`set_bit`. Address
-arithmetic wraps and the kernel reads/writes *before* the bitmap,
-typically panicking (author: dm-mirror `sync_bits` vs `clean_bits` guard
-page).
+Step 5.3: TRACE CALLEES
+Record: `for_each_mem_range` → `__next_mem_range` / `should_skip_region`
+(skips NOMAP unless `MEMBLOCK_NOMAP` requested). Then `__map_memblock` →
+`__create_pgd_mapping` → `__create_pgd_mapping_locked`.
+`memblock_mark_nomap` → `memblock_isolate_range` (byte splits, no page
+align) — verified in `mm/memblock.c`.
 
-That matters for large dm-mirror logs (tiny region size on multi-TB
-devices) and any other LE bitmap with a high index (e.g. KVM
-dirty_bitmap with `unsigned long rel_gfn`). The fix is only changing
-`int` to `unsigned long` on nine inlines.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Reachable on every arm64 boot. User/firmware trigger is a sub-
+page `no-map` reserved-memory node (common with 16K/64K pages).
+Unprivileged userspace does not need to do anything after boot; the bad
+mapping already exists. Speculative CPU access of TEE pages is enough.
 
-## Risk vs benefit
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Second `for_each_mem_range` in this file is
+`validate_bootmem_online()` under `CONFIG_DEBUG_VM` — not page-table
+creation. No sibling fix already in this tree.
 
-Benefit is preventing a confirmed panic. Risk is negligible: no control-
-flow, locking, or userspace ABI change; widening is source-compatible
-for non-negative callers. Worst case for a negative caller is the old
-sign-extension behavior, and none were found.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-## Concerns
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: **Yes.**
+- `map_mem()` loop: `mmu.c:660-670` passes raw `start`/`end` to
+  `__map_memblock`.
+- Rounding-down: `mmu.c:443-445`.
+- NOMAP skip: `should_skip_region()` in `mm/memblock.c:1081-1083`.
+- Byte isolate: `memblock_isolate_range()`.
+- Introduced: rounding 2015, loop 2017/2020 — well before 6.12.
+- `7ace06a01efab` not in HEAD.
 
-- Trigger is uncommon with LVM’s 4096-sector default.
-- No Fixes:/Cc: stable (not a negative by itself).
-- Stable-list discussion could not be fetched (403/404).
-- Independent dm-log overflow patches are *not* substitutes for this
-  type fix.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: **Minor adaptation, not a rewrite.** Committed patch fails `git
+apply --check` because this tree still has `if (start >= end) break;`
+and `map_mem(pgd_t *pgdp)`. That is exactly v1’s context. Insert the
+three rounding lines after the existing `break`. No need for
+`2e527667a3b9b`.
 
-## Verification
-- [Phase 1] Parsed tags: only author + Yury Norov SOBs; no
-  Fixes:/Reported-by:/Cc: stable
-- [Phase 2] Diff: 9 `int nr` → `unsigned long nr` in `include/asm-
-  generic/bitops/le.h`; bodies unchanged
-- [Phase 2] `generic___set_bit` uses `BIT_WORD(nr)` pointer math — huge
-  nr wraps before `addr`
-- [Phase 2] `set_bit` takes `long nr`; `_test_bit`/`___set_bit` take
-  `unsigned long nr`
-- [Phase 3] `git describe HEAD` / Makefile: 7.3.0-rc4
-  (`v7.3-rc4-27-gf0100363d8c37`)
-- [Phase 3] `git merge-base --is-ancestor 1c61b0a6e5c47 HEAD`: yes
-  (already in this tree)
-- [Phase 3] blame: `int nr` from `a56560b3b2332` (v2.6.39-rc1); fix is
-  `1c61b0a6e5c47`
-- [Phase 3] `git show 1c61b0a6e5c47^:include/asm-generic/bitops/le.h`:
-  confirmed `int nr`
-- [Phase 3] No follow-up commits on `le.h` after this one
-- [Phase 4] `b4 dig -c 1c61b0a6e5c47`: v1 then v2; v2 is what was
-  committed
-- [Phase 4] `b4 dig -a/-w`: linux-arch; Yury, Arnd, Rasmus CC’d
-- [Phase 4] Yury: taking into bitmap-for-next; asked about 256MB bitmaps
-  / production
-- [Phase 4] Author: machine crashes without the fix; production with LVM
-  defaults unlikely
-- [Phase 5] Callers: dm-log, md-bitmap, kvm `mark_page_dirty_in_slot`,
-  ext4 macros, others
-- [Phase 5] dm-log `log_*_bit(..., unsigned int bit)` — values ≥
-  0x80000000 hit the old conversion
-- [Phase 5] Reproducer math: 8589934590 sectors / region 2 →
-  `region_count = 4294967295` (UINT_MAX)
-- [Phase 6] Current tree already has `unsigned long nr`; no other `le.h`
-  copies
-- [Phase 6] Arches include `asm-generic/bitops/le.h` (x86, arm64, etc.)
-- [Phase 8] Failure mode: OOB → panic; trigger needs large bitmap
-- UNVERIFIED: stable@ discussion (lore 403, gnuweeb stable search 404)
-- UNVERIFIED: exhaustive proof no caller passed negative `int` on
-  purpose (author stated they looked)
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: None. `git log --grep="accidental linear mapping"` /
+`--grep="no-map"` on this file in HEAD does not contain this fix.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: `arch/arm64/mm` linear map. **CORE for arm64** (every arm64
+boot). `no-map` is how firmware hides TEE/DSP/GPU carveouts.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Mature; this file still changes, but the bank-mapping loop has
+been stable for years in 6.12. Bug is old, not a new-subsystem leftover.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: arm64 systems whose DT/firmware has **sub-page-aligned `no-map`
+reserved-memory**. More likely with 16K/64K pages. Author hit it on
+6.1.rt; 6.12 has the same mapping logic.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Boot + unaligned `no-map` region. No extra userspace trigger.
+Cache prefetch can then touch TEE. Commonness: not every board, but real
+on 64K TEE/embedded SoCs.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record:
+- Isolation break: `no-map` (including TEE) mapped `PAGE_KERNEL`.
+- Speculative access / firmware “REE accessed secure memory” faults
+  (verified report).
+- DT forbids speculative access to `no-map`.
+- Severity: **HIGH** (security isolation + platform faults). Not a
+  universal oops, but it is an important real bug, not a nit.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- **Benefit:** high for affected boards (TEE/firmware faults, linear-map
+  leak of carveouts).
+- **Risk:** low (≤1 unused page per boundary; matches buddy PFN
+  rounding; maintainer-acked).
+- Ratio favors backport.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+
+FOR:
+- Real bug in this tree’s `map_mem()` / `__create_pgd_mapping_locked()`.
+- Hardware report: Cortex-A78AE, 64K, TEE `no-map`, firmware faults;
+  also seen conceptually on 6.1, so 6.12 is in range.
+- DT `no-map` contract violated (must not map, must not speculate).
+- 14-line, single-function, no new API.
+- Will applied; Ard endorsed the approach.
+- Original patch context matches 6.12 `map_mem(pgd_t *pgdp)`.
+- Inward rounding matches `__free_memory_core()` so it does not unmap
+  buddy-owned pages.
+
+AGAINST:
+- Trigger is firmware/DT-dependent (unaligned `no-map`), not every arm64
+  box.
+- Committed mainline hunk needs a trivial context tweak (`break` still
+  present here).
+- Will first preferred warn-only; that was withdrawn after Ard’s
+  coalescing point, not a standing NAK.
+- Theoretical firmware footgun if a needed image lived in the discarded
+  page remainder (Ard); sliver is already not buddy memory.
+
+UNRESOLVED:
+- lore.kernel.org/stable search 403; whether stable@ already took it is
+  UNVERIFIED.
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — mechanism verified in-tree;
+   debugger + maintainer apply.
+2. Fixes a real bug that affects users? **PASS** — TEE/linear-map
+   isolation break and firmware faults.
+3. Important issue? **PASS** — security isolation / platform abort, not
+   a log nit.
+4. Small and contained? **PASS** — +14 lines, one loop.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — bug present; v1 context
+   matches; committed diff needs only local `map_mem` context.
+
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not ID/quirk/DT-board/build/docs. Ordinary important bugfix.
+
+Step 9.4: MAKE YOUR DECISION
+Backport to this 6.12 tree. The bug is here, the fix is small, and
+leaving `no-map` (especially TEE) in the linear map is a real isolation
+and stability failure on 64K systems.
+
+------------------------------------------------
+What the commit solves for stable users
+------------------------------------------------
+On this 6.12 tree, boot builds the linear map in `map_mem()` from
+`for_each_mem_range()`. NOMAP regions are skipped, but neighbors keep
+byte-accurate edges. `__create_pgd_mapping_locked()` then rounds
+physical start **down** to `PAGE_MASK`, so a 32KiB `no-map` hole on a
+64K page is mapped as normal RAM. That contradicts DT `no-map` and can
+let the CPU speculate into firmware/TEE memory.
+
+Rounding the mapped range inward before `__map_memblock` stops that
+overlap. At most one page per boundary stays unmapped; those bytes were
+already excluded from the buddy allocator.
+
+------------------------------------------------
+Stable rules / risk
+------------------------------------------------
+Surgical, no API, code is in 6.12, original submission matches this
+`map_mem(pgd_t *)` loop. Benefit is isolation and avoiding firmware
+aborts; risk is a conservative hole the allocator already does not use.
+
+------------------------------------------------
+Verification
+------------------------------------------------
+- [Phase 1] `git describe HEAD` / `make kernelversion`:
+  `p-6.12-3-g88406e77611c6`, **6.12.111**. Tags: author SOB + Will
+  Deacon SOB only.
+- [Phase 2] `git show 7ace06a01efab`: +14 in `map_mem`; this tree
+  `Read`/`Grep`: `phys &= PAGE_MASK` at `mmu.c:443`; loop at
+  `mmu.c:660-670`.
+- [Phase 2] `reserved-memory.yaml`: `no-map` forbids standard mapping
+  and speculative access.
+- [Phase 2] `__free_memory_core()`: `PFN_UP`/`PFN_DOWN` in
+  `mm/memblock.c:2153-2158`.
+- [Phase 3] blame: `9c4e08a3022b6` (2015) PAGE_MASK; `98d2e1539b84a`
+  (2017) / `b10d6bca87204` (2020) loop.
+- [Phase 3] `git merge-base --is-ancestor 7ace06a01efab HEAD` → not in
+  tree (exit 1).
+- [Phase 3] `2e527667a3b9b` (drop `pgd_t*`) not in HEAD; not a
+  prerequisite.
+- [Phase 3] `git log origin/master --grep="accidental linear mapping" --
+  arch/arm64/mm/mmu.c`: `7ace06a01efab`; `git describe --contains
+  --match 'v*'`: `v7.3-rc1~...`
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 only; lore msgid
+  `20260513010255.3764038-1-liulhong617@163.com`; Will + Ard discussion;
+  applied 6 Aug 2026; author follow-up on v6.1.177-rt TEE faults.
+- [Phase 4] lore WebFetch 403 on lore.kernel.org/all and /stable —
+  thread recovered via `b4 dig -m`.
+- [Phase 5] `paging_init()` calls `map_mem(swapper_pg_dir)`;
+  `should_skip_region()` skips NOMAP.
+- [Phase 6] `git apply --check` of committed diff **fails** (context);
+  6.12 loop still has `if (start >= end) break;` matching v1.
+- [Phase 6] `origin/master` `map_mem` still has `PAGE_ALIGN(start)` /
+  `end & PAGE_MASK`.
+- [Phase 8] Failure mode from mbox + DT: TEE mapped, prefetcher,
+  firmware abort — HIGH.
+- UNVERIFIED: whether stable@ already queued it (HTTP 403).
 
 **YES**
 
- include/asm-generic/bitops/le.h | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/arm64/mm/mmu.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/include/asm-generic/bitops/le.h b/include/asm-generic/bitops/le.h
-index d51beff603755..e3b0da9a25f1b 100644
---- a/include/asm-generic/bitops/le.h
-+++ b/include/asm-generic/bitops/le.h
-@@ -16,47 +16,47 @@
- #endif
- 
- 
--static inline int test_bit_le(int nr, const void *addr)
-+static inline int test_bit_le(unsigned long nr, const void *addr)
- {
- 	return test_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline void set_bit_le(int nr, void *addr)
-+static inline void set_bit_le(unsigned long nr, void *addr)
- {
- 	set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline void clear_bit_le(int nr, void *addr)
-+static inline void clear_bit_le(unsigned long nr, void *addr)
- {
- 	clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline void __set_bit_le(int nr, void *addr)
-+static inline void __set_bit_le(unsigned long nr, void *addr)
- {
- 	__set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline void __clear_bit_le(int nr, void *addr)
-+static inline void __clear_bit_le(unsigned long nr, void *addr)
- {
- 	__clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline int test_and_set_bit_le(int nr, void *addr)
-+static inline int test_and_set_bit_le(unsigned long nr, void *addr)
- {
- 	return test_and_set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline int test_and_clear_bit_le(int nr, void *addr)
-+static inline int test_and_clear_bit_le(unsigned long nr, void *addr)
- {
- 	return test_and_clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline int __test_and_set_bit_le(int nr, void *addr)
-+static inline int __test_and_set_bit_le(unsigned long nr, void *addr)
- {
- 	return __test_and_set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline int __test_and_clear_bit_le(int nr, void *addr)
-+static inline int __test_and_clear_bit_le(unsigned long nr, void *addr)
- {
- 	return __test_and_clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index 71841b5c31928..7c3f560df6529 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1179,6 +1179,20 @@ static void __init map_mem(pgd_t *pgdp)
+ 	for_each_mem_range(i, &start, &end) {
+ 		if (start >= end)
+ 			break;
++		/*
++		 * for_each_mem_range may return sub-page-aligned boundaries
++		 * after memblock_mark_nomap() splits regions at byte precision.
++		 * __create_pgd_mapping_locked aligns phys down to PAGE_MASK,
++		 * which could accidentally map no-map memory on the boundary.
++		 * Round the mappable range inward: start UP, end DOWN, so
++		 * that the mapped area never overlaps with adjacent no-map
++		 * regions. The cost is at most one page of unmapped gap at
++		 * each boundary.
++		 */
++		start = PAGE_ALIGN(start);
++		end = end & PAGE_MASK;
++		if (start >= end)
++			continue;
+ 		/*
+ 		 * The linear map must allow allocation tags reading/writing
+ 		 * if MTE is present. Otherwise, it has the same attributes as
 -- 
 2.53.0
 
