@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD2054FE86;
-	Mon, 19 Oct 2026 13:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85053552EA1;
+	Mon, 19 Oct 2026 13:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418215; cv=none; b=T2OjsboUeRb5s9arEnoF0lgzz3xKzDAJUDh9NhFva5g8bKDWKNnABIfWgLKsiX/Slv7NKdbrXLUzISOxSzNX9UwwSVv/2aqfRuSkZpXwmr4TgUe0gzq6zIuRjZwyGoW5K4w+6BhK+o5nOZdkqNku5ZGcxgl4ktLODoD+qUC7KwU=
+	t=1792418216; cv=none; b=bMv2X2N+wEsPN39fCX5U00VHs3KxndwzdG3c3M1/blZ+iMHzdHNt3xzA3M39EQDV87H98rBY8WqDObLorWSPVlMmgbNc9WX5imwibCFEHB7ppDcVohDjN9vABGvlAG7ywA3TsoW/qEQ02eY+ijPQY8Zl4/MihsgQgYaZXTr5KuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418215; c=relaxed/simple;
-	bh=IQhLecDtcqdEaGgJc2/Op1sbmyXwy2oT2ijSxdk601E=;
+	s=arc-20240116; t=1792418216; c=relaxed/simple;
+	bh=l2+4rCrRU9R0NV27tELmt8GLCgbifsruIkHDxZZwIwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qrED0uc+sWuQR3nx9kONo+IUy/S+wKf/pWLmtep7Jclp3Suf++HcxNBZTA8iIPUTEiaDnYxFI5Ypl4yv9x7xJ4w7PsoTxU9tkWiFIpK7Q378eBywSpFL9yOYDmoJgkfoyS89r41T7/wW9eISIJr2txeSBh9kbO28uxBn9e6/RQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VsqA7Qo3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qeZAZf1Ds8PAz6BnwZtLg8P3ooexi3tf7BIlErkrMtFgNvNu5pJ7YbDohQpJXAbLGcrfsox3lRcQfN0zQMPkS4C90X12xoq2eAqg9qcVJBLvG3LtkxXh7ZqpCiiBo6NLU0TccqGLSc1V59cMkJSVFqwDvQ3ybrHC5+/FY5SvLz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H5lc6piF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VsqA7Qo3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80E01F000C8;
-	Mon, 19 Oct 2026 13:56:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H5lc6piF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A041F000C5;
+	Mon, 19 Oct 2026 13:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418213;
-	bh=N45kJ+5sX/X+h0o4k5A4rBO8ZMU+fiVLgW1Kl2dteRs=;
+	s=k20260515; t=1792418214;
+	bh=RBg2HH6BixzdAEJ3GT79k0MdNl551Cl17A6oZmv23J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VsqA7Qo3wClGpB2Pth3ldHvddvZ/eU4RHYg5lyWT8ug6iuPPz/7KLUr9GmaKOfwkV
-	 VNPQliu4SNt0B4Sq62KQ4xoBpQP7bS1A0pHHGDRAY522em0Sg02D15t/bLlyNKhZia
-	 L09Ta/HJdd3WnTszAW+/Wo7YGmjBzGALGarEVJNvILQskIdWQxO7qPgC9ECLi0/V8F
-	 xctMQ/1xiff3U9EBhoyALW/mCs57ZTdSjosd4AK/xhqC45WTGww4Ak+T7f2oQYfpT6
-	 WtLk2uc93EY6z3JS5Yx47Z6sXt9r8ZbspRPGgo08D5FEIyhFhhWtt/GlqYukhS+p0K
-	 /UjxI4CjbUEuQ==
+	b=H5lc6piFfh6Jhb6ab3keGaF//wyPCye/BGckoOF8Mmqg9fHlqLYGGdsKLGf1/GADz
+	 4MzJFEjqCJWMrqypC1/9bI5vfmU+l97BNAEMQ4fPmm4ZCwYqpYJa/EPw4k7kBBhyAU
+	 dIgEHq1fq10XsNlSsleOwKJoubb23LlZjrpmAGL1NvmoxVO0l6cJ9Aj21ErUThib8G
+	 3NaClWq4GKu70ERdNMNhpl6rCLkwDODGLdA0WwuCSr15vZLyvkmHArWH+xQWMD95sl
+	 a+JK7Q4ZGRUTABRTfxPdY87puQx5oSsx8UQMsLw0ElLW2I4p/OZFqCLxCFoKCALgIf
+	 pIrdmSwNlj5XQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Felix Fietkau <nbd@nbd.name>,
+Cc: Tomer Maimon <tmaimon77@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-5.15] wifi: mt76: set the EOSP bit in the QoS header of the last released frame
-Date: Mon, 19 Oct 2026 09:46:23 -0400
-Message-ID: <20261019135441.1420968-92-sashal@kernel.org>
+	andrew@codeconstruct.com.au,
+	avifishman70@gmail.com,
+	tali.perry1@gmail.com,
+	openbmc@lists.ozlabs.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] pinctrl: npcm8xx: fix debounce register selection
+Date: Mon, 19 Oct 2026 09:46:24 -0400
+Message-ID: <20261019135441.1420968-93-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,407 +56,386 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Tomer Maimon <tmaimon77@gmail.com>
 
-[ Upstream commit 0b8d2524716099ea4743fa65bc364f94b3106a31 ]
+[ Upstream commit 602ee6c9447e4382c7e145b26a1c940813f2a144 ]
 
-When the driver implements .release_buffered_frames, mac80211 leaves the
-U-APSD signalling entirely to the driver: "In this case it is also
-responsible for setting the EOSP flag in the QoS header of the frames"
-(include/net/mac80211.h). Only IEEE80211_TX_STATUS_EOSP was being set,
-which merely ends the service period inside mac80211, so on air the
-service period was never terminated. Clients that wait for EOSP before
-going back to doze keep the SP open and stop triggering, which stalls all
-downlink traffic for that station.
+Each DBNCS register programs debounce source selection for 16 GPIOs.
+The current offset calculation advances the register address every four
+GPIOs, so offsets 4-15 and 20-31 end up touching the wrong selector
+register.
 
-Set the wire EOSP bit on the last frame of a U-APSD service period.
-EOSP has no meaning for a PS-Poll response, so pass the release reason
-down and leave those frames alone.
+Advance the DBNCS offset per 16 GPIOs so each line uses the debounce
+selector bank that matches the hardware layout.
 
-Link: https://patch.msgid.link/20260801145334.1166751-4-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real U-APSD protocol bug in mt76 that already exists in this
-5.15.221 tree. The fix is small, applies here, and is independent of the
-rest of the series.
+The local checkout is **v7.3-rc4** (mainline 7.3.0-rc4). The candidate
+is a one-line DBNCS offset fix in the Nuvoton NPCM8XX pinctrl driver;
+the buggy formula has been in this file since the driver landed in v6.7.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1 — subject**
-Record: `[wifi: mt76:]` `[set]` set the EOSP bit in the QoS header of
-the last released frame. “Set” here is a protocol-correctness fix, not a
-feature add.
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[pinctrl/npcm8xx] [fix] [debounce DBNCS register offset is
+wrong for most GPIOs in a bank]**
 
-**Step 1.2 — tags**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Link: https://patch.msgid.link/20260801145334.1166751-4-nbd@nbd.name`
-  (linux-wireless, series 04/10)
-- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` (mt76 maintainer; Sasha
-  Levin SOB ignored per instructions)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-  stable` (absence is expected)
+- Signed-off-by: Tomer Maimon \<tmaimon77@gmail.com\> (author; original
+  NPCM8XX pinctrl driver author)
+- Signed-off-by: Linus Walleij \<linusw@kernel.org\> (pinctrl
+  maintainer; applied the patch)
+- No Fixes:, Reported-by, Tested-by, Reviewed-by, Acked-by, Link:, or
+  Cc: stable (absence of Fixes/Cc:stable is expected for this review)
 
-Mainline SHA (from `origin/master`, path-limited log):
-`0b8d2524716099ea4743fa65bc364f94b3106a31`. First containing tag:
-`v7.3-rc1`. Not an ancestor of this HEAD.
-
-**Step 1.3 — body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** `.release_buffered_frames` means mac80211 does not set the
-  on-air EOSP bit; the driver must. mt76 only set
-  `IEEE80211_TX_STATUS_EOSP` (ends the SP inside mac80211).
-- **Symptom:** U-APSD clients that wait for EOSP never see it, keep the
-  service period open, stop triggering, **all downlink for that STA
-  stalls**.
-- **Root cause:** missing `IEEE80211_QOS_CTL_EOSP` on the last QoS frame
-  of a U-APSD SP. PS-Poll must not get EOSP.
-- **Version info:** none in the message. Buggy code dates to 2017.
+- **Bug:** Each DBNCS register selects debounce source for 16 GPIOs. The
+  driver advanced the register pointer every four GPIOs (`gpio / 4`
+  bytes).
+- **Symptom:** GPIOs 4–15 and 20–31 program the wrong selector register
+  (and, for most of those, an unaligned address).
+- **Root cause:** Integer-division “simplification”: `(gpio / 16) * 4`
+  is not `gpio / 4`.
+- **Version info:** None in the message. Driver introduced in v6.7-rc1.
+- **Failure mode:** Hardware debounce source is programmed into the
+  wrong MMIO location.
 
-**Step 1.4 — hidden fix?**
-Record: Not hidden. Explicit protocol/connectivity fix.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a disguised cleanup. Subject and body describe a register-
+selection bug. The 2022 pre-merge driver used `gpio / 16` with a `* 4`
+stride; mainline shipped the broken `gpio / 4` form.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1 — inventory**
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/net/wireless/mediatek/mt76/tx.c` (`+12 / -4`)
-- Functions: `mt76_queue_ps_skb`, `mt76_release_buffered_frames`
-- Scope: single-file surgical change. `mt76_queue_ps_skb` is static;
-  exported `mt76_release_buffered_frames` signature already has
-  `reason`.
+- File: `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` (+2/−1)
+- Function: `debounce_timing_setting()`
+- Scope: single-file surgical fix (one expression)
 
-**Step 2.2 — flow**
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Before: last PS-release frame gets `IEEE80211_TX_STATUS_EOSP |
-  IEEE80211_TX_CTL_REQ_TX_STATUS` and More Data cleared. QoS Control on
-  the wire is untouched.
-- After: same flags, plus if `reason == IEEE80211_FRAME_RELEASE_UAPSD`
-  and the frame is QoS data, OR `IEEE80211_QOS_CTL_EOSP` into the QoS
-  control field. `reason` is passed through both call sites.
-- Path: U-APSD/PS-Poll release via `.release_buffered_frames`, not the
-  normal TX burst path.
+- Hardware: `NPCM8XX_GP_N_DBNCS0` at 0x80, `DBNCS1` at 0x84; 2 bits per
+  GPIO; 16 GPIOs per 32-bit register. Bit index `(gpio % 16) * 2` was
+  already correct.
+- Before: `base + 0x80 + (gpio / 4)`
+  - gpio 0–3: 0x80 (DBNCS0, aligned)
+  - gpio 4–7: 0x81, 8–11: 0x82, 12–15: 0x83 (unaligned, inside DBNCS0)
+  - gpio 16–19: 0x84 (DBNCS1, accidentally correct)
+  - gpio 20–31: 0x85–0x87 (unaligned; 32-bit RMW can overlap DBNCP0 at
+    0x88)
+- After: `base + 0x80 + (gpio / 16) * 4` → 0x80 for 0–15, 0x84 for
+  16–31.
+- Path: pinconf set of `PIN_CONFIG_INPUT_DEBOUNCE` only (not a
+  probe/error-path change).
 
-**Step 2.3 — bug mechanism**
-Record: **Logic / protocol correctness.** mac80211’s own release path
-(`net/mac80211/sta_info.c`) does `*qoshdr |= IEEE80211_QOS_CTL_EOSP` for
-U-APSD. Drivers that implement `.release_buffered_frames` must do the
-same (`include/net/mac80211.h`). mt76 did not.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **[Logic / hardware programming]** Wrong MMIO offset. Matches
+the bit-field layout already in the same function. `npcm_gpio_set()`
+does `iowrite32(ioread32(reg) | pinmask, reg)` on that pointer.
 
-**Step 2.4 — quality**
-Record: Obviously correct and aligned with mac80211. Guards match the
-docs (U-APSD only; QoS data only). skb is exclusively owned after
-`ieee80211_tx_dequeue`. Header at `skb->data` matches existing
-`mt76_skb_set_moredata()`. Regression risk is low: PS-Poll unchanged;
-non-QoS last frames still lack wire EOSP (mac80211 already assumes
-drivers mostly buffer QoS-data, or add a QoS-Null themselves). Pre-
-existing unused `more_data` parameter is not changed.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct against DBNCS0/DBNCS1 at 0x80/0x84 and `(gpio
+% 16) * 2`. Minimal. Regression risk is very low: only the register
+address changes; GPIOs 0–3 and 16–19 keep the same address.
 
-## Phase 3: Git history
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.1 — blame**
-Record: `mt76_queue_ps_skb` / `mt76_release_buffered_frames` introduced
-in `17f1de56df0512` (“mt76: add common code…”, 2017-12-07,
-**v4.16-rc1**). `IEEE80211_TX_STATUS_EOSP` added in `7267a7965dd7b`
-(2018). Present for the entire 5.15 lifetime.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: Buggy line introduced in **acf4884a57170** (“pinctrl: nuvoton:
+add NPCM8XX pinctrl and GPIO driver”, Tomer Maimon, 2023-09-11),
+contained in **v6.7-rc1**. Present until 602ee6c9447e4.
 
-**Step 3.2 — Fixes: tag**
-Record: None. Introducer is `17f1de56df0512`, which **is** in this tree.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: tag. Bug is in the original driver merge, not a later
+regression.
 
-**Step 3.3 — related file history**
-Record: Recent 5.15 `tx.c` work is unrelated (locking, UAF, queue id).
-This tree already has U-APSD AP support: `b807b368c4f9b` (mt76 AP
-U-APSD), `4bf04d33f5b7e` (mt7915). No earlier EOSP-on-wire fix.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Same-author series merged via `pinctrl-v7.3-1` (drop RTS/CTS,
+RMII, RG2 drive strength, pending GPIO events, IRQ setup, pin flags,
+this debounce fix). This hunk does not depend on those other patches.
+Only other debounce commit on this path is the original driver add.
 
-**Step 3.4 — author**
-Record: Felix Fietkau is listed in `MAINTAINERS` as mt76 maintainer.
-Sibling series patch 05 (`697badc27a9b3`, mt7603 U-APSD termination) is
-a separate chip-specific fix, not a prerequisite.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Tomer Maimon is the Nuvoton/NPCM pinctrl author. Linus Walleij
+applied the series. Recent npcm8xx work is a mix of pin-map corrections
+and one feature (RG2 drive strength). This commit is the debounce
+correctness fix.
 
-**Step 3.5 — prerequisites**
-Record: Series is **01–10**, but 04 does **not** depend on 01–03. Patch
-01 (`a547b414bf7ea`) changes `mt76_txq_send_burst` / HW TIM buffering
-and does not touch `mt76_queue_ps_skb`. 02/03/09/10 are
-mt7915/mt7996/MLO (mt7996 is not in 5.15). 05–08 are mt7603-only. 04 is
-standalone. All helpers used (`ieee80211_is_data_qos`,
-`ieee80211_get_qos_ctl`, `IEEE80211_QOS_CTL_EOSP`,
-`IEEE80211_FRAME_RELEASE_UAPSD`) exist in this tree via `mt76.h` →
-`<net/mac80211.h>` / `ieee80211.h`.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Standalone. Uses `NPCM8XX_GP_N_DBNCS0` and
+`debounce_timing_setting()` as they existed at driver introduction. No
+new helpers or struct fields.
 
-## Phase 4: Mailing list / external
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.1 — original discussion**
-Record: `b4 dig -c 0b8d252471609` →
-https://patch.msgid.link/20260801145334.1166751-4-nbd@nbd.name
-`b4 dig -a`: single **v1** series, 2026-08-01. Applied version is that
-v1. Thread has the 10 patches plus a kernel-test-robot build error on
-**10/10** (`ieee80211_txq_aql_pending` / patch 01), **not** on 04. No
-NAK, no reviewer concern about EOSP. Merged via `wireless-
-next-2026-08-06` into `v7.3-rc1`.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 602ee6c9447e4` →
+  https://patch.msgid.link/20260715122923.1938327-9-tmaimon77@gmail.com
+- Subject: `[PATCH v1 8/8] pinctrl: npcm8xx: fix debounce register
+  selection` (2026-07-15)
+- `b4 dig -a`: only **v1**; applied version matches v1
+- lore.kernel.org fetches returned **403**; patch text confirmed via
+  LKML/openwall mirrors. No replies were visible on those mirror pages.
 
-**Step 4.2 — recipients (`b4 dig -w`)**
-Record: Felix Fietkau, `linux-wireless@vger.kernel.org`. Maintainer-
-authored self-merge; no extra Reviewed-by. Normal for mt76.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): linusw@kernel.org, brgl@kernel.org,
+andrew@codeconstruct.com.au, linux-gpio, openbmc, Nuvoton/Google BMC
+CCs. No Reviewed-by on the commit; maintainer SOB is Linus Walleij.
 
-**Step 4.3 — bug report**
-Record: No syzbot/bugzilla. The series commit messages describe a
-concrete on-air failure (clients waiting for EOSP). Unverified: no
-public user stack trace beyond the author’s analysis.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No Reported-by, bugzilla, or syzbot link. Author-found hardware
+mapping error.
 
-**Step 4.4 — series context**
-Record: 04 is the common-path EOSP fix. 05 is the mt7603 driver-PS-queue
-analogue. Taking 04 without 05 still fixes mac80211-buffered frames on
-**all** chips that use `mt76_release_buffered_frames` (mt76x0/x2,
-mt7615, mt7915, mt7921, and mt7603’s fallback).
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Patch 8/8 of an npcm8xx pin/group cleanup series. Other patches
+change groups, IRQ setup, or add RG2 drive strength. This offset change
+does not require them. Pre-merge 2022 v2 driver used `int DBNCS_offset =
+gpio / 16` and `DBNCS0 + (DBNCS_offset * 4)` — the correct formula this
+commit restores.
 
-**Step 4.5 — stable list**
-Record: `lore.kernel.org/stable/?q=mt76+EOSP+QoS` → **No results
-found**. No recorded reason to skip it.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search was not usable (403). No evidence
+this was discussed on stable@ from the mirrors that did load.
 
-## Phase 5: Semantic / call graph
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.1 — functions**
-Record: `mt76_queue_ps_skb`, `mt76_release_buffered_frames`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `debounce_timing_setting()` only.
 
-**Step 5.2 — callers**
-Record: `mt76_queue_ps_skb` only from `mt76_release_buffered_frames`.
-That is `.release_buffered_frames` for mt76x0, mt76x2, mt7615, mt7915,
-mt7921; mt7603 wraps it after draining `msta->psq`. mac80211 calls it
-from `ieee80211_sta_ps_deliver_response()` →
-`drv_release_buffered_frames()`.
+**Step 5.2: TRACE CALLERS**
+Record:
+- `debounce_timing_setting()` ← `npcm_set_debounce()` ←
+  `npcm8xx_config_set_one()` on `PIN_CONFIG_INPUT_DEBOUNCE` ←
+  `npcm8xx_config_set()` (`pinconf_ops.pin_config_set`)
+- DT generic pinconf maps `input-debounce` to that param (`pinconf-
+  generic.c`).
+- **GPIO cdev debounce does not hit this path here:**
+  `gpio_generic_chip_init()` does not set `gc->set_config`, and this
+  driver never assigns `gpiochip_generic_config`. `gpio_do_set_config()`
+  returns `-ENOTSUPP`; gpiolib-cdev then uses software debounce.
 
-**Step 5.3 — callees**
-Record: `IEEE80211_SKB_CB`, `ieee80211_is_data_qos`,
-`ieee80211_get_qos_ctl`, `mt76_skb_set_moredata`, `__mt76_tx_queue_skb`.
-No new locks/allocs.
+**Step 5.3: TRACE CALLEES**
+Record: `npcm_gpio_set()` (32-bit RMW), `iowrite32` of DBNCPx period
+registers, `DIV_ROUND_CLOSEST` for custom periods.
 
-**Step 5.4 — reachability**
-Record: Yes, from the air. AP RX of a U-APSD trigger
-(`ieee80211_sta_uapsd_trigger` in `mac80211.c` / `rx.c`) →
-`ieee80211_sta_ps_deliver_uapsd` → driver release. This tree sets
-`WIPHY_FLAG_AP_UAPSD`. Typical trigger: a phone associated to an mt76
-AP.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Reachable when a pinctrl state applies `input-debounce` (boot DT
+or pin_config_set). No in-tree dts/dtsi uses `input-debounce`
+(verified). OpenBMC board DTs are often out of tree. Not a syscall hot
+path on this driver as wired today.
 
-**Step 5.5 — similar patterns**
-Record: mac80211 `sta_info.c` uses the same `*qoshdr |=
-IEEE80211_QOS_CTL_EOSP`. Sibling mt7603 patch 05 does the same for TXD-
-prefixed PS-queue frames (`skb->data[MT_TXD_SIZE]`). Common-path frames
-from `ieee80211_tx_dequeue` have the 802.11 header at `skb->data` (same
-as `mt76_skb_set_moredata`).
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: npcm7xx has PIN_CONFIG_INPUT_DEBOUNCE cases but no DBNCS
+registers (NPCM8XX-specific adjustable debounce). No sibling copy of
+this bug.
 
-## Phase 6: This tree (5.15.221)
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 6.1 — buggy code present?**
-Record: **Yes.** `drivers/net/wireless/mediatek/mt76/tx.c`
-`mt76_queue_ps_skb()` (lines 344–358) sets only
-`IEEE80211_TX_STATUS_EOSP`, not the QoS EOSP bit. Introduced v4.16;
-U-APSD AP enabled here since 2020.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` is present.
+Pre-image at 602ee6c9447e4^ is `+ (gpio / 4)`. Bug since v6.7. This
+checkout already contains the fix (expected for a mainline candidate
+tree). `PINCTRL_NPCM8XX` depends on `ARCH_NPCM || COMPILE_TEST`.
 
-`git describe HEAD`: `p-5.15-2-g6703e5d2f3a29`. `make kernelversion`:
-**5.15.221**. `git merge-base --is-ancestor 0b8d252471609 HEAD` → **not
-present**.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply on the debounce formula. Surrounding gpio-generic
+API churn does not affect this one line. Expected backport difficulty:
+**clean apply** on any tree that still has `(gpio / 4)` in
+`debounce_timing_setting`.
 
-**Step 6.2 — backport difficulty**
-Record: **Clean apply.** `git apply --check` succeeded; hunks applied at
-offset −69 only because `mt76_txq_dequeue` still uses
-`MT_TX_HW_QUEUE_EXT_PHY` here vs `FIELD_PREP(MT_TX_HW_QUEUE_PHY, …)`
-upstream. That function is context, not part of the change.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No earlier debounce-offset fix. `git log --grep=debounce --
+drivers/pinctrl/nuvoton/` only shows the original add and this commit.
 
-**Step 6.3 — related fixes already here?**
-Record: No. Only `7267a7965dd7b` (TX status for the software EOSP flag),
-which is exactly the incomplete behavior this commit finishes.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## Phase 7: Subsystem
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **[pinctrl / Nuvoton NPCM8XX GPIO] [PERIPHERAL]** — Arbel BMC
+(ARM64 Cortex-A35), used on OpenBMC server BMCs. Not core mm/fs/net.
 
-**Step 7.1**
-Record: `drivers/net/wireless/mediatek/mt76` — Wi-Fi driver.
-**IMPORTANT** (not core kernel, but widely used: OpenWrt/home routers,
-mt76x0/x2/7603/7615/7915/7921).
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Mature driver (v6.7), recent concentrated npcm8xx pin-map/IRQ
+fixes in the 7.3 pinctrl pull. Debounce math had been unchanged since
+introduction.
 
-**Step 7.2**
-Record: Mature driver; this PS-release path has been stable since 2017.
-Not a bug in brand-new code.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-## Phase 8: Impact and risk
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Platform-specific:** NPCM8XX BMC boards that set pinctrl
+`input-debounce`. Not universal. No in-tree DT consumers found.
 
-**Step 8.1 — who**
-Record: Driver/config-specific: `CONFIG_MT76*` AP mode with U-APSD
-clients. Large real-world set (MediaTek AP SoCs).
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Applying hardware debounce via pinconf. Not every boot unless DT
+requests it. Unprivileged GPIO debounce ioctl does **not** reach this
+function on this driver (no `set_config`). Privilege/DT-dependent.
 
-**Step 8.2 — trigger**
-Record: Associated STA in power-save using U-APSD (typical phones) sends
-a trigger; AP releases buffered QoS data. Not a rare error path.
-Unprivileged on the air (associated client). PS-Poll-only clients are
-unaffected by the new bit.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record:
+- Primary (author): wrong DBNCS register → debounce source not applied
+  to the intended line; possible corruption of neighboring DBNCS/DBNCP
+  fields via unaligned 32-bit RMW.
+- Unaligned `ioread32`/`iowrite32` on ARM64 Device mappings *can*
+  alignment-fault; **no crash was reported**. Treat crash as possible,
+  not verified.
+- Severity: **MEDIUM** for functional debounce / adjacent-register
+  corruption on this SoC; not a demonstrated panic/UAF/security hole.
 
-**Step 8.3 — failure mode**
-Record: **Station downlink stall** until the client gives up the SP. Not
-a kernel oops. Severity: **HIGH** (loss of connectivity for that STA),
-not CRITICAL (no panic/corruption).
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** Makes hardware debounce match the documented 16-GPIO
+  DBNCS banks for NPCM8XX users who enable it.
+- **Risk:** Very low (one address expression; GPIOs that already hit
+  0x80/0x84 unchanged).
+- **Ratio:** Favorable. Small correctness fix, not a feature.
 
-**Step 8.4 — risk/benefit**
-Record: Benefit high for mt76 AP + U-APSD clients. Risk very low: ~12
-lines, QoS bit only on last U-APSD QoS-data frame, same pattern as
-mac80211, clean apply, no API/struct change. Patch 01’s
-`ieee80211_txq_aql_pending` is **not** required.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-## Phase 9: Synthesis
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Step 9.1 — evidence**
+FOR backporting:
+- Real hardware programming bug, present since the driver was added
+  (v6.7).
+- Restores the mapping the author’s 2022 submission already used (`gpio
+  / 16` × 4-byte stride).
+- Matches DBNCS0/DBNCS1 at 0x80/0x84 and the existing `(gpio % 16) * 2`
+  bit layout.
+- 3-line, single-function, no API/feature change.
+- Author is the driver writer; pinctrl maintainer applied it.
+- Standalone; other 8/8 series patches not required.
+- Applies on this tree’s pre-image without surrounding refactor.
 
-For:
-- Real, documented 802.11 bug: missing on-air EOSP → downlink stall
-- Code and AP U-APSD flag exist in 5.15.221
-- Bug since v4.16
-- Maintainer-authored, merged to mainline (`v7.3-rc1`), no revert, no
-  later rewrite of this function
-- 12 insertions / 4 deletions, clean apply
-- Matches mac80211
-- Standalone despite 04/10 numbering
+AGAINST:
+- Peripheral BMC pinctrl, not a core crash/security/corruption class as
+  described.
+- No Fixes/Cc:stable, no Reported-by/Tested-by (tags not required, but
+  no field report).
+- No in-tree `input-debounce` DT users; GPIO cdev debounce does not call
+  this code.
+- Series also contains non-stable material (e.g. RG2 drive strength);
+  this patch itself is independent.
 
-Against:
-- Not crash/security/corruption
-- No `Reported-by` / syzbot
-- No extra reviewer
-- mt7603 hardware PS-queue still wrong without patch 05 (does not make
-  04 incorrect or unusable)
+UNRESOLVED:
+- Full lore thread (reviews/NAKs) unverified due to lore 403.
+- Whether any OpenBMC DT actually sets `input-debounce` (not in this
+  tree).
+- Whether unaligned MMIO actually oopses on NPCM8XX (not reported).
 
-Unresolved: no independent end-user report found beyond the maintainer’s
-analysis.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — formula matches register
+   layout; maintainer applied. No extra Tested-by.
+2. Fixes a real bug that affects users? **PASS** — wrong DBNCS bank for
+   24/32 lines per bank when hardware debounce is configured.
+3. Important issue (crash, security, corruption, deadlock)? **PASS**
+   (borderline) — wrong MMIO and possible adjacent-register RMW; not a
+   documented oops. Still a hardware-feature break on a production BMC
+   SoC, which stable routinely takes in pinctrl/gpio.
+4. Small and contained? **PASS** — +2/−1, one function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — same file/function; pre-image
+   is the buggy line.
 
-**Step 9.2 — stable rules**
-1. Obviously correct and tested? **PASS** — same as mac80211; in
-   mainline since v7.3-rc1
-2. Real bug affecting users? **PASS** — U-APSD clients on mt76 APs
-3. Important? **PASS** — full downlink stall for the STA (HIGH)
-4. Small/contained? **PASS** — one file, ~12 lines
-5. No new features/APIs? **PASS** — sets a standard 802.11 bit the
-   driver was already required to set
-6. Applies to this tree? **PASS** — `git apply --check` clean
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
+driver correctness fix.
 
-**Step 9.3 — exceptions**
-Record: None (not an ID/quirk/DT/build/doc exception). Qualifies as a
-normal bugfix.
+**Step 9.4: MAKE YOUR DECISION**
+This tree has the NPCM8XX driver and the long-standing `gpio / 4` bug.
+The patch is a minimal, obviously correct register-index fix with no
+dependencies. Benefit is limited to NPCM8XX debounce configuration, but
+the risk of taking it is negligible and the bug is real. That meets
+stable criteria for this checkout.
 
-**Step 9.4 — decision**
-This 5.15.221 tree has the buggy path, U-APSD AP support, and every API
-the patch needs. The change is a small, self-contained protocol fix for
-a serious AP-mode connectivity failure. It should be backported here.
+------------------------------------------------
+What the commit solves, for stable users
+------------------------------------------------
+Hardware debounce on NPCM8XX is supposed to use DBNCS0 for GPIOs 0–15
+and DBNCS1 for 16–31. Integer division turned `(gpio / 16) * 4` into
+`gpio / 4`, so most lines wrote the wrong (often unaligned) address.
+Boards that set pinctrl `input-debounce` would not get the intended
+debounce source and could disturb neighboring debounce-period registers.
+The fix is one address expression.
 
----
+Risk vs benefit: very low risk, modest but real benefit for NPCM8XX BMC
+GPIO debounce. No series dependencies.
 
-### What it solves for 5.15 users
-On MediaTek mt76 APs, U-APSD service periods never get the EOSP bit on
-the last released QoS frame. mac80211 thinks the SP ended
-(`IEEE80211_TX_STATUS_EOSP`), but the client never sees EOSP on the air,
-stops triggering, and **downlink to that station stalls**. Setting
-`IEEE80211_QOS_CTL_EOSP` on the last U-APSD QoS-data frame is what
-mac80211 already documents and implements when the driver does not take
-`.release_buffered_frames`.
-
-### Stable rules / risk
-Meets all six criteria. Benefit is restoring buffered downlink for
-U-APSD clients; risk is a one-bit header update on a path that already
-rewrites More Data. No series dependencies for this hunk. mt7603’s
-separate PS-queue EOSP bug is a sibling, not a blocker.
-
-### Verification
-- [Phase 1] Parsed tags: Link to 04/10, author SOB only; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 1] `git log origin/master --grep='set the EOSP bit' --
-  drivers/net/wireless/mediatek/mt76/`: `0b8d252471609`
-- [Phase 1] `git describe --contains --match 'v*' 0b8d252471609`:
-  `v7.3-rc1~133^2~99^2~15^2~8`
-- [Phase 2] Diff: `mt76_queue_ps_skb` + `reason`; EOSP OR on last U-APSD
-  QoS-data frame; two call sites
-- [Phase 2] Compared to `net/mac80211/sta_info.c:1708` (`*qoshdr |=
-  IEEE80211_QOS_CTL_EOSP`) — same mechanism
-- [Phase 2] Confirmed `include/net/mac80211.h` requires the driver to
-  set EOSP when `.release_buffered_frames` is implemented
-- [Phase 3] `git blame` on `tx.c` 345–403: introduced `17f1de56df0512`
-  (v4.16-rc1)
-- [Phase 3] `git log --grep='EOSP' --
-  drivers/net/wireless/mediatek/mt76/`: only TX-status EOSP
-  (`7267a7965dd7b`) in this tree
-- [Phase 3] Patch 01 `a547b414bf7ea` does not touch `mt76_queue_ps_skb`
-  (not a prerequisite)
-- [Phase 4] `b4 dig -c 0b8d252471609`: lore URL above; `b4 dig -a`: v1
-  only; `b4 dig -w`: linux-wireless + author
-- [Phase 4] 11-message mbox: no NAK on 04; kbuild error is on 10/10 /
-  patch 01
-- [Phase 4] `curl` stable lore for `mt76 EOSP QoS`: no results
-- [Phase 5] Callers: mt76x0/x2, mt7615, mt7915, mt7921 ops; mt7603
-  wrapper; mac80211 `drv_release_buffered_frames`
-- [Phase 5] This tree: `WIPHY_FLAG_AP_UAPSD` and
-  `ieee80211_sta_uapsd_trigger` in `mt76/mac80211.c`
-- [Phase 6] `git describe HEAD`: `p-5.15-2-g6703e5d2f3a29`; `make
-  kernelversion`: 5.15.221
-- [Phase 6] `git merge-base --is-ancestor 0b8d252471609 HEAD`: not in
-  tree
-- [Phase 6] `git apply --check` of 04/10: success, offset −69
-- [Phase 6] APIs present: `IEEE80211_QOS_CTL_EOSP` `0x0010`,
-  `ieee80211_get_qos_ctl`, `ieee80211_is_data_qos`,
-  `IEEE80211_FRAME_RELEASE_UAPSD`
-- [Phase 8] Failure mode: STA downlink stall (HIGH), not oops
-- UNVERIFIED: no independent user bugzilla/syzbot report; impact
-  inferred from protocol + maintainer description
+Verification:
+- [Phase 1] Parsed commit 602ee6c9447e4: SOB Tomer Maimon + Linus
+  Walleij; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: one expression in `debounce_timing_setting()`;
+  DBNCS0=0x80, DBNCS1=0x84 confirmed in this file
+- [Phase 2] `npcm_gpio_set()` is 32-bit RMW at the computed pointer
+  (lines 124–129)
+- [Phase 3] `git blame` on parent: acf4884a57170 (v6.7-rc1) introduced
+  `(gpio / 4)`
+- [Phase 3] `git merge-base --is-ancestor acf4884a57170 HEAD` → yes; fix
+  is ancestor of HEAD
+- [Phase 3] `git log --grep=debounce -- drivers/pinctrl/nuvoton/` → only
+  driver add + this fix
+- [Phase 4] `b4 dig -c 602ee6c9447e4` → msgid 20260715122923.1938327-9;
+  v1 8/8; recipients linusw, brgl, openbmc
+- [Phase 4] Pre-merge 2022 v2 used `gpio / 16` and `* 4`
+  (lists.ozlabs.org OpenBMC archive)
+- [Phase 4] lore.kernel.org 403 — full review thread UNVERIFIED;
+  LKML/openwall showed the patch text only
+- [Phase 5] Callers: `npcm_set_debounce` ← `npcm8xx_config_set_one`
+  PIN_CONFIG_INPUT_DEBOUNCE
+- [Phase 5] This driver has no `gc->set_config`; GPIO cdev debounce does
+  not reach this function
+- [Phase 5] `rg input-debounce` on dts/dtsi: no matches
+- [Phase 6] `git describe HEAD` → v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` → 7.3.0-rc4
+- [Phase 6] Parent of fix still has `(gpio / 4)`; apply is clean
+- [Phase 8] Failure mode: wrong debounce MMIO; crash via unaligned
+  access UNVERIFIED
+- UNVERIFIED: OpenBMC out-of-tree DT debounce use; stable@ discussion;
+  review NAKs
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/tx.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index 731caeda72b52..93275bb692fa5 100644
---- a/drivers/net/wireless/mediatek/mt76/tx.c
-+++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -415,16 +415,23 @@ mt76_txq_dequeue(struct mt76_phy *phy, struct mt76_txq *mtxq)
- 
- static void
- mt76_queue_ps_skb(struct mt76_phy *phy, struct ieee80211_sta *sta,
--		  struct sk_buff *skb, bool last)
-+		  struct sk_buff *skb, bool last,
-+		  enum ieee80211_frame_release_type reason)
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+index 22cc87d43ea69..28464463ff833 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+@@ -2135,7 +2135,8 @@ static const struct pinmux_ops npcm8xx_pinmux_ops = {
+ static int debounce_timing_setting(struct npcm8xx_gpio *bank, u32 gpio,
+ 				   u32 nanosecs)
  {
- 	struct mt76_wcid *wcid = (struct mt76_wcid *)sta->drv_priv;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
-+	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
+-	void __iomem *DBNCS_offset = bank->base + NPCM8XX_GP_N_DBNCS0 + (gpio / 4);
++	void __iomem *DBNCS_offset = bank->base + NPCM8XX_GP_N_DBNCS0 +
++				     (gpio / 16) * 4;
+ 	int gpio_debounce = (gpio % 16) * 2, debounce_select, i;
+ 	u32 dbncp_val, dbncp_val_mod;
  
- 	info->control.flags |= IEEE80211_TX_CTRL_PS_RESPONSE;
--	if (last)
-+	if (last) {
- 		info->flags |= IEEE80211_TX_STATUS_EOSP |
- 			       IEEE80211_TX_CTL_REQ_TX_STATUS;
- 
-+		if (reason == IEEE80211_FRAME_RELEASE_UAPSD &&
-+		    ieee80211_is_data_qos(hdr->frame_control))
-+			*ieee80211_get_qos_ctl(hdr) |= IEEE80211_QOS_CTL_EOSP;
-+	}
-+
- 	mt76_skb_set_moredata(skb, !last);
- 	__mt76_tx_queue_skb(phy, MT_TXQ_PSD, skb, wcid, sta, NULL);
- }
-@@ -457,14 +464,15 @@ mt76_release_buffered_frames(struct ieee80211_hw *hw, struct ieee80211_sta *sta,
- 
- 			nframes--;
- 			if (last_skb)
--				mt76_queue_ps_skb(phy, sta, last_skb, false);
-+				mt76_queue_ps_skb(phy, sta, last_skb, false,
-+						  reason);
- 
- 			last_skb = skb;
- 		} while (nframes);
- 	}
- 
- 	if (last_skb) {
--		mt76_queue_ps_skb(phy, sta, last_skb, true);
-+		mt76_queue_ps_skb(phy, sta, last_skb, true, reason);
- 		dev->queue_ops->kick(dev, hwq);
- 	} else {
- 		ieee80211_sta_eosp(sta);
 -- 
 2.53.0
 
