@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF64527FB1;
-	Mon, 19 Oct 2026 14:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4135527FC3;
+	Mon, 19 Oct 2026 14:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418574; cv=none; b=qyPWc/8Y3bn/LYQmQm8H94dburBBvNjoEcBSLO7I6FJ0eclN6cjckoztKaoIKiwFPyO33Q0Uay73UOK04LhNvD4hprV3VbLem0OCK4qsS3NQ+IPi6vsZC4JD9rinjacfvE3s4wkbgd8TpBAZjj11O9EGhcARqxtF/Lf1bfSFCCE=
+	t=1792418575; cv=none; b=Sv5lrJyUFPUmo99ap/zEPVZzP5CXBg1T5iaX77yaKUvIgLUn8gFnbFXoOF1iYPnuA4su68hO0773aukZgZgBKElIkDz6/CtsFnu/d1vGOtsiwBzBODstM/Cs4ELQFeita+14Bm8EyUj1WS/7IJBSbBLEH3HTc8SB0Yt0tX4BljM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418574; c=relaxed/simple;
-	bh=+1ZWmQmS7jC1pco+Ozx6kg7JXui4zpUeJ0lalaES/0E=;
+	s=arc-20240116; t=1792418575; c=relaxed/simple;
+	bh=Y/neO6EHFGwLh8pa7B+NVwTUEpf8aC70WWbL/TXYEYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QKNcRLJ6DsCnzu0nNrfl9u6WZFzGABXj6sBiDOTvzl5VxUxL3OxUEZdjE8osTcaGhLnzwP3wKMFEed+m7JZOEiuU9GSD85cV4MqsLjtaaOeiwB4OjuRaE0h2E4sltSmeWZqup7Qut6M3lPy/fzVxI3WwaSct2BaOSrGx+b8DYdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DqXoXndN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ckpivZsl13UofIG0Tp2VSZrQRjHvh6mAlIoB/Yp4tLNv1mmjG3xe0V5x0sUA4Fn4nFUfnIq+NH9GH2Zo5jLyRNmNSZtmtSR4UdoIXyvmTYAZqUoGbbbTUi7dYahD6EkmaTJ23wtx9g75owOkIrB0mrVopA6WAeM2u8lgwCGt3uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXEwnaul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DqXoXndN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F86A1F000C4;
-	Mon, 19 Oct 2026 14:02:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RXEwnaul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CBA1F000C7;
+	Mon, 19 Oct 2026 14:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418571;
-	bh=kvnjUFG/xYwm+NO+qD6stlC04XHUVrYTPecZAg78TVo=;
+	s=k20260515; t=1792418572;
+	bh=+O0pLDWiJaBqFJBeOjOY6kMwYvWyU4+xf8Id2PyVxzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqXoXndNKnS8fnPbfriMzHZ+67xbnT+aM4apZ4mCSmVhejV08Btca1t0aLb/BzPK8
-	 MKkfNKtn+BJh2P5re4b/Q2WSKc/jsYWbzZwXlmYtTwyjHE1QXMKJU2e1EaeMcUYfHd
-	 XDp39gUf+Alh8xwIVxGgrZ8f8iCRSNvRFzsxXZGxV65F7+NavVTPsTDelD2XxOrFIU
-	 4J2W42vFcqaTDRUK9sc6syMq0vd+PGhws6I78Ipc8KfUPvtd1F9Fsan3BMeSQ4qDRm
-	 4GBQWhxWqxr4rY0gwtI+9q97fRyG8qqe2QmOgmmh5CBQF61ExTPQMlw8HUYtPRjEY1
-	 wCvnSpb3Zy30g==
+	b=RXEwnaulby7pQ0lJjm6NBmS7obAPyWm0JY7/jnMtDIbnrClXCxq6OVY2GaUx7ccR5
+	 erm3pxebsEUAXcXjYz6Fu16Kwvyc0QuFm7RjoEpkn00XkvzFG46f/e/WcSMJBQZ4MT
+	 ZI+Df1goPTxYUfhWh7pqq04gpdiOkoI3vL1eIROYP6JptzNz/p44epl1xIilekPiK4
+	 IvVWql1NJ47z1WrSbIAnnwOFDUKvlvh2auX4isE/NwKGq9LxP3mZZ3EH+yOn/ALP7b
+	 K7wQCE/9w3HSIrQNPCfjHJW3oEKa2C4eBhRY8ODsIabGLLhbsD+PjIQGZf5VdBN/Ep
+	 U8rzSK5lMkRcw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	robin.clark@oss.qualcomm.com,
-	joro@8bytes.org,
-	iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	scott.branden@broadcom.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] iommu/qcom: Check pm_runtime_resume_and_get() return in probe
-Date: Mon, 19 Oct 2026 09:50:33 -0400
-Message-ID: <20261019135441.1420968-342-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] misc: bcm-vk: validate write size before allocation
+Date: Mon, 19 Oct 2026 09:50:34 -0400
+Message-ID: <20261019135441.1420968-343-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,436 +52,476 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit e910315ae08a23bc953daed10b1c518abac1df49 ]
+[ Upstream commit f66c40cd90954f52809b3eabd386137f56bb6215 ]
 
-The SMMU_INTR_SEL_NS register write in qcom_iommu_device_probe() uses
-pm_runtime_get_sync() without checking the return value. If runtime
-resume fails the subsequent writel_relaxed() would access hardware with
-clocks potentially disabled.
+bcm_vk_write() uses the user-supplied write count to size a
+flexible-array work entry and then copies count bytes into that array.
+The allocation expression is evaluated before any overflow check, so a
+very large count can wrap the allocation smaller than the subsequent
+copy.
 
-Switch to pm_runtime_resume_and_get() which handles the usage-count
-cleanup on failure, check the return value, and unwind the already
-registered iommu device on error.
+Reject empty writes, check the allocation arithmetic before kzalloc(),
+and initialize the __counted_by field before copying into to_v_msg[].
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260629160605.29412-1-alhouseenyousef@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the tree version, the probe path, series context, and review
-thread. Compiling the nine-phase analysis and verdict next.
+## Phase 1: Commit message forensics
 
----
+**Step 1.1: Subject line**
+- Subsystem: `misc: bcm-vk`
+- Action: **validate** (pre-check / prevent)
+- Claimed intent: reject a user-controlled write length that is used as
+  an allocation size before the copy.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Record: `[misc/bcm-vk] [validate] [check write count before sizing the
+work-entry allocation]`
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+**Step 1.2: Tags**
+- `Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>` (author)
+- `Link: https://patch.msgid.link/20260629160605.29412-1-
+  alhouseenyousef@gmail.com`
+- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
+  (char-misc maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` (absence of the last two is expected in this
+  pipeline)
+- Sasha Levin SOB is not present on the real commit `f66c40cd90954`
 
-Record: **[iommu/qcom]** **[Check]** Check `pm_runtime_resume_and_get()`
-return in probe. “Check” here is a missing-error-handling fix, not a
-feature.
+Record: Author SOB + Greg SOB + msgid Link. No syzbot, no Fixes, no
+stable CC.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.3: Body**
+`bcm_vk_write()` sizes a flexible-array work entry with the user
+`count`, then `copy_from_user()`s `count` bytes into it. The sum
+`sizeof(*entry) + count + vk->ib_sgl_size` is evaluated with wrapping C
+addition **before** any overflow check, so a huge `count` can make
+`kzalloc()` allocate less than `count`, and the copy overruns the slab
+object.
 
-Record:
-- **Reviewed-by:** Konrad Dybcio \<konrad.dybcio@oss.qualcomm.com\>
-  (Qualcomm reviewer)
-- **Signed-off-by:** Mukesh Ojha \<mukesh.ojha@oss.qualcomm.com\>
-  (author)
-- **Signed-off-by:** Will Deacon \<will@kernel.org\> (IOMMU/SMMU
-  maintainer who applied it)
-- **No Fixes:** tag (expected for this review pipeline)
-- **No Cc: stable** (expected)
-- **No Reported-by / Tested-by / Link / Acked-by**
-- Ignore any pipeline “Signed-off-by: Sasha Levin” / “[Upstream commit
-  …]” markers (none in the real commit)
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
-Record:
-- **Bug:** `qcom_iommu_device_probe()` does `pm_runtime_get_sync()` then
-  `writel_relaxed()` to `SMMU_INTR_SEL_NS` without checking the PM call.
-- **Symptom:** If runtime resume fails, MMIO is written with clocks
-  possibly off. On Qualcomm that can hang the interconnect / SError, and
-  probe still returns success so interrupt routing may be wrong.
-- **Root cause:** ignored `pm_runtime_get_sync()` return; that API also
-  leaves the usage count up on failure (the new API drops it).
-- **Fix:** `pm_runtime_resume_and_get()`, check `ret`, unwind
-  `iommu_device_unregister` + existing sysfs remove.
-- **Version info:** none in the message. Code dates to the original
-  driver (v4.14).
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: Not disguised. Explicit error-path / unclocked-access fix. The
-“usage-count cleanup” wording is slightly overstated at this site
-because the old code always called `pm_runtime_put_sync()` after the
-write; the real bugs are the unclocked `writel` and probe succeeding
-after a failed resume.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: INVENTORY THE CHANGES**
+The patch: reject `count == 0`, check the two additions with
+`check_add_overflow()` before `kzalloc()`, and set `to_v_blks` (the
+`__counted_by` field) before the copy.
 
 Record:
-- File: `drivers/iommu/arm/arm-smmu/qcom_iommu.c` (+5 / −1)
-- Function: `qcom_iommu_device_probe()`
-- Scope: single-file surgical probe error path
+- Bug: integer wrap of allocation size vs subsequent copy length
+- Symptom: heap buffer overflow (or HARDENED_USERCOPY abort) on
+  `write()`
+- Version info: none in the message
+- Root cause: unchecked `size_t` addition of a user length
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 1.4: Hidden bug fix?**
+Not hidden. The subject says “validate”; the body describes wrap, then
+copy. The empty-write reject and `__counted_by` move are the same write
+path, not a cleanup-only change.
 
-Record: Before (only when `qcom_iommu->local_base` is set):
-`pm_runtime_get_sync` → always `writel_relaxed(0xffffffff, local_base +
-SMMU_INTR_SEL_NS)` → `pm_runtime_put_sync` → return 0. After:
-`pm_runtime_resume_and_get`; on failure `goto err_iommu_unregister`
-(unregister IOMMU, remove sysfs, return error); on success same write +
-put as before.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record:
-- **Category:** (a) error-path unwind + (g) missing return check, which
-  prevents unclocked MMIO.
-- **Mechanism:** `qcom_iommu_resume()` enables iface/bus/tbu clocks via
-  `clk_bulk_prepare_enable()`. If that (or SCM restore) fails, the old
-  path still wrote `SMMU_INTR_SEL_NS`. Switch to
-  `pm_runtime_resume_and_get()` is required: `pm_runtime_get_sync()` can
-  return `1` (already active), so `if (ret)` on get_sync would mis-
-  handle success.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record: Minimal and correct. `pm_runtime_resume_and_get()` returns 0 or
-negative (`include/linux/pm_runtime.h`). Unwind matches
-`qcom_iommu_device_remove()`. Regression risk is low: only the RPM-
-failure path starts failing probe instead of succeeding after a possibly
-unclocked write. If clocks cannot be enabled, failing probe is the right
-outcome.
+Record: Explicit memory-safety fix, not disguised cleanup.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 2: Diff analysis
 
-**Step 3.1: BLAME THE CHANGED LINES**
+**Step 2.1: Inventory**
+- File: `drivers/misc/bcm-vk/bcm_vk_msg.c` (+12 / −6; `git show --stat`
+  reports 18 lines changed)
+- Include: `#include <linux/overflow.h>`
+- Function: `bcm_vk_write()` only (the `bcm_vk_msg_init` hunk in the
+  prompt is context-only; no functional change there)
 
-Record: The `if (qcom_iommu->local_base)` write was added in
-**0ae349a0f33fb0** (“iommu/qcom: Add qcom_iommu”, Rob Clark,
-2017-08-09), first in **v4.14-rc1**. Present in this tree (`git merge-
-base --is-ancestor 0ae349a0f33fb0 HEAD`). Long-lived bug, not new code.
+Record: Single-file surgical fix in one syscall handler.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
+**Step 2.2: Code flow**
+Before (verified on `f66c40cd90954^`):
+1. Reject `count` not a multiple of 16 (`VK_MSGQ_BLK_SIZE`).
+2. `kzalloc(sizeof(*entry) + count + vk->ib_sgl_size, GFP_KERNEL)` with
+   wrapping add.
+3. `copy_from_user(&entry->to_v_msg[0], buf, count)`.
+4. Then `entry->to_v_blks = count >> 4`, then a **later** msgq-size
+   check.
 
-Record: No Fixes: tag. Buggy code is the original 2017 driver, not a
-recent regression.
+After:
+1. Also reject `count == 0`.
+2. `check_add_overflow(sizeof(*entry), count, &entry_size)` then add
+   `vk->ib_sgl_size`; fail with `-EOVERFLOW`.
+3. `kzalloc(entry_size)`.
+4. Set `to_v_blks` **before** the copy.
+5. Same copy and later msgq check.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Normal `write()` path; hardening of alloc + copy, not an error-
+path-only change.
 
-Record: Same-day IOMMU pull (Will Deacon, 2026-07-22):
-- `c579f18e79599` — adds `err_sysfs_remove` (**soft prerequisite** for
-  the new goto)
-- `bf69e515b1802` — `devm_pm_runtime_enable()` (series 2/6; changes
-  nearby error labels)
-- **`e910315ae08a2`** — this commit (series 3/6)
-- Later 4/6–6/6 are other bugs in the same file, not needed for this
-  hunk
+**Step 2.3: Bug mechanism**
+- Category: **integer overflow → heap buffer overflow** (also
+  `__counted_by` / bounds-sanitizer correctness).
+- User `count` is only required to be a multiple of 16. Near `SIZE_MAX`,
+  the sum wraps to a small size, `kzalloc` succeeds, then
+  `copy_from_user` uses the original huge `count`. The first mapped user
+  page(s) are enough to overflow the slab object before the copy hits
+  `-EFAULT`.
+- The msgq bound is **after** the copy, so it does not prevent the
+  overflow.
+- `to_v_msg[]` is `__counted_by(to_v_blks)` in this tree. `kzalloc`
+  leaves `to_v_blks == 0`, so the copy used to write into a counted-by-
+  zero flexible array.
 
-Standalone for the probe RPM check, but the hunk assumes
-`err_sysfs_remove` exists. That label is in this tree.
+Record: Alloc-size wrap + copy; `__counted_by` initialized too late.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+**Step 2.4: Fix quality**
+- Obviously correct: standard `check_add_overflow` + allocate checked
+  size.
+- Minimal; no API/structure change.
+- Regression risk: low. `-EOVERFLOW` / `-EINVAL` for impossible sizes.
+  Rejecting `count == 0` is reasonable (zero-length messages are not a
+  multiple of a useful blk payload). `check_add_overflow` is an existing
+  helper.
 
-Record: Mukesh Ojha (Qualcomm) sent the “iommu/qcom: Misc Fixes” series.
-Not the file’s listed maintainer (Rob Clark); Konrad reviewed, Will
-applied. Related author commits on this file are the rest of that
-series.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: Needs `err_sysfs_remove` from `c579f18e79599` (cover letter:
-series sits on Haoxiang Li’s sysfs cleanup).
-`pm_runtime_resume_and_get()` exists in this tree. Can apply standalone
-**on this checkout**. Does not need 4/6–6/6.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- **b4 dig:** v2 3/6, https://patch.msgid.link/20260717144608.3216274-4-
-  mukesh.ojha@oss.qualcomm.com
-- **Revisions:** v1 3/8 (2026-06-23) → v2 3/6 (2026-07-17). Same hunk;
-  v1 still had `err_pm_disable` (removed by 2/6).
-- Konrad R-b on v1 with no requested changes: Message-ID
-  `f636b144-807f-4a10-bf44-d06b169fce21@oss.qualcomm.com`
-- Will applied the whole v2 series 2026-07-22; no NAKs
-- No reviewer asked for Cc: stable
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: To/Cc included Rob Clark, Will Deacon, Joerg Roedel, Robin
-Murphy, `iommu@lists.linux.dev`, `linux-arm-msm`. Konrad R-b; Will
-merged.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No Reported-by, syzbot, or bugzilla. Author analysis of the
-error path, not a user crash report.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Cover: “[PATCH v2 0/6] iommu/qcom: Misc Fixes”. Independent
-fixes in one file. This patch does not need 4/6 (pgtbl leak), 5/6 (mutex
-publish), or 6/6 (ctx_probe clocks). 2/6 only shifts nearby labels.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: gnuweeb `/stable/?q=qcom_iommu+pm_runtime_resume_and_get` had no
-discussion of this fix. Not previously rejected for stable.
+Record: High quality, low regression risk.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 3: Git history
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+**Step 3.1: Blame / introduction**
+- Driver messaging (including this alloc+copy) landed in `111d746bb4767`
+  (“misc: bcm-vk: add VK messaging support”), contained in `v5.12-rc1`.
+- `__counted_by` on `struct bcm_vk_wkent`: `3c69d52e3e12f` (contained in
+  `v6.7-rc1`).
+- Parent of the fix still had the wrapping `kzalloc` expression.
 
-Record: `qcom_iommu_device_probe()`; new label `err_iommu_unregister`
-calling `iommu_device_unregister()`.
+Record: Buggy alloc/copy since v5.12; counted-by issue since v6.7.
 
-**Step 5.2: TRACE CALLERS**
+**Step 3.2: Fixes: tag**
+None. Ancestor of the bug is `111d746bb4767`, and `git merge-base --is-
+ancestor 111d746bb4767 HEAD` is true.
 
-Record: `.probe = qcom_iommu_device_probe` on `qcom-iommu`. Triggered by
-DT `qcom,msm-iommu-v1` / `v2` during boot (or bind). Not a syscall.
-`local_base` is optional (first MEM resource); the RPM get/write runs
-only if that resource exists.
+**Step 3.3: File history**
+Recent bcm-vk work is mostly style, kmalloc_obj conversion, an
+acquire/release change, and this overflow check. No prerequisite series
+for this hunk. Standalone.
 
-**Step 5.3: TRACE CALLEES**
+**Step 3.4: Author**
+Yousef Alhouseen also has nearby misc overflow/bounds patches (`hpilo`,
+`ibmvmc`, `xilinx_sdfec`, `genwqe`, `sgi-gru`) merged the same day by
+Greg. Not the bcm-vk maintainer; a correctness/security sweep. Greg
+still took the patch.
 
-Record: `pm_runtime_resume_and_get` → `qcom_iommu_resume` →
-`clk_bulk_prepare_enable` and possibly `qcom_scm_restore_sec_cfg`. Then
-`writel_relaxed` to `SMMU_INTR_SEL_NS` (0x2000), `pm_runtime_put_sync`.
+**Step 3.5: Dependencies**
+- `check_add_overflow()` / `linux/overflow.h`: present in this tree
+  (helpers date to 2018).
+- `__counted_by` field exists here; moving `to_v_blks` does not need
+  extra commits.
+- Applies standalone.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Boot/device probe on MSM8916-class SoCs. Unprivileged users can
-rebind if they can unbind the driver; typical trigger is boot. Path is
-real on those boards.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same file still uses unchecked `pm_runtime_get_sync` in
-`domain_free`, `attach_dev`, `identity_attach`, `unmap`,
-`flush_iotlb_all`. Comments there already warn about unclocked TLB
-access. This commit only fixes probe. Sibling 6/6 adds a checked resume
-around ctx-bank FSR access.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: Local tree is **v7.3-rc4** (`git describe HEAD` =
-`v7.3-rc4-27-gf0100363d8c37`, `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
-EXTRAVERSION=-rc4`). Driver is present. The unclocked-write pattern
-existed here from v4.14 until `e910315ae08a2`. HEAD already has the
-fixed form in `qcom_iommu_device_probe()` (lines 866–880). Evaluation is
-technical merit for this tree’s code, not “already landed.”
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Clean apply** on this tree: `err_sysfs_remove` and
-`devm_pm_runtime_enable` are present. Hunk matches current/pre-fix
-context.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: No alternate fix for this probe RPM check. Sysfs unwind
-(`c579f18e79599`) is here and is what this goto chains into.
+Record: No missing prerequisites in this checkout.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 4: Mailing list / external
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+**Step 4.1: Original discussion**
+`b4 dig -c f66c40cd90954` matched msgid
+`20260629160605.29412-1-alhouseenyousef@gmail.com`.
+`b4 dig -a`: **v1 only**, 2026-06-29.
+Saved mbox: **one message** (the patch). No replies, NAKs, or reviewer
+comments in that thread. Greg applied it to char-misc.
 
-Record: **IOMMU / Qualcomm legacy SMMU** (`drivers/iommu/arm/arm-
-smmu/qcom_iommu.c`). **IMPORTANT** for MSM8916/8917/8937/8939/8953/8976
-(DT still uses `qcom,msm-iommu-v1`). Not core MM/VFS; IOMMU failures
-break DMA/display/modem on those SoCs.
+Direct lore HTTP fetch returned 403; discussion content was taken from
+the b4 mbox instead.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+**Step 4.2: Recipients (`b4 dig -w`)**
+- Maintainer: Scott Branden
+- Broadcom internal list
+- Arnd Bergmann
+- Greg Kroah-Hartman
+- linux-kernel@vger.kernel.org
 
-Record: Mature “legacy qcom_iommu” (author’s words). Occasional
-correctness fixes in 2026, not heavy churn. Long-lived bug, more
-relevant for stable.
+Right lists/people were CCed. No `Reviewed-by` on the committed patch.
 
----
+**Step 4.3: Bug report**
+No `Reported-by` / syzbot / bugzilla. Trigger needs `/dev/bcm-vk.N` (PCI
+device), so syzbot is unlikely.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 4.4: Series**
+Standalone `[PATCH]`, not N/M.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
+**Step 4.5: Stable list**
+Web search did not turn up a stable@ discussion of this subject.
+Unverified beyond that (lore search HTTP 403).
 
-Record: **Driver/platform-specific**, `CONFIG_QCOM_IOMMU`, older
-Qualcomm ARM64 boards listed above. Not universal.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-Record: Probe, and only if `local_base` is mapped **and** runtime resume
-fails (`clk_bulk_prepare_enable` or SCM restore). Uncommon on healthy
-hardware; realistic on clock/GDSC/SCM failure. Not a normal userspace
-trigger.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-Record: Unclocked MMIO → possible **bus hang / SError** (**HIGH** if it
-fires). Otherwise probe succeeds with `SMMU_INTR_SEL_NS` not programmed
-(**MEDIUM** functional). Trigger rarity → overall **MEDIUM–HIGH**, still
-a real hang class, not cosmetic.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit:** Avoid hang/abort and false-successful probe when clocks
-  cannot come up; fail cleanly and unwind registration.
-- **Risk:** Very low (6-line error path, reviewed, standard API).
-- **Ratio:** Favorable.
+Record: v1, maintainer-tree merge, no NAK, no explicit stable nomination
+in the thread.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 5: Semantic / call graph
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 5.1: Functions**
+`bcm_vk_write()` only.
 
-**FOR:**
-- Real unclocked MMIO on a documented-sensitive Qualcomm path
-- Small (+5/−1), obviously correct
-- `pm_runtime_resume_and_get` is the right API (get_sync’s `1` is
-  success)
-- Konrad R-b, Will merged; no NAKs
-- Driver in this tree since v4.14; DT still ships for several SoCs
-- Same-file comments treat unclocked access as a real hang risk
-- Prerequisites (`err_sysfs_remove`, `pm_runtime_resume_and_get`) are in
+**Step 5.2: Callers**
+Wired as `.write = bcm_vk_write` in `bcm_vk_fops` (`bcm_vk_dev.c`). That
+is the miscdevice `write()` path. Reachable from the `write` syscall on
+`/dev/bcm-vk.N`.
+
+**Step 5.3: Callees**
+`bcm_vk_drv_access_ok`, `kzalloc`, `copy_from_user`, later `get_q_num`,
+msgq `readl`, `bcm_vk_get_msg_id`. The overflow is **before** queue/id
+logic.
+
+**Step 5.4: Reachability**
+1. PCI probe of Broadcom Valkyrie (`PCI_DEVICE_ID_VALKYRIE` 0x5e87)
+   registers the misc device.
+2. `bcm_vk_drv_access_ok()` requires `msgq_inited` (card messaging up);
+   otherwise `-EPERM`.
+3. Then user `write()` with a 16-aligned huge length hits the wrap.
+
+Userspace-reachable on systems that have this card and a live msgq.
+
+**Step 5.5: Similar patterns**
+Same author’s same-day misc write/size checks. Same class of bug, not a
+bcm-vk-only refactor.
+
+Record: Syscall-reachable heap overflow on a real device node.
+
+---
+
+## Phase 6: This checkout
+
+**Step 6.1: Local tree**
+- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`
+- `make kernelversion`: `7.3.0-rc4`
+- Makefile: VERSION=7 PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4
+- Driver, `bcm_vk_write()`, `check_add_overflow`, and `__counted_by` are
+  all present.
+- `git merge-base --is-ancestor f66c40cd90954 HEAD` is true (current
+  `bcm_vk_write()` already has the checks). That is not used as “already
+  selected for stable”; it only confirms the code this patch targets
+  exists here.
+
+Record: Buggy path exists in this lineage since v5.12; this tree is
+7.3-rc4 and has the helpers the patch needs.
+
+**Step 6.2: Backport difficulty**
+Against this tree: clean (the hunk matches current code). `overflow.h`
+is already used by the patched file.
+
+**Step 6.3: Other fixes for the same bug**
+No earlier overflow check on this alloc. No competing fix.
+
+---
+
+## Phase 7: Subsystem context
+
+**Step 7.1**
+- Subsystem: `drivers/misc/bcm-vk` (Broadcom VK PCIe accelerator,
+  video/crypto offload).
+- Criticality: **PERIPHERAL** hardware, but the handler is a generic
+  `write()` with a kernel heap overflow.
+
+**Step 7.2**
+Mature driver (v5.12). Low churn besides treewide kmalloc conversions
+and this safety patch. Maintainer status: Supported (Scott Branden).
+
+---
+
+## Phase 8: Impact and risk
+
+**Step 8.1: Who is affected**
+Users of Broadcom VK (`CONFIG_BCM_VK`, PCI 14e4:5e87). Not universal.
+Device node is a miscdevice; `.mode` is unset, so default char-dev
+permissions (typically root/udev). Anyone who can open the node can
+issue the `write()`.
+
+**Step 8.2: Trigger**
+- Hardware present, driver loaded, msgq initialized.
+- `write(fd, buf, count)` with `count` a non-zero multiple of 16 large
+  enough to wrap `sizeof(*entry) + count + ib_sgl_size` (`ib_sgl_size`
+  default 16×16 = 256).
+- Not every boot; it is a deliberate/malicious or buggy huge write, not
+  a typical message size.
+- Unprivileged only if udev grants the node; otherwise local
+  privileged/compromised userspace with device access.
+
+**Step 8.3: Failure mode**
+Heap overflow of a `kzalloc` object, or `usercopy` abort if
+HARDENED_USERCOPY is on. Severity: **HIGH** (memory corruption / crash).
+Security-relevant if the node is writable.
+
+**Step 8.4: Risk vs benefit**
+- Benefit: stops a user-controlled wrap-and-copy; also makes
+  `__counted_by` consistent before the copy.
+- Risk: ~12 insertions in one function; overflow helpers already in this
+  tree.
+- Ratio: high benefit / very low risk for this tree.
+
+---
+
+## Phase 9: Synthesis
+
+**Evidence FOR**
+- Real wrap of `kzalloc` size vs `copy_from_user` length; msgq check is
+  too late.
+- Syscall-reachable (`write` on `/dev/bcm-vk.N`).
+- Small, obviously correct, uses existing `check_add_overflow`.
+- Merged by Greg KH; CCed to the bcm-vk maintainer.
+- Driver and helpers exist in this 7.3-rc4 tree.
+- `__counted_by` init-before-copy is required in this tree.
+
+**Evidence AGAINST**
+- Niche PCIe accelerator, not a core-path bug.
+- No reporter, syzbot, Fixes, or stable CC.
+- No mailing-list review comments (v1 applied as-is).
+- Author is not the subsystem maintainer (audit-style series).
+
+**Unresolved**
+- Full lore HTML was 403; thread content is from `b4 dig -m` (single
+  email).
+- No stable@ discussion found.
+
+**Stable rules**
+1. Obviously correct and tested — **PASS** (standard overflow check;
+   merged to char-misc). No extra Tested-by.
+2. Real bug affecting users — **PASS** (heap overflow on write for VK
+   users).
+3. Important (crash/security/corruption) — **PASS** (HIGH: heap smash /
+   usercopy BUG).
+4. Small and contained — **PASS** (one function, ~12 lines).
+5. No new features/APIs — **PASS**.
+6. Can apply to this tree — **PASS** (`overflow.h`, `bcm_vk_write`,
+   `__counted_by` all present).
+
+**Exception category:** none (not an ID/quirk/DT/build/doc exception).
+It is a normal memory-safety fix.
+
+This tree is **7.3.0-rc4**. The driver has had this alloc+copy since
+v5.12. The patch is a contained security/correctness fix and belongs
+here.
+
+---
+
+## What the commit solves for this tree
+
+`bcm_vk_write()` trusted a user `size_t count` in
+`kzalloc(sizeof(*entry) + count + vk->ib_sgl_size)` and then copied
+`count` bytes. A 16-aligned huge count wraps the size, allocates a small
+object, and overflows it on copy. The later queue-size check does not
+run first. The fix checks the arithmetic, rejects empty writes, and sets
+`to_v_blks` before touching `to_v_msg[]`.
+
+It matches stable rules: real overflow, small, no new API, helpers
+already in this tree. Risk is low; benefit is avoiding a write-triggered
+heap overflow on Broadcom VK devices.
+
+---
+
+## Verification
+- [Phase 1] `git show f66c40cd90954 --format=fuller`: subject/body/tags
+  as above; no Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff vs parent: overflow.h, `!count` check, two
+  `check_add_overflow`, `to_v_blks` moved before `copy_from_user`
+- [Phase 2] `git show f66c40cd90954^:drivers/misc/bcm-vk/bcm_vk_msg.c`:
+  wrapping `kzalloc` then copy then `to_v_blks`
+- [Phase 3] `111d746bb4767` contained in `v5.12-rc1`; `3c69d52e3e12f`
+  counted_by in `v6.7-rc1`
+- [Phase 3] `git merge-base --is-ancestor 111d746bb4767 HEAD`: driver in
   this tree
-- Matches stable’s “oops, hang, … or some ‘oh, that’s not good’ issue”
-
-**AGAINST:**
-- No user/syzbot report; error path is uncommon
-- Series patch 3/6 (but functionally independent)
-- Other `get_sync` sites in the file remain unchecked
-- Usage-count leak at this site was already balanced by `put_sync`
-
-**UNRESOLVED:** lore.kernel.org HTTP 403; discussion recovered via `b4
-dig` mbox, gnuweeb, and openwall. No evidence of a field crash, only
-code-path analysis.
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — API contract matches;
-   maintainer applied after R-b
-2. Fixes a real bug that affects users? **PASS** — unclocked write and
-   successful probe after failed resume on shipped MSM8916-class IOMMU
-3. Important issue? **PASS** — hang/SError class; trigger is rare but
-   severity is not “trivial”
-4. Small and contained? **PASS** — 6 lines, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — code and labels exist here
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: None (not a device ID, quirk table, DT, build, or doc fix).
-Qualifies as a normal small bugfix.
-
-**Step 9.4: MAKE YOUR DECISION**
-
-This is a small, reviewed probe-path fix that stops a `writel` to SMMU
-MMIO when runtime resume (clocks) has failed, and fails probe instead of
-continuing. That is a real stability bug on a still-used Qualcomm IOMMU,
-the change is contained, and this checkout has the driver plus the sysfs
-unwind label the hunk uses. Benefit outweighs risk.
-
----
-
-### What the commit solves for this tree
-
-`qcom_iommu_device_probe()` programmed `SMMU_INTR_SEL_NS` after
-`pm_runtime_get_sync()` with no check. Resume enables the IOMMU clocks;
-on failure the write can hit unclocked hardware (hang/SError) and probe
-still returned 0. The fix uses `pm_runtime_resume_and_get()`, returns
-the error, and unregisters the IOMMU device.
-
-It meets stable rules: obviously correct, real hang-class bug, ~6 lines,
-no new API. Risk is confined to the already-broken clock-failure path.
-
----
-
-### Verification
-
-- **[Phase 1]** Parsed `e910315ae08a2`: R-b Konrad Dybcio; SOB Mukesh
-  Ojha, Will Deacon; no Fixes/Reported-by/stable Cc
-- **[Phase 2]** Diff: +5/−1 in `qcom_iommu_device_probe()`;
-  `pm_runtime_get_sync` → checked `pm_runtime_resume_and_get` +
-  `err_iommu_unregister`
-- **[Phase 2]** Confirmed `pm_runtime_resume_and_get()` returns 0 or
-  negative (`include/linux/pm_runtime.h`); `get_sync` may return 1
-- **[Phase 2]** Confirmed resume path: `qcom_iommu_resume()` →
-  `clk_bulk_prepare_enable()`
-- **[Phase 3]** Blame: write from `0ae349a0f33fb0` (v4.14-rc1); `merge-
-  base --is-ancestor` true
-- **[Phase 3]** `c579f18e79599` and `bf69e515b1802` are ancestors of
-  HEAD
-- **[Phase 4]** `b4 dig -c e910315ae08a2`: v2 3/6 of “Misc Fixes”; v1
-  3/8 same hunk
-- **[Phase 4]** `b4 dig -a/-w/-m`: Konrad R-b, Will applied 1/6–6/6;
-  recipients were IOMMU/QCOM lists; no NAK
-- **[Phase 4]** Stable-list search: no prior discussion of this fix
-- **[Phase 5]** Probe is platform driver for `qcom,msm-iommu-v1/v2`; DT
-  hits in msm8916/8917/8937/8939/8953/8976
-- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
-  Makefile 7.3.0-rc4; driver present; hunk matches
-- **[Phase 8]** Failure mode: unclocked MMIO hang/SError if RPM resume
-  fails at probe; severity HIGH if hit, trigger uncommon
-- **UNVERIFIED:** lore.kernel.org 403 (mbox/mirrors used instead); no
-  field reproducer found
-
-The fix is small, surgical, and meets the stable criteria for this tree.
+- [Phase 3] Author log under `drivers/misc/`: clustered overflow/bounds
+  patches merged 2026-07-17
+- [Phase 4] `b4 dig -c f66c40cd90954`: msgid 20260629160605.29412-1; v1
+  only
+- [Phase 4] `b4 dig -w`: Branden, Broadcom list, Arnd, Greg, lkml
+- [Phase 4] `b4 dig -m`: 1-message mbox, no replies/NAKs
+- [Phase 4] WebFetch lore: 403; stable@ search: no dedicated thread
+  found
+- [Phase 5] `.write = bcm_vk_write`; `bcm_vk_drv_access_ok` is
+  `atomic_read_acquire(&vk->msgq_inited)`
+- [Phase 5] PCI id table: Broadcom Valkyrie 0x5e87 only
+- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
+  `kernelversion` 7.3.0-rc4
+- [Phase 6] Current `bcm_vk_write()` already contains
+  `check_add_overflow`; `include/linux/overflow.h` defines it
+- [Phase 6] `to_v_msg[] __counted_by(to_v_blks)` in `bcm_vk_msg.h`
+- [Phase 8] `nr_ib_sgl_blk` default `BCM_VK_DEF_IB_SGL_BLK_LEN` 16;
+  `VK_MSGQ_BLK_SIZE` 16
+- UNVERIFIED: distro udev mode for `/dev/bcm-vk.N` (whether unprivileged
+  open is allowed)
 
 **YES**
 
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/misc/bcm-vk/bcm_vk_msg.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 9bee85259c69e..fbe4bd3ec0c42 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -863,13 +863,17 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
+index a36a6c7d384a9..4663d758de3ce 100644
+--- a/drivers/misc/bcm-vk/bcm_vk_msg.c
++++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
+@@ -9,6 +9,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/poll.h>
+ #include <linux/sizes.h>
+ #include <linux/spinlock.h>
+@@ -1090,6 +1091,7 @@ ssize_t bcm_vk_write(struct file *p_file,
+ 	u32 q_num;
+ 	u32 msg_size;
+ 	u32 msgq_size;
++	size_t entry_size;
+ 
+ 	if (!bcm_vk_drv_access_ok(vk))
+ 		return -EPERM;
+@@ -1097,20 +1099,26 @@ ssize_t bcm_vk_write(struct file *p_file,
+ 	dev_dbg(dev, "Msg count %zu\n", count);
+ 
+ 	/* first, do sanity check where count should be multiple of basic blk */
+-	if (count & (VK_MSGQ_BLK_SIZE - 1)) {
+-		dev_err(dev, "Failure with size %zu not multiple of %zu\n",
++	if (!count || count & (VK_MSGQ_BLK_SIZE - 1)) {
++		dev_err(dev, "Failure with size %zu not a positive multiple of %zu\n",
+ 			count, VK_MSGQ_BLK_SIZE);
+ 		rc = -EINVAL;
+ 		goto write_err;
  	}
  
- 	if (qcom_iommu->local_base) {
--		pm_runtime_get_sync(dev);
-+		ret = pm_runtime_resume_and_get(dev);
-+		if (ret)
-+			goto err_iommu_unregister;
- 		writel_relaxed(0xffffffff, qcom_iommu->local_base + SMMU_INTR_SEL_NS);
- 		pm_runtime_put_sync(dev);
++	if (check_add_overflow(sizeof(*entry), count, &entry_size) ||
++	    check_add_overflow(entry_size, vk->ib_sgl_size, &entry_size)) {
++		rc = -EOVERFLOW;
++		goto write_err;
++	}
++
+ 	/* allocate the work entry + buffer for size count and inband sgl */
+-	entry = kzalloc(sizeof(*entry) + count + vk->ib_sgl_size,
+-			GFP_KERNEL);
++	entry = kzalloc(entry_size, GFP_KERNEL);
+ 	if (!entry) {
+ 		rc = -ENOMEM;
+ 		goto write_err;
+ 	}
++	entry->to_v_blks = count >> VK_MSGQ_BLK_SZ_SHIFT;
+ 
+ 	/* now copy msg from user space, and then formulate the work entry */
+ 	if (copy_from_user(&entry->to_v_msg[0], buf, count)) {
+@@ -1118,7 +1126,6 @@ ssize_t bcm_vk_write(struct file *p_file,
+ 		goto write_free_ent;
  	}
  
- 	return 0;
+-	entry->to_v_blks = count >> VK_MSGQ_BLK_SZ_SHIFT;
+ 	entry->ctx = ctx;
  
-+err_iommu_unregister:
-+	iommu_device_unregister(&qcom_iommu->iommu);
- err_sysfs_remove:
- 	iommu_device_sysfs_remove(&qcom_iommu->iommu);
- err_pm_disable:
+ 	/* do a check on the blk size which could not exceed queue space */
+@@ -1355,4 +1362,3 @@ void bcm_vk_msg_remove(struct bcm_vk *vk)
+ 	bcm_vk_drain_all_pend(&vk->pdev->dev, &vk->to_v_msg_chan, NULL);
+ 	bcm_vk_drain_all_pend(&vk->pdev->dev, &vk->to_h_msg_chan, NULL);
+ }
+-
 -- 
 2.53.0
 
