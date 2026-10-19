@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63C656F5AD;
-	Mon, 19 Oct 2026 13:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79E856F596;
+	Mon, 19 Oct 2026 13:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418291; cv=none; b=LcRAzLqS4raaZ9x0TzEG7olddXTbcFaDKJPLjR7nZy6eddYZhPJLxTAN4iJ8tXj8mjLEV65qwjL1aVOGqP+JcfvWBszTvc6WEz7eH/OBx/Ltz3p32GUKa635/I72NKOTERQw0CF0dkFsAxtrgrm9JniKdFI19audTmH+INOwm4w=
+	t=1792418292; cv=none; b=RpOllWfsCC6VsdWr4LZ3lAJQ6JniksUBLDOqqvNbhpfNtCvuprk66BwzQq302eGV8IfrhrPURKJrL4fnxl5DXszzqJck5nGUy19YAh/nmh9jd0ALrH43WQbDgx6guKzWHOn1AbWOAqw3BrrRLY07Ngrzs/rRuWhEuEkT2Hr5FhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418291; c=relaxed/simple;
-	bh=mzty+ws1sKtDmSkzjIdIec4AMpgjXVrDoYqBTWcLT7U=;
+	s=arc-20240116; t=1792418292; c=relaxed/simple;
+	bh=YpOkIw5PdAs/6BqswdxjKokAVxgcEM9k62TOVOhU4YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kFQYNE3umkC3lCi7HH2H6tRmyOHfP+uEVMMrhLPGEVJEMlAbH33+B2HsBwUPOq0x9ZMdO+lloc6u/qK+uhVggR5dvC44eMYwAm0G2Es0Gy24iyHB1fwKKUy8kR+0W7C9TUUoVfpFM7gFploap2AujyhVaT9hmncE3FQBcPFt16E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgNRhGoG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nRhgq0bLmamgrWxJvJPDljJpBYwKxJvg2y5dNTwKzIzlf9A842kcnW0UG0lEtzdjQgtKSbWg5TN5YKiIHmSbMmVGmIkhmhadcyrplDQwtlWNs5g3mvCLXUODOkI7H2qB+U/ILw2aUS2RXiAo0Ag5J85ek8pMgPmJy91dQg6kb4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IdsDWIpE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgNRhGoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815411F000C6;
-	Mon, 19 Oct 2026 13:58:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IdsDWIpE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C9F1F000C4;
+	Mon, 19 Oct 2026 13:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418288;
-	bh=4tv8ydoFGM/MRd2Ch8NgorMLvUS1dYbChvJFqN0lylI=;
+	s=k20260515; t=1792418289;
+	bh=g4t47SO9W2O0FAJkfkLRuHHaB72xfpzSs9Rvl8v0L8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HgNRhGoGghLZul2qxsbU3epsCG/Mm7PHqCPHGYO26VuHfgjzIWRIjh/v8WxOTV6e1
-	 Yob2wsQOmR5ySHvIU6PP4caBDgFIjCiriUHCf3LktjV9ZpYtLG/8QHBEFuyo8qQhC1
-	 F8GoKh1Di0GN2FxQ/GW15Qc67VlbFsHiUrG0APsgLDolj3JKfbYl+XZh4BmtKOjOkz
-	 t9PsSRWtmwaj/45h0bkR+IiPhcDRjs8d/rKA9ADBJAqycChCi/cK1JLlwZ98oMwORc
-	 q/k+r3Oj2kvO7N6qWQtU3z9l2A0L3pQPY9SkwG3biIOkyC7c1A6eAqE//l1XISTiTu
-	 Sn7kf3pSXfEKQ==
+	b=IdsDWIpE6/zvamRRqNIIjmMNHSyHcm3+rlDTpchawC+QqejzjlTc/QkWs1OC6g/eX
+	 dPhndyD6HAzfJ1wJXSbJcjwJmh/eW8bYen+HvCYDZi6iugYT4wm6Bd5hsYplXkfD/5
+	 z2apziAt8r9JgXT0kyqU0u14Ml+VNGwoAIuQr3i69ovRTQGGkq+9yEzu5wx3aNVlEG
+	 /lEF6AzquW5aYpk0FdWrhxTh4CFjkRWm58GZnLKzZG3KMgTzDvwczWcDWBL/kAP0/q
+	 Mjso0AMC9Ri0m1CF+LBLq356Dy3WXsp3FEVSCuxtpDW7LuxDa+m2CEEm3qdb4Dayv2
+	 caj1r9jSUPHqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Ts'o <tytso@mit.edu>,
+Cc: Chin-Yen Lee <timlee@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-ext4@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ext4: check return value of ext4_get_block() in ext4_load_tail_bh()
-Date: Mon, 19 Oct 2026 09:47:12 -0400
-Message-ID: <20261019135441.1420968-141-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] wifi: rtw89: wow: add QoS control field to WoWLAN ARP response for MLO
+Date: Mon, 19 Oct 2026 09:47:13 -0400
+Message-ID: <20261019135441.1420968-142-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,402 +52,464 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Chin-Yen Lee <timlee@realtek.com>
 
-[ Upstream commit 705a3fd3bac167f1dabe3d3bba46cd484c5528dd ]
+[ Upstream commit 03a963f4aeda538acad50806e94ef25d95b78743 ]
 
-ext4_load_tail_bh() ignores the return value of ext4_get_block(), so an
-I/O or allocation failure is silently discarded. buffer_mapped(bh) stays
-false and the function returns NULL, which callers such as
-ext4_block_do_zero_range() treat as "nothing to do" and return success.
-This can mask real failures during zero-range, truncate, or punch-hole
-operations, potentially exposing stale data if the block was not
-actually a hole and needed zeroing. So propagate the error to the
-callers.
+Some MLO APs expect WoWLAN ARP response frames to be transmitted as
+QoS data frames and may discard frames that do not contain a QoS
+Control field.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260714080044.4038124-4-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Add a QoS Control field and use the QoS Data subtype when generating
+WoWLAN ARP responses for MLD vifs. Keep the existing frame format
+unchanged for non-MLO connections.
+
+This allows WoWLAN ARP responses to be accepted by MLO APs while
+preserving compatibility with legacy APs.
+
+Signed-off-by: Chin-Yen Lee <timlee@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260625061545.44808-10-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Local tree
-
-This checkout is **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`).
-`ext4_load_tail_bh()` exists here (since v7.1-rc1). The candidate
-`705a3fd3bac16` is already an ancestor of HEAD (merged in v7.3-rc1). The
-verdict is whether this fix belongs in **this** tree on technical merit,
-not because it was already applied.
-
----
-
 ## Phase 1: Commit message forensics
 
-**Step 1.1 — Subject**
-- Record: **[ext4] [check] check return value of `ext4_get_block()` in
-  `ext4_load_tail_bh()`**
-- Verb “check” here means propagate a previously ignored error.
+**Step 1.1: Subject line**
+Record: **[wifi: rtw89: wow:] [add] [QoS Control field on WoWLAN ARP
+responses for MLO]**
+Subsystem is Realtek rtw89 WoWLAN. The verb is “add”, but the body is
+interoperability: MLO APs drop ARP frames that are not QoS Data.
 
-**Step 1.2 — Tags**
-- Record:
-  - `Signed-off-by: Zhang Yi <yi.zhang@huawei.com>` (author; ext4
-    reviewer in MAINTAINERS)
-  - `Reviewed-by: Jan Kara <jack@suse.cz>` (ext4 reviewer)
-  - `Link: https://patch.msgid.link/20260714080044.4038124-4-
-    yi.zhang@huaweicloud.com` (v4 3/9)
-  - `Signed-off-by: Theodore Ts'o <tytso@mit.edu>` (ext4 maintainer)
-  - No `Fixes:`, no `Cc: stable`, no `Reported-by`, no syzbot. Absence
-    of those tags is expected for this review.
+**Step 1.2: Tags**
+Record:
+- Signed-off-by: Chin-Yen Lee \<timlee@realtek.com\> (author)
+- Signed-off-by: Ping-Ke Shih \<pkshih@realtek.com\> (rtw89 maintainer)
+- Link:
+  https://patch.msgid.link/20260625061545.44808-10-pkshih@realtek.com
+  (msgid `…44808-10…` → patch 09/10 of a 10-patch `rtw-next` series;
+  1-based msgid index)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable (absence is expected here)
+- Ignore pipeline SOBs such as Sasha Levin (none on the real commit)
 
-**Step 1.3 — Body**
-- Record: **Bug:** `ext4_load_tail_bh()` ignores `ext4_get_block()`
-  errors. On failure `buffer_mapped(bh)` stays false, the helper returns
-  `NULL`, and callers such as `ext4_block_do_zero_range()` treat that as
-  “hole / nothing to do” and return success.
-- **Symptom:** Silent success of zero-range, truncate, or punch-hole
-  while the tail block was not zeroed.
-- **Failure mode:** Stale data can later be exposed if the block was not
-  a hole.
-- **Root cause:** Error conflated with “unmapped hole”.
-- **No version range** in the message.
+**Step 1.3: Body**
+Record:
+- **Bug:** Some MLO APs require WoWLAN ARP responses as QoS Data and
+  discard frames without a QoS Control field.
+- **Symptom:** ARP keep-alive / ARP offload during WoWLAN is ignored →
+  AP can drop the STA while suspend/WoWLAN is active.
+- **Root cause:** `rtw89_arp_response_get()` always built a non-QoS Data
+  3-address frame.
+- **Fix:** For MLD vifs, set `IEEE80211_STYPE_QOS_DATA` and insert a
+  2-byte QoS Control field; leave non-MLO frames unchanged.
+- **Versions:** none named in the message.
 
-**Step 1.4 — Hidden bug fix?**
-- Record: **Not hidden.** It is an explicit error-propagation / stale-
-  data fix. Cover letter later confirms patches 2 and 3 were “pre-
-  existing fixes … originally going to be sent separately,” then folded
-  into the WRITE_ZEROES series.
+**Step 1.4: Hidden bug fix?**
+Record: Yes. “Add QoS control field” is a protocol-format fix for an
+existing WoWLAN ARP template, not a new userspace API. Cover letter
+language (“support WoWLAN with MLO AP”) is feature-ish, but the driver
+already had MLO WoWLAN and ARP offload/keep-alive; this corrects the
+template those paths upload.
 
 ---
 
 ## Phase 2: Diff analysis
 
-**Step 2.1 — Inventory**
-- Record: **One file**, `fs/ext4/inode.c`: **+3 / −1**. One function:
-  `ext4_load_tail_bh()`. Surgical, single-file.
+**Step 2.1: Inventory**
+Record:
+- File: `drivers/net/wireless/realtek/rtw89/fw.c` (+24 / −7; `git show
+  --stat` matches)
+- Function: `rtw89_arp_response_get()` only
+- Scope: single-file, single-function, surgical
 
-**Step 2.2 — Flow**
-- Record: **Before:** unmapped bh → `ext4_get_block(..., create=0)`
-  return ignored → if still unmapped, `goto unlock` with `err == 0` →
-  `return NULL`.
-- **After:** negative return sets `err` and `goto unlock` → existing
-  `return err ? ERR_PTR(err) : NULL`.
-- Path: mapping lookup on the tail block during partial-block zeroing
-  (error path only).
+**Step 2.2: Control flow**
+Record (before → after):
+- Allocate skb sized for 3-addr header + security header + ARP body →
+  also reserve 2 bytes when `ieee80211_vif_is_mld(vif)`.
+- Frame control: Data+ToDS (+Protected if PTK) → same, plus QoS Data
+  subtype for MLO, Data subtype for legacy.
+- Always `skb_put_zero(sec_hdr_len)` → insert QoS Control (zeros) before
+  IV if MLO; skip security bytes when `sec_hdr_len == 0` (equivalent to
+  `skb_put_zero(0)`).
+- Debug print via `str_yes_no(with_qos)`.
 
-**Step 2.3 — Bug mechanism**
-- Record: **Logic / correctness (ignored error → false success).**
-  Category closest to “return value checking / missing error handling.”
-  Not UAF, leak, or race.
-- Mechanism: I/O or allocation failure from `ext4_get_block()` is
-  treated as a hole, so truncate/punch/zero-range skip tail zeroing and
-  still succeed.
+802.11 order is correct: 3-addr MAC header, QoS Control, IV, LLC+ARP.
+QoS Control of 0 is TID 0 / normal ACK, which is appropriate for ARP.
 
-**Step 2.4 — Fix quality**
-- Record: **Obviously correct.** Callers already do `IS_ERR_OR_NULL(bh)`
-  / `PTR_ERR_OR_ZERO(bh)` (present since the helper was factored out).
-  Unlock/put already runs on the `unlock` path. Regression risk is low
-  **in this tree** because parent `2fff82f081401` skips inline-data EOF
-  zeroing (otherwise append writes on inline files could see `-ERANGE`).
-  No API change.
+**Step 2.3: Bug mechanism**
+Record: **Logic / protocol correctness + hardware interoperability.**
+MLO (802.11be) APs expect QoS Data; non-QoS keep-alive/offload templates
+are discarded. Not UAF, leak, race, or NULL deref.
+
+**Step 2.4: Fix quality**
+Record: Obviously correct and minimal. Non-MLO path is unchanged in
+substance (`IEEE80211_STYPE_DATA` is 0). Regression risk is low and
+confined to MLO WoWLAN ARP: a wrong QoS field could still be dropped,
+but zeroed QoS Control is the standard default. No public API or struct
+layout change.
 
 ---
 
 ## Phase 3: Git history
 
-**Step 3.1 — Blame**
-- Record: Ignored `ext4_get_block()` call dates to **`d863dc3614e489`
-  (2013, Lukas Czerner)** inside `__ext4_block_zero_page_range`. Helper
-  **`ext4_load_tail_bh`** was factored out in **`3b312a6f510ca` (“ext4:
-  factor out journalled block zeroing range”, Zhang Yi, 2026-03)** and
-  kept the same ignored return. First in this lineage: **v7.1-rc1**.
+**Step 3.1: Blame**
+Record:
+- Function introduced in `58ed86e1666b3` (“wifi: rtw89: wow: add ARP
+  offload feature”, 2024-05-02) — contained in `v6.11-rc1` era (`git
+  describe --contains` → `x86_boot_for_v6.11_rc1~…`).
+- Link-aware `rtwvif_link` args: `2f7dae17c48cd1` (2024-09).
+- Security header: `0065199f4303bc` (2024-06).
+- Keep-alive uses this template: `dcf5c7262bffa` (2026-05-25, in
+  **v7.2-rc1**).
+- MLD MAC in ARP: parent `76edcedda6437` (same series 08/10).
+- This commit: `03a963f4aeda5`, **contained in v7.3-rc1**.
 
-**Step 3.2 — Fixes: tag**
-- Record: **None.** Introducing commit for the helper is
-  `3b312a6f510ca`, ancestor of this HEAD. The ignored-return bug is
-  older than the helper.
+**Step 3.2: Fixes: tag**
+Record: None. Buggy behavior is the original ARP template never emitting
+QoS Data for MLD vifs after MLO WoWLAN existed.
 
-**Step 3.3 — File history**
-- Record: Same v4 series around this commit:
-  1. `e1cf7b5f5c8ad` FGP_WRITEBEGIN
-  2. `2fff82f081401` skip inline-data tail zeroing **(prerequisite)**
-  3. **`705a3fd3bac16` this fix**
-  4. `b16e9d27a643a` move partial zeroing earlier
-  5. `012e6a2c9ff4d` comment-only return-semantics clarification
-  6–9. WRITE_ZEROES edge handling (some of those have `Cc: stable`)
-- This patch is **standalone** given (2). (5) is comments only; 6–9 are
-  WRITE_ZEROES, not required for this error check.
+**Step 3.3: Related file history**
+Record: Same-day series (msgid `20260625061545.44808-*`):
+1. MAC finish active TX
+2. pass chip version to FW
+3. lower UDM1 debug level
+4. drop pkt offload on H2C failure
+5. disable sniffer RX filter (Wi-Fi 7)
+6. PCI phy error / refclk
+7. LPS MLO link ID fix
+8. **MLD address in WoWLAN ARP** (parent)
+9. **this patch**
+10. RF init only on Wi-Fi 6 in WoW
 
-**Step 3.4 — Author**
-- Record: **Zhang Yi** is an ext4 **Reviewer** in MAINTAINERS; 178 ext4
-  commits in this tree. Not a drive-by.
+This patch does not call or require patches 1–8/10. 08/10 only changes
+ARP hw addresses; 09/10 only changes frame control + QoS bytes.
+Standalone at the code level.
 
-**Step 3.5 — Dependencies**
-- Record: Needs `ext4_load_tail_bh()` + `ERR_PTR` return +
-  `IS_ERR_OR_NULL` callers — all present since `3b312a6f510ca` (v7.1).
-  Needs **`2fff82f081401`** so inline-data append does not start
-  failing. Both are in this tree. **Applies standalone on top of that
-  parent.**
+**Step 3.4: Author**
+Record: Chin-Yen Lee (Realtek); maintainer Ping-Ke Shih signed off and
+applied the whole series to `rtw-next`. Nearby author work is other
+rtw89 WoWLAN/MLO fixes.
+
+**Step 3.5: Prerequisites in this tree**
+Record: Present here:
+- `rtwvif_to_vif()` in `core.h`
+- `ieee80211_vif_is_mld()` in `include/net/mac80211.h`
+- `str_yes_no()` in `include/linux/string_choices.h`
+- ARP offload + keep-alive both call `rtw89_fw_h2c_add_general_pkt(…,
+  RTW89_PKT_OFLD_TYPE_ARP_RSP, …)`
+Can apply standalone on this tree.
 
 ---
 
-## Phase 4: Mailing list
+## Phase 4: Mailing list / external
 
-**Step 4.1 — Original discussion**
-- Record: `b4 dig -c 705a3fd3bac16` → **https://patch.msgid.link/2026071
-  4080044.4038124-4-yi.zhang@huaweicloud.com**
-- Series: **[PATCH v4 0/9] ext4: fix unaligned edge handling in
-  FALLOC_FL_WRITE_ZEROES**
-- Revisions: v1 → v4. v4 vs v3: **no code change** on this patch; v3
-  collected Jan’s R-b.
-- Cover letter: patches 2 and 3 were **pre-existing fixes folded in**,
-  not WRITE_ZEROES-only prep.
-- No NAK found on this patch. Ted merged it.
+**Step 4.1: b4 dig**
+Record:
+- Lore/msgid:
+  https://patch.msgid.link/20260625061545.44808-10-pkshih@realtek.com
+- Subject: `[PATCH rtw-next 09/10] wifi: rtw89: wow: add QoS control
+  field to WoWLAN ARP response for MLO`
+- Series: v1 only (`b4 dig -a`); no v2/v3.
+- Cover letter (`00/10`): “update some MAC, FW and WoWLAN settings”;
+  “The last three patches are related to WoWLAN, and the first two are
+  to support WoWLAN with MLO AP that uses MLD address.”
+- Only reply in the saved mbox: Ping-Ke applying all 10 to `rtw-next`
+  (no NAK, no reviewer comments on 09/10).
+- No Cc: stable in the thread.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-- Record: `linux-ext4`, `linux-fsdevel`, **tytso@mit.edu**,
-  **jack@suse.cz**, adilger, libaokun, ojaswin, ritesh.list —
-  maintainers/reviewers were on Cc. Jan reviewed; Ted committed.
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: Ping-Ke Shih, linux-wireless, gary.chang@realtek.com,
+timlee@realtek.com, dian_syuan0116@realtek.com, kevin_yang@realtek.com.
+Maintainer was To/Cc and applied it. No external review tags.
 
-**Step 4.3 — Bug report**
-- Record: **No external bugzilla/syzbot report.** Issue found by code
-  inspection (author). Severity is argued in the commit: silent success
-  + possible stale data.
+**Step 4.3: Bug report**
+Record: No Reported-by, bugzilla, or syzbot. Vendor-described AP
+behavior only. Specific AP models for *this* QoS issue are not named
+(keep-alive predecessor named TP-Link Archer BE800).
 
-**Step 4.4 — Series**
-- Record: 9 patches. This one is independently useful. Sibling patches
-  7–9 carry `Cc: stable` for WRITE_ZEROES; this one does not. That is
-  **not** used as a NO vote (tags are expected to be absent here).
+**Step 4.4: Series**
+Record: Mixed MAC/FW/WoW settings. 09/10 is self-contained; 08/10 is a
+related but independent MLO ARP address fix.
 
-**Step 4.5 — stable@**
-- Record: **UNVERIFIED.** lore.kernel.org WebFetch returned 403; no
-  separate stable-thread confirmation. `b4 dig` matched the ext4 thread.
+**Step 4.5: stable@**
+Record: **UNVERIFIED** (lore.kernel.org/stable blocked by Anubis).
+Thread mbox has no stable discussion.
+
+WebFetch of lore/msgid also returned 403; discussion was recovered via
+`b4 dig -m`.
 
 ---
 
 ## Phase 5: Semantic / call graph
 
-**Step 5.1 — Functions**
-- Record: **`ext4_load_tail_bh`** only.
+**Step 5.1: Functions**
+Record: `rtw89_arp_response_get()` only.
 
-**Step 5.2 — Callers**
-- Record (this tree):
-  - `ext4_block_do_zero_range()` → `IS_ERR_OR_NULL` / `PTR_ERR_OR_ZERO`
-  - `ext4_block_journalled_zero_range()` → same
-  - via `ext4_block_zero_range()`:
-    - `ext4_block_zero_eof()` — truncate (`ext4_truncate`), setattr
-      grow, append (`ext4_write_checks` in `fs/ext4/file.c`)
-    - `ext4_zero_partial_blocks()` — punch-hole (`ext4_punch_hole`),
-      `ext4_zero_range()` / WRITE_ZEROES in `fs/ext4/extents.c`
+**Step 5.2: Callers**
+Record:
+- `rtw89_fw_h2c_add_general_pkt()` → `RTW89_PKT_OFLD_TYPE_ARP_RSP`
+- `rtw89_fw_h2c_keep_alive()` (WoW keep-alive enable)
+- `rtw89_fw_h2c_arp_offload()` (WoW ARP offload enable)
+- `rtw89_wow_fw_start()` in `wow.c` enables both when the interface is
+  linked
 
-**Step 5.3 — Callees**
-- Record: `__filemap_get_folio`, `ext4_get_block` (lookup only),
-  `ext4_read_bh_lock`, folio lock/put.
+Path is WoWLAN firmware start on suspend (`CONFIG_PM`), not a syscall
+hot path.
 
-**Step 5.4 — Reachability**
-- Record: **Yes, from userspace:** `truncate`/`ftruncate`, `fallocate`
-  (punch/zero/WRITE_ZEROES), append `write`. Unprivileged processes on
-  their own files can hit the path. The **error** itself needs
-  `ext4_get_block()` failure (I/O error, ENOMEM, corruption), not a
-  normal happy path.
+**Step 5.3: Callees**
+Record: `rtwvif_to_vif`, `ieee80211_vif_is_mld`,
+`rtw89_wow_get_sec_hdr_len`, `dev_alloc_skb`, `skb_put_zero`,
+`cpu_to_le16`, `ether_addr_copy`, `str_yes_no` (debug only).
 
-**Step 5.5 — Similar patterns**
-- Record: Same ignored return lived in `__ext4_block_zero_page_range`
-  since 2013. No second copy of this exact bug in current
-  `ext4_load_tail_bh`.
+**Step 5.4: Reachability**
+Record: Userspace-reachable via suspend with WoWLAN on an rtw89 STA
+associated as an MLD. Not unprivileged kernel-memory corruption; it is a
+normal power-management / offload path.
+
+**Step 5.5: Similar patterns**
+Record: `rtw89_sa_query_get()` still builds a non-QoS mgmt action frame
+(correct for SA Query). No sibling ARP builders. Keep-alive commit
+`dcf5c7262bffa` is the same interoperability class (APs ignoring Null
+keep-alives).
 
 ---
 
 ## Phase 6: This checkout
 
-**Step 6.1 — Buggy code here?**
-- Record: **Yes.** Helper is in `fs/ext4/inode.c` (~4033). Introduced
-  **v7.1-rc1** (`3b312a6f510ca`). This 7.3-rc4 tree has that code. The
-  ignored-return bug existed until `705a3fd3bac16` (v7.3-rc1).
+**Step 6.1: Local tree and whether the bug exists**
+Record:
+- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
+- `make kernelversion`: **7.3.0-rc4**
+- `rtw89_arp_response_get()` exists; MLO (`ieee80211_vif_is_mld`), WoW
+  keep-alive, and ARP offload all exist.
+- Without this change, MLO ARP templates are non-QoS Data. That is the
+  bug this tree’s rtw89 WoW+MLO users hit.
+- Commit `03a963f4aeda5` is an ancestor of HEAD (`git merge-base --is-
+  ancestor` → yes) because it landed in **v7.3-rc1**. That is not used
+  as “already selected for stable”; it only confirms the code and
+  helpers are in this series.
 
-**Step 6.2 — Backport difficulty**
-- Record: **Clean apply** onto the parent in this tree
-  (`2fff82f081401`). Three lines. Later `b4e409c18c797` removed fs-layer
-  fscrypt decrypt from this function; that is after/around the same
-  merge window and does not change the get_block check.
+**Step 6.2: Backport difficulty**
+Record: Clean apply on this tree (hunk matches current `fw.c`). No
+refactor blocking it.
 
-**Step 6.3 — Related fixes already here?**
-- Record: Prerequisite `2fff82f081401` is in HEAD. Follow-up
-  `012e6a2c9ff4d` is comments only. No competing alternate fix.
+**Step 6.3: Other fixes here**
+Record: No later follow-up rewriting this QoS logic (`git log` after the
+commit on this function is unrelated fw/coex/scan work). Parent MLD-
+address fix is already here and independent.
 
 ---
 
-## Phase 7: Subsystem
+## Phase 7: Subsystem context
 
 **Step 7.1**
-- Record: **ext4 (`fs/ext4`)** — **IMPORTANT** (default Linux
-  filesystem; data integrity).
+Record: **drivers/net/wireless/realtek/rtw89** — important (common Wi-Fi
+6/7 laptops), not core mm/fs. WoWLAN is `CONFIG_PM`.
 
 **Step 7.2**
-- Record: **Active** in 7.3 (WRITE_ZEROES series, iomap, fastcommit,
-  etc.). Helper itself is recent (7.1) but the ignored-return pattern is
-  old.
+Record: Very active (frequent coex/MLO/WoW commits). This is a late
+correction to existing MLO WoW, not a brand-new subsystem.
 
 ---
 
 ## Phase 8: Impact and risk
 
-**Step 8.1 — Who**
-- Record: **Filesystem-specific:** ext4 users doing truncate, punch-
-  hole, zero-range, append, WRITE_ZEROES.
+**Step 8.1: Who**
+Record: Driver-specific + config-specific: rtw89, MLO association,
+WoWLAN/suspend. Not universal.
 
-**Step 8.2 — Trigger**
-- Record: Partial-block zeroing **plus** `ext4_get_block()` failure.
-  Uncommon (I/O error / ENOMEM / bad metadata). Unprivileged users can
-  invoke the operations; they cannot usually force get_block failure
-  except under memory/IO pressure.
+**Step 8.2: Trigger**
+Record: Suspend with WoWLAN while associated to an MLO AP that rejects
+non-QoS Data. Common for Wi-Fi 7 + lid-close. Unprivileged in the sense
+of normal laptop suspend, not an exploit primitive.
 
-**Step 8.3 — Failure mode**
-- Record: **Stale data / false success** on truncate/punch/zero-range.
-  Not a panic. **Severity: HIGH** for a filesystem (classic “truncate
-  succeeded but tail not zeroed → later extend exposes old data”). Not
-  CRITICAL (no oops/deadlock).
+**Step 8.3: Failure mode**
+Record: AP discards keep-alive and/or ARP offload → association can drop
+in suspend. **Severity: MEDIUM** (connectivity / suspend Wi-Fi, not
+oops/corruption). Matches stable-rules “hardware quirk” / “oh, that’s
+not good”, not crash/UAF.
 
-**Step 8.4 — Ratio**
-- Record: **Benefit: high** for ext4 data integrity on error paths.
-  **Risk: very low** (3 lines, existing ERR_PTR path, Jan + Ted).
-  Prerequisite for inline data is already in this tree.
+**Step 8.4: Risk–benefit**
+Record:
+- Benefit: MLO WoWLAN keep-alive and ARP offload actually accepted;
+  avoids silent disconnect on suspend for Wi-Fi 7 rtw89.
+- Risk: ~24 lines, MLO-only, no locking/API. Low.
+- Ratio: favorable for this tree, which already has MLO WoW + ARP
+  templates.
 
 ---
 
 ## Phase 9: Synthesis
 
-**Step 9.1 — Evidence**
+**Step 9.1: Evidence**
 
-**For:**
-- Real correctness bug: mapping lookup failure reported as success.
-- Concrete data-integrity outcome on truncate/punch/zero-range.
-- Userspace-reachable (common ext4 ops).
-- 3-line, obviously correct; callers already handle `ERR_PTR`.
-- Reviewed by Jan Kara, merged by Ted Ts'o; author is an ext4 reviewer.
-- Cover letter: intended as a standalone pre-existing fix.
-- Buggy helper **is in this 7.3 tree** (since 7.1).
-- Prerequisite inline-data skip **is in this tree**.
+For:
+- Real interoperability bug on an existing path (WoW ARP template), not
+  a new driver or API.
+- This 7.3 tree has MLO, `rtw89_arp_response_get()`, keep-alive, and ARP
+  offload.
+- Small, obviously correct, non-MLO behavior preserved.
+- Maintainer SOB + applied to rtw.git.
+- Official stable rules allow hardware quirks and “oh, that’s not good”
+  issues; this is AP-side discard of malformed/non-QoS MLO data.
+- Suspend/WoWLAN disconnect is user-visible on shipping Realtek Wi-Fi 7
+  hardware.
 
-**Against:**
-- Error-path only; no syzbot/user `Reported-by`.
-- Bundled in a 9-patch WRITE_ZEROES series (mitigated: explicitly called
-  out as a separate pre-existing fix).
-- Trigger requires get_block failure (rare).
+Against:
+- Not oops/deadlock/corruption/security.
+- `rtw-next` series titled “update some MAC, FW and WoWLAN settings”;
+  cover letter says “support WoWLAN with MLO AP”.
+- No external reporters, Tested-by, or Fixes: tag.
+- Affects only MLO + WoWLAN.
 
-**Unresolved:** stable@ archive (lore 403); full v1 review text beyond
-the on-commit `Reviewed-by`.
+Unresolved:
+- Stable-list history (lore bot wall).
+- Which exact APs need QoS (commit says “some MLO APs”).
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** (trivial check; R-b Jan; in
-   7.3-rc1)
-2. Real bug affecting users? **PASS** (false success + possible stale
-   data)
-3. Important (crash/security/corruption/deadlock)? **PASS** (stale data
-   / integrity, HIGH)
-4. Small and contained? **PASS** (+3/−1, one function)
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** (helper + callers + prerequisite
-   present)
+**Step 9.2: Stable rules checklist** (`Documentation/process/stable-
+kernel-rules.rst`)
+1. Obviously correct and tested? **PASS** — vendor + maintainer, tiny,
+   protocol order verified in tree.
+2. Real bug that bothers users? **PASS** — WoWLAN ARP ignored, possible
+   disconnect in suspend on MLO.
+3. Important (crash/security/corruption/deadlock **or** quirk / “oh
+   that’s not good”)? **PASS** — quirk / connectivity, not CRITICAL
+   crash.
+4. Small and contained? **PASS** — one function, well under 100 lines.
+5. No new features/APIs? **PASS** — frame format fix for existing
+   offload, no new uAPI.
+6. Applies to this tree? **PASS** — helpers and callers exist; hunk
+   matches `fw.c`.
 
-**Step 9.3 — Exceptions**
-- Record: **None** (not a device ID/quirk/DT/build/doc exception).
-  Ordinary bugfix.
+**Step 9.3: Exception category**
+Record: Hardware/protocol quirk (MLO APs dropping non-QoS WoW ARP),
+analogous to other driver workarounds. Not a device-ID one-liner, but
+the same class.
 
-**Step 9.4 — Decision**
-This is a small, reviewed ext4 integrity fix for code that exists in
-this 7.3-rc4 tree. Callers already propagate `ERR_PTR`. The inline-data
-prerequisite is present, so the change does not turn append-on-inline-
-data into `-ERANGE`. It meets stable criteria for **this** tree.
+**Step 9.4: Decision**
+This tree is **7.3.0-rc4**. rtw89 already implements MLO WoWLAN and
+uploads ARP templates for keep-alive and ARP offload. Sending those as
+non-QoS Data is wrong for MLO APs and can drop the link in suspend. The
+patch is a small, MLO-only frame-format fix with low regression risk and
+no extra series dependencies. That is appropriate to have in this tree’s
+stable line.
+
+### What it solves for users of this tree
+WoWLAN keep-alive and ARP offload on rtw89 MLD vifs were built as
+ordinary Data frames. Some MLO APs drop those, so the AP may age out the
+STA during suspend. Adding QoS Control + QoS Data subtype makes those
+firmware-transmitted frames acceptable while leaving legacy associations
+unchanged.
+
+### Risk vs benefit
+Benefit is restoring Wi-Fi 7 WoWLAN connectivity on Realtek rtw89. Risk
+is a 2-byte header on the MLO path only. Non-MLO frame control stays
+Data+ToDS.
+
+### Concerns
+Cover letter frames this as MLO WoW “support” in a mixed `rtw-next`
+series, and there is no public reproducer. On this 7.3 tree those
+features already exist, so this is a contained correctness fix, not a
+new subsystem.
 
 ---
 
-## Why it matters here
-
-On this 7.3 tree, `ext4_load_tail_bh()` is the shared tail-zero helper
-for truncate, punch-hole, fallocate zero/WRITE_ZEROES, and post-EOF
-append. Ignoring `ext4_get_block()` makes a failed extent lookup look
-like a hole, so those operations can succeed without zeroing a mapped
-tail. Later grow/read can then expose stale bytes. Checking the return
-and using the existing `ERR_PTR` path is the right, minimal fix.
-
-Risk is low: three lines, no locking/API change, prerequisite
-`2fff82f081401` already in this checkout.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed commit
-  `705a3fd3bac167f1dabe3d3bba46cd484c5528dd`: Zhang Yi, R-b Jan Kara,
-  SOB Ted Ts'o, Link msgid `…4038124-4…`. No Fixes/Cc:stable/Reported-
-  by.
-- **[Phase 2]** `git show 705a3fd3bac16`: +3/−1 in `ext4_load_tail_bh`;
-  `err = ext4_get_block(...); if (err < 0) goto unlock`.
-- **[Phase 2]** Confirmed unlock already returns `err ? ERR_PTR(err) :
-  NULL` before the patch (`git show 705a3fd3bac16^:fs/ext4/inode.c`).
-- **[Phase 2]** Callers at the fix: `IS_ERR_OR_NULL` / `PTR_ERR_OR_ZERO`
-  (`git grep` on `705a3fd3bac16`).
-- **[Phase 3]** `git blame 705a3fd3bac16^` around the call:
-  `d863dc3614e489` (2013).
-- **[Phase 3]** `git log -S ext4_load_tail_bh -- fs/ext4/inode.c` →
-  `3b312a6f510ca`; `git describe --contains` → **v7.1-rc1**.
-- **[Phase 3]** `git merge-base --is-ancestor 3b312a6f510ca HEAD` true;
-  `705a3fd3bac16` ancestor of HEAD true; **not** in v7.2; **in**
-  v7.3-rc1.
-- **[Phase 3]** Parent `2fff82f081401` documents `-ERANGE` on inline
-  data if this check is added without the skip; that skip is in HEAD.
-- **[Phase 4]** `b4 dig -c 705a3fd3bac16` → v4 3/9 lore URL; `-a` showed
-  v3 and v4; `-w` listed ext4 maintainers.
-- **[Phase 4]** Cover letter (mbox): “Fold in two pre-existing fixes
-  (now patches 2 and 3)”.
-- **[Phase 4]** WebFetch lore/msgid.link: **403**. Stable-list search:
-  **UNVERIFIED**.
-- **[Phase 5]** Grep callers: `ext4_block_do_zero_range`,
-  `ext4_block_journalled_zero_range` → `ext4_block_zero_eof` /
-  `ext4_zero_partial_blocks` → truncate, setattr, punch-hole,
-  zero_range, `file.c` append.
-- **[Phase 5]** Truncate: `ext4_truncate` → `ext4_block_zero_eof`; on
-  error `goto out_trace` (does **not** keep shrinking after a failed
-  zero). Punch-hole/`ext4_zero_range` return the error.
-- **[Phase 6]** `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`;
-  `make kernelversion` = `7.3.0-rc4`.
-- **[Phase 6]** Buggy helper present in this tree since v7.1;
-  prerequisite and this commit both ancestors of HEAD.
-- **[Phase 7]** MAINTAINERS: Zhang Yi is `R:` on EXT4; Jan Kara is `R:`;
-  Ted is `M:`.
-- **[Phase 8]** Failure mode verified from commit text + truncate/punch
-  callers, not from a live repro (no reproducer in the message).
-- **UNVERIFIED:** Whether `ext4_get_block` can return an error while
-  leaving `BH_Mapped` set (fix still correct: any `err < 0` is
-  propagated). No live I/O-error repro.
-
-The patch is a small, reviewed ext4 integrity fix for code that exists
-in this 7.3 tree, with callers already wired for `ERR_PTR` and the
-inline-data prerequisite present.
+Verification:
+- [Phase 1] Parsed subject/tags/body from `git log -1 --format=fuller
+  03a963f4aeda5`; msgid is 09/10 of `20260625061545.44808`.
+- [Phase 2] Diff vs current `fw.c` `rtw89_arp_response_get()`; +24/−7 in
+  one function; QoS inserted after 3-addr header, before IV.
+- [Phase 3] `git merge-base --is-ancestor 03a963f4aeda5 HEAD` → yes;
+  `git describe --contains` → `v7.3-rc1~…`; blame shows intro
+  `58ed86e1666b3`; parent `76edcedda6437` is address-only.
+- [Phase 3] `git log --oneline --grep=20260625061545.44808 --
+  drivers/net/wireless/realtek/rtw89/` listed all 10 series commits.
+- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 `rtw-next` 10-patch series; applied
+  by Ping-Ke; no NAK; no stable Cc. WebFetch lore 403; curl stable list
+  Anubis-blocked.
+- [Phase 5] Grep: ARP_RSP used from keep-alive and ARP offload;
+  `rtw89_wow_fw_start()` enables both.
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-g…; `VERSION/PATCHLEVEL`
+  7.3.0-rc4; MLO/WoW/ARP code present.
+- [Phase 7] rtw89 Wi-Fi 6/7 driver, active history on `fw.c`.
+- [Phase 8] Failure mode: AP drops WoW ARP → disconnect in suspend; not
+  a kernel oops.
+- [Phase 9] Checked `Documentation/process/stable-kernel-rules.rst`
+  (quirk / “oh that’s not good”, ≤100 lines).
+- UNVERIFIED: lore.kernel.org/stable archives (bot challenge).
+- UNVERIFIED: exact AP models for the QoS requirement (not named in
+  commit or mbox).
 
 **YES**
 
- fs/ext4/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/fw.c | 31 +++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 9a5c08650bd1e..2e3f7ba1a924b 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4119,7 +4119,9 @@ static int __ext4_block_zero_page_range(handle_t *handle,
- 	}
- 	if (!buffer_mapped(bh)) {
- 		BUFFER_TRACE(bh, "unmapped");
--		ext4_get_block(inode, iblock, bh, 0);
-+		err = ext4_get_block(inode, iblock, bh, 0);
-+		if (err < 0)
-+			goto unlock;
- 		/* unmapped? It's a hole - nothing to do */
- 		if (!buffer_mapped(bh)) {
- 			BUFFER_TRACE(bh, "still unmapped");
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index c6533a085c7fe..299526220380f 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -2701,6 +2701,7 @@ static struct sk_buff *rtw89_sa_query_get(struct rtw89_dev *rtwdev,
+ static struct sk_buff *rtw89_arp_response_get(struct rtw89_dev *rtwdev,
+ 					      struct rtw89_vif_link *rtwvif_link)
+ {
++	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif_link->rtwvif);
+ 	struct rtw89_vif *rtwvif = rtwvif_link->rtwvif;
+ 	u8 sec_hdr_len = rtw89_wow_get_sec_hdr_len(rtwdev);
+ 	struct rtw89_wow_param *rtw_wow = &rtwdev->wow;
+@@ -2708,26 +2709,42 @@ static struct sk_buff *rtw89_arp_response_get(struct rtw89_dev *rtwdev,
+ 	struct rtw89_arp_rsp *arp_skb;
+ 	struct arphdr *arp_hdr;
+ 	struct sk_buff *skb;
+-	__le16 fc;
++	bool with_qos;
++	u16 fc;
+ 
+-	skb = dev_alloc_skb(sizeof(*hdr) + sec_hdr_len + sizeof(*arp_skb));
++	with_qos = ieee80211_vif_is_mld(vif);
++
++	rtw89_debug(rtwdev, RTW89_DBG_WOW, "[arp_reply] with qos field: %s\n",
++		    str_yes_no(with_qos));
++
++	skb = dev_alloc_skb(sizeof(*hdr) + sec_hdr_len + sizeof(*arp_skb) +
++			    (with_qos ? 2 : 0));
+ 	if (!skb)
+ 		return NULL;
+ 
+ 	hdr = skb_put_zero(skb, sizeof(*hdr));
+ 
++	fc = IEEE80211_FTYPE_DATA | IEEE80211_FCTL_TODS;
++
+ 	if (rtw_wow->ptk_alg)
+-		fc = cpu_to_le16(IEEE80211_FTYPE_DATA | IEEE80211_FCTL_TODS |
+-				 IEEE80211_FCTL_PROTECTED);
++		fc |= IEEE80211_FCTL_PROTECTED;
++
++	if (with_qos)
++		fc |= IEEE80211_STYPE_QOS_DATA;
+ 	else
+-		fc = cpu_to_le16(IEEE80211_FTYPE_DATA | IEEE80211_FCTL_TODS);
++		fc |= IEEE80211_STYPE_DATA;
++
++	hdr->frame_control = cpu_to_le16(fc);
+ 
+-	hdr->frame_control = fc;
+ 	ether_addr_copy(hdr->addr1, rtwvif_link->bssid);
+ 	ether_addr_copy(hdr->addr2, rtwvif_link->mac_addr);
+ 	ether_addr_copy(hdr->addr3, rtwvif_link->bssid);
+ 
+-	skb_put_zero(skb, sec_hdr_len);
++	if (with_qos)
++		skb_put_zero(skb, sizeof(__le16));
++
++	if (sec_hdr_len)
++		skb_put_zero(skb, sec_hdr_len);
+ 
+ 	arp_skb = skb_put_zero(skb, sizeof(*arp_skb));
+ 	memcpy(arp_skb->llc_hdr, rfc1042_header, sizeof(rfc1042_header));
 -- 
 2.53.0
 
