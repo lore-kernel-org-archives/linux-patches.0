@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C423E549FC4;
-	Mon, 19 Oct 2026 13:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16709549FE8;
+	Mon, 19 Oct 2026 13:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418197; cv=none; b=ftVFtClKF0OjBBL+veGugb8rGXrUyT49w+BxpSTBDluTRJLNe1xhbu7giy73icQlerkFMTObrzTeLWskllHE+58LnxHncQKPxIX10K1DrOuQbAuuJxzrQFVxQ3ewbnvlULV8eymHA21xNotjP6NpgKdc2prrpUja7NWZS52BAuU=
+	t=1792418198; cv=none; b=qd0ydzIkviI8GkcUxDeYsqpADttWqADwhfYKojWGdiG8S9DbNGCGT/veU5/SMrg9Ogq3UCdPDsz9zXHtaDxKGGHEuNKGQs+/npMQBiNZMZciiRYbh4IBmDCKr0bm4PEBQ0UKk5Gur0MWg+5snAOg1RzEPkg5nWFLvZdtVx18J/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418197; c=relaxed/simple;
-	bh=XKYtZG9jZ3ReqcBRdyDFRva8ElWckOc+6/P9d5PO27Q=;
+	s=arc-20240116; t=1792418198; c=relaxed/simple;
+	bh=oo8OmNd7PFkwcBm9mFfdSsWqNFY7K44HIBsli4h8vwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nWpN1DTzw+VX4lqgX7ro6HVW7NfPbFPLI1pb4tBptNcOEgDn6grf1/W/SwJwF7DAg2popm5bR+fU8yjYd/kya8PJh+4G2WxkPx+uQ2KTaAy/7CeR65SW7sSAQRdkfGd7pT96NKg2WxeA48e2DQYO8Nn8GplKn847fpVT99YfWPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lfqn1lKo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XXeLOO5R2ZQW267FKZyk0pu3viFunoSnPeKbC/fWvXtgWPOlJwjgYoAKX0z5w3OcKLea9QGbuQx/ylj/hiWPEBc5uwW2b7Sw9G/jhR4kQvRBaI10J3MY5cNz0l5pMd2rwUOGOSZ0tPv/nWIRtGey5JuWqs0eBeO596mN3R/AUU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OMBS8j6C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lfqn1lKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F171F000C4;
-	Mon, 19 Oct 2026 13:56:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OMBS8j6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B181F000C5;
+	Mon, 19 Oct 2026 13:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418194;
-	bh=2jrlydWD0ybximvu56ADcj1OMkqBIJuYCWQhhTa9mxo=;
+	s=k20260515; t=1792418196;
+	bh=cU4XMLCf+ejcttphqk7t+RlgvoU6IylGaxO6JhCgIaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lfqn1lKo4Al6ArAUORpxLDkU9AYoZF/ZUsl6/iGEEAwpl2ecHBxm7bGco4bXUKScz
-	 waX0ay3zV+rqdcm9pjWm2CZR3LD87alntU2lu7RCOZyOIqd+jsSb9ylKtTbcq5p5ck
-	 oY50PlIa+Pm1L92KRkO09OlSDi09i+1NefDPKIEH7OIr4r9d+1hU5yvGn6rPkFS35D
-	 hlJP40tWWcwsOuo+9Z6DzGctw9MDHPu/B0PBuptLRrMGKhEWXZheAabN4PARqRI/M3
-	 nk9GmDiBy2AVICJb/MjRDJYXyCwH1mttnFQyewwyDCviwIDqTRg2nCAi4vJTfjbP5G
-	 6TL7RaVZr6uFA==
+	b=OMBS8j6C5rqwdXSuduRYec0+wmo4cDAw9ONdS5AoZ+SdiWi91kQpGpLosNLv+XHtG
+	 II1QNXtU5xqUEXEgpEpk2F27/WEi0zxlo2a8WQskTEOD38qs0o9XEKv42PVZIkucxU
+	 Aq6wAjNFeh0jhy+Bq37hd82WkXrxg3I6qirlSXakqoQ3WjD9SsbvRo8jvSaN0fXFpK
+	 jsp7enxbRPQPmSU9JUftZT6CcFv8tMI6J6LXg+YTAkiatAtuVHLhpijS3aXcwEqvYQ
+	 m2HZuo4QGHxiRYlyBjziczeilZwZZBbxYCH3x4Bk2TcAP/OZIQdXIcjKFSFO4I8Yue
+	 d1SDhc6ReL5pQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] wifi: mac80211_hwsim: clear PMSR request state on abort
-Date: Mon, 19 Oct 2026 09:46:10 -0400
-Message-ID: <20261019135441.1420968-79-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Limit mic boost on Positivo N15RPE-S
+Date: Mon, 19 Oct 2026 09:46:11 -0400
+Message-ID: <20261019135441.1420968-80-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,440 +54,407 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-[ Upstream commit 37a77bd1395e8261d1760ae39c7f5eb637300550 ]
+[ Upstream commit 253010acfc8ad908446347b30a613032d1517bb5 ]
 
-mac80211_hwsim saves the in-flight cfg80211 PMSR request and its wdev
-in data->pmsr_request / data->pmsr_request_wdev when a measurement
-starts, and clears them only when it reports completion.
+The internal mic boost on the Positivo N15RPE-S is too high.
+Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
+to limit the gain.
 
-mac80211_hwsim_abort_pmsr() never cleared that saved state. cfg80211
-owns the request and frees it once the abort callback returns
-(cfg80211_pmsr_process_abort() calls rdev_abort_pmsr() then
-kfree(req)), so after an abort data->pmsr_request dangles. A later
-hwsim PMSR report then dereferences the freed request in
-hwsim_pmsr_report_nl() and completes it; a use-after-free.
-
-Clear data->pmsr_request and data->pmsr_request_wdev once the abort
-matches the active request. Move the wmediumd/virtio notification check
-below the clear so the saved state is dropped even when no notification
-is sent.
-
-Assisted-by: Codex:gpt-5
-Assisted-by: Claude:opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260708195911.84365-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Link: https://patch.msgid.link/20260805154518.19093-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The local tree is **6.12.111** (`pending-6.12`). This is a one-line
+Realtek HDA PCI quirk for a laptop whose driver and existing mic-boost
+fixup are already in this tree.
 
-**Step 1.1: Subject line**
-Record: **[wifi: mac80211_hwsim]** **[clear]** in-flight PMSR request
-pointers when abort matches, so cfg80211’s free cannot leave a dangling
-`data->pmsr_request`.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2: Tags**
-Committed message (pipeline-stripped):
-- Link: `https://patch.msgid.link/20260708195911.84365-2-
-  enderaoelyther@gmail.com`
-- Assisted-by: Codex:gpt-5, Claude:opus-4.8
-- Signed-off-by: Zhao Li; Johannes Berg
-- No Fixes:/Cc: stable/Reported-by in the committed text (expected for
-  this pipeline)
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [ALSA hda/realtek] [Limit] [apply existing
+ALC269_FIXUP_LIMIT_INT_MIC_BOOST to Positivo N15RPE-S because internal
+mic boost is too high]
 
-Original mailing-list submission (from the saved mbox, not used as
-circular “already selected” evidence):
-- Fixes: `5530c04c87c5` (“mac80211_hwsim: add PMSR request support via
-  virtio”)
-- Cc: `stable@vger.kernel.org`
-- Cover letter: `[PATCH 0/8] wifi: fix PMSR lifetime and frame
-  validation issues`
-
-**Step 1.3: Body**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- **Bug:** `mac80211_hwsim_abort_pmsr()` never NULLs
-  `data->pmsr_request` / `data->pmsr_request_wdev`. cfg80211 owns the
-  request and `kfree(req)` after `rdev_abort_pmsr()`.
-- **Symptom:** later `hwsim_pmsr_report_nl()` uses the freed request →
-  use-after-free. Abort also leaves a non-NULL pointer so a new start
-  can see `-EBUSY` forever.
-- **Root cause:** abort notifies wmediumd/virtio but does not drop saved
-  state; an early `return` when wmediumd/virtio is absent skips even the
-  mutex.
-- **Version:** not stated in the message. Introduction is v6.4-rc1
-  (verified in Phase 3).
+- Signed-off-by: Edson Juliano Drosdeck (author)
+- Link: https://patch.msgid.link/20260805154518.19093-1-
+  edson.drosdeck@gmail.com
+- Signed-off-by: Takashi Iwai (ALSA maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable
+- Ignore pipeline markers (none present on the upstream commit
+  `253010acfc8ad`)
 
-**Step 1.4: Hidden bug fix?**
-Record: **No.** This is an explicit UAF fix, not cleanup disguised as a
-fix.
-
----
-
-## Phase 2: Diff analysis
-
-**Step 2.1: Inventory**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- File: `drivers/net/wireless/virtual/mac80211_hwsim_main.c` (+7 / −3)
-- Function: `mac80211_hwsim_abort_pmsr()` only
-- Scope: single-file surgical fix
+- Bug: internal microphone boost on Positivo N15RPE-S is too high
+- Symptom: excessive gain / noisy internal mic (the fixup comment says
+  levels 2 and 3 are too noisy)
+- Failure mode: hardware-specific unusable/noisy capture, not a kernel
+  crash
+- Root cause: this PCI SSID is not in the quirk table, so the existing
+  boost limiter is not applied
+- Version info: none stated
 
-**Step 2.2: Flow change**
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. It is an explicit hardware quirk: map
+SSID `0x2782:0xa128` to an existing fixup.
+
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- **Before:** read `data->wmediumd`; if no wmediumd and no virtio,
-  **return unlocked** with saved pointers intact. If notification is
-  sent, still never NULL the pointers.
-- **After:** take the mutex, match `data->pmsr_request == request`, then
-  set both pointers to NULL **before** the notification check. Missing
-  wmediumd/virtio is `goto out` (unlock), not an early return.
+- Files: `sound/hda/codecs/realtek/alc269.c` (+1 / -0)
+- Function/table: `alc269_fixup_tbl[]`
+- Scope: single-file, one-line surgical quirk addition
 
-**Step 2.3: Bug mechanism**
-Record: **Use-after-free / dangling pointer** (also a lifetime/refcount-
-style leak of a cfg80211-owned object). cfg80211 frees the request;
-hwsim keeps the pointer; `hwsim_pmsr_report_nl()` later calls
-`cfg80211_pmsr_report()` / `cfg80211_pmsr_complete()` on it.
-
-**Step 2.4: Fix quality**
-Record: Obviously correct: abort that matches the in-flight request must
-drop the saved pointers because cfg80211 will free the object. Mutex
-already covers start/abort/report. Regression risk is low: a late report
-after abort now hits `if (!data->pmsr_request) return -EINVAL`, which is
-the intended post-abort behavior. No API/data-structure change.
-
----
-
-## Phase 3: Git history
-
-**Step 3.1: Blame**
-Record: Pre-fix abort body is entirely from **`8ba1da95053e0`**
-(“mac80211_hwsim: add PMSR abort support via virtio”, Jaewan Kim,
-2023-03-22). Pointers are stored in **`5530c04c87c59`** (start/request
-support, same day). First appears in **v6.4-rc1**. Present for a long
-time in this lineage.
-
-**Step 3.2: Fixes: target**
-Record: Original Fixes: `5530c04c87c5` is an ancestor of HEAD (`git
-merge-base --is-ancestor` exit 0). Closest actual miss is abort itself
-(`8ba1da95053e0`), also an ancestor. Related: `2bef4d1fb8b34` (NULL
-deref in `hwsim_pmsr_report_nl`, 2023) — different bug, already here.
-
-**Step 3.3: File history**
-Record: Neighbor `aeea930c7a878` (“authenticate PMSR report senders”) is
-series patch 2/8, parent of this commit, **independent** (touches
-`hwsim_pmsr_report_nl()`, not abort). File split `340f2ab83a5c9` / move
-`f79cbc77abde2` already in this tree. No extra prerequisite for the
-abort clear.
-
-**Step 3.4: Author**
-Record: Zhao Li is not the wireless maintainer. Same-day sibling is the
-report-sender auth patch. Maintainer **Johannes Berg** applied this
-commit.
-
-**Step 3.5: Dependencies**
-Record: Standalone. Uses existing `data->pmsr_request`, `data->mutex`,
-`hwsim_virtio_enabled`. Series 1/8; does not need 2/8–8/8. Can apply
-without `aeea930c7a878`.
-
----
-
-## Phase 4: Mailing list
-
-**Step 4.1: Original discussion**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- Lore URL: https://patch.msgid.link/20260708195911.84365-2-
-  enderaoelyther@gmail.com
-- Cover: https://patch.msgid.link/20260708195911.84365-1-
-  enderaoelyther@gmail.com
-- Series: **v1 only** as this patch (`b4 dig -a` “v2” is a different
-  nl80211 color-change patch; false match)
-- Johannes on the cover (2026-07-21): will take the two hwsim patches
-  for **wireless-next**; **“I don’t think hwsim is all that relevant in
-  deployed systems.”** Not a NAK of the UAF. He did apply this patch the
-  same day.
-- No reviewer asked for changes to this hunk. Other series patches
-  (probe-resp, S1G TWT) were called out as LLM-pattern issues; **this
-  patch was not**.
+- Before: PCI SSID `0x2782:0xa128` has no match; codec uses default
+  auto-config with full internal-mic boost range
+- After: that SSID matches `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`, which at
+  probe overrides amp caps so internal-mic boost is only steps 0–1
+- Path: codec probe (`patch_alc269()` → `snd_hda_pick_fixup(...,
+  alc269_fixup_tbl, ...)`)
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: linux-wireless, Johannes Berg, Jaewan Kim (original PMSR
-author), Intel/Qualcomm/Marvell names, **stable@vger.kernel.org**. Right
-lists for a hwsim UAF.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Hardware workaround] Existing
+`alc269_fixup_limit_int_mic_boost()` already limits noisy boost levels 2
+and 3. This commit only adds the PCI ID so that function runs on this
+laptop.
 
-**Step 4.3: Bug report**
-Record: No syzbot/bugzilla. Found by review. Cover letter: KASAN hwsim
-boot; after the fix, a stale `REPORT_PMSR` got `-EINVAL` with no KASAN
-splat. Author-tested, not an external user report.
+Verified function in this tree
+(`sound/pci/hda/patch_realtek.c:6661-6690`):
+- Runs only on `HDA_FIXUP_ACT_PROBE`
+- Walks auto-config inputs, keeps only `AUTO_PIN_MIC` with
+  `INPUT_PIN_ATTR_INT`
+- Calls `snd_hda_override_amp_caps()` with `NUM_STEPS=1`
 
-**Step 4.4: Series**
-Record: 8 patches, mixed subsystems. This one is self-contained. 2/8
-(sender auth) is a separate spoofing fix, not required to stop the abort
-UAF (it only narrows who can fire `hwsim_pmsr_report_nl()`).
-
-**Step 4.5: Stable list**
-Record: lore.kernel.org returned HTTP 403 via WebFetch. Original
-submission **did** Cc stable. Johannes’s “not relevant in deployed
-systems” is the only maintainer comment on hwsim priority. **No NAK and
-no “do not backport” found in the mbox.**
-
----
-
-## Phase 5: Semantic / call chain
-
-**Step 5.1: Functions**
-Record: `mac80211_hwsim_abort_pmsr()` only. Consumers of the pointers:
-`mac80211_hwsim_start_pmsr()`, `hwsim_pmsr_report_nl()`.
-
-**Step 5.2: Callers**
+Step 2.4: ASSESS THE FIX QUALITY
 Record:
-- `ieee80211_ops.abort_pmsr` → `drv_abort_pmsr()` →
-  `ieee80211_abort_pmsr()` → `rdev_abort_pmsr()` →
-  `cfg80211_pmsr_process_abort()` which **then `kfree(req)`**.
-- Abort work: `cfg80211_pmsr_free_wk` / `cfg80211_pmsr_wdev_down`.
-- Socket teardown: `nl80211` URELEASE → `cfg80211_release_pmsr()`.
+- Quality: obviously correct; identical pattern already used for
+  Positivo ARN50, Positivo N14AP7, VAIO VJFE-CL, several ThinkPads
+- Minimal: one `SND_PCI_QUIRK` line, no API/data-structure change
+- Regression risk: very low; only SSID `0x2782:0xa128` is affected. The
+  chosen fixup is chained to `ALC269_FIXUP_THINKPAD_ACPI`, but that is
+  the same chain used by the other Positivo/VAIO limit-boost entries
+  already in this tree.
 
-**Step 5.3: Callees**
-Record: mutex, `genlmsg_new`, `mac80211_hwsim_send_pmsr_request`,
-virtio/wmediumd unicast. After the fix, notification is best-effort;
-**state drop is not**.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 5.4: Reachability**
-Record: Yes, from userspace on this tree:
-1. `NL80211_CMD_PEER_MEASUREMENT_START` (`GENL_UNS_ADMIN_PERM`) with
-   PMSR capa on an hwsim radio (wmediumd or virtio).
-2. Close the nl80211 socket or take the wdev down → abort → cfg80211
-   frees `req`.
-3. `HWSIM_CMD_REPORT_PMSR` has **no** `GENL_UNS_ADMIN_PERM` (verified at
-   the genl op). Combined with a leftover pointer, that is the UAF.
-4. Extra path: wmediumd URELEASE sets `data->wmediumd = 0`
-   (`hwsim_register_wmediumd(net, 0)`). Old abort **returned
-   immediately** and never cleared.
-
-**Step 5.5: Similar patterns**
-Record: Same lifetime bug described for iwlwifi MLD in series 3/8
-(`mld->ftm_initiator.req` left dangling). hwsim abort was the incomplete
-half of start-saves/complete-clears.
-
----
-
-## Phase 6: This checkout
-
-**Step 6.1: Local tree and buggy code**
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- `git describe HEAD`: **v7.3-rc4-27-gf0100363d8c37**
-- `make kernelversion`: **7.3.0-rc4**
-- Buggy abort (save on start, clear only in `hwsim_pmsr_report_nl()`)
-  exists here; pre-image at `37a77bd1395e8^` still has the early return
-  and no NULL. Introduced v6.4-rc1; **not after this branch point**.
+- Insertion point in this tree is after `SND_PCI_QUIRK(0x2782, 0x4900,
+  "MEDION E15443", ...)` (`98b5ade3a44d8f`, 2024)
+- The buggy “missing ID” is not old code; the laptop simply was never
+  listed
+- The fixup itself dates to `3e0d611b2045b` (“ALSA: hda - Limit internal
+  mic boost for a few Asus machines”, 2013-04-22, contained in
+  v3.10-rc1) and **is an ancestor of HEAD**
 
-**Step 6.2: Backport difficulty**
-Record: **Clean apply** on this tree’s `mac80211_hwsim_main.c`. Function
-and fields (`pmsr_request`, `pmsr_request_wdev`, `mutex`) are present.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Expected for a new device quirk. Not a negative
+signal.
 
-**Step 6.3: Related fixes already here**
-Record: No earlier abort-clear. `2bef4d1fb8b34` is a different NULL
-check. `aeea930c7a878` is sender auth, not this UAF.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- Related commits already in this tree:
+  - `d44418f5024f6` ALSA: hda/realtek: Limit mic boost on Positivo ARN50
+    (same author, same fixup; already backported here)
+  - `86a433862912f` ALSA: hda/realtek: Limit mic boost on N14AP7 (same
+    author, same fixup; had Cc: stable)
+- Standalone: not patch X/Y. No prerequisite series.
 
----
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Edson Juliano Drosdeck has 10 commits in
+`sound/pci/hda/patch_realtek.c` on this tree, almost all Positivo/VAIO
+HDA quirks. Regular hardware-quirk contributor, not a one-off.
 
-## Phase 7: Subsystem
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record:
+- Depends only on `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` and
+  `alc269_fixup_tbl[]`, both present
+- Can apply standalone as a one-line quirk in
+  `sound/pci/hda/patch_realtek.c`
+- Mainline file path `sound/hda/codecs/realtek/alc269.c` is the
+  post-6.12 HDA codec split; that path does **not** exist here.
+  Equivalent table is `alc269_fixup_tbl` in `patch_realtek.c`
 
-**Step 7.1**
-Record: **drivers/net/wireless/virtual** (mac80211_hwsim). Kconfig:
-“Simulated radio testing tool… not needed for normal wireless LAN
-usage.” Criticality: **PERIPHERAL** as hardware, but **IMPORTANT** as a
-virtual/test driver shipped as a module and used by
-CI/syzkaller/wmediumd.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 7.2**
-Record: File is actively developed (NAN, virtio, many 2026 hwsim fixes).
-PMSR abort itself has been unchanged since 2023 — a long-standing hole,
-not churn from last month.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c 253010acfc8ad` → https://patch.msgid.link/20260805154518.19
+  093-1-edson.drosdeck@gmail.com
+- `b4 dig -a`: only v1; no later revision
+- Thread is two messages: the patch and Takashi Iwai “Applied to for-
+  next branch. Thanks.”
+- No NAK, no requested changes, no reviewer-flagged risk
+- No explicit Cc: stable in the thread (absence expected)
 
----
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): To Takashi Iwai (`tiwai@suse.com`); Cc Jaroslav
+Kysela (`perex@perex.cz`), Realtek (`kailang@realtek.com`), linux-sound,
+linux-kernel. Subsystem maintainer received and applied it.
 
-## Phase 8: Impact and risk
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla link. Description is a hardware report from
+the same author who previously submitted verified Positivo quirks. No
+independent public bug count found.
 
-**Step 8.1: Who**
-Record: Users with `CONFIG_MAC80211_HWSIM` who start PMSR
-(wmediumd/virtio) and abort. Not general Wi-Fi laptops. Distros often
-ship the module; Android Cuttlefish / mac80211 selftests use it.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone one-patch series. Same author’s ARN50/N14AP7 limit-
+boost quirks are the precedent; those are already in this tree.
 
-**Step 8.2: Trigger**
-Record: Start PMSR, then abort (socket close / iface down), then a
-report **or** wmediumd disconnect so abort’s old early-return fires.
-Needs CAP_NET_ADMIN to **start**; report genl op is unrestricted.
-Timing-dependent if wmediumd still reports after abort;
-**deterministic** dangling pointer after abort regardless.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable search returned HTTP 403. No stable-list
+discussion verified. No evidence this was rejected for stable.
 
-**Step 8.3: Failure mode**
-Record: **Use-after-free** in `cfg80211_pmsr_report` /
-`cfg80211_pmsr_complete` (`req->cookie`, `req->nl_portid`, …). Severity:
-**HIGH** (oops/KASAN; possible memory corruption). Secondary: stuck
-`-EBUSY` on later PMSR.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 8.4: Risk vs benefit**
-Record: Benefit **high** for anyone hitting hwsim PMSR abort (crash).
-Risk **very low**: ~10-line pointer clear under an existing mutex. Ratio
-favors taking it on this tree.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: Table `alc269_fixup_tbl[]` only. Runtime function used by the
+new ID: `alc269_fixup_limit_int_mic_boost()`. Probe picker:
+`snd_hda_pick_fixup()` from `patch_alc269()`.
 
----
+Step 5.2: TRACE CALLERS
+Record:
+- `patch_alc269()` at `sound/pci/hda/patch_realtek.c:12416` calls
+  `snd_hda_pick_fixup(codec, alc269_fixup_models, alc269_fixup_tbl,
+  alc269_fixups)` (line 12583)
+- That is the ALC269-family codec probe path
+  (CONFIG_SND_HDA_CODEC_REALTEK)
+- Not IRQ, not syscall hot path; once at device probe
 
-## Phase 9: Synthesis
+Step 5.3: TRACE CALLEES
+Record: `alc269_fixup_limit_int_mic_boost()` →
+`snd_hda_codec_get_pincfg()`, `snd_hda_get_input_pin_attr()`,
+`snd_hda_override_amp_caps()`. No allocation, no new locks.
 
-**Step 9.1: Evidence**
-For:
-- Real UAF with a traced cfg80211 `kfree(req)` after `rdev_abort_pmsr()`
-- Small, obviously correct, mutex-protected
-- Bug in this tree since v6.4-rc1
-- Standalone; no new API
-- Author tested abort-then-report under KASAN
-- Wireless maintainer applied it
-- Original submission had Fixes: + Cc: stable
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Userspace cannot trigger a crash path. The ID is matched when
+this laptop’s Realtek HDA codec is probed. Reachable for owners of
+Positivo N15RPE-S with SND_HDA_CODEC_REALTEK. Unprivileged users then
+get a usable (non-blown-out) internal mic.
 
-Against:
-- Test/simulator driver; Johannes said hwsim is not very relevant on
-  deployed systems
-- No syzbot/external user report
-- Start path needs admin + wmediumd/virtio
-- LLM-assisted series (maintainer criticized *other* patches, not this
-  one)
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` already used for many
+IDs in this tree, including:
+- `0x1c6c:0x122a` Positivo N14AP7
+- `0x2014:0x800a` Positivo ARN50
+- `0x2782:0x0214` VAIO VJFE-CL
+This is a systematic hardware pattern, not a one-off experiment.
 
-Unresolved: stable@ lore search (HTTP 403). Does not change the local-
-tree technical picture.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** (clear-on-abort; KASAN boot
-   described)
-2. Real user-visible bug? **PASS** (UAF / oops; also stuck PMSR)
-3. Important (crash/security/corruption/deadlock)? **PASS** (UAF → HIGH)
-4. Small and contained? **PASS** (+7/−3, one function)
-5. No new features/APIs? **PASS**
-6. Applies to this tree? **PASS** (code present; clean)
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- `git describe HEAD` = `p-6.12-2-gd38d58a4e0359`; `make kernelversion`
+  = 6.12.111
+- `git merge-base --is-ancestor 253010acfc8ad HEAD` → **not in this
+  tree**
+- `0xa128` is absent from `patch_realtek.c` (grep: no matches)
+- The missing-ID bug exists here: the laptop would probe without the
+  limiter
+- Fixup and table exist since well before 6.12 (fixup from v3.10)
 
-**Step 9.3: Exceptions**
-Record: None (not a device ID/quirk/DT/build/doc exception). Qualifies
-as a normal memory-safety fix.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Needs a trivial backport, not a clean git-am of the mainline
+diff:
+1. Path: `sound/hda/codecs/realtek/alc269.c` →
+   `sound/pci/hda/patch_realtek.c`
+2. Context: mainline next line is Lunnen Ground 14 (`0x2782, 0xa212`),
+   which is **not** in 6.12; insert after `0x2782, 0x4900` and before
+   `0x7017, 0x2014`
+That is the same class of adjustment used for `d44418f5024f6` (ARN50) on
+this tree.
 
-**Step 9.4: Decision**
-This checkout is **v7.3-rc4**. The buggy hwsim PMSR abort path is here.
-The patch is a small UAF fix with no prerequisites. Maintainer
-skepticism about hwsim on production APs does not make a use-after-free
-in this tree’s driver “not a bug.” It should be taken.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No N15RPE-S entry. Nearby same-class quirks (ARN50, N14AP7) are
+present. No alternate fix for `0x2782:0xa128`.
 
----
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## What the commit solves for this tree
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [sound/pci/hda Realtek codec] [IMPORTANT for laptop audio;
+PERIPHERAL in that only this PCI ID is affected]
 
-`mac80211_hwsim` stores cfg80211’s PMSR request in `data->pmsr_request`.
-cfg80211 frees that object when abort finishes. This tree’s abort
-callback never dropped the pointer (and skipped all cleanup if wmediumd
-had already exited). A later `HWSIM_CMD_REPORT_PMSR` dereferences freed
-memory. Clearing the two pointers under `data->mutex` when abort matches
-is the whole fix.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Very active: last 20 commits on `patch_realtek.c` are mostly
+more `SND_PCI_QUIRK` entries (HP, Lenovo, Samsung, MECHREVO, ASUS).
+Mature driver; this is the normal way hardware enablement/workarounds
+land.
 
-## Risk vs benefit
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-Benefit: prevent a KASAN/UAF oops on PMSR abort and allow a later start.
-Risk: negligible; notification becomes best-effort after the pointer is
-already gone, which is what cfg80211 requires.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific / PCI-SSID-specific: only Positivo N15RPE-S
+(`0x2782:0xa128`) with Realtek ALC269-family HDA.
 
-## Concerns
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record:
+- Trigger: every boot/probe on that laptop when using the internal mic
+  at high boost
+- Common for owners of that model; zero impact elsewhere
+- Not a security trigger; not unprivileged-crash
 
-None that block this tree: no missing helpers, no series dependency,
-file is already `mac80211_hwsim_main.c`. Johannes’s “deployed systems”
-comment is priority, not a correctness NAK.
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: [Noisy / overly boosted internal mic, capture quality unusable
+at high gain] [MEDIUM for those users; LOW globally]. Not
+panic/UAF/corruption, but it is a real hardware defect the existing
+quirk is designed to fix.
 
----
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: high for N15RPE-S users on 6.12 (mic works as on later
+  kernels)
+- Risk: very low (one ID, existing fixup, same pattern already
+  backported here)
+- Ratio: strongly favors backport
 
-## Verification
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-- **[Phase 1]** Parsed committed tags: Link msgid
-  `20260708195911.84365-2`; SOBs Zhao Li + Johannes Berg; no Fixes in
-  committed text
-- **[Phase 1]** mbox of original mail: Fixes `5530c04c87c5`, Cc: stable
-- **[Phase 2]** `git show 37a77bd1395e8`: +7/−3 in
-  `mac80211_hwsim_abort_pmsr` only
-- **[Phase 2]** Read current abort (lines 3848–3911) and
-  `hwsim_pmsr_report_nl` (4213–4277): report uses `data->pmsr_request`
-  then NULLs it
-- **[Phase 2]** Read `cfg80211_pmsr_process_abort()`:
-  `rdev_abort_pmsr()` then `kfree(req)`
-- **[Phase 3]** `git blame` on pre-image: abort from `8ba1da95053e0`;
-  `git describe --contains` → v6.4-rc1
-- **[Phase 3]** `git merge-base --is-ancestor 5530c04c87c59 HEAD` → 0;
-  same for `8ba1da95053e0`
-- **[Phase 3]** `git log --oneline --grep=pmsr --
-  drivers/net/wireless/virtual/`: series neighbor `aeea930c7a878`
-  independent
-- **[Phase 3]** `git log --oneline -S mac80211_hwsim_abort_pmsr --
-  drivers/net/wireless/virtual/`: only intro + this fix
-- **[Phase 4]** `b4 dig -c 37a77bd1395e8`: patch.msgid.link `…84365-2`
-- **[Phase 4]** `b4 dig -a`: v1 of this patch; “v2” is unrelated nl80211
-  color-change
-- **[Phase 4]** `b4 dig -w`: linux-wireless, Johannes, Jaewan Kim,
-  stable@
-- **[Phase 4]** mbox msg from Johannes: wireless-next; hwsim “not all
-  that relevant in deployed systems”; no NAK of this diff
-- **[Phase 4]** WebFetch lore/stable: HTTP 403 — UNVERIFIED whether it
-  was discussed on stable@ beyond original Cc
-- **[Phase 5]** Grep: abort wired in `ieee80211_ops`; nl80211 URELEASE
-  calls `cfg80211_release_pmsr`
-- **[Phase 5]** `HWSIM_CMD_REPORT_PMSR` op has no `GENL_UNS_ADMIN_PERM`;
-  `NL80211_CMD_PEER_MEASUREMENT_START` has it
-- **[Phase 5]** wmediumd URELEASE zeros portid via
-  `hwsim_register_wmediumd(net, 0)`
-- **[Phase 6]** `git describe HEAD` v7.3-rc4-27-gf0100363d8c37; Makefile
-  7.3.0-rc4
-- **[Phase 6]** `git merge-base --is-ancestor 37a77bd1395e8 HEAD` → 0
-  (present; judged on merit, not as “already selected”)
-- **[Phase 6]** Pre-fix abort still has early return without NULL (shown
-  at `37a77bd1395e8^`)
-- **[Phase 7]** Kconfig: test tool, module `mac80211_hwsim`
-- **[Phase 8]** `cfg80211_pmsr_complete()` derefs `req->cookie` /
-  `req->nl_portid` — UAF if abort already freed `req`
-- **UNVERIFIED:** How many distro .configs enable `MAC80211_HWSIM` — not
-  used to drive the verdict; UAF is in-tree regardless
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Explicit audio-codec hardware quirk (`SND_PCI_QUIRK` + existing fixup)
+- Real user-visible bug (internal mic boost too high)
+- One line, obviously correct, maintainer-applied
+- Same author’s identical Positivo ARN50 quirk already in this 6.12 tree
+- Fixup and quirk table already present
+- No new API, no new driver, no behavioral change except this SSID
 
-The fix is small, surgical, and matches stable rules for a real use-
-after-free in code this tree has had since v6.4.
+AGAINST:
+- Not a crash/security/data-corruption bug
+- Mainline path differs; needs 1-line context/path adjustment
+- No independent public bugzilla/syzbot report
+- Affected population is one laptop model
+
+UNRESOLVED:
+- Could not query lore.kernel.org/stable (HTTP 403)
+- Could not independently verify the author’s hardware test beyond the
+  commit text and maintainer apply
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — one ID, existing fixup, applied
+   by Takashi Iwai
+2. Fixes a real bug that affects users? PASS — excessive internal mic
+   boost on this machine
+3. Important issue? PASS under the hardware-quirk exception (audio codec
+   quirk); severity MEDIUM for that model
+4. Small and contained? PASS — +1 line
+5. No new features or APIs? PASS — ID mapped to existing fixup
+6. Can apply to the local tree? PASS — equivalent table exists; needs
+   trivial path/context backport, same as prior quirks on this tree
+
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: **Hardware quirk / audio codec quirk** (`SND_PCI_QUIRK` in
+Realtek HDA). This is an explicit stable exception.
+
+Step 9.4: MAKE YOUR DECISION
+This should be backported to this 6.12 tree. It is the standard Realtek
+laptop quirk: add a PCI subsystem ID so an existing limiter runs. The
+driver, table, and `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` are all here; only
+the N15RPE-S ID is missing. Risk is confined to that SSID.
+
+------------------------------------------------
+What problem it solves and why it matters
+The Positivo N15RPE-S ships with an internal mic whose boost steps 2–3
+are too hot. Without this ID, 6.12 users of that laptop keep the default
+full boost range. The commit maps `0x2782:0xa128` onto the long-standing
+limiter already used for other Positivo machines in this tree.
+
+Stable-rules fit
+It is small, obviously correct, does not add APIs, and is the documented
+audio-quirk exception. It is not a crash fix, but stable routinely takes
+these ID-only Realtek quirks.
+
+Risk vs benefit
+Benefit is a working internal mic for that model. Risk is a single-ID
+table entry using a fixup that has been in the kernel since v3.10 and is
+already applied to sibling Positivo IDs here.
+
+Concerns
+The mainline hunk will not `git am` cleanly because of the later HDA
+file split and a neighboring Lunnen Ground 14 entry that 6.12 lacks. The
+backport is still a one-line insert into `alc269_fixup_tbl` in
+`sound/pci/hda/patch_realtek.c`.
+
+Verification:
+- [Phase 1] Parsed tags on `253010acfc8ad`: author SOB, maintainer SOB,
+  msgid Link; no Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x2782, 0xa128, "Positivo N15RPE-S",
+  ALC269_FIXUP_LIMIT_INT_MIC_BOOST)`
+- [Phase 2] Read `alc269_fixup_limit_int_mic_boost()` at
+  `patch_realtek.c:6661-6690`; confirmed it clamps internal-mic amp
+  steps to 0–1
+- [Phase 2] Confirmed `[ALC269_FIXUP_LIMIT_INT_MIC_BOOST]` exists at
+  line 8711 and chains to `ALC269_FIXUP_THINKPAD_ACPI` (same as other
+  Positivo limit-boost entries)
+- [Phase 3] `git merge-base --is-ancestor 3e0d611b2045b HEAD` — fixup
+  present (v3.10)
+- [Phase 3] `git merge-base --is-ancestor 253010acfc8ad HEAD` —
+  candidate **not** in this tree
+- [Phase 3] `git log --grep=N15RPE -- sound/pci/hda/` — empty
+- [Phase 3] Grep `0xa128` in `patch_realtek.c` — no match
+- [Phase 3] Same-class commits in tree: `d44418f5024f6` (ARN50),
+  `86a433862912f` (N14AP7)
+- [Phase 3] Author has 10 Realtek HDA quirk commits in this tree
+- [Phase 4] `b4 dig -c 253010acfc8ad` → msgid
+  20260805154518.19093-1-edson.drosdeck@gmail.com
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: To tiwai, Cc linux-sound / perex / Realtek
+- [Phase 4] LKML/Patchew: Takashi “Applied to for-next”; no NAK
+- [Phase 4] UNVERIFIED: lore.kernel.org/stable search HTTP 403
+- [Phase 5] `patch_alc269()` line 12583 uses `alc269_fixup_tbl`
+- [Phase 6] `git describe HEAD` = p-6.12-2-gd38d58a4e0359; kernelversion
+  6.12.111
+- [Phase 6] Local file is `sound/pci/hda/patch_realtek.c`; `alc269.c`
+  does not exist; insert after 0x2782/0x4900 before 0x7017/0x2014
+- [Phase 8] Failure mode: noisy/excessive internal mic boost on one
+  laptop; not a crash
 
 **YES**
 
- drivers/net/wireless/virtual/mac80211_hwsim.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 484198766efda..89794c724858c 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -3654,9 +3654,6 @@ static void mac80211_hwsim_abort_pmsr(struct ieee80211_hw *hw,
- 	int err = 0;
- 
- 	data = hw->priv;
--	_portid = READ_ONCE(data->wmediumd);
--	if (!_portid && !hwsim_virtio_enabled)
--		return;
- 
- 	mutex_lock(&data->mutex);
- 
-@@ -3665,6 +3662,13 @@ static void mac80211_hwsim_abort_pmsr(struct ieee80211_hw *hw,
- 		goto out;
- 	}
- 
-+	data->pmsr_request = NULL;
-+	data->pmsr_request_wdev = NULL;
-+
-+	_portid = READ_ONCE(data->wmediumd);
-+	if (!_portid && !hwsim_virtio_enabled)
-+		goto out;
-+
- 	skb = genlmsg_new(GENLMSG_DEFAULT_SIZE, GFP_KERNEL);
- 	if (!skb) {
- 		err = -ENOMEM;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index f2b0eb8501a78..5098d3f375316 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7646,6 +7646,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x2782, 0x4900, "MEDION E15443", ALC233_FIXUP_MEDION_MTL_SPK),
++	SND_PCI_QUIRK(0x2782, 0xa128, "Positivo N15RPE-S", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0xa212, "Lunnen Ground 14", ALC269VC_FIXUP_LUNNEN_GROUND_14),
+ 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
 -- 
 2.53.0
 
