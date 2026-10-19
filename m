@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D6E5BE69A;
-	Mon, 19 Oct 2026 14:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426134C4606;
+	Mon, 19 Oct 2026 14:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418469; cv=none; b=g7Yo4G1CoeawGCx7dX9OJlINl0fC9Uz0cCaifq2MHzJwnYHl7hZXgDfdKphYHI06KT4ziSVPQJjk6I9JcvOFPX7MlkkV+ROtCeBN28FZceQ9wg9T/gjoVwKfnHXCIcXL6Yl6RcT/aEniQFRZk8tacPi8+Y3sOqU4mypjMTHCrQw=
+	t=1792418472; cv=none; b=jV0jRuHKWRrhAcoP1nhPJ/8WhHcq04I4DmNNjhQUaVPCiThbP+EanS6Yrsjz0Lv5FoldB4NGZ24z/lvOzTHeG9Akskzozs+TYfwxkUxusQFKvV3qbKZg1XSh2JkGD+BK5gwjjH/QcN5CmOxq/8wBjv8pVm5u4VMxv1HTfEwhdw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418469; c=relaxed/simple;
-	bh=pWdHP9LHEKz+sABbungOTDUeh0Z4zqzoeeY4zbHYH+g=;
+	s=arc-20240116; t=1792418472; c=relaxed/simple;
+	bh=Bgs8nsbCp+tgvjP5B+4k3VHCj367cj7VXupzgpKtVSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DS4YwJP8qfGRGpOQmXI4218IZfTPEk5DE5A96tvZNPYa6k/HAIm5Tr2PbXuVRJQvfKctOT/odpgZMih8UAtVP92eEWDgchJ/wxJOpTd23hlDqfrMm/Xl4C2WCZqFFrVoLe2w6hhDmT5GciR6Jb8hJ1VnA0a+9VSOdNHcn+QOloY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZb2M6IK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=A4oB/1fZ4MndUCftOeswnXYp6fSX6dI+gOEvmSUoVwaDZ/gHjvSj1t65leEHQSN2q85szm/vUoBVJ4/NhAx4rOVQkaYkvvZdqkczKaxBvI2VHQX5MPMsAWW1LRhD/bNpXVhZ3Narnr5YkV1pZtKyKyFqYFTmHKa6SXyQOX5Lvuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LY4J83kL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZb2M6IK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F95A1F000CA;
-	Mon, 19 Oct 2026 14:01:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LY4J83kL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0897F1F000C4;
+	Mon, 19 Oct 2026 14:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418467;
-	bh=lJlw6GhXp1L1rVQ4RJd14E3+3JJvpD0/PFLiCS+TtDM=;
+	s=k20260515; t=1792418469;
+	bh=1pBPNFEO0meoCcIWDnS/H5lw/oRXuQ7DEnRFhYwttSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZb2M6IKha4110qa8pjwQOWKVKtq4azzbl/EltGrYAFX6d/rjwfb4L9d71RGIno6k
-	 eqwTHI2+IkPL7eWwLRrGUiLOTqtmqK68l9rd47jHpSMP31nYAuOo3LCAIAs3pBep9m
-	 aBFGw9NnOAe2qdFF3RoHiw1JtMbJSCdyvAuR+u/YKkrm5uw35FKG9GLCW1oQS8giEQ
-	 OlzoTozmmd9S0ue7MuS4DC5PhPh0IytA6XdS29m8nXiP4UaL+y/jrWjj7oDH4/O9Kv
-	 ioxmUmH+NMSU5BiMRmkg3jI7Sk793HQCZoovdyAjj7KA8EbH42pZF8G+xXA35EG5P9
-	 dr9nVMCB+IVdw==
+	b=LY4J83kLVSektUJpgCzqlxZBeoCbI2DiVZxXWQiINQbEnARTK7dgaGiiDOSXakEUf
+	 s+D+kIH834oATgw5Ew6FPV4XL9WfE/z5gubGfC8vjmRSlUMWIBzVITkE76+Gv2x9a6
+	 N5UtSCtggMSiRAXprNGbpdOf2w3EtnKO/tDNfDqra93nSXP97Q51o+sHIxMOMWiENN
+	 K+EmDrKrwdMS/Bzj9lRMY7NvhZ5QCPAmtqQhhWbbHIcV2SgqJ+CtY/4H3lxmGYVH9A
+	 7ocxS3lQadY1RVqYZe0xzX5JrPMl5ou7EUhWGxJZev5t3XSYMpaL6MPu57kjwnsJAi
+	 CSm+ILKKliukA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brian Grech <bgrech@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: YiPeng Chai <YiPeng.Chai@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	shuah@kernel.org,
-	netdev@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] selftests/net: fin_ack_lat: fix latency threshold typo
-Date: Mon, 19 Oct 2026 09:49:20 -0400
-Message-ID: <20261019135441.1420968-269-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] drm/amdgpu: add bounds check to prevent array overflow
+Date: Mon, 19 Oct 2026 09:49:21 -0400
+Message-ID: <20261019135441.1420968-270-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,381 +57,364 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Grech <bgrech@redhat.com>
+From: YiPeng Chai <YiPeng.Chai@amd.com>
 
-[ Upstream commit 2373107782a98ba15931a37bbd9dd46d7213e5aa ]
+[ Upstream commit db15c49a17b8fab9ada38f3a548e5353d7d6b1a8 ]
 
-The commit message for af8c8a450bf4 ("selftests: net: Add FIN_ACK
-processing order related latency spike test") states: "if the latency
-is larger than 1 second (spike), print a message". However the code
-uses a threshold of 100000 us (100 ms), not 1000000 us (1 s).
+Add bounds check to prevent array overflow.
 
-The lower threshold causes false positives on slower hardware where
-normal connection latency occasionally exceeds 100 ms but never
-approaches the 1 s spike that indicates the actual FIN/ACK race bug.
+v2:
+  Add warning messages.
 
-Fix the threshold to match the documented intent.
-
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Brian Grech <bgrech@redhat.com>
-Link: https://patch.msgid.link/20260806151645.4172900-1-bgrech@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have the local 6.12 tree, the one-line typo, mailing-list review, and
-a clean apply. Compiling the nine-phase analysis next.
+The local tree is **6.18.53**. The unbounded write into
+`mce_adev_list.devs[]` is present in that base; this is a 7-line
+overflow guard for that array.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Step 1.1: PARSE THE SUBJECT LINE
+Record: **[drm/amdgpu] [add] bounds check to prevent array overflow**
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Record: `[selftests/net] [fix] latency threshold typo in fin_ack_lat`
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record:
+- Signed-off-by: YiPeng Chai (author)
+- Reviewed-by: Tao Zhou
+- Signed-off-by: Alex Deucher (amdgpu maintainer)
+- No Fixes:, Reported-by, Tested-by, Link:, or Cc: stable (absence is
+  expected)
+- Pipeline-only tags ignored: `[Upstream commit db15c49a17b8…]`, Signed-
+  off-by: Sasha Levin
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS** (from the presented message
-and from `git show 2373107782a9`)
-- `Reviewed-by: Simon Horman <horms@kernel.org>`
-- `Signed-off-by: Brian Grech <bgrech@redhat.com>` (author)
-- `Link:
-  https://patch.msgid.link/20260806151645.4172900-1-bgrech@redhat.com`
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (netdev maintainer,
-  applied it)
-- No `Reported-by`, `Tested-by`, `Acked-by` in the committed message
-- Committed message has no `Fixes:` / `Cc: stable` (those tags were on
-  mailing-list v3; they are not treated as “already selected”)
-- Record: Reviewed by a netdev reviewer; applied by the net maintainer.
-  Author is Red Hat.
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Record:
+- Bug: write into `mce_adev_list.devs[]` with no cap vs
+  `MAX_GPU_INSTANCE` (64)
+- Symptom: kernel array overflow / adjacent BSS corruption
+- Version info: none in the message
+- Root cause: registration does `devs[num_gpu++] = adev` with no
+  capacity check (the sibling `amdgpu_register_gpu_instance()` has had
+  that check since 2018)
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record: [Bug] `fin_ack_lat` treats latency ≥ 100000 µs (100 ms) as a
-  spike, while the original test commit says the spike is **1 second**.
-  [Symptom] false FAIL printouts on slower/loaded hardware when normal
-  localhost connect latency is 100 ms–1 s. [Version] original test is
-  `af8c8a450bf4` (2020). [Root cause] missing zero: 100000 vs 1000000.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not disguised. It is an explicit overflow fix. v2 only adds a
+ratelimited warning.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: Not hidden. Explicit typo/threshold bug in a kselftest. “fix”
-  is accurate.
+===============================================================
+PHASE 2: DIFF ANALYSIS
+===============================================================
 
----
+Step 2.1: INVENTORY THE CHANGES
+Record:
+- File: `drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c` (+7 / −0)
+- Function: `amdgpu_register_bad_pages_mca_notifier()`
+- Scope: single-file surgical fix
 
-## PHASE 2: DIFF ANALYSIS
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record:
+- Before: always `mce_adev_list.devs[mce_adev_list.num_gpu++] = adev`,
+  then register the MCE decode chain once
+- After: if `num_gpu >= MAX_GPU_INSTANCE`, warn and return; otherwise
+  same as before
+- Path: device init / RAS recovery init, not the MCE hot path
 
-**Step 2.1: INVENTORY THE CHANGES**
-- Record: `tools/testing/selftests/net/fin_ack_lat.c` — 1 line changed
-  (`100000` → `1000000`). Function: `client()`. Scope: single-file, one-
-  line surgical fix. `git show --stat`: `1 file changed, 1 insertion(+),
-  1 deletion(-)`.
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record:
+- Category: **buffer overflow / out-of-bounds write**
+- Mechanism: `devs` is `struct amdgpu_device *devs[MAX_GPU_INSTANCE]`
+  (64). Index 64 is past the array and lands on `num_gpu` and the
+  following BSS. A pointer-sized store there corrupts static driver
+  state.
+- Fix: same capacity check already used for `mgpu_info` in
+  `amdgpu_kms.c`
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record: After `connect`/`send`/`read`, `timediff()` returns
-  microseconds (`tv_sec * 1000000 + tv_usec`). If `lat < threshold`,
-  skip the printf and close. Before: print (and the wrapper script
-  counts a FAIL) at ≥ 100 ms. After: only at ≥ 1 s.
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Obviously correct; no API/lock/data-structure change
+- Early return only skips adding a 65th device; the decode chain is
+  already registered by GPU 0
+- Regression risk: **very low** (warn + return). Skipping page-
+  retirement for a 65th Aldebaran is safer than overflowing
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record: [Category] logic/correctness (wrong constant). [Mechanism]
-  threshold was 10× too low vs documented 1 s spike that matches
-  `TCP_TIMEOUT_INIT` (1×HZ). Wrapper `fin_ack_lat.sh` fails if any spike
-  line is printed.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Record: Obviously correct vs the original commit text and vs
-  `timediff()` units. Minimal. Regression risk is that 100 ms–1 s events
-  would no longer FAIL; that is intended, because those are not the
-  FIN/ACK race (which waits a full initial RTO of 1 s). No
-  API/locking/kernel-runtime change.
+Step 3.1: BLAME THE CHANGED LINES
+Record:
+- Unbounded store introduced in `91a1a52d03aa0f` (Mukul Joshi,
+  2021-09-20): “Fix RAS page retirement with mode2 reset on Aldebaran”
+- Present in this 6.18.53 tree (`git merge-base --is-ancestor
+  91a1a52d03aa0f v6.18.53` succeeded)
 
----
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. Introducer is `91a1a52d03aa0f`, in this tree.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- This tree has **no** `amdgpu_unregister_bad_pages_mca_notifier` (that
+  landed later, ~Nov 2025 on amd-gfx)
+- `amdgpu_ras_recovery_fini()` / `amdgpu_driver_unload_kms()` never
+  shrink `mce_adev_list`
+- GPU reset unregisters `mgpu_info` and re-adds it; it does **not** re-
+  run `amdgpu_ras_recovery_init()`, so reset does not grow this list
+- Series mate patch 2/2 (`drm/amd/ras: use IS_ERR() to check thread
+  creation result`) touches `rascore/ras_process.c` and is independent
 
-**Step 3.1: BLAME THE CHANGED LINES**
-- Record: Line 72 (`if (lat < 100000)`) blamed to `af8c8a450bf469`
-  (SeongJae Park, 2020-02-02). Introduced with the test; never changed
-  since.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: YiPeng Chai is a regular amdgpu RAS contributor. Tao Zhou
+reviewed; Alex Deucher applied. Not a drive-by change.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-- Committed message has no `Fixes:` tag. Mailing-list v3 cited `Fixes:
-  af8c8a450bf4`.
-- `git merge-base --is-ancestor af8c8a450bf4 HEAD` → yes (exit 0).
-- Original test message: “if the latency is larger than 1 second
-  (spike), print a message.”
-- Related kernel fix `9603d47bad464` (“tcp: Reduce SYN resend delay if a
-  suspicous ACK is received”) is also an ancestor; it describes the 1 s
-  `TIMEOUT_INIT` reconnection spike this test is for.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: None. The register function in v6.18.53 matches the parent hunk.
+Applies standalone.
 
-**Step 3.3: CHECK FILE HISTORY**
-- Record: Only one commit on this file in this tree: `af8c8a450bf46`. No
-  later refactor. Standalone, not patch X/Y.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: `git log --author="Brian Grech" --
-  tools/testing/selftests/net/` is empty in this tree (author is not a
-  6.12 net-selftest regular). Reviewer Horman and committer Kicinski are
-  netdev maintainers/reviewers.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c db15c49a17b8…` →
+  https://patch.msgid.link/20260616093753.4142104-1-YiPeng.Chai@amd.com
+- v1 (2026-06-16): check only, silent return
+- v2 (same day): added `dev_warn_ratelimited`
+- Tao Zhou (v1): “do we need to add warning message for it?” — that is
+  the only review request
+- No NAKs, no stable discussion, no user crash report
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: None. Only changes a numeric constant. `git apply --check` of
-  `2373107782a9` succeeds on this tree.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record (`b4 dig -w`): amd-gfx, Hawking Zhang, Tao Zhou, Candice Li. Tao
+Zhou: Reviewed-by on v2. Alex Deucher signed off.
 
----
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot, bugzilla, or user report found. Looks like an
+internal correctness/static-analysis fix, not a field crash.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record:
+- 2-patch series; 2/2 is an unrelated `kthread_run` IS_ERR check
+- Related later work: “Unregister mce notifier” (Nov 2025) — **not in
+  this 6.18.53 tree**, so the list never shrinks here. That makes
+  overflow easier to hit than on later mainline
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record: `b4 dig -c 2373107782a9` →
-  https://patch.msgid.link/20260806151645.4172900-1-bgrech@redhat.com
-- Revisions (`b4 dig -a`):
-  - v1: 2026-07-31,
-    https://patch.msgid.link/20260731145914.4014912-1-bgrech@redhat.com
-  - v2: 2026-08-04 (added maintainer CCs)
-  - v3: 2026-08-06 (applied)
-- Horman (2026-08-06): looks good; “might be nice” to explain why 1 s;
-  “if this is a fix to be backported (I am unsure)” then add `Fixes:`
-  and target `net`. **Reviewed-by** given; no NAK.
-- Author replied and sent v3 with original-commit wording, `Fixes:`, and
-  `Cc: stable`.
-- Applied to netdev/net-next by Jakub Kicinski (`2373107782a9`). No NAKs
-  in the saved thread.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: No lore.kernel.org/stable hit for this subject. lore.kernel.org
+fetches returned 403; mail-archive + b4 were used instead.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record (`b4 dig -w`): netdev, linux-kselftest, Shuah Khan, Eric
-  Dumazet, Paolo Abeni, Simon Horman, Jakub Kicinski. Right lists and
-  maintainers.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: No syzbot/bugzilla. Evidence is the commit text plus a Red Hat
-  author describing loaded/slower-hardware false positives. Severity:
-  incorrect kselftest FAIL, not a kernel oops.
+Step 5.1: IDENTIFY KEY FUNCTIONS
+Record: `amdgpu_register_bad_pages_mca_notifier()` (modified). Related:
+`find_adev()`, `amdgpu_bad_page_notifier()`,
+`amdgpu_ras_recovery_init()`. semcode MCP not available; used grep/read.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: Standalone 1-patch series. No sibling patches required.
+Step 5.2: TRACE CALLERS
+Record:
+- Only caller: `amdgpu_ras_recovery_init()` when `CONFIG_X86_MCE_AMD`,
+  `asic_type == CHIP_ALDEBARAN`, and `adev->gmc.xgmi.connected_to_cpu`
+- That is called only from `amdgpu_device_init()` (not from reset
+  reinit)
+- `amdgpu_device_init()` ← `amdgpu_driver_load_kms()` ← PCI probe
+- `amdgpu_pci_remove()` → `amdgpu_driver_unload_kms()` does **not** drop
+  the MCE list entry
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: lore.kernel.org/stable search via WebFetch returned 403. Web
-  search did not find a stable-list rejection or discussion of this fix.
-  UNVERIFIED: no confirmed stable@ thread beyond v3 CCing stable.
+Step 5.3: TRACE CALLEES
+Record: `dev_warn_ratelimited()`, `mce_register_decode_chain()`
+(unchanged, still once)
 
----
+Step 5.4: FOLLOW THE CALL CHAIN
+Record:
+- Reachable on MI200/MI250 (Aldebaran) CPU-attached XGMI systems (HPC),
+  with RAS enabled
+- Not a syscall; probe/unbind-bind
+- Unbind/bind without `rmmod` leaves module statics: each successful RAS
+  init increments `num_gpu`. After 64 such inits, the next write is OOB
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: `amdgpu_register_gpu_instance()` already guards
+`mgpu_info.num_gpu >= MAX_GPU_INSTANCE` (blame: `62d73fbcfb3671`, 2018).
+This list was a copy without that guard.
 
-**Step 5.1: KEY FUNCTIONS**
-- Record: `client()` only.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 5.2: TRACE CALLERS**
-- Record: `main()` forks and the child calls `client(port)`. Userspace-
-  only. `fin_ack_lat.sh` runs `./fin_ack_lat` for 30s and FAILs if any
-  stdout spike line appears. Makefile: `TEST_PROGS += fin_ack_lat.sh`,
-  `TEST_GEN_FILES += fin_ack_lat` — part of default net selftests.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. v6.18.53 has:
+`mce_adev_list.devs[mce_adev_list.num_gpu++] = adev;`
+with no check. `MAX_GPU_INSTANCE` is 64 in `amdgpu.h`. Introduced 2021,
+long before 6.18.
 
-**Step 5.3: TRACE CALLEES**
-- Record: socket/connect/send/read, `timediff()`, `printf` on spike. No
-  kernel helpers.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: **Clean apply**. v6.18.53 function body matches the parent hunk
+(no unregister helper in this tree; not required).
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: Reachable by running the net kselftest (localhost TCP). Not a
-  syscall bug; it is the test harness for the 2020 FIN/ACK race.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: No other overflow guard or unregister for `mce_adev_list` in
+v6.18.53.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: Only this one comparison. `timediff()` already uses `*
-  1000000` (µs), which confirms 1000000 = 1 s.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
----
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: drm/amdgpu RAS / x86 MCE decode. **IMPORTANT** for
+Aldebaran+XGMI-to-CPU, not core kernel. Still kernel-memory corruption
+if it fires.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: amdgpu RAS is actively maintained; this particular list has been
+unchanged since 2021 except later unregister (not in 6.18).
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: Yes. This checkout is **6.12.111** (`pending-6.12`,
-  `p-6.12-3-gc504cf0baa3d8`). `fin_ack_lat.c:72` is still `if (lat <
-  100000)`. Introduced 2020-02 (`af8c8a450bf4`); present throughout
-  6.12. Candidate `2373107782a9` is **not** an ancestor of HEAD.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: `git diff af8c8a450bf4 HEAD --
-  tools/testing/selftests/net/fin_ack_lat.c` is empty. `git apply
-  --check` of the candidate succeeds. Expected: **clean apply**.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver- and config-specific: `CONFIG_DRM_AMDGPU` +
+`CONFIG_X86_MCE_AMD` + Aldebaran (PCI 1002:7408/740C/740F/7410) with
+host-GPU XGMI. Real HPC/Instinct users exist; not all amdgpu laptops.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: `git log --grep="fin_ack_lat: fix latency"` and
-  `--grep="latency threshold typo"` on that path: empty. No alternate
-  fix.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record:
+- 65+ registrations into a 64-slot array
+- A node with 65 Aldebaran GPUs is not realistic
+- **In this tree**, no unregister: PCI unbind/bind (or probe after a
+  failed teardown that still completed RAS init) grows the list. 64
+  cycles is uncommon but a real admin/debug path
+- Unprivileged users cannot typically drive 64 GPU rebinds
 
----
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: OOB write of an `amdgpu_device *` past `devs[]` into `num_gpu`
+and following BSS → memory corruption, then likely oops on later
+MCE/list walk. Severity **HIGH** when hit; likelihood **LOW**.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- Benefit: prevents a real overflow on a path this tree never cleans up;
+  matches an existing sibling check
+- Risk: 7 lines, warn+return, no locking/API change — **very low**
+- Ratio: favorable for stable
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-- Record: `tools/testing/selftests/net/` — kselftest, not kernel
-  runtime. Criticality: **PERIPHERAL** for production machines;
-  **IMPORTANT** for people who run net selftests on 6.12 (distro CI, LTS
-  validation).
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
-- Record: Net selftests are active in 6.12; this **file** is untouched
-  since 2020 (mature, long-standing typo).
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-- Record: Anyone running `tools/testing/selftests/net`
-  (`fin_ack_lat.sh`). Not production TCP. Config: standard net
-  kselftests.
-
-**Step 8.2: TRIGGER CONDITIONS**
-- Record: 30 s of localhost connect/send/read. False FAIL when a loop
-  exceeds 100 ms (loaded CI, slow VM, embedded). Unprivileged users can
-  run the test; this is not a security trigger.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-- Record: Incorrect kselftest FAIL (script: `FAIL: N spikes detected`).
-  No oops, hang, or corruption. Severity: **MEDIUM** for testers/CI,
-  **LOW** for production runtime. The kernel bug the test is meant to
-  catch is a ~1 s SYN retry (`TCP_TIMEOUT_INIT` = `1*HZ` in
-  `include/net/tcp.h`).
-
-**Step 8.4: RISK-BENEFIT RATIO**
-- Record: Benefit: stops false FAILs on 6.12 net selftests; restores the
-  1 s meaning the test was written for. Risk: one constant in userspace;
-  no kernel change. Ratio: **high benefit for testers / very low risk**.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: EVIDENCE**
+Step 9.1: COMPILE THE EVIDENCE
 
 FOR:
-- Real, documented mismatch: commit `af8c8a450bf4` says 1 s; code uses
-  100 ms.
-- `timediff()` is in microseconds; 1000000 µs is 1 s.
-- Kernel symptom being tested is a 1 s initial RTO (`TCP_TIMEOUT_INIT`),
-  not 100 ms.
-- Wrapper treats any printed spike as FAIL, so the typo causes false
-  failures.
-- File and bug exist in this 6.12 tree unchanged since 2020.
-- One-line, applies cleanly, userspace-only.
-- Reviewed-by Horman; applied by Kicinski.
-- Author (Red Hat) describes slower/loaded-system false positives — a
-  real “bothers people” case for LTS testing.
+- Real unbounded store into a 64-entry static array (memory safety)
+- Buggy code is in 6.18.53 and dates to 2021
+- This tree never unregisters, so the counter can climb across
+  unbind/bind
+- 7-line, obviously correct, same pattern as
+  `amdgpu_register_gpu_instance()`
+- Reviewed by Tao Zhou; applied by Alex Deucher
+- Applies cleanly; no prerequisites
 
 AGAINST:
-- Not a kernel crash, UAF, deadlock, or CVE.
-- Horman was unsure about backport before v3.
-- Applied via net-next; committed message dropped `Fixes:`/`Cc: stable`.
-- Only testers are affected.
+- Thin commit message; no crash report / syzbot / CVE
+- Needs Aldebaran + XGMI-to-CPU + 65 registrations — rare in production
+- Series 1/2, but 2/2 is unrelated
 
 UNRESOLVED:
-- Could not read lore.kernel.org/stable (403). No evidence of a stable
-  rejection.
+- Could not fetch lore.kernel.org (403); used b4 + mail-archive
+- No public statement of how the overflow was found (Coverity vs
+  internal test)
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — units, original docs, and
-   TCP_TIMEOUT_INIT all agree; reviewed.
-2. Fixes a real bug that affects users? **PASS** — false kselftest FAILs
-   on slower/loaded hardware; Red Hat author.
-3. Important issue? **PASS** (as “oh, that's not good” / broken default
-   net selftest), not as a production crash. Official `stable-kernel-
-   rules.rst` allows a real bug that bothers people, not only
-   oops/hang/CVE.
-4. Small and contained? **PASS** — 1 line, 1 file.
-5. No new features or APIs? **PASS**.
-6. Can apply to this tree? **PASS** — clean apply; buggy code present.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — trivial bounds check; v2
+   reviewed
+2. Fixes a real bug that affects users? **PASS** — OOB write; reachable
+   if the list is never drained
+3. Important issue? **PASS** — kernel memory corruption (HIGH, uncommon
+   trigger)
+4. Small and contained? **PASS** — +7 lines, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — clean against v6.18.53
 
-**Step 9.3: EXCEPTION CATEGORIES**
-- Record: Not a device-ID/quirk/DT/build/docs exception. Closest
-  analogue: **test/tooling correctness** (same spirit as a build fix:
-  helps people who build and test this kernel).
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a normal
+memory-safety fix.
 
-**Step 9.4: DECISION**
+Step 9.4: MAKE YOUR DECISION
+This is a small, obviously correct overflow guard for code that exists
+in this 6.18.53 tree. Because 6.18 never removes entries from
+`mce_adev_list`, the overflow is more reachable here than on later
+kernels that gained unregister. Benefit outweighs risk.
 
-This tree is **6.12.111**. The typo is in-tree, the 1 s threshold is
-what the test and the TCP bug both mean, and the patch is a one-line
-userspace correction with no kernel regression surface. That is
-appropriate for 6.12 stable: it stops false net-selftest failures
-without changing runtime behavior.
+Verification:
+- [Phase 1] Tags: author YiPeng Chai, Reviewed-by Tao Zhou, SOB Alex
+  Deucher; no Fixes/Reported-by
+- [Phase 2] Diff: +7 lines in
+  `amdgpu_register_bad_pages_mca_notifier()`; `if (num_gpu >=
+  MAX_GPU_INSTANCE) warn; return;`
+- [Phase 3] `git blame` v6.18.53: unbounded store from `91a1a52d03aa0f`
+  (2021); ancestor of v6.18.53
+- [Phase 3] `git merge-base --is-ancestor 4f933b6727c05 v6.18.53` failed
+  — fix is not in 6.18.53
+- [Phase 3] No unregister in this tree (`git grep unregister_bad_pages`
+  empty; `git log --grep="Unregister mce notifier"` empty)
+- [Phase 3] Only recovery_init caller of register; reset path does not
+  re-call it
+- [Phase 4] `b4 dig -c db15c49a17b8`: v1 + v2; Tao asked for a warning;
+  v2 Reviewed-by
+- [Phase 4] `b4 dig -a`: two revisions, applied is v2
+- [Phase 4] `b4 dig -w`: amd-gfx + Hawking Zhang, Tao Zhou, Candice Li
+- [Phase 4] Patch 2/2 is IS_ERR on rascore kthread — independent
+- [Phase 4] lore.kernel.org WebFetch 403 — UNVERIFIED via lore HTML;
+  mail-archive used instead
+- [Phase 5] Callers: only Aldebaran + `connected_to_cpu` in
+  `amdgpu_ras_recovery_init` ← `amdgpu_device_init` ← PCI probe
+- [Phase 5] Remove path: `amdgpu_pci_remove` →
+  `amdgpu_driver_unload_kms` does not touch `mce_adev_list`
+- [Phase 6] `git describe HEAD`: v6.18.53-5049-g0f0bdc2b0dffb; `make
+  kernelversion`: 6.18.53
+- [Phase 6] v6.18.53 function matches parent; MAX_GPU_INSTANCE=64
+- [Phase 8] Failure mode: OOB write into BSS → corruption/oops; severity
+  HIGH, trigger uncommon
+- UNVERIFIED: exact discovery method (no public reproducer)
 
----
-
-## What the commit solves for stable users
-
-On 6.12, `fin_ack_lat` is a default net selftest. It is supposed to flag
-the ~1 s reconnect spike from FIN/ACK processing order
-(`TCP_TIMEOUT_INIT`). A missing zero makes it flag ≥100 ms instead, so
-loaded or slow machines can FAIL without the actual TCP bug. Distros and
-anyone running kselftests on 6.12 get noisy, wrong results.
-
-## Stable rules / risk vs benefit
-
-It is obviously correct, tiny, already reviewed, and applies cleanly.
-Benefit is reliable tests; risk is negligible. It does not fix a
-production crash, but it does fix a real, user-visible test bug in this
-tree.
-
-## Concerns
-
-None that block a backport: no missing prerequisites, no file drift, no
-kernel ABI change. Raising the threshold will ignore 100 ms–1 s events;
-that matches the original design.
-
----
-
-## Verification
-- [Phase 1] Parsed committed tags on `2373107782a9`; Horman Reviewed-by;
-  Kicinski SOB; no Fixes in committed text
-- [Phase 1] Original test commit `af8c8a450bf4` text: “larger than 1
-  second (spike)”
-- [Phase 2] Diff: one comparison in `client()`, 100000 → 1000000
-- [Phase 2] `timediff()` uses `tv_sec * 1000000` (microseconds) —
-  verified in `fin_ack_lat.c`
-- [Phase 2] `fin_ack_lat.sh` FAILs if any spike line is printed —
-  verified
-- [Phase 3] `git blame` line 72 → `af8c8a450bf469` (2020-02-02)
-- [Phase 3] `git merge-base --is-ancestor af8c8a450bf4 HEAD` → yes;
-  `2373107782a9` → no
-- [Phase 3] `9603d47bad464` (TCP SYN resend / 1 s spike) is an ancestor
-- [Phase 3] File unmodified after introduction (`git diff af8c8a450bf4
-  HEAD -- fin_ack_lat.c` empty)
-- [Phase 3] `git apply --check` of candidate → success
-- [Phase 4] `b4 dig -c 2373107782a9` → lore msgid
-  `20260806151645.4172900-1-bgrech@redhat.com`
-- [Phase 4] `b4 dig -a`: v1 (2026-07-31), v3 (2026-08-06, applied)
-- [Phase 4] `b4 dig -m`: Horman Reviewed-by; unsure about backport; no
-  NAK; v3 added Fixes + Cc: stable on the list
-- [Phase 4] Patchwork: applied to net-next as `2373107782a9`
-- [Phase 4] UNVERIFIED: stable@ archive (lore 403)
-- [Phase 5] `client()` called only from forked `main()`; Makefile lists
-  the test in `TEST_PROGS`
-- [Phase 5] `TCP_TIMEOUT_INIT` is `1*HZ` in `include/net/tcp.h`
-- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → 6.12.111; line 72 still `100000`
-- [Phase 8] Failure mode: kselftest false FAIL, not kernel oops;
-  severity MEDIUM for testers
+The patch is a 7-line bounds check that stops a real out-of-bounds write
+in RAS MCE GPU tracking. The buggy store is in this 6.18.53 tree, the
+tree never shrinks the list on teardown, and the change is obviously
+correct with negligible regression risk.
 
 **YES**
 
- tools/testing/selftests/net/fin_ack_lat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/testing/selftests/net/fin_ack_lat.c b/tools/testing/selftests/net/fin_ack_lat.c
-index 70187494b57af..4117332eb1a9c 100644
---- a/tools/testing/selftests/net/fin_ack_lat.c
-+++ b/tools/testing/selftests/net/fin_ack_lat.c
-@@ -69,7 +69,7 @@ static void client(int port)
- 		lat = timediff(start, end);
- 		sum_lat += lat;
- 		nr_lat++;
--		if (lat < 100000)
-+		if (lat < 1000000)
- 			goto close;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+index 16ae44e131ad4..b03d422572589 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -4814,6 +4814,13 @@ static void amdgpu_register_bad_pages_mca_notifier(struct amdgpu_device *adev)
+ 	 * Use this list instead of mgpu_info to find the amdgpu
+ 	 * device on which the UMC error was reported.
+ 	 */
++	if (mce_adev_list.num_gpu >= MAX_GPU_INSTANCE) {
++		dev_warn_ratelimited(adev->dev,
++			"mce_adev_list full, skip notifier registration (max=%d)\n",
++			MAX_GPU_INSTANCE);
++		return;
++	}
++
+ 	mce_adev_list.devs[mce_adev_list.num_gpu++] = adev;
  
- 		if (getsockname(sock, (struct sockaddr *)&laddr, &len) == -1)
+ 	/*
 -- 
 2.53.0
 
