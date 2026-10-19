@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E4B63139D;
-	Mon, 19 Oct 2026 14:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F75540760;
+	Mon, 19 Oct 2026 14:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418733; cv=none; b=SdAEftSRR/zkhIp0E30Tu/70UnlvWd5AM/pzEbTtGcQ48If223UEL7Tz3YXFrFwpivILzXXt7nAitag0B6pVAGjhOrjue6vX5ud0nLtSb61W//U/OgO38Q9nyYPtq+FsBebYCc8GODkudEzEEVYTnfenaW8Z+CGoExPbGSuNMdY=
+	t=1792418734; cv=none; b=jgpgqCjKZJpabfOfQWD7gJAu3zO9mqAoLnkkFMyI00jz8MG7RWzvEGumOkVaS/R7IOlng9Ng7TmaiaZZSwWiWNHh+KTU7cb3y9/ga57tz43+113lUFKYfDoWPdVAuyY76O8GPxviTK0AYVGPVNSUKEWbQHYfQt7+QaMZBZwJTpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418733; c=relaxed/simple;
-	bh=MOmZKezusvd3+rl8lQj3gb0nThfx7DNqvGBVftOEahM=;
+	s=arc-20240116; t=1792418734; c=relaxed/simple;
+	bh=wuv4QQPfrA+28/x/mOc9yJ6c1H1DGov3sFiROc4ep7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XgMnn45byX3MLGCIgSSsUnASFe2HMuSCrwvZvod1E1+Q5EZiEYF6o4hpaEEnsmzoNEtnKwOT+DabvRKScWeEcqaFeR3Km9JY1QzT2aZpGoQ4eRBYeBKntnt7Onq4u9rwR8LXXc7U5svWVG9nSwpgC7l7xjpb52DpsiNzYajnLo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AkufR0Z5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=h/6AoCEJxaaor3RsDpUMhBKK7NdVTKW5UqYuVJr9l1utk5DARj2IDWEDa241bpKmtf8g++Si2iIuAfn4maSbzAhRfs/q4WRGmuu0ovTURleSFzgOJObXoHaHXmdz8mi5Mz59z9pK7XpDBHSXGiEfUpc0MD8tIKfgBHPJ49ZqHt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aslYCR1E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AkufR0Z5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD6D1F000C7;
-	Mon, 19 Oct 2026 14:05:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aslYCR1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E531F000C8;
+	Mon, 19 Oct 2026 14:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418729;
-	bh=5rmeK0G0kCVmt28KfnVlKueuTOC+BkuMm7WRfsXUmzo=;
+	s=k20260515; t=1792418731;
+	bh=ZsRVqzdZHElcE+klBvADse0UYwgU5hroLrFhVkJiRL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AkufR0Z5b4oz2hz/dGdUIbuyKwd0fC6OswogWOg9hS8AUxx7cGQBbauFVxh7cePNP
-	 R8ku+RrnI8xX6v63Q5JDR+cawPc6c4AjFiv3T/Pt2DZR6/O+E4QbeB/MsSYWZkyUBT
-	 OIrIhVbLah/S8bF7R8imo+sPft+l1sIiahR3w+YbBGJEGd/PxJWKzZCjRrETTg1cAf
-	 cjpdfl1YgLBapQ5FnG9NhPkdQSavDxdZKIMXqW5aMb8+5gdWV55a54+yPyooTUlwWE
-	 9VMti4Se7ZhzaIoU18ypRogwfGK4xNJOVqnzCe4Q1Wr/plSwVtahjH1V27hk1LNgJy
-	 vSeE3pvX6Qi+Q==
+	b=aslYCR1EJtDGab37v7SuQiyNLKqdyed7jM53r1xQ6WRp/etcVWnkI+M3C/Ghni3jO
+	 3/AFUhxHkc7lSS0Q7PavIUidlEITaQiiD0iugGS5ahUKeRMNitpY1DjWoYhWkqIQus
+	 5PpKzPc3ootboQN6dHDE8mMecqmxOcNOfDdGBar7FV/YTjoc5pkA3PLSIpx6Vp8Lia
+	 arNUKgh1//eDpGcYJkCnezO0AroFeM6HCzKlaIHiiiDiYXuXb2gBTf7WqWqVQ2Z33E
+	 x71+TNaL+MHrsWHA0MN3r3UW1PRLdpJdFGrinF2eRpThCwXGVl8gAJqdJFdNq4qj1/
+	 HAem0Jei1a/aw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Pranjal Shrivastava <praan@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] spi: cadence-qspi: Fix status polling with octal DTR chips
-Date: Mon, 19 Oct 2026 09:52:26 -0400
-Message-ID: <20261019135441.1420968-455-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] PCI/ATS: Ensure pci_ats_supported() is PF-aware for VFs
+Date: Mon, 19 Oct 2026 09:52:27 -0400
+Message-ID: <20261019135441.1420968-456-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,468 +58,374 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit fd99864b0ac936e870c7ae28354c5cd3dad5efd0 ]
+[ Upstream commit 4f2cd6091ac41566a7300f5a4590d20a99aaa8bc ]
 
-Most SPI NOR chips today use 0x05 as ReaD Status Register (RDSR)
-opcode. After almost every transaction, the core will wait for the said
-transation to be digested by the chip by polling its status
-register. This mechanism has been automated by certain chips, such as
-the Cadence QSPI controller. Unfortunately, the feature has been
-disabled for various (relevant) reasons. Disabling this feature has been
-done by setting WRITE_COMPLETION_CTRL_REG.DISABLE_POLLING_FLD, keeping
-the rest of the register intact. In this same register, there is also a
-field named WRITE_COMPLETION_CTRL_REG.OPCODE_FLD, which by default also
-contains 0x05, as primary RDSR opcode.
+Update pci_ats_supported() to additionally check the associated PF's
+status when called on a VF. This ensures that PF-level quirks and
+untrusted status are correctly propagated to VFs, providing a robust
+support check that aligns with the kernel's PF-centric ATS configuration
+model and is immune to the timing of VF-specific fixups.
 
-As a result, both the SPI NOR and SPI NAND cores, primary users through
-spi-mem of the spi_mem_ops interface, do send their own RDSR. In this
-driver, such command goes through one of the fifth possible data path
-specifically crafted for short register-like commands, named STIG. In
-STIG mode, the opcode of the operation is written to
-OSPI_FLASH_CMD_CTRL_REG. This means that the opcode field of STIG
-configuration and the opcode field of the automatic polling
-configuration contain the same value.
-
-Unfortunately, the TRM explains in two different places that this
-configuration is forbidden, without explaining why it is problematic:
-
-$12.4.2.4.11 OSPI Software-Triggered Instruction Generator (STIG)
-```
-OSPI_FLASH_CMD_CTRL_REG[31-24] CMD_OPCODE_FLD bits should be set
-different than OSPI_DEV_INSTR_RD_CONFIG_REG[7-0] RD_OPCODE_NON_XIP_FLD
-and OSPI_DEV_INSTR_WR_CONFIG_REG[7-0] WR_OPCODE_FLD.
-```
-
-and
-
-$12.4.2.5.2 Configuring the OSPI Controller for Optimal Use
-```
-When using the OSPI Controller, the opcodes in
-OSPI_DEV_INSTR_RD_CONFIG_REG[7-0] RD_OPCODE_NON_XIP_FLD,
-OSPI_DEV_INSTR_WR_CONFIG_REG[7-0] WR_OPCODE_FLD and
-OSPI_WRITE_COMPLETION_CTRL_REG[7-0] OPCODE_FLD bit fields shall not
-match the opcode in the OSPI_FLASH_CMD_CTRL_REG[31-24] CMD_OPCODE_FLD
-bit field.
-```
-
-For some reasons, this is only unveiled now when testing in ODTR
-mode. Plain SDR modes work flawlessly with the same chips. One possible
-reason for this, is that the internal data path in ODTR mode is
-very different due to the extra opcode extension/repetition which may be
-interpreted differently (this is a wild guess). For sure there is an
-interference, as even the TRM states that there is some magic happening:
-
-$12.4.2.4.13 OSPI Command Translation
-```
-The WREN and the RDSR device instructions are the only ones that are
-sent by the controller under the hood.
-```
-
-I cannot probe the bus when the problem arises, so I don't know exactly
-what is sent on the bus. Practically speaking, the chip was driving the
-lines low (reading all 0s), which is not the usual default state when
-the chip is not driving the lines (all 1s). Other people on the mailing
-list claimed successfully using ODTR chips with this controller. My take
-here is that either they were using a variant of the IP without write
-completion at all (there is a quirk for it), or they were using chips
-slightly more flexible about their opcode sequency or maybe with
-different addr/dummy requirements.
-
-Clearing the WRITE_COMPLETION_CTRL_REG.OPCODE_FLD while disabling write
-completion polling entirely seems the best compromise.
-
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20261001-winbond-spi-next-cadence-rdsr-fix-v1-1-ec5ff594ba5d@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **6.18.57**. The candidate is a 3-line Cadence QSPI
-programming fix: stop leaving the default RDSR opcode in
-`WRITE_COMPLETION_CTRL` after auto-poll is disabled, which the TRM
-forbids and which breaks octal DTR status polling.
+## Phase 1: Commit message forensics
+
+**Step 1.1: Subject line**
+Record: `[PCI/ATS] [Ensure] make pci_ats_supported() PF-aware when
+called on a VF`
+
+**Step 1.2: Tags**
+Record:
+- Reviewed-by: Jason Gunthorpe (NVIDIA / IOMMU)
+- Reviewed-by: Samiullah Khawaja (Google)
+- Reviewed-by: Nicolin Chen (NVIDIA)
+- Reviewed-by: Lu Baolu (Intel VT-d)
+- Reviewed-by: Kevin Tian (Intel)
+- Acked-by: Bjorn Helgaas (PCI maintainer)
+- Signed-off-by: Pranjal Shrivastava (author)
+- Signed-off-by: Joerg Roedel (IOMMU maintainer, committer)
+- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable (absence
+  expected)
+
+**Step 1.3: Body**
+Record:
+- Bug: `pci_ats_supported()` on a VF only inspects that VF. PF quirks
+  (`quirk_no_ats` zeros `ats_cap`) and PF `untrusted` are not applied.
+- Symptom: VFs can be treated as ATS-capable when the PF is not allowed
+  to use ATS; IOMMU then programs ATS and `pci_enable_ats()` can fail,
+  leaving inconsistent ATS/IOMMU state.
+- Cover letter (v9 0/4): seen under `iova_stress` as `pci_enable_ats()`
+  failure → PCI warnings on detach. Also: “`pci_ats_supported()` did not
+  account for PF-level quirked status.”
+- Root cause: helper is device-local; kernel ATS policy is PF-centric
+  (STU programmed on PF, VFs share it).
+- Version: helper added in 2020 (`521376741b2c2`); this change landed
+  for v7.3-rc1.
+
+**Step 1.4: Hidden bug fix?**
+Record: Yes. “Ensure” / “robust support check” is a real correctness
+fix: VFs of quirked or untrusted PFs could be reported as ATS-capable.
+Not style-only.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 2: Diff analysis
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[spi: cadence-qspi:] [Fix] [status polling fails with octal
-DTR chips because WRITE_COMPLETION_CTRL.OPCODE_FLD still holds 0x05]**
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 2.1: Inventory**
 Record:
-- **Fixes:** none (expected)
-- **Reported-by:** none
-- **Tested-by:** none
-- **Reviewed-by:** none
-- **Acked-by:** none
-- **Link:** https://patch.msgid.link/20261001-winbond-spi-next-cadence-
-  rdsr-fix-v1-1-ec5ff594ba5d@bootlin.com
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Miquel Raynal (author; MTD/NAND maintainer); Mark
-  Brown (SPI maintainer, applied the patch)
-- Ignore: `[ Upstream commit fd99864b0ac936e870c7ae28354c5cd3dad5efd0 ]`
-  and `Signed-off-by: Sasha Levin` (pipeline)
+- File: `drivers/pci/ats.c` (+5 / −2)
+- Function: `pci_ats_supported()`
+- Scope: single-function surgical change
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 2.2: Control flow**
+Record: Before: `false` if `!ats_cap`, else `untrusted == 0`. After:
+`false` if `!ats_cap` or `untrusted`; if VF, recurse to
+`pci_physfn(dev)`; else `true`. Recursion is one level (PF is not a
+virtfn).
+
+**Step 2.3: Bug mechanism**
 Record:
-- **Bug:** Auto-HW write-completion polling was disabled by OR-ing
-  `DISABLE_POLLING_FLD` into `WRITE_COMPLETION_CTRL`, which **kept the
-  reset-default OPCODE_FLD = 0x05 (RDSR)**. SPI NOR/NAND then issue
-  their own RDSR via STIG (`OSPI_FLASH_CMD_CTRL_REG`), so STIG opcode
-  and completion-opcode both become 0x05.
-- **TRM:** Cadence OSPI TRM §12.4.2.4.11 and §12.4.2.5.2 forbid STIG
-  `CMD_OPCODE_FLD` matching `WRITE_COMPLETION_CTRL.OPCODE_FLD` (and the
-  read/write instruction opcodes).
-- **Symptom:** In **octal DTR**, the flash drives the bus low (reads as
-  all 0s). SDR with the same chips works. Status 0 means WIP=0, so
-  software can treat a still-busy flash as ready.
-- **Root cause (author):** controller still has “under the hood”
-  WREN/RDSR translation; ODTR’s extra opcode extension/repetition likely
-  makes the illegal opcode collision actually fire.
-- **Versions:** none named. Introduced by the 2021 auto-poll disable,
-  not by new 7.x code.
+- Category: logic/correctness + hardware quirk inheritance (security-
+  adjacent ATS policy)
+- Mechanism: `quirk_no_ats()` is `DECLARE_PCI_FIXUP_FINAL` and matches
+  PF IDs, zeroing PF `ats_cap`. VFs have their own ATS cap and usually
+  different IDs, so VF `ats_cap` stays set. FINAL quirks run in
+  `pci_bus_add_device()` after `device_add()` → IOMMU probe. Checking
+  the PF avoids depending on VF FINAL fixup timing.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Not hidden.** Subject and body describe a real hardware-
-programming bug. Not cleanup/refactor.
+**Step 2.4: Fix quality**
+Record: Minimal and aligned with `pci_ats_required()` /
+`pci_pri_supported()`, which already walk to the PF. Regression risk is
+low: it only denies ATS when the PF is already denied. VF ATS without a
+usable PF was already broken (`pci_enable_ats()` requires matching PF
+STU).
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 3: Git history
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `drivers/spi/spi-cadence-quadspi.c` (**+1 / −2**)
-- Function: `cqspi_write_setup()`
-- Scope: **single-file surgical fix**
+**Step 3.1: Blame**
+Record: Helper introduced by `521376741b2c2` (“PCI/ATS: Only enable ATS
+for trusted devices”, 2020-05-27, ~v5.8). The VF PF walk is
+`4f2cd6091ac41` (2026-07-09).
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** `reg = readl(WR_COMPLETION_CTRL); reg |=
-  DISABLE_AUTO_POLL; writel(...)` — RMW preserves OPCODE_FLD=0x05 and
-  poll-count/delay/bit fields.
-- **After:** `reg = CQSPI_REG_WR_DISABLE_AUTO_POLL; writel(...)` —
-  writes only BIT(14), so OPCODE_FLD becomes 0 (and other poll fields
-  0).
-- Path: **write setup** for every spi-mem data write when
-  `cqspi->wr_completion` is true (default). Direct-mode writes stay
-  disabled, unchanged.
+**Step 3.2: Fixes: tag**
+Record: None. Buggy code is the original helper from `521376741b2c2`,
+present in this tree.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+**Step 3.3: Related file history**
 Record:
-- **Category:** hardware workaround / logic correctness (illegal
-  controller opcode collision)
-- **Mechanism:** disabled auto-poll still advertised RDSR 0x05; STIG
-  RDSR used the same opcode; TRM-forbidden config; ODTR status reads
-  return 0
-- **Fix:** clear OPCODE_FLD while keeping poll disabled, so STIG 0x05 no
-  longer matches
+- `6c17c7d5936e6` (v6.12): `pci_prepare_ats()` — PF STU before VFs
+- `4f2cd6091ac41`: this change (series 1/4)
+- `6fd7c5c81af23`: series 2/4, STU check in `pci_prepare_ats()` —
+  follow-on, not a prerequisite
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- **Quality:** minimal and aligned with the TRM. Polling was already
-  disabled; remaining fields only matter when polling is on.
-  `CQSPI_NO_SUPPORT_WR_COMPLETION` platforms (SoCFPGA, Mobileye) never
-  write this register.
-- **Regression risk:** **low**. SDR already worked with poll disabled;
-  changing opcode from 0x05 to 0 while poll is off is what the TRM
-  wants. Slightly broader than clearing only bits [7:0], but with
-  `DISABLE_POLLING` set that is harmless.
-- No API/data-structure/locking changes.
+**Step 3.4: Author**
+Record: Pranjal Shrivastava; IOMMU/PCI ATS work. Not subsystem
+maintainer. Joerg Roedel applied it; Bjorn Helgaas acked.
+
+**Step 3.5: Dependencies**
+Record: Standalone. Uses existing `pci_physfn()`, `is_virtfn`,
+`ats_cap`, `untrusted`. Later series patches (SMMUv3 WARN, VT-d probe
+fail) depend on this, not the reverse.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 4: Mailing list
 
-**Step 3.1: BLAME THE CHANGED LINES**
+**Step 4.1: Original discussion**
 Record:
-- Auto-poll disable + RMW: **`9cb2ff11171264`** (“spi: cadence-quadspi:
-  Disable Auto-HW polling”, Apurva Nandan, 2021-07-13) — present since
-  ~v5.15
-- `if (cqspi->wr_completion)` gate: **`98d948eb833104`** (2021-11)
-- DTR support: **`f453f293979fb`** (2021-01-06)
-- The RMW was already used for DTR-only in `f453f293979fb`;
-  `9cb2ff11171264` extended it to all writes. Bug is years old in this
-  tree.
+- Lore:
+  https://patch.msgid.link/20260615235037.259909-2-praan@google.com
+- Cover:
+  https://patch.msgid.link/20260615235037.259909-1-praan@google.com
+- Revisions: v3 (2026-05-19) through v9 (2026-06-15). Applied version is
+  v9 1/4.
+- No NAKs in the v9 mbox. Joerg: “Applied, thanks.”
+- No reviewer Cc: stable.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: **No Fixes: tag.** Buggy pattern comes from `9cb2ff11171264`,
-which **is** in this tree (`git merge-base --is-ancestor` succeeded).
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: iommu@lists.linux.dev, linux-pci@, Joerg Roedel, Will Deacon,
+Robin Murphy, Lu Baolu, Jason Gunthorpe, Kevin Tian, Bjorn Helgaas,
+Nicolin Chen, Samiullah Khawaja.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent cadence-qspi work is clocks, PM, DMA, DT parse —
-unrelated. Independent of later ODTR opcode-filter commit `bee085476d27`
-and its revert (neither is in this tree). **Standalone.**
+**Step 4.3: Bug report**
+Record: No syzbot/bugzilla. Cover letter: `iova_stress` ATS mismatch; PF
+quirk gap after David’s HEADER-phase work. UNVERIFIED: I could not open
+lore via WebFetch (403); content is from `b4 dig -m`.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Miquel Raynal maintains MTD/NAND/SPI-NAND and contributes
-regularly to spi-mem/cadence-qspi. Nearby work is DTR/spi-mem, not a
-hidden multi-patch dependency. This submission is **[1/1]**.
+**Step 4.4: Series**
+Record: v9 0/4 “iommu: Standardize ATS robustness and state tracking” (4
+patches). This is patch 1 and is independently correct.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Uses only `CQSPI_REG_WR_DISABLE_AUTO_POLL`,
-`cqspi->wr_completion`, and `cqspi_write_setup()` — all present at
-**v6.18.57**. `git diff v6.18.57 a1536ec7381c3^ -- drivers/spi/spi-
-cadence-quadspi.c` is **empty**: the hunk applies cleanly to this
-series.
+**Step 4.5: Stable list**
+Record: No hit that this was requested or rejected for stable (curl to
+lore.kernel.org/stable returned empty). UNVERIFIED beyond that.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 5: Code semantics
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+**Step 5.1: Functions**
+Record: `pci_ats_supported()` only.
+
+**Step 5.2: Callers**
 Record:
-- `b4 dig -c fd99864b0ac9`: https://patch.msgid.link/20261001-winbond-
-  spi-next-cadence-rdsr-fix-v1-1-ec5ff594ba5d@bootlin.com
-- `b4 dig -a`: **v1 only**, single patch `[PATCH]` / Mark Brown `[1/1]`
-- Thread: author cover + Mark Brown “Applied to spi.git **for-7.3**”
-- **No NAK, no review objections, no reviewer Cc: stable**
-- Cover note: issue is subtle; explanation is long on purpose
+- `pci_prepare_ats()` / `pci_enable_ats()` / `pci_ats_required()`
+  (`drivers/pci/ats.c`)
+- Intel VT-d probe / ATS / release (`drivers/iommu/intel/iommu.c`)
+- ARM SMMUv3 `arm_smmu_ats_supported()` and probe
+  (`drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c`)
+- AMD IOMMU `pdev_get_caps()` (`drivers/iommu/amd/iommu.c`)
+- IOMMU reset prepare/done (`drivers/iommu/iommu.c`)
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): Mark Brown (applied), Thomas Petazzoni, Santhosh
-Kumar K / Vignesh Raghavendra (TI, cadence-qspi), Steam Lin (Winbond),
-linux-spi. Maintainer-applied; no extra Reviewed-by.
+**Step 5.3: Callees**
+Record: `pci_physfn()` (returns `dev->physfn` for VFs).
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Author reproduced on real ODTR hardware (bus
-stuck low / reads 0). Winbond engineer CC’d. Others on-list said ODTR
-worked — author attributes that to IP without write-completion (quirk)
-or more tolerant chips.
+**Step 5.4: Reachability**
+Record: Yes. IOMMU `probe_device` during PCI add / SR-IOV VF create.
+Userspace can create VFs (sysfs `sriov_numvfs`). Not a rare config-only
+path if IOMMU + SR-IOV + ATS are enabled.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Series name `winbond-spi-next-cadence-rdsr-fix` is **one
-patch**. Not 2/3 of a stack. Later opcode-filter revert is a different
-bug and not required here.
+**Step 5.5: Similar patterns**
+Record: `pci_ats_required()`, `pci_pri_supported()`, PASID helpers
+already use `pci_physfn()`. This helper was the outlier.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: WebSearch of lore.kernel.org/stable for this subject found
-**no** stable discussion (and no documented reason to skip it).
+Verified probe vs quirk order:
+- `pci_device_add()`: HEADER fixups → `pci_ats_init()` → `device_add()`
+  (IOMMU probe)
+- `pci_bus_add_device()`: FINAL fixups (`quirk_no_ats`) after that
+So IOMMU can observe VF `ats_cap` before VF FINAL quirks. PF FINAL
+quirks have usually already run when VFs are created later.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 6: This checkout
 
-semcode MCP is **not available**; used grep/read.
+**Step 6.1: Buggy code in this tree?**
+Record: Yes. Tree is **v7.3-rc4** (`7.3.0-rc4`). `pci_ats_supported()`
+exists since v5.8. Pre-change body is the `!ats_cap` / `untrusted == 0`
+check. `git merge-base --is-ancestor 4f2cd6091ac41 HEAD` is true (native
+7.3-rc1 merge, not a reason to skip technical review).
 
-**Step 5.1: KEY FUNCTIONS**
-Record: **`cqspi_write_setup()`** only.
+**Step 6.2: Backport difficulty**
+Record: Clean apply onto the parent helper. No API/struct change.
 
-**Step 5.2: TRACE CALLERS**
+**Step 6.3: Related fixes already here?**
+Record: No earlier substitute for PF-aware `pci_ats_supported()`.
+`quirk_no_ats` is still FINAL, not HEADER, so the VF/PF gap remains
+without this change.
+
+---
+
+## Phase 7: Subsystem context
+
+**Step 7.1**
+Record: PCI ATS / IOMMU. Criticality: **IMPORTANT** (IOMMU DMA
+translation; ATS can emit Translated AT and partially bypass IOMMU).
+
+**Step 7.2**
+Record: Active (VF ATS, CXL always-on ATS, Intel/AMD/SMMUv3). Helper
+itself is mature (2020).
+
+---
+
+## Phase 8: Impact and risk
+
+**Step 8.1: Who is affected**
+Record: SR-IOV + IOMMU + ATS. Datacenter NICs/IPUs/GPUs. Intel IPU E2000
+quirk: broken ATS invalidation → “outdated translations” and “system
+instability.” Those FINAL quirks match listed PF IDs; VF IDs often
+differ.
+
+**Step 8.2: Trigger**
+Record: Creating/probing a VF of a PF with `ats_cap` cleared or
+`untrusted` set. Common on SR-IOV enable, not every boot. Unprivileged
+users cannot usually create VFs.
+
+**Step 8.3: Failure mode**
 Record:
-- `cqspi_write_setup` ← `cqspi_write` ← `cqspi_mem_process` ←
-  `cqspi_exec_mem_op` (`spi_controller_mem_ops.exec_op`)
-- After a data write, spi-nor/spi-nand poll RDSR via
-  **`cqspi_command_read()` (STIG)** when the op has no address or is a
-  small register read (`nbytes <= STIG max`).
-- Context: process context, MTD/spi-mem, not IRQ.
+- ATS enabled on hardware the PF quirk meant to disable → stale IOTLB /
+  instability / possible bad DMA (**HIGH**)
+- IOMMU thinks ATS is supported, `pci_enable_ats()` fails, detach
+  warnings / inconsistent state (**MEDIUM–HIGH**)
+- Untrusted PF VFs getting ATS would be a DMA/ATS bypass gap; VF
+  `untrusted` is often already set from the upstream bridge, so this
+  part is extra defense
 
-**Step 5.3: TRACE CALLEES**
-Record: `cqspi_enable_dtr`, `writel` of WR/RD_INSTR and
-WR_COMPLETION_CTRL, then size register. No alloc/locks.
+Severity: **HIGH** (quirk bypass on broken ATS), not a universal panic.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace/MTD write/erase → spi-nor `spi_nor_octal_dtr_write` /
-page program → exec_op write → `cqspi_write_setup` programs
-WR_COMPLETION_CTRL → `spi_nor_read_sr()` issues RDSR (0x05; in 8-8-8 DTR
-also dummy/addr and 2 data bytes) → STIG. **Reachable on every flash
-write** on Cadence OSPI with wr_completion. Not a syscall UAF, but
-boot/rootfs-on-OSPI is a common embedded path.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: `WR_COMPLETION_CTRL` is only written here. Platforms with
-`CQSPI_NO_SUPPORT_WR_COMPLETION` skip it (SoCFPGA, Mobileye EyeQ5).
+**Step 8.4: Risk-benefit**
+Record: Benefit high for SR-IOV ATS users on quirked devices; risk very
+low (5 lines, stricter deny only). Ratio: favorable.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 9: Synthesis
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** At **v6.18.57** `cqspi_write_setup()` still does the
-RMW. Tree: `git describe HEAD` = **v6.18.57-155-gcdf239ca885b2**, `make
-kernelversion` = **6.18.57**. DTR (`cqspi_mem_caps.dtr = true`,
-`cqspi_enable_dtr`) and octal (`CQSPI_SUPPORTS_OCTAL` on TI AM654 and
-Versal) are here. spi-nor has `SNOR_PROTO_8_8_8_DTR` and
-`spi_nor_read_sr()` DTR RDSR.
+**Step 9.1: Evidence**
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply** to v6.18.57. Surrounding function matches the
-hunk exactly.
+For:
+- Real bug: VF ATS allow-list ignored PF quirk/`untrusted`
+- Concrete trigger: SR-IOV VF probe; `iova_stress` saw enable-fail /
+  detach warnings
+- E2000-class quirks document instability if ATS stays on
+- 5-line, obviously correct, PF walk matches the rest of PCI ATS
+- Reviewed by PCI and Intel/AMD/ARM IOMMU maintainers
+- Self-contained; applies to this tree’s helper
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No other commit in this tree fixes OPCODE_FLD vs STIG. This
-candidate is the first.
+Against:
+- Framed as robustness in a 4-patch series, not a panic/CVE
+- No Fixes:/Cc: stable (not a negative by itself)
+- Affects SR-IOV+ATS, not all machines
+- Untrusted gap is weaker than the quirk/`ats_cap` gap
 
----
+Unresolved:
+- Exact `iova_stress` trace not in the v9 mbox
+- Whether every E2000 VF ID is already in the quirk table (PF walk still
+  needed for timing and other `quirk_no_ats` IDs)
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — one-level PF recurse; v9
+   reviews; `iova_stress` mentioned
+2. Real user-visible bug? **PASS** — false ATS support on VFs; IOMMU
+   mismatch; quirk bypass
+3. Important (crash/security/corruption/deadlock)? **PASS** — ATS on
+   quirked broken invalidation is instability / stale translations; ATS
+   policy is security-adjacent
+4. Small and contained? **PASS** — +5/−2, one function
+5. No new features/APIs? **PASS**
+6. Applies to this tree? **PASS** — helper and fields exist; parent hunk
+   matches
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **drivers/spi** Cadence Quad SPI (`CONFIG_SPI_CADENCE_QUADSPI`).
-**IMPORTANT** for embedded: TI K3 OSPI (`ti,am654-ospi`), AMD/Xilinx
-Versal OSPI, plus JH7110, Intel LGM, etc. Often **boot/root filesystem
-flash**. Not core mm/VFS, not staging.
+**Step 9.3: Exceptions**
+Record: Not a device-ID/DT/build/doc exception. Hardware-quirk
+*inheritance* for existing `quirk_no_ats` entries.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained (PM, clocks, DMA) but this programming
-sequence has been stable since 2021.
+**Step 9.4: Decision**
+This tree is Linux **7.3-rc4**. The helper has been wrong for VFs since
+v5.8. The change is a small, reviewed correctness fix so VFs cannot use
+ATS when the PF is quirk-disabled or untrusted, which is the kernel’s
+PF-centric ATS model. That is appropriate here.
 
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific**, especially **octal DTR** on controllers
-that **have** write-completion (TI AM654/K3 OSPI, Versal OSPI).
-SoCFPGA/Mobileye skip the register. SDR of the same chips is reported
-working.
-
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Flash write/erase then software RDSR poll in **8-8-8 DTR**.
-Needs octal-capable controller + ODTR NOR/NAND. Not unprivileged-attack
-surface; typically MTD from kernel/root. Timing-independent once ODTR is
-on — author reproduced it.
-
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record:
-- **Failure:** RDSR returns 0 (lines held low). WIP=0 can look like “not
-  busy” while a program/erase is still running → **failed writes or
-  flash corruption**. Or ops just fail.
-- **Severity: HIGH** (flash integrity on OSPI-boot systems). Not a KASAN
-  crash, but real storage failure.
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit: high** for ODTR-on-Cadence-QSPI users (TI K3, Versal, …)
-- **Risk: very low** (1–3 lines, poll already off, quirk skips broken
-  IP)
-- **Ratio: strongly favors backport**
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-- Real, reproduced bug: ODTR status poll returns all 0s
-- TRM forbids this opcode collision
-- Possible **write-completion mis-detect / flash corruption**
-- 3-line, obviously correct, no new API
-- Code has been wrong in this tree since 2021; DTR/octal already exist
-- Applies cleanly to v6.18.57
-- Author is MTD maintainer; SPI maintainer applied it
-- Hardware-programming workaround (stable exception class)
-
-**AGAINST:**
-- No Fixes:/Cc: stable (not a negative per rules)
-- No extra reviewers; applied to **for-7.3** not as an -rc hotfix
-- Author is not 100% sure of the internal ODTR datapath (“wild guess”)
-- Hits ODTR more than SDR; fewer machines than a core-mm bug
-- Writes the whole register, not only OPCODE_FLD (still safe with poll
-  disabled)
-
-**UNRESOLVED:** Exact on-wire ODTR sequence (author could not probe). No
-stable-list thread. Unverified whether every Cypress Semper setup
-already failed the same way (Winbond exposed it; TRM still applies).
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — TRM + reproduced ODTR
-   failure; maintainer applied
-2. Fixes a real bug that affects users? **PASS** — OSPI flash status
-   poll broken in ODTR
-3. Important issue? **PASS** — HIGH: failed program/erase or false
-   “ready” (corruption risk)
-4. Small and contained? **PASS** — +1/−2, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — v6.18.57 has the RMW; empty
-   diff vs parent file
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Hardware workaround** for Cadence OSPI write-completion vs
-STIG RDSR. Not a new driver/API.
-
-**Step 9.4: MAKE YOUR DECISION**
-This belongs on 6.18.y: the buggy RMW is in this tree, octal DTR is
-supported, the fix is tiny, and the failure is flash status polling — a
-data-integrity problem on platforms that boot from OSPI.
-
----
-
-### Problem and why it matters here
-`cqspi_write_setup()` disables controller auto-poll but left
-`WRITE_COMPLETION_CTRL.OPCODE_FLD` at the reset default **0x05**.
-Software RDSR also uses 0x05 in STIG. The Cadence TRM forbids that
-match. In octal DTR, status reads come back 0, so WIP can look clear
-while the chip is still busy. On TI AM654/K3 and Versal OSPI that is
-boot/storage flash, not a niche sysfs knob.
-
-### Stable rules / risk
-Surgical, no new ABI, applies to **this** 6.18.57 tree without
-prerequisites. Benefit (correct ODTR status, avoid bad write completion)
-dwarfs the risk of writing BIT(14) instead of RMW.
+### What the commit solves for users of this tree
+Without it, `pci_ats_supported(VF)` can be true while the PF has
+`ats_cap == 0` (FINAL `quirk_no_ats`) or is untrusted. IOMMU drivers
+then set up ATS on the VF. That can enable ATS on hardware the PF quirk
+turned off (Intel E2000: bad invalidate endianness → stale translations
+/ instability), or fail later in `pci_enable_ats()` and leave IOMMU/PCI
+ATS state inconsistent.
 
 ### Verification
-- **[Phase 1]** Tags: Link to msgid `20261001-winbond-spi-next-cadence-
-  rdsr-fix-v1-1-…`; SOB Miquel Raynal + Mark Brown; no Fixes/Reported-
+- [Phase 1] Tags: five Reviewed-by + Bjorn Acked-by; no Fixes/Reported-
   by/Cc: stable
-- **[Phase 2]** Diff: `cqspi_write_setup()` RMW → `reg =
-  CQSPI_REG_WR_DISABLE_AUTO_POLL` (+1/−2)
-- **[Phase 3]** blame: RMW from `9cb2ff11171264` (2021); wr_completion
-  gate `98d948eb833104`; DTR `f453f293979fb`; all ancestors of HEAD
-- **[Phase 3]** `git merge-base --is-ancestor 9cb2ff11171264 HEAD` → yes
-- **[Phase 3]** `git diff v6.18.57 a1536ec7381c3^ -- drivers/spi/spi-
-  cadence-quadspi.c` → 0 lines (clean apply)
-- **[Phase 4]** `b4 dig -c fd99864b0ac9`: lore/patch.msgid.link match;
-  `-a` v1 only; `-w` Broonie/TI/Winbond/linux-spi; mbox: Applied
-  **for-7.3**, no NAK
-- **[Phase 4]** lore.kernel.org WebFetch → 403; recovered via `b4 -m` +
-  patchew
-- **[Phase 4]** stable lore search: no hits
-- **[Phase 5]** callers: `cqspi_write` → `cqspi_mem_process` →
-  `cqspi_exec_mem_op`; RDSR via `cqspi_command_read` STIG;
-  `spi_nor_read_sr()` DTR path in `drivers/mtd/spi-nor/core.c`
-- **[Phase 6]** `git describe HEAD` = v6.18.57-155-gcdf239ca885b2; `make
-  kernelversion` = 6.18.57; v6.18.57 still has the RMW
-- **[Phase 6]** octal platdata: `am654_ospi`, `versal_ospi`,
-  `versal2_ospi` have `CQSPI_SUPPORTS_OCTAL` and wr_completion;
-  SoCFPGA/Mobileye set `CQSPI_NO_SUPPORT_WR_COMPLETION`
-- **[Phase 7]** `CONFIG_SPI_CADENCE_QUADSPI`; compatibles include
-  `ti,am654-ospi`, `xlnx,versal-ospi-1.0`
-- **[Phase 8]** Failure: ODTR RDSR all 0s → false ready / failed flash
-  ops; severity HIGH
-- **UNVERIFIED:** on-wire ODTR collision (author could not probe);
-  whether every Cypress Semper board already failed identically
-- **semcode:** namespace not available
+- [Phase 1] Cover letter from `/tmp/ats-thread.mbox`: `iova_stress`, PF
+  quirk gap
+- [Phase 2] Diff: +5/−2 in `pci_ats_supported()` only
+- [Phase 3] `git blame`: helper from `521376741b2c2` (v5.8); VF walk
+  from `4f2cd6091ac41`
+- [Phase 3] `git show 4f2cd6091ac41^:drivers/pci/ats.c`: old `return
+  (dev->untrusted == 0)`
+- [Phase 3] Series 2/4 is `6fd7c5c81af23`; not required for this helper
+  change
+- [Phase 4] `b4 dig -c 4f2cd6091ac41`: v9 1/4 at
+  patch.msgid.link/20260615235037.259909-2-praan@google.com
+- [Phase 4] `b4 dig -a`: v3–v9; applied = v9
+- [Phase 4] `b4 dig -w`: PCI + IOMMU maintainers on Cc
+- [Phase 4] mbox msg 9: Joerg “Applied, thanks.” No NAK
+- [Phase 4] WebFetch lore: 403; used b4 mbox instead
+- [Phase 5] Callers: VT-d, SMMUv3, AMD IOMMU,
+  `pci_enable_ats`/`pci_prepare_ats`
+- [Phase 5] `pci_device_add` vs `pci_bus_add_device`: IOMMU probe before
+  FINAL `quirk_no_ats`
+- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- [Phase 6] `git merge-base --is-ancestor 4f2cd6091ac41 HEAD` = yes
+- [Phase 8] E2000 quirk commit `a18615b1cfc04`: ATS invalidate endian
+  bug → system instability
+- UNVERIFIED: full `iova_stress` log; whether every E2000 VF ID is
+  already quirked
 
-The patch is a small, correct hardware programming fix for a real flash-
-status bug that exists in this 6.18.y tree.
+The fix is small, surgical, and meets the stable criteria for this tree.
 
 **YES**
 
- drivers/spi/spi-cadence-quadspi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pci/ats.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 0a32e28eefd51..441426bc232ef 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1058,8 +1058,7 @@ static int cqspi_write_setup(struct cqspi_flash_pdata *f_pdata,
- 	 * care of polling the status register.
- 	 */
- 	if (cqspi->wr_completion) {
--		reg = readl(reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
--		reg |= CQSPI_REG_WR_DISABLE_AUTO_POLL;
-+		reg = CQSPI_REG_WR_DISABLE_AUTO_POLL;
- 		writel(reg, reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
- 		/*
- 		 * DAC mode require auto polling as flash needs to be polled
+diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
+index ec6c8dbdc5e9c..a5fa7745bce8e 100644
+--- a/drivers/pci/ats.c
++++ b/drivers/pci/ats.c
+@@ -40,10 +40,13 @@ void pci_ats_init(struct pci_dev *dev)
+  */
+ bool pci_ats_supported(struct pci_dev *dev)
+ {
+-	if (!dev->ats_cap)
++	if (!dev->ats_cap || dev->untrusted)
+ 		return false;
+ 
+-	return (dev->untrusted == 0);
++	if (dev->is_virtfn)
++		return pci_ats_supported(pci_physfn(dev));
++
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(pci_ats_supported);
+ 
 -- 
 2.53.0
 
