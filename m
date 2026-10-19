@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774934D3BDF;
-	Mon, 19 Oct 2026 13:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3427854BC0B;
+	Mon, 19 Oct 2026 13:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418199; cv=none; b=QboJ/Qx1fokS/2eRJbsA25G2AfIjIwoTVtEKUG8d/An6wtQcAmShf15d2KcR19rUb60DPJQD2XTxET/ArMpy3wzyo9nJ1jNqnWiu3N0LcMXD53k0sfwFwFXv1foCDOJUBU/0vJzjv32X4me/ZWsV7Wb/2TRcwTC7zuoqUVkhOKM=
+	t=1792418202; cv=none; b=EPuny+YjsHlQwkpNeiPp6X3asWxkvV1yfdk7Rc8Hs/JW+cQvpUu0sQd5xSV/6YTwNvi5zlxlZ4I16eLMkwKj4KGQp6pP0bQA3I9cbJ1VuxyOuCmXSYucAAkbAkGrMyJjZidQXgf4Kqu2iLfAv/1JKycOBqrtkfp8QkF2FKhjaHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418199; c=relaxed/simple;
-	bh=DGeyJUKNG/Zud4VeFVjsUaBEmqmQzHiz7nCp348GZvA=;
+	s=arc-20240116; t=1792418202; c=relaxed/simple;
+	bh=zbv5n/iUgw1TdOv5qfqPb2adYceNULy459/p58NA4r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ueMkY7GzYE8vIpmFW3kaNFuFWrLZElm2dStCQe8Jrm6fpEaXnlH+ivCJeYoLPlGVKyjRIPbTLnwpWBlcDnTAnb0s4c6PvtxlTBGfSYoLCHS+0+E6aTEBB3CPvMs1G/TfCTuOfdeThLnyJy8wwwgKKbGDg9wXz8f4n6IvctYQbcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HAZSqTT4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=M1bd/wOVJHVSO4ab6bfrtKGSkS+BDUOFgKX3qs+EsIOmTOhJS83HD4XmR5H50gUjP8c0Lt2fFfTuSdkg+Y46vYwkJPtYTD2EmgsSjWDv7Co7hcxtC/yfNGnTOlYI6yCZcBUgjs8GtZ3CmLoMJIWFpTWgbzdIwEcQiRVR734CMiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YFwiVWoK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HAZSqTT4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1881F000C6;
-	Mon, 19 Oct 2026 13:56:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YFwiVWoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6E01F000C4;
+	Mon, 19 Oct 2026 13:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418197;
-	bh=ab8K1Llg3UAFspOW+KyCke1prYK5tm9fieHRIDRqQcE=;
+	s=k20260515; t=1792418199;
+	bh=yaDvv4if2EQfZyDxwt9WaxbkScaEfCJPng9oJb9w5zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HAZSqTT4SSHnZtvrc8unzgvs3tRVtEv2oYsaoPNkGNBAQYvCjCB+wCxzmhNqfUxIT
-	 Hu9URr83A5B5aeaAnHKCZx1q967VLLIIpPHSwrNB595LVyLBvpd4XxBd7P/GSCwSmZ
-	 Aa3UaHqeG9J43VfERhimebWN3mAtkdC6kUiPyv4CPnKCXK7C4Lxd7iZ7+TwglwHgF7
-	 kUyRE1hmBBb9pM/Pm2IXAuaykK4jmNFtuxpWRs7JBNiQZjtnjeaVeEe2ocFLGRcQVa
-	 IlpGYbbJZ9NtC0Iae+RFOiDBicrNpZzwKO1whheAJQqyFSbPR843TV4boMdcjM5VW1
-	 Nvt2Voe9baVLg==
+	b=YFwiVWoKItAkFqQQZJzoBiPZbAlwK8lR3MZIcTo486SUlZIAF3I8J92njvFALeHhA
+	 Gnz8OGawaTC+9zTtvqP3PyXR8Qv8c362iAf5fWA9BYyK+CopGpE0ckamTkqrBIc/Wc
+	 Q66ZT4cwS0X3hBVguGKd5PPUljZxDkZiw661zpnO77zUcg6eqWIc3PjDBEulP8EhRI
+	 TOpl6AAWNb5W2CQH+6ukBD59cAHABbl2aXE8HifnSlFIPptXvb06u9ySmAU4pD+gPc
+	 3uhpEAA6gwARBTYGwCMCXjbw364PuLWVBASjxmev12ySSmKB5cFFWEETgiNMnHRJn1
+	 FAI0QlYfkeyFQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Milo Chen <cmh79479@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+Cc: Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andreas.noever@gmail.com,
-	westeri@kernel.org,
-	YehezkelShB@gmail.com,
-	linux-usb@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] thunderbolt: xdomain: Notify peers after enumeration
-Date: Mon, 19 Oct 2026 09:46:12 -0400
-Message-ID: <20261019135441.1420968-81-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/amd/pm: derive stable PPT limits from PPTable
+Date: Mon, 19 Oct 2026 09:46:13 -0400
+Message-ID: <20261019135441.1420968-82-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,442 +57,562 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Milo Chen <cmh79479@gmail.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit e027dba038f0008df9bc9575f5c3e803e90636c6 ]
+[ Upstream commit 25f4a46b0c8acd77c9065b50a1fe48af27d91fdf ]
 
-Service drivers may register local XDomain properties while discovery is
-still in progress. This can cause the properties changed notification to be
-sent before the peer is ready to act on it.
+GetPptLimit reports mutable PMFW runtime state. Using that value for
+static capabilities causes two externally visible problems:
 
-If the peer has already read the local property block before the service
-was registered, it may keep using the old property generation and miss the
-newly registered service. With ThunderboltIP this can leave the network
-service half-discovered after a warm reboot and the login request
-eventually times out.
+- A userspace override changes the default reported through hwmon.
+- A firmware reset changes the advertised minimum or maximum range.
 
-Queue another properties changed notification after the XDomain reaches
-ENUMERATED so the peer can re-read the final local properties.
+Derive platform defaults and supported ranges from the driver PPTable
+for Sienna Cichlid, Navi10, Arcturus, and Aldebaran. Reserve PMFW queries
+for the effective current limit.
 
-Signed-off-by: Milo Chen <cmh79479@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Runtime policy can no longer redefine immutable platform capabilities.
+
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
-candidate is a one-line Thunderbolt XDomain handshake fix: after
-discovery reaches `ENUMERATED`, send another properties-changed
-notification so a peer can pick up services registered during discovery.
-That matches a real ThunderboltIP failure after warm reboot, and the
-surrounding helpers already exist here.
+I have enough from the local 6.12 tree, the sibling SMU13/SMU14
+backports, and the series context to decide. The remaining lore lookups
+failed with 403, so those are marked unverified.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [drm/amd/pm] [derive] [source immutable PPT default/min/max from
+the driver PPTable instead of PMFW GetPptLimit]
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Record: `[thunderbolt: xdomain:] [Notify] [send properties-changed to
-  peers once XDomain discovery reaches ENUMERATED]`
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+Record:
+- Signed-off-by: Yang Wang <kevinyang.wang@amd.com> (author)
+- Reviewed-by: Kenneth Feng <kenneth.feng@amd.com> (AMD PM reviewer)
+- Signed-off-by: Alex Deucher <alexander.deucher@amd.com> (amdgpu
+  maintainer)
+- No Fixes:, Reported-by, Tested-by, Link:, or Cc: stable (absence
+  expected)
+- Ignore Sasha Levin SOB if present (pipeline)
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Record:
-  - `Signed-off-by: Milo Chen <cmh79479@gmail.com>` (author)
-  - `Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>`
-    (Thunderbolt maintainer; applied the patch)
-  - No `Fixes:`
-  - No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:` /
-    `Link:` / `Cc: stable`
-  - Absence of `Fixes:` / `Cc: stable` is expected for this review and
-    is not a negative signal
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Record:
+- Bug: GetPptLimit returns mutable PMFW runtime state, but the driver
+  used that one value for current, default, min, and max.
+- Symptoms: (1) a userspace power-cap override changes the default shown
+  in hwmon; (2) a firmware/GPU reset changes the advertised min/max
+  range.
+- Failure mode: hwmon `power1_cap_default` / `power1_cap_max` /
+  `power1_cap_min` stop being immutable platform capabilities. After
+  reset, `smu_set_power_limit()` can reject a previously valid TDP
+  because max was recomputed from the runtime value.
+- Root cause: static capabilities were taken from PMFW instead of
+  PPTable.
+- Version info: none in the message. Upstream SHA from drm.git is
+  `25f4a46b0c8acd77c9065b50a1fe48af27d91fdf` (author 2026-07-30,
+  committed 2026-08-06).
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-- Record:
-  - **Bug:** Service drivers may register local XDomain properties while
-    discovery is still running. The properties-changed notification can
-    go out before the peer can act on it.
-  - **Symptom:** Peer keeps an old property generation and misses the
-    new service. With ThunderboltIP, the network service stays half-
-    discovered after a **warm reboot** and the **login request times
-    out**.
-  - **Root cause:** Notification is sent too early (during discovery);
-    nothing is sent once the local host is fully enumerated.
-  - **Fix:** Queue another properties-changed notification when the
-    XDomain reaches `ENUMERATED`.
-  - **Version info:** none in the message.
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not a disguised cleanup. It is an explicit correctness fix.
+Navi10/Sienna also start using AC vs DC PPTable entries, matching the
+SMU13 pattern already in this tree.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-- Record: Not a disguised cleanup. The message describes a concrete
-  functional failure (ThunderboltIP login timeout) and a protocol-timing
-  fix.
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
----
+Step 2.1: INVENTORY THE CHANGES
+Record:
+- `arcturus_ppt.c` `arcturus_get_power_limit`: ~+12/-11
+- `navi10_ppt.c` `navi10_get_power_limit`: ~+16/-12
+- `sienna_cichlid_ppt.c` `sienna_cichlid_get_power_limit`: ~+16/-12
+- `aldebaran_ppt.c` `aldebaran_get_power_limit`: ~+6/-2
+- Scope: four ASIC PPT backends, one function each. Surgical, not a
+  cross-subsystem refactor.
 
-## PHASE 2: DIFF ANALYSIS
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Record:
+- Before: query GetPptLimit into `power_limit`; on failure fall back to
+  PPTable; assign that same value to current, default, and (for
+  Navi/Sienna) the OD min/max base.
+- After: default/min/max come from PPTable (Navi/Sienna: AC or DC by
+  `adev->pm.ac_power`). GetPptLimit is used only for current; on query
+  failure current falls back to default.
+- Arcturus: max becomes the PPTable default; min stays 0 (already true
+  in this tree from `08e5f8e1a24fb`).
+- Aldebaran: max already came from `pptable->PptLimit`; default now does
+  too, instead of the GetPptLimit result.
+- Path: init via `smu_late_init()` → `smu_get_asic_power_limits()`, and
+  GPU reset via `smu_reset()` which re-runs late_init. Also used when
+  Sienna/Aldebaran re-query current.
 
-**Step 2.1: INVENTORY THE CHANGES**
-- Record:
-  - File: `drivers/thunderbolt/xdomain.c` (`+1 / -0`)
-  - Function: `tb_xdomain_state_work()`
-  - Scope: single-file, one-line surgical change
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: [Logic / correctness] Using a mutable firmware PPT as the
+immutable hwmon default/range. Fix: PPTable owns capabilities; PMFW owns
+current.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Record:
-  - **Before:** `XDOMAIN_STATE_PROPERTIES` success only sets `xd->state
-    = XDOMAIN_STATE_ENUMERATED`.
-  - **After:** same, then `tb_xdomain_queue_properties_changed(xd)`.
-  - Path: successful remote property fetch at the end of XDomain
-    discovery (normal path, not an error path).
+Step 2.4: ASSESS THE FIX QUALITY
+Record: Obviously correct and matches `smu_v13_0_0_get_power_limit()` /
+`smu_v14_0_2_get_power_limit()` already in this tree. Minimal.
+Regression risk is low: Navi/Sienna now pick DC limits on battery, which
+is the same rule SMU13 already uses here. Desktop `ac_power` is normally
+true, so those cards keep AC limits. No API or locking changes.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-- Record:
-  - **Category:** logic / protocol handshake correctness (missed peer
-    notification).
-  - **Mechanism:** `tb_xdomain_queue_properties_changed()` already runs
-    in `XDOMAIN_STATE_INIT` and after UUID. `tb_register_property_dir()`
-    (used by `thunderbolt-net`) also notifies via
-    `update_all_xdomains()`. If that happens while the peer is not
-    ready, or after the peer already read the old block, the peer can
-    stick on the old generation. There was no notify after local
-    discovery finished. The new call reuses the existing notify helper
-    at ENUMERATED so the peer re-reads the final block.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Record:
-  - **Quality:** Obviously correct relative to the described race. It
-    reuses `tb_xdomain_queue_properties_changed()`, which already sends
-    `PROPERTIES_CHANGED_REQUEST` with retries.
-  - **Minimal:** one call, no API/data-structure change.
-  - **Regression risk:** Low for the intended case. Extra notifies are
-    already part of the protocol; the receiver path in
-    `tb_xdp_handle_request()` treats `PROPERTIES_CHANGED_REQUEST` as
-    “re-run state work / re-read properties.”
-  - **Noted risk (code-derived, not field-confirmed):** because
-    `XDOMAIN_STATE_ENUMERATED` already re-enters `PROPERTIES` when a
-    peer notify arrives, a successful re-read will now send another
-    notify. Two Linux hosts both running this change could keep
-    exchanging property updates. No follow-up revert/fix appears in this
-    tree after the commit. Treat as theoretical unless proven in use.
+Step 3.1: BLAME THE CHANGED LINES
+Record: The GetPptLimit-as-everything pattern dates to `1e239fdd31cdf1`
+(Evan Quan, 2020-06-08, “maximize code sharing around power limit”).
+Min/max pointer args came from `1958946858a62b` (Ma Jun, 2023-10-12).
+Present since well before 6.12.
 
----
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. The real ancestor is the 2020 GetPptLimit
+sharing, which is in this tree.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record:
+- `08e5f8e1a24fb` already in this tree: Arcturus min=0 (Cc: stable).
+  This patch keeps that.
+- `b3498e00aff57` “fix smu13 power limit default/cap calculation” (Yang
+  Wang, Cc: stable, in v6.12.94): same bug on SMU13.
+- `b3adc697752b9` follow-up SMU13 range fix (Cc: stable, Closes gitlab
+  5419).
+- `a322d276f3d10` SMU14 range fix (Cc: stable).
+- This candidate is the remaining SMU11/Aldebaran analog; not already
+  applied (`git merge-base --is-ancestor 25f4a46b0c8acd HEAD` failed).
 
-**Step 3.1: BLAME THE CHANGED LINES**
-- Record:
-  - Surrounding state machine: `8e1de7042596ab` (“thunderbolt: Add
-    support for XDomain lane bonding”, 2022-05-05), first in
-    **v5.19-rc1**.
-  - Notify helper and INIT/UUID notify sites: same commit.
-  - The added line is this candidate (`e027dba038f000`, Milo Chen,
-    2026-06-24).
-  - XDomain discovery protocol itself: `d1ff70241a275` (2017),
-    **v4.15-rc1**.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Yang Wang is a regular amd/pm contributor in this tree
+(SMU13/SMU14 power-limit fixes, pptable UAF, metrics). Kenneth Feng
+reviewed those as well.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-- Record: No `Fixes:` tag. Not applicable. The missing notify at
-  ENUMERATED dates to the 5.19 state machine.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Standalone. No new helpers. `SocketPowerLimitDc`,
+`GET_PPTABLE_MEMBER`, and `adev->pm.ac_power` already exist here. Later
+drm-next-7.3 series (refactor by controller, OD percentage,
+save/restore, restore after reset) is a large follow-on and is not
+required for this hunk.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-- Record:
-  - Related: `abc27e5bfed2f` (“Allow service drivers to specify their
-    own properties”) — extra per-service properties, not required for
-    this one-line call.
-  - `308092d080852` (“Restart XDomain discovery handshake after
-    failure”) — nearby error-path change; not a prerequisite.
-  - Standalone. Not `patch X/Y`.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-- Record: Milo Chen has only this thunderbolt commit here. Applied by
-  **Mika Westerberg**, Thunderbolt maintainer.
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Record:
+- `b4 dig -c 25f4a46b0c8acd77c9065b50a1fe48af27d91fdf`: lore.kernel.org
+  returned server error; no match.
+- lore.kernel.org WebFetch: 403.
+- drm.git commit page confirms SHA, author, reviewer, committer.
+- amd-gfx July 2026: related 4-patch “refactor PPT limit runtime policy”
+  (Kenneth Feng reviewed). “derive stable PPT limits from PPTable” is
+  listed first among Yang Wang’s five commits in the amd-drm-next-7.3
+  pull (mail-archive).
+- UNVERIFIED: full review thread / NAKs / explicit Cc: stable for this
+  exact patch (lore 403).
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-- Record: Depends only on `tb_xdomain_queue_properties_changed()` and
-  `XDOMAIN_STATE_ENUMERATED`, both present since 5.19. Applies
-  standalone.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: Kenneth Feng Reviewed-by; Alex Deucher signed off. Recipients
+from `b4 dig -w` unverified.
 
----
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No Reported-by on this commit. Sibling SMU13 fix closed
+https://gitlab.freedesktop.org/drm/amd/-/work_items/5227 (WebFetch 403;
+title/body unverified). Follow-up closed work item 5419.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: First of five PPT commits in amd-drm-next-7.3. Later four are a
+large policy refactor. This patch is self-contained.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- Record:
-  - `b4 dig -c e027dba038f000…` →
-    https://patch.msgid.link/20260624060909.2610434-1-cmh79479@gmail.com
-  - **v1:** `[PATCH] thunderbolt: xdomain: notify peers after
-    enumeration` (From: Rqirus) —
-    https://patch.msgid.link/20260624011131.2532004-1-cmh79479@gmail.com
-  - **v2:** same diff; changelog: “Use full name in From and Signed-off-
-    by.”
-  - Mika Westerberg on v2: **“Applied to thunderbolt.git/next,
-    thanks!”**
-  - No NAK. No request for `Cc: stable` in the saved thread.
-  - lore.kernel.org HTTP fetch returned 403; discussion was recovered
-    via `b4 dig -m`.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: UNVERIFIED for this SHA (lore 403). The same class of fix for
+SMU13/SMU14 already landed in this 6.12 tree with Cc: stable.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-- Record (`b4 dig -w`): To/Cc Mika Westerberg, Andreas Noever, Michael
-  Jamet, Yehezkel Bernat, linux-usb, linux-kernel. Subsystem maintainers
-  were on the original mail. Mika applied it.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-- Record: No bugzilla/syzbot/Link. The commit text is the bug report:
-  ThunderboltIP half-discovered after warm reboot, login timeout.
-  Severity from the author: networking service fails to complete
-  discovery.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `arcturus_get_power_limit`, `navi10_get_power_limit`,
+`sienna_cichlid_get_power_limit`, `aldebaran_get_power_limit`.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-- Record: Single-patch series (v1→v2, identical diff). Not part of a
-  multi-patch set.
+Step 5.2: TRACE CALLERS
+Record: Registered as `.get_power_limit` in each ppt_funcs table.
+Invoked via `smu_get_asic_power_limits()` from:
+- `smu_late_init()` (boot and `smu_reset()`), filling
+  `smu->{current,default,max,min}_power_limit`
+- `smu_get_power_limit()` for CURRENT on Sienna-family (11.0.7/11/12/13)
+  and Aldebaran (13.0.2)
+Hwmon `power1_cap{,_default,_max,_min}` goes
+`amdgpu_hwmon_show_power_cap_*` → `amdgpu_dpm_get_power_limit` →
+`smu_get_power_limit`. Sets are range-checked against cached
+`max_power_limit`/`min_power_limit` in `smu_set_power_limit()`.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-- Record: Web search of lore.kernel.org/stable for this subject returned
-  no relevant hits. **UNVERIFIED** that nobody asked for it on stable@;
-  no evidence it was rejected either.
+Step 5.3: TRACE CALLEES
+Record: `smu_v11_0_get_current_power_limit()` /
+`smu_cmn_send_smc_msg(SMU_MSG_GetPptLimit)` for current only; PPTable
+fields for defaults.
 
----
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Userspace-reachable via hwmon sysfs (typically root). GPU reset
+/ late_init also refresh the caches. Reachable on Navi10 (RX 5700),
+Sienna (RX 6800/6900, 6000M), Arcturus (MI100), Aldebaran (MI200).
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: SMU13 (`smu_v13_0_0`, `smu_v13_0_7`) and SMU14 (`smu_v14_0_2`)
+already use PPTable + AC/DC for default/min/max in this tree. These four
+backends were the leftover GetPptLimit-for-everything copies.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-- Record: `tb_xdomain_state_work()` modified; calls
-  `tb_xdomain_queue_properties_changed()`; that queues
-  `tb_xdomain_properties_changed()` →
-  `tb_xdp_properties_changed_request()`.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 5.2: TRACE CALLERS**
-- Record:
-  - `tb_xdomain_state_work` is delayed work started from
-    `start_handshake()` / queue helpers; not a syscall.
-  - `tb_xdomain_queue_properties_changed` call sites: INIT (no UUID
-    needed), UUID success, and (after this patch) PROPERTIES success.
-  - `tb_register_property_dir()` is called from
-    `drivers/net/thunderbolt/main.c` (`tbnet_init`),
-    `drivers/thunderbolt/stream.c`, `drivers/thunderbolt/dma_test.c`.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: Yes. Local tree is **pending-6.12 / 6.12.111**
+(`p-6.12-3-g88406e77611c6`). The four `*_get_power_limit` functions
+match the patch “before” side. Bug introduced ~2020 (`1e239fdd31cdf1`),
+long before 6.12.
 
-**Step 5.3: TRACE CALLEES**
-- Record: Notify path allocates/sends an XDomain control packet with
-  retries (`XDOMAIN_RETRIES`). Failure is logged; it does not unwind
-  enumeration.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Clean apply expected. Navi10 context below the hunk differs
+(`MAX_PCIE_CONF` vs `NUM_LINK_LEVELS`) but that is outside this
+function. Arcturus min=0 already present.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-- Record: Reachable when two hosts do XDomain discovery over
-  Thunderbolt/USB4 (cable/peer already present, including after warm
-  reboot). Userspace does not need a special syscall; loading
-  `thunderbolt-net` during boot vs in-progress discovery is the trigger.
-  Config: `CONFIG_USB4` plus Thunderbolt networking.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: SMU13/SMU14 analogs are here; these four ASICs are not. No
+earlier version of this exact change.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-- Record: Same notify is already used at INIT/UUID and when property
-  dirs are registered. This fills the gap at end-of-discovery. No
-  sibling drivers needed the same hunk.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
----
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [drm/amd/pm SWSMU] [IMPORTANT] — common AMD dGPU/instinct power
+management, not core mm/net, but widely used hardware.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively maintained; recent 6.12.y already took SMU13/SMU14
+power-limit correctness fixes from the same author.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-- Record: Yes. `drivers/thunderbolt/xdomain.c` has the PROPERTIES →
-  ENUMERATED transition. Parent of the candidate only sets `xd->state =
-  XDOMAIN_STATE_ENUMERATED` with no notify. ThunderboltIP registers
-  `"network"` via `tb_register_property_dir()` in this tree. Bug class
-  has been present since the 5.19 state machine; this tree is 7.3-rc4,
-  so the code is in-scope.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-- Record: Expected **clean apply**. Parent context around the hunk
-  matches this tree’s pre-patch source. One added line, no helpers
-  missing.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific: Navi10/Navi14, Sienna Cichlid family, Arcturus,
+Aldebaran. Anyone using hwmon power cap (LACT, CoreCtrl, scripts) or
+hitting GPU reset.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-- Record: No other commit on this file addresses “notify after
-  enumeration” or the ThunderboltIP warm-reboot miss. `abc27e5bfed2f` is
-  a separate feature (per-service properties), not a substitute.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record:
+- Always at `smu_late_init` if PMFW current ≠ PPTable default (boot
+  power source / firmware policy).
+- GPU reset (`smu_reset` → late_init) refreshes default/max/min from
+  GetPptLimit, so a runtime policy or leftover firmware value rewrites
+  advertised range.
+- In this 6.12 tree, DEFAULT/MAX/MIN hwmon reads use the cache, so a
+  live userspace write to `power1_cap` does not immediately rewrite
+  `power1_cap_default` unless late_init/reset re-runs. The commit’s
+  first symptom is therefore mainly boot/reset, not every write. Still a
+  real bug.
+- Trigger is privileged sysfs or reset, not an unprivileged crash
+  primitive.
 
----
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Incorrect hwmon capabilities; after reset,
+`smu_set_power_limit()` can reject a previously legal TDP because max
+was derived from the runtime PPT. No oops/UAF/corruption. Severity:
+MEDIUM (functional / ABI), same class already accepted for this tree on
+SMU13.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record: Benefit medium-high for affected GPUs (correct caps, no trapped
+range after reset). Risk low (~40 net lines, four isolated functions,
+established pattern). Ratio favors backport.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-- Record: `drivers/thunderbolt/` (USB4/Thunderbolt). **IMPORTANT** for
-  USB4/TBT hosts, **PERIPHERAL** relative to mm/VFS. Affects Thunderbolt
-  XDomain and ThunderboltIP (`drivers/net/thunderbolt/`), not all
-  machines.
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-- Record: Actively maintained (Mika Westerberg). Recent xdomain work
-  includes UAF and bounds fixes. Mature protocol with ongoing fixes;
-  this is not staging.
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Real bug: mutable PMFW state used as immutable hwmon default/min/max.
+- After GPU reset, cached max/min can shrink and block restoring the
+  platform TDP.
+- Same class already backported to this 6.12 tree for SMU13/SMU14
+  (`b3498e00aff57`, `b3adc697752b9`, `a322d276f3d10`), all Cc: stable.
+- Small, obviously correct, no new APIs.
+- Buggy code is in this tree; patch applies cleanly.
+- Reviewed by Kenneth Feng, signed off by Alex Deucher.
 
----
+AGAINST:
+- Not a crash, security hole, or data corruption.
+- First of a later 5-commit PPT series; later patches are large
+  refactors (do not take those).
+- Navi/Sienna AC/DC selection is extra vs the old always-AC fallback
+  (same as already-stable SMU13).
+- No Fixes:/Reported-by on this commit; lore thread unverified.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+UNRESOLVED:
+- Full amd-gfx review text / NAKs (lore 403, b4 failed).
+- GitLab 5227 details (403).
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-- Record: Thunderbolt/USB4 hosts using XDomain, especially ThunderboltIP
-  between two machines after warm reboot. Driver-specific / config-
-  specific (`CONFIG_USB4`, thunderbolt-net).
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? PASS — matches SMU13/14 in this tree;
+   AMD reviewer + maintainer.
+2. Fixes a real bug that affects users? PASS — wrong hwmon caps; reset
+   can trap the power range.
+3. Important issue? PASS — not a panic, but the same issue was already
+   treated as stable-worthy here for newer ASICs; user-visible PM/sysfs
+   breakage on common GPUs.
+4. Small and contained? PASS — four functions, ~70 lines.
+5. No new features or APIs? PASS — corrects existing hwmon values; AC/DC
+   uses existing PPTable fields.
+6. Can apply to the local tree? PASS — buggy code present; clean apply
+   expected.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-- Record: Warm reboot (or service driver registering properties during
-  discovery). Timing-dependent. Unprivileged users do not trigger it via
-  a random syscall; they hit it by using Thunderbolt networking. Common
-  for that hardware/use case, rare globally.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: None of the automatic exceptions (device ID / quirk / DT / build
+/ docs). Qualifies as a normal small correctness fix.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-- Record: ThunderboltIP discovery incomplete; login times out; network
-  over Thunderbolt does not come up. Not a panic, UAF, or corruption.
-  **Severity: HIGH for ThunderboltIP users, MEDIUM overall** (feature
-  broken, host stays up).
-
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-- Record:
-  - **Benefit:** Restores Thunderbolt networking after a realistic warm-
-    reboot race. High for those users.
-  - **Risk:** Very low line count; extra notify is an existing protocol
-    message. Theoretical Linux↔Linux notify loop is unverified in the
-    field; no revert in this tree.
-  - **Ratio:** Benefit outweighs risk.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR backporting:**
-- Real user-visible bug: ThunderboltIP half-discovered, login timeout
-  after warm reboot.
-- One-line, reuses an existing helper.
-- Maintainer (Mika Westerberg) applied it with no technical objections.
-- All needed symbols/state exist in this 7.3-rc4 tree (state machine
-  since 5.19).
-- Applies cleanly; not a new API/feature.
-- Standalone; v2 only fixed the author’s From name.
-
-**AGAINST backporting:**
-- Not a crash, UAF, or security bug.
-- Affects a subset (USB4/TBT XDomain / ThunderboltIP).
-- No `Reported-by` besides the author’s scenario.
-- Theoretical extra notify traffic between two patched Linux peers
-  (unverified in production).
-
-**UNRESOLVED:**
-- Could not fetch lore over HTTP (403); used `b4` mbox instead.
-- Mika’s v1 mail body was not in the saved v2 mbox; v2 changelog says
-  the only change was the From/SOB name.
-- No stable@ thread found.
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one existing helper call;
-   maintainer applied to thunderbolt.git/next.
-2. Fixes a real bug that affects users? **PASS** — ThunderboltIP login
-   timeout after warm reboot.
-3. Important issue? **PASS** — service remains unusable (connectivity
-   failure), not a panic; still a serious functional break for that
-   hardware.
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — helpers and state machine are
-   present; hunk context matches.
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-- Record: None (not a device ID, quirk table, DT, build, or docs-only
-  change). Qualifies as a normal small bugfix.
-
-**Step 9.4: DECISION**
-This tree has the buggy handshake. The patch is a minimal, maintainer-
-acked fix for a real ThunderboltIP discovery failure. That is
-appropriate to backport here.
-
----
-
-### What the commit solves for this tree
-On 7.3-rc4, XDomain discovery still notifies peers early and service
-drivers (notably `thunderbolt-net`) can still register the `"network"`
-property directory while handshake is in progress. Without a notify at
-`ENUMERATED`, a peer that already read the old block can miss the
-service; ThunderboltIP then sits half-discovered and login times out
-after warm reboot. One extra `tb_xdomain_queue_properties_changed()` at
-the end of discovery closes that window.
-
-### Stable rules
-The change is obviously correct, tiny, and does not add APIs. It fixes a
-real connectivity bug, not a refactor.
-
-### Risk vs benefit
-Benefit is restoring Thunderbolt networking after reboot. Risk is one
-extra protocol notify on a path that already sends that message.
-Residual ping-pong risk between two Linux peers is unverified and did
-not produce a follow-up fix in this tree.
-
-### Concerns
-No `Fixes:` tag (expected). Not a crash-class bug. Depends on
-Thunderbolt XDomain, which this tree has. No missing prerequisites.
-
----
+Step 9.4: MAKE YOUR DECISION
+This should be backported to this 6.12 tree. It is the leftover
+SMU11/Aldebaran half of a power-cap reporting bug whose SMU13/SMU14 half
+is already in 6.12.y. Do not pull the later PPT refactor series with it.
 
 Verification:
-- [Phase 1] Parsed commit `e027dba038f0008df9bc9575f5c3e803e90636c6`:
-  subject/body/SOBs only; no Fixes/Reported-by/Cc stable
-- [Phase 2] Diff: +1 line in `tb_xdomain_state_work()` after `xd->state
-  = XDOMAIN_STATE_ENUMERATED`
-- [Phase 2] Confirmed existing notifies at INIT (line 1739) and UUID
-  success (line 1751); `tb_register_property_dir()` calls
-  `update_all_xdomains()`
-- [Phase 2] Confirmed `thunderbolt-net` `tbnet_init()` calls
-  `tb_register_property_dir("network", tbnet_dir)`
-- [Phase 2] Receiver of `PROPERTIES_CHANGED_REQUEST` queues
-  `state_work`; `ENUMERATED` re-enters `PROPERTIES` (verified in
-  `xdomain.c`)
-- [Phase 3] `git blame`: state machine from `8e1de7042596ab`
-  (v5.19-rc1); XDomain protocol from `d1ff70241a275` (v4.15-rc1)
-- [Phase 3] `git log --author="Milo Chen" -- drivers/thunderbolt/`: only
-  this commit
-- [Phase 3] No later xdomain.c commit addresses this notify
-- [Phase 4] `b4 dig -c e027dba038f000…`: lore match
-  https://patch.msgid.link/20260624060909.2610434-1-cmh79479@gmail.com
-- [Phase 4] `b4 dig -a`: v1 and v2; v2 identical diff, From-name fix
-  only
-- [Phase 4] `b4 dig -w`: thunderbolt maintainers + linux-usb
-- [Phase 4] mbox: Mika Westerberg “Applied to thunderbolt.git/next,
-  thanks!”
-- [Phase 4] WebFetch lore: 403; used b4 instead
-- [Phase 4] Stable-list search: no relevant hits
-- [Phase 5] Callers of `tb_register_property_dir`: thunderbolt-net,
-  stream, dma_test (grep)
-- [Phase 5] semcode MCP: not available; used git grep/read
-- [Phase 6] `make kernelversion` / Makefile: 7.3.0-rc4; `git describe
-  HEAD`: v7.3-rc4-27-gf0100363d8c37
-- [Phase 6] Parent hunk lacks the notify; this tree has the helpers
-- [Phase 6] `git merge-base --is-ancestor e027dba038f000 HEAD`: ancestor
-  (original commit in this development tree; not used as “already
-  selected for stable”)
-- [Phase 7] MAINTAINERS: THUNDERBOLT DRIVER, Mika Westerberg
-- [Phase 8] Failure mode: ThunderboltIP login timeout / half-discovered
-  service, not oops
-- UNVERIFIED: Mika v1 review body (not in v2 mbox); whether Linux↔Linux
-  notify looping occurs in the field; whether stable@ ever discussed
-  this patch
+- [Phase 1] Parsed tags: author Yang Wang, Reviewed-by Kenneth Feng, SOB
+  Alex Deucher; no Fixes/Reported-by/Cc stable
+- [Phase 1] drm.git SHA 25f4a46b0c8acd77c9065b50a1fe48af27d91fdf
+  confirmed via search snippet
+- [Phase 2] Diff: four `*_get_power_limit` functions; PPTable for
+  default/min/max, GetPptLimit only for current
+- [Phase 3] git describe HEAD: p-6.12-3-g88406e77611c6; make
+  kernelversion 6.12.111
+- [Phase 3] git merge-base --is-ancestor 25f4a46b0c8acd HEAD: not an
+  ancestor (not in this tree)
+- [Phase 3] git blame: GetPptLimit pattern from 1e239fdd31cdf1 (2020);
+  still present in all four files
+- [Phase 3] Related stable commits in this tree: b3498e00aff57
+  (v6.12.94), b3adc697752b9, a322d276f3d10, 08e5f8e1a24fb
+- [Phase 4] b4 dig -c 25f4a46b0c8acd: lore server error, no match
+- [Phase 4] lore WebFetch 403; gitlab 5227 403
+- [Phase 4] amd-gfx July 2026: 4-patch PPT refactor series by same
+  author; drm-next-7.3 pull lists this commit first of five
+- [Phase 5] Callers: smu_late_init, smu_reset, smu_get_power_limit,
+  hwmon power1_cap*; range check in smu_set_power_limit
+- [Phase 5] SMU13/SMU14 in this tree already implement the post-fix
+  pattern
+- [Phase 6] Read all four local functions: match the patch “before” side
+- [Phase 6] GET_PPTABLE_MEMBER and SocketPowerLimitDc exist for Sienna
+  and Beige Goby
+- [Phase 8] Failure mode: wrong hwmon caps / possible -EINVAL on set
+  after reset; not oops
+- UNVERIFIED: original lore discussion, NAKs, gitlab 5227 body, whether
+  SocketPowerLimitDc is zero on any Navi10 mobile SKU
+
+This is a small, already-reviewed correction of hwmon PPT
+default/min/max on GPUs that still use GetPptLimit for those values. The
+same bug was already backported on SMU13/SMU14 in this 6.12 tree, the
+code is present, and the follow-on refactor series is not required.
 
 **YES**
 
- drivers/thunderbolt/xdomain.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c | 25 ++++++++-------
+ .../gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c   | 32 +++++++++++--------
+ .../amd/pm/swsmu/smu11/sienna_cichlid_ppt.c   | 28 +++++++++-------
+ .../drm/amd/pm/swsmu/smu13/aldebaran_ppt.c    |  8 +++--
+ 4 files changed, 53 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index d9c2686b5fe41..b35e2f7c318dc 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -1692,6 +1692,7 @@ static void tb_xdomain_state_work(struct work_struct *work)
- 			tb_xdomain_failed(xd);
- 		} else {
- 			xd->state = XDOMAIN_STATE_ENUMERATED;
-+			tb_xdomain_queue_properties_changed(xd);
- 		}
- 		break;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+index 4fff78da81ff8..2b2d3c3aa20ba 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+@@ -1329,24 +1329,25 @@ static int arcturus_get_power_limit(struct smu_context *smu,
+ 					uint32_t *min_power_limit)
+ {
+ 	PPTable_t *pptable = smu->smu_table.driver_pptable;
+-	uint32_t power_limit;
++	uint32_t current_limit, default_limit;
  
+-	if (smu_v11_0_get_current_power_limit(smu, &power_limit)) {
+-		/* the last hope to figure out the ppt limit */
+-		if (!pptable) {
+-			dev_err(smu->adev->dev, "Cannot get PPT limit due to pptable missing!");
+-			return -EINVAL;
+-		}
+-		power_limit =
+-			pptable->SocketPowerLimitAc[PPT_THROTTLER_PPT0];
++	if (!pptable) {
++		dev_err(smu->adev->dev,
++			"Cannot get PPT limit due to pptable missing!");
++		return -EINVAL;
+ 	}
+ 
++	default_limit = pptable->SocketPowerLimitAc[PPT_THROTTLER_PPT0];
++
++	if (smu_v11_0_get_current_power_limit(smu, &current_limit))
++		current_limit = default_limit;
++
+ 	if (current_power_limit)
+-		*current_power_limit = power_limit;
++		*current_power_limit = current_limit;
+ 	if (default_power_limit)
+-		*default_power_limit = power_limit;
++		*default_power_limit = default_limit;
+ 	if (max_power_limit)
+-		*max_power_limit = power_limit;
++		*max_power_limit = default_limit;
+ 	/*
+ 	 * No lower bound is imposed on the limit. Any unreasonable limit set
+ 	 * will result in frequent throttling.
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
+index a2fcf678182b4..4737ceb2a5434 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
+@@ -2393,22 +2393,26 @@ static int navi10_get_power_limit(struct smu_context *smu,
+ 		(struct smu_11_0_powerplay_table *)smu->smu_table.power_play_table;
+ 	struct smu_11_0_overdrive_table *od_settings = smu->od_settings;
+ 	PPTable_t *pptable = smu->smu_table.driver_pptable;
+-	uint32_t power_limit, od_percent_upper = 0, od_percent_lower = 0;
++	uint32_t current_limit, default_limit;
++	uint32_t od_percent_upper = 0, od_percent_lower = 0;
+ 
+-	if (smu_v11_0_get_current_power_limit(smu, &power_limit)) {
+-		/* the last hope to figure out the ppt limit */
+-		if (!pptable) {
+-			dev_err(smu->adev->dev, "Cannot get PPT limit due to pptable missing!");
+-			return -EINVAL;
+-		}
+-		power_limit =
+-			pptable->SocketPowerLimitAc[PPT_THROTTLER_PPT0];
++	if (!pptable) {
++		dev_err(smu->adev->dev,
++			"Cannot get PPT limit due to pptable missing!");
++		return -EINVAL;
+ 	}
+ 
++	default_limit = smu->adev->pm.ac_power ?
++		pptable->SocketPowerLimitAc[PPT_THROTTLER_PPT0] :
++		pptable->SocketPowerLimitDc[PPT_THROTTLER_PPT0];
++
++	if (smu_v11_0_get_current_power_limit(smu, &current_limit))
++		current_limit = default_limit;
++
+ 	if (current_power_limit)
+-		*current_power_limit = power_limit;
++		*current_power_limit = current_limit;
+ 	if (default_power_limit)
+-		*default_power_limit = power_limit;
++		*default_power_limit = default_limit;
+ 
+ 	if (powerplay_table) {
+ 		if (smu->od_enabled &&
+@@ -2422,15 +2426,15 @@ static int navi10_get_power_limit(struct smu_context *smu,
+ 	}
+ 
+ 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
+-					od_percent_upper, od_percent_lower, power_limit);
++		 od_percent_upper, od_percent_lower, default_limit);
+ 
+ 	if (max_power_limit) {
+-		*max_power_limit = power_limit * (100 + od_percent_upper);
++		*max_power_limit = default_limit * (100 + od_percent_upper);
+ 		*max_power_limit /= 100;
+ 	}
+ 
+ 	if (min_power_limit) {
+-		*min_power_limit = power_limit * (100 - od_percent_lower);
++		*min_power_limit = default_limit * (100 - od_percent_lower);
+ 		*min_power_limit /= 100;
+ 	}
+ 
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+index 31c2c0386b1f9..d553c6fbab47c 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+@@ -632,20 +632,24 @@ static int sienna_cichlid_get_power_limit(struct smu_context *smu,
+ 	struct smu_11_0_7_powerplay_table *powerplay_table =
+ 		(struct smu_11_0_7_powerplay_table *)smu->smu_table.power_play_table;
+ 	struct smu_11_0_7_overdrive_table *od_settings = smu->od_settings;
+-	uint32_t power_limit, od_percent_upper = 0, od_percent_lower = 0;
+-	uint16_t *table_member;
++	uint32_t current_limit, default_limit;
++	uint32_t od_percent_upper = 0, od_percent_lower = 0;
++	u16 *power_limit_ac, *power_limit_dc;
+ 
+-	GET_PPTABLE_MEMBER(SocketPowerLimitAc, &table_member);
++	GET_PPTABLE_MEMBER(SocketPowerLimitAc, &power_limit_ac);
++	GET_PPTABLE_MEMBER(SocketPowerLimitDc, &power_limit_dc);
+ 
+-	if (smu_v11_0_get_current_power_limit(smu, &power_limit)) {
+-		power_limit =
+-			table_member[PPT_THROTTLER_PPT0];
+-	}
++	default_limit = smu->adev->pm.ac_power ?
++		power_limit_ac[PPT_THROTTLER_PPT0] :
++		power_limit_dc[PPT_THROTTLER_PPT0];
++
++	if (smu_v11_0_get_current_power_limit(smu, &current_limit))
++		current_limit = default_limit;
+ 
+ 	if (current_power_limit)
+-		*current_power_limit = power_limit;
++		*current_power_limit = current_limit;
+ 	if (default_power_limit)
+-		*default_power_limit = power_limit;
++		*default_power_limit = default_limit;
+ 
+ 	if (powerplay_table) {
+ 		if (smu->od_enabled &&
+@@ -659,15 +663,15 @@ static int sienna_cichlid_get_power_limit(struct smu_context *smu,
+ 	}
+ 
+ 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
+-					od_percent_upper, od_percent_lower, power_limit);
++		 od_percent_upper, od_percent_lower, default_limit);
+ 
+ 	if (max_power_limit) {
+-		*max_power_limit = power_limit * (100 + od_percent_upper);
++		*max_power_limit = default_limit * (100 + od_percent_upper);
+ 		*max_power_limit /= 100;
+ 	}
+ 
+ 	if (min_power_limit) {
+-		*min_power_limit = power_limit * (100 - od_percent_lower);
++		*min_power_limit = default_limit * (100 - od_percent_lower);
+ 		*min_power_limit /= 100;
+ 	}
+ 	return 0;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+index 18d5d07045098..9e67e57d70b75 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+@@ -1281,8 +1281,12 @@ static int aldebaran_get_power_limit(struct smu_context *smu,
+ 
+ 	if (current_power_limit)
+ 		*current_power_limit = power_limit;
+-	if (default_power_limit)
+-		*default_power_limit = power_limit;
++	if (default_power_limit) {
++		if (pptable)
++			*default_power_limit = pptable->PptLimit;
++		else
++			*default_power_limit = power_limit;
++	}
+ 
+ 	if (max_power_limit) {
+ 		if (pptable)
 -- 
 2.53.0
 
