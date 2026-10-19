@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225D4538741;
-	Mon, 19 Oct 2026 13:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428CB538748;
+	Mon, 19 Oct 2026 13:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418174; cv=none; b=bSQnM+y61uD8r7nmpzUC3vKzJxOY03A6n4IPUgebeXUjXMBPHqtTT5u6pmB+cEnbZgJ2bZHmRimcSmXm0BjYf0DbuAU4dEG1yRtUGSsBG1L2R0yK996IhUxBJXtdhtaDxfFCHra8tWf5gUuG0ILoEdXzJlFh0cLuC/zEBKWrhJU=
+	t=1792418175; cv=none; b=PeAOu4kXSut+qo02yksOdtd/YONRS7NiEx7lLdYGF4IvmgDlbPI2h/PjXhC4eVmI78XxLhbBEXmfbAY/VG5Y/l2+aBDkcUv/orc8vtLovU03Y9C4US8wscwQv8YjHJ2yydWehF/sFLmkXdl2Bb1Dict9Lp2xfKfQPkULUjOCfZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418174; c=relaxed/simple;
-	bh=MsYuuonF+t8Vet8Hd4vyBkQ3hI11jrb+4rAv2QYnZqQ=;
+	s=arc-20240116; t=1792418175; c=relaxed/simple;
+	bh=ojKbfTfbjoT+pOmAsSpXrKEufsS1a47lgmJwSDSoZJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j9Do1o1NzxqjVhaZKwrEZ4ROoZi3fUlJh1nh4hgIc1bofaGtKTtv9wEFLVRNcKd0/O4BwhmEj91/I4LL3zFsp0t7mde9MpwDGUhRDgA799Er1sHNMR95s5VdDN/pMyVJnvscveQ+SzFDreMRdQ5QvB45Gbst42QT+GnyN4a9rQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UsTrLdsx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QCSM8ZvDybOxN1MT6QvkG0GPVjt/AX1Gx6D+Zo0FqEnqslW1H7xjA9NUpc69oZp/chuPIAqlId9VsFUrD61vn1nZ3hiQPbbVxMH11zgv3YiSaT018LU9pG3mH2QPPm65PvywXkLRqV78x0r4h3+8sIu8b+01VR/7ru1RqWdzc4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPbznKCY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UsTrLdsx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316751F000C7;
-	Mon, 19 Oct 2026 13:56:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPbznKCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A32D1F000C8;
+	Mon, 19 Oct 2026 13:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418172;
-	bh=ICmoUyCunv4E8CECVZGCjgTclZEh1+4vusTPYfelhOQ=;
+	s=k20260515; t=1792418173;
+	bh=cafnEB8iBQJmsk1xd6L3vlvyLfpoK8rRBYgY6/Qxe8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UsTrLdsxW02tzARaXeYSf9ITYP3vxgIuhNsy+PswKSfYwaZ1CkwF5JYicbvcxrahp
-	 QnFkpdzUh5jnjSij2QkMbofFaudm1jFxDoLUhmCXeEvipD93YejGI/h+OfldHD0u2X
-	 qBU5EP9htVXEsf6gRoyV6fQijcoTSFg+xZOZ9sT4SpGAHiXWGYKQLXgbdfe0Sgl3j4
-	 C4fRYkmIcG/wGOd4k2Nm0eZViPgpuGucN3sB0eAcML5nzK1aMW1rLbBrxn9LN2i862
-	 MgWWx+KwSrke/z9FZvplLOkqO43Ig1i6GAe/MfkhH5sGwG8xU2XCNOtt1ZuxLHallP
-	 +Nzw8FC4paTcQ==
+	b=gPbznKCY3BkVUma8CpKNV4jXzDR3s0pgfZMzAiDyhRcnHvfWCJZiCQjcYhZaAhU1/
+	 vRK6Pmp1ntBGl+IQFrrr8+SYbdqU+3JujtkgWnwTJOwalpychyLaGqNfzRr88xBB4E
+	 8Y8ipMQF6ocLdR3APBEg0BTw7BBNLz2JzuuQTuS/R5l09PUQebcAW2XqSNNaKUspz/
+	 DsHhi8CRPcLbf3pFHGndyPtOrA2V+D3m0clTw4AiUvhnl1sWMngCEm2qGuffvQ/obG
+	 Fv+fbyaiZKqNVcVeusLaca9PrTX1fk2TDlbdYPmxkibzaipZw2i3iz7L2swL4tbO4e
+	 OvQv8sSklwJ7Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rahul Bukte <rahul.bukte@sony.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: William Hansen-Baird <william.hansen.baird@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jirislaby@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] serial: 8250: force synchronous probe for the ISA and PNP drivers
-Date: Mon, 19 Oct 2026 09:45:54 -0400
-Message-ID: <20261019135441.1420968-63-sashal@kernel.org>
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: rtlwifi: fix disabling of ASPM for RTL8723BE with AER flooding
+Date: Mon, 19 Oct 2026 09:45:55 -0400
+Message-ID: <20261019135441.1420968-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,463 +52,521 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rahul Bukte <rahul.bukte@sony.com>
+From: William Hansen-Baird <william.hansen.baird@gmail.com>
 
-[ Upstream commit 31e11af34e2c7cc61e25533ab877b1f9cc3eb528 ]
+[ Upstream commit 04a46c2dbf3b516c96a1d19b72917b56055ad6c1 ]
 
-On x86_64 defconfig, booting with driver_async_probe=serial hangs in early
-init. The 8250 PNP driver is put onto the async probe pool.
-serial8250_register_8250_port() runs in a kworker concurrently with the
-ISA registration done from the serial8250_init() initcall resulting in a
-deadlock or NULL dereference.
+commit 77a6407c6ab2 ("wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723")
+adds code which sets ppsc->support_aspm to false in
+_rtl_pci_update_default_setting() in order to disable ASPM.
+This does not, however, disable ASPM. Rather, it disables driver
+control of ASPM, and blocks calls to rtl_pci_enable_aspm()
+and rtl_pci_disable_aspm().
 
-  - Deadlock: serial_core_register_port() holds port_mutex across
-    serial_core_add_one_port()
-        uart_configure_port()
-            autoconfig_irq()
-                probe_irq_on()
-                    async_synchronize_full(),
-    which waits for the async probe pool to drain.
+In some cases, the pci device supplied to the probe function has
+ASPM enabled. The code would therefore not disable ASPM, as it means to,
+but rather just leave it enabled.
+This was discovered through testing on a Razer Blade 14 2017.
 
-    The async PNP worker reaches the "port already in use" check and
-    tries to unregister it.
-    serial8250_register_8250_port()
-        uart_remove_one_port()
-            serial_core_unregister_port()
-    This blocks on port_mutex.
-    The init thread waits for the worker and the worker waits for the
-    init thread.
+Implement a new __rtl_pci_disable_aspm(hw) function which does not check
+ppsc->support_aspm before disabling and call it from
+rtl_pci_disable_aspm().
 
-  - NULL deref: when the worker instead observes a slot whose port.dev
-    is set but whose port_dev has not yet been populated, it hits the
-    null pointer on the call to serial_core_get_ctrl_dev() in
-    serial_core_unregister_port().
+Then move the code added in the previous commit to rtl_pci_init_aspm() to
+allow adding a call to __rtl_pci_disable_aspm(hw).
+This makes sure ASPM is disabled while still disabling
+driver control of ASPM to block it from being enabled later.
 
-Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
-Link: https://patch.msgid.link/20260610054130.2825182-1-rahul.bukte@sony.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260630141553.785769-2-william.hansen.baird@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4**. The two-line `PROBE_FORCE_SYNCHRONOUS`
-change is a real deadlock/NULL-deref fix on the 8250 ISA vs PNP probe
-path, and the affected code is present here.
+Local tree is **7.3.0-rc4**. The original incomplete RTL8723BE ASPM
+quirk is in this lineage; this commit is a small, tested hardware-quirk
+fix that actually clears ASPM instead of only blocking driver control.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[serial/8250] [force] force synchronous probe for the ISA and
-PNP drivers`
+Step 1.1: PARSE THE SUBJECT LINE
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record: `[wifi: rtlwifi:] [fix] [ASPM disable for RTL8723BE with AER
+flooding actually takes effect]`
+
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+
 Record:
-- `Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>` (author)
-- `Link: https://patch.msgid.link/20260610054130.2825182-1-
-  rahul.bukte@sony.com`
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (tty
-  maintainer applied it)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence of Fixes/Cc-stable is expected for this
-  review)
+- No `Fixes:` tag (v3 cover letter: “Removed misleading Fixes tag from
+  patch 1”)
+- No `Reported-by:` / `Tested-by:` on this commit (testing is described
+  in the body: Razer Blade 14 2017)
+- `Acked-by: Ping-Ke Shih <pkshih@realtek.com>` (rtlwifi maintainer)
+- `Signed-off-by: William Hansen-Baird` (author)
+- `Signed-off-by: Ping-Ke Shih` (maintainer applied to rtw-next)
+- `Link: https://patch.msgid.link/20260630141553.785769-2-
+  william.hansen.baird@gmail.com`
+- No `Cc: stable@vger.kernel.org` (expected for this pipeline; not a
+  negative)
+- Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+  ignored per instructions
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
+
 Record:
-- **Bug:** On x86_64 defconfig, `driver_async_probe=serial` hangs in
-  early init. The 8250 PNP driver (`name = "serial"`) is queued for
-  async probe while `serial8250_init()` still registers ISA ports.
-- **Symptom/failure mode:**
-  1. **Deadlock:** ISA `serial_core_register_port()` holds `port_mutex`
-     through `autoconfig_irq()` → `probe_irq_on()` →
-     `async_synchronize_full()`. The async PNP worker hits the in-use
-     port path and blocks in `serial_core_unregister_port()` on the same
-     mutex.
-  2. **NULL deref:** The worker sees `port.dev` set but `port_dev` still
-     NULL, then `serial_core_get_ctrl_dev(port_dev)` oopses.
-- **Version information:** None beyond “x86_64 defconfig”.
-- **Root cause:** Concurrent ISA initcall registration vs async PNP
-  probe of the same 8250 port slots.
+- **Bug:** `77a6407c6ab2` set `ppsc->support_aspm = false` intending to
+  disable ASPM. That only disables *driver control* of ASPM
+  (`rtl_pci_enable_aspm` / `rtl_pci_disable_aspm` return early). If
+  firmware/BIOS left ASPM on at probe, it stays on.
+- **Symptom:** PCIe AER flooding, heavy lag, poor throughput, occasional
+  lock-ups on RTL8723BE (subsystem 11ad:1723; same class of issue on
+  other 8723BE cards).
+- **Root cause:** Early return `if (!ppsc->support_aspm) return;` in
+  `rtl_pci_disable_aspm()` prevents the register write that would clear
+  L0s/L1.
+- **Fix:** `__rtl_pci_disable_aspm()` skips that check; quirk in
+  `rtl_pci_init_aspm()` calls it, then sets `support_aspm = false` so
+  ASPM is not re-enabled.
+- **Version info:** Fixes incomplete quirk from April 2025; that quirk
+  is in this tree (first in v6.16).
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not a disguised cleanup. It is an explicit deadlock/oops fix.
-The in-thread note “Found while experimenting with
-`driver_async_probe=*` to improve boot time” only explains how it was
-found, not that it is theoretical.
+Step 1.4: DETECT HIDDEN BUG FIXES
+
+Record: Not hidden. Explicit fix of a broken hardware quirk. Not
+cleanup-only.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- `drivers/tty/serial/8250/8250_platform.c`: +1
-  (`serial8250_isa_driver.driver.probe_type`)
-- `drivers/tty/serial/8250/8250_pnp.c`: +1
-  (`serial_pnp_driver.driver.probe_type`)
-- Two insertions total. Surgical, two-file, same subsystem.
+Step 2.1: INVENTORY THE CHANGES
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** Both drivers use default `PROBE_DEFAULT_STRATEGY`.
-  `driver_allows_async_probing()` then honors `driver_async_probe=` /
-  module async-probe, so PNP probe can run in a kworker while
-  `serial8250_init()` is still in the initcall.
-- **After:** `PROBE_FORCE_SYNCHRONOUS` makes
-  `driver_allows_async_probing()` return false, so probe stays on the
-  registration thread and cannot overlap ISA `uart_add_one_port()`.
+- File: `drivers/net/wireless/realtek/rtlwifi/pci.c` only (`26`
+  insertions, `13` deletions)
+- Functions: `_rtl_pci_update_default_setting` (quirk removed),
+  `rtl_pci_disable_aspm` renamed to `__rtl_pci_disable_aspm` (early
+  `support_aspm` check dropped), new thin `rtl_pci_disable_aspm`
+  wrapper, `rtl_pci_init_aspm` (quirk moved here +
+  `__rtl_pci_disable_aspm()` call)
+- Scope: single-file surgical hardware-quirk fix
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** Race → deadlock and NULL dereference.
-- **Mechanism verified in this tree:**
-  - `serial8250_init()` calls `serial8250_pnp_init()` then later
-    `serial8250_register_ports()` which sets `up->port.dev` and calls
-    `uart_add_one_port()`.
-  - `serial_core_register_port()` holds `port_mutex` across
-    `serial_core_add_one_port()` → `uart_configure_port()` →
-    `config_port()`. With `UPF_AUTO_IRQ` (x86 `STD_COM*_FLAGS` when
-    `CONFIG_SERIAL_8250_DETECT_IRQ`), that reaches `autoconfig_irq()` →
-    `probe_irq_on()` → `async_synchronize_full()`.
-  - Concurrent PNP: `serial_pnp_probe()` →
-    `serial8250_register_8250_port()`. If `uart->port.dev` is already
-    set: `uart_remove_one_port()` → `serial_core_unregister_port()`.
-  - `serial_core_unregister_port()` reads `port->port_dev` and calls
-    `serial_core_get_ctrl_dev(port_dev)` **before** taking `port_mutex`.
-    NULL `port_dev` is an oops. Non-NULL `port_dev` waits on
-    `port_mutex` while the init thread waits for async probe → deadlock.
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 
-**Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- Obviously correct: `PROBE_FORCE_SYNCHRONOUS` exists specifically so
-  drivers that cannot tolerate async probe stay synchronous, including
-  against `driver_async_probe=`. Same pattern as i8042 PNP.
-- Minimal: two field initializers, no API/behavior change for the
-  default (already synchronous) boot path.
-- Regression risk is very low. The only cost is that these two drivers
-  cannot be async-probed, which is the intended workaround.
+- **Before:** `_rtl_pci_update_default_setting()` for 11ad:1723 only
+  sets `support_aspm = false`. Later `rtl_pci_disable_aspm()` /
+  `rtl_pci_enable_aspm()` no-op. `rtl_pci_init_aspm()` never clears
+  LNKCTL ASPM bits. RTL8723BE default `const_pci_aspm = 3` would have
+  taken `RT_RF_PS_LEVEL_ALWAYS_ASPM` and tried to *enable* ASPM; the
+  quirk blocked that enable but did not clear already-set bits.
+- **After:** After defaults, matching 11ad:1723 calls
+  `__rtl_pci_disable_aspm()` (writes LNKCTL, clears L0s/L1), then
+  `support_aspm = false`. ALWAYS_ASPM then calls
+  `rtl_pci_enable_aspm()`, which no-ops. Normal disable path still
+  respects `support_aspm`.
+
+Step 2.3: IDENTIFY THE BUG MECHANISM
+
+Record:
+- Category: **hardware workaround / logic correctness** (quirk did not
+  do what it claimed)
+- Mechanism: `support_aspm = false` was treated as “ASPM off” but it
+  only gated driver helpers. Probe-time ASPM from firmware stayed
+  enabled → AER RxErr flood.
+
+Step 2.4: ASSESS THE FIX QUALITY
+
+Record:
+- Obviously correct: disable first, then lock out re-enable.
+- Minimal: no API change; other chips still go through the guarded
+  wrapper.
+- Regression risk low: extra disable only for 11ad:1723; wrapper
+  preserves old behavior elsewhere.
+- Residual limit (pre-existing): `__rtl_pci_disable_aspm()` still
+  returns if bridge vendor is UNKNOWN. Not introduced here.
+- `_rtl8723be_enable_aspm_back_door()` still runs in `hw_init` and can
+  poke L0s/L1 via DBI; `enable_aspm()` afterward no-ops. Same as the
+  original quirk. Author testing reported AER flood stopped. Not a
+  reason to reject this patch.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
+Step 3.1: BLAME THE CHANGED LINES
+
 Record:
-- ISA `platform_driver` struct: `ffd8e8bd26e94` (“serial: 8250: Extract
-  platform driver”, 2024).
-- PNP `pnp_driver` struct: original tree (`1da177e4c3f41`, 2005).
-- The race is not in newly added probe_type lines; those are the fix.
-  The overlapping register/unregister design is long-standing. The NULL
-  deref specifically needs `port_dev` / `serial_core_get_ctrl_dev()`,
-  introduced by `84a9582fd2030` (“serial: core: Start managing serial
-  controllers to enable runtime PM”, in v6.5-rc1).
+- Incomplete quirk introduced by `77a6407c6ab24` (“wifi: rtlwifi:
+  disable ASPM for RTL8723BE with subsystem ID 11ad:1723”), 2025-04-28,
+  **in v6.16** (not v6.15).
+- That commit had `Cc: stable`, `Fixes: a619d1abe20c` (rtl8723be driver
+  add), bugzilla 218127, Tested-by.
+- ASPM helpers themselves date to the original rtlwifi PCI code (much
+  older).
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Not applicable. The deadlock ingredients
-(`probe_irq_on()` → `async_synchronize_full()` in `22a9d645677fe`;
-`driver_async_probe=` in `1ea61b68d0f86`) and the serial-core `port_dev`
-path are all in this tree.
+Step 3.2: FOLLOW THE FIXES: TAG
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Recent 8250_platform/pnp work is refactoring, not a hidden
-  prerequisite series.
-- This is standalone (not `patch X/Y`).
-- Follow-up on these files after this commit is only `4f643bef0984b`
-  (named initializers in the PNP ID table), unrelated.
+Record: No `Fixes:` on the candidate (intentionally dropped as
+“misleading” in v3). Functionally it completes `77a6407c6ab24`. That
+commit **is** an ancestor of this HEAD.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Rahul Bukte is not a serial maintainer. This is their only
-serial commit here; other listed commits are i915 NULL checks. Weight
-comes from Greg Kroah-Hartman applying it to tty, not from author
-tenure.
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Standalone. It only needs `struct device_driver.probe_type` and
-`PROBE_FORCE_SYNCHRONOUS`, both present in
-`include/linux/device/driver.h` and `drivers/base/dd.c` in this tree.
+Record: 3-patch series (v4):
+1. **This commit** — actual bugfix (standalone)
+2. `676e59a3825c6` — if-statement → `rtl_aspm_quirks` table (refactor)
+3. `2b7858891b100` — add 17aa:b736 (Razer Blade 14 2017)
+
+This patch does not need 2 or 3. Later `b3943b3c29714` (2023) removed
+*bogus bridge* ASPM writes; this patch only uses the remaining device
+LNKCTL path, so it does not restore that danger.
+
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+
+Record: William Hansen-Baird authored this series plus one unrelated
+rtl8723be irq cleanup. Applied and Acked by Ping-Ke Shih (Realtek
+rtlwifi maintainer).
+
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+
+Record: Needs `77a6407c6ab24` (or equivalent 11ad:1723 quirk) and
+existing `rtl_pci_disable_aspm` / `pcie_capability_*` helpers. All
+present here. Standalone vs the rest of the series.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+
 Record:
-- `b4 dig -c 31e11af34e2c7`:
-  https://patch.msgid.link/20260610054130.2825182-1-rahul.bukte@sony.com
-- `b4 dig -a`: **v1 only**, no later revisions.
-- Saved mbox (`b4 dig -m`) is the original patch only; **no review
-  replies, NAKs, or Cc: stable comments**.
-- Extra note in the mail (not in the committed message): “Found while
-  experimenting with `driver_async_probe=*` … Tested on x86_64 defconfig
-  under QEMU + KVM with `driver_async_probe=serial`.”
-- lore.kernel.org HTTP fetch returned 403; LKML mirror matches the same
-  v1 text.
+- `b4 dig -c 04a46c2dbf3b5` → https://patch.msgid.link/20260630141553.78
+  5769-2-william.hansen.baird@gmail.com
+- v1 2026-06-14, v2 2026-06-16, v3 2026-06-26, v4 2026-06-30 (applied)
+- v2: split `__rtl_pci_disable_aspm()` so the check is bypassed only for
+  the quirk
+- v3: style nits; **removed misleading Fixes tag**; trailing whitespace
+- v4: whitespace/`{}` nits; Acked-by carried forward
+- No NAKs. Ping-Ke: “looks good to me” + Acked-by; applied all 3 to rtw-
+  next
+- No reviewer `Cc: stable` in the saved thread
+- lore.kernel.org HTTP fetch returned 403; thread recovered via `b4 dig
+  -m`
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included Greg Kroah-Hartman, Jiri Slaby,
-Ilpo Järvinen, linux-serial, linux-kernel. No `Reviewed-by` landed. Greg
-applied it (tty maintainer SOB).
+Step 4.2: CHECK WHO REVIEWED THE PATCH
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Author reproduced a boot hang on x86_64
-defconfig + QEMU. That is a concrete trigger, not a static guess.
+Record: `b4 dig -w`: author, `pkshih@realtek.com`, `linux-
+wireless@vger.kernel.org`, `linux-kernel@vger.kernel.org`. Maintainer
+reviewed and applied.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone. Historical analogue: i8042 PNP
-`PROBE_FORCE_SYNCHRONOUS` (same driver-core annotation for probes that
-cannot run async). A 2018 attempt to mark 8250
-`PROBE_PREFER_ASYNCHRONOUS` shows async 8250 probe has been known to be
-delicate.
+Step 4.3: SEARCH FOR THE BUG REPORT
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: `https://lore.kernel.org/stable/?q=...` returned 403. Web search
-found no stable-thread discussion. **UNVERIFIED:** whether anyone
-already asked for or rejected this on stable@.
+Record: This commit cites in-person testing on a Razer Blade 14 2017.
+Underlying AER issue: kernel bugzilla 218127 and lore discussion from
+`77a6407c6ab24` (ASUS F441U/X555UQ, 11ad:1723). Real user impact (lags,
+lock-ups), not theoretical.
+
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+
+Record: Patch 1 is the mechanism fix and is self-contained. Patches 2–3
+are refactor + extra ID; not required for *this* commit.
+
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+
+Record: **UNVERIFIED** — lore.kernel.org/stable blocked (Anubis). No in-
+tree evidence this was rejected for stable.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: No function bodies changed. Annotations on
-`serial8250_isa_driver` and `serial_pnp_driver`. Runtime effect is
-through `driver_allows_async_probing()` → probe of `serial8250_probe` /
-`serial_pnp_probe`.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
 
-**Step 5.2: TRACE CALLERS**
+Record: `_rtl_pci_update_default_setting`, `__rtl_pci_disable_aspm` (new
+name of old body), `rtl_pci_disable_aspm` (new wrapper),
+`rtl_pci_init_aspm`.
+
+Step 5.2: TRACE CALLERS
+
 Record:
-- `serial_pnp_probe`: PNP match during `pnp_register_driver()` from
-  `serial8250_pnp_init()` inside `serial8250_init()` (module_init /
-  boot).
-- ISA path: `serial8250_register_ports()` from the same initcall;
-  platform `serial8250_probe` from
-  `platform_driver_register(&serial8250_isa_driver)`.
-- Context: boot initcall, not a syscall hot path. Reachable on any x86
-  box with 8250 + PNP (ACPI selects `PNP`; `SERIAL_8250_PNP` defaults to
-  y).
+- `rtl_pci_init_aspm()` from `rtl_pci_probe()` (device enumeration)
+- `rtl_pci_disable_aspm()` from disconnect and `intf_ops->disable_aspm`
+- `disable_aspm`/`enable_aspm` from rtl8723be `hw_init`, other rtlwifi
+  chips, and `ps.c` power save
+- Probe/init path; not a syscall hot path. Userspace-visible via loading
+  the driver on affected laptops.
 
-**Step 5.3: TRACE CALLEES**
-Record: `serial_pnp_probe` → `serial8250_register_8250_port` → possible
-`uart_remove_one_port` → `serial_core_unregister_port`. ISA:
-`uart_add_one_port` → `serial_core_register_port` →
-`uart_configure_port` → `autoconfig_irq` → `probe_irq_on` →
-`async_synchronize_full`.
+Step 5.3: TRACE CALLEES
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Triggered by the documented kernel parameter
-`driver_async_probe=serial` or `=*`, not by an unprivileged syscall.
-Still a real boot-time path: x86_64 defconfig sets
-`CONFIG_SERIAL_8250=y`, `CONFIG_SERIAL_8250_CONSOLE=y`,
-`CONFIG_SERIAL_8250_DETECT_IRQ=y`. Userspace cannot hit it after boot
-unless the driver is re-probed.
+Record: `pcie_capability_read_word` /
+`_rtl_pci_platform_switch_device_pci_aspm` →
+`pcie_capability_clear_and_set_word` on `PCI_EXP_LNKCTL`; optional
+clkreq via `_rtl_pci_switch_clk_req`.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Many drivers already set `PROBE_FORCE_SYNCHRONOUS` (i8042 PNP,
-USB gadget UDC, PHY, Hyper-V, CXL, regulators, etc.). This is the
-established way to opt a driver out of async probe.
+Step 5.4: FOLLOW THE CALL CHAIN
+
+Record: PCI probe → `rtl_pci_init_aspm` → quirk disable. Reachable on
+affected hardware when `rtl8723be`/`rtlwifi` loads. Not a
+sanitizer/syzbot path; real laptop hardware.
+
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+
+Record: Toshiba 8192SE still only sets `support_aspm = false` without
+forcing disable. Same class of incompleteness; this commit does not
+touch it. Follow-up series extends the same disable+flag pattern to
+17aa:b736 via an ID table.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`
-- `make kernelversion` / Makefile: **7.3.0-rc4**
-- Both files and both driver structs exist.
-  `serial_core_unregister_port()` still dereferences `port_dev` before
-  `port_mutex`. `serial8250_register_ports()` still sets `port.dev` then
-  calls `uart_add_one_port()`. `probe_irq_on()` still calls
-  `async_synchronize_full()`. `x86_64_defconfig` still enables
-  `SERIAL_8250_DETECT_IRQ`.
-- NULL-deref window exists since serial-core `port_dev` (v6.5). Deadlock
-  window with `driver_async_probe` exists since that cmdline was added
-  (2019) on kernels with IRQ autodetect.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Clean apply in this tree. `8250_platform.c` exists here (split
-in `ffd8e8bd26e94`). `probe_type` field exists. No conflicting local
-changes.
+Record: **Yes.** Checkout is **7.3.0-rc4**
+(`v7.3-rc4-27-gf0100363d8c37`). `77a6407c6ab24` is an ancestor (present
+since v6.16). Parent of the candidate still has the 11ad:1723 block that
+only clears `support_aspm`. Driver, PCI ASPM helpers, and
+`HARDWARE_TYPE_RTL8723BE` are all here. Bug was **not** introduced after
+this tree branched.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No earlier alternate fix for this race. `git log
---grep='synchronous probe' -- drivers/tty/serial/` only shows this
-commit.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+
+Record: Against the parent of `04a46c2dbf3b5`, the patch is a clean
+apply on this file. Later 7.3 commits already refactored that quirk into
+`rtl_aspm_quirks[]`; that is post-fix evolution, not a missing
+prerequisite. No rework needed for this tree’s lineage.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+
+Record: No alternate fix of the same “flag vs actually clear LNKCTL” bug
+besides this series. Original `77a6407c6ab24` is the incomplete version
+this completes.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/tty/serial/8250` — **IMPORTANT**. 8250 is the standard
-PC UART/console driver, not staging/peripheral.
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained (regular tty/serial 8250 cleanups). The bug
-is in long-lived register/unregister interaction plus async probe, not
-in brand-new 8250 code.
+Record: `drivers/net/wireless/realtek/rtlwifi` —
+**PERIPHERAL/IMPORTANT** for owners of RTL8723BE laptops (ASUS
+F441U/X555UQ and similar). Not core mm/fs, but a shipping WiFi adapter
+in production machines.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+
+Record: Mature driver; still receiving bugfixes. rtlwifi 8723BE is old
+but still the in-tree driver for that chip.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Config/cmdline specific: `CONFIG_SERIAL_8250` + PNP 8250, and
-`driver_async_probe=serial` or `=*`. Default boot (no that parameter)
-stays synchronous and does not hit it. Population is everyone using that
-documented parameter on x86 8250, including distro/OEM boot-time
-experiments.
+Step 8.1: DETERMINE WHO IS AFFECTED
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Trigger: boot with `driver_async_probe=serial` (PNP name) or `=*`.
-- Not default, but documented in `kernel-parameters.txt` for boot-time
-  optimization.
-- Timing-dependent: deadlock vs NULL deref depends on whether `port_dev`
-  is populated yet.
-- Unprivileged users cannot set the cmdline after boot.
+Record: Driver-specific: RTL8723BE with subsystem **11ad:1723** (ASUSTek
+F441U, X555UQ, etc.). Only that ID in *this* commit.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record:
-- Deadlock during early init → **CRITICAL** (boot hang).
-- NULL deref in `serial_core_get_ctrl_dev()` → **CRITICAL** (oops).
-- Author reproduced the hang on x86_64 defconfig + QEMU.
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record: Trigger is boot/probe with ASPM already enabled (common). Not a
+race. Unprivileged users do not need a special exploit; plugging/using
+the laptop is enough. Confirmed on real hardware.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+
+Record: AER correctable-error flood → system-wide slowdown, bad WiFi
+throughput, **occasional lock-ups**. Severity **HIGH** (hang/lock-up and
+severe lag), not a KASAN crash.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+
 Record:
-- **Benefit:** High for anyone using `driver_async_probe` on 8250;
-  prevents boot hang/oops. Default path is unchanged.
-- **Risk:** Very low (2 lines, existing driver-core flag, no locking/API
-  change).
-- **Ratio:** Strongly in favor of taking it.
+- **Benefit:** High for affected laptops; makes an already-stable quirk
+  actually work.
+- **Risk:** Low (~26/+13 lines, one file, ID-gated, maintainer Acked,
+  tested).
+- **Ratio:** Strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 9.1: COMPILE THE EVIDENCE
 
-FOR backporting:
-- Real, reproduced boot hang and a NULL deref on a common x86_64
-  defconfig.
-- Failure modes are deadlock and oops (stable-class bugs).
-- Two-line, obviously correct use of `PROBE_FORCE_SYNCHRONOUS`.
-- Call paths verified in this 7.3-rc4 tree.
-- Applied by the tty maintainer.
-- Same annotation pattern as i8042 PNP.
-- Default probe behavior is already synchronous; this only blocks a
-  dangerous async override.
+**FOR:**
+- Real hardware bug: AER flood, lag, lock-ups on known laptops
+- Existing stable-bound quirk (`77a6407c6ab24`) did not disable ASPM
+  when it was already on
+- Small, obviously correct, ID-scoped
+- Hardware quirk exception
+- Maintainer Acked-by and applied; author tested
+- Prerequisite incomplete quirk is in this 7.3 tree
+- Self-contained as patch 1/3
 
-AGAINST:
-- Trigger is a non-default cmdline, not everyday production boots.
-- No `Reviewed-by`; mailing list had no discussion.
-- Author is not a serial regular.
-- No syzbot or multi-user reports.
+**AGAINST:**
+- Affects a specific PCI subsystem ID, not all users
+- No `Fixes:`/`Cc: stable` (expected here; Fixes was dropped as
+  misleading)
+- DBI backdoor in `hw_init` still exists (pre-existing; testing said AER
+  stopped)
 
-UNRESOLVED:
-- Stable@ discussion could not be fetched (HTTP 403).
-- Whether a more invasive serial-core locking fix would be “more
-  correct” long-term (not required for this self-contained workaround).
+**UNRESOLVED:**
+- Stable mailing-list history (lore/stable fetch blocked)
+- Direct lore.kernel.org HTTP (403); discussion recovered via b4
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — two field sets; tested on
-   QEMU x86_64 defconfig; Greg applied it.
-2. Fixes a real bug that affects users? **PASS** — hang/oops with a
-   documented kernel parameter.
-3. Important issue? **PASS** — deadlock and NULL deref, severity
-   CRITICAL when triggered.
-4. Small and contained? **PASS** — +2 lines, two 8250 driver structs.
-5. No new features or APIs? **PASS** — uses existing `probe_type`.
-6. Can apply to the local tree? **PASS** — files, APIs, and buggy paths
-   all exist on v7.3-rc4.
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/DT/docs/build fix. Closest analogue is a
-hardware/driver quirk: annotate a driver that cannot safely probe
-asynchronously.
+1. Obviously correct and tested? **PASS** — maintainer ack; tested on
+   affected hardware; v2–v4 review
+2. Fixes a real bug that affects users? **PASS** — broken quirk left
+   ASPM on; AER/lag/lock-ups
+3. Important issue? **PASS** — lock-ups and severe performance, not
+   cosmetic
+4. Small and contained? **PASS** — one file, +26/-13
+5. No new features or APIs? **PASS** — completes an existing quirk
+6. Can apply to the local tree? **PASS** — `pci.c` and `77a6407c6ab24`
+   are here; context matches
 
-**Step 9.4: DECISION**
-This belongs in this tree. The 8250 ISA/PNP overlap plus
-`probe_irq_on()`’s `async_synchronize_full()` is a genuine boot deadlock
-and oops once async probe is forced. The workaround is the smallest
-correct change and does not alter the default synchronous boot path.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
 
-===============================================================
-Verification
-===============================================================
-- [Phase 1] Parsed tags: author SOB, Greg KH SOB, lore msgid link; no
-  Fixes/Reported-by/Reviewed-by/Cc-stable.
-- [Phase 2] Diff: +1 line each in `8250_platform.c` and `8250_pnp.c`;
-  `probe_type = PROBE_FORCE_SYNCHRONOUS`.
-- [Phase 2] `driver_allows_async_probing()`: `PROBE_FORCE_SYNCHRONOUS`
-  returns false even when cmdline requests async.
-- [Phase 2] `serial8250_init()` order: `serial8250_pnp_init()` then
-  `serial8250_register_ports()` then `platform_driver_register()`.
-- [Phase 2] `serial8250_register_8250_port()`: `if (uart->port.dev)
-  uart_remove_one_port()`.
-- [Phase 2] `serial_core_unregister_port()` calls
-  `serial_core_get_ctrl_dev(port_dev)` before `port_mutex`.
-- [Phase 2] `probe_irq_on()` calls `async_synchronize_full()`
-  (`kernel/irq/autoprobe.c:39`).
-- [Phase 2] x86 `STD_COM*_FLAGS` include `UPF_AUTO_IRQ` when
-  `CONFIG_SERIAL_8250_DETECT_IRQ`; x86_64_defconfig sets that.
-- [Phase 3] `git blame`: probe_type lines are this commit; surrounding
-  structs are older.
-- [Phase 3] `84a9582fd2030` introduced `serial_core_unregister_port`
-  (contained in v6.5-rc1).
-- [Phase 3] Author has no other 8250 commits; no prerequisite series.
-- [Phase 4] `b4 dig -c 31e11af34e2c7`: original submission found; `-a`
-  shows v1 only; `-w` lists Greg/Jiri/Ilpo/linux-serial; `-m` mbox has
-  no replies.
-- [Phase 4] lore.kernel.org WebFetch/curl: 403. LKML mirror confirms
-  same v1 text.
-- [Phase 4] UNVERIFIED: stable@ archive contents.
-- [Phase 5] PNP driver `.name = "serial"` matches
-  `driver_async_probe=serial`. ISA name is `serial8250`.
-- [Phase 5] ACPI Kconfig `select PNP`; `SERIAL_8250_PNP` default y.
-- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; Makefile
-  7.3.0-rc4.
-- [Phase 6] `git merge-base --is-ancestor 31e11af34e2c7 HEAD`: ancestor
-  (used only to confirm the code under review is this change).
-- [Phase 8] Failure mode: early-init deadlock or NULL deref; severity
-  CRITICAL when `driver_async_probe` is used.
+Record: **Hardware quirk/workaround** for a broken RTL8723BE/ASPM
+combination.
 
-The patch is small, correct, and prevents a boot hang/oops on a path
-that exists in this 7.3-rc4 tree.
+Step 9.4: MAKE YOUR DECISION
+
+This tree has the incomplete 11ad:1723 quirk and the rtlwifi ASPM path.
+The change is a small, reviewed fix that actually clears ASPM so those
+laptops do not keep flooding AER and locking up. It belongs in this
+tree.
+
+Verification:
+- [Phase 1] Tags: Acked-by Ping-Ke Shih; Link msgid
+  20260630141553.785769-2; no Fixes/Cc:stable; v3 changelog said Fixes
+  was removed as misleading
+- [Phase 1] Body: `support_aspm=false` blocks disable/enable helpers
+  instead of clearing ASPM
+- [Phase 2] Diff: pci.c +26/-13; quirk moved to `rtl_pci_init_aspm`;
+  `__rtl_pci_disable_aspm` skips the flag check
+- [Phase 2] RTL8723BE default `const_pci_aspm = 3` / `aspm_support = 1`
+  verified in `rtl8723be/sw.c`
+- [Phase 3] `git merge-base --is-ancestor 77a6407c6ab24 HEAD` → yes;
+  original first in v6.16, not v6.15
+- [Phase 3] `git merge-base --is-ancestor 04a46c2dbf3b5 HEAD` → yes; not
+  an ancestor of v7.2; is in v7.3-rc1
+- [Phase 3] Series: this commit, then ID-table refactor, then 17aa:b736;
+  this patch standalone
+- [Phase 4] `b4 dig -c 04a46c2dbf3b5` / `-a` / `-w` / `-m`: v1–v4,
+  maintainer Ack, applied to rtw-next; no NAK
+- [Phase 4] WebFetch lore 403; stable lore Anubis — UNVERIFIED via HTTP
+- [Phase 5] Callers: `rtl_pci_probe` → `rtl_pci_init_aspm`;
+  `intf_ops->disable_aspm` from rtl8723be `hw_init` and `ps.c`
+- [Phase 6] `make kernelversion` / `git describe HEAD`: 7.3.0-rc4 /
+  `v7.3-rc4-27-gf0100363d8c37`; origin torvalds/linux.git
+- [Phase 6] Parent of candidate still has 11ad:1723 `support_aspm =
+  false` only
+- [Phase 8] Failure mode: AER flood, lag, lock-ups — HIGH; change ID-
+  gated — low risk
+- UNVERIFIED: Whether this was discussed on stable@; whether DBI
+  backdoor re-enables L0s/L1 after probe on all machines (testing said
+  AER stopped)
+
+The patch is a contained hardware-quirk correctness fix for a bug this
+tree actually has.
 
 **YES**
 
- drivers/tty/serial/8250/8250_platform.c | 1 +
- drivers/tty/serial/8250/8250_pnp.c      | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 39 ++++++++++++++--------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_platform.c b/drivers/tty/serial/8250/8250_platform.c
-index fe7ec440ffa58..69d8720fb65bf 100644
---- a/drivers/tty/serial/8250/8250_platform.c
-+++ b/drivers/tty/serial/8250/8250_platform.c
-@@ -287,6 +287,7 @@ static struct platform_driver serial8250_isa_driver = {
- 	.driver		= {
- 		.name	= "serial8250",
- 		.acpi_match_table = acpi_platform_serial_table,
-+		.probe_type = PROBE_FORCE_SYNCHRONOUS,
- 	},
- };
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 8fb9604c3c533..f9f05252b890e 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -156,15 +156,6 @@ static void _rtl_pci_update_default_setting(struct ieee80211_hw *hw)
+ 				PCI_EXP_LNKCTL_ASPM_L1 | PCI_EXP_LNKCTL_CCC))
+ 		ppsc->support_aspm = false;
  
-diff --git a/drivers/tty/serial/8250/8250_pnp.c b/drivers/tty/serial/8250/8250_pnp.c
-index 7a837fdf9df13..3f41a9d6cb273 100644
---- a/drivers/tty/serial/8250/8250_pnp.c
-+++ b/drivers/tty/serial/8250/8250_pnp.c
-@@ -521,6 +521,7 @@ static struct pnp_driver serial_pnp_driver = {
- 	.remove		= serial_pnp_remove,
- 	.driver         = {
- 		.pm     = pm_sleep_ptr(&serial_pnp_pm_ops),
-+		.probe_type = PROBE_FORCE_SYNCHRONOUS,
- 	},
- 	.id_table	= pnp_dev_table,
- };
+-	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
+-	 * X555UQ with subsystem ID 11ad:1723 are known to output large
+-	 * amounts of PCIe AER errors during and after boot up, causing
+-	 * heavy lags, poor network throughput, and occasional lock-ups.
+-	 */
+-	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
+-	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
+-	     rtlpci->pdev->subsystem_device == 0x1723))
+-		ppsc->support_aspm = false;
+ }
+ 
+ static bool _rtl_pci_platform_switch_device_pci_aspm(
+@@ -203,7 +194,7 @@ static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
+ }
+ 
+ /*Disable RTL8192SE ASPM & Disable Pci Bridge ASPM*/
+-static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
++static void __rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ {
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
+@@ -215,9 +206,6 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ 	u16 aspmlevel = 0;
+ 	u16 tmp_u1b = 0;
+ 
+-	if (!ppsc->support_aspm)
+-		return;
+-
+ 	if (pcibridge_vendor == PCI_BRIDGE_VENDOR_UNKNOWN) {
+ 		rtl_dbg(rtlpriv, COMP_POWER, DBG_TRACE,
+ 			"PCI(Bridge) UNKNOWN\n");
+@@ -240,6 +228,16 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
+ 	_rtl_pci_platform_switch_device_pci_aspm(hw, linkctrl_reg);
+ }
+ 
++static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
++{
++	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
++
++	if (!ppsc->support_aspm)
++		return;
++
++	__rtl_pci_disable_aspm(hw);
++}
++
+ /*Enable RTL8192SE ASPM & Enable Pci Bridge ASPM for
+  *power saving We should follow the sequence to enable
+  *RTL8192SE first then enable Pci Bridge ASPM
+@@ -330,10 +328,25 @@ static void rtl_pci_parse_configuration(struct pci_dev *pdev,
+ 
+ static void rtl_pci_init_aspm(struct ieee80211_hw *hw)
+ {
++	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
+ 	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
++	struct rtl_priv *rtlpriv = rtl_priv(hw);
+ 
+ 	_rtl_pci_update_default_setting(hw);
+ 
++	/*
++	 * RTL8723BE found on some ASUSTek laptops, such as F441U and
++	 * X555UQ with subsystem ID 11ad:1723 are known to output large
++	 * amounts of PCIe AER errors during and after boot up, causing
++	 * heavy lags, poor network throughput, and occasional lock-ups.
++	 */
++	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
++	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
++	     rtlpci->pdev->subsystem_device == 0x1723)) {
++		__rtl_pci_disable_aspm(hw);
++		ppsc->support_aspm = false;
++	}
++
+ 	if (ppsc->reg_rfps_level & RT_RF_PS_LEVEL_ALWAYS_ASPM) {
+ 		/*Always enable ASPM & Clock Req. */
+ 		rtl_pci_enable_aspm(hw);
 -- 
 2.53.0
 
