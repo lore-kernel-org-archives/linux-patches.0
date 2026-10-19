@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D4755F624;
-	Mon, 19 Oct 2026 13:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DA45605EA;
+	Mon, 19 Oct 2026 13:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418246; cv=none; b=CvXIpmtAvijRRvERsC+ufgiiOhvyOxnLelPLvLmJZgOx7j28EH93GACu58AcDCugQapp6dacvebrbQg+t2V4H5xtViRK/NmHmWBn10nPAQ7Zn39/seW4jdZNj3O6sfPaRsuDXsZU3/WXOHHI2QWIRhWo4Ek7ZKHFGpOkDKOPsJg=
+	t=1792418247; cv=none; b=CFdQ9pal8EgRIhsMzs42WvKKO/CMHZp2J109P3ZBsFMlUMm9pvJReVhpu/GR7EmkCcC+z9YdVWcFN85rh+x8Ww0j7iBhUoeSubY6JvSWBW6IL3Wc5L5wIYwfb9gZLw/ElzWlaGrD8myA8mUvsV3wIjl+vmGHteaun8IMD21BEzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418246; c=relaxed/simple;
-	bh=qtg5o7vgcWmexblo8MQT+J0ce2cEPo8iV+2RB85ju/o=;
+	s=arc-20240116; t=1792418247; c=relaxed/simple;
+	bh=+bycS3FNwOEP9aBvLSskjl2fWeKQasweKMhsK2k/Dzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hDHNXqs/6FrE6uBm7cleY2q/3M2LEqignc5DG7kcU3vZMNsJez8CgM5QFK3G7r7nBWN+y5sSUKHu8drWbPWk5XzmWMONSsRKsevgHTE0wEpqZG8CK921wu+OUkXSfzX239twSS61XbzFai+z+M+SdltDgZGIla3B9lA6bnkEvNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AItLilEc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bMw7d/Qq6xDU4R3ZZyHaeQMDHoe49cPE3BtFUCUSrcf0pEb4Akj7Vks06Z/bX0zAfdP6JYa3JAEgbHSx4N7Eu6ZVVjlwjSN5BqqjAgFUGDiiEbtKFlfds7Bezxz8FsUzSuDYd/NgU7XD+XkV5IGBY5Koqv5ZY/6BdF4yoHaF0fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RYxJ2HuE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AItLilEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8481F000C4;
-	Mon, 19 Oct 2026 13:57:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RYxJ2HuE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB281F000C7;
+	Mon, 19 Oct 2026 13:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418243;
-	bh=yI+FRH+GKlmCSgljWKtK+F9J/s6RC2srfk5ZlIgedqQ=;
+	s=k20260515; t=1792418245;
+	bh=e/tPNI9hFvJMP9o9Nrl76+6LDOslBsYJqg1tlFuCZCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AItLilEcGJ/ASp82dX0muBpn3FYL8lFmcKQS9TWM17pOFqUsHlBuYeqbAeChvNc7O
-	 Z5cJpZbzQoqVnXhwfAX5fJ3GDSUvVJtyz5oZ5/8LYNjlVLNzGRvfNgvNZX0/7oQuSa
-	 HzCQBHhqs/L06cegHIChUTZVnkHaPZ7jE0VmLcb4TZNTcQFC/WFbni3phI/i7HUXTq
-	 8edj4GaE6NmcFCBL6k6NcgSdSQZqcnm2xD4ekZOrA0SxqbX4BkHuRqqzuiXhgHM1Fi
-	 fJthc8dgHfgzFtAPOjPmQt49RZZpNdoKtKwL1wOBV5u0W3IWfH1nxFRLDY4f2UX7pn
-	 KPvAcynYZdjiQ==
+	b=RYxJ2HuE/rAvej/yjrQja6JYLqSAZ4JW04Rwd4pdHny+EqP4eyB9a9tcSCV26GFqv
+	 gINTfAqjvymgl/d7/7dE8qXol1VgZQddoarwbKufQEO8r8mZJQJRcU+OxYRR+sAgLS
+	 AlSvQIDoHnPl27j3KvfyouAiAYtBm/Jn+ltJL2hcfYl1mOjiEg7nFOHBl9d/uU/ZKd
+	 YXOzDFFRBIpYbzFCkKQCBDTYqt5zYcbWxqDe45WrF6eKSkg2UkcoWLDYMawKR+yIWG
+	 wcy0j/C7enYTiw7XYai9n2925gVzTRp71qKKtWzWp9WfJG07tt8zZG21G+BzOrVi7M
+	 zbAL5iRq7SS5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shang En Sim <sim@shangen.org>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Szymon Durawa <szymon.durawa@linux.intel.com>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	mani@kernel.org,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Enable mute LEDs on HP Spectre x360 16-aa0xxx
-Date: Mon, 19 Oct 2026 09:46:45 -0400
-Message-ID: <20261019135441.1420968-114-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] PCI: vmd: Add Nova Lake (NVL) and Dunlow (DNL) Device IDs
+Date: Mon, 19 Oct 2026 09:46:46 -0400
+Message-ID: <20261019135441.1420968-115-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,357 +57,303 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang En Sim <sim@shangen.org>
+From: Szymon Durawa <szymon.durawa@linux.intel.com>
 
-[ Upstream commit bfcdc1c0eaeae5525c726193568e8d638b2afdc0 ]
+[ Upstream commit 55aa45154fe48b7d8e96bc031ad27d5b0edfcdb8 ]
 
-The HP Spectre x360 2-in-1 Laptop 16-aa0xxx with PCI subsystem ID
-0x103c:0x8c17 only gets the CS35L41 amplifier setup from
-ALC287_FIXUP_CS35L41_I2C_2, so the speaker-mute and mic-mute keyboard
-LEDs do not work.
+Add VMD Device ID Support for Intel NVL/DNL processors.
 
-Use ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX like subsystem ID 0x8c16 so
-the mute LEDs work.
-
-Tested on HP Spectre x360 2-in-1 Laptop 16-aa0xxx.
-
-Signed-off-by: Shang En Sim <sim@shangen.org>
-Link: https://patch.msgid.link/20260807055139.58707-1-sim@shangen.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Nirmal Patel <nirmal.patel@linux.intel.com>
+Signed-off-by: Szymon Durawa <szymon.durawa@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Nirmal Patel <nirmal.patel@linux.intel.com>
+Cc: Jonathan Derrick <jonathan.derrick@linux.dev>
+Link: https://patch.msgid.link/20260819130523.398493-1-szymon.durawa@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.53** (`pending-6.18`,
-`p-6.18-1-g03b85e06ca9bf`). The buggy `0x8c17` mapping is present here,
-and the target AA0XXX fixup already exists.
+This tree is **6.12.111** (`p-6.12-3-gc504cf0baa3d8`). The commit is a
+PCI ID table update for the existing Intel VMD driver, and that driver
+plus `VMD_FEATS_CLIENT` are already here.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ALSA hda/realtek] [Enable] [map HP Spectre x360 16-aa0xxx SSID
-0x8c17 to the mute-LED fixup already used by 0x8c16]
+**Step 1.1:** Record: `[PCI: vmd] [Add] Add Nova Lake (NVL) and Dunlow
+(DNL) Device IDs`
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Fixes: none (expected for this review)
-- Reported-by: none
-- Tested-by: none as a tag; body says the author tested on the 16-aa0xxx
-- Reviewed-by: none
-- Acked-by: none
-- Link: https://patch.msgid.link/20260807055139.58707-1-sim@shangen.org
-- Cc: stable: none (expected)
-- Signed-off-by: Shang En Sim <sim@shangen.org> (author)
-- Signed-off-by: Takashi Iwai <tiwai@suse.de> (ALSA maintainer; applied
-  the patch)
-- No syzbot / sanitizer tags
+**Step 1.2:** Tags (ignoring pipeline `Signed-off-by: Sasha Levin` /
+`[Upstream commit ...]`):
+- Suggested-by: Nirmal Patel (Intel VMD maintainer)
+- Signed-off-by: Szymon Durawa (author, Intel)
+- Signed-off-by: Bjorn Helgaas (PCI maintainer; applied it)
+- Cc: Nirmal Patel, Jonathan Derrick
+- Link: https://patch.msgid.link/20260819130523.398493-1-
+  szymon.durawa@linux.intel.com
+- No Fixes:, Reported-by, Tested-by, Reviewed-by in the committed
+  message (Reviewed-by: Nirmal Patel was given on v1 but not copied into
+  the commit)
+- No Cc: stable (expected for this review)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: SSID `0x103c:0x8c17` is wired only to
-  `ALC287_FIXUP_CS35L41_I2C_2`, so CS35L41 amps are set up but speaker-
-  mute and mic-mute keyboard LEDs do not work.
-- Symptom: mute/mic-mute LEDs stay dead on this 16-aa0xxx variant.
-- Root cause: sibling `0x8c16` already uses
-  `ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX`; `0x8c17` was left on the
-  amp-only quirk.
-- Version info: none in the message.
-- Author’s fix: use the same AA0XXX fixup as `0x8c16`. Tested on the
-  16-aa0xxx.
+**Step 1.3:** Record: Bug description: none as a crash/leak. The body is
+one sentence: add VMD Device IDs for Intel NVL/DNL. Failure mode without
+the patch: `vmd` does not bind to 8086:d70b / 8086:d73b, so NVMe/PCIe
+devices under Intel RST/VMD stay hidden. No version range in the
+message. Root cause: missing PCI IDs in `vmd_ids[]`.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. This is an explicit hardware-quirk correction, not
-cleanup disguised as a fix.
+**Step 1.4:** Record: Not a hidden bug fix. It is a hardware-ID
+enablement patch, which is an explicit stable exception.
 
 ===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
+PHASE 2: DIFF ANALYSIS
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `sound/hda/codecs/realtek/alc269.c` (1 hunk)
-- Scope: 1 line changed in `alc269_fixup_tbl[]` (SSID string + fixup id)
-- Classification: single-file surgical quirk-table update
+**Step 2.1:** Record: `drivers/pci/controller/vmd.c` only; +4 / -0.
+Function/data: `vmd_ids[]`. Scope: single-file surgical ID add.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record: Before, `SND_PCI_QUIRK(0x103c, 0x8c17, ...)` selected
-`ALC287_FIXUP_CS35L41_I2C_2` (`cs35l41_fixup_i2c_two` only). After, the
-same SSID selects `ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX`. That fixup
-still calls `cs35l41_fixup_i2c_two`, and also applies speaker pin
-configs, GPIO amp enable, mute-LED coefbit, and GPIO LED setup. Path:
-codec probe via `snd_hda_pick_fixup()`.
+**Step 2.2:** Record: Before: table ends at 0xb07f (mainline) / 0xb06f
+(this 6.12 tree). After: 0xd70b and 0xd73b appended with `.driver_data =
+VMD_FEATS_CLIENT`. Probe path for those IDs then runs `vmd_probe()` →
+`vmd_enable_domain()`.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Hardware workaround / audio codec quirk] The wrong existing
-fixup left mute LEDs (and the extra speaker GPIO/pin work from the 2024
-Spectre fixup) unused. The new mapping reuses an already-present fixup.
+**Step 2.3:** Record: Category **h) hardware workarounds / device ID
+additions**. Mechanism: PCI core matches the ID table; without the
+entries the driver never probes.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct: `0x8c16` and `0x8c17` were added together as
-“HP Spectre 16”; `0x8c16` already got the full AA0XXX fixup. One-line
-table change, no new API. Regression risk is low: the author tested
-0x8c17 hardware; the new fixup still runs the old CS35L41 I2C setup.
-Residual risk is that 0x8c17 could differ slightly from 0x8c16 in
-speaker pin/GPIO behavior; that is unverified beyond the author’s test.
+**Step 2.4:** Record: Obviously correct; same pattern as existing client
+SKUs (0x7d0b, 0xad0b, 0xb60b, 0xb06f). No locking/API/data-structure
+change. Regression risk is very low: only systems with those two IDs are
+affected, and they currently have no VMD driver at all.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: In this tree the `0x8c17` line is attributed to `aeeb85f26c3bb`
-(“ALSA: hda: Split Realtek HD-audio codec driver”, 2025-07-09), which is
-a file move. The content originated in `aa8e3ef4fe533` (“ALSA:
-hda/realtek: Add quirks for various HP ENVY models”, 2024-01-26, first
-in v6.9). Both `aa8e3ef4fe533` and `557f6e4ab5ba6` are ancestors of this
-HEAD.
+**Step 3.1:** Record: `vmd_ids[]` dates to 2016 (`185a383ada2e`).
+`VMD_FEATS_CLIENT` grouping is `14d2079af6483` (2023, in this tree).
+Last IDs in this tree are 0xb60b/0xb06f from `34883c93bd330` (already
+backported to 6.12.y). 0xd70b/0xd73b are absent here. 0xb07f is in the
+parent context of the mainline commit but **not** in this tree; it is a
+sibling ID, not a functional prerequisite.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. The incomplete 0x8c17 mapping has been in the
-lineage since v6.9; the AA0XXX fixup landed in `557f6e4ab5ba6` (v6.12)
-for 0x8c16 only and left 0x8c17 on the amp-only quirk.
+**Step 3.2:** Record: No Fixes: tag. Not applicable.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Related: `557f6e4ab5ba6` added
-`alc245_fixup_hp_spectre_x360_16_aa0xxx` and switched 0x8c16. Recent
-`alc269.c` history is other HP mute-LED quirks. This commit is
-standalone, not patch X/Y.
+**Step 3.3:** Record: Same-file history includes several prior DID adds
+that followed this exact pattern:
+- `57a128acaba02` PCI: vmd: Add DID 8086:7D0B and 8086:AD0B for Intel
+  MTL SKUs
+- `34883c93bd330` PCI: vmd: Add DID 8086:B06F and 8086:B60B for Intel
+  client SKUs (already in this 6.12 tree)
+Standalone; not patch X/Y of a series that this commit depends on.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Shang En Sim has no other Realtek commits in this history.
-Takashi Iwai applied it. This tree already contains many similar HP
-mute-LED `SND_PCI_QUIRK` backports.
+**Step 3.4:** Record: Author Szymon Durawa has no other VMD commits in
+this tree. Suggested/reviewed by Nirmal Patel, who authored the previous
+client DID add in this file.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Needs `ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX` and the 0x8c17
-table row. Both exist here. `git apply --check` of `bfcdc1c0eaeae`
-succeeded (hunk at offset -491). Standalone.
+**Step 3.5:** Record: Uses existing `PCI_VDEVICE` and
+`VMD_FEATS_CLIENT`. Does not use later v7.3 features
+(`VMD_FEAT_USE_BIOS_INFO`, BUS_RESTRICT_CFG=3). Those other v7.3 VMD
+patches target different IDs (0x28C1 / Arrow Lake-HX). Can apply
+standalone.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c bfcdc1c0eaeae`:
-  https://patch.msgid.link/20260807055139.58707-1-sim@shangen.org
-- `b4 dig -a`: v1 only (2026-08-06)
-- Thread (mbox): Takashi Iwai “Applied to for-next branch now. Thanks.”
-  No NAK, no stable request, no design concerns.
+**Step 4.1:** Record: Mainline SHA
+`55aa45154fe48b7d8e96bc031ad27d5b0edfcdb8` (not an ancestor of this
+HEAD).
+- b4 dig: https://patch.msgid.link/20260819130523.398493-1-
+  szymon.durawa@linux.intel.com
+- v1: 2026-07-08 (duplicate subject, missing CCs)
+- v2: 2026-07-29 (CCs added)
+- v3: 2026-08-19 (description added) — this is what was applied
+- No NAKs. Manivannan asked for a changelog body and full maintainer CC.
+  Nirmal Patel Reviewed-by on v1. Bjorn: “Applied to pci/controller/vmd
+  for v7.3”. No reviewer asked for Cc: stable.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: `b4 dig -w`: To Jaroslav Kysela, Takashi Iwai; Cc linux-sound@.
-Maintainer applied it.
+**Step 4.2:** Record: Recipients included linux-pci, Bjorn Helgaas,
+Nirmal Patel, Jonathan Derrick, Dan Williams, Lukas Wunner, Lorenzo
+Pieralisi, Krzysztof Wilczyński, Manivannan Sadhasivam, Rob Herring.
+Right maintainers were on the thread by v2/v3.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No bugzilla/syzbot link. Evidence is the author’s hardware test
-in the commit body. WebFetch of lore/msgid.link returned 403; the thread
-was recovered via `b4 dig -m`.
+**Step 4.3:** Record: No syzbot/bugzilla report. This is Intel
+enablement, not a fuzzer crash.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone. Sibling work is `557f6e4ab5ba6` (already in this
-tree).
+**Step 4.4:** Record: Standalone 1-patch series. Same v7.3 VMD merge
+also had BIOS-info / BUS_RESTRICT_CFG=3 / _OSC patches; this ID add does
+not depend on them.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No lore.kernel.org/stable discussion of this subject was found.
+**Step 4.5:** Record: No stable-list discussion found
+(lore.kernel.org/stable returned 403; web search did not show a stable
+thread for this subject). Absence is not a negative signal.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: Table `alc269_fixup_tbl[]` only. No function body edited.
-Consumed fixup: `alc245_fixup_hp_spectre_x360_16_aa0xxx`.
+**Step 5.1:** Record: Modified `vmd_ids[]` only. Consumers:
+`vmd_drv.id_table` → PCI core → `vmd_probe()`.
 
-Step 5.2: TRACE CALLERS
-Record: `alc269_probe()` → `snd_hda_pick_fixup(..., alc269_fixup_tbl,
-alc269_fixups)` (around line 8517). That is HD-audio codec probe, not a
-hot path or IRQ path.
+**Step 5.2:** Record: Callers of `vmd_probe()`: PCI bus match on VMD
+devices. Context: driver probe during enumeration (boot / module load),
+not IRQ/hot path. Impact surface: only 8086:d70b and 8086:d73b.
 
-Step 5.3: TRACE CALLEES
-Record: New fixup calls `snd_hda_apply_pincfgs`,
-`snd_hda_override_conn_list`, `alc_update_gpio_data`,
-`cs35l41_fixup_i2c_two`, `alc245_fixup_hp_mute_led_coefbit`,
-`alc245_fixup_hp_gpio_led`. Old quirk only called
-`cs35l41_fixup_i2c_two`.
+**Step 5.3:** Record: `vmd_probe()` uses `id->driver_data` as feature
+flags, then `vmd_enable_domain()`. `VMD_FEATS_CLIENT` already includes
+membar shadow VSCAP, bus restrictions, first-vector offset, BIOS PM
+quirk.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: PCI/HDA enumeration at boot on this laptop. Userspace mute keys
-then drive the LED hooks. Reachable on that hardware without extra
-privileges.
+**Step 5.4:** Record: Reachable whenever firmware presents those PCI IDs
+(Intel RST/VMD mode on NVL/DNL). Userspace cannot invent the IDs;
+missing IDs mean missing NVMe.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same file already maps 0x8c16 to AA0XXX. Many nearby HP
-`SND_PCI_QUIRK` mute-LED entries. This is the same pattern, for the
-missed sibling SSID.
+**Step 5.5:** Record: Same pattern as every recent client VMD DID add.
+`34883c93bd330` is the direct precedent already in this tree.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. `sound/hda/codecs/realtek/alc269.c:6957`:
-`SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre 16",
-ALC287_FIXUP_CS35L41_I2C_2)`
-Target enum, function, and `alc269_fixups[]` slot all exist. `git merge-
-base --is-ancestor bfcdc1c0eaeae HEAD` is false, so the fix is not in
-this tree yet. Incomplete 0x8c17 mapping dates to v6.9; 6.18 still has
-it.
+**Step 6.1:** Record: VMD driver exists (`drivers/pci/controller/vmd.c`,
+`CONFIG_VMD`). `VMD_FEATS_CLIENT` exists at lines 83–86. Current table
+ends at 0xb06f (lines 1109–1132). 0xd70b and 0xd73b are **not** present.
+Hardware is new; the *driver* has been here for years.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply (`git apply --check` succeeded). File layout matches
-mainline (`sound/hda/codecs/realtek/alc269.c`). No rework needed.
+**Step 6.2:** Record: Backport difficulty: **minor context tweak**. Hunk
+context mentions 0xb07f, which this tree lacks. Insert the two entries
+after 0xb06f. No semantic rework.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: `557f6e4ab5ba6` is here (0x8c16 + AA0XXX function). 0x8c17 is
-still on the amp-only quirk. No substitute fix.
+**Step 6.3:** Record: No equivalent NVL/DNL IDs already here. `git
+merge-base --is-ancestor 55aa45154fe48b7d8e96bc031ad27d5b0edfcdb8 HEAD`
+failed (not in this tree).
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [ALSA HD-audio Realtek] [IMPORTANT] Common laptop codec path;
-this change is one HP SSID only.
+**Step 7.1:** Record: Subsystem PCI host controller / Intel VMD.
+Criticality: **IMPORTANT** for Intel client systems using RST/VMD
+(common laptop default); not core mm/fs, but storage disappearance is
+user-visible.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: High. Recent `alc269.c` log is mostly HP/Lenovo/ASUS quirk
-additions, including mute LEDs. Mature quirk table, not experimental
-code.
+**Step 7.2:** Record: Mature driver (since ~2016). Recent 6.12 VMD work
+is bugfixes plus prior DID adds. This is the same mature ID-table
+pattern.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / platform-specific: HP Spectre x360 16-aa0xxx
-with PCI SSID 0x103c:0x8c17 only.
+**Step 8.1:** Record: Affected users: Intel Nova Lake / Dunlow systems
+with VMD enabled (`CONFIG_VMD`, x86_64). Not universal.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every probe of that codec (boot). Mute/mic-mute keys then fail
-to light LEDs. Unprivileged users hit it on that laptop. Not a race.
+**Step 8.2:** Record: Trigger: boot/enumeration on that hardware. Common
+on those SKUs if BIOS leaves RST/VMD on. Not a race; not unprivileged-
+exploit.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Mute/mic-mute LEDs do not work. The unused AA0XXX path also has
-speaker pin/GPIO amp setup that 0x8c16 already gets. Not a panic,
-deadlock, or corruption. Severity MEDIUM for that hardware; this is the
-documented audio-codec quirk exception.
+**Step 8.3:** Record: Failure mode: VMD and child NVMe never bind →
+missing system/data disks. Severity: **HIGH** for those platforms
+(storage unavailable), not a kernel oops.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record: Benefit high for those users (LEDs, and the same speaker fixup
-as 0x8c16). Risk very low: 1-line table change, same fixup already used
-by sibling SSID, maintainer-applied, author-tested. Ratio strongly
-favors backport.
+**Step 8.4:** Record: Benefit high for NVL/DNL on 6.12.y (LTS still
+receiving updates at 6.12.111). Risk very low: 4 lines, existing flags,
+existing probe path. Precedent: 0xb06f/0xb60b already backported here.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real hardware bug on a shipping HP Spectre x360 16-aa0xxx SSID
-- Classic `SND_PCI_QUIRK` audio-codec quirk correction (stable
-  exception)
-- Buggy row and target fixup both exist in 6.18.53
-- One-line, applies cleanly, no new API
-- Author tested; Takashi Iwai applied
-- Sibling 0x8c16 already uses this fixup here
-- This tree already takes similar HP mute-LED quirks
+**Step 9.1:** FOR:
+- Stable exception: PCI ID add to an existing driver
+- Driver, `VMD_FEATS_CLIENT`, and probe path all present in 6.12.111
+- Same pattern already backported (`34883c93bd330`)
+- 4 lines, no new APIs, no new features beyond matching two IDs
+- Suggested/reviewed by VMD maintainer; applied by PCI maintainer
+- Without it, NVMe behind VMD is invisible on those CPUs
 
 AGAINST:
-- No crash/security/corruption
-- No Fixes:/Cc: stable (not a negative by itself)
-- Author is not the subsystem maintainer (mitigated by Iwai applying it)
-- Theoretical 0x8c16 vs 0x8c17 hardware difference (mitigated by test on
-  0x8c17)
+- Not a crash/UAF/security fix
+- Context mentions 0xb07f, absent here (trivial adjust)
+- NVL/DNL are newer than 6.12’s original release; other platform bits
+  may still be missing on a given machine — but that is true of every
+  DID backport and is not a reason to omit the IDs
 
 UNRESOLVED:
-- Could not HTTP-fetch lore (403); thread recovered via b4 mbox
-- No independent second-user report
+- Could not read lore.kernel.org/stable (403). No evidence of a
+  deliberate stable skip.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — one-line SSID remap; author
-   tested; maintainer applied
-2. Fixes a real bug that affects users? PASS — mute LEDs dead on this
-   SSID
-3. Important issue? PASS under the audio-codec quirk exception (MEDIUM,
-   not a panic)
-4. Small and contained? PASS — 1 line, one table
-5. No new features or APIs? PASS — reuses existing fixup
-6. Can apply to the local tree? PASS — `git apply --check` succeeded;
-   prerequisites present
+**Step 9.2:** Stable rules:
+1. Obviously correct and tested? **PASS** (standard ID table; maintainer
+   review + applied)
+2. Fixes a real bug that affects users? **PASS** (devices never bind
+   without the IDs)
+3. Important issue? **PASS** under the device-ID exception; storage non-
+   enumeration is serious for affected hardware
+4. Small and contained? **PASS** (4 lines, one table)
+5. No new features or APIs? **PASS** (IDs only; existing feature flags)
+6. Can apply to this tree? **PASS** (minor context conflict only)
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Hardware quirk / audio codec `SND_PCI_QUIRK` (HP mute LED +
-pin/GPIO). This class is treated as stable material.
+**Step 9.3:** Record: Exception category: **NEW DEVICE IDs** on an
+existing driver.
 
-Step 9.4: MAKE YOUR DECISION
-This tree already has the incomplete 0x8c17 mapping and the AA0XXX
-fixup. The commit only points this SSID at that fixup. That is a small,
-tested hardware quirk and should be backported.
-
-What the commit solves: 0x8c17 currently only programs CS35L41 amps, so
-mute LEDs do not work. After the change it matches 0x8c16.
-
-Risk vs benefit: very low risk, clear user-visible fix on that laptop.
-No missing prerequisites in 6.18.53.
+**Step 9.4:** Backport. The local tree has the driver and the client
+feature set; this is the same class of change already taken for earlier
+Intel client VMD IDs.
 
 Verification:
-- [Phase 1] Parsed tags: Link to msgid; SOBs Shang En Sim and Takashi
-  Iwai; no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: 1 line in `alc269_fixup_tbl`; 0x8c17
-  `ALC287_FIXUP_CS35L41_I2C_2` →
-  `ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX`
-- [Phase 2] Confirmed AA0XXX still calls `cs35l41_fixup_i2c_two` plus
-  mute-LED/GPIO/pin setup (`alc269.c:3550-3590`)
-- [Phase 2] Confirmed old quirk is amp-only
-  (`[ALC287_FIXUP_CS35L41_I2C_2]` → `cs35l41_fixup_i2c_two`)
-- [Phase 3] `git blame -L 6954,6960`: 0x8c17 line from split commit
-  `aeeb85f26c3bb`; origin `aa8e3ef4fe533` (v6.9)
-- [Phase 3] `git merge-base --is-ancestor aa8e3ef4fe533 HEAD` true;
-  `557f6e4ab5ba6` true; `bfcdc1c0eaeae` false
-- [Phase 3] `git show 557f6e4ab5ba6`: added AA0XXX for 0x8c16, left
-  0x8c17 unchanged
-- [Phase 4] `b4 dig -c bfcdc1c0eaeae`:
-  patch.msgid.link/20260807055139.58707-1-sim@shangen.org
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: Kysela, Iwai, linux-sound
-- [Phase 4] `b4 dig -m`: Iwai applied to for-next; no NAK
-- [Phase 4] WebFetch lore/msgid.link: 403; used mbox instead
-- [Phase 4] Stable lore search: no discussion of this patch
-- [Phase 5] `alc269_probe()` calls `snd_hda_pick_fixup(...,
-  alc269_fixup_tbl, ...)`
-- [Phase 6] `git describe HEAD`: p-6.18-1-g03b85e06ca9bf; `make
-  kernelversion`: 6.18.53; branch pending-6.18
-- [Phase 6] Buggy line at `alc269.c:6957`; 0x8c16 already AA0XXX at 6956
-- [Phase 6] `git show bfcdc1c0eaeae | git apply --check`: succeeded at
-  offset -491
-- [Phase 8] Failure mode: mute LEDs inoperative on SSID 0x8c17; severity
-  MEDIUM; quirk exception applies
-- UNVERIFIED: HTTP lore body (403); whether any 0x8c17 unit differs
-  electrically from 0x8c16 beyond the author’s test
+- [Phase 1] Parsed tags: Suggested-by Nirmal Patel; SOB Durawa +
+  Helgaas; Link msgid 20260819130523.398493-1; no Fixes/syzbot
+- [Phase 2] Diff: +4 lines in `vmd_ids[]` for 0xd70b and 0xd73b with
+  `VMD_FEATS_CLIENT`
+- [Phase 3] blame: table from 2016; `VMD_FEATS_CLIENT` from
+  `14d2079af6483` (in tree); last IDs `34883c93bd330` (in tree)
+- [Phase 3] No Fixes: tag
+- [Phase 3] `git merge-base --is-ancestor
+  55aa45154fe48b7d8e96bc031ad27d5b0edfcdb8 HEAD` → not in this tree
+- [Phase 4] `b4 dig -c 55aa45154fe48b7d8e96bc031ad27d5b0edfcdb8`:
+  matched v1/v2/v3; v3 applied
+- [Phase 4] `b4 dig -w`: linux-pci + Helgaas + Patel on original To/Cc
+- [Phase 4] v1 mbox: Manivannan requested description/CCs; Nirmal Patel
+  Reviewed-by; no NAK
+- [Phase 4] v3 mbox: Helgaas applied for v7.3
+- [Phase 4] lore.kernel.org/stable fetch: 403, UNVERIFIED whether it was
+  discussed on stable@
+- [Phase 5] `vmd_probe()` reads `id->driver_data`; `CONFIG_VMD` in
+  `drivers/pci/controller/Kconfig`
+- [Phase 6] `git describe HEAD` / Makefile: 6.12.111; IDs
+  0xd70b/0xd73b/0xb07f absent from local `vmd.c`
+- [Phase 6] `VMD_FEATS_CLIENT` present at lines 83–86 of local `vmd.c`
+- [Phase 8] Failure mode: VMD/NVMe not enumerated on NVL/DNL, not a
+  panic
+
+This is a four-line PCI ID addition to a driver that already exists in
+6.12.y, using feature flags already used by other client SKUs. That is
+exactly the stable device-ID exception.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/vmd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 5098d3f375316..97ab2269dc472 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6969,7 +6969,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c15, "HP Spectre x360 2-in-1 Laptop 14-eu0xxx", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
--	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre 16", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8c2d, "HP Victus 15-fa1xxx (MB 8C2D)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index 5d3e6cc7e4feb..aa6d4f56f612a 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -1141,6 +1141,10 @@ static const struct pci_device_id vmd_ids[] = {
+                 .driver_data = VMD_FEATS_CLIENT,},
+ 	{PCI_VDEVICE(INTEL, 0xb07f),
+                 .driver_data = VMD_FEATS_CLIENT,},
++	{PCI_VDEVICE(INTEL, 0xd70b),
++		.driver_data = VMD_FEATS_CLIENT,},
++	{PCI_VDEVICE(INTEL, 0xd73b),
++		.driver_data = VMD_FEATS_CLIENT,},
+ 	{0,}
+ };
+ MODULE_DEVICE_TABLE(pci, vmd_ids);
 -- 
 2.53.0
 
