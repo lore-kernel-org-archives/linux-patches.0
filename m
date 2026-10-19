@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1F55AEC73;
-	Mon, 19 Oct 2026 13:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66713491B18;
+	Mon, 19 Oct 2026 13:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418139; cv=none; b=MACvaLFArmlYepnwqQORJ+In4EkBDcWK0OA4cS2y5PfpMFS2x5Z5UZ/StIAr+Ob9evBcqBRLAKlb2DWvAM1IuQsxRpXMZQ77Lxk+vgeKB9UoHqF/fOqc2qpO+Uq/vPtWe4XmQoEdPnLqTjNGn51ilQAg3wjvrPxHFSgJvXo6vb4=
+	t=1792418140; cv=none; b=nLckUbu8kB616hXsYkmUKU+MWxmUa8WrCk8+c745es5kfp32ddrZqOupdKJ2tnVi3cDFlwPHNfuFwkqPR9RDCXPxWWEBzF7FoF1hflLK2UllQtfGfv124Q8pPCyHkJ1sAGhGqpYz/JZ7VQ21+bEQ7EAStwqHuHksn64KqnampK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418139; c=relaxed/simple;
-	bh=v4OhAgEDDA8R6LlG2dQP5Nt81LhplBXdxjryogR3DOA=;
+	s=arc-20240116; t=1792418140; c=relaxed/simple;
+	bh=nV/GgtA5nTps9seInIOZO0l79vN6MSzj8KxQpKLXFi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HLGnoGnrQdCDnp5l8Jhdf20s41EKfEd9QIGOIqNXiSwOGmWh/HIvwqlGWBR9A5tVhyC8z/y2H0W74UihBRO2p9EGXTXdAwEo/Pfvl9N06um02gppPrZYx64oOktCByGs7xw+Nah1E6m6xWEpiHLE0uNIXjlXy55DCcs+XXSmdAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oOGhvkX0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OK5t+fxr2czFktTvRAvVDGOJ+YQPC2Gjbat70UqSyzczuekrEdHnnPrFZGIL2LZNCclyC43kXpgf9icbqdxMdF/otNhRHPJEOZW39kT9M7uEhJmXSlzOI3/UrTQNyWzOynGxoFZvJlOzKWHe+jUqWqKc005mJ9wHExyaFb9Yohg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=awtmbfM3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oOGhvkX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B341F000C5;
-	Mon, 19 Oct 2026 13:55:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="awtmbfM3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A951F000C4;
+	Mon, 19 Oct 2026 13:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418136;
-	bh=FeGX7r180FDvb3Y2kxslhB62CVPWh4NYp016IICuyxc=;
+	s=k20260515; t=1792418138;
+	bh=V3PpoMFAw7qVzM1GmPC801AjygH/PqO9elu51OZwm6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oOGhvkX028q6ks1PE8QCGlEvw3CYg3l5eWOHJn0rhiniNCh38WsfEbJkgr4zUPKDw
-	 +VEkHOArTELU8Nrja5ocBSS/lQp/QsGEEa6LazNfvJ7ZAfZ4uJBT+0qoP0RWEsW5WU
-	 G0L+muPiZXDv2vj6q+vIG5zOEShIF+6AhbNoH1AIrgkDt3DS8+ioAKQzq5RA1nT/pm
-	 OCekAnmzoG6i83sN0I50iZyi41hrYAT7/ICvdSs8aJnnMbVg/yQZ4Z0yLcl0TfBBlQ
-	 02Np+j+wSC1rRYiSBsfx9bN4Nj5etZGHwY8nQvKCNFPERYOYvCCMdDvy8fNhtDIjTV
-	 +bnc7CQ0kiXGA==
+	b=awtmbfM35GvxrICJC9YsYeE6kkmFpQ6LocPglQBwvS1MX7AfO0oznuNFKC4mTfsB2
+	 eGLoC3ZKmD95HMR0eOY6Wn/gYs/GJQK80GBTvVngrECjkBjdoVnlKY6vYQbcFc7J81
+	 hXfcKFWE6e8E4jBpktXrafwA0poIN+b3eWG23ob8J4wYVpGP8SS8NbqJzVJvU4YgQc
+	 CwPOacC3I99mca9gRU3wtPb//154YxlRRtRo4vGhng6GMsDFoMnUT07dIfAK7CuIms
+	 kNdWiwi9BQZkN5IBxwSWPThI3aa12us+1JYMjI1NeCueS6fZS8bRyFvzBEOGNTOfXk
+	 1j5nei/6aOI3g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zeyu Li <13776528859@163.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Alex Deucher <alexander.deucher@amd.com>,
+	Kent Russell <kent.russell@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	Felix.Kuehling@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Add ALC235 support for headset mode
-Date: Mon, 19 Oct 2026 09:45:29 -0400
-Message-ID: <20261019135441.1420968-38-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] drm/amdgpu/gfx11: WARN() rather than BUG() for invalid SDMA engine
+Date: Mon, 19 Oct 2026 09:45:30 -0400
+Message-ID: <20261019135441.1420968-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,431 +57,361 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeyu Li <13776528859@163.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 9ee4266827cfb67b9fbb89136ea6a8f3d7809f5c ]
+[ Upstream commit c24edbd5ae0e4f24e0179e8c9f22a867016177bb ]
 
-The ALC235 (0x10ec0235) is registered as the ALC255 codec variant in
-patch_alc269(), but the headset mode functions were missing a case
-for it, so the CTIA/OMTP jack type detection and routing never ran
-on this codec. As a result, a plugged-in headset is detected (jack
-presence works) but the microphone signal is never routed, leaving
-the capture stream permanently silent.
+There's no need to crash the kernel for these cases.
 
-Verified on an ASUS M5451GA laptop (HDA:10ec0235,10431814): with the
-ALC255 coef sequence applied, the headset microphone works correctly.
-
-Signed-off-by: Zeyu Li <13776528859@163.com>
-Link: https://patch.msgid.link/20260926140336.27896-1-13776528859@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+I have enough context: this is a three-line `BUG()`-to-`WARN()` change
+on the GFX11 KFD SDMA path, already present in this 7.3-rc4 tree. The
+remaining question is whether it is a real panic-prevention fix worth
+keeping in stable.
+
 ## Phase 1: Commit message forensics
 
-**Step 1.1 — Subject**
-Record: **[ALSA/hda/realtek] [Add] Add ALC235 support for headset mode**
+**Step 1.1: Subject line**
+Record: `[drm/amdgpu/gfx11]` `[WARN() rather than BUG()]` `[stop
+panicking on an invalid SDMA engine id in get_sdma_rlc_reg_offset()]`
 
-The verb is “Add”, but the body is a missing-ID fix: ALC235 is already
-treated as an ALC255 variant, and the headset-mode switches never
-included it.
-
-**Step 1.2 — Tags**
+**Step 1.2: Tags**
 Record:
-- **Fixes:** none (expected for this review)
-- **Reported-by:** none
-- **Tested-by:** none (author states hardware verification in the body)
-- **Reviewed-by / Acked-by:** none on the commit
-- **Link:**
-  https://patch.msgid.link/20260926140336.27896-1-13776528859@163.com
-- **Cc: stable:** none (expected)
-- **Signed-off-by:** Zeyu Li (author); Takashi Iwai (ALSA maintainer)
-- Pipeline tags ignored: `[Upstream commit ...]`, `Signed-off-by: Sasha
-  Levin`
+- `Reviewed-by: Kent Russell <kent.russell@amd.com>` (AMD GPU developer)
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+  maintainer; ignore any Sasha Levin SOB)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable`
+  (absence expected)
 
-**Step 1.3 — Body**
-Record:
-- **Bug:** ALC235 (`0x10ec0235`) is classified as `ALC269_TYPE_ALC255`
-  in `patch_alc269()`, but the six headset-mode helpers omit that vendor
-  ID.
-- **Symptom:** combo-jack presence works; headset capture stays silent
-  because CTIA/OMTP detection and mic routing never run.
-- **Root cause:** `switch (codec->core.vendor_id)` falls through with no
-  match, so `alc_process_coef_fw(codec, coef0255)` is never applied.
-- **Verification:** ASUS M5451GA (`HDA:10ec0235,10431814`); ALC255 coef
-  sequence restores headset mic.
-- **Version info:** none in the message. Codec ID has been in-tree since
-  2014.
+**Step 1.3: Body**
+Record: Body is one sentence: “There's no need to crash the kernel for
+these cases.” No stack trace, no reproducer, no version range. Failure
+mode claimed: kernel crash via `BUG()`. Root cause as stated: invalid
+`engine_id` in `get_sdma_rlc_reg_offset()` was treated as fatal.
 
-**Step 1.4 — Hidden bug fix?**
-Record: Not hidden. This is a hardware-routing bug written as “Add
-support”. It does not add a driver or API; it fills in a missing vendor-
-ID case in existing tables.
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. It is an explicit panic-to-warning conversion. It is
+also patch `15/43` of Alex Deucher’s amdgpu `BUG()`-removal series
+(later resent as `02/30`). Same boilerplate appears on sibling
+gfx12/gfx12.1 patches. That is hardening of a driver `BUG()`, not a
+style-only rename.
 
 ## Phase 2: Diff analysis
 
-**Step 2.1 — Inventory**
-Record:
-- **File:** `sound/hda/codecs/realtek/realtek.c` — **+6 / −0**
-- **Functions:** `alc_headset_mode_unplugged`,
-  `alc_headset_mode_mic_in`, `alc_headset_mode_default`,
-  `alc_headset_mode_ctia`, `alc_headset_mode_omtp`,
-  `alc_determine_headset_type`
-- **Scope:** single-file, surgical. One `case 0x10ec0235:` added
-  immediately above each existing `case 0x10ec0255:`.
+**Step 2.1: Inventory**
+Record: One file, `drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c`.
+Function: `get_sdma_rlc_reg_offset()`. Scope: +2/−1, single-file
+surgical change.
 
-**Step 2.2 — Flow change**
-Record: Before, those switches did nothing for vendor `0x10ec0235`.
-After, ALC235 uses the same ALC255 coefficient firmware already used for
-`0x10ec0255` (unplug, mic-in, default headphone, CTIA, OMTP, and type-
-detect).
+**Step 2.2: Code flow**
+Record: Before: `switch (engine_id)` handles 0 and 1; `default:` calls
+`BUG()` and never returns. After: `WARN(1, "Invalid SDMA engine id
+%d\n", engine_id); break;` then the function still computes
+`sdma_rlc_reg_offset` from `sdma_engine_reg_base` (initialized to 0) and
+returns. Affected path: invalid engine id on SDMA queue
+load/dump/occupy/destroy.
 
-Author-reported working values `COEF 0x45=0xd489`, `0x1b=0x0c2b` match
-`alc_headset_mode_ctia()`’s `coef0255` exactly.
+**Step 2.3: Bug mechanism**
+Record: Category **(g) logic / correctness** plus crash hardening.
+`BUG()` is a kernel panic (unless `CONFIG_BUG` is off). The fix stops
+the panic and logs. It does not add a hard error return; callers still
+`RREG32`/`WREG32` using a 0 base.
 
-**Step 2.3 — Bug mechanism**
-Record: **Hardware workaround / missing codec ID** in existing headset-
-mode tables. Without the case, jack detect still works via generic HP
-automute, but combo-jack mic routing never happens.
-
-**Step 2.4 — Fix quality**
-Record: Minimal and obviously correct given that `patch_alc269()`
-already maps ALC235 → ALC255. Regression risk is low: the new cases only
-run when headset-mode hooks are installed (`alc_fixup_headset_mode` /
-`alc_probe_headset_mode`). Realtek confirmed compatibility (Phase 4).
-Residual incompleteness: `alc255_set_default_jack_type()` still has only
-`0x10ec0255`; the author still got a working headset mic without that
-extra case.
+**Step 2.4: Fix quality**
+Record: Obviously correct as “don’t panic.” Minimal. Regression risk is
+low: if the default branch is taken, the kernel continues and may
+program SDMA engine 0-ish registers instead of dying. That matches the
+older gfx9/gfx10.3 pattern (`dev_warn` + fallthrough to engine 0),
+though this gfx11 version warns and breaks with `base = 0` rather than
+explicitly using the engine-0 `SOC15_REG_OFFSET`. No public API change.
 
 ## Phase 3: Git history
 
-**Step 3.1 — Blame**
+**Step 3.1: Blame**
+Record: Function and original `BUG()` introduced in `cc009e613de65`
+(“drm/amdkfd: Add KFD support for soc21 v3”, Mukul Joshi, 2022-05-04).
+That commit is an ancestor of `v6.1` and `v6.6` in this repo. The
+`WARN()` lines are from `c24edbd5ae0e4` (Alex Deucher, 2026-06-15 /
+committed 2026-07-08).
+
+**Step 3.2: Fixes: tag**
+Record: No `Fixes:` tag. Buggy code is the original gfx11 KFD SDMA
+helper, not a later regression.
+
+**Step 3.3: File history / series**
+Record: Standalone for this file. Related siblings:
+- `28cc342e2455c` gfx12 same change
+- `9f8032604b973` gfx12.1 same change
+Part of the June/July 2026 amdgpu `BUG()` cleanup. No extra gfx11
+refactor is required for this hunk.
+
+**Step 3.4: Author**
+Record: Alex Deucher is the amdgpu maintainer. Around the same dates he
+landed many `BUG()`/`BUG_ON()` → `WARN()`/`-EINVAL` conversions across
+gfx/sdma/psp.
+
+**Step 3.5: Prerequisites**
+Record: None. The function and `BUG()` existed since the file was added.
+Applies standalone.
+
+## Phase 4: Mailing list / external
+
+**Step 4.1: Original discussion**
+Record: `b4 dig -c c24edbd5ae0e4` matched patch-id
+`8e42a5ee823a482676f1d117737bc3f4d06296d3`.
+Lore/msgid: https://patch.msgid.link/20260615235645.737189-15-
+alexander.deucher@amd.com
+Series: v1 `[PATCH 15/43]` 2026-06-15; later v2 `[PATCH 02/30]`
+2026-07-07. Committed version matches the posted diff. No NAKs found. No
+reviewer `Cc: stable` on this patch. Cover-letter fetch from lore
+returned 403; mail-archive and Phoronix describe the series as removing
+amdgpu `BUG()` so the driver does not panic when it can continue.
+
+**Step 4.2: Recipients (`b4 dig -w`)**
+Record: Alex Deucher, `amd-gfx@lists.freedesktop.org`. Kent Russell’s
+`Reviewed-by` is on the git commit, not on the v1 mail-archive copy
+(review landed later / at commit time).
+
+**Step 4.3: Bug report**
+Record: None. No syzbot, bugzilla, or user panic report.
+
+**Step 4.4: Related patches**
+Record: Independent per-IP copies. This gfx11 hunk does not depend on
+the rest of the 43-patch series.
+
+**Step 4.5: Stable list**
+Record: No stable-thread hit found for this subject. UNVERIFIED:
+lore.kernel.org/stable search was blocked (Anubis/403).
+
+## Phase 5: Semantic / call graph
+
+**Step 5.1: Functions**
+Record: `get_sdma_rlc_reg_offset()` only.
+
+**Step 5.2: Callers (this tree)**
 Record:
-- Headset-mode switches (minus the new case) come from the 6.16-era
-  Realtek split `aeeb85f26c3bb` (2025-07-11), itself a move of older
-  `patch_realtek.c` logic.
-- ALC235 vendor ID added in `92f974df34601` (2014-06-06, Kailang Yang):
-  “New vendor ID for ALC233 … compatible with ALC255. It is use for
-  Lenovo.”
-- Variant assignment added in `ea04a1dbf8b1d` (2018-04-25, Kailang Yang,
-  already sent to stable). Maintainer note then: *“the chip is 10ec:0235
-  bonding for ALC233b, which is equivalent with ALC255. It's only used
-  for Lenovo. The chip needs no alc_process_coef_fw() for headset unlike
-  ALC255.”*
+- `hqd_sdma_load_v11()` — KFD SDMA queue load
+- `hqd_sdma_dump_v11()` — dump (debug / dqm)
+- `hqd_sdma_is_occupied_v11()`
+- `hqd_sdma_destroy_v11()` — preempt/destroy
 
-That 2018 note is why the ID was classified as ALC255 but
-**intentionally omitted** from headset coef switches. The 2026 report is
-an ASUS machine, not Lenovo, and Realtek later said the ALC255 sequence
-is compatible.
+Those are `gfx_v11_kfd2kgd` ops. Load goes `kfd_load_mqd_sdma()` →
+`hqd_sdma_load()`. Dump is used from `kfd_device_queue_manager.c`.
 
-**Step 3.2 — Fixes tag**
-Record: No `Fixes:` tag. The incomplete classification dates to
-`ea04a1dbf8b1d` (2018), which is in this tree.
+**Step 5.3: Callees**
+Record: `SOC15_REG_OFFSET`, register arithmetic, `pr_debug`. Callers
+then `RREG32`/`WREG32` at the returned offset.
 
-**Step 3.3 — File history**
-Record: Recent `realtek.c` / `alc269.c` history is the usual stream of
-laptop quirks. No prerequisite refactor is required. Not a `patch X/Y`
-series.
+**Step 5.4: Reachability**
+Record: Yes, from `/dev/kfd` queue create/destroy (needs KFD/render
+access, not a raw unprivileged syscall). `engine_id` comes from
+`v11_sdma_mqd.sdma_engine_id`, set in `kfd_mqd_manager_v11.c` from
+`q->sdma_engine_id`.
 
-**Step 3.4 — Author**
-Record: Zeyu Li has no other Realtek commits in this tree. This is a
-user-reported hardware fix reviewed by the ALSA maintainer and a Realtek
-engineer, not a maintainer-authored cleanup.
+Kernel assignment (`kfd_device_queue_manager.c`):
+- normal SDMA: `sdma_id % kfd_get_num_sdma_engines()`
+- `kfd_get_num_sdma_engines()` is `num_instances/num_nodes`, or
+  `min(..., 2)` if XGMI
 
-**Step 3.5 — Dependencies**
-Record: Standalone. It only adds a `case` next to an existing
-`0x10ec0255` arm. Those functions and `coef0255` already exist here. No
-new helpers.
+Userspace `KFD_QUEUE_TYPE_SDMA_BY_ENG_ID` is range-checked against
+`num_sdma + num_xgmi - 1` in `kfd_ioctl_create_queue()`.
 
-## Phase 4: Mailing list / external research
+Verified: on typical GFX11 (2 SDMA, no XGMI) the id is 0 or 1, so
+`default:` is not the normal path. Unverified: whether any GFX11 SKU
+with XGMI and >2 SDMA instances can produce `engine_id >= 2` and hit
+`BUG()`.
 
-**Step 4.1 — Original discussion**
-Record:
-- Lore/msgid:
-  https://patch.msgid.link/20260926140336.27896-1-13776528859@163.com
-- `b4 dig -c 9ee4266827cfb67b9fbb89136ea6a8f3d7809f5c` matched that
-  thread.
-- Revisions: same patch sent twice (lkml + linux-sound). No v2/v3 code
-  change.
-- Takashi Iwai (28 Sep 2026): *“I'm not sure whether it's 100% safe…
-  Kailang, could you check it? Can ALC235 be fully compatible in this
-  manner?”*
-- Author follow-up: jack sense and VREF were already correct; capture
-  stayed silent until ALC255 CTIA coefs were applied.
-- **Kailang Yang, Realtek (1 Oct 2026): “Yes, it's compatible.”**
-- Takashi then applied the patch. No NAK.
+**Step 5.5: Similar patterns**
+Record: gfx9 and gfx10.3 already `dev_warn` + fallthrough to engine 0.
+gfx11/12/12.1 used `BUG()` until this series. This is aligning gfx11
+with the safer sibling.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: Zeyu Li; linux-sound; Takashi Iwai; Jaroslav Kysela. Realtek
-(Kailang) was added during review.
+## Phase 6: This tree
 
-**Step 4.3 — Bug report**
-Record: Reporter is the author, on a specific ASUS laptop. One machine,
-but a concrete silent-mic failure with before/after coefs. No
-syzbot/bugzilla.
+**Step 6.1: Buggy code in this checkout?**
+Record: Local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). File
+exists. Current `get_sdma_rlc_reg_offset()` already has `WARN(1, ...)`.
+`git merge-base --is-ancestor c24edbd5ae0e4 HEAD` succeeds. The panic
+path is already gone here; the pre-fix `BUG()` is in the parent of that
+commit.
 
-**Step 4.4 — Series**
-Record: Standalone single patch. No sibling commits required.
+**Step 6.2: Backport difficulty**
+Record: Clean apply. Hunk matches the original function from 2022; no
+conflicting refactor in that switch.
 
-**Step 4.5 — Stable list**
-Record: **UNVERIFIED** — lore.kernel.org/stable returned HTTP 403. No
-other evidence it was rejected for stable.
+**Step 6.3: Related fixes already here**
+Record: This exact fix is already ancestor of HEAD. Sibling gfx12/12.1
+conversions are also present. No alternate gfx11 SDMA `BUG()` fix.
 
-## Phase 5: Code semantic analysis
-
-**Step 5.1 — Functions**
-Record: the six headset-mode helpers listed in 2.1. They are called only
-from `alc_update_headset_mode()`.
-
-**Step 5.2 — Callers**
-Record:
-- `alc_update_headset_mode()` ← `alc_update_headset_mode_hook` (capture
-  mux), `alc_update_headset_jack_cb` (HP jack), `alc_fixup_headset_mode`
-  INIT, `alc_probe_headset_mode` (installs the hooks).
-- Those hooks are installed only when a headset-mode fixup is active
-  (`ALC255_FIXUP_HEADSET_MODE`, `model=alc255-asus`, etc.).
-- This tree has **no** PCI/pin quirk for ASUS `1043:1814`. Existing
-  ALC235 pin quirks are Lenovo-only and do **not** enable headset mode.
-  The author’s box therefore needed a headset-mode fixup or `model=` to
-  hit this path. The commit still fixes every ALC235 device that already
-  uses that path.
-
-**Step 5.3 — Callees**
-Record: `alc_process_coef_fw`, `alc_write_coef_idx`,
-`alc_read_coef_idx`, `snd_hda_set_pin_ctl_cache`. Codec coefficient
-writes plus pin VREF. No locking/alloc/API changes.
-
-**Step 5.4 — Reachability**
-Record: Userspace-reachable: plug a headset and select the headset-mic
-input on a machine whose quirk/model enables headset mode. Unprivileged
-audio use; not a syscall crash path.
-
-**Step 5.5 — Similar patterns**
-Record: Same table already groups sibling IDs
-(`0x10ec0230`/`0236`/`0256`, `0x10ec0234`/`0274`/`0294`). Adding `0235`
-next to `0255` matches that pattern. The only remaining
-`0x10ec0255`-only switch is `alc255_set_default_jack_type()` in
-`alc269.c`.
-
-## Phase 6: This tree (6.18.y)
-
-**Step 6.1 — Does the bug exist here?**
-Record: **Yes.** Local tree is **6.18.57** (`git describe`:
-`v6.18.57-155-gcdf239ca885b2`; Makefile `VERSION=6 PATCHLEVEL=18
-SUBLEVEL=57`).
-
-Without this change (parent of the candidate):
-- `patch_alc269()` already has `case 0x10ec0235:` → `ALC269_TYPE_ALC255`
-- Headset-mode switches have only `case 0x10ec0255:`
-- File path is already `sound/hda/codecs/realtek/realtek.c` (split
-  commit is an ancestor)
-
-The codec has been present since 2014; the ALC255 classification since
-2018. This is not post-6.18 hardware enablement of a new driver.
-
-**Step 6.2 — Backport difficulty**
-Record: **Clean apply.** Same file, same six switches, same neighboring
-`0x10ec0255` cases. No structural conflict.
-
-**Step 6.3 — Related fixes already here?**
-Record: No other ALC235 headset-mode fix. No follow-up on `realtek.c`
-after this candidate that would supersede it.
-
-## Phase 7: Subsystem context
+## Phase 7: Subsystem
 
 **Step 7.1**
-Record: **ALSA HD-audio / Realtek codec.** Criticality: **IMPORTANT**
-(common laptop audio), not core mm/VFS. Realtek HDA is the default codec
-path on a large fraction of x86 laptops.
+Record: `drivers/gpu/drm/amd/amdgpu` KFD GFX11. Criticality:
+**IMPORTANT** (RDNA3 / RX 7000 / Phoenix, not core mm/vfs).
 
 **Step 7.2**
-Record: Very active (many recent laptop quirks). That is normal for this
-file and is why codec-ID / quirk additions are routinely taken into
-stable.
+Record: amdgpu/KFD is actively developed; this helper itself has been
+stable since 2022.
 
 ## Phase 8: Impact and risk
 
-**Step 8.1 — Who is affected**
-Record: Users of Realtek ALC235 (`CONFIG_SND_HDA_CODEC_REALTEK`) whose
-machine enables headset mode (quirk or `model=`). Confirmed hardware:
-ASUS M5451GA. Older Lenovo ALC235 boxes use other pin quirks and do not
-enter these switches.
+**Step 8.1: Who**
+Record: Users of AMD GFX11 + KFD compute (ROCm / `/dev/kfd`), config
+`CONFIG_HSA_AMD`. Driver-specific, not universal.
 
-**Step 8.2 — Trigger**
-Record: Plug a CTIA/OMTP headset and use the headset mic. Common laptop
-action. Unprivileged.
+**Step 8.2: Trigger**
+Record: Invalid `engine_id` not in `{0,1}` on SDMA HQD
+load/dump/destroy. Common path uses kernel-assigned 0/1. Userspace
+engine id is validated for `SDMA_BY_ENG_ID`. Trigger is uncommon; not
+shown as a day-to-day ROCm failure. Not a fully unprivileged DoS on
+typical 2-engine GFX11.
 
-**Step 8.3 — Failure mode**
-Record: Headset playback/jack detect works; **headset microphone capture
-is permanently silent**. Severity: **HIGH** for affected laptops (broken
-input device), not a panic/UAF. This is the standard “audio hardware
-quirk” class.
+**Step 8.3: Failure mode**
+Record: Old: `BUG()` → kernel panic. Severity if hit: **CRITICAL**.
+Likelihood: **LOW** on known 2-engine GFX11. After the fix: warning +
+possible wrong MMIO if the branch is taken.
 
-**Step 8.4 — Risk vs benefit**
-Record:
-- **Benefit:** restores headset mic on ALC235 machines that already go
-  through headset mode; Realtek-confirmed; hardware-tested.
-- **Risk:** very low (6 fallthrough cases, existing coef table).
-  Theoretical risk to old Lenovo ALC233b bonding is mitigated by (a)
-  those quirks not enabling headset mode, and (b) Kailang’s 2026
-  “compatible” ack.
-- **Ratio:** favorable.
+**Step 8.4: Risk-benefit**
+Record: Benefit: avoid an intentional driver panic on a bad engine id.
+Risk: 3 lines, no locking/API change, very low. Ratio: favorable if the
+panic is treated as worth preventing; weaker if judged purely
+theoretical.
 
 ## Phase 9: Synthesis
 
-**Step 9.1 — Evidence**
+**Step 9.1: Evidence**
 
-For:
-- Real user-visible bug (silent headset mic) on identified hardware
-- 6-line vendor-ID addition to an existing driver table (hardware-quirk
-  exception)
-- Codec already present and classified as ALC255 in this 6.18 tree
-- Applies cleanly; no new API; standalone
-- Tested by the author; ALSA maintainer applied it after Realtek
-  confirmation
-- Same pattern as other Realtek headset vendor-ID additions that stable
-  accepts
+FOR:
+- Replaces `BUG()` (panic) with `WARN()` on a real KFD SDMA path.
+- 3-line, obviously correct, reviewed by Kent Russell, written by the
+  amdgpu maintainer.
+- GFX11 KFD support has been in the kernel since 2022 (`cc009e613de65`,
+  ancestor of v6.1).
+- gfx9/gfx10.3 already refused to panic here; gfx11 was the harsh
+  outlier.
+- No prerequisites; applies cleanly to this file.
+- Prompt’s crash/panic guidance favors inclusion.
 
-Against:
-- Subject reads like a feature (“Add support”)
-- 2018 Realtek note said this bonding originally needed **no** headset
-  `alc_process_coef_fw()` (Lenovo-only)
-- No machine-specific quirk for `1043:1814` in this tree, so the ASUS
-  laptop may still need `model=alc255-asus` (or a later quirk) for the
-  new cases to run
-- `alc255_set_default_jack_type()` still omits ALC235
+AGAINST:
+- No user report, syzbot, or demonstrated trigger.
+- Official stable rule: not a “this could be a problem” patch without an
+  exploit/trigger explanation.
+- Identical one-line body across a 43-patch cleanup series, not a
+  targeted production-crash fix.
+- On typical GFX11, engine id is 0 or 1, so `default:` is largely
+  defensive.
+- After `WARN()`, execution continues with `base = 0` rather than
+  failing the ioctl.
 
-Unresolved:
-- Stable-list discussion (lore 403)
+UNRESOLVED:
+- Whether any GFX11 product can assign `engine_id >= 2` via XGMI extra
+  SDMA engines.
+- Full cover-letter text (lore 403).
+- Stable-list discussion (lore/stable blocked).
 
-The “against” items do not outweigh the fix. The 2018 note is superseded
-by the same Realtek engineer in 2026. Missing `model=`/quirk is a
-separate enablement issue; this commit is still the required routing fix
-once headset mode is on. Incomplete default-jack-type setup did not
-prevent the reported fix from working.
+**Step 9.2: Stable rules checklist**
+1. Obviously correct and tested? **PASS** — 3-line substitution,
+   reviewed, in mainline.
+2. Fixes a real bug that affects users? **PASS** with caveat — it fixes
+   a real panic *if* the branch runs; no evidence users hit it. Still a
+   driver `BUG()` on a userspace-reachable KFD path.
+3. Important (crash/security/corruption/deadlock)? **PASS** for the
+   failure mode (panic). Likelihood is low.
+4. Small and contained? **PASS** — +2/−1, one function.
+5. No new features/APIs? **PASS**.
+6. Can apply to this tree? **PASS** — file/function exist; hunk is
+   identical. (Already applied on 7.3-rc4.)
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — fallthrough onto the
-   existing ALC255 path; hardware + Realtek + maintainer.
-2. Real bug affecting users? **PASS** — silent headset capture.
-3. Important? **PASS** — broken headset mic on laptop HDA; hardware-
-   quirk class.
-4. Small and contained? **PASS** — +6 lines, one file.
-5. No new features/APIs? **PASS** — missing ID in existing tables, not a
-   new driver.
-6. Applies to this 6.18 tree? **PASS** — same file and switches.
+**Step 9.3: Exception category**
+Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary
+robustness fix.
 
-**Step 9.3 — Exception**
-Record: **Hardware quirk / missing codec ID** in an existing Realtek HDA
-driver. This is an allowed stable exception.
+**Step 9.4: Decision**
 
-**Step 9.4 — Decision**
-This tree is 6.18.y. The buggy omission exists here. The patch is the
-standard Realtek headset-ID fix, confirmed by Realtek, and is
-appropriate for this stable tree.
+This tree is 7.3-rc4 and already contains the commit; the evaluation is
+whether the change is stable-worthy for this codebase, not whether to
+re-apply it.
 
-## What this means for 6.18 users
+It should be. `BUG()` in `get_sdma_rlc_reg_offset()` is an intentional
+kernel panic on the GFX11 KFD SDMA load/destroy path. Replacing it with
+`WARN()` is the same policy older GFX generations already used, it is
+three lines, and it cannot introduce a new API or locking scheme. Lack
+of a public reproducer makes it a cleanup-shaped patch, but the user-
+visible failure if that branch ever runs is still a full panic, which is
+what stable is for.
 
-ALC235 has been registered for years and is already treated as ALC255,
-but the headset-mode coefficient path never ran. On machines that use
-that path, a plugged headset is detected and the mic stays silent.
-Adding `0x10ec0235` beside `0x10ec0255` is a 6-line, already-tested
-hardware quirk with no API change and a clean apply on this tree.
+### What it solves for stable users
+Stops the GFX11 KFD SDMA helper from taking down the machine on an out-
+of-range engine id, instead of asserting.
+
+### Rules
+Small, obviously correct, no new API, applies to this file. It addresses
+a panic, not a feature.
+
+### Risk vs benefit
+Benefit is panic avoidance on AMD RDNA3 compute queues. Risk is
+negligible.
+
+### Concerns
+Trigger is uncommon; after `WARN()` the function still returns a 0-based
+offset. That is acceptable versus `BUG()`. No extra commits are
+required.
 
 ## Verification
-- [Phase 1] Parsed tags: Link to msgid `20260926140336.27896-1`; SOBs
-  Zeyu Li + Takashi Iwai; no Fixes/Reported-by/Cc-stable
-- [Phase 2] Diff: +6 `case 0x10ec0235:` lines in six headset-mode
-  functions in `sound/hda/codecs/realtek/realtek.c`
-- [Phase 2] `coef0255` in `alc_headset_mode_ctia()` is `WRITE_COEF(0x45,
-  0xd489)` + `WRITE_COEF(0x1b, 0x0c2b)`, matching the author’s test
-- [Phase 3] `git describe HEAD` / `make kernelversion`: **6.18.57**
-- [Phase 3] `git show 92f974df34601`: ALC235 ID added 2014 as
-  ALC233/ALC255-compatible
-- [Phase 3] `git show ea04a1dbf8b1d`: 2018 variant assignment + note
-  that headset coefs were then thought unnecessary
-- [Phase 3] Parent of candidate: headset switches have `0x10ec0255`
-  only; `patch_alc269()` already has `0x10ec0235` → `ALC269_TYPE_ALC255`
-- [Phase 3] `git log --author="Zeyu Li"`: only this commit in-tree
-- [Phase 4] `b4 dig -c 9ee4266827cfb…`: thread at
-  patch.msgid.link/20260926140336.27896-1
-- [Phase 4] `b4 dig -a`: same patch, no later revision
-- [Phase 4] `b4 dig -w`: linux-sound, Takashi Iwai, Jaroslav Kysela
-- [Phase 4] mbox: Takashi asked Realtek; Kailang: “Yes, it's
-  compatible.”; Takashi applied
-- [Phase 5] Callers of the six functions are only
-  `alc_update_headset_mode()`; that is wired only by headset-mode fixups
-- [Phase 5] No `1043:1814` / M5451 quirk in `alc269.c`; ASUS pin quirks
-  match `0x10ec0255` only
-- [Phase 6] File and buggy switches exist in this 6.18 checkout; Realtek
-  split `aeeb85f26c3bb` is an ancestor
-- [Phase 6] Expected apply: clean
-- [Phase 8] Failure mode: silent headset mic, severity HIGH for affected
-  laptops
-- UNVERIFIED: lore.kernel.org/stable search (HTTP 403)
-
-The patch is a small, tested hardware-quirk fix for a real silent-mic
-bug that exists in this 6.18 tree.
+- [Phase 1] Parsed subject/body/tags: one-sentence panic rationale;
+  `Reviewed-by: Kent Russell`; no `Fixes`/`Reported-by`.
+- [Phase 2] Diff: `BUG()` → `WARN(1, ...)` + `break` in
+  `get_sdma_rlc_reg_offset()`; +2/−1.
+- [Phase 3] `git blame`: `BUG()` from `cc009e613de65` (2022-05-04);
+  ancestor of v6.1 and v6.6.
+- [Phase 3] `git show c24edbd5ae0e4`: matches the candidate diff.
+- [Phase 3] `git merge-base --is-ancestor c24edbd5ae0e4 HEAD`: yes
+  (already in this tree).
+- [Phase 4] `b4 dig -c c24edbd5ae0e4`: msgid
+  `20260615235645.737189-15-alexander.deucher@amd.com` (`15/43`).
+- [Phase 4] `b4 dig -a`: v1 43-patch series 2026-06-15; v2 30-patch
+  2026-07-07.
+- [Phase 4] `b4 dig -w`: To/Cc Alex Deucher + amd-gfx; no stable CC.
+- [Phase 4] mail-archive: posted diff identical; no NAK in the copies
+  read.
+- [Phase 4] UNVERIFIED: lore.kernel.org cover letter and stable@ archive
+  (403/Anubis).
+- [Phase 5] Callers verified: `hqd_sdma_load_v11` / `dump` /
+  `is_occupied` / `destroy`; load via `kfd_load_mqd_sdma`.
+- [Phase 5] `engine_id` from MQD ← `q->sdma_engine_id`; ioctl range
+  check for `SDMA_BY_ENG_ID`; typical GFX11 stays 0/1.
+- [Phase 5] gfx9/gfx10.3 already warn instead of `BUG()`.
+- [Phase 6] `git describe HEAD` / Makefile: 7.3.0-rc4; current file
+  already has `WARN()`.
+- [Phase 8] Failure mode if hit: `BUG()` panic; trigger likelihood low
+  on 2-engine GFX11.
+- UNVERIFIED: GFX11 SKU with `engine_id >= 2` in production.
 
 **YES**
 
- sound/hda/codecs/realtek/realtek.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/realtek.c b/sound/hda/codecs/realtek/realtek.c
-index ca377a5adadb5..a1529650950d8 100644
---- a/sound/hda/codecs/realtek/realtek.c
-+++ b/sound/hda/codecs/realtek/realtek.c
-@@ -1305,6 +1305,7 @@ static void alc_headset_mode_unplugged(struct hda_codec *codec)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
+index aaccf0b9947d4..d32ea91eeb343 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
+@@ -139,7 +139,8 @@ static uint32_t get_sdma_rlc_reg_offset(struct amdgpu_device *adev,
+ 				regSDMA1_QUEUE0_RB_CNTL) - regSDMA0_QUEUE0_RB_CNTL;
+ 		break;
+ 	default:
+-		BUG();
++		WARN(1, "Invalid SDMA engine id %d\n", engine_id);
++		break;
  	}
  
- 	switch (codec->core.vendor_id) {
-+	case 0x10ec0235:
- 	case 0x10ec0255:
- 		alc_process_coef_fw(codec, coef0255);
- 		break;
-@@ -1420,6 +1421,7 @@ static void alc_headset_mode_mic_in(struct hda_codec *codec, hda_nid_t hp_pin,
- 	};
- 
- 	switch (codec->core.vendor_id) {
-+	case 0x10ec0235:
- 	case 0x10ec0255:
- 		alc_write_coef_idx(codec, 0x45, 0xc489);
- 		snd_hda_set_pin_ctl_cache(codec, hp_pin, 0);
-@@ -1575,6 +1577,7 @@ static void alc_headset_mode_default(struct hda_codec *codec)
- 		alc_process_coef_fw(codec, coef0225);
- 		alc_hp_enable_unmute(codec, 75);
- 		break;
-+	case 0x10ec0235:
- 	case 0x10ec0255:
- 		alc_process_coef_fw(codec, coef0255);
- 		break;
-@@ -1676,6 +1679,7 @@ static void alc_headset_mode_ctia(struct hda_codec *codec)
- 	};
- 
- 	switch (codec->core.vendor_id) {
-+	case 0x10ec0235:
- 	case 0x10ec0255:
- 		alc_process_coef_fw(codec, coef0255);
- 		break;
-@@ -1793,6 +1797,7 @@ static void alc_headset_mode_omtp(struct hda_codec *codec)
- 	};
- 
- 	switch (codec->core.vendor_id) {
-+	case 0x10ec0235:
- 	case 0x10ec0255:
- 		alc_process_coef_fw(codec, coef0255);
- 		break;
-@@ -1894,6 +1899,7 @@ static void alc_determine_headset_type(struct hda_codec *codec)
- 	}
- 
- 	switch (codec->core.vendor_id) {
-+	case 0x10ec0235:
- 	case 0x10ec0255:
- 		alc_process_coef_fw(codec, coef0255);
- 		msleep(300);
+ 	sdma_rlc_reg_offset = sdma_engine_reg_base
 -- 
 2.53.0
 
