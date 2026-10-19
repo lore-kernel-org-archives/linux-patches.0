@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EB2569811;
-	Mon, 19 Oct 2026 13:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4990456982F;
+	Mon, 19 Oct 2026 13:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418264; cv=none; b=bXjv7P2G2CW/o/PcS6uvPBDrYCJEQajkJw6PpY2IAMaoSK+r1xqy/U7QPoeNSBAewv/qPt0sB6T9Gkct0agjm7py5Zuf/vAcTKzL4/10QddDxn6B74POEy9RuAI6/hECVxRO6ohMwzov4lLt17FTl++JX9uU5OPyOuGyPTJG2fQ=
+	t=1792418266; cv=none; b=t6WBIjmjHplGtgigcDQNlVUZo6EwHYBt3yZVJGuSgotVwt3n4iwcoKYNVvs3CpkMbcWuu0PA2Ttcl84bw3e89cCDUz17gSKxOj3Tau8LIlNEW6mLYIHx04PUnEu1tr+8k8AXZY76tHqmUW9sKvbtRcmStdrH2hYrAIYAPinIM9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418264; c=relaxed/simple;
-	bh=Suv7eg1aJ7Tifx1fwLy70ni9uREKsxIaRnxp5RBSXq0=;
+	s=arc-20240116; t=1792418266; c=relaxed/simple;
+	bh=wiqPXWVlTTveYzvN9waZ4nUny+eZwY9OurxyivW9KuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eR84bPJOPUaDTR5B+0Tpe5MuIh0uz2Ud3KoRYEHvsjnUUgtILkE9KMcGPqezhY8J7V3zFIN3pdgOmDcUzNWED+EzMmWctG007Gq9viq4nXsCwajbZdWBp5FjIcNAnii0JYgSqT1yTC14q3D2Et7LFt+Fv/cg10beUEUd1EW/XQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aEy3hyaB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uGgrcSgSmdu5tFxyxbSrzQERVB8MhlNNxgD/FPn5vkwDV7H1JC93blge9J9c35GYFPjqc58OGs915Iy1jBs0ERYwSGhT+vMr11Ot+p66X5rAshNsUNxCBX06qRNqo0Gp1YOWFU8cHzsWwDeN9+HXUYyD8fxYS628QvFbRKkEoA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mYsFsmFq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aEy3hyaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEEE1F000C4;
-	Mon, 19 Oct 2026 13:57:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mYsFsmFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E481F000C6;
+	Mon, 19 Oct 2026 13:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418262;
-	bh=7hnDKs4oRavKgsNuGuZnZCAYPrJeLUboc9yjYXsOnO0=;
+	s=k20260515; t=1792418263;
+	bh=MGmTAbgILO+6jEkopSYybQ9rcFhYEntoql9d3wDhxuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEy3hyaB6qvGmREb54C5UY0qjWT2KWjP1pkXn/62caHY4jCv0hci49MXw14R5q6Rm
-	 YG3eBp5vFxw1wq3W9jAEVy73LtGsLGZ6Bf2Bip2iuwQS+FtDWjfFrl1gMkYYOJelJO
-	 kyCh3rMWvIw6YtSplrE9Fg6z01X6m5YG8w0vx2AFEp4hQjqqwQ86BrM95YvTMyJtmp
-	 8Tg1c8KISo45xZ7tIOZlHd+aDAYWu85oa34qJ3wExwGIAdgQ6R4SvcA2iiv6RdgAll
-	 lfMkQGy9GZzzGvVUsrlCpF4MewUg5bZ9sKhmU/FGTPKuA/pq/K1mNM3jdUJh0sFggc
-	 4y0KKxbfOt8ZA==
+	b=mYsFsmFqWOG9Dwhte03PRlpm0r9FiOW0+2net+qKlP5aLpOL/WG4u5yoRT6fL6c4H
+	 4Vhr3jn+T5BkIEzehsQAi49zU5nxR9dFhXZdKT7p0Sf0S8HgeSy9WnrXio73krruo3
+	 V3sJBxHB+lb5H+QE+fKaSYT/RdRqGWtGqpd36UAkmWr+fjFIY25hif/YpYhDqn9Udz
+	 gu+AjXl7L16pZL4bOQpZa8Z4Rr9Lvv8itVYdYHqqI0HZPSMYDChTOvAgTNcA54SeDm
+	 +5mIM6vJXkVz2IGMvsHKoI6c7NB4jxgBl1VcQLOaUiyJg3uC2WAC0xyNcoN1OBJr/6
+	 D64fTvou7B6Yw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Woodhouse <dwmw@amazon.co.uk>,
-	Paul Durrant <paul@xen.org>,
-	Sean Christopherson <seanjc@google.com>,
+Cc: Sumeet Pawnikar <sumeet4linux@gmail.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dwmw2@infradead.org,
-	pbonzini@redhat.com,
-	tglx@kernel.org,
-	mingo@redhat.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	kvm@vger.kernel.org,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] KVM: x86/xen: Prevent runstate times from becoming negative
-Date: Mon, 19 Oct 2026 09:46:58 -0400
-Message-ID: <20261019135441.1420968-127-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] powercap: intel_rapl: Fix kernel panic during PMU unbind
+Date: Mon, 19 Oct 2026 09:46:59 -0400
+Message-ID: <20261019135441.1420968-128-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -60,381 +54,368 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Sumeet Pawnikar <sumeet4linux@gmail.com>
 
-[ Upstream commit 36a85200643e62d20a91f0bc1a811187b59f7762 ]
+[ Upstream commit 916b61abba586d950a4d8264e2841cc5ccfa4df1 ]
 
-When kvm_xen_update_runstate() is invoked to set a vCPU's runstate, the
-time spent in the previous runstate is accounted. This is based on the
-delta between the current KVM clock time, and the previous value stored
-in vcpu->arch.xen.runstate_entry_time.
+rapl_package_add_pmu() fails internally at perf_pmu_register(),
+and rapl_pmu_update() leaves the global rapl_pmu.pmu structure
+zero-initialized via memset and returns an error. But any
+previously probed packages retain has_pmu = true.
 
-If the KVM clock goes backwards, that delta will be negative. Or, since
-it's an unsigned 64-bit integer, very *large*. Linux guests deal with
-that particularly badly, reporting 100% steal time for ever more (well,
-for *centuries* at least, until the delta has been consumed).
+When the driver is subsequently unbound or removed,
+rapl_package_remove_pmu_locked() sees has_pmu == true and
+unconditionally calls perf_pmu_unregister(&rapl_pmu.pmu) on the
+zeroed-out structure. This attempts a list_del_rcu() on a NULL
+list head, immediately causing a kernel panic.
 
-So when a negative delta is detected, just refrain from updating the
-runstate times until the KVM clock catches up with runstate_entry_time
-again.
+Fix this by checking if the PMU is actually registered before
+attempting to unregister it.
 
-Also clamp steal_ns to delta_ns to prevent steal time from exceeding
-the total elapsed time, and handle negative steal_ns (which can happen
-if run_delay goes backwards across a scheduler update).
-
-The userspace APIs for setting the runstate times do not allow them to
-be set past the current KVM clock, but userspace can still adjust the
-KVM clock *after* setting the runstate times, which would cause this
-situation to occur.
-
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Link: https://patch.msgid.link/20260728144954.355376-21-dwmw2@infradead.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+[ rjw: Added empty line after the new conditional ]
+Link: https://patch.msgid.link/20260822094657.12489-1-sumeet4linux@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.53** (`pending-6.18`). The buggy unsigned
-runstate math is in this checkout; the candidate fix is not. This is a
-small, self-contained guest steal-time wraparound fix and should be
-backported here.
+The local tree is **6.12.111** (`pending-6.12`). The panic path is
+present here; only the later `_locked` wrapper is missing, so the same
+two-line check belongs in `rapl_package_remove_pmu`.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Subsystem: `KVM: x86/xen`
-- Action verb: **Prevent**
-- Claimed intent: stop Xen runstate accounting from wrapping when
-  kvmclock or steal time goes backwards
 
-Record: [KVM x86/xen] [prevent] [runstate times wrapping to huge
-unsigned values / 100% guest steal]
+Record: **[powercap: intel_rapl:] [Fix] [kernel panic during PMU
+unbind]**
+Subsystem `powercap` / Intel RAPL. Verb is explicitly **fix**. Claimed
+intent: stop a panic when the RAPL perf PMU is unbound after a failed
+registration.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Fixes: none (expected for this review pipeline)
-- Reported-by: none
-- Tested-by: none
-- Reviewed-by: Paul Durrant `<paul@xen.org>` (Xen maintainer)
-- Acked-by: none
-- Link: `https://patch.msgid.link/20260728144954.355376-21-
-  dwmw2@infradead.org`
-- Cc: stable: none (expected)
-- Signed-off-by: David Woodhouse `<dwmw@amazon.co.uk>` (author; KVM Xen
-  author)
-- Signed-off-by: Sean Christopherson `<seanjc@google.com>` (KVM x86
-  maintainer; applied)
-- Ignore: any pipeline “Upstream commit” / Sasha Levin SOB if present
 
-Record: Reviewed by Xen maintainer, applied by KVM x86 maintainer. Link
-shows **v7 20/36** of “Cleaning up the KVM clock mess”. No syzbot, no
-user Reported-by.
+Record:
+- **Reviewed-by:** Abel Vesa `<abel.vesa@oss.qualcomm.com>`
+- **Link:** `https://patch.msgid.link/20260822094657.12489-1-
+  sumeet4linux@gmail.com`
+- **Signed-off-by:** Sumeet Pawnikar (author); Rafael J. Wysocki (PM
+  maintainer)
+- **Ignored (pipeline):** Signed-off-by: Sasha Levin (not present on
+  this candidate text, but would be ignored)
+- **No Fixes:** tag (expected)
+- **No Cc: stable** (expected)
+- **No Reported-by / Tested-by / syzbot**
+
+Notable: PM subsystem maintainer applied it; one external Reviewed-by.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Bug: `kvm_xen_update_runstate()` accounts time as `now -
-runstate_entry_time` in a `u64`. If kvmclock goes backwards, that delta
-wraps to ~2^64 ns. Linux guests then show **100% steal time for
-centuries**.
 
-Triggers described:
-1. kvmclock going backwards
-2. userspace `KVM_SET_CLOCK` after runstate times were set (the SET_ATTR
-   APIs reject entry_time in the future, but clock can be moved
-   afterwards)
-3. `steal_ns` negative if `sched_info.run_delay` goes backwards
-
-Fix: treat deltas as signed; skip time accounting while delta is
-negative (leave `runstate_entry_time` so a later positive delta covers
-the gap); clamp steal to elapsed time; ignore negative steal.
-
-Record: [unsigned wrap of runstate/steal] [guest 100% steal forever] [no
-version pin] [root cause: unsigned kvmclock/run_delay subtraction]
+Record:
+- **Bug:** `rapl_pmu_update()` can fail at `perf_pmu_register()` after
+  `memset` of `rapl_pmu.pmu`. Packages that already succeeded keep
+  `has_pmu = true`.
+- **Symptom:** On unbind/remove, `rapl_package_remove_pmu*()` sees
+  `has_pmu` and calls `perf_pmu_unregister()` on a PMU whose `list_head`
+  is NULL → `list_del_rcu()` NULL deref → **kernel panic**.
+- **Root cause:** Unregister is gated only on `rp->has_pmu`, not on
+  whether the global PMU is actually registered.
+- **Version info in message:** none. Introduced with RAPL PMU APIs
+  (verified in Phase 3 as v6.11).
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Not disguised. Explicit correctness fix for wraparound.
 
-Record: [Not a hidden fix; it is a stated wraparound/steal-time bug fix]
+Record: **Not hidden.** This is an explicit panic fix, not cleanup
+disguised as a fix.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
-- File: `arch/x86/kvm/xen.c` only
-- Scope: ~22 insertions / ~6 deletions in one function
-- Function: `kvm_xen_update_runstate()`
-- Classification: single-file surgical fix
 
-Record: [xen.c +22/-6] [kvm_xen_update_runstate] [surgical]
+Record:
+- **File:** `drivers/powercap/intel_rapl_common.c`
+- **Scope:** 2 insertions, 1 deletion (plus blank line from rjw)
+- **Function (upstream):** `rapl_package_remove_pmu_locked()`
+- **Classification:** single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Before (this tree, lines 587–616):
-```c
-u64 delta_ns = now - vx->runstate_entry_time;
-...
-u64 steal_ns = run_delay - vx->last_steal;
-delta_ns -= steal_ns;
-vx->runstate_times[RUNSTATE_runnable] += steal_ns;
-vx->runstate_times[vx->current_runstate] += delta_ns;
-vx->runstate_entry_time = now;
-```
-Any `now < entry_time` or `run_delay < last_steal` wraps and adds a huge
-value.
 
-After:
-- `s64 delta_ns`, `s64 steal_ns`
-- `delta_ns < 0` → update current runstate + `last_steal` only; do not
-  touch times or `entry_time`
-- steal applied only if `steal_ns > 0`, and clamped to `delta_ns`
-- `last_steal` always updated (even on the skip path)
-
-Record: [unsigned wrap → skip/clamp signed accounting; guest cache still
-updated]
+Record:
+- **Before:** If this package has `has_pmu` and no other package still
+  needs the PMU, always `perf_pmu_unregister(&rapl_pmu.pmu)` then
+  `memset` the global `rapl_pmu`.
+- **After:** Same, but unregister only if `rapl_pmu.registered`.
+- **Path:** driver remove / unbind / (later kernels) CPU-hotplug
+  teardown — error-recovery path after a failed PMU (re)register.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Category: **logic / type (unsigned wrap) + guest-visible accounting
-corruption**
 
-Mechanism:
-- `u64` subtraction underflows to ~2^64 ns
-- Guest `xen_steal_clock()` is `runnable + offline`
-  (`drivers/xen/time.c`)
-- Huge runnable/offline → 100% steal until that delta is “consumed”
+Record: **[NULL deref / invalid list_del on unregistered PMU]**
 
-Record: [unsigned wrap] [skip negative kvmclock delta; clamp/ignore bad
-steal_ns]
+In this tree, `rapl_pmu_update()` (unchanged since 575024a8aa7cf):
+
+```1996:2024:drivers/powercap/intel_rapl_common.c
+        /* Unregister previous registered PMU */
+        if (rapl_pmu.registered)
+                perf_pmu_unregister(&rapl_pmu.pmu);
+
+        rapl_pmu.registered = false;
+        rapl_pmu.domain_map |= rp->domain_map;
+
+        memset(&rapl_pmu.pmu, 0, sizeof(struct pmu));
+        /* ... fill callbacks ... */
+        ret = perf_pmu_register(&rapl_pmu.pmu, "power", -1);
+        if (ret) {
+                pr_info("Failed to register PMU\n");
+                return ret;   /* does NOT set rp->has_pmu; does NOT
+restore prior PMU */
+        }
+        rapl_pmu.registered = true;
+end:
+        rp->has_pmu = true;
+```
+
+If package A already registered, then package B needs extra domains
+(documented dual-package Psys case): previous PMU is unregistered,
+`pmu.entry` is zeroed, re-register fails. Package A still has `has_pmu
+== true`. Remove of A then hits:
+
+```2104:2105:drivers/powercap/intel_rapl_common.c
+        perf_pmu_unregister(&rapl_pmu.pmu);
+        memset(&rapl_pmu, 0, sizeof(struct rapl_pmu));
+```
+
+`perf_pmu_unregister()` does `list_del_rcu(&pmu->entry)`. A zeroed
+`list_head` has `next = prev = NULL`. `__list_del(entry->prev,
+entry->next)` writes through NULL → oops.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Obviously correct: steal cannot exceed elapsed time; negative elapsed
-time must not be accounted. Minimal. No API/struct change. Regression
-risk is low: a backward clock window is not accounted until kvmclock
-catches up, then one positive delta covers it. Neighboring
-`kvm_xen_inject_vcpu_vector()` in the posted context uses a 3-arg
-`kvm_irq_delivery_to_apic`; this tree has a 4th `NULL` — that function
-is **not** in the changed hunk.
 
-Record: [high quality, surgical] [low regression risk]
+Record: **Obviously correct.** `rapl_pmu.registered` is already
+maintained in this file (set true only after successful
+`perf_pmu_register()`, cleared before re-register). Skipping unregister
+when it is false cannot skip a still-registered PMU. Regression risk is
+very low. No API/data-structure change.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Entire function blamed to `5ec3289b31ab9` (“Compatibility fixes for
-shared runstate area”, 2022-11-18), originally added in `30b5c851af799`
-(“Add support for vCPU runstate information”, 2021-03-01,
-**v5.12-rc2**).
 
-Record: [30b5c851af799 / 5ec3289b31ab9] [first appeared v5.12; this
-shape since v6.2]
+Record: Unconditional `perf_pmu_unregister` in
+`rapl_package_remove_pmu()` is from **575024a8aa7cf** (“powercap:
+intel_rapl: Introduce APIs for PMU support”, Zhang Rui, 2024-04-28).
+`git describe --contains` → **v6.11**. Present in this 6.12 tree (`git
+merge-base --is-ancestor 575024a8aa7cf HEAD` succeeded).
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-No Fixes: tag.
 
-Record: [N/A — no Fixes: tag] [introducer is in this tree]
+Record: No Fixes: tag. The introducing commit is 575024a8aa7cf; TPMI
+started calling it in **963a9ad3c589** (“Enable PMU support”), also in
+this tree (v6.11).
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Recent `xen.c` commits are unrelated (schedop poll, event channels,
-timers). No later runstate accounting rewrite in this tree.
 
-Record: [no conflicting local rework] [standalone vs local xen.c
-history]
+Record:
+- **35cf088430978** already in this tree (v6.12.110): “Handle PMU
+  registration failure during probe”. That only logs
+  `rapl_package_add_pmu()` failure; probe still succeeds; remove still
+  calls `rapl_package_remove_pmu()`. It does **not** fix the panic.
+- No `remove_pmu_locked` commits here.
+- Standalone logic; not patch X/Y of a series that 6.12 needs.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-David Woodhouse is the author of KVM Xen runstate (Amazon). Related
-history is the original runstate feature and later Xen timer/deadlock
-fixes. This is a maintainer-area fix.
 
-Record: [primary KVM Xen runstate author] [this is a follow-on to his
-2021 accounting]
+Record: Sumeet Pawnikar has several powercap fixes in this tree,
+including 35cf088 (already backported). Not the RAPL maintainer; Zhang
+Rui / Rafael Wysocki own the subsystem. Rafael applied this patch as
+7.3-rc material.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Posted as **v7 20/36** of the kvmclock cleanup series. Cover letter
-(verified): fixes/cleanups are ordered **not** to depend on the later
-new uAPI. Cover-letter stat for `xen.c` is `28 +-`, matching **only this
-patch**. Later patches do not change this function. Local function body
-matches the patch “before” exactly.
 
-Record: [no code prerequisites in this tree] [can apply standalone]
+Record: Upstream applies the check in
+`rapl_package_remove_pmu_locked()`, added later (~6.19) by “Fix possible
+recursive lock warning” (`dcd0b625`) together with MSR RAPL PMU. **`git
+merge-base --is-ancestor dcd0b625… HEAD` failed** — that refactor is
+**not** in 6.12. It is **not required**: 6.12 already has
+`rapl_pmu.registered` and the same unregister in
+`rapl_package_remove_pmu()`. Standalone one-line semantic backport.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-- `b4 dig -c` on the candidate SHA failed: `36a85200643e` is **not** in
-  this object store (`git merge-base --is-ancestor` exit 1)
-- Found via search: [PATCH v7 20/36] on LKML/Patchew
-- Cover letter: https://lkml.iu.edu/2607.3/08309.html — “Cleaning up the
-  KVM clock mess”
-- Patch: https://lkml.iu.edu/2607.3/08399.html
-- kvm-x86 commit: `36a85200643e62d20a91f0bc1a811187b59f7762`
-- lore.kernel.org fetches returned 403; used LKML/Patchew mirrors
 
-v7 vs v6: same runstate hunk (v6 was 26/36; v7 reordered). No NAK on
-this patch in the retrieved pages. `Reviewed-by: Paul Durrant` already
-on the submission.
-
-Record: [lore msgid 20260728144954.355376-21] [v6→v7 reorder, same diff]
-[no NAK found] [no reviewer Cc: stable on this patch]
+Record:
+- `b4 dig -c` cannot be used on this SHA (commit is not in the
+  checkout). Related commit 35cf088 was found as v3 on lore.
+- Original: 2026-07-26 (linux-pm). Resend: 2026-08-22, msgid
+  `20260822094657.12489-1-sumeet4linux@gmail.com`.
+- URLs: https://lists.openwall.net/linux-kernel/2026/08/22/310 and
+  https://lkml.iu.edu/2608.2/11624.html
+- Abel Vesa: “Looks OK to me” + Reviewed-by. Rafael: “Applied as 7.3-rc
+  material, thanks!”
+- No NAKs. Same 3-line diff from v1 through resend. No reviewer request
+  for Cc: stable.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Paul Durrant (Xen). Sean Christopherson applied. Series was on kvm/xen
-lists (from msgid/patchew).
 
-Record: [Paul Durrant review; Sean applied]
+Record: To/Cc: Rafael J. Wysocki, linux-pm, linux-kernel. Reviewer Abel
+Vesa. Applied by the PM maintainer. Appropriate audience.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-No syzbot/bugzilla. Bug is described from Xen-on-KVM steal accounting
-(author is the feature owner). Guest symptom matches
-`xen_steal_clock()`.
 
-Record: [no public user bugzilla] [author-described production-style
-steal blow-up]
+Record: No syzbot/bugzilla. Mechanism is explained in the commit
+(list_del_rcu on NULL). Author of the sibling probe-failure patch, so
+this is from the same investigation, not theoretical cleanup.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Series problem statement includes kvmclock **discontinuities**
-(masterclock re-snapshot yanking guest time) and imprecise
-`KVM_SET_CLOCK` migration. Patch 36 is a Xen runstate migration
-selftest. This hunk is the only `xen.c` change and does not need the new
-`KVM_[GS]ET_CLOCK_GUEST` API.
 
-Record: [thematic series; this patch is standalone] [do not need the
-other 35 patches for this tree]
+Record: Sibling **35cf088** already in 6.12.110. This panic fix is the
+missing half of that failure handling. Not a multi-patch series that
+6.12 lacks.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-lore.kernel.org/stable returned 403.
 
-Record: [UNVERIFIED: no stable@ thread retrieved]
+Record: lore.kernel.org/stable returned 403. Open web search found no
+stable-list rejection. **UNVERIFIED:** whether anyone already asked for
+this on stable@ (does not change the technical verdict).
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: [`kvm_xen_update_runstate`]
+
+Record: Upstream: `rapl_package_remove_pmu_locked`. This tree:
+`rapl_package_remove_pmu`. Related: `rapl_pmu_update`,
+`rapl_package_add_pmu`.
 
 **Step 5.2: TRACE CALLERS**
-- `kvm_xen_runstate_set_running()` ← `record_steal_time()` in
-  `arch/x86/kvm/x86.c` when `kvm_xen_msr_enabled()` (vCPU enter)
-- `kvm_xen_runstate_set_preempted()` ← `kvm_arch_vcpu_put()` (preempt
-  path)
-- `kvm_xen_vcpu_set_attr()` `KVM_XEN_VCPU_ATTR_TYPE_RUNSTATE_CURRENT`
-  and `..._ADJUST` (VMM ioctl)
 
-Hot path for Xen-enabled KVM guests, plus userspace restore.
-
-Record: [vCPU enter/put + Xen runstate ioctls]
+Record:
+- `intel_rapl_tpmi_remove()` → `rapl_package_remove_pmu()` (only caller
+  in 6.12; MSR driver does **not** use these APIs here).
+- `intel_rapl_tpmi_probe()` → `rapl_package_add_pmu()` →
+  `rapl_pmu_update()`. Probe **continues** if add_pmu fails (after
+  35cf088, still `return 0`).
+- Remove runs on unbind, rmmod, or TPMI device teardown — process
+  context, not IRQ.
 
 **Step 5.3: TRACE CALLEES**
-`get_kvmclock_ns()`, `kvm_xen_update_runstate_guest()` (writes guest
-runstate area). No new locks/allocs.
 
-Record: [kvmclock read + optional guest shared-area update]
+Record: `perf_pmu_unregister()` → `list_del_rcu(&pmu->entry)` under
+`pmus_lock`, then `synchronize_srcu` / `synchronize_rcu`, sysfs
+teardown. `list_add_rcu(&pmu->entry, &pmus)` happens only at the **end**
+of successful `perf_pmu_register()`. Failed register never links
+`entry`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Reachable from normal vCPU run when `CONFIG_KVM_XEN` and Xen
-MSR/hypercall page are enabled. Userspace can also move kvmclock via
-`KVM_SET_CLOCK` (`kvm_vm_ioctl_set_clock` in this tree). The REALTIME
-flag tries to avoid stepping backwards, but a plain `KVM_SET_CLOCK`
-still sets `kvmclock_offset = data.clock - now_raw_ns` with no
-monotonicity check.
 
-Record: [reachable from VMM + guest vCPU run] [KVM_SET_CLOCK can move
-clock back]
+Record: Reachable on Intel TPMI RAPL (`CONFIG_INTEL_RAPL_TPMI` +
+`CONFIG_PERF_EVENTS`): Meteor Lake / Lunar Lake / Arrow Lake class
+platforms that 6.12 actually ships on. Trigger: successful PMU add, then
+a later package’s `rapl_pmu_update()` re-register fails, then driver
+remove. Unprivileged users typically cannot unbind, but
+rmmod/unbind/hot-unplug and failed second-package probe are real
+admin/boot paths. Documented dual-package Psys re-register is exactly
+this update path.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Guest steal: `drivers/xen/time.c` `xen_steal_clock()` = runnable +
-offline. Same wrap on `steal_ns` would inflate runnable. This tree
-already rejects SET_ATTR runstate entry_time **after** current kvmclock
-(lines 1039–1043, 1080–1085) but not clock changes afterwards.
 
-Record: [guest steal uses runnable+offline] [SET_ATTR future-time check
-exists; SET_CLOCK hole remains]
+Record: Same file already checks `rapl_pmu.registered` before unregister
+**inside** `rapl_pmu_update()`. Remove path is the missing twin of that
+check. No other RAPL unregister site in 6.12.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Yes. `arch/x86/kvm/xen.c` `kvm_xen_update_runstate()` still uses `u64
-delta_ns` / `u64 steal_ns`.
-- Tree: `pending-6.18`, `make kernelversion` = **6.18.53**
-- Introducer `30b5c851af799` is an ancestor
-- Candidate `36a85200643e` is **not** an ancestor
 
-Record: [buggy code present at xen.c:587–616] [since v5.12]
+Record: **Yes.** `drivers/powercap/intel_rapl_common.c` lines 2089–2106:
+`rapl_package_remove_pmu()` still calls `perf_pmu_unregister` with only
+a `has_pmu` guard. `struct rapl_pmu { … bool registered; }` exists at
+1574–1579. Bug since **v6.11** (575024a8aa7cf + 963a9ad3c589).
+
+Local tree: `git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`, `make
+kernelversion` = **6.12.111**, branch `pending-6.12`.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Function text matches the patch before-image. Expected **clean apply**.
 
-Record: [clean apply]
+Record: **Minor context rework, not a semantic rewrite.**
+- Function name: `rapl_package_remove_pmu` vs upstream `_locked`
+- Extra `guard(cpus_read_lock)()` still in the 6.12 function
+- `EXPORT_SYMBOL_GPL` vs `EXPORT_SYMBOL_NS_GPL`
+
+The two-line `if (rapl_pmu.registered)` change applies in place.
+`registered` already exists.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-No “Prevent runstate times” commit. kvmclock cleanup series not in this
-tree (`git log --grep` empty). 6.18 still has the masterclock
-discontinuity issue that series describes.
 
-Record: [no substitute fix present]
+Record: 35cf088 is here and only adds a `dev_info`. **This panic is not
+already fixed.** `git log --grep='panic during PMU'` on this path is
+empty.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-`arch/x86/kvm/xen.c` — KVM Xen PV ABI emulation. **IMPORTANT** for Xen-
-on-KVM (cloud/QEMU), not core mm/vfs. `CONFIG_KVM_XEN` defaults to “If
-in doubt, N” but is a real production option (author is Amazon; header
-copyright Amazon/Oracle).
 
-Record: [KVM Xen] [IMPORTANT, config-specific]
+Record: **drivers/powercap (Intel RAPL)** — **IMPORTANT** for Intel
+platforms with TPMI RAPL + perf, not core-mm/VFS. Panic still takes down
+the machine.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Mature feature (v5.12+), ongoing Xen timer/evtchn fixes. Not staging.
 
-Record: [mature, still maintained]
+Record: Mature driver; PMU APIs added in v6.11. Moderate churn (platform
+IDs, locking, leak fixes). This is a leftover hole in the v6.11 PMU
+feature, not a brand-new 7.x path.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Xen-ABI KVM guests with runstate/steal enabled (`CONFIG_KVM_XEN` + VMM
-setup). Not all KVM users.
 
-Record: [config/driver-specific: KVM Xen guests]
+Record: **Config/driver-specific:** `CONFIG_INTEL_RAPL_TPMI` +
+`CONFIG_PERF_EVENTS` on Intel TPMI RAPL hardware (client MTL/LNL/ARL and
+any TPMI Xeon). Not universal, not staging.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-1. `KVM_SET_CLOCK` (live migration/snapshot) after runstate SET_ATTR —
-   documented, exists in this tree
-2. kvmclock discontinuities from masterclock re-snapshot — still present
-   here; the rest of the series is **not**
-3. `run_delay < last_steal` unsigned wrap (ioctl uses VMM `current`;
-   vCPU path uses the vCPU task)
 
-Unprivileged guest cannot call `KVM_SET_CLOCK`; the VMM can. Guest then
-sees broken steal forever.
-
-Record: [migration/SET_CLOCK and steal wrap] [realistic in production
-Xen-on-KVM] [VMM-triggered, guest-visible]
+Record: (1) At least one package successfully added the PMU
+(`has_pmu=true`, `registered=true`). (2) A later package causes
+unregister + `memset(&rapl_pmu.pmu)` + failed `perf_pmu_register`
+(`registered` stays false; prior packages keep `has_pmu`). (3) Last
+`has_pmu` package is removed. Dual-package extra-domain update is
+documented in-tree. First-package-only register failure is already safe
+(`has_pmu` not set). Commonness: uncommon; severity when hit: panic.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Not a host oops. Guest scheduler steal accounting becomes permanently
-wrong (100% steal for ~centuries). That breaks guest CPU accounting,
-load, and can stall workloads/watchdogs. **HIGH** for those guests (not
-host CRITICAL).
 
-Record: [guest steal corruption / apparent 100% steal] [HIGH]
+Record: **Kernel oops/panic** via NULL deref in `list_del_rcu` /
+`__list_del`. **Severity: CRITICAL.**
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Benefit: stops a permanent guest-visible accounting failure on a path
-used in migration. Risk: ~20 lines, no locking/API change, skip-
-accounting is conservative.
 
-Record: [high benefit for Xen-on-KVM] [very low risk] [favorable]
+Record:
+- **Benefit:** Prevents a real panic on TPMI RAPL unbind after a failed
+  PMU update. Complements the probe-failure log already in 6.12.110.
+- **Risk:** Very low — one boolean already used on the add path; skip
+  unregister only when the PMU is not on the perf list.
+- **Ratio:** Strongly favors backport. Needs a 2-line context-adjusted
+  backport, not the later `_locked` API.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -442,164 +423,107 @@ PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-FOR:
-- Real wraparound; guest `xen_steal_clock()` turns it into 100% steal
-  for centuries
-- Buggy `u64` math is in this 6.18.53 tree since v5.12
-- Trigger exists here: `KVM_SET_CLOCK` after runstate setup; masterclock
-  yanks; steal_ns wrap
-- Small, obviously correct, applies cleanly
-- Reviewed by Paul Durrant; applied by Sean Christopherson
-- Standalone; series cover letter says these cleanups do not depend on
-  later uAPI
-- This tree does **not** have the rest of the kvmclock series, so
-  discontinuities remain
+**FOR:**
+- Real kernel panic (`list_del_rcu` on a zeroed `pmu->entry`)
+- Buggy code and `rapl_pmu.registered` both exist in 6.12.111
+- Bug present since v6.11
+- 2-line, obviously correct
+- Reviewed and applied by Rafael Wysocki
+- Sibling PMU-failure handling already backported here (35cf088)
+- No new feature/API
 
-AGAINST:
-- Part of a 36-patch series (subject 20/36) — but verified independent
-- No Fixes:/Cc: stable (not a negative per rules)
-- No crash/CVE; Xen-specific
-- No public multi-user Reported-by
-- `CONFIG_KVM_XEN` is optional
+**AGAINST:**
+- Exact hunk targets `rapl_package_remove_pmu_locked()` (post-6.12
+  split) — needs a tiny backport
+- Trigger needs a failed re-register after a successful one (not every
+  boot)
+- TPMI-only in this tree
+- No syzbot / no Fixes tag (expected)
 
-UNRESOLVED:
-- Direct lore.kernel.org and stable@ search 403
-- `b4 dig` could not use a local candidate SHA
-- Did not independently reproduce 100% steal (author claim + guest steal
-  formula are consistent)
+**UNRESOLVED:**
+- Stable@ discussion (lore 403)
+- Whether a later mainline `rapl_pmu_update()` memsets the whole
+  `rapl_pmu` on error (6.12 path is still panic-capable as shown)
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — signed math + clamp;
-   reviewed; in kvm-x86
-2. Fixes a real bug that affects users? **PASS** — guest steal blow-up
-   on kvmclock/steal wrap
-3. Important issue? **PASS** — permanent 100% steal is a serious guest
-   functional failure (HIGH, not host panic)
-4. Small and contained? **PASS** — one function, ~28 lines
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — buggy code present, before-
-   image matches
+
+1. Obviously correct and tested? **PASS** — flag already tracks
+   registration; maintainer applied it.
+2. Fixes a real bug that affects users? **PASS** — panic on RAPL TPMI
+   unbind after failed PMU update.
+3. Important issue? **PASS** — kernel panic, CRITICAL.
+4. Small and contained? **PASS** — 2 lines, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** (with trivial rename/context:
+   same check in `rapl_package_remove_pmu`).
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Not a device-ID/quirk/DT/build/doc exception. Ordinary correctness fix.
 
-**Step 9.4: DECISION**
-Backport to **this** 6.18.53 tree. The series around it is not needed;
-the bug and the trigger are here.
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a straight
+crash fix.
 
-------------------------------------------------
-Detailed explanation
-------------------------------------------------
-**Problem:** Xen runstate times are accumulated with unsigned kvmclock
-and `run_delay` deltas. A backward step wraps to ~2^64 ns. Linux guests
-use runnable+offline as steal, so they can show 100% steal for
-centuries. That is a live-migration/`KVM_SET_CLOCK` class bug, not a
-theoretical one, and 6.18 still allows `KVM_SET_CLOCK` to move the clock
-back.
+**Step 9.4: MAKE YOUR DECISION**
 
-**Stable rules:** Small, obviously correct, no new API, real guest-
-visible failure, applies cleanly to this checkout.
-
-**Risk vs benefit:** Benefit is preventing unusable guest steal
-accounting on Xen-on-KVM. Risk is skipping a short accounting window
-until kvmclock catches up — the intended recovery.
-
-**Concerns:** Do not pull the rest of the kvmclock series. This hunk is
-sufficient. No extra 6.18-specific rework expected.
+This is a small, obviously correct panic fix for code that 6.12 has had
+since v6.11. The `_locked` wrapper is not a dependency. Backport the
+same `if (rapl_pmu.registered)` guard into `rapl_package_remove_pmu()`.
 
 Verification:
-- [Phase 1] Parsed tags: Reviewed-by Paul Durrant; Link msgid
-  20260728144954.355376-21; SOB Woodhouse + Sean; no Fixes/Reported-
-  by/Cc:stable
-- [Phase 1] Subject verb “Prevent”; body describes unsigned wrap → 100%
-  steal
-- [Phase 2] Diff: only `kvm_xen_update_runstate()` in
-  `arch/x86/kvm/xen.c`; signed delta/steal, skip if `delta_ns < 0`,
-  clamp steal
-- [Phase 3] `git blame` 587–616 → `5ec3289b31ab9`; introducer
-  `30b5c851af799` contained in **v5.12-rc2**
-- [Phase 3] `git merge-base --is-ancestor 30b5c851af799 HEAD` → yes;
-  `36a85200643e` → no
-- [Phase 3] Author is original runstate implementer
-- [Phase 4] Cover letter LKML: series reordered so fixes do not depend
-  on new uAPI; xen.c `28 +-` is this patch only
-- [Phase 4] Patch text on lkml.iu.edu/patchew matches the candidate diff
-- [Phase 4] UNVERIFIED: lore.kernel.org 403; b4 dig no local SHA;
-  stable@ search 403
-- [Phase 5] Callers: `record_steal_time` / `kvm_arch_vcpu_put` / Xen
-  SET_ATTR; guest steal in `drivers/xen/time.c:145-150`
-- [Phase 5] `kvm_vm_ioctl_set_clock` can set `kvmclock_offset` without a
-  general “no backwards” check
-- [Phase 6] `git describe HEAD` p-6.18-1-g03b85e06ca9bf; `make
-  kernelversion` 6.18.53; local function still unsigned
-- [Phase 6] Local function body identical to patch before-image → clean
-  apply
-- [Phase 7] CONFIG_KVM_XEN in `arch/x86/kvm/Kconfig`
-- [Phase 8] Failure mode: guest 100% steal, severity HIGH; risk very low
-- UNVERIFIED: could not reproduce steal blow-up at runtime; relied on
-  code + author description
+- [Phase 1] Parsed tags: Reviewed-by Abel Vesa; Link msgid
+  20260822094657; Rafael SOB; no Fixes/Cc:stable/syzbot
+- [Phase 1] Body describes list_del_rcu on NULL after failed register +
+  leftover has_pmu
+- [Phase 2] Diff: 2 lines in remove path; add `if (rapl_pmu.registered)`
+  before `perf_pmu_unregister`
+- [Phase 2] Local `rapl_pmu_update()` confirmed: memset pmu, set
+  registered=false, return on register failure without clearing other
+  packages’ has_pmu
+- [Phase 2] `perf_pmu_unregister` → `list_del_rcu(&pmu->entry)`;
+  `list_add_rcu` only after successful register
+- [Phase 3] git blame: 575024a8aa7cf (v6.11) introduced the bug;
+  ancestor of HEAD
+- [Phase 3] 963a9ad3c589 TPMI Enable PMU support is in this tree
+- [Phase 3] 35cf088430978 already in v6.12.110; does not fix unregister
+  panic
+- [Phase 3] dcd0b625 `_locked` split is NOT an ancestor of HEAD
+- [Phase 4] Original 2026-07-26; resend 2026-08-22; Abel Reviewed-by;
+  Rafael applied as 7.3-rc; no NAK
+- [Phase 4] b4 dig on this SHA N/A (commit not in tree); b4 dig on
+  35cf088 found v3 lore thread
+- [Phase 4] lore.kernel.org/stable fetch 403 — UNVERIFIED stable-list
+  history
+- [Phase 5] Only 6.12 caller: intel_rapl_tpmi_remove; probe ignores
+  add_pmu errors
+- [Phase 6] git describe HEAD: p-6.12-3-gc504cf0baa3d8; kernelversion
+  6.12.111; buggy unregister at intel_rapl_common.c:2104
+- [Phase 6] rapl_pmu.registered exists; patch needs function-name
+  context tweak
+- [Phase 8] Failure mode: NULL deref / oops on unbind, severity CRITICAL
+- UNVERIFIED: whether anyone nominated this on stable@
+
+The fix is small, surgical, and meets the stable criteria for this 6.12
+tree.
 
 **YES**
 
- arch/x86/kvm/xen.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ drivers/powercap/intel_rapl_common.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/xen.c b/arch/x86/kvm/xen.c
-index d6b2a665b499d..b41e67e245a81 100644
---- a/arch/x86/kvm/xen.c
-+++ b/arch/x86/kvm/xen.c
-@@ -588,29 +588,45 @@ void kvm_xen_update_runstate(struct kvm_vcpu *v, int state)
- {
- 	struct kvm_vcpu_xen *vx = &v->arch.xen;
- 	u64 now = get_kvmclock_ns(v->kvm);
--	u64 delta_ns = now - vx->runstate_entry_time;
- 	u64 run_delay = current->sched_info.run_delay;
-+	s64 delta_ns = now - vx->runstate_entry_time;
-+	s64 steal_ns = run_delay - vx->last_steal;
- 
-+	/*
-+	 * If the vCPU was never run before, its prior state should
-+	 * be considered RUNSTATE_offline.
-+	 */
- 	if (unlikely(!vx->runstate_entry_time))
- 		vx->current_runstate = RUNSTATE_offline;
- 
-+	/*
-+	 * If KVM clock went backwards, just update the current runstate
-+	 * but don't account any time. Leave entry_time unchanged so the
-+	 * next positive delta covers the full period once the clock
-+	 * catches up. Update last_steal every time so stolen time only
-+	 * reflects the interval since the most recent call.
-+	 */
-+	if (delta_ns < 0)
-+		goto update_guest;
-+
- 	/*
- 	 * Time waiting for the scheduler isn't "stolen" if the
- 	 * vCPU wasn't running anyway.
- 	 */
--	if (vx->current_runstate == RUNSTATE_running) {
--		u64 steal_ns = run_delay - vx->last_steal;
-+	if (vx->current_runstate == RUNSTATE_running && steal_ns > 0) {
-+		if (steal_ns > delta_ns)
-+			steal_ns = delta_ns;
- 
- 		delta_ns -= steal_ns;
--
- 		vx->runstate_times[RUNSTATE_runnable] += steal_ns;
+diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+index f08ac99f5e55e..977c4c90923d5 100644
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -2106,7 +2106,9 @@ void rapl_package_remove_pmu(struct rapl_package *rp)
+ 			return;
  	}
--	vx->last_steal = run_delay;
  
- 	vx->runstate_times[vx->current_runstate] += delta_ns;
--	vx->current_runstate = state;
- 	vx->runstate_entry_time = now;
- 
-+ update_guest:
-+	vx->current_runstate = state;
-+	vx->last_steal = run_delay;
- 	if (vx->runstate_cache.active)
- 		kvm_xen_update_runstate_guest(v, state == RUNSTATE_runnable);
+-	perf_pmu_unregister(&rapl_pmu.pmu);
++	if (rapl_pmu.registered)
++		perf_pmu_unregister(&rapl_pmu.pmu);
++
+ 	memset(&rapl_pmu, 0, sizeof(struct rapl_pmu));
  }
+ EXPORT_SYMBOL_GPL(rapl_package_remove_pmu);
 -- 
 2.53.0
 
