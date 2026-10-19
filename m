@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5309491B3D;
-	Mon, 19 Oct 2026 13:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461994C8472;
+	Mon, 19 Oct 2026 13:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418142; cv=none; b=IdjpfCQQPwYS7yokQQg/23N6205ehsLAEWXQy9uGl7JIIgYBRz6bLdAuPNOH1qyljULphWR4pnScDXVaowKuX6bMg70X0TBE1QDdVmqrynv6oyMPVWMbC9ShDIymOUcs14OSCbv6/jibvuJb7ouIHhGB63QdYRKbyeLeKKa/VX0=
+	t=1792418143; cv=none; b=O1YWpfH2JE6cBU/UMDFLX+BQ1hz9mkJEOuh25pAxhWxsMH/i5wTNNOMPuLMDSwwGTMxal8j2FA+k03s8s/lzU2FSdIlR2rDOMHi/ZQTL+qtBmC8iqQsBb+uHMh0VyugRGqk2xjcgLWZVz21W7tp0d41ucNR1JjzM6EXMctPpLm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418142; c=relaxed/simple;
-	bh=ySlhVHs5EIvaSq+cdETOQHdQwsOEDbFvT/Gg499Rl0s=;
+	s=arc-20240116; t=1792418143; c=relaxed/simple;
+	bh=ZkXaKlUyhiS+fvLIj9i2IUobo1CeYA99D47HxTX72Qc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tEv8HMfy7hCIJQhSi5I7BbNAsc74MLZZLipTpaq5tgPyR/b/3pSclHunlDTRsxGGUcY4REFonVmfdHXggb6fq1UMyqcdLvm9Br3q2VmY8ZfMzXCNJuBYIwEl7fUUMJK02eLbdCOsCRLzx1GF3ZF3uOicm4SENi/MsAf55NwxcF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V9IonbLK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dwtrkOfE7CzvG8w9yn+AjPF7rzMZ7KOlL62GOXnIOD5OYrksWQJoQ2ZJoNbXVjiTlO3v2BdH+WdshUaNnTNfF2o4FAhKvTB94iFDOQdki3fPjwSN8mavAWLgx4LJ4z9e1Jj+e9RmjYYkCkSJsRr1LdQPV3t18VM5EInaBiBuVgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YqNpPYpj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V9IonbLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA811F000C6;
-	Mon, 19 Oct 2026 13:55:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YqNpPYpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BDE1F000C7;
+	Mon, 19 Oct 2026 13:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418139;
-	bh=q6Y5kyHWSxLwi9giqi72Tq/HTjncMBIStO0G17YuWw0=;
+	s=k20260515; t=1792418141;
+	bh=ypyiSk7m1tN2St+TQ9gw6JLtzzjoLOMXeA2Bwty7kUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9IonbLKKfFHjhquDMRFtdehQRLkhutM5ewown8MizBDZCyRTCruaERbQaDD5wJvV
-	 8RNl9wmoTAHrwmawuJ+0uZSKiV/qR8ioUcmtB6zyD24dvSqyjm4W5eTYLr9DCK06Qz
-	 AQ3RnwnvydK6p1aHbCtFEknkF5+uEuT1GNCEsL7BXyvIy2jffdNwO7pGvmJJb1mq8t
-	 Pbbs9/7F/pozVdyAKbt/DrHLyv/nUgMIn1zVETivEAd8mb9tX8q+XMs1+tTKoj2O6s
-	 e4vzbZnz7PNBroeQYj7M7CYyT4GFipg9q33SxqnA1kN5epTMx8sq03xBDHVV5gKaSE
-	 dV/I5jitxnUWA==
+	b=YqNpPYpj0Z7D95H69wGyZDNyXwZfQqb/XD9tABfjvSXDLL7TgpHRKY3thQn14XU2K
+	 a4vN8JK48uTYrkUGPU42H8ywffSTBa0500NBJ9WwyWJzEd354JsYnn5QOBT6c0JaM4
+	 iYH1vD0hAwHQF9Vd0qr/oHjyrGKwX+iZ6d7p+ofvXUaWNLhcIV3h1Q6WfykARwsBcZ
+	 H1kfksigDOhmD+M6mrAjY23U6rEZInTBs1QkJybFKa+5kog0gv/9ww5vrAX6UQx27l
+	 ftw30IGG0lyGQbhO80/Hm5JeciNVD8CccVXvu1TUPajvbUkCXylYdkjmUjk5LdEJdP
+	 kgGa3TIW0MNvw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rui Qi <qirui.001@bytedance.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+Cc: Hari Mishal <harimishal1@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rostedt@goodmis.org,
-	shuah@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] selftests/ftrace: Force C locale in ftracetest
-Date: Mon, 19 Oct 2026 09:45:31 -0400
-Message-ID: <20261019135441.1420968-40-sashal@kernel.org>
+	axboe@kernel.dk,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] nvme: clamp FDP nruhsd to allocated RUH status descriptor count
+Date: Mon, 19 Oct 2026 09:45:32 -0400
+Message-ID: <20261019135441.1420968-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,362 +56,391 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rui Qi <qirui.001@bytedance.com>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit c13fcd3951dcc19524ce0b3e852844b16cd32b22 ]
+[ Upstream commit 29261f8bb41662f2a660c479e5cf592942b53f78 ]
 
-Some ftracetest test cases parse command output by matching English
-field names. Tools such as readelf may localize their output via
-gettext, while ftracetest currently inherits the user locale from
-the environment.
+nvme_query_fdp_info() allocates the RUH status buffer for at most S8_MAX
+- 1 descriptors, and then copies ruhs->ruhsd[] into head->plids[] using
+the controller reported ruhs->nruhsd directly as the loop bound.
+However, that count wasn't taken into account for the actual buffer's
+size, so there was a chance for a controller reporting a larger nruhsd
+to cause the copy to overflow the buffer.  Clamp nr_plids to the same
+bound used for the allocation.
 
-If a translated field name is printed, parsing can fail even though
-the tested kernel behavior is unchanged. For example, add_remove_uprobe
-can fail to find the ELF entry point and then write a uprobe event with
-a missing offset.
-
-Export LC_ALL=C in the top-level ftracetest runner so every test case
-gets stable command output by default.
-
-Link: https://lore.kernel.org/all/20260807081512.2974757-2-qirui.001@bytedance.com/
-
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a three-line selftest locale fix, the
-companion uprobe offset patch is already in this 6.18 tree, and the
-runner still inherits the user locale.
+This is a one-line out-of-bounds-read clamp in NVMe FDP setup. The local
+tree is **v7.3-rc4** (`7.3.0-rc4`, HEAD `f0100363d8c37`).
+`nvme_query_fdp_info()` exists here; the overflow is real; the change is
+surgical.
 
-## Phase 1: Commit message forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject line**
-- Record: `[selftests/ftrace] [Force] Force C locale in ftracetest so
-  test parsing is locale-stable`
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[nvme]** **[clamp]** clamp FDP `nruhsd` to the allocated RUH
+status descriptor count. “Clamp” is a bounds-fix verb.
 
-**Step 1.2: Tags**
-- Record:
-  - `Link: https://lore.kernel.org/all/20260807081512.2974757-2-
-    qirui.001@bytedance.com/`
-  - `Signed-off-by: Rui Qi <qirui.001@bytedance.com>` (author)
-  - `Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>`
-    (ftrace/probes maintainer)
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-    by:`, or `Cc: stable` (absence is expected for this review)
-  - Upstream SHA: `c13fcd3951dcc19524ce0b3e852844b16cd32b22`
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record:
+- **Reviewed-by:** Christoph Hellwig `<hch@lst.de>`
+- **Assisted-by:** gkh_clanker_t1000
+- **Signed-off-by:** Hari Mishal (author), Greg Kroah-Hartman
+  (submitter), Keith Busch (NVMe maintainer)
+- **No Fixes:** tag (expected)
+- **No Reported-by / Tested-by / Link / Cc: stable**
+- Ignore pipeline SOBs; Greg’s SOB is from the actual submission, not a
+  stable-prep marker
 
-**Step 1.3: Body**
-- Record: `[Bug] ftracetest inherits the user locale; tools such as
-  readelf can print translated field names. Tests that grep English
-  strings then fail even though kernel behavior is unchanged.`
-  `[Symptom] add_remove_uprobe fails to parse the ELF entry point and
-  writes a uprobe event with a missing offset.` `[Versions] none
-  stated.` `[Root cause] command-output parsing depends on English
-  gettext strings while LC_ALL is not forced.`
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** `nvme_query_fdp_info()` allocates a RUH-status buffer for at
+  most `S8_MAX - 1` descriptors, then copies `ruhs->ruhsd[]` using
+  controller-reported `ruhs->nruhsd` as the loop bound.
+- **Symptom:** a controller that reports `nruhsd` larger than the
+  allocated descriptor count overflows that buffer on the copy into
+  `head->plids[]`.
+- **Root cause:** allocation size and copy bound were not the same.
+- **Fix:** clamp `nr_plids` to the same bound used for allocation.
+- **Version info in message:** none.
 
-**Step 1.4: Hidden bug fix?**
-- Record: `[Not disguised.] This is an explicit robustness fix for
-  locale-dependent test parsing, not a style cleanup.`
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. This is an explicit buffer-overflow / OOB-read fix.
 
-## Phase 2: Diff analysis
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Record: `[Files] tools/testing/selftests/ftrace/ftracetest +3 / -0`
-  `[Functions] none; top-level shell runner` `[Scope] single-file,
-  surgical]`
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- **File:** `drivers/nvme/host/core.c` — 1 insertion, 1 deletion
+- **Function:** `nvme_query_fdp_info()`
+- **Scope:** single-file, one-line surgical fix
 
-**Step 2.2: Code flow**
-- Record: `[Before] ftracetest and every sourced `.tc` inherit LANG/LC_*
-  from the environment.` `[After] `export LC_ALL=C` at runner start,
-  inherited by all test cases including `readelf` in add_remove_uprobe.`
-  `[Path] initialization of the test harness, not kernel runtime.`
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record: Before: `head->nr_plids = le16_to_cpu(ruhs->nruhsd);` then
+`kcalloc(head->nr_plids, …)` and `for (i = 0; i < head->nr_plids; i++)
+head->plids[i] = le16_to_cpu(ruhs->ruhsd[i].pid);`. After: `nr_plids` is
+`min(reported, S8_MAX - 1)`, so the copy cannot walk past the allocated
+`ruhs` buffer. Path is namespace-head init when the controller
+advertises FDP.
 
-**Step 2.3: Bug mechanism**
-- Record: `[Category] logic/correctness in the test harness (locale-
-  dependent parsing).` `[Mechanism] `add_remove_uprobe.tc` does `grep
-  "Entry point"` and `grep LOAD` on `readelf` output. If those strings
-  are translated, `ENTRY` is empty, `OFFSET` is empty, and the script
-  writes `p:myevent ${REALBIN}:` with no offset.`
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **(g) logic/correctness + (d) memory safety — out-of-bounds
+read.** `nruhsd` is a `__le16` from the device (0..65535). Allocation
+used `struct_size(ruhs, ruhsd, S8_MAX - 1)` (126 descriptors, 4048
+bytes). Verified layout in `include/linux/nvme.h`: 16-byte header +
+32-byte `nvme_fdp_ruh_status_desc`. If `nruhsd == 65535`, the loop reads
+~2MB past the buffer. `plids` is sized from `nr_plids`, so the overflow
+is an OOB **read** of `ruhs`, not a write into `plids`.
 
-**Step 2.4: Fix quality**
-- Record: `[Quality] obviously correct; `LC_ALL=C` is the standard way
-  to freeze tool output. Three comment+export lines, no API change.`
-  `[Regression risk] very low. C locale can change collation/number
-  formatting, but ftrace tests parse English tracefs and ELF field
-  names. Maintainer asked for runner-wide export rather than
-  per-`readelf` wrappers.`
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct: clamp matches the allocation bound. Minimal.
+Regression risk is low: extra reported placement IDs are dropped instead
+of overflowing. Later mainline commit `53cdaeab2e30e` raised that cap to
+`U8_MAX` / `NVME_MAX_PLIDS`; that is a follow-up improvement, not a sign
+this clamp is wrong.
 
-## Phase 3: Git history
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-- Record: `[Introduced] ftracetest header is from `6e68e6c5e4b67`
-  (2014). The locale-sensitive parsing was added by `dc4b165855f23`
-  ("Use readelf to find entry point in uprobe test", 2025-02-26) and
-  tightened by `bd4e5a97edf8c` (already in this tree), which greps
-  `"Entry point"` with no `LC_ALL=C`.` `[Age] parsing bug present since
-  v6.15-era code; still present here.`
+**Step 3.1: BLAME THE CHANGED LINES**
+Record:
+- Allocation `struct_size(..., S8_MAX - 1)` introduced in
+  `30b5f20bb2dda` (“nvme: register fdp parameters with the block layer”,
+  Keith Busch, 2025-05-06).
+- Unclamped `nr_plids` assignment plus the `ruhsd[]` copy loop:
+  `38e8397dde633` (“nvme: use fdp streams if write stream is provided”).
+- Both first appear in **v6.16-rc1** (`git describe --contains --match
+  'v*'`).
 
-**Step 3.2: Fixes: tag**
-- Record: `[N/A] no Fixes: tag. Companion series patch 2/2
-  (`bd4e5a97edf8c` / upstream `24aa630f6259`) fixes `dc4b165855f23` and
-  is already an ancestor of HEAD.`
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Introducing commits identified by blame, not by
+tag.
 
-**Step 3.3: File history**
-- Record: `[Related] `bd4e5a97edf8c` already backported here with `Cc:
-  stable`. That is v2 2/2 of the same series. In v2, per-command
-  `LC_ALL=C` was removed from the uprobe test because patch 1/2 was
-  supposed to set it in the runner. This tree has 2/2 without 1/2.`
-  `[Standalone?] yes as a diff; semantically it completes that series.`
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record:
+- `29261f8bb4166` — this clamp (candidate)
+- `53cdaeab2e30e` — raise cap to `U8_MAX` and introduce `NVME_MAX_PLIDS`
+  (depends on the clamp being present)
+- `56e1c6bbe4bb0` — race on the plids array (independent locking fix)
+- Series partner `3c568b35a0d30` — NS descriptor bounds (different
+  function, not a prerequisite)
 
-**Step 3.4: Author**
-- Record: `[Author] Rui Qi (ByteDance); not the subsystem maintainer.
-  Only other ftrace selftest commit in this tree is the companion offset
-  conversion. Maintainer Masami Hiramatsu applied both.`
+Standalone. Labeled `[PATCH 2/2]` but 1/2 is an independent bounds check
+in `nvme_identify_ns_descs()`.
 
-**Step 3.5: Prerequisites**
-- Record: `[Dependencies] none for apply. Insertion is after the
-  copyright block, which matches this tree. Local `ftracetest` lacks
-  mainline `--rv`; that is later context only and is not required.`
-  `[Standalone apply] yes.`
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Hari Mishal also authored sibling overflow fixes (`nvme: bound
+ns descriptor header…`, `nvmet: passthru: fix OOB reads…`). Submitted
+via Greg; merged by NVMe maintainer Keith Busch. Christoph Hellwig
+reviewed.
 
-## Phase 4: Mailing list
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None for the clamp itself. It only needs `nvme_query_fdp_info()`
+with `S8_MAX - 1` allocation and the copy loop — present since v6.16. No
+new helpers or APIs.
 
-**Step 4.1: Original discussion**
-- Record: `[Lore] https://patch.msgid.link/20260807081512.2974757-2-
-  qirui.001@bytedance.com` (WebFetch on lore.kernel.org returned 403;
-  thread recovered via `b4 dig -m`).`
-- `[Revisions] v1 (2026-08-06): `LC_ALL=C` only on one `readelf` in
-  add_remove_uprobe. v2 (2026-08-07): moved to top-level `ftracetest`
-  per Masami. Applied version is v2, latest.`
-- `[Feedback] Masami on v1: force C locale in the top-level runner, not
-  per test. Author agreed and sent v2. Masami applied v2 2/2 with "Good
-  catch! OK, let me take it." No NAKs. No reviewer `Cc: stable` on this
-  patch (2/2 had `Fixes:` and later got `Cc: stable` in the backport).`
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.2: Recipients**
-- Record: `[To/Cc] Steven Rostedt, Masami Hiramatsu, Mathieu Desnoyers,
-  Shuah Khan, Heiko Carstens, linux-trace-kernel, linux-kselftest,
-  linux-kernel.`
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 29261f8bb4166` → https://patch.msgid.link/2026070932-fried-
+  frying-9c36@gregkh
+- **v1 only** (`b4 dig -a`): `[PATCH 1/2] nvme: bound ns descriptor…` +
+  `[PATCH 2/2]` this clamp
+- Full thread saved via `b4 dig -m`; lore HTTP fetch returned 403, so
+  discussion is from the mbox, not lore HTML
+- Christoph: “Looks good: Reviewed-by: Christoph Hellwig”
+- Keith Busch: “Thanks, series applied to nvme-7.3.”
+- No NAK, no stable discussion in-thread, no reviewer risk flags
 
-**Step 4.3: Bug report**
-- Record: `[No syzbot/bugzilla.] Cover letter: series fixes two ways
-  add_remove_uprobe can build an invalid uprobe offset. v1 body: if
-  readelf is translated, ENTRYPOINT is empty and the `uprobe_events`
-  write is rejected because the offset after `PATH:` is missing. Author
-  is a real user of a non-C locale (ByteDance).`
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): linux-nvme, linux-kernel, Keith Busch, Jens Axboe,
+Christoph Hellwig, Sagi Grimberg. Appropriate maintainers were on Cc.
+Christoph reviewed; Keith applied.
 
-**Step 4.4: Series**
-- Record: `[v2 0/2] "Fix add_remove_uprobe robustness". Patch 1 = this
-  commit. Patch 2 = ELF VA→file offset (`bd4e5a97edf8c`), already in
-  this tree. v2 2/2 dropped inline `LC_ALL=C` and relies on the runner.`
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla/`Reported-by`. Bug is from code review /
+static analysis (Greg/clanker-assisted). Still a concrete OOB from
+device-provided `nruhsd`.
 
-**Step 4.5: Stable list**
-- Record: `[No stable-list discussion found] for this subject. Companion
-  2/2 was taken into this tree with `Cc: stable@vger.kernel.org`.`
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 2/2 is independent of 1/2. Follow-up `53cdaeab2e30e` changes the
+numeric cap but does not replace the need to clamp. Race fix
+`56e1c6bbe4bb0` is separate.
 
-## Phase 5: Code semantics
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned 403. **UNVERIFIED**
+whether stable@ already discussed this. No evidence in the nvme thread
+of a stable NAK.
 
-**Step 5.1: Functions**
-- Record: `[No C functions.] Change is `export LC_ALL=C` in
-  `ftracetest`. Affected consumer: `add_remove_uprobe.tc` `readelf`
-  parsing.`
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.2: Callers**
-- Record: `[ftracetest-ktap] runs `./ftracetest -K -v`. kselftest
-  Makefile lists `ftracetest` / `ftracetest-ktap`. `__run_test` sources
-  each `.tc` in a subshell, so `LC_ALL=C` is inherited. Reachable
-  whenever someone runs ftrace selftests.`
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `nvme_query_fdp_info()` only.
 
-**Step 5.3: Callees**
-- Record: `[readelf -hW / -lW, grep, awk, writes to uprobe_events.]
-  Kernel ABI involved is `uprobe_events`, already exercised by the
-  test.`
+**Step 5.2: TRACE CALLERS**
+Record: Only caller is `nvme_alloc_ns_head()` in
+`drivers/nvme/host/core.c`:
 
-**Step 5.4: Call chain**
-- Record: `[kselftest runner → ftracetest-ktap → ftracetest →
-  add_remove_uprobe.tc → readelf → uprobe_events.] Userspace-only. Not a
-  syscall bug; it does cause a false test failure and a malformed probe
-  write.`
+```4043:4047:drivers/nvme/host/core.c
+        if (ctrl->ctratt & NVME_CTRL_ATTR_FDPS) {
+                ret = nvme_query_fdp_info(ns, info);
+                if (ret < 0)
+                        goto out_cleanup_srcu;
+        }
+```
 
-**Step 5.5: Similar patterns**
-- Record: `[Only this ftrace test greps readelf "Entry point".] Other
-  selftests (e.g. mptcp) already pin `LC_ALL=C` on individual commands.
-  No `export LC_ALL=C` in this tree's ftrace runner yet.`
+Triggered during namespace-head creation when Identify Controller
+`ctratt` has `NVME_CTRL_ATTR_FDPS`. That is probe/scan, not a hot I/O
+path, but it runs for every FDP-capable namespace.
 
-## Phase 6: This tree (pending-6.18 / 6.18.53)
+**Step 5.3: TRACE CALLEES**
+Record: `nvme_get_features()`, `nvme_query_fdp_granularity()`,
+`kzalloc`/`kcalloc`, `nvme_submit_sync_cmd()` (device fills `ruhs`),
+then the copy loop.
 
-**Step 6.1: Buggy code present?**
-- Record: `[Yes.] `tools/testing/selftests/ftrace/ftracetest` has no
-  `LC_ALL=C`. `add_remove_uprobe.tc` lines 17 and 37 grep English
-  `readelf` strings. `git describe HEAD` = `p-6.18-1-g03b85e06ca9bf`;
-  `make kernelversion` = `6.18.53`. Introduced by `dc4b165855f23`
-  (ancestor of HEAD).`
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Device probe / namespace scan → `nvme_init_ns_head` →
+`nvme_alloc_ns_head` → `nvme_query_fdp_info`. Reachable from attaching
+an NVMe device, including NVMe over Fabrics. A malicious or buggy target
+can set FDPS and return a huge `nruhsd`. Not a direct unprivileged
+syscall, but device/Fabrics-controlled and kernel-reachable.
 
-**Step 6.2: Backport difficulty**
-- Record: `[Clean apply.] Copyright-block context matches. `--rv` in the
-  candidate hunk is later mainline noise, not needed here.`
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same author series also bounded NS identify descriptors. Follow-
+up kept the clamp and only raised the cap. No second unclamped `nruhsd`
+copy found.
 
-**Step 6.3: Related fixes already here?**
-- Record: `[Partial.] Offset conversion `bd4e5a97edf8c` is here; locale
-  export is not. No earlier equivalent `LC_ALL=C` in this file.`
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-## Phase 7: Subsystem context
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes, in this lineage.** This checkout is **v7.3-rc4** (`make
+kernelversion` → `7.3.0-rc4`). FDP query exists. Bug introduced
+**v6.16-rc1**, before 7.3. Candidate `29261f8bb4166` is already an
+ancestor of HEAD (`git merge-base --is-ancestor` succeeded; first
+contained in **v7.3-rc1**). Current HEAD already clamps:
 
-**Step 7.1**
-- Record: `[Subsystem] tools/testing/selftests/ftrace` `[Criticality]
-  PERIPHERAL for production kernel runtime; IMPORTANT for anyone running
-  ftrace kselftests on this stable tree (distro CI, KernelCI, vendor
-  QA).`
+```2371:2371:drivers/nvme/host/core.c
+        head->nr_plids = min(le16_to_cpu(ruhs->nruhsd), NVME_MAX_PLIDS);
+```
 
-**Step 7.2**
-- Record: `[Activity] active; recent ftrace selftest fixes already
-  landed in this 6.18.y tree, including the companion uprobe test fix.`
+That is this fix plus `53cdaeab2e30e` (`NVME_MAX_PLIDS` = `U8_MAX`). The
+unclamped assignment is gone at HEAD because the fix landed in 7.3-rc1;
+the overflow pattern is still the code this tree maintains.
 
-## Phase 8: Impact and risk
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Against **current HEAD**, the original hunk would not apply
+(`S8_MAX - 1` vs `NVME_MAX_PLIDS`). Against the pre-fix function (parent
+of `29261f8bb4166` in this history), it is a one-line change on
+`head->nr_plids = le16_to_cpu(ruhs->nruhsd)` with matching `S8_MAX - 1`
+allocation. **Expected backport difficulty: clean apply** on trees that
+still have that allocation; this 7.3 checkout already has the later
+form.
 
-**Step 8.1: Who is affected**
-- Record: `[config/test-specific] users/CI running ftracetest with a
-  non-C locale (zh_CN, de_DE, ja_JP, etc.). No effect on kernel boot or
-  production tracing if tests are not run.`
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This clamp and the `NVME_MAX_PLIDS` follow-up are both in HEAD.
+That is this tree already containing the upstream fix, not a different
+substitute.
 
-**Step 8.2: Trigger**
-- Record: `[Trigger] run ftracetest (or kselftest ftrace) with
-  translated binutils/gettext. Common on non-English developer and QA
-  machines. Unprivileged users can run the tests if they have tracefs
-  access; this is not a privilege-escalation bug.`
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 8.3: Failure mode**
-- Record: `[Failure] false-negative kselftest; possible write of
-  `p:myevent <path>:` with empty offset, which the kernel rejects. Not a
-  panic, UAF, or data corruption.` `[Severity] MEDIUM for QA/CI
-  correctness; LOW for production kernel runtime.`
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **NVMe host core** (`drivers/nvme/host/`). **IMPORTANT** —
+common storage stack, not staging. Overflow is in host core during
+namespace setup.
 
-**Step 8.4: Risk-benefit**
-- Record: `[Benefit] medium for this tree: completes a 2-patch series
-  whose second half is already here, so add_remove_uprobe stays locale-
-  broken without it.` `[Risk] very low (3 lines, userspace test runner
-  only).` `[Ratio] favorable.`
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Active (recent FDP, multipath, scan, SRCU fixes). FDP streams
+themselves date to v6.16; this is not brand-new experimental code in
+7.3.
 
-## Phase 9: Synthesis
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 9.1: Evidence**
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Driver-specific / config-specific:** NVMe controllers with FDP
+(`NVME_CTRL_ATTR_FDPS` + `FDPCFG_FDPE`). Includes local NVMe and Fabrics
+targets that advertise FDP.
 
-For:
-- Real, reproducible test failure when `readelf` is localized.
-- Companion v2 2/2 is already in this 6.18 tree and depends on runner
-  `LC_ALL=C` (inline `LC_ALL=C` was removed in v2).
-- Tiny, obviously correct, maintainer-directed.
-- Applies cleanly; no kernel ABI/feature change.
-- kselftest false failures on stable are used by distros and CI.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Namespace scan/probe on an FDP-enabled controller that returns
+`nruhsd >` allocated descriptor count. Not every boot. A buggy SSD can
+hit it; an untrusted NVMe/TCP target can hit it on purpose. Unprivileged
+local users cannot trigger it without a device.
 
-Against:
-- Not a kernel crash, security hole, deadlock, or data corruption.
-- Only hits people who run ftrace selftests under a non-C locale.
-- This patch itself was not `Cc: stable` (not used as a NO vote per the
-  review rules).
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: **Kernel out-of-bounds read** of `ruhs->ruhsd[]` → KASAN/oops or
+infoleak of adjacent heap. **Severity: HIGH.**
 
-Unresolved:
-- Could not fetch lore.kernel.org over HTTP (403); discussion was
-  recovered from `b4 dig` mbox. No stable-list thread found.
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record: **Benefit: high** (stops device-triggered OOB). **Risk: very
+low** (one `min()`, same bound as allocation). **Ratio: strongly
+favorable.**
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — 3-line export; maintainer
-   requested and applied; author ran `checkpatch` and `sh -n`.
-2. Real bug affecting users? **PASS** — false ftracetest failure and
-   malformed uprobe write on localized systems.
-3. Important issue? **PASS** — not a kernel oops, but it is a real
-   kselftest break, and this tree already took the paired functional
-   fix. Leaving this out keeps that test locale-fragile.
-4. Small and contained? **PASS** — +3 lines, one file.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS**.
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.3: Exception category**
-- Record: `[Not a device-ID/quirk/DT/build/docs exception.] Closest
-  analogue is a kselftest robustness/false-failure fix, which stable
-  trees routinely take when the test exists in-tree.`
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Step 9.4: Decision**
-This should be backported to **this** 6.18.y tree. The bug exists here,
-the patch is surgical, and it finishes a series that is already half-
-applied.
+**FOR:**
+- Real OOB read from device-controlled `nruhsd` vs a 126-descriptor
+  buffer
+- One-line, obviously correct clamp
+- Reviewed by Christoph Hellwig; applied by Keith Busch
+- No new API/feature
+- Self-contained; series 1/2 is not required
+- FDP path exists in this tree; bug dates to v6.16
 
-### What the commit solves for stable users
-On a non-C locale, `readelf` can translate `"Entry point"`, so
-`add_remove_uprobe` computes an empty offset and fails even though
-uprobes work. Distros and CI that run ftrace kselftests against 6.18.y
-get a false failure. The offset-conversion fix already in this tree
-still greps English `readelf` text and assumed this runner change.
+**AGAINST:**
+- No public user/syzbot report (code-analysis find)
+- Only FDP-capable devices
+- HEAD already has this clamp (and a later cap raise), so this exact
+  hunk is not what HEAD’s source line looks like
+- Lore stable@ search could not be fetched (403)
+
+**UNRESOLVED:**
+- Whether stable@ already queued it (lore/stable HTTP 403)
+- No runtime reproducer in the message (mechanism is still verified in
+  code)
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — clamp equals allocation
+   bound; reviewed and merged to nvme-7.3
+2. Fixes a real bug that affects users? **PASS** — OOB read on FDP
+   namespace setup
+3. Important issue (crash/security/corruption/deadlock)? **PASS** —
+   HIGH, kernel OOB from device data
+4. Small and contained? **PASS** — 1 line, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** for this codebase’s pre-fix
+   form (`S8_MAX - 1` allocation + unclamped `nruhsd`). HEAD already has
+   the evolved clamp; that does not make the fix inapplicable to this
+   lineage.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not a device-ID/quirk/DT/build/docs exception). It is a
+normal memory-safety fix.
+
+**Step 9.4: MAKE YOUR DECISION**
+This tree’s NVMe host core has the FDP RUH-status query, and using the
+controller’s `nruhsd` as the copy bound without capping it to the
+allocated descriptor count is a real overflow. The fix is the smallest
+correct change. This 7.3 checkout already contains that logic (then
+raised the cap to `U8_MAX`); that is the upstream landing, not a reason
+to treat the overflow as unworthy of stable. Benefit vs risk is strongly
+in favor of backporting.
+
+### What the commit solves, and why it matters
+A Flexible Data Placement controller returns how many Reclaim Unit
+Handle status descriptors it has (`nruhsd`). The driver only allocated
+room for 126, then indexed `ruhs->ruhsd[i]` up to the raw reported
+count. That is a kernel heap OOB read during namespace setup, including
+from a remote NVMe/TCP target.
+
+### Stable rules
+Small, obviously correct, no new API, real memory-safety bug.
 
 ### Risk vs benefit
-Benefit is restoring a test that this tree already ships. Risk is
-negligible: `LC_ALL=C` only affects the ftracetest process tree.
+One `min()` vs device-triggered OOB: take the fix.
 
 ### Concerns
-None material. `--rv` in the original hunk context is not in this tree
-and is not required. No further commits are needed for the export to
-work.
+Patch 2/2 does not need patch 1/2. Trees that already switched
+allocation to `NVME_MAX_PLIDS` should keep clamp and allocation in sync
+(already true here via `53cdaeab2e30e`). Trees still on `S8_MAX - 1`
+should get this commit as-is.
 
-## Verification
-- [Phase 1] Parsed tags: Link to lore msgid `20260807081512.2974757-2`;
-  SOBs Rui Qi and Masami Hiramatsu; no Fixes/Reported-by/Cc: stable.
-- [Phase 2] Diff: +3 lines in `ftracetest` (`export LC_ALL=C`);
-  confirmed local file lacks it.
-- [Phase 3] `git describe HEAD` → `p-6.18-1-g03b85e06ca9bf`; `make
-  kernelversion` → `6.18.53`.
-- [Phase 3] `git merge-base --is-ancestor c13fcd3951dcc1 HEAD` → not an
-  ancestor (fix not in tree).
-- [Phase 3] `git merge-base --is-ancestor bd4e5a97edf8c HEAD` → yes
-  (companion 2/2 is in tree).
-- [Phase 3] `git merge-base --is-ancestor dc4b165855f23 HEAD` → yes
-  (readelf parsing introduced here).
-- [Phase 3] `git blame` on ftracetest header: `6e68e6c5e4b67` (2014); no
-  LC_ALL.
-- [Phase 3] Read `add_remove_uprobe.tc`: greps `"Entry point"` and
-  `LOAD` with no LC_ALL.
-- [Phase 4] `b4 dig -c c13fcd3951dcc1` → v2 1/2 msgid link above.
-- [Phase 4] `b4 dig -a` → v1 per-readelf LC_ALL, v2 runner-wide
-  (applied).
-- [Phase 4] `b4 dig -w` → Rostedt, Masami, Desnoyers, Shuah, kselftest
-  and trace lists.
-- [Phase 4] mbox: Masami asked to set LC_ALL in the runner; no NAKs;
-  cover letter describes two invalid-offset paths.
-- [Phase 4] lore WebFetch 403; stable-list search found no discussion of
-  this subject.
-- [Phase 5] `ftracetest-ktap` invokes `./ftracetest -K -v`; `__run_test`
-  sources `.tc` files so export is inherited.
-- [Phase 6] Insertion context after copyright block is present; `export
-  LC_ALL=C` is not.
-- [Phase 8] Failure mode verified from v1 message and current test
-  script: empty ENTRY → `p:myevent path:` write → test fail, not kernel
-  oops.
-- UNVERIFIED: live `readelf` translation under a specific locale was not
-  executed on this machine; the gettext localization claim is from the
-  author and is consistent with binutils behavior, but was not
-  reproduced here.
+Verification:
+- [Phase 1] Parsed tags: Reviewed-by Christoph Hellwig; SOBs Hari
+  Mishal, Greg KH, Keith Busch; no Fixes/Reported-by/Cc stable
+- [Phase 2] Diff: 1 line in `nvme_query_fdp_info()`;
+  `le16_to_cpu(ruhs->nruhsd)` → `min(..., S8_MAX - 1)`
+- [Phase 2] Struct sizes verified in `include/linux/nvme.h`: 16-byte
+  header + 32-byte descriptors; 126 descriptors → 4048-byte buffer;
+  `nruhsd` up to 65535
+- [Phase 3] Blame: allocation `30b5f20bb2dda`, copy loop
+  `38e8397dde633`; both `git describe --contains --match 'v*'` →
+  v6.16-rc1
+- [Phase 3] `git merge-base --is-ancestor 29261f8bb4166 HEAD` → commit
+  is in this tree; `describe --contains` → v7.3-rc1
+- [Phase 3] Parent of candidate still has `size = struct_size(ruhs,
+  ruhsd, S8_MAX - 1)` and unclamped `nr_plids`
+- [Phase 4] `b4 dig -c` → msgid 2026070932-fried-frying-9c36@gregkh;
+  `-a` v1 only; `-w` nvme maintainers; `-m` full thread
+- [Phase 4] mbox: Christoph R-b; Keith “applied to nvme-7.3”; no NAK
+- [Phase 4] lore.kernel.org and patch.msgid.link HTTP 403; LKML mirrors
+  agree with mbox
+- [Phase 5] grep callers: only `nvme_alloc_ns_head()` when
+  `NVME_CTRL_ATTR_FDPS`
+- [Phase 6] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
+  7.3.0-rc4; current clamp is `min(..., NVME_MAX_PLIDS)` from
+  `53cdaeab2e30e`
+- [Phase 8] Failure mode: OOB read of `ruhs->ruhsd[]`, severity HIGH
+- UNVERIFIED: stable@ mailing-list history (HTTP 403); no runtime
+  reproducer in the commit message
 
 **YES**
 
- tools/testing/selftests/ftrace/ftracetest | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
-index cce72f8b03dce..ee3b950e872f6 100755
---- a/tools/testing/selftests/ftrace/ftracetest
-+++ b/tools/testing/selftests/ftrace/ftracetest
-@@ -7,6 +7,9 @@
- #  Written by Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
- #
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 5ed62e070f715..ad725e346c94e 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2313,7 +2313,7 @@ static int nvme_query_fdp_info(struct nvme_ns *ns, struct nvme_ns_info *info)
+ 		goto free;
+ 	}
  
-+# Keep command output parsing stable regardless of the user's locale.
-+export LC_ALL=C
-+
- usage() { # errno [message]
- [ ! -z "$2" ] && echo $2
- echo "Usage: ftracetest [options] [testcase(s)] [testcase-directory(s)]"
+-	head->nr_plids = le16_to_cpu(ruhs->nruhsd);
++	head->nr_plids = min(le16_to_cpu(ruhs->nruhsd), S8_MAX - 1);
+ 	if (!head->nr_plids)
+ 		goto free;
+ 
 -- 
 2.53.0
 
