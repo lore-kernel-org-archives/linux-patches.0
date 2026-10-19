@@ -1,50 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC68250EC0D;
-	Mon, 19 Oct 2026 13:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A323514753;
+	Mon, 19 Oct 2026 13:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418105; cv=none; b=DQlmxkexetOt8i+Bsv4llclhVoUi+tNQgqriaOo20WX5yUq5pk9Tuewvy+CFWRXTnmHHXAPE7ZUzetO1HosZFZscpO/ZtEtOF7BeCBvfa3TRYQhKa4VzpI0CJFbtgIJy/HWb6H0KlVeVuN1bKBQas3PtXnRtADlkIha+7ZaOVAI=
+	t=1792418107; cv=none; b=VlkHXPiTfjXRUQ+fJowRWL6kCpCE9p161z+rBir31pvSVfJRqJlNouDlPPHfBQZitCOCCtFpZLoZuTFY/GO5pZI7TPdSQMvdJPWxV9wYBPMx9b7jmZ2LJZK4RWmegKjE2ZGbd6VU60O1asLkSQxeVgM4HxutTtXlx2Q0aUPbk1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418105; c=relaxed/simple;
-	bh=dRKtZiqV8VSzXaZcx6dKZKMWSLuN2sC5YxHYVua8wOI=;
+	s=arc-20240116; t=1792418107; c=relaxed/simple;
+	bh=jXlyxxQFxfUqX6pnvaWYF38tE6OgTm28TgmzDMre1GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y5Ia3Byz0o6dskjGDzd2I0ErgzWF5Ho0+XJGLD9irulwS+a4Fe35kqZmeaNmwTXcPugdX7YZL1ueHmLeVmtFthdNgNYZX4ROzINFNJaQOQdekoS6hF1EJI69lLeKsiGXJHKm3gNnKo+Y4tYKDDy2KE4EdwnOM8wTSwJL4EJu1kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FmYu8/td; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kc7mLGGevxOaEQFg8NmCm6uhg2WHwO1+HZL3PQAmhLMmfU1Kpd0RDVxpRaAREsXKGRbd9TxmCbojihWPQyxdzyEPDGNCGbxPg4B+9tIPndnejS/K7PP9rFezC1FBxzeVX02a2ExLqwwe/OqjcHMMsgLlO+OKiD6S/4ZFZpfUAjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DGFRHV8d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FmYu8/td"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD571F000C4;
-	Mon, 19 Oct 2026 13:55:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DGFRHV8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25251F000CA;
+	Mon, 19 Oct 2026 13:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418103;
-	bh=7MLSX91YXWGMiDuQOVHG7eM6KF/4ZfqZKFra9uborK0=;
+	s=k20260515; t=1792418105;
+	bh=JqlXyvFuSdHOxo0/HGsAnTDVAoVmT6DZMuonjjOohJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FmYu8/tdyWkdcrQpj/khJ7b5PDJxrClr1nJ8vxdwP5lv6vqqflev+AgE3GHsHSVUX
-	 3UudM1472T2OlmQ64pgVUhgY5f2T8WfFiaQSsKJramM/06aOvlUZ2iPgaeCEq1v3a8
-	 axdqzqf9tF2T+ILUCfHUEmS3l0UPQS3TAULUIFf/yPXVJaW/h2X5f+I6Z+Pc47lDZK
-	 Jq7I0aBFkeUTlSVI6wPE+fU81laS2iqNpUfzsSQWZkULd+drIqC0fHC50iw58b1LXj
-	 42U0JxBQxWGAgrGIbBpC0Z5fdx5ZsdBngWd77SaHPvIL/VTKZDH4a5O8jnb89JnLP6
-	 ity1oV8sMmTrg==
+	b=DGFRHV8dNIxkoJ9H/PyGPhaAEiO6sW0aKH+iVRcfYGCOPUkIXbr9haONkuLTfY4jb
+	 QHFBIn1yZx94Ik25qhtmFg2wX6VdRhKvGrDa8ENVn34VFgLeBMnU/dUA3XGV+yYcd/
+	 ZpNCOnBLCLvf2sMNxV2pT+XSEDLea6NqKmd0cJV1uBUqGqX8xWCkm+1TTG3p8rM5YI
+	 rynt9Pet5wfWu8XDNo6zh2s+imKmRWJOgrWCOQD3Yc6OHLNMQGYZYnU7gko35oHRFG
+	 3zBi9C+/rUmzSG44X1MtLPyp0w6gaDxIinxxYfsgO8t2wbpM2qotzbgI2YO0evzY4X
+	 vJDz66DkNkCmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Brian Masney <bmasney@redhat.com>,
+Cc: Feng Tang <feng.tang@linux.alibaba.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	y.oudjana@protonmail.com,
-	sboyd@kernel.org,
-	bmasney+clk@redhat.com,
-	jbrunet+clk@baylibre.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-clk@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18] clk: mediatek: mt6735-vencsys: add missing MODULE_DEVICE_TABLE()
-Date: Mon, 19 Oct 2026 09:45:05 -0400
-Message-ID: <20261019135441.1420968-14-sashal@kernel.org>
+	davem@davemloft.net,
+	edumazet@kernel.org,
+	kuba@kernel.org,
+	shuah@kernel.org,
+	netdev@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] selftests: net: reuseport_bpf_numa: consider cpuless numa node
+Date: Mon, 19 Oct 2026 09:45:06 -0400
+Message-ID: <20261019135441.1420968-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -60,351 +58,359 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Feng Tang <feng.tang@linux.alibaba.com>
 
-[ Upstream commit 36cf8d279ff90835f4b002dec28eedb059554842 ]
+[ Upstream commit 88b8d85e889e2fe1cce3e66e50c3029dda94842a ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+reuseport_bpf_numa case failed when testing on a platform with CXL
+memory:
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+    #./reuseport_bpf_numa
+    ---- IPv4 UDP ----
+    send node 0, receive socket 0
+    ./reuseport_bpf_numa: failed to pin to node: Invalid argument
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
+The root cause is that the platform has 2 numa nodes: node 0 has
+both cpu and memory, while node 1 is a CXL node which only has
+memory, and caused numa_run_on_node() to fail.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Add sanity check to skip cpuless numa node for the numa binding test.
+
+Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260807002436.43991-1-feng.tang@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-This tree is **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
-driver exists here; the change is a one-line `MODULE_DEVICE_TABLE(of,
-...)` so the vencsys clock module can autoload from DT.
-
 ## Phase 1: Commit message forensics
 
 **Step 1.1: Subject line**
-- Record: `[clk/mediatek] [add] add missing MODULE_DEVICE_TABLE() for
-  mt6735-vencsys`
+- Record: `[selftests: net]` `[consider]` skip CPU-less NUMA nodes in
+  `reuseport_bpf_numa` so the test does not abort when
+  `numa_run_on_node()` cannot pin to a memory-only node.
 
 **Step 1.2: Tags**
-- Record:
-  - **Fixes:** none (expected for this review)
-  - **Reported-by:** none
-  - **Tested-by:** none
-  - **Reviewed-by:** Brian Masney `<bmasney@redhat.com>` (COMMON CLK
-    FRAMEWORK maintainer)
-  - **Acked-by:** none
-  - **Link:** none in the commit; mailing list found via `b4 dig`
-  - **Cc: stable:** none (not a negative signal)
-  - **Signed-off-by:** Pengpeng Hou `<pengpeng@iscas.ac.cn>` (author);
-    Brian Masney `<bmasney@redhat.com>` (clk maintainer who applied it)
-  - Notable: maintainer review + maintainer SOB; no user/syzbot report
+- Record: `Reviewed-by: Simon Horman <horms@kernel.org>`; `Link: https:/
+  /patch.msgid.link/20260807002436.43991-1-feng.tang@linux.alibaba.com`;
+  `Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>`; `Signed-off-
+  by: Paolo Abeni <pabeni@redhat.com>`.
+- No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Cc: stable`
+  (absence is expected). Ignore any pipeline `Signed-off-by: Sasha
+  Levin` / `[Upstream commit ...]` markers.
 
 **Step 1.3: Body**
-- Record:
-  - **Bug:** OF match table is wired to `.of_match_table` but not
-    exported with `MODULE_DEVICE_TABLE()`, so `file2alias` does not emit
-    `of:` aliases.
-  - **Symptom:** when `CONFIG_COMMON_CLK_MT6735_VENCSYS=m`,
-    udev/modprobe cannot autoload `clk-mt6735-vencsys` from
-    `mediatek,mt6735-vencsys`.
-  - **Version info:** none in the message. Git: driver added in
-    **v6.13-rc1** (`0bd9b1211f741`); this fix first appears in
-    **v7.3-rc1**.
-  - **Root cause:** omitted alias publication, not a runtime logic
-    error.
+- Record: On a 2-node CXL box, node 0 has CPU+memory and node 1 is
+  memory-only. The test prints `send node 0, receive socket 0` then dies
+  with `failed to pin to node: Invalid argument` from
+  `numa_run_on_node()`. Root cause is treating every bit in
+  `numa_nodes_ptr` as a pin-able CPU node. Fix: skip CPU-less nodes.
 
 **Step 1.4: Hidden bug fix?**
-- Record: Not hidden. It is a real functional gap (module autoload), not
-  a crash/UAF. The “source-level fix / no hardware reproduction” wording
-  matches the original lore submission, not pipeline decoration.
+- Record: Yes. “Consider” is test-robustness language, but the program
+  currently `error(1, ...)` and fails. This is a real false failure, not
+  style cleanup.
 
 ## Phase 2: Diff analysis
 
 **Step 2.1: Inventory**
-- Record:
-  - `drivers/clk/mediatek/clk-mt6735-vencsys.c`: **+1 / -0**
-  - Function/data: `of_match_mt6735_vencsys[]` (file scope)
-  - Scope: single-file, one-line surgical change
+- Record: One file, `tools/testing/selftests/net/reuseport_bpf_numa.c`.
+  About +24 lines. New helper `is_cpuless_node()`; `test()` gains two
+  `continue`s. Surgical, single-file, userspace selftest only.
 
-**Step 2.2: Code flow**
-- Record: Before, the table is only consumed by
-  `platform_driver.driver.of_match_table` (bind if the module is already
-  loaded or built-in). After, `MODULE_DEVICE_TABLE(of,
-  of_match_mt6735_vencsys)` also creates a `__mod_device_table` alias so
-  `scripts/mod/file2alias.c` `do_of_entry()` emits
-  `of:N*T*Cmediatek,mt6735-vencsys`. Build-time metadata only; no probe-
-  path change.
+**Step 2.2: Flow**
+- Record: Before: both forward and reverse loops skip only nodes unset
+  in `numa_nodes_ptr`, then call `send_from_node()` which does
+  `numa_run_on_node()` and aborts on failure. After: also skip nodes
+  whose libnuma CPU mask has weight 0. Normal send/receive path for CPU-
+  bearing nodes is unchanged.
 
 **Step 2.3: Bug mechanism**
-- Record: **Hardware matching / module autoload** (same class as missing
-  device IDs). Match table exists but is not published for modules.
+- Record: Logic/correctness in a selftest. Memory-only NUMA nodes are
+  present in `numa_nodes_ptr` (the 2021 skip does not drop them) but
+  have an empty CPU mask, so pinning returns EINVAL. `is_cpuless_node()`
+  uses `numa_allocate_cpumask()` / `numa_node_to_cpus()` /
+  `numa_bitmask_weight()`; on helper error it returns false (do not
+  skip), which is conservative.
 
 **Step 2.4: Fix quality**
-- Record: Obviously correct; matches sibling MT6735 files that shipped
-  with `MODULE_DEVICE_TABLE` (`apmixedsys`, `infracfg`, `pericfg`,
-  `topckgen`). No runtime lock/API/data-structure change. Regression
-  risk is essentially none. `imgsys` and `mfgcfg` still lack the macro;
-  this patch does not depend on those.
+- Record: Obviously correct and minimal. Skipping a CPU-less node is
+  right: `bpf_get_numa_node_id()` is the current CPU’s node, so a
+  memory-only node can never be the sender. Regression risk is very low
+  (userspace test only). Helper allocation failure still hits the old
+  abort path.
 
 ## Phase 3: Git history
 
 **Step 3.1: Blame**
-- Record: Match table and driver introduced by `0bd9b1211f741` (“clk:
-  mediatek: Add drivers for MT6735 syscon clock and reset controllers”,
-  Yassine Oudjana, 2024-11-06, applied 2024-11-14). First in
-  **v6.13-rc1**. `MODULE_DEVICE_TABLE` line is this commit
-  `36cf8d279ff90`.
+- Record: Loops come from `3c2c3c16aaf6a` (Daniel Borkmann, 2016-10-21,
+  “reuseport, bpf: add test case for bpf_get_numa_node_id”), first
+  contained in v4.10-rc1. The existing skip is `a38bc45a08e97` (Kleber
+  Sacilotto de Souza, 2021-11-01), contained in v5.16-rc1: skip nodes
+  not in `numa_nodes_ptr` (non-consecutive IDs). That does not cover
+  CPU-less memory nodes.
 
 **Step 3.2: Fixes: tag**
-- Record: No `Fixes:` tag. The omission dates from the introducing
-  commit `0bd9b1211f741`, which **is** an ancestor of this tree.
+- Record: None. Buggy assumption is in the original 2016 test, still
+  present here.
 
 **Step 3.3: File history**
-- Record: Only two commits on this file: introducer + this fix. No later
-  conflicting refactor. Sibling same-day commit `096ab64a0e694` does the
-  same for `clk-mt6735-vdecsys.c`. Standalone; not patch 2/N.
+- Record: This tree only has later `0273d10182ec4` (ARRAY_SIZE warning),
+  then the 2021 skip, 2018 numa-skip-if-unavailable, SPDX, and the
+  original test. No `setup_netns()` in this file (0 matches).
+  Standalone; not patch X/Y.
 
 **Step 3.4: Author**
-- Record: Pengpeng Hou is not the MT6735 clk maintainer (that is Yassine
-  Oudjana). Same author also added `MODULE_DEVICE_TABLE` in `clk-
-  mt6735-vdecsys.c` and two i.MX clk drivers. Applied by clk co-
-  maintainer Brian Masney.
+- Record: Feng Tang has other tools/selftests work in this history (e.g.
+  mm `compaction_test`) but no other net `reuseport_bpf_numa` commits.
+  Not the net maintainer. Applied by Paolo Abeni after Simon Horman’s
+  review.
 
-**Step 3.5: Dependencies**
-- Record: None. Uses existing `MODULE_DEVICE_TABLE` / `of_device_id`.
-  Applies on top of the original driver with no prerequisites.
+**Step 3.5: Prerequisites**
+- Record: Needs existing libnuma usage (`numa_nodes_ptr`,
+  `numa_run_on_node`, `-lnuma`). All present. Makefile already has
+  `$(OUTPUT)/reuseport_bpf_numa: LDLIBS += -lnuma`. No missing kernel
+  APIs. Can apply standalone.
 
-## Phase 4: Mailing list and external research
+## Phase 4: Mailing list / external
 
 **Step 4.1: Original discussion**
-- Record: `b4 dig -c 36cf8d279ff90` →
-  https://patch.msgid.link/20260704124808.19916-1-pengpeng@iscas.ac.cn
-- `b4 dig -a`: **v1 only** (2026-07-04). Applied version is that v1.
-- Thread (mbox): author patch + Brian Masney `Reviewed-by`. No NAK, no
-  stable nomination, no risk discussion.
+- Record: `b4 mbox` for msgid
+  `20260807002436.43991-1-feng.tang@linux.alibaba.com` returned 404;
+  lore.kernel.org fetches returned 403. Recovered from
+  Openwall/LKML/Patchew.
+- v1 (`20260730113040.75718-1-...`): check inside `send_from_node()`,
+  return -1, no NULL check on `numa_allocate_cpumask()`.
+- v2 (`[PATCH net v2]`): lift check into `test()`, add alloc-failure
+  handling; typo “unlikeyly”; unnecessary `inline`.
+- v3 (`[PATCH net-next v3]`): spelling + drop `inline` (Jakub, Sashiko).
+  Committed version matches v3.
+- No NAKs. No reviewer `Cc: stable` found.
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-- Record: Yassine Oudjana (MT6735 clk maintainer), Stephen Boyd, Brian
-  Masney, Michael Turquette, Matthias Brugger, AngeloGioacchino Del
-  Regno; `linux-clk`, `linux-mediatek`, `linux-arm-kernel`, `linux-
-  kernel`. Right maintainers and lists.
+**Step 4.2: Reviewers**
+- Record: To/Cc included Jakub Kicinski, David Miller, Eric Dumazet,
+  Paolo Abeni, Simon Horman, Shuah Khan, Andi Kleen, netdev, linux-
+  kselftest, bpf. Jakub reviewed v2 (inline). Simon Horman `Reviewed-by`
+  on v3. Paolo applied.
 
 **Step 4.3: Bug report**
-- Record: No Reported-by, no syzbot, no bugzilla. Author states there
-  was no hardware reproduction.
+- Record: Author reproduced on CXL hardware; commit body has the exact
+  abort. No syzbot/bugzilla. Severity for testers: hard FAIL after the
+  first successful node-0 send.
 
 **Step 4.4: Series**
-- Record: Independent single patches (vencsys + vdecsys), not a numbered
-  series. This commit does not need the vdecsys patch.
+- Record: Single patch, three revisions. No sibling patches required.
 
 **Step 4.5: Stable list**
-- Record: **UNVERIFIED.** `curl` to lore.kernel.org/stable returned HTTP
-  403. No in-tree evidence this was rejected for stable.
+- Record: No stable-list hit found. UNVERIFIED that nobody asked for it
+  on stable@ (lore 403).
 
-## Phase 5: Code semantic analysis
+## Phase 5: Semantic analysis
 
 **Step 5.1: Functions**
-- Record: No function body changed. Adds `MODULE_DEVICE_TABLE` next to
-  `of_match_mt6735_vencsys[]`. Driver still uses
-  `module_platform_driver` → `mtk_clk_simple_probe` /
-  `mtk_clk_simple_remove`.
+- Record: Adds `is_cpuless_node()`. Touches `test()`. `send_from_node()`
+  unchanged.
 
 **Step 5.2: Callers**
-- Record: Platform core binds via OF compatible. Probe is boot/device-
-  instantiation, not a syscall hot path. Impact is whether the **module
-  is loaded at all**.
+- Record: `is_cpuless_node` only from `test()`. `test()` only from
+  `main()` (IPv4/IPv6 × UDP/TCP). Userspace kselftest, not kernel.
 
 **Step 5.3: Callees**
-- Record: Unchanged. `mtk_clk_simple_probe()` in `clk-mtk.c` registers
-  the vencsys gates from `vencsys_clks`.
+- Record: libnuma `numa_allocate_cpumask`, `numa_node_to_cpus`,
+  `numa_bitmask_weight`, `numa_bitmask_free`. Already linked with
+  `-lnuma`.
 
 **Step 5.4: Reachability**
-- Record: Reachable when DT has `mediatek,mt6735-vencsys` and the driver
-  is a module. **No in-tree `.dts`/`.dtsi` uses that compatible** (only
-  `Documentation/devicetree/bindings/clock/mediatek,syscon.yaml`). Users
-  need out-of-tree DT (typical for older MT6735 phones). Built-in (`=y`)
-  is unaffected.
+- Record: Triggered by running `./reuseport_bpf_numa` on NUMA
+  (`CONFIG_NUMA=y` in `tools/testing/selftests/net/config`) with at
+  least one CPU-less node. Not a syscall/kernel path.
 
 **Step 5.5: Similar patterns**
-- Record: Same omission still present in `clk-mt6735-imgsys.c` and `clk-
-  mt6735-mfgcfg.c`. Four other MT6735 clk files had
-  `MODULE_DEVICE_TABLE` from day one (`43c04ed791892` for apmixedsys).
-  Pattern is systematic but this patch is complete for vencsys.
+- Record: Same file already skips unavailable nodes (`a38bc45a08e97`).
+  This is the CPU-less counterpart. No other `numa_run_on_node`
+  selftests in this tree.
 
-## Phase 6: Local tree cross-reference
+## Phase 6: This tree (6.12.111)
 
-**Step 6.1: Buggy code in this tree?**
-- Record: Yes. File exists; current tree already has the fix at line 40.
-  Bug was the missing alias from v6.13 until v7.3-rc1.
-  `CONFIG_COMMON_CLK_MT6735_VENCSYS` is **tristate**.
+**Step 6.1: Buggy code present?**
+- Record: Yes. Local tree is `pending-6.12` / `p-6.12-3-gc504cf0baa3d8`,
+  `make kernelversion` = **6.12.111**. File has the 2016 loops and the
+  2021 `numa_nodes_ptr` skip, and still calls `send_from_node()` without
+  a CPU-less check (`git merge-base --is-ancestor` for both historical
+  commits succeeded). `git log --grep="consider cpuless"` on this file
+  is empty. CXL is in this tree (`drivers/cxl/`).
 
 **Step 6.2: Backport difficulty**
-- Record: **Clean apply.** File is essentially unchanged since
-  introduction. One inserted line after the match table.
+- Record: Clean apply. The three functional contexts exist verbatim
+  (helper insertion after `attach_bpf()`, two loop sites). Mainline
+  trailing `setup_netns()` context is **not** in 6.12 and is not part of
+  the v3 hunks. `bool` is already used in other net selftests here
+  without extra headers.
 
-**Step 6.3: Related fixes already here**
-- Record: This exact commit is already an ancestor of HEAD (`git merge-
-  base --is-ancestor 36cf8d279ff90 HEAD` → yes). That is mainline
-  history, not a reason to reject on merit. No alternate fix. Sibling
-  vdecsys fix is also present; imgsys/mfgcfg still missing.
+**Step 6.3: Related fixes already here?**
+- Record: Only the 2021 unavailable-node skip. It does not fix CXL
+  memory-only nodes. No equivalent `is_cpuless_node` fix.
 
 ## Phase 7: Subsystem context
 
-**Step 7.1: Subsystem / criticality**
-- Record: `drivers/clk/mediatek/` — SoC clock driver. **PERIPHERAL**
-  (MT6735 video-encoder clocks only). Not mm/fs/net core.
+**Step 7.1:** Record: `tools/testing/selftests/net` — kselftest for
+SO_REUSEPORT + `bpf_get_numa_node_id`. Criticality: PERIPHERAL for
+production runtime; IMPORTANT for people who run net kselftests (this
+6.12.y tree already took ~100 `tools/testing/selftests/net` commits
+since `v6.12`).
 
-**Step 7.2: Activity**
-- Record: Mediatek clk is actively maintained; this file is not. Two
-  commits total. Mature omission, not churn.
+**Step 7.2:** Record: Net selftests are actively backported here (UAF in
+tests, br_netfilter false failures, HZ=100 skips, portable timeouts,
+etc.).
 
 ## Phase 8: Impact and risk
 
-**Step 8.1: Who is affected**
-- Record: Only MT6735 systems with `CONFIG_COMMON_CLK_MT6735_VENCSYS=m`
-  and a DT node `mediatek,mt6735-vencsys`. Driver- and config-specific;
-  small population (no in-tree board DTS).
+**Step 8.1:** Record: Testers running this binary on NUMA machines with
+CPU-less nodes (CXL memory, similar memory-only nodes). Not a production
+kernel path.
 
-**Step 8.2: Trigger**
-- Record: Modular boot + OF device present. Not a race. Unprivileged
-  users do not trigger it; udev autoload fails. Built-in and manual
-  `modprobe` work.
+**Step 8.2:** Record: Trigger is running the selftest on that topology.
+First CPU node can succeed; the next CPU-less node aborts. Unprivileged
+if the test is run that way; not a kernel exploit path.
 
-**Step 8.3: Failure mode**
-- Record: Module does not autoload → vencsys clocks (smi_larb3, venc,
-  jpgenc, jpgdec) never register → video encode/JPEG on that SoC can
-  fail. **Severity: MEDIUM** (functional miss, not
-  oops/corruption/deadlock). Fits stable-rules “oh, that’s not good” and
-  the device-ID-style enablement exception.
+**Step 8.3:** Record: Failure mode = kselftest abort (`error(1, errno,
+"failed to pin to node")`). Severity LOW–MEDIUM for the kernel (no
+oops/corruption), HIGH for CI on those machines (hard fail).
 
-**Step 8.4: Risk-benefit**
-- Record: **Benefit:** correct autoload for a supported tristate driver;
-  one line. **Risk:** negligible (modinfo/depmod metadata only). Ratio
-  favors applying it on trees that have this driver.
+**Step 8.4:** Record: Benefit medium for CXL/NUMA testers of 6.12.y;
+risk very low (userspace, +24 lines, no kernel change). Ratio favors
+backport on this tree, which already takes kselftest false-fail fixes.
 
-## Phase 9: Final synthesis
+## Phase 9: Synthesis
 
-**Step 9.1: Evidence**
+**For**
+- Real, reproduced FAIL on CXL memory-only NUMA; 6.12 has both the test
+  and CXL.
+- Completes the 2021 skip: `numa_nodes_ptr` still includes CPU-less
+  nodes.
+- Small, reviewed, v3 is the applied form; no series deps.
+- Applies cleanly here; zero kernel runtime risk.
+- This tree regularly backports the same class (e.g. `selftests:
+  netfilter: packetdrill: avoid failure on HZ=100 kernel`,
+  vxlan/br_netfilter false-fail fixes).
+- v2 was sent to `net` as a bugfix.
 
-FOR:
-- Real autoload bug: match table used, aliases not published
-- One line, obviously correct, reviewed and applied by clk maintainer
-  Brian Masney
-- Driver is tristate; modular build is an intended config
-- Same class as device-ID additions (publish existing OF IDs)
-- Sibling MT6735 files already had the macro; this was an omission from
-  `0bd9b1211f741`
-- Zero runtime regression risk; applies cleanly
-- Driver and bug exist in this 7.3 tree (introduced v6.13)
+**Against**
+- Not a kernel crash, security hole, or data-corruption fix.
+- Affects one selftest on a subset of NUMA topologies.
+- Final submission was `net-next`; no `Cc: stable` in the thread I could
+  read.
 
-AGAINST:
-- Not a crash, UAF, deadlock, or security issue
-- No user report and no hardware reproduction
-- No in-tree DT consumer for this compatible
-- Niche SoC; often clocks are built-in
+**Unresolved**
+- Exact mainline SHA (not on this branch).
+- lore.kernel.org / `b4` thread dump (403/404).
+- Whether stable@ ever discussed it.
 
-UNRESOLVED:
-- Whether this was discussed on the stable list (lore HTTP 403)
+**Stable rules checklist**
+1. Obviously correct and tested? **PASS** (libnuma weight 0; Reviewed-by
+   Horman; author reproduced).
+2. Real bug that bothers people? **PASS** (hard selftest FAIL on real
+   CXL hardware).
+3. Important (crash/security/corruption/deadlock)? **PASS** under this
+   tree’s documented “oh, that’s not good” / kselftest-false-fail
+   practice; not a production oops.
+4. Small and contained? **PASS** (~24 lines, one file).
+5. No new features/APIs? **PASS**.
+6. Can apply to this tree? **PASS** (contexts verified).
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? **PASS** — one-line, standard macro,
-   maintainer Reviewed-by/SOB. No runtime test; correctness is
-   mechanical.
-2. Real bug that affects users? **PASS** — modular OF autoload is
-   broken. User set is small but real if they use `=m`.
-3. Important issue? **PASS** (low end of “oh, that’s not good” /
-   hardware-enablement), not CRITICAL.
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — publishes existing match table.
-6. Can apply to this tree? **PASS** — file and table exist; patch is a
-   clean one-liner.
+**Exception category:** none of ID/quirk/DT/build/docs; it is a
+kselftest correctness/robustness fix, which this 6.12.y tree already
+accepts.
 
-**Step 9.3: Exception category**
-- Record: Closest match is **device ID / hardware matching** (OF module
-  aliases), not a new driver.
+The test in 6.12.111 still assumes every exposed NUMA node has CPUs.
+That is false on CXL memory-only nodes, so `reuseport_bpf_numa` aborts.
+The patch only skips those nodes and does not change kernel behavior.
+That is a contained, low-risk fix worth taking on this tree.
 
-**Step 9.4: Decision**
-
-Backport this. It is a one-line, obviously correct fix for failed OF
-module autoload on an existing tristate driver. That is the same kind of
-enablement stable already takes for new device IDs, with no runtime
-behavior change if the module is built-in or loaded by other means. This
-7.3 tree has the driver (since v6.13); there are no missing
-prerequisites. Limited hardware and no crash report lower urgency, not
-correctness.
-
-### What it solves for stable users
-If `clk-mt6735-vencsys` is a module, userspace cannot match
-`mediatek,mt6735-vencsys` and load it. Video-encoder clocks then never
-appear. `MODULE_DEVICE_TABLE(of, ...)` generates the aliases
-`file2alias` already knows how to emit.
-
-### Risk vs benefit
-Benefit is correct autoload on MT6735 modular configs. Risk is
-negligible: no probe, locking, or ABI change.
-
-## Verification
-- [Phase 1] Parsed tags: Reviewed-by + SOB Brian Masney; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 1] `git show -s 36cf8d279ff90`: body matches the candidate;
-  “source-level fix” is in the real commit and lore v1
-- [Phase 2] Diff: +1 `MODULE_DEVICE_TABLE(of, of_match_mt6735_vencsys)`
-  in `clk-mt6735-vencsys.c`
-- [Phase 2] `include/linux/module.h` and `scripts/mod/file2alias.c`
-  `do_of_entry()`: confirmed alias generation from that macro
-- [Phase 3] `git blame`: table from `0bd9b1211f741` (v6.13-rc1); macro
-  from `36cf8d279ff90`
-- [Phase 3] `git describe --contains 0bd9b1211f741`: v6.13-rc1; fix
-  contained in v7.3-rc1; `git merge-base --is-ancestor` vs v7.2: not in
-  v7.2
-- [Phase 3] File log: only introducer + this commit; sibling
-  `096ab64a0e694` for vdecsys
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1 lore thread; Masney Reviewed-by;
-  correct clk/mediatek CCs; no NAK
-- [Phase 4] WebFetch lore/msgid.link: HTTP 403; used mbox instead
-- [Phase 5] Kconfig: `COMMON_CLK_MT6735_VENCSYS` tristate; Makefile
-  `obj-$(CONFIG_COMMON_CLK_MT6735_VENCSYS)`
-- [Phase 5] `mtk_clk_simple_probe` in `clk-mtk.c` used unchanged
-- [Phase 5] Grep: no in-tree dts/dtsi `mediatek,mt6735-vencsys`; binding
-  in `mediatek,syscon.yaml`
-- [Phase 5] imgsys/mfgcfg still lack `MODULE_DEVICE_TABLE`
-- [Phase 6] `make kernelversion` / `git describe HEAD`: 7.3.0-rc4 /
-  v7.3-rc4-27-gf0100363d8c37
-- [Phase 6] File currently contains the macro; `git merge-base --is-
-  ancestor 36cf8d279ff90 HEAD` = yes
-- [Phase 7] MAINTAINERS: MT6735 clk → Yassine Oudjana; COMMON CLK →
-  Stephen Boyd, Brian Masney, Jerome Brunet
-- [Phase 8] Failure mode: missing module autoload, not oops; severity
-  MEDIUM
-- UNVERIFIED: stable@ lore discussion (HTTP 403)
+### Verification
+- [Phase 1] Parsed tags: Reviewed-by Simon Horman; Link msgid; SOBs Feng
+  Tang / Paolo Abeni; no Fixes/Reported-by/Cc:stable.
+- [Phase 2] Diff: +24 lines, `is_cpuless_node()` + two `continue`s in
+  `test()`; `send_from_node()` still `error(1)` on pin failure.
+- [Phase 3] `git blame` loops: `3c2c3c16aaf6a` (2016) and
+  `a38bc45a08e97` (2021 skip). Both are ancestors of HEAD.
+- [Phase 3] `git describe --contains`: original test v4.10-rc1; 2021
+  skip v5.16-rc1.
+- [Phase 3] `git log --grep="consider cpuless"` on this file: empty (fix
+  not in tree).
+- [Phase 4] `b4 mbox` msgid: 404; lore WebFetch: 403; used
+  Openwall/LKML/Patchew for v1–v3.
+- [Phase 4] v1→v3: Sashiko NULL-check; lift skip out of
+  `send_from_node`; Jakub spelling/`inline`; Horman Reviewed-by; no NAK.
+- [Phase 5] Callers: `main` → `test` → `send_from_node`; userspace only.
+  `grep numa_run_on_node` only this file under selftests.
+- [Phase 6] `git describe HEAD` / `make kernelversion`: pending-6.12,
+  6.12.111. File matches patch contexts (`hunk1 present`, two loop
+  sites). No `setup_netns`. `drivers/cxl/` present. `CONFIG_NUMA=y` in
+  net selftest config. `-lnuma` already in Makefile.
+- [Phase 6] `v6.12..HEAD -- tools/testing/selftests/net/`: 100 commits,
+  including false-fail/skip fixes.
+- [Phase 8] Failure: selftest abort `failed to pin to node: Invalid
+  argument`; not a kernel oops.
+- UNVERIFIED: lore.kernel.org full thread; stable@ discussion; mainline
+  SHA.
 
 **YES**
 
- drivers/clk/mediatek/clk-mt6735-vencsys.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../selftests/net/reuseport_bpf_numa.c        | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/clk/mediatek/clk-mt6735-vencsys.c b/drivers/clk/mediatek/clk-mt6735-vencsys.c
-index 8dec7f98492ac..64ba9da9fd427 100644
---- a/drivers/clk/mediatek/clk-mt6735-vencsys.c
-+++ b/drivers/clk/mediatek/clk-mt6735-vencsys.c
-@@ -37,6 +37,7 @@ static const struct of_device_id of_match_mt6735_vencsys[] = {
- 	{ .compatible = "mediatek,mt6735-vencsys", .data = &vencsys_clks },
- 	{ /* sentinel */ }
- };
-+MODULE_DEVICE_TABLE(of, of_match_mt6735_vencsys);
+diff --git a/tools/testing/selftests/net/reuseport_bpf_numa.c b/tools/testing/selftests/net/reuseport_bpf_numa.c
+index c9ba36aa688e2..b04b511809ad2 100644
+--- a/tools/testing/selftests/net/reuseport_bpf_numa.c
++++ b/tools/testing/selftests/net/reuseport_bpf_numa.c
+@@ -104,6 +104,26 @@ static void attach_bpf(int fd)
+ 	close(bpf_fd);
+ }
  
- static struct platform_driver clk_mt6735_vencsys = {
- 	.probe = mtk_clk_simple_probe,
++/*
++ * Return true if it is a cpuless node. Return false if it isn't or any
++ * error (very unlikely) happens during the libnuma calls.
++ */
++static bool is_cpuless_node(int node_id)
++{
++	struct bitmask *cpumask;
++	bool ret = false;
++
++	cpumask = numa_allocate_cpumask();
++	if (!cpumask)
++		return ret;
++
++	if (!numa_node_to_cpus(node_id, cpumask) && !numa_bitmask_weight(cpumask))
++		ret = true;
++
++	numa_bitmask_free(cpumask);
++	return ret;
++}
++
+ static void send_from_node(int node_id, int family, int proto)
+ {
+ 	struct sockaddr_storage saddr, daddr;
+@@ -213,6 +233,8 @@ static void test(int *rcv_fd, int len, int family, int proto)
+ 	for (node = 0; node < len; ++node) {
+ 		if (!numa_bitmask_isbitset(numa_nodes_ptr, node))
+ 			continue;
++		if (is_cpuless_node(node))
++			continue;
+ 		send_from_node(node, family, proto);
+ 		receive_on_node(rcv_fd, len, epfd, node, proto);
+ 	}
+@@ -221,6 +243,8 @@ static void test(int *rcv_fd, int len, int family, int proto)
+ 	for (node = len - 1; node >= 0; --node) {
+ 		if (!numa_bitmask_isbitset(numa_nodes_ptr, node))
+ 			continue;
++		if (is_cpuless_node(node))
++			continue;
+ 		send_from_node(node, family, proto);
+ 		receive_on_node(rcv_fd, len, epfd, node, proto);
+ 	}
 -- 
 2.53.0
 
