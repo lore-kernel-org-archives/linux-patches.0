@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77095D7CA1;
-	Mon, 19 Oct 2026 14:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB5D4D3BC1;
+	Mon, 19 Oct 2026 14:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418515; cv=none; b=BaMiOc+e3T00CCMAAvWZAMFWe8aNm2RKM4q77hRRSE3Kd9/Reb4WFuwgqCQRgJWulFasS3aX3aQ/6cF1lpDs013xQFbBcK88E22q5PTnS3PM8381WtJm1/Ny0VFLkFPb9vi3B+ZrOqmKgsUfy9i+OlvpTTZDAt+d/6pn3nlcXts=
+	t=1792418517; cv=none; b=QmPWIxhiS9Oj/OjgEuFRlcYAnnYX/r3vgF4fplPnEJMqC0hnJ6AkR+TEViJTbpdxbnZNHjawF4GuuGCr9jEBXWcUEuB4Z57a+EABd5eEyJTr5zsrYI4P5l58iSFPmPZsBPDrpB2jH+M0B0i9A17zDCU2JpR3hDBZ0dewCOL74JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418515; c=relaxed/simple;
-	bh=ySLNsBrlRCzTR2nLg8mBh6uqeGNK2/UeG9mxjqFVSak=;
+	s=arc-20240116; t=1792418517; c=relaxed/simple;
+	bh=QTirHrIn1Zc4NgTjLu0XMpXGjojBjDEi/jkUjkhP+xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XPHFkwRvliZmkhh6orZdIfrVGOaUUhcc15lC8sqF4N366QwmVsYhQgGpeP1YyPONt08+6UE3Pd9U6XE4bQwOsN07/EizahP/z0vdPWyDI5kgC4bZ24ALTb7X2+kZXmcuyWaLapRB954AvDhYQbenSSSZJMnpD7Ep8N4KobOERu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K6ibStXY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JJ8ymA6z4Eb8WIcI+/4VJxaEaXSotxRSd8WxsEYZVSXKvKWiF/USwihF4si4OOrmdl1WcDEDGT4q++OJ1mKk6NJf4/DqdYB1RFG5hEiyEORMUTiDK96CTpGtvhTgKnSW6/eO9jJqV5fxziO0YskdhevFaZK6kvny7CTMx1iiSSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aPmLKmmy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K6ibStXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785EB1F000C6;
-	Mon, 19 Oct 2026 14:01:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aPmLKmmy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE7C1F000C7;
+	Mon, 19 Oct 2026 14:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418512;
-	bh=8RndOT4KZvRzJ72Zs4ghL3mZz03S5UyfL5M7Fa9CMsI=;
+	s=k20260515; t=1792418514;
+	bh=FfMEqOk9tEAGb7JSgvHuG1mrEWOKhoUT079PF0wQ09Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K6ibStXYBdEzKqH2BBGv0rQ//0OnSlv7ieQlXb/KIDmm1PrN1tS7u1ZQOE+wyZ+zh
-	 /8S3fGTB2RXCp3RHguIsSBR5cUJantnewmtS7fwRRX3nVi87LkjpqInRU+8hT6wwJK
-	 Ou4dQ398VBaCZ1IBgJ66SaX1bkp/J+f8FqRE0oFcftjcUcov9IbY4siX6OLHLf3Sod
-	 eEskyNcxZGG2/eqpQseho/6zGumlzR4EJiiiUH1d6L7lkrf6FvUZA7q+2GBysZ2Rna
-	 uw9+n4Plo4yD0K3Gt5l7JyYHTfzU3cB0MSskAWoj6nLSxWUMZdHrWsy57NoncvpjUj
-	 qECmHY0DRb4ZA==
+	b=aPmLKmmyA1ZlDfopwxi6ieXbvagkYrtwhQyCun9izbbgET1l3+uWQqEw9Ibos6ngR
+	 BxLFrGanZ1/sKrDFKs4pUqSi8467Ie/13aNgdrXjVcAHT0iEtaJhOX7pH3bvOKeIG2
+	 8lxKulmNUplHkWW6LhTBC4RAItxoKvC5if+e5X+44c3ziIMWlU8jCzt92TkmUt1eFF
+	 YELhQgsyra/79IVHs63cxegJZTT6Ija8qyjXyKm6N/c+xBxlrXlet4ixYl/VG2nem4
+	 1C9dlJtHIN3AtScgSzyFuLBIBgIs9VFbtCEhIwsabCZxC+EfH/CPjBzUk28s6sGN/6
+	 kK0/1Ww9d0NYw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>,
-	Douglas Anderson <dianders@chromium.org>,
+Cc: Guanghui Feng <guanghuifeng@linux.alibaba.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	dwmw2@infradead.org,
+	joro@8bytes.org,
+	will@kernel.org,
+	iommu@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] drm/panel-edp: Support MB116AS01'3 edp panel
-Date: Mon, 19 Oct 2026 09:49:52 -0400
-Message-ID: <20261019135441.1420968-301-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] iommu/vt-d: Fix CACHE_TAG_NESTING_DEVTLB polluting shared variables in flush loop
+Date: Mon, 19 Oct 2026 09:49:53 -0400
+Message-ID: <20261019135441.1420968-302-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,405 +57,533 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>
+From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 
-[ Upstream commit 844e71ba7d7a50c5ffa29d147afaeaafb19b39e4 ]
+[ Upstream commit 3846e469c1ba1407260066070bff5c88ee39a4c7 ]
 
-MB116AS01'3 raw edid:
-00 ff ff ff ff ff ff 00 21 63 03 12 00 00 00 00
-00 23 01 04 95 1a 0e 78 23 e7 05 9c 5b 56 93 27
-21 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 36 1c 56 92 50 00 1c 30 60 18
-a8 00 00 90 10 00 00 18 00 00 00 fd 00 28 3c 30
-30 07 01 0a 20 20 20 20 20 20 00 00 00 fe 00 48
-4b 43 20 4d 59 20 20 20 20 0a 20 20 00 00 00 fe
-00 4d 42 31 31 36 41 53 30 31 27 33 20 20 01 cb
+In cache_tag_flush_range(), the CACHE_TAG_NESTING_DEVTLB case modifies the
+shared local variables 'addr' and 'mask' before falling through to
+CACHE_TAG_DEVTLB. This causes all subsequent CACHE_TAG_DEVTLB entries in
+the same loop iteration to incorrectly use the full-range flush parameters
+(addr=0, mask=MAX_AGAW_PFN_WIDTH) instead of the precisely calculated PSI
+range. This is not the intended behavior, as regular DEVTLB entries should
+always perform targeted range-based invalidation.
 
-70 20 79 02 00 22 00 14 1c 1a 01 84 55 05 91 00
-5f 00 17 00 ff 02 1b 00 09 00 07 00 2b 00 06 27
-00 28 3b 00 00 81 00 13 72 1a 00 00 03 01 28 3c
-00 00 00 00 00 00 3c 00 00 00 00 25 01 09 1c 1a
-01 1c 1a 01 28 3c 80 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 e7 90
+Fix this by having CACHE_TAG_NESTING_DEVTLB directly call
+cache_tag_flush_devtlb_psi() with the full-range constants and break,
+instead of modifying shared variables and falling through. This ensures
+CACHE_TAG_DEVTLB always uses the original calculated addr and mask for
+precise range flush.
 
-Signed-off-by: Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260701013018.2621972-1-zhouhaikun5@huaqin.corp-partner.google.com
+This change slightly affects trace_cache_tag_flush_range() behavior.
+Previously, after addr/mask were overwritten, the tracepoint could record
+a full-range flush even when the caller requested a narrower range.
+
+The tracepoint should reflect caller intent. Although this helper may
+widen the actual hardware invalidation range for implementation reasons,
+that does not change what the caller requested, so logging the requested
+range is the correct behavior.
+
+If the actual invalidation range sent to hardware is needed, it is already
+visible via the qi_submit trace event, which records the invalidation
+descriptors emitted by the driver.
+
+Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Local tree is **6.18.y** (`v6.18.53`, `VERSION=6 PATCHLEVEL=18`). The
-MB116AS01'3 table entry is **not** in `v6.18.53`. The driver, HKC table,
-`delay_200_500_e80`, and unknown-panel `WARN_ON` path are present. This
-is a one-line panel ID / quirk for an existing driver.
+The remaining thread parse confirms two vendors independently hit the
+same flush-loop bug. I’ll wrap the nine-phase analysis against this 6.12
+tree only.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: `[drm/panel-edp] [Support] [add MB116AS01'3 eDP panel table
-entry]`
-- Subsystem: `drm/panel-edp`
-- Verb: "Support" — hardware enablement / ID addition, not a refactor
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[iommu/vt-d] [Fix] [CACHE_TAG_NESTING_DEVTLB mutates shared
+`addr`/`mask` in `cache_tag_flush_range()`, so later tags in the same
+loop use a full-range flush instead of the calculated PSI range]**
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- `Signed-off-by: Haikun Zhou <zhouhaikun5@huaqin.corp-
-  partner.google.com>` (author; Huaqin/Google partner)
-- `Reviewed-by: Douglas Anderson <dianders@chromium.org>` (panel-edp
-  reviewer in MAINTAINERS)
-- `Signed-off-by: Douglas Anderson <dianders@chromium.org>` (maintainer
-  applied it)
-- `Link: https://patch.msgid.link/20260701013018.2621972-1-
-  zhouhaikun5@huaqin.corp-partner.google.com`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable` (absence
-  expected for this review)
-- Ignored: `Signed-off-by: Sasha Levin` and `[Upstream commit ...]`
-  (pipeline markers)
+- **Signed-off-by:** Guanghui Feng (author, Alibaba), Guixin Liu
+  (Alibaba), Lu Baolu (Intel VT-d maintainer), Joerg Roedel (IOMMU
+  maintainer)
+- **No Fixes:** tag (expected for this review pipeline)
+- **No Cc: stable** (expected)
+- **No Reported-by / Tested-by / Reviewed-by / Acked-by / Link** on the
+  committed message
+- Independent earlier submission of the same bug exists (Baidu; see
+  Phase 4)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
 Record:
-- Bug description: the panel is missing from `edp_panels[]`. The body is
-  the raw EDID (base block + extension), not a crash log.
-- Symptom: unmatched generic `edp-panel` uses conservative delays and
-  hits `WARN_ON(!detected_panel)` at probe.
-- Version info: none in the message. Author date is 2026-07-01; `v6.18`
-  is 2025-11-30, so this landed after this series branched.
-- Root cause: HKC ID `0x1203` was not in the delay/quirk table.
+- **Bug:** In `cache_tag_flush_range()`, `CACHE_TAG_NESTING_DEVTLB`
+  writes `addr = 0` and `mask = MAX_AGAW_PFN_WIDTH` then `fallthrough`s
+  into `CACHE_TAG_DEVTLB`. Those locals are computed once before the
+  loop, so every later tag sees the full-range values.
+- **Symptom:** Regular DevTLB (and, in this tree, later IOTLB)
+  invalidations become global/full-range instead of the caller’s PSI
+  range. Tracepoint can also log a full-range flush when the caller
+  asked for a narrower range.
+- **Version info:** None in the message. Introduced with cache-tag
+  helpers (v6.11); present in this 6.12 tree.
+- **Root cause:** Shared loop variables overwritten for one tag type,
+  then reused for all later tags.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit panel ID / power-
-sequencing quirk. That is the same class as PCI/USB ID additions.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Record: **Not hidden.** Subject and body are an explicit logic-bug fix.
+The extra tracepoint paragraph is a side effect of stopping the
+overwrite, not the reason for the change.
 
-Step 2.1: INVENTORY THE CHANGES
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File: `drivers/gpu/drm/panel/panel-edp.c` (`+1 / -0`)
-- Function/table: `edp_panels[]`
-- Scope: single-file, one-line surgical addition
+- **File:** `drivers/iommu/intel/cache.c` only
+- **Net:** 2 insertions, 3 deletions (5-line change)
+- **Function:** `cache_tag_flush_range()`
+- **Scope:** single-file surgical fix
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- Before: HKC `0x1203` is not in `edp_panels[]`. `find_edp_panel()`
-  returns NULL.
-- After: match `EDP_PANEL_ENTRY('H', 'K', 'C', 0x1203,
-  &delay_200_500_e80, "MB116AS01'3")`.
-- Path: `panel_edp_probe()` → compatible `"edp-panel"` →
-  `generic_edp_panel_probe()` → EDID panel ID lookup.
-- After match: `desc->delay = *detected_panel->delay` (`hpd_absent=200`,
-  `unprepare=500`, `enable=80`).
-- Unmatched: `WARN_ON` plus `panel_edp_set_conservative_timings()`
-  (`unprepare=2000`, `enable=200`).
+- **Before:** `CACHE_TAG_NESTING_DEVTLB` mutates `addr`/`mask`, falls
+  through, flushes that tag as a full DevTLB, and leaves the mutated
+  values for later iterations.
+- **After:** That case calls `cache_tag_flush_devtlb_psi(domain, tag, 0,
+  MAX_AGAW_PFN_WIDTH)` and `break`s. Later
+  `CACHE_TAG_DEVTLB`/`CACHE_TAG_IOTLB` tags keep the original PSI
+  `addr`/`mask`.
+- **Path:** mapping-change invalidation (`intel_iommu_tlb_sync`,
+  superpage switch, SVM range invalidate), not probe/error-only.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **Hardware workaround / device ID** (category h).
-- Mechanism: EDID mfg `HKC` (bytes `21 63`) and product `0x1203` (bytes
-  `03 12`) were not mapped to delays. The panel name in EDID descriptor
-  0xFE is `MB116AS01'3` (`0x27` = `'`).
-- Fix: add the existing `delay_200_500_e80` preset (already used by many
-  11.6" BOE/CMN entries).
+Verified in this checkout (`cache.c` 437–478): the buggy `addr = 0; mask
+= MAX_AGAW_PFN_WIDTH; fallthrough;` is present.
 
-Step 2.4: ASSESS THE FIX QUALITY
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **[Logic / correctness]** Shared loop state is clobbered. Nested
+DevTLB still needs a full device-cache flush (comment is unchanged). The
+fallthrough was a convenient way to reuse the DevTLB helper and
+accidentally changed flush parameters for every later tag.
+
+Consequence in this tree:
+- Later `CACHE_TAG_DEVTLB`: full-range Dev-IOTLB instead of PSI (over-
+  invalidation).
+- Later `CACHE_TAG_IOTLB` / `CACHE_TAG_NESTING_IOTLB`:
+  `cache_tag_flush_iotlb(..., addr, pages, mask, ih)` with `addr=0`,
+  `mask=MAX_AGAW_PFN_WIDTH` (52) and original `pages`. On the nest-
+  parent S2 domain (`use_first_level` is false; see Phase 5/6) that
+  typically becomes domain-selective IOTLB (`mask > cap_max_amask_val`)
+  — still covering, but far broader than PSI.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record: **Obviously correct.** Same full-range DevTLB flush for nesting,
+without mutating shared locals. No new locking, APIs, or data
+structures. Regression risk is low: nested DevTLB still gets a full
+flush; other tags get the range the caller computed. Tracepoint then
+logs the requested range, which is the stated intent.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
 Record:
-- Obviously correct: one table row, sorted under existing HKC entries
-  (`0x1203` before `0x2d51`).
-- Minimal; no unrelated edits.
-- Regression risk: very low. Lookup is ID-specific; other panels
-  unchanged.
-- `delay_200_500_e80` already exists in this tree (verified at `panel-
-  edp.c:1760` on `v6.18.53`).
+- Buggy `addr`/`mask`/`fallthrough` introduced in **`c4d27ffaa8eb0`**
+  (“iommu/vt-d: Add cache tag invalidation helpers”, Lu Baolu,
+  2024-04-24).
+- **`git describe --contains c4d27ffaa8eb0`:**
+  `x86_boot_for_v6.11_rc1~...` → first appeared in **v6.11**.
+- **`git merge-base --is-ancestor c4d27ffaa8eb0 HEAD`:** yes. Present
+  for the whole 6.12 lifetime.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-Step 3.1: BLAME THE CHANGED LINES
+Record: **No Fixes: tag.** Equivalent “buggy commit” is `c4d27ffaa8eb0`,
+which is in this tree.
+
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+
+Record (recent `drivers/iommu/intel/cache.c`):
+- `ffd774c34774f` qi_batch NULL with nested parent
+- `705c1cdf1e73c` batched cache invalidation
+- `3297d047cd7f5` refactor IOTLB/Dev-IOTLB flush (this is why 6.12’s
+  `cache_tag_flush_iotlb` still takes `pages`)
+- `c4d27ffaa8eb0` original helpers (bug intro)
+
+Standalone fix, not patch 2/3 of a functional series. It was later
+folded as 03/19 in “Intel IOMMU updates for v7.3”, but it does not
+depend on the other patches in that pull.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Guanghui Feng has `31fd1e0281621` (“Fix intel iommu iotlb sync
+hardlockup and retry”) in this Intel IOMMU tree. Guixin Liu has no other
+hits here. Lu Baolu is the VT-d maintainer and signed off. Two vendors
+independently posted the same bug (Alibaba and Baidu).
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: **No functional prerequisites.**
+`cache_tag_flush_devtlb_psi(domain, tag, addr, mask)` exists here with
+that signature. Surrounding context differs (`pages` still passed to
+IOTLB flush and the tracepoint; `cache_tag_flush_all` is still its own
+loop, not a wrapper). The 3-line change backports with a context tweak,
+not extra commits.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- Table introduced with `panel-edp` split: `5f04e7ce392db` ("Split eDP
-  panels out of panel-simple").
-- HKC rows already in `v6.18` / `v6.18.53` (`0x2d51`, `0x2d5b`
-  MB116AN01, `0x2d5c` MB116AN01-2).
-- `delay_200_500_e80` from `4d53cf8147950` ("Add several generic edp
-  panels"), present in this tree.
-- This ID is new; the table and delay helper are old.
+- Original: Message-ID
+  `20260623060122.3796325-1-guanghuifeng@linux.alibaba.com`
+  (2026-06-23), 3-message thread via `b4 mbox`.
+- Lu Baolu (2026-06-27): same issue already posted by Baidu:
+  `https://lore.kernel.org/linux-
+  iommu/20260605003950.1720-1-lirongqing@baidu.com/`
+- Lu Baolu (2026-07-27): **“Queued for v7.3-rc1.”**
+- No NAKs. No reviewer concern about correctness.
+- v2 of the Intel pull added the tracepoint clarification; the code
+  change is unchanged from v1.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No `Fixes:` tag. N/A. The gap is a missing table row, not a
-later regression.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: Recipients were the IOMMU maintainers (Woodhouse, Lu, Roedel,
+Deacon, Murphy) and `iommu@lists.linux.dev`. Lu Baolu signed off and
+queued it; Joerg applied it. No separate Reviewed-by on the committed
+text. Kevin Tian was CCed on the pull, not recorded as a reviewer of
+this hunk.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+
+Record: No syzbot/bugzilla. **Two independent vendor patches:**
+1. Li RongQing (Baidu), 2026-06-05: “Prevent variable pollution in
+   `cache_tag_flush_range()`” — per-iteration `flush_addr`/`flush_mask`
+   copies, including the IOTLB path.
+2. Guanghui Feng (Alibaba), 2026-06-23 — the version that landed (direct
+   full-range call + `break`).
+
+Baidu pinged after 12 days; Lu queued it. That is “bothers people,” not
+a theoretical review nit.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: Landed as **03/19** of Lu Baolu’s “Intel IOMMU updates for
+v7.3”. Other patches in that series are unrelated (UCTP, tboot, context
+teardown, etc.). This hunk is self-contained. Several *other* fixes from
+that pull are already in this `pending-6.12` tree; this one is not.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: `lore.kernel.org/stable` fetch returned 403. **UNVERIFIED**
+whether stable@ already discussed this specific subject. No evidence it
+was rejected for stable.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `cache_tag_flush_range()`; helper `cache_tag_flush_devtlb_psi()`
+(unchanged).
+
+**Step 5.2: TRACE CALLERS**
+
+Record (this tree):
+- `intel_iommu_tlb_sync()` in `iommu.c` — unmap/Iotlb gather; **common
+  VFIO/iommufd map change path**
+- `switch_to_super_page()` in `iommu.c`
+- `intel_nested_cache_invalidate_user()` in `nested.c` — flushes the
+  **nested S1 domain** (IOTLB/DEVTLB only; NESTING tags live on S2)
+- `intel_arch_invalidate_secondary_tlbs()` in `svm.c` — SVA
+
+The pollution matters when the domain being flushed **has
+`CACHE_TAG_NESTING_DEVTLB` on its list**, i.e. the **S2 nest-parent**,
+on S2 map changes (`intel_iommu_tlb_sync` on that domain).
+
+**Step 5.3: TRACE CALLEES**
+
+Record: `calculate_psi_aligned_address` → lock → per-tag
+`cache_tag_flush_iotlb` / `cache_tag_flush_devtlb_psi` →
+`qi_batch_add_*` / `qi_submit_sync`.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Nested attach (`cache_tag_assign_domain`) puts NESTING_* tags on
+`domain->s2_domain`. Nest parent is allocated with
+`paging_domain_alloc(dev, false)` so **`use_first_level` is false**.
+Userspace (iommufd/VFIO nested vIOMMU) changing S2 mappings triggers
+`intel_iommu_tlb_sync` → `cache_tag_flush_range` on S2. **Reachable from
+VM/device assignment, not a debug-only path.**
+
+Tag order (`list_add_tail`): per nested ATS device, `NESTING_IOTLB` then
+`NESTING_DEVTLB`. With **two or more** nested ATS devices, after the
+first `NESTING_DEVTLB`, later IOTLB/DEVTLB tags see polluted
+`addr`/`mask`. Mixed host-on-S2 + nested-on-S2 with nested attached
+first is the `CACHE_TAG_DEVTLB` case the commit describes.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: `cache_tag_flush_all()` in this tree already handles
+`CACHE_TAG_DEVTLB` and `CACHE_TAG_NESTING_DEVTLB` together via
+`cache_tag_flush_devtlb_all()` **without** mutating shared range locals.
+`cache_tag_flush_range_np()` does not touch DevTLB. The range path is
+the inconsistent one.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
 Record:
-- `v6.18..v6.18.53` already contains many similar one-line panel adds
-  (AUO, BOE, CSW, LG, Sharp, mt8189 Chromebook panels).
-- Standalone; not `patch X/Y`.
+- **Tree:** `pending-6.12`, `git describe HEAD` =
+  `p-6.12-3-gc504cf0baa3d8`, `make kernelversion` = **6.12.111**
+- Buggy code: `drivers/iommu/intel/cache.c` lines 458–468
+- Introduced v6.11 (`c4d27ffaa8eb0`), **before** 6.12 branched
+- `git log --grep='polluting shared'` on this path: **empty** — fix
+  **not** already applied
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: **Minor context rework, not a redesign.** This tree still has:
+- `cache_tag_flush_iotlb(domain, tag, addr, pages, mask, ih)`
+- `trace_cache_tag_flush_range(tag, start, end, addr, pages, mask)`
+- a full `cache_tag_flush_all()` loop
+
+Mainline hunk context dropped `pages` and collapsed
+`cache_tag_flush_all` into a wrapper. The three changed lines
+(`addr`/`mask`/`fallthrough` → direct call + `break`) match this file
+as-is.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: No equivalent fix. `fallthrough` at line 468 is still the only
+one in this file.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+
+Record: **Intel VT-d IOMMU cache invalidation.** Criticality:
+**IMPORTANT** (DMA isolation / nested virtualization). Not core mm/VFS,
+but wrong Dev-IOTLB/IOTLB parameters affect VFIO/iommufd nested guests
+with ATS devices.
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Actively maintained; this `pending-6.12` branch already carries
+other VT-d fixes from the same v7.3 era pull. Cache-tag code has been
+stable in structure since 6.11 aside from batching.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: **Config/driver-specific:** `CONFIG_INTEL_IOMMU` + nested
+translation (`IOMMU_HWPT_ALLOC_NEST_PARENT` / iommufd nested) + ATS
+devices so `CACHE_TAG_*DEVTLB` tags exist. Typical cloud VFIO/vIOMMU.
+Not every 6.12 box.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record: S2 mapping changes while nested ATS devices are attached and
+more than one relevant cache tag follows a `NESTING_DEVTLB` on the list
+(multiple nested ATS devices, or nested-then-host on the same S2).
+Privileged/VMM path (iommufd), not an unprivileged syscall smash. Easy
+to hit in production nested setups; two cloud vendors filed it
+independently.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record: **Wrong IOMMU invalidation parameters → overly broad IOTLB/Dev-
+IOTLB flushes** (global Device-TLB / domain-selective IOTLB instead of
+PSI).
+
+Verified **not** stale-translation under-invalidation on this tree’s
+nest parent: S2 is `paging_domain_alloc(dev, false)`, so the first-level
+`piotlb(addr=0, original pages)` mis-flush does not apply.
+
+Severity: **MEDIUM–HIGH** for nested ATS (I/O stalls, ATS storms, lost
+PSI benefit on a hot unmap path). Not oops/corruption in the verified
+6.12 S2 path. Matches stable-rules **“oh, that's not good”** and, given
+Baidu+Alibaba, a **notable performance/correctness issue that bothers
+production users**.
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
 Record:
-- Haikun Zhou has other `panel-edp` ID/delay commits (`CSW MNB601LS1-4`,
-  `CMN N116BCJ-EAK`).
-- Reviewer Douglas Anderson is `R:` for "DRM DRIVER FOR GENERIC EDP
-  PANELS" in MAINTAINERS.
+- **Benefit:** Restore intended PSI DevTLB/IOTLB invalidation on nested
+  S2 flushes; avoid global ATS invalidation for later devices; tiny,
+  local change.
+- **Risk:** Very low (3 lines, same helper, nesting still full-flushes).
+- **Ratio:** Favorable for 6.12-stable.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: None. Needs only `EDP_PANEL_ENTRY`, HKC table, and
-`delay_200_500_e80`, all in `v6.18.53`. Dry-run against the `v6.18.53`
-blob: hunk applied (offset -5). Standalone apply: yes.
+---
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## PHASE 9: FINAL SYNTHESIS
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 9e55b14301666`: V2 at https://patch.msgid.link/202607010130
-  18.2621972-1-zhouhaikun5@huaqin.corp-partner.google.com
-- `b4 dig -a`:
-  - v1 2026-06-29: `MB116AS01-3` (hyphen), msgid
-    `20260629012200.248066-1-...`
-  - v2 2026-07-01: `MB116AS01'3` (apostrophe, matches EDID)
-- Applied version is v2.
-- Doug Anderson: Reviewed-by and pushed to drm-misc-next as
-  `844e71ba7d7a`.
-- No NAK found.
-- UNVERIFIED: exact v1 review text (lore 403, MARC 404). Name change
-  v1→v2 is verified from the two patches.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`):
-- To/Cc: `dianders@chromium.org`, `neil.armstrong@linaro.org`,
-  `sam@ravnborg.org`, `dri-devel@lists.freedesktop.org`, `linux-
-  kernel@vger.kernel.org`, `daniel@ffwll.ch`, `airlied@gmail.com`
-- Subsystem reviewer included and signed off.
+**FOR:**
+- Real logic bug in VT-d nested cache invalidation, present since v6.11,
+  in this 6.12.111 tree
+- Two independent vendor reports (Baidu 2026-06-05, Alibaba 2026-06-23);
+  maintainer queued it
+- 5-line, obviously correct; no new API
+- User-visible extra global Device-TLB/IOTLB invalidations on nested S2
+  map updates
+- `cache_tag_flush_all()` already avoided this pattern; range path did
+  not
+- No functional dependencies missing here
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Evidence is the EDID dump in the patch.
-Author is a hardware partner, typical for ChromeOS panel IDs.
+**AGAINST:**
+- Not a crash, UAF, or proven stale-TLB corruption on this tree’s S2
+  path (error is conservative over-flush)
+- Nested+ATS is not universal
+- Hunk needs a small context backport (`pages` / `cache_tag_flush_all`
+  shape)
+- No Fixes/Cc: stable on the commit (not a negative per the pipeline
+  rules)
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone 1/1. drm-misc pull for 7.3-rc1 lists it under
-**panel-edp: quirks** with MB116AS01 (https://lists.openwall.net/linux-
-kernel/2026/08/20/246).
+**UNRESOLVED:**
+- lore.kernel.org HTTP 403; stable@ history not fetched (thread
+  recovered via `b4 mbox`)
+- Exact mainline SHA not in this checkout (no `git log --all`)
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search returned 403. UNVERIFIED: no
-stable-list thread found. Official `v6.18.53` already took the same
-class of panel-edp ID patches, so there is no local policy against this
-type.
+**Step 9.2: STABLE RULES CHECKLIST**
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+1. Obviously correct and tested? **PASS** — maintainer queued; two
+   vendors; trivial control-flow fix
+2. Fixes a real bug that affects users? **PASS** — Baidu and Alibaba
+   both submitted it
+3. Important issue? **PASS** (with the documented “oh, that's not good”
+   / notable nested-ATS invalidation impact) — not oops/corruption here,
+   but wrong IOMMU flush parameters on a production nested path
+4. Small and contained? **PASS** — 5 lines, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — buggy lines exist; needs
+   minor context adjustment, not missing helpers
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No function body change. Data: `edp_panels[]`. Consumers:
-`find_edp_panel()`, `generic_edp_panel_probe()`.
+**Step 9.3: EXCEPTION CATEGORIES**
 
-Step 5.2: TRACE CALLERS
-Record:
-- `find_edp_panel()` ← `generic_edp_panel_probe()`
-- `generic_edp_panel_probe()` ← `panel_edp_probe()` when OF compatible
-  is `"edp-panel"`
-- `panel_edp_probe()` ← `panel_edp_platform_probe()` /
-  `panel_edp_dp_aux_ep_probe()`
-- Context: device probe / display bring-up, not IRQ-hot.
+Record: None (not a device ID/quirk/DT/build/doc exception). Qualifies
+as a normal small bugfix.
 
-Step 5.3: TRACE CALLEES
-Record: Table is data only. Probe reads EDID, matches ID, copies
-`panel_delay`. Delays used in `panel_edp_prepare_once()` (`hpd_absent`)
-and `panel_edp_enable()` (`enable`).
+**Step 9.4: DECISION**
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace does not call this directly. Plug in the panel
-(Chromebook/laptop DT `edp-panel` on DP AUX) and it runs at
-probe/resume. Reachable on machines with this HKC panel.
+This 6.12 tree has the bug. The fix is a three-line control-flow
+correction in Intel VT-d nested invalidation. It does not need later
+refactors. Over-flush is still a real, production-visible IOMMU bug
+(independent Alibaba and Baidu reports), and the patch is the lowest-
+risk way to restore the intended PSI range. It should be backported
+here.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same file is a long ID table. HKC already has three entries.
-Many sibling "Add … panel" commits are already in official 6.18.y.
+---
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## What the commit solves (for 6.12)
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. `v6.18.53` has `edp_panels[]`, HKC rows,
-`find_edp_panel()`, and:
-```
-if (WARN_ON(!panel->detected_panel)) {
-    ... "Unknown panel ... using conservative timings"
-```
-`MB116AS01` / `0x1203` is **not** in `v6.18` or `v6.18.53`. Bug =
-missing quirk for hardware that this driver already enumerates.
+`cache_tag_flush_range()` computes one PSI `addr`/`mask`, then walks
+every cache tag. Nested DevTLB must flush the whole device cache, so the
+original code stuffed `addr=0` / `mask=MAX_AGAW_PFN_WIDTH` into those
+shared locals and fell through. Later tags on that S2 domain (other
+nested ATS devices, or regular DevTLB) then issued a full-range
+invalidation instead of the range the caller asked for. On 6.12 that is
+extra-wide IOTLB/Dev-IOTLB traffic, not a verified stale-mapping hole,
+but it is incorrect invalidation on the nested map-update path.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply to `v6.18.53` (dry-run succeeded, offset -5).
-Surrounding HKC context matches. Difficulty: clean apply.
+## Risk vs benefit
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No other MB116AS01'3 / HKC `0x1203` fix in this series. Nearby
-HKC MB116AN01 entries do not cover `0x1203`.
+Benefit is restoring targeted invalidation for a path cloud VFIO/iommufd
+actually uses. Risk is a 3-line change that keeps the nested full flush
+and only stops clobbering later tags.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Concerns
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: `drivers/gpu/drm/panel/` — DRM panel. Criticality: **IMPORTANT**
-for devices with this panel (blank/slow display, boot `WARN_ON`);
-**PERIPHERAL** for everyone else (ID match is a no-op).
+Backport cannot be a blind `git am` of the mainline hunk: this tree
+still passes `pages` into `cache_tag_flush_iotlb` and the tracepoint,
+and `cache_tag_flush_all()` is still a separate loop. Edit only the
+`CACHE_TAG_NESTING_DEVTLB` arm.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature table, still getting ID/quirk adds. Official 6.18.y
-already backports them. Not a new subsystem.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / hardware-specific: machines whose eDP EDID is
-HKC `0x1203` (MB116AS01'3), typically ChromeOS/partner laptops. No
-effect on other panels.
-
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every probe of `"edp-panel"` with that EDID (boot and often
-resume). Not a race. Unprivileged users do not trigger it except by
-using the device.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- Without the entry: `WARN_ON` stack on probe (noisy, can trip panic-on-
-  warn) **plus** conservative delays (2s unprepare vs 500ms; 200ms
-  enable vs 80ms). Conservative path is designed so the panel still
-  usually works.
-- Failure mode: boot warning + slower power sequencing, not a universal
-  oops.
-- Severity: **MEDIUM** for affected hardware (warning + wrong timings);
-  **LOW** globally.
-- Still qualifies under the device-ID / quirk exception.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: high for that panel (correct T3/T12-style delays, no
-  `WARN_ON`); zero for others.
-- Risk: very low (1 line, existing delay struct, ID-gated).
-- Ratio: strongly favors backport.
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- One-line ID/quirk in an existing driver (`panel-edp.c` /
-  `edp_panels[]`).
-- Matches stable exceptions: **device ID** and **hardware quirk** (drm-
-  misc pull even labeled it "panel-edp: quirks").
-- Avoids `WARN_ON` and 2s conservative unprepare on this panel.
-- `delay_200_500_e80`, HKC table, and lookup path exist in this 6.18
-  tree.
-- Reviewed and applied by the panel-edp maintainer.
-- Official 6.18.y already contains many identical panel-edp ID
-  backports.
-- Applies cleanly to `v6.18.53`.
-
-AGAINST:
-- Not a UAF/crash/corruption fix for all users; unmatched panels usually
-  still work with conservative delays.
-- No `Reported-by` from end users; vendor EDID add.
-
-UNRESOLVED:
-- Exact v1 review comments (lore/MARC fetch failed).
-- Whether this was discussed on stable@ (lore/stable 403).
-
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — one sorted table row;
-   maintainer Reviewed-by and merged.
-2. Fixes a real bug that affects users? **PASS** — missing quirk:
-   `WARN_ON` + wrong power delays on this panel.
-3. Important issue? **PASS** under the device-ID/quirk exception (boot
-   warning + incorrect sequencing on real hardware). Not a core panic.
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — no new driver, syscall, or
-   userspace API; only a table ID.
-6. Can apply to the local tree? **PASS** — dry-run against `v6.18.53`
-   succeeded.
-
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **Device ID addition to existing driver** and **hardware
-quirk/workaround**. Automatic YES class.
-
-Step 9.4: MAKE YOUR DECISION
-This tree is 6.18.y. The driver already identifies unknown eDP panels
-and warns. Adding HKC `0x1203` is the same kind of ID/quirk 6.18.y
-already takes. Benefit is real for that hardware; risk is negligible.
-
-What it solves for stable users: Chromebook/laptop panels with EDID HKC
-`0x1203` get the intended 200/500/80 ms sequencing and stop hitting the
-unknown-panel `WARN_ON`.
-
-Risk vs benefit: one ID-gated line vs boot warning and multi-second
-conservative delays. Favor backport.
+---
 
 Verification:
-- [Phase 1] Tags: Haikun Zhou SOB, Douglas Anderson Reviewed-by + SOB,
-  lore msgid link; no Fixes/Reported-by/Cc:stable
-- [Phase 1] Body is raw EDID; decoded mfg HKC (`0x2163`) product
-  `0x1203`; name `MB116AS01'3`
-- [Phase 2] Diff: +1 `EDP_PANEL_ENTRY` in `edp_panels[]`; delay
-  `&delay_200_500_e80`
-- [Phase 2] Unmatched path: `WARN_ON` + `unprepare=2000`/`enable=200` in
-  `generic_edp_panel_probe()` (verified in this tree and `v6.18.53`)
-- [Phase 3] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
-  kernelversion` → 6.18.53
-- [Phase 3] `git merge-base --is-ancestor 9e55b14301666 v6.18.53` → NO
-  (not in official 6.18.53)
-- [Phase 3] `git grep MB116AS01 v6.18.53 -- panel-edp.c` → not present;
-  HKC `0x2d51/0x2d5b/0x2d5c` present
-- [Phase 3] `delay_200_500_e80` present at line 1760 on `v6.18.53`
-- [Phase 3] `v6.18..v6.18.53` already has multiple `drm/panel-edp: Add …
-  panel` commits
-- [Phase 4] `b4 dig -c`: V2 lore URL; `b4 dig -a`: v1 hyphen name, v2
-  apostrophe; `b4 dig -w`: dianders, dri-devel, drm maintainers
-- [Phase 4] LKML: Doug Reviewed-by, pushed `844e71ba7d7a` to drm-misc-
-  next
-- [Phase 4] drm 7.3-rc1 pull lists MB116AS01 under panel-edp quirks
-- [Phase 4] UNVERIFIED: v1 review text; stable@ discussion (HTTP
-  403/404)
-- [Phase 5] Call chain: `panel_edp_probe` → `generic_edp_panel_probe` →
-  `find_edp_panel`; delays used in prepare/enable
-- [Phase 6] Dry-run `patch --dry-run` of this commit onto `v6.18.53`
-  `panel-edp.c`: succeeded (offset -5)
-- [Phase 7] MAINTAINERS: Douglas Anderson is `R:` for panel-edp.c
-- [Phase 8] Severity: WARN_ON + wrong delays on this panel; ID-gated so
-  other hardware unaffected
+- [Phase 1] Parsed tags: SOBs Feng/Liu/Lu/Roedel; no Fixes/Reported-
+  by/Cc:stable
+- [Phase 2] Diff: 2+/3- in `cache_tag_flush_range()`; replace
+  mutate+fallthrough with direct `cache_tag_flush_devtlb_psi(..., 0,
+  MAX_AGAW_PFN_WIDTH)` + break
+- [Phase 2] Read `cache.c` 437–510 in this tree: buggy fallthrough still
+  at 466–468
+- [Phase 3] `git blame`: intro `c4d27ffaa8eb0` (v6.11); `git merge-base
+  --is-ancestor` yes
+- [Phase 3] `git log --grep='polluting shared'` on path: not present
+- [Phase 3] `cache_tag_flush_iotlb` still has `pages` (`3297d047cd7f5`);
+  no missing helper
+- [Phase 4] `b4 mbox` original thread: Lu notes Baidu duplicate; queued
+  for v7.3-rc1; no NAK
+- [Phase 4] Baidu thread `20260605003950.1720-1-lirongqing@baidu.com`:
+  same bug, IOTLB path included
+- [Phase 4] UNVERIFIED: lore.kernel.org/stable HTTP 403
+- [Phase 5] Callers: `intel_iommu_tlb_sync`, `switch_to_super_page`,
+  nested user invalidate, SVM
+- [Phase 5] Nest parent: `paging_domain_alloc(dev, false)` at
+  `iommu.c:3606` → `use_first_level` false
+- [Phase 5] NESTING tags assigned to `domain->s2_domain` in
+  `cache_tag_assign_domain()`
+- [Phase 6] `git describe HEAD` p-6.12-3-gc504cf0baa3d8; `make
+  kernelversion` 6.12.111
+- [Phase 8] Failure mode: over-wide DevTLB/IOTLB invalidation; not
+  verified as under-invalidate on this S2 path
+- UNVERIFIED: mainline SHA (commit not in this checkout; `--all` not
+  used)
 
 **YES**
 
- drivers/gpu/drm/panel/panel-edp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/intel/cache.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index f2ae333a32d8c..0da04d75e4e96 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -2061,6 +2061,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 
- 	EDP_PANEL_ENTRY('E', 'T', 'C', 0x0000, &delay_50_500_e200_d200_po2e335, "LP079QX1-SP0V"),
- 
-+	EDP_PANEL_ENTRY('H', 'K', 'C', 0x1203, &delay_200_500_e80, "MB116AS01'3"),
- 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d51, &delay_200_500_e200, "Unknown"),
- 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d5b, &delay_200_500_e200, "MB116AN01"),
- 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d5c, &delay_200_500_e200, "MB116AN01-2"),
+diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
+index 385ae5cfb30d4..e6bc730fac3b0 100644
+--- a/drivers/iommu/intel/cache.c
++++ b/drivers/iommu/intel/cache.c
+@@ -468,9 +468,8 @@ void cache_tag_flush_range(struct dmar_domain *domain, unsigned long start,
+ 			 * affected by a change in S2. So just flush the entire
+ 			 * device cache.
+ 			 */
+-			addr = 0;
+-			mask = MAX_AGAW_PFN_WIDTH;
+-			fallthrough;
++			cache_tag_flush_devtlb_psi(domain, tag, 0, MAX_AGAW_PFN_WIDTH);
++			break;
+ 		case CACHE_TAG_DEVTLB:
+ 			cache_tag_flush_devtlb_psi(domain, tag, addr, mask);
+ 			break;
 -- 
 2.53.0
 
