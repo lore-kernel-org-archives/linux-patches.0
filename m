@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556BB61452C;
-	Mon, 19 Oct 2026 14:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FEE61455B;
+	Mon, 19 Oct 2026 14:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418641; cv=none; b=JyyvjgGe3bapb9LRB6tUspGuFvHdR6vsWqw2MI0zZ/8m7WR22qYXggbkRWFNdFfhg677KirPPpiur8EZ+iYVdUa9bL8gQIATiSxYGfp8AzYmXDpF8HaAwCOpqTUiMiAhvMgkTS+eSc3Pi2boBVXvwdRbwd0v6Ghnp+8oNYdMj2w=
+	t=1792418643; cv=none; b=CtiWplwfRPZLmDaHKZ02iu0xaHPTCcGZZK+Wq9RuZeq+i1etGH0FGTzR56eYep6ftNlu6hzUe02xQwubfxxkTivqqmvyfnlEUQ5CkOa+EWSVMT8mrifWjQiq3iDEaEOB9EnsKQiVEq0XAqhz9VKqaXyawW2YVN667uB5Q/JxnwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418641; c=relaxed/simple;
-	bh=F6lt85MPcOEl59jtb3ug1gRiJSnG6SVyKhxF5/x/u2w=;
+	s=arc-20240116; t=1792418643; c=relaxed/simple;
+	bh=bU8nbisqP7aBrR+U/CPiOVc6eRpOHVetyvDDtp0LIWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LFRjWUBXBBOyAqrOCIEkNYseFyWzdbTyGWU47aceT0vCSkGMV8LDBR7Lo6BQlbR3BqJvXN+CJKx04u6m1J7hGNnJ0QNqKsOaJ6EAAMhzoGQnG0XK9rYw+dyneE31FU+IuDDKR+NL4aIkUa9IzSh8PJlf3xeUQoc79mv/Dz2/Ga0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f0Ihlqp5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iBg/6Ui2IIRxyejnSATdMJDZLxp9jE9YyVoBYsGVRLGeyjzOkCOSxoTx17UoUdv/ukESrXgawLJ23wiD51EVIeEuiLOWFYQdGTV3OpQY57drQoqtTal+RFyvDHFOVMlNmmuvp/qUXs1jc4tfmppM94qcmU5Fru+2gC7F1c2QBTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d0VeMBmB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f0Ihlqp5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1591F000C5;
-	Mon, 19 Oct 2026 14:03:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d0VeMBmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D801F000C4;
+	Mon, 19 Oct 2026 14:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418639;
-	bh=B4aUK8YmLb+jDiSRsCJYcxErZJfEJETwyn2Yf6MMcYY=;
+	s=k20260515; t=1792418641;
+	bh=JoR/Uw8DzaN62uBMS7uJe8B2wMvAo7Agf/4iuypCCEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f0Ihlqp5IHOLY7iEX/gGb91SPVlxhehyTLXu3PeC61HY2FUHgBSSVHJH286T3Jd9m
-	 GCoHIe72qawwOshCpP10Pd5nvQGwije+bnUZphIHJhrf9ykSoQeG4GcCXt/DL2qzcF
-	 iYUEWotpv5T3U7yDOx2H60YZ4vppYBmQ503K4RviGAEidPwP5Xelr0ZGqwhAxxD/og
-	 Kkd8iV08sv4Exwkmoq6A6QTZAaO8DbWM8DZl/0PuHMYnTY057BY8BjK11Ms9rvsrud
-	 IYZ873sUvUcmxHL5y80Rs9HvjZo1RFTZjd78bJR9ySxjc4vk9JIlvDOcGrLRisPOP+
-	 ht/Mn+jIHhldA==
+	b=d0VeMBmBzLKV6JroB4rApuQ00gFjBd5SA2svZoOckNIGYahij/qhcC9Rk7ngorVJ8
+	 TatH1Hvb6Q/uVf5kccKsCm4orhm6Pu0mZ9UFtpE+MI5eQxjtuR1x29C//qvKycDhfG
+	 QIRNSbL+Ssyo4sZ8PEV4EhUQIw7FEicLPYR6WY9ms2BZrnQL2qqiIvljWpwU06QQ+S
+	 LkQT38x6F0FKpD9TeJJOQ8v9csGeoPJdBj6O8WqAkpRkeKsv9FvLk0YW4Tt7xJhSBJ
+	 b+Tir4KujZjXHbOhag6660nwY/nsXpJGT+QGlsJERN6jGNr7VezN2FTtKiZLL+Kt15
+	 jINm8yfaYMP5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Frank Li <Frank.Li@nxp.com>,
+Cc: Yongqiang Sun <Yongqiang.Sun@amd.com>,
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
+	Felix.Kuehling@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] firmware: imx: scu: manage mailbox channels and global handle
-Date: Mon, 19 Oct 2026 09:51:23 -0400
-Message-ID: <20261019135441.1420968-392-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/amdkfd: use node XCC count for v9 CRIU control stack restore
+Date: Mon, 19 Oct 2026 09:51:24 -0400
+Message-ID: <20261019135441.1420968-393-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,362 +58,427 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yongqiang Sun <Yongqiang.Sun@amd.com>
 
-[ Upstream commit 55c748d596f841a18cf659ce0999f64029a5c88c ]
+[ Upstream commit 1a0aa3c4cb207fcbf7ebd2d9ed9f1cfb4560bd2c ]
 
-imx_scu_probe() requests mailbox channels with the non-managed
-mbox_request_channel_byname() helper and then publishes sc_ipc through
-the global imx_sc_ipc_handle.  Later probe failures, including child
-population failure, can leave the channels and global handle live after
-the probe has failed.
+set_queue_properties_from_criu() divided the checkpointed control stack
+size by NUM_XCC(adev->gfx.xcc_mask) (whole GPU), while the checkpoint
+size was recorded, the MQD buffer allocated, and the control stack
+restored using the per-node mask NUM_XCC(mm->dev->xcc_mask). On spatially
+partitioned GFX9.4.3 (CPX/QPX) these differ, so the per-XCC control stack
+size used for the restore memcpy could exceed the region sized for the
+MQD allocation, writing past the BO into adjacent kernel memory; it also
+broke legitimate restore on partitioned parts.
 
-Register devres actions to free each mailbox channel and clear the global
-handle.  Also depopulate partially created child devices when
-devm_of_platform_populate() reports an error.
+Divide by the per-node XCC count so allocation and copy agree,
+leaving kfd_queue_acquire_buffers() to bound the size against
+the node's advertised control stack size.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
+Reviewed-by: David Francis <David.Francis@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The local tree is **6.18.53** (`Makefile` `VERSION=6 PATCHLEVEL=18
+SUBLEVEL=53`, `git describe` `v6.18.53-5049-g0f0bdc2b0dffb`, branch
+`autosel`). The verdict is only for this 6.18.y checkout.
 
-**Step 1.1:** Record: `[firmware/imx SCU] [manage] Register managed
-cleanup for mailbox channels and the global IPC handle, and depopulate
-children if probe fails.`
+Upstream `1a0aa3c4cb20` is not an ancestor of `v6.18.53`. The buggy line
+is present at `v6.18.53`.
 
-**Step 1.2:** Tags present:
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Signed-off-by: Frank Li <Frank.Li@nxp.com>` (i.MX maintainer who
-  applied it)
+---
 
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
-`Link:`, or `Cc: stable`. Absence of those tags is expected for this
-review and is not treated as a negative signal.
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.3:** Record:
-- **Bug:** `imx_scu_probe()` uses unmanaged
-  `mbox_request_channel_byname()` and then publishes `sc_ipc` via the
-  global `imx_sc_ipc_handle`. Later probe failures, including
-  `devm_of_platform_populate()`, leave channels allocated and the global
-  handle set.
-- **Symptom:** Leaked mailbox channels after a failed probe; a live
-  global handle to an object that `devm_kzalloc` then frees; partial
-  child devices left behind.
-- **Version info:** None in the message. Driver originated in v4.20
-  (`edbee095fafb4`).
-- **Root cause:** Non-devm mailbox requests plus a global pointer with
-  no rollback on the remaining error paths.
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[drm/amdkfd] [use] [use node XCC count for v9 CRIU control
+stack restore]**
+- Subsystem: `drm/amdkfd` (AMD KFD compute)
+- Verb: “use” — here it is a correctness fix (wrong XCC divisor), not a
+  feature
 
-**Step 1.4:** Record: This is an explicit probe-error-path resource-leak
-/ dangling-pointer fix, not a disguised cleanup. The wording matches the
-diff.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record:
+- No `Fixes:` tag (expected)
+- No `Reported-by:`, `Tested-by:`, `Link:`, `Cc: stable`
+- `Reviewed-by: David Francis <David.Francis@amd.com>`
+- `Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>` (author)
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+  maintainer)
+- Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+  1a0aa3c4cb20...]` ignored per instructions
 
-## Phase 2: Diff analysis
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** CRIU restore divides checkpointed control-stack size by
+  whole-GPU `NUM_XCC(adev->gfx.xcc_mask)`, while checkpoint, MQD
+  allocation, and restore memcpy use per-node
+  `NUM_XCC(mm->dev->xcc_mask)`.
+- **Symptom:** On spatially partitioned GFX9.4.3 (CPX/QPX) the two
+  counts differ. Restore memcpy can write past the MQD BO into adjacent
+  kernel memory; legitimate restore on a partition also fails.
+- **Root cause:** Wrong XCC divisor in
+  `set_queue_properties_from_criu()`.
+- **Fix:** Divide by per-node `NUM_XCC(pdd->dev->xcc_mask)`;
+  `kfd_queue_acquire_buffers()` still checks against the node’s
+  advertised control-stack size.
+- No version range in the message.
 
-**Step 2.1:** Record:
-- File: `drivers/firmware/imx/imx-scu.c` (+24 / −1)
-- Functions added: `imx_scu_free_mbox_chan()`, `imx_scu_clear_handle()`
-- Function modified: `imx_scu_probe()`
-- Scope: single-file surgical fix
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not hidden. Explicit buffer-overrun + broken restore. Not
+cleanup/refactor.
 
-**Step 2.2:** Before → after:
-1. After a successful `mbox_request_channel_byname()`, the channel was
-   never registered with devres. Mid-loop failure (`-EPROBE_DEFER`,
-   `-ENOMEM` from `kasprintf`, later channel failure) returned without
-   `mbox_free_channel()`. After: each channel is wrapped in
-   `devm_add_action_or_reset(..., imx_scu_free_mbox_chan, ch)`.
-2. `imx_sc_ipc_handle = sc_ipc` was published with no undo. After: a
-   matching `devm_add_action_or_reset(..., imx_scu_clear_handle,
-   sc_ipc)` NULLs it on unwind if it still points at this object.
-3. `return devm_of_platform_populate(dev)` could fail after
-   `of_platform_populate()` had already created some children
-   (`devm_of_platform_populate()` does **not** depopulate on failure; it
-   only `devres_free()`s the tracking pointer). After: explicit
-   `of_platform_depopulate(dev)` on that error.
+---
 
-**Step 2.3:** Record: `[error-path resource leak + dangling global
-pointer]`
-- Mailbox leak: unmanaged `mbox_request_channel_byname()` with no free
-  on later probe failure.
-- Retry hazard: `__mbox_bind_client()` returns `-EBUSY` if `chan->cl` is
-  already set, so a later probe retry can stick forever.
-- Handle leak / UAF: `sc_ipc` is `devm_kzalloc`’d; probe failure
-  releases it while `imx_sc_ipc_handle` still points at it. Other i.MX
-  drivers call `imx_scu_get_handle()`.
-- Child leak: failed `of_platform_populate()` still sets
-  `OF_POPULATED_BUS` and can leave partial children.
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.4:** Record: The mailbox and handle `devres` actions are
-obviously correct (`devm_add_action_or_reset` runs the action
-immediately if registration fails). Calling `of_platform_depopulate()`
-only on populate failure is the right API:
-`devm_of_platform_depopulate()` would `WARN` because the managed
-resource was never added. Regression risk is low. Remaining related
-leaks (`gip3`, `soc_device`, secondary static handles) are pre-existing
-and not introduced here.
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c` (`1`
+  insertion, `1` deletion)
+- Function: `kfd_criu_restore_queue()`
+- Scope: single-file, one-line surgical fix
 
-## Phase 3: Git history
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- **Before:** `set_queue_properties_from_criu(&qp, q_data,
+  NUM_XCC(pdd->dev->adev->gfx.xcc_mask));` → `qp.ctl_stack_size =
+  q_data->ctl_stack_size / whole_GPU_xcc`
+- **After:** `NUM_XCC(pdd->dev->xcc_mask)` → divide by this node’s XCC
+  count
+- Path: CRIU queue restore (`AMDKFD_IOC_CRIU_OP`), compute queues only
+  (`KFD_QUEUE_TYPE_COMPUTE` in `set_queue_properties_from_criu`)
 
-**Step 3.1:** Record: Unmanaged `mbox_request_channel_byname()` and
-`imx_sc_ipc_handle = sc_ipc` come from `edbee095fafb4` (“firmware: imx:
-add SCU firmware driver support”, 2018-10-08), first contained in
-**v4.20-rc1**. The bug is long-standing.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **[Buffer overflow / OOB kernel write] + [logic/correctness]**
 
-**Step 3.2:** No `Fixes:` tag. Not applicable.
+Verified chain:
+1. Checkpoint (`get_checkpoint_info` in `kfd_mqd_manager_v9.c`):
+   `*ctl_stack_size = m->cp_hqd_cntl_stack_size *
+   NUM_XCC(mm->dev->xcc_mask)` (node).
+2. `allocate_mqd()` sizes the GTT BO from `q->ctl_stack_size` (the
+   divided per-XCC value) × `NUM_XCC(node->xcc_mask)`.
+3. `create_queue_nocpsch` / `create_queue_cpsch` pass
+   **`qd->ctl_stack_size`** (full user/checkpoint size) into
+   `restore_mqd()`.
+4. `restore_mqd_v9_4_3()` copies `ctl_stack_size /
+   NUM_XCC(mm->dev->xcc_mask)` bytes per XCC with unbounded `memcpy` in
+   `restore_mqd()` to `*mqd + PAGE_SIZE`.
 
-**Step 3.3:** Related commits on this file:
-- `89f12d6509bff` — kasprintf leak in the same probe loop (same class of
-  bug)
-- `fbf10b86f6057` — OF node leak in probe
-- `97a07dd2b559d` — `devm_mutex_init` (adjacent context; not a
-  functional prerequisite)
-- `ff79af939d847` — `suppress_bind_attrs = true`
+On CPX/QPX, GPU XCC count > node XCC count. A crafted
+`q_data->ctl_stack_size = node_props.ctl_stack_size * GPU_xcc` makes
+`qp.ctl_stack_size` pass `kfd_queue_acquire_buffers()`’s equality check,
+then restore copies `GPU_xcc/NODE_xcc` times too much → write past the
+BO.
 
-This is a standalone v1 patch, not part of a series. No follow-ups to
-this file after `55c748d596f84`.
+A legitimate checkpoint (`ctl_stack_size = per_xcc * NODE_xcc`) yields a
+too-small `qp.ctl_stack_size`, so acquire_buffers returns `-EINVAL` and
+restore is broken.
 
-**Step 3.4:** Pengpeng Hou has only this commit in
-`drivers/firmware/imx/`. Frank Li (NXP i.MX maintainer) applied it.
-Author is a contributor; the applying maintainer is the subsystem owner.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct: same `NUM_XCC(dev->xcc_mask)` as
+checkpoint/allocate/restore. Minimal. No API/locking change. Regression
+risk very low (only partitioned restore, which is currently wrong).
+`pdd->dev->xcc_mask` exists on `struct kfd_node` in this tree.
 
-**Step 3.5:** No hard dependencies. `devm_add_action_or_reset()` is in
-`include/linux/device/devres.h` in this tree. Applies standalone.
+---
 
-## Phase 4: Mailing list and external research
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 4.1:** Record:
-- Lore / msgid:
-  https://patch.msgid.link/20260616005902.11634-1-pengpeng@iscas.ac.cn
-- Series: v1 only (`b4 dig -a`)
-- Maintainer apply: Frank Li, “Applied, thanks!” (24 Jul 2026), commit
-  `55c748d596f84`
-- No NAK. No `Cc: stable` suggestion in the thread.
-- Sashiko bot flagged **pre-existing** incomplete cleanup (`gip3`,
-  `soc_device`, secondary handles, RPC timeout). Those are not
-  regressions from this patch.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: At `v6.18.53`, line 1065 was introduced by **`f6c0f3d24478a`**
+(`drm/amdkfd: Fix checkpoint-restore on multi-xcc`, David Yat Sin,
+2025-07-16). That commit added the `num_xcc` argument and used
+**`adev->gfx.xcc_mask`**. It is an ancestor of `v6.18.53` and was itself
+`Cc: stable@vger.kernel.org` (cherry-pick of `a578f2a58c3a`).
 
-**Step 4.2:** Recipients (`b4 dig -w`): Frank Li, Sascha Hauer,
-Pengutronix, Fabio Estevam, `imx@lists.linux.dev`, `linux-arm-kernel`,
-`linux-kernel`. Appropriate i.MX maintainers were on To/Cc.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. The introducing commit is `f6c0f3d24478a`,
+present in this tree.
 
-**Step 4.3:** No bugzilla / syzbot / user `Reported-by`. Bug is from
-code inspection of the probe error path.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record (file-limited `git log`):
+- `c6c290e408fe3` `drm/amdkfd: Properly acquire queue buffers in CRIU
+  restore` — **in v6.18.53**; this patch depends on that bound
+- `fd1691ec62701` bounds on CRIU queue type/mqd size — already here
+- `f6c0f3d24478a` multi-xcc CRIU — introduced the bug
+- Later clamp/bound CRIU patches from the same author are **not** in
+  this tree; they are extra hardening, not prerequisites
 
-**Step 4.4:** Standalone 1/1 patch. No series dependencies.
+Standalone given acquire_buffers is already here.
 
-**Step 4.5:** Record: UNVERIFIED for lore.kernel.org/stable (Anubis bot
-wall). Original imx thread has no stable discussion.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Yongqiang Sun has other amdkfd CRIU/safety work. Not the
+subsystem maintainer. Review is from David Francis; merge SOB from Alex
+Deucher.
 
-## Phase 5: Code semantic analysis
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Needs `set_queue_properties_from_criu(..., num_xcc)`
+(`f6c0f3d24478a`) and `kfd_queue_acquire_buffers()` (`c6c290e408fe3`).
+Both are in `v6.18.53`. `pdd->dev->xcc_mask` exists. Applies standalone
+on this tree.
 
-**Step 5.1:** Record: `imx_scu_free_mbox_chan`, `imx_scu_clear_handle`,
-`imx_scu_probe`.
+---
 
-**Step 5.2:** `imx_scu_probe()` is the platform probe for `fsl,imx-scu`.
-`imx_scu_get_handle()` is called from clk-scu, scu-pd, thermal, rtc,
-pinctrl, nvmem, GPIO, reset, FEC, FlexCAN, remoteproc, DRM, SOF, and
-others. Impact is every i.MX8QM/QXP SCU consumer.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 5.3:** Probe allocates `sc_ipc`, requests MU mailbox channels,
-publishes the global handle, then populates child devices. Callees:
-`mbox_request_channel_byname`, `mbox_free_channel`,
-`devm_of_platform_populate`, `of_platform_depopulate`.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 1a0aa3c4cb20` failed: lore.kernel.org returned server
+  errors (UNVERIFIED via b4)
+- Thread found on amd-gfx: https://ratatoskr.run/amd-
+  gfx/2026/06/17177385 (2026-06-25)
+- Single-patch submission, not v2/v3
+- Same one-line diff as committed
 
-**Step 5.4:** Reachable at boot on SCU SoCs (`subsys_initcall_sync`).
-Not a syscall, but it is the firmware IPC path those boards need to
-bring up clocks, power domains, and peripherals. Unprivileged userspace
-cannot poke it directly.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: David Francis: “Nice catch” + `Reviewed-by`. No NAK. Alex
+Deucher SOB on the commit. Recipients: amd-gfx; maintainers listed
+include Felix Kuehling, Alex Deucher.
 
-**Step 5.5:** Same driver already had a kasprintf leak fix in this
-probe. `imx_scu_enable_general_irq_channel()` still requests unmanaged
-`gip3` (pre-existing, not this patch).
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla. Author-found mismatch. Same month as related
+CRIU bound/clamp patches.
 
-## Phase 6: Local tree
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Same author, June 2026 amd-gfx:
+- `clamp v9 CRIU control stack checkpoint copy to BO size`
+- `bound v9 CRIU control stack restore to allocated MQD region`
+- this divisor fix
 
-**Step 6.1:** Local tree is **7.3.0-rc4** (`git describe HEAD` =
-`v7.3-rc4-27-gf0100363d8c37`). Buggy pattern was introduced in v4.20 and
-is in this lineage. `git merge-base --is-ancestor 55c748d596f84 HEAD`
-succeeds. Pre-fix probe is in `55c748d596f84^`.
+Complementary, not a numbered series. drm-next 7.3 pull listed this
+under CRIU fixes. This line does not need the clamp/bound patches to be
+correct.
 
-**Step 6.2:** Expected apply: clean on this tree (`devm_mutex_init`
-context matches).
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned **403**. No stable-list
+discussion verified. No evidence it was rejected for stable.
 
-**Step 6.3:** No alternate fix for mailbox/handle cleanup. Prior leak
-fixes (`89f12d6509bff`, `fbf10b86f6057`) do not cover this.
+---
 
-## Phase 7: Subsystem context
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 7.1:** Record: `[drivers/firmware/imx] [IMPORTANT]` — i.MX8QM/QXP
-System Controller IPC. Not core mm/net, but it is the firmware bus those
-SoCs use for clocks, PD, pinmux, thermal, RTC.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `kfd_criu_restore_queue()` (call site);
+`set_queue_properties_from_criu()` (consumer of `num_xcc`); downstream
+`kfd_queue_acquire_buffers`, `pqm_create_queue` → `restore_mqd` /
+`restore_mqd_v9_4_3`.
 
-**Step 7.2:** Mature driver (2018), occasional probe-correctness fixes.
-Not a new subsystem.
+**Step 5.2: TRACE CALLERS**
+Record:
+- `kfd_criu_restore_queue` ← `criu_restore_objects()` ← `kfd_ioctl_criu`
+  via `AMDKFD_IOC_CRIU_OP`
+- Ioctl flag `KFD_IOC_FLAG_CHECKPOINT_RESTORE`: `CAP_CHECKPOINT_RESTORE`
+  or `CAP_SYS_ADMIN`
+- Userspace-reachable, privileged
 
-## Phase 8: Impact and risk
+**Step 5.3: TRACE CALLEES**
+Record: `set_queue_properties_from_criu` → `kfd_queue_acquire_buffers`
+(must match `node_props.ctl_stack_size`) → `pqm_create_queue` →
+`allocate_mqd` + `restore_mqd(..., qd->ctl_stack_size)`.
 
-**Step 8.1:** i.MX8QM/QXP (and similar SCU) users with `CONFIG_IMX_SCU`.
-Driver-specific / SoC-specific.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Privileged CRIU restore ioctl → kernel memcpy into MQD GTT.
+Triggered by GPU container checkpoint/restore on partitioned GFX9.4.3
+(MI300 family). Unprivileged users cannot call it.
 
-**Step 8.2:** Trigger is probe failure **after** some channels were
-requested: mid-loop `kasprintf` `-ENOMEM`, a later
-`mbox_request_channel_byname()` failure, `devm_mutex_init()` failure, or
-`devm_of_platform_populate()` failure. First-channel `-EPROBE_DEFER`
-does **not** leak (nothing held yet). Not userspace-triggerable except
-via boot / driver bind.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Rest of KFD uses `dev->xcc_mask` / `mm->dev->xcc_mask`. This
+restore call was the odd `adev->gfx.xcc_mask` user in this path.
+`kfd_device.c` sets `node->xcc_mask` from XCP when partitioned, else
+from whole-GPU mask — they only differ with spatial partitions.
 
-**Step 8.3:** Failure mode:
-- Leaked MU channels → retry gets `-EBUSY` → SCU never probes →
-  clocks/PD/peripherals fail (**HIGH**, can make the board unusable)
-- Dangling `imx_sc_ipc_handle` after `devm` frees `sc_ipc` (**HIGH** UAF
-  if another driver then calls `imx_scu_get_handle()`)
-- Orphan child devices after failed populate (**MEDIUM**)
+---
 
-Happy-path probe is unchanged.
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 8.4:** Benefit: prevents stuck SCU probe and a global-handle UAF
-on real error paths. Risk: ~24 lines, probe error path only, standard
-`devres` pattern. Ratio: favorable.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** `v6.18.53:kfd_process_queue_manager.c:1065`:
+`set_queue_properties_from_criu(&qp, q_data,
+NUM_XCC(pdd->dev->adev->gfx.xcc_mask));`
+Introduced `f6c0f3d24478a` (2025-07-16), present in 6.18.y.
 
-## Phase 9: Synthesis
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply. Surrounding function at 6.18.53 matches the hunk
+(`kfd_queue_acquire_buffers` already there). `pdd->dev->xcc_mask` is in
+`kfd_priv.h:279` at 6.18.53.
 
-**Evidence FOR:**
-- Real leak of exclusive mailbox channels; `__mbox_bind_client()`
-  returning `-EBUSY` can permanently break SCU probe retry.
-- Global handle left pointing at `devm`-freed `sc_ipc` after populate
-  failure (UAF for every `imx_scu_get_handle()` caller).
-- `of_platform_depopulate()` on failed `devm_of_platform_populate()` is
-  correct (verified against `drivers/of/platform.c`).
-- Small, single-file, no new API.
-- Applied by the i.MX maintainer; v1 accepted as-is.
-- Same probe function already needed leak fixes; this is the
-  mailbox/handle analogue.
-- Code and helpers exist in this 7.3-rc4 tree; no missing prerequisites.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: acquire_buffers bound is already in 6.18.53. Clamp/bound memcpy
+patches are not; they are extra, not a substitute. No other fix of this
+divisor mismatch.
 
-**Evidence AGAINST:**
-- No user/syzbot report; author-found error-path bug.
-- Trigger is uncommon (not the first-channel `-EPROBE_DEFER` case).
-- Incomplete: `gip3`, `soc_device`, and secondary IPC statics still leak
-  (pre-existing).
-- Affects SCU i.MX8 platforms only.
+---
 
-**Unresolved:** lore.kernel.org/stable search blocked (Anubis). Thread
-via `b4 dig` had no stable nomination.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Stable rules:**
-1. Obviously correct and tested? **PASS** — standard `devres` unwind;
-   maintainer applied it; no NAK.
-2. Real bug affecting users? **PASS** — leaked exclusive channels and a
-   dangling global IPC handle on failed probe.
-3. Important (crash/security/corruption/deadlock)? **PASS** — `-EBUSY`
-   probe stall can prevent SCU bring-up; dangling handle is a UAF.
-   Severity HIGH, not a happy-path panic.
-4. Small and contained? **PASS** — 24 insertions, one file.
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — context matches; helpers present.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **amdkfd (AMD GPU compute)** — **IMPORTANT** for ROCm/HPC, not
+core mm/VFS. CRIU restore is a real production path for GPU containers.
 
-**Exception category:** none; this is a normal error-path leak/UAF fix.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Active (many recent CRIU bound-check fixes). This is a follow-on
+to the multi-xcc CRIU work already in stable.
 
-The local tree is 7.3-rc4. The SCU driver and the buggy unmanaged
-mailbox/handle pattern are in this lineage (since v4.20). The fix is a
-small, correct rollback of probe resources. Remaining gip3/soc_dev gaps
-are not a reason to keep the main channel/handle leak.
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver/config-specific: `CONFIG_HSA_AMD` + KFD CRIU restore +
+GFX9.4.3 spatial partition (CPX/QPX). MI300-class HPC/AI systems.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record:
+- Legitimate: CRIU restore of a compute queue on a partitioned node →
+  restore fails (`-EINVAL` from acquire_buffers)
+- Malicious/crafted checkpoint: size chosen so the wrong divisor equals
+  `node_props.ctl_stack_size` → OOB `memcpy`
+- Requires `CAP_CHECKPOINT_RESTORE` or `CAP_SYS_ADMIN`
+- Unprivileged users cannot trigger it
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record:
+- OOB write past MQD BO into adjacent kernel (TTM/GTT) memory → **HIGH**
+  (corruption/crash; privileged)
+- Broken legitimate CRIU restore on partitioned parts → **HIGH** for
+  those users (functional failure, not a panic on the happy path)
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** Fixes kernel OOB write and restores CRIU on partitioned
+  GFX9.4.3; the buggy multi-xcc CRIU code is already in this stable tree
+- **Risk:** Very low (one identifier change, same pattern as the rest of
+  KFD)
+- **Ratio:** Strongly favors backport
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Real bug: wrong XCC divisor vs checkpoint/allocate/restore
+- Kernel memory overwrite via unbounded `memcpy` in `restore_mqd()`
+- Broken CRIU restore on CPX/QPX GFX9.4.3
+- Introducing commit already in 6.18.y and was `Cc: stable`
+- 1-line, obviously correct, reviewed by David Francis, SOB Alex Deucher
+- Prerequisites (`f6c0f3d24478a`, `kfd_queue_acquire_buffers`) present
+- Applies cleanly
+
+AGAINST:
+- Privileged ioctl only
+- Only partitioned multi-XCC GFX9.4.3 + CRIU
+- No syzbot / no `Fixes:` / no explicit stable Cc on this commit
+- Complementary clamp/bound patches not in this tree (hardening, not
+  required)
+
+UNRESOLVED:
+- `b4 dig` / lore.kernel.org stable search failed (server 403/error)
+- No public reproducer beyond code inspection (commit describes the
+  mechanism)
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — 1-line mask fix; Reviewed-by
+   + maintainer SOB
+2. Fixes a real bug that affects users? **PASS** — partitioned CRIU
+   restore wrong; OOB on crafted size
+3. Important issue? **PASS** — kernel OOB write + failed restore (HIGH,
+   privileged)
+4. Small and contained? **PASS** — 1 line, one file
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — buggy line and
+   `dev->xcc_mask` exist at 6.18.53
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not an ID/quirk/DT/build/docs exception. Ordinary important
+bugfix.
+
+**Step 9.4: MAKE YOUR DECISION**
+This belongs on 6.18.y. The bug is in this tree because multi-xcc CRIU
+was already backported with the wrong divisor. The fix is minimal and
+matches every other XCC user in the restore path.
+
+---
+
+### What the commit solves for stable users
+On 6.18.53, KFD CRIU restore still divides by the whole-GPU XCC mask.
+Checkpoint, MQD BO size, and `restore_mqd_v9_4_3()` use the **node**
+mask. On GFX9.4.3 CPX/QPX those differ, so restore either fails or (with
+a crafted privileged checkpoint) `memcpy`s past the MQD BO into kernel
+GTT. Switching to `pdd->dev->xcc_mask` makes allocation and copy agree;
+acquire_buffers already pins the per-XCC size to the node’s advertised
+control-stack size.
+
+### Risk vs benefit
+Benefit is high for MI300 CRIU/partition users and closes an OOB write.
+Risk is a one-token change with no locking/API impact.
+
+### Concerns
+Clamp/bound memcpy patches are not required for this to be correct. CRIU
+is privileged, which lowers exploitability but does not make the
+overflow or the broken restore acceptable on stable.
+
+---
 
 Verification:
-- [Phase 1] Parsed tags: only author + Frank Li SOBs; no Fixes/Reported-
-  by/Cc: stable
-- [Phase 2] Diff: +24/−1 in `imx_scu_probe()`;
-  `devm_add_action_or_reset` for mbox + handle; `of_platform_depopulate`
-  on populate failure
-- [Phase 2] `devm_of_platform_populate()` on failure does
-  `devres_free(ptr)` without depopulate; `of_platform_populate()` still
-  sets `OF_POPULATED_BUS` — explicit depopulate is required and not a
-  double-free
-- [Phase 2] `__mbox_bind_client()` returns `-EBUSY` if `chan->cl` is set
-  — verified in `drivers/mailbox/mailbox.c`
-- [Phase 3] Blame: bug from `edbee095fafb4` (v4.20-rc1); `git merge-base
-  --is-ancestor 55c748d596f84 HEAD` true
-- [Phase 3] No Fixes: tag; no follow-up commits on this file
-- [Phase 4] `b4 dig -c 55c748d596f84`:
-  https://patch.msgid.link/20260616005902.11634-1-pengpeng@iscas.ac.cn
-- [Phase 4] `b4 dig -a`: v1 only; `b4 dig -w`: Frank Li / Sascha Hauer /
-  imx list CC’d
-- [Phase 4] mbox: Frank Li “Applied, thanks!”; Sashiko noted pre-
-  existing gaps, no NAK
-- [Phase 4] lore.kernel.org/stable: UNVERIFIED (bot challenge)
-- [Phase 5] Callers of `imx_scu_get_handle()` span clk, pd, net,
-  thermal, rtc, drm, etc.
-- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion`: 7.3.0-rc4; buggy probe exists in parent of this commit
-- [Phase 8] Failure mode: mailbox leak → stuck probe / dangling handle
-  UAF; severity HIGH
+- [Phase 1] Tags: Reviewed-by David Francis; SOB Yongqiang Sun, Alex
+  Deucher; no Fixes/Reported-by/Cc:stable
+- [Phase 1] Body: OOB write past MQD BO + broken partitioned restore;
+  wrong GPU vs node XCC divisor
+- [Phase 2] Diff: 1 line in `kfd_criu_restore_queue()`:
+  `adev->gfx.xcc_mask` → `dev->xcc_mask`
+- [Phase 2] `allocate_mqd` uses `q->ctl_stack_size *
+  NUM_XCC(node->xcc_mask)`; `restore_mqd` uses `qd->ctl_stack_size`;
+  `restore_mqd_v9_4_3` divides by `mm->dev->xcc_mask`; memcpy unbounded
+- [Phase 2] `kfd_queue_acquire_buffers` requires `ctl_stack_size ==
+  node_props.ctl_stack_size` (present at 6.18.53)
+- [Phase 3] Blame at v6.18.53: `f6c0f3d24478a` introduced
+  `NUM_XCC(pdd->dev->adev->gfx.xcc_mask)`; `Cc: stable`; ancestor of
+  v6.18.53
+- [Phase 3] `git merge-base --is-ancestor 1a0aa3c4cb20 v6.18.53` → not
+  present; buggy code is present
+- [Phase 3] Prerequisites `f6c0f3d24478a` and `c6c290e408fe3` are in
+  v6.18.53
+- [Phase 4] b4 dig: lore server error — UNVERIFIED via b4
+- [Phase 4] amd-gfx thread 2026-06-25; David Francis “Nice catch” +
+  Reviewed-by; no NAK
+- [Phase 4] lore.kernel.org/stable: 403 — UNVERIFIED
+- [Phase 5] Caller: `AMDKFD_IOC_CRIU_OP` with CAP_CHECKPOINT_RESTORE or
+  CAP_SYS_ADMIN
+- [Phase 5] `kfd_device.c`: `node->xcc_mask` from XCP vs
+  `adev->gfx.xcc_mask` when unpartitioned
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 6.18.53; line
+  1065 at v6.18.53 is the buggy call; `kfd_node.xcc_mask` exists
+- [Phase 6] Clean apply: surrounding code at v6.18.53 matches the hunk
+- [Phase 8] Failure: kernel OOB write (HIGH) + CRIU restore failure on
+  CPX/QPX; privileged trigger
+- UNVERIFIED: b4/lore.kernel.org availability; no runtime reproducer
+  executed
 
 **YES**
 
- drivers/firmware/imx/imx-scu.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/imx/imx-scu.c b/drivers/firmware/imx/imx-scu.c
-index 8c28e25ddc8a6..28d745ae06067 100644
---- a/drivers/firmware/imx/imx-scu.c
-+++ b/drivers/firmware/imx/imx-scu.c
-@@ -82,6 +82,17 @@ static int imx_sc_linux_errmap[IMX_SC_ERR_LAST] = {
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 912c4ebd30405..99a47f2a45e7a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -1062,7 +1062,7 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ 	ctl_stack = mqd + q_data->mqd_size;
  
- static struct imx_sc_ipc *imx_sc_ipc_handle;
+ 	memset(&qp, 0, sizeof(qp));
+-	set_queue_properties_from_criu(&qp, q_data, NUM_XCC(pdd->dev->adev->gfx.xcc_mask));
++	set_queue_properties_from_criu(&qp, q_data, NUM_XCC(pdd->dev->xcc_mask));
  
-+static void imx_scu_free_mbox_chan(void *data)
-+{
-+	mbox_free_channel(data);
-+}
-+
-+static void imx_scu_clear_handle(void *data)
-+{
-+	if (imx_sc_ipc_handle == data)
-+		imx_sc_ipc_handle = NULL;
-+}
-+
- static inline int imx_sc_to_linux_errno(int errno)
- {
- 	if (errno >= IMX_SC_ERR_NONE && errno < IMX_SC_ERR_LAST)
-@@ -321,6 +332,11 @@ static int imx_scu_probe(struct platform_device *pdev)
- 		dev_dbg(dev, "request mbox chan %s\n", chan_name);
- 		/* chan_name is not used anymore by framework */
- 		kfree(chan_name);
-+
-+		ret = devm_add_action_or_reset(dev, imx_scu_free_mbox_chan,
-+					       sc_chan->ch);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	sc_ipc->dev = dev;
-@@ -328,6 +344,9 @@ static int imx_scu_probe(struct platform_device *pdev)
- 	init_completion(&sc_ipc->done);
- 
- 	imx_sc_ipc_handle = sc_ipc;
-+	ret = devm_add_action_or_reset(dev, imx_scu_clear_handle, sc_ipc);
-+	if (ret)
-+		return ret;
- 
- 	ret = imx_scu_soc_init(dev);
- 	if (ret)
-@@ -340,7 +359,11 @@ static int imx_scu_probe(struct platform_device *pdev)
- 
- 	dev_info(dev, "NXP i.MX SCU Initialized\n");
- 
--	return devm_of_platform_populate(dev);
-+	ret = devm_of_platform_populate(dev);
-+	if (ret)
-+		of_platform_depopulate(dev);
-+
-+	return ret;
- }
- 
- static const struct of_device_id imx_scu_match[] = {
+ 	ret = kfd_queue_acquire_buffers(pdd, &qp);
+ 	if (ret) {
 -- 
 2.53.0
 
