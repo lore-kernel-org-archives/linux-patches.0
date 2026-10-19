@@ -1,47 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971594FFA5E;
-	Mon, 19 Oct 2026 13:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A111C56761C;
+	Mon, 19 Oct 2026 13:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418259; cv=none; b=A7tNpR+YqGOWFAao92DLcGD3MkaudT86gI8ekxAs+i0Or4hRrub0CcUFjd0LmC8Iok0+s3cFcZQEzWvKLlTLNwKExdI6+Qjs9U/wdc1qqMKFFNycdOExNeCshF8J0dieOVFOkJOMpxT2MvOuwgyInxM+AsO4VIi35vP0qjYj2To=
+	t=1792418261; cv=none; b=fH/Tv5oI/7CDtqaw0h0F0e5dXyvJKs2ns8OT4Fj4PfC0c6Ymc+AIhIJkdDzLAN6MQ03mxMw97DotbEvPgrPhq5m4ky3dKTYVLooGv4mogsJXxRP2gOdaqEKikw3MBtu/uO59PA+QFCpucHQv/8ymiRTd7KK/HPv2UPupwv+Sv7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418259; c=relaxed/simple;
-	bh=GRa+adR9gcEu36dxBTH2LE/PC300d6J8yKkAixZ13cw=;
+	s=arc-20240116; t=1792418261; c=relaxed/simple;
+	bh=mVu/VZ5070a8W1qqcSIftbIH/POy+fY8wJoWqo21vOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EI9roHrFESdV7H3RFpJL+i0ADCKGHyKUKQfS1QADWuGUGxCpX+/X2b58U5FbyJd+q8/JQOUGUjNNEEC27jlijtVExgF6OKjGkhYv9Zb2XTEo6DpjxCIdLFPmaIIuW0TFVZESJ8p+UhFT95Ac9ic7ms4IvTpfaGld/dY0+2DuNp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FnagN85g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bTJ+Dd6yg3rbxDVNNO+1NShB5F2jvIS2vOKnQF3NZMXUuT1DAjlIWD6e7NT3djSqGCngRWMgTQUyNgHDTgqat+SBcVQF6HscD1OOvqgebCMmFKTiWynQlbIi2TPPFCR70auxaKnhS8PTDQKWU8iYMOuz+dPV2ia0oTPwjD0hv88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YHl5R+GI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FnagN85g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AB61F000C5;
-	Mon, 19 Oct 2026 13:57:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YHl5R+GI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB7E1F000C9;
+	Mon, 19 Oct 2026 13:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418257;
-	bh=Yf4wDzeS/mnKuQFF/RJEmEwysZgxQ9lxEjWcYlcYlcw=;
+	s=k20260515; t=1792418259;
+	bh=7tglQ4SuEKiErpdWAuNWDMl5ZXFyXLnC3VVhBZBHVVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FnagN85gyy5TgysYhyW5mE7kbbIhGl7UzF/GWdCmeJvB9JXOsQJqpQZdwYg1TO6Md
-	 sDp73CZ8G4vU4STzwIvDKn3jexmBOBC1SZtdb6eXRXoeIWw67lsnW5CjU4Ukr+oSmn
-	 cZaPtYxfgxoja/ey8Q20vinYTtA4Bs5h+JovcIwnCbSeMOJ7CGchkmUcI1jtjQ8ApR
-	 fPb/RuOXx4hYXC2B8G1kydXl5vq18vYLlw9IyvFUQxBpRo3ctBpzOSErpDa7cmoOJU
-	 TQPbBFSYQnDvQUcAxf5kjvBs12G7/OpDuTaYzfSXM8EjkFa0ffVzPQM/mqnWYNDzZt
-	 4ETxF0KOf0+/g==
+	b=YHl5R+GIUox6T9jGfx6o40DLZf8BBP/rkbYxSa6piueEkRm2OY5KQ6LhCKl/Cw9rk
+	 9TGaTB9vKZ6UOnkJz1/a/Sfs62ZuNtj3CZwt36q67ncoNZTUJVbHoXuWzJk8OT05WE
+	 4ssjLY4VcCpYMCEYiZsVr8e08gy36sLLZs4lCEia18glhpav7aacnP4eyuB1mSOUu/
+	 qLpzzGKnUdQYZt54lqC/edKbDkTWXvuP7SIEQ4kUu8tYfnAjw1uxPmQk76dNEWsdOB
+	 Fgf+RtC/MCkXE0xYaNQRg/ZrkeQPG+5XGK4ipuQwO7NhKh6tWX0MuqW3URxH4KRcor
+	 tjlrTddPJMINg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+Cc: Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	intel-xe@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	eddyz87@gmail.com,
+	luke.r.nels@gmail.com,
+	xi.wang@gmail.com,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	bpf@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] drm/xe: only resume exec queues that were actually suspended
-Date: Mon, 19 Oct 2026 09:46:55 -0400
-Message-ID: <20261019135441.1420968-124-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] riscv, bpf: Add support for BPF_SDIV and BPF_SMOD in RV32 JIT
+Date: Mon, 19 Oct 2026 09:46:56 -0400
+Message-ID: <20261019135441.1420968-125-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,471 +63,395 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 65f40fa5022bcdb90d3a39e4948adf2aa16732a3 ]
+[ Upstream commit 2e0fa2389c50fd3a69bb738efa74e127b7516938 ]
 
-A consumer-issued suspend() can fail (e.g. the queue is killed, banned
-or wedged), leaving the queue un-suspended. The consumer must then not
-issue the matching resume(): resuming a queue that was never suspended
-is incorrect.
+The current rv32 bpf jit compiler incorrectly treats BPF_SDIV and
+BPF_SMOD as unsigned operations. The BPF instruction set allows
+signed division and modulo by reusing the BPF_DIV and BPF_MOD opcodes
+with the instruction offset set to 1.
 
-Add an lr.suspended flag to struct xe_exec_queue that records whether a
-consumer suspend() succeeded and a matching resume() is still owed. Set
-it on a successful suspend() in the preempt-fence path, clear it on
-resume(), and only resume queues that have it set.
+Update the emit_alu_r32() function to accept an 'is_sdiv' variable and
+emit the correct div and rem instructions when the offset is 1.
 
-In resume_and_reinstall_preempt_fences() also skip queues that have
-since been reset/killed/banned/wedged: such a queue's suspend may not
-have completed (suspend_pending can still be set, e.g. a preempt fence
-signalled with -ENOENT without waiting), so resuming it would trip the
-!suspend_pending assert in the backend. Leave it marked suspended and
-let teardown resolve its state.
+Before this patch:
+[   44.161771] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+[   44.167385] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+[   44.171053] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+[   44.172081] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
 
-A queue is only ever suspended by a single consumer at a time
-(preempt-fence mode and hw engine group fault mode are mutually
-exclusive), so a single flag is sufficient.
+After this patch:
+[   16.002192] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 95 PASS
+[   16.002983] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 1059 PASS
+[   16.017167] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 136 PASS
+[   16.023002] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 109 PASS
 
-Assisted-by: Github-Copilot:Claude-opus-4.8
-Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260713202317.2187787-9-niranjana.vishwanathapura@intel.com
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Link: https://lore.kernel.org/bpf/20260714002451.4091139-2-visitorckw@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **v7.3-rc4** (mainline). The Xe preempt-fence path this
-patch touches is present, and the change is a small, self-contained
-pairing fix for a real GuC suspend/resume protocol bug.
-
 ## Phase 1: Commit message forensics
 
-**Step 1.1: Subject line**
-- Record: `[drm/xe] [only resume] only resume exec queues that were
-  actually suspended`
-- Subsystem: Intel Xe DRM. Verb “only resume” is a restriction/guard: do
-  not resume a queue that was never successfully suspended.
+**Step 1.1 — Subject**
+Record: `[riscv, bpf] [Add support] Treat BPF_SDIV/BPF_SMOD as signed in
+the RV32 JIT, not as unsigned DIV/MOD.`
 
-**Step 1.2: Tags**
-- Record:
-  - `Assisted-by: Github-Copilot:Claude-opus-4.8`
-  - `Signed-off-by: Niranjana Vishwanathapura` (author)
-  - `Reviewed-by: Matthew Brost` (Xe maintainer)
-  - `Link: https://patch.msgid.link/20260713202317.2187787-9-
-    niranjana.vishwanathapura@intel.com`
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable` (absence is
-    expected)
-  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-    …]` markers; none were on the real commit
+**Step 1.2 — Tags**
+Record:
+- Reviewed-by: Pu Lehui `<pulehui@huawei.com>` (RISC-V BPF JIT reviewer;
+  author of the RV64 signed-div JIT)
+- Link: `https://lore.kernel.org/bpf/20260714002451.4091139-2-
+  visitorckw@gmail.com`
+- Signed-off-by: Kuan-Wei Chiu (author)
+- Signed-off-by: Kumar Kartikeya Dwivedi (BPF maintainer, applied to
+  bpf-next)
+- No Fixes:, no Cc: stable, no Reported-by, no Tested-by on the commit
+  itself (Tested-by: Pu Lehui is on the series cover)
+- Absence of Fixes/Cc: stable is expected for this review and is not a
+  negative signal
 
-**Step 1.3: Body**
-- Record: `[Bug] Consumer `suspend()` can fail (killed/banned/wedged)
-  leaving the queue un-suspended; the matching `resume()` was still
-  issued. A second case: suspend started but the preempt fence was
-  signalled `-ENOENT` without `suspend_wait()`, so `suspend_pending` can
-  still be set; `resume()` then trips the backend `!suspend_pending`
-  assert.`
-- `[Symptom]` Incorrect resume pairing; GuC backend assert; scheduling
-  state left inconsistent.
-- `[Version]` None stated. Series title: “balance exec queue
-  suspend/resume”.
-- `[Root cause]` Resume was unconditional. Fix: `lr.suspended` set only
-  on successful `suspend()`, cleared on `resume()`, and skip
-  reset/killed/banned/wedged queues.
+**Step 1.3 — Body**
+Record: The RV32 JIT emits `divu`/`remu` for `BPF_DIV`/`BPF_MOD` even
+when `insn->off == 1` (the BPF encoding for signed div/mod). Symptom is
+silent wrong results with the program still marked JIT’d (`jited:1`):
+`-6 / 2` → `2147483645` instead of `-3`; `-7 % 2` → `1` instead of `-1`.
+Root cause: offset field ignored. After: those `test_bpf` cases PASS.
 
-**Step 1.4: Hidden bug fix?**
-- Record: Not disguised. Explicit correctness fix. Covering letter also
-  calls the series “fixes and hardens”; this patch is the pairing fix,
-  not a pure cleanup.
+**Step 1.4 — Hidden bug fix?**
+Record: Yes. Title says “Add support”, but this is a JIT miscompilation
+fix. The JIT already handles DIV/MOD; it just uses the unsigned RISC-V
+ops. Cover-letter v3 dropped a Fixes: tag and retitled the series as
+enablement; that is framing, not a lack of a bug.
 
 ## Phase 2: Diff analysis
 
-**Step 2.1: Inventory**
-- Record: 3 files, **+36 / -1**
-  - `xe_exec_queue_types.h`: add `bool lr.suspended` (+12)
-  - `xe_preempt_fence.c`: `preempt_fence_enable_signaling()` (+7)
-  - `xe_vm.c`: `resume_and_reinstall_preempt_fences()` (+17 / -1)
-- Scope: single-subsystem surgical fix.
+**Step 2.1 — Inventory**
+Record: One file, `arch/riscv/net/bpf_jit_comp32.c`, +10/−5. Functions:
+`emit_alu_r32()` (signature + DIV/MOD cases), `bpf_jit_emit_insn()` (two
+call sites). Surgical, single-file.
 
-**Step 2.2: Code flow**
-- Record:
-  - **Before:** `suspend()` return stored in `pfence->error`;
-    `resume_and_reinstall_preempt_fences()` always called
-    `q->ops->resume(q)` for every queue on `vm->preempt.exec_queues`.
-  - **After:** successful `suspend()` does `WRITE_ONCE(q->lr.suspended,
-    true)`; resume only if `READ_ONCE(q->lr.suspended) &&
-    !q->ops->reset_status(q)`, then clears the flag.
-- Path: compute/long-running VM rebind worker (preempt-fence mode), not
-  probe/init.
+**Step 2.2 — Flow**
+Record:
+- Before: `emit_alu_r32(..., u8 op)` always emits `rv_divu` / `rv_remu`.
+- After: it takes `const struct bpf_insn *insn`, sets `is_signed =
+  insn->off == 1`, and emits `rv_div`/`rv_rem` vs `rv_divu`/`rv_remu`.
+- Callers pass `insn` instead of `BPF_OP(code)`. Both register (`BPF_X`)
+  and immediate (`BPF_K`) 32-bit DIV/MOD already go through this path
+  (no RISC-V I-type div).
+- 64-bit DIV/MOD on RV32 still `goto notsupported` (interpreter
+  fallback). This patch does not touch that path.
 
-**Step 2.3: Bug mechanism**
-- Record: `[Logic / state-machine pairing]` plus `[debug assert]`
-- At the parent of this commit, GuC resume was:
+**Step 2.3 — Bug mechanism**
+Record: Logic/correctness. Signed vs unsigned opcode selected by
+`insn->off`. Not a leak, race, or UAF.
 
-```2248:2254:drivers/gpu/drm/xe/xe_guc_submit.c
-// parent: 65f40fa5022bc^
-xe_gt_assert(guc_to_gt(guc), !q->guc->suspend_pending);
-guc_exec_queue_try_add_msg(q, msg, RESUME);
-```
-
-- Failed `suspend()` returns `-EINVAL` *before* setting
-  `suspend_pending`. Unconditional `resume()` still queues a GuC RESUME.
-- `preempt_fence_work_func()` on `reset_status()` signals `-ENOENT`
-  without `suspend_wait()`, so `suspend_pending` can still be true when
-  resume runs.
-- `guc_exec_queue_allowed_to_change_state()` is `!killed/banned/wedged
-  && registered` — it does **not** check RESET. A reset-but-not-yet-
-  killed queue can take the resume path and call `enable_scheduling()`.
-
-**Step 2.4: Fix quality**
-- Record: Obviously correct pairing (resume only if suspend succeeded
-  and queue is not in reset/kill). Minimal. Adds an internal flag only.
-  WRITE_ONCE/READ_ONCE match the comment that only one consumer suspends
-  at a time (preempt-fence vs hw-engine-group fault mode). Regression
-  risk: low; skipping resume is limited to queues already failing, which
-  the commit says teardown owns.
+**Step 2.4 — Fix quality**
+Record: Obviously correct and minimal. Regression risk is low: unsigned
+path is unchanged when `off == 0`; signed ops are the matching RISC-V
+M-extension instructions. No API or data-structure change. Minor nit:
+commit text says an `is_sdiv` argument; the code uses `is_signed` from
+`insn->off`. Harmless.
 
 ## Phase 3: Git history
 
-**Step 3.1: Blame / introduction**
-- Record: Unconditional `q->ops->resume(q)` in
-  `resume_and_reinstall_preempt_fences()` dates to `dd08ebf6c3525`
-  (“drm/xe: Introduce a new DRM driver for Intel GPUs”), i.e. Xe’s
-  introduction (v6.8-era). Long-standing, not last-month code.
+**Step 3.1 — Blame**
+Record: Unsigned `rv_divu`/`rv_remu` in `emit_alu_r32` come from
+`5f316b65e99f` (“riscv, bpf: Add RV32G eBPF JIT”, 2020-03,
+**v5.7-rc1**). At that time BPF had no signed div. The encoding (`off ==
+1`) landed in `ec0e2da95f72d` (“bpf: Support new signed div/mod
+instructions.”, 2023-07, **v6.6-rc1**), which updated the interpreter
+and x86 JIT only. RV64 JIT followed in `3e18ff4bce9b5` (**v6.6-rc1**).
+RV32 stayed on unsigned emit until this commit.
 
-**Step 3.2: Fixes: tag**
-- Record: No `Fixes:` tag. Buggy resume site is original Xe code, not a
-  recent regression-only commit.
+**Step 3.2 — Fixes: tag**
+Record: None on the landed commit. v1/v2 had a Fixes: tag; v3 removed
+it. CI bot later suggested `Fixes: 5f316b65e99f`; Pu Lehui replied that
+a Fixes tag was not needed. That objection is about blaming the 2020 JIT
+(which was correct then), not about whether today’s unsigned emit is
+wrong.
 
-**Step 3.3: Related file history**
-- Record: This is **patch 1/6** of “drm/xe: balance exec queue
-  suspend/resume”. Later commits in this tree that use `lr.suspended` /
-  continue the series:
-  - `dad2af2da9ead` ban on suspend timeout
-  - `412c885692cad` uninterruptible suspend wait
-  - `c373eaaada2fe` hw_engine_group propagate suspend failures (sets
-    `lr.suspended` there)
-  - `3c316b09072c2` suspend refcount
-  - `5d5a729cc9780` multi-queue preempt primary
-- Patch 1 is standalone for the preempt-fence path. Later patches are
-  not required for this hunk to be correct.
+**Step 3.3 — File history / series**
+Record: bpf-next v4 1/3 of “signed operations and 32-bit atomics”:
+1. this SDIV/SMOD patch (`2e0fa2389c50f`)
+2. BPF_MOVSX (`c6a08afdfe3a8`)
+3. 32-bit atomics (`a1b37972efc0b`)
 
-**Step 3.4: Author**
-- Record: Niranjana Vishwanathapura, regular Xe contributor. Reviewed by
-  Matthew Brost, Xe maintainer (`MAINTAINERS`: INTEL DRM XE DRIVER).
+This patch does not depend on 2 or 3. Merge: `426a6befd01f9`.
 
-**Step 3.5: Dependencies**
-- Record: Needs existing `q->ops->suspend`, `resume`, `reset_status`,
-  and `struct xe_exec_queue` `lr` — all present here. No new helper from
-  later series patches. Can apply standalone.
+**Step 3.4 — Author**
+Record: Kuan-Wei Chiu; not the RV32 JIT original author. Nearby work is
+this series only. Reviewer Pu Lehui is the established RISC-V BPF JIT
+contributor.
 
-## Phase 4: Mailing list / external
+**Step 3.5 — Prerequisites**
+Record: Needs `rv_div()` / `rv_rem()` in `arch/riscv/net/bpf_jit.h`
+(added by `3e18ff4bce9b5`, present here). Needs `emit_alu_r32` and
+32-bit DIV/MOD cases (present since v5.7). Standalone on this tree.
 
-**Step 4.1: Original discussion**
-- Record: `b4 dig -c 65f40fa5022bc` → https://patch.msgid.link/202607132
-  02317.2187787-9-niranjana.vishwanathapura@intel.com
-- Revisions: v1 (2026-06-24, 1/5) → v2 → v3 (1/6) → v5 covering letter
-  2026-07-13. Applied version is v5 1/6.
-- Covering letter: consumers issued resume even when suspend never took
-  effect; “with the GuC backend it can trip the `!suspend_pending`
-  assertion or leave scheduling state inconsistent.”
-- No NAKs in the saved thread mbox (series posts only; `Reviewed-by` was
-  already on the submission).
+## Phase 4: Mailing list
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-- Record: `intel-xe@lists.freedesktop.org`, Matthew Brost, Thomas
-  Hellström (both Xe maintainers). Right list and maintainers.
+**Step 4.1 — Original discussion**
+Record: Lore from `b4 dig`:
+`https://patch.msgid.link/20260714002451.4091139-2-visitorckw@gmail.com`
+Revisions: v3 (2026-07-06) and v4 (2026-07-14). v3 changelog: pass
+`insn` into `emit_alu_r32`; **remove Fixes: tag and update title**.
+Applied version is v4 (latest). No NAK on this patch. No Cc: stable in
+the thread.
 
-**Step 4.3: Bug report**
-- Record: No syzbot, bugzilla, or user `Reported-by`. Author-driven
-  correctness fix.
+**Step 4.2 — Recipients**
+Record: bpf@vger, linux-riscv, ast, daniel, andrii, eddyz87, memxor,
+palmer, aou, pulehui, martin.lau, yonghong.song, alex@ghiti.fr. Right
+lists and maintainers. Reviewed-by Pu Lehui; applied by Kumar Kartikeya
+Dwivedi.
 
-**Step 4.4: Series**
-- Record: 6 patches. Patch 1 = this commit (preempt-fence pairing).
-  Patch 4 applies the same flag to hw engine group. Patch 6 is multi-
-  queue GuC preempt behavior. This commit does not depend on 2–6.
+**Step 4.3 — Bug report**
+Record: No syzbot/bugzilla. Evidence is in-tree `test_bpf` (#165, #166,
+#169, #170) plus Pu Lehui Tested-by on the cover. Cover also notes
+`test_bpf.ko` going to 0 failures on the author’s setup.
 
-**Step 4.5: Stable list**
-- Record: lore.kernel.org/stable search for this subject did not show a
-  dedicated stable request or rejection (unrelated 7.2/6.18 review mails
-  matched generic words).
+**Step 4.4 — Series**
+Record: 1/3 is this fix. 2/3 (MOVSX) and 3/3 (atomics) are separate ISA-
+coverage patches. 3/3 is closer to a feature (more JIT’d atomics;
+interpreter already worked). This patch is self-contained.
 
-## Phase 5: Semantic / call-chain
+**Step 4.5 — stable@**
+Record: UNVERIFIED. lore.kernel.org returned 403 to HTTP fetch; the
+saved mboxes have no stable@ nomination.
 
-**Step 5.1: Functions**
-- Record: `preempt_fence_enable_signaling`,
-  `resume_and_reinstall_preempt_fences`. New field
-  `xe_exec_queue.lr.suspended`.
+## Phase 5: Semantic analysis
 
-**Step 5.2: Callers**
-- Record: `resume_and_reinstall_preempt_fences()` is called once from
-  the preempt rebind worker after `arm_preempt_fences()` (“point of no
-  return”). `preempt_fence_enable_signaling` is the dma-fence
-  `enable_signaling` callback for Xe preempt fences.
+**Step 5.1 — Functions**
+Record: `emit_alu_r32`, `bpf_jit_emit_insn`.
 
-**Step 5.3: Callees**
-- Record: `q->ops->suspend` / `resume` / `reset_status` (GuC backend is
-  the real one; execlist ops are NIY stubs).
+**Step 5.2 — Callers**
+Record: `emit_alu_r32` is only called from `bpf_jit_emit_insn` (ALU
+32-bit X/K DIV/MOD/MUL/shifts, and NEG). `bpf_jit_emit_insn` is called
+from `arch/riscv/net/bpf_jit_core.c` during JIT of a loaded BPF program.
 
-**Step 5.4: Reachability**
-- Record: Yes from userspace. `xe_vm_in_preempt_fence_mode()` is long-
-  running compute VMs (`XE_VM_FLAG_LR_MODE` and not fault mode).
-  Triggered when the VM rebind worker runs (BO moves, userptr
-  invalidation, eviction) while compute exec queues are attached.
-  Concurrent GPU reset/kill of a queue during that window is the bad
-  path.
+**Step 5.3 — Callees**
+Record: `bpf_get_reg32` / `bpf_put_reg32`,
+`rv_div`/`rv_divu`/`rv_rem`/`rv_remu`. No new locks or allocations.
 
-**Step 5.5: Similar patterns**
-- Record: Same `lr.suspended` discipline later in `xe_hw_engine_group.c`
-  (series patch 4). Confirms this is the intended pairing primitive, not
-  a one-off hack.
+**Step 5.4 — Reachability**
+Record: Yes, from BPF program load on RV32 with `CONFIG_BPF_JIT`
+(`HAVE_EBPF_JIT if MMU`). Userspace that can load BPF (privileged; or
+unprivileged if enabled) can hit it. `lib/test_bpf.c` exercises it
+directly. With `BPF_JIT_ALWAYS_ON`, interpreter fallback is gone and a
+wrong JIT is the only path.
 
-## Phase 6: This tree
+**Step 5.5 — Similar patterns**
+Record: RV64 already branched on signed vs unsigned in
+`bpf_jit_comp64.c`. Interpreter in `kernel/bpf/fixups.c` uses `insn->off
+== 1` the same way. ARM32 added 32-bit signed div in `5097faa559a60`
+(v6.7-rc1). RV32 64-bit SDIV is still not JIT’d (`notsupported`) —
+different, safe fallback.
 
-**Step 6.1: Buggy code in this tree?**
-- Record: Yes. Tree is `v7.3-rc4-27-gf0100363d8c37`, `VERSION=7
-  PATCHLEVEL=3 SUBLEVEL=0 EXTRAVERSION=-rc4`. Xe files exist. Parent of
-  `65f40fa5022bc` still has unconditional `q->ops->resume(q)`. Bug
-  introduced with Xe (`dd08ebf6c3525`), well before 7.3.
+## Phase 6: Local tree (this checkout)
 
-**Step 6.2: Backport difficulty**
-- Record: For this tree, the surrounding structs/ops match the diff:
-  clean apply. (This commit is already an ancestor of HEAD; that is used
-  only to inspect the code, not as a “already selected” reason.)
+**Step 6.1 — Does the buggy code exist here?**
+Record: Local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). RV32
+JIT, signed-div ISA, and `rv_div`/`rv_rem` are all present. The
+unsigned-only emit existed in this lineage from v6.6 until
+`2e0fa2389c50f` (contained in **v7.3-rc1**). Current `emit_alu_r32`
+already has `is_signed = insn->off == 1`. The bug class is in this
+tree’s history; the file this patch touches is here.
 
-**Step 6.3: Related fixes already here**
-- Record: No earlier alternate fix of this pairing. Later series patches
-  extend the same flag to other callers; they do not replace this
-  preempt-fence fix.
+**Step 6.2 — Backport difficulty**
+Record: Clean apply on this code. Pre-image matches the parent of
+`2e0fa2389c50f`. Helpers already exist.
+
+**Step 6.3 — Related fixes already here**
+Record: This commit is already an ancestor of HEAD (landed in 7.3-rc1).
+That is origin-tree presence, not a reason to treat it as “already
+selected for stable.” No alternate RV32 SDIV fix. Later series patches
+(MOVSX, atomics) are independent.
 
 ## Phase 7: Subsystem context
 
 **Step 7.1**
-- Record: `[drivers/gpu/drm/xe] [IMPORTANT]` — Intel Xe (Lunar Lake and
-  newer). Not core mm/net, but a supported production GPU driver.
+Record: `arch/riscv/net` BPF JIT. Criticality: **PERIPHERAL** for
+hardware (RV32 Linux with MMU), **IMPORTANT** for correctness of JIT’d
+BPF on that platform. Makefile: `bpf_jit_comp32.o` only when not
+`CONFIG_ARCH_RV64I`.
 
 **Step 7.2**
-- Record: High activity (many Xe commits in this tree). The bug itself
-  is old pairing, not a brand-new subsystem.
+Record: File is mature (since v5.7) with occasional ISA catch-up. Not a
+staging driver.
 
 ## Phase 8: Impact and risk
 
-**Step 8.1: Who is affected**
-- Record: Xe users with long-running/compute exec queues in preempt-
-  fence mode (Intel compute / Level Zero style workloads), during VM
-  rebind plus queue reset/kill/ban/wedge.
+**Step 8.1 — Who**
+Record: RV32 + BPF JIT users (embedded RISC-V with MMU). Not RV64. Not
+no-MMU (no eBPF JIT).
 
-**Step 8.2: Trigger**
-- Record: Not every boot. Concurrent rebind + queue failure/reset.
-  Userspace-reachable via compute VM + memory movement + hang/reset or
-  queue destroy. Timing-dependent.
+**Step 8.2 — Trigger**
+Record: Loading/running a BPF program that uses 32-bit signed DIV or MOD
+(`off == 1`). Common in `test_bpf`; less common in production filters,
+but a valid ISA op since v6.6. Typically requires BPF-load privilege.
 
-**Step 8.3: Failure mode**
-- Record: `xe_gt_assert` is **debug-only** (`CONFIG_DRM_XE_DEBUG`);
-  production distro kernels will not WARN there. Production still queues
-  GuC RESUME without a completed suspend. For killed queues,
-  `allowed_to_change_state` makes the resume handler mostly a no-op. For
-  **RESET but not yet killed** queues, resume can `enable_scheduling()`
-  on a context hang recovery is tearing down — GPU scheduling
-  inconsistency / possible hang of that engine, not a kernel oops.
-- Severity: **HIGH** for the reset-window GuC protocol break; **MEDIUM**
-  if only dead queues are poked (mostly no-op + debug WARN).
+**Step 8.3 — Failure mode**
+Record: Silent wrong ALU result while still reporting `jited:1`. Not a
+panic. Wrong packet/cgroup/seccomp decisions are possible if a program
+uses signed div. Severity: **HIGH** for correctness, not CRITICAL
+crash/corruption of kernel memory.
 
-**Step 8.4: Risk-benefit**
-- Record: Benefit: medium-high for Xe compute (prevents illegal resume /
-  enable on reset queues). Risk: low (36 lines, error/teardown path, no
-  UAPI). Ratio favors taking it.
+**Step 8.4 — Risk/benefit**
+Record: Benefit: correct 32-bit signed div/mod on RV32 JIT; `test_bpf`
+failures gone. Risk: very low (~10 lines, ALU emit only, unsigned path
+unchanged). Ratio: favorable.
 
 ## Phase 9: Synthesis
 
-**Step 9.1: Evidence**
+**Evidence FOR**
+- JIT emits unsigned ops for a signed encoding; programs get wrong
+  answers and still count as JIT’d.
+- Reproduced by `test_bpf`; reviewed and tested by Pu Lehui.
+- Small, obviously correct, no new UAPI.
+- Independent of the rest of the series.
+- All helpers and call sites exist in this tree.
+- Same class of ISA handling RV64 and the interpreter already do.
 
-FOR:
-- Real pairing bug: resume of never-suspended or still-pending-suspend
-  queues.
-- Concrete backend contract: `guc_exec_queue_resume()` asserts
-  `!suspend_pending` and (in production) still submits RESUME.
-- Reset vs kill mismatch: `reset_status` includes RESET;
-  `allowed_to_change_state` does not — so old resume can re-enable a
-  reset context.
-- Small, obviously correct, maintainer-reviewed (Matthew Brost).
-- Self-contained for preempt-fence; this tree has the code.
-- No new userspace API.
+**Evidence AGAINST**
+- Subject/cover are “Add support”; sent to bpf-next, not bpf.
+- Maintainer said a Fixes tag was not needed (“not a bugfix”) — aimed at
+  the 2020 JIT commit, which predates signed div.
+- RV32 is a small user base; 64-bit SDIV still not JIT’d (safe
+  fallback).
+- Not a crash, deadlock, or kernel memory-safety bug.
 
-AGAINST:
-- Series 1/6; later patches continue related hardening (not required
-  here).
-- No `Reported-by` / syzbot.
-- Healthy queues on the success path are unchanged; the skip is for
-  already-failing queues.
-- Primary wording in the commit is the debug assert.
+**Unresolved**
+- UNVERIFIED: whether stable@ ever discussed this (lore HTTP 403).
+- UNVERIFIED: exact v1/v2 subject/Fixes SHA (v3 changelog confirms a
+  Fixes tag was removed).
 
-UNRESOLVED:
-- No public user crash report proving a full-device GPU hang in the
-  wild.
-- Stable list had no explicit ACK/NAK for this subject.
+**Stable rules**
+1. Obviously correct and tested? **PASS** — review + `test_bpf`
+   before/after + Tested-by.
+2. Real bug affecting users? **PASS** — wrong JIT output for a valid
+   insn, not a new opcode.
+3. Important? **PASS** — silent miscompilation of ALU; high correctness
+   impact, not a panic.
+4. Small and contained? **PASS** — one file, ~10 lines.
+5. No new features/APIs? **PASS** — selects existing RISC-V `div`/`rem`
+   when `off==1`; BPF ISA already has this encoding.
+6. Applies to this tree? **PASS** — file, helpers, and DIV/MOD path are
+   here.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — pairing is straightforward;
-   v1–v5 review; maintainer `Reviewed-by`.
-2. Real bug affecting users? **PASS** — reachable compute rebind +
-   reset/kill path; illegal GuC RESUME.
-3. Important (crash/security/corruption/deadlock)? **PASS** — not a
-   kernel oops in production, but GuC protocol violation and
-   `enable_scheduling()` on a reset queue is a serious GPU-driver
-   failure (hang / inconsistent scheduling), which is in the “etc.”
-   class for driver stability.
-4. Small and contained? **PASS** — 36 lines, 3 Xe files.
-5. No new features/APIs? **PASS** — internal flag only. (Series patch 6
-   is a feature; this patch is not.)
-6. Can apply to this tree? **PASS** — Xe preempt-fence path and ops
-   exist; hunk is against the local structures.
+**Exception category:** none (not an ID/quirk/DT/build/doc patch).
 
-**Step 9.3: Exception category**
-- Record: None (not a device ID, quirk, DT, build, or docs fix).
-  Qualifies as a normal bugfix.
+The “add support” wording is leftover from a feature series. Behavior is
+a JIT bug: the compiler accepts SDIV/SMOD and emits the wrong RISC-V
+instruction. That is appropriate for this tree.
 
-**Step 9.4: Decision**
-This is a small, reviewed correctness fix for a real suspend/resume
-imbalance on a supported Intel GPU compute path. It does not add
-features, applies to this tree’s Xe code, and the production risk of the
-bug is illegal GuC resume (including re-enabling a reset context), not
-merely a debug WARN. That meets stable rules for this checkout.
+Verification:
+- [Phase 1] Parsed tags: Reviewed-by Pu Lehui; Link to bpf lore; no
+  Fixes/Cc: stable/Reported-by
+- [Phase 1] Body documents `test_bpf` #165/#166/#169/#170 wrong results
+  with `jited:1`
+- [Phase 2] Diff: `emit_alu_r32` takes `insn`; `is_signed = insn->off ==
+  1`; `rv_div`/`rv_rem` vs `divu`/`remu`; two call-site updates
+- [Phase 2] Confirmed 64-bit DIV/MOD still `goto notsupported` (no
+  incomplete 64-bit signed path)
+- [Phase 3] `git blame` on parent: unsigned emit from `5f316b65e99f`
+  (v5.7-rc1)
+- [Phase 3] `ec0e2da95f72d` added signed div ISA in v6.6-rc1; RV64 JIT
+  `3e18ff4bce9b5` same cycle
+- [Phase 3] `git describe --contains 2e0fa2389c50f` → `v7.3-rc1~...`;
+  `git merge-base --is-ancestor` confirms it is in HEAD
+- [Phase 3] Series 2/3 and 3/3 are independent; no prerequisite besides
+  `rv_div`/`rv_rem` (present)
+- [Phase 4] `b4 dig -c 2e0fa2389c50f`: patch-id match; v3 and v4;
+  applied v4 1/3
+- [Phase 4] `b4 dig -w`: bpf + linux-riscv + BPF/RISC-V maintainers
+- [Phase 4] v3 mbox: CI suggested Fixes: 5f316b65e99f; Pu Lehui: “not
+  need to add fixes tag, as this not a bugfix”; Pu Reviewed-by on the
+  code
+- [Phase 4] Cover: “Remove the Fixes: tag and update title”; Tested-by
+  Pu Lehui
+- [Phase 4] WebFetch lore: 403 Forbidden — discussion taken from b4
+  mboxes instead
+- [Phase 5] Callers: only `bpf_jit_emit_insn`; JIT compile path from
+  `bpf_jit_core.c`
+- [Phase 5] `lib/test_bpf.c` has ALU_SDIV_* / ALU_SMOD_* cases matching
+  the commit
+- [Phase 6] `make kernelversion` / `git describe HEAD`: 7.3.0-rc4 /
+  v7.3-rc4-27-gf0100363d8c37
+- [Phase 6] `arch/riscv/net/Makefile`: comp32 used when not RV64I;
+  `HAVE_EBPF_JIT if MMU`
+- [Phase 6] Current file already has the signed emit (commit ancestor of
+  HEAD)
+- [Phase 8] Failure mode: wrong 32-bit signed div/mod in JIT’d BPF;
+  severity HIGH correctness
+- UNVERIFIED: stable@ mailing list history (lore 403)
 
-### What it solves for users of this tree
-On Xe long-running (preempt-fence) VMs, the rebind worker always resumed
-every attached exec queue. If `suspend()` had failed or the queue was
-reset before suspend finished, that resume violated the GuC backend
-contract. This patch records a successful suspend and only resumes those
-queues, so already-failed queues are left to teardown instead of getting
-a spurious RESUME.
-
-### Risk vs benefit
-Benefit is avoiding GuC protocol errors and possible engine re-enable
-during reset. Risk is low: one flag, two call sites, no UAPI, skip
-limited to reset/killed queues.
-
-### Concerns
-It is patch 1/6; hw-engine-group pairing is a later commit and is not
-required for this hunk. No in-the-wild report. Debug asserts are
-compiled out of production, so the user-visible production issue is the
-protocol/state bug, not a WARN.
-
-### Verification
-- [Phase 1] Parsed commit `65f40fa5022bc`: tags as listed; no
-  Fixes/Reported-by/Cc-stable.
-- [Phase 2] Diff: +36/-1 in three Xe files; resume became conditional on
-  `lr.suspended && !reset_status()`.
-- [Phase 2] Parent `guc_exec_queue_suspend` returns `-EINVAL` for
-  killed/banned/wedged without setting `suspend_pending`; parent
-  `guc_exec_queue_resume` asserts `!suspend_pending` then
-  `try_add_msg(RESUME)`.
-- [Phase 2] `xe_assert.h`: `xe_gt_assert` effective only with
-  `CONFIG_DRM_XE_DEBUG`.
-- [Phase 2] `guc_exec_queue_allowed_to_change_state()` ignores RESET;
-  `guc_exec_queue_reset_status()` includes RESET;
-  `xe_guc_exec_queue_reset_handler()` sets reset then `trigger_cleanup`
-  — window verified in `xe_guc_submit.c`.
-- [Phase 3] `git log -S 'resume_and_reinstall_preempt_fences' --
-  drivers/gpu/drm/xe/xe_vm.c` → `dd08ebf6c3525`.
-- [Phase 3] Series neighbors confirmed via `git log --author=Niranjana
-  Vishwanathapura -- drivers/gpu/drm/xe/`.
-- [Phase 3] `git merge-base --is-ancestor 65f40fa5022bc HEAD` succeeds
-  (used to inspect, not as a selection argument). `git merge-base --is-
-  ancestor 65f40fa5022bc v7.2` fails; present since `v7.3-rc1`.
-- [Phase 4] `b4 dig -c 65f40fa5022bc` / `-a` / `-w` / `-m /tmp/xe-
-  suspend.mbox`: v5 1/6, maintainers CC’d, covering letter quoted above;
-  mbox had no NAK replies.
-- [Phase 4] lore.kernel.org/stable search: no dedicated discussion of
-  this patch.
-- [Phase 5] Only caller of `resume_and_reinstall_preempt_fences` is the
-  rebind worker in `xe_vm.c` (~line 569).
-- [Phase 6] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` → `7.3.0-rc4`.
-- [Phase 7] `MAINTAINERS`: Matthew Brost is Xe maintainer; he reviewed
-  the patch.
-- [Phase 8] Failure mode: production GuC RESUME without completed
-  suspend; debug WARN only if `CONFIG_DRM_XE_DEBUG`.
-- UNVERIFIED: no public user GPU-hang log for this exact race.
+The patch is a small, tested JIT correctness fix for a real miscompile
+on RV32. It meets stable rules for this tree.
 
 **YES**
 
- drivers/gpu/drm/xe/xe_exec_queue_types.h | 12 ++++++++++++
- drivers/gpu/drm/xe/xe_preempt_fence.c    |  7 +++++++
- drivers/gpu/drm/xe/xe_vm.c               | 18 +++++++++++++++++-
- 3 files changed, 36 insertions(+), 1 deletion(-)
+ arch/riscv/net/bpf_jit_comp32.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_exec_queue_types.h b/drivers/gpu/drm/xe/xe_exec_queue_types.h
-index 38906cb7608ca..c5024acf4aaf0 100644
---- a/drivers/gpu/drm/xe/xe_exec_queue_types.h
-+++ b/drivers/gpu/drm/xe/xe_exec_queue_types.h
-@@ -139,6 +139,18 @@ struct xe_exec_queue {
- 		u32 seqno;
- 		/** @lr.link: link into VM's list of exec queues */
- 		struct list_head link;
-+		/**
-+		 * @lr.suspended: Tracks whether the consumer-issued suspend()
-+		 * succeeded and a matching resume() is still owed. suspend() can
-+		 * fail (e.g. killed/banned/wedged), leaving the queue
-+		 * un-suspended, so consumers must only resume() queues that were
-+		 * actually suspended. Set by the suspend caller on success and
-+		 * cleared by the resume caller. A queue is only ever suspended by
-+		 * a single consumer at a time (preempt-fence mode and hw engine
-+		 * group fault mode are mutually exclusive), so a single flag is
-+		 * sufficient.
-+		 */
-+		bool suspended;
- 	} lr;
- 
- #define XE_EXEC_QUEUE_TLB_INVAL_PRIMARY_GT	0
-diff --git a/drivers/gpu/drm/xe/xe_preempt_fence.c b/drivers/gpu/drm/xe/xe_preempt_fence.c
-index 83fbeea5aa201..014a5980febd0 100644
---- a/drivers/gpu/drm/xe/xe_preempt_fence.c
-+++ b/drivers/gpu/drm/xe/xe_preempt_fence.c
-@@ -63,6 +63,13 @@ static bool preempt_fence_enable_signaling(struct dma_fence *fence)
- 	struct xe_exec_queue *q = pfence->q;
- 
- 	pfence->error = q->ops->suspend(q);
-+	/*
-+	 * Record a successful suspend so the rebind worker only resumes queues
-+	 * that were actually suspended; a failed suspend() leaves the queue
-+	 * un-suspended and must not be paired with a resume().
-+	 */
-+	if (!pfence->error)
-+		WRITE_ONCE(q->lr.suspended, true);
- 	queue_work(q->vm->xe->preempt_fence_wq, &pfence->preempt_work);
- 	return true;
+diff --git a/arch/riscv/net/bpf_jit_comp32.c b/arch/riscv/net/bpf_jit_comp32.c
+index 592dd86fbf811..89153946a4e46 100644
+--- a/arch/riscv/net/bpf_jit_comp32.c
++++ b/arch/riscv/net/bpf_jit_comp32.c
+@@ -509,12 +509,15 @@ static void emit_alu_r64(const s8 *dst, const s8 *src,
  }
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index a4272bc248ec7..b139ee46208ad 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -195,7 +195,23 @@ static void resume_and_reinstall_preempt_fences(struct xe_vm *vm,
- 	xe_vm_assert_held(vm);
  
- 	list_for_each_entry(q, &vm->preempt.exec_queues, lr.link) {
--		q->ops->resume(q);
-+		/*
-+		 * Only resume queues whose suspend() actually succeeded. A
-+		 * failed suspend() (e.g. killed/banned/wedged) leaves the queue
-+		 * un-suspended, so it must not be resumed.
-+		 *
-+		 * Also skip queues that have since been reset/killed/banned/
-+		 * wedged: their suspend may not have completed (suspend_pending
-+		 * can still be set, e.g. a preempt fence signalled with -ENOENT
-+		 * without waiting), so resuming would trip the !suspend_pending
-+		 * assert in the backend. Such queues are being torn down anyway,
-+		 * so leave them marked suspended and let teardown resolve their
-+		 * state.
-+		 */
-+		if (READ_ONCE(q->lr.suspended) && !q->ops->reset_status(q)) {
-+			WRITE_ONCE(q->lr.suspended, false);
-+			q->ops->resume(q);
-+		}
+ static void emit_alu_r32(const s8 *dst, const s8 *src,
+-			 struct rv_jit_context *ctx, const u8 op)
++			 struct rv_jit_context *ctx,
++			 const struct bpf_insn *insn)
+ {
+ 	const s8 *tmp1 = bpf2rv32[TMP_REG_1];
+ 	const s8 *tmp2 = bpf2rv32[TMP_REG_2];
+ 	const s8 *rd = bpf_get_reg32(dst, tmp1, ctx);
+ 	const s8 *rs = bpf_get_reg32(src, tmp2, ctx);
++	u8 op = BPF_OP(insn->code);
++	bool is_signed = insn->off == 1;
  
- 		drm_gpuvm_resv_add_fence(&vm->gpuvm, exec, q->lr.pfence,
- 					 DMA_RESV_USAGE_BOOKKEEP, DMA_RESV_USAGE_BOOKKEEP);
+ 	switch (op) {
+ 	case BPF_MOV:
+@@ -539,10 +542,12 @@ static void emit_alu_r32(const s8 *dst, const s8 *src,
+ 		emit(rv_mul(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_DIV:
+-		emit(rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
++		emit(is_signed ? rv_div(lo(rd), lo(rd), lo(rs)) :
++				 rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_MOD:
+-		emit(rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
++		emit(is_signed ? rv_rem(lo(rd), lo(rd), lo(rs)) :
++				 rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_LSH:
+ 		emit(rv_sll(lo(rd), lo(rd), lo(rs)), ctx);
+@@ -1041,7 +1046,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 			emit_imm32(tmp2, imm, ctx);
+ 			src = tmp2;
+ 		}
+-		emit_alu_r32(dst, src, ctx, BPF_OP(code));
++		emit_alu_r32(dst, src, ctx, insn);
+ 		break;
+ 
+ 	case BPF_ALU | BPF_MOV | BPF_K:
+@@ -1065,7 +1070,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 		 * src is ignored---choose tmp2 as a dummy register since it
+ 		 * is not on the stack.
+ 		 */
+-		emit_alu_r32(dst, tmp2, ctx, BPF_OP(code));
++		emit_alu_r32(dst, tmp2, ctx, insn);
+ 		break;
+ 
+ 	case BPF_ALU | BPF_END | BPF_FROM_LE:
 -- 
 2.53.0
 
