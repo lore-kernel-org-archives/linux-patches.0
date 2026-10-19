@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD1853874F;
-	Mon, 19 Oct 2026 14:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E9262044C;
+	Mon, 19 Oct 2026 14:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418680; cv=none; b=hieDDk7VYHqZESHBCrbKrFrtKbryiHpXLJdjquC9pXK6VovaRDDnF0eCmX9XzdgPcQrgBor5nVNzo+uXhj9WZm2rrctdMWDRpEXHhNONehcq3rZT96XLSfBBIjn6EhBLiGAwxHZxHWq9W2IAuSoQSzYJikOcxQdQA8jtPfaTkYs=
+	t=1792418680; cv=none; b=DoM2fho8g6d523cqO5jj6gdv8gRZHl0qvUefL4Qs9zubulWmjh9biIjPL0BSuJftyAQHz1WZ/u0tsftGItehpKpgBF8OHdbmSFGk3gMvwN0cuAxcW32wti57CdqCnkwt2BgJS0a9XC+gtxjJiGW3kiV5QbEi6w2jz/ay7x4nDSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418680; c=relaxed/simple;
-	bh=92yfff09+yvs9metrWfc5YQuesSJJbtmG40b2V84F6E=;
+	bh=B67A8eXe3+J+lFkKW1UCubxmG4KiUYkrRr4S1T6k8ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kcx/8zqX6x9i8PHo02rzPj38a+Cq2CM0LElMeXREmmiLX27fxHP9bclfUv0fOLTRXcV74kOccEbDjKmVCSXZu//0C3EoWil+pwCUq/OGPyH0eimE7IULiRm26Vf/+nD66nX3qjFnw2CF9lsxXyDOo5PL/UbSdNAPXLXK8maWhDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RtRFL7nA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GUlypB3NU7A3NiAbZHRX/djOydaF2iohknFGeuPlxR3/qJD7ObTkVNxXWx0ofHM6qQF7ZpZ39dTmLAhK+WuKsQX5FIY7CMS390G48mo4PtmH6KtkbCL39foeh8bLRdIc22v+fVeOB9FCp5gc67i82xTmDQGuRa1Z2DlW47GqpIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FvIz9x5w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RtRFL7nA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63A21F000C6;
-	Mon, 19 Oct 2026 14:04:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FvIz9x5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083921F000C8;
+	Mon, 19 Oct 2026 14:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418673;
-	bh=qip7GubNeeIoI+UNFFiRLzIhcMV2s1Sly8t3a9nUNLQ=;
+	s=k20260515; t=1792418677;
+	bh=tUxqjMydVOQ+CkV40AyW4K1j3ezjia8tYP77IbFRgrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RtRFL7nAFJOXPd+wJJ9Z55NeU9GwoytbCXrpJzB6RySfzWY7v8KxRmsLn6/e4Dd5Y
-	 hwLYd1GmFZrJJRaJE/RZmRVgLc+N69xL/ribkonSc9ncNQUsv+8np8xs1RRfYTv12K
-	 y901jXdCwzQkyt1dPl7eP813GlGgpPjj7VHFN9gsOZ9exEBmIwNaDVdDTmoQgqLjxB
-	 KeOQFr3SaDuKiqn5xCh7UEDlkI7OrOWd6fjU67qS6+IfTjc/bui98hHf9gJpi3HIfg
-	 tD4iCJr2h23ZD0+Z2rtaRtpHfeW1UZKMLZUjW5TdQu8MfblZuGwt/Sq9GlJG6pIeJj
-	 ESrHLoUHnRchQ==
+	b=FvIz9x5wWkY21K1cIsh9sTE5c9AqjKn4B0QtYk9HoPbDJBvJwSvZIMbkB4U31LJu4
+	 fF2XlJdESOFRy8ob5bSDpO7WuuRGupZYBjWJj2qtEHt9g84W4LDQr+PpsLzWVG7RRh
+	 MpxHtbENMDw6MUiog8WzPORZ+wy5/31GwPMIw99a1MJ+xToTkpJaYUO9f94lMt57A6
+	 PERRHuEwf1AguqZVtHsTCtEegOjpnlZjhysvEcC9SnTvLTRgfFFhdIZYrsBEOtOrRr
+	 tA8Aep7Y5uJkXfgs1hyva+G7MDpbA86XkA1styCVdBVVHeaJ8/svw3x2ZpME/85imn
+	 Uqr+P2kg6K8pw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Abbott <abbotti@mev.co.uk>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hsweeten@visionengravers.com,
+	kenneth.feng@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] comedi: pcmmio: Add sanity check to interrupt handler
-Date: Mon, 19 Oct 2026 09:51:47 -0400
-Message-ID: <20261019135441.1420968-416-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/amd/pm: Validate Tonga PowerPlay state array bounds
+Date: Mon, 19 Oct 2026 09:51:49 -0400
+Message-ID: <20261019135441.1420968-418-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,452 +58,544 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit ea72e2fc9026f375314421ddfa4dbdc49432a899 ]
+[ Upstream commit 1ac24df78c566d767a5ef05a1fe0ecc55bac248d ]
 
-The driver requests an interrupt handler for the device, after setting
-device registers to disable interrupt generation.  The interrupt handler
-should not be called prematurely unless the user-configured I/O port
-base address and/or IRQ number are incorrect or the hardware is bad.
+process_pptables_v1_0.c builds the Tonga state array pointer
+from usStateArrayOffset before checking that the table buffer covers
+the referenced data. A truncated PowerPlay table can therefore lead to
+out-of-bounds reads while validating the state array.
 
-For safety, check the dev->attached flag in the interrupt handler to
-ensure the device has been fully set up, avoiding a possible null
-pointer dereference of dev->read_subdev.
+Validate the fixed table size first, then check the state array offset
+and entry range before dereferencing the state array.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-10-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a 3-line IRQ-handler guard against a KASAN NULL deref in an
-existing COMEDI driver. The local tree is **Linux 7.3.0-rc4**
-(`v7.3-rc4-27-gf0100363d8c37`). The driver and the buggy attach/IRQ
-ordering are present here; the patch is self-contained.
+I have enough to decide: the Tonga state-array OOB exists in this
+6.18.53 tree, the patch is self-contained, and it applies cleanly.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[comedi: pcmmio:] [Add] [sanity check in `interrupt_pcmmio()`
-so a premature IRQ cannot dereference a NULL `dev->read_subdev`]**
+Step 1.1: PARSE THE SUBJECT LINE
+Record: [drm/amd/pm] [Validate] [Add bounds checks before using the
+Tonga PowerPlay state array pointer derived from `usStateArrayOffset`.]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 Record:
-- **Fixes:** none (expected for this review)
-- **Cc: stable:** none (expected; not a negative signal)
-- **Reported-by:** Jaeyoung Chung `<jjy600901@snu.ac.kr>`; Sangyun Kim
-  `<sangyun.kim@snu.ac.kr>`; Kyungwook Boo `<bookyungwook@gmail.com>`
-  (three reporters)
-- **Link:** https://lore.kernel.org/lkml/20260610115912.780131-1-
-  jjy600901@snu.ac.kr/ (original KASAN/NULL-deref report)
-- **Link:**
-  https://patch.msgid.link/20260618102949.26607-10-abbotti@mev.co.uk
-  (patch 09/11 of Ian Abbott’s series; msgid `-10` is 0-based git-send-
-  email numbering)
-- **Signed-off-by:** Ian Abbott (author, COMEDI maintainer); Greg Kroah-
-  Hartman (COMEDI co-maintainer / applied the patch)
-- Ignore pipeline SOBs/upstream markers if present.
+- Signed-off-by: Yang Wang &lt;kevinyang.wang@amd.com&gt; (author)
+- Reviewed-by: Hawking Zhang &lt;Hawking.Zhang@amd.com&gt; (AMD GFX
+  reviewer; mailing-list reply said the whole 5-patch series is
+  Reviewed-by)
+- Signed-off-by: Alex Deucher &lt;alexander.deucher@amd.com&gt; (amdgpu
+  maintainer)
+- No Fixes:, Reported-by, Tested-by, Link:, or Cc: stable (absence
+  expected)
+- Ignore pipeline-added Upstream commit / Sasha Levin SOB
 
-Notable: three reporters and an explicit KASAN NULL-deref report that
-names `pcmmio.c`.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Bug:** `pcmmio_attach()` calls `request_irq()` after disabling board
-  interrupt generation, but **before** subdevices are allocated and
-  before `dev->read_subdev` is set. `dev->attached` is only set later in
-  `comedi_device_postconfig()`.
-- **Symptom:** premature IRQ → `interrupt_pcmmio()` uses a NULL
-  `read_subdev` → NULL deref in `pcmmio_handle_dio_intr()`.
-- **Trigger (author):** should not happen on good hardware with a
-  correct I/O base and IRQ; can happen if the user-configured I/O
-  base/IRQ is wrong or the hardware is bad.
-- **Root cause:** IRQ handler registered before the comedi device is
-  fully set up.
-- **Version info:** none in the message. Driver dates to 2009.
+- Bug: `process_pptables_v1_0.c` forms `ATOM_Tonga_State_Array *` from
+  `usStateArrayOffset` before proving the PowerPlay buffer covers that
+  object.
+- Symptom: truncated/malformed PowerPlay table → out-of-bounds reads
+  while validating the state array.
+- Root cause: pointer arithmetic first, checks after (and the checks
+  never used `soft_pp_table_size`).
+- Fix: check fixed table size, then offset, then entry span, then
+  dereference.
+- No affected-version list in the message.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: **Not a disguised cleanup.** Subject says “Add sanity check”;
-body describes a NULL deref. Cover letter: “Add/fix sanity check in ISA
-drivers to avoid null-ptr-deref.”
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not disguised. Explicit OOB hardening. Also tightens
+`entry_index <= ucNumEntries` to `entry_index < ucNumEntries` (off-by-
+one on the index check).
 
 ===============================================================
-PHASE 2: DIFF ANALYSIS
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-**Step 2.1: INVENTORY THE CHANGES**
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- **File:** `drivers/comedi/drivers/pcmmio.c` — **+3 / −0**
-- **Function:** `interrupt_pcmmio()`
-- **Scope:** single-file, surgical
+- File: `drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c`
+  (+40 / −22)
+- Functions: `check_powerplay_tables` split into `get_tonga_state_array`
+  + thin wrapper; `get_number_of_powerplay_table_entries_v1_0`;
+  `get_powerplay_table_entry_v1_0`
+- Scope: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-- **Before:** handler always copies `s = dev->read_subdev`, then `inb()`
-  of the pending register; if any pending bits are set, calls
-  `pcmmio_handle_dio_intr(dev, s, triggered)`.
-- **After:** if `!dev->attached`, return `IRQ_NONE` before touching the
-  pending register or `s`.
-- **Path:** IRQ during attach (and any other time `attached` is false).
-  Not a new userspace API.
+- Hunk 1 (init validation): Before — compute `state_arrays = table +
+  usStateArrayOffset` then assert revision/offset/size/`ucNumEntries`.
+  After — require `soft_pp_table_size >= sizeof(*powerplay_table)`, then
+  existing header checks, then `offset <= table_size -
+  sizeof(*state_arrays)`, then dereference, then `struct_size(...) <=
+  remaining`.
+- Hunk 2 (`get_number_of_powerplay_table_entries_v1_0`): Before — same
+  unvalidated pointer add, return `ucNumEntries`. After — shared helper;
+  fail closed on invalid table.
+- Hunk 3 (`get_powerplay_table_entry_v1_0`): Before — pointer add +
+  offset/`ucNumEntries` checks after the add; `entry_index <=
+  ucNumEntries`. After — helper first; `entry_index < ucNumEntries`.
+- Paths: GPU powerplay init and power-state table walk (normal device
+  bring-up), not a rare error-only path.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **[NULL pointer dereference / memory safety]**
-- `pcmmio_handle_dio_intr()` does `struct comedi_cmd *cmd =
-  &s->async->cmd;` as its first real use of `s`. If `s` is NULL, that is
-  a kernel oops.
-- `s = dev->read_subdev` is only a pointer copy; the crash is the later
-  use. The attached check sits before that use.
-- `pcmmio_attach()` order (verified in this tree): `pcmmio_reset()` →
-  `request_irq(..., interrupt_pcmmio, ...)` →
-  `comedi_alloc_subdevices()` → `dev->read_subdev = s`.
-  `comedi_device_attach()` then calls `comedi_device_postconfig()`,
-  which sets `dev->attached = true` last.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
+Step 2.3: IDENTIFY THE BUG MECHANISM
 Record:
-- **Quality:** matches the long-standing COMEDI pattern (`if
-  (!dev->attached) return IRQ_NONE;`) used in many drivers (`das800`,
-  `comedi_parport`, `ni_660x`, etc.).
-- **Minimal:** three lines, no API/data-structure change.
-- **Regression risk:** very low. Returning `IRQ_NONE` for an unattached
-  device is correct (this IRQ is requested with flags `0`, not shared).
-- **Not a follow-up candidate:** sibling “Fix sanity check” patches
-  moved an *existing* attached test *before* a real dereference
-  (`s->async->cmd`). Here the new test is before `s` is used. No later
-  pcmmio follow-up exists on this file.
+- Category: memory safety — buffer overflow / OOB read of firmware (and
+  optionally sysfs-uploaded) table data.
+- Mechanism: `usStateArrayOffset` and `ucNumEntries` were trusted. A
+  truncated blob or huge offset reads past the ATOM table.
+  `struct_size()` is overflow-safe for the entries span.
+- Also logic: exclusive vs inclusive index check.
+
+Step 2.4: ASSESS THE FIX QUALITY
+Record:
+- Obviously correct: size → header → offset → header of subtable → full
+  entries span.
+- Underflow: `table_size - sizeof(*state_arrays)` is safe because the
+  first check is `table_size >= sizeof(*powerplay_table)`, and
+  `ATOM_Tonga_POWERPLAYTABLE` is much larger than
+  `ATOM_Tonga_State_Array` (header + two `UCHAR`s + flex array).
+- Regression: valid VBIOS tables should still pass if `usStructureSize`
+  is the full PowerPlay blob (ATOM `CU16(idx)` / `usStructureSize`).
+  That is the same size the later Tonga/Vega subtable helpers use; a
+  header-only size would reject every Tonga GPU and would not have
+  landed.
+- No public API / locking / data-structure change. Stale kernel-doc
+  above `get_tonga_state_array` still mentions `check_powerplay_tables`
+  (later comment-only fix 4986757d); no runtime impact.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-**Step 3.1: BLAME THE CHANGED LINES**
+Step 3.1: BLAME THE CHANGED LINES
 Record:
-- Handler introduced with the driver: `6baef150380d5` (“Staging: comedi:
-  add pcmmio and pcmuio drivers”, 2009-04-03, contained in v2.6.30-rc1).
-- `s = dev->read_subdev` from `19e0bf12358e59` (2013).
-- Driver left staging in `8ffdff6a8cfbd` (2021-04-15, v5.13).
-- Buggy ordering (IRQ before `read_subdev`) has been in this code for
-  many years, including this 7.3 tree.
+- Buggy `check_powerplay_tables` body: `c82baa28184356` (yanyang1,
+  2015-08-18), originally `tonga_processpptables.c`.
+- File rename: `f8a4c11b0a33f9` (2016).
+- Bug has been in-tree since PowerPlay v1 (~4.x era), so it is in this
+  6.18 tree.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: **No Fixes: tag.** Bug is the original attach/IRQ ordering, not
-a recent regression.
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: No Fixes: tag. N/A.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
 Record:
-- Same-file recent commit: `78ba300a99917` “comedi: pcmmio: Add sanity
-  checks for I/O base address” — **independent**; this IRQ patch does
-  not use that helper.
-- This commit is standalone. Cover letter lists it as **9/11**; each
-  patch is a different driver. No shared helper, no data-structure
-  prerequisite.
-- No later pcmmio commits after `ea72e2fc9026f` on this file.
+- Same author/series (independent per-ASIC bounds work):
+  - 1/5 `Validate pp_table header before reading size` (SWSMU
+    `smu_sys_set_pp_table`)
+  - 2/5 `Use uploaded size for legacy custom PPTable`
+    (`pp_dpm_set_pp_table`)
+  - **3/5 this commit**
+  - 4/5 Vega hwmgr bounds
+  - 5/5 legacy hwmgr offsets
+- Follow-up (separate 2/3 series): `Validate Tonga PPTable subtable
+  bounds` (~600 lines) for other subtables; later comment-align commit
+  for this helper.
+- This commit does not call `pp_entries_max()` (autosel parent helper).
+  Standalone for the state-array OOB.
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Ian Abbott is **the COMEDI maintainer**. Same-day series
-adds/fixes the same attached check in aio_iiro_16, das6402, dt2811,
-ni_at_a2150, ni_atmio16d, pcl711, pcl816, pcl818, pcmmio, pcmuio,
-quatech_daqp_cs. Earlier `17221216ae8ce` (“comedi: comedi_parport: deal
-with premature interrupt”) is the same class, and that one had syzbot +
-`Cc: stable`.
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: Yang Wang is an AMD PM contributor with a run of PPTable
+bounds/UAF fixes. Hawking Zhang reviewed; Alex Deucher merged.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: **None required.** `dev->attached` and `interrupt_pcmmio()`
-exist in this tree. Patch applies as a 3-line insertion.
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record:
+- Uses existing `hwmgr->soft_pp_table_size` (set in
+  `get_powerplay_table()` from ATOM) and kernel `struct_size`
+  (`include/linux/overflow.h`). Both exist in v6.18.53.
+- 1/5 is a different file (SWSMU). 2/5 improves custom-upload size
+  accounting in `amd_powerplay.c` but is not required to compile or to
+  bound VBIOS tables.
+- Can apply standalone. Confirmed with `patch --dry-run` against
+  `v6.18.53` file: clean.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **b4 dig:**
-  https://patch.msgid.link/20260618102949.26607-10-abbotti@mev.co.uk
-- **Series:** v1 only (`[PATCH 01/11]` … `11/11`), 2026-06-18. No v2/v3.
-- **Cover letter:** “comedi: Add/fix sanity check in ISA drivers to
-  avoid null-ptr-deref”. Names pcmmio among the reported drivers.
-- **Mbox:** 12 messages, all from the author (cover + 11 patches). **No
-  replies, no NAK, no reviewer Cc: stable.** Greg applied the series.
-- Lore HTML fetch returned **403**; discussion recovered via `b4 dig -m`
-  and `b4 mbox`.
+- `b4 dig -c 1ac24df78c566d767a5ef05a1fe0ecc55bac248d` → [PATCH 3/5] htt
+  ps://patch.msgid.link/20260623034151.263746-3-kevinyang.wang@amd.com
+- `b4 dig -a`: only v1 of this 5-patch series (no later rewrite of 3/5).
+- Freedesktop: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-June/147288.html
+- Hawking on 1/5 (series Ack): “Series is Reviewed-by: Hawking Zhang” —
+  https://lists.freedesktop.org/archives/amd-gfx/2026-June/147299.html
+- No NAK found. No Cc: stable in the submission.
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (**b4 dig -w**): To/Cc were Ian Abbott, linux-kernel, Greg Kroah-
-Hartman, H Hartley Sweeten, and the three reporters. Maintainers were on
-the original mail. No extra Reviewed-by/Acked-by.
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: `b4 dig -w` To/Cc: amd-gfx, Alex Deucher, Hawking Zhang, Kenneth
+Feng. Maintainer merged.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record (original mail, msgid
-`20260610115912.780131-1-jjy600901@snu.ac.kr`):
-- Subject: **“comedi: KASAN null-ptr-deref in ISA driver IRQ handlers on
-  early IRQ”**
-- Explicitly lists **pcmmio.c / `interrupt_pcmmio()` /
-  `pcmmio_attach()`**
-- Mechanism: `request_irq()` before `dev->read_subdev = s`; handler then
-  uses a NULL subdevice
-- Suggested fix: move `request_irq()` later **or** guard the handler
-- Ian chose the established attached-flag guard (same as many other
-  COMEDI drivers)
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla. Bug is described as truncated PowerPlay
+table OOB. Trigger is firmware parse at init, or root write to
+`pp_table` sysfs (documented in `amdgpu_pm.c`).
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 11 independent per-driver patches. This one does not need the
-others. The parport sibling (`17221216ae8ce`) already has `Cc: stable`
-because syzbot hit `comedi_parport`. Same bug class.
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: 5-patch OOB series plus a later Tonga subtable series. This
+patch is the Tonga *state array* piece and is self-contained. Other
+patches cover other table formats/subtables.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** for lore.kernel.org/stable (HTTP 403). The
-submission mbox has no stable-list discussion.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: UNVERIFIED — lore.kernel.org/stable returned HTTP 403. No
+evidence this was rejected for stable.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `interrupt_pcmmio()` modified; callees of interest:
-`pcmmio_handle_dio_intr()`, `pcmmio_attach()`.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: `get_tonga_state_array` (new), `check_powerplay_tables`,
+`get_number_of_powerplay_table_entries_v1_0`,
+`get_powerplay_table_entry_v1_0`.
 
-**Step 5.2: TRACE CALLERS**
+Step 5.2: TRACE CALLERS
 Record:
-- `interrupt_pcmmio` is registered only from `pcmmio_attach()` via
-  `request_irq(it->options[1], interrupt_pcmmio, 0, ...)`.
-- Attach is reached from `comedi_device_attach()` ←
-  `do_devconfig_ioctl()` (COMEDI_DEVCONFIG). That ioctl requires
-  **`CAP_SYS_ADMIN`**.
-- Context: hard IRQ. Not a hot syscall path for unprivileged users.
+- `check_powerplay_tables` ← `pp_tables_v1_0_initialize` ←
+  `pptable_v1_0_funcs.pptable_init` ← SMU7 when `pp_table_version ==
+  PP_TABLE_V1` (`smu7_init_function_pointers`).
+- `get_number_of_powerplay_table_entries_v1_0` ←
+  `smu7_get_number_of_powerplay_table_entries` ← `psm`
+  `get_num_of_pp_table_entries`.
+- `get_powerplay_table_entry_v1_0` ← `smu7_get_pp_table_entry_v1` ←
+  `psm_init_power_state_table` loop `for (i = 0; i < table_entries;
+  i++)`.
+- Context: driver init / DPM bring-up, process context.
 
-**Step 5.3: TRACE CALLEES**
-Record: `inb()` of `PCMMIO_INT_PENDING_REG`; `pcmmio_dio_read/write`;
-`pcmmio_handle_dio_intr()` which immediately does `&s->async->cmd`.
+Step 5.3: TRACE CALLEES
+Record: `le16_to_cpu`, `struct_size`, `PP_ASSERT_WITH_CODE` (warns and
+runs `return -1` — real control flow, not a debug-only assert).
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record:
-- Reachable from userspace **with CAP_SYS_ADMIN**: load `pcmmio`,
-  `COMEDI_DEVCONFIG` with an IRQ in `options[1]`.
-- Crash window: IRQ between `request_irq()` and `dev->attached = true`.
-- If the pending register reads as zero, the old handler returned
-  `IRQ_NONE` without using `s`. The NULL deref needs a premature IRQ
-  **and** a non-zero pending read (wrong I/O base returning garbage, or
-  bad/mis-routed hardware). That is exactly the ISA comedi_config model,
-  and it is how syzbot hit parport.
-- **Not** unprivileged-triggerable. Still a real kernel oops on a
-  supported ioctl.
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: Reachable on every boot of SMU7 PP_TABLE_V1 ASICs
+(Tonga/Fiji/Polaris/VegaM class in this hwmgr). Also reachable if root
+writes `/sys/class/drm/cardX/device/pp_table` (`S_IRUGO | S_IWUSR`),
+which copies into `hardcode_pp_table` and calls `amd_powerplay_reset` →
+re-init. Unprivileged users cannot write the sysfs node.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: dozens of COMEDI IRQ handlers already check `dev->attached`.
-This is aligning pcmmio with that pattern, not inventing a new one.
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same unvalidated `table + le16_to_cpu(offset)` pattern in
+Vega/legacy processpptables; same author fixed those in 4/5, 5/5, and
+the later Tonga subtable patch.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.**
-- Tree: **7.3.0-rc4** (mainline-like checkout, detached HEAD).
-- `drivers/comedi/drivers/pcmmio.c` exists; `pcmmio_attach()` still
-  requests the IRQ before `read_subdev` and before postconfig sets
-  `attached`.
-- Commit `ea72e2fc9026f` **is** an ancestor of HEAD (`git merge-base
-  --is-ancestor` exit 0). That is expected for a mainline candidate; it
-  is **not** used as “already selected for stable.”
-- Bug introduced ~2009, not after this tree branched.
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record:
+- Local tree: `v6.18.53-5049-g0f0bdc2b0dffb`, `VERSION=6 PATCHLEVEL=18
+  SUBLEVEL=53`, branch `autosel`.
+- `git merge-base --is-ancestor f29e53bc54611 v6.18.53` → **not in
+  v6.18.53**.
+- `v6.18.53:process_pptables_v1_0.c` still has the old
+  `check_powerplay_tables` that adds `usStateArrayOffset` before any
+  size check (lines 1116–1137).
+- Bug introduced ~2015; present here.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply.** Hunk is a 3-line insert into a handler whose
-shape has been stable since 2013. No refactor of this function in this
-tree beyond this commit.
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Expected **clean apply**. Dry-run of this commit’s diff onto the
+v6.18.53 copy of the file succeeded. Mainline context uses
+`kzalloc_obj`; 6.18.53 uses `kzalloc(sizeof(...))` — that line is not
+part of the hunks.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This is the fix. No alternate pcmmio IRQ NULL-deref fix. The
-I/O-base check (`78ba300a99917`) is a different issue and is not
-required for this hunk.
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: v6.18.53 does **not** contain 1/5, 2/5, this commit, 4/5, or
+5/5. No earlier Tonga state-array bounds helper. Follow-up subtable
+helpers (`tonga_pp_table_has_space`) are only on the autosel branch
+after later candidates — not in v6.18.53.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **[drivers/comedi — COMEDI DAQ]** **[PERIPHERAL]**
-Winsystems PCM-MIO PC/104 board (`CONFIG_COMEDI_PCMMIO`). Niche
-industrial hardware, but a real in-tree driver (out of staging since
-v5.13).
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: [drm/amd/pm powerplay] [IMPORTANT — widely used AMD GPU DPM for
+Tonga/Fiji/Polaris-era cards, not core mm/net, but real hardware in the
+field]
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature. Ian Abbott still actively fixing ISA attach/IRQ races in
-2026. Not staging.
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively maintained; this is targeted firmware-table hardening,
+not a refactor of a brand-new subsystem.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **driver-specific / config-specific** — users who load `pcmmio`
-and attach it with an IRQ via comedi_config.
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: Driver-specific: amdgpu SMU7 with PowerPlay table v1
+(Tonga/Fiji/Polaris family). Config `CONFIG_DRM_AMDGPU`.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
 Record:
-- Trigger: attach with `options[1]` (IRQ) set; IRQ fires before
-  `attached`; pending register reads non-zero.
-- Likelihood on correctly jumpered good hardware: low (driver disables
-  interrupt generation before `request_irq()`).
-- Likelihood with wrong I/O base/IRQ (admin ioctl, fuzzer, bad card):
-  realistic. Original report treated it as a KASAN NULL deref across
-  several ISA drivers, including this one.
-- Unprivileged: **no** (CAP_SYS_ADMIN for COMEDI_DEVCONFIG).
+- Always parsed at device init from VBIOS/ATOM
+  (`smu_atom_get_data_table` → `soft_pp_table_size = usStructureSize`).
+- Healthy firmware: no behavior change.
+- Truncated/corrupt VBIOS or crafted table: OOB read.
+- Sysfs `pp_table` store is root-only. On v6.18.53, short uploads
+  `memcpy` into a buffer still sized as the original table
+  (`pp_dpm_set_pp_table`); 2/5 would make `soft_pp_table_size` match the
+  upload. This commit still stops offsets that run past
+  `soft_pp_table_size`.
+- Unprivileged users cannot trigger via sysfs.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **Kernel oops / KASAN null-ptr-deref** → **HIGH** (crash of the
-machine or at least the IRQ path; not data corruption on a mounted fs,
-but a serious crash).
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: Kernel OOB read → KASAN/oops, possible info leak from adjacent
+BIOS/kernel memory if values are consumed. Severity: **HIGH** (memory
+safety). Not a confirmed remote unprivileged exploit.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
 Record:
-- **Benefit:** prevents a documented NULL deref oops on a long-lived
-  driver. High for anyone who hits it; population is small.
-- **Risk:** very low (3 lines, established pattern, IRQ_NONE on
-  unattached device).
-- **Ratio:** favorable. Small crash fixes in obscure drivers are
-  standard stable material.
+- Benefit: HIGH for Tonga/Polaris users with bad/truncated firmware or
+  custom PP tables; fail closed instead of reading off the end of the
+  ATOM blob.
+- Risk: LOW (~40 lines, local helper, existing `PP_ASSERT_WITH_CODE`
+  style).
+- Ratio: favorable. Residual gap: other subtables still unchecked until
+  the large follow-up; that is not a reason to skip this contained
+  state-array fix.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-**Step 9.1: COMPILE THE EVIDENCE**
+Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Real OOB read: pointer from firmware offset used before buffer
+  coverage is proven (code from 2015, present in 6.18.53).
+- Small, obviously correct, overflow-safe `struct_size` check.
+- Reviewed by Hawking Zhang (series), merged by Alex Deucher.
+- Applies cleanly to this tree; no missing types/helpers.
+- Shared helper also closes the same hole in entry-count and entry-fetch
+  paths.
+- Fail closed: init returns error instead of walking garbage.
 
-**FOR backporting:**
-- Real NULL deref in an IRQ handler; original report is titled as KASAN
-  null-ptr-deref and names this file.
-- Three reporters; maintainer-authored; applied by Greg KH.
-- 3-line, obviously correct, same pattern as many other COMEDI drivers.
-- Buggy ordering has been in the driver since 2009; present in this
-  tree.
-- Standalone; no prerequisites; clean apply.
-- Sibling parport fix of the same class was nominated for stable
-  (syzbot).
-- Sanitizer-class crash; stable rules treat serious crashes as in-scope
-  even for niche drivers.
+AGAINST:
+- No crash report / syzbot / Fixes: tag.
+- Part of 3/5; full PPTable hardening needs later larger patches.
+- Sysfs path is root-only; VBIOS path needs a truncated/malformed table.
+- Incomplete vs later 600-line subtable patch.
 
-**AGAINST:**
-- Niche PC/104 board; interrupt support in the driver comments is
-  “untested.”
-- Author frames it as “for safety” and says a premature IRQ needs bad
-  config/hardware.
-- Needs CAP_SYS_ADMIN to attach.
-- No Fixes:/Cc: stable on this specific commit (absence is expected
-  here; still a weaker signal than parport).
-- No mailing-list review replies.
+UNRESOLVED:
+- Stable list discussion (lore 403).
+- No production crash log attached to the patch.
 
-**UNRESOLVED:**
-- Could not search lore.kernel.org/stable (403).
-- Original report has no pcmmio-specific reproducer/stack in the mail
-  body (code analysis + KASAN class).
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — order of checks is sound;
+   maintainer review; in mainline.
+2. Fixes a real bug that affects users? **PASS** — OOB read of PowerPlay
+   state array from truncated/malformed tables on a live init path.
+3. Important issue? **PASS** — kernel OOB read / crash / info-leak
+   class; HIGH, not a style cleanup.
+4. Small and contained? **PASS** — one file, +40/−22.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — bug present in v6.18.53; dry-
+   run apply clean.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — 3-line attached check,
-   established COMEDI idiom; applied by subsystem maintainers.
-2. Fixes a real bug that affects users? **PASS** — NULL deref if IRQ
-   runs before attach completes; reported against this driver.
-3. Important issue? **PASS** — kernel oops / KASAN null-ptr-deref (HIGH,
-   not a core-mm panic, but a serious crash).
-4. Small and contained? **PASS** — +3 lines, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — file and handler exist; hunk
-   is trivial.
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/docs exception. Ordinary memory-safety
+bugfix.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: none (not a device ID, quirk, DT, build, or docs exception). It
-qualifies as a normal crash fix.
-
-**Step 9.4: MAKE YOUR DECISION**
-This tree has the driver, the attach/IRQ race, and the NULL deref path.
-The patch is a minimal, standard guard. Privilege and niche hardware
-lower the blast radius; they do not make a KASAN NULL deref in an IRQ
-handler unsuitable for stable.
+Step 9.4: MAKE YOUR DECISION
+This should be backported to **this** 6.18.y tree. The buggy pointer
+construction is in v6.18.53, the fix is small and independent of the
+rest of the 5-patch series, and it prevents out-of-bounds reads during
+amdgpu PowerPlay v1 init.
 
 ===============================================================
-What the commit solves, and why it matters here
+What the commit solves for this tree
 ===============================================================
 
-`pcmmio_attach()` registers `interrupt_pcmmio` before subdevices exist
-and before `dev->attached` is set. If that handler runs in that window
-and the pending register is non-zero, `pcmmio_handle_dio_intr()`
-dereferences a NULL `read_subdev` (`s->async->cmd`) and oopses. The
-patch returns `IRQ_NONE` until the device is fully attached.
+On 6.18.53, `check_powerplay_tables()`,
+`get_number_of_powerplay_table_entries_v1_0()`, and
+`get_powerplay_table_entry_v1_0()` all do:
 
-That matches the original SNU report and the usual COMEDI IRQ-safety
-pattern. For this 7.3 checkout the code exists, the fix is three lines,
-and regression risk is negligible.
+`state_arrays = (ATOM_Tonga_State_Array *)(powerplay_table +
+le16_to_cpu(usStateArrayOffset))`
 
-===============================================================
-Verification
-===============================================================
-- **[Phase 1]** Parsed tags: three Reported-by; two Links; no Fixes:/Cc:
-  stable; SOBs Ian Abbott + Greg KH.
-- **[Phase 1]** Cover letter (mbox): series is explicitly “avoid null-
-  ptr-deref”; pcmmio is listed.
-- **[Phase 2]** Diff: +3 lines in `interrupt_pcmmio()` only.
-- **[Phase 2]** Read `pcmmio_attach()`: `request_irq` at line 688,
-  `read_subdev` at 749; `comedi_device_postconfig()` sets `attached`
-  after `attach()` returns.
-- **[Phase 2]** Read `pcmmio_handle_dio_intr()`: first use of `s` is
-  `&s->async->cmd`.
-- **[Phase 3]** `git blame`: handler from 2009 (`6baef150380d5`); this
-  check from `ea72e2fc9026f`.
-- **[Phase 3]** `git log --oneline -20 --
-  drivers/comedi/drivers/pcmmio.c`: no later pcmmio follow-up.
-- **[Phase 3]** No Fixes: tag to follow.
-- **[Phase 4]** `b4 dig -c ea72e2fc9026f`: lore URL
-  `20260618102949.26607-10-abbotti@mev.co.uk`.
-- **[Phase 4]** `b4 dig -a`: v1 series only, 11 patches.
-- **[Phase 4]** `b4 dig -w`: Greg KH + Hartley Sweeten + reporters on
-  Cc.
-- **[Phase 4]** `b4 mbox` of
-  `20260610115912.780131-1-jjy600901@snu.ac.kr`: KASAN report names
-  `interrupt_pcmmio`.
-- **[Phase 4]** UNVERIFIED: lore.kernel.org HTML and stable@ search
-  (403).
-- **[Phase 5]** Callers: only `request_irq` from `pcmmio_attach`; ioctl
-  path needs CAP_SYS_ADMIN (`do_devconfig_ioctl`).
-- **[Phase 6]** `git describe HEAD` / `make kernelversion`:
-  **7.3.0-rc4**.
-- **[Phase 6]** `git merge-base --is-ancestor ea72e2fc9026f HEAD`: yes
-  (candidate is in this history).
-- **[Phase 8]** Failure mode: NULL deref oops in IRQ handler; severity
-  HIGH.
-- **UNVERIFIED:** live reproduction on PCM-MIO hardware (not available).
+and then read `ucNumEntries` / `entries[i]`. `soft_pp_table_size` is
+already known from ATOM `usStructureSize` but was unused. A truncated
+PowerPlay table or an offset past the blob is an out-of-bounds kernel
+read during GPU init (Polaris-class cards are still common). The patch
+adds the missing coverage checks and an exclusive entry-index test. It
+does not add APIs. 1/5 and 2/5 are related hardening but not
+compile/runtime prerequisites for this file.
 
-The fix is small, surgical, and meets the stable criteria for a real
-crash.
+Risk vs benefit: low risk of regressing good firmware; high value if the
+table is short or the offset is wrong.
+
+Verification:
+- [Phase 1] Tags: author Yang Wang; Reviewed-by Hawking Zhang; SOB Alex
+  Deucher; no Fixes/syzbot/stable Cc
+- [Phase 2] Diff: +40/−22 in `process_pptables_v1_0.c`; helper + three
+  call sites; OOB bounds + off-by-one index
+- [Phase 2] `PP_ASSERT_WITH_CODE` in `pp_debug.h` really `pr_warn` +
+  executes `return -1`
+- [Phase 3] Blame: `c82baa28184356` (2015-08-18) introduced the
+  unvalidated pointer add
+- [Phase 3] No Fixes: tag
+- [Phase 3] Series 1/5 and 2/5 touch other files; this commit does not
+  use `pp_entries_max()`
+- [Phase 3] `struct_size` in `include/linux/overflow.h`;
+  `soft_pp_table_size` set in `get_powerplay_table()`
+- [Phase 4] `b4 dig -c 1ac24df78c566d767a5ef05a1fe0ecc55bac248d` → PATCH
+  3/5 msgid 20260623034151.263746-3
+- [Phase 4] `b4 dig -a`: v1 only for this series
+- [Phase 4] `b4 dig -w`: amd-gfx, Deucher, Hawking, Kenneth Feng
+- [Phase 4] Hawking: “Series is Reviewed-by”
+  https://lists.freedesktop.org/archives/amd-gfx/2026-June/147299.html
+- [Phase 4] Patch body: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-June/147288.html
+- [Phase 5] Callers: `pp_tables_v1_0_initialize`,
+  `smu7_get_number_of_powerplay_table_entries`,
+  `smu7_get_pp_table_entry_v1` ← `psm_init_power_state_table`
+- [Phase 5] `pptable_v1_0_funcs` selected for `PP_TABLE_V1` in
+  `smu7_init_function_pointers`
+- [Phase 5] sysfs `pp_table` is `S_IRUGO | S_IWUSR`
+  (`AMDGPU_DEVICE_ATTR_RW`)
+- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb; Makefile
+  6.18.53
+- [Phase 6] commit **not** ancestor of v6.18.53; buggy function present
+  at v6.18.53:1116
+- [Phase 6] `patch --dry-run` of this diff onto v6.18.53 file: success
+- [Phase 6] ATOM size is `usStructureSize` via
+  `amdgpu_atom_parse_data_header` `*size = CU16(idx)`
+- [Phase 8] Failure mode: OOB read on truncated PP table during amdgpu
+  init; HIGH
+- UNVERIFIED: lore.kernel.org/stable search (HTTP 403); no public crash
+  repro attached to the patch
 
 **YES**
 
- drivers/comedi/drivers/pcmmio.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../powerplay/hwmgr/process_pptables_v1_0.c   | 62 ++++++++++++-------
+ 1 file changed, 40 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/comedi/drivers/pcmmio.c b/drivers/comedi/drivers/pcmmio.c
-index c2402239d5513..db9cb3fedb48d 100644
---- a/drivers/comedi/drivers/pcmmio.c
-+++ b/drivers/comedi/drivers/pcmmio.c
-@@ -362,6 +362,9 @@ static irqreturn_t interrupt_pcmmio(int irq, void *d)
- 	unsigned int triggered;
- 	unsigned char int_pend;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
+index 6cfef1b295abb..94c1e2c103703 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
+@@ -1113,15 +1113,17 @@ static int init_thermal_controller(
+  * @powerplay_table: Pointer to the PowerPlay Table.
+  * Exception:  2 if the powerplay table is incorrect.
+  */
+-static int check_powerplay_tables(
+-		struct pp_hwmgr *hwmgr,
+-		const ATOM_Tonga_POWERPLAYTABLE *powerplay_table
+-		)
++static int get_tonga_state_array(struct pp_hwmgr *hwmgr,
++	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table,
++	const ATOM_Tonga_State_Array **state_array)
+ {
+ 	const ATOM_Tonga_State_Array *state_arrays;
++	u16 state_array_offset;
++	size_t state_array_size;
++	size_t table_size = hwmgr->soft_pp_table_size;
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
+-	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)powerplay_table) +
+-		le16_to_cpu(powerplay_table->usStateArrayOffset));
++	PP_ASSERT_WITH_CODE((table_size >= sizeof(*powerplay_table)),
++			    "Invalid PowerPlay Table!", return -1);
+ 
+ 	PP_ASSERT_WITH_CODE((ATOM_Tonga_TABLE_REVISION_TONGA <=
+ 		powerplay_table->sHeader.ucTableFormatRevision),
+@@ -1130,12 +1132,34 @@ static int check_powerplay_tables(
+ 		"State table is not set!", return -1);
+ 	PP_ASSERT_WITH_CODE((0 < powerplay_table->sHeader.usStructureSize),
+ 		"Invalid PowerPlay Table!", return -1);
 +
- 	/* are there any interrupts pending */
- 	int_pend = inb(dev->iobase + PCMMIO_INT_PENDING_REG) & 0x07;
- 	if (!int_pend)
++	state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
++	PP_ASSERT_WITH_CODE((state_array_offset <=
++			     table_size - sizeof(*state_arrays)),
++			    "Invalid PowerPlay Table!", return -1);
++
++	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)powerplay_table) +
++		state_array_offset);
+ 	PP_ASSERT_WITH_CODE((0 < state_arrays->ucNumEntries),
+ 		"Invalid PowerPlay Table!", return -1);
+ 
++	state_array_size = struct_size(state_arrays, entries, state_arrays->ucNumEntries);
++	PP_ASSERT_WITH_CODE((state_array_size <= table_size - state_array_offset),
++			    "Invalid PowerPlay Table!", return -1);
++
++	*state_array = state_arrays;
++
+ 	return 0;
+ }
+ 
++static int check_powerplay_tables(struct pp_hwmgr *hwmgr,
++	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table)
++{
++	const ATOM_Tonga_State_Array *state_arrays;
++
++	return get_tonga_state_array(hwmgr, powerplay_table, &state_arrays);
++}
++
+ static int pp_tables_v1_0_initialize(struct pp_hwmgr *hwmgr)
+ {
+ 	int result = 0;
+@@ -1239,17 +1263,16 @@ const struct pp_table_func pptable_v1_0_funcs = {
+ 
+ int get_number_of_powerplay_table_entries_v1_0(struct pp_hwmgr *hwmgr)
+ {
+-	ATOM_Tonga_State_Array const *state_arrays;
++	const ATOM_Tonga_State_Array *state_arrays;
+ 	const ATOM_Tonga_POWERPLAYTABLE *pp_table = get_powerplay_table(hwmgr);
++	int result;
+ 
+ 	PP_ASSERT_WITH_CODE((NULL != pp_table),
+ 			"Missing PowerPlay Table!", return -1);
+-	PP_ASSERT_WITH_CODE((pp_table->sHeader.ucTableFormatRevision >=
+-			ATOM_Tonga_TABLE_REVISION_TONGA),
+-			"Incorrect PowerPlay table revision!", return -1);
+ 
+-	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)pp_table) +
+-			le16_to_cpu(pp_table->usStateArrayOffset));
++	result = get_tonga_state_array(hwmgr, pp_table, &state_arrays);
++	PP_ASSERT_WITH_CODE((result == 0),
++			    "Invalid PowerPlay Table State Array.", return result);
+ 
+ 	return (uint32_t)(state_arrays->ucNumEntries);
+ }
+@@ -1380,15 +1403,11 @@ int get_powerplay_table_entry_v1_0(struct pp_hwmgr *hwmgr,
+ 
+ 	if (pp_table->sHeader.ucTableFormatRevision >=
+ 			ATOM_Tonga_TABLE_REVISION_TONGA) {
+-		state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)pp_table) +
+-				le16_to_cpu(pp_table->usStateArrayOffset));
+-
+-		PP_ASSERT_WITH_CODE((0 < pp_table->usStateArrayOffset),
+-				"Invalid PowerPlay Table State Array Offset.", return -1);
+-		PP_ASSERT_WITH_CODE((0 < state_arrays->ucNumEntries),
+-				"Invalid PowerPlay Table State Array.", return -1);
+-		PP_ASSERT_WITH_CODE((entry_index <= state_arrays->ucNumEntries),
+-				"Invalid PowerPlay Table State Array Entry.", return -1);
++		result = get_tonga_state_array(hwmgr, pp_table, &state_arrays);
++		PP_ASSERT_WITH_CODE((result == 0),
++				    "Invalid PowerPlay Table State Array.", return result);
++		PP_ASSERT_WITH_CODE((entry_index < state_arrays->ucNumEntries),
++				    "Invalid PowerPlay Table State Array Entry.", return -1);
+ 
+ 		state_entry = GET_FLEXIBLE_ARRAY_MEMBER_ADDR(
+ 						ATOM_Tonga_State, entries,
+@@ -1414,4 +1433,3 @@ int get_powerplay_table_entry_v1_0(struct pp_hwmgr *hwmgr,
+ 
+ 	return result;
+ }
+-
 -- 
 2.53.0
 
