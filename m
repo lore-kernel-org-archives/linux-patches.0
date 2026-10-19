@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DEA64237F;
-	Mon, 19 Oct 2026 14:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD00645085;
+	Mon, 19 Oct 2026 14:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418786; cv=none; b=KomAY3HpKd7jRhJjEVUkGZga1r2VdEuhdDLy4vviTNHBjlVJFu+wYabdR29ZBNwtNaniPd3aM7QPnY/Wyu7p3Kj01uwa3y2eGwUN0Bph5ZYqzhz3nRdUDBcUDq+wNFSCVo657kTvdlO7y+/iQW0T3XzFhwo/7D4/Gn/TwoCbAh8=
+	t=1792418786; cv=none; b=hg7G/Tggf/jGPQra/b7OcSNplTo5yxM/wPlQW99GL0CyxaqYDU5zmmBmCsRZvib2/wKo7NGgQNUN56a3yhydrpv5M9uGnCyoPYM2eQGEdhkbaHMr+nVK1JeqjYi/mwkgQWc4oen5q24NRxWRThOMtkPHDbdOBR6xQazMWRC6WYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418786; c=relaxed/simple;
-	bh=pygUcnzaksX9aU8kJ88BWTM71IAxaDaqLTBnSiwPHag=;
+	bh=fpbUBSic+Y0uy5UHJ532+VtLkF+liEMy0afhOOEyUj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pgfvqb/G2Qts4mIM8M9hKlI4LjG2anjPbVxgkL2UkxSYiRaLwvjFrXEWDCOdkGwGF3FAiNNTw/7AKdQvfD44kBfUdvd7E5mcBbKI4xBorBdhdG/Xdr8pASD5KK/Vt0mxkHGNeJhVUiVWWWAesDBa16KqdRY2OEbEqrEh/RYX9pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mCKdYXhA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tHH0sSX/MU8PVgO7kAb1yxvBIStWZXZRMtzRhmleNhfMSSjs2OHVwQNI/MaPIMpfAkwUtxSXRDr2ESxVWum55G5l87g2Cy7o9KDwcB+mEhFUqMm/4q5KVQcSwuNjiGDgaa9Ri9vzeaBaDjEu3rklNz83VTw1jLD5axzla9Mf8uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E9/nQD7S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mCKdYXhA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F451F000C7;
-	Mon, 19 Oct 2026 14:06:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E9/nQD7S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D641E1F000C5;
+	Mon, 19 Oct 2026 14:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418783;
-	bh=+zdzCHQBF84phwrViAwt8IDjEeqG5XBif9izD52XHEY=;
+	s=k20260515; t=1792418784;
+	bh=2Cqt/StO5wJRmyuqhqdQe+vFzWCcT9Y1VHmZC4EWq60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mCKdYXhA1LpdN9IF42ifafMvinE+7DyUltDx/1WXXgVGeTGKT8rfaIkbPSqr1b7PK
-	 DYvYCpR8BqLrfqnkCaAyrW0hjpDQIrEFYEJbQIyjEZjVfa1eqfxSK46qOuOtGYHt7m
-	 2MiAiUwbb2LNyuPyb7wrmWHwA5cdYnObsJ0OecgSZS+65VIzapfhPEoVTGLxkvej1Q
-	 tDscrCIhuhA/c+mfsMvTclL39zSiW21DGLlu2VwoWejpy0+MLvdd8a4Px4CZ+9R3Ys
-	 hEoOX9mLKj9FeRLmvf6onvPU7uYsc6vmtff+P5IMdOcIyMc7+3v2mzmydSKuM0GexG
-	 ZFAdn3Y2OF4uA==
+	b=E9/nQD7StqWbgAGRjAOY28lNWp7VlJALTWwOSu9hVt2wguy76/Db8F85SL70PoRbf
+	 Wm8bIVD5JHKkI6I8+qENXxIedNbBnNQr6/OxMxkyALuTWJyiIUOfYcJ+2WbNa8vP6Z
+	 Bm3QKYJGW/B/HIQnikepUrX90/wfL6iXuxcODTR3ri0lNAReehMIf7Tvm/btlD4kj7
+	 04JwFw01TrCjj4Aro2qgQIYKtuFnxoSFojzGoJyx2IMkszhQAjZVmTu4tMMOKqmhGP
+	 LTK9VyC4cg/x7Tg+zLnhZ1wA8XfUUO8OiVydRuIqq0auJNWkciqLcoq45lPesHQuGx
+	 nPb9VXWTX23bA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Muralidhara M K <muralidhara.mk@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Andreas Haufler <andreas@haufler.info>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	naveenkrishna.chatradhi@amd.com,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] platform/x86/amd/hsmp: Validate _DSD mailbox sub-package element count
-Date: Mon, 19 Oct 2026 09:53:04 -0400
-Message-ID: <20261019135441.1420968-493-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] tools/lib/thermal: Fix misplaced extern "C" closing brace
+Date: Mon, 19 Oct 2026 09:53:05 -0400
+Message-ID: <20261019135441.1420968-494-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -48,303 +47,530 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muralidhara M K <muralidhara.mk@amd.com>
+From: Andreas Haufler <andreas@haufler.info>
 
-[ Upstream commit 0d7a2664494534d6152be9bd9bf1cb1d089c67d3 ]
+[ Upstream commit cb0ec27efac2aaf92393ad563a35fb6f00d0a6cd ]
 
-hsmp_read_acpi_dsd() dereferenced elements[0] and elements[1] of each
-mailbox sub-package before confirming the package actually held two
-elements, allowing an out-of-bounds read on a malformed _DSD.
+The public libthermal header opens the C++ 'extern "C" {' block inside
+the __LIBTHERMAL_H include guard, but places the closing brace after
+the guard has already ended:
 
-Verify package.count >= 2 first, then fetch the string and integer
-objects.
+	#endif /* __LIBTHERMAL_H */
 
-Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260625123337.886435-3-muralidhara.mk@amd.com
-Link: https://patch.msgid.link/20260629155634.1807598-3-muralidhara.mk@amd.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+	#ifdef __cplusplus
+	}
+	#endif
+
+On a single inclusion the braces still balance, so the problem is
+invisible. On the second inclusion of the header in the same C++
+translation unit the include guard skips the opening 'extern "C" {',
+while the closing '}' lives outside the guard and is emitted anyway.
+This leaves a stray '}' and breaks compilation for any C++ consumer
+that includes the header more than once.
+
+Move the closing block inside the include guard so both halves of the
+'extern "C"' declaration are guarded consistently.
+
+Signed-off-by: Andreas Haufler <andreas@haufler.info>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+## Local tree
 
-**Step 1.1:** Record: `[platform/x86/amd/hsmp] [Validate] [check _DSD
-mailbox sub-package count before indexing elements[0]/[1]]`
+This checkout is **pending-6.18**, kernel **6.18.53**
+(`p-6.18-1-g03b85e06ca9bf`). The verdict is only about this tree.
 
-**Step 1.2:** Record: tags present:
-- `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
-  (platform-drivers-x86 maintainer)
-- `Link: https://patch.msgid.link/20260625123337.886435-3-
-  muralidhara.mk@amd.com` (v2 7-patch series)
-- `Link: https://patch.msgid.link/20260629155634.1807598-3-
-  muralidhara.mk@amd.com` (v2 4-patch series, applied version)
-- `Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>` (author)
-- `Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
-  (maintainer apply)
-- No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence is expected)
-- No syzbot, no Tested-by, no CVE
+Mainline commit: `cb0ec27efac2aaf92393ad563a35fb6f00d0a6cd` (landed
+after v6.18; `git describe` reports `v7.2-rc2-24-gcb0ec27efac2a`). It is
+**not** an ancestor of HEAD.
 
-**Step 1.3:** Record: `[Bug: hsmp_read_acpi_dsd() indexed mailbox sub-
-package elements[0] and elements[1] before checking package.count]
-[Symptom: out-of-bounds read on malformed ACPI _DSD] [Versions: none
-stated] [Root cause: missing count check before pointer fetch]`
+---
 
-Cover letter for the 4-patch series: “This series hardens the AMD HSMP
-ACPI driver against malformed firmware.” Patches 1–2 are ACPI input
-validation; this is patch 2.
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.4:** Record: `[Not disguised. Explicit OOB-read fix. “Validate”
-here is a real bounds check, not style cleanup.]`
+### Step 1.1: PARSE THE SUBJECT LINE
 
-## Phase 2: Diff analysis
+- **Subsystem:** `tools/lib/thermal` (userspace libthermal, not
+  `drivers/thermal`)
+- **Action verb:** Fix
+- **Claimed intent:** Put the C++ `extern "C"` closing brace inside the
+  include guard
 
-**Step 2.1:** Record: `[drivers/platform/x86/amd/hsmp/acpi.c: +9/-3]
-[function: hsmp_read_acpi_dsd] [single-file surgical fix]`
+**Record:** `[tools/lib/thermal] [fix] [move misplaced extern "C" }
+inside include guard]`
 
-**Step 2.2:** Record: Before: after `msgobj =
-&mailbox_package->package.elements[j]`, the code immediately did `msgstr
-= &msgobj->package.elements[0]` and `msgint =
-&msgobj->package.elements[1]`, then checked `msgobj->type`,
-`msgstr->type`, and `msgint->type`. After: check `msgobj->type !=
-ACPI_TYPE_PACKAGE || msgobj->package.count < 2` first (`||` short-
-circuits, so `.package.count` is not read on a non-package), then take
-the two element pointers, then check string/integer types. Probe error
-path: malformed firmware now returns `-EINVAL` instead of reading off
-the end of the ACPI object array.
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 
-**Step 2.3:** Record: `[Bug category: buffer overflow / out-of-bounds
-AND type-confused union access] [Mechanism: ACPI package elements array
-is sized to package.count; count 0 or 1 makes elements[0]/elements[1]
-OOB. Type was also checked after the dereference, so a non-PACKAGE
-object was read as a package.]`
+From `git show cb0ec27efac2a` and the lore thread:
 
-**Step 2.4:** Record: `[Obviously correct: reorder of existing checks
-plus one count test. No unrelated edits. Regression risk very low: well-
-formed _DSD (count >= 2, string+integer) is unchanged; only malformed
-firmware takes the new -EINVAL path.]`
+| Tag | Value |
+|-----|--------|
+| Signed-off-by | Andreas Haufler \<andreas@haufler.info\> (author) |
+| Signed-off-by | Daniel Lezcano \<daniel.lezcano@kernel.org\> (thermal
+maintainer) |
+| Link |
+https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info |
 
-## Phase 3: Git history
+**Absent (expected):** Fixes, Reported-by, Tested-by, Reviewed-by,
+Acked-by, Cc: stable.
 
-**Step 3.1:** Record: `[Buggy dereference introduced in ba8dcff0e9c4f
-("platform/x86/amd/hsmp: Add support for ACPI based probing",
-2024-01-06). First in v6.9. Moved unchanged to acpi.c in 969f915473d8c
-(v6.13). Present for ~2 years before this fix.]`
+**Record:** Author + maintainer SOB; one lore Link. No syzbot, no Fixes,
+no stable tag.
 
-**Step 3.2:** Record: `[No Fixes: tag. Original buggy commit
-ba8dcff0e9c4f is an ancestor of this HEAD.]`
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 
-**Step 3.3:** Record: `[Sibling series (self-contained, this patch does
-not need the others):`
-- `4c7d1b4cd75a7 Validate ACPI UID before parsing socket index (1/4)`
-- `0d7a266449453 this commit (2/4)`
-- `b558cbed39af2 Pass struct device explicitly (3/4, pure refactor)`
-- `e5e511f5d9e05 Gate the data plane on a fully initialized socket
-  (4/4)`
-`] [Standalone: yes. No shared types or helpers.]`
+The header opens `extern "C" {` **inside** `#ifndef __LIBTHERMAL_H`, but
+closes `}` **after** `#endif`.
 
-**Step 3.4:** Record: `[Author Muralidhara M K is an AMD HSMP
-contributor (many HSMP commits). Subsystem maintainers: Naveen Krishna
-Chatradhi (MAINTAINERS), applied/reviewed by Ilpo Järvinen (pdx86).]`
+- First include: braces balance, so C++ compiles.
+- Second include in the same C++ TU: the guard skips the opening brace,
+  but the closing `}` is still emitted → stray `}` → **compile error**.
 
-**Step 3.5:** Record: `[No functional prerequisites. Later HEAD commit
-b558cbed39af2 changed the prototype to hsmp_read_acpi_dsd(struct device
-*dev, struct hsmp_socket *sock); that is a follow-up, not a dependency
-of this bounds check.]`
+**Record:**
+- **Bug:** include-guard / `extern "C"` mismatch
+- **Symptom:** C++ compile failure on the second include of `thermal.h`
+- **Versions:** none stated; intro commit is in this tree since v5.19
+- **Root cause:** closing `}` lives outside the guard
 
-## Phase 4: Mailing list
+### Step 1.4: DETECT HIDDEN BUG FIXES
 
-**Step 4.1:** Record: `[b4 dig: https://patch.msgid.link/20260629155634.
-1807598-3-muralidhara.mk@amd.com] [Revisions: combined UID+_DSD patch as
-2/7 on 2026-06-25; split to 2/4 on 2026-06-29 after Ilpo asked for a
-split; applied version is that 2/4] [Ilpo: “totally independent changes
-so they should be split”; then Reviewed-by. No NAK, no stable
-nomination, no concern about the OOB logic itself.]`
+Not disguised. Subject and body describe a real compile break.
 
-**Step 4.2:** Record: `[To: Ilpo Järvinen; Cc: platform-
-driver-x86@vger.kernel.org, linux-kernel@vger.kernel.org. Right
-maintainer and list.]`
+**Record:** Not a hidden fix. Explicit userspace header compile bug.
 
-**Step 4.3:** Record: `[No bugzilla/syzbot report. Bug was found by
-review of the ACPI parser, not a user crash. Cover letter: “based on the
-review discussion at [1]”.]`
+---
 
-**Step 4.4:** Record: `[Part of a 4-patch hardening series. This hunk is
-independent. Patch 3 is explicitly “pure refactor”; patch 4 is a
-different race. Do not need 3/4 or 4/4 for this OOB fix.]`
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.5:** Record: `[lore.kernel.org/stable search returned HTTP 403.
-UNVERIFIED: no confirmed stable-list discussion.]`
+### Step 2.1: INVENTORY THE CHANGES
 
-## Phase 5: Code semantics
+```
+tools/lib/thermal/include/thermal.h | 4 ++--
+```
 
-**Step 5.1:** Record: `[hsmp_read_acpi_dsd]`
+One file. Two lines moved: `#endif /* __LIBTHERMAL_H */` is placed after
+the `extern "C"` close. No functions changed (header-only).
 
-**Step 5.2:** Record: `[Callers: hsmp_parse_acpi_table() → init_acpi() →
-hsmp_acpi_probe(). Probe of the AMD HSMP ACPI platform device
-(CONFIG_AMD_HSMP_ACPI). Not interrupt context, not a syscall. One call
-site.]`
+**Record:** `[thermal.h +2/-2] [no functions] [single-file surgical]`
 
-**Step 5.3:** Record: `[acpi_evaluate_object_typed("_DSD"),
-is_acpi_hsmp_uuid(), strncmp on MSG_*_STR, ACPI_FREE. No locks, no
-allocation beyond the ACPI buffer already obtained.]`
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 
-**Step 5.4:** Record: `[Reachable at driver bind when firmware exposes
-the HSMP ACPI object (EPYC / MI300A). Unprivileged userspace cannot
-inject a malformed _DSD on a normal system; the trigger is firmware.
-Broken/tampered ACPI tables can hit it at probe.]`
+**Before** (this tree, lines 178–182):
 
-**Step 5.5:** Record: `[Outer _DSD package already checks
-dsd->package.count != 2 before elements[0]/[1]. Only the inner mailbox
-sub-packages lacked a count check. No other copy of this inner loop.]`
+```178:182:tools/lib/thermal/include/thermal.h
+#endif /* __LIBTHERMAL_H */
 
-## Phase 6: This tree (v7.3-rc4)
+#ifdef __cplusplus
+}
+#endif
+```
 
-**Step 6.1:** Record: `[Local tree: v7.3-rc4-27-gf0100363d8c37,
-kernelversion 7.3.0-rc4. File and function exist. Bug introduced in
-v6.9, long before 7.3. Current working tree already contains the count
-check (this commit is an ancestor of HEAD). Evaluating the pre-fix
-logic: the OOB was in this lineage.]`
+**After:** `#ifdef __cplusplus` / `}` / `#endif` stay inside
+`__LIBTHERMAL_H`, then the guard ends.
 
-**Step 6.2:** Record: `[On this checkout the change is already present;
-a re-apply of the raw diff would not match because (a) the check is
-already there and (b) b558cbed39af2 later changed the function
-signature. That is history of this development tree, not a missing
-prerequisite. The fix itself is a 12-line reorder in one function.]`
+**Record:** `[header guard close moved after extern "C" close; second
+C++ include no longer emits a stray }]`
 
-**Step 6.3:** Record: `[No alternate fix for this OOB. git log
---grep='mailbox sub-package' on this path only finds this commit.]`
+### Step 2.3: IDENTIFY THE BUG MECHANISM
 
-## Phase 7: Subsystem context
+**Category:** (g) logic/correctness + (h) not hardware; this is a
+**build / include-file** defect.
 
-**Step 7.1:** Record: `[platform/x86 AMD HSMP ACPI driver] [PERIPHERAL /
-IMPORTANT-for-EPYC-servers: Host System Management Port mailbox on AMD
-EPYC and MI300A, CONFIG_AMD_HSMP_ACPI]`
+**Mechanism:** On re-include, the guard suppresses `extern "C" {` but
+not `}`.
 
-**Step 7.2:** Record: `[Active in 2026: concurrency/lifecycle series
-plus metric-table work. Parser bug itself dates to the original ACPI
-probe support (v6.9), so it is old code, not a last-month feature.]`
+**Record:** `[build/include-guard] [closing brace outside guard]`
 
-## Phase 8: Impact and risk
+### Step 2.4: ASSESS THE FIX QUALITY
 
-**Step 8.1:** Record: `[Affected users: systems with
-CONFIG_AMD_HSMP_ACPI and an HSMP ACPI device (AMD EPYC / MI300A
-servers). Not universal.]`
+Matches the correct pattern in `tools/lib/bpf/libbpf.h` (close `extern
+"C"` **then** `#endif /* __LIBBPF_LIBBPF_H */`). Minimal, no API change,
+no runtime code. Regression risk is effectively none.
 
-**Step 8.2:** Record: `[Trigger: probe-time parse of ACPI _DSD mailbox
-sub-packages with count < 2 or non-PACKAGE type. Common on correct AMD
-BIOS: no. Possible with broken BIOS, firmware fuzzing, or ACPI table
-tampering. Unprivileged users cannot trigger it via a syscall.]`
+**Record:** `[obviously correct] [no meaningful regression risk]`
 
-**Step 8.3:** Record: `[Failure mode: out-of-bounds read of union
-acpi_object (KASAN OOB / possible oops during probe). Severity: HIGH if
-firmware is malformed; LOW on well-formed production BIOS. Probe failure
-is preferable to an OOB.]`
+---
 
-**Step 8.4:** Record: `[Benefit: closes a real memory-safety hole in a
-production server driver, cheaply. Risk: very low (error path only, same
-success path). Ratio: favorable.]`
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-## Phase 9: Synthesis
+### Step 3.1: BLAME THE CHANGED LINES
 
-**For backporting:** Real OOB (and type-confused union access) in
-`hsmp_read_acpi_dsd()`. Small (+9/-3), obviously correct, maintainer-
-reviewed. Driver and buggy pattern exist in this tree’s history since
-v6.9. No series dependency. Matches stable rules for memory-safety
-fixes.
+```
+47c4b0de080adc (Daniel Lezcano 2022-04-20)  #endif /* __LIBTHERMAL_H */
+47c4b0de080adc (Daniel Lezcano 2022-04-20)  #ifdef __cplusplus
+47c4b0de080adc (Daniel Lezcano 2022-04-20)  }
+```
 
-**Against:** No user/syzbot report; firmware-only trigger; driver is not
-core kernel. Cover letter calls it “hardening.” This 7.3-rc4 checkout
-already contains the commit.
+Introduced with the library itself. Present since v5.19 (`git merge-base
+--is-ancestor 47c4b0de080ad v5.19`; not in v5.18).
 
-**Unresolved:** Stable mailing list search was HTTP 403.
+**Record:** `[47c4b0de080ad "tools/lib/thermal: Add a thermal library"]
+[v5.19]`
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — reorder + count check; Ilpo
-   Reviewed-by; W=1/checkpatch claimed on the series.
-2. Real bug affecting users? **PASS** — OOB on malformed _DSD;
-   EPYC/MI300A with bad firmware would oops or KASAN-fail at probe.
-3. Important (crash/security/corruption/deadlock)? **PASS** — OOB read
-   is a crash/memory-safety issue. Not a wild userspace exploit, but
-   still an important class.
-4. Small and contained? **PASS** — one function, 12 lines.
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — the file/function exist here; the
-   change is the right fix for this parser. (HEAD already has the
-   equivalent code.)
+### Step 3.2: FOLLOW THE FIXES: TAG
 
-**Exception category:** none (not a device ID/quirk/DT/build/doc patch).
-It is a normal memory-safety bugfix.
+No Fixes tag. The buggy code is the original header layout from
+47c4b0de080ad, which **is** in this tree.
 
-This tree is 7.3.0-rc4. The HSMP ACPI `_DSD` parser is present. The bug
-is a genuine out-of-bounds read of ACPI package elements, not a
-refactor. The success path is unchanged. That is stable-quality on
-technical merit.
+**Record:** `[no Fixes tag; intro commit is in this tree]`
 
-Verification:
-- [Phase 1] Parsed tags: Reviewed-by Ilpo; two msgid Links; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +9/-3 in `hsmp_read_acpi_dsd()`; count check before
-  `elements[0]/[1]`
-- [Phase 3] `git blame` on parent: lines from 969f915473d8c; semantic
-  intro `ba8dcff0e9c4f` (in v6.9, ancestor of HEAD)
-- [Phase 3] No Fixes: tag; `git merge-base --is-ancestor ba8dcff0e9c4f
-  HEAD` yes
-- [Phase 3] Series 1/4–4/4 identified; this patch does not need 3/4 or
-  4/4
-- [Phase 4] `b4 dig -c 0d7a266449453`: lore URL above; `-a` showed
-  7-patch then 4-patch split; `-w` To Ilpo + pdx86
-- [Phase 4] Ilpo 2026-06-26: split request + Reviewed-by; no NAK on the
-  OOB fix
-- [Phase 4] lore.kernel.org WebFetch 403; stable list UNVERIFIED
-- [Phase 5] Call chain: `hsmp_acpi_probe` → `init_acpi` →
-  `hsmp_parse_acpi_table` → `hsmp_read_acpi_dsd`
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` = 7.3.0-rc4; file present; `git merge-base --is-
-  ancestor 0d7a266449453 HEAD` yes
-- [Phase 8] Failure mode: OOB ACPI object read at probe; HIGH if
-  firmware malformed
-- UNVERIFIED: whether stable@ discussed this (lore 403)
+### Step 3.3: CHECK FILE HISTORY
+
+Only two commits on this file in this tree:
+
+- `47c4b0de080ad` — add library
+- `a262672486287` — threshold netlink ABI (does not touch the
+  guard/`extern "C"`)
+
+No later local fix. `git log v6.18..HEAD --
+tools/lib/thermal/include/thermal.h` is empty. File at v6.18 and HEAD
+still has the misplaced `}`.
+
+**Record:** `[no related local fixes] [standalone] [not a series]`
+
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+
+`git log --author="Andreas Haufler" -- tools/` is empty in this tree.
+Author is an external contributor. Maintainer Daniel Lezcano committed
+it (`CommitDate: Fri Aug 7 17:18:51 2026`) after “Applied, thanks for
+the fix”.
+
+**Record:** `[external author; thermal maintainer applied]`
+
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+
+Diff assumes only `#endif` / `#ifdef __cplusplus` / `}`. Those lines
+exist unchanged. Standalone.
+
+**Record:** `[no dependencies] [applies standalone]`
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+
+`b4 dig -c cb0ec27efac2a` matched by patch-id:
+
+- **Lore:**
+  https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info
+- **v1 only** (`b4 dig -a`): no v2/v3
+- Thread: patch + Daniel Lezcano reply: **“Applied, thanks for the
+  fix”**
+- No NAK, no stable nomination, no requested rework
+
+WebFetch to lore returned 403; thread was recovered via `b4 mbox`.
+
+**Record:** `[v1 accepted as-is] [maintainer Applied] [no stable
+mention] [no NAKs]`
+
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+
+`b4 dig -w` recipients: Rafael Wysocki, Daniel Lezcano, Zhang Rui,
+Lukasz Luba, linux-pm, linux-kernel. Those are the THERMAL
+maintainers/reviewers in MAINTAINERS.
+
+**Record:** `[thermal maintainers on To/Cc; Lezcano applied]`
+
+### Step 4.3: SEARCH FOR THE BUG REPORT
+
+No Reported-by, bugzilla, or syzbot. Author found it by inspecting the
+public header.
+
+**Record:** `[no external bug report] [author-discovered compile
+defect]`
+
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+
+Standalone `[PATCH]`, msgid `...91246-1`, no `-2`. `git log
+origin/master cb0ec27efac2a^.. -- tools/lib/thermal/include/thermal.h`
+shows only this commit.
+
+**Record:** `[standalone; no follow-up on the header]`
+
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+
+lore.kernel.org/stable WebFetch returned 403. No Cc: stable on the
+patch. No local `git log --grep=extern -- tools/lib/thermal/` hits.
+
+**Record:** `[no stable-list discussion verified; lore/stable fetch
+failed with 403]`
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+semcode MCP is not available. Grep/read used instead.
+
+### Step 5.1: IDENTIFY KEY FUNCTIONS
+
+No functions modified. Change is preprocessor layout at the bottom of
+`thermal.h`.
+
+**Record:** `[none; include guard / extern "C" only]`
+
+### Step 5.2: TRACE CALLERS
+
+In-tree includes of this header:
+
+- `tools/lib/thermal/{thermal,events,commands,thermal_nl,sampling}.c`
+- `tools/thermal/thermal-engine/thermal-engine.c` (`thermal_init`,
+  `thermal_events_handle`)
+
+All **C**. `find tools/thermal tools/lib/thermal -name '*.cpp'` is
+empty. The header is still a **public installed API** (`install_headers`
+installs `include/thermal.h`; `libthermal.pc`).
+
+**Record:** `[in-tree users are C; public header is C++-aware and
+installed]`
+
+### Step 5.3: TRACE CALLEES
+
+N/A for a brace move.
+
+**Record:** `[N/A]`
+
+### Step 5.4: FOLLOW THE CALL CHAIN
+
+Trigger is **userspace C++** including `thermal.h` twice (direct or via
+two headers). Not a syscall/kernel path. Reachable for anyone who
+installs libthermal and uses it from C++.
+
+**Record:** `[userspace C++ re-include] [not kernel runtime]`
+
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+
+`tools/lib/bpf/libbpf.h` and `libbpf_legacy.h` close `extern "C"`
+**inside** the guard. This patch matches that.
+
+**Record:** `[libbpf already uses the correct pattern; libthermal was
+the outlier]`
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+
+Yes. `tools/lib/thermal/include/thermal.h` lines 178–182 still have
+`#endif` before the closing `}`. Introduced in v5.19; present at v6.18
+and HEAD.
+
+`git merge-base --is-ancestor cb0ec27efac2a HEAD` → **not in this
+tree**.
+
+**Record:** `[bug present at thermal.h:178-182] [since v5.19] [fix not
+applied]`
+
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+
+Context around the hunk is identical to the mainline diff. No churn on
+this file after v6.18. Clean apply.
+
+**Record:** `[clean apply]`
+
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+
+No. File history has no other extern-C/guard fix.
+
+**Record:** `[no existing equivalent fix]`
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+
+`tools/lib/thermal/` — userspace thermal netlink library (THERMAL in
+MAINTAINERS: Rafael Wysocki, Daniel Lezcano).
+
+**Criticality:** PERIPHERAL for kernel runtime; IMPORTANT as a **public
+installed userspace API** for thermal tools. Not mm/fs/net core.
+
+**Record:** `[tools/lib/thermal] [PERIPHERAL kernel / public userspace
+header]`
+
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+
+Low churn: library add (2022), threshold ABI (2024), a few
+build/leak/symbol fixes. Mature header layout, not a moving target.
+
+**Record:** `[low activity; header layout stable since 2022]`
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: DETERMINE WHO IS AFFECTED
+
+C++ programs that include the installed `thermal.h` more than once. In-
+tree C tools (`thermal-engine`) are unaffected. Kernel image/build is
+unaffected.
+
+**Record:** `[config/userspace-specific: C++ libthermal consumers]`
+
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+
+Second `#include <thermal.h>` in one C++ translation unit (common with
+umbrella headers). Unprivileged userspace compile-time only. Not a race.
+
+**Record:** `[double include from C++] [uncommon but valid] [compile-
+time only]`
+
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+
+Compile failure (`stray '}'`), not oops/corruption/UAF. Stable rules
+still list **build errors** and **include-file fixes** as in-scope.
+
+**Record:** `[C++ compile break] [MEDIUM as a build bug; HIGH as
+include-file correctness; not a kernel crash]`
+
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+
+- **Benefit:** C++ consumers of the public header compile; long-standing
+  defect (v5.19+).
+- **Risk:** 4-line preprocessor move, no runtime, no ABI change.
+
+**Record:** `[moderate benefit for C++ libthermal users] [near-zero
+risk] [favorable]`
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: COMPILE THE EVIDENCE
+
+**FOR:**
+- Real, well-explained compile break for a public C++-aware header
+- Obviously correct; matches libbpf
+- 4 lines; zero runtime/API risk
+- Buggy code is in this 6.18.53 tree; fix is not
+- Applies cleanly; no prerequisites
+- Maintainer applied v1 with “thanks for the fix”
+- Fits the **build / include-file** exception in stable-kernel-rules
+
+**AGAINST:**
+- Not a kernel oops, UAF, deadlock, or security hole
+- In-tree tools are C and already build
+- No multi-user Reported-by
+- libthermal is a small audience
+
+**UNRESOLVED:**
+- Could not search lore.kernel.org/stable (HTTP 403). Unverified whether
+  anyone asked for this on the stable list.
+
+### Step 9.2: APPLY THE STABLE RULES CHECKLIST
+
+1. Obviously correct and tested? **PASS** — mechanical brace move;
+   maintainer applied
+2. Fixes a real bug that affects users? **PASS** — C++ double-include of
+   the installed header fails
+3. Important issue? **PASS** — build/include-file error (explicitly
+   allowed); not a crash, but in-scope
+4. Small and contained? **PASS** — 4 lines, one header
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — context matches HEAD
+
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+
+**Build / include-file fix.** Not a device ID, quirk, DT, or docs-only
+change.
+
+### Step 9.4: DECISION
+
+This tree ships the buggy public header. The fix is a 4-line, zero-risk
+compile repair that mainline already took. That meets stable rules for
+this 6.18 tree.
+
+---
+
+## What the commit solves for this tree
+
+`thermal.h` advertises C++ support (`extern "C"`) and is installed
+(`make install` → `include/thermal.h`). The closing `}` sits outside
+`__LIBTHERMAL_H`, so a second include in one C++ file emits a stray
+brace and fails the build. Moving `#endif` below the close matches every
+other well-formed kernel userspace header. Kernel runtime is untouched.
+
+Risk vs benefit: benefit is restoring a header that this tree already
+ships; risk is none.
+
+---
+
+## Verification
+
+- **[Phase 1]** `git show cb0ec27efac2a`: tags are author SOB, Lezcano
+  SOB, Link; no Fixes/Reported-by/Cc: stable
+- **[Phase 1]** Body describes second-include stray `}` — matches the
+  current header
+- **[Phase 2]** Diff is `#endif` moved after `#ifdef __cplusplus` / `}`
+  / `#endif`
+- **[Phase 2]** `tools/lib/bpf/libbpf.h` uses the same close-then-guard-
+  end order
+- **[Phase 3]** `git blame tools/lib/thermal/include/thermal.h` lines
+  178–182 → `47c4b0de080ad`
+- **[Phase 3]** `git merge-base --is-ancestor 47c4b0de080ad v5.19` yes;
+  `v5.18` no
+- **[Phase 3]** `git log --oneline --
+  tools/lib/thermal/include/thermal.h`: only add + threshold ABI
+- **[Phase 3]** `git merge-base --is-ancestor cb0ec27efac2a HEAD` → not
+  in this tree
+- **[Phase 4]** `b4 dig -c cb0ec27efac2a`: lore URL + v1 only
+- **[Phase 4]** `b4 dig -a`: single revision 2026-07-21
+- **[Phase 4]** `b4 dig -w`: Rafael, Lezcano, Zhang Rui, Lukasz Luba,
+  linux-pm, linux-kernel
+- **[Phase 4]** `b4 mbox`: Lezcano “Applied, thanks for the fix”
+  (2026-08-07)
+- **[Phase 4]** WebFetch lore/all, patch.msgid.link, lore/linux-pm,
+  lore/stable → 403
+- **[Phase 5]** No `*.cpp` under `tools/thermal` or `tools/lib/thermal`
+- **[Phase 5]** In-tree include sites are C; `thermal-engine.c` calls
+  `thermal_init`
+- **[Phase 5]** Makefile `install_headers` installs `include/thermal.h`
+- **[Phase 6]** `make kernelversion` / Makefile → 6.18.53; `git describe
+  HEAD` → `p-6.18-1-g03b85e06ca9bf`
+- **[Phase 6]** HEAD `thermal.h` still has `#endif` before `}`
+- **[Phase 6]** `git log v6.18..HEAD --
+  tools/lib/thermal/include/thermal.h` empty
+- **[Phase 7]** MAINTAINERS THERMAL covers `tools/lib/thermal/`
+- **[Phase 8]** Failure mode verified as C++ compile-time only, not
+  kernel oops
+- **UNVERIFIED:** stable@ mailing-list archive (HTTP 403); does not
+  change the verdict
+
+The local 6.18.53 tree has the bug, the fix is small and correct, and it
+applies cleanly.
 
 **YES**
 
- drivers/platform/x86/amd/hsmp/acpi.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ tools/lib/thermal/include/thermal.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/hsmp/acpi.c b/drivers/platform/x86/amd/hsmp/acpi.c
-index 674be31654776..8f297d52ab5e3 100644
---- a/drivers/platform/x86/amd/hsmp/acpi.c
-+++ b/drivers/platform/x86/amd/hsmp/acpi.c
-@@ -152,12 +152,18 @@ static int hsmp_read_acpi_dsd(struct hsmp_socket *sock)
- 		union acpi_object *msgobj, *msgstr, *msgint;
+diff --git a/tools/lib/thermal/include/thermal.h b/tools/lib/thermal/include/thermal.h
+index 818ecdfb46e50..d9097271d9fad 100644
+--- a/tools/lib/thermal/include/thermal.h
++++ b/tools/lib/thermal/include/thermal.h
+@@ -175,8 +175,8 @@ LIBTHERMAL_API thermal_error_t thermal_sampling_handle(struct thermal_handler *t
  
- 		msgobj	= &mailbox_package->package.elements[j];
--		msgstr	= &msgobj->package.elements[0];
--		msgint	= &msgobj->package.elements[1];
+ LIBTHERMAL_API int thermal_sampling_fd(struct thermal_handler *th);
  
- 		/* package should have 1 string and 1 integer object */
- 		if (msgobj->type != ACPI_TYPE_PACKAGE ||
--		    msgstr->type != ACPI_TYPE_STRING ||
-+		    msgobj->package.count < 2) {
-+			ret = -EINVAL;
-+			goto free_buf;
-+		}
+-#endif /* __LIBTHERMAL_H */
+-
+ #ifdef __cplusplus
+ }
+ #endif
 +
-+		msgstr	= &msgobj->package.elements[0];
-+		msgint	= &msgobj->package.elements[1];
-+
-+		if (msgstr->type != ACPI_TYPE_STRING ||
- 		    msgint->type != ACPI_TYPE_INTEGER) {
- 			ret = -EINVAL;
- 			goto free_buf;
++#endif /* __LIBTHERMAL_H */
 -- 
 2.53.0
 
