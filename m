@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2792583DA7;
-	Mon, 19 Oct 2026 13:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D828500AB2;
+	Mon, 19 Oct 2026 13:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418331; cv=none; b=cKPuHBqin7xRZC05hcOmwBzgM0pe4RtZbd6JxnYOz3bcz/iTO1ZbVf3dISKeaP8DYwzC0oxDhmkFB63D86lAX0f2AY6J+Tcr6Qis6okW7YUs3VkJC0AfFnQ+5uF7fXOqV2QPVpaR8+wjM9ecy3jcBqJPQLu3JJKXMMYnJrc2hNU=
+	t=1792418332; cv=none; b=VQDoJ4zOf3aHOPd3x5f+LBLVJCxrs3G32Dur+slapfiFD6doG1YIax/wgIh/LxAFYRF4HGmQ+3AoAfzhC0UOgRHujXd1SANFSOSF4RnSBFcOiu8oKcaxPVHbj0sgmdKiLMyKtx1Wl0vNgSHWXp1yDvJ3+vo3Q/NLtsPRCPEEzPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418331; c=relaxed/simple;
-	bh=milrIlVUbZashnMkcKN4rMuCglSG3pnEANrftBe7vUo=;
+	s=arc-20240116; t=1792418332; c=relaxed/simple;
+	bh=b416kC/7CaYadZQDJ9zlNw1KeykzNXi6AefTmPsk9d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lw6wnKKeI6RiDCpcx1jpriDzPHoylDekZuw7GNYBXlIc4LA2Sb3/VXaCe3k+jqqz94a02/yRBJYmZerHAzZbOzB03B32PHcZ3xtl++T4/sqv3o01gOha/SmZtrdh+7VaO8QGCHjRfyZqNCbNrQrmNsCdpwpnNVDA+MCGa2oWq0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KADB6xss; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gH0A0xQ6QsUxXeYYn6FkcztXSsl7X3UPvjtschmCWrlb1KupgXFBmakK0BdLj6Oaas/k3pdIkRsG6KoiqsNSYJA0qE/QnXbECeX/lfxf3xsIAPt/dkGEv7Y/nL3zF9WXl6fJ3s/9Rk+AnPOlaIvDho9LfqbHByl9/gPT2wuyHO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eDEguPhG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KADB6xss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11791F000CB;
-	Mon, 19 Oct 2026 13:58:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eDEguPhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1801F000C7;
+	Mon, 19 Oct 2026 13:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418328;
-	bh=0W9+MtI0CaOH9WUkG/Dmpf/F+iFgVr1uPGP3BHDkQrI=;
+	s=k20260515; t=1792418327;
+	bh=WAqhhXzj65SZ1X+PrGy9aIEIqNsKhn7pV/K6lVOjYDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KADB6xss+UXgyWgobYHYivrGi6MUOJa4WqlGF3UJIyPsOjxaYrchP6oEkhJpQdwwL
-	 Q+ZB8b1Qh+7c0Cd6HPSulPIwA9FQK+tfPiOUjHHJyb9hSeqnsk1HwpkUekT20dzhTx
-	 CWI6/PoC5gXiQBuJwvWtz07vYYXkWk8Pcl3G8Ba34uxnV/GoNwk9XilIkDfplS/sc4
-	 b1vq0tPyvv+9FuwhfIgQMST7uSSYN5JA8bQM8vSEvNQZ1uqyEYcltNl3hKpddZIZBV
-	 HeZfjkI+R0BPHKf61NfT9ySGdMqX9sgPfCNLb9hBDsBIJ6JjjsDGaacn8nB8pCbDbL
-	 uvjbq53V3IhYA==
+	b=eDEguPhGPzyOSR8HN+aXNhuUjaiy0dVkof5Ydr6yqPwHdwpcrE0IwGO+zhA31t7Pl
+	 TNQuFSbx3HyriK2RKsIfPUnMkO96NuvRUY/Ef/C2XtisXWTw3/JQelh8YijfteWQze
+	 2cmWl3iPQDcZHoyx7N+G11ucehL8b/GqdHLviKiYcdohK/IXFou5nenwJIugkslQGx
+	 5rgjtyMBCYeUYo4hPBAyvGX5zRdWUboReOYk36dH8IkuehSUcTx3fDwm8yzF/9sNMr
+	 IdsMxzPW6dLdA2dyu/VMKWA6gF3I8Ja7xnxgkJ4VBTrE16HIz11zbndfqhUjQNlErF
+	 y9RoIVwR9ZxAQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: validate D3_END notif size
-Date: Mon, 19 Oct 2026 09:47:41 -0400
-Message-ID: <20261019135441.1420968-170-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ASoC: codecs: uda1342: Leave cache-only mode before syncing
+Date: Mon, 19 Oct 2026 09:47:40 -0400
+Message-ID: <20261019135441.1420968-169-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,361 +55,392 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 4e777dcdfe70d9b3ddf38cb49de9e30306889b18 ]
+[ Upstream commit 29da72e58fde87e632f2fa43e448fcd1e3ab31b0 ]
 
-Check D3_END_NOTIFICATION payload length before reading notif->flags.
-On short payloads, mark notif handling as failed.
-Avoid out-of-bounds reads from malformed notifications.
+uda1342_suspend() puts the regmap into cache-only mode. uda1342_resume()
+marks the cache dirty and syncs it, but does not first leave cache-only
+mode and ignores sync failures.
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714165826.db2df8b6b6bb.I6163bbdf433379bf1dbf9eb46fb9562892217bd7@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Leave cache-only mode before syncing the dirty cache, propagate sync
+failures, and restore cache-only/dirty state on failure.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704072140.67222-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Local tree is **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
-iwlwifi MLD D3 resume path is present here, and this is a small bounds
-check that stops an out-of-bounds read of firmware notification data.
+The local tree is **v7.3-rc4**. The UDA1342 resume path never left
+cache-only mode, so after suspend the codec stays cache-only and later
+register writes never reach hardware.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1 — Subject**
-Record: **[iwlwifi/mld]** **[validate]** Check `D3_END_NOTIFICATION`
-payload size before reading `notif->flags`.
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[ASoC/codecs/uda1342] [Leave / prevent incorrect PM cache
+state] [Disable cache-only mode before `regcache_sync()` on resume, and
+fail resume if sync fails]**
 
-**Step 1.2 — Tags**
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Assisted-by: GitHubCopilot:gpt-5.3-codex`
-- `Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>`
-  (author)
-- `Link: https://patch.msgid.link/20260714165826.db2df8b6b6bb.I6163bbdf4
-  33379bf1dbf9eb46fb9562892217bd7@changeid`
-- `Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>`
-  (iwlwifi maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-  stable` (absence of Fixes/Cc-stable is expected for this review)
-- Sasha Levin SOB ignored per pipeline rules
+- **Fixes:** none (expected for this review)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none
+- **Acked-by:** none
+- **Cc: stable:** none (expected)
+- **Link:**
+  https://patch.msgid.link/20260704072140.67222-1-pengpeng@iscas.ac.cn
+- **Signed-off-by:** Pengpeng Hou (author); Mark Brown (ASoC
+  maintainer). Ignore any Sasha Levin SOB if present.
 
-**Step 1.3 — Body**
-Record: Firmware `D3_END_NOTIFICATION` payload length is not checked
-before `le32_to_cpu(notif->flags)`. A short payload is an out-of-bounds
-read. On failure, handling is marked failed (`notif_handling_err`).
-Symptom: OOB read of firmware RX data during D3/WoWLAN resume. No stack
-trace, reproducer, or version range in the message. Root cause: missing
-length check vs `sizeof(struct iwl_d3_end_notif)`.
-
-**Step 1.4 — Hidden bug fix?**
-Record: Not hidden. The subject/body state a bounds check to avoid OOB
-reads. Copilot assistance does not change that.
-
-## Phase 2: Diff analysis
-
-**Step 2.1 — Inventory**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- File: `drivers/net/wireless/intel/iwlwifi/mld/d3.c` (+9 / −1)
-- Function: `iwl_mld_handle_d3_notif()`
-- Scope: single-file, one `switch` case (`WIDE_ID(PROT_OFFLOAD_GROUP,
-  D3_END_NOTIFICATION)`)
+- **Bug:** `uda1342_suspend()` sets `regcache_cache_only(..., true)`.
+  `uda1342_resume()` marks the cache dirty and calls `regcache_sync()`
+  without leaving cache-only mode, and ignores the sync return value.
+- **Symptom:** After suspend/resume the map stays cache-only, so later
+  `regmap` writes update only the cache. On this tree, `regcache_sync()`
+  also `WARN_ON`s and returns `-EINVAL` if `cache_only` is still set.
+- **Version info in message:** none
+- **Root cause (author):** resume never disables cache-only before sync,
+  and never reports sync failure.
 
-**Step 2.2 — Control flow**
-Record: Before, the handler always did `resume_data->d3_end_flags =
-le32_to_cpu(notif->flags)` from `pkt->data` with no length check, then
-set `IWL_D3_NOTIF_D3_END_NOTIF`. After, it computes `len =
-iwl_rx_packet_payload_len(pkt)` and uses `IWL_FW_CHECK(mld, len <
-sizeof(*notif), ...)`. Short payload: log, set `notif_handling_err =
-true`, skip the flags read. Valid payload: same flags assignment as
-before. In both cases it still sets `IWL_D3_NOTIF_D3_END_NOTIF` so the
-wait completes. Error path only for truncated firmware notifications.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a disguised cleanup. It is an explicit PM correctness fix
+(leave cache-only, propagate errors, restore dirty/cache-only on
+failure).
 
-**Step 2.3 — Bug mechanism**
-Record: **Memory safety / out-of-bounds read.** `struct
-iwl_d3_end_notif` is a packed `__le32 flags` (4 bytes). Reading
-`notif->flags` when `payload_len < 4` reads past the declared RX
-payload. Same class of check already used in `mvm/d3.c`.
+===============================================================
+PHASE 2: DIFF ANALYSIS
+===============================================================
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct: compare payload length to `sizeof(*notif)`
-before dereference, using existing `IWL_FW_CHECK` /
-`iwl_rx_packet_payload_len`. Surgical, no API change. Regression risk is
-low: valid 4-byte notifications behave as before. Truncated ones fail
-resume with `-EIO` via `notif_handling_err` instead of using garbage
-`d3_end_flags` (which can spuriously set or miss
-`IWL_D0I3_RESET_REQUIRE`). The API struct always includes `flags`; MVM
-already rejects short D3_END payloads, so empty notifications are not a
-valid firmware contract.
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `sound/soc/codecs/uda1342.c` (+8 / -1)
+- Function: `uda1342_resume()`
+- Scope: single-file surgical fix
 
-## Phase 3: Git history
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- **Before:** `regcache_mark_dirty()` then `regcache_sync()` with
+  `cache_only` still true; return 0 always.
+- **After:** `regcache_cache_only(..., false)`, mark dirty, `ret =
+  regcache_sync()`. On failure, re-enter cache-only, mark dirty, return
+  `ret`.
+- Path: system-sleep resume (and the runtime-resume callback used by
+  `pm_runtime_force_resume()`).
 
-**Step 3.1 — Blame**
-Record: Unchecked `notif->flags` read was introduced with
-`d1e879ec600f9` (`wifi: iwlwifi: add iwlmld sub-driver`, 2025-02-16).
-`git describe --tags d1e879ec600f9` → `v6.14-rc4-1062-gd1e879ec600f9`
-(iwlmld landed for ~6.15). The bug has been in this driver since it was
-added.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record:
+- **Category:** logic / PM correctness (cache-only left enabled; ignored
+  error)
+- **Mechanism:** suspend enables cache-only. Resume must disable it
+  before sync so writes hit I2C. Leaving it set means `_regmap_write()`
+  takes the cache-only early return and never calls `map->reg_write()`.
+  This tree also has `WARN_ON(map->cache_only)` in `regcache_sync()`, so
+  the old resume warns and returns `-EINVAL` without restoring hardware.
 
-**Step 3.2 — Fixes: tag**
-Record: No `Fixes:` tag. Introducing commit is `d1e879ec600f9`, which
-**is** an ancestor of this tree (`git merge-base --is-ancestor`
-succeeded).
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- Matches the usual ASoC pattern (`tas2552_runtime_resume()` and many
+  others).
+- Minimal, obviously correct.
+- Failure unwind matches other codecs: stay cache-only and dirty so a
+  later resume can retry.
+- Regression risk is low: one driver, resume path only, no API change.
 
-**Step 3.3 — Related file history**
-Record: Same-day MVM sibling `c1a1dc162870a` (`wifi: iwlwifi: mvm: d3:
-validate D3 resume notification payloads`) documents “buffer underread
-on malformed or truncated notifications.” Later MLD D3 checks (`validate
-WoWLAN notif header`, wake-packet reads) are independent siblings, not
-prerequisites. Follow-up `4f5384b58b483` disconnects on D3 resume
-failure; this patch does not depend on it.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.4 — Author**
-Record: Emmanuel Grumbach is a long-time iwlwifi developer. Applied by
-maintainer Miri Korenblit. Same author wrote the MVM D3 payload
-validation.
+**Step 3.1: BLAME THE CHANGED LINES**
+Record:
+- Buggy resume introduced in `de0fb25e37aae` (“ASoC: codecs: Add uda1342
+  codec driver”, Binbin Zhou, 2024-10-09).
+- First appeared in **v6.13-rc1**. Present in this 7.3-rc4 tree.
 
-**Step 3.5 — Dependencies**
-Record: Standalone. Uses existing `iwl_rx_packet_payload_len` (`iwl-
-trans.h`), `IWL_FW_CHECK` (`fw/dbg.h`, included by `d3.c`; macro since
-`568db7fd27fad` / ~v6.5), `notif_handling_err`, and `struct
-iwl_d3_end_notif`. No new helpers. It was **09/15** in an iwlwifi-next
-bundle of mixed fixes/features; this hunk has no code dependency on the
-other 14 patches.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Introducer is `de0fb25e37aae`, confirmed
+ancestor of HEAD.
 
-## Phase 4: Mailing list / external research
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Only four commits on the file: driver add, two `i2c_device_id`
+cleanups, then this fix. Standalone, not patch X/Y.
 
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c 4e777dcdfe70d` → https://patch.msgid.link/20260714165
-826.db2df8b6b6bb.I6163bbdf433379bf1dbf9eb46fb9562892217bd7@changeid
-`b4 dig -a`: v1 and **v2**; applied version is **v2** `[PATCH v2
-iwlwifi-next 09/15]`. Cover letter: “Usual fixed, cleanups and features
-from our internal tree.” v2 only resends after `iwlwifi-next` contained
-an unrelated compile-time hcmd-size check. No NAK, no reviewer concern,
-no `Cc: stable` on this patch. Direct lore.kernel.org fetch returned
-**403**; thread recovered via `b4 dig -m`.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Pengpeng Hou is a regular small-fix contributor, not the UDA1342
+author. Original driver is Binbin Zhou (Loongson). Mark Brown applied
+the patch. Related work around the same time: many ASoC “propagate
+`regcache_sync()` errors” patches.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-Record: To Johannes Berg (`johannes@sipsolutions.net`); Cc `linux-
-wireless@vger.kernel.org`, Emmanuel Grumbach. Correct wireless/iwlwifi
-audience. This patch itself has no extra `Reviewed-by` (unlike some
-series mates). Maintainer SOB is present.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None. Uses `regcache_cache_only` / `regcache_mark_dirty` /
+`regcache_sync`, all long-standing. Applies standalone.
 
-**Step 4.3 — Bug report**
-Record: No `Reported-by`, syzbot, or bugzilla. Firmware-malformed-
-notification hardening, not a user crash report.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 4.4 — Series**
-Record: 15-patch iwlwifi-next dump. This patch is an isolated length
-check in one case of `iwl_mld_handle_d3_notif`. Other patches add device
-IDs, LARI v14, TCM removal, etc. Not a multi-step refactor of this
-function.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c 29da72e58fde8` →
+  https://patch.msgid.link/20260704072140.67222-1-pengpeng@iscas.ac.cn
+- `b4 dig -a`: only **v1**
+- Thread: submission + Mark Brown “Applied to sound.git for-7.3”. No
+  NAK, no requested revisions, no reviewer `Cc: stable`.
 
-**Step 4.5 — Stable list**
-Record: lore.kernel.org/stable WebFetch returned **403**. No stable
-discussion in the saved mbox. **UNVERIFIED:** whether anyone already
-nominated this on stable@.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): Liam Girdwood, Mark Brown, Jaroslav Kysela,
+Takashi Iwai, Linus Walleij, Charles Keepax, Uwe Kleine-König, linux-
+sound, linux-kernel. Maintainer Mark Brown applied it.
 
-## Phase 5: Code semantic analysis
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No `Reported-by`, syzbot, or bugzilla. Bug is from code
+inspection. Driver was added for **Loongson-2K1000** (`7d04763cae994`
+series: “Add uda1342 codec required on Loongson-2K1000”), so there are
+real boards, even with no in-tree `.dts` match for `nxp,uda1342`.
 
-**Step 5.1 — Functions**
-Record: `iwl_mld_handle_d3_notif()` only.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone v1. Same resume pattern exists across ASoC codecs.
 
-**Step 5.2 — Callers**
-Record: Registered as the notification-wait callback from
-`iwl_mld_wait_d3_notif()`, itself called by:
-- `iwl_mld_no_wowlan_resume()` → `iwl_mld_mac80211_start()` when
-  `fw_status.in_d3` (`mac80211.c`)
-- `iwl_mld_wowlan_resume()` → `iwl_mld_resume()` mac80211 resume op
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable returned 403. No evidence this was
+discussed on stable (UNVERIFIED beyond the 403).
 
-Context: process context, suspend/resume, `CONFIG_PM_SLEEP`
-(`mld/Makefile`: `iwlmld-$(CONFIG_PM_SLEEP) += d3.o`).
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 5.3 — Callees**
-Record: `iwl_rx_packet_payload_len()`, `IWL_FW_CHECK` → `IWL_ERR_LIMIT`,
-`le32_to_cpu()`. No allocation, no new locks.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `uda1342_resume()`; `uda1342_suspend()` unchanged.
 
-**Step 5.4 — Reachability**
-Record: Yes, from userspace via suspend/resume (S3/WoWLAN) on Intel Wi-
-Fi 7 / MLD (`CONFIG_IWLMLD`). Unprivileged users typically cannot inject
-firmware RX payloads; trigger is firmware (or a compromised device).
-Still a real kernel OOB if firmware truncates the notif.
+**Step 5.2: TRACE CALLERS**
+Record:
+- Wired via `DEFINE_RUNTIME_DEV_PM_OPS(uda1342_pm_ops, uda1342_suspend,
+  uda1342_resume, NULL)`:
+  - system sleep: `pm_runtime_force_suspend` / `pm_runtime_force_resume`
+  - runtime: `uda1342_suspend` / `uda1342_resume`
+- `.pm = pm_sleep_ptr(&uda1342_pm_ops)` so system sleep uses these ops.
+- Probe never calls `pm_runtime_enable()`, so runtime autosuspend is
+  unused. System suspend still calls `GET_CALLBACK(dev,
+  runtime_suspend/resume)` from `pm_runtime_force_*`
+  (`drivers/base/power/runtime.c`).
 
-**Step 5.5 — Similar patterns**
-Record: MVM `iwl_mvm_wait_d3_notif` already checks `len <
-sizeof(*notif)` before `notif->flags`. Other iwlwifi handlers use
-`IWL_FW_CHECK(..., pkt_len < sizeof(...))`. This closes a gap in the
-newer MLD copy of D3 resume.
+**Step 5.3: TRACE CALLEES**
+Record: `regcache_cache_only`, `regcache_mark_dirty`, `regcache_sync`.
+Sync uses maple ops (`REGCACHE_MAPLE`) and `_regmap_write`.
 
-## Phase 6: Local tree (7.3.0-rc4)
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record:
+- Userspace: suspend/resume (or hibernation) with
+  `CONFIG_SND_SOC_UDA1342` and a `nxp,uda1342` I2C device.
+- After a “successful” old resume, `uda1342_mute()` /
+  `uda1342_hw_params()` → `regmap_update_bits()` → `_regmap_write()`
+  cache-only early return → no I2C write.
+- Reachable on real Loongson-2K1000 hardware; not a syscall fuzzer path.
 
-**Step 6.1 — Buggy code here?**
-Record: Yes. `drivers/net/wireless/intel/iwlwifi/mld/d3.c` exists;
-`iwl_mld_handle_d3_notif` handles `D3_END_NOTIFICATION`. Pre-patch
-parent shows the unguarded `le32_to_cpu(notif->flags)`. Bug introduced
-with iwlmld (`d1e879ec600f9`), ancestor of HEAD.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same leave-cache-only-then-sync pattern in many codecs
+(`tas2552.c`, `wm8962.c`, etc.). This driver was the one that omitted
+it.
 
-**Step 6.2 — Backport difficulty**
-Record: Clean apply. Surrounding case statement matches the candidate
-diff. `IWL_FW_CHECK` and `notif_handling_err` are already in this tree.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 6.3 — Related fixes already here?**
-Record: No earlier MLD D3_END size check. MVM has its own check
-(`c1a1dc162870a`); that does not cover MLD.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record:
+- `git describe HEAD` → **v7.3-rc4-27-gf0100363d8c37**
+- `make kernelversion` → **7.3.0-rc4**
+- Driver present: `sound/soc/codecs/uda1342.c`
+- `git merge-base --is-ancestor de0fb25e37aae HEAD` → yes
+- Bug introduced in v6.13-rc1, still in this lineage. Current file
+  already has the fixed resume (expected: this is the mainline commit
+  under review).
 
-## Phase 7: Subsystem / maintainer
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply. Surrounding resume/probe code is the original
+driver plus trivial `i2c_device_id` init cleanups. No refactor.
 
-**Step 7.1**
-Record: **iwlwifi MLD** (`drivers/net/wireless/intel/iwlwifi/mld/`).
-**IMPORTANT** (not core mm/fs, but a widely used Intel Wi-Fi driver on
-current hardware). D3.c is only built with `CONFIG_PM_SLEEP`.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No earlier equivalent fix. Later `86fc3483a4d60` (“regcache:
+Warn if regcache_sync() is called in cache_only mode”, also v7.3-rc1)
+makes the old resume a `WARN_ON` + `-EINVAL` on this tree.
 
-**Step 7.2**
-Record: Active (frequent iwlwifi-next dumps). D3_END handling itself has
-been stable since the sub-driver was added.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-## Phase 8: Impact and risk
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **ASoC codec driver** (`sound/soc/codecs/`). Criticality:
+**PERIPHERAL** (one NXP codec, Loongson-2K1000). Not core mm/fs/net.
 
-**Step 8.1 — Who is affected**
-Record: Users of Intel Wi-Fi MLD (`CONFIG_IWLMLD`) who suspend/resume or
-use WoWLAN. Driver- and config-specific, not universal.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: ASoC codecs are actively developed. This file itself is quiet
+(four commits). Mature for this driver: the PM bug was present from
+introduction.
 
-**Step 8.2 — Trigger**
-Record: D3 resume when firmware delivers `D3_END_NOTIFICATION` with
-payload &lt; 4 bytes. Uncommon if firmware is healthy; realistic on
-firmware bugs. Not a normal userspace syscall; firmware-sourced.
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-**Step 8.3 — Failure mode**
-Record: Out-of-bounds read of RX buffer / declared payload. Can be KASAN
-OOB, garbage `d3_end_flags` (wrong reset-on-resume), or a crash if the
-buffer is tightly sized. **Severity: HIGH** (OOB; resume correctness).
-Not a guaranteed panic on every resume.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Users of **CONFIG_SND_SOC_UDA1342** / `nxp,uda1342` (documented
+for Loongson-2K1000). Driver- and config-specific, not universal.
 
-**Step 8.4 — Risk vs benefit**
-Record: **Benefit: high** for MLD laptop suspend/resume — prevents OOB
-and acting on garbage reset flags. **Risk: very low** — 9 lines, error
-path only, same pattern as MVM. Ratio favors backport.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record:
+- Trigger: system suspend/resume with this codec.
+- Common on any machine that sleeps.
+- Not an unprivileged syscall exploit path.
+- Not a timing race.
 
-## Phase 9: Synthesis
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record:
+- On this tree: `WARN_ON` in `regcache_sync()` and resume returns
+  `-EINVAL` → hardware not restored.
+- Even without that warn: cache-only left set → mute/volume/hw_params
+  never programmed to the chip; audio broken after resume.
+- Severity: **HIGH** for those devices (broken audio / failed resume),
+  not a panic or filesystem corruption.
 
-**Step 9.1 — Evidence**
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** medium-high for UDA1342 boards; zero elsewhere.
+- **Risk:** very low (8 lines, one function, standard pattern).
+- **Ratio:** favorable.
 
-For:
-- Real OOB read of firmware notification payload
-- Small, obviously correct check (`len < sizeof(*notif)`)
-- Matches established iwlwifi/`IWL_FW_CHECK` and MVM D3 handler
-- D3/WoWLAN resume is a common path on laptops
-- Garbage flags can mis-handle `IWL_D0I3_RESET_REQUIRE`
-- Maintainer-applied; Johannes/linux-wireless were CCed
-- Applies cleanly; no prerequisites missing in 7.3-rc4
-- iwlmld and the buggy handler exist in this tree
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-Against:
-- No user/syzbot report; Copilot-assisted
-- Trigger needs truncated firmware, not a normal station
-- Mixed 15-patch “updates” series, not explicitly Cc: stable
-- No extra `Reviewed-by` on this patch
+**Step 9.1: COMPILE THE EVIDENCE**
 
-Unresolved:
-- lore.kernel.org HTTP 403; stable@ search not confirmed beyond the mbox
+FOR:
+- Real suspend/resume bug: cache-only never cleared, so post-resume
+  register writes never hit I2C.
+- On this 7.3-rc4 tree, `regcache_sync()` additionally WARNs and fails
+  if cache-only is still set.
+- Small, surgical, matches other ASoC codecs; maintainer applied v1 with
+  no objections.
+- Driver exists here since v6.13; no extra prerequisites.
+- Error return lets the PM core fail resume instead of pretending it
+  succeeded.
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — length check before
-   dereference; applied to iwlwifi-next by the maintainer.
-2. Real bug affecting users? **PASS** — OOB on truncated D3_END; MLD D3
-   resume is a real path.
-3. Important (crash/security/corruption/deadlock)? **PASS** — OOB read /
-   possible bad resume flags; HIGH, not theoretical style-only.
-4. Small and contained? **PASS** — +9/−1, one function, one case.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS** — files, macros, and structures
-   exist.
+AGAINST:
+- Peripheral codec, no in-tree DTS, no user/syzbot report.
+- Author is not the original driver author; no `Tested-by`.
+- Not a security/UAF/deadlock class issue.
 
-**Step 9.3 — Exceptions**
-Record: Not a device-ID/quirk/DT/build/docs exception. It is a
-straightforward memory-safety fix.
+UNRESOLVED:
+- Stable list search on lore returned 403.
+- No public confirmation of a user-reproduced resume failure (code
+  analysis only).
 
-**Step 9.4 — Decision**
-This tree is 7.3-rc4 and contains iwlmld D3 resume. The patch is a
-9-line firmware notification bounds check that stops an OOB read and
-avoids using garbage `d3_end_flags`. It meets stable criteria for this
-checkout.
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — standard pattern; applied by
+   Mark Brown. No extra tester tag.
+2. Fixes a real bug that affects users? **PASS** — resume leaves the
+   codec in cache-only; Loongson-2K1000 uses this codec.
+3. Important issue? **PASS** — broken audio / failed resume after sleep;
+   WARN_ON on this tree. Not a panic, but user-visible PM breakage.
+4. Small and contained? **PASS** — 8 insertions, 1 deletion, one
+   function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — file and helpers exist;
+   context matches.
 
-### What it solves for this tree
-On Intel MLD Wi-Fi, D3/WoWLAN resume handled `D3_END_NOTIFICATION` by
-reading a 4-byte `flags` field without checking payload length. A short
-firmware notification reads past valid RX data and can drive wrong
-reset-on-resume behavior. The fix logs via `IWL_FW_CHECK`, sets
-`notif_handling_err` (resume returns `-EIO`), and only then skips the
-flags read.
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: None (not a device ID / DT / build / docs exception). It is a
+normal small bug fix.
 
-### Risk vs benefit
-Benefit is preventing OOB and incorrect D3 resume on `CONFIG_IWLMLD` +
-`CONFIG_PM_SLEEP`. Risk is negligible: valid notifications are
-unchanged.
+**Step 9.4: MAKE YOUR DECISION**
+This tree has the UDA1342 driver and the broken resume. The patch is the
+usual, low-risk ASoC fix: leave cache-only, sync, report errors. That is
+appropriate to backport here.
 
-## Verification
-- [Phase 1] Parsed tags: author Grumbach, maintainer Korenblit SOB,
-  msgid.link; no Fixes/Reported-by/Cc-stable
-- [Phase 2] Diff: +9/−1 in `iwl_mld_handle_d3_notif` D3_END case; length
-  check then optional `le32_to_cpu(notif->flags)`
-- [Phase 2] `struct iwl_d3_end_notif` is `__le32 flags` only
-  (`fw/api/d3.h`)
-- [Phase 2] `IWL_FW_CHECK` defined in `fw/dbg.h`; included from
-  `mld/d3.c`
-- [Phase 2] `notif_handling_err` forces `ret = -EIO` in
-  `iwl_mld_wait_d3_notif`
-- [Phase 2] `d3_end_flags & IWL_D0I3_RESET_REQUIRE` used in no-wowlan
-  and wowlan resume
-- [Phase 3] `git describe HEAD` / `make kernelversion`: **7.3.0-rc4**
-- [Phase 3] Blame: unguarded read from `d1e879ec600f9` (iwlmld add,
-  ~v6.15)
-- [Phase 3] `git merge-base --is-ancestor d1e879ec600f9 HEAD`: yes
-- [Phase 3] Pre-patch: `git show 4e777dcdfe70d^:.../mld/d3.c` shows
-  unguarded flags read
-- [Phase 3] MVM sibling `c1a1dc162870a` same-day D3 payload validation
-- [Phase 3] `IWL_FW_CHECK` from `568db7fd27fad` (~v6.5)
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v2 09/15, linux-wireless + Johannes;
-  no NAK in mbox
-- [Phase 4] Cover letter: mixed iwlwifi-next updates; this patch listed
-  under Grumbach fixes
-- [Phase 4] UNVERIFIED: lore.kernel.org and stable@ HTTP 403
-- [Phase 5] Callers: `iwl_mld_no_wowlan_resume` /
-  `iwl_mld_wowlan_resume` from mac80211 start/resume
-- [Phase 5] `mld/Makefile`: `d3.o` only with `CONFIG_PM_SLEEP`;
-  `CONFIG_IWLMLD`
-- [Phase 6] Buggy handler present; apply would be clean
-- [Phase 8] Failure mode: OOB read of D3_END payload / garbage reset
-  flags, severity HIGH
+**What the commit solves for this tree:** After suspend, resume never
+turns cache-only off. Sync then either WARNs/`-EINVAL` (this 7.3 code)
+or leaves later `regmap` writes stuck in the cache. Audio after sleep is
+wrong. The patch restores hardware and reports I2C/sync failure.
+
+**Stable rules:** Small, obviously correct, no new API, applies cleanly,
+real PM bug.
+
+**Risk vs benefit:** Very low regression risk vs fixing resume for this
+codec.
+
+**Concerns:** Niche hardware, no tester tag. Not enough to reject a
+9-line resume fix whose code is present in this checkout.
+
+Verification:
+- [Phase 1] Parsed tags: Link to msgid `20260704072140.67222-1`; SOBs
+  Hou and Brown; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: `uda1342_resume()` +8/-1; add
+  `regcache_cache_only(false)`, check `regcache_sync()`, unwind on error
+- [Phase 2] `_regmap_write()`: cache_only + !cache_bypass returns 0
+  without `reg_write` (verified in `drivers/base/regmap/regmap.c`)
+- [Phase 2] `regcache_sync()`: `WARN_ON(map->cache_only)` returns
+  `-EINVAL` (verified line 437 of `regcache.c`)
+- [Phase 3] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4
+- [Phase 3] `git blame` on parent: buggy resume is `de0fb25e37aae`
+  (v6.13-rc1)
+- [Phase 3] `git merge-base --is-ancestor de0fb25e37aae HEAD`: yes
+- [Phase 3] `git merge-base --is-ancestor 29da72e58fde8 HEAD`: yes
+  (mainline commit under review)
+- [Phase 3] File log: four commits, no series dependency
+- [Phase 4] `b4 dig -c 29da72e58fde8`: lore msgid match; `-a`: v1 only;
+  `-w`: ASoC maintainers CC’d; mbox: Brown applied, no NAK
+- [Phase 4] lore.kernel.org/stable: 403 — UNVERIFIED
+- [Phase 5] `DEFINE_RUNTIME_DEV_PM_OPS` + `pm_sleep_ptr`;
+  `pm_runtime_force_suspend/resume` call the runtime callbacks
+- [Phase 5] Probe does not `pm_runtime_enable()` — system sleep still
+  uses `pm_runtime_force_*`
+- [Phase 5] `7d04763cae994`: driver added for Loongson-2K1000
+- [Phase 6] Pre-fix resume read from `29da72e58fde8^`: mark dirty +
+  sync, no `cache_only(false)`
+- [Phase 6] WARN_ON added in `86fc3483a4d60` (v7.3-rc1), present in this
+  tree
+- [Phase 8] Failure: WARN + failed resume / cache-only stuck; severity
+  HIGH for this device
+- UNVERIFIED: whether this was already requested on the stable list
+  (HTTP 403)
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/mld/d3.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/codecs/uda1342.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/d3.c b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
-index 0cb7bfcd6420e..73fd4c69357ca 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
-@@ -1326,8 +1326,16 @@ static bool iwl_mld_handle_d3_notif(struct iwl_notif_wait_data *notif_wait,
- 	}
- 	case WIDE_ID(PROT_OFFLOAD_GROUP, D3_END_NOTIFICATION): {
- 		struct iwl_d3_end_notif *notif = (void *)pkt->data;
-+		u32 len = iwl_rx_packet_payload_len(pkt);
-+
-+		if (IWL_FW_CHECK(mld, len < sizeof(*notif),
-+				 "Invalid D3_END notification (expected=%zu got=%u)\n",
-+				 sizeof(*notif), len)) {
-+			resume_data->notif_handling_err = true;
-+		} else {
-+			resume_data->d3_end_flags = le32_to_cpu(notif->flags);
-+		}
+diff --git a/sound/soc/codecs/uda1342.c b/sound/soc/codecs/uda1342.c
+index b0b29012842da..c21919bef4d72 100644
+--- a/sound/soc/codecs/uda1342.c
++++ b/sound/soc/codecs/uda1342.c
+@@ -308,9 +308,16 @@ static int uda1342_suspend(struct device *dev)
+ static int uda1342_resume(struct device *dev)
+ {
+ 	struct uda1342_priv *uda1342 = dev_get_drvdata(dev);
++	int ret;
  
--		resume_data->d3_end_flags = le32_to_cpu(notif->flags);
- 		resume_data->notifs_received |= IWL_D3_NOTIF_D3_END_NOTIF;
- 		break;
- 	}
++	regcache_cache_only(uda1342->regmap, false);
+ 	regcache_mark_dirty(uda1342->regmap);
+-	regcache_sync(uda1342->regmap);
++	ret = regcache_sync(uda1342->regmap);
++	if (ret) {
++		regcache_cache_only(uda1342->regmap, true);
++		regcache_mark_dirty(uda1342->regmap);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
