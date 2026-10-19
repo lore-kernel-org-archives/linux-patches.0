@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD285548361;
-	Mon, 19 Oct 2026 13:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AC3548383;
+	Mon, 19 Oct 2026 13:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418192; cv=none; b=Ov4ZJ1po31c7b3E6cv+qZruTFT4hkn+8WnQLzrF/fMRKNILMQgFXr5hBvWFVazf3ZYd5CiPq5VOSdNKBEasTwjylV9Cby9YUNPJ8VM9xTetD3eAFg1DI1sSIDymTTCgweV0BaEzNslTcTcGgBx3Qd9akf/G/Ibem8f8NaDwXfFM=
+	t=1792418194; cv=none; b=cWPRsycwkMqqYkJzOWg9efVEXyjyKhIxgYAITxW6JVd/EQkamLB32VVCGkLW2hT8pia33Jfti41m71O+73lvFNLOU0ecOjnvXGWKxg2Rn83GlSKyPEn7hFWsFwR3MGqIJjGPON7IOtA3gk4m0PnCxEu/+F00DRKH5caopk1KRpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418192; c=relaxed/simple;
-	bh=YIgvDSLFUYaxwCXW75fGzmzMToDiAVGmeTXCss3DLEQ=;
+	s=arc-20240116; t=1792418194; c=relaxed/simple;
+	bh=ycv05iTVb9HbBERCDJCNS7QLQDCwysj1x2yEF9333bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G/Dty8cP20U6/v36meMuYuRujjxywgXby+5jqMeiihph7LR33wXknxaVsYJ/H+luINyn8jHwNBupCGcU2F8JxCd+526HXlXf0KVvrsKhX7T12Bv3RseV417I17aBL8yM0S9OmNDFtfi55d4PEPLS3IqkrzwQ4fn7Np68CaZn0/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ViOgBH/J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tHhUh1shMoHBcYGJlorFyY1x2BL2ps/vHIlmO++zvYqzIQHSml7lB+vF8UmHXXQ9NKs9RYUwQbXbo0UsuSMbOq1wWDzrv8gLBcVuKNq6KhvZSfOZso4hq9/lTsAQD0LKi5z3mX3oPpZl0FHCz1QM2ZgtJa6dpTf+2+913Czp/Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lazK86t4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ViOgBH/J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7881F000C4;
-	Mon, 19 Oct 2026 13:56:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lazK86t4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085991F000C8;
+	Mon, 19 Oct 2026 13:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418190;
-	bh=GBDQnJH235L1jol/o3nhffq/7PZ9JTvYNaSZcRr7Cpc=;
+	s=k20260515; t=1792418192;
+	bh=FASpZ5k/JyiXygAwiIimxKfKoMxwFYX/5kYDuwsYLlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ViOgBH/JD9oEtouHZ7LboM7mCl/oTm9IC9Bz20zzr+YZAvXiQy2Wpz9Eh8Q1yqb82
-	 pvNGKETY/gyKpRv6Q23pq7Oi15CIrIIL47nxsWkwz3IVG2zdYAqdmOpL+uVZkBqkq2
-	 LEdHsV6xG/bTRcOGh84/306v8FY6dgksqvOhKPWdVePcl1fzJtBMvKMNSmm9Mnles7
-	 cpQqziWPSeZ3NNVvcluRm6vovOXzGHY7+YZ5k2mwwIXEXLZ/0GmEEHo1lvqKvHthZQ
-	 ZEfwlDDhahzMs8ZEp/ekkyBGuIu81+KxF9hzBIPCPwpM2ogYI97SQwVoUVOxhOcUVo
-	 nrYnWxqYqt93Q==
+	b=lazK86t40XxcY2NDAWhd4CJpRHyqnNboR/sDOMjLe8rcn8zw7OOPAEmZ5Bkgb0ooi
+	 s71ErRauZZbFvuhm8xAU+Y8IEwRhamyHRD5W8hksKUYPrfFxpEEaWMlaOlBGRm0B2J
+	 Xu0Ez/0ZCzTUU48f6TJbHRmuRq4YYhfC6xHUFMGzs/Q+sWTaq9kLZibDwBpQ6IoyUD
+	 r5/Yhi8ZZJ+TmvT/czLkFCscdnEDhjIcZQYJo0cs39zueunImfwqqHJVaXriF6s/wS
+	 xDwacxPKkBzZa1c8o7t4E+sQt0/tW6f3ri6qFioet1oVpASDHYRa4zVaBA7M+UunPh
+	 yEr1GRnUfepsA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+Cc: Prashant Rahul <prashantrahul23@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	eddyz87@gmail.com,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	memxor@gmail.com,
-	bpf@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] libbpf: Fix ring buffer consumer loop on 32-bit position wrap
-Date: Mon, 19 Oct 2026 09:46:07 -0400
-Message-ID: <20261019135441.1420968-76-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.1] wifi: mt76: mt7921: fix memory leak when skb_linearize fails in mcu rx event
+Date: Mon, 19 Oct 2026 09:46:08 -0400
+Message-ID: <20261019135441.1420968-77-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -50,437 +52,419 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: Prashant Rahul <prashantrahul23@gmail.com>
 
-[ Upstream commit fdd4fad0bbbd08501465c5f9b556963093c5d58a ]
+[ Upstream commit 4361f1660101270611eb5dc39799f620b35f2e4d ]
 
-ringbuf_process_ring() walks the records between the consumer and the
-producer with an ordering comparison:
+The ownership of sk_buff skb is passed to mt7921_queue_rx_skb, each
+path inside it under the switch case handles cleaning of skb and it
+is true for mt7921_mcu_rx_event as well.
 
-	while (cons_pos < prod_pos) {
+mt7921_mcu_rx_event, on a success path, either queues skb via
+mt76_mcu_rx_event or cleans it immediately inside
+mt7921_mcu_uni_rx_unsolicited_event.
 
-cons_pos and prod_pos mirror the kernel's ring positions and are
-unsigned long here too, so on 32-bit they wrap at 2^32 bytes of traffic.
-When producer_pos has wrapped and consumer_pos has not, prod_pos is the
-smaller of the two, the loop body never runs and no record is consumed.
-Since consumer_pos only advances inside that loop, it never wraps either
-and the consumer stops delivering samples for good, with no error
-returned to the caller: ring_buffer__poll() keeps reporting zero
-records while the kernel side fills up and starts dropping.
+However inside mt7921_mcu_rx_event, if skb_linearize fails, the function
+returns immediately and never bothers cleaning skb which leaks skb.
 
-Compare the distance instead. The consumer never runs ahead of the
-producer, so prod_pos - cons_pos is the amount of unconsumed data and
-stays correct across the wrap.
+Since skb is fully owned at this point, it is safe to call
+dev_kfree_skb which fixes the leak.
 
-64-bit hosts are unaffected in practice: the counters would need 16 EiB
-to wrap. This is the userspace counterpart of the kernel-side walk fixed
-in "bpf: Fix pending_pos walk on 32-bit ring position wrap"; a 32-bit
-consumer hits whichever of the two comes first.
+Granted, the skb_linearize failure is rare as it can only fail under
+heavy memory usage, but at the same time, leaking memory under heavy
+memory usage can worsen the OOM condition.
 
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-5-i.tellez@btesa.com
+Signed-off-by: Prashant Rahul <prashantrahul23@gmail.com>
+Link: https://patch.msgid.link/20260716-mt7921-mem-leak-v1-1-6e9c0ea19f63@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+# Stable backport analysis: mt7921 MCU RX skb leak
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[libbpf] [Fix] ring buffer consumer loop on 32-bit position
-wrap**
+**Tree decided:** `pending-6.6` (6.6.157), SHA `04810563abb71`.
+At the start of this evaluation `git describe`/`make kernelversion`
+reported **6.6.157**. The working copy later moved to v7.3-rc4; every
+presence/absence claim below was rechecked against **`pending-6.6`**,
+not that later checkout.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- **Signed-off-by:** Israel Téllez García `<i.tellez@btesa.com>`
-  (author)
-- **Signed-off-by:** Andrii Nakryiko `<andrii@kernel.org>` (libbpf/BPF
-  maintainer)
-- **Link:** `https://lore.kernel.org/bpf/20260814124843.22041-5-
-  i.tellez@btesa.com`
-- No `Reported-by`, `Tested-by`, `Reviewed-by`, `Acked-by`, or `Cc:
-  stable` on the original patch
-- Original submission had **no `Fixes:` tag**. `b4 am` later attached a
-  lore trailer: `Fixes: bf99c936f947 ("libbpf: Add BPF ring buffer
-  support")` (DKIM/kernel.org). That SHA is the 2020 introduction of BPF
-  ringbuf in libbpf, and it is in this tree.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** `ringbuf_process_ring()` uses `while (cons_pos < prod_pos)`
-  on `unsigned long` positions. On 32-bit those wrap at 2^32 bytes.
-  After producer wrap, `prod_pos` is small and `cons_pos` is still
-  large, so the loop never runs.
-- **Symptom:** `ring_buffer__poll()` / consume APIs keep returning 0
-  with no error; the kernel ring fills and drops samples permanently.
-- **Root cause:** ordering comparison is not wrap-safe; consumer_pos
-  only advances inside that loop, so it never wraps either.
-- **Version info:** 64-bit is unaffected in practice (16 EiB to wrap).
-  Explicitly the userspace counterpart of the kernel `pending_pos` walk.
-  Field data for that sibling: four armv7 i.MX7 Dual devices on 6.6.52
-  stalled after exactly 4295491360 bytes (~2^32 + one 512 KiB ring).
-- **Author’s fix:** `prod_pos - cons_pos > 0` (unsigned distance).
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. Subject and body describe a real wrap-induced stall.
-Not cleanup/refactor.
+The candidate is mainline `4361f16601012` (`wifi: mt76: mt7921: fix
+memory leak when skb_linearize fails in mcu rx event`).
 
 ---
 
-## Phase 2: Diff analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `tools/lib/bpf/ringbuf.c` — **1 line changed** (`+1 / -1`)
-- Function: `ringbuf_process_ring()`
-- Scope: single-file surgical fix
+**Step 1.1 — Subject**
+Record: **[wifi: mt76: mt7921]** **[fix]** memory leak when
+`skb_linearize` fails in MCU RX event.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** `while (cons_pos < prod_pos)` — fails after producer wrap
-  on 32-bit.
-- **After:** `while (prod_pos - cons_pos > 0)` — unsigned modular
-  distance; stays true while unconsumed data exists.
-- Path: normal consume path (`ring_buffer__poll` / `__consume` /
-  `__consume_n` / `ring__consume*`), not an error/init-only path.
+**Step 1.2 — Tags**
+- `Signed-off-by: Prashant Rahul <prashantrahul23@gmail.com>` (author)
+- `Link: https://patch.msgid.link/20260716-mt7921-mem-
+  leak-v1-1-6e9c0ea19f63@gmail.com`
+- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` (mt76 maintainer;
+  applied the patch)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable` (absence of Fixes/Cc-stable is expected for this
+  review).
+Record: Maintainer SOB; msgid shows **v1 patch 1/1** (standalone).
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+**Step 1.3 — Body**
 Record:
-- **Category:** logic/correctness (32-bit wrap / unsigned comparison)
-- **Mechanism:** same class as kernel `pending_pos`. Unsigned `unsigned
-  long` counters are documented to wrap
-  (`Documentation/bpf/ringbuf.rst`). Distance arithmetic is already used
-  in this tree in `ring__avail_data_size()` (`return prod_pos -
-  cons_pos`) and kernel `ringbuf_avail_data_sz()`.
+- **Bug:** `mt7921_queue_rx_skb` transfers skb ownership into
+  `mt7921_mcu_rx_event`. Success paths free or queue the skb. If
+  `skb_linearize()` fails, the function returns without freeing.
+- **Symptom:** skb leak. Author notes failure is rare (ENOMEM) but
+  leaking under memory pressure can worsen OOM.
+- **Root cause:** missing `dev_kfree_skb` on the linearize error path.
+- **Version info in message:** none.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: matches the kernel-side pattern already in this
-  tree (`while (prod_pos - pend_pos > 0)` in `kernel/bpf/ringbuf.c`).
-- Minimal: one condition.
-- Regression risk: low. On 64-bit equivalent until astronomical wrap. If
-  consumer ever ran ahead of producer, the new check would wrap and keep
-  looping; the author and kernel invariant say that does not happen.
-  Same assumption the kernel pending_pos fix already shipped here.
+**Step 1.4 — Hidden bug fix?**
+Record: **No disguise.** This is an explicit leak fix, not cleanup-as-
+fix.
 
 ---
 
-## Phase 3: Git history investigation
+## PHASE 2: DIFF ANALYSIS
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: Buggy `while (cons_pos < prod_pos)` introduced in
-**`bf99c936f9478`** (“libbpf: Add BPF ring buffer support”, 2020-06-01)
-by Andrii Nakryiko. Present since BPF ringbuf existed. Surrounding `cnt
->= n` bits are later (`13e8125a22763`, 2024) and unrelated.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: Original mail had no `Fixes:`. Trailer names `bf99c936f947`,
-which **is in this tree**. Kernel sibling `19de99ea47e3c` (“bpf: Fix
-pending_pos walk on 32-bit ring position wrap”) **is already in this
-tree**; its `Fixes:` target `cfa1a2329a691` is also here.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `tools/lib/bpf/ringbuf.c` commits are consume_n
-overflow/return-value fixes, not wrap handling. This is standalone:
-series patch 4/4. Cover letter: patches 1–3 are kernel; 4 is libbpf.
-Patches 2–3 are overwrite-mode `ringbuf_avail_data_sz()` —
-**overwrite_pos does not exist in this 6.12 tree**. Nakryiko dropped
-patch 3 anyway.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Israel Téllez García authored the kernel wrap fix already on
-this branch (`19de99ea47e3c`). Andrii Nakryiko (libbpf maintainer)
-applied both.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: No code dependency. One-line condition change in a function that
-already exists. `git apply --check` on the original mbox succeeded (exit
-0). Does not need overwrite-mode patches.
-
----
-
-## Phase 4: Mailing list and external research
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+**Step 2.1 — Inventory**
 Record:
-- Series: **[PATCH v2 bpf 0/4] bpf: Fix ring buffer position wrap
-  handling on 32-bit**
-- Lore: `https://lore.kernel.org/bpf/20260814124843.22041-1-
-  i.tellez@btesa.com`
-- This patch: `...22041-5-i.tellez@btesa.com` (4/4)
-- v1: `https://lore.kernel.org/bpf/20260806130214.66028-1-
-  i.tellez@btesa.com/` (kernel pending_pos only; v2 added sites 2–4)
-- v2 change for patch 1: drop `(long)` cast per Nakryiko; unsigned
-  difference is enough
-- Cover: patch 1 was the field-observed stall; patch 4 is the userspace
-  counterpart. “A 32-bit consumer hits whichever of the two comes
-  first.”
-- No NAK on patch 4. Patch 3 was dropped by both author and Nakryiko
-  (ordering of overwrite_pos loads).
+- File: `drivers/net/wireless/mediatek/mt76/mt7921/mcu.c` (**+3 / −1**)
+- Function: `mt7921_mcu_rx_event`
+- Scope: **single-file surgical fix**
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc included Andrii Nakryiko, Alexei
-Starovoitov, Daniel Borkmann, Eduard Zingerman, Martin KaFai Lau, Song
-Liu, Jiri Olsa, `bpf@vger.kernel.org`. Applied by Nakryiko.
+**Step 2.2 — Flow**
+Before (pending-6.6 `mcu.c:312-313`):
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla for the libbpf loop itself. Field evidence is
-on the kernel sibling: four armv7 devices, exact 2^32-byte trigger, 8–17
-h uptime, one patched device then passed 10 GiB. Cover: “Userspace kept
-consuming normally until the producer stopped” — meaning the kernel
-stall fired first. Once that kernel fix is in (it is, here), this libbpf
-loop is the next wrap failure.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record:
-1. Kernel pending_pos — **already in this tree**
-2. Overwrite-mode avail-data — **N/A here** (no overwrite_mode)
-3. producer_pos vs overwrite_pos load order — dropped; **N/A here**
-4. **This libbpf loop** — candidate
-- User-ringbuf peek (`u64` locals, `cons_pos >= prod_pos`) was called
-  out as a separate issue and is **not** this commit. Confirmed still
-  present at `kernel/bpf/ringbuf.c:687`.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** — lore.kernel.org/stable returned Anubis bot-
-challenge (403/HTML). No stable-list discussion retrieved.
-
----
-
-## Phase 5: Code semantic analysis
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `ringbuf_process_ring()` only. (semcode MCP not available; used
-hunk headers + grep.)
-
-**Step 5.2: TRACE CALLERS**
-Record: All in-tree callers of `ringbuf_process_ring()`:
-- `ring_buffer__consume_n()`
-- `ring_buffer__consume()`
-- `ring_buffer__poll()`
-- `ring__consume_n()` / `ring__consume()`
-
-These are the public libbpf ringbuf consume APIs. Reachable from any
-userspace consumer of `BPF_MAP_TYPE_RINGBUF` (tracing, networking,
-etc.). `bpftool` in this tree links `tools/lib/bpf`.
-
-**Step 5.3: TRACE CALLEES**
-Record: `smp_load_acquire` on positions/len, `roundup_len()`,
-`r->sample_cb()`, `smp_store_release` of consumer_pos. No
-allocation/locking in the changed condition.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace path: app/bpftool → `ring_buffer__poll/consume` →
-`ringbuf_process_ring`. Trigger: ~4 GiB cumulative ring traffic on
-32-bit. Unprivileged if the process already has the map fd (typical
-tracing daemon). Not a kernel oops, but permanent event loss.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record:
-- Same buggy compare in
-  `tools/testing/selftests/bpf/benchs/bench_ringbufs.c:305` (benchmark
-  only; not this commit).
-- Wrap-safe distance already in `ring__avail_data_size()` and kernel
-  `ringbuf_avail_data_sz()`.
-- Kernel pending_pos already converted to distance in this tree.
-
----
-
-## Phase 6: Cross-referencing against the local tree
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** Local tree is **6.12.111** (`git describe`:
-`p-6.12-3-gc504cf0baa3d8`, Makefile `VERSION=6 PATCHLEVEL=12
-SUBLEVEL=111`).
-
-```247:247:tools/lib/bpf/ringbuf.c
-                while (cons_pos < prod_pos) {
+```
+if (skb_linearize(skb))
+    return;
 ```
 
-`struct ring` uses `unsigned long *consumer_pos` / `*producer_pos`
-(lines 29–30). Bug introduced in v5.8-era libbpf ringbuf
-(`bf99c936f9478`), long before 6.12. Positions are still `unsigned long`
-in kernel `struct bpf_ringbuf`.
+After:
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply.** `git apply --check` on the original patch mbox
-exited 0. Function shape matches the hunk (`ringbuf_process_ring(struct
-ring *r, size_t n)` with `cons_pos`/`prod_pos` as `unsigned long`).
+```
+if (skb_linearize(skb)) {
+    dev_kfree_skb(skb);
+    return;
+}
+```
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: Kernel pending_pos wrap fix **is** here (`19de99ea47e3c`).
-Userspace loop still has `cons_pos < prod_pos`. No alternate libbpf wrap
-fix in this file.
+Record: **error path only.** Success paths unchanged.
 
----
+**Step 2.3 — Bug mechanism**
+Record: **[resource leak]** On `skb_linearize` failure (`-ENOMEM` for
+nonlinear skbs), the still-owned skb is dropped. Caller
+`mt7921_queue_rx_skb` does not free after `PKT_TYPE_RX_EVENT`. Other
+switch arms in the same caller (`dev_kfree_skb` / `napi_consume_skb`)
+and other arms of `mt7921_mcu_rx_event` (`dev_kfree_skb`,
+`mt76_mcu_rx_event` queue) already consume the skb.
 
-## Phase 7: Subsystem and maintainer context
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **libbpf** (`tools/lib/bpf/`) — userspace helper shipped with
-the kernel, used by bpftool and in-tree BPF tools. Criticality:
-**IMPORTANT** for BPF users, especially 32-bit embedded collectors. Not
-core mm/sched, but this tree already backports libbpf ringbuf fixes
-(`087d757fb4736`, `00f0e08f23fc0`).
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively maintained; libbpf ringbuf APIs grew through 6.12
-(`ring__consume_n`, etc.). The wrap bug is old (2020), not a new-feature
-leftover.
+**Step 2.4 — Fix quality**
+Record: **Obviously correct.** Matches established kernel pattern (`if
+(skb_linearize(skb)) { dev_kfree_skb(_any)(skb); return; }`). Same free
+helper already used in this MCU event path. No API/lock/data-structure
+change. Regression risk: **very low** (could only be a double-free if
+linearize already freed; it does not — see Phase 5).
 
 ---
 
-## Phase 8: Impact and risk assessment
+## PHASE 3: GIT HISTORY
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Config/platform-specific:** 32-bit hosts using in-tree libbpf
-to consume `BPF_MAP_TYPE_RINGBUF` (armv7/i.MX and similar LTS/embedded).
-64-bit unaffected in practice.
+**Step 3.1 — Blame**
+Record: Leak introduced by **`f0ff5d3aa64812`** (`mt76: mt7921: make all
+event parser reusable between mt7921s and mt7921e`, Sean Wang,
+2021-10-19). That commit added `skb_linearize` + early return and never
+freed on failure. Present since ~5.16-era; **`git merge-base --is-
+ancestor f0ff5d3aa64812 pending-6.6` succeeds.**
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: After ~4 GiB of ring traffic, if producer wraps while consumer
-still has unconsumed bytes. Common with epoll/batching. Timing-dependent
-at the wrap, then **sticky forever**. Unprivileged if the process
-already holds the map. The sibling bug was reproduced at 441–862
-records/s over hours — not a theoretical corner.
+**Step 3.2 — Fixes: tag**
+Record: **None.** Introducer identified by blame: `f0ff5d3aa64812`,
+which **is** in this 6.6 tree.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Permanent silent stop of sample delivery; kernel then drops
-events; APIs return 0 with no error. **HIGH** data/event loss (not a
-kernel oops). Restart of the consumer is required.
+**Step 3.3 — File history (pending-6.6)**
+Recent 6.6 work on this file is CLC firmware validation, not MCU RX. No
+competing leak fix. Record: **standalone**; not part of a multi-patch
+series.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit: high for 32-bit BPF consumers.** Kernel producer wrap is
-  already fixed here, so this is now the remaining stall. Same class as
-  a field-proven 6.6.52 armv7 outage.
-- **Risk: very low.** One comparison, same idiom as kernel code already
-  on this branch.
-- Ratio: strongly favors backport.
+**Step 3.4 — Author**
+Prashant Rahul has **no other commits** in this tree’s mt76 history.
+Applied by **Felix Fietkau**, listed maintainer of MEDIATEK MT76 in
+`MAINTAINERS`. Record: one-off contributor; **maintainer-applied**.
 
----
-
-## Phase 9: Final synthesis
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-**FOR:**
-- Real wrap bug; documented that 32-bit positions wrap
-- Permanent silent event loss, no error
-- One-line, obviously correct, applies cleanly
-- Kernel counterpart already in this 6.12.y tree — without this,
-  producer keeps going and userspace is the next stall
-- Field-proven sibling on armv7 (core LTS/embedded)
-- Maintainer SOB (Nakryiko); v2 reviewed
-- No new APIs; no overwrite-mode dependency
-
-**AGAINST:**
-- Userspace libbpf (some distros use github libbpf, not in-tree)
-- 32-bit only in practice
-- Original field report hit kernel pending_pos first
-- No `Cc: stable` on the original mail (expected for this review queue;
-  not a negative)
-
-**UNRESOLVED:**
-- Could not query lore.kernel.org/stable (bot wall)
-- Could not confirm whether standalone libbpf already carries this
-  (irrelevant: verdict is for in-tree `tools/lib/bpf`)
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — same unsigned-distance idiom
-   as kernel code already here; series tested on armv7 for the sibling;
-   maintainer applied it.
-2. Fixes a real bug that affects users? **PASS** — 32-bit ringbuf
-   consumers stall after wrap.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** at
-   HIGH — permanent silent event loss, not an oops, but equivalent
-   operational failure for tracing/telemetry.
-4. Small and contained? **PASS** — 1 line, 1 file.
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — `git apply --check`
-   succeeded; buggy loop present.
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/docs exception. Ordinary small bugfix.
-
-**Step 9.4: DECISION**
-
-This belongs on **this** 6.12.y tree. The buggy `cons_pos < prod_pos`
-loop is here; the matching kernel wrap fix is already here; the one-line
-change applies cleanly and closes the remaining 32-bit stall for in-tree
-libbpf consumers.
-
-### What the commit solves and why it matters here
-
-On 32-bit, ring positions are 32-bit `unsigned long` and are documented
-to wrap. After producer wrap, the consumer loop never runs, never
-advances `consumer_pos`, and never recovers. `ring_buffer__poll()`
-reports 0 forever while the kernel drops samples. 6.12.y already
-contains the kernel `pending_pos` wrap fix, so a 32-bit producer can now
-wrap; this userspace loop is the next failure. 32-bit ARM collectors are
-a real LTS audience (the sibling was seen on i.MX7 Dual).
-
-### Risk vs benefit
-
-Benefit is high for 32-bit BPF ringbuf users; risk is a one-line
-comparison already used in-kernel on this branch.
+**Step 3.5 — Dependencies**
+The hunk only needs `mt7921_mcu_rx_event` + `skb_linearize` +
+`dev_kfree_skb`, all present. Mailing-list patch context matches 6.6
+(the extra `MCU_EVENT_RSSI_NOTIFY` in later mainline is **below** the
+change). Record: **applies standalone**.
 
 ---
 
-### Verification
-- **[Phase 1]** Parsed subject/tags/body from the candidate and from
-  `/tmp/ringbuf-mbox/wrap-p5`; `Fixes:` only as a later lore trailer to
-  `bf99c936f947`
-- **[Phase 2]** Diff is one condition in `ringbuf_process_ring()`;
-  current tree still has `while (cons_pos < prod_pos)` at line 247
-- **[Phase 3]** `git blame` → `bf99c936f9478` (2020); `git merge-base
-  --is-ancestor` confirms that SHA, `cfa1a2329a691`, and kernel wrap fix
-  `19de99ea47e3c` are in HEAD
-- **[Phase 3]** `git log --oneline -- tools/lib/bpf/ringbuf.c` — no
-  userspace wrap fix present
-- **[Phase 4]** `b4 dig -c 19de99ea47e3c -a/-w` → v2 4-patch series;
-  this is 4/4
-- **[Phase 4]** Cover letter and patches from `/tmp/ringbuf-
-  series/*.cover` and `.mbx`; Nakryiko dropped patch 3 (`/tmp/ringbuf-
-  mbox/nakryiko`)
-- **[Phase 4]** lore.kernel.org HTTP 403 / Anubis; used `b4` mboxes
-  instead
-- **[Phase 5]** grep callers of `ringbuf_process_ring` in
-  `tools/lib/bpf/ringbuf.c`; public consume/poll APIs
-- **[Phase 6]** `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` → `6.12.111`
-- **[Phase 6]** `git apply --check /tmp/ringbuf-mbox/wrap-p5` exit 0
-- **[Phase 6]** `overwrite_pos` / `overwrite_mode` absent from
-  `kernel/bpf/ringbuf.c` in this tree
-- **[Phase 7/8]** `Documentation/bpf/ringbuf.rst` documents 32-bit wrap;
-  kernel sibling commit describes four armv7 devices
-- **UNVERIFIED:** stable@ lore discussion; whether distro standalone
-  libbpf already has this
+## PHASE 4: MAILING LIST / EXTERNAL
+
+**Step 4.1 — Original discussion**
+- `b4 dig -c <msgid>` / `b4 mbox`: no match (404).
+- lore.kernel.org: **403**.
+- Recovered from Openwall and Ratatoskr:
+  https://lists.openwall.net/linux-kernel/2026/07/16/1707
+  msgid `20260716-mt7921-mem-leak-v1-1-6e9c0ea19f63@gmail.com`
+Record: **v1, single patch**, applied as submitted (`4361f16601012`
+matches that diff). No v2/v3.
+
+**Step 4.2 — Recipients (`b4 dig -w` unavailable; headers from
+Openwall)**
+To: Felix Fietkau, Lorenzo Bianconi, Ryder Lee, Shayne Chen, Sean Wang
+(mt76 maintainers/reviewers), plus MediaTek ARM contacts. Cc: linux-
+wireless, linux-kernel, linux-mediatek, linux-arm-kernel. Record:
+**correct maintainer set**.
+
+**Step 4.3 — Bug report**
+Record: **No syzbot/bugzilla.** Static ownership analysis; author states
+the leak is rare.
+
+**Step 4.4 — Series**
+Record: **1/1 standalone.** No sibling mt7925/mt7915 patches required
+for this tree (only mt7921 has this `skb_linearize` in pending-6.6).
+
+**Step 4.5 — Stable list**
+Search for this subject on lore stable returned unrelated hits. Record:
+**no prior stable NAK found** (lore 403 limited this).
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1 — Functions**
+Record: `mt7921_mcu_rx_event` only.
+
+**Step 5.2 — Callers**
+`mt7921_queue_rx_skb()` (`mac.c`) `case PKT_TYPE_RX_EVENT:` calls it and
+does **not** free afterwards.
+
+That `rx_skb` hook is registered for **PCIe, USB, and SDIO**:
+- `mt7921/pci.c`, `usb.c`, `sdio.c` → `.rx_skb = mt7921_queue_rx_skb`
+- Invoked from `mt76_dma_rx_process` (NAPI), `mt76u` USB RX,
+  `mt76s_process_rx_queue` (SDIO)
+
+Record: **hot RX path** for MT7921E/S/U.
+
+**Step 5.3 — Callees**
+`skb_linearize` → `__skb_linearize` → `__pskb_pull_tail`; returns
+`-ENOMEM` on failure and **does not free** the skb
+(`include/linux/skbuff.h`: “If there is no free memory -ENOMEM is
+returned”). Success continues to `mt7921_mcu_uni_rx_unsolicited_event` /
+`mt76_mcu_rx_event` / `mt7921_mcu_rx_unsolicited_event`.
+
+**Step 5.4 — Reachability**
+Nonlinear MCU events are real:
+- SDIO `mt76s_build_rx_skb` uses `skb_add_rx_frag` when payload >
+  `MT_SKB_HEAD_LEN` — this is **why** `f0ff5d3aa64812` added linearize
+  (“paged fragment skb for the SDIO device”).
+- USB `mt76u_build_rx_skb` same pattern.
+- DMA `mt76_add_fragment` builds fraglists for multi-buffer RX.
+
+Record: reachable from normal firmware MCU events; unprivileged users
+can generate MCU traffic by using WiFi. Failure needs **ENOMEM during
+linearize**.
+
+**Step 5.5 — Similar patterns**
+In pending-6.6, `skb_linearize` appears **only here** under mt76. No
+duplicate site left unfixed in this tree.
+
+---
+
+## PHASE 6: LOCAL TREE (pending-6.6 / 6.6.157)
+
+**Step 6.1 — Buggy code present?**
+Record: **Yes.**
+`pending-6.6:drivers/net/wireless/mediatek/mt76/mt7921/mcu.c:312-313`:
+
+```
+if (skb_linearize(skb))
+    return;
+```
+
+`git merge-base --is-ancestor 4361f16601012 pending-6.6` → **false**
+(fix not here).
+`git merge-base --is-ancestor f0ff5d3aa64812 pending-6.6` → **true**
+(bug intro is here).
+Bug age: **2021**, well before 6.6.
+
+**Step 6.2 — Backport difficulty**
+Submitted hunk is 4 lines around `skb_linearize` with context that
+matches 6.6 (`struct mt76_connac2_mcu_rxd *rxd` then the if).
+`MCU_EVENT_RSSI_NOTIFY` is later mainline-only context **below** the
+edit. Record: **clean apply / trivial**.
+
+**Step 6.3 — Related fixes already here?**
+`git log --grep=skb_linearize` on mt76 in this tree: **empty**. No
+alternate fix. Record: **none**.
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1**
+Record: **wifi / mt76 / mt7921**. Criticality: **IMPORTANT** — MT7921E
+is a common laptop WiFi 6 adapter (PCIe); USB/SDIO variants exist
+(`MT7921E/S/U` in Kconfig). Not core mm/net, not staging.
+
+**Step 7.2**
+Record: Mature driver (MCU support from `1c099ab44727c8`, 2021). 6.6
+still receives mt76 bugfixes (CLC, etc.).
+
+---
+
+## PHASE 8: IMPACT AND RISK
+
+**Step 8.1 — Who is affected**
+Record: **driver-specific**, users with MediaTek MT7921 (very common on
+laptops). Config: `CONFIG_MT7921E/S/U`.
+
+**Step 8.2 — Trigger**
+Record: Firmware MCU RX event whose skb is nonlinear, **and**
+`skb_linearize` fails (GFP/ENOMEM). Unprivileged WiFi use can generate
+events; the failure itself is **uncommon**. SDIO long events are the
+originally cited nonlinear case; USB/DMA can also fragment.
+
+**Step 8.3 — Failure mode**
+Record: **skb leak under memory pressure**, which can deepen OOM. Not a
+panic/UAF. Severity: **MEDIUM–HIGH** (hot-path leak, not a one-time
+probe leak).
+
+**Step 8.4 — Risk/benefit**
+- Benefit: **medium** — stops a real leak on a widely shipped chip; most
+  valuable when the system is already under memory pressure.
+- Risk: **very low** — 3 lines, error path, same free as sibling paths.
+- Ratio: **favor backport**.
+
+---
+
+## PHASE 9: SYNTHESIS
+
+**Step 9.1 — Evidence**
+
+**For:**
+- Real leak with verified ownership (caller does not free).
+- Code and introducer are in 6.6.157; fix is not.
+- Tiny, obviously correct, maintainer-applied.
+- MT7921 is production hardware, not staging.
+- Leak on an RX path under OOM is a stability issue, not a style
+  cleanup.
+
+**Against:**
+- Trigger is rare (`skb_linearize` ENOMEM).
+- No crash/syzbot/CVE.
+- No explicit `Cc: stable` (not a negative per the review rules).
+
+**Unresolved:** Full lore thread (403/404); no reviewer comments beyond
+maintainer merge. Does not change the technical verdict.
+
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested — **PASS** (3-line ownership fix; in
+   mainline via Felix).
+2. Real bug affecting users — **PASS** (skb leak on MT7921 MCU RX).
+3. Important (crash/security/corruption/deadlock) — **PASS** as an RX-
+   path leak that can worsen OOM; not a panic, but in the leak class
+   stable regularly takes.
+4. Small and contained — **PASS** (4 lines, one function).
+5. No new features/APIs — **PASS**.
+6. Can apply to this tree — **PASS** (hunk matches 6.6).
+
+**Step 9.3 — Exceptions**
+Record: none needed (not an ID/quirk/DT/build/doc exception). Ordinary
+small leak fix.
+
+**Step 9.4 — Decision**
+Backport to **this** 6.6.157 tree. The bug exists here, the fix is
+surgical, and regression risk is negligible.
+
+---
+
+## What the commit solves for stable users
+
+On MT7921, firmware MCU events are handed to `mt7921_mcu_rx_event` with
+full skb ownership. Nonlinear events (especially SDIO, also USB/DMA
+fragments) are linearized first. If that allocation fails, 6.6 returns
+and leaks the skb. Under memory pressure that leak makes OOM worse.
+Adding `dev_kfree_skb(skb)` on that path closes the leak without
+changing success behavior.
+
+## Risk vs benefit
+
+Benefit is a real leak fix on a common WiFi chip; risk is a three-line
+error-path free that matches existing code in the same function.
+
+## Concerns
+
+None material: no prerequisites, no API change, no locking, expected
+clean apply. Trigger rarity is the only weak point and is not enough to
+reject a contained leak fix.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed tags: author SOB, Link msgid, Felix Fietkau SOB;
+  no Fixes/Reported-by/Cc-stable.
+- **[Phase 2]** Diff: +3/−1 in `mt7921_mcu_rx_event`; adds
+  `dev_kfree_skb` on `skb_linearize` failure.
+- **[Phase 3]** `git blame` on pending-6.6: leak from `f0ff5d3aa64812`
+  (2021-10-19); `git merge-base --is-ancestor f0ff5d3aa64812
+  pending-6.6` true.
+- **[Phase 3]** `git show f0ff5d3aa64812`: added `if
+  (skb_linearize(skb)) return;` with no free.
+- **[Phase 3]** `git log --author=Prashant Rahul`: no other mt76 commits
+  in this history.
+- **[Phase 4]** Openwall/Ratatoskr: v1 1/1, same diff as
+  `4361f16601012`; mt76 maintainers on To:.
+- **[Phase 4]** `b4 mbox` msgid: 404; lore.kernel.org: 403.
+  **UNVERIFIED:** full review replies / explicit stable nomination.
+- **[Phase 5]** Callers: `mt7921_queue_rx_skb` (no free on
+  `PKT_TYPE_RX_EVENT`); hooked from pci/usb/sdio `.rx_skb`.
+- **[Phase 5]** `skb_linearize` documented to return `-ENOMEM` and not
+  free; USB/SDIO `skb_add_rx_frag` makes nonlinear skbs.
+- **[Phase 6]** `git describe` at start: `p-6.6-3-g04810563abb71`, `make
+  kernelversion` 6.6.157.
+- **[Phase 6]** `git grep` on `pending-6.6`: leak at `mcu.c:312-313`.
+- **[Phase 6]** `git merge-base --is-ancestor 4361f16601012 pending-6.6`
+  false.
+- **[Phase 8]** Failure mode: skb leak under ENOMEM on MCU RX; severity
+  MEDIUM–HIGH.
+- **UNVERIFIED:** complete lore thread text after 403.
+
+The fix is small, matches stable leak-fix practice, and the buggy code
+is in this 6.6 tree.
 
 **YES**
 
- tools/lib/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
-index 00ec4837a06de..c8fe57401a8b5 100644
---- a/tools/lib/bpf/ringbuf.c
-+++ b/tools/lib/bpf/ringbuf.c
-@@ -244,7 +244,7 @@ static int64_t ringbuf_process_ring(struct ring *r, size_t n)
- 	do {
- 		got_new_data = false;
- 		prod_pos = smp_load_acquire(r->producer_pos);
--		while (cons_pos < prod_pos) {
-+		while (prod_pos - cons_pos > 0) {
- 			len_ptr = r->data + (cons_pos & r->mask);
- 			len = smp_load_acquire(len_ptr);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index 8c8b35cba856c..f63ef02542387 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -354,8 +354,10 @@ void mt7921_mcu_rx_event(struct mt792x_dev *dev, struct sk_buff *skb)
+ {
+ 	struct mt76_connac2_mcu_rxd *rxd;
+ 
+-	if (skb_linearize(skb))
++	if (skb_linearize(skb)) {
++		dev_kfree_skb(skb);
+ 		return;
++	}
+ 
+ 	rxd = (struct mt76_connac2_mcu_rxd *)skb->data;
  
 -- 
 2.53.0
