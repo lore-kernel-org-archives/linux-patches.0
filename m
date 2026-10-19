@@ -1,49 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C5D54079F;
-	Mon, 19 Oct 2026 14:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88651632F1B;
+	Mon, 19 Oct 2026 14:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418736; cv=none; b=BCE2vczQKui/SUdZg6FiEERlYoGmgHvj1AvVQVTZUpWLt6aiw8szhHXAa4H+cCgoNSyVdNrnOikmYhwePPiRHRQOclwxMgNCzSbsZ8fd89VnjonNd7/8soxGVbaDwQwle9kAAFtcCIBmX1WWiSSAGvmrh9QhvZf3h28qPRWQMYA=
+	t=1792418737; cv=none; b=awjcn+nzpoDvmY8pP/a0VEntRTmY6NGJD+TF56KnmrIXZ2NyzaWRiNR8aetNV0N2KFBa9YSaQvDkmVCZnMCzxIF4dsUcvahEVW8ZhbtMvIS8Q8UopO7NF89Tj4hwkj71uy7atQ6NG9rqOnpCg7qSsnUQMSZg/Pz5vy0ZQAXTZBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418736; c=relaxed/simple;
-	bh=eHb84UA0PUho8tRWxIs/nLkY+kqzYbVhfC90duWTyNY=;
+	s=arc-20240116; t=1792418737; c=relaxed/simple;
+	bh=401LqcwXCf/+f0cY/n+VTGh7mNcCtlVIYof+x6FrNG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oZZAaB5mlwroOxS+07ufI2QsOqaVAGVg6i3pwnQ+F4V3z8JjOji+N305fWKWdwX/ITIbaTjmcF81bVBzyQckDemRTamWi5UeXATuv4GPsNnBV4zodVnN+F3LWdyY2Whky30Io1a1Kxvdm3wwMWh6FrnLGmWVgniF0J7Tjllr+yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PMZMZqmZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NO6AbeiFaPdtnYVnGL3/Xhh9b+k8PzOqbvOn16w2EL45VhPKMll4nEfiwbQBSVGXTkSneNxWL3Ixk7nDbZ1c52dBU8/PoRN4uU+7cmoSDi8PjgZTs2yS7v7pKsdvRYpbC0xOLZqbK+1GEcCtHv26dxDv4OrPwAcs95mELIuQTAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kcpdNswp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PMZMZqmZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B142A1F000C4;
-	Mon, 19 Oct 2026 14:05:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kcpdNswp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E911F000C9;
+	Mon, 19 Oct 2026 14:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418733;
-	bh=oYI5T8O+AAnnizZIZ7eRm4bWkb3nui5PR4a81p/JJF4=;
+	s=k20260515; t=1792418734;
+	bh=7I6Sb1q+kKDR3InApJmi6kDqrK4mWzyufDDhKPEIcOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PMZMZqmZedOF8b9GGtHKTDijHwxZw08NTe+x0xvgt6x9P4na1RSVPwX2SmaFDRiOk
-	 FAHJZFOeRbuD4Sv0YxoQUkzEXZTPgQCf9SGBDVRls13Xj/kxG9I1xH0ss6nvG9EHeT
-	 oflJkew7NlAkzMkyyIgp+XFhg+SMkJmf6HdU7q1abpg0z0Ez9u0aRVgePebN+FkKdA
-	 p+0d7TwgG9hccWheUaSzIHbSfh2PPci+zIApOSgvuO+361t/tGPx0DTsrQI5MpM0x8
-	 ZHt0Jbo7f6GP8W7Xqkk/ooEK1fZPxS0nZhdk5WlTl2N6xTLaRV7aD1scmjGyyolvCA
-	 wF9jSzKC+zlxw==
+	b=kcpdNswpIi/+Onxxfnj3VfiD0NGDAD7o9fw9i/loN6GEt9lugYCe0RFHxBFy/+KEt
+	 lscGdfVT8rShGgClSUlSSevFtlXYMGerJUbMllqRtouF866Y4hdNd/0OvW+qQIzZ0X
+	 +pAPP+3EyOQQtj+Z6UFyeYB8NsHmD6zynUn9IDAJpg5SKQ4ZHYdIlMyLqR0hAGABLk
+	 aVUfZOdS45jwV5taCrRi4h3Bf/UBNMbnYPECRJJvdq+PuL+suerKHtkkvUcZpDjIt3
+	 Py3YSr3fuqOiWwwhvRt/hrTBG7uECq6wqR+2b2pNBr9lNMqRGFTCPw5i85u4iYR2iN
+	 p+wW/J4uMIrLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiawen Liu <1298662399@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Mariano Baragiola <mbaragiola@linux.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	william.zhang@broadcom.com,
-	kursad.oney@broadcom.com,
-	jonas.gorski@gmail.com,
-	anand.gore@broadcom.com,
-	florian.fainelli@broadcom.com,
-	rafal@milecki.pl,
-	linux-spi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	ajay.kathat@microchip.com,
+	claudiu.beznea@tuxon.dev,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] spi: bcmbca-hsspi: return error from failed controller suspend
-Date: Mon, 19 Oct 2026 09:52:28 -0400
-Message-ID: <20261019135441.1420968-457-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] wifi: wilc1000: validate monitor transmit frame headers
+Date: Mon, 19 Oct 2026 09:52:29 -0400
+Message-ID: <20261019135441.1420968-458-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -59,482 +54,481 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Mariano Baragiola <mbaragiola@linux.com>
 
-[ Upstream commit faa878d4805ca375738294bc52eae310eb287b16 ]
+[ Upstream commit 9d96e037ff90a2fc81a841b2002d500a5a4a5351 ]
 
-spi_controller_suspend() can fail if pending transfers cannot stop.
-bcmbca_hsspi_suspend() ignored the error and still disabled the
-PLL and core clocks.
+wilc_wfi_mon_xmit() reads the radiotap length before ensuring that the
+fixed header is present. After stripping that header, it reads the frame
+type and all three 802.11 addresses without checking how much frame data
+remains.
 
-Return the error before disabling the clocks.
+A truncated monitor injection can therefore cause out-of-bounds reads.
+Validate the radiotap header first, use the common 802.11 helper to check
+the variable header length, and require a complete three-address header
+before using the addresses. This covers QoS and four-address data headers
+while rejecting short control headers that this path cannot classify.
 
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Link: https://patch.msgid.link/tencent_54F5634545908FBA724E758054BF03953808@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
+Link: https://patch.msgid.link/20260728192610.2236361-1-mbaragiola@linux.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.18.53** (`v6.18.53-5049-g0f0bdc2b0dffb`, branch
-`autosel`). The verdict is only about this checkout: the buggy suspend
-path is in `v6.18.53`, and the patch applies cleanly to it.
+This is a **5.15.221** tree (`pending-5.15`). The buggy
+`wilc_wfi_mon_xmit()` path is present, the OOB is real, and the fix is a
+small validation change that belongs here.
 
----
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Step 1.1: PARSE THE SUBJECT LINE
+Record: **[wifi: wilc1000:] [validate] [check radiotap and 802.11
+headers before reading them on monitor TX]**
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+From the candidate message:
+- **Link:** `https://patch.msgid.link/20260728192610.2236361-1-
+  mbaragiola@linux.com`
+- **Signed-off-by:** Mariano Baragiola (author)
+- **Signed-off-by:** Johannes Berg (wireless maintainer; accepted the
+  patch)
+- No `Fixes:` / `Cc: stable` / `Reported-by` / `Reviewed-by` in the
+  candidate text (absence is expected here)
 
-Record: **[spi / bcmbca-hsspi] [return] [propagate
-`spi_controller_suspend()` failure instead of disabling clocks and
-reporting success]**
+Original mailing-list submission (verified via `b4 mbox` / Openwall, not
+the candidate markers) also had:
+- **Fixes:** `c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11
+  driver")`
+- **Cc:** `stable@vger.kernel.org`
+- **To:** Ajay Singh, Claudiu Beznea (WILC maintainers)
+- **Cc:** linux-wireless, linux-kernel
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
+Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- **Fixes:** none (expected for this review pipeline)
-- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none on this
-  specific patch (sibling Broadcom patches in the same author’s work had
-  Acked-by/Reviewed-by from Broadcom)
-- **Link:** https://patch.msgid.link/tencent_54F5634545908FBA724E758054B
-  F03953808@qq.com
-- **Cc: stable:** absent (not a negative signal)
-- **Signed-off-by:** Jiawen Liu (author); Mark Brown (SPI maintainer).
-  Ignore Sasha Levin SOB (pipeline).
-- **[Upstream commit faa878d4805c…]** / pipeline markers: ignored per
-  instructions
+- **Bug:** `wilc_wfi_mon_xmit()` calls
+  `ieee80211_get_radiotap_len(skb->data)` before the skb is known to
+  contain a radiotap header, then after `skb_pull()` reads frame type
+  and three 802.11 addresses with no remaining-length check.
+- **Symptom:** truncated monitor injection causes **out-of-bounds
+  reads**.
+- **Root cause:** missing bounds checks on radiotap length and 802.11
+  header length.
+- **Fix:** validate radiotap version/length, use
+  `ieee80211_get_hdrlen_from_skb()`, require a full 3-address header,
+  drop short frames.
+- **Version info:** none in the body. Original `Fixes:` points at the
+  2015 driver introduction.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Step 1.4: DETECT HIDDEN BUG FIXES
+Record: **Not hidden.** The message names OOB reads and describes the
+missing checks. The new `drop:` path also stops returning `-1` from
+`ndo_start_xmit` without freeing the skb.
 
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
+
+Step 2.1: INVENTORY THE CHANGES
 Record:
-- **Bug:** `spi_controller_suspend()` can fail when pending transfers
-  cannot be stopped; `bcmbca_hsspi_suspend()` ignored that and still
-  disabled PLL and core clocks, then returned 0.
-- **Symptom:** system suspend is reported successful while SPI clocks
-  are gated with the queue possibly still active → MMIO to unclocked
-  hardware, incomplete SPI transactions.
-- **Version info:** none in the message. Driver added in v6.3; bug
-  present from introduction.
-- **Root cause:** missing return-value check before clock teardown.
+- **File:** `drivers/net/wireless/microchip/wilc1000/mon.c` only (~+25 /
+  -5)
+- **Function:** `wilc_wfi_mon_xmit()`
+- **Scope:** single-file surgical fix
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
+Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Local code today (verified in this tree):
 
-Record: Not disguised. It is an explicit PM error-path fix: “Handle X
-properly” / missing error check. Real bug, not style.
+```156:195:drivers/net/wireless/microchip/wilc1000/mon.c
+        rtap_len = ieee80211_get_radiotap_len(skb->data);
+        if (skb->len < rtap_len)
+                return -1;
 
----
+        skb_pull(skb, rtap_len);
 
-## PHASE 2: DIFF ANALYSIS
+        if (skb->data[0] == 0xc0 &&
+is_broadcast_ether_addr(&skb->data[4])) {
+                // ...
+        }
+        skb->dev = mon_priv->real_ndev;
 
-**Step 2.1: INVENTORY THE CHANGES**
-
-Record:
-- File: `drivers/spi/spi-bcmbca-hsspi.c` — **+5 / −1**
-- Function: `bcmbca_hsspi_suspend()`
-- Scope: **single-file surgical fix**
-
-Upstream/context in the provided snippet also shows `remove()`/`#ifdef
-CONFIG_PM_SLEEP` around it; the change that actually lands on this tree
-is only the suspend return check (parent of `072b287a97bf3` matches
-`v6.18.53` for this file, 0-line diff).
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record:
-- **Before:** `spi_controller_suspend(host)` return ignored →
-  `clk_disable_unprepare(pll)` + `clk_disable_unprepare(clk)` → `return
-  0`.
-- **After:** if `spi_controller_suspend()` fails, return that error
-  immediately; clocks stay enabled.
-- Path: **system-sleep suspend error path**, not probe/init.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record:
-- **Category:** logic / PM error-path correctness (resource teardown
-  while transfers may still be running).
-- **Mechanism:** this driver sets `host->transfer_one_message`, so
-  registration calls `spi_controller_initialize_queue()` and
-  `ctlr->queued = true`. `spi_controller_suspend()` then calls
-  `spi_stop_queue()`, which polls up to 500 × ~10 ms (~5 s) and returns
-  **`-EBUSY`** if the queue/busy bit never clears. The driver used to
-  power down clocks anyway.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record:
-- Obviously correct and matches the usual SPI driver pattern (e.g.
-  `rockchip_spi_suspend()` in this tree).
-- Minimal; no API/data-structure changes.
-- Regression risk is low. An automated review (sashiko-bot) noted that
-  `spi_controller_suspend()` still sets `SPI_CONTROLLER_SUSPENDED` on
-  failure, and a failed device suspend does not get `resume()`. That is
-  a **pre-existing SPI core quirk** shared by most drivers that already
-  check this return. The old path is worse: same flag is set **and**
-  clocks are gated. Mark Brown applied the series without requesting an
-  unwind.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record:
-- Ignored `spi_controller_suspend()` + clock disable introduced in
-  **`a38a2233f23b5`** (“spi: bcmbca-hsspi: Add driver for newer HSSPI
-  controller”, William Zhang, 2023-02-09).
-- First appeared: **`v6.3-rc1`**. Present for the entire life of this
-  driver, including 6.18.y.
-
-**Step 3.2: FOLLOW THE FIXES TAG**
-
-Record: No Fixes tag. Buggy code is the original driver, not a later
-regression.
-
-**Step 3.3: CHECK FILE HISTORY**
-
-Record (this file, newest first):
-- `2b580ac54f40f` — modern PM macros (later autosel candidate; **not** a
-  prerequisite)
-- `072b287a97bf3` — **this** commit
-- `148a3f03aec89` — resume-side clock cleanup (**already in v6.18.53**,
-  had Fixes + Cc: stable)
-- Driver-original suspend path otherwise unchanged since v6.3
-
-Standalone. Cover letter: *“The patches are independent and only touch
-the local error paths in each driver.”*
-
-**Step 3.4: CHECK THE AUTHOR’S OTHER COMMITS**
-
-Record: Jiawen Liu submitted a 4-patch SPI PM error-handling series
-(atcspi200, **bcmbca-hsspi**, fsl-dspi, nxp-fspi). Additional similar
-Broadcom fixes exist for bcm63xx / bcm63xx-hsspi / bcm-qspi. Author is a
-regular contributor, not the SPI maintainer. Maintainer **Mark Brown**
-applied all 4.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: None. Uses existing `spi_controller_suspend()`. Applies
-standalone. Series 2/4 is independent.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- `b4 dig -c faa878d4805c`: **[PATCH 2/4] spi: bcmbca-hsspi: return
-  error from failed controller suspend**
-- Thread: https://patch.msgid.link/tencent_54F5634545908FBA724E758054BF0
-  3953808@qq.com
-- Cover: **[PATCH 0/4] spi: fix PM error handling in several drivers**
-  (2026-06-20)
-- `b4 dig -a`: **v1 only**; committed version is that v1.
-- Human review: no NAK. Mark Brown applied to `spi/for-7.3`
-  (git.kernel.org/broonie/spi/c/faa878d4805c).
-- sashiko-bot: “permanently wedged in a suspended state” if error is
-  propagated (SPI core marks suspended even on `-EBUSY`). No maintainer
-  follow-up; patch still applied.
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record (`b4 dig -w`): To Mark Brown; Cc William Zhang, Kursad Oney,
-Jonas Gorski, bcm-kernel-feedback-list, Florian Fainelli, linux-spi,
-linux-arm-kernel, etc. Right maintainers/lists. No Acked-by on this hunk
-(unlike some sibling Broadcom patches).
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot, bugzilla, or user crash report. Bug is from code
-inspection of the ignored return. The same driver’s **resume**
-counterpart (`148a3f03aec89`) was user/author-driven with
-Fixes+Cc:stable and is already in this tree.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Independent 2/4. Sibling Broadcom suspend-return patches are the
-same class, not build/runtime dependencies. Resume clock-disable-on-
-failure is already in 6.18.53; this is the suspend-side counterpart.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: lore.kernel.org returned 403; WebSearch of
-`lore.kernel.org/stable` for this subject found **no** stable-specific
-discussion. UNVERIFIED that anyone requested or rejected it on stable@;
-no evidence of a known reason to skip it.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: KEY FUNCTIONS**
-
-Record: `bcmbca_hsspi_suspend()` (modified). Callees of interest:
-`spi_controller_suspend()`, `spi_stop_queue()`,
-`clk_disable_unprepare()`.
-
-**Step 5.2: TRACE CALLERS**
-
-Record: Wired via `DEFINE_SIMPLE_DEV_PM_OPS(bcmbca_hsspi_pm_ops, …)` /
-`.pm` on the platform driver. Called from the PM core on **system
-sleep**, not from syscalls directly. Reachable on BCMBCA boards that
-suspend with `CONFIG_SPI_BCMBCA_HSSPI` and `CONFIG_PM_SLEEP`.
-
-**Step 5.3: TRACE CALLEES**
-
-Record:
-- `spi_controller_suspend()` → `spi_stop_queue()` if queued; always
-  `__spi_mark_suspended()`.
-- Then (success only, after this patch) clock disable.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record:
-`pm_suspend` → `dpm_suspend` → `bcmbca_hsspi_suspend` →
-`spi_controller_suspend` → `spi_stop_queue`.
-
-In-flight work is `bcmbca_hsspi_transfer_one` → `bcmbca_hsspi_do_txrx`
-doing `__raw_readl`/`__raw_writel` on `bs->regs`. Yanking clocks while
-that runs is a hang/abort/corruption path. Userspace can keep the queue
-busy (SPI flash, sensors) across a suspend request.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Most SPI drivers in this tree already check
-`spi_controller_suspend()` (dw, tegra, rockchip, qup, pxa2xx, atmel, …).
-This driver was an outlier. Same author’s bcm63xx/bcm-qspi patches fix
-the same pattern.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.** `v6.18.53:drivers/spi/spi-bcmbca-hsspi.c` still has:
-
-```c
-spi_controller_suspend(host);
-clk_disable_unprepare(bs->pll_clk);
-clk_disable_unprepare(bs->clk);
-return 0;
+        ether_addr_copy(srcadd, &skb->data[10]);
+        ether_addr_copy(bssid, &skb->data[16]);
 ```
 
-`git merge-base --is-ancestor 072b287a97bf3 v6.18.53` → **not an
-ancestor**. Bug introduced in v6.3, still in 6.18.53.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Clean apply.** `git diff v6.18.53 072b287a97bf3^ --
-drivers/spi/spi-bcmbca-hsspi.c` is empty. No rework needed. Later
-“modern PM macros” commit is unrelated and not required.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: Resume-side `148a3f03aec89` **is** in v6.18.53. No other
-suspend-error check for this function. This is the missing counterpart,
-not a duplicate.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-
-Record: **drivers/spi** — Broadcom BCMBCA HSSPI
-(`CONFIG_SPI_BCMBCA_HSSPI`, `depends on ARCH_BCMBCA || COMPILE_TEST`).
-**PERIPHERAL / platform-specific**, but SPI NOR on those SoCs is often
-boot/config flash, so a bad suspend is not cosmetic.
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-
-Record: SPI core is mature; this driver is small and not heavily
-churned. Bug is long-standing (since v6.3), not a brand-new feature.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-
-Record: **Platform-specific** — Broadcom BCMBCA (ARM/ARM64 broadband
-SoCs: gateways/routers). Only if the HSSPI driver and system sleep are
-enabled.
-
-**Step 8.2: TRIGGER CONDITIONS**
-
-Record: System suspend while the SPI queue stays busy for ~5 seconds
-(`spi_stop_queue` limit). Uncommon, but exactly the dangerous case
-(stuck or long transfer). Not a syzbot syscall crash; can be induced by
-userspace SPI activity plus suspend. Unprivileged trigger depends on who
-can open the SPI device and who can suspend (typically privileged).
-
-**Step 8.3: FAILURE MODE SEVERITY**
-
 Record:
-- Clocks gated while the pump may still MMIO → bus hang, imprecise
-  abort, or torn SPI NOR write.
-- PM core is told suspend succeeded, so the machine continues into sleep
-  with live SPI I/O unclocked.
-- **Severity: HIGH** when it hits (corruption/hang); trigger is
-  uncommon.
+- **Radiotap:** before: read `it_len` with no minimum-size or version
+  check, then `return -1` (invalid `netdev_tx_t`, skb not consumed).
+  After: require `sizeof(*rtap_hdr)`, `it_version == 0`, `rtap_len >=
+  sizeof(*rtap_hdr)`, else drop and free.
+- **802.11 header:** before: `skb->data[0]`, `&skb->data[4]`,
+  `&skb->data[10]`, `&skb->data[16]` with no length check. After:
+  `ieee80211_get_hdrlen_from_skb()` and `hdr_len >= sizeof(struct
+  ieee80211_hdr_3addr)` (24 bytes).
+- **Deauth match:** `data[0] == 0xc0` replaced by
+  `ieee80211_is_deauth(hdr->frame_control)`; broadcast dest uses
+  `hdr->addr1`.
+- **Address copy:** hardcoded offsets 10/16 replaced by `hdr->addr2` /
+  `hdr->addr3` (same layout, now only after a 24-byte header is proven
+  present).
+- **Drop path:** `dev_kfree_skb(skb); return NETDEV_TX_OK;` — correct TX
+  contract.
 
-**Step 8.4: RISK-BENEFIT RATIO**
+Step 2.3: IDENTIFY THE BUG MECHANISM
+Record: **(d) Memory safety / (g) logic.** Category: **buffer overflow /
+out-of-bounds read**.
+- `ieee80211_get_radiotap_len()` does `get_unaligned_le16(&hdr->it_len)`
+  at offset 2. A 0–1 byte skb is already an OOB read.
+- If `skb->len == rtap_len`, `skb_pull()` leaves an empty skb;
+  `data[0]`, `data[4]`, `data[10]`, `data[16]` are then OOB.
+- Need 22 bytes after radiotap for addr3 (`data[16..21]`); nothing
+  enforced that.
 
+Step 2.4: ASSESS THE FIX QUALITY
+Record: **Obviously correct and minimal.** Uses existing helpers.
+Dropping short control headers is intentional (this path needs
+addr2/addr3). QoS/4-address data still pass because their hdrlen is ≥ 24
+and addr2/addr3 stay at the same offsets.
+- **Regression risk:** low. Valid full 3-address injects unchanged.
+  Short frames that previously hit OOB are now dropped.
+- **Not introduced:** deauth path still does not free the original skb;
+  `skb2` allocation failure still returns `-ENOMEM`. Pre-existing.
+
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+
+Step 3.1: BLAME THE CHANGED LINES
+Record: The TX path is from **c5c77ba18ea6** (`staging: wilc1000: Add
+SDIO/SPI 802.11 driver`, 2015-05-24). Length check `skb->len < rtap_len`
+is from **60959e53f839** (2016). Address copies from **870709141599**
+(2019). Bug has been in this driver for the whole 5.15 lifetime.
+
+Step 3.2: FOLLOW THE FIXES: TAG
+Record: Original submission tagged **Fixes: c5c77ba18ea6**. `git merge-
+base --is-ancestor c5c77ba18ea6 HEAD` succeeded. Introduced in
+**v4.2-rc1**. Present in this tree.
+
+Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Record: `mon.c` on this branch is only a handful of commits (staging
+move, strlcpy, error-path cleanup, netdev register crash). **No prior
+monitor-header validation.** Other wilc1000 OOB fixes **are** already
+here (`validate assoc response length`, `fix out-of-bounds read in P2P
+public action frames`, `fix RX buffer OOB-write`, etc.). This patch is
+**standalone**, subject `[PATCH]` not `X/Y`.
+
+Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Record: No other Mariano Baragiola wilc1000 commits in this tree.
+Johannes Berg’s SOB is the maintainer acceptance. WILC maintainers were
+on To:.
+
+Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+Record: Functional helpers all exist here:
+- `ieee80211_get_radiotap_len()` — `include/net/ieee80211_radiotap.h`
+- `ieee80211_get_hdrlen_from_skb()` — `net/wireless/util.c`
+  (`EXPORT_SYMBOL`)
+- `ieee80211_is_deauth()`, `struct ieee80211_hdr_3addr` —
+  `include/linux/ieee80211.h`
+- `NETDEV_TX_OK` — `include/linux/netdevice.h`
+- Includes already pulled via `cfg80211.h` → `netdev.h`
+
+**One backport tweak:** `struct ieee80211_radiotap_header_fixed` is
+**not** in 5.15 (`git merge-base --is-ancestor 57be3d3562ca HEAD`
+failed). That type was added in 2024 (`wifi: radiotap: Avoid -Wflex-
+array-member-not-at-end warnings`) for a compiler warning. In this tree
+`sizeof(struct ieee80211_radiotap_header)` is **8** (flex array has size
+0) — same as the fixed header. Substitute `struct
+ieee80211_radiotap_header *rtap_hdr`. **Can apply standalone** with that
+one-identifier change.
+
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+
+Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- **Benefit:** medium-high for BCMBCA devices that suspend; prevents
-  clock-off during active SPI. Completes PM error handling already fixed
-  on resume in this tree.
-- **Risk:** very low (5 lines, standard pattern). Residual:
-  `SPI_CONTROLLER_SUSPENDED` can stick if suspend fails (SPI core). That
-  already exists for the majority of SPI drivers here; old code still
-  set the flag **and** cut clocks.
-- **Ratio:** benefit outweighs risk.
+- **Lore/msgid:** `20260728192610.2236361-1-mbaragiola@linux.com`
+  (2026-07-28)
+- **b4 mbox:** **1 message in the thread** — no review replies, no NAK,
+  no v2
+- **Openwall:** same single-patch post
+- Johannes applied it (SOB on the committed version). Single-revision,
+  no later unapplied vN.
+- Author nominated **Cc: stable** and **Fixes:** on the original post.
 
----
+Step 4.2: CHECK WHO REVIEWED THE PATCH
+Record: To: Ajay Singh, Claudiu Beznea. Cc: linux-wireless, linux-
+kernel, stable. Applied by **Johannes Berg**. No on-list Reviewed-by
+found.
 
-## PHASE 9: FINAL SYNTHESIS
+Step 4.3: SEARCH FOR THE BUG REPORT
+Record: No syzbot/bugzilla tag. Bug is from code inspection of the TX
+path. Reachable from userspace `ndo_start_xmit` on the monitor netdev
+(creating that iface is `NL80211_IFTYPE_MONITOR` in
+`add_virtual_intf()`).
 
-**Step 9.1: EVIDENCE**
+Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+Record: Standalone. Related wilc1000 OOB work in the same period (P2P
+public action, assoc-response length) is already on this 5.15 branch;
+this commit is a different file/path.
 
-**For backporting:**
-- Real PM bug: ignored `-EBUSY` from `spi_controller_suspend()`, then
-  clock disable + `return 0`.
-- Can unclock MMIO and corrupt in-flight SPI (including flash).
-- 5-line, obviously correct, maintainer-applied (Mark Brown).
-- Driver and buggy code exist in **this** 6.18.53 tree since v6.3.
-- Applies cleanly; no prerequisites.
-- Same class as the resume fix already in 6.18.53.
-- Aligns this outlier with the rest of the SPI subsystem.
+Step 4.5: CHECK STABLE MAILING LIST HISTORY
+Record: lore.kernel.org/stable returned HTTP 403. Original patch **was**
+Cc’d to stable@. No evidence of a NAK against backporting. UNVERIFIED:
+later stable-list debate beyond that CC.
 
-**Against:**
-- No user/syzbot report; error path is uncommon (~5 s busy).
-- Platform-specific (not all machines).
-- Incomplete vs an unwind via `spi_controller_resume()` (SPI core marks
-  suspended on failure).
-- No Fixes/Cc:stable (expected here; not a reason to reject).
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Unresolved:**
-- Could not fetch lore.kernel.org (403). Thread recovered via `b4 dig`
-  mbox + LKML/openwall. No stable@ discussion found.
+Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+Record: **`wilc_wfi_mon_xmit()`** only.
 
-**Step 9.2: STABLE RULES CHECKLIST**
+Step 5.2: TRACE CALLERS
+Record: Registered as `.ndo_start_xmit` on the monitor netdev created by
+`wilc_wfi_init_mon_interface()` from `add_virtual_intf()` when type is
+`NL80211_IFTYPE_MONITOR`. Call context: process, packet TX (inject). Not
+IRQ.
 
-1. Obviously correct and tested? **PASS** — applied by SPI maintainer;
-   pattern used across `drivers/spi`.
-2. Fixes a real bug that affects users? **PASS** — ignored suspend
-   failure + clock teardown.
-3. Important issue? **PASS** — hang/abort/data corruption on active SPI
-   during suspend, not a style tweak.
-4. Small and contained? **PASS** — +5/−1, one function.
+Step 5.3: TRACE CALLEES
+Record: `ieee80211_get_radiotap_len`, `skb_pull`,
+`ieee80211_get_hdrlen_from_skb`, `ieee80211_is_deauth`,
+`is_broadcast_ether_addr`, `ether_addr_copy`, `mon_mgmt_tx`,
+`wilc_mac_xmit` (consumes skb; `dev_kfree_skb` on its error paths),
+`dev_kfree_skb`, `netif_rx`.
+
+Step 5.4: FOLLOW THE CALL CHAIN
+Record: nl80211 add monitor iface (typically `CAP_NET_ADMIN`) → inject
+on that netdev → `wilc_wfi_mon_xmit()`. **Userspace-reachable** on
+systems with WILC1000 and a monitor interface. Not a theoretical dead
+path.
+
+Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Record: Same driver already received several length-check OOB fixes on
+this branch. `ieee80211_get_hdrlen_from_skb()` is the usual helper (e.g.
+ath9k). This is the same class of bug, not a one-off style cleanup.
+
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+Record: **Yes.** `drivers/net/wireless/microchip/wilc1000/mon.c` lines
+156–195. Introduced 2015; driver left staging in 2020 (`5625f965d7644`,
+ancestor of HEAD). **5.15.221** has the bug.
+
+Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+Record: Context around `wilc_wfi_mon_xmit()` matches the hunks.
+**Expected difficulty: minor** — rename
+`ieee80211_radiotap_header_fixed` → `ieee80211_radiotap_header`. No
+other missing APIs.
+
+Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+Record: **This fix is not in the tree** (`git log --grep="validate
+monitor transmit"` on that path is empty). Other wilc1000 OOB fixes do
+not cover this TX path.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+Record: **wifi / wilc1000**
+(`drivers/net/wireless/microchip/wilc1000/`). **PERIPHERAL/IMPORTANT for
+its users:** IoT/embedded SDIO/SPI WiFi (Kconfig: “usually found in IoT
+devices”). Not core mm/VFS, but a supported in-tree driver on 5.15 LTS,
+which is exactly where those boards stay.
+
+Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+Record: Actively receiving stable OOB/UAF fixes on this branch. Mature
+driver, old bug.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+Step 8.1: DETERMINE WHO IS AFFECTED
+Record: **Driver-specific / config-specific** (`CONFIG_WILC1000_SDIO` or
+`CONFIG_WILC1000_SPI`), monitor interface in use.
+
+Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+Record: Inject a short radiotap or short 802.11 frame on the monitor
+netdev. Easy to hit once the iface exists. Creating it is privileged;
+injection is still a **kernel** OOB, not a userspace-only issue.
+
+Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+Record: **OOB read** of skb/adjacent kernel memory; KASAN crash or info
+leak into classification/TX. Invalid `ndo_start_xmit` `-1` can also
+confuse the stack and leak the skb. **Severity: HIGH** (memory safety /
+crash). Not a silent FS corruption, but in the sanitizer/OOB class that
+stable regularly takes.
+
+Step 8.4: CALCULATE RISK-BENEFIT RATIO
+Record:
+- **Benefit:** high for WILC1000 + monitor users; closes a long-standing
+  OOB on a reachable TX path.
+- **Risk:** very low (~20 lines, drop path only for invalid frames, one
+  type-name tweak).
+- **Ratio:** favorable.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+Step 9.1: COMPILE THE EVIDENCE
+
+**FOR backporting:**
+- Real OOB reads in `ndo_start_xmit` on truncated injects (code-
+  verified).
+- Bug present since 2015; this 5.15 tree has the exact buggy code.
+- Small, obviously correct validation; wireless maintainer SOB.
+- Author Cc’d stable and tagged Fixes: c5c77ba18ea6 (in tree).
+- Same driver already gets OOB backports on this branch.
+- Helpers exist; drop path also fixes a wrong TX return / skb leak.
+
+**AGAINST:**
+- Niche IoT driver, monitor path, typically privileged setup.
+- `ieee80211_radiotap_header_fixed` missing (one-line substitution).
+- No syzbot/user crash log; no on-list review besides maintainer merge.
+
+**UNRESOLVED:**
+- lore.kernel.org HTTP 403; no extra review comments beyond the
+  1-message thread.
+- Whether Johannes dropped Fixes/Cc: stable when applying (candidate
+  text lacks them; original mail had them).
+
+Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — bounds checks + existing
+   helpers; maintainer applied it.
+2. Fixes a real bug that affects users? **PASS** — OOB on monitor
+   inject.
+3. Important issue? **PASS** — kernel OOB read / crash; HIGH.
+4. Small and contained? **PASS** — one function, ~20 lines.
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean on v6.18.53.
+6. Can apply to the local tree? **PASS** — with
+   `ieee80211_radiotap_header` instead of `_fixed`.
 
-**Step 9.3: EXCEPTION CATEGORIES**
+Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Record: Not a device-ID/quirk/DT/docs exception. It is a **memory-safety
+OOB fix**, which is core stable material.
 
-Record: Not a device-ID/quirk/DT/build/doc exception. Ordinary small
-bugfix.
-
-**Step 9.4: DECISION**
-
-This belongs in this 6.18.y tree. The bug is in the tree, the fix is
-surgical, and leaving clocks on when the queue cannot stop is the
-correct hardware behavior.
-
----
-
-### Problem for stable users
-
-On Broadcom BCMBCA HSSPI, suspend called `spi_controller_suspend()`
-(which can return `-EBUSY` after ~5 s if transfers will not stop) and
-then **always** disabled PLL/core clocks and returned success. That can
-cut clocks under a live transfer (`bcmbca_hsspi_do_txrx` MMIO). This
-tree already fixed the matching resume error path; suspend was still
-wrong.
-
-### Stable rules / risk
-
-Meets the rules: real bug, small, no new API, clean apply to 6.18.53.
-Risk is a few lines in one PM callback. Benefit is avoiding unclocked
-SPI and false-successful suspend.
-
-### Concerns
-
-No extra commits needed. Sashiko’s “stuck SUSPENDED flag” note is a SPI-
-core limitation already shared by most drivers; it does not make the old
-“disable clocks anyway” path acceptable.
-
----
+Step 9.4: MAKE YOUR DECISION
+The bug exists in this 5.15 tree, the failure is an OOB read on a
+userspace-reachable TX path, and the fix is small. The missing `_fixed`
+type is not a missing prerequisite; it is the same 8-byte header under
+the older name.
 
 Verification:
-- [Phase 1] Parsed subject/tags/body from `git show 072b287a97bf3` /
-  upstream `faa878d4805c`; no Fixes/Reported-by; Link to msgid; Mark
-  Brown SOB
-- [Phase 2] Diff: +5/−1 in `bcmbca_hsspi_suspend()`; ignore →
-  check/return
-- [Phase 2] `spi_controller_suspend()` / `spi_stop_queue()` in
-  `drivers/spi/spi.c`: queued controllers can return `-EBUSY`;
-  `__spi_mark_suspended()` always runs
-- [Phase 2] Driver sets `transfer_one_message`;
-  `spi_register_controller()` initializes the queue (`ctlr->queued =
-  true`)
-- [Phase 3] `git blame 072b287a97bf3^`: buggy lines from `a38a2233f23b5`
-  (v6.3-rc1)
-- [Phase 3] `git log --oneline -- drivers/spi/spi-bcmbca-hsspi.c`:
-  resume fix `148a3f03aec89` already in v6.18.53; this commit not in
-  v6.18.53
-- [Phase 3] `git merge-base --is-ancestor 072b287a97bf3 v6.18.53` → no;
-  `git diff v6.18.53 072b287a97bf3^ -- drivers/spi/spi-bcmbca-hsspi.c` →
-  0 lines
-- [Phase 3] Author series via `git log --author="Jiawen Liu" --
-  drivers/spi/`
-- [Phase 4] `b4 dig -c faa878d4805c` / `-a` / `-w` / `-m`: v1 2/4,
-  independent series, applied by Mark Brown 2026-06-30; Broadcom/SPI
-  lists on Cc
-- [Phase 4] Cover letter from lkml.iu.edu: patches independent
-- [Phase 4] sashiko-bot mbox msg: SUSPENDED-flag concern; no NAK from
-  maintainer
-- [Phase 4] lore.kernel.org WebFetch 403; stable@ search found nothing
-  relevant — UNVERIFIED no stable@ thread
-- [Phase 5] Callers: PM ops only; callees: `spi_controller_suspend`,
-  `clk_disable_unprepare`; transfer path uses MMIO
-- [Phase 5] Similar pattern already in `spi-rockchip.c` and many other
-  SPI drivers
-- [Phase 6] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
-  kernelversion` → 6.18.53; buggy suspend in `v6.18.53` file
-- [Phase 7] `CONFIG_SPI_BCMBCA_HSSPI` depends on `ARCH_BCMBCA`
-- [Phase 8] Failure mode: unclocked SPI MMIO / possible flash
-  corruption; trigger = suspend with busy queue for ~5 s
-- UNVERIFIED: live user reports of this suspend path; full
-  lore.kernel.org HTML (403)
+- [Phase 1] Parsed candidate tags: Link msgid, SOB Mariano Baragiola,
+  SOB Johannes Berg; no Fixes in candidate text
+- [Phase 1] b4 mbox + Openwall: original mail had Fixes: c5c77ba18ea6
+  and Cc: stable@vger.kernel.org
+- [Phase 2] Diff: one function `wilc_wfi_mon_xmit`; radiotap/802.11
+  length checks + drop path
+- [Phase 2] Local `mon.c` confirmed: `ieee80211_get_radiotap_len` then
+  `return -1`; then `data[0]/[4]/[10]/[16]` with no length check
+- [Phase 2] `ieee80211_get_radiotap_len` reads `it_len` at offset 2
+  without a size check
+- [Phase 3] blame: path from c5c77ba18ea6 (2015); `git merge-base --is-
+  ancestor c5c77ba18ea6 HEAD` true
+- [Phase 3] `git log --grep="validate monitor transmit" -- wilc1000`
+  empty — fix not present
+- [Phase 3] `57be3d3562ca` (`ieee80211_radiotap_header_fixed`) is
+  **not** an ancestor
+- [Phase 3] compiled `sizeof(struct ieee80211_radiotap_header)` with FAM
+  = 8
+- [Phase 3] `ieee80211_get_hdrlen_from_skb`, `ieee80211_is_deauth`,
+  `ieee80211_hdr_3addr`, `NETDEV_TX_OK` all exist
+- [Phase 4] b4 mbox: 1-message thread, no NAK/v2; To: WILC maintainers
+- [Phase 4] lore.kernel.org 403 — UNVERIFIED further review thread
+- [Phase 5] caller is monitor `.ndo_start_xmit`; iface created from
+  `add_virtual_intf()` MONITOR
+- [Phase 5] `wilc_mac_xmit` frees skb on its error paths
+- [Phase 6] `git describe HEAD` → p-5.15-2-g6703e5d2f3a29; `make
+  kernelversion` → 5.15.221
+- [Phase 6] driver not staging here (`5625f965d7644` is ancestor)
+- [Phase 8] Failure mode: OOB read on truncated monitor TX, severity
+  HIGH
+- UNVERIFIED: later stable@ discussion after the original Cc
+
+The patch is a real, small OOB fix for code this tree still has.
+Backport with `struct ieee80211_radiotap_header` in place of
+`ieee80211_radiotap_header_fixed`.
 
 **YES**
 
- drivers/spi/spi-bcmbca-hsspi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/microchip/wilc1000/mon.c | 30 +++++++++++++++----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-bcmbca-hsspi.c b/drivers/spi/spi-bcmbca-hsspi.c
-index a1ff33f6dc095..50beb8443ea90 100644
---- a/drivers/spi/spi-bcmbca-hsspi.c
-+++ b/drivers/spi/spi-bcmbca-hsspi.c
-@@ -586,8 +586,12 @@ static int bcmbca_hsspi_suspend(struct device *dev)
+diff --git a/drivers/net/wireless/microchip/wilc1000/mon.c b/drivers/net/wireless/microchip/wilc1000/mon.c
+index c3d27aaec2974..c0fde3b0d8aab 100644
+--- a/drivers/net/wireless/microchip/wilc1000/mon.c
++++ b/drivers/net/wireless/microchip/wilc1000/mon.c
+@@ -142,6 +142,9 @@ static int mon_mgmt_tx(struct net_device *dev, const u8 *buf, size_t len)
+ static netdev_tx_t wilc_wfi_mon_xmit(struct sk_buff *skb,
+ 				     struct net_device *dev)
  {
- 	struct spi_controller *host = dev_get_drvdata(dev);
- 	struct bcmbca_hsspi *bs = spi_controller_get_devdata(host);
-+	int ret;
++	struct ieee80211_radiotap_header_fixed *rtap_hdr;
++	struct ieee80211_hdr_3addr *hdr;
++	unsigned int hdr_len;
+ 	u32 rtap_len, ret = 0;
+ 	struct wilc_wfi_mon_priv  *mon_priv;
+ 	struct sk_buff *skb2;
+@@ -153,13 +156,26 @@ static netdev_tx_t wilc_wfi_mon_xmit(struct sk_buff *skb,
+ 	if (!mon_priv)
+ 		return -EFAULT;
+ 
++	if (skb->len < sizeof(*rtap_hdr))
++		goto drop;
 +
-+	ret = spi_controller_suspend(host);
-+	if (ret)
-+		return ret;
++	rtap_hdr = (void *)skb->data;
++	if (rtap_hdr->it_version)
++		goto drop;
++
+ 	rtap_len = ieee80211_get_radiotap_len(skb->data);
+-	if (skb->len < rtap_len)
+-		return -1;
++	if (rtap_len < sizeof(*rtap_hdr) || skb->len < rtap_len)
++		goto drop;
  
--	spi_controller_suspend(host);
- 	clk_disable_unprepare(bs->pll_clk);
- 	clk_disable_unprepare(bs->clk);
+ 	skb_pull(skb, rtap_len);
++	hdr_len = ieee80211_get_hdrlen_from_skb(skb);
++	if (hdr_len < sizeof(*hdr))
++		goto drop;
  
+-	if (skb->data[0] == 0xc0 && is_broadcast_ether_addr(&skb->data[4])) {
++	hdr = (void *)skb->data;
++
++	if (ieee80211_is_deauth(hdr->frame_control) &&
++	    is_broadcast_ether_addr(hdr->addr1)) {
+ 		skb2 = dev_alloc_skb(skb->len + sizeof(*cb_hdr));
+ 		if (!skb2)
+ 			return -ENOMEM;
+@@ -191,8 +207,8 @@ static netdev_tx_t wilc_wfi_mon_xmit(struct sk_buff *skb,
+ 	}
+ 	skb->dev = mon_priv->real_ndev;
+ 
+-	ether_addr_copy(srcadd, &skb->data[10]);
+-	ether_addr_copy(bssid, &skb->data[16]);
++	ether_addr_copy(srcadd, hdr->addr2);
++	ether_addr_copy(bssid, hdr->addr3);
+ 	/*
+ 	 * Identify if data or mgmt packet, if source address and bssid
+ 	 * fields are equal send it to mgmt frames handler
+@@ -207,6 +223,10 @@ static netdev_tx_t wilc_wfi_mon_xmit(struct sk_buff *skb,
+ 	}
+ 
+ 	return ret;
++
++drop:
++	dev_kfree_skb(skb);
++	return NETDEV_TX_OK;
+ }
+ 
+ static const struct net_device_ops wilc_wfi_netdev_ops = {
 -- 
 2.53.0
 
