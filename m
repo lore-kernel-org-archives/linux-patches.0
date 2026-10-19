@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FEF54BC3D;
-	Mon, 19 Oct 2026 13:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28ABA50E59B;
+	Mon, 19 Oct 2026 13:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418204; cv=none; b=bsP37zFyOl+0UsaXC7Za5/e2ho/FIVEwspUfGhCk9m2WcB9QgwqAKHxvmY+nILnico/gFiQVB7qjt8aJEU+W0l1X/SGSs0C5kYmTaB1djIbreFoq323c+IY5PEfbiP0Q5S0tLJP7uKh8HGMMkKtlhVbTerh63WiWieuzpe81NTM=
+	t=1792418204; cv=none; b=i6c6RU9NgHjf/Te0i22Bj92Rajj1ytf76QMQDb/iJl8DpY8CsQZe0AhSz9jFrhjJK/dKRHTbezZK+paNPlMEbPl4TR33pwBGEAjxgUFkxB9KuMnDhVrzbirF9AMTP4wCGwTG7Ec4bCbWyoMWn06eCc9FxjV/Z5c6JnsB+gXLUts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418204; c=relaxed/simple;
-	bh=z4NsKVfjx8HGMVWk/IIhqNa/gJbtYgpUP5zTBFfc35A=;
+	bh=FUC4+ktDq9/olCbQLnWP9lsQxuowCI9V8p4DeN3m4C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VikyGUAyGyH+Ec7JcadcD0b3X1xeVGoyU5vtGGK66r21S0lmUt9J9gv2tLjT5pE19w9y/vD/z2/SojQvxAJ/+zN8pH5TPB3Sza2he2M+90DefcrbUe+Q6V4+fVa55/Kn57p+M7Dfs0ZdRqoCQIMOjwskp+8Ke/oIXnPbK+YDqf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FI47pChF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Wwzm7NvuTq82xl4ScrlWrl5Mkl001dVp0Sh7NB/Bivswl1KVsG8JOvtyO4GR6ALCnlCIjKYlcoXxzkq4cEbC1FO9lRMubwoqTXw5NoX2sF+ZjAnfCNbxpzDAqKD6pTLkC4Ev0KqdH6jTPv+HXR3c9ais/AI+6HJ/24N44GbcR4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LnkibqHS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FI47pChF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828A11F000C5;
-	Mon, 19 Oct 2026 13:56:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LnkibqHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B341F000C7;
+	Mon, 19 Oct 2026 13:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418200;
-	bh=eJSdATW2Qr1HPFuivwkn3fyU6QISohvpr1nA2CpokCU=;
+	s=k20260515; t=1792418202;
+	bh=lNWFS/3scIX+7MJSnEHstb3kLAcYL3/eoyYtqGJwCB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FI47pChF7k71f/Mi9+4T6VHhT5r0zXhXyZcqhHEEo8Ol0K12f3C/9inaJQ3jrchqS
-	 pQwCWlgxWgQJKOjNeBJVm3y/UgGNMXPEj6JS7nvPIIJ5SnpG2oiNKtDIz9dAjgx5yw
-	 XfjEJxgSaSTe04fRz8ho+5j5Gy5TqPXXwWUg3av9q2jdfHvmNFs5euL5DEK/MoeCpW
-	 TX4yRjb5k+XJX4DIM0vEY59qG2Enf2Pa7ALja7JFYwZgYTEZMbwz/z10wpdo4OEYBQ
-	 rX/2PsoI2dKsPgf69LUXdVk1yXfSKhqMzQ8F0P+LIlz7q1GKV+hr4YXH+tDwQv3dF9
-	 FJhz9CqWMUwhw==
+	b=LnkibqHS87my1ieBNzpo6zpnmLnT0fMpVNqdEL6yEwwnSFEBazKkXwxiyVPzIC9pV
+	 f6DQnlQo1dnbIeRm8Qk8JtDSwIG0KXsbZYo1+bU6pVES/vzs8Q6gMlaLK1ula5cXZY
+	 YIqlmtQsCn/GTx6FSmVCqCi2h+oQHT0sb2ogLpVVRcLn0Koqi9p8kMdD5ReczoTGVA
+	 gz0mUctmw7gQPoqZxD9jEooYiJK9g+EHsnvzLy1aq5ky9HwtvKPQi48Ni/AoukgO8N
+	 EXhftPku4kw7/pM9hV7H9wTRh1XGF0MiZKvz9ggOXd3NO+7me3ZXDa6P3+oxORKeqS
+	 zy7DwNml0Odkg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Hari Mishal <harimishal1@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	oleg@makarenk.ooo,
-	linux-input@vger.kernel.org,
+	axboe@kernel.dk,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] HID: universal-pidff: Add support for Turtle Beach VelocityOne Race
-Date: Mon, 19 Oct 2026 09:46:14 -0400
-Message-ID: <20261019135441.1420968-83-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] nvme: bound ns descriptor header and body to identify buffer
+Date: Mon, 19 Oct 2026 09:46:15 -0400
+Message-ID: <20261019135441.1420968-84-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -49,387 +50,475 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit 53f7f7955a684e820bdd6bd6792c45c4b434f637 ]
+[ Upstream commit 3c568b35a0d309acb40746552bec2af24cd550ef ]
 
-Add usb VID and device PID to hid-ids.h
+nvme_identify_ns_descs() allocates a buffer and gives it to the
+controller, which populates it and then iterates the buffer with
+variable byte increments that vary by type and body size.  But, there is
+no bounds check inside the iteration itself except the loop bound
+itself.  Fix this by checking and stopping iteration if the next header
+or its declared body would go past the buffer itself.
 
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Assisted-by: gkh_clanker_t1000
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 — Subject**
-- Record: `[HID / universal-pidff] [Add] USB VID/PID so Turtle Beach
-  VelocityOne Race binds to the existing hid-universal-pidff driver`
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-**Step 1.2 — Tags**
-- Record:
-  - `Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>`
-    (author; co-author of this driver)
-  - `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID maintainer)
-  - `[Upstream commit 53f7f7955a684e820bdd6bd6792c45c4b434f637]` and
-    `Signed-off-by: Sasha Levin` ignored as pipeline markers
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-    by:`, `Link:`, or `Cc: stable` (absence of the last two is expected)
+Record: **[nvme]** **[bound]** bound namespace descriptor header and
+body to the Identify buffer so iteration cannot walk off the end.
 
-**Step 1.3 — Body**
-- Record: Body is one sentence: “Add usb VID and device PID to hid-
-  ids.h”. No crash, leak, or corruption described. The claimed intent is
-  hardware enablement for one USB HID device. No version range given.
-  Root cause as stated: the IDs were missing from the existing driver’s
-  table.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
-**Step 1.4 — Hidden bug fix?**
-- Record: Not a disguised leak/race/UAF. It is a USB ID addition to an
-  existing driver (stable exception category 1).
+Record:
+- **Assisted-by:** gkh_clanker_t1000 (LLM-assisted; not a substitute for
+  review)
+- **Reviewed-by:** Christoph Hellwig \<hch@lst.de\> (NVMe maintainer)
+- **Signed-off-by:** Hari Mishal \<harimishal1@gmail.com\> (author)
+- **Signed-off-by:** Greg Kroah-Hartman \<gregkh@linuxfoundation.org\>
+  (submitted the series)
+- **Signed-off-by:** Keith Busch \<kbusch@kernel.org\> (NVMe maintainer;
+  applied)
+- **No Fixes:** tag (expected for this review pipeline)
+- **No Cc: stable** (expected)
+- **No Reported-by / Tested-by / Link / syzbot**
+- Ignore pipeline markers: none in the supplied text beyond the usual
+  SOBs
 
----
+Notable: reviewed and applied by the two primary NVMe maintainers.
+Submitted as **[PATCH 1/2]** with an unrelated sibling (FDP clamp).
 
-## Phase 2: Diff analysis
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-**Step 2.1 — Inventory**
-- Record:
-  - `drivers/hid/hid-ids.h`: +3 (two `#define`s plus a blank line)
-  - `drivers/hid/hid-universal-pidff.c`: +1 in
-    `universal_pidff_devices[]`
-  - Net +4 lines, two files, one table plus ID macros
-  - Classification: single-purpose, surgical device-ID add
+Record:
+- **Bug:** `nvme_identify_ns_descs()` allocates a 4096-byte Identify
+  buffer, lets the controller fill it, then walks variable-length
+  namespace ID descriptors. The only guard was `pos <
+  NVME_IDENTIFY_DATA_SIZE`.
+- **Symptom/failure mode:** out-of-bounds header/body access when a
+  descriptor header sits near the end of the buffer, or `nidl` claims a
+  body that extends past 4096 bytes. That is a heap OOB read (possible
+  crash, KASAN report, or adjacent-heap leak via `memcpy` in
+  `nvme_process_ns_desc()`).
+- **Version info:** none in the message. The walker has existed since
+  2017.
+- **Root cause:** device-controlled stride (`sizeof(header) + nidl`)
+  with no check that the next header or declared body still fits in the
+  allocation.
 
-**Step 2.2 — Code flow**
-- Record:
-  - Before: `0x10f5:0x7077` is unmatched by this driver and falls
-    through to generic HID.
-  - After: HID core matches `HID_USB_DEVICE(USB_VENDOR_ID_TURTLE_BEACH,
-    USB_DEVICE_ID_TB_VELOCITYONE_RACE)` and calls
-    `universal_pidff_probe()`.
-  - Path: device enumeration / probe, not an error path. No
-    `driver_data` quirks.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-**Step 2.3 — Bug mechanism**
-- Record: `[Hardware enablement / USB device ID]` — the driver already
-  implements PID force-feedback wrapping; this only lists one more
-  VID/PID. Not UAF, leak, race, overflow, or init-bug.
-
-**Step 2.4 — Fix quality**
-- Record: Obviously correct as an ID table add. Insertion sits
-  alphabetically between TURBOX and TWINHAN. Vendor `0x10f5` already
-  identifies Turtle Beach elsewhere (`drivers/input/joystick/xpad.c`
-  uses `0x10f5` with other PIDs `0x7005`/`0x7008`/`0x7073`). PID
-  `0x7077` does not collide with those. No public API change. Regression
-  risk is low: only this VID:PID binds; probe returns 0 even if the PID
-  usage page is absent.
+Record: **Not a disguised cleanup.** It is an explicit bounds-check fix.
+The verb “bound” here means “do not read past the buffer.”
 
 ---
 
-## Phase 3: Git history
+## PHASE 2: DIFF ANALYSIS
 
-**Step 3.1 — Blame**
-- Record: New lines; they did not exist before this commit. Surrounding
-  `hid-ids.h` TURBOX/TWINHAN macros date to 2008–2017. The device table
-  terminator was last touched by `5b9cae8c6472e` (clang-format, 2025).
-  The driver itself was added in `f06bf8d94fffb` (“HID: Add hid-
-  universal-pidff driver and supported device ids”, 2025-02-03; `git
-  describe` of that commit is `v6.13-4738-gf06bf8d94fffb`).
+**Step 2.1: INVENTORY THE CHANGES**
 
-**Step 3.2 — Fixes: tag**
-- Record: No `Fixes:` tag. Not applicable.
+Record:
+- **File:** `drivers/nvme/host/core.c` — **+4 / −0**
+- **Function:** `nvme_identify_ns_descs()`
+- **Scope:** single-file surgical fix (two `if` + `break` pairs)
 
-**Step 3.3 — File history**
-- Record: Recent related commits on this driver: Asetek ID adds
-  (`c385f61108d40`), spelling/format nits, and `01d9874e84d3a` (stop
-  device on FF init failure). No prerequisite refactor is required for
-  this ID. Standalone; not “patch X/Y”. No later follow-up on these
-  files after this commit.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-**Step 3.4 — Author**
-- Record: Tomasz Pakuła is a listed `MODULE_AUTHOR` of `hid-universal-
-  pidff.c` and a frequent hid-pidff contributor (overflow, NPD,
-  playback, Asetek IDs). This is the subsystem’s own device-table
-  maintainer, not a drive-by.
+Record: **Before:** loop at `pos`, form `cur = data + pos`, read
+`cur->nidl` immediately, then call `nvme_process_ns_desc()` which
+`memcpy`s the body. **After:** (1) if the 4-byte header would pass the
+buffer, stop; (2) if `nidl == 0`, stop (unchanged); (3) if header+body
+would pass the buffer, stop; then process. Still an Identify/scan path,
+not an error-recovery rewrite. Stopping with `break` matches existing
+`nidl == 0` / `len < 0` handling (no new error code for a truncated
+trailing descriptor).
 
-**Step 3.5 — Dependencies**
-- Record: Needs `hid-universal-pidff.c`, `USB_VENDOR_ID_*` macros, and
-  `hid_pidff_init_with_quirks`. All are in this tree. `git merge-base
-  --is-ancestor f06bf8d94fffb HEAD` succeeds; `git merge-base --is-
-  ancestor f06bf8d94fffb v6.18` also succeeds. Can apply standalone.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
----
+Record: **[Memory safety / out-of-bounds]** Device-controlled OOB read.
 
-## Phase 4: Mailing list / external research
+Mechanism, verified against `struct nvme_ns_id_desc` (`nidt`, `nidl`,
+reserved — 4 bytes) and `nvme_process_ns_desc()`:
+- If `pos` is 4093–4095, reading the header itself is OOB.
+- If the header fits but `nidl` does not leave enough remaining bytes,
+  known-type `memcpy` (EUI64/NGUID/UUID/CSI) reads past the
+  `kzalloc(4096)` buffer after the length-equals-expected check.
 
-**Step 4.1 — Original discussion**
-- Record: `b4 dig -c 53f7f7955a684e820bdd6bd6792c45c4b434f637` → https:/
-  /patch.msgid.link/20260922131758.1242755-1-
-  tomasz.pakula.oficjalny@gmail.com
-- `b4 dig -a`: single v1 series only; no v2/v3.
-- LKML: https://lkml.iu.edu/2609.2/17309.html (submission),
-  https://lkml.iu.edu/2609.2/21230.html (Jiri Kosina: “Applied,
-  thanks.”)
-- No NAK, no requested changes, no stable nomination in review.
-  lore.kernel.org fetch returned 403; discussion confirmed via `b4 dig`
-  + LKML/Patchew mirrors.
+The fix stops before those accesses. Header check is first, so
+`cur->nidl` is only read when the header is in-bounds.
 
-**Step 4.2 — Recipients (`b4 dig -w`)**
-- Record: `jikos@kernel.org` (HID maintainer), `oleg@makarenk.ooo` (co-
-  author), `linux-input@vger.kernel.org`, `linux-
-  kernel@vger.kernel.org`. Right lists and maintainer were on Cc; Kosina
-  applied it.
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 4.3 — Bug report**
-- Record: No `Reported-by` / syzbot / bugzilla. Phoronix (secondary, not
-  a kernel bug tracker) notes basic HID input already worked and this
-  listing improves FF for the VelocityOne Race. That is consistent with
-  an ID add, not a crash fix.
+Record: **Obviously correct and minimal.** Check order is right. `nidl`
+is `__u8` (max 255); `pos` is non-negative and `< 4096`; `pos + 4 +
+nidl` cannot overflow a 32-bit `int`. On spec-compliant lists that fit
+in 4096 bytes the new branches never fire. **Regression risk: very
+low.** Truncating a malformed last descriptor is safer than reading past
+the buffer. If CSI is truncated on a multi-CSS controller, the existing
+`!csi_seen` path can still return `-EINVAL` — that is the conservative
+failure.
 
-**Step 4.4 — Series context**
-- Record: Standalone one-patch series. Same pattern as earlier Asetek ID
-  adds in this driver.
-
-**Step 4.5 — Stable list**
-- Record: `WebFetch` of `https://lore.kernel.org/stable/?q=VelocityOne`
-  returned 403. Web search did not show a stable-list thread about this
-  patch. UNVERIFIED that nobody discussed it on stable@; no evidence of
-  a NAK there either.
+No API, locking, or data-structure change.
 
 ---
 
-## Phase 5: Code semantic analysis
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 5.1 — Functions**
-- Record: No function body changed. Data only:
-  `universal_pidff_devices[]` plus two macros. Probe path that becomes
-  reachable: `universal_pidff_probe` → `universal_pidff_input_mapping` /
-  `universal_pidff_input_configured`.
+**Step 3.1: BLAME THE CHANGED LINES**
 
-**Step 5.2 — Callers**
-- Record: `universal_pidff_probe` is only the `.probe` of `struct
-  hid_driver universal_pidff`, registered via `module_hid_driver`.
-  Invoked by HID/USB enumeration when VID:PID matches. Not IRQ, not a
-  syscall hot path.
+Record: Loop introduced by **`3b22ba2682b432`** (“nvme: get list of
+namespace descriptors”, Johannes Thumshirn, 2017-06-15) — first
+contained in **v4.13-rc1**. The two bounds checks are
+**`3c568b35a0d309`** (this commit, 2026-07-14). The walker has been in-
+tree for many years.
 
-**Step 5.3 — Callees**
-- Record: `hid_parse`, `hid_hw_start`, `hid_pidff_init_with_quirks`,
-  `hid_hw_stop`. Existing, already used by every other ID in the table.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-**Step 5.4 — Reachability**
-- Record: Reachable when a user plugs in `10f5:7077` and
-  `CONFIG_HID_UNIVERSAL_PIDFF` is enabled (`depends on USB_HID &&
-  HID_PID`). Userspace cannot trigger it without that hardware.
+Record: **No Fixes: tag.** Buggy pattern comes from `3b22ba2682b432`,
+which is an ancestor of this checkout.
 
-**Step 5.5 — Similar patterns**
-- Record: Same table already lists Moza, Cammus, VRS, FFBeast, Lite
-  Star/PXN, Asetek. This is the established way this driver gains
-  devices. Turtle Beach VID `0x10f5` is already used in `xpad.c` for
-  other products; PID `0x7077` is unique.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
----
+Record:
+- Same-author sibling **`bc7f75eba5001`** — `nvmet: passthru: fix OOB
+  reads when parsing ns id descriptor list` (same descriptor-list OOB
+  class on the target passthru path). Independent file.
+- Series sibling **`29261f8bb4166`** — `nvme: clamp FDP nruhsd...` is a
+  different function (`nvme_query_fdp_info`). **This 1/2 does not depend
+  on 2/2.**
+- Later `core.c` changes (kmalloc_obj, unsigned nsid print,
+  scan/SRCU/FDP) do not rewrite this loop. **Standalone.**
 
-## Phase 6: Local tree (this checkout)
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-**Step 6.1 — Does the code exist here?**
-- Record: Local tree is **6.18.57** (`make kernelversion`; `git describe
-  HEAD` = `v6.18.57-155-gcdf239ca885b2`). `hid-universal-pidff.c`
-  exists. Driver intro `f06bf8d94fffb` is an ancestor of both `HEAD` and
-  `v6.18`. Parent of this candidate still has the Asetek rows and the
-  empty terminator; the ID macros were absent (`git grep
-  USB_VENDOR_ID_TURTLE` on the parent was empty). The hardware and
-  driver this listing targets are in this tree.
+Record: Hari Mishal is not an NVMe maintainer; three NVMe commits, all
+device-controlled bounds issues. Weight comes from **Christoph Hellwig
+Reviewed-by** and **Keith Busch** applying it to nvme-7.3.
 
-**Step 6.2 — Backport difficulty**
-- Record: Clean apply. Parent context matches the provided diff (TURBOX
-  block, then TWINHAN; Asetek entries then `{}`). No refactor gap.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-**Step 6.3 — Related fixes already here?**
-- Record: No other VelocityOne Race HID listing. No alternate fix for
-  `10f5:7077` in HID. `xpad.c` does not claim PID `0x7077`.
+Record: **None.** Adds checks in an existing loop.
+`nvme_process_ns_desc()`, `NVME_IDENTIFY_DATA_SIZE` (4096), and `struct
+nvme_ns_id_desc` already exist here. Applies standalone.
 
 ---
 
-## Phase 7: Subsystem context
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 7.1**
-- Record: `[HID USB force-feedback helper] [IMPORTANT for owners of
-  listed wheels; PERIPHERAL vs core kernel]`. Not mm/fs/net core.
-  Optional `CONFIG_HID_UNIVERSAL_PIDFF`.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 7.2**
-- Record: Actively maintained in 2025–2026 (quirks, Asetek IDs, pidff
-  correctness fixes). Mature enough that ID adds are the normal
-  extension mechanism.
+Record:
+- **b4 dig:** https://patch.msgid.link/2026070931-stopping-
+  cost-239a@gregkh
+- **v1 only** (`b4 dig -a`); applied version is that v1
+- Thread (mbox): Christoph: “Looks good: Reviewed-by”; Keith: “Thanks,
+  series applied to nvme-7.3.”
+- **No NAK, no stability concerns, no request for Cc: stable**
 
----
+WebFetch of lore.kernel.org returned **403**; discussion recovered via
+`b4 dig -m`.
 
-## Phase 8: Impact and risk
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-**Step 8.1 — Who is affected**
-- Record: Driver-specific / config-specific: users who own a Turtle
-  Beach VelocityOne Race and enable this HID driver. Everyone else is
-  unchanged.
+Record (`b4 dig -w`): To/Cc included **linux-nvme**, **Keith Busch, Jens
+Axboe, Christoph Hellwig, Sagi Grimberg** (all NVM EXPRESS DRIVER
+maintainers). Appropriate audience.
 
-**Step 8.2 — Trigger**
-- Record: Plug in that USB wheel. Not a race. Unprivileged user can plug
-  hardware; no syscall exploit surface beyond normal HID.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-**Step 8.3 — Failure mode without the patch**
-- Record: Device stays on hid-generic: basic input, missing this
-  driver’s PID FF init and button-range mapping. Not
-  oops/deadlock/corruption. Severity for those users: functional
-  hardware gap (FF), **MEDIUM** as a bug, but it is the documented
-  device-ID exception.
+Record: **No user/syzbot/bugzilla report.** Found by analysis (Greg’s
+clanker + author). Still a real, reachable OOB given a malformed
+Identify NS descriptor list.
 
-**Step 8.4 — Risk vs benefit**
-- Record: Benefit: FF/PID support for this wheel on 6.18.y without a
-  full kernel upgrade. Risk: very low (4 lines, match is VID+PID, no
-  quirk, probe already tolerates missing PID page). Ratio: favorable for
-  a device-ID add.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
----
+Record: **[PATCH 1/2]** / **[PATCH 2/2]** share an author and file but
+not code. 1/2 is self-contained. Target passthru fix is a related class,
+not a prerequisite.
 
-## Phase 9: Synthesis
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-**Step 9.1 — Evidence**
-
-For:
-- USB ID add to a driver that already exists in this 6.18 tree (stable
-  exception 1).
-- +4 lines, no new APIs, no new driver, no new sysfs/module params.
-- HID maintainer applied v1 with no objections.
-- Author maintains this driver.
-- VID `0x10f5` is already Turtle Beach in-tree; PID does not clash with
-  xpad entries.
-- Applies cleanly here.
-
-Against:
-- Not a crash/security/corruption fix.
-- Short commit message; no `Reported-by`.
-- Niche ~$650 sim-racing hardware.
-- Improves FF rather than repairing a generic HID oops.
-
-Unresolved:
-- lore.kernel.org HTTP 403; stable@ thread not confirmed.
-- No in-tree test that this exact PID speaks USB PID FF (same as other
-  IDs in this table).
-
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — mechanical ID add;
-   maintainer applied it. No in-tree Tested-by, but the change is the
-   same class as prior IDs in this file.
-2. Real issue affecting users? **PASS** — without the ID, this wheel
-   does not get the existing PID FF path.
-3. Important (crash/security/deadlock) **or** listed exception? **PASS**
-   — USB device ID on an existing driver.
-4. Small and contained? **PASS** — 4 lines, two files.
-5. No new features/APIs? **PASS** — no new driver, ioctl, or userspace
-   ABI; only an ID in an existing table.
-6. Applies to this tree? **PASS** — driver and insertion point are
-   present on 6.18.57.
-
-**Step 9.3 — Exception**
-- Record: **NEW DEVICE ID** (USB VID/PID) on existing `hid-universal-
-  pidff`.
-
-**Step 9.4 — Decision**
-This is exactly the device-ID class stable trees take. The driver is in
-6.18; the patch is tiny and isolated to `10f5:7077`. Benefit is real for
-owners of that wheel; risk to everyone else is negligible.
+Record: lore.kernel.org/stable WebFetch **403**. **UNVERIFIED** whether
+stable@ already discussed this hash. Absence of Cc: stable is expected
+here and is not a negative.
 
 ---
 
-### What the commit does for this tree
-It lists Turtle Beach VelocityOne Race (`USB 10f5:7077`) in `hid-
-universal-pidff` so 6.18 systems can use the PID force-feedback path
-already in this kernel, instead of generic HID only.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Stable-rules fit
-Meets the device-ID exception: existing driver, IDs only, clean apply,
-no new API.
+**Step 5.1: KEY FUNCTIONS**
+
+Record: **`nvme_identify_ns_descs()`** modified;
+**`nvme_process_ns_desc()`** callee (memcpy of descriptor bodies).
+
+**Step 5.2: TRACE CALLERS**
+
+Record:
+- Only caller: `nvme_scan_ns()` in `drivers/nvme/host/core.c`
+- `nvme_scan_ns()` ← `nvme_scan_ns_async()` /
+  `nvme_scan_ns_sequential()`
+- Those ← `nvme_scan_work()` on `ctrl->scan_work`
+
+Context: **process-context workqueue**, NVMe namespace scan on probe,
+reset, and NS-changed AEN. Common path for NVMe hosts, not IRQ/hot-
+cache.
+
+**Step 5.3: TRACE CALLEES**
+
+Record: `kzalloc` / `nvme_submit_sync_cmd` / `nvme_process_ns_desc` /
+`kfree`. The OOB is in the parse loop and in `nvme_process_ns_desc()`
+memcpy, not in the admin command itself.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Reachable on any NVMe 1.3+ controller (or multi-CSS) that does
+not have `NVME_QUIRK_NO_NS_DESC_LIST`. Userspace does not call this
+syscall-direct; a **malicious or buggy controller** (local PCIe or NVMe-
+oF target) controls the buffer. That is a standard untrusted-device
+memory-safety bug.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: Same class already bounded in `drivers/nvme/target/passthru.c`
+(`pos + sizeof(*cur)` and CSI body). Host-side
+`nvme_identify_ns_descs()` was the gap this commit closes.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record:
+- Local tree: **`git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`**,
+  **`make kernelversion` = 7.3.0-rc4**
+- Function and loop exist at `drivers/nvme/host/core.c`
+  (`nvme_identify_ns_descs`)
+- Bug introduced **v4.13** (`3b22ba2682b432`), long before this branch
+- The two checks are present on HEAD (this commit is an ancestor). That
+  is historical fact, **not** used as “already selected for stable”
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: **Clean apply** to this `nvme_identify_ns_descs()` shape.
+Context is the same 4.13-era loop; no extra helpers required. **Expected
+backport difficulty: clean apply** on trees that still have this
+function.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: No earlier host-side equivalent. Passthru OOB fix is a different
+file. No conflicting alternate host fix.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+
+Record: **NVMe host core** (`drivers/nvme/host/core.c`). **IMPORTANT** —
+common block/storage path, not mm/VFS core, but widely deployed
+(servers, laptops, NVMe-oF).
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Actively maintained (Keith Busch, Christoph Hellwig, et al.).
+This is a small correctness fix in old parse code, not a follow-on to a
+brand-new feature in 7.3.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: **Driver-specific, but broad:** NVMe hosts scanning namespaces
+(almost all NVMe users on 1.3+). Triggered by device Identify data, not
+a rare Kconfig.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record: Namespace scan (probe/reset/NS-changed). **Not** every I/O.
+Needs a **malformed descriptor list** (buggy firmware or untrusted
+target). Unprivileged local users typically cannot inject Identify
+payloads without device control; NVMe-oF to an untrusted target can.
+Timing-independent; deterministic given bad data.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record: **Heap out-of-bounds read** → KASAN/oops, possible info leak, or
+silent heap corruption adjacent to the Identify buffer. **Severity:
+HIGH.** Not a guaranteed panic on production kernels, but it is a real
+memory-safety bug in a storage driver.
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit: high** — stops device-controlled OOB on a common NVMe scan
+  path; 4 lines; maintainers acked.
+- **Risk: very low** — two range checks; no lock/API/behavior change for
+  valid lists.
+- **Ratio: strongly favors backport.**
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR:**
+- Real OOB read from controller-controlled Identify NS descriptor list
+- Path is namespace scan on ordinary NVMe hosts
+- 4-line, obviously correct bounds checks; header checked before `nidl`
+- Same bug class already recognized on the passthru parser
+- Reviewed-by Christoph Hellwig; applied by Keith Busch
+- Code has existed since v4.13; no missing prerequisites in this tree
+- No new feature/API
+
+**AGAINST:**
+- No Fixes:/Cc: stable/syzbot/user report (not a negative per the rules)
+- LLM-assisted origin (offset by maintainer review)
+- Trigger needs a bogus/malicious controller, not typical I/O
+- Series labeled 1/2 (sibling is independent)
+
+**UNRESOLVED:**
+- lore.kernel.org HTTP 403; thread recovered via b4 mbox
+- Whether stable@ already discussed this commit: **UNVERIFIED**
+
+**Step 9.2: STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — two range checks; Reviewed-
+   by maintainer; applied to nvme-7.3
+2. Fixes a real bug that affects users? **PASS** — OOB parse of device
+   Identify data
+3. Important (crash/security/corruption/deadlock)? **PASS** — HIGH
+   memory-safety (OOB read; crash/leak potential)
+4. Small and contained? **PASS** — +4 lines, one function
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — same function/context; no
+   extra deps
+
+**Step 9.3: EXCEPTION CATEGORIES**
+
+Record: **None** (not an ID/quirk/DT/build/doc exception). It qualifies
+as a normal small memory-safety fix.
+
+**Step 9.4: DECISION**
+
+This is a surgical host-side bounds check for a long-standing, device-
+controlled OOB in NVMe namespace scanning. It meets stable rules for
+this checkout (7.3-rc4; buggy walker present since v4.13). Benefit is
+high; regression risk is very low.
+
+---
+
+### What the commit solves (for this tree)
+
+`nvme_identify_ns_descs()` walks a 4096-byte Identify Namespace ID
+Descriptor List with a device-chosen stride. Without checking that the
+next 4-byte header and `nidl` body fit, a truncated or oversized last
+descriptor causes an out-of-bounds header read and/or `memcpy` in
+`nvme_process_ns_desc()`. That hits every NVMe scan of a 1.3+ (or multi-
+CSS) controller that returns a bad list. The patch stops the loop before
+those accesses. Compliant devices are unchanged.
 
 ### Risk vs benefit
-Very low risk, localized hardware enablement. No locking or error-path
-change.
+
+Four lines of range checks, no locking or ABI change. Worst case on a
+truncated list is skipping remaining descriptors (already the `nidl ==
+0` policy). Benefit is preventing a heap OOB in a widely used storage
+driver.
 
 ### Concerns
-None that block backport. No extra quirks or follow-up commits required
-in this tree. Stable-list discussion could not be fetched (403).
+
+None that block backport: 1/2 is independent of the FDP 2/2 patch; no
+extra commits required; apply is clean against this
+`nvme_identify_ns_descs()`.
 
 ---
 
-Verification:
-- [Phase 1] Parsed tags: author SOB + Jiri Kosina SOB; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 1] Body is a one-line ID add, not a crash write-up
-- [Phase 2] Diff: +3 `hid-ids.h`, +1 table row; no function logic change
-- [Phase 2] No `driver_data` quirk on the new entry
-- [Phase 3] `git blame` on new macros → this commit; surrounding IDs
-  from 2008–2017
-- [Phase 3] Driver intro `f06bf8d94fffb` (`v6.13-4738-gf06bf8d94fffb`);
-  ancestor of HEAD and of `v6.18`
-- [Phase 3] `git log --oneline --author="Tomasz Pakuła" --
-  drivers/hid/`: driver co-maintainer, many pidff commits
-- [Phase 3] No later commits on these files after this ID add
-- [Phase 4] `b4 dig -c 53f7f7955a684e820bdd6bd6792c45c4b434f637`: lore
-  msgid `20260922131758.1242755-1-tomasz.pakula.oficjalny@gmail.com`
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: jikos@kernel.org, linux-input, co-author Oleg
-- [Phase 4] LKML: Kosina “Applied, thanks.”
-  (https://lkml.iu.edu/2609.2/21230.html)
-- [Phase 4] lore.kernel.org WebFetch: 403; used LKML/Patchew/`b4`
-  instead
-- [Phase 5] Probe only via `module_hid_driver`; callees
-  `hid_parse`/`hid_hw_start`/`hid_pidff_init_with_quirks` exist here
-- [Phase 5] `0x10f5` in `xpad.c` for other PIDs; `0x7077` not used there
-- [Phase 6] `make kernelversion` → 6.18.57; `git describe HEAD` →
-  `v6.18.57-155-gcdf239ca885b2`
-- [Phase 6] Parent of candidate: no `USB_VENDOR_ID_TURTLE`; Asetek rows
-  present; apply context matches
-- [Phase 8] Failure mode: missing FF/mapping for one USB wheel, not oops
-- UNVERIFIED: stable@ archive (HTTP 403); no in-kernel confirmation the
-  device implements USB PID (same as other table IDs)
+### Verification
+
+- **[Phase 1]** Parsed tags: Reviewed-by Christoph Hellwig; SOB Hari
+  Mishal, Greg Kroah-Hartman, Keith Busch; Assisted-by
+  gkh_clanker_t1000; no Fixes/Reported-by/Cc:stable/syzbot
+- **[Phase 2]** Diff: +4 lines in `nvme_identify_ns_descs()`; two `pos +
+  sizeof(*cur)` / `+ cur->nidl` checks vs `NVME_IDENTIFY_DATA_SIZE`
+  (4096). Confirmed `struct nvme_ns_id_desc` is 4 bytes; `nidl` is
+  `__u8`
+- **[Phase 2]** `nvme_process_ns_desc()` memcpy of EUI64/NGUID/UUID/CSI
+  only after `nidl` matches expected length — body check is what keeps
+  those copies in-buffer
+- **[Phase 2]** Integer overflow: max `pos+hdr+nidl` ≈ 4354, no 32-bit
+  overflow
+- **[Phase 3]** `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` = 7.3.0-rc4
+- **[Phase 3]** Commit `3c568b35a0d309`; `git merge-base --is-ancestor`
+  → ancestor of HEAD
+- **[Phase 3]** Blame: loop `3b22ba2682b432` (2017, v4.13-rc1); checks
+  from this commit
+- **[Phase 3]** Pre-image `git show 3c568b35a0d30^:...` matches the
+  supplied diff (no header/body checks)
+- **[Phase 3]** Sibling `29261f8bb4166` is `nvme_query_fdp_info()` only
+  — not a prereq. Related `bc7f75eba5001` is target passthru
+- **[Phase 4]** `b4 dig -c 3c568b35a0d309`: lore/msgid
+  2026070931-stopping-cost-239a@gregkh; v1 only; CC linux-nvme + all
+  NVMe maintainers
+- **[Phase 4]** mbox: Hellwig Reviewed-by; Busch “series applied to
+  nvme-7.3”; no NAK
+- **[Phase 4]** WebFetch lore.kernel.org / patch.msgid.link / lore
+  stable search: **403** — discussion taken from b4 mbox instead
+- **[Phase 5]** Only caller `nvme_scan_ns()` → `nvme_scan_work()`
+  (probe/reset/NS-changed scan)
+- **[Phase 5]** Similar bounds already in
+  `drivers/nvme/target/passthru.c`
+- **[Phase 6]** Buggy walker exists in this tree’s history since v4.13;
+  current file has the checks; apply would be clean
+- **[Phase 6]** MAINTAINERS: NVM EXPRESS DRIVER — Busch, Axboe, Hellwig,
+  Grimberg
+- **[Phase 8]** Failure mode: heap OOB read on malformed Identify NS
+  descriptor list; severity HIGH
+- **UNVERIFIED:** whether stable@ already discussed this commit (lore
+  stable HTTP 403)
 
 **YES**
 
- drivers/hid/hid-ids.h             | 3 +++
- drivers/hid/hid-universal-pidff.c | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/nvme/host/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index ca5c62f29aebe..69b1b0f98c99d 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1415,6 +1415,9 @@
- #define USB_DEVICE_ID_ASUS_MD_5110	0x5110
- #define USB_DEVICE_ID_TURBOX_TOUCHSCREEN_MOSART	0x7100
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index d5fb6612fa229..5ed62e070f715 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1564,8 +1564,12 @@ static int nvme_identify_ns_descs(struct nvme_ctrl *ctrl,
+ 	for (pos = 0; pos < NVME_IDENTIFY_DATA_SIZE; pos += len) {
+ 		struct nvme_ns_id_desc *cur = data + pos;
  
-+#define USB_VENDOR_ID_TURTLE_BEACH	0x10f5
-+#define USB_DEVICE_ID_TB_VELOCITYONE_RACE	0x7077
-+
- #define USB_VENDOR_ID_TWINHAN		0x6253
- #define USB_DEVICE_ID_TWINHAN_IR_REMOTE	0x0100
++		if (pos + sizeof(*cur) > NVME_IDENTIFY_DATA_SIZE)
++			break;
+ 		if (cur->nidl == 0)
+ 			break;
++		if (pos + sizeof(*cur) + cur->nidl > NVME_IDENTIFY_DATA_SIZE)
++			break;
  
-diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
-index 60180467a0bfd..f1854cfe42d0d 100644
---- a/drivers/hid/hid-universal-pidff.c
-+++ b/drivers/hid/hid-universal-pidff.c
-@@ -187,6 +187,7 @@ static const struct hid_device_id universal_pidff_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_FORTE) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_LA_PRIMA) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_TONY_KANAAN) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_TURTLE_BEACH, USB_DEVICE_ID_TB_VELOCITYONE_RACE)},
- 	{}
- };
- MODULE_DEVICE_TABLE(hid, universal_pidff_devices);
+ 		len = nvme_process_ns_desc(ctrl, &info->ids, cur, &csi_seen);
+ 		if (len < 0)
 -- 
 2.53.0
 
