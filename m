@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDFE596089;
-	Mon, 19 Oct 2026 13:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64DE5960B2;
+	Mon, 19 Oct 2026 13:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418343; cv=none; b=ZJfrSfFH1sK1kVLjuTu4v8Hk74gkVbYM8XoNihOkxWjeNdkmLze5e2aJVVnEp/RX0BLrPSoHVZ7+hG6NO4e8TmXFewQ3GbBH4qbW+mqObFknO46i/mtCmwqVMx4A/Pa/BUi2JyG3DVbcPIlEArOg22AbC58JiIPZRowjM8WwyNo=
+	t=1792418344; cv=none; b=gCHr7kDAA+cIWwsdsYPgA3isXxk+Z6jrqRnwNSyfpZmXc756UwJhEy0S6V8pqUMiEsprJ97W1gLvPESHFHQoSg+AcCo86xbVsN93e20suVYo0T49z32/HtxCQm92KW6seYYopyEg++p+AS0NaQ9P9b3JFW4RAmozgKibIM80b8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418343; c=relaxed/simple;
-	bh=eXPkSbZty3nJgx67BUK5Exqfe2uKhV5SjWL73GvIeKs=;
+	s=arc-20240116; t=1792418344; c=relaxed/simple;
+	bh=Em+p1aCLuTydphUsb895XKAldfpdFX15ZxcAfUunYFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gbCChLtH/zb31fotrzXGmHYRccX/TCTbul+QquQ05mRMG+OjS+XNAbz2jOWD/AUEQmlCXK+C26VcCl/MSMICktnrQxRjMvC2S4reoLcvXe+Sy7gQ4rkV5emEweLbk+f/8UjCVxMlP228YLgbXu+1DCDjKCEjt7V/siLrlsBqtTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nExBARQ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=t7jcULnu2OYoKijfFOf6ZxocWiV/DS5tNHU/aK9CuWDU51c9V3mi8WXvB1OybKralex7R58xzTmxqXphgCW5DuRfGTNFfjPbXPsZPAhA5OEZuHT4quBDOYp1ziCec2E542hzuxLXmgctFC7iLEUucLPY+3tzqw1JZSN8vlyMVGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LOln+WWR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nExBARQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D8E1F000C8;
-	Mon, 19 Oct 2026 13:58:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LOln+WWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1AE1F000C4;
+	Mon, 19 Oct 2026 13:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418340;
-	bh=ydWsISwGVhAYduRngYKtRJeZzj1G2o3+akZSzVQmqWA=;
+	s=k20260515; t=1792418342;
+	bh=sumvp7u+FhaLjUIiSX0AB5EXKDXdwxL7Gk14bIE++bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nExBARQ7627TYLL+NmYef9ik0FN4HVzhZsVOHprdNBocvcFnxjiO+OqBzc+VHIWuD
-	 ahS+b63x4qhg6qX9j9SqD2UdsLjjq5VIgcmK+msJh6Jr6Neg2IS1Jl1+o/PjoY+ORZ
-	 MPXv4i20YCudYAlKZfswkW6ljkYM6nBhsjbiZxU4/MZNa3YTzuN1IBUesEL0QRJTJz
-	 X8T1MgzmINMV+UjQjkq0QM3alopAL5zJjjhdqkIpyUkednkNqUv5qhj5NAFg8HzhMc
-	 Y3cWXSQU+31PZB9rLBylwUBxKW5HUoWhTdXh0me264qWkksqJkQj+0KzDWpv89Rlu/
-	 unGL/3nvQ+Eyg==
+	b=LOln+WWRaMfbvHmBkqe5kUc1zQz28ZiFDQofkNoPBCMrVQCmA5jXTxcYv1J4nTeHb
+	 yEv6MjPSgfmTKDGOYXjSe0H+q2+21l9uJKpjvbwxblRpSC+OLyii0QneY92F+sVNCv
+	 bgkCIooFK1AkOO4IHmvGG8nvbcLRGDlyBD+TK0CBF4xiCtO/mNBhrmwto6E9MQXR4n
+	 Hb9kuML5VhRAkXkOw8i1xbnC4NYbUeIoPV295DCmsZtKTYickiRmFqnBKDmt6VpRPF
+	 nMmDrYl9jTNO1PQrL5OxtDrjBAVvbOnb+5D5Ikr5ddkN21fuGVOn9eQROwmoG0HRR1
+	 CwyZlHW4UxqOg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Robin Everaars <robineveraars@pm.me>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Anuj Bolewar <bolewara@gmail.com>,
+	syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	airlied@redhat.com,
+	kraxel@redhat.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ACPI: button: Add DMI quirk for Razer Blade Pro 17 early 2020 lid switch
-Date: Mon, 19 Oct 2026 09:47:49 -0400
-Message-ID: <20261019135441.1420968-178-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] drm/virtio: reclaim pending vbufs before tearing down vqs
+Date: Mon, 19 Oct 2026 09:47:50 -0400
+Message-ID: <20261019135441.1420968-179-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,423 +60,508 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Everaars <robineveraars@pm.me>
+From: Anuj Bolewar <bolewara@gmail.com>
 
-[ Upstream commit 415125669c2ddc773c579a60df108f75712dfa83 ]
+[ Upstream commit 61d85f99b5a55d4f717c4bb2f4c4acabf22ee3fc ]
 
-The lid switch reports "close" but can miss the matching "open", leaving
-_LID closed after resume. systemd-logind then suspends the system again
-roughly every 35 seconds.
+virtio_gpu_free_vbufs() destroys the vbufs kmem_cache after the virtqueues
+have already been released. Commands that were queued but never completed
+by the device leave their vbuffers stranded in the virtqueue, so the cache
+still holds live objects when virtio_gpu_deinit() tears everything down.
+This triggers a WARNING in virtio_gpu_free_vbufs:
 
-Reading the embedded controller's PSTA byte while _LID is stale shows that
-bit 0x04 is set, which the DSDT treats as open. The DSDT returns the cached
-LIDS byte from _LID. Its wake path aborts in RTEC on an unhandled
-SystemCMOS region before copying PSTA to LIDS.
+    BUG virtio-gpu-vbufs (Not tainted): Objects remaining in cache
+    on __kmem_cache_shutdown()
 
-Initialize the lid state to open on resume, matching the existing quirk
-for the Razer Blade Stealth 13 late 2019. With
-button.lid_init_state=open, a physical close suspended once and resume
-reported open without another suspend.
+Drain any buffers still sitting in the control and cursor virtqueues in
+virtio_gpu_deinit() after the device has been reset and before the
+virtqueues are deleted, following the same pattern used by virtio_console's
+remove_vqs(). Each reclaimed buffer is released with free_vbuf(), dropping
+the reference on any GEM objects it holds. Pending RESOURCE_UNREF
+commands are handled as well: their resp_cb_data still references a GEM
+object, so it is cleaned up with virtio_gpu_cleanup_object() to avoid
+leaking it on teardown.
 
-Signed-off-by: Robin Everaars <robineveraars@pm.me>
-Link: https://patch.msgid.link/20260817141414.213075-1-robineveraars@pm.me
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=06f9b2a53ba4a5a47644
+Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260802-virtio-gpu-reclaim-vbufs-v2-1-5767fb860691@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a DMI-scoped lid quirk, the buggy path
-exists in 6.12, and the patch applies here.
+# Stable backport analysis: `drm/virtio: reclaim pending vbufs before
+tearing down vqs`
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+Local tree: **6.12.111** (`p-6.12-3-gc504cf0baa3d8`). Verdict is for
+this checkout only.
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ACPI] [Add] [DMI quirk for Razer Blade Pro 17 early 2020 lid
-switch]
-Subsystem prefix: `ACPI: button:`. Action verb: **Add**. Claimed intent:
-add a DMI match so this laptop initializes lid state as open, matching
-an existing Razer quirk.
+---
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: `[drm/virtio] [reclaim] [drain leftover virtqueue buffers before
+destroying vbufs cache]`
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
 Record:
-- Signed-off-by: Robin Everaars <robineveraars@pm.me> (author)
-- Link:
-  https://patch.msgid.link/20260817141414.213075-1-robineveraars@pm.me
-- Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com> (ACPI
-  maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable (absence expected for this review)
-- Ignore any pipeline "Upstream commit" / "Signed-off-by: Sasha Levin"
-  markers
+- `Reported-by: syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com` —
+  fuzzer-found, reproducible
+- `Closes: https://syzkaller.appspot.com/bug?extid=06f9b2a53ba4a5a47644`
+- `Signed-off-by: Anuj Bolewar <bolewara@gmail.com>` (author)
+- `Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>`
+  (virtio-gpu maintainer)
+- `Link: https://patch.msgid.link/20260802-virtio-gpu-reclaim-
+  vbufs-v2-1-5767fb860691@gmail.com`
+- No `Fixes:` tag (expected for this review pipeline)
+- Ignore pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
+  if present
 
-Notable: ACPI maintainer applied it. No syzbot/KASAN. Hardware-quirk
-report from the machine owner.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-- Bug: lid reports "close" but can miss the matching "open"; `_LID`
-  stays closed after resume.
-- Symptom: systemd-logind re-suspends roughly every 35 seconds (suspend
-  loop).
-- Root cause (firmware): EC PSTA bit 0x04 is set (DSDT treats that as
-  open), but `_LID` returns cached LIDS. Wake path aborts in RTEC on an
-  unhandled SystemCMOS region before copying PSTA to LIDS.
-- Fix: DMI quirk `ACPI_BUTTON_LID_INIT_OPEN`, same as Razer Blade
-  Stealth 13 late 2019.
-- Test: with `button.lid_init_state=open`, a physical close suspended
-  once; resume reported open; no second suspend.
-- Version info: none in the message. Commit is in v7.3-rc1 (`git
-  describe --contains` → `v7.3-rc1~39^2^3`).
+- **Bug:** `virtio_gpu_free_vbufs()` calls `kmem_cache_destroy()` after
+  VQs are already deleted. In-flight commands stay attached to the
+  virtqueue, so the `virtio-gpu-vbufs` cache still has live objects.
+- **Symptom:** SLUB `BUG virtio-gpu-vbufs: Objects remaining on
+  __kmem_cache_shutdown()` plus `WARNING` in `virtio_gpu_free_vbufs` /
+  `kmem_cache_destroy`, on device removal.
+- **Root cause:** `virtio_gpu_deinit()` does `virtio_reset_device()`
+  then `del_vqs()` without draining unused buffers.
+- **Fix:** After reset, before `del_vqs()`, detach leftover buffers
+  (same idea as `virtio_console` `remove_vqs()`), `free_vbuf()` them,
+  drop GEM arrays, and `virtio_gpu_cleanup_object()` pending
+  `RESOURCE_UNREF` GEM objects.
+- **Version info:** none in the message; code has been this way for
+  years.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit hardware quirk for a
-firmware lid bug. The "Add" verb here is the standard DMI-quirk
-exception, not a new feature.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Record: Not hidden. Explicit leak/WARNING fix on teardown. v2 also
+closes a GEM leak for stranded `RESOURCE_UNREF` commands.
 
-Step 2.1: INVENTORY THE CHANGES
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
 Record:
-- File: `drivers/acpi/button.c` (+11 / -0)
-- Function/data: `dmi_lid_quirks[]` only
-- Scope: single-file surgical DMI table addition
-- Commit: `415125669c2ddc773c579a60df108f75712dfa83`
+- `drivers/gpu/drm/virtio/virtgpu_drv.h`: +1 declaration
+- `drivers/gpu/drm/virtio/virtgpu_kms.c`: +1 call in
+  `virtio_gpu_deinit()`
+- `drivers/gpu/drm/virtio/virtgpu_vq.c`: +15, new
+  `virtio_gpu_reclaim_vbufs()`
+- **Total: +17 / −0.** Single-subsystem surgical fix.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
 Record:
-- Before: this DMI identity is unmatched;
-  `acpi_button_register_driver()` sets `lid_init_state =
-  ACPI_BUTTON_LID_INIT_METHOD` (evaluate `_LID`).
-- After: match vendor `"Razer"` + product `"Blade Pro 17 (Early 2020) -
-  RZ09-0329"` → `ACPI_BUTTON_LID_INIT_OPEN`.
-- Affected path: lid init on first userspace open
-  (`acpi_lid_input_open`) and on resume (`acpi_button_resume` →
-  `acpi_lid_initialize_state` → `acpi_lid_notify_state(device, 1)`).
-- Other machines: unchanged (`dmi_first_match` is exact).
+- **Before:** `virtio_gpu_deinit()` flushes work, resets the device,
+  deletes VQs. Later `virtio_gpu_release()` → `virtio_gpu_free_vbufs()`
+  → `kmem_cache_destroy(vgdev->vbufs)` with any still-queued `vbuffer`s
+  live.
+- **After:** Same sequence, plus `virtio_gpu_reclaim_vbufs()` between
+  reset and `del_vqs()`. Control queue: detach unused bufs, put GEM
+  arrays, cleanup `resp_cb_data`, `free_vbuf()`. Cursor queue: detach
+  and `free_vbuf()`.
+- Path: device removal / unbind / probe-fail after successful
+  `virtio_gpu_init()`.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Hardware workaround / DMI quirk]
-Broken: firmware `_LID` stuck closed after resume; userspace treats that
-as lid-closed and suspends again.
-Fix: report lid open on init/resume for this DMI ID, same as existing
-Razer/Medion/Samsung entries.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct and minimal. Regression risk is confined to
-this DMI string. If the lid is truly closed at resume from another
-wakeup source, init-open can delay one close report until the next close
-notify; that is the established tradeoff for this quirk class (Stealth
-13 late 2019, Medion, Samsung). No API/locking/refcount changes.
-
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-Step 3.1: BLAME THE CHANGED LINES
-Record: Insertion is between:
-- `0528904926aab` (2020-01-02) Razer Blade Stealth 13 late 2019, same
-  `ACPI_BUTTON_LID_INIT_OPEN` pattern
-- `8fa73ee44daef` (2024-10-20) Samsung Galaxy Book2, same pattern, `Cc:
-  All applicable <stable@vger.kernel.org>`
-- Table exists since `d7cd08231a7fa` (2019-10-28)
-The "bug" is firmware on a 2020 laptop; the kernel quirk table has been
-in this driver for years.
-
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable. Firmware defect, not a kernel
-regression from a specific SHA.
-
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record (this tree, last 20 on `drivers/acpi/button.c`): other DMI lid
-quirks (Lenovo Yoga 9, Medion E2228T, Nextbook Ares 8A, Samsung Galaxy
-Book2) plus unrelated notify/input_free_device changes. No prerequisite
-refactor required for this table entry.
-Standalone, not patch X/Y.
-
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: `git log --author='Robin Everaars' -- drivers/acpi/` is empty in
-this tree. Author is a hardware reporter, not the ACPI maintainer.
-Weight comes from Rafael applying it and from matching an existing
-quirk.
-
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Depends only on `dmi_lid_quirks[]` and
-`ACPI_BUTTON_LID_INIT_OPEN`, both present. Later mainline converted
-`acpi_button_add` → `acpi_button_probe`; that is after 6.12 and not
-required. A later mailing-list patch for Blade Stealth 13 Early 2020
-(RZ09-0310) is a sibling quirk, not a dependency. Can apply standalone.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
 Record:
-- `b4 dig -c 415125669c2dd`:
-  https://patch.msgid.link/20260817141414.213075-1-robineveraars@pm.me
-- `b4 dig -a`: v1 msgid `20260817133259.195548-1-robineveraars@pm.me`,
-  v2 same code; v1 was unapplicable because Proton OpenPGP/MIME inserted
-  line breaks. No logic review changes.
-- Rafael: "Applied as 7.3-rc material, thanks!" No NAK, no stable
-  discussion in-thread.
-- lore.kernel.org WebFetch returned 403; discussion recovered via b4,
-  Patchew, and openwall.
+- **Category:** resource leak + teardown WARNING (stranded slab objects;
+  GEM refs left held).
+- **Mechanism:** `virtqueue_detach_unused_buf()` after reset, then
+  existing `free_vbuf()` / `virtio_gpu_array_put_free()` /
+  `virtio_gpu_cleanup_object()`.
+- In this tree `resp_cb_data` is only set in
+  `virtio_gpu_cmd_unref_resource()` to a `struct virtio_gpu_object *`,
+  so the extra cleanup is specific and correct here.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To/Cc Rafael J. Wysocki, Len Brown, linux-acpi,
-linux-kernel. Maintainer applied it. No extra Reviewed-by.
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No bugzilla/syzbot Link. Evidence is the author's firmware
-analysis (PSTA vs LIDS/RTEC) and the `lid_init_state=open` test. Same
-class as the 2020 Stealth 13 quirk ("systemd continuously re-suspend the
-laptop every 30s"). UserBenchmark/Geekbench and linux-hardware.org Razer
-probes support the product-name form `Blade … - RZ09-xxxx` with vendor
-`Razer`.
-
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone v2. Related later proposal: Ian Gallagher, Blade
-Stealth 13 Early 2020 RZ09-0310, which cites this Pro 17 entry as
-already in tree. Not required for this backport.
-
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: WebSearch of lore.kernel.org/stable for this model found no
-prior stable request or rejection. UNVERIFIED at the individual-message
-level because lore WebFetch is 403.
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No function body changed. Data: `dmi_lid_quirks[]`. Consumers:
-`acpi_button_register_driver()`, `acpi_lid_initialize_state()`.
-
-Step 5.2: TRACE CALLERS
 Record:
-- `acpi_button_register_driver()`: module/driver init;
-  `dmi_first_match(dmi_lid_quirks)` if `lid_init_state == -1`.
-- `acpi_lid_initialize_state()`: from `acpi_button_resume()`
-  (CONFIG_PM_SLEEP) and `acpi_lid_input_open()` (userspace opens
-  `/dev/input` lid switch).
-- Not IRQ/hot-path; boot and resume/open.
+- Obviously correct: documented virtio shutdown helper; same pattern as
+  `virtio_console`.
+- Minimal; no API/feature additions.
+- Regression risk is low. After `drm_dev_unplug()`, `drm_dev_enter()`
+  fails, so `array_put_free()` → last GEM put →
+  `virtio_gpu_cmd_unref_resource()` takes the existing `-ENODEV` path
+  (`free_vbuf` + `virtio_gpu_cleanup_object`) instead of re-queuing.
+  Both VQs are always created in `virtio_gpu_init()`
+  (`vqs[0]`/`vqs[1]`), so no NULL `cursorq.vq` on the deinit path.
 
-Step 5.3: TRACE CALLEES
-Record: `ACPI_BUTTON_LID_INIT_OPEN` → `acpi_lid_notify_state(device, 1)`
-reports SW_LID open. No alloc/new locks.
+---
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace-reachable: logind/systemd reads the lid input device
-and acts on SW_LID. Trigger is close-lid suspend then resume with lid
-open — normal laptop use. Unprivileged user can trigger by closing the
-lid.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same `ACPI_BUTTON_LID_INIT_OPEN` DMI entries already in this
-tree for Lenovo 82BG, Medion E2215T/E2228T, Razer Stealth 13 Late 2019,
-Samsung 750XED. This is another instance of a known firmware class, not
-a new mechanism.
+**Step 3.1: BLAME THE CHANGED LINES**
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
 Record:
-- Tree: `pending-6.12`, `git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`,
-  `make kernelversion` = **6.12.111**
-- `dmi_lid_quirks[]` present; Stealth 13 quirk present; **no**
-  `RZ09-0329` / Blade Pro 17 entry
-- `git merge-base --is-ancestor 415125669c2dd HEAD` → not an ancestor
-  (not in this tree)
-- Quirk infrastructure since 2019; bug is firmware on 2020 hardware,
-  relevant to 6.12
+- `virtio_gpu_free_vbufs()` / `kmem_cache_destroy`: `f5985bf9cadd4e`
+  (Gerd Hoffmann, 2017-03-01, “drm: virtio: use kmem_cache”) — ancestor
+  of this HEAD.
+- `virtio_gpu_deinit()` body: `dc5698e80cf724` (Dave Airlie, 2013) plus
+  later `virtio_reset_device()` (`d9679d0013a668`, 2021).
+- Bug is old; present throughout 6.12.y.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: `git show 415125669c2dd | git apply --check` succeeded (hunk at
-line 130, offset -3). Difference vs mainline is later
-`acpi_button_probe` conversion, not the DMI table. Expected: **clean
-apply**.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No RZ09-0329 match. No other 6.12 commit with this subject (`git
-log --grep='Razer Blade Pro 17' -- drivers/acpi/button.c` empty).
-Samsung/Stealth 13 quirks are related pattern, not a substitute for this
-DMI ID.
+Record: No `Fixes:` tag. Not applicable. Buggy teardown is in this tree.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [ACPI button / laptop lid] [IMPORTANT]
-`CONFIG_ACPI_BUTTON` default y. Lid events drive suspend on essentially
-all ACPI laptops. Not mm/core, but suspend-loop is user-visible
-stability.
+Record: Recent virtio GPU work here is unrelated (EDID bounds, deadlock,
+fence, KMS removal). No reclaim helper already present. `cec7f1774605a`
+is a different probe double-free. Standalone patch, not “X/Y” of a
+larger series (cover said “Patch 1” of a 1-patch series).
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: This 6.12 file is mature (quirks since 2019). Mainline later did
-a large button.c rework (platform device, devres); that churn is **not**
-in this tree. The DMI table is the stable part.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+Record: Anuj Bolewar has no virtio GPU commits in this tree. Dmitry
+Osipenko is the virtio-gpu maintainer (SOB + “Applied to drm-misc-
+fixes”).
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / DMI-specific: Razer Blade Pro 17 Early 2020
-(RZ09-0329) only. ACPI button is default-y, so those laptops on 6.12 are
-in scope.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Close lid → suspend → open lid/resume. Common laptop path.
-Unprivileged user can trigger. Not a narrow error path.
+Record: Uses `virtqueue_detach_unused_buf`, `free_vbuf`,
+`virtio_gpu_array_put_free`, `virtio_gpu_cleanup_object` — all present.
+No panic-path helpers required. Can apply standalone.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: [Suspend loop ~every 35s] [HIGH]
-Not a panic, but the machine cannot stay awake after lid-wake. Matches
-historical "systemd re-suspend every 30s" reports. Data-loss risk if
-unsaved work is interrupted by repeated suspend.
+---
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
 Record:
-- Benefit: HIGH for that model (fixes unusable suspend/resume)
-- Risk: VERY LOW (11-line DMI entry, no other machines)
-- Ratio: strongly favors backport
+- `b4 dig -c <sha>` cannot match: commit is not in this tree (candidate
+  only).
+- Lore search via lore.kernel.org returned 403.
+- Recovered from Openwall/LKML:
+  - v1: drain only (`objs` + `free_vbuf`)
+  - v2: also `virtio_gpu_cleanup_object(resp_cb_data)`
+  - Applied version is v2
+- Dmitry Osipenko, 2026-08-14: **“Applied to drm-misc-fixes, thanks!”**
+  — no NAK.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-Step 9.1: COMPILE THE EVIDENCE
+Record: Recipients included Airlie, Hoffmann, Osipenko, Gurchetan Singh,
+Chia-I Wu, dri-devel, virtualization, syzkaller-bugs. Maintainer applied
+it. No NAK found.
 
-FOR:
-- Real user-visible bug: lid stuck closed → logind suspend loop
-- Hardware quirk exception (DMI table), explicitly allowed in stable
-- Same mechanism as Stealth 13 late 2019 (in this tree since 2020) and
-  Samsung Galaxy Book2 (`Cc: stable`)
-- 11 lines, one file, no APIs
-- Applies cleanly to 6.12.111
-- ACPI maintainer applied as 7.3-rc
-- Author tested `lid_init_state=open`
-- DMI product string matches later Razer naming (`Blade … - RZ09-xxxx`)
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-AGAINST:
-- Affects one laptop model, not all users
-- No Fixes:/Cc: stable in the commit (expected; not a negative)
-- Author tested the module param; DMI match correctness is inferred from
-  the string they submitted (if wrong, quirk is a no-op, not a
-  regression)
+Record (syzkaller, extid `06f9b2a53ba4a5a47644`):
+- Title: `WARNING in virtio_gpu_free_vbufs`
+- Labels: `prio:high`
+- Assessment: DenialOfService exploitable; VM guest and host trigger;
+  not unprivileged
+- Stack: `kmem_cache_destroy` → `virtio_gpu_free_vbufs` →
+  `virtio_gpu_release` → `drm_dev_put` → `virtio_dev_remove` → PCI
+  `remove_store`
+- 13 crashes; first ~2026-07-29
+- Syzbot lists upstream fix `61d85f99b5a5` (that SHA is not in this
+  tree; `git merge-base --is-ancestor` was not used on an unknown remote
+  SHA)
 
-UNRESOLVED:
-- lore.kernel.org HTTP 403; thread recovered via b4/Patchew/openwall
-- No independent kernel bugzilla duplicate found
-- Stable list not confirmed message-by-message (search found nothing)
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — copy of existing quirk;
-   author + maintainer
-2. Fixes a real bug that affects users? **PASS** — suspend loop after
-   resume
-3. Important issue? **PASS** — HIGH: system re-suspends every ~35s
-   (hang/unusable, not a panic)
-4. Small and contained? **PASS** — +11 lines, one DMI entry
-5. No new features or APIs? **PASS** — quirk table only
-6. Can apply to the local tree? **PASS** — `git apply --check` clean;
-   table present
+Record: 1-patch series. v2 is the applied leak-complete version.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **Hardware quirk/workaround** (DMI lid_init_state). Automatic
-stable-qualifier.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-Step 9.4: MAKE YOUR DECISION
-This tree is 6.12.111. The quirk table and `ACPI_BUTTON_LID_INIT_OPEN`
-exist; the RZ09-0329 entry does not. The patch is a small, model-scoped
-workaround for a firmware lid bug that leaves the laptop in a suspend
-loop. That is exactly the class of DMI quirk stable already carries for
-this driver.
+Record: lore.kernel.org/stable search 403. **UNVERIFIED** whether
+stable@ already discussed it. Not used as a NO reason.
 
-What it solves for 6.12 users: after closing the lid, resume can leave
-`_LID` closed while the lid is open; systemd-logind then suspends again.
-The quirk reports open on resume for this DMI ID only.
+---
 
-Risk vs benefit: benefit is restoring normal lid/suspend on this 2020
-Razer; risk is a no-op on every other machine.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-No dependencies, no backport rework, no new API.
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
 
-Verification:
-- [Phase 1] Parsed tags: author SOB, Rafael SOB, Link msgid
-  `20260817141414.213075-1-robineveraars@pm.me`; no Fixes/Reported-
-  by/Cc: stable
-- [Phase 1] Body: `_LID` stale closed after resume; logind re-suspend
-  ~35s; PSTA/LIDS/RTEC firmware explanation; tested
-  `button.lid_init_state=open`
-- [Phase 2] Diff: +11 lines in `dmi_lid_quirks[]` only;
-  `ACPI_BUTTON_LID_INIT_OPEN` for Razer / `Blade Pro 17 (Early 2020) -
-  RZ09-0329`
-- [Phase 2] Local `acpi_lid_initialize_state()` OPEN case calls
-  `acpi_lid_notify_state(device, 1)`; resume and `acpi_lid_input_open`
-  both call it
-- [Phase 3] Blame: Stealth 13 quirk `0528904926aab` (2020); Samsung
-  `8fa73ee44daef` (2024, Cc: stable); table from `d7cd08231a7fa` (2019)
-- [Phase 3] No Fixes: tag; standalone; no Robin Everaars history in this
-  ACPI tree
-- [Phase 4] `b4 dig -c 415125669c2dd`: v2 URL; `b4 dig -a`: v1→v2, PGP
-  wrapping only; `b4 dig -w`: Rafael, Len Brown, linux-acpi
-- [Phase 4] Patchew: Rafael "Applied as 7.3-rc material, thanks!"; no
-  NAK
-- [Phase 4] lore WebFetch 403; UNVERIFIED raw lore HTML
-- [Phase 5] Callers: `acpi_button_register_driver` (init),
-  `acpi_button_resume`, `acpi_lid_input_open`; userspace lid/logind path
-- [Phase 5] Similar OPEN quirks already in this file for
-  Lenovo/Medion/Razer/Samsung
-- [Phase 6] `git describe HEAD` p-6.12-3-gc504cf0baa3d8; kernelversion
-  6.12.111; `merge-base --is-ancestor 415125669c2dd HEAD` false
-- [Phase 6] `git apply --check` succeeded at offset -3
-- [Phase 6] Grep: no RZ09-0329 in this tree
-- [Phase 7] MAINTAINERS ACPI: Rafael Wysocki; `CONFIG_ACPI_BUTTON`
-  default y
-- [Phase 8] Failure mode: suspend loop; severity HIGH; DMI-scoped; risk
-  very low
-- [Phase 3/4] Commit `415125669c2dd` is `v7.3-rc1~39^2^3` on
-  origin/master
-- UNVERIFIED: individual stable@ thread bodies (lore 403); exact
-  dmidecode dump of the author's machine (string is consistent with
-  other 2020+ Razer DMI names)
+Record: `virtio_gpu_reclaim_vbufs` (new), `virtio_gpu_deinit` (call
+site), `free_vbuf`, `virtio_gpu_array_put_free`,
+`virtio_gpu_cleanup_object`.
+
+**Step 5.2: TRACE CALLERS**
+
+Record:
+- `virtio_gpu_deinit()` from `virtio_gpu_probe` error path after
+  `virtio_gpu_init()` (`err_deinit`) and from `virtio_gpu_remove()`
+  after `drm_dev_unplug()`.
+- Teardown/unbind, not a hot path.
+
+**Step 5.3: TRACE CALLEES**
+
+Record: `virtqueue_detach_unused_buf` (documented for shutdown/reset),
+GEM put, object cleanup, `kmem_cache_free`.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record: Userspace/sysfs PCI remove (privileged) or guest virtio-gpu
+unplug. Syzbot hit it from `remove_store`. Reachable on any system that
+unbinds/unplugs virtio-gpu with commands still in the VQ (unresponsive
+device, hot-unplug, fuzz).
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: Same drain exists in `virtio_console.c` `remove_vqs()`,
+`virtio_net`, `virtio_crypto`, vsock, etc. virtio-gpu was missing it.
+
+semcode: not available; used `git grep` / file reads.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: **Yes.**
+
+```283:293:drivers/gpu/drm/virtio/virtgpu_kms.c
+void virtio_gpu_deinit(struct drm_device *dev)
+{
+        ...
+        virtio_reset_device(vgdev->vdev);
+        vgdev->vdev->config->del_vqs(vgdev->vdev);
+}
+```
+
+```83:87:drivers/gpu/drm/virtio/virtgpu_vq.c
+void virtio_gpu_free_vbufs(struct virtio_gpu_device *vgdev)
+{
+        kmem_cache_destroy(vgdev->vbufs);
+        vgdev->vbufs = NULL;
+}
+```
+
+`virtio_gpu_reclaim_vbufs` is **not** in this tree. `git log
+--grep='reclaim pending vbufs'` on those files: empty.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: **Clean apply expected.** Actual v2 context matches 6.12 (no
+panic helpers required). Line numbers differ slightly; 3-line context
+around reset/`del_vqs` and `free_vbuf`/`reclaim_vbufs` is the same.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: No equivalent drain. KMS-disabled removal fix `38a5f891cda6d` is
+unrelated (atomic shutdown).
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+
+Record: `drivers/gpu/drm/virtio` — **IMPORTANT** for VMs/QEMU guests
+(common virtio-gpu), not core mm/VFS. Not staging.
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+
+Record: Mature driver (2013+), still receiving 6.12 stable fixes. Bug is
+long-standing, not a brand-new subsystem.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: virtio-gpu users (`CONFIG_DRM_VIRTIO_GPU`) — QEMU/KVM/cloud VMs,
+driver unbind, PCI remove, module unload.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record: Device teardown with commands still on the control/cursor VQ.
+Syzbot: PCI `remove`. Privileged on the host; a VM guest can trigger it.
+Not every boot, but a realistic hot-unplug/reset path.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record:
+- `kmem_cache_destroy()` **always** `WARN`s if objects remain
+  (`mm/slab_common.c` ~547), not only `CONFIG_SLUB_DEBUG`.
+- With SLUB_DEBUG, additional `slab_bug` / `__slab_err`.
+- If shutdown fails, the cache is **not** released (`if (err) return`) →
+  cache leak plus leaked vbufs/GEM.
+- Syzbot: DoS, `prio:high`.
+- Severity: **HIGH** (kernel WARNING/taint, resource leak on remove;
+  panic if `panic_on_warn`).
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
+Record: **Benefit high** (stops WARNING + leak on a common VM GPU
+driver). **Risk low** (17 lines, existing helpers, maintainer-acked).
+Ratio favors backport.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: EVIDENCE**
+
+**FOR:**
+- Real, syzbot-reproduced teardown bug
+- Unconditional `WARN` + slab/GEM leak
+- virtio-gpu is widely used in VMs on 6.12 LTS
+- Small, obviously correct drain matching other virtio drivers
+- All callees exist here; bug exists here
+- Maintainer applied v2 to drm-misc-fixes
+
+**AGAINST:**
+- Trigger is device removal, not a hot path
+- Needs privilege / VM unplug (not a local unprivileged syscall crash)
+- No `Fixes:` / stable Cc in the original (not a negative under these
+  rules)
+
+**UNRESOLVED:**
+- lore.kernel.org 403; stable@ discussion not fetched
+- `b4 dig` could not resolve a SHA that is not in this tree
+
+**Step 9.2: STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — v2, syzbot, maintainer
+   applied
+2. Real user-visible bug? **PASS** — WARNING + leak on virtio-gpu remove
+3. Important (crash/leak/DoS)? **PASS** — HIGH; syzbot prio:high / DoS
+4. Small and contained? **PASS** — +17 lines, 3 files, one driver
+5. No new features/APIs? **PASS** — internal helper only
+6. Applies to local tree? **PASS** — buggy code present; helpers present
+
+**Step 9.3: EXCEPTION CATEGORIES**
+
+Record: Not ID/quirk/DT/docs. Ordinary important bugfix.
+
+**Step 9.4: DECISION**
+
+This tree has the bug and the dependencies. The fix is small, matches
+established virtio teardown, and stops a syzbot-confirmed WARNING plus
+object leak on virtio-gpu teardown. It should be backported to this 6.12
+tree.
+
+---
+
+## What the commit solves for stable users
+
+On virtio-gpu unbind/unplug, in-flight command buffers stay in the
+virtqueues. Destroying the `virtio-gpu-vbufs` cache then WARNs and leaks
+those buffers and any GEM objects they hold (including pending
+`RESOURCE_UNREF`). 6.12 guests using virtio-gpu hit this on device
+removal.
+
+## Risk vs benefit
+
+Benefit: no WARN/taint and no leaked GEM/vbufs on a common VM driver.
+Risk: low; one drain after reset, before `del_vqs()`, using APIs already
+in 6.12.
+
+## Concerns
+
+None that block backport. Header context in some expanded diffs mentions
+later panic helpers; the real v2 hunk does not need them. Apply as the
+17-line v2.
+
+---
+
+## Verification
+
+- **[Phase 1]** Tags: syzbot Reported-by, Closes syzkaller URL, Osipenko
+  SOB
+- **[Phase 2]** Diff: +17 across 3 virtio GPU files; drain after reset
+- **[Phase 2]** `resp_cb_data` only assigned in
+  `virtio_gpu_cmd_unref_resource()` in this tree
+- **[Phase 3]** `git describe HEAD` / Makefile: 6.12.111;
+  `p-6.12-3-gc504cf0baa3d8`
+- **[Phase 3]** blame: `kmem_cache_destroy` in `virtio_gpu_free_vbufs`
+  since `f5985bf9cadd4e` (2017); deinit without drain since original
+  driver
+- **[Phase 3]** `git log --grep='reclaim pending vbufs' --
+  drivers/gpu/drm/virtio/`: not present
+- **[Phase 4]** Openwall v2 + LKML: Osipenko “Applied to drm-misc-fixes”
+- **[Phase 4]** syzbot: WARNING in `virtio_gpu_free_vbufs`, prio:high,
+  PCI remove stack, 13 crashes
+- **[Phase 4]** lore.kernel.org 403; `b4 dig` no local commit —
+  UNVERIFIED beyond Openwall/LKML/syzbot
+- **[Phase 5]** Callers: `virtio_gpu_drv.c` probe fail +
+  `virtio_gpu_remove`
+- **[Phase 5]** Both VQs assigned in `virtio_gpu_init()` lines 217–218
+- **[Phase 6]** Local `virtio_gpu_deinit` / `virtio_gpu_free_vbufs`
+  match the buggy sequence
+- **[Phase 6]** `virtqueue_detach_unused_buf`,
+  `virtio_gpu_array_put_free`, `virtio_gpu_cleanup_object` exist
+- **[Phase 8]** `kmem_cache_destroy` WARNs if `__kmem_cache_shutdown`
+  returns nonzero (`mm/slab_common.c`); cache not released on error
+- **UNVERIFIED:** whether this SHA is already in some other stable
+  series (irrelevant; not in this tree)
 
 **YES**
 
- drivers/acpi/button.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/virtio/virtgpu_drv.h |  1 +
+ drivers/gpu/drm/virtio/virtgpu_kms.c |  1 +
+ drivers/gpu/drm/virtio/virtgpu_vq.c  | 15 +++++++++++++++
+ 3 files changed, 17 insertions(+)
 
-diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
-index 384caea90ce5f..4ddaee8955c30 100644
---- a/drivers/acpi/button.c
-+++ b/drivers/acpi/button.c
-@@ -132,6 +132,17 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
- 		},
- 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
- 	},
-+	{
-+		/*
-+		 * Razer Blade Pro 17 early 2020, notification of the LID device
-+		 * only happens on close, not on open and _LID keeps returning closed.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Razer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Blade Pro 17 (Early 2020) - RZ09-0329"),
-+		},
-+		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
-+	},
- 	{
- 		/*
- 		 * Samsung galaxybook2 ,initial _LID device notification returns
+diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
+index 51b78f8a8aa2e..d52f35a09a1b0 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.h
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
+@@ -355,6 +355,7 @@ void virtio_gpu_array_put_free_work(struct work_struct *work);
+ /* virtgpu_vq.c */
+ int virtio_gpu_alloc_vbufs(struct virtio_gpu_device *vgdev);
+ void virtio_gpu_free_vbufs(struct virtio_gpu_device *vgdev);
++void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev);
+ void virtio_gpu_cmd_create_resource(struct virtio_gpu_device *vgdev,
+ 				    struct virtio_gpu_object *bo,
+ 				    struct virtio_gpu_object_params *params,
+diff --git a/drivers/gpu/drm/virtio/virtgpu_kms.c b/drivers/gpu/drm/virtio/virtgpu_kms.c
+index 4a25347734fda..01ea5cd5ea7f1 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_kms.c
++++ b/drivers/gpu/drm/virtio/virtgpu_kms.c
+@@ -289,6 +289,7 @@ void virtio_gpu_deinit(struct drm_device *dev)
+ 	flush_work(&vgdev->cursorq.dequeue_work);
+ 	flush_work(&vgdev->config_changed_work);
+ 	virtio_reset_device(vgdev->vdev);
++	virtio_gpu_reclaim_vbufs(vgdev);
+ 	vgdev->vdev->config->del_vqs(vgdev->vdev);
+ }
+ 
+diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
+index 244a791ab915e..f7e7d212fc67c 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_vq.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
+@@ -207,6 +207,21 @@ static void free_vbuf(struct virtio_gpu_device *vgdev,
+ 	kmem_cache_free(vgdev->vbufs, vbuf);
+ }
+ 
++void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev)
++{
++	struct virtio_gpu_vbuffer *vbuf;
++
++	while ((vbuf = virtqueue_detach_unused_buf(vgdev->ctrlq.vq))) {
++		if (vbuf->objs)
++			virtio_gpu_array_put_free(vbuf->objs);
++		if (vbuf->resp_cb_data)
++			virtio_gpu_cleanup_object(vbuf->resp_cb_data);
++		free_vbuf(vgdev, vbuf);
++	}
++	while ((vbuf = virtqueue_detach_unused_buf(vgdev->cursorq.vq)))
++		free_vbuf(vgdev, vbuf);
++}
++
+ static void reclaim_vbufs(struct virtqueue *vq, struct list_head *reclaim_list)
+ {
+ 	struct virtio_gpu_vbuffer *vbuf;
 -- 
 2.53.0
 
