@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7A55DE9A6;
-	Mon, 19 Oct 2026 14:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEF45DD574;
+	Mon, 19 Oct 2026 14:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418537; cv=none; b=MEBAmZTszustPiP4hmyRO9lQ+Xmw0s6hpGp/Jvv3xnZnrpKABCKoNRRb4GYRiCK/vhCMlIB5fiCgeEHWO7dU2O5oL2jF+Fe5cak5YELgsSOU0iGsESoqgK5u40q9gkGa+KCBNnZO+jinLTk3QkdFCCvTxmLctRpZoKaawoSfxok=
+	t=1792418538; cv=none; b=KdQJQTbCRbNSXuBymwUn5wcd4cAnZ8cQvYI299p9bk7N/eKW2kBcKjJUKP/XpjhpcMD7ukQIooU6IBNbfNwQGefaaozEbAjr2u4fMHnBPM1WEgYYBKjDBphCC1HtYrE6+CLe5mQ6PQ80Az8OiWCMfJoUyoOnVSC1UX1SEjR0Uqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418537; c=relaxed/simple;
-	bh=OoAODBPG7JuGh6KFSqk77Miq0NaF5LnnMtJ/XBIQmi0=;
+	s=arc-20240116; t=1792418538; c=relaxed/simple;
+	bh=rdreeGsyL3pCHnz92Zx9K7T1XZ/e3VBbHHTB7w/ja3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jkORyY07WInFfXp4Kaw0MvJgoEGZq/Cf/A4u7I4H0EAHer+kbOWbf+FsH3Bw1XffNInc0+fcopHM1uxIYEWygO8b7S3brhz6RatyVNk9xXWynYIr2B9ctuKaFkbZYFR6P8etkXQ4piybcqVzQUaYprjshnD4BGIgC+mfOAoPxeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NjzZ2xGK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=peY3AfcrSe6lB1LyGx0CcYY7a17LE2P4/h8yL36jWFaM+mO/EEtCGamwsvQgK33jrtFhWtpEeY8TqrytEWE+IrAlIx/OKykTB0WsFOKzONCfCa56nqepsriR/PkOTnU1xUVZ2nc/nMD4ktPCpnQl6PHT4Ml1TNm0HVf+LpTrpuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Or2ODciU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NjzZ2xGK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17421F000C9;
-	Mon, 19 Oct 2026 14:02:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Or2ODciU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978431F000C7;
+	Mon, 19 Oct 2026 14:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418535;
-	bh=r2RDo+R5bPz8ehvpSEPrSMIYkGdL2eQ9N6e7gpsV5Rc=;
+	s=k20260515; t=1792418531;
+	bh=Y0Acs1GjZ8s3VI9YkREK3IWGQmpvGOM/AWX2WIww85A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NjzZ2xGKGp3ZlF1VpUsuTRFSYzjC3VZPE1PfCUgcS0I4KCj2sgWUZCeJelhcbR2mz
-	 DL/YhX0Vm/G/cFACH2d4sMonGXi2wF7KD1E8wB6l86S4fMTuj/2JxvimA3PIHopWw1
-	 AsZKqxuZkUS2Fnhsg3th44xn39+wQIMxOV8TulZChsyCb4+cG+hy+9QRJr5uLseK/Y
-	 DPFnY7N5MZklxSZgTc8YeQe6d4SX+0iuTUhNyeC11uJBt6vJUe2irNCuL4Z9Ho0slp
-	 PJPqjfqN6s2vzX9DgvWrjrLz5ea9Fy8u+n8bOjwF5biqOYRg8y1C6cumWXKzGwaGVu
-	 vJkaxb10/IjSA==
+	b=Or2ODciU7WUELSUSN+yZmyPGr/PS8WZKTgNbpybAuAqGVWDsVCkxt8LrS7x8JmDwu
+	 KpFhrgYCCRh4r9iNfIWGD+LE4LSNShoVp2ZfQ91HbE1ONYV246+aJJm1TWS3Vrmwq3
+	 24VwhOf6iLMqYb642cHJwhAeY9axs2BHX/FSfSpk6gfld9amhoSsaZ9GUIyFSmyMl9
+	 882G2cKs9ZNbq1b/KEOqwlE0nXwKiP8Z8i+bvworf+P9cJ/bd9WkimaICz39EjezPH
+	 Pe5mygpsVRxtKPsQWhJ69/O94+jt1bhGdLwfKrsG8SQe7u0POrUenilTSEAc5T3T/i
+	 I348Ibf1o5sKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michail Tatas <michail.tatas@gmail.com>,
-	Corey Minyard <corey@minyard.net>,
+Cc: Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
-	openipmi-developer@lists.sourceforge.net,
+	neil.armstrong@linaro.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ipmi: Fix leak in __ipmi_bmc_register
-Date: Mon, 19 Oct 2026 09:50:08 -0400
-Message-ID: <20261019135441.1420968-317-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/panel: panel-edp: Adjust T8 timing for AUO B116XAK01.6 and B140XTK02.4
+Date: Mon, 19 Oct 2026 09:50:05 -0400
+Message-ID: <20261019135441.1420968-314-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,426 +58,405 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michail Tatas <michail.tatas@gmail.com>
+From: Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>
 
-[ Upstream commit 18e633dd9674c8bf118ea8583bb5a531edc2728a ]
+[ Upstream commit 0d40cab39158704e372240ed9821a00bfe117125 ]
 
-In case that ida_alloc(&ipmi_bmc_ida,...) succeeds and then
-platform_device_register() fails, ipmi_bmc_ida is leaked.
-Fix by freeing the error path
+Screen garbage or flickering can be observed during mode changes (such
+as VT switches) on systems using the AUO B116XAK01.6 and B140XTK02.4
+panels.
 
-Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
-Message-ID: <anUK_HOy_pCgvsBm@michalis-linux>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+This occurs because the backlight is enabled before the video signal
+stabilizes. Waveform measurements show that the panel signal takes
+around 140ms to stabilize after a mode change, meaning the previous 50ms T8
+timing was insufficient.
+
+To resolve this issue, adjust the eDP panel delay entry from
+delay_200_500_e50 to delay_200_500_e200 (increasing T8 from 50ms to 200ms).
+This matches the updated panel specifications from AUO, which now formally
+define T8 as 200ms to mask any display abnormalities during mode changes.
+
+Signed-off-by: Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260720025358.2781136-1-dioyc_zhang@compal.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line IDA leak fix in IPMI BMC registration. The buggy
-error path is in this 6.12.111 tree, the patch applies cleanly, and the
-maintainer treated it as a bug fix.
+This checkout is **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+change is a two-line eDP T8 delay quirk for two AUO panels. Both panel
+IDs and `delay_200_500_e200` exist here; the fix is a hardware timing
+workaround, not a new API.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[ipmi] [Fix] leak in __ipmi_bmc_register` — explicit leak fix
-in BMC registration.
+Record: `[drm/panel: panel-edp] [Adjust] [increase T8/enable delay from
+50ms to 200ms for two AUO eDP panels]`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- No `Fixes:` tag (expected for this review pipeline)
-- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, `Cc:
-  stable`, or `Link:`
-- `Signed-off-by: Michail Tatas <michail.tatas@gmail.com>` (author)
-- `Message-ID: <anUK_HOy_pCgvsBm@michalis-linux>`
-- `Signed-off-by: Corey Minyard <corey@minyard.net>` (IPMI maintainer;
-  not a pipeline SOB)
-- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-  ...]` if present
+- `Signed-off-by: Dio Zhang <dioyc_zhang@compal.corp-
+  partner.google.com>` (author)
+- `Reviewed-by: Douglas Anderson <dianders@chromium.org>` (panel-edp
+  reviewer in MAINTAINERS)
+- `Signed-off-by: Douglas Anderson <dianders@chromium.org>` (applied via
+  drm-misc)
+- `Link: https://patch.msgid.link/20260720025358.2781136-1-
+  dioyc_zhang@compal.corp-partner.google.com`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Acked-by:`, or `Cc:
+  stable` (absence expected)
+- Ignore any pipeline `Upstream commit` / Sasha Levin SOB (none present
+  on the real commit)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: `ida_alloc(&ipmi_bmc_ida, ...)` succeeds, then
-  `platform_device_register()` fails, and the IDA ID is never freed.
-- Symptom: leaked IDA ID (IDs cannot be reused). Not a kmalloc leak of
-  the `bmc` object itself — that is already freed via `put_device()`.
-- Failure mode: resource leak on the BMC registration error path; can
-  retry (see Phase 5).
-- Root cause: `out_list_del` calls `put_device(&bmc->pdev.dev)` (which
-  `kfree`s the BMC via `release_bmc_device`) but never `ida_free()`.
-- No version range in the message.
+- **Bug:** On AUO B116XAK01.6 and B140XTK02.4, the backlight comes on
+  before the video signal is stable after a mode change.
+- **Symptom:** Screen garbage or flickering during mode changes (e.g. VT
+  switches).
+- **Root cause:** T8 (`delay.enable`) was 50ms; waveforms show ~140ms
+  until the signal is stable. AUO’s updated spec now lists T8 as 200ms.
+- **Fix:** Point those two `EDP_PANEL_ENTRY` rows at
+  `delay_200_500_e200` instead of `delay_200_500_e50`.
+- **Versions:** none named in the message.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. Subject and body both say “Fix leak”. This is a
-straightforward error-path resource leak.
+Record: Not a disguised cleanup. It is an explicit hardware-timing fix
+for a user-visible display glitch.
 
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/char/ipmi/ipmi_msghandler.c` (+1 / −0)
-- Function: `__ipmi_bmc_register()` error label `out_list_del`
-- Scope: single-file, one-line surgical fix
-- Upstream SHA: `18e633dd9674c8bf118ea8583bb5a531edc2728a`
+- File: `drivers/gpu/drm/panel/panel-edp.c` — **2 insertions, 2
+  deletions** (4 lines with context).
+- No functions rewritten; two table initializers in `edp_panels[]`.
+- Scope: single-file, surgical table tweak.
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record: Before — on `platform_device_register()` failure, the code
-unlinks the BMC, resets `intf->bmc`, then `put_device()`. After — same
-path, but `ida_free(&ipmi_bmc_ida, bmc->pdev.id)` runs **before**
-`put_device()`, because `put_device()` → `release_bmc_device()` →
-`kfree(bmc)` would make `bmc->pdev.id` unusable.
-
-Verified local error path:
-
-```3255:3261:drivers/char/ipmi/ipmi_msghandler.c
-out_list_del:
-        mutex_lock(&bmc->dyn_mutex);
-        list_del(&intf->bmc_link);
-        mutex_unlock(&bmc->dyn_mutex);
-        intf->bmc = &intf->tmp_bmc;
-        put_device(&bmc->pdev.dev);
-        goto out;
-```
-
-And the only jump to that label:
-
-```3188:3194:drivers/char/ipmi/ipmi_msghandler.c
-                rv = platform_device_register(&bmc->pdev);
-                if (rv) {
-                        dev_err(intf->si_dev,
-                                "Unable to register bmc device: %d\n",
-                                rv);
-                        goto out_list_del;
-                }
-```
-
-Successful-registration cleanup already frees the ID in
-`cleanup_bmc_work()`:
-
-```3048:3056:drivers/char/ipmi/ipmi_msghandler.c
-static void cleanup_bmc_work(struct work_struct *work)
-{
-        struct bmc_device *bmc = container_of(work, struct bmc_device,
-                                              remove_work);
-        int id = bmc->pdev.id; /* Unregister overwrites id */
-
-        platform_device_unregister(&bmc->pdev);
-        ida_free(&ipmi_bmc_ida, id);
-}
-```
-
-That work is queued only from `kref_put(&bmc->usecount,
-cleanup_bmc_device)`. `out_list_del` uses `put_device()`, not
-`kref_put()`, so `ida_free` currently never runs on this failure.
+Record:
+- Before: AUO 0x1ea5 (B116XAK01.6) and AUO 0x67a8 (B140XTK02.4) used
+  `delay_200_500_e50` (`enable = 50`).
+- After: both use `delay_200_500_e200` (`enable = 200`).
+- Path: EDID-matched panel probe copies `detected_panel->delay` into
+  `desc->delay`; `panel_edp_enable()` then `msleep(delay.enable)` before
+  backlight-on. Only those two product IDs change.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: Category **(a) error-path resource leak**. Mechanism: IDA ID
-allocated, never returned on `platform_device_register()` failure. Fix:
-add the missing `ida_free()` before the device is released.
-
-Not a kmalloc UAF: `release_bmc_device()` still frees the BMC. Not a
-double-free of the ID: `cleanup_bmc_work` is not queued on this path.
+Record:
+- **Category:** hardware workaround / timing quirk (T8 too short).
+- **Mechanism:** backlight enabled while the panel still shows invalid
+  frames; lengthening T8 masks the garbage until the signal is valid.
+  Matches other `delay_200_500_e200` users in the same table.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct. `ida_free` must precede `put_device` (object
-containing the id is freed there). Minimal, no unrelated edits, no
-API/lock/hot-path changes. Regression risk is very low.
-Double-`ida_free` is not a concern because this path does not go through
-`cleanup_bmc_work`.
+Record:
+- Obviously correct: reuses an existing delay struct; no new constants
+  or control flow.
+- Minimal; no unrelated edits.
+- Regression risk is low and local: +150ms backlight-on delay only for
+  those two EDID IDs. Maintainer Doug Anderson noted that longer delays
+  “always stink, but sometimes is unavoidable,” then reviewed and
+  applied the patch. No deadlock/API/locking change.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- IDA numbering: `68e7e50f195f` (“ipmi: Don't use BMC product/dev ids in
-  the BMC name”, Corey Minyard, 2017)
-- `out_list_del` + `put_device`: `a2cb600fa22a87` (“ipmi: Rework BMC
-  registration”, 2017)
-- `ida_alloc` conversion: `9bd9fbd9032a3` (2023) — API rename only; leak
-  already existed with `ida_simple_get`
-- Partial sibling leak: `4aa7afb0ee20a` (2019) freed `bmc` on
-  `ida_simple_get()` failure, but did **not** free the ID after
-  `platform_device_register()` failure
-
-Bug has been in-tree since ~2017. All of the above are ancestors of this
-HEAD.
+- Current lines are commit `0d40cab391587` (Dio Zhang, 2026-07-20) —
+  this fix.
+- B116XAK01.6 (`0x1ea5`) added in `a70abdd994cb` (“drm/panel-edp: Add
+  AUO B116XAK01.6”, 2022-09-23) with `delay_200_500_e50`. Contained in
+  `v6.1-rc1`.
+- B140XTK02.4 (`0x67a8`) added in `4c34cdb93ea1` (2026-05-09) with
+  `delay_200_500_e50`. Present in this 7.3 tree.
+- `delay_200_500_e200` first appeared in `f6ff4570e567` (2022-07-20,
+  “Add panel entry for R140NWF5 RH”), also `v6.1-rc1` era.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Closest introducer is `68e7e50f195f` (IDA IDs)
-plus `a2cb600fa22a87` (error path that omits `ida_free`). Both are in
-this tree (`git merge-base --is-ancestor` returned 0).
+Record: No `Fixes:` tag. Not applicable. The original panel-add commits
+used a conservative generic 50ms T8 that later proved too short for
+these two SKUs.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Nearby IPMI fixes in this 6.12 tree (`d4be659a3e56f` SI NULL
-deref, `e2a3b77df6aef` refcount leak) are unrelated. Upstream neighbor
-`b6c46ab0bdee9` (“Remove all sysfs files on registration failure”) is a
-**different** leak in `ipmi_add_smi()` sysfs attributes, not a
-prerequisite. This commit is standalone.
+Record:
+- Same file has many “Fix delays for …” / “Modify … delay” commits (e.g.
+  `43113fd4c5f56` INX N116BCA-EA2, `9abe13a0598a8` CMN 0x14d6).
+  Established pattern.
+- Follow-ups after `0d40cab` are unrelated (I2C leak, new panel IDs,
+  `pre_unprepare`).
+- Standalone; not “patch X/Y”.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Michail Tatas has no other IPMI commits on `origin/master`
-besides this one. Corey Minyard (MAINTAINERS: IPMI SUBSYSTEM) authored
-the registration rewrite and SOB’d this patch. Maintainer-acked.
+Record: Dio Zhang has this one commit under `drivers/gpu/drm/panel/`.
+Douglas Anderson is the listed reviewer for `DRM DRIVER FOR GENERIC EDP
+PANELS` and authored/applied many `panel-edp` changes.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Needs `ida_free` / `ida_alloc` / `ipmi_bmc_ida` /
-`out_list_del`, all present here. `git apply --check` of `18e633dd9674c`
-succeeded at offset −44 lines. Standalone.
+Record: Needs `edp_panels[]`, `delay_200_500_e200`, and the two
+`EDP_PANEL_ENTRY` rows. All exist in this tree. Standalone.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 18e633dd9674c` →
-  https://patch.msgid.link/anUK_HOy_pCgvsBm@michalis-linux
-- `b4 dig -a`: single **v1**, no later revisions
-- Patchew: Corey Minyard replied *“You are correct, added to my next
-  tree. Thank you.”* — no NAK, no requested changes
-- Included in `[GIT PULL] IPMI bug fixes for 7.3` as “Several cleanup on
-  error fixes”
+- `b4 dig -c 0d40cab391587`: v2 at https://patch.msgid.link/202607200253
+  58.2781136-1-dioyc_zhang@compal.corp-partner.google.com
+- `b4 dig -a`: v1 2026-07-17, v2 2026-07-20 (applied).
+- v1 review (mbox): Doug asked only for a real name in SOB/authorship;
+  no NAK; no stable debate.
+- v2 review (mbox): Doug R-b’d, fixed subject to name both panels, noted
+  it needed a trivial rebase onto drm-misc-next, pushed as
+  `0d40cab391587`.
+- WebFetch of lore.kernel.org returned **403**; discussion recovered via
+  `b4 dig -m`.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To Corey Minyard (`corey@minyard.net`); Cc
-`openipmi-developer@lists.sourceforge.net`, `linux-
-kernel@vger.kernel.org`. Subsystem maintainer received and applied it.
+Record (`b4 dig -w`): To/Cc included `dianders@chromium.org`,
+`neil.armstrong@linaro.org`, `airlied@gmail.com`, `daniel@ffwll.ch`,
+`sam@ravnborg.org`, `dri-devel@lists.freedesktop.org`, `linux-
+kernel@vger.kernel.org`. Subsystem reviewer Doug Anderson both reviewed
+and applied it.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla/`Reported-by`. Found by code inspection.
-Maintainer confirmed the leak.
+Record: No `Reported-by` / bugzilla / syzbot. Evidence is the author’s
+waveform measurements plus AUO’s updated T8=200ms spec. Compal/Google-
+partner author implies Chromebook-class hardware.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone `[PATCH]`, not `n/m`. Same pull also had unrelated
-IPMI error-path fixes (sysfs leftover attrs, SI NULL deref already in
-this tree as `d4be659a3e56f`). None required for this one-liner.
+Record: Single-patch series. v2 vs v1 is authorship/subject cleanup,
+same diff.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: Web search of lore.kernel.org/stable for this subject found no
-prior stable discussion or rejection. UNVERIFIED that nobody ever asked
-for it on stable@; absence of hits is not a reason to skip it.
+Record: **UNVERIFIED** — lore.kernel.org/stable WebFetch returned 403.
+No stable mention in the dri-devel mbox.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: `__ipmi_bmc_register()` only. Helpers involved:
-`ida_alloc`/`ida_free`, `platform_device_register`, `put_device`,
-`release_bmc_device`, `cleanup_bmc_work`.
+Record: No function bodies edited. Runtime users of the table:
+`find_edp_panel()`, panel identification in `panel_edp_probe()` path
+(`desc->delay = *panel->detected_panel->delay`), `panel_edp_enable()`.
 
 **Step 5.2: TRACE CALLERS**
-Record: Sole call site is `__bmc_get_device_id()` when BMC identity is
-new/changed (`!intf->bmc_registered` or GUID/device/product id change).
-That is called from:
-- `ipmi_add_smi()` (interface probe)
-- `bmc_get_device_id()` used by sysfs attrs (`device_id_show` and
-  siblings) and `ipmi_get_version()`
-- `redo_bmc_reg()` work scheduled when `!intf->bmc_registered`
+Record:
+- `find_edp_panel()` called from the generic eDP identification path
+  (~line 820) after reading the EDID panel ID.
+- `panel_edp_enable` is the DRM panel `.enable` callback
+  (`panel_edp_funcs`).
+- Called on modeset/enable (including VT switch), not a rare error path.
 
 **Step 5.3: TRACE CALLEES**
-Record: Allocates BMC, takes an IDA id, registers a platform device
-`ipmi_bmc.<id>`, creates sysfs links. Error path in question is
-register-fail.
+Record: `panel_edp_enable()` uses `msleep(delay)` then
+`panel_edp_wait()` for `prepare_to_enable` / `powered_on_to_enable`.
+This change only increases the `msleep` for those two IDs.
 
-**Step 5.4: FOLLOW THE CALL CHAIN (reachability)**
-Record: Reachable on IPMI SMI probe and on BMC id refresh. If
-`__ipmi_bmc_register()` fails:
-
-```2674:2675:drivers/char/ipmi/ipmi_msghandler.c
-                if (__ipmi_bmc_register(intf, &id, guid_set, &guid,
-intf_num))
-                        need_waiter(intf); /* Retry later on an error.
-*/
-```
-
-`need_waiter()` arms `ipmi_timer` (1s: `IPMI_TIMEOUT_TIME == 1000`).
-`ipmi_timeout_handler()` sees `!intf->bmc_registered` and schedules
-`redo_bmc_reg()` → `bmc_get_device_id()` again. Persistent
-`platform_device_register()` failure therefore retries about once per
-second and leaks one IDA ID per retry. Userspace can also hit
-`__bmc_get_device_id` via sysfs BMC attributes and `ipmi_get_version()`.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace modeset / VT switch → DRM enable →
+`panel_edp_enable()` → extra 150ms wait → backlight. Reachable on any
+system whose eDP panel EDID is AUO 0x1ea5 or 0x67a8.
+`CONFIG_DRM_PANEL_EDP` (OF + backlight). Not a syscall memory-safety
+bug; it is a common display path for those laptops.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Only one `ida_free(&ipmi_bmc_ida, ...)` in this file today
-(`cleanup_bmc_work`). The 2019 commit `4aa7afb0ee20a` fixed the sibling
-leak (kfree BMC if `ida_simple_get` fails). This patch is the missing
-half of that cleanup.
+Record: Many other panels already use `delay_200_500_e200`. Prior “Fix
+delays for …” commits in this file use the same table-pointer swap.
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. Tree is **6.12.111** (`git describe HEAD` →
-`p-6.12-3-gc504cf0baa3d8`, `VERSION=6 PATCHLEVEL=12 SUBLEVEL=111`).
-`18e633dd9674c` is **not** an ancestor (`merge-base --is-ancestor` exit
-1). Local `out_list_del` still has `put_device` without `ida_free`. Bug
-dates to 2017 (`68e7e50f195f` / `a2cb600fa22a87`).
+Record:
+- `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion`: **7.3.0-rc4**.
+- Both panel rows exist. `git merge-base --is-ancestor 0d40cab391587
+  HEAD` is true (this is mainline after the fix).
+- Pre-fix state used `delay_200_500_e50` for both IDs; that is the bug
+  this tree’s history actually had. B116XAK01.6 has been in tree since
+  v6.1-rc1; B140XTK02.4 since May 2026, also in 7.3.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: `git show 18e633dd9674c | git apply --check` → **Hunk #1
-succeeded at 3257 (offset -44 lines)**. Expected difficulty: **clean
-apply**. Surrounding `out_list_del` context matches upstream parent.
+Record: Context in this tree matches the committed hunk (same
+vendor/product rows). `delay_200_500_e200` is present. No structural
+mismatch. Forward `git apply --check` of the patch on current HEAD fails
+only because the after-image is already applied — expected on this
+mainline checkout.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: `4aa7afb0ee20a` is present (ida_alloc-failure kfree). No other
-`ida_free` on `out_list_del`. No substitute fix.
+Record: This is the delay fix for those two IDs. No competing alternate
+T8 patch found on this file.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/char/ipmi/` — IPMI message handler. **IMPORTANT** for
-servers/enterprise/BMC out-of-band management (typical LTS users). Not
-core mm/scheduler, not staging.
+Record: `drivers/gpu/drm/panel/panel-edp.c` — generic eDP panel driver.
+**IMPORTANT** for laptops/Chromebooks using generic eDP, not core
+mm/VFS. Peripheral relative to the whole kernel, but the driver is
+widely used.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature (IPMI since 2.6-era). Recent 6.12.y history is bugfixes,
-not redesign. Long-lived leak, not a brand-new subsystem.
+Record: Actively updated (panel IDs, delay tweaks, probe leak fixes).
+Mature table-driven delay model since ~2022.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Config-specific: `CONFIG_IPMI_HANDLER`. Driver-specific: systems
-with an IPMI BMC (most servers). Not universal desktop, but core for
-enterprise stable.
+Record: Driver-specific / hardware-specific: only EDID AUO 0x1ea5 and
+0x67a8. No effect on other panels.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: `platform_device_register(&bmc->pdev)` failure after a
-successful `ida_alloc`. Typical causes: `-ENOMEM`, or platform namespace
-issues. Not every boot. If it fails, the 1s retry loop can fire
-repeatedly. Not a userspace-triggered security primitive by itself, but
-BMC sysfs/`ipmi_get_version` can re-enter registration.
+Record: Mode changes such as VT switches (author). Common on laptops.
+Unprivileged users can trigger VT/modeset on typical distro setups. Not
+a security exploit path.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: IDA ID leak (and IDA bitmap growth). BMC object is freed. Not
-oops/deadlock/corruption. Persistent retry can leak one ID per second.
-ID space is large (`ida_alloc` without max ≈ 0..INT_MAX), so exhaustion
-is slow, but it is a real unbounded leak on a retry path, not a one-shot
-init leak.
-
-Severity: **MEDIUM** (resource leak on error/retry path). Still matches
-the class of error-path leak fixes that stable regularly takes.
+Record: Screen garbage/flickering. Not oops/deadlock/corruption.
+**MEDIUM** user-visible display bug. Official stable rules explicitly
+list **hardware quirk** next to oops/hang as acceptable
+(`Documentation/process/stable-kernel-rules.rst`).
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- Benefit: stops a verified ID leak in IPMI BMC registration, including
-  the retry loop. High value relative to patch size for IPMI-using
-  servers.
-- Risk: **very low** — one line, error path only, ordering is required
-  and correct.
-- Ratio: strongly favors backport.
+- **Benefit:** Stops garbage/flicker on two real AUO panels; matches
+  vendor T8=200ms; waveform-backed (~140ms needed vs 50ms old).
+- **Risk:** Very low — 2 pointer swaps, existing struct, +150ms enable
+  delay only for those IDs.
+- **Ratio:** Favorable. Same class as USB/PCI delay quirks that
+  routinely go to stable.
 
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real IDA leak on a live error path that can retry every second
-- One-line, obviously correct, `ida_free` before `put_device`
-- Buggy code present in this 6.12.111 tree since 2017
-- Applies cleanly (offset only)
-- IPMI maintainer confirmed and merged it as a bug fix
-- Completes the 2019 leak fix that only covered `ida_alloc` failure
-- No new API, no refactor, no dependencies missing here
+- Real user-visible bug (garbage/flicker on VT/mode change), measured
+  and spec-backed.
+- Hardware quirk / timing workaround — allowed by stable-kernel-rules.
+- 2-line table change; existing `delay_200_500_e200`; no new
+  API/feature.
+- Reviewed and applied by panel-edp reviewer Douglas Anderson.
+- Both panel IDs and delay helper exist in this 7.3 tree.
+- Isolated to two EDID IDs.
 
 AGAINST:
-- Trigger is `platform_device_register()` failure (uncommon)
-- Not a crash/UAF/security hole
-- No `Reported-by` from production
-- ID space is large, so practical exhaustion is slow
+- Not a crash, UAF, or data-corruption bug.
+- +150ms backlight delay (maintainer accepted that tradeoff).
+- No `Reported-by` from multiple end users / no syzbot.
+- Stable list discussion could not be fetched (lore 403).
 
 UNRESOLVED:
-- Direct lore.kernel.org fetch returned 403; discussion recovered via
-  `b4 dig` + Patchew
-- No stable@ thread found for this subject
+- Could not read lore.kernel.org/stable (HTTP 403).
+- Could not independently view AUO datasheets (not in-tree).
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — 1 line; maintainer: “You are
-   correct”
-2. Fixes a real bug that affects users? **PASS** — IDA leak; retry can
-   repeat it
-3. Important issue? **PASS** (MEDIUM leak, same class as other stable
-   error-path leaks; IPMI is enterprise-relevant). Not CRITICAL crash,
-   but important enough.
-4. Small and contained? **PASS** — +1 line, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — `git apply --check` succeeded
+1. Obviously correct and tested? **PASS** — reuses existing delay
+   struct; maintainer review; author reports waveform data.
+2. Fixes a real bug that affects users? **PASS** — garbage/flicker on
+   mode change.
+3. Important issue? **PASS** as hardware quirk (documented exception);
+   severity MEDIUM visual, not CRITICAL crash.
+4. Small and contained? **PASS** — 2 lines, one table.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — target rows,
+   `delay_200_500_e200`, and enable path all exist here.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
-bugfix.
+Record: **Hardware quirk/workaround** (panel power-sequence delay,
+analogous to USB delay quirks).
 
-**Step 9.4: DECISION**
-Backport. The leak exists here, the fix is trivial and correct, and IPMI
-BMC registration is used on the servers that run this LTS tree.
-
-### What the commit solves for this tree
-If BMC platform-device registration fails after `ida_alloc`, 6.12
-currently drops the BMC (`put_device`) but keeps the ID.
-`__ipmi_bmc_register` failure then schedules a 1s retry, so a sticky
-failure leaks IDs continuously. Adding `ida_free(&ipmi_bmc_ida,
-bmc->pdev.id)` before `put_device` closes that path.
-
-### Risk vs benefit
-Benefit is a real resource-leak fix in a long-lived IPMI path. Risk is
-essentially nil.
-
-### Concerns
-None for 6.12: no missing helpers, no conflicting refactor, apply is
-clean.
-
----
+**Step 9.4: MAKE YOUR DECISION**
+This tree has the driver, both panel IDs, and the 200ms delay helper.
+The change is a small, reviewed T8 quirk that fixes real display garbage
+on mode changes. That meets stable rules for this checkout.
 
 Verification:
-- [Phase 1] Parsed tags: author SOB Michail Tatas; maintainer SOB Corey
-  Minyard; Message-ID `anUK_HOy_pCgvsBm@michalis-linux`; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +1 `ida_free(&ipmi_bmc_ida, bmc->pdev.id)` in
-  `out_list_del` of `__ipmi_bmc_register`
-- [Phase 2] Confirmed `out_list_del` is only reached from
-  `platform_device_register()` failure; success-path `ida_free` is in
-  `cleanup_bmc_work` via `kref_put`, not this path
-- [Phase 3] `git blame`: IDA intro `68e7e50f195f` (2017); error label
-  `a2cb600fa22a87` (2017); sibling kfree fix `4aa7afb0ee20a` (2019)
-- [Phase 3] `git merge-base --is-ancestor` of those three vs HEAD: all
-  present; `18e633dd9674c` **not** in HEAD
-- [Phase 3] Neighbor `b6c46ab0bdee9` is a different sysfs leak; not a
-  prerequisite
-- [Phase 4] `b4 dig -c 18e633dd9674c`: lore match
-  `https://patch.msgid.link/anUK_HOy_pCgvsBm@michalis-linux`
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: To Corey Minyard, Cc openipmi-developer + LKML
-- [Phase 4] Patchew: maintainer “You are correct, added to my next tree”
-- [Phase 4] GIT PULL “IPMI bug fixes for 7.3” lists this commit
-- [Phase 4] lore.kernel.org WebFetch 403; discussion taken from
-  b4/Patchew instead
-- [Phase 5] Callers: `__bmc_get_device_id` ← `ipmi_add_smi`, sysfs BMC
-  attrs, `ipmi_get_version`, `redo_bmc_reg`
-- [Phase 5] Retry: `need_waiter` → 1s `ipmi_timer` → `bmc_reg_work`
-  while `!bmc_registered`
-- [Phase 6] `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion`: 6.12.111
-- [Phase 6] `git apply --check`: hunk succeeded at line 3257 (offset
-  −44)
-- [Phase 7] MAINTAINERS: IPMI SUBSYSTEM → Corey Minyard
-- [Phase 8] Failure mode: IDA ID leak on error/retry; severity MEDIUM;
-  risk very low
-- UNVERIFIED: Direct lore.kernel.org HTML of the thread (403); no
-  stable@ archive hit for this subject
+- [Phase 1] Parsed tags: Reviewed-by/SOB Douglas Anderson; Link to
+  msgid; no Fixes/Reported-by/Cc:stable
+- [Phase 1] Body: VT-switch garbage; T8 50ms vs ~140ms measured; AUO
+  spec T8=200ms
+- [Phase 2] Diff: two `EDP_PANEL_ENTRY` pointer swaps in `edp_panels[]`;
+  +2/-2
+- [Phase 2] `delay_200_500_e50.enable=50`,
+  `delay_200_500_e200.enable=200` verified in panel-edp.c
+- [Phase 2] `panel_edp_enable()` `msleep(p->desc->delay.enable)`; probe
+  copies `detected_panel->delay`
+- [Phase 3] `git show 0d40cab391587`: confirmed subject/body/stat
+- [Phase 3] `git merge-base --is-ancestor 0d40cab391587 HEAD` → yes
+  (already in 7.3-rc4 history; not used as circular “already selected”
+  reasoning)
+- [Phase 3] `git blame` on the two rows: this commit; origins
+  `a70abdd994cb` (v6.1-rc1) and `4c34cdb93ea1` (2026-05, in this tree)
+- [Phase 3] `delay_200_500_e200` introduced `f6ff4570e567` (v6.1-rc1
+  era)
+- [Phase 3] Similar delay-fix pattern: `43113fd4c5f56` and others in the
+  same file
+- [Phase 4] `b4 dig -c 0d40cab391587`: v2 lore URL; `-a`: v1+v2; `-w`:
+  dri-devel + dianders
+- [Phase 4] mbox: v1 name-only feedback; v2 Reviewed-by + pushed to drm-
+  misc-next; no NAK
+- [Phase 4] WebFetch lore/stable: 403 — UNVERIFIED stable-list history
+- [Phase 5] Call chain: EDID match → delay table → `panel_edp_enable` on
+  modeset; CONFIG_DRM_PANEL_EDP
+- [Phase 6] `git describe HEAD` / `make kernelversion`: 7.3.0-rc4; both
+  IDs and e200 present
+- [Phase 7] MAINTAINERS: Douglas Anderson reviewer for panel-edp.c
+- [Phase 8] Failure mode: display garbage, MEDIUM; official rules
+  include hardware quirk
+- [Phase 9] stable-kernel-rules.rst lines 15–20: quirk is an accepted
+  class
+- UNVERIFIED: AUO datasheet text; stable@ mailing-list traffic
+
+The fix is small, confined to two EDID entries, and is the usual panel-
+edp delay quirk pattern. Benefit outweighs the extra 150ms enable wait
+on just those panels.
 
 **YES**
 
- drivers/char/ipmi/ipmi_msghandler.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panel/panel-edp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 0247079db185e..dc4704b067b94 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3306,6 +3306,7 @@ static int __ipmi_bmc_register(struct ipmi_smi *intf,
- 	list_del(&intf->bmc_link);
- 	mutex_unlock(&bmc->dyn_mutex);
- 	intf->bmc = &intf->tmp_bmc;
-+	ida_free(&ipmi_bmc_ida, bmc->pdev.id);
- 	put_device(&bmc->pdev.dev);
- 	goto out;
- }
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 0da04d75e4e96..614c63e95c357 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1901,7 +1901,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x145c, &delay_200_500_e50, "B116XAB01.4"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1999, &delay_200_500_e50, "Unknown"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1e9b, &delay_200_500_e50, "B133UAN02.1"),
+-	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e50, "B116XAK01.6"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e200, "B116XAK01.6"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x203d, &delay_200_500_e50, "B140HTN02.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x208d, &delay_200_500_e50, "B140HTN02.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x235c, &delay_200_500_e50, "B116XTN02.3"),
+@@ -1921,7 +1921,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x635c, &delay_200_500_e50, "B116XAN06.3"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x639c, &delay_200_500_e50, "B140HAK02.7"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x643d, &delay_200_500_e50, "B140HAN06.4"),
+-	EDP_PANEL_ENTRY('A', 'U', 'O', 0x67a8, &delay_200_500_e50, "B140XTK02.4"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x67a8, &delay_200_500_e200, "B140XTK02.4"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x723c, &delay_200_500_e50, "B140XTN07.2"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x73aa, &delay_200_500_e50, "B116XTN02.3"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8594, &delay_200_500_e50, "B133UAN01.0"),
 -- 
 2.53.0
 
