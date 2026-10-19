@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CEB504590;
-	Mon, 19 Oct 2026 14:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20985045BD;
+	Mon, 19 Oct 2026 14:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418403; cv=none; b=ZAaUB2Q9s4dYP3mOmz+KSh6/IIxMZVhRZm/edwHA0MGe21y1odUe09c2ykDqTTbapwoVBp07swpovrzlyKCX431t5wtwPMg5SdqyWhBYc5CpuI/k9mH2R/HNkLLKwJ5xOsgho4Ds8Wu8cXHh7sJXRm+4Ie7eMg9o+RU4lxDPt1o=
+	t=1792418404; cv=none; b=PAgbI9BMg56faZ9JheBzx/Nzd+f+Ko/0qAYA8sRU6lWv08i3CJ45x7BDDJVobYYizv8+NBr3T71jfXEjzdN2hXdT3YDKHIwcqvcPYVrK7FZkc+pVxif59OMVocMp8pNlXV3bU92u/dMIlK5XeA36K6fB4NsINddHclfrEPOBhXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418403; c=relaxed/simple;
-	bh=j+25EtGXlRmXOxmEW7NMe5ZCnGrKtICT/rtOAS6w7h8=;
+	s=arc-20240116; t=1792418404; c=relaxed/simple;
+	bh=eCpd0bciKuxFgznG6LMVfPYwxYpve4cdhZknkVTjqQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pQ+Zh4+mXqzdsrY3bSI4Go45huPyHNv+h4ffd5ZV2LOdmBaB5mIx7xD7iIAcMCNoecuEleePyL5spLlpyc1eALMXNfVzNQ6MQrY9+NT+ENalRKr2lqXwk8Wh1Ws0o1mRXDLugbEXazLiWZi3D2H5eThW9HOj1XH7xZ06zIwv4J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hcPZfMXU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oZLtgx1A7Om0SZBsCF1IrRAsBwupengAQXmIfhqJ94SgLPOKbTSIwQ6H9yLGHM2GN/Q6n5c8DFZgiSF5YaBhBQMkhgFz6fzmzlKs7Hqrfi2EJUyfPWaWelDSKfL+j95RN6ctQCRgP+XVLxR2oVyU13URcQ/1hR5XzsKg12bZ6+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hobk8cfg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hcPZfMXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEFE1F000C6;
-	Mon, 19 Oct 2026 13:59:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hobk8cfg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04ED21F000C8;
+	Mon, 19 Oct 2026 14:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418400;
-	bh=yFZpNctuqc65JwbA5ST21nPpKZMLa1+35C3lsRlwGX4=;
+	s=k20260515; t=1792418401;
+	bh=jht7pw9u/wfie8PUcFFd5RpIB9cO4cBkWZiCGj/+V5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hcPZfMXUal0KeOZMmgW8tltJVqW/JiKpFkYNWkyQiv2JSrbpGB4t7g/+2WlABELtZ
-	 aUBtzQqRmepJXkZWqvm4nWnS/4F/jyUjcJ5Ta8s18TtdXx4rhqqIT7/rLDYllZfEan
-	 r3wLHW0nsGqgONMoRLprHd2+ASS9jNDkEkWwF126RF3u9LQ0zNSqIzch8T6prOzmDQ
-	 2DuBvii/jZc7vAmca6VikxFeiCeOenkrKbQJZWBRpQYrl9Z7XV+NGuAsd0AOFdbyQ7
-	 83nKpyHyhdfNtsv7HPEtkXIhSSmeZFEbF7PGXZyjTSC9vARB/lZcP2856zQ27llHja
-	 bZ+h/1Bo66SZg==
+	b=Hobk8cfgRJ0PXI5IenxTyrMvb6qMGWJ/LosUf96WPzte8JaGk29j2ifW+HXq9Bfzm
+	 tTjyNd92KXYGiqws980hYugsnX3Ba3L2ySFtMe4h9AfegITKEtbhJB8MyNzZWlktpL
+	 0Uu+QaFM80tWH6KhZO5qhT9xycNbsVRO2utV4hlCQV7xAiXrqXafFIweealCwqjGpA
+	 Mw7GL2SqWe/ygSixsnVJ5j1alp2eirM88KxDxCGXlNHubCYZOfN9YuB5ck8MKwIY5E
+	 nsS7t9hEtkRaT3XanetzeLEcCscMdiPn9BU8RL5AW9u5QX+ipif9qvpyowlHWbrUov
+	 zQ3b4gD4isX9g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	ntfs3@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: add missing NULL check for codec->bus->pci
-Date: Mon, 19 Oct 2026 09:48:34 -0400
-Message-ID: <20261019135441.1420968-223-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] fs/ntfs3: Fix memory leak in indx_find_sort()
+Date: Mon, 19 Oct 2026 09:48:35 -0400
+Message-ID: <20261019135441.1420968-224-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,92 +51,118 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 3b36ac93739e7b119a30affaee9c2dd41f24efbb ]
+[ Upstream commit 194491be54e1c9e4d29d3ee777b05ff031c4b670 ]
 
-In alc269_probe(), codec->bus->pci is dereferenced without a NULL check
-for the ALC236 vendor ID case. Add the missing check, consistent with
-the existing pattern used elsewhere in the same function.
+When popping a level from the index lookup stack, indx_find_sort() frees
+the struct indx_node but not the index buffer it owns. Every call that
+descends and then pops a level leaks that allocation.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260730015302.253008-2-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Free n->index before freeing the node itself.
+
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local checkout is **v7.3-rc4** (mainline, `7.3.0-rc4`). The
-candidate is a one-line NULL check in `alc269_probe()`. The unguarded
-`codec->bus->pci->vendor` dereference is real: non-PCI HDA controllers
-leave `bus->pci` NULL, and the same function already guards other PCI
-accesses.
+I have enough to decide: this is a one-line leak fix in
+`indx_find_sort()`, the buggy code is in this 7.3-rc4 tree, and it meets
+the stable rules.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[ALSA hda/realtek] [add] missing NULL check for
-codec->bus->pci`
+Record: **[fs/ntfs3] [fix] memory leak in `indx_find_sort()`** —
+subsystem `fs/ntfs3`, action verb **fix**, claimed intent is to stop
+leaking the index buffer when a lookup level is popped.
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Signed-off-by: Bob Song <songxiebing@kylinos.cn>` (author)
-- `Link: https://patch.msgid.link/20260730015302.253008-2-
-  songxiebing@kylinos.cn`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable` (absence expected)
-- Message-Id suffix `-2` indicates patch 2 of a 2-patch series
+Commit `194491be54e1c9e4d29d3ee777b05ff031c4b670` (Author: Konstantin
+Komarov, 2026-07-30):
+
+- **Fixes:** none (expected for this review)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none
+- **Acked-by:** none
+- **Link:** none in the commit message
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Konstantin Komarov \<almaz.alexandrovich@paragon-
+  software.com\> (author/maintainer)
+
+No syzbot, no multi-user reports, no explicit stable nomination. Author
+is the NTFS3 maintainer.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: `alc269_probe()` dereferences `codec->bus->pci` with no NULL
-  check in the ALC236 (`0x10ec0236`) case
-- Symptom: kernel oops / NULL pointer dereference at codec probe
-- Root cause: missing the same `codec->bus->pci &&` guard already used
-  earlier in the same function
-- No stack trace, reproducer, or version range in the message
+- **Bug:** When popping a level from the index lookup stack,
+  `indx_find_sort()` frees `struct indx_node` but not the index buffer
+  it owns (`n->index`).
+- **Symptom:** Every call that descends into a child index block and
+  later pops that level leaks that allocation (typically a 4 KiB
+  `kmalloc` of `INDEX_BUFFER`).
+- **Failure mode:** kernel memory leak on NTFS3 `$SDH` index walks.
+- **Version info:** none in the message.
+- **Root cause (author):** `kfree(n)` without `kfree(n->index)`.
+- **Fix:** free `n->index` before freeing the node.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. It is an explicit NULL-deref fix (“add missing
-NULL check”, “consistent with the existing pattern”).
+Record: Not disguised. Subject and body state a leak fix. It is a
+classic missing-`kfree` resource-leak fix, not cleanup-only.
 
 ===============================================================
-PHASE 2: DIFF ANALYSIS
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `sound/hda/codecs/realtek/alc269.c` (+1 / −0)
-- Function: `alc269_probe()`
-- Scope: single-file, single-line surgical fix
+- File: `fs/ntfs3/index.c` — **+1 / −0**
+- Function: `indx_find_sort()`
+- Scope: **single-file surgical fix** (one line in the `pop_level` path)
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record: In the `0x10ec0236` / ALC256 variant case, probe used to
-evaluate `codec->bus->pci->vendor != PCI_VENDOR_ID_AMD` unconditionally.
-After the change it short-circuits if `codec->bus->pci` is NULL and
-leaves `spec->en_3kpull_low` at its default (`true`). PCI-present
-behavior is unchanged.
+Record (before → after):
+- Before: `fnd_pop(fnd); kfree(n);` — node struct freed; `n->index` (and
+  buffer heads in `n->nb`) left allocated.
+- After: `fnd_pop(fnd); kfree(n->index); kfree(n);` — index buffer and
+  node struct freed.
+- Path: **normal** pop-level path when the current directory entry is
+  the last in that index block and the walk moves to the parent. Not
+  init-only.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- Category: NULL pointer dereference (memory safety)
-- Mechanism: `hda_bus.pci` is optional. `azx_bus_init()` does `bus->pci
-  = chip->pci`. Platform controllers (Tegra, ACPI HDA, CIX IPBLOQ) never
-  set `chip->pci`, so it stays NULL. ALC236 probe then does
-  `pci->vendor` and oopses. The 2014 commit `5100cd07d43a1` (“ALSA:
-  hda/realtek - Allow NULL bus->pci”) already established that Realtek
-  must tolerate a NULL PCI pointer.
+Record: **[Memory leak / resource leak]**
+- `indx_read()` / `indx_read_ra()` allocates `struct indx_node` and
+  `in->index` (`kmalloc(bytes, GFP_NOFS)` where `bytes = 1u <<
+  indx->index_bits`, typically 4096).
+- Correct teardown is `put_indx_node()`: `kfree(in->index);
+  nb_put(&in->nb); kfree(in);`.
+- Sibling `indx_find_raw()` already does `fnd_pop()` +
+  `put_indx_node(n)`.
+- `indx_find_sort()` used `kfree(n)` only. This patch adds
+  `kfree(n->index)` on the pop path.
+- Mechanism: missing free of owned `kmalloc` buffer.
+
+Note (verified, not a reason to reject): the patch does **not** call
+`nb_put(&n->nb)`, so buffer_head refs can still leak on this path. Two
+other `kfree(n)` sites in the same function (invalid-entry error paths
+at the `de_has_vcn_ex` loop) are also unchanged.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct; matches existing guards at lines 9119 and
-9126 in the same function. No API, locking, or data-structure change. If
-`pci` is NULL, skipping the AMD-specific `en_3kpull_low = false` keeps
-the default — the same “optional PCI” policy as 2014. Regression risk is
-very low.
+Record:
+- Obviously correct for the stated leak: `kfree(n->index)` matches the
+  first action of `put_indx_node()`; `kfree(NULL)` is safe; `fnd_pop()`
+  NULLs the stack slot so later `fnd_clear()`/`put_indx_node()` will not
+  double-free.
+- Minimal: one line, no unrelated edits, no API change.
+- Regression risk: **very low**. Does not change lookup results,
+  locking, or on-disk layout.
+- Residual risk: incomplete vs `put_indx_node()` (BH leak remains). That
+  is an unfixed sibling leak, not a regression introduced by this line.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
@@ -147,34 +170,35 @@ PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Unguarded deref introduced in `69ea4c9d02b79` (“ALSA: hda/realtek -
-  remove 3k pull low procedure”, 2023-07-13, in v6.5-rc3)
-- Condition rewritten (still unguarded) in `46cdff2369cbd` (“ALSA:
-  hda/realtek - Remodified 3k pull low procedure”, 2023-08-15, in
-  v6.5-rc7)
-- File later moved/split (`6014e9021b28e`, `aeeb85f26c3bbe`); logic
-  unchanged until this fix
+- Pop-level `kfree(n)` / `ntfs_free(n)` present since
+  **`82cae269cfa95`** (“fs/ntfs3: Add initialization of super block”,
+  2021-08-13) — NTFS3 introduction.
+- `ntfs_free(n)` → `kfree(n)` in **`195c52bdd5d5e`** (“Do not use driver
+  own alloc wrappers”, 2021-08-24); `ntfs_free` was just `kfree`, so the
+  leak is original, not introduced by that conversion.
+- This leak has existed for the entire life of NTFS3 in mainline (~5.15
+  onward).
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. The buggy pattern dates to `69ea4c9d02b79` /
-`46cdff2369cbd`, both ancestors of this HEAD.
+Record: No `Fixes:` tag. Buggy code is the original `indx_find_sort()`
+implementation in `82cae269cfa95`, which **is an ancestor of HEAD**.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent `alc269.c` history is mostly laptop quirks. Sibling in
-the same series is `5b106b40ed220` (COEF error checks). That patch
-touches `alc282_init` / `alc282_shutup` / `alc285_hp_init` /
-`alc294_hp_init`, not `alc269_probe` or `bus->pci`. This NULL check is
-standalone.
+Record:
+- Recent `fs/ntfs3/index.c` work is mostly bounds checks and cosmetics.
+- Related leak: `87ac077d6ea86` “ntfs3: fix memory leak in
+  indx_create_allocate()” — different function.
+- No later commit after `194491be54e1c` changes this site (`git log
+  194491be54e1c..HEAD -- fs/ntfs3/index.c` is empty).
+- Standalone 1-line patch, not “X/Y” of a series.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Bob Song is a regular HDA contributor, not the subsystem
-maintainer. Takashi Iwai applied the patch. Related author work around
-the same time is the independent COEF-check patch.
+Record: Konstantin Komarov is the NTFS3 maintainer (Paragon). Many
+recent NTFS3 commits are his. Weight: high.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: None required. One added `&&` in an existing `if`. The v2 split
-from the COEF patch was requested by Iwai because they are different
-fixes.
+Record: None. The patch only uses existing `kfree`, `fnd_pop`, and
+`n->index`. Those exist in this tree. **Can apply standalone.**
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
@@ -182,129 +206,150 @@ PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 3b36ac93739e7` → https://patch.msgid.link/20260730015302.25
-  3008-2-songxiebing@kylinos.cn
-- v1: combined COEF checks + this NULL check
-  (`20260729063803.1453980-1`)
-- v2: split into two patches after maintainer request
-- Applied version is v2 (latest)
-- Direct lore HTTP fetch returned 403; thread recovered via `b4 dig -m`
+- `b4 dig -c 194491be54e1c` → https://patch.msgid.link/20260724111443.14
+  728-1-almaz.alexandrovich@paragon-software.com
+- `b4 dig -a`: single revision **v1** only (2026-07-24). Committed
+  version matches v1.
+- lore.kernel.org fetch returned 403; patch text confirmed via
+  Openwall/IU mirrors. No replies found on those archives (no NAK, no
+  Cc: stable in-thread).
+- Earlier independent patch (Jan 2026) from Jiasheng Jiang: “[PATCH v2]
+  fs/ntfs3: Fix memory and resource leak in indx_find_sort” replacing
+  **all three** `kfree(n)` with `put_indx_node(n)` and adding `Fixes:
+  82cae269cfa9`. That fuller patch was **not** merged; the maintainer
+  later landed this narrower 1-line version.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): To/Cc `tiwai@suse.com`, `perex@perex.cz`, `linux-
-sound@vger.kernel.org`, `linux-kernel@vger.kernel.org`. Takashi Iwai
-(ALSA maintainer) applied it: “Applied to for-next branch now. Thanks.”
-No NAK.
+Record (`b4 dig -w`): To/Cc: Konstantin Komarov,
+`ntfs3@lists.linux.dev`, `linux-kernel@vger.kernel.org`, `linux-
+fsdevel@vger.kernel.org`. No extra reviewer SOB on the commit.
+Maintainer self-applied.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No `Reported-by`, syzbot, or bugzilla. Found by code inspection
-(missing check vs. siblings). No user crash report found.
+Record: No `Reported-by` / bugzilla / syzbot. Bug established from code
+(missing free vs `put_indx_node` / `indx_find_raw`). User-report count:
+**unverified / none found**.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Two-patch v2 series. Patch 1 = COEF error checks (independent).
-Iwai on v1: “Could you split the NULL check to another patch? Basically
-it's a completely different sort of fix from others.” Confirms this is
-self-contained.
+Record: Jiang’s Jan 2026 patch is the more complete form of the same
+fix. This commit is a subset (pop path `n->index` only). No series
+dependency for applying this one line.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned HTTP 403. No stable
-discussion in the saved mbox. UNVERIFIED whether anyone already
-nominated this for stable.
+Record: lore.kernel.org/stable search was 403; web search did not turn
+up a stable-list thread for this subject. **No verified stable-list NAK
+or prior selection discussion.**
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `alc269_probe()` only.
+Record: `indx_find_sort()` only.
 
 **Step 5.2: TRACE CALLERS**
-Record: Assigned as `alc269_codec_ops.probe`. Invoked from the HDA codec
-driver probe path when a matching ID in `snd_hda_id_alc269[]` is
-enumerated (includes `0x10ec0236` “ALC236”). Probe-time, not IRQ/hot
-path.
+Record: Only caller in this tree is `ntfs_insert_security()` in
+`fs/ntfs3/fsntfs.c` (SDH index walk when inserting a security
+descriptor). That is called from:
+- `inode.c` file/inode create when a new default/dir security id must be
+  stored
+- `xattr.c` when setting a security descriptor xattr
+
+Not interrupt context. Process context, under `ni->ni_lock`. Finder is
+released with `fnd_put()` → `fnd_clear()` → `put_indx_node()` for
+**remaining** stack nodes; popped nodes are supposed to be freed in
+`indx_find_sort` itself.
 
 **Step 5.3: TRACE CALLEES**
-Record: The hunk only reads `codec->core.vendor_id` and
-`codec->bus->pci->vendor`, then may set `spec->en_3kpull_low`. That flag
-is later consumed by `alc256_shutup()`.
+Record: `fnd_pop`, `kfree`, `indx_read`/`hdr_first_de`/`de_is_last` on
+the surrounding path. `indx_read_ra` allocates node + index buffer +
+buffer_heads.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Device enumeration → HDA controller probe → codec bind →
-`alc269_probe()`. Reachable on any machine with an ALC236 (very common
-Dell/HP laptop codec). The NULL path is reached only when the controller
-did not assign `bus->pci` (platform/ACPI/Tegra/CIX). Userspace can
-trigger it by loading the codec module / booting with that hardware.
+Record: Userspace NTFS3 create/`setxattr` → `ntfs_insert_security` →
+`indx_find` then loop `indx_find_sort`. **Reachable from userspace** on
+a mounted ntfs3 volume. Not every I/O; triggered when inserting (or
+searching duplicate) security descriptors in `$Secure::$SDH`. If the SDH
+B-tree is deeper than root, pop_level runs and leaked before this fix.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Same function already uses `if (codec->bus->pci && …)` for
-Acer/Lenovo rename quirks. `realtek.c` has `if (!codec->bus->pci)
-return`. This site was the hole left by the 2023 3k-pull rewrite.
+Record: Same function still has `kfree(n)` without `kfree(n->index)` on
+two **error** paths. `indx_find_raw` already uses `put_indx_node`.
+Pattern is systematic in `indx_find_sort`, only partly fixed here.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. Local tree is `v7.3-rc4-27-gf0100363d8c37` / `7.3.0-rc4`.
-File `sound/hda/codecs/realtek/alc269.c` exists. The ALC236
-`bus->pci->vendor` test is at lines 9188–9191; this commit
-(`3b36ac93739e7`) is already an ancestor of HEAD. The bug was introduced
-in v6.5-era code that this tree still contains.
+Record:
+- Local tree: **`v7.3-rc4-27-gf0100363d8c37`**, `make kernelversion` =
+  **7.3.0-rc4**.
+- `fs/ntfs3/index.c` `indx_find_sort()` exists. Pre-image is `fnd_pop` +
+  `kfree(n)` without freeing `n->index`.
+- Bug introduced with NTFS3 in **`82cae269cfa95` (2021)**, present in
+  this tree (`git merge-base --is-ancestor 82cae269cfa95 HEAD`
+  succeeded).
+- This is not “new code after this branch point.”
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Expected apply: clean. One context line in an `if`. No refactor
-needed on this tree. (Older stables still using
-`sound/pci/hda/patch_realtek.c` / `patch_alc269()` would need a
-path/function-name adjustment; that does not apply to this checkout.)
+Record: **Clean apply.** Surrounding function text is the original
+structure; the hunk is one added line. No conflicting refactor of
+`indx_find_sort` in this tree. `put_indx_node()` already exists if a
+slightly richer backport were used, but this exact diff applies as-is.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This exact fix is already in HEAD. `5100cd07d43a1` (2014) added
-the general “allow NULL bus->pci” policy; it did not cover this later
-ALC236 site. No other substitute for this one-line guard.
+Record: No earlier alternative (Jiang `put_indx_node`) in this history.
+This commit **is** the fix that landed (`ntfs3_for_7.3` merge
+`dc83d18cdd904`). No competing fix for the same `kfree(n)` pop site.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `sound/hda/codecs/realtek` — HD-audio Realtek codec.
-Criticality: **IMPORTANT** (extremely common laptop audio), not core
-mm/VFS.
+Record: **[fs/ntfs3] [IMPORTANT]** — real RW filesystem
+(CONFIG_NTFS3_FS), not staging. Not core VFS/mm, but used on Windows
+volumes, dual-boot, and some appliances. Leak is in metadata index walk
+for `$Secure`.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Actively developed (quirks land frequently). The buggy PCI deref
-itself has been stable since 2023; this is a late correctness fix, not
-churn in new code.
+Record: Active (many 7.3 NTFS3 fixes). The leak itself is old (2021),
+not a bug in brand-new code.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver/codec-specific: ALC236 (`0x10ec0236`) on a bus where
-`hda_bus.pci` is NULL. Intel/AMD PCI HDA (the usual ALC236 laptops)
-always set `pci` in `azx_create()` / SOF / AVS, so they do not crash.
-Non-PCI controllers in this tree (Tegra, ACPI HDA, CIX IPBLOQ) never
-assign `chip->pci`.
+Record: **filesystem-specific / config-specific** — `CONFIG_NTFS3_FS`
+users who insert security descriptors (file create with new/default SD,
+security xattr). Not universal.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Codec probe of ALC236 with `bus->pci == NULL`. Not a race. Not
-unprivileged-syscall-exploitable beyond “device exists.” Commonness of
-the crash path is low; commonness of ALC236 is high. The NULL case is a
-supported configuration (explicit 2014 policy).
+Record:
+- Trigger: `indx_find_sort()` after a descent into an index allocation
+  block, then last-entry pop.
+- How common: not every syscall; **per unique-SD insert / SDH hash-chain
+  walk**, not a once-per-boot init-only leak. Repeated unique ACLs leak
+  repeatedly.
+- Unprivileged users: if they can create files or set security xattrs on
+  ntfs3, yes. Typical create after `def_security_id` is cached may not
+  re-enter insert; still reachable.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: NULL deref → oops at probe. Audio init fails; with
-`panic_on_oops` the machine dies. Severity: **HIGH** (crash), trigger
-rarity: low-to-medium.
+Record: **[kernel memory leak of index buffers (and remaining BH refs)]
+[HIGH for the kmalloc leak on a live FS path; not panic/corruption].**
+Unbounded across many unique SD inserts; can contribute to memory
+pressure. Not a crash or data-corruption bug.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- Benefit: prevents a probe-time oops on a supported non-PCI HDA +
-  ALC236 configuration; restores the documented NULL-PCI policy
-- Risk: one `&&` in a probe-time `if`; PCI systems behave identically
-- Ratio: high benefit / very low risk
+- **Benefit:** medium-high for ntfs3 users — stops a real leak on a used
+  lookup path; 4 KiB+ per popped level.
+- **Risk:** very low — 1 line, same pattern as `put_indx_node`’s first
+  free, no lock/API change.
+- **Ratio:** strongly in favor of taking the fix.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -313,102 +358,129 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real NULL deref, not style
-- Same function already NULL-checks `bus->pci` in two other places
-- 2014 maintainer commit documented that Realtek must allow NULL
-  `bus->pci`
-- Platform HDA controllers in this tree leave `pci` NULL (verified: no
-  `->pci =` in tegra.c, acpi.c, cix-ipbloq.c)
-- One-line, obviously correct, applied by Takashi Iwai
-- Independent of the sibling COEF patch
-- Code and bug exist in this tree
+- Real leak: `kfree(n)` drops the node without freeing `n->index`
+  allocated in `indx_read_ra()`.
+- Normal pop path, not style-only.
+- 1 line, obviously correct, maintainer-authored.
+- Code and bug exist in this 7.3-rc4 tree since NTFS3 was added.
+- Applies cleanly; no prerequisites.
+- Same class as many stable leak fixes; sibling `indx_find_raw` already
+  frees via `put_indx_node()`.
+- Reachable from userspace ntfs3 create/xattr.
 
 AGAINST:
-- No user crash report or syzbot hit
-- Typical ALC236 laptops use PCI HDA, so they never take the NULL path
-- No `Fixes:` / `Cc: stable` from the author (not a negative per the
-  rules)
+- Not a crash, deadlock, or corruption issue.
+- Incomplete: no `nb_put()`, two error-path `kfree(n)` sites remain.
+- Single caller (`ntfs_insert_security`), not a hot readdir path.
+- No syzbot/user `Reported-by`, no in-commit tests.
 
 UNRESOLVED:
-- Direct lore.kernel.org HTTP was 403 (thread recovered via b4)
-- No confirmed stable-list discussion
-- How often ALC236 actually sits behind Tegra/ACPI/CIX HDA is
-  unverified; the NULL-PCI design is still supported
+- Could not fetch lore.kernel.org (403) or confirm stable-list
+  discussion.
+- No public reply thread found on mirrors for the July v1 mail.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — one `&&` matching existing
-   pattern; maintainer applied to for-next
-2. Fixes a real bug that affects users? **PASS** — NULL deref on a
-   supported non-PCI HDA configuration
+1. Obviously correct and tested? **PASS** — correctness is visible from
+   `put_indx_node()` / `indx_find_raw()`. Testing is only implied by
+   maintainer merge, not a Tested-by tag.
+2. Fixes a real bug that affects users? **PASS** — leaked kernel
+   allocations on ntfs3 SD insert/lookup.
 3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   probe-time oops
-4. Small and contained? **PASS** — +1 line, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — file and surrounding code
-   match; commit is already in this HEAD
+   memory leak on a live FS path (stable routinely takes these). Not
+   CRITICAL severity, but it is a real resource leak, not cosmetic.
+4. Small and contained? **PASS** — +1 line, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — context matches; ntfs3 and
+   `indx_find_sort()` are present.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/build/doc exception. It is a straight
-crash fix.
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a normal
+leak fix.
 
 **Step 9.4: MAKE YOUR DECISION**
+This tree is **7.3.0-rc4**. The leak exists in `indx_find_sort()` here
+and has since NTFS3 landed. The patch is a one-line `kfree(n->index)` on
+pop, matching the node’s ownership. Residual BH/error-path leaks do not
+make this line wrong or risky. Benefit outweighs risk.
 
-This is a one-line NULL check closing a hole left when the 2023 3k-pull
-rewrite dereferenced `codec->bus->pci` without the guard the rest of
-Realtek has used since 2014. On this v7.3-rc4 tree the buggy site
-exists, non-PCI controllers still leave `pci` NULL, and the change
-cannot alter PCI HDA behavior. It meets the stable rules: real crash,
-tiny, obviously correct.
+===============================================================
+What problem this solves for this tree
+===============================================================
+`indx_find_sort()` walks the NTFS `$SDH` B-tree. After `indx_read()`
+fills a child `indx_node`, popping that level used to `kfree` only the
+node object. The owned index buffer stayed allocated for every descent-
+then-pop. NTFS3 users inserting security descriptors (file create /
+security xattr) leak that memory. This commit frees `n->index` first,
+which is the correct teardown for that allocation.
 
-Verification:
-- [Phase 1] Parsed tags: SOB Bob Song + Takashi Iwai; Link msgid `-2`;
-  no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: +1 line in `alc269_probe()` adding `codec->bus->pci
-  &&` before `pci->vendor`
-- [Phase 2] Confirmed sibling NULL checks at alc269.c:9119 and :9126
-- [Phase 3] `git blame`: guard is `3b36ac93739e7`; surrounding code from
-  `aeeb85f26c3bbe` (file split)
-- [Phase 3] Unguarded deref from `69ea4c9d02b79` (v6.5-rc3) and
-  `46cdff2369cbd` (v6.5-rc7); both are ancestors of HEAD
-- [Phase 3] Sibling `5b106b40ed220` does not touch `alc269_probe` /
-  `bus->pci` — not a prerequisite
-- [Phase 3] `git merge-base --is-ancestor 3b36ac93739e7 HEAD` → already
-  in this tree
-- [Phase 4] `b4 dig -c 3b36ac93739e7`: lore URL found; v1 combined, v2
-  split at Iwai’s request; Iwai applied v2
-- [Phase 4] `b4 dig -w`: linux-sound, perex, tiwai on original To/Cc
-- [Phase 4] lore HTTP 403; mbox saved with `b4 dig -m`
-- [Phase 5] `alc269_probe` is `.probe` of `alc269_codec_ops`; ID
-  `0x10ec0236` is in `snd_hda_id_alc269[]`
-- [Phase 5] `azx_bus_init()` assigns `bus->pci = chip->pci`;
-  tegra/acpi/cix-ipbloq never set `chip->pci`
-- [Phase 6] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` → `7.3.0-rc4`
-- [Phase 6] Buggy ALC236 block present at alc269.c:9188–9191
-- [Phase 6] Historical policy: `5100cd07d43a1` “Allow NULL bus->pci”
-  (v3.15-rc1) is in HEAD
-- [Phase 8] Failure mode: NULL deref at codec probe → oops; severity
-  HIGH; PCI path unchanged
-- UNVERIFIED: whether ALC236 is commonly wired to Tegra/ACPI/CIX in the
-  field; lore.kernel.org/stable discussion (HTTP 403)
+It meets stable rules: obviously correct, real leak, small, no new API,
+applies here. Risk is a single `kfree` on a pointer the node exclusively
+owns after `fnd_pop()`.
+
+Concerns: the fuller `put_indx_node()` replacement was proposed earlier
+and would also drop buffer heads and fix two error paths; this commit is
+a partial fix. That is acceptable for stable — it still plugs the main
+pop-path kmalloc leak without depending on other commits.
+
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Parsed commit `194491be54e1c`: subject/body leak fix; tags =
+  author SOB only; no Fixes/Reported-by/Cc: stable.
+- [Phase 2] Diff: +1 line `kfree(n->index)` before `kfree(n)` in
+  `indx_find_sort()` pop_level; confirmed `put_indx_node()` does
+  `kfree(in->index); nb_put(); kfree(in)`.
+- [Phase 2] Confirmed `indx_read_ra()` `kmalloc`s `ib` and assigns
+  `in->index = ib`.
+- [Phase 2] Confirmed `indx_find_raw()` uses `put_indx_node(n)` after
+  `fnd_pop`.
+- [Phase 3] `git blame`: pop path from `82cae269cfa95` (2021);
+  `kfree(n)` from `195c52bdd5d5e`; this line from `194491be54e1c`.
+- [Phase 3] `git merge-base --is-ancestor 82cae269cfa95 HEAD` and
+  `194491be54e1c HEAD`: both true.
+- [Phase 3] `git log 194491be54e1c..HEAD -- fs/ntfs3/index.c`: no later
+  change to this file.
+- [Phase 3] No `Fixes:` tag to follow.
+- [Phase 4] `b4 dig -c 194491be54e1c`: lore msgid
+  `20260724111443.14728-1-almaz.alexandrovich@paragon-software.com`;
+  `-a` v1 only; `-w` ntfs3/fsdevel/lkml.
+- [Phase 4] Openwall/IU mirrors: patch text matches commit; no replies
+  found.
+- [Phase 4] Found unmerged Jan 2026 Jiasheng Jiang `put_indx_node` patch
+  (lkml.iu.edu / gnuweeb).
+- [Phase 4] lore.kernel.org WebFetch: 403. Stable-list hit:
+  **UNVERIFIED**.
+- [Phase 5] `git grep indx_find_sort`: only `ntfs_insert_security` +
+  declaration.
+- [Phase 5] `ntfs_insert_security` `out:` calls `fnd_put(fnd_sdh)`.
+- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion` = 7.3.0-rc4.
+- [Phase 6] Pre-fix source at `194491be54e1c^` still has `kfree(n)`
+  without `kfree(n->index)`.
+- [Phase 8] Failure mode: kmalloc leak of index buffers on SDH pop;
+  severity HIGH for leak class, not oops/corruption.
+- UNVERIFIED: whether any user actually hit OOM from this; mailing-list
+  review comments beyond the isolated patch mail.
+
+The fix is small, surgical, and meets the stable criteria for this tree.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
+ fs/ntfs3/index.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 6bf500c0b5f9b..d88627558150f 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -8451,6 +8451,7 @@ static int alc269_probe(struct hda_codec *codec, const struct hda_device_id *id)
- 		spec->init_hook = alc256_init;
- 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
- 		if (codec->core.vendor_id == 0x10ec0236 &&
-+		    codec->bus->pci &&
- 		    codec->bus->pci->vendor != PCI_VENDOR_ID_AMD)
- 			spec->en_3kpull_low = false;
- 		break;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index edfcd28573ef9..03ae5a817c1b4 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1325,6 +1325,7 @@ int indx_find_sort(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 		/* Pop one level. */
+ 		if (n) {
+ 			fnd_pop(fnd);
++			kfree(n->index);
+ 			kfree(n);
+ 		}
+ 
 -- 
 2.53.0
 
