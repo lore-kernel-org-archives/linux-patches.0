@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172A560FF07;
-	Mon, 19 Oct 2026 14:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CE8530ABF;
+	Mon, 19 Oct 2026 14:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418630; cv=none; b=aVJWmtmHU85Usvw31Ezd9vUEDgR3uWZ5noK7pQwLye34NLVL3t5pdmnN/VhID0JsKcB6ysI0rHqeNoh72GywWyBNoVPRohKg9STSgptLhM32CF6xwZG4YRZGEvd0fZVd+IPa8u8JNAaYssAmBPf8d98Bz21OGXHFLLGJJ4koG4M=
+	t=1792418632; cv=none; b=CI6hLlweNeFu9vSJywvY16rnl439sVsUYVQbQq3fxMIIA1A04I/kGisxcOIAm9YgrqUy49GhnSdtDaiRs0Vku8iJhjDDQRDMvxzt5Rc19dlvspO71+Iu37TYfd+xb7tU6Fkuir2RnenpYaT+p3qv8RNJpZRZCqd3NQ7YJSlLyEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418630; c=relaxed/simple;
-	bh=TyijZPZNVQ4NAT0+bvDWX8mxgFZpAbKLiUirdLRWDfQ=;
+	s=arc-20240116; t=1792418632; c=relaxed/simple;
+	bh=rcpwPJ7mcV+mpVjshr18mmEwCaZCXXtBA3JTQOERv7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PLKEOBad9WR8tLrXJD8GZvzFsP2IAWFUsJQh+58fVQBAm/nwcDb7QT6ToB3cQby/CH4TsvGYX/V11ofqH+BGMnrdf7ieApCZ9xo39L9JYg6hHKMOsRzvr/NKIMNhcZMwPX6w9DEfMfWJoAYRbc3m9k4j5eM10SpVZV5ZFIm4UxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dKpJb57h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Mrlrc3elum3MB0/PfF8F8un348qyOvCPU+Oteafq8MLfJ61SVW6Jkdx1fRMh8LHQRd7Q0dVJ9Q/EQt7svbvNB/UtolY4eXytrECB6KFLA3ORrcXVAHS7i/qzwFeQEQjmTucaoZuuWPdjHSSMkFDEMTsoUSeJ00cGm2wX5qtgfvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bnyvl+H9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dKpJb57h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8831F000C6;
-	Mon, 19 Oct 2026 14:03:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bnyvl+H9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E08F1F000C7;
+	Mon, 19 Oct 2026 14:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418628;
-	bh=a7S47/WW/v4K1F5IJZOTzYM/zCZR3J61VKUez1IAJA8=;
+	s=k20260515; t=1792418629;
+	bh=euT1B/egjPX/wctp3QDspXsmLwlDfRDCrI84bw+LBz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dKpJb57hBRRKcnd8Fl5XWfTkv0NKaoVakLmhFTJBON3+5QUnE5aI1gDklz8teXBv5
-	 93o2VRVLXFG2fgS2Da0hjp62Nj1pv/6ya4BnI39nVbGZhR3dKc1n42Xh4PZk5/n4YX
-	 ygYIxpXeZLhcbRgGyGXloQsRwMEH7KTODwA6fPMWlSxOrbMfjaTziYUUamTygvMkwv
-	 tdGjK+/52TA0CopFsg9frRffjTn9edx7IVPuVbcz8Bc4lMZRVT1lKZBbUvrDycGu5/
-	 lscHfgR1MTlcemAAus1ceKZKF9rh8gWvDSnI9+D4kf9z/ITbzKtoyD0zHUNnMNYC4F
-	 3bgACbxcUOPjQ==
+	b=bnyvl+H9nzsYyKam45p4sxdrWh4eMEk9X0sFpCZd719nWPbJZs7w1XFbDAsO1VHHl
+	 nr/gaOuVPXZr84imucDvxlG4fC3Qpis3yYmF0/TzXG5a/FfP1ZKmunMADLu6C5g+Su
+	 jPS9IwBwk0ZaJ5lJoCfR5uoXhjrfV/fzFrqTlzVx/OpGymeqmd0fHZiejtjFqJNdS6
+	 5wHAKLoUuKkWGcVlEdexyHe09Ai1jEyQ+HF86Ou4JjieAgEuwVDJ5tKVMZdrgQ5mSL
+	 hIC/l2+x7tdnA7Qlz68tzoY9UC1eaOolk9Xrx1FCskNaT6aCDeNxwJqPhQwJSaVj0N
+	 9QtP3XcDT7jLA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Yang Wen <anmuxixixi@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-rtc@vger.kernel.org,
+	sj1557.seo@samsung.com,
+	exfat@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] rtc: ab-eoz9: add missing MODULE_DEVICE_TABLE()
-Date: Mon, 19 Oct 2026 09:51:15 -0400
-Message-ID: <20261019135441.1420968-384-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] exfat: keep FITRIM within the requested range
+Date: Mon, 19 Oct 2026 09:51:16 -0400
+Message-ID: <20261019135441.1420968-385-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,402 +53,411 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yang Wen <anmuxixixi@gmail.com>
 
-[ Upstream commit 7490b8356e52e09c196645912f2c054f79aa5f3a ]
+[ Upstream commit 2de727471b3b13409466a4af4f8824a86073bf4b ]
 
-The driver has a match table for the i2c bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+exfat_find_free_bitmap() searches the entire allocation bitmap and may
+wrap around to its beginning. exfat_trim_fs() does not verify that the
+returned cluster is still within the requested FITRIM range.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+As a result, a partial FITRIM operation may discard free clusters outside
+the user-specified range and report a trimmed length larger than the
+requested length.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
+Validate each returned cluster against the requested range and stop the
+search when it wraps around or passes the range end.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704152528.53258-1-pengpeng@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Yang Wen <anmuxixixi@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line `MODULE_DEVICE_TABLE(i2c, ...)` addition on a driver
-that already exists in this 6.12 tree. The I2C ID table is wired up but
-never exported, so i2c-style module autoload is broken.
+The local tree is **6.12.111** (`pending-6.12`). The FITRIM range bug is
+in this checkout, and the fix applies cleanly.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [rtc: ab-eoz9] [add] [export the existing I2C match table via
-MODULE_DEVICE_TABLE so aliases are generated for autoload]
+**Step 1.1: PARSE THE SUBJECT LINE**
+- Record: **[exfat] [keep / constrain] keep FITRIM within the requested
+  range**
+- Subsystem: `exfat`. Action is “keep … within”, i.e. stop the ioctl
+  from acting outside the caller’s range.
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn> (author)
-- Link:
-  https://patch.msgid.link/20260704152528.53258-1-pengpeng@iscas.ac.cn
-- Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com> (RTC
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Commit `2de727471b3b13409466a4af4f8824a86073bf4b` (mainline, contained
+in `v7.3-rc1`):
+- Signed-off-by: Yang Wen \<anmuxixixi@gmail.com\> (author)
+- Signed-off-by: Namjae Jeon \<linkinjeon@kernel.org\> (exFAT
   maintainer)
-- No Fixes: tag (expected for this review queue)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by
-- Ignore pipeline SOBs if present
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
+  or Cc: stable (absence is expected for this review)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: `abeoz9_id[]` is used as `id_table` but never published with
-  `MODULE_DEVICE_TABLE(i2c, ...)`, so file2alias does not emit
-  `i2c:abeoz9` aliases.
-- Symptom: when `RTC_DRV_ABEOZ9=m`, udev/modprobe will not autoload the
-  module for a non-DT I2C instantiation (`new_device`, board info,
-  etc.).
-- Failure mode: driver stays unloaded; RTC does not appear until a
-  manual `modprobe rtc-ab-eoz9`.
-- Version info: none in the message.
-- Root cause: missing alias publication, not a match-table or probe-
-  logic error.
-- Author explicitly calls this a source-level fix with no dynamic
-  hardware repro.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+- Record: **[Bug]** `exfat_find_free_bitmap()` walks the whole
+  allocation bitmap and **wraps to cluster 2**. `exfat_trim_fs()` treats
+  that result as the next hole to discard, without checking the FITRIM
+  range.
+- **[Symptom]** A **partial** FITRIM can `sb_issue_discard()` free
+  clusters **outside** `range->start`/`range->len`, and write back a
+  `range->len` **larger than requested**.
+- **[Root cause]** Trim reused the allocator’s circular free-cluster
+  search and never rejected a wrapped or out-of-range cluster.
+- **[Versions]** Message does not name versions. FITRIM was added in
+  `654762df2ec7d` (v5.13); wrap-around has been in
+  `exfat_find_free_bitmap()` since `1e49a94cf70720` (exFAT bitmap ops).
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. It is a missing-autoload bug. The “source-level”
-wording does not change that `MODULE_DEVICE_TABLE` is the documented way
-I2C drivers publish aliases (`Documentation/i2c/writing-clients.rst`).
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+- Record: **Not a disguised cleanup.** It is an explicit FITRIM
+  correctness fix (wrong discard range + wrong reported length).
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## PHASE 2: DIFF ANALYSIS
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `drivers/rtc/rtc-ab-eoz9.c` (+1 / -0)
-- One line after `abeoz9_id[]`: `MODULE_DEVICE_TABLE(i2c, abeoz9_id);`
-- No functions changed; table/registration data only
-- Scope: single-file surgical fix
+**Step 2.1: INVENTORY THE CHANGES**
+- Record: **`fs/exfat/balloc.c` only** — 19 insertions, 12 deletions
+  (net +7). Function: `exfat_trim_fs()`. **Single-function surgical
+  fix.**
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: OF table already has `MODULE_DEVICE_TABLE(of,
-  abeoz9_dt_match)`. I2C table exists and is assigned to `.id_table` but
-  is not exported.
-- After: I2C table is also exported. Built-in builds are unchanged
-  (`MODULE_DEVICE_TABLE` is empty when `!MODULE` in
-  `include/linux/module.h`).
-- Path affected: module-alias generation at build time, not
-  probe/runtime.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Local `exfat_trim_fs()` (lines 309–387) is **byte-identical** to the
+parent of `2de727471b3b1`.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: hardware enablement / missing device-ID alias (same class as
-  adding IDs)
-- Mechanism: without the export, `i2c:abeoz9` never appears in module
-  info. `i2c_device_uevent()` uses `MODALIAS=i2c:<name>` when OF/ACPI
-  modalias is unavailable (`drivers/i2c/i2c-core-base.c`). Autoload then
-  fails.
+Before:
+1. `trim_begin = exfat_find_free_bitmap(sb, clu_start)` — wrap is
+   ignored.
+2. Second search; EOF bails **before** remainder trim.
+3. `do { ... } while (next != EOF && next > trim_end)` — wrap at the
+   **end** of an iteration can exit, but if the wrapped cluster was
+   **assigned** to `trim_begin`/`trim_end`, wrap detection is lost and
+   the loop trims from the start of the volume.
+4. `next >= clu_end` does not catch wrap-to-beginning.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: one standard macro, same pattern as `rtc-
-  ab-b5ze-s3.c` and most other I2C RTC drivers.
-- Minimal: one line, no unrelated edits.
-- Regression risk: very low. No locking, no probe/remove change, no ABI.
-  Built-in is a no-op.
+After:
+1. Reject first cluster if EOF or `trim_begin < clu_start || trim_begin
+   > clu_end`.
+2. `for (;;)`: stop when `trim_end >= clu_end`.
+3. Reject next cluster if EOF, wrap (`next <= trim_end`), or `next >
+   clu_end`.
+4. Remainder trim still runs for the last in-range hole.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+- Record: **[Logic / correctness]** FITRIM range not enforced against a
+  wrapping bitmap walk. Also a minor hole: old EOF-on-second-search
+  skipped remainder trim of a valid in-range hole.
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Driver added in `67075b63cce26` (“rtc: add AB-RTCMC-32.768kHz-EOZ9 RTC
-  support”, Artem Panfilov, 2019-02-17).
-- Present in v5.2. OF `MODULE_DEVICE_TABLE` was there from day one; I2C
-  export was never added.
-- `abeoz9_id` line `{ "abeoz9" }` last touched by `a47d377e22c4a` (drop
-  explicit `driver_data = 0`).
+**Step 2.4: ASSESS THE FIX QUALITY**
+- Record: **Obviously correct.** Range checks match FITRIM’s
+  `[clu_start, clu_end]`. Wrap is `next <= trim_end`. Inclusive end:
+  `trim_end++` only when `next == trim_end+1` and `next <= clu_end`.
+  `fatal_signal_pending` kept. No API/lock/structure changes. **Low
+  regression risk** (tightens discard, does not expand it). Remainder
+  after a range-validated hole cannot start outside the range.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Buggy pattern dates to the introducing commit
-`67075b63cce26`, which is an ancestor of this HEAD.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Recent file history is unrelated (temperature/undervoltage, probe
-  style, IRQ flags).
-- Not part of a numbered series. Standalone one-liner.
-- Sibling Abracon driver `rtc-ab-b5ze-s3.c` already has both OF and I2C
-  `MODULE_DEVICE_TABLE`.
+**Step 3.1: BLAME THE CHANGED LINES**
+- Record: Entire `exfat_trim_fs()` is **`654762df2ec7d`** (“exfat: add
+  support ioctl and FITRIM function”, Hyeongseok Kim, 2021-03-04). Wrap
+  in `exfat_find_free_bitmap()` is **`1e49a94cf70720`** (“exfat: add
+  bitmap operations”). Bug is as old as FITRIM itself (**v5.13**).
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record:
-- Pengpeng Hou is not the RTC maintainer. Same-day pattern: `can:
-  ctucanfd: add missing MODULE_DEVICE_TABLE()` is already in this tree
-  as `877e99535dfb9` (upstream `d937bdb244a7`, with Cc: stable).
-- RTC maintainer Alexandre Belloni applied the rtc patch (SOB +
-  “Applied, thanks!”).
+**Step 3.2: FOLLOW THE FIXES: TAG**
+- Record: **No Fixes: tag.** Introducer is `654762df2ec7d`, **present in
+  this tree** (`git merge-base --is-ancestor` succeeded).
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: None. Uses existing `abeoz9_id` and the existing
-`MODULE_DEVICE_TABLE` macro. Standalone.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+- Record: Recent local `fs/exfat/balloc.c` commits are bitmap
+  validation, soft lockup, leaks, ffs/hweight — **none change trim**.
+  Mainline after this fix has **no further `balloc.c` commits**.
+  **Standalone, not a series.**
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+- Record: **Yang Wen** has **no** prior `fs/exfat/` commits in this
+  tree. **Namjae Jeon** is the exFAT maintainer and applied the patch
+  the next day.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- lore fetch via WebFetch returned 403; retrieved with `b4 mbox` msgid
-  `20260704152528.53258-1-pengpeng@iscas.ac.cn`.
-- Thread: original patch + Sashiko bot “no issues” + Alexandre Belloni
-  apply mail.
-- Single revision (PATCH, not v2/v3). Applied as `7490b8356e52` in the
-  RTC tree.
-- Submitted context uses `{ "abeoz9" }`, which matches this 6.12 file
-  (the candidate blob with `{ .name = "abeoz9" }` is a later-mainline
-  context difference only).
-- No NAK. No reviewer-requested Cc: stable.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+- Record: **None.** Uses existing `exfat_find_free_bitmap`,
+  `sb_issue_discard`, `clu_start`/`clu_end`. `git apply --check`
+  **succeeds** (hunks at offset −12).
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: To: Alexandre Belloni; Cc: linux-rtc, linux-kernel. Maintainer
-applied it. No other human review comments.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No user/syzbot/bugzilla report. Author states source-level
-evidence only. No in-tree `.dts` user of `abracon,abeoz9` besides
-`trivial-rtc.yaml`.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+- Record: **[Lore]**
+  https://patch.msgid.link/20260813142919.812744-1-anmuxixixi@gmail.com
+- **[Revisions]** **v1 only** (b4 dig -a). Applied as submitted.
+- Maintainer reply (Namjae Jeon, 2026-08-14): **“Applied it to #dev.
+  Thanks!”** — no NAK, no requested changes, no stable nomination in-
+  thread.
+- WebFetch/curl to lore.kernel.org hit Anubis bot-check (403). Thread
+  recovered via **`b4 dig -m`**.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Batch of missing-`MODULE_DEVICE_TABLE` scans the same day (at
-least CAN PCI + this RTC). CAN one already backported here. This RTC
-patch is self-contained.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+- Record: To/Cc: Namjae Jeon, Sungjong Seo, Yuezhang Mo,
+  `exfat@lists.linux.dev`, `linux-kernel`. **Maintainer applied v1.** No
+  extra Reviewed-by on the commit.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No stable-list discussion found for this subject. Absence is
-expected; that is why it is in this review queue.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+- Record: **No Reported-by / bugzilla / syzbot.** Analysis-driven, not a
+  user crash report.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+- Record: **Standalone single patch.** No follow-up on `origin/master`
+  for this function.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No functions modified. Data: `abeoz9_id[]`. Consumers:
-`abeoz9_driver.id_table`. Macro: `MODULE_DEVICE_TABLE`.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+- Record: lore.kernel.org/stable search **blocked** (Anubis).
+  **UNVERIFIED** whether stable@ discussed this. Not used as a NO
+  signal.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `abeoz9_probe` is only referenced from `abeoz9_driver.probe`.
-- I2C core calls it on match. Autoload is the gap before probe.
-- `i2c_device_uevent()`: OF alias if of_node, else ACPI, else `i2c:` +
-  `client->name`.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-Step 5.3: TRACE CALLEES
-Record: The new line does not call anything at runtime. file2alias
-consumes `__mod_i2c__abeoz9_id_device_table`.
+**Step 5.1: KEY FUNCTIONS**
+- Record: **Modified:** `exfat_trim_fs()`. **Relies on:**
+  `exfat_find_free_bitmap()` (wraps; unchanged).
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record:
-- Userspace-reachable: instantiating `abeoz9` on an I2C adapter (sysfs
-  `new_device`, board info) with the driver as a module.
-- DT path already autoloads via existing OF table.
-- `!CONFIG_OF` / no of_node: I2C alias is the only autoload path, and it
-  is missing.
-- Driver does not require DT to probe (`abeoz9_trickle_parse_dt` returns
-  0 if the property is absent).
+**Step 5.2: TRACE CALLERS**
+- Record: Only **`exfat_ioctl_fitrim()`** in `fs/exfat/file.c` (`FITRIM`
+  ioctl). Requires **`CAP_SYS_ADMIN`**. Copies `struct fstrim_range`
+  in/out; `range.len` is the trimmed-byte count userspace sees (`fstrim
+  -v`).
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Most I2C RTC drivers already have `MODULE_DEVICE_TABLE(i2c,
-...)`. This driver is the incomplete sibling of `rtc-ab-b5ze-s3`. Same-
-day CAN PCI fix already landed in this tree.
+**Step 5.3: TRACE CALLEES**
+- Record: `exfat_find_free_bitmap()`, `sb_issue_discard()`,
+  `exfat_cluster_to_sector()`, `mutex_lock(&sbi->bitmap_lock)`,
+  `fatal_signal_pending()`.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 5.4: FOLLOW THE CALL CHAIN**
+- Record: `ioctl(FITRIM)` → `exfat_ioctl()` → `exfat_ioctl_fitrim()` →
+  `exfat_trim_fs()`. Reachable from userspace **with CAP_SYS_ADMIN**
+  (`fstrim`, systemd-fstrim, Android idle trim). **Not** an unprivileged
+  path.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- Tree: `p-6.12-3-gc504cf0baa3d8`, `make kernelversion` = 6.12.111
-  (VERSION 6 / PATCHLEVEL 12 / SUBLEVEL 111).
-- File present. `MODULE_DEVICE_TABLE(of, ...)` at line 567; `abeoz9_id`
-  at 570–573; no `MODULE_DEVICE_TABLE(i2c, ...)`.
-- `7490b8356e52` is not an ancestor of HEAD (`git merge-base --is-
-  ancestor` exit 1).
-- Bug present since v5.2.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+- Record: **FAT** `fat_trim_fs()` walks **only** `ent_start..ent_end`
+  (no wrap). exFAT is the outlier. FAT’s loop is the intended FITRIM
+  contract.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Original mailed patch context is `{ "abeoz9" }`, which is
-exactly this tree. Clean apply. No refactor blocking it.
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No equivalent fix on `rtc-ab-eoz9.c`. OF alias only.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+- Record: **Yes.** `fs/exfat/balloc.c` `exfat_trim_fs()` matches the
+  pre-fix function (SHA-1 of the function text identical to
+  `2de727471b3b1^`). Introduced **v5.13**, present in **6.12.111**.
+  Candidate **not** an ancestor of HEAD.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+- Record: **Clean apply** (`git apply --check`, offset −12 from later
+  bitmap-load changes that do not touch trim). **No rework needed.**
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: `drivers/rtc/` I2C RTC. Criticality: PERIPHERAL / driver-
-specific. RTC still matters for wall-clock and wake on boards that use
-this Abracon part.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+- Record: **No** other FITRIM-range fix in this tree. Only FITRIM commit
+  is the original add (`654762df2ec7d`).
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: RTC is mature and still getting stable-worthy fixes in this
-tree. This file itself is low-churn.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+- Record: **[exFAT filesystem] [IMPORTANT]** — SD cards, USB sticks,
+  Android/embedded. Not mm/VFS-core, but a widely shipped FS.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Users of Abracon AB-RTCMC-32.768kHz-EOZ9 with
-`RTC_DRV_ABEOZ9=m`. DT boards already autoload. Affected: non-DT I2C
-instantiation, or any path that emits `i2c:abeoz9` rather than the OF
-modalias. Config-specific (`=m` only).
+**Step 7.2: SUBSYSTEM ACTIVITY**
+- Record: **Active** (bitmap validation, lockups, leaks). Trim loop
+  itself has been **unchanged since 2021**.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record:
-- Trigger: I2C client named `abeoz9` appears while the driver is a
-  module and no OF/ACPI modalias is used.
-- Not every boot on DT systems.
-- Unprivileged users cannot typically create I2C clients; this is not a
-  security trigger.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record:
-- Failure: module not loaded; RTC absent until manual modprobe. No oops,
-  UAF, or corruption.
-- Severity: MEDIUM for affected hardware (device does not work
-  automatically). LOW globally (niche chip, DT already covered).
-- Still a real user-visible bug, same class as missing device IDs.
+**Step 8.1: WHO IS AFFECTED**
+- Record: **Filesystem-specific (exFAT) + ioctl path.** Anyone running
+  **partial** FITRIM (`fstrim -o/-l`, chunked idle trim). Full-volume
+  trim (`start=0`, `len=ULLONG_MAX`) sets `clu_start` to
+  `EXFAT_FIRST_CLUSTER`, so wrap is inside the requested range —
+  **default `fstrim` is largely unaffected**.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: medium-low population, high for anyone on the broken autoload
-  path; restores hardware probe without manual load.
-- Risk: very low (one line, no runtime code).
-- Ratio: favorable. Same class already accepted here for ctucanfd.
+**Step 8.2: TRIGGER CONDITIONS**
+- Record: CAP_SYS_ADMIN FITRIM with a **range that is not the whole
+  volume**, and **no free cluster from `clu_start` to end of bitmap**
+  (first search wraps), **or** a hole whose next free cluster is found
+  only after wrap. Not a race (`bitmap_lock` held). Unprivileged users
+  **cannot** trigger it.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 8.3: FAILURE MODE SEVERITY**
+- Record: **Wrong-range discard of free clusters** + **inflated
+  `range->len`**. Not a panic/UAF. On SSDs: extra wear and extra
+  latency. On thin/sparse LUNs: **unmap of the wrong region** (space
+  accounting / unexpected hole punch of free space outside the requested
+  byte range). File data in allocated clusters is not discarded.
+  **Severity: MEDIUM** (contract + device-side unmap), not CRITICAL.
 
-Step 9.1: COMPILE THE EVIDENCE
+**Step 8.4: RISK-BENEFIT RATIO**
+- Record: **Benefit: medium** (correct FITRIM; matters for
+  ranged/chunked trim on exFAT). **Risk: very low** (~20-line single-
+  function tighten). **Ratio: favorable.**
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
 FOR:
-- Real autoload bug: I2C ID table is used but not exported.
-- One line, obviously correct, maintainer-applied.
-- Driver and bug have been in this 6.12 tree since the v5.2
-  introduction.
-- Original patch applies cleanly here.
-- Zero runtime change for built-in; aliases only when `=m`.
-- Stable rules allow device-ID additions; this publishes an existing ID.
-- Sibling Abracon RTC already has the I2C export.
-- Same-day CAN `MODULE_DEVICE_TABLE` fix is already in this tree.
+- Real FITRIM bug: discard and reported length ignore the requested
+  range when the bitmap search wraps.
+- Present in this 6.12 tree since v5.13; function matches mainline
+  parent.
+- Small, obviously correct, applies cleanly; no new API.
+- Maintainer applied v1 the next day; no follow-up revert/fix.
+- FAT already confines trim to the range; this aligns exFAT with that
+  contract.
+- Extra/wrong-range discard is user-visible and can unmap the wrong
+  thin-provisioned region.
 
 AGAINST:
-- No user report or syzbot; author says source-level only.
-- Not a crash/security/deadlock.
-- DT autoload already works; chip is mainly DT/embedded.
-- No in-tree board DTS users of `abracon,abeoz9`.
+- Not a crash, UAF, or file-data corruption.
+- Needs CAP_SYS_ADMIN; default full-FS `fstrim` rarely hits wrap.
+- No Reported-by / Tested-by / syzbot.
+- “Important” is a correctness/contract issue, not panic-class.
 
 UNRESOLVED:
-- Could not fetch lore.kernel.org via WebFetch (403); thread recovered
-  via `b4 mbox`.
-- No stable-list thread found.
+- Stable@ discussion (lore blocked).
+- How often 6.12 users actually pass a partial FITRIM range.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — one standard macro; maintainer
-   applied; matches documented I2C driver pattern.
-2. Fixes a real bug that affects users? PASS — missing `i2c:abeoz9`
-   alias; module does not autoload on the I2C path.
-3. Important issue? PASS under the device-ID / hardware-enablement
-   exception. User-visible: RTC module does not load. Not a panic.
-4. Small and contained? PASS — +1 line, one file.
-5. No new features or APIs? PASS — existing table, existing macro.
-6. Can apply to the local tree? PASS — buggy code present; mailed
-   context matches 6.12.
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — logic is local and
+   checkable; maintainer merged v1; in mainline as of v7.3-rc1. No
+   separate Tested-by.
+2. Fixes a real bug that affects users? **PASS** — ranged FITRIM
+   discards the wrong free clusters and lies about `len`.
+3. Important issue? **PASS** (MEDIUM) — wrong discard range / thin unmap
+   / wrong userspace length, not a crash. Still a real FS ioctl bug, not
+   a cleanup.
+4. Small and contained? **PASS** — one function, +19/−12.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — `git apply --check`
+   succeeded.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Device ID / module-alias publication for an existing driver. Not
-a new driver, API, or module parameter.
+**Step 9.3: EXCEPTION CATEGORIES**
+- Record: **None** (not a device ID/quirk/DT/build/doc exception).
+  Qualifies as a normal bugfix.
 
-Step 9.4: MAKE YOUR DECISION
-YES. The bug exists in this 6.12.111 tree, the fix is a one-line alias
-export with no runtime risk, and it is the same class of hardware-
-enablement stable already takes (including this author’s CAN patch
-already on this branch).
+**Step 9.4: DECISION**
+This tree still has the original 2021 trim loop. The fix is a tight
+range/wrap check, not a refactor. For 6.12 users of exFAT FITRIM,
+especially chunked/partial trim, backporting prevents out-of-range
+discards with negligible risk.
 
-What the commit solves for stable users: if `rtc-ab-eoz9` is built as a
-module, I2C instantiation that emits `i2c:abeoz9` (non-DT) never
-autoloads the driver. DT boards already work via the OF table. The extra
-line closes the I2C alias gap.
+### What the commit solves for this tree
+Partial `FITRIM` on exFAT can discard free clusters **before** the
+requested offset after `exfat_find_free_bitmap()` wraps, and return a
+**larger** trimmed length than requested. That violates the ioctl
+contract and can TRIM the wrong region on SSDs/thin volumes. The code
+path exists here unchanged; the patch applies cleanly.
 
-Risk vs benefit: benefit is autoload for this RTC on the I2C path; risk
-is essentially nil. No prerequisites. Original mailed hunk matches this
-tree’s `{ "abeoz9" }` initializer.
+### Risk vs benefit
+Benefit is correctness of a privileged but standard maintenance ioctl on
+a common removable/Android filesystem. Risk is very low: fewer discards,
+same locks, same helpers.
+
+---
 
 Verification:
-- [Phase 1] Parsed tags: author SOB Pengpeng Hou; Link msgid; RTC
-  maintainer SOB Alexandre Belloni; no Fixes/Cc:stable/Reported-by
-- [Phase 1] Body: missing I2C MODULE_DEVICE_TABLE; source-level, no
-  hardware repro claimed
-- [Phase 2] Diff: +1 line `MODULE_DEVICE_TABLE(i2c, abeoz9_id)` after
-  `abeoz9_id[]` in `drivers/rtc/rtc-ab-eoz9.c`
-- [Phase 2] `include/linux/module.h`: macro is alias-only when `MODULE`,
-  empty when built-in
-- [Phase 3] blame: table from `67075b63cce26` (2019); OF export present
-  then; I2C export never added
-- [Phase 3] `git merge-base --is-ancestor 67075b63cce26 HEAD`:
-  introducing commit is in this tree; in v5.2
-- [Phase 3] `git log --oneline --grep='MODULE_DEVICE_TABLE' --
-  drivers/rtc/rtc-ab-eoz9.c`: empty (fix not here)
-- [Phase 3] Same-author `877e99535dfb9` can/ctucanfd MODULE_DEVICE_TABLE
-  already in this tree
-- [Phase 4] `b4 mbox` msgid
-  `20260704152528.53258-1-pengpeng@iscas.ac.cn`: 3 messages; maintainer
-  applied as `7490b8356e52`; mailed hunk uses `{ "abeoz9" }`
-- [Phase 4] WebFetch lore/msgid.link: 403; discussion recovered from
-  mbox and openwall/lkml mirrors
-- [Phase 5] `i2c_device_uevent`: OF first, then ACPI, then
-  `MODALIAS=i2c:` + client name
-- [Phase 5] grep: `abeoz9_probe` only from this driver; no in-tree DTS
-  users besides `trivial-rtc.yaml`
-- [Phase 5] `rtc-ab-b5ze-s3.c` already has both OF and I2C
-  MODULE_DEVICE_TABLE
-- [Phase 6] `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion`: 6.12.111
-- [Phase 6] Local file lines 562–582: OF table exported; I2C table not;
-  `{ "abeoz9" }`
-- [Phase 6] `git merge-base --is-ancestor 7490b8356e52 HEAD`: exit 1
-  (not in this tree)
-- [Phase 7] Kconfig `RTC_DRV_ABEOZ9` is tristate; not set in defconfigs
-  searched
-- [Phase 8] Failure mode: missing module autoload for I2C path, severity
-  MEDIUM for that hardware, not a crash
-- UNVERIFIED: live lore.kernel.org HTML (403); no stable-list hit for
-  this subject
+- [Phase 1] `git log -1` / `git show 2de727471b3b1`: subject/body/SOBs
+  only; no Fixes/Reported-by/Cc stable
+- [Phase 1] Local tree: `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`;
+  `make kernelversion` → **6.12.111**
+- [Phase 2] Diff is only `exfat_trim_fs()` in `fs/exfat/balloc.c`
+  (+19/−12)
+- [Phase 2] Read local `exfat_trim_fs` (balloc.c:309–387) and
+  `exfat_find_free_bitmap` wrap (balloc.c:266–271)
+- [Phase 2] Function SHA-1 of local trim == parent of `2de727471b3b1`
+- [Phase 3] `git blame -L 309,387 fs/exfat/balloc.c` → all
+  `654762df2ec7d` (v5.13 FITRIM)
+- [Phase 3] `git blame -L 266,274` wrap → `1e49a94cf70720`
+- [Phase 3] `git merge-base --is-ancestor 654762df2ec7d HEAD` → yes;
+  `2de727471b3b1` → **not** in HEAD
+- [Phase 3] `git apply --check` of `2de727471b3b1` → **success**, offset
+  −12
+- [Phase 3] `git log origin/master -- fs/exfat/balloc.c` after the fix →
+  **empty** (no follow-up)
+- [Phase 4] `b4 dig -c 2de727471b3b1` →
+  https://patch.msgid.link/20260813142919.812744-1-anmuxixixi@gmail.com
+- [Phase 4] `b4 dig -a`: v1 only; `-w`: maintainer + Seo + Mo + exfat
+  list
+- [Phase 4] mbox: Namjae Jeon “Applied it to #dev”; no NAK/stable tag
+- [Phase 4] lore WebFetch/curl: **403 Anubis** — stable@ search
+  UNVERIFIED
+- [Phase 5] Callers: only `exfat_ioctl_fitrim()`;
+  `capable(CAP_SYS_ADMIN)`
+- [Phase 5] FAT `fat_trim_fs()` already limits to `ent_start..ent_end`
+- [Phase 6] Buggy loop present; no prior range fix in this tree
+- [Phase 8] Failure: out-of-range discard + bad `range->len`; severity
+  MEDIUM
+- UNVERIFIED: whether this SHA was already discussed on stable@
+
+The patch is a small, correctly scoped FITRIM range check for a bug that
+exists in this 6.12 tree and applies without prerequisites.
 
 **YES**
 
- drivers/rtc/rtc-ab-eoz9.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/exfat/balloc.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
-index de002f7a39bf4..8dc656bb78bfb 100644
---- a/drivers/rtc/rtc-ab-eoz9.c
-+++ b/drivers/rtc/rtc-ab-eoz9.c
-@@ -549,6 +549,7 @@ static const struct i2c_device_id abeoz9_id[] = {
- 	{ "abeoz9" },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(i2c, abeoz9_id);
+diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
+index 0b6466b3490a0..4013034375dbe 100644
+--- a/fs/exfat/balloc.c
++++ b/fs/exfat/balloc.c
+@@ -327,14 +327,27 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
+ 	mutex_lock(&sbi->bitmap_lock);
  
- static struct i2c_driver abeoz9_driver = {
- 	.driver = {
+ 	trim_begin = trim_end = exfat_find_free_bitmap(sb, clu_start);
+-	if (trim_begin == EXFAT_EOF_CLUSTER)
++	/*
++	 * exfat_find_free_bitmap() may wrap around to the beginning of
++	 * the bitmap. Reject a cluster outside the requested range.
++	 */
++	if (trim_begin == EXFAT_EOF_CLUSTER ||
++		trim_begin < clu_start || trim_begin > clu_end)
+ 		goto unlock;
+ 
+-	next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
+-	if (next_free_clu == EXFAT_EOF_CLUSTER)
+-		goto unlock;
++	for (;;) {
++		if (trim_end >= clu_end)
++			break;
++
++		next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
++		/*
++		 * Stop if the search wrapped around or moved beyond the requested
++		 * FITRIM range.
++		 */
++		if (next_free_clu == EXFAT_EOF_CLUSTER ||
++			next_free_clu <= trim_end || next_free_clu > clu_end)
++			break;
+ 
+-	do {
+ 		if (next_free_clu == trim_end + 1) {
+ 			/* extend trim range for continuous free cluster */
+ 			trim_end++;
+@@ -355,17 +368,11 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
+ 			trim_begin = trim_end = next_free_clu;
+ 		}
+ 
+-		if (next_free_clu >= clu_end)
+-			break;
+-
+ 		if (fatal_signal_pending(current)) {
+ 			err = -ERESTARTSYS;
+ 			goto unlock;
+ 		}
+-
+-		next_free_clu = exfat_find_free_bitmap(sb, next_free_clu + 1);
+-	} while (next_free_clu != EXFAT_EOF_CLUSTER &&
+-			next_free_clu > trim_end);
++	}
+ 
+ 	/* try to trim remainder */
+ 	count = trim_end - trim_begin + 1;
 -- 
 2.53.0
 
