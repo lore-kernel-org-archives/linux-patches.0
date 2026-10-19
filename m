@@ -1,46 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB2D612565;
-	Mon, 19 Oct 2026 14:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C23D61258F;
+	Mon, 19 Oct 2026 14:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418633; cv=none; b=ZP8RT2jq11J0IOhzXk72P/Txxmckw6W5thVEpzxn1LuL2GjyEtcFJUcGT1bhRlfUITog89o9ZxDG6cPRH82uJRO6v7hx03/EQKOyL3jxjjvfvN00rdqNdN21tK/ljAanz+ONZvoaxErjDVNPiNtI28nDiufiPZ52635VKWOReNo=
+	t=1792418635; cv=none; b=Dvu/rdS/EQbkO5KmSCwHFo9pS+RJ3djyeDXE2aivhi1rkb17qM+9z7StN9seftONAxs1QeJkcm0a+D1SwQDorLl+rzNuCFlcz8sUOxukYlVlP5myMMnXC8MtifsoXMdviZg6KqOzqKfc1mpy9PZgrOitK9/6JV9y5nmZnClxHUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418633; c=relaxed/simple;
-	bh=ZfxOOX3ej3q0mFdA/DyGaopJmYWIhBshTMlyYAqSVrE=;
+	s=arc-20240116; t=1792418635; c=relaxed/simple;
+	bh=0/9695QWSJqXIagvEzmbBsJCdE5Lkg6pHDvm2j0EBu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LQIMyI8mwT8qUldTdJLkKdPllx82TC17sx0EEqrLRARHq28mHXJlOVPQNr8ULEIN2taxnwZO2Gt46DTZC3tHYbHQ/xH9yB52/giW4lxwFuNWr3lGh0a3EeikaWMIP12vCEuHqBk1A388a7WIkE+iKVISeVUtoFHsIX589PZmqTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AfbQ1jl/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BD9/ssY9n5Nxzh+5kY1H/Qv8gICU6RocmwSnL4xfZgMvvQNI5TdJP+QbpGCFbZRwZ8opUgASbQSlbM3lu8E4XWiatPLS82yKo4iL1pO2aEbqNYBSABJUtGpossRKyNuEmlHnd5XSCVl08EKBSqZyTiWtkyDkB/neFch5CRSB7RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sy9eVxO9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AfbQ1jl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9871F000C8;
-	Mon, 19 Oct 2026 14:03:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sy9eVxO9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3661F000C9;
+	Mon, 19 Oct 2026 14:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418630;
-	bh=Zev1xjlOxm+rYJyfpM2+m7m0Kp99smLd/rcxrOeHMJg=;
+	s=k20260515; t=1792418632;
+	bh=sv6rVlir+RBR5HytJBd1kxyg8GjuUSzazSxRgHWQXJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AfbQ1jl/o4qP/jZWo2mhs761kp/rrE7UFJE2nUyJYR49lfzCVH6GLXTa4wCJDsUTC
-	 qluVLQeW0ArMPelYgQGZmsJMeo4PncFNlGRAsts2gIru9hvehgsbelMm3ji0oU7GVT
-	 uqmfW9CJDU3CoCTGkEBSqmdLBNhrXFwU9m1D+3ulYzb6PY2daa/1ZLPQBGWG2GAINU
-	 Q6/81EmiOilXjcWmgkHkWMrtVh7Y17jGFuw2x6bv8qInhlxez2pK7JStXoxfdZU+V9
-	 kpsM+IQ1V8QhL991hUTxVSIN+0MPnuYsPfknHaFPxCFgnfQ28KomCSpdGzgshEhvrn
-	 Ha8peKpb+sI+A==
+	b=Sy9eVxO9FHnAsiqFgAgXpgE0EwvnrsF0PJpA7VSNtfd2K7T62sa28615clRyVNi3o
+	 PIWSaau5ob1MLGp6BPhUCD13+q5CXtSSZzq2z4+p0jOqLIv63N8rWnlXBN5buFWmPU
+	 /HFPX4EobkxsXTr09K14UrmHtHnLCSG7u1yly+zqEbUmZNOloSAJ7L5An59BQyAHpg
+	 rGfL8KwESeQH89wBj+LkBYfMU2n9ALSDyY2UwkEHtDhuW86ARpQu5Vx1M12efksrbN
+	 rMlWynmFS2Fp6/SCImuirwMkJFJkwX7XBk8kTYpHoGooGmv/tk3KHxdqV4p/QIvT8+
+	 u7aUJxTelWYxQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ruoyu Wang <ruoyuw560@gmail.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Devin Wittmayer <lucid_duck@justthetip.ca>,
+	0072a70 <90307219+0072a70@users.noreply.github.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	ping.cheng@wacom.com,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] HID: wacom: avoid copying Bluetooth input reports
-Date: Mon, 19 Oct 2026 09:51:17 -0400
-Message-ID: <20261019135441.1420968-386-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mt76: mt76x02: report rx FCS errors to mac80211
+Date: Mon, 19 Oct 2026 09:51:18 -0400
+Message-ID: <20261019135441.1420968-387-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,394 +59,408 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 8310cdeefc8a14d2093c3234b570c7805c20bcbf ]
+[ Upstream commit ddae0bcb01e71c1184bb3f526f9622e31dc38f3b ]
 
-wacom_intuos_bt_irq() duplicates the received Bluetooth report with
-kmemdup() so that it can pass 10-byte input report payloads to the
-common Intuos parser. The helper then copies each payload back into
-wacom->data before calling wacom_intuos_irq().
+When the fcsfail filter is enabled the hardware passes frames with a bad
+FCS up to the driver, but mt76x02_mac_process_rx() never checks
+MT_RXINFO_CRCERR and hands them to mac80211 without
+RX_FLAG_FAILED_FCS_CRC. In monitor mode the radiotap flags byte then
+never gets IEEE80211_RADIOTAP_F_BADFCS set and corrupted frames cannot be
+told apart from clean ones.
 
-Avoid the allocation and copy by temporarily pointing wacom->data at the
-current 10-byte payload while the common parser runs, then restoring the
-original report pointer. The Bluetooth report parser keeps using the
-original report buffer for dispatch and battery parsing, while the common
-parser sees the same payload bytes as before.
+Set RX_FLAG_FAILED_FCS_CRC from the descriptor CRC error bit, matching
+mt7603, mt7615, mt7915, mt7921, mt7925 and mt7996.
 
-This also removes the unchecked kmemdup() result from the Bluetooth IRQ
-path.
-
-Suggested-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: 0072a70 <90307219+0072a70@users.noreply.github.com>
+Closes: https://github.com/morrownr/mt76/issues/38
+Tested-by: 0072a70 <90307219+0072a70@users.noreply.github.com>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260613002544.27750-3-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Vanilla 6.18.53 still has the unchecked `kmemdup(GFP_KERNEL)` in this
-Bluetooth IRQ path. The rest of the walkthrough is below.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1 — Subject**
+- Record: `[wifi: mt76: mt76x02]` `[report]` `[report rx FCS errors to
+  mac80211]`
+- Subsystem is MediaTek mt76, mt76x02 family (mt76x0 / mt76x2 PCI and
+  USB). “Report” here is a correctness fix: the driver already receives
+  CRC-failed frames and must mark them.
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [HID: wacom] [avoid] [stop kmemdup/memcpy of Bluetooth Intuos
-reports by switching the parser onto the live 10-byte payload]
+**Step 1.2 — Tags**
+- Record:
+  - `Reported-by: 0072a70 <90307219+0072a70@users.noreply.github.com>` —
+    real user hit
+  - `Closes: https://github.com/morrownr/mt76/issues/38`
+  - `Tested-by:` same reporter, on real hardware
+  - `Signed-off-by: Devin Wittmayer` (author)
+  - `Link: https://patch.msgid.link/20260613002544.27750-3-
+    lucid_duck@justthetip.ca`
+  - `Signed-off-by: Felix Fietkau` (mt76 maintainer)
+  - No `Fixes:` tag (expected for this review)
+  - No `Cc: stable` (expected; not a negative)
+  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+    ...]`
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Suggested-by: Jason Gerecke <jason.gerecke@wacom.com>
-- Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com> (author)
-- Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com> (Wacom driver
-  maintainer)
-- Signed-off-by: Jiri Kosina <jkosina@suse.com> (HID maintainer)
-- Ignore: `[Upstream commit 8310cdeefc8a...]`, `Signed-off-by: Sasha
-  Levin`
-- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable (absence
-  expected)
+**Step 1.3 — Body**
+- Record:
+  - **Bug:** With the `fcsfail` filter enabled, hardware delivers frames
+    with `MT_RXINFO_CRCERR` set. `mt76x02_mac_process_rx()` never reads
+    that bit, so mac80211 never gets `RX_FLAG_FAILED_FCS_CRC`.
+  - **Symptom:** In monitor mode, radiotap never sets
+    `IEEE80211_RADIOTAP_F_BADFCS`; corrupted frames look identical to
+    clean ones.
+  - **Root cause:** Missing descriptor-bit → `rx_status` translation.
+    Other mt76 chips already do this.
+  - **Version info in the message:** none. Reporter used kernel 7.0.x;
+    the code path is much older (see Phase 3).
 
-Notable: maintainer both suggested the approach and reviewed it.
+**Step 1.4 — Hidden bug fix?**
+- Record: Not disguised. It is an explicit missing-flag fix that
+  implements the documented mac80211 contract for `FIF_FCSFAIL`.
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: `wacom_intuos_bt_irq()` `kmemdup()`s the Bluetooth report, then
-  `wacom_intuos_bt_process_data()` `memcpy`s each 10-byte payload into
-  `wacom->data` for `wacom_intuos_irq()`. The `kmemdup()` result is not
-  checked.
-- Symptom: NULL deref of `data[0]` if allocation fails; also an
-  allocation+copy on every report.
-- Version info: none in the message. The `kmemdup` itself was added
-  later (see Phase 3).
-- Root cause: the copy exists only so the shared Intuos parser can see a
-  10-byte payload without destroying the packed Bluetooth report. The
-  author replaces that with a temporary `wacom->data` pointer swap.
+## Phase 2: Diff analysis
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Yes. v1 on the list was explicitly `HID: wacom: handle kmemdup
-failure in Bluetooth IRQ path` (NULL check). v2, at Jason Gerecke’s
-request, removes the allocation instead. This is a crash fix written as
-“avoid copying.”
+**Step 2.1 — Inventory**
+- Record: one file, `drivers/net/wireless/mediatek/mt76/mt76x02_mac.c`.
+  Three lines added, none removed. Function: `mt76x02_mac_process_rx()`.
+  Surgical single-file change.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+**Step 2.2 — Flow**
+- Record: After the existing `MT_RXINFO_L2PAD` check, if `rxinfo &
+  MT_RXINFO_CRCERR`, set `status->flag |= RX_FLAG_FAILED_FCS_CRC`.
+  Normal RX is unchanged for clean frames. Error/monitor path for CRC-
+  failed frames is now marked.
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `drivers/hid/wacom_wac.c` (~5 insertions, 3 deletions; series
-  mail said 8 lines)
-- Functions: `wacom_intuos_bt_process_data()`, `wacom_intuos_bt_irq()`
-- Scope: single-file surgical fix
+**Step 2.3 — Bug mechanism**
+- Record: **Logic / correctness** (driver contract). Hardware already
+  passes CRC-failed frames when `FIF_FCSFAIL` is on
+  (`MT76_FILTER(FCSFAIL, MT_RX_FILTR_CFG_CRC_ERR)` in
+  `mt76x02_configure_filter()`). The driver failed to set the flag
+  mac80211 requires (`include/net/mac80211.h`: *“pass frames with failed
+  FCS (but you need to set RX_FLAG_FAILED_FCS_CRC for them)”*).
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: `wacom_intuos_bt_irq()` does `data = kmemdup(wacom->data, len,
-  GFP_KERNEL)` then `switch (data[0])`. Helper `memcpy(wacom->data,
-  data, 10)` then `wacom_intuos_irq()`. `kfree(data)` at the end.
-- After: `data = wacom->data`. Helper saves `wacom->data`, points it at
-  the 10-byte slice, calls `wacom_intuos_irq()`, restores the original
-  pointer.
-- Path: HID input IRQ for `INTUOS4WL` (Wacom Intuos4 Wireless, USB ID
-  0xBD), not probe/error-only.
+Verified mac80211 consequences in this tree:
+- `ieee80211_add_rx_radiotap_header()` sets
+  `IEEE80211_RADIOTAP_F_BADFCS` only if that flag is present
+  (`net/mac80211/rx.c`).
+- `should_drop_frame()` treats `RX_FLAG_FAILED_FCS_CRC` as drop-from-
+  cooked-path. Without it, `ieee80211_rx_monitor()` copies the frame to
+  monitor and **returns the original skb** to
+  `__ieee80211_rx_handle_packet()`. FCS-failed frames can therefore
+  enter the cooked RX path whenever `fcsfail` is enabled (including
+  concurrent monitor + STA/AP).
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: NULL deref on failed `kmemdup`; GFP_KERNEL allocation on the
-  HID input IRQ path.
-- Mechanism: `hid_irq_in()` (USB URB complete) →
-  `hid_safe_input_report()` → `wacom_raw_event()` → `wacom_wac_irq()` →
-  `wacom_intuos_bt_irq()`. `__hid_input_report()` uses `down_trylock()`
-  because this can run in atomic context. `kmemdup(..., GFP_KERNEL)`
-  there can sleep or return NULL; `switch (data[0])` then oopses. The
-  pointer swap keeps the packed report intact without allocating.
+**Step 2.4 — Fix quality**
+- Record: Obviously correct; same pattern as
+  `mt7603`/`mt7615`/`mt7915`/`mt7921`/`mt7996` in this tree. Minimal.
+  Regression risk is low: only CRCERR frames get a flag they should
+  already have. Clean frames are untouched. Does not add APIs or change
+  locking.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Quality: small, equivalent for this device. `wacom_intuos_inout()` /
-  `wacom_intuos_general()` / INTUOS4 pad parsing only read
-  `data[0]`–`data[9]`. Restore of `wacom->data` is synchronous; nothing
-  stashes the pointer.
-- Regression risk: low-medium. Sashiko flagged unaligned
-  `be16_to_cpup((__be16 *)&data[2])` because payloads start at offset
-  1/11. Old `memcpy` landed those 10 bytes on the aligned URB buffer;
-  the new pointer does not. Jason Gerecke treated that as non-blocking
-  and asked for a later alignment cleanup. Intuos4 WL is a PC USB
-  tablet, so strict-alignment ARM faults are unlikely. No API/data-
-  structure change.
+## Phase 3: Git history
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 3.1 — Blame**
+- Record: Insertion point is the 2018 `mt76x02_mac_process_rx()` body
+  from `d9f8934ed147b3` (“mt76: move mt76x02_mac_process_rx in
+  mt76x02-lib module”), 2018-10-04, first contained in **v4.20-rc1**.
+  `MT_RXINFO_CRCERR` is defined in `mt76x02_mac.h:54` since
+  `5327b5ea13910d` (2018-09-04). The bit has been defined for years and
+  never consumed in RX processing.
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- Bluetooth packing/`memcpy` helper: 81af7e61a774e6 (Benjamin Tissoires,
-  2014-08-06).
-- `kmemdup`/`kfree`: 5e013ad206895e (“HID: wacom: Remove static
-  WACOM_PKGLEN_MAX limit”, Jason Gerecke, 2025-03-03). That replaced a
-  stack `unsigned char data[WACOM_PKGLEN_MAX]` + `memcpy`. First in
-  v6.15 (in v6.15, not in v6.14). Present in this 6.18.53 tree.
+**Step 3.2 — Fixes: tag**
+- Record: None. The omission dates to the original mt76x02 RX path, not
+  a later regression.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Functionally this repairs 5e013ad206895e, which
-is an ancestor of this tree.
+**Step 3.3 — File history**
+- Record: Same-function sibling from the same series is already in this
+  tree: `b6e7958602bd1` (“do not WARN on invalid rx descriptor length”).
+  That is patch 1/2 of `[PATCH 0/2] wifi: mt76: mt76x02: rx fixes for
+  fcsfail monitor mode`. This candidate is patch 2/2. They touch
+  different lines; this one does not depend on patch 1. `git apply
+  --check` of this hunk on HEAD is **clean**. No other FCS reporting
+  commit exists on this file.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- c8dc23c97680e “HID: wacom: fix out-of-bounds read in
-  wacom_intuos_bt_irq” — length checks; already in v6.18.53.
-- 74ec08f7b81c2 — Pro2 BT length validation, different function.
-- Standalone; not patch x/y. No extra prereqs beyond the `kmemdup` code
-  this tree already has.
+**Step 3.4 — Author**
+- Record: Devin Wittmayer; not the subsystem maintainer. Maintainer
+  Felix Fietkau signed off. Author also submitted the sibling WARN fix.
+  Related author commits in this tree: `b6e7958602bd1`, plus unrelated
+  mt7615/mt7921 TXRX_NOTIFY drops.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Ruoyu Wang has this one wacom commit here. Jason Gerecke is the
-Wacom maintainer and both introduced the `kmemdup` and reviewed this
-fix.
+**Step 3.5 — Prerequisites**
+- Record: None beyond symbols already in 6.6: `MT_RXINFO_CRCERR`,
+  `RX_FLAG_FAILED_FCS_CRC`, `status->flag`. Commit text mentions mt7925;
+  that chip need not exist here — it is comparison only. Standalone
+  apply: yes.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: None. Uses existing `wacom->data` / `wacom_intuos_irq()`.
-Applies to v6.18.53 as written.
+## Phase 4: Mailing list / external research
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 4.1 — Original discussion**
+- Record: `b4 dig -c <sha>` cannot match because this commit is not in
+  the local history. Fallback: `b4 mbox
+  20260613002544.27750-3-lucid_duck@justthetip.ca`.
+  - Cover: https://patch.msgid.link/20260613002544.27750-1-
+    lucid_duck@justthetip.ca
+  - Series: v1 only (`b4 am --check-newer-revisions`: no later
+    revision).
+  - Two patches; this is 2/2.
+  - Cover: tested on MT7612U and MT7610U; fcsfail monitor captures get
+    BADFCS on corrupted frames, clean frames unchanged.
+  - No NAKs in the retrieved thread (cover + 2 patches, no review
+    replies). Applied by Felix Fietkau.
+  - Lore HTTP fetch returned 403; b4 was used instead.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- Lore/msgid:
-  https://patch.msgid.link/20260617072035.3373487-1-ruoyuw560@gmail.com
-- v1 (2026-06-06):
-  https://patch.msgid.link/20260606040344.4-1-ruoyuw560@gmail.com —
-  NULL-check only.
-- v2 (2026-06-17): pointer swap, as Jason asked.
-- v1: Jason Reviewed-by + “do away with the kmemdup entirely.”
-- v2: Sashiko unaligned-access warning; Jason: do not block; wants a
-  later alignment cleanup; Reviewed-by.
-- Jiri Kosina: “Applied, thanks.”
-- No NAK. No reviewer Cc: stable.
+**Step 4.2 — Recipients**
+- Record: To Felix Fietkau, Lorenzo Bianconi; Cc Ryder Lee, Shayne Chen,
+  Sean Wang, linux-wireless, linux-kernel. Right maintainers/lists.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: To/Cc: Ping Cheng, Jason Gerecke, Jiri Kosina, Benjamin
-Tissoires, linux-input, linux-kernel. Jason reviewed; Jiri applied.
+**Step 4.3 — Bug report**
+- Record: GitHub issue #38 (closed). Hardware: Alfa AWUS036ACM, mt7612u,
+  driver mt76x2u. With `iw set monitor fcsfail`, radiotap flags were
+  always `0x00`; `radiotap.flags.badfcs == 1` matched 0 of 2978 frames.
+  After this exact three-line change: 956/7353 frames had BADFCS `0x40`,
+  clean frames stayed `0x00`. Confirmed on-list/issue by the reporter
+  (`Tested-by`).
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No Reported-by / bugzilla / syzbot. Found by code review of the
-unchecked `kmemdup`.
+**Step 4.4 — Series context**
+- Record: Patch 1 (WARN on bogus MPDU length under fcsfail) is already
+  in this 6.6 tree. Patch 2 is the functional reporting fix.
+  Independent; both target the same user-visible fcsfail path.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: v1→v2 of one patch, not a multi-commit series. Related OOB fix
-already in this tree.
+**Step 4.5 — stable@ discussion**
+- Record: lore.kernel.org/stable HTTP 403. No separate stable-thread
+  evidence retrieved. Absence is not a negative for this review.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: UNVERIFIED — lore.kernel.org/stable returned 403. b4 thread has
-no stable discussion.
+## Phase 5: Semantic / call-chain analysis
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 5.1 — Functions**
+- Record: `mt76x02_mac_process_rx()`.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `wacom_intuos_bt_process_data()`, `wacom_intuos_bt_irq()`.
+**Step 5.2 — Callers**
+- Record: Only `mt76x02_queue_rx_skb()` in `mt76x02_txrx.c` (data RX,
+  not MCU queue). That is the USB/PCI RX completion path for mt76x0 and
+  mt76x2.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `wacom_intuos_bt_irq()` ← `wacom_wac_irq()` case `INTUOS4WL`
-  (`drivers/hid/wacom_wac.c`).
-- `wacom_wac_irq()` ← `wacom_raw_event()` (`wacom_sys.c`).
-- USB: `hid_irq_in()` (`drivers/hid/usbhid/hid-core.c`) calls
-  `hid_safe_input_report()` from URB complete (atomic/softirq).
-- Bluetooth HIDP: `hidp_process_report()` from the l2cap/session path
-  (process context). This device is USB ID 0xBD, so the USB IRQ path is
-  the one that matters.
-- Device table: `wacom_features_0xBD` / “Wacom Intuos4 WL”.
+**Step 5.3 — Callees (relevant)**
+- Record: Sets `struct mt76_rx_status` in `skb->cb`, then `mt76_rx()` →
+  mac80211. `mt76_rx()` already counts `RX_FLAG_FAILED_FCS_CRC` for
+  testmode FCS stats (`mac80211.c`).
 
-Step 5.3: TRACE CALLEES
-Record: `wacom_intuos_irq()` → pad/inout/general parsers;
-`wacom_notify_battery()`; `input_sync()`. No alloc after the change.
+**Step 5.4 — Reachability**
+- Record: Userspace-reachable: `iw set type monitor` + `iw set monitor
+  fcsfail` (nl80211 `NL80211_MNTR_FLAG_FCSFAIL` →
+  `ieee80211_adjust_monitor_flags()` → `fif_fcsfail` → `FIF_FCSFAIL` →
+  hardware CRC filter cleared). Common on USB adapters used for capture
+  (Alfa AWUS036ACM and similar).
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Reachable from normal USB HID input of Intuos4 Wireless.
-Unprivileged userspace is not required; hardware input is enough. Not a
-syscall fuzzer path.
+**Step 5.5 — Similar patterns**
+- Record: Same `status->flag |= RX_FLAG_FAILED_FCS_CRC` already present
+  in this tree for mt7603, mt7615, mt7915, mt7921, mt7996. mt76x02 is
+  the gap. `MT_RXINFO_ICVERR` / `MT_RXINFO_MICERR` are also unused here;
+  out of scope for this patch.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Pro2 BT (`wacom_intuos_pro2_bt_irq`) does not `kmemdup`. This
-packed 10-byte copy was unique to Intuos4 WL.
+## Phase 6: This tree (6.6.157 / pending-6.6)
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 6.1 — Does the buggy code exist?**
+- Record: Yes. `mt76x02_mac_process_rx()` at `mt76x02_mac.c:794–797` has
+  L2PAD then DECRYPT; no CRCERR check. `MT_RXINFO_CRCERR` is defined.
+  `git merge-base --is-ancestor d9f8934ed147b3 HEAD` succeeded. Bug
+  present since ~v4.20, so it is in 6.6.y.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Local tree: 6.18.53 (`autosel`,
-`v6.18.53-5049-g0f0bdc2b0dffb`). `v6.18.53:drivers/hid/wacom_wac.c`
-still has `kmemdup` + `memcpy` + unchecked `data[0]`. Upstream fix
-8310cdeefc8a is not an ancestor of v6.18.53.
+Local tree identity:
+- `git describe HEAD` → `p-6.6-3-g04810563abb71`
+- `make kernelversion` → **6.6.157**
+- Branch: `pending-6.6`
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply. Surrounding OOB length checks are already in
-6.18.53.
+**Step 6.2 — Backport difficulty**
+- Record: **Clean apply.** Context matches; `git apply --check`
+  succeeded. Surrounding code is the same as the patch’s index.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: OOB length checks yes. No earlier version of this pointer-
-swap/NULL-check.
+**Step 6.3 — Related fixes already here**
+- Record: No existing CRCERR → `RX_FLAG_FAILED_FCS_CRC` translation.
+  Sibling WARN fix `b6e7958602bd1` is present (different hunk).
+  `63fe66f102837` (mt7996 FCS bit in wrong RXD word) is a different
+  chip.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Phase 7: Subsystem context
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: HID / Wacom tablet driver. IMPORTANT for tablet users,
-PERIPHERAL overall (one 2010-era wireless Intuos4 model).
+**Step 7.1**
+- Record: `drivers/net/wireless/mediatek/mt76` — **IMPORTANT** (widely
+  used WiFi, not core mm/vfs). Covers MT76x0U/E and MT76x2U/E (`Kconfig`
+  MT7610/MT7612 USB and PCIe). Peripheral relative to core kernel, but
+  these USB NICs are common in the field.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Active (device IDs, BT OOB fixes, pktlen work). The `kmemdup` is
-from the v6.15 pktlen change, not ancient code.
+**Step 7.2**
+- Record: mt76 is active; mt76x02 RX processing itself has been stable
+  for years. This is a long-standing omission, not churn from a new
+  subsystem.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 8: Impact and risk
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific — Intuos4 Wireless (`INTUOS4WL`, USB
-0x056A:0x00BD).
+**Step 8.1 — Who is affected**
+- Record: Users of mt76x0/mt76x2 (USB and PCIe) who enable monitor
+  `fcsfail`. Normal STA/AP-only operation keeps the hardware CRC filter
+  on, so those users are not on this path. Mixed monitor+managed on the
+  same phy is affected for cooked RX.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every packed BT/WL input report allocates. Oops if `kmemdup`
-fails; GFP_KERNEL from USB complete is illegal even when the alloc hits
-the slab cache. Not a userspace-triggered security hole.
+**Step 8.2 — Trigger**
+- Record: Explicit monitor `fcsfail` (and typically a busy channel). Not
+  every boot. Unprivileged users cannot enable monitor without
+  privileges, so this is not a generic local-priv-esc path; it is a
+  privileged capture/correctness bug.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: NULL deref → oops (HIGH). GFP_KERNEL from URB complete →
-sleeping-in-atomic WARN/instability (HIGH). Practical hit rate is low
-(small alloc, old device), but the bug is on the live input path.
+**Step 8.3 — Failure mode**
+- Record:
+  - Monitor: corrupted frames indistinguishable from good ones (broken
+    advertised filter). **MEDIUM** for dedicated capture.
+  - Cooked path: FCS-failed frames can be processed as valid 802.11 when
+    `fcsfail` is on. That is frame-integrity / stack-correctness, not a
+    panic. **MEDIUM–HIGH** in mixed-iface setups; not a guaranteed oops.
+  - Overall severity: **MEDIUM**, with a real user-visible functional
+    break and a documented driver-API violation.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: medium — real IRQ-path crash/atomic-sleep fix, small user
-  population.
-- Risk: low — ~8 lines, maintainer-reviewed; unaligned `be16_to_cpup` is
-  the main caveat and was accepted upstream.
-- Ratio: benefit outweighs risk for 6.18.y.
+**Step 8.4 — Risk vs benefit**
+- Record: **Benefit: medium** (correct FCS reporting; stop garbage
+  frames leaking into cooked RX). **Risk: very low** (3 lines, same
+  pattern as sibling chips, no lock/API change). Ratio favors backport.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+## Phase 9: Synthesis
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Unchecked `kmemdup` NULL deref in this 6.18.53 tree.
-- GFP_KERNEL on USB HID URB complete; 5e013ad replaced an atomic-safe
-  stack buffer.
-- v1 was an explicit crash fix; v2 is the maintainer-preferred form.
-- Reviewed by Jason Gerecke, applied by Jiri Kosina.
-- Small, no new API, applies cleanly, parsers only use 10 payload bytes.
+**Step 9.1 — Evidence**
 
-AGAINST:
-- Niche Intuos4 Wireless hardware.
-- No user/syzbot report.
-- Subject reads like an optimization.
-- Unaligned access vs old memcpy-to-aligned-buffer; no follow-up
-  alignment patch verified here.
+For:
+- Real, reproduced bug (GitHub #38; Tested-by on MT7612U; author also
+  tested MT7610U).
+- Violates mac80211 `FIF_FCSFAIL` contract; radiotap BADFCS never set.
+- FCS-failed frames can continue into `__ieee80211_rx_handle_packet()`
+  without the flag.
+- Three-line, obviously correct, matches every other mt76 MAC in this
+  tree.
+- Applies cleanly to 6.6.157; symbols and call path exist.
+- Maintainer SOB (Felix Fietkau).
+- Popular USB hardware (e.g. Alfa AWUS036ACM).
 
-UNRESOLVED:
-- No stable@ thread (lore 403).
-- No evidence of a field oops.
+Against:
+- Not a crash/UAF/deadlock; mainly monitor-mode correctness plus cooked-
+  path leakage only when `fcsfail` is enabled.
+- No `Fixes:` (omission from original driver, not a later regression).
+- Affects a subset of mt76x02 users, not all machines.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — pointer save/restore; Wacom
-   maintainer Reviewed-by.
-2. Fixes a real bug that affects users? PASS — NULL deref and GFP_KERNEL
-   in IRQ on a shipping device path.
-3. Important issue? PASS — oops / sleeping-in-atomic (HIGH), not a style
-   cleanup.
-4. Small and contained? PASS — one file, ~8 lines.
-5. No new features or APIs? PASS.
-6. Can apply to the local tree? PASS — buggy code is in v6.18.53; patch
-   matches.
+Unresolved:
+- Direct lore.kernel.org HTTP was 403; discussion recovered via b4.
+- No independent stable@ thread found.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary bugfix.
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — 3 lines, hardware-tested,
+   maintainer-acked.
+2. Real bug affecting users? **PASS** — reporter could not tell bad-FCS
+   frames apart; contract violation is in-tree.
+3. Important issue? **PASS** (medium) — broken advertised monitor filter
+   plus cooked-path delivery of CRC-failed frames. Not a panic, but it
+   is a real correctness/integrity bug, not a feature.
+4. Small and contained? **PASS** — +3 lines, one function.
+5. No new features/APIs? **PASS** — sets an existing `rx_status` flag
+   other mt76 chips already set.
+6. Can apply to this tree? **PASS** — clean apply on 6.6.157.
 
-Step 9.4: MAKE YOUR DECISION
-This belongs on 6.18.53. The tree still does `kmemdup(..., GFP_KERNEL)`
-in `wacom_intuos_bt_irq()` and dereferences `data[0]` with no NULL
-check, on the USB HID complete path. Replacing that with a temporary
-`wacom->data` pointer is the same fix the maintainer asked for, and it
-applies here without extra commits.
+**Step 9.3 — Exception category**
+- Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
+  driver correctness fix.
+
+**Step 9.4 — Decision**
+This tree is **6.6.157**. The buggy RX path, `MT_RXINFO_CRCERR`, and
+mac80211 flag handling are all present. The patch is a tiny, tested,
+maintainer-accepted fix for a user-visible bug on hardware this driver
+supports. Benefit clearly outweighs risk.
+
+---
+
+### What the commit solves for 6.6 users
+
+mt76x02 already programs the hardware to deliver CRC-failed frames when
+monitor `fcsfail` is set, but never tells mac80211. Users of
+MT7610/MT7612 USB and PCIe adapters then see every frame as clean in
+radiotap, and those frames can also continue into the normal RX
+handlers. The fix sets `RX_FLAG_FAILED_FCS_CRC` from `MT_RXINFO_CRCERR`,
+which is what this tree already does for later mt76 chips.
+
+### Stable-rule fit
+
+Small, obviously correct, no new API, applies cleanly, real user-visible
+bug. Importance is monitor/FCS integrity rather than a panic; that is
+still within what stable takes for driver contract bugs of this size.
+
+### Risk vs benefit
+
+Very low risk (three lines, clean frames unchanged). Medium benefit for
+mt76x02 monitor users and mixed-iface setups.
+
+### Concerns
+
+No functional dependencies. Series mate (WARN drop) is already in this
+tree but is not required for this hunk. mt7925 in the commit message is
+comparison only.
+
+---
 
 Verification:
-- [Phase 1] Tags: Suggested-by/Reviewed-by Jason Gerecke, SOB Ruoyu Wang
-  and Jiri Kosina; no Fixes/Reported-by/Cc: stable
-- [Phase 1] v1 subject from b4: “handle kmemdup failure in Bluetooth IRQ
-  path”
-- [Phase 2] Diff: drop kmemdup/kfree/memcpy; save/restore `wacom->data`
-  around `wacom_intuos_irq()`
-- [Phase 2] Parsers for INTUOS4WL use `data[0]`–`data[9]` only
-  (inout/general/pad)
-- [Phase 3] Blame: kmemdup from 5e013ad206895e (v6.15+); in HEAD and
-  v6.18.53
-- [Phase 3] `git merge-base --is-ancestor 5e013ad206895e v6.18.53` →
-  yes; `8310cdeefc8a` → no
-- [Phase 3] Related OOB fix c8dc23c97680e already in v6.18.53
-- [Phase 4] `b4 dig -c 8310cdeefc8a` → v1+v2 msgid links; Jason reviewed
-  both; Jiri applied v2
-- [Phase 4] Sashiko unaligned warning; Jason said do not block
-- [Phase 4] lore.kernel.org WebFetch 403; stable@ search UNVERIFIED
-- [Phase 5] Call chain: `hid_irq_in` → `hid_safe_input_report` →
-  `wacom_raw_event` → `wacom_intuos_bt_irq`; USB 0xBD Intuos4 WL
-- [Phase 6] `git describe HEAD` → v6.18.53-5049-g0f0bdc2b0dffb; `make
-  kernelversion` → 6.18.53
-- [Phase 6] `git show v6.18.53:drivers/hid/wacom_wac.c` still has
-  kmemdup
-- [Phase 8] Failure: NULL deref / GFP_KERNEL from URB complete; severity
-  HIGH
-- UNVERIFIED: whether this was already requested on stable@
+- [Phase 1] Parsed tags: Reported-by/Tested-by 0072a70, Closes
+  github.com/morrownr/mt76/issues/38, Link msgid `...27750-3...`, SOB
+  Felix Fietkau; no Fixes/Cc:stable
+- [Phase 2] Diff: +3 lines in `mt76x02_mac_process_rx()` after L2PAD;
+  sets `RX_FLAG_FAILED_FCS_CRC` from `MT_RXINFO_CRCERR`
+- [Phase 2] Confirmed `mt76x02_configure_filter()` maps `FIF_FCSFAIL` →
+  clear `MT_RX_FILTR_CFG_CRC_ERR`
+- [Phase 2] Confirmed mac80211 `should_drop_frame()` / radiotap BADFCS /
+  `ieee80211_rx_monitor()` cooked-path return behavior in this tree
+- [Phase 3] `git blame`: insertion region from `d9f8934ed147b3` (2018);
+  `git merge-base --is-ancestor` true; `git describe --contains` →
+  v4.20-rc1
+- [Phase 3] `MT_RXINFO_CRCERR` defined at `mt76x02_mac.h:54`; `git grep`
+  shows it is unused in `.c` files in this tree
+- [Phase 3] Sibling `b6e7958602bd1` already in HEAD; this hunk
+  independent; `git apply --check` CLEAN
+- [Phase 4] `b4 mbox` saved 3-message series; cover tested
+  MT7612U/MT7610U; `b4 am --check-newer-revisions` = v1 only, no NAKs
+- [Phase 4] WebFetch of GitHub issue #38: reproduced 0 BADFCS; after
+  patch 956/7353 frames flagged
+- [Phase 4] lore.kernel.org WebFetch: 403 — UNVERIFIED via HTTP;
+  recovered via b4
+- [Phase 5] Only caller: `mt76x02_queue_rx_skb()`; chips: MT76x0U/E,
+  MT76x2U/E
+- [Phase 5] Same flag already set in mt7603/mt7615/mt7915/mt7921/mt7996
+  in this checkout
+- [Phase 6] `git describe HEAD` p-6.6-3-g04810563abb71; `make
+  kernelversion` 6.6.157; buggy code present; fix not applied
+- [Phase 8] Failure mode: wrong radiotap + possible cooked-path delivery
+  of CRC-failed frames; not a panic
+- UNVERIFIED: stable@ mailing-list thread content (HTTP 403)
 
 **YES**
 
- drivers/hid/wacom_wac.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76x02_mac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
-index af76e49fd0f25..8feb8027be95e 100644
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1192,8 +1192,11 @@ static int int_dist(int x1, int y1, int x2, int y2)
- static void wacom_intuos_bt_process_data(struct wacom_wac *wacom,
- 		unsigned char *data)
- {
--	memcpy(wacom->data, data, 10);
-+	u8 *saved_data = wacom->data;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+index 06f17da2c0106..17c9782915315 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+@@ -792,6 +792,9 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
+ 	if (rxinfo & MT_RXINFO_L2PAD)
+ 		pad_len += 2;
+ 
++	if (rxinfo & MT_RXINFO_CRCERR)
++		status->flag |= RX_FLAG_FAILED_FCS_CRC;
 +
-+	wacom->data = data;
- 	wacom_intuos_irq(wacom);
-+	wacom->data = saved_data;
- 
- 	input_sync(wacom->pen_input);
- 	if (wacom->pad_input)
-@@ -1202,7 +1205,7 @@ static void wacom_intuos_bt_process_data(struct wacom_wac *wacom,
- 
- static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
- {
--	u8 *data = kmemdup(wacom->data, len, GFP_KERNEL);
-+	u8 *data = wacom->data;
- 	int i = 1;
- 	unsigned power_raw, battery_capacity, bat_charging, ps_connected;
- 
-@@ -1242,7 +1245,6 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
- 		break;
- 	}
- 
--	kfree(data);
- 	return 0;
- }
- 
+ 	if (rxinfo & MT_RXINFO_DECRYPT) {
+ 		status->flag |= RX_FLAG_DECRYPTED;
+ 		status->flag |= RX_FLAG_MMIC_STRIPPED;
 -- 
 2.53.0
 
