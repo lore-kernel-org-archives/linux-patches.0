@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9728950F15C;
-	Mon, 19 Oct 2026 13:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9231549FC4;
+	Mon, 19 Oct 2026 13:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418208; cv=none; b=cJdYEMEuf9nEFopOOAapHgO0gHGRLqZs46vm7E86jqrZPAkbbj4MVfP58iPiZlKExph3D/1fY9dYTydbysLqB9gnX6CzGf8rBl/BGRfwnu7tIOZK87l36GMvP93mcfsL37fev3fqozCOCpfDpoBCs5XtV2eeGQ2diD8SRxM939s=
+	t=1792418209; cv=none; b=D/jbhxi3iYweMHKHXNbtkEc3MaXXNnV5pJcMmiOnPSyUJX0CWFMkN9qsA0PJDKlQhHnU9s1CRo4CEUOtHgaoEyEaWn1AXuwjNdzGAmxeDRXwQFv0EGXuMsDja/gcLgI9TlrMfkvKU1knvebaBGlkT7NonQf06InXHF3f7Ny5Q4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418208; c=relaxed/simple;
-	bh=C1UGyC5iPmJkN49m3Si2mhrEjEGxKh2aD03KCvh0pWk=;
+	s=arc-20240116; t=1792418209; c=relaxed/simple;
+	bh=LoGHjCg9Sdcxom0ypPmWIaigurbig5u9/msoRi9pe9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qHUuogaU+NNSMRR2vonvqjjks/4wbsoTXajWd2D4ayaPbtndEqEVu4Kwm6hluOwADyYzf8D9Em+YItbD5Lc+oZyL4PYGuvcDoXxFk40kE1x+mdENG1nccH1kNsrIRMa49QuusPMmmfy4o0/BEwm3ExMbJI2gi4SnXVK3ennsqec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YDiajION; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ar5PNBgxhMQa1CNJ02DoiJPdnXlv5W/dox1+7ccNa6qHoHiHkXd9CHXCtIcm3OfU6dNffayr/+K0BXzgb8lgQ9ZeWH1A/uQlkt42fr1Q+s9WbpE0XB1kJmIv3P0DdbzsKyLSGhU7CgbyEZEPg7Eh64i6qSkDDytdb5x14AJEHFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JsCneYY1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YDiajION"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC901F000C5;
-	Mon, 19 Oct 2026 13:56:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JsCneYY1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17B11F000C6;
+	Mon, 19 Oct 2026 13:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418205;
-	bh=KggA7O7wwFxjfQiaO0JBLflfjpRu9dzqNjPhKfCK+PI=;
+	s=k20260515; t=1792418206;
+	bh=uG5gA47gOYSyqqgUu8gf686568I17wT33QCswzzSEF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YDiajIONOr4MgAzzy40qANeOtFOFQRL1pHKG97peTPHpL9cmcPvVEvo+85U+i1xeS
-	 3Ao1jIRtZwuwWiTKrEICkvXLZLgwCdoQoHmS2LYWIAvCsZwK9iVfdNB9/jtvjxLfDE
-	 6MTOM2Y10eVUqwmChe7uvSKDbmLkUaSt062MIelMMmm71bED9PB26+6/A8s0am+4NN
-	 kuotZSp56PpRc33TI7Zw7OaPxgGb1dbY+1Z/z/DHK/BAmnDCReCHC768l4A90NLlbz
-	 GVvpHLzJruhdW3Xm58bqFVXWdVJ3PluHKSei00w71Wq8sWVY67lS8253kSwkDbnAc1
-	 Zz+tZWZLfIJCQ==
+	b=JsCneYY1MgmhpCzfm5O6CLs+yIAv4q2PBtazRARbHJ9HgADn+ghuia+eMWDfdhWml
+	 Ku5WaPzOfXwTUtPvHtp1MSW9IvDyHt3gKfBvUXMeTOGhUHyaR9qD9ms+JL7R0xYqKw
+	 b6Db/cAj0tNvnop5pvodQFE3EDBc1AJi4u6oM2RhXVH3JD0PiTQ6pVvjnGQOlLQ8xR
+	 CQWJlX5pcVB/EQC43PvQwfJGUzH15fUPm1gcBgvgqG39y1sJ3pUZORd0dqBxRSbckk
+	 oQXlat4+gOjHOLa60WRMJ8GkD8/oDy5b463bQljwUy8e2DMqpj1Ut2peKXjxYJ963t
+	 K9xjUwk0I6cVA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+Cc: Yunye Zhao <yunye.zhao@linux.alibaba.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-btrfs@vger.kernel.org,
+	song@kernel.org,
+	linux-raid@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] btrfs: fix memory barrier order in reloc_root_is_dead()
-Date: Mon, 19 Oct 2026 09:46:18 -0400
-Message-ID: <20261019135441.1420968-87-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] md: add cond_resched() to md_do_sync()'s skip path
+Date: Mon, 19 Oct 2026 09:46:19 -0400
+Message-ID: <20261019135441.1420968-88-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,519 +53,326 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Yunye Zhao <yunye.zhao@linux.alibaba.com>
 
-[ Upstream commit 6f1c97695a6e230ee15c9e052e1933bdccfd5fa3 ]
+[ Upstream commit 162eb5ba791f6260fdaabae75fa2df20134f67d8 ]
 
-When we set a root's reloc_root to NULL, we do it like this:
+When sync_request() reports a skipped region (*skipped == 1),
+md_do_sync()'s main loop advances the cursor and takes an early
+continue:
 
-   static void clear_reloc_root(struct btrfs_root *root)
-   {
-       root->reloc_root = NULL;
-       /*
-        * Need barrier to ensure clear_bit() only happens after
-        * root->reloc_root = NULL. Pairs with have_reloc_root().
-        */
-        smp_wmb();
-        clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
-   }
+	j += sectors;
+	...
+	if (last_check + window > io_sectors || j == max_sectors)
+		continue;
 
-So that a NULL reloc_root is always seen before seeing that the bit
-BTRFS_ROOT_DEAD_RELOC_TREE was cleared.
+If the personality returns a small span per call (raid10 recovery
+returns only 128 sectors), syncing a large, mostly clean array iterates
+this branch an enormous number of times without ever yielding the CPU.
+On a non-preemptive kernel the resync thread then trips the soft-lockup
+watchdog:
 
-But on the read side we have:
+  watchdog: BUG: soft lockup - CPU#149 stuck for 313s! [mdX_resync]
+   md_bitmap_start_sync+0x6f/0xe0
+   raid10_sync_request+0x2c9/0x1530 [raid10]
+   md_do_sync+0x810/0x1030
+   md_thread+0xa7/0x150
 
-   static bool reloc_root_is_dead(const struct btrfs_root *root)
-   {
-        smp_rmb();
-        if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
-            return true;
-        return false;
-   }
+Add a cond_resched().  This does not reduce the wasted iterations; the
+excessive iteration count is a raid10 problem addressed separately.
 
-And then callers of reloc_root_is_dead() access root->reloc_root.
-
-Because the read memory barrier is placed before testing the bit, the CPU
-is completely free to speculatively reorder those two loads. It can read
-root->reloc_root before it actually checks the dead tree bit.
-
-Sashiko reported this as an existing problem in another patch review, see
-the link in the Link tag below.
-
-Fix this by moving the read memory barrier to happen after testing the bit
-and update the comment to reflect current reality.
-
-Link: https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd7afd36c9427.1781194426.git.fdmanana%40suse.com
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>
+Link: https://patch.msgid.link/20260723135535.101995-3-yunye.zhao@linux.alibaba.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This tree is **Linux 6.18.53** (`pending-6.18`). The candidate is
-mainline `6f1c97695a6e2` (`v7.3-rc1`) and is **not** in this checkout.
-The misplaced `smp_rmb()` in `reloc_root_is_dead()` is still present,
-and the write-side half of the same series is already here.
+The checked-out tree is **6.18.53** (`pending-6.18`). The skip path in
+`md_do_sync()` is present, has no yield, and matches this patch. That is
+a real soft-lockup fix.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## Phase 1: Commit message forensics
 
-**Step 1.1: PARSE THE SUBJECT LINE**
+**Step 1.1 — Subject**
+- Record: `[md] [add] add cond_resched() to md_do_sync()'s skip path`
+- Subsystem: MD RAID core. Verb “add” here is a yield on an existing
+  loop, not a feature.
 
-Record: `[btrfs]` `[fix]` — correct read-side memory-barrier order in
-`reloc_root_is_dead()` so the `BTRFS_ROOT_DEAD_RELOC_TREE` bit is
-observed before callers load `root->reloc_root`.
+**Step 1.2 — Tags**
+- Record:
+  - `Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>` (author)
+  - `Link: https://patch.msgid.link/20260723135535.101995-3-
+    yunye.zhao@linux.alibaba.com`
+  - `Signed-off-by: Yu Kuai <yukuai@fygo.io>` (md maintainer; applied)
+  - No `Fixes:` / `Reported-by:` / `Tested-by:` in the committed text
+  - Original v2 submission **did** include `Cc: stable@vger.kernel.org`;
+    Yu Kuai dropped it when applying (“Remove the cc stable as there is
+    no fixtag”). That is process, not a technical NAK.
+  - Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit …]`
+    ignored as instructed.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.3 — Body**
+- Record:
+  - **Bug:** when `sync_request()` returns `*skipped == 1` with a small
+    span (RAID10 recovery: 128 sectors), `md_do_sync()` takes `continue`
+    and never reaches the existing `cond_resched()`.
+  - **Symptom:** `watchdog: BUG: soft lockup - CPU#149 stuck for 313s!
+    [mdX_resync]` with `md_bitmap_start_sync` → `raid10_sync_request` →
+    `md_do_sync` → `md_thread`.
+  - **Trigger:** large, mostly-clean RAID10 recovery (author:
+    2^40-sector device → ~2^33 iterations).
+  - **Root cause of CPU burn:** RAID10 recovery discards the bitmap’s
+    large clean span and returns 128; that is patch 3/3. This commit
+    only yields.
+  - Author tested on 6.6.102 and mainline.
 
-Record:
-- **Link:** https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd
-  7afd36c9427.1781194426.git.fdmanana%40suse.com (Sashiko review of a
-  related UAF patch, where this read-side bug was flagged)
-- **Reviewed-by:** Boris Burkov `<boris@bur.io>`
-- **Signed-off-by:** Filipe Manana `<fdmanana@suse.com>` (author), David
-  Sterba `<dsterba@suse.com>` (btrfs maintainer)
-- No **Fixes:**, **Reported-by:**, **Tested-by:**, **Cc: stable**,
-  **Acked-by:**
-- Ignore pipeline SOBs. Absence of Fixes/Cc-stable is expected.
+**Step 1.4 — Hidden bug fix?**
+- Record: Not hidden. Explicit soft-lockup fix. Series cover letter
+  calls it a “safety net, any personality/layout.”
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+## Phase 2: Diff analysis
 
-Record:
-- **Bug:** Writer does `root->reloc_root = NULL; smp_wmb();
-  clear_bit(DEAD)`. Reader did `smp_rmb(); test_bit(DEAD)` and then
-  callers loaded `root->reloc_root`.
-- **Mechanism:** An `smp_rmb()` *before* the bit load does not order
-  that load against the later `reloc_root` load. CPU/compiler may load
-  `reloc_root` first.
-- **Symptom:** Stale non-NULL `reloc_root` after the writer has NULLed
-  it and cleared the dead bit, then `btrfs_drop_snapshot()` — use-after-
-  free.
-- **Root cause:** Classic MP (message-passing) pairing error:
-  `smp_rmb()` must sit *between* the two loads, not before both.
-- **Version info:** Buggy helper dates to `6282675e6708ec` (v5.5-rc7,
-  2020).
+**Step 2.1 — Inventory**
+- Record: `drivers/md/md.c` only; ~3 insertions / 1 deletion in
+  `md_do_sync()`. Surgical, single-function.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
+**Step 2.2 — Flow**
+- Record: **Before:** skip/early-continue path never yields. **After:**
+  `cond_resched()` then `continue`. Normal I/O path still uses the later
+  `cond_resched()` at the speed-limit check.
 
-Record: Not hidden. Explicit barrier/UAF-class correctness fix, found by
-Sashiko on a related reloc-root series.
+**Step 2.3 — Bug mechanism**
+- Record: **Hang / soft-lockup** (non-preemptive). Skip path bypasses
+  the yield that already exists later in the same loop.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Verified in this tree:
 
-**Step 2.1: INVENTORY THE CHANGES**
-
-Record:
-- **File:** `fs/btrfs/relocation.c` (+6 / −5)
-- **Function:** `reloc_root_is_dead()`
-- **Scope:** Single-function, surgical
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record:
-- **Before:** `smp_rmb(); if (test_bit(DEAD)) return true; return
-  false;`
-- **After:** `if (test_bit(DEAD)) return true; smp_rmb(); return false;`
-- **Affected path:** Any caller that, on a false result, then reads
-  `root->reloc_root` (`have_reloc_root()`, `btrfs_init_reloc_root()`,
-  `btrfs_should_ignore_reloc_root()`).
-- Early return when the bit is set skips the rmb; those callers do not
-  load `reloc_root`. That is correct.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record:
-- **Category:** Synchronization / race (memory-barrier pairing); failure
-  mode is UAF
-- **Mechanism:** Writer: store `reloc_root=NULL`, `smp_wmb()`,
-  `clear_bit(DEAD)`. Required reader: load DEAD, `smp_rmb()`, load
-  `reloc_root`. Current reader puts `smp_rmb()` *before* the bit load,
-  so it does not pair. Compiler can hoist `root->reloc_root` above
-  `test_bit()` after inlining (x86 included); weak memory models can
-  also reorder the loads in hardware.
-
-Verified against LKMM recipes (`tools/memory-
-model/Documentation/recipes.txt`, MP + `smp_wmb`/`smp_rmb`): the read
-barrier is between the two loads.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record: Minimal and matches documented pairing. No API/data-structure
-change. Regression risk is low: if the bit is set we return without rmb
-(callers do not touch `reloc_root`); if clear, rmb orders the subsequent
-load. David Sterba initially doubted the move; Filipe explained the
-pairing; David still merged with SOB.
-
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record:
-- Buggy `smp_rmb()` + `test_bit()`: `6282675e6708ec` (“btrfs:
-  relocation: fix reloc_root lifespan and access”), Qu Wenruo,
-  2020-01-08, first in **v5.5-rc7**. That commit itself was `CC: stable
-  # 5.4+` to fix KASAN UAFs on balance+snapshot.
-- Write-side `clear_reloc_root()`: `fda1b6636ff184` in this tree
-  (Upstream `83201804efa4a`).
-- Original commit text even said “the pairing read side is before
-  test_bit” — that comment is what this patch corrects.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No Fixes: tag. Introducer is `6282675e6708ec`, present in this
-tree (`git merge-base --is-ancestor` exit 0). Independently identified
-in 2021 by Baptiste Lepers (`[PATCH] btrfs: relocation: fix misplaced
-barrier in reloc_root_is_dead`, 2021-05-26) with `Fixes: 6282675e6708e`;
-that patch was never merged.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: Same-day 2-patch series `[PATCH 0/2] btrfs: fix incorrect
-barrier usage in relocation`:
-- **1/2** `b78fe9563e2d5` / this tree `63d6b1f04cd91` — write-side
-  `clear_reloc_root()` in `merge_reloc_roots()`. **Already in this
-  tree.**
-- **2/2** this commit — read-side rmb. **Not in this tree.**
-
-Prerequisite UAF helper `clear_reloc_root` (`fda1b6636ff184`) is also
-already here. No later mainline rewrite of `reloc_root_is_dead()` after
-`6f1c97695a6e2`.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Filipe Manana is a core btrfs author (many reloc-root UAF/leak
-fixes). David Sterba (listed btrfs maintainer) signed off. Boris Burkov
-reviewed the series.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: This hunk only reorders `smp_rmb()` vs `test_bit()` in
-`reloc_root_is_dead()`. It does not call `clear_reloc_root()`.
-Standalone. `git show 6f1c97695a6e2 | git apply --check` succeeded (hunk
-offset −94 lines only).
-
-The kbuild error on the series was `clear_reloc_root` undeclared when
-**1/2** was applied without the UAF series; that does not apply to
-**this** patch, and this 6.18.53 tree already has both the helper and
-1/2.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- **Lore/thread:** cover `cover.1781263239.git.fdmanana@suse.com`; 2/2
-  msgid `62602395bf1488aa81645ea59e22405d6c06d3f7.1781263239.git.fdmanan
-  a@suse.com`
-- **Series:** v1 only (2026-06-12), two patches
-- **b4 dig -c 6f1c97695a6e2** initially matched the related UAF v5
-  thread (same Link/Sashiko URL / similar patch-id). Direct msgid fetch
-  recovered the real 0/2 series (9 messages).
-- **Reviewer feedback:**
-  - Boris Burkov: `Reviewed-by` on the cover (both patches)
-  - David Sterba (2026-06-18): argued rmb-before-`test_bit` was
-    intentional “to have up-to-date value”; said post-test rmb “is
-    wrong, or at least not entirely correct”; suggested dropping
-    barriers
-  - Filipe: pairing is load-bit / rmb / load-`reloc_root` against store-
-    NULL / wmb / clear-bit; dropping barriers would regress the 2020
-    KASAN races
-  - David still merged (SOB on the commit)
-- **kbuild:** false positive (1/2 vs missing helper on for-next vs
-  Linus)
-- **Stable nomination in thread:** none
-- **NAKs:** no NAK; maintainer doubt was answered and the patch landed
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: To/Cc `linux-btrfs@vger.kernel.org`. Boris reviewed. David (M:
-in MAINTAINERS) engaged and merged.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot for this exact rmb placement. Sashiko flagged it while
-reviewing the insert_dirty_subvol UAF series. Original 2020 KASAN
-reports (Zygo Blaxell) are why the barriers exist. 2021 Baptiste patch:
-same diagnosis; appears unreplied (odd `To:`), never applied.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Companion 1/2 already AUTOSEL’d and present in this 6.18 tree.
-This 2/2 is the unfinished read-side half. UAF series that introduced
-`clear_reloc_root` is also already here.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: Openwall/AUTOSEL traffic is for 1/2 and the UAF helper, not this
-subject. No stable-list rejection of 2/2 was found. lore.kernel.org
-search URLs returned 403; discussion was recovered via `b4 mbox`
-instead.
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-
-Record: `reloc_root_is_dead()` only.
-
-**Step 5.2: TRACE CALLERS**
-
-Record (this tree, `fs/btrfs/`):
-- `have_reloc_root()` → `btrfs_update_reloc_root()`,
-  `btrfs_reloc_pre_snapshot()`, `btrfs_reloc_post_snapshot()`
-- `btrfs_init_reloc_root()` (direct) ← `fs/btrfs/transaction.c` when a
-  shareable root is recorded in a transaction
-- `btrfs_should_ignore_reloc_root()` ← `fs/btrfs/backref.c` during reloc
-  backref walk
-
-Contexts: relocation/balance, snapshot creation during balance,
-transaction join for subvolumes. Not interrupt. Reachable from
-`BTRFS_IOC_BALANCE` / snapshot ioctls.
-
-**Step 5.3: TRACE CALLEES**
-
-Record: `test_bit()`, `smp_rmb()`. Callers then read `root->reloc_root`
-and may dereference `commit_root`.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Writer `clean_dirty_subvols()` / `clear_reloc_root()`: save
-pointer, NULL `reloc_root`, wmb, clear DEAD, `btrfs_drop_snapshot()`.
-Concurrent reader: new transaction / snapshot / backref walk calling
-`reloc_root_is_dead()` then loading `reloc_root`. Original 2020 analysis
-called this the C–D window after `btrfs_commit_transaction()`.
-Userspace-reachable on btrfs balance+snapshot. Unprivileged users
-typically cannot ioctl-balance; a hit still crashes/corrals the
-filesystem.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same class of misplaced rmb in `btrfs_record_root_in_trans`
-(2021 Baptiste, later 2026 “btrfs: fix root-in-trans fast-path
-ordering”). Write-side pairing in this file is already correct
-(`clear_reloc_root`, `btrfs_update_reloc_root` `set_bit`+wmb).
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: **Yes.** `fs/btrfs/relocation.c` lines 246–257:
-
-```246:257:fs/btrfs/relocation.c
-static bool reloc_root_is_dead(const struct btrfs_root *root)
-{
-        /*
-  - Pair with set_bit/clear_bit in clean_dirty_subvols and
-  - btrfs_update_reloc_root. We need to see the updated bit before
-  - trying to access reloc_root
-         */
-        smp_rmb();
-        if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
-                return true;
-        return false;
-}
+```9751:9753:drivers/md/md.c
+                if (last_check + window > io_sectors || j ==
+max_sectors)
+                        continue;
 ```
 
-Introduced v5.5; still wrong here. Write side already uses `smp_wmb()`
-in `clear_reloc_root()` (1460–1468). `git merge-base --is-ancestor
-6f1c97695a6e2 HEAD` → not an ancestor.
+```9779:9779:drivers/md/md.c
+                cond_resched();
+```
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Skip `continue` never reaches line 9779. `window` is `32 * (PAGE_SIZE /
+512)` (256 sectors). If `skipped`, `io_sectors` does not increase, so
+`last_check + window > io_sectors` stays true.
 
-Record: **Clean apply** (`git apply --check` succeeded, offset only). No
-helper dependency. Surrounding `have_reloc_root()` / callers match
-mainline.
+RAID10 recovery still does `max_sync = RESYNC_PAGES << (PAGE_SHIFT-9)`
+(128 sectors). On a clean bitmap, `biolist == NULL` → `giveup` clamps to
+`max_sync` and, because `max_sector` is a parameter (not reset at
+`skipped:`), the call returns 128 to `md_do_sync()`.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+**Step 2.4 — Fix quality**
+- Record: Obviously correct. Same primitive already used in this
+  function. Process context (`md_thread`). No new API/locks. Regression
+  risk very low. Might slightly slow tight skip loops; that is the goal.
 
-Record: 1/2 and `clear_reloc_root` UAF fix are here. This read-side
-reorder is not. No substitute fix.
+## Phase 3: Git history
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 3.1 — Blame**
+- Record: Skip `continue` dates to early MD (`57afd89f98a99` / 2.6 era).
+  Long-standing. RAID10 128-sector recovery cap is equally old
+  (`RESYNC_BLOCK_SIZE` 64KiB).
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+**Step 3.2 — Fixes: tag**
+- Record: None. Not a regression from a single later commit; interaction
+  of skip-continue and RAID10 recovery skip size.
 
-Record: **fs/btrfs** — **IMPORTANT** (filesystem integrity; reloc UAF
-can oops or corrupt during balance).
+**Step 3.3 — Related commits**
+- Record: Patch 2/3 of “md/raid10: fix recovery corruption and soft
+  lockup on large arrays”.
+  - 1/3 `md/raid10: fix still_degraded being inverted` — **already in
+    this tree** (`0efabe6229dc6`). Independent.
+  - 3/3 `md/raid10: skip clean regions in bulk` — **not** in this tree.
+    Independent; this yield still needed for far/offset layouts and
+    other personalities.
+- No `cond_resched` on this skip path in `HEAD`.
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+**Step 3.4 — Author**
+- Record: Yunye Zhao (Alibaba). Applied by Yu Kuai (md maintainer).
 
-Record: Active. Multiple 2026 reloc-root UAF/leak/barrier fixes already
-landed in this 6.18.y tree.
+**Step 3.5 — Dependencies**
+- Record: Standalone. Uses existing `cond_resched()`. 6.18
+  `md_do_sync()` already has `update:`, `MD_RESYNC_ACTIVE`, and 4-arg
+  `sync_request()` — same context as the patch. Clean apply.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 4: Mailing list
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
+**Step 4.1 — Discussion**
+- Record: https://lore.kernel.org/linux-
+  raid/20260723135535.101995-3-yunye.zhao@linux.alibaba.com/ (also
+  openwall mirrors).
+- v1: single `cond_resched` patch. Yu Kuai initially thought it was a
+  dead loop.
+- v2: 3 patches; this one retitled; v1 “io_sectors never increases”
+  claim corrected.
+- Yu Kuai on v1 follow-up: “This patch is still valuable, even a 5s
+  lockup is not acceptable.”
+- Applied to md-7.3. No NAK on the yield itself.
 
-Record: Btrfs users who run balance/relocation, especially concurrent
-with snapshots/subvolume updates. Not universal, but a standard admin
-path.
+**Step 4.2 — Recipients**
+- Record: Song Liu, Yu Kuai; Cc Li Nan, Xiao Ni, linux-raid, linux-
+  kernel.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+**Step 4.3 — Bug report**
+- Record: Author stack trace; 2^40-sector array; ~8.6e9 iterations;
+  313s. Cover letter: before patch 3, 37.2s 100% CPU on 8T-per-disk
+  sparse recovery; `softlockup_panic=1`.
 
-Record: Overlap of `clear_reloc_root()`/`clean_dirty_subvols()` with a
-reader of `have_reloc_root()` / `btrfs_init_reloc_root()` /
-`btrfs_should_ignore_reloc_root()`. Timing-dependent; same shape as the
-2020 KASAN balance+snapshot reports. Typically privileged ioctls; impact
-is whole-fs.
+**Step 4.4 — Series**
+- Record: 2/3 is the md-core safety net. Does not depend on 1/3 or 3/3.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+**Step 4.5 — stable@**
+- Record: No useful stable-list thread found (lore.kernel.org/stable
+  403). Maintainer dropped `Cc: stable` only for missing `Fixes:`.
 
-Record: Stale `reloc_root` used after `btrfs_drop_snapshot()` → **UAF /
-oops**, possible further refcount damage. **Severity: HIGH.**
+## Phase 5: Semantics
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+**Step 5.1 — Functions**
+- Record: `md_do_sync()`.
 
-Record:
-- **Benefit: HIGH** — completes barrier pairing; write side already
-  backported here, so this tree currently has an unpaired wmb.
-- **Risk: LOW** — 11 lines, one static helper, no locking/API change.
-- **Ratio:** Strongly favorable.
+**Step 5.2 — Callers**
+- Record: Registered as the MD resync thread
+  (`md_register_thread(md_do_sync, …)`). Kernel thread, not IRQ.
+  Userspace triggers via array recovery/resync/check (`mdadm`).
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 5.3 — Callees**
+- Record: `pers->sync_request()`, bitmap start/end, `cond_resched()`,
+  speed-limit waits.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 5.4 — Reachability**
+- Record: Yes. Disk replace / rebuild / `--syncaction` on RAID10 with
+  internal bitmap. Production path.
 
-**FOR:**
-- Real MP barrier bug; UAF if `reloc_root` is loaded before `test_bit`
-  during dead-bit clear
-- Buggy code verified in this 6.18.53 tree since v5.5
-- Write-side companion already in this tree → read side is the missing
-  half
-- LKMM pairing is unambiguous (`smp_rmb` between the two loads)
-- Small, applies cleanly, reviewed (Boris), merged by maintainer (David)
-- Same race family as the 2020 KASAN reloc-root lifespan fix
-- Sashiko + independent 2021 diagnosis
+**Step 5.5 — Similar patterns**
+- Record: Same file already yields on the I/O path. RAID1/5/10 use
+  `cond_resched()` in other loops. Skip path was the hole.
 
-**AGAINST:**
-- No dedicated syzbot/user crash for this rmb placement
-- David initially disputed the move (later merged)
-- Original 2020 text claimed a transaction as a higher-level barrier
-  (barriers still added for the C–D window; this patch is that window)
-- 2021 patch sat unmerged (likely overlooked, not NAK’d)
+## Phase 6: This tree (6.18.53)
 
-**UNRESOLVED:** Could not fetch lore.kernel.org HTML (403). Thread
-recovered via `b4 mbox`. No evidence this 2/2 was rejected for stable.
+**Step 6.1 — Buggy code present?**
+- Record: **Yes.** `drivers/md/md.c` ~9752 skip `continue` with no
+  yield. RAID10 `giveup` still advances by `max_sync` (128). `git
+  describe HEAD`: `p-6.18-1-g03b85e06ca9bf`. `make kernelversion`:
+  `6.18.53`.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+**Step 6.2 — Backport difficulty**
+- Record: **Clean apply.** Local hunk matches the submitted diff
+  (`MD_RESYNC_ACTIVE`, `update:`).
 
-1. Obviously correct and tested? **PASS** — matches LKMM MP pairing;
-   reviewed; in mainline as of v7.3-rc1
-2. Fixes a real bug that affects users? **PASS** — unpaired barrier on a
-   path built to stop reloc-root UAF
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   HIGH, UAF/oops during balance
-4. Small and contained? **PASS** — +6/−5, one function
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — clean apply; prerequisites
-   already present
+**Step 6.3 — Already fixed?**
+- Record: No. 1/3 is in tree; 2/3 and 3/3 are not. Older `71e8e4f288e74`
+  (bitmap size vs array size) is a different lockup.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+## Phase 7: Subsystem
 
-Record: N/A — ordinary correctness fix.
+**Step 7.1**
+- Record: `drivers/md` — **IMPORTANT** (enterprise RAID, dm-raid). Not
+  staging.
 
-**Step 9.4: MAKE YOUR DECISION**
+**Step 7.2**
+- Record: Active; recent RAID10/md fixes on this branch.
 
-This 6.18.53 tree still has `smp_rmb()` before `test_bit()` in
-`reloc_root_is_dead()`, so the write-side `smp_wmb()` already present in
-`clear_reloc_root()` does not pair. Moving the rmb after the bit test is
-the standard, small fix for a UAF-class race on btrfs relocation. It
-should be backported here.
+## Phase 8: Impact and risk
 
-===============================================================
-Verification
-===============================================================
+**Step 8.1 — Who**
+- Record: MD/RAID users, especially RAID10 recovery of large mostly-
+  clean arrays. Distro/enterprise kernels often `PREEMPT_NONE` /
+  `PREEMPT_VOLUNTARY`.
 
-- **[Phase 1]** Parsed subject/tags/body from `git show 6f1c97695a6e2`
-  on origin/master
-- **[Phase 2]** Diff is +6/−5 in `reloc_root_is_dead()` only; compared
-  to current `fs/btrfs/relocation.c:246-257`
-- **[Phase 2]** Confirmed write side `clear_reloc_root()` at 1460–1468:
-  NULL → `smp_wmb()` → `clear_bit`
-- **[Phase 2]** LKMM recipes.txt MP example: load y, `smp_rmb()`, load x
-- **[Phase 3]** `git blame -L 246,257`: `6282675e6708ec` (v5.5-rc7);
-  `git describe --contains 6282675e6708ec` → `v5.5-rc7~22^2~2`
-- **[Phase 3]** `git merge-base --is-ancestor 6282675e6708ec HEAD` →
-  yes; `6f1c97695a6e2` → no
-- **[Phase 3]** `git merge-base --is-ancestor 63d6b1f04cd91 HEAD` → 1/2
-  present; `fda1b6636ff18` → `clear_reloc_root` present
-- **[Phase 3]** `git show 6f1c97695a6e2 | git apply --check` → hunk
-  succeeded at offset −94
-- **[Phase 3]** `git describe --contains 6f1c97695a6e2` →
-  `v7.3-rc1~117^2~66`
-- **[Phase 4]** `b4 mbox` of msgid `50682caa6bbf…` → cover + 1/2 + 2/2 +
-  Boris Reviewed-by + David concern + Filipe reply + kbuild false
-  positive
-- **[Phase 4]** 2021 Baptiste patch verified via openwall/lkml.iu (never
-  in `git log origin/master --author='Baptiste Lepers' -- fs/btrfs`)
-- **[Phase 4]** lore.kernel.org WebFetch 403; used b4 instead
-- **[Phase 5]** `git grep` callers: `have_reloc_root`,
-  `btrfs_init_reloc_root`, `btrfs_should_ignore_reloc_root` →
-  transaction.c, relocation.c, backref.c
-- **[Phase 6]** `git describe HEAD` / `make kernelversion` →
-  `p-6.18-1-g03b85e06ca9bf`, **6.18.53**
-- **[Phase 6]** `git grep -A20 reloc_root_is_dead origin/master` →
-  mainline already has test_bit then rmb
-- **[Phase 7]** MAINTAINERS: David Sterba is btrfs maintainer; he SOB’d
-  the commit
-- **[Phase 8]** Failure mode from original `6282675e6708ec` KASAN stacks
-  (balance+snapshot) plus C–D window vs `drop_snapshot` after
-  `clear_bit`
-- **UNVERIFIED:** Direct sashiko.dev review text (JS page had no static
-  content); inferred from Link tag + cover letter + Filipe changelog
+**Step 8.2 — Trigger**
+- Record: Recovery/resync of a large sparse array. Not unprivileged
+  syscall; rebuild is a privileged/admin path. Common after disk
+  replace. Timing-independent tight loop.
 
-The patch is a small, obviously correct pairing fix for a reloc-root UAF
-race, the buggy code is in this 6.18.53 tree, and the write-side half is
-already here.
+**Step 8.3 — Failure mode**
+- Record: Soft lockup (313s in the report). With `softlockup_panic=1`,
+  panic. **CRITICAL**.
+
+**Step 8.4 — Risk vs benefit**
+- Record: Benefit high (stops watchdog/panic). Risk very low (3 lines,
+  existing helper). Ratio strongly in favor. Remaining CPU spin is patch
+  3; this still prevents the BUG.
+
+## Phase 9: Synthesis
+
+**For backporting**
+- Real, reproduced soft lockup with stack trace.
+- Hole is in this tree; patch matches.
+- Tiny, obviously correct; maintainer applied it and called it valuable.
+- Independent of 3/3; still needed after 1/3.
+- Classic stable pattern: `cond_resched()` to stop a lockup.
+
+**Against**
+- Does not cut the 128-sector crawl (author is explicit).
+- No `Fixes:` (maintainer dropped `Cc: stable` for that).
+- Pre-existing `md_new_event()` spam on `last_check == 0` (not
+  introduced here).
+
+**Unresolved:** none that change the verdict. Could not fetch
+lore.kernel.org/stable (403); discussion from the patch mbox is enough.
+
+**Stable rules**
+1. Obviously correct and tested — **PASS** (mainline + QEMU tests;
+   maintainer applied).
+2. Real user-visible bug — **PASS** (soft lockup on RAID10 recovery).
+3. Important (crash/hang) — **PASS** (soft lockup / possible panic).
+4. Small and contained — **PASS** (~3 lines, one function).
+5. No new features/APIs — **PASS**.
+6. Applies to this tree — **PASS** (clean).
+
+**Exception category:** none required; it is a hang fix.
+
+This matters on 6.18 because RAID rebuild of large arrays is normal
+operations, and a 5–313s lockup (or panic) is exactly what stable is
+for. The yield is the same one the I/O path already uses.
+
+## Verification
+- [Phase 1] Tags: author SOB, Yu Kuai SOB, msgid link; v2 had `Cc:
+  stable`, dropped on apply for missing Fixes.
+- [Phase 2] Diff: 3 lines in `md_do_sync()` skip `continue`; 6.18 code
+  at 9752–9753 / 9779 matches.
+- [Phase 2] RAID10: `max_sync = RESYNC_PAGES << (PAGE_SHIFT-9)` = 128;
+  `biolist == NULL` → `giveup`.
+- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.18.53, branch
+  `pending-6.18`.
+- [Phase 3] 1/3 already ancestor (`0efabe6229dc6`); this commit is not
+  in HEAD.
+- [Phase 4] `b4 mbox` 21-message thread; Yu Kuai: yield still valuable;
+  applied to md-7.3.
+- [Phase 5] Caller: `md_register_thread(md_do_sync)` resync thread.
+- [Phase 6] Skip path present; context matches; expected clean apply.
+- [Phase 8] Failure: soft lockup 313s; severity CRITICAL.
+- UNVERIFIED: lore.kernel.org/stable search (HTTP 403). Does not change
+  the verdict.
 
 **YES**
 
- fs/btrfs/relocation.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/md/md.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index eab9686b1bcdf..fcb0ab937de5c 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -245,14 +245,15 @@ static struct btrfs_backref_node *walk_down_backref(
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index ce3bd127e3bb3..44f44219ed7fe 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9751,8 +9751,10 @@ void md_do_sync(struct md_thread *thread)
+ 			 */
+ 			md_new_event();
  
- static bool reloc_root_is_dead(const struct btrfs_root *root)
- {
-+	if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
-+		return true;
- 	/*
--	 * Pair with set_bit/clear_bit in clean_dirty_subvols and
--	 * btrfs_update_reloc_root. We need to see the updated bit before
--	 * trying to access reloc_root
-+	 * Pairs with set_bit/clear_bit in clear_reloc_root() and
-+	 * btrfs_update_reloc_root(). We need to see the updated bit before
-+	 * trying to access root->reloc_root in our callers.
- 	 */
- 	smp_rmb();
--	if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
--		return true;
-+
- 	return false;
- }
+-		if (last_check + window > io_sectors || j == max_sectors)
++		if (last_check + window > io_sectors || j == max_sectors) {
++			cond_resched();
+ 			continue;
++		}
  
+ 		last_check = io_sectors;
+ 	repeat:
 -- 
 2.53.0
 
