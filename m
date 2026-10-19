@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B999D5D3C44;
-	Mon, 19 Oct 2026 14:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8EE4D1F8B;
+	Mon, 19 Oct 2026 14:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418502; cv=none; b=LognfyZGvOv91UcRJufILyM0BcOFFRKFFZkmKOQN27ezlmDidIrLSMnVXgTYLPsEwyK+NHjcIHBpjvlnzjUQ+pzefzDapYTbIkmwKlzAI0kTR3MCKL55dfMqaNBMm0VhMI13nqso7bKxwN3D0rnsUegQuxojjv7gdoqpXQFJ0tQ=
+	t=1792418503; cv=none; b=SCSGRteuEuVdmmuIR0nXq2icIk4+L3oORrLXcBMA86EK83BGXk9lDbNR/dcBF0sDfbwqfUme8+PNZ8+LezBIJVrPyXDN8M7QJgGacHCCPb94FUfhCPh2+Xwwcle39C/FcsmaeOmHIvoM2duHrVNhLAVEer4P9AalCZhxLjAPokk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418502; c=relaxed/simple;
-	bh=9uEfvAuOiYOJcHxMy0F3ENWFF6EcCpNXoDLQ2cXBcbI=;
+	s=arc-20240116; t=1792418503; c=relaxed/simple;
+	bh=Pw16NMBKp4Tb7RpBxtRLoXIQzsakfGEM8SLKudZ+8JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ufhbF6w2+PLSmc2I5qCgf83oNakggjV+LQWQFaD9HaQ+693Pn67JCUHtOFnAqsQi1QDC5q564Su3TrhUpEoDTSut/KE+djmY8DzTSKSFLLdgTsvBGWoS8NstGbEz8NwS3kSnHaKv92gtQQPBMUoA8lXhvQRiSko7yYi45Z1R/oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f1TrjllH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cNomdWyhUh1mtzIgymZsFFsWtOM3DouuOJSNAUnD+p81c3Dfd/fq+3y9zoCFQbNnlMDMOhIJXMd2Nq/dJ6mEP/fVpfn39S22oRtuwRZzpo+FVkmjONczgG7Ub7mLtHJj2UJqqNm0BZU06/XlsxQTJWrYEIwyAPmqEfjv95Y5DVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bb0BZXX+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f1TrjllH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10321F000C6;
-	Mon, 19 Oct 2026 14:01:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bb0BZXX+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0992C1F000C9;
+	Mon, 19 Oct 2026 14:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418499;
-	bh=brGJVCCR968UDegg086AWZ0DWO31Q6p+SXo1Qipf9ms=;
+	s=k20260515; t=1792418500;
+	bh=vCYSX0KAdzMp4LUoB36agPXg/WOb5Qw+5T8Kzg7aaEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f1TrjllHaHDtc4iZw20WqO7wlw3GbOnNR40JMr+9UCsk2xMNgijd5nVSQTWy8iOtc
-	 gja6vNESHpUU4PePFKd09lliq4kdzfNhKWDFIzVEUMoYSZh6T10ZR4evgRrpugkb+R
-	 HzY8dn4LfSnbZzr1Ktnrc1KYaw70zy9Z4Z9QEptxk4kypOr+Mqy8TkPARA/KDW3dJ+
-	 42dEIkTIW+U4QchwoMQo7MPVrvGkBbOYkfC4/BVAQL7/C2dtZCcnHt8Fzql8j2LbDd
-	 kwE7mH9gR7LjhlgTOZKAdYwm+fhTJD2GU2II1xbBZt27R9lgcyy0hx1WemdQHyRWZF
-	 ehAo79G1acymg==
+	b=Bb0BZXX+XXSb2TK8BkM7gxBi954yujRm0UpD3MDPufSsrMxxU/FkEf4gu+H1SvsJY
+	 YxdNc/MAcEYDhFXezh0wSMyDCpo6gbKE743Ww/+m0Gy58Oy1ggZymCWzZndOEb+sSn
+	 jLpLUivEEQFfxGm2pFEKMZOJH5vXPRKMv3nW/N+rmq2sU+pl934FjfiDN92DVH5X88
+	 xI34YrU499JZoCvDPYclaD4TUKF9XXkF0qZLnzjF7cUuAAYyjzE2Tw6eFMb+dEStqU
+	 Otw48UlEh+5rvgKZpHBbilza91rCTFgxl1Q0PuuQDiyMhnCmLxh+2m17XrYULJuO69
+	 ixAMwR6X9F5HQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+Cc: Thomas Huth <thuth@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linusw@kernel.org,
-	brgl@kernel.org,
-	linux-gpio@vger.kernel.org,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] gpio: pca9570: Use I2C match data
-Date: Mon, 19 Oct 2026 09:49:43 -0400
-Message-ID: <20261019135441.1420968-292-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] smb: server: Free session data in user_session.c with kfree_sensitive()
+Date: Mon, 19 Oct 2026 09:49:44 -0400
+Message-ID: <20261019135441.1420968-293-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,378 +52,380 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Thomas Huth <thuth@redhat.com>
 
-[ Upstream commit 415c63896b76fd98883e190bc7518383cb01779c ]
+[ Upstream commit 9a4bd6507c21f66e84dc021705a4b9d84773111e ]
 
-The driver stores chip metadata in both the OF match table and the I2C
-id table, but probe currently reads it with device_get_match_data().
-That helper only returns firmware-node match data, so an I2C-id/modalias
-match can leave chip_data NULL before the driver dereferences it to read
-ngpio.
+struct ksmbd_session contains some arrays with sensitive information, like
+sess_key, smb3encryptionkey, smb3decryptionkey and smb3signingkey. Thus
+let's make sure that this information cannot leak via the heap and use
+kfree_sensitive() to free it.
 
-Use i2c_get_match_data() so the I2C id table driver_data is consumed
-when firmware match data is not present.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260624053744.72612-1-pengpeng@iscas.ac.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+I have the local 6.12.111 code, the upstream commit, and the mailing-
+list thread. Compiling the nine-phase analysis next.
+
 ## Phase 1: Commit message forensics
 
 **Step 1.1: Subject line**
-- Record: `[gpio/pca9570] [Use] Switch probe from firmware-only match
-  data to I2C match data so I2C-id/modalias binds get chip metadata`
+- Record: `[smb/ksmbd server] [Free / use kfree_sensitive] Wipe ksmbd
+  session objects (and Preauth_HashValue) so session keys cannot remain
+  in freed heap memory`
 
-**Step 1.2: Tags**
-- Record:
-  - `Fixes:`: none (expected for this review)
-  - `Reported-by:`: none
-  - `Tested-by:`: none
-  - `Reviewed-by:`: none
-  - `Acked-by:`: none
-  - `Link:` `https://patch.msgid.link/20260624053744.72612-1-
-    pengpeng@iscas.ac.cn`
-  - `Cc: stable`: none (expected)
-  - `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-  - `Signed-off-by: Bartosz Golaszewski
-    <bartosz.golaszewski@oss.qualcomm.com>` (GPIO maintainer)
-  - Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
-    415c63896b76...]` ignored per instructions
+**Step 1.2: Tags** (from upstream
+`d4a6d1c94f7a383c16fd5f5e912a39a640d1cb9d`; ignore pipeline SOBs)
+- No `Fixes:`
+- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Cc: stable`
+- `Acked-by: Namjae Jeon <linkinjeon@kernel.org>` (ksmbd maintainer)
+- `Signed-off-by: Thomas Huth <thuth@redhat.com>` (author)
+- `Signed-off-by: Steve French <stfrench@microsoft.com>` (CIFS
+  maintainer; present on the merged commit)
+- Candidate-prep copy also had `Signed-off-by: Namjae Jeon`; merged form
+  uses Acked-by instead
+- Record: Maintainer ack, no user report, no syzbot, no CVE tag
 
 **Step 1.3: Body**
-- Record: `[Bug] Probe uses device_get_match_data() while chip metadata
-  lives in both OF and I2C id tables. That helper only returns firmware-
-  node data.` `[Symptom] I2C-id/modalias bind leaves chip_data NULL;
-  probe then reads chip_data->ngpio.` `[Versions] None stated.` `[Root
-  cause] Wrong match-data helper; I2C id table driver_data is never
-  consumed.`
+- Record: `[Bug] ksmbd_session holds sess_key, smb3encryptionkey,
+  smb3decryptionkey, smb3signingkey and a Preauth_HashValue buffer, then
+  frees them with kfree(), so those secrets can remain in the slab.
+  [Symptom] Potential heap disclosure of SMB session/crypto keys after
+  session teardown. [Versions] None stated. [Root cause] Sensitive
+  material is returned to the allocator without memzero_explicit.]`
+- Cover letter (series v2 0/5): “It's good security practice to clear
+  sensitive data… and to use kfree_sensitive() for data that is returned
+  to the heap.”
 
 **Step 1.4: Hidden bug fix?**
-- Record: This is an explicit bug fix, not cleanup. The subject says
-  “Use” rather than “fix”, but the body describes a NULL dereference on
-  probe.
+- Record: Not disguised cleanup. It is an explicit secret-wipe / heap-
+  disclosure hardening change. Functional behavior of session teardown
+  is unchanged except the object is zeroed before free.
 
 ## Phase 2: Diff analysis
 
 **Step 2.1: Inventory**
-- Record: `[Files] drivers/gpio/gpio-pca9570.c: 1 insertion, 1 deletion`
-  `[Function] pca9570_probe()` `[Scope] Single-file, one-line surgical
-  change`
-
-The candidate as applied on this tree is exactly that one-line swap.
-Mainline context around `devm_mutex_init()` is not in 6.18.y
-(`mutex_init()` is still used here); it does not affect the hunk.
+- Record: `[fs/smb/server/mgmt/user_session.c: 2 insertions, 2
+  deletions] [function: ksmbd_session_destroy] [scope: single-file, two-
+  call-site surgical change]`
 
 **Step 2.2: Code flow**
-- Record: `[Before] gpio->chip_data =
-  device_get_match_data(&client->dev); then gpio->chip.ngpio =
-  gpio->chip_data->ngpio;` `[After] Same dereference, but chip_data
-  comes from i2c_get_match_data(client).` Path: probe / initialization,
-  not an error path.
+- Record: Before, `ksmbd_session_destroy()` calls
+  `kfree(sess->Preauth_HashValue)` then `kfree(sess)` after logoff/file-
+  table/user/RPC/channel teardown. After, those two frees use
+  `kfree_sensitive()`, which `memzero_explicit`s the whole allocation
+  then `kfree`s. Normal teardown path only; not an error-path
+  restructure.
 
-**Step 2.3: Bug mechanism**
-- Record: `[Category] Memory safety — NULL pointer dereference`
-  `[Mechanism] device_get_match_data() is fwnode-only
-  (drivers/base/property.c). i2c_device_match() can still bind via
-  i2c_match_id() when there is no OF/ACPI data. Probe then dereferences
-  NULL. i2c_get_match_data() tries firmware data first, then
-  id_table->driver_data.`
+Verified in this tree at:
 
-Verified helper:
-
-```121:137:drivers/i2c/i2c-core-base.c
-const void *i2c_get_match_data(const struct i2c_client *client)
+```159:175:fs/smb/server/mgmt/user_session.c
+void ksmbd_session_destroy(struct ksmbd_session *sess)
 {
-        struct i2c_driver *driver = to_i2c_driver(client->dev.driver);
-        const struct i2c_device_id *match;
-        const void *data;
+        if (!sess)
+                return;
 
-        data = device_get_match_data(&client->dev);
-        if (!data) {
-                match = i2c_match_id(driver->id_table, client);
-                if (!match)
-                        return NULL;
-
-                data = (const void *)match->driver_data;
-        }
-
-        return data;
+        ksmbd_tree_conn_session_logoff(sess);
+        ksmbd_destroy_file_table(sess);
+        if (sess->user)
+                ksmbd_free_user(sess->user);
+        ksmbd_launch_ksmbd_durable_scavenger();
+        ksmbd_session_rpc_clear_list(sess);
+        free_channel_list(sess);
+        kfree(sess->Preauth_HashValue);
+        ksmbd_release_id(&session_ida, sess->id);
+        ida_destroy(&sess->tree_conn_ida);
+        kfree(sess);
 }
 ```
 
-The id table already stores the pointers probe needs:
+Sensitive fields verified in `struct ksmbd_session` (`user_session.h`):
+`sess_key`, `smb3encryptionkey`, `smb3decryptionkey`, `smb3signingkey`,
+plus `Preauth_HashValue`.
 
-```158:163:drivers/gpio/gpio-pca9570.c
-static const struct i2c_device_id pca9570_id_table[] = {
-        { "pca9570", (kernel_ulong_t)&pca9570_gpio},
-        { "pca9571", (kernel_ulong_t)&pca9571_gpio },
-        { "slg7xl45106", (kernel_ulong_t)&slg7xl45106_gpio },
-        { /* sentinel */ }
-};
-```
+**Step 2.3: Bug mechanism**
+- Record: `[Memory safety / cryptographic material leftover] [kfree()
+  does not clear; kfree_sensitive() zeros via memzero_explicit then
+  frees. Category: information leak / CWE-226 class, not UAF/crash.]`
 
 **Step 2.4: Fix quality**
-- Record: `[Quality] Obviously correct; this is the I2C-core helper used
-  by pca953x/pcf857x in this tree.` `[Regression risk] Very low.
-  Firmware path is unchanged (helper still calls device_get_match_data
-  first). No locking, API, or data-structure change. Still no NULL check
-  after the lookup; that is not a regression versus the OF path.`
+- Record: `[Obviously correct drop-in. kfree_sensitive() is NULL-safe
+  like kfree(). Session is kzalloc'd, so ksize/kfree_sensitive is the
+  right API. No API/lock/struct change.] [Regression risk: very low.
+  Docs warn kfree_sensitive is not for hot paths; session destroy is
+  logoff/expire/teardown, not a packet hot path.]`
 
 ## Phase 3: Git history
 
 **Step 3.1: Blame**
-- Record: `[Introduced] Pointer dereference of match data: b8a34582c7f7f
-  (“gpio: pca9570: add a platform data structure”, 2022-10-27, contained
-  in v6.2-rc1).` Before that, 16d44b6085c1d (2020) used
-  `(uintptr_t)device_get_match_data()`, so a missing firmware match set
-  `ngpio = 0` instead of oopsing. The crash exists from v6.2 onward.
-  Helper `i2c_get_match_data()`: 564d73c4d9201, contained in v6.5-rc1;
-  present in this tree.
+- Record: `ksmbd_session_destroy` and `kfree(sess->Preauth_HashValue)`
+  from `e2f34481b24db2` (“cifsd: add server-side procedures for SMB3”),
+  contained in `v5.15-rc1`. `kfree(sess)` from `822bc8ea514ecd` (2021).
+  Encryption key fields from `5a0ca7700591a5` (2021). Bug has been in
+  this code since ksmbd entered mainline.
 
 **Step 3.2: Fixes: tag**
-- Record: No `Fixes:` tag. Buggy commit `b8a34582c7f7f` is an ancestor
-  of HEAD.
+- Record: No `Fixes:` tag. Not applicable. Introducer is the original
+  ksmbd session code, which is in this tree (`git merge-base --is-
+  ancestor` of those SHAs vs HEAD succeeded).
 
 **Step 3.3: File history**
-- Record: Recent file commits are GPIO callback renames, kerneldoc,
-  probe-style switch, chip_data rename, slg7xl45106/pca9571 support. No
-  prerequisite refactor is required for this one-line swap. Standalone,
-  not patch X/Y.
+- Record: Recent 6.12.y ksmbd session work is lifetime/UAF/ida (e.g.
+  `9d58ac0643e5b` destroy tree_conn_ida, session leak/UAF fixes). None
+  already switches these two `kfree`s. Not blocked by later refactor in
+  this file.
 
 **Step 3.4: Author**
-- Record: Pengpeng Hou has several GPIO fixes on this branch
-  (MODULE_DEVICE_TABLE, probe-failure handling). Not the GPIO
-  maintainer. Maintainer Bartosz Golaszewski applied the patch.
+- Record: Thomas Huth (Red Hat); not the ksmbd maintainer. Series of
+  five independent kfree_sensitive conversions. Maintainer Namjae Jeon
+  acked and applied to `#ksmbd-for-next-next`. Steve French signed off
+  on the merge.
 
 **Step 3.5: Dependencies**
-- Record: Depends only on `i2c_get_match_data()`, which exists in
-  v6.18.53 (`include/linux/i2c.h` and `drivers/i2c/i2c-core-base.c`).
-  Can apply standalone. Applied commit `f191ba12096a2` is a clean 2-line
-  change on this tree.
+- Record: Patch 3/5 of “Clear sensitive data before freeing it”. Sibling
+  patches touch `auth.c`, `user_config.c`, `connection.c`, `smb2pdu.c`.
+  This hunk does not call new helpers and does not depend on those other
+  diffs. `linux/slab.h` already included. `kfree_sensitive()` exists in
+  this tree (`mm/slab_common.c`, exported). Standalone apply: yes.
 
 ## Phase 4: Mailing list / external
 
 **Step 4.1: Original discussion**
 - Record: `[Lore]
-  https://patch.msgid.link/20260624053744.72612-1-pengpeng@iscas.ac.cn`
-  `[Revisions] v1 only, single patch` `[Feedback] Maintainer reply:
-  “Applied, thanks!” No NAK, no requested changes, no Cc: stable
-  suggestion.` Direct lore.kernel.org fetch returned 403; full thread
-  recovered via `b4 dig -m`.
+  https://patch.msgid.link/20260811154620.2425851-4-thuth@redhat.com`
+- Series: v1 (4 patches, 2026-08-10) → v2 (5 patches, 2026-08-11). This
+  file hunk is unchanged v1→v2.
+- v1 review (Namjae): also wipe `struct preauth_session` in
+  `ksmbd_preauth_session_destroy()`. That was handled in v2 patch 5
+  (`smb2pdu.c` session-setup paths), not in this commit. This commit is
+  still self-contained.
+- No NAK. No reviewer asked for `Cc: stable`. Maintainer: “Applied them
+  to #ksmbd-for-next-next.”
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-- Record: Linus Walleij, Bartosz Golaszewski, linux-gpio@, linux-
-  kernel@. Correct GPIO maintainers and list. Applied by Bartosz.
+**Step 4.2: Recipients (b4 dig -w)**
+- Record: Thomas Huth; Namjae Jeon; Steve French; Sergey Senozhatsky;
+  Tom Talpey; linux-kernel@. Subsystem maintainers were on To/Cc and the
+  ksmbd maintainer acked.
 
 **Step 4.3: Bug report**
-- Record: No Reported-by / bugzilla / syzbot. Bug is deduced from the
-  code: I2C-id bind + firmware-only helper.
+- Record: No syzbot/bugzilla/CVE for this change. Author framed it as
+  hygiene; spots “identified with AI” then written by hand.
 
-**Step 4.4: Series**
-- Record: Standalone v1. Sibling GPIO conversions already in this tree:
-  `ea05787136256` (pca953x) and `db3b16dcc7e4f` (pcf857x). Not
-  prerequisites.
+**Step 4.4: Series context**
+- Record: Five independent wipe sites. This one wipes the session object
+  that actually embeds the SMB3 keys. Related remaining `kfree(chann)`
+  of `struct channel` (contains `smb3signingkey`) is not part of this
+  commit; that does not make this hunk incorrect.
 
 **Step 4.5: Stable list**
-- Record: Original submission did not Cc stable. lore.kernel.org/stable
-  search could not be fetched (HTTP 403). No stable-specific discussion
-  in the recovered thread.
+- Record: No stable@ discussion found for this subject. Unverified that
+  it was previously rejected for stable.
+
+Upstream SHA (not in this branch):
+`d4a6d1c94f7a383c16fd5f5e912a39a640d1cb9d`. `git merge-base --is-
+ancestor d4a6d1c94f7a3 HEAD` failed (exit 1).
 
 ## Phase 5: Semantic analysis
 
 **Step 5.1: Functions**
-- Record: `pca9570_probe()` only.
+- Record: `ksmbd_session_destroy` only.
 
 **Step 5.2: Callers**
-- Record: Only `pca9570_driver.probe`. Invoked from I2C core on client
-  bind (boot DT, ACPI, `i2c_new_client_device()`, sysfs `new_device`).
-  Not IRQ/hot-path.
+- Record: Same file: `ksmbd_expire_session`, `ksmbd_sessions_deregister`
+  (two sites), `ksmbd_user_session_put`, `__session_create` error path.
+- `ksmbd_user_session_put` is used from `smb2pdu.c` (session
+  setup/logoff), `server.c`, `auth.c`, and register failure.
+- Context: SMB session lifetime (logoff, expire, connection teardown,
+  create failure). Not IRQ. Reachable from a connected SMB client.
 
 **Step 5.3: Callees**
-- Record: After the lookup, probe still uses `chip_data->ngpio`,
-  `devm_mutex_init`/`mutex_init`, `pca9570_read`,
-  `devm_gpiochip_add_data`. The only behavioral change is where match
-  data comes from.
+- Record: tree-connect logoff, file table destroy, `ksmbd_free_user`,
+  durable scavenger, RPC clear, `free_channel_list`, then the two frees.
+  Side effect of the patch is only the wipe-before-free.
 
 **Step 5.4: Reachability**
-- Record: DT boards with `compatible = "nxp,pca9570"` (imx95-15x15-evk,
-  imx8mp-dhcom-pdk3, stm32mp157c-lxa-tac-gen1) already get firmware
-  match data and do not hit the bug. The broken path is I2C-id/modalias:
-  sysfs `new_device`, board-info, or any client without a firmware node.
-  That is a supported I2C instantiation method (`new_device_store` in
-  i2c-core). Needs privileges to write sysfs; still a deterministic
-  probe oops for that path.
+- Record: Yes. Any ksmbd login then logoff/disconnect/expire hits this.
+  CONFIG_SMB_SERVER (default n), module `ksmbd`. Network-facing when
+  enabled.
 
 **Step 5.5: Similar patterns**
-- Record: Same class of I2C GPIO expanders already use
-  `i2c_get_match_data()` (`gpio-pca953x.c`, `gpio-pcf857x.c`). pca953x
-  also NULL-checks; this patch does not add that check.
+- Record: CIFS client already uses `kfree_sensitive` widely for session
+  keys/passwords in this tree. ksmbd server only uses it in `auth.c`
+  (`kfree_sensitive(ctx_arc4)`). `free_channel_list`/`ksmbd_chann_del`
+  still `kfree` channel objects that embed `smb3signingkey`.
+  `ksmbd_preauth_session_destroy` still `kfree`s `preauth_session` (hash
+  embedded). Same class of leftover secrets; this patch still covers the
+  primary session key material.
 
-## Phase 6: Local tree (this checkout only)
+## Phase 6: This tree (6.12.111)
 
-**Step 6.1: Does the bug exist here?**
-- Record: Local tree is **6.18.53** (`git describe HEAD`:
-  `v6.18.53-5049-g0f0bdc2b0dffb`; Makefile `VERSION=6 PATCHLEVEL=18
-  SUBLEVEL=53`). At `v6.18.53`, probe still does
-  `device_get_match_data()` then `chip_data->ngpio`. Bug present.
-  Candidate is **not** an ancestor of `v6.18.53`. Crash-introducing
-  commit `b8a34582c7f7f` (v6.2) is in this tree.
+**Step 6.1: Buggy code present?**
+- Record: Yes. `pending-6.12` / `make kernelversion` = 6.12.111. Exact
+  `kfree(sess->Preauth_HashValue)` and `kfree(sess)` still in
+  `ksmbd_session_destroy`. Introduced with ksmbd (v5.15), long before
+  6.12.
 
 **Step 6.2: Backport difficulty**
-- Record: Clean apply. On this tree the change is exactly one call swap;
-  no `devm_mutex_init` conflict.
+- Record: Clean apply. Mailing-list hunk context
+  (`ksmbd_launch_ksmbd_durable_scavenger` … `ida_destroy`) matches this
+  tree. Upstream later added `delete_proc_session(sess)` above these
+  lines; that symbol is absent here but is not in the 3-line context of
+  the actual change. `kfree_sensitive` already declared in
+  `include/linux/slab.h`.
 
 **Step 6.3: Related fixes already here?**
-- Record: No earlier pca9570 match-data fix. pca953x/pcf857x already
-  converted; this driver was left on the firmware-only helper.
+- Record: No equivalent wipe of these two allocations. `git log
+  --grep=kfree_sensitive -- fs/smb/server` has no matching session-
+  destroy commit.
 
 ## Phase 7: Subsystem context
 
 **Step 7.1**
-- Record: `[Subsystem] drivers/gpio (I2C GPO expander)` `[Criticality]
-  PERIPHERAL / driver-specific` — NXP PCA9570/PCA9571 and Dialog
-  SLG7XL45106. Not core MM/VFS, but in-tree boards and
-  `CONFIG_GPIO_PCA9570` users exist.
+- Record: `[ksmbd / fs/smb/server] [IMPORTANT for systems with
+  CONFIG_SMB_SERVER: NAS/embedded SMB3 server; not CORE for every 6.12
+  user]`
 
 **Step 7.2**
-- Record: GPIO I2C expanders are mature. This file is low-churn except
-  callback API updates. Long-standing bug (since v6.2), not churn from a
-  new subsystem.
+- Record: Actively maintained; this 6.12.y branch already carries many
+  ksmbd security/UAF backports. Code path itself is mature (since 5.15).
 
 ## Phase 8: Impact and risk
 
 **Step 8.1: Who is affected**
-- Record: Driver-specific / config-specific (`CONFIG_GPIO_PCA9570`). DT
-  users are fine. Users instantiating via I2C id/modalias oops in probe.
+- Record: Config-specific (`CONFIG_SMB_SERVER`). Users running ksmbd
+  (SMB3 kernel server).
 
 **Step 8.2: Trigger**
-- Record: `[Trigger] Bind pca9570/pca9571/slg7xl45106 without firmware
-  match data.` `[Likelihood] Uncommon vs DT, but 100% on that path (not
-  a race).` `[Unprivileged?] No; sysfs new_device is privileged. Not a
-  local-priv-esc issue.`
+- Record: Session destroy on logoff, idle expire, connection teardown,
+  or failed session create. Common on any real ksmbd workload.
+  Triggering the leftover keys does not require a race; the wipe
+  omission is deterministic. Reading the leftover keys does require
+  another info leak, a dump, or similar.
 
 **Step 8.3: Failure mode**
-- Record: `[Failure] NULL deref in pca9570_probe → kernel oops`
-  `[Severity] HIGH (crash on probe for a supported bind method). Not
-  data corruption or unprivileged security.`
+- Record: `[Residual SMB session/encryption/signing keys and preauth
+  hash in slab after free] [Severity: MEDIUM as a standalone disclosure
+  (needs another read of freed/reused heap), HIGH in combination with an
+  uninitialized-kmalloc leak or memory dump because the secrets can
+  decrypt prior SMB3 traffic or expose session key material]`
 
-**Step 8.4: Risk vs benefit**
-- Record: `[Benefit] Prevents a deterministic probe oops; makes the
-  existing I2C id table actually work.` `[Risk] Very low: one line,
-  established helper, firmware path unchanged.` `[Ratio] Favorable.`
+**Step 8.4: Risk-benefit**
+- Record: `[Benefit: medium for ksmbd deployments — clears the actual
+  SMB3 key material on every session end] [Risk: very low — 2 lines,
+  dedicated API, teardown path only] [Ratio: favorable]`
 
 ## Phase 9: Synthesis
 
-**Step 9.1: Evidence**
+**Evidence FOR**
+- Deterministic failure to clear SMB3 session keys, signing keys,
+  encryption/decryption keys, and Preauth_HashValue on session destroy.
+- `kfree_sensitive()` exists specifically for this; CIFS client in this
+  tree already uses it for the same class of secrets.
+- Two-line, obviously correct, maintainer-acked, already merged
+  upstream.
+- Applies cleanly to 6.12.111; no new API; no lock/data-structure
+  change.
+- ksmbd is a network-facing file server; leftover keys after logoff are
+  real cryptographic material, not a style nit.
+- Official stable rules include “a real security issue”; this is secret
+  leftover in heap (CWE-226), not a feature.
 
-For:
-- Real NULL deref when I2C-id matching; helper and dereference verified
-  in this tree
-- One-line, obviously correct; GPIO maintainer applied v1 with no
-  objections
-- `i2c_get_match_data()` already in 6.18.y; applies cleanly
-- Same pattern already used by sibling GPIO I2C expanders
-- In-tree DT users exist, so the driver is not dead; the I2C id table
-  with `driver_data` is currently unused/wrong
+**Evidence AGAINST**
+- Cover letter calls it “good security practice,” not a demonstrated
+  crash/CVE. No `Reported-by`, no exploit write-up.
+- Official rule: no “this could be a problem” without how it is
+  exploited. Direct userspace leak is not shown; it is residual data
+  until slab reuse or a dump.
+- Incomplete hygiene: channel objects and
+  `ksmbd_preauth_session_destroy()` still use `kfree` in this file.
+- `CONFIG_SMB_SERVER` defaults to n.
 
-Against:
-- No user/syzbot report
-- In-tree boards use DT, so they do not hit it
-- Peripheral driver, not core
-- Probe still does not NULL-check `chip_data` (pre-existing)
+**Unresolved**
+- No stable@ thread found (search quality limited;
+  lore.kernel.org/stable returned unrelated hits).
+- Semcode MCP not available; callers traced with `git grep`.
 
-Unresolved:
-- lore.kernel.org HTTP 403 for live HTML; thread recovered via b4 mbox
-- No stable@ discussion found
+**Stable rules checklist**
+1. Obviously correct and tested? **PASS** — drop-in `kfree` →
+   `kfree_sensitive`; maintainer ack; applied upstream.
+2. Fixes a real bug that affects users? **PASS** — session objects with
+   live SMB3 keys are freed without wiping; that is leftover secret
+   material on a path every ksmbd session takes.
+3. Important issue? **PASS** (security: key leftover; not
+   oops/deadlock). Severity is secret wipe, not a panic.
+4. Small and contained? **PASS** — 2 lines, one function.
+5. No new features/APIs? **PASS**.
+6. Can apply to this tree? **PASS** — same function body aside from
+   later `delete_proc_session`, which this hunk does not need.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — one helper swap; maintainer
-   applied; helper semantics verified
-2. Fixes a real bug that affects users? **PASS** — NULL deref on a
-   supported I2C bind path
-3. Important (crash/security/corruption/deadlock)? **PASS** — probe oops
-   (HIGH, not universal CRITICAL)
-4. Small and contained? **PASS** — 1 line, one file
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — clean on 6.18.53; helper present
+**Exception category:** None of ID/quirk/DT/build/docs. Security wipe of
+existing allocations.
 
-**Step 9.3: Exception category**
-- Record: None (not a device ID/quirk/DT/build/docs exception). It is a
-  normal small crash fix.
+This is not a crash fix, but it is a small, obviously correct wipe of
+real SMB3 key material on session teardown, the code is present in
+6.12.111, and regression risk is negligible. That meets the stable bar
+for a real security issue on ksmbd.
 
-**Step 9.4: Decision**
-This belongs in this 6.18.y tree: the buggy code is here, the helper is
-here, and the fix is a one-line swap that stops a NULL deref on I2C-id
-probe.
+Verification:
+- [Phase 1] Parsed subject/body/tags from candidate text and `git log -1
+  d4a6d1c94f7a3`; maintainer Acked-by; no Fixes/Reported-by/Cc: stable
+- [Phase 2] Read `ksmbd_session_destroy` and `struct ksmbd_session` in
+  this tree; confirmed two `kfree` sites and key arrays
+- [Phase 2] Read `kfree_sensitive()` in `mm/slab_common.c` (zeros via
+  `memzero_explicit`, then `kfree`)
+- [Phase 3] `git blame -L 159,175` user_session.c; introducer
+  `e2f34481b24db2` contained in v5.15-rc1
+- [Phase 3] `git merge-base --is-ancestor` of introducer and of
+  `d4a6d1c94f7a3` vs HEAD: introducer yes, this fix no
+- [Phase 3] `git log --oneline -20 --
+  fs/smb/server/mgmt/user_session.c`: no prior equivalent wipe
+- [Phase 4] `b4 dig -c d4a6d1c94f7a3` / `-a` / `-w`: v1 then v2; lore
+  https://patch.msgid.link/20260811154620.2425851-4-thuth@redhat.com;
+  Namjae applied v2; no NAK; no stable nomination
+- [Phase 4] Cover letter and v1 review (preauth_session) fetched from
+  openwall/lkml/patchew
+- [Phase 5] `git grep ksmbd_session_destroy` / `ksmbd_user_session_put`:
+  session logoff/expire/teardown/create-error
+- [Phase 5] Confirmed `__session_create` uses `kzalloc`;
+  `user_session.c` includes `linux/slab.h`
+- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → 6.12.111
+- [Phase 6] `delete_proc_session` absent here; does not block the two-
+  line hunk
+- [Phase 7] `CONFIG_SMB_SERVER` in `fs/smb/server/Kconfig`, default n
+- [Phase 8] Failure mode: leftover session keys in slab after destroy
+- UNVERIFIED: no dedicated stable@ discussion located
 
-## What the commit solves
-
-`pca9570_probe()` treats `device_get_match_data()` as the source of
-`struct pca9570_chip_data`, then immediately reads `->ngpio`. That
-helper only consults firmware nodes. I2C matching can still succeed from
-`id_table` (sysfs `new_device`, board info, modalias). `chip_data` is
-then NULL and probe oopses. `i2c_get_match_data()` keeps the DT path and
-consumes the id-table pointers this driver already stores.
-
-For 6.18 stable users this is a small crash fix, not a feature. DT
-boards keep working; non-firmware instantiation stops oopsing.
-
-## Verification
-- [Phase 1] Parsed tags: author + GPIO maintainer SOB, lore Link; no
-  Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: 1 line in `pca9570_probe()`; `device_get_match_data` →
-  `i2c_get_match_data`
-- [Phase 2] `device_get_match_data()` is fwnode-only
-  (`drivers/base/property.c:1346`)
-- [Phase 2] `i2c_get_match_data()` falls back to `id_table->driver_data`
-  (`i2c-core-base.c:121`)
-- [Phase 2] `i2c_device_match()` binds OF, then ACPI, then I2C id
-  (`i2c-core-base.c:140`)
-- [Phase 3] Blame: crash introduced by `b8a34582c7f7f` (v6.2-rc1);
-  helper from `564d73c4d9201` (v6.5-rc1)
-- [Phase 3] `git merge-base --is-ancestor b8a34582c7f7f HEAD` → yes;
-  helper ancestor → yes
-- [Phase 4] `b4 dig -c 415c63896b76`: v1 only; recipients GPIO
-  maintainers; mbox: “Applied, thanks!”
-- [Phase 4] lore.kernel.org WebFetch: HTTP 403; used b4 mbox instead
-- [Phase 5] `pca9570_probe` only used as `i2c_driver.probe`
-- [Phase 5] DT users: imx95-15x15-evk, imx8mp-dhcom-pdk3,
-  stm32mp157c-lxa-tac-gen1
-- [Phase 6] `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `make
-  kernelversion` → 6.18.53
-- [Phase 6] `v6.18.53:drivers/gpio/gpio-pca9570.c` still uses
-  `device_get_match_data`; candidate not in `v6.18.53`
-- [Phase 6] Applied form on this branch: clean 2-line change
-  (`f191ba12096a2`)
-- [Phase 8] Failure mode: NULL deref in probe → oops; DT path unaffected
-- UNVERIFIED: live lore.kernel.org/stable HTML search (HTTP 403)
-
-The patch is obviously correct, fixes a real probe oops, is one line,
-and applies cleanly to this 6.18.y tree.
+The two-line `kfree_sensitive()` conversion belongs in this 6.12 tree:
+the buggy frees are here, the API is here, and it wipes real SMB3
+session keys on teardown with negligible risk.
 
 **YES**
 
- drivers/gpio/gpio-pca9570.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/mgmt/user_session.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-pca9570.c b/drivers/gpio/gpio-pca9570.c
-index c5a1287079a06..f7cc3fbf45336 100644
---- a/drivers/gpio/gpio-pca9570.c
-+++ b/drivers/gpio/gpio-pca9570.c
-@@ -128,7 +128,7 @@ static int pca9570_probe(struct i2c_client *client)
- 	gpio->chip.get = pca9570_get;
- 	gpio->chip.set = pca9570_set;
- 	gpio->chip.base = -1;
--	gpio->chip_data = device_get_match_data(&client->dev);
-+	gpio->chip_data = i2c_get_match_data(client);
- 	gpio->chip.ngpio = gpio->chip_data->ngpio;
- 	gpio->chip.can_sleep = true;
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 3a2591434b5f8..973db0466575e 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -168,10 +168,10 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
+ 	ksmbd_launch_ksmbd_durable_scavenger();
+ 	ksmbd_session_rpc_clear_list(sess);
+ 	free_channel_list(sess);
+-	kfree(sess->Preauth_HashValue);
++	kfree_sensitive(sess->Preauth_HashValue);
+ 	ksmbd_release_id(&session_ida, sess->id);
+ 	ida_destroy(&sess->tree_conn_ida);
+-	kfree(sess);
++	kfree_sensitive(sess);
+ }
  
+ struct ksmbd_session *__session_lookup(unsigned long long id)
 -- 
 2.53.0
 
