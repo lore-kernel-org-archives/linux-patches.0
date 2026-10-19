@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC9E54408D;
-	Mon, 19 Oct 2026 13:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706885440B7;
+	Mon, 19 Oct 2026 13:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418186; cv=none; b=YWH1kcn/i8JVAT7+qAgsd9cX5PKx0PdRRyZSWA2HnmHscslk7Sa165tbvwzWH/Y2PKNFP7UlrqWYLGPtBLN0FdVDOprs9wWXhz9apQ/sBAudNT4Gii35Dy1tPzg1Fs0tGGhObDCvpcGhzphrLz1Hyrj+ofq3Xn6LQfcPb6U7lbw=
+	t=1792418189; cv=none; b=V6FHvtVS8928PXS7jwJfKfqmE/oMUqNrnnhB61vA5d0fbc0Xbv5kfej/6kXFmE0sG3tlMUJSlopE2YWTH3/j7CYWhZwGC9E1otn41gwE6H0/FIFyHjJ+N7+LQ2DRd+bmSKm7rjSV+Ud3PITbvPCrlNzsgY3F3ShzjDdA6bAZqrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418186; c=relaxed/simple;
-	bh=WPytO5mj3Kz6s0pbUcHQ9xPaUjyuzpcKV6wnMQPYkMU=;
+	s=arc-20240116; t=1792418189; c=relaxed/simple;
+	bh=Su7odCwld2ZEjjMbvsIuAfENW70V/LsYaDrgciEWvtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fGAehLpwFRFBgtR4O91py6VHww2RPzcBAQ/PT46pCxEXXmsAg797rD4tcdYOfDZvARq8f8J7QrP+yNxuvF7undbmfYybSwEQEzHZjNLdhSUoNroQCaaWP4xvRGmnawEdxPD6L5Kdsrl0SD49dor2yoKYH5Bjv1qkcS4tM88fyi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPpfUFPm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=u9p7F9maHicTOQPeCz2UB69urLhkn9c2n5XOigZ8zdBUn2yF3tDGfwMXJISc4A7wFMzJu+E5fFCUSyEboCm1N6UOOlE+oPsmEsHbgEcrWLJZPhiRG5wEjUrgQUhOztQA79K1V1FIJb9pHpYMl5XzuRuS6rCyN+PyOyte2T8xc1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SnAchmJu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPpfUFPm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDF81F000C5;
-	Mon, 19 Oct 2026 13:56:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SnAchmJu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE1C1F000C7;
+	Mon, 19 Oct 2026 13:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418184;
-	bh=dc6SFE22Qvk6YfiBY+bv4S7Ucp5hbJOxKN83Amem+GU=;
+	s=k20260515; t=1792418186;
+	bh=IADk5RTBOjulE82dL7hv754PZj7PHSe/oQHD0jA6uiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hPpfUFPmgyhblvtLfSkQp1tBmtTfoVRGXKT9hZb30Ib1XmHmYLBcS/kIdVlkKtd2R
-	 UIi6oJ6SlTv+gnDfc2S+AF4X/fZwh2PP5NQNMzKBUTTPqEbXQ5XoKg8LJm3lrIiM8M
-	 FwHW39mxXneBpkctnLPdvsLXrsa/GDT9Bbor6CYYmeO7EkLrBgCDboQKOFa1Bg1L6d
-	 NVPHUCsrui7Eoz/1iiS9yIJEKOerBoJ3/jYUaO3Mj3DV0aNNQJA55xBDlU+2Suupxw
-	 Wk0hoWqEutW3mIQMvp+WqYBfsZ3vFz2+XdYhXulJhhJ2Z8kzMjEv384hK5hQCsDFF7
-	 vC1Tc/LIwXz5g==
+	b=SnAchmJuKWxMjqrZ70rMAeemhFBNJZwEb7A9EofkYIvYL+sd7cSl3yuLG4teHT/nU
+	 0tpeE9qFFJNc2rDAx+H0VocfFDakI1kzTW1cI9aqxn/NoA4Mk0ollcpj2oq4pb5HZE
+	 0qvuJqN3RAPHGT4vLJLBoc3gXSDX3hJOKNE1zL/h8ZxvowPQAZ+djNJCjEDgyTgQWB
+	 e1D92CnkUeVqtXw6ebZWzt7rQLTEtRBpv6PueXkH2frMp+HgvPR3+zZr9uBnEriXAm
+	 bsO/Ecj0cJB2VJMrmhlJ8le7YLlAE/TLpO4ChvldKfB4eTmRi3v53b6JXj/5VPDd+5
+	 jbMSrS9eTqPrw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tomer Maimon <tmaimon77@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: David Maximiliano Hermitte <davemadmaxxx@gmail.com>,
+	syzbot+97e301b4b82ae803d21b@syzkaller.appspotmail.com,
+	George Anthony Vernon <contact@gvernon.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew@codeconstruct.com.au,
-	avifishman70@gmail.com,
-	tali.perry1@gmail.com,
-	openbmc@lists.ozlabs.org,
-	linux-gpio@vger.kernel.org,
+	frank.li@vivo.com,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] pinctrl: npcm8xx: move GPIO IRQ setup into request_resources
-Date: Mon, 19 Oct 2026 09:46:03 -0400
-Message-ID: <20261019135441.1420968-72-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] hfs: validate catalog CNIDs before instantiating inodes
+Date: Mon, 19 Oct 2026 09:46:04 -0400
+Message-ID: <20261019135441.1420968-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,416 +56,580 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomer Maimon <tmaimon77@gmail.com>
+From: David Maximiliano Hermitte <davemadmaxxx@gmail.com>
 
-[ Upstream commit b8edfde12e355030e708394c0fa11632559c7ac5 ]
+[ Upstream commit 53c3c138d672765c26884c55728307a65c634328 ]
 
-npcmgpio_irq_startup() calls pinctrl_gpio_direction_input(), which may
-sleep while taking the pinctrl core mutex. That makes IRQ startup trip
-lockdep when CONFIG_PROVE_LOCKING is enabled.
+hfs_cat_find_brec() first resolves a catalog thread record by CNID and
+then looks up the corresponding catalog record by parent/name. On a
+corrupted filesystem image, the second lookup may find a record whose
+CNID does not match the CNID that was requested.
 
-Move the direction change into irq_request_resources() and keep startup
-limited to the ack and unmask operations that are safe in atomic
-context.
+Validate the record found by the second lookup before returning it.
+Read the already-found record with hfs_bnode_read(), require the exact
+fixed size for file and directory records, reject other record types,
+and verify that the stored CNID matches the requested CNID.
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Also validate reserved CNIDs in hfs_read_inode() before populating the
+inode, propagate hfs_read_inode() failures from the resource-fork lookup
+path, and reject bad resource-fork and root inodes.
+
+Keep hfs_write_inode() unchanged, so corrupted catalog records are
+rejected before reaching its existing reserved-CNID BUG() path.
+
+Reported-by: syzbot+97e301b4b82ae803d21b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=97e301b4b82ae803d21b
+Cc: George Anthony Vernon <contact@gvernon.com>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: David Maximiliano Hermitte <davemadmaxxx@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260708215636.73815-1-davemadmaxxx@gmail.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **v7.3-rc4** (`7.3.0-rc4`). The NPCM8XX pinctrl driver
-is present, and this change is a real sleep-in-atomic IRQ fix, not a
-feature add.
+The local checkout is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+commit is `53c3c138d6727` and is already in this mainline history (first
+contained in `v7.3-rc1`). The evaluation below is whether that fix is
+suitable to take into stable from this tree: HFS is present, the `BUG()`
+path is ancient, and the patch is self-contained.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: **[pinctrl/npcm8xx] [move] move GPIO IRQ setup into
-request_resources**
-Subsystem `pinctrl: npcm8xx`. Verb is “move”, but the body is a
-correctness fix: take a may-sleep call out of `irq_startup`.
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[hfs] [validate] Validate catalog CNIDs before instantiating
+inodes** — “validate” here is a correctness/safety check, not a feature.
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Tomer Maimon `<tmaimon77@gmail.com>` (author; NPCM
-  maintainer)
-- Signed-off-by: Linus Walleij `<linusw@kernel.org>` (pinctrl
-  maintainer)
-- No Fixes, Reported-by, Tested-by, Reviewed-by, Acked-by, Link, or Cc:
-  stable
-Absence of Fixes/Cc: stable is expected for this review and is not a
-negative signal.
+- **Reported-by:** syzbot+97e301b4b82ae803d21b@syzkaller.appspotmail.com
+  (fuzzer, reproducible)
+- **Closes:**
+  https://syzkaller.appspot.com/bug?extid=97e301b4b82ae803d21b
+- **Cc:** George Anthony Vernon, Tetsuo Handa
+- **Signed-off-by:** David Maximiliano Hermitte (author); Viacheslav
+  Dubeyko (HFS maintainer, twice)
+- **Reviewed-by:** Viacheslav Dubeyko
+- **Link:** https://lore.kernel.org/r/20260708215636.73815-1-
+  davemadmaxxx@gmail.com
+- **No Fixes:** tag (expected)
+- **No Cc: stable** (expected; not a negative)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: `npcmgpio_irq_startup()` calls `pinctrl_gpio_direction_input()`,
-  which takes the pinctrl mutex and may sleep.
-- Symptom: lockdep splat with `CONFIG_PROVE_LOCKING` on IRQ startup.
-- Root cause: IRQ startup runs in atomic context; mutex_lock there is
-  illegal.
-- Fix: do the direction change in `irq_request_resources()`; leave
-  startup as ack+unmask only.
-- No version range, stack trace, or reproducer in the message.
+- **Bug:** `hfs_cat_find_brec()` resolves a thread by CNID, then looks
+  up the catalog record by parent/name. On a corrupted image that second
+  lookup can return a record whose stored CNID does not match the
+  requested CNID.
+- **Symptom/failure mode:** A corrupted catalog record is turned into an
+  inode with a reserved CNID (`i_ino < HFS_FIRSTUSER_CNID` and not
+  root/extents/catalog). Later writeback hits `BUG()` in
+  `hfs_write_inode()`.
+- **Version info:** none in the message; syzbot first crash is
+  2022-11-25.
+- **Root cause (author):** missing validation of the second catalog
+  lookup, plus missing reserved-CNID checks at inode instantiation;
+  resource-fork lookup ignored `hfs_read_inode()` failures.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a hidden fix. It is an explicit locking/context bug. Cover
-letter of the v1 series called the set a “cleanup” from a Nuvoton tree
-comparison, but this patch itself describes a real sleep-in-atomic
-problem.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not a disguised cleanup. Explicit syzbot crash fix: reject bad
+catalog records so they never reach the reserved-CNID `BUG()`.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+---
 
-Step 2.1: INVENTORY THE CHANGES
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` (+23 / -6, 29 lines)
-- Functions: `npcmgpio_irq_startup` (changed),
-  `npcmgpio_irq_request_resources` (added),
-  `npcmgpio_irq_release_resources` (added), `npcmgpio_irqchip` (changed)
-- Scope: single-file surgical irqchip callback change
+- `fs/hfs/catalog.c`: +40 / -1 — add `hfs_cat_validate_found_cnid()`,
+  call it from `hfs_cat_find_brec()`
+- `fs/hfs/hfs_fs.h`: +19 — add inline `hfs_is_valid_cnid()`
+- `fs/hfs/inode.c`: +12 / -1 — CNID checks in `hfs_read_inode()`;
+  propagate errors and `is_bad_inode()` in `hfs_file_lookup()`
+- `fs/hfs/super.c`: +5 — reject bad root inode in `hfs_fill_super()`
+- **Total:** +76 / -2 across 4 HFS files
+- **Scope:** single-subsystem surgical fix
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Before: `irq_startup` called `npcmgpio_direction_input()` then
-  ack/unmask. Resource helpers came from `GPIOCHIP_IRQ_RESOURCE_HELPERS`
-  (`gpiochip_irq_reqres` / `gpiochip_irq_relres`).
-- After: `irq_startup` only ack+unmask. New `irq_request_resources` does
-  `npcmgpio_direction_input()` then `gpiochip_reqres_irq()`. New
-  `irq_release_resources` calls `gpiochip_relres_irq()`. Macro helpers
-  removed because custom callbacks replace them.
-- Path: GPIO `request_irq()` setup, not a probe-only path.
+- **`hfs_cat_find_brec`:** Before: thread lookup, then `return
+  hfs_brec_find(fd)` with no check that the found record’s CNID matches.
+  After: on success, read the found record, require exact file/dir size,
+  reject other types, require `found_cnid == cnid`, else `-EIO`.
+- **`hfs_read_inode`:** Before: populate inode from any file/dir record,
+  including reserved CNIDs 0,1,5–15. After: `hfs_is_valid_cnid()`;
+  invalid → `-EIO` before `i_ino` is set.
+- **`hfs_file_lookup` (rsrc):** Before: ignored `hfs_read_inode()`
+  return, then `mark_inode_dirty()`. After: propagate errors;
+  `is_bad_inode()` → `-EIO` + `iput`.
+- **`hfs_fill_super`:** After `hfs_iget()`, `is_bad_inode(root)` →
+  `iput` and fail mount instead of `d_make_root()` on a bad inode.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **Synchronization / illegal sleep in atomic context**
-`irq_startup()` is invoked from `__setup_irq()` while `desc->lock` is
-held via `raw_spin_lock_irqsave()` (`kernel/irq/manage.c`: lock at 1589,
-`irq_startup()` at 1766, unlock at 1807).
-`pinctrl_gpio_direction_input()` takes `pinctrldev_list_mutex` and
-`pctldev->mutex` (`drivers/pinctrl/core.c`). Mutex in that context is
-sleep-in-atomic. `irq_request_resources()` runs before that spinlock and
-is allowed to sleep.
-
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Quality is high. Same pattern as `pinctrl-ingenic.c` and
-`pinctrl-st.c`. Resource get/put is preserved. Direction-input errors
-are now returned instead of ignored. Regression risk is low: startup no
-longer re-applies input on later startups, which matches other drivers;
-first `request_irq()` still sets input before unmask. No API or data-
-structure change.
-
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
-
-Step 3.1: BLAME THE CHANGED LINES
-Record: Buggy `npcmgpio_irq_startup()` / `GPIOCHIP_IRQ_RESOURCE_HELPERS`
-came from `acf4884a571709` (“pinctrl: nuvoton: add NPCM8XX pinctrl and
-GPIO driver”, 2023-08-28), first in **v6.7-rc1**. The bug is as old as
-the driver.
-
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Introducer is the original driver commit above.
-`git merge-base --is-ancestor acf4884a571709 HEAD` is true in this tree.
-
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Submitted as **[PATCH v1 6/8]** “pinctrl: npcm8xx: fix pinmuxing
-and configuration handling”. Siblings (bmcuart1 pins, RMII, RG2 drive
-strength, event clear, rename, JM1/SMB7 flags, debounce) do not change
-the irqchip callbacks this patch needs. Standalone. No follow-up on
-these IRQ helpers after this commit.
-
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Tomer Maimon is listed under ARM/NUVOTON NPCM ARCHITECTURE in
-MAINTAINERS. Recent npcm8xx work is this same 8-patch set plus earlier
-pin-table updates. Maintainer-authored.
-
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Needs existing `gpiochip_reqres_irq` / `gpiochip_relres_irq` and
-`GPIOCHIP_IRQ_RESOURCE_HELPERS`, both present here. No series
-prerequisite for this hunk. Can apply standalone to this driver.
-
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
-
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record: `b4 dig -c b8edfde12e355` →
-https://patch.msgid.link/20260715122923.1938327-7-tmaimon77@gmail.com
-Only **v1**. Lore HTTP fetch returned 403; full thread was saved with
-`b4 dig -m`. Linus Walleij (24 Jul 2026): “No comments so patches
-applied.” No NAK, no stable nomination, no requested respin.
-
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: `b4 dig -w` To/Cc: Tomer Maimon, Andrew Jeffery, Linus Walleij,
-Bartosz Golaszewski, openbmc, linux-gpio, linux-kernel, Avi Fishman,
-Tali Perry, Patrick Venture, Nancy Yuen, Benjamin Fair. Right lists and
-maintainers. Only explicit reply is Walleij applying the series.
-
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No Reported-by, syzbot, or bugzilla. Issue was found by
-comparing upstream with Nuvoton’s tree. Symptom claimed is lockdep with
-`CONFIG_PROVE_LOCKING`. No public user crash report found.
-
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: 8-patch pinmux/config series. This IRQ move does not depend on
-the others. npcm7xx still calls `npcmgpio_direction_input()` from
-`irq_startup()` — same class of bug, different driver, not a dependency.
-
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search via curl returned 403. UNVERIFIED
-whether stable@ already discussed this. No evidence in the gpio thread
-of a stable NAK.
-
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
-
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `npcmgpio_irq_startup`, `npcmgpio_irq_request_resources`,
-`npcmgpio_irq_release_resources`, plus `npcmgpio_irqchip` initializer.
-
-Step 5.2: TRACE CALLERS
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 Record:
-- irqchip ops invoked from IRQ core: `irq_request_resources()` /
-  `irq_release_resources()` / `irq_startup()` in `kernel/irq/manage.c`
-  and `kernel/irq/chip.c`
-- Chip registered in `npcm8xx_gpio_register()` via `girq->chip`
-- Reachable from `request_irq()` / `gpiod_to_irq()` users on NPCM8XX
-  GPIO banks
+- **Category:** memory-safety / logic — corrupted on-disk metadata →
+  kernel `BUG()` (oops, invalid opcode).
+- **Mechanism:** Reserved CNIDs instantiated as normal inodes; writeback
+  `hfs_write_inode()` does `BUG()` in the default branch of
+  `inode->i_ino < HFS_FIRSTUSER_CNID`. Also bounds/type checks on
+  catalog record length.
+- **Not:** leak, UAF, or locking fix.
 
-Step 5.3: TRACE CALLEES
-Record: `npcmgpio_direction_input` → `pinctrl_gpio_direction_input`
-(mutex) + generic `bank->direction_input`; `npcmgpio_irq_ack` / `unmask`
-(MMIO); `gpiochip_reqres_irq` / `gpiochip_relres_irq`.
-
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: userspace or driver `request_irq` on a GPIO line → `__setup_irq`
-→ `irq_request_resources` (sleep OK) →
-`raw_spin_lock_irqsave(&desc->lock)` → `irq_startup` (atomic). Path is
-reachable whenever GPIO IRQs are used (BMC buttons, hotplug, etc.). Not
-an obscure config-only path if `PINCTRL_NPCM8XX` is enabled (`depends on
-ARCH_NPCM || COMPILE_TEST`).
-
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Same “direction_input in irq_request_resources” pattern in
-ingenic and ST pinctrl. Sibling `pinctrl-npcm7xx.c` still has the old
-startup-time `direction_input` call.
-
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
-
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Driver is `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c`.
-Introduced v6.7 (`acf4884a571709`). `git merge-base --is-ancestor
-acf4884a571709 HEAD` succeeded. Pre-fix startup still present at parent
-`b8edfde12e355^`. Local kernel: **v7.3-rc4** (`7.3.0-rc4`).
-
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Expected apply: **clean**. Hunks are local to the irqchip struct
-and two small callbacks. `GPIOCHIP_IRQ_RESOURCE_HELPERS` and
-`gpiochip_reqres_irq()` exist here. Reverse-apply of the committed diff
-checked cleanly against current file.
-
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No earlier alternate fix for this irq_startup sleep. Current
-HEAD already contains `b8edfde12e355` because this checkout is mainline
-after the pinctrl-v7.3 pull; that is the upstream commit under review,
-not a prior independent fix. No later corrective commit.
-
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
-
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **pinctrl / GPIO irqchip for Nuvoton NPCM8XX (Arbel BMC)**.
-Criticality: **PERIPHERAL** for general kernels, **IMPORTANT** for
-OpenBMC/NPCM845 systems. Not mm/fs/net core.
-
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: File is actively updated (pin tables, debounce, RMII, this IRQ
-fix). Driver is mature since v6.7, not brand-new staging code.
-
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
-
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **driver-specific / platform-specific**: NPCM8XX
-(`CONFIG_PINCTRL_NPCM8XX`), typically OpenBMC on NPCM845. Not universal.
-
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Trigger is GPIO IRQ request (`request_irq` / irqchip startup).
-Common for BMC GPIO IRQs. Unprivileged userspace can hit it if a GPIO
-irq is exported; typical path is kernel drivers during bring-up. Not a
-rare race: with lockdep it fires on every such startup. Mutex contention
-can turn it into a real sleep-under-spinlock.
-
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Failure mode: mutex_lock while `desc->lock` is held and IRQs are
-off.
-- With `CONFIG_PROVE_LOCKING` / `DEBUG_ATOMIC_SLEEP`: lockdep/WARN
-  (always)
-- If `pctldev->mutex` is contended: **scheduling while atomic** → BUG
-Severity: **HIGH** (illegal atomic sleep; crash if contended), not a
-silent data-corruption bug.
-
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- Benefit: medium-high for NPCM8XX/OpenBMC (correct IRQ request, no
-  lockdep/sleep-in-atomic); zero for other platforms
-- Risk: **low** (~20 net lines, irqchip callbacks only, established
-  pattern)
-- Ratio: favorable
+- Obviously correct relative to HFS CNID rules: user CNIDs ≥ 16;
+  reserved 2=root dir, 3=extents file, 4=catalog file; others invalid
+  for catalog-instantiated inodes.
+- `iget5_locked` `set()` returning non-zero → `inode_insert5()` returns
+  NULL; `hfs_iget()` already treats NULL as failure.
+- New `hfs_read_inode()` code does not sleep (safe under
+  `inode_hash_lock`).
+- Maintainer asked to leave `hfs_write_inode()` unchanged; defense is at
+  instantiation. Remaining `BUG()` is only if some other path still
+  creates a reserved-CNID inode.
+- **Regression risk:** low. Could reject a theoretically weird volume
+  with catalog entries using CNIDs 1 or 5–15; that is invalid HFS and
+  those inodes would `BUG()` on writeback anyway.
+- No public API / data-structure change.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real sleep-in-atomic: `pinctrl_gpio_direction_input()` takes mutexes;
-  `irq_startup()` runs under `raw_spin_lock_irqsave(&desc->lock)`
-- Deterministic on GPIO IRQ request with lockdep
-- Can BUG if the pinctrl mutex is contended
-- Small, obviously correct, matches ingenic/ST
-- Keeps `gpiochip_reqres_irq` / `gpiochip_relres_irq`
-- Driver exists in this tree since v6.7
-- Author is NPCM maintainer; applied by Linus Walleij
-- Standalone vs the rest of the 8-patch series
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-AGAINST:
-- No user crash report / syzbot / Fixes tag
-- Author framed the user-visible issue as lockdep, not production oops
-- NPCM8XX-only
-- Cover letter called the series a vendor-tree cleanup
-- npcm7xx still has the same pattern (does not make this patch wrong)
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: `hfs_write_inode()` reserved-CNID `BUG()` and
+`hfs_cat_find_brec()` date to **1da177e4c3f41 (Linux-2.6.12-rc2,
+2005)**. Long-standing, not a newly introduced bug.
 
-UNRESOLVED:
-- lore.kernel.org HTTP 403; stable@ discussion not independently fetched
-  (thread itself was retrieved via b4)
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Buggy behavior is original HFS catalog/inode
+code, not a recent regression.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — context split is the
-   documented irqchip model; applied by pinctrl maintainer. No extra
-   Tested-by.
-2. Fixes a real bug that affects users? **PASS** — illegal mutex in IRQ
-   startup on GPIO `request_irq`.
-3. Important issue? **PASS** — sleep-in-atomic / lockdep; possible BUG
-   if mutex contended. Not a new feature.
-4. Small and contained? **PASS** — one file, ~29 lines.
-5. No new features or APIs? **PASS** — only irqchip callback placement.
-6. Can apply to the local tree? **PASS** — driver and helpers exist;
-   hunks match.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Nearby HFS work (`hfs_correct_next_unused_CNID`, MDB locking) is
+independent. This commit is standalone, not `patch X/Y`. After it, later
+`fs/hfs/{inode,catalog,super,hfs_fs.h}` commits are unrelated (MDB,
+delayed work, ENOSPC). No follow-up fix to this patch.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None (not a device ID, quirk, DT, build, or docs-only change).
-Qualifies as a normal bugfix.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Only this HFS commit from David Maximiliano Hermitte. Weight
+comes from **Reviewed-by / Signed-off-by Viacheslav Dubeyko** (HFS
+maintainer). Earlier related attempts: George Vernon, Tetsuo Handa
+(syzbot thread).
 
-Step 9.4: MAKE YOUR DECISION
-This tree has the NPCM8XX driver and the buggy startup path. The patch
-is a small, correct move of a may-sleep call to
-`irq_request_resources()`, which is the sleepable side of
-`request_irq()`. That meets stable rules for this checkout.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Uses existing `hfs_bnode_read()`, `hfs_brec_find()`,
+`is_bad_inode()`, `HFS_*_CNID`, `hfs_read_inode()` already returning
+`int` since 2.6.12. **Can apply standalone.**
 
-Verification:
-- [Phase 1] Tags: only Tomer Maimon and Linus Walleij SOBs; no
-  Fixes/Reported-by/stable Cc
-- [Phase 2] Diff: 23 insertions, 6 deletions in `pinctrl-npcm8xx.c`;
-  direction_input moved; GPIOCHIP_IRQ_RESOURCE_HELPERS replaced by
-  custom reqres/relres
-- [Phase 2] `pinctrl_gpio_direction()` locks `pctldev->mutex`;
-  `pinctrl_get_device_gpio_range()` locks `pinctrldev_list_mutex`
-- [Phase 2] `__setup_irq()`: `irq_request_resources()` before
-  `desc->lock`; `irq_startup()` while lock held (`manage.c` 1574–1766,
-  unlock 1807)
-- [Phase 3] Blame: bug from `acf4884a571709` (v6.7-rc1); `git merge-base
-  --is-ancestor` true for intro and for `b8edfde12e355`
-- [Phase 3] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion`: 7.3.0-rc4
-- [Phase 3] Series 1/8–8/8 identified; this patch does not depend on the
-  others
-- [Phase 4] `b4 dig -c b8edfde12e355`: lore msgid
-  20260715122923.1938327-7; v1 only
-- [Phase 4] `b4 dig -w`: Walleij, Golaszewski, Andrew Jeffery, openbmc,
-  linux-gpio
-- [Phase 4] mbox: Walleij “No comments so patches applied”; no
-  NAK/stable Cc
-- [Phase 4] UNVERIFIED: stable@ archive (HTTP 403)
-- [Phase 5] Same pattern in `ingenic_gpio_irq_request` and
-  `st_gpio_irq_request_resources`; npcm7xx still uses startup-time
-  direction_input
-- [Phase 6] File present; reverse `git apply --check` of the commit diff
-  succeeded
-- [Phase 8] Failure mode: lockdep always; scheduling-while-atomic if
-  mutex contended — HIGH for this SoC, not universal
-- UNVERIFIED: whether an unprivileged gpiochip ioctl is the common
-  trigger vs kernel drivers (both reach `request_irq`)
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- **b4 dig:**
+  https://patch.msgid.link/20260708215636.73815-1-davemadmaxxx@gmail.com
+- **Revisions:** v1 (2026-07-02) → v3 RESEND → v4 → **v5 (applied)**
+- Maintainer review drove exact size checks, signed `rec_len`, keep
+  `hfs_write_inode()` unchanged, preserve `hfs_file_lookup()` error
+  codes
+- v5: Slava: “Looks good. Thanks a lot for the fix.” + Reviewed-by
+- Tetsuo: not a NAK; points at sashiko notes on *pre-existing* issues
+- Author revalidated with HFS build and QEMU syzbot repro
+- **No NAKs** of the committed approach
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (b4 dig -w): Viacheslav Dubeyko, Tetsuo Handa, George Vernon,
+Jori Koolstra, linux-fsdevel, syzbot. Maintainer reviewed and merged.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record (syzbot, live page):
+- Title: **kernel BUG in hfs_write_inode**
+- First crash: **2022-11-25**; last listed ~35d before the page
+  snapshot; **243695 crashes**; C and syz reproducers
+- Stack: `hfs_write_inode` ← writeback `wb_workfn` (kworker), invalid
+  opcode at `BUG()`
+- Security assessment: DenialOfService yes, FilesystemTrigger yes,
+  **Unprivileged: no** (needs a mountable image)
+- Duplicate: “invalid opcode in hfs_write_inode”
+- Fix commit listed as `53c3c138d672`
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Single-patch series (v1–v5 of the same change). Earlier
+alternate approaches (replace `BUG()` with `-EIO`/`-EFSCORRUPTED`,
+broader `BUG()` removal) were **not** what merged; this validation-at-
+instantiation patch is standalone.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: **UNVERIFIED** — lore.kernel.org fetches returned 403. No `Cc:
+stable` in the fsdevel thread. That absence is not a reason to reject.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Record: `hfs_cat_validate_found_cnid` (new), `hfs_cat_find_brec`,
+`hfs_is_valid_cnid` (new inline), `hfs_read_inode`, `hfs_file_lookup`,
+`hfs_fill_super`. `hfs_write_inode` unchanged.
+
+**Step 5.2: TRACE CALLERS**
+Record:
+- `hfs_cat_find_brec()` — only `hfs_fill_super()` (root at mount)
+- `hfs_read_inode()` — `iget5_locked` set callback from `hfs_iget()`
+  (`hfs_lookup` / `hfs_fill_super`) and direct call from
+  `hfs_file_lookup()` (rsrc)
+- `hfs_write_inode()` — `s_op->write_inode` from writeback (crash site)
+
+**Step 5.3: TRACE CALLEES**
+Record: `hfs_bnode_read`, `hfs_brec_find`, `be32_to_cpu`,
+`is_bad_inode`, `iput`. No new allocations/locks.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Reachable from **mounting an HFS image** and from **lookup /
+rsrc** on a mounted volume. Syzbot C repro mounts a crafted image;
+writeback then `BUG()`s. Userspace-triggerable if the caller can mount
+HFS (`CONFIG_HFS_FS`).
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: HFS+ already special-cases reserved vs user CNIDs in
+`hfsplus_iget()` (`fs/hfsplus/super.c`). Classic HFS lacked that for
+catalog-instantiated inodes. Same class of bug, HFS-only fix.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. `BUG()` still in `hfs_write_inode()` at `fs/hfs/inode.c`
+(lines 479–491), present since 2.6.12. Validation from this commit is
+already applied here (`hfs_is_valid_cnid` in `hfs_fs.h`,
+`hfs_cat_validate_found_cnid` in `catalog.c`). Introduced: original HFS
+port, not post-7.3.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Expected apply: clean / minor context** on trees that still
+have `hfs_cat_find_brec`, `hfs_read_inode`, `hfs_file_lookup`,
+`hfs_fill_super`. New code does not depend on `inode_set_ctime_to_ts`,
+`set_default_d_op`, or CNID-correction helpers. Constants live in
+`include/linux/hfs_common.h` here; older trees may still have them in
+`fs/hfs/hfs.h` — only a context/include issue, not a logic dependency.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This is the fix (`53c3c138d6727`). No earlier equivalent in-
+tree. Not in `v7.2`.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **fs/hfs** — **PERIPHERAL** (legacy Mac HFS, `CONFIG_HFS_FS`,
+not the VFS core). Still a real on-disk filesystem; a `BUG()` on
+corrupted images is a kernel crash, not a cosmetic warning.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively maintained under Viacheslav Dubeyko (`hfs-v7.3-tag1`
+and other recent HFS tags). Mature code with ongoing syzbot/hardening.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Config/driver-specific:** `CONFIG_HFS_FS`. Anyone who can
+mount HFS (including fuzzers, forensic mounts, old Mac volumes). Not
+universal.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Mount / use a **corrupted HFS image**. Syzbot has a C repro;
+240k+ crashes over ~4 years. Not unprivileged without mount capability.
+Timing-independent once the bad inode is instantiated and dirtied
+(`hfs_file_lookup` does `mark_inode_dirty` on rsrc).
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: **`BUG()` / invalid opcode in writeback kworker → oops.**
+**Severity: CRITICAL** (kernel crash). DoS, not a demonstrated
+privilege-escalation.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** high for HFS users and any tree that enables HFS — stops
+  a years-old reproducible `BUG()`.
+- **Risk:** low — +76 lines, HFS-only, reviewed, tested with QEMU repro;
+  failure mode on bad images becomes `-EIO` / failed mount instead of
+  oops.
+- **Ratio:** strongly favors backport.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR:**
+- Syzbot kernel `BUG()` since 2022, C repro, hundreds of thousands of
+  crashes
+- Crash in writeback (`wb_workfn` → `hfs_write_inode`)
+- Small, contained HFS-only change (+76/-2)
+- Maintainer Reviewed-by after v1–v5
+- Bug in code since 2.6.12; no missing prerequisites in this tree
+- Matches stable rules: real crash, obviously correct validation, no new
+  API
+
+**AGAINST:**
+- HFS is a legacy/peripheral FS
+- Needs ability to mount HFS (not unprivileged syscall-only)
+- `hfs_write_inode()` `BUG()` remains as a backstop if another path
+  instantiates a reserved CNID
+- No `Cc: stable` (expected for this review queue)
+
+**UNRESOLVED:**
+- lore.kernel.org/stable search (HTTP 403)
+- Whether every older stable series has identical hunk context
+  (`hfs_common.h` vs `hfs.h`)
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — maintainer review, QEMU
+   repro, syzbot
+2. Fixes a real bug that affects users? **PASS** — reproducible `BUG()`
+   on corrupted HFS
+3. Important issue? **PASS** — kernel oops (CRITICAL)
+4. Small and contained? **PASS** — 4 files, +76/-2, HFS only
+5. No new features or APIs? **PASS** — validation only
+6. Can apply to the local tree? **PASS** — code is present; patch is
+   self-contained (already merged here as of 7.3-rc1)
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Not ID/quirk/DT/docs. Ordinary **crash fix** on filesystem
+corruption.
+
+**Step 9.4: MAKE YOUR DECISION**
+This is a real, long-standing, syzbot-reproduced kernel `BUG()` on
+corrupted HFS catalog data. The fix is small, reviewed, and stops bad
+CNIDs from becoming inodes that writeback will crash on. That is
+appropriate for stable.
+
+---
+
+### What the commit solves and why it matters
+On a corrupted HFS catalog, a thread lookup by CNID can be followed by a
+parent/name lookup that returns a **different** record. That record can
+carry a reserved CNID (0, 1, 5–15, …). Instantiating it and dirtying it
+(notably the resource-fork path, which previously ignored
+`hfs_read_inode()` errors) causes **writeback to `BUG()`** in
+`hfs_write_inode()`. Stable kernels that still ship HFS will oops the
+same way; rejecting the record with `-EIO` is the right user-visible
+behavior.
+
+### Stable rules / risk
+Surgical, HFS-only, no new APIs, maintainer-acked, fuzzer-proven.
+Residual risk is failing mount/lookup on already-invalid volumes that
+used to oops instead.
+
+### Concerns
+Older trees may need a trivial context tweak if CNID macros are still in
+`fs/hfs/hfs.h`. No semantic prerequisites. The remaining `BUG()` in
+`hfs_write_inode()` is intentional per the maintainer.
+
+### Verification
+- **[Phase 1]** Tags: syzbot Reported-by, Closes syzkaller URL,
+  Reviewed-by Dubeyko, lore Link; no Fixes/Cc-stable
+- **[Phase 2]** Diff: +76/-2 in catalog.c, hfs_fs.h, inode.c, super.c;
+  validation + error propagation
+- **[Phase 3]** `git describe HEAD` → v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion` → 7.3.0-rc4
+- **[Phase 3]** Commit `53c3c138d6727`; `git merge-base --is-ancestor
+  53c3c138d6727 HEAD` → yes
+- **[Phase 3]** `git merge-base --is-ancestor 53c3c138d6727 v7.2` → not
+  in v7.2; `git describe --contains` → v7.3-rc1~222^2~9
+- **[Phase 3]** Blame: `BUG()` in `hfs_write_inode` from 1da177e4c3f41
+  (2.6.12-rc2)
+- **[Phase 3]** `hfs_read_inode` already `static int` since 2.6.12; pre-
+  fix `hfs_file_lookup` discarded its return value
+- **[Phase 4]** `b4 dig -c 53c3c138d6727` → msgid
+  20260708215636.73815-1; v1/v3/v4/v5; v5 applied
+- **[Phase 4]** `b4 dig -w`: Dubeyko, Handa, fsdevel, syzbot
+- **[Phase 4]** `b4 dig -m`: Slava “Looks good” + Reviewed-by; asked to
+  leave `hfs_write_inode` unchanged
+- **[Phase 4]** WebFetch syzbot: kernel BUG in hfs_write_inode,
+  2022-11-25, C repro, 243695 crashes
+- **[Phase 4]** lore.kernel.org WebFetch: 403 — stable-list search
+  UNVERIFIED
+- **[Phase 5]** Callers: `hfs_cat_find_brec` only from `hfs_fill_super`;
+  `hfs_iget` from dir lookup + mount; rsrc via `hfs_file_lookup`
+- **[Phase 5]** `inode_insert5()` treats failed `set()` as NULL inode
+  (verified `fs/inode.c`)
+- **[Phase 6]** Local files already contain the new helpers; `BUG()`
+  path still present
+- **[Phase 8]** Failure mode: oops in kworker writeback, severity
+  CRITICAL
+- **UNVERIFIED:** stable@ discussion (lore 403); exact hunk context on
+  every LTS series
 
 **YES**
 
- drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 29 ++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ fs/hfs/catalog.c | 41 ++++++++++++++++++++++++++++++++++++++++-
+ fs/hfs/hfs_fs.h  | 19 +++++++++++++++++++
+ fs/hfs/inode.c   | 13 ++++++++++++-
+ fs/hfs/super.c   |  5 +++++
+ 4 files changed, 76 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-index 28464463ff833..0347a471f9226 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-@@ -295,17 +295,33 @@ static void npcmgpio_irq_unmask(struct irq_data *d)
- 
- static unsigned int npcmgpio_irq_startup(struct irq_data *d)
- {
--	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
--	unsigned int gpio = irqd_to_hwirq(d);
--
--	/* active-high, input, clear interrupt, enable interrupt */
--	npcmgpio_direction_input(gc, gpio);
- 	npcmgpio_irq_ack(d);
- 	npcmgpio_irq_unmask(d);
- 
- 	return 0;
+diff --git a/fs/hfs/catalog.c b/fs/hfs/catalog.c
+index ccdbbffaaf7c1..f3fd84cffed5f 100644
+--- a/fs/hfs/catalog.c
++++ b/fs/hfs/catalog.c
+@@ -182,6 +182,40 @@ int hfs_cat_keycmp(const btree_key *key1, const btree_key *key2)
+ 			  key2->cat.CName.name, key2->cat.CName.len);
  }
  
-+static int npcmgpio_irq_request_resources(struct irq_data *d)
++static int hfs_cat_validate_found_cnid(struct hfs_find_data *fd, u32 cnid)
 +{
-+	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-+	unsigned int gpio = irqd_to_hwirq(d);
-+	int ret;
++	hfs_cat_rec rec;
++	u32 found_cnid;
++	int rec_len;
 +
-+	ret = npcmgpio_direction_input(gc, gpio);
-+	if (ret)
-+		return ret;
++	rec_len = fd->entrylength;
++	if (rec_len <= 0 || (size_t)rec_len > sizeof(rec))
++		return -EIO;
 +
-+	return gpiochip_reqres_irq(gc, gpio);
++	memset(&rec, 0, sizeof(rec));
++	hfs_bnode_read(fd->bnode, &rec, fd->entryoffset, rec_len);
++
++	switch (rec.type) {
++	case HFS_CDR_FIL:
++		if ((size_t)rec_len != sizeof(struct hfs_cat_file))
++			return -EIO;
++		found_cnid = be32_to_cpu(rec.file.FlNum);
++		break;
++	case HFS_CDR_DIR:
++		if ((size_t)rec_len != sizeof(struct hfs_cat_dir))
++			return -EIO;
++		found_cnid = be32_to_cpu(rec.dir.DirID);
++		break;
++	default:
++		return -EIO;
++	}
++
++	if (found_cnid != cnid)
++		return -EIO;
++
++	return 0;
 +}
 +
-+static void npcmgpio_irq_release_resources(struct irq_data *d)
-+{
-+	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-+	unsigned int gpio = irqd_to_hwirq(d);
+ /* Try to get a catalog entry for given catalog id */
+ // move to read_super???
+ int hfs_cat_find_brec(struct super_block *sb, u32 cnid,
+@@ -208,7 +242,12 @@ int hfs_cat_find_brec(struct super_block *sb, u32 cnid,
+ 		return -EIO;
+ 	}
+ 	memcpy(fd->search_key->cat.CName.name, rec.thread.CName.name, len);
+-	return hfs_brec_find(fd);
 +
-+	gpiochip_relres_irq(gc, gpio);
-+}
++	res = hfs_brec_find(fd);
++	if (res)
++		return res;
 +
- static struct irq_chip npcmgpio_irqchip = {
- 	.name = "NPCM8XX-GPIO-IRQ",
- 	.irq_ack = npcmgpio_irq_ack,
-@@ -313,8 +329,9 @@ static struct irq_chip npcmgpio_irqchip = {
- 	.irq_mask = npcmgpio_irq_mask,
- 	.irq_set_type = npcmgpio_set_irq_type,
- 	.irq_startup = npcmgpio_irq_startup,
-+	.irq_request_resources = npcmgpio_irq_request_resources,
-+	.irq_release_resources = npcmgpio_irq_release_resources,
- 	.flags =  IRQCHIP_MASK_ON_SUSPEND | IRQCHIP_IMMUTABLE,
--	GPIOCHIP_IRQ_RESOURCE_HELPERS,
- };
++	return hfs_cat_validate_found_cnid(fd, cnid);
+ }
  
- static const int gpi36_pins[] = { 36 };
+ static inline
+diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
+index 86b5ae62247be..724b28bb8c6c4 100644
+--- a/fs/hfs/hfs_fs.h
++++ b/fs/hfs/hfs_fs.h
+@@ -156,6 +156,25 @@ extern int hfs_cat_move(u32 cnid, struct inode *src_dir,
+ extern void hfs_cat_build_key(struct super_block *sb, btree_key *key,
+ 			      u32 parent, const struct qstr *name);
+ 
++/*
++ * Validate the CNID of a catalog record.
++ */
++static inline bool hfs_is_valid_cnid(u32 cnid, u8 type)
++{
++	if (likely(cnid >= HFS_FIRSTUSER_CNID))
++		return true;
++
++	switch (cnid) {
++	case HFS_ROOT_CNID:
++		return type == HFS_CDR_DIR;
++	case HFS_EXT_CNID:
++	case HFS_CAT_CNID:
++		return type == HFS_CDR_FIL;
++	default:
++		return false;
++	}
++}
++
+ /* dir.c */
+ extern const struct file_operations hfs_dir_operations;
+ extern const struct inode_operations hfs_dir_inode_operations;
+diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
+index f1796e4b07e83..e815e9a8ac6f2 100644
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -365,6 +365,9 @@ static int hfs_read_inode(struct inode *inode, void *data)
+ 	rec = idata->rec;
+ 	switch (rec->type) {
+ 	case HFS_CDR_FIL:
++		if (!hfs_is_valid_cnid(be32_to_cpu(rec->file.FlNum), rec->type))
++			return -EIO;
++
+ 		if (!HFS_IS_RSRC(inode)) {
+ 			hfs_inode_read_fork(inode, rec->file.ExtRec, rec->file.LgLen,
+ 					    rec->file.PyLen, be16_to_cpu(rec->file.ClpSize));
+@@ -386,6 +389,9 @@ static int hfs_read_inode(struct inode *inode, void *data)
+ 		inode->i_mapping->a_ops = &hfs_aops;
+ 		break;
+ 	case HFS_CDR_DIR:
++		if (!hfs_is_valid_cnid(be32_to_cpu(rec->dir.DirID), rec->type))
++			return -EIO;
++
+ 		inode->i_ino = be32_to_cpu(rec->dir.DirID);
+ 		inode->i_size = be16_to_cpu(rec->dir.Val) + 2;
+ 		HFS_I(inode)->fs_blocks = 0;
+@@ -565,13 +571,18 @@ static struct dentry *hfs_file_lookup(struct inode *dir, struct dentry *dentry,
+ 	res = hfs_brec_read(&fd, &rec, sizeof(rec));
+ 	if (!res) {
+ 		struct hfs_iget_data idata = { NULL, &rec };
+-		hfs_read_inode(inode, &idata);
++		res = hfs_read_inode(inode, &idata);
+ 	}
+ 	hfs_find_exit(&fd);
+ 	if (res) {
+ 		iput(inode);
+ 		return ERR_PTR(res);
+ 	}
++
++	if (is_bad_inode(inode)) {
++		iput(inode);
++		return ERR_PTR(-EIO);
++	}
+ 	HFS_I(inode)->rsrc_inode = dir;
+ 	HFS_I(dir)->rsrc_inode = inode;
+ 	igrab(dir);
+diff --git a/fs/hfs/super.c b/fs/hfs/super.c
+index 97546d6b41f47..933aa04480899 100644
+--- a/fs/hfs/super.c
++++ b/fs/hfs/super.c
+@@ -372,6 +372,11 @@ static int hfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	if (!root_inode)
+ 		goto bail_no_root;
+ 
++	if (is_bad_inode(root_inode)) {
++		iput(root_inode);
++		goto bail_no_root;
++	}
++
+ 	set_default_d_op(sb, &hfs_dentry_operations);
+ 	res = -ENOMEM;
+ 	sb->s_root = d_make_root(root_inode);
 -- 
 2.53.0
 
