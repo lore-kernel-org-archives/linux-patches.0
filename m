@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D967F582790;
-	Mon, 19 Oct 2026 13:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C295827B6;
+	Mon, 19 Oct 2026 13:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418399; cv=none; b=N6BGOSfGYnJIy441wrUybV2WWAAzUraW3oj10ePo7qCZG8dDe0o9gGVqdobE3WnEu7jkq7I6qOgtShZLl7xT8X2QR2jLpy3DXxoBrjPb9K6Hh0tleFSU0qNaCncOzJR6KMLVF6HIHhOs87/YORaBoxnHuP7TNw8JuqOhwuE3pGI=
+	t=1792418401; cv=none; b=fxXSuMVP8uJQy0gypN0ZtbbjX0zOmhmHlLqN0mrofoXqvH2nsmDwMLE90eg5JxZOWnhz5ViFvI0MJ5a4t4ek8KD5slwkFhbwHmYGWLXEGKSwadCsk7afMXLYMZXbHo1/8uGItdJpyNqGNhyEkWRhcSm/9jSKz9bVc//q8c2QizE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418399; c=relaxed/simple;
-	bh=uZukE25iEAl//S0ejw2tfv0/KdKPev8quqJPBkrJLig=;
+	s=arc-20240116; t=1792418401; c=relaxed/simple;
+	bh=5QDcUM7V3F85GFwGD4h7tdAoC/2rDXMWYHQDXo3SzMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bdnWpjTyiTl4zAOKNdCCAfdjteUW2QFOQCfIDtCz2hsgX1Nry6tN06RxVK4X+hwxe4dJexfK4dQ2WXTp1sGxOEH1DWlruZGkAKG/VXl/wZB73lRhfcAKZIerBoIZQV5Dwnl15vN73T4Eb84CAOdjumaAFkz70uSp91ctZwL8A04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ec82nxEg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jWVqUFvLvNXZs80zXIkU1d2QZlc3U1e8GHrbwQ8b4vXyN87oytn2YQBuRXDO8zBVuQW953v1GKkeVxTa/5MQRN8gfnwEn7xgIgd1F0e/El/JpkAwp9mNoQdvu+Tc4zPRYI9qCKMEhpIOpmGFowojs5HUr6bFGN+aqU1O6hHc2mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hXVb4oxq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ec82nxEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB391F000C9;
-	Mon, 19 Oct 2026 13:59:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hXVb4oxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C951F000C4;
+	Mon, 19 Oct 2026 13:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418397;
-	bh=KpHCv03iBiqXe9bmGz9dOiNVSpQl+aoBCSsyicKvSkI=;
+	s=k20260515; t=1792418399;
+	bh=rN5dETSaf8THpyHMEVrc/LonwTYZDhVP2rrH8ZWjnjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ec82nxEgfiZ/NkB17hcT+MK8Us+80Ax329H7p1j5pb7wNLAEW+n7pCE+WUjHpvu3y
-	 yVE/NyO4EQAopddV5So3UbREkSmA8GvPdlCcfMUF7goJ8bvpWTKGCtUS8fJhbXlBkN
-	 APDCHF5AEbdZ5BjYMxBVarRWF2saXTX/bbkIsFmPkCb0Y7cipm4CGWPCJXrymp6KNY
-	 qu4FsapDXSXf9GeCZhBSwfL3ZK9pscCS1vdBtHwE95RvEggeZ8VA2TWPjxpiir35dY
-	 JCuVT7OycKNA19gsTS+/GuJaHfEszDpaPutvGN5Q8/mIucRQLc2oNm+0zy4MulaRrP
-	 EXVbD/GXAdRSg==
+	b=hXVb4oxquf3yq60oqS/PGvRpJEN8mOARbsUzAn+01xPELIvxtUPTWvl7t0im2Y/lk
+	 Sp0oATw1xomhDshEolpS5Z+8rhduN+SBRFw309ILVtt5BOIqPTye9Yor22oKeo6nMW
+	 pHzCQ0l2nQqQkDMH9Z7Vd5FXEQtx39MMINrgh/axlXkN0dctTSQd93IY4T87cywgFM
+	 kavhKXImN8FmPVdvbEvb7/DYtBX3LtucYS1gDkn1SNLj/uSs2VkJI6dqTxIfwN+DPy
+	 Y4IL/PYnhnZpSy1yT+9qul09cbu0Rqjwsq8Y/H1lHmWh3vgJoYn9V8bhkhIhcWbqdC
+	 tjmriiYZk1IGg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Abhijeeth Babu <babu.jeeth@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+Cc: Matthew Jacob <mjacob@feralsw.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	westeri@kernel.org,
-	linux-i2c@vger.kernel.org,
-	linux-acpi@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] i2c: acpi: Force ELAN1300 touchpads to 100 kHz
-Date: Mon, 19 Oct 2026 09:48:32 -0400
-Message-ID: <20261019135441.1420968-221-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/amdgpu: Support some Barco AMD based graphics adapters
+Date: Mon, 19 Oct 2026 09:48:33 -0400
+Message-ID: <20261019135441.1420968-222-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,418 +56,321 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Abhijeeth Babu <babu.jeeth@gmail.com>
+From: Matthew Jacob <mjacob@feralsw.com>
 
-[ Upstream commit 9e9762e578db7556bea644bb5a8a2435f63544d1 ]
+[ Upstream commit 3dc4d68ee26a7ac12069ff0562ad8935106c79b6 ]
 
-The ELAN1300 touchpad with HID ID 04F3:3104 on the ASUS VivoBook
-X513UA_KM513UA exhibits severe pointer jumps and erratic movement when
-the I2C bus operates at 400 kHz.
+These adapters typically are only supported by Barco on the
+Windows platform. However, with these changes in the linux
+driver, multiple monitor support should work correctly.
 
-The system DSDT describes the touchpad using an I2cSerialBusV2 resource
-with a speed of 0x00061A80, corresponding to 400 kHz, on the
-AMDI0010:03 controller.
-
-At this speed, libinput repeatedly reports:
-
-kernel bug: Touch jump detected and discarded
-
-Add ELAN1300 to i2c_acpi_force_100khz_device_ids so that it operates at
-100 kHz.
-
-Before the change, nine touch-jump events were recorded, with additional
-messages suppressed by libinput's rate limiter. With the bus forced to
-100 kHz, no touch-jump events have been observed and the touchpad operates
-normally.
-
-The affected system uses BIOS X513UA.319 dated 2023-05-09.
-
-Signed-off-by: Abhijeeth Babu <babu.jeeth@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260617192611.125513-1-babu.jeeth@gmail.com
+Signed-off-by: Matthew Jacob <mjacob@feralsw.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: `[i2c: acpi]` `[Force]` Force ELAN1300 touchpads to 100 kHz
-instead of the DSDT-advertised 400 kHz.
-
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Record:
-- `Fixes:` none (expected)
-- `Reported-by:` none
-- `Tested-by:` none (author reports before/after on the affected
-  machine)
-- `Reviewed-by:` none
-- `Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>`
-  (ACPI/I2C ACPI expert)
-- `Signed-off-by: Abhijeeth Babu` (author)
-- `Signed-off-by: Andi Shyti` (I2C host-driver maintainer; merged to
-  `i2c/i2c-for-7.3`)
-- `Link: https://lore.kernel.org/r/20260617192611.125513-1-
-  babu.jeeth@gmail.com`
-- `Cc: stable@vger.kernel.org` none (expected)
-- Ignored: `[Upstream commit 9e9762e578db7556bea644bb5a8a2435f63544d1]`
-  and `Signed-off-by: Sasha Levin` (pipeline markers)
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
-Record:
-- Bug: ELAN1300 (`HID 04F3:3104`) on ASUS VivoBook X513UA_KM513UA
-  jumps/erratically tracks when the I2C bus runs at 400 kHz.
-- DSDT `I2cSerialBusV2` speed `0x00061A80` = 400000 Hz on `AMDI0010:03`.
-- Symptom: libinput `kernel bug: Touch jump detected and discarded`
-  (nine events before rate limiting).
-- Root cause: bus too fast for this touchpad under Linux (same class of
-  issue as existing ELAN06FA/DLL0945 100 kHz quirks; comment notes
-  Windows works at 400 kHz, so this is a Linux HCNT/LCNT/timing
-  interaction, not a DSDT typo).
-- Author tested: jumps gone at 100 kHz. BIOS X513UA.319 (2023-05-09).
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Record: Not hidden. Explicit hardware quirk. Same pattern as the
-existing `i2c_acpi_force_100khz_device_ids` entries.
-
----
-
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
-
-**Step 2.1: INVENTORY THE CHANGES**
-
-Record:
-- File: `drivers/i2c/i2c-core-acpi.c` (+1 / −0)
-- Function: none; one ACPI ID added to
-  `i2c_acpi_force_100khz_device_ids[]`
-- Scope: single-file, one-line surgical quirk
-
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Record: Before, `i2c_acpi_lookup_speed()` left ELAN1300 at DSDT 400 kHz.
-After, `acpi_match_device_ids()` matches `"ELAN1300"` and sets
-`lookup->force_speed = I2C_MAX_STANDARD_MODE_FREQ` (100000).
-`i2c_acpi_find_bus_speed()` then returns that forced speed and logs
-`FW_BUG` if it differs from the ACPI-advertised speed.
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Record: Category **(h) hardware workaround**. Same mechanism as
-DLL0945/ELAN06FA: ACPI HID match forces the adapter to 100 kHz because
-400 kHz produces unusable HID reports.
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-
-Record: Obviously correct; one table entry; no API/locking/refcount
-change. Regression risk is limited to other machines whose ACPI HID is
-also `ELAN1300`: they would be forced to 100 kHz. Standard-mode I2C is
-universally supported; previous quirks used the same HID-wide match.
-Bus-wide force could slow sibling devices on `AMDI0010:03`; that is the
-established tradeoff of this table.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-
-Record: Table introduced by `bfd74cd1fbc02` (“i2c: Force ELAN06FA
-touchpad I2C bus freq to 100KHz”, 2025-01-13). DLL0945 added by
-`0b7c9528facdb` (2025-08-03). Both are in `v6.18` / `v6.18.53`. The 400
-kHz force infrastructure is `7574c0db2e68c` (2019), also in this tree.
-
-**Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: No `Fixes:` tag. Not applicable. The “bug” is
-hardware+DSDT+Linux timing, present whenever this laptop runs a kernel
-that honors the 400 kHz DSDT resource.
-
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record: Recent related commits on this file: ELAN06FA (`bfd74cd1fbc02`),
-DLL0945 (`0b7c9528facdb`). Standalone; not patch X/Y. `ELAN0678` appears
-in the mainline hunk context but is **not** in this 6.18 tree (`git log
---grep=ELAN0678 -- drivers/i2c/` empty; no matches in the tree). That ID
-is not a prerequisite.
-
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Only this I2C commit from Abhijeeth Babu. Acked by Mika
-Westerberg; merged by Andi Shyti (`MAINTAINERS`: I2C host-driver
-maintainer).
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Record: Depends on `i2c_acpi_force_100khz_device_ids` +
-`i2c_acpi_lookup_speed()` force path. Both exist at `v6.18.53`.
-Standalone one-line add. Applies to `v6.18.53` (`git apply --check` on
-that file: rc 0).
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- `b4 dig -c 9e9762e578db7556bea644bb5a8a2435f63544d1` →
-  https://patch.msgid.link/20260617192611.125513-1-babu.jeeth@gmail.com
-- Thread: https://lore-kernel.gnuweeb.org/linux-
-  acpi/ajSIc9fcALRaYhRq@zenone.zhora.eu/T/ (3 messages)
-- `b4 dig -a`: v1 only; no later revisions
-- No NAK. Mika Acked-by. Andi: “merged to i2c/i2c-for-7.3.” No reviewer
-  `Cc: stable` request (absence is not a negative).
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record (`b4 dig -w`): To Mika Westerberg, Andi Shyti; Cc linux-i2c,
-linux-acpi, linux-kernel. Right maintainers on the original submission.
-
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot/bugzilla. Author is the reporter: before (nine
-libinput touch-jumps) / after (none). Real hardware, BIOS dated 2023.
-
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Standalone v1. Same table already holds ELAN06FA and DLL0945.
-
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-Record: gnuweeb `stable/?q=ELAN1300` hits are unrelated old stable
-reviews (no this patch). No recorded reason to exclude it.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-
-Record: Table `i2c_acpi_force_100khz_device_ids`; consumers
-`i2c_acpi_lookup_speed()`, `i2c_acpi_find_bus_speed()`. semcode MCP not
-available; used grep.
-
-**Step 5.2: TRACE CALLERS**
-
-Record: `i2c_acpi_find_bus_speed()` callers include:
-- `drivers/i2c/busses/i2c-designware-common.c`
-  (`i2c_dw_acpi_round_bus_speed`) — **this is the path for AMDI0010**
-- `i2c-amd-mp2-plat.c`, `i2c-synquacer.c`, `i2c-ls2x.c`,
-  `i2c-viai2c-zhaoxin.c`, `i2c-usbio.c`, `drivers/crypto/atmel-i2c.c`
-
-`AMDI0010` is in `dw_i2c_acpi_match[]` in `i2c-designware-platdrv.c`
-(line 359). Probe-time bus frequency, not a hot path.
-
-**Step 5.3: TRACE CALLEES**
-
-Record: `acpi_walk_namespace` → `i2c_acpi_lookup_speed` →
-`acpi_match_device_ids`. Then DesignWare `i2c_dw_adjust_bus_speed()`
-takes `min`/`max` with ACPI speed. Forced 100 kHz is applied at adapter
-setup.
-
-**Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Laptop boot → DesignWare AMDI0010 probe → ACPI speed lookup →
-ELAN1300 match → 100 kHz. Userspace HID/libinput then sees stable
-reports. Reachable on any ACPI x86 laptop with this HID; not a rare
-config.
-
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-Record: Same table already has `{ "DLL0945", 0 }` and `{ "ELAN06FA", 0
-}`. This is the third instance of the same quirk.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record: Local tree is **6.18.53** (`make kernelversion`; `git describe
-HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`). At **`v6.18.53`** the table is:
-
-```
-{ "DLL0945", 0 },
-{ "ELAN06FA", 0 },
-{}
-```
-
-No `ELAN1300`. Matching/force path is present. Hardware (BIOS 2023)
-predates 6.18. Bug exists here.
-
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: Clean apply to `v6.18.53` (`git apply --check` rc 0). Mainline
-context mentions `ELAN0678`, which is not in 6.18; the one-line add
-still matches `DLL0945`/`ELAN06FA`. Difficulty: clean / trivial.
-
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-Record: ELAN06FA and DLL0945 are in `v6.18`. No other ELAN1300
-workaround in hid/i2c (`rg ELAN1300` only this table). No alternate fix.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-Record: I2C ACPI core (`drivers/i2c/i2c-core-acpi.c`). **IMPORTANT** for
-ACPI laptops: input device usability. Not mm/fs/net core, but a shared
-I2C path used by many x86 systems.
-
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Record: Mature. Speed-force tables have existed since 2019 (400 kHz) and
-2025 (100 kHz). Low churn; ID additions are the normal maintenance
+## Phase 1: Commit message forensics
+
+**Step 1.1:** Record: `[drm/amdgpu] [Support] [add PCI IDs so Barco AMD
+adapters bind to amdgpu]`
+
+**Step 1.2:** Tags in the commit as given:
+- `Signed-off-by: Matthew Jacob <mjacob@feralsw.com>` (author)
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Cc: stable`, `Link:`, `Tested-by`, or
+  `Reviewed-by` on the committed message (absence of `Fixes`/`Cc:
+  stable` is expected for this review)
+
+**Step 1.3:** Record:
+- Bug/problem: Barco MXRT cards (AMD GPUs with Barco PCI IDs) are not in
+  `pciidlist`, so amdgpu never binds; Windows-only vendor support.
+- Symptom: cards do not work as DRM devices; multi-monitor setups fail.
+- Version info: none in the message.
+- Root cause: missing device IDs, not a logic bug in existing chip code.
+
+**Step 1.4:** Record: Not a hidden crash/UAF fix. It is hardware
+enablement via PCI IDs. That is an explicit stable exception, not
+disguised cleanup.
+
+## Phase 2: Diff analysis
+
+**Step 2.1:** Record:
+- File: `drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c` only
+- +4 / -0 (four PCI ID rows)
+- Function/object: `pciidlist[]`
+- Scope: single-file surgical device-ID addition
+
+**Step 2.2:** Record (each hunk is the same pattern):
+- Before: ID missing → PCI core does not match amdgpu
+- After: ID present with existing `CHIP_*` flags → probe uses already-
+  supported ASIC paths
+  - `0x664D` → `CHIP_BONAIRE`
+  - `0x693B` → `CHIP_TONGA`
+  - `0x67D4` → `CHIP_POLARIS10`
+  - `0x698F` → `CHIP_POLARIS12`
+- Path: device enumeration / probe, not an error path
+
+**Step 2.3:** Record: `[Hardware workarounds / device ID addition]`
+Mechanism: missing IDs so existing Bonaire/Tonga/Polaris code never runs
+for those DIDs.
+
+**Step 2.4:** Record: Obviously correct if the IDs belong to those
+families. Regression risk is low: only those four DIDs start probing;
+neighboring IDs are unchanged. Wrong-family assignment could mis-init a
+GPU; public PCI databases and nearby IDs in the same table match the
+chosen `CHIP_*` values. Original submission used `//` comments; the
+committed form dropped them (kernel style). No API or data-structure
+change.
+
+## Phase 3: Git history
+
+**Step 3.1:** Record: `pciidlist` has existed for the life of amdgpu.
+Nearby IDs (`0x6649`, `0x6939`, `0x67D0`, `0x6987`) are long-standing.
+The gap is missing Barco DIDs, not a newly introduced logic bug.
+`CHIP_BONAIRE` / `CHIP_TONGA` / `CHIP_POLARIS10` / `CHIP_POLARIS12` are
+in `include/drm/amd_asic_type.h` (enum values 5, 11, 15, 17).
+
+**Step 3.2:** No `Fixes:` tag. Buggy “code” is the absence of IDs. Not
+applicable as a Fixes follow-up.
+
+**Step 3.3:** Recent related history on this file includes other PCI ID
+work (e.g. cyan skillfish IDs already in v6.18). Standalone; not patch
+X/Y. A later named-initializer rewrite of the table exists only as a
+later candidate on this branch, not in `v6.18.53`.
+
+**Step 3.4:** Author Matthew Jacob (Feral Software) has this one amdgpu
+commit here. Alex Deucher, amdgpu maintainer, applied it (`CommitDate:
+Wed Jul 1 2026`, SOB).
+
+**Step 3.5:** No functional prerequisites. Applies against the existing
+`pciidlist` format in `v6.18.53`. Does not need new CHIP types, new
+helpers, or other series patches.
+
+Upstream object `3dc4d68ee26a7ac12069ff0562ad8935106c79b6` is **not** an
+ancestor of `v6.18` or `v6.18.53`.
+
+## Phase 4: Mailing list / external research
+
+**Step 4.1:** `b4 dig -c 3dc4d68ee26a7ac12069ff0562ad8935106c79b6`
+failed (lore.kernel.org server error). Fallback: freedesktop amd-gfx.
+- Submission: https://lists.freedesktop.org/archives/amd-
+  gfx/2026-June/147081.html
+- First attempt (attachment, not git-format):
+  https://lists.freedesktop.org/archives/amd-gfx/2026-June/147075.html
+- Alex asked for a proper git patch + SOB:
+  https://lists.freedesktop.org/archives/amd-gfx/2026-June/147077.html
+- Alex applied the git-format patch the same day:
+  https://lists.freedesktop.org/archives/amd-gfx/2026-June/147083.html
+  (“Applied. Thanks!”)
+- Archive index also lists later Christian König and Matthew Jacob
+  follow-ups; **exact text of those later mails is UNVERIFIED** (message
+  numbers not resolved). No NAK found on the applied version.
+
+**Step 4.2:** Recipients: amd-gfx. Maintainer Alex Deucher reviewed and
+applied. Not a drive-by unreviewed ID dump.
+
+**Step 4.3:** Real-world reports:
+- 2023: Matthias Reichl, Barco MXRT-5600 `1002:664d` on HP Z240; neither
+  radeon nor amdgpu bound; adding the ID made it work (Debian, kernel
+  6.2-rc3, CIK enabled). Alex noted the DID was missing from AMD’s
+  Windows list too. https://lists.freedesktop.org/archives/amd-
+  gfx/2023-January/088522.html
+- 2026 cover letter: Kaiser radiology PACS fleets; Barco/Kaiser had no
+  objection.
+- PCI ID databases: `664D` Bonaire/W5100/MXRT-5600; `693B`
+  Tonga/W7100/MXRT-7600; `67D4` Polaris10/WX 7100/MXRT-8700; `698F`
+  Polaris12/WX 3100/MXRT 4700.
+
+**Step 4.4:** Standalone 4-line ID add. A later separate patch proposed
+`0x67D7` (MXRT-6700); not required for this commit.
+
+**Step 4.5:** lore.kernel.org/stable search returned 403; **UNVERIFIED**
+whether stable@ already discussed this ID set. No evidence of a NAK for
+stable.
+
+## Phase 5: Code semantic analysis
+
+**Step 5.1:** Record: `pciidlist[]` (static `pci_device_id` table). No
+function body edits.
+
+**Step 5.2:** Record: PCI core match → `amdgpu` `.id_table` /
+`MODULE_DEVICE_TABLE(pci, pciidlist)` around the probe path in
+`amdgpu_drv.c`. Trigger is plugging in / booting with that GPU. Not a
+syscall hot path.
+
+**Step 5.3:** Record: probe then uses existing ASIC init for
+`CHIP_BONAIRE` / `CHIP_TONGA` / `CHIP_POLARIS10` / `CHIP_POLARIS12`.
+Those ASICs already have full driver support in this tree.
+
+**Step 5.4:** Record: Userspace-reachable only in the sense of having
+the card. Unprivileged users cannot invent a PCI ID. Impact is “card
+works vs. no DRM driver”.
+
+**Step 5.5:** Same table already lists sibling IDs in each family.
+`amdgpu_unsupported_pciidlist[]` does not contain these four IDs. radeon
+`include/drm/drm_pciids.h` still lacks `0x664D` (Bonaire default driver
+is radeon unless CIK is switched to amdgpu). That does not block amdgpu
+IDs for Tonga/Polaris.
+
+## Phase 6: Local tree (this checkout)
+
+**Step 6.1:** Record:
+- `git describe HEAD` → `v6.18.53-5049-g0f0bdc2b0dffb`; `Makefile` →
+  **6.18.53**
+- `v6.18.53:drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c` does **not**
+  contain `0x664D`, `0x693B`, `0x67D4`, `0x698F`
+- Surrounding rows in `v6.18.53` match the candidate hunks (positional
+  `{0x1002, 0x...., PCI_ANY_ID, ...}` form)
+- `CHIP_*` enums exist in this series
+- Bug/gap: missing IDs, present for as long as those families have been
+  in amdgpu
+
+**Step 6.2:** Record: **clean apply** onto `v6.18.53`. No format
+mismatch. (HEAD currently uses `PCI_DEVICE()` named initializers because
+a later candidate rewrote the table; that rewrite is not in `v6.18.53`.)
+
+**Step 6.3:** Record: No alternate fix for these four IDs in
+`v6.18..v6.18.53`. Cyan skillfish ID adds are a different family and
+already in v6.18.
+
+## Phase 7: Subsystem context
+
+**Step 7.1:** Record: `[drm/amdgpu] [IMPORTANT]` — common GPU driver,
+not staging. Device-ID-only, not a new driver.
+
+**Step 7.2:** Record: amdgpu is actively developed; these GCN families
+(CIK/VI/Polaris) are mature. Adding IDs to old ASICs is the usual
 pattern.
 
----
+## Phase 8: Impact and risk
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 8.1:** Record: driver-specific / hardware-specific. Users of
+Barco MXRT (medical/pro multi-display) AMD cards. Not universal.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
+**Step 8.2:** Record: Trigger = boot with that PCI device. Common for
+those machines, zero for everyone else. Not a userspace exploit path.
 
-Record: Driver/hardware-specific: ACPI HID `ELAN1300` (reported: ASUS
-VivoBook X513UA_KM513UA, I2C-HID `04F3:3104`, DesignWare `AMDI0010`).
-Only those machines change behavior.
+**Step 8.3:** Record: Failure mode today = adapter unbound / no KMS, not
+an oops. Severity for affected users: **HIGH** (hardware dead on Linux).
+Severity for others: none. Not panic/UAF.
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+**Step 8.4:** Record:
+- Benefit: high for those GPUs (kernel finally binds; Tonga/Polaris work
+  with default amdgpu; Bonaire needs existing `DRM_AMDGPU_CIK` /
+  `amdgpu.cik_support=1` like other Bonaire parts)
+- Risk: very low (4 rows, existing CHIP flags, maintainer-applied)
+- Ratio: favorable; this is the documented device-ID exception
 
-Record: Every boot / every pointer motion at 400 kHz. Not a race.
-Unprivileged user just uses the touchpad. Common on the affected laptop.
+Caveats (not blockers):
+- Two IDs were labeled “Tentative” in the mail (`0x67D4` MXRT-8750 vs
+  databases saying MXRT-8700; `0x698F` MXRT-4700, which does exist).
+  Family assignment still matches public PCI IDs.
+- Bonaire `0x664D` is not added to radeon; default CIK remains radeon.
+  Same as needing CIK-in-amdgpu for other Bonaire cards.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+## Phase 9: Synthesis
 
-Record: Unusable touchpad (severe jumps; libinput discards motion). Not
-a panic/UAF. **MEDIUM–HIGH** for affected users (primary pointing device
-broken). Fits the documented **hardware quirk** exception.
+**Evidence FOR:**
+- Canonical PCI ID addition to an existing driver
+- 4 lines, existing `CHIP_*` only
+- Families already in 6.18.y; IDs missing from `v6.18.53`
+- Applies cleanly
+- Maintainer (Alex Deucher) applied it
+- Documented users (Kaiser PACS, 2023 MXRT-5600 report)
+- PCI ID databases agree with the chip mapping
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+**Evidence AGAINST:**
+- Not a crash/security/corruption fix
+- Two IDs originally marked tentative
+- Bonaire ID incomplete vs radeon default
+- Exact later König comments UNVERIFIED
 
-Record:
-- Benefit: high for ELAN1300 laptops on 6.18.y (touchpad works).
-- Risk: very low (1 line, existing table, 100 kHz is safer than 400 kHz
-  for I2C slaves).
-- Ratio: strongly favors backport.
+**Unresolved:** exact text of later amd-gfx follow-ups; whether stable@
+already discussed it (lore 403 / b4 lore error).
 
----
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** — table rows + maintainer
+   apply; 2023 user tested `664d`
+2. Real bug affecting users? **PASS** — devices never bind
+3. Important? **PASS** under the device-ID exception (hardware
+   enablement, not a new driver)
+4. Small and contained? **PASS** — 4 lines, one file
+5. No new features/APIs? **PASS** — IDs only; no new ioctls/params
+6. Can apply to this tree? **PASS** — `v6.18.53` table format matches
 
-## PHASE 9: FINAL SYNTHESIS
+**Exception category:** New PCI IDs on an existing driver.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+This should be backported to this 6.18.y tree: the driver and ASIC
+support are already here; only the four IDs are missing.
 
-FOR:
-- Real user-visible hardware bug (tested before/after).
-- Classic I2C ACPI speed quirk; table and matcher already in 6.18.53.
-- One line; no new API.
-- Acked by Mika Westerberg; merged by Andi Shyti; no NAK.
-- Same class as ELAN06FA/DLL0945 already in this tree.
-
-AGAINST:
-- Not a crash/security/corruption issue.
-- Affects a specific HID, not all machines.
-- No `Fixes:`/`Cc: stable` (expected; not a negative).
-- HID-wide match could slow other ELAN1300 boards to 100 kHz (accepted
-  pattern; low risk).
-
-UNRESOLVED:
-- lore.kernel.org WebFetch returned 403; discussion recovered via
-  b4/gnuweeb/lkml.
-- How many other products share ACPI HID `ELAN1300` is unverified.
-
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — one ID; author measured
-   jumps gone.
-2. Fixes a real bug that affects users? **PASS** — unusable touchpad on
-   a shipping ASUS laptop.
-3. Important issue? **PASS** as hardware quirk (broken input), not a
-   kernel oops.
-4. Small and contained? **PASS** — +1 line, one file.
-5. No new features or APIs? **PASS** — existing quirk table.
-6. Can apply to the local tree? **PASS** — table exists; applies cleanly
-   to 6.18.53.
-
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Record: **Hardware quirk/workaround** (and ACPI device-ID addition to an
-existing table). Explicitly allowed for stable.
-
-**Step 9.4: DECISION**
-
-This 6.18.53 tree already has the 100 kHz force table and honors DSDT
-400 kHz for unmatched HIDs, so ELAN1300 laptops still misbehave here.
-The fix is a one-line ID add, the same mechanism already used for
-ELAN06FA and DLL0945, and it applies cleanly.
-
-What it solves for stable users: ASUS VivoBook X513UA (and any other
-`ELAN1300`) touchpads stop jumping when the DesignWare `AMDI0010` bus is
-left at 400 kHz.
-
-Risk vs benefit: negligible code risk, restores a primary input device.
-
----
-
-## Verification
-
-- [Phase 1] Parsed tags: Acked-by Mika Westerberg; SOB Andi Shyti; Link
-  lore msgid `20260617192611.125513-1-babu.jeeth@gmail.com`; no
-  Fixes/Reported-by/Cc-stable. Ignored Upstream/Sasha markers.
-- [Phase 1] Body: DSDT 0x00061A80 = 400 kHz; libinput touch jumps; BIOS
-  X513UA.319 2023-05-09.
-- [Phase 2] Diff: +1 `{ "ELAN1300", 0 }` in
-  `i2c_acpi_force_100khz_device_ids`; `i2c_acpi_lookup_speed` sets
-  `I2C_MAX_STANDARD_MODE_FREQ` (100000 in `include/linux/i2c.h`).
-- [Phase 3] `git blame`: table from `bfd74cd1fbc02` (ELAN06FA, 2025-01);
-  DLL0945 `0b7c9528facdb`. Both ancestors of `v6.18.53`.
-- [Phase 3] `git merge-base --is-ancestor`: ELAN06FA and DLL0945 in
-  v6.18.53; ELAN1300 **not** in v6.18.53 tag.
-- [Phase 3] No ELAN0678 in this tree; not a dependency.
-- [Phase 4] `b4 dig -c 9e9762e578db7556bea644bb5a8a2435f63544d1`: v1
-  only; Mika ack; Andi merged to i2c-for-7.3; no NAK.
-- [Phase 4] `b4 dig -w`: To Mika/Andi; Cc linux-i2c/linux-acpi.
-- [Phase 4] Thread read via gnuweeb/lkml (lore.kernel.org fetch 403).
-- [Phase 4] Stable list search for ELAN1300: no discussion of this
-  patch.
-- [Phase 5] Callers of `i2c_acpi_find_bus_speed`: DesignWare (AMDI0010),
-  plus several other ACPI I2C hosts. `AMDI0010` in `i2c-designware-
-  platdrv.c`.
-- [Phase 5] semcode: namespace not present; used `rg`.
-- [Phase 6] `make kernelversion` / `git describe HEAD`: 6.18.53 /
-  `v6.18.53-5049-g0f0bdc2b0dffb`.
-- [Phase 6] `git show v6.18.53:drivers/i2c/i2c-core-acpi.c`: table has
-  DLL0945+ELAN06FA only.
-- [Phase 6] `git apply --check` of the hunk onto v6.18.53 file: success
-  (rc 0).
-- [Phase 7] `MAINTAINERS`: Andi Shyti = I2C SUBSYSTEM HOST DRIVERS.
-- [Phase 8] Failure mode: broken touchpad tracking, not oops. Severity
-  MEDIUM–HIGH for affected laptops; quirk exception applies.
-- UNVERIFIED: exact number of other SKUs using ACPI HID ELAN1300.
+Verification:
+- [Phase 1] Parsed subject/tags/body: Support + two SOBs; no
+  Fixes/Reported-by
+- [Phase 2] Diff: +4 PCI IDs in `pciidlist` (`664D` Bonaire, `693B`
+  Tonga, `67D4` Polaris10, `698F` Polaris12)
+- [Phase 3] `git describe HEAD` / Makefile: 6.18.53; upstream
+  `3dc4d68ee26a` not ancestor of v6.18/v6.18.53
+- [Phase 3] `git show v6.18.53:drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c`:
+  those four IDs absent; neighbor rows match the patch
+- [Phase 3] `CHIP_BONAIRE` etc. in `include/drm/amd_asic_type.h`
+- [Phase 4] b4 dig: lore server error; used lists.freedesktop.org
+  instead
+- [Phase 4] 147075/147077/147081/147083: resend as git patch, Alex
+  applied
+- [Phase 4] 2023 664d thread: card worked after adding the ID
+- [Phase 5] `MODULE_DEVICE_TABLE` / `.id_table = pciidlist`; IDs not on
+  `amdgpu_unsupported_pciidlist`
+- [Phase 6] Clean apply to v6.18.53 old-style table; radeon
+  `drm_pciids.h` still has `0x6649` but not `0x664D`
+- [Phase 7] amdgpu important, families mature
+- [Phase 8] Probe-only; risk limited to those DIDs
+- UNVERIFIED: full text of later Christian König replies; stable@
+  archive (403)
 
 **YES**
 
- drivers/i2c/i2c-core-acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index ed90858a27b7b..98ebbc973f212 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -372,6 +372,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
- 	 */
- 	{ "DLL0945", 0 },
- 	{ "ELAN06FA", 0 },
-+	{ "ELAN1300", 0 },
- 	{}
- };
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 376a7cd2667f6..845ebe041563f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -1953,6 +1953,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6646, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
+ 	{0x1002, 0x6647, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
+ 	{0x1002, 0x6649, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
++	{0x1002, 0x664D, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6650, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6651, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6658, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+@@ -2022,6 +2023,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6930, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	{0x1002, 0x6938, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	{0x1002, 0x6939, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
++	{0x1002, 0x693B, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	/* fiji */
+ 	{0x1002, 0x7300, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
+ 	{0x1002, 0x730F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
+@@ -2050,6 +2052,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x67C4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C7, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67D0, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
++	{0x1002, 0x67D4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67DF, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C8, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C9, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+@@ -2063,6 +2066,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6985, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6986, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6987, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
++	{0x1002, 0x698F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6995, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6997, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x699F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
 -- 
 2.53.0
 
