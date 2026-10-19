@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B779F4FDA60;
-	Mon, 19 Oct 2026 13:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FE34F183A;
+	Mon, 19 Oct 2026 13:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418357; cv=none; b=L1uPRlTrbbSQIxwAmFNcd5JgKDvggj4ETh+PiHWgNTfBewCIx40VIf/KhcvM4B8gzh5Ua7aTF6S9EDNcnAIuI++tGkVWLiwt4cqyVuBOl2MS/e7FeJagsa86ouO9MLevUXakneKTQ28XKjINYTfEWAlUj1hDuGNzU6Wc2qlZfGY=
+	t=1792418359; cv=none; b=he7KzJjgFELYExnm83b6TMeCsyDib0t3bCwUANgNI5gcesTIp8/tqidSpnY1B4kBqRs+/QdWTRZrkRFLSnBw/VaOMy89RDtsgTJk1mXB1CTBjQgjhjoGIxz4+eSkqoMhztXQJwUCkXcxymTSvfvRz0pVF8VDP24AciMEb82CTX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418357; c=relaxed/simple;
-	bh=XL+i2kXPboZpyJglz5lKPnUnV1uUdkteTksLLLT07SY=;
+	s=arc-20240116; t=1792418359; c=relaxed/simple;
+	bh=sIaMVIx2/CeVjggQmKtFTDO92nOiBGIHRXKql9+UEas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qfrZsbwOK77cNpIXpUVxvrWG2Q1WlEQXDl+7XfVVRBF9G0vsO823m4Mi62wFYsjBkFdqpnQDQL1873ofTgX8gaN2eN6YAvybnNebZfoG5pk7+qbGJJr3+wdRORb2gulAm1lv+IWkiqBM05S+mW2Qxh7CAkljDYipv8WqfAyoX+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g/Vjolir; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hnIFhKTEeDr8uBfjUtsQNVPAYrNIrCiMKM19RxQokcYWYlySY1qxXPYmGmhUimTKiPlvnVD4Ehj82tlX93cw8j+fw2SubPe3RaULQfxi49J6ocVkL8zHs8vAegF+OfAfd13O5EmYt1yijhUXl2HtCvrsrqPw4VKVFaAbZptvptI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cd4Rr39g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g/Vjolir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562321F000CA;
-	Mon, 19 Oct 2026 13:59:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cd4Rr39g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0307A1F000C4;
+	Mon, 19 Oct 2026 13:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418354;
-	bh=i2Q7aAjTJ/e0eAWK93juXRdlPT8LvAMuRr0Mso6+cQ0=;
+	s=k20260515; t=1792418356;
+	bh=ichSf4TdWpTOdRexvrIgI0skTn5DtcC0xaCxkjGpiiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g/VjolirWdupi0rrC1teXUWGKnr7gs/hhyxbLvNmbCPI9Unw/g/I2qrmmwM94vKE6
-	 TblB6qIcjRYjUgnH+DeI1SJHHJlV3coEMtpghG3qlUaO2DQHG9AXz+ZizQX0/jnKRl
-	 h4TalmmfnfvcyBpWDpWAzJ0tNQGQQIcNc/gI93/ZZn9SZyQzsF6jdTFamUOwhoWL2j
-	 aMpoeB0dXC9wXmF5giLD8PesFbzwqWdPExPZuU6vdvuzkdgTBx5tfSPIlL3Nq95N0v
-	 YOk+YXKIIo/5vyHTDZxVOkJ1krJ/5PDA+cryV123SlRgLxcrUeWQAPEy68XmSymujE
-	 6tLCfpW6gk80g==
+	b=cd4Rr39gN6SkDIvkhPPd7aMLEL6GR+pNTQV8dVQglCqd7QorYwfshKgmcMut3lqNE
+	 dp7vTUjbYYoVkg8pgq/oyZZm9qrukKT5YQmYGC2d2TWIkpM/gWQ9ZfjDgkZxHIT1W4
+	 0jLNzo2MeGxo+HdGMavyFgLHPFquByj7SpV3Nu7Cv8aRLRjywtSeLLLBVjduRiL+ie
+	 CxoY5+xR3Ay5cwWAxaPcc5FVa5JaKZM7Q5BBMENPqAm6254oA2vYXF4DzHbuALsKva
+	 T5gTBBFnMtXZHm70yvqKyZlS0H/1rkpEh4+28nfz/BzU3xpX5mgOgxtZVIF3azHPoR
+	 5PfYrr1uPhzzg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Bauer <mail@david-bauer.net>,
-	Felix Fietkau <nbd@nbd.name>,
+Cc: Benjamin Coddington <ben.coddington@hammerspace.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.1] wifi: mt76: mt7915: configure noise floor reporting on reset
-Date: Mon, 19 Oct 2026 09:47:59 -0400
-Message-ID: <20261019135441.1420968-188-sashal@kernel.org>
+	trondmy@kernel.org,
+	anna@kernel.org,
+	linux-nfs@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] NFSv4/flexfiles: report cancelled I/O as a layout error
+Date: Mon, 19 Oct 2026 09:48:00 -0400
+Message-ID: <20261019135441.1420968-189-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -58,67 +55,85 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Bauer <mail@david-bauer.net>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-[ Upstream commit a92cd5dd792a63a5d8a72142835382d4edbe9933 ]
+[ Upstream commit 4a013b0e881e0466cc2c6a5518d2f6cda3a4f19f ]
 
-When performing a full system recovery of the MCU on a dual-phy
-platform, band 0 (usually 2.4GHz) stops reading correct noise floor
-data.
+When a layout is recalled or revoked the client cancels its in-flight I/O
+so the layout can be returned.  The metadata server needs to learn that
+this I/O to the storage device did not complete, so that it can reconcile
+the affected mirror instance (or, if none remains, take other action).
 
-This is due to noise floor reporting only being configured correctly
-for the second device PHY.
+The cancellation completed with -EAGAIN, which ff_layout_io_track_ds_error()
+does not recognise: it fell through the switch and recorded nothing, so no
+error was reported to the server.
 
-Configure the respective registers correctly after restarting the MCU
-firmware to fix reported noise-floor values.
+-EAGAIN is overloaded in the RPC layer, so rather than key the reporting on
+it, cancel the I/O with -ECANCELED and map that to NFS4ERR_NXIO in
+ff_layout_io_track_ds_error() -- the status the client already reports for
+the transport errors that leave an in-flight write incomplete.  The
+cancelled I/O is then reported to the server via LAYOUTERROR / LAYOUTRETURN.
 
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Link: https://patch.msgid.link/20260516144944.2574053-1-mail@david-bauer.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Unlike a genuine transport error, though, we aborted the I/O ourselves and
+have no evidence the device is at fault, so once the error is recorded we
+skip marking the device unreachable and forcing a further layout return.
+
+The retry disposition is unchanged from the original -EAGAIN cancellation:
+both NFS4ERR_NXIO and -ECANCELED are no-ops in ff_layout_async_handle_error(),
+which still resets the I/O to pNFS (or the MDS), so it is re-driven as before.
+
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.6.157** (`pending-6.6`). The buggy dual-PHY
-restart path is present here, and this commit should be backported.
+The local tree is **6.12.111** (`pending-6.12`). The buggy cancel path
+is present here; the candidate is not.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[wifi: mt76: mt7915]** **[configure]** configure noise floor
-reporting after MCU reset on dual-PHY platforms. “Configure” here is
-restoring register state that recovery currently skips, not a new
-feature.
+Record: `[NFSv4/flexfiles] [report] report cancelled I/O as a layout
+error`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: David Bauer &lt;mail@david-bauer.net&gt; (author)
-- Link: https://patch.msgid.link/20260516144944.2574053-1-mail@david-
-  bauer.net
-- Signed-off-by: Felix Fietkau &lt;nbd@nbd.name&gt; (mt76 maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable (absence is expected)
-- Ignored: any pipeline “Upstream commit” / Sasha Levin SOB markers
+- Signed-off-by: Benjamin Coddington `<bcodding@hammerspace.com>`
+  (author)
+- Signed-off-by: Trond Myklebust `<trond.myklebust@hammerspace.com>`
+  (NFS maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
+  or Cc: stable (absence expected)
+- Author in git: Benjamin Coddington `<ben.coddington@hammerspace.com>`
+- Upstream SHA (on `all-next`, not in this tree):
+  `4a013b0e881e0466cc2c6a5518d2f6cda3a4f19f` (2026-06-25)
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** After full MCU recovery on a dual-PHY (DBDC) device, band 0
-  (usually 2.4 GHz) stops reporting correct noise floor.
-- **Symptom:** Wrong NF / survey noise on the primary PHY; the second
-  PHY is configured correctly.
-- **Root cause (author):** NF enable is only applied for the second PHY
-  after firmware restart.
-- **Version info:** none in the message. The restart path has been in
-  this tree since before v6.6.
+- Bug: on layout recall/revoke the client cancels in-flight DS I/O so
+  the layout can be returned. Cancellation used `-EAGAIN`, which
+  `ff_layout_io_track_ds_error()` does not recognize, so it records
+  nothing and the MDS never learns the I/O did not complete.
+- Symptom: MDS cannot reconcile the affected flexfiles mirror (or take
+  other action if no instance remains). Incomplete writes can sit on a
+  DS with no write layout held.
+- Root cause: `-EAGAIN` is overloaded in the RPC layer and is not in the
+  tracked-error switch (default: return).
+- Fix: cancel with `-ECANCELED`, map that to `NFS4ERR_NXIO` (same status
+  already used for transport errors that leave a write incomplete),
+  report via LAYOUTERROR / LAYOUTRETURN, but skip marking the device
+  unreachable and skip forcing another layout return.
+- Retry path: unchanged; both `NFS4ERR_NXIO` and `-ECANCELED` fall
+  through `ff_layout_async_handle_error()` to RESET_TO_PNFS /
+  RESET_TO_MDS.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised cleanup. It is an explicit hardware-init fix. The
-mechanism (clear `MT76_STATE_RUNNING` before `mt7915_run()`) also re-
-runs the primary PHY’s PM/MAC init that the same `if (!running)` guard
-skips, not only NF.
+Record: Not disguised. This is an explicit protocol/correctness fix:
+cancelled I/O was silently dropped instead of being reported to the MDS.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -126,229 +141,237 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/net/wireless/mediatek/mt76/mt7915/mac.c` only
-- Scope: ~+6/−2 in `mt7915_mac_restart()` (surgical, single function)
-- Adds `bool run_main, run_ext`
-- Replaces `test_bit(MT76_STATE_RUNNING)` with `test_and_clear_bit`,
-  then uses those saved flags to decide whether to call `mt7915_run()`
+- File: `fs/nfs/flexfilelayout/flexfilelayout.c` (+22 / -1)
+- Functions: `ff_layout_io_track_ds_error()`, `ff_layout_cancel_io()`
+- Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- **Before:** After firmware reload, `mt7915_run()` is called while both
-  PHYs still have `MT76_STATE_RUNNING`. `mt7915_dev_running()` is
-  therefore true.
-- In this tree, `mt7915_run()` only programs primary-PHY PM/MAC/NF when
-  `!running`:
-
-```32:58:drivers/net/wireless/mediatek/mt76/mt7915/main.c
-        if (!running) {
-                ret = mt76_connac_mcu_set_pm(&dev->mt76,
-                                             dev->phy.mt76->band_idx,
-0);
-                ...
-                mt7915_mac_enable_nf(dev, dev->phy.mt76->band_idx);
-        }
-
-        if (phy != &dev->phy) {
-                ...
-                mt7915_mac_enable_nf(dev, phy->mt76->band_idx);
-        }
-```
-
-- Primary `mt7915_run()` therefore skips band-0 NF. Ext `mt7915_run()`
-  still hits `phy != &dev->phy` and enables band-1 NF. That matches the
-  commit message.
-- `ieee80211_restart_hw()` after full reset does not repair this:
-  starting the main PHY while the ext PHY still has `MT76_STATE_RUNNING`
-  keeps `running == true`, so band 0 is skipped again; starting the ext
-  PHY then enables only the ext PHY’s NF.
-- **After:** bits are cleared first, so the first `mt7915_run()` sees
-  `running == false` and programs band 0. Saved flags still prevent
-  starting a PHY that was never up.
+- Hunk 1 (switch): `-ECANCELED` now maps to `NFS4ERR_NXIO` and continues
+  into `ff_layout_track_ds_error()` instead of hitting `default:
+  return`.
+- Hunk 2: after recording the error, `if (error == -ECANCELED) goto
+  out;` skips `ff_layout_mark_ds_unreachable()` and
+  `pnfs_error_mark_layout_for_return()`.
+- Hunk 3: `rpc_cancel_tasks(clnt, -EAGAIN, ...)` becomes
+  `rpc_cancel_tasks(clnt, -ECANCELED, ...)`.
+- Prepare paths (`ff_layout_*_prepare_common`) still `rpc_exit(task,
+  -EAGAIN)` for invalid lsegs. That is I/O that was never sent; it is
+  correctly left alone.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Logic / hardware-init.** After MCU reload, IPI/NF registers
-(`mt7915_mac_enable_nf`: `MT_WF_PHY_RXTD12_*` and
-`MT_WF_PHY_RX_CTRL1_IPI_EN`) are not programmed for band 0.
-`mt7915_mac_init_band()` does not enable NF; only `mt7915_run()` does.
+Record:
+- Category: logic / protocol correctness (missing error reporting), with
+  data-integrity impact on flexfiles mirrors.
+- Mechanism: cancelled in-flight RPC completed with an unrecognized
+  errno, so no `nfs4_ff_layout_ds_err` was queued and LAYOUTERROR /
+  LAYOUTRETURN carried no I/O error.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct. Same approach the mt76 maintainer asked for
-on-list. Minimal. Mutex is already held in `mt7915_mac_full_reset()`;
-`MT76_RESET` is already set. Risk is low: if `mt7915_run()` fails, the
-RUNNING bits stay clear, but full reset retries and then calls
-`ieee80211_restart_hw()`, which stop/start and restores them.
+Record:
+- Obviously correct: use a dedicated errno, record it as the same NXIO
+  the client already reports for incomplete writes, and do not condemn
+  the device for a client-initiated abort.
+- Minimal; no API or structural change.
+- Regression risk: low. `nfs_pgio_result()` treats any non-zero
+  `rw_done()` return the same, so `-ECANCELED` vs `-EAGAIN` does not
+  change the resend path. Verified in
+  `ff_layout_async_handle_error_v4()`: `NFS4ERR_NXIO` is a no-op in the
+  op_status switch; `-ECANCELED` is not a connection error, then
+  RESET_TO_PNFS/MDS. v3 already deleted the deviceid on `-EAGAIN`
+  (default) and still does so on `-ECANCELED`.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record: The `test_bit` + `mt7915_run()` sequence was introduced in
-`8a55712d124fd8` (“wifi: mt76: mt7915: enable full system reset
-support”, Bo Jiao / Ryder Lee, 2022). `git describe --contains` →
-`v6.2-rc1~...`. Present in this 6.6 tree (`git merge-base --is-ancestor
-8a55712d124fd8 HEAD` succeeded).
+Record:
+- Error switch introduced in `dd52128afdde` (Trond, 2015-08-20) — never
+  handled `-EAGAIN`.
+- `ff_layout_cancel_io()` and the `-EAGAIN` cancel introduced in
+  `b739a5bd9d9f18` ("NFSv4/flexfiles: Cancel I/O if the layout is
+  recalled or revoked", 2022-10-05, first in v6.1-rc1).
+- That cancel commit is an ancestor of HEAD.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. Not applicable. The introducing commit is in this
-tree.
+Record: No Fixes: tag. The introducing commit is `b739a5bd9d9f18`,
+present in this tree.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Related reset work already in this tree:
-- `c71d2db21f153` improve hardware restart reliability
-- `1e474cbe5db60` fix omac index assignment after hardware reset
-- `72eabd4c1986b` firmware restart on devices with a second PCIe link
-This patch is standalone; it does not depend on those.
-`test_and_clear_bit(MT76_STATE_RUNNING)` is **not** in this tree (`git
-grep` found no matches).
+Record:
+- Same pattern already in this tree: `1630224189cc4` (ENETDOWN),
+  `dd7d7ee3ba2a7` (EINVAL), `7836d75467e9d` (RDMA) — all add cases to
+  this switch so the MDS is told.
+- This commit is patch 3/3 of "pNFS/flexfiles: honor clora_changed and
+  report cancelled I/O".
+- Patch 2 (`aceaa5991bdf7` "honor clora_changed when recalling a
+  layout") is **not** in this tree. It only changes *when* cancel runs
+  (skip cancel if `clora_changed` is false). This commit does not call
+  any new helper from patch 2.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: David Bauer is an OpenWrt/wireless contributor; in this tree he
-already has `b6c39aaa85c4e` (mt7915 MCU re-init). Felix Fietkau (mt76
-maintainer) signed off and designed the committed approach.
+Record: Benjamin Coddington (Hammerspace) is a regular NFS/pNFS
+contributor. Trond (NFS maintainer, also Hammerspace) applied it.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: No functional prerequisites. Surrounding `mt7915_init_txpower()`
-signature and `napi_enable` placement differ from later mainline; those
-are context only. The `run_main`/`run_ext` change applies with a small
-context tweak.
+Record:
+- Semantic fix is standalone: change the cancel errno and handle it in
+  the existing switch.
+- Clean apply is **not** standalone against this tree. Mainline added
+  `dss_id` via later striped-layout commits (`8a8e0f5566edc`,
+  `a1491919c8805`, `20b1d75fb840c`, …). Those are **not** in HEAD. This
+  tree only has `d1830d0740d72` (data-structure support) and still uses
+  `mirror->dss[0]` / no `dss_id` argument.
+- `git apply --check` of the mainline diff: hunk 1 applied (offset
+  -177); hunk 2 failed on the `dss_id` argument. A 6.12 backport is a
+  small context edit, not a rewrite.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record: `b4 dig -c` was not usable (commit SHA not in this checkout’s
-master). `b4 mbox` on msgid `20260516144944.2574053-1-mail@david-
-bauer.net` saved a 4-message thread.
-- v1 (16 May 2026): 4-line change in `mt7915_run()`: `if (!running ||
-  (reset && phy == &dev->phy))`
-- Felix (27 May): asked to clear `MT76_STATE_RUNNING` in
-  `mt7915_mac_restart` instead
-- David: explained the per-PHY RUNNING guard (don’t start a PHY that was
-  never up)
-- Felix (1 Jun): proposed exactly the committed `test_and_clear_bit`
-  pattern
-No NAK. No reviewer `Cc: stable`. Committed diff is the maintainer
-rewrite, still linked to the v1 msgid.
+Record:
+- `b4 dig -c 4a013b0e881e0` → https://patch.msgid.link/b5ed2050a2fa573ad
+  9a2bcf7769f23397e480f2a.1782388900.git.bcodding@hammerspace.com
+- Series: v1 (2026-06-24) then v2 (2026-06-25). Applied version is v2
+  3/3.
+- Cover letter: RFC 8881 §20.3.3; since `b739a5bd9d9f` the client
+  cancels DS I/O on every recall; when it *does* cancel (changed recall
+  or revoke), report `NFS4ERR_NXIO` so the MDS can reconcile.
+- v2 changes were only for patches 1–2 (Anna: kerneldoc, `FILE_INODE` /
+  `inode->i_ino`). Patch 3 was unchanged.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: Recipients included Felix Fietkau, Lorenzo Bianconi, Ryder Lee,
-Shayne Chen, Sean Wang, linux-wireless, linux-mediatek. Felix both
-reviewed and applied.
+Record:
+- Recipients: Trond Myklebust, Anna Schumaker, linux-nfs@vger.kernel.org
+- Anna reviewed v1 1/3 and 2/3 only (tracepoint inode id; kerneldoc for
+  `cancel_io`). No NAK. No comments on 3/3.
+- Trond applied the series (Signed-off-by).
+- No reviewer Cc: stable.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Author describes a real dual-PHY MCU
-recovery failure. That is a field observation, not a theoretical report.
+Record: No syzbot, bugzilla, or external user report. The description is
+a vendor/protocol failure (Hammerspace flexfiles MDS cannot reconcile
+after cancel). WebFetch to lore returned 403; discussion was recovered
+via `b4 dig -m`.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Single patch, not N/M. v1 vs committed is a maintainer rewrite
-of the same fix, not a multi-patch series.
+Record:
+- 1/3: tracepoint only — not required for this fix.
+- 2/3: stop cancelling on unchanged recalls — complementary RFC
+  behavior, not a compile/runtime dependency of 3/3. Without it, 6.12
+  still cancels on every recall, so this fix would send NXIO on more
+  recalls than post-series mainline. That is more conservative for the
+  MDS (reconcile), not a crash path.
+- Other cancel callers (`pnfs_mark_matching_lsegs_invalid`,
+  teardown/return with cancel) remain even after 2/3.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: No useful stable-list hit for this subject. No recorded reason
-to keep it out of stable.
+Record: No stable-list discussion found (lore.kernel.org/stable search
+via WebFetch was 403). UNVERIFIED: whether anyone already requested or
+rejected this for stable.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS**
-Record: Modified: `mt7915_mac_restart()`. Behavior depends on
-`mt7915_run()`, `mt7915_dev_running()`, `mt7915_mac_enable_nf()`.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `ff_layout_io_track_ds_error()`, `ff_layout_cancel_io()`.
 
 **Step 5.2: TRACE CALLERS**
 Record:
-- `mt7915_mac_restart()` ← `mt7915_mac_full_reset()` (only caller in
-  this tree)
-- `mt7915_mac_full_reset()` ← `mt7915_mac_reset_work()` when
-  `dev->recovery.restart`
-- `recovery.restart` set in `mt7915_reset()` on WA/WM watchdog
-  (`MT_MCU_CMD_WDT_MASK`), which logs “firmware crash, attempting
-  recovery”
-- `mt7915_run()` also from `mt7915_start()` (normal iface start); this
-  patch does not change that path
+- `ff_layout_io_track_ds_error()`: `ff_layout_read_done_cb()`,
+  `ff_layout_write_done_cb()`, `ff_layout_commit_done_cb()` — DS I/O
+  completion.
+- `ff_layout_cancel_io()`: registered as
+  `pnfs_layoutdriver_type.cancel_io`.
+- `pnfs_lseg_cancel_io()` → `pnfs_mark_matching_lsegs_invalid()` (line
+  744) and `pnfs_mark_matching_lsegs_return()` (line 2678).
+- Those run on CB_LAYOUTRECALL, layout return, revoke, and teardown.
 
 **Step 5.3: TRACE CALLEES**
-Record: After firmware load: `mt7915_mcu_init_firmware`,
-`mt7915_mcu_set_eeprom`, `mt7915_mac_init`, txpower/txbf, then
-`mt7915_run()` (PM, `mt7915_mcu_set_mac`, `mt7915_mac_enable_nf`,
-thermal, RTS, SKU, RX path).
+Record: `ff_layout_track_ds_error()` queues `nfs4_ff_layout_ds_err`;
+`ff_layout_send_layouterror()` / `ff_layout_encode_ioerr()` send
+LAYOUTERROR / LAYOUTRETURN. `rpc_cancel_tasks()` →
+`rpc_task_try_cancel()`.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Triggered by firmware watchdog recovery on `CONFIG_MT7915E`
-dual-PHY (mt7915/mt7916/mt798x DBDC), common on APs/routers. Not a
-generic syscall crash path. Userspace sees bad survey noise
-(`mt76_get_survey` → `SURVEY_INFO_NOISE_DBM`) and ACS can use it.
-Debugfs can also force full reset (`b662b71`).
+Record: Reachable from normal pNFS flexfiles file I/O plus MDS
+CB_LAYOUTRECALL. Not a raw syscall crash path; it is a common path for
+any flexfiles mount under layout recall/return.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: No `test_and_clear_bit(MT76_STATE_RUNNING)` in this tree’s mt76.
-Sibling chips (mt7615/mt7996) have similar NF helpers; this fix is
-mt7915-restart-specific.
+Record: Same switch already maps transport failures to `NFS4ERR_NXIO`.
+This is the same class of fix, for a client-initiated cancel that
+previously fell on the floor.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: Yes. `mt7915_mac_restart()` at
-`drivers/net/wireless/mediatek/mt76/mt7915/mac.c:1397-1407` still uses
-`test_bit` without clearing. Introduced v6.2-era (`8a55712d124fd8`),
-present since this 6.6 branch.
+Record: Yes.
+- Tree: `p-6.12-3-gc504cf0baa3d8`, `VERSION=6 PATCHLEVEL=12
+  SUBLEVEL=111`.
+- `git merge-base --is-ancestor 4a013b0e881e0 HEAD` → not an ancestor
+  (fix not present).
+- `ff_layout_cancel_io()` still uses `-EAGAIN` (line 2196).
+- `ff_layout_io_track_ds_error()` has no `-ECANCELED` case; default
+  returns without recording (lines 1369–1370).
+- Bug introduced in v6.1 (`b739a5bd9d9f18`); present for the whole 6.12
+  lifetime.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Minor context.** Mainline hunk context uses
-`mt7915_init_txpower(&dev->phy)` / `mt7915_init_txpower(phy2)`; this
-tree still has `mt7915_init_txpower(dev, &dev->mphy.sband_* )`.
-`napi_enable` vs `local_bh_disable` order in the `out:` path also
-differs. The RUNNING-bit change itself matches this tree. Easy manual
-backport; not a rewrite.
+Record: Minor conflicts. Need to drop `dss_id` from
+`ff_layout_track_ds_error()` / `ff_layout_mark_ds_unreachable()` and
+keep the single `dss[0]` cancel loop. Not a semantic rewrite.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: Reset reliability/omac-after-reset fixes are here. This NF re-
-init after MCU recovery is not.
+Record: No equivalent cancel-reporting fix. Related NXIO mappings
+(ENETDOWN, EINVAL, EPROTO/ENODEV) are already here and do not cover
+cancel.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **wifi / mt76 mt7915**
-(`drivers/net/wireless/mediatek/mt76/mt7915/`). **IMPORTANT** for users
-of these radios (filogic/mt7915 DBDC APs), not core mm/net. Not staging.
+Record: `fs/nfs/flexfilelayout` — NFSv4.1 pNFS flexfiles client.
+**IMPORTANT** (not core VFS; production for flexfiles MDS deployments).
+`CONFIG_PNFS_FLEXFILE_LAYOUT` defaults to `NFS_V4`.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Mature driver, still getting reset-path fixes in this 6.6 tree.
-Not a newly added subsystem.
+Record: Active. Recent 6.12 backports include NO_IO_THRU_MDS, zero-FH
+rejection, NFS-level error handling, ENETDOWN reporting.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Driver-specific, dual-PHY `CONFIG_MT7915E` after full MCU
-recovery. Widely used on embedded/AP hardware.
+Record: Flexfiles pNFS clients (`CONFIG_PNFS_FLEXFILE_LAYOUT`). Not
+universal; real production users (Hammerspace and other flexfiles MDS).
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Firmware WA/WM watchdog → full recovery. Unprivileged users
-cannot trigger it directly. Timing is the recovery path, not a race.
-Debugfs reset can also hit it.
+Record: Layout recall, revoke, or return while DS read/write/commit RPCs
+are in flight. Common on flexfiles (recall on close, lease recovery,
+restriping). Not an unprivileged local exploit; it is a networked MDS
+callback plus in-flight I/O.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Wrong band-0 noise floor / survey after recovery; ACS can pick a
-worse channel. Not an oops, deadlock, or corruption. Connectivity was
-not reported broken; `mac_init` still runs, so MAC datapath likely
-survives. **Severity: MEDIUM.**
+Record: MDS is not told that in-flight writes did not complete, so it
+may not reconcile a mirror. Later reads can see a stale or incomplete
+replica. **HIGH** (data integrity / stale data), not a kernel oops.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** Medium. Restores intended PHY register state on a
-  recovery path this tree already treats as backport-worthy.
-- **Risk:** Low. ~8 lines, one function, maintainer-specified, under
-  existing reset mutex.
-- **Ratio:** Favorable.
+- Benefit: HIGH for flexfiles — MDS can reconcile after cancel/revoke.
+- Risk: LOW — +22 lines, contained, retry path unchanged. Extra NXIO
+  reports on 6.12’s still-unconditional cancel are conservative, not a
+  hang/crash.
+- Ratio: benefit outweighs risk.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -357,125 +380,151 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real dual-PHY bug after MCU full recovery; primary PHY NF registers
-  never reprogrammed
-- Code and introducing commit are in 6.6.157
-- Small, obviously correct, maintainer-directed
-- Same `!running` skip also omits band-0 `set_pm`/`set_mac` on that path
-- This tree already backported other mt7915 reset corrections
-- Dual-PHY mt7915/mt798x is common production AP hardware
+- Real bug: cancelled DS I/O is invisible to the MDS.
+- Data-integrity impact on flexfiles mirrors.
+- Code is in this 6.12 tree since v6.1.
+- Small, obviously correct, maintainer-applied.
+- Same reporting pattern already backported here (ENETDOWN, EINVAL,
+  RDMA).
+- Retry disposition verified unchanged.
 
 AGAINST:
-- Not a crash, UAF, deadlock, or security issue
-- Trigger is firmware watchdog recovery, not a hot path
-- User-visible effect is mainly survey/ACS noise, not a reported outage
-- Apply needs a trivial context adjustment
+- Patch 3/3 of a series; 2/3 (narrower cancel) is not here.
+- Mainline diff needs a small `dss_id`-free backport.
+- No crash/UAF/CVE; flexfiles-specific.
+- No Fixes:/Cc: stable/user report (expected for this queue).
 
 UNRESOLVED:
-- Upstream SHA is not on this checkout’s `master`, so `b4 dig -c <sha>`
-  was not run (thread retrieved via msgid instead)
-- No independent confirmation that band-0 MAC/PM skip causes traffic
-  loss (author only reported NF)
+- Stable-list history (lore/stable WebFetch 403).
+- How every flexfiles MDS implementation reacts to extra NXIO on
+  unchanged recalls (without patch 2). Conservative, not a kernel
+  regression.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — logic matches
-   `mt7915_run()`; maintainer specified this form
-2. Fixes a real bug that affects users? **PASS** — wrong NF after
-   recovery on dual-PHY
-3. Important issue? **PASS** (medium) — recovery leaves hardware
-   misconfigured; not a panic, but it is a real functional failure of
-   SER
-4. Small and contained? **PASS** — one function, few lines
+1. Obviously correct and tested? **PASS** — mapped like existing
+   transport errors; applied by the NFS maintainer.
+2. Fixes a real bug that affects users? **PASS** — MDS cannot reconcile
+   after cancel.
+3. Important issue? **PASS** — data integrity / stale flexfiles mirrors
+   (HIGH, not oops).
+4. Small and contained? **PASS** — +22/-1, one file.
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — buggy code present; minor
-   context only
+6. Can apply to the local tree? **PASS** — needs a trivial context
+   backport (no `dss_id`); buggy code is here.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a new device ID/API. Closest class is hardware re-init after
-reset (quirk-like). Qualifies on technical merit, not only via an
-exception.
+Record: None (not a device ID, quirk, DT, build, or docs fix). Qualifies
+as a normal important bugfix.
 
 **Step 9.4: MAKE YOUR DECISION**
-Backport. The 6.6 tree has the bug, the fix is surgical, and leaving MCU
-recovery with band 0 NF unprogrammed is a real driver bug on hardware
-this series already ships.
+This should be backported to this 6.12 tree. The cancel path exists, the
+MDS is not told, and the fix is small. Adapt the hunks to the `dss[0]` /
+no-`dss_id` signatures; do not pull the striped-layout series.
+
+What it solves for stable users: after layout recall/revoke, in-flight
+flexfiles I/O is cancelled so the layout can return, but 6.12 records
+nothing. The MDS then cannot reconcile the mirror. Mapping cancel to
+`NFS4ERR_NXIO` and sending LAYOUTERROR / LAYOUTRETURN closes that hole
+without marking the device dead or changing retry.
+
+Risk vs benefit: low risk, high benefit on flexfiles. Companion patch 2
+(honor `clora_changed`) is a separate RFC behavior change and is not
+required for this reporting fix to work.
 
 Verification:
-- [Phase 1] Parsed tags: author David Bauer, Link to msgid, SOB Felix
-  Fietkau; no Fixes/Cc stable/Reported-by
-- [Phase 1] Body: dual-PHY MCU recovery → band 0 NF wrong because only
-  PHY1 is configured
-- [Phase 2] Diff: `mt7915_mac_restart()` saves/clears RUNNING then calls
-  `mt7915_run()`
-- [Phase 2] Local `mt7915_run()`: primary NF only if
-  `!mt7915_dev_running()`; ext NF if `phy != &dev->phy`
-- [Phase 2] `mt7915_mac_init_band()` does not set IPI/NF; only
-  `mt7915_mac_enable_nf()` does
-- [Phase 3] `git blame` `mac.c:1397-1407` → `8a55712d124fd8` (v6.2-rc1);
-  ancestor of HEAD
-- [Phase 3] `git grep test_and_clear_bit(MT76_STATE_RUNNING)` → no hits
-  in this tree
-- [Phase 3] Related reset fixes already here (`c71d2db21f153`,
-  `1e474cbe5db60`); this NF fix is not
-- [Phase 4] `b4 mbox` msgid → 4-message thread; Felix requested the
-  committed approach; no NAK
-- [Phase 4] lore.kernel.org WebFetch returned 403; used b4 mbox +
-  openwall/ratatoskr instead
-- [Phase 4] No meaningful stable-list discussion found
-- [Phase 5] Call chain: WDT → `mt7915_reset()` → dump_work →
-  `mt7915_mac_reset_work()` → `mt7915_mac_full_reset()` →
-  `mt7915_mac_restart()`
-- [Phase 5] Survey path: `mt7915_update_channel()` → `state->noise` →
-  `mt76_get_survey()`
-- [Phase 6] `git describe HEAD` / `make kernelversion` → p-6.6-3 /
-  **6.6.157**
-- [Phase 6] Local `mt7915_init_txpower()` signature differs from patch
-  context; RUNNING change still maps 1:1
-- [Phase 8] Failure mode: incorrect band-0 noise after firmware crash
-  recovery; severity MEDIUM
-- UNVERIFIED: exact upstream SHA (not on this `master`); whether band-0
-  `set_mac` skip also breaks traffic (not claimed by author)
-
-The patch is a small, maintainer-reviewed correction of MCU recovery on
-dual-PHY mt7915, and the buggy code is in this 6.6 tree.
+- [Phase 1] Tags: only author + Trond SOBs; no Fixes/Reported-by/Cc
+  stable
+- [Phase 1] Upstream SHA `4a013b0e881e0` on all-next; `git merge-base
+  --is-ancestor` → not in HEAD
+- [Phase 2] Diff: +22/-1 in one file; `-EAGAIN` → `-ECANCELED`; new NXIO
+  case; skip unreachable/return
+- [Phase 2] `NFS4ERR_NXIO` and `NFSERR_NXIO` both equal 6
+- [Phase 2] `nfs_pgio_result()`: non-zero `rw_done()` skips
+  `nfs_set_pgio_error` for both errnos
+- [Phase 2] v4/v3 async handlers: retry disposition matches the commit
+  text
+- [Phase 3] Blame: switch from `dd52128afdde` (2015); cancel from
+  `b739a5bd9d9f18` (v6.1), ancestor of HEAD
+- [Phase 3] Similar backports already here: `1630224189cc4`,
+  `dd7d7ee3ba2a7`, `7836d75467e9d`
+- [Phase 3] Patch 2 `aceaa5991bdf7` is not an ancestor of HEAD
+- [Phase 4] `b4 dig -c 4a013b0e881e0`: v2 3/3 at the msgid.link above
+- [Phase 4] `b4 dig -a`: v1 then v2; 3/3 unchanged
+- [Phase 4] `b4 dig -w`: Trond, Anna, linux-nfs
+- [Phase 4] Anna v1 review: nits on 1/3 and 2/3 only; no NAK of 3/3
+- [Phase 4] Cover letter recovered from `/tmp/ff-cancel-thread.mbox`
+- [Phase 5] Callers: read/write/commit done_cb; cancel via
+  `pnfs_lseg_cancel_io` from recall/return/invalidate
+- [Phase 6] `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`; `make
+  kernelversion` → 6.12.111
+- [Phase 6] Local cancel still `-EAGAIN` at flexfilelayout.c:2196; no
+  `-ECANCELED` in `fs/nfs`
+- [Phase 6] `git apply --check` failed on `dss_id` hunk; striped error-
+  path commits not in HEAD
+- [Phase 8] Failure mode: unreported incomplete DS I/O →
+  unreconciliation / stale mirror, HIGH
+- UNVERIFIED: stable@ discussion (lore 403)
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index dda4e7d179536..55d2553addb13 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -1292,6 +1292,7 @@ mt7915_mac_restart(struct mt7915_dev *dev)
- 	struct mt7915_phy *phy2;
- 	struct mt76_phy *ext_phy;
- 	struct mt76_dev *mdev = &dev->mt76;
-+	bool run_main, run_ext;
- 	int i, ret;
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 8099bfc4fe2f8..c708724bb53f2 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1546,6 +1546,17 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 		case -EACCES:
+ 			*op_status = status = NFS4ERR_ACCESS;
+ 			break;
++		case -ECANCELED:
++			/*
++			 * In-flight I/O we cancelled to return a recalled or
++			 * revoked layout.  Report it as a failure to reach the
++			 * device (NFS4ERR_NXIO), like the transport errors
++			 * above, so the server can reconcile the affected mirror
++			 * instance.  We aborted the I/O ourselves rather than
++			 * observe the device fail, so don't condemn it below.
++			 */
++			*op_status = status = NFS4ERR_NXIO;
++			break;
+ 		default:
+ 			return;
+ 		}
+@@ -1556,6 +1567,15 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 				       mirror, dss_id, offset, length, status, opnum,
+ 				       nfs_io_gfp_mask());
  
- 	ext_phy = dev->mt76.phys[MT_BAND1];
-@@ -1387,13 +1388,17 @@ mt7915_mac_restart(struct mt7915_dev *dev)
- 	mt7915_init_txpower(phy2);
- 	ret = mt7915_txbf_init(dev);
- 
--	if (test_bit(MT76_STATE_RUNNING, &dev->mphy.state)) {
-+	run_main = test_and_clear_bit(MT76_STATE_RUNNING, &dev->mphy.state);
-+	run_ext = ext_phy &&
-+		  test_and_clear_bit(MT76_STATE_RUNNING, &ext_phy->state);
++	/*
++	 * I/O we cancelled ourselves to return a recalled or revoked layout
++	 * is reported above so the server can reconcile the mirror, but we
++	 * have no evidence the device is at fault: don't mark it unreachable
++	 * or force a return.
++	 */
++	if (error == -ECANCELED)
++		goto out;
 +
-+	if (run_main) {
- 		ret = mt7915_run(dev->mphy.hw);
- 		if (ret)
- 			goto out;
+ 	switch (status) {
+ 	case NFS4ERR_DELAY:
+ 	case NFS4ERR_GRACE:
+@@ -1575,6 +1595,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 						  lseg);
  	}
  
--	if (ext_phy && test_bit(MT76_STATE_RUNNING, &ext_phy->state)) {
-+	if (run_ext) {
- 		ret = mt7915_run(ext_phy->hw);
- 		if (ret)
- 			goto out;
++out:
+ 	dprintk("%s: err %d op %d status %u\n", __func__, err, opnum, status);
+ }
+ 
+@@ -2465,7 +2486,7 @@ static void ff_layout_cancel_io(struct pnfs_layout_segment *lseg)
+ 			clnt = ds_clp->cl_rpcclient;
+ 			if (!clnt)
+ 				continue;
+-			if (!rpc_cancel_tasks(clnt, -EAGAIN,
++			if (!rpc_cancel_tasks(clnt, -ECANCELED,
+ 					      ff_layout_match_io, lseg))
+ 				continue;
+ 			rpc_clnt_disconnect(clnt);
 -- 
 2.53.0
 
