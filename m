@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D708B5432C2;
-	Mon, 19 Oct 2026 14:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262F064234F;
+	Mon, 19 Oct 2026 14:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418777; cv=none; b=TI6VDjZiPk8Q2rsQUgmI0Uzlzk/0C0vi+zTPX9Gs1ACYFeGKobXALKixD+b0zb83OFb+qaGJYIChmDOQxfyYA6dtYzDkcf2/A3JEZSKkEIi1PsWAWDZ17fmOlmYF8vZzwMrwBl//MDKAeV5xrtgKsGq6E4DLmkPSfY+o82PmjL0=
+	t=1792418777; cv=none; b=Kfa/ZUBHmmX7nmf+BVP4cxBjV31OT3CvzuJm4tCHQzBYmqPskbdWBnhinaW1+nareM04dsxP2FQ0jUXa2Ib2s5PtsfUOa28lhn8Qj1ilVryjBMOmLnu4jtvP1dZVLj5OYqIzZi5YsLLDpuc3TjdsE6Drn/DZx1H1X0behg0oFhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792418777; c=relaxed/simple;
-	bh=F011rrGwk/fAdzGLEfzIP+ZK7niA8zOqR3GB4Oq0AcU=;
+	bh=Z6rRgUDqoTPhXOWUBBJmlcPobv6lwEgJ5SzQ14hZGCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q9CTz1l8Pf0Sicxwvq/HYX7vIo2eJf3lUWddA0Xyu7wNeVeLXIsdFeKtFZGiQ5TBcqE2HcGwGreTTAiSZVY/x2Bl58geeDvlQIIEoktz2NODV7ILW3zWFK6ZX1q4k+JZ+ymZI/p19W+ZrntrdRZEL73AazD+Ez5WM32rqRIZGkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qch91keC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BDBDCO04mwm9CbwrXIpdcmTFtew6NW4MNaGcik4GP61VoW2tOHIz7SsDcaqpNW9p0SCDBybMqeU/8vE30Z5iZg4DPHP3k8I4vI3qXMw/gQXStKmp66hcaDRuIJ6Jg19ko4c2m/JigV2CsH6pDBXm+w5x6B0lxplFc3LH7RNnBog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LWPfA+iY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qch91keC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF2F1F000C6;
-	Mon, 19 Oct 2026 14:06:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LWPfA+iY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269D61F000C7;
+	Mon, 19 Oct 2026 14:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418773;
-	bh=pV/PGsoDREG2Yx0sJy7RIYSvqH1/BNXYFkBey3XN0EU=;
+	s=k20260515; t=1792418775;
+	bh=+5V9mU+RXqdOADrsld+Cp1WhwgJ5e4PE7jhOOwElKns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qch91keCrYrSrfcsd2peD2Hm4U0BjVVsk0Xupi5/ZUL8hmCnWzVr9wMfVFI0ORMDy
-	 1LzK7gHLhZ90+VUwhqoQWYR+ZTFTvQc66mHar4UmmLxRKhVayaIGTIQrTSHOVmKJlh
-	 TVcNhSlwGLPPLQ+i1V7+F4n6aIFuEe4Nwwuxqpq73N6HdQvsQ/0MUi9UV3Wr27mvan
-	 D6DxWuhHkSPzV+EczPTNkQ2CRcaXG3O5i1SjJbzKC2FQ3jZZYeVIHX+kLU7KMoqaqF
-	 Fz7s4xqtVEf+o+5w8gh6pVfJex2Vs+xuASFBFR/ieQwLaoX6cY8Z91RTAH/RLYeezf
-	 r+8f+vdh7ACEg==
+	b=LWPfA+iYmWJKJAAZY3O4sSV/Ap9Rwy5O4HGKw9hpqH1qr3SBnXLW3p11a9wh+6nTe
+	 usfjUE/Hjwl1ihme3esX8VU5cSFDFHEGXgTBjNNjvrT3JgNisNR+nWULC6Ig379T1f
+	 kLkB0lZg+6zarsUll/sXfJ27nQMQ2mOg9at5xTlJM+KWajKTxEHWHgPdArbNKNbyhE
+	 Qqt/KeXCTAc7yZn+dLJuS0F29j/UpydC+klZtxD06pXt8ZQJMSBVDv2L8ySWxp5NJ0
+	 258DCWhwN8XW6cIB8myLRzafhXrFG76wJWRYM4a/+iYF9CaOGMgGAYBDqA4pVWiat0
+	 o3DGU6IQdPs/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Luis Banha <luisbanha26@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Muralidhara M K <muralidhara.mk@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	naveenkrishna.chatradhi@amd.com,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 15-ec1xxx
-Date: Mon, 19 Oct 2026 09:52:57 -0400
-Message-ID: <20261019135441.1420968-486-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] platform/x86/amd/hsmp: Validate ACPI UID before parsing socket index
+Date: Mon, 19 Oct 2026 09:52:58 -0400
+Message-ID: <20261019135441.1420968-487-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -48,407 +48,340 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luis Banha <luisbanha26@gmail.com>
+From: Muralidhara M K <muralidhara.mk@amd.com>
 
-[ Upstream commit 775aa96c310d59f3d15a6e5a9bd1796fd1ba95ec ]
+[ Upstream commit 4c7d1b4cd75a775326e6802608440f7642284ea6 ]
 
-The mute LED on the HP Pavilion Gaming Laptop 15-ec1xxx (103c:87b2)
-does not work automatically. Add the ALC285_FIXUP_HP_MUTE_LED quirk
-to fix this behavior.
+hsmp_get_uid() passed the device UID directly to kstrtou16(uid + 2)
+without checking it.  A NULL UID or one shorter than three characters
+would dereference a NULL pointer or read past the end of the string.
 
-Signed-off-by: Luis Banha <luisbanha26@gmail.com>
-Link: https://patch.msgid.link/20260921230105.16844-1-luisbanha26@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reject such UIDs with -EINVAL before stripping the "ID" prefix.
+
+Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260625123337.886435-3-muralidhara.mk@amd.com
+Link: https://patch.msgid.link/20260629155634.1807598-2-muralidhara.mk@amd.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line HP Realtek mute-LED quirk for PCI SSID `103c:87b2`.
-The local tree is **6.18.57** (`v6.18.57-155-gcdf239ca885b2`). The
-Realtek HDA driver, `alc269_fixup_tbl[]`, and `ALC285_FIXUP_HP_MUTE_LED`
-are already present here; without this entry the Pavilion 15-ec1xxx mute
-LED stays dead.
+This checkout is **Linux 7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+analysis is whether `4c7d1b4cd75a7` (“Validate ACPI UID before parsing
+socket index”) is a technically sound stable backport for this tree’s
+HSMP ACPI driver.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## Phase 1: Commit message forensics
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ALSA/hda/realtek] [Add] [mute LED quirk for HP Pavilion
-15-ec1xxx]
-Subsystem prefix `ALSA: hda/realtek`. Action verb is **Add**, but the
-object is a hardware quirk for a specific laptop, not a new feature/API.
+**Step 1.1 — Subject**
+- Record: `[platform/x86/amd/hsmp] [Validate] Reject NULL/short ACPI
+  UIDs before `kstrtou16(uid + 2)``
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Signed-off-by: Luis Banha \<luisbanha26@gmail.com\> (author)
-- Link:
-  https://patch.msgid.link/20260921230105.16844-1-luisbanha26@gmail.com
-- Signed-off-by: Takashi Iwai \<tiwai@suse.de\> (ALSA maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable (absence is expected for this review)
-- Pipeline-added markers ignored: `[ Upstream commit
-  775aa96c310d59f3d15a6e5a9bd1796fd1ba95ec ]`, Signed-off-by: Sasha
-  Levin
+**Step 1.2 — Tags**
+- Record:
+  - `Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>` (author;
+    AMD HSMP contributor)
+  - `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>` (pdx86
+    maintainer)
+  - `Link: https://patch.msgid.link/20260625123337.886435-3-
+    muralidhara.mk@amd.com` (earlier series)
+  - `Link: https://patch.msgid.link/20260629155634.1807598-2-
+    muralidhara.mk@amd.com` (applied v2 1/4)
+  - `Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
+    (maintainer apply)
+  - No `Fixes:`, no `Reported-by:`, no `Cc: stable` (absence is expected
+    for this review)
+  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+    ...]` markers
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: mute LED on HP Pavilion Gaming Laptop 15-ec1xxx (SSID 103c:87b2)
-  does not work automatically
-- Symptom: mute-key LED does not track mute state
-- Version info: none stated
-- Root cause implied: this SSID is missing from `alc269_fixup_tbl[]`, so
-  the existing `ALC285_FIXUP_HP_MUTE_LED` path is never applied
+**Step 1.3 — Body**
+- Record: Bug = `hsmp_get_uid()` calls `kstrtou16(uid + 2)` with no
+  check. Symptom = NULL deref if UID is NULL, or read past the string if
+  UID is shorter than three characters. Root cause = missing validation
+  before stripping the `"ID"` prefix. No version range or reproducer in
+  the message.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit hardware-quirk
-addition. That is a documented stable exception, not a hidden leak/race.
+**Step 1.4 — Hidden bug fix?**
+- Record: Not hidden. It is an explicit memory-safety check. The series
+  cover letter calls it “ACPI input hardening,” which is still a real
+  NULL/OOB fix, not style cleanup.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File: `sound/hda/codecs/realtek/alc269.c` (+1 / -0)
-- Function/table: `alc269_fixup_tbl[]`
-- Scope: single-file surgical one-liner
+**Step 2.1 — Inventory**
+- Record: One file, `drivers/platform/x86/amd/hsmp/acpi.c`, **+3**
+  (include + 2-line check). Function: `hsmp_get_uid()`. Scope: single-
+  file surgical fix.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: SSID 0x103c:0x87b2 has no matching `SND_PCI_QUIRK`.
-  `snd_hda_pick_fixup()` in `alc269_probe()` leaves the codec without
-  this LED fixup.
-- After: that SSID maps to `ALC285_FIXUP_HP_MUTE_LED`.
-- Path affected: codec probe/init for this laptop only.
+**Step 2.2 — Code flow**
+- Record: Before: `uid = acpi_device_uid(ACPI_COMPANION(dev)); return
+  kstrtou16(uid + 2, 10, sock_ind);`
+  After: if `uid` is NULL or `strlen(uid) < 3`, return `-EINVAL`; else
+  same parse.
+  Path: ACPI HSMP probe / `init_acpi()`, not a hot path.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: **hardware workaround / codec quirk**
-- Mechanism: HP wired mute/mic-mute LEDs to Realtek COEF bits.
-  `alc285_fixup_hp_mute_led()` already programs:
-  - mute LED: COEF 0x0b bit 3 via `alc285_fixup_hp_mute_led_coefbit()`
-  - mic-mute LED: COEF 0x19 bit 13 via
-    `alc285_fixup_hp_coef_micmute_led()`
-- The bug is a missing table entry, not missing driver logic. Same
-  pattern as nearby HP OMEN 15 (`0x8786/0x8787/0x8788`) and Pavilion
-  15z-ec200 (`0x88dd`).
+**Step 2.3 — Bug mechanism**
+- Record: **NULL pointer dereference + out-of-bounds string read.**
+  - `acpi_device` is `kzalloc`’d (`drivers/acpi/scan.c`), so
+    `pnp.unique_id` starts NULL.
+  - `unique_id` is only set when `ACPI_VALID_UID` (`kstrdup` of `_UID`).
+    Missing `_UID`, or `kstrdup` failure, leaves NULL.
+  - `acpi_device_uid()` is `#define acpi_device_uid(d)
+    ((d)->pnp.unique_id)` — can be NULL.
+  - `kstrtou16()` → `_parse_integer_fixup_radix()` reads `s[0]`
+    immediately. NULL `uid` is a kernel oops.
+  - UID shorter than 2 characters (`"0"`, `"1"`, `""`) makes `uid + 2`
+    past the NUL; `kstrtou*` walks until NUL → heap overread.
+  - `strlen == 2` (`"ID"`) is conservatively rejected; `kstrtou16("")`
+    would have returned `-EINVAL` anyway.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: one `SND_PCI_QUIRK` in PCI-ID order between
-  `0x8788` and `0x87b7`.
-- Minimal: no API, locking, or control-path changes.
-- Regression risk: confined to 103c:87b2. Wrong LED polarity would at
-  worst invert LEDs on that model; it cannot affect other machines.
+**Step 2.4 — Fix quality**
+- Record: Obviously correct and minimal. Valid `"ID00"`/`"ID01"` UIDs
+  are unchanged. Regression risk is very low: probe fails with `-EINVAL`
+  instead of oopsing. No API/locking/refcount change. Does not check the
+  `"ID"` prefix itself; that is leftover firmware-format assumption, not
+  a regression.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## Phase 3: Git history
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- The new line is the candidate itself (`e0d12f383475a`, Luis Banha,
-  2026-09-22).
-- Surrounding HP ALC285 mute-LED entries come from the Realtek split
-  `aeeb85f26c3bb` (2025-07-09) and older `patch_realtek.c` history.
-- `ALC285_FIXUP_HP_MUTE_LED` has been used since at least
-  `375f8426ed994` (“Add a quirk for HP OMEN 15 mute LED”, 2021-10-28,
-  Cc: stable). That commit is an ancestor of this tree.
+**Step 3.1 — Blame**
+- Record: Buggy `kstrtou16(uid + 2)` came from `ba8dcff0e9c4f` (“Add
+  support for ACPI based probing”, Suma Hegde, 2024-01-06). Landed in
+  **v6.9** (in v6.9, not in v6.8). Later moved unchanged in
+  `969f915473d8c` (v6.13 directory split). Present for many releases.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable. The “bug” is a missing per-
-machine ID, not a regression from a specific earlier commit.
+**Step 3.2 — Fixes: tag**
+- Record: None. Introducer is `ba8dcff0e9c4f`, ancestor of this HEAD.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- Related: `d75dba4974447` “Add a quirk for HP Pavilion 15z-ec200” (same
-  15-ec family, same `ALC285_FIXUP_HP_MUTE_LED`, Cc: stable). Present in
-  this tree (`git merge-base --is-ancestor` exit 0).
-- Many later HP mute-LED ID additions in the same table (15-eg0xxx,
-  14-dv1001TU, Victus, etc.).
-- Standalone: not “patch X/Y”. No prerequisites beyond the existing
-  fixup enum/function, both already here.
+**Step 3.3 — File history**
+- Record: Nearby commits are later HSMP hardening (`0d7a266449453` _DSD
+  count, `e5e511f5d9e05` data-plane gate). This patch is **standalone**;
+  it does not need those.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Luis Banha has only this Realtek commit in this tree. Maintainer
-Takashi Iwai applied it (SOB). Not the subsystem maintainer, but
-maintainer-applied.
+**Step 3.4 — Author**
+- Record: Muralidhara M K is a regular AMD HSMP author. Reviewed and
+  applied by pdx86 maintainer Ilpo Järvinen.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: None. Diff assumes `SND_PCI_QUIRK`, `ALC285_FIXUP_HP_MUTE_LED`,
-and `alc269_fixup_tbl[]`, all present. Can apply standalone.
+**Step 3.5 — Dependencies**
+- Record: None. Only uses existing `acpi_device_uid`, `strlen`,
+  `kstrtou16`. Can apply by itself to any tree that has
+  `hsmp_get_uid()`.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+## Phase 4: Mailing list / external
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 775aa96c310d59f3d15a6e5a9bd1796fd1ba95ec` matched patch-id
-  `0b68c9761ca63e73bd01063dba912b15105a26c8`
-- Lore/msgid:
-  https://patch.msgid.link/20260921230105.16844-1-luisbanha26@gmail.com
-- `b4 dig -a`: single revision **v1** only; committed version is that v1
-- Maintainer reply (Takashi Iwai, 2026-09-28): “Applied now. Thanks.” No
-  NAK, no requested changes, no extra stable discussion
-- msgid.link and lore.kernel.org returned 403; discussion recovered from
-  LKML archive (https://lkml.iu.edu/2609.2/15241.html and
-  https://lkml.iu.edu/2609.3/09057.html)
+**Step 4.1 — Original discussion**
+- Record: `b4 dig -c 4c7d1b4cd75a7` matched
+  https://patch.msgid.link/20260629155634.1807598-2-
+  muralidhara.mk@amd.com
+  Revisions: included in a larger 2026-06-25 series, then **v1 1/4**
+  (2026-06-29) and **v2 1/4** of “ACPI input hardening and data-plane
+  readiness gating.” Applied version is v2 1/4. No NAKs. Cover letter:
+  Patches 1–2 validate ACPI input; this one is the UID check. Ilpo
+  applied the series to `review-ilpo-next` and noted fixes go via for-
+  next unless they are current-rc regressions — so not treated as a hot
+  -rc regression, but still accepted as a real fix. No `Cc: stable` in
+  the thread.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record (`b4 dig -w`): To/Cc were Luis Banha, tiwai@suse.com,
-perex@perex.cz, linux-sound@vger.kernel.org, linux-
-kernel@vger.kernel.org. Correct ALSA maintainers and list. Takashi
-applied it.
+**Step 4.2 — Recipients (`b4 dig -w`)**
+- Record: Ilpo Järvinen, `platform-driver-x86@vger.kernel.org`, `linux-
+  kernel@vger.kernel.org`. Right maintainer and list.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record:
-- No kernel.org bugzilla link in the commit
-- Arch Linux forum thread “HP Pavilion Gaming Laptop 15-ec1xxx mute
-  button led issue” (2024-06): OP plus a second user with the same
-  model; `aplay -l` shows **ALC285 Analog**; existing `model=` strings
-  including `hp-mute-led-mic1/2/3` did not help (those map to older
-  `ALC269_FIXUP_HP_MUTE_LED_MICx`, not `ALC285_FIXUP_HP_MUTE_LED`)
-- linux-hardware.org probe for Pavilion Gaming 15-ec1xxx confirms PCI
-  subsystem **103c:87b2**
-- Same-family 15z-ec200 already uses this exact fixup in-tree
+**Step 4.3 — Bug report**
+- Record: No syzbot/bugzilla/`Reported-by`. Bug is described from code
+  review, not a user crash dump.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone v1. Not part of a multi-patch series. Sibling
-15z-ec200 quirk already here.
+**Step 4.4 — Series**
+- Record: v2 1/4 is self-contained. Later patches ( _DSD bounds, device
+  threading, readiness gate) are separate bugs. This one does not need
+  them.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable search for this subject/SSID returned no
-relevant discussion (403 on direct lore fetch; web search of stable
-archives found no prior NAK or exclusion). No evidence this was rejected
-for stable.
+**Step 4.5 — Stable list**
+- Record: lore.kernel.org returned 403 via WebFetch. Thread mbox from
+  `b4 dig -m` has **no** stable discussion. UNVERIFIED whether it was
+  later requested on stable@.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+## Phase 5: Semantic / call graph
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: Table `alc269_fixup_tbl[]` only. Consumed by `alc269_probe()` →
-`snd_hda_pick_fixup()`. Applied function: `alc285_fixup_hp_mute_led()`.
+**Step 5.1 — Functions**
+- Record: `hsmp_get_uid()` only.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `alc269_probe()` (codec probe) calls `snd_hda_pick_fixup(...,
-  alc269_fixup_tbl, alc269_fixups)`
-- Match is PCI subsystem vendor/device
-- Context: device enumeration / module load, not IRQ/hot path
-- Impact surface: only machines with SSID 103c:87b2
+**Step 5.2 — Callers**
+- Record: Only `init_acpi()` → `hsmp_acpi_probe()`
+  (`platform_driver.probe`). Probe/init context, one call site.
 
-Step 5.3: TRACE CALLEES
-Record: `alc285_fixup_hp_mute_led()` → COEF setup +
-`snd_hda_gen_add_mute_led_cdev()` /
-`snd_hda_gen_add_micmute_led_cdev()`. Registers LED class devices so
-userspace mute state drives the hardware LED.
+**Step 5.3 — Callees**
+- Record: `ACPI_COMPANION()`, `acpi_device_uid()`, `strlen()`,
+  `kstrtou16()`.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: PCI HDA probe → Realtek ALC269-family probe → quirk pick →
-PRE_PROBE fixup. Reachable on every boot of this laptop. Not a syscall
-fuzzer path; it is normal hardware init.
+**Step 5.4 — Reachability**
+- Record: Triggered when `CONFIG_AMD_HSMP_ACPI` probes HID
+  `ACPI_HSMP_DEVICE_HID` (AMD EPYC/MI300A HSMP ACPI). Not a syscall.
+  Unprivileged users cannot inject ACPI `_UID`. Firmware with
+  missing/short `_UID` (or numeric `_UID` like `"0"`) oopses at probe
+  instead of failing the driver.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Multiple HP machines already use `ALC285_FIXUP_HP_MUTE_LED` in
-this file (`0x8603`, `0x877a`, `0x8786/87/88`, `0x8896`, `0x88dd`,
-`0x8902`). This is the established pattern for ALC285 HP mute LEDs.
+**Step 5.5 — Similar patterns**
+- Record: Core ACPI already NULL-checks UID in
+  `acpi_dev_uid_to_integer()` (`if (!uid) return -ENODATA`). HSMP was
+  missing that same guard.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+## Phase 6: This tree
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Tree is 6.18.57. File `sound/hda/codecs/realtek/alc269.c`
-exists. Parent of the candidate (`ce2e10f2403a4`) has no `0x87b2` entry
-(`git show parent | rg 0x87b2` empty). `ALC285_FIXUP_HP_MUTE_LED` and
-`alc285_fixup_hp_mute_led()` exist. Upstream SHA `775aa96c310d` is
-**not** an ancestor of HEAD (expected: this is 6.18.y, patch is from
-2026-09). The machine’s missing-ID bug exists here.
+**Step 6.1 — Buggy code here?**
+- Record: Yes. File and `hsmp_get_uid()` exist. The 2-line check is
+  already present at lines 97–98 because this commit **is an ancestor of
+  HEAD**. Introduced v6.9; this is 7.3-rc4, so the driver and the bug
+  (pre-fix) belong to this lineage.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply. Context around `0x8788` / `0x87b7` matches the
-submitted diff. No structural conflict with this 6.18 tree. Reverse of
-the one-line patch applies cleanly on current HEAD.
+**Step 6.2 — Backport difficulty**
+- Record: Clean apply. `hsmp_get_uid()` body has been stable since v6.9
+  aside from this check. This 7.3 tree already has extra includes from
+  later commits; the three-line change itself is trivial.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No other `0x87b2` quirk anywhere in the tree. 15z-ec200
-(`0x88dd`) is a related SKU, not a substitute for 15-ec1xxx.
+**Step 6.3 — Other fix already here?**
+- Record: This *is* the fix. No alternate UID validation exists besides
+  these two lines.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Phase 7: Subsystem
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: ALSA HD-audio Realtek codec (`sound/hda/codecs/realtek/`).
-Criticality: **IMPORTANT** (very common laptop audio), but this change
-is machine-specific.
+**Step 7.1**
+- Record: `drivers/platform/x86/amd/hsmp` — AMD Host System Management
+  Port. **PERIPHERAL / IMPORTANT for AMD server users**, not core
+  mm/vfs. Used on EPYC and MI300A.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively maintained; recent `alc269.c` history is mostly
-additional `SND_PCI_QUIRK` mute-LED IDs. Mature driver, long-lived quirk
-table. Takashi Iwai is the maintainer and applied this patch.
+**Step 7.2**
+- Record: Actively maintained (many 2026 HSMP commits by Muralidhara).
+  Driver itself is mature since v6.9.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+## Phase 8: Impact and risk
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / hardware-specific. Only HP Pavilion Gaming
-15-ec1xxx (PCI SSID 103c:87b2), typically ALC285. Requires
-`SND_HDA_CODEC_REALTEK`.
+**Step 8.1 — Who**
+- Record: Config- and firmware-specific: `CONFIG_AMD_HSMP_ACPI` on AMD
+  servers whose BIOS exposes the HSMP ACPI object.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every boot/probe on that laptop. Unprivileged users cannot
-exploit it; they just see a dead mute LED. Independent user reports
-exist (Arch forum, 2024).
+**Step 8.2 — Trigger**
+- Record: Driver probe. Common on matching hardware with **correct**
+  `"IDxx"` UID (then the new check is a no-op). Crash only if `_UID` is
+  missing, empty, or shorter than 3 characters. Not a userspace trigger.
+  Realistic for incomplete ACPI (VMs, BIOS bugs, numeric `_UID`).
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Mute (and mic-mute) LED does not follow mixer mute. No oops,
-deadlock, or data corruption. Severity **MEDIUM** as a functional
-hardware bug; still a real user-visible defect. Covered by the stable
-**hardware quirk** exception.
+**Step 8.3 — Failure mode**
+- Record: Kernel oops on NULL deref or KASAN-class OOB read during
+  probe. **Severity: HIGH** (crash). Not data corruption. Not a local
+  privilege-escalation path by itself.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: high for owners of this 2020-era HP gaming laptop; enables
-  the LED that never worked on stock 6.18.
-- Risk: very low (1 line, existing fixup, SSID-gated).
-- Ratio: strongly favorable.
+**Step 8.4 — Risk/benefit**
+- Record: Benefit: prevent oops, fail probe cleanly. Risk: very low (3
+  lines, error path only, valid firmware unchanged). Ratio strongly
+  favors applying it.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+## Phase 9: Synthesis
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Hardware codec quirk (`SND_PCI_QUIRK`) on an existing driver —
-  explicit stable exception
-- Real user-visible bug on a specific, identified laptop
-- Existing `ALC285_FIXUP_HP_MUTE_LED` already used by same-family
-  15z-ec200 in this tree
-- 1 insertion, no new APIs, no locking, no refactor
-- Applied by ALSA maintainer Takashi Iwai
-- Independent reports that 15-ec1xxx mute LED is broken on Linux/ALC285
-- Applies cleanly to this 6.18.57 tree
+**Evidence FOR**
+- Real NULL deref and string OOB, confirmed in `kstrtox` and ACPI UID
+  init.
+- 3-line, obviously correct check; same pattern as
+  `acpi_dev_uid_to_integer()`.
+- Reviewed and applied by the pdx86 maintainer.
+- Standalone; no series dependencies.
+- Driver and buggy code exist in this tree (since v6.9).
+- Oops during probe is worse than `-EINVAL` probe failure.
 
-AGAINST:
-- Not a crash/security/corruption fix
-- Author did not include Tested-by details or hda-verb dumps in the
-  commit (unlike some sibling LED quirks)
-- Arch users did not confirm this exact fixup (they never had a model
-  string for it)
+**Evidence AGAINST**
+- No user/`syzbot` report; found by review, framed as hardening.
+- Trigger needs bad/non-spec `_UID`; production AMD BIOS should use
+  `ID00`/`ID01`.
+- Peripheral driver, not core.
+- Maintainer routed it through for-next, not as an urgent -rc
+  regression.
 
-UNRESOLVED:
-- Direct lore.kernel.org fetch was 403; discussion recovered via b4 +
-  LKML
-- Could not independently re-test LED polarity on hardware
+**Unresolved**
+- Could not fetch lore.kernel.org HTML (403); used `b4 dig` mbox
+  instead.
+- No stable@ thread found in that mbox.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — one SSID mapped to a long-
-   used HP ALC285 LED fixup; maintainer applied v1; same family already
-   uses it
-2. Fixes a real bug that affects users? **PASS** — mute LED does not
-   work on 15-ec1xxx
-3. Important issue? **PASS** under the hardware-quirk exception (codec
-   LED workaround). Not a panic, but stable routinely takes these
-4. Small and contained? **PASS** — +1 line, one table
-5. No new features or APIs? **PASS** — ID added to existing quirk table
-6. Can apply to the local tree? **PASS** — file, enum, and neighboring
-   context all present on 6.18.57
+**Stable rules**
+1. Obviously correct and tested? **PASS** — 2-line guard; W=1/checkpatch
+   per cover letter; maintainer Reviewed-by.
+2. Real user-visible bug? **PASS** — oops/OOB on missing or short
+   `_UID`.
+3. Important (crash/security/corruption)? **PASS** — probe-time kernel
+   oops; HIGH, not theoretical UAF in a hot path.
+4. Small and contained? **PASS** — +3 lines, one function.
+5. No new features/APIs? **PASS**.
+6. Applies to this tree? **PASS** — `hsmp_get_uid()` is here; change is
+   trivial.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **Hardware quirk / audio codec quirk** (`SND_PCI_QUIRK` in
-Realtek HDA). Also analogous to “new device ID on an existing driver”:
-the driver and fixup already exist; only the SSID is new.
+**Exception category:** none required; this is a normal small crash-
+prevention fix.
 
-Step 9.4: MAKE YOUR DECISION
-This should be backported to this 6.18.57 tree. It is the standard
-Realtek mute-LED ID addition: tiny, SSID-scoped, uses an existing fixup,
-and restores hardware behavior for a real laptop that this tree already
-supports.
-
-===============================================================
-What the commit solves, and why it matters here
-===============================================================
-
-On this 6.18 tree the Realtek ALC269-family driver already knows how to
-drive HP ALC285 mute LEDs via COEF bits. The Pavilion Gaming 15-ec1xxx
-simply was never listed, so probe never enables that path and the F-key
-LED stays off. Adding `SND_PCI_QUIRK(0x103c, 0x87b2, ...,
-ALC285_FIXUP_HP_MUTE_LED)` is the same class of stable backport as
-USB/PCI/codec quirks: it does not add a driver or API, it only matches
-known hardware to existing workaround code.
-
-Risk is limited to that SSID. Benefit is restoring a user-visible LED on
-a shipping laptop. The patch applies cleanly here.
+This is a surgical memory-safety check in an existing driver. It does
+not add features, does not need later series patches, and turns a
+firmware-table oops into a failed probe. That meets stable criteria for
+this tree.
 
 Verification:
-- [Phase 1] Parsed tags: author SOB Luis Banha; maintainer SOB Takashi
-  Iwai; msgid.link present; no Fixes/Reported-by/Cc: stable
-- [Phase 1] Ignored pipeline `[ Upstream commit 775aa96c310d... ]` and
-  Sasha Levin SOB
-- [Phase 2] Diff: +1 `SND_PCI_QUIRK` in `alc269_fixup_tbl[]` in
-  `sound/hda/codecs/realtek/alc269.c`
-- [Phase 2] Read `alc285_fixup_hp_mute_led()` at alc269.c:1679 — COEF
-  mute + micmute LED setup
-- [Phase 3] `git describe HEAD` / `make kernelversion`:
-  v6.18.57-155-gcdf239ca885b2 / 6.18.57
-- [Phase 3] `git merge-base --is-ancestor 775aa96c310d HEAD`: exit 1
-  (upstream SHA not in this stable history, as expected)
-- [Phase 3] Parent `ce2e10f2403a4` has no 0x87b2; has 15z-ec200 0x88dd
-  with the same fixup
-- [Phase 3] `git merge-base --is-ancestor d75dba4974447 HEAD` and
-  `375f8426ed994 HEAD`: both 0 (related quirks exist here)
-- [Phase 3] `git blame -L 6818,6822 HEAD`: 0x87b2 attributed to
-  candidate; neighbors from aeeb85f26c3bb
-- [Phase 4] `b4 dig -c 775aa96c310d`: matched lore msgid
-  20260921230105.16844-1-luisbanha26@gmail.com
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: tiwai, perex, linux-sound Cc’d
-- [Phase 4] LKML: Takashi “Applied now. Thanks.” No NAK
-- [Phase 4] Arch bbs.archlinux.org/viewtopic.php?id=296366: two users,
-  ALC285, dead mute LED
-- [Phase 4] linux-hardware.org: 15-ec1xxx SSID 103c:87b2
-- [Phase 4] lore.kernel.org direct fetch: 403; stable-list search: no
-  prior rejection found
-- [Phase 5] Call chain: `alc269_probe()` → `snd_hda_pick_fixup(...,
-  alc269_fixup_tbl, ...)`
-- [Phase 5] `git grep 0x87b2`: only this new quirk line
-- [Phase 6] File/fixup/table all present; insertion context matches;
-  reverse-apply of the one-liner is clean
-- [Phase 7] Subsystem: ALSA HDA Realtek, maintainer-applied
-- [Phase 8] Failure mode: dead mute LED, SSID-scoped, very low
-  regression risk
-- UNVERIFIED: hardware LED polarity not retested in this environment;
-  original lore HTML not fetched (403)
+- [Phase 1] Parsed tags: Reviewed-by Ilpo; two msgid.link URLs; no
+  Fixes/Reported-by/Cc: stable
+- [Phase 2] Diff: +3 lines in `hsmp_get_uid()`; include `linux/string.h`
+  + NULL/strlen check
+- [Phase 2] Confirmed `kstrtou16` → `_parse_integer_fixup_radix()` reads
+  `s[0]`
+- [Phase 2] Confirmed `acpi_device` kzalloc and `unique_id` only set if
+  `ACPI_VALID_UID`
+- [Phase 3] `git describe HEAD` / `make kernelversion`: v7.3-rc4 /
+  7.3.0-rc4
+- [Phase 3] `git merge-base --is-ancestor 4c7d1b4cd75a7 HEAD`: yes
+- [Phase 3] Blame: buggy parse from `ba8dcff0e9c4f` (v6.9); check from
+  `4c7d1b4cd75a7`
+- [Phase 3] `git merge-base --is-ancestor ba8dcff0e9c4f v6.9`: yes; not
+  in v6.8
+- [Phase 4] `b4 dig -c 4c7d1b4cd75a7`: lore URL and v2 1/4 series
+- [Phase 4] `b4 dig -a`: 2026-06-25 series, then v1/v2 4-patch hardening
+  series
+- [Phase 4] `b4 dig -w`: Ilpo + platform-driver-x86
+- [Phase 4] mbox: Ilpo applied 1/4; no NAK; no Cc: stable
+- [Phase 4] WebFetch lore.kernel.org: 403 — used mbox instead
+- [Phase 5] Callers: `init_acpi()` ← `hsmp_acpi_probe()` only
+- [Phase 6] Current `acpi.c` already has the two-line check
+- [Phase 8] Failure mode: NULL deref / OOB on probe → oops; valid `IDxx`
+  unchanged
+- UNVERIFIED: later stable@ requests beyond this thread mbox
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/amd/hsmp/acpi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 6afb35769f746..1fcf2ba795e8a 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6822,6 +6822,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8786, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8787, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x87b2, "HP Pavilion Gaming Laptop 15-ec1xxx", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87cb, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+diff --git a/drivers/platform/x86/amd/hsmp/acpi.c b/drivers/platform/x86/amd/hsmp/acpi.c
+index d0b74d243ce4c..674be31654776 100644
+--- a/drivers/platform/x86/amd/hsmp/acpi.c
++++ b/drivers/platform/x86/amd/hsmp/acpi.c
+@@ -21,6 +21,7 @@
+ #include <linux/kstrtox.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
++#include <linux/string.h>
+ #include <linux/sysfs.h>
+ #include <linux/uuid.h>
+ 
+@@ -78,6 +79,8 @@ static inline int hsmp_get_uid(struct device *dev, u16 *sock_ind)
+ 	 * bytes to integer.
+ 	 */
+ 	uid = acpi_device_uid(ACPI_COMPANION(dev));
++	if (!uid || strlen(uid) < 3)
++		return -EINVAL;
+ 
+ 	return kstrtou16(uid + 2, 10, sock_ind);
+ }
 -- 
 2.53.0
 
