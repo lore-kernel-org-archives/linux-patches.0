@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C3364A888;
-	Mon, 19 Oct 2026 14:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7255B53FA22;
+	Mon, 19 Oct 2026 14:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418811; cv=none; b=gXzXDlVwFjp2lmJvgy6E+BFhiq54uUsBChpyxNbietHWrTa7xO+N+XU3Ywv175bl+GulhmwT86PrFL/H5xWJiMfacR7sSARwqqJQXUMv9BaVIGLUwOR6BSBbBv9PCC5DSumAZG74kgjQm2NXY1rEqbBnJcMe93LR9b5hMu0shSY=
+	t=1792418812; cv=none; b=mC7AnyoctEFcdsh7NO2GYqhLuXjVzsZ2VQeaaGr92n4reHMFarA82/eSrMCO9Bmy4B56sGjXJdNxW7YCCzaQHcJE1bHQlzbIlAz2bmHfIXc40bUZBMIvyFDWPw1UEiTI2DZENGXcK8VlDYlz7zCfFX4uKWzA2fCnWkvOuw967Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418811; c=relaxed/simple;
-	bh=7eHM45NPLVbSB2rWEQrIR/3jDdUUMejk7jeUEPqlOqQ=;
+	s=arc-20240116; t=1792418812; c=relaxed/simple;
+	bh=9rG/+Iw+mKzxYFLTqkl6csqsPkCNFKmRx0FknDhw6QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=goKf0TwP4YTeBlB52ONSjP7iegSh2Af0VVpLs7buxhfhChjnOEo3bFmxvP6Og7OvyKpb98EVfheSgwe7cx0cRqK1hY6+dDlIRV/pWbmnwnhlr/vN2dJE1s9eYsJnC4w10dFm2cG5qB10FBe05R34J5IklMzsHjVmlOctuPzqdwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O7pnl4xI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JKorlWdWGpLaUAljSanlTv1BI7RLBVE80rysBj8luulE+mqiFDK+amPHw56a+Iq5MESjGV36CnYxUop7p50Mv0gT5AOCfT+/GJYJlzlKclEli+LN9zHEBWtWmBm1QekGxesmcFLV1Q7ZCuLm1121RsRQzO/KWqXSkuHUCF6vqzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gvP5p6fJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O7pnl4xI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4161F000CC;
-	Mon, 19 Oct 2026 14:06:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gvP5p6fJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D981F000C4;
+	Mon, 19 Oct 2026 14:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418807;
-	bh=Ka3ZG+0/jaJUIN2HdnBaOl0wFNO/VMkQL9G6JtKgayE=;
+	s=k20260515; t=1792418808;
+	bh=RzQ3SkwKQZ9klrbhlD1x6zyQ5NhMYF1dZvBVDXNr5yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7pnl4xInEy3Y20FiMePeIDiXxrcjlSQM6GOs/EFrOUljgX/ctYT5VJN6IhvUnL1A
-	 vR8I8KUZsf1mYMkUlhKgzML9SIXsPH0Q8raUvXd4qTcNL5FoeS3HQY6mumktmjrRHD
-	 6rJ8szeHSyBH0xCEvEP0jnJVyNAEsNGxjhthxlzszm111zRgjdKMgt/TcByMtKltag
-	 lTs2qop/cIQide1mcU8Zwj5PMdM2fqzmzW/5UykON9BT5LorL1Zn1Qe5XubkhRpDWm
-	 tLaHzEyKBgFRUgXXXv9fWMb2plDjMdQ5NUDiAntdCiZqH688dhw0xJ0MST0MZTlBI9
-	 XiJVccnVwS9xw==
+	b=gvP5p6fJhaEhhjEKpSg2YPvM/9lvSuF8tTaukzN34pI6EEZoZ2G/x26nKIkxkrGw/
+	 CBZ5MOrefrFxXGQ3sSZscW8W2btzJM3Yz9bFv8z/bxo2/e8bnpMa5YMwPI3v5Ag5TE
+	 zUXu6Fgccp4EVpCmHRfvIuBqxBMUVGyPhfSaqxLFVA5k416dB8KtQjjxLF7Agcw0Gh
+	 A13q1DjaOx+RKqscOUdiT5o7ikyGfGZsU2TMaQY6Ul2t7EexnnRFVFGTHbNTaXf+tM
+	 aD3LBtdhRnwp0VaF8RrTMl9asA0hKIDmP8nq7g8gelYctFBJg7S3upWTrPBrkFoNnV
+	 Hh0YelvCgB0lg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: BingKun Yue <yuebingkun@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+Cc: Baokun Li <libaokun@linux.alibaba.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
+	linux-ext4@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] fbdev: platinumfb: add error checking for ioremap calls
-Date: Mon, 19 Oct 2026 09:53:21 -0400
-Message-ID: <20261019135441.1420968-510-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ext4: reduce max cluster size to match documented 256MB limit
+Date: Mon, 19 Oct 2026 09:53:22 -0400
+Message-ID: <20261019135441.1420968-511-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,460 +54,531 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: BingKun Yue <yuebingkun@kylinos.cn>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit ba13226fc966004713aed47931db8922b84d1960 ]
+[ Upstream commit afa3caf2fbc417f755f36e271c4b3c2d45ccda9d ]
 
-The ioremap() and ioremap_wt() calls in platinumfb_probe() were not
-checked for failure. If any of these mappings fail, the driver would
-dereference NULL pointers, leading to a kernel panic.
+The mke2fs man page documents:
 
-Add proper error checking and use goto-based cleanup to avoid code
-duplication across the error paths.
+  Valid cluster-size values are from 2048 to 256M bytes per cluster.
 
-Signed-off-by: BingKun Yue <yuebingkun@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+but EXT4_MAX_CLUSTER_LOG_SIZE was set to 30 (1GB), allowing crafted
+filesystem images to specify cluster sizes up to 1GB.
+
+On 32-bit systems with bigalloc enabled, the consistency check in
+ext4_handle_clustersize():
+
+  s_blocks_per_group == s_clusters_per_group * (clustersize / blocksize)
+
+can overflow when the cluster ratio is large enough. Since
+s_blocks_per_group is not range-checked in the bigalloc path, the
+wrapped product can pass the consistency check, leading to inconsistent
+group geometry and potential out-of-bounds block allocation.
+
+Reduce EXT4_MAX_CLUSTER_LOG_SIZE to 28 to match the documented 256MB
+limit. With this cap, the maximum product is:
+
+  (blocksize * 8) * (256M / blocksize) = 2^31
+
+which fits safely in a 32-bit unsigned long for all block sizes.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260608061112.392391-1-libaokun%40linux.alibaba.com
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://patch.msgid.link/20260608111150.827117-3-libaokun@linux.alibaba.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+Local tree is **v7.3-rc4** (kernel 7.3.0-rc4, detached HEAD). The change
+is a one-line cap on ext4 bigalloc cluster size to stop a 32-bit
+overflow on crafted images.
 
-**Step 1.1 — Subject**
-- Record: **[fbdev/platinumfb] [add] error checking for ioremap calls**
-- Subsystem: `fbdev: platinumfb`. Action verb: **add** (defensive
-  checks). Intent: stop using NULL mappings after failed `ioremap()` /
-  `ioremap_wt()`.
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2 — Tags**
-- Record (committed message):
-  - `Signed-off-by: BingKun Yue <yuebingkun@kylinos.cn>` (author)
-  - `Signed-off-by: Helge Deller <deller@gmx.de>` (fbdev maintainer)
-- Ignored as pipeline noise: any `[Upstream commit ...]` / `Signed-off-
-  by: Sasha Levin`.
-- Not in the committed message, but present on the mailing-list v1/v2:
-  `Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")`. Helge Deller dropped that
-  tag as having no value (it points at the git epoch, not a real
-  introducing change).
-- No `Reported-by`, `Tested-by`, `Reviewed-by`, `Acked-by`, `Link:`, or
-  `Cc: stable` in the committed message.
-- Absence of `Cc: stable` / `Fixes:` is expected for this review and is
-  not a negative signal.
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-**Step 1.3 — Body**
-- Record:
-  - **Bug:** `ioremap()` / `ioremap_wt()` in `platinumfb_probe()` are
-    unchecked.
-  - **Symptom:** NULL dereference → kernel panic.
-  - **Root cause:** probe maps framebuffer, platinum registers, and cmap
-    registers, then immediately writes through those pointers
-    (`out_be32`, `fbuffer[0x100000] = ...`).
-  - **Fix approach:** check each mapping, return `-ENOMEM`, goto-based
-    cleanup to avoid duplicated teardown.
-  - **Version info:** none in the body. Hardware is Apple “platinum” on
-    PPC32 Power Mac.
+Record: **[ext4]** **[reduce]** reduce `EXT4_MAX_CLUSTER_LOG_SIZE` from
+30 (1GB) to 28 (256MB) to match the documented mke2fs limit and stop a
+32-bit overflow.
 
-**Step 1.4 — Hidden bug fix?**
-- Record: **Yes, a real bug fix**, not style cleanup. The “goto cleanup”
-  wording also **closes a pre-existing resource leak**: on
-  `platinum_init_fb()` failure the old path `iounmap()`’d three mappings
-  and called `framebuffer_release()` but never `release_mem_region()`
-  for the framebuffer or cmap regions. `platinumfb_remove()` does
-  release those regions, but `remove()` is not run after a failed probe.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
----
+Record:
+- **Reported-by:** Sashiko `<sashiko-bot@kernel.org>` (automated kernel
+  review, not syzbot)
+- **Closes:** https://sashiko.dev/#/patchset/20260608061112.392391-1-
+  libaokun%40linux.alibaba.com (v1 series)
+- **Reviewed-by:** Andreas Dilger `<adilger@dilger.ca>` (ext4 co-
+  maintainer)
+- **Link:** https://patch.msgid.link/20260608111150.827117-3-
+  libaokun@linux.alibaba.com
+- **Signed-off-by:** Baokun Li `<libaokun@linux.alibaba.com>` (author)
+- **Signed-off-by:** Theodore Ts'o `<tytso@mit.edu>` (ext4 maintainer;
+  applied the series)
+- **Fixes:** none (expected for this review pipeline)
+- **Cc: stable:** none (expected)
+- Ignore pipeline markers: none present in the supplied message beyond
+  the usual evaluation context
 
-## Phase 2: Diff analysis
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-**Step 2.1 — Inventory**
-- Record:
-  - File: `drivers/video/fbdev/platinumfb.c` (~+23 / −8 in
-    `platinumfb_probe()`; ~35 lines net as posted).
-  - Function modified: **`platinumfb_probe()` only**.
-  - Scope: **single-file surgical fix**.
+Record:
+- **Bug:** `EXT4_MAX_CLUSTER_LOG_SIZE` was 30, so crafted bigalloc
+  images can claim cluster sizes up to 1GB. mke2fs only documents
+  2048–256MB.
+- **Symptom/failure mode:** On 32-bit, `s_clusters_per_group *
+  (clustersize / blocksize)` in `ext4_handle_clustersize()` wraps.
+  `s_blocks_per_group` is not range-checked on the bigalloc path, so the
+  wrapped product can pass the consistency check. That yields
+  inconsistent group geometry and possible out-of-bounds block
+  allocation.
+- **Version info:** none beyond “32-bit systems with bigalloc”.
+- **Root cause (author):** cluster-size cap is too high; product can
+  exceed 32-bit `unsigned long`.
 
-**Step 2.2 — Code flow**
-- Record:
-  - **Hunk 1 (framebuffer):** `ioremap_wt(..., 0x400000)` was used
-    unconditionally. After: if NULL, `rc = -ENOMEM`, `goto
-    err_release_fb`.
-  - **Hunk 2 (platinum regs):** `ioremap(..., 0x1000)` was used
-    unconditionally. After: if NULL, `goto err_unmap_fb`.
-  - **Hunk 3 (cmap regs):** `ioremap(..., 0x1000)` was used
-    unconditionally. After: if NULL, `goto err_release_cmap`.
-  - **Hunk 4 (init failure / cleanup):** old `platinum_init_fb()`
-    failure only unmapped and released `fb_info`. After: shared labels
-    unmap cmap → release cmap region → unmap platinum regs → unmap
-    framebuffer → release framebuffer region → `framebuffer_release()`.
-    Success path now `return 0` explicitly.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-**Step 2.3 — Bug mechanism**
-- Record:
-  - **Category:** memory safety (NULL deref) + error-path resource leak.
-  - **Mechanism:** failed `ioremap*` returns NULL; next statements
-    dereference it (`out_be32(&pinfo->platinum_regs->...)`,
-    `fbuffer[0x100000] = 0x34`, `out_8(&pinfo->cmap_regs->addr, ...)`).
-  - **Cleanup:** goto chain matches acquisition order. Nathan Chancellor
-    later had an unused `err_unmap_regs` label removed; the candidate
-    diff is that folded version (no unused label).
+Record: Not a disguised cleanup. The message names overflow, crafted
+images, and OOB allocation. It is an explicit mount-time sanity fix.
 
-**Step 2.4 — Fix quality**
-- Record:
-  - Obviously correct: each mapping is checked before use; unwind order
-    is right.
-  - Minimal: one probe function, no API/struct changes.
-  - Regression risk: **low**. Same teardown operations already exist on
-    the `platinum_init_fb()` error path and in `platinumfb_remove()`.
-    Extra `release_mem_region()` on probe failure is the missing
-    counterpart of `request_mem_region()`.
-  - Pre-existing (unchanged): `request_mem_region()` for cmap is still
-    unchecked; `dev_set_drvdata()` still happens before
-    `platinum_init_fb()`. Not introduced by this patch.
-  - `rc` is already declared in this tree and is set on every new goto
-    path (`-ENOMEM`) or by `platinum_init_fb()`.
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
----
+**Step 2.1: INVENTORY THE CHANGES**
 
-## Phase 3: Git history
+Record:
+- **File:** `fs/ext4/ext4.h` — 1 line changed (`30` → `28`)
+- **Functions:** none; only `#define EXT4_MAX_CLUSTER_LOG_SIZE`
+- **Scope:** single-file, one-constant surgical fix
 
-**Step 3.1 — Blame**
-- Record:
-  - Unchecked `ioremap()` of platinum/cmap regs: present since
-    `1da177e4c3f41` (Linux-2.6.12-rc2, 2005).
-  - Framebuffer mapping: `cc5d0189b9ba95` (2005) then `e04e39507c3c3d`
-    (2018, `__ioremap()` → `ioremap_wt()`), still unchecked.
-  - Partial teardown on `platinum_init_fb()` failure: `2b7574da255fef`
-    (2006, “ioremap balanced with iounmap”).
-- The hole has been in this driver for the entire git history, including
-  this 6.12 tree.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-**Step 3.2 — Fixes: tag**
-- Record: mailing-list `Fixes: 1da177e4c3f4` is the epoch commit, not a
-  real regression. Helge dropped it. `1da177e4c3f41` **is** an ancestor
-  of this tree (`git merge-base --is-ancestor` succeeded). The buggy
-  code is here regardless of the tag.
+Record:
+- **Before:** `__ext4_fill_super()` rejects `s_log_cluster_size` only if
+  it is greater than `30 - 10 = 20`, so `clustersize = BLOCK_SIZE << log
+  = 1024 << 20 = 1GB` is accepted.
+- **After:** max log is `28 - 10 = 18`, so max cluster size is `1024 <<
+  18 = 256MB`.
+- **Path:** mount-time superblock validation in `__ext4_fill_super()`,
+  before `ext4_handle_clustersize()`.
 
-**Step 3.3 — File history**
-- Record: last change touching this file in-tree is `01ecc142ef7c8`
-  (“fbdev: Switch back to struct platform_driver::remove()”). Recent
-  platinumfb work is platform-remove/fb_ops/whitespace, not probe
-  mapping. **Standalone**, not patch N/M.
+Verified use site:
 
-**Step 3.4 — Author**
-- Record: BingKun Yue has **no** other commits in this tree under
-  `drivers/video/fbdev/`. Helge Deller is the fbdev maintainer and
-  signed off. Nathan Chancellor (Clang/build) reviewed the applied
-  version.
+```5196:5202:fs/ext4/super.c
+        if (le32_to_cpu(es->s_log_cluster_size) >
+            (EXT4_MAX_CLUSTER_LOG_SIZE - EXT4_MIN_BLOCK_LOG_SIZE)) {
+                ext4_msg(sb, KERN_ERR,
+                         "Invalid log cluster size: %u",
+                         le32_to_cpu(es->s_log_cluster_size));
+                goto out;
+        }
+```
 
-**Step 3.5 — Dependencies**
-- Record: uses `ioremap_wt()`, `dev_err()`, `request_mem_region()`,
-  `framebuffer_release()` — all present. **Can apply standalone.**
-  Context in this checkout matches the “before” side of the diff
-  exactly.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
----
+Record:
+- **Category:** integer overflow in mount-time geometry check, leading
+  to inconsistent geometry / possible OOB block allocation (memory-
+  safety / filesystem-image robustness).
+- **Mechanism:** `s_blocks_per_group` and `s_clusters_per_group` are
+  `unsigned long` (`fs/ext4/ext4.h`). The check is:
 
-## Phase 4: Mailing list / external research
+```4500:4506:fs/ext4/super.c
+        if (sbi->s_blocks_per_group !=
+            (sbi->s_clusters_per_group * (clustersize /
+sb->s_blocksize))) {
+                ext4_msg(sb, KERN_ERR,
+                         "blocks per group (%lu) and clusters per group
+(%lu) inconsistent",
+                         sbi->s_blocks_per_group,
+sbi->s_clusters_per_group);
+                return -EINVAL;
+        }
+```
 
-`b4 dig -c` was not used: the candidate is **not in this checkout**, so
-there is no local SHA to feed it. Thread was recovered from
-lore/openwall/patchew.
+`s_clusters_per_group` is capped at `blocksize * 8`. Max product is
+`(blocksize * 8) * (clustersize / blocksize) = 8 * clustersize`.
+- With 1GB clusters: `8 * 2^30 = 2^33` → wraps on 32-bit `unsigned
+  long`.
+- With 256MB clusters: `8 * 2^28 = 2^31` → fits in 32-bit `unsigned
+  long`.
 
-**Step 4.1 — Original discussion**
-- Record:
-  - v1 (duplicated cleanup, no gotos):
-    `20260817055625.276500-1-yuebingkun@kylinos.cn`
-  - v2 (goto cleanup, applied): `https://lists.openwall.net/linux-
-    kernel/2026/08/17/346` — Message-ID
-    `20260817063637.306865-1-yuebingkun@kylinos.cn`
-  - Helge Deller: applied v2, dropped the epoch `Fixes:` line, asked for
-    a real name on SOB.
-  - Nathan Chancellor: unused label `err_unmap_regs` warning; suggested
-    deleting it. Helge folded that in. Candidate diff matches the folded
-    result (`err_release_cmap` falls through into
-    `iounmap(platinum_regs)`).
-  - A later “v3” wrongly changed `strscpy` → `strcpy` and reused this
-    subject; reviewers called out the mismatch. **That v3 is not this
-    candidate.**
-  - Merged in Helge’s fbdev pull for **v7.3-rc1**.
-- No NAK. No reviewer `Cc: stable`. No claim this was a production crash
-  report.
+The `s_blocks_per_group > sb->s_blocksize * 8` range check is only on
+the **non-bigalloc** branch (verified in `ext4_handle_clustersize()`).
 
-**Step 4.2 — Recipients**
-- Record: To Helge Deller; Cc `linux-fbdev`, `dri-devel`, `linux-
-  kernel`. Right maintainer and list.
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 4.3 — Bug report**
-- Record: **No user/syzbot report.** Static/code-review finding. Failure
-  mode is still a panic if `ioremap*` fails.
+Record:
+- **Quality:** obviously correct. Tightens an existing mount-time bound
+  to the documented mkfs limit; the overflow math is checkable by
+  inspection.
+- **Regression risk:** very low. mke2fs documents max 256MB; Andreas
+  Dilger noted real-world >1GB clusters are implausible. A 512MB (log
+  29) filesystem would also be rejected; Jan Kara said 28 or 29 were
+  both acceptable. **29 is not overflow-safe:** `8 * 512MB = 2^32` wraps
+  to 0 on 32-bit `unsigned long`. 28 is the right cap. Ted applied 28.
 
-**Step 4.4 — Series**
-- Record: Standalone driver fix. Same family of Mac fbdev drivers:
-  `controlfb.c` and `valkyriefb.c` **already** check ioremap failure in
-  this tree. platinumfb is the outlier.
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 4.5 — Stable list**
-- Record: lore.kernel.org/stable search returned **403**. **UNVERIFIED**
-  whether this SHA was discussed on stable@. No evidence it was
-  rejected.
+**Step 3.1: BLAME THE CHANGED LINES**
 
----
+Record:
+- Current line (already 28 in this checkout): `afa3caf2fbc41` Baokun Li,
+  2026-06-08 — the candidate itself.
+- Previous value 30 introduced by **`9e47a4c9fc580`** (“ext4: sanity
+  check the block and cluster size at mount time”, Ted Ts'o,
+  2016-11-18), first in **v4.10-rc1**. Duplicate in-tree copy:
+  `8cdf3372fe836`.
+- That original commit was **Cc: stable** and cited security refs
+  (SecurityFocus 539661, RH BZ 1332506). The 1GB cap has been in place
+  since then.
 
-## Phase 5: Semantic / call-chain
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-**Step 5.1 — Functions**
-- Record: `platinumfb_probe()` only.
+Record: No `Fixes:` tag. The overflow is in the interaction of the 2016
+cap (`9e47a4c9fc580`, in this tree) and the bigalloc consistency
+multiply (bigalloc from `281b59959707d`, **v3.2-rc1**). Both ancestors
+of HEAD.
 
-**Step 5.2 — Callers**
-- Record: `.probe = platinumfb_probe` in `platinum_driver`. Called from
-  platform/OF probe when the node name is `"platinum"`. Boot/device-bind
-  path, not a syscall.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-**Step 5.3 — Callees**
-- Record: `ioremap_wt` / `ioremap`, `request_mem_region` /
-  `release_mem_region`, `iounmap`, `platinum_init_fb()` (VRAM probe +
-  `register_framebuffer()`), `framebuffer_release()`. After a successful
-  map, probe immediately MMIO-writes the mapped addresses.
+Record:
+- This is **v2 2/3** of “ext4: tighten mount-time superblock geometry
+  validation”.
+- Sibling **1/3:** `d42dc7726a003` — 8-alignment of clusters/inodes per
+  group (bitmap csum).
+- Sibling **3/3:** `a34de48f329b2` — inodes-per-group multiple of
+  inodes-per-block.
+- Cover letter (Ted applied 2026-07-23): patches 2 and 3 were added in
+  v2 for additional Sashiko issues and are **independent of patch 1**.
+- This commit is standalone: only the `#define` in `ext4.h`. No
+  prerequisite from 1/3 or 3/3.
 
-**Step 5.4 — Reachability**
-- Record: Reachable only if `CONFIG_FB_PLATINUM=y` (`bool`, not
-  tristate) on **PPC_PMAC && PPC32** with a `platinum` OF node. Not
-  userspace-triggerable on other machines. If probe runs and `ioremap*`
-  fails, panic is certain.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-**Step 5.5 — Similar patterns**
-- Record: `controlfb.c` already does `if (!p->cmap_regs ||
-  !p->control_regs || !p->frame_buffer) goto error_out;`. `valkyriefb.c`
-  already does a NULL check after the three ioremaps. Historical
-  analogue: `13b7c0390a5d3` “video: imsttfb: check for ioremap()
-  failures”.
+Record: Baokun Li is a regular, high-volume ext4 contributor (many
+recent ext4 commits in this tree). Series was reviewed by
+Dilger/Kara/Zhang Yi and applied by Ted Ts'o.
 
----
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-## Phase 6: This tree (pending-6.12 / 6.12.111)
+Record: None required. `EXT4_MAX_CLUSTER_LOG_SIZE` and the
+`s_log_cluster_size` check exist here. The define is the only consumer
+besides `ext4.h` itself (`git grep` shows only `fs/ext4/ext4.h` and
+`fs/ext4/super.c`). Applies standalone.
 
-**Step 6.1 — Does the bug exist here?**
-- Record: **Yes.** `drivers/video/fbdev/platinumfb.c` lines 569, 574,
-  578: three unchecked maps, then MMIO at 581–608. `make kernelversion`
-  → **6.12.111**. `git describe HEAD` → `p-6.12-3-gc504cf0baa3d8`.
-  Subject grep on this file history: **commit not present**.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 6.2 — Backport difficulty**
-- Record: **Clean apply.** All four “before” contexts match this file
-  byte-for-byte.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 6.3 — Related fixes already here?**
-- Record: **No** platinumfb ioremap-check. Sibling Mac drivers already
-  have the check; this driver does not.
+Record:
+- **b4 dig -c afa3caf2fbc41:** matched `[PATCH v2 2/3]` at https://patch
+  .msgid.link/20260608111150.827117-3-libaokun@linux.alibaba.com
+- **b4 dig -a:** series is **v2** “ext4: tighten mount-time superblock
+  geometry validation” (2026-06-08). v1 was only patch 1; patches 2–3
+  are new in v2.
+- **Jan Kara** (2026-06-09): no NAK; defer 28 vs 29 to Ted; both fine if
+  consistent.
+- **Andreas Dilger** (2026-06-08): Reviewed-by; “pretty safe”; doubts
+  anyone uses >1GiB clusters.
+- **Ted Ts'o** (2026-07-23): “Applied, thanks!” with this SHA.
+- No NAKs. No reviewer `Cc: stable` in the thread (absence expected).
 
----
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-## Phase 7: Subsystem context
+Record (**b4 dig -w**): linux-ext4, tytso, adilger, jack@suse.cz,
+yi.zhang@huawei.com, ojaswin@linux.ibm.com, ritesh.list@gmail.com,
+Sashiko. Maintainers and regular reviewers were on the To/Cc list.
+Dilger R-b; Ted applied.
 
-**Step 7.1**
-- Record: **fbdev / Apple Platinum**. Criticality: **PERIPHERAL**
-  (legacy PPC32 Power Mac only). Still a first-party in-tree driver, not
-  staging.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-**Step 7.2**
-- Record: File is mature/quiet. Last platinumfb-specific functional
-  change in this tree is older fbdev-ops/platform-remove work. Bug is
-  long-standing, not a new-subsystem leftover.
+Record: Sashiko is an LF/Google automated review bot, not a user crash
+or syzbot repro. The Closes URL is the v1 patchset page (SPA; fetch
+returned the Sashiko landing page, not the finding text). Cover letter:
+patches 2 and 3 fix additional Sashiko-reported issues. Severity from
+the patch itself: crafted-image overflow → inconsistent geometry / OOB
+allocation.
 
----
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-## Phase 8: Impact and risk
+Record: Three independent mount-time checks. This one does not need 1/3
+or 3/3 to be correct. Siblings are also real bugfixes but out of scope
+for this verdict.
 
-**Step 8.1 — Who is affected**
-- Record: **config- and platform-specific**: 32-bit Power Macintosh with
-  platinum graphics (`CONFIG_FB_PLATINUM`). Tiny population, but those
-  users take this path on every boot.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-**Step 8.2 — Trigger**
-- Record: Probe-time `ioremap*` failure (vmalloc/ioremap space
-  exhaustion or mapping rejection). Unprivileged users cannot trigger it
-  except by booting that machine. Uncommon, not theoretical in the “dead
-  code” sense: the next instructions are unconditional dereferences.
+Record: lore.kernel.org/stable returned 403. Openwall/web search found
+no stable-list rejection of this patch. UNVERIFIED whether anyone
+already requested it on stable@.
 
-**Step 8.3 — Failure mode**
-- Record: **NULL deref → oops/panic during probe**. Severity: **HIGH**
-  (crash), not a security hole. Secondary: mem-region leak if
-  `platinum_init_fb()` fails after regions were requested.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 8.4 — Risk/benefit**
-- Record:
-  - Benefit: avoid panic and leak on a real (if rare) probe failure;
-    same check sibling drivers already have.
-  - Risk: **very low** (~20 lines, error path only, maintainer-applied,
-    unused-label already folded).
-  - Ratio: favorable. Conservative stable policy still accepts small
-    NULL-deref probe fixes in in-tree drivers.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
 
----
+Record: No function body changed. Consumer: `__ext4_fill_super()`
+cluster-log check; downstream user of the accepted size:
+`ext4_handle_clustersize()`.
 
-## Phase 9: Synthesis
+**Step 5.2: TRACE CALLERS**
 
-**Step 9.1 — Evidence**
+Record:
+- `ext4_handle_clustersize()` is static; only caller is
+  `__ext4_fill_super()` at mount (`fs/ext4/super.c:5451`).
+- `ext4_fill_super()` is the VFS mount entry (`:5835`).
+- Context: filesystem mount, not IRQ/hot path.
 
-For:
-- Unchecked `ioremap*` then immediate dereference is a real panic.
-- Bug is in **this** 6.12 tree and dates to 2.6.12-era code.
-- Small, obviously correct, applies cleanly.
-- Also releases mem regions on `platinum_init_fb()` failure (old path
-  leaked them).
-- Maintainer SOB; Nathan’s warning fix is already in the candidate.
-- Sibling `controlfb` / `valkyriefb` already check this.
+**Step 5.3: TRACE CALLEES**
 
-Against:
-- No crash report, no syzbot, no `Cc: stable`.
-- Hardware is ancient PPC32 Power Mac; ioremap failure is uncommon.
-- Helge treated the epoch `Fixes:` as worthless (not a tracked
-  regression).
-- Mixed into a 7.3-rc1 “fixes and updates” pull with many cleanups.
+Record: The define is only compared in the mount validator. No new
+calls.
 
-Unresolved:
-- Exact mainline SHA (not in this tree).
-- Whether stable@ already discussed it (lore/stable 403).
-- `b4 dig` not run (no local SHA).
+**Step 5.4: FOLLOW THE CALL CHAIN**
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested? **PASS** — logic is straightforward;
-   maintainer applied it; unused-label fixed.
-2. Real bug affecting users? **PASS** — NULL deref on failed map; probe
-   is the only path this driver has.
-3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
-   panic. User base is small; crash class still qualifies.
-4. Small and contained? **PASS** — one function, one file.
-5. No new features/APIs? **PASS**.
-6. Applies to this tree? **PASS** — context matches; no missing prereqs.
+Record: Userspace mount of an ext4 image (`mount`, loop, USB, VM disk) →
+`ext4_fill_super` → `__ext4_fill_super` → log-cluster check →
+`ext4_handle_clustersize()`. Reachable from any ext4 mount of a bigalloc
+image. Triggering the overflow needs a crafted superblock (untrusted
+image), typically CAP_SYS_ADMIN to mount, still the usual malicious-
+filesystem class.
 
-**Step 9.3 — Exceptions**
-- Record: none (not a device ID, quirk, DT, build, or docs patch).
-  Ordinary crash-prevention fix.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-**Step 9.4 — Decision**
-This is a surgical NULL-deref/leak fix in code this tree actually runs
-on PPC32 Power Mac. Sibling drivers already do the check. Benefit is a
-avoided panic; risk is negligible. Meets stable rules for **this** 6.12
-checkout.
+Record: Same series adds two other geometry checks. Same class of
+crafted-image bugs. No other `EXT4_MAX_CLUSTER_LOG_SIZE` sites.
 
----
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-### Problem for stable users
-On Power Macs with Apple platinum graphics, `platinumfb_probe()` maps
-the framebuffer and two register windows and then writes through those
-pointers with no NULL check. A failed `ioremap*` panics instead of
-failing probe. The new labels also `release_mem_region()` on
-`platinum_init_fb()` failure, which the old error path skipped.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
 
-### Rules / risk
-Small, maintainer-acked, applies cleanly to 6.12.111, no new API, no
-extra dependencies. Regression risk is limited to probe error paths.
+Record:
+- Tree: **v7.3-rc4-27-gf0100363d8c37**, `VERSION=7 PATCHLEVEL=3
+  SUBLEVEL=0 EXTRAVERSION=-rc4`.
+- `git merge-base --is-ancestor afa3caf2fbc41 HEAD` → commit **is** in
+  HEAD (landed via ext4-for-linus 7.3-rc1). Current `#define` is already
+  28.
+- That does **not** mean “already selected for stable”; it is the
+  mainline landing. The **bug mechanism** (32-bit multiply of
+  `s_clusters_per_group` by cluster ratio, uncapped `s_blocks_per_group`
+  on bigalloc) is still in `ext4_handle_clustersize()` here; only the
+  cap is 28.
+- Bug class has existed since the 2016 cap (`9e47a4c9fc580` is an
+  ancestor). Code is not missing.
 
-### Concerns
-Rare hardware and no field report; Helge dropped the epoch `Fixes:` tag.
-Those do not remove the panic if mapping fails, and they do not block
-backport to this tree.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: Expected apply: **clean**. One-line `#define` change in
+`fs/ext4/ext4.h`. Macro and check have been stable since 2016 / the 2022
+`ext4_handle_clustersize()` factor-out (`4a8557b094671`).
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: This is the fix. No earlier alternate cap. No follow-up revert
+or tightening of this define after `afa3caf2fbc41` in `fs/ext4/ext4.h`.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: **ext4** (`fs/ext4/`). **IMPORTANT** — default Linux filesystem;
+crafted-image bugs affect anyone who mounts untrusted ext4 (install
+media, USB, VMs, backups).
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: Actively developed (ext4_for_linus pulls this cycle). The
+overflow is in long-standing mount validation, not new BS>PS work.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: **Filesystem-specific (ext4)**, extra conditions: **bigalloc +
+32-bit `unsigned long` + cluster size > 256MB**. 64-bit does not wrap at
+1GB, but the looser cap still allows undocumented cluster sizes. 32-bit
+still matters (embedded, some Android/i686).
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: Mount of a crafted bigalloc image with large
+`s_log_cluster_size`. Not every boot. Not an unprivileged syscall by
+itself (mount is privileged), but standard untrusted-image attack. Not a
+timing race.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: Integer overflow bypass of geometry check → inconsistent groups
+→ **potential out-of-bounds block allocation**. Severity **HIGH**
+(memory corruption / OOB on crafted mount). Not a guaranteed panic on
+every mount, but it is a real robustness/security class that stable
+routinely takes.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit:** high for 32-bit ext4 mounts of untrusted images; aligns
+  kernel with documented mkfs limit.
+- **Risk:** very low (one constant; Dilger R-b; Ted applied). Only
+  theoretical regression is rejecting 512MB/1GB cluster filesystems that
+  mke2fs would not create.
+- **Ratio:** strongly favors backport.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+FOR:
+- Real 32-bit overflow in mount-time geometry check; wrapped product can
+  pass; OOB allocation is the stated consequence.
+- One-line, obviously correct cap matching mke2fs (256MB).
+- 28 is the max value that keeps `8 * clustersize` ≤ 2^31 on 32-bit.
+- Reviewed by Andreas Dilger; applied by Ted Ts'o; Jan Kara did not
+  object.
+- Independent of the rest of the series.
+- Affected code present since v4.10; applies cleanly.
+- Same class as the original 2016 cluster-size sanity check (that one
+  was Cc: stable).
+
+AGAINST:
+- Trigger needs crafted bigalloc + typically 32-bit.
+- No `Fixes:` / `Cc: stable` (not a negative per rules).
+- Sashiko is a bot, not a production crash with a reproducer.
+- Jan Kara floated 29; that value still overflows (verified); committed
+  value is 28.
+
+UNRESOLVED:
+- Stable@ discussion (lore/stable 403).
+- Full Sashiko finding text (SPA page).
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — one-constant change;
+   maintainer-applied; Dilger R-b.
+2. Fixes a real bug that affects users? **PASS** — overflow on crafted
+   bigalloc mount.
+3. Important issue (crash, security, corruption, deadlock)? **PASS** —
+   HIGH: overflow → bad geometry / possible OOB allocation.
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features or APIs? **PASS** — tightens an existing limit.
+6. Can apply to the local tree? **PASS** — define and check exist; patch
+   is a single substitution.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: Not an ID/quirk/DT/build/docs exception. It is a normal small
+correctness/security-style mount check.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This tree has the ext4 mount path, the overflow-prone multiply, and the
+too-large historical cap. The fix is a one-line tightening to the
+documented 256MB limit so the 32-bit product cannot wrap. Independent,
+reviewed, and low regression risk. It should be backported here.
+
+------------------------------------------------
+What the commit solves and why it matters
+------------------------------------------------
+Crafted ext4 bigalloc images can set cluster size up to 1GB. On 32-bit,
+the groups-per-cluster consistency multiply wraps, so a bogus
+`s_blocks_per_group` can look consistent. That can produce wrong group
+geometry and out-of-bounds block allocation when the image is mounted.
+Capping at 256MB matches mke2fs and keeps the product at 2^31.
+
+------------------------------------------------
+Stable rules / risk vs benefit
+------------------------------------------------
+Meets all six criteria: real overflow, small, no API, applies cleanly.
+Benefit is blocking a crafted-image OOB path; risk is rejecting
+undocumented huge clusters that tools do not create.
+
+------------------------------------------------
+Concerns
+------------------------------------------------
+No extra series deps. No backport rework expected. 32-bit-centric, but
+still a valid stable-class filesystem-image bug.
 
 Verification:
-- [Phase 1] Parsed committed tags: author + Helge Deller SOB only; no
-  Reported-by/syzbot.
-- [Phase 1] Openwall v2: original `Fixes: 1da177e4c3f4`; Helge dropped
-  it as valueless.
-- [Phase 2] Diff: three NULL checks + goto teardown in
-  `platinumfb_probe()`; also `release_mem_region` on init failure.
-- [Phase 2] Current probe (lines 569–633) dereferences maps with no
-  checks; cleanup omits mem-region release.
-- [Phase 3] `git blame`: unchecked ioremap since `1da177e4c3f41` /
-  `cc5d0189b9ba95`; `ioremap_wt` from `e04e39507c3c3d`.
-- [Phase 3] `git merge-base --is-ancestor 1da177e4c3f41 HEAD`: yes.
-- [Phase 3] `git log --oneline --grep='add error checking for ioremap'
-  -- drivers/video/fbdev/`: not in this tree.
-- [Phase 3] Author search in fbdev: no other BingKun Yue commits here.
-- [Phase 4] Thread: v2 applied by Helge; Nathan unused-label fold
-  matches candidate; bogus v3 strcpy not this patch.
-- [Phase 4] lore.kernel.org/stable: 403, UNVERIFIED.
-- [Phase 4] `b4 dig`: UNVERIFIED (no local candidate SHA).
-- [Phase 5] Only caller: `platinum_driver.probe`; Kconfig `FB_PLATINUM`
-  depends on `PPC_PMAC && PPC32`, `bool`.
-- [Phase 5] `controlfb.c` / `valkyriefb.c` already check ioremap NULL in
-  this tree.
-- [Phase 6] `git describe HEAD` = `p-6.12-3-gc504cf0baa3d8`; `make
-  kernelversion` = 6.12.111.
-- [Phase 6] Before-context of all four hunks matches this file.
-- [Phase 8] Failure mode: NULL deref oops on probe, severity HIGH;
-  trigger rare but on the only probe path.
-- UNVERIFIED: mainline SHA; stable@ discussion.
+- [Phase 1] Parsed tags: Reported-by Sashiko; Reviewed-by Andreas
+  Dilger; SOB Baokun Li + Ted Ts'o; Link msgid 20260608111150.827117-3;
+  no Fixes/Cc:stable
+- [Phase 1] Cover letter (openwall/spinics): v2 2/3 independent of 1/3;
+  overflow on 32-bit bigalloc
+- [Phase 2] Diff: 1 line in fs/ext4/ext4.h, 30→28
+- [Phase 2] Read ext4_handle_clustersize(): s_blocks_per_group range
+  check only on non-bigalloc; multiply at lines 4500–4501
+- [Phase 2] Types: s_blocks_per_group / s_clusters_per_group are
+  unsigned long (ext4.h:1595–1596)
+- [Phase 2] Math: max product 8*clustersize; 1GB → 2^33 wrap; 256MB →
+  2^31; 512MB → 2^32 wrap (29 unsafe)
+- [Phase 2] Consumer: __ext4_fill_super log-cluster check at
+  super.c:5196–5202
+- [Phase 3] git blame: current 28 from afa3caf2fbc41; 30 from
+  9e47a4c9fc580 (2016-11-18, v4.10-rc1, Cc:stable)
+- [Phase 3] git merge-base --is-ancestor 9e47a4c9fc580 HEAD: yes
+- [Phase 3] git merge-base --is-ancestor afa3caf2fbc41 HEAD: yes
+  (mainline landing, not used as circular “already selected”)
+- [Phase 3] Series siblings d42dc7726a003 and a34de48f329b2 are
+  independent; this patch only touches the define
+- [Phase 3] git grep EXT4_MAX_CLUSTER_LOG_SIZE: only ext4.h and super.c
+- [Phase 4] b4 dig -c: lore msgid 20260608111150.827117-3
+- [Phase 4] b4 dig -a: v2 series 2026-06-08; v1 was patch 1 only
+- [Phase 4] b4 dig -w: tytso, dilger, jack, linux-ext4 on original To/Cc
+- [Phase 4] Jan Kara: 28 vs 29 up to Ted, no NAK
+- [Phase 4] Andreas Dilger: Reviewed-by; safe, nobody using >1GiB
+  clusters
+- [Phase 4] Ted: Applied 2026-07-23 as afa3caf2fbc41
+- [Phase 4] lore.kernel.org/stable: 403, UNVERIFIED
+- [Phase 4] sashiko.dev hash URL: landing page only, UNVERIFIED full
+  finding text
+- [Phase 5] Only caller of ext4_handle_clustersize: __ext4_fill_super
+  (mount)
+- [Phase 6] git describe HEAD: v7.3-rc4-27-gf0100363d8c37; make
+  kernelversion 7.3.0-rc4
+- [Phase 6] Buggy cap/check present in this lineage since v4.10; apply
+  is a one-line define swap
+- [Phase 8] Failure mode: 32-bit overflow → inconsistent geometry /
+  possible OOB alloc, severity HIGH
+- UNVERIFIED: stable@ thread; full Sashiko report body
 
 **YES**
 
- drivers/video/fbdev/platinumfb.c | 35 ++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ fs/ext4/ext4.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/platinumfb.c b/drivers/video/fbdev/platinumfb.c
-index a08d955d9b439..81fdaa3541db9 100644
---- a/drivers/video/fbdev/platinumfb.c
-+++ b/drivers/video/fbdev/platinumfb.c
-@@ -567,15 +567,30 @@ static int platinumfb_probe(struct platform_device* odev)
- 	/* frame buffer - map only 4MB */
- 	pinfo->frame_buffer_phys = pinfo->rsrc_fb.start;
- 	pinfo->frame_buffer = ioremap_wt(pinfo->rsrc_fb.start, 0x400000);
-+	if (!pinfo->frame_buffer) {
-+		dev_err(&odev->dev, "failed to ioremap frame buffer\n");
-+		rc = -ENOMEM;
-+		goto err_release_fb;
-+	}
- 	pinfo->base_frame_buffer = pinfo->frame_buffer;
- 
- 	/* registers */
- 	pinfo->platinum_regs_phys = pinfo->rsrc_reg.start;
- 	pinfo->platinum_regs = ioremap(pinfo->rsrc_reg.start, 0x1000);
-+	if (!pinfo->platinum_regs) {
-+		dev_err(&odev->dev, "failed to ioremap registers\n");
-+		rc = -ENOMEM;
-+		goto err_unmap_fb;
-+	}
- 
- 	pinfo->cmap_regs_phys = 0xf301b000;	/* XXX not in prom? */
- 	request_mem_region(pinfo->cmap_regs_phys, 0x1000, "platinumfb cmap");
- 	pinfo->cmap_regs = ioremap(pinfo->cmap_regs_phys, 0x1000);
-+	if (!pinfo->cmap_regs) {
-+		dev_err(&odev->dev, "failed to ioremap cmap registers\n");
-+		rc = -ENOMEM;
-+		goto err_release_cmap;
-+	}
- 
- 	/* Grok total video ram */
- 	out_be32(&pinfo->platinum_regs->reg[16].r, (unsigned)pinfo->frame_buffer_phys);
-@@ -623,13 +638,21 @@ static int platinumfb_probe(struct platform_device* odev)
- 	dev_set_drvdata(&odev->dev, info);
- 
- 	rc = platinum_init_fb(info);
--	if (rc != 0) {
--		iounmap(pinfo->frame_buffer);
--		iounmap(pinfo->platinum_regs);
--		iounmap(pinfo->cmap_regs);
--		framebuffer_release(info);
--	}
-+	if (rc != 0)
-+		goto err_unmap_cmap;
-+
-+	return 0;
- 
-+err_unmap_cmap:
-+	iounmap(pinfo->cmap_regs);
-+err_release_cmap:
-+	release_mem_region(pinfo->cmap_regs_phys, 0x1000);
-+	iounmap(pinfo->platinum_regs);
-+err_unmap_fb:
-+	iounmap(pinfo->frame_buffer);
-+err_release_fb:
-+	release_mem_region(pinfo->rsrc_fb.start, resource_size(&pinfo->rsrc_fb));
-+	framebuffer_release(info);
- 	return rc;
- }
- 
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index da6428312c36b..a9178d63a7d1b 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -334,7 +334,7 @@ struct ext4_io_submit {
+ #define	EXT4_MAX_BLOCK_SIZE		65536
+ #define EXT4_MIN_BLOCK_LOG_SIZE		10
+ #define EXT4_MAX_BLOCK_LOG_SIZE		16
+-#define EXT4_MAX_CLUSTER_LOG_SIZE	30
++#define EXT4_MAX_CLUSTER_LOG_SIZE	28
+ #ifdef __KERNEL__
+ # define EXT4_BLOCK_SIZE(s)		((s)->s_blocksize)
+ #else
 -- 
 2.53.0
 
