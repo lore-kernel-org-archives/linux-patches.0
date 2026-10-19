@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B063641288;
-	Mon, 19 Oct 2026 14:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7F66412A7;
+	Mon, 19 Oct 2026 14:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418774; cv=none; b=tEEJf1Cg8YJfbYsrKHqLaHKpHZb1OV0BaePJI8r4kO//g1IXbyc0R5XWK/hFexSS9nI1b4ycL5f3bgCkGxXce7nZBuwJ+J550KVNwRsij9T5F0+u4xCOv+zoPd//2fGiCDDZXeGxMNX5wcYb1PV9jty6MKWPkgqqj1owlnCvePM=
+	t=1792418775; cv=none; b=ZEB3t/qb6gFkChNdL7Zzz4ZWFLZ0NKcDvxxUGegjuOR8uRhHEqd98BKzpcnCxEl5nK3zpLNXHFEt+OXgEHY+6NDBmip0CyIrv/WombLyFKJiNhJlUKlAE7fsXb6bSdM/G9mHwtUmNRlvpB107+qpL3VLw84cjbCeGL7LDNUyIJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418774; c=relaxed/simple;
-	bh=oe6hVInF5aLxtdWXAIN49eG/HWZpwC2kv6SsCUy4m0c=;
+	s=arc-20240116; t=1792418775; c=relaxed/simple;
+	bh=9RZKm+LlYX2skDfvqazO2NeUcqxuRdWs+Q6Pu0ZJZDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aFKkG+Paaq9SXHMTtPvoIJrO5PmXkzqYjS6jecn2DaxpQZhH9FmU8qYS9rB/ks0gnel97NIgz1sJ4QmKRACOA+uvjSS1eJFfd0KCyjwDRyozlxLACgi1zvneI0bIotIgpO3eN6iDY8JRP4HgTwRYfzfJflgSj/c/Hw1DLCLYsRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DF0XqVbh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tBmwqhE9hMOhxKgB5/LVmp67256bHr+YeBlVk6p2GVSDhq0WI27Tvm5QUODA/FykRZXY3W0aVtTNBiOWvY81OKFQB96ODBAEONjzA62BvirRqGd+FT42ysO9LhIp/mMA7lzlglT4DP4MsM3z6SZ3IM8qsfK3xrld/CRM5ojTZas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UxchbdT5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DF0XqVbh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685AA1F000C8;
-	Mon, 19 Oct 2026 14:06:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UxchbdT5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B337D1F000C5;
+	Mon, 19 Oct 2026 14:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418771;
-	bh=pHMYaTG+i0R8a6QfGfVBBIxsW7wzkijgDYrGOyUsDjg=;
+	s=k20260515; t=1792418772;
+	bh=6fJnlo8O1pfL2oUAYxfdSQZxivBmSltwkVs8WY/T7Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DF0XqVbhpPinEoWy1xidJzeGr4qff+ET//kGMIekGJfKjKR4Vb8KRAaPc6D27X53g
-	 sZ1I04RiAJJJw5wNXjRJDQ18y2MdCYKEuDPR+0tqykVgbig2AOfmV3aapqXqxSFpki
-	 JGOpL2yzh89YpRr3x/hU+fLyBO6RHi7K4pkFuf4STTjnog1y1NeWTomkMzlytv6OfV
-	 i181cvjEpcln7ihtzfF2wOsnAko8LnIK9YvT92kVjhCDKPHm/JIe5C7ATK4Et/+G3J
-	 nl+XvGAp0sBo9DlIyrtzCfxKkTWtkijE/1re62dlXOcmJ3jKQ3or/d5znTwj/HX2Ea
-	 fX7F5sc33gTPw==
+	b=UxchbdT5rJP/5EK6OENrna5wWBohXkCZIkYfQ+vWBXNDn3huR/XNjxB2ZbVXX339a
+	 z7xk2BjruvOohdC3/Tney8S9soEWOQmBl0EU6ZlWlJJ+eDEeuHcMiY2+fZOgYzwern
+	 Em9SLBgwFu6pJJCGshVxHbk9JfWYz35iMyFcUm9PvCNLHV0Q0fBeVOmoiEerlLM93r
+	 vHOunXrAIdrIr8Pi7x18//Bd12MKDA1Yha1a3c5/x3vUrMxMrzVbZtSgJ5c4e4SIlR
+	 d0Db6IwFFfaG9AomWS5wbdhQJOIelancEBHkX1ID2W/f4Iua00Vn9RSTpVIsM5dueL
+	 fwzWcKhHLnBeA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mauricio Orozco <maudob@live.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Arash Golgol <arash.golgol@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	lgirdwood@gmail.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Add quirk for ASUS VivoBook M515DA/X515DAP
-Date: Mon, 19 Oct 2026 09:52:55 -0400
-Message-ID: <20261019135441.1420968-484-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] regulator: fan53555: Add support for FAN53555BUC23X type
+Date: Mon, 19 Oct 2026 09:52:56 -0400
+Message-ID: <20261019135441.1420968-485-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,407 +52,379 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mauricio Orozco <maudob@live.com>
+From: Arash Golgol <arash.golgol@gmail.com>
 
-[ Upstream commit a9fa2a016e805504223abf8c9b373ac9f7bfb9b3 ]
+[ Upstream commit e739acbe05b06de78ef7089470f122432f651faa ]
 
-The ASUS VivoBook M515DA/X515DAP (subsystem ID 1043:1e3e)
-requires the ALC256_FIXUP_ASUS_MIC_NO_PRESENCE fixup to
-enable the internal microphone.
+FAN53555BUC23X has the ID 0 and REV 0xc, starts at 600mV and
+increments in 12.5mV steps.
 
-Without this quirk, the internal microphone captures only
-silence under Linux, while it works correctly under Windows.
+Per the datasheet, the FAN53555BUC23X (23 option) is grouped with
+the 00 and 13 options for soft-start timing (t_SS = 300us typ.),
+so the existing enable_time = 400 is reused here as well.
 
-The fix has been verified on real hardware.
-Tested on an ASUS VivoBook M515DA/X515DAP running Linux Mint
-22.3 with Ubuntu HWE kernel 7.0.0-28.
+This variant is found on the ASUS Tinker Edge R (RK3399Pro) as the
+supply regulator for both vdd_gpu and vdd_cpu_b. Verified across
+the full GPU OPP table with the userspace devfreq governor.
 
-Signed-off-by: Mauricio Orozco <maudob@live.com>
-Link: https://patch.msgid.link/20260730033506.8958-1-mauoro3@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
+Link: https://patch.msgid.link/20260812125054.19111-1-arash.golgol@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a one-line ALSA Realtek SSID quirk for a 2020 ASUS VivoBook. The
-local tree is **5.15.221** (`pending-5.15`). The Realtek table lives at
-`sound/pci/hda/patch_realtek.c` here, not the later `alc269.c` path, but
-the same fixup and quirk table already exist.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1 — Subject**
+- Record: `[regulator/fan53555] [Add] [support for FAN53555BUC23X chip
+  revision]`
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [ALSA hda/realtek] [add] [SSID quirk so ASUS VivoBook
-M515DA/X515DAP internal mic works]
+**Step 1.2 — Tags**
+- Record:
+  - `Signed-off-by: Arash Golgol <arash.golgol@gmail.com>` (author)
+  - `Link: https://patch.msgid.link/20260812125054.19111-1-
+    arash.golgol@gmail.com`
+  - `Signed-off-by: Mark Brown <broonie@kernel.org>` (regulator
+    maintainer)
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+    by:`, or `Cc: stable` (absence is expected)
+  - Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+    ...]` if present
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Signed-off-by: Mauricio Orozco <maudob@live.com> (author)
-- Link: https://patch.msgid.link/20260730033506.8958-1-mauoro3@gmail.com
-- Signed-off-by: Takashi Iwai <tiwai@suse.de> (ALSA maintainer)
-- No Fixes: tag (expected)
-- No Cc: stable (expected)
-- No Reported-by / Tested-by / Reviewed-by / Acked-by
-- Ignore any pipeline "Upstream commit" / "Signed-off-by: Sasha Levin"
-  markers; they are not evidence of selection
+**Step 1.3 — Body**
+- Record:
+  - Bug / gap: FAN53555 option 23 (ID 0, REV 0xc) is not in the driver’s
+    revision table, so probe fails.
+  - Specs: 600 mV min, 12.5 mV steps; soft-start grouped with options
+    00/13 (`t_SS` 300 µs typ.) so `enable_time = 400`.
+  - Hardware: ASUS Tinker Edge R (RK3399Pro), `vdd_gpu` and `vdd_cpu_b`.
+  - Symptom: regulator probe returns `-EINVAL` (“Chip ID %d with rev %d
+    not supported”).
+  - Author tested the full GPU OPP table with the userspace devfreq
+    governor.
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: ASUS VivoBook M515DA/X515DAP, PCI/codec SSID **1043:1e3e**,
-  internal mic records silence on Linux; works on Windows.
-- Symptom: functional capture failure (silent input), not a crash.
-- Root cause implied: BIOS pin config does not describe the mic; needs
-  existing `ALC256_FIXUP_ASUS_MIC_NO_PRESENCE`.
-- Version info: tested on Linux Mint 22.3 with Ubuntu HWE kernel
-  7.0.0-28 on real hardware.
-- Author explains the needed fixup and the user-visible failure; does
-  not claim a new API.
+**Step 1.4 — Hidden bug fix?**
+- Record: Not disguised cleanup. It is explicit hardware-variant
+  support. Functionally it closes a probe-fail path for real silicon.
+  The 2016 commit that added option 13 already stated that options 00,
+  13, **and 23** share `DIE_ID` 0, so option 23 was a known missing ID.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. This is an explicit hardware quirk: add
-one `SND_PCI_QUIRK` so an existing pin fixup is applied.
+---
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- File in the candidate: `sound/hda/codecs/realtek/alc269.c` (+1 line)
-- Function/table: `alc269_fixup_tbl[]`
-- Scope: single-file, one-line surgical table addition
-- This 5.15 tree: that path does **not** exist; equivalent is
-  `sound/pci/hda/patch_realtek.c`
+**Step 2.1 — Inventory**
+- Record: `drivers/regulator/fan53555.c` only; about +6 lines, 0
+  removed.
+- Functions: enum `FAN53555_CHIP_REV_*`;
+  `fan53555_voltages_setup_fairchild()`.
+- Scope: single-file surgical ID/table addition.
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: SSID 1043:1e3e is not in `alc269_fixup_tbl`, so
-  `snd_hda_pick_fixup()` does not apply this MIC_NO_PRESENCE pin
-  rewrite.
-- After: that SSID matches and applies
-  `ALC256_FIXUP_ASUS_MIC_NO_PRESENCE`.
-- Path: codec probe / initialization, not a hot path or error path.
-- In this tree, `alc269_probe()` calls `snd_hda_pick_fixup(...,
-  alc269_fixup_tbl, alc269_fixups)` then pin-fallback tables. A PCI-SSID
-  hit sets `codec->fixup_id`, so later `snd_hda_pick_pin_fixup()`
-  returns immediately.
+**Step 2.2 — Flow**
+- Before: `chip_id == FAN53555_CHIP_ID_00` and `chip_rev == 0xc` fall
+  into `default` and return `-EINVAL`. Probe logs “Failed to setup
+  device!” and the regulator is not registered.
+- After: that ID/REV sets `vsel_min = 600000`, `vsel_step = 12500`,
+  `enable_time = 400`, then continues the existing Fairchild setup
+  (`slew_*`, `vsel_count = FAN53555_NVOLTAGES` (64)).
+- Path: I2C probe / device setup only. Other ID/REV combinations
+  unchanged.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: **hardware workaround / audio codec quirk**
-- Mechanism: remap NID 0x19 to `0x04a11120` (headset mic, no jack
-  detect) and chain `ALC256_FIXUP_ASUS_HEADSET_MODE` →
-  `alc_fixup_headset_mode`. Without that, auto-parse leaves the internal
-  mic unusable (silence).
-- Same pattern already used in this tree for other ASUS machines
-  (X430UN, X509DAP, pin-quirk ASUS ALC256 entries).
+**Step 2.3 — Bug mechanism**
+- Record: **Hardware workaround / device ID addition** (chip revision
+  table). Same class as PCI/USB ID adds: existing driver, new ID/params
+  so the silicon enumerates.
+- Without it this is a **logic / missing-ID** failure, not
+  UAF/leak/race.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Obviously correct: one table entry, existing fixup, SSID-gated.
-- Regression risk: confined to 1043:1e3e. Wrong-SSID collision would
-  only affect that ID; ASUS SSIDs are SKU-specific. No locking, alloc,
-  or API change.
-- Upstream insert is slightly unsorted (0x1e3e placed after 0x1e10,
-  before 0x1e11). Lookup is linear in `snd_pci_quirk_lookup_id()`, so
-  order is not a functional issue.
+**Step 2.4 — Fix quality**
+- Record: Matches the 00/13 cases; values match the commit text and
+  typical FAN53555 option-23 programming (64 × 12.5 mV from 600 mV →
+  1.3875 V). `vsel_count` stays 64 after the switch, which is correct.
+  Isolated `switch` arm; no API, lock, or struct change. Regression risk
+  is limited to mis-identified ID 0 / REV 0xc parts; those currently
+  fail probe anyway. Wrong tables are not applied to working chips.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
 
-Step 3.1: BLAME THE CHANGED LINES
-Record:
-- `ALC256_FIXUP_ASUS_MIC_NO_PRESENCE` introduced in `e1037354a0a75a`
-  (Jian-Hong Pan, 2019-03-22), contained in **v5.1-rc3**, ancestor of
-  this HEAD.
-- Nearby 0x1e11 entry blamed to `4b43d05a1978a9` (2020-07-24).
-- Bug is missing table row, not a later regression. Hardware is ~2020
-  VivoBook 15 (Ryzen 3000).
+## Phase 3: Git history
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Not applicable. The "bug" is incomplete BIOS pin
-config, not a prior kernel commit.
+**Step 3.1 — Blame**
+- Record: Revision split introduced in `e57cbb70b7b377` (Wadim Egorov,
+  2016-04-20): “IC type options 00, 13 and **23** are sharing the same
+  DIE_ID 0.” Only 00 (`REV 0x3`) and 13 (`REV 0xf`) were added; 23 was
+  documented and then omitted. `fan53555_voltages_setup_fairchild()`
+  dates to `ee30928ab61678` (2014). `enable_time` lines come from
+  `3d546c8b107003` (already in this 6.12 tree).
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- This tree already backported the same class of fix: `82199bb33185f`
-  "ALSA: hda/realtek: Add quirk for ASUS VivoBook X509DAP" (also
-  `ALC256_FIXUP_ASUS_MIC_NO_PRESENCE`).
-- Many other "Add quirk" commits on `patch_realtek.c`.
-- Standalone; not patch X/Y.
+**Step 3.2 — Fixes: tag**
+- Record: None. Introducer is the 2016 13X patch, which is in this tree
+  (`git merge-base --is-ancestor e57cbb70b7b377 HEAD` succeeded).
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record:
-- Mauricio Orozco has no prior commits under `sound/pci/hda/` in this
-  tree.
-- Applied by Takashi Iwai (ALSA maintainer). Weight comes from
-  maintainer acceptance plus hardware test, not author history here.
+**Step 3.3 — File history**
+- Record: Recent local commits include enable_time, probe cleanup,
+  RK860X, FAN53526, BUC18X, UC13X. No prerequisite refactor beyond
+  enable_time, which is already here. Standalone; not “patch X/Y”.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record:
-- Needs `ALC256_FIXUP_ASUS_MIC_NO_PRESENCE`, `alc269_fixup_tbl`,
-  `SND_PCI_QUIRK`, ALC256 in `alc269` probe. All present.
-- Does not need later-only IDs (`ALC245_FIXUP_CS35L41_SPI_2`,
-  `HDA_CODEC_QUIRK`, etc.).
-- Can apply standalone after rewriting the path/context.
+**Step 3.4 — Author**
+- Record: Arash Golgol has no other commits on `drivers/regulator/` in
+  this tree. Applied by Mark Brown (regulator maintainer).
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 3.5 — Dependencies**
+- Record: Needs the existing Fairchild ID/REV switch and `enable_time`
+  field. Both are in 6.12.111. Applies as a 6-line add. No new helpers.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- b4 mbox msgid `20260730033506.8958-1-mauoro3@gmail.com`: 2 messages.
-- Submission: https://lists.openwall.net/linux-kernel/2026/07/30/304
-  (also lkml.iu.edu).
-- Single v1; no v2/v3.
-- Reply: Takashi Iwai 2026-08-03: "Applied to for-next branch now.
-  Thanks." No NAK, no requested changes.
-- lore.kernel.org WebFetch returned 403 (Anubis). Thread recovered via
-  b4 + openwall/lkml mirrors.
+---
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record:
-- To: tiwai@suse.com, perex@perex.cz
-- Cc: linux-sound, linux-kernel, maudob@live.com
-- Appropriate maintainers were on the original mail. Maintainer applied
-  it. No extra Reviewed-by.
+## Phase 4: Mailing list / external
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record:
-- No bugzilla/syzbot link. Evidence is the author's hardware test
-  (silent mic vs Windows).
-- No additional independent public reports found beyond this patch
-  thread.
+**Step 4.1 — Original discussion**
+- Record: `b4 dig -c e739acbe05b0` →
+  https://patch.msgid.link/20260812125054.19111-1-arash.golgol@gmail.com
+- `b4 dig -a`: single v1, no v2/v3.
+- Thread: 2 messages (patch + maintainer apply). No NAK, no review nits,
+  no `Cc: stable` request.
+- Mark Brown applied to `regulator.git for-7.3` (merge-window queue, not
+  a -fixes pull). That is process classification, not a NAK of the
+  change.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone 1/1 patch. Closest sibling already in this tree:
-VivoBook X509DAP MIC_NO_PRESENCE quirk.
+**Step 4.2 — Recipients (`b4 dig -w`)**
+- Record: Arash Golgol; linux-kernel@vger.kernel.org; Liam Girdwood
+  (`lgirdwood@gmail.com`); Mark Brown (`broonie@kernel.org`). Both
+  regulator maintainers were on Cc.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: No stable@ discussion found for M515DA/X515DAP. No recorded
-reason to exclude it. This tree's `stable-kernel-rules.rst` line 24:
-"New device IDs and quirks are also accepted."
+**Step 4.3 — Bug report**
+- Record: No syzbot/bugzilla. User report is the commit body (Tinker
+  Edge R, GPU OPP verification).
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 4.4 — Series**
+- Record: Standalone 1/1. No companion DT commit in this series.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: No function body change. Data: `alc269_fixup_tbl[]`. Consumers:
-`snd_hda_pick_fixup()` from `alc269_probe()`; applied fixup
-`ALC256_FIXUP_ASUS_MIC_NO_PRESENCE` → `alc_fixup_headset_mode`.
+**Step 4.5 — Stable list**
+- Record: lore.kernel.org/stable search via WebFetch returned 403. `b4`
+  thread has no stable discussion. UNVERIFIED: whether anyone already
+  asked for this on stable@.
 
-Step 5.2: TRACE CALLERS
-Record:
-- `alc269_probe()` in `patch_realtek.c` (~10555) calls
-  `snd_hda_pick_fixup(..., alc269_fixup_tbl, ...)`.
-- ALC256 (`0x10ec0256`) is handled in that probe (`spec->codec_variant =
-  ALC269_TYPE_ALC256` at ~10475).
-- Trigger: HDA codec probe at boot / module load for that laptop. Not
-  IRQ/syscall hot path.
+---
 
-Step 5.3: TRACE CALLEES
-Record: `snd_hda_pick_fixup` → `snd_pci_quirk_lookup` /
-`snd_pci_quirk_lookup_id` (linear SSID match in `sound/core/misc.c`).
-Then pin overwrite + `alc_fixup_headset_mode`.
+## Phase 5: Semantic / call graph
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace capture (PulseAudio/PipeWire/arecord) uses the HDA PCM
-created at probe. Unprivileged users on this laptop hit the silent-mic
-bug. Reachable and user-visible.
+**Step 5.1 — Functions**
+- Record: `fan53555_voltages_setup_fairchild()`; enum
+  `FAN53555_CHIP_REV_23`.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: Multiple `ALC256_FIXUP_ASUS_MIC_NO_PRESENCE` entries already in
-this tree (X430UN 0x1271, X509DAP 0x197e, three ASUS pin quirks, Huawei
-WRT-WX9). Systematic ASUS ALC256 BIOS-pin problem; this is another SSID.
+**Step 5.2 — Callers**
+- Record: Only `fan53555_device_setup()` when `vendor ==
+  FAN53555_VENDOR_FAIRCHILD` (OF compatible `fcs,fan53555` / I2C id
+  `fan53555`).
+- Call chain: `fan53555_regulator_probe()` (I2C `.probe`) → read ID1/ID2
+  → `fan53555_device_setup()` → `fan53555_voltages_setup_fairchild()`.
+- Context: boot/probe, not IRQ/hot path.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 5.3 — Callees**
+- Record: Only field assignment; no alloc/lock/I/O in the new arm.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- Local: **5.15.221**, branch `pending-5.15`, `git describe`
-  `p-5.15-2-g6703e5d2f3a29`.
-- Quirk table: `alc269_fixup_tbl` at
-  `sound/pci/hda/patch_realtek.c:9132`.
-- SSID **0x1e3e is absent** (`grep` over `sound/pci/hda` found no
-  match).
-- Fixup exists at enum line 7146 and table 8393–8401.
-- Insertion point: around the existing 0x1e11 Zephyrus G15 entry (line
-  9449). 0x1e10 X507UAR is not in 5.15.
-- Bug is missing hardware enablement, present since the driver shipped
-  without this SSID.
+**Step 5.4 — Reachability**
+- Record: Yes, from device enumeration when `CONFIG_REGULATOR_FAN53555`
+  is set and a Fairchild FAN53555 is on I2C. Userspace then uses the
+  regulator via OPP/devfreq/cpufreq. Unprivileged users do not trigger
+  probe; boot/firmware does.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Minor context/path rewrite, not a semantic rework.** Upstream
-file was split later to `sound/hda/codecs/realtek/alc269.c`. Same one-
-line add used for X509DAP (`82199bb33185f` → `patch_realtek.c`).
-Surrounding mainline-only quirks are not required.
+**Step 5.5 — Similar patterns**
+- Record: Same driver already has `FAN53555_CHIP_REV_00` / `_13`, plus
+  BUC18X (`DIE_ID` 8). In-tree DTs using `fcs,fan53555` include several
+  RK3399/RK356x/i.MX8 boards. Runtime ID/REV decides the table; any of
+  those with BUC23X silicon currently fail probe.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No M515DA/0x1e3e entry. Pin quirks for other ASUS ALC256 pin
-maps exist, but this machine still needs the SSID quirk (author: mic is
-silent without it). `snd_hda_pick_pin_fixup` only runs if no SSID fixup
-matched; it did not save this SKU.
+---
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Phase 6: This tree (6.12.111 / `pending-6.12`)
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [sound/pci/hda Realtek codec] [IMPORTANT for laptop audio;
-PERIPHERAL as a single SKU]. Affects owners of this ASUS model only.
+**Step 6.1 — Buggy code present?**
+- Record: Yes. `drivers/regulator/fan53555.c` has ID 0 + REV 00/13 only;
+  REV 0xc hits `default` → `-EINVAL`. Introduced conceptually in 2016
+  when 00/13 were split and 23 was left out. Candidate SHA
+  `e739acbe05b0` is **not** an ancestor of HEAD.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature, actively patched in 5.15-stable with many quirk
-backports. This is long-lived Realtek HDA code, not a post-5.15
-subsystem.
+**Step 6.2 — Backport difficulty**
+- Record: **Clean apply.** Context (enum + `enable_time = 400` on
+  REV_13) matches the submitted diff. `3d546c8b107003` (enable_time) is
+  already in this tree.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 6.3 — Related fixes already here?**
+- Record: No BUC23 / `CHIP_REV_23` commit. UC13X and BUC18X are present;
+  they do not cover REV 0xc.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific / platform-specific: ASUS VivoBook
-M515DA/X515DAP (SSID 1043:1e3e), ALC256. Ubuntu 22.04-class 5.15 users
-still run these 2020 machines.
+- Note: No in-tree DT for “ASUS Tinker Edge R” (`tinker-edge` grep
+  empty). That does not remove the ID gap: identification is from I2C
+  DIE_ID/DIE_REV, and out-of-tree/custom DTs plus any in-tree
+  `fcs,fan53555` board with this silicon still hit the failure.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every boot / every capture on that laptop. Not a race.
-Unprivileged user can trigger (open the mic). Common for that hardware,
-zero impact elsewhere.
+---
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Internal microphone captures silence. Not panic/corruption.
-Severity **MEDIUM** functionally, but it is a real hardware-broken-on-
-Linux bug. Audio codec quirks are an explicit stable exception.
+## Phase 7: Subsystem context
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record:
-- Benefit: restores internal mic on a real, still-deployed VivoBook;
-  same class as quirks already in 5.15.y.
-- Risk: very low (one SSID-matched line, existing fixup).
-- Ratio: high benefit for those users, negligible risk to everyone else.
+**Step 7.1**
+- Record: `drivers/regulator/` — voltage regulator for CPU/GPU rails.
+  **IMPORTANT** (common PMIC-class driver; not mm/core). Failure on
+  CPU/GPU supplies is board-visible (no DVFS / probe error), not a core-
+  kernel oops.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+**Step 7.2**
+- Record: Mature driver (2012+), occasional ID/clone additions. Not a
+  newly added subsystem.
 
-Step 9.1: COMPILE THE EVIDENCE
+---
 
-FOR backporting:
-- Real user-visible bug: internal mic silent on Linux, works on Windows.
-- Verified on real hardware; ALSA maintainer applied v1 with no
-  objections.
-- One-line `SND_PCI_QUIRK` using a fixup present since v5.1.
-- Stable rules in this tree explicitly allow new device IDs and quirks.
-- Identical VivoBook ALC256 MIC_NO_PRESENCE quirk already backported
-  here (X509DAP).
-- Hardware (2020) is in the 5.15 user population.
-- No new APIs, no refactor, no series dependencies.
+## Phase 8: Impact and risk
 
-AGAINST:
-- Not a crash/security/corruption issue (quirk exception covers this).
-- Upstream path differs; needs a one-line backport to `patch_realtek.c`.
-- No extra independent reporters beyond the author.
-- Tested on kernel 7.0, not 5.15 — unverified on this exact series, but
-  the missing SSID and the fixup are the same.
+**Step 8.1 — Who is affected**
+- Record: Driver/config-specific: `CONFIG_REGULATOR_FAN53555` and
+  FAN53555 option 23 (ID 0, REV 0xc). Confirmed board: ASUS Tinker Edge
+  R. Other `fcs,fan53555` boards only if they have that silicon.
 
-UNRESOLVED:
-- Could not fetch lore.kernel.org HTML (403). Thread contents confirmed
-  via b4 mbox and public mirrors.
-- Could not confirm codec pin dump for this SKU beyond the author's SSID
-  + chosen fixup.
-- No stable@ thread found.
+**Step 8.2 — Trigger**
+- Record: Every probe of that part. Not a race. Not unprivileged-
+  triggerable.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — one SSID line; tested on
-   hardware; maintainer applied.
-2. Fixes a real bug that affects users? **PASS** — silent internal mic.
-3. Important issue? **PASS** under the quirk exception (and "oh, that's
-   not good" hardware breakage); not CRITICAL crash.
-4. Small and contained? **PASS** — +1 line.
-5. No new features or APIs? **PASS** — existing fixup, new ID only.
-6. Can apply to the local tree? **PASS** — table and fixup exist;
-   path/context rewrite only.
+**Step 8.3 — Failure mode**
+- Record: Probe fails (`-EINVAL`); `vdd_gpu` / `vdd_cpu_b` never
+  register. DVFS/OPP is wrong or unavailable; not a generic panic.
+  Severity **MEDIUM** as a crash class, **HIGH** as “this board’s
+  CPU/GPU regulator does not work.”
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: **Hardware quirk / audio codec quirk** (`SND_PCI_QUIRK` in
-Realtek HDA). Also treated like a device-ID addition to an existing
-driver.
+**Step 8.4 — Risk/benefit**
+- Benefit: Enables existing driver on real hardware; fills a gap called
+  out since 2016.
+- Risk: Very low (6 lines, new `switch` arm only).
+- Ratio: favorable for a device-ID-class change.
 
-Step 9.4: MAKE YOUR DECISION
-This should be backported to this 5.15 tree. It is the standard Realtek
-laptop microphone quirk: small, SSID-scoped, already-used fixup, real
-hardware confirmation, and this tree already takes the same kind of
-patch.
+---
 
-What it solves for stable users: 5.15 LTS systems on ASUS VivoBook
-M515DA/X515DAP currently get a dead internal mic. The quirk applies
-`ALC256_FIXUP_ASUS_MIC_NO_PRESENCE` so capture works.
+## Phase 9: Synthesis
 
-Risk vs benefit: one table entry vs restoring mic on that SKU. Backport
-adjustment is the file path (`alc269.c` → `patch_realtek.c`) and
-inserting next to the existing 0x1e11 ASUS entry.
+**Step 9.1 — Evidence**
 
-Verification:
-- [Phase 1] Parsed tags: author SOB, Link msgid, Takashi Iwai SOB; no
-  Fixes/Cc-stable/Reported-by
-- [Phase 2] Diff: +1 `SND_PCI_QUIRK(0x1043, 0x1e3e, ...,
-  ALC256_FIXUP_ASUS_MIC_NO_PRESENCE)` in `alc269_fixup_tbl`
-- [Phase 2] Read fixup at `patch_realtek.c:8393-8401`: pin 0x19 →
-  0x04a11120, chained to `ALC256_FIXUP_ASUS_HEADSET_MODE`
-- [Phase 2] Read `alc_fixup_headset_mode` chain at 8101–8104
-- [Phase 3] `git describe HEAD` / Makefile: 5.15.221, `pending-5.15`,
-  `p-5.15-2-g6703e5d2f3a29`
-- [Phase 3] `git blame` fixup: `e1037354a0a75a`, `git merge-base --is-
-  ancestor` of HEAD, `git describe --contains` → v5.1-rc3
-- [Phase 3] `git log --grep=M515DA` / `0x1e3e` on `patch_realtek.c`:
-  empty
-- [Phase 3] Precedent: `82199bb33185f` X509DAP same fixup already in
-  HEAD
-- [Phase 4] `b4 mbox` msgid: v1 patch + Takashi "Applied to for-next";
-  no NAK
-- [Phase 4] Openwall/LKML mirrors match that thread
-- [Phase 4] lore WebFetch: 403; contents taken from b4 mbox instead
-- [Phase 4] WebSearch stable@: no discussion of this SKU
-- [Phase 5] `alc269_probe` at 10555 uses `alc269_fixup_tbl`; ALC256 case
-  at 10475; pick_pin_fixup skips if SSID already matched (934–942)
-- [Phase 5] `snd_pci_quirk_lookup_id` linear match in
-  `sound/core/misc.c`
-- [Phase 6] File `sound/hda/codecs/realtek/alc269.c` missing;
-  `sound/pci/hda/patch_realtek.c` present;
-  `ALC256_FIXUP_ASUS_MIC_NO_PRESENCE` present; 0x1e3e absent
-- [Phase 6] `Documentation/process/stable-kernel-rules.rst` line 24:
-  quirks accepted
-- [Phase 8] Failure mode: silent internal mic, SSID-scoped, low
-  regression risk
-- UNVERIFIED: live pin dump for 1043:1e3e; lore HTML; runtime test on
-  5.15 itself
+For:
+- Existing driver; only a chip-rev ID and voltage/soft-start constants.
+- Matches the documented stable exception for new device IDs.
+- Without it, option-23 parts fail probe; CPU/GPU supplies on Tinker
+  Edge R do not register.
+- 2016 UC13X commit already named option 23 as sharing DIE_ID 0.
+- 6 lines, obviously correct, hardware-tested, maintainer-applied.
+- Applies cleanly to this 6.12 tree (`enable_time` already present).
+- No behavior change for other IDs.
+
+Against:
+- New variant support, not a UAF/crash/corruption fix for already-
+  supported chips.
+- Maintainer queued it for the 7.3 merge window, not as a -fixes patch.
+- Tinker Edge R DT is not in this tree.
+- Niche part; no syzbot / multi-user reports.
+
+Unresolved:
+- UNVERIFIED: stable@ discussion (lore stable WebFetch 403).
+- UNVERIFIED: how many in-tree 6.12 boards actually ship BUC23X silicon.
+
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — linear table like 00/13;
+   author verified GPU OPPs; Mark Brown applied.
+2. Real bug affecting users? **PASS** — probe `-EINVAL` on real
+   option-23 parts.
+3. Important? **PASS** under the device-ID exception (CPU/GPU regulator
+   otherwise missing). Not a generic panic.
+4. Small/contained? **PASS** — 6 lines, one file.
+5. No new features/APIs? **PASS** as ID-table enablement of an existing
+   driver (no new uAPI, sysfs, or driver).
+6. Applies to this tree? **PASS** — code and `enable_time` context are
+   here; candidate is not yet an ancestor.
+
+**Step 9.3 — Exception**
+- Record: **New device ID / chip-revision table entry on an existing
+  driver.**
+
+**Step 9.4 — Decision**
+This is the same kind of change as adding a PCI/USB ID: the driver is
+already in 6.12; only the missing DIE_REV 0xc parameters are added.
+Leaving it out keeps CPU/GPU regulators broken on that silicon. Risk is
+negligible.
+
+---
+
+## What the commit solves for 6.12 users
+
+On FAN53555 option 23 (ID 0, REV 0xc),
+`fan53555_voltages_setup_fairchild()` currently errors out, so I2C probe
+fails and the regulator is never registered. That is the GPU and little-
+core CPU supply on the ASUS Tinker Edge R. The patch adds the datasheet
+min/step/enable_time so those rails work. It is not a new driver or ABI.
+
+Risk vs benefit: 6 isolated lines vs unusable CPU/GPU DVFS on that
+hardware. No change for other revisions.
+
+Concerns: no in-tree Tinker Edge R DT; maintainer treated it as merge-
+window material. Neither blocks a device-ID backport. No extra commits
+required.
+
+---
+
+## Verification
+- [Phase 1] Parsed subject/body/tags from the candidate message; no
+  Fixes/Reported-by/Cc:stable.
+- [Phase 2] Diff: +6 lines in `fan53555.c` (enum + `case
+  FAN53555_CHIP_REV_23`); confirmed against local file around lines
+  113–116 and 292–313.
+- [Phase 3] `git blame` / `git show e57cbb70b7b377`: 2016 UC13X commit
+  documents options 00, 13, and 23 sharing DIE_ID 0; only 00/13
+  implemented.
+- [Phase 3] `git merge-base --is-ancestor e57cbb70b7b377 HEAD`: yes.
+  `e739acbe05b0` vs HEAD: not an ancestor.
+- [Phase 3] `3d546c8b107003` (enable_time) is in this tree; patch
+  context matches.
+- [Phase 4] `b4 dig -c e739acbe05b0`: lore URL
+  `20260812125054.19111-1-arash.golgol@gmail.com`; v1 only; To/Cc Liam
+  Girdwood + Mark Brown.
+- [Phase 4] Mbox: apply mail only; no NAK. Mark Brown: applied to
+  `for-7.3`.
+- [Phase 4] UNVERIFIED: stable@ archive (HTTP 403).
+- [Phase 5] Callers: only `fan53555_device_setup()` ←
+  `fan53555_regulator_probe()`.
+- [Phase 6] `git describe HEAD` / Makefile: **6.12.111**
+  (`pending-6.12`). Buggy default arm present. No Tinker Edge R DT.
+- [Phase 8] Failure: probe `-EINVAL`, regulator absent; not a kernel
+  oops.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/fan53555.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 3364f6ad91fcb..4cadbad99537a 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7196,6 +7196,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1264, "ASUS UM5606KA", ALC294_FIXUP_BASS_SPEAKER_15),
- 	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e10, "ASUS VivoBook X507UAR", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1043, 0x1e3e, "ASUS VivoBook M515DA/X515DAP", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
- 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e1f, "ASUS Vivobook 15 X1504VAP", ALC2XX_FIXUP_HEADSET_MIC),
+diff --git a/drivers/regulator/fan53555.c b/drivers/regulator/fan53555.c
+index c282236959b18..59155cad99bc6 100644
+--- a/drivers/regulator/fan53555.c
++++ b/drivers/regulator/fan53555.c
+@@ -113,6 +113,7 @@ enum {
+ enum {
+ 	FAN53555_CHIP_REV_00 = 0x3,
+ 	FAN53555_CHIP_REV_13 = 0xf,
++	FAN53555_CHIP_REV_23 = 0xc,
+ };
+ 
+ enum {
+@@ -305,6 +306,11 @@ static int fan53555_voltages_setup_fairchild(struct fan53555_device_info *di)
+ 			di->vsel_step = 10000;
+ 			di->enable_time = 400;
+ 			break;
++		case FAN53555_CHIP_REV_23:
++			di->vsel_min = 600000;
++			di->vsel_step = 12500;
++			di->enable_time = 400;
++			break;
+ 		default:
+ 			dev_err(di->dev,
+ 				"Chip ID %d with rev %d not supported!\n",
 -- 
 2.53.0
 
