@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF844D3BCC;
-	Mon, 19 Oct 2026 14:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542135D5DB7;
+	Mon, 19 Oct 2026 14:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418520; cv=none; b=NZhJ2Ugmv1f2rV37lKRPlnu3rIW2DrTh3O/xLqVGgNsyEVJP2JfTxlywUCYIfsv8ot0e/Bl672mkq1zhW189tGWwdiFuTrn3Cj4nMxrzsfcMnS706fRpy9N6Bo0kL9WcJ9xw3vQANvAXGwd9e8pSM87DBLxRFc/SXYRKWml0bjM=
+	t=1792418523; cv=none; b=PsxawrTLTtbet76Ii6KR+9z2TZGgI18KjtWqkERvaW8PEiSzk7blJKJkkB7oueDkRuPbKfEnzvWrA6j/hNnKJNvq/3xJJGld8Pur0DakrTBhSO3cZNDFtiw//cPzVlMV9xmuXTugLtLwTe6hqKReuesYGZNPVP86f59xzNiYtBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418520; c=relaxed/simple;
-	bh=nAdt/5BAv3tpy5fb3+f/dEwdMsrycZXG/BoJ/3d78SA=;
+	s=arc-20240116; t=1792418523; c=relaxed/simple;
+	bh=jFjoZje5kLn73JJIeD6nU3VHpkgdr+EoS63/2I4yVqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zk3qXC3w9oYprIBTb3eRgFyfDa2+kqJ3peKOc6jGSRo+6kqeokVPjHrN0s20C5h0vJafpfvOyTj9BBH3Ll86flNqOi0F5AvHJB1Tf5PqR/62kszA16CCMtPDnKZo+82tALcco9exh1F0bjvCT8XBGFGoFwyh4C3pUXXZgzN+fUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aZQr2/YJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uxGI4lbDeA8R6UuKepxwJjFhDfHAk4/LUwj/deSJn3D32mVfkrGWGmRgo8sybhWA/0ptLYXgFACHzFlLdXf+JmBfRQghlA9bvY2uiliMqZhdnG9EucnYwt2FR9/qCSBGfRP6/01caxY/BeZFxN7pOQ7ZZcC/hibRAVWTHkP2iuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jsQZLJj0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aZQr2/YJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9ECD1F000CF;
-	Mon, 19 Oct 2026 14:01:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jsQZLJj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E89A1F000CD;
+	Mon, 19 Oct 2026 14:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418518;
-	bh=g5hh8XGBr6cDzQJ9gkaCkkRFfKMadX4LxrcXJDs2Dh8=;
+	s=k20260515; t=1792418519;
+	bh=wbCfE7+0JL3bHLkZaRl4667sbctaeZUWcJ36KHksLU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZQr2/YJo83A6xeimQ1SYSvjqswEKRCtCLoYTqXRWKRpEmZ6cjiEIR+Soff3YPE38
-	 ODkslt7mhiFbWP3nahPAXC7FHxK8PbESTyIWZbyjeVzFH0yrvq9H+iCborYWJTEPZi
-	 oZwv5uB3OG0zvo52YReoPpbFMGrqeJz+nTLdhvMjFSpAOjajaecWGBI0YabI6LJhRr
-	 ypht1/LsmLxZTit99KEalUGgzW8uea2NGTbuBx1ZXLihA4EiVxw8N9OIyfRTshZZCP
-	 erKMP7rCPq1231FDLHCswFtpebcYPBJ9csVCU+05mrdXSd4CYQhQ/3fNmmNSuNWLcY
-	 O61/L0Cuf+NKQ==
+	b=jsQZLJj0Xzt6k5uslVbISviUURz0CZWLXYkK7bmWS/IpWACqArtJWN9Qc4CWlT1RO
+	 p0YV9t/V4qXnPxuVWRX6XE5nfUetvaWdp6elCxr7nKRU6E55xnJIHcon1GPL7pUdii
+	 sGoG+cLGfDxuiTRwUJsqrem74Otk6mNWt4DFXrzQnwOObc11TjN/cQiIOY9BqOwaML
+	 A/4IYqCeiT+CUVaSOIFoGKs563wXMqXOr4YHkD7Tm8mZ7c9hZBBT0kyPbTJsXYbJ9F
+	 beP89md4SVnJYYKTkY2M4nGhCy8vGhfOgJlC5o2UkCHtgxYO55hnlh6N/91rBDsut5
+	 9O7jng4C0Ja/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lucas Stach <l.stach@pengutronix.de>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
+Cc: Senjin <senjin@hatchling.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	etnaviv@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	ntfs3@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] drm/etnaviv: check all modules for idle after reset
-Date: Mon, 19 Oct 2026 09:49:56 -0400
-Message-ID: <20261019135441.1420968-305-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] fs/ntfs3: fix lseek EINVAL on sparse/compressed files with 64-bit clusters
+Date: Mon, 19 Oct 2026 09:49:57 -0400
+Message-ID: <20261019135441.1420968-306-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,350 +52,420 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Senjin <senjin@hatchling.org>
 
-[ Upstream commit 1006d1f7c03d92b28c252333836635df8e165401 ]
+[ Upstream commit 789af83e41aef54c1ff1cee16adc27822e0a0d71 ]
 
-While the FE is an important part of the GPU, which needs to be idle
-after reset, all other modules should be idle after a proper reset.
-Check all present modules for being idle to determine whether the
-reset was successful.
+When CONFIG_NTFS3_64BIT_CLUSTER is enabled, sbi->maxbytes_sparse is set
+to -1. As a signed loff_t this is -1LL, the most negative value. Any
+lseek on a sparse or compressed file passes this as maxsize to
+vfs_setpos(), which returns -EINVAL whenever offset > maxsize, and
+since -1LL is less than any non-negative offset, every seek fails,
+including lseek(fd, 0, SEEK_SET).
 
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://patch.msgid.link/20260511085148.652256-1-l.stach@pengutronix.de
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+The intent of -1 here appears to be "no limit" (matching the spirit of
+MAX_LFS_FILESIZE assigned to sbi->maxbytes and sb->s_maxbytes in the
+same block), but the signed type makes it the minimum instead of the
+maximum.
+
+Fix by assigning MAX_LFS_FILESIZE to sbi->maxbytes_sparse in the
+64-bit cluster path, consistent with the other two limits set there.
+
+Observed on a 16 TB NTFS volume with 0xFFFFFEFF total clusters compiled
+with CONFIG_NTFS3_64BIT_CLUSTER=y. Sequential reads via dd/cp worked
+correctly; any lseek call on sparse files returned EINVAL, preventing
+archive managers and other tools from random-accessing files on the
+volume. The non-64-bit-cluster path correctly sets maxbytes_sparse to
+(1ull << (cluster_bits + 32)) - 1, a large positive value.
+
+Signed-off-by: Senjin <senjin@hatchling.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+This is a one-line NTFS3 correctness fix: with 64-bit clusters,
+sparse/compressed `lseek` was passing a signed `-1` limit into
+`vfs_setpos()`, so every nonnegative seek returned `-EINVAL`. The local
+tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`); the path and the
+bug both exist here.
 
-**Step 1.1: Subject line**
-Record: `[drm/etnaviv]` `[check]` `[after GPU reset, require every
-present module idle, not only FE]`
+---
 
-**Step 1.2: Tags**
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: `[fs/ntfs3] [fix] [lseek returns EINVAL on sparse/compressed
+files when CONFIG_NTFS3_64BIT_CLUSTER is set]`
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>` (etnaviv
-  reviewer in MAINTAINERS)
-- `Link: https://patch.msgid.link/20260511085148.652256-1-
-  l.stach@pengutronix.de`
-- `Signed-off-by: Lucas Stach <l.stach@pengutronix.de>` (etnaviv
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable`, or syzbot
-  tags (absence of Fixes/Cc-stable is expected here)
+- `Signed-off-by: Senjin <senjin@hatchling.org>` (author)
+- `Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-
+  software.com>` (NTFS3 maintainer; listed in MAINTAINERS)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, `Link:`, or `Cc: stable@` (absence is expected for this review)
 
-**Step 1.3: Body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: reset success was decided only from the frontend (FE) idle bit.
-- Symptom/failure mode: a reset that leaves other modules busy is
-  treated as success; the driver then continues probe or hang recovery.
-- Version info: none in the message.
-- Root cause (author): after a proper reset every present module should
-  be idle; FE-only is not enough.
+- **Bug:** With `CONFIG_NTFS3_64BIT_CLUSTER`, `sbi->maxbytes_sparse` is
+  set to `-1`. Used as signed `loff_t`, that is `-1LL`. `ntfs_llseek()`
+  passes it to `vfs_setpos()` / `generic_file_llseek_size()`, which
+  rejects any `offset > maxsize`.
+- **Symptom:** Every `lseek` on sparse/compressed files fails with
+  `EINVAL`, including `lseek(fd, 0, SEEK_SET)`. Sequential `dd`/`cp`
+  still work. Archive managers cannot random-access those files.
+- **Trigger:** Observed on a 16 TB NTFS volume (`0xFFFFFEFF` clusters)
+  with `CONFIG_NTFS3_64BIT_CLUSTER=y`.
+- **Root cause:** `-1` was meant as “no limit” (same idea as
+  `MAX_LFS_FILESIZE` for `sb->s_maxbytes`), but as a signed max it is
+  the minimum, not the maximum.
+- **Fix:** Assign `MAX_LFS_FILESIZE` instead, matching `sb->s_maxbytes`
+  in the same `#ifdef`.
 
-**Step 1.4: Hidden bug fix?**
-Record: Not disguised. It is an explicit correctness fix of reset-
-success detection. Verb is “check”, but it changes a control-flow
-condition that previously let a non-idle GPU leave the retry loop.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: `[Not hidden]` — subject and body describe a real, reproduced
+functional bug.
 
-## Phase 2: Diff analysis
+---
 
-**Step 2.1: Inventory**
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/gpu/drm/etnaviv/etnaviv_gpu.c` (~3 lines changed,
-  3+/3-)
-- Function: `etnaviv_hw_reset()`
-- Scope: single-file surgical change
+- File: `fs/ntfs3/super.c` — 1 insertion, 1 deletion
+- Function: `ntfs_init_from_boot()`
+- Scope: single-file surgical one-liner
 
-**Step 2.2: Code flow**
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Before: after `gpu_read(VIVS_HI_IDLE_STATE)`, retry only if `(idle &
-  VIVS_HI_IDLE_STATE_FE) == 0`.
-- After: retry if `(idle & gpu->idle_mask) != gpu->idle_mask`.
-- Path: hardware reset retry loop (1s timeout). Used from GPU init
-  (`etnaviv_gpu_init` path) and hang recovery
-  (`etnaviv_gpu_recover_hang`).
+- **Before:** `#ifdef CONFIG_NTFS3_64BIT_CLUSTER` always does
+  `sbi->maxbytes_sparse = -1`.
+- **After:** `sbi->maxbytes_sparse = MAX_LFS_FILESIZE`.
+- Path: superblock init at mount. Affects every later
+  `ntfs_get_maxbytes()` use for sparse/compressed inodes.
 
-The loop already had a second check on `VIVS_HI_CLOCK_CONTROL`
-IDLE_3D/IDLE_2D. This change only widens the IDLE_STATE check from FE to
-`idle_mask`.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: `[Logic / type-signedness]`
 
-**Step 2.3: Bug mechanism**
-Record: `[Logic / correctness]` Reset success was too weak. Incomplete
-reset could be accepted if FE was idle. Fix reuses `gpu->idle_mask`,
-already used by `etnaviv_gpu_wait_idle()` and RPM suspend.
+Verified types and call path:
+- `maxbytes_sparse` is `u64` (`fs/ntfs3/ntfs_fs.h`). Assigning `-1`
+  stores `U64_MAX`.
+- `ntfs_get_maxbytes()` returns that as `loff_t`. `U64_MAX` → `-1LL`.
+- `ntfs_llseek()` (`fs/ntfs3/file.c`) passes that to
+  `generic_file_llseek_size()` / `vfs_setpos()`.
+- `vfs_setpos_cookie()` (`fs/read_write.c`) does `if (offset > maxsize)
+  return -EINVAL`. For `offset == 0` and `maxsize == -1`, `0 > -1` is
+  true.
 
-**Step 2.4: Fix quality**
+Same conversion also breaks `ntfs_iomap_begin()`’s `IOMAP_REPORT` check
+(`offset > ntfs_get_maxbytes(ni)`), so fiemap/bmap on those files can
+fail the same way.
+
+The `#else` path already uses a large positive `(1ull << (cluster_bits +
+32)) - 1`.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- Obviously correct relative to existing idle policy; same comparison as
-  `etnaviv_gpu_wait_idle()`.
-- Minimal; no API/struct change.
-- Regression risk: stricter success can turn a flaky reset into `-EBUSY`
-  after 1s (probe fails). That is the intended failure if modules never
-  go idle. `idle_mask` already accounts for GC300/GC600 absent-module
-  bits (`~AXI_LP` elsewhere). No lock/API change.
+- Obviously correct: `MAX_LFS_FILESIZE` is `LLONG_MAX` on 64-bit
+  (`include/linux/fs.h`); this config is 64-bit-only (`#error` on
+  32-bit). Same constant is already assigned to `sb->s_maxbytes` in this
+  block.
+- Minimal: one assignment change, no API/struct change.
+- Regression risk: very low. Limit goes from “every seek fails” to the
+  VFS max file size. `ntfs_set_size()` / attrib insert compare against
+  `u64`; `LLONG_MAX` is still a huge positive cap and matches VFS, vs
+  the old `U64_MAX` which was accidentally unlimited on those u64
+  checks.
 
-## Phase 3: Git history
+---
 
-**Step 3.1: Blame**
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- FE-only check: `a8c21a5451d83` (“drm/etnaviv: add initial etnaviv DRM
-  driver”, 2015).
-- `idle_mask` field: same initial driver; default
-  `~VIVS_HI_IDLE_STATE_AXI_LP` moved earlier in `2b76f5be7c2778`
-  (2018/2019, “initialize idle mask before querying the HW db”).
-- Bug is long-standing, not new 7.3 code.
+- Buggy assignment introduced in `82cae269cfa95` (“fs/ntfs3: Add
+  initialization of super block”, 2021-08-13), first in **v5.15-rc1**.
+- Field has been `u64 maxbytes_sparse` since the original headers
+  (`4534a70b7056f`).
+- User-visible `lseek` breakage requires `ntfs_llseek()` using
+  `ntfs_get_maxbytes()`, added in `c613269677283` (“implement llseek
+  SEEK_DATA/SEEK_HOLE…”), contained in **v7.0-rc1**. Before that,
+  `.llseek = generic_file_llseek` used `sb->s_maxbytes`
+  (`MAX_LFS_FILESIZE` in this config), so SEEK_SET worked.
 
-**Step 3.2: Fixes: tag**
-Record: None. Introducer is the 2015 driver add, verified via blame/`git
-log -S`.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: `[N/A — no Fixes: tag]`. Effective buggy commit for the reported
+symptom is `c613269677283` (in this tree). The `-1` store itself is from
+`82cae269cfa95` (also in this tree).
 
-**Step 3.3: Related file history**
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 Record:
-- `1006d1f7c03d9` — this commit
-- `4720915ab4828` — patch 2/2, MMUv2 disabled-after-reset check
-  (independent extra check)
-- `c182a2ae13886` — later power-register flush; not a prerequisite of
-  this hunk
-This commit is standalone. Patch 2 is related hardening, not required
-for this condition change.
+- Candidate: `789af83e41aef` (2026-06-13 / committed 2026-07-24).
+- Merged to Linus in `dc83d18cdd904` (`ntfs3_for_7.3`, 2026-08-20);
+  present in **v7.3-rc1**. **Not** in v7.2 / v7.1 / v7.0.
+- Series sibling (v2 1/2): `e31886cb6e0e1` (ATTR_BITMAP extents) is the
+  git parent but touches `fs/ntfs3/inode.c` only. Independent of this
+  hunk.
+- No other `maxbytes_sparse` fix in this tree.
 
-**Step 3.4: Author**
-Record: Lucas Stach is listed `M:` for “DRM DRIVERS FOR VIVANTE GPU IP”.
-Christian Gmeiner is `R:`. Recent etnaviv work by the same author
-includes hang-check and reset-related fixes.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Senjin has this plus the ATTR_BITMAP mount fix on the same 16 TB
+volume. Konstantin Komarov is the NTFS3 maintainer (`MAINTAINERS`:
+Supported) and committed both.
 
-**Step 3.5: Dependencies**
-Record: Needs `gpu->idle_mask` and the reset retry loop. Both exist in
-this tree (and have since the original driver / 2019 idle_mask init).
-Applies standalone. Does not need `gpu_write_power_sync` from the later
-flush commit.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Standalone. Needs only `CONFIG_NTFS3_64BIT_CLUSTER` and
+`MAX_LFS_FILESIZE`, both present since ntfs3 was added. Does not need
+patch 1/2.
 
-## Phase 4: Mailing list / external
+---
 
-**Step 4.1: Original discussion**
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 1006d1f7c03d9` → https://patch.msgid.link/20260511085148.65
-  2256-1-l.stach@pengutronix.de
-- `b4 dig -a`: single v1 series, two patches. Committed version matches
-  v1.
-- Reviewer: Reviewed-by only; no NAK, no stable nomination, no risk
-  discussion.
-- lore.kernel.org HTTP fetch returned 403; thread recovered via `b4 dig
-  -m`.
+- `b4 dig -c 789af83e41aef`: `[PATCH v2 2/2]`,
+  https://patch.msgid.link/6a2dba8e030b48618aa54661@mailersend.net
+- `b4 dig -a`: v1 was only the ATTR_BITMAP patch (2026-06-10); v2 added
+  this as 2/2 (2026-06-13). Applied version is v2.
+- lore.kernel.org / patch.msgid.link returned **403**; spinics ntfs3
+  thread returned **500**. Patch text confirmed via LKML IU and Openwall
+  mirrors. Full reply thread: **UNVERIFIED**.
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: Lucas Stach, `etnaviv@lists.freedesktop.org`, `dri-
-devel@lists.freedesktop.org`, Christian Gmeiner. Right lists and
-reviewer.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): `senjin@hatchling.org`, `ntfs3@lists.linux.dev`,
+`almaz.alexandrovich@paragon-software.com`, `linux-
+kernel@vger.kernel.org`. Maintainer list was CCed; maintainer signed off
+and merged. No NAK found in reachable archives.
 
-**Step 4.3: Bug report**
-Record: No Reported-by, bugzilla, or syzbot. No described repro.
-UNVERIFIED whether a specific hang prompted the series; message does not
-say.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla link. Author reports a real 16 TB volume;
+sequential I/O worked, `lseek` did not. Same volume as the ATTR_BITMAP
+mount failure.
 
-**Step 4.4: Series**
-Record: 1/2 idle-mask check; 2/2 MMUv2 disable check. Independent. 1/2
-is self-contained.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: v2 1/2 is a different mount bug (`inode.c`). This 2/2 is self-
+contained. Linus’s `ntfs3_for_7.3` pull lists “lseek EINVAL on
+sparse/compressed files with 64-bit clusters” under Fixed.
 
-**Step 4.5: Stable list**
-Record: Web search of lore stable for this subject found no relevant
-thread. No evidence it was rejected for stable.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search did not turn up this subject
+(403/unrelated hits). **UNVERIFIED** whether anyone already
+requested/rejected it for stable.
 
-## Phase 5: Semantic / impact
+---
 
-**Step 5.1: Functions**
-Record: `etnaviv_hw_reset()` only.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.2: Callers**
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `ntfs_init_from_boot()` (assignment). Consumers:
+`ntfs_get_maxbytes()` → `ntfs_llseek()`, `ntfs_iomap_begin()`; also raw
+`sbi->maxbytes_sparse` in `ntfs_set_size()` and attrib insert.
+
+**Step 5.2: TRACE CALLERS**
 Record:
-- GPU identify/init: `ret = etnaviv_hw_reset(gpu);` — probe/init failure
-  if reset times out.
-- `etnaviv_gpu_recover_hang()` ← `etnaviv_sched.c` timed-out job path
-  (`drm_sched_stop` → recover → resubmit). Return value of reset is
-  ignored there (pre-existing). Benefit on that path is extra retries
-  until modules are idle, not a new hard fail.
+- `ntfs_init_from_boot()` — mount/fill_super.
+- `ntfs_llseek` — `file_operations.llseek` for regular ntfs3 files
+  (syscall `lseek`/`llseek`).
+- `ntfs_iomap_begin` — fiemap/bmap `IOMAP_REPORT`.
+- Directory `llseek` still uses `generic_file_llseek` (`dir.c`); not
+  this bug.
 
-**Step 5.3: Callees**
-Record: `gpu_read(VIVS_HI_IDLE_STATE)` unchanged; only the predicate
-changes.
+**Step 5.3: TRACE CALLEES**
+Record: The changed line is an assignment. Downstream: `vfs_setpos()` /
+`generic_file_llseek_size()`.
 
-**Step 5.4: Reachability**
-Record: Yes. Init/reset on device bring-up; hang recovery from GPU
-scheduler after a stuck job (userspace GL/Vulkan/etnaviv DRM). Not
-syscall-direct memory corruption; it is a common driver path on Vivante
-/ i.MX systems.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Userspace `lseek` → `ntfs_llseek` → `ntfs_get_maxbytes` →
+`vfs_setpos`. Reachable from unprivileged processes with a file open.
+Confirmed in-tree.
 
-**Step 5.5: Similar patterns**
-Record: `etnaviv_gpu_wait_idle()` already uses `(idle & gpu->idle_mask)
-== gpu->idle_mask`. RPM suspend uses `idle_mask` minus FE/MC. This
-aligns reset with those definitions.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: `sbi->maxbytes = -1` remains in the overflow branch (`clusters
+>= 1ull << (64 - cluster_bits)`). Same signedness issue for *non-sparse*
+files, but that volume size is far beyond the reported 16 TB /
+`0xFFFFFEFF` clusters. Out of this patch’s scope.
 
-## Phase 6: This checkout
+---
 
-**Step 6.1: Local tree and buggy code**
-Record:
-- `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`
-- `make kernelversion` → `7.3.0-rc4`
-- `etnaviv_hw_reset`, `idle_mask`, and the idle register exist here.
-- `git merge-base --is-ancestor 1006d1f7c03d9 HEAD` → yes (commit
-  already in this 7.3-rc4 lineage).
-- Pre-commit code (parent `3e32e6672fa30`) still had the FE-only test.
-  Introduced 2015; not after this branch.
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 6.2: Backport difficulty**
-Record: Clean 3-line predicate swap. No refactor of the surrounding
-reset function is required for this hunk. Expected: clean apply on trees
-that still have the FE-only check.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. `fs/ntfs3/super.c`, `ntfs_llseek`,
+`CONFIG_NTFS3_64BIT_CLUSTER`, and `ntfs_get_maxbytes()` are all present.
+Current line is already the fixed assignment (`sbi->maxbytes_sparse =
+MAX_LFS_FILESIZE` at line 1214). Pre-fix `-1` is in `789af83e41aef^`.
+Bug introduction for lseek: v7.0; this checkout is 7.3-rc4.
 
-**Step 6.3: Related fixes already here**
-Record: This exact change is already in HEAD. Follow-up MMUv2 check is
-also here; it is not a substitute for the idle_mask check.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply. Surrounding `#ifdef CONFIG_NTFS3_64BIT_CLUSTER` /
+`sb->s_maxbytes = MAX_LFS_FILESIZE` matches the hunk. No conflicting
+refactor in this function.
 
-## Phase 7: Subsystem
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: This commit *is* the fix (`789af83e41aef` is an ancestor of
+HEAD). No earlier substitute fix. That is origin-tree presence, not a
+reason to reject on merit.
 
-**Step 7.1**
-Record: `[drm/etnaviv]` `[IMPORTANT]` — not core mm/net, but the Vivante
-GPU driver used on NXP i.MX and similar embedded SoCs, including
-display.
+---
 
-**Step 7.2**
-Record: Actively maintained (recent reset/hang/cache commits). The FE-
-only check itself was untouched for ~10 years.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-## Phase 8: Impact and risk
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: `[fs/ntfs3] [IMPORTANT]` — not core VFS, but a supported RW
+filesystem used for Windows/large volumes. Maintainer-supported.
 
-**Step 8.1: Who**
-Record: Driver-specific: `CONFIG_DRM_ETNAVIV` / Vivante GPU users
-(embedded i.MX class).
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Actively maintained (regular `ntfs3_for_*` pulls, many 7.3
+fixes). This is not staging.
 
-**Step 8.2: Trigger**
-Record: GPU soft-reset during init and after hangcheck. Incomplete
-module idle after reset is the hardware case the existing retry loop
-already exists for. Unprivileged GPU clients can trigger hang recovery
-via a stuck job; they cannot directly poke the idle register.
+---
 
-**Step 8.3: Failure mode**
-Record: `[incomplete reset treated as success]` `[HIGH for GPU, not
-kernel panic]`. Probe can later use a GPU that is not fully idle; hang
-recovery can resubmit onto modules still busy → further hangs, failed
-jobs, possible display freeze. Not KASAN/UAF. Not a documented CVE.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.4: Risk-benefit**
-Record:
-- Benefit: medium-high for etnaviv — reset/hang recovery actually waits
-  for the same idle definition the rest of the driver uses.
-- Risk: low — 3 lines, existing mask, maintainer + reviewer. Residual
-  risk is probe `-EBUSY` if some chip never sets all `idle_mask` bits
-  after reset; GC300/GC600 already have a reduced mask, and
-  wait_idle/RPM have used this mask for years.
-- Ratio: favorable.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Config-specific (`CONFIG_NTFS3_64BIT_CLUSTER=y`, 64-bit,
+recommended N in Kconfig) **and** sparse or compressed files. That
+option exists specifically for 16T+ volumes with 4K clusters (Windows
+ntfs.sys is 32-bit cluster). Real users of large NTFS volumes.
 
-## Phase 9: Synthesis
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Any `lseek` (SEEK_SET/SEEK_END/nonzero SEEK_CUR) on a
+sparse/compressed file after mount. Common for archive tools, not rare
+error-path. Unprivileged if the user can open the file. Not a race.
 
-**Step 9.1: Evidence**
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: `[Failure: all random access via lseek fails with EINVAL;
+sequential read still works] [Severity: HIGH]`. Not a panic/UAF, but the
+filesystem is unusable for a normal class of tools. Also breaks
+fiemap/bmap `IOMAP_REPORT` on those inodes.
 
-FOR:
-- Real logic bug: reset-success ignored non-FE modules.
-- Same `idle_mask` already used for wait_idle and RPM.
-- 3-line, obviously correct, no new API.
-- Hang recovery and init both go through this loop.
-- Maintainer-authored, reviewed by listed reviewer.
-- Code and prerequisites exist in this tree; bug dates to 2015.
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record: Benefit high for affected mounts (restores `lseek`). Risk very
+low (1 line, same constant already used for `s_maxbytes`). Ratio
+strongly favors backport.
 
-AGAINST:
-- No user report, repro, sanitizer hit, or described crash.
-- Not a kernel oops/UAF/deadlock; GPU-side hang/recovery.
-- CLOCK_CONTROL IDLE_2D/IDLE_3D already checked afterward.
-- Patch 1/2 of hardening, not a smoking-gun “Fixes:”.
+---
 
-UNRESOLVED:
-- No public report of a hang caused specifically by FE-idle / other-
-  module-busy.
-- lore.kernel.org HTTP 403; discussion taken from `b4 dig` mbox only.
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — predicate matches
-   `wait_idle`; reviewed.
-2. Real bug affecting users? **PASS** — false reset success on init/hang
-   recover.
-3. Important (crash/security/corruption/deadlock/hang)? **PASS** —
-   failed GPU reset/hang recovery; UI/GPU freeze on this hardware, not a
-   core panic.
-4. Small and contained? **PASS** — 3 lines, one function.
-5. No new features/APIs? **PASS**
-6. Applies to this tree? **PASS** — driver, `idle_mask`, and reset loop
-   are present.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Step 9.3: Exception category**
-Record: None (not an ID/quirk/DT/build/doc exception). It is a normal
-small driver correctness fix.
+**FOR:**
+- Real user-visible bug on a 16 TB volume; `lseek` always `EINVAL` on
+  sparse/compressed files.
+- Mechanism verified in this tree (`vfs_setpos` `offset > maxsize`,
+  signed `-1`).
+- One-line, obviously correct, matches existing `MAX_LFS_FILESIZE`
+  usage.
+- Maintainer signed off and merged.
+- Standalone; no new API/feature.
+- Call path is a normal syscall.
 
-**Step 9.4: Decision**
-This tree is 7.3-rc4 and already contains the change; the evaluation is
-whether this tree *should* have it on technical merit. It should. The
-FE-only test has been wrong for as long as the driver has reset
-hardware. The retry loop exists because reset is not always complete on
-the first try; ignoring other modules lets that loop exit too early,
-then init or hang recovery proceeds. The fix is the same idle definition
-already used elsewhere, tiny, and reviewed by the subsystem.
+**AGAINST:**
+- Option defaults to N; smaller population.
+- Not a crash/UAF/corruption.
+- Series labeled 2/2 (sibling is unrelated and not required).
+- Full lore review thread not readable (403/500).
 
-It is not a core memory-safety crash, but it is a contained, real reset
-bug on a production embedded GPU path, which is in scope for stable.
+**UNRESOLVED:** Full reviewer comments; any stable@ discussion.
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — type/`vfs_setpos` logic is
+   clear; author observed it on real hardware; maintainer merged.
+2. Fixes a real bug that affects users? **PASS** — reproduced; tools
+   cannot seek.
+3. Important issue? **PASS** — HIGH: filesystem random-access completely
+   broken for sparse/compressed files on this config (not a panic, but a
+   serious functional failure).
+4. Small and contained? **PASS** — 1 line, one file, one assignment.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — hunk matches
+   `ntfs_init_from_boot()` here.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: `[None]` — ordinary bugfix, not a device-ID/quirk/DT/build/doc
+exception.
+
+**Step 9.4: MAKE YOUR DECISION**
+This tree has the ntfs3 64-bit-cluster init path and
+`ntfs_llseek()`/`ntfs_get_maxbytes()`. The signed `-1` max makes every
+sparse/compressed seek fail. Replacing it with `MAX_LFS_FILESIZE` is the
+right, minimal fix and meets stable rules.
+
+---
+
+### What the commit solves and why it matters here
+On `CONFIG_NTFS3_64BIT_CLUSTER=y`, sparse/compressed files cannot be
+seeked at all. That breaks archive managers and any random-access reader
+while sequential copy still works. This checkout is 7.3, which already
+has the 7.0 `ntfs_llseek` path, so the bug is in this codebase.
+
+### Stable rules
+Small, correct, user-reported functional failure, no new API, applies
+cleanly.
+
+### Risk vs benefit
+Very low risk, high benefit for large NTFS volumes built with 64-bit
+clusters.
+
+### Concerns
+Kconfig recommends N, so not every ntfs3 user. Patch 1/2 is not a
+dependency. Residual `sbi->maxbytes = -1` overflow branch is a separate
+edge case.
+
+---
 
 Verification:
-- [Phase 1] Tags: Reviewed-by Christian Gmeiner; Link msgid
-  20260511085148.652256-1; maintainer SOB; no Fixes/Reported-by/syzbot
-- [Phase 2] Diff: 3-line condition change in `etnaviv_hw_reset()`; FE
-  bit → `idle_mask`
-- [Phase 3] Blame: FE check from `a8c21a5451d83` (2015); `idle_mask`
-  init `2b76f5be7c2778`
-- [Phase 3] `git log -S 'FE is not idle'` / `-S idle_mask` limited to
-  `etnaviv_gpu.c`
-- [Phase 3] Series: 1/2 this commit, 2/2 `4720915ab4828` MMUv2 check;
-  standalone
-- [Phase 4] `b4 dig -c 1006d1f7c03d9`: lore msgid link; v1 only; dri-
-  devel/etnaviv CC; Reviewed-by; no NAK
-- [Phase 4] `b4 dig -m`: 4 messages (2 patches + 2 R-b); WebFetch lore
-  403
-- [Phase 4] Stable lore search: no relevant hits
-- [Phase 5] Callers: init `etnaviv_hw_reset` at line 891;
-  `etnaviv_gpu_recover_hang` from `etnaviv_sched.c:84`
-- [Phase 5] `wait_idle` uses identical mask compare at line 1709
-- [Phase 6] `git describe HEAD` v7.3-rc4-27-gf0100363d8c37;
-  kernelversion 7.3.0-rc4
-- [Phase 6] `git merge-base --is-ancestor 1006d1f7c03d9 HEAD` true; not
-  ancestor of `v7.2`
-- [Phase 7] MAINTAINERS: Lucas Stach M:, Christian Gmeiner R:
-- [Phase 8] Failure: incomplete GPU reset / failed hang recovery, not
-  kernel UAF
-- UNVERIFIED: specific user-visible hang from FE-only success;
-  lore.kernel.org page content besides b4 mbox
+- [Phase 1] Parsed commit `789af83e41aef`: SOB Senjin + maintainer
+  Komarov; no Fixes/Cc stable/Reported-by
+- [Phase 2] Diff: `sbi->maxbytes_sparse = -1` → `MAX_LFS_FILESIZE` in
+  `ntfs_init_from_boot()`; 1 line
+- [Phase 2] Confirmed `maxbytes_sparse` is `u64`; `ntfs_get_maxbytes()`
+  returns `loff_t`; `vfs_setpos_cookie()` rejects `offset > maxsize`
+- [Phase 2] Confirmed `ntfs_llseek()` and `ntfs_iomap_begin()` consume
+  that value
+- [Phase 3] `git blame`: `-1` from `82cae269cfa95` (v5.15-rc1);
+  `ntfs_llseek` from `c613269677283` (v7.0-rc1)
+- [Phase 3] `git merge-base --is-ancestor 789af83e41aef HEAD`: yes; in
+  v7.3-rc1; not in v7.2/v7.1/v7.0
+- [Phase 3] Series 1/2 `e31886cb6e0e1` touches `inode.c` only; not
+  required
+- [Phase 4] `b4 dig -c/-a/-w`: v2 2/2, maintainer+ntfs3 list CCed; lore
+  fetch 403
+- [Phase 4] LKML IU / Openwall: patch text matches; no NAK in those
+  copies
+- [Phase 4] UNVERIFIED: full lore thread, stable@ discussion
+- [Phase 5] Callers: `ntfs_llseek` (syscall), `ntfs_iomap_begin`
+  (fiemap)
+- [Phase 6] `git describe HEAD`: `v7.3-rc4-27-gf0100363d8c37`; `make
+  kernelversion`: 7.3.0-rc4; current `super.c:1214` already has the fix
+- [Phase 6] `CONFIG_NTFS3_64BIT_CLUSTER` in `fs/ntfs3/Kconfig`, 64-bit
+  only
+- [Phase 7] MAINTAINERS: Konstantin Komarov, Supported
+- [Phase 8] Failure: every sparse/compressed `lseek` → `-EINVAL`;
+  severity HIGH; trigger is normal userspace seek
 
 **YES**
 
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ntfs3/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index cf0d9049bcf1e..368e799fc0c5d 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -582,9 +582,9 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
- 		/* read idle register. */
- 		idle = gpu_read(gpu, VIVS_HI_IDLE_STATE);
- 
--		/* try resetting again if FE is not idle */
--		if ((idle & VIVS_HI_IDLE_STATE_FE) == 0) {
--			dev_dbg(gpu->dev, "FE is not idle\n");
-+		/* try resetting again if any module is not idle */
-+		if ((idle & gpu->idle_mask) != gpu->idle_mask) {
-+			dev_dbg(gpu->dev, "GPU modules not idle\n");
- 			continue;
- 		}
- 
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 346c52f952076..dcf14410c6621 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -1163,7 +1163,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ #ifdef CONFIG_NTFS3_64BIT_CLUSTER
+ 	if (clusters >= (1ull << (64 - cluster_bits)))
+ 		sbi->maxbytes = -1;
+-	sbi->maxbytes_sparse = -1;
++	sbi->maxbytes_sparse = MAX_LFS_FILESIZE;
+ 	sb->s_maxbytes = MAX_LFS_FILESIZE;
+ #else
+ 	/* Maximum size for sparse file. */
 -- 
 2.53.0
 
