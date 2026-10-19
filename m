@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0A953D591;
-	Mon, 19 Oct 2026 14:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096A553BBAF;
+	Mon, 19 Oct 2026 14:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418713; cv=none; b=nWLKTURiy/pLrYUmLSsrAAFUtKd6P6JSh7NCdKYshoAnGGhjqqwer+1LyZodDl0cmJdE4b1c4fLSP8ChjdZOV7cNZ3TrTu+xlgqAl+1yHENRG4yLVdiUEWDWhAjCiSgSSxo3iG3pAAs3yqNLQuXoISzpHJ06kXhFTDsORDI1PIA=
+	t=1792418715; cv=none; b=FEgaZSWquNP86hWr8gwWmQyfYYELWwetpULTd349ZfiBhkZGnYN7nWBuq/aIoH6GaKJ3RA50GHfFcgP7GWXQ53G70LjyyurtHQj4H2I5L+Pd6uzAHVNF0smpqdvWnhPEskzAk2S3RJKvCuEK8iu18qB1dRpsZZSI7v5xNvhQW80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418713; c=relaxed/simple;
-	bh=ICjwcPGSyuHCHj38lFIHkB179DMBWGKL3U2PAeLo/3Q=;
+	s=arc-20240116; t=1792418715; c=relaxed/simple;
+	bh=g+veDCmlhCAqMBdGLPALcJ3IuOIMVViwoioxncymKNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EQ9qKU21Lfg2hnTfA8Oh3Obvu4h74BZbShW+sUwRDaWTVp1psHkDD6Rr2FXM7/l6/nB7lVth+Dm0+RCLMLXAgS62pI4VR81k9UxRnQ1EfGSZrxVyzmFno2J+oIrVNZgsXEVtFavuIOawuJm7cVVGTL5Le7qrR6kBbP/ZAnHRvK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bnsccmgx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Nbxa9TDhzxERz6qdCSJfpV48WhfoRw8AVSqOZGMRUQNwe3KaGnmAiZYGT4oACT6p2NyQisYK/GeFEoApQ+wEi4G29Zn9qa1ABGd5O6NjZz5zJZCxiQUBrEAE5UMt4dFBWaOEb8iBj8x+DY6J+wmltONso9g7P/0Hm2hwObmfKE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mn+M2xg5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bnsccmgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5A91F000C5;
-	Mon, 19 Oct 2026 14:05:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mn+M2xg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D8C1F000C7;
+	Mon, 19 Oct 2026 14:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418710;
-	bh=MCfvKyKdZX37EObaSz3b1VNDIt/oWHvY2bMR4aaE0zY=;
+	s=k20260515; t=1792418711;
+	bh=CM2WAE2HkP0FdbYvaMOjqRvZj/7tVd7+xmKcg/KyjcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BnsccmgxPALbW7KkR+HFLpkjxejXQoiwpVfYwFq37RL2zIV+fw9ZaiNBCvJfPVAlA
-	 xtJQabswhPyklzD75Ij9pO8umqniRx/Y3m8QtYKsnuE9Ci3qZPyE2zlFUMVTGKWS8X
-	 iHy0Zpqf5ssWsiq7VI2iKdtnZKHQ6rFjRLCkT0YiczazgqBQSccXwUWHKMgrk6ff5C
-	 vEA7+qKUw7kaKuKJeNNssKTJ0obwvS8Vxc3jC2ukNFCnGEs+SvyItGTzwyW9km7vQj
-	 KYKdPyXqn85P+rhv5PINR5Da1SiUEX7uS4aBZzVVtarmYWP/BV4QqiwRn+gBelFN2g
-	 gismD1jmNreoQ==
+	b=Mn+M2xg5dJ6MTHExbbG+b450kblSLnAZM9hVmnrEgdoHSa9O6Y5h8aZq8hRFVe1dK
+	 NjGjNgRKKoYSw6wKijfuWoQoz5+PoEUY7EXG/ki+6UzbcvGOrfUrZKGrYF4fReV2k2
+	 hkGKV3wJzMKtComXJdKTblvIHc0FEe+Lz45wZK+NjZWjCFpfADG5Ot4IAedT9+/kDc
+	 nQWZUmjuyPTgUORnLhH9qQ2VXRlqRtpMT+zcQLcPdrzRcH4dLQ0bk300wqt6kncokx
+	 XLGQ5JyMUsCvOxepTKRWagVW5vv8TSeDoZKwZ2CECCbF3VtL3Gtj/0k6blgx4CSlND
+	 q9jw1ngtv9ZDw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Iva=20Kasprzakov=C3=A1?= <iva@yenya.net>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Weimin Xiong <xiongwm2026@163.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
+	dtatulea@nvidia.com,
+	jasowangio@gmail.com,
+	eperezma@redhat.com,
+	virtualization@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] Bluetooth: fix BT dependency for submodules
-Date: Mon, 19 Oct 2026 09:52:12 -0400
-Message-ID: <20261019135441.1420968-441-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] vdpa/mlx5: roll back MR update after VQ setup failure
+Date: Mon, 19 Oct 2026 09:52:13 -0400
+Message-ID: <20261019135441.1420968-442-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -48,431 +49,496 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Iva Kasprzaková <iva@yenya.net>
+From: Weimin Xiong <xiongwm2026@163.com>
 
-[ Upstream commit 6ec1896b5331563fedf3f01014aba9c9e35d7f29 ]
+[ Upstream commit 11f79e2780043ad94424a8db02a7a9022ba93252 ]
 
-The modules rfcomm (BT_RFCOMM), bnep (BT_BNEP), hidp (BT_HIDP), and
-bluetooth_6lowpan (BT_6LOWPAN) are dependent on the bluetooth module
-(BT, tristate) only transitively through the boolean BT_BREDR for the
-first three and through the boolean BT_LE for the bluetooth_6lowpan.
-Therefore, the modules can be selected as built-in even if the BT=m.
-The combination of BT=m and =y for the said modules leads to the kernel
-build system silently ignoring those modules, without ever compiling
-them as built-in or as loadable modules.
+mlx5_vdpa_change_map() must install the new MR before rebuilding or
+resuming virtqueues, because both paths read the MR keys from
+mvdev->mres.mr[].
 
-Add BT as a direct dependency to the Kconfig of rfcomm, bnep, hidp, and
-bluetooth_6lowpan. The modules set to =y when BT=m will default to =m,
-rather then getting silently ignored by the build system.
+If rebuilding the virtqueue resources fails, the new MR must not remain
+installed after its reference is released. Keep an extra reference to
+the old MR before replacing it. On setup failure, restore the old MR;
+the saved reference then becomes the map reference, while replacing the
+new MR drops its map reference.
 
-Signed-off-by: Iva Kasprzaková <iva@yenya.net>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Make mlx5_vdpa_change_map() consume new_mr on all error paths so that
+set_map_data() does not release an MR already released during rollback.
+
+v2:
+- Keep the new MR installed while virtqueues are rebuilt.
+- Restore the old MR only after setup_vq_resources() fails.
+
+Signed-off-by: Weimin Xiong <xiongwm2026@163.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+
+Message-ID: <20260716054353.155805-1-xiongwm2026@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The buggy Kconfig is
-present here; the fix is a small, correct build/config change that
-should be backported.
+Local tree is **6.12.111** (`pending-6.12`). The buggy
+`mlx5_vdpa_change_map()` path is present, the patch applies cleanly, and
+this is a real use-after-free on the map-update error path.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[Bluetooth] [fix] Make RFCOMM/BNEP/HIDP/6LoWPAN depend directly
-on tristate CONFIG_BT so they cannot be =y when BT=m`
+Record: **[vdpa/mlx5] [roll back] [restore the previous memory region if
+virtqueue rebuild fails after installing a new MR]**
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Iva Kasprzaková \<iva@yenya.net\> (author)
-- Signed-off-by: Luiz Augusto von Dentz \<luiz.von.dentz@intel.com\>
-  (Bluetooth maintainer)
-- No Fixes:, Reported-by, Tested-by, Reviewed-by, Acked-by, Link:, or
-  Cc: stable
-- Absence of Fixes:/Cc: stable is expected for this review queue and is
-  not a negative
+- **Fixes:** none (expected for this review)
+- **Reported-by / Tested-by / Reviewed-by / Acked-by:** none
+- **Link:** none in the commit; Message-ID
+  `20260716054353.155805-1-xiongwm2026@163.com`
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Weimin Xiong (author); Michael S. Tsirkin (vhost
+  maintainer, applied the patch)
+- Ignore any pipeline SOBs.
+
+Notable: standalone v2 patch, not `N/M`. Maintainer SOB is present; no
+syzbot tag.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** RFCOMM, BNEP, HIDP, and 6LoWPAN depend on CONFIG_BT only
-  through boolean `BT_BREDR` / `BT_LE`. A boolean that depends on a
-  tristate is `y` when the tristate is `m`, so the protocol options can
-  be `y` while `BT=m`.
-- **Symptom:** Those protocols are silently not compiled (neither built-
-  in nor as modules).
-- **Fix:** Add `depends on BT` so `=y` with `BT=m` becomes `=m` and they
-  actually build.
-- **Version info:** None in the message. Root cause is kconfig
-  tristate/bool transitivity.
+- **Bug:** `mlx5_vdpa_change_map()` installs `new_mr` into
+  `mvdev->mres.mr[]` before rebuilding virtqueues. If
+  `setup_vq_resources()` fails, the caller still drops `new_mr` while
+  that pointer remains installed.
+- **Symptom:** dangling MR pointer / use-after-free after a failed live
+  map update. GC can free the MR ~2s later (`MLX5_VDPA_MR_GC_TRIGGER_MS`
+  is 2000).
+- **Version info:** none in the message. Introduced by the v6.7 MR-
+  update flow, present in this 6.12 tree.
+- **Root cause:** missing rollback of the map slot and split ownership
+  of `new_mr` between `change_map()` and `set_map_data()`.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. This is an explicit Kconfig/build correctness fix,
-not cleanup-as-fix.
+Record: **Not a disguised cleanup.** This is an explicit error-path
+refcount/UAF fix. v1 wrongly deferred the MR install until after VQ
+setup; v2 keeps the new MR installed during rebuild and rolls back only
+on failure.
 
----
-
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
 Record:
-- `net/bluetooth/Kconfig`: `BT_6LOWPAN` `depends on BT_LE && 6LOWPAN` →
-  `depends on BT && BT_LE && 6LOWPAN`
-- `net/bluetooth/bnep/Kconfig`: `BT_BNEP` `depends on BT_BREDR` →
-  `depends on BT && BT_BREDR`
-- `net/bluetooth/hidp/Kconfig`: `BT_HIDP` `depends on BT_BREDR && HID` →
-  `depends on BT && BT_BREDR && HID`
-- `net/bluetooth/rfcomm/Kconfig`: `BT_RFCOMM` `depends on BT_BREDR` →
-  `depends on BT && BT_BREDR`
-- **Scope:** 4 files, 4 insertions / 4 deletions. Surgical Kconfig-only
-  change.
+- File: `drivers/vdpa/mlx5/net/mlx5_vnet.c` — **+15 / -8** (23 lines)
+- Functions: `mlx5_vdpa_change_map()`, `set_map_data()`
+- Scope: **single-file surgical error-path fix**
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record: Before, Kconfig allowed `BT=m` + protocol `=y`. After, `depends
-on BT` forces the protocol to follow BT’s tristate (`m` if BT is `m`).
-No C code or ABI change.
+Record:
+1. `save_channels_info()` failure: now `mlx5_vdpa_put_mr(new_mr)` inside
+   `change_map()` (caller no longer puts it).
+2. Before `mlx5_vdpa_update_mr()`: extra `get` on `old_mr` so it is not
+   GC'd after the map slot is replaced.
+3. `setup_vq_resources()` failure: `mlx5_vdpa_update_mr(old_mr)`
+   restores the old map; extra get becomes the map ref; installing
+   `old_mr` drops `new_mr`'s map ref.
+4. Success / early `!DRIVER_OK` / suspended: `goto out` and drop the
+   extra old-MR ref.
+5. `set_map_data()`: remove `out_err` put of `new_mr` so rollback cannot
+   double-free.
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: **Build/Kconfig correctness** (documented stable exception:
-build fix). Mechanism: `net/Makefile` has `obj-$(CONFIG_BT) +=
-bluetooth/`. With `BT=m` the bluetooth directory is descended as a
-module (`need-builtin` unset). `scripts/Makefile.lib` then does `obj-y
-:= $(filter-out %/, $(obj-y))`, so `rfcomm/` / `bnep/` / `hidp/` listed
-as `obj-y` are dropped and never built.
+Record: **[UAF / dangling pointer + refcount] [map slot updated, then
+`new_mr` released on error while `mres.mr[asid]` still points at it]**
+
+Verified in this tree:
+
+```731:743:drivers/vdpa/mlx5/core/mr.c
+void mlx5_vdpa_update_mr(struct mlx5_vdpa_dev *mvdev,
+                         struct mlx5_vdpa_mr *new_mr,
+                         unsigned int asid)
+{
+        struct mlx5_vdpa_mr *old_mr = mvdev->mres.mr[asid];
+        mutex_lock(&mvdev->mres.lock);
+        _mlx5_vdpa_put_mr(mvdev, old_mr);
+        mvdev->mres.mr[asid] = new_mr;
+        mutex_unlock(&mvdev->mres.lock);
+}
+```
+
+`create_virtqueue()` / `modify_virtqueue` read `mvdev->mres.mr[]` for
+mkeys, so the new MR **must** be installed before rebuild/resume. v1 was
+incorrect; v2 matches that constraint.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record: Obviously correct (standard tristate `depends on` pattern).
-Minimal. Regression risk is very low: the only configs that change are
-invalid ones (`BT=m` + proto `=y`), which currently produce missing
-modules; they become `=m` and actually work. No API or data-structure
-change.
+Record:
+- **Quality:** refcount flow is consistent: extra get on `old_mr`;
+  failure converts it into the map ref; success drops it; `new_mr` is
+  consumed on every `change_map()` error path.
+- **Regression risk:** low. No new locks, APIs, or data structures.
+  `put_mr(NULL)` is a no-op. Residual issue: after a failed rebuild, VQs
+  stay torn down (pre-existing); this patch only keeps the MR pointer
+  valid.
 
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record: The broken `depends on BT_BREDR` / `depends on BT_LE` lines come
-from **65efd2bf48853** (“Bluetooth: Introduce BT_BREDR and BT_LE config
-options”, Marcel Holtmann, 2014-11-02). That commit replaced `depends on
-BT` with the booleans. Present since ~v3.19; well before 6.12.
+Record:
+- `mlx5_vdpa_update_mr()` before setup: **625e4b59a923d2** (“vdpa/mlx5:
+  Improve mr update flow”), **v6.7-rc1**.
+- Teardown/rebuild via `setup_vq_resources()`: **f756dd3e2a4c70**,
+  **v6.8-rc1**.
+- Caller `out_err` put: **625e4b59a923d2** / **a06bd11b18fdf2**.
+- Function itself dates to **1a86b377aa2147** (2020).
+
+The dangling-pointer pattern exists since the v6.7 MR-update refactor:
+setup failure returns without restoring the map, and the caller puts
+`new_mr`.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No Fixes: tag. The introducing commit is in this tree (`git
-merge-base --is-ancestor 65efd2bf48853 HEAD` succeeded). Upstream fix
-SHA from patchwork: **646d8e385271** — **not** an ancestor of this HEAD.
+Record: **No Fixes: tag.** Buggy pattern is in this tree via 625e4b59 /
+f756dd3e. `git merge-base --is-ancestor 11f79e2780043 HEAD` is false —
+fix is **not** already here.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 Record:
-- HIDP extra deps: **6cc90ccd4f6cf** (“HID: fix BT_HIDP Kconfig
-  dependencies”, 2022) — **in this tree**. Local line is `depends on
-  BT_BREDR && INPUT && HID_SUPPORT` plus `select HID`, not upstream’s
-  `depends on BT_BREDR && HID`.
-- CMTP still exists here (`depends on BT_BREDR && ISDN_CAPI &&
-  DEPRECATED`) and has the same class of bug; this patch does not touch
-  it (CMTP was later removed). Standalone otherwise; v2 only added
-  6LoWPAN.
+- Related: **62111654481d5** “Postpone MR deletion” (**v6.12-rc1**) —
+  delayed GC, so a dangling MR is freed ~2s later rather than
+  immediately.
+- No prior rollback of `change_map()` in this tree.
+- Standalone; not `N/M`.
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Iva Kasprzaková has no other commits in this tree’s bluetooth
-history. Luiz von Dentz (SOB / applier) is the Bluetooth maintainer.
+Record: Weimin Xiong has **no other mlx5 vdpa commits in this tree**.
+Subsystem maintainer is Dragos Tatulea; the patch was applied by Michael
+Tsirkin. Recipients included Tatulea, Tsirkin, Jason Wang, Eugenio
+Perez.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: No functional prerequisites. HIDP hunk needs a one-line context
-tweak (`BT && BT_BREDR && INPUT && HID_SUPPORT`). RFCOMM, BNEP, and
-6LoWPAN match this tree exactly.
+Record: Uses existing `mlx5_vdpa_get_mr` / `put_mr` / `update_mr`. `git
+apply --check` of 11f79e27 against this tree: **clean**. **Standalone.**
 
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- Lore/msgid:
-  https://patch.msgid.link/20260722130849.7813-1-iva@yenya.net
-- v1: 2026-07-20 \<20260720150919.9602-1-iva@yenya.net\>
-- v2 (applied): 2026-07-22
-- Luiz asked v1 to also cover `BT_6LOWPAN`; v2 did that. No NAKs. No
-  reviewer `Cc: stable`. Applied to bluetooth-next as 646d8e385271; in
-  bluetooth-next pull 2026-08-07.
+- `b4 dig -c 11f79e2780043`:
+  https://patch.msgid.link/20260716054353.155805-1-xiongwm2026@163.com
+- `b4 dig -a`: **only v2** matched by patch-id
+- v1 existed with a different subject/diff: “fix MR state corruption on
+  setup_vq_resources failure” — it moved `update_mr` **after** setup,
+  which would program VQs with the **old** mkey. v2 changelog documents
+  that correction.
+- Saved mbox: **patch only, no public replies**. lore.kernel.org fetches
+  returned 403; no NAK found in the saved thread.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: Recipients: Marcel Holtmann, Luiz von Dentz, linux-bluetooth.
-Luiz requested the 6LoWPAN addition and applied v2. BlueZ CI:
-CheckPatch/BuildKernel/IncrementalBuild PASS; mgmt/mesh tester fails
-look pre-existing, not caused by this Kconfig change.
+Record (`b4 dig -w`): To/Cc Dragos Tatulea, Michael Tsirkin, Jason Wang,
+Xuan Zhuo, Eugenio Perez, virtualization@lists.linux.dev. Applied with
+Tsirkin SOB. No public Reviewed-by.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No syzbot/bugzilla. Author analysis plus maintainer
-confirmation. **In-tree proof:** `arch/arm/configs/s5pv210_defconfig`
-has `CONFIG_BT=m`, `CONFIG_BT_RFCOMM=y`, `CONFIG_BT_BNEP=y`.
+Record: **No syzbot, bugzilla, or user crash report.** Bug is from code
+inspection of the error path. Failure mode is still verified from the
+current sources.
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Single-patch series. v1→v2 only added 6LoWPAN. Not part of a
-larger refactor.
+Record: **Standalone v2.** No later `mlx5_vnet.c` commits on `all-next`
+after 11f79e27. No follow-up reverting or replacing this fix.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: gnuweeb stable search for this subject found no discussion of
-this patch (unrelated “dependency” hits only).
+Record: lore.kernel.org/stable search returned 403. **UNVERIFIED**
+whether stable@ already discussed this. That does not change the
+technical verdict.
 
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: No C functions. Symbols: `BT_RFCOMM`, `BT_BNEP`, `BT_HIDP`,
-`BT_6LOWPAN`. Build sites: `net/bluetooth/Makefile`
-`obj-$(CONFIG_BT_RFCOMM)` etc., gated by `net/Makefile`
-`obj-$(CONFIG_BT) += bluetooth/`.
+Record: `mlx5_vdpa_change_map()`, `set_map_data()`
 
 **Step 5.2: TRACE CALLERS**
-Record: RFCOMM: DUN/OBEX/serial. BNEP: PAN. HIDP: Bluetooth HID.
-6LoWPAN: BLE IPv6. Reachable whenever those Kconfig options are enabled.
+Record:
+- `set_map_data()` → `mlx5_vdpa_change_map()` when an ASID already has
+  an MR
+- `mlx5_vdpa_set_map()` (vdpa `.set_map`) → `set_map_data()` under
+  `reslock`
+- vhost-vdpa calls `.set_map` from `vhost_vdpa_map()` / unmap / batch
+  IOTLB updates (`drivers/vhost/vdpa.c`)
 
 **Step 5.3: TRACE CALLEES**
-Record: N/A (Kconfig only).
+Record: `suspend_vqs`, `save_channels_info`, `teardown_vq_resources`,
+`mlx5_vdpa_get_mr`/`update_mr`/`put_mr`, `setup_vq_resources`,
+`resume_vqs`. `setup_vq_resources()` can fail on umem, virtqueue create,
+RQT/TIR, steering (firmware/alloc errors). `_mlx5_vdpa_put_mr()` queues
+GC when refcount hits 0.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Yes, userspace-visible: missing
-`rfcomm`/`bnep`/`hidp`/`bluetooth_6lowpan` when the bad combo is set.
-`s5pv210_defconfig` is a concrete in-tree trigger.
+Record: Userspace/QEMU vhost-vdpa IOTLB updates → `VHOST_IOTLB_*` →
+`ops->set_map` → this path. **Reachable from VM memory map changes**
+(boot, live migration, hotplug, vIOMMU). The UAF arm additionally needs
+DRIVER_OK, non-resumable firmware (`freeze_to_rdy_supported` missing →
+`.resume = NULL` → teardown/rebuild), and `setup_vq_resources()`
+failure.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: `BT_CMTP` in this tree still `depends on BT_BREDR` only
-(deprecated). Out of this patch’s scope.
+Record: Other `mlx5_vdpa_update_mr()` sites (`mlx5_vdpa_clean_mrs`,
+first-map in `set_map_data`, reset) do not rebuild VQs then drop the new
+MR while leaving it installed. This error path is unique to
+`change_map()`.
 
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.**
-- `net/bluetooth/rfcomm/Kconfig:4` `depends on BT_BREDR`
-- `net/bluetooth/bnep/Kconfig:4` `depends on BT_BREDR`
-- `net/bluetooth/hidp/Kconfig:4` `depends on BT_BREDR && INPUT &&
-  HID_SUPPORT`
-- `net/bluetooth/Kconfig:86` `depends on BT_LE && 6LOWPAN`
-Introduced 2014 (65efd2bf48853); still here. Fix 646d8e385271 is **not**
-in HEAD.
+Record: **Yes.** `mlx5_vdpa_change_map()` at
+`drivers/vdpa/mlx5/net/mlx5_vnet.c:3044` still updates the MR then
+returns on `setup_vq_resources()` failure; `set_map_data()` still `put`s
+`new_mr` on that error. Bug since **v6.7**; delayed GC since
+**v6.12-rc1**. Local: **6.12.111**.
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Minor conflict on HIDP only** (this tree still has
-INPUT/HID_SUPPORT + `select HID`). Other three hunks apply cleanly.
-Expected backport: add `BT &&` on the local HIDP depends line.
+Record: **Clean apply** (`git apply --check` exit 0). Surrounding code
+matches the diff hunks.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No equivalent `depends on BT &&` on these four symbols.
-6cc90ccd4f6cf only added HID_SUPPORT.
+Record: **No** rollback/`roll back MR` commit in this tree. 11f79e27 is
+not an ancestor of HEAD.
 
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `net/bluetooth` Kconfig. **IMPORTANT** — Bluetooth stack, not
-core mm/VFS, but RFCOMM/HIDP/BNEP are widely used.
+Record: **[drivers/vdpa/mlx5] [IMPORTANT]** — ConnectX6+ virtio-net
+datapath offload (`CONFIG_MLX5_VDPA_NET`). Not core MM/VFS, but
+production virtualization (OpenStack/K8s HW-offloaded virtio).
+Maintainer: Dragos Tatulea.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Active (many Luiz fixes on this branch). The bug itself is old
-(2014), not churn from a new subsystem.
+Record: Mature, still receiving error-path and MR-lifetime fixes
+(postpone MR deletion, probe error paths). Not staging.
 
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Config-specific: `CONFIG_BT=m` and a protocol `=y`. Hits custom
-configs, oldconfig `BT=y`→`m` transitions, and **s5pv210_defconfig** in
-this tree. Distros that set all of them to `=m` are unaffected.
+Record: **driver-specific / config-specific** — `CONFIG_MLX5_VDPA_NET`
+users, mainly when firmware lacks `freeze_to_rdy_supported`
+(teardown/rebuild on every map change).
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: At **build** time, not a runtime race. Unprivileged users cannot
-trigger it; builders/defconfigs can. Likelihood: uncommon but **real**
-(in-tree defconfig).
+Record: Live `.set_map` while DRIVER_OK, teardown path, then VQ resource
+setup fails. Not every boot; map updates are normal for vDPA VMs.
+Unprivileged guest does not call `.set_map` directly; the VMM/host
+process does. Still a host kernel UAF.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: Protocols silently omitted — no RFCOMM TTY/DUN, no PAN, no
-Bluetooth HID, no BT 6LoWPAN. Not a panic. **MEDIUM–HIGH** functional
-breakage; matches stable’s “build error” / “oh, that’s not good”.
+Record: **[dangling `mres.mr[]` + GC free → UAF] [HIGH]** — later VQ
+modify/create or another map op can dereference a freed MR. Crash or
+memory corruption in the host kernel.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
 Record:
-- **Benefit:** High for affected configs — modules actually get built
-  (s5pv210 RFCOMM/BNEP included).
-- **Risk:** Very low — 4 Kconfig depends lines; only invalid configs
-  change, and they change toward working.
-- **Ratio:** Favor backport.
+- **Benefit:** high for mlx5 vDPA — prevents UAF after a failed map
+  change.
+- **Risk:** low — ~15 lines, local refcount, applies cleanly.
+- **Ratio:** **favor backport.**
 
----
-
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR:**
-- Real Kconfig/build bug: `BT=m` + proto `=y` drops
-  rfcomm/bnep/hidp/6lowpan (verified in `scripts/Makefile.lib` via
-  `need-builtin`).
-- In-tree `s5pv210_defconfig` has that combo.
-- Bug exists in 6.12 since 65efd2bf48853 (2014).
-- Four one-line depends fixes; no new API.
-- Maintainer-requested v2, applied by Luiz, CI build PASS.
-- Matches stable “build fix” exception.
+FOR:
+- Real UAF: map slot holds `new_mr` after the caller drops its last map
+  ref.
+- Delayed GC in this 6.12 tree makes the free asynchronous and easier to
+  hit.
+- Small, contained, obviously correct refcount rollback.
+- Applies cleanly; no missing helpers.
+- v2 respects that VQ setup/resume must see the new MR keys.
+- Applied by the vhost maintainer.
 
-**AGAINST:**
-- Not a crash/UAF/security bug.
-- No Cc: stable (must not count as a negative here).
-- Lived a long time; many distros use all-`=m`.
-- HIDP hunk needs a one-line context adjust.
-- CMTP in 6.12 has the same pattern and is not fixed (deprecated).
+AGAINST:
+- Error-path only (setup failure after teardown).
+- mlx5 vDPA only, not all 6.12 users.
+- No syzbot/user report, no Fixes/Cc:stable (not a negative per the
+  review rules).
+- No public review comments in the saved mbox.
 
-**UNRESOLVED:** Exact mainline commit that switched HIDP from `INPUT &&
-HID_SUPPORT` + `select HID` to `depends on HID` (post-6.12); does not
-change the `depends on BT` fix.
+UNRESOLVED:
+- Full lore/stable@ threads (HTTP 403).
+- No Tested-by from hardware.
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — standard depends; Luiz
-   applied; build CI passed.
-2. Fixes a real bug that affects users? **PASS** — silent missing
-   Bluetooth protocols; s5pv210_defconfig.
-3. Important issue? **PASS** — build/config omission of
-   RFCOMM/BNEP/HIDP/6LoWPAN (severity MEDIUM–HIGH, not panic).
-4. Small and contained? **PASS** — 4 lines, Kconfig only.
+1. Obviously correct and tested? **PASS** — refcount accounting is
+   consistent; maintainer-applied. Hardware Tested-by absent but the
+   logic is verifiable from the code.
+2. Fixes a real bug that affects users? **PASS** — dangling MR after
+   failed `.set_map`.
+3. Important issue? **PASS** — UAF / host crash, HIGH.
+4. Small and contained? **PASS** — one file, +15/-8.
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — 3/4 clean; HIDP needs
-   `depends on BT && BT_BREDR && INPUT && HID_SUPPORT`.
+6. Can apply to the local tree? **PASS** — buggy code present; clean
+   apply.
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: **Build fix** (Kconfig dependency). Qualifies.
+Record: **Not an exception category** (not an ID/quirk/DT/build/doc
+add). It qualifies as a normal UAF/refcount bug fix.
 
-**Step 9.4: DECISION**
-Backport. The bug is in this 6.12 tree, the fix is surgical and correct,
-and it restores Bluetooth protocol modules that kbuild currently throws
-away.
+**Step 9.4: MAKE YOUR DECISION**
+This tree has the bug. The patch is a small, correct rollback that
+prevents a host UAF on a reachable vDPA map-update error path. Backport
+it.
 
----
+===============================================================
+What the commit solves, and why it matters here
+===============================================================
 
-### What the commit solves for this tree
+On 6.12, a live mlx5 vDPA map change with non-resumable firmware tears
+down virtqueues, installs a new MR, then rebuilds queues. If rebuild
+fails, `set_map_data()` still `put`s that new MR while `mres.mr[asid]`
+points at it. The MR GC workqueue can free it two seconds later. Later
+mkey reads are a use-after-free in the host kernel.
 
-With `CONFIG_BT=m`, kbuild visits `net/bluetooth/` without `need-
-builtin`. Protocol dirs listed as `obj-y` are filtered out, so
-RFCOMM/BNEP/HIDP/6LoWPAN never compile. Adding `depends on BT` forces
-those symbols to `=m` when BT is a module, which is the working
-configuration. That includes `arch/arm/configs/s5pv210_defconfig` in
-this checkout.
+The fix keeps an extra ref on the old MR, installs the new one for the
+rebuild (required, because create/modify read `mres.mr[]`), and on setup
+failure restores the old MR so the extra ref becomes the map ref.
+`change_map()` owns `new_mr` on all error paths, so the caller does not
+double-put.
 
-### Stable rules / risk vs benefit
+Risk vs benefit: low risk, high severity. No prerequisites missing in
+6.12.111.
 
-Meets the rules: obviously correct, real user-visible build bug, small,
-no new API. Benefit is restoring missing Bluetooth profiles; risk is a
-Kconfig depends tweak on configs that already did not build those
-objects.
-
-### Concerns
-
-HIDP must be backported as `depends on BT && BT_BREDR && INPUT &&
-HID_SUPPORT` (this tree does not yet use `depends on HID`). CMTP is left
-as-is (deprecated, not in the upstream patch).
-
----
-
-Verification:
-- [Phase 1] Tags: author SOB Iva Kasprzaková; maintainer SOB Luiz; no
-  Fixes/Reported-by/Cc: stable
-- [Phase 2] Diff: four `depends on BT &&` additions in Kconfig only
-- [Phase 2] Kbuild: `scripts/Makefile.lib` drops `obj-y` directories
-  when `need-builtin` is unset; `net/Makefile` uses `obj-$(CONFIG_BT) +=
-  bluetooth/`
-- [Phase 3] blame: 65efd2bf48853 (2014) introduced `depends on
-  BT_BREDR`/`BT_LE`; ancestor of HEAD
-- [Phase 3] `git merge-base --is-ancestor 646d8e385271 HEAD` failed —
-  fix not in this tree
-- [Phase 3] HIDP in this tree is 6cc90ccd4f6cf (`INPUT && HID_SUPPORT`),
-  not upstream `depends on HID`
-- [Phase 4] b4 dig: v1 20260720150919.9602-1-iva@yenya.net, v2
-  20260722130849.7813-1-iva@yenya.net
-- [Phase 4] Luiz asked for BT_6LOWPAN on v1; v2 applied to bluetooth-
-  next 646d8e385271
-- [Phase 4] Recipients: Holtmann, Luiz, linux-bluetooth; no stable
-  nomination
-- [Phase 4] stable lore search: no discussion of this patch
-- [Phase 6] `git describe HEAD`: p-6.12-3-g710455e2077bb; `make
-  kernelversion`: 6.12.111
-- [Phase 6] Local files still have the old depends lines
-- [Phase 8] `arch/arm/configs/s5pv210_defconfig`: CONFIG_BT=m +
-  CONFIG_BT_RFCOMM=y + CONFIG_BT_BNEP=y
-- [Phase 8] Failure mode: protocols silently not built; severity
-  MEDIUM–HIGH
-- UNVERIFIED: exact later commit that rewrote HIDP to `depends on HID`
-  (not required for the 6.12 backport)
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Parsed tags: SOB Weimin Xiong + Michael Tsirkin; Message-ID
+  present; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +15/-8 in `mlx5_vnet.c`; extra get on old MR; rollback
+  via `update_mr`; move `new_mr` put into `change_map()`
+- [Phase 2] `mlx5_vdpa_update_mr()` puts old and assigns new without get
+  on new (mr.c:731)
+- [Phase 2] `mlx5_vdpa_create_mr()` starts refcount at 1 (mr.c:832)
+- [Phase 2] create_virtqueue reads `mvdev->mres.mr[]` for mkeys
+  (mlx5_vnet.c:944)
+- [Phase 3] blame: update-before-setup from 625e4b59 (v6.7-rc1);
+  teardown/rebuild from f756dd3e (v6.8-rc1)
+- [Phase 3] `git merge-base --is-ancestor 11f79e2780043 HEAD` → not in
+  this tree
+- [Phase 3] Postpone-MR-deletion 62111654481d5 is in this tree
+  (v6.12-rc1); GC delay 2000ms (mr.c:664)
+- [Phase 4] `b4 dig -c 11f79e27` →
+  patch.msgid.link/20260716054353.155805-1-xiongwm2026@163.com
+- [Phase 4] `b4 dig -a`: only v2; v1 was a different (incorrect) patch-
+  id
+- [Phase 4] `b4 dig -w`: Tatulea, Tsirkin, Wang, Perez CC'd
+- [Phase 4] mbox: submission only, no replies; lore HTTP 403
+- [Phase 5] callers: `mlx5_vdpa_set_map` ← vhost-vdpa `.set_map`
+- [Phase 5] teardown path when `.resume` is NULL
+  (`freeze_to_rdy_supported` missing, mlx5_vnet.c:4107)
+- [Phase 6] `git describe HEAD` → p-6.12-3-gc504cf0baa3d8; `make
+  kernelversion` → 6.12.111
+- [Phase 6] current `mlx5_vdpa_change_map()` matches the pre-patch code;
+  `git apply --check` clean
+- [Phase 8] Failure mode: dangling MR → GC → UAF, severity HIGH
+- UNVERIFIED: stable@ mailing-list discussion (lore 403); no hardware
+  Tested-by
 
 **YES**
 
- net/bluetooth/Kconfig        | 2 +-
- net/bluetooth/bnep/Kconfig   | 2 +-
- net/bluetooth/hidp/Kconfig   | 2 +-
- net/bluetooth/rfcomm/Kconfig | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/vdpa/mlx5/net/mlx5_vnet.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/Kconfig b/net/bluetooth/Kconfig
-index 6b2b65a667008..86618afb855d3 100644
---- a/net/bluetooth/Kconfig
-+++ b/net/bluetooth/Kconfig
-@@ -83,7 +83,7 @@ config BT_LE_L2CAP_ECRED
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index 44062e9d68f00..c49167d760a62 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -3044,18 +3044,24 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
+ 				unsigned int asid)
+ {
+ 	struct mlx5_vdpa_net *ndev = to_mlx5_vdpa_ndev(mvdev);
++	struct mlx5_vdpa_mr *old_mr;
+ 	bool teardown = !is_resumable(ndev);
+ 	int err;
  
- config BT_6LOWPAN
- 	tristate "Bluetooth 6LoWPAN support"
--	depends on BT_LE && 6LOWPAN
-+	depends on BT && BT_LE && 6LOWPAN
- 	help
- 	  IPv6 compression over Bluetooth Low Energy.
+ 	suspend_vqs(ndev, 0, ndev->cur_num_vqs);
+ 	if (teardown) {
+ 		err = save_channels_info(ndev);
+-		if (err)
++		if (err) {
++			mlx5_vdpa_put_mr(mvdev, new_mr);
+ 			return err;
++		}
  
-diff --git a/net/bluetooth/bnep/Kconfig b/net/bluetooth/bnep/Kconfig
-index aac02b5b0d170..f8087e2d2c00e 100644
---- a/net/bluetooth/bnep/Kconfig
-+++ b/net/bluetooth/bnep/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config BT_BNEP
- 	tristate "BNEP protocol support"
--	depends on BT_BREDR
-+	depends on BT && BT_BREDR
- 	select CRC32
- 	help
- 	  BNEP (Bluetooth Network Encapsulation Protocol) is Ethernet
-diff --git a/net/bluetooth/hidp/Kconfig b/net/bluetooth/hidp/Kconfig
-index e08aae35351a7..ba52c7296f18f 100644
---- a/net/bluetooth/hidp/Kconfig
-+++ b/net/bluetooth/hidp/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config BT_HIDP
- 	tristate "HIDP protocol support"
--	depends on BT_BREDR && HID
-+	depends on BT && BT_BREDR && HID
- 	help
- 	  HIDP (Human Interface Device Protocol) is a transport layer
- 	  for HID reports.  HIDP is required for the Bluetooth Human
-diff --git a/net/bluetooth/rfcomm/Kconfig b/net/bluetooth/rfcomm/Kconfig
-index 9b9953ebf4c02..e7af2d565cea8 100644
---- a/net/bluetooth/rfcomm/Kconfig
-+++ b/net/bluetooth/rfcomm/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config BT_RFCOMM
- 	tristate "RFCOMM protocol support"
--	depends on BT_BREDR
-+	depends on BT && BT_BREDR
- 	help
- 	  RFCOMM provides connection oriented stream transport.  RFCOMM
- 	  support is required for Dialup Networking, OBEX and other Bluetooth
+ 		teardown_vq_resources(ndev);
+ 	}
+ 
++	/* Keep the old MR alive in case rebuilding the VQs fails. */
++	old_mr = mvdev->mres.mr[asid];
++	mlx5_vdpa_get_mr(mvdev, old_mr);
+ 	mlx5_vdpa_update_mr(mvdev, new_mr, asid);
+ 
+ 	for (int i = 0; i < mvdev->max_vqs; i++)
+@@ -3063,17 +3069,22 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
+ 						MLX5_VIRTQ_MODIFY_MASK_DESC_GROUP_MKEY;
+ 
+ 	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK) || mvdev->suspended)
+-		return 0;
++		goto out;
+ 
+ 	if (teardown) {
+ 		restore_channels_info(ndev);
+ 		err = setup_vq_resources(ndev, true);
+-		if (err)
++		if (err) {
++			/* The saved reference becomes the restored map reference. */
++			mlx5_vdpa_update_mr(mvdev, old_mr, asid);
+ 			return err;
++		}
+ 	}
+ 
+ 	resume_vqs(ndev, 0, ndev->cur_num_vqs);
+ 
++out:
++	mlx5_vdpa_put_mr(mvdev, old_mr);
+ 	return 0;
+ }
+ 
+@@ -3357,15 +3368,11 @@ static int set_map_data(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
+ 		err = mlx5_vdpa_change_map(mvdev, new_mr, asid);
+ 		if (err) {
+ 			mlx5_vdpa_err(mvdev, "change map failed(%d)\n", err);
+-			goto out_err;
++			return err;
+ 		}
+ 	}
+ 
+ 	return mlx5_vdpa_update_cvq_iotlb(mvdev, iotlb, asid);
+-
+-out_err:
+-	mlx5_vdpa_put_mr(mvdev, new_mr);
+-	return err;
+ }
+ 
+ static int mlx5_vdpa_set_map(struct vdpa_device *vdev, unsigned int asid,
 -- 
 2.53.0
 
