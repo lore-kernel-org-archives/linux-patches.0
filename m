@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB5D4D3BC1;
-	Mon, 19 Oct 2026 14:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CD95D8C8E;
+	Mon, 19 Oct 2026 14:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418517; cv=none; b=QmPWIxhiS9Oj/OjgEuFRlcYAnnYX/r3vgF4fplPnEJMqC0hnJ6AkR+TEViJTbpdxbnZNHjawF4GuuGCr9jEBXWcUEuB4Z57a+EABd5eEyJTr5zsrYI4P5l58iSFPmPZsBPDrpB2jH+M0B0i9A17zDCU2JpR3hDBZ0dewCOL74JM=
+	t=1792418518; cv=none; b=sKf1vDdSZMQMexx+XOcgJ3IgPWifkKAvYmsdmc6GwY8qH4WaIO44IU37akSfTZMIqLA3X7Ak3nLZTTI5W/zQxzAn+qUcCTOMIxr9DvRe2L4GWdQYqJbCmSYvfnnhBKzVQz9gNngwZcNnzaa8hYQ0RS9Ch8//dJonxMciFEFZh4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418517; c=relaxed/simple;
-	bh=QTirHrIn1Zc4NgTjLu0XMpXGjojBjDEi/jkUjkhP+xg=;
+	s=arc-20240116; t=1792418518; c=relaxed/simple;
+	bh=XZ1DQhAoE9PMJ0oJ1VLxRMseKp+0fnZUW8nGW8XSnWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JJ8ymA6z4Eb8WIcI+/4VJxaEaXSotxRSd8WxsEYZVSXKvKWiF/USwihF4si4OOrmdl1WcDEDGT4q++OJ1mKk6NJf4/DqdYB1RFG5hEiyEORMUTiDK96CTpGtvhTgKnSW6/eO9jJqV5fxziO0YskdhevFaZK6kvny7CTMx1iiSSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aPmLKmmy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rWhcx4qwiz55+j+N+m/5t/ywmMKS/PtIWSCH50Kv6i+DvIqZxs3OspFo72Gw/jixxYchWq7JUFBvCWFI731nAPQW347F09bMRGLzqxXGV+laqB5lE1jpD1tyFjo4RL2yj+NZ7MAmnlJ+JTZz4EEIn31Z+wI8HNcJIrwcGElTz3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oLDLbiOZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aPmLKmmy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE7C1F000C7;
-	Mon, 19 Oct 2026 14:01:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oLDLbiOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31631F000C9;
+	Mon, 19 Oct 2026 14:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418514;
-	bh=FfMEqOk9tEAGb7JSgvHuG1mrEWOKhoUT079PF0wQ09Q=;
+	s=k20260515; t=1792418516;
+	bh=Jk6QeDP3er7oJrzie6h/aR641WmY6fsxB8wBz8frDWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aPmLKmmyA1ZlDfopwxi6ieXbvagkYrtwhQyCun9izbbgET1l3+uWQqEw9Ibos6ngR
-	 BxLFrGanZ1/sKrDFKs4pUqSi8467Ie/13aNgdrXjVcAHT0iEtaJhOX7pH3bvOKeIG2
-	 8lxKulmNUplHkWW6LhTBC4RAItxoKvC5if+e5X+44c3ziIMWlU8jCzt92TkmUt1eFF
-	 YELhQgsyra/79IVHs63cxegJZTT6Ija8qyjXyKm6N/c+xBxlrXlet4ixYl/VG2nem4
-	 1C9dlJtHIN3AtScgSzyFuLBIBgIs9VFbtCEhIwsabCZxC+EfH/CPjBzUk28s6sGN/6
-	 kK0/1Ww9d0NYw==
+	b=oLDLbiOZTnR66taWzBOMVQeAV9EhS6xttqVYpAkN3aMtdzOBt3dnKVbuI4Pw8mg8E
+	 Qa/G18GF8jyN1CF9FpZFLI+OTxk/quQ29CBVRyz6p7OHsAgR79WPfov2MrDOcmkfJw
+	 sMQrZhNe6Z/yDBW4/EbYmJ1n14q5zwKBj+fjs68OK7F97da06usYfvdHi/0wm3w6Gj
+	 4d6vHzx7CJTwgoBUHGaPjc1nu/WYVZZtgkiLnyRJFhFG9AiqXoWPAYIpxdSJmqSj1p
+	 Ps5gBQUUAwX48+oKk84yzmpk5pGmYbP+AgwLg0h1bVqcieZVhwwi+jpuw2q76J0/1C
+	 Nw98OgSw8gt9Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+Cc: William Theesfeld <william@theesfeld.net>,
+	Brian Masney <bmasney@redhat.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dwmw2@infradead.org,
-	joro@8bytes.org,
-	will@kernel.org,
-	iommu@lists.linux.dev,
+	sboyd@kernel.org,
+	bmasney+clk@redhat.com,
+	jbrunet+clk@baylibre.com,
+	linux-clk@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] iommu/vt-d: Fix CACHE_TAG_NESTING_DEVTLB polluting shared variables in flush loop
-Date: Mon, 19 Oct 2026 09:49:53 -0400
-Message-ID: <20261019135441.1420968-302-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] clk: zynq: handle kasprintf() failure in periph_clk registration
+Date: Mon, 19 Oct 2026 09:49:54 -0400
+Message-ID: <20261019135441.1420968-303-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,533 +57,468 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: William Theesfeld <william@theesfeld.net>
 
-[ Upstream commit 3846e469c1ba1407260066070bff5c88ee39a4c7 ]
+[ Upstream commit d4d0d335e8d37c6c7e1c5664c7664288eca5a09b ]
 
-In cache_tag_flush_range(), the CACHE_TAG_NESTING_DEVTLB case modifies the
-shared local variables 'addr' and 'mask' before falling through to
-CACHE_TAG_DEVTLB. This causes all subsequent CACHE_TAG_DEVTLB entries in
-the same loop iteration to incorrectly use the full-range flush parameters
-(addr=0, mask=MAX_AGAW_PFN_WIDTH) instead of the precisely calculated PSI
-range. This is not the intended behavior, as regular DEVTLB entries should
-always perform targeted range-based invalidation.
+zynq_clk_register_periph_clk() ignores the return value of the two
+kasprintf() calls used to build the mux and divider clock names, and
+passes the resulting (possibly NULL) pointers straight into
+clk_register_mux(), clk_register_divider() and clk_register_gate() as
+the clock '"'name'"' argument.  On allocation failure that name later
+gets dereferenced by the clock framework (e.g. in debugfs name
+formatting), causing a NULL-pointer dereference.
 
-Fix this by having CACHE_TAG_NESTING_DEVTLB directly call
-cache_tag_flush_devtlb_psi() with the full-range constants and break,
-instead of modifying shared variables and falling through. This ensures
-CACHE_TAG_DEVTLB always uses the original calculated addr and mask for
-precise range flush.
+Check both kasprintf() returns.  On failure unwind any allocated name
+buffer and the spinlock, then fall through to the existing err label
+which sets clks[] to ERR_PTR(-ENOMEM).  Freeing the spinlock on the
+error path is correct here because no clk_register_*() call has had
+a chance to take ownership of it; the success path intentionally
+hands it off to the registered clocks.
 
-This change slightly affects trace_cache_tag_flush_range() behavior.
-Previously, after addr/mask were overwritten, the tracepoint could record
-a full-range flush even when the caller requested a narrower range.
+The neighbouring zynq_clk_register_fclk() in the same file already
+uses this per-allocation goto-label cleanup pattern; this change
+brings periph_clk into line with it.
 
-The tracepoint should reflect caller intent. Although this helper may
-widen the actual hardware invalidation range for implementation reasons,
-that does not change what the caller requested, so logging the requested
-range is the correct behavior.
-
-If the actual invalidation range sent to hardware is needed, it is already
-visible via the qi_submit trace event, which records the invalidation
-descriptors emitted by the driver.
-
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: William Theesfeld <william@theesfeld.net>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The remaining thread parse confirms two vendors independently hit the
-same flush-loop bug. I’ll wrap the nine-phase analysis against this 6.12
-tree only.
+The local tree is **6.18.53**. The buggy
+`zynq_clk_register_periph_clk()` path is present here, and the patch is
+an 8-line error-path fix. Full nine-phase analysis follows.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-
-Record: **[iommu/vt-d] [Fix] [CACHE_TAG_NESTING_DEVTLB mutates shared
-`addr`/`mask` in `cache_tag_flush_range()`, so later tags in the same
-loop use a full-range flush instead of the calculated PSI range]**
+- Subsystem: `clk: zynq`
+- Action verb: **handle** (bug-fix verb: missing failure handling)
+- Intent: check `kasprintf()` in peripheral clock registration so a NULL
+  name is not passed into the clock framework
+- Record: `[clk/zynq] [handle] [check kasprintf failure when registering
+  periph clocks]`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-Record:
-- **Signed-off-by:** Guanghui Feng (author, Alibaba), Guixin Liu
-  (Alibaba), Lu Baolu (Intel VT-d maintainer), Joerg Roedel (IOMMU
-  maintainer)
-- **No Fixes:** tag (expected for this review pipeline)
-- **No Cc: stable** (expected)
-- **No Reported-by / Tested-by / Reviewed-by / Acked-by / Link** on the
-  committed message
-- Independent earlier submission of the same bug exists (Baidu; see
-  Phase 4)
+- `Reviewed-by: Brian Masney <bmasney@redhat.com>` — clk co-maintainer;
+  also final `Signed-off-by` into clk tree
+- `Reviewed-by: Michal Simek <michal.simek@amd.com>` — ARM/Zynq
+  architecture maintainer
+- `Signed-off-by: William Theesfeld <william@theesfeld.net>` — author
+- `Signed-off-by: Brian Masney <bmasney@redhat.com>` — maintainer merge
+- No `Fixes:` tag (expected for this review pipeline)
+- No `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable`
+- Pipeline-added markers ignored per instructions: `[Upstream commit
+  d4d0d335…]`, `Signed-off-by: Sasha Levin`
+- Record: maintainer-reviewed, no syzbot/user report, no Fixes tag
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
-Record:
-- **Bug:** In `cache_tag_flush_range()`, `CACHE_TAG_NESTING_DEVTLB`
-  writes `addr = 0` and `mask = MAX_AGAW_PFN_WIDTH` then `fallthrough`s
-  into `CACHE_TAG_DEVTLB`. Those locals are computed once before the
-  loop, so every later tag sees the full-range values.
-- **Symptom:** Regular DevTLB (and, in this tree, later IOTLB)
-  invalidations become global/full-range instead of the caller’s PSI
-  range. Tracepoint can also log a full-range flush when the caller
-  asked for a narrower range.
-- **Version info:** None in the message. Introduced with cache-tag
-  helpers (v6.11); present in this 6.12 tree.
-- **Root cause:** Shared loop variables overwritten for one tag type,
-  then reused for all later tags.
+- Bug: `zynq_clk_register_periph_clk()` ignores two `kasprintf()`
+  results used as mux/divider names and passes them into
+  `clk_register_mux/divider/gate`
+- Claimed symptom: NULL name later dereferenced in CCF (commit cites
+  debugfs name formatting) → NULL-pointer dereference
+- Fix: check both returns; on failure free the other name buffer and the
+  spinlock, then the existing `err` label sets `clks[] =
+  ERR_PTR(-ENOMEM)`
+- Author notes the sibling `zynq_clk_register_fclk()` already uses this
+  goto-cleanup pattern
+- Record: `[Bug: unchecked kasprintf] [Symptom: NPD / broken clock init]
+  [No version info] [Root cause: missing NULL checks before
+  clk_register_*]`
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
+- Not disguised. Explicit error-path fix. Also closes a spinlock leak on
+  the failure path (lock is allocated before `kasprintf`; success hands
+  it to registered clocks, so failure must `kfree(lock)`).
+- Record: `[Not hidden; allocation-failure / leak / NPD-class error-path
+  fix]`
 
-Record: **Not hidden.** Subject and body are an explicit logic-bug fix.
-The extra tracepoint paragraph is a side effect of stopping the
-overwrite, not the reason for the change.
-
----
-
-## PHASE 2: DIFF ANALYSIS
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
-
-Record:
-- **File:** `drivers/iommu/intel/cache.c` only
-- **Net:** 2 insertions, 3 deletions (5-line change)
-- **Function:** `cache_tag_flush_range()`
-- **Scope:** single-file surgical fix
+- File: `drivers/clk/zynq/clkc.c` — **+8 / -0**
+- Function: `zynq_clk_register_periph_clk()`
+- Scope: single-file surgical error-path fix
+- Record: `[clkc.c +8] [zynq_clk_register_periph_clk] [surgical]`
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Verified against parent `e3b8b15ec6f0a^`:
 
-Record:
-- **Before:** `CACHE_TAG_NESTING_DEVTLB` mutates `addr`/`mask`, falls
-  through, flushes that tag as a full DevTLB, and leaves the mutated
-  values for later iterations.
-- **After:** That case calls `cache_tag_flush_devtlb_psi(domain, tag, 0,
-  MAX_AGAW_PFN_WIDTH)` and `break`s. Later
-  `CACHE_TAG_DEVTLB`/`CACHE_TAG_IOTLB` tags keep the original PSI
-  `addr`/`mask`.
-- **Path:** mapping-change invalidation (`intel_iommu_tlb_sync`,
-  superpage switch, SVM range invalidate), not probe/error-only.
+Before:
+```
+mux_name = kasprintf(...);   /* unchecked */
+div_name = kasprintf(...);   /* unchecked */
+clk_register_mux(..., mux_name, ...);
+clk_register_divider(..., div_name, mux_name, ...);
+clks[clk0] = clk_register_gate(..., clk_name0, div_name, ...);
+```
+`err` was only used for `kmalloc(lock)` failure.
 
-Verified in this checkout (`cache.c` 437–478): the buggy `addr = 0; mask
-= MAX_AGAW_PFN_WIDTH; fallthrough;` is present.
+After: NULL `mux_name` → `err_mux_name` (`kfree(lock)`); NULL `div_name`
+→ `err_div_name` (`kfree(mux_name)` then lock). Then `err` sets
+`clks[clk0/clk1] = ERR_PTR(-ENOMEM)`. Success path unchanged.
+- Record: `[error path only: skip clk_register_* on kasprintf failure
+  and unwind]`
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
+Category: **error path / resource leak** plus **memory safety** (NULL
+name into CCF).
 
-Record: **[Logic / correctness]** Shared loop state is clobbered. Nested
-DevTLB still needs a full device-cache flush (comment is unchanged). The
-fallthrough was a convenient way to reuse the DevTLB helper and
-accidentally changed flush parameters for every later tag.
+Verified CCF behavior in this tree (`drivers/clk/clk.c`):
+- `kstrdup_const(NULL)` → `kstrdup(NULL)` returns NULL (`mm/util.c:84`)
+- `__clk_register` then fails with `-ENOMEM` if `core->name` is NULL
+  (`clk.c:4435-4438`)
+- NULL **parent** name hits `WARN(!parent_names[i], ...)` then
+  `clk_cpy_name(..., true)` returns `-EINVAL` (`clk.c:4347-4351,
+  4307-4309`)
+- `zynq_clk_setup()` then does `if (IS_ERR(clks[i])) BUG();`
+  (`clkc.c:570-575`)
 
-Consequence in this tree:
-- Later `CACHE_TAG_DEVTLB`: full-range Dev-IOTLB instead of PSI (over-
-  invalidation).
-- Later `CACHE_TAG_IOTLB` / `CACHE_TAG_NESTING_IOTLB`:
-  `cache_tag_flush_iotlb(..., addr, pages, mask, ih)` with `addr=0`,
-  `mask=MAX_AGAW_PFN_WIDTH` (52) and original `pages`. On the nest-
-  parent S2 domain (`use_first_level` is false; see Phase 5/6) that
-  typically becomes domain-selective IOTLB (`mask > cap_max_amask_val`)
-  — still covering, but far broader than PSI.
+So a fully failed registration already `BUG()`s. The remaining hole is
+mixed failure (mux `kasprintf` fails, div succeeds): mux/div
+registration fails, gate may still register with a valid DT name and a
+never-created parent → no `BUG()`, broken UART/SDIO/SPI/LQSPI/SMC/PCAP
+clocks, and the spinlock can leak because `err` is not taken.
+- Record: `[error-path leak + WARN + inconsistent clks[] / possible
+  silent broken periph clocks]`
 
 **Step 2.4: ASSESS THE FIX QUALITY**
+- Matches the existing `zynq_clk_register_fclk()` pattern (present since
+  `f8fe36f6083a70`, v3.13).
+- `kfree(lock)` on this path is correct: no `clk_register_*` has run
+  yet.
+- Does not change the success path.
+- Regression risk: very low. On failure, `clks[]` becomes
+  `ERR_PTR(-ENOMEM)` and `zynq_clk_setup()` `BUG()`s — same policy this
+  driver already uses for lock allocation / registration failure.
+- Record: `[obviously correct, 8 lines, error-path only; risk very low]`
 
-Record: **Obviously correct.** Same full-range DevTLB flush for nesting,
-without mutating shared locals. No new locking, APIs, or data
-structures. Regression risk is low: nested DevTLB still gets a full
-flush; other tags get the range the caller computed. Tracepoint then
-logs the requested range, which is the stated intent.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-
-Record:
-- Buggy `addr`/`mask`/`fallthrough` introduced in **`c4d27ffaa8eb0`**
-  (“iommu/vt-d: Add cache tag invalidation helpers”, Lu Baolu,
-  2024-04-24).
-- **`git describe --contains c4d27ffaa8eb0`:**
-  `x86_boot_for_v6.11_rc1~...` → first appeared in **v6.11**.
-- **`git merge-base --is-ancestor c4d27ffaa8eb0 HEAD`:** yes. Present
-  for the whole 6.12 lifetime.
+- Function introduced in `0ee52b157b8ed8` (“clk: zynq: Add clock
+  controller driver”), 2013, contained in **v3.11-rc1**.
+- `kasprintf` calls were unchecked from introduction until this fix.
+- Record: `[0ee52b157b8ed8 / v3.11] [bug present for the life of this
+  driver]`
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-
-Record: **No Fixes: tag.** Equivalent “buggy commit” is `c4d27ffaa8eb0`,
-which is in this tree.
+- No `Fixes:` tag. Buggy commit is the original driver add, which **is**
+  in this tree.
+- Record: `[no Fixes tag; original driver commit is in this tree]`
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Record (recent `drivers/iommu/intel/cache.c`):
-- `ffd774c34774f` qi_batch NULL with nested parent
-- `705c1cdf1e73c` batched cache invalidation
-- `3297d047cd7f5` refactor IOTLB/Dev-IOTLB flush (this is why 6.12’s
-  `cache_tag_flush_iotlb` still takes `pages`)
-- `c4d27ffaa8eb0` original helpers (bug intro)
-
-Standalone fix, not patch 2/3 of a functional series. It was later
-folded as 03/19 in “Intel IOMMU updates for v7.3”, but it does not
-depend on the other patches in that pull.
+- `f8fe36f6083a70` (v3.13): same goto-cleanup for
+  `zynq_clk_register_fclk()` kasprintf/kmalloc
+- `7938e9ce39d67` (2024, in this tree): “Prevent null pointer
+  dereference caused by kmalloc failure” in `zynq_clk_setup()`
+- `a6aa462c3efc1`: parameter update to this function — not a
+  prerequisite for these checks
+- Standalone; not patch N/M
+- Record: `[standalone; sibling already had the pattern; related kmalloc
+  NPD fix already here]`
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Record: Guanghui Feng has `31fd1e0281621` (“Fix intel iommu iotlb sync
-hardlockup and retry”) in this Intel IOMMU tree. Guixin Liu has no other
-hits here. Lu Baolu is the VT-d maintainer and signed off. Two vendors
-independently posted the same bug (Alibaba and Baidu).
+- Only this clk/zynq commit from William Theesfeld in this tree
+- Weight comes from reviewers: Michal Simek (Zynq) and Brian Masney
+  (clk)
+- Record: `[author not subsystem maintainer; both relevant maintainers
+  reviewed]`
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+- Uses existing `kasprintf`, `kfree`, `goto err` — all present
+- Mainline context uses `kmalloc_obj`; this tree still uses
+  `kmalloc(sizeof(*lock), GFP_KERNEL)`. The hunk does not touch that
+  line, so no `kmalloc_obj` dependency.
+- Record: `[no prerequisites; applies standalone against this tree’s
+  kmalloc() form]`
 
-Record: **No functional prerequisites.**
-`cache_tag_flush_devtlb_psi(domain, tag, addr, mask)` exists here with
-that signature. Surrounding context differs (`pages` still passed to
-IOTLB flush and the tracepoint; `cache_tag_flush_all` is still its own
-loop, not a wrapper). The 3-line change backports with a context tweak,
-not extra commits.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-Record:
-- Original: Message-ID
-  `20260623060122.3796325-1-guanghuifeng@linux.alibaba.com`
-  (2026-06-23), 3-message thread via `b4 mbox`.
-- Lu Baolu (2026-06-27): same issue already posted by Baidu:
-  `https://lore.kernel.org/linux-
-  iommu/20260605003950.1720-1-lirongqing@baidu.com/`
-- Lu Baolu (2026-07-27): **“Queued for v7.3-rc1.”**
-- No NAKs. No reviewer concern about correctness.
-- v2 of the Intel pull added the tracepoint clarification; the code
-  change is unchanged from v1.
+- `b4 dig -c d4d0d335e8d37c6c7e1c5664c7664288eca5a09b` →
+  https://patch.msgid.link/20260601203500.658135-1-william@theesfeld.net
+- `b4 dig -a`: **v1 only** (2026-06-01)
+- Thread saved to mbox: Michal Simek Reviewed-by (2026-06-02); Brian
+  Masney Reviewed-by (2026-06-15). No NAK, no requested respin, no Cc:
+  stable in review.
+- Lore WebFetch returned 403; discussion read from `b4 dig -m` instead
+- Record: `[lore msgid 20260601203500.658135-1-william@theesfeld.net]
+  [v1 applied] [no NAKs] [no stable nomination in thread]`
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-Record: Recipients were the IOMMU maintainers (Woodhouse, Lu, Roedel,
-Deacon, Murphy) and `iommu@lists.linux.dev`. Lu Baolu signed off and
-queued it; Joerg applied it. No separate Reviewed-by on the committed
-text. Kevin Tian was CCed on the pull, not recorded as a reviewer of
-this hunk.
+- `b4 dig -w` recipients: Turquette, Boyd, Masney, Simek, linux-clk,
+  linux-arm-kernel, linux-kernel
+- Record: `[clk maintainers + Zynq maintainer were on To/Cc; both
+  Reviewed-by]`
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Record: No syzbot/bugzilla. **Two independent vendor patches:**
-1. Li RongQing (Baidu), 2026-06-05: “Prevent variable pollution in
-   `cache_tag_flush_range()`” — per-iteration `flush_addr`/`flush_mask`
-   copies, including the IOTLB path.
-2. Guanghui Feng (Alibaba), 2026-06-23 — the version that landed (direct
-   full-range call + `break`).
-
-Baidu pinged after 12 days; Lu queued it. That is “bothers people,” not
-a theoretical review nit.
+- No Reported-by / Link / syzbot
+- Record: `[no external bug report; found by code inspection]`
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-Record: Landed as **03/19** of Lu Baolu’s “Intel IOMMU updates for
-v7.3”. Other patches in that series are unrelated (UCTP, tboot, context
-teardown, etc.). This hunk is self-contained. Several *other* fixes from
-that pull are already in this `pending-6.12` tree; this one is not.
+- Standalone v1 patch, not a series
+- Record: `[standalone]`
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+- `lore.kernel.org/stable/` fetch returned 403
+- Record: `[UNVERIFIED: stable-list discussion; not used for the
+  verdict]`
 
-Record: `lore.kernel.org/stable` fetch returned 403. **UNVERIFIED**
-whether stable@ already discussed this specific subject. No evidence it
-was rejected for stable.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: KEY FUNCTIONS**
-
-Record: `cache_tag_flush_range()`; helper `cache_tag_flush_devtlb_psi()`
-(unchanged).
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+- Record: `[zynq_clk_register_periph_clk (modified); zynq_clk_setup
+  (caller)]`
 
 **Step 5.2: TRACE CALLERS**
-
-Record (this tree):
-- `intel_iommu_tlb_sync()` in `iommu.c` — unmap/Iotlb gather; **common
-  VFIO/iommufd map change path**
-- `switch_to_super_page()` in `iommu.c`
-- `intel_nested_cache_invalidate_user()` in `nested.c` — flushes the
-  **nested S1 domain** (IOTLB/DEVTLB only; NESTING tags live on S2)
-- `intel_arch_invalidate_secondary_tlbs()` in `svm.c` — SVA
-
-The pollution matters when the domain being flushed **has
-`CACHE_TAG_NESTING_DEVTLB` on its list**, i.e. the **S2 nest-parent**,
-on S2 map changes (`intel_iommu_tlb_sync` on that domain).
+Call sites in `zynq_clk_setup()` (CLK_OF_DECLARE `"xlnx,ps7-clkc"`,
+every Zynq boot):
+- lqspi, smc, pcap (single gate)
+- sdio0/sdio1, uart0/uart1, spi0/spi1 (two gates)
+- Record: `[boot-time OF clock init for Zynq PS peripherals]`
 
 **Step 5.3: TRACE CALLEES**
-
-Record: `calculate_psi_aligned_address` → lock → per-tag
-`cache_tag_flush_iotlb` / `cache_tag_flush_devtlb_psi` →
-`qi_batch_add_*` / `qi_submit_sync`.
+- `kasprintf`, `kmalloc`/`kfree`, `clk_register_mux/divider/gate`
+- Record: `[name alloc + CCF register; gate clocks stored in clks[]]`
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-
-Record: Nested attach (`cache_tag_assign_domain`) puts NESTING_* tags on
-`domain->s2_domain`. Nest parent is allocated with
-`paging_domain_alloc(dev, false)` so **`use_first_level` is false**.
-Userspace (iommufd/VFIO nested vIOMMU) changing S2 mappings triggers
-`intel_iommu_tlb_sync` → `cache_tag_flush_range` on S2. **Reachable from
-VM/device assignment, not a debug-only path.**
-
-Tag order (`list_add_tail`): per nested ATS device, `NESTING_IOTLB` then
-`NESTING_DEVTLB`. With **two or more** nested ATS devices, after the
-first `NESTING_DEVTLB`, later IOTLB/DEVTLB tags see polluted
-`addr`/`mask`. Mixed host-on-S2 + nested-on-S2 with nested attached
-first is the `CACHE_TAG_DEVTLB` case the commit describes.
+- `CLK_OF_DECLARE` → `zynq_clk_setup` → `zynq_clk_register_periph_clk`
+  during early boot on `CONFIG_ARCH_ZYNQ`
+- `CONFIG_ARCH_ZYNQ=y` in `arch/arm/configs/multi_v7_defconfig`
+- Not a syscall path; unprivileged users cannot trigger it except by
+  booting the platform (possibly under memory pressure)
+- Record: `[reachable on every Zynq boot; not userspace-triggerable
+  later]`
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+- `zynq_clk_register_fclk()` already checks every `kasprintf`
+- After this patch, no remaining unchecked `kasprintf` in
+  `drivers/clk/zynq/clkc.c`
+- Record: `[sibling already fixed; this was the remaining hole]`
 
-Record: `cache_tag_flush_all()` in this tree already handles
-`CACHE_TAG_DEVTLB` and `CACHE_TAG_NESTING_DEVTLB` together via
-`cache_tag_flush_devtlb_all()` **without** mutating shared range locals.
-`cache_tag_flush_range_np()` does not touch DevTLB. The range path is
-the inconsistent one.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Record:
-- **Tree:** `pending-6.12`, `git describe HEAD` =
-  `p-6.12-3-gc504cf0baa3d8`, `make kernelversion` = **6.12.111**
-- Buggy code: `drivers/iommu/intel/cache.c` lines 458–468
-- Introduced v6.11 (`c4d27ffaa8eb0`), **before** 6.12 branched
-- `git log --grep='polluting shared'` on this path: **empty** — fix
-  **not** already applied
+- `git describe HEAD` → **v6.18.53-5049-g0f0bdc2b0dffb**
+- `make kernelversion` → **6.18.53**
+- Parent of the candidate still has unchecked `kasprintf` in
+  `zynq_clk_register_periph_clk`
+- Driver built as `obj-$(CONFIG_ARCH_ZYNQ) += zynq/`
+- Record: `[yes, buggy code exists in 6.18.y zynq clkc; bug since
+  v3.11]`
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Record: **Minor context rework, not a redesign.** This tree still has:
-- `cache_tag_flush_iotlb(domain, tag, addr, pages, mask, ih)`
-- `trace_cache_tag_flush_range(tag, start, end, addr, pages, mask)`
-- a full `cache_tag_flush_all()` loop
-
-Mainline hunk context dropped `pages` and collapsed
-`cache_tag_flush_all` into a wrapper. The three changed lines
-(`addr`/`mask`/`fallthrough` → direct call + `break`) match this file
-as-is.
+- Surrounding function matches; only the 8 check/label lines are needed
+- `kmalloc_obj` in the mainline diff context is **not** used in this
+  file here
+- Record: `[clean apply / trivial context]`
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+- `7938e9ce39d67` (kmalloc NPD in `zynq_clk_setup`) is already in this
+  tree — different allocation
+- fclk kasprintf checks already present
+- No earlier equivalent of this periph_clk check besides the candidate
+  itself
+- Record: `[no substitute fix for this function’s kasprintf]`
 
-Record: No equivalent fix. `fallthrough` at line 468 is still the only
-one in this file.
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
----
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+- `drivers/clk/zynq/` — platform clock provider for Xilinx Zynq-7000
+- Criticality: **IMPORTANT** for Zynq (UART/SDIO/SPI clocks);
+  **PERIPHERAL** vs core kernel
+- Record: `[clk/zynq] [IMPORTANT for affected SoC, not universal]`
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+- File is mature (2013); recent commits are small correctness fixes, not
+  refactors
+- Record: `[mature/stable platform driver]`
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-Record: **Intel VT-d IOMMU cache invalidation.** Criticality:
-**IMPORTANT** (DMA isolation / nested virtualization). Not core mm/VFS,
-but wrong Dev-IOTLB/IOTLB parameters affect VFIO/iommufd nested guests
-with ATS devices.
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+- Record: `[platform-specific: CONFIG_ARCH_ZYNQ / xlnx,ps7-clkc]`
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+- `kasprintf(GFP_KERNEL, "%s_mux"/"%s_div", clk_name0)` during `__init`
+  (~tens of bytes)
+- Trigger: allocation failure at boot (rare, but same class this file
+  already treats as fatal via `BUG()`)
+- Not triggerable later from unprivileged userspace
+- Record: `[rare boot OOM; not a syscall race]`
 
-Record: Actively maintained; this `pending-6.12` branch already carries
-other VT-d fixes from the same v7.3 era pull. Cache-tag code has been
-stable in structure since 6.11 aside from batching.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Verified, not just the commit text:
+- NULL clock **name**: CCF fails `-ENOMEM` (no debugfs NPD on that path
+  in 6.18)
+- NULL **parent** name: `WARN()` then `-EINVAL`
+- Some combinations: `clks[i]` is `ERR_PTR` → existing `BUG()` in
+  `zynq_clk_setup`
+- Mixed success: possible boot with broken peripheral clocks + spinlock
+  leak
+- Author’s debugfs-NPD example is **overstated for this CCF**, but WARN
+  / leak / inconsistent init are real
+- Record: `[WARN + leak + possible BUG() or silently broken
+  UART/SDIO/SPI] [severity HIGH on trigger, trigger rare]`
 
----
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+- Benefit: correct OOM handling for clocks used on every Zynq boot;
+  closes leak; avoids WARN and half-registered trees
+- Risk: 8 lines, error path only, same pattern already in-tree
+- Record: `[benefit medium-high if it fires; risk very low; ratio favors
+  backport]`
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: WHO IS AFFECTED**
-
-Record: **Config/driver-specific:** `CONFIG_INTEL_IOMMU` + nested
-translation (`IOMMU_HWPT_ALLOC_NEST_PARENT` / iommufd nested) + ATS
-devices so `CACHE_TAG_*DEVTLB` tags exist. Typical cloud VFIO/vIOMMU.
-Not every 6.12 box.
-
-**Step 8.2: TRIGGER CONDITIONS**
-
-Record: S2 mapping changes while nested ATS devices are attached and
-more than one relevant cache tag follows a `NESTING_DEVTLB` on the list
-(multiple nested ATS devices, or nested-then-host on the same S2).
-Privileged/VMM path (iommufd), not an unprivileged syscall smash. Easy
-to hit in production nested setups; two cloud vendors filed it
-independently.
-
-**Step 8.3: FAILURE MODE SEVERITY**
-
-Record: **Wrong IOMMU invalidation parameters → overly broad IOTLB/Dev-
-IOTLB flushes** (global Device-TLB / domain-selective IOTLB instead of
-PSI).
-
-Verified **not** stale-translation under-invalidation on this tree’s
-nest parent: S2 is `paging_domain_alloc(dev, false)`, so the first-level
-`piotlb(addr=0, original pages)` mis-flush does not apply.
-
-Severity: **MEDIUM–HIGH** for nested ATS (I/O stalls, ATS storms, lost
-PSI benefit on a hot unmap path). Not oops/corruption in the verified
-6.12 S2 path. Matches stable-rules **“oh, that's not good”** and, given
-Baidu+Alibaba, a **notable performance/correctness issue that bothers
-production users**.
-
-**Step 8.4: RISK-BENEFIT RATIO**
-
-Record:
-- **Benefit:** Restore intended PSI DevTLB/IOTLB invalidation on nested
-  S2 flushes; avoid global ATS invalidation for later devices; tiny,
-  local change.
-- **Risk:** Very low (3 lines, same helper, nesting still full-flushes).
-- **Ratio:** Favorable for 6.12-stable.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
-**FOR:**
-- Real logic bug in VT-d nested cache invalidation, present since v6.11,
-  in this 6.12.111 tree
-- Two independent vendor reports (Baidu 2026-06-05, Alibaba 2026-06-23);
-  maintainer queued it
-- 5-line, obviously correct; no new API
-- User-visible extra global Device-TLB/IOTLB invalidations on nested S2
-  map updates
-- `cache_tag_flush_all()` already avoided this pattern; range path did
-  not
-- No functional dependencies missing here
+FOR:
+- Real missing error handling on `kasprintf` in a boot clock path that
+  already `BUG()`s on `IS_ERR(clks[i])`
+- Also a spinlock leak and a `WARN()` on NULL parent names
+- 8-line, obviously correct, mirrors in-tree sibling
+- Code and bug exist in this 6.18 tree since v3.11
+- Applies without `kmalloc_obj` or other prereqs
+- Reviewed by Zynq maintainer and clk maintainer
+- Same file already received a 2024 allocation-failure NPD fix
 
-**AGAINST:**
-- Not a crash, UAF, or proven stale-TLB corruption on this tree’s S2
-  path (error is conservative over-flush)
-- Nested+ATS is not universal
-- Hunk needs a small context backport (`pages` / `cache_tag_flush_all`
-  shape)
-- No Fixes/Cc: stable on the commit (not a negative per the pipeline
-  rules)
+AGAINST:
+- Trigger is a tiny boot-time allocation failure (rare)
+- No user/syzbot report
+- Debugfs NPD claim is not how 6.18 CCF handles a NULL `init.name`
+  (fails `-ENOMEM` first)
+- Platform-specific, not core
 
-**UNRESOLVED:**
-- lore.kernel.org HTTP 403; stable@ history not fetched (thread
-  recovered via `b4 mbox`)
-- Exact mainline SHA not in this checkout (no `git log --all`)
+UNRESOLVED:
+- Stable mailing list search (lore 403)
 
-**Step 9.2: STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — maintainer queued; two
-   vendors; trivial control-flow fix
-2. Fixes a real bug that affects users? **PASS** — Baidu and Alibaba
-   both submitted it
-3. Important issue? **PASS** (with the documented “oh, that's not good”
-   / notable nested-ATS invalidation impact) — not oops/corruption here,
-   but wrong IOMMU flush parameters on a production nested path
-4. Small and contained? **PASS** — 5 lines, one function
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — matches existing fclk
+   pattern; two maintainer Reviewed-by
+2. Fixes a real bug that affects users? **PASS** — unchecked alloc,
+   leak, WARN, inconsistent `clks[]` on Zynq boot
+3. Important issue? **PASS** — boot `WARN`/`BUG()`/broken UART-SDIO-SPI
+   clocks; same class as the in-tree kmalloc NPD fix
+4. Small and contained? **PASS** — +8 lines, one function
 5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — buggy lines exist; needs
-   minor context adjustment, not missing helpers
+6. Can apply to the local tree? **PASS** — function and bug present;
+   context is `kmalloc(sizeof)`, not `kmalloc_obj`
 
-**Step 9.3: EXCEPTION CATEGORIES**
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+- Not a device ID / quirk / DT / build / docs exception
+- Record: `[none; qualifies as a normal small bugfix]`
 
-Record: None (not a device ID/quirk/DT/build/doc exception). Qualifies
-as a normal small bugfix.
+**Step 9.4: MAKE YOUR DECISION**
+The patch is a small, maintainer-reviewed error-path fix for code this
+6.18 tree has had since v3.11. It does not add features. Risk is
+confined to the allocation-failure path. That is appropriate for this
+stable tree.
 
-**Step 9.4: DECISION**
+===============================================================
+What problem it solves for this tree
+===============================================================
+`zynq_clk_register_periph_clk()` builds mux/divider names with
+`kasprintf()` and, on failure, still calls into the clock framework.
+That can `WARN` on a NULL parent, leak the per-clock spinlock, and
+either `BUG()` in `zynq_clk_setup()` or leave UART/SDIO/SPI/LQSPI clocks
+half-registered. The fix stops before `clk_register_*`, frees the
+lock/name, and reports `-ENOMEM` the way lock allocation already does.
 
-This 6.12 tree has the bug. The fix is a three-line control-flow
-correction in Intel VT-d nested invalidation. It does not need later
-refactors. Over-flush is still a real, production-visible IOMMU bug
-(independent Alibaba and Baidu reports), and the patch is the lowest-
-risk way to restore the intended PSI range. It should be backported
-here.
+===============================================================
+Verification
+===============================================================
+- [Phase 1] Parsed tags: Reviewed-by Masney + Simek; no Fixes/Reported-
+  by/Cc stable; ignored pipeline Upstream/Sasha SOB
+- [Phase 1] Subject/body: handle kasprintf failure; claimed NPD; sibling
+  fclk pattern
+- [Phase 2] Diff: +8 in `zynq_clk_register_periph_clk`; parent still
+  unchecked (git show e3b8b15^)
+- [Phase 2] CCF: `kstrdup(NULL)` returns NULL (`mm/util.c:84`);
+  `__clk_register` `-ENOMEM` on NULL name (`clk.c:4435-4438`); NULL
+  parent `WARN` + `-EINVAL` (`clk.c:4347-4351`)
+- [Phase 2] `zynq_clk_setup` `BUG()`s on `IS_ERR(clks[i])`
+  (`clkc.c:570-575`)
+- [Phase 3] blame: function from `0ee52b157b8ed8` (v3.11-rc1); fclk
+  checks from `f8fe36f6083a70` (v3.13)
+- [Phase 3] related `7938e9ce39d67` kmalloc NPD fix is ancestor of HEAD
+- [Phase 3] no Fixes tag; original driver commit is in this tree
+- [Phase 4] `b4 dig -c d4d0d335…`: lore msgid
+  20260601203500.658135-1-william@theesfeld.net
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: clk + Zynq maintainers on Cc
+- [Phase 4] mbox: Simek and Masney Reviewed-by; no NAK
+- [Phase 4] lore WebFetch 403; stable-list search UNVERIFIED
+- [Phase 5] callers: lqspi/smc/pcap/sdio/uart/spi from `zynq_clk_setup`;
+  `CLK_OF_DECLARE(zynq_clkc, "xlnx,ps7-clkc")`
+- [Phase 5] `CONFIG_ARCH_ZYNQ=y` in multi_v7_defconfig;
+  `obj-$(CONFIG_ARCH_ZYNQ) += zynq/`
+- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb;
+  kernelversion 6.18.53
+- [Phase 6] buggy kasprintf present without this patch; no kmalloc_obj
+  in this file
+- [Phase 8] failure mode verified against CCF (debugfs NPD overstated);
+  WARN/leak/BUG/broken periph clocks verified
+- UNVERIFIED: whether this hash was discussed on stable@ (lore 403)
 
----
-
-## What the commit solves (for 6.12)
-
-`cache_tag_flush_range()` computes one PSI `addr`/`mask`, then walks
-every cache tag. Nested DevTLB must flush the whole device cache, so the
-original code stuffed `addr=0` / `mask=MAX_AGAW_PFN_WIDTH` into those
-shared locals and fell through. Later tags on that S2 domain (other
-nested ATS devices, or regular DevTLB) then issued a full-range
-invalidation instead of the range the caller asked for. On 6.12 that is
-extra-wide IOTLB/Dev-IOTLB traffic, not a verified stale-mapping hole,
-but it is incorrect invalidation on the nested map-update path.
-
-## Risk vs benefit
-
-Benefit is restoring targeted invalidation for a path cloud VFIO/iommufd
-actually uses. Risk is a 3-line change that keeps the nested full flush
-and only stops clobbering later tags.
-
-## Concerns
-
-Backport cannot be a blind `git am` of the mainline hunk: this tree
-still passes `pages` into `cache_tag_flush_iotlb` and the tracepoint,
-and `cache_tag_flush_all()` is still a separate loop. Edit only the
-`CACHE_TAG_NESTING_DEVTLB` arm.
-
----
-
-Verification:
-- [Phase 1] Parsed tags: SOBs Feng/Liu/Lu/Roedel; no Fixes/Reported-
-  by/Cc:stable
-- [Phase 2] Diff: 2+/3- in `cache_tag_flush_range()`; replace
-  mutate+fallthrough with direct `cache_tag_flush_devtlb_psi(..., 0,
-  MAX_AGAW_PFN_WIDTH)` + break
-- [Phase 2] Read `cache.c` 437–510 in this tree: buggy fallthrough still
-  at 466–468
-- [Phase 3] `git blame`: intro `c4d27ffaa8eb0` (v6.11); `git merge-base
-  --is-ancestor` yes
-- [Phase 3] `git log --grep='polluting shared'` on path: not present
-- [Phase 3] `cache_tag_flush_iotlb` still has `pages` (`3297d047cd7f5`);
-  no missing helper
-- [Phase 4] `b4 mbox` original thread: Lu notes Baidu duplicate; queued
-  for v7.3-rc1; no NAK
-- [Phase 4] Baidu thread `20260605003950.1720-1-lirongqing@baidu.com`:
-  same bug, IOTLB path included
-- [Phase 4] UNVERIFIED: lore.kernel.org/stable HTTP 403
-- [Phase 5] Callers: `intel_iommu_tlb_sync`, `switch_to_super_page`,
-  nested user invalidate, SVM
-- [Phase 5] Nest parent: `paging_domain_alloc(dev, false)` at
-  `iommu.c:3606` → `use_first_level` false
-- [Phase 5] NESTING tags assigned to `domain->s2_domain` in
-  `cache_tag_assign_domain()`
-- [Phase 6] `git describe HEAD` p-6.12-3-gc504cf0baa3d8; `make
-  kernelversion` 6.12.111
-- [Phase 8] Failure mode: over-wide DevTLB/IOTLB invalidation; not
-  verified as under-invalidate on this S2 path
-- UNVERIFIED: mainline SHA (commit not in this checkout; `--all` not
-  used)
+The fix is small, surgical, present in the affected 6.18 code, and meets
+the stable criteria.
 
 **YES**
 
- drivers/iommu/intel/cache.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/zynq/clkc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
-index 385ae5cfb30d4..e6bc730fac3b0 100644
---- a/drivers/iommu/intel/cache.c
-+++ b/drivers/iommu/intel/cache.c
-@@ -468,9 +468,8 @@ void cache_tag_flush_range(struct dmar_domain *domain, unsigned long start,
- 			 * affected by a change in S2. So just flush the entire
- 			 * device cache.
- 			 */
--			addr = 0;
--			mask = MAX_AGAW_PFN_WIDTH;
--			fallthrough;
-+			cache_tag_flush_devtlb_psi(domain, tag, 0, MAX_AGAW_PFN_WIDTH);
-+			break;
- 		case CACHE_TAG_DEVTLB:
- 			cache_tag_flush_devtlb_psi(domain, tag, addr, mask);
- 			break;
+diff --git a/drivers/clk/zynq/clkc.c b/drivers/clk/zynq/clkc.c
+index c28d3dacf0fb2..db40a9e7dd3d9 100644
+--- a/drivers/clk/zynq/clkc.c
++++ b/drivers/clk/zynq/clkc.c
+@@ -186,7 +186,11 @@ static void __init zynq_clk_register_periph_clk(enum zynq_clk clk0,
+ 	spin_lock_init(lock);
+ 
+ 	mux_name = kasprintf(GFP_KERNEL, "%s_mux", clk_name0);
++	if (!mux_name)
++		goto err_mux_name;
+ 	div_name = kasprintf(GFP_KERNEL, "%s_div", clk_name0);
++	if (!div_name)
++		goto err_div_name;
+ 
+ 	clk_register_mux(NULL, mux_name, parents, 4,
+ 			CLK_SET_RATE_NO_REPARENT, clk_ctrl, 4, 2, 0, lock);
+@@ -205,6 +209,10 @@ static void __init zynq_clk_register_periph_clk(enum zynq_clk clk0,
+ 
+ 	return;
+ 
++err_div_name:
++	kfree(mux_name);
++err_mux_name:
++	kfree(lock);
+ err:
+ 	clks[clk0] = ERR_PTR(-ENOMEM);
+ 	if (two_gates)
 -- 
 2.53.0
 
