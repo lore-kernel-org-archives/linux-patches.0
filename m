@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3427854BC0B;
-	Mon, 19 Oct 2026 13:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FEF54BC3D;
+	Mon, 19 Oct 2026 13:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418202; cv=none; b=EPuny+YjsHlQwkpNeiPp6X3asWxkvV1yfdk7Rc8Hs/JW+cQvpUu0sQd5xSV/6YTwNvi5zlxlZ4I16eLMkwKj4KGQp6pP0bQA3I9cbJ1VuxyOuCmXSYucAAkbAkGrMyJjZidQXgf4Kqu2iLfAv/1JKycOBqrtkfp8QkF2FKhjaHY=
+	t=1792418204; cv=none; b=bsP37zFyOl+0UsaXC7Za5/e2ho/FIVEwspUfGhCk9m2WcB9QgwqAKHxvmY+nILnico/gFiQVB7qjt8aJEU+W0l1X/SGSs0C5kYmTaB1djIbreFoq323c+IY5PEfbiP0Q5S0tLJP7uKh8HGMMkKtlhVbTerh63WiWieuzpe81NTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418202; c=relaxed/simple;
-	bh=zbv5n/iUgw1TdOv5qfqPb2adYceNULy459/p58NA4r8=;
+	s=arc-20240116; t=1792418204; c=relaxed/simple;
+	bh=z4NsKVfjx8HGMVWk/IIhqNa/gJbtYgpUP5zTBFfc35A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M1bd/wOVJHVSO4ab6bfrtKGSkS+BDUOFgKX3qs+EsIOmTOhJS83HD4XmR5H50gUjP8c0Lt2fFfTuSdkg+Y46vYwkJPtYTD2EmgsSjWDv7Co7hcxtC/yfNGnTOlYI6yCZcBUgjs8GtZ3CmLoMJIWFpTWgbzdIwEcQiRVR734CMiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YFwiVWoK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VikyGUAyGyH+Ec7JcadcD0b3X1xeVGoyU5vtGGK66r21S0lmUt9J9gv2tLjT5pE19w9y/vD/z2/SojQvxAJ/+zN8pH5TPB3Sza2he2M+90DefcrbUe+Q6V4+fVa55/Kn57p+M7Dfs0ZdRqoCQIMOjwskp+8Ke/oIXnPbK+YDqf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FI47pChF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YFwiVWoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6E01F000C4;
-	Mon, 19 Oct 2026 13:56:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FI47pChF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828A11F000C5;
+	Mon, 19 Oct 2026 13:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418199;
-	bh=yaDvv4if2EQfZyDxwt9WaxbkScaEfCJPng9oJb9w5zw=;
+	s=k20260515; t=1792418200;
+	bh=eJSdATW2Qr1HPFuivwkn3fyU6QISohvpr1nA2CpokCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YFwiVWoKItAkFqQQZJzoBiPZbAlwK8lR3MZIcTo486SUlZIAF3I8J92njvFALeHhA
-	 Gnz8OGawaTC+9zTtvqP3PyXR8Qv8c362iAf5fWA9BYyK+CopGpE0ckamTkqrBIc/Wc
-	 Q66ZT4cwS0X3hBVguGKd5PPUljZxDkZiw661zpnO77zUcg6eqWIc3PjDBEulP8EhRI
-	 TOpl6AAWNb5W2CQH+6ukBD59cAHABbl2aXE8HifnSlFIPptXvb06u9ySmAU4pD+gPc
-	 3uhpEAA6gwARBTYGwCMCXjbw364PuLWVBASjxmev12ySSmKB5cFFWEETgiNMnHRJn1
-	 FAI0QlYfkeyFQ==
+	b=FI47pChF7k71f/Mi9+4T6VHhT5r0zXhXyZcqhHEEo8Ol0K12f3C/9inaJQ3jrchqS
+	 pQwCWlgxWgQJKOjNeBJVm3y/UgGNMXPEj6JS7nvPIIJ5SnpG2oiNKtDIz9dAjgx5yw
+	 XfjEJxgSaSTe04fRz8ho+5j5Gy5TqPXXwWUg3av9q2jdfHvmNFs5euL5DEK/MoeCpW
+	 TX4yRjb5k+XJX4DIM0vEY59qG2Enf2Pa7ALja7JFYwZgYTEZMbwz/z10wpdo4OEYBQ
+	 rX/2PsoI2dKsPgf69LUXdVk1yXfSKhqMzQ8F0P+LIlz7q1GKV+hr4YXH+tDwQv3dF9
+	 FJhz9CqWMUwhw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yang Wang <kevinyang.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: =?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	oleg@makarenk.ooo,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/amd/pm: derive stable PPT limits from PPTable
-Date: Mon, 19 Oct 2026 09:46:13 -0400
-Message-ID: <20261019135441.1420968-82-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] HID: universal-pidff: Add support for Turtle Beach VelocityOne Race
+Date: Mon, 19 Oct 2026 09:46:14 -0400
+Message-ID: <20261019135441.1420968-83-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -51,568 +49,387 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.57
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 25f4a46b0c8acd77c9065b50a1fe48af27d91fdf ]
+[ Upstream commit 53f7f7955a684e820bdd6bd6792c45c4b434f637 ]
 
-GetPptLimit reports mutable PMFW runtime state. Using that value for
-static capabilities causes two externally visible problems:
+Add usb VID and device PID to hid-ids.h
 
-- A userspace override changes the default reported through hwmon.
-- A firmware reset changes the advertised minimum or maximum range.
-
-Derive platform defaults and supported ranges from the driver PPTable
-for Sienna Cichlid, Navi10, Arcturus, and Aldebaran. Reserve PMFW queries
-for the effective current limit.
-
-Runtime policy can no longer redefine immutable platform capabilities.
-
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough from the local 6.12 tree, the sibling SMU13/SMU14
-backports, and the series context to decide. The remaining lore lookups
-failed with 403, so those are marked unverified.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1 — Subject**
+- Record: `[HID / universal-pidff] [Add] USB VID/PID so Turtle Beach
+  VelocityOne Race binds to the existing hid-universal-pidff driver`
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [drm/amd/pm] [derive] [source immutable PPT default/min/max from
-the driver PPTable instead of PMFW GetPptLimit]
+**Step 1.2 — Tags**
+- Record:
+  - `Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>`
+    (author; co-author of this driver)
+  - `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID maintainer)
+  - `[Upstream commit 53f7f7955a684e820bdd6bd6792c45c4b434f637]` and
+    `Signed-off-by: Sasha Levin` ignored as pipeline markers
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+    by:`, `Link:`, or `Cc: stable` (absence of the last two is expected)
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-Record:
-- Signed-off-by: Yang Wang <kevinyang.wang@amd.com> (author)
-- Reviewed-by: Kenneth Feng <kenneth.feng@amd.com> (AMD PM reviewer)
-- Signed-off-by: Alex Deucher <alexander.deucher@amd.com> (amdgpu
-  maintainer)
-- No Fixes:, Reported-by, Tested-by, Link:, or Cc: stable (absence
-  expected)
-- Ignore Sasha Levin SOB if present (pipeline)
+**Step 1.3 — Body**
+- Record: Body is one sentence: “Add usb VID and device PID to hid-
+  ids.h”. No crash, leak, or corruption described. The claimed intent is
+  hardware enablement for one USB HID device. No version range given.
+  Root cause as stated: the IDs were missing from the existing driver’s
+  table.
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Record:
-- Bug: GetPptLimit returns mutable PMFW runtime state, but the driver
-  used that one value for current, default, min, and max.
-- Symptoms: (1) a userspace power-cap override changes the default shown
-  in hwmon; (2) a firmware/GPU reset changes the advertised min/max
-  range.
-- Failure mode: hwmon `power1_cap_default` / `power1_cap_max` /
-  `power1_cap_min` stop being immutable platform capabilities. After
-  reset, `smu_set_power_limit()` can reject a previously valid TDP
-  because max was recomputed from the runtime value.
-- Root cause: static capabilities were taken from PMFW instead of
-  PPTable.
-- Version info: none in the message. Upstream SHA from drm.git is
-  `25f4a46b0c8acd77c9065b50a1fe48af27d91fdf` (author 2026-07-30,
-  committed 2026-08-06).
+**Step 1.4 — Hidden bug fix?**
+- Record: Not a disguised leak/race/UAF. It is a USB ID addition to an
+  existing driver (stable exception category 1).
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit correctness fix.
-Navi10/Sienna also start using AC vs DC PPTable entries, matching the
-SMU13 pattern already in this tree.
+---
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
-Step 2.1: INVENTORY THE CHANGES
-Record:
-- `arcturus_ppt.c` `arcturus_get_power_limit`: ~+12/-11
-- `navi10_ppt.c` `navi10_get_power_limit`: ~+16/-12
-- `sienna_cichlid_ppt.c` `sienna_cichlid_get_power_limit`: ~+16/-12
-- `aldebaran_ppt.c` `aldebaran_get_power_limit`: ~+6/-2
-- Scope: four ASIC PPT backends, one function each. Surgical, not a
-  cross-subsystem refactor.
+**Step 2.1 — Inventory**
+- Record:
+  - `drivers/hid/hid-ids.h`: +3 (two `#define`s plus a blank line)
+  - `drivers/hid/hid-universal-pidff.c`: +1 in
+    `universal_pidff_devices[]`
+  - Net +4 lines, two files, one table plus ID macros
+  - Classification: single-purpose, surgical device-ID add
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Record:
-- Before: query GetPptLimit into `power_limit`; on failure fall back to
-  PPTable; assign that same value to current, default, and (for
-  Navi/Sienna) the OD min/max base.
-- After: default/min/max come from PPTable (Navi/Sienna: AC or DC by
-  `adev->pm.ac_power`). GetPptLimit is used only for current; on query
-  failure current falls back to default.
-- Arcturus: max becomes the PPTable default; min stays 0 (already true
-  in this tree from `08e5f8e1a24fb`).
-- Aldebaran: max already came from `pptable->PptLimit`; default now does
-  too, instead of the GetPptLimit result.
-- Path: init via `smu_late_init()` → `smu_get_asic_power_limits()`, and
-  GPU reset via `smu_reset()` which re-runs late_init. Also used when
-  Sienna/Aldebaran re-query current.
+**Step 2.2 — Code flow**
+- Record:
+  - Before: `0x10f5:0x7077` is unmatched by this driver and falls
+    through to generic HID.
+  - After: HID core matches `HID_USB_DEVICE(USB_VENDOR_ID_TURTLE_BEACH,
+    USB_DEVICE_ID_TB_VELOCITYONE_RACE)` and calls
+    `universal_pidff_probe()`.
+  - Path: device enumeration / probe, not an error path. No
+    `driver_data` quirks.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: [Logic / correctness] Using a mutable firmware PPT as the
-immutable hwmon default/range. Fix: PPTable owns capabilities; PMFW owns
-current.
+**Step 2.3 — Bug mechanism**
+- Record: `[Hardware enablement / USB device ID]` — the driver already
+  implements PID force-feedback wrapping; this only lists one more
+  VID/PID. Not UAF, leak, race, overflow, or init-bug.
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct and matches `smu_v13_0_0_get_power_limit()` /
-`smu_v14_0_2_get_power_limit()` already in this tree. Minimal.
-Regression risk is low: Navi/Sienna now pick DC limits on battery, which
-is the same rule SMU13 already uses here. Desktop `ac_power` is normally
-true, so those cards keep AC limits. No API or locking changes.
+**Step 2.4 — Fix quality**
+- Record: Obviously correct as an ID table add. Insertion sits
+  alphabetically between TURBOX and TWINHAN. Vendor `0x10f5` already
+  identifies Turtle Beach elsewhere (`drivers/input/joystick/xpad.c`
+  uses `0x10f5` with other PIDs `0x7005`/`0x7008`/`0x7073`). PID
+  `0x7077` does not collide with those. No public API change. Regression
+  risk is low: only this VID:PID binds; probe returns 0 even if the PID
+  usage page is absent.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+---
 
-Step 3.1: BLAME THE CHANGED LINES
-Record: The GetPptLimit-as-everything pattern dates to `1e239fdd31cdf1`
-(Evan Quan, 2020-06-08, “maximize code sharing around power limit”).
-Min/max pointer args came from `1958946858a62b` (Ma Jun, 2023-10-12).
-Present since well before 6.12.
+## Phase 3: Git history
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. The real ancestor is the 2020 GetPptLimit
-sharing, which is in this tree.
+**Step 3.1 — Blame**
+- Record: New lines; they did not exist before this commit. Surrounding
+  `hid-ids.h` TURBOX/TWINHAN macros date to 2008–2017. The device table
+  terminator was last touched by `5b9cae8c6472e` (clang-format, 2025).
+  The driver itself was added in `f06bf8d94fffb` (“HID: Add hid-
+  universal-pidff driver and supported device ids”, 2025-02-03; `git
+  describe` of that commit is `v6.13-4738-gf06bf8d94fffb`).
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- `08e5f8e1a24fb` already in this tree: Arcturus min=0 (Cc: stable).
-  This patch keeps that.
-- `b3498e00aff57` “fix smu13 power limit default/cap calculation” (Yang
-  Wang, Cc: stable, in v6.12.94): same bug on SMU13.
-- `b3adc697752b9` follow-up SMU13 range fix (Cc: stable, Closes gitlab
-  5419).
-- `a322d276f3d10` SMU14 range fix (Cc: stable).
-- This candidate is the remaining SMU11/Aldebaran analog; not already
-  applied (`git merge-base --is-ancestor 25f4a46b0c8acd HEAD` failed).
+**Step 3.2 — Fixes: tag**
+- Record: No `Fixes:` tag. Not applicable.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Yang Wang is a regular amd/pm contributor in this tree
-(SMU13/SMU14 power-limit fixes, pptable UAF, metrics). Kenneth Feng
-reviewed those as well.
+**Step 3.3 — File history**
+- Record: Recent related commits on this driver: Asetek ID adds
+  (`c385f61108d40`), spelling/format nits, and `01d9874e84d3a` (stop
+  device on FF init failure). No prerequisite refactor is required for
+  this ID. Standalone; not “patch X/Y”. No later follow-up on these
+  files after this commit.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: Standalone. No new helpers. `SocketPowerLimitDc`,
-`GET_PPTABLE_MEMBER`, and `adev->pm.ac_power` already exist here. Later
-drm-next-7.3 series (refactor by controller, OD percentage,
-save/restore, restore after reset) is a large follow-on and is not
-required for this hunk.
+**Step 3.4 — Author**
+- Record: Tomasz Pakuła is a listed `MODULE_AUTHOR` of `hid-universal-
+  pidff.c` and a frequent hid-pidff contributor (overflow, NPD,
+  playback, Asetek IDs). This is the subsystem’s own device-table
+  maintainer, not a drive-by.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 3.5 — Dependencies**
+- Record: Needs `hid-universal-pidff.c`, `USB_VENDOR_ID_*` macros, and
+  `hid_pidff_init_with_quirks`. All are in this tree. `git merge-base
+  --is-ancestor f06bf8d94fffb HEAD` succeeds; `git merge-base --is-
+  ancestor f06bf8d94fffb v6.18` also succeeds. Can apply standalone.
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record:
-- `b4 dig -c 25f4a46b0c8acd77c9065b50a1fe48af27d91fdf`: lore.kernel.org
-  returned server error; no match.
-- lore.kernel.org WebFetch: 403.
-- drm.git commit page confirms SHA, author, reviewer, committer.
-- amd-gfx July 2026: related 4-patch “refactor PPT limit runtime policy”
-  (Kenneth Feng reviewed). “derive stable PPT limits from PPTable” is
-  listed first among Yang Wang’s five commits in the amd-drm-next-7.3
-  pull (mail-archive).
-- UNVERIFIED: full review thread / NAKs / explicit Cc: stable for this
-  exact patch (lore 403).
+---
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: Kenneth Feng Reviewed-by; Alex Deucher signed off. Recipients
-from `b4 dig -w` unverified.
+## Phase 4: Mailing list / external research
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No Reported-by on this commit. Sibling SMU13 fix closed
-https://gitlab.freedesktop.org/drm/amd/-/work_items/5227 (WebFetch 403;
-title/body unverified). Follow-up closed work item 5419.
+**Step 4.1 — Original discussion**
+- Record: `b4 dig -c 53f7f7955a684e820bdd6bd6792c45c4b434f637` → https:/
+  /patch.msgid.link/20260922131758.1242755-1-
+  tomasz.pakula.oficjalny@gmail.com
+- `b4 dig -a`: single v1 series only; no v2/v3.
+- LKML: https://lkml.iu.edu/2609.2/17309.html (submission),
+  https://lkml.iu.edu/2609.2/21230.html (Jiri Kosina: “Applied,
+  thanks.”)
+- No NAK, no requested changes, no stable nomination in review.
+  lore.kernel.org fetch returned 403; discussion confirmed via `b4 dig`
+  + LKML/Patchew mirrors.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: First of five PPT commits in amd-drm-next-7.3. Later four are a
-large policy refactor. This patch is self-contained.
+**Step 4.2 — Recipients (`b4 dig -w`)**
+- Record: `jikos@kernel.org` (HID maintainer), `oleg@makarenk.ooo` (co-
+  author), `linux-input@vger.kernel.org`, `linux-
+  kernel@vger.kernel.org`. Right lists and maintainer were on Cc; Kosina
+  applied it.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: UNVERIFIED for this SHA (lore 403). The same class of fix for
-SMU13/SMU14 already landed in this 6.12 tree with Cc: stable.
+**Step 4.3 — Bug report**
+- Record: No `Reported-by` / syzbot / bugzilla. Phoronix (secondary, not
+  a kernel bug tracker) notes basic HID input already worked and this
+  listing improves FF for the VelocityOne Race. That is consistent with
+  an ID add, not a crash fix.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 4.4 — Series context**
+- Record: Standalone one-patch series. Same pattern as earlier Asetek ID
+  adds in this driver.
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `arcturus_get_power_limit`, `navi10_get_power_limit`,
-`sienna_cichlid_get_power_limit`, `aldebaran_get_power_limit`.
+**Step 4.5 — Stable list**
+- Record: `WebFetch` of `https://lore.kernel.org/stable/?q=VelocityOne`
+  returned 403. Web search did not show a stable-list thread about this
+  patch. UNVERIFIED that nobody discussed it on stable@; no evidence of
+  a NAK there either.
 
-Step 5.2: TRACE CALLERS
-Record: Registered as `.get_power_limit` in each ppt_funcs table.
-Invoked via `smu_get_asic_power_limits()` from:
-- `smu_late_init()` (boot and `smu_reset()`), filling
-  `smu->{current,default,max,min}_power_limit`
-- `smu_get_power_limit()` for CURRENT on Sienna-family (11.0.7/11/12/13)
-  and Aldebaran (13.0.2)
-Hwmon `power1_cap{,_default,_max,_min}` goes
-`amdgpu_hwmon_show_power_cap_*` → `amdgpu_dpm_get_power_limit` →
-`smu_get_power_limit`. Sets are range-checked against cached
-`max_power_limit`/`min_power_limit` in `smu_set_power_limit()`.
+---
 
-Step 5.3: TRACE CALLEES
-Record: `smu_v11_0_get_current_power_limit()` /
-`smu_cmn_send_smc_msg(SMU_MSG_GetPptLimit)` for current only; PPTable
-fields for defaults.
+## Phase 5: Code semantic analysis
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace-reachable via hwmon sysfs (typically root). GPU reset
-/ late_init also refresh the caches. Reachable on Navi10 (RX 5700),
-Sienna (RX 6800/6900, 6000M), Arcturus (MI100), Aldebaran (MI200).
+**Step 5.1 — Functions**
+- Record: No function body changed. Data only:
+  `universal_pidff_devices[]` plus two macros. Probe path that becomes
+  reachable: `universal_pidff_probe` → `universal_pidff_input_mapping` /
+  `universal_pidff_input_configured`.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: SMU13 (`smu_v13_0_0`, `smu_v13_0_7`) and SMU14 (`smu_v14_0_2`)
-already use PPTable + AC/DC for default/min/max in this tree. These four
-backends were the leftover GetPptLimit-for-everything copies.
+**Step 5.2 — Callers**
+- Record: `universal_pidff_probe` is only the `.probe` of `struct
+  hid_driver universal_pidff`, registered via `module_hid_driver`.
+  Invoked by HID/USB enumeration when VID:PID matches. Not IRQ, not a
+  syscall hot path.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 5.3 — Callees**
+- Record: `hid_parse`, `hid_hw_start`, `hid_pidff_init_with_quirks`,
+  `hid_hw_stop`. Existing, already used by every other ID in the table.
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: Yes. Local tree is **pending-6.12 / 6.12.111**
-(`p-6.12-3-g88406e77611c6`). The four `*_get_power_limit` functions
-match the patch “before” side. Bug introduced ~2020 (`1e239fdd31cdf1`),
-long before 6.12.
+**Step 5.4 — Reachability**
+- Record: Reachable when a user plugs in `10f5:7077` and
+  `CONFIG_HID_UNIVERSAL_PIDFF` is enabled (`depends on USB_HID &&
+  HID_PID`). Userspace cannot trigger it without that hardware.
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Clean apply expected. Navi10 context below the hunk differs
-(`MAX_PCIE_CONF` vs `NUM_LINK_LEVELS`) but that is outside this
-function. Arcturus min=0 already present.
+**Step 5.5 — Similar patterns**
+- Record: Same table already lists Moza, Cammus, VRS, FFBeast, Lite
+  Star/PXN, Asetek. This is the established way this driver gains
+  devices. Turtle Beach VID `0x10f5` is already used in `xpad.c` for
+  other products; PID `0x7077` is unique.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: SMU13/SMU14 analogs are here; these four ASICs are not. No
-earlier version of this exact change.
+---
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+## Phase 6: Local tree (this checkout)
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [drm/amd/pm SWSMU] [IMPORTANT] — common AMD dGPU/instinct power
-management, not core mm/net, but widely used hardware.
+**Step 6.1 — Does the code exist here?**
+- Record: Local tree is **6.18.57** (`make kernelversion`; `git describe
+  HEAD` = `v6.18.57-155-gcdf239ca885b2`). `hid-universal-pidff.c`
+  exists. Driver intro `f06bf8d94fffb` is an ancestor of both `HEAD` and
+  `v6.18`. Parent of this candidate still has the Asetek rows and the
+  empty terminator; the ID macros were absent (`git grep
+  USB_VENDOR_ID_TURTLE` on the parent was empty). The hardware and
+  driver this listing targets are in this tree.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Actively maintained; recent 6.12.y already took SMU13/SMU14
-power-limit correctness fixes from the same author.
+**Step 6.2 — Backport difficulty**
+- Record: Clean apply. Parent context matches the provided diff (TURBOX
+  block, then TWINHAN; Asetek entries then `{}`). No refactor gap.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 6.3 — Related fixes already here?**
+- Record: No other VelocityOne Race HID listing. No alternate fix for
+  `10f5:7077` in HID. `xpad.c` does not claim PID `0x7077`.
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Driver-specific: Navi10/Navi14, Sienna Cichlid family, Arcturus,
-Aldebaran. Anyone using hwmon power cap (LACT, CoreCtrl, scripts) or
-hitting GPU reset.
+---
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record:
-- Always at `smu_late_init` if PMFW current ≠ PPTable default (boot
-  power source / firmware policy).
-- GPU reset (`smu_reset` → late_init) refreshes default/max/min from
-  GetPptLimit, so a runtime policy or leftover firmware value rewrites
-  advertised range.
-- In this 6.12 tree, DEFAULT/MAX/MIN hwmon reads use the cache, so a
-  live userspace write to `power1_cap` does not immediately rewrite
-  `power1_cap_default` unless late_init/reset re-runs. The commit’s
-  first symptom is therefore mainly boot/reset, not every write. Still a
-  real bug.
-- Trigger is privileged sysfs or reset, not an unprivileged crash
-  primitive.
+## Phase 7: Subsystem context
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Record: Incorrect hwmon capabilities; after reset,
-`smu_set_power_limit()` can reject a previously legal TDP because max
-was derived from the runtime PPT. No oops/UAF/corruption. Severity:
-MEDIUM (functional / ABI), same class already accepted for this tree on
-SMU13.
+**Step 7.1**
+- Record: `[HID USB force-feedback helper] [IMPORTANT for owners of
+  listed wheels; PERIPHERAL vs core kernel]`. Not mm/fs/net core.
+  Optional `CONFIG_HID_UNIVERSAL_PIDFF`.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record: Benefit medium-high for affected GPUs (correct caps, no trapped
-range after reset). Risk low (~40 net lines, four isolated functions,
-established pattern). Ratio favors backport.
+**Step 7.2**
+- Record: Actively maintained in 2025–2026 (quirks, Asetek IDs, pidff
+  correctness fixes). Mature enough that ID adds are the normal
+  extension mechanism.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+---
 
-Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real bug: mutable PMFW state used as immutable hwmon default/min/max.
-- After GPU reset, cached max/min can shrink and block restoring the
-  platform TDP.
-- Same class already backported to this 6.12 tree for SMU13/SMU14
-  (`b3498e00aff57`, `b3adc697752b9`, `a322d276f3d10`), all Cc: stable.
-- Small, obviously correct, no new APIs.
-- Buggy code is in this tree; patch applies cleanly.
-- Reviewed by Kenneth Feng, signed off by Alex Deucher.
+## Phase 8: Impact and risk
 
-AGAINST:
-- Not a crash, security hole, or data corruption.
-- First of a later 5-commit PPT series; later patches are large
-  refactors (do not take those).
-- Navi/Sienna AC/DC selection is extra vs the old always-AC fallback
-  (same as already-stable SMU13).
-- No Fixes:/Reported-by on this commit; lore thread unverified.
+**Step 8.1 — Who is affected**
+- Record: Driver-specific / config-specific: users who own a Turtle
+  Beach VelocityOne Race and enable this HID driver. Everyone else is
+  unchanged.
 
-UNRESOLVED:
-- Full amd-gfx review text / NAKs (lore 403, b4 failed).
-- GitLab 5227 details (403).
+**Step 8.2 — Trigger**
+- Record: Plug in that USB wheel. Not a race. Unprivileged user can plug
+  hardware; no syscall exploit surface beyond normal HID.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? PASS — matches SMU13/14 in this tree;
-   AMD reviewer + maintainer.
-2. Fixes a real bug that affects users? PASS — wrong hwmon caps; reset
-   can trap the power range.
-3. Important issue? PASS — not a panic, but the same issue was already
-   treated as stable-worthy here for newer ASICs; user-visible PM/sysfs
-   breakage on common GPUs.
-4. Small and contained? PASS — four functions, ~70 lines.
-5. No new features or APIs? PASS — corrects existing hwmon values; AC/DC
-   uses existing PPTable fields.
-6. Can apply to the local tree? PASS — buggy code present; clean apply
-   expected.
+**Step 8.3 — Failure mode without the patch**
+- Record: Device stays on hid-generic: basic input, missing this
+  driver’s PID FF init and button-range mapping. Not
+  oops/deadlock/corruption. Severity for those users: functional
+  hardware gap (FF), **MEDIUM** as a bug, but it is the documented
+  device-ID exception.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: None of the automatic exceptions (device ID / quirk / DT / build
-/ docs). Qualifies as a normal small correctness fix.
+**Step 8.4 — Risk vs benefit**
+- Record: Benefit: FF/PID support for this wheel on 6.18.y without a
+  full kernel upgrade. Risk: very low (4 lines, match is VID+PID, no
+  quirk, probe already tolerates missing PID page). Ratio: favorable for
+  a device-ID add.
 
-Step 9.4: MAKE YOUR DECISION
-This should be backported to this 6.12 tree. It is the leftover
-SMU11/Aldebaran half of a power-cap reporting bug whose SMU13/SMU14 half
-is already in 6.12.y. Do not pull the later PPT refactor series with it.
+---
+
+## Phase 9: Synthesis
+
+**Step 9.1 — Evidence**
+
+For:
+- USB ID add to a driver that already exists in this 6.18 tree (stable
+  exception 1).
+- +4 lines, no new APIs, no new driver, no new sysfs/module params.
+- HID maintainer applied v1 with no objections.
+- Author maintains this driver.
+- VID `0x10f5` is already Turtle Beach in-tree; PID does not clash with
+  xpad entries.
+- Applies cleanly here.
+
+Against:
+- Not a crash/security/corruption fix.
+- Short commit message; no `Reported-by`.
+- Niche ~$650 sim-racing hardware.
+- Improves FF rather than repairing a generic HID oops.
+
+Unresolved:
+- lore.kernel.org HTTP 403; stable@ thread not confirmed.
+- No in-tree test that this exact PID speaks USB PID FF (same as other
+  IDs in this table).
+
+**Step 9.2 — Stable rules**
+1. Obviously correct and tested? **PASS** — mechanical ID add;
+   maintainer applied it. No in-tree Tested-by, but the change is the
+   same class as prior IDs in this file.
+2. Real issue affecting users? **PASS** — without the ID, this wheel
+   does not get the existing PID FF path.
+3. Important (crash/security/deadlock) **or** listed exception? **PASS**
+   — USB device ID on an existing driver.
+4. Small and contained? **PASS** — 4 lines, two files.
+5. No new features/APIs? **PASS** — no new driver, ioctl, or userspace
+   ABI; only an ID in an existing table.
+6. Applies to this tree? **PASS** — driver and insertion point are
+   present on 6.18.57.
+
+**Step 9.3 — Exception**
+- Record: **NEW DEVICE ID** (USB VID/PID) on existing `hid-universal-
+  pidff`.
+
+**Step 9.4 — Decision**
+This is exactly the device-ID class stable trees take. The driver is in
+6.18; the patch is tiny and isolated to `10f5:7077`. Benefit is real for
+owners of that wheel; risk to everyone else is negligible.
+
+---
+
+### What the commit does for this tree
+It lists Turtle Beach VelocityOne Race (`USB 10f5:7077`) in `hid-
+universal-pidff` so 6.18 systems can use the PID force-feedback path
+already in this kernel, instead of generic HID only.
+
+### Stable-rules fit
+Meets the device-ID exception: existing driver, IDs only, clean apply,
+no new API.
+
+### Risk vs benefit
+Very low risk, localized hardware enablement. No locking or error-path
+change.
+
+### Concerns
+None that block backport. No extra quirks or follow-up commits required
+in this tree. Stable-list discussion could not be fetched (403).
+
+---
 
 Verification:
-- [Phase 1] Parsed tags: author Yang Wang, Reviewed-by Kenneth Feng, SOB
-  Alex Deucher; no Fixes/Reported-by/Cc stable
-- [Phase 1] drm.git SHA 25f4a46b0c8acd77c9065b50a1fe48af27d91fdf
-  confirmed via search snippet
-- [Phase 2] Diff: four `*_get_power_limit` functions; PPTable for
-  default/min/max, GetPptLimit only for current
-- [Phase 3] git describe HEAD: p-6.12-3-g88406e77611c6; make
-  kernelversion 6.12.111
-- [Phase 3] git merge-base --is-ancestor 25f4a46b0c8acd HEAD: not an
-  ancestor (not in this tree)
-- [Phase 3] git blame: GetPptLimit pattern from 1e239fdd31cdf1 (2020);
-  still present in all four files
-- [Phase 3] Related stable commits in this tree: b3498e00aff57
-  (v6.12.94), b3adc697752b9, a322d276f3d10, 08e5f8e1a24fb
-- [Phase 4] b4 dig -c 25f4a46b0c8acd: lore server error, no match
-- [Phase 4] lore WebFetch 403; gitlab 5227 403
-- [Phase 4] amd-gfx July 2026: 4-patch PPT refactor series by same
-  author; drm-next-7.3 pull lists this commit first of five
-- [Phase 5] Callers: smu_late_init, smu_reset, smu_get_power_limit,
-  hwmon power1_cap*; range check in smu_set_power_limit
-- [Phase 5] SMU13/SMU14 in this tree already implement the post-fix
-  pattern
-- [Phase 6] Read all four local functions: match the patch “before” side
-- [Phase 6] GET_PPTABLE_MEMBER and SocketPowerLimitDc exist for Sienna
-  and Beige Goby
-- [Phase 8] Failure mode: wrong hwmon caps / possible -EINVAL on set
-  after reset; not oops
-- UNVERIFIED: original lore discussion, NAKs, gitlab 5227 body, whether
-  SocketPowerLimitDc is zero on any Navi10 mobile SKU
-
-This is a small, already-reviewed correction of hwmon PPT
-default/min/max on GPUs that still use GetPptLimit for those values. The
-same bug was already backported on SMU13/SMU14 in this 6.12 tree, the
-code is present, and the follow-on refactor series is not required.
+- [Phase 1] Parsed tags: author SOB + Jiri Kosina SOB; no
+  Fixes/Reported-by/Cc:stable
+- [Phase 1] Body is a one-line ID add, not a crash write-up
+- [Phase 2] Diff: +3 `hid-ids.h`, +1 table row; no function logic change
+- [Phase 2] No `driver_data` quirk on the new entry
+- [Phase 3] `git blame` on new macros → this commit; surrounding IDs
+  from 2008–2017
+- [Phase 3] Driver intro `f06bf8d94fffb` (`v6.13-4738-gf06bf8d94fffb`);
+  ancestor of HEAD and of `v6.18`
+- [Phase 3] `git log --oneline --author="Tomasz Pakuła" --
+  drivers/hid/`: driver co-maintainer, many pidff commits
+- [Phase 3] No later commits on these files after this ID add
+- [Phase 4] `b4 dig -c 53f7f7955a684e820bdd6bd6792c45c4b434f637`: lore
+  msgid `20260922131758.1242755-1-tomasz.pakula.oficjalny@gmail.com`
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: jikos@kernel.org, linux-input, co-author Oleg
+- [Phase 4] LKML: Kosina “Applied, thanks.”
+  (https://lkml.iu.edu/2609.2/21230.html)
+- [Phase 4] lore.kernel.org WebFetch: 403; used LKML/Patchew/`b4`
+  instead
+- [Phase 5] Probe only via `module_hid_driver`; callees
+  `hid_parse`/`hid_hw_start`/`hid_pidff_init_with_quirks` exist here
+- [Phase 5] `0x10f5` in `xpad.c` for other PIDs; `0x7077` not used there
+- [Phase 6] `make kernelversion` → 6.18.57; `git describe HEAD` →
+  `v6.18.57-155-gcdf239ca885b2`
+- [Phase 6] Parent of candidate: no `USB_VENDOR_ID_TURTLE`; Asetek rows
+  present; apply context matches
+- [Phase 8] Failure mode: missing FF/mapping for one USB wheel, not oops
+- UNVERIFIED: stable@ archive (HTTP 403); no in-kernel confirmation the
+  device implements USB PID (same as other table IDs)
 
 **YES**
 
- .../gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c | 25 ++++++++-------
- .../gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c   | 32 +++++++++++--------
- .../amd/pm/swsmu/smu11/sienna_cichlid_ppt.c   | 28 +++++++++-------
- .../drm/amd/pm/swsmu/smu13/aldebaran_ppt.c    |  8 +++--
- 4 files changed, 53 insertions(+), 40 deletions(-)
+ drivers/hid/hid-ids.h             | 3 +++
+ drivers/hid/hid-universal-pidff.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-index 4fff78da81ff8..2b2d3c3aa20ba 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-@@ -1329,24 +1329,25 @@ static int arcturus_get_power_limit(struct smu_context *smu,
- 					uint32_t *min_power_limit)
- {
- 	PPTable_t *pptable = smu->smu_table.driver_pptable;
--	uint32_t power_limit;
-+	uint32_t current_limit, default_limit;
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index ca5c62f29aebe..69b1b0f98c99d 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1415,6 +1415,9 @@
+ #define USB_DEVICE_ID_ASUS_MD_5110	0x5110
+ #define USB_DEVICE_ID_TURBOX_TOUCHSCREEN_MOSART	0x7100
  
--	if (smu_v11_0_get_current_power_limit(smu, &power_limit)) {
--		/* the last hope to figure out the ppt limit */
--		if (!pptable) {
--			dev_err(smu->adev->dev, "Cannot get PPT limit due to pptable missing!");
--			return -EINVAL;
--		}
--		power_limit =
--			pptable->SocketPowerLimitAc[PPT_THROTTLER_PPT0];
-+	if (!pptable) {
-+		dev_err(smu->adev->dev,
-+			"Cannot get PPT limit due to pptable missing!");
-+		return -EINVAL;
- 	}
- 
-+	default_limit = pptable->SocketPowerLimitAc[PPT_THROTTLER_PPT0];
++#define USB_VENDOR_ID_TURTLE_BEACH	0x10f5
++#define USB_DEVICE_ID_TB_VELOCITYONE_RACE	0x7077
 +
-+	if (smu_v11_0_get_current_power_limit(smu, &current_limit))
-+		current_limit = default_limit;
-+
- 	if (current_power_limit)
--		*current_power_limit = power_limit;
-+		*current_power_limit = current_limit;
- 	if (default_power_limit)
--		*default_power_limit = power_limit;
-+		*default_power_limit = default_limit;
- 	if (max_power_limit)
--		*max_power_limit = power_limit;
-+		*max_power_limit = default_limit;
- 	/*
- 	 * No lower bound is imposed on the limit. Any unreasonable limit set
- 	 * will result in frequent throttling.
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-index a2fcf678182b4..4737ceb2a5434 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-@@ -2393,22 +2393,26 @@ static int navi10_get_power_limit(struct smu_context *smu,
- 		(struct smu_11_0_powerplay_table *)smu->smu_table.power_play_table;
- 	struct smu_11_0_overdrive_table *od_settings = smu->od_settings;
- 	PPTable_t *pptable = smu->smu_table.driver_pptable;
--	uint32_t power_limit, od_percent_upper = 0, od_percent_lower = 0;
-+	uint32_t current_limit, default_limit;
-+	uint32_t od_percent_upper = 0, od_percent_lower = 0;
+ #define USB_VENDOR_ID_TWINHAN		0x6253
+ #define USB_DEVICE_ID_TWINHAN_IR_REMOTE	0x0100
  
--	if (smu_v11_0_get_current_power_limit(smu, &power_limit)) {
--		/* the last hope to figure out the ppt limit */
--		if (!pptable) {
--			dev_err(smu->adev->dev, "Cannot get PPT limit due to pptable missing!");
--			return -EINVAL;
--		}
--		power_limit =
--			pptable->SocketPowerLimitAc[PPT_THROTTLER_PPT0];
-+	if (!pptable) {
-+		dev_err(smu->adev->dev,
-+			"Cannot get PPT limit due to pptable missing!");
-+		return -EINVAL;
- 	}
- 
-+	default_limit = smu->adev->pm.ac_power ?
-+		pptable->SocketPowerLimitAc[PPT_THROTTLER_PPT0] :
-+		pptable->SocketPowerLimitDc[PPT_THROTTLER_PPT0];
-+
-+	if (smu_v11_0_get_current_power_limit(smu, &current_limit))
-+		current_limit = default_limit;
-+
- 	if (current_power_limit)
--		*current_power_limit = power_limit;
-+		*current_power_limit = current_limit;
- 	if (default_power_limit)
--		*default_power_limit = power_limit;
-+		*default_power_limit = default_limit;
- 
- 	if (powerplay_table) {
- 		if (smu->od_enabled &&
-@@ -2422,15 +2426,15 @@ static int navi10_get_power_limit(struct smu_context *smu,
- 	}
- 
- 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
--					od_percent_upper, od_percent_lower, power_limit);
-+		 od_percent_upper, od_percent_lower, default_limit);
- 
- 	if (max_power_limit) {
--		*max_power_limit = power_limit * (100 + od_percent_upper);
-+		*max_power_limit = default_limit * (100 + od_percent_upper);
- 		*max_power_limit /= 100;
- 	}
- 
- 	if (min_power_limit) {
--		*min_power_limit = power_limit * (100 - od_percent_lower);
-+		*min_power_limit = default_limit * (100 - od_percent_lower);
- 		*min_power_limit /= 100;
- 	}
- 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-index 31c2c0386b1f9..d553c6fbab47c 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -632,20 +632,24 @@ static int sienna_cichlid_get_power_limit(struct smu_context *smu,
- 	struct smu_11_0_7_powerplay_table *powerplay_table =
- 		(struct smu_11_0_7_powerplay_table *)smu->smu_table.power_play_table;
- 	struct smu_11_0_7_overdrive_table *od_settings = smu->od_settings;
--	uint32_t power_limit, od_percent_upper = 0, od_percent_lower = 0;
--	uint16_t *table_member;
-+	uint32_t current_limit, default_limit;
-+	uint32_t od_percent_upper = 0, od_percent_lower = 0;
-+	u16 *power_limit_ac, *power_limit_dc;
- 
--	GET_PPTABLE_MEMBER(SocketPowerLimitAc, &table_member);
-+	GET_PPTABLE_MEMBER(SocketPowerLimitAc, &power_limit_ac);
-+	GET_PPTABLE_MEMBER(SocketPowerLimitDc, &power_limit_dc);
- 
--	if (smu_v11_0_get_current_power_limit(smu, &power_limit)) {
--		power_limit =
--			table_member[PPT_THROTTLER_PPT0];
--	}
-+	default_limit = smu->adev->pm.ac_power ?
-+		power_limit_ac[PPT_THROTTLER_PPT0] :
-+		power_limit_dc[PPT_THROTTLER_PPT0];
-+
-+	if (smu_v11_0_get_current_power_limit(smu, &current_limit))
-+		current_limit = default_limit;
- 
- 	if (current_power_limit)
--		*current_power_limit = power_limit;
-+		*current_power_limit = current_limit;
- 	if (default_power_limit)
--		*default_power_limit = power_limit;
-+		*default_power_limit = default_limit;
- 
- 	if (powerplay_table) {
- 		if (smu->od_enabled &&
-@@ -659,15 +663,15 @@ static int sienna_cichlid_get_power_limit(struct smu_context *smu,
- 	}
- 
- 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
--					od_percent_upper, od_percent_lower, power_limit);
-+		 od_percent_upper, od_percent_lower, default_limit);
- 
- 	if (max_power_limit) {
--		*max_power_limit = power_limit * (100 + od_percent_upper);
-+		*max_power_limit = default_limit * (100 + od_percent_upper);
- 		*max_power_limit /= 100;
- 	}
- 
- 	if (min_power_limit) {
--		*min_power_limit = power_limit * (100 - od_percent_lower);
-+		*min_power_limit = default_limit * (100 - od_percent_lower);
- 		*min_power_limit /= 100;
- 	}
- 	return 0;
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-index 18d5d07045098..9e67e57d70b75 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-@@ -1281,8 +1281,12 @@ static int aldebaran_get_power_limit(struct smu_context *smu,
- 
- 	if (current_power_limit)
- 		*current_power_limit = power_limit;
--	if (default_power_limit)
--		*default_power_limit = power_limit;
-+	if (default_power_limit) {
-+		if (pptable)
-+			*default_power_limit = pptable->PptLimit;
-+		else
-+			*default_power_limit = power_limit;
-+	}
- 
- 	if (max_power_limit) {
- 		if (pptable)
+diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
+index 60180467a0bfd..f1854cfe42d0d 100644
+--- a/drivers/hid/hid-universal-pidff.c
++++ b/drivers/hid/hid-universal-pidff.c
+@@ -187,6 +187,7 @@ static const struct hid_device_id universal_pidff_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_FORTE) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_LA_PRIMA) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_TONY_KANAAN) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_TURTLE_BEACH, USB_DEVICE_ID_TB_VELOCITYONE_RACE)},
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(hid, universal_pidff_devices);
 -- 
 2.53.0
 
