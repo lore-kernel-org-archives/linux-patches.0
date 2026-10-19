@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8597527FAA;
-	Mon, 19 Oct 2026 14:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EA9528E68;
+	Mon, 19 Oct 2026 14:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418577; cv=none; b=Mnzy0/lWLNNx11QgnAOJKVVox9CnJcdiLKxuscFbadjN6PYNbgbVqQ17gnEAc4C5dth0rcM3pprO49nRvn/iipM+EUXlZMEWOoOoKe8SiEim77KsDFYQNOvZnqLJYL6dmVJiX25WaqX9mkahvSAA+uWxW/cJNkLvvgt3GnbpPNQ=
+	t=1792418578; cv=none; b=kbra1v9p5VYdIO3bmCxIbb/TTukfEpi7hBTOmxDZH/O+QRTujgOBRnTEc7eK2Z2KlInU6OJMhraa2OChgH2WTiC6LykYN82l8yQ+Leyr94ZCb78zH3qe3M763qxZSSXhmmUWcNfWz0iRS25iOzxRURrdcPlGLB1K7iDR67M4aEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418577; c=relaxed/simple;
-	bh=H5bx14eHgHrAlHbq5Av0q/wky2hMBG7AsqxKUd1ahVs=;
+	s=arc-20240116; t=1792418578; c=relaxed/simple;
+	bh=mxgUwr6eBLDTr3uKoTKvcNKJHZ4U7iU0rHWnG5sCgGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QxQ1fZbmiIcCsvMFDMhv30kGu3PRVhBQtOS4Unoe/Vv1UXnZq3w+edBhXVCMWuaykfsB2Ft+0etknSX4HoZV4CSCSnfHIanZJJPigBJRbtdmdBMLmQVhCYut3BvrOQTu3wXRRjp1sKzfg7Gcs0e6KymTlsxR/eBf41BNHv+dips=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=crbzpjmZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sGtdcmtJOZKdpdfTe3YsECER/an/vAlw69pPAueI6pbtQh/GiPtOsVLZbrXAjNppQYldoJcym1hbSXnKchMrJG9ZhJpVDMMY1j1xnq87N3OvW6W/8ADfhCBBEiMFcovXal2Xyv/ChL1FURprxD5xHcNWOZEa351HzvhhD/lP0Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CU9SAHCx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="crbzpjmZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F611F000CA;
-	Mon, 19 Oct 2026 14:02:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CU9SAHCx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293D41F000CC;
+	Mon, 19 Oct 2026 14:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418573;
-	bh=bk/DI9RFZeexxtAaHB7BsUX5Ya90d3OBuO88xMA81E4=;
+	s=k20260515; t=1792418575;
+	bh=4+ql4p3vcgQx02kQf+GRMuwllGIpGjZYMql1bdoHiOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=crbzpjmZVSoNpxAqFY8NxHlBUkXR399233CikFQeuuX5DiJgM70MJAWiY1lfvo1ub
-	 W2+3ilFtnh7PhKPZD06WFFm7CIQiNyzlZTuKx8W6+x2vc/oaKJvGpmxR4xwxJM3kJa
-	 UMd5g+WNVpybVKWhosji+xfdUxD7D5WOYFMT0Mwx9W7qcQFKofodte61XPjXhzBbqy
-	 4DX23o6K3pKB/iiW6CAbtpYt29Zqm+1x6DyXxGZn47SQgVtNQr2WQibMaTT6DO9mx0
-	 wLW2KCmQsiToIhaocfenN7460Zi/hCRE+6LhUbvibYdxVGcetJmb3MyeqmiyheHRVf
-	 2bY332SQMdNKg==
+	b=CU9SAHCxIbVAtWPqFl6/lNgWh1InzVqESYolABan5DQqtftHW0ob1IA3h871xpciX
+	 gIA/cbKp6SQSKf8R/o20gwj6tFrsKaxgbCM8PnG9VAVbFK6YPRMd+YGenxpfqmNyNR
+	 whGiUL2oDovzenuVVK4GzKBHb3s+yAEP/ZP7AXHke7N90YQCmtzUKPQWRmcUgDN33w
+	 s2ZLMi2gSGg4h+aNGX730YsOK35jGdU/LXaih42zJJ5lZJp8C0emiMSx9LwxWG6c6d
+	 C37gUoea29i0Kgmte31VLkBh4Axbbn3Hn9CDEqQHwk+JELjU1ykhgHT290pLxmlPRK
+	 yTC9W6NakH5jw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	neil.armstrong@linaro.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: cancel wiphy work before freeing wiphy
-Date: Mon, 19 Oct 2026 09:50:35 -0400
-Message-ID: <20261019135441.1420968-344-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/panel-edp: Add BOE NV116WH2-M30, BOE NT116WHM-N21, BOE NV116FH1-M31, BOE NV116FH1-M30
+Date: Mon, 19 Oct 2026 09:50:36 -0400
+Message-ID: <20261019135441.1420968-345-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -52,485 +58,457 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
 
-[ Upstream commit c99bc4d4e0ba6f4661b2b914c96a597d26e7cc05 ]
+[ Upstream commit d4ae726fc08024b359e9cacf2507f1c256b9d71c ]
 
-When we fail to load the fw during op-mode start, we purge the list
-of the async handlers but we don't cancel the work.
-Same when we stop the op-mode.
+The raw EDIDs for each panel:
 
-Before freeing wiphy, we need to cancel/flush any pending wiphy work,
-otherwise the work will fire with a freed memory.
-cfg80211 will do it anyway, but it will warn.
+BOE NV116WH2-M30
+00 ff ff ff ff ff ff 00 09 e5 6e 38 00 00 00 00
+0a 24 01 04 95 1a 0e 78 03 0b 55 9a 5f 58 95 28
+1e 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 96 1d 56 c8 50 00 26 30 30 20
+36 00 00 90 10 00 00 1a b9 13 56 c8 50 00 26 30
+30 20 36 00 00 90 10 00 00 1a 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
+00 0d 40 ff 0a 3c 7d 0f 0c 17 7d 00 00 00 00 80
 
-Cancel the work in those cases.
+BOE NT116WHM-N21
+00 ff ff ff ff ff ff 00 09 e5 79 38 00 00 00 00
+08 24 01 04 95 1a 0e 78 03 3a d5 95 5c 58 94 29
+24 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 38 1d 56 c8 50 00 1c 30 30 20
+36 00 00 90 10 00 00 1a 7b 13 56 c8 50 00 1c 30
+30 20 36 00 00 90 10 00 00 1a 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
+00 0d 40 ff 0a 3c 7d 0f 0c 17 7d 00 00 00 00 7a
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20260714165826.07aa49f755a2.I734a27b1b0eeb5b0e821aee3318fee8dc0a6bc03@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+BOE NV116FH1-M31
+00 ff ff ff ff ff ff 00 09 e5 8b 38 01 ff 00 00
+0c 24 01 04 a5 1a 0e 78 03 50 d5 9c 55 52 8f 27
+15 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 9a 36 80 a0 70 38 28 40 30 20
+35 00 00 90 10 00 00 1a 67 24 80 a0 70 38 28 40
+30 20 35 00 00 90 10 00 00 1a 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
+00 0d 36 ff 0a 3c 96 0f 0b 1a 96 00 00 00 01 cd
+
+70 20 79 02 00 20 00 0c 9a 0e 00 8b 38 00 00 00
+00 0c 1a 00 21 01 1d 03 0a a2 05 80 07 38 04 88
+c2 39 55 1e 15 8f 7a 32 15 02 35 54 b0 5c b0 5c
+00 36 12 78 22 00 14 ff 21 02 85 7f 07 9f 00 2f
+00 1f 00 37 04 27 00 02 00 04 00 81 00 15 74 1a
+00 00 03 00 28 3c 00 00 53 5a 53 5a 3c 00 00 00
+00 00 00 2b 00 06 27 00 28 3b 00 00 2e 00 06 80
+4b b0 5c b0 5c 00 00 00 00 00 00 00 00 00 89 90
+
+BOE NV116FH1-M30
+00 ff ff ff ff ff ff 00 09 e5 8c 38 01 ff 00 00
+0c 24 01 04 a5 1a 0e 78 03 50 d5 9c 55 52 8f 27
+15 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 9a 36 80 a0 70 38 28 40 30 20
+35 00 00 90 10 00 00 1a 67 24 80 a0 70 38 28 40
+30 20 35 00 00 90 10 00 00 1a 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
+00 0d 36 ff 0a 3c 96 0f 0b 1a 96 00 00 00 01 cc
+
+70 20 79 02 00 20 00 0c 9a 0e 00 8c 38 00 00 00
+00 0c 1a 00 21 01 1d 03 0a a2 05 80 07 38 04 88
+c2 39 55 1e 15 8f 7a 32 15 02 35 54 b0 5c b0 5c
+00 36 12 78 22 00 14 ff 21 02 85 7f 07 9f 00 2f
+00 1f 00 37 04 27 00 02 00 04 00 81 00 15 74 1a
+00 00 03 00 28 3c 00 00 53 5a 53 5a 3c 00 00 00
+00 00 00 2b 00 06 27 00 28 3b 00 00 2e 00 06 80
+4b b0 5c b0 5c 00 00 00 00 00 00 00 00 00 88 90
+
+Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260608080310.15126-3-terry_hsiao@compal.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough to decide: this is a small UAF/WARN fix in iwlwifi MLD,
-the buggy path exists in this 7.3-rc4 tree, and the change is self-
-contained.
+This is a four-line addition of BOE eDP panel IDs to the existing
+`panel-edp` table in **6.18.53**. That is the device-ID exception for
+stable: the driver and delay helper already exist here; only the IDs are
+new.
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-Record: `[iwlwifi/mld] [cancel] cancel wiphy work before freeing wiphy`
-- Subsystem: `wifi: iwlwifi: mld`
-- Action verb: **cancel** (prevent leftover work from running after
-  teardown)
-- Intent: stop pending `wiphy_work` before `ieee80211_free_hw()` so it
-  cannot run against freed memory
+- Subsystem: `drm/panel-edp`
+- Action verb: **Add**
+- Claimed intent: register four BOE 11.6" eDP panels by EDID product ID
+
+Record: [`drm/panel-edp`] [Add] [four BOE panel IDs to the EDID lookup
+table]
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Reviewed-by: Johannes Berg <johannes.berg@intel.com>` —
-  mac80211/cfg80211 and iwlwifi maintainer
-- `Link: https://patch.msgid.link/20260714165826.07aa49f755a2.I734a27b1b
-  0eeb5b0e821aee3318fee8dc0a6bc03@changeid`
-- `Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>`
-  (author; ignore any Sasha Levin SOB)
-- **No** `Fixes:`, **no** `Cc: stable`, **no** `Reported-by`, **no**
-  `Tested-by` — expected for this review pipeline
-- Notable: maintainer Reviewed-by; no syzbot/KASAN report in the message
+- `Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-
+  partner.google.com>` (author; Compal/Google Chromebook ODM)
+- `Reviewed-by: Douglas Anderson <dianders@chromium.org>` (panel-edp
+  maintainer)
+- `Signed-off-by: Douglas Anderson <dianders@chromium.org>` (applied to
+  drm-misc)
+- `Link: https://patch.msgid.link/20260608080310.15126-3-
+  terry_hsiao@compal.corp-partner.google.com`
+- No `Fixes:` tag (expected)
+- No `Cc: stable` (expected)
+- No `Reported-by:` / `Tested-by:` / `Acked-by:`
+- Ignore pipeline `Signed-off-by: Sasha Levin` and `[Upstream commit
+  ...]`
+
+Record: Author SOB + maintainer Reviewed-by/SOB + lore Link. No syzbot,
+no Fixes. Series msgid `-3` is patch 2/2 of a 2-patch series.
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** On op-mode start firmware-load failure, async handler *list*
-  is purged (`iwl_mld_stop_fw()` →
-  `iwl_mld_cancel_async_notifications()`), but `async_handlers_wk` is
-  not cancelled. Same gap on op-mode stop.
-- **Symptom:** Pending wiphy work can run after `ieee80211_free_hw()`;
-  cfg80211 still drains/cancels and **WARNs**.
-- **Failure mode:** use-after-free of wiphy/`iwl_mld` if the work runs;
-  otherwise `WARN_ON(!list_empty(&rdev->wiphy_work_list))` in
-  `cfg80211_dev_free()`.
-- **Root cause:** cancel of `async_handlers_wk` was removed from the
-  generic purge helper; start-fail/stop still free the wiphy with work
-  queued.
-- **Version info in message:** none
+The body is four raw EDIDs. Product IDs in those EDIDs match the table
+entries (bytes 10–11 LE): `6e 38` → `0x386e`, `79 38` → `0x3879`, `8b
+38` → `0x388b`, `8c 38` → `0x388c`. Manufacturer `09 e5` is BOE.
+
+Record: [Bug: these panel IDs are missing from `edp_panels[]`] [Symptom:
+unknown-panel `WARN_ON` plus conservative 2000 ms unprepare / 200 ms
+enable instead of panel-specific 500/80 ms] [No version range stated]
+[Root cause: hardware not in the EDID delay table]
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not disguised. Explicit teardown correctness / UAF-prevention.
-Not style cleanup.
+Not a disguised leak/race fix. It is hardware enablement plus power-
+sequencing timings (quirk-style).
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+Record: [Not a hidden memory-safety fix. It is a device-ID / timing-
+quirk addition.]
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `drivers/net/wireless/intel/iwlwifi/mld/mld.c` — **+3 lines**, 0
-  removed (`git show --stat`: 3 insertions)
-- Functions: `iwl_op_mode_mld_start()`, `iwl_op_mode_mld_stop()`
-- Scope: **single-file surgical fix**
+- File: `drivers/gpu/drm/panel/panel-edp.c` (+4 / −0)
+- Function/data: `edp_panels[]` only
+- Scope: single-file surgical table insert
+
+Record: [1 file, +4 lines] [`edp_panels[]`] [single-file surgical]
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-Hunk 1 (`iwl_op_mode_mld_start`, firmware/NVM failure):
-- **Before:** `wiphy_unlock` → `rtnl_unlock` → `goto err` →
-  `ieee80211_free_hw()` with `async_handlers_wk` possibly still on
-  `wiphy_work_list`.
-- **After:** `wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk)`
-  while `wiphy_lock` is still held, then unlock/free.
-- Path: **error path** (fw load or NVM read failure during probe/op-mode
-  start).
+Before: `find_edp_panel()` misses these IDs → `WARN_ON(!detected_panel)`
+→ `panel_edp_set_conservative_timings()` (`unprepare=2000`,
+`enable=200`).
+After: match BOE `0x386e/0x3879/0x388b/0x388c` and copy
+`delay_200_500_e80` (`hpd_absent=200`, `unprepare=500`, `enable=80`).
 
-Hunk 2 (`iwl_op_mode_mld_stop`):
-- **Before:** lock, `iwl_mld_low_latency_stop` /
-  `iwl_mld_deinit_time_sync`, unlock, `ieee80211_unregister_hw` /
-  `ieee80211_free_hw`.
-- **After:** same, but cancel `async_handlers_wk` under the wiphy lock
-  first.
-- Path: **teardown** (module unload / transport op-mode leave).
+Record: [unknown-panel conservative path → identified panel with
+`delay_200_500_e80`]
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** memory safety (use-after-free of work item / wiphy) +
-  leftover-work WARN
-- **Mechanism:** `wiphy_work_queue()` during RX after ALIVE;
-  `iwl_mld_stop_fw()` purges `async_handlers_list` but (after
-  59a5876e474ac) no longer cancels the work. `ieee80211_free_hw()` →
-  `wiphy_free()` → `cfg80211_dev_free()` WARNs if the list is non-empty.
-  Worker `cfg80211_wiphy_work()` can also run
-  `iwl_mld_async_handlers_wk()` after unlock and race teardown.
-- **Fix:** `wiphy_work_cancel()` under the wiphy mutex (required by
-  `lockdep_assert_held(&wiphy->mtx)` in `wiphy_work_cancel()`).
+Category **(h) hardware workarounds / device IDs**. Mechanism: EDID
+identity was not in the delay table.
+
+Record: [Device ID / panel quirk] [Missing table rows; add four
+`EDP_PANEL_ENTRY` lines using an existing delay struct]
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- Obviously correct: both sites already hold `wiphy_lock`; cancel of a
-  not-queued work is a no-op (`list_empty` check in
-  `wiphy_work_cancel()`).
-- Minimal; no API/data-structure change.
-- Regression risk: **very low**. Cancel vs flush is appropriate here (do
-  not run handlers from a dead/going-away FW). Does not restore the lock
-  requirement on `iwl_mld_cancel_async_notifications()`.
-- Residual (pre-existing, not introduced here): NVM-fail path still does
-  not call `iwl_mld_stop_fw()`; cancel avoids running those handlers
-  during free. That is strictly safer than leaving work queued.
+Obviously correct: sorted by vendor then product ID (`0x386e` after
+`0x0ddf`). Reuses `delay_200_500_e80`, already used by many BOE 11.6"
+panels. No API/struct change. Regression risk is limited to these four
+IDs; wrong delays would only affect those panels, and 80 ms enable is
+the common BOE value.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+Record: [Minimal, correct, low risk] [No public API change]
+
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Surrounding start-fail/stop skeleton: `d1e879ec600f9` (“wifi: iwlwifi:
-  add iwlmld sub-driver”, 2025-02/03) — first appeared in **v6.15**.
-- The two new cancel lines: `c99bc4d4e0ba6` (this commit, 2026-07-14).
-- Stop-path `wiphy_lock` wrapper: `83128399f3b492` (Benjamin Berg,
-  2025-05).
+Local tree: `v6.18.53` (`6.18.53`), branch `autosel`.
+- `panel-edp.c` exists since `5f04e7ce392db` (2021, ancestor of
+  v6.18.53)
+- `delay_200_500_e80` from `4d53cf8147950` (2023, ancestor of v6.18.53)
+- Insertion point at v6.18.53 is after BOE `0x0ddf` (`518867b093942`)
+
+Record: [Table/driver long present] [Bug is missing IDs, not a
+regression in old lines] [First appeared as a gap whenever these panels
+are used with `edp-panel`]
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Historical chain (verified with `git show` /
-`git log -S`):
-1. `4f7a07791944e` (2025-04, Fixes: d1e879ec600f9) — cancel async notifs
-   on start failure specifically because work can run after
-   `ieee80211_free_hw` (**UAF**).
-2. `833026098b2d9` — fold cancel+purge into
-   `iwl_mld_cancel_async_notifications()`.
-3. **`59a5876e474ac` (2026-05-26, in v7.2, not in v7.1)** — **removed**
-   `wiphy_work_cancel()` from that helper so it can run without the
-   wiphy lock. That **reopened** the free-without-cancel hole.
-4. This commit puts cancel back on the two paths that actually free the
-   wiphy.
+No `Fixes:` tag.
 
-`59a5876e474ac` **is** an ancestor of this tree (`git merge-base --is-
-ancestor` → yes via v7.2).
+Record: [N/A — no Fixes tag]
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Nearby: `a40ad60a47f7c` purge-on-NIC-error; `59a5876e474ac` remove
-  cancel from helper.
-- This is **not** patch-dependent on other hunks in the 15-patch
-  iwlwifi-next dump; parent is unrelated `21b3263b90e80` (“mvm: validate
-  monitor notif link_id”).
-- Standalone: **yes**.
+**Step 3.3: CHECK FILE HISTORY**
+v6.18..v6.18.53 already contains several of the same class of commits,
+e.g. `89097c138061e`, `2583d6dcbf500`, `bafdd6284f1b9`, `ed713c88b6bf7`,
+`7eeefe23a8196`, `0bd968c04acfb`.
+
+Record: [This tree already takes panel-edp ID additions] [No
+prerequisite refactor for these 4 lines] [Series 2/2; independent of
+1/2]
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Miri Korenblit is a primary iwlwifi MLD author (driver
-introduction and most async-handler work). Johannes Berg reviewed. High
-confidence in the diagnosis.
+Terry Hsiao has other panel-edp ID additions in this tree
+(`bafdd6284f1b9`, `ed713c88b6bf7`, `d4b9b6da5777b`). Douglas Anderson is
+the subsystem maintainer and reviewed/applied this.
+
+Record: [Regular Chromebook panel contributor; maintainer-reviewed]
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- Needs `wiphy_work_*` and `struct wiphy_work async_handlers_wk` —
-  present since MLD intro in this tree.
-- Needs the start-fail `if (ret)` / stop `wiphy_lock` shape — present.
-- Needs `59a5876e474ac` as the regression that made cancel missing; that
-  commit is in this tree.
-- **Can apply standalone: yes** (already an ancestor of HEAD).
+Series 1/2 adds unrelated AUO/CMN/CSW IDs. `EDP_PANEL_ENTRY` and
+`delay_200_500_e80` are already in v6.18.53. `0x0db3` is in the
+**mainline** hunk context but **not** in v6.18.53; the 4 added lines do
+not need it.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+Record: [No functional dependency on 1/2] [Can apply standalone]
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- `b4 dig -c c99bc4d4e0ba6`: **[PATCH iwlwifi-next 08/15]**
-  https://patch.msgid.link/20260714143119.07aa49f755a2.I734a27b1b0eeb5b0
-  e821aee3318fee8dc0a6bc03@changeid
-- `b4 dig -a`: v1 then **v2** “wifi: iwlwifi: updates - 07-14-2026”
-  https://patch.msgid.link/20260714165826.07aa49f755a2.I734a27b1b0eeb5b0
-  e821aee3318fee8dc0a6bc03@changeid
-  Committed `Link:` is **v2** (latest).
-- Lore WebFetch returned **403**; patchwork bot-blocked. Review body
-  beyond tags is **UNVERIFIED**. No NAK found in b4 metadata.
+`b4 dig -c d4ae726fc08024b359e9cacf2507f1c256b9d71c` matched:
+https://patch.msgid.link/20260608080310.15126-3-terry_hsiao@compal.corp-
+partner.google.com
+
+`b4 dig -a`: single revision **v1**, series `[PATCH v1 0/2] drm/panel-
+edp: Add AUO, BOE, CMN, and CSW panels`.
+
+Doug Anderson: `Reviewed-by` and pushed to drm-misc-next as
+`d4ae726fc08024b359e9cacf2507f1c256b9d71c`. No NAK, no stable discussion
+in-thread.
+
+Record: [lore/msgid above] [v1 only] [Maintainer R-b, no objections] [No
+Cc: stable in review]
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (`b4 dig -w`): Miri Korenblit; Johannes Berg
-(`johannes@sipsolutions.net` / intel.com); `linux-
-wireless@vger.kernel.org`. Maintainer was To/Cc and `Reviewed-by`.
+`b4 dig -w`: To/Cc included `dianders@chromium.org`, DRM maintainers
+(Airlie, Vetter, Ripard, Zimmermann, Lankhorst, Armstrong), `dri-devel`,
+`linux-kernel`.
+
+Record: [Correct lists; panel-edp maintainer reviewed]
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No `Reported-by` / bugzilla / syzbot. Author-found from code
-(consistent with 4f7a077’s earlier UAF write-up). User count:
-**UNVERIFIED**, but the start-fail path is firmware-load failure — a
-real probe path.
+No bugzilla/syzbot. Evidence is author-supplied EDIDs from Compal/Google
+hardware.
+
+Record: [No public crash report] [Real panels documented by EDID dumps]
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: 08/15 of a mixed iwlwifi-next batch, not a dependent 1/N fix
-series. Parent commit unrelated. No other series patch required for this
-hunk.
+Patch 1/2 is independent ID adds. Not required for 2/2.
+
+Record: [Standalone among the series]
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: WebSearch of lore.kernel.org/stable for this subject did **not**
-find a stable-specific thread. **UNVERIFIED** that anyone nominated or
-rejected it on stable@ (absence of Cc:stable is expected).
+lore.kernel.org HTTP fetch returned 403. Thread mbox from `b4 dig -m`
+has no stable@ traffic.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+Record: [No stable-specific discussion found in the submission thread]
+[UNVERIFIED: lore.kernel.org/stable web search 403]
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `iwl_op_mode_mld_start`, `iwl_op_mode_mld_stop`. Related
-callees: `wiphy_work_cancel`, `iwl_mld_load_fw`, `iwl_mld_stop_fw`,
-`ieee80211_free_hw`.
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: IDENTIFY KEY FUNCTIONS**
+Modified: `edp_panels[]`. Consumers: `find_edp_panel()`,
+`generic_edp_panel_probe()`.
+
+Record: [`edp_panels[]` / `find_edp_panel` / `generic_edp_panel_probe`]
 
 **Step 5.2: TRACE CALLERS**
-Record:
-- `iwl_mld_ops.start = iwl_op_mode_mld_start` — op-mode start from
-  iwlwifi transport when `iwlmld` is selected
-  (`iwl_opmode_register("iwlmld", ...)`).
-- Stop is the matching `.stop` callback on unbind/unload.
-- Context: process, probe/remove — not IRQ. Reachable whenever
-  CONFIG_IWLMLD hardware probes or the module is removed.
+`generic_edp_panel_probe()` ← `panel_edp_probe()` when DT compatible is
+`edp-panel` ← `panel_edp_platform_probe` / DP AUX probe
+(`panel_edp_dp_aux_ep_probe` path at line 2190).
+
+Record: [Probe-time, one path per panel] [Not IRQ/hot-path]
 
 **Step 5.3: TRACE CALLEES**
-Record:
-- Start-fail: `iwl_mld_load_fw()` on error after ALIVE calls
-  `iwl_mld_stop_fw()` → purges list, does **not** cancel work.
-- Then `ieee80211_free_hw()` → `wiphy_free()` → `put_device()` →
-  `wiphy_dev_release()` → `cfg80211_dev_free()` which
-  `WARN_ON(!list_empty(&rdev->wiphy_work_list))` then
-  `cancel_work_sync(&rdev->wiphy_work)`.
-- Worker: `cfg80211_wiphy_work()` → `wk->func` →
-  `iwl_mld_async_handlers_wk()`.
+`drm_edid_read_base_block`, `drm_edid_get_panel_id`, `find_edp_panel`,
+`drm_edid_match`. On match: `desc->delay = *entry->delay`.
+
+Record: [EDID identify + delay copy]
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace/admin trigger: load iwlwifi on MLD firmware (Wi-Fi 7
-Intel), failed firmware/NVM, or unload. Not a syscall exploit path;
-**driver probe/remove**. Common enough for production laptops.
+Userspace does not call this directly. It runs when an eDP panel with
+compatible `edp-panel` is probed (typical Chromebook/laptop). Reachable
+on machines that actually have these BOE panels.
+
+Record: [Device probe] [Reachable on those laptops] [Unprivileged users
+do not trigger a new attack surface]
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: MVM already cancels/flushes analog work in `iwl_mvm_mac_stop()`
-(`wiphy_work_cancel` on `async_handlers_wiphy_wk`). MLD
-`iwl_mld_mac80211_stop()` already cancels `add_txqs_wk` but **not**
-`async_handlers_wk`. This commit aligns MLD teardown with that rule.
+Many existing BOE `NT116WHM-N21` / `NV116*` rows already use
+`delay_200_500_e80` or nearby delays. Same pattern as other stable
+panel-edp ID commits in this tree.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+Record: [Same table-add pattern already used in 6.18.y]
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Local tree: **v7.3-rc4** (`git describe HEAD` →
-  `v7.3-rc4-27-gf0100363d8c37`; `VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
-  EXTRAVERSION=-rc4`).
-- MLD driver **present**
-  (`drivers/net/wireless/intel/iwlwifi/mld/mld.c`).
-- Regression `59a5876e474ac` **is** in this history (v7.2+).
-- Current file already contains both `wiphy_work_cancel` calls (this
-  commit is ancestor of HEAD). Pre-fix parent of `c99bc4d4e0ba6` matches
-  the supplied diff exactly.
-- Bug was introduced **before** this 7.3 branch (in v7.2), not after.
+Yes. `panel-edp.c` and `edp_panels[]` exist at v6.18.53. `git grep` of
+`0x386e|0x3879|0x388b|0x388c|NV116WH2-M30` on **v6.18.53** found
+nothing. `git merge-base --is-ancestor` of the candidate vs `v6.18.53`
+is false.
+
+Record: [IDs missing from 6.18.53] [Driver present since 2021]
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply** on this tree (already applied). Surrounding
-`iwl_op_mode_mld_start`/`stop` matches the patch. `wiphy_work_cancel`
-exists in `net/wireless/core.c`.
+Dry-run: `git show 75ecc68dd7996` patch against
+`v6.18.53:drivers/gpu/drm/panel/panel-edp.c` applied cleanly (`patch
+--dry-run` exit 0). Mainline context mentions `0x0db3` (not in 6.18.53);
+the 3-line context used for this tree (`0x0d45`/`0x0d73`/`0x0ddf`)
+matches.
+
+Record: [Clean apply to 6.18.53]
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: `4f7a07791944e` / `833026098b2d9` / `59a5876e474ac` are all
-here. No alternate fix of this hole besides `c99bc4d4e0ba6`. `git log
---grep='cancel wiphy work'` only this commit.
+No other commit on this file adds these four IDs except the autosel
+candidate itself (ignored as pipeline). No alternate fix.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+Record: [IDs not in v6.18.53]
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: `drivers/net/wireless/intel/iwlwifi/mld` — Intel Wi-Fi MLD
-(CONFIG_IWLMLD). **IMPORTANT** (shipping Wi-Fi 7 NICs), not core mm/VFS,
-not staging.
+`drivers/gpu/drm/panel/` — DRM eDP panel database. Criticality:
+**IMPORTANT** for machines with these panels; **PERIPHERAL** globally.
+`CONFIG_DRM_PANEL_EDP` is the existing Kconfig.
+
+Record: [drm/panel-edp] [IMPORTANT for affected laptops]
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Very active (NAN, RSC, scan, firmware API churn in recent `git
-log` on `mld.c`). Mature enough that this is a teardown correctness fix,
-not new-feature scaffolding.
+Actively receiving ID additions; mature table, small well-known change
+type.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+Record: [Mature table, frequent ID adds]
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **driver-specific / config-specific** — CONFIG_IWLMLD users
-(Intel MLD firmware devices). Not universal.
+Only systems whose eDP EDID is BOE product `0x386e/0x3879/0x388b/0x388c`
+(11.6" Compal/Google Chromebook-class panels). `CONFIG_DRM_PANEL_EDP`.
+
+Record: [driver-specific / config-specific]
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record:
-- Start-fail: firmware load/init failure after ALIVE (missing/bad fw,
-  PNVM/init timeout) — **realistic probe path**.
-- Stop: op-mode teardown/unload.
-- Timing: leftover `wiphy_work` after list purge.
-- Unprivileged trigger: only if an unprivileged user can unload the
-  driver or force fw failure — typically **admin/probe**. Not a syzbot-
-  style syscall UAF, but probe-fail is still user-visible.
+Every probe of those panels (boot, resume). Not a race. Not
+unprivileged-exploitable beyond “this laptop’s panel”.
+
+Record: [Boot/probe of those four panels] [Likely if that hardware ships
+on 6.18] [No extra userspace trigger]
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record:
-- Confirmed: `WARN_ON` in `cfg80211_dev_free()` if work remains queued
-  (taint; panic if `panic_on_warn`).
-- Author/prior commit (`4f7a077`): work running after
-  `ieee80211_free_hw` is **UAF**. cfg80211’s `cancel_work_sync` in
-  `cfg80211_dev_free` reduces but does not make the WARN or the post-
-  unlock race imaginary (`cfg80211_wiphy_work` can run after
-  `wiphy_unlock` and before free).
-- Severity: **HIGH** (WARN + realistic UAF race on probe fail / unload).
+Without the IDs: `WARN_ON` plus conservative delays (2 s unprepare).
+Panel generally still lights; sequencing is slower/less accurate. With
+wrong HPD-absent handling, flicker or failed light-up is possible; that
+is why the table exists.
+
+Record: [WARN_ON + suboptimal eDP power sequencing] [Severity MEDIUM,
+hardware-enablement HIGH for those devices]
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- Benefit: **high** for IWLMLD users — stops WARN/UAF on fw init failure
-  and stop.
-- Risk: **very low** — 3 lines, existing API, lock already held.
-- Ratio: strongly in favor of including the fix.
+Benefit: enable correct timings for four real panels; stop WARN_ON; same
+class already accepted in 6.18.y.
+Risk: four static table rows, existing delay struct, no locking/API.
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+Record: [High benefit for those devices, very low risk] [Favorable]
+
+## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real teardown bug: pending `async_handlers_wk` after wiphy free
-- Regression from `59a5876e474ac` (in this tree); restores cancel only
-  where memory is freed
-- Same UAF class as `4f7a07791944e` (explicit “access freed memory”)
-- 3-line, obviously correct, maintainer Reviewed-by
-- Applies to this tree’s MLD code; prerequisites present
-- cfg80211 documents leftover work with WARN_ON
+- Explicit stable exception: device IDs / quirks on an existing driver
+- Driver, macro, and `delay_200_500_e80` already in 6.18.53
+- +4 lines, maintainer-reviewed, EDIDs match IDs
+- Applies cleanly to v6.18.53
+- Same class already in 6.18.y
+- Avoids `WARN_ON` and 2 s conservative unprepare on those panels
 
 AGAINST:
-- No Fixes:/Cc:stable/Reported-by (not a negative per pipeline rules)
-- Error/teardown path, not hot datapath
-- cfg80211 already `cancel_work_sync`s, so many hits are WARN rather
-  than a guaranteed oops
-- 08/15 series member (but standalone)
+- Not a crash/UAF/security fix
+- Fallback path still tries to run the panel
+- Affects only four panel SKUs
 
 UNRESOLVED:
-- Full lore review text (HTTP 403)
-- Whether stable@ already discussed this subject
-- How often start-fail hits with work still queued (depends on
-  notifications after ALIVE)
+- lore.kernel.org HTTP 403 for a stable@ archive search (thread mbox had
+  no stable@)
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — lock already held; Johannes
-   reviewed; cancel is the documented API.
-2. Fixes a real bug that affects users? **PASS** — leftover wiphy work
-   on fw-start failure and op-mode stop.
-3. Important issue? **PASS** — UAF risk + `WARN_ON` in cfg80211 (HIGH).
-4. Small and contained? **PASS** — +3 lines, one file, two call sites.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — MLD + `wiphy_work_cancel` +
-   matching functions exist (commit already in 7.3-rc4).
+1. Obviously correct and tested? **PASS** — EDIDs, maintainer R-b,
+   pushed to drm-misc-next
+2. Fixes a real bug that affects users? **PASS** — missing IDs for real
+   panels (WARN_ON + wrong delays)
+3. Important issue? **PASS** under the device-ID exception (not CRITICAL
+   crash)
+4. Small and contained? **PASS** — +4 lines, one table
+5. No new features or APIs? **PASS** — IDs only, existing helper
+6. Can apply to the local tree? **PASS** — dry-run clean on 6.18.53
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
-bugfix.
+Record: [NEW DEVICE IDs to existing driver — also hardware timing quirk]
 
 **Step 9.4: MAKE YOUR DECISION**
+This belongs in 6.18.y. The local tree already has `panel-edp` and the
+delay helper; these four BOE IDs are missing; the change is the same
+kind of ID add this series already ships.
 
-This tree is **7.3-rc4** and contains the iwlwifi MLD op-mode. The hole
-is real here: after `59a5876e474ac`, start-fail and stop free the wiphy
-without cancelling `async_handlers_wk`. That is a use-after-free/WARN
-class bug on firmware load failure — a path users hit. The fix is three
-lines, matches cfg80211’s contract, and does not need the rest of the
-15-patch series.
+What it solves for stable users: Chromebook/laptop eDP panels identified
+by those EDIDs get correct power-on/off delays instead of the unknown-
+panel `WARN_ON` and 2000 ms conservative unprepare.
 
----
+Risk vs benefit: four static rows vs making those panels sequence
+correctly. No dependencies on series 1/2.
 
-### What the commit solves
-On MLD op-mode start, firmware can ALIVE and queue `async_handlers_wk`.
-Failure then purges the handler list in `iwl_mld_stop_fw()` but leaves
-the wiphy work queued. `ieee80211_free_hw()` then frees that memory.
-cfg80211 still `cancel_work_sync`s and **WARNs**; there is also a window
-after `wiphy_unlock` where the worker can run. The same missing cancel
-exists in `iwl_op_mode_mld_stop`. Cancelling under the wiphy lock closes
-that.
-
-### Stable rules
-Meets all six criteria for **this** tree: small, correct, no new API,
-real WARN/UAF, code present.
-
-### Risk vs benefit
-Benefit high for Intel MLD hardware; risk very low (idempotent cancel,
-lock already held).
-
-### Concerns
-None that block inclusion. Not a dependent series member. NVM-fail still
-does not `iwl_mld_stop_fw()` (pre-existing); this patch still improves
-that path by not leaving work queued.
-
-Verification:
-- [Phase 1] Parsed subject/tags: Reviewed-by Johannes Berg; Link to v2
-  msgid; no Fixes/Cc:stable/Reported-by
-- [Phase 1] Body: purge-without-cancel on start-fail and stop; work vs
-  freed wiphy; cfg80211 WARN
-- [Phase 2] Diff: +3 lines in `mld.c`; `iwl_op_mode_mld_start` error
-  path and `iwl_op_mode_mld_stop`; `wiphy_work_cancel`
-- [Phase 2] `wiphy_work_cancel()` in `net/wireless/core.c` requires
-  wiphy mutex; both sites already `wiphy_lock`
-- [Phase 2] `cfg80211_dev_free()`:
-  `WARN_ON(!list_empty(&rdev->wiphy_work_list))` then `cancel_work_sync`
-- [Phase 3] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` 7.3.0-rc4
-- [Phase 3] `git merge-base --is-ancestor c99bc4d4e0ba6 HEAD` → yes
-- [Phase 3] `git blame` start-fail/stop: skeleton `d1e879ec600f9` (MLD
-  intro); cancel lines this commit
-- [Phase 3] MLD first in v6.15 (`git merge-base --is-ancestor
-  d1e879ec600f9 v6.15`); not in v6.14
-- [Phase 3] `git show 59a5876e474ac`: removed `wiphy_work_cancel` from
-  `iwl_mld_cancel_async_notifications`; in v7.2, not v7.1
-- [Phase 3] `git show 4f7a07791944e`: original UAF fix on start-fail;
-  Fixes: d1e879ec600f9
-- [Phase 3] `git log -S wiphy_work_cancel -- mld/`: d1e879ec, 4f7a077,
-  833026, 59a5876, c99bc4d4
-- [Phase 3] Parent of candidate is unrelated mvm change; series 08/15 is
-  a mixed iwlwifi-next batch
-- [Phase 4] `b4 dig -c`: lore/patchwork msgid for 08/15; `-a`: v1 then
-  v2 (applied); `-w`: Johannes + linux-wireless
-- [Phase 4] WebFetch lore 403; patchwork bot wall; spinics 500 — review
-  comments UNVERIFIED
-- [Phase 4] No stable@ hit for this subject (search not useful)
-- [Phase 5] `iwl_mld_ops.start` = `iwl_op_mode_mld_start`; RX path
-  `wiphy_work_queue(&mld->async_handlers_wk)` in `notif.c`
-- [Phase 5] `iwl_mld_load_fw` error after init sequence calls
-  `iwl_mld_stop_fw` (purge, no cancel)
-- [Phase 5] MVM `iwl_mvm_mac_stop` already cancels analogous wiphy work
-- [Phase 6] Local `mld.c` already has both cancel sites; pre-image of
-  parent matches the candidate diff
-- [Phase 7] CONFIG_IWLMLD in
-  `drivers/net/wireless/intel/iwlwifi/Kconfig`
-- [Phase 8] Trigger: fw load fail after ALIVE / op-mode stop; severity
-  HIGH (WARN + UAF race)
-- UNVERIFIED: exact lore review discussion text; field frequency of this
-  WARN
+### Verification
+- [Phase 1] Tags: Hsiao SOB, Anderson R-b/SOB, msgid
+  20260608080310.15126-3; no Fixes/Reported-by
+- [Phase 1] EDIDs: product IDs 0x386e/0x3879/0x388b/0x388c match added
+  rows
+- [Phase 2] Diff: +4 `EDP_PANEL_ENTRY` lines in `edp_panels[]` using
+  `delay_200_500_e80`
+- [Phase 2] Fallback: `generic_edp_panel_probe()` lines 814–824
+  `WARN_ON` + `panel_edp_set_conservative_timings()` (unprepare 2000,
+  enable 200)
+- [Phase 3] `git describe HEAD` / Makefile: **6.18.53**
+  (`v6.18.53-5049-g0f0bdc2b0dffb`)
+- [Phase 3] `git merge-base --is-ancestor 4d53cf8147950 v6.18.53` yes;
+  `5f04e7ce392db` yes
+- [Phase 3] `git grep` on v6.18.53: IDs **absent**; `delay_200_500_e80`
+  **present** at line 1760
+- [Phase 3] Similar ID adds already in `v6.18..v6.18.53` (e.g.
+  `89097c138061e`, `bafdd6284f1b9`)
+- [Phase 4] `b4 dig -c d4ae726fc080...`: matched series; v1 only;
+  Anderson R-b; drm-misc-next `d4ae726fc080`
+- [Phase 4] `b4 dig -w`: dri-devel + DRM maintainers + dianders
+- [Phase 4] `b4 dig -m`: cover 0/2, 1/2 independent IDs, 2/2 this patch;
+  no NAK
+- [Phase 4] WebFetch lore/msgid.link: 403 — discussion taken from mbox
+  instead
+- [Phase 5] Callers of `generic_edp_panel_probe`: only `panel_edp_probe`
+  for `edp-panel`
+- [Phase 6] Dry-run apply of candidate hunk onto v6.18.53 `panel-edp.c`:
+  **success**
+- [Phase 6] `0x0db3` (mainline context) **not** in v6.18.53; not
+  required
+- [Phase 7] `CONFIG_DRM_PANEL_EDP` present in this tree
+- [Phase 8] Failure mode: WARN_ON + conservative delays, not oops
+- UNVERIFIED: stable@ archive web search (HTTP 403)
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/mld/mld.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/panel/panel-edp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-index cf003a4a37408..49fcbe6814677 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-@@ -440,6 +440,8 @@ iwl_op_mode_mld_start(struct iwl_trans *trans, const struct iwl_rf_cfg *cfg,
- 	}
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 9ad1769885b3c..792923b1d7878 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -2005,6 +2005,10 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0d45, &delay_200_500_e80, "NV116WHM-N4B"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0d73, &delay_200_500_e80, "NE140WUM-N6S"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0ddf, &delay_200_500_e80, "NV116WHM-T01"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x386e, &delay_200_500_e80, "NV116WH2-M30"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x3879, &delay_200_500_e80, "NT116WHM-N21"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x388b, &delay_200_500_e80, "NV116FH1-M31"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x388c, &delay_200_500_e80, "NV116FH1-M30"),
  
- 	if (ret) {
-+		/* wiphy memory is about to be freed, we should cancel any pending work */
-+		wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk);
- 		wiphy_unlock(mld->wiphy);
- 		rtnl_unlock();
- 		goto err;
-@@ -505,6 +507,7 @@ iwl_op_mode_mld_stop(struct iwl_op_mode *op_mode)
- 	iwl_mld_thermal_exit(mld);
- 
- 	wiphy_lock(mld->wiphy);
-+	wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk);
- 	iwl_mld_low_latency_stop(mld);
- 	iwl_mld_deinit_time_sync(mld);
- 	wiphy_unlock(mld->wiphy);
+ 	EDP_PANEL_ENTRY('C', 'M', 'N', 0x1130, &delay_200_500_e50, "N116BGE-EB2"),
+ 	EDP_PANEL_ENTRY('C', 'M', 'N', 0x1132, &delay_200_500_e80_d50, "N116BGE-EA2"),
 -- 
 2.53.0
 
