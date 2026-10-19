@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FEA533D1E;
-	Mon, 19 Oct 2026 13:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE64F538747;
+	Mon, 19 Oct 2026 13:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418172; cv=none; b=gV2fnj7Tt1gnLP5F/wtaIue/fdzkl/5o22OcwI7ZKOtafFYEtgmjoJk5oSFCPnoOqfpB643/AjsKR6JaLRipuI6vsEI5Q427vxo4SqUsYflCv+AigX8qyOcZ8FZUVhcXnpJEQzM/QCfHMnlqPXfy0efcb4ovJ0NptPjYevNONf8=
+	t=1792418173; cv=none; b=cdseK+s54YDA/MqgGaS9nTrdurIT8KIJitc0HrY58ZoSB0Bn6UulAEpm2xf7flhrGNAlq6Seazj+L7ysDLVOaQibAvD1c03XQTg34qmKkLoBYgT3o9t5PL/X4RGXrX2o9euG5e/gKFzBhVMkKaoC5cu9UkZcwBHixjOELqnKc2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418172; c=relaxed/simple;
-	bh=LkQNGb/gF/AMAymAiYwSMVzJa/Dr+oE5vkKelPezV4c=;
+	s=arc-20240116; t=1792418173; c=relaxed/simple;
+	bh=GNFR2ygFColmruE9hnRL36mSBBf4NUEBSG6hoWa1ypU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uxWIcA0ndW99EelxZhZjBxY3zbBEWQliKnK2bMDbXb3epEotl4+MyURinzbLE140WUEDaWBlQ2NgNWt/igUrKq58gUza6ATC+Mxooiswbc78+Ksf0YPKji2E5pXMlH61C1cYOTRqAFiqO2tHnSjUSccvlFg2i25H0JFQAg8jr20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lucBs15F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=J2lve4cZgcq5p5y83HvmXYQBVHgsR55ke7+Je+aHRJxzQWlvwA/gBdh+TlSIu2L5I5v+XOvUFUEHwzAaUJqBxwPdVufmhKZkZ8cGh6Cv4piLc3Ynmrjaa5ALzTPTZMR++tCHVgmO0ORlUEpDSlNaTAgCEDbmvgGjIctA9gt67C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eE0D2dko; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lucBs15F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B63B1F000C5;
-	Mon, 19 Oct 2026 13:56:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eE0D2dko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E641F000C6;
+	Mon, 19 Oct 2026 13:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418169;
-	bh=yS1cXJUZ6MiwhUPWcwMLDFOnLoS8irSvjD9Yc+fW79A=;
+	s=k20260515; t=1792418170;
+	bh=wWQZeQDhDv+kA4pq+n9MJZ7tRjBa7W4Nvr6f8lDj1Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lucBs15F258srCLlUdUjdtcM+/sk5x7HNZXWtcOHdf43WUxky0VrPpFb6zMtbSa21
-	 mLL9LhJna8UpKkJZNpiH9szWd/0SC/lMWPl0zqOpZ2veJsIHzy/n72Zrc24jFFYOf2
-	 SwjNCruMQYA6iqNkkKx0G7RpodkfC1wCgBSKKnDTrPxLnjKWyTBIIfmStUS/TnrWn5
-	 vE+0H/gn3VT2TPluvmxY0mETL2lgXEGTtUqTCA1HWrDyybU/ZAi1F33HyMb+TXVZt6
-	 wHCeALpWKCGz86eKv+NRuLS7pRaXpajvk97MVANohc27LVMXilVX83rbfB1iD77vek
-	 bQ1qfm0PG+sbQ==
+	b=eE0D2dkomhOX5+NlQ9h55t3+l6ggC24H0iAu+1VcFyDP0k8eninYBOggTDd0lpxeT
+	 Tr48+INyi5ruhehs7c7+NZJPHskMybnOMubbSCNSHr9svlQcwTusQxJa/9g+od1tlw
+	 1OhltnGEvU+7ux3+lPMTZJzPO2mnLD8B5lgN/VmwkAGkgklWiLkW7Rwk3wszJJHcRg
+	 ygThY0/7RZCM1uu3NPhJ1+5kQzExzokkAlSMtV1Mgu7GqiK2RFt+ibGLnI+tnLexzs
+	 swn/388hgL9HHBafmBkuMKJLd9Zaa65KWgkaLOUJxKkNxax7waNrKgCrRBBPPrwJOl
+	 HWeUE7TcKzdVw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Abbott <abbotti@mev.co.uk>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
+Cc: Pei Xiao <xiaopei01@kylinos.cn>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hsweeten@visionengravers.com,
+	vaibhavgupta40@gmail.com,
+	jens.taprogge@taprogge.org,
+	industrypack-devel@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] comedi: das6402: Add sanity check to interrupt handler
-Date: Mon, 19 Oct 2026 09:45:52 -0400
-Message-ID: <20261019135441.1420968-61-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] ipack: ipoctal: add rwsem to guard against TOCTOU in remove path
+Date: Mon, 19 Oct 2026 09:45:53 -0400
+Message-ID: <20261019135441.1420968-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -55,424 +54,517 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit e90d0550c5b3056c8821f5cd714f80902de0fca6 ]
+[ Upstream commit 7d3a708af7f4e2af9e114d731bd60d30c1ec884e ]
 
-The driver requests an interrupt handler for the device, after setting
-device registers to disable interrupt generation.  The interrupt handler
-should not be called prematurely unless the user-configured I/O port
-base address and/or IRQ number are incorrect or the hardware is bad.
+The "removed" flag check in each tty op has a TOCTOU race with
+__ipoctal_remove(): the device could be removed between the flag
+check and the subsequent access to hardware resources (channel
+registers via iowrite8, or xmit_buf in write_tty).
 
-For safety, check the dev->attached flag in the interrupt handler to
-ensure the device has been fully set up, avoiding a possible null
-pointer dereference of dev->read_subdev.
+Close this race by introducing a read-write semaphore (remove_sem).
+The tty ops acquire the read lock via guard(rwsem_read) for the
+full duration of the operation, while __ipoctal_remove() acquires
+the write lock via scoped_guard(rwsem_write) when setting the
+removed flag.  This ensures that once removed is true, no in-flight
+tty op can still be accessing resources that are about to be freed
+by the remove path.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-3-abbotti@mev.co.uk
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/fbce75010a0f0a3a3709a5e06fd0ffd19ca0a0ed.1782870760.git.xiaopei01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The local tree is **v7.3-rc4** (Makefile 7.3.0-rc4). The buggy `removed`
+flag is present here (parent UAF fix `b6b5d64cb161a`), and this commit
+closes a real TOCTOU on that flag.
 
-**Step 1.1: Subject line**
-Record: **[comedi/das6402] [Add] sanity check in the IRQ handler to
-avoid a NULL deref of `dev->read_subdev` before attach completes**
+---
 
-**Step 1.2: Tags**
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[ipack/ipoctal] [add] [rwsem to close TOCTOU between `removed`
+check and hardware access in the remove path]**
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- `Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>`
-- `Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>`
-- `Reported-by: Kyungwook Boo <bookyungwook@gmail.com>`
-- `Link: https://lore.kernel.org/lkml/20260610115912.780131-1-
-  jjy600901@snu.ac.kr/` (original bug report)
-- `Signed-off-by: Ian Abbott <abbotti@mev.co.uk>` (author; comedi
-  maintainer)
-- `Link:
-  https://patch.msgid.link/20260618102949.26607-3-abbotti@mev.co.uk`
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
-- No `Fixes:` tag (expected for this review)
-- No `Cc: stable` (expected; not a negative signal)
-- No `Reviewed-by` / `Tested-by` / `Acked-by`
-- Three independent reporters (SNU) is a strong real-world signal
+- **Link:** `https://patch.msgid.link/fbce75010a0f0a3a3709a5e06fd0ffd19c
+  a0a0ed.1782870760.git.xiaopei01@kylinos.cn`
+- **Signed-off-by:** Pei Xiao `<xiaopei01@kylinos.cn>` (author)
+- **Signed-off-by:** Greg Kroah-Hartman (char-misc maintainer; applied
+  the patch)
+- No **Fixes:**, **Reported-by:**, **Tested-by:**, **Reviewed-by:**,
+  **Acked-by:**, or **Cc: stable** on *this* commit (absence is
+  expected)
+- Parent commit `b6b5d64cb161a` *does* have Reported-by: Shuangpeng Bai,
+  Closes: lore KASAN report, Fixes: `05e5027efc9c`
 
-**Step 1.3: Body**
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- **Bug:** IRQ handler is registered in `das6402_attach()` before
-  subdevices (and `dev->read_subdev`) are set up. `dev->attached` is
-  only set later in core postconfig.
-- **Symptom:** NULL pointer dereference of `dev->read_subdev` /
-  `s->async` if an IRQ arrives early.
-- **Trigger (author):** user-configured I/O base and/or IRQ wrong, or
-  bad hardware. The original report also frames it as any IRQ between
-  `request_irq()` and `read_subdev` assignment.
-- **Root cause:** handler immediately does `s = dev->read_subdev; async
-  = s->async;` with no attached/NULL check.
-- **Version info:** none in the message. Blame shows the deref pattern
-  since 2014.
+- **Bug:** unlocked `removed` flag check in tty ops races with
+  `__ipoctal_remove()`.
+- **Symptom:** device can be removed between the check and `iowrite8` /
+  `xmit_buf` use → MMIO after iounmap (page fault) or use of a freed
+  transmit buffer.
+- **Root cause:** check-then-use without a lock that spans both.
+- **Fix:** `remove_sem` rwsem; tty ops take read lock for the whole op;
+  remove takes write lock while setting `removed`.
+- **Version info:** none in the message. Parent UAF bug dates to the
+  2012 staging move; this TOCTOU exists only after the parent’s
+  `removed` flag.
 
-**Step 1.4: Hidden bug fix?**
-Record: **Not hidden.** It is an explicit NULL-deref guard. Cover
-letter: “Add/fix sanity check in ISA drivers to avoid null-ptr-deref.”
-Original report title: **KASAN null-ptr-deref**.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: **Not hidden.** Explicit race/TOCTOU fix. “Add rwsem” is the
+synchronization change that closes the window.
 
 ---
 
-## Phase 2: Diff analysis
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `drivers/comedi/drivers/das6402.c` (+8 / −2)
-- Function: `das6402_interrupt()`
-- Scope: **single-file surgical fix**
+- **File:** `drivers/ipack/devices/ipoctal.c` — **+10 / −6** (16 lines)
+- **Functions/data:** `struct ipoctal` (`remove_sem`);
+  `ipoctal_port_activate`, `ipoctal_write_tty`, `ipoctal_set_termios`,
+  `ipoctal_hangup`, `ipoctal_shutdown`; `ipoctal_probe` (`init_rwsem`);
+  `__ipoctal_remove` (`scoped_guard` around `removed = true`)
+- **Scope:** single-file surgical fix
 
-**Step 2.2: Code flow**
-Record: **Before:** on every IRQ, immediately dereference
-`dev->read_subdev` and `s->async`. **After:** if `!dev->attached`,
-return `IRQ_NONE`; only then load `async`/`cmd`. Assigning `s =
-dev->read_subdev` before the check is a pointer copy, not a deref.
-
-**Step 2.3: Bug mechanism**
-Record: **[NULL pointer dereference / memory safety]** in IRQ context.
-`request_irq()` runs in `das6402_attach()` before
-`comedi_alloc_subdevices()` and `dev->read_subdev = s`. Core sets
-`dev->attached = true` only in `comedi_device_postconfig()` after attach
-returns. On a premature IRQ, `read_subdev` is still NULL → `s->async`
-oops.
-
-Detach also sets `attached = false` **before** `comedi_legacy_detach()`
-→ `free_irq()`, so the same check covers the teardown window.
-
-**Step 2.4: Fix quality**
-Record: **Obviously correct** and the established comedi pattern
-(`comedi_parport`, `ni_660x`, many ISA drivers). Minimal. Regression
-risk is low: returning `IRQ_NONE` before attach is the intended “not
-ours yet” behavior. `DAS6402_CTRL_INTE` is only set in
-`das6402_ai_cmd()`, which cannot run until the device is attached, so
-legitimate acquisition IRQs are unaffected.
-
-This is patch 02/11 of a per-driver series; das6402 did not already have
-a misplaced `attached` check (unlike pcl818/dt2811 “Fix sanity check”
-patches). No follow-up was needed for this file.
-
----
-
-## Phase 3: Git history
-
-**Step 3.1: Blame**
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Handler exists since `48f16b6aeafdfb` (2009).
-- NULL deref of `read_subdev` introduced by `d1d24cb65ee360` (“staging:
-  comedi: das6402: read analog input samples in interrupt handler”,
-  Hartley Sweeten, 2014-11-13) → **v3.19-rc1**.
-- Driver rewrite: `79e5e6addbb18b` (v3.15-rc1).
-- Comedi left staging: `8ffdff6a8cfbd` (around v5.13).
-- Long-lived bug, not recent new code.
+- **Before:** each listed tty op reads `ipoctal->removed` with no lock,
+  then touches MMIO/`xmit_buf`. Remove stores `removed = true` then
+  `free_irq`, `tty_port_free_xmit_buf`, `tty_port_destroy`.
+- **After:** ops hold `down_read` for the whole op via
+  `guard(rwsem_read)`. Remove’s `down_write` waits for in-flight
+  readers, then sets `removed`. Later readers see `removed == true` and
+  skip hardware. Then remove frees resources.
+- **Path:** device-remove vs concurrent tty ops (write, termios, hangup,
+  shutdown, port activate).
 
-**Step 3.2: Fixes: tag**
-Record: **None.** Introducing commit `d1d24cb65ee360` **is** an ancestor
-of this tree.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **[Synchronization / race — TOCTOU]** Flag check without a lock
+that covers the subsequent access. Writer waits for readers, then
+publishes `removed`; new readers bail out. Category (c) not involved (no
+get/put change here). Complements parent kref/`removed` UAF fix.
 
-**Step 3.3: File history**
-Record (recent on this file):
-- `e90d0550c5b30` this fix
-- `2ddb4c5699129` I/O base sanity (independent; not a prerequisite)
-- `70f2b28b5243d` bit-shift OOB fix
-
-Standalone. Series is 11 independent per-driver IRQ guards.
-
-**Step 3.4: Author**
-Record: Ian Abbott is **the comedi maintainer** (118 comedi commits in
-this tree). Sibling `comedi_parport` fix `17221216ae8ce` is the same
-class and was explicitly `Cc: stable` + syzbot.
-
-**Step 3.5: Dependencies**
-Record: **None.** Uses existing `dev->attached` and `IRQ_NONE`. Applies
-standalone.
-
-`git merge-base --is-ancestor e90d0550c5b30 HEAD` → already in this
-checkout (v7.3-rc4). That is not treated as “already selected for
-stable.”
-
----
-
-## Phase 4: Mailing list / external research
-
-**Step 4.1: Original discussion**
+**Step 2.4: ASSESS THE FIX QUALITY**
 Record:
-- `b4 dig -c e90d0550c5b30` →
-  https://patch.msgid.link/20260618102949.26607-3-abbotti@mev.co.uk
-- Series: **v1 only**, `[PATCH 02/11]`, cover `comedi: Add/fix sanity
-  check in ISA drivers to avoid null-ptr-deref`
-- Bug report (lkml.iu.edu / lore): Jaeyoung Chung, 2026-06-10,
-  **“comedi: KASAN null-ptr-deref in ISA driver IRQ handlers on early
-  IRQ”**. Names `das6402_attach` / `das6402_interrupt` first. Failure:
-  kernel panic / KASAN when IRQ fires after `request_irq()` and before
-  `read_subdev` is set.
-- Suggested fix matches this patch (guard handler or move
-  `request_irq`).
-- Mbox: cover + 11 patches, **no NAKs, no reviewer objections**. Greg KH
-  applied it.
-
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: `linux-kernel@vger.kernel.org`, Greg Kroah-Hartman, H Hartley
-Sweeten, the three reporters. Comedi maintainers were on the patch.
-
-**Step 4.3: Bug report**
-Record: Static/code-path KASAN NULL deref in several ISA comedi IRQ
-handlers. Three reporters. `das6402` is the exemplar. Sibling parport
-case was syzbot-reproduced GPF.
-
-**Step 4.4: Series**
-Record: 11 independent driver patches. This one does not need the rest.
-
-**Step 4.5: Stable list**
-Record: lore.kernel.org/stable fetch returned 403. Unverified whether
-someone already nominated it on the stable list. The related parport
-patch **was** `Cc: stable`.
+- **Quality:** classic rwsem lifetime barrier; `guard`/`scoped_guard`
+  make unlock-on-return automatic. Write lock is only held while storing
+  the flag, which is enough because later readers observe `removed`.
+- **Verified non-nesting:** `ipoctal_hangup` → `tty_port_hangup` →
+  `tty_port_shutdown` calls **`tty_port_operations.shutdown`**, which
+  this driver does **not** set. `tty_operations.shutdown`
+  (`ipoctal_shutdown`) runs from `release_tty()`, a different path. No
+  recursive `down_read` on the same task.
+- **`tty_unregister_device`** only does `device_destroy`/`cdev_del`; it
+  does not take `tty_lock`. Write lock is dropped before unregister, so
+  hangup’s `tty_lock` → read lock vs remove’s write lock → unregister is
+  not a held-lock inversion.
+- **Regression risk:** low. `down_read` in `write_tty` is legal (tty
+  write may sleep). IRQ handler does not take the rwsem; remove still
+  `free_irq` after publishing `removed`, which waits out in-flight IRQs.
+- **Incompleteness (not a reason to reject):** `write_room` /
+  `chars_in_buffer` / `get_icount` still unlocked; they only touch
+  `channel` fields kept alive by the parent kref, not MMIO/`xmit_buf`.
 
 ---
 
-## Phase 5: Code semantic analysis
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 5.1: Functions**
-Record: `das6402_interrupt()` only.
-
-**Step 5.2: Callers**
-Record: only `request_irq(..., das6402_interrupt, ...)` in
-`das6402_attach()` (`drivers/comedi/drivers/das6402.c:579`). **Hard IRQ
-context.**
-
-**Step 5.3: Callees**
-Record: `inb`, `das6402_ai_read_sample`, `comedi_buf_write_samples`,
-`das6402_clear_all_interrupts`, `comedi_handle_events`. After the guard,
-those only run once attached.
-
-**Step 5.4: Reachability**
-Record: Yes, from userspace: Comedi `COMEDI_DEVCONFIG` attach with I/O
-base + IRQ (`it->options[0]` / `[1]`). Typically privileged.
-Misconfigured port/IRQ or a spurious IRQ during attach/detach oopses the
-kernel. `das6402_reset()` runs before `request_irq` and leaves
-`CTRL_SOFT_TRIG` (no `DAS6402_CTRL_INTE`); device IRQs are enabled later
-in `das6402_ai_cmd()`. So a **correct** board is unlikely to interrupt
-early; wrong I/O/IRQ, leftover IRQ line, or teardown still can.
-
-**Step 5.5: Similar patterns**
-Record: Same `if (!dev->attached)` guard across many comedi ISA drivers.
-This series adds/fixes it in 11 of them. Established, not experimental.
-
----
-
-## Phase 6: Local tree
-
-**Step 6.1: Does the buggy code exist here?**
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Tree: **`v7.3-rc4-27-gf0100363d8c37`**, `VERSION=7 PATCHLEVEL=3
-  SUBLEVEL=0 EXTRAVERSION=-rc4` (mainline 7.3-rc, not an LTS branch).
-- File and handler exist. Pre-fix handler (parent of `e90d0550c5b30`)
-  dereferenced `s->async` unconditionally. Bug introduced **v3.19**
-  (`d1d24cb65ee360`), long before 7.3.
-- Current tree already contains the fix (`e90d0550c5b30` is an ancestor
-  of HEAD).
+- `removed` and kref: **`b6b5d64cb161a`** (Pei Xiao, 2026-07-17, “fix
+  UAF, null-ptr-deref, and use-after-free in cleanup on remove”).
+- `remove_sem`: **this commit `7d3a708af7f4e`**.
+- Driver core (`struct ipoctal`): 2012 (`ba4dc61fe8c545` staging).
+- **The TOCTOU is in code added by the immediate parent**, not in
+  ancient unlocked MMIO.
 
-**Step 6.2: Backport difficulty**
-Record: **Clean apply** to any tree with this `das6402_interrupt()`
-shape (stable since 2014). No structural prerequisites.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: **No Fixes: tag on this commit.** Parent `b6b5d64cb161a` has
+`Fixes: 05e5027efc9c` (“Staging: ipack: move out of staging”,
+2012-11-16). `git merge-base --is-ancestor` confirms `05e5027efc9c`,
+`b6b5d64cb161a`, and `7d3a708af7f4e` are all ancestors of HEAD.
 
-**Step 6.3: Related fixes already here**
-Record: This exact fix is already in HEAD. No alternate das6402 IRQ
-NULL-deref fix. `2ddb4c5699129` only restricts I/O base; it does not
-close the IRQ window.
-
----
-
-## Phase 7: Subsystem context
-
-**Step 7.1**
-Record: **comedi / DAS6402 ISA DAQ driver**. Criticality: **PERIPHERAL**
-(legacy ISA, `CONFIG_COMEDI_DAS6402`), but the failure is a **kernel
-oops in IRQ context**, not a cosmetic driver glitch. Comedi is out of
-staging.
-
-**Step 7.2**
-Record: Mature driver (1999/2014). Recent activity is this class of
-IRQ/I/O sanity fixes, not a rewrite.
-
----
-
-## Phase 8: Impact and risk
-
-**Step 8.1: Who is affected**
-Record: **Driver-specific / config-specific** (`CONFIG_COMEDI_DAS6402`).
-Keithley/Computerboards DAS6402-12/16 and compatibles. Small population,
-but a crash is still a crash for those users and for anyone attaching
-with a bad IRQ/port.
-
-**Step 8.2: Trigger**
-Record: Attach with IRQ configured, then an IRQ before `attached` (bad
-I/O/IRQ, spurious line, or the `attached=false`…`free_irq` detach
-window). Not every boot on healthy hardware. Privileged attach, not
-unprivileged syscall spray like a VFS bug; still a real oops and KASAN-
-class memory-safety issue.
-
-**Step 8.3: Failure mode**
-Record: **NULL deref in hardirq → KASAN / oops / panic**. Severity:
-**CRITICAL** (crash), limited blast radius (this driver).
-
-**Step 8.4: Risk-benefit**
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 Record:
-- **Benefit:** prevents IRQ-time oops on a real, reported path; same
-  pattern already used for stable on `comedi_parport`.
-- **Risk:** very low (8 lines, early return, no locking/API change).
-- **Ratio:** favorable.
+- Direct parent of this commit **is** `b6b5d64cb161a`. Same author,
+  consecutive timestamps (10:01:09 / 10:01:10).
+- Mailing-list subject: **`[PATCH 2/2]`**. Patch 1 is the
+  UAF/kref/`removed` flag; patch 2 is this rwsem.
+- No later commits on this file after `7d3a708af7f4e`.
+- **Standalone for this tree: yes**, because patch 1 is already here.
+  Not standalone on a tree that lacks `b6b5d64cb161a`.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Pei Xiao is **not** the ipack maintainer; only these two ipack
+commits. Greg KH applied both. Reporter Shuangpeng Bai iterated on the
+series.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record:
+- **Hard dependency:** `removed`, the flag checks, `kref_init` context
+  in probe. All from `b6b5d64cb161a`, **present in this tree**.
+- `guard(rwsem_read)` / `scoped_guard(rwsem_write)`:
+  `DEFINE_LOCK_GUARD_1` in `include/linux/rwsem.h` (includes
+  `cleanup.h`) — **present here**.
+- Can apply standalone **on this tree: yes**.
 
 ---
 
-## Phase 9: Synthesis
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 9.1: Evidence**
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- **b4 dig -c 7d3a708af7f4e:** matched series; lore msgid `fbce75010a0f0
+  a3a3709a5e06fd0ffd19ca0a0ed.1782441021.git.xiaopei01@kylinos.cn` (and
+  committed link with `.1782870760`).
+- **b4 dig -a:** evolved RFC → PATCH → **PATCH 1/2 + 2/2**. This commit
+  is 2/2.
+- Thread started as **`[BUG] KASAN: slab-use-after-free in
+  ipoctal_write_tty`** (Shuangpeng Bai, 14 Jun 2026), QEMU TPCI200/IP-
+  Octal, repro: open tty then `/sys/bus/pci/drivers/tpci200/unbind`.
+- Incomplete earlier versions produced: NULL deref in write, page fault
+  in `ipoctal_set_termios` → `iowrite8`, UAF in `ipoctal_cleanup`.
+- **Shuangpeng on the 1/2+2/2 series (30 Jun 2026): “I tried this patch
+  on my side and no bug is triggered.”**
+- **No NAKs.** No reviewer asked for Cc: stable. Greg applied the
+  series.
 
-FOR:
-- KASAN-reported NULL deref in an interrupt handler (oops/panic)
-- Three reporters; das6402 is the primary example in the report
-- 8-line, obviously correct guard used across comedi
-- Maintainer-authored; applied by Greg KH
-- Bug present since ~v3.19; no missing prerequisites in this tree
-- Sibling parport fix of the same class was `Cc: stable`
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record: **b4 dig -w:** To/Cc were Pei Xiao, shuangpeng.kernel@gmail.com,
+linux-kernel@. Not a dedicated ipack list. Greg KH (subsystem
+maintainer) applied it after Pei asked him to look at
+`cover.1782870760`.
 
-AGAINST:
-- Niche ISA DAQ hardware
-- Healthy boards with correct I/O/IRQ are unlikely to interrupt before
-  `DAS6402_CTRL_INTE` is set
-- No `Fixes:` / `Cc: stable` on this commit (expected; not used as a NO)
-- No extra `Reviewed-by` besides maintainer + Greg
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record:
+- KASAN slab-UAF in `ipoctal_write_tty` via `n_tty_write` /
+  `ksys_write`, freed from `tpci200_pci_remove` → `unbind_store`.
+- Repro gist referenced in-thread. **Root-only sysfs unbind**, QEMU not
+  physical hardware.
+- Greg (15–16 Jun 2026): unbind is a testing path; **“As it's not a real
+  issue for drivers like this, it's a very low priority”**, but he would
+  review patches. He still merged the series.
 
-UNRESOLVED:
-- Could not search lore.kernel.org/stable (403)
-- No C reproducer in the SNU mail (code-path / KASAN analysis, not
-  syzbot)
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: **2-patch series.** Patch 1: kref, `carrier_owner` cache,
+`removed` flag, NULL `xmit_buf` check. Patch 2 (this): rwsem around that
+flag. Both in this tree. Tester signed off on the combination.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** (standard `dev->attached`
-   guard; applied upstream)
-2. Real user-affecting bug? **PASS** (KASAN NULL deref / panic on early
-   IRQ)
-3. Important (crash/security/corruption/deadlock)? **PASS** — crash in
-   IRQ handler
-4. Small and contained? **PASS** — one function, +8/−2
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — file and handler exist; patch is
-   already the current code
-
-**Step 9.3: Exception category**
-Record: None needed (not a device-ID/quirk/DT/build/doc exception). It
-is a straightforward crash fix.
-
-**Step 9.4: Decision**
-This tree is **Linux 7.3-rc4**. The DAS6402 IRQ handler and the
-`read_subdev` deref have been in this lineage since v3.19. The change is
-a small, standard NULL-deref guard for a KASAN-confirmed oops. It meets
-stable criteria on technical merit. Niche hardware lowers breadth of
-impact, not the fact that the failure is a kernel crash.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: **UNVERIFIED** for lore.kernel.org/stable (HTTP 403). No `Cc:
+stable` in the thread mbox. No evidence of a prior stable NAK.
 
 ---
 
-### What it solves for stable users
-If `das6402` is loaded and attached with an IRQ, the handler can run
-after `request_irq()` but before `dev->read_subdev` is set (and while
-`dev->attached` is still false). The old handler immediately did
-`s->async` and oopsed. The patch returns `IRQ_NONE` until attach is
-complete.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Risk vs benefit
-Benefit is avoiding an IRQ-context oops; risk is an 8-line early return
-that does not change the post-attach command path (`CTRL_INTE` only in
-`das6402_ai_cmd()`).
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `ipoctal_port_activate`, `ipoctal_write_tty`,
+`ipoctal_set_termios`, `ipoctal_hangup`, `ipoctal_shutdown`,
+`ipoctal_probe`, `__ipoctal_remove`; field `ipoctal.remove_sem`.
 
-### Concerns
-No backport rework, no series dependency. Apply is clean on this
-`das6402.c`.
+**Step 5.2: TRACE CALLERS**
+Record:
+- `ipoctal_write_tty` ← `tty_operations.write` ← userspace `write()` on
+  the tty.
+- `ipoctal_set_termios` ← tty ioctl (reporter: `tty_mode_ioctl`).
+- `ipoctal_port_activate` ← `tty_port_operations.activate` ←
+  `ipoctal_open` → `tty_port_open`.
+- `ipoctal_hangup` ← `tty_operations.hangup` ← `__tty_hangup`.
+- `ipoctal_shutdown` ← `tty_operations.shutdown` ← `release_tty()`.
+- `__ipoctal_remove` ← `ipoctal_remove` ← `ipack_driver_ops.remove`
+  (unbind / PCI remove / module teardown).
+- **Reachable from userspace tty ops + admin device removal.**
+
+**Step 5.3: TRACE CALLEES**
+Record: `iowrite8` / `ipoctal_reset_channel`,
+`ipoctal_copy_write_buffer` (`xmit_buf`), `tty_port_hangup` /
+`tty_port_set_initialized`, `free_irq` via bus ops,
+`tty_port_free_xmit_buf`.
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Open `/dev/tty*` on IP-OCTAL, keep fd, remove carrier (`unbind`,
+`rmmod`, PCI remove). **Yes, userspace-reachable.** Unprivileged
+write/ioctl; removal needs privileges or hotplug. Failure is kernel
+oops/UAF, not just ENODEV.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same unlocked `if (ipoctal->removed)` was in all hardware-
+touching tty ops from patch 1; this patch wraps all of them. No sibling
+ipack device driver with the same pattern.
 
 ---
 
-Verification:
-- [Phase 1] Parsed tags: 3× Reported-by (SNU), lore bug Link, Ian Abbott
-  + Greg KH SOBs; no Fixes/Cc:stable
-- [Phase 2] Diff: +8/−2 in `das6402_interrupt()`; defer `s->async` until
-  `dev->attached`
-- [Phase 2] Confirmed `DAS6402_CTRL_INTE` only in `das6402_ai_cmd()`;
-  reset uses `CTRL_SOFT_TRIG` before `request_irq`
-- [Phase 2] Confirmed detach sets `attached = false` then
-  `comedi_legacy_detach()` → `free_irq()`
-- [Phase 3] `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`; Makefile
-  7.3.0-rc4
-- [Phase 3] `git blame`: deref from `d1d24cb65ee360` (v3.19-rc1);
-  handler from 2009/2014
-- [Phase 3] `git merge-base --is-ancestor d1d24cb65ee360 HEAD` →
-  introducing commit in this tree
-- [Phase 3] `git merge-base --is-ancestor e90d0550c5b30 HEAD` → this
-  commit already in HEAD (ignored as “already selected”)
-- [Phase 3] Pre-fix handler via `git show
-  e90d0550c5b30^:drivers/comedi/drivers/das6402.c` matches the candidate
-  diff
-- [Phase 3] Ian Abbott: 118 comedi commits; sibling `17221216ae8ce` had
-  `Cc: stable` + syzbot
-- [Phase 4] `b4 dig -c e90d0550c5b30` → msgid `20260618102949.26607-3`;
-  series v1 02/11
-- [Phase 4] `b4 dig -a`: v1 only; `b4 dig -w`: Greg KH + Hartley Sweeten
-  + reporters
-- [Phase 4] Mbox: cover letter “null-ptr-deref”; no NAK/review
-  objections
-- [Phase 4] Original report fetched from lkml.iu.edu: KASAN null-ptr-
-  deref, das6402 listed first
-- [Phase 4] lore.kernel.org WebFetch 403; stable-list search UNVERIFIED
-- [Phase 5] `das6402_interrupt` callers: only `request_irq` in
-  `das6402_attach`
-- [Phase 6] Current `das6402.c` already has `if (!dev->attached)`; buggy
-  form exists at parent of this commit
-- [Phase 7] `CONFIG_COMEDI_DAS6402` in `drivers/comedi/Kconfig`;
-  peripheral ISA driver, not staging
-- [Phase 8] Failure mode: NULL deref in hardirq → oops/panic, severity
-  CRITICAL, population driver-specific
-- UNVERIFIED: whether this SHA was discussed on stable@ (lore 403)
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-The fix is small, surgical, and meets all stable kernel criteria.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.** HEAD is `v7.3-rc4-27-gf0100363d8c37`, version
+**7.3.0-rc4**. `struct ipoctal` has `removed` from `b6b5d64cb161a` (in
+7.3-rc1 char-misc merge). Without this commit, those checks are
+unlocked. Bug introduced **in this 7.3 cycle** by patch 1, not after
+this tree branched.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Clean apply on this tree** (same file layout,
+`guard`/`scoped_guard`/`kref_init` present). Context uses `kzalloc_obj`
+from a treewide change; this hunk only adds `init_rwsem` next to
+`kref_init` from patch 1.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: Parent UAF fix **is** here. No alternate TOCTOU fix. No later
+revert or follow-up on this file.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **`drivers/ipack` (IndustryPack / GE IP-OCTAL UART).**
+**PERIPHERAL.** `CONFIG_SERIAL_IPOCTAL` depends on `IPACK_BUS && TTY`,
+**default n**. Used in industrial/HEP-style carrier boards (CERN/GE
+history), also QEMU TPCI200.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: **Mature / low churn.** Until this 2026 series, last functional
+ipoctal work was small tty API conversions and older leak/race fixes.
+Not a hot new subsystem.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: **Driver-specific / config-specific** (`CONFIG_SERIAL_IPOCTAL`).
+Not universal.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Concurrent tty op and `__ipoctal_remove`. Reproduced with **root
+sysfs unbind** while fd open. Same remove path as PCI remove / module
+unload. Unprivileged user cannot unbind; they can issue write/ioctl on
+an already-open fd. Race window is real but narrow.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record: **Oops / KASAN UAF / MMIO page fault.** **HIGH** when it fires
+(kernel crash). Not a generic unprivileged LPE path. Greg called the
+underlying unbind-vs-open-fd class **low priority** for this driver.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** medium-high *if* patch 1 is present (this tree):
+  completes an incomplete UAF mitigation; prevents residual oops on
+  remove-with-open-tty.
+- **Risk:** low — ~10 lines, one file, scoped guards, no API change.
+- **Ratio:** favorable **on this tree**, because shipping patch 1
+  without patch 2 leaves a known TOCTOU.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**For backporting to this tree:**
+- Real TOCTOU: check `removed` then access MMIO/`xmit_buf` while remove
+  frees them.
+- Failure is oops/UAF (reporter already hit page fault and KASAN on
+  related paths).
+- Small, obviously correct rwsem barrier; tester confirmed 1/2+2/2 no
+  longer crashes.
+- Prerequisite patch 1 **is in this tree**; without this commit the 7.3
+  `removed` flag is racy.
+- Greg KH applied it; no NAKs.
+- Matches stable “race with severe outcome” guidance.
+
+**Against:**
+- Explicit **PATCH 2/2** (but dependency is already here).
+- Niche `default n` IndustryPack UART.
+- Trigger in the report is root sysfs unbind; Greg called that class low
+  priority.
+- This commit has no Fixes:/Reported-by of its own (expected).
+- Not a core-kernel path.
+
+**Unresolved:**
+- Stable-list search 403 (no confirmation anyone asked stable@).
+- No independent reproduction of *only* the TOCTOU (series tested as a
+  whole).
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — lock spans check+use;
+   Shuangpeng retested the series.
+2. Fixes a real bug that affects users? **PASS** — race on this tree’s
+   `removed` flag; same remove-vs-open-tty path as the KASAN report.
+3. Important issue? **PASS** — oops/UAF/page fault, not a style change.
+   Importance is limited by hardware rarity, not by bug class.
+4. Small and contained? **PASS** — one file, +10/−6.
+5. No new features or APIs? **PASS**.
+6. Can apply to the local tree? **PASS** — parent, `removed`, and
+   `guard(rwsem_*)` all exist here.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: **None** (not an ID/quirk/DT/build/doc exception). Qualifies as
+a normal race/UAF-completion fix.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This tree is 7.3-rc4 and already contains the parent UAF fix that added
+an unlocked `removed` flag. Leaving that flag without `remove_sem` re-
+opens MMIO-after-unmap and freed-`xmit_buf` on remove-while-tty-open.
+The patch is small, correct, and was tested as the second half of that
+series. That is enough technical merit to backport it **into this
+tree**.
+
+It would be the wrong patch to take **alone** on a tree that still lacks
+`b6b5d64cb161a`; that is not this tree.
+
+---
+
+## Detailed explanation
+
+The parent commit keeps `struct ipoctal` alive with a kref and uses
+`removed` to skip MMIO after unmap. That check is TOCTOU:
+`__ipoctal_remove()` can set `removed` and free `xmit_buf`/unmap BARs
+between the load of the flag and `iowrite8` / buffer use. The rwsem
+makes “still using hardware” and “publish removed” exclusive. That is a
+real crash class on a path the reporter already exercised.
+
+Stable rules are met: real bug, crash severity, tiny diff, no new API,
+applies here. Peripheral hardware and a root-oriented repro lower
+*breadth*, not correctness. Risk is low vs the benefit of not shipping
+the incomplete flag.
+
+---
+
+## Verification
+- **[Phase 1]** Parsed tags: Link msgid, SOB Pei Xiao + Greg KH; no
+  Fixes/Reported-by on this commit; parent has Reported-by Shuangpeng
+  Bai + Fixes 05e5027efc9c
+- **[Phase 2]** Diff: `drivers/ipack/devices/ipoctal.c` +10/−6; rwsem
+  around five tty ops + probe init + remove store
+- **[Phase 2]** Confirmed `tty_port_hangup` calls port `.shutdown`, not
+  `tty_operations.shutdown`; ipoctal port ops have no `.shutdown`
+- **[Phase 2]** `tty_unregister_device` is `device_destroy`/`cdev_del`
+  only
+- **[Phase 3]** `git describe HEAD` → `v7.3-rc4-27-gf0100363d8c37`;
+  `make kernelversion` → 7.3.0-rc4
+- **[Phase 3]** `git merge-base --is-ancestor` b6b5d64, 7d3a708, 05e5027
+  → all in HEAD
+- **[Phase 3]** `git log -1 7d3a708^` → parent is exactly the
+  UAF/`removed` commit
+- **[Phase 3]** blame: `removed` from b6b5d64; `remove_sem` from 7d3a708
+- **[Phase 4]** `b4 dig -c 7d3a708af7f4e` / `-a` / `-w` / `-m`: PATCH
+  2/2, RFC→v2 series, recipients Pei/Shuangpeng/lkml
+- **[Phase 4]** mbox: KASAN report, Greg low-priority comment,
+  Shuangpeng “no bug is triggered” on 1/2+2/2
+- **[Phase 4]** lore.kernel.org WebFetch/curl: **403** — discussion
+  taken from b4 mbox instead
+- **[Phase 5]** Callers traced in `ipoctal.c` + `tty_io.c` /
+  `tty_port.c`
+- **[Phase 6]** Local file has `removed` + `remove_sem`; no later
+  follow-up on this file
+- **[Phase 7]** Kconfig: `SERIAL_IPOCTAL` default n, depends IPACK_BUS
+  && TTY
+- **[Phase 8]** Failure mode: UAF/oops/PF on remove vs open tty; trigger
+  requires device removal
+- **UNVERIFIED:** whether anyone mailed stable@ about this exact commit
+  (lore/stable 403)
 
 **YES**
 
- drivers/comedi/drivers/das6402.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/ipack/devices/ipoctal.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/comedi/drivers/das6402.c b/drivers/comedi/drivers/das6402.c
-index 7660487e563c5..f9a778390ac93 100644
---- a/drivers/comedi/drivers/das6402.c
-+++ b/drivers/comedi/drivers/das6402.c
-@@ -173,10 +173,16 @@ static irqreturn_t das6402_interrupt(int irq, void *d)
- {
- 	struct comedi_device *dev = d;
- 	struct comedi_subdevice *s = dev->read_subdev;
--	struct comedi_async *async = s->async;
--	struct comedi_cmd *cmd = &async->cmd;
-+	struct comedi_async *async;
-+	struct comedi_cmd *cmd;
- 	unsigned int status;
+diff --git a/drivers/ipack/devices/ipoctal.c b/drivers/ipack/devices/ipoctal.c
+index 474b58858dca6..aab303c4a9837 100644
+--- a/drivers/ipack/devices/ipoctal.c
++++ b/drivers/ipack/devices/ipoctal.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/interrupt.h>
+ #include <linux/kref.h>
++#include <linux/rwsem.h>
+ #include <linux/sched.h>
+ #include <linux/tty.h>
+ #include <linux/serial.h>
+@@ -54,6 +55,7 @@ struct ipoctal {
+ 	u8 __iomem			*int_space;
+ 	struct kref			kref;
+ 	struct module			*carrier_owner;
++	struct rw_semaphore		remove_sem;
+ 	bool				removed;
+ };
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
-+
-+	async = s->async;
-+	cmd = &async->cmd;
-+
- 	status = inb(dev->iobase + DAS6402_STATUS_REG);
- 	if ((status & DAS6402_STATUS_INT) == 0)
- 		return IRQ_NONE;
+@@ -81,7 +83,7 @@ static int ipoctal_port_activate(struct tty_port *port, struct tty_struct *tty)
+ 	channel = dev_get_drvdata(tty->dev);
+ 	ipoctal = chan_to_ipoctal(channel, tty->index);
+ 
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed)
+ 		return -ENODEV;
+ 
+@@ -476,7 +478,7 @@ static ssize_t ipoctal_write_tty(struct tty_struct *tty, const u8 *buf,
+ 	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
+ 	size_t char_copied;
+ 
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed || !channel->tty_port.xmit_buf)
+ 		return 0;
+ 
+@@ -522,7 +524,7 @@ static void ipoctal_set_termios(struct tty_struct *tty,
+ 	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
+ 	speed_t baud;
+ 
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed)
+ 		return;
+ 
+@@ -660,7 +662,7 @@ static void ipoctal_hangup(struct tty_struct *tty)
+ 		return;
+ 
+ 	ipoctal = chan_to_ipoctal(channel, tty->index);
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed)
+ 		return;
+ 
+@@ -686,7 +688,7 @@ static void ipoctal_shutdown(struct tty_struct *tty)
+ 		return;
+ 
+ 	ipoctal = chan_to_ipoctal(channel, tty->index);
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed)
+ 		return;
+ 
+@@ -736,6 +738,7 @@ static int ipoctal_probe(struct ipack_device *dev)
+ 		return -ENOMEM;
+ 
+ 	kref_init(&ipoctal->kref);
++	init_rwsem(&ipoctal->remove_sem);
+ 
+ 	ipoctal->dev = dev;
+ 	ipoctal->carrier_owner = dev->bus->owner;
+@@ -755,7 +758,8 @@ static void __ipoctal_remove(struct ipoctal *ipoctal)
+ {
+ 	int i;
+ 
+-	ipoctal->removed = true;
++	scoped_guard(rwsem_write, &ipoctal->remove_sem)
++		ipoctal->removed = true;
+ 
+ 	ipoctal->dev->bus->ops->free_irq(ipoctal->dev);
+ 
 -- 
 2.53.0
 
