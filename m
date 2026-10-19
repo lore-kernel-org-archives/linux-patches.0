@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0597F621530;
-	Mon, 19 Oct 2026 14:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA9162045C;
+	Mon, 19 Oct 2026 14:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418686; cv=none; b=B9m4MNXuSxMkq52zUyhizQaO99BqkQSgoA6RXoDcyBm8r+BipAG7Z8ubzwvyjH4JGseoH8jBSnfjHarMpIM2MlKCFyuN8nFLVo+N127EdiAkI/FtVkhiCjWipKzQ8K+M5WeP+ewBxXpaXdJm07jrJPgGdsyRg9cw1umAih7lvQM=
+	t=1792418688; cv=none; b=puX3CifIW1jJhQ4bnAUtN9ypB+5Ixm2P+v/kOjSzHpzXHppgBqaZGiRPukQTqspV2Tu419e0yGODRqOx69Qsg47P2WMINb77gxjQScrYzr6tfMzdkS62TXF8NmBeYi5Y/3SOrsxzari1GomQVR9Jryd6Q3ZiNOOdlBlI34LLN5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418686; c=relaxed/simple;
-	bh=UxgYAVt7T7mKJm1EEapzlYzDOLV68JxCW59NobJA8xI=;
+	s=arc-20240116; t=1792418688; c=relaxed/simple;
+	bh=KdA9561FDaAktrAwCYGgaOwdlX+FTgvNK3jPw9Cwayw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dq2+INt8Gn4koinFJiClFfIbKYYF0SNz6eIZ3TFu9HPitROoFhDK/rE9nkMeq73/FgFbdMobxJiYp9EtJjwBcBvSspw79Her9JfEZ8d94+uaQIqrVzqHtdCqp3HFmyTNjNNwhiECMQ7Q6DiEDV7Ikn1Pqp4wRk8hPRwui7Qrd7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jza5pUxA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=D/3G6QDF/C8HqsaCQlaLAxw6h+Yl07itsnNRP4XCbN2seJRLHn2FhDOzthBk9GGbhibhziBdC7pQdmZD6RPjZLe3FDrNGz/zP7oZv49jRhyYd5pwyAef12sRb586o3ujFZxiwdhEHSQoJ9nfJPKaldqiPP5LwpwOs7J1mf9JKsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onZWBroj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jza5pUxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B581F000C4;
-	Mon, 19 Oct 2026 14:04:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="onZWBroj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444881F000CB;
+	Mon, 19 Oct 2026 14:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418682;
-	bh=28ddZe0ZAUTWgPWrbXLSWvpXeelnwH5XNSDrOpcjeMQ=;
+	s=k20260515; t=1792418684;
+	bh=qvbp8f2w9chI37b/MVBFR5OrAMzeWq0Ca+d/8PVVkew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jza5pUxAfrQcps4/981xHjGpUzdFnb49+zN1BEcGMwKw6ZNGJjNA613otOo59Kpjo
-	 miaew/pvmEYW83rBZBOLK2DkSkmvJWynDBRZQnfuo1GCAmjW7dkXSIJHLEDnrG4wPX
-	 emeGzV3f6E+xWzox1wy5O0wYP1qCASO0HbMlkJZKNY5zu14EwCw8AmMu9hSJ2PeI/L
-	 pIQLOQY1vDHmFgMSPoPVa00mtQm/I60hTszNwft8SxexYMKy9X3c9q2g/+NwXYMSJ1
-	 juklYgk25aTigfiq/zEy2BWMhvcqdl4qHgWaOzD2LNWFuiXvmU6xD4JG78Gcte8QDd
-	 +Chduc6jpDwVA==
+	b=onZWBroj4DATtTVx9lISZyZ/gs3gHXZfO/W4KfTi7azoynNJNsnxQY5u/1cwmG//2
+	 jk5zfqcUeIpdTRU5b5Jn8dJtQu+G6eGSGkNCX+65JEHV6pqrgurKfs2AOlg2g5fZAz
+	 IWohzr1GXr08r/5cTMoYzpkcoTStDk4dxDCKOaokWUiAKTJYNo0JMedMWRF1OHqrDl
+	 3t9XHMS91e4LcxvAJSy74uxeg7QH79fL98sKmvqdWMRgj1ncJSgXKYTrS6v6AWFTAs
+	 Au6f96yafjTCIbZa8sqv4Yx0Z2VkQWKDwsR+Yrzid1BpqfkQAF5SDibRJ2e2ha5Wl6
+	 K2GGzqj6sNhAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+Cc: Xiang Liu <xiang.liu@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	kenneth.feng@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ntfs3: fix info-leak in ntfs_rename()
-Date: Mon, 19 Oct 2026 09:51:53 -0400
-Message-ID: <20261019135441.1420968-422-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] drm/amd/pm: Guard VBIOS AC timing table walk
+Date: Mon, 19 Oct 2026 09:51:54 -0400
+Message-ID: <20261019135441.1420968-423-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,412 +58,456 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Xiang Liu <xiang.liu@amd.com>
 
-[ Upstream commit 2fa56613b25d0c983ef3ff6d3e865d4254280abe ]
+[ Upstream commit 2bf6867e5953a140fc91c3159987656e44ed29fb ]
 
-Hard to say about copy_to_user_iter(), but at least the first splat
-looks correct. At the end of fill_name_de(), data layout is:
+Reject AC timing blocks with a stride smaller than a dword before walking
+VBIOS data. A zero stride can otherwise keep reg_data pinned on a
+nonmatching MEM_ID forever.
 
-struct NTFS_DE *e = buf;
-...
+Also bound the data-block and END marker reads by the returned VRAM_Info
+table size so malformed index/data sizes do not push the timing walk past
+the table.
 
-    |<- data_size + sizeof(struct NTFS_DE) ->|<- XXX ->|
-buf |-----------------------------------------------------------
-    |<- ALIGN(data_size, 8) + sizeof(struct NTFS_DE) ->|   ;; e->size
-
-If 'buf' was allocated with kmalloc(), XXX remains uninitialized and
-passed as such to memcpy() called from hdr_insert_de().
-
-So using kzalloc() for all buffers passed to fill_name_de() looks
-the simplest and most safe solution. OTOH if someone would have
-said that an overhead of PAGE_SIZE'd memset() is too large, more
-fine-granted solution is to memset() XXX only.
-
-Reported-by: syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=905d785c4923bea2c1db
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Xiang Liu <xiang.liu@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is a real KMSAN kernel infoleak in ntfs3 rename: 8-byte alignment
-padding in directory entries is copied from uninitialized `kmalloc()`
-memory onto the volume. The local tree is **7.3.0-rc4**
-(`v7.3-rc4-27-gf0100363d8c37`); ntfs3 and `fill_name_de()` exist here,
-and the fix is small, correct, and reachable from `rename(2)`.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1: Subject line**
+Record: `[drm/amd/pm] [Guard] Reject undersized VBIOS AC timing strides
+and bound the table walk`
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[ntfs3] [fix] info-leak in `ntfs_rename()`**
+Subsystem `drm/amd/pm`. Verb is **Guard** (defensive bounds / hang
+prevention), not a feature addition.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+**Step 1.2: Tags**
 Record:
-- **Reported-by:**
-  `syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com` (syzbot /
-  KMSAN)
-- **Closes:**
-  `https://syzkaller.appspot.com/bug?extid=905d785c4923bea2c1db`
-- **Signed-off-by:** Dmitry Antipov (author of the analysis/patch);
-  Konstantin Komarov (ntfs3 maintainer, applied it)
-- **No Fixes:** tag on the committed version (v1 on-list had `Fixes:
-  ca2a04e84af7`, dropped later)
-- **No Cc: stable** (expected for this review)
-- **No Tested-by / Reviewed-by / Acked-by / Link:** (Closes URL is the
-  bug tracker)
+- `Signed-off-by: Xiang Liu <xiang.liu@amd.com>` (author)
+- `Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>` (AMD reviewer)
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable`
+  (absence is expected for this review)
+- Pipeline markers (`[ Upstream commit 2bf6867e5953... ]`, `Signed-off-
+  by: Sasha Levin`) ignored per instructions
 
-Notable: syzbot + maintainer SOB.
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+**Step 1.3: Body**
 Record:
-- **Bug:** After `fill_name_de()`, `e->size` is 8-byte-aligned
-  (`ALIGN(data_size, 8) + sizeof(NTFS_DE)`). The pad between `data_size
-  + sizeof(NTFS_DE)` and that aligned size (`XXX`) is never written if
-  `buf` came from `kmalloc()`.
-- **Failure mode:** That pad is `memcpy()`’d in `hdr_insert_de()`,
-  written out with the index/MFT record, then observed as a **KMSAN
-  kernel-infoleak** when the block is later read into userspace
-  (`copy_to_user_iter` / `filemap_read`).
-- **Root cause (author):** uninitialized alignment padding, not a
-  `rename()` copy_to_user of the name buffer itself.
-- **Fix chosen:** memset only `XXX` (0–7 bytes), instead of
-  `kzalloc(PATH_MAX)` for every caller.
-- **Version info in message:** none.
+- **Bug:** `atomctrl_retrieve_ac_timing()` walks VBIOS AC timing blocks
+  using `usRegDataBlkSize` as the stride. A zero (or sub-dword) stride
+  never advances `reg_data`. If the pinned dword’s MEM_ID does not match
+  `index`, `num_ranges` never increases, so the
+  `VBIOS_MAX_AC_TIMING_ENTRIES` cap never fires.
+- **Symptom:** infinite loop / hang during GPU powerplay init.
+- **Second bug:** index/data sizes can walk past the VRAM_Info table;
+  unbounded dword reads of the END marker and per-entry payload.
+- **Root cause:** firmware table walk trusts VBIOS sizes with no stride
+  or table-end check.
+- **Version info:** none in the message. Code has been in-tree since
+  v4.5.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. Subject and body describe a KMSAN infoleak. The
-“fine-grained memset” wording is the fix, not cleanup.
+**Step 1.4: Hidden bug fix?**
+Record: Not hidden. It is an explicit hang + OOB hardening of a firmware
+parser. “Guard” here means missing validation, not a cleanup.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS
-===============================================================
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
+**Step 2.1: Inventory**
 Record:
-- **File:** `fs/ntfs3/namei.c` only (`+7 / -2`)
-- **Function:** `fill_name_de()`
-- **Scope:** single-file surgical fix
+- File: `drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c` — **+22 /
+  −6**
+- Functions: `atomctrl_retrieve_ac_timing`,
+  `atomctrl_initialize_mc_reg_table`,
+  `atomctrl_initialize_mc_reg_table_v2_2`
+- Scope: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+**Step 2.2: Code flow**
 Record:
-- **Before:** `e->size = cpu_to_le16(ALIGN(data_size, 8) + sizeof(struct
-  NTFS_DE));` with no write of the pad.
-- **After:** compute `real_size` and `aligned_size`; if they differ,
-  `memset` the pad; then set `e->size` to `aligned_size`.
-- **Path:** every `fill_name_de()` caller (rename still uses
-  `kmalloc(PATH_MAX)`; create/link/unlink already `kzalloc`).
+1. `atomctrl_retrieve_ac_timing`: cache `stride =
+   le16_to_cpu(usRegDataBlkSize)`; **before:** walk with raw stride;
+   **after:** `-EINVAL` if `stride < 4`.
+2. Loop: **before:** `while (*(u32 *)reg_data != END && num_ranges <
+   20)`; **after:** also require `(u8 *)reg_data + 4 <= table_end`
+   before the read.
+3. Inner `DATA_FROM_TABLE` copies: **before:** unbounded `*((u32
+   *)reg_data + j)`; **after:** reject if that dword would pass
+   `table_end`.
+4. Advance: same addition, using cached `stride`.
+5. Exit: **before:** `PP_ASSERT_WITH_CODE` that the current dword is
+   `END_OF_REG_DATA_BLOCK` (0), which itself can read past the table;
+   **after:** bounds-check then compare, return `-EINVAL`.
+6. Callers: both init helpers already have `size` from
+   `smu_atom_get_data_table()` but unused for the walk; they now set
+   `table_end = (u8 *)vram_info + size` and pass it in.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
+**Step 2.3: Bug mechanism**
 Record:
-- **Category:** uninitialized data / kernel infoleak (KMSAN)
-- **Mechanism:** `hdr_insert_de()` does `memcpy(before, de, de_size)`
-  with `de_size = le16_to_cpu(de->size)` including alignment pad. Pad
-  bytes are slab leftovers. They land in the directory index, get
-  written via `ni_write_inode` → `ntfs_write_bh`, then leak through
-  `blkdev_read_iter` / `filemap_read`.
+- **Category:** logic / memory-safety (infinite loop + OOB read)
+- **Mechanism:** stride 0 pins `reg_data`. `END_OF_REG_DATA_BLOCK` is
+  `0x00000000`. If that dword is nonzero and MEM_ID ≠ `index`, the loop
+  never terminates. Large stride or oversized index table walks off the
+  claimed VRAM_Info blob into adjacent BIOS/kernel memory.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
+**Step 2.4: Fix quality**
+Record: Obviously correct C short-circuit bounds checks. Minimal. No API
+change (`atomctrl_retrieve_ac_timing` is static). Regression risk is
+low: a valid AC block must be at least one dword (MEM_ID + clock).
+`table_end` uses the ATOM header size already returned to these
+functions. Residual gap: `atomctrl_set_mc_reg_address_table()` and
+`usMemClkPatchTblOffset` are still unchecked; sibling parsers in
+`amdgpu_atombios.c` / `radeon_atombios.c` still have the old walk. That
+does not make this patch incorrect.
+
+## Phase 3: Git history
+
+**Step 3.1: Blame**
+Record: Unbounded walk introduced in `c82baa2818435`
+(“drm/amd/powerplay: add Tonga dpm support (v3)”, 2015-12-21), first in
+**v4.5-rc1**. Present on this 6.18 tree. Only later touch of the same
+loop: `12c6967428a09` (2024) added `if (i)` for `DATA_EQU_PREV` OOB on
+`mc_data[-1]`, not this stride/end-marker bug.
+
+**Step 3.2: Fixes: tag**
+Record: None. Buggy code is the original 2015 parser, not a recent
+regression.
+
+**Step 3.3: File history**
+Record: Recent related work on this file: NULL checks in
+`atomctrl_initialize_mc_reg_table` (`820116a39f96b`, already in
+v6.18.53). No prerequisite refactor. No “patch X/Y”. Standalone.
+
+**Step 3.4: Author**
+Record: Xiang Liu is an AMD drm/amdgpu contributor (many amdgpu
+commits). Hawking Zhang reviewed; Alex Deucher applied. Not a drive-by.
+
+**Step 3.5: Dependencies**
+Record: None. Uses existing `smu_atom_get_data_table(..., &size, ...)`,
+existing structs, no new helpers. Applies standalone.
+
+## Phase 4: Mailing list
+
+**Step 4.1:** `b4 dig -c 2bf6867e5953a140fc91c3159987656e44ed29fb`
+Record: lore URL
+`https://patch.msgid.link/20260623042601.562748-1-xiang.liu@amd.com`.
+**v1 only** (no v2/v3). Thread: patch + Hawking `Reviewed-by`. No NAK,
+no stable debate, no requested rework. Direct WebFetch of
+lore.kernel.org returned **403**; thread recovered via `b4 dig -m`.
+
+**Step 4.2:** `b4 dig -w`
+Record: To `amd-gfx@lists.freedesktop.org`; Cc Hawking Zhang, Tao Zhou,
+Stanley Yang, YiPeng Chai. Right list and AMD PM reviewers.
+
+**Step 4.3: Bug report**
+Record: No `Reported-by` / syzbot / bugzilla. Author-described defect
+from code inspection. Unverified whether a specific card hung in the
+wild.
+
+**Step 4.4: Series**
+Record: Single standalone `[PATCH]`, not N/M.
+
+**Step 4.5: Stable list**
+Record: lore.kernel.org/stable WebFetch 403. **UNVERIFIED** whether
+stable@ already discussed this; that does not change the technical
+verdict.
+
+## Phase 5: Semantic / call graph
+
+**Step 5.1: Functions**
+Record: `atomctrl_retrieve_ac_timing`,
+`atomctrl_initialize_mc_reg_table`,
+`atomctrl_initialize_mc_reg_table_v2_2`.
+
+**Step 5.2: Callers**
 Record:
-- Obviously correct: pad length is `ALIGN(x,8)-x` ∈ [0,7]; memset only
-  when needed.
-- Minimal; no API/locking/refcount changes.
-- Regression risk very low: those bytes were garbage; NTFS index entries
-  are 8-byte aligned and pad should be zero.
-- Completeness: this matches the KMSAN “Bytes 404-407 of 1536” (4-byte
-  pad). `ni_add_name()` still fills `ref`/`home`/`dup` after
-  `fill_name_de()`, so this is not trying to zero the whole
-  `ATTR_FILE_NAME`.
+- `tonga_initialize_mc_reg_table` → `atomctrl_initialize_mc_reg_table`
+- `iceland_initialize_mc_reg_table` → same
+- `ci_initialize_mc_reg_table` → same
+- `polaris10_initialize_mc_reg_table` →
+  `atomctrl_initialize_mc_reg_table_v2_2`
+- Those are `.initialize_mc_reg_table` in SMU7 smumgr;
+  `smum_initialize_mc_reg_table()` is called from `smu7_hwmgr.c` during
+  DPM enable (device init / resume), **without checking the return
+  value**.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+**Step 5.3: Callees**
+Record: `smu_atom_get_data_table()` → `amdgpu_atom_parse_data_header()`;
+pointer is `atom_context->bios + data_start`; `size` is the ATOM table
+size.
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- Alignment-in-`e->size` comes from **4342306f0f0d5** (`fs/ntfs3: Add
-  file operations and implementation`, 2021-08-13; originally
-  `QuadAlign(data_size)`).
-- **fa3cacf544636** only switched `QuadAlign` to `ALIGN`.
-- Bug present since ntfs3 was added (**v5.15-era**).
+**Step 5.4: Reachability**
+Record: Yes, from normal amdgpu load on CI / Tonga / Iceland / Polaris
+(RX 400/500-class, still common). Not a syscall fuzzer path; firmware-
+driven probe/resume. Unprivileged users cannot craft VBIOS on a locked
+ROM, but custom/modded Polaris VBIOS is common, and a bad image hangs
+the kernel in this loop.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: Committed version has **no Fixes:** tag. On-list v1 used `Fixes:
-ca2a04e84af7` (`ntfs: ->d_compare() must not block`), which swapped
-`__getname()` for `kmalloc()` — both uninitialized. That tag is
-**wrong**; the leak is as old as `fill_name_de()`. `ca2a04e84af79`
-**is** an ancestor of this HEAD, but is **not** a prerequisite for the
-memset.
+**Step 5.5: Similar patterns**
+Record: Same unguarded walk remains in
+`amdgpu_atombios_init_mc_reg_table()` and `radeon_atombios.c`. This
+commit only hardens the powerplay copy. Sibling bugs are not a reason to
+reject this fix.
 
-**Step 3.3: CHECK FILE HISTORY**
-Record: Recent `namei.c` work is ADS, mkdir, vfs `->create`. **No
-follow-up** to this infoleak. Not patch X/Y. Standalone.
+## Phase 6: This tree (6.18.53)
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Dmitry Antipov has no other recent ntfs3 commits in this
-history. Konstantin Komarov is the ntfs3 maintainer and applied the
-memset form.
+**Step 6.1:**
+Record: Local tree is **6.18.53** (`v6.18.53-5049-g0f0bdc2b0dffb`,
+branch `autosel`).
+`git merge-base --is-ancestor 2bf6867e5953... v6.18.53` → **not an
+ancestor**.
+v6.18.53 still has the unguarded `while (*(uint32_t *)reg_data !=
+END_OF_REG_DATA_BLOCK && ...)` in `atomctrl_retrieve_ac_timing()`. Bug
+exists here.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: Uses existing `fill_name_de`, `ALIGN`, `fname_full_size`,
-`NTFS_DE`. **Applies standalone.** `ntfs_rename` can keep `kmalloc`.
+**Step 6.2:**
+Record: `git apply --check` of the upstream diff onto a v6.18.53 copy of
+the file **succeeded** (exit 0). Clean apply. No structural drift.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 6.3:**
+Record: `12c6967428a09` and `820116a39f96b` are in v6.18.53; they do not
+implement stride/table_end guards. No alternate fix present.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- **b4 dig:**
-  https://patch.msgid.link/20260609123618.712961-1-dmantipov@yandex.ru
-- **Series:** v1 only (`[PATCH] ntfs3: fix info-leak in ntfs_rename()`),
-  2026-06-09
-- **v1 diff:** `kmalloc` → `kzalloc` in `ntfs_rename` only
-- **Al Viro** asked how that buffer reaches `copy_to_user_iter()`, then
-  guessed a deeper metadata/bh reuse bug
-- **Dmitry** explained the pad/`hdr_insert_de` path and posted the
-  memset version (what landed)
-- **Konstantin (2026-07-15):** “The patch is applied, thank you.” No
-  NAK. No Cc: stable in-thread.
+## Phase 7: Subsystem
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record (**b4 dig -w**): Dmitry Antipov, Konstantin Komarov, Al Viro,
-`ntfs3@lists.linux.dev`, `lvc-project@linuxtesting.org`, syzbot.
-Maintainer applied it after VFS questions.
+**Step 7.1:**
+Record: `drivers/gpu/drm/amd/pm/powerplay` — **IMPORTANT** (legacy GCN
+powerplay, not core mm/net, but production GPU init).
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record (syzkaller):
-- Title: **KMSAN: kernel-infoleak in filemap_read**
-- First crash 2023-12-20; C repro; **9090** crashes; prio:high
-- Uninit created at `kmalloc` in `ntfs_rename`; stored in
-  `hdr_insert_de` → `indx_insert_into_root` → `ni_rename`; written via
-  `ntfs_write_bh`; copied out via `blkdev_read_iter` (sample: **udevd**)
-- Syzbot lists **2fa56613b25d** as the fix commit
+**Step 7.2:**
+Record: File is mature (2015). Little recent churn besides docs, a NULL
+check, and the 2024 `mc_data[i-1]` guard. Long-lived bug, not a new-
+subsystem issue.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone. Related local infoleak: `35d1ea92c7d94` (LZNT
-decompress) — different path.
+## Phase 8: Impact and risk
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: **UNVERIFIED** — lore.kernel.org/stable returned 403. No local
-evidence this was rejected for stable.
+**Step 8.1:** Driver-specific: CI/Tonga/Iceland/Polaris via powerplay
+(`CONFIG_DRM_AMDGPU`, typically `DRM_AMDGPU_CIK` for CI). Polaris is
+still widely deployed.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 8.2:** Trigger: GPU DPM bring-up when VRAM_Info AC timing has
+`usRegDataBlkSize < 4` or truncated/malformed blocks. Common on
+**valid** VBIOS: no. Realistic on corrupted, truncated, or vendor-modded
+VBIOS: yes. Not a userspace syscall primitive.
 
-**Step 5.1: KEY FUNCTIONS**
-Record: `fill_name_de()`; leak sink `hdr_insert_de()`; user entry
-`ntfs_rename()` → `ni_rename()` → `ni_add_name()` →
-`indx_insert_entry()`.
+**Step 8.3:** Failure mode:
+- Zero stride + nonmatching MEM_ID → **infinite loop in probe/resume** →
+  **CRITICAL** hang
+- Walk past table → **OOB read** → **HIGH** (crash / KASAN)
 
-**Step 5.2: TRACE CALLERS**
-Record (`git grep`):
-- `ntfs_rename()` — `rename(2)`; `kmalloc(PATH_MAX)` (**the syzbot
-  path**)
-- `ntfs_create_inode()` — create/mkdir/symlink; already `kzalloc`
-- `ntfs_link_inode()` — `link(2)`; already `kzalloc`
-- `ntfs_unlink_inode()` — unlink/rmdir; already `kzalloc`
+**Step 8.4:** Benefit: prevent hang/OOB on a long-lived parser used at
+init. Risk: ~22 lines, error-path only for bad firmware. Valid tables
+keep working. Ratio is favorable.
 
-**Step 5.3: TRACE CALLEES**
-Record: `ntfs_nls_to_utf16` / `memcpy` for the name; `fname_full_size`;
-then `memset` of pad.
+Ignored `smum_initialize_mc_reg_table()` return means a now-failing
+parse no longer hangs; MC timing table may stay empty. That is still
+better than a soft lockup, and matches other `-EINVAL` paths already in
+these helpers.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record: Userspace `rename()` on ntfs3 → directory index insert →
-MFT/index write → later `read()` of the block device (udev) copies pad
-to userspace. **Reachable from a normal syscall** on a mounted ntfs3
-volume.
+## Phase 9: Synthesis
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: Other `fill_name_de` callers already `kzalloc`. Rename is the
-remaining `kmalloc` caller; fixing `fill_name_de` covers all of them.
+**For:**
+- Real hang (zero stride) and real OOB (unbounded VBIOS walk)
+- Code present since v4.5; **present and unfixed in this 6.18.53 tree**
+- Small, obviously correct, no new API
+- Maintainer SOB + AMD review; v1 accepted as-is
+- Clean apply to this tree; no prerequisites
+- Polar / CI powerplay still used here
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Against:**
+- No public reproducer / syzbot / CVE
+- Trigger is malformed firmware, not every boot
+- Sibling parsers not fixed in the same patch
+- `usMemClkPatchTblOffset` still unchecked (pre-existing)
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record:
-- Tree: **7.3.0-rc4** (`git describe`: `v7.3-rc4-27-gf0100363d8c37`)
-- `fs/ntfs3/namei.c` and `fill_name_de()` exist
-- Bug introduced **4342306f0f0d5** (ntfs3 add, ~5.15); **is ancestor of
-  HEAD**
-- Current `fill_name_de()` **already contains** this memset (`git merge-
-  base --is-ancestor 2fa56613b25d0 HEAD` → yes)
-- `ntfs_rename` still does `de = kmalloc(PATH_MAX, GFP_KERNEL)` — the
-  memset is what stops the leak
+**Unresolved:** stable@ discussion (lore 403); whether a specific
+customer VBIOS hit this.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: Hunk is local to `fill_name_de` and matches the long-standing
-function shape (`QuadAlign`/`ALIGN` + `e->size`). **Clean apply** on any
-tree with original `fill_name_de`. No structural prereq.
+**Stable rules:**
+1. Obviously correct and tested — **PASS** (reviewed, merged, logic is
+   local bounds checks)
+2. Real bug affecting users — **PASS** (hang/OOB on bad VBIOS; Polaris
+   custom BIOS is a real population)
+3. Important (crash/hang) — **PASS** (infinite loop in GPU init)
+4. Small and contained — **PASS** (22/6, one file)
+5. No new features/APIs — **PASS**
+6. Applies to this tree — **PASS** (clean on v6.18.53)
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: This **is** the fix (`2fa56613b25d0`). No later replacement.
-LZNT infoleak is separate.
+**Exception category:** not a device-ID/quirk/DT/build/doc exception. It
+is a firmware-parser safety fix.
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+This meets stable rules for **this** 6.18.y tree: the buggy walk is
+here, the fix is surgical, and the failure mode is a hang or OOB during
+amdgpu powerplay init.
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-Record: **fs/ntfs3** — **IMPORTANT** (in-tree RW NTFS since 5.15; not
-core VFS, but a real production FS). Not staging.
+### What it solves for stable users
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
-Record: Actively maintained (Paragon / Komarov); mix of features and
-sanitizer/bounds fixes.
+On CI/Tonga/Iceland/Polaris, powerplay walks the VBIOS AC timing table
+with a stride taken from the image. A zero stride can spin forever; a
+bad size can read past the table. The patch rejects sub-dword strides
+and caps every dword access by the ATOM-reported VRAM_Info size, turning
+a probe hang/OOB into `-EINVAL`.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+### Risk vs benefit
 
-**Step 8.1: WHO IS AFFECTED**
-Record: **Filesystem-specific** — `CONFIG_NTFS3_FS` users who rename on
-ntfs3. Trigger is rename, not an obscure ioctl.
+Benefit is avoiding a hard-to-debug init hang and OOB on firmware that
+is already treated as untrusted input. Risk is a few bounds checks on an
+error path; valid VBIOS is unchanged. Residual unfixed copies elsewhere
+do not block this backport.
 
-**Step 8.2: TRIGGER CONDITIONS**
-Record: `rename(2)` when the new name is inserted into a directory
-index. Common. Unprivileged users with write access to an ntfs3 mount
-can write slab leftovers into on-disk index entries. The syzbot read
-path is `blkdev_read_iter` (typically privileged udev), but the
-**confidentiality failure is writing kernel heap into the volume**.
+### Concerns
 
-**Step 8.3: FAILURE MODE SEVERITY**
-Record: **KMSAN kernel-infoleak** of uninitialized kmalloc memory onto
-disk / into a later userspace read. **Severity: HIGH** (security
-infoleak; not a panic). Syzbot prio:high; C repro; thousands of crashes.
-
-**Step 8.4: RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** high — stops a real, fuzzer-reproduced kernel infoleak on
-  a syscall path
-- **Risk:** very low — 5-line memset of 0–7 pad bytes
-- **Ratio:** strongly favors taking the fix
-
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
-
-**Step 9.1: COMPILE THE EVIDENCE**
-
-FOR:
-- Syzbot KMSAN kernel-infoleak with C repro and a clear `kmalloc` →
-  `hdr_insert_de` → disk → `copy_to_user` chain
-- Small, obviously correct memset of alignment padding
-- ntfs3 maintainer applied it after discussion with Al Viro
-- Bug present since ntfs3 introduction; code exists in this tree
-- No new API, no locking, no series dependencies
-- Rename still uses `kmalloc`; without this, the leak remains
-
-AGAINST:
-- Al Viro first wondered if `copy_to_user` meant a deeper metadata-reuse
-  bug; Dmitry’s pad explanation is what was applied, and it matches the
-  first splat
-- Infoleak, not a crash (still stable-worthy)
-- lore.kernel.org HTTP 403; stable-list history not independently
-  fetched
-
-UNRESOLVED:
-- Whether older stable series already carried a different zeroing
-  approach (not this 7.3 tree)
-- Whether KMSAN instances still listed as “missing” are stale vs. a
-  second leak
-
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — pad math is local; syzbot +
-   maintainer apply
-2. Fixes a real bug that affects users? **PASS** — KMSAN infoleak, C
-   repro, udev read of written metadata
-3. Important (crash/security/corruption/deadlock)? **PASS** — kernel
-   infoleak / security, HIGH
-4. Small and contained? **PASS** — `fill_name_de` only, ~5 lines
-5. No new features or APIs? **PASS**
-6. Can apply to the local tree? **PASS** — same function exists; no
-   missing helpers
-
-**Step 9.3: EXCEPTION CATEGORIES**
-Record: None (not an ID/quirk/DT/build/doc exception). It is a normal
-memory-safety fix.
-
-**Step 9.4: DECISION**
-This tree has ntfs3 and the buggy `fill_name_de`/`ntfs_rename` design.
-The change is a contained KMSAN infoleak fix with a documented syscall
-trigger. It meets stable criteria on technical merit.
+No `Fixes:` lineage; leftover unbounded walks in
+`atomctrl_set_mc_reg_address_table` and `amdgpu_atombios.c`. Neither is
+a dependency of this patch. Apply to 6.18.53 is clean.
 
 Verification:
-- [Phase 1] Tags: syzbot Reported-by + Closes URL; maintainer SOB; no
-  Fixes on committed form
-- [Phase 2] Diff: +7/-2 in `fill_name_de`; memset of `aligned_size -
-  real_size`
-- [Phase 2] `hdr_insert_de` (index.c:873): `memcpy(before, de, de_size)`
-  with `de_size` from `de->size`
-- [Phase 3] Blame: 4342306f0f0d5 introduced QuadAlign size;
-  fa3cacf544636 switched to ALIGN
-- [Phase 3] `git merge-base --is-ancestor 4342306f0f0d5 HEAD` → 0 (bug
-  origin in this tree)
-- [Phase 3] `git merge-base --is-ancestor 2fa56613b25d0 HEAD` → 0 (this
-  SHA is in HEAD)
-- [Phase 3] Original v1 Fixes: ca2a04e84af79 is in HEAD but is not
-  required for the memset
-- [Phase 4] `b4 dig -c 2fa56613b25d0`: lore msgid
-  `20260609123618.712961-1-dmantipov@yandex.ru`
-- [Phase 4] `b4 dig -a`: v1 only; committed code is Dmitry’s follow-up
-  memset, not v1 kzalloc
-- [Phase 4] `b4 dig -w`: ntfs3 list, Komarov, Al Viro, syzbot, lvc-
-  project
-- [Phase 4] mbox: Viro questions; Dmitry pad diagram; Komarov “patch is
-  applied”
-- [Phase 4] WebFetch lore.kernel.org → 403; used b4 mbox instead
-- [Phase 4] syzbot: KMSAN infoleak, C repro, uninit at ntfs_rename
-  kmalloc, store at hdr_insert_de
-- [Phase 5] Callers: rename (kmalloc), create/link/unlink (kzalloc)
-- [Phase 5] `ni_add_name` fills ref/home/dup after fill_name_de; then
-  `indx_insert_entry`
-- [Phase 6] `git describe HEAD` = v7.3-rc4-27-gf0100363d8c37; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 6] Current namei.c lines 56–61 already have the memset
-- [Phase 8] Failure mode: kernel heap bytes written into NTFS index and
-  readable via blkdev read
-- UNVERIFIED: stable@ mailing-list discussion (lore 403)
+- [Phase 1] Parsed tags: author Xiang Liu, R-b Hawking Zhang, SOB Alex
+  Deucher; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: +22/−6 in `ppatomctrl.c`; stride `< sizeof(u32)`
+  reject; `table_end` on loop, payload, END marker
+- [Phase 2] `END_OF_REG_DATA_BLOCK` is `0x00000000` in
+  `atombios.h:7486`; zero stride + nonzero nonmatching MEM_ID loops
+  forever
+- [Phase 3] `git blame` on v6.18.53: walk from `c82baa2818435`
+  (v4.5-rc1)
+- [Phase 3] `git merge-base --is-ancestor 2bf6867e5953 v6.18.53` → not
+  present in 6.18.53
+- [Phase 3] `12c6967428a09` / `820116a39f96b` do not implement this
+  guard; latter is already in 6.18.53
+- [Phase 4] `b4 dig -c 2bf6867e5953`: v1 only,
+  https://patch.msgid.link/20260623042601.562748-1-xiang.liu@amd.com
+- [Phase 4] `b4 dig -a`: single revision; `b4 dig -w`: amd-gfx + AMD
+  reviewers; mbox: Hawking Reviewed-by, no NAK
+- [Phase 4] WebFetch lore/stable: 403 — UNVERIFIED stable-list history
+- [Phase 5] Callers: tonga/iceland/ci + polaris10 smumgr →
+  `smum_initialize_mc_reg_table` from `smu7_hwmgr.c:1582` (return
+  ignored)
+- [Phase 5] Same pattern still in `amdgpu_atombios.c:1511` and
+  `radeon_atombios.c:4031`
+- [Phase 6] `make kernelversion` / `git describe`: 6.18.53; pre-image
+  matches; apply --check on v6.18.53 copy exit 0
+- [Phase 8] Failure: infinite loop or OOB at GPU DPM init; severity
+  hang/crash
+- UNVERIFIED: whether a specific shipping VBIOS has been observed with
+  stride 0
 
 **YES**
 
- fs/ntfs3/namei.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ .../drm/amd/pm/powerplay/hwmgr/ppatomctrl.c   | 28 +++++++++++++++----
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 64cde1a856f44..f547ce82520f8 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -22,7 +22,7 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index 1fff7567bca27..4b796d60b03d4 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -46,16 +46,22 @@ union voltage_object_info {
+ static int atomctrl_retrieve_ac_timing(
+ 		uint8_t index,
+ 		ATOM_INIT_REG_BLOCK *reg_block,
++		u8 *table_end,
+ 		pp_atomctrl_mc_reg_table *table)
  {
- 	int err;
- 	struct NTFS_DE *e = buf;
--	u16 data_size;
-+	u16 data_size, real_size, aligned_size;
- 	struct ATTR_FILE_NAME *fname = (struct ATTR_FILE_NAME *)(e + 1);
+ 	uint32_t i, j;
++	u16 stride = le16_to_cpu(reg_block->usRegDataBlkSize);
+ 	uint8_t tmem_id;
+ 	ATOM_MEMORY_SETTING_DATA_BLOCK *reg_data = (ATOM_MEMORY_SETTING_DATA_BLOCK *)
+ 		((uint8_t *)reg_block + (2 * sizeof(uint16_t)) + le16_to_cpu(reg_block->usRegIndexTblSize));
  
- #ifndef CONFIG_NTFS3_64BIT_CLUSTER
-@@ -53,7 +53,12 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
- 	fname->type = FILE_NAME_POSIX;
- 	data_size = fname_full_size(fname);
+ 	uint8_t num_ranges = 0;
  
--	e->size = cpu_to_le16(ALIGN(data_size, 8) + sizeof(struct NTFS_DE));
-+	real_size = data_size + sizeof(struct NTFS_DE);
-+	aligned_size = ALIGN(data_size, 8) + sizeof(struct NTFS_DE);
-+	if (aligned_size > real_size)
-+		memset((char *)buf + real_size, 0, aligned_size - real_size);
+-	while (*(uint32_t *)reg_data != END_OF_REG_DATA_BLOCK &&
++	if (stride < sizeof(uint32_t))
++		return -EINVAL;
 +
-+	e->size = cpu_to_le16(aligned_size);
- 	e->key_size = cpu_to_le16(data_size);
- 	e->flags = 0;
- 	e->res = 0;
++	while ((uint8_t *)reg_data + sizeof(uint32_t) <= table_end &&
++	       *(uint32_t *)reg_data != END_OF_REG_DATA_BLOCK &&
+ 			num_ranges < VBIOS_MAX_AC_TIMING_ENTRIES) {
+ 		tmem_id = (uint8_t)((*(uint32_t *)reg_data & MEM_ID_MASK) >> MEM_ID_SHIFT);
+ 
+@@ -67,6 +73,10 @@ static int atomctrl_retrieve_ac_timing(
+ 			for (i = 0, j = 1; i < table->last; i++) {
+ 				if ((table->mc_reg_address[i].uc_pre_reg_data &
+ 							LOW_NIBBLE_MASK) == DATA_FROM_TABLE) {
++					if ((uint8_t *)reg_data +
++					    (j + 1) * sizeof(uint32_t) > table_end)
++						return -EINVAL;
++
+ 					table->mc_reg_table_entry[num_ranges].mc_data[i] =
+ 						(uint32_t)*((uint32_t *)reg_data + j);
+ 					j++;
+@@ -81,11 +91,13 @@ static int atomctrl_retrieve_ac_timing(
+ 		}
+ 
+ 		reg_data = (ATOM_MEMORY_SETTING_DATA_BLOCK *)
+-			((uint8_t *)reg_data + le16_to_cpu(reg_block->usRegDataBlkSize)) ;
++			((uint8_t *)reg_data + stride);
+ 	}
+ 
+-	PP_ASSERT_WITH_CODE((*(uint32_t *)reg_data == END_OF_REG_DATA_BLOCK),
+-			"Invalid VramInfo table.", return -1);
++	if ((uint8_t *)reg_data + sizeof(uint32_t) > table_end ||
++	    *(uint32_t *)reg_data != END_OF_REG_DATA_BLOCK)
++		return -EINVAL;
++
+ 	table->num_entries = num_ranges;
+ 
+ 	return 0;
+@@ -136,6 +148,7 @@ int atomctrl_initialize_mc_reg_table(
+ {
+ 	ATOM_VRAM_INFO_HEADER_V2_1 *vram_info;
+ 	ATOM_INIT_REG_BLOCK *reg_block;
++	u8 *table_end;
+ 	int result = 0;
+ 	u8 frev, crev;
+ 	u16 size;
+@@ -157,6 +170,7 @@ int atomctrl_initialize_mc_reg_table(
+ 	}
+ 
+ 	if (0 == result) {
++		table_end = (uint8_t *)vram_info + size;
+ 		reg_block = (ATOM_INIT_REG_BLOCK *)
+ 			((uint8_t *)vram_info + le16_to_cpu(vram_info->usMemClkPatchTblOffset));
+ 		result = atomctrl_set_mc_reg_address_table(reg_block, table);
+@@ -164,7 +178,7 @@ int atomctrl_initialize_mc_reg_table(
+ 
+ 	if (0 == result) {
+ 		result = atomctrl_retrieve_ac_timing(module_index,
+-					reg_block, table);
++					reg_block, table_end, table);
+ 	}
+ 
+ 	return result;
+@@ -177,6 +191,7 @@ int atomctrl_initialize_mc_reg_table_v2_2(
+ {
+ 	ATOM_VRAM_INFO_HEADER_V2_2 *vram_info;
+ 	ATOM_INIT_REG_BLOCK *reg_block;
++	u8 *table_end;
+ 	int result = 0;
+ 	u8 frev, crev;
+ 	u16 size;
+@@ -198,6 +213,7 @@ int atomctrl_initialize_mc_reg_table_v2_2(
+ 	}
+ 
+ 	if (0 == result) {
++		table_end = (uint8_t *)vram_info + size;
+ 		reg_block = (ATOM_INIT_REG_BLOCK *)
+ 			((uint8_t *)vram_info + le16_to_cpu(vram_info->usMemClkPatchTblOffset));
+ 		result = atomctrl_set_mc_reg_address_table(reg_block, table);
+@@ -205,7 +221,7 @@ int atomctrl_initialize_mc_reg_table_v2_2(
+ 
+ 	if (0 == result) {
+ 		result = atomctrl_retrieve_ac_timing(module_index,
+-					reg_block, table);
++					reg_block, table_end, table);
+ 	}
+ 
+ 	return result;
 -- 
 2.53.0
 
