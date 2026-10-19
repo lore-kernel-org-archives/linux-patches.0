@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66713491B18;
-	Mon, 19 Oct 2026 13:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5309491B3D;
+	Mon, 19 Oct 2026 13:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418140; cv=none; b=nLckUbu8kB616hXsYkmUKU+MWxmUa8WrCk8+c745es5kfp32ddrZqOupdKJ2tnVi3cDFlwPHNfuFwkqPR9RDCXPxWWEBzF7FoF1hflLK2UllQtfGfv124Q8pPCyHkJ1sAGhGqpYz/JZ7VQ21+bEQ7EAStwqHuHksn64KqnampK0=
+	t=1792418142; cv=none; b=IdjpfCQQPwYS7yokQQg/23N6205ehsLAEWXQy9uGl7JIIgYBRz6bLdAuPNOH1qyljULphWR4pnScDXVaowKuX6bMg70X0TBE1QDdVmqrynv6oyMPVWMbC9ShDIymOUcs14OSCbv6/jibvuJb7ouIHhGB63QdYRKbyeLeKKa/VX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418140; c=relaxed/simple;
-	bh=nV/GgtA5nTps9seInIOZO0l79vN6MSzj8KxQpKLXFi0=;
+	s=arc-20240116; t=1792418142; c=relaxed/simple;
+	bh=ySlhVHs5EIvaSq+cdETOQHdQwsOEDbFvT/Gg499Rl0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OK5t+fxr2czFktTvRAvVDGOJ+YQPC2Gjbat70UqSyzczuekrEdHnnPrFZGIL2LZNCclyC43kXpgf9icbqdxMdF/otNhRHPJEOZW39kT9M7uEhJmXSlzOI3/UrTQNyWzOynGxoFZvJlOzKWHe+jUqWqKc005mJ9wHExyaFb9Yohg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=awtmbfM3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tEv8HMfy7hCIJQhSi5I7BbNAsc74MLZZLipTpaq5tgPyR/b/3pSclHunlDTRsxGGUcY4REFonVmfdHXggb6fq1UMyqcdLvm9Br3q2VmY8ZfMzXCNJuBYIwEl7fUUMJK02eLbdCOsCRLzx1GF3ZF3uOicm4SENi/MsAf55NwxcF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V9IonbLK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="awtmbfM3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A951F000C4;
-	Mon, 19 Oct 2026 13:55:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V9IonbLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA811F000C6;
+	Mon, 19 Oct 2026 13:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418138;
-	bh=V3PpoMFAw7qVzM1GmPC801AjygH/PqO9elu51OZwm6g=;
+	s=k20260515; t=1792418139;
+	bh=q6Y5kyHWSxLwi9giqi72Tq/HTjncMBIStO0G17YuWw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=awtmbfM35GvxrICJC9YsYeE6kkmFpQ6LocPglQBwvS1MX7AfO0oznuNFKC4mTfsB2
-	 eGLoC3ZKmD95HMR0eOY6Wn/gYs/GJQK80GBTvVngrECjkBjdoVnlKY6vYQbcFc7J81
-	 hXfcKFWE6e8E4jBpktXrafwA0poIN+b3eWG23ob8J4wYVpGP8SS8NbqJzVJvU4YgQc
-	 CwPOacC3I99mca9gRU3wtPb//154YxlRRtRo4vGhng6GMsDFoMnUT07dIfAK7CuIms
-	 kNdWiwi9BQZkN5IBxwSWPThI3aa12us+1JYMjI1NeCueS6fZS8bRyFvzBEOGNTOfXk
-	 1j5nei/6aOI3g==
+	b=V9IonbLKKfFHjhquDMRFtdehQRLkhutM5ewown8MizBDZCyRTCruaERbQaDD5wJvV
+	 8RNl9wmoTAHrwmawuJ+0uZSKiV/qR8ioUcmtB6zyD24dvSqyjm4W5eTYLr9DCK06Qz
+	 AQ3RnwnvydK6p1aHbCtFEknkF5+uEuT1GNCEsL7BXyvIy2jffdNwO7pGvmJJb1mq8t
+	 Pbbs9/7F/pozVdyAKbt/DrHLyv/nUgMIn1zVETivEAd8mb9tX8q+XMs1+tTKoj2O6s
+	 e4vzbZnz7PNBroeQYj7M7CYyT4GFipg9q33SxqnA1kN5epTMx8sq03xBDHVV5gKaSE
+	 dV/I5jitxnUWA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
+Cc: Rui Qi <qirui.001@bytedance.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] drm/amdgpu/gfx11: WARN() rather than BUG() for invalid SDMA engine
-Date: Mon, 19 Oct 2026 09:45:30 -0400
-Message-ID: <20261019135441.1420968-39-sashal@kernel.org>
+	rostedt@goodmis.org,
+	shuah@kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] selftests/ftrace: Force C locale in ftracetest
+Date: Mon, 19 Oct 2026 09:45:31 -0400
+Message-ID: <20261019135441.1420968-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,361 +55,362 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit c24edbd5ae0e4f24e0179e8c9f22a867016177bb ]
+[ Upstream commit c13fcd3951dcc19524ce0b3e852844b16cd32b22 ]
 
-There's no need to crash the kernel for these cases.
+Some ftracetest test cases parse command output by matching English
+field names. Tools such as readelf may localize their output via
+gettext, while ftracetest currently inherits the user locale from
+the environment.
 
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+If a translated field name is printed, parsing can fail even though
+the tested kernel behavior is unchanged. For example, add_remove_uprobe
+can fail to find the ELF entry point and then write a uprobe event with
+a missing offset.
+
+Export LC_ALL=C in the top-level ftracetest runner so every test case
+gets stable command output by default.
+
+Link: https://lore.kernel.org/all/20260807081512.2974757-2-qirui.001@bytedance.com/
+
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough context: this is a three-line `BUG()`-to-`WARN()` change
-on the GFX11 KFD SDMA path, already present in this 7.3-rc4 tree. The
-remaining question is whether it is a real panic-prevention fix worth
-keeping in stable.
+I have enough to decide: this is a three-line selftest locale fix, the
+companion uprobe offset patch is already in this 6.18 tree, and the
+runner still inherits the user locale.
 
 ## Phase 1: Commit message forensics
 
 **Step 1.1: Subject line**
-Record: `[drm/amdgpu/gfx11]` `[WARN() rather than BUG()]` `[stop
-panicking on an invalid SDMA engine id in get_sdma_rlc_reg_offset()]`
+- Record: `[selftests/ftrace] [Force] Force C locale in ftracetest so
+  test parsing is locale-stable`
 
 **Step 1.2: Tags**
-Record:
-- `Reviewed-by: Kent Russell <kent.russell@amd.com>` (AMD GPU developer)
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
-  maintainer; ignore any Sasha Levin SOB)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc: stable`
-  (absence expected)
+- Record:
+  - `Link: https://lore.kernel.org/all/20260807081512.2974757-2-
+    qirui.001@bytedance.com/`
+  - `Signed-off-by: Rui Qi <qirui.001@bytedance.com>` (author)
+  - `Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>`
+    (ftrace/probes maintainer)
+  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+    by:`, or `Cc: stable` (absence is expected for this review)
+  - Upstream SHA: `c13fcd3951dcc19524ce0b3e852844b16cd32b22`
 
 **Step 1.3: Body**
-Record: Body is one sentence: “There's no need to crash the kernel for
-these cases.” No stack trace, no reproducer, no version range. Failure
-mode claimed: kernel crash via `BUG()`. Root cause as stated: invalid
-`engine_id` in `get_sdma_rlc_reg_offset()` was treated as fatal.
+- Record: `[Bug] ftracetest inherits the user locale; tools such as
+  readelf can print translated field names. Tests that grep English
+  strings then fail even though kernel behavior is unchanged.`
+  `[Symptom] add_remove_uprobe fails to parse the ELF entry point and
+  writes a uprobe event with a missing offset.` `[Versions] none
+  stated.` `[Root cause] command-output parsing depends on English
+  gettext strings while LC_ALL is not forced.`
 
 **Step 1.4: Hidden bug fix?**
-Record: Not hidden. It is an explicit panic-to-warning conversion. It is
-also patch `15/43` of Alex Deucher’s amdgpu `BUG()`-removal series
-(later resent as `02/30`). Same boilerplate appears on sibling
-gfx12/gfx12.1 patches. That is hardening of a driver `BUG()`, not a
-style-only rename.
+- Record: `[Not disguised.] This is an explicit robustness fix for
+  locale-dependent test parsing, not a style cleanup.`
 
 ## Phase 2: Diff analysis
 
 **Step 2.1: Inventory**
-Record: One file, `drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c`.
-Function: `get_sdma_rlc_reg_offset()`. Scope: +2/−1, single-file
-surgical change.
+- Record: `[Files] tools/testing/selftests/ftrace/ftracetest +3 / -0`
+  `[Functions] none; top-level shell runner` `[Scope] single-file,
+  surgical]`
 
 **Step 2.2: Code flow**
-Record: Before: `switch (engine_id)` handles 0 and 1; `default:` calls
-`BUG()` and never returns. After: `WARN(1, "Invalid SDMA engine id
-%d\n", engine_id); break;` then the function still computes
-`sdma_rlc_reg_offset` from `sdma_engine_reg_base` (initialized to 0) and
-returns. Affected path: invalid engine id on SDMA queue
-load/dump/occupy/destroy.
+- Record: `[Before] ftracetest and every sourced `.tc` inherit LANG/LC_*
+  from the environment.` `[After] `export LC_ALL=C` at runner start,
+  inherited by all test cases including `readelf` in add_remove_uprobe.`
+  `[Path] initialization of the test harness, not kernel runtime.`
 
 **Step 2.3: Bug mechanism**
-Record: Category **(g) logic / correctness** plus crash hardening.
-`BUG()` is a kernel panic (unless `CONFIG_BUG` is off). The fix stops
-the panic and logs. It does not add a hard error return; callers still
-`RREG32`/`WREG32` using a 0 base.
+- Record: `[Category] logic/correctness in the test harness (locale-
+  dependent parsing).` `[Mechanism] `add_remove_uprobe.tc` does `grep
+  "Entry point"` and `grep LOAD` on `readelf` output. If those strings
+  are translated, `ENTRY` is empty, `OFFSET` is empty, and the script
+  writes `p:myevent ${REALBIN}:` with no offset.`
 
 **Step 2.4: Fix quality**
-Record: Obviously correct as “don’t panic.” Minimal. Regression risk is
-low: if the default branch is taken, the kernel continues and may
-program SDMA engine 0-ish registers instead of dying. That matches the
-older gfx9/gfx10.3 pattern (`dev_warn` + fallthrough to engine 0),
-though this gfx11 version warns and breaks with `base = 0` rather than
-explicitly using the engine-0 `SOC15_REG_OFFSET`. No public API change.
+- Record: `[Quality] obviously correct; `LC_ALL=C` is the standard way
+  to freeze tool output. Three comment+export lines, no API change.`
+  `[Regression risk] very low. C locale can change collation/number
+  formatting, but ftrace tests parse English tracefs and ELF field
+  names. Maintainer asked for runner-wide export rather than
+  per-`readelf` wrappers.`
 
 ## Phase 3: Git history
 
 **Step 3.1: Blame**
-Record: Function and original `BUG()` introduced in `cc009e613de65`
-(“drm/amdkfd: Add KFD support for soc21 v3”, Mukul Joshi, 2022-05-04).
-That commit is an ancestor of `v6.1` and `v6.6` in this repo. The
-`WARN()` lines are from `c24edbd5ae0e4` (Alex Deucher, 2026-06-15 /
-committed 2026-07-08).
+- Record: `[Introduced] ftracetest header is from `6e68e6c5e4b67`
+  (2014). The locale-sensitive parsing was added by `dc4b165855f23`
+  ("Use readelf to find entry point in uprobe test", 2025-02-26) and
+  tightened by `bd4e5a97edf8c` (already in this tree), which greps
+  `"Entry point"` with no `LC_ALL=C`.` `[Age] parsing bug present since
+  v6.15-era code; still present here.`
 
 **Step 3.2: Fixes: tag**
-Record: No `Fixes:` tag. Buggy code is the original gfx11 KFD SDMA
-helper, not a later regression.
+- Record: `[N/A] no Fixes: tag. Companion series patch 2/2
+  (`bd4e5a97edf8c` / upstream `24aa630f6259`) fixes `dc4b165855f23` and
+  is already an ancestor of HEAD.`
 
-**Step 3.3: File history / series**
-Record: Standalone for this file. Related siblings:
-- `28cc342e2455c` gfx12 same change
-- `9f8032604b973` gfx12.1 same change
-Part of the June/July 2026 amdgpu `BUG()` cleanup. No extra gfx11
-refactor is required for this hunk.
+**Step 3.3: File history**
+- Record: `[Related] `bd4e5a97edf8c` already backported here with `Cc:
+  stable`. That is v2 2/2 of the same series. In v2, per-command
+  `LC_ALL=C` was removed from the uprobe test because patch 1/2 was
+  supposed to set it in the runner. This tree has 2/2 without 1/2.`
+  `[Standalone?] yes as a diff; semantically it completes that series.`
 
 **Step 3.4: Author**
-Record: Alex Deucher is the amdgpu maintainer. Around the same dates he
-landed many `BUG()`/`BUG_ON()` → `WARN()`/`-EINVAL` conversions across
-gfx/sdma/psp.
+- Record: `[Author] Rui Qi (ByteDance); not the subsystem maintainer.
+  Only other ftrace selftest commit in this tree is the companion offset
+  conversion. Maintainer Masami Hiramatsu applied both.`
 
 **Step 3.5: Prerequisites**
-Record: None. The function and `BUG()` existed since the file was added.
-Applies standalone.
+- Record: `[Dependencies] none for apply. Insertion is after the
+  copyright block, which matches this tree. Local `ftracetest` lacks
+  mainline `--rv`; that is later context only and is not required.`
+  `[Standalone apply] yes.`
 
-## Phase 4: Mailing list / external
+## Phase 4: Mailing list
 
 **Step 4.1: Original discussion**
-Record: `b4 dig -c c24edbd5ae0e4` matched patch-id
-`8e42a5ee823a482676f1d117737bc3f4d06296d3`.
-Lore/msgid: https://patch.msgid.link/20260615235645.737189-15-
-alexander.deucher@amd.com
-Series: v1 `[PATCH 15/43]` 2026-06-15; later v2 `[PATCH 02/30]`
-2026-07-07. Committed version matches the posted diff. No NAKs found. No
-reviewer `Cc: stable` on this patch. Cover-letter fetch from lore
-returned 403; mail-archive and Phoronix describe the series as removing
-amdgpu `BUG()` so the driver does not panic when it can continue.
+- Record: `[Lore] https://patch.msgid.link/20260807081512.2974757-2-
+  qirui.001@bytedance.com` (WebFetch on lore.kernel.org returned 403;
+  thread recovered via `b4 dig -m`).`
+- `[Revisions] v1 (2026-08-06): `LC_ALL=C` only on one `readelf` in
+  add_remove_uprobe. v2 (2026-08-07): moved to top-level `ftracetest`
+  per Masami. Applied version is v2, latest.`
+- `[Feedback] Masami on v1: force C locale in the top-level runner, not
+  per test. Author agreed and sent v2. Masami applied v2 2/2 with "Good
+  catch! OK, let me take it." No NAKs. No reviewer `Cc: stable` on this
+  patch (2/2 had `Fixes:` and later got `Cc: stable` in the backport).`
 
-**Step 4.2: Recipients (`b4 dig -w`)**
-Record: Alex Deucher, `amd-gfx@lists.freedesktop.org`. Kent Russell’s
-`Reviewed-by` is on the git commit, not on the v1 mail-archive copy
-(review landed later / at commit time).
+**Step 4.2: Recipients**
+- Record: `[To/Cc] Steven Rostedt, Masami Hiramatsu, Mathieu Desnoyers,
+  Shuah Khan, Heiko Carstens, linux-trace-kernel, linux-kselftest,
+  linux-kernel.`
 
 **Step 4.3: Bug report**
-Record: None. No syzbot, bugzilla, or user panic report.
+- Record: `[No syzbot/bugzilla.] Cover letter: series fixes two ways
+  add_remove_uprobe can build an invalid uprobe offset. v1 body: if
+  readelf is translated, ENTRYPOINT is empty and the `uprobe_events`
+  write is rejected because the offset after `PATH:` is missing. Author
+  is a real user of a non-C locale (ByteDance).`
 
-**Step 4.4: Related patches**
-Record: Independent per-IP copies. This gfx11 hunk does not depend on
-the rest of the 43-patch series.
+**Step 4.4: Series**
+- Record: `[v2 0/2] "Fix add_remove_uprobe robustness". Patch 1 = this
+  commit. Patch 2 = ELF VA→file offset (`bd4e5a97edf8c`), already in
+  this tree. v2 2/2 dropped inline `LC_ALL=C` and relies on the runner.`
 
 **Step 4.5: Stable list**
-Record: No stable-thread hit found for this subject. UNVERIFIED:
-lore.kernel.org/stable search was blocked (Anubis/403).
+- Record: `[No stable-list discussion found] for this subject. Companion
+  2/2 was taken into this tree with `Cc: stable@vger.kernel.org`.`
 
-## Phase 5: Semantic / call graph
+## Phase 5: Code semantics
 
 **Step 5.1: Functions**
-Record: `get_sdma_rlc_reg_offset()` only.
+- Record: `[No C functions.] Change is `export LC_ALL=C` in
+  `ftracetest`. Affected consumer: `add_remove_uprobe.tc` `readelf`
+  parsing.`
 
-**Step 5.2: Callers (this tree)**
-Record:
-- `hqd_sdma_load_v11()` — KFD SDMA queue load
-- `hqd_sdma_dump_v11()` — dump (debug / dqm)
-- `hqd_sdma_is_occupied_v11()`
-- `hqd_sdma_destroy_v11()` — preempt/destroy
-
-Those are `gfx_v11_kfd2kgd` ops. Load goes `kfd_load_mqd_sdma()` →
-`hqd_sdma_load()`. Dump is used from `kfd_device_queue_manager.c`.
+**Step 5.2: Callers**
+- Record: `[ftracetest-ktap] runs `./ftracetest -K -v`. kselftest
+  Makefile lists `ftracetest` / `ftracetest-ktap`. `__run_test` sources
+  each `.tc` in a subshell, so `LC_ALL=C` is inherited. Reachable
+  whenever someone runs ftrace selftests.`
 
 **Step 5.3: Callees**
-Record: `SOC15_REG_OFFSET`, register arithmetic, `pr_debug`. Callers
-then `RREG32`/`WREG32` at the returned offset.
+- Record: `[readelf -hW / -lW, grep, awk, writes to uprobe_events.]
+  Kernel ABI involved is `uprobe_events`, already exercised by the
+  test.`
 
-**Step 5.4: Reachability**
-Record: Yes, from `/dev/kfd` queue create/destroy (needs KFD/render
-access, not a raw unprivileged syscall). `engine_id` comes from
-`v11_sdma_mqd.sdma_engine_id`, set in `kfd_mqd_manager_v11.c` from
-`q->sdma_engine_id`.
-
-Kernel assignment (`kfd_device_queue_manager.c`):
-- normal SDMA: `sdma_id % kfd_get_num_sdma_engines()`
-- `kfd_get_num_sdma_engines()` is `num_instances/num_nodes`, or
-  `min(..., 2)` if XGMI
-
-Userspace `KFD_QUEUE_TYPE_SDMA_BY_ENG_ID` is range-checked against
-`num_sdma + num_xgmi - 1` in `kfd_ioctl_create_queue()`.
-
-Verified: on typical GFX11 (2 SDMA, no XGMI) the id is 0 or 1, so
-`default:` is not the normal path. Unverified: whether any GFX11 SKU
-with XGMI and >2 SDMA instances can produce `engine_id >= 2` and hit
-`BUG()`.
+**Step 5.4: Call chain**
+- Record: `[kselftest runner → ftracetest-ktap → ftracetest →
+  add_remove_uprobe.tc → readelf → uprobe_events.] Userspace-only. Not a
+  syscall bug; it does cause a false test failure and a malformed probe
+  write.`
 
 **Step 5.5: Similar patterns**
-Record: gfx9 and gfx10.3 already `dev_warn` + fallthrough to engine 0.
-gfx11/12/12.1 used `BUG()` until this series. This is aligning gfx11
-with the safer sibling.
+- Record: `[Only this ftrace test greps readelf "Entry point".] Other
+  selftests (e.g. mptcp) already pin `LC_ALL=C` on individual commands.
+  No `export LC_ALL=C` in this tree's ftrace runner yet.`
 
-## Phase 6: This tree
+## Phase 6: This tree (pending-6.18 / 6.18.53)
 
-**Step 6.1: Buggy code in this checkout?**
-Record: Local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). File
-exists. Current `get_sdma_rlc_reg_offset()` already has `WARN(1, ...)`.
-`git merge-base --is-ancestor c24edbd5ae0e4 HEAD` succeeds. The panic
-path is already gone here; the pre-fix `BUG()` is in the parent of that
-commit.
+**Step 6.1: Buggy code present?**
+- Record: `[Yes.] `tools/testing/selftests/ftrace/ftracetest` has no
+  `LC_ALL=C`. `add_remove_uprobe.tc` lines 17 and 37 grep English
+  `readelf` strings. `git describe HEAD` = `p-6.18-1-g03b85e06ca9bf`;
+  `make kernelversion` = `6.18.53`. Introduced by `dc4b165855f23`
+  (ancestor of HEAD).`
 
 **Step 6.2: Backport difficulty**
-Record: Clean apply. Hunk matches the original function from 2022; no
-conflicting refactor in that switch.
+- Record: `[Clean apply.] Copyright-block context matches. `--rv` in the
+  candidate hunk is later mainline noise, not needed here.`
 
-**Step 6.3: Related fixes already here**
-Record: This exact fix is already ancestor of HEAD. Sibling gfx12/12.1
-conversions are also present. No alternate gfx11 SDMA `BUG()` fix.
+**Step 6.3: Related fixes already here?**
+- Record: `[Partial.] Offset conversion `bd4e5a97edf8c` is here; locale
+  export is not. No earlier equivalent `LC_ALL=C` in this file.`
 
-## Phase 7: Subsystem
+## Phase 7: Subsystem context
 
 **Step 7.1**
-Record: `drivers/gpu/drm/amd/amdgpu` KFD GFX11. Criticality:
-**IMPORTANT** (RDNA3 / RX 7000 / Phoenix, not core mm/vfs).
+- Record: `[Subsystem] tools/testing/selftests/ftrace` `[Criticality]
+  PERIPHERAL for production kernel runtime; IMPORTANT for anyone running
+  ftrace kselftests on this stable tree (distro CI, KernelCI, vendor
+  QA).`
 
 **Step 7.2**
-Record: amdgpu/KFD is actively developed; this helper itself has been
-stable since 2022.
+- Record: `[Activity] active; recent ftrace selftest fixes already
+  landed in this 6.18.y tree, including the companion uprobe test fix.`
 
 ## Phase 8: Impact and risk
 
-**Step 8.1: Who**
-Record: Users of AMD GFX11 + KFD compute (ROCm / `/dev/kfd`), config
-`CONFIG_HSA_AMD`. Driver-specific, not universal.
+**Step 8.1: Who is affected**
+- Record: `[config/test-specific] users/CI running ftracetest with a
+  non-C locale (zh_CN, de_DE, ja_JP, etc.). No effect on kernel boot or
+  production tracing if tests are not run.`
 
 **Step 8.2: Trigger**
-Record: Invalid `engine_id` not in `{0,1}` on SDMA HQD
-load/dump/destroy. Common path uses kernel-assigned 0/1. Userspace
-engine id is validated for `SDMA_BY_ENG_ID`. Trigger is uncommon; not
-shown as a day-to-day ROCm failure. Not a fully unprivileged DoS on
-typical 2-engine GFX11.
+- Record: `[Trigger] run ftracetest (or kselftest ftrace) with
+  translated binutils/gettext. Common on non-English developer and QA
+  machines. Unprivileged users can run the tests if they have tracefs
+  access; this is not a privilege-escalation bug.`
 
 **Step 8.3: Failure mode**
-Record: Old: `BUG()` → kernel panic. Severity if hit: **CRITICAL**.
-Likelihood: **LOW** on known 2-engine GFX11. After the fix: warning +
-possible wrong MMIO if the branch is taken.
+- Record: `[Failure] false-negative kselftest; possible write of
+  `p:myevent <path>:` with empty offset, which the kernel rejects. Not a
+  panic, UAF, or data corruption.` `[Severity] MEDIUM for QA/CI
+  correctness; LOW for production kernel runtime.`
 
 **Step 8.4: Risk-benefit**
-Record: Benefit: avoid an intentional driver panic on a bad engine id.
-Risk: 3 lines, no locking/API change, very low. Ratio: favorable if the
-panic is treated as worth preventing; weaker if judged purely
-theoretical.
+- Record: `[Benefit] medium for this tree: completes a 2-patch series
+  whose second half is already here, so add_remove_uprobe stays locale-
+  broken without it.` `[Risk] very low (3 lines, userspace test runner
+  only).` `[Ratio] favorable.`
 
 ## Phase 9: Synthesis
 
 **Step 9.1: Evidence**
 
-FOR:
-- Replaces `BUG()` (panic) with `WARN()` on a real KFD SDMA path.
-- 3-line, obviously correct, reviewed by Kent Russell, written by the
-  amdgpu maintainer.
-- GFX11 KFD support has been in the kernel since 2022 (`cc009e613de65`,
-  ancestor of v6.1).
-- gfx9/gfx10.3 already refused to panic here; gfx11 was the harsh
-  outlier.
-- No prerequisites; applies cleanly to this file.
-- Prompt’s crash/panic guidance favors inclusion.
+For:
+- Real, reproducible test failure when `readelf` is localized.
+- Companion v2 2/2 is already in this 6.18 tree and depends on runner
+  `LC_ALL=C` (inline `LC_ALL=C` was removed in v2).
+- Tiny, obviously correct, maintainer-directed.
+- Applies cleanly; no kernel ABI/feature change.
+- kselftest false failures on stable are used by distros and CI.
 
-AGAINST:
-- No user report, syzbot, or demonstrated trigger.
-- Official stable rule: not a “this could be a problem” patch without an
-  exploit/trigger explanation.
-- Identical one-line body across a 43-patch cleanup series, not a
-  targeted production-crash fix.
-- On typical GFX11, engine id is 0 or 1, so `default:` is largely
-  defensive.
-- After `WARN()`, execution continues with `base = 0` rather than
-  failing the ioctl.
+Against:
+- Not a kernel crash, security hole, deadlock, or data corruption.
+- Only hits people who run ftrace selftests under a non-C locale.
+- This patch itself was not `Cc: stable` (not used as a NO vote per the
+  review rules).
 
-UNRESOLVED:
-- Whether any GFX11 product can assign `engine_id >= 2` via XGMI extra
-  SDMA engines.
-- Full cover-letter text (lore 403).
-- Stable-list discussion (lore/stable blocked).
+Unresolved:
+- Could not fetch lore.kernel.org over HTTP (403); discussion was
+  recovered from `b4 dig` mbox. No stable-list thread found.
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? **PASS** — 3-line substitution,
-   reviewed, in mainline.
-2. Fixes a real bug that affects users? **PASS** with caveat — it fixes
-   a real panic *if* the branch runs; no evidence users hit it. Still a
-   driver `BUG()` on a userspace-reachable KFD path.
-3. Important (crash/security/corruption/deadlock)? **PASS** for the
-   failure mode (panic). Likelihood is low.
-4. Small and contained? **PASS** — +2/−1, one function.
+**Step 9.2: Stable rules**
+1. Obviously correct and tested? **PASS** — 3-line export; maintainer
+   requested and applied; author ran `checkpatch` and `sh -n`.
+2. Real bug affecting users? **PASS** — false ftracetest failure and
+   malformed uprobe write on localized systems.
+3. Important issue? **PASS** — not a kernel oops, but it is a real
+   kselftest break, and this tree already took the paired functional
+   fix. Leaving this out keeps that test locale-fragile.
+4. Small and contained? **PASS** — +3 lines, one file.
 5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS** — file/function exist; hunk is
-   identical. (Already applied on 7.3-rc4.)
+6. Can apply to this tree? **PASS**.
 
 **Step 9.3: Exception category**
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary
-robustness fix.
+- Record: `[Not a device-ID/quirk/DT/build/docs exception.] Closest
+  analogue is a kselftest robustness/false-failure fix, which stable
+  trees routinely take when the test exists in-tree.`
 
 **Step 9.4: Decision**
+This should be backported to **this** 6.18.y tree. The bug exists here,
+the patch is surgical, and it finishes a series that is already half-
+applied.
 
-This tree is 7.3-rc4 and already contains the commit; the evaluation is
-whether the change is stable-worthy for this codebase, not whether to
-re-apply it.
-
-It should be. `BUG()` in `get_sdma_rlc_reg_offset()` is an intentional
-kernel panic on the GFX11 KFD SDMA load/destroy path. Replacing it with
-`WARN()` is the same policy older GFX generations already used, it is
-three lines, and it cannot introduce a new API or locking scheme. Lack
-of a public reproducer makes it a cleanup-shaped patch, but the user-
-visible failure if that branch ever runs is still a full panic, which is
-what stable is for.
-
-### What it solves for stable users
-Stops the GFX11 KFD SDMA helper from taking down the machine on an out-
-of-range engine id, instead of asserting.
-
-### Rules
-Small, obviously correct, no new API, applies to this file. It addresses
-a panic, not a feature.
+### What the commit solves for stable users
+On a non-C locale, `readelf` can translate `"Entry point"`, so
+`add_remove_uprobe` computes an empty offset and fails even though
+uprobes work. Distros and CI that run ftrace kselftests against 6.18.y
+get a false failure. The offset-conversion fix already in this tree
+still greps English `readelf` text and assumed this runner change.
 
 ### Risk vs benefit
-Benefit is panic avoidance on AMD RDNA3 compute queues. Risk is
-negligible.
+Benefit is restoring a test that this tree already ships. Risk is
+negligible: `LC_ALL=C` only affects the ftracetest process tree.
 
 ### Concerns
-Trigger is uncommon; after `WARN()` the function still returns a 0-based
-offset. That is acceptable versus `BUG()`. No extra commits are
-required.
+None material. `--rv` in the original hunk context is not in this tree
+and is not required. No further commits are needed for the export to
+work.
 
 ## Verification
-- [Phase 1] Parsed subject/body/tags: one-sentence panic rationale;
-  `Reviewed-by: Kent Russell`; no `Fixes`/`Reported-by`.
-- [Phase 2] Diff: `BUG()` → `WARN(1, ...)` + `break` in
-  `get_sdma_rlc_reg_offset()`; +2/−1.
-- [Phase 3] `git blame`: `BUG()` from `cc009e613de65` (2022-05-04);
-  ancestor of v6.1 and v6.6.
-- [Phase 3] `git show c24edbd5ae0e4`: matches the candidate diff.
-- [Phase 3] `git merge-base --is-ancestor c24edbd5ae0e4 HEAD`: yes
-  (already in this tree).
-- [Phase 4] `b4 dig -c c24edbd5ae0e4`: msgid
-  `20260615235645.737189-15-alexander.deucher@amd.com` (`15/43`).
-- [Phase 4] `b4 dig -a`: v1 43-patch series 2026-06-15; v2 30-patch
-  2026-07-07.
-- [Phase 4] `b4 dig -w`: To/Cc Alex Deucher + amd-gfx; no stable CC.
-- [Phase 4] mail-archive: posted diff identical; no NAK in the copies
-  read.
-- [Phase 4] UNVERIFIED: lore.kernel.org cover letter and stable@ archive
-  (403/Anubis).
-- [Phase 5] Callers verified: `hqd_sdma_load_v11` / `dump` /
-  `is_occupied` / `destroy`; load via `kfd_load_mqd_sdma`.
-- [Phase 5] `engine_id` from MQD ← `q->sdma_engine_id`; ioctl range
-  check for `SDMA_BY_ENG_ID`; typical GFX11 stays 0/1.
-- [Phase 5] gfx9/gfx10.3 already warn instead of `BUG()`.
-- [Phase 6] `git describe HEAD` / Makefile: 7.3.0-rc4; current file
-  already has `WARN()`.
-- [Phase 8] Failure mode if hit: `BUG()` panic; trigger likelihood low
-  on 2-engine GFX11.
-- UNVERIFIED: GFX11 SKU with `engine_id >= 2` in production.
+- [Phase 1] Parsed tags: Link to lore msgid `20260807081512.2974757-2`;
+  SOBs Rui Qi and Masami Hiramatsu; no Fixes/Reported-by/Cc: stable.
+- [Phase 2] Diff: +3 lines in `ftracetest` (`export LC_ALL=C`);
+  confirmed local file lacks it.
+- [Phase 3] `git describe HEAD` → `p-6.18-1-g03b85e06ca9bf`; `make
+  kernelversion` → `6.18.53`.
+- [Phase 3] `git merge-base --is-ancestor c13fcd3951dcc1 HEAD` → not an
+  ancestor (fix not in tree).
+- [Phase 3] `git merge-base --is-ancestor bd4e5a97edf8c HEAD` → yes
+  (companion 2/2 is in tree).
+- [Phase 3] `git merge-base --is-ancestor dc4b165855f23 HEAD` → yes
+  (readelf parsing introduced here).
+- [Phase 3] `git blame` on ftracetest header: `6e68e6c5e4b67` (2014); no
+  LC_ALL.
+- [Phase 3] Read `add_remove_uprobe.tc`: greps `"Entry point"` and
+  `LOAD` with no LC_ALL.
+- [Phase 4] `b4 dig -c c13fcd3951dcc1` → v2 1/2 msgid link above.
+- [Phase 4] `b4 dig -a` → v1 per-readelf LC_ALL, v2 runner-wide
+  (applied).
+- [Phase 4] `b4 dig -w` → Rostedt, Masami, Desnoyers, Shuah, kselftest
+  and trace lists.
+- [Phase 4] mbox: Masami asked to set LC_ALL in the runner; no NAKs;
+  cover letter describes two invalid-offset paths.
+- [Phase 4] lore WebFetch 403; stable-list search found no discussion of
+  this subject.
+- [Phase 5] `ftracetest-ktap` invokes `./ftracetest -K -v`; `__run_test`
+  sources `.tc` files so export is inherited.
+- [Phase 6] Insertion context after copyright block is present; `export
+  LC_ALL=C` is not.
+- [Phase 8] Failure mode verified from v1 message and current test
+  script: empty ENTRY → `p:myevent path:` write → test fail, not kernel
+  oops.
+- UNVERIFIED: live `readelf` translation under a specific locale was not
+  executed on this machine; the gettext localization claim is from the
+  author and is consistent with binutils behavior, but was not
+  reproduced here.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/ftrace/ftracetest | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
-index aaccf0b9947d4..d32ea91eeb343 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v11.c
-@@ -139,7 +139,8 @@ static uint32_t get_sdma_rlc_reg_offset(struct amdgpu_device *adev,
- 				regSDMA1_QUEUE0_RB_CNTL) - regSDMA0_QUEUE0_RB_CNTL;
- 		break;
- 	default:
--		BUG();
-+		WARN(1, "Invalid SDMA engine id %d\n", engine_id);
-+		break;
- 	}
+diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
+index cce72f8b03dce..ee3b950e872f6 100755
+--- a/tools/testing/selftests/ftrace/ftracetest
++++ b/tools/testing/selftests/ftrace/ftracetest
+@@ -7,6 +7,9 @@
+ #  Written by Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
+ #
  
- 	sdma_rlc_reg_offset = sdma_engine_reg_base
++# Keep command output parsing stable regardless of the user's locale.
++export LC_ALL=C
++
+ usage() { # errno [message]
+ [ ! -z "$2" ] && echo $2
+ echo "Usage: ftracetest [options] [testcase(s)] [testcase-directory(s)]"
 -- 
 2.53.0
 
