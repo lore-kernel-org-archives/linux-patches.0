@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF0A50EC0D;
-	Mon, 19 Oct 2026 13:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BB75208B6;
+	Mon, 19 Oct 2026 13:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418113; cv=none; b=GHY62tp9rDYPULZGa3lRraPr1erEStziZqMw/dGN0iQ7WQJmBEOXbL059fWuDp1OHuwgyM7eRTae2LNge9YJszf37T6vtj9j3qJ7g8Ubge57DeliziRbi7lzSVk4IKUtknrE/c2hYF7fQe4yJYnY2ypTKvPYZRIRAb28FuDfFfc=
+	t=1792418115; cv=none; b=gNTZ9yu4n6yIKJqr6/fCUVTDop9I1R4P4hfvnyvAyjXAzZNet0R4J47AvNgFSBvyG5FVGLiNYzfEilbHNyEo2Q27WBT8rI7AST2oPjNif5tF2VHClYPn8BiJAceN2d8eFDceZxr3NozzoUpUuWONPoPJKfEO6vcKm5f8Ze6Nj4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418113; c=relaxed/simple;
-	bh=ob6SbSxU6KL0J9LUBotDK+ahtRmLaWxphDpFbG+VLI8=;
+	s=arc-20240116; t=1792418115; c=relaxed/simple;
+	bh=U4koSAER90SeyEy0tNlP4fPNMDTpolOLeef99Vb0ERc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gGWXoh7mIVxGoZQfXiNy6F9mvFoUVugygls9W88CTEC9/a7Fd3eDYU92z0B5U4qGwf0tPFYMxybLNgXSGl177wNxukgGFzBtEaMe+MX62j5eTNKLIxP72H3qwWmUNlb/EvtEKjMRZvICm9ZOgsdR4NJCOhgxsAnC/mvyjdNVOCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jYEmRCMW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gr9JUOMQkAGTV4XlYXt0uL2gHbl916nA4cWQk0ZXg6/C78A2n8T+JWlm57ZMl9iQkeajqHhIS3IxJR79wC4KETA5XrHosjhJccBT2D02y25iyfvVMzwYbqKqaE6Xnnd/lnkkxaUKoPAH2Hl+MpmK8IYYEK3oCVLvZx1MgUckXLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nk2HhtdZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jYEmRCMW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F411F000C7;
-	Mon, 19 Oct 2026 13:55:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nk2HhtdZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFB51F000C9;
+	Mon, 19 Oct 2026 13:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418111;
-	bh=Qq0Sy4dDbS/+hJNRzm9nfc0E5/mBfh7kyOCGmA57em8=;
+	s=k20260515; t=1792418113;
+	bh=l0Uk1/DpNZ6w/8m/csQtHlUf7Na9Gh7XbL1dzLVVlGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jYEmRCMWJJWo+Exu7ri6WyQT4YF+Xlvb8KHA7L9skMw4fcJ+ZAKM9djxnrombNjVI
-	 ytSs52coqAZ+ALwbFW30z+v4Diw5ZUqzqWAurSwQRU/uePUXi1cVkAx4xSdtT+OuvG
-	 42h138CeES7TXPA0vUWAMHndjfqzlBXLuPIPIm6Y7q6z2Yd/g/dhbVGT4qXYlQdsaT
-	 Qy3BHMRgzMABCuPoPRwvKhoCEP+pIrSbUrkM+8gRb4r+gsWkcvHZyMfDpCUzcDmwiR
-	 orlidJxQtp5iHH8NJcxqdBvVRZX8v0boXYkxM95hheC4a+lByJURil3wqwmmB2JdTY
-	 N5XrP0OdEgwGw==
+	b=Nk2HhtdZdyOcTnpPsWePcb/BYZjhgMdipMmeb3D7WEYggkLrA+coTSRRAlkiOUbYE
+	 efSrkIeqCzLoXFw0Sbw7AXAOSbLbpCidk/jQaxAO5c4XYzqEVZLSeewSCM9jkr88nW
+	 dtNOsgzBbcOnmF5ooQhWOF/u9b9wf52nCaJYPYyxPOLrGiIUTtOde07BxHO+uN/zR5
+	 L478eNskSnAoo3o2GT5RgL8VJi3taQRfpjp863yv6lZ7nUYw0h+PTjNgikSUIjakGO
+	 vztRYkK6KsnG2jVfPhgl5lT/6pnPufRr/RPApyEEt52TnMBvTcy4ZxpLI9v4g+BrQh
+	 aK72/TpFDFFYw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zide Chen <zide.chen@intel.com>,
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Thomas Falcon <thomas.falcon@intel.com>,
+	Zide Chen <zide.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	mingo@redhat.com,
 	acme@kernel.org,
@@ -42,9 +43,9 @@ Cc: Zide Chen <zide.chen@intel.com>,
 	x86@kernel.org,
 	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] perf/x86/intel/uncore: Fix PCI PMU cleanup on setup failure
-Date: Mon, 19 Oct 2026 09:45:10 -0400
-Message-ID: <20261019135441.1420968-19-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] perf/x86: Free hybrid state on PMU init failure
+Date: Mon, 19 Oct 2026 09:45:11 -0400
+Message-ID: <20261019135441.1420968-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -60,459 +61,455 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zide Chen <zide.chen@intel.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 003267cb94e21d762eb72d6977d84f44f1705bb7 ]
+[ Upstream commit 96746e731e1626545e343974ca4673739dceb31b ]
 
-When uncore_pci_pmu_register() fails, pmu->boxes[die] is set to NULL
-before returning.  In the uncore_pci_remove() path, this causes
-uncore_pci_pmu_unregister() to be skipped entirely, leaking
-pmu->activeboxes.  In the uncore_bus_notify() path,
-uncore_pci_pmu_unregister() may still be called and must exit early
-when pmu->boxes[die] is NULL to avoid a NULL pointer dereference, and
-to ensure activeboxes is only decremented for a previously active box.
+If PMU initialization fails, for example in check_hw_exists(), hybrid
+state can be left partially initialized: x86_pmu.hybrid_pmu is not freed
+and perf_is_hybrid remains set. This can leak memory and leave stale
+hybrid state reachable after a failed init path.
 
-Additionally, since pci_get_drvdata() returns NULL on registration
-failure, uncore_pci_remove() can no longer treat NULL drvdata as an
-indicator of an auxiliary PCI device.  Remove the associated
-WARN_ON_ONCE().
+Add x86_pmu_free_hybrid() and use it on PMU init failure paths so all
+hybrid-related state is consistently reset.
 
-Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://sashiko.dev/#/patchset/20260512233048.9577-1-zide.chen@intel.com?part=1
-Link: https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
+Reviewed-by: Thomas Falcon <thomas.falcon@intel.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Link: https://patch.msgid.link/20260717080342.1879573-3-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The 6.18.53 file matches the pre-fix code exactly, so this is a clean,
-self-contained error-path leak and NULL-deref fix. Full phase
-walkthrough follows.
+The local tree is **6.12.111** (`pending-6.12`). The hybrid PMU
+init/error path exists here, and this commit is a real error-path
+UAF/leak fix that belongs in this tree.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
-Step 1.1: PARSE THE SUBJECT LINE
-Record: [perf/x86/intel/uncore] [fix] [PCI PMU cleanup on setup failure]
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[perf/x86] [Free] [release hybrid PMU state when PMU init
+fails]**
 
-Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 Record:
-- Signed-off-by: Zide Chen (author)
-- Signed-off-by: Peter Zijlstra (Intel) (perf/x86 maintainer)
-- Reviewed-by: Dapeng Mi (Intel uncore reviewer)
-- Link: https://sashiko.dev/#/patchset/20260512233048.9577-1-
-  zide.chen@intel.com?part=1
-- Link:
-  https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
-- No Fixes: tag (expected)
-- No Reported-by / Tested-by / syzbot
-- No Cc: stable (expected)
-- Ignore: [Upstream commit 003267cb94e21d762eb72d6977d84f44f1705bb7] and
-  Sasha Levin SOB (pipeline)
+- No `Fixes:` tag (expected for this review pipeline)
+- No `Reported-by:` / syzbot
+- No `Tested-by:`
+- `Reviewed-by: Thomas Falcon <thomas.falcon@intel.com>`
+- `Reviewed-by: Zide Chen <zide.chen@intel.com>`
+- `Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>` (author)
+- `Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>` (perf
+  maintainer)
+- `Link: https://patch.msgid.link/20260717080342.1879573-3-
+  dapeng1.mi@linux.intel.com`
+- No `Cc: stable` (not a negative signal)
 
-Step 1.3: ANALYZE THE COMMIT BODY TEXT
+SHA on `origin/master`: `96746e731e1626545e343974ca4673739dceb31b` (not
+an ancestor of HEAD).
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 Record:
-- Bug: when `uncore_pci_pmu_register()` fails, `pmu->boxes[die]` is
-  NULLed and the box is freed, but `pmu->activeboxes` stays incremented.
-- Symptoms: (1) `uncore_pci_remove()` skips unregister because drvdata
-  is NULL → `activeboxes` leak; (2) `uncore_bus_notify()` still calls
-  unregister → NULL deref of `box`; (3) false `WARN_ON_ONCE()` because
-  NULL drvdata is no longer uniquely “extra PCI device”.
-- Version info: none in the message. Code dates to 2020.
-- Root cause: incomplete error-path rollback in
-  `uncore_pci_pmu_register()`, and unregister not tolerating a NULL box.
+- **Bug:** On hybrid Intel PMU init failure (example:
+  `check_hw_exists()`), `x86_pmu.hybrid_pmu` is not freed and
+  `perf_is_hybrid` stays enabled.
+- **Symptom:** Memory leak plus leftover hybrid state after a failed
+  init.
+- **Root cause:** `intel_pmu_init_hybrid()` allocates `hybrid_pmu` and
+  enables the static key; `init_hw_perf_events()` error paths
+  `memset(&x86_pmu, 0, ...)` without freeing or disabling that key. The
+  hybrid `perf_pmu_register` fail path kfree's too early and still
+  leaves the static key set.
+- **Version:** Hybrid PMUs exist since 2021; this tree has them.
 
-Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not hidden. Explicit leak + NULL-deref + false-WARN fix. The
-“remove WARN_ON” piece is diagnostic, not a new feature.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not disguised. It is an explicit error-path leak/stale-state
+fix. The delayed `kfree` also removes a use-after-free on the hybrid
+register-fail path (see Phase 2/5).
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
-Step 2.1: INVENTORY THE CHANGES
+**Step 2.1: INVENTORY THE CHANGES**
 Record:
-- File: `arch/x86/events/intel/uncore.c` (+4 / −1)
-- Functions: `uncore_pci_pmu_register()`, `uncore_pci_pmu_unregister()`,
-  `uncore_pci_remove()`
-- Scope: single-file surgical fix (5 lines)
+- File: `arch/x86/events/core.c` (+12 / −3)
+- New helper: `x86_pmu_free_hybrid()`
+- Modified: `init_hw_perf_events()` (hybrid register-fail block and
+  `out_bad_pmu`)
+- Scope: single-file surgical error-path fix
 
-Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 Record:
-- Hunk 1 (`uncore_pci_pmu_register`): first-box `uncore_pmu_register()`
-  failure already NULLed `boxes[die]`, exited and freed the box, but
-  left `activeboxes` incremented. After: `atomic_dec(&pmu->activeboxes)`
-  on that path.
-- Hunk 2 (`uncore_pci_pmu_unregister`): previously always used `box` and
-  decremented `activeboxes`. After: return immediately if `box` is NULL
-  (no deref, no bogus decrement).
-- Hunk 3 (`uncore_pci_remove`): drop `WARN_ON_ONCE(i >=
-  UNCORE_EXTRA_PCI_DEV_MAX)` when drvdata is NULL.
+- **Hunk 1:** Add `x86_pmu_free_hybrid()`: if `hybrid_pmu` is set,
+  disable `perf_is_hybrid`, `kfree` the array, NULL it, set
+  `num_hybrid_pmus = 0`.
+- **Hunk 2 (before):** Hybrid `perf_pmu_register` failure kfree's the
+  array, NULLs it, zeros the count, then `goto out2` (cpuhp teardown,
+  then `memset`).
+- **Hunk 2 (after):** Only unregister already-registered PMUs and `goto
+  out2`; free/reset happens later in `out_bad_pmu`.
+- **Hunk 3:** `out_bad_pmu` calls `x86_pmu_free_hybrid()` **before**
+  `memset(&x86_pmu, 0, ...)`.
 
-Step 2.3: IDENTIFY THE BUG MECHANISM
-Record:
-- Category: error-path resource leak + NULL pointer dereference (and a
-  false WARN).
-- Mechanism: `atomic_inc_return(&pmu->activeboxes)` runs before
-  `uncore_pmu_register()`. On failure the box is torn down but the
-  counter is not. Discovery/`bus_notify` still looks up the PMU by PCI
-  identity and calls unregister, which does `uncore_box_exit(box)` on
-  NULL (`box->flags`).
-- Leak consequence: the next box of the same PMU sees `activeboxes > 1`
-  and skips `uncore_pmu_register()`, so the PMU never appears in perf.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record: **Error-path resource leak + UAF + stale static key**
 
-Step 2.4: ASSESS THE FIX QUALITY
-Record:
-- Quality: obviously correct. Decrement matches the increment; NULL
-  guard is the standard pattern; no API/data-structure change.
-- Regression risk: very low. Sashiko noted that PCI probe failure does
-  not call `remove()`, so the WARN removal is not strictly required for
-  that path. That only drops a diagnostic; it does not create a crash.
-  The NULL check is required for `uncore_bus_notify()`, which is
-  independent of `remove()`.
+Verified in this tree (`init_hw_perf_events`, `intel_pmu_init_hybrid`,
+`intel_pmu_cpu_dead`):
+
+1. **Leak on early failure:** `intel_pmu_init_hybrid()` does `kcalloc` +
+   `static_branch_enable(&perf_is_hybrid)`. If `check_hw_exists()` then
+   fails, 6.12 jumps to `out_bad_pmu` and only `memset`s `x86_pmu`,
+   dropping the pointer without `kfree`. `perf_is_hybrid` stays enabled.
+
+2. **UAF on hybrid register failure:** By the time `perf_pmu_register`
+   runs, `CPUHP_AP_PERF_X86_STARTING` has already run
+   `intel_pmu_cpu_starting()` → `init_hybrid_pmu()`, which sets
+   `cpuc->pmu` into the `hybrid_pmu` array. Current 6.12 code `kfree`s
+   that array **then** `goto out2` →
+   `cpuhp_remove_state(CPUHP_PERF_X86_PREPARE)` → `x86_pmu_dead_cpu()` →
+   `intel_pmu_cpu_dead()`:
+
+```5209:5210:arch/x86/events/intel/core.c
+        if (is_hybrid() && cpuc->pmu)
+                cpumask_clear_cpu(cpu,
+&hybrid_pmu(cpuc->pmu)->supported_cpus);
+```
+
+`is_hybrid()` is still true and `cpuc->pmu` still points at freed
+memory. That is a use-after-free. Moving the free to after cpuhp
+teardown fixes it.
+
+3. **Stale static key:** The old register-fail path never called
+   `static_branch_disable(&perf_is_hybrid)`.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record: Obviously correct and minimal. `static_branch_disable` + `kfree`
++ NULL during `__init` teardown is low risk. Free-after-cpuhp is the
+right order. No API change. Regression risk is low.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
-Step 3.1: BLAME THE CHANGED LINES
+**Step 3.1: BLAME THE CHANGED LINES**
 Record:
-- Buggy register error path: `16fa64315c1bd` (“Factor out
-  uncore_pci_pmu_register()”), Kan Liang, 2020-09-14. First mainline:
-  v5.10-rc1.
-- Unregister without NULL check: `cdcce92a3a03bc` (2020).
-- WARN_ON_ONCE: `899396cf7b4b31` (Yan Zheng, 2013).
-- Long-lived code, present in this 6.18 tree.
+- Hybrid register/kfree block: `d9977c43bff89` (“perf/x86: Register
+  hybrid PMUs”, 2021-04-19) — present in 6.12.
+- `intel_pmu_init_hybrid()` alloc/static key: `97588df87b56e2` (Kan
+  Liang, 2023-08-29) — present in 6.12.
+- `out_bad_pmu` memset: `916e3a4f950eac` (Paolo Bonzini, 2022) — present
+  in 6.12.
 
-Step 3.2: FOLLOW THE FIXES: TAG
-Record: No Fixes: tag. Introducer is `16fa64315c1bd`, which **is** an
-ancestor of v6.18.53.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No `Fixes:` tag. Bug was introduced with hybrid PMU support
+(2021/2023), well before 6.12.
 
-Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record:
-- This is v3 1/8 of “PMU setup robustness fixes”.
-- Series: 1/8 this fix; 2/8 refcnt cleanup; 3/8 init_box errors; 4/8
-  keep PCI PMUs if MMIO/MSR alloc fails; 5/8 factor box setup; 6–8
-  flags/lazy setup.
-- 4/8 (`d623e292c6a4c`) is already in v6.18.53. 2/8 and 5/8 are not.
-- This patch does not depend on 2/8+; later patches build on it.
-  Standalone.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: This is v3 **2/8** of Dapeng Mi’s “Miscellaneous PMU bug fixes
+and optimizations”.
+- Parent: `91787047b1dc5` “Unregister PMI handler on PMU init failure”
+  (adds `pmi_unregister:`) — **not** in this tree.
+- Next: `278a3731c9d08` “Guard intel_pmu_cpu_dead() against invalid
+  hybrid PMU casts” — separate OOB/`container_of` bug; not required for
+  this leak/UAF fix.
+This patch is standalone: the helper only needs to run before `memset`
+at `out_bad_pmu`.
 
-Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Zide Chen is an active Intel uncore contributor on this tree
-(die-id, discovery, IMC events, etc.). Maintainer path: Peter Zijlstra
-SOB. Dapeng Mi Reviewed-by.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Dapeng Mi is an Intel perf contributor. Same series has several
+hybrid/error-path fixes. Applied by Peter Zijlstra.
 
-Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: No missing helpers or types. Parent of the candidate and
-`v6.18.53:arch/x86/events/intel/uncore.c` are byte-identical (same
-sha256). Applies standalone. Dry-run `patch -p1` against the v6.18.53
-file succeeded.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: Patch 1 is **not** a functional prerequisite. It only changes
+nearby labels (`pmi_unregister`, `goto pmi_unregister` instead of
+`return err`). `x86_pmu_free_hybrid()` can be added to 6.12’s existing
+`out_bad_pmu`. No new helpers or structs.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
-Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 Record:
-- `b4 dig -c 540120722e9bf`: `[PATCH V3 1/8] perf/x86/intel/uncore: Fix
-  PCI PMU cleanup on setup failure`
-- URL:
-  https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
-- lore.kernel.org WebFetch returned 403; full thread saved via `b4 dig
-  -m` (26 messages).
-- V1/V2 existed; this patch was **new in v2** after Sashiko review of
-  v1. v3 only added Reviewed-by. Applied version is latest.
-- Cover letter: “PCI PMU cleanup on setup failure has activeboxes leaks
-  and potential NULL pointer dereference in error paths.”
-- No NAK. tip-bot applied it to perf/core (2026-06-30).
-- Sashiko on v3: questioned WARN_ON removal (Medium); two High notes
-  were pre-existing UAF/races, not introduced by this patch. No stable
-  NAK.
+- `b4 dig -c 96746e731e162` → https://patch.msgid.link/20260717080342.18
+  79573-3-dapeng1.mi@linux.intel.com
+- Revisions: v1 (2026-07-10, 2/7), v2 (2026-07-13, 2/7), v3 (2026-07-17,
+  2/8). This hunk did not change across revisions.
+- Cover letter: bugs found in review (Sashiko) of a later SIMD/eGPR
+  sampling series, not from a production crash.
+- Zide Chen: `Reviewed-by` for the whole series. Author called the
+  series “low risky”. No NAKs found.
+- Merged to tip perf/core 2026-08-12, then Linus.
 
-Step 4.2: CHECK WHO REVIEWED THE PATCH
-Record: `b4 dig -w` recipients: Peter Zijlstra, Ingo Molnar, Arnaldo,
-Namhyung Kim, Ian Rogers, Adrian Hunter, Alexander Shishkin, Andi Kleen,
-Stephane Eranian, linux-kernel, linux-perf-users, Dapeng Mi. Dapeng
-Reviewed-by on the committed patch; Peter Zijlstra SOB.
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): Peter Zijlstra, Ingo Molnar, Arnaldo Carvalho de
+Melo, Namhyung Kim, Ian Rogers, Adrian Hunter, Alexander Shishkin, Andi
+Kleen, Stephane Eranian, linux-kernel, linux-perf-users, Zide Chen,
+Thomas Falcon. Maintainer applied it.
 
-Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla. Found by code review (Sashiko on v1 → new
-patch 1 in v2). Still a real, reachable error path, not a theoretical
-rewrite.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No syzbot/bugzilla. Found by code review of hybrid init error
+paths.
 
-Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: 8-patch robustness series. This 1/8 is self-contained. 4/8
-already landed in this 6.18.53 tree. Later patches are larger (broken-
-state, lazy MSR/MMIO) and are not required for this leak/NULL-deref fix.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: Standalone among 8 patches. Patch 1 (NMI unregister) and patch 3
+(cpu_dead hybrid cast) are related but independent.
 
-Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: lore.kernel.org/stable WebFetch returned 403. UNVERIFIED whether
-stable@ discussed it. Not used as a NO signal (absence of Cc: stable is
-expected).
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: No stable-list discussion found for this subject. Not a reason
+to skip it.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
-Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `uncore_pci_pmu_register`, `uncore_pci_pmu_unregister`,
-`uncore_pci_remove`. Related: `uncore_pci_probe`, `uncore_bus_notify`,
-`uncore_pci_pmus_register`, `uncore_pci_sub_driver_init`.
+**Step 5.1: KEY FUNCTIONS**
+Record: `x86_pmu_free_hybrid()` (new), `init_hw_perf_events()`
+(modified). Related existing: `intel_pmu_init_hybrid()`,
+`intel_pmu_cpu_dead()`, `x86_pmu_dead_cpu()`.
 
-Step 5.2: TRACE CALLERS
+**Step 5.2: TRACE CALLERS**
 Record:
-- `uncore_pci_pmu_register`: `uncore_pci_probe` (legacy
-  `uncore_pci_driver`), `uncore_pci_sub_driver_init` (PCI sub-devices),
-  `uncore_pci_pmus_register` (discovery; return value ignored).
-- `uncore_pci_pmu_unregister`: `uncore_pci_remove`, `uncore_bus_notify`.
-- `uncore_bus_notify`: PCI `BUS_NOTIFY_DEL_DEVICE`. Discovery always
-  registers this notifier.
-- Context: driver init / PCI probe / PCI device deletion. Not a syscall
-  hot path, but boot and hot-unplug on Intel systems with uncore
-  (default `y`).
+- `init_hw_perf_events()`: `early_initcall`, once at boot.
+- `x86_pmu_free_hybrid()`: only `out_bad_pmu`.
+- `intel_pmu_cpu_dead()`: `x86_pmu.cpu_dead` from `x86_pmu_dead_cpu` on
+  CPUHP_PERF_X86_PREPARE teardown (init rollback and later CPU down).
+- `is_hybrid()` used in `get_possible_counter_mask()`, `is_x86_event()`,
+  `allocate_fake_cpuc()`, `x86_pmu_event_init()`,
+  `intel_pmu_cpu_starting()`, `intel_pmu_cpu_dead()`, and `hybrid()`
+  macros.
 
-Step 5.3: TRACE CALLEES
-Record:
-- `uncore_pmu_register()` → `perf_pmu_register()` (can fail: ENOMEM,
-  sysfs/device_add, name collision).
-- `uncore_box_exit()` at v6.18.53: `test_and_clear_bit(...,
-  &box->flags)` — NULL `box` is a hard oops.
-- `kfree(NULL)` is safe; the crash is `uncore_box_exit`.
+**Step 5.3: TRACE CALLEES**
+Record: `static_branch_disable()`, `kfree()`. No locks, no I/O.
 
-Step 5.4: FOLLOW THE CALL CHAIN
-Record:
-- Modern Intel (no `uncore_pci_driver`): `uncore_pci_init` →
-  `uncore_pci_pmus_register` → register (retval ignored) →
-  `bus_register_notifier`. Failed first-box `perf_pmu_register` + later
-  `BUS_NOTIFY_DEL_DEVICE` → `uncore_pci_find_dev_pmu_from_types` still
-  finds the PMU → unregister(NULL) → oops.
-- Same PMU, later boxes: `activeboxes > 1` skips `uncore_pmu_register` →
-  uncore PMU missing from perf.
-- Reachable without a special debug option.
-  `CONFIG_PERF_EVENTS_INTEL_UNCORE` defaults to y on Intel+PCI.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: Boot-time hybrid Intel PMU init (Alder/Raptor/Meteor/Lunar/Arrow
+Lake in this tree). Triggered by `check_hw_exists()` failure (broken
+PMU, hypervisor without PMU) or `perf_pmu_register()` failure. Not a
+normal syscall path; it is a boot/error path. Register-fail UAF runs in
+cpuhp teardown while the array is already freed.
 
-Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: MSR/MMIO setup is a different model; this series later factors
-PCI lazy registration for those paths. No duplicate of this exact PCI
-error-path bug in-tree. 2/8 adds refcnt decrement in unregister and is a
-follow-up cleanup, not a prerequisite.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: Same series cleans other hybrid error paths (NMI leak, invalid
+`hybrid_pmu()` cast). `01c153956b443` (“Validate the return value of
+intel_pmu_init_hybrid()”) is a related NULL-deref fix and is **not** in
+this tree; not required here.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
-Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record:
-- Local tree: `v6.18.53-5049-g0f0bdc2b0dffb`, `make kernelversion`
-  6.18.53.
-- At v6.18.53, `uncore_pci_pmu_register` still omits `atomic_dec` on
-  `uncore_pmu_register()` failure; unregister has no NULL check;
-  `WARN_ON_ONCE` is present. Bug exists here.
-- Introduced v5.10-rc1; not after 6.18 branched.
-- `git merge-base --is-ancestor 16fa64315c1bd v6.18.53` → yes.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: **Yes.**
+- Tree: `p-6.12-3-gc504cf0baa3d8`, `VERSION=6 PATCHLEVEL=12
+  SUBLEVEL=111`
+- `git merge-base --is-ancestor 96746e731e162 HEAD` → not an ancestor
+- 6.12 `init_hw_perf_events()` still kfree's on register fail, then
+  `memset`s at `out_bad_pmu` with no `x86_pmu_free_hybrid()` and no
+  `static_branch_disable`
+- `intel_pmu_init_hybrid()` still allocates and enables `perf_is_hybrid`
 
-Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: Expected apply: **clean**. Candidate parent `uncore.c` sha256
-equals v6.18.53 `uncore.c`. Dry-run apply succeeded.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: **Minor conflicts, easy backport.**
+- `git apply --check` of the raw diff fails: `x86_pmu_show_pmu_cap()`
+  log strings differ, and mainline has `pmi_unregister:` from patch 1.
+- The real change is still: add the helper after
+  `x86_pmu_show_pmu_cap()`, drop the three-line kfree in the register-
+  fail block, call the helper just before `memset` at `out_bad_pmu`.
 
-Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: No other “PCI PMU cleanup” fix in v6.18.53. 4/8 of the same
-series is already in 6.18.53 (`d623e292c6a4c`). That does not fix this
-leak/NULL deref.
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No `x86_pmu_free_hybrid`, no “Free hybrid state” commit.
+Register-fail still does the early `kfree`.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
-Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: [arch/x86/events/intel uncore PMU] [IMPORTANT — default-on Intel
-server/workstation perf, not core mm/sched, but widely enabled]
+**Step 7.1: SUBSYSTEM AND CRITICALITY**
+Record: **arch/x86/events (x86 perf PMU)** — **IMPORTANT**. Hybrid Intel
+CPUs are common (ADL/RPL/MTL/LNL/ARL). Not core mm/VFS, but production
+x86 hardware.
 
-Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature (2012+) with ongoing platform adds (PTL, WCL, etc.). This
-bug is old incomplete error handling, not a brand-new driver.
+**Step 7.2: SUBSYSTEM ACTIVITY**
+Record: Mature PMU core with ongoing hybrid work. Bug has been in hybrid
+support since it landed, not a last-month feature.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
-Step 8.1: DETERMINE WHO IS AFFECTED
-Record: Intel x86 with `CONFIG_PERF_EVENTS_INTEL_UNCORE` (default y).
-Driver-specific / config-default-on. Discovery platforms (newer Xeon)
-hit the bus-notify NULL deref path.
+**Step 8.1: WHO IS AFFECTED**
+Record: Intel hybrid x86 systems where PMU init fails (VMs without a
+usable PMU, broken BIOS/MSRs, or `perf_pmu_register` failure). Not
+universal; config `PERF_EVENTS` + hybrid CPU models.
 
-Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Step 8.2: TRIGGER CONDITIONS**
 Record:
-- Trigger: first box of a PCI uncore PMU fails `perf_pmu_register()`
-  (ENOMEM, sysfs failure, name clash).
-- Not every boot, but a real error path. Discovery ignores register
-  failure and still installs the notifier.
-- Unprivileged users do not trigger it directly; PCI unbind/hotplug and
-  boot setup do. Missing PMU is user-visible to perf.
+- `check_hw_exists()` false after `intel_pmu_init_hybrid()` — leak +
+  leftover `perf_is_hybrid`. Common-ish in hypervisors; uncommon on
+  healthy bare metal.
+- Hybrid `perf_pmu_register` failure after cpuhp STARTING — **UAF** in
+  `intel_pmu_cpu_dead()`. Rare (ENOMEM/name clash) but a real error
+  path.
+Not unprivileged-syscall triggered.
 
-Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Step 8.3: FAILURE MODE SEVERITY**
 Record:
-- NULL deref in `uncore_box_exit(NULL)` on device delete → oops.
-  **HIGH** (crash on error + unplug).
-- `activeboxes` leak → later boxes skip PMU registration → uncore events
-  absent. **MEDIUM–HIGH**.
-- False WARN_ON. **LOW**.
-- Overall: **HIGH** (crash on a reachable error path).
+- Register-fail + early kfree: **UAF** → crash/KASAN — **HIGH**
+- Early `check_hw_exists` fail: small one-time leak of `num_hybrid_pmus
+  * sizeof(struct x86_hybrid_pmu)` plus leftover `is_hybrid()` —
+  **MEDIUM** (leak) / **MEDIUM-HIGH** if later `hybrid()` users run with
+  a NULL/zeroed `x86_pmu`
+Overall: **HIGH** because of the UAF, not only the leak.
 
-Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Step 8.4: RISK-BENEFIT RATIO**
 Record:
-- Benefit: high — prevents oops and silently missing uncore PMUs after a
-  failed first-box register.
-- Risk: very low — 5 lines, no locking/API change, WARN removal is the
-  only nit.
-- Ratio: strongly favorable.
+- Benefit: closes UAF + leak + stale static key on hybrid init failure.
+  High for those systems, zero for others.
+- Risk: ~12 lines, `__init` error path only, no locking/API change.
+  **Low**.
+- Ratio: **favor backport**.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
-Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: COMPILE THE EVIDENCE**
 
-FOR backporting:
-- Real leak of `pmu->activeboxes` on `uncore_pmu_register()` failure
-  (code at v6.18.53 matches).
-- Real NULL deref: discovery `uncore_pci_pmus_register()` ignores
-  failure, `uncore_bus_notify` still unregisters,
-  `uncore_box_exit(NULL)` oopses.
-- Same leak causes later boxes to skip `uncore_pmu_register()`, so the
-  PMU never shows up in perf.
-- 5-line, obviously correct, no new API.
-- Applies cleanly; file is identical to the pre-fix version.
-- Bug present since v5.10; this 6.18 tree has it.
-- Reviewed by Dapeng Mi; SOB Peter Zijlstra.
-- Patch 1/8 is standalone; later series members not required.
-- Same series 4/8 already in this 6.18.53 tree.
+FOR:
+- Buggy code is in this 6.12 tree (hybrid since 2021).
+- Fixes a real leak (`memset` drops `hybrid_pmu` without `kfree`).
+- Fixes a real UAF: kfree of `hybrid_pmu` before `cpuhp_remove_state` →
+  `intel_pmu_cpu_dead()` → `hybrid_pmu(cpuc->pmu)`.
+- Also clears `perf_is_hybrid`, which the register-fail path never did.
+- Small (12/−3), obviously correct, reviewed by Intel and applied by
+  Peter Zijlstra.
+- Standalone; patch 1 is only context.
 
 AGAINST:
-- Trigger is an error path (`perf_pmu_register` failure), not a always-
-  on boot crash.
-- No user/syzbot report.
-- Sashiko: WARN_ON removal is weakly justified for the `pci_driver`
-  probe/remove model (probe failure does not call remove). Diagnostic-
-  only concern.
-- Later 2/8 refcnt cleanup is related but separate; not a blocker.
+- No production/syzbot report; found in review.
+- Register-fail UAF is a rare path.
+- Raw mainline diff does not apply cleanly (log text +
+  `pmi_unregister`).
+- One-time init leak alone would be weak; the UAF is what makes it
+  important.
 
 UNRESOLVED:
-- Stable mailing list search via lore HTTP was 403 (mbox/review still
-  obtained via b4).
-- How often `perf_pmu_register` actually fails in production:
-  unverified, but ENOMEM/sysfs failure is a standard, reachable errno
-  path.
+- Could not fetch lore HTML (403); used `b4 dig` + Patchew instead.
+  Reviews/NAKs still verified.
+- Exact `sizeof(struct x86_hybrid_pmu)` not measured; leak is still a
+  bounded boot-time allocation.
 
-Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — counter rollback + NULL
-   guard; maintainer SOB; Dapeng review; in mainline perf/core.
-2. Fixes a real bug that affects users? **PASS** — leak, skipped PMU
-   registration, oops on device delete.
-3. Important issue? **PASS** — NULL deref oops; missing uncore PMU.
-   Severity HIGH.
-4. Small and contained? **PASS** — 5 lines, one file.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — clean apply to v6.18.53
-   `uncore.c`.
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — reviewed, tested (`perf
+   test` on Diamond Rapids/Nova Lake), merged via tip.
+2. Fixes a real bug that affects users? **PASS** — leak + UAF + stale
+   hybrid key on hybrid init failure.
+3. Important (crash/security/corruption/deadlock)? **PASS** — UAF on
+   cpuhp rollback after hybrid register failure; leftover hybrid key
+   after failed init.
+4. Small and contained? **PASS** — one file, ~15 lines.
+5. No new features or APIs? **PASS** — static helper on the existing
+   error path.
+6. Can apply to the local tree? **PASS** — needs a trivial backport
+   (insert helper, drop 3 lines, call before `memset`); no missing APIs.
 
-Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/build/docs exception. Ordinary small
-bugfix; does not need an exception.
+**Step 9.3: EXCEPTION CATEGORIES**
+Record: Not a device-ID/quirk/DT/docs exception. Ordinary error-path
+memory-safety fix.
 
-Step 9.4: MAKE YOUR DECISION
-This belongs in 6.18.y: the buggy rollback is in this tree, the fix is
-surgical, and the failure mode is a kernel oops plus a stuck/missing PCI
-uncore PMU. WARN_ON removal is a minor diagnostic tradeoff, not a reason
-to reject the leak and NULL-deref fix.
-
-What the commit solves for stable users: Intel uncore PCI PMU setup
-failure currently leaks `activeboxes` and can oops in
-`uncore_bus_notify` when the device goes away. Backporting restores
-counter balance, skips unregister when there is no box, and avoids a
-false WARN.
-
-Risk vs benefit: benefit is crash/functional correctness on a default-on
-Intel perf driver; risk is a 5-line error-path change that applies with
-no prerequisites.
+**Step 9.4: DECISION**
+This tree has the hybrid init bug. The patch is small, correct, and
+fixes UAF plus leak on failure. Context from later mainline
+(`pmi_unregister`) is not required. It should be backported to this 6.12
+tree.
 
 Verification:
-- [Phase 1] Parsed tags: SOB Zide Chen, SOB Peter Zijlstra, Reviewed-by
-  Dapeng Mi; Links to sashiko and patch.msgid.link; no Fixes/syzbot.
-- [Phase 2] Diff: +`atomic_dec` on register failure; +`if (!box) return`
-  in unregister; −`WARN_ON_ONCE` in remove. 4+/1− in `uncore.c`.
-- [Phase 2] `uncore_box_exit` at v6.18.53 dereferences `box->flags` —
-  NULL box is an oops.
-- [Phase 3] blame: register failure path from `16fa64315c1bd`
-  (v5.10-rc1); present in v6.18.53.
-- [Phase 3] `git merge-base --is-ancestor 16fa64315c1bd v6.18.53` → yes.
-  Candidate itself is not an ancestor of v6.18.53.
-- [Phase 3] Parent `uncore.c` sha256 == v6.18.53 `uncore.c`; `patch -p1
-  --dry-run` succeeded.
-- [Phase 3] Series 1/8 standalone; 4/8 `d623e292c6a4c` already in
-  v6.18.53; 2/8 and 5/8 not in v6.18.53 and not required.
-- [Phase 4] `b4 dig -c 540120722e9bf`: V3 1/8,
-  https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
-- [Phase 4] `b4 dig -a`: v1→v3; this patch added in v2 after Sashiko; v3
-  is what landed.
-- [Phase 4] `b4 dig -w`: perf maintainers CC’d; Dapeng Reviewed-by; no
-  NAK.
-- [Phase 4] mbox cover letter explicitly calls out activeboxes leak and
-  NULL deref.
-- [Phase 4] lore HTTP 403; discussion recovered from b4 mbox. Stable-
-  list search UNVERIFIED (403).
-- [Phase 5] Callers: probe, sub-driver init, discovery
-  `uncore_pci_pmus_register` (ignores retval, always registers bus
-  notifier).
-- [Phase 5] `uncore_pmu_register` → `perf_pmu_register` can fail.
-- [Phase 6] `git describe HEAD` = v6.18.53-5049-g0f0bdc2b0dffb;
-  `Makefile` 6.18.53; buggy code at v6.18.53 lines 1166–1172 / 1229–1238
-  / 1257.
-- [Phase 7] `CONFIG_PERF_EVENTS_INTEL_UNCORE` default y.
-- [Phase 8] Failure mode: NULL deref oops + skipped PMU registration;
-  severity HIGH.
-- UNVERIFIED: production frequency of `perf_pmu_register` failure;
-  stable@ lore thread (HTTP 403).
+- [Phase 1] Tags: Reviewed-by Falcon/Chen; SOB Zijlstra; Link msgid
+  `...-3-dapeng1.mi@linux.intel.com`; no Fixes/syzbot
+- [Phase 1] SHA `96746e731e162` on origin/master; `merge-base --is-
+  ancestor` vs HEAD = not present
+- [Phase 2] Diff: +12/−3 in `arch/x86/events/core.c`; helper + delayed
+  free + `out_bad_pmu` call
+- [Phase 2] 6.12 `init_hw_perf_events` still early-kfrees at lines
+  2184–2186, then memset at 2200 with no static-key disable
+- [Phase 2/5] `intel_pmu_cpu_dead()` uses `hybrid_pmu(cpuc->pmu)` when
+  `is_hybrid()`; `x86_pmu_dead_cpu` is the PREPARE teardown
+- [Phase 3] Hybrid register path blamed to `d9977c43bff89` (2021);
+  alloc/key to `97588df87b56e2` (2023)
+- [Phase 3] Parent `91787047b1dc5` (NMI unregister) not in HEAD; not
+  required
+- [Phase 4] `b4 dig -c 96746e731e162` matched v3 2/8; v1→v3 hunk
+  unchanged; no NAK
+- [Phase 4] Cover letter: review-found bugs; Zide Chen Reviewed-by for
+  series
+- [Phase 4] lore.kernel.org HTTP 403; Patchew used instead
+- [Phase 5] `intel_pmu_init_hybrid()` enables `perf_is_hybrid` after
+  `kcalloc` (this tree, ~6360)
+- [Phase 6] `git describe HEAD` = p-6.12-3-gc504cf0baa3d8; `make
+  kernelversion` = 6.12.111
+- [Phase 6] `git apply --check` of raw commit fails on
+  `x86_pmu_show_pmu_cap` context; logic still maps onto 6.12
+  `out_bad_pmu`
+- [Phase 8] Failure mode: UAF in `intel_pmu_cpu_dead` after hybrid
+  register fail; leak on `check_hw_exists` fail
+- UNVERIFIED: live reproduction of `perf_pmu_register` failure; exact
+  leaked byte count
+
+The fix is small, matches this tree’s hybrid init code, and closes a
+real UAF/leak on PMU init failure.
 
 **YES**
 
- arch/x86/events/intel/uncore.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/events/core.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
-index a5793847ed5a9..3d9973c416ecf 100644
---- a/arch/x86/events/intel/uncore.c
-+++ b/arch/x86/events/intel/uncore.c
-@@ -1165,6 +1165,7 @@ static int uncore_pci_pmu_register(struct pci_dev *pdev,
- 	/* First active box registers the pmu */
- 	ret = uncore_pmu_register(pmu);
- 	if (ret) {
-+		atomic_dec(&pmu->activeboxes);
- 		pmu->boxes[die] = NULL;
- 		uncore_box_exit(box);
- 		kfree(box);
-@@ -1230,6 +1231,9 @@ static void uncore_pci_pmu_unregister(struct intel_uncore_pmu *pmu, int die)
- {
- 	struct intel_uncore_box *box = pmu->boxes[die];
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 2aa9270446634..7c37c228a88a4 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2087,6 +2087,17 @@ void x86_pmu_show_pmu_cap(struct pmu *pmu)
+ 	pr_info("... global_ctrl mask:          %016llx\n", hybrid(pmu, intel_ctrl));
+ }
  
-+	if (!box)
++static void x86_pmu_free_hybrid(void)
++{
++	if (!x86_pmu.hybrid_pmu)
 +		return;
 +
- 	pmu->boxes[die] = NULL;
- 	if (atomic_dec_return(&pmu->activeboxes) == 0)
- 		uncore_pmu_unregister(pmu);
-@@ -1254,7 +1258,6 @@ static void uncore_pci_remove(struct pci_dev *pdev)
- 				break;
- 			}
++	static_branch_disable(&perf_is_hybrid);
++	kfree(x86_pmu.hybrid_pmu);
++	x86_pmu.hybrid_pmu = NULL;
++	x86_pmu.num_hybrid_pmus = 0;
++}
++
+ static int __init init_hw_perf_events(void)
+ {
+ 	struct x86_pmu_quirk *quirk;
+@@ -2214,9 +2225,6 @@ static int __init init_hw_perf_events(void)
+ 			for (j = 0; j < i; j++)
+ 				perf_pmu_unregister(&x86_pmu.hybrid_pmu[j].pmu);
+ 			pr_warn("Failed to register hybrid PMUs\n");
+-			kfree(x86_pmu.hybrid_pmu);
+-			x86_pmu.hybrid_pmu = NULL;
+-			x86_pmu.num_hybrid_pmus = 0;
+ 			goto out2;
  		}
--		WARN_ON_ONCE(i >= UNCORE_EXTRA_PCI_DEV_MAX);
- 		return;
  	}
- 
+@@ -2232,6 +2240,7 @@ static int __init init_hw_perf_events(void)
+ pmi_unregister:
+ 	unregister_nmi_handler(NMI_LOCAL, "PMI");
+ out_bad_pmu:
++	x86_pmu_free_hybrid();
+ 	memset(&x86_pmu, 0, sizeof(x86_pmu));
+ 	return err;
+ }
 -- 
 2.53.0
 
