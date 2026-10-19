@@ -1,49 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C725DD55A;
-	Mon, 19 Oct 2026 14:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760335E215C;
+	Mon, 19 Oct 2026 14:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418548; cv=none; b=kim03SQQQ8CDv1PEIZ6MCrMzNOpGgWJ5S3xBya7y8mehdNi7Emiu/B+tYZkyt4Qv7X3NZw/qt4+OBESPWHoZIyWJgDBvMeSpdyzZSp3pORcMFtDCyGJgn1aIe6e3agV1LSzUiSdSVKKp/LZTyGMnvVz2R/TQEBgdtkJMgbmrxlA=
+	t=1792418549; cv=none; b=gZzFJYJr0E72p5rlArC4lT/PZouZhx0JvJPyI854h0U74bIUfG9G0lLaACibK+SvCtIRBSJ76r4UhZYPGCkLemf4IwmuSk82MhGHLiA3ZhrOeCluyozILMxQhaE9lhhsZqipl57Wvbyxxqdhl6D0rSeuOLALQ9A80nQZ3KZ4K4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418548; c=relaxed/simple;
-	bh=LE3Kv7Qns3rlZoneNgTeytOBAiXvMZHekS2Zx5AqkVU=;
+	s=arc-20240116; t=1792418549; c=relaxed/simple;
+	bh=vKtA7JRfO70+rdfogeVXY2fLuLw5H3B9c4LIWICzq5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=duXsBSO4zYGoDpZrN/2lB8jhBTc9o0DsblUKoq1DiIWwRwdh68GjgWDhPVXhsV2xkC9OdmsQoOOV7I3mRFCAKTzwPHBPs1Eq0m7U+jJZcYpSBK21juEIDej1mXmstSZ1XndnNlb0bjoSJiwjAQpEQ07wlx8k1dAjZYh/UTVkuKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Am/QgtGB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WIDFCQ+hM7MdUQ/0LU31F98PGhBgD2XMZNFiJ1ZuEph8OdCtL3zbPrsNHbBcBuj9a2qJhiiBgB74061WRcdnuBlWTqQafexNOUzkTSVfJCWZk3x0gMH3NwSaIOHv5Sjad5OZZC98yl75evh0Jl8Yb2L5K6WWRpKgSepoXfEY8Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bu5ppNYx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Am/QgtGB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F1E1F000CA;
-	Mon, 19 Oct 2026 14:02:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bu5ppNYx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFC71F000C7;
+	Mon, 19 Oct 2026 14:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418545;
-	bh=uAyfzSL+KBnTpm8lz6gbxfhV5Hr/gzCgN0IahSCbmUY=;
+	s=k20260515; t=1792418546;
+	bh=2Yx0E8RRn1cWZ8BEo/BfdquUwBZonkPGH7EBNzQe+3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Am/QgtGB90XDPD4NzcronxpUAEPSHHAA/XF6NfC9qsNBCJUK8dxSka7z1XfJ710UY
-	 1lv5Cx2z1wIroLGiNJ6DVeiq4oJ9LZoVKqvgskoLKDQFvB7ls0hUIFCSbVELG5b5jG
-	 wrRmEbVTNaL1LnCw71C5RAMJb+vN2gSX2VpBJy3nHntX3WmP1cALweXbonxDlkns/a
-	 nfWa9PLePEpCncXQ64QPtJcunjBiCwwcCADEnTTGnguxXtfOMQTtZkAnU3P3aNlw0L
-	 KEnHnG2Srdisjw0iqRzBcheV2+zJgEorx/4OnDa/4QUxid0tmZ52MZhMXp3BIOfFBi
-	 H3Yym/oW8qTNQ==
+	b=Bu5ppNYxaPrOn1juxuqzMmeSqr9139wHh3FM2FajtVrqMm9p+stSmWZAC69E2+HyQ
+	 pFsNcahAQ92BPqnm+8Q1e+PeOyRgfFHZHJS9/TDyimUbN+1Ro71QiPOvlfZh9EmUYy
+	 i5OF56Q8k9/sunOsp/MrEJV60I+eWSeLp0rcYDFfT/gjqGG6wEtuu+dtfl9UfXQPRI
+	 P77iRcPNH6YyJ3E8c5eD53ggXL8BEkgjdQtrP9OvwPVWUVGvHkUjuOtNaRIHH6BBhB
+	 8QhvwrjfF7wXIRmVtgOlUNO8I/cNJAFe9HlvJDBBrDZcmpxGR3vSUMhABi9gYjgUL5
+	 V65MkBZX9swaA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zihan Xi <zihanx@nebusec.ai>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Andreas Kemnade <andreas@kemnade.info>,
+	sashiko-bot@kernel.org,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>,
-	magnus.karlsson@intel.com,
-	maciej.fijalkowski@intel.com,
-	davem@davemloft.net,
-	edumazet@kernel.org,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	bpf@vger.kernel.org,
+	linux-omap@vger.kernel.org,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] xsk: account ring allocations to memcg
-Date: Mon, 19 Oct 2026 09:50:15 -0400
-Message-ID: <20261019135441.1420968-324-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] fbdev: omap2: dsi: do not copy isr table
+Date: Mon, 19 Oct 2026 09:50:16 -0400
+Message-ID: <20261019135441.1420968-325-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -59,418 +55,321 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit b0057c68df711bf6a62033c072ac61c4f9d3cbc1 ]
+[ Upstream commit 31875c51c31edec57b3620f278680c23a823763b ]
 
-AF_XDP rings are allocated from setsockopt() and can be mapped into user
-space.  The shared xskq_create() helper allocates the ring backing memory,
-but the user-controlled and long-lived allocation is not charged as kmem
-to the allocating memory cgroup.
+To te able to unregister stuff from isrs, the corresponding table was
+copied.  Nobody seems to unregister stuff that way, so it does not help.
+But there are stack-allocated objects passed to these isrs giving chances
+of UAF of these objects if irqs are unregistered while they are handled,
+so better do not copy that table.
 
-The current implementation uses vmalloc_user(), which allocates the
-backing pages with GFP_KERNEL | __GFP_ZERO.  Use the same VM_USERMAP
-vmalloc path, but pass GFP_KERNEL_ACCOUNT so the ring backing pages are
-attributed to memcg/kmem and can be constrained by existing cgroup memory
-limits.  This keeps the existing zeroing and mmap semantics while avoiding
-AF_XDP-specific optmem or RLIMIT_MEMLOCK accounting.
-
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260731164623.4694-2-zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: sashiko-bot@kernel.org
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **6.12.111** (`pending-6.12`). The AF_XDP ring path
-still uses unaccounted `vmalloc_user()`, so this is a real memcg/DoS
-hole in this checkout, not a no-op.
+This is a UAF fix in the OMAP2 fbdev DSI IRQ path. The same change is
+already in this 6.12 tree for the DRM copy of the driver; the fbdev copy
+of the bug is still present.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 **Step 1.1: PARSE THE SUBJECT LINE**
-- Subsystem: `xsk` (AF_XDP / `net/xdp`)
-- Action verb: **account** (resource-accounting fix, not a refactor)
-- Claimed intent: charge AF_XDP ring backing pages to memcg/kmem
-
-Record: `[xsk] [account] charge AF_XDP ring allocations to memcg`
+Record: `[fbdev/omap2/dsi] [do not copy] [stop copying the DSI ISR table
+before invoking handlers]`
 
 **Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-
-From the candidate message:
-- `Acked-by: Stanislav Fomichev <sdf@fomichev.me>`
-- `Link:
-  https://patch.msgid.link/20260731164623.4694-2-zihanx@nebusec.ai`
-- `Signed-off-by: Zihan Xi <zihanx@nebusec.ai>`
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>`
-- Ignore: any `Signed-off-by: Sasha Levin` (pipeline)
-
-From the original v3 submission (mailing list, not treated as “already
-selected”):
-- `Fixes: 423f38329d26 ("xsk: add umem fill queue support and mmap")`
-- `Cc: stable@vger.kernel.org`
-- `Reported-by: Vega <vega@nebusec.ai>`
-- `Assisted-by: Codex:gpt-5.4`
-
-No syzbot, no Tested-by. Absence of Fixes/Cc:stable on the candidate
-copy is expected and is not a NO signal.
-
-Record: Ack from XDP/BPF reviewer; original submission had Fixes +
-Cc:stable + Reported-by; applied by netdev maintainer.
+Record:
+- `Suggested-by: sashiko-bot@kernel.org` (static-analysis bot; this is
+  the original trigger, not a user crash report)
+- `Signed-off-by: Andreas Kemnade <andreas@kemnade.info>` (author)
+- `Signed-off-by: Helge Deller <deller@gmx.de>` (fbdev maintainer)
+- No `Fixes:` tag (expected for this review queue)
+- No `Cc: stable@vger.kernel.org`
+- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, or `Link:`
+- Ignore `Signed-off-by: Sasha Levin` / `[Upstream commit ...]` if
+  present in candidate packaging; they are not part of the technical
+  decision
 
 **Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-
-Bug: `xskq_create()` allocates mmapable ring memory from `setsockopt()`
-with `vmalloc_user()` (`GFP_KERNEL | __GFP_ZERO`). That allocation is
-user-controlled, long-lived, and **not charged to memcg/kmem**.
-
-Symptom: a task with `CAP_NET_RAW` in a user+net namespace can request
-very large RX/TX/fill/completion rings **before bind or packet I/O**.
-Cover letter includes a PoC (`unshare -Urn ./poc`, 1<<25 entries) and an
-OOM panic on **6.12.95** with `panic_on_oom`.
-
-Root cause: missing `__GFP_ACCOUNT` on the VM_USERMAP vmalloc path.
-Author explicitly says panic_on_oom is environment-specific; the defect
-is missing kmem attribution.
-
-Record: `[Bug: unaccounted userspace-triggered vmalloc of AF_XDP rings]
-[Symptom: memcg-limit bypass / global OOM] [Version: repro on 6.12.95]
-[Cause: vmalloc_user uses GFP_KERNEL, not GFP_KERNEL_ACCOUNT]`
+Record:
+- Bug: ISR table was memcpy’d so handlers could unregister themselves,
+  then the copy was walked after dropping `irq_lock`.
+- Author claim: nothing unregisters from ISR context, so the copy is
+  unused for its stated purpose.
+- Failure mode: stack-allocated objects (`DECLARE_COMPLETION_ONSTACK`,
+  `dsi_packet_sent_handler_data` on stack) are passed as ISR `arg`. If
+  unregister/return happens while the IRQ handler still walks the copy,
+  those objects are used after free.
+- No kernel-version range in the message.
+- Root cause: lockless copy of function+arg pointers that alias stack
+  objects.
 
 **Step 1.4: DETECT HIDDEN BUG FIXES**
-
-Not disguised. It is a missing-accounting fix. Kernel policy in
-`Documentation/core-api/memory-allocation.rst` says untrusted userspace
-allocations **must** set `__GFP_ACCOUNT`.
-
-Record: `[Not hidden; explicit resource-accounting / isolation bug]`
+Record: Not a disguised cleanup. It is explicitly a UAF/race fix, even
+though the subject does not say “fix”.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
 ===============================================================
 
 **Step 2.1: INVENTORY THE CHANGES**
-
-File: `net/xdp/xsk_queue.c` only (~+11 / -1)
-
-- Add `#include <asm/shmparam.h>`
-- Add `xskq_vmalloc_user()`
-- In `xskq_create()`: `vmalloc_user(size)` → `xskq_vmalloc_user(size)`
-
-`xskq_destroy()` still `vfree()`s the ring (uncharge is automatic on
-page free).
-
-Record: `[1 file, ~12 lines] [xskq_vmalloc_user added; xskq_create
-modified] [single-file surgical]`
+Record:
+- File: `drivers/video/fbdev/omap2/omapfb/dss/dsi.c` (+1 / −8; 9 lines)
+- Removes `struct dsi_isr_tables isr_tables_copy` from `struct dsi_data`
+- In `omap_dsi_irq_handler()`: drop `memcpy`, call `dsi_handle_isrs()`
+  on the live table **while `irq_lock` is held**, then unlock
+- Scope: single-file surgical fix
 
 **Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-
-Before: `vmalloc_user()` → `__vmalloc_node_range(..., GFP_KERNEL |
-__GFP_ZERO, PAGE_KERNEL, VM_USERMAP, ...)`
-
-After: same VM_USERMAP/SHMLBA/zeroing/mmap path, GFP flag is
-`GFP_KERNEL_ACCOUNT | __GFP_ZERO`.
-
-Affected path: `setsockopt(SOL_XDP,
-XDP_{RX,TX,UMEM_FILL,UMEM_COMPLETION}_RING)` → `xsk_setsockopt` →
-`xsk_init_queue` → `xskq_create`. Normal allocation path, not an error-
-path-only change.
-
-Record: `[before: unaccounted vmalloc_user] [after: identical vmalloc,
-charged to memcg]`
+Record:
+- Before: lock → read/ack IRQ status → memcpy table → unlock →
+  `dsi_handle_isrs(&copy)` → error/stats
+- After: lock → read/ack IRQ status → `dsi_handle_isrs(&live table)` →
+  unlock → error/stats
+- Affected path: hardirq handler (`devm_request_irq(...,
+  omap_dsi_irq_handler, IRQF_SHARED, ...)`)
+- Unregister (`dsi_unregister_isr*`) takes `irq_lock`, so it now waits
+  until handlers finish
 
 **Step 2.3: IDENTIFY THE BUG MECHANISM**
-
-Category: resource accounting / isolation (userspace-triggered kernel
-memory not charged to kmemcg). Secondary failure mode: OOM /
-panic_on_oom.
-
-Mechanism: `GFP_KERNEL` vs `GFP_KERNEL_ACCOUNT` (`GFP_KERNEL |
-__GFP_ACCOUNT`). In this tree, `__vmalloc_node_range_noprof()` honors
-`__GFP_ACCOUNT` (page alloc + `MEMCG_VMALLOC` stat).
-
-Not UAF, leak, race, or bounds check.
-
-Record: `[resource accounting] [uncharged mmapable ring pages; fix is
-GFP_KERNEL_ACCOUNT]`
+Record:
+- Category: use-after-free / race (memory safety)
+- Mechanism: copy of ISR `arg` pointers outlives unregister of stack-
+  allocated completions
+- Verified stack objects passed into ISRs in this tree:
+  - `dsi_sync_vc_vp()` / `dsi_sync_vc_l4()`:
+    `DECLARE_COMPLETION_ONSTACK` + stack `dsi_packet_sent_handler_data`
+  - `dsi_vc_send_bta_sync()`: stack completion registered on **two**
+    tables (global + VC)
+  - `dsi_enter_ulps()`: stack completion registered on CIO table
+- Concrete UAF in `dsi_vc_send_bta_sync()`: `dsi_handle_isrs()` walks
+  global table then VC table. First handler can `complete()`; waiter
+  unregisters and returns; second handler still runs against the copy
+  with a dangling stack pointer.
+- Fix: keep `irq_lock` across handler dispatch so unregister cannot
+  destroy the objects until handlers return.
 
 **Step 2.4: ASSESS THE FIX QUALITY**
-
-Obviously correct relative to `vmalloc_user()` in `mm/vmalloc.c` (same
-args except GFP). No new uAPI. `vfree()` already drops the pages, so no
-extra unaccount helper (unlike rejected v2 `mm_account_pinned_pages`).
-
-Regression risk: AF_XDP in a **tight memcg** can now get `-ENOMEM` where
-it previously escaped the limit. That is the intended isolation. No
-lock/API/lifetime change.
-
-Stanislav noted dislike of open-coding `__vmalloc_node_range`; same
-pattern already used for mmapable BPF maps after
-`vmalloc_user_node_flags` was removed. Acceptable.
-
-Record: `[minimal, matches vmalloc_user] [low regression risk; memcg
-ENOMEM is intended]`
+Record:
+- Obviously correct given the locking: unregister cannot proceed while
+  handlers run.
+- Minimal; no API change.
+- Regression risk is low **if** no ISR unregisters itself (would
+  deadlock on `irq_lock`). Verified all three callbacks
+  (`dsi_completion_handler`, `dsi_packet_sent_handler_vp`,
+  `dsi_packet_sent_handler_l4`) only `complete()` and/or read registers.
+  None call `dsi_unregister_isr*`.
+- `complete()` under a spinlock is valid.
+- Holding the lock slightly longer in hardirq is register reads +
+  `complete()`, not a sleep.
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 **Step 3.1: BLAME THE CHANGED LINES**
-
-- Ring helper/mmap: `423f38329d267` (2018, Magnus Karlsson) — “xsk: add
-  umem fill queue support and mmap”
-- `vmalloc_user` switch: `9f78bf330a66c` (2023, Xuan Zhuo) — “xsk:
-  support use vaddr as ring”
-- Overflow guard: `a12bbb3cccf03` (2023)
-
-Buggy missing accounting dates to the original mmapable queue (2018).
-`vmalloc_user` only changed the allocator.
-
-Record: `[introduced conceptually in 423f38329d267 (v4.18-era);
-vmalloc_user since 9f78bf330a66c / v6.3]`
+Record:
+- Copy logic and `isr_tables_copy` blamed to `f76ee892a99e6` (“omapfb:
+  copy omapdss & displays for omapfb”, 2015-12-29).
+- Pattern is as old as the fbdev DSS copy in this tree; originally
+  inherited from OMAP DSS ISR support.
+- Long-lived bug, not recent code.
 
 **Step 3.2: FOLLOW THE FIXES: TAG**
-
-`423f38329d267` **is an ancestor of this HEAD** (`git merge-base --is-
-ancestor` exit 0). Original code used `__get_free_pages`; accounting was
-missing then too.
-
-Record: `[Fixes target in this tree] [no later in-tree substitute for
-ring memcg charge]`
+Record: No `Fixes:` on the fbdev commit. The sibling DRM fix
+`2c27a84ba8d1b` (`drm/omap: dsi: Do not copy isr table`) has `Fixes:
+4ae2ddddf44cd ("OMAP: DSS2: DSI: Add ISR support")`. That original ISR
+support is what fbdev copied.
 
 **Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-
-Recent `net/xdp/xsk_queue.c`: overflow check, vmalloc conversion, header
-moves. No existing memcg/optmem/RLIMIT charge on rings.
-
-Series history (mailing list): v1 optmem + socket lifetime coupling; v2
-RLIMIT_MEMLOCK; **v3 is standalone 1/1** memcg-only.
-
-Record: `[standalone v3; no in-tree prereq refactor]`
+Record:
+- Recent `dsi.c` changes in this tree are unrelated (platform remove,
+  of_graph, timer, pm_runtime).
+- Standalone; not patch N/M.
+- Cover letter on lore points at a DRM twin:
+  `https://lore.kernel.org/lkml/20260702-dsi-
+  uaf-v2-1-dbb4aa0f0b8e@kemnade.info/`
+- That DRM twin **is already in this tree** as `2c27a84ba8d1b`
+  (contained in `v6.12.110~477`).
 
 **Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-
-Zihan Xi is not an XDP maintainer. Reviewer Stanislav Fomichev is a
-regular XDP/BPF reviewer and Acked v3. Applied by Jakub Kicinski.
-
-Record: `[author: reporter/fixer; reviewer: subsystem regular;
-maintainer applied]`
+Record:
+- Andreas Kemnade is an OMAP/display contributor; same author wrote the
+  DRM twin.
+- Helge Deller (fbdev maintainer) applied the fbdev patch.
+- Tomi Valkeinen applied the DRM twin.
 
 **Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-
-Needs `__vmalloc_node_range`, `SHMLBA`, `VM_USERMAP`,
-`GFP_KERNEL_ACCOUNT`. All present in 6.12.
-
-Local `xskq_create` uses `kzalloc(sizeof(*q), GFP_KERNEL)` vs mainline
-`kzalloc_obj(*q)` — **not in the changed hunks**. Functional diff
-applies.
-
-Record: `[no functional dependencies] [applies standalone with trivial
-context]`
+Record:
+- No new functions/types.
+- Applies as a logic change on existing `omap_dsi_irq_handler` / `struct
+  dsi_data`.
+- Context mismatch only: mainline hunk context has `timer_delete()`;
+  this tree still has `del_timer()` (`8fa7292fee5c5` timer rename is not
+  in 6.12). Not a functional dependency.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 **Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-
-`b4 dig -c <msgid>` could not match a local commit (patch not in this
-tree). `b4 mbox` retrieved the 4-message thread.
-
-- Cover: https://lists.openwall.net/netdev/2026/07/31/395
-- Patch: https://lists.openwall.net/netdev/2026/07/31/392
-- Review: https://lists.openwall.net/netdev/2026/07/31/437
-
-v1 optmem, v2 RLIMIT_MEMLOCK, v3 memcg. Applied version is v3 (latest).
-No NAK. Stanislav Acked. Patchwork-bot accepted it.
-
-Author nominated `Cc: stable` on v3. Reviewer did not object.
-
-Record: `[lore msgid 20260731164623.4694-2] [v1→v3, v3 applied] [Ack, no
-NAK] [author Cc:stable]`
+Record:
+- `b4 dig -c 31875c51c31ed`: https://patch.msgid.link/20260702-fbomap-
+  uaf-fix-v1-1-6417edf9d3e7@kemnade.info
+- `b4 dig -a`: single revision **v1** only; that version was applied.
+- Thread: author patch → sashiko-bot review → author reply → Helge
+  Deller “applied.”
+- No NAK. Deller accepted it.
+- Bot comments were about **pre-existing sibling bugs** (DRM DSI, DISPC
+  copy, unbind timers), not about this change being wrong.
+- Author noted the DRM variant in the patch footer.
 
 **Step 4.2: CHECK WHO REVIEWED THE PATCH**
-
-To/Cc: netdev, bpf, Magnus Karlsson, Maciej Fijalkowski, Stanislav
-Fomichev, davem, edumazet, pabeni, horms, ast, daniel, hawk,
-john.fastabend.
-
-Stanislav reviewed v2 (pushed memcg over RLIMIT_MEMLOCK) and Acked v3.
-
-Record: `[Stanislav Fomichev Ack; XDP maintainers were CC'd]`
+Record (`b4 dig -w`):
+- To: Helge Deller
+- Cc: linux-omap, linux-fbdev, dri-devel, linux-kernel, sashiko-bot
+- Appropriate lists; fbdev maintainer applied it.
+- No human Reviewed-by besides maintainer application.
 
 **Step 4.3: SEARCH FOR THE BUG REPORT**
-
-Internal report (`Reported-by: Vega`) plus full PoC and panic log on
-6.12.95. Trigger: `socket(AF_XDP)` + `setsockopt` with 2^25 entries,
-`unshare -Urn`. No syzbot/bugzilla.
-
-Record: `[reproducible OOM/panic on 6.12.95; userns+CAP_NET_RAW]`
+Record:
+- No syzbot/bugzilla user report. Trigger is sashiko-bot static
+  analysis.
+- Bug is still real: code in this tree matches the described UAF (stack
+  completions + lockless copy).
 
 **Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-
-v3 is 0/1 + 1/1. No extra patches required. v1/v2 approaches were
-dropped.
-
-Record: `[self-contained; earlier series versions superseded]`
+Record:
+- DRM twin already backported here (`2c27a84ba8d1b`).
+- fbdev DISPC still copies a stack `registered_isr` in `dispc-compat.c`
+  (`omap_dispc_irq_handler`); same pattern, **separate** file, not
+  required for this DSI patch to be correct.
+- No revert of either DSI fix on `origin/master`.
 
 **Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-
-No useful hit on lore.kernel.org/stable for this subject. No recorded
-rejection for 6.12.y.
-
-Record: `[no stable-list rejection found]`
+Record: UNVERIFIED. `lore.kernel.org/stable/` and lore message URLs
+returned HTTP 403. Thread was recovered via `b4 dig -m` instead. No
+stable-list discussion could be fetched.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 **Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-
-Record: `[xskq_vmalloc_user (new), xskq_create (modified)]`
+Record: `omap_dsi_irq_handler()`; field removed from `struct dsi_data`.
+Callers of `dsi_handle_isrs()` / `dsi_call_isrs()` unchanged except the
+table pointer and lock scope.
 
 **Step 5.2: TRACE CALLERS**
-
-`xskq_create` is only called from `xsk_init_queue()` in `net/xdp/xsk.c`,
-from `xsk_setsockopt` for the four ring options. Process context,
-syscall.
-
-`xsk_create()` requires `ns_capable(net->user_ns, CAP_NET_RAW)` —
-**available to an unprivileged user inside a user namespace**.
-
-Record: `[setsockopt path; userns CAP_NET_RAW]`
+Record:
+- `omap_dsi_irq_handler` ← `devm_request_irq` in DSI bind/probe (`dsi.c`
+  ~5363). Hardirq, `IRQF_SHARED`.
+- Register/unregister sites are process context, all take `irq_lock`.
+- Sync/BTA/ULPS paths used during DSI frame update, command write, and
+  ULPS enter (`dsi_sync_vc` from update/disable; `dsi_vc_send_bta_sync`
+  as `.bta_sync`; `dsi_enter_ulps`).
 
 **Step 5.3: TRACE CALLEES**
-
-`__vmalloc_node_range` → page alloc with GFP; `vfree` on destroy. No new
-locks.
-
-Record: `[vmalloc/vfree only]`
+Record: `dsi_handle_isrs` → `dsi_call_isrs` → registered `isr(arg,
+status)` → `complete()` / `REG_GET`. Then `dsi_handle_irq_errors` and
+`dsi_collect_irq_stats` still after unlock.
 
 **Step 5.4: FOLLOW THE CALL CHAIN**
-
-`socket(AF_XDP)` → `setsockopt(SOL_XDP, XDP_*_RING, &entries)` →
-`xskq_create`.
-
-`xsk_init_queue` only checks `entries != 0`, power of two, and queue not
-already set. **No upper bound.** `xdp_desc` is 16 bytes; 2^25 entries ≈
-512 MiB per RX/TX ring (fill/completion similar with `u64` descs). Eight
-sockets × four rings is multi-GB kernel vmalloc.
-
-Reachable from userspace: **yes**.
-
-Record: `[userspace-reachable unbounded vmalloc]`
+Record: Reachable from normal display I/O on `CONFIG_FB_OMAP2=y` +
+`CONFIG_FB_OMAP2_DSS_DSI=y` (MIPI DSI panel). Not a syscall fuzzer path,
+but a real device IRQ + wait-for-completion path. Unprivileged userspace
+can trigger it by updating the framebuffer on such hardware.
 
 **Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-
-UMEM pages are charged via `user->locked_vm`
-(`xdp_umem_unaccount_pages`). BPF mmapable maps use
-`__vmalloc_node_range` with accounting flags. Rings were the hole.
-
-`vmalloc_user()` elsewhere (kcov, perf, videobuf) is a separate
-question; this patch only fixes AF_XDP.
-
-Record: `[UMEM already bounded; rings were not; BPF already accounts
-mmapable vmalloc]`
+Record:
+- DRM `drivers/gpu/drm/omapdrm/dss/dsi.c` in **this tree** already calls
+  `dsi_handle_isrs(&dsi->isr_tables, ...)` under `irq_lock` (the
+  backported twin).
+- fbdev `dispc-compat.c` still memcpy’s ISRs then drops the lock;
+  leftover sibling, not a blocker for this patch.
+- `isr_tables_copy` exists only in this fbdev `dsi.c` in this checkout.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 **Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-
-Yes. `net/xdp/xsk_queue.c:49` is `q->ring = vmalloc_user(size);`. `make
-kernelversion` = **6.12.111**. Repro log is 6.12.95. `423f38329d267` and
-`9f78bf330a66c` are ancestors. No `xskq_vmalloc_user` /
-`GFP_KERNEL_ACCOUNT` in `net/xdp`.
-
-Record: `[buggy code present; bug since 2018 / vmalloc path since ~6.3]`
+Record:
+- `git describe HEAD`: `p-6.12-3-gc504cf0baa3d8`
+- `make kernelversion` / Makefile: **6.12.111**
+- `git merge-base --is-ancestor 31875c51c31ed HEAD` → not an ancestor
+  (fix not in this tree)
+- Buggy code present: `isr_tables_copy` at `dsi.c:330`, memcpy at
+  `dsi.c:841-848`
+- Introduced here via `f76ee892a99e6` (v4.5-era copy)
 
 **Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-
-Expected apply: **clean / trivial context**. Only surrounding difference
-is `kzalloc` vs `kzalloc_obj`. `asm/shmparam.h` exists
-(`arch/x86/include/asm/shmparam.h`, `include/asm-generic/shmparam.h`).
-`__vmalloc_node_range` macro exists in `include/linux/vmalloc.h`.
-
-Record: `[clean apply or one-hunk context tweak]`
+Record:
+- `git apply --check` of `31875c51c31ed` fails only because context has
+  `timer_delete` vs local `del_timer`.
+- The two functional hunks (remove field; move `dsi_handle_isrs` before
+  unlock) match this tree byte-for-byte aside from that nearby timer
+  name.
+- Expected difficulty: **minor context tweak**, not rework.
 
 **Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-
-No memcg/optmem/RLIMIT accounting on ring create in this tree.
-
-Record: `[no substitute fix present]`
+Record:
+- DRM equivalent already applied (`2c27a84ba8d1b`).
+- No fbdev DSI equivalent. `FB_OMAP2` depends on `DRM_OMAP=n`, so omapfb
+  users do **not** get the DRM fix.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 **Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-
-`net/xdp` — AF_XDP. Config: `CONFIG_XDP_SOCKETS` (depends on
-`BPF_SYSCALL`, default n).
-
-Criticality: **IMPORTANT** (not core mm/VFS). Used for high-performance
-networking; also a userns attack surface when enabled.
-
-Record: `[net/xdp AF_XDP] [IMPORTANT]`
+Record: `drivers/video/fbdev/omap2` — SoC display driver. Criticality:
+**PERIPHERAL** (OMAP2+ boards using legacy fbdev, not omapdrm). Still
+in-tree and user-facing on that hardware.
 
 **Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-
-Mature since 2018; ongoing XDP work. This is an old hole, not a bug in
-brand-new code.
-
-Record: `[mature; hole is long-standing]`
+Record: Mature/legacy. Low churn; bug has been present since the 2015
+omapdss copy. Maintainer (Deller) still takes fixes.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 **Step 8.1: DETERMINE WHO IS AFFECTED**
-
-Config-specific (`CONFIG_XDP_SOCKETS`) plus anyone who can create AF_XDP
-sockets. Isolation impact is highest for **containers / memcg-limited
-workloads** on LTS kernels.
-
-Record: `[config-specific AF_XDP; high impact for cgroup/container
-hosts]`
+Record: Driver-specific / config-specific: `CONFIG_FB_OMAP2` +
+`CONFIG_FB_OMAP2_DSS_DSI` on OMAP2+ with MIPI DSI, and only when DRM
+omap is disabled.
 
 **Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-
-`setsockopt` of a large power-of-two ring. No bind, no traffic.
-Unprivileged in a user ns with `CAP_NET_RAW`. Easy and deterministic.
-
-Caveat (verified from author): **without a memcg limit**,
-`GFP_KERNEL_ACCOUNT` does not stop global OOM (`CONSTRAINT_NONE` in
-their prototype). Enforcement is cgroup memory policy.
-
-Record: `[easy syscall trigger] [fix enforces memcg, not a global hard
-cap]`
+Record:
+- Trigger: DSI IRQ concurrent with unregister of a stack-backed ISR
+  after `complete()` or timeout (`dsi_sync_vc_*` 10 ms, BTA 500 ms, ULPS
+  1000 ms).
+- Dual-ISR BTA path is the most realistic (two handlers, one stack
+  object).
+- Unprivileged userspace can drive framebuffer updates that hit
+  `dsi_sync_vc`.
 
 **Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-
-- With memcg limits (typical k8s/LTS): bypass of memory.max / kmem →
-  **container isolation hole** (HIGH/CRITICAL for multi-tenant)
-- With panic_on_oom: **kernel panic** (CRITICAL in that config)
-- Without memcg limits: still global OOM killer after the patch
-
-Record: `[memcg bypass + OOM] [HIGH; CRITICAL under panic_on_oom /
-multi-tenant]`
+Record: Use-after-free of stack completions / handler-data → kernel oops
+or memory corruption in hardirq. Severity: **HIGH**.
 
 **Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-
-Benefit: closes documented-required kmem accounting; lets existing
-cgroup limits constrain a userspace-triggered multi-hundred-MB vmalloc;
-matches BPF-style mmapable alloc policy.
-
-Risk: ~12 lines, GFP flag only, one file. Possible `-ENOMEM` for
-oversized rings inside a small memcg — correct.
-
-Record: `[benefit high for container/LTS] [risk very low] [favorable]`
+Record:
+- Benefit: HIGH for omapfb+DSI users (prevents UAF in IRQ). Population
+  is small, but the DRM twin was already taken into this same 6.12.y
+  tree, which shows the bug class is treated as stable-worthy.
+- Risk: LOW (9 lines, verified no self-unregister, `complete()` under
+  spinlock is fine).
+- Ratio: benefit outweighs risk.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
@@ -479,181 +378,109 @@ PHASE 9: FINAL SYNTHESIS
 **Step 9.1: COMPILE THE EVIDENCE**
 
 FOR:
-- Real, documented policy violation: untrusted userspace alloc without
-  `__GFP_ACCOUNT`
-- Concrete PoC and panic on **6.12.95**, this series
-- Reachable via userns `CAP_NET_RAW` + `setsockopt`, no bind needed
-- Unbounded ring size (power-of-two only)
-- Small, obviously equivalent to `vmalloc_user` + account flag
-- APIs and buggy code exist in this 6.12.111 tree
-- Acked by Stanislav Fomichev; applied by Jakub Kicinski
-- Standalone (v3 dropped optmem/RLIMIT machinery)
-- UMEM already resource-bounded; rings were the gap
-- Author asked for stable; reviewer did not object
+- Real UAF: lockless copy of pointers to `DECLARE_COMPLETION_ONSTACK`
+  objects
+- Dual-ISR BTA path makes the race practical, not only a 1-instruction
+  window
+- Small, obviously correct lock-scope change
+- All ISR callbacks verified not to unregister (no self-deadlock)
+- Code exists in this 6.12.111 tree; bug dates to 2015 copy
+- fbdev maintainer applied v1 with no NAK
+- Identical DRM fix already in this tree; omapfb users are the leftover
+  affected set
 
 AGAINST:
-- Does **not** by itself stop global OOM if there is no memcg limit
-  (author confirmed)
-- `CONFIG_XDP_SOCKETS` is not default-on
-- Open-codes `__vmalloc_node_range` (reviewer accepted)
-- Can change success/failure of huge rings inside tight memcgs
+- No user `Reported-by` / syzbot (bot-found)
+- Peripheral OMAP fbdev DSI, not a core path
+- Vanilla patch needs a one-line context adjust (`del_timer`)
+- DISPC has a similar leftover pattern (out of scope for this commit)
 
 UNRESOLVED:
-- Exact mainline SHA of the applied commit (not in this checkout; thread
-  was retrieved by msgid)
-- No stable-list discussion found
+- Could not query lore.kernel.org/stable (HTTP 403)
+- No runtime reproduction in this session (analysis is from code +
+  thread)
 
 **Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-
-1. Obviously correct and tested? **PASS** — same vmalloc path as
-   `vmalloc_user`; PoC/discussion; maintainer Ack
-2. Fixes a real bug that affects users? **PASS** — missing kmem charge;
-   OOM/isolation on 6.12
-3. Important issue? **PASS** — memcg isolation hole and OOM
-   (panic_on_oom in the report)
-4. Small and contained? **PASS** — one file, ~12 lines
-5. No new features or APIs? **PASS** — GFP flag only, not a new uAPI
-6. Can apply to the local tree? **PASS** — code and helpers present
+1. Obviously correct and tested? **PASS** — lock documents the intent;
+   maintainer applied; DRM twin already on 6.12.y
+2. Fixes a real bug that affects users? **PASS** — UAF on DSI IRQ vs
+   stack completions
+3. Important issue? **PASS** — UAF / oops / memory corruption (HIGH)
+4. Small and contained? **PASS** — 9 lines, one file
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — functional diff matches;
+   trivial `del_timer` context
 
 **Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-
-Not a device-ID/quirk/DT/docs exception. Ordinary resource-accounting
-bug fix.
-
-Record: `[no exception category; qualifies on primary rules]`
+Record: Not an ID/quirk/DT/build/docs exception. It is a normal memory-
+safety bugfix.
 
 **Step 9.4: MAKE YOUR DECISION**
+This should be backported to **this** 6.12.y tree. The buggy
+`isr_tables_copy` path is here; the fix is the same one already taken
+for omapdrm; omapfb is a separate config and still needs it.
 
-This is a small, correct fix for a userspace-reachable hole that this
-6.12 tree still has. LTS hosts that run AF_XDP and cgroups (containers)
-need the charge so memory.max actually applies. Incomplete as a *global*
-OOM cap is not a reason to keep rings unaccounted; kernel policy already
-requires `__GFP_ACCOUNT`, and that is exactly what this patch adds.
-
-===============================================================
-DETAILED EXPLANATION
-===============================================================
-
-**Problem:** `xskq_create()` backs AF_XDP rings with `vmalloc_user()`
-(`GFP_KERNEL`). `setsockopt()` can request an arbitrary power-of-two
-entry count with no memcg charge. In a user namespace that grant
-`CAP_NET_RAW`, that is a large, long-lived kernel allocation that
-bypasses cgroup kmem limits. The report includes a panic on 6.12.95
-under `panic_on_oom`.
-
-**Why it matters here:** This checkout is 6.12.111; the `vmalloc_user()`
-call is still present. 6.12.y is an LTS line used with cgroups. Charging
-the pages is what makes existing memory limits apply to this path.
-
-**Rules:** Surgical, no new API, no series prereq, applies with at most
-trivial `kzalloc` context. Reviewer-directed design (memcg, not
-optmem/RLIMIT).
-
-**Risk vs benefit:** Benefit is isolation/OOM under memcg; risk is a GFP
-flag on one alloc. `vfree()` already releases pages. The remaining gap
-(no memcg → still global OOM) is a property of memcg, not a reason to
-skip the charge.
-
-**Concerns:** Incomplete without cgroup limits; XDP sockets are
-optional. Neither outweighs backporting the accounting the kernel
-already requires for untrusted userspace allocations.
-
-===============================================================
 Verification:
-===============================================================
-- [Phase 1] Parsed subject/body/tags from the candidate message;
-  mailing-list v3 also had Fixes: 423f38329d26, Cc: stable, Reported-by:
-  Vega
-- [Phase 2] Diff is one file: helper wrapping `__vmalloc_node_range`
-  with `GFP_KERNEL_ACCOUNT | __GFP_ZERO`, VM_USERMAP, SHMLBA — compared
-  to `vmalloc_user_noprof()` in mm/vmalloc.c:4063-4068
-- [Phase 2] Confirmed `GFP_KERNEL_ACCOUNT` is `GFP_KERNEL |
-  __GFP_ACCOUNT` in include/linux/gfp_types.h:379
-- [Phase 2] Confirmed vmalloc honors `__GFP_ACCOUNT` in
-  mm/vmalloc.c:3734-3738
-- [Phase 3] `git blame net/xdp/xsk_queue.c`: vmalloc_user from
-  9f78bf330a66c; helper from 423f38329d267
-- [Phase 3] `git merge-base --is-ancestor 423f38329d267 HEAD` → 0;
-  `9f78bf330a66c` → 0
-- [Phase 3] `git log --oneline -20 -- net/xdp/xsk_queue.c`: no memcg
-  accounting already present
-- [Phase 3] No `GFP_KERNEL_ACCOUNT` under net/xdp in this tree
-- [Phase 4] `b4 dig -c <msgid>`: no local commit match; `b4 mbox` saved
-  4-message thread
-- [Phase 4] Thread: v3 patch, Stanislav Ack, patchwork-bot, cover
-  letter; no NAK
-- [Phase 4] Openwall cover+review: PoC, 6.12.95 panic, memcg vs RLIMIT
-  debate
-- [Phase 4] WebSearch of lore.kernel.org/stable: no rejection thread
-  found (UNVERIFIED: lore search 403 on some URLs)
-- [Phase 5] Callers: only `xsk_init_queue` ← `xsk_setsockopt` for four
-  ring optnames
-- [Phase 5] `xsk_create`: `ns_capable(net->user_ns, CAP_NET_RAW)` at
-  net/xdp/xsk.c:1742
-- [Phase 5] `xsk_init_queue`: no max entries, only power-of-two
-  (net/xdp/xsk.c:1061-1062)
-- [Phase 5] `struct xdp_desc` is 16 bytes
-  (include/uapi/linux/if_xdp.h:155-159)
-- [Phase 6] `git describe HEAD` → p-6.12-2-gd38d58a4e0359; `make
-  kernelversion` → 6.12.111
-- [Phase 6] Current file still has `q->ring = vmalloc_user(size)` at
-  line 49
-- [Phase 6] `__vmalloc_node_range` and `asm/shmparam.h` exist in this
-  tree
-- [Phase 7] CONFIG_XDP_SOCKETS in net/xdp/Kconfig, default n, depends on
-  BPF_SYSCALL
-- [Phase 8] UMEM uses locked_vm in xdp_umem.c; rings do not
-- [Phase 8] Documentation/core-api/memory-allocation.rst:53-56 requires
-  __GFP_ACCOUNT for untrusted userspace allocs
-- UNVERIFIED: mainline commit SHA (patch not in this checkout)
-- UNVERIFIED: whether a later mainline follow-up added a hard ring-size
-  cap (not in this tree)
+- [Phase 1] Tags: Suggested-by sashiko-bot; SOB Kemnade + Deller; no
+  Fixes/Cc stable/Reported-by
+- [Phase 2] Diff: remove `isr_tables_copy`; call
+  `dsi_handle_isrs(&dsi->isr_tables)` before `spin_unlock`
+- [Phase 2] Confirmed stack completions at dsi.c:2298, 2347, 2617, 3115
+- [Phase 2] Confirmed ISR callbacks only complete/read MMIO; no
+  unregister
+- [Phase 3] Blame: f76ee892a99e6 (2015); ancestor check of 31875c51c31ed
+  vs HEAD: not present
+- [Phase 3] DRM twin 2c27a84ba8d1b is in this tree (`git merge-base
+  --is-ancestor` exit 0; `v6.12.110~477`)
+- [Phase 4] b4 dig: lore msgid 20260702-fbomap-uaf-
+  fix-v1-1-6417edf9d3e7@kemnade.info; v1 only; Deller “applied.”
+- [Phase 4] UNVERIFIED: stable@ lore search (HTTP 403)
+- [Phase 5] Handler installed via `devm_request_irq` + `IRQF_SHARED`;
+  sync/BTA/ULPS are the users
+- [Phase 6] Local tree 6.12.111; buggy memcpy still at dsi.c:841-848;
+  apply --check fails only on `timer_delete` vs `del_timer`
+- [Phase 7] Peripheral fbdev OMAP DSI; mutually exclusive with DRM_OMAP
+- [Phase 8] Failure mode: hardirq UAF of stack object, severity HIGH
 
-The patch is a small, correct memcg charge for a userspace-reachable
-AF_XDP allocation that this 6.12 tree still leaves unaccounted.
+The patch is a small UAF fix that already exists for the DRM clone in
+this tree, applies with a trivial context tweak, and matches stable
+rules.
 
 **YES**
 
- net/xdp/xsk_queue.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/omap2/omapfb/dss/dsi.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/net/xdp/xsk_queue.c b/net/xdp/xsk_queue.c
-index d2c2640300171..7069830943ea8 100644
---- a/net/xdp/xsk_queue.c
-+++ b/net/xdp/xsk_queue.c
-@@ -9,6 +9,8 @@
- #include <linux/vmalloc.h>
- #include <net/xdp_sock_drv.h>
+diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
+index 370e8623754ec..b1df2c014b00c 100644
+--- a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
++++ b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
+@@ -326,8 +326,6 @@ struct dsi_data {
  
-+#include <asm/shmparam.h>
-+
- #include "xsk_queue.h"
+ 	spinlock_t irq_lock;
+ 	struct dsi_isr_tables isr_tables;
+-	/* space for a copy used by the interrupt handler */
+-	struct dsi_isr_tables isr_tables_copy;
  
- static size_t xskq_get_ring_size(struct xsk_queue *q, bool umem_queue)
-@@ -21,6 +23,14 @@ static size_t xskq_get_ring_size(struct xsk_queue *q, bool umem_queue)
- 	return struct_size(rxtx_ring, desc, q->nentries);
- }
+ 	int update_channel;
+ #ifdef DSI_PERF_MEASURE
+@@ -838,15 +836,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
+ 		timer_delete(&dsi->te_timer);
+ #endif
  
-+static void *xskq_vmalloc_user(unsigned long size)
-+{
-+	return __vmalloc_node_range(size, SHMLBA, VMALLOC_START, VMALLOC_END,
-+				     GFP_KERNEL_ACCOUNT | __GFP_ZERO, PAGE_KERNEL,
-+				     VM_USERMAP, NUMA_NO_NODE,
-+				     __builtin_return_address(0));
-+}
-+
- struct xsk_queue *xskq_create(u32 nentries, bool umem_queue)
- {
- 	struct xsk_queue *q;
-@@ -46,7 +56,7 @@ struct xsk_queue *xskq_create(u32 nentries, bool umem_queue)
+-	/* make a copy and unlock, so that isrs can unregister
+-	 * themselves */
+-	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
+-		sizeof(dsi->isr_tables));
  
- 	size = PAGE_ALIGN(size);
++	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
+ 	spin_unlock(&dsi->irq_lock);
  
--	q->ring = vmalloc_user(size);
-+	q->ring = xskq_vmalloc_user(size);
- 	if (!q->ring) {
- 		kfree(q);
- 		return NULL;
+-	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
+-
+ 	dsi_handle_irq_errors(dsidev, irqstatus, vcstatus, ciostatus);
+ 
+ 	dsi_collect_irq_stats(dsidev, irqstatus, vcstatus, ciostatus);
 -- 
 2.53.0
 
