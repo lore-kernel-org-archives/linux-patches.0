@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F5653FA34;
-	Mon, 19 Oct 2026 14:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82470634F39;
+	Mon, 19 Oct 2026 14:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418741; cv=none; b=OWNa0+NV0SKfkkF4orqVMXJL+k2+rccxt15wkV47Mon3qrLSIryCvcBvQXl1rW7mULBq+sg6ama20q/7NmlonrH8rGpGltuH1Du5i8QpPonPKKdVHdlLvuX1avDXP8twDKei5LVhOCmeMwitnKu3onFtzMXWXZQdfytF0TP1Btg=
+	t=1792418743; cv=none; b=BKlxX41qwajZJXE3OWIUx4KOrifFtJH/1Krn+RYsVndQWPNvlFWyHREPxAbRe4wz3PT0KlytzZ9WTy3k3j+uAZn2q0vGPa3WUla/MXQHKHV75FlO+UHGg0lLPhwN6a0N4vdPAO3GDmjF5EtKI9EKsarEWkqhZ+hHDfTz2Sy/zS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418741; c=relaxed/simple;
-	bh=ItiaHpscuhLnvEU67e6Y4Sr5/bGI3Pbtxayik5HC9Qk=;
+	s=arc-20240116; t=1792418743; c=relaxed/simple;
+	bh=HVjNpkKLxT7qbdAdX4Zdcfqctuwo66CEVxbqw0grWh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c/i/wJRYksWJ0xhrKlhcag4M+MiGMXu9Zj8NxZeJNcFCbYR8kIhOxHRgT2hAIaMCxvY3eC8eb5ADe4HxbSRQynLSRI3L9fXlOj7rdGKOZKK8M1DWAbB14SdhEJryqUL3itUaeqYrvBVacflKV9tMakna3V3LVYEsxjP0QeKn4qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JnAFN8Cs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tCYQqT7xMf+eoFLZbkwbVQRPfh+XnauvM5w0mTisepp1+nLXU8oVNWw4wS4988kiV15ILgzonFRHigTGfCphqJORwYTZuV5PgW4cXSeTMeAspu8XLehVQBT+soxMruGGtsreyuZOwoRLNo0aPVe7HmWPVZrxWr0Fj4Y6LvLh7Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iCiU/Fab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JnAFN8Cs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDAF1F000C8;
-	Mon, 19 Oct 2026 14:05:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iCiU/Fab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A431F000C6;
+	Mon, 19 Oct 2026 14:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418739;
-	bh=LCK6HzOGftkUfxabSJI1PrQfGr8GFb458mN9VeUB30k=;
+	s=k20260515; t=1792418740;
+	bh=7cDxpU4h7PLon0nH984O6cOV2WKPkPMLrPLXQMxU55g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JnAFN8CsBjqT1I9q339vBlRTKeNyLHONguQGmeVKtFkrTHqxo3WiJddoHqiBTiXUN
-	 HkicvSz4oFzsSwRl/K15W104V9L8vnYwnQhXo39ftkfaHh9EHKLyT4oux26ar//mfH
-	 q9uDwZ8ZvAg0u4w3Yr51xl3Npvh/h0/CCi2iTqjcI/h5Y1+1R47obn2GkN23mwUWv2
-	 QkOe1/X8n087DL5MzCKLRm8v12VTwz3RiflpQhtT3fEP1UXj6BdV67kB3OF/debpF3
-	 NupCjOyEDjQlKGHhFIfHFhoad/yibbbSXnrt22lz4B6rzQ1TeJYizRJVF1jHVBvVyH
-	 o/L1RIM051jJA==
+	b=iCiU/FabYqYihhFEr91ABX8s79SlkjGeTjLiekhJEQP5NGPGBQa8+l5D5AWorrbDL
+	 vOtF4ZidpquaQQ9gd7odJvT7472vQZMrYlr/lLnP8WtjDi+IZz/GuHxd5RpDTwYc9o
+	 Np7p5OGJP9U6Iu+eOD8YkYLHE4pZjhbxkvOEwncDCRIKM6haFp21GxX5EazA8+jnH2
+	 Na451Yg0wwxZQlC4gwnH16vQWxReJXz6e3kUIxAHRKgsjnV4aRZLaEPgas6iHM9XZb
+	 6pIUmu3AzV33mDU4ziFCOZrpOPFO+KsaJZ+A3eJMofkcZDufLD95aYYk4555T/FzlX
+	 8YebOD8PQN//Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
+Cc: Tomer Maimon <tmaimon77@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	andrew@codeconstruct.com.au,
+	avifishman70@gmail.com,
+	tali.perry1@gmail.com,
+	openbmc@lists.ozlabs.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] drm/amdgpu/atomfirmware: WARN() rather than BUG()
-Date: Mon, 19 Oct 2026 09:52:32 -0400
-Message-ID: <20261019135441.1420968-461-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] pinctrl: npcm8xx: clear pending GPIO events during init
+Date: Mon, 19 Oct 2026 09:52:33 -0400
+Message-ID: <20261019135441.1420968-462-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -56,379 +56,397 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Tomer Maimon <tmaimon77@gmail.com>
 
-[ Upstream commit d7c595044965c826e6f3ce30590d3ec4399cd633 ]
+[ Upstream commit cd39cce4cfd499f555eb8b8252636609c3468f57 ]
 
-There's no need to crash the kernel for this case.  Just
-return an error.
+A bank may retain pending event status across resets of the GPIO block.
+If probe leaves the old state in place, the chained IRQ handler can see
+spurious events as soon as the irqchip is registered.
 
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Disable event generation and clear EVST before wiring each GPIO bank
+into gpiolib so the driver starts from a known state.
+
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit message forensics
+The local tree is **7.3.0-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The
+NPCM8XX pinctrl/GPIO driver is present, the leftover EVEN/EVST init gap
+is real on this path, and the change is a 3-line hardware init fix that
+belongs here.
 
-**Step 1.1: Subject line**
-- Record: `[drm/amdgpu/atomfirmware] [WARN rather than BUG / return an
-  error] [stop panicking the kernel on an unexpected VBIOS gfx_info
-  revision]`
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.2: Tags**
-- Record:
-  - `Reviewed-by: Kent Russell <kent.russell@amd.com>` (added at commit
-    time; not on the mailed v1 patch)
-  - `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (author;
-    amdgpu maintainer)
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Acked-by:`, `Link:`, or
-    `Cc: stable` (absence expected)
-  - Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
-    ignored per instructions
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: **[pinctrl/npcm8xx] [clear] [clear leftover GPIO event
+enable/status before irqchip registration]**
 
-**Step 1.3: Body**
-- Record:
-  - Bug: `BUG()` on an unexpected atom `gfx_info` firmware revision in
-    `amdgpu_atomfirmware_get_clock_info()`.
-  - Symptom: whole-machine kernel crash during AMDGPU init.
-  - Author intent: do not crash; “just return an error.”
-  - No stack trace, reproducer, or version range in the message.
-  - Actual diff does **not** add `WARN()` and does **not** set `ret =
-    -EINVAL`; it only deletes the `else { BUG(); }`.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+Record:
+- Signed-off-by: Tomer Maimon \<tmaimon77@gmail.com\> (author; original
+  NPCM8XX driver author)
+- Signed-off-by: Linus Walleij \<linusw@kernel.org\> (pinctrl
+  maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
+  or Cc: stable (absence is expected)
 
-**Step 1.4: Hidden bug fix?**
-- Record: Not hidden. It is an explicit crash-prevention change.
-  Title/body oversell the implementation (no `WARN()`, no explicit error
-  return).
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+Record:
+- **Bug:** GPIO bank EVEN/EVST can survive GPIO-block reset
+  (bootloader/firmware leftover).
+- **Symptom:** chained IRQ handler sees spurious events as soon as the
+  irqchip is registered at probe.
+- **Root cause:** probe never disables event generation or W1C-clears
+  EVST before `gpiochip_add_data()`.
+- **Fix:** write EVEN=0, then EVST=0xffffffff, per bank, before gpiolib
+  wiring.
+- **Versions:** none stated. Bug is an omission since the driver was
+  added.
 
----
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: Not disguised. Subject/body describe a real init-time IRQ bug.
+Cover letter of the v1 8-patch series called the series a vendor-tree
+cleanup, but this patch is a concrete spurious-IRQ fix, not style-only.
 
-## Phase 2: Diff analysis
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-**Step 2.1: Inventory**
-- Record: `drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c` — **2 lines
-  deleted, 0 added**. Function: `amdgpu_atomfirmware_get_clock_info()`.
-  Single-file surgical change.
+**Step 2.1: INVENTORY THE CHANGES**
+Record:
+- File: `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` (+3 / −0)
+- Function: `npcm8xx_gpio_fw()`
+- Scope: single-file surgical init fix
 
-**Step 2.2: Code flow**
-- Record: On Navi+ (`asic_type >= CHIP_NAVI10`), after a successful
-  `gfx_info` header parse:
-  - **Before:** known revisions (`frev==3`, or `frev==2 && crev==6`, or
-    `frev==2 && crev>=2 && crev!=6`) set `spll->reference_freq` and
-    `ret=0`. Any other `(frev,crev)` hit `BUG()` and panics.
-  - **After:** unknown revisions fall through. `ret` stays whatever
-    earlier `firmwareinfo` / `smu_info` / `umc_info` parsing left (`0`
-    if those succeeded, else `-EINVAL`). No panic.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+Record:
+- **Before:** after `fwnode_irq_get()`, the bank’s EVEN/EVST were left
+  as hardware left them; later `npcm8xx_gpio_register()` set
+  `girq->parent_handler = npcmgpio_irq_handler` and called
+  `devm_gpiochip_add_data()`.
+- **After:** EVEN is forced to 0 (no event generation), then EVST is
+  W1C-cleared with `0xffffffff`, still before irqchip registration.
+- Path: probe/init only (`npcm8xx_pinctrl_probe` → `npcm8xx_gpio_fw`).
 
-**Step 2.3: Bug mechanism**
-- Record: **Logic / correctness + crash prevention.** `BUG()` used as an
-  “unknown firmware table” assert in a driver probe path. Firmware is
-  independent of the kernel; an unknown or newer table must not take
-  down the box. Sibling `amdgpu_atomfirmware_get_gfx_info()` already
-  returns `-EINVAL` for unknown revisions; this path was the
-  inconsistent panic.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Record:
+- **Category:** hardware leftover interrupt state / spurious IRQ (init
+  hygiene, same class as a quirk).
+- **Mechanism:** `npcmgpio_irq_handler()` does `sts = EVST; en = EVEN;
+  sts &= en;` then `generic_handle_domain_irq()` for set bits. If
+  firmware left EVEN and EVST non-zero, the first chained invocation
+  dispatches IRQs for lines that were never requested. Parent bank IRQs
+  in DT are **GIC_SPI, IRQ_TYPE_LEVEL_HIGH**; leftover asserted status
+  can keep the parent line high (storm / “nobody cared”).
+  `npcmgpio_irq_ack()` writes `BIT(gpio)` to EVST, confirming EVST is
+  write-1-to-clear; writing `0xffffffff` is the correct all-clear.
+  Disabling EVEN first avoids a new event sneaking in between the two
+  writes.
 
-**Step 2.4: Fix quality**
-- Record: Minimal and obviously safe (only removes a panic). Regression
-  risk is very low. Residual nit: unknown tables no longer fail the
-  function if earlier tables parsed, so init can continue with the
-  `smu_info` reference clock instead of failing probe. That matches the
-  pre-`BUG()` behavior from 2021 and is still far better than panicking.
-  Message/subject mismatch is cosmetic, not a functional defect.
+**Step 2.4: ASSESS THE FIX QUALITY**
+Record:
+- Obviously correct: disable, then W1C-clear, before the handler is
+  installed.
+- Minimal: two MMIO writes, no API/struct/locking changes.
+- Regression risk: very low. Linux GPIO IRQs must be requested through
+  gpiolib; inheriting bootloader unmasks is not a supported ABI.
+  Starting masked+cleared is the normal irqchip model.
 
----
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-## Phase 3: Git history
+**Step 3.1: BLAME THE CHANGED LINES**
+Record: The surrounding `npcm8xx_gpio_fw()` bank setup comes from
+**acf4884a57170** (“pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO
+driver”, 2023-08-28), first in **v6.7-rc1**. The bug is missing init,
+present for the lifetime of the driver.
 
-**Step 3.1: Blame**
-- Record: `BUG()` added in `a8d59943b8846` (“drm/amdgpu: update query
-  ref clk from bios”, Hawking Zhang, 2022-04-28) when adding
-  `atom_gfx_info_v3_0`. `git describe` =
-  `v5.17-rc6-1819-ga8d59943b8846`. `git merge-base --is-ancestor` vs
-  tags: **not in v5.18, is in v5.19**. Navi+ clock override itself came
-  from `9a530062d57fe` (Aaron Liu, 2021; `v5.12-rc7-1827`), which did
-  **not** `BUG()` — unknown versions just skipped the override.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+Record: No Fixes: tag. N/A. Introduced-by is the original driver commit
+above. `git merge-base --is-ancestor acf4884a57170 HEAD` is implicit:
+the file exists on this 7.3 tree.
 
-**Step 3.2: Fixes: tag**
-- Record: None. Introducer is `a8d59943b8846` as above. That commit is
-  an ancestor of this HEAD.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Record: Same-day series (2026-07-15) in this file:
+1. drop RTS/CTS from bmcuart1
+2. enable RMII outputs
+3. RG2 drive strength
+4. **this commit**
+5. rename GPIO7 IOX2
+6. move IRQ setup into `request_resources`
+7. JM1/SMB7 pin flags
+8. debounce register selection
 
-**Step 3.3: File history**
-- Record: Latest change on this file in HEAD is this commit. No follow-
-  up on the same function. Standalone; not a functional 2/3 dependency.
+This patch does not use symbols or structure from 1–3 or 5–8.
+Standalone.
 
-**Step 3.4: Author**
-- Record: Alex Deucher is the amdgpu maintainer. Same-day series
-  converted many amdgpu `BUG()`/`BUG_ON()` sites. Related file commits
-  are unrelated vram/firmware table work.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Record: Tomer Maimon is the Nuvoton driver author
+(`MODULE_AUTHOR("tomer.maimon@nuvoton.com")`) and added both NPCM7XX and
+NPCM8XX pinctrl drivers. Weight: high.
 
-**Step 3.5: Prerequisites**
-- Record: None. Only deletes two lines of existing `BUG()`. Applies
-  standalone wherever that `else { BUG(); }` exists.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+Record: None. Uses existing `NPCM8XX_GP_N_EVEN` / `NPCM8XX_GP_N_EVST`
+and `iowrite32()`. Applies standalone.
 
----
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-## Phase 4: Mailing list / external
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Record:
+- `b4 dig -c cd39cce4cfd499f555eb8b8252636609c3468f57` →
+  https://patch.msgid.link/20260715122923.1938327-5-tmaimon77@gmail.com
+- v1 only (`b4 dig -a`): **[PATCH v1 4/8]** in “pinctrl: npcm8xx: fix
+  pinmuxing and configuration handling”
+- Cover letter: issues found by comparing upstream with the Nuvoton
+  tree; this patch is called out as clearing stale GPIO events at probe.
+- Linus Walleij (2026-07-24): “No comments so patches applied.” No NAK,
+  no requested respin.
+- Applied version is v1 (only revision).
 
-**Step 4.1: Original discussion**
-- Record: `b4 dig -c d7c595044965c` → `[PATCH 18/43]
-  drm/amdgpu/atomfirmware: WARN() rather than BUG()`
-  https://patch.msgid.link/20260615235645.737189-18-
-  alexander.deucher@amd.com
-  - `b4 dig -a`: **v1 only** of a 43-patch June 15 2026 series. Resent
-    as `[PATCH 05/30]` on 2026-07-07 (same diff).
-  - Thread has no technical NAK. Only a ping from Alex on 01/43.
-  - No reviewer-requested `Cc: stable` found in the mbox.
-  - Committed version matches mailed diff (2-line deletion).
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Record (`b4 dig -w`): To/Cc included linusw@kernel.org (pinctrl
+maintainer), brgl@kernel.org (GPIO), andrew@codeconstruct.com.au,
+openbmc@lists.ozlabs.org, linux-gpio, Nuvoton/Google OpenBMC people.
+Maintainer applied the series. No Reviewed-by tags on the commit.
 
-**Step 4.2: Recipients**
-- Record: `b4 dig -w`: `Alex Deucher`, `amd-gfx@lists.freedesktop.org`
-  only. Kent Russell’s `Reviewed-by` was added at commit, not on the
-  mailed patch.
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+Record: No Reported-by, bugzilla, or syzbot. Trigger is SoC/firmware
+leftover state, not a fuzzer path. Author is the vendor driver owner;
+that is how this class of BMC GPIO bugs usually surfaces.
 
-**Step 4.3: Bug report**
-- Record: No `Reported-by`, syzbot, or bugzilla. No evidence of a user
-  hitting this `BUG()` in the last four years.
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+Record: 8-patch v1 series. Other patches are pinmux/drive-
+strength/rename/lockdep-IRQ-startup/debounce — not prerequisites. This
+3-line hunk is self-contained.
 
-**Step 4.4: Series context**
-- Record: Independent one-file `BUG()` removals. Pull text for drm-
-  next-7.3 lists this under “Old BUG() and BUG_ON() removal.” drm-
-  fixes-7.2 took an earlier batch described as “Drop unnecessary BUG()
-  and BUG_ON() from error paths.” This commit landed in **drm-next for
-  7.3** (`git describe d7c595044965c` = `v7.2-rc2-1048-gd7c595044965c`).
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+Record: lore.kernel.org/stable search returned HTTP 403. **UNVERIFIED:**
+no confirmation of prior stable-list discussion. gpio list mbox had no
+“Cc: stable” and no objection.
 
-**Step 4.5: Stable list**
-- Record: lore.kernel.org/stable fetch returned 403. **UNVERIFIED**
-  whether stable@ discussed this specific patch. No `Cc: stable` on the
-  submission.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
----
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
+Record: `npcm8xx_gpio_fw()` (modified). Related, not edited:
+`npcmgpio_irq_handler()`, `npcm8xx_gpio_register()`,
+`npcm8xx_pinctrl_probe()`.
 
-## Phase 5: Semantic / call graph
+**Step 5.2: TRACE CALLERS**
+Record:
+- `npcm8xx_gpio_fw()` ← `npcm8xx_pinctrl_probe()` only (platform probe,
+  `arch_initcall`).
+- `npcmgpio_irq_handler()` ← chained parent handler for each of 8 GPIO
+  banks.
+- Context: boot/probe, then hardirq for bank SPI 116–123.
 
-**Step 5.1: Functions**
-- Record: `amdgpu_atomfirmware_get_clock_info()` only. semcode MCP not
-  available; used grep / read.
+**Step 5.3: TRACE CALLEES**
+Record: `iowrite32()` to EVEN and EVST. No alloc, no locks. Later
+`npcm8xx_gpio_register()` → `devm_gpiochip_add_data()`.
 
-**Step 5.2: Callers**
-- Record: Sole caller `amdgpu_device.c` (~4085), during device init when
-  `adev->bios && adev->is_atom_fw`. `is_atom_fw` is set for `asic_type
-  >= CHIP_VEGA10`. Failure currently logs and `goto failed` (probe
-  abort). Not IRQ, not a syscall hot path. Runs once per GPU at
-  boot/module load.
+**Step 5.4: FOLLOW THE CALL CHAIN**
+Record: DT `compatible = "nuvoton,npcm845-pinctrl"` with 8
+`gpio@f001x000` nodes, each `interrupts = <GIC_SPI 11x
+IRQ_TYPE_LEVEL_HIGH>`. Reachable on every NPCM845/NPCM8XX boot
+(OpenBMC). Not a syscall fuzzer path; userspace GPIO IRQ consumers can
+be hit by the spurious events if leftover enables match those lines.
 
-**Step 5.3: Callees**
-- Record: `get_index_into_master_table`,
-  `amdgpu_atom_parse_data_header`, `le32_to_cpu` on VBIOS tables. No
-  alloc/lock in the changed hunk.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+Record: NPCM7XX has the same EVEN/EVST handler and **does not** clear
+them at init (same latent class, out of scope). `pinctrl-owl.c` also
+clears pending GPIO IRQs in its handler path. Pattern is established.
 
-**Step 5.4: Reachability**
-- Record: Yes, from normal boot on Vega10+ with atom firmware. The
-  `BUG()` itself only ran for Navi+ (`CHIP_NAVI10` and later — RX 5700
-  and essentially all later AMD GPUs) **and** an unrecognized `gfx_info`
-  `(frev,crev)`. Current headers only define v2.2 / v2.3 / v2.4 / v2.7 /
-  v3.0, all of which the `if`/`else if` already accept (`frev==2 &&
-  crev>=2` or `frev==3`). So the panic path is **firmware-mismatch /
-  corruption / future table**, not day-1 shipping VBIOS.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
 
-**Step 5.5: Similar patterns**
-- Record: Same author, same series: imu11/12, ucode, cgs, gfx11/12 SDMA,
-  etc. `get_gfx_info()` in this file already used `-EINVAL` instead of
-  `BUG()`.
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+Record: Yes. `drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c` is in this
+7.3-rc4 tree. Driver since v6.7. Without the two writes,
+`npcm8xx_gpio_fw()` still maps banks and `npcm8xx_gpio_register()` still
+installs `npcmgpio_irq_handler`. Bug introduced with the driver, long
+before 7.3.
 
----
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+Record: Clean apply. Hunk sits immediately after `fwnode_irq_get()` in
+`npcm8xx_gpio_fw()`, which exists here. No structural mismatch.
 
-## Phase 6: This checkout
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+Record: No earlier equivalent EVEN/EVST init. This is the first such
+clear on this file (`git log --grep='pending GPIO'` / `'spurious'` on
+that path only hits this commit).
 
-**Step 6.1: Does the buggy code exist here?**
-- Record: Local tree is **v7.3-rc4** (`VERSION=7 PATCHLEVEL=3 SUBLEVEL=0
-  EXTRAVERSION=-rc4`, HEAD `f0100363d8c37`). `git merge-base --is-
-  ancestor d7c595044965c HEAD` → yes. Current source already has the
-  `BUG()` removed (lines 911–920). The panic existed in this lineage
-  from **v5.19** until this commit (**v7.2-rc2+**).
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
 
-**Step 6.2: Backport difficulty**
-- Record: Clean 2-line deletion against the pre-image. No structural
-  prerequisites.
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+Record: **pinctrl/GPIO, Nuvoton NPCM8XX (BMC SoC).** Criticality:
+**PERIPHERAL** for the kernel as a whole, **IMPORTANT** for NPCM845
+OpenBMC/server BMC users. `CONFIG_PINCTRL_NPCM8XX` depends on `ARCH_NPCM
+|| COMPILE_TEST`.
 
-**Step 6.3: Related fixes already here**
-- Record: This **is** the fix; no alternate fix. No later revert or
-  follow-up on this function.
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+Record: Mature driver (v6.7), with a burst of vendor fixes in the 7.3
+window. Not staging.
 
----
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
 
-## Phase 7: Subsystem context
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+Record: Driver-specific / platform-specific: Nuvoton NPCM8XX (e.g.
+NPCM845) systems using this pinctrl driver. Typical population: OpenBMC
+on that SoC.
 
-**Step 7.1:** Record: `drm/amdgpu` atom firmware parser. **IMPORTANT**
-(very common GPUs), not core mm/VFS.
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+Record: Boot/probe, when firmware or a partial GPIO-block reset left
+EVEN/EVST non-zero. Common on BMCs (bootloader uses GPIOs). Not
+unprivileged-syscall; it is default hardware bring-up.
 
-**Step 7.2:** Record: High activity; this particular function has been
-stable since the 2022 v3.0 clock change aside from this `BUG()` removal.
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+Record:
+- Spurious chained IRQs at probe.
+- Parent IRQs are **level-high**; leftover enable+status can hold the
+  line → IRQ storm, “nobody cared”, hung boot.
+- `generic_handle_domain_irq()` on never-requested lines (this driver
+  defaults `girq->handler = handle_level_irq`, not `handle_bad_irq`).
+- **Severity: HIGH** (boot IRQ storm / spurious IRQs on BMC GPIO). Not a
+  universal panic, but a real stability failure on affected boards.
 
----
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+Record:
+- **Benefit:** high for NPCM8XX (known-state IRQ init; prevents probe-
+  time storms).
+- **Risk:** very low (2 MMIO writes, probe only).
+- **Ratio:** strongly in favor of applying.
 
-## Phase 8: Impact and risk
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
 
-**Step 8.1: Who is affected**
-- Record: Users of amdgpu on Navi+ (RDNA and later), i.e. a large
-  fraction of AMD GPU systems, **if** VBIOS `gfx_info` revision is not
-  one of the known cases.
+**Step 9.1: COMPILE THE EVIDENCE**
 
-**Step 8.2: Trigger**
-- Record: GPU probe. Not unprivileged syscall. Needs Navi+ **and**
-  unknown `gfx_info` frev/crev (corrupt VBIOS, unexpected vendor
-  firmware, or a newer table the driver was never taught). Common-path
-  shipping firmware does not hit it; firmware is still out of the
-  kernel’s control.
+FOR:
+- Real leftover-hardware IRQ bug, not a refactor.
+- Level-triggered parent IRQs make leftover EVST/EVEN a boot storm risk.
+- 3 lines, obviously correct (mask then W1C-clear before handler
+  install).
+- Author is the vendor driver owner; pinctrl maintainer applied it.
+- Driver and insertion point exist in this 7.3 tree; no prerequisites.
+- Same class as accepted GPIO “clear pending at init” fixes.
 
-**Step 8.3: Failure mode**
-- Record: `BUG()` → kernel panic during device init. **Severity:
-  CRITICAL if triggered, LOW likelihood on known VBIOS.** After the fix,
-  unknown tables skip the gfx_info clock override and typically still
-  return success from earlier tables.
+AGAINST:
+- No user/syzbot report; found via vendor-tree comparison.
+- Affects one BMC SoC family, not core kernel.
+- No Cc: stable (not a negative by itself).
+- Series mixed in feature/rename patches (this hunk does not depend on
+  them).
 
-**Step 8.4: Risk-benefit**
-- Record: Benefit medium-high (prevents a machine-killing assert in
-  firmware parse). Risk very low (2-line deletion, no locking/API/data-
-  structure change). Ratio favors applying it.
+UNRESOLVED:
+- Could not search lore.kernel.org/stable (HTTP 403).
+- No independent Tested-by.
 
----
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+1. Obviously correct and tested? **PASS** — two register writes,
+   maintainer applied; no test robot/NAK. Formal Tested-by absent, but
+   the change is reviewable from the handler and DT IRQ type.
+2. Fixes a real bug that affects users? **PASS** — leftover EVEN/EVST →
+   spurious chained IRQs on NPCM8XX probe.
+3. Important issue? **PASS** — boot-time spurious/level IRQ storm on BMC
+   GPIO, not cosmetic.
+4. Small and contained? **PASS** — +3 lines, one function.
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — file, registers, and
+   `npcm8xx_gpio_fw()` insertion point are here.
 
-## Phase 9: Synthesis
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+Record: Hardware init/workaround (clear stale IRQ state). Not a new ID,
+but the same “make existing hardware boot cleanly” exception.
 
-**Step 9.1: Evidence**
+**Step 9.4: MAKE YOUR DECISION**
+This is a small, correct, self-contained fix for leftover GPIO event
+state that can fire the chained handler as soon as the irqchip is
+registered. The buggy path exists in this 7.3 tree. It should be applied
+here.
 
-**For backporting**
-- `BUG()` in driver init panics the whole system; kernel policy
-  (`Documentation/process/coding-style.rst`, `deprecated.rst`) says not
-  to do this.
-- Path is real GPU probe for all modern AMD GPUs; firmware tables can
-  change independently of the kernel.
-- 2-line deletion, obviously correct, no new API.
-- Sibling function already errors instead of panicking.
-- Restores the pre-v5.19 “don’t panic” behavior.
-- Maintainer-authored, Reviewed-by Kent Russell.
-- Zero practical regression surface.
+What the commit solves: NPCM8XX GPIO banks can keep EVEN/EVST across
+GPIO-block reset. Probe used to register the chained handler on that
+dirty state, so leftover enables × pending status become spurious (and,
+with level-high parents, potentially stuck) interrupts at boot.
 
-**Against**
-- No user report in ~4 years; known table versions are all handled, so
-  the `else` is effectively a developer assert.
-- Part of a 43-patch “drop old BUG()s” sweep; pull described it as
-  cleanup, and it went to drm-next-7.3, not drm-fixes.
-- Subject/body promise `WARN()` + error return; the patch does neither.
-- After the change, unknown tables can return 0 with the smu_info clock
-  rather than failing probe.
+Stable rules: obviously correct, real bug, important for that platform,
+tiny, no new API, applies cleanly.
 
-**Unresolved**
-- Stable@ discussion unverified (lore 403).
-- No public confirmation this `BUG()` ever fired on shipping hardware.
+Risk vs benefit: two MMIO writes at probe vs boot IRQ storms on OpenBMC
+NPCM845. Benefit dominates.
 
-**Step 9.2: Stable rules**
-1. Obviously correct and tested? **PASS** — 2-line deletion; maintainer
-   + reviewer.
-2. Real bug affecting users? **PASS** — panicking on unknown firmware is
-   a real driver bug; firmware is untrusted/variable even if reports are
-   absent.
-3. Important (crash/security/corruption/deadlock)? **PASS** — failure
-   mode is a kernel panic. Likelihood is low, severity is high.
-4. Small and contained? **PASS** — 2 lines, one function.
-5. No new features/APIs? **PASS**.
-6. Can apply to this tree? **PASS** — the hunk exists in this lineage;
-   the tree already contains the commit (`d7c595044965c`).
+Concerns: no public reproducer; NPCM7XX still has the same gap (does not
+block this fix). No extra backports required.
 
-**Step 9.3: Exceptions**
-- Record: None (not a device ID, quirk, DT, build, or doc fix).
-  Qualifies on the crash-prevention rule, not an exception category.
-
-**Step 9.4: Decision**
-
-This tree is **v7.3-rc4**. The change is a two-line removal of a `BUG()`
-in Navi+ VBIOS clock parsing. That assert can panic the machine during
-amdgpu init if `gfx_info` is an unknown revision. That is the wrong
-failure mode for firmware the kernel does not control. The patch is
-trivial, standalone, and does not add features. Lack of a crash report
-and the series being a BUG() cleanup do not outweigh a panic in GPU
-probe.
-
-It meets the stable criteria for this tree: real crash fix, small,
-obviously correct, no dependencies.
-
----
-
-## What the commit solves for stable users
-
-On Navi and later, `amdgpu_atomfirmware_get_clock_info()` used `BUG()`
-when the VBIOS `gfx_info` table had a revision the driver did not list.
-That is a full kernel panic during device init. Stable systems keep a
-GPU for years while VBIOS/firmware can still change; panicking instead
-of skipping the override (or failing probe) is the bug. The fix only
-deletes that `BUG()`.
-
-Risk vs benefit: benefit is avoiding a boot-time panic; risk is
-essentially none. The leftover behavior (continue with the smu_info
-clock, no `WARN()`) is slightly sloppy versus the commit text, but it is
-the old safe path from before v5.19 and is acceptable for stable.
-
----
-
-## Verification
-- [Phase 1] Parsed tags: Reviewed-by Kent Russell, SOB Alex Deucher; no
-  Fixes/Reported-by/Cc:stable
-- [Phase 1] Body claims WARN + return error; `git show d7c595044965c` is
-  only `- } else {` / `- BUG();`
-- [Phase 2] Diff: 2 deletions in `amdgpu_atomfirmware_get_clock_info()`
-- [Phase 2] Read current function: `ret` starts `-EINVAL`; earlier
-  tables set `ret=0`; unknown gfx_info no longer panics
-- [Phase 3] `git blame` on parent: `BUG()` from `a8d59943b8846`
-  (2022-04-28)
-- [Phase 3] `git merge-base --is-ancestor a8d59943b8846 v5.18` → 1
-  (absent); vs v5.19 → 0 (present)
-- [Phase 3] Pre-BUG code in `9a530062d57fe` did not panic on unknown
-  revisions
-- [Phase 3] `git merge-base --is-ancestor d7c595044965c HEAD` → 0
-  (commit is in this tree)
-- [Phase 4] `b4 dig -c d7c595044965c` → lore/msgid
-  20260615235645.737189-18; 18/43 series
-- [Phase 4] `b4 dig -a`: v1 only; later resent as 05/30 with identical
-  diff
-- [Phase 4] `b4 mbox`: 44 messages, no NAK, no stable nomination; Kent
-  review not on the mailed patch
-- [Phase 4] `b4 dig -w`: To/Cc Alex Deucher + amd-gfx only
-- [Phase 4] lore.kernel.org and lore stable search: HTTP 403 —
-  UNVERIFIED
-- [Phase 5] grep: only caller is `amdgpu_device.c` init when
-  `is_atom_fw`; `is_atom_fw` set for Vega10+
-- [Phase 5] `atomfirmware.h`: gfx_info structs v2.2, v2.3, v2.4, v2.7,
-  v3.0 only — no v4
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 6] `git describe d7c595044965c` =
-  `v7.2-rc2-1048-gd7c595044965c`
-- [Phase 6] Current file lines 911–920: no `BUG()`
-- [Phase 8] Failure mode: `BUG()` panic on GPU init — CRITICAL if hit
-- UNVERIFIED: whether this `BUG()` has ever fired on shipping VBIOS;
-  whether stable@ already considered it
+Verification:
+- [Phase 1] Parsed tags: only Tomer Maimon + Linus Walleij SOBs; no
+  Fixes/Reported-by/stable
+- [Phase 2] Diff: +3 lines in `npcm8xx_gpio_fw()`; EVEN=0 then
+  EVST=0xffffffff
+- [Phase 2] Handler at lines 210–227 ANDs EVST with EVEN then
+  `generic_handle_domain_irq()`
+- [Phase 2] `npcmgpio_irq_ack()` writes `BIT(gpio)` to EVST → W1C
+  confirmed
+- [Phase 3] Driver added in acf4884a57170 (v6.7-rc1); blame of
+  surrounding init is that commit
+- [Phase 3] `git merge-base --is-ancestor` of the fix vs HEAD: commit is
+  in this 7.3 history; code path exists either way
+- [Phase 3] Standalone vs 8-patch series: no shared symbols with
+  neighboring patches
+- [Phase 4] `b4 dig -c cd39cce4cfd49`: lore msgid
+  20260715122923.1938327-5; v1 4/8
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: linusw, brgl, openbmc, linux-gpio
+- [Phase 4] mbox: Linus Walleij “No comments so patches applied.”; no
+  NAK; no Cc: stable
+- [Phase 4] Cover letter (LKML archive): vendor-tree comparison; this
+  patch listed as stale-event clear
+- [Phase 4] lore.kernel.org/stable: 403, UNVERIFIED
+- [Phase 5] Callers: `npcm8xx_pinctrl_probe` only; 8 DT GPIO banks,
+  GIC_SPI 116–123 level-high
+- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4
+- [Phase 6] File and `fwnode_irq_get` insertion point present; apply
+  would be clean
+- [Phase 8] Failure mode: spurious chained GPIO IRQs / possible level-
+  triggered storm at probe; HIGH on NPCM8XX, not core-wide
+- UNVERIFIED: stable@ list discussion; independent user reports
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
-index c7d32fb216e4e..ce2a4a15d5ecb 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
-@@ -806,8 +806,6 @@ int amdgpu_atomfirmware_get_clock_info(struct amdgpu_device *adev)
- 				   (crev != 6)) {
- 				spll->reference_freq = le32_to_cpu(gfx_info->v22.rlc_gpu_timer_refclk);
- 				ret = 0;
--			} else {
--				BUG();
- 			}
- 		}
- 	}
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+index c94441b2acdae..22cc87d43ea69 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+@@ -2412,6 +2412,9 @@ static int npcm8xx_gpio_fw(struct npcm8xx_pinctrl *pctrl)
+ 		if (ret < 0)
+ 			return dev_err_probe(dev, ret, "Failed to retrieve IRQ for bank %u\n", id);
+ 
++		iowrite32(0, pctrl->gpio_bank[id].base + NPCM8XX_GP_N_EVEN);
++		iowrite32(0xffffffff, pctrl->gpio_bank[id].base + NPCM8XX_GP_N_EVST);
++
+ 		pctrl->gpio_bank[id].irq = ret;
+ 		pctrl->gpio_bank[id].irq_chip = npcmgpio_irqchip;
+ 		pctrl->gpio_bank[id].irqbase = id * NPCM8XX_GPIO_PER_BANK;
 -- 
 2.53.0
 
