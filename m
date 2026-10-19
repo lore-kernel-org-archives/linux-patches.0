@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C1B58110D;
-	Mon, 19 Oct 2026 13:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04EE4F55CC;
+	Mon, 19 Oct 2026 13:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418326; cv=none; b=V2XZQj+qTqKvsVct1G9r8VLzjzlf4B5VrGrHmWtBF+xPbT3oexM2trH470DMME0tkoxL6YolEtpGxw50o0zABZtXjrexqQWy1o6DcSQaEGw5Kxy47+BjpY6bOySlXPa/oWRUd9Qw8gGToPIzPoqfrkW6RZS0b1plR30rIqoxjxQ=
+	t=1792418329; cv=none; b=tNo/4ysoQ32AQKc7xVLk09pD5r+rDYx5P9AsRgo/dR/IQsH4bL0A7LvILjLjWhTprXsj2Al914v9QiwfGXH5vrqcSSQiViM0QTl05OG8rovFWp4QSOmB1H6s3g/wBNjOHhat4PznlEJIdYsbOwIec1p36XEAzJ1MrMFCgHiSIZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418326; c=relaxed/simple;
-	bh=i0IlCIv7pyilbwZcnN+6XbhzW3Tg+4U2ngeMCrqt/ZQ=;
+	s=arc-20240116; t=1792418329; c=relaxed/simple;
+	bh=v3TnQfomq5DOdToBm9KN+2GrcuQ3kCaCqNyH1RiERMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fpd0BqpvCg0L75K+GqTmV1xFzi2AVPQnBKy8nIeRIIzHm898KvCCeh97EyiqHMccfwbxNeWU3vnNy5HaHumvQgC93D5Bo3/OZP4E48X0+xuSsTkiYjtQTT4sXDQkeyPI+JYSqzZhp+Vk0pYTBTP3i09N0HLQyHVStOvKgV3J2vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IdKfBQjO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JmqmolH9F3Y1uAOAtvxUqwgI2axVnxJmwjNYZ+xUHwJ0cv+e5t+fb37pCrL39okkatgthxWbHq5FPnVxpKNB884RNfCHt1oHjUeW4E884w/PCpWgHqscQBzj+t2aThK8ZZ1/PNoySP+gYYXC9tXD2qwKkgnOHzCp2+cPAGwg7jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oal7QZTn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IdKfBQjO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C81F1F000C4;
-	Mon, 19 Oct 2026 13:58:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oal7QZTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75121F000C6;
+	Mon, 19 Oct 2026 13:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418323;
-	bh=woEF3Kbtoybbab/DTXcJXzNtcHi8tW3Ti0bDiIc7/9c=;
+	s=k20260515; t=1792418324;
+	bh=IDcXYreBZNrwbKXGDCum4ggHLKTGxosx/kv63bkThqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IdKfBQjOSIZlTFB0X6CC0cqPinLpTBzMWRN0B4o5aHqeprRqrBfAhLKmZ2cipTMs0
-	 myZvtd30wmFVRhs4IobZmGUMPPpRFXRxz1aGBWy5WGlkbjAOYaSe6c+2Q2Ml+M7MYd
-	 U8Mi+5CxamX2SXH03Gs9CBKgzLYZU1PCJHFmY1hB/Wxxm/0ewv+FGgK7DOvnH/Zvxj
-	 98VldMkavRwXkADiD/UROVsx2LJyO7D6ud0KXdpMGl5AvcdjAFmPsjrPzNKRt3SSGi
-	 LnRCR0PPYc7D3Rjq5aDtuxOr96/wh3god8N9LLkDBZY2BMRWLyjAqUQmPtwMAGHQwP
-	 CWAanD7Pea4Iw==
+	b=oal7QZTntC/BIDONB6VR4K94tW9qIkzfoFRIAKPpIojcfb0UVuv/GjWRC41ec+jIJ
+	 G+ljx4RS/drAoirtfiI74oWfmIXyq18xZWXulaM97mMUVFaPUL5g0EZQIRBxmaCfky
+	 joS/6M4D3Fkg6mK4J9pJvkB+9K8RxONyVA39O3b2iYfuAVUKjXSsdGKmbePxi6oHY1
+	 0b9U2SU/GCn7vJyYCaeZeeVbCL5as/5tVrhWuWVS1/bne1mpsCsPNVPzn03i8ILvGs
+	 1LIhdBfeslmgZStu+DJZ6l0unlYzL2IZ+p2U4kt7+NEAkntWYEh6zFJxSCevuyxioI
+	 Mtl3cN0bGQwbA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Li Qiang <liqiang01@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hverkuil@kernel.org,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: go7007: s2250: propagate control I/O failures
-Date: Mon, 19 Oct 2026 09:47:37 -0400
-Message-ID: <20261019135441.1420968-166-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] Bluetooth: bfusb: validate received block boundaries
+Date: Mon, 19 Oct 2026 09:47:38 -0400
+Message-ID: <20261019135441.1420968-167-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,467 +54,600 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit 59dc14a6cb5ff1ae5ce2f6ebf51fe0139e1c0623 ]
+[ Upstream commit 6afadcff79b157a4770c4e987a6005bff40a670b ]
 
-The brightness and contrast paths use oldvalue after read_reg_fp()
-without checking whether the read succeeded.  A failed read leaves
-oldvalue uninitialized and can write arbitrary reserved register bits.
+The USB receive path trusts the block header to contain the required
+number of bytes and passes it to the reassembly routine. The routine
+also trusts a malformed HCI packet type and can append more data than
+the skb allocated from the advertised packet length. A malformed USB
+transfer can therefore cause out-of-bounds reads or an skb tail
+overwrite.
 
-Return read and write errors from every control path so failed hardware
-access cannot be reported as a successful control update.
+Validate block header availability, declared block size, packet type,
+and reassembly tailroom. Drop the partial frame on an invalid block.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is mainline **7.3.0-rc4**. The Sensoray 2250 control path
-is present here, and the change is a small, real error-path fix: a
-failed `read_reg_fp()` left `oldvalue` uninitialized and could program
-reserved VPX322 bits while still reporting success to V4L2.
-
-## Phase 1: Commit message forensics
-
-**Step 1.1: Subject line**
-Record: **[media/go7007/s2250] [propagate] Return control I/O errors so
-brightness/contrast do not use an uninitialized register image**
-
-**Step 1.2: Tags**
-Record:
-- **Signed-off-by:** Yousef Alhouseen (author)
-- **Signed-off-by:** Hans Verkuil (media/GO7007 maintainer; applied the
-  patch)
-- **No** Fixes, Reported-by, Tested-by, Reviewed-by, Acked-by, Link, or
-  Cc: stable (absence of Fixes/Cc stable is expected for this review)
-- Not a syzbot report; not a kernel test robot report
-
-**Step 1.3: Body**
-Record:
-- **Bug:** brightness/contrast call `read_reg_fp()` then use `oldvalue`
-  without checking the read.
-- **Symptom:** a failed read leaves `oldvalue` uninitialized; the
-  following write can poke **arbitrary reserved register bits**. Failed
-  I/O is still reported as a successful control update.
-- **Version info:** none in the message. Commit `59dc14a6cb5ff` was
-  applied 2026-07-27 and is an ancestor of `v7.3-rc1` (this checkout is
-  `v7.3-rc4-27-gf0100363d8c37`). It is **not** an ancestor of `v7.2`.
-- **Root cause (author):** missing error checks on FP register
-  read/write in `s2250_s_ctrl()`.
-
-**Step 1.4: Hidden bug fix?**
-Record: **Yes, and it is not hidden.** The subject uses “propagate”
-rather than “fix”, but the body is an uninitialized-use / false-success
-bug. Saturation/hue changes are the same class: swallow write errors and
-return 0.
-
-## Phase 2: Diff analysis
-
-**Step 2.1: Inventory**
-Record:
-- **File:** `drivers/media/usb/go7007/s2250-board.c` — **+33 / −21** (54
-  lines with context; under the 100-line stable cap)
-- **Function:** `s2250_s_ctrl()` only
-- **Scope:** single-file surgical fix
-
-**Step 2.2: Code flow**
-Record (before → after), all in `s2250_s_ctrl()`:
-
-- **Brightness / contrast:** `read_reg_fp()` / `write_reg_fp()` results
-  ignored; always `break` then `return 0` → each call’s return is
-  checked; first failure is returned; last write’s status is returned.
-- **Saturation / hue:** write ignored, `return 0` → `return
-  write_reg_fp(...)`.
-- **Normal path:** unchanged when I/O succeeds (still RMW reserved bits,
-  then write `0x140`).
-- **Error path:** now fails the V4L2 set instead of committing a fake
-  success.
-
-**Step 2.3: Bug mechanism**
-Record: **Uninitialized data + ignored I/O errors (logic/correctness).**
-
-Verified in this tree: `read_reg_fp()` writes `*val` only after a
-successful USB vendor request:
-
-```249:286:drivers/media/usb/go7007/s2250-board.c
-static int read_reg_fp(struct i2c_client *client, u16 addr, u16 *val)
-{
-        // ...
-        if (go == NULL)
-                return -ENODEV;
-        if (go->status == STATUS_SHUTDOWN)
-                return -EBUSY;
-        // kzalloc / mutex_lock_interruptible / usb_control_msg failures
-        // all return without *val = ...
-        *val = (buf[0] << 8) | buf[1];
-        kfree(buf);
-        return 0;
-}
-```
-
-`write_reg_fp()` likewise returns 0 or a negative errno, never a
-positive byte count, so `if (ret)` is equivalent to `if (ret < 0)`.
-
-On a failed read, `oldvalue` is stack garbage. The write is `ctrl->val |
-(oldvalue & ~0xff)` (brightness) or `... & ~0x3f` (contrast), so
-reserved bits come from that garbage.
-
-**Step 2.4: Fix quality**
-Record: **Obviously correct and minimal.** No API/data-structure change.
-Regression risk is low: VIDIOC_S_CTRL that used to return 0 on hardware
-failure now returns the errno. That is the intended V4L2 behavior
-(`try_or_set_cluster()` only copies new values after `s_ctrl` succeeds).
-Partial updates if a later write fails were already possible; the patch
-does not add locking or new control IDs.
-
-## Phase 3: Git history
-
-**Step 3.1: Blame**
-Record:
-- Unchecked `read_reg_fp()` + `oldvalue` RMW: **05d76f2da1e5cc**
-  (“s2250: subdev conversion”, 2009; contained in **v2.6.33-rc1**)
-- Driver itself: **b11869dbb6cc4** (v2.6.29-rc1 era staging)
-- Control-framework conversion: **d3b2ccd9e307ea** (2013) kept the same
-  ignore-errors pattern
-- Bug is old, not recent churn
-
-**Step 3.2: Fixes: tag**
-Record: **None.** No Fixes SHA to follow. The buggy pattern is the 2009
-subdev conversion, not a recent regression.
-
-**Step 3.3: File history**
-Record: Recent `s2250-board.c` work is i2c probe conversions and a probe
-leak fix, not a series this patch depends on. **Standalone.** Same-day
-sibling by the same author: `41f82777e5477` (“avoid undefined shifts in
-MPEG-4 headers”) — different file (`go7007-driver` MPEG path), not a
-prerequisite.
-
-**Step 3.4: Author**
-Record: Yousef Alhouseen is not the subsystem maintainer. Two
-media/go7007 correctness patches on 2026-06-30; Hans Verkuil applied
-both. Maintainer SOB is a positive quality signal.
-
-**Step 3.5: Dependencies**
-Record: **None.** Uses existing `read_reg_fp()` / `write_reg_fp()` and
-`s2250_s_ctrl()`. **Applies standalone.**
-
-## Phase 4: Mailing list / external
-
-**Step 4.1:**
-Record:
-- **b4 dig -c 59dc14a6cb5ff** → https://patch.msgid.link/20260630105015.
-  53932-1-alhouseenyousef@gmail.com
-- **b4 dig -a:** **v1 only** (committed diff matches v1)
-- **b4 dig -m:** thread is the patch mail only — **no replies, no NAK,
-  no Cc: stable**
-- lore.kernel.org HTTP fetches returned **403**; discussion content was
-  recovered via `b4`
-
-**Step 4.2:**
-Record: **b4 dig -w** recipients: Hans Verkuil, Mauro Chehab, linux-
-media, linux-kernel. Appropriate lists/maintainers. Hans’s SOB on the
-git commit is the review signal.
-
-**Step 4.3:**
-Record: **No bugzilla/syzbot/user report.** Finding is from code
-inspection.
-
-**Step 4.4:**
-Record: Standalone v1 patch, not part of a numbered series. Sibling
-MPEG-4 shift patch is independent.
-
-**Step 4.5:**
-Record: **UNVERIFIED** whether linux-stable ever discussed this
-(lore.kernel.org 403; no local hit on this file’s history besides the
-mainline commit).
-
-## Phase 5: Semantic / call graph
-
-**Step 5.1:**
-Record: Modified function: **`s2250_s_ctrl`**. Helpers used:
-`read_reg_fp`, `write_reg_fp`.
-
-**Step 5.2: Callers**
-Record: Wired as `s2250_ctrl_ops.s_ctrl`. Invoked from:
-- `try_or_set_cluster()` → `call_op(master, s_ctrl)` (`v4l2-ctrls-
-  core.c`)
-- `__v4l2_ctrl_handler_setup()` during control setup
-- Userspace: `v4l2_s_ctrl()` / `VIDIOC_S_CTRL` / `VIDIOC_S_EXT_CTRLS`
-
-**Step 5.3: Callees**
-Record: USB vendor requests via `go7007_usb_vendor_request()` →
-`usb_control_msg()`. Also `mutex_lock_interruptible()` (can return
-**-EINTR**).
-
-**Step 5.4: Reachability**
-Record: **Yes, from userspace** if `CONFIG_VIDEO_GO7007_USB_S2250_BOARD`
-is enabled and a Sensoray 2250/2251 is present. Realistic failure that
-still continues into the write: **EINTR on the read’s mutex**, then a
-successful write mutex — two separate `mutex_lock_interruptible()`
-calls. ENOMEM on the read’s `kzalloc` with a later successful write
-alloc is also possible. `STATUS_SHUTDOWN`/`go == NULL` fail both read
-and write before hardware access, so those paths do not program garbage.
-
-**Step 5.5: Similar patterns**
-Record: `s2250_s_std`, `s2250_set_fmt`, and `s2250_s_video_routing`
-still ignore `write_reg_fp()` results. This patch does not claim to fix
-those; they have no uninitialized `oldvalue`. Not a series dependency.
-
-semcode MCP: **not available**; used `git grep` / file reads.
-
-## Phase 6: This checkout
-
-**Step 6.1:**
-Record:
-- Tree: **`v7.3-rc4-27-gf0100363d8c37`**, `make kernelversion` =
-  **7.3.0-rc4**
-- File and `s2250_s_ctrl()` **exist**
-- Buggy ignore-error RMW existed in this lineage from 2009 until
-  **59dc14a6cb5ff** (merged for **v7.3-rc1**)
-- Current `HEAD` source already contains the fixed function (commit is
-  an ancestor of `HEAD` and of `v7.3-rc4`)
-- Bug was **not** introduced after this tree; it is old. This 7.3
-  snapshot already includes the fix as a mainline merge, not as a stable
-  cherry-pick.
-
-**Step 6.2:**
-Record: **Clean apply** to this file’s `s2250_s_ctrl()` shape (same
-switch, same register macros). No conflicting refactor in this tree.
-
-**Step 6.3:**
-Record: No alternate fix for this `oldvalue` bug. Only this commit
-changes those checks.
-
-## Phase 7: Subsystem context
-
-**Step 7.1:**
-Record: **media / USB V4L2 driver** (`drivers/media/usb/go7007/`).
-**PERIPHERAL** — Sensoray 2250/2251 only
-(`CONFIG_VIDEO_GO7007_USB_S2250_BOARD`). Maintainer: Hans Verkuil,
-linux-media.
-
-**Step 7.2:**
-Record: File is mature/low-churn (last functional s2250 work before this
-was older i2c/probe fixes). Not a newly added subsystem.
-
-## Phase 8: Impact and risk
-
-**Step 8.1:**
-Record: **Driver-specific / config-specific**
-(`VIDEO_GO7007_USB_S2250_BOARD`). Not universal. Small user population
-(legacy USB MPEG capture box).
-
-**Step 8.2:**
-Record:
-- Trigger: `VIDIOC_S_CTRL` for brightness/contrast (and sat/hue for the
-  false-success half)
-- Common on a working device: **no** (happy path already initialized
-  `oldvalue`)
-- Realistic error: **signal interrupting the read lock**, USB control-
-  msg failure, or alloc failure
-- Unprivileged user with the video node can issue the ioctl
-
-**Step 8.3:**
-Record:
-- **Failure mode:** uninitialized stack bits written into VPX322
-  reserved fields; V4L2 still treats the set as success and publishes
-  the new control value
-- **Not** an oops, deadlock, filesystem corruption, or a demonstrated
-  CVE
-- **Severity: MEDIUM** (hardware misprogramming + lying to userspace).
-  On shutdown-only failures, writes also fail first, so those are lower
-  impact.
-
-**Step 8.4:**
-Record:
-- **Benefit:** medium-low globally, high for the few users of this board
-  if a control set races with EINTR/USB error
-- **Risk:** **very low** (33 lines, error returns only, maintainer-
-  applied)
-- **Ratio:** favorable for a tiny correctness fix; the weak point is
-  “important issue” given niche hardware and no reports
-
-## Phase 9: Synthesis
-
-**Step 9.1: Evidence**
-
-**For backporting**
-- Verified uninitialized `oldvalue` when `read_reg_fp()` fails
-- Verified reserved-bit RMW from that garbage
-- Verified V4L2 commits the new value if `s_ctrl` returns 0
-- Realistic EINTR window (separate interruptible locks)
-- Small, obviously correct, maintainer SOB
-- No new API; under 100 lines
-- Driver and function exist in this tree
-
-**Against**
-- Niche, aging Sensoray 2250/2251 hardware
-- No user/syzbot/KMSAN report
-- Not a crash, hang, or user-data corruption
-- Looks like a static-analysis sweep (two go7007 patches the same day)
-- Sibling functions still ignore I/O errors
-- Official rule text wants a bug that “bothers people” or an “oh, that’s
-  not good” issue — this is the latter, not a production fire
-
-**Unresolved**
-- Could not read lore.kernel.org in the browser (403); no on-list review
-  beyond Hans applying v1
-- Did not compile to confirm `-Wmaybe-uninitialized`
-- No evidence of prior stable-list discussion
-
-**Step 9.2: Stable rules checklist** (this tree)
-1. Obviously correct and tested? **PASS** — mechanical error returns;
-   applied by Hans Verkuil. No extra Tested-by.
-2. Real bug that affects users? **PASS** — uninit RMW and false ioctl
-   success on a reachable control path.
-3. Important (crash/security/corruption/deadlock)? **PASS** (weak) —
-   hardware register corruption and incorrect V4L2 success fall under
-   “oh, that’s not good”, not oops/hang. Not a theoretical race without
-   a trigger.
-4. Small and contained? **PASS** — one function, +33/−21.
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS** — same `s2250_s_ctrl()`; this
-   7.3-rc4 checkout already contains the commit as of v7.3-rc1.
-
-**Step 9.3: Exception category**
-Record: **None** (not a device ID, quirk, DT, build, or docs fix).
-
-**Step 9.4: Decision**
-This tree’s go7007/s2250 code is the long-standing buggy RMW path. The
-patch is a small, maintainer-applied fix for uninitialized reserved-bit
-writes and false `VIDIOC_S_CTRL` success. That is a real, user-visible
-device-control bug with very low regression risk. It is not a core-
-kernel crisis, but it is in-scope for stable as an “oh, that’s not good”
-driver correctness fix, and the code it needs is present here.
-
-### What the commit solves for this tree
-`s2250_s_ctrl()` used to ignore FP register I/O errors. On
-brightness/contrast, a failed read left `oldvalue` uninitialized and the
-next write could set reserved VPX322 bits while V4L2 still stored the
-new control. After the fix, those errors propagate so userspace is not
-told the hardware update succeeded.
-
-### Risk vs benefit
-Benefit is limited to Sensoray 2250/2251 users, but the downside of
-taking the patch is negligible. Returning errno instead of 0 on failed
-I/O is the correct userspace contract.
+The local tree is **6.18.53** (`pending-6.18`). The buggy `bfusb`
+receive path is present here; the fix is not. This is a real USB OOB /
+`skb_over_panic` bug, and the patch applies cleanly.
 
 ---
 
-Verification:
-- [Phase 1] Parsed commit `59dc14a6cb5ff`; tags are author + Hans
-  Verkuil SOB only
-- [Phase 1] Confirmed no syzbot/Fixes/Link/Reported-by
-- [Phase 2] Diff is only `s2250_s_ctrl()` in `s2250-board.c` (+33/−21)
-- [Phase 2] Read `read_reg_fp()`/`write_reg_fp()`: `*val` set only on
-  success; writes return 0 or negative
-- [Phase 3] `git blame` on pre-patch function: ignore-errors RMW from
-  `05d76f2da1e5cc` (v2.6.33-rc1)
-- [Phase 3] No Fixes tag; sibling `41f82777e5477` is a different go7007
-  issue, not a dep
-- [Phase 3] `git merge-base --is-ancestor 59dc14a6cb5ff v7.2` → not in
-  7.2; ancestor of `v7.3-rc1` and of HEAD
-- [Phase 4] `b4 dig -c/-a/-w/-m`: v1, Hans+media list, no thread
-  replies, no stable nomination
-- [Phase 4] WebFetch/curl to lore.kernel.org → 403; UNVERIFIED public
-  review beyond the mbox
-- [Phase 5] `s2250_ctrl_ops.s_ctrl` → `try_or_set_cluster()` /
-  `v4l2_s_ctrl()`; userspace `VIDIOC_S_CTRL`
-- [Phase 5] Confirmed `try_or_set_cluster()` does not publish new values
-  if `s_ctrl` returns nonzero
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 6] Current file already has the error checks; driver Kconfig
-  `VIDEO_GO7007_USB_S2250_BOARD` exists
-- [Phase 7] MAINTAINERS: GO7007 MPEG CODEC, Hans Verkuil
-- [Phase 8] Failure mode: reserved-bit programming + false success;
-  severity MEDIUM; EINTR path verified in `read_reg_fp`/`write_reg_fp`
-- [Phase 9] Official `stable-kernel-rules.rst` read: ≤100 lines, real
-  bug, “oh that’s not good”, no new API
-- UNVERIFIED: compiler warning reproduction; stable mailing-list history
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: PARSE THE SUBJECT LINE**
+
+Record: **[Bluetooth/bfusb] [validate] [check USB block headers and
+reassembly bounds before trusting them]**
+
+- Subsystem prefix: `Bluetooth: bfusb:`
+- Action verb: **validate** (safety check / missing bounds handling)
+- Claimed intent: stop treating untrusted USB block headers as valid
+  lengths
+
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+
+Record (from the candidate message and from `git show b94bab6f1dd9`):
+
+- `Signed-off-by: Li Qiang <liqiang01@kylinos.cn>` — author
+- `Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>` —
+  Bluetooth maintainer; applied to bluetooth-next
+- No `Fixes:` tag (expected)
+- No `Cc: stable@vger.kernel.org` (expected)
+- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Acked-by:` /
+  `Link:`
+- Ignore any pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit
+  ...]` markers
+
+Notable pattern: maintainer SOB only; no syzbot/user report. The same
+driver already had a `Cc: stable` USB-descriptor panic fix
+(`b5e6fa7a12572`, division by zero on malicious `wMaxPacketSize`).
+
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+
+Record:
+
+- **Bug:** USB RX trusts the 2/3-byte block header and HCI packet type.
+  Reassembly then copies `len` bytes into an skb sized from the
+  advertised HCI length, with no tailroom check.
+- **Symptom:** out-of-bounds URB reads and skb tail overwrite
+  (`skb_put()` → `skb_over_panic()` → `BUG()`).
+- **Version info:** none in the message. Blame shows the logic dates to
+  `1da177e4c3f41` (Linux-2.6.12-rc2).
+- **Root cause (author):** malformed USB transfer; missing validation of
+  header availability, declared size, packet type, and reassembly
+  tailroom. Invalid blocks should drop the partial frame.
+
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+
+Record: **Not a hidden/cleanup-only change.** The subject is “validate”,
+but the body names OOB reads and skb overwrite. The diff adds bounds
+checks, a `default:` reject, and `break` on short/oversize blocks. This
+is an explicit memory-safety fix.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: INVENTORY THE CHANGES**
+
+Record:
+
+- File: `drivers/bluetooth/bfusb.c` only
+- Scope: **+34 / −3**, single-file surgical fix
+- Functions: `bfusb_recv_block()`, `bfusb_rx_complete()`
+
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+
+Record (before → after), verified against current `bfusb.c` in this
+tree:
+
+1. **Unknown HCI packet type (start block):** `switch` has EVENT/ACL/SCO
+   only, no `default`. `pkt_len` stays **0**. Code allocates
+   `bt_skb_alloc(0)`, then `skb_put_data(..., len)` with the remaining
+   block. → **`default:` returns `-EILSEQ`** before alloc.
+2. **Reassembly copy:** any continuation (or start payload) is copied
+   with `skb_put_data` with no tailroom check. → **if `len >
+   skb_tailroom(reassembly)`, free skb, return `-EILSEQ`**.
+3. **Block header parse loop:** `while (count)` always does `hdr =
+   buf[0] | (buf[1] << 8)` and, unless bit `0x4000`, `buf[2]`. No `count
+   >= 2` / `count >= 3` checks. → **short-header checks; drop reassembly
+   and `break`**.
+4. **`count < len`:** only logs `"block extends over URB buffer
+   ranges"`, then still calls `bfusb_recv_block` and does `count -=
+   len`. → **free reassembly and `break`**.
+5. **Error accounting:** `bfusb_recv_block` return was ignored. → **on
+   `< 0`, `data->hdev->stat.err_rx++`**.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+
+Record: **[Memory safety: OOB read + skb overflow panic] [plus infinite
+loop in URB complete]**
+
+Verified mechanism in this tree:
+
+```355:376:drivers/bluetooth/bfusb.c
+        while (count) {
+                hdr = buf[0] | (buf[1] << 8);
+                ...
+                        len = (buf[2] == 0) ? 256 : buf[2];
+                ...
+                if (count < len)
+                        bt_dev_err(data->hdev, "block extends over URB
+buffer ranges");
+
+                if ((hdr & 0xe1) == 0xc1)
+                        bfusb_recv_block(data, hdr, buf, len);
+
+                count -= len;
+                buf   += len;
+        }
+```
+
+- `count` is `int urb->actual_length`. If `count < len`, `count -= len`
+  goes **negative**. `while (count)` is then true forever → **hard
+  lockup in USB completion**.
+- `skb_put_data()` calls `skb_put()`, which panics if `skb->tail >
+  skb->end`:
+
+```2574:2592:net/core/skbuff.c
+ - This function extends the used data area of the buffer. If this would
+ - exceed the total buffer size the kernel will panic.
+...
+        if (unlikely(skb->tail > skb->end))
+                skb_over_panic(skb, len, __builtin_return_address(0));
+```
+
+`skb_over_panic()` → `skb_panic()` → `BUG()`.
+
+Unknown packet type: `pkt_len` initialized to 0, no `default`, then
+`bt_skb_alloc(0)` and `skb_put_data` of the rest of the block → same
+panic.
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+
+Record:
+
+- **Quality:** obviously correct. Same pattern as existing
+  `skb_tailroom` checks in `btusb.c` / `hci_h4.c`.
+- **Minimal:** only RX validation and error accounting; no API/structure
+  changes.
+- **Regression risk: low.** `default:` cannot reject ISO
+  (`HCI_ISODATA_PKT` 0x05) on this 2003-era AVM dongle (VID `0x057c`,
+  PID `0x2200`); previously unknown types already panicked. Short-header
+  `break` only stops already-corrupt URBs. `kfree_skb(NULL)` is safe if
+  `reassembly` is already NULL.
+- **Red flags:** labeled `[PATCH 1/5]`, but the other four patches touch
+  **different files** (`btmrvl`, `hci_bcsp`, `hci_ldisc`, `hci_qca`).
+  This one is standalone.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: BLAME THE CHANGED LINES**
+
+Record:
+
+- Core RX loop / `bfusb_recv_block`: `1da177e4c3f41` (Linus, 2005-04-16,
+  Linux-2.6.12-rc2)
+- Function split/cleanup: `9c724357f432df` (Marcel Holtmann, 2006)
+- `skb_put_data`: `59ae1d127ac0ae` (2017) — same overflow semantics as
+  old `skb_put`+`memcpy`
+- `bt_dev_err` conversion: `2a4f3909d0fbda` (2020)
+- Brace removal on the `count < len` log: `461159ece0586` (2025) — style
+  only; did **not** add a `break`
+
+Buggy pattern has been in the tree for ~20 years.
+
+**Step 3.2: FOLLOW THE FIXES: TAG**
+
+Record: **No `Fixes:` tag.** Introducer is `1da177e4c3f41`, which **is**
+an ancestor of this tree (`git merge-base --is-ancestor 1da177e4c3f41
+HEAD` succeeded).
+
+Related unmerged attempt: Seungjin Bae, Oct 2025, “Fix buffer over-read
+in rx processing loop” — only the `count < 3` / `buf[2]` case. Not in
+this tree. This commit is a superset.
+
+**Step 3.3: CHECK FILE HISTORY**
+
+Record (recent `git log --oneline -20 -- drivers/bluetooth/bfusb.c`):
+
+- `b5e6fa7a12572` — `bfusb: fix division by zero in send path` (`Cc:
+  stable`, malicious USB descriptors)
+- `461159ece0586` — brace style on the exact `count < len` line
+- No existing bounds-check fix for this RX loop
+
+Standalone: yes. Series mates are other drivers.
+
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+
+Record: Li Qiang has **no** other `drivers/bluetooth/` commits on this
+branch. Luiz von Dentz is a Bluetooth maintainer (`MAINTAINERS`:
+BLUETOOTH DRIVERS / SUBSYSTEM) and applied the patch to bluetooth-next
+(commit date Mon Jul 20 2026).
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+
+Record: **None required.** Uses existing `skb_tailroom`, `bt_skb_alloc`,
+`bt_dev_err`, `kfree_skb`. `git show b94bab6f1dd9 --
+drivers/bluetooth/bfusb.c | git apply --check` → **clean apply**.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+
+Record:
+
+- `b4 dig -c b94bab6f1dd9`: https://patch.msgid.link/1f79f2f12306c15d6f6
+  86348bb79d8e6839968d2.1784191283.git.liqiang01@kylinos.cn
+- Cover: `[PATCH 0/5] Bluetooth: harden packet and transport parsing`
+  (2026-07-16)
+- `b4 dig -a`: **v1 only**; applied as submitted
+- Applied to bluetooth-next as `b94bab6f1dd9` by Luiz (patchwork-bot,
+  2026-07-20)
+- Networking pull for **7.3** (Jakub Kicinski, 2026-08-18) — **not** in
+  6.18
+- No NAK on this patch. Samsung review (`0eec0c0d-636b-...`) is about
+  **patch 2/5 `btmrvl`**, not bfusb.
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+
+Record (`b4 dig -w`): `linux-bluetooth@vger.kernel.org`, Marcel
+Holtmann, Luiz von Dentz, LKML. Maintainer applied it. No extra
+Reviewed-by on this hunk.
+
+**Step 4.3: SEARCH FOR THE BUG REPORT**
+
+Record: no syzbot/bugzilla/`Reported-by`. Independent earlier report:
+Seungjin Bae described the `buf[2]` over-read / panic (Oct 2025).
+Trigger is a malformed USB bulk IN, not a syscall fuzzer.
+
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
+
+Record: 5 independent driver hardenings. Patch 1/5 is self-contained.
+Patch 5/5 (`hci_qca`) was **not** applied. No bfusb follow-up found.
+
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
+
+Record: lore.kernel.org/stable search for this subject did not turn up a
+prior stable discussion or a reason to skip it. UNVERIFIED in the sense
+that lore.kernel.org itself returned 403; used mirrors + web search
+instead.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1: KEY FUNCTIONS**
+
+Record: `bfusb_recv_block()`, `bfusb_rx_complete()`.
+
+**Step 5.2: TRACE CALLERS**
+
+Record:
+
+- `bfusb_recv_block` — only from `bfusb_rx_complete`
+- `bfusb_rx_complete` — URB complete from `bfusb_rx_submit()`
+  (`usb_fill_bulk_urb(..., bfusb_rx_complete, skb)`)
+- `bfusb_rx_submit` — `bfusb_open()` (HCI start) and resubmit in
+  `bfusb_rx_complete`
+
+Context: USB completion (atomic/BH). An infinite `while (count)` here is
+a **hard lockup**, not a sleepable hang.
+
+**Step 5.3: TRACE CALLEES**
+
+Record: `bt_skb_alloc`, `skb_put_data`/`skb_put`, `hci_recv_frame`,
+`kfree_skb`, `usb_submit_urb`. No new callees in the fix (`skb_tailroom`
+is an existing inline).
+
+**Step 5.4: FOLLOW THE CALL CHAIN**
+
+Record:
+
+USB plug of `0x057c:0x2200` → `bfusb_probe` → BlueZ opens HCI →
+`bfusb_open` → bulk IN URBs → `bfusb_rx_complete`.
+
+Reachable from: a matching (or spoofed) USB device plus HCI running. Not
+a random syscall; **local USB attack surface**, same class as the prior
+`Cc: stable` bfusb descriptor fix.
+
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
+
+Record: `btusb.c`, `hci_h4.c`, `btmtk.c` already check `skb_tailroom`
+before appending. `err_rx++` on parse failure is standard (`btusb`,
+`btsdio`, `bpa10x`, …). bfusb was missing both.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record: **Yes.** `drivers/bluetooth/bfusb.c` still has the unvalidated
+loop and no `default:` / tailroom check (lines 245–376). `git describe
+HEAD` = `p-6.18-1-g03b85e06ca9bf`; `make kernelversion` = **6.18.53**.
+`git merge-base --is-ancestor b94bab6f1dd9 HEAD` → **not in this tree**.
+Introduced in 2.6.12-rc2; present for the entire 6.18 lifetime.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: **Clean apply.** `git apply --check` on the exact commit diff
+succeeded. Surrounding code matches the hunks (including
+post-`461159ece0586` braceless `if (count < len)`).
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: Seungjin Bae over-read patch is **not** here. No other RX-bounds
+fix in this file. The send-path div-by-zero fix **is** here; it does not
+cover this RX bug.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: **Bluetooth USB driver (`drivers/bluetooth/bfusb.c`)**.
+Criticality: **PERIPHERAL** hardware (AVM BlueFRITZ! USB only), but the
+failure is a **kernel panic / lockup** on untrusted USB data. Kconfig:
+`BT_HCIBFUSB`, depends on USB. Enabled as `=m` in several defconfigs
+(e.g. `omap2plus`, `exynos`, `loongson3`, `pmac32`).
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: Bluetooth core is active; **bfusb itself is mature/mostly
+idle**. Recent file commits are isolated fixes/style. Long-lived bug,
+not churn from a new feature.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: WHO IS AFFECTED**
+
+Record: **driver-specific** — AVM BlueFRITZ! USB (`USB_DEVICE(0x057c,
+0x2200)`), plus any system with the module that binds a spoofed VID/PID.
+Not universal.
+
+**Step 8.2: TRIGGER CONDITIONS**
+
+Record:
+
+- Requires this driver bound and HCI running (`HCI_RUNNING`).
+- Trigger: truncated/malformed bulk IN (device bug, USB fuzzing,
+  malicious dongle).
+- Not a normal healthy-traffic path.
+- Unprivileged userspace cannot hit it without the device; a **USB
+  attacker** can.
+
+**Step 8.3: FAILURE MODE SEVERITY**
+
+Record:
+
+- `skb_put` overflow → `skb_over_panic` → **`BUG()` / panic** —
+  **CRITICAL**
+- `while (count)` with negative `count` → **infinite loop in URB
+  complete** — **CRITICAL**
+- Short-header `buf[0]/buf[1]/buf[2]` — **OOB read** — **HIGH**
+
+**Step 8.4: RISK-BENEFIT RATIO**
+
+Record:
+
+- **Benefit: high for affected systems** (panic/lockup prevention).
+  Population is small, but the same driver already got stable treatment
+  for malicious USB descriptors.
+- **Risk: very low** — 37-line, single-file, validated by maintainer,
+  applies cleanly, error-path only.
+- **Ratio: favor backport.**
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR:**
+
+- Real OOB read + `skb` overflow `BUG()` + possible hard lockup,
+  verified in this tree’s code
+- Bug present since 2.6.12; definitely in 6.18.53
+- Small, obviously correct, no new APIs
+- Applies cleanly; no prerequisites
+- Bluetooth maintainer applied it
+- Same driver already had a stable USB-malice panic fix
+- Independent of the rest of the 5-patch series
+
+**AGAINST:**
+
+- Niche 2000s dongle; few users
+- No syzbot / production `Reported-by`
+- Series framed as “harden”
+- Patch 2/5 (`btmrvl`) later needed a fix — **does not apply to this
+  file**
+
+**UNRESOLVED:**
+
+- Could not fetch lore.kernel.org directly (403); used `b4 dig` +
+  mirrors
+- No scan of every post-`b94bab6f1dd9` bluetooth-next follow-up (object
+  is not on HEAD); no evidence of a bfusb revert/fixup
+
+**Step 9.2: STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — maintainer-applied; logic
+   matches existing Bluetooth RX checks
+2. Fixes a real bug that affects users? **PASS** — malformed USB RX
+   panics/lockups this driver
+3. Important issue? **PASS** — kernel `BUG()` / hard lockup / OOB
+   (CRITICAL), even though the driver is niche
+4. Small and contained? **PASS** — +34/−3, one file
+5. No new features or APIs? **PASS**
+6. Can apply to the local tree? **PASS** — `git apply --check`
+   succeeded; buggy code present; fix not present
+
+**Step 9.3: EXCEPTION CATEGORIES**
+
+Record: none (not a device ID / quirk / DT / build / doc exception).
+Qualifies as a **normal memory-safety bug fix**.
+
+**Step 9.4: DECISION**
+
+Backport to **this** 6.18.53 tree. The receive path here still trusts
+USB block lengths; that can panic or lock up the USB completion path.
+The fix is surgical and already matches this file.
+
+### What the commit solves for stable users
+
+On AVM BlueFRITZ! USB (or a spoofed `057c:2200`), a short or lying block
+header can over-read the URB buffer, `skb_put()` past the reassembled
+HCI skb (`BUG()`), or drive `count` negative and spin forever in
+`bfusb_rx_complete`. This tree still has that code. The patch only adds
+header/size/type/tailroom checks and drops the partial frame.
+
+### Risk vs benefit
+
+Benefit is preventing panic/lockup on untrusted USB RX. Risk is low:
+error-path validation, no locking/API change, clean apply. Niche
+hardware lowers breadth of impact but does not make a USB-triggered
+`BUG()` unsuitable for stable.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed subject/body/tags from the candidate text and
+  `git show b94bab6f1dd9`; no Fixes/Cc:stable/Reported-by; Luiz SOB
+  confirmed
+- **[Phase 2]** Read `bfusb_recv_block` / `bfusb_rx_complete` in this
+  tree; confirmed missing `default`, no tailroom check, log-only `count
+  < len`, signed `count` loop
+- **[Phase 2]** Read `skb_put` / `skb_put_data` / `skb_panic`: overflow
+  → `BUG()`
+- **[Phase 3]** `git blame` on both functions: core logic
+  `1da177e4c3f41` (2.6.12-rc2)
+- **[Phase 3]** `git merge-base --is-ancestor 1da177e4c3f41 HEAD` —
+  introducer in this tree
+- **[Phase 3]** `git merge-base --is-ancestor b94bab6f1dd9 HEAD` — fix
+  **not** in this tree (exit 1)
+- **[Phase 3]** `git log --oneline -20 -- drivers/bluetooth/bfusb.c` —
+  no prior RX-bounds fix; `b5e6fa7a12572` is a different (send-path) USB
+  panic
+- **[Phase 4]** `b4 dig -c b94bab6f1dd9` — lore msgid
+  `1f79f2f12306c15d6f686348bb79d8e6839968d2.1784191283`
+- **[Phase 4]** `b4 dig -a` — v1 only
+- **[Phase 4]** `b4 dig -w` — linux-bluetooth, Holtmann, von Dentz
+- **[Phase 4]** Cover letter / patchwork-bot: applied to bluetooth-next
+  2026-07-20; networking pull for 7.3
+- **[Phase 4]** Samsung mail is about `btmrvl` 2/5, not this patch
+- **[Phase 5]** Callers: only URB complete ← `bfusb_rx_submit` ←
+  `bfusb_open` / resubmit
+- **[Phase 5]** `git grep skb_tailroom` in `drivers/bluetooth` — sibling
+  drivers already check
+- **[Phase 6]** `git describe HEAD` / `make kernelversion`: 6.18.53;
+  `grep` found no “block exceeds packet length” in this tree
+- **[Phase 6]** `git apply --check` of `b94bab6f1dd9` — success
+- **[Phase 7]** Kconfig `BT_HCIBFUSB`; MAINTAINERS lists Luiz;
+  defconfigs enable it as a module
+- **[Phase 8]** Failure mode verified: panic (`BUG`) and infinite URB-
+  complete loop
+- **UNVERIFIED:** direct lore.kernel.org HTTP (403); exhaustive post-
+  merge bfusb follow-ups on branches not in HEAD
 
 **YES**
 
- drivers/media/usb/go7007/s2250-board.c | 54 ++++++++++++++++----------
- 1 file changed, 33 insertions(+), 21 deletions(-)
+ drivers/bluetooth/bfusb.c | 37 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 34 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/go7007/s2250-board.c b/drivers/media/usb/go7007/s2250-board.c
-index a155b987282f8..e536964c14e6a 100644
---- a/drivers/media/usb/go7007/s2250-board.c
-+++ b/drivers/media/usb/go7007/s2250-board.c
-@@ -365,36 +365,48 @@ static int s2250_s_ctrl(struct v4l2_ctrl *ctrl)
- 	struct s2250 *state = container_of(ctrl->handler, struct s2250, hdl);
- 	struct i2c_client *client = v4l2_get_subdevdata(&state->sd);
- 	u16 oldvalue;
-+	int ret;
+diff --git a/drivers/bluetooth/bfusb.c b/drivers/bluetooth/bfusb.c
+index 8df310983bf6b..d31d797639b51 100644
+--- a/drivers/bluetooth/bfusb.c
++++ b/drivers/bluetooth/bfusb.c
+@@ -301,6 +301,11 @@ static inline int bfusb_recv_block(struct bfusb_data *data, int hdr, unsigned ch
+ 				return -EILSEQ;
+ 			}
+ 			break;
++
++		default:
++			bt_dev_err(data->hdev, "unknown packet type 0x%02x",
++				   pkt_type);
++			return -EILSEQ;
+ 		}
  
- 	switch (ctrl->id) {
- 	case V4L2_CID_BRIGHTNESS:
--		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
--			     ctrl->val | (oldvalue & ~0xff));
--		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
--			     ctrl->val | (oldvalue & ~0xff));
--		write_reg_fp(client, 0x140, 0x60);
--		break;
-+		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
-+				   ctrl->val | (oldvalue & ~0xff));
-+		if (ret)
-+			return ret;
-+		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
-+				   ctrl->val | (oldvalue & ~0xff));
-+		if (ret)
-+			return ret;
-+		return write_reg_fp(client, 0x140, 0x60);
- 	case V4L2_CID_CONTRAST:
--		read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_CONTRAST0,
--			     ctrl->val | (oldvalue & ~0x3f));
--		read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_CONTRAST1,
--			     ctrl->val | (oldvalue & ~0x3f));
--		write_reg_fp(client, 0x140, 0x60);
--		break;
-+		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST0,
-+				   ctrl->val | (oldvalue & ~0x3f));
-+		if (ret)
-+			return ret;
-+		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST1,
-+				   ctrl->val | (oldvalue & ~0x3f));
-+		if (ret)
-+			return ret;
-+		return write_reg_fp(client, 0x140, 0x60);
- 	case V4L2_CID_SATURATION:
--		write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
--		break;
-+		return write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
- 	case V4L2_CID_HUE:
--		write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
--		break;
-+		return write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
- 	default:
- 		return -EINVAL;
+ 		skb = bt_skb_alloc(pkt_len, GFP_ATOMIC);
+@@ -319,6 +324,13 @@ static inline int bfusb_recv_block(struct bfusb_data *data, int hdr, unsigned ch
+ 		}
  	}
--	return 0;
- }
  
- static int s2250_set_fmt(struct v4l2_subdev *sd,
++	if (len > skb_tailroom(data->reassembly)) {
++		bt_dev_err(data->hdev, "block exceeds packet length");
++		kfree_skb(data->reassembly);
++		data->reassembly = NULL;
++		return -EILSEQ;
++	}
++
+ 	if (len > 0)
+ 		skb_put_data(data->reassembly, buf, len);
+ 
+@@ -353,6 +365,13 @@ static void bfusb_rx_complete(struct urb *urb)
+ 	skb_put(skb, count);
+ 
+ 	while (count) {
++		if (count < 2) {
++			bt_dev_err(data->hdev, "short block header");
++			kfree_skb(data->reassembly);
++			data->reassembly = NULL;
++			break;
++		}
++
+ 		hdr = buf[0] | (buf[1] << 8);
+ 
+ 		if (hdr & 0x4000) {
+@@ -360,16 +379,28 @@ static void bfusb_rx_complete(struct urb *urb)
+ 			count -= 2;
+ 			buf   += 2;
+ 		} else {
++			if (count < 3) {
++				bt_dev_err(data->hdev, "short block header");
++				kfree_skb(data->reassembly);
++				data->reassembly = NULL;
++				break;
++			}
++
+ 			len = (buf[2] == 0) ? 256 : buf[2];
+ 			count -= 3;
+ 			buf   += 3;
+ 		}
+ 
+-		if (count < len)
++		if (count < len) {
+ 			bt_dev_err(data->hdev, "block extends over URB buffer ranges");
++			kfree_skb(data->reassembly);
++			data->reassembly = NULL;
++			break;
++		}
+ 
+-		if ((hdr & 0xe1) == 0xc1)
+-			bfusb_recv_block(data, hdr, buf, len);
++		if ((hdr & 0xe1) == 0xc1 &&
++		    bfusb_recv_block(data, hdr, buf, len) < 0)
++			data->hdev->stat.err_rx++;
+ 
+ 		count -= len;
+ 		buf   += len;
 -- 
 2.53.0
 
