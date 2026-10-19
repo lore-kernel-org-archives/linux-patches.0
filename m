@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9231549FC4;
-	Mon, 19 Oct 2026 13:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CD6511882;
+	Mon, 19 Oct 2026 13:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418209; cv=none; b=D/jbhxi3iYweMHKHXNbtkEc3MaXXNnV5pJcMmiOnPSyUJX0CWFMkN9qsA0PJDKlQhHnU9s1CRo4CEUOtHgaoEyEaWn1AXuwjNdzGAmxeDRXwQFv0EGXuMsDja/gcLgI9TlrMfkvKU1knvebaBGlkT7NonQf06InXHF3f7Ny5Q4c=
+	t=1792418211; cv=none; b=XqJ5oA2eRDxJShlSummIoPZDt8c0J7d2zmIuPCIdAP8d4rdwwCJ3OowuqnOsJMSHfQ3EDDkLbpCpCsqcmxVOjy4vEknGPs+gxDEdIqJf8ZXDLMzdFAoREq58FjFGd10G96tK+dcxJNyFndQa71WwRkpE4bTZtKBRZT2FK/1Sxig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418209; c=relaxed/simple;
-	bh=LoGHjCg9Sdcxom0ypPmWIaigurbig5u9/msoRi9pe9E=;
+	s=arc-20240116; t=1792418211; c=relaxed/simple;
+	bh=1iXGcyE+mB3oSIh0oukTqsQovgY3iTPujs8Q57Sxv20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ar5PNBgxhMQa1CNJ02DoiJPdnXlv5W/dox1+7ccNa6qHoHiHkXd9CHXCtIcm3OfU6dNffayr/+K0BXzgb8lgQ9ZeWH1A/uQlkt42fr1Q+s9WbpE0XB1kJmIv3P0DdbzsKyLSGhU7CgbyEZEPg7Eh64i6qSkDDytdb5x14AJEHFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JsCneYY1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Dv5CPTmkiKYW+f1Po1skHi1E5/r8kh7YCrTn4wNYWqwTfU42feYE9i6Bkdz5advsXisRD2QJ2/aZ+WsCftmVwU3839Yi3ZIDjeOi9LyYClDfa7cwMBX6RP6JQVeCY3pnQ0GtjeTQ0wAyRTCdN6CndcV+HmavMTLs8JI8KdDqVT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YdBpICYO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JsCneYY1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17B11F000C6;
-	Mon, 19 Oct 2026 13:56:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YdBpICYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5051F000CA;
+	Mon, 19 Oct 2026 13:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418206;
-	bh=uG5gA47gOYSyqqgUu8gf686568I17wT33QCswzzSEF4=;
+	s=k20260515; t=1792418208;
+	bh=wtMA7tykm4p2klfOQZv9kTCziyui7WJUsRYmknVZgJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JsCneYY1MgmhpCzfm5O6CLs+yIAv4q2PBtazRARbHJ9HgADn+ghuia+eMWDfdhWml
-	 Ku5WaPzOfXwTUtPvHtp1MSW9IvDyHt3gKfBvUXMeTOGhUHyaR9qD9ms+JL7R0xYqKw
-	 b6Db/cAj0tNvnop5pvodQFE3EDBc1AJi4u6oM2RhXVH3JD0PiTQ6pVvjnGQOlLQ8xR
-	 CQWJlX5pcVB/EQC43PvQwfJGUzH15fUPm1gcBgvgqG39y1sJ3pUZORd0dqBxRSbckk
-	 oQXlat4+gOjHOLa60WRMJ8GkD8/oDy5b463bQljwUy8e2DMqpj1Ut2peKXjxYJ963t
-	 K9xjUwk0I6cVA==
+	b=YdBpICYOhjy4YmOfHXicTXkvevvAgita+gBd/4kYbiZISYyKwTMaIH71QJONbelf8
+	 lv8ma7EJPvStLP5sg7zWZ+A2MwVE62rINy5fTH0QCWP20nAZiarDqqgY+Npzv69fzw
+	 QVMPhjjl6gGTU0kEi4534nLPKplKTgADpWa4njECmGUqW1EyKOCIdww8/FsfRRJM0G
+	 BDkqZexPH3t5t2hZtiXmvz/EE70zd3XT6xMJY7x9unayoNLpYLBF6CYsOnRceCdkJ3
+	 V96RAnEBGUSvTu+IFNT7T8F/xfFLXG6oAUgfoQrOXGrm7FtitRClUNAER6wXnwNbN8
+	 D15ubSbUIK8ag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yunye Zhao <yunye.zhao@linux.alibaba.com>,
-	Yu Kuai <yukuai@fygo.io>,
+Cc: Aditya Sherawat <asherawa@qti.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	song@kernel.org,
-	linux-raid@vger.kernel.org,
+	lumag@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] md: add cond_resched() to md_do_sync()'s skip path
-Date: Mon, 19 Oct 2026 09:46:19 -0400
-Message-ID: <20261019135441.1420968-88-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] drm/msm/adreno: Add support for A704 GPU
+Date: Mon, 19 Oct 2026 09:46:20 -0400
+Message-ID: <20261019135441.1420968-89-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -53,326 +60,470 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunye Zhao <yunye.zhao@linux.alibaba.com>
+From: Aditya Sherawat <asherawa@qti.qualcomm.com>
 
-[ Upstream commit 162eb5ba791f6260fdaabae75fa2df20134f67d8 ]
+[ Upstream commit 1f69339da06255a7f8560b4768fff83992c03deb ]
 
-When sync_request() reports a skipped region (*skipped == 1),
-md_do_sync()'s main loop advances the cursor and takes an early
-continue:
+Adreno A704 GPU found in Shikra is an IP reuse of A702 GPU with very
+minimal changes. The only KMD facing difference is the chipid and the
+zap firmware which is specified via devicetree.
 
-	j += sectors;
-	...
-	if (last_check + window > io_sectors || j == max_sectors)
-		continue;
+Just add the new chipid to enable support for A704 GPU in Shikra.
 
-If the personality returns a small span per call (raid10 recovery
-returns only 128 sectors), syncing a large, mostly clean array iterates
-this branch an enormous number of times without ever yielding the CPU.
-On a non-preemptive kernel the resync thread then trips the soft-lockup
-watchdog:
-
-  watchdog: BUG: soft lockup - CPU#149 stuck for 313s! [mdX_resync]
-   md_bitmap_start_sync+0x6f/0xe0
-   raid10_sync_request+0x2c9/0x1530 [raid10]
-   md_do_sync+0x810/0x1030
-   md_thread+0xa7/0x150
-
-Add a cond_resched().  This does not reduce the wasted iterations; the
-excessive iteration count is a raid10 problem addressed separately.
-
-Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>
-Link: https://patch.msgid.link/20260723135535.101995-3-yunye.zhao@linux.alibaba.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Aditya Sherawat <asherawa@qti.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/738931/
+Message-ID: <20260710-shikra-gpu-v6-1-b388ec5dce77@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The checked-out tree is **6.18.53** (`pending-6.18`). The skip path in
-`md_do_sync()` is present, has no yield, and matches this patch. That is
-a real soft-lockup fix.
+The local checkout is **Linux 7.3.0-rc4**
+(`v7.3-rc4-27-gf0100363d8c37`). The commit is a one-line Adreno chip-id
+add on the existing A702 catalog entry; that is the textbook device-ID
+exception, so the rest of the write-up is the forensic checklist behind
+a YES for this tree.
 
-## Phase 1: Commit message forensics
+===============================================================
+PHASE 1: COMMIT MESSAGE FORENSICS
+===============================================================
 
-**Step 1.1 — Subject**
-- Record: `[md] [add] add cond_resched() to md_do_sync()'s skip path`
-- Subsystem: MD RAID core. Verb “add” here is a yield on an existing
-  loop, not a feature.
+**Step 1.1: PARSE THE SUBJECT LINE**
 
-**Step 1.2 — Tags**
-- Record:
-  - `Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>` (author)
-  - `Link: https://patch.msgid.link/20260723135535.101995-3-
-    yunye.zhao@linux.alibaba.com`
-  - `Signed-off-by: Yu Kuai <yukuai@fygo.io>` (md maintainer; applied)
-  - No `Fixes:` / `Reported-by:` / `Tested-by:` in the committed text
-  - Original v2 submission **did** include `Cc: stable@vger.kernel.org`;
-    Yu Kuai dropped it when applying (“Remove the cc stable as there is
-    no fixtag”). That is process, not a technical NAK.
-  - Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit …]`
-    ignored as instructed.
+Record: **[drm/msm/adreno] [Add] [register Adreno A704 chipid on the
+existing A702 catalog entry]**
 
-**Step 1.3 — Body**
-- Record:
-  - **Bug:** when `sync_request()` returns `*skipped == 1` with a small
-    span (RAID10 recovery: 128 sectors), `md_do_sync()` takes `continue`
-    and never reaches the existing `cond_resched()`.
-  - **Symptom:** `watchdog: BUG: soft lockup - CPU#149 stuck for 313s!
-    [mdX_resync]` with `md_bitmap_start_sync` → `raid10_sync_request` →
-    `md_do_sync` → `md_thread`.
-  - **Trigger:** large, mostly-clean RAID10 recovery (author:
-    2^40-sector device → ~2^33 iterations).
-  - **Root cause of CPU burn:** RAID10 recovery discards the bitmap’s
-    large clean span and returns 128; that is patch 3/3. This commit
-    only yields.
-  - Author tested on 6.6.102 and mainline.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
 
-**Step 1.4 — Hidden bug fix?**
-- Record: Not hidden. Explicit soft-lockup fix. Series cover letter
-  calls it a “safety net, any personality/layout.”
+Record:
+- **Fixes:** none (expected; this is new hardware ID enablement, not a
+  regression fix)
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** Konrad Dybcio `<konrad.dybcio@oss.qualcomm.com>`
+  (listed reviewer of the msm/adreno driver); Dmitry Baryshkov
+  `<dmitry.baryshkov@oss.qualcomm.com>` (msm display maintainer)
+- **Acked-by:** none
+- **Link:** none in the commit body; **Patchwork:**
+  https://patchwork.freedesktop.org/patch/738931/; **Message-ID:**
+  `<20260710-shikra-gpu-v6-1-b388ec5dce77@oss.qualcomm.com>` (explicit
+  **v6 1/7** of the Shikra GPU series)
+- **Cc: stable:** none (expected)
+- **Signed-off-by:** Aditya Sherawat (author); Akhil P Oommen
+  (msm/adreno reviewer/maintainer, listed in MAINTAINERS); Rob Clark
+  (DRM msm maintainer, committer)
+- Pipeline markers such as `Upstream commit` / `Signed-off-by: Sasha
+  Levin` were ignored per instructions; none were present on the git
+  object itself
 
-## Phase 2: Diff analysis
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
 
-**Step 2.1 — Inventory**
-- Record: `drivers/md/md.c` only; ~3 insertions / 1 deletion in
-  `md_do_sync()`. Surgical, single-function.
+Record:
+- **Bug/problem:** Adreno A704 on Qualcomm **Shikra** is an IP reuse of
+  A702. The kernel-facing difference is the chipid (`0x07000400` vs
+  `0x07000200`); zap firmware is supplied via DT, not a new catalog
+  firmware name.
+- **Symptom:** without the chipid, `adreno_info()` does not match,
+  `adreno_has_gpu()` warns `Unknown GPU revision` and returns false, and
+  the GPU does not bind.
+- **Version info:** none in the message. Git: commit is
+  `1f69339da06255a7f8560b4768fff83992c03deb`, first contained in
+  **v7.3-rc1**.
+- **Root cause as stated:** missing catalog chipid; A704 is not a new
+  GPU family.
 
-**Step 2.2 — Flow**
-- Record: **Before:** skip/early-continue path never yields. **After:**
-  `cond_resched()` then `continue`. Normal I/O path still uses the later
-  `cond_resched()` at the speed-limit check.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
 
-**Step 2.3 — Bug mechanism**
-- Record: **Hang / soft-lockup** (non-preemptive). Skip path bypasses
-  the yield that already exists later in the same loop.
+Record: **Not a hidden bug fix.** The subject is honest new-hardware
+enablement. It still qualifies under the **new device-ID** stable
+exception (one ID on an already-supported driver), not as a
+crash/UAF/leak fix.
 
-Verified in this tree:
+===============================================================
+PHASE 2: DIFF ANALYSIS - LINE BY LINE
+===============================================================
 
-```9751:9753:drivers/md/md.c
-                if (last_check + window > io_sectors || j ==
-max_sectors)
-                        continue;
-```
+**Step 2.1: INVENTORY THE CHANGES**
 
-```9779:9779:drivers/md/md.c
-                cond_resched();
-```
+Record:
+- **File:** `drivers/gpu/drm/msm/adreno/a6xx_catalog.c` — **1 insertion,
+  1 deletion** (2 lines changed, 1 file)
+- **Function/object:** `static const struct adreno_info a7xx_gpus[]` —
+  first entry (A702)
+- **Scope:** single-file surgical ID add
 
-Skip `continue` never reaches line 9779. `window` is `32 * (PAGE_SIZE /
-512)` (256 sectors). If `skipped`, `io_sectors` does not increase, so
-`last_check + window > io_sectors` stays true.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
 
-RAID10 recovery still does `max_sync = RESYNC_PAGES << (PAGE_SHIFT-9)`
-(128 sectors). On a clean bitmap, `biolist == NULL` → `giveup` clamps to
-`max_sync` and, because `max_sector` is a parameter (not reset at
-`skipped:`), the call returns 128 to `md_do_sync()`.
+Record:
+- **Before:** that catalog entry matches only `chip_ids = {0x07000200,
+  0}`.
+- **After:** `{0x07000200, 0x07000400, 0}`.
+- **Path:** GPU probe / `adreno_has_gpu()` → `find_chipid()` (DT
+  compatible `qcom,adreno-07000400` or `qcom,chipid`) → `adreno_info()`
+  walks `chip_ids[]`. A704 now returns the existing A702 `adreno_info`
+  (same firmware `a702_sqe.fw`, same `a6xx_gmuwrapper_funcs`, same
+  quirks). Systems without that chipid are unchanged.
 
-**Step 2.4 — Fix quality**
-- Record: Obviously correct. Same primitive already used in this
-  function. Process context (`md_thread`). No new API/locks. Regression
-  risk very low. Might slightly slow tight skip loops; that is the goal.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
 
-## Phase 3: Git history
+Record: **[Hardware / device-ID enablement]** not UAF/leak/race.
+Mechanism: catalog match table omitted `0x07000400`, so A704 never
+bound. Fix: append the ID to the existing A702 row. Same pattern as
+existing multi-id rows (e.g. A630 `0x06030001, 0x06030002`).
 
-**Step 3.1 — Blame**
-- Record: Skip `continue` dates to early MD (`57afd89f98a99` / 2.6 era).
-  Long-standing. RAID10 128-sector recovery cap is equally old
-  (`RESYNC_BLOCK_SIZE` 64KiB).
+Verified detail: `adreno_is_a702()` compares `gpu->info->chip_ids[0] ==
+0x07000200`. A702 remains first, so A704 still takes the A702 code paths
+— consistent with “IP reuse”.
 
-**Step 3.2 — Fixes: tag**
-- Record: None. Not a regression from a single later commit; interaction
-  of skip-continue and RAID10 recovery skip size.
+**Step 2.4: ASSESS THE FIX QUALITY**
 
-**Step 3.3 — Related commits**
-- Record: Patch 2/3 of “md/raid10: fix recovery corruption and soft
-  lockup on large arrays”.
-  - 1/3 `md/raid10: fix still_degraded being inverted` — **already in
-    this tree** (`0efabe6229dc6`). Independent.
-  - 3/3 `md/raid10: skip clean regions in bulk` — **not** in this tree.
-    Independent; this yield still needed for far/offset layouts and
-    other personalities.
-- No `cond_resched` on this skip path in `HEAD`.
+Record: **Obviously correct and minimal.** No API, locking, or struct-
+layout change. Regression risk is **very low**: unknown chipids still
+miss; only `0x07000400` newly matches, and it reuses the already-shipped
+A702 programming. Zap firmware override remains DT `firmware-name`
+(`adreno_gpu.c`).
 
-**Step 3.4 — Author**
-- Record: Yunye Zhao (Alibaba). Applied by Yu Kuai (md maintainer).
+===============================================================
+PHASE 3: GIT HISTORY INVESTIGATION
+===============================================================
 
-**Step 3.5 — Dependencies**
-- Record: Standalone. Uses existing `cond_resched()`. 6.18
-  `md_do_sync()` already has `update:`, `MD_RESYNC_ACTIVE`, and 4-arg
-  `sync_request()` — same context as the patch. Clean apply.
+**Step 3.1: BLAME THE CHANGED LINES**
 
-## Phase 4: Mailing list
+Record:
+- Current line is this commit (`1f69339da06255`).
+- Surrounding A702 entry comes from catalog split **`2e819c420e5b8`**
+  (Rob Clark, 2024-06-18) and A702 support **`18397519cb622`**
+  (“drm/msm/adreno: Add A702 support”), first contained in **v6.9-rc1**.
+- A702 code has been in-tree for many releases; this is not last-month-
+  only infrastructure.
 
-**Step 4.1 — Discussion**
-- Record: https://lore.kernel.org/linux-
-  raid/20260723135535.101995-3-yunye.zhao@linux.alibaba.com/ (also
-  openwall mirrors).
-- v1: single `cond_resched` patch. Yu Kuai initially thought it was a
-  dead loop.
-- v2: 3 patches; this one retitled; v1 “io_sectors never increases”
-  claim corrected.
-- Yu Kuai on v1 follow-up: “This patch is still valuable, even a 5s
-  lockup is not acceptable.”
-- Applied to md-7.3. No NAK on the yield itself.
+**Step 3.2: FOLLOW THE FIXES: TAG**
 
-**Step 4.2 — Recipients**
-- Record: Song Liu, Yu Kuai; Cc Li Nan, Xiao Ni, linux-raid, linux-
-  kernel.
+Record: **No Fixes: tag.** N/A. There is no “introduced the bug” SHA;
+the gap is a new chipid on existing IP.
 
-**Step 4.3 — Bug report**
-- Record: Author stack trace; 2^40-sector array; ~8.6e9 iterations;
-  313s. Cover letter: before patch 3, 37.2s 100% CPU on 8T-per-disk
-  sparse recovery; `softlockup_panic=1`.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
 
-**Step 4.4 — Series**
-- Record: 2/3 is the md-core safety net. Does not depend on 1/3 or 3/3.
+Record:
+- Immediate neighbors in `a6xx_catalog.c`: A810 support, A722 support,
+  GBIF rename, A730 hwcg fix — unrelated GPU SKUs.
+- **Series:** Message-ID is **v6 1/7** “drm/msm: Add support for Shikra
+  GPU (A704)”. Rest of series: dt-binding `qcom,adreno-07000400`, SMMU
+  binding, Shikra GPU/SMMU/cooling DT, EVK enable.
+- Binding commit **`9479a45e5f59c`** is in this tree
+  (`qcom,adreno-07000400` in `gpu.yaml`).
+- This catalog patch is **standalone** as a match-table add; it does not
+  call new helpers.
 
-**Step 4.5 — stable@**
-- Record: No useful stable-list thread found (lore.kernel.org/stable
-  403). Maintainer dropped `Cc: stable` only for missing `Fixes:`.
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
 
-## Phase 5: Semantics
+Record: Aditya Sherawat has this one msm/adreno commit in the path-
+limited log. Submitted via **Akhil P Oommen** (MAINTAINERS reviewer for
+Adreno) and merged by **Rob Clark**. Weight is from reviewer/maintainer
+trailers, not author volume.
 
-**Step 5.1 — Functions**
-- Record: `md_do_sync()`.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
 
-**Step 5.2 — Callers**
-- Record: Registered as the MD resync thread
-  (`md_register_thread(md_do_sync, …)`). Kernel thread, not IRQ.
-  Userspace triggers via array recovery/resync/check (`mdadm`).
+Record:
+- Needs the A702 `a7xx_gpus[]` row and `ADRENO_CHIP_IDS()` — both
+  present here.
+- Does **not** need the rest of the 7-patch DT series to be correct or
+  safe.
+- Cover letter listed many Shikra SoC prerequisites; those apply to
+  **board GPU bring-up**, not to appending a chipid.
+- **Can apply standalone: yes.**
 
-**Step 5.3 — Callees**
-- Record: `pers->sync_request()`, bitmap start/end, `cond_resched()`,
-  speed-limit waits.
+===============================================================
+PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+===============================================================
 
-**Step 5.4 — Reachability**
-- Record: Yes. Disk replace / rebuild / `--syncaction` on RAID10 with
-  internal bitmap. Production path.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
 
-**Step 5.5 — Similar patterns**
-- Record: Same file already yields on the I/O path. RAID1/5/10 use
-  `cond_resched()` in other loops. Skip path was the hole.
+Record:
+- `b4 dig -c 1f69339da06255`: **[PATCH v6 1/7] drm/msm/adreno: Add
+  support for A704 GPU** — https://patch.msgid.link/20260710-shikra-
+  gpu-v6-1-b388ec5dce77@oss.qualcomm.com
+- `b4 dig -a`: v1 (2026-06-09, 2 patches, bindings-first) through **v6
+  (2026-07-10, 7 patches)**. Applied version is latest (v6).
+- Cover letter (v5 mbox, same change-id): A704 is A702 reuse; Mesa
+  already merged
+  (gitlab.freedesktop.org/mesa/mesa/-/merge_requests/41762). DT bits
+  added from v3.
+- Reviews on this patch: R-b Konrad, R-b Dmitry. **No NAK** on the
+  chipid patch. Dmitry’s only v5 comment was parsing of the **GPU
+  cooling DT** commit (patch 6), unrelated to the chipid.
+- **No reviewer Cc: stable** on this patch.
 
-## Phase 6: This tree (6.18.53)
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
 
-**Step 6.1 — Buggy code present?**
-- Record: **Yes.** `drivers/md/md.c` ~9752 skip `continue` with no
-  yield. RAID10 `giveup` still advances by `max_sync` (128). `git
-  describe HEAD`: `p-6.18-1-g03b85e06ca9bf`. `make kernelversion`:
-  `6.18.53`.
+Record (`b4 dig -w`): To/Cc included Rob Clark, Konrad Dybcio, Dmitry
+Baryshkov, Akhil P Oommen, linux-arm-msm, dri-devel, freedreno, DT list.
+Right maintainers and lists.
 
-**Step 6.2 — Backport difficulty**
-- Record: **Clean apply.** Local hunk matches the submitted diff
-  (`MD_RESYNC_ACTIVE`, `update:`).
+**Step 4.3: SEARCH FOR THE BUG REPORT**
 
-**Step 6.3 — Already fixed?**
-- Record: No. 1/3 is in tree; 2/3 and 3/3 are not. Older `71e8e4f288e74`
-  (bitmap size vs array size) is a different lockup.
+Record: **No syzbot/bugzilla/user crash.** Intent is enablement of
+Shikra A704, not a fuzzer bug. Cover letter is the “report”.
 
-## Phase 7: Subsystem
+**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
 
-**Step 7.1**
-- Record: `drivers/md` — **IMPORTANT** (enterprise RAID, dm-raid). Not
-  staging.
+Record: 7-patch Shikra GPU series. This commit is **1/7** and is the
+only KMD catalog change. Later patches are bindings/DT. Not a “2/3 logic
+fix that is incomplete alone”.
 
-**Step 7.2**
-- Record: Active; recent RAID10/md fixes on this branch.
+**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
 
-## Phase 8: Impact and risk
+Record: `https://lore.kernel.org/stable/?q=A704+adreno` → **[No results
+found]**. No stable request and no documented rejection.
 
-**Step 8.1 — Who**
-- Record: MD/RAID users, especially RAID10 recovery of large mostly-
-  clean arrays. Distro/enterprise kernels often `PREEMPT_NONE` /
-  `PREEMPT_VOLUNTARY`.
+===============================================================
+PHASE 5: CODE SEMANTIC ANALYSIS
+===============================================================
 
-**Step 8.2 — Trigger**
-- Record: Recovery/resync of a large sparse array. Not unprivileged
-  syscall; rebuild is a privileged/admin path. Common after disk
-  replace. Timing-independent tight loop.
+**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
 
-**Step 8.3 — Failure mode**
-- Record: Soft lockup (313s in the report). With `softlockup_panic=1`,
-  panic. **CRITICAL**.
+Record: No function body edited. Data: `a7xx_gpus[]`. Consumers:
+`adreno_info()`, `adreno_has_gpu()`, `adreno_bind()`.
 
-**Step 8.4 — Risk vs benefit**
-- Record: Benefit high (stops watchdog/panic). Risk very low (3 lines,
-  existing helper). Ratio strongly in favor. Remaining CPU spin is patch
-  3; this still prevents the BUG.
+**Step 5.2: TRACE CALLERS**
 
-## Phase 9: Synthesis
+Record:
+- `adreno_info()`: used from `adreno_has_gpu()` and `adreno_bind()`.
+- `adreno_has_gpu()` / bind: OF GPU device probe (drm/msm), not a
+  syscall-hot path.
+- Context: platform probe, process context.
 
-**For backporting**
-- Real, reproduced soft lockup with stack trace.
-- Hole is in this tree; patch matches.
-- Tiny, obviously correct; maintainer applied it and called it valuable.
-- Independent of 3/3; still needed after 1/3.
-- Classic stable pattern: `cond_resched()` to stop a lockup.
+**Step 5.3: TRACE CALLEES**
 
-**Against**
-- Does not cut the 128-sector crawl (author is explicit).
-- No `Fixes:` (maintainer dropped `Cc: stable` for that).
-- Pre-existing `md_new_event()` spam on `last_check == 0` (not
-  introduced here).
+Record: After match, `info->funcs->init` is existing
+`&a6xx_gmuwrapper_funcs`. No new callees.
 
-**Unresolved:** none that change the verdict. Could not fetch
-lore.kernel.org/stable (403); discussion from the patch mbox is enough.
+**Step 5.4: FOLLOW THE CALL CHAIN**
 
-**Stable rules**
-1. Obviously correct and tested — **PASS** (mainline + QEMU tests;
-   maintainer applied).
-2. Real user-visible bug — **PASS** (soft lockup on RAID10 recovery).
-3. Important (crash/hang) — **PASS** (soft lockup / possible panic).
-4. Small and contained — **PASS** (~3 lines, one function).
-5. No new features/APIs — **PASS**.
-6. Applies to this tree — **PASS** (clean).
+Record: userspace cannot invent a chipid; DT/firmware describes the GPU.
+Reachable on Shikra (or any board with `qcom,adreno-07000400`). **Not**
+a universal mm/fs path. Without a GPU node the new ID is inert.
 
-**Exception category:** none required; it is a hang fix.
+**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
 
-This matters on 6.18 because RAID rebuild of large arrays is normal
-operations, and a 5–313s lockup (or panic) is exactly what stable is
-for. The yield is the same one the I/O path already uses.
+Record: Multiple `ADRENO_CHIP_IDS(id1, id2)` rows already exist (A630
+and others). This is the standard alias-SKU pattern.
 
-## Verification
-- [Phase 1] Tags: author SOB, Yu Kuai SOB, msgid link; v2 had `Cc:
-  stable`, dropped on apply for missing Fixes.
-- [Phase 2] Diff: 3 lines in `md_do_sync()` skip `continue`; 6.18 code
-  at 9752–9753 / 9779 matches.
-- [Phase 2] RAID10: `max_sync = RESYNC_PAGES << (PAGE_SHIFT-9)` = 128;
-  `biolist == NULL` → `giveup`.
-- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.18.53, branch
-  `pending-6.18`.
-- [Phase 3] 1/3 already ancestor (`0efabe6229dc6`); this commit is not
-  in HEAD.
-- [Phase 4] `b4 mbox` 21-message thread; Yu Kuai: yield still valuable;
-  applied to md-7.3.
-- [Phase 5] Caller: `md_register_thread(md_do_sync)` resync thread.
-- [Phase 6] Skip path present; context matches; expected clean apply.
-- [Phase 8] Failure: soft lockup 313s; severity CRITICAL.
-- UNVERIFIED: lore.kernel.org/stable search (HTTP 403). Does not change
-  the verdict.
+===============================================================
+PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+===============================================================
+
+**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
+
+Record:
+- Tree: **7.3.0-rc4** (mainline -rc, `HEAD` `f0100363d8c37`).
+- `a6xx_catalog.c` A702 row exists; **this commit is already an ancestor
+  of HEAD** (`git merge-base --is-ancestor 1f69339da06255 HEAD` → yes).
+  Current source already has `ADRENO_CHIP_IDS(0x07000200, 0x07000400)`.
+- A702 support: **v6.9-rc1**; catalog file since **`2e819c420e5b8`**.
+- Missing-id problem is real for any 7.3-based kernel that lacked this
+  SHA; this checkout already contains the ID.
+
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+
+Record: **Clean apply** onto the A702 row in this tree (already
+applied). No conflicting hunk. `a6xx_gmuwrapper_funcs` is present
+(`491fadb2b818e`).
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
+
+Record: Binding `9479a45e5f59c` is here. Shikra `shikra.dtsi` has GPUCC
+but **no `gpu@` / `qcom,adreno-07000400` node** in this checkout — DT
+enablement from later series patches is incomplete here, which does
+**not** make the chipid harmful.
+
+===============================================================
+PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+===============================================================
+
+**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
+
+Record: **drm/msm/adreno** (Qualcomm GPU). **IMPORTANT** for MSM/Adreno
+devices, not core mm/vfs. Peripheral relative to the whole kernel;
+important for Shikra and any other A704 SKU.
+
+**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
+
+Record: **Active** — recent catalog churn (A810, A722, A840, X2-85).
+Maintained by Rob Clark / Akhil / Konrad. Mature A702 path since v6.9;
+this ID rides that path.
+
+===============================================================
+PHASE 8: IMPACT AND RISK ASSESSMENT
+===============================================================
+
+**Step 8.1: DETERMINE WHO IS AFFECTED**
+
+Record: **driver/platform-specific** — Adreno A704 / Shikra. No effect
+on other GPUs. `CONFIG_DRM_MSM` users only.
+
+**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
+
+Record: Probe of a GPU node whose parsed chipid is `0x07000400`. Common
+on that SoC, never on others. Unprivileged users do not trigger a new
+attack surface; they only get a working GPU after bind.
+
+**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
+
+Record: Without the ID: GPU not recognized, no bind, no display/compute
+on that SoC — **not** panic/UAF. **Severity: MEDIUM for those devices**
+(hardware dead), **LOW for everyone else**. Device-ID exception treats
+that as backport-worthy enablement.
+
+**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
+
+Record:
+- **Benefit:** A704/Shikra GPU can bind using the already-supported A702
+  path; Mesa support already exists per cover letter.
+- **Risk:** very low (1-token ID, existing row, no hot-path/locking).
+- **Ratio:** high benefit for that hardware, negligible risk.
+
+===============================================================
+PHASE 9: FINAL SYNTHESIS
+===============================================================
+
+**Step 9.1: COMPILE THE EVIDENCE**
+
+**FOR:**
+- Classic **new device ID** on an existing driver (A702 since v6.9).
+- One-line, obviously correct; A704 is documented IP reuse of A702.
+- Matching already supports multiple `chip_ids`; A702 stays
+  `chip_ids[0]` so `adreno_is_a702()` still works.
+- Reviewed by Konrad Dybcio and Dmitry Baryshkov; signed off by Akhil P
+  Oommen; merged by Rob Clark.
+- Inert on machines without chipid `0x07000400`.
+- Local tree has the A702 catalog row, macros, and probe path; patch
+  applies (and is already in 7.3-rc1+).
+
+**AGAINST:**
+- Not a crash/security/corruption fix; it is new SKU enablement.
+- Part of a 7-patch Shikra GPU series (DT still incomplete in this dts).
+- No syzbot/user crash, no Cc: stable, no stable@ discussion.
+- Author is not a high-volume subsystem regular (mitigated by maintainer
+  R-b/SOB).
+
+**UNRESOLVED:**
+- lore HTML for the v6 thread was 403 via WebFetch; discussion was
+  recovered via `b4 dig` + mbox (v5 thread saved; v6 is the applied
+  revision with the same chipid hunk).
+- Whether every Shikra EVK DT patch is in 7.3-rc4: GPU node not found in
+  `shikra*.dts*`; does not change chipid safety.
+
+**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
+
+1. Obviously correct and tested? **PASS** — one ID, two msm maintainers
+   R-b, merged by drm/msm maintainer; Mesa noted as already merged.
+2. Fixes a real bug that affects users? **PASS** (via device-ID
+   exception) — without the ID, A704 never matches and the GPU does not
+   probe.
+3. Important issue (crash, security, corruption, deadlock)? **PASS**
+   under the **new device-ID exception**, not as a critical memory-
+   safety fix. Severity for A704 owners is missing GPU, not oops.
+4. Small and contained? **PASS** — 1 file, +1/-1.
+5. No new features or APIs? **PASS** — no new uAPI/driver; only a chipid
+   alias on existing A702 code.
+6. Can apply to the local tree? **PASS** — A702 row and
+   `ADRENO_CHIP_IDS` exist; commit is already in this 7.3-rc4 history.
+
+**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
+
+Record: **NEW DEVICE ID on an existing driver** (Adreno catalog chipid ≡
+PCI/USB ID add). DT exception would apply to later series patches, not
+this one.
+
+**Step 9.4: MAKE YOUR DECISION**
+
+This tree is **7.3.0-rc4**. The A702 driver and catalog entry are
+present. The patch is a one-line chipid add, which stable policy
+explicitly allows. It does not need the rest of the Shikra DT series to
+be correct. Benefit is enabling A704; risk is negligible. That is a YES
+for this tree.
+
+---
+
+**What the commit solves for users of this tree:** A704 reports chipid
+`0x07000400`. Without it, drm/msm logs unknown revision and skips the
+GPU. With it, the existing A702 path runs (SQE firmware, GMU wrapper,
+quirks). Zap firmware stays DT-overridable.
+
+**Stable rules:** small, reviewed, no new API; qualifies as a device-ID
+add, not as a sanitizer/crash fix.
+
+**Risk vs benefit:** very low risk, real hardware enablement for
+Shikra/A704.
+
+**Concerns:** series 1/7; DT GPU node may still be missing on Shikra in
+this checkout — that does not make the ID unsafe. No crash-fix urgency.
+
+Verification:
+- [Phase 1] Subject/tags: no Fixes/Reported-by/Cc:stable; R-b Konrad +
+  Dmitry; SOB Akhil + Rob Clark; Message-ID v6-1/7
+- [Phase 1] Body: A704 = A702 reuse; difference is chipid + DT zap
+- [Phase 2] `git show 1f69339da06255`: `a6xx_catalog.c` +1/-1,
+  `ADRENO_CHIP_IDS(0x07000200, 0x07000400)`
+- [Phase 2] `adreno_is_a702()` uses `chip_ids[0] == 0x07000200` — A702
+  remains first
+- [Phase 2] `adreno_info()` matches any `chip_ids[k]`
+  (`adreno_device.c:59-61`)
+- [Phase 3] `git describe --match 'v*' --contains 18397519cb622` → A702
+  in **v6.9-rc1**
+- [Phase 3] `git describe --match 'v*' --contains 1f69339da06255` → A704
+  in **v7.3-rc1**
+- [Phase 3] blame: A702 row from `2e819c420e5b8`; this line from
+  `1f69339da06255`
+- [Phase 3] no Fixes: tag; standalone vs DT series
+- [Phase 4] `b4 dig -c`: lore/msgid v6 1/7; `-a`: v1–v6; `-w`: msm
+  maintainers + lists
+- [Phase 4] mbox `/tmp/a704-thread.mbox`: v5 0–7/7 subjects; R-b on
+  chipid; Dmitry comment only on cooling DT
+- [Phase 4] lore.kernel.org/stable `A704 adreno`: no hits
+- [Phase 4] WebFetch lore/patchwork: 403/Anubis; discussion taken from
+  b4/mbox instead
+- [Phase 5] probe path `find_chipid` → `adreno_info` →
+  `info->funcs->init`; grep callers verified
+- [Phase 5] similar multi-id: A630 `0x06030001, 0x06030002`
+- [Phase 6] `git describe HEAD` → **v7.3-rc4-27-gf0100363d8c37**; `make
+  kernelversion` → **7.3.0-rc4**
+- [Phase 6] `git merge-base --is-ancestor 1f69339da06255 HEAD` → yes
+  (already in this tree)
+- [Phase 6] `gpu.yaml` contains `qcom,adreno-07000400` via
+  `9479a45e5f59c`
+- [Phase 6] no `gpu@` / adreno compatible in
+  `arch/arm64/boot/dts/qcom/shikra*`
+- [Phase 7] MAINTAINERS: Rob Clark / Konrad / Akhil for
+  `drivers/gpu/drm/msm/adreno/`
+- [Phase 8] failure mode: unknown GPU, no bind; not oops; device-ID
+  exception
+- UNVERIFIED: full v6 lore HTML (403); whether Shikra EVK GPU DT landed
+  under a different subject
 
 **YES**
 
- drivers/md/md.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index ce3bd127e3bb3..44f44219ed7fe 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9751,8 +9751,10 @@ void md_do_sync(struct md_thread *thread)
- 			 */
- 			md_new_event();
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index b43850966a5f6..bbfee7fef6dc0 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1417,7 +1417,7 @@ DECLARE_ADRENO_REGLIST_LIST(a750_ifpc_reglist);
  
--		if (last_check + window > io_sectors || j == max_sectors)
-+		if (last_check + window > io_sectors || j == max_sectors) {
-+			cond_resched();
- 			continue;
-+		}
- 
- 		last_check = io_sectors;
- 	repeat:
+ static const struct adreno_info a7xx_gpus[] = {
+ 	{
+-		.chip_ids = ADRENO_CHIP_IDS(0x07000200),
++		.chip_ids = ADRENO_CHIP_IDS(0x07000200, 0x07000400),
+ 		.family = ADRENO_6XX_GEN1, /* NOT a mistake! */
+ 		.fw = {
+ 			[ADRENO_FW_SQE] = "a702_sqe.fw",
 -- 
 2.53.0
 
