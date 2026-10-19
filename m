@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6712461257C;
-	Mon, 19 Oct 2026 14:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556BB61452C;
+	Mon, 19 Oct 2026 14:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418640; cv=none; b=pIpGQ+9+VrT78OYH99+pvC/yL+Yz4O4iT19akubGUpMfVYcLt9uV3LGRbiuQWifF7im8YF4KWFjL7g7k5ZzNSS4ahwh020ylVfDuDMX2tYQ7tlqwORUHxD14uy1M3B3Y9s38xXKwdcovRfSh3qq027+yFfi4LWYmmTQCibym9Ss=
+	t=1792418641; cv=none; b=JyyvjgGe3bapb9LRB6tUspGuFvHdR6vsWqw2MI0zZ/8m7WR22qYXggbkRWFNdFfhg677KirPPpiur8EZ+iYVdUa9bL8gQIATiSxYGfp8AzYmXDpF8HaAwCOpqTUiMiAhvMgkTS+eSc3Pi2boBVXvwdRbwd0v6Ghnp+8oNYdMj2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418640; c=relaxed/simple;
-	bh=r5s3InEchgvzp3m5zFOMXBo11KI1W/XUdhk/T3HSa7o=;
+	s=arc-20240116; t=1792418641; c=relaxed/simple;
+	bh=F6lt85MPcOEl59jtb3ug1gRiJSnG6SVyKhxF5/x/u2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uL/p5uzqdMYxPLfh421oN7UmHjlHkdtAop3wmTx3ACLj7+9Z/7Y2wy66J+tT/PjyYhPqiLzeDsXthGnWrWHWFfrsbn1AMEi/HJ6U1FtsjKFNofX4RrWvKEBuhGPWUAk+6c1RONLVoEtw2tVUijCzOXT2Xb2Un8dbat5LZYOpwCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/NQEzy0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LFRjWUBXBBOyAqrOCIEkNYseFyWzdbTyGWU47aceT0vCSkGMV8LDBR7Lo6BQlbR3BqJvXN+CJKx04u6m1J7hGNnJ0QNqKsOaJ6EAAMhzoGQnG0XK9rYw+dyneE31FU+IuDDKR+NL4aIkUa9IzSh8PJlf3xeUQoc79mv/Dz2/Ga0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f0Ihlqp5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/NQEzy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266391F000C6;
-	Mon, 19 Oct 2026 14:03:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f0Ihlqp5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1591F000C5;
+	Mon, 19 Oct 2026 14:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418638;
-	bh=RpwoW7TM1a80u01aCDnUbBDnSWEjFDM2O80sxikozNc=;
+	s=k20260515; t=1792418639;
+	bh=B4aUK8YmLb+jDiSRsCJYcxErZJfEJETwyn2Yf6MMcYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V/NQEzy0VZ9FzibMz+BiyK1tSjkk8DCXXiPKi3hhKYJA4YrIT4ZeE72fk7OuOysu9
-	 +lbsRhpftpHyzoB7+i4sfAA8WCKVEHpmlr4QFFhZaOyY22Xq/8rFrwF0+5JcFoI1Xz
-	 bxxuLY8YpFXCMipVD3Zd6QhAZ/CF9GBKj77JBc+5HwEYRojw52uvMrHIKZcDumsD3F
-	 3yN8UeNauPYvBIyvtj0SkfRYUjjc77o5/20hZMkJNhu5st9iV+lQV/ol5+ZhBQ8LAL
-	 0v9GCar2R9x+51VwPudHar4f3qecBBbJOUWQNCbrdijQZLWgu/uSal2cjyEPk2jSFn
-	 K2oZTi8dJq4/w==
+	b=f0Ihlqp5IHOLY7iEX/gGb91SPVlxhehyTLXu3PeC61HY2FUHgBSSVHJH286T3Jd9m
+	 GCoHIe72qawwOshCpP10Pd5nvQGwije+bnUZphIHJhrf9ykSoQeG4GcCXt/DL2qzcF
+	 iYUEWotpv5T3U7yDOx2H60YZ4vppYBmQ503K4RviGAEidPwP5Xelr0ZGqwhAxxD/og
+	 Kkd8iV08sv4Exwkmoq6A6QTZAaO8DbWM8DZl/0PuHMYnTY057BY8BjK11Ms9rvsrud
+	 IYZ873sUvUcmxHL5y80Rs9HvjZo1RFTZjd78bJR9ySxjc4vk9JIlvDOcGrLRisPOP+
+	 ht/Mn+jIHhldA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda: Check snd_hda_power_pm construct error before executing verb
-Date: Mon, 19 Oct 2026 09:51:22 -0400
-Message-ID: <20261019135441.1420968-391-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] firmware: imx: scu: manage mailbox channels and global handle
+Date: Mon, 19 Oct 2026 09:51:23 -0400
+Message-ID: <20261019135441.1420968-392-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -54,406 +53,362 @@ X-stable-base: Linux 6.18.57
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit df27e4dc80c4a30ad206432cb848aab00de22ca7 ]
+[ Upstream commit 55c748d596f841a18cf659ce0999f64029a5c88c ]
 
-When userspace writes 1 to /sys/bus/pci/devices/XX/remove to remove
-HDA PCI device, the HDA hardware control path is shut down and devres
-unmaps the BAR virtual address bus->remap_addr automatically during
-driver removal.
+imx_scu_probe() requests mailbox channels with the non-managed
+mbox_request_channel_byname() helper and then publishes sc_ipc through
+the global imx_sc_ipc_handle.  Later probe failures, including child
+population failure, can leave the channels and global handle live after
+the probe has failed.
 
-If a delayed HDA verb command arrives after the MMIO region is
-unmapped, the driver will access invalid virtual addresses and trigger
-a page fault splat.
+Register devres actions to free each mailbox channel and clear the global
+handle.  Also depopulate partially created child devices when
+devm_of_platform_populate() reports an error.
 
-So add an error check right after constructing snd_hda_power_pm.
-
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260717024948.506335-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Local tree is **7.3-rc4** (`v7.3-rc4-27-gf0100363d8c37`). The HDA
-`CLASS(snd_hda_power_pm)` path exists here, and this is a real page-
-fault on PCI unbind. Analysis below is for this checkout only.
+## Phase 1: Commit message forensics
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+**Step 1.1:** Record: `[firmware/imx SCU] [manage] Register managed
+cleanup for mailbox channels and the global IPC handle, and depopulate
+children if probe fails.`
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: **[ALSA: hda:] [Check] [bail out of verb execution if
-`snd_hda_power_pm` construction failed and the controller is already
-stopped]**
+**Step 1.2:** Tags present:
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Signed-off-by: Frank Li <Frank.Li@nxp.com>` (i.MX maintainer who
+  applied it)
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- `Signed-off-by: Bob Song <songxiebing@kylinos.cn>` (author)
-- `Link: https://patch.msgid.link/20260717024948.506335-1-
-  songxiebing@kylinos.cn` (v2 submission)
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA/HDA maintainer)
-- No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Cc: stable`
-  (absence expected)
-- Pipeline `Signed-off-by: Sasha Levin` / `[Upstream commit ...]`
-  ignored
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
+`Link:`, or `Cc: stable`. Absence of those tags is expected for this
+review and is not treated as a negative signal.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record:
-- **Bug:** After `echo 1 > /sys/bus/pci/devices/XX/remove`, the HDA
-  control path is torn down and `devres` unmaps `bus->remap_addr`.
-- **Symptom:** A later HDA verb still runs, touches the unmapped BAR,
-  **page fault / splat**.
-- **Root cause (author):** `CLASS(snd_hda_power_pm, pm)(codec)` can
-  fail; the old code ignored `pm.err` and still called
-  `snd_hdac_bus_exec_verb_unlocked()`.
-- **Version info:** none in the message.
+**Step 1.3:** Record:
+- **Bug:** `imx_scu_probe()` uses unmanaged
+  `mbox_request_channel_byname()` and then publishes `sc_ipc` via the
+  global `imx_sc_ipc_handle`. Later probe failures, including
+  `devm_of_platform_populate()`, leave channels allocated and the global
+  handle set.
+- **Symptom:** Leaked mailbox channels after a failed probe; a live
+  global handle to an object that `devm_kzalloc` then frees; partial
+  child devices left behind.
+- **Version info:** None in the message. Driver originated in v4.20
+  (`edbee095fafb4`).
+- **Root cause:** Non-devm mailbox requests plus a global pointer with
+  no rollback on the remaining error paths.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: Not hidden. Explicit crash-avoidance check. The v1 lore text is
-even clearer: constructor fails, code still issues verbs, then MMIO
-after iounmap.
+**Step 1.4:** Record: This is an explicit probe-error-path resource-leak
+/ dangling-pointer fix, not a disguised cleanup. The wording matches the
+diff.
 
-===============================================================
-PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## Phase 2: Diff analysis
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- File: `sound/hda/common/codec.c` — **+6 / -0**
-- Function: `call_exec_verb()`
-- Scope: **single-file surgical fix**
+**Step 2.1:** Record:
+- File: `drivers/firmware/imx/imx-scu.c` (+24 / −1)
+- Functions added: `imx_scu_free_mbox_chan()`, `imx_scu_clear_handle()`
+- Function modified: `imx_scu_probe()`
+- Scope: single-file surgical fix
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-Record:
-- **Before:** `CLASS(snd_hda_power_pm, pm)(codec)` then immediately
-  `guard(mutex)` and `snd_hdac_bus_exec_verb_unlocked()` — `pm.err`
-  unused.
-- **After:** if `pm.err < 0 && !bus->core.chip_init`, warn and return
-  `pm.err`; skip MMIO.
-- Path: verb send after power-up, specifically when the controller is
-  already stopped.
+**Step 2.2:** Before → after:
+1. After a successful `mbox_request_channel_byname()`, the channel was
+   never registered with devres. Mid-loop failure (`-EPROBE_DEFER`,
+   `-ENOMEM` from `kasprintf`, later channel failure) returned without
+   `mbox_free_channel()`. After: each channel is wrapped in
+   `devm_add_action_or_reset(..., imx_scu_free_mbox_chan, ch)`.
+2. `imx_sc_ipc_handle = sc_ipc` was published with no undo. After: a
+   matching `devm_add_action_or_reset(..., imx_scu_clear_handle,
+   sc_ipc)` NULLs it on unwind if it still points at this object.
+3. `return devm_of_platform_populate(dev)` could fail after
+   `of_platform_populate()` had already created some children
+   (`devm_of_platform_populate()` does **not** depopulate on failure; it
+   only `devres_free()`s the tracking pointer). After: explicit
+   `of_platform_depopulate(dev)` on that error.
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record:
-- **Category:** memory-safety / invalid MMIO after teardown (page
-  fault).
-- **Mechanism:** `snd_hdac_bus_send_cmd_corb()` does
-  `snd_hdac_chip_readw(bus, CORBWP)` via `bus->remap_addr` with **no
-  `chip_init` guard**. `azx_send_cmd()` only checks `chip->disabled`.
-  After `snd_hdac_bus_stop_chip()` sets `chip_init = false`, a delayed
-  verb still MMIO’s the BAR. Power-up failure (`pm_runtime_get_sync`
-  error while the device is going away) is the signal that hardware is
-  no longer usable.
-- **Note:** `CLASS` destructor still runs on the early return, so the
-  `get`/`put` pair stays balanced (`pm_runtime_get_sync` still bumps the
-  usage count on error).
+**Step 2.3:** Record: `[error-path resource leak + dangling global
+pointer]`
+- Mailbox leak: unmanaged `mbox_request_channel_byname()` with no free
+  on later probe failure.
+- Retry hazard: `__mbox_bind_client()` returns `-EBUSY` if `chan->cl` is
+  already set, so a later probe retry can stick forever.
+- Handle leak / UAF: `sc_ipc` is `devm_kzalloc`’d; probe failure
+  releases it while `imx_sc_ipc_handle` still points at it. Other i.MX
+  drivers call `imx_scu_get_handle()`.
+- Child leak: failed `of_platform_populate()` still sets
+  `OF_POPULATED_BUS` and can leave partial children.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record:
-- **Quality:** Small, matches the header note (“If the error handling is
-  needed, refer `pm.err`”). HDMI already checks `pm.err`
-  (`sound/hda/codecs/hdmi/hdmi.c`).
-- **Conservative:** both `pm.err < 0` **and** `!chip_init` — v1’s
-  `pm_runtime_status_suspended()` false-positive on platform devices
-  without RPM was why v1 was dropped.
-- **Residual hole:** if power-up fails but `chip_init` is still true,
-  verbs still run; if `chip_init` is false but power-up succeeded, verbs
-  still run. Incomplete, not wrong.
-- **Regression risk:** low for this v2 form. `codec_warn` on a teardown
-  race is acceptable.
+**Step 2.4:** Record: The mailbox and handle `devres` actions are
+obviously correct (`devm_add_action_or_reset` runs the action
+immediately if registration fails). Calling `of_platform_depopulate()`
+only on populate failure is the right API:
+`devm_of_platform_depopulate()` would `WARN` because the managed
+resource was never added. Regression risk is low. Remaining related
+leaks (`gip3`, `soc_device`, secondary static handles) are pre-existing
+and not introduced here.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+## Phase 3: Git history
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record:
-- `CLASS(snd_hda_power_pm, pm)(codec)` introduced in **`8dad6b3dac279`**
-  (“ALSA: hda/common: Use cleanup macros for PM controls”, 2025-08-29) —
-  in this tree.
-- Before that, `codec_exec_verb()` called `snd_hda_power_up_pm()` and
-  **also ignored the return value** (`664c715573c2c`, 2015). Ignoring
-  power-up failure is old; `pm.err` only became easy to check after
-  CLASS.
+**Step 3.1:** Record: Unmanaged `mbox_request_channel_byname()` and
+`imx_sc_ipc_handle = sc_ipc` come from `edbee095fafb4` (“firmware: imx:
+add SCU firmware driver support”, 2018-10-08), first contained in
+**v4.20-rc1**. The bug is long-standing.
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-Record: No `Fixes:` tag. Closest introducer of this exact shape is
-`8dad6b3dac279` (CLASS refactor, “no functional changes”). Present in
-this 7.3 tree.
+**Step 3.2:** No `Fixes:` tag. Not applicable.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record:
-- Immediate parents of `call_exec_verb`: `8dad6b3dac279` (extract +
-  CLASS), `62dd3851d2450` (`guard(mutex)`).
-- Follow-ups on this file after the fix (`ba4239b6d8e1b`,
-  `7284788743121`) are unrelated.
-- Standalone 6-line patch, not patch X/Y.
+**Step 3.3:** Related commits on this file:
+- `89f12d6509bff` — kasprintf leak in the same probe loop (same class of
+  bug)
+- `fbf10b86f6057` — OF node leak in probe
+- `97a07dd2b559d` — `devm_mutex_init` (adjacent context; not a
+  functional prerequisite)
+- `ff79af939d847` — `suppress_bind_attrs = true`
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Bob Song is a regular HDA contributor (quirks, NULL checks), not
-the maintainer. Maintainer is Takashi Iwai, who applied the patch.
+This is a standalone v1 patch, not part of a series. No follow-ups to
+this file after `55c748d596f84`.
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record:
-- Needs `CLASS(snd_hda_power_pm)` / `struct __hda_power_obj.err` from
-  **`5d8c9c987fbdd`** + **`8dad6b3dac279`**.
-- Needs `sound/hda/common/codec.c` (moved in **`05be28fe8521f`**,
-  2025-07).
-- **All of that is in this 7.3-rc4 tree.** Applies standalone here.
+**Step 3.4:** Pengpeng Hou has only this commit in
+`drivers/firmware/imx/`. Frank Li (NXP i.MX maintainer) applied it.
+Author is a contributor; the applying maintainer is the subsystem owner.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+**Step 3.5:** No hard dependencies. `devm_add_action_or_reset()` is in
+`include/linux/device/devres.h` in this tree. Applies standalone.
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Record:
-- Lore (via `b4 dig`): https://patch.msgid.link/20260717024948.506335-1-
-  songxiebing@kylinos.cn
-- **v1** (2026-07-13): `pm.err < 0 && pm_runtime_status_suspended(...)`.
-  Takashi applied, then **author asked to drop it**: platforms without
-  RPM keep `runtime_status == suspended`, so verbs would be blocked.
-  Takashi dropped it.
-- **v2** (2026-07-17): `pm.err < 0 && !bus->core.chip_init`. Takashi:
-  “Applied to for-next branch.” **This is the committed version.**
-- **v3** (same day): only `!bus->core.chip_init` (no `pm.err`). **Not
-  applied.**
-- No NAKs on v2. No `Cc: stable` in review.
+## Phase 4: Mailing list and external research
 
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Record: To/Cc: Takashi Iwai, Jaroslav Kysela, linux-sound, linux-kernel.
-Subsystem maintainer applied v2 after the v1 false-positive.
+**Step 4.1:** Record:
+- Lore / msgid:
+  https://patch.msgid.link/20260616005902.11634-1-pengpeng@iscas.ac.cn
+- Series: v1 only (`b4 dig -a`)
+- Maintainer apply: Frank Li, “Applied, thanks!” (24 Jul 2026), commit
+  `55c748d596f84`
+- No NAK. No `Cc: stable` suggestion in the thread.
+- Sashiko bot flagged **pre-existing** incomplete cleanup (`gip3`,
+  `soc_device`, secondary handles, RPC timeout). Those are not
+  regressions from this patch.
 
-**Step 4.3: SEARCH FOR THE BUG REPORT**
-Record: No bugzilla/syzbot. Trigger described as sysfs PCI `remove`. No
-stack dump in the thread. **UNVERIFIED** how many users hit it beyond
-the author (Kylinos).
+**Step 4.2:** Recipients (`b4 dig -w`): Frank Li, Sascha Hauer,
+Pengutronix, Fabio Estevam, `imx@lists.linux.dev`, `linux-arm-kernel`,
+`linux-kernel`. Appropriate i.MX maintainers were on To/Cc.
 
-**Step 4.4: CHECK FOR RELATED PATCHES AND SERIES**
-Record: Standalone. HDMI already has similar `pm.err` checks;
-ca0132/realtek CLASS sites were not changed.
+**Step 4.3:** No bugzilla / syzbot / user `Reported-by`. Bug is from
+code inspection of the probe error path.
 
-**Step 4.5: CHECK STABLE MAILING LIST HISTORY**
-Record: lore.kernel.org/stable search returned a bot wall (403).
-**UNVERIFIED** whether stable@ already discussed this. No local `git log
---grep` hits besides this commit.
+**Step 4.4:** Standalone 1/1 patch. No series dependencies.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+**Step 4.5:** Record: UNVERIFIED for lore.kernel.org/stable (Anubis bot
+wall). Original imx thread has no stable discussion.
 
-**Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF**
-Record: `call_exec_verb()`; helper for `codec_exec_verb()`.
+## Phase 5: Code semantic analysis
 
-**Step 5.2: TRACE CALLERS**
-Record:
-- `codec_exec_verb` is `codec->core.exec_verb`
-  (`snd_hda_codec_device_new`).
-- `snd_hdac_exec_verb()` uses that; fallback is
-  `snd_hdac_bus_exec_verb()`.
-- Reachable from mixer/jack/HDMI/proc/hwdep/regmap — **normal HDA I/O**,
-  not an obscure helper.
+**Step 5.1:** Record: `imx_scu_free_mbox_chan`, `imx_scu_clear_handle`,
+`imx_scu_probe`.
 
-**Step 5.3: TRACE CALLEES**
-Record: `snd_hda_power_up_pm` → `pm_runtime_get_sync`;
-`snd_hdac_bus_exec_verb_unlocked` → `bus->ops->command` (`azx_send_cmd`
-→ `snd_hdac_bus_send_cmd_corb`) which **MMIO’s `remap_addr`**.
+**Step 5.2:** `imx_scu_probe()` is the platform probe for `fsl,imx-scu`.
+`imx_scu_get_handle()` is called from clk-scu, scu-pd, thermal, rtc,
+pinctrl, nvmem, GPIO, reset, FEC, FlexCAN, remoteproc, DRM, SOF, and
+others. Impact is every i.MX8QM/QXP SCU consumer.
 
-**Step 5.4: FOLLOW THE CALL CHAIN**
-Record:
-- Everyday verbs: yes, from ALSA ioctls (often unprivileged for the
-  audio device).
-- **The crash path** is teardown: PCI `remove` / `snd_card_free` /
-  `azx_free` → `azx_stop_chip()` (`chip_init = false`) then `pcim` BAR
-  unmap. Needs a verb still in flight (jack work, unsol work, a racing
-  ctl).
-- `echo 1 > .../remove` is admin; **VFIO GPU passthrough** also unbinds
-  the HDA function. Userspace-reachable as a privileged/hotplug path,
-  not a syzbot syscall smash.
+**Step 5.3:** Probe allocates `sc_ipc`, requests MU mailbox channels,
+publishes the global handle, then populates child devices. Callees:
+`mbox_request_channel_byname`, `mbox_free_channel`,
+`devm_of_platform_populate`, `of_platform_depopulate`.
 
-**Step 5.5: SEARCH FOR SIMILAR PATTERNS**
-Record: HDMI already checks `pm.err`. USB mixer code widely checks
-`pm.err < 0` after CLASS. This `call_exec_verb` site was the hole for
-generic HDA verbs.
+**Step 5.4:** Reachable at boot on SCU SoCs (`subsys_initcall_sync`).
+Not a syscall, but it is the firmware IPC path those boards need to
+bring up clocks, power domains, and peripherals. Unprivileged userspace
+cannot poke it directly.
 
-===============================================================
-PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-===============================================================
+**Step 5.5:** Same driver already had a kasprintf leak fix in this
+probe. `imx_scu_enable_general_irq_channel()` still requests unmanaged
+`gip3` (pre-existing, not this patch).
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?**
-Record: **Yes.** `sound/hda/common/codec.c` `call_exec_verb()` uses
-CLASS; `chip_init` and `pm.err` exist. Parent of `df27e4dc80c4a` had no
-check. Bug is this tree’s HDA code (CLASS era, ~6.18+; this is 7.3).
+## Phase 6: Local tree
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-Record: **Clean apply** on this tree: same function, same CLASS, same
-`bus->core.chip_init`.
+**Step 6.1:** Local tree is **7.3.0-rc4** (`git describe HEAD` =
+`v7.3-rc4-27-gf0100363d8c37`). Buggy pattern was introduced in v4.20 and
+is in this lineage. `git merge-base --is-ancestor 55c748d596f84 HEAD`
+succeeds. Pre-fix probe is in `55c748d596f84^`.
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE**
-Record: No earlier alternate fix. HDMI’s `pm.err` checks do not cover
-`call_exec_verb`.
+**Step 6.2:** Expected apply: clean on this tree (`devm_mutex_init`
+context matches).
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+**Step 6.3:** No alternate fix for mailbox/handle cleanup. Prior leak
+fixes (`89f12d6509bff`, `fbf10b86f6057`) do not cover this.
 
-**Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY**
-Record: **ALSA HD-audio codec core** (`sound/hda/common/`).
-**IMPORTANT** — Intel/AMD/NVIDIA HDA is on most PCs, not core mm/sched.
+## Phase 7: Subsystem context
 
-**Step 7.2: ASSESS SUBSYSTEM ACTIVITY**
-Record: Active (CLASS/guard cleanups, HDMI, Realtek). Maintainer-acked.
+**Step 7.1:** Record: `[drivers/firmware/imx] [IMPORTANT]` — i.MX8QM/QXP
+System Controller IPC. Not core mm/net, but it is the firmware bus those
+SoCs use for clocks, PD, pinmux, thermal, RTC.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+**Step 7.2:** Mature driver (2018), occasional probe-correctness fixes.
+Not a new subsystem.
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: **Driver-specific** — HDA users who unbind/remove the PCI
-function (sysfs remove, VFIO, hotplug, driver rebind). Not all boots.
+## Phase 8: Impact and risk
 
-**Step 8.2: DETERMINE THE TRIGGER CONDITIONS**
-Record: Timing-dependent: delayed verb vs. chip stop / BAR unmap.
-Privileged/hotplug, not a typical unprivileged mixer write while the
-device is live.
+**Step 8.1:** i.MX8QM/QXP (and similar SCU) users with `CONFIG_IMX_SCU`.
+Driver-specific / SoC-specific.
 
-**Step 8.3: DETERMINE THE FAILURE MODE SEVERITY**
-Record: **Page fault / oops** (author; lore v1 said “page fault BUG”).
-**Severity: HIGH** (oops on unbind; panic if `panic_on_oops`). Not
-filesystem corruption.
+**Step 8.2:** Trigger is probe failure **after** some channels were
+requested: mid-loop `kasprintf` `-ENOMEM`, a later
+`mbox_request_channel_byname()` failure, `devm_mutex_init()` failure, or
+`devm_of_platform_populate()` failure. First-channel `-EPROBE_DEFER`
+does **not** leak (nothing held yet). Not userspace-triggerable except
+via boot / driver bind.
 
-**Step 8.4: CALCULATE RISK-BENEFIT RATIO**
-Record:
-- **Benefit:** HIGH for unbind/VFIO/hotplug — avoids oops.
-- **Risk:** LOW — 6 lines, v1 regression already filtered, maintainer
-  applied v2.
-- **Ratio:** favorable.
+**Step 8.3:** Failure mode:
+- Leaked MU channels → retry gets `-EBUSY` → SCU never probes →
+  clocks/PD/peripherals fail (**HIGH**, can make the board unusable)
+- Dangling `imx_sc_ipc_handle` after `devm` frees `sc_ipc` (**HIGH** UAF
+  if another driver then calls `imx_scu_get_handle()`)
+- Orphan child devices after failed populate (**MEDIUM**)
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+Happy-path probe is unchanged.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Step 8.4:** Benefit: prevents stuck SCU probe and a global-handle UAF
+on real error paths. Risk: ~24 lines, probe error path only, standard
+`devres` pattern. Ratio: favorable.
 
-**FOR:**
-- Real oops: MMIO after HDA BAR unmap / chip stop.
-- `snd_hdac_bus_send_cmd_corb()` has no `chip_init`/`remap_addr`
-  validity check — verified.
-- 6-line, no new API, CLASS destructor still balances PM.
-- Maintainer applied v2 after a real v1 false-positive on no-RPM
-  platform devices.
-- All prerequisites exist in **this** 7.3-rc4 tree.
-- HDA + PCI unbind (including GPU audio / VFIO) is a real production
-  path.
+## Phase 9: Synthesis
 
-**AGAINST:**
-- No stack trace, syzbot, or extra `Reported-by`.
-- Trigger is teardown, not playback.
-- Check is incomplete (`pm.err` XOR `chip_init`).
-- v3 was not taken; v2 is what mainline has.
+**Evidence FOR:**
+- Real leak of exclusive mailbox channels; `__mbox_bind_client()`
+  returning `-EBUSY` can permanently break SCU probe retry.
+- Global handle left pointing at `devm`-freed `sc_ipc` after populate
+  failure (UAF for every `imx_scu_get_handle()` caller).
+- `of_platform_depopulate()` on failed `devm_of_platform_populate()` is
+  correct (verified against `drivers/of/platform.c`).
+- Small, single-file, no new API.
+- Applied by the i.MX maintainer; v1 accepted as-is.
+- Same probe function already needed leak fixes; this is the
+  mailbox/handle analogue.
+- Code and helpers exist in this 7.3-rc4 tree; no missing prerequisites.
 
-**UNRESOLVED:**
-- Exact delayed-verb source (jack vs unsol vs racing ctl) not dumped.
-- stable@ discussion unverified (lore blocked).
+**Evidence AGAINST:**
+- No user/syzbot report; author-found error-path bug.
+- Trigger is uncommon (not the first-channel `-EPROBE_DEFER` case).
+- Incomplete: `gip3`, `soc_device`, and secondary IPC statics still leak
+  (pre-existing).
+- Affects SCU i.MX8 platforms only.
 
-**Step 9.2: APPLY THE STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **PASS** — v2 after v1 drop; maintainer
-   applied.
-2. Fixes a real bug that affects users? **PASS** — oops on PCI remove.
-3. Important issue? **PASS** — kernel page fault / oops (HIGH, not idle
-   WARN).
-4. Small and contained? **PASS** — +6 lines, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** —
-   CLASS/`pm.err`/`chip_init`/`call_exec_verb` all present.
+**Unresolved:** lore.kernel.org/stable search blocked (Anubis). Thread
+via `b4 dig` had no stable nomination.
 
-**Step 9.3: CHECK FOR EXCEPTION CATEGORIES**
-Record: None (not a device ID/quirk/DT/build/doc). It is a normal crash
-fix.
+**Stable rules:**
+1. Obviously correct and tested? **PASS** — standard `devres` unwind;
+   maintainer applied it; no NAK.
+2. Real bug affecting users? **PASS** — leaked exclusive channels and a
+   dangling global IPC handle on failed probe.
+3. Important (crash/security/corruption/deadlock)? **PASS** — `-EBUSY`
+   probe stall can prevent SCU bring-up; dangling handle is a UAF.
+   Severity HIGH, not a happy-path panic.
+4. Small and contained? **PASS** — 24 insertions, one file.
+5. No new features/APIs? **PASS**
+6. Can apply to this tree? **PASS** — context matches; helpers present.
 
-**Step 9.4: MAKE YOUR DECISION**
-For **this 7.3-rc4 tree**, the bug is present, the patch is self-
-contained, and it prevents a verified MMIO-after-teardown oops. It meets
-stable rules here.
+**Exception category:** none; this is a normal error-path leak/UAF fix.
 
-**What it solves for this tree:** A delayed HDA verb after controller
-stop / BAR unmap used to ignore `snd_hda_power_pm` failure and hit
-unmapped MMIO. Skipping the verb when power-up failed **and**
-`chip_init` is false stops that oops without the v1 “platform device
-never left RPM_SUSPENDED” regression.
-
-**Risk vs benefit:** Low risk, clear oops-avoidance benefit on
-unbind/hotplug.
-
----
+The local tree is 7.3-rc4. The SCU driver and the buggy unmanaged
+mailbox/handle pattern are in this lineage (since v4.20). The fix is a
+small, correct rollback of probe resources. Remaining gip3/soc_dev gaps
+are not a reason to keep the main channel/handle leak.
 
 Verification:
-- [Phase 1] Tags: author Bob Song; Link to v2 msgid; SOB Takashi Iwai;
-  no Fixes/Reported-by/Cc:stable
-- [Phase 1] Body: PCI sysfs `remove` → BAR unmap → delayed verb → page
-  fault
-- [Phase 2] Diff: +6 in `call_exec_verb()`; `pm.err < 0 &&
-  !bus->core.chip_init` then return
-- [Phase 2] `snd_hdac_bus_send_cmd_corb()` uses `snd_hdac_chip_readw` on
-  `remap_addr` with no `chip_init` check (`sound/hda/core/controller.c`)
-- [Phase 2] `azx_send_cmd()` only checks `chip->disabled`
-- [Phase 2] Header documents `pm.err` (`include/sound/hda_codec.h`)
-- [Phase 2] CLASS destructor still `snd_hda_power_down_pm` on early
-  return (RAII)
-- [Phase 3] Blame: CLASS in `8dad6b3dac279` (2025-08-29); this tree has
-  it (`git merge-base --is-ancestor` 0)
-- [Phase 3] Pre-CLASS `codec_exec_verb` also ignored
-  `snd_hda_power_up_pm()` return (`git show 8dad6b3dac279`)
-- [Phase 3] CLASS macros: `5d8c9c987fbdd`; file move: `05be28fe8521f`;
-  both in this tree
-- [Phase 3] No follow-up fix of this check after `df27e4dc80c4a`
-- [Phase 4] `b4 dig -c df27e4dc80c4a`: v1/v2/v3; committed = v2
-- [Phase 4] mbox: v1 applied then dropped (no-RPM platform false
-  positive); v2 applied; v3 not applied
-- [Phase 4] Recipients: tiwai, perex, linux-sound
-- [Phase 4] lore WebFetch 403; stable@ search unverified (bot wall)
-- [Phase 5] `codec_exec_verb` set as `codec->core.exec_verb`; used via
-  `snd_hdac_exec_verb`
-- [Phase 5] HDMI already checks `pm.err` (`hdmi.c`)
-- [Phase 6] `git describe HEAD` = `v7.3-rc4-27-gf0100363d8c37`; `make
-  kernelversion` = 7.3.0-rc4
-- [Phase 6] Pre-image of `call_exec_verb` confirmed via `git show
-  df27e4dc80c4a^:sound/hda/common/codec.c`
-- [Phase 6] `azx_free()` stops chip when `bus->chip_init` (`intel.c`);
-  `azx_remove()` → `snd_card_free`
-- [Phase 8] Failure mode: page fault on unmapped BAR; trigger: PCI
-  remove / unbind
-- UNVERIFIED: exact delayed-verb producer; number of users; stable@
-  thread
-
-The fix is small, matches this tree’s CLASS-based HDA code, and prevents
-a real oops on device teardown.
+- [Phase 1] Parsed tags: only author + Frank Li SOBs; no Fixes/Reported-
+  by/Cc: stable
+- [Phase 2] Diff: +24/−1 in `imx_scu_probe()`;
+  `devm_add_action_or_reset` for mbox + handle; `of_platform_depopulate`
+  on populate failure
+- [Phase 2] `devm_of_platform_populate()` on failure does
+  `devres_free(ptr)` without depopulate; `of_platform_populate()` still
+  sets `OF_POPULATED_BUS` — explicit depopulate is required and not a
+  double-free
+- [Phase 2] `__mbox_bind_client()` returns `-EBUSY` if `chan->cl` is set
+  — verified in `drivers/mailbox/mailbox.c`
+- [Phase 3] Blame: bug from `edbee095fafb4` (v4.20-rc1); `git merge-base
+  --is-ancestor 55c748d596f84 HEAD` true
+- [Phase 3] No Fixes: tag; no follow-up commits on this file
+- [Phase 4] `b4 dig -c 55c748d596f84`:
+  https://patch.msgid.link/20260616005902.11634-1-pengpeng@iscas.ac.cn
+- [Phase 4] `b4 dig -a`: v1 only; `b4 dig -w`: Frank Li / Sascha Hauer /
+  imx list CC’d
+- [Phase 4] mbox: Frank Li “Applied, thanks!”; Sashiko noted pre-
+  existing gaps, no NAK
+- [Phase 4] lore.kernel.org/stable: UNVERIFIED (bot challenge)
+- [Phase 5] Callers of `imx_scu_get_handle()` span clk, pd, net,
+  thermal, rtc, drm, etc.
+- [Phase 6] `git describe HEAD`: v7.3-rc4-27-gf0100363d8c37; `make
+  kernelversion`: 7.3.0-rc4; buggy probe exists in parent of this commit
+- [Phase 8] Failure mode: mailbox leak → stuck probe / dangling handle
+  UAF; severity HIGH
 
 **YES**
 
- sound/hda/common/codec.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/firmware/imx/imx-scu.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/common/codec.c b/sound/hda/common/codec.c
-index 8cab932177194..7869f673894fe 100644
---- a/sound/hda/common/codec.c
-+++ b/sound/hda/common/codec.c
-@@ -39,6 +39,12 @@ static int call_exec_verb(struct hda_bus *bus, struct hda_codec *codec,
- 	int err;
+diff --git a/drivers/firmware/imx/imx-scu.c b/drivers/firmware/imx/imx-scu.c
+index 8c28e25ddc8a6..28d745ae06067 100644
+--- a/drivers/firmware/imx/imx-scu.c
++++ b/drivers/firmware/imx/imx-scu.c
+@@ -82,6 +82,17 @@ static int imx_sc_linux_errmap[IMX_SC_ERR_LAST] = {
  
- 	CLASS(snd_hda_power_pm, pm)(codec);
-+	if (pm.err < 0 && !bus->core.chip_init) {
-+		codec_warn(codec,
-+			   "Failed to send cmd 0x%x ret=[%d], hda control stopped\n",
-+			   cmd, pm.err);
-+		return pm.err;
-+	}
- 	guard(mutex)(&bus->core.cmd_mutex);
- 	if (flags & HDA_RW_NO_RESPONSE_FALLBACK)
- 		bus->no_response_fallback = 1;
+ static struct imx_sc_ipc *imx_sc_ipc_handle;
+ 
++static void imx_scu_free_mbox_chan(void *data)
++{
++	mbox_free_channel(data);
++}
++
++static void imx_scu_clear_handle(void *data)
++{
++	if (imx_sc_ipc_handle == data)
++		imx_sc_ipc_handle = NULL;
++}
++
+ static inline int imx_sc_to_linux_errno(int errno)
+ {
+ 	if (errno >= IMX_SC_ERR_NONE && errno < IMX_SC_ERR_LAST)
+@@ -321,6 +332,11 @@ static int imx_scu_probe(struct platform_device *pdev)
+ 		dev_dbg(dev, "request mbox chan %s\n", chan_name);
+ 		/* chan_name is not used anymore by framework */
+ 		kfree(chan_name);
++
++		ret = devm_add_action_or_reset(dev, imx_scu_free_mbox_chan,
++					       sc_chan->ch);
++		if (ret)
++			return ret;
+ 	}
+ 
+ 	sc_ipc->dev = dev;
+@@ -328,6 +344,9 @@ static int imx_scu_probe(struct platform_device *pdev)
+ 	init_completion(&sc_ipc->done);
+ 
+ 	imx_sc_ipc_handle = sc_ipc;
++	ret = devm_add_action_or_reset(dev, imx_scu_clear_handle, sc_ipc);
++	if (ret)
++		return ret;
+ 
+ 	ret = imx_scu_soc_init(dev);
+ 	if (ret)
+@@ -340,7 +359,11 @@ static int imx_scu_probe(struct platform_device *pdev)
+ 
+ 	dev_info(dev, "NXP i.MX SCU Initialized\n");
+ 
+-	return devm_of_platform_populate(dev);
++	ret = devm_of_platform_populate(dev);
++	if (ret)
++		of_platform_depopulate(dev);
++
++	return ret;
+ }
+ 
+ static const struct of_device_id imx_scu_match[] = {
 -- 
 2.53.0
 
