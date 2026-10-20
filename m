@@ -1,71 +1,72 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792507296;
-	b=ng4/d7Z8rdDC0n6hK7DUtM7l1dAZyc8M3Dc2l5LUGJUclud9P1ibm+YXB6sdXErt7Qzo
-	 PrYYHfnS5TAx6whMx9/tzmwtD5EA/E2hBxz66J23oUveoEOq5Vp5aFs1JWveJ1pJNJADI
-	 zJpu33yjWiBStZpHrItiIEP6xPa8wv5sJ3Dh3u2aeXpkvYh4Dn+qqVvSvuyPpDkg2WXre
-	 eqOdyz4kFhEwOmkobpaiEAg3A0PhCwrOWxnzpI6g6jnYcJy7dmYcycRlewWS5cRxTc//i
-	 g3DgJIF4k+ODbw1aT8SWMyq2KuWTvg3cwxJyKuJnhb8B9/6qTYIYjjoGKjvnQVa8rWA==
+	t=1792508082;
+	b=pqc8l9EF6Tq4iZeXF3FWX1wohVxXnVuiY1xu0XPnHCaPetjkKOLxXOf+/MfH7bLksF4m
+	 JhJham7N9QxypcREYwZ9Co15YRmm8QghpYS1gJ+7bUnoRFp94VXF6xGqJYLiY3/KCCXuX
+	 oGYiMsSYgAl2Gvmx21wxYGlVBFOhISq93V40VrQCC2UWGoV8gclhXiEwXH+Yr7OMTs54n
+	 ELyXpy9Dqr3OEDZDLdbuWzPmxRzq7CXbn49YU2GspT+8MdOMS6llIR6DCw1c7qeh1aXBr
+	 4LWaBTH5h9QL+6+T+88TOgQfSpA5QIWxiuAG36nrbkTD+g2b1zjbPyQvVQhscXzeloQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792507296;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
+	a=rsa-sha256; c=relaxed/relaxed; t=1792508082;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=u2R+vKwDQK40EH2xxgxsG9RudDTuTEMR/+RO0OXMR9I=;
-	b=muC9wDKfxUeUNNC/8In2LVw/NsMHr3+OJx3VPJLbGDDZBDtclHxC8fs7U6Vk3vKXcKys
-	 4NKLBUT1k45QsubL8Xo26EFGOnZgBQM95UhKDYxpTK+OHMyAbfj3sIpOA2w/V88lcq+Fm
-	 cOdBXYXX34wzh1VsS9gdc2ptwSCiW3ddoItB9yN9HGq/dd1SL43h45YYmPmLot134Pur4
-	 AxYg9XG6le5r8R10WTTyDbtbqrYFiUJ6oEik7IPa/09AY3//mc48Jf8qpTWvwzoBM0AX2
-	 n6IAk3U7yPuVVhHK0Gkgr6YkEPgyLcryrkefCq4AuEhVBHsOgwvRDOcdQXdMAM9IyRg==
+	bh=/N2vEDspMeBxvAsx0/efXFk4ZBc7+qkvIXFQZ4lDJmA=;
+	b=NxLy8FmtNoc0y5OpW1YZF7GWYZWE2gCtT1hP8ZtiH3/K08+JiJ1z05xMQtRp3iugdEuG
+	 /nTEOyzydili9EIJw9BfZzuBPTmVS2n1tJhJ2Okw0CDU6509phNu6sILX2ikm7hrUp4Bf
+	 6fjSUlGMyRrY16oOOERHKvNMhwiZyKRs3DeYXTtE0VjDMsq9AA5xFTp/HrHi7Rgou4Jzn
+	 JsmVCeJSSIC7k60Lod3xDqj1CutYiCK2j6dW9bZ3Y/LxZ17nlbcp1e9SwLmtsncKKytVb
+	 kRObYKqqO/YzYU0TBpj0KsOEwbLbPhXNTXKmfXc6U3RR40o4drC705+1/L+56F5kEcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Sqs9pVvX;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=F7LFA3sQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15416606A33D;
-	Tue, 20 Oct 2026 14:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773F5606A31A;
+	Tue, 20 Oct 2026 14:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Sqs9pVvX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828C41F000C5;
-	Tue, 20 Oct 2026 14:41:31 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=F7LFA3sQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADF11F000C4;
+	Tue, 20 Oct 2026 14:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792507295;
-	bh=u2R+vKwDQK40EH2xxgxsG9RudDTuTEMR/+RO0OXMR9I=;
+	s=k20260515; t=1792508082;
+	bh=/N2vEDspMeBxvAsx0/efXFk4ZBc7+qkvIXFQZ4lDJmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sqs9pVvX5FbF15Ru/G3v0PTg4JqJJHMjtR1s4STZZFueQpv0DBUi1sDxYIbfHxDmV
-	 LKcKiRNjz/hScOnrBAe64ONzM3BW178D/ePqk/E/d5i/FJy2npUdM1UJmWrTd8b7Cv
-	 UKdS89l9nBR+ctGgof78zUkIflKkP0nP8HqCTyrGEl8/zkD7flKlhp29ibqjd7S9W5
-	 UxmpaMZisduZfOpMbJVEOTLyaf7z5pfW1LHwLGPV7SqlulaBMdklo81vK4ZMVZRzRf
-	 oqbK4gC4jnFTN9YwjLlI8c6anpJoo/YA+uxdjrN1cWnYJo8nPQOkyFk8bt2OsB30KT
-	 cnbh/EM21B8Tg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
+	b=F7LFA3sQ21HhpWwvsLp8L1LmS/o9R7EhGZVXOHcSPQ6u5BVlqzBEZih60qjEwSbr8
+	 ycLznB1SxmwKYbzKEPceU4R9JzTG2XtCGDQuY6zvyFYIFgsNTQSpLODw+mB9wu9wSM
+	 Pf2pZyfGnjt5by5WaHg0W8t3XO2faZvmMb8rl4tJPLMLFMOLswA1DlozieRFUiCSZh
+	 ZE+Hc/hM6jFprgGAy040GbW0CWZ/rVJGecw7F3qd7o61tWNoDXvpddGBcWAdY9BUcL
+	 tcOweJ3J+gNGfzsmkFOHeZIyuDwD7LjiXqaIvMXr0J8Y6wSyTonE7seyOVbQQKGetU
+	 EWxtUxrd+NbPA==
+From: SJ Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SJ Park <sj@kernel.org>,
 	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
 Subject: Re: [PATCH 6.12 000/858] 6.12.114-rc2 review
-Date: Tue, 20 Oct 2026 16:40:17 +0200
-Message-ID: <20261020144017.171634-1-ojeda@kernel.org>
+Date: Tue, 20 Oct 2026 07:54:33 -0700
+Message-ID: <20261020145434.89456-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261020075246.861837975@linuxfoundation.org>
-References: <20261020075246.861837975@linuxfoundation.org>
+References: 
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -78,21 +79,20 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 On Tue, 20 Oct 2026 09:57:31 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
+
 > This is the start of the stable review cycle for the 6.12.114 release.
 > There are 858 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Thu, 22 Oct 2026 07:51:15 +0000.
-> Anything received after that time might be too late.
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
+This rc kernel passes DAMON functionality test [1] on my test machine.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: SJ Park <sj@kernel.org>
 
-Thanks!
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
 
-Cheers,
-Miguel
+
+Thanks,
+SJ
+
+[...]
