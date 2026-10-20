@@ -1,60 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792482211;
-	b=J7AoVhn4nMJSX4dbdwRy0RMnuCLA4opaHMKWhH86j81JiTc52Gwvw5wXm+MjTJyD2C2k
-	 9SBhPtAwPrlz8YPZcRiRVGlP9gokoSCaZ+Fnsv5VuVEMzqnAZuwTxHAbuNdG2K+5FgtHr
-	 ifyIGGnaTJ8W9JnU6ySe3zY4V+N5xmEMD7rW9d7B088t261YFVlIold947LFfwVcxP1Ae
-	 2dRLnN/1nkOc20ygsYU79HaDi0ZyO+87FWozlSiQOh/tleSmmizzO3/cKXqChMmxdzgtX
-	 CUbYptTJZHFyIG7UFqe9UVLAhuzEsM/1c68qDBZeqhJyE99hbatmb/1ELs9MVBTzsnA==
+	t=1792482292;
+	b=OF7x2J/ei+DU/vNOlYOJ9dW5n/PGrQh0re61WMQ3nhc0TDT+MyVZcw4PGa/lXEpRnbKz
+	 E4tEEz8AwJ975rQXE3HsWkRI4RUwr8DxYY7dWOh8wWaOJp0wr8kHUHVfqgg8EZEFb4Nr8
+	 Os9K6d6qS35KPCkVJ4cKgdHbfrQXlm/Ef4cRyoBK8Ryeew1c+d12dhDsgSq0GmJ8w1tSf
+	 GkLj+VRFHqF6lidDVMpNjwfCbJm6ViwL/icpKE75Uif/enC+8V6j4OQhVFyqKj4kyxIi9
+	 U2HFY+9mrU0ZYbBkYZHGux7fO/mfToPXswxEJClWLzUV7coXdilIBK7/mPjfd/LvbwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792482211;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792482292;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=vU0z7m5xe8g7wdR48TxjDcDkibjrJE+rIqBFjrvHAwc=;
-	b=v6GeV5XYBisCnL592pmI1qkcG0nv3YFSSfBk4bEEUPF/hxJo9JrlYLGCCC8xpMeUHCcV
-	 x0nXD0/jN8qxHWNM3cu4mtFTPPgooqYGJbyauHy+ameelSGEvBZJ2MnP9+514uvSlCDO1
-	 /JcbhfSNkGAAbVWKxvgOy4Qw3hYrhMkTmYyAFHhxmrdXd8iOq+xSPHD417uIQ/QpidHgv
-	 GR7cRcONe+aMT8auEX7fZjXBKtcG1AWm4cCp3maIQdQ5oPj5PR2CJaJz7bOtQsoltz4LG
-	 rK72AmTiEfVn+grjJpj53Q11hRzUYc1v/r6d7gHdIsHt5NOJtKfuhD93sZEiYWenWhw==
+	bh=a2h4Z8ZzXdSSz8n/vvfe+ikwa6GSH3/gQBGbU1tp0HI=;
+	b=iHNCMUTKIPRsXRegYyO/fPU7mqfPAqp+WlILLMbt9MvDbJCvqJAX+MVyGcBR30kZo+bC
+	 Q1prJJXwNL1z4FSUyd+sAfsm+ylornqnfS29s2wfWwbLWma1RD4zQ7s4UfiFg/uWhAmjn
+	 Rs2TmTUlbbwTinwgB1ETyQ4ndvGJXa+DRhOI9/TiR1pZJy6GH/4vkDNCcthqtdtxVC+G4
+	 SbA8DhBEk9zf8TQUEcl5m4AhRUi72OdWfJEeP+ygmY9dcgw0ovPYDgEgzZ9LdXxg5b/7r
+	 QhHW1hSs867W6LeO9dilsaKePZDZUmNS5ZfGd6yMt4rN1z2hkwbtd4HKZphbGQA/Ufw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b/gEWzmI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EklBsvsw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8293606A319;
-	Tue, 20 Oct 2026 07:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FBC606A319;
+	Tue, 20 Oct 2026 07:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b/gEWzmI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA711F000C6;
-	Tue, 20 Oct 2026 07:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EklBsvsw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675571F000C6;
+	Tue, 20 Oct 2026 07:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792482210;
-	bh=vU0z7m5xe8g7wdR48TxjDcDkibjrJE+rIqBFjrvHAwc=;
+	s=korg; t=1792482291;
+	bh=a2h4Z8ZzXdSSz8n/vvfe+ikwa6GSH3/gQBGbU1tp0HI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=b/gEWzmIn5UmvCA0H08E+zVeH7GIr0bew5OcqfsbMynh7eqTZzFaXEpn/wY3JTa7C
-	 xv4ZZNszgfeIxh4AUfpmCrYqo/UGmhDmLSMja9HHBCw2TzauBuA4vmK4ZuA9+a6hAC
-	 3Q/ADSjv3Mes060W5MrECqih86p6fAzySbxensj4=
-Date: Tue, 20 Oct 2026 09:43:27 +0200
+	b=EklBsvsw5Cl4Jq/7zKwAC+m4ZxQplkvjIh3Vc8hPfFwZiZoP3MqTTow29XDx3q43C
+	 xCq1YDffdyqJyPQv3/uCC2ZZCheOkXyGanJh8Hz6ldIRpE+MkO7sLMpq7QvQITP2eH
+	 Nx2QK//Jz/mrHKFyo68VPGXNK9F5BqkImuSruQhw=
+Date: Tue, 20 Oct 2026 09:44:49 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Peter Schneider <pschneider1968@googlemail.com>
-Cc: Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@nabladev.com,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 0000/1674] 6.6.160-rc1 review
-Message-ID: <2026102018-staunch-evidence-bc19@gregkh>
-References: <20261017160431.119607952@linuxfoundation.org>
- <827e9f8d-5654-4964-a999-5ce94bd98fd4@googlemail.com>
- <7201018c-20e8-4187-832a-aeb0e5db98ca@googlemail.com>
- <rc-reply-0001-6f27dc9abcab@kernel.org>
- <892078c7-7fa1-4e32-a00f-1ac907c0ebcc@googlemail.com>
+To: Matthieu Baerts <matttbe@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 212/869] mptcp: move the whole rx path under msk
+ socket lock protection
+Message-ID: <2026102011-numbing-campsite-8856@gregkh>
+References: <20261017160036.979869304@linuxfoundation.org>
+ <20261017160042.490038561@linuxfoundation.org>
+ <0c1f23e0-3574-4582-a271-59a6ec86ad81@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -66,27 +60,38 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <892078c7-7fa1-4e32-a00f-1ac907c0ebcc@googlemail.com>
+In-Reply-To: <0c1f23e0-3574-4582-a271-59a6ec86ad81@kernel.org>
 
-On Mon, Oct 19, 2026 at 09:10:50PM +0200, Peter Schneider wrote:
-> Am 19.10.2026 um 18:54 schrieb Sasha Levin:
-> > On Mon, Oct 19, 2026 at 06:02:37AM +0200, Peter Schneider wrote:
-> > > # first bad commit: [7c1e132b0967210526de05e7af6f1c26ad0c1516] sysfs: Introduce a mechanism to hide static attribute_groups
-> > 
-> > Thanks for bisecting this.
-> > 
-> > > I think the problem is, that if you take this patch for stable, you need to also take the patch which is upstream [
-> > > cd69fedf58f8ab1ab511f7c6ac1969cebf1c935f] sysfs: Fix crash on empty group attributes array. It addresses the exact crash
-> > > that I've run into.
-> > 
-> > Rather than adding cd69fedf58f8, I dropped d87c295f599c ("sysfs: Introduce a
-> > mechanism to hide static attribute_groups") and its dependent c7fbb8218b4a
-> > ("sysfs: check visibility before changing group attribute ownership") from the
-> > 6.6 and 6.1 queues.
-> > 
+On Mon, Oct 19, 2026 at 08:35:51PM +0200, Matthieu Baerts wrote:
+> Hi Greg, Sasha,
 > 
-> Yeah, that seems to be the cleaner approach. I just tested this, and this works fine, too.
+> On 17/10/2026 17:50, Greg Kroah-Hartman wrote:
+> > 6.12-stable review patch.  If anyone has any objections, please let me know.
 > 
-> Will there be an -rc2?
+> I do!
+> 
+> > From: Paolo Abeni <pabeni@redhat.com>
+> > 
+> > [ Upstream commit bc68b0efa1bf923cef1294a631d8e7416c7e06e4 ]
+> 
+> It looks like this commit is causing troubles when running the MPTCP
+> selftests:
+> 
+> https://github.com/multipath-tcp/mptcp_net-next/actions/runs/39279118402#summary-118153494823
+> 
+> not ok 1 test: selftest_mptcp_connect # FAIL
+> not ok 1 test: selftest_mptcp_connect_checksum # FAIL
+> not ok 1 test: selftest_mptcp_connect_sendfile # FAIL
+> 
+> Is it possible to drop it, please?
+> 
+> I guess a few other patches are linked to that one:
+> 
+>  - mptcp: cleanup mem accounting
+>  - mptcp: leverage skb deferral free
+>  - mptcp: add eat_recv_skb helper
+>  - mptcp: fix soft lockup in mptcp_recvmsg()
 
-Based on all of the reports, yes.
+Thanks, I'll go drop all of these now, and push out a -rc2.
+
+greg k-h
