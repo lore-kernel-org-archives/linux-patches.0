@@ -1,108 +1,108 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792602393;
-	b=rMmbT7ANXdje6bI+4kSboqNTPZhmm0WyNbxmG4h0iH9meqqO7sopVxV8F+rcD4LYgRIx
-	 mCvHgFLNcx7N4xlDHTEDw28AYVfEopg5QS3jNzm2GairEhOYM2qvvYjOTgeKyNM2EXCmv
-	 UwRFZS61dIkX6gUICLN71ddHWndW9wvivEIwo6elFd0rMl8186pMqV1/740MZCxnO21ao
-	 Ds8GpH5xJIHTXnvzZkvKDpk9LFGYWwo8Ln9viUT2wYBzqCpQkde3lu8ebB75/4aiMbqTM
-	 egzr6GgHC9o1dxJS8EO1pUONQT4qUybzmM5vLG/W9CwGbd6PCoE5BK65BT7/92sndJA==
+	t=1792604625;
+	b=tKgJkBHB7+yjUCwtBLUFGkjFSb2oRxwFqq9FbGTJveofqod27ofBR+VGxd1SAj7ErJbr
+	 VAPk57jbCKfmWHJC5EFvlhDd2KXIFSbYYG0Jk2kyStzPmYPuWIvkR4zFfDIyq/F2Hucen
+	 2MvPGawrOGBF0wJVnlquCTLbLyHxl5Ah2yKDyGn43UDgZocj20okhWOJy6W+/3rKKCUC8
+	 /H+R8gOVjz+w0U8cn228wK9qQ9sqTwVc1qu3tAR8k0kFamH2XXFBKE7qXojww3hVcDt42
+	 MVSlJL9S5xO7TY7ISZ8W2JJhqeBpxoBYmjVt9zfHphc4rdVHTleasahvrZjOzoSZqLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792602393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792604625;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
 	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Date:From:
 	 To:Cc:Subject:Message-ID:In-Reply-To:References:Organization:X-Mailer:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:X-Proofpoint-GUID:
-	 X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:
+	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Spam-Info:
 	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=4KgtddslSOEOaN73E6Xh0kX0j9JGBALLWlHj4vZIcu8=;
-	b=RzHi/Dmp2FB8vVHolVZgI3Fl8VMP2JcqddAQq+jEuJF3TkgXTGhpSWS2QJzLR6ekWP5c
-	 /7/fpLYHYOY6joPh+UxoF4cXSS8mWXoxZRW4xiF41yiE8eVzQYc4fscTMpN4mBEjrf0Qd
-	 3MO3nRsT06VqnkG0P87rUHmgB6Ajlm4IVeK2Hd2AVK8DE22FM533sLtTcR2gkfEjc8Xt8
-	 +Mi6JgFHPaI5qmyhhXtVGY4lBTb30SmTB/vxPW2qD/+JoFcr0caZppjbgnKbyh3sP/PAD
-	 QWM2Ey/JVjtHJvJV3bsG5bSc6PIwdd1Q0aZpi0cY53DSBtOIOmn41fvtEkkfkGEOqUA==
+	bh=vilmZRHHMNfnexi+YGDujqWXf83C8yeE3BqzopJL6bY=;
+	b=MByUJMOgMGbjDicRqdsVKpi2p0coqXbrIk7h3dPeKrTMabsOGt1lWgYP4MH9AHdfjXzS
+	 +bjKpk/TahpB6C7Vds02JukPY2lUtKI997F+zCcwVC06aY+jzMJlqt1lO6kJvbagol7MV
+	 oEVnFq6cB1YGaJaNmTUrj1XHkQShlwUzsJt/Q3+IC5tQ5vI95+vGNp+GDJLVFUx6uksGQ
+	 HesmqxxWjYrMHaNpX3xSwhbUjzHet4zq8xElWK0/G0YnitbJ0aBjdTMPGvRXrKpBtMXYN
+	 7TpPquvAI2L6OCYUMzH5H93JCpbPo01hyZHv/7cflglCyGn2392OhRNkBbT0f4SH5SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.qualcomm.com;
 	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OSlcL8cO;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=cbKLoQhq;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eoyi9og8;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ekdZynG5;
 	arc=none smtp.remote-ip=205.220.180.131
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C7660A260F
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:06:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C0C7660A260F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB369606A329
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:43:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EB369606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OSlcL8cO;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=cbKLoQhq
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LFU0vj682104
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:06:31 GMT
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eoyi9og8;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ekdZynG5
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LHSl0v1745568
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:43:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4KgtddslSOEOaN73E6Xh0kX0j9JGBALLWlHj4vZIcu8=; b=OSlcL8cOU5zXbryB
-	8fphfV9zo1XreQA4OpWxV/h7tO89Sx+6X2Zl5p6+0ULsUn90taN9eGxYH16jm+qk
-	L0XZJ7Dn3v8XGxu9eL4AUwpW89Q08hqaGYjoQLd+s7IfocWo3yT9caDh8KNWlz5H
-	s2wvu8IN32qEW3e4b+swbEmyIx4Sb7Bfs53jhsZpFAhMxFVFGH/lhgrGUhOIl9na
-	ZHCzsoC6k5dyzggh321+7NzEQC0sx6z0Q589PxqQBdkJCqG9N/vTM/t84N6WLpwZ
-	XNzQ4yeKMJxtggMzRJOTsDyC0PwIrehi/AU/krpfAg39mwEvzewP39PNMVc/Bg+a
-	pxwNPQ==
+	vilmZRHHMNfnexi+YGDujqWXf83C8yeE3BqzopJL6bY=; b=eoyi9og8lE7X7gFs
+	6zN8p4jNwkyfCNTayV/KpLYTog8YiPf09MNrJZcVJnd8ebBGnM3y90AF6J6wPsgu
+	KIHm6p3JiNc6RZfwNDa4t1fGBEFrTEmAppjPtFmqqXsDcs6gCeSuRZZlb5bNDOS9
+	ImS1uhcDnN727Uzxw2NojUhBmpaItcPZUTIJpC/20W36NsqozA/ILY/A7RqOC8Fa
+	fp6nVz6bC6n4qpaiLw/MFEox+9rhuaWmCR3mtKA8Cekf76hFS10V2nlLwjUarK9d
+	b3wbMfLBTWZOussj3TRqDPdEihPsXKcxNsCG7ejdilg63VQy4NSwejKyn6ahUKZG
+	iSFgwA==
 Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hex7vs12a-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf1u3g1xq-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:06:31 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-35a04491c56so58101eec.0
-        for <patches@lists.linux.dev>; Wed, 21 Oct 2026 10:06:31 -0700 (PDT)
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:43:43 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-36803927a49so1551666eec.1
+        for <patches@lists.linux.dev>; Wed, 21 Oct 2026 10:43:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1792602390; x=1793207190; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1792604622; x=1793209422; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:organization
          :references:in-reply-to:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to:content-type;
-        bh=4KgtddslSOEOaN73E6Xh0kX0j9JGBALLWlHj4vZIcu8=;
-        b=cbKLoQhqeNXCGLi4HHxFmMhOUxkSOfp7e3ZchtQjmOhGl80/JCiDH56chTbGPZ9pZo
-         Z680Oya2WFxdUMAG6Q8PuxUVPQgjaaBxwsDLJIVA+Yt2VX2MUkxEHusLOETNuACPqfRH
-         FbiPdUiJevXwieVXZl8x0Ap8UEPYdsvkJB9tTcNIOpj9Nhh+2ZsjRbOKhdV/bkI4s53N
-         bqn983WDqbZ+K7n3lUXgRMM8lYfT9NXcw7RtZA3KFczEt8nXc68lz8/17apqMTPLjgsD
-         e5xG5gXg0B/yx6D5s2X5g+pWRPOK+5H4707jzh/XwBlGa/kJ05kTsh6pjEAdt5RFpJZ7
-         0CJA==
+        bh=vilmZRHHMNfnexi+YGDujqWXf83C8yeE3BqzopJL6bY=;
+        b=ekdZynG5N72Vv9zll63ZqX3F8beN6Q3u74zZGXhxS9Ll/jLJQBUYKXolZYFGV09iuE
+         QQdCXW4zVkURErEk8o/ksppKwJnN0vUUp9L2mxRmYZTJDPJjAwe5+UdH5CWmDSDXtiYs
+         TIutTqXC4LjZeaaw3nz4r4JBV0vS1N8jAj3j4hfLwT7G3ZOfYacJQLAk0Yp2n8B0dQVl
+         0SK++Lv75ieTRqcr5o/zeLKWp48vOykYAay0KnuiWXadWYkNJ+XcYsxVjrh4Ok2vncF4
+         RdIfdXwif8YHxSxsy6o0gOSaCHy6W9PRsKewj/PVuxyzQXoIKvRFo4DfN9xZXCnCLZUC
+         anhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792602390; x=1793207190;
+        d=1e100.net; s=20260707; t=1792604622; x=1793209422;
         h=content-transfer-encoding:content-type:mime-version:organization
          :references:in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4KgtddslSOEOaN73E6Xh0kX0j9JGBALLWlHj4vZIcu8=;
-        b=YYMLA1Gtji7iGf/wSxqEXEntrmHfQI0AmT1pcXTNmb/IYnxTDW9c1xHz1iwgdiSkv6
-         ZrwYmeW/b+rIVH58P1nZc2WFGJ0+QuZJdAON6sq95E1mwho4qEVmyNmJxviKe/uPH1Jo
-         mhuYQfYPYxO8Ys8Iy0kuBReU4tQlgJe2GGPNf+nRSvt0srx/vZGl1ClUWyacuSkYhKuN
-         WKVtM5c+8WJ8BSuQ9xA5AncHV70d2jl6FCEp5gAQjyz3iiffXuRSpgYduPCPHPiZ1mOu
-         Ue5ZrBz/edqZcnWghlR/gFx9cVgmdmurCRIBPuG28fLCIXzaj3GgDA9wxJV8zLdwAzBs
-         B9bQ==
-X-Forwarded-Encrypted: i=1; AKwUvByZ5sa56URf3H12RRDzc66n1DZm7niuoCF12mo/tBkT7N2ZqZnoABHYk4QwhnAwKWvcVzBG4UQo@lists.linux.dev
-X-Gm-Message-State: AFq9FYKgA2dzufyXECoZNMfxtHdnCMkKGN464joJ40wJwWl6gnEGvCNs
-	yVsqRURxudoMBtDhHgOj3NOIXtqRFvVLdXUhVfsgFdbjUHTW70+D3ha6YgYLMr2gRRiS2bFv3L6
-	U39peWNPMfO4PsOprAGd3+nRfFxFggEIlTyOyg+zJyDDRnaq3FNMIr/0mvyta
-X-Gm-Gg: AYBFou0Iu/fOWrMXyBj1+YlrqU/N3teSWEp71fvDdDiqkoS+XzMMy0owXA+/l9pdgUV
-	7N1289uolusI6PaltKSPH707kUdlr2TyUnanQfCaLaIzEV3qg3CIBwZnFNcvCXxXZXiHjDNq+hB
-	4fsm60p0qL1opSI6w33gx+TrjNeRcugMfc4pnaWHeKxb/JYngeYRIcaUUnlgyMbS71Z9FWM/STA
-	Ycpq9iDavd/Pnmr+4GAVIuisidQ137uIwjHRYArapOfofN8g5nOsSTQw2LPnm2BNZsHa9stx0ao
-	RieQWyTiMaXg/0ew6kvGKpyvJzWNCyUr+Y2zCceSlJfVs6zG8wjY/VwpLDMqya8SdUa/mmHJ8H+
-	DUGHT7sSeP1VEczIubczZY2RqV5KIwsE5N2VJmcsnYw==
-X-Received: by 2002:a05:693c:20cf:20b0:363:a45d:10b1 with SMTP id 5a478bee46e88-365fa49061dmr6847150eec.5.1792602390113;
-        Wed, 21 Oct 2026 10:06:30 -0700 (PDT)
-X-Received: by 2002:a05:693c:20cf:20b0:363:a45d:10b1 with SMTP id 5a478bee46e88-365fa49061dmr6847104eec.5.1792602389510;
-        Wed, 21 Oct 2026 10:06:29 -0700 (PDT)
+        bh=vilmZRHHMNfnexi+YGDujqWXf83C8yeE3BqzopJL6bY=;
+        b=0+3TL8TfamW+Sq613bNCaE4K7i0FHMfnmJdt3hXxUxBK1X0igprDlvx4v4f/hcNwGL
+         2lwSBHthGsguHxCZ0zkCOP2UuUDwiYMTrp7zcKDq7ZOFgTy3Hu1/qtcYRiI1bFus1hiP
+         vJXOXojVcKLI4a+hdRa7YSItFl79+rKHL4IuQ2NcAmWqI2uH4n09lei1am0e0onUB8bM
+         2dVm555+diTtA7ios7OKT8tH3ezyzIYordAy8U1ppZ0EK1KDhJufrXZoLbIy528W/LoC
+         eSTkv2mhryYTc3VrGzhCreNxRM+WAO2GxU/OVaBJO7IUgeTS/NEk0m6giamRyhrcjmGm
+         FXyg==
+X-Forwarded-Encrypted: i=1; AKwUvByQa1/dqah2ofNAf5RV5MWcmAiRc6+jWbYjZsueYMjjUXla/cnC2Xts1CjPmI7S2PyN9rk2FByy@lists.linux.dev
+X-Gm-Message-State: AFq9FYLGJb6XqopYz1k3vLDYC/3nJ47cYw/akhRrRqaDpEwzbRpLD7HQ
+	tfZ8HqIzblSDELbjka8bqWhIAQFopkooWuTLK6EyeyR/MkDiwERqCmWhi5ukyz4h5DSGkq1AwLD
+	9RZUAsnY64864vweb/9LNS7DJX3PdFhsAIVxMa/Xp+XvJxlDSLY8M925PHGE6
+X-Gm-Gg: AYBFou0Nd3kX7BNcvrMhXzp8lEtyz6otyMNsX7rUZ3V5EKsL3g0Bh68wSaw7ehRyTpg
+	y0JhEIvIE4sJcLT6o+K1AXPKTsuIA9I+b/AzT935Z5Bov+pRhbZCB4z/ZW391/kkfes5RqQxJ1K
+	j611aUJQckijiFat5COVE535fP+l3KNNlDVjwzOgRENU0jPvbuL4QswAHqzB6Q4zJWupxktkUqb
+	Nh38vQ0KyNd8ahminQo5iN+nw9k6oApgLa8ZfFgy1iHU82MUghcokiId8LqotxQrYZGyFtNOxIV
+	d1AxSqBeR5tSftxOp4esnXT0FN28oDRSrcHqAGVnEAMsZ2A2FumQJN9ew5i4P3qnyRuXCYX3E8M
+	jfqc01KjunGzViVMiwGp0mTDepY/+WVaxhVM9WHlRTA==
+X-Received: by 2002:a05:693c:65db:b0:366:8efb:bab9 with SMTP id 5a478bee46e88-3674e450f24mr4349161eec.11.1792604622270;
+        Wed, 21 Oct 2026 10:43:42 -0700 (PDT)
+X-Received: by 2002:a05:693c:65db:b0:366:8efb:bab9 with SMTP id 5a478bee46e88-3674e450f24mr4349127eec.11.1792604621677;
+        Wed, 21 Oct 2026 10:43:41 -0700 (PDT)
 Received: from localhost (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-367f52ce166sm5334511eec.29.2026.10.21.10.06.27
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36741f753f7sm8840346eec.27.2026.10.21.10.43.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 10:06:29 -0700 (PDT)
-Date: Wed, 21 Oct 2026 10:06:22 -0700
+        Wed, 21 Oct 2026 10:43:41 -0700 (PDT)
+Date: Wed, 21 Oct 2026 10:43:36 -0700
 From: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
@@ -136,12 +136,11 @@ Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
         Sami Tolvanen <samitolvanen@google.com>,
         Song
  Shuai <songshuaishuai@tinylab.org>
-Subject: Re: [PATCH v2 08/15] efi/libstub: Have efi_kaslr_relocate_kernel()
- handle extra_size
-Message-ID: <20261021100622.00007ae5@oss.qualcomm.com>
-In-Reply-To: <8-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+Subject: Re: [PATCH v2 11/15] arm64: drtm: Add macro definitions for DEN0113
+Message-ID: <20261021104336.00000437@oss.qualcomm.com>
+In-Reply-To: <11-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
 References: <0-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
-	<8-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+	<11-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
 Organization: Qualcomm
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.51; x86_64-w64-mingw32)
 X-Mailing-List: patches@lists.linux.dev
@@ -155,114 +154,172 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: QFiSS8aRpaElBQxKVjrDKC1E37GMIhCb
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA2OCBTYWx0ZWRfX/3Wj9leRH8ek
- ZJKwWdHe1Smip0Df2Mb/d3nh23pNKyK+oU1UP5w7q8NBcXVtFXEVi1Vp9Zedsr6c5EYglvZStfx
- GK3g/Phk0FSMUcnhc0YI5a7+zt207TI=
-X-Proofpoint-GUID: QFiSS8aRpaElBQxKVjrDKC1E37GMIhCb
-X-Authority-Analysis: v=2.4 cv=e4uT2qp/ c=1 sm=1 tr=0 ts=6ad8f117 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=S8ZMU4sP c=1 sm=1 tr=0 ts=6ad8f9cf cx=c_pps
  a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
  a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=Ikd4Dj_1AAAA:8 a=EUspDBNiAAAA:8 a=z1Vexnt6jiiBlSUV7TIA:9 a=CjuIK1q_8ugA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=Ikd4Dj_1AAAA:8 a=EUspDBNiAAAA:8 a=cBdanpMcOxUnX1AP4g8A:9 a=CjuIK1q_8ugA:10
  a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA2OCBTYWx0ZWRfX90Wo6x4B0Tti
- Yb+46DqQzOh2ZdpQ+81og/jTxtjOwZSN0PLh0lHLuyB3Tb+Ejooedd+nQRU7WXjN2ox8nRb0y+v
- JUp1capFv8m1Zjz0537LIIi5p63Y4CjtSfRcaPjKFONYiH/JUFaH8uReV8fctJkngy8Vphgu8lv
- TQvM2E3B3ysfRYcCiLtoLQwOQoGeTj49xlSdPZcW2ty3MgBfn6x1+dcr1g5U0ONuAby8bK/5oJy
- ZW0BlVx6M2MCNdbEkTqHxmjnOl/SybmVqrzYrCPT8LVa1jDhOilIPAfvJlBJoBtyGZPI8hGMIg+
- mUNxNkqB+ZXVCoeCVn7aXRZ0feB+RtINY5ySjVMPHFq7BOyC08Uu+F83+q8RG40cHPS07QFtAK2
- wlxGAPIK2mYl0o1/YbNm7GrYMsfsKmE/rq33AdsIUEt6B9qzrA0hh6qu17WDc0RthC+tQ9vldRX
- Y3pS9ZuZy23if8JwJ5w==
+X-Proofpoint-ORIG-GUID: N8CRGGSTzDZsB93YMklYNuiHE2Oa0AmH
+X-Proofpoint-GUID: N8CRGGSTzDZsB93YMklYNuiHE2Oa0AmH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA3MCBTYWx0ZWRfX0NlwWYDfNgGS
+ 9qh4CVYMH0rD8b1SgL5GWsX1oxtTH7yTygmExpNf1Pt/sACtlb9plP5U27bmIhnDxaoQFFCIpRB
+ xRzYFZoR6e3LoOLe0FpJWP7umLy/3Nw2RdaCmU2mQT5YFEC30HE3uPVcO+LyX+m9+2YMPbKLshr
+ x9SopRYGJzytmbrg2luWh7+RSuL9b4xyLDF3POfikqtKk48OIfCjmLR1Fq8G/J2evPYG9kK7Oac
+ yjZshDrVFNo4vrtQgOK6VDMKhuAQvttKYivFaWHbQRDTLVx3yaMcx+hXgLr8WHuDdjeR60sN0HT
+ C2QOyDrsCVg2GSecwCudoXjDJpZkBYLW9Zy8cVQbx73dcqBFo/Z8uIVHam/sSxwBpeLCZVGBvn6
+ ASVTI+Z1sHRs9uaTS7Ta8rvrwD3BeDgH6GI/Xhe2loxHgTgXtdNUpEufM5JOWlUlHcM1PN7YKkf
+ cZ4xI0LxVB7y4v8a37Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA3MCBTYWx0ZWRfX72Mb/HzGKdhZ
+ 9F9Yff1Vrpewc9qES5cA6qRa6+D+Hp94Fb1Zf94m4dXwJQitnJa5+Wp0JTMV0pDeztPEWLZMle9
+ 0YMj5ZuwGZqUWq3wjQN14Cyn4Os+Nrg=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_04,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210068
+ bulkscore=0 phishscore=0 clxscore=1015 adultscore=0 impostorscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610210070
 
-On Fri,  2 Oct 2026 20:31:45 -0300
+On Fri,  2 Oct 2026 20:31:48 -0300
 Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-> There are three possibilities here, each a little different:
-> - relocating for kaslr, just request extra_size like the zboot flow does
->   when allocating from EFI
-> - in place, attempt to allocate from EFI precisely after Image to
->   confirm nothing weird is there, failing that
-> - like any other error with the in place EFI location allocate
->   non-randomly with extra_size included
-> 
-> Remove the callers' assignments of reserve_size since
-> efi_kaslr_relocate_kernel() now does it.
+> Taken from rev 1.4b of the spec, following the SMCC register layout and
+> constant names.
 > 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-A couple of trivial comments.  Otherwise looks good to me.
+
+Nice - appreciated the spec references as saved a bunch of searching.
+A few really small comments inline. Either way 
 
 Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 
-> diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
-> index 4bc963e999eb97..e419f3800af517 100644
-> --- a/drivers/firmware/efi/libstub/kaslr.c
-> +++ b/drivers/firmware/efi/libstub/kaslr.c
+> ---
+>  arch/arm64/include/asm/drtm.h | 304 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 304 insertions(+)
+>  create mode 100644 arch/arm64/include/asm/drtm.h
+> 
+> diff --git a/arch/arm64/include/asm/drtm.h b/arch/arm64/include/asm/drtm.h
+> new file mode 100644
+> index 00000000000000..8188af1b582bb3
+> --- /dev/null
+> +++ b/arch/arm64/include/asm/drtm.h
 
-> @@ -125,16 +164,29 @@ efi_status_t efi_kaslr_relocate_kernel(unsigned long *image_addr,
->  	}
->  
->  	if (status != EFI_SUCCESS) {
-> -		if (!check_image_region(*image_addr, kernel_memsize)) {
-> +		bool image_region_ok =
-> +			check_image_region(*image_addr, kernel_memsize);
+> +/*
+> + * The spec uses 4KB pages for sizes and alignment throughout, see v1.4B
+> + * sections 3.3, 3.13, 3.14 and 3.15.
+> + */
+> +#define ARM_DRTM_PAGE_SIZE			4096
+
+Maybe use SZ_4K from linux/sizes.h
+
+
+
+> +/* v1.4B section 3.3 "DRTM_FEATURES" */
+> +#define ARM_DRTM_SMC_FEATURES			(ARM_DRTM_SMC_FN_BASE + 0x01)
+> +/* X1 input parameter */
+> +#define ARM_DRTM_FEATURE_SELECTOR		BIT_U64(63)
+
+Maybe define the alternate masking for function ID - for completeness if nothing else.
+
+> +#define ARM_DRTM_FEATURE_ID_MASK		GENMASK_U64(7, 0)
+
+> +/*
+> + * PCR schema numbers. ARM_DRTM_PCR_SCHEMA_MASK is a bitmap indexed by these,
+> + * and the Launch Features ARM_DRTM_LAUNCH_PCR_SCHEMA_MASK field holds one.
+> + */
+
+Similar to below. Maybe this dual use is a bit fragile.
+
+> +#define ARM_DRTM_PCR_SCHEMA_DEFAULT		0
+> +#define ARM_DRTM_PCR_SCHEMA_AUTHORITIES		1
+
+> +/* v1.4B Table 6 "DMA protection features" */
+> +#define ARM_DRTM_FEATURE_DMA_PROTECTION		0x03
+> +#define ARM_DRTM_DMA_PROTECTION_MASK		GENMASK_U64(7, 0)
+> +/* Only valid if ARM_DRTM_DMA_PROTECTION_REGION is supported */
+> +#define ARM_DRTM_MAX_REGIONS_MASK		GENMASK_U64(23, 8)
 > +
-> +		if (!image_region_ok) {
+> +/*
+> + * DMA protection types. ARM_DRTM_DMA_PROTECTION_MASK is a bitmap indexed by
+> + * these, and the Launch Features ARM_DRTM_LAUNCH_DMA_PROTECTION_MASK field
+> + * holds one.
+> + */
+> +#define ARM_DRTM_DMA_PROTECTION_COMPLETE	0
+> +#define ARM_DRTM_DMA_PROTECTION_REGION		1
 
-Why this change?  I don't particularly mind but seems to be churn that isn't
-necessarily needed.
+The dual use of these for bitmap indexes in one place and
+values in another seems fragile.  Maybe it is better to have
+different naming for the two even though the values match?
 
->  			efi_err("FIRMWARE BUG: Image BSS overlaps adjacent EFI memory region\n");
->  		} else if (IS_ALIGNED(*image_addr, min_kimg_align) &&
-> -			   (unsigned long)_end < EFI_ALLOC_LIMIT) {
-> -			/*
-> -			 * Just execute from wherever we were loaded by the
-> -			 * UEFI PE/COFF loader if the placement is suitable.
-> -			 */
-> -			*reserve_size = 0;
-> -			return EFI_SUCCESS;
-> +			   (unsigned long)_end + extra_size < EFI_ALLOC_LIMIT) {
-> +			if (!extra_size) {
-> +				/*
-> +				 * Just execute from wherever we were loaded by
-> +				 * the UEFI PE/COFF loader if the placement is
-> +				 * suitable.
-> +				 */
-> +				*reserve_size = 0;
-> +				return EFI_SUCCESS;
-> +			}
+
+> +/* v1.4B section 3.4 "DRTM_DYNAMIC_LAUNCH" */
+> +#define ARM_DRTM_SMC_DYNAMIC_LAUNCH		(ARM_DRTM_SMC_FN_BASE + 0x04)
 > +
-> +			status = allocate_image_tail(*image_addr,
-> +						     kernel_memsize, extra_size,
-> +						     reserve_addr,
-> +						     reserve_size);
+> +/* v1.4B section 3.5 "DRTM_UNPROTECT_MEMORY" */
+> +#define ARM_DRTM_SMC_UNPROTECT_MEMORY		(ARM_DRTM_SMC_FN_BASE + 0x03)
+> +
+> +/* v1.4B section 3.6 "DRTM_CLOSE_LOCALITY" */
+> +#define ARM_DRTM_SMC_CLOSE_LOCALITY		(ARM_DRTM_SMC_FN_BASE + 0x05)
+> +
+> +/* v1.4B section 3.7 "DRTM_GET_ERROR" */
+> +#define ARM_DRTM_SMC_GET_ERROR			(ARM_DRTM_SMC_FN_BASE + 0x06)
+> +
+> +/* v1.4B section 3.8 "DRTM_SET_ERROR" */
 
-I'd move reserve_size up a line to group it with reserve_addr.
+I know I'm the one who asks for references, but maybe the SMC numbers are obvious
+enough without given the name matches the spec section?  The table references
+etc below are excellent!  The do no harm beyond a bit of bloat though so I don't
+mind if you want to keep them.
+
+> +#define ARM_DRTM_SMC_SET_ERROR			(ARM_DRTM_SMC_FN_BASE + 0x07)
+
+> +
+> +/* v1.4B Table 8 "Definition for error IDs (Bits[10:3])" */
+> +#define ARM_DRTM_ERROR_ID_NONE			0x0
+> +#define ARM_DRTM_ERROR_ID_PARAMETERS		0x2
+> +#define ARM_DRTM_ERROR_ID_SECURE_EXCEPTION	0x3
+> +#define ARM_DRTM_ERROR_ID_TCB_HASH_UNLOCKED	0x4
+
+I'd use NOT_LOCKED to align with spec.  Maybe it makes a subtle
+difference somewhere? UNLOCKED might imply a transition to that
+state, where as NOT_LOCKED doesn't.  Meh, doesn't really matter
+as I'm probably over thinking this.
+
+> +#define ARM_DRTM_ERROR_ID_TPM			0x5
+> +#define ARM_DRTM_ERROR_ID_SIGNATURE		0x6
+> +#define ARM_DRTM_ERROR_ID_IMAGE_FORMAT		0x7
+> +#define ARM_DRTM_ERROR_ID_VENDOR		0xFF
+
+> +/*
+> + * v1.4b Section 3.3.1 says:
+> + *   A return value of greater than 0 means the feature ID is
+> + *   implemented, and there are other feature-specific
+> + *   feature or capability bits available in other return value
+> + *   registers.
+
+I'd wrap to 80 chars.
+
+> + * And for FEATURE_SELECTOR all defined features return data in other
+> + * registers, so 0 is not an allowed return.
+> + */
+> +static inline s64 arm_drtm_query_feature(u64 feature, u64 *value)
+> +{
+> +	struct arm_smccc_res res;
+> +
+> +	arm_smccc_1_1_smc(ARM_DRTM_SMC_FEATURES,
+> +			  ARM_DRTM_FEATURE_SELECTOR |
+> +				  FIELD_PREP(ARM_DRTM_FEATURE_ID_MASK, feature),
+
+> +			  0, 0, 0, 0, 0, 0, &res);
+> +	*value = res.a1;
+> +	return res.a0;
+> +}
 
 
-> +			if (status == EFI_SUCCESS)
-> +				return EFI_SUCCESS;
->  		}
->  
->  		status = efi_allocate_pages_aligned(*reserve_size, reserve_addr,
-> diff --git a/drivers/firmware/efi/libstub/riscv-stub.c b/drivers/firmware/efi/libstub/riscv-stub.c
-> index 725b634c517919..a88b2d275e5bb0 100644
-> --- a/drivers/firmware/efi/libstub/riscv-stub.c
-> +++ b/drivers/firmware/efi/libstub/riscv-stub.c
-> @@ -37,7 +37,6 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
->  	kernel_codesize = __init_text_end - _start;
->  	kernel_memsize = kernel_size + (_end - _edata);
->  	*image_addr = (unsigned long)_start;
-> -	*reserve_size = kernel_memsize;
->  
->  	status = efi_kaslr_relocate_kernel(image_addr,
->  					   reserve_addr, reserve_size,
+> +
+> +#endif /* !__ASSEMBLY__ */
+> +#endif /* __ASM_DRTM_H */
 
