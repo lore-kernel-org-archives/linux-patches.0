@@ -1,50 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792570127;
-	b=p+CrM8mxdIZxwtZw3wmBl6cpsJJzm3VWVCxtTf5WiQSw8x0e5vmsn6xZClPYM3rikzF5
-	 dXl1Fc4GzCx7mE2cpy7Mjpjfgiiz8M8TgOLS3aFKyPbad+S5VCBbttD+1bGWymDXOR7FW
-	 fF102uHE0tIqbCR61BGXo6tjDwIoVChXaeMnSK3nTG3oH7jVXNiOfHpXI9QibPzhK/edy
-	 GCHr0bfhm71nXg87GKQoH4Iqz9B2f3Lvg02Y9ccpcHjamowtiP7RqLu1GG9r1I8C8TEat
-	 7xaOc+7eYcLGXyY+Jb9XK+LutTRyj0S5ou7LO0pVEqkdMj49YojJqdb8sce7JXAv6Hg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792570127;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=AqlZ3i98W8KIbKL/1v8ATr9shp2SQpSgzOXsLucMZMc=;
-	b=gavMq/UV2PUyeStWH6OEzMDwHvh9K/Tv7NCyftW/LnB+JXbtj1F2hutUDPhAiiFnWSSf
-	 GikUauHGR3e+GcEs0dafmGdUkb70ZIB81EiW3IMlQpB4Qtb/iNQjBMWvdLDtQtDT7uqph
-	 /ElVspiFQoe2JeALgkan55voxBQ7e++9zeuNznBvf0LdCFXE+5kTZnPlSPY8j8MbTE0Vn
-	 G4SI8MbrH6X/z1/oKTvfk5eSZ+tYVVLqhlxzp41pcRAelNzYHrHFe02a3gTsZ91s/nT0Q
-	 VgR6Mlo7D/1TReQsCV4i+qFMOMDutwLyf0o0IFaCZA3OkUmh2ukGgtHi6/uKIPhj1fg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=QWTE8VNC;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96781606A31B
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 08:08:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 96781606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.61.67
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792585231;
+	b=puZeVgFt775de6tZReGcJmC0hLcHZ8qJ0ku+7zYFtleeh9ejPnpdWBSZfCpWG/woh4n9
+	 um/x0iOwcpDf1SPIphhEiXQoPcWmrzMKOVrCSsIwMDv222idF00Q8t8ovA2o74Z9Emd9H
+	 6BGqPGU1PtE72BisbaL6zvTCtb49dwL5fPnWwo6w7E1yvCfOX469KNk3DW2WEwQn916Hf
+	 aNtLaNFYLCeHPrbHdjNDkM8uC1i+1mVn2vwCpFU8pxEC7zBKjFd1O6J0injsjNdW8TOId
+	 4JuodBaZEJTx2Uu2NRKQjyDE16vW1wBA+OnjNltak3TwoHDmqylmFY1wbtlPtf51buA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792585231;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=Xx0dqxkmR3d+WNM225WMIPxE36eYGDVjZAkM1zsnSFM=;
+	b=vEnpn2s0dyn1FFsZh2S1ADXWSarign3sOcJ77ju8nM6jt8BEv2XFUgwY3AbBj5aFYne9
+	 Lfts8I8Exovoq11DVivB5N03Dry/Vz61yKNr/5FQgegQsa+TedBh5dv7vLQDNTEII05HP
+	 A4i7F4M9dTkMA6jnHdU7iPwIbHDnQ9ith70P6/9j6S7p0gL8HugWYi276aaGWKS+8n9pF
+	 qjo3V7WXVazBcxAw7hNbFP9XEjx/+SQCtwuk746ejrXiiTS25ckTkcYAe4WFdwAmkfQIR
+	 4jZuE3+cBmLrDfsVo1o+IVxxp/2j3BDyNwocsXuGDMAPSpWmsZWg/yZS22OynxaniDQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=afoolPA2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.61.67
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010067.outbound.protection.outlook.com [52.101.61.67])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF21606A319
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 12:20:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2FF21606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=QWTE8VNC
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 768F41595;
-	Wed, 21 Oct 2026 01:08:40 -0700 (PDT)
-Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2E2B63F7B4;
-	Wed, 21 Oct 2026 01:08:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1792570123; bh=cnyaEnul7lwGJfjB43Qer2YuUdo+zKOTOANHUovpt8U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QWTE8VNC/AdoGW019vhpgeWWcJzn9DWgmoS9MuR8/DW6vM35uoQ3+eaqVROLKArdR
-	 xuDjU731EIsKkFLN1tAyXJbvHHNAbi7ZH9VUqzwmbZ9ErkGfm5ssYs3AUc8ZoRD3IS
-	 CW90xGvB3du+N8D+SSO9tKTZaobu8I69mNET1k5I=
-Date: Wed, 21 Oct 2026 09:08:36 +0100
-From: Yeoreum Yun <yeoreum.yun@arm.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=afoolPA2
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oLBJOy1uxIOsn6VF7dRLbDP+VbPCLsGFlk8Gf4olPVgPbR27tg3Ge4T92jhsHONNbFCY8vz6MTsB5J4Tkqhgbx/DqRHc1VTuMxelHgC2XSHtRH1BfvfqOKiBq3HSWsZ4jLWA69rRppCAqZoJHZE6PvzGQ7NVnWKyKKHnNeXk0kqbZbFI+t32lCGxLc37NhIruOhDV0pnHx5n3cNiiY0aufXa0SJhIXOdu7I0DwZq/iokB9orItF3llm9/C9qJUWA0HXBfYxt97lLdMFZY/xJGT5qlYw6ceyGW4NpUxFRJSH4knZM2NYNsYW2uqcAfiaEOIt+b0RZLICJ1kBcs0PY2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Xx0dqxkmR3d+WNM225WMIPxE36eYGDVjZAkM1zsnSFM=;
+ b=EvW3K0KMyme6tZ1WPIpep+uKstXFCOL1o8giZ38uEF4XvT5QNaiTR7FUHLLaAJX6QgS58OimJZy7cpjB24VBwuERNKIMGHTGWxBhn/jgcgc+962uzDoWAkS4Pnu6MWTc63IkiyduQC2bCVz/nR65y25NKD3PmKm/o9N0QmPjzy/Wbje6AfpMPZuXCQ13u1nIBkmmbh2wTNJC5fIyAlvQT43GkwV3GfmWAKYH13C5K2X9GlXTMmCmSppZTC3bNJBCzhN7iian7do556jcvFNodOs4jt1e2srlNkebbtwMnpSwfupBwTFwcCcsdh86CYyvE7TDEqeN6zgzP7WL1dfrBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Xx0dqxkmR3d+WNM225WMIPxE36eYGDVjZAkM1zsnSFM=;
+ b=afoolPA2jmkwduGAlPJRT9uPUOZhiv7n/CxmbdEWfslBCohxZKD4yHf0y0V+p77wqy0At0eyy8GHf49CI8rkAFxyMtYCFJO6P7q3IMlMliZRGi6tlHknS0oqMr2w7PsAxEQ1QrW6UQvfO1Rg0hxTzc8zIKLcRPYlr6DbKkdBLtzc0v0ZnnpybiqnhKUk3ggMtxZ4plKTo7nW8p0nmWrG0zOOCP2X3+JI5RO5GzR5rTZ8trGfAP3mxG07WvVD3crPMEQn3TAZ4Piq+//pHdonqSYt6pNjBkwVHueZkHodgVeq40Efhcjp8MZZ8v4YRjyBP2CwNF8NBgD2Ss0nlwr3ig==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CHBPR12MB731189.namprd12.prod.outlook.com
+ (2603:10b6:610:33d::12) by MW4PR12MB6875.namprd12.prod.outlook.com
+ (2603:10b6:303:209::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Wed, 21 Oct
+ 2026 12:20:19 +0000
+Received: from CHBPR12MB731189.namprd12.prod.outlook.com
+ ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
+ ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0546.012; Wed, 21 Oct 2026
+ 12:20:18 +0000
+Date: Wed, 21 Oct 2026 09:20:16 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Yeoreum Yun <yeoreum.yun@arm.com>
 Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
 	Ard Biesheuvel <ardb@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
 	Catalin Marinas <catalin.marinas@arm.com>,
@@ -64,14 +94,22 @@ Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	linux-integrity@vger.kernel.org,
 	Palmer Dabbelt <palmer@rivosinc.com>, patches@lists.linux.dev,
-	Piotr =?iso-8859-1?Q?Kr=F3l?= <piotr.krol@3mdeb.com>,
+	Piotr =?utf-8?B?S3LDs2w=?= <piotr.krol@3mdeb.com>,
 	Ross Philipson <ross.philipson@gmail.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Song Shuai <songshuaishuai@tinylab.org>
-Subject: Re: [PATCH v2 15/15] efi/arm64: Implement ARM64 DRTM in the stub
-Message-ID: <athzBHFwyp0bFEu9@e129823.arm.com>
+Subject: Re: [PATCH v2 12/15] arm64: drtm: Update the linker script for
+ EFI_STUB_DRTM
+Message-ID: <20261021122016.GK3008132@nvidia.com>
 References: <0-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
- <15-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+ <12-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+ <atfwCcRfC6rWFywH@e129823.arm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <atfwCcRfC6rWFywH@e129823.arm.com>
+X-ClientProxiedBy: MN2PR20CA0065.namprd20.prod.outlook.com
+ (2603:10b6:208:235::34) To CHBPR12MB731189.namprd12.prod.outlook.com
+ (2603:10b6:610:33d::12)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -81,454 +119,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <15-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|MW4PR12MB6875:EE_
+X-MS-Office365-Filtering-Correlation-Id: 361466de-fb67-476f-4ce2-08df2f6dab18
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|7416014|376014|1800799024|366016|56012099006|4143699003|11063799006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	j1QFWT7eyuy3DgOQdSIwQO753jsY+zgeEAEajIQyxE6OkoB1bkro/90GiEkR2bCQrimfdjuAkOrIZ/wlf5wi61w04icEf7xtFVQo+p3qhSSLfcsSmW3g2V33etMbKi/U8I0zIVNSvz+HStPvYc2DQASFska3JSvmy7HUMik6o/Y8mcuxWPrdnB0vAvYOQQalthDDng7zZHTTeBCCfQZneqEl1v3SpM4ARQ7aMSMr8skjjtmKLFGojOnv96u8uTxXfzh6zAviursGfe+FPCY7lDHLOWUAUPPfH4yJ2u76jb/OYPAYJheXJrLZ9BpSxTrHrqJ4FKCjAanLn6rpM08wDY86GPnQBEFlbcJ0s60GsMMyIp7nJWO73wDna/N0MVQpoIhev9Sg4FhZRksKlV0TQyf9/FYbzXpChS7WJDr6iBCsT+3IvTkHyxgt1QZEwaTuiWVtgG9mwB5UmKeLuGdxDzymW7rZxtPZ5v9qILkJwtUYYCo4dEX9YNHOlw2NNZHFcQRMsnVi1RhLMFyWugG54sSSuLm/zCBf+gdMiXxGhT0thETfavABZWfngSFjeEmOcUJUXuVcPPF8VzjUnI1L+V1jyTlzpGsMVJVP3nukMHB4IwI2MXsbATLrb9JNOEQIm0oV+YGf6PbEJFhGeMI66qQb91s1PZ8HDgpBP8T15cQ=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(366016)(56012099006)(4143699003)(11063799006)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?gJxyTXFhY3f74NmkMNMLIJcIvIOD6X8z6NJiNqzu1ZiRh9YKV1or35PB/wih?=
+ =?us-ascii?Q?g/69Z6eSgUnv6t/6IU58idXko3vwqclk+RnxTkpXtqzDD+XW2RBe9cfYMlwr?=
+ =?us-ascii?Q?lvzhX6HcHi3Y06FnBUWozCePsJhETNNXnlB1hb4ob1E8edwzEnackF3TnymJ?=
+ =?us-ascii?Q?Pmieo/PNqq/KAMswbHWdjD5cuOuQr/GGPeYMqOkjDWjAkl1xanObgLTLpVBW?=
+ =?us-ascii?Q?lqkBXQsoNBMzF4lvJpd/Bu6Se67fY5CECuvkjRoCbE+elWD02/DTH+Hfefw/?=
+ =?us-ascii?Q?v1VKs/Ag6VnmcVocPNQE0JcFwKH3DbAY+hpvee7GegLnSxChtMMLdEB0S74d?=
+ =?us-ascii?Q?gUWYHJZYqSRM1fpbCyUS7J6sU4SdN4XzfH8u2GaA8ag6UVqH3fMT9UpA3NwP?=
+ =?us-ascii?Q?OrXgJgUL6WPA+TSALEwr+lLAZIbppSm+xKyKGEr0VWf5Bnaf+EalV0ycphbn?=
+ =?us-ascii?Q?Du8vebybLaILljVuarWrw4upxyBPiP98FYXHQFMc84Xv9iUk1UzwvAqI1XdD?=
+ =?us-ascii?Q?xlBS933uBg2sj5riz9DsgS2gUsVtQ3/hqXR+Eao0aL0mudOGXM53vRYlNil1?=
+ =?us-ascii?Q?fuE3ZMnidSfaChT5ayLu41uk56/kkDs3xMEh1B5H3QI4cztxYC8aG2Sl7dxE?=
+ =?us-ascii?Q?PEVTCIb6ibz2ONtwpcfOO+R8WRuKPPjiPeRjtDemEjp/HdvTUyv8zNPAFknG?=
+ =?us-ascii?Q?0hjqO/h0ntoAI1zQl18bgBcW/DQOyLeIPOjG3K2tMbxT+/C9tmuH6D4QFBGu?=
+ =?us-ascii?Q?fLDoQ7fzd1Zmf4PKW9hniIDY5WyPgKJtVGEsGWyo23uvUYIVy+3TlHpDvQOm?=
+ =?us-ascii?Q?N9JvCK3hkETq5wTs8SKIpbzI5lV2Y8TCLH1WCpmRhZPh5Lm9MryLAX5ok2AY?=
+ =?us-ascii?Q?u/OpTyPGAw0DSkkSwkDbrAKShy+BGycht0m1VZWprqi0SFcbTqmpFpZDJkEU?=
+ =?us-ascii?Q?3gTfNK9ymzusmhdYjnN+0neFH2Q20KTuxDUmw7Wo8IC5KnCK29t0CEJ7ywW9?=
+ =?us-ascii?Q?FPlOsRuzrMwihaU3Kq0o+R6k7iN7hypS/reNPalIdDakSfYVP/3hWizpQc99?=
+ =?us-ascii?Q?LH1UR6h6lDaumPFvHoHoR85LBNfzYCtjBkH+o/uVM7vnQfPAvBKi0wTN6dcW?=
+ =?us-ascii?Q?x6D2WvyIc77lpq3cokkwgBbUtWx2emr9VqYtlqYkGUN08VLma8sPRDJCd8dZ?=
+ =?us-ascii?Q?HSVK6a22Tr1oX6RiFVPZVukPokdIw7YD6H6xTYQgV4AuzgzgIQs2B4bW2eXM?=
+ =?us-ascii?Q?EmD9LuvbqiTdw2RcjMau5Js+aUbudbG6q4Imuq4p8ooNTAkmrhXCMRdf20Fy?=
+ =?us-ascii?Q?EDn00ESng8R5DSaI9PvasQ+DRMYagNytnx1byhfK0IhwANI5Abyj5XR3v7gT?=
+ =?us-ascii?Q?17uf43MWnzKXizbu/denU3jdYuirKP9vL+mghVPk8HIhf5yZLMZkUudcYE+R?=
+ =?us-ascii?Q?6dimMOiEbcPAbix07V7RBJVK2XNuw5RnU/PBFA3dlpNSiFw0jIOzKSnKj8+H?=
+ =?us-ascii?Q?+/wPqBds4E3rIcMQOLvY3wyNwQ+9aecNvzDc7UIdnTOxlWJiOwjVCna6KDFl?=
+ =?us-ascii?Q?A20qXmd4Z0LlgH/RKNzLExh2phLA3vUNNo5LT2y00hyW4zne3s5jumx1lD3z?=
+ =?us-ascii?Q?GcyYAh2zb4ZV04L4sa8NXx/UbkhX90GkVnHjoYg++IzeCnGpQf8B07idlimJ?=
+ =?us-ascii?Q?kSoS2k3BTTCKBmxOaqAKTtcA9Z/XAPIvuNL9U+c6hjxNUfxw?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 361466de-fb67-476f-4ce2-08df2f6dab18
+X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2026 12:20:17.9271
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: q8xCbfMEOr05JRcJOGsNypaMIEgs7DQnwc7qc/mfu+tEw7/xQZGk3w6BKR85Pppj
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6875
 
-Hi Jason,
+On Tue, Oct 20, 2026 at 11:49:45PM +0100, Yeoreum Yun wrote:
+> >  #define ARM64_IMAGE_MAGIC	"ARM\x64"
+> >  
+> > +#ifdef CONFIG_ARM64_DRTM
+> > +#define EFI_IMAGE_INFO_SIZE	40
+> 
+> Small nit. I know according to #13, This should be 40 with drtm_entry
+> and arm64_drtm_handoff. but in this patch, should EFI_IMAGE_INFO_SIZE
+> be 24 and be change to 40 at #13?
 
-Overall patches are look good to me.
+Yep, I fixed up the hunks so this flows right, CONFIG_ARM64_DRTM can't
+be selected at this point in the series so there is no way to tell it
+was wrong..
 
-But small one question more.
-
-> Provide an implementation of the CONFIG_EFI_STUB_DRTM protocol for ARM64
-> DEN0113 >= v1.1.
-> 
-> First, it queries the FW for support and collects all the
-> information. This is needed to compute the extra_size, which comes
-> from FW reporting how much memory it needs during the launch for the
-> DLME Data and DCE-owned data. The generic stub ensures there is
-> trailing memory after Image for this.
-> 
-> Then the DRTM_PARAMETERS launch structure is computed using the
-> offsets in the efi_info.
-> 
-> Finally, the stub does ExitBootServices and calls the actual launch.
-> 
-> The feature discovery process is deliberately fairly verbose to help
-> debug any FW weirdness in the field. Enable it with efi=debug
-> 
-> It looks something like:
-> 
->  EFI stub: DRTM: interface version 1.4
->  EFI stub: DEBUG: DRTM: TPM algorithm 0xc, TPM hashing unavailable, PCR schemas 0x1
->  EFI stub: DEBUG: DRTM: minimum DLME data 73728 bytes, Normal-world DCE 0 bytes
->  EFI stub: Decompressing Linux Kernel...
->  EFI stub: Generating empty DTB
->  EFI stub: Exiting boot services...
->  EFI stub: DEBUG: DRTM: will launch, selected launch features 0x0
->  [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x000f0510]
-> 
-> Eventually the launch'd kernel is going to require built in crypto
-> libraries that match what the FW is using so it can validate some of the
-> information left behind during early boot. Refuse to launch if these are
-> not built in and build in the most common ones from the ARM64_DRTM
-> kconfig.
-> 
-> One nit, if the platform does not support SMC then using drtm=auto may
-> crash on the SMC op. As far as I can tell there is no way to discover SMC
-> support through EFI. Learning it from the ACPI FADT is doable and costs
-> about 250 lines of code.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  arch/arm64/Kconfig                        |  16 +
->  drivers/firmware/efi/libstub/Makefile     |   1 +
->  drivers/firmware/efi/libstub/arm64-drtm.c | 426 ++++++++++++++++++++++
->  3 files changed, 443 insertions(+)
->  create mode 100644 drivers/firmware/efi/libstub/arm64-drtm.c
-> 
-> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-> index 4a752835ce1116..30244bc2d57696 100644
-> --- a/arch/arm64/Kconfig
-> +++ b/arch/arm64/Kconfig
-> @@ -2543,6 +2543,22 @@ config EFI
->  	  allow the kernel to be booted as an EFI application. This
->  	  is only useful on systems that have UEFI firmware.
->  
-> +config ARM64_DRTM
-> +	bool "Arm Dynamic Root of Trust for Measurement support"
-> +	depends on EFI
-> +	select CRYPTO
-> +	select CRYPTO_SHA256
-> +	select CRYPTO_SHA512
-> +	select EFI_STUB_DRTM
-> +	help
-> +	  Support launching Linux as a Dynamically Launched Measured
-> +	  Environment (DLME) using Arm's DEN0113 DRTM specification. Requires
-> +	  booting through the EFI stub. The drtm= kernel command line option
-> +	  enables or disables the launch at boot.
-> +
-> +	  If unsure, say N. This option is EXPERIMENTAL and does not yet provide
-> +	  security.
-> +
->  config COMPRESSED_INSTALL
->  	bool "Install compressed image by default"
->  	help
-> diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-> index 3f1921e6c334d1..f0958b4df16592 100644
-> --- a/drivers/firmware/efi/libstub/Makefile
-> +++ b/drivers/firmware/efi/libstub/Makefile
-> @@ -83,6 +83,7 @@ lib-$(CONFIG_EFI_GENERIC_STUB)	+= efi-stub.o string.o intrinsics.o systable.o \
->  
->  lib-$(CONFIG_ARM)		+= arm32-stub.o
->  lib-$(CONFIG_ARM64)		+= kaslr.o arm64.o arm64-stub.o smbios.o
-> +lib-$(CONFIG_ARM64_DRTM)	+= arm64-drtm.o
->  lib-$(CONFIG_X86)		+= x86-stub.o smbios.o
->  lib-$(CONFIG_X86_64)		+= x86-5lvl.o
->  lib-$(CONFIG_RISCV)		+= kaslr.o riscv.o riscv-stub.o
-> diff --git a/drivers/firmware/efi/libstub/arm64-drtm.c b/drivers/firmware/efi/libstub/arm64-drtm.c
-> new file mode 100644
-> index 00000000000000..2fc58babc3e7cb
-> --- /dev/null
-> +++ b/drivers/firmware/efi/libstub/arm64-drtm.c
-> @@ -0,0 +1,426 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/* Copyright (c) 2026, NVIDIA CORPORATION & AFFILIATES
-> + *
-> + * EFI Stub implementation for ARM DEN 0113 "DRTM Architecture for Arm"
-> + *
-> + * This code runs on the untrusted side of the boot in the EFI stub. Nothing it
-> + * does should impact the integrity of the post-launch world and it does not
-> + * need to take special security precautions.
-> + */
-> +#include <linux/bitfield.h>
-> +#include <linux/efi.h>
-> +#include <linux/kconfig.h>
-> +#include <linux/overflow.h>
-> +#include <linux/sizes.h>
-> +#include <linux/tpm_command.h>
-> +#include <linux/unaligned.h>
-> +
-> +#include <uapi/linux/psci.h>
-> +
-> +#include <asm/cputype.h>
-> +#include <asm/drtm.h>
-> +#include <asm/image.h>
-> +
-> +#include "efistub.h"
-> +
-> +struct efi_drtm_config {
-> +	u32 launch_features;
-> +	unsigned long dlme_data_size;
-> +	unsigned long nw_dce_size;
-> +	struct arm_drtm_parameters *params_addr;
-> +};
-> +static struct efi_drtm_config drtm_cfg;
-> +
-> +/* True if SMCCC 1.0 or later is available. */
-> +static bool efi_arm64_psci_smccc_compatible(void)
-> +{
-> +	struct arm_smccc_res res;
-> +	s32 status;
-> +
-> +	arm_smccc_1_1_smc(PSCI_0_2_FN_PSCI_VERSION, &res);
-> +	if ((s32)res.a0 < 0)
-> +		return false;
-> +
-> +	if (PSCI_VERSION_MAJOR(res.a0) < 1)
-> +		return false;
-> +
-> +	arm_smccc_1_1_smc(PSCI_1_0_FN_PSCI_FEATURES, ARM_SMCCC_VERSION_FUNC_ID,
-> +			  &res);
-> +	status = (s32)res.a0;
-> +	if (status == PSCI_RET_NOT_SUPPORTED) {
-> +		/*
-> +		 * SMCCC_VERSION was introduced by SMCCC 1.1, so firmware that
-> +		 * does not advertise that function through PSCI_FEATURES is
-> +		 * using the valid SMCCC 1.0 baseline.
-> +		 */
-> +		return true;
-> +	} else if (status < 0) {
-> +		return false;
-> +	} else {
-> +		u32 version;
-> +
-> +		arm_smccc_1_1_smc(ARM_SMCCC_VERSION_FUNC_ID, &res);
-> +		version = res.a0;
-> +		if ((version >> 16) != 1 || version < ARM_SMCCC_VERSION_1_1)
-> +			return false;
-> +	}
-> +	return true;
-> +}
-> +
-> +static bool efi_drtm_query_feature(u64 feature, u64 *value)
-> +{
-> +	s64 status;
-> +
-> +	status = arm_drtm_query_feature(feature, value);
-> +	if (status < 1) {
-> +		efi_err("DRTM: feature %llx query failed (x0=%lld)\n", feature,
-> +			status);
-> +		return false;
-> +	}
-> +
-> +	return true;
-> +}
-> +
-> +/*
-> + * For the kernel to boot it must have the matching hash algorithm built in to
-> + * be able to validate the TCB hashes. Assume the TPM hash algorithm is the one
-> + * that TCB_HASH_TABLE will be using.
-> + */
-> +static bool efi_drtm_hash_algorithm_supported(u16 algorithm)
-> +{
-> +	switch (algorithm) {
-> +	case TPM_ALG_SHA256:
-> +		return IS_BUILTIN(CONFIG_CRYPTO_SHA256);
-> +	case TPM_ALG_SHA384:
-> +	case TPM_ALG_SHA512:
-> +		return IS_BUILTIN(CONFIG_CRYPTO_SHA512);
-> +	default:
-> +		return false;
-> +	}
-> +}
-> +
-> +static bool efi_drtm_probe_tpm(void)
-> +{
-> +	u16 algorithm;
-> +	u8 schemas;
-> +	u64 value;
-> +
-> +	if (!efi_drtm_query_feature(ARM_DRTM_FEATURE_TPM, &value))
-> +		return false;
-> +	algorithm = FIELD_GET(ARM_DRTM_TPM_ALG_MASK, value);
-> +	schemas = FIELD_GET(ARM_DRTM_PCR_SCHEMA_MASK, value);
-> +
-> +	if (!efi_drtm_hash_algorithm_supported(algorithm)) {
-> +		efi_err("DRTM: firmware hash algorithm 0x%x is unavailable (feature 0x%llx)\n",
-> +			algorithm, value);
-> +		return false;
-> +	}
-> +
-> +	if (!(schemas & BIT(ARM_DRTM_PCR_SCHEMA_DEFAULT))) {
-> +		efi_err("DRTM: default PCR schema is unavailable (feature 0x%llx)\n",
-> +			value);
-> +		return false;
-> +	}
-> +
-> +	efi_debug("DRTM: TPM algorithm 0x%x, TPM hashing %s, PCR schemas 0x%x\n",
-> +		  algorithm,
-> +		  value & ARM_DRTM_TPM_HASHING ? "available" : "unavailable",
-> +		  schemas);
-> +	return true;
-> +}
-> +
-> +static bool efi_drtm_probe_memory(void)
-> +{
-> +	u64 value;
-> +
-> +	if (!efi_drtm_query_feature(ARM_DRTM_FEATURE_MIN_MEMORY, &value))
-> +		return false;
-> +
-> +	drtm_cfg.dlme_data_size =
-> +		FIELD_GET(ARM_DRTM_DLME_DATA_PAGES_MASK, value) *
-> +		ARM_DRTM_PAGE_SIZE;
-> +	drtm_cfg.nw_dce_size = FIELD_GET(ARM_DRTM_NW_DCE_PAGES_MASK, value) *
-> +			       ARM_DRTM_PAGE_SIZE;
-> +
-> +	efi_debug("DRTM: minimum DLME data %lu bytes, Normal-world DCE %lu bytes\n",
-> +		  drtm_cfg.dlme_data_size, drtm_cfg.nw_dce_size);
-> +	return true;
-> +}
-> +
-> +static bool efi_drtm_probe_dma(void)
-> +{
-> +	u64 value;
-> +
-> +	if (!efi_drtm_query_feature(ARM_DRTM_FEATURE_DMA_PROTECTION, &value))
-> +		return false;
-> +
-> +	if (!(FIELD_GET(ARM_DRTM_DMA_PROTECTION_MASK, value) &
-> +	      BIT(ARM_DRTM_DMA_PROTECTION_COMPLETE))) {
-> +		efi_err("DRTM: complete DMA protection is unavailable (feature 0x%llx)\n",
-> +			value);
-> +		return false;
-> +	}
-> +	return true;
-> +}
-> +
-> +/* Sanity check nothing has gone wrong */
-> +static bool efi_drtm_probe_boot_pe(void)
-> +{
-> +	u64 current_pe = read_cpuid_mpidr() & MPIDR_HWID_BITMASK;
-> +	u64 boot_pe;
-> +
-> +	if (!efi_drtm_query_feature(ARM_DRTM_FEATURE_BOOT_PE, &boot_pe))
-> +		return false;
-> +
-> +	if ((boot_pe & MPIDR_HWID_BITMASK) != current_pe) {
-> +		efi_err("DRTM: boot PE 0x%llx does not match current PE 0x%llx\n",
-> +			boot_pe, current_pe);
-> +		return false;
-> +	}
-> +
-> +	return true;
-> +}
-> +
-> +static void efi_drtm_report_previous_error(void)
-> +{
-> +	s64 error_code;
-> +	s64 status;
-> +
-> +	status = arm_drtm_query_function(ARM_DRTM_SMC_GET_ERROR);
-> +	if (status != ARM_DRTM_SUCCESS) {
-> +		efi_debug("DRTM: GET_ERROR is unavailable (x0=%lld)\n", status);
-> +		return;
-> +	}
-> +
-> +	status = arm_drtm_get_error(&error_code);
-> +	if (status != ARM_DRTM_SUCCESS) {
-> +		efi_warn("DRTM: failed to read previous error (x0=%lld)\n",
-> +			 status);
-> +		return;
-> +	}
-> +
-> +	if (error_code) {
-> +		efi_warn("DRTM: firmware reports previous launch error 0x%llx\n",
-> +			 error_code);
-> +		if (efi_drtm_policy != EFI_DRTM_ENFORCE)
-> +			efi_drtm_policy = EFI_DRTM_OFF;
-> +	}
-> +}
-> +
-> +static efi_status_t efi_drtm_failure(void)
-> +{
-> +	if (efi_drtm_policy == EFI_DRTM_AUTO) {
-> +		efi_warn("DRTM: preparation failed, continuing without DRTM\n");
-> +		efi_drtm_policy = EFI_DRTM_OFF;
-> +		return EFI_SUCCESS;
-> +	}
-> +
-> +	efi_err("DRTM: enforced preparation failed\n");
-> +	return EFI_UNSUPPORTED;
-> +}
-> +
-> +efi_status_t efi_drtm_prepare(void)
-> +{
-> +	s64 feature_status;
-> +	u16 major, minor;
-> +	s32 status;
-> +
-> +	if (efi_drtm_policy == EFI_DRTM_OFF)
-> +		return EFI_SUCCESS;
-> +
-> +	if (!efi_arm64_psci_smccc_compatible())
-> +		return efi_drtm_failure();
-> +
-> +	/*
-> +	 * v1.4B section 3.2.1 "DRTM_VERSION usage" explains that a new major
-> +	 * ABI version may "Change behavior of existing functions". Verify the
-> +	 * major version before calling anything so we don't trigger unknown
-> +	 * behavior.
-> +	 */
-> +	status = arm_drtm_version(&major, &minor);
-> +	if (status != ARM_DRTM_SUCCESS) {
-> +		efi_err("DRTM: failed to read interface version (x0=%d)\n",
-> +			status);
-> +		return efi_drtm_failure();
-> +	}
-> +	if (major != ARM_DRTM_VERSION_MAJOR) {
-> +		efi_err("DRTM: unsupported interface version %u.%u\n", major,
-> +			minor);
-> +		return efi_drtm_failure();
-> +	}
-> +	efi_info("DRTM: interface version %u.%u\n", major, minor);
-> +
-> +	efi_drtm_report_previous_error();
-> +	if (efi_drtm_policy == EFI_DRTM_OFF)
-> +		return EFI_SUCCESS;
-> +
-> +	feature_status = arm_drtm_query_function(ARM_DRTM_SMC_DYNAMIC_LAUNCH);
-> +	if (feature_status != ARM_DRTM_SUCCESS) {
-> +		efi_err("DRTM: dynamic launch is unavailable (x0=%lld)\n",
-> +			feature_status);
-> +		return efi_drtm_failure();
-> +	}
-> +
-> +	if (!efi_drtm_probe_tpm() || !efi_drtm_probe_memory() ||
-> +	    !efi_drtm_probe_dma() || !efi_drtm_probe_boot_pe())
-> +		return efi_drtm_failure();
-> +
-> +	drtm_cfg.launch_features =
-> +		ARM_DRTM_LAUNCH_HASH_FIRMWARE |
-> +		FIELD_PREP(ARM_DRTM_LAUNCH_PCR_SCHEMA_MASK,
-> +			   ARM_DRTM_PCR_SCHEMA_DEFAULT) |
-> +		FIELD_PREP(ARM_DRTM_LAUNCH_DMA_PROTECTION_MASK,
-> +			   ARM_DRTM_DMA_PROTECTION_COMPLETE) |
-> +		ARM_DRTM_LAUNCH_NO_AUTH | ARM_DRTM_LAUNCH_KEEP_SECURE_IRQS;
-> +
-> +	return EFI_SUCCESS;
-> +}
-> +
-> +unsigned long efi_drtm_get_extra_size(void)
-> +{
-> +	/*
-> +	 * See arch/arm64/kernel/vmlinux.lds.S for the DRTM Memory layout.
-> +	 *
-> +	 * v1.4B Table 6 "Return values for DRTM features", feature 0x2 reports
-> +	 * both minimum sizes in 4 KiB pages.
-> +	 *
-> +	 * The linker places the DLME data at the 4 KiB-aligned end of the
-> +	 * static Image as required by R314030 in Table 13 "DLME region
-> +	 * requirements".
-> +	 *
-> +	 * The DLME region must include all of that data (R45200 in Table 30
-> +	 * "DCE requirements for the DLME"), and an optional Normal-world DCE
-> +	 * follows it at another 4 KiB-aligned address as required by R312080 in
-> +	 * Table 10 "DRTM_PARAMETERS requirements".
-> +	 *
-> +	 * A final page holds the 4 KiB-aligned DRTM_PARAMETERS required by
-> +	 * R312010 in the same table. Only the first area is part of the DLME
-> +	 * region.
-> +	 */
-> +	if (efi_drtm_policy == EFI_DRTM_OFF)
-> +		return 0;
-> +	return drtm_cfg.dlme_data_size + drtm_cfg.nw_dce_size +
-> +	       ARM_DRTM_PAGE_SIZE;
-> +}
-> +
-> +efi_status_t efi_drtm_prepare_launch(unsigned long image_base,
-> +				     unsigned long fdt_addr)
-> +{
-> +	const struct arm64_image_header *header = (const void *)image_base;
-> +	const struct efi_image_info *info = efi_get_image_info(image_base);
-> +	struct arm64_drtm_handoff *handoff =
-> +		efi_get_image_symbol(image_base, arm64_drtm_handoff);
-> +	struct arm_drtm_parameters *params;
-> +	unsigned long measured_offset;
-> +	unsigned long measured_size;
-> +	unsigned long image_size;
-> +	unsigned long dlme_start;
-> +	unsigned long dlme_end;
-> +	unsigned long dce_end;
-> +	unsigned long entry;
-> +
-> +	if (efi_drtm_policy == EFI_DRTM_OFF)
-> +		return EFI_SUCCESS;
-> +
-> +	image_size = le64_to_cpu(header->image_size);
-> +	measured_offset = info->drtm_measured_start;
-> +	measured_size = info->dlme_measured_size;
-> +	entry = info->drtm_entry;
-> +	dlme_start = image_base + image_size;
-> +	dlme_end = dlme_start + drtm_cfg.dlme_data_size;
-> +	dce_end = dlme_end + drtm_cfg.nw_dce_size;
-
-Suppose user boot the kernel via decompressed Image which is the
-part of artifact of compressed image and use the drtm option (e.g.
-booting via UEFI shell with decompressed Image).
-
-Since the drtm extra memory is allocated only in efi_zboot_entry(),
-I think the drtm extra memory wouldn't be allocated so it would corrupt
-memory while setting the laucn parameter or by DRTM...
-
-Is this simply an example of incorrect usage which is ignorable?
-
-Thanks.
-
-[...snip...]
-
--- 
-Sincerely,
-Yeoreum Yun
+Thanks,
+Jason
