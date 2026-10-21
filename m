@@ -1,108 +1,108 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792604625;
-	b=tKgJkBHB7+yjUCwtBLUFGkjFSb2oRxwFqq9FbGTJveofqod27ofBR+VGxd1SAj7ErJbr
-	 VAPk57jbCKfmWHJC5EFvlhDd2KXIFSbYYG0Jk2kyStzPmYPuWIvkR4zFfDIyq/F2Hucen
-	 2MvPGawrOGBF0wJVnlquCTLbLyHxl5Ah2yKDyGn43UDgZocj20okhWOJy6W+/3rKKCUC8
-	 /H+R8gOVjz+w0U8cn228wK9qQ9sqTwVc1qu3tAR8k0kFamH2XXFBKE7qXojww3hVcDt42
-	 MVSlJL9S5xO7TY7ISZ8W2JJhqeBpxoBYmjVt9zfHphc4rdVHTleasahvrZjOzoSZqLQ==
+	t=1792604854;
+	b=26Gcav5ViXFCN/8/2enGWxMySkuAqj5MFbZSp373vl0VLK3UhlgVTsrXh4y94BUwGmto
+	 MCRDXbAGKwnGKdfc6KisPxBfA3D4B5DgA99qTy+sXOf02XeBr5QXJLoqVtrIp+KAd/BJJ
+	 Tj46fmB12jnn4fBbgDKVZKb2hWzdsaMyD3GOvzRBGGtS3c9wwWtd1nKlHIgZNy3jpLCRt
+	 d5KZTGePwsi5qfW3mdz4UwtJg8i+NCXHMUiDy8Q3vE/ziZMFM0ZwaoO0JOYYkGahvzS9Z
+	 g5n+h4aCVLWG+ZMUg+rT2BsJl5XUwO9hsqpnxDYQtoDi37XmXTMTmcheaM2OBNr8SpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792604625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792604854;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
 	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Date:From:
 	 To:Cc:Subject:Message-ID:In-Reply-To:References:Organization:X-Mailer:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-Proofpoint-GUID:
 	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-ORIG-GUID:X-Authority-Analysis:
 	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=vilmZRHHMNfnexi+YGDujqWXf83C8yeE3BqzopJL6bY=;
-	b=MByUJMOgMGbjDicRqdsVKpi2p0coqXbrIk7h3dPeKrTMabsOGt1lWgYP4MH9AHdfjXzS
-	 +bjKpk/TahpB6C7Vds02JukPY2lUtKI997F+zCcwVC06aY+jzMJlqt1lO6kJvbagol7MV
-	 oEVnFq6cB1YGaJaNmTUrj1XHkQShlwUzsJt/Q3+IC5tQ5vI95+vGNp+GDJLVFUx6uksGQ
-	 HesmqxxWjYrMHaNpX3xSwhbUjzHet4zq8xElWK0/G0YnitbJ0aBjdTMPGvRXrKpBtMXYN
-	 7TpPquvAI2L6OCYUMzH5H93JCpbPo01hyZHv/7cflglCyGn2392OhRNkBbT0f4SH5SA==
+	bh=kD15e1tCEFZb0oDM+2xTBELmNwYQTz7QW2OQ3oM2K7k=;
+	b=pwNKIL5RCVBaF4yRZ8wD6MU8icPcBO4yCbUR0P7fWu7JBMrnSrxjnoatwnG7XZeYPn4V
+	 K3+Fsn9tqVkbInoimTWW341LsykDANc5eMksSyUeSUl1LExgVAzIFctPA/S42JKiyX0d3
+	 Mi6xhJC0SZpMLBmFVwdbc7aKVDNXMSB6vBPr8midyDNpnF47YENwfxnyPOtDuQ5q8Hoa8
+	 cTtMD93TMO4YMkTYPHGG4tcunGzLoUwnAezg0n4cm7+y236Ebe+1MEq0BH0zD0aBCqhAf
+	 2C4F+d1hqbegoW5lUhOdgchxqBJvmuk6WcQGfRiajdTTByFvnAQW6l205K/brYk1S3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.qualcomm.com;
 	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eoyi9og8;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ekdZynG5;
-	arc=none smtp.remote-ip=205.220.180.131
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hfpCRj+j;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HTQWydCV;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB369606A329
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:43:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EB369606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828EC606A31E
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:47:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 828EC606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eoyi9og8;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ekdZynG5
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LHSl0v1745568
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:43:43 GMT
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hfpCRj+j;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HTQWydCV
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LFU8Gb3727378
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:47:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vilmZRHHMNfnexi+YGDujqWXf83C8yeE3BqzopJL6bY=; b=eoyi9og8lE7X7gFs
-	6zN8p4jNwkyfCNTayV/KpLYTog8YiPf09MNrJZcVJnd8ebBGnM3y90AF6J6wPsgu
-	KIHm6p3JiNc6RZfwNDa4t1fGBEFrTEmAppjPtFmqqXsDcs6gCeSuRZZlb5bNDOS9
-	ImS1uhcDnN727Uzxw2NojUhBmpaItcPZUTIJpC/20W36NsqozA/ILY/A7RqOC8Fa
-	fp6nVz6bC6n4qpaiLw/MFEox+9rhuaWmCR3mtKA8Cekf76hFS10V2nlLwjUarK9d
-	b3wbMfLBTWZOussj3TRqDPdEihPsXKcxNsCG7ejdilg63VQy4NSwejKyn6ahUKZG
-	iSFgwA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf1u3g1xq-1
+	kD15e1tCEFZb0oDM+2xTBELmNwYQTz7QW2OQ3oM2K7k=; b=hfpCRj+j2KxWdKAB
+	AHRIXbKs8512TkOfMBg7uAuf4pQwBrgHnCXqjXGBqRwBoq/H7P7OrFgZF0Zfi+tR
+	vu+VfuJDugBApslvid6veWNBEZZcyRXJAke9i6292jK0t0YZGi9NrNaWSpT8tY+V
+	s0gVcVKmPr81HHIdp7X7HflfO6HpD/K1SRGxm3CFbfoBQBPSdCsoYQ7ODmPPoU7T
+	R3UtMzJ9hljMDpG1WZQeQQuRgdzWHC+h+yxC/BvbZHBOb3CssvTUbrb7Z5UqBp16
+	83IkxTQ0zg67ak7mU7qRBBySHW1fHCbjzIGN0Kp3HDrdNz9pEeOQETK0hUBs98qx
+	h9bHVQ==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hesy7ae71-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:43:43 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-36803927a49so1551666eec.1
-        for <patches@lists.linux.dev>; Wed, 21 Oct 2026 10:43:43 -0700 (PDT)
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:47:33 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id a92af1059eb24-17dc865c94cso320412c88.1
+        for <patches@lists.linux.dev>; Wed, 21 Oct 2026 10:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1792604622; x=1793209422; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1792604853; x=1793209653; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:organization
          :references:in-reply-to:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to:content-type;
-        bh=vilmZRHHMNfnexi+YGDujqWXf83C8yeE3BqzopJL6bY=;
-        b=ekdZynG5N72Vv9zll63ZqX3F8beN6Q3u74zZGXhxS9Ll/jLJQBUYKXolZYFGV09iuE
-         QQdCXW4zVkURErEk8o/ksppKwJnN0vUUp9L2mxRmYZTJDPJjAwe5+UdH5CWmDSDXtiYs
-         TIutTqXC4LjZeaaw3nz4r4JBV0vS1N8jAj3j4hfLwT7G3ZOfYacJQLAk0Yp2n8B0dQVl
-         0SK++Lv75ieTRqcr5o/zeLKWp48vOykYAay0KnuiWXadWYkNJ+XcYsxVjrh4Ok2vncF4
-         RdIfdXwif8YHxSxsy6o0gOSaCHy6W9PRsKewj/PVuxyzQXoIKvRFo4DfN9xZXCnCLZUC
-         anhw==
+        bh=kD15e1tCEFZb0oDM+2xTBELmNwYQTz7QW2OQ3oM2K7k=;
+        b=HTQWydCVI3qqBUoPzBSEBJadN68CIS378UaFsJRnvXy0cUAR80ooaB2JU4XmpaTbFY
+         HyB3D6v9dNF8A+nNGL5abDK22Ym8QgCMAtCs5r5vYysMg3z3Tqb7p3Yq4Gm2vSSshbDD
+         Bf9u+25ejcAjb8g1aOtE7PjG+XImleXIobaciIDxdxRI6wTedt+RSU2weDFCV/Utfi+U
+         5W90yDifMajSm/X0WFhw4KXU1WGnDH176JO8BN6HdxFFLa7lheHjCeVMqdfkK1mkxSaU
+         OkAfMGuZOLRrDQvjFYlCZsR+ihJ3mbBtrJCYRoLXpvKT25LN5z3FScCS+8v6g3Q5y46r
+         LG2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792604622; x=1793209422;
+        d=1e100.net; s=20260707; t=1792604853; x=1793209653;
         h=content-transfer-encoding:content-type:mime-version:organization
          :references:in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vilmZRHHMNfnexi+YGDujqWXf83C8yeE3BqzopJL6bY=;
-        b=0+3TL8TfamW+Sq613bNCaE4K7i0FHMfnmJdt3hXxUxBK1X0igprDlvx4v4f/hcNwGL
-         2lwSBHthGsguHxCZ0zkCOP2UuUDwiYMTrp7zcKDq7ZOFgTy3Hu1/qtcYRiI1bFus1hiP
-         vJXOXojVcKLI4a+hdRa7YSItFl79+rKHL4IuQ2NcAmWqI2uH4n09lei1am0e0onUB8bM
-         2dVm555+diTtA7ios7OKT8tH3ezyzIYordAy8U1ppZ0EK1KDhJufrXZoLbIy528W/LoC
-         eSTkv2mhryYTc3VrGzhCreNxRM+WAO2GxU/OVaBJO7IUgeTS/NEk0m6giamRyhrcjmGm
-         FXyg==
-X-Forwarded-Encrypted: i=1; AKwUvByQa1/dqah2ofNAf5RV5MWcmAiRc6+jWbYjZsueYMjjUXla/cnC2Xts1CjPmI7S2PyN9rk2FByy@lists.linux.dev
-X-Gm-Message-State: AFq9FYLGJb6XqopYz1k3vLDYC/3nJ47cYw/akhRrRqaDpEwzbRpLD7HQ
-	tfZ8HqIzblSDELbjka8bqWhIAQFopkooWuTLK6EyeyR/MkDiwERqCmWhi5ukyz4h5DSGkq1AwLD
-	9RZUAsnY64864vweb/9LNS7DJX3PdFhsAIVxMa/Xp+XvJxlDSLY8M925PHGE6
-X-Gm-Gg: AYBFou0Nd3kX7BNcvrMhXzp8lEtyz6otyMNsX7rUZ3V5EKsL3g0Bh68wSaw7ehRyTpg
-	y0JhEIvIE4sJcLT6o+K1AXPKTsuIA9I+b/AzT935Z5Bov+pRhbZCB4z/ZW391/kkfes5RqQxJ1K
-	j611aUJQckijiFat5COVE535fP+l3KNNlDVjwzOgRENU0jPvbuL4QswAHqzB6Q4zJWupxktkUqb
-	Nh38vQ0KyNd8ahminQo5iN+nw9k6oApgLa8ZfFgy1iHU82MUghcokiId8LqotxQrYZGyFtNOxIV
-	d1AxSqBeR5tSftxOp4esnXT0FN28oDRSrcHqAGVnEAMsZ2A2FumQJN9ew5i4P3qnyRuXCYX3E8M
-	jfqc01KjunGzViVMiwGp0mTDepY/+WVaxhVM9WHlRTA==
-X-Received: by 2002:a05:693c:65db:b0:366:8efb:bab9 with SMTP id 5a478bee46e88-3674e450f24mr4349161eec.11.1792604622270;
-        Wed, 21 Oct 2026 10:43:42 -0700 (PDT)
-X-Received: by 2002:a05:693c:65db:b0:366:8efb:bab9 with SMTP id 5a478bee46e88-3674e450f24mr4349127eec.11.1792604621677;
-        Wed, 21 Oct 2026 10:43:41 -0700 (PDT)
+        bh=kD15e1tCEFZb0oDM+2xTBELmNwYQTz7QW2OQ3oM2K7k=;
+        b=12ueIZ7yEHUyENOTJo58uNxppb/uPo08fWWRsSfGLMyHYTnVp0123W4emiUAisMBWT
+         N15Cn5dvbtum/9yfq0YXaVT/txaZ/YqPzeQErUe3J4+GKvaAJXLDxzIpPcBkBC+vMzKT
+         nOuwHlcJ8Gz4grCxAJSAnAZmeFt/m8K3dw2KsawFhdvXG8s2hob3IbZf/ByWRcO/tdLw
+         hcWMeqUXJQm0MYfhh8Sv5kmKwNdtfwl8z47136iBCFirnGZm1nTRABQ65g9MmOquNQRD
+         vIWnhATrhlpSFiQ1GP4oI4Hu2h6qpx59J7x6wiO+JP0YYdbvTTiwPVn8Eeye6JfIDNEL
+         Dghw==
+X-Forwarded-Encrypted: i=1; AKwUvBy+/PYUhqS7nnJp6WCTIKv0RWSAlBaYJfad2juNP/llTIoo9NoKTRhmSaPlHDQlsQR/jkLaW5aI@lists.linux.dev
+X-Gm-Message-State: AFq9FYJULn1EVLyJ5Ut6sMyKOSuF+En2vSGSKT4XRIeok4a5hgbbcYMS
+	WK/TQ0UMnDJM+gwT7VUeZpo7w2AdS6yhnyL9IAcOLD531wxSQjWNyaSzT4G8tWBp3QTXPBYZ7zU
+	+KV68n4LQSt0IaSzw+Hag4xKXTOpyFRbe5VkoUUdnlJ8v+hdOG098G1NmWn49
+X-Gm-Gg: AYBFou12vt3fTm2F9e51HL63BXqWMKvqL2gXuBTZ+iQJ+ShpnepFCVuMBzIM+mtslZv
+	fhT5F3MaTB1JieGk8iGmvBQVpXDDuXNMLDHZdHyAtWi32ib6wizh8uoEH7i34RmAJPu+TzFd3R0
+	QUHbrza7MIyedXalnR2+CE646RYeMDf3XKEhIcyE9JMluds7SaSfIk8XGnY/8iY4IQHroMrv3cR
+	Tfyw4p3PbLe5oZIs0W1RMAAAh/I0BzgxBpEWpYW0QR3ZNQnXBb7Xb8mOgyjLLVV1wiU9DloWGba
+	nZ6QYbFG6FeUWz/1mptfAo/k/fU/WNMfBserSLAYBugFdM0fsB6/oLXmeUJIpDtG9wzfzQKrH2H
+	0j+EGUfikWms6V0iJhg7zmJWpM6+7txUwsxvWiLnbHw==
+X-Received: by 2002:a05:701b:4214:20b0:143:297c:276c with SMTP id a92af1059eb24-190a5d6f349mr3478034c88.33.1792604852556;
+        Wed, 21 Oct 2026 10:47:32 -0700 (PDT)
+X-Received: by 2002:a05:701b:4214:20b0:143:297c:276c with SMTP id a92af1059eb24-190a5d6f349mr3477983c88.33.1792604851896;
+        Wed, 21 Oct 2026 10:47:31 -0700 (PDT)
 Received: from localhost (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36741f753f7sm8840346eec.27.2026.10.21.10.43.39
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36740cc848fsm8915123eec.13.2026.10.21.10.47.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 10:43:41 -0700 (PDT)
-Date: Wed, 21 Oct 2026 10:43:36 -0700
+        Wed, 21 Oct 2026 10:47:31 -0700 (PDT)
+Date: Wed, 21 Oct 2026 10:47:26 -0700
 From: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
@@ -136,11 +136,11 @@ Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
         Sami Tolvanen <samitolvanen@google.com>,
         Song
  Shuai <songshuaishuai@tinylab.org>
-Subject: Re: [PATCH v2 11/15] arm64: drtm: Add macro definitions for DEN0113
-Message-ID: <20261021104336.00000437@oss.qualcomm.com>
-In-Reply-To: <11-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+Subject: Re: [PATCH v2 14/15] arm64: drtm: Call UNPROTECT_MEMORY
+Message-ID: <20261021104726.00002640@oss.qualcomm.com>
+In-Reply-To: <14-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
 References: <0-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
-	<11-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+	<14-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
 Organization: Qualcomm
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.51; x86_64-w64-mingw32)
 X-Mailing-List: patches@lists.linux.dev
@@ -154,172 +154,111 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=S8ZMU4sP c=1 sm=1 tr=0 ts=6ad8f9cf cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+X-Proofpoint-GUID: kQXp1IStjL0eyP2cZix76rhdT0B8bc2k
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA3MCBTYWx0ZWRfXywNyH7CIlPph
+ hNqUISznWUPyEVYGCFmCCRUIc4nWLJW8hqEpQOQ1SCu3rxQLW0dhSkIyKuXqEDyCcHGUHFPjYpv
+ 245YPEo+GqLLog6E7F4SSA/r6pji/nEEsKPrgnKWOUl1mEB0IHbQuE5tz0m9JYtvOK3/IlM3VlW
+ e1HpFUOgcy1NPY0J2wPW/s/sLrhjWvv5xIwUgJGvLDAXo5809yl2SioY9Fj32YFcRkR3+Mi1hF2
+ pq4F6zpW8wr2MiVPMeR11/bCygCZW+tj3WnWrh6gIuefmvBeP7jWGGkUSssVuIBcj+1CuGFsY4j
+ Fgw0gHJHOFjeIq1QUTkGrfK1Z5/TJlEOFa0A5peSq8PGrx3t+T4HTJ+3qUvnWZCMfIPI0vrczwd
+ f9RYGDt6cY/q/4P3oaT1zfPHRn0+J/wgbjvPMBNhYa7MHAyrII63CB9HvrtJWEtWavyBMFijvnZ
+ gxEJtcHt42qkm5BUUAg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA3MCBTYWx0ZWRfX8ChxhjmadRMh
+ se7Dt/MLh46kF6w49xVRVn+m6zyDtp9a/q/mM6UlOSyElkZVby8hnP4MD7s0BOdlLWiqNylEdWq
+ rnsyDR/68jy6N0fHNjQVTyongv4ukzw=
+X-Proofpoint-ORIG-GUID: kQXp1IStjL0eyP2cZix76rhdT0B8bc2k
+X-Authority-Analysis: v=2.4 cv=IPaXmQvG c=1 sm=1 tr=0 ts=6ad8fab5 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
  a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=Ikd4Dj_1AAAA:8 a=EUspDBNiAAAA:8 a=cBdanpMcOxUnX1AP4g8A:9 a=CjuIK1q_8ugA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-ORIG-GUID: N8CRGGSTzDZsB93YMklYNuiHE2Oa0AmH
-X-Proofpoint-GUID: N8CRGGSTzDZsB93YMklYNuiHE2Oa0AmH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA3MCBTYWx0ZWRfX0NlwWYDfNgGS
- 9qh4CVYMH0rD8b1SgL5GWsX1oxtTH7yTygmExpNf1Pt/sACtlb9plP5U27bmIhnDxaoQFFCIpRB
- xRzYFZoR6e3LoOLe0FpJWP7umLy/3Nw2RdaCmU2mQT5YFEC30HE3uPVcO+LyX+m9+2YMPbKLshr
- x9SopRYGJzytmbrg2luWh7+RSuL9b4xyLDF3POfikqtKk48OIfCjmLR1Fq8G/J2evPYG9kK7Oac
- yjZshDrVFNo4vrtQgOK6VDMKhuAQvttKYivFaWHbQRDTLVx3yaMcx+hXgLr8WHuDdjeR60sN0HT
- C2QOyDrsCVg2GSecwCudoXjDJpZkBYLW9Zy8cVQbx73dcqBFo/Z8uIVHam/sSxwBpeLCZVGBvn6
- ASVTI+Z1sHRs9uaTS7Ta8rvrwD3BeDgH6GI/Xhe2loxHgTgXtdNUpEufM5JOWlUlHcM1PN7YKkf
- cZ4xI0LxVB7y4v8a37Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA3MCBTYWx0ZWRfX72Mb/HzGKdhZ
- 9F9Yff1Vrpewc9qES5cA6qRa6+D+Hp94Fb1Zf94m4dXwJQitnJa5+Wp0JTMV0pDeztPEWLZMle9
- 0YMj5ZuwGZqUWq3wjQN14Cyn4Os+Nrg=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=Ikd4Dj_1AAAA:8 a=4lc54p1sSd76nvOad-kA:9 a=CjuIK1q_8ugA:10
+ a=Fk4IpSoW4aLDllm1B1p-:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_04,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 clxscore=1015 adultscore=0 impostorscore=0
- malwarescore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610210070
+ clxscore=1015 malwarescore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210070
 
-On Fri,  2 Oct 2026 20:31:48 -0300
+On Fri,  2 Oct 2026 20:31:51 -0300
 Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-> Taken from rev 1.4b of the spec, following the SMCC register layout and
-> constant names.
+> The stub always requests ARM_DRTM_LAUNCH_DMA_COMPLETE. On a system
+> with an SMMU the COMPLETE option is sanely implemented using the SMMU
+> global abort register. DMA_COMPLETE should be mostly a no-op. It
+> seems to be designed for the region protection mode that Linux does
+> not use.
+> 
+> However, the FW can still do something interesting under it and we
+> should call it. Choose late_initcall as we know the SMMU drivers are
+> loaded by then. If some platform does actually block DMA beyond the
+> SMMU, then this would result in a noisy failure of built-in driver
+> DMA, not a silent security gap.
+> 
+> The platforms I'm aware of are OK with this placement, and it is a
+> reasonable place to start.
 > 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-
-Nice - appreciated the spec references as saved a bunch of searching.
-A few really small comments inline. Either way 
-
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-
 > ---
->  arch/arm64/include/asm/drtm.h | 304 ++++++++++++++++++++++++++++++++++
->  1 file changed, 304 insertions(+)
->  create mode 100644 arch/arm64/include/asm/drtm.h
+>  arch/arm64/kernel/drtm.c | 39 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 39 insertions(+)
 > 
-> diff --git a/arch/arm64/include/asm/drtm.h b/arch/arm64/include/asm/drtm.h
-> new file mode 100644
-> index 00000000000000..8188af1b582bb3
-> --- /dev/null
-> +++ b/arch/arm64/include/asm/drtm.h
-
-> +/*
-> + * The spec uses 4KB pages for sizes and alignment throughout, see v1.4B
-> + * sections 3.3, 3.13, 3.14 and 3.15.
-> + */
-> +#define ARM_DRTM_PAGE_SIZE			4096
-
-Maybe use SZ_4K from linux/sizes.h
-
-
-
-> +/* v1.4B section 3.3 "DRTM_FEATURES" */
-> +#define ARM_DRTM_SMC_FEATURES			(ARM_DRTM_SMC_FN_BASE + 0x01)
-> +/* X1 input parameter */
-> +#define ARM_DRTM_FEATURE_SELECTOR		BIT_U64(63)
-
-Maybe define the alternate masking for function ID - for completeness if nothing else.
-
-> +#define ARM_DRTM_FEATURE_ID_MASK		GENMASK_U64(7, 0)
-
-> +/*
-> + * PCR schema numbers. ARM_DRTM_PCR_SCHEMA_MASK is a bitmap indexed by these,
-> + * and the Launch Features ARM_DRTM_LAUNCH_PCR_SCHEMA_MASK field holds one.
-> + */
-
-Similar to below. Maybe this dual use is a bit fragile.
-
-> +#define ARM_DRTM_PCR_SCHEMA_DEFAULT		0
-> +#define ARM_DRTM_PCR_SCHEMA_AUTHORITIES		1
-
-> +/* v1.4B Table 6 "DMA protection features" */
-> +#define ARM_DRTM_FEATURE_DMA_PROTECTION		0x03
-> +#define ARM_DRTM_DMA_PROTECTION_MASK		GENMASK_U64(7, 0)
-> +/* Only valid if ARM_DRTM_DMA_PROTECTION_REGION is supported */
-> +#define ARM_DRTM_MAX_REGIONS_MASK		GENMASK_U64(23, 8)
+> diff --git a/arch/arm64/kernel/drtm.c b/arch/arm64/kernel/drtm.c
+> index 14493948a27f0d..6062980a5d9e53 100644
+> --- a/arch/arm64/kernel/drtm.c
+> +++ b/arch/arm64/kernel/drtm.c
+> @@ -3,8 +3,47 @@
+>   *
+>   * Support functions for ARM DEN 0113 "DRTM Architecture for Arm"
+>   */
+> +#include <linux/bug.h>
+>  #include <linux/efi.h>
+> +#include <linux/init.h>
+> +#include <linux/printk.h>
+>  
+>  #include <asm/drtm.h>
+>  
+>  struct arm64_drtm_handoff arm64_drtm_handoff __efi_data_handoff;
 > +
-> +/*
-> + * DMA protection types. ARM_DRTM_DMA_PROTECTION_MASK is a bitmap indexed by
-> + * these, and the Launch Features ARM_DRTM_LAUNCH_DMA_PROTECTION_MASK field
-> + * holds one.
-> + */
-> +#define ARM_DRTM_DMA_PROTECTION_COMPLETE	0
-> +#define ARM_DRTM_DMA_PROTECTION_REGION		1
-
-The dual use of these for bitmap indexes in one place and
-values in another seems fragile.  Maybe it is better to have
-different naming for the two even though the values match?
-
-
-> +/* v1.4B section 3.4 "DRTM_DYNAMIC_LAUNCH" */
-> +#define ARM_DRTM_SMC_DYNAMIC_LAUNCH		(ARM_DRTM_SMC_FN_BASE + 0x04)
-> +
-> +/* v1.4B section 3.5 "DRTM_UNPROTECT_MEMORY" */
-> +#define ARM_DRTM_SMC_UNPROTECT_MEMORY		(ARM_DRTM_SMC_FN_BASE + 0x03)
-> +
-> +/* v1.4B section 3.6 "DRTM_CLOSE_LOCALITY" */
-> +#define ARM_DRTM_SMC_CLOSE_LOCALITY		(ARM_DRTM_SMC_FN_BASE + 0x05)
-> +
-> +/* v1.4B section 3.7 "DRTM_GET_ERROR" */
-> +#define ARM_DRTM_SMC_GET_ERROR			(ARM_DRTM_SMC_FN_BASE + 0x06)
-> +
-> +/* v1.4B section 3.8 "DRTM_SET_ERROR" */
-
-I know I'm the one who asks for references, but maybe the SMC numbers are obvious
-enough without given the name matches the spec section?  The table references
-etc below are excellent!  The do no harm beyond a bit of bloat though so I don't
-mind if you want to keep them.
-
-> +#define ARM_DRTM_SMC_SET_ERROR			(ARM_DRTM_SMC_FN_BASE + 0x07)
-
-> +
-> +/* v1.4B Table 8 "Definition for error IDs (Bits[10:3])" */
-> +#define ARM_DRTM_ERROR_ID_NONE			0x0
-> +#define ARM_DRTM_ERROR_ID_PARAMETERS		0x2
-> +#define ARM_DRTM_ERROR_ID_SECURE_EXCEPTION	0x3
-> +#define ARM_DRTM_ERROR_ID_TCB_HASH_UNLOCKED	0x4
-
-I'd use NOT_LOCKED to align with spec.  Maybe it makes a subtle
-difference somewhere? UNLOCKED might imply a transition to that
-state, where as NOT_LOCKED doesn't.  Meh, doesn't really matter
-as I'm probably over thinking this.
-
-> +#define ARM_DRTM_ERROR_ID_TPM			0x5
-> +#define ARM_DRTM_ERROR_ID_SIGNATURE		0x6
-> +#define ARM_DRTM_ERROR_ID_IMAGE_FORMAT		0x7
-> +#define ARM_DRTM_ERROR_ID_VENDOR		0xFF
-
-> +/*
-> + * v1.4b Section 3.3.1 says:
-> + *   A return value of greater than 0 means the feature ID is
-> + *   implemented, and there are other feature-specific
-> + *   feature or capability bits available in other return value
-> + *   registers.
-
-I'd wrap to 80 chars.
-
-> + * And for FEATURE_SELECTOR all defined features return data in other
-> + * registers, so 0 is not an allowed return.
-> + */
-> +static inline s64 arm_drtm_query_feature(u64 feature, u64 *value)
+> +static int __init arm64_drtm_unprotect_memory(void)
 > +{
-> +	struct arm_smccc_res res;
+> +	s64 status;
 > +
-> +	arm_smccc_1_1_smc(ARM_DRTM_SMC_FEATURES,
-> +			  ARM_DRTM_FEATURE_SELECTOR |
-> +				  FIELD_PREP(ARM_DRTM_FEATURE_ID_MASK, feature),
+> +	if (!arm64_drtm_handoff.drtm_enabled)
+> +		return 0;
+> +
+> +	/*
+> +	 * Currently Linux can only fully support a DRTM implementation that
+> +	 * relies only the SMMU.
 
-> +			  0, 0, 0, 0, 0, 0, &res);
-> +	*value = res.a1;
-> +	return res.a0;
+That sentence doesn't parse.  relies on maybe?
+
+> This should be called directly after attaching
+> +	 * a driver to every SMMU but before binding any drivers that want to
+> +	 * use devices attached to the SMMU. Our boot flow does not have a way
+> +	 * to do that, so for now call it here.
+> +	 *
+> +	 * For SMMU based implementations their UNPROTECT_MEMORY is probably a
+> +	 * NOP since touching the SMMU here is forbidden, but they may still do
+> +	 * something interesting so be sure to call it at least.
+> +	 *
+> +	 * The stub excludes the most likely case of non-SMMU by only using
+> +	 * ARM_DRTM_DMA_PROTECTION_COMPLETE, which is defined as:
+> +	 *    Complete DMA protection is hardware-based enforcement at the SMMU
+> +	 *    that blocks all DMA from Non- secure devices."
+> +	 *
+> +	 * For now if people have such systems they cannot include built-in
+> +	 * drivers for any DMA devices, those have to be modules to be ordered
+> +	 * after this.
+> +	 */
+> +	status = arm_drtm_unprotect_memory();
+> +	WARN(status != ARM_DRTM_SUCCESS,
+> +	     "DRTM: failed to unprotect memory (x0=%lld)", status);
+> +	if (status == ARM_DRTM_SUCCESS)
+> +		pr_info("DRTM: launch completed\n");
+> +	return 0;
 > +}
-
-
-> +
-> +#endif /* !__ASSEMBLY__ */
-> +#endif /* __ASM_DRTM_H */
+> +late_initcall_sync(arm64_drtm_unprotect_memory);
 
