@@ -1,77 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792563293;
-	b=E/Ea1/xbQCg/l8Lk35U3LqY2eBq4N1/bIuPhGG7VA/BDbUusOsiBTMBQv0Z5NTxfv3rP
-	 oeOLtvbTYp9P0bolY5najamt6C/GEvHNf22nfK0tyakQWr2W4nZixMtBNJUPDBiwuoDWY
-	 Caqv6PlnxuO11fav9DNL8UPAL4EPpCgHdArb5jD9LTnm4i0cpzH/hNmJGtmBOD9otj5y7
-	 jlJWLc35Rne93SbPp0LECGu2zNHiXqmS2WWP/Qf8fW/VN9wrkR4CWgt7ypef3Fz685HV/
-	 ekBDLKcgIqx7TUECh0KTDORO3WnAu76AGjG9YKb0Zi8YF4OxtCNyF8K69q+3a9oravQ==
+	t=1792568762;
+	b=ZdiRhoxcwnv1DDZPCWhG1Kxo48Yb86+/XI2cAUtXEK1yMkBJN80+3RXmEKo6HN5Hlxb8
+	 1qIR4L1QvyuDHXvQtwTPUmDx2E3TOsxeM8N2mCy/Oa5+aeJx9e1Ir/a9Mekns1OaIgufN
+	 om/ixzt+FkqaF9hZLHW50hi5LiRW7xocHzy07rMIWaX4OPg+fpEIkMue9DQto9kDdxcDp
+	 3H6PKrqd+VNCorer3nnxxCrZN7jLatsaT/+HXd3ZJNkIrSZfsZK/q6X66cL+5haV3QN0m
+	 2IYy7VOjcZ7S+rqu8Oze+wRPmAZeu4FlWzG9WxAvTtlwJiLFZry1SyfX3kYq2AEVp4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792563293;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=3x3TamlaaK9V9PCuBZqg1dttpYbp4NHVNda75j19VEs=;
-	b=y/RlcmwruTp93oz8nr67xvmlt5vJjkQy4eKv3RNkjFgG7Rz+4x3YAkz702d8cLbvp3qi
-	 MZ4qr4dCH7tlEbp3HysjcgbT7ONN4JthBw4GYO4NEYzpBJ9DYi7tCp14zIZghaQRIHRck
-	 /M15NQ8owsIiUjGzR5tRBHXVVE3vFtULuJUoOB/uv+Dd7IzYuHiOrRmmqSvy8+IrGtNUG
-	 T3gyV53cg0zD0J06d/H/4VFKiSfT5nmRVufgxbedA3VvY/BZ8LcUo531WhDACXEPwrqNc
-	 PmFP65ufqprGjiuRbm3IbcL2BBA1SIOyVpj+Py48f5K7jgljUJCFuz6DLCfhFL2PNcA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792568762;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=SFN8gYn+RF8fPSaaK8mqyJ5ZeLixW3+cdNYTNRujQ4M=;
+	b=VC28TWzVcvVe67Y4xGkT1pyAu01KJ6goMJb0tzu0GBJYeAi5dcesRTDvQMen70RDpoW4
+	 P6N4KG5QngJQ3bBb9LEss5Cqgto0V+mcjJYq7lTv07X+Wyi2CwMoj1sgsL2unDHBooxz6
+	 +mtFPqa903Gdy+sm9kcG8xW/lR/CwHnUacb1/tK9gmuzVMnKI5sfhXrbAKa1Cz7jYnkcR
+	 0ANbf51B2Y+PivKBDQ9gxalYPO9KK7UzuOyvwFpx+npGJ7BknYaxG9/rzGf/ERsZYa1GR
+	 zNfvcuJjh79Jm1ngwsoKcoQFNNvd2akMdtkOgTMP84BiVOd2wY74QmDZRI/n6Xm/wjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F13606A32A
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 06:14:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39F13606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DF9A815A1;
-	Tue, 20 Oct 2026 23:14:37 -0700 (PDT)
-Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7D69D3F673;
-	Tue, 20 Oct 2026 23:14:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1792563281; bh=bY7eaKmWXeEGJZPv0klJ3mm9fvB9sa6YQ58K0dGT+DQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Dz1W2m1mtqieAvvcHZ0PElJP5ck781BRAil8keCt0J0xDmnmsvOtE2z2M/5OD8bJT
-	 x0mY2JIMQy/68/SPz8OHAETC2GSRyy6i0mXuMcfrF0pwBi7AW/wwQj2YV7ClSyJ7P8
-	 z7NHuQtFqmTF4JQhakFU6b9pfZaA/t3mKW3YduKY=
-Date: Wed, 21 Oct 2026 07:14:33 +0100
-From: Yeoreum Yun <yeoreum.yun@arm.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>, Alexandre Ghiti <alex@ghiti.fr>,
-	Albert Ou <aou@eecs.berkeley.edu>, Ard Biesheuvel <ardb@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jonathan Corbet <corbet@lwn.net>, David Sterba <dsterba@suse.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	linux-arch@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-doc@vger.kernel.org, linux-efi@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Simon Glass <sjg@chromium.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Nick Terrell <terrelln@fb.com>, Will Deacon <will@kernel.org>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	linux-integrity@vger.kernel.org,
-	Palmer Dabbelt <palmer@rivosinc.com>, patches@lists.linux.dev,
-	Piotr =?iso-8859-1?Q?Kr=F3l?= <piotr.krol@3mdeb.com>,
-	Ross Philipson <ross.philipson@gmail.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Song Shuai <songshuaishuai@tinylab.org>
-Subject: Re: [PATCH v2 15/15] efi/arm64: Implement ARM64 DRTM in the stub
-Message-ID: <athYSbJXA96DZK-X@e129823.arm.com>
-References: <0-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
- <15-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
- <atf4ONRM3xbs877y@e129823.arm.com>
- <20261020233435.GJ3008132@nvidia.com>
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZuWNFmzA;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A32606A31C;
+	Wed, 21 Oct 2026 07:46:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZuWNFmzA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4A21F000C9;
+	Wed, 21 Oct 2026 07:46:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1792568761;
+	bh=SFN8gYn+RF8fPSaaK8mqyJ5ZeLixW3+cdNYTNRujQ4M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ZuWNFmzAE88AW5F68+RnmxHkF8zw17bwz0/kqqdOuNLDoFE/juDrGzCxoRS2tsVM8
+	 tfo7cDhYhyIArth896moOZg6icT4Saa3kTYH29v8p199U9rGO5XiTIaXN/+FhNQ38y
+	 Dq+Yv8/kzCtuPvPr0Go/C2ApEPE0UL7TBC8VtwGE=
+Date: Wed, 21 Oct 2026 09:45:16 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.6 0000/1651] 6.6.160-rc2 review
+Message-ID: <2026102152-yield-ripping-7709@gregkh>
+References: <20261020075535.084584701@linuxfoundation.org>
+ <beac545f-9a17-4a47-a4cd-7a705302a35c@gmail.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -83,48 +62,43 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261020233435.GJ3008132@nvidia.com>
+In-Reply-To: <beac545f-9a17-4a47-a4cd-7a705302a35c@gmail.com>
 
-On Tue, Oct 20, 2026 at 08:34:35PM -0300, Jason Gunthorpe wrote:
-> On Wed, Oct 21, 2026 at 12:24:40AM +0100, Yeoreum Yun wrote:
-> > One small question...
+On Tue, Oct 20, 2026 at 09:14:08AM -0700, Florian Fainelli wrote:
+> On 10/20/26 00:57, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.6.160 release.
+> > There are 1651 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > [..snipped..]
+> > Responses should be made by Thu, 22 Oct 2026 07:53:04 +0000.
+> > Anything received after that time might be too late.
 > > 
-> > > +void efi_drtm_launch(void)
-> > > +{
-> > > +	if (efi_drtm_policy == EFI_DRTM_OFF)
-> > > +		return;
-> > > +
-> > > +	/*
-> > > +	 * No cache maintenance is required before the launch. v1.4B R42130 in
-> > > +	 * Table 22 "DCE preamble requirements" requires the DRTM_PARAMETERS to
-> > > +	 * be accessible as Normal Write-Back Cacheable, Inner Shareable memory,
-> > > +	 * so the DCE reads them coherently with the writes made above.  R45220
-> > > +	 * in Table 30 "DCE requirements for the DLME" then has the DCE clean
-> > > +	 * and invalidate the whole DLME region to the Point of Coherency before
-> > > +	 * it measures the DLME image, which covers both the Image itself and
-> > > +	 * the handoff struct placed in the DLME region. Thus once we jump into
-> > > +	 * the kernel with MMU and caches off the CPU will see everything the
-> > > +	 * stub wrote.
-> > > +	 */
-> > > +	arm_drtm_dynamic_launch(drtm_cfg.params_addr);
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.160-rc2.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> > and the diffstat can be found below.
 > > 
-> > After launching, How to get eventlogs for measurement of DLEM if
-> > tpm_read_log_efi() is used? Doesn't it need to concatenate those
-> > event logs from DRTM eventlog in returned DLEM data?
+> > thanks,
+> > 
+> > greg k-h
 > 
-> My plan is a future series will return them as a discrete log bundle
-> through attestation subsystem. All of the logs will be available
-> consistently that way, CCGL, the EFI and ACPI ones..
+> perf build issues are fixed, however we now we get the MIPS kernel to fail
+> building with:
 > 
-> And it will be logically linked to the ROT the DRTM uses in some
-> future ROT agile DRTM flow. So we can tell the difference between a
-> TPM bare metal launch into PCRs and something like a realm launch into
-> REMs.
+> arch/mips/kernel/ftrace.c: In function 'ftrace_dyn_arch_init_insns':
+> arch/mips/kernel/ftrace.c:62:6: error: implicit declaration of function
+> 'uasm_in_compat_space_p'; did you mean 'uasm_i_dsra_safe'?
+> [-Werror=implicit-function-declaration]
+>   if (uasm_in_compat_space_p(MCOUNT_ADDR)) {
+>       ^~~~~~~~~~~~~~~~~~~~~~
+>       uasm_i_dsra_safe
+> cc1: some warnings being treated as errors
 
-Make sense. Thanks!
+Looks like this is missing commit e9f98feb1720 ("mips: unhide
+uasm_in_compat_space_p() declaration"), so I'll go queue that up now,
 
--- 
-Sincerely,
-Yeoreum Yun
+thanks.
+
+greg k-h
