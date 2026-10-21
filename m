@@ -1,69 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.13
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792616522;
-	b=IGG6gtivzUlnF4B2kraVuFc5xqpjuQkD9EQZE9YVFrmehWn+WDAr40pG15k63OxNyaPX
-	 iOyVWp4j2CC08+iJ20QwvhlTUdxq9+vlASMGzC0/rH4FIMpzJmzYViAnQyOmmJjX8koV7
-	 a5Lq+3bV/LH9+oITY8ilYkOXx7NsQNSDrMEE56WC6hCX90zgXOL/adFuYxVfNPR+HC6KK
-	 Xkt1PkViyCF0nNQhq4ewEwjr04hFzWxXChTJstwiELEg8zkA6h54Oz0ivxQ4K/+1NafFx
-	 Uak8txFhticeXNzufzfcPlwYWbwmV/7kIGT+HwDXqjSyGiXhDsK/naGvc1+dbfYH/gQ==
+	t=1792621330;
+	b=GDFzxvFzAz3neNipwb/VragFF5g5mEJbyLhFP9956pkjBuI8KsBDNQ9DpKbmitPvZxD0
+	 s1e4ObQWrlndlQirRJDD/YEBCflPYuXwF4N9qhM5yy9cqNgGHwOLXMiu7yEXtnsk00OmC
+	 683lJLUXwXzbjkiflEhnQYC4kLxwsQCs39yGLnFPAxS9sn+H104QdxcxIQHh4T5BwZNpV
+	 SgCnoQjfBBTyzPH0gYRuY4tMqNpx1f06UMTQBnupU9GhRxKgBLXxf2ZcOVG+6PG46GOUw
+	 pAhAxtiT2P0DwbdgHWfmA/niCcTZzibYIfVDAqC0GqgVfCQj8tK8kWXszmZl8UFHlsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792616522;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
-	 Date:In-Reply-To:References:Content-Type:User-Agent:MIME-Version:
-	 X-SRS-Rewrite;
-	bh=MeueggKi48gnff3VUrSjikCBY6bGfKJ4k9AzVge6EaE=;
-	b=JH4EWZ+LnvG+xpsBslRfpl7Gjumj/pT5b3NJAk6lqF3ha0FhgB5N3ZdOr94wHlGIgd9H
-	 jIpc1SXqwvnwFV6WY2FNaPig0BFO3JEJsBuPma2QI77md/qsJ7Bs1m3J/Rczcn9N8efbn
-	 jeZyHegRnXj4aA5vT896SlECYaVbDibzVy73r7/MMsIi3z604aRdIaR5VU3qdPFhWSOxY
-	 lTwJegft0zm5bA/mRc0WLtDHTI0TXBry5atLhPTzuQf+939Zm+ZRBmoNtvNOAbCNL2YCg
-	 OShH4Jbq5X27+6lso/kcu7nEokFDuTrB3mLlslEbimuA3hNwVlOOOuqe3ylXOyjvSxw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792621330;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=SstS/aerNK8KvlijOKFS7nqpS6vEQAL24S1VtRAhY4Q=;
+	b=bigFt+zB2jrjQOfy6mqVqhrF6aKH10917x5ZHaZ2v703v9IdNBrKQ83C5F7AnljcFh4b
+	 EDX5IWL/jFDw+7LDEnR0RBhO21InaBNb5wyhSXvhwE5IMtToRgI0VdYsLf9ojlcT3SgqD
+	 onkldRq32WWsWZsCvzusuU11VFfTK9ZgrEbZpJMOkKa2KwqTIXhTUxrz/ApKymAmJ1JWt
+	 RZaKPwBieKy546vkOyeZ75F2m5KjXjkNAIv5kmqjPaRLAzL5ipDWEz9IjGR6N6KEWlkkv
+	 joDsSfFf88ZsOFWtkx3tasi9J020ZU5vx4gmqjwLOdaMK19pa+yEwGFaCIxQJcEoMiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=none smtp.mailfrom=casper.srs.infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=EwmVP3EO;
-	arc=none smtp.remote-ip=90.155.50.34
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dfNGc1y1;
+	arc=none smtp.remote-ip=192.198.163.13
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB4E606A319;
-	Wed, 21 Oct 2026 21:01:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0AB4E606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F18606A31A
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 22:22:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 48F18606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=EwmVP3EO
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
-	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=MeueggKi48gnff3VUrSjikCBY6bGfKJ4k9AzVge6EaE=; b=EwmVP3EOfz157ubzU1URKgigNK
-	ntVCnhC3ulFUUMkvtoWuyszhxPQvYI2nim0S8+IWTgGi9b1gZahZrwirV5h2Y3+5VGBh3xKj7cxlN
-	actYmQ89/h/NnrPymK0ptKXesKCMt0Z3Lzjdk41HVXLXMU0W76suT7ZT9K/IqEfJly3Is2kW1VM1K
-	Fg34OBm0rnrTMKykLbYSR0gbl6chuYdWCGz8++XSwLNEun+U+JfRY5BPc50I4T64kLSDzMR3PaXYt
-	aqsnR/81qYd8wGfR994P3aEC2gWKHLfbqvHODPadanFAoAoH8UGtDyvq0FVpRQ4B77IktOu+PLPU3
-	KK+AetGQ==;
-Received: from 54-240-197-233.amazon.com ([54.240.197.233] helo=u09cd745991455d.ant.amazon.com)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1xJdRa-0000000Cfy1-1Ndp;
-	Wed, 21 Oct 2026 21:01:55 +0000
-Message-ID: <3bc2d742e0fa4944c5da6b4d2932225a1c1761d7.camel@infradead.org>
-Subject: Re: [PATCH AUTOSEL 6.18-6.6] KVM: x86/xen: Prevent runstate times
- from becoming negative
-From: David Woodhouse <dwmw2@infradead.org>
-To: Sean Christopherson <seanjc@google.com>, Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org, Paul Durrant
- <paul@xen.org>, 	pbonzini@redhat.com, tglx@kernel.org, mingo@redhat.com,
- bp@alien8.de, 	dave.hansen@linux.intel.com, x86@kernel.org,
- kvm@vger.kernel.org, 	linux-kernel@vger.kernel.org
-Date: Wed, 21 Oct 2026 22:01:53 +0100
-In-Reply-To: <atkdzsPJgcu123DO@google.com>
-References: <20261019135441.1420968-1-sashal@kernel.org>
-	 <20261019135441.1420968-127-sashal@kernel.org>
-	 <atkdzsPJgcu123DO@google.com>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-imuaOhcTB0QvbOwXTSlu"
-User-Agent: Evolution 3.62.0-0ubuntu1~ppa1~24.04 
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dfNGc1y1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1792621329; x=1824157329;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=4pbGT3tKNIqn7SCAYqOmly57C4LwkQGCdYDhKsNxvIc=;
+  b=dfNGc1y1dE98P3hC/sTWJl1O81hBiE3omt0nyROeNCg1ey0nc8mfLOrS
+   xpyVpGvTfD9JE0jUXym+neWvCuQAfjKQc5fyjErmaKc556x/9KN1na3aR
+   FcH18CxXPt9I+iZ/CXZOGxNyjMlx1stnV+Vw34JJLJyrJfxfFM2b6lDJD
+   I5TZtdauRnkAkVNaJXd5sTXcJbdIYThWG/DnwUlRmm540H8TmDnC/EjCf
+   YADG3NdGM5CzeAl1jsYUurh5oIbpnnsgff4DkDvO14wLvkbJeNfXOn4m3
+   l4kjmkvK3C7KHf4qxYL6lHe71YD5/+QgeqdqqX/Fhv/HkXKXTuytDuqTF
+   g==;
+X-CSE-ConnectionGUID: BOMb12eBQ9+FBcWXbNRqYA==
+X-CSE-MsgGUID: f94PQA1PT1a7jlIEjgcTSg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11942"; a="1346487"
+X-IronPort-AV: E=Sophos;i="6.27,171,1787036400"; 
+   d="scan'208";a="1346487"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2026 15:22:08 -0700
+X-CSE-ConnectionGUID: UH5h7j24QkGtyg1RSQPUQg==
+X-CSE-MsgGUID: aIxcM1FNTjmSVNDtsHJ3DA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,171,1787036400"; 
+   d="scan'208";a="3127857"
+Received: from rodrigoa-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.213])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2026 15:22:08 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: tony.luck@intel.com
+Cc: Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	david.e.box@intel.com,
+	dfustini@baylibre.com,
+	fenghuay@nvidia.com,
+	hch@infradead.org,
+	james.morse@arm.com,
+	linux-kernel@vger.kernel.org,
+	maciej.wieczor-retman@intel.com,
+	patches@lists.linux.dev,
+	peternewman@google.com,
+	reinette.chatre@intel.com,
+	x86@kernel.org,
+	yu.c.chen@intel.com
+Subject: [PATCH v14+ 14/24] x86,fs/resctrl: Handle systems where AET is the only monitoring feature
+Date: Wed, 21 Oct 2026 15:22:00 -0700
+Message-ID: <20261021222200.16310-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261019205031.16977-15-tony.luck@intel.com>
+References: <20261019205031.16977-15-tony.luck@intel.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -73,147 +92,168 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+Content-Transfer-Encoding: 8bit
 
+Application Energy Telemetry (AET) is not enumerated via CPUID. Its presence
+is discovered on the first mount of the resctrl file system by querying the
+pmt_telemetry driver. resctrl is initialized at boot only if CPUID
+enumeration finds allocation or monitoring features.
 
---=-imuaOhcTB0QvbOwXTSlu
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On a system that supports monitoring (X86_FEATURE_CQM) but no L3 monitoring
+features, get_rdt_mon_resources() reports that no monitoring is supported.
+If the system also does not support allocation, resctrl is not initialized
+and AET can never be used.
 
-On Wed, 2026-10-21 at 13:17 -0700, Sean Christopherson wrote:
->=20
->=20
-> Two questions: do we care abou this specific flaw, and does anyone run Xe=
-n guests
-> with KVM using an LTS kernel?=C2=A0 I agree with AI's assessment that thi=
-s is low risk,
-> but unless this will actually benefit someone, I don't see the point.
+Assume that AET may be supported whenever the system supports monitoring,
+but check for non-zero supported RMIDs to deal sanely with misconfigured
+systems.
 
-I concur. Nobody runs KVM and expects steal time and clocks not to be
-entirely hosed once you start caring deeply about the details =E2=80=94 eve=
-n in
-upstream. You want this stuff to work, you carefully curate the kernel
-you're running.
+If AET is not supported either, the mount finds neither allocation nor
+monitoring support. rdt_get_tree() then lets the mount succeed with nothing
+to allocate or monitor, but does not mark resctrl as mounted. Fail the mount
+with an error message instead, before any of the file system is set up.
 
-Backporting this one to LTS kernels doesn't help anyone. The risk is
-low, but the benefit is lower.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+v14+
+	Add check that there are some RMIDs to address Sashiko report
+	about booting with "clearcpuid=cqm".
 
-Those who care will already have it backported to 6.18 anyway.
+ arch/x86/kernel/cpu/resctrl/internal.h  |  2 +-
+ arch/x86/kernel/cpu/resctrl/core.c      | 22 +++++++++++++---------
+ arch/x86/kernel/cpu/resctrl/intel_aet.c |  3 +++
+ arch/x86/kernel/cpu/resctrl/monitor.c   |  4 +---
+ fs/resctrl/rdtgroup.c                   |  8 ++++++--
+ 5 files changed, 24 insertions(+), 15 deletions(-)
 
---=-imuaOhcTB0QvbOwXTSlu
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index 086282a82fca..c038b7d80ce3 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -226,7 +226,7 @@ union l3_qos_abmc_cfg {
+ 
+ void rdt_ctrl_update(void *arg);
+ 
+-int rdt_get_l3_mon_config(struct rdt_resource *r);
++void rdt_get_l3_mon_config(struct rdt_resource *r);
+ 
+ bool rdt_cpu_has(int flag);
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index b32fa143283e..0262174df7ad 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -991,7 +991,7 @@ static __init bool get_rdt_alloc_resources(void)
+ static __init bool get_rdt_mon_resources(void)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+-	bool ret = false;
++	bool l3_mon_found = false;
+ 
+ 	/* Any monitoring at all? */
+ 	if (!cpu_feature_enabled(X86_FEATURE_CQM))
+@@ -1001,27 +1001,31 @@ static __init bool get_rdt_mon_resources(void)
+ 
+ 	/* Any of the L3 monitoring features? */
+ 	if (!cpu_feature_enabled(X86_FEATURE_CQM_LLC))
+-		return false;
++		goto out;
+ 
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
+ 		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		l3_mon_found = true;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
+ 		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		l3_mon_found = true;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
+ 		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		l3_mon_found = true;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_ABMC))
+-		ret = true;
++		l3_mon_found = true;
+ 
+-	if (!ret)
+-		return false;
++	if (l3_mon_found)
++		rdt_get_l3_mon_config(r);
++	else
++		pr_info("CPUID reports L3 monitoring support, but no L3 monitoring features found\n");
+ 
+-	return !rdt_get_l3_mon_config(r);
++out:
++	/* Non-L3 features, e.g. AET, may be supported */
++	return true;
+ }
+ 
+ static __init void __check_quirks_intel(void)
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index 9f0829a82cb0..9d666cf080d5 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -343,6 +343,9 @@ bool intel_aet_get_events(void)
+ 	struct event_group **peg;
+ 	bool ret = false;
+ 
++	if (!resctrl_arch_system_max_rmid_idx())
++		return false;
++
+ 	for_each_event_group(peg) {
+ 		pfid = lookup_pfid((*peg)->pfname);
+ 		p = intel_pmt_get_regions_by_feature(pfid);
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 82a555855c1b..bd45d72d1d05 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -431,7 +431,7 @@ static void __init intel_rdt_mbm_apply_quirk(u32 num_rmid)
+ 	mbm_cf = mbm_cf_table[cf_index].cf;
+ }
+ 
+-int __init rdt_get_l3_mon_config(struct rdt_resource *r)
++void __init rdt_get_l3_mon_config(struct rdt_resource *r)
+ {
+ 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+ 	unsigned int mbm_offset;
+@@ -519,8 +519,6 @@ int __init rdt_get_l3_mon_config(struct rdt_resource *r)
+ 		intel_rdt_mbm_apply_quirk(num_rmid);
+ 
+ 	r->mon_capable = true;
+-
+-	return 0;
+ }
+ 
+ static void resctrl_abmc_set_one_amd(void *arg)
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 79d4ddc3d64d..ecdb5da50179 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -3193,6 +3193,11 @@ static int rdt_get_tree(struct fs_context *fc)
+ 		goto out;
+ 	}
+ 
++	if (!resctrl_alloc_capable() && !resctrl_mon_capable()) {
++		ret = invalfc(fc, "No allocation or monitoring features are available or enabled");
++		goto out;
++	}
++
+ 	ret = setup_rmid_lru_list();
+ 	if (ret)
+ 		goto out;
+@@ -3251,8 +3256,7 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	if (resctrl_mon_capable())
+ 		resctrl_arch_enable_mon();
+ 
+-	if (resctrl_alloc_capable() || resctrl_mon_capable())
+-		resctrl_mounted = true;
++	resctrl_mounted = true;
+ 
+ 	if (resctrl_is_mbm_enabled()) {
+ 		r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+-- 
+2.56.0
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
-ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
-MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
-DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
-q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
-S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
-Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
-72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
-CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
-mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
-h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
-CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
-GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
-v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
-CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
-b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
-Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
-A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
-vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
-0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
-jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
-FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
-HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
-IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
-MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
-sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
-tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
-EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
-6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
-ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
-bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
-Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
-02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
-sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
-ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
-JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
-LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
-BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
-hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
-SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
-c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
-RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
-AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
-EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
-ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
-+3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
-+icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
-McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
-LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
-nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
-gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
-Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
-CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
-QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
-Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
-SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
-YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
-kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
-pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
-v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
-vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
-PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
-REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
-lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
-aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
-D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
-bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
-MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
-oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
-TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
-bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
-BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
-MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
-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
-V0dBkh33bqcdw1/lbImlIgYAAAAAAAA=
-
-
---=-imuaOhcTB0QvbOwXTSlu--
