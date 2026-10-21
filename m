@@ -1,109 +1,108 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792601530;
-	b=nU7Xk/VszClpQvAfdE1Hq1Qu7mBme6oO/HPPTf815j1T43hcpbIVPgmb/p19PQnavJN6
-	 7r5Uoeq7hX1UQthz+749zfdwPABVOcArYC1IlNqWzHQN23Er/Fb+1nzGVXHgKuNRWvJxb
-	 bWveCZlYpvbF/Rprpi0fT+m4amE1OTyo7ROQwTXlMTLEl0nqzsynbTzvlQlNHXAO63vpN
-	 Micqky5n9I/W4PxP34Mc0Hv1ydXz8Wn2zGrZyeWvxGEESy7N38QJsCqaeDaj3tjwjYdqr
-	 jm9H3twKxRYvj/0h7xm9F/Q9ybMOWpxIpzY+5kWzDHSE+73fgIXPs8R/CQqvgjelfmQ==
+	t=1792602393;
+	b=rMmbT7ANXdje6bI+4kSboqNTPZhmm0WyNbxmG4h0iH9meqqO7sopVxV8F+rcD4LYgRIx
+	 mCvHgFLNcx7N4xlDHTEDw28AYVfEopg5QS3jNzm2GairEhOYM2qvvYjOTgeKyNM2EXCmv
+	 UwRFZS61dIkX6gUICLN71ddHWndW9wvivEIwo6elFd0rMl8186pMqV1/740MZCxnO21ao
+	 Ds8GpH5xJIHTXnvzZkvKDpk9LFGYWwo8Ln9viUT2wYBzqCpQkde3lu8ebB75/4aiMbqTM
+	 egzr6GgHC9o1dxJS8EO1pUONQT4qUybzmM5vLG/W9CwGbd6PCoE5BK65BT7/92sndJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792601530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792602393;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
 	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Date:From:
 	 To:Cc:Subject:Message-ID:In-Reply-To:References:Organization:X-Mailer:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=3Qwd5IeDpUYoKVbi14CXRmp0vCTcpiIpKFvrCb+PUaQ=;
-	b=rsAI4eARlj4+f8JVE1tXbeDriSy44i3thIlwBNWAvio9rJWSiT3fdYgTn68yeokboQGq
-	 V/8rGFB02aaSM0elsBGNI2SZ1ssGBy6qKWEVYXKXw5+i07/XB6R+aZLz8pb51c5BrICdK
-	 NH0TpbRncIc5y8EIekTukUyu4uJGaBwECzDVnuG4EapbM/rIC1uj4JRiM0SLYnwpAlbCu
-	 k73D2SsUX7TWpTLez2UztKFewZb48FF2XzKh5BDbz7YmnAMuP+0Se0gB4UwjaAz5jZ2ss
-	 fPXBtXTl4I/qouRT3UP+YzSA5ADZqGTe+Gvf55Df2yYOfqyv6QjsNjSThIz9UULLcNw==
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:X-Proofpoint-GUID:
+	 X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=4KgtddslSOEOaN73E6Xh0kX0j9JGBALLWlHj4vZIcu8=;
+	b=RzHi/Dmp2FB8vVHolVZgI3Fl8VMP2JcqddAQq+jEuJF3TkgXTGhpSWS2QJzLR6ekWP5c
+	 /7/fpLYHYOY6joPh+UxoF4cXSS8mWXoxZRW4xiF41yiE8eVzQYc4fscTMpN4mBEjrf0Qd
+	 3MO3nRsT06VqnkG0P87rUHmgB6Ajlm4IVeK2Hd2AVK8DE22FM533sLtTcR2gkfEjc8Xt8
+	 +Mi6JgFHPaI5qmyhhXtVGY4lBTb30SmTB/vxPW2qD/+JoFcr0caZppjbgnKbyh3sP/PAD
+	 QWM2Ey/JVjtHJvJV3bsG5bSc6PIwdd1Q0aZpi0cY53DSBtOIOmn41fvtEkkfkGEOqUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.qualcomm.com;
 	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=fGBW0L6P;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=evXwQXVA;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OSlcL8cO;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=cbKLoQhq;
 	arc=none smtp.remote-ip=205.220.180.131
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4317A606A320
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 16:52:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4317A606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C7660A260F
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:06:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C0C7660A260F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=fGBW0L6P;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=evXwQXVA
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LGQE1D1117013
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 16:52:08 GMT
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OSlcL8cO;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=cbKLoQhq
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LFU0vj682104
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:06:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3Qwd5IeDpUYoKVbi14CXRmp0vCTcpiIpKFvrCb+PUaQ=; b=fGBW0L6PCB1n3raX
-	d/aUhPmemf5kyrJMb2V994vfSQxb8ZW1AUflWoJbMqxkNdQMkyX60NaRpWzwG2ZR
-	dyDNPyramva9fABPmwqppOy5x+y3G2Xjpzu+HJAQ8qTdGMQEDtxA5BLJJps0Gfbc
-	0RS6PuOx2PIHdwu3bJdDo33JYwkVD1p+N8Eahl+8OsJIsrCWmXNci7Ks5pmN/stb
-	gumg0KOS4MOx3tLDNhDJjMnuFbAjLxfI2H6AicbgZ1SvXdgPAikr3eeNDm/5NzI1
-	ReUtxdLTy3hBPhb9/wjImsppuSRvPHiJNWyrz7U7vS8e4LyChMQCIA5S5oPDbcDF
-	hGURjw==
+	4KgtddslSOEOaN73E6Xh0kX0j9JGBALLWlHj4vZIcu8=; b=OSlcL8cOU5zXbryB
+	8fphfV9zo1XreQA4OpWxV/h7tO89Sx+6X2Zl5p6+0ULsUn90taN9eGxYH16jm+qk
+	L0XZJ7Dn3v8XGxu9eL4AUwpW89Q08hqaGYjoQLd+s7IfocWo3yT9caDh8KNWlz5H
+	s2wvu8IN32qEW3e4b+swbEmyIx4Sb7Bfs53jhsZpFAhMxFVFGH/lhgrGUhOIl9na
+	ZHCzsoC6k5dyzggh321+7NzEQC0sx6z0Q589PxqQBdkJCqG9N/vTM/t84N6WLpwZ
+	XNzQ4yeKMJxtggMzRJOTsDyC0PwIrehi/AU/krpfAg39mwEvzewP39PNMVc/Bg+a
+	pxwNPQ==
 Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4heh5r457q-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hex7vs12a-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 16:52:08 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-3510d0baf63so2170766eec.1
-        for <patches@lists.linux.dev>; Wed, 21 Oct 2026 09:52:07 -0700 (PDT)
+	for <patches@lists.linux.dev>; Wed, 21 Oct 2026 17:06:31 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-35a04491c56so58101eec.0
+        for <patches@lists.linux.dev>; Wed, 21 Oct 2026 10:06:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1792601527; x=1793206327; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1792602390; x=1793207190; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:organization
          :references:in-reply-to:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to:content-type;
-        bh=3Qwd5IeDpUYoKVbi14CXRmp0vCTcpiIpKFvrCb+PUaQ=;
-        b=evXwQXVANU7Hc+fYa5g3h6BvwD6INWM+PYDw0tvblFiWgcyL6KKcgP3OdkCb1xI1YQ
-         ubx0ebF1bjm3k8ywlDXzQOcRGSCR3xqT9BIpc6NibTb/uzYhVRPn0bfcaa2fjw2+NBcl
-         exuxqpYWpQA94/ucDErRTholv4SJazxr8iFHpxcYw/3rf0CLXJqtdbhN+Jex1NiDnpFJ
-         xS2uk0pDEnoZ2meQs0aM6ynR0veh4VsryXyZHRz4ReuL8OIzMSW0Cho13mRamHK8TXbB
-         RikWcFODmyeFgNF+0ScIxB3M759Bja8w6uMdQxGPX3mZqouyCw4ot68po+p1LXmygQ6C
-         Wjrg==
+        bh=4KgtddslSOEOaN73E6Xh0kX0j9JGBALLWlHj4vZIcu8=;
+        b=cbKLoQhqeNXCGLi4HHxFmMhOUxkSOfp7e3ZchtQjmOhGl80/JCiDH56chTbGPZ9pZo
+         Z680Oya2WFxdUMAG6Q8PuxUVPQgjaaBxwsDLJIVA+Yt2VX2MUkxEHusLOETNuACPqfRH
+         FbiPdUiJevXwieVXZl8x0Ap8UEPYdsvkJB9tTcNIOpj9Nhh+2ZsjRbOKhdV/bkI4s53N
+         bqn983WDqbZ+K7n3lUXgRMM8lYfT9NXcw7RtZA3KFczEt8nXc68lz8/17apqMTPLjgsD
+         e5xG5gXg0B/yx6D5s2X5g+pWRPOK+5H4707jzh/XwBlGa/kJ05kTsh6pjEAdt5RFpJZ7
+         0CJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792601527; x=1793206327;
+        d=1e100.net; s=20260707; t=1792602390; x=1793207190;
         h=content-transfer-encoding:content-type:mime-version:organization
          :references:in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=3Qwd5IeDpUYoKVbi14CXRmp0vCTcpiIpKFvrCb+PUaQ=;
-        b=a9zWA3gs2Z8a1V4BRWOw+AqBbVCegZtswLkjCSceW1g2nQ27gRM7ogId/I0vsNzYf4
-         ZDvMSEphVYt5cR2rz0j3yerNqpXe9fS01D5owHE1WLmXlt9GHigDkqZH/T7vo89ByxyP
-         x2GPU7NpCI8qoDFJUXQE91PxovOK3zLaV4x3/S0y+EoLH8LnOO6DLzZA/2GPeQ3ICVBn
-         OyuKegsL9WMdknKfSNYjZK2TqsqrxgfSY1lpxcNJtdswfBDwMbuyp4PnaJSr5m3G1GA0
-         tWFnspzWjbRbUEiTbqlg6xFnMeDt6X4ef+Oh/2jM0b7PaBeq2xndE2ZVobemcYivly3p
-         bflw==
-X-Forwarded-Encrypted: i=1; AKwUvBx749OlY0i6ZM8gaOyxQOeTe6uTyCrGcA5JfdIcIJobLEVXXo84RYnesXVk3Q83NONV0gF/Eqz3@lists.linux.dev
-X-Gm-Message-State: AFq9FYIQSzXAVNLTB95aqk6HHa0j3hwPzpNAK2Kg1M+nrFlckoofux9U
-	BAOIa6i/O8lzhEJcuzb8xu44iUgah2m3Ivl3Jwuj86jAbXDjmN70xfnKhWZ66gnFoq1QXLCOEko
-	Nvq/CPvt9zZFo/JXysX3hJeohoFTAz8qv6HtYXdI5JuRTDF3eaYtatH4oV1o6
-X-Gm-Gg: AYBFou2udypAitnS+hZ3/ylS15HJX9ZCM0dA3LlMtwPv9Z0BQik8kiB1upTskdwN9wy
-	Zd3dj8b0O3Ya0UtLOIBJSwDaOIHPEwzBudO0Gx+EgcGTL7C+hQVE0onWAYs0rQ/VygoJSHiNmAS
-	lIJZBbzILMGblvSsDYml6c3/JIMbO9ivTbABDFeenI0Hq1f+bMF33dbfFOTl5l9bOQVpqw6H7ss
-	SoO++IBL7kSd0d0bsrLbL4IXbosCA8Vd+I4RdYSrx56AEX4F6P5w2v1GjhmKeavsXuKPUk0lIgg
-	z/9eyTEq4p3axtklP0tR1oKWF7JbydI+XD+NlZZBgETmhUBT2KIQad8NfO/4iL4fv5kKbGFboBs
-	0h9m0AVNz9qRm8nsGkiExiqjhmtY1Mcy4fp9OdQHyYA==
-X-Received: by 2002:a05:7300:fb83:b0:359:8492:2107 with SMTP id 5a478bee46e88-3674c43c286mr5506664eec.10.1792601526918;
-        Wed, 21 Oct 2026 09:52:06 -0700 (PDT)
-X-Received: by 2002:a05:7300:fb83:b0:359:8492:2107 with SMTP id 5a478bee46e88-3674c43c286mr5506599eec.10.1792601526326;
-        Wed, 21 Oct 2026 09:52:06 -0700 (PDT)
+        bh=4KgtddslSOEOaN73E6Xh0kX0j9JGBALLWlHj4vZIcu8=;
+        b=YYMLA1Gtji7iGf/wSxqEXEntrmHfQI0AmT1pcXTNmb/IYnxTDW9c1xHz1iwgdiSkv6
+         ZrwYmeW/b+rIVH58P1nZc2WFGJ0+QuZJdAON6sq95E1mwho4qEVmyNmJxviKe/uPH1Jo
+         mhuYQfYPYxO8Ys8Iy0kuBReU4tQlgJe2GGPNf+nRSvt0srx/vZGl1ClUWyacuSkYhKuN
+         WKVtM5c+8WJ8BSuQ9xA5AncHV70d2jl6FCEp5gAQjyz3iiffXuRSpgYduPCPHPiZ1mOu
+         Ue5ZrBz/edqZcnWghlR/gFx9cVgmdmurCRIBPuG28fLCIXzaj3GgDA9wxJV8zLdwAzBs
+         B9bQ==
+X-Forwarded-Encrypted: i=1; AKwUvByZ5sa56URf3H12RRDzc66n1DZm7niuoCF12mo/tBkT7N2ZqZnoABHYk4QwhnAwKWvcVzBG4UQo@lists.linux.dev
+X-Gm-Message-State: AFq9FYKgA2dzufyXECoZNMfxtHdnCMkKGN464joJ40wJwWl6gnEGvCNs
+	yVsqRURxudoMBtDhHgOj3NOIXtqRFvVLdXUhVfsgFdbjUHTW70+D3ha6YgYLMr2gRRiS2bFv3L6
+	U39peWNPMfO4PsOprAGd3+nRfFxFggEIlTyOyg+zJyDDRnaq3FNMIr/0mvyta
+X-Gm-Gg: AYBFou0Iu/fOWrMXyBj1+YlrqU/N3teSWEp71fvDdDiqkoS+XzMMy0owXA+/l9pdgUV
+	7N1289uolusI6PaltKSPH707kUdlr2TyUnanQfCaLaIzEV3qg3CIBwZnFNcvCXxXZXiHjDNq+hB
+	4fsm60p0qL1opSI6w33gx+TrjNeRcugMfc4pnaWHeKxb/JYngeYRIcaUUnlgyMbS71Z9FWM/STA
+	Ycpq9iDavd/Pnmr+4GAVIuisidQ137uIwjHRYArapOfofN8g5nOsSTQw2LPnm2BNZsHa9stx0ao
+	RieQWyTiMaXg/0ew6kvGKpyvJzWNCyUr+Y2zCceSlJfVs6zG8wjY/VwpLDMqya8SdUa/mmHJ8H+
+	DUGHT7sSeP1VEczIubczZY2RqV5KIwsE5N2VJmcsnYw==
+X-Received: by 2002:a05:693c:20cf:20b0:363:a45d:10b1 with SMTP id 5a478bee46e88-365fa49061dmr6847150eec.5.1792602390113;
+        Wed, 21 Oct 2026 10:06:30 -0700 (PDT)
+X-Received: by 2002:a05:693c:20cf:20b0:363:a45d:10b1 with SMTP id 5a478bee46e88-365fa49061dmr6847104eec.5.1792602389510;
+        Wed, 21 Oct 2026 10:06:29 -0700 (PDT)
 Received: from localhost (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3674206d1f1sm8700283eec.28.2026.10.21.09.52.04
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-367f52ce166sm5334511eec.29.2026.10.21.10.06.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 09:52:06 -0700 (PDT)
-Date: Wed, 21 Oct 2026 09:51:55 -0700
+        Wed, 21 Oct 2026 10:06:29 -0700 (PDT)
+Date: Wed, 21 Oct 2026 10:06:22 -0700
 From: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
@@ -137,12 +136,12 @@ Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
         Sami Tolvanen <samitolvanen@google.com>,
         Song
  Shuai <songshuaishuai@tinylab.org>
-Subject: Re: [PATCH v2 07/15] efi/libstub: Add generic arch callbacks for
- DRTM
-Message-ID: <20261021095155.00003fc2@oss.qualcomm.com>
-In-Reply-To: <7-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+Subject: Re: [PATCH v2 08/15] efi/libstub: Have efi_kaslr_relocate_kernel()
+ handle extra_size
+Message-ID: <20261021100622.00007ae5@oss.qualcomm.com>
+In-Reply-To: <8-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
 References: <0-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
-	<7-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
+	<8-v2-989a18390eb1+486-arm64_drtm_jgg@nvidia.com>
 Organization: Qualcomm
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.51; x86_64-w64-mingw32)
 X-Mailing-List: patches@lists.linux.dev
@@ -156,67 +155,114 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=aI5lOr9m c=1 sm=1 tr=0 ts=6ad8edb8 cx=c_pps
+X-Proofpoint-ORIG-GUID: QFiSS8aRpaElBQxKVjrDKC1E37GMIhCb
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA2OCBTYWx0ZWRfX/3Wj9leRH8ek
+ ZJKwWdHe1Smip0Df2Mb/d3nh23pNKyK+oU1UP5w7q8NBcXVtFXEVi1Vp9Zedsr6c5EYglvZStfx
+ GK3g/Phk0FSMUcnhc0YI5a7+zt207TI=
+X-Proofpoint-GUID: QFiSS8aRpaElBQxKVjrDKC1E37GMIhCb
+X-Authority-Analysis: v=2.4 cv=e4uT2qp/ c=1 sm=1 tr=0 ts=6ad8f117 cx=c_pps
  a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
  a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=Ikd4Dj_1AAAA:8 a=EUspDBNiAAAA:8 a=PZHjKiIRVRR-A8qzlogA:9 a=CjuIK1q_8ugA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=Ikd4Dj_1AAAA:8 a=EUspDBNiAAAA:8 a=z1Vexnt6jiiBlSUV7TIA:9 a=CjuIK1q_8ugA:10
  a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-ORIG-GUID: giiVzl-GFz2GFjoJZuJpzhqHH-FtddAz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA2NyBTYWx0ZWRfX5MRLmoDHpI8U
- qg+ocex2yYlgd6ZranNC6LxTViF/Z4SbWZZAuvndi62ObEB+tYtdcf9EE9p0N0aHffwEY1BJZ1O
- 9mKDR1brDHbW2ddqU8GVGL4uYFXjLFe7IPuEGck13EJItsZj6yoBbcmrGj5A/JAmDVloDCxS0Jx
- pNhBjYoM79XUQ6zBKCc5ZVNMUyxyouOjNTa2z8fBT0jtoMM5+nUDpI64jVpcaYkeTDT5s0tzYkH
- CYimNIp+N2gvwVWOrWflqr666/OGEPO0SALAXyNt2Dg7yvo8DmGjFB8+ZCOdkRF+ofn1E3D44rM
- Q6X7FKalYhgaFpmB25cUfk76uff0aOFRcsEdk8MPTjaF3ZEBodLhrD2LZ+EHLpbP90otBvLDZ64
- SRrUg4HXi2k5EdwgrNnzRgMe/GA0S1oFETyipR3BAPfVXJhuBNipquRBqvhsSGBtcVBnouC1+E1
- Qx6DziN7yiEYXubrIFQ==
-X-Proofpoint-GUID: giiVzl-GFz2GFjoJZuJpzhqHH-FtddAz
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA2NyBTYWx0ZWRfXzaTjJn2U9xo0
- SsUiOikdy3/ESJSEBYW8MnqxgUn46/8UmDkqlWbcMuWwdwU/+onXrwKDexlsgpVbB3taiGSnLW2
- 5Lp6CaqEoFd3mHoYsm6UBlIEZmYL5y8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA2OCBTYWx0ZWRfX90Wo6x4B0Tti
+ Yb+46DqQzOh2ZdpQ+81og/jTxtjOwZSN0PLh0lHLuyB3Tb+Ejooedd+nQRU7WXjN2ox8nRb0y+v
+ JUp1capFv8m1Zjz0537LIIi5p63Y4CjtSfRcaPjKFONYiH/JUFaH8uReV8fctJkngy8Vphgu8lv
+ TQvM2E3B3ysfRYcCiLtoLQwOQoGeTj49xlSdPZcW2ty3MgBfn6x1+dcr1g5U0ONuAby8bK/5oJy
+ ZW0BlVx6M2MCNdbEkTqHxmjnOl/SybmVqrzYrCPT8LVa1jDhOilIPAfvJlBJoBtyGZPI8hGMIg+
+ mUNxNkqB+ZXVCoeCVn7aXRZ0feB+RtINY5ySjVMPHFq7BOyC08Uu+F83+q8RG40cHPS07QFtAK2
+ wlxGAPIK2mYl0o1/YbNm7GrYMsfsKmE/rq33AdsIUEt6B9qzrA0hh6qu17WDc0RthC+tQ9vldRX
+ Y3pS9ZuZy23if8JwJ5w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_04,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 spamscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
+ phishscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 bulkscore=0 malwarescore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210067
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210068
 
-On Fri,  2 Oct 2026 20:31:44 -0300
+On Fri,  2 Oct 2026 20:31:45 -0300
 Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-> If the architecture supports an EFI stub launched version of DRTM, it
-> can select the kconfig and provide the hooks under its architecture
-> build.
+> There are three possibilities here, each a little different:
+> - relocating for kaslr, just request extra_size like the zboot flow does
+>   when allocating from EFI
+> - in place, attempt to allocate from EFI precisely after Image to
+>   confirm nothing weird is there, failing that
+> - like any other error with the in place EFI location allocate
+>   non-randomly with extra_size included
 > 
-> Have the common code parse a drtm=enforce|auto|off kernel command line
-> parameter to set the boot behavior. Support commas in the args list since
-> there will be more options here down the road.
-> 
-> efi_drtm_prepare() is called before doing any decompression or image
-> relocation. It should figure out if DRTM is supported, policy-permitted,
-> and how much memory efi_drtm_get_extra_size() should return.
-> 
-> The image handling is revised to allocate extra_size at the end of
-> the normal image. The architecture can use this to store any
-> information needed for the DRTM flow. It is always contiguous with
-> Image, which is a requirement of ARM's specification.
-> 
-> efi_drtm_prepare_launch() is called while still in EFI boot services after
-> Image is fully prepared in its final location.
-> 
-> efi_drtm_launch() is called after exiting boot services and must
-> jump into the kernel through the DRTM flow. If it returns, then the
-> normal launch is tried (auto mode).
-> 
-> The extra_size is allocated directly after the Image. Handle the
-> trivial zboot flow now, and vmlinux in the following patch.
+> Remove the callers' assignments of reserve_size since
+> efi_kaslr_relocate_kernel() now does it.
 > 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-
-Seems fine to me.  Some of the functions affected have annoyingly
-complex flows already but this isn't obviously making things worse!
+A couple of trivial comments.  Otherwise looks good to me.
 
 Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+
+> diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
+> index 4bc963e999eb97..e419f3800af517 100644
+> --- a/drivers/firmware/efi/libstub/kaslr.c
+> +++ b/drivers/firmware/efi/libstub/kaslr.c
+
+> @@ -125,16 +164,29 @@ efi_status_t efi_kaslr_relocate_kernel(unsigned long *image_addr,
+>  	}
+>  
+>  	if (status != EFI_SUCCESS) {
+> -		if (!check_image_region(*image_addr, kernel_memsize)) {
+> +		bool image_region_ok =
+> +			check_image_region(*image_addr, kernel_memsize);
+> +
+> +		if (!image_region_ok) {
+
+Why this change?  I don't particularly mind but seems to be churn that isn't
+necessarily needed.
+
+>  			efi_err("FIRMWARE BUG: Image BSS overlaps adjacent EFI memory region\n");
+>  		} else if (IS_ALIGNED(*image_addr, min_kimg_align) &&
+> -			   (unsigned long)_end < EFI_ALLOC_LIMIT) {
+> -			/*
+> -			 * Just execute from wherever we were loaded by the
+> -			 * UEFI PE/COFF loader if the placement is suitable.
+> -			 */
+> -			*reserve_size = 0;
+> -			return EFI_SUCCESS;
+> +			   (unsigned long)_end + extra_size < EFI_ALLOC_LIMIT) {
+> +			if (!extra_size) {
+> +				/*
+> +				 * Just execute from wherever we were loaded by
+> +				 * the UEFI PE/COFF loader if the placement is
+> +				 * suitable.
+> +				 */
+> +				*reserve_size = 0;
+> +				return EFI_SUCCESS;
+> +			}
+> +
+> +			status = allocate_image_tail(*image_addr,
+> +						     kernel_memsize, extra_size,
+> +						     reserve_addr,
+> +						     reserve_size);
+
+I'd move reserve_size up a line to group it with reserve_addr.
+
+
+> +			if (status == EFI_SUCCESS)
+> +				return EFI_SUCCESS;
+>  		}
+>  
+>  		status = efi_allocate_pages_aligned(*reserve_size, reserve_addr,
+> diff --git a/drivers/firmware/efi/libstub/riscv-stub.c b/drivers/firmware/efi/libstub/riscv-stub.c
+> index 725b634c517919..a88b2d275e5bb0 100644
+> --- a/drivers/firmware/efi/libstub/riscv-stub.c
+> +++ b/drivers/firmware/efi/libstub/riscv-stub.c
+> @@ -37,7 +37,6 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
+>  	kernel_codesize = __init_text_end - _start;
+>  	kernel_memsize = kernel_size + (_end - _edata);
+>  	*image_addr = (unsigned long)_start;
+> -	*reserve_size = kernel_memsize;
+>  
+>  	status = efi_kaslr_relocate_kernel(image_addr,
+>  					   reserve_addr, reserve_size,
+
