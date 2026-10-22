@@ -1,70 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792661569;
-	b=Nc6CVrGAH61I5spxn291zqfq1lSFukUdxlA4kyrrNitpZQ4vLmxYIpC2UrMNn7sw+Bqy
-	 XC0aV/OUznoVKPOeO+OS0KB/HJCD/RPgXDG4wyIqsVPSh/6npZ/JdRx1dpVdW/IwbVSES
-	 Wl0tElWBryPwwo/hW6jV5GwSr5txhw8lULg5uZGtR5soMzHK038rcu30ZfDSlJHoGhYJ3
-	 8K0BMxAA/0j3P86YptJLp/3ed42MV+FBoLvuuq2DXpF6r3wKNZLoYYhCppRoPtOYbKTto
-	 GEkv1LcHyUxBD6DdUoFaY/wMksiD2EGmmUXj2CdBoHEccnnCf2pkXv1DHh0jEPsJcYA==
+	t=1792665923;
+	b=mZkkwufP0YmppOQDpcikAmNTjnDwiHOk3wPwBpFv/e5u19UX908pJX/WHg7mIo/MpIrR
+	 KKqJQzu7K5JUmjdBFhGouKgGzGJfzstCNPegwME0+iRPlJuCU0rqb9WgKXCsK1wGwFtJq
+	 iqKVV0FtKiNWqaJvvPYv/ddG5szQ3PWftHzEIHR+DiVVqEwfWDk6V81hRO21q6PlIl28J
+	 drQIDnOeAtIUMQACEB8Mbq64XRJ8Dm23mOEGP1j5Bm3A9dmCHxhksuXNDlRRiuzBTZ9fa
+	 nt5ClN0QoKAHoTFl0DV2MZuoviTByRVHyWNgQiFhl+sTcB6V/ER/u82dYTEWW6qFPjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792661569;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:To:Cc:
-	 Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:
-	 X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=MNO86/vPNqNj1ipvoo0nLkf4S6QTI8ifhfqmHv8QTLc=;
-	b=i4r8EyWJz4PFcOxrkzbHr4OL/3iZaifJbHGt+fLC4M2L0YfLnMxVBJVWc4WxwLk44CId
-	 2Hu3PAwqXpIpzQcHJzDa8Fdyl0Z2iwNLLAWhqkxWDzKcXEkjNom0LGeGlpPaT0Tg49smJ
-	 fvcRWSfE5UnR/H9Ge2Qy0P/DvajygVcYNMYlW5hPSXlb1+r1yG5ieRi7VmGB3cGdv8o8n
-	 L66hiP7yYCnHKNTkFjGX3ybcwPVM5idCjagVqL7ZSAkOyjgTaCeY9cGDQpXaHbxZWCLKc
-	 BEx/EI2Uz0opRKa/YJphKz5MYPcGsBE3EUEv+xfPZ3bqqZVoAYhGWQsv+JjjHGjaKOg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792665923;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=N9HHi9fwsvtU7offP25Wt0v5zoGj3/L7qJNeRlZeT70=;
+	b=EZuZ4Q/M7Mb+F8GXhSR9ozG6gBAEcMLQs4o9ud2DUXBVvxWmAia6iGA0qQjKlNzSsevp
+	 U6z8rHYA4tfMxHMPCIrS1s1b1miSqXbP0bt1+oicWlla5C2Fhsk+NRvf6hRfq+0g1qDFU
+	 Ej0mrff7V6JgA8GMMdB4mgBh7cvHLSxGkx1+hepHM7DwaeQpbQtGsEIe77jgZ9VL0SUM1
+	 QnYhnWf9/9il3pNR0wOE03zbTz60xoy1tfxLCcMXyt8M8g52WoeVzJXT3OH6A5zeKkaz7
+	 UoWpdOHHZv9vJNo0q2L4Rej2rIFo2Jzj9lLyV0agrX0tOxkVBRzZ9zNJrSBpFPxhZ2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=X0XWt5ef;
-	arc=none smtp.remote-ip=54.206.34.216
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDBE606A31A
-	for <patches@lists.linux.dev>; Thu, 22 Oct 2026 09:32:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFDBE606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=Ysvry8ZX;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 790D9606A31E
+	for <patches@lists.linux.dev>; Thu, 22 Oct 2026 10:45:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 790D9606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=X0XWt5ef
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1792661527;
-	bh=MNO86/vPNqNj1ipvoo0nLkf4S6QTI8ifhfqmHv8QTLc=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=X0XWt5efgrf16/36sevCEXi6yunRWAcucw825CKt1LPupt3ONBsTaYTaBeFVr46nF
-	 89oAuMdGdmfpwPnIHopjLBnWitATyAS260kcxADP7y1gA5HD7hpfTzF+oz3b2hO+8g
-	 EdOdBwcH6yUeyPJ/sArS0EdCAyGoVpZAn94dfhtU=
-X-QQ-mid: zesmtpsz4t1792661521tf8c4d186
-X-QQ-Originating-IP: dPy+WkuC9bdncRwOP6S9bDiBeHuFCmOE3cM24EOhmeQ=
-Received: from SW-U22IC-015.dc.com ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 22 Oct 2026 17:31:59 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 12619411188459355194
-EX-QQ-RecipientCnt: 8
-From: Peixin Xie <peixin.xie@linux.spacemit.com>
-To: sashal@kernel.org
-Cc: linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	peixin.xie@linux.spacemit.com,
-	rafael.j.wysocki@intel.com,
-	rafael@kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.18-6.1] ACPI: scan: Defer device power initialization
-Date: Thu, 22 Oct 2026 17:31:58 +0800
-Message-Id: <20261022093158.739937-1-peixin.xie@linux.spacemit.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261019135441.1420968-273-sashal@kernel.org>
-References: <20261019135441.1420968-273-sashal@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=Ysvry8ZX
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 99D682C41;
+	Thu, 22 Oct 2026 03:45:18 -0700 (PDT)
+Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3D4D23F7B4;
+	Thu, 22 Oct 2026 03:45:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1792665921; bh=3X3M0isCHv6Nxso4ETuGI+iVhS7OfF0HzavL3Pe1L5Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Ysvry8ZXBjN5H5Sa8n2Coo4qA4hYONE9ARB0xYkDq400NhtvRacaBACac238WWGzK
+	 gtdPXPBH5l1VXOSE7ctgVVxROasRRgctXfzScNG7d5P+8MeRRl9OLEbnWm73LoO9UT
+	 5NHiXmkt+7hHvmraRUYBIdQh1z3a6C67ph3Hl4OI=
+Message-ID: <05e5d99a-c12f-4fb9-b632-2301f21d54c7@arm.com>
+Date: Thu, 22 Oct 2026 11:45:18 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -74,39 +53,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: OC9B+nDkeCKkI9jAP7HbmnP3PO7SHXtCwDR6cXqg+/YW6pEM8g68anKk
-	qROa5eHOEw7NRGKKuv/m0MV3VtfWAFoMKlmUl/HJsbP8XncOLyGbF7WjJbyVFZREGVMe6yj
-	SZuO1kO9EzfjiPwyVZlFA5eXV+UZL5zjhldM2YSB2LPfRI2J6a16VokQEH78aDS2kw6CWIY
-	QFfnwVgVDVmj7nKjnoWVHOVpW0notiuM1spT2Wgi6rwuva+VnHNcJkGgkmPii661KwtGdWX
-	uGjW+3RZ3kUTrQ+X2RxrtNX1Dj9HlnRTHB3XvHJD+zfsThqLuI5wR4vNa3cxyS8Vq04HUQp
-	/cUhz9ocmLC5O5p7B47t6v6rmpCZVobZ+1HLAyNgltFHBRp4HMyNpiPN5oHZSVoglrt7KGf
-	1XafMpJ1LzYe5fRspSkHyYj4jckuWAFiKNdFlzydI+H1AAvgoHHvwfcjVLL+NG3LfuWEVuV
-	/kzSod1Fgvk7Y19zxUjcyGF2xIe2w+S43wdIP6rgv994bj/oPmBaeW74KsN3IEh03oadhZb
-	I/jKr9PzcrYDIIz84mwvyLUnKbKguloTzGGrfCF9vumk0V2TEBvTcSfaMfrUFaqRo0OZ56O
-	+4W+1OUV7DnR+3Ye3CeAAXCY/BkImD6y/+LwSognyx4v7EEclMnW5RKQfXl3Vmmdd/jxxcq
-	bjZK0vtcL5LbbtkzmkNBZ8JMFtw4xpmyYdpFAP7orowQ+E1IIDv82LGYyWmurxK8UDZ1lSF
-	LcdyeW95WnqP5VHBpgKcVKUmtZgR1+Px99S/jIc+JVyDSxD01b3v3DxK3V81UiERDVETS+r
-	M/YvfNlIV6YOqMGc7hzuQXFVEadHCOg1YHSlb/N6NgDSvGCWfQysWrQIyGJr3snhO9/8u64
-	IU9RoDCXbBs3HWU45GNhH/Fyho/PYgf1+pwUOyOEsJoe4m2aOsVOID9ee88VijECXX+PWUN
-	SvLQUg0qIUjZOpsJ8UehPzhNygYIUlDe3MXWLFvnS+Dq3BoC1p3yGcFHuFD9o755U8zWISj
-	xlxzdFiSZ/FoNVV6BZGgBEdGwbQOjHpHvGO0Uy2VTkdC04cQSH+uUs6wFmoRN3dsROqf9hh
-	6+rNZb8M/jp
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-QQ-RECHKSPAM: 0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 00/10] arm_mpam: resctrl: Separate MPAM domains
+To: Reinette Chatre <reinette.chatre@intel.com>, james.morse@arm.com,
+ Dave.Martin@arm.com, fenghuay@nvidia.com
+Cc: tony.luck@intel.com, yu.c.chen@intel.com, babu.moger@amd.com,
+ fustini@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <cover.1792443633.git.reinette.chatre@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <cover.1792443633.git.reinette.chatre@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Sasha,
+Hi Reinette,
 
-Please drop this from AUTOSEL for all targeted stable branches.
+On 19/10/2026 23:07, Reinette Chatre wrote:
+> RFC v1: https://lore.kernel.org/lkml/85ca29e89eacf12cfa7071249419e7cadb8f0691.1788220029.git.reinette.chatre@intel.com/
+> 
+> The MPAM driver represents a resctrl domain with a single structure,
+> struct mpam_resctrl_dom, that holds both a control domain and a
+> monitoring domain. On a system that supports both allocation and
+> monitoring, one instance is created for each domain and its two
+> domains are added to the resource's control and monitoring domain
+> lists.
+> 
+> Holding both domains in one structure requires control and monitoring
+> to be done at the same scope, and ties each control domain to a
+> monitoring domain. This does not fit the proposed support for multiple
+> controls per resource [1]. There, each control of a resource, for
+> example a "min" and a "max" memory bandwidth control, has its own list
+> of control domains while the resource keeps a single list of
+> monitoring domains. With one structure for both, every control domain
+> would come with a monitoring domain of its own, which does not reflect
+> the resource.
+> 
+> This series gives control and monitoring domains their own structures,
+> set up and torn down independently as CPUs come online and go offline,
+> in preparation for supporting multiple controls per resource. Along
+> the way it stops failing CPU online when a domain cannot be set up,
+> and adds checks when setting up a monitoring domain.
+> 
+>   1-2   Preparatory cleanups of domain allocation
+>   3     Do not fail CPU online when domain setup fails
+>   4-6   Separate the control and monitoring domain structures
+>   7-9   Checks when setting up a monitoring domain
+>   10    Comment update, kept separate for review
+> 
+> An earlier version of the domain split was posted on its own [2]. This
+> version incorporates the feedback from that discussion. It gives each
+> type of domain its own structure instead of duplicating the shared
+> one, sets up each domain independently instead of undoing one domain
+> when setting up the other fails, and adds the checks in patches 8 and
+> 9.
+> 
+> Patch 7 turns a WARN_ON_ONCE(0) into a warning that fires. It is a
+> separate patch because it is not clear whether the silent failure was
+> intended. If it was, the patch can instead drop the dead
+> WARN_ON_ONCE().
+> 
+> This is an RFC because I am only able to compile test MPAM changes,
+> which is also why the patches are small and each change is justified
+> on its own. Patches can be squashed if preferred, for example patch 10
+> into patches 5 and 9. Testing on MPAM hardware would be greatly
+> appreciated, as is any other feedback.
 
-This patch has been reverted. And Rafael has started a new thread to
-discuss a replacement fix.
+On an initial look through the patches everything seems sensible and in line with what we discussed
+previously. I've given it a quick sanity check on a couple of models and nothing goes wrong. Is
+there any particular shape of system needed to exercise corner cases? I'll try with monitor only
+systems and control only systems and do some more testing on real hardware as well.
 
-Link:
-https://lore.kernel.org/lkml/6029658.DvuYhMxLoT@rafael.j.wysocki/
-https://lore.kernel.org/lkml/6044499.DvuYhMxLoT@rafael.j.wysocki/
+Thank you very much for taking so much care over the MPAM side of things.
 
-Thanks,
-Peixin
+Ben
+
+> 
+> The series is based on the for-next/mpam branch of the arm64 tree:
+> git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git
+> 
+> [1] https://lore.kernel.org/lkml/d258a32f-12d5-464d-abe9-4720fb3e44b3@intel.com/
+> [2] https://lore.kernel.org/lkml/85ca29e89eacf12cfa7071249419e7cadb8f0691.1788220029.git.reinette.chatre@intel.com/
+> 
+> Reinette Chatre (10):
+>   arm_mpam: resctrl: Use find_component() when allocating a domain
+>   arm_mpam: resctrl: Rename ctrl_comp in mpam_resctrl_alloc_domain()
+>   arm_mpam: resctrl: Do not fail CPU online when domain setup fails
+>   arm_mpam: resctrl: Split control and monitoring domain setup into
+>     helpers
+>   arm_mpam: resctrl: Give the monitoring domain its own structure
+>   arm_mpam: resctrl: Rename struct mpam_resctrl_dom to
+>     mpam_resctrl_ctrl_dom
+>   arm_mpam: resctrl: Warn when no monitoring component is found for a
+>     CPU
+>   arm_mpam: resctrl: Require a component for each monitoring event
+>   arm_mpam: resctrl: Require monitoring components to cover the same
+>     CPUs
+>   arm_mpam: resctrl: Update the comment on monitoring domain setup
+> 
+>  drivers/resctrl/mpam_devices.c  |   2 +-
+>  drivers/resctrl/mpam_internal.h |  11 +-
+>  drivers/resctrl/mpam_resctrl.c  | 325 +++++++++++++++++---------------
+>  3 files changed, 181 insertions(+), 157 deletions(-)
+> 
+> 
+> base-commit: 8ea457f746d915d55f78b43d33b1cd618f3d93ad
+
