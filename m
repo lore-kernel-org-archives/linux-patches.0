@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774979;
-	b=tgOu+0MmFUt/4vUN/mKsg3l84HU8hh6ZXgMQtVoMJ49LMuMQ5ZUavwgPGERpPsHxmUvf
-	 2jYb1ESElKOojgTpggvQqAYLLIGDjoD+ERq6vAZfTlHQgA1LRPbu/slYr9wa4SJpdHMDU
-	 jh5cqPkRpAHMP9gNWjtQd2zNPBfo/JrTi2trGkvvjx2/Y0FQuU6u1zwNZANB8TqhODU+C
-	 YL3ZXTsLR7u/esdSE9heDsl85ruxpgJURLmXtpczIyleE3v0ODAcsZoNMvZUIpuBaT/kK
-	 pAv2D7/n8lAMGa+BAB6ocdIjg98CyZfq1JhqPv/fmPhU0PbIPYhvcnROW+XxZ2XCohw==
+	t=1792774982;
+	b=SpmPQQSZRsTbhxBCTv9+9RWDGBQ6cllod76c1DKRJIe5mxzYKTwZ03Yk5AoGYn3QoKNM
+	 lhOm2vEaUkuvP2k0Bb+Oy3dRudsPY4Z8EdZFD6CbKXxazX1F0FnWhinVl1LGrwnrYi6AZ
+	 FLMCCurGUP+dX/nCmqVLw/daHa6eOKtEwaJPeImqOfM6rcl+QRhsQ9wFawD6HTRahDxmO
+	 8lFGBm16cOUQkIIuGCUYFLRhPVKKvaq3UjwOniz9shYupjhg6ECUN22I8iAkqHfJ5csCE
+	 lMwNg08JUtC4cDCiy2Lb8dp4FhWCokjwdt3poCseIBJ26uPTVL7kKjIaakLRAhF+utg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774979;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774982;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZwxcIaljnNycQhvPYPc1sh9w4K2Mb6dD7LkMynB4nAM=;
-	b=3B3e9wTwTmGSA4kf+HBZV55iL5js7Avl1n8zR3rld4rkHVw81L6u4uXBKjfBVEZH7Tg9
-	 spteQdZNNVZ76YlGkcTRjoOMBQvlVNq7aVB+ESeBucIMySmWHZGnZxSbLs9neQgcIgVjk
-	 RuQT4+YzpTpP75DX7bArlmHuTrin0e1OaflVhwt6dIvIFJ7IWy2e6cXrn3DepLuIzRh2f
-	 LFlfjkrZhZYuBxcy/uu+3j+OqWD2gOSJU3JJgyyEm1L96FCQXg091M1nudkTciSTFX/L4
-	 B94oDKdxLI8Qoy/sHgqN808fwqVK17IlkcmlB1Hq/PETa8+ylC6kyTVN3w4v3XIpBzw==
+	bh=hX376NTabXvdEdJ9zbiYIsKwB8a0bzoG3eiMusreXdQ=;
+	b=yRuPCmZRmm9OCEdCwfnZ38HSsnvCHYoMgQVuuPc5f+Rh540FKCFxQVvaJaSHvJK3c+fr
+	 27w1evFh3Vxf1D+iNNWPzdBPaWk/36yKIw3zqkTMv5TZQ4kUK07U17eYEq75qjXVbXXml
+	 W3P0XhepWYEP70+NQAZt1MXbjGtHm6BPUJA6z/ay+xiMAktOC5lGUtyxM5q8Hsp1Txc+c
+	 f0g+W+YCFdqAIjihWj/FXYJSbJmDd+Y3kGIIU/j6UpyFMfV2Se48AQvQHybUI3Scs5ub6
+	 Y7sHZhT3xdJocE5bkSt4R/gVjOqfLCwv3VishRIUzZ+gBqxbFClAbMduxt9LQ8UgpoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=elYcZmHq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJsQ98qG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98808606A31B;
-	Fri, 23 Oct 2026 17:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8F7606A31A;
+	Fri, 23 Oct 2026 17:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=elYcZmHq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3A51F01825;
-	Fri, 23 Oct 2026 17:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJsQ98qG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87801F01825;
+	Fri, 23 Oct 2026 17:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774979;
-	bh=ZwxcIaljnNycQhvPYPc1sh9w4K2Mb6dD7LkMynB4nAM=;
+	s=korg; t=1792774982;
+	bh=hX376NTabXvdEdJ9zbiYIsKwB8a0bzoG3eiMusreXdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=elYcZmHqGvidd7qDKKDe5lKhH/t+38lB7ane+ZhqL8auGwNNvSvM5bfsMEOMqCC5e
-	 VB3pClZvbKfxjPwHYSfa3ygBnEgxZNB9kTTvje961FkYQbWukdPB9zigsQ9wccdwCo
-	 MpbfcGx4t8ZVUH9JTyJ38ZulaYbeYrXB/s97P8pA=
+	b=rJsQ98qGRIAYNoP36bteV1qnf2ve6Vipmz865TXMcbNw9T4whECXdNuFpb+qj0v2r
+	 2fVMjOZYg7tGyllDtng3qoObN+IJqbWXwyirNB0ePgP5I+s3TjfA9ksz7DBvI7Bqjf
+	 /uRawMnjAZV41kSufdWoltaXuXhx6uwrQu/cfOPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Shivers <jshivers@redhat.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 222/242] smb: client: fix multiuser mount with krb5
-Date: Fri, 23 Oct 2026 18:41:04 +0200
-Message-ID: <20261023163719.078902680@linuxfoundation.org>
+Subject: [PATCH 7.2 223/242] smb: client: reject SetEA requests that do not fit the request buffer
+Date: Fri, 23 Oct 2026 18:41:05 +0200
+Message-ID: <20261023163719.106416014@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -72,94 +71,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Yunpeng Tian <shionthanatos@gmail.com>
 
-commit 69499395867332364ed4ac8b546537eb3bab6ebb upstream.
+commit 4aa2c106aef4bf3dfd97c30842db0767b26e8428 upstream.
 
-Customer reported that they could no longer mount their SMB shares
-with multiuser mount option and krb5.  Turned out that the client
-wasn't duplicating username option when creating multiuser
-connections, therefore failing to retrieve credentials as
-cifs.upcall(8) couldn't find them in keytab.
+CIFSSMBSetEA() copies the caller's extended attribute value into the
+SMB request buffer without checking that it fits.  The requirement is
+stated in the source but was never implemented:
 
-Fix this by duplicating username option (if set) from original fs
-context before creating multiuser connections with krb5.
+	/*BB add length check to see if it would fit in
+	     negotiated SMB buffer size BB */
+	/* if (ea_value_len > buffer_size - 512 (enough for header)) */
+	if (ea_value_len)
+		memcpy(parm_data->list.name + name_len + 1,
+		       ea_value, ea_value_len);
 
-Reproducer:
+The only bound applied on the way in is in cifs_xattr_set():
 
-  ```
-  $ ktutil
-  ktutil:  add_entry -password -p testuser -k 1 -e aes256-cts
-  Password for testuser@ZELDA.TEST:
-  ktutil:  write_kt /etc/krb5.keytab
-  ktutil:  quit
-  $ klist -ke
-  Keytab name: FILE:/etc/krb5.keytab
-  KVNO Principal
-   ---- ----------------------------------------------------------------
-     1 testuser@ZELDA.TEST (aes256-cts-hmac-sha1-96)
-  $ mount.cifs //w22-root2/scratch /mnt/1 -o \
-      	uid=1000,sec=krb5,username=testuser@ZELDA.TEST,multiuser
-  mount error(13): Permission denied
-  Refer to the mount.cifs(8) manual page (e.g. man mount.cifs) and
-  kernel log messages (dmesg)
-  ```
+	#define MAX_EA_VALUE_SIZE CIFSMaxBufSize
+	...
+	if (size > MAX_EA_VALUE_SIZE)
 
-Reported-by: Jacob Shivers <jshivers@redhat.com>
-Fixes: 12b4c5d98cd7 ("smb: client: fix krb5 mount with username option")
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+CIFSMaxBufSize is the full payload capacity of the buffer, so a value
+of exactly that size leaves no room for the SMB header, the TRANS2
+parameter block, the fealist header and the EA name that are written
+ahead of it in the same object.
+
+SendReceive() already enforces the correct limit on this very length:
+
+	if (in_len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE)
+
+but it is called after the copy has taken place.  An unprivileged
+setxattr(2) on an SMB1 mount with a 250-byte name and a 16384-byte
+value writes 16384 bytes starting 345 bytes into a 16588-byte
+cifs_request object, ending 141 bytes past it:
+
+  BUG: KASAN: slab-out-of-bounds in CIFSSMBSetEA+0xabc/0xde0
+  Write of size 16384 at addr ffff888003aa0159 by task init/68
+   __asan_memcpy+0x3c/0x60
+   CIFSSMBSetEA+0xabc/0xde0
+   cifs_xattr_set+0xd3a/0xff0
+   __vfs_setxattr+0x13e/0x1a0
+  The buggy address is located 345 bytes inside of
+   allocated 16588-byte region
+
+Apply SendReceive()'s limit to the assembled request before the copy
+rather than after it, and widen the byte counters so the sum cannot
+wrap before it is tested.
+
+byte_count is also tested against U16_MAX, because it is stored in the
+16-bit pSMB->ByteCount.  That becomes reachable when CIFSMaxBufSize is
+raised at module load, where it may be set as high as 1024*127: with a
+5-byte EA name and a 65521-byte value, count is exactly U16_MAX while
+byte_count is 65556, and cpu_to_le16() would truncate it to 20 and
+transmit a frame whose ByteCount does not match its length.  Testing
+byte_count covers count as well, since byte_count is the larger of the
+two and count's only 16-bit consumer is written after this point.
+
+check_add_overflow() is evaluated first so that total_len is assigned
+before it is reported.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ fs/smb/client/cifssmb.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4201,14 +4201,25 @@ cifs_setup_session(const unsigned int xi
- 	return rc;
- }
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -6350,8 +6350,10 @@ CIFSSMBSetEA(const unsigned int xid, str
+ 	int name_len;
+ 	int rc = 0;
+ 	int bytes_returned = 0;
+-	__u16 params, param_offset, byte_count, offset, count;
++	__u16 params, param_offset;
++	unsigned int byte_count, offset, count;
+ 	int remap = cifs_remap(cifs_sb);
++	unsigned int total_len;
  
--static int
--cifs_set_vol_auth(struct smb3_fs_context *ctx, struct cifs_ses *ses)
-+static int set_fs_context_auth(struct smb3_fs_context *ctx,
-+			       struct cifs_ses *ses)
- {
- 	ctx->sectype = ses->sectype;
- 
--	/* krb5 is special, since we don't need username or pw */
--	if (ctx->sectype == Kerberos)
-+	/*
-+	 * krb5 is special as we might need to pass username (passwordless) down
-+	 * to cifs.upcall(8) for keytab.
-+	 */
-+	if (ctx->sectype == Kerberos) {
-+		if (ses->user_name && ses->user_name[0]) {
-+			ctx->username = kstrndup(ses->user_name,
-+						 CIFS_MAX_USERNAME_LEN,
-+						 GFP_KERNEL);
-+			if (!ctx->username)
-+				return -ENOMEM;
-+		}
- 		return 0;
+ 	cifs_dbg(FYI, "In SetEA\n");
+ SetEARetry:
+@@ -6403,6 +6405,13 @@ SetEARetry:
+ 	pSMB->Reserved3 = 0;
+ 	pSMB->SubCommand = cpu_to_le16(TRANS2_SET_PATH_INFORMATION);
+ 	byte_count = 3 /* pad */  + params + count;
++	if (check_add_overflow(in_len, byte_count, &total_len) ||
++	    byte_count > U16_MAX ||
++	    total_len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
++		cifs_dbg(VFS, "EA request too large: %u bytes\n", total_len);
++		cifs_buf_release(pSMB);
++		return -E2BIG;
 +	}
- 
- 	return cifs_set_cifscreds(ctx, ses);
- }
-@@ -4248,7 +4259,7 @@ cifs_construct_tcon(struct cifs_sb_info
- 	ctx->dfs_root_ses = master_tcon->ses->dfs_root_ses;
- 	ctx->unicode = master_tcon->ses->unicode;
- 
--	rc = cifs_set_vol_auth(ctx, master_tcon->ses);
-+	rc = set_fs_context_auth(ctx, master_tcon->ses);
- 	if (rc) {
- 		tcon = ERR_PTR(rc);
- 		goto out;
+ 	pSMB->DataCount = cpu_to_le16(count);
+ 	parm_data->list_len = cpu_to_le32(count);
+ 	parm_data->list.EA_flags = 0;
 
 
