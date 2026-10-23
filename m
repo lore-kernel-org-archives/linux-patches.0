@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774244;
-	b=ZKNcuGmGVwPBRDxRxpFNVyUuyfMm1IM00R/lx1iVYvnMRWrCG9FEQiAN17jUFY2ySVk0
-	 J5TfMdBM9/mhPpPCAfNCpfjDxXn8YR724/PK+6IGEKYUJO7xDVcnKRo9WqnubhCRB1NRP
-	 sh02xLf5nLD1t2ndVqDb9BWFZ8lC6iTtwCiCIgIFH4qdU808fYBmUh7VKPOasIHbW3ZNV
-	 wX5YyUHxHw0JtbtnNVpYXO5OoBw4sqoHxi91Ev9/n7LD8J5tU1k+9wXG2p4phxXRIquio
-	 HKEj2NHsSNnNNO0exdU/rGspE/SQGENAVr+a+7TadtJsr99L96FtqckGyBeYj7OXTtQ==
+	t=1792774247;
+	b=MlmeEniy093IQrm+mCt/3BzRxMUCJQYIEMmIXNp1XSqLvzqCE7KDDbdFUuZJE9co8dZ3
+	 1bR6TOsm+asMHnsfnmuWLGGyg0U9Vrc9Mr11wxjGTb6gCpw9qR+bP8ycZpGYAQIyDgx5L
+	 L70szsQqXNRWgQK/oV0iqwokxDgzrePmxyqdYUV0+1j95HsdGYPSaMPO2NNqinnnksU5E
+	 FJLMaNkE1oYimLspSwg4f5AZsieBkHRSWB5mdGvzLo6GEtaStPUKQ7RYXDXCC3fqiP0OY
+	 LR4MHCdrUN+mOuEKMisAfSXj/YX9hyR3HAiueEiN6kmLlp6BwZ/ChrFAhjQdit4CFdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RKYh9B5CNfSy8Etq6Zv2iR8t4W9dtIW0YsafTn4OQBM=;
-	b=OqHR1QV9KDEBbAdC0Ul7GQDj6zuWC2xugFAoh9QXQK6lnszx0QUN4Q22GBSxy1YpwWRu
-	 2Qfmqmvq410INq1T+lCYKopuPYQTVVoa8+VmYHgesDueDqoLQDY8+3rSDTLlSXpDUfj7v
-	 PDpkgPwLQJilwO6MwicPpCSNSoPnmOp7uc0ZKwbv8uKbEQPmm2W8ga/F5LPN4yBMZNqBk
-	 UAMf0zcNVtmJTMc15zYE6MF2ZeeZYSuHCKX2y2FeQecw65Eplt1R3pKbDYijxPqcUw8+P
-	 gWALMV037iW+WYjfDwqqQFrVwRDOdvJlCq/7SSMJDWkIsgi/javuv1QP4UaADBYEXIw==
+	bh=SYY0PU2ZCf9Q0WAZpJhsI1xHN+efHxcTabhyeweu3X0=;
+	b=q2j+8t3PjH8BrK3zJt0uIyVG7frWqKNWLv9YtRB7iNJRukHgHaLGR1ewRnhVSgxnFjp9
+	 ZtO+Xcae3vfBgONRzHSsb/88s40RFy0qhO2wfRQgbM+z3EcyyZH+ebv+JEkzkANFZ0zdS
+	 a+aDyeKryNJd9IU2zUubTmnJ+UPPcNVhWm3ThVEi41uT1oJzJEg49B/nW05k3/qQQaxkd
+	 oUBs0tV7IhNxWU9ti8zh3Zav96czhwSfjuDJSh9BtdLdLeAxHVO8gBj1jHjfydgZ4M7xC
+	 /Xy7ld/0/kqMcfEk72Yj0H/zznHLuGWczNVGdH+KM1OmxE5mM+BhEFd7d2fVV6LZB9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HdLKxNdt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+y3aMVC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EAC606A31A;
-	Fri, 23 Oct 2026 16:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB97F606A31E;
+	Fri, 23 Oct 2026 16:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HdLKxNdt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123AB1F01825;
-	Fri, 23 Oct 2026 16:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+y3aMVC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258A81F01829;
+	Fri, 23 Oct 2026 16:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774243;
-	bh=RKYh9B5CNfSy8Etq6Zv2iR8t4W9dtIW0YsafTn4OQBM=;
+	s=korg; t=1792774246;
+	bh=SYY0PU2ZCf9Q0WAZpJhsI1xHN+efHxcTabhyeweu3X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HdLKxNdtE8PL+56zj/CTKNorr9AnPOZA+lQvkjYY/C9XxAwXHbSJVJWnz0s5eXwgS
-	 jYbJiVKfIhuze5c45tWq+v7uwbSwp3pAekzmFhYDaNoECwAnIZq8sfNGuih7oknrYM
-	 fcQ0pCuwueEgy9TIcUHUPm0mAYOM1aRa5qmp8S3Q=
+	b=N+y3aMVCcONSBs5EtA6ciwumoK/Z/O4pAhTIShAXEHe0i3G4lVkc9xV4JeN5gvZbr
+	 t4Q/gTAsC/CJT2tMba5+z44vcHQ7EgRy6FRLHaGdM5Fx+C/OtMjO+obV/LJXEQG6T3
+	 bNNa506F4c2fA9kd/Lo6BVysT+apaXBOCKn9q8uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 168/193] tracing: Keep the predicate limit separate from program capacity
-Date: Fri, 23 Oct 2026 18:37:25 +0200
-Message-ID: <20261023163718.186160105@linuxfoundation.org>
+Subject: [PATCH 6.18 169/193] drm/amdgpu: free the userptr ranges when a CS fails after parser_bos
+Date: Fri, 23 Oct 2026 18:37:26 +0200
+Message-ID: <20261023163718.211283402@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -68,55 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taeyang Lee <0wn@theori.io>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 803aa6fc2dbea25ab9d3ed19eca1c96d0ab17445 ]
+[ Upstream commit 1b4da805a0ba354a549ce07459c871c17dd94fe0 ]
 
-predicate_parse() adds two to nr_preds to reserve the terminal TRUE
-and FALSE entries. It also uses that increased value as the limit for
-parsed predicates. If the initial count is smaller than the number
-actually parsed, the program can fill the allocation and subsequent
-accesses can go past its end.
+amdgpu_cs_parser_bos() allocates an HMM range for every userptr entry of
+the BO list and looks up the user pages. Those ranges are only freed when
+amdgpu_cs_parser_bos() itself fails or when amdgpu_cs_submit() checks
+them under the notifier lock. If amdgpu_cs_patch_jobs(),
+amdgpu_cs_vm_handling(), amdgpu_cs_sync_rings() or the early part of
+amdgpu_cs_submit() fails, nothing frees them: neither
+amdgpu_cs_parser_fini() nor amdgpu_bo_list_free() touch e->range.
 
-Keep nr_preds as the predicate limit and use a separate value for the
-allocation size. This leaves space for both terminal entries and a
-zeroed entry when parsing stops at the limit.
+Each such CS then leaks the range, its hmm_pfns array (8 bytes per page
+of the userptr BO) and the BO reference the range holds. An IB on a ring
+that patches the CS in place (e.g. VCN) with an unmapped va_start fails
+in amdgpu_cs_patch_ibs() and takes this path.
 
+Free the ranges on those error paths. Ranges amdgpu_cs_submit() already
+dropped are NULL, so freeing them again is a no-op.
+
+Fixes: fec8fdb54e8f ("drm/amdgpu: fix userptr HMM range handling v2")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c52a9542ed7cfd527feb938bd0accada2ac8d267)
 Cc: stable@vger.kernel.org
-Fixes: 39f7c41c908b ("tracing/filters: Enable filtering a cpumask field by another cpumask")
-Link: https://patch.msgid.link/atELCd1XjKVhrkFL@Taeyangs-MacBook-Pro.local
-Signed-off-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ sashal: Adapted the kzalloc_objs() allocation to the existing kcalloc() call. ]
+[ sashal: Adapted cleanup to the existing error_backoff path using amdgpu_ttm_tt_get_user_pages_done() before the mutex unlock. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_filter.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -482,18 +482,17 @@ predicate_parse(const char *str, int nr_
- 	int len;
- 	int N = 0;
- 	int i;
--
--	nr_preds += 2; /* For TRUE and FALSE */
-+	int nr_preds_alloc = nr_preds + 2; /* For TRUE and FALSE */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1448,6 +1448,7 @@ static void amdgpu_cs_parser_fini(struct
+ int amdgpu_cs_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ {
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
++	struct amdgpu_bo_list_entry *e;
+ 	struct amdgpu_cs_parser parser;
+ 	int r;
  
- 	op_stack = kmalloc_array(nr_parens, sizeof(*op_stack), GFP_KERNEL);
- 	if (!op_stack)
- 		return ERR_PTR(-ENOMEM);
--	prog_stack = kcalloc(nr_preds, sizeof(*prog_stack), GFP_KERNEL);
-+	prog_stack = kcalloc(nr_preds_alloc, sizeof(*prog_stack), GFP_KERNEL);
- 	if (!prog_stack) {
- 		parse_error(pe, -ENOMEM, 0);
- 		goto out_free;
- 	}
--	inverts = kmalloc_array(nr_preds, sizeof(*inverts), GFP_KERNEL);
-+	inverts = kmalloc_array(nr_preds_alloc, sizeof(*inverts), GFP_KERNEL);
- 	if (!inverts) {
- 		parse_error(pe, -ENOMEM, 0);
- 		goto out_free;
+@@ -1502,6 +1503,11 @@ int amdgpu_cs_ioctl(struct drm_device *d
+ 	return 0;
+ 
+ error_backoff:
++	/* amdgpu_cs_submit() only drops the ranges once it got that far. */
++	amdgpu_bo_list_for_each_userptr_entry(e, parser.bo_list) {
++		amdgpu_ttm_tt_get_user_pages_done(e->bo->tbo.ttm, e->range);
++		e->range = NULL;
++	}
+ 	mutex_unlock(&parser.bo_list->bo_list_mutex);
+ 
+ error_fini:
 
 
