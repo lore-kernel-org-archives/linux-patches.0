@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774491;
-	b=RRhJAuHo9sz3VteVWKqFUO/JrOJj/fYdgNlkQ/sq+iejbXWCHk0dl66NHK50JQnriVJH
-	 /RvIChw/G9nDauXTi74uNxN8hx4aFHjYhQURIdgxzN2yGiV01kCN1jPALgMmL0jSsyWVV
-	 Kwq/J0JezA3jaa7Mmtrn0BIqj7/iN6Ewi6op62Vb+ER6y9grm2AIp3bws7qyli3ZBZ7xq
-	 7EkNScwIUxIREDgbWcNb2qRCqpzDwt2+aQpn5oV9mS74M63AuK6M/AHqbuTQX2pRFkUJV
-	 68Rg70fiL6yKLS64Ia691O0yfHtNdSxhDInmvWjlX+cFyor5mb41JQDNCxAG3LJlALA==
+	t=1792774494;
+	b=o5VQWQuEQVXrX8UtUX9s2GsRnm6GQiph8pKmBML3iFL4BMNAifEN4qxOCR8uf8SP9mt6
+	 YcIfuZoM1V56G9k+O6hyLwhef/DZByO906NW+2Ho4ASFc2m4RluvzcfOKWcJHbXw8xzl8
+	 73/Yu5B83WYbAnaJEQozqRbMDNlpXw4IgsZO5g5hNSp/uC+biVTRq1efc/FUBXWt5qMst
+	 cEpJzSGKJeZiOa7Go2njvXZueRyQPz/dfdli1Q0Y3eeI1UP0Q+7dfPdHdpnSxzbT9TE3e
+	 peMGFM73LzOELKYSTmb17xUDZPf7eRwEkTcuYfh1Trclm9ThNl2Uy+ItWT3YYfW6ryA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774491;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774494;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JYy+oWAv9LlNpDZlLWaB3vvqIndyKW7kItVGkb0Rdyw=;
-	b=3UWIojNwESYRD6IvyNPdyg8YzgNR2mbItsYvIjiPvHNJxxLWTu5I6zH6/nV+bDHylvUK
-	 QoHwQBe9DZAokmb7SkoAWm23TjJSXA+fg0xyHKVrWW+BFUAkFla9/hwsPCObYpbXf/idu
-	 G3M68j8DA3c4q34qbdnakycoI8ndVxFHty9U4T/3wJKk0Wxb/mqv8d8FFLYYR37GkMoZ1
-	 3r2dhwXHENnN2KfbFGneQcYgE0RnoxnHOoDMyj++Ot8HLXQEqW6gjkLf4isxbsCTyzbuM
-	 zya5geINW2qJmFsXz762L0CGwcyR2JK1D6vgETegGs7QTCQ4K3zG0buX4Mumf74QEXw==
+	bh=jLbFpgMO1wUg3bfOvl7c2fwlXwBa+j3MDQPfs8HZfOQ=;
+	b=SBmdqvV/q3sGMCllR6oSYctADCIzsM4rG+oxz9GypkgR41dU/T7zo3yxpoTn9/UtO4SC
+	 nEnnCp/QyV04ZroJrN7BfVoBQMlRKXSbtmQwraSwAiRJWIhkKp2dEA7oiet0UBbRRHuy+
+	 b10dW7SFHAyfvW0Tgg7E1VJ9iK59N/WrEOhRWB+tuXNSShGivhmh2WcyK1/uLkF7Z1gDo
+	 bD8sXPc5gvaPwt4hOr3LH6ze3v8xTBjLwxa+3JuqQFRFYpHpKCmdfsZ2nwXqvZpdK4inS
+	 t1X3z1fFLVg/XMKRwQOPafeoDOOX/PMqT8KvCRPUGhEa4QBkIt5ezCl5r3qY5GqXNOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3mvfcbe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLE11+fo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31ED606A31D;
-	Fri, 23 Oct 2026 16:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C89606A31B;
+	Fri, 23 Oct 2026 16:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3mvfcbe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B131F01825;
-	Fri, 23 Oct 2026 16:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLE11+fo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2E61F01828;
+	Fri, 23 Oct 2026 16:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774490;
-	bh=JYy+oWAv9LlNpDZlLWaB3vvqIndyKW7kItVGkb0Rdyw=;
+	s=korg; t=1792774493;
+	bh=jLbFpgMO1wUg3bfOvl7c2fwlXwBa+j3MDQPfs8HZfOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h3mvfcbeRfgu6+Tt/+CDbvxqjb2zgLGvsyRyHX/r+qs7ZmWTwhg7XEJx4xIyVpES6
-	 ZSjRnkmjFo1twlURmWb1wVRvHqZXhyO9x6PxOdL7lT/RIrU3JJbL8UpJXPoFT/3oQg
-	 sP5fubxIldIKDrpNos4wEjP/3UyY/TpYAYDmlyvM=
+	b=OLE11+fonQbKMYmJ8B/1NR1odgZTgULx4l4V29OmR1y8ToVgN/UIe61THanV4ccrI
+	 aT4qN5AR6x5QMP2hBDVU1Fi0LsF/IWuILvBKxKwVAJYa8b9ywflqdehjTVOUEZ3hVv
+	 OkrBJlE3ZH36I9SoZzLgi427y3L+2kDzyKFJFm4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 059/242] pipe: preserve existing fasync readers on writer setup failure
-Date: Fri, 23 Oct 2026 18:38:21 +0200
-Message-ID: <20261023163715.178510860@linuxfoundation.org>
+Subject: [PATCH 7.2 060/242] fs: add switch_fs_struct()
+Date: Fri, 23 Oct 2026 18:38:22 +0200
+Message-ID: <20261023163715.202482475@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,55 +67,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 40bb03d3ea6f6a915218508819ecc4d7a7fa260d ]
+[ Upstream commit 21bcea3ef2025796a29ba88f2747d864ed535758 ]
 
-F_SETFL and FIOASYNC decide whether to invoke ->fasync() before
-pipe_fasync() takes pipe->mutex. Two enables of one O_RDWR FIFO can
-therefore both enter the callback.
+Don't open-code the guts of replacing current's fs struct.
 
-fasync_helper() allocates before checking for an existing entry. If the
-first enable installs both entries, a second enable can update the
-reader entry and then fail the allocation for the writer entry. The
-error path removes the pre-existing reader entry, clearing FASYNC while
-the writer entry remains registered. __fput() then skips ->fasync(), so a
-later pipe notification can dereference the freed file or its f_owner.
-An unprivileged memory-pressure reproducer triggers a KASAN
-slab-use-after-free in send_sigio() through this path.
-
-Keep the reader helper's result and undo the registration only if this
-call added it. The pipe mutex serializes changes to both lists, so a
-failed new registration still removes its reader, while a failed
-duplicate preserves the existing registrations and FASYNC. Successful
-duplicate enables continue to update fa_fd as before.
-
-Fixes: 76398425bb06 ("Move FASYNC bit handling to f_op->fasync()")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20260601-work-kthread-nullfs-v4-1-77ee053060e0@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: d2bdb9b61b42 ("fs: let idle threads share init_fs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pipe.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/fs_struct.c            | 18 ++++++++++++++++++
+ include/linux/fs_struct.h |  2 ++
+ kernel/fork.c             | 22 ++++++----------------
+ 3 files changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/fs/pipe.c b/fs/pipe.c
-index 429b0714ec575..910be01a6c935 100644
---- a/fs/pipe.c
-+++ b/fs/pipe.c
-@@ -853,9 +853,11 @@ pipe_fasync(int fd, struct file *filp, int on)
- 	if (filp->f_mode & FMODE_READ)
- 		retval = fasync_helper(fd, filp, on, &pipe->fasync_readers);
- 	if ((filp->f_mode & FMODE_WRITE) && retval >= 0) {
-+		int read_ret = retval;
+diff --git a/fs/fs_struct.c b/fs/fs_struct.c
+index 394875d06fd60..c441586537e7e 100644
+--- a/fs/fs_struct.c
++++ b/fs/fs_struct.c
+@@ -147,6 +147,24 @@ int unshare_fs_struct(void)
+ }
+ EXPORT_SYMBOL_GPL(unshare_fs_struct);
+ 
++struct fs_struct *switch_fs_struct(struct fs_struct *new_fs)
++{
++	struct fs_struct *fs;
 +
- 		retval = fasync_helper(fd, filp, on, &pipe->fasync_writers);
--		if (retval < 0 && (filp->f_mode & FMODE_READ))
--			/* this can happen only if on == T */
-+		/* Undo only a reader entry added by this call. */
-+		if (retval < 0 && read_ret > 0)
- 			fasync_helper(-1, filp, 0, &pipe->fasync_readers);
- 	}
- 	mutex_unlock(&pipe->mutex);
++	scoped_guard(task_lock, current) {
++		fs = current->fs;
++		read_seqlock_excl(&fs->seq);
++		current->fs = new_fs;
++		if (--fs->users)
++			new_fs = NULL;
++		else
++			new_fs = fs;
++		read_sequnlock_excl(&fs->seq);
++	}
++
++	return new_fs;
++}
++
+ /* to be mentioned only in INIT_TASK */
+ struct fs_struct init_fs = {
+ 	.users		= 1,
+diff --git a/include/linux/fs_struct.h b/include/linux/fs_struct.h
+index 0070764b790a3..ade459383f925 100644
+--- a/include/linux/fs_struct.h
++++ b/include/linux/fs_struct.h
+@@ -40,6 +40,8 @@ static inline void get_fs_pwd(struct fs_struct *fs, struct path *pwd)
+ 	read_sequnlock_excl(&fs->seq);
+ }
+ 
++struct fs_struct *switch_fs_struct(struct fs_struct *new_fs);
++
+ extern bool current_chrooted(void);
+ 
+ static inline int current_umask(void)
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 854448152696b..739659e71af53 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -3220,7 +3220,7 @@ static int unshare_fd(unsigned long unshare_flags, struct files_struct **new_fdp
+  */
+ int ksys_unshare(unsigned long unshare_flags)
+ {
+-	struct fs_struct *fs, *new_fs = NULL;
++	struct fs_struct *new_fs = NULL;
+ 	struct files_struct *new_fd = NULL;
+ 	struct cred *new_cred = NULL;
+ 	struct nsproxy *new_nsproxy = NULL;
+@@ -3298,23 +3298,13 @@ int ksys_unshare(unsigned long unshare_flags)
+ 			new_nsproxy = NULL;
+ 		}
+ 
+-		task_lock(current);
++		if (new_fs)
++			new_fs = switch_fs_struct(new_fs);
+ 
+-		if (new_fs) {
+-			fs = current->fs;
+-			read_seqlock_excl(&fs->seq);
+-			current->fs = new_fs;
+-			if (--fs->users)
+-				new_fs = NULL;
+-			else
+-				new_fs = fs;
+-			read_sequnlock_excl(&fs->seq);
+-		}
+-
+-		if (new_fd)
++		if (new_fd) {
++			guard(task_lock)(current);
+ 			swap(current->files, new_fd);
+-
+-		task_unlock(current);
++		}
+ 
+ 		if (new_cred) {
+ 			/* Install the new user namespace */
 -- 
 2.53.0
 
