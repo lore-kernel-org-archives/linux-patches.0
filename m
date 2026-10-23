@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774232;
-	b=GvdSBG0WnS1uBjQqrfogie6QO4HL7jiZ7tW0kF/8EMDhpeuDzpNkGtRDOHJ44mvcsVkR
-	 uCoiAiEyDhYLXWXQc79tssDuXwN5bUc5/LXI2FSv0Y8pn6aqvBj3KtjcCaFy6WRQbcHUb
-	 p7OzjCvl9xKuGj5gJYa/kXW1wrAH/rTPKkXGL39bA674O7UYAOB4Pv4goTHwTXUC2Cc1S
-	 MA4vneKR09D4wUTnOGWFLaUZxOxoSB3TRnIhKtCrfHyavE1b06c66NUX3Hq06Br8JK7Cx
-	 42mpbFstQu6Q8rIkbe6ED9PTIkv/pMbOhopaCtTp3z9ak6g0xe3oFUxH/Fd3kjC0roQ==
+	t=1792774235;
+	b=ds5IcZ0r9Dw8UBrBSYY/t+lvNullI5btmskCVrBqetoWDoei+vVbhXkJTGoELq7UMwaw
+	 /Yp7cK0K/ifPdGkc+gUeurfJTqCMaGsmySgI5X7ZiYA4/ejJKj2O18A+SHPNyzL881Yds
+	 WPq481mJ/x0i2FD8IR2QptCdpyi/MdQB2SWnNZStEAvsbfecUZ2OjPgAdf73/FngS4L6d
+	 3ueOD5POHhozIYOT/0OimtRxNbqWqmjAUbVOghe0KYGXEHcMYVzLMmXaxIKZeF7R80Xty
+	 gkwDhKRbEWTGUR9uCHK8XYO70tTJsU0V5VkYHi/j8EsHwCFXpSXR7UNzJ/t/ssj6zKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774232;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774235;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mzukxdZPzMS2Ry5O+DByUuq8aPsyke/MPWOxuzQssYg=;
-	b=ZdKpysGDXwUX7kQ7LG39frVzxTOpHZl3upbNNh0u/OEzljBw7DSXNaq5FWwOvxMQHfhb
-	 Da9RdEDvdjjLsplH5MjmIBKUT/9uBU0wECpXxkVuDR6s46PLg5jNa3GZoLN9gH4ue8sRE
-	 6VJBC9DkJa+DGL4GH6/ImXcEj1vepJAzrQCK+zoBsQhahikldZKAUVc5xc305nprQ1kMC
-	 +j3mnbfASMaYaALPkHwBa8ZduAWboiR9/cFEIWt93LeCkoifWaCC5QrKH0lVDTMg0sION
-	 1foG8b3moZvNSaCqZRA6Wb/EnukzjC6X95/UK2nXOztbhCF1MwTLwOOU/5BFIJYAfQw==
+	bh=9tn2rXB/H9ox0J+/C64OdYdxD89mYnoy4np60qM+QlI=;
+	b=f+qMoA88ekZt2FTXQOt41GNFXJImFTiyRCMH1c+EeKN23TU/z6Yq4NDzLKj2n6In0H4G
+	 kXan4O2/7Aja/hi/3xf+8pJsrA6VlvjILSdnezqd07dlZXc21TBi1QBaqhWrK4ENxXyYV
+	 +HAF9MhOoIJcSai78J0P96QFR0DMOAAquejY7hnF2X/+aNhh5oDhr7qWgyft+CR7QWZHC
+	 D+3QR9Ib7Y0vwFsP3vb0G9uVK9yBQsk8McAV+J0rG800o0lLHKc1GvbTt///aM7ysRiVS
+	 93kMZuJ50QXd7PTH+U4gZTDTix57oElCpltbUUc8j1DL0FhVvHFT1A+PHXImfkf+eiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVdvngAm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SABNuzSm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F57D606A31B;
-	Fri, 23 Oct 2026 16:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196A9606A31B;
+	Fri, 23 Oct 2026 16:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVdvngAm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666421F01825;
-	Fri, 23 Oct 2026 16:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SABNuzSm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616221F01828;
+	Fri, 23 Oct 2026 16:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774231;
-	bh=mzukxdZPzMS2Ry5O+DByUuq8aPsyke/MPWOxuzQssYg=;
+	s=korg; t=1792774234;
+	bh=9tn2rXB/H9ox0J+/C64OdYdxD89mYnoy4np60qM+QlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BVdvngAmf5z2qjBvbKXURQGt6NCGAfgJlsqvAKIdPuoZa/j+iSC5Wwd/ydevcQeKV
-	 ZdM3RRymGo7CYSHa9H8uRkglb5eyuQ7lVJb+pjtmoxJ60PJMi/u0n4k4Q20AFsIbon
-	 1nOnbanQglo+u/YnupXJ3tRKhpfZgDCu2r1f7KkU=
+	b=SABNuzSmaJSKfjWXqRzTCkW5xdNcLQSX4wMzKDpFRaML0EW3rJE89+w88dE5Rnmbi
+	 9ciMP6zdrb3vGvToVe/mMgKRnxIuIbwDsn6ChsBlHLWZav5zgTLexk+Ijds8dScBTc
+	 GXpYRoVMG0unV4xqXT/S3yttxkfzWPyCujXtTWow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 164/193] ntfs3: free the sbi after a grace period
-Date: Fri, 23 Oct 2026 18:37:21 +0200
-Message-ID: <20261023163718.094007711@linuxfoundation.org>
+Subject: [PATCH 6.18 165/193] drm/i915/dmc: Harden DMC firmware payload parsing
+Date: Fri, 23 Oct 2026 18:37:22 +0200
+Message-ID: <20261023163718.116287421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -67,159 +70,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
 
-[ Upstream commit c01b091b06412d3b1b53d8c2925f6de586c8a2fc ]
+[ Upstream commit 8bb1858db453cd4250e3b633f5d2d09206024ca6 ]
 
-If the "nocase" mount option ntfs3 uses custom hash and dentry compare
-functions. Both access ntfs3 superblock private information in rcu
-pathwalk. ntfs_put_super() and ntfs3_kill_sb() drop the info without any
-rcu delay. A lookup that's still inside the filesystem when the last
-reference to the mount is dropped causes a UAF. With a pathwalk held up
-in ntfs_d_hash() while the last reference to the mount goes away:
+Validate the conversion of the DMC firmware size from dwords to bytes
+using check_mul_overflow() before calculating the firmware payload size.
 
-  BUG: KASAN: slab-use-after-free in ntfs_nls_to_utf16+0x752/0x940
-  Read of size 8 at addr ff1100010453c850 by task walker/99
-  Call Trace:
-   <TASK>
-   ntfs_nls_to_utf16+0x752/0x940
-   ntfs_d_hash+0x22b/0x500
-   link_path_walk+0x11ad/0x1d30
-   path_lookupat+0x63/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-  [...]
-  Allocated by task 95:
-   __kmalloc_cache_noprof+0x249/0x560
-   ntfs_init_fs_context+0x2db/0x5a0
-   alloc_fs_context+0x52e/0xc70
-  [...]
-  Freed by task 98:
-   kfree+0x1db/0x5b0
-   deactivate_locked_super+0x9c/0xf0
-   cleanup_mnt+0x9f/0x130
-   task_work_run+0x131/0x250
+Reject zero-length payloads and zero MMIO counts in the DMC firmware
+header so malformed firmware is caught early. Also set dmc_fw_size only
+after the payload allocation succeeds.
 
-The bug is currently masked by the grace period in namespace_unlock()
-for umount(2). Keep the necessary information until the filesystem
-private info is freed and free it with an rcu delay.
-
-ntfs3_free_sbi() now runs from an rcu callback and drops the upcase
-table via ntfs_put_shared(). So switch s_shared_lock over to
-spin_lock_bh(). Otherwise the callback can deadlock against a task
-holding the lock on the same cpu.
-
-Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
+Fixes: eb805623d8b1 ("drm/i915/skl: Add support to load SKL CSR firmware.")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-7-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Assisted-by: Claude-Code:Sonnet-5
+Signed-off-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260922133535.3180973-5-dibin.moolakadan.subrahmanian@intel.com
+(cherry picked from commit efde6601a1f1daedfe3dcc2816c934ddb44e3eef)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/ntfs_fs.h |    1 +
- fs/ntfs3/super.c   |   33 +++++++++++++++++++++------------
- 2 files changed, 22 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dmc.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -209,6 +209,7 @@ struct ntfs_index {
- /* Ntfs file system in-core superblock data. */
- struct ntfs_sb_info {
- 	struct super_block *sb;
-+	struct rcu_head rcu;
- 
- 	u32 discard_granularity;
- 	u64 discard_granularity_mask_inv; // ~(discard_granularity_mask_inv-1)
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -194,7 +194,7 @@ void *ntfs_set_shared(void *ptr, u32 byt
- 	void *ret = NULL;
- 	int i, j = -1;
- 
--	spin_lock(&s_shared_lock);
-+	spin_lock_bh(&s_shared_lock);
- 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
- 		if (!s_shared[i].cnt) {
- 			j = i;
-@@ -212,7 +212,7 @@ void *ntfs_set_shared(void *ptr, u32 byt
- 		s_shared[j].cnt = 1;
- 		ret = ptr;
+--- a/drivers/gpu/drm/i915/display/intel_dmc.c
++++ b/drivers/gpu/drm/i915/display/intel_dmc.c
+@@ -1132,7 +1132,7 @@ static u32 parse_dmc_fw_header(struct in
  	}
--	spin_unlock(&s_shared_lock);
-+	spin_unlock_bh(&s_shared_lock);
  
- 	return ret;
- }
-@@ -229,7 +229,7 @@ void *ntfs_put_shared(void *ptr)
- 	void *ret = ptr;
- 	int i;
- 
--	spin_lock(&s_shared_lock);
-+	spin_lock_bh(&s_shared_lock);
- 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
- 		if (s_shared[i].cnt && s_shared[i].ptr == ptr) {
- 			if (--s_shared[i].cnt)
-@@ -237,7 +237,7 @@ void *ntfs_put_shared(void *ptr)
- 			break;
- 		}
+ 	/* Cache the dmc header info. */
+-	if (mmio_count > mmio_count_max) {
++	if (!mmio_count || mmio_count > mmio_count_max) {
+ 		drm_err(display->drm, "DMC firmware has wrong mmio count %u\n", mmio_count);
+ 		return 0;
  	}
--	spin_unlock(&s_shared_lock);
-+	spin_unlock_bh(&s_shared_lock);
+@@ -1178,13 +1178,21 @@ static u32 parse_dmc_fw_header(struct in
+ 			    disable_dmc_evt(display, dmc_id, dmc_info->mmioaddr[i],
+ 					    dmc_info->mmiodata[i]) ? " (disabling)" : "");
+ 	}
+-	dmc_info->mmio_count = mmio_count;
+-	dmc_info->start_mmioaddr = start_mmioaddr;
  
- 	return ret;
- }
-@@ -684,6 +684,8 @@ static noinline void ntfs3_put_sbi(struc
+ 	rem_size -= header_len_bytes;
  
- static void ntfs3_free_sbi(struct ntfs_sb_info *sbi)
- {
-+	if (sbi->options)
-+		put_mount_options(sbi->options);
- 	kfree(sbi->new_rec);
- 	kvfree(ntfs_put_shared(sbi->upcase));
- 	kvfree(sbi->def_table);
-@@ -695,6 +697,11 @@ static void ntfs3_free_sbi(struct ntfs_s
- 	kfree(sbi);
- }
- 
-+static void ntfs3_free_sbi_rcu(struct rcu_head *head)
-+{
-+	ntfs3_free_sbi(container_of(head, struct ntfs_sb_info, rcu));
-+}
+ 	/* fw_size is in dwords, so multiplied by 4 to convert into bytes. */
+-	payload_size = dmc_header->fw_size * 4;
++	if (check_mul_overflow(dmc_header->fw_size, 4u, &payload_size)) {
++		drm_err(display->drm, "DMC fw_size too large (%u dwords)\n",
++			dmc_header->fw_size);
++		return 0;
++	}
 +
- static void ntfs_put_super(struct super_block *sb)
- {
- 	struct ntfs_sb_info *sbi = sb->s_fs_info;
-@@ -704,11 +711,11 @@ static void ntfs_put_super(struct super_
- 	/* Mark rw ntfs as clear, if possible. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_CLEAR);
++	if (!payload_size) {
++		drm_err(display->drm, "DMC firmware has empty payload\n");
++		return 0;
++	}
++
+ 	if (rem_size < payload_size)
+ 		goto error_truncated;
  
--	if (sbi->options) {
--		put_mount_options(sbi->options);
--		sbi->options = NULL;
--	}
--
-+	/*
-+	 * The mount options stay until the sbi is freed: ->d_hash() and
-+	 * ->d_compare() of a pathwalk in rcu mode read the nls table through
-+	 * them.
-+	 */
- 	ntfs3_put_sbi(sbi);
- }
+@@ -1192,7 +1200,6 @@ static u32 parse_dmc_fw_header(struct in
+ 		drm_err(display->drm, "DMC FW too big (%u bytes)\n", payload_size);
+ 		return 0;
+ 	}
+-	dmc_info->dmc_fw_size = dmc_header->fw_size;
  
-@@ -1865,9 +1872,11 @@ static void ntfs3_kill_sb(struct super_b
+ 	if (!dmc_load_addr_sanity_check(dmc, start_mmioaddr, payload_size,
+ 					dmc_header->header_ver, dmc_id)) {
+@@ -1204,6 +1211,10 @@ static u32 parse_dmc_fw_header(struct in
+ 	if (!dmc_info->payload)
+ 		return 0;
  
- 	kill_block_super(sb);
++	dmc_info->mmio_count = mmio_count;
++	dmc_info->start_mmioaddr = start_mmioaddr;
++	dmc_info->dmc_fw_size = dmc_header->fw_size;
++
+ 	payload = (u8 *)(dmc_header) + header_len_bytes;
+ 	memcpy(dmc_info->payload, payload, payload_size);
  
--	if (sbi->options)
--		put_mount_options(sbi->options);
--	ntfs3_free_sbi(sbi);
-+	/*
-+	 * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare()
-+	 * and read the upcase table and the nls table through the sbi.
-+	 */
-+	call_rcu(&sbi->rcu, ntfs3_free_sbi_rcu);
- }
- 
- // clang-format off
 
 
