@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773974;
-	b=PgFVhqt0N7D8z8TxU5BCg2xdGDHMG6Ny8EHbU8E3XVEoJx69LWsYX+bwkopWlv3BQ2bC
-	 RspfW1q8uMbot7+UMbc6Kqd/HucYKV1lNC1R/eNQWYF2irhNkPR4shWb72zIgQ/774nOT
-	 5QsQKT968JhA/CqoqMpk6CzUCkbbM5EGh2/bkGKc7ulJlcMZEgkGm0YyAgQPxCrFWK7Vb
-	 Vj9Zry4d+Rm/qbAESremBXH/cjwAMJ+eB5X3xmrkoF6K8/15QVHk/puvsiuCMWCugMBqv
-	 d7kRimq8rjvwUmIJe4VZkfM09JG3j1HmPKfe+u8heATP4VFslU3GQKwx7ktxu7I0R1A==
+	t=1792773977;
+	b=wJaD+YNoNy/Da7XHiexTVnxLAcfaLT4HK5AEb4PfIIv7wzRxpV9f64qf1WrlVKdc1aLG
+	 HmpRGj7pRNrub0nleJ2/Ib+8TqvACfHSe2MPNsjS8ghf9gV62F6sTm8/SHcUji/boPHfX
+	 1a3sXzZv/blLtxIF08hxiEHfcGfnMhJXRB3jiNU8MVVrZsU+GG/N6iYEH6YMkDonCIdX9
+	 ORYLAfr1sY5eD9G2morRSGA6MM2pT4fQiTTcmkSHUb8BF4w9ZoIvLA/Iy1MY8aK3o8jVE
+	 k6TPfE3ojBLVegVw6cbSZgSqKFNe7FBGuh0NceS/FbXY9iGZ+GvZCScS6f0vjJ2ey7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=27svanuAPz0L+ZY4JuLehQBIxI6NlqziPsWMUSIxsHU=;
-	b=b3ojIZvOvpD1U9fNMpi+c7kpuBRagNfAWjrEH+TyR1G76KfYJsFP9zQIr06WmlQSTkVg
-	 0wZ5WV4UP2f3RbARG6yOlqwZcWenwepGjJR3ZmRevtwI06A6m+QlZjETaMcWtIA8dF3s+
-	 i6QDZtRLvTQUPL/WqOMo6Gx7yTDigmf/6Eg7QFlrYauSmu4ejxDcDzYhzw19/hp207sAp
-	 kCxjyMQcr5Q0ZBcXlXc6oGqJ+EMiH8i8oFRChFBm/p8EzcGKFmqBg6QmcpPcDoLt7MfcK
-	 WriLBg6RtDlJZbuAAWG1kFKrTMwIzlgL5rDbUgJ7xcGPiwBI4jsXrpwTt1yvB5oV6Iw==
+	bh=urJ6N1nEKB0R1rkCFZldX8DZFoPUeMRCyj6dPanaViA=;
+	b=smIjVr74fdz4kkU35+aVI0eeKM0K2z6WKm7E8TrZ60gcv1Lq1rb8zNQjYoSAQXDxBk7p
+	 t1AXWYbUP3oypuY6SMt2il0G5mLR8nVCxCjXacOmB6GsBZ9FF+lMoi6Lxa2bWQkaXiR/+
+	 LFKlb5uvK2JnwLgqIZkbgDhIuKGnrynk/EJwFQhuhwLEDaR67ISN+3r0QRx4RWBjRC+wZ
+	 RvSnbakRfhl84mapR8TTGrGa/zXNfD4krkgfXzWbTn8Ox9NNe+8GJsAuz7q2/GvNREv32
+	 LUO0v+hG8eULUe2X4UAJtkQBei52eijxl6y9alDuXEy4zHyh5L9Nu8xo1DO4jkzELkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Id6WbZsZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RlVhrsu8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19C7606A31A;
-	Fri, 23 Oct 2026 16:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C4C606A31A;
+	Fri, 23 Oct 2026 16:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Id6WbZsZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B7E1F01825;
-	Fri, 23 Oct 2026 16:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RlVhrsu8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0C21F01825;
+	Fri, 23 Oct 2026 16:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773973;
-	bh=27svanuAPz0L+ZY4JuLehQBIxI6NlqziPsWMUSIxsHU=;
+	s=korg; t=1792773976;
+	bh=urJ6N1nEKB0R1rkCFZldX8DZFoPUeMRCyj6dPanaViA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Id6WbZsZTwt1jb4xF6j8K/enyedaYTuTh7vKkF1VbdN2RTNeoisd1s7qQScE7fgws
-	 Ou0spjP/+1dRs+bVS9SSuL6h4cdZN3UT4u1QaFUH/NVt/Tv9tRJk61p8abm0M4cIzG
-	 ySDt8mr7nYEcZEt/FlK+ec6i+SgeOUahEe+3anXo=
+	b=RlVhrsu8fD/mB/sEFqbv2/tj2Phg14P3Yh4ExuY84nCWQXnlwDbkAnjIgIKF4q2BY
+	 qSUq11WKcjzqONByU7O36NgH1fTJeAve0OrCO1vLE+8vjMtWpWfVrSmOzDxHsFJuyr
+	 NcUkKcA0mfOMlPAkH1VnT+NuFxEd4+c3Ptwbmrhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw2@infradead.org>,
-	Amirmohammad Eftekhar <amirmohammadeftekhar@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 078/193] KVM: nVMX: Reset MMU back to the root MMU if loading L2 state fails for !VM-Entry
-Date: Fri, 23 Oct 2026 18:35:55 +0200
-Message-ID: <20261023163716.051302028@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 079/193] fsnotify: prevent mark additions during connector teardown
+Date: Fri, 23 Oct 2026 18:35:56 +0200
+Message-ID: <20261023163716.077246938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,70 +67,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amirmohammad Eftekhar <amirmohammadeftekhar@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit c8f4cfe1cf93bce924e27f2abead7a4c4a487505 upstream.
+commit 36ebddca56b9d8993d6dc984fdecc748ee1f5e06 upstream.
 
-Reset the vCPU's MMU pointer back to the root MMU if loading L2 state fails
-in the "not from VM-Entry" case, i.e. when emulating RSM or handling
-KVM_SET_NESTED_STATE.  Failure to unwind the MMU pointer results in KVM
-trying to run L1 with a nested MMU, and is especially problematic if the
-vCPU manages to free its nested state before the VM crashes.  Constructing
-the root for a nested EPT MMU goes through vmcs12, which is dynamically
-allocated/freed when nVMX is enabled/disabled.  And so if the nested state
-is freed with the MMU still pointing at the nested MMU, KVM will hit a NULL
-pointer deref when attempting to get L1=>L2 EPTP.
+fsnotify_destroy_marks() keeps a reference to its current mark while it
+drops conn->lock to destroy the mark. This stabilizes the forward-walk
+cursor, but does not prevent a new mark from being inserted before it.
+For example, an inotify watch re-added after IN_IGNORED sorts before the
+old, detached mark for the same group. The walk can miss the replacement
+and then detach the entire connector from the object.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000078
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 114a2d067 P4D 111743067 PUD 11141f067 PMD 0
-  Oops: Oops: 0000 [#1] SMP
-  CPU: 20 UID: 1000 PID: 1272 Comm: nested_tdp_faul Not tainted 7.3.0-rc4-8c89f11d1a99b-sink-vm #1914 PREEMPTLAZY
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:nested_ept_get_eptp+0xb/0x10 [kvm_intel]
+The replacement is still on its group's marks_list and, for inotify, in
+the watch IDR. The group mutex no longer protects the connector's object
+from disappearing. An unprivileged fdinfo read racing the final detach
+can consequently call igrab(NULL):
+
+  BUG: KASAN: null-ptr-deref in igrab+0x24/0x100
+  Write of size 4 at addr 0000000000000148
   Call Trace:
-   <TASK>
-   kvm_mmu_load+0xcd/0x870 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x18f5/0x1f80 [kvm]
-   kvm_vcpu_ioctl+0x2c7/0x970 [kvm]
-   __x64_sys_ioctl+0x90/0xd0
-   do_syscall_64+0x9c/0x4d0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x47491b
-   </TASK>
-  Modules linked in: kvm_intel kvm irqbypass
-  CR2: 0000000000000078
-  ---[ end trace 0000000000000000 ]---
-  RIP: 0010:nested_ept_get_eptp+0xb/0x10 [kvm_intel]
+   igrab+0x24/0x100
+   inotify_show_fdinfo+0x1dc/0x5e0
+   seq_show+0x397/0x690
 
-Cc: David Woodhouse <dwmw2@infradead.org>
-Fixes: 72e9cbdb4338 ("KVM: nVMX: fix SMI injection in guest mode")
-Fixes: 8fcc4b5923af ("kvm: nVMX: Introduce KVM_CAP_NESTED_STATE")
+Set a DESTROYING flag under conn->lock before starting the walk, and
+reject new marks on that connector with -ENOENT. The existing add-mark
+error paths undo the temporary group-list entry and the backend's watch
+allocation. Do not wait for teardown while holding the group mutex,
+which the destroyer needs. Once the old connector is detached, an add
+can install a fresh connector as before.
+
+This closes the insertion race for all object types using the common
+connector teardown, without changing the mark reference or SRCU lifetime
+rules.
+
+Fixes: 6b3f05d24d35 ("fsnotify: Detach mark from object list when last reference is dropped")
 Cc: stable@vger.kernel.org
-Signed-off-by: Amirmohammad Eftekhar <amirmohammadeftekhar@gmail.com>
-[sean: write changelog]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Link: https://patch.msgid.link/20261001214356.3825100-2-seanjc@google.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/notify/mark.c                 |   11 +++++++++++
+ include/linux/fsnotify_backend.h |    1 +
+ 2 files changed, 12 insertions(+)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3821,8 +3821,10 @@ vmentry_fail_vmexit_guest_mode:
- vmentry_fail_vmexit:
- 	vmx_switch_vmcs(vcpu, &vmx->vmcs01);
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -786,6 +786,11 @@ restart:
+ 		goto restart;
+ 	}
  
--	if (!from_vmentry)
-+	if (!from_vmentry) {
-+		nested_ept_uninit_mmu_context(vcpu);
- 		return NVMX_VMENTRY_VMEXIT;
++	if (conn->flags & FSNOTIFY_CONN_FLAG_DESTROYING) {
++		err = -ENOENT;
++		goto out_err;
 +	}
- 
- 	nested_put_vmcs12_pages(vcpu);
- 
++
+ 	/* is mark the first mark? */
+ 	if (hlist_empty(&conn->list)) {
+ 		hlist_add_head_rcu(&mark->obj_list, &conn->list);
+@@ -974,6 +979,12 @@ void fsnotify_destroy_marks(fsnotify_con
+ 	if (!conn)
+ 		return;
+ 	/*
++	 * New marks could be inserted before our cursor and survive the final
++	 * detachment of the connector from the object. Prevent additions to
++	 * this connector before dropping its lock.
++	 */
++	conn->flags |= FSNOTIFY_CONN_FLAG_DESTROYING;
++	/*
+ 	 * We have to be careful since we can race with e.g.
+ 	 * fsnotify_clear_marks_by_group() and once we drop the conn->lock, the
+ 	 * list can get modified. However we are holding mark reference and
+--- a/include/linux/fsnotify_backend.h
++++ b/include/linux/fsnotify_backend.h
+@@ -546,6 +546,7 @@ struct fsnotify_mark_connector {
+ 	unsigned char prio;	/* Highest priority group */
+ #define FSNOTIFY_CONN_FLAG_IS_WATCHED	0x01
+ #define FSNOTIFY_CONN_FLAG_HAS_IREF	0x02
++#define FSNOTIFY_CONN_FLAG_DESTROYING	0x04
+ 	unsigned short flags;	/* flags [lock] */
+ 	union {
+ 		/* Object pointer [lock] */
 
 
