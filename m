@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774998;
-	b=VcC7f1jYkr1ySMm/NHpPQY/ZOLMjBTfYLZSFxZ4hTjK9H+gGjlFRWi16MQ5m8oA2y4H9
-	 e+fR+mLzajl7mA4NOSIZrHLLbZA9MSlXUbsuk7hqmZHq0MToaBWEeyRyZhsSLj7UZKNBQ
-	 0uk/K9QJ9Th3BEjMCp9UKIMuWpjGRcfwD2IHDEVVRSInYXWbpw76tCwoOyabap/OcPpZs
-	 qtBi2uP8tmAd1dJM/sxzMrSVn308N/2XKV+4EFMeBGd6zoz6bmdaNaWM0PeA7j06blLw/
-	 tthPMIUDNlqfgy7fA7cCGN1EN0Cmma/jS3f2PiNq3rrWz31znNjsDIOyraeVrEDZ3gQ==
+	t=1792775001;
+	b=EMvMOReAXyTv899HGnMyhJj7ZRrgQl83Es+wPXNyKyShv3K7rnHeDgmESVNwaAkEetfM
+	 c5KmmCD8fNCPVnALteToA9G7Rn2rrV98SNiYbNMOIlt7IRt+Y6nUUfoqbi2d2JZtnhOI7
+	 sM/GRiB+NEBVhv9yJFvBsDpxCYJKiA8z+0mL+C/FRqwzOG2aiQlt2tLIFy2qgWW23xoPt
+	 bsLvtCwa/rUE+iLt5sgUYrTveHqDe79hk0h4s5l+SDBJo8Hoprt/daSQEOxcYV94R4RH8
+	 kirKWUhznHrn+mOOwHYTj+i/UIkJedPXPVTfTWRC0jv1AbX+F0AaYw1KODC1fSLDLCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775001;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tdrs+v61jPH4jgymkFir/d4+JVF22h5SMJpLAQMbyPI=;
-	b=ufFB9rbN73ydBQSgXjfhG5iuQITan7IZGg2duuz9E+6lOEQrPSdnOglFUrtKCHohtvHQ
-	 nB86ERswV0vsgjLOFG72agUQpdZyYQsPm5yOGNnCznuE4l6mCRI4mubzNT7m8RV7fNHtL
-	 nr+i53Weom7rYm+x2EWb6Geg4a1a7frwyrSMALkJ+EXcBqEmvNUGWyD9z8mQxggmlmEX3
-	 WAfB3AuxR47M6KRd7goPWvPJRGhSnBLh0+B+vp6LxLl2Pdib8kY8fBd8kz7/9nhD0JB5m
-	 HKXWJCp08f4hn5NlVpGgkboPZ/mNSM6/CcFHRWChLcGa48aLjxj/AR+PUu0bdQbax7g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=7m53AaP+qoLRhnf8433h+DOC/yexpebvKI9neReJCTI=;
+	b=gg2fN1iI7W/31DX7S0kJwQ3NRpBMzxmOlqkSIHAo+TvsWle9oBERhyAxNI/ucUkJRAYH
+	 VV8wfc+EHF3Xmlz3YbWLKzJUFTmId78Pc4Ef6dP3AhhN3NQme+qrJShipdGYi+1QEIhdU
+	 lgVZQyamUFH3a6svraJ2ZCXQNFhAWCID11Pq3sDlmqUfkLfwq9HS8chpgr6tKxAjXTFZt
+	 z0B7/jgSZnf4/MyYFd+7IEPSvKKq34Vtaa8/swztfzM1S9kAb8tXtvOZZOjc7QSc+QXus
+	 wvdwtDo1IjCd1hq2mYrczvQrbfNdKsilXLdIB+UMELomT/hri1kPPr4MAY8x0sLVV/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Mgl/XMbg";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEg9iFUv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F203606A31A;
-	Fri, 23 Oct 2026 17:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4D3606A31A;
+	Fri, 23 Oct 2026 17:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mgl/XMbg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670941F01825;
-	Fri, 23 Oct 2026 17:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEg9iFUv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735F71F01825;
+	Fri, 23 Oct 2026 17:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774998;
-	bh=Tdrs+v61jPH4jgymkFir/d4+JVF22h5SMJpLAQMbyPI=;
+	s=korg; t=1792775001;
+	bh=7m53AaP+qoLRhnf8433h+DOC/yexpebvKI9neReJCTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mgl/XMbgOpqjzaZ8OWFa8MudTEG3zWB2pEpLDT5erwFEPm+iA1Y78LmQGuyhl+awR
-	 nTDqIodsJHesSul4Dk/9PGQfR8Yks9WVkYKBIamtqGzQ2AvC9Ytp/AKghZ0iKBWwA6
-	 /IexbMPdUZpcM46lgxx3mXivSYqiw/9mX9WAXlNQ=
+	b=LEg9iFUvPU+3KjdtR4TK2Ri8NnvnBXm9CjCNFsPlSHGNhBGS2sOikPVWBM63los3M
+	 rhUNMDLY/4GkJJX0Ok98wE0l6db/nHeqEUtW2oHEP+71fALEHeee4DRapXmorLxPYx
+	 hczUt/7ofVdFJg8AVTIdaVAtpY56MU+jBeq2to2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haris Okanovic <harisokn@amazon.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Radu Rendec <radu@rendec.net>
-Subject: [PATCH 7.2 228/242] genirq/proc: Fix missing CPU header in /proc/interrupts
-Date: Fri, 23 Oct 2026 18:41:10 +0200
-Message-ID: <20261023163719.235766560@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 211/242] drm/amdgpu/userq: actually validate userq BOs
+Date: Fri, 23 Oct 2026 18:40:53 +0200
+Message-ID: <20261023163718.787775200@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -63,97 +63,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haris Okanovic <harisokn@amazon.com>
+From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit e74798f2f8e1562f2bbd2fed8d81929eeef39ffc upstream.
+[ Upstream commit 32d0771ef4ca69c30a1db3aefa34dd177cd2a047 ]
 
-irq_seq_show() must be idempotent since it may be called multiple times
-to render the same record, e.g. when seq_file's buffer is exceeded. It
-emits the CPU header behind the one-shot print_header flag, which the
-first pass clears, so the header is lost with the discarded buffer.
+This was supposed to loop over the individual evicted list, as the
+kernel and always_valid evicted lists were already handled in
+amdgpu_vm_validate.
 
-This can be seen on large systems, such as 8g.48xl (192 CPUs) and
-8i.96xl (384 CPUs) AWS instance types:
+Without this, BOs that were created and evicted before a userq was made
+would never end up in an eviction fence rearm.
 
-  $ head -1 /proc/interrupts
-     9:          0          0 ...  0  GICv3  25 Level  vgic
+Also add the missing ref to the BO before drm_exec locks and refs it.
 
-Replace print_header with the position of the first record and include
-the header whenever that record is emitted.
-
-Fixes: 171cc0d9eed1 ("genirq/proc: Speed up /proc/interrupts iteration")
-Signed-off-by: Haris Okanovic <harisokn@amazon.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260911-dev-harisokn-proc-interrupts-fix-b4-v1-1-f9ff208efcfa@amazon.com
+Fixes: 4cdbba5a16aa ("drm/amdgpu: restructure VM state machine v4")
+Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 18decfc9e8cc0fa70b6de9944cc27a37729edfbd)
+Cc: stable@vger.kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/proc.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/kernel/irq/proc.c
-+++ b/kernel/irq/proc.c
-@@ -462,7 +462,7 @@ int __weak arch_show_interrupts(struct s
- static DEFINE_RAW_SPINLOCK(irq_proc_constraints_lock);
- 
- static struct irq_proc_constraints {
--	bool		print_header;
-+	loff_t		first_pos;
- 	unsigned int	num_prec;
- 	unsigned int	chip_width;
- } irq_proc_constraints __read_mostly = {
-@@ -543,14 +543,13 @@ static int irq_seq_show(struct seq_file
- 	struct irqaction *action;
- 
- 	/* Print header for the first interrupt? */
--	if (constr->print_header) {
-+	if (p->index == constr->first_pos) {
- 		unsigned int cpu;
- 
- 		seq_printf(p, "%*s", constr->num_prec + 8, "");
- 		for_each_online_cpu(cpu)
- 			seq_printf(p, "CPU%-8d", cpu);
- 		seq_putc(p, '\n');
--		constr->print_header = false;
- 	}
- 
- 	if (desc == ARCH_PROC_IRQDESC)
-@@ -635,14 +634,25 @@ static void *irq_seq_next_desc(loff_t *p
- 
- static void *irq_seq_start(struct seq_file *f, loff_t *pos)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -937,19 +937,21 @@ amdgpu_userq_bo_validate(struct amdgpu_d
  {
--	if (!*pos) {
--		struct irq_proc_constraints *constr = f->private;
-+	struct irq_proc_constraints *constr = f->private;
-+	bool first = !*pos;
-+	void *ret;
+ 	struct ttm_operation_ctx ctx = { false, false };
+ 	struct amdgpu_bo_va *bo_va;
+-	struct amdgpu_bo *bo;
++	struct amdgpu_bo *bo, *tmp;
+ 	int ret;
  
-+	if (first) {
- 		constr->num_prec = READ_ONCE(irq_proc_constraints.num_prec);
- 		constr->chip_width = READ_ONCE(irq_proc_constraints.chip_width);
--		constr->print_header = true;
- 	}
--	return irq_seq_next_desc(pos);
-+
-+	ret = irq_seq_next_desc(pos);
-+
-+	/*
-+	 * Record position of the first output record so that irq_seq_show()
-+	 * knows where to write the header.
-+	 */
-+	if (first)
-+		constr->first_pos = *pos;
-+
-+	return ret;
- }
+ 	spin_lock(&vm->individual_lock);
+-	while (!list_empty(&vm->always_valid.evicted)) {
+-		bo_va = list_first_entry(&vm->always_valid.evicted,
++	while (!list_empty(&vm->individual.evicted)) {
++		bo_va = list_first_entry(&vm->individual.evicted,
+ 					 struct amdgpu_bo_va,
+ 					 base.vm_status);
++		bo = bo_va->base.bo;
++		tmp = amdgpu_bo_ref(bo);
+ 		spin_unlock(&vm->individual_lock);
  
- static void *irq_seq_next(struct seq_file *f, void *v, loff_t *pos)
+-		bo = bo_va->base.bo;
+ 		ret = drm_exec_prepare_obj(exec, &bo->tbo.base,
+ 					   TTM_NUM_MOVE_FENCES + 1);
++		amdgpu_bo_unref(&tmp);
+ 		if (unlikely(ret))
+ 			return ret;
+ 
 
 
