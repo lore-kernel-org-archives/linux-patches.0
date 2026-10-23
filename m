@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774518;
-	b=z6lZW2Rm+75xYbj+YJKWqRw1DuGARz01+S0pW+faYyNrEL/65OiwnWVBhebSdCvH3W5B
-	 qJJUhw4WY0F7ZpuQAYRXCZNAapxsUcT8gMO0UTwRrPylOJlmzxoCDGljDSVFNe9J1a/Z9
-	 0hTtTw2mhzSRhEp7ATCsMmK+zt9eiNqdZTqStHZ7mTsF+Tfp4qCHWUFoBm6KRQ906Rell
-	 Zo9/u9OxUsRt3NJSAwDZuJh2iavaivz9oV8S1EABjwtxpXwoXW3f/2Rt721Yr5bvQslPp
-	 3xfLuqrgYTQcYx/DOA7yKyr/iNm/a36TItVkMlNqRxqvLatDz2PTA9wIjUF248bBrpA==
+	t=1792774521;
+	b=JBz7cP+VegcOelpbexPeH0T0JIM8Ef/cQK83BbyeOXa4j49LhayP7bseCIttNLXWnvbf
+	 nZDVfRApaVXGeAZFnoiK0BXwXaY3I3C27l2IpBPxTZOLu06JaWyCacTF/MDICiL/k1ifI
+	 AY7ku0munFjJadZQYlOZiUZFWTtvXJy8CLZdISeRZhmzrohQHQz+1i7bPFRTQc8rKi/KA
+	 1CbO+zZkpZl0WHNmsOerRsR0Xy50Rzq+5h0EAKlYfzYd4d/0mDkvDd4xxwVvc/PFZJQGb
+	 iyJjVSIGhyUCN9I0GW0O2YPkznuOiDo7b9vpMZib6MNmxEbPP5bia8oXQhH7/iHh92w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Dr9V1LqLfpG1sQFk9Gua9QjsQoYwuWybe3DhLWueVlg=;
-	b=ttNmb/rKyyDfX5dSj6Hphm8XJUQ+i38udLp1m6TXbsN2KY7m4GI2L8FlA6sPQFcNCoQV
-	 BRqrEJcWsptXutxZScC97T0A8sqINCo8jZi4BWF35HjQ2dgJulpEwQ6d8x+PX/YOYgH8H
-	 CHbxJGAP6iuMLCh7TFsj9snYRck/sOfgRfe7BQ4UxVelbxjvHpcfYXyza47WMlW6thSS2
-	 ZMZ1CzCk5d0Q834HhfZWWTmYznMx5yDBXOU5Ub7bbKKgpmtzu1fM5wFfafNrZhLOUw4fH
-	 y9FYK/mad3+H/8x3bQnvUTAWSnInJZihWB6TchPnMNrqwWD3G3fkesRdlQrXXm++crQ==
+	bh=6F2vg4ha5E/CxzWViGdOY4/FrUliHSkUA2yWhAil55Y=;
+	b=mOJDESNeVXvqMD/VUWKq4DTjmDNzYA4yJpQzJOo/ex6BW3MV5elwsRR1b5SoZ2vkZH6N
+	 8sYjBbooxaz0j96eabknJCH2wynAmDsTCCM75/0O6pED7Lwfa8e+X9Xzg4PQREnFHXCFX
+	 MsGMmjEiFvCaIQhocjKCJK6LBzSUSnNfCwgTEneCoo7hkvDV+fwpkYWi/99hZVYyJC9D6
+	 2UhuI2bIETJIPw2sSNrJGUGQPWWuRwu+Inq96GufWNPdHMj2ggNQut1ek90lzfng/cyjM
+	 VWiA/eY3P+T/FPTVxrWlIWrkiugy82MrXL989zlyHO3Pleln0qm1WoOxn8P76ix8GkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1FpBgS/H";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0y+Sq9Sh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB53606A31B;
-	Fri, 23 Oct 2026 16:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B19606A31B;
+	Fri, 23 Oct 2026 16:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1FpBgS/H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FE91F01825;
-	Fri, 23 Oct 2026 16:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0y+Sq9Sh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1DF1F01825;
+	Fri, 23 Oct 2026 16:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774517;
-	bh=Dr9V1LqLfpG1sQFk9Gua9QjsQoYwuWybe3DhLWueVlg=;
+	s=korg; t=1792774520;
+	bh=6F2vg4ha5E/CxzWViGdOY4/FrUliHSkUA2yWhAil55Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1FpBgS/H0xqN1EbRlak0XEwOHhGsPJI5jGXAmIl0gOPUWSGT6gkpB7hyE9b0b79b/
-	 KMPS0EuFt9nWPUX9beMPZDG1kYhQ6bgx1FiZxkFVePhPDV8gptUvACGoudebhVSOcd
-	 Mi1W3XyoIF0YWJ6eVGRReq2XzKCrkfIESep3vtsE=
+	b=0y+Sq9ShAsT0xvgEhqvQ3SKz1vDhup0NEBDORquxDHAdRtzOyHyH2brJJ2WNfw5gq
+	 XbC7ivfeFF7bYx5Yb7diGYqIJoWcFguuWm9lyQCIa83X76aWaCHTK8kORDi14NwKrC
+	 7s1UtSwO/HN6u3KMPqvUpD9WtW3Rrcs8YXZHYEHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 067/242] fs: let idle threads share init_fs
-Date: Fri, 23 Oct 2026 18:38:29 +0200
-Message-ID: <20261023163715.367129117@linuxfoundation.org>
+Subject: [PATCH 7.2 068/242] tracing: Fix empty symbol names in simple_ring_buffer undef check
+Date: Fri, 23 Oct 2026 18:38:30 +0200
+Message-ID: <20261023163715.390115271@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,223 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit d2bdb9b61b42766ed66eef822370ad44435f40fe ]
+[ Upstream commit c902b6d709845def1d1d3ab818e0b9d9b962ab16 ]
 
-With nullfs as the real rootfs userspace can pivot_root() away from the
-initramfs and unmount it:
+Sparc64 emits empty symmbol names. Skips them when establishing the
+allowlist and when extracing undefined symbols.
 
-    chdir(rootfs);
-    pivot_root(".", ".");
-    umount2(".", MNT_DETACH);
-
-That's what systemd does and the initramfs is supposed to go away at
-that point together with all the memory it uses. But on every machine
-with more than one possible cpu the initramfs superblock stays around
-forever (cf. [1]). With ramfs as rootfs the unpacked initramfs shows up
-as Unevictable in /proc/meminfo, with tmpfs as Shmem, and it is never
-freed. In the reports that's between 70MB and 150MB.
-
-The idle threads of the secondary cpus are created by fork_idle() from
-smp_init(). That runs in kernel_init(), i.e., in PID 1, after
-init_userspace_fs() moved PID 1 from nullfs into the initramfs.
-fork_idle() doesn't pass CLONE_FS so each idle thread gets a private
-copy of PID 1's fs_struct and with it a reference to the initramfs as
-root and as pwd.
-
-pivot_root() relies on chroot_fs_refs() to move everyone whose root or
-pwd is the old root over to the new root. Idle threads aren't on the
-task list though so chroot_fs_refs() never finds them. They never exit
-either. So they keep the initramfs mount and with it the superblock
-alive for good. I overlooked this when I added nullfs. Before that the
-rootfs could never be unmounted anyway so it didn't matter what pinned
-it.
-
-Idle threads are kernel threads and init_task, the idle thread of the
-boot cpu, already uses init_fs. So let the idle threads of the other
-cpus share init_fs as well instead of copying PID 1's filesystem state.
-
-Note that kernels before 7.3 need a different backport. There PID 1
-still shares init_fs with all kthreads so passing CLONE_FS in
-fork_idle() is enough. They also have a second pin: devtmpfsd unshares
-a copy of the initial mount namespace, initramfs mount included. That
-was fixed in commit 66d2faeccbff ("devtmpfs: create private mount
-namespace").
-
-Reproducer, as /init in an initramfs together with a 128MB ballast
-file, booted with root=/dev/sda to get ramfs and with -smp 4:
-
-    // SPDX-License-Identifier: GPL-2.0
-    /* initramfs /init: switch root like systemd, check the old root */
-    #define _GNU_SOURCE
-    #include <fcntl.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-    #include <sys/mount.h>
-    #include <sys/reboot.h>
-    #include <sys/sendfile.h>
-    #include <sys/stat.h>
-    #include <sys/syscall.h>
-    #include <sys/sysmacros.h>
-    #include <unistd.h>
-
-    static void meminfo(void)
-    {
-    	char line[256];
-    	FILE *f = fopen("/proc/meminfo", "re");
-
-    	while (f && fgets(line, sizeof(line), f))
-    		if (!strncmp(line, "Unevictable:", 12) ||
-    		    !strncmp(line, "Shmem:", 6))
-    			fputs(line, stdout);
-    	if (f)
-    		fclose(f);
-    }
-
-    int main(int argc, char *argv[])
-    {
-    	struct stat st;
-    	char dev[32], buf[32];
-    	unsigned int maj, min;
-    	int fd, in, out;
-    	long r;
-
-    	if (argc > 1) {
-    		sleep(2);
-    		meminfo();
-    		/* ustat() only finds live superblocks */
-    		r = syscall(SYS_ustat, (unsigned)atoi(argv[1]), buf);
-    		printf("initramfs superblock %s\n", r ? "freed" : "pinned");
-    		fflush(stdout);
-    		sleep(1);
-    		reboot(RB_POWER_OFF);
-    	}
-
-    	mount("proc", "/proc", "proc", 0, NULL);
-    	mount("devtmpfs", "/dev", "devtmpfs", 0, NULL);
-    	/* drop the fds console_on_rootfs() opened in the initramfs */
-    	fd = open("/dev/console", O_RDWR);
-    	dup2(fd, 0);
-    	dup2(fd, 1);
-    	dup2(fd, 2);
-    	close(fd);
-    	setvbuf(stdout, NULL, _IOLBF, 0);
-    	meminfo();
-
-    	stat("/", &st);
-    	maj = major(st.st_dev);
-    	min = minor(st.st_dev);
-    	/* new_encode_dev(), what ustat() expects */
-    	snprintf(dev, sizeof(dev), "%u",
-    		 (min & 0xff) | (maj << 8) | ((min & ~0xffu) << 12));
-
-    	mkdir("/sysroot", 0755);
-    	mount("tmpfs", "/sysroot", "tmpfs", 0, NULL);
-    	mkdir("/sysroot/proc", 0755);
-    	mkdir("/sysroot/dev", 0755);
-    	in = open("/init", O_RDONLY);
-    	out = open("/sysroot/init", O_WRONLY | O_CREAT, 0755);
-    	fstat(in, &st);
-    	sendfile(out, in, NULL, st.st_size);
-    	close(in);
-    	close(out);
-
-    	mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL);
-    	mount("/proc", "/sysroot/proc", NULL, MS_BIND | MS_REC, NULL);
-    	mount("/dev", "/sysroot/dev", NULL, MS_BIND | MS_REC, NULL);
-    	chdir("/sysroot");
-    	if (syscall(SYS_pivot_root, ".", ".") || umount2(".", MNT_DETACH))
-    		perror("pivot_root");
-    	execl("/init", "/init", dev, NULL);
-    	return 1;
-    }
-
-Before:
-
-    Unevictable:      131812 kB
-    Shmem:                 0 kB
-    Unevictable:      131812 kB
-    Shmem:               792 kB
-    initramfs superblock pinned
-
-After:
-
-    Unevictable:      131812 kB
-    Shmem:                 0 kB
-    Unevictable:           0 kB
-    Shmem:               792 kB
-    initramfs superblock freed
-
-With -smp 1 the superblock is freed without this patch as well.
-
-[1]: https://github.com/systemd/systemd/issues/43911
-
-Fixes: 576ee5dfd459 ("fs: add immutable rootfs")
-Link: https://patch.msgid.link/20261013-work-fs-idle_fs-v1-2-2063d1bcb5aa@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://patch.msgid.link/20260923074213.3077182-2-vdonnefort@google.com
+Fixes: 1211907ac0b5 ("tracing: Generate undef symbols allowlist for simple_ring_buffer")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/5574c9e6-9ed2-4ee6-a2b2-fb6ee81e83a1@roeck-us.net/
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ kernel/trace/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 92edfd918b74b..fceeada14c7fd 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1620,6 +1620,7 @@ static int copy_exec_state(u64 clone_flags, struct task_struct *tsk)
+diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
+index f934ff586bd43..0e1846f7dda32 100644
+--- a/kernel/trace/Makefile
++++ b/kernel/trace/Makefile
+@@ -146,11 +146,11 @@ KASAN_SANITIZE_undefsyms_base.o := y
  
- enum copy_fs_flags_t {
- 	COPY_FS_UMH	= (1 << 0),
-+	COPY_FS_IDLE	= (1 << 1),
- };
+ UNDEFINED_ALLOWLIST = __asan __gcov __kasan __kcsan __hwasan __sancov __sanitizer __tsan __ubsan __msan \
+ 		      __aeabi_unwind_cpp __s390_indirect_jump __x86_indirect_thunk simple_ring_buffer \
+-		      $(shell $(NM) -u $(obj)/undefsyms_base.o 2>/dev/null | awk '{print $$2}')
++		      $(shell $(NM) -u $(obj)/undefsyms_base.o 2>/dev/null | awk '$$2 {print $$2}')
  
- static int copy_fs(u64 clone_flags, struct task_struct *tsk,
-@@ -1639,13 +1640,14 @@ static int copy_fs(u64 clone_flags, struct task_struct *tsk,
- 		if (current->nsproxy->mnt_ns != &init_mnt_ns)
- 			return -EINVAL;
- 		fs = userspace_init_fs;
-+	} else if (flags & COPY_FS_IDLE) {
-+		fs = &init_fs;
- 	} else {
- 		fs = current->fs;
- 		VFS_WARN_ON_ONCE(current->fs != current->real_fs);
- 	}
- 
- 	if (clone_flags & CLONE_FS) {
--		/* tsk->fs is already what we want */
- 		read_seqlock_excl(&fs->seq);
- 		/* "users" and "in_exec" locked for check_unsafe_exec() */
- 		if (fs->in_exec) {
-@@ -1654,6 +1656,7 @@ static int copy_fs(u64 clone_flags, struct task_struct *tsk,
- 		}
- 		fs->users++;
- 		read_sequnlock_excl(&fs->seq);
-+		tsk->real_fs = tsk->fs = fs;
- 		return 0;
- 	}
- 	tsk->real_fs = tsk->fs = copy_fs_struct(fs);
-@@ -2303,7 +2306,9 @@ __latent_entropy struct task_struct *copy_process(
- 	retval = copy_files(clone_flags, p, args->no_files);
- 	if (retval)
- 		goto bad_fork_cleanup_semundo;
--	retval = copy_fs(clone_flags, p, args->umh ? COPY_FS_UMH : 0);
-+	retval = copy_fs(clone_flags, p,
-+			 (args->umh ? COPY_FS_UMH : 0) |
-+			 (args->idle ? COPY_FS_IDLE : 0));
- 	if (retval)
- 		goto bad_fork_cleanup_files;
- 	retval = copy_sighand(clone_flags, p);
-@@ -2675,7 +2680,7 @@ struct task_struct * __init fork_idle(int cpu)
- {
- 	struct task_struct *task;
- 	struct kernel_clone_args args = {
--		.flags		= CLONE_VM,
-+		.flags		= CLONE_VM | CLONE_FS,
- 		.fn		= &idle_dummy,
- 		.fn_arg		= NULL,
- 		.kthread	= 1,
+ quiet_cmd_check_undefined = NM      $<
+       cmd_check_undefined = \
+-          undefsyms=$$($(NM) -u $< | grep -v $(addprefix -e , $(UNDEFINED_ALLOWLIST)) || true); \
++          undefsyms=$$($(NM) -u $< | awk '$$2 {print $$2}' | grep -v $(addprefix -e , $(UNDEFINED_ALLOWLIST)) || true); \
+           if [ -n "$$undefsyms" ]; then \
+               echo "Unexpected symbols in $<:" >&2; \
+               echo "$$undefsyms" >&2; \
 -- 
 2.53.0
 
