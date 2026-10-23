@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774184;
-	b=IlSernVms5s5C/VkhJI8DRWmgEPbzPDQzEwcpRkHToN2+TOCVVcKZFeTtmZ1jm9H3UVR
-	 evqusgVEHUjKcM5aEdaxDiR+UWNOoHT0KxWumUiEcBENSfop5z80bAG3XXzasUdborzUv
-	 ZkzpAWj0jailitE8WW+bQtfANRvnVo4z1/MiXYgK3k/HAP8eiQ9/L3eyEaeNedfwTSjqW
-	 sovXZlPJKP8zP9lz56aKO9bS83KM8ZhLnKQdxdpE5lbtMelr0BEeLxjFmH3UqCwY7gObw
-	 FV2l72SACNnzwoJCXFriKGwoVm7UaMbd5v9L60uNMt+VgItNXq2Ex58ElATaGUbRXUQ==
+	t=1792774190;
+	b=bMq5jvjxkeS9mc9oEZxV7ktjsZWrYQ4PaN2Dus581e2klbsuZua9TwOeJIRS+vPkD276
+	 VW9645VG5th5/pHU5+gqEXDixrME9UwYnsPGNCMRccrlGZ4ez5fE9mFT0+zfoPS97gM7j
+	 +7qK4mmfAgP50wx9uqtgocDXO0nWKdabndjN61Dqmit697SMDu+y7zyiNMLqOd49q0UaR
+	 XWurWgdAXyE9LlLwKW4/KZvJwIT01hIbBdJnUBupig9KGeUTUnoeDyHfRMgbPeZZgmCOL
+	 s2HBT7X0GSmNPFmlKkknwAUR2d3W7spHIm1qV2FW7H+3Zjn/CW7wLLperJRlL/IdYEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774184;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774190;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oTLfUB9GbkPUqyuXHJJT6PvaNJAW67KJf6tYZvyRZP8=;
-	b=ErbUZ+HZfLHBubbzCDtJE9v9a4IdY3zek+4ANgMn881cUd/vFNBqQIz+cbtOcrrPcN4N
-	 clSf8LkaIqT7B50TBDyuKr6yzo9WeNvkZ5CAA3HpF/AoSLDZKcP/Bav5eSRm6WBOFbW8L
-	 5IixnfsqrtJ8u3n+G8CcezcOGhOmoE+GeWw1RDODamFHd3o0syhWRCDufAlw6t990ICG/
-	 9ruo8TrpKOsjqd0veCb7eRrjEmGVqhwgY5Xz+N74Kd4B10m10yhW2T7VqQf+JsZLQW16b
-	 7XOkDfpAZNy2UPIIKDFW7lvfwnaEYAydRGC4HzKIyhk8F3Lr2HuhRz6DSZa4jCcw+lw==
+	bh=rJD4t5wLcR6b3u9FbDswwuC6tA3O8+Mmu5Vsgvyc+uQ=;
+	b=ElDe4biI7LwvPaShyuyO2cEhrS6lTz9i2I69m8Z7lYkwGu2bwuqlJA/cikSv0G9+GlxE
+	 Mobvpq+V58rw8AxeVKuI+yF/PDiu4qr8/pXC8uSp1EVOjEfCzzxzoV8SMgTKBM14Ty5os
+	 /gbxGuFZQHe1S4dxunDXMtANPcPNsFliUkoP1PSVpDGY4OG7FBqe82lCvdB+dRasEydgN
+	 ZqEuLaGR8HmzaOioPinRUdNcaOs36vyUihscfxnh0wDqC2B43UN/1JBHHxDr9sNkcEzcM
+	 f1ZfAK4yZBYhsy7YGGoQgGC7ci5a2gR60a4nN0imrxk9nh2/YzCHN0QbmcFoTfFBNrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aStTkzbO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XanzXddb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F9B60A2602;
-	Fri, 23 Oct 2026 16:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1760A60A2607;
+	Fri, 23 Oct 2026 16:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aStTkzbO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A732A1F031E0;
-	Fri, 23 Oct 2026 16:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XanzXddb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6948E1F01829;
+	Fri, 23 Oct 2026 16:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774184;
-	bh=oTLfUB9GbkPUqyuXHJJT6PvaNJAW67KJf6tYZvyRZP8=;
+	s=korg; t=1792774190;
+	bh=rJD4t5wLcR6b3u9FbDswwuC6tA3O8+Mmu5Vsgvyc+uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aStTkzbOhwNoJikjyuHzY7GOF4oGs7spkSyvInTXep0FKLorDdp3emeXmNBjtrXSp
-	 2e83gStEhcadY/0QSRGDu60ce9XD28mXPV9Y8EHgrzgZ5EUQwqx4GehbFYewS0zFJ3
-	 qklNiwzUAJ6N7hsi4jhwXuh9VyBk1Kf9rDXvPFUg=
+	b=XanzXddb+1o9uZFC50q3BoDWNRxjQgYdwusZ5bqeGDDZ9zjUbecl4V9NHCBh/s6bS
+	 QytJC7s0CbYIsBWbaEfydNQysC8sb37kSIT99Ytmo9APdpFh8Z7b5jD4/PhIqLyx4u
+	 hv3Stwsxcs35zusYqIkErRNExXNRhjpdFmIQfnx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 150/193] ASoC: SOF: ipc4-topology: Fix shift-out-of-bounds for aggregated ALH capture
-Date: Fri, 23 Oct 2026 18:37:07 +0200
-Message-ID: <20261023163717.760304792@linuxfoundation.org>
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 152/193] net: bridge: mcast: dont truncate the port group walk on teardown
+Date: Fri, 23 Oct 2026 18:37:09 +0200
+Message-ID: <20261023163717.807483398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,62 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Jun Yang <littleddfu@gmail.com>
 
-[ Upstream commit 746de48c3a250f0c264105dcbfcdf0c5001e970b ]
+commit 5a3f7a683aee56e1f15c9d53041f3236767eaae7 upstream.
 
-When ch_count is smaller than blob->alh_cfg.device_count (e.g. a mono
-capture stream, such as a SmartMic, aggregated across multiple SDW
-links), step = ch_count / blob->alh_cfg.device_count truncates to 0.
-The subsequent GENMASK(step - 1, 0) then underflows step - 1 (u32) to
-UINT_MAX, causing GENMASK()'s internal shift to use an out-of-bounds
-exponent:
+__br_multicast_disable_port_ctx() and br_multicast_del_port() walk
+port->mglist with hlist_for_each_entry_safe(). However,
+br_multicast_find_del_pg() can also delete other entries from the same
+list through br_multicast_fwd_src_remove() or __fwd_del_star_excl().
 
-  UBSAN: shift-out-of-bounds in sound/soc/sof/ipc4-topology.c:2363:13
-  shift exponent 18446744069414584384 is too large for 64-bit type 'long unsigned int'
+If such an entry is the iterator's saved next node, hlist_del_init()
+clears its ->next and terminates the walk early. The reproducer triggers
+this in both teardown walks, leaving port groups in the bridge mdb with
+a dangling ->key.port after del_nbp() frees the port:
 
-Treat ch_count < device_count the same way as the existing "channels
-equal to output reference channels" case: apply the same ch_mask to
-every aggregated device instead of trying to split channels that
-can't be evenly divided.
+  BUG: KASAN: slab-use-after-free in __mdb_fill_info+0x1191/0x1320
+   __mdb_fill_info+0x1191/0x1320
+   br_mdb_dump+0x594/0xe40
+   rtnl_mdb_dump+0x1cf/0x5d0
 
-Fixes: 0390a102cc18 ("ASoC: SOF: ipc4-topology: use different channel mask for each sdw amp feedback")
+Use hlist_del_init_rcu() to unlink the group while preserving ->next.
+br_multicast_del_pg() and the teardown walks run under
+br->multicast_lock. The GC worker must acquire the same lock before
+detaching the group for destruction, so the node remains alive while
+the walk uses the preserved pointer.
+
+Preserving ->next means a walk can now reach a group that an earlier
+iteration already deleted as a side effect. That group is off mp->ports,
+so br_multicast_find_del_pg() would fall through its port scan and hit
+the trailing WARN_ON(1). Skip such groups at the top of that helper: a
+port group is put on port->mglist when it is created and only unlinked
+when it is deleted, so hlist_unhashed() identifies exactly this case.
+
+Fixes: b08123684bd5 ("net: bridge: mcast: install S,G entries automatically based on reports")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20261008090130.15135-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: Added a standalone guard around the mask calculation because the upstream playback conditional is absent. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260831111330.199543-1-junvyyang@tencent.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-topology.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/bridge/br_multicast.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -2286,8 +2286,20 @@ sof_ipc4_prepare_copier_module(struct sn
- 				ch_map >>= 4;
- 			}
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -813,7 +813,11 @@ static void __br_multicast_del_pg(struct
+ 	struct hlist_node *tmp;
  
--			step = ch_count / blob->alh_cfg.device_count;
--			mask =  GENMASK(step - 1, 0);
-+			if (ch_count < blob->alh_cfg.device_count) {
-+				/*
-+				 * When there are fewer channels than aggregated devices
-+				 * (e.g. a mono capture stream split across multiple links),
-+				 * set step = 0 to ensure all the ch_mask is applied to all
-+				 * alh mappings.
-+				 */
-+				mask = ch_mask;
-+				step = 0;
-+			} else {
-+				step = ch_count / blob->alh_cfg.device_count;
-+				mask =  GENMASK(step - 1, 0);
-+			}
+ 	rcu_assign_pointer(*pp, pg->next);
+-	hlist_del_init(&pg->mglist);
++	/* Keep ->next (held under multicast_lock, freed later by the GC work):
++	 * a port->mglist teardown walk may have latched this node as its next,
++	 * and deleting other groups of the same port must not truncate it.
++	 */
++	hlist_del_init_rcu(&pg->mglist);
+ 	br_multicast_eht_clean_sets(pg);
+ 	hlist_for_each_entry_safe(ent, tmp, &pg->src_list, node)
+ 		br_multicast_del_group_src(ent, false);
+@@ -848,6 +852,13 @@ static void br_multicast_find_del_pg(str
+ 	struct net_bridge_mdb_entry *mp;
+ 	struct net_bridge_port_group *p;
+ 
++	/* A teardown walk over port->mglist can reach a group that an earlier
++	 * iteration already deleted as a side effect. It is off mp->ports by
++	 * now, so skip it instead of falling through to the WARN_ON() below.
++	 */
++	if (hlist_unhashed(&pg->mglist))
++		return;
 +
- 			/*
- 			 * Set each gtw_cfg.node_id to blob->alh_cfg.mapping[]
- 			 * for all widgets with the same stream name
+ 	mp = br_mdb_ip_get(br, &pg->key.addr);
+ 	if (WARN_ON(!mp))
+ 		return;
 
 
