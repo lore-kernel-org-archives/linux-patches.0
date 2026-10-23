@@ -1,52 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774760;
-	b=JezF6QLH1qZXErJl5HO2rHEh1CD0/saUtXFyaHKlDjMciWZlKUuY1ymjlsk8g0jecdWH
-	 XnVskeL4dK8g0a5k8XnXYlaGi7O66g8nJtErEUoffEkXerw/tnBkUv0DannIJYE+P8I5+
-	 uHYVPbmyVfawWqUQ3ILoE8NT6++L8bwkUv8exbonuw3BbGd2SyM0UeVmfL+h8wXRU1PKz
-	 +r2dszOkwardTmtqXOdURxvvKucxhhNlhiJpB2Lmlyidf0wwnENJWmU53RPucyn5RYcLF
-	 Xwg79oouiwZ61pIgNxo+61edilBzXCxMsXjYR6CqlpNFgimGIn/WNweilE1r4MNijGw==
+	t=1792774763;
+	b=Tg6ZNpDfNnVHC5qxahGCx/8xf/cjs3DTL+uan0iMzy4q6xhBsB/ifTJ/UKrL/KGs7ldm
+	 lz4rh4vwvdQVCbkQgz6UiIfNa5spZVfMOFXxCBxj3i1wsVeILnKB9PhaTEAKd6AAPx5i/
+	 lk1crw2PiPxyO1u/WazgNYBzwwr0MB9UHVzDUbatRwyuEhbwQXQYpnuiEev5pudAEftFp
+	 4B0DzKbi7oAY/DchtknxKxJ5nBFSQGVHWOsgZXwAwKfFGTMWXoNRIMRBakrPha5cEMir4
+	 wDEop6FbKZJZ2ADNPWN7nLwHpNjEHl8qYe7x1sg1hbvR9jLl9mPlXEhgLqqUkGZ72zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774763;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VQ9SugXGGt6ONuMiLsdLjI5PAOePNeS76L5b9/NabOk=;
-	b=XsTMlsgoJS81xfwhi38+2EjDhYzfkEaiboPKqo2RRTyOkNwHNLVUVcEV0uvLsgbqWOUL
-	 3r/mSMpvE22NkGsF86sXEPfacRtkmsZoI4BKJ9txOX8CCTHI4SctFzwGUn1x7Sr2iMAc0
-	 ABJWVfkjzYPuSJ2luJfg64Er3QCoY0UfRpMpzmd3qepc0QDIchVkvNBJl0lau6D9ha4JK
-	 U12/ONugT6iMyg1MpIJOk92/BNB47nnuj5I3iZtB/sI843Q+1M/fjHxl2LY8+0NYAXanq
-	 Q6/kmCqzGVJkeuXomqexvmqncbppBju9jTrTvwPV1uFq416hwiu0vNcUfXd7zhZCisw==
+	bh=BUkiwHw1u/YKa9MgOqHaXQ0cm+IFMcZv7WnH7dirz7M=;
+	b=MucJEzYHU7/+a9iykXV91MfAjyaINT+NtQ1Tmk5LF/nUH+jcv4Va3uqiqbT43A7gw+0O
+	 pXHjjrlx+jyVvFvABsLOnZlY3T7X5ViFr6XCSxD+LISXRd+tMYb3KeVqFf6E5ohiQctuZ
+	 f8m46adNX7QNuOyZbhcX9DVrFf0GxJ15vjtTQpTbm8jh543MRpIBnUbV7o+E3GUg3XfIV
+	 XcfHWiwRQSHeZp7Xe40aFs1JJLFPBYuV4IshrJFY7Y0M+fjX6Ptd32h1AKlIpcHGd78uG
+	 uAtbupgErIZaGJelk3bacVWelBpGNQ5mOGfVDpKiSLKFDKQsx7K4zgBVCUZxZSNMP7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hbInvB22;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ew80oGbF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214DF606A31A;
-	Fri, 23 Oct 2026 16:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB431606A31A;
+	Fri, 23 Oct 2026 16:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hbInvB22
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD761F01825;
-	Fri, 23 Oct 2026 16:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ew80oGbF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320E01F01825;
+	Fri, 23 Oct 2026 16:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774760;
-	bh=VQ9SugXGGt6ONuMiLsdLjI5PAOePNeS76L5b9/NabOk=;
+	s=korg; t=1792774762;
+	bh=BUkiwHw1u/YKa9MgOqHaXQ0cm+IFMcZv7WnH7dirz7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hbInvB22ScsRTHJWaGUrBsyQayK0K1dEpw9PV0kaCQj4ZnGhZcfuz4FlvQQxZ5ZI5
-	 nYFZHUB33TWNYAOwb1CRAKYBh+ZTyF3H7vacu4KEoJE9Zy/0LYnkUcxCdpZ6gCTEbx
-	 6jISvBLbATtwujEbTywcKqQ9s80bBJHfrjUNQiz0=
+	b=ew80oGbFSEOx4KxeWKEruY5GRLJN8BPbtaRFzhX+TEiVs1h42yp8xu327pDeTfBMQ
+	 o/iht6TByPQvbC4uMUwqi/rAdTMndpibdCG+KCpEHgY66a9hZDfqITP2U6a5g+h8XM
+	 +PpNNYIixmMGh/FAkTENFcofcTSO94PKtBg2/U7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 149/242] scsi: libiscsi: Validate the task named by a management response
-Date: Fri, 23 Oct 2026 18:39:51 +0200
-Message-ID: <20261023163717.308340720@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Dominik Kaszewski <dominik.kaszewski@amd.com>,
+	George Zhang <george.zhang@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 150/242] drm/amd/display: Fix NULL sink dereference in USB4 bandwidth functions
+Date: Fri, 23 Oct 2026 18:39:52 +0200
+Message-ID: <20261023163717.330117015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,82 +78,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 11bffcd9cb346732eab2914ef44fe777a3f0b585 upstream.
+commit 55a67aa89342545b89f469dea6f29bfb6fac6f3d upstream.
 
-__iscsi_complete_pdu() fetches the task for five response types from one
-place and checks only that the index resolved:
+allocate_usb4_bandwidth_for_stream() and allocate_usb4_bandwidth() both
+use ASSERT(stream->sink) before dereferencing stream->sink->link. ASSERT
+is compiled out in production builds, so a NULL stream->sink causes a
+NULL pointer dereference.
 
-      case ISCSI_OP_LOGOUT_RSP:
-      case ISCSI_OP_LOGIN_RSP:
-      case ISCSI_OP_TEXT_RSP:
-      case ISCSI_OP_SCSI_TMFUNC_RSP:
-      case ISCSI_OP_NOOP_IN:
-              task = iscsi_itt_to_task(conn, hdr->itt);
-              if (!task)
-                      return ISCSI_ERR_BAD_ITT;
+link_set_dpms_off() already guards two earlier accesses to stream->sink
+with explicit NULL checks, confirming that stream->sink can legitimately
+be NULL. The subsequent call to deallocate_usb4_bandwidth() had no
+equivalent guard.
 
-iscsi_itt_to_task() bounds the index against cmds_max and looks at
-nothing else, so a target can name any slot in the pool, including one
-that has never been used. task->conn is then NULL, and both
-iscsi_nop_out_rsp() and iscsi_complete_task() dereference it. One
-unsolicited NOP-In is enough; a Text Response carrying the same ITT
-crashes in iscsi_complete_task() instead.
+Replace the ASSERT() calls with proper NULL checks that return false
+early, and add a matching stream->sink guard at the call site in
+link_set_dpms_off() consistent with the surrounding pattern.
 
-Require the task to be in flight and not a SCSI command, the way
-iscsi_itt_to_ctask() does for the command opcodes.
+v2: Keep the existing ASSERT() calls for diagnostics (to report
+    unexpected NULL sink), and add explicit NULL checks that return false
+    before dereferencing stream->sink. Also add a matching stream->sink
+    guard at the deallocation call site in link_set_dpms_off(). (Alex)
 
-[    6.298634] Oops: general protection fault, probably for non-canonical address 0xdffffc000000000c: 0000 [#1] SMP KASAN NOPTI
-[    6.298642] KASAN: null-ptr-deref in range [0x0000000000000060-0x0000000000000067]
-[    6.298652] CPU: 1 UID: 0 PID: 111 Comm: iscsistart Not tainted 7.2.0-rc5-ISCSI1-gf5098b6bae76 #1 PREEMPT(lazy)
-[    6.298654] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    6.298656] RIP: 0010:iscsi_nop_out_rsp.constprop.0+0x46/0x160
-[    6.298691] Code: c1 ea 03 48 83 ec 08 80 3c 02 00 0f 85 f5 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 8b 6b 58 48 8d 7d 60 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 c0 00 00 00 48 8b 45 60 48 39 c3 74 50 48 b8 00
-[    6.298698] RSP: 0018:ffff88806c907be8 EFLAGS: 00010206
-[    6.298701] RAX: dffffc0000000000 RBX: ffff888006116800 RCX: 0000000000000020
-[    6.298702] RDX: 000000000000000c RSI: ffff88800525d578 RDI: 0000000000000060
-[    6.298703] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-[    6.298706] R10: 0000000000000020 R11: 0000000000000000 R12: 0000000000000000
-[    6.298706] R13: 000000000000002e R14: ffff8880056eb440 R15: ffff888006116800
-[    6.298707] FS:  00007fc02d1c2740(0000) GS:ffff8880b29bc000(0000) knlGS:0000000000000000
-[    6.298710] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    6.298711] CR2: 000055fe3b56ddf8 CR3: 00000000053b9004 CR4: 0000000000770ef0
-[    6.298712] PKRU: 55555554
-[    6.298713] Call Trace:
-[    6.298714]  <IRQ>
-[    6.298714]  __iscsi_complete_pdu+0x13a8/0x22a0
-[    6.298758]  iscsi_complete_pdu+0x54/0xa0
-[    6.298759]  iscsi_tcp_hdr_recv_done+0x870/0x2c80
-[    6.298778]  iscsi_tcp_recv_skb+0x31e/0xec0
-[    6.298800]  iscsi_sw_tcp_recv+0x12f/0x390
-[    6.298804]  __tcp_read_sock+0x1ab/0x810
-[    6.298812]  iscsi_sw_tcp_data_ready+0x18b/0x510
-[    6.298814]  tcp_rcv_established+0x1f56/0x3a00
-[    6.298842]  tcp_v4_do_rcv+0x449/0x960
-[    6.298847]  tcp_v4_rcv+0x2245/0x3bc0
-
-Fixes: 7996a778ff8c ("[SCSI] iscsi: add libiscsi")
+Fixes: 8fa813b7fd1e ("drm/amd/display: Remove sink usage from DPMS")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Cc: Dominik Kaszewski <dominik.kaszewski@amd.com>
+Cc: George Zhang <george.zhang@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Roman Li <Roman.Li@amd.com>
+Cc: Ivan Lipski <ivan.lipski@amd.com>
+Cc: Dan Wheeler <daniel.wheeler@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 98029a0ce61feb52c563f65349dd9b25f672e355)
 Cc: stable@vger.kernel.org
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20261007015842.634893-4-yhlee@isslab.korea.ac.kr
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libiscsi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/libiscsi.c
-+++ b/drivers/scsi/libiscsi.c
-@@ -1286,7 +1286,7 @@ int __iscsi_complete_pdu(struct iscsi_co
- 	case ISCSI_OP_SCSI_TMFUNC_RSP:
- 	case ISCSI_OP_NOOP_IN:
- 		task = iscsi_itt_to_task(conn, hdr->itt);
--		if (!task)
-+		if (!task || task->state == ISCSI_TASK_FREE || task->sc)
- 			return ISCSI_ERR_BAD_ITT;
- 		break;
- 	default:
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -2298,9 +2298,14 @@ static bool allocate_usb4_bandwidth_for_
+ {
+ 	ASSERT(stream->sink);
+ 
+-	struct dc_link *link = stream->sink->link;
++	struct dc_link *link;
+ 	int req_bw = stream_bw;
+ 
++	if (!stream->sink)
++		return false;
++
++	link = stream->sink->link;
++
+ 	DC_LOGGER_INIT(link->ctx->logger);
+ 
+ 	if (!link->dpia_bw_alloc_config.bw_alloc_enabled)
+@@ -2347,9 +2352,13 @@ static bool allocate_usb4_bandwidth(stru
+ 	ASSERT(stream->sink);
+ 
+ 	bool ret;
++	int bw;
++
++	if (!stream->sink)
++		return false;
+ 
+-	int bw = dc_bandwidth_in_kbps_from_timing(&stream->timing,
+-			dc_link_get_highest_encoding_format(stream->sink->link));
++	bw = dc_bandwidth_in_kbps_from_timing(&stream->timing,
++					      dc_link_get_highest_encoding_format(stream->sink->link));
+ 
+ 	ret = allocate_usb4_bandwidth_for_stream(stream, bw);
+ 
+@@ -2410,7 +2419,8 @@ void link_set_dpms_off(struct pipe_ctx *
+ 	update_psp_stream_config(pipe_ctx, true);
+ 	dc->hwss.blank_stream(pipe_ctx);
+ 
+-	if (pipe_ctx->link_config.dp_tunnel_settings.should_use_dp_bw_allocation)
++	if (pipe_ctx->link_config.dp_tunnel_settings.should_use_dp_bw_allocation &&
++	    stream->sink)
+ 		deallocate_usb4_bandwidth(stream);
+ 
+ 	if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
 
 
