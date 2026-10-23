@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774230;
-	b=4/6chRD9AZV2MlUSPXqstqmaOBHfJNlbSsROHTZ8a8V+QnCLnJ9BdmPMwCRJYR7NUHKG
-	 X8Rg3YPcbOXqtoCRMf3RVjbwb2HqxDWRhQ1p4EJLnhr5ToGca/VVvz2gy5HbP+RyitzYB
-	 81d0B1B3ChQNqm5SatqprA56nMZPLQ8bvnMGfiN8lNBjrYrk7m42PAtbT5EI2rzKLCzDl
-	 letsDVQ+28eOZyxrQenwVBmi9u/ggZVmnwicUZT40B63FOq25zsgK+J7nGcHxLbSpOvHN
-	 gu9cpZ4SnTHo/G2URf9/Qsewm3cVoa9dufya4Wh7RoVMXCR9oFO9sOT2E4tuqdBx2tw==
+	t=1792774232;
+	b=GvdSBG0WnS1uBjQqrfogie6QO4HL7jiZ7tW0kF/8EMDhpeuDzpNkGtRDOHJ44mvcsVkR
+	 uCoiAiEyDhYLXWXQc79tssDuXwN5bUc5/LXI2FSv0Y8pn6aqvBj3KtjcCaFy6WRQbcHUb
+	 p7OzjCvl9xKuGj5gJYa/kXW1wrAH/rTPKkXGL39bA674O7UYAOB4Pv4goTHwTXUC2Cc1S
+	 MA4vneKR09D4wUTnOGWFLaUZxOxoSB3TRnIhKtCrfHyavE1b06c66NUX3Hq06Br8JK7Cx
+	 42mpbFstQu6Q8rIkbe6ED9PTIkv/pMbOhopaCtTp3z9ak6g0xe3oFUxH/Fd3kjC0roQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774230;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nOBB+2YaGRd8FJIFnsRSqRihs5+VPD8v0kmYGnpprfs=;
-	b=xQEMuchZYZ2Mnp34GNe7Vl3i/t8maLJ6YM0aEujhcM7BJ4v44pcrzn4RIeq9XSsQQszJ
-	 +ZkfA9c3oXRNfRDPwf/cjRtGHYxgo6OIsLLhcGCk1nijcLPlavs7uszgtppp4OGb7Cvk+
-	 BgIKmEarLzzNzDgjVyI/NpJmmJqB/V3sjffIxCTl/MlUHPB/cuQ+MszLLkRVE2hSBo6k/
-	 TQVPTVZembp7UBaa0u8yREh/wgDFzMVvcU7fkVx/M9wT3VkSEIKU695FEDRcy9Pa0M04K
-	 oUbTfTKmEZtPqcSwOBDtNScVkirZu+WSWSjwBbr5ewf/DQi7QGvy3sE/pwTarjSNYFw==
+	bh=mzukxdZPzMS2Ry5O+DByUuq8aPsyke/MPWOxuzQssYg=;
+	b=ZdKpysGDXwUX7kQ7LG39frVzxTOpHZl3upbNNh0u/OEzljBw7DSXNaq5FWwOvxMQHfhb
+	 Da9RdEDvdjjLsplH5MjmIBKUT/9uBU0wECpXxkVuDR6s46PLg5jNa3GZoLN9gH4ue8sRE
+	 6VJBC9DkJa+DGL4GH6/ImXcEj1vepJAzrQCK+zoBsQhahikldZKAUVc5xc305nprQ1kMC
+	 +j3mnbfASMaYaALPkHwBa8ZduAWboiR9/cFEIWt93LeCkoifWaCC5QrKH0lVDTMg0sION
+	 1foG8b3moZvNSaCqZRA6Wb/EnukzjC6X95/UK2nXOztbhCF1MwTLwOOU/5BFIJYAfQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jyrb0+hd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVdvngAm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B79C606A322;
-	Fri, 23 Oct 2026 16:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F57D606A31B;
+	Fri, 23 Oct 2026 16:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jyrb0+hd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1281F01825;
-	Fri, 23 Oct 2026 16:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVdvngAm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666421F01825;
+	Fri, 23 Oct 2026 16:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774229;
-	bh=nOBB+2YaGRd8FJIFnsRSqRihs5+VPD8v0kmYGnpprfs=;
+	s=korg; t=1792774231;
+	bh=mzukxdZPzMS2Ry5O+DByUuq8aPsyke/MPWOxuzQssYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jyrb0+hdpJMOyqtc9Evg5rjeKo8lWxVL63c3A58cl30x1dGDv5od33I1nK8GcQWXC
-	 H581+WBOu95LZHjNYaHy3stHKC7oK/k0ERJqfksIu+0uLzcRizOPV3bygOWfEnj0od
-	 GXi3nBO2B7mBSx3tC64uLoMdjir+b1nNMYqCFfyU=
+	b=BVdvngAmf5z2qjBvbKXURQGt6NCGAfgJlsqvAKIdPuoZa/j+iSC5Wwd/ydevcQeKV
+	 ZdM3RRymGo7CYSHa9H8uRkglb5eyuQ7lVJb+pjtmoxJ60PJMi/u0n4k4Q20AFsIbon
+	 1nOnbanQglo+u/YnupXJ3tRKhpfZgDCu2r1f7KkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Vosburgh <theminershive@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 137/193] sctp: validate chunk length in the inqueue parser
-Date: Fri, 23 Oct 2026 18:36:54 +0200
-Message-ID: <20261023163717.449399245@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 164/193] ntfs3: free the sbi after a grace period
+Date: Fri, 23 Oct 2026 18:37:21 +0200
+Message-ID: <20261023163718.094007711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -68,67 +67,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Vosburgh <theminershive@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 6cfc1b90cb86f4aabc69fb8e30128e07e2cdfa3a upstream.
+[ Upstream commit c01b091b06412d3b1b53d8c2925f6de586c8a2fc ]
 
-SCTP chunks always include a four-byte generic header, but
-sctp_inq_pop() currently accepts shorter declared lengths. A zero-length
-chunk leaves chunk_end at the current header.
+If the "nocase" mount option ntfs3 uses custom hash and dentry compare
+functions. Both access ntfs3 superblock private information in rcu
+pathwalk. ntfs_put_super() and ntfs3_kill_sb() drop the info without any
+rcu delay. A lookup that's still inside the filesystem when the last
+reference to the mount is dropped causes a UAF. With a pathwalk held up
+in ntfs_d_hash() while the last reference to the mount goes away:
 
-When ASCONF is covered by the association's SCTP-AUTH policy,
-sctp_assoc_bh_rcv() can continue before the state machine performs its
-normal chunk-length check. sctp_inq_pop() then returns the same malformed
-chunk repeatedly and the receive softirq can lock up.
+  BUG: KASAN: slab-use-after-free in ntfs_nls_to_utf16+0x752/0x940
+  Read of size 8 at addr ff1100010453c850 by task walker/99
+  Call Trace:
+   <TASK>
+   ntfs_nls_to_utf16+0x752/0x940
+   ntfs_d_hash+0x22b/0x500
+   link_path_walk+0x11ad/0x1d30
+   path_lookupat+0x63/0xb00
+   filename_lookup+0x1f1/0x5b0
+   vfs_statx+0xd7/0x3b0
+  [...]
+  Allocated by task 95:
+   __kmalloc_cache_noprof+0x249/0x560
+   ntfs_init_fs_context+0x2db/0x5a0
+   alloc_fs_context+0x52e/0xc70
+  [...]
+  Freed by task 98:
+   kfree+0x1db/0x5b0
+   deactivate_locked_super+0x9c/0xf0
+   cleanup_mnt+0x9f/0x130
+   task_work_run+0x131/0x250
 
-A remote SCTP peer can trigger this after establishing an association on
-a kernel built with CONFIG_IP_SCTP and configured with
-net.sctp.addip_enable=1 and net.sctp.auth_enable=1. The reproducer did
-not require application credentials, a shared SCTP AUTH key, or
-net.sctp.addip_noauth_enable=1.
+The bug is currently masked by the grace period in namespace_unlock()
+for umount(2). Keep the necessary information until the filesystem
+private info is freed and free it with an rcu delay.
 
-On commit f967455fb2a5 ("seg6: reset IP6CB after IPv6 decapsulation"),
-one zero-length ASCONF caused repeated
-watchdog soft-lockup reports in a two-vCPU KVM guest. All 3 pre-trigger
-health probes succeeded, while 36 of 37 post-trigger probes failed. With
-this change, all 37 post-trigger probes succeeded and no equivalent
-soft-lockup signature appeared.
+ntfs3_free_sbi() now runs from an rcu callback and drops the upcase
+table via ntfs_put_shared(). So switch s_shared_lock over to
+spin_lock_bh(). Otherwise the callback can deadlock against a task
+holding the lock on the same cpu.
 
-Reject chunks shorter than the generic SCTP header at the shared inqueue
-parser boundary. Mark the packet for discard before either caller can
-continue processing it, while preserving the four-byte generic minimum.
-Declared-length 1 through 4 controls and kernel-generated ASCONF traffic
-remained healthy. The patched sctp_hello selftest passed for IPv4 and
-IPv6.
-
-The complete private reproducer and validation evidence are available
-directly to maintainers on request.
-
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
+Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
 Cc: stable@vger.kernel.org
-Signed-off-by: Charles Vosburgh <theminershive@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260827-sctp-zero-chunk-inqueue-v2-1-2e7669c6a6cb@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-7-7446d2d335e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/inqueue.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ntfs3/ntfs_fs.h |    1 +
+ fs/ntfs3/super.c   |   33 +++++++++++++++++++++------------
+ 2 files changed, 22 insertions(+), 12 deletions(-)
 
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -212,8 +212,10 @@ new_skb:
- 	chunk->chunk_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));
- 	skb_pull(chunk->skb, sizeof(*ch));
- 	chunk->subh.v = NULL; /* Subheader is no longer valid.  */
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -209,6 +209,7 @@ struct ntfs_index {
+ /* Ntfs file system in-core superblock data. */
+ struct ntfs_sb_info {
+ 	struct super_block *sb;
++	struct rcu_head rcu;
+ 
+ 	u32 discard_granularity;
+ 	u64 discard_granularity_mask_inv; // ~(discard_granularity_mask_inv-1)
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -194,7 +194,7 @@ void *ntfs_set_shared(void *ptr, u32 byt
+ 	void *ret = NULL;
+ 	int i, j = -1;
+ 
+-	spin_lock(&s_shared_lock);
++	spin_lock_bh(&s_shared_lock);
+ 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
+ 		if (!s_shared[i].cnt) {
+ 			j = i;
+@@ -212,7 +212,7 @@ void *ntfs_set_shared(void *ptr, u32 byt
+ 		s_shared[j].cnt = 1;
+ 		ret = ptr;
+ 	}
+-	spin_unlock(&s_shared_lock);
++	spin_unlock_bh(&s_shared_lock);
+ 
+ 	return ret;
+ }
+@@ -229,7 +229,7 @@ void *ntfs_put_shared(void *ptr)
+ 	void *ret = ptr;
+ 	int i;
+ 
+-	spin_lock(&s_shared_lock);
++	spin_lock_bh(&s_shared_lock);
+ 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
+ 		if (s_shared[i].cnt && s_shared[i].ptr == ptr) {
+ 			if (--s_shared[i].cnt)
+@@ -237,7 +237,7 @@ void *ntfs_put_shared(void *ptr)
+ 			break;
+ 		}
+ 	}
+-	spin_unlock(&s_shared_lock);
++	spin_unlock_bh(&s_shared_lock);
+ 
+ 	return ret;
+ }
+@@ -684,6 +684,8 @@ static noinline void ntfs3_put_sbi(struc
+ 
+ static void ntfs3_free_sbi(struct ntfs_sb_info *sbi)
+ {
++	if (sbi->options)
++		put_mount_options(sbi->options);
+ 	kfree(sbi->new_rec);
+ 	kvfree(ntfs_put_shared(sbi->upcase));
+ 	kvfree(sbi->def_table);
+@@ -695,6 +697,11 @@ static void ntfs3_free_sbi(struct ntfs_s
+ 	kfree(sbi);
+ }
+ 
++static void ntfs3_free_sbi_rcu(struct rcu_head *head)
++{
++	ntfs3_free_sbi(container_of(head, struct ntfs_sb_info, rcu));
++}
++
+ static void ntfs_put_super(struct super_block *sb)
+ {
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+@@ -704,11 +711,11 @@ static void ntfs_put_super(struct super_
+ 	/* Mark rw ntfs as clear, if possible. */
+ 	ntfs_set_state(sbi, NTFS_DIRTY_CLEAR);
+ 
+-	if (sbi->options) {
+-		put_mount_options(sbi->options);
+-		sbi->options = NULL;
+-	}
 -
--	if (chunk->chunk_end + sizeof(*ch) <= skb_tail_pointer(chunk->skb)) {
-+	if (unlikely(ntohs(ch->length) < sizeof(*ch))) {
-+		chunk->pdiscard = 1;
-+	} else if (chunk->chunk_end + sizeof(*ch) <=
-+		   skb_tail_pointer(chunk->skb)) {
- 		/* This is not a singleton */
- 		chunk->singleton = 0;
- 	} else if (chunk->chunk_end > skb_tail_pointer(chunk->skb)) {
++	/*
++	 * The mount options stay until the sbi is freed: ->d_hash() and
++	 * ->d_compare() of a pathwalk in rcu mode read the nls table through
++	 * them.
++	 */
+ 	ntfs3_put_sbi(sbi);
+ }
+ 
+@@ -1865,9 +1872,11 @@ static void ntfs3_kill_sb(struct super_b
+ 
+ 	kill_block_super(sb);
+ 
+-	if (sbi->options)
+-		put_mount_options(sbi->options);
+-	ntfs3_free_sbi(sbi);
++	/*
++	 * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare()
++	 * and read the upcase table and the nls table through the sbi.
++	 */
++	call_rcu(&sbi->rcu, ntfs3_free_sbi_rcu);
+ }
+ 
+ // clang-format off
 
 
