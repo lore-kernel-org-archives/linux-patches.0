@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774852;
-	b=I5BuoAFWdFir6c/l+P+vRLawUW1Igm5yXWj6JrBz3wgoUoUHHhtt6AdTrNI9PDkEUutD
-	 QetE9zgqUsAHGUS3dODR/qbukrCiiRlTmhxfZjoFGfv60bf2x/Hp5mMkKydisYaX0+K4n
-	 J4Nzhb4+HgAf6df/+9ejAxDca6lMbK4VW9GvImObZqX0dG51L66DqUh2hHxj5+Yn9ArKv
-	 J5k3dHlNOJSJw63p2cOw/XzcbRYMQc2N+gO5Ox7vHSYvsfACmBpHo4QmTXwG/HonCL3jF
-	 vqy8cTJg1M7fDUmvVdlObY5nkECg3WF6IX50tRui/NQETcX/FMwQ7/H3rAaheYgsl+A==
+	t=1792774855;
+	b=DhN1FOoRWe6UxV4gOJWPotoxmBajb7LLgAsrmcOqw44a3v0YSLZkKzmDyC166DSV+Yno
+	 zR3VrXUOR7J2dfWHv2G2Cx7MsNoUtBJMZFWH7oT2GqM0x+Z1FUUJoOQMoz2b5lZA4FAxz
+	 /0AXR7/f3Q633cylVLtWhqwzUrQxnkn18zCt8ArHYd962dOYJ+TCZRyXkjs53oT/dijQ+
+	 eXWQF8+I261g96OUOfz2m+R3K9nGAaLOuhjU5MS5ydQwKlM+AKZbyDrU1LmmzvrBOTr6C
+	 ilmX3pnLwl+qI91NQit1G4U0AqUkVhDy4+VXvvtOsYd15bLEZZBefn2G/5u97AByeQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774852;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xgui4jjq7vdcym3xtzNr1iRPXmuZrOsIVIg6WSuH5Fs=;
-	b=n72u8Amc+delmlV66/S13lB4Yu7h+TIXPHOTfBQ5DhMrY/j6j29cRuYjSECzgMCQJlPS
-	 QOlJTHlbW3COnrpQ4xVIhvHg2LfvhXDCV5vnafSWP7iwKiJaMpAECgOxD8G76Pv3oh6Ih
-	 vrOz7z6IP88Toeh5Af6CQmAPikxiWYmsstdIieQY0kb4+3s+SGoZblGhjLVw57GEJawoB
-	 yb7rHeMaDabw3nJCVO/SqTPbZhvPcY05Tpg6LfNnYOKTMrBPLnY/rFkO7TX8EAVJVZfsA
-	 hpGvd7gt+lCSn9qhld8uTgTObXmaTwvVHV46iZhSvwuqu+NoLX+Qp0X51BkMgFUJhxQ==
+	bh=asw6CN8qgNc2cLRYhO/dBOTWbKTkGVl9wp8a9L5jDvA=;
+	b=Z56heHCMLmYMA4x9MqaRSU6ym381IBj1Gcr9R0BGMxifFw1UZrJbRQaNAh0d5Fs5ShFz
+	 KAxq2TgWDzgAslsZIHk/6XQKwClSnbDLSJ+XK/DGU3YFnenBDBQGCOYubj4dFp7EuUlrm
+	 nlfJVCuI3RlBJkZ9An858inNeRUTamkEB5NcBCaLJfWQ6PhjOsFAFmthHBsSFMEjpfaLP
+	 mF4gTiM6HQIh28aDd6x1BHlglrJkdzNadXiuMiv3KKNecxi8kLgke2fBscC8OhJ7jx/dp
+	 ABgXk/SDEkgho/K22OwgMCBsU1TMghQoCsvLwCBEh+A8x1g/UFpk0L9TbACZ67IV0Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrOgP6fa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WHLE8s1E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D27F606A31A;
-	Fri, 23 Oct 2026 17:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AEF606A31B;
+	Fri, 23 Oct 2026 17:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrOgP6fa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4401F01825;
-	Fri, 23 Oct 2026 17:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WHLE8s1E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58101F01825;
+	Fri, 23 Oct 2026 17:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774852;
-	bh=Xgui4jjq7vdcym3xtzNr1iRPXmuZrOsIVIg6WSuH5Fs=;
+	s=korg; t=1792774855;
+	bh=asw6CN8qgNc2cLRYhO/dBOTWbKTkGVl9wp8a9L5jDvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GrOgP6fabrd1fTC22uGY88NeSHAvpU6CeJYnBWgThC9PntZsRENCK/j+k+cim/SQg
-	 gf9nfb2i2/5j43cEfAn2hW9Q+GXIMu5NJiEy1zTNpTb3Q1XDkk6dfMA+VxMOghk206
-	 OPM+z0WDs8kE/E0Ld1ChmFO0XyQl/Mx9PDM8X7pc=
+	b=WHLE8s1EesdIjzl3FDqyqhClMFkPXc27RoKKqJ+PKdOR0GLq0ighQrzbLA3kC2CKS
+	 VLN4UuJ5sJTL3np8QlKwojJRuBD6DNuFvJDStYyrnTBC/GMXXkfaSyt9rzyD5yBYp6
+	 mcRC3WpWQgbviHZC72sDfPXXp6XF3mWmbtV0SLXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 181/242] cifs: dont update i_size in cifs_do_truncate without a cached handle
-Date: Fri, 23 Oct 2026 18:40:23 +0200
-Message-ID: <20261023163718.068792992@linuxfoundation.org>
+	Ben Marzinski <bmarzins@redhat.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 7.2 182/242] dm cache: fix demotion stats in passthrough mode
+Date: Fri, 23 Oct 2026 18:40:24 +0200
+Message-ID: <20261023163718.092402479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,65 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit fe39cd9d48f2346605f3746e0cc19e89d5f373eb upstream.
+commit 2ccb8878c149443c6acf628b438c9c942c20abb2 upstream.
 
-If find_writable_file() returns null, cifs_file_flush will return
-0 without issuing set_file_size, and the outer 'if (!rc)' block
-will set i_size to 0 before telling the server to truncate.  If
-the cifs_open() then fails, the inode will have size 0, while
-the server file is unchanged.
+The demotion counter is incremented per incoming write bio before the
+invalidation begins, causing the demotion count to exceed the actual
+number of cached blocks when multiple bios target the same cached
+block. Additionally, the counter is incremented unconditionally
+regardless of invalidation failure.
 
-Move the netfs_resize_file() and cifs_setsize() into the 'if
-(cfile)', so they only run after a successful set_file_size.
+Reproduce steps:
 
-In the no-handle else branch, evict stale pages with
-truncate_inode_pages before the O_TRUNC open to dispose of old
-cache pages, and let the open response set the i_size.
+1. Create a cache device consisting of 512 cache entries
 
-Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
+modprobe brd rd_size=262144
+dmsetup create cmeta --table "0 8192 linear /dev/ram0 0"
+dmsetup create cdata --table "0 65536 linear /dev/ram0 8192"
+dmsetup create corig --table "0 65536 linear /dev/ram0 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 65536 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+
+2. Populate the cache, and record the number of cached blocks
+
+fio --name=populate --filename=/dev/mapper/cache --rw=randwrite --bs=4k \
+--direct=1 --ioengine=libaio --iodepth=32 --io_size=2048m
+nr_cached=$(dmsetup status cache | awk '{split($7, a, "/"); print a[1]}')
+
+3. Reload the cache into passthrough mode
+
+dmsetup suspend cache
+dmsetup reload cache --table "0 65536 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
+dmsetup resume cache
+
+4. Write to the passthrough cache with multiple jobs to trigger
+   multiple bios hitting the same cached block.
+
+fio --filename=/dev/mapper/cache --name=test --rw=write --bs=4k \
+--direct=1 --ioengine=libaio --iodepth=32 --numjobs=4
+
+5. Check if demoted matches cached block count. These numbers should
+   match but may differ due to overcounting per bio.
+
+nr_demoted=$(dmsetup status cache | awk '{print $12}')
+echo "$nr_cached, $nr_demoted"
+
+Fix by moving the demotion counter increment into invalidate_complete(),
+gated on the success flag.
+
+Reported-by: Ben Marzinski <bmarzins@redhat.com>
+Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Acked-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/md/dm-cache-target.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -1012,10 +1012,26 @@ static int cifs_do_truncate(const unsign
- 			server = tcon->ses->server;
- 			rc = server->ops->set_file_size(xid, tcon,
- 							cfile, 0, false);
--		}
--		if (!rc) {
--			netfs_resize_file(&cinode->netfs, 0, true);
--			cifs_setsize(inode, 0);
-+			if (!rc) {
-+				inode_lock(inode);
-+				filemap_invalidate_lock(inode->i_mapping);
-+				netfs_resize_file(&cinode->netfs, 0, true);
-+				cifs_setsize(inode, 0);
-+				filemap_invalidate_unlock(inode->i_mapping);
-+				inode_unlock(inode);
-+				cifs_invalidate_cache(inode, 0);
-+			}
-+		} else {
-+			/*
-+			 * No cached handle; evict stale pages so they can't
-+			 * be served after the file is later extended; let
-+			 * the server's O_TRUNC open response set the i_size
-+			 */
-+			inode_lock(inode);
-+			filemap_invalidate_lock(inode->i_mapping);
-+			truncate_inode_pages(inode->i_mapping, 0);
-+			filemap_invalidate_unlock(inode->i_mapping);
-+			inode_unlock(inode);
- 			cifs_invalidate_cache(inode, 0);
- 		}
- 	}
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1461,6 +1461,9 @@ static void invalidate_complete(struct d
+ 	struct bio_list bios;
+ 	struct cache *cache = mg->cache;
+ 
++	if (success)
++		atomic_inc(&cache->stats.demotion);
++
+ 	bio_list_init(&bios);
+ 	if (mg->cell) {
+ 		if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
+@@ -1732,7 +1735,6 @@ static int map_bio(struct cache *cache,
+ 		if (passthrough_mode(cache)) {
+ 			if (bio_data_dir(bio) == WRITE) {
+ 				bio_drop_shared_lock(cache, bio);
+-				atomic_inc(&cache->stats.demotion);
+ 				invalidate_start(cache, cblock, block, bio);
+ 				return DM_MAPIO_SUBMITTED;
+ 			} else
 
 
