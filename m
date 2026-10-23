@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773861;
-	b=IMCEmwSGjfA3Hddsjg+Xod43YCp7e/YCj3n4KW0P9MGgQf9/ft7CjPamTMYuhW67VPlL
-	 gb3LCPFL2U5MBOUgZ1RbWzjJPkCPnsRBFlChy9g+/aRbhG6xKjzXd6putFQ9WnxZZ8Pau
-	 nf6it4XOKZ2mdCKz+FcvVCTwRhuYOSA2zFnHfe/+T/oeCKpZIRY0EZVFloJT2/nPgJZn8
-	 pDnxqo9r4O+NQXhzGaQw8imlFaUP/pue6mo3olgFAaxguGvRecf5XNVlCIhaf1JBTLfwn
-	 v4LyC/lnAAe4rZLynw37lFAiADA88DccYCG98pz+kZa8KK/WIm/W+B+Era56FD9CPgg==
+	t=1792773864;
+	b=gz6A9IQkXe0JVGnYyA8Kp18dwUUuTZ8dphO/tU+X0k+ato8DQlKHr3eECSHu4HgOZKPF
+	 wvOTermIwkRDTYESZgfxp6qSGGyDBKTDE7Hvp+govg6bn8m8if4lHFaybO2lvt7y0tT7K
+	 fKr1HLnP5wcjFiVA+Eu1r4vBtqkmJ4W/ir4jYXiXGmm9qr9kvxaJgxuFoQSEMi806Ix35
+	 ZMOAmrbxXIyWtjK+o+opaPtS9zu7+UOMqW8pm/uGBuq05It/cFuvY1vwuOMJCfML5qcQi
+	 M8vmZVRN+D1KdIoTvVex0WiK4hcdT2ol7/Z0EcuGc4mBVdajWgiMxXz3WI1mqaLNrTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aTnKRytYXwYkXKzEaK6MTKyUkODj1xZ0qDbMVpVLClI=;
-	b=o6PJARASCiNByPH9c55oo4sU+/By1xKIU1UQf59Db5zB5In1ZNo0HQXzZb+n04CHcVdl
-	 P1hng8i7kNV9BlzXwh4Vs3uMxJhAliIrurTbt4Ncjga74LuRp8xadPeOtORfKSOgqYs/t
-	 11jUihqzpGUxSQ5tWsYmqF7dctB9LUoQ1ZZxugnm94HjOBx4OUBcSZho+7fI0f3LGZuv1
-	 7/Y6XHcqgPBJXL5TeJ44KDCo7x5lEoG6naG+6igBppYIALgrKcBkm2wxvAiV1ugGI/SCx
-	 ILfCGpJYyHawWMndmpAMr6+Zn2KPuXKOSsVQuf8TH1ipWtVrY6qWECJU8/QIYP2UTpQ==
+	bh=Z2Yv3rEhxRC8+t/8UF6JqTjgT5ywkOMzY+GCvSx9yEY=;
+	b=erUXk9a1Mwkld7VpMgVmBN1tNM2po+FMwiD6o+rR3cww1Z7FypLi6wOH1CweKWlWEQud
+	 oE492TcyaasGpr7X5uL9HXdksy9BDkwJBr9pxQ2RwzCTQorFg6xMHovtb0dO06+1kIWbQ
+	 pvPsHiAzu7DM9YtpnjMrbuymNvsS3MAvHf0Jf6BNsWrHeZMv9LJpqm5K2U5IB/yU77aTS
+	 o+OuwnF8hJean75tz/E5qLU02ik/ZvYQL3FpQrp0XvV3DYkYVM23QsYYjZ4JdqKCrvnT3
+	 zAdDWd8mVGM+Zb1ekW/IvAw0dn1Biij8b+VWXbfXwd50mUu8wLf5iecqJtMlkDNiowg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYeqStAr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6GQLtWi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DBF606A31B;
-	Fri, 23 Oct 2026 16:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA803606A31B;
+	Fri, 23 Oct 2026 16:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYeqStAr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103AE1F01825;
-	Fri, 23 Oct 2026 16:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6GQLtWi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3721F01825;
+	Fri, 23 Oct 2026 16:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773860;
-	bh=aTnKRytYXwYkXKzEaK6MTKyUkODj1xZ0qDbMVpVLClI=;
+	s=korg; t=1792773863;
+	bh=Z2Yv3rEhxRC8+t/8UF6JqTjgT5ywkOMzY+GCvSx9yEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LYeqStArw27Afo/Rjt+AD01kOtY/XepaVV5LX2p7ARLYng2AzVeq+FbxKnGPa7XtG
-	 WkiH/nG8wwig40MLR95kaIQilebfUyXB4aYfHCAbWm6miAVT066uzBFHCBxTPua4ks
-	 e8US0rvRpuOw0lwTZnmW4o/bFTrHkabPusNtJzcU=
+	b=j6GQLtWiCoZa5rgTfUuNrxiBkJQfRKSCzRIL8WX3Vtv+EVscjvyNeq50sh7WNeBrB
+	 /sjaTq+1YCfyx3lDCnJKvmEZrs12q8rofLkvxDslXNxbV2iPjqylyfWtK1baWQLi8L
+	 TEt2T/C7ARoKlT2RYT7Gg2p9pKAjmJxjJPZTL78Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Michael Kelley <mhkelley@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michael Reeves <michael.reeves077@gmail.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 013/193] Drivers: hv: Avoid infinite retry loop in init_vp_index()
-Date: Fri, 23 Oct 2026 18:34:50 +0200
-Message-ID: <20261023163714.517534254@linuxfoundation.org>
+Subject: [PATCH 6.18 040/193] regmap: Drop map lock during cache init and exit
+Date: Fri, 23 Oct 2026 18:35:17 +0200
+Message-ID: <20261023163715.154790954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,78 +70,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Michael Reeves <michael.reeves077@gmail.com>
 
-[ Upstream commit 32ea0a33e3a0fb7c10c601b43e1b2f6c06a3f5fd ]
+[ Upstream commit abff0a48b110fe52d43999b4cb7c793a510a6bf1 ]
 
-There is a retry loop in init_vp_index() where the CPUs from a certain
-node are stripped out if they have already been in the allocated cpumask
-or not in HK_TYPE_MANAGED_IRQ housekeeping cpumask. If there is no
-CPU left, the allocated cpumask is ignored and the process is retried
-again. However, if the HK_TYPE_MANAGED_IRQ housekeeping cpumask turns
-out not to contain any CPU in that particular node, that will become an
-infinite retry loop.  This particular problem was reported by sashiko
-[1]. This should rarely happen, but we still need to guard against this.
+On systems with CONFIG_PROVE_RAW_LOCK_NESTING enabled, Apple GPIO probe
+triggers an "Invalid wait context" lockdep warning.
 
-Fix this infinite loop problem by also skipping NUMA node that has no
-housekeeping CPU in the inner while loop of init_vp_index(). Also update
-the early abort check to check for the absence of online housekeeping
-CPUs instead of just the emptiness of the cpumask. As the outer for
-loop will only be reached if the housekeeping cpumask has at least one
-online CPU, a NUMA node with housekeeping CPUs will eventually be found.
+The driver uses a regmap with a raw spinlock and REGCACHE_FLAT. During
+regcache_init(), regcache_flat_init() allocates memory while holding the
+raw spinlock. The memory allocator can acquire a non-raw spinlock, which
+causes an invalid raw-to-non-raw lock nesting error. The abbreviated call
+chain is:
 
-Link: https://sashiko.dev/#/message/20260422030903.E1BFCC2BCB0%40smtp.kernel.org [1]
-Fixes: 6640b5df1a38 ("Drivers: hv: vmbus: Don't assign VMbus channel interrupts to isolated CPUs")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Michael Kelley <mhkelley@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+  apple_gpio_pinctrl_probe
+    regcache_init
+      regcache_flat_init
+        __kmalloc_noprof
+          __pcs_replace_empty_main
+            refill_objects
+              _raw_spin_lock_irqsave
+
+Cache allocation occurs before the regmap is published, cache destruction
+occurs after users have stopped accessing it, and regmap_reinit_cache()
+requires callers to prevent concurrent access. Remove the outer map lock
+from cache initialization and destruction. Keep it for cache population
+and normal register access.
+
+The Maple cache still uses its internal spinlock during teardown. That
+lock can also be acquired from hard IRQ context during register access.
+Add Maple-state irqsave helpers and use them during teardown to preserve
+the lock's IRQ-safe lockdep state.
+
+Fixes: fd4ebc07b4df ("regmap: Hold the regmap lock when allocating and freeing the cache")
+Suggested-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Liam R. Howlett <liam@infradead.org>
+Signed-off-by: Michael Reeves <michael.reeves077@gmail.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20261006-regcache-lifecycle-submit-v3-2-37bdd82fd47c@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel_mgmt.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/base/regmap/regcache-maple.c | 9 +++++++--
+ drivers/base/regmap/regcache.c       | 6 ------
+ include/linux/maple_tree.h           | 4 ++++
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-index d5348195e4fb0..5f013d4582d76 100644
---- a/drivers/hv/channel_mgmt.c
-+++ b/drivers/hv/channel_mgmt.c
-@@ -744,13 +744,14 @@ static void init_vp_index(struct vmbus_channel *channel)
- 	u32 i, ncpu = num_online_cpus();
- 	cpumask_var_t available_mask;
- 	struct cpumask *allocated_mask;
-+	const struct cpumask *node_mask;
- 	const struct cpumask *hk_mask = housekeeping_cpumask(HK_TYPE_MANAGED_IRQ);
- 	u32 target_cpu;
- 	int numa_node;
+diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
+index 9cf0384ce7b95..38a648efa6069 100644
+--- a/drivers/base/regmap/regcache-maple.c
++++ b/drivers/base/regmap/regcache-maple.c
+@@ -295,16 +295,21 @@ static int regcache_maple_exit(struct regmap *map)
+ 	struct maple_tree *mt = map->cache;
+ 	MA_STATE(mas, mt, 0, UINT_MAX);
+ 	unsigned int *entry;
++	unsigned long flags;
  
- 	if (!perf_chn ||
- 	    !alloc_cpumask_var(&available_mask, GFP_KERNEL) ||
--	    cpumask_empty(hk_mask)) {
-+	    !cpumask_intersects(hk_mask, cpu_online_mask)) {
- 		/*
- 		 * If the channel is not a performance critical
- 		 * channel, bind it to VMBUS_CONNECT_CPU.
-@@ -772,14 +773,19 @@ static void init_vp_index(struct vmbus_channel *channel)
- 				next_numa_node_id = 0;
- 				continue;
- 			}
--			if (cpumask_empty(cpumask_of_node(numa_node)))
-+			/*
-+			 * Try next NUMA node if current NUMA node has no CPU
-+			 * or doesn't contain any housekeeping CPU.
-+			 */
-+			node_mask = cpumask_of_node(numa_node);
-+			if (!cpumask_intersects(node_mask, hk_mask))
- 				continue;
- 			break;
- 		}
- 		allocated_mask = &hv_context.hv_numa_map[numa_node];
+ 	/* if we've already been called then just return */
+ 	if (!mt)
+ 		return 0;
  
- retry:
--		cpumask_xor(available_mask, allocated_mask, cpumask_of_node(numa_node));
-+		cpumask_xor(available_mask, allocated_mask, node_mask);
- 		cpumask_and(available_mask, available_mask, hk_mask);
+-	mas_lock(&mas);
++	/*
++	 * Register access may take the Maple lock from hard IRQ context, so
++	 * preserve its IRQ-safe lockdep state during teardown.
++	 */
++	mas_lock_irqsave(&mas, flags);
+ 	mas_for_each(&mas, entry, UINT_MAX)
+ 		kfree(entry);
+ 	__mt_destroy(mt);
+-	mas_unlock(&mas);
++	mas_unlock_irqrestore(&mas, flags);
  
- 		if (cpumask_empty(available_mask)) {
+ 	kfree(mt);
+ 	map->cache = NULL;
+diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
+index e3f53d03340d7..57757adad1f56 100644
+--- a/drivers/base/regmap/regcache.c
++++ b/drivers/base/regmap/regcache.c
+@@ -215,9 +215,7 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
+ 	if (map->cache_ops->init) {
+ 		dev_dbg(map->dev, "Initializing %s cache\n",
+ 			map->cache_ops->name);
+-		map->lock(map->lock_arg);
+ 		ret = map->cache_ops->init(map);
+-		map->unlock(map->lock_arg);
+ 		if (ret)
+ 			goto err_free;
+ 	}
+@@ -235,9 +233,7 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
+ err_exit:
+ 	if (map->cache_ops->exit) {
+ 		dev_dbg(map->dev, "Destroying %s cache\n", map->cache_ops->name);
+-		map->lock(map->lock_arg);
+ 		map->cache_ops->exit(map);
+-		map->unlock(map->lock_arg);
+ 	}
+ err_free:
+ 	kfree(map->reg_defaults);
+@@ -261,9 +257,7 @@ void regcache_exit(struct regmap *map)
+ 	if (map->cache_ops->exit) {
+ 		dev_dbg(map->dev, "Destroying %s cache\n",
+ 			map->cache_ops->name);
+-		map->lock(map->lock_arg);
+ 		map->cache_ops->exit(map);
+-		map->unlock(map->lock_arg);
+ 	}
+ }
+ 
+diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
+index 2ba53c0654678..983a57400563b 100644
+--- a/include/linux/maple_tree.h
++++ b/include/linux/maple_tree.h
+@@ -470,9 +470,13 @@ struct ma_wr_state {
+ };
+ 
+ #define mas_lock(mas)           spin_lock(&((mas)->tree->ma_lock))
++#define mas_lock_irqsave(mas, flags) \
++		spin_lock_irqsave(&((mas)->tree->ma_lock), flags)
+ #define mas_lock_nested(mas, subclass) \
+ 		spin_lock_nested(&((mas)->tree->ma_lock), subclass)
+ #define mas_unlock(mas)         spin_unlock(&((mas)->tree->ma_lock))
++#define mas_unlock_irqrestore(mas, flags) \
++		spin_unlock_irqrestore(&((mas)->tree->ma_lock), flags)
+ 
+ /*
+  * Special values for ma_state.node.
 -- 
 2.53.0
 
