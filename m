@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774512;
-	b=qIzJ+dYkXMEdpBmvJpXW5oRkzWGeSu9Q4SbkTftsSPH1k5M4UwPMS0tSSSxq5H2bw7bq
-	 siYHxjHvxnJMqQfkwKNTTrcnYONMDysPI27E3YGq4yKTeddGyLBp9BiyylpJWlukEuCJA
-	 /82Ifdyvm5Js8WpuoS/ydOOc1NXzF+cmY72NdZY6OTA0nbvKdHCW5dkYIcFCZpyXN2ZJB
-	 OYMl4Vi6ysnxccgLgrfwX3xQ3avstskwQZhqC4MtwPAvmIE0/hKfqdLF8RTX6qVP2Gbkb
-	 DI+TIk5s5bG5g+wkNpxVvoRN4lOhAN/7v+R+ewpw3HRpqmOucwSP0BoDFn6CCNjgamQ==
+	t=1792774515;
+	b=KGpfgwlx9etscuMeD5SvNe02KYVe5elOYg3qcq60sp29kvvrntRNcGUXCJRKrNwMAipa
+	 qYOVE4loWSRnaf7NYHfCUv0yYoV4dSAwzaURTbxKv8aUhb7eNxfggIGybI5AK0tCK6LAD
+	 6P1pew+PHDSMGIKUUAV0a9A9vHqews+tUsCw1e6DG9ZQYJJwLGuwk2Lq+BcPMgVgLiUiY
+	 pJK1ZYXBvVsZmSZVcS36ppvCp87sIPIa9EiIUi7GDe/exH7lfxm7vvK/IqhryiBURVJtN
+	 iGwCMMbDDjJsZx31aSOF7G+prTw1zO0iibcQopCk/Itf8z3e4/sQQWyxLnQapPhXZkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ODUn0Sdt8ZlKzRTfLz4SIBt7dG9lOxAASCZdUD6DD7U=;
-	b=rXNJ1SWkzB/jfiNVJPrvOc4L64FwaR/Ww8HUwC5LgXo72Ay2WcJ0c2F6/PfnPTRkUSyh
-	 4zDmYyZ38PbfLfZDqw4YtRptEPnFhqwWzhECSPyaer+8sNMMG8Mj5Ib4+cSSBbyLRpXkR
-	 E9LKNlMkwBnTFwUEvnAqaGTOxls8cA2G/BP7CNVOkzg07+Seiv2wVxPYWnxWYO3qI6SNL
-	 YdpycKeprLyVkVclGLKVXBZiSJ5uktRmbOE6lA2zQDMQSyO8Wct3dBohg8oJckKvWhQwd
-	 l5OJaswQunrxnPguBBATd2/CpytXpOqPIw/gi12OpKkf0AOzYyT0wjydv6kWVpcYe5A==
+	bh=baeDLGoAzf0vg2gFAitpEjCeslbaBgog/I60NAqcajE=;
+	b=RzOlklUolBppl4onBfEOzjMMAwWfl9Oqcp8gd1kB447U1G+YNgfOACzQs/xZ054kpXj1
+	 EXHp3OLR/oHxGnNV1AQF5uMK5og9AEpMCDrkxS3+eS4tGEdSlmOS4jyiugBMPVn+i09q5
+	 wtA31JFve4BTr+PNpC+B1dBYwT+kQN8/mDRUEAo+C9cIxqLQocl8kS1oONf6IjUVzoyJv
+	 XFxvF5ItTVEhUUO9+A2CpNt9qqMhhC9dKGBuR8kUamUjkYh/DpbLcWeTPpWZQK1Xzr5Mi
+	 UPWP5/c/cCoK5wlvvmRfpq6LxoUqnz7KLbL62MUeFHOVyJzVtKjgdygdI/gv5nm3D2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTN2VtOV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CUfcYVAu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF6C606A31A;
-	Fri, 23 Oct 2026 16:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6956606A31D;
+	Fri, 23 Oct 2026 16:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTN2VtOV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3751F01825;
-	Fri, 23 Oct 2026 16:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CUfcYVAu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A98B1F01825;
+	Fri, 23 Oct 2026 16:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774511;
-	bh=ODUn0Sdt8ZlKzRTfLz4SIBt7dG9lOxAASCZdUD6DD7U=;
+	s=korg; t=1792774514;
+	bh=baeDLGoAzf0vg2gFAitpEjCeslbaBgog/I60NAqcajE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qTN2VtOVOHweLpp4z1aIri60E3Qy/YWsWeIms4w8t8K7QN/Q6gXNqEjPsBoJN51ZI
-	 Slkr/n5U2a4MkIMUuJ9HLChoOQ2Dw95fg5Gw51hrmi+kCG5s9lmOTdFg9FJLRUqlwe
-	 kIS8G7/TSTWFXpOq39sfOJpp1j3gcVNQkH5ib3Mw=
+	b=CUfcYVAuJYmzkkWNTWnY3GaMSoVwuU2kaE2VwtO6ao2d0iHEd2cD43Sf2KgxSNGHE
+	 y4ng1pVv8gP9ekJPdKgu6vNPfreItvMqt7jeixVs3rbZmquGxB475+7MtsFtOWpMV0
+	 s+pE5N2PW5AVvJY6gJBf4wGLgsbioMwtbqib9RNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 065/242] fs: add umh argument to struct kernel_clone_args
-Date: Fri, 23 Oct 2026 18:38:27 +0200
-Message-ID: <20261023163715.321389519@linuxfoundation.org>
+Subject: [PATCH 7.2 066/242] fs: pass flags to copy_fs()
+Date: Fri, 23 Oct 2026 18:38:28 +0200
+Message-ID: <20261023163715.345530918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,113 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit ed4b1672529018b2013c62235c4bf1ab0ae0e3d4 ]
+[ Upstream commit 9cd0df397a119d6b95ad68e2c82b69b4d620694e ]
 
-Add a umh field to struct kernel_clone_args. When set, copy_fs() copies
-from pid 1's fs_struct instead of the kthread's fs_struct. This ensures
-usermodehelper threads always get init's filesystem state regardless of
-their parent's (kthreadd's) fs.
+Turn the umh boolean into a flags argument. Idle threads need their own
+case in copy_fs() as well and that's nicer than a second boolean.
 
-Usermodehelper threads are not allowed to create mount namespaces
-(CLONE_NEWNS), share filesystem state (CLONE_FS), or be started from
-a non-initial mount namespace. No usermodehelper currently does this so
-we don't need to worry about this restriction.
+No functional changes.
 
-Set .umh = 1 in user_mode_thread(). At this stage pid 1's fs points to
-rootfs which is the same as kthreadd's fs, so this is functionally
-equivalent.
-
-Link: https://patch.msgid.link/20260601-work-kthread-nullfs-v4-20-77ee053060e0@kernel.org
+Link: https://patch.msgid.link/20261013-work-fs-idle_fs-v1-1-2063d1bcb5aa@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Stable-dep-of: d2bdb9b61b42 ("fs: let idle threads share init_fs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/task.h |  1 +
- kernel/fork.c              | 25 +++++++++++++++++++++----
- kernel/umh.c               |  6 ++----
- 3 files changed, 24 insertions(+), 8 deletions(-)
+ kernel/fork.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
-index 41ed884cffc96..e0c1ca8c6a188 100644
---- a/include/linux/sched/task.h
-+++ b/include/linux/sched/task.h
-@@ -31,6 +31,7 @@ struct kernel_clone_args {
- 	u32 io_thread:1;
- 	u32 user_worker:1;
- 	u32 no_files:1;
-+	u32 umh:1;
- 	unsigned long stack;
- 	unsigned long stack_size;
- 	unsigned long tls;
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 4441d415480c6..2f736fa44798b 100644
+index 2f736fa44798b..92edfd918b74b 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
-@@ -1618,11 +1618,27 @@ static int copy_exec_state(u64 clone_flags, struct task_struct *tsk)
+@@ -1618,7 +1618,12 @@ static int copy_exec_state(u64 clone_flags, struct task_struct *tsk)
  	return task_exec_state_copy(tsk);
  }
  
--static int copy_fs(u64 clone_flags, struct task_struct *tsk)
-+static int copy_fs(u64 clone_flags, struct task_struct *tsk, bool umh)
- {
--	struct fs_struct *fs = current->fs;
-+	struct fs_struct *fs;
+-static int copy_fs(u64 clone_flags, struct task_struct *tsk, bool umh)
++enum copy_fs_flags_t {
++	COPY_FS_UMH	= (1 << 0),
++};
 +
-+	/*
-+	 * Usermodehelper may copy userspace_init_fs filesystem state but
-+	 * they don't get to create mount namespaces, share the
-+	 * filesystem state, or be started from a non-initial mount
-+	 * namespace.
-+	 */
-+	if (umh) {
-+		if (clone_flags & (CLONE_NEWNS | CLONE_FS))
-+			return -EINVAL;
-+		if (current->nsproxy->mnt_ns != &init_mnt_ns)
-+			return -EINVAL;
-+		fs = userspace_init_fs;
-+	} else {
-+		fs = current->fs;
-+		VFS_WARN_ON_ONCE(current->fs != current->real_fs);
-+	}
++static int copy_fs(u64 clone_flags, struct task_struct *tsk,
++		   enum copy_fs_flags_t flags)
+ {
+ 	struct fs_struct *fs;
  
--	VFS_WARN_ON_ONCE(current->fs != current->real_fs);
- 	if (clone_flags & CLONE_FS) {
- 		/* tsk->fs is already what we want */
- 		read_seqlock_excl(&fs->seq);
-@@ -2282,7 +2298,7 @@ __latent_entropy struct task_struct *copy_process(
+@@ -1628,7 +1633,7 @@ static int copy_fs(u64 clone_flags, struct task_struct *tsk, bool umh)
+ 	 * filesystem state, or be started from a non-initial mount
+ 	 * namespace.
+ 	 */
+-	if (umh) {
++	if (flags & COPY_FS_UMH) {
+ 		if (clone_flags & (CLONE_NEWNS | CLONE_FS))
+ 			return -EINVAL;
+ 		if (current->nsproxy->mnt_ns != &init_mnt_ns)
+@@ -2298,7 +2303,7 @@ __latent_entropy struct task_struct *copy_process(
  	retval = copy_files(clone_flags, p, args->no_files);
  	if (retval)
  		goto bad_fork_cleanup_semundo;
--	retval = copy_fs(clone_flags, p);
-+	retval = copy_fs(clone_flags, p, args->umh);
+-	retval = copy_fs(clone_flags, p, args->umh);
++	retval = copy_fs(clone_flags, p, args->umh ? COPY_FS_UMH : 0);
  	if (retval)
  		goto bad_fork_cleanup_files;
  	retval = copy_sighand(clone_flags, p);
-@@ -2825,6 +2841,7 @@ pid_t user_mode_thread(int (*fn)(void *), void *arg, unsigned long flags)
- 		.exit_signal	= (flags & CSIGNAL),
- 		.fn		= fn,
- 		.fn_arg		= arg,
-+		.umh		= 1,
- 	};
- 
- 	return kernel_clone(&args);
-diff --git a/kernel/umh.c b/kernel/umh.c
-index 48117c569e1aa..6e2c7bb315c68 100644
---- a/kernel/umh.c
-+++ b/kernel/umh.c
-@@ -71,10 +71,8 @@ static int call_usermodehelper_exec_async(void *data)
- 	spin_unlock_irq(&current->sighand->siglock);
- 
- 	/*
--	 * Initial kernel threads share ther FS with init, in order to
--	 * get the init root directory. But we've now created a new
--	 * thread that is going to execve a user process and has its own
--	 * 'struct fs_struct'. Reset umask to the default.
-+	 * Usermodehelper threads get a copy of userspace init's
-+	 * fs_struct. Reset umask to the default.
- 	 */
- 	current->fs->umask = 0022;
- 
 -- 
 2.53.0
 
