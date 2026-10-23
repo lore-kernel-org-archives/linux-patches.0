@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774131;
-	b=oLB1W54C9tsw4c36kaOBns1f2cZjw8PffPxjnmZkq3PnEQlLNIyv5T/KVea+TCk3DyT1
-	 hF0Q3m55FL3WPhqwqRb7WwC7jA1671gTmUX1xDbWIRI/36RNmRLTwCeZ6aKXHRWV5/Iv7
-	 v26XqWSJfPj3Pfbpifby1ZadZqLP/4Lx7aO5x6GcParU/Opi/jTL0xK1TzBddFqFcJJn2
-	 Yupo2rCfsr5qF7W8DbGKiLqet0YmT1QRNVn1C/9H+h4V/DIGZHE+WKmc/IZP/u2z50Trh
-	 MjFcVJTZv3WpI8hDU7smdB9K28fqT2f+aG3sSwH9B6sDBB+IUnXwBjEUy//DZFPh/Ig==
+	t=1792774134;
+	b=PWSnIK10/F9hk0UlHxNLcO6mfFU1+fnVnwAYrIej74wOudCJl3U/w/UXn+APJfLqOKAn
+	 VVyVCB0sLwJMV1cQ7/5iChSgXTlvt29LIXUsRRCWv7yveNfEjt2Ib0SROU0o7AL7nW8eV
+	 LBeDmjabjGEBxRkCgKOTWT9+M5ZoLB5NngS/zxQrgMffXf4hcDbowaIASs0yjmach3Ck4
+	 7S6gDYfMiKDB0cNJ96OsZM/6r3Qa4N5l+yHyKOv/CAqz40yql/V2HZ6YSYgieF0T2ERsh
+	 Z9ia6cUpJelYSnoo5WMQN/EfUNjHv33fg55r7LyHp5Jdtc0HLlsb30mBv2pJ3CulscQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774131;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774134;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dwfBUxH7xtpTWz6nVJ18i35a9w4i43k+U5hhBHhitgg=;
-	b=HNsMtL2Ct7hd2F7NwuWI0tLhPgAbKHLhT5NtSkpucPJODl2hb8qCx7T76Nl1dUP9mtdx
-	 0/4qbmfFh3rPyWTvRLYr2SLj/pw4sL5rIN08TSiEeuTQ0lOO84ND/ODgJgUfz6t+D0Bid
-	 f4i3X6E9aH/rwaaGGu+oqW4BK643Z9lLRcsziHqsLzCWS06w1GeQ/MOWCm341R7KaOj7Y
-	 GzSqh33143iS48wo8uMGCKdB/EPnTgIaZuwohKnVkWXiFiNIn6d3G7c80lWUPFyMXf5nW
-	 KO9YYja80YSXACp4v3TlbN1JGbmWl3Fv9/KLsYdAUkoT8SlMS0ThZbUY8erYX2eNg5g==
+	bh=hOKsKwXIJRu8nNnIv9KmSsh8tO1KGw01LvghaVqfO1I=;
+	b=CxpSlRU93OQlr7lxEzFyUUqW0pG3xm9JBJ2VBw8v6zkyKpp6Zz9b5FMJe1V/h5XX5HA8
+	 U/OgTot3ZQkZufB8XONbLNOdwMfgZzT5csuh2ModtGFaT2F1iStyiabDQIEvUJTjA0ZLn
+	 /JaVAdh9gs400pHJH8zBrlQcdj2ptGbOdfbFOSSAI6QvyCA48O1qYV1TEGLVmEIP3jybK
+	 SaHdDnKFRfOjIVi6kC/tFCVMYyCdXGzflVWXDga4lm5N7HHqPlLq93g6hfRfkSVJY2Pnu
+	 ZZl56EwcCNWVKsd1E52ED69/aqEErVci3YAbBU9kxwn2/vuV00826bugnetYvXzkGsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzwQQiAk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGnEFY7L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C47606A32A;
-	Fri, 23 Oct 2026 16:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A2A606A31B;
+	Fri, 23 Oct 2026 16:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzwQQiAk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227881F031E1;
-	Fri, 23 Oct 2026 16:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGnEFY7L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E2E1F01828;
+	Fri, 23 Oct 2026 16:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774130;
-	bh=dwfBUxH7xtpTWz6nVJ18i35a9w4i43k+U5hhBHhitgg=;
+	s=korg; t=1792774133;
+	bh=hOKsKwXIJRu8nNnIv9KmSsh8tO1KGw01LvghaVqfO1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dzwQQiAkoK7Jz73ZHZANqC8isymx+xvNIfoVDsASrf0phfBZhUvMQQnE4GJunmimS
-	 wEWWOK/FQS2KV1LnOibPoCeGjeCHjroXCD+aiM1927fMQLyWMejBeEOoipnjtKvjIS
-	 mdbSCeV4v/Zh3RyPd4ijaWj8395ADt3/FVKzYRqA=
+	b=FGnEFY7LyEKY+E0hw+HjV4IHY8yzN5FSerBu8iZah6aEnTtd8s+WNBHp/usvOT8lV
+	 OAm1wTGmCm8fzEPYBamh/+T4DIcOpLu+R9FBVnELOgEzeC1d705kszZcNvSQ3hcvfS
+	 62z1TJvVqRdFXNIroDIK23cqBOaRGAC+7FMxlcII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Serge Hallyn <sergeh@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Hans Holmberg <hans.holmberg@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 130/193] xfs: fix capability check in xfs
-Date: Fri, 23 Oct 2026 18:36:47 +0200
-Message-ID: <20261023163717.283371773@linuxfoundation.org>
+Subject: [PATCH 6.18 131/193] xfs: fix zoned write iomap flags assignments
+Date: Fri, 23 Oct 2026 18:36:48 +0200
+Message-ID: <20261023163717.307039438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -71,80 +71,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Maiolino <cem@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-commit e2f62a9744ebad3bcb6347a648e615026e9efeff upstream.
+commit 4bc67fc800edcaae8a657e4d2fba12e64e856b9f upstream.
 
-An user reported a bug where he managed to evade group's quota
-by changing a file's gid to a different group id the same user
-belonged to, even though quotas were enforced on both gids and the
-file's size was big enough to exceed the quota's hardlimit.
+Don't overwrite IOMAP_F_DIRTY with IOMAP_F_ANON_WRITE, but ensure both
+flags are set instead.
 
-Commit eba0549bc7d1 replaced a capable() call by a
-has_capability_noaudit() to prevent unnecessary selinux audit messages.
-Turns out that both calls have slightly different semantics even though
-their documentation seems similar. Where in a nutshell:
+Note that in practice this is harmless as all zoned writes force a metadata
+transaction anyway, but incorrectly assigned flags are still a landmine
+that will cause problems at some point.
 
-capable() - Tests the task's effective credentials
-has_ns_capability_noaudit() - Tests the task's real credentials
-
-This most of the time has no practical difference but in some cases like
-changing attrs (specifically group id in this case) through a NFS client
-this will allow the quota code to use XFS_QMOPT_FORCE_RES, effectively
-bypassing quota accounting checks.
-
-Using instead ns_capable_noaudit() should fix this issue and prevent
-selinux audit messages.
-
-This also fix the remaining calls to has_capability_noaudit()
-
-Fixes: eba0549bc7d1 ("xfs: don't generate selinux audit messages for capability testing")
-Cc: stable@vger.kernel.org # v5.18
-Reported-by: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Signed-off-by: Carlos Maiolino <cmaiolino@redhat.com>
+Fixes: 058dd70c65ab ("xfs: implement buffered writes to zoned RT devices")
+Fixes: 2e2383405824 ("xfs: implement direct writes to zoned RT devices")
+Cc: stable@vger.kernel.org # v6.15
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Andrey Albershteyn <aalbersh@kernel.org>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Serge Hallyn <sergeh@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hans Holmberg <hans.holmberg@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_fsmap.c |    2 +-
- fs/xfs/xfs_ioctl.c |    2 +-
- fs/xfs/xfs_iops.c  |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_aops.c  |    3 +--
+ fs/xfs/xfs_iomap.c |    3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/xfs_fsmap.c
-+++ b/fs/xfs/xfs_fsmap.c
-@@ -1175,7 +1175,7 @@ xfs_getfsmap(
- 		return -EINVAL;
+--- a/fs/xfs/xfs_aops.c
++++ b/fs/xfs/xfs_aops.c
+@@ -616,11 +616,10 @@ xfs_zoned_map_blocks(
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
  
- 	use_rmap = xfs_has_rmapbt(mp) &&
--		   has_capability_noaudit(current, CAP_SYS_ADMIN);
-+		   ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN);
- 	head->fmh_entries = 0;
+ 	wpc->iomap.type = IOMAP_MAPPED;
+-	wpc->iomap.flags = IOMAP_F_DIRTY;
+ 	wpc->iomap.bdev = mp->m_rtdev_targp->bt_bdev;
+ 	wpc->iomap.offset = offset;
+ 	wpc->iomap.length = XFS_FSB_TO_B(mp, count_fsb);
+-	wpc->iomap.flags = IOMAP_F_ANON_WRITE;
++	wpc->iomap.flags = IOMAP_F_ANON_WRITE | IOMAP_F_DIRTY;
  
- 	/* Set up our device handlers. */
---- a/fs/xfs/xfs_ioctl.c
-+++ b/fs/xfs/xfs_ioctl.c
-@@ -619,7 +619,7 @@ xfs_ioctl_setattr_get_trans(
- 		goto out_error;
- 
- 	error = xfs_trans_alloc_ichange(ip, NULL, NULL, pdqp,
--			has_capability_noaudit(current, CAP_FOWNER), &tp);
-+			ns_capable_noaudit(&init_user_ns, CAP_FOWNER), &tp);
- 	if (error)
- 		goto out_error;
- 
---- a/fs/xfs/xfs_iops.c
-+++ b/fs/xfs/xfs_iops.c
-@@ -835,7 +835,7 @@ xfs_setattr_nonsize(
+ 	trace_xfs_zoned_map_blocks(ip, offset, wpc->iomap.length);
+ 	return 0;
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -1078,11 +1078,10 @@ xfs_zoned_direct_write_iomap_begin(
  	}
  
- 	error = xfs_trans_alloc_ichange(ip, udqp, gdqp, NULL,
--			has_capability_noaudit(current, CAP_FOWNER), &tp);
-+			ns_capable_noaudit(&init_user_ns, CAP_FOWNER), &tp);
- 	if (error)
- 		goto out_dqrele;
+ 	iomap->type = IOMAP_MAPPED;
+-	iomap->flags = IOMAP_F_DIRTY;
+ 	iomap->bdev = ip->i_mount->m_rtdev_targp->bt_bdev;
+ 	iomap->offset = offset;
+ 	iomap->length = length;
+-	iomap->flags = IOMAP_F_ANON_WRITE;
++	iomap->flags = IOMAP_F_ANON_WRITE | IOMAP_F_DIRTY;
+ 	return 0;
+ }
  
 
 
