@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774425;
-	b=k95WpH5yMNKFpr0JGMmcHSUAunwIuyJ9daPcXboPRZRR+hmns2rIpTCo3EDXMHa/fsRU
-	 Kr/PwC18xNMZcK6OTduIlFVa0WOslHbA3ZBeuK3sAtE99TndceUzPq53dO9LNUqW+NvcK
-	 vf2iNLMj13NyJRR+S+J6m7jUpNlfGFHeuwI1J4ch/dl89hY3JyCV7tfjX1nnaJII+vlwo
-	 rH6bq2h2bXP0YKyehTO44jjU/v+brXZu/fCjMw4Mrj3p2GqGJy1hagO6ckWAI+wlBSLT2
-	 JXqm6K0qrL4cteVr3i1RVHUYTmZ7EKt37qyd9g5hcOOA/5PBj+iCmbFBD6h3l15PNZA==
+	t=1792774428;
+	b=ldJftN3Akzvz06ELBhXuIbuoGGIpoK4HT9ANXNxlEWZcDXFvD6R4OfAKP2kpXVDMEazw
+	 2SI24YeUAbtY5H7dAwn0tBo3G/xd1VktwyDW9V+gr7CLloOYa7r0U+7OXHIS5pKTUhRl8
+	 WRs06+uDXWwi7n6bDONsjAZizfqjFh8YfQsVQ2J8v79mTerXOHBlgXMx6rr0F34hsacUf
+	 ZQ85do1ri3N5ZUiG3wOevPU1PTBmJD2T6S53KiJuenW4JBzi4IbOij+ixiDQpnHKdDnak
+	 Xh9RHQ2MmLvLAywRVmV2q0Fz40gIoCS/52TpprFzodALyErGVmMJNI8NW00M2l4PNjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bctp47XswutqmJaBN7Zay7BRnIythHIixkkKY6wb6tM=;
-	b=H0gWd5JZW389nz9DH30WiK0jBSCHEdjIPtOEvEjMI9wo/7rWry+THFVCK2YIOVW/lq8h
-	 bnadd9EUovKTXCkBNfWc0sbGdMHv/R32aaMks8iQkx6JTmMF2rZK43JYV2/HvKTew8wfK
-	 VAw6lvM2wuAMBFkY+U/jQCvI1Md1dxwh2L3sSJ9mEjfjZsnNZEan8v9RbAY5OpMPmd1M3
-	 vYoIGdbCKS2eLx++1AyHX3bmzT6mkBYgz6UYrzM4LR/5QtWzgLwpUrdTjHlfCbPxDFXVb
-	 ctreQZ0yuew8Ed/B6IWbf5qoJwjpcnTfELhdxZ+YsgXBJAjcpVrUBqeHHtZPcnjiUCQ==
+	bh=rl24X0vo622MkesUcU/PWFPtDAFUwUyBhnlbsePVSSM=;
+	b=AcRJ5jC3LgbUjfDROROjfgl8Bo3+TpDW5u5ecGd+6RAXVj4iPBdmuvudcxU9PzzsDtR2
+	 QTqNxCbi2xcVeCTFdogLaKa4G57x/kgusO+N9bv+8Ha4erCQOMPHH/HHW1y74Y4IkGjxE
+	 O2wNLtUyv1UNqGevPkASY/KZscWnAKhxbRpztEWyq8eiLYiz7M4zzhD2JO3rcejxJ0nbN
+	 lyWtPXXlQ6kE9VmTB/l/qxmqVeRn98DjNscGqEK9ao7tadkCT3xli+IWmEE072vXSBmeR
+	 3rFRtDtQD+WPESo/Ahi5ihBtl1GYoaiHM50EgG3EXnpyIVcsEHN2E/nuAwR7BWoJooA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGmj+CE6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weu18f6s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD4E606A31B;
-	Fri, 23 Oct 2026 16:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7493C606A31A;
+	Fri, 23 Oct 2026 16:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGmj+CE6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A6F1F01825;
-	Fri, 23 Oct 2026 16:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weu18f6s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C379D1F01825;
+	Fri, 23 Oct 2026 16:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774425;
-	bh=Bctp47XswutqmJaBN7Zay7BRnIythHIixkkKY6wb6tM=;
+	s=korg; t=1792774428;
+	bh=rl24X0vo622MkesUcU/PWFPtDAFUwUyBhnlbsePVSSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGmj+CE6ol/u9zA5b+pML9LeL3N0b/b3+WZzhZ7d8TWP1Y76szDoqF9xuJqlFTYKg
-	 TbugnY9642Cc9j0p1SV/hoxjyN32D9TuLgp75jgqK2yky0/xh6D4My+YwE16oCH8hq
-	 C8use5jZSUAcZlBJ7NljrVG8ew+HRzLw9llFtpwE=
+	b=weu18f6ssEBYnUz/I0b1oIkYNT9N+C8DZSp9TJCcA441qZtDYeP4hE9+XB6XihDsZ
+	 BGDR6K0fA85abCY5kqsxg6FdersfC5iYdHIfojc9Jou3mPizlAUUbJe+rd5ojy0vI0
+	 5DCg/Wg5SLYpNjzcokizag5mMkiHFkArLe79BFCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	HyeongJun An <sammiee5311@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 035/242] ASoC: pcm3168a: Fix the DAC zero flag polarity bit
-Date: Fri, 23 Oct 2026 18:37:57 +0200
-Message-ID: <20261023163714.611459291@linuxfoundation.org>
+Subject: [PATCH 7.2 036/242] ASoC: max98371: Fix the Speaker DHT Min Volume bits
+Date: Fri, 23 Oct 2026 18:37:58 +0200
+Message-ID: <20261023163714.633766309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,44 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit b26edc925c1cfa0184cd270ed81d4833db045ce0 ]
+[ Upstream commit f7934340c56a84fc1b246ebf6b2e806d775f3b54 ]
 
-The DAC Zero Flag Polarity enum uses PCM3168A_DAC_ATSPDA_SHIFT, which
-is bit 6 of register 70. That bit is ATSPDA, the attenuation speed,
-which the DAC Volume Rate Multiplier enum already owns. The datasheet
-puts ZREV, the zero flag polarity, at bit 0. The header defines
-PCM3168A_DAC_ZREV_SHIFT for it, but nothing uses it.
+Register 0x31 holds two 4-bit fields. The datasheet puts SPK_GAIN_MIN
+at bits 7:4 and DHT_VROT_PNT at bits 3:0. The Speaker DHT Min Volume
+and Speaker DHT Rotation Volume controls both use bits 3:0.
 
-So changing the zero flag polarity changes the attenuation speed, and
-ZREV cannot be set.
+So setting the minimum speaker gain changes the DHT rotation point, and
+SPK_GAIN_MIN cannot be set.
 
-Use PCM3168A_DAC_ZREV_SHIFT.
+Move Speaker DHT Min Volume to bits 7:4.
 
-Fixes: a9b17a638af5 ("ASoC: pcm3168a: Add driver for pcm3168a codec")
-Link: https://www.ti.com/lit/ds/symlink/pcm3168a.pdf
+Fixes: ca2cd6bc6663 ("ASoC: Add max98371 codec driver")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261008130953.2446692-4-sammiee5311@gmail.com
+Link: https://patch.msgid.link/20261008130953.2446692-5-sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/pcm3168a.c | 2 +-
+ sound/soc/codecs/max98371.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
-index cb6a6f08f2f80..6f45ea4869a75 100644
---- a/sound/soc/codecs/pcm3168a.c
-+++ b/sound/soc/codecs/pcm3168a.c
-@@ -103,7 +103,7 @@ static SOC_ENUM_SINGLE_DECL(pcm3168a_dac_zf_func, PCM3168A_DAC_ATT_DEMP_ZF,
- static const char *const pcm3168a_pol[] = { "Active High", "Active Low" };
- 
- static SOC_ENUM_SINGLE_DECL(pcm3168a_dac_zf_pol, PCM3168A_DAC_ATT_DEMP_ZF,
--		PCM3168A_DAC_ATSPDA_SHIFT, pcm3168a_pol);
-+		PCM3168A_DAC_ZREV_SHIFT, pcm3168a_pol);
- 
- static const char *const pcm3168a_con[] = { "Differential", "Single-Ended" };
- 
+diff --git a/sound/soc/codecs/max98371.c b/sound/soc/codecs/max98371.c
+index c8d4c68af5623..324270cc5cb26 100644
+--- a/sound/soc/codecs/max98371.c
++++ b/sound/soc/codecs/max98371.c
+@@ -166,7 +166,7 @@ static const struct snd_kcontrol_new max98371_snd_controls[] = {
+ 			0, (1<<MAX98371_DHT_MAX_WIDTH)-1, 0,
+ 			max98371_dht_max_gain),
+ 	SOC_SINGLE_TLV("Speaker DHT Min Volume", MAX98371_DHT_GAIN,
+-			0, (1<<MAX98371_DHT_GAIN_WIDTH)-1, 0,
++			4, (1<<MAX98371_DHT_GAIN_WIDTH)-1, 0,
+ 			max98371_dht_min_gain),
+ 	SOC_SINGLE_TLV("Speaker DHT Rotation Volume", MAX98371_DHT_GAIN,
+ 			0, (1<<MAX98371_DHT_ROT_WIDTH)-1, 0,
 -- 
 2.53.0
 
