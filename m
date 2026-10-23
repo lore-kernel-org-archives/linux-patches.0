@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774590;
-	b=erU2CliqX1PrQoor2tme9b9TpfwXhNTwjbgyEzvmV+DMHwSmvhvNuRM6a+X3hfR8B4Ol
-	 gWKutVSBdqJmyERqxKTg3Zk36LPI4kxbM4+bIk1PLpOE1UrXeAuGjLt5x/RUwjrzRz5ii
-	 8/fsLOBCnjSyikSj6dcd6g1hQvQCErubbe6E0Z8Y7APWGssujM4F6agTXXMmhrtJzEV6z
-	 c9rTrY+n76Plie/nqMDYlDI9BIe3amqohPRiCTQDoUzIGtwLZwE+vR5Rhcv0eAaZml74F
-	 uNRhbw9pQErQyfBHXBcZLf/0HZXc8ZakEdEfdCIn0aSACBjuI2SN981zxL5l93w1/+w==
+	t=1792774593;
+	b=fioKZwp0fPdeK5CNDHDI3xsH84Tp3fdieOlqddKO/Hd51BZUR9+rGZiVHqCxDUPK1iqT
+	 BKhQzXxq+hsLfa46pDByCJEX4qxpTJtoCZoCdumv2e5CaYWhxv5Hk/S9aNZxy7yf72vJ8
+	 sq35MIKxA1FMx7OxUqByphLyTnWjiujzIIEgq/SnaRB3kPignVMzftGq8E+e+RDTCLAzC
+	 xNjXOhl4ngK54J9ogDpGMbHF22JkkQaij4kbHnAp8xYXs4//fN/n8KSewe7kIBymSHMn1
+	 lG0YAMl7MvIf7AdiyUH/aZ4L1v8L5acD6SLXcDOBtaroBGricGYhr7czxzQxI/RqqLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774590;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RXwdKGf9+YFDn+L0OBWSczsLDaNwcVc26ut0bLy5pRY=;
-	b=XU7EJ8O/KL+48gVBURFDBRCMDN9A3cjaCT5LI/llGm1XRafgXVGrYsNzc7oABWRUAgmw
-	 Arl86ykp2P9/RpZwY7nQXoiMu4yjCXK9nnK9b0fgCkL5CieixKdQ+R3az/UrTOqvAtXEC
-	 QARfp+19NW2JsoH3jssWrt682AzA2lshsAvWWxwEP9Q0RNcWdfx+v5tal8O+PVxSGfK/T
-	 3ma2PhPQkI/f8jY402XTVVf9JlgoyQOGaPCkAOZmhQEetuJIS1DhBiY6BM0/StgpXBJBt
-	 /cyhr8GonX6/epfimI7KAmaJCmxcH/3g4GWkO5g7M+CyYJIfX6zN3OBCljZHJl2FJEQ==
+	bh=idatbPIIzlZogXZjfV9iHbaEV6/4YmR8LIBg0z2oUy4=;
+	b=FIPb0GlR+zRaSmgO9dhOH8kLzcHQWBS2lXFEMpUgsRnO5sSg/Ezrf7DOspc9yuGMQyaO
+	 H3A9kWFicM1DvUZD0WZqq68m8XU3kY0pY1kl4MSMHKZj73kmToYb71cwQ+kA0gkHSphGK
+	 FcteR5d5jqs6lhszsDpN6VKnc2IDyZfUSo5zuZpsyxeaSyqoJYoIL+sodJokGiyS0lIii
+	 KlR7RnqgP1tZmIkkRxWtkpH0ub2PfqaVK0KE2lWRfoHI0qiFjMuu8xwvemo2GFVtYOqEq
+	 8nQC5+ScHP4tR0P/Ozpyd+rWPWDWaIuVB2qxEdfmFIwFo6iOoaoHonmr1qYtQPf6abw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EN37df9U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wd0X74C4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901D9606A31A;
-	Fri, 23 Oct 2026 16:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71564606A31A;
+	Fri, 23 Oct 2026 16:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EN37df9U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF74F1F01825;
-	Fri, 23 Oct 2026 16:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wd0X74C4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25B31F01825;
+	Fri, 23 Oct 2026 16:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774590;
-	bh=RXwdKGf9+YFDn+L0OBWSczsLDaNwcVc26ut0bLy5pRY=;
+	s=korg; t=1792774593;
+	bh=idatbPIIzlZogXZjfV9iHbaEV6/4YmR8LIBg0z2oUy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EN37df9UrvGJ+Bv5jMgnPGIN3/O3rPXrMJ1p2XGhVs2/diau3V9EqlAVw73LKvu/o
-	 1ZXWJZmGGJL3tnaaPmvxiSsT3UsDscVKWVfcxLt/7LfeFYCRvOo49vRl8pbqcBsz26
-	 wH3Eu096+ob2P1NEqx92O0AdB2g67AGgUwIRO1+E=
+	b=wd0X74C4vwYBFH5PP8P97bINS0rS2NQz9tp/0WJH0Pl8SXznLW6JRwczN3DgtAKSt
+	 WLGkX/l0+3WbsecRZOIFR+mFPU2wLUQrBC7Ms50L3lTr9F7RA1TaSHurUoLTWwNKHL
+	 Es8ZzKDAQezZ2GX5WGbuzid1cx84NZUd3lZucjY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 054/242] iommupt/kunit: Use if_changed_rule for the kunit
-Date: Fri, 23 Oct 2026 18:38:16 +0200
-Message-ID: <20261023163715.057157976@linuxfoundation.org>
+Subject: [PATCH 7.2 045/242] drm/xe: skip eviction of a BO with no resource
+Date: Fri, 23 Oct 2026 18:38:07 +0200
+Message-ID: <20261023163714.843414047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,38 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 
-[ Upstream commit 4bcfe29021993cb167fd9bbdb849f7d7247a166f ]
+[ Upstream commit 448e76cbdc6652ccd3ba337b7a6e1f028859f2ed ]
 
-Use if_changed_rule so rule_cc_o_c runs cmd_save_c_flags for the kunit
-objects. Without the saved flags CONFIG_LTO_CLANG_THIN_DIST runs the
-ThinLTO backend with no --target and generates x86_64 code from arm64
-bitcode.
+xe_evict_flags() switches on tbo->resource->mem_type to choose an
+eviction placement. An xe BO can reach eviction with no ttm.resource,
+e.g. an imported dma-buf BO whose resource was freed during teardown
+while its attachment is still live: the exporter then invalidates it via
+xe_dma_buf_move_notify() -> xe_bo_evict(), and the switch dereferences a
+NULL resource and faults.
 
-Fixes: 1dd4187f53c3 ("iommupt: Add a kunit test for Generic Page Table")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610110841.120JzAJG-lkp@intel.com/
-Assisted-by: LLM
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+A BO with no resource has nothing placed or mapped, so there is nothing
+to evict. Return an empty placement (num_placement = 0), mirroring the
+handling already used for non-xe scatter-gather BOs just above;
+ttm_bo_validate() then takes the pipeline-gutting path and returns 0.
+
+Without the fix the xe_dma_buf@xe_test_dmabuf_move_notify_no_resource
+dynamic live selftest will fail with below stack.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000010
+RIP: 0010:xe_evict_flags+0xf4/0x140 [xe]
+Call Trace:
+ <TASK>
+ xe_bo_evict+0x40/0xa0 [xe]
+ ? ttm_bo_pipeline_gutting+0x71/0x180 [ttm]
+ xe_test_dmabuf_move_notify_no_resource+0x182/0x440 [xe]
+ xe_dma_buf_kunit+0x387/0x580 [xe]
+
+v2: Add Fixes tag and failure info in commit text (Matt Brost)
+
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Assisted-by: GitHub-Copilot:claude-opus-4.8
+Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Link: https://patch.msgid.link/20261012215014.1495677-5-niranjana.vishwanathapura@intel.com
+(cherry picked from commit dbcfaac6331f1fcb0c2fe3ad3e9adb1e5d43ec0c)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/generic_pt/fmt/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_bo.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/generic_pt/fmt/Makefile b/drivers/iommu/generic_pt/fmt/Makefile
-index ea024d582594e..e308760d02b7d 100644
---- a/drivers/iommu/generic_pt/fmt/Makefile
-+++ b/drivers/iommu/generic_pt/fmt/Makefile
-@@ -25,6 +25,6 @@ $(eval $(foreach fmt,$(iommu_pt_fmt-m),$(call create_format,$(fmt),m)))
- # with -DGENERIC_PT_KUNIT
- $(obj)/kunit_iommu_%.o: $(src)/iommu_%.c FORCE
- 	$(call rule_mkdir)
--	$(call if_changed_dep,cc_o_c)
-+	$(call if_changed_rule,cc_o_c)
+diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
+index f4c5151d61c7c..dcdbe70b5f734 100644
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -330,6 +330,12 @@ static void xe_evict_flags(struct ttm_buffer_object *tbo,
+ 		return;
+ 	}
  
- obj-$(CONFIG_IOMMU_PT_KUNIT_TEST) += $(IOMMU_PT_KUNIT_TEST)
++	/* No resource: nothing is placed/mapped, so there is nothing to evict. */
++	if (!tbo->resource) {
++		placement->num_placement = 0;
++		return;
++	}
++
+ 	bo = ttm_to_xe_bo(tbo);
+ 	if (bo->flags & XE_BO_FLAG_CPU_ADDR_MIRROR) {
+ 		*placement = sys_placement;
 -- 
 2.53.0
 
