@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774291;
-	b=xVSWBC8hBBds6lHKG5s6kNTGH9qKnc17fiPANqvHwqhbaKIynCKdrCDmMRqK5owoTVdC
-	 XNRblrnApTVLpuJlY3mr3/tgSifuSKTHovDHz7URRvJPBtsC5rnUnBlooZ7SODAGDG0Sj
-	 U7Le27gDQYaIN71nCu4jGdihFmOfuIxAlG41lDJ8P+YBS/p65rgKMyUUwQB/L0V6kamtl
-	 vaM6X0XZqNNeEX5Fz3F0uW4bTwmjZeS1JR4Mvu3c7/cTeXLDCuo/62JAwoxY7Q12l2xnI
-	 q6yMRcEdZ82jAeaFrKw3/EN0+G5syGHTHNW0vTR3AeIrEitRdTUpOGKjxQ/Y4TyKVzw==
+	t=1792774295;
+	b=anPRFdd3GSYR7V96KQTW1bSgMob2H72JXcxUB3/SsSFBFD7vdQ/kObKFk/XtPcjwVtH2
+	 aR5MONOaEz6NpHOFRPXBy+xwHAYNeGpwiqS0n828nu1GNiI6QFXDN5ftEk9urvgeJ8HyL
+	 MPk91VquJU5tXENMv12pqmUPi+eZn85QaX5TBeJVx+YRA+Fua5k7cZHNlji5GqNZ/M/H1
+	 +UsLKyLnCsgMuRW0H2bZhf4eTCpxcg0tk4MUO+xsAzAsZa8qMZI6QpQjWaPxA2A43OHfH
+	 hunQsCQoqQWaUmHoVIhrgY8UhTSBrguq7J0fzWNqleNdWZGIYVisaJA5XVRQeSaAsyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774295;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8Mn9pgnUCSbpeP8vW+uWiwuYiXiXSH/JSJCzNxwoSH0=;
-	b=DUFZxr3iFMv6l87Gne2KHwsYoPYlQZ4w7RtVwkraCYTrpzS2eW39f2Kl1si/3l+Hy5fg
-	 CYVHXc+9vrM0ok87vp0vl3TN87x9QLihyvO5pZhVMt6/yaYuu4pk1mAZtoaXyb6Ou53Y7
-	 NtZ1zT2WRJNFkO+HAoE/DbYneG9AryqZvrJWSktF2sryKW/n7rfhrzo4XbKCigD1du+/f
-	 sKqbC6jeu5BJZOiOHTIa23K62K1+2rHYfMcZKnRdWfmPhtDoM/3h5gT9f2yeLiRmGX8RK
-	 sEwaXz0TKFxj+z8stqQ4h+DsE1yvEhPK4hUMlgLdHudRvj082j2x7+dWB3Ours1Y4nQ==
+	bh=i+Ug2G/90n6xQqUZFJcWm/9RrER8DglZ2Rq73jqu91o=;
+	b=QWyKcX4IDHt0yUFtqLlBaERponxyNfFXuAsUZHAlLj1U4db7ecHbHywExD7HvxcTB87U
+	 kYlUo7bVXPQ1AKv7XA/Uz1KYYWedK5XOrBETo9jsj3Y0X4Fo6z+96mfNn8zjcgH0/Cep8
+	 O1ecFZQf3Dlg93h/zNHCLdiNjhFIq3hJnwVrG5rBlDEWkymBAPUKqrqE+0nixOBW9gZ27
+	 ewfnNePEcrPC/H3OgALkLVRbpSlyDLkNGZH8gMmLGdmz+vrRn0eMI0vDCj55C2N9e5pfY
+	 k+HpATAchhs4J0svIDXvGz8aw4UeCqypJS9UeQynedMUfMfyvw9S8jhXpqKLNHmQ1RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JFTowyWH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ov3QnyZ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E430606A31A;
-	Fri, 23 Oct 2026 16:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A97B606A31B;
+	Fri, 23 Oct 2026 16:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JFTowyWH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FB31F01825;
-	Fri, 23 Oct 2026 16:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ov3QnyZ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976B61F01825;
+	Fri, 23 Oct 2026 16:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774291;
-	bh=8Mn9pgnUCSbpeP8vW+uWiwuYiXiXSH/JSJCzNxwoSH0=;
+	s=korg; t=1792774294;
+	bh=i+Ug2G/90n6xQqUZFJcWm/9RrER8DglZ2Rq73jqu91o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JFTowyWHdfwmWowT1/UkLBaqVczdWaCDrwIZ7HH0pEP7JUloI1stiJxCyJtYFoWWP
-	 ywwcU7Raoic7rZF4gqPq1jCJUHAUPXbunOM7z0xIG7e6FuUhB8vj57VgbrQCLFlILS
-	 JuWx9v/EvKX4Iv70exmbftPtx88sfu+EQ00TRcdY=
+	b=Ov3QnyZ6SozAM8CUoUv2+e1gvRW6yMREdyWtENbX9AGryTK+y6I7vnsD2JCkLkzPP
+	 lJdAVxow8UNl/iLS03QZAV0Im5js+bQRxbYTurxiultIbc2QT9OZQy4AsbmxU/bS0E
+	 zthoJZ/AeEl75x+s0Sgg56GWvyureMgqD1bBKXQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Vishnu Dasa <vishnu.dasa@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 186/193] vsock/vmci: validate packet source for connected sockets
-Date: Fri, 23 Oct 2026 18:37:43 +0200
-Message-ID: <20261023163718.620458319@linuxfoundation.org>
+Subject: [PATCH 6.18 187/193] smb: client: fix data corruption with concurrent writes and O_TRUNC
+Date: Fri, 23 Oct 2026 18:37:44 +0200
+Message-ID: <20261023163718.643843406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -72,136 +72,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit ad9a7da3fa39c2d616ec0dd3cf6e30531d032fe7 ]
+[ Upstream commit a8603b52b39f520ea8a34def74c23fba87396d3e ]
 
-vmci_transport_recv_stream_cb() looks up sockets first by the full source
-and destination tuple, then by destination only in the bound table. The
-fallback can select a non-listening socket without checking whether the
-packet came from its stored peer.
+cifs_do_truncate() flushes dirty pages with filemap_write_and_wait()
+and truncates the file on the server, but in the old code both
+operations ran without holding i_rwsem or invalidate_lock.  A
+concurrent buffered write via netfs_perform_write() -- which only
+needs i_rwsem shared -- could dirty new pages after the flush but
+before the local truncation, and those pages would be silently
+discarded by cifs_setsize() -> truncate_pagecache().
 
-This was reproduced with two VMCI contexts. A RST from the context not
-stored in a TCP_SYN_SENT socket reset that socket after it was selected by
-the destination-only lookup.
+Fix by acquiring inode_lock (exclusive i_rwsem) and
+filemap_invalidate_lock at the top of cifs_do_truncate(), so the
+entire flush-truncate-resize sequence is atomic with respect to:
 
-VMCI can process notification packets in bottom-half context when the
-socket is not owned by user context, or defer packets to a workqueue. Use
-vsock_check_source() after taking the socket lock in the bottom-half path,
-and recheck after lock_sock() in the workqueue path. Listening sockets
-continue to accept packets from any source.
+  - buffered writes (blocked by exclusive i_rwsem, since
+    netfs_start_io_write takes i_rwsem shared),
+  - read page faults (blocked by exclusive invalidate_lock, since
+    filemap_fault takes it shared),
+  - writeback collection (blocked by netfs_wb_begin/netfs_wb_end
+    around the server truncate and local resize, since
+    netfs_writepages also acquires the wb lock).
 
-Reply with a RST addressed from the received packet before dropping a
-source that fails validation. This preserves the existing reset behavior
-for bound non-listening and concurrently closed sockets without directing
-the reset to a connected socket's stored peer.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/20260814121255.6B5001F000E9@smtp.kernel.org/
+Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
-Link: https://patch.msgid.link/20260826003929.966160-3-4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Replaced two calls to the unavailable vsock_check_source() helper with equivalent inline conditions. ]
+[ sashal: Replaced netfs_wb_begin()/netfs_wb_end() with direct wb_lock mutex operations. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Depends on <20261022162527.1685626-1-sashal@kernel.org>
+ fs/smb/client/file.c |   28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
- net/vmw_vsock/vmci_transport.c |   42 ++++++++++++++++++++++++++++++++++-------
- 1 file changed, 35 insertions(+), 7 deletions(-)
-
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -676,11 +676,13 @@ static int vmci_transport_recv_stream_cb
- 	struct vmci_transport_packet *pkt;
- 	struct vsock_sock *vsk;
- 	bool bh_process_pkt;
-+	bool drop_pkt;
- 	int err;
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -990,42 +990,50 @@ static int cifs_do_truncate(const unsign
+ 	struct cifs_tcon *tcon;
+ 	int rc;
  
- 	sk = NULL;
- 	err = VMCI_SUCCESS;
- 	bh_process_pkt = false;
-+	drop_pkt = false;
- 
- 	/* Ignore incoming packets from contexts without sockets, or resources
- 	 * that aren't vsock implementations.
-@@ -757,17 +759,32 @@ static int vmci_transport_recv_stream_cb
- 	bh_lock_sock(sk);
- 
- 	if (!sock_owned_by_user(sk)) {
--		/* The local context ID may be out of date, update it. */
--		vsk->local_addr.svm_cid = dst.svm_cid;
--
--		if (sk->sk_state == TCP_ESTABLISHED)
--			vmci_trans(vsk)->notify_ops->handle_notify_pkt(
--					sk, pkt, true, &dst, &src,
--					&bh_process_pkt);
-+		if (sk->sk_state != TCP_LISTEN &&
-+		    (vsk->transport != &vmci_transport ||
-+		     src.svm_port != vsk->remote_addr.svm_port ||
-+		     (src.svm_cid != vsk->remote_addr.svm_cid &&
-+		      vmci_transport.get_local_cid() != VMADDR_CID_LOCAL))) {
-+			drop_pkt = true;
-+			err = VMCI_ERROR_NO_ACCESS;
-+		} else {
-+			/* The local context ID may be out of date, update it. */
-+			vsk->local_addr.svm_cid = dst.svm_cid;
+-	rc = filemap_write_and_wait(inode->i_mapping);
+-	if (is_interrupt_error(rc))
++	rc = inode_lock_killable(inode);
++	if (rc)
+ 		return -ERESTARTSYS;
 +
-+			if (sk->sk_state == TCP_ESTABLISHED)
-+				vmci_trans(vsk)->notify_ops->handle_notify_pkt(sk, pkt, true,
-+									       &dst, &src,
-+									       &bh_process_pkt);
-+		}
- 	}
- 
- 	bh_unlock_sock(sk);
- 
-+	if (drop_pkt) {
-+		if (vmci_transport_send_reset_bh(&dst, &src, pkt) < 0)
-+			pr_err("unable to send reset\n");
++	filemap_invalidate_lock(inode->i_mapping);
++
++	rc = filemap_write_and_wait(inode->i_mapping);
++	if (is_interrupt_error(rc)) {
++		rc = -ERESTARTSYS;
 +		goto out;
 +	}
+ 	mapping_set_error(inode->i_mapping, rc);
+ 
+ 	cfile = find_writable_file(cinode, FIND_WR_FSUID_ONLY);
+ 	rc = cifs_file_flush(xid, inode, cfile);
+ 	if (!rc) {
+ 		if (cfile) {
++			struct netfs_inode *ictx = netfs_inode(inode);
 +
- 	if (!bh_process_pkt) {
- 		struct vmci_transport_recv_pkt_info *recv_pkt_info;
- 
-@@ -892,6 +909,7 @@ static void vmci_transport_recv_pkt_work
- {
- 	struct vmci_transport_recv_pkt_info *recv_pkt_info;
- 	struct vmci_transport_packet *pkt;
-+	struct sockaddr_vm src;
- 	struct sock *sk;
- 
- 	recv_pkt_info =
-@@ -900,6 +918,15 @@ static void vmci_transport_recv_pkt_work
- 	pkt = &recv_pkt_info->pkt;
- 
- 	lock_sock(sk);
-+	vsock_addr_init(&src, pkt->dg.src.context, pkt->src_port);
-+	if (sk->sk_state != TCP_LISTEN &&
-+	    (vsock_sk(sk)->transport != &vmci_transport ||
-+	     src.svm_port != vsock_sk(sk)->remote_addr.svm_port ||
-+	     (src.svm_cid != vsock_sk(sk)->remote_addr.svm_cid &&
-+	      vmci_transport.get_local_cid() != VMADDR_CID_LOCAL))) {
-+		vmci_transport_reply_reset(pkt);
-+		goto out;
-+	}
- 
- 	/* The local context ID may be out of date. */
- 	vsock_sk(sk)->local_addr.svm_cid = pkt->dg.dst.context;
-@@ -929,6 +956,7 @@ static void vmci_transport_recv_pkt_work
- 		break;
+ 			tcon = tlink_tcon(cfile->tlink);
+ 			server = tcon->ses->server;
++			mutex_lock(&ictx->wb_lock);
+ 			rc = server->ops->set_file_size(xid, tcon,
+ 							cfile, 0, false);
+ 			if (!rc) {
+-				inode_lock(inode);
+-				filemap_invalidate_lock(inode->i_mapping);
+ 				netfs_resize_file(&cinode->netfs, 0, true);
+ 				cifs_setsize(inode, 0);
+-				filemap_invalidate_unlock(inode->i_mapping);
+-				inode_unlock(inode);
+ 				cifs_invalidate_cache(inode, 0);
+ 			}
++			mutex_unlock(&ictx->wb_lock);
+ 		} else {
+ 			/*
+ 			 * No cached handle; evict stale pages so they can't
+ 			 * be served after the file is later extended; let
+ 			 * the server's O_TRUNC open response set the i_size
+ 			 */
+-			inode_lock(inode);
+-			filemap_invalidate_lock(inode->i_mapping);
+ 			truncate_inode_pages(inode->i_mapping, 0);
+-			filemap_invalidate_unlock(inode->i_mapping);
+-			inode_unlock(inode);
+ 			cifs_invalidate_cache(inode, 0);
+ 		}
  	}
- 
++
 +out:
- 	release_sock(sk);
- 	kfree(recv_pkt_info);
- 	/* Release reference obtained in the stream callback when we fetched
++	filemap_invalidate_unlock(inode->i_mapping);
++	inode_unlock(inode);
+ 	if (cfile)
+ 		cifsFileInfo_put(cfile);
+ 	return rc;
 
 
