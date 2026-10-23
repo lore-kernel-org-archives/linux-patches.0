@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773962;
-	b=z+mBhMP4Ekk+SZGEEqm5UlRBjNG0ABgNK0d/DkXZHg+c50NRcfXwBGUTO3Wxelad47/J
-	 8ih0d/63AxLjpqZ8x0kpLiLKhxs9ur4ixsmrCY0bw3H3myBAbetMS7+oxYx3AO5uHsESW
-	 sLbaKrX4BabH7B77A6SWJINc4zbKx7vVqI23PIU1zT3o9vVbFhHyaai0JtAkox8uls+S/
-	 AEgN876y2g+DXedWhu2ChAVTYeib+f8dWP8AtvDig4kySXz+28++pehnOF9s8kOeAqgwg
-	 OfG/F/l2Eo/pT2N8OaN3Quq+bVCcw177wKQIupIy6o1ckIZyDpzt0k2XluzcU7L2auQ==
+	t=1792773965;
+	b=JUtDAnizqeyrvNrtysVgdQbQy0wCDwfRJQJHWJt6BpO8pfwUJdIf6GgYPIhZJpvTDTRV
+	 9R9aDZ2XEsOL9NsDgDaFPPgW2wpg6dJ1FkdMh8FpXaZJzn5sdaTemwGra5Yueq4kUKB/G
+	 fNWXf9nZMpq94mJvbImDWj1+FCugGHdARAiZgd0lx1r+BdRBKCf+CIhoa1Z+nQPAOeLPh
+	 M8mS23K4yLGENLkcuK09AT5AErTnN5Ptw96yLVVFmThomxWENxDC7FoMiychOXuOdJe+7
+	 MbeQzKRX4fkvxzkLPN9ZsaOgkm1AbscXMDRwA0BPiaP7OvpJwewEJ0zDQY4sRVAHU+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y6l4kln/2ZFows/WKSMFu3ZhlryZY3SqerzYH83yGF8=;
-	b=NvwPg5H8NMwmIcXB3DMX2H8bfyi5fhV3t1i8sLU16DNCs09rIfyuLp+RDApMS2KlwfjQ
-	 sQoS6yqTmlzhASHKop4CDmws8EEnusA7eC3jHiXjjklkY9Llp4bJJzukJTHJIqeOOaSKV
-	 aDWiyQGkbRhNa7qS1yI6EyNOe6qZ+CFy5SQqWB/S7YSORKLHJwhcbBCs5lW3wXajjC4jt
-	 d2zSJAmuz9LSv3R0BggY0kdQNa0kEvc9G0YPfpmaOh2+3yy1KQ9blyC9Le+FH9l4Im5ql
-	 Xg28j2qGbiFTwWIh6RCNtb6SYzbkrLMGEhOEQvAoeu/Upm6+jhZ0nY5vhRKL2fZz+2w==
+	bh=l9cW5AI0ZPkXpkONGMmJ7xwIHkh/yOiuUjdtGEfxgBo=;
+	b=DkDNUgBHVYJ5fNhON02KHAjOz7E1+t+rA+8t0yhLZcbwe5QRZYMKe7VOUsLL3rbXVX0x
+	 Xuxe90olEh3dVyB/fTvVoTvP7YDIh8WNrAP0cuAdnuD8B76KaB/E9Oc0ULqLfe4s0Ukiw
+	 UpFjK/jP7W3dxdl76V/2HqqnKmpG8l81rsCuefkMbKRjk4tVPrmZaS8qS2rmNl2pP3PVb
+	 WzzW4CG1REZxdE6aY1MAWXAGLLl/MH52qDrcpuyImzh8J4UZ6EoWJSAZ0nigkCJSSwBkp
+	 lhF/+9MpRU01ItGzoIP7G3tpa4pzWsKQOjllPR0sHCkK8Hpogu6nP68WyVAETFW+eQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lQRb9d9V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QaheqMla;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57E6606A31D;
-	Fri, 23 Oct 2026 16:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3ACC606A31A;
+	Fri, 23 Oct 2026 16:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lQRb9d9V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433721F01825;
-	Fri, 23 Oct 2026 16:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QaheqMla
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202301F01825;
+	Fri, 23 Oct 2026 16:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773961;
-	bh=Y6l4kln/2ZFows/WKSMFu3ZhlryZY3SqerzYH83yGF8=;
+	s=korg; t=1792773964;
+	bh=l9cW5AI0ZPkXpkONGMmJ7xwIHkh/yOiuUjdtGEfxgBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lQRb9d9V666KzOuVoCBaIa1FmKPSqcWcElCC+hrBgNaC3SRb/CtoDjSWA82U6t7/d
-	 sxjoCw4fCUIJ7BBhjOECo9FwD80mFlLUD5XxLEJJBLDzg19oz/0ahkmMxiOhlfTdAk
-	 mjrweBcd3mVSiT5ejXE+APYZmGIGaFESwsnR9eAg=
+	b=QaheqMlaD02FDtkTdtAzPtjFnKFPk6mEELQO7QRuBIIlpegjudImzytaRWT983BWZ
+	 foA+C6G+2p7GHn21LWuwyNZYS0Dotlpy/23uBKBhlbgFXMogJuqh5vyMtPE/v3d5aQ
+	 hZqnMuRH06KA8m5Gb1gmGSTS/geBTkMJvAJSqFp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 074/193] bootconfig: give the footer size static_assert a message
-Date: Fri, 23 Oct 2026 18:35:51 +0200
-Message-ID: <20261023163715.954615329@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 075/193] unicode: free the map after a grace period
+Date: Fri, 23 Oct 2026 18:35:52 +0200
+Message-ID: <20261023163715.976845173@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -67,39 +66,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-commit a1ddc2721467fb68241372db77657fd0dcf6cda5 upstream.
+commit a96c5299bd7305eb984377681eb3222a57376405 upstream.
 
-static_assert() without a message is a C23 feature, so clang warns:
+generic_ci_d_hash() and generic_ci_d_compare() read sb->s_encoding and
+dereference the unicode map while a pathwalk in rcu mode holds nothing
+but rcu_read_lock(). The filesystems that use them, ext4, f2fs and
+tmpfs, drop the map with utf8_unload() from ->put_super(), which runs
+when the last reference to the mount goes away. A lookup that is still
+inside such a filesystem at that point reads a freed map.
 
-  main.c:498:56: warning: '_Static_assert' with no message is a C23 extension [-Wc23-extensions]
+With a pathwalk held up in utf8_casefold_hash() while the last reference
+to a casefolded tmpfs goes away:
 
-Add a message.
+  BUG: KASAN: slab-use-after-free in utf8nlookup+0x74c/0x950
+  Read of size 8 at addr ff110001030fe658 by task walker/98
+  Call Trace:
+   <TASK>
+   utf8nlookup+0x74c/0x950
+   utf8byte+0x160/0x1560
+   utf8_casefold_hash+0x167/0x230
+   generic_ci_d_hash+0xdd/0x1c0
+   link_path_walk+0x11ad/0x1d30
+   path_lookupat+0x63/0xb00
+   filename_lookup+0x1f1/0x5b0
+   vfs_statx+0xd7/0x3b0
+  [...]
+  Allocated by task 94:
+   __kmalloc_cache_noprof+0x249/0x560
+   utf8_load+0x4e/0x570
+   shmem_parse_opt_casefold.isra.0+0x92/0x270
+  [...]
+  Freed by task 97:
+   kfree+0x1db/0x5b0
+   shmem_put_super+0x72/0x170
+   generic_shutdown_super+0x14c/0x530
+   kill_anon_super+0x3a/0x60
+   deactivate_locked_super+0x9c/0xf0
+   cleanup_mnt+0x9f/0x130
 
-Link: http://lkml.kernel.org/r/20261011223358.2327625-13-sashal@kernel.org
+So far that has been hard to hit. umount(2) waits for a grace period
+in namespace_unlock() before it drops the mount, so only a mount whose
+last reference goes away elsewhere, like the close of a file or a chdir
+out of a lazily unmounted directory, can race a walker. So it is
+reachable.
 
-Fixes: 6ed5e20466c79 ("bootconfig: Fix unaligned access when building footer")
+Delay the free until a grace period has passed. The map and the data
+table it holds a reference to then outlive any pathwalk that found the
+superblock before the mount went away. The reference on the data table
+module is dropped from the rcu callback as well. utf8-core is built in
+whenever CONFIG_UNICODE is set, so there is no module exit that would
+have to wait for the callbacks.
+
+Overlayfs points the s_encoding of an overlay at the map of its first
+layer without taking a reference of its own. That stays correct. The
+layer is held by the overlay, so its map is dropped only after the
+overlay is gone.
+
+Fixes: b886ee3e778e ("ext4: Support case-insensitive file name lookups")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-6-7446d2d335e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/bootconfig/main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/unicode/utf8-core.c  |   21 +++++++++++++++++----
+ include/linux/unicode.h |    1 +
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
---- a/tools/bootconfig/main.c
-+++ b/tools/bootconfig/main.c
-@@ -458,7 +458,8 @@ static int apply_xbc(const char *path, c
- 	footer.size = htole32(size);
- 	footer.csum = htole32(csum);
- 	memcpy(footer.magic, BOOTCONFIG_MAGIC, BOOTCONFIG_MAGIC_LEN);
--	static_assert(sizeof(footer) == BOOTCONFIG_FOOTER_SIZE);
-+	static_assert(sizeof(footer) == BOOTCONFIG_FOOTER_SIZE,
-+		      "bootconfig footer size mismatch");
- 	memcpy(data + size, &footer, BOOTCONFIG_FOOTER_SIZE);
+--- a/fs/unicode/utf8-core.c
++++ b/fs/unicode/utf8-core.c
+@@ -3,6 +3,7 @@
+ #include <linux/kernel.h>
+ #include <linux/string.h>
+ #include <linux/slab.h>
++#include <linux/rcupdate.h>
+ #include <linux/parser.h>
+ #include <linux/errno.h>
+ #include <linux/stringhash.h>
+@@ -205,12 +206,24 @@ out_free_um:
+ }
+ EXPORT_SYMBOL(utf8_load);
  
- 	total_size = size + BOOTCONFIG_FOOTER_SIZE;
++static void utf8_unload_rcu(struct rcu_head *head)
++{
++	struct unicode_map *um = container_of(head, struct unicode_map, rcu);
++
++	symbol_put(utf8_data_table);
++	kfree(um);
++}
++
++/*
++ * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare() of a
++ * filesystem that is being torn down and read the map through its
++ * superblock, so the map and the tables it points to have to outlive the
++ * grace period.
++ */
+ void utf8_unload(struct unicode_map *um)
+ {
+-	if (um) {
+-		symbol_put(utf8_data_table);
+-		kfree(um);
+-	}
++	if (um)
++		call_rcu(&um->rcu, utf8_unload_rcu);
+ }
+ EXPORT_SYMBOL(utf8_unload);
+ 
+--- a/include/linux/unicode.h
++++ b/include/linux/unicode.h
+@@ -53,6 +53,7 @@ struct unicode_map {
+ 	unsigned int version;
+ 	const struct utf8data *ntab[UTF8_NMAX];
+ 	const struct utf8data_table *tables;
++	struct rcu_head rcu;
+ };
+ 
+ int utf8_validate(const struct unicode_map *um, const struct qstr *str);
 
 
