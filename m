@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774599;
-	b=AWVGXhxG5bRfygS98JQ9pxNKLmk4EhsZgq3IZVPk53HS8UKwYJaStq+VN7WQFtMqEqt7
-	 cxBknU/Pfj2FTjMSjnTN8x3j/e/weiwUp8UlZ3UJkhL1OQaQSa0+2TvPRWWQQLvCjyGSm
-	 dFWGTLrDbkMoibNM8gmEYOHsBEjYmnspcjNQErZ1j/t36evCPbAY9eSbm7jpnaP4kHkuf
-	 SSwa5xjFlr37FRWdlNl4LZwr46rrSs4C4nnKG9QPz1YkkKNPtpFh+F4XfmlC7spMlIayC
-	 8DMZcp36ct8iZuR1XpxQ6FBmQz5Fe+thbxU1WmMZ1I8s8NVfJLeoRMYhB7uKj7eWFFA==
+	t=1792774605;
+	b=SkJYotvQv8zv5hw5gkj3SrE7ZEyqRMRG/zoU9pnkePl1pWxtpRF9FrMkq/P4l3CZm1Yc
+	 yyU5LwFSXcvC2RTg7iG99rSabuFI76QfVpYITYrmINhIZW9NhpfsVUYLcEgqVQN7ioA+C
+	 7eWM+ltXJKQIsXoF1W6+sp2RfYoqr/Hla9uau9Wt7aQPbu6/ImA6hDueR9AYj+rFQ7cwE
+	 Z5vVgORzbFYK7EGBSfjPLzGf0STZDvf3RUNKqYr54V6sM+G2daShEI+qCUGpKT7wrDiXk
+	 l/RyhRNyNft5Jg0wThvxWAHUS6PUhw+ui9kXYUn7zLxWvkQcl2QChJ/J2nDSoDfzTQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kK4NHdhFP0SMnkIOpLM6PHQXivWDmXt4RkHPOEGlBD4=;
-	b=lq1hRmjNTEmkn4+8ENVtv7M6uBBShMi/KuFvyvx91D/AlMglBSffycoPztUE1XKfqeQB
-	 laEE2j/f1R1qCnYIewfll5XPNuBu5UCiUr4OIYWNmA7ft+H8kqWFd6YeOdCIC7yzzd0FQ
-	 LHR4I2qrOqhJpB+BYs+1z6W0WQYBx8HnoGS/1/g6/QaFYq8GcZ/X88FsKh3hbZnTHnPYA
-	 1aDNhOTtK3qiQf4MzCgQB1fbvDPyxrXGlHPdLN1rSLMtfV7Ir+uHxKDyrqOClSyvft3Dq
-	 oAaV15pJM4upt25jK8NlNut+P/2r5hMAhmhNI4VcwCLd+BebfEPdeRcfzxsQGkS7Yyw==
+	bh=UCa/XIOWNj5+OE1ne+oyxOl9QFL5ZjuC155B1ObqWM8=;
+	b=CxJvFXfE2wAHmTfsn4DelYOFqSerDf591iIStr5VWO1cIVHhj2cbQZufWNawXYM0ZF7l
+	 kigQm+izH2J2ufWagtekseur6JPdHPVZDAWkolWi2kDjb5tYepaMjiTvG7k9GqxFe7Gmv
+	 x2JQ6+RkNr/DpdZBW4zTH+D+hmiZ8fU4WOHTpv07TSRb5BF9N+2i15OKv5/p46aQinROW
+	 3gERXWfbWTOeatOleM0aPb0HcS5McXmsMfeyG9lFZu7+Fzk/TJuoURSPe2cVnp39H7P1x
+	 fl3W3hgQKKnxplymLrijeCdWmIPlkD97Mo2zY18cgaw5VCoWxEuY9DdceCMvGNP0nbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A88/hSjh";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PURoIkUe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DFB606A31B;
-	Fri, 23 Oct 2026 16:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB3E606A326;
+	Fri, 23 Oct 2026 16:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A88/hSjh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32E21F01828;
-	Fri, 23 Oct 2026 16:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PURoIkUe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B611F01825;
+	Fri, 23 Oct 2026 16:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774599;
-	bh=kK4NHdhFP0SMnkIOpLM6PHQXivWDmXt4RkHPOEGlBD4=;
+	s=korg; t=1792774605;
+	bh=UCa/XIOWNj5+OE1ne+oyxOl9QFL5ZjuC155B1ObqWM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A88/hSjhRAblO9MbcX0uCCbA30tShkmGsOz+KgJO3u05PL4d3aEKJSxDud515iqqO
-	 N2AYKjC5jOgZJ+D2aEdbf0b78viFjkpd561VnKgLGXDI7Y8XOAeN/pbgSI3nmnwrMA
-	 1yIIg0EuMui5mcasc3n13891tjZn94mqpjZ887bM=
+	b=PURoIkUeOTobpZAKqVx+UfTZsJ9xTSIh8YcXlUxhAgG1RPZLyVXv7h73UbfkQXUY6
+	 28hhZgimI9RD/FwM8qUtM3u8YBGkjO7jIpN12duKjXoVjOCmti5LhcGoS3qRqxKRAM
+	 OUcFxupy71mlZEWlO/HtX4d9brIfozJ0TAlqzWkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Alexander Gruhlke <gruhlke@mailbox.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 096/242] PCI: Dont treat ~0 as ready in pci_dev_wait() with RRS SV
-Date: Fri, 23 Oct 2026 18:38:58 +0200
-Message-ID: <20261023163716.049624372@linuxfoundation.org>
+Subject: [PATCH 7.2 098/242] firewire: core: fix race condition in split transaction handling
+Date: Fri, 23 Oct 2026 18:39:00 +0200
+Message-ID: <20261023163716.100101302@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,66 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gruhlke <gruhlke@mailbox.org>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit e8df1d194c39b7a5159d570798941851f70a8668 ]
+[ Upstream commit 7f9f2d6abc40f79e802b4063859eda343043b85c ]
 
-With RRS Software Visibility, pci_dev_wait() considers a device ready as
-soon as reading the Vendor ID doesn't return the RRS value.  Devices aren't
-required to respond with RRS while they aren't ready, so the read may
-return ~0 and pci_dev_wait() stops waiting too early.  This was seen with
-Intel [8086:0a54] and Samsung [144d:a80c] NVMe SSDs.
+For a split transaction, either fw_core_handle_response() or
+split_transaction_timeout_callback() may manipulate the same transaction
+entry in the pending transaction list. The return value of timer_delete()
+is used to determine which function handles the entry. If the transaction
+is a split transaction and timer_delete() returns zero, the timeout
+callback may already be running. In this case, the response handler must
+leave the entry in the list for the timeout callback to remove.
 
-Also wait while the Vendor ID reads ~0.  A VF's Vendor ID always reads ~0,
-so check its Command register instead, as is done without RRS SV.
+A previous code refactoring broke this behavior, introducing a race
+condition in which both functions could process the same transaction.
+This could lead to a use-after-free on the transaction initiator side.
 
-Fixes: d591f6804e7e ("PCI: Wait for device readiness with Configuration RRS")
-Link: https://lore.kernel.org/r/20250611101442.387378-1-hui.wang@canonical.com
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Alexander Gruhlke <gruhlke@mailbox.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20261011190145.23621-3-gruhlke@mailbox.org
+Fix the regression by ensuring that the response handler does not process
+the transaction when timer_delete() returns zero. The timeout callback is
+responsible for removing the entry from the pending transaction list.
+
+Fixes: fa2dc2710076 ("firewire: core: code refactoring to find and pop transaction entry")
+Link: https://lore.kernel.org/r/20261018025504.290598-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/firewire/core-transaction.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 80d2338b2a0a8..c8be53376ff3b 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1213,9 +1213,11 @@ static int pci_dev_wait(struct pci_dev *dev, char *reset_type, int timeout)
- 	 * initialize.
- 	 *
- 	 * If the device is below a Root Port with Configuration RRS
--	 * Software Visibility enabled, reading the Vendor ID returns a
-+	 * Software Visibility enabled, reading the Vendor ID may return a
- 	 * special data value if the device responded with RRS.  Read the
--	 * Vendor ID until we get non-RRS status.
-+	 * Vendor ID until we get non-RRS status and something other than
-+	 * ~0.  The Vendor ID of VFs reads ~0, so check their Command
-+	 * register instead.
- 	 *
- 	 * If there's no Root Port or Configuration RRS Software Visibility
- 	 * is not enabled, the device may still respond with RRS, but
-@@ -1235,8 +1237,13 @@ static int pci_dev_wait(struct pci_dev *dev, char *reset_type, int timeout)
+diff --git a/drivers/firewire/core-transaction.c b/drivers/firewire/core-transaction.c
+index 22ae387ae03ca..016070560c742 100644
+--- a/drivers/firewire/core-transaction.c
++++ b/drivers/firewire/core-transaction.c
+@@ -89,8 +89,12 @@ void fw_cancel_pending_transactions(struct fw_card *card)
+ 			break;						\
+ 		}							\
+ 	}								\
+-	if (t && try_cancel_split_timeout(t))				\
+-		remove_transaction_entry(card, t);			\
++	if (t) {							\
++		if (try_cancel_split_timeout(t))			\
++			remove_transaction_entry(card, t);		\
++		else							\
++			t = NULL;					\
++	}								\
+ 	t;								\
+ })
  
- 		if (root && root->config_rrs_sv) {
- 			pci_read_config_dword(dev, PCI_VENDOR_ID, &id);
--			if (!pci_bus_rrs_vendor_id(id))
--				break;
-+			if (!pci_bus_rrs_vendor_id(id)) {
-+				if (PCI_POSSIBLE_ERROR(id) && dev->is_virtfn)
-+					pci_read_config_dword(dev, PCI_COMMAND,
-+							      &id);
-+				if (!PCI_POSSIBLE_ERROR(id))
-+					break;
-+			}
- 		} else {
- 			pci_read_config_dword(dev, PCI_COMMAND, &id);
- 			if (!PCI_POSSIBLE_ERROR(id))
 -- 
 2.53.0
 
