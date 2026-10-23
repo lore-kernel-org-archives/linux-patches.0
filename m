@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773838;
-	b=1qIXtYQnKl8DoXNn/AYm2c+aHH/4LgeCW3Z4HXI2wqx35lkrQ5DOjGjhb1+zv0fZorxv
-	 HMRQXvDavvAIby0FxNQFeOEV62Y7hSuMDIoly6OoIfR6rYhS/y05kpE99RlHukMx+e0yH
-	 Lbqx1kZGgmFzsEctEP4YmTS7o1DJVb4JJ1hyodT+YVdS3llkGk2qLrOunBm7uQ+IOcDnx
-	 o6tdJZOGZKH2CLvrGqcCoIbGca6FhS/OT0cq4nk7qQ82PYOCcooENbsayMiVcCMyKwe82
-	 KQAwUYL1Q5oXTJ4N6lhLJha8iIQPhhDJsTdX/kw6rmrkdTRFTycNUNeRqv+J32aF0/g==
+	t=1792773840;
+	b=qgURtSSasXD9vIV4BKi7gdm7z/LwDmI4vGruFc6rgcDDZci0CZ9N7bW9UEmM1SdNkthV
+	 ExUHQ/O7dvBsDn/hLXfd3JRTJ17mykLS3ooETXPPm2+JBu9jrcmGCsNCfAm2nhKIilkk7
+	 XIESwC0Zw2JTrL/ZErE81C6AIZdq3goY3knPcJBPYWgrsWDM6Y+DJ/v7lNXOjpRWHlh71
+	 PyL1XnANAUAln7tPJk22GOu+gaRrecA+d/8VKY+kWzNIx+RpvxZDSJhY5+fD6/F+DjA8T
+	 GnGyXrTVKGWYsNY9nU6yu1VAuTURLIwng7bK7Vm59Inj1HSBx5G5NJwJmxBO3ZPDb4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773840;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wQdCOl8S2DcCJgYZs5naSlQBCwXJvMSRLWOENrr89zE=;
-	b=HdGvu7a5r8Y3jJA3ijX3gOQIJ35jDzojnFXDBno/dle83zTH2qXH8Gxz+8J2YMp0m63E
-	 WEzOhQPdw5f0ruT/kltR66qLE0lMoht2ZZX9hpWcZfWSmDZnaTZeZu08z//Gicl+/egW5
-	 iCtJOX00/U7bElTzjHcVpX/621EtyEQ0MUJomQcCUq8HxTT8kdia0Xd6Z75jKXO1DOTuU
-	 /pTh5osPDXElx48GJ03rgRBPnuuPUV2gRkS08s4Wp/zam+iP32ni2H3EYVdxFrgvo3W03
-	 +UYvLnXEto9CqCbeFcSCLe23oOvSziTgmq/ifOyoMIW43AAx7RXt7X4fzshP9BQA9Bg==
+	bh=23MZ6tabc5fDX09NbHB1N/MCXt0j8dILNSXHGbPQCwU=;
+	b=1ZigaZ0dfN07SCusSba8krIy7jZvNF/NfuCxCjaa301hrFDJtigOONV5eexHJeu3J9t5
+	 iV/uaBzNc2OrH3G8EVMzW8iTXC+C04mgXuqlw5LIx8O2f3xfmTbbMXeFHK1QIfzq+Vdag
+	 D9Hl5olfNU9Hfz+Hcs+O6jdvs2Iyna0U2YA/aWpMySXyuGfNiZSxmDqiGjRbXIZ6+U7cu
+	 qpfBZpw0RVE26/R7hlmhdbYcV21f5UoFBt+oNhNWmNOiDPhJUvoRkxdxjk0p5VFYEg/ts
+	 aNSOvSLQNyf5RKyBFYPuO7m4RoeQbIomp5tMTaL6NJ8EztcjeSAnC2niWjUfEuFWRZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezkpBmEJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vU7kzo7j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBEE606A31F;
-	Fri, 23 Oct 2026 16:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D46F60A380D;
+	Fri, 23 Oct 2026 16:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezkpBmEJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4711F01825;
-	Fri, 23 Oct 2026 16:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vU7kzo7j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11C71F031E4;
+	Fri, 23 Oct 2026 16:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773837;
-	bh=wQdCOl8S2DcCJgYZs5naSlQBCwXJvMSRLWOENrr89zE=;
+	s=korg; t=1792773840;
+	bh=23MZ6tabc5fDX09NbHB1N/MCXt0j8dILNSXHGbPQCwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ezkpBmEJo9XpClLhpjWGNlGrrlqx5WEMyixYdlkycRdW4rdVXW7BNaBu2Y2345aI3
-	 bqe7P2d7ipEuZqW/w0j8CNYcRz6Ql7wl4Pqf9dxeES/NFawa8D5WuY0gwuLkFMIF8e
-	 TuKay+DgI8o+0lCSmhuMOufm69mnIwNDYX4WsTPE=
+	b=vU7kzo7j744GREWdHwIA/2YKcjeYwYfoTKrOFituCuEZDpq+dHX6G6NBumoTRkSAP
+	 R4lxcICmQmCFXwct83cQYdDFp3GjSbsX46dx7IMV4DaAfSoGVishXQKtMiQqck6PQH
+	 zBOtkzU1UNJZHPlG1YmC06f6Q30dm9EWSNd5zsLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	HyeongJun An <sammiee5311@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 032/193] ASoC: cs42l56: Put the Limiter Cushion control on the limiter register
-Date: Fri, 23 Oct 2026 18:35:09 +0200
-Message-ID: <20261023163714.960297930@linuxfoundation.org>
+Subject: [PATCH 6.18 033/193] ASoC: cs42l52: Fix the NG Type Switch bit
+Date: Fri, 23 Oct 2026 18:35:10 +0200
+Message-ID: <20261023163714.983342262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -70,42 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 203436d2aeb7093290459e344e1912a418a6ebfd ]
+[ Upstream commit 8b08b98796d2da103f2432550c14a7c687e72080 ]
 
-The Limiter Cushion control writes bits 4:2 of the ALC Thresholds
-register. Those bits are ALCMIN, which the ALC MIN control owns. The
-datasheet puts CUSH at bits 4:2 of the Limit Thresholds Control
-register, next to LMAX, which the Limiter MAX control already uses.
+The NG Type Switch enum selects between "Apply Specific" and "Apply
+All", which is the NGALL bit. The datasheet puts NGALL at bit 7 of the
+Noise Gate Control register. The enum uses bit 6, which is NG, the
+noise gate enable owned by the NG Enable Switch. cs42l52.h names it
+CS42L52_NG_ENABLE_SHIFT. cs42l56 has the same Noise Gate register and
+puts its NG All Switch at bit 7.
 
-So setting the limiter cushion changes the ALC minimum threshold, and
-the cushion itself cannot be set.
+So changing the noise gate type turns the noise gate on or off, and
+NGALL cannot be set.
 
-Use CS42L56_LIM_THRESHOLD_CTL.
+Use bit 7.
 
-Fixes: 272b5edd3b8f ("ASoC: Add support for CS42L56 CODEC")
-Link: https://statics.cirrus.com/pubs/proDatasheet/CS42L56_F2.pdf
+Fixes: dfe0f98b8d2e ("ASoC: Add support for CS42L52 Codec")
+Link: https://statics.cirrus.com/pubs/proDatasheet/CS42L52_F2.pdf
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261008130953.2446692-2-sammiee5311@gmail.com
+Link: https://patch.msgid.link/20261008130953.2446692-3-sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l56.c | 2 +-
+ sound/soc/codecs/cs42l52.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
-index 98fa812bc07b8..4e46b8ba92485 100644
---- a/sound/soc/codecs/cs42l56.c
-+++ b/sound/soc/codecs/cs42l56.c
-@@ -481,7 +481,7 @@ static const struct snd_kcontrol_new cs42l56_snd_controls[] = {
- 			0, 0x3f, 0, 0),
- 	SOC_SINGLE_TLV("Limiter MAX", CS42L56_LIM_THRESHOLD_CTL,
- 			5, 0x07, 1, alc_tlv),
--	SOC_SINGLE_TLV("Limiter Cushion", CS42L56_ALC_THRESHOLD,
-+	SOC_SINGLE_TLV("Limiter Cushion", CS42L56_LIM_THRESHOLD_CTL,
- 			2, 0x07, 1, alc_tlv),
+diff --git a/sound/soc/codecs/cs42l52.c b/sound/soc/codecs/cs42l52.c
+index a9ffba62aaf88..4a7cfd52e583e 100644
+--- a/sound/soc/codecs/cs42l52.c
++++ b/sound/soc/codecs/cs42l52.c
+@@ -290,7 +290,7 @@ static const char * const cs42l52_ng_type_text[] = {
+ };
  
- 	SOC_SINGLE("NG Switch", CS42L56_NOISE_GATE_CTL, 6, 1, 1),
+ static SOC_ENUM_SINGLE_DECL(ng_type_enum,
+-			    CS42L52_NOISE_GATE_CTL, 6,
++			    CS42L52_NOISE_GATE_CTL, 7,
+ 			    cs42l52_ng_type_text);
+ 
+ static const char * const left_swap_text[] = {
 -- 
 2.53.0
 
