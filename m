@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774656;
-	b=ffSwdOHBtRIWbPi+Htf0MkuS1F+r8dPdbnSDF/UBnrfdXpfk82iac/r0nR/9HoQMM1Fw
-	 3WTG2TlW9C2mJoHlk5fGXqVgSmj6YmBnn22YLpINlOY9CLM4qCg8GupQSo2dvHQqNpkHq
-	 i+F328V+0BixcEVnB1LngfvL+dyzyQUievpLfVadTgY0Br/tWQmB5YhykU92JG/LXduPj
-	 6WkHmV2vm/ubZWA4lfQXBu+CD+dXKN4MDmGYuOxfh3vjFrZwhnls2C/AhklVslnPKqJe+
-	 /NkottQkELpHc4UEXW+tAfNyH53zkqCvb9Om/Gy9iKjJgy58Or//Dq06BGCJrDE2OPA==
+	t=1792774659;
+	b=ERwAw0MYGss0T3udNIRCJIshP8XJCdL7f3wiFZAbB0n1G0dDwhxOhetBC1ok0wtD5ZC5
+	 BoW73UAR2gprCo/N4++9C9Rb4+euvnewCdpv8Znt0oyzeR99KJha0FqyN4sckdoZDE2PX
+	 dczNJ5+6aeU76F/gqHbKWaKYEz691gOFoyZni0NFvKsBr8YHVMiwvhzhu5FG7ifOtalv1
+	 bJ2+8J/kJ3TRtN55DfFps/Y94p+S0JBMktTXwRt/yVTXK0TpvhWGvlzV/2PXz1daADGyv
+	 TmMHkZt911p/JZ5SJz6mgWleq61q90WQW6XFLeIhv78/j2F7V2MJdqwuiL3n4emLiBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774656;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774659;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RL+V2+ekVnfnN2NfomDdPebxVvopoJGQndMo7KEMnoc=;
-	b=M4scS9Y+23UJAW3wz23FEQAGmbGEfeP8r7KAcS6bZ+EDX8sDs35H7XICnyHXiyvvhl1U
-	 PY19XVE//7KfaJuJcnqXSmGP9VLiTp8JhbTlsiGELrC+AMLZVsiJ0FstbueN1EGcW0ZEH
-	 NiRO71yl9BNKkQapj1/ZhofLy/ebVe8ZGcnPhuqTnGd77is6OIwoW8O+L9Q04XclYpFJR
-	 fv2JwReEy1v8zwe0TbjnV94/w1SMh/MdjfdLcEYWQMTIiz5D9comkoRjlAAlrl0Qmnim0
-	 XFIu7zff8JVMUclTeDHeJSUvKzlwd/epqiueq/PgVIlZK2P6TFnksioy2q+wrWjHE7A==
+	bh=6q/du3sZ7G9NzNhDK3feKyGlyMsMuGZK7X5pMXhgxhQ=;
+	b=fwGuJmf4kglxQFUU8LUQp3i9mjeZ2zITm/K+jYUzK5oF9IDPQfPOkOplNE+67icvXr2R
+	 rAc3J0G8EIBs1gh6ihqjq5eT3TB3TEPcZonMYrFASp3PAx2ggUms3Zkd4KUTL59v+nQA9
+	 fB9lzJDADBcTLGgtboo3CvPAGA25ksFz3fUJI3tnUIcQl5VLu6JwhNFhHfFu3EOjwvrsf
+	 enc5vEWiFBe7H2pad7DdWoF81EvDbHyM/aSi8fiF/dkVWSTjqP83T7l6k1rjbL7XV4/Az
+	 rJZ+SyTqBvtokuYdoSHfMlPSYDYZpXgFR9lq1n99/ypshpKIolOfCau726f7X3e8NUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WAi3WpUS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F6gJ8q9n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58952606A31E;
-	Fri, 23 Oct 2026 16:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C922606A31E;
+	Fri, 23 Oct 2026 16:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WAi3WpUS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F891F01828;
-	Fri, 23 Oct 2026 16:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F6gJ8q9n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9858D1F01825;
+	Fri, 23 Oct 2026 16:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774656;
-	bh=RL+V2+ekVnfnN2NfomDdPebxVvopoJGQndMo7KEMnoc=;
+	s=korg; t=1792774659;
+	bh=6q/du3sZ7G9NzNhDK3feKyGlyMsMuGZK7X5pMXhgxhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WAi3WpUSSUCu5ETdFSxruzFkNdfCwMS02idBHxULLEUVsWxdpiFethQRo0JkXrgfK
-	 TdkZ7LihP1b3aiaojBrAdH6EQ47KEHje8VIZ+JYFFkDQX0VNkr3umglrMr0LOZZyCI
-	 l2UyFKpoIhPfFYD+fQ8iwTs/h0UCmNHi+1Nn0kmU=
+	b=F6gJ8q9n9+TEpBYhun9KZGLXmHTP3STBM4HAr8W/4akSpaaTIeNRuoChqJO+v/3qr
+	 0UAXWf9cO6k2X35PeCanu1uWvC19tiaXoZxpHEtzrEmJyh3ck56g1HQCrPEVj7HKuo
+	 gfW+CuN4iFxf0gYk2CGABKbiBDJnjyw6kpP1aZXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 114/242] ext4: free the sbi after a grace period
-Date: Fri, 23 Oct 2026 18:39:16 +0200
-Message-ID: <20261023163716.475993788@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 115/242] eventfs: Free the eventfs_inode after an rcu grace period too
+Date: Fri, 23 Oct 2026 18:39:17 +0200
+Message-ID: <20261023163716.498723486@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,173 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit c17b44266a1f9fcb49b894d4611d1254bf1aa313 upstream.
+commit 2cd88c498ecff8e22bf4c397b8eb226db70ac343 upstream.
 
-ext4_get_link() follows a symlink that keeps its target in a data block
-in rcu pathwalk mode with ext4_getblk(EXT4_GET_BLOCKS_CACHED_NOWAIT).
-That reads s_mount_state in the ASSERT() of ext4_getblk() and again in
-ext4_es_lookup_extent(), and the lookup bumps the extent status hit or
-miss counter, all through sb->s_fs_info.
+tracefs_d_revalidate() reads ->is_freed of the eventfs_inode that
+dentry->d_fsdata points to, and ->d_revalidate() is called in rcu
+pathwalk mode with nothing but rcu_read_lock() held. The dentry itself
+stays around for such a walker, but tracefs_d_release() drops its
+reference to the eventfs_inode when the dentry is killed, and
+release_ei() then frees it after a grace period of eventfs_srcu. An
+SRCU grace period doesn't wait for rcu_read_lock() sections, so the
+walker can read an eventfs_inode that is already gone.
 
-ext4_put_super() destroys those counters, clears sb->s_fs_info and frees
-the sbi without waiting for a grace period. A pathwalk that is still in
-ext4_get_link() when the last reference to the mount goes away then
-dereferences a NULL s_fs_info, the freed sbi or the destroyed percpu
-counters.
+With a pathwalk held up in tracefs_d_revalidate() while the dentry goes
+away:
 
-With a pathwalk held up in ext4_get_link() while the last reference
-goes away:
-
-  KASAN: null-ptr-deref in range [0x00000000000000a8-0x00000000000000af]
-  RIP: 0010:ext4_getblk+0xf0/0x640
+  BUG: KASAN: slab-use-after-free in tracefs_d_revalidate+0x76/0x90
+  Read of size 1 at addr ff1100010152d8d0 by task walker/97
   Call Trace:
    <TASK>
-   ext4_get_link+0x26c/0x410
-   pick_link+0xf96/0x1780
-   step_into_slowpath+0x9b8/0x1250
-   path_lookupat+0x484/0xb00
+   tracefs_d_revalidate+0x76/0x90
+   lookup_fast+0x320/0x640
+   path_lookupat+0x160/0xb00
    filename_lookup+0x1f1/0x5b0
    vfs_statx+0xd7/0x3b0
    vfs_fstatat+0x4d/0x90
    __do_sys_newfstatat+0xa0/0x100
    do_syscall_64+0x10e/0x5e0
    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  [...]
+  Allocated by task 1:
+   __kmalloc_cache_noprof+0x249/0x560
+   eventfs_create_dir+0x7a/0x590
+   event_create_dir+0x2fb/0xcf0
+   trace_add_event_call+0xbf/0x150
+  [...]
+  Freed by task 11:
+   kfree+0x1db/0x5b0
+   srcu_invoke_callbacks+0x3a3/0x620
+   process_one_work+0x937/0x1810
+   worker_thread+0x4f1/0xd60
 
-So far that has been hard to hit. umount(2) waits for a grace period in
-namespace_unlock() before it drops the mount, so only a mount whose last
-reference goes away elsewhere, like the close of a file or a chdir out of
-a lazily unmounted directory, can race a walker.
+Before commit 8e556432477e ("eventfs: Use SRCU for freeing
+eventfs_inodes") release_ei() used call_rcu(), which covered the walker,
+while eventfs_iterate() needs the SRCU grace period. Wait for both and
+chain call_rcu() from the SRCU callback.
 
-Keep sb->s_fs_info and free the sbi together with the extent status
-counters after a grace period. Split the counters out of
-ext4_es_unregister_shrinker() for that. The shrinker still gets wasted
-in ext4_put_super(), the counters go with the sbi.
-
-Fixes: 6493792d3299 ("ext4: convert symlink external data block mapping to bdev")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-1-7446d2d335e6@kernel.org
+Fixes: 8e556432477e ("eventfs: Use SRCU for freeing eventfs_inodes")
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-4-7446d2d335e6@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h           |    2 ++
- fs/ext4/extents-test.c   |    2 ++
- fs/ext4/extents.c        |    1 +
- fs/ext4/extents_status.c |    7 ++++++-
- fs/ext4/extents_status.h |    1 +
- fs/ext4/super.c          |   13 +++++++++++--
- 6 files changed, 23 insertions(+), 3 deletions(-)
+ fs/tracefs/event_inode.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1768,6 +1768,8 @@ struct ext4_sb_info {
- 	struct list_head s_es_list;	/* List of inodes with reclaimable extents */
- 	long s_es_nr_inode;
- 	struct ext4_es_stats s_es_stats;
-+	/* ext4_get_link() reads the sbi in rcu pathwalk */
-+	struct rcu_head s_rcu;
- 	struct mb_cache *s_ea_block_cache;
- 	struct mb_cache *s_ea_inode_cache;
- 	spinlock_t s_es_lock ____cacheline_aligned_in_smp;
---- a/fs/ext4/extents-test.c
-+++ b/fs/ext4/extents-test.c
-@@ -156,6 +156,7 @@ static void extents_kunit_exit(struct ku
- 
- 	sbi = k_ctx.k_ei->vfs_inode.i_sb->s_fs_info;
- 	ext4_es_unregister_shrinker(sbi);
-+	ext4_es_destroy_stats(sbi);
- 	deactivate_super(sbi->s_sb);
- 	kfree(sbi);
- 	kfree(k_ctx.k_ei);
-@@ -345,6 +346,7 @@ out:
- 	k_ctx.k_data = NULL;
- 
- 	ext4_es_unregister_shrinker(sbi);
-+	ext4_es_destroy_stats(sbi);
- out_deactivate:
- 	deactivate_locked_super(sb);
- 	kfree(sbi);
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -6297,6 +6297,7 @@ EXPORT_SYMBOL_FOR_EXT4_TEST(__ext4_ext_d
- EXPORT_SYMBOL_FOR_EXT4_TEST(ext4_ext_zeroout);
- EXPORT_SYMBOL_FOR_EXT4_TEST(ext4_es_register_shrinker);
- EXPORT_SYMBOL_FOR_EXT4_TEST(ext4_es_unregister_shrinker);
-+EXPORT_SYMBOL_FOR_EXT4_TEST(ext4_es_destroy_stats);
- EXPORT_SYMBOL_FOR_EXT4_TEST(ext4_map_create_blocks);
- EXPORT_SYMBOL_FOR_EXT4_TEST(ext4_es_init_tree);
- EXPORT_SYMBOL_FOR_EXT4_TEST(ext4_es_lookup_extent);
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -1882,11 +1882,16 @@ err1:
- 
- void ext4_es_unregister_shrinker(struct ext4_sb_info *sbi)
- {
-+	shrinker_free(sbi->s_es_shrinker);
-+}
-+
-+/* ext4_get_link() bumps the hit and miss counters in rcu pathwalk */
-+void ext4_es_destroy_stats(struct ext4_sb_info *sbi)
-+{
- 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_cache_hits);
- 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_cache_misses);
- 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_all_cnt);
- 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_shk_cnt);
--	shrinker_free(sbi->s_es_shrinker);
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -91,6 +91,14 @@ static void free_ei_rcu(struct rcu_head
+ 	}
  }
  
++/* read under eventfs_srcu and, by tracefs_d_revalidate(), in rcu pathwalk */
++static void free_ei_srcu(struct rcu_head *rcu)
++{
++	struct eventfs_inode *ei = container_of(rcu, struct eventfs_inode, rcu);
++
++	call_rcu(&ei->rcu, free_ei_rcu);
++}
++
  /*
---- a/fs/ext4/extents_status.h
-+++ b/fs/ext4/extents_status.h
-@@ -238,6 +238,7 @@ static inline void ext4_es_store_pblock_
- 
- extern int ext4_es_register_shrinker(struct ext4_sb_info *sbi);
- extern void ext4_es_unregister_shrinker(struct ext4_sb_info *sbi);
-+extern void ext4_es_destroy_stats(struct ext4_sb_info *sbi);
- 
- extern int ext4_seq_es_shrinker_info_show(struct seq_file *seq, void *v);
- 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1279,6 +1279,14 @@ static void ext4_flex_groups_free(struct
+  * eventfs_inode reference count management.
+  *
+@@ -112,7 +120,7 @@ static void release_ei(struct kref *ref)
+ 			entry->release(entry->name, ei->data);
  	}
+ 
+-	call_srcu(&eventfs_srcu, &ei->rcu, free_ei_rcu);
++	call_srcu(&eventfs_srcu, &ei->rcu, free_ei_srcu);
  }
  
-+static void ext4_put_sbi_rcu(struct rcu_head *head)
-+{
-+	struct ext4_sb_info *sbi = container_of(head, struct ext4_sb_info, s_rcu);
-+
-+	ext4_es_destroy_stats(sbi);
-+	kfree(sbi);
-+}
-+
- static void ext4_put_super(struct super_block *sb)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
-@@ -1372,7 +1380,6 @@ static void ext4_put_super(struct super_
- 	ext4_stop_mmpd(sbi);
- 
- 	brelse(sbi->s_sbh);
--	sb->s_fs_info = NULL;
- 	/*
- 	 * Now that we are completely done shutting down the
- 	 * superblock, we need to actually destroy the kobject.
-@@ -1385,7 +1392,8 @@ static void ext4_put_super(struct super_
- #if IS_ENABLED(CONFIG_UNICODE)
- 	utf8_unload(sb->s_encoding);
- #endif
--	kfree(sbi);
-+	/* ext4_get_link() reads the sbi and the counters in rcu pathwalk */
-+	call_rcu(&sbi->s_rcu, ext4_put_sbi_rcu);
- }
- 
- static struct kmem_cache *ext4_inode_cachep;
-@@ -5778,6 +5786,7 @@ failed_mount_wq:
- 	}
- failed_mount3a:
- 	ext4_es_unregister_shrinker(sbi);
-+	ext4_es_destroy_stats(sbi);
- failed_mount3:
- 	/* flush s_sb_upd_work before sbi destroy */
- 	flush_work(&sbi->s_sb_upd_work);
+ static inline void put_ei(struct eventfs_inode *ei)
 
 
