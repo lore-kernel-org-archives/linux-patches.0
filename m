@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774068;
-	b=wTPM+LH4ux+0YZtWxKy4fdS1M85CChxCc3VK/9HmMyFPJTVkChrsiS94/iMz9n/2/zys
-	 WgRxygIJ776H1QL5zzUyAqP4MKLe8RWAQzdVxG191BBEE4+02lCoWd8wD0b9dN5IFVnRW
-	 NOouuQXnf9qxcpEsoyY7lL8wXT9fuKOObrO8+l9c7Q/mIYpzwDhXMX1z8ciEhJWO5MEc3
-	 CV1ERiMPkku4fiEkKyGMcePbH/FkhCwIpV/gYeWI57w6vcMOkybrnOfqNtlCuvmhTAU7G
-	 SwWjdeNxVo//ZBYvUCMSJ6dm/WUM31CyhfTbZe7BA/no+cXbyGO1zMopZm2dMpwcm+Q==
+	t=1792774071;
+	b=TqgvHof98nlv46N9WsvUZCQt/bnnWfv1pxQPsU2NZPLXisvsAUzEjKCId+XzI1Qqct6D
+	 CPfDeJ5rITObK6K5xAIknr1LrTE4aNUH7A7Jg393ILdAFXTsi/ExBm4ITsItnowTfRkkp
+	 nr92S/Cfu0NBUx9A7R+dJoc5XQ4X2TykH/k/R301AStbR2+gp6R1Li8iA4KEOG2NKBwZy
+	 etUZGOnwM4ELYiKEz9qr0w1w94G9aweXvEwCwF8arNp8d+WVXw4/Vj4VJdSy3BmcoyAyU
+	 SGouLEuAdheEXNBrv0vXtstkdiWdxjsGU9I6mGS2xs/Ehu/bvf1jB+PdeShUm8B6InA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774071;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WkiarrDc+iG75qK2XfNJK3I8g2GU7k2VJdQQ0w5BkCE=;
-	b=l8z64VsFeyn69CnfNruHoP8eLRI/kr8UlxjBdTBhPgVsNAHFUyQH9Z5XWkdNzGsbPGin
-	 g5jVP4/68XhKJ00n7yN/bTvl929SD8Mz+Ud5JSaPStVu2kSKJL64A3weCQeJuSscj2rgG
-	 HD+3apmF0sNB7kt1LXDCYRSwp0WUuIYQMiSaAsMX64mr3NCpac24nt14i57WirbjkDfoO
-	 4R0k25RjgvxL8wTG9OjKUDupu/uWGkTRYM7qloTB7renRolvVbyL5nlFZBwo8r/JRWPg6
-	 WLLk+0a2LHCXuU4KCf4ZUObl8Erg2Jipfjk1Pthp6cr2Dt3yFBXHJuOn01QyPlZEIkA==
+	bh=Q0N7TlE+MVhlxSQe3v0F8czSaJEBBFMpv2mWCXrRxDY=;
+	b=hG8oOU1Iz2A23DlhnfbHF3FArRKBLgl0tFGKXEAIgVreHttox87F5x5BC5qlgMAOQ4pU
+	 cZ7T+bSTo60awZm1E4YoTMsZLYSTfxW2LhdqRXQt+SYzTe0QAwnR07nh50WoeYaYyDlX2
+	 pGwjXqqBgjQusMcewZNQ/xxBXUQLmB9RoGSL0FDC+eb23nkDQlSUQhT+dXOdDVeMzyuDy
+	 3HvnFQr/FMkOnY7b8PZO0nvoD+5xMJpvknEdSdc8Tv6Kdp+Amx4sKvVqwi6qlb3jXBADf
+	 k2KbGSzploLAuHipSGA723JKFar8EwWe7S62EOS2cbuZoP57yIsK2iArtJuqIhndbGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bfB3iZ8W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=estHrNC7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87015606A328;
-	Fri, 23 Oct 2026 16:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E340606A31E;
+	Fri, 23 Oct 2026 16:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bfB3iZ8W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E721F01828;
-	Fri, 23 Oct 2026 16:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=estHrNC7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC48B1F01825;
+	Fri, 23 Oct 2026 16:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774068;
-	bh=WkiarrDc+iG75qK2XfNJK3I8g2GU7k2VJdQQ0w5BkCE=;
+	s=korg; t=1792774071;
+	bh=Q0N7TlE+MVhlxSQe3v0F8czSaJEBBFMpv2mWCXrRxDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bfB3iZ8WKpsX6QKytaMpmAYryshWQmpzTRHRCOOAC4FDdaOeQp6ZNqdQ7NwBb8h6n
-	 DAR0fbIgMHFRp0W2WTUBP6IfYgnQDTqx5E0NT7/AjJIZRGvk0HUAgLHSJmfOyPmIdH
-	 pt6Xj6rXACV3GZm3IFePSC9IAKn3U2sekWL//CVQ=
+	b=estHrNC7eTM48ZtE+j7clUXgPLtempaii+OvZtpDtOgOEtdV8EEna9k22u5IuKerq
+	 G3/NzoIyRYDePZelo0CBTuI2T97NzkLGu+fubs5MOeI7M1z0T6rNd+cV5zBHAOyzPG
+	 OL/G0Vgn4mL+y4fOzPJjojFzRl2Eo6I5t+emgYDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	David Carlier <devnexen@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 111/193] tracing: Fix the shift out of bounds in the log2 histogram modifier
-Date: Fri, 23 Oct 2026 18:36:28 +0200
-Message-ID: <20261023163716.834783199@linuxfoundation.org>
+Subject: [PATCH 6.18 112/193] tracing: Take trace_types_lock when dropping the buffer_meta reference
+Date: Fri, 23 Oct 2026 18:36:29 +0200
+Message-ID: <20261023163716.857121087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -67,70 +67,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 647c2f97fcb94bc642cefe6db004999974563f06 upstream.
+commit 2afe7575fb24b9d0476ae4a3a9862f7997216aa4 upstream.
 
-The .log2 key modifier files a value under its base-2 order:
-
-  # echo 'hist:keys=bytes_req.log2' > events/kmem/kmalloc/trigger
-
-hist_field_log2() computes that as ilog2(roundup_pow_of_two(val)). The
-out-of-line form of roundup_pow_of_two() is
-
-	return 1UL << fls_long(n - 1);
-
-which shifts by 64 on a 64-bit kernel both when n is 0, where n - 1
-wraps to ULONG_MAX, and when n is above 2^63. Both are ordinary keys,
-because the field fetch hands every value over as a u64: a syscall
-argument of 0 reaches the first, and one above 2^63 reaches the second.
-
-Keying sys_enter_lseek on offset.log2 and passing 0, 1, 2, 3, 1000,
-2^63+1 and U64_MAX gives
-
-  { offset: ~ 2^1  } hitcount:          1
-  { offset: ~ 2^10 } hitcount:          1
-  { offset: ~ 2^2  } hitcount:          1
-  { offset: ~ 2^0  } hitcount:          4
-
-Keys above 2^63 land in the lowest bucket. With CONFIG_UBSAN_SHIFT=y
-the shift is also reported:
-
-  UBSAN: shift-out-of-bounds in include/linux/log2.h:57:13
-  shift exponent 64 is too large for 64-bit type 'long unsigned int'
-   __ubsan_handle_shift_out_of_bounds.cold+0xdd/0x1cb
-   hist_fn_call.cold+0x8b/0xd9
-   event_hist_trigger+0x1cc/0x790
-   ftrace_syscall_enter+0x197/0x360
-   do_syscall_64+0x402/0x4b0
-
-Use order_base_2(), which is ilog2(n - 1) + 1 for n > 1 and 0 below
-that. It returns what the old expression returned on every input the
-old one was defined for. Where it was not, 0 stays in bucket 0, which
-is where x86_64 had been putting it, and the keys above 2^63 move into
-bucket 64.
+tracing_buffer_meta_open() drops the trace_array reference with
+__trace_array_put() when ring_buffer_meta_seq_init() fails, without
+holding trace_types_lock. Use trace_array_put() like every other open
+error path.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260916002735.808520-1-donggeunyoo.kernel@gmail.com
-Fixes: 4b94f5b7b4a5 ("tracing: Add hist trigger 'log2' modifier")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
+Link: https://patch.msgid.link/20260914133506.4865-2-devnexen@gmail.com
+Fixes: 950032ffcee7 ("ring-buffer: Add output of ring buffer meta page")
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    2 +-
+ kernel/trace/trace.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -284,7 +284,7 @@ static u64 hist_field_log2(struct hist_f
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -7127,7 +7127,7 @@ static int tracing_buffer_meta_open(stru
  
- 	u64 val = hist_fn_call(operand, elt, buffer, rbe, event);
- 
--	return (u64) ilog2(roundup_pow_of_two(val));
-+	return order_base_2(val);
+ 	ret = ring_buffer_meta_seq_init(filp, tr->array_buffer.buffer, cpu);
+ 	if (ret < 0)
+-		__trace_array_put(tr);
++		trace_array_put(tr);
+ 	return ret;
  }
  
- static u64 hist_field_bucket(struct hist_field *hist_field,
 
 
