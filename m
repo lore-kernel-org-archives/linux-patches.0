@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773878;
-	b=akjM66hp4xdZBgVmdq4CAndM9FrZ9+PlFcEa1zQF20qKH9/+KGschCXlxfFOqEfCUvZq
-	 eKrEQYETq9K4K+TGoYVkVqHJo/HWQV0rkaiDOf1sL1/wj5+tpYA/dmoF0XT/Xj1EbiPyI
-	 ug13rDWm7ZDsCn+97QTeHzlosvvjimeGhxKMhQ/Jc589set+vuuZwoKA9EN3Dp0/rATAw
-	 JI6EwqKVu/2FGOjvsyjOWIECqd21ynLwhlf6JILsR7baI9OiKT5pNWqADidNQygzX9C5H
-	 0JkqErweouUjldExHnkXZ0ykjFVdbzxTKwRGYVLF0XAS42ci31uhmES+vrGJmL2dcSA==
+	t=1792773881;
+	b=lt7MSC441pysN1cM0CzMirKXJCfSgx00d1nYqVAVfEXt0Yq+H2VccL4wW0bcVY7g9Q+s
+	 eo56Q3LnyFbeD6vdQR+flyxMCtnGquYxiJvjdoW0hbn8KJR5oYIAuikyBOFke2aqInDUY
+	 Glw4X2EfY5jskuwwDrSq1H5x9/r+R9V/r8dT4ER/eMIyZuC0/gatMnro77yr138iEfDM7
+	 08kpAOWgPGSE1qmU9v9t9ufY0QeGZlDWKDtX4M41WhJiIYNXqBzbp43UoIsTuXwH+pouX
+	 TlWXjFMKkzRW5EJKaIBHmG+EfOyKop6fxEJFG8KKSw5O3FWY7Q2wAC38ZM/ixL/5Omg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773881;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bc+Hvb6ExZn7/bwQ3oc1bxytZQVNNrInVHWOjUuZvTY=;
-	b=aiRfEgP5Mw8O7sQ/Y6rnB52+ClUj3Ga+2AzqEueL5tXN7+P1WLyjkhxGW2AAI72D8jtW
-	 L+FWqUUQ0QjtZsdpcvyz64khfUqMDzVKNkUd5aayUc/fQDFiq2Z39BlaJzTTWhy+CNAZo
-	 4rMTWYBWDosIJKbCXh8KgXARz/C0STVG6J0nIeTIOVU4pafaPcIA8827f4XEazo9r9x9J
-	 Y63DGWjAUOIk6d18J/p9iFJV4Qp5dZq0YMlnKyiVpSlLxjVbDpwNzU8mLxIS8l74HAc/c
-	 mdkcdyFDYf75TC1fD2DlvZ1Ru0NIB+JSN47+cgXEVCdBxf5jSXEC1rfsNTEv0ZjTFuQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=a9BO2YsF1dc0SqGhQCqQSXHl9nJnrm4dN1oO5bCzpG8=;
+	b=BOFdwGgFHrkQC3dnxziHxdKBpPFseIQ6GFADyCEmkyRDuv8Ps3Bct3gyTHZw9H7vwMIq
+	 khvDcsJpmrI7RHWc3XojfLrg5jSzQ+NUOJcYG03bJmR7AZ+866S9w0Jz6znu9C4U7IQwm
+	 lcKFmS+jUpOQ9ogKu0Wton7zzoRF8TdM5L9JvtY0rjuTI403WUjnm7BFk/foGpYOFghP+
+	 vq5rMZzDS/C7/uwRcEUxDWtwbXE645UbD4UcUS+f4SkHHQU7XmDM+WpiKjlMKv18sOd9E
+	 xG8ikAHlryoJSGkkf34k+vGp1YtRJFlTbVIMyJo//vNlMaiDqmHD0OHP6AP198eymmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8Zt145f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e/3+QAwV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E91606A31A;
-	Fri, 23 Oct 2026 16:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E380B606A324;
+	Fri, 23 Oct 2026 16:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8Zt145f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A3E1F01825;
-	Fri, 23 Oct 2026 16:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e/3+QAwV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A241F01825;
+	Fri, 23 Oct 2026 16:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773877;
-	bh=bc+Hvb6ExZn7/bwQ3oc1bxytZQVNNrInVHWOjUuZvTY=;
+	s=korg; t=1792773880;
+	bh=a9BO2YsF1dc0SqGhQCqQSXHl9nJnrm4dN1oO5bCzpG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G8Zt145fMRhtlzMtKuuRtB7bkLHGh426dTD1n6fkvVwTzX4FspdfXbqc3wwK/X694
-	 q/XPb50hlduzWzwmku+UWMYpZ2/oYYFNrIiNDM5oFyxQ8oME4RUXAlnuhS06ROKMAz
-	 MpcWesffrp7+E9jo+mpWmhUgZVnSxzlw5nQyR8Yg=
+	b=e/3+QAwVIGIYRyPdAcB1O8ky0h2YnVGWNG2WCa0HwofyjqUnT+pgM9rGAaKjcyZ5G
+	 L+XbG1Lc70T5s9OnZ8fZ3/yNeDQV9CMh4MjAkxVAAXueSVdoSZjzuh1gMBxGeVrq8z
+	 JjSxiKXEmkQqxi7oq4LlLXal1hQO916Codm+F4WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Bor=C5=AFvka?= <boruvka.marek@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 045/193] ASoC: amd: yc: disable MSI on resume
-Date: Fri, 23 Oct 2026 18:35:22 +0200
-Message-ID: <20261023163715.272306481@linuxfoundation.org>
+Subject: [PATCH 6.18 046/193] drm/xe: skip eviction of a BO with no resource
+Date: Fri, 23 Oct 2026 18:35:23 +0200
+Message-ID: <20261023163715.297953378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -63,94 +63,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 
-[ Upstream commit 2a31b5378c6db9c4a8d399e5d10d32cd4b732bef ]
+[ Upstream commit 448e76cbdc6652ccd3ba337b7a6e1f028859f2ed ]
 
-BIOS/firmware may re-enable MSI in PCI config space during system
-resume even though this driver only uses legacy INTx interrupts. If MSI
-is left enabled with stale address and data registers, the device can
-write interrupts to a bogus address and cause an IOMMU IO_PAGE_FAULT.
+xe_evict_flags() switches on tbo->resource->mem_type to choose an
+eviction placement. An xe BO can reach eviction with no ttm.resource,
+e.g. an imported dma-buf BO whose resource was freed during teardown
+while its attachment is still live: the exporter then invalidates it via
+xe_dma_buf_move_notify() -> xe_bo_evict(), and the switch dereferences a
+NULL resource and faults.
 
-Clear the MSI Enable bit before reinitializing ACP hardware on system
-resume. Keep runtime resume separate because firmware does not restore
-PCI configuration on that path.
+A BO with no resource has nothing placed or mapped, so there is nothing
+to evict. Return an empty placement (num_placement = 0), mirroring the
+handling already used for non-xe scatter-gather BOs just above;
+ttm_bo_validate() then takes the pipeline-gutting path and returns 0.
 
-Fixes: c8212df7bc0f ("ASoC: amd: add acp6x pci driver pm ops")
-Reported-by: Marek Borůvka <boruvka.marek@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222119
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20261013125425.3541206-1-mario.limonciello@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Without the fix the xe_dma_buf@xe_test_dmabuf_move_notify_no_resource
+dynamic live selftest will fail with below stack.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000010
+RIP: 0010:xe_evict_flags+0xf4/0x140 [xe]
+Call Trace:
+ <TASK>
+ xe_bo_evict+0x40/0xa0 [xe]
+ ? ttm_bo_pipeline_gutting+0x71/0x180 [ttm]
+ xe_test_dmabuf_move_notify_no_resource+0x182/0x440 [xe]
+ xe_dma_buf_kunit+0x387/0x580 [xe]
+
+v2: Add Fixes tag and failure info in commit text (Matt Brost)
+
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Assisted-by: GitHub-Copilot:claude-opus-4.8
+Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Link: https://patch.msgid.link/20261012215014.1495677-5-niranjana.vishwanathapura@intel.com
+(cherry picked from commit dbcfaac6331f1fcb0c2fe3ad3e9adb1e5d43ec0c)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/pci-acp6x.c | 38 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_bo.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/amd/yc/pci-acp6x.c b/sound/soc/amd/yc/pci-acp6x.c
-index 1140ed1cbb3d1..b72b7ae1a2563 100644
---- a/sound/soc/amd/yc/pci-acp6x.c
-+++ b/sound/soc/amd/yc/pci-acp6x.c
-@@ -289,7 +289,7 @@ static int snd_acp6x_suspend(struct device *dev)
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
+index 6d3db1517c8a4..2496b24840be8 100644
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -313,6 +313,12 @@ static void xe_evict_flags(struct ttm_buffer_object *tbo,
+ 		return;
+ 	}
  
--static int snd_acp6x_resume(struct device *dev)
-+static int snd_acp6x_runtime_resume(struct device *dev)
- {
- 	struct acp6x_dev_data *adata;
- 	int ret;
-@@ -301,8 +301,42 @@ static int snd_acp6x_resume(struct device *dev)
- 	return ret;
- }
- 
-+static void acp6x_disable_msi_on_resume(struct pci_dev *pdev)
-+{
-+	u16 control;
-+
-+	if (!pdev->msi_cap)
++	/* No resource: nothing is placed/mapped, so there is nothing to evict. */
++	if (!tbo->resource) {
++		placement->num_placement = 0;
 +		return;
-+
-+	pci_read_config_word(pdev, pdev->msi_cap + PCI_MSI_FLAGS, &control);
-+	if (control & PCI_MSI_FLAGS_ENABLE) {
-+		dev_warn(&pdev->dev,
-+			 "ACP: MSI unexpectedly enabled after resume (flags=0x%04x), disabling\n",
-+			 control);
-+		control &= ~PCI_MSI_FLAGS_ENABLE;
-+		pci_write_config_word(pdev, pdev->msi_cap + PCI_MSI_FLAGS, control);
 +	}
-+}
 +
-+static int snd_acp6x_resume(struct device *dev)
-+{
-+	struct pci_dev *pdev = to_pci_dev(dev);
-+
-+	/*
-+	 * BIOS/firmware may re-enable MSI in PCI config space during
-+	 * system resume even though this driver only uses legacy INTx
-+	 * interrupts. If MSI is left enabled with stale address/data
-+	 * registers, the device will write interrupts to a bogus address
-+	 * causing IOMMU IO_PAGE_FAULT and interrupt delivery failure.
-+	 * Explicitly clear the MSI Enable bit before reinitializing
-+	 * the ACP hardware.
-+	 */
-+	acp6x_disable_msi_on_resume(pdev);
-+	return snd_acp6x_runtime_resume(dev);
-+}
-+
- static const struct dev_pm_ops acp6x_pm = {
--	RUNTIME_PM_OPS(snd_acp6x_suspend, snd_acp6x_resume, NULL)
-+	RUNTIME_PM_OPS(snd_acp6x_suspend, snd_acp6x_runtime_resume, NULL)
- 	SYSTEM_SLEEP_PM_OPS(snd_acp6x_suspend, snd_acp6x_resume)
- };
- 
+ 	bo = ttm_to_xe_bo(tbo);
+ 	if (bo->flags & XE_BO_FLAG_CPU_ADDR_MIRROR) {
+ 		*placement = sys_placement;
 -- 
 2.53.0
 
