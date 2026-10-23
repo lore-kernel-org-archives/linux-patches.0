@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775010;
-	b=by+svn5/2QFXnz11YTZN0/B7NTXgTCVa9Afsu+PDDbL8vkpo2bvsmaAftUVtD0y1Kacq
-	 3kPH8f/lPuxR/K6lMc4N2c+QQN5hav9oJ99roSjpy9x95iQZ8NNxws2tBpZpgYYghW2Y5
-	 yeZag1DdOMud5t3K1n3WYHyBPGJr/ROSAKboo4PSw/JBJBX1V94/hZ+8QnT+q7JKy/aLX
-	 fE/9Z4a5ttDT27HtZvBB55uieNiKDs9xv1qqeqYXLmCPyukaJY+yTUmYYUpe4BGvBbGC2
-	 BPFk5o8oqzTuOG7DLXMo7yDQ2+Nelk+WITIIvtwvcRcAeVgm1oYRDihdPWN8x6WKcng==
+	t=1792775013;
+	b=cb5nIrUk4e1a36+lZwRXCJoT5VtLWCvPecFgGDel3WqUoQUnx6/VfKE35PTBTKtb6dIG
+	 XnZ3vxfjQJay6+Pc5ZnPoOvYJtHPZNNU3dKSBzL1Wx+ct95wlR0w+xZc2ik1WfArmP+MA
+	 /fPsBTCxql1JgGCmzIgzCvSSEtnJaHHSiXALhXYaaONGpZP0Ie/4Hfa5XNYBwDI9CJrc1
+	 66PCFnHE1iJIRGRLCpHdLHWno1AhX3rfjGSKt8MwomZeXE7wD5nS5/ucj5jROzzZJAGpt
+	 nUeYWUVSSIt7B23dyuCRJlfkKQkN0kh0eHbPhcef/H6mcgg+Yi/JEgSvRi72I5IWPVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WuU+zrH9jGDA8Gnuitj7VFrdNDAbuHSJxGI5/c5iJ8M=;
-	b=3FddjHVAN2uH5fPwlXkwYMKFM6TRIYLmLsK/5SiGpidp7ZP5P6brSRj09KQq1h2bzi4A
-	 nJd+h5d83EkNhhp9KDLr2hlCPogpRm3CjFqvMbCx+Gai0zZMtX7SCxIrBqOSB/n0vfGM6
-	 rU1KApQ9pmwXRJ/cmpFVMG9qjl6vwvoEu7Irxkp5N7mxQWhT9IZZ4MjFiht2zqIBAdt+a
-	 b9IuF8urgtxYnJEa1RMgT3beTMZvIFvL8tl5jVm5xRVMWcCY+GtiW/JxMKvQSedXzdGIw
-	 wGRqrq4r7AoknOyYE6KtJL1+9h5DTBCO+S0aYnEmMN6+6uxfoon0kT3XzZc/0j7Jttw==
+	bh=wHmBbl/rIdc4r47YvlBhaVU3y4UcioRsXE+XyeWQi64=;
+	b=szl+zX2KUDJItKOEb2gte6bXjAvsV7QwB96rY4oYSxg42EwGINSTrhLAuT0461RfD06p
+	 lmKlimwnlmTF1tR1OqWaFwpVtxIlGOtWIlB8bEI9FXpP9m7lr86JdACQ4RESrpJ7dHSVn
+	 zUQF0aSM3h5Tk5NRP/cVKGkXWzUc+Ci99CT1HVq+zfgzXr8Uduk4uzN8Vc+D61sGw6Wb0
+	 L15BOTdB1Sgjkvud61wqk1Mwm3xA19vA40+mU0AM8Cx81lcreQt6TfP/BBNr+2an8JTNi
+	 nSfMEu5+H8Xel8TRU1MpiW7aYps5YdXNomtmef8+7obbHt2ili/WvNIw3wg4WKanYnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qOpZAuJT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F01ib3Ko;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78423606A31A;
-	Fri, 23 Oct 2026 17:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CCD606A31B;
+	Fri, 23 Oct 2026 17:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qOpZAuJT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59D81F01825;
-	Fri, 23 Oct 2026 17:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F01ib3Ko
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72CC1F01825;
+	Fri, 23 Oct 2026 17:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775010;
-	bh=WuU+zrH9jGDA8Gnuitj7VFrdNDAbuHSJxGI5/c5iJ8M=;
+	s=korg; t=1792775013;
+	bh=wHmBbl/rIdc4r47YvlBhaVU3y4UcioRsXE+XyeWQi64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qOpZAuJTvhCjn/ZsyuPBQsHzHn9iB/JzdFII5ieGmMz+CLPnVeYawpNXADvhRvI6M
-	 zoWJvIGanb1DeErNPfGkaQCLXXJgbzYnoDEkEDLBDgmU8VfgkcIphCn8YcelkLdbJn
-	 Sl5IcaKChQA5SdtNQ/Qy+8NJo/5AYXbCq2xTutUI=
+	b=F01ib3Ko4uT3vv06LXERmQqkhOMNfQfg5Zdjcd61tbDE59SBdvsQ5WzRlG/DKYYkx
+	 F1P7BbZeTfievLClVo9LqmiQqae2Z20zuMIE75z41Zh0BDOF77mJXJXDz8LRBHu4al
+	 SL7LUzvCpCaKCit86n39vWSku8CfIZfeaJnQbDyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangyu Bu <xbu@meta.com>,
-	Tejun Heo <tj@kernel.org>,
-	Dan Schatzberg <schatzberg.dan@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 231/242] sched_ext: Fix stall when a task enqueued with SCX_ENQ_LAST lands back on its CPUs local DSQ
-Date: Fri, 23 Oct 2026 18:41:13 +0200
-Message-ID: <20261023163719.309120412@linuxfoundation.org>
+Subject: [PATCH 7.2 232/242] tracing: Use __free() for expr_str() buffer
+Date: Fri, 23 Oct 2026 18:41:14 +0200
+Message-ID: <20261023163719.334541721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,85 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 7a9df76679633cf26e0fea882a684012c6ec245a ]
+[ Upstream commit 988995c0552b6213b6bf16cea57258d4842c1488 ]
 
-With SCX_OPS_ENQ_LAST, the last runnable task on a CPU is passed to
-ops.enqueue() instead of being kept running. Exiting tasks without
-SCX_OPS_ENQ_EXITING, migration disabled tasks without
-SCX_OPS_ENQ_MIGRATION_DISABLED and tasks on an offline rq skip ops.enqueue()
-and go straight to the local DSQ. This happens in put_prev_task_scx() after
-the pick has settled on idle, so nothing reschedules the CPU, which idles
-with the task queued until an unrelated wakeup lands on it or the watchdog
-fires.
+expr_str() allocates a temporary expression buffer and manually frees it
+on some error paths.
 
-scx_mitosis, which sets SCX_OPS_ENQ_LAST without SCX_OPS_ENQ_EXITING, hit
-this during mass cgroup teardown: exiting tasks stuck in exit_mmap() for
-over 40 seconds.
+Convert the buffer to __free(kfree) and return it with return_ptr() on
+success. This keeps ownership handling separate from the later ERR_PTR()
+conversion and string-bound change.
 
-A task put on the local DSQ runs, as anywhere else. If the SCX_ENQ_LAST
-enqueue left the task on this CPU's local DSQ, set need_resched on the task
-being switched in, as proxy_resched_idle() does. resched_curr() would flag
-the task being put instead, and __schedule() clears that right after the
-pick.
-
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Xiangyu Bu <xbu@meta.com>
-Link: https://github.com/sched-ext/scx/pull/3870
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
-[ sashal: Adjusted context to use do_enqueue_task() without the upstream CPU-capability condition. ]
+Link: https://patch.msgid.link/20260611055945.22348-2-pengpeng@iscas.ac.cn
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Stable-dep-of: a0777b9e5315 ("tracing: Fix NULL dereference when copying keys for a field variable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c      |   13 +++++++++++--
- kernel/sched/ext/internal.h |    5 +++--
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ kernel/trace/trace_events_hist.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -3169,8 +3169,7 @@ static void put_prev_task_scx(struct rq
- 		/*
- 		 * If @p is runnable but we're about to enter a lower
- 		 * sched_class, %SCX_OPS_ENQ_LAST must be set. Tell
--		 * ops.enqueue() that @p is the only one available for this cpu,
--		 * which should trigger an explicit follow-up scheduling event.
-+		 * ops.enqueue() that @p is the only one available for this cpu.
- 		 *
- 		 * Under core scheduling, a pick dispatches only when nothing is
- 		 * locally runnable and can legitimately go idle with @p still
-@@ -3180,6 +3179,16 @@ static void put_prev_task_scx(struct rq
- 			WARN_ON_ONCE(!sched_core_enabled(rq) &&
- 				     !(sch->ops.flags & SCX_OPS_ENQ_LAST));
- 			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
-+
-+			/*
-+			 * A task put on the local DSQ runs, as anywhere else.
-+			 * Here the insert can't reschedule on its own: the pick
-+			 * has settled on @next and @p is still curr, so
-+			 * resched_curr() would flag @p and __schedule() clears
-+			 * that right after the pick. Flag @next instead.
-+			 */
-+			if (p->scx.dsq == &rq->scx.local_dsq)
-+				set_tsk_need_resched(next);
- 		} else {
- 			do_enqueue_task(rq, p, 0, -1);
- 		}
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1291,8 +1291,9 @@ enum scx_enq_flags {
- 	 * %SCX_OPS_ENQ_LAST is specified, they're ops.enqueue()'d with the
- 	 * %SCX_ENQ_LAST flag set.
- 	 *
--	 * The BPF scheduler is responsible for triggering a follow-up
--	 * scheduling event. Otherwise, Execution may stall.
-+	 * If the task is queued on the local DSQ of the CPU it was running on,
-+	 * it continues to run. Otherwise, the CPU goes idle. A scheduler that
-+	 * wants a full dispatch cycle on the CPU should kick it.
- 	 */
- 	SCX_ENQ_LAST		= 1LLU << 41,
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1758,7 +1758,7 @@ static void expr_field_str(struct hist_f
  
+ static char *expr_str(struct hist_field *field, unsigned int level)
+ {
+-	char *expr;
++	char *expr __free(kfree) = NULL;
+ 
+ 	if (level > 1)
+ 		return NULL;
+@@ -1769,7 +1769,7 @@ static char *expr_str(struct hist_field
+ 
+ 	if (!field->operands[0]) {
+ 		expr_field_str(field, expr);
+-		return expr;
++		return_ptr(expr);
+ 	}
+ 
+ 	if (field->operator == FIELD_OP_UNARY_MINUS) {
+@@ -1777,16 +1777,15 @@ static char *expr_str(struct hist_field
+ 
+ 		strcat(expr, "-(");
+ 		subexpr = expr_str(field->operands[0], ++level);
+-		if (!subexpr) {
+-			kfree(expr);
++		if (!subexpr)
+ 			return NULL;
+-		}
++
+ 		strcat(expr, subexpr);
+ 		strcat(expr, ")");
+ 
+ 		kfree(subexpr);
+ 
+-		return expr;
++		return_ptr(expr);
+ 	}
+ 
+ 	expr_field_str(field->operands[0], expr);
+@@ -1805,13 +1804,12 @@ static char *expr_str(struct hist_field
+ 		strcat(expr, "*");
+ 		break;
+ 	default:
+-		kfree(expr);
+ 		return NULL;
+ 	}
+ 
+ 	expr_field_str(field->operands[1], expr);
+ 
+-	return expr;
++	return_ptr(expr);
+ }
+ 
+ /*
 
 
