@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774527;
-	b=SqzlhnIJGDa9sqV5o297OCwzHaTuBql+ra9Z7IEjkEo5Us5AWRhjeZ6cGtMr2R9E+JBD
-	 PqF8GbjfwcOTaL4y2VdkKfXAkprCMOzoJdOCngqBgv4qQQmMJPgEYudk0EiXaWWiThbJZ
-	 zAzNkP1CtA18hpPQCMoNLBYRuO+9xU/EaGCUBsNs+3I52ugoPbN6kSaJg4/Pui/rWSyCN
-	 hRDJmR5dD23Tole9QdVDdTA5yjarY47tJV64tiRj3VecWbe5+CEJlLsFjaZbtygbKA9qv
-	 V3Ch3DI+hQJMonohS460yhSWLZ2TUeKpdMySpaJ+BUQf3l4n141sPHCZRQW1i+gGOag==
+	t=1792774529;
+	b=Wpni2OE2BZkKeowmjvobHqjAPyQ6AgDL65EYF6b2AJUEkTq/FA0/Nhx7mtml3M0XznhS
+	 N8ytw8n2alt/cZAf5g/+SRhzyYEdh9BRmXMTxUKjKE9se1eWK9r1ka+v+ggpS11UnLV4g
+	 JIqYCwFgvhkHSD/R4uq1mvDhBcV/4xKyQKUZtta9MkZLk3/dmq/KvEp/QdeVCeWNsy8ju
+	 o17pFXzD9lrQsZLEwKM7NbnT2ZJ3I5WGDOG7i66750HJBBtzCtRNgncGc+2XqjrNrJhdL
+	 BdjA2NsDT1r2pBuXfWieys8lYKYsSIYF35eXhBaf1pUz5Psh0ho2YwJi9KKlvmysCLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ta7AbZJvmo2LWOw9rUuSOwTsEMf4C8U1sFeannP2iCk=;
-	b=to6j7g0TX3fOFj4rF1e6+nJaTKUdjxCOKHMbqvX1G2EqhWYJAu1n06apgblkW/aN4X6H
-	 GHYmFESziiUbMdlnTgpIdyyQCDurhSCuAy1kq1Am0sZq13xXKrXEuHmRH6Nj2Vr5YjbK4
-	 Hy8d6Lk3oDzeZI5rG1XoWJbBL01I/qMp55/qNy0ImaqDbQ57g9FLUjQUmiC4ycXRi5pQJ
-	 cZ6NSOSlfgDvygvwqS6jHMVS/JrmxnkiUvIbPImwODx8PrHdEcshuN5wKVSDsELUy93Ne
-	 iRI5WzeuRpYUdYs+cLw666PfT6GAP2CwxSuIgLEgh/yMJKjWUmfgWuen7YwZYINtRkQ==
+	bh=gVAHWS8CCah+D4qkEBqMKoF3PpVcnEVcKS21DsetOt4=;
+	b=QVgUSCVO6byOeq3KIvAwkBZjlCr59zYrgUSCHVAneLCEPaR2sF7i2OV0YbvU+YWGjfpq
+	 EokkTfIoV2XjYKwX+BYTkgxmevMchIdLTtr4OmhcfARwwa8pgODlDJ2/NvuKqjuyuT6XA
+	 DTprsfcHBT45HTiiYTITRc6OnsoLNHMrXzfwJho8/fVV5YcYxPrpKtsYlpXO8bgKwwcMW
+	 x3AgquDokQ+TnT2z55sHwR9LJwNibYrJPF68VLd7fk46LFt5QZHjhIYlakQRqVGGf/kJK
+	 zUOTOg8BZhJ8M1+QEgM7fx01QNmJ0qw1eqS2l9aELRRL+XJlKYfkC1k/nm1GqnXeJYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1UgZp+UE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gktVV/r8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53AD606A31E;
-	Fri, 23 Oct 2026 16:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82069606A31A;
+	Fri, 23 Oct 2026 16:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1UgZp+UE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CB01F01825;
-	Fri, 23 Oct 2026 16:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gktVV/r8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11D31F01825;
+	Fri, 23 Oct 2026 16:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774526;
-	bh=ta7AbZJvmo2LWOw9rUuSOwTsEMf4C8U1sFeannP2iCk=;
+	s=korg; t=1792774529;
+	bh=gVAHWS8CCah+D4qkEBqMKoF3PpVcnEVcKS21DsetOt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1UgZp+UETk7Yve+vYfFwOswZeRQ2CMv9HIJwRPq2FKVx50W4i7e9hPdUTKUUo3hmJ
-	 lBL2HSg/OOViIUWPwQvyGKvDsw6lLUQUDwpSWimqlgwGOPbMh852LUP5fBoPdk07NB
-	 /kidiDlYTeVtuXwZBBGvFDAwcSCG5cLNAzpK2Hzo=
+	b=gktVV/r8jKF0l7i06ZODx81hZwfH4TP894mF6jfhYVy1Du8o+3yyoU0sRM4+CYcWo
+	 W79yYH6t09T79/pWc1u/F+eoMR6g2o2yp8DQP4YSDyUKk+bbh3J+wuIuSprOfKMlUW
+	 FK8U/BolwSx46b0QlVARtvk7Zsr1cNCLylUst0Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
 	Vincent Donnefort <vdonnefort@google.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 070/242] tracing: Fix simple_ring_buffer undef check on sparc64
-Date: Fri, 23 Oct 2026 18:38:32 +0200
-Message-ID: <20261023163715.436739408@linuxfoundation.org>
+Subject: [PATCH 7.2 071/242] ring-buffer: Skip si_mem_available() for persistent and remote buffers
+Date: Fri, 23 Oct 2026 18:38:33 +0200
+Message-ID: <20261023163715.460592293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,36 +70,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit 0fa993581aaa58a34ae3dcebebe0fbf593fcb441 ]
+[ Upstream commit c9fc60c18b6d42efdea0cd88ca132b2f452157c3 ]
 
-simple_ring_buffer relies on headers that end up including
-<asm/thread_info.h>. On sparc64, this emits the undefined symbol
-current_thread_info_reg. Allow this symbol.
+Persistent and remote buffer memory is pre-allocated by the time
+__rb_allocate_pages() is called. Skip si_mem_available() to avoid
+wrongly failing the allocation under memory pressure.
 
-Link: https://patch.msgid.link/20260923074213.3077182-4-vdonnefort@google.com
-Fixes: 1211907ac0b5 ("tracing: Generate undef symbols allowlist for simple_ring_buffer")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/all/5574c9e6-9ed2-4ee6-a2b2-fb6ee81e83a1@roeck-us.net/
+For the same reason, unset user_thread.
+
+Link: https://patch.msgid.link/20261013102047.1488347-2-vdonnefort@google.com
+Fixes: be68d63a139b ("ring-buffer: Add ring_buffer_alloc_range()")
+Fixes: 2e67fabd8b77 ("ring-buffer: Introduce ring-buffer remotes")
 Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ring_buffer.c | 41 +++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
-index 0e1846f7dda32..3860bc53a4bed 100644
---- a/kernel/trace/Makefile
-+++ b/kernel/trace/Makefile
-@@ -146,6 +146,7 @@ KASAN_SANITIZE_undefsyms_base.o := y
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 7c59e8e586196..4c0141d8e0622 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2424,20 +2424,30 @@ static int __rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
+ 	struct trace_buffer *buffer = cpu_buffer->buffer;
+ 	struct ring_buffer_cpu_meta *meta = NULL;
+ 	struct buffer_page *bpage, *tmp;
+-	bool user_thread = current->mm != NULL;
+ 	struct ring_buffer_desc *desc = NULL;
++	bool user_thread = false;
+ 	long i;
  
- UNDEFINED_ALLOWLIST = __asan __gcov __kasan __kcsan __hwasan __sancov __sanitizer __tsan __ubsan __msan \
- 		      __aeabi_unwind_cpp __s390_indirect_jump __x86_indirect_thunk simple_ring_buffer \
-+		      current_thread_info_reg \
- 		      $(shell $(NM) -u $(obj)/undefsyms_base.o 2>/dev/null | awk '$$2 {print $$2}')
+-	/*
+-	 * Check if the available memory is there first.
+-	 * Note, si_mem_available() only gives us a rough estimate of available
+-	 * memory. It may not be accurate. But we don't care, we just want
+-	 * to prevent doing any allocation when it is obvious that it is
+-	 * not going to succeed.
+-	 */
+-	i = si_mem_available();
+-	if (i < nr_pages)
+-		return -ENOMEM;
++	if (buffer->range_addr_start) {
++		meta = rb_range_meta(buffer, nr_pages, cpu_buffer->cpu);
++	} else if (buffer->remote) {
++		desc = ring_buffer_desc(buffer->remote->desc, cpu_buffer->cpu);
++		if (!desc || WARN_ON(desc->nr_page_va != (nr_pages + 1)))
++			return -EINVAL;
++	} else {
++		/*
++		 * Check if the available memory is there first.
++		 * Note, si_mem_available() only gives us a rough estimate of available
++		 * memory. It may not be accurate. But we don't care, we just want
++		 * to prevent doing any allocation when it is obvious that it is
++		 * not going to succeed.
++		 */
++		i = si_mem_available();
++		if (i < nr_pages)
++			return -ENOMEM;
++
++		user_thread = current->mm != NULL;
++	}
  
- quiet_cmd_check_undefined = NM      $<
+ 	/*
+ 	 * If a user thread allocates too much, and si_mem_available()
+@@ -2451,15 +2461,6 @@ static int __rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
+ 	if (user_thread)
+ 		set_current_oom_origin();
+ 
+-	if (buffer->range_addr_start)
+-		meta = rb_range_meta(buffer, nr_pages, cpu_buffer->cpu);
+-
+-	if (buffer->remote) {
+-		desc = ring_buffer_desc(buffer->remote->desc, cpu_buffer->cpu);
+-		if (!desc || WARN_ON(desc->nr_page_va != (nr_pages + 1)))
+-			return -EINVAL;
+-	}
+-
+ 	for (i = 0; i < nr_pages; i++) {
+ 
+ 		bpage = alloc_cpu_page(cpu_buffer->cpu);
 -- 
 2.53.0
 
