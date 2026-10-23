@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774585;
-	b=VPCW9i884tXZfVo5rxh0ZEh65TFfKUUwVfAKg617ugnhU1pDnGhsseUMtEwlG/t3C/l0
-	 3e3C+7Ticp6ltEwthF8/hDjkmKVIStJdx5L3OrggAj0yy/uNVgQm8+dGtZJHAvi6ncVow
-	 VP/lb+XGesgHqqndLQvlZmVb0iNQG/uq9T0/k7Kyday43JU989NYhnd9f/pkInVTy5/zG
-	 B6RjjKVBwiyjsMCBT/bHLOCdmLp7dmc3QzmrdE4RLbZaPhrEkoBU1Hg8i+pKGlz7Jde0A
-	 v50dsO/AEescd8VwezpoEPwj1zTnGlUAj9l8iv2FxpBzJOcRgjAKdlSjUovSCl2IKAQ==
+	t=1792774588;
+	b=0H5q2YM/F5kzGx+F2NVJCMijCUnUW5I1ywzSlKzj4fVNNQsbNEpL2Zvupzf5GkkOpxMP
+	 jnl7BCVwVR1577LSStoN5lsBSB9ahOmE/Ef0tODysPunP8buIcNgwg5mwfkfguQBTcWJ8
+	 YiOqugr25XxsnQtHG4X8AO8DBtEZk+nskHUt9xxY8d4d7rvwhxaAeKezBkM5vu2tpoZoU
+	 2KEUCJYurxoP0H3bLhfuBLZIAgQv39IkERZ17r1EqxZC5fnohbDpnXLUE2R0JNf1P4KMX
+	 eF22uTZ/ktx/ia82Ny3RgEmRPFVn+bDdVoYLVhfaZd4reKAEOsPkKbZ/LiseLPtX/7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774585;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774588;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CzjOi2yNlPs/qbje9QjwkIKiyg8deXx0g7nvrxxi08I=;
-	b=oW3WCPzIBoy0iT6eGiv4tP1gqPrUQpdjU40bgrOZVAG6nvnMbdUvrf8PgSs6+oJcxa3H
-	 XpkcPC62f8du3WWcipkYhI7wYSuosiDqvNYtQMVS9XMVM1m4rxgHEBi0elhAeYrt0LHEd
-	 EcDbqWT4ouhPF9qa2MNlqAISwNIY3o1wfdII5hqVsrh52cwUjjMPM9rn61eAzzF9+2VwY
-	 KOPSrHUOU3Vr5/1aVAGkr2JtP6YV9Mpj/aefCrEMeSS/iP++zUXh03xeMagKlojf27P1t
-	 LWhjtnU3XDwxkkhofit9zVy/Ntl2XGP/yURwkujjsgXR73aXIttFsPxO/qMaBxkn16Q==
+	bh=W0iLIyTyf1ZUdwJUv/SAJOEiBYe0fZx6Pha1S1DPxWU=;
+	b=nsLOL8+6Jt6aMf5ql1s/K4kFFQpFuXwd9c1Q/wlCTYZ5XweP+Qy0NDHQx5AY47ZeKExA
+	 CfLAxBSgLdOQsSY4e5TQxaDEtixyiVIl0pfZ9j0vnz4KI1EM/Y3zLeOc2X/REaslUdp2Z
+	 ltToeB/Pak06x6fBpstguFUUIlYKg4xrEXPHMNipaopQazen0WGKay8TFjKBO+Be6ehPE
+	 MtQSlMJUGREAcY+TdwGJIw8dyjxa0/ylh2sYo/PvYSae2AE86ml6i5lghKCdceNXS+Dky
+	 yu7GNi/RF7e9LwIzEQ+qOPqSzgJtSQsqPPiMCvhjaMXonOHFBx8ljQ6YeFzYlPtNrvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qdMyD49L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOJLmjwc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F87606A31A;
-	Fri, 23 Oct 2026 16:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66B6606A31F;
+	Fri, 23 Oct 2026 16:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qdMyD49L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A42A1F01825;
-	Fri, 23 Oct 2026 16:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOJLmjwc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AB11F01825;
+	Fri, 23 Oct 2026 16:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774584;
-	bh=CzjOi2yNlPs/qbje9QjwkIKiyg8deXx0g7nvrxxi08I=;
+	s=korg; t=1792774587;
+	bh=W0iLIyTyf1ZUdwJUv/SAJOEiBYe0fZx6Pha1S1DPxWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qdMyD49LM8PdVI7I68vPJalLfE21tkD1kf021AQ55kwjbcbG5s7voEheB5yv4i6b9
-	 Vu3Ly04k4Sgjg2lzgwjymp6EZ+SLsSRx8QCYH0pK0KptJqgM/HHyKu9RL1c8xIbQFz
-	 PhF3Jd1FSx1gPGU1TiFztGUThDcDpU1mkOKCBg5Q=
+	b=xOJLmjwc8s5xdpe67Oc8JzrskZzCflSwwI4of8nmA/8PjWoOD8uSMBPChAUFGY+aO
+	 YQ/AfC/AJ2NXSCjNCmyvDlHJMSviC02g+64v6rL883N9yjwPUU6I57Wp/114rRIr6L
+	 0PqKEbCeWCTPFiHx5Fp6/JXKb8R5l17yUwW2SQxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Phil Auld <pauld@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 052/242] sched/core: Call wakeup_preempt() for queued tasks during class change
-Date: Fri, 23 Oct 2026 18:38:14 +0200
-Message-ID: <20261023163715.008638905@linuxfoundation.org>
+Subject: [PATCH 7.2 053/242] entry: Account the deferred hrtimer rearm as hardirq context for lockdep
+Date: Fri, 23 Oct 2026 18:38:15 +0200
+Message-ID: <20261023163715.033054571@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,172 +68,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-[ Upstream commit 118a2cf4ced60777a2408001e2b4838fed1cea55 ]
+[ Upstream commit 7cbaa0f4579f48e92639c6abb761fdef8fbade47 ]
 
-Paul reported recent RCU changes exposed a lost resched where CPU idles
-with a rcutorture thread waiting while being completely runnable.
+On a desktop debug kernel (PROVE_LOCKING, KASAN, LOCKDEP_CHAINS_BITS=19)
+lockdep switches itself off after about two days of uptime with
+"BUG: MAX_LOCKDEP_CHAIN_HLOCKS too low!", and locking is not validated
+until the next reboot. In the last such boot the pool ran out after 46.6
+hours, and a fifth of it, 533509 of 2621431 chain hlocks in 63838 of
+344717 chains, had been created by the deferred hrtimer rearm on return
+from interrupt.
 
-Dumping the rq state at the time of idling with runnable tasks showed
-the following:
+Make lockdep account that rearm as part of the timer interrupt it
+belongs to.
 
-  rq->next_class = &fair_sched_class
-  rq->nr_running = 1
-  rq->cfs.h_nr_queued = 0
-  rq->rt.rt_nr_running = 1
+Commit 15dd3a948855
+("hrtimer: Push reprogramming timers into the interrupt return path")
+moved the reprogramming of the clock event device out of the timer
+interrupt into the interrupt return path. On return to kernel mode
+irqentry_exit_to_kernel_mode_after_preempt() performs it after
+irq_exit_rcu() has already left lockdep's hardirq context. lockdep
+therefore records hrtimer_bases.lock and the timekeeper sequence count
+as taken by the interrupted context, on top of the locks that context
+holds, and every distinct held-lock stack an interrupt hits adds two
+lock chains. When the rearm runs from irq_enter_rcu() or
+__irq_exit_rcu() it is still inside lockdep's hardirq context, and there
+the same acquisitions reuse one pair of chains.
 
-Although the waiting task was an RT task, "rq->next_class" did not point
-to rt_sched_class and was stuck at the lower priority fair_sched_class.
+The dependencies recorded on the return path are "lock held with
+interrupts enabled -> hrtimer_bases.lock". Such a lock is hardirq-unsafe
+and hrtimer_bases.lock is hardirq-safe, so a path in the reverse
+direction is already reported by the irq-safety checks without these
+edges.
 
-Inspecting sched_change_end() revealed the following race with
-__sched_setscheduler() for queued, but non-running tasks:
+Re-enter lockdep's hardirq context around the rearm on the kernel return
+path. The return to user mode path holds no locks and is left alone, as
+is the rearm in __schedule(), which runs under the runqueue lock.
 
-    CPU0                                   CPU1
-    ====                                   ====
+With the same kernel tree, configuration and workload, one hour of
+uptime including a full kernel build, the chains of this shape, with
+hrtimer_bases.lock and optionally the timekeeper sequence count on top
+of a held-lock stack outside the scheduler, go from 13266 (96187 chain
+hlocks, 15.9% of those in use) to 4. Those 4 come from clock_was_set(),
+which takes cpus_read_lock() and each CPU's hrtimer_bases.lock and reads
+the clock under it.
 
-  __schedule()
-
-    /*
-     * rq->donor is a fair task that blocks.
-     * rq->next_class = &fair_sched_class
-     */
-
-    rq_lock(rq0)
-
-    pick_next_task()
-      /* nr_running = 0 */
-      pick_task_fair()
-        sched_balance_newidle()
-          raw_spin_rq_unlock(rq0)
-                                    rq_lock(rq0)
-
-                                    activate_task(rq0, p)
-                                      /* p is a fair task */
-                                      rq0->nr_running++;
-                                      rq0->cfs.h_nr_queued++;
-                                      wakeup_preempt(rq, p)
-                                        rq->next_class = &fair_sched_class
-                                        resched_curr()
-
-                                    rq_unlock(rq0)
-
-                                    __sched_setscheduler(p)
-                                      /* p is moved to SCHED_RR */
-                                      task_rq_lock(p)
-                                      sched_change_begin()
-
-				      rq0->cfs.h_nr_queued--;
-				      rq0->rt.rt_nr_running++;
-
-                                      sched_change_end()
-                                        /*
-                                         * p->on_rq = 1 (ctx->queued)
-                                         * but p is not rq->donor
-                                         * (!ctx->running) hence
-                                         * resched_curr() is and
-                                         * rq->next_class upgrade is
-                                         * skipped.
-                                         */
-
-                                       task_rq_unlock()
-
-          raw_spin_rq_lock(rq0)
-
-          /*
-           * rq->nr_running = 1
-           * rq->cfs.h_nr_queued = 0
-           * rq->rt.rt_nr_running = 1
-           * rq->next_class = &fair_sched_class
-           */
-
-           if (rq->cfs.h_nr_queued && ...)
-             /* Above is false */
-
-           if (rq_modified_above(this_rq, &fair_sched_class))
-             /* Also false since rq->next_class is still fair */
-
-      /*
-       * sched_balance_newidle() is considered to
-       * have failed to pull any fair tasks and no
-       * other wakeups were detected.
-       */
-       return NULL; /* pick_task_fair() */
-
-    pick_task_idle()
-      return rq->idle;
-
-    next = rq->idle;
-
-    /* Preemption indicators are lost */
-    clear_tsk_need_resched(prev);
-    clear_preempt_need_resched();
-
-    rq->curr = rq->idle;
-
-  !!! rq->idle switches in with rq->running == 1 but !need_resched() !!!
-
-In simple words, enqueue, followed by a class change of the newly queued
-task goes unnoticed in rq->next_class indicator and
-sched_balance_newidle() sees no fair task, nor any higher priority task
-enqueued.
-
-The above sequence will lead to CPU idling with a runnable task on the
-CPU.
-
-Call wakeup_preempt() for ctx->queued cases in sched_change_end() to
-re-evaluate rq->next_class after class change (ENQUEUE_CLASS) and set
-the NEED_RESCHED indicator accordingly.
-
-Newidle balance will correctly see an enqueue of a higher priority
-task if a queued task was upgraded when the rq_lock() was dropped and
-will retry the pick.
-
-Closes: https://lore.kernel.org/lkml/8fa7f795-518c-4507-b684-60b0c1cac2c5@paulmck-laptop/
-Fixes: 704069649b5b ("sched/core: Rework sched_class::wakeup_preempt() and rq_modified_*()")
-Reported-by: Paul E. McKenney <paulmck@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Fixes: 15dd3a948855 ("hrtimer: Push reprogramming timers into the interrupt return path")
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Link: https://patch.msgid.link/20261013152455.9039-1-kprateek.nayak@amd.com
+Link: https://patch.msgid.link/20261013071318.33300-1-mikhail.v.gavrilov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ include/linux/irq-entry-common.h | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index c104562638e33..383ced4156e20 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -11323,17 +11323,16 @@ void sched_change_end(struct sched_change_ctx *ctx)
- 		if (p->sched_class->switched_to)
- 			p->sched_class->switched_to(rq, p);
+diff --git a/include/linux/irq-entry-common.h b/include/linux/irq-entry-common.h
+index 1fabf0f5ea8e7..c03153548a2d4 100644
+--- a/include/linux/irq-entry-common.h
++++ b/include/linux/irq-entry-common.h
+@@ -468,6 +468,25 @@ static inline void irqentry_exit_to_kernel_mode_preempt(struct pt_regs *regs,
+ 		irqentry_exit_cond_resched();
+ }
  
-+		/*
-+		 * Check if the task can preempt the current in case the class
-+		 * was upgraded. Note that none of the switch*_from() methods
-+		 * know the new class and none of the switch*_to() methods know
-+		 * the old class so we must resched here.
-+		 */
-+		if (ctx->queued)
-+			wakeup_preempt(rq, p, 0);
++/*
++ * The deferred hrtimer rearm is the tail of the timer interrupt, moved to the
++ * interrupt return path so that it runs after a possible reschedule. By now
++ * irq_exit_rcu() has left lockdep's hardirq context. Re-enter it for the
++ * rearm, so that the hrtimer base lock and the timekeeping sequence count are
++ * not chained onto the locks held by the interrupted context, which would add
++ * new lock chains for every lock stack an interrupt hits.
++ *
++ * The rearm on return to user mode needs no such annotation: no locks are
++ * held there, so it uses the same lock chains as the rearm in hardirq
++ * context.
++ */
++static __always_inline void irqentry_hrtimer_rearm_deferred(void)
++{
++	lockdep_hardirq_enter();
++	hrtimer_rearm_deferred();
++	lockdep_hardirq_exit();
++}
 +
- 		if (ctx->running) {
--			/*
--			 * If this was a class promotion; let the old class
--			 * know it got preempted. Note that none of the
--			 * switch*_from() methods know the new class and none
--			 * of the switch*_to() methods know the old class.
--			 */
--			if (sched_class_above(p->sched_class, ctx->class)) {
--				rq->next_class->wakeup_preempt(rq, p, 0);
--				rq->next_class = p->sched_class;
--			}
- 			/*
- 			 * If this was a degradation in class; make sure to
- 			 * reschedule.
+ /**
+  * irqentry_exit_to_kernel_mode_after_preempt - Establish trace, lockdep and RCU state
+  * @regs:	Pointer to current's pt_regs
+@@ -491,7 +510,7 @@ irqentry_exit_to_kernel_mode_after_preempt(struct pt_regs *regs, irqentry_state_
+ 		 */
+ 		if (state.exit_rcu) {
+ 			instrumentation_begin();
+-			hrtimer_rearm_deferred();
++			irqentry_hrtimer_rearm_deferred();
+ 			/* Tell the tracer that IRET will enable interrupts */
+ 			trace_hardirqs_on_prepare();
+ 			lockdep_hardirqs_on_prepare();
+@@ -502,7 +521,7 @@ irqentry_exit_to_kernel_mode_after_preempt(struct pt_regs *regs, irqentry_state_
+ 		}
+ 
+ 		instrumentation_begin();
+-		hrtimer_rearm_deferred();
++		irqentry_hrtimer_rearm_deferred();
+ 		/* Covers both tracing and lockdep */
+ 		trace_hardirqs_on();
+ 		instrumentation_end();
 -- 
 2.53.0
 
