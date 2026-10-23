@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774338;
-	b=upii1d18q54DjhCUxjKIwmC5u01vWPgYsgF/QlVzwN/VHz7/vlvruyBaMs8dwAd2RLhR
-	 ze0a45D2za8kvcie5GDeKhxxm9eeBEtT7B5QJh7T2W9lNwvJMzLl8dmGj1+3F8fmldNOF
-	 qiZcP+2bEFkoPR4BghXaXs9+/mX2afV2KC4agKjsmEk6UHgC6lLGd3dfC4F2nz0+b4PCK
-	 MTAarRL+h8j6OeVwYtWu7hi7X6Af1pnEEhkRbW9GcWvay1Hrcay7R1q6NCp6f+lEdvFY7
-	 3nHsim73CQ/+DhWr0lMgUZ1+zr2KTLY9QAqy5vTlsoNO/DNC98LDD6OWYZDxQ35WJ4Q==
+	t=1792774341;
+	b=Sz87sDYw2pLcCukN0veWkEiuaS/NWT18Gmo1GaDtpT7tz13djgU5/L+BZdEO3OTIfG0E
+	 UmEKwao9HYlsPh8j2urc0HGj4neNInsdXfk8+F1tm6BuUUUtj/mkk1NPm8rJpif8tTkhH
+	 JyIl8Op5t3drmwsrW5zCOOS61yjeceUwLRpQcpEsly64BaVvc1P9pXVB5KDLru9PRL8ao
+	 4F9s6sxlTUg9GXzN4vMro7WXCNmd4ieZo3ah9mJ8bXxZWeJ9SPq9jioEF5ocEFCT0tvpO
+	 ZT0+byUXIPJCPru9sTWnokvvFPgG+Ni+VCgvnujXYaNutE3lVCE8FrNe0IIu8DVbmvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RP7AcwlL/eTDIP4eoPS5GolXGswhLCjfbbgtGq6djBI=;
-	b=WZHyTc2Qn2zuWeMik6MPi7vroAZI+mb2vhJaAbjB5jCpBWJSeRjVo3xMAHpdI/3Z/Q6X
-	 DL7ctRd8R8lUD42K81WeguwwdZzGf+i+4T4kdgS2FZVMsqAtFtJnY3ONwlZ+0rEQQp6dK
-	 ISuw8strOQKeFVcDaz5c/hIUAm9I2XsXqWbNjMUdh+LHHEYTQ+Q4rmruGL4Hp9t/y4AaD
-	 3iWyuWFLpQarAdwTaR8m2kdJWua5JCMlLKD2btZZyWaEfMqQkiHc+HlRO43Fn6m1Z5Wus
-	 +KT1oJ4H4C9f/NBpcY+lBzE2T+AzEagMFidzNpQpZ0mgty7Odn9jVjkPNPCyMMEvtjA==
+	bh=jPP31pOCEoZUZ9p++sCp+Ro6I3RxuOE4vKvMVGwgUzk=;
+	b=bGgYT0xzkAi6OLT7FIw6l7Alft1mFJIilxQoNPLgiEPU2BKX1fCdTvwgRGMtUnTeeiOr
+	 4phzJIF/yjppOdWZiueTODURyqhu0DKwdIaGRLcI5owf33hZrbHCKpLEIGgbRDyA/cHeh
+	 WWw1LNQWlO0uyeLi4P804GmlBlom1Ff9Ecoi288ONgc6/acYWPIANlM8XVb28eY4WVMo/
+	 G2HQR22CjLrJYj3RBT7cqLHaOLm2oaaVo990Ls9LcD9QRWHZM5uM9GP25l5F/RWNOKPiI
+	 5qlMCl2szMhuySq12XoNEeoLavpTHBxJQpLMsV8SYlULYUaMlX9Nt8e6ttjXsJ+cx9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Krh9l0BF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgUcSfSo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CAC606A31A;
-	Fri, 23 Oct 2026 16:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554A0606A31A;
+	Fri, 23 Oct 2026 16:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Krh9l0BF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A80141F01825;
-	Fri, 23 Oct 2026 16:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgUcSfSo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBC91F01825;
+	Fri, 23 Oct 2026 16:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774338;
-	bh=RP7AcwlL/eTDIP4eoPS5GolXGswhLCjfbbgtGq6djBI=;
+	s=korg; t=1792774341;
+	bh=jPP31pOCEoZUZ9p++sCp+Ro6I3RxuOE4vKvMVGwgUzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Krh9l0BFeJ7zkgt8rVNHW1d5DMuTyBNbgpYyPWufvRuvNAmM2W+Y8Nmyt4oKYQb0v
-	 YLK8uHM4oeMdsXN2mmCH8PF4+fCoyiI3cQ+LHI3ufET8VObOZqGvPz1cJCLxB8Y8y2
-	 5gwM1SIpSDzYSFxMGXWkjMZ30htLI/SgIkuJtohY=
+	b=OgUcSfSoqNXfTjNFPunuMBghJl9UFnFiU8zAsBfdDU8QXKk1dNcaVjDpnlfxtFLMF
+	 9PrTmOFqCBCtuecrkLFMRpLmUCThKiUySt5quqC4YB117q+DaJd42tKOz5KRGqy1NR
+	 Ln/b0IQJL1DKs8iaIsh+R9Cxlbp/YNSUSxfF2cIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
+	Gael Blivet <gael.blivet@gmail.com>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 175/193] smb/client: refresh allocation size after duplicate extents
-Date: Fri, 23 Oct 2026 18:37:32 +0200
-Message-ID: <20261023163718.356054618@linuxfoundation.org>
+Subject: [PATCH 7.2 001/242] ksmbd: exempt FSCTL_PIPE_TRANSCEIVE from the generic file-id lookup
+Date: Fri, 23 Oct 2026 18:37:23 +0200
+Message-ID: <20261023163713.849250995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
-References: <20261023163714.201276352@linuxfoundation.org>
+In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
+References: <20261023163713.816071858@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -65,143 +65,50 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit 5906d0e82e8e07d756f3ed1abfac8f8cea2c20dc ]
+[ Upstream commit a3bcea7c819a6c69ca937a68631311711bf20e66 ]
 
-FSCTL_DUPLICATE_EXTENTS_TO_FILE changes the target file extents on the
-server, but the client does not refresh the target AllocationSize/i_blocks.
-Callers can observe or use the wrong st_blocks value immediately after the
-clone, before a later attribute revalidation corrects it.
+smb2_ioctl() rejects FSCTL_PIPE_TRANSCEIVE with
+STATUS_OBJECT_NAME_NOT_FOUND before fsctl_pipe_transceive() runs. RPC
+pipe IDs live in sess->rpc_handle_list, a separate namespace from the
+ksmbd_file table the generic ksmbd_lookup_fd_slow() gate searches, so
+the lookup always misses.
 
-For example, create a reflinked file with a leading hole:
+Found while testing generic SMB browsing (Finder's "Connect to
+Server"): every DCE/RPC bind over a named pipe (SRVSVC, WKSSVC, SAMR,
+LSARPC) failed right after CREATE. Adding FSCTL_PIPE_TRANSCEIVE to the
+same no_fileid_ioctl exemption as FSCTL_PIPE_WAIT fixes it, confirmed
+by testing a build with and without the change.
 
-        xfs_io -f -c "pwrite -S 0x61 0 64k" src
-        touch dst
-        chmod 600 dst
-        xfs_io -c "reflink src 0 1m 64k" dst
-        mkswap dst
-        swapon dst
-
-The file still has a hole after mkswap:
-
-        /mnt/scratch/dst:
-          [0..7]:       allocated
-          [8..2047]:    hole
-          [2048..2175]: allocated
-
-The server also reports only the allocated ranges:
-
-        server dst size=1114112 blocks=144
-
-but the client reported EOF-derived blocks:
-
-        client dst size=1114112 blocks=2176
-
-and swapon succeeded:
-
-        swapon_result=success
-        /mnt/scratch/dst 1.1M 0B -1
-
-So EOF-derived i_blocks can let a sparse reflinked file pass the CIFS
-swapfile hole check.
-
-Fix this by querying FILE_ALL_INFORMATION on the target handle after a
-successful duplicate extents request. Update i_blocks from AllocationSize
-and keep the refreshed target inode attributes valid so a following stat
-does not immediately revalidate again.
-
-If the query fails, mark the cached inode attributes stale so a later
-getattr can refresh them.
-
-This also fixes the xfstests generic/370 regression introduced by the
-i_blocks accounting change, as tested on a Samba "vfs objects = btrfs"
-share.
-
-Fixes: 99cd0a6eeb6c ("smb/client: do not account EOF extension as allocation")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Assisted-by: Claude:claude-sonnet-5
+Tested-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 53676a5e2823 ("cifs: add revalidation on FSCTL failure in smb2_duplicate_extents()")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c  |   10 +++++++---
- fs/smb/client/smb2ops.c |   30 ++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -1463,9 +1463,13 @@ static loff_t cifs_remap_file_range(stru
- 			target_cifsi->netfs.zero_point = new_size;
- 	}
- 
--	/* force revalidate of size and timestamps of target file now
--	   that target is updated on the server */
--	CIFS_I(target_inode)->time = 0;
-+	/*
-+	 * On success, duplicate_extents already updated the target inode attrs
-+	 * or marked them stale if the refresh failed.  On failure, mark attrs
-+	 * stale because EOF may have changed before the clone failed.
-+	 */
-+	if (rc)
-+		CIFS_I(target_inode)->time = 0;
- unlock:
- 	/* although unlocking in the reverse order from locking is not
- 	   strictly necessary here it is a little cleaner to be consistent */
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -2271,10 +2271,14 @@ smb2_duplicate_extents(const unsigned in
- 			u64 len, u64 dest_off)
- {
- 	int rc;
-+	int qrc;
- 	unsigned int ret_data_len;
- 	struct inode *inode;
-+	struct smb2_file_all_info file_inf;
- 	struct duplicate_extents_to_file dup_ext_buf;
-+	struct timespec64 ts;
- 	struct cifs_tcon *tcon = tlink_tcon(trgtfile->tlink);
-+	u64 asize;
- 
- 	/* server fileays advertise duplicate extent support with this flag */
- 	if ((le32_to_cpu(tcon->fsAttrInfo.Attributes) &
-@@ -2309,6 +2313,32 @@ smb2_duplicate_extents(const unsigned in
- 	if (ret_data_len > 0)
- 		cifs_dbg(FYI, "Non-zero response length in duplicate extents\n");
- 
-+	if (rc == 0) {
-+		qrc = SMB2_query_info(xid, tcon, trgtfile->fid.persistent_fid,
-+				      trgtfile->fid.volatile_fid, &file_inf);
-+		spin_lock(&inode->i_lock);
-+		if (qrc == 0) {
-+			asize = le64_to_cpu(file_inf.AllocationSize);
-+			CIFS_I(inode)->time = jiffies;
-+			if (file_inf.LastWriteTime) {
-+				ts = cifs_NTtimeToUnix(file_inf.LastWriteTime);
-+				inode_set_mtime_to_ts(inode, ts);
-+			}
-+			if (file_inf.ChangeTime) {
-+				ts = cifs_NTtimeToUnix(file_inf.ChangeTime);
-+				inode_set_ctime_to_ts(inode, ts);
-+			}
-+			if (file_inf.LastAccessTime) {
-+				ts = cifs_NTtimeToUnix(file_inf.LastAccessTime);
-+				inode_set_atime_to_ts(inode, ts);
-+			}
-+			inode->i_blocks = CIFS_INO_BLOCKS(asize);
-+		} else {
-+			CIFS_I(inode)->time = 0; /* force reval */
-+		}
-+		spin_unlock(&inode->i_lock);
-+	}
-+
- duplicate_extents_out:
- 	if (rc)
- 		trace_smb3_clone_err(xid, srcfile->fid.volatile_fid,
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 5f82dcd9a0b55..7cc5ca6a12652 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -9634,6 +9634,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 	case FSCTL_QUERY_NETWORK_INTERFACE_INFO:
+ 	case FSCTL_VALIDATE_NEGOTIATE_INFO:
+ 	case FSCTL_PIPE_WAIT:
++	case FSCTL_PIPE_TRANSCEIVE:
+ 		no_fileid_ioctl = true;
+ 		break;
+ 	default:
+-- 
+2.53.0
+
 
 
