@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774727;
-	b=xLiPLhpKOpLE6CYfNeuXlRPjgPZS7a7UPoOX8bZ91jCPySslAtN0LpumXpyc4LTqW2Tw
-	 x0fg6Bjduulu0XLYGqgCvXF13waor7VW0OUCi+GmgDMNoZfetf1i3qoCqPTb4CELIovjH
-	 RLaLIeaEh2bLtVDOahbzN2dT9/gSSdcqfY05njv4/nGQ2k0s3R4EhstBgyvlls+MdxjCV
-	 9/E1TCzOAgCodpBQeG9GxEzvC96H09NDy2qtRQ1avo5IAGQRi9Uxb81rNLUwf+E8pXYD7
-	 p0IbySuEjWlTXcHl6/PifEUm2/J92V8mkpqVkiG2WIlwePVI/EWcLDe0+Va6kVZZPkA==
+	t=1792774730;
+	b=G5xoxivu4w4pk8VLp/dcUaJq48hIuqmR3BXGdJPkedaJkPSd2T9A8Op0p0gl/FA8xELv
+	 4FMRkO5+oR5r0qPIy78Tc0IGE3Ro+KZoPpMoXBQm7F8K+6OhTE7DNB68v+LmV4t4ze2qf
+	 WNRf+zALfm0zcbEFM4jjj4b7BfNstzvC1tQw+/R9xsgvV7sPTpjgkud3AqE6IMVlr9C/l
+	 W36KX53f3ebrlsuRzorxxTSmUIBXT8Hc+amqw5FDi0EuiJe/JoT2k6CBMqdamkQJHLuSA
+	 TP+jwDl8kc4qgWdIhqlctqNhYUG6fQdg9oYjnbvDsj6odAioixUAa5A7vX27hohpYEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774727;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774730;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pgg2H+gU1E+oMBGpqcrVnsNHpCulgouQJfwAjB0PejI=;
-	b=0X2g/xaZ+m37ZAP5JnVHtsQ5FqncdSRobLOyUHvYD7NxpNElM33KTqQbEQEAVFES5cpK
-	 kGGWSF3NCVuoq4AZ+zirlaciCozGDeWtjhEqZ+fbZJnXMoSNjh1DTmm8SDBjFTHEKUkTv
-	 iQQPgBGA0EEgh26G0JoIp/+gw504G4vPMZwtI7RDrTvgoLJGa5T1oMgcuttTNeB+bZwhY
-	 Ueo7hWuhNzWDzE2sBca7T16Mcoxaxwq9xMNmxelZmsAsq64zTOEqo26Tla0A8hSTdzHk+
-	 odrDHkLe6bCo2knkq8xRuczfNzTaWj48GbwjOy+VCbZvM7jln4ZCDsqO/YdDe1/DnbA==
+	bh=7PlDDh9Ooxrv+Kkfk2Q/+Ve7MAFoNG28CGnRC5BR7xw=;
+	b=uIF09vEV7BU9rkr+QDgoRVy1T95flIRzU6ilgF2GUxKiwS/+hM84pZMvC8hJA9Vef+PM
+	 owg3d9HE1f2Psv7hWAIib+8ij611pKhP4PXvuQc3AiY64/wit7gCqh9MspQKdwcaqtHf3
+	 9pQKfp1rLl2XRiF1Gzn4qbTVLeNZy9wuqb0TSTbgSfQFX5VNmt08+hbakcmdfYnHIOiQh
+	 n5LjrhC4chUfyioZVIia4kuUtQOonVr6KL+H9/IrkNqpc1lbhp/PnVfpDsaXrZVI9Fp6G
+	 SRXo/jxPtB0Xn9SWWgL/lbdIWkdKR5y/Uagk3ZASHfg8PFddGQ1WpBgwlhDKmXHwvNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFrBmSVl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DcMyd4Rl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE78606A31F;
-	Fri, 23 Oct 2026 16:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2117606A31A;
+	Fri, 23 Oct 2026 16:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFrBmSVl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3911F01825;
-	Fri, 23 Oct 2026 16:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DcMyd4Rl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D9D1F01825;
+	Fri, 23 Oct 2026 16:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774727;
-	bh=pgg2H+gU1E+oMBGpqcrVnsNHpCulgouQJfwAjB0PejI=;
+	s=korg; t=1792774730;
+	bh=7PlDDh9Ooxrv+Kkfk2Q/+Ve7MAFoNG28CGnRC5BR7xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mFrBmSVlzgNHJ81eG1Lpm41b8EnQ8r+7TwT5PpGIXzKhCK9TXhI/SXOqt0/m1k8qC
-	 FIkRFfI7WxISJm2YK/zEPLrj5B7a6aBRbOtEMBNdlGeviCc2KOUYgXc75/Oo/fsugF
-	 yGdRTcpJpKFk7Vx/VteHCvJWKSL4kZmdcu2VgXfY=
+	b=DcMyd4RlJHXIHt2NjX2vGKaPOc4OMujT17HKMJVQVEY+tCyXT0i7irmAj8zbFKWFZ
+	 +y+JFdheBHEehda23uIzDW0OFLJhXjooJrge4C9Ziiaic+1SOEK/ZVQL2g3BbhnPld
+	 4yCjC/S7CSN5whZBANaD7L24MP5/iQjMGfVpCCiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ameer Hamza <ameer.hamza@truenas.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Antoine Huret <antoine.huret@bull.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.2 139/242] perf: Track the perf mlock gift separately
-Date: Fri, 23 Oct 2026 18:39:41 +0200
-Message-ID: <20261023163717.067021720@linuxfoundation.org>
+Subject: [PATCH 7.2 140/242] perf: Update cgroup time when rotating multiplexed events
+Date: Fri, 23 Oct 2026 18:39:42 +0200
+Message-ID: <20261023163717.090745188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,134 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Antoine Huret <antoine.huret@bull.com>
 
-commit 78436f3882fb8d848c823bf8cf754988202c5ca5 upstream.
+commit e4c7c401c6b9174c0c893084fdaa6a84bd2520d7 upstream.
 
-The locked_vm field in struct user_struct was originally introduced by
-commit 789f90fcf6b0 ("perf_counter: per user mlock gift") to provide an
-mlock-like budget for perf measured against mm->pinned_vm (since 2011).
+Since commit bd2756811766 ("perf: Rewrite core context handling"),
+perf_rotate_context() only updates the context time before scheduling
+out the flexible events. It no longer updates the cgroup time, which
+ctx_sched_out() used to do.
 
-perf grants each user a 'gift' of perf_event_mlock_kb * online CPUs of
-buffer pages which is charged to user->locked_vm without any RLIMIT_MEMLOCK
-check.
+Cgroup events take their times from the per-cpu cgroup clock, so
+between two cgroup switches the rotations see a frozen clock. The
+events rotated out lose the running time they accumulated, and the next
+update, usually a read, credits the whole interval to the events that
+happen to be on the PMU at that moment.
 
-Only pages beyond the gift are checked against RLIMIT_MEMLOCK, per-mm, via
-mm->pinned_vm, which makes it different from the standard mlock() check,
-which is per-mm and made against RLIMIT_MEMLOCK.
+As a result, the time_running of multiplexed cgroup events is wrong,
+and so are their scaled counts, as long as no other cgroup runs on the
+CPU, e.g. a busy job alone on its CPUs. Counting cycles over one second
+of a busy loop in a cgroup gives from half to several times the max
+frequency of the CPU.
 
-However, since this was introduced, a number of other components have
-utilised this field where a shared resource needed to be limited against
-RLIMIT_MEMLOCK.
+Update the cgroup time before rotating the CPU context, as was done
+before the rewrite.
 
-The other users are currently MSG_ZEROCOPY, io_uring, AF_XDP, iommufd,
-s390 KVM zPCI and most recently, secretmem in commit 97d34aa65c29
-("mm/secretmem: properly account locked pages").
-
-This field is shared between all of these, but because the gift is not
-checked against RLIMIT_MEMLOCK, user->locked_vm alone can exceed it - 16
-CPUs * 516 KiB is already more than the default 8 MiB - after which every
-other user of the field fails unconditionally.
-
-This was reported by a user who saw secretmem failing while running a
-simultaneous perf record.
-
-Resolve the issue by simply giving perf its own field separate from the
-rest.
-
-BPF used user->locked_vm up until commit 80ee81e0403c ("bpf: Eliminate
-rlimit-based memory accounting infra for bpf maps") which landed in 5.11.
-
-Thus also eliminate the now-defunct ifdef for CONFIG_BPF_SYSCALL for
-user->locked_vm.
-
-This issue exists between all of the components which use user->locked_vm
-and perf, however secretmem is the first user who has caused a report over
-many years and has been backported, so target the fix at that.
-
-Fixes: 97d34aa65c29 ("mm/secretmem: properly account locked pages")
-Closes: https://lore.kernel.org/20261002175651.811343-1-ameer.hamza@truenas.com
-Reported-by: Ameer Hamza <ameer.hamza@truenas.com>
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Fixes: bd2756811766 ("perf: Rewrite core context handling")
+Closes: https://lore.kernel.org/r/PR3PR07MB69223331EED5BEBE150375B7849C2@PR3PR07MB6922.eurprd07.prod.outlook.com/
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Antoine Huret <antoine.huret@bull.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261003-perf-locked-vm-fix-v1-1-d214dcaf0d76@kernel.org
+Link: https://patch.msgid.link/20261015-perf-cgroup-rotation-time-v1-1-93e177dfee5d@bull.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/user.h |    8 +++++---
- kernel/events/core.c       |   12 ++++++------
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ kernel/events/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/sched/user.h
-+++ b/include/linux/sched/user.h
-@@ -23,11 +23,13 @@ struct user_struct {
- 	struct hlist_node uidhash_node;
- 	kuid_t uid;
- 
--#if defined(CONFIG_PERF_EVENTS) || defined(CONFIG_BPF_SYSCALL) || \
--	defined(CONFIG_NET) || defined(CONFIG_IO_URING) || \
-+#if defined(CONFIG_NET) || defined(CONFIG_IO_URING) || \
- 	defined(CONFIG_VFIO_PCI_ZDEV_KVM) || IS_ENABLED(CONFIG_IOMMUFD) || \
- 	defined(CONFIG_SECRETMEM)
--	atomic_long_t locked_vm;
-+	atomic_long_t locked_vm;	/* pinned pages charged to RLIMIT_MEMLOCK */
-+#endif
-+#ifdef CONFIG_PERF_EVENTS
-+	atomic_long_t perf_mlock;	/* perf buffer pages within perf_event_mlock_kb */
- #endif
- #ifdef CONFIG_WATCH_QUEUE
- 	atomic_t nr_watches;	/* The number of watches this user currently has */
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -7059,7 +7059,7 @@ static void perf_mmap_close(struct vm_ar
- 		perf_pmu_output_stop(event);
+@@ -4639,6 +4639,7 @@ static bool perf_rotate_context(struct p
  
- 		/* now it's safe to free the pages */
--		atomic_long_sub(rb->aux_nr_pages - rb->aux_mmap_locked, &mmap_user->locked_vm);
-+		atomic_long_sub(rb->aux_nr_pages - rb->aux_mmap_locked, &mmap_user->perf_mlock);
- 		atomic64_sub(rb->aux_mmap_locked, &vma->vm_mm->pinned_vm);
- 
- 		/* this has to be the last one */
-@@ -7241,11 +7241,11 @@ static bool perf_mmap_calc_limits(struct
- 	/* Increase the limit linearly with more CPUs */
- 	user_lock_limit *= num_online_cpus();
- 
--	user_locked = atomic_long_read(&user->locked_vm);
-+	user_locked = atomic_long_read(&user->perf_mlock);
- 
- 	/*
- 	 * sysctl_perf_event_mlock may have changed, so that
--	 *     user->locked_vm > user_lock_limit
-+	 *     user->perf_mlock > user_lock_limit
- 	 */
- 	if (user_locked > user_lock_limit)
- 		user_locked = user_lock_limit;
-@@ -7253,7 +7253,7 @@ static bool perf_mmap_calc_limits(struct
- 
- 	if (user_locked > user_lock_limit) {
- 		/*
--		 * charge locked_vm until it hits user_lock_limit;
-+		 * charge perf_mlock until it hits user_lock_limit;
- 		 * charge the rest from pinned_vm
- 		 */
- 		*extra = user_locked - user_lock_limit;
-@@ -7271,7 +7271,7 @@ static void perf_mmap_account(struct vm_
- {
- 	struct user_struct *user = current_user();
- 
--	atomic_long_add(user_extra, &user->locked_vm);
-+	atomic_long_add(user_extra, &user->perf_mlock);
- 	atomic64_add(extra, &vma->vm_mm->pinned_vm);
- }
- 
-@@ -7280,7 +7280,7 @@ static void perf_mmap_unaccount(struct v
- 	struct user_struct *user = rb->mmap_user;
- 
- 	atomic_long_sub((perf_data_size(rb) >> PAGE_SHIFT) + 1 - rb->mmap_locked,
--			&user->locked_vm);
-+			&user->perf_mlock);
- 	atomic64_sub(rb->mmap_locked, &vma->vm_mm->pinned_vm);
- }
- 
+ 	if (cpu_event) {
+ 		update_context_time(&cpuctx->ctx);
++		update_cgrp_time_from_cpuctx(cpuctx, false);
+ 		__pmu_ctx_sched_out(cpu_epc, EVENT_FLEXIBLE);
+ 		rotate_ctx(&cpuctx->ctx, cpu_event);
+ 		__pmu_ctx_sched_in(cpu_epc, EVENT_FLEXIBLE);
 
 
