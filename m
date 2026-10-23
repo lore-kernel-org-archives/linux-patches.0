@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774802;
-	b=zFeW32W0xjDeFElb/WOomMwqWOI0MXrV7hFxyW7P9aCG76HHLof/23vfAOAIVt4faA4K
-	 cY4XPYWBl7wNOBB8LPCXhC9e4IO1c5TbVPc4QVzCYe/RfI/LofAzNYNEpAk9aQWZMOL51
-	 IIvsHV8s18M7MIjIWN+DR8OC2pMBaEzI3XPmAXu8htxNoO3GXCgx7J2otNsD3Qnl4HIQp
-	 poQQzqCwvDRh3uZ3g/09H9u9MNl01AfQwUmRO/RFzd52ATfwOuqW/t0Na59hu4qS3y36v
-	 v95jMVma3k4LH/VgE3m18flmiLmSeiHz9+Kf5FxuTJmI746EOxqodCDxZSUlEJkuXCg==
+	t=1792774805;
+	b=SHtU1tx0AvyzXP5d5oOB9f2Nh5bLHUXfGuSujXQ7wInQOt3XMvM+ZQwn9l6bChO/n71R
+	 X4hLUszaJRb26wpvE02auLWOGVcx9zv6jpP4kmChXhFObzmBLcNDeC4kzAsvwanAI3YXL
+	 9CcLU90CsDM8j00+1NZKdUej4wBOr41e9j+QEQT/LQZQ0al69k6VQFhvxvbGCVgl8vJjR
+	 NZJR0A1cc0Rvlqx3f1MmddMoKj74UlvTr7zbRAkCbGnpYBEy2ZhSgww9K2FBeAKUoaVoS
+	 HRBaqBieGZHjCmvvn83ibIrPSmOb/h1QaKnpP3Lv6OzCGqG8X6SzupxKj9XF+oSnGWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=LnCpUw0I734PANpGwTBfIAtm4IsdcetRgH1c0LzW+f0=;
-	b=wLasV1m2UIyLZl1KxoKcPPciV96stqdEN8fJJUF5qf2BHpIviAJmtKagIsm9wO3iqR5r
-	 QdnA48cLKWIdbtXT+9cjl2q2jBi05K82LW0bsolP1Naa0+mjmpf25SybiHDbw8m0y4JiO
-	 Gw4IY7JfpqP+V31gEAgcbdrIoANFW6uycXidIxDQTPcVHrF7xXpvRUjagK03mNM1ITdmF
-	 8B2QWkIfbysNRAD2ni2t1nAysGKW+x/BHnRo2MbFpicgHj+nVqWn06TNR7hJfEdHsmLjw
-	 U4NRO5ZR/IW208dHVhq/B/XHUx2A/xX/v4SvjUH3/VcT1mlh+rwg+65Z+jaiPiJEFdg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=/lmxHTE21W5zmoyp3jZTt8DzJx0jl19rLdXeNkXrEiE=;
+	b=oyBkDMDRaGx5KKgiBhQ7m4o7kbF11LJ/zC5tRuo9mbtFJr+6uIpKSK6bV+ntuweyBBEJ
+	 USByRfydYckmFs7G9ZTlxFun5wvLosVfNwKjQC64o47lOPRSRMEMvPHNLpiVbQhHGc/3i
+	 i6oPCKzwX1bgp4ABCl4M17pnu3H5tEWVGF3fBaWZSWrnQZti6QR3NDVkZdIryYZICSd/y
+	 +QwGWxUunGTk9dSgztZf84ans/Jo6JpNUFZgWDf7RWsw3g+01n46dbBODntxaVlpkroDL
+	 riqUeJn3zPZ5IdCW4Pl7gcrlXQQYh0HHydCwlHArlmipV/5VFyMesTk1JgJeTpd2qdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xr7dkl13;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iicajFDP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFB9606A32A;
-	Fri, 23 Oct 2026 17:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E9A606A31D;
+	Fri, 23 Oct 2026 17:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xr7dkl13
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEFF1F01825;
-	Fri, 23 Oct 2026 17:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iicajFDP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056EF1F01825;
+	Fri, 23 Oct 2026 17:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774801;
-	bh=LnCpUw0I734PANpGwTBfIAtm4IsdcetRgH1c0LzW+f0=;
+	s=korg; t=1792774804;
+	bh=/lmxHTE21W5zmoyp3jZTt8DzJx0jl19rLdXeNkXrEiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xr7dkl1335ewjM6u9uVbQf48kTBjZtCVJdnRC7KYU1U2CHrQ+Qhan7FFYZk5Z2Y4f
-	 47329C1CXEtV1OpWtcm+YJ4xuogNgVNzveb68UFYuIYibdecxIRmIpCh8Du+Syi8n0
-	 5pmiCXG1USL6hEpcTgpJt/PG5m0nEl90Y8F4O4aw=
+	b=iicajFDP1GM2Xa1PJgCF7R+8myHs3D0lUnyeIPBitGYpjDKYbv5+RCr/0VkvutC+I
+	 J7aHYVdpnXWVXukwvT80Vo8prOfBg82jJpI1xJqm2bRPhKw/mk+4tVjO+7CqEDR2WI
+	 7B3xeYWroymmexEgTu7A6F3XtDE516eBmneOMcho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 7.2 162/242] drm/i915/dmc: Add sanity check for DMC load address
-Date: Fri, 23 Oct 2026 18:40:04 +0200
-Message-ID: <20261023163717.616576026@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 7.2 163/242] drm/xe: Bump LRU for external objects on exec and rebind
+Date: Fri, 23 Oct 2026 18:40:05 +0200
+Message-ID: <20261023163717.639786580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -63,129 +63,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 7dedc5bb11f95e96fe80757c924d8d9aa7327759 upstream.
+commit d2ce8fcd778ee6d92748c92d23a56d4416c29d86 upstream.
 
-For DMC firmware header version 3, the firmware load address is stored
-in dmc_info->start_mmioaddr and later used by dmc_load_program().
+The VM's private BOs get their LRU position refreshed in bulk via
+ttm_lru_bulk_move_tail() on vm->lru_bulk_move, both after a successful
+non-LR exec and after the LR preempt-fence rebind worker runs. External
+objects (BOs potentially shared across VMs) are never added to that
+per-VM bulk move list, so their LRU position is never refreshed by
+either path. This makes external objects in active use look more
+evictable than they are.
 
-Unlike the MMIO address table, the firmware load address is not
-validated. Add a sanity check to ensure it is within the valid range.
+Add xe_vm_bump_lru(), which, under a single lru_lock critical section,
+performs the bulk move of the VM's private BOs and bumps each external
+object locked by the drm_exec transaction. Use it from both the non-LR
+exec path and the LR rebind worker, replacing the open-coded bulk move.
 
-BSpec: 69671, 68378
-Fixes: 3d5928a168a9 ("drm/i915/xelpd: Pipe A DMC plugging")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude-Code:Sonnet-5
-Signed-off-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
-Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260922133535.3180973-6-dibin.moolakadan.subrahmanian@intel.com
-(cherry picked from commit 5e47ee5c76ca9becde8df4ad5202845b7ffcbc4c)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: d490ecf57790 ("drm/xe: Rework xe_exec and the VM rebind worker to use the drm_exec helper")
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Assisted-by: LLM
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20261012132607.21387-1-thomas.hellstrom@linux.intel.com
+(cherry picked from commit 324ba30cca180c2e1d02090743dd78ccb15b9e4a)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dmc.c      |   55 ++++++++++++++++++++++++++
- drivers/gpu/drm/i915/display/intel_dmc_regs.h |   12 +++++
- 2 files changed, 67 insertions(+)
+ drivers/gpu/drm/xe/xe_exec.c |    7 ++-----
+ drivers/gpu/drm/xe/xe_vm.c   |   31 ++++++++++++++++++++++++++++---
+ drivers/gpu/drm/xe/xe_vm.h   |    2 ++
+ 3 files changed, 32 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dmc.c
-+++ b/drivers/gpu/drm/i915/display/intel_dmc.c
-@@ -1019,6 +1019,55 @@ static void dmc_set_fw_offset(struct int
- 	}
+--- a/drivers/gpu/drm/xe/xe_exec.c
++++ b/drivers/gpu/drm/xe/xe_exec.c
+@@ -346,11 +346,8 @@ retry:
+ 	xe_sched_job_push(job);
+ 	xe_vm_reactivate_rebind(vm);
+ 
+-	if (!err && !xe_vm_in_lr_mode(vm)) {
+-		spin_lock(&xe->ttm.lru_lock);
+-		ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
+-		spin_unlock(&xe->ttm.lru_lock);
+-	}
++	if (!err && !xe_vm_in_lr_mode(vm))
++		xe_vm_bump_lru(vm, exec);
+ 
+ 	if (mode == EXEC_MODE_LR)
+ 		xe_hw_engine_group_resume_faulting_lr_jobs(group);
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -394,6 +394,33 @@ int xe_vm_validate_rebind(struct xe_vm *
+ 	return 0;
  }
  
-+/*
-+ * Check if the load address is within the valid range for the given DMC ID.
++/**
++ * xe_vm_bump_lru() - Bump the LRU position of BOs used by a submission
++ * @vm: The vm for which we are bumping LRUs.
++ * @exec: The struct drm_exec with the locked GEM objects.
++ *
++ * Move the VM's private BOs, and all external objects locked by @exec,
++ * to the LRU tail. Private BOs are moved in bulk using @vm's
++ * &xe_vm.lru_bulk_move. External objects, which may be shared with other
++ * VMs, are not part of that bulk move and are bumped individually.
 + */
-+static bool dmc_load_addr_sanity_check(struct intel_dmc *dmc,
-+				       u32 start_addr, u32 payload_size,
-+				       int header_ver, enum intel_dmc_id dmc_id)
++void xe_vm_bump_lru(struct xe_vm *vm, struct drm_exec *exec)
 +{
-+	u32 start_range, end_range, end_addr;
++	spinlock_t *lru_lock = &vm->xe->ttm.lru_lock;
++	struct drm_gem_object *obj;
 +
-+	if (header_ver != 3)
-+		return true;
++	spin_lock(lru_lock);
++	ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
++	drm_exec_for_each_locked_object(exec, obj) {
++		if (!drm_gpuvm_is_extobj(&vm->gpuvm, obj))
++			continue;
 +
-+	switch (dmc_id) {
-+	case DMC_FW_MAIN:
-+		start_range = DMC_MAIN_PROGRAM_BASE_START;
-+		end_range = DMC_MAIN_PROGRAM_BASE_END;
-+		break;
-+	case DMC_FW_PIPEA:
-+		start_range = DMC_PIPEA_PROGRAM_BASE_START;
-+		end_range = DMC_PIPEA_PROGRAM_BASE_END;
-+		break;
-+	case DMC_FW_PIPEB:
-+		start_range = DMC_PIPEB_PROGRAM_BASE_START;
-+		end_range = DMC_PIPEB_PROGRAM_BASE_END;
-+		break;
-+	case DMC_FW_PIPEC:
-+		start_range = DMC_PIPEC_PROGRAM_BASE_START;
-+		end_range = DMC_PIPEC_PROGRAM_BASE_END;
-+		break;
-+	case DMC_FW_PIPED:
-+		start_range = DMC_PIPED_PROGRAM_BASE_START;
-+		end_range = DMC_PIPED_PROGRAM_BASE_END;
-+		break;
-+	default:
-+		MISSING_CASE(dmc_id);
-+		return false;
++		ttm_bo_move_to_lru_tail(&gem_to_xe_bo(obj)->ttm);
++		cond_resched_lock(lru_lock);
 +	}
-+
-+	if (payload_size == 0)
-+		end_addr = start_addr;
-+	else if (check_add_overflow(start_addr, payload_size - 1, &end_addr))
-+		return false;
-+
-+	if (start_addr < start_range || end_addr > end_range)
-+		return false;
-+
-+	return true;
++	spin_unlock(lru_lock);
 +}
 +
- static bool dmc_mmio_addr_sanity_check(struct intel_dmc *dmc,
- 				       const u32 *mmioaddr, u32 mmio_count,
- 				       int header_ver, enum intel_dmc_id dmc_id)
-@@ -1178,6 +1227,12 @@ static u32 parse_dmc_fw_header(struct in
- 	}
- 	dmc_info->dmc_fw_size = dmc_header->fw_size;
+ static int xe_preempt_work_begin(struct drm_exec *exec, struct xe_vm *vm,
+ 				 bool *done)
+ {
+@@ -544,9 +571,7 @@ retry:
  
-+	if (!dmc_load_addr_sanity_check(dmc, start_mmioaddr, payload_size,
-+					dmc_header->header_ver, dmc_id)) {
-+		drm_err(display->drm, "DMC %d: firmware has wrong load address\n", dmc_id);
-+		return 0;
-+	}
-+
- 	dmc_info->payload = kmalloc(payload_size, GFP_KERNEL);
- 	if (!dmc_info->payload)
- 		return 0;
---- a/drivers/gpu/drm/i915/display/intel_dmc_regs.h
-+++ b/drivers/gpu/drm/i915/display/intel_dmc_regs.h
-@@ -521,6 +521,18 @@ enum pipedmc_event_id {
- #define TGL_PIPE_MMIO_END(dmc_id)	_PICK_EVEN(((dmc_id) - 1), _TGL_PIPEA_MMIO_END,\
- 					      _TGL_PIPEB_MMIO_END)
+ #undef retry_required
  
-+/* For DMC header version v3*/
-+#define DMC_MAIN_PROGRAM_BASE_START	0x80000
-+#define DMC_MAIN_PROGRAM_BASE_END	0x86fff
-+#define DMC_PIPEA_PROGRAM_BASE_START	0x90000
-+#define DMC_PIPEA_PROGRAM_BASE_END	0x96fff
-+#define DMC_PIPEB_PROGRAM_BASE_START	0x98000
-+#define DMC_PIPEB_PROGRAM_BASE_END	0x9efff
-+#define DMC_PIPEC_PROGRAM_BASE_START	0x52000
-+#define DMC_PIPEC_PROGRAM_BASE_END	0x53fff
-+#define DMC_PIPED_PROGRAM_BASE_START	0x59000
-+#define DMC_PIPED_PROGRAM_BASE_END	0x5afff
+-	spin_lock(&vm->xe->ttm.lru_lock);
+-	ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
+-	spin_unlock(&vm->xe->ttm.lru_lock);
++	xe_vm_bump_lru(vm, &exec);
+ 
+ 	/* Point of no return. */
+ 	arm_preempt_fences(vm, &preempt_fences);
+--- a/drivers/gpu/drm/xe/xe_vm.h
++++ b/drivers/gpu/drm/xe/xe_vm.h
+@@ -284,6 +284,8 @@ int xe_vm_lock_vma(struct drm_exec *exec
+ int xe_vm_validate_rebind(struct xe_vm *vm, struct drm_exec *exec,
+ 			  unsigned int num_fences);
+ 
++void xe_vm_bump_lru(struct xe_vm *vm, struct drm_exec *exec);
 +
- #define SKL_DMC_DC3_DC5_COUNT	_MMIO(0x80030)
- #define SKL_DMC_DC5_DC6_COUNT	_MMIO(0x8002C)
- #define BXT_DMC_DC3_DC5_COUNT	_MMIO(0x80038)
+ struct dma_fence *xe_vm_bind_kernel_bo(struct xe_vm *vm, struct xe_bo *bo,
+ 				       struct xe_exec_queue *q, u64 addr,
+ 				       enum xe_cache_level cache_lvl);
 
 
