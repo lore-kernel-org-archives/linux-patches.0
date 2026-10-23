@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774871;
-	b=oi8z/nTR7+nTlnD83MswpmRWNHfUB3YonKeEl7ZwncNcHw/IyDFK/abIlROjb7ulkr7i
-	 xdtsUyodBiB8vYO2CgSEnkZ99V5wLDEXm8d8pRi8tlrUOmAhCsjfYjzxpV8+1jJS+Ys86
-	 mmTZTvmZFX1zBiemW8RPU+8AUkT2Hs7PpM3KZYhJeEj0KlpiOQ2DzDRg2JkczPrRrxiWF
-	 PxqBQlbpmPfus1+rExFbzX1SNRYBnvLx+x3Go21ApTPk+KokNf9kgfHGtkwBnMeoPIYDx
-	 neqTuVJLaUqgpQ8ifzMceAoSL2si+ngdCf81YySuFePPax9YPp6AZW1Wh8SOK+O5RAQ==
+	t=1792774874;
+	b=TrNDvh3hovWu2lmJwqEtmUavWzEqJs1ma6qSpreHlv9h02QuB3XRFu9Z02stSqmQz7bJ
+	 8p76pW+LEyupsA5OWgA72DkDY2QyS8kEARQBAHKliYFeFOMN8Q5Out7pprI/YDswEiiKP
+	 xDBS6ttBko1ZGC5Tem+z+vEreiOq04dqplPqXEBijvJzt++FOTbyF4l8AN3Na3FAz/NK2
+	 uODEWjTsMy6WZ13wU4DayLo29cAzKaJFxRiV3BbovPeNaczVlo1+n7aT0zjoB+ZEwvZFQ
+	 1pbMLxqs7NBMtCWHHB88cZTIdu0zC2cOIh2t1Q+T0yE7ZWwW6zHuAasVhrz9/e4pzbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lm3qShQ81asZCAYmCA+0KiTG3G4VgkPhWRsyqOYIXj4=;
-	b=I6sZLg5xQyo79pZ2fCV+VDsz6w5uh7s+qlHDv0SggqNDaWPdWFQKRk8DyFoZhLgZQBv9
-	 gyDthL7ofDa9WRdEhMDRzK4lkiza3sT4LQs2t3uEuthFR4idQ/0k88w6r370PEULTqF6F
-	 dBrLD0Sh5gS8aZNo1Un8RhO4eW/HeMfMBwdEJDbSmTJBvr+FOnDL9HF3UA8twxSt4o3f2
-	 R+CJhDR9IYtGfkMuTQ8NIaHaOqlvOeBoS0nqQsPa1Pu9H+3n6OZm21DHKz+E5084J6ytL
-	 6bfOq9FFaanG+N9bS/MSof4FYoIfncW0ubG8odnQ4Mcmtj/AXJay76CwbQOykyvfviA==
+	bh=n2XciUPIR6RUed+XaZ7rV/cRfYMv1+RcknlvdzS2O7E=;
+	b=vjO6pf+1mSbgw8irh61yB8Tbkjm1OpSsOz9f1ovZ8CG8b5MEI8tu5WBK4b2Nal1TovYl
+	 nMdhzE6QWCKL3gDRY+rLKcLHvCKVpOPbvuKosrYe72nIUrznlnVxR17oKOB8OJkpsPg4f
+	 6eetrdDBJaBmSZbdqjOO5gcZXshOqI3MAZW+86j6OhXSzzXeumnEqyINrS8XSnsUXpQYt
+	 PRFAagpYjJiuoPUiEn3kIvHXfwHLhjWA2oi00UEuraqAxfEg1/NL+7QZQ6EP0krqVqdqc
+	 CcdKW3TpRc2NR9zBVOk3OdsX+5UbpQpkcCSGe0kHBr15q9tviYy2ikGXgE/uIPA8KuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pJxFmSWW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BYHrWewv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E15606A31D;
-	Fri, 23 Oct 2026 17:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E24C606A31E;
+	Fri, 23 Oct 2026 17:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pJxFmSWW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDD01F01828;
-	Fri, 23 Oct 2026 17:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BYHrWewv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E04E1F01825;
+	Fri, 23 Oct 2026 17:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774871;
-	bh=Lm3qShQ81asZCAYmCA+0KiTG3G4VgkPhWRsyqOYIXj4=;
+	s=korg; t=1792774874;
+	bh=n2XciUPIR6RUed+XaZ7rV/cRfYMv1+RcknlvdzS2O7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pJxFmSWWa0pA8Zfqa5btV9dqQwBkM/Unp6MwJoJWsD2raRqpKEpkiv8XAZw4jOUAI
-	 qGPDFVHPw+aeyC+XqM2lqrCsJowd2kgVTTJUa1XqyjyTSYyDvupGG3tg7VxVQNi+Ae
-	 v146zrGkmDeNve5osE3DmCRLrE2YDDAj2QvITDSs=
+	b=BYHrWewv8ClmKkJGUovs61DkPcSwpkg+RCKP5S8FY6OcES3HF3MaINZnITD+Pvrb6
+	 gtVTnid4gRipMOC4yjq5SuYrmpO1gb/eEgF1WJL8C7vn06HBTuju8C0NZvj/Dl7iHY
+	 q/ZfWo2Ly8NwmGcZGAvwhVGIJCItMOvG/8OoPAvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sun Yangkai <sunyangkai@fygo.io>,
-	Chen Cheng <chencheng@fnnas.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.2 187/242] dm-integrity: require stable writes for internal hash modes
-Date: Fri, 23 Oct 2026 18:40:29 +0200
-Message-ID: <20261023163718.211250158@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 170/242] tracing: Take trace_types_lock when dropping the buffer_meta reference
+Date: Fri, 23 Oct 2026 18:40:12 +0200
+Message-ID: <20261023163717.805847297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,54 +67,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit b2fd92f016e9d692fd3c8c08d0ee014e9212279d upstream.
+commit 2afe7575fb24b9d0476ae4a3a9862f7997216aa4 upstream.
 
-dm-integrity direct, bitmap and inline internal-hash modes compute
-integrity tags from the pages carried by the write bio.  The lower data
-write also uses those pages, so the tag and the data write depend on the
-same memory contents staying unchanged while writeback is in flight.
+tracing_buffer_meta_open() drops the trace_array reference with
+__trace_array_put() when ring_buffer_meta_seq_init() fails, without
+holding trace_types_lock. Use trace_array_put() like every other open
+error path.
 
-Without stable writes, a buffered writer can modify a writeback folio
-after dm-integrity has submitted the data bio and before the lower device
-has consumed the data.  After a crash, this can leave data from the later
-contents with a tag calculated from the earlier contents, causing
-permanent checksum failures on read.
-
-Set BLK_FEAT_STABLE_WRITES for internal-hash D, B and I modes so
-filesystems wait for writeback folios to become stable before modifying
-them again.  Journal mode is left unchanged because it copies data into
-the journal before computing and persisting the tag.
-
-Tested using dm-delay over a virtio-blk test disk, dm-integrity
-internal_hash:crc32c and no-journal ext4.  The D and B reproducers both
-failed with checksum errors before this change and completed with
-READ_RC=0 and zero mismatches after it.
-
-Fixes: 7eada909bfd7 ("dm: add integrity target")
 Cc: stable@vger.kernel.org
-Reported-by: Sun Yangkai <sunyangkai@fygo.io>
-Link: https://github.com/chencheng-fnnas/reproducer/blob/main/dm-integrity-writeback-race.py
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Link: https://patch.msgid.link/20260914133506.4865-2-devnexen@gmail.com
+Fixes: 950032ffcee7 ("ring-buffer: Add output of ring buffer meta page")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/trace/trace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -4176,6 +4176,10 @@ static void dm_integrity_io_hints(struct
- 	limits->dma_alignment = limits->logical_block_size - 1;
- 	limits->discard_granularity = ic->sectors_per_block << SECTOR_SHIFT;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5879,7 +5879,7 @@ static int tracing_buffer_meta_open(stru
  
-+	if (ic->internal_hash &&
-+	    (ic->mode == 'D' || ic->mode == 'B' || ic->mode == 'I'))
-+		limits->features |= BLK_FEAT_STABLE_WRITES;
-+
- 	if (!ic->internal_hash) {
- 		struct blk_integrity *bi = &limits->integrity;
+ 	ret = ring_buffer_meta_seq_init(filp, tr->array_buffer.buffer, cpu);
+ 	if (ret < 0)
+-		__trace_array_put(tr);
++		trace_array_put(tr);
+ 	return ret;
+ }
  
 
 
