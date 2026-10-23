@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775019;
-	b=JBK0gFEmx3TL12jFzRNL7G2bIqmbu4BvKDTChV8JJ6NVi/PjFPbOL9QWN8X2iBnXtSXq
-	 DkctduJpKuPLqMRB/eMOQ+p4/7R0QTGf6lsI/6WAQY3cDLXpltPgHziLCg29jW/DPWYxD
-	 nzrozkH1JMN/dBCMLqaiFVNDgGbPwu+aaz5mbPKrT2J2L88Q1rBA5mUxNh7fCjgv/v1ev
-	 e/LTSv3lS+hDr+EpBUInDJgmkv08D/fkeNeo+YNiZovSDTB3YIZIO+Br7wP2m6L4SGydF
-	 izhqaPWaxTyFSOOhMBGnW8A3CX+MpMHZzcBQKxOnEOy2CImzH04wC5u/y1D9G62sTmw==
+	t=1792775022;
+	b=nHrZT1ybOiF7Cyl81UaOaOfthI5yAUxuso7C5dhPNLPFwPuyuBp4068xoOf+1RBSChhV
+	 Ri4g5fikifAUO5LBtQIah7f7MQVGaFluxRff9Hf5YOuVLTtlNTblwE2BzVcuciMrKNtJ8
+	 wqJEOiX+3Ha7WRIojzb40HqN9RBbnkGYNE506wGeBCbJK7bHu5TwsZIwMnaZkeCWCFSfK
+	 r+glYwWRVvxwuMKe+cHEfg6Y6ezcxEludhVvUVzs8kBXulI8CAfS3cE3aV0PnOTlqkjOj
+	 akn9No+ILC3ahT4kBXi0CdSfmkfjpWbZGFKf36TfauQn89GnVt821fpzpnocOLIc6Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775022;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=30ZJOrLXVinV8Dh4E0vGyKrAWCY6jwZ963l67u1Pt6U=;
-	b=453cIsfhdYJ8M95g6n+l2HltrRPn6oq9Tr+MCfAnGLUFfpc9ibaYwpven5cc4LcagwAA
-	 8oDxWIp+f7A/AySUHc1aSI7z8CXapsGb2mSeX6iJEbE8ZSvr6zLKQuaqsCMg3FgMM9Qk+
-	 U7/ppjieHFhvlnb0OnqUSqZXncSFhdIrLcrVKZlOghCYY3/sF0ikOnl06/e9ZCv2KPFRK
-	 24aqIPI4j9YzgupPL7sLqorNE67n7nEwoZd3lCu9Fggu89o+UvIuGTMAggtFCc/9GRvnT
-	 gJDYHXB+NiqnAs+KTxGPOf6Nwg7uVeSFNbTxqnc5cakJku8+gt16P3IjYiJ6waZRzXA==
+	bh=6KNIpdftuqhEQZ6vLllPf63pef5VWPpjV2e4OEnLOrc=;
+	b=HigOhdT2ry1pBj6CQuetBryWLEoHHj2VwDDxheYCoEhcAgGGwxY7vbAQf7FHlBXlfIW8
+	 F4xchQ0+c0UR0s90RrSszx0NmU6XFG7tPC5RSDZTwunI70tpudSciQOh8sUdmL1oocX76
+	 IzvRjpF6vaBAgdSORboG9unnKF3PmdeF68XoEEZhlcb7UgyV/0loTOeixj1y1umWUcYUi
+	 tY00Mry4Y6YemA6CTU2iU5vNHSPROPnW6cVoKdfEpmBwJpK1VJFHQZ3eHbgbRV4iexRmw
+	 oX1thKj86Xi+cQdcoN3JEE23uelbWoVoq7VyR6M+UUX6rReX5a65re3E26/Z4F7pCgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vcvYktW4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYpMd3PD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74106606A31A;
-	Fri, 23 Oct 2026 17:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7999E606A32C;
+	Fri, 23 Oct 2026 17:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vcvYktW4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE7B1F01825;
-	Fri, 23 Oct 2026 17:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYpMd3PD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BAE1F01825;
+	Fri, 23 Oct 2026 17:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775019;
-	bh=30ZJOrLXVinV8Dh4E0vGyKrAWCY6jwZ963l67u1Pt6U=;
+	s=korg; t=1792775022;
+	bh=6KNIpdftuqhEQZ6vLllPf63pef5VWPpjV2e4OEnLOrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vcvYktW4eXOERsMtg3qVI57BxbnSqx50z8BVDgCxRuXBaKaKOoVE7VTf/1lWpS/fz
-	 jgJQy75fbuokLoINu8hdIf+kYOUBsCWrQ20G7NIuqgKVJqh/v4jnwTRmo5r1YRqI6n
-	 p01jUgHgoUI1BFo+XbgikZd016h9zZY6VBpgMjZo=
+	b=TYpMd3PDjZr15sCH9LrIMvGb1qC9+co68wTv8x+QUugPTY8acGpSJLbK5hwtLh0R3
+	 tIrLUPLsS5iWRlEXZtC21u8vBPeD644XGBW+NvkF44r8NL+j/W42TYrRal2EDYy/bW
+	 gdlQEdtsU8N1vG8whKJF7tC6SYZtlxZVoq20kEsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 234/242] tracing: Fix NULL dereference when copying keys for a field variable
-Date: Fri, 23 Oct 2026 18:41:16 +0200
-Message-ID: <20261023163719.384569851@linuxfoundation.org>
+Subject: [PATCH 7.2 235/242] sched_ext: Fix the bypass dispatch claim for schedulers bypassed by an ancestor
+Date: Fri, 23 Oct 2026 18:41:17 +0200
+Message-ID: <20261023163719.409676525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,71 +68,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit a0777b9e53157f1f6848a0fd0650f5465391ea81 ]
+[ Upstream commit 5bdeca322a6f8d10acaf67cccab1f69747ee7be3 ]
 
-In event_hist_trigger_parse() where it needs to create actions like
-"onmatch", it calls:
+scx_bypass() claims bypass dispatch when the scheduler's depth goes from
+zero to one and releases it when the depth returns to zero, but propagates
+only the depth to the descendants, not the claim. A descendant that starts
+bypassing with its ancestor never claims, and one whose own bypass ends
+under the ancestor's keeps its claim, as its depth does not return to zero.
 
-  event_hist_trigger_parse() {
-    create_actions() {
-      action_create() {
-        trace_action_create() {
-          trace_action_create_field_var() {
-            create_field_var_hist()
+A sub-scheduler enable whose bypass ends under a PM suspend thus leaks its
+claim: the parent keeps hosting bypass dispatch and the sub-scheduler's next
+bypass trips the WARN_ON_ONCE() on the claim. A sub-scheduler disable that
+starts under a PM suspend has no claim, so once the resume lifts the root's
+bypass its tasks sit on the parent's bypass DSQs with nobody consuming them.
 
-Where create_field_var_hist() does a loop on the hist_data
-representing the keys. The issue is, if the keys uses one of the
-pseudo field types (like common_cpu), the hist_data field element
-will have NULL for its field member causing a NULL pointer
-dereference when accessing the key_field->field->name.
+Claim for every descendant whose depth goes from zero to one in the
+propagation and release every scheduler in the subtree whose depth returned
+to zero once the tasks have moved out of the bypass DSQs. A parent that is
+bypassing itself when a descendant claims consumes only its own bypass DSQs,
+empty until it leaves bypass and becomes the host.
 
-  # echo 'hist:keys=common_cpu:ts0=common_timestamp.usecs' > \
-      events/sched/sched_waking/trigger
-  # echo 'my_synth u64 lat; int prio' > synthetic_events
-  # echo 'hist:keys=common_cpu:wakeup_lat=common_timestamp.usecs-$ts0:\
-      onmatch(sched.sched_waking).my_synth($wakeup_lat,prio)' > \
-      events/sched/sched_switch/trigger
-
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:create_field_var_hist+0x771/0x1380
-  Call Trace:
-   trace_action_create_field_var+0x360/0x600
-   trace_action_create+0x393/0xe80
-   event_hist_trigger_parse+0x3e47/0x69e0
-   trigger_process_regex+0x1a6/0x250
-   event_trigger_write+0xce/0x160
-
-Instead of accessing it directly, use the proper handler
-expr_field_str() to get the name.
-
-The three previous patches are prerequisites: without them a .buckets
-key and a common_stacktrace key each render into a command that cannot
-be parsed back.
-
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260914053443.981201-5-donggeunyoo.kernel@gmail.com
-Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: aa2a0a19686c ("sched_ext: Separate bypass dispatch enabling from bypass depth tracking")
+Cc: stable@vger.kernel.org # v7.1+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+[ sashal: Changed scx_disable_bypass_dsp() calls to disable_bypass_dsp(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext/ext.c |   34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -3078,7 +3078,7 @@ create_field_var_hist(struct hist_trigge
- 		key_field = hist_data->fields[i];
- 		if (!first)
- 			seq_buf_putc(&s, ',');
--		seq_buf_puts(&s, key_field->field->name);
-+		expr_field_str(key_field, &s);
- 		first = false;
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -5717,15 +5717,12 @@ static void enable_bypass_dsp(struct scx
+ 
+ 	/*
+ 	 * When a sub-sched bypasses, its tasks are queued on the bypass DSQs of
+-	 * the nearest non-bypassing ancestor or root. As enable_bypass_dsp() is
+-	 * called iff @sch is not already bypassed due to an ancestor bypassing,
+-	 * we can assume that the parent is not bypassing and thus will be the
+-	 * host of the bypass DSQs.
+-	 *
+-	 * While the situation may change in the future, the following
+-	 * guarantees that the nearest non-bypassing ancestor or root has bypass
+-	 * dispatch enabled while a descendant is bypassing, which is all that's
+-	 * required.
++	 * the nearest non-bypassing ancestor or root. The parent hosts them
++	 * unless it is bypassing too. Then they sit further up and the parent
++	 * consumes only its own bypass DSQs, empty until it leaves bypass and
++	 * becomes the host. Either way the nearest non-bypassing ancestor or
++	 * root has bypass dispatch enabled while a descendant is bypassing,
++	 * which is all that's required.
+ 	 *
+ 	 * bypass_dsp_enabled() test is used to determine whether to enter the
+ 	 * bypass dispatch handling path from both bypassing and hosting scheds.
+@@ -5818,16 +5815,19 @@ static void scx_bypass(struct scx_sched
+ 	 * Bypass state is propagated to all descendants - an scx_sched bypasses
+ 	 * if itself or any of its ancestors are in bypass mode. A descendant's
+ 	 * depth is the sum of its own bypasses and its ancestors', so every
+-	 * call propagates whether or not @sch changed state.
++	 * call propagates whether or not @sch changed state. The descendants'
++	 * claims are released below with @sch's, after their tasks have moved.
+ 	 */
+ 	raw_spin_lock(&scx_sched_lock);
+ 	scx_for_each_descendant_pre(pos, sch) {
+ 		if (pos == sch)
+ 			continue;
+-		if (bypass)
+-			inc_bypass_depth(pos);
+-		else
++		if (bypass) {
++			if (inc_bypass_depth(pos))
++				enable_bypass_dsp(pos);
++		} else {
+ 			dec_bypass_depth(pos);
++		}
+ 	}
+ 	raw_spin_unlock(&scx_sched_lock);
+ 
+@@ -5903,8 +5903,12 @@ static void scx_bypass(struct scx_sched
  	}
  
+ 	/* disarming must come after moving all tasks out of the bypass DSQs */
+-	if (!bypass)
+-		disable_bypass_dsp(sch);
++	if (!bypass) {
++		guard(raw_spinlock)(&scx_sched_lock);
++		scx_for_each_descendant_pre(pos, sch)
++			if (!pos->bypass_depth)
++				disable_bypass_dsp(pos);
++	}
+ unlock:
+ 	raw_spin_unlock_irqrestore(&scx_bypass_lock, flags);
+ }
 
 
