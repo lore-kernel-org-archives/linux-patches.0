@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773928;
-	b=LRefkf4ghDEQ4HReis+usB+yy86evRiLbjU3UYsfbks7jaa+h6+HkYXOU7qSsyxaPWWK
-	 NU+Sk+v44+8q6IEBEKqrdqkmKpgbmmhc2olnr46/GSyA9qhx02z5QUi6lJYXlaVdtTfBQ
-	 +sOOKl5mZH0kYJ8Y3QhzRaLkFkfv9eQO1it9tMobEGNg3dwEva27Ug4jUlOie9sBowQmW
-	 35L9lzU4owRR2XT13I4SOfFnjUgbb2w3gBUXDZZsc2v9iWDv8x/YRNQSowD0VGXtCAg3G
-	 cTkS6QV35GhsuzaCQfwwNVsxJf7HJujRvpiSgKxbAMHmAzkaGeA2Xpxtl6aHE4vUAyA==
+	t=1792773931;
+	b=0B530bPl7e5nxXzq22vD6+F7jMP8QPaNrDiPNfXuYq23oGTRVSX3VtTmADMqt8q6u1Hz
+	 pcnIZ99F5FJUqXPJT75fms7bMtlh07z6QapImEir3ceSp2LDhpSZFiVbpKPw7Q5UsPY58
+	 Ac0I96S1DOfFVtKYyyopK0Ts78y+6/6t8Exk9bvaAvV/lR/hQvAsGVfvhfpRdQ7/nRi9Y
+	 B6/t42txoILd1XBg1EDTLcm+u3K953uzKijlfiPzjNljObFkNQuy6zrvyj/HZi2tQiQr+
+	 9GrR3SE2X8DcqPf67/aFdQ0S3a805n9MfTz/8Fuz3D5w8pvI66vSOKNHSYxcqV5gFhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773928;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773931;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DvYF+5NtJszE2uPdEtmjBEjp6MUFdryUgJtSTtQCuwM=;
-	b=Li/vL0aF+EDgtdmGAL6YZQGsL/jXisRlqQ/2jq/Q4Gy+QS3/HWZECEtaPDGCzBQQH2vY
-	 MQER6eRsAZuQTGiU6lXLvUhJNN4duImdqBdrZT8HKXN9Kv1/se6HbG3NBzWT/j5y+MOCq
-	 ll9dbPRddOTVYbPEgOkqoWLhqgi0VDxfJbDWnHcRUhHxCKhd8ScJSq5uvCOMiIEAdPQV2
-	 1mRwVJYj9FNwJaXNErWjz63Ogs3FPwlN9GMpZ+nWslBQ50M9BQxDwOLwGJ1GIUMq9Un1f
-	 3MQKxVVpBt0Cx98I81b5HUnZfc1iUXsZKdGA3raCJGTjGon03/YUYNiEbqlut0ZOyzQ==
+	bh=BnwbGuh73aGFyy83tdyV0ZjW1BA7feePzF3mjEEuRcI=;
+	b=g8Cj9JiPKRkRQNxwMMNupq/I/1eoMJCa345As+sujAQ8fHbzCiRqe9yE+L1wtZd5AnUx
+	 N+I4PO36uoN5PrYfSNMgWEpRGriYey9fEpnaNtkTo3mcaJvaqfF6p9LMbke7JE5akUH31
+	 HYGFGOzCxbC0f/91QInAy5kjx5IQUcPSJZshERkg4dTwh0OkAN5AsmH9jvx05M1p2PtZc
+	 TLpwu/85lMzkyaP39/kp94JmagCm4f4x+HW+xjTYfz46W+EOPXPOHe+yQmFYuI2zDM8ME
+	 RQbDVV6CPEbonoTFdjbruSkpBsLQ2C5SlbgeyFV98L6rLEC+sNTsbUqvzGTWN7e23oQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fAEkHcAa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wwma1SYn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEA0606A31B;
-	Fri, 23 Oct 2026 16:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5F9606A31A;
+	Fri, 23 Oct 2026 16:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fAEkHcAa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D05A1F01828;
-	Fri, 23 Oct 2026 16:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wwma1SYn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692AE1F01825;
+	Fri, 23 Oct 2026 16:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773928;
-	bh=DvYF+5NtJszE2uPdEtmjBEjp6MUFdryUgJtSTtQCuwM=;
+	s=korg; t=1792773931;
+	bh=BnwbGuh73aGFyy83tdyV0ZjW1BA7feePzF3mjEEuRcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fAEkHcAar4tqjrGOnqCydqsVbXvjqBTUFO5UlbCVSTC7Hf29Wj1ZFRz+5B3LChQZA
-	 okdvOzWatdyOfEoU0MWI7ATRNayQ/t7qGjYgVE5KsxTZh2GllrjlCnUBXxFK7FI8UU
-	 uYpYB2EOkQDMMeZDpoGGOGV0V9/NY7gWWvDNTIcs=
+	b=Wwma1SYn5mBJslF4GMYxDTYl/JmsnUwyrJ0PEYHBmoRluSbpdjnerZH1cxHeS6KZP
+	 vlYkpQX3SWsOhKye/RjMcrsIYF+RuUnds46OUQ6C5L/7YjRHqS6GyHMCFAdFT/5w5J
+	 6guH8SaIoViaDRAw/ns+OmvVei7y5yupE1x5sqoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Andy Shevchenko <andy@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 064/193] gpio: mxc: fix both_edges bit operations
-Date: Fri, 23 Oct 2026 18:35:41 +0200
-Message-ID: <20261023163715.718680739@linuxfoundation.org>
+Subject: [PATCH 6.18 065/193] gpio: mxc: use BIT() macro
+Date: Fri, 23 Oct 2026 18:35:42 +0200
+Message-ID: <20261023163715.742733090@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -71,89 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit b7719c575dec69146f6d537fd616b27083c0cf45 ]
+[ Upstream commit 9de94681ee48770ec7e2062451a572b557bf9298 ]
 
-gpio_set_irq_type() can be called concurrently for different pins on
-the same port.  The IRQ core serializes per irq descriptor, but
-different pins have different descriptors, so on SMP systems two
-concurrent gpio_set_irq_type() calls for pins on the same port run
-without mutual exclusion.
+Replace the open-code with the BIT() macro.
 
-The read-modify-write of port->both_edges is performed outside the
-port-wide scoped_guard(gpio_generic_lock_irqsave) section, so
-concurrent updates for different pins can overwrite each other,
-causing missed interrupts or stuck IRQ lines on dual-edge triggered
-pins.
-
-The original uniprocessor MXC SoCs were not affected; the race
-became reachable on multi-core i.MX7 and i.MX8 SoCs that reuse this
-driver.
-
-Convert both_edges from u32 to unsigned long and use set_bit(),
-clear_bit(), and test_bit() to make the modifications atomic.
-
-Fixes: 910862ec092c ("mxc: emulate GPIO interrupt on both-edges")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-2-c4d769587d3e@nxp.com
+Link: https://patch.msgid.link/20260526063504.25916-2-alexander.stein@ew.tq-group.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Stable-dep-of: 170aeff46fb5 ("gpio: mxc: fix wakeup_pads bit operations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mxc.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-mxc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
-index 9c4db51489730..b71f4b4b6bc2a 100644
+index b71f4b4b6bc2a..7e17d7668980d 100644
 --- a/drivers/gpio/gpio-mxc.c
 +++ b/drivers/gpio/gpio-mxc.c
-@@ -7,6 +7,7 @@
- // Authors: Daniel Mack, Juergen Beisert.
- // Copyright (C) 2004-2010 Freescale Semiconductor, Inc. All Rights Reserved.
+@@ -331,13 +331,13 @@ static int gpio_set_wake_irq(struct irq_data *d, u32 enable)
+ 			ret = enable_irq_wake(port->irq_high);
+ 		else
+ 			ret = enable_irq_wake(port->irq);
+-		port->wakeup_pads |= (1 << gpio_idx);
++		port->wakeup_pads |= BIT(gpio_idx);
+ 	} else {
+ 		if (port->irq_high && (gpio_idx >= 16))
+ 			ret = disable_irq_wake(port->irq_high);
+ 		else
+ 			ret = disable_irq_wake(port->irq);
+-		port->wakeup_pads &= ~(1 << gpio_idx);
++		port->wakeup_pads &= ~BIT(gpio_idx);
+ 	}
  
-+#include <linux/bitops.h>
- #include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/err.h>
-@@ -68,7 +69,7 @@ struct mxc_gpio_port {
- 	struct irq_domain *domain;
- 	struct gpio_generic_chip gen_gc;
- 	struct device *dev;
--	u32 both_edges;
-+	unsigned long both_edges;
- 	struct mxc_gpio_reg_saved gpio_saved_reg;
- 	bool power_off;
- 	u32 wakeup_pads;
-@@ -168,7 +169,7 @@ static int gpio_set_irq_type(struct irq_data *d, u32 type)
- 	int edge;
- 	void __iomem *reg = port->base;
- 
--	port->both_edges &= ~(1 << gpio_idx);
-+	clear_bit(gpio_idx, &port->both_edges);
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
- 		edge = GPIO_INT_RISE_EDGE;
-@@ -188,7 +189,7 @@ static int gpio_set_irq_type(struct irq_data *d, u32 type)
- 				edge = GPIO_INT_HIGH_LEV;
- 				pr_debug("mxc: set GPIO %d to high trigger\n", gpio_idx);
- 			}
--			port->both_edges |= 1 << gpio_idx;
-+			set_bit(gpio_idx, &port->both_edges);
- 		}
- 		break;
- 	case IRQ_TYPE_LEVEL_LOW:
-@@ -259,7 +260,7 @@ static void mxc_gpio_irq_handler(struct mxc_gpio_port *port, u32 irq_stat)
- 	while (irq_stat != 0) {
- 		int irqoffset = fls(irq_stat) - 1;
- 
--		if (port->both_edges & (1 << irqoffset))
-+		if (test_bit(irqoffset, &port->both_edges))
- 			mxc_flip_edge(port, irqoffset);
- 
- 		generic_handle_domain_irq(port->domain, irqoffset);
+ 	return ret;
 -- 
 2.53.0
 
