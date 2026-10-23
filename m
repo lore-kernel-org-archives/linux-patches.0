@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774044;
-	b=C/TMIr1DXPwpIU1jiBn/LFJBFoQdLzOKz33Wn9u3r6Pbu9WdSaB1aJefHtkRiElHdY3/
-	 JNEukX+NE6htrWfcZXqk5LxTH9S74jpeGS2X+2xXcJCI+ksk14Icn/4kYhKHjBU1Tntwe
-	 8tXpcRd2NNsKjz61pa7nZ585QBgyP+fzNcwt21S+YipGGVfD/Rwruh3vf0XDmvJDM5Yil
-	 1e4kT8vitNC4ppFNKQog0SN5ejXyPRK/vhrQbbUrTiAQp3+ao3c4knDRBilRx4B7a0cRs
-	 UzOrtv2EofRsZ/HsCs8rBWkAfO7pZt2l7WYv7pYSbsn+9kbWi1bWdTk3DfABo9QYDqQ==
+	t=1792774047;
+	b=iARFwCqUR76t+kYUde9vddIhl8F6ibCUJGX2YBtxpZpTmiwRUte5bBR1UwgFt/RAOZ74
+	 2lg9rHaPoGKjO4Usd8rUtOej+puLzb3we5iBGRTAeRLGJq0+pKbbSiX/oJFBF9YiDvVWs
+	 Cd8UJdINckgFCZVfCp3okkcpbaQXqMfGiNLcMAwX6TG/8BJbKoArpwy4wvG9pCI3grFEy
+	 hM9C2/F6+cL7sBLsuCRHuMt048WhaVxuLrQPVTRTEOROap43oFkHFWeqtm5BrNFMZakJ2
+	 T4347G4BipsKqKVmjKSFEVuniYrk/V3wFniIwLRYFygbJykqzAlbhs2wzcj6oWgiHzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774047;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=8arA5V41G7CsvBEWn0o2nI3ErJliMwJfjNGwj0pCDpM=;
-	b=kncDKM3j4PJOKNsZn69A71sTQeKN9IhsUPqzyZfuq62vJdlGeu/aj1zjokfIKDPk529/
-	 VxE/IjaHbmBa53MVM61u/pWm6eA5aUivVEw89UpQMCmRK7J2ZIsWunbqyek23cLORsape
-	 loumNycBps91TsUiDz7quI8vcmjoSkmgrViRBl3/mIqsYmgNIAVhNa/gcEXyYSvLJG+ag
-	 k/AIDm3/zxKzUWGnUrM8Lz7q9Ddy7iQpftYJuIbKiPxsjVlv8ludJ9IUhTb2/W7xt8Q0/
-	 sDuywJYD470pNayU+KsNqRLwT3A6YoX5rRpcEeJmEWDnjc/pgMwYO6NCbuihiDZi7zg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=MOtXxEKxwAVQ2NyE0av0aKDUUyW7N+8CJe5Hsk787/w=;
+	b=Ps0fmtX2yaUZisZSHH/a6JhoFsZkU1XfAHnr0pZ+ZVT5n/pf8qCqVBM/SLdBq8xmihtW
+	 VZSJZA5KhBGjMJhFjBvs7EnB78xLIFBi8EWJ/Vl3b9pmVFVq9E7RuZDpDTq/R4YAO1/JU
+	 RxOOFEHwrsx2s75xWeiiyFxD34TS14bY/EebX845ZBs/X0Fro9kRRpawnsQOwHrwhwQCs
+	 RlZdvZgvZYmEHEI/UvU3aOT86rZ6Yr6fUyECWonExEWf3RERDKZMXNANLxsuNQEP3rCyq
+	 D+PQdmgMpSOemPQBK2uu2XkXtyoDqu8jdN6jmqthwJ6Xi7FYCSmXNZWrSxx0uS/T36w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fp6XSc6P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C1uC4rdh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306F7606A31A;
-	Fri, 23 Oct 2026 16:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179E4606A31B;
+	Fri, 23 Oct 2026 16:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fp6XSc6P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831D91F01825;
-	Fri, 23 Oct 2026 16:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C1uC4rdh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648311F01825;
+	Fri, 23 Oct 2026 16:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774044;
-	bh=8arA5V41G7CsvBEWn0o2nI3ErJliMwJfjNGwj0pCDpM=;
+	s=korg; t=1792774046;
+	bh=MOtXxEKxwAVQ2NyE0av0aKDUUyW7N+8CJe5Hsk787/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fp6XSc6P5XjasEiNCzHVAFYu/MF/u+EFsugNo7+C1bSYDlgGaELdjrgh4wFOUExQ6
-	 KD5s8wU+7g6UF9Q3vkQgz4lgAZzdK7lIBkUbzBEmL8X0mC5+WMLySyEAYOOiKBY4gd
-	 bJ3rLp3xTP93qbBSlJsmy1tlcl86UErWypo26XRc=
+	b=C1uC4rdhyIE8ILV+roUzmwlV4VKugSXQdXKIhCYImqiYBngArM/qhlRRua5++jwK7
+	 SsIzTm3KQ0ilAmQh/ljAFKoTKrIhPMMu2slxqU8IsQ+b4RwJFz5Ef/gEgJBJolVxgv
+	 ZzwPvcvOvqWWXJMgn8muJEmnDqgvfp8bj9z6YOPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Kevin Wang <kevin.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 103/193] drm/amd/pm: add zero fan stop temperature support on smu 14.0.2
-Date: Fri, 23 Oct 2026 18:36:20 +0200
-Message-ID: <20261023163716.643828334@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
+Subject: [PATCH 6.18 104/193] drm/amdgpu/sdma3: Work around POLL_REGMEM / FENCE hang
+Date: Fri, 23 Oct 2026 18:36:21 +0200
+Message-ID: <20261023163716.667900869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -62,134 +61,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kenneth Feng <kenneth.feng@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit a2eae9f4fa1b07f8e6e61b48931228da051943f0 upstream.
+commit 752480ad62964edf0254e151110d3e53a7cb37de upstream.
 
-add zero fan stop temperature support on smu 14.0.2
+SDMA can randomly hang on Polaris 10. Hard to reproduce,
+but has been occurring sporadically in the Mesa CI
+on the RADV Polaris 10 job even when Mesa isn't using
+the SDMA engine.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5905
-Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
-Reviewed-by: Kevin Wang <kevin.wang@amd.com>
+When Mesa actually uses the SDMA on Polaris, the hang
+becomes more frequent and the reproduction rate goes up
+significantly in the CI system.
+
+We don't know why the hangs occur, but it seems
+that inserting a single NOP packet before each
+POLL_REGMEM and FENCE packet works around it.
+At the moment it's unclear which GPUs are affected,
+so let's apply this to SDMA 3.x for now.
+
+Note that this issue is not documented or acknowledged by AMD.
+
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f990c94a2633d0ead477eb1b174e254a6d292e66)
+(cherry picked from commit c343a27ed90823d08de125f7c447d96d056b75d9)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c |   55 ++++++++++++++++++-
- 1 file changed, 54 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c |   25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-@@ -80,6 +80,7 @@
- #define PP_OD_FEATURE_FAN_TARGET_TEMPERATURE		9
- #define PP_OD_FEATURE_FAN_MINIMUM_PWM			10
- #define PP_OD_FEATURE_FAN_ZERO_RPM_ENABLE		11
-+#define PP_OD_FEATURE_FAN_ZERO_RPM_STOP_TEMP		12
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c
+@@ -457,6 +457,9 @@ static void sdma_v3_0_ring_emit_hdp_flus
+ 	else
+ 		ref_and_mask = REG_SET_FIELD(ref_and_mask, GPU_HDP_FLUSH_DONE, SDMA1, 1);
  
- static struct cmn2asic_msg_mapping smu_v14_0_2_message_map[SMU_MSG_MAX_COUNT] = {
- 	MSG_MAP(TestMessage,			PPSMC_MSG_TestMessage,                 1),
-@@ -1034,6 +1035,10 @@ static void smu_v14_0_2_get_od_setting_l
- 		od_min_setting = overdrive_lowerlimits->FanZeroRpmEnable;
- 		od_max_setting = overdrive_upperlimits->FanZeroRpmEnable;
- 		break;
-+	case PP_OD_FEATURE_FAN_ZERO_RPM_STOP_TEMP:
-+		od_min_setting = pptable->SkuTable.MsgLimits.FanStopTempMin;
-+		od_max_setting = pptable->SkuTable.MsgLimits.FanStopTempMax;
-+		break;
- 	default:
- 		od_min_setting = od_max_setting = INT_MAX;
- 		break;
-@@ -1330,6 +1335,24 @@ static int smu_v14_0_2_print_clk_levels(
- 				      min_value, max_value);
- 		break;
++	/* Hang workaround */
++	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
++
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
+ 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(1) |
+ 			  SDMA_PKT_POLL_REGMEM_HEADER_FUNC(3)); /* == */
+@@ -484,6 +487,10 @@ static void sdma_v3_0_ring_emit_fence(st
+ 				      unsigned flags)
+ {
+ 	bool write64bit = flags & AMDGPU_FENCE_FLAG_64BIT;
++
++	/* Hang workaround */
++	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
++
+ 	/* write the fence */
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+@@ -492,7 +499,11 @@ static void sdma_v3_0_ring_emit_fence(st
  
-+	case SMU_OD_FAN_ZERO_RPM_STOP_TEMP:
-+		if (!smu_v14_0_2_is_od_feature_supported(smu,
-+							 PP_OD_FEATURE_ZERO_FAN_BIT))
-+			break;
+ 	/* optionally write high bits as well */
+ 	if (write64bit) {
++		/* Hang workaround */
++		amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
 +
-+		size += sysfs_emit_at(buf, size, "FAN_ZERO_RPM_STOP_TEMPERATURE:\n");
-+		size += sysfs_emit_at(buf, size, "%d\n",
-+					(int)od_table->OverDriveTable.FanZeroRpmStopTemp);
+ 		addr += 4;
 +
-+		size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
-+		smu_v14_0_2_get_od_setting_limits(smu,
-+						  PP_OD_FEATURE_FAN_ZERO_RPM_STOP_TEMP,
-+						  &min_value,
-+						  &max_value);
-+		size += sysfs_emit_at(buf, size, "ZERO_RPM_STOP_TEMPERATURE: %u %u\n",
-+				      min_value, max_value);
-+		break;
-+
- 	case SMU_OD_RANGE:
- 		if (!smu_v14_0_2_is_od_feature_supported(smu, PP_OD_FEATURE_GFXCLK_BIT) &&
- 		    !smu_v14_0_2_is_od_feature_supported(smu, PP_OD_FEATURE_UCLK_BIT) &&
-@@ -2317,7 +2340,9 @@ static void smu_v14_0_2_set_supported_od
- 					    OD_OPS_SUPPORT_FAN_MINIMUM_PWM_RETRIEVE |
- 					    OD_OPS_SUPPORT_FAN_MINIMUM_PWM_SET |
- 					    OD_OPS_SUPPORT_FAN_ZERO_RPM_ENABLE_RETRIEVE |
--					    OD_OPS_SUPPORT_FAN_ZERO_RPM_ENABLE_SET;
-+					    OD_OPS_SUPPORT_FAN_ZERO_RPM_ENABLE_SET |
-+					    OD_OPS_SUPPORT_FAN_ZERO_RPM_STOP_TEMP_RETRIEVE |
-+					    OD_OPS_SUPPORT_FAN_ZERO_RPM_STOP_TEMP_SET;
- }
+ 		amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
+ 		amdgpu_ring_write(ring, lower_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(addr));
+@@ -1033,6 +1044,9 @@ static void sdma_v3_0_ring_emit_pipeline
+ 	uint32_t seq = ring->fence_drv.sync_seq;
+ 	uint64_t addr = ring->fence_drv.gpu_addr;
  
- static int smu_v14_0_2_get_overdrive_table(struct smu_context *smu,
-@@ -2398,6 +2423,8 @@ static int smu_v14_0_2_set_default_od_se
- 			user_od_table_bak.OverDriveTable.FanMinimumPwm;
- 		user_od_table->OverDriveTable.FanZeroRpmEnable =
- 			user_od_table_bak.OverDriveTable.FanZeroRpmEnable;
-+		user_od_table->OverDriveTable.FanZeroRpmStopTemp =
-+			user_od_table_bak.OverDriveTable.FanZeroRpmStopTemp;
- 	}
++	/* Hang workaround */
++	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
++
+ 	/* wait for idle */
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
+ 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(0) |
+@@ -1061,6 +1075,9 @@ static void sdma_v3_0_ring_emit_vm_flush
+ {
+ 	amdgpu_gmc_emit_flush_gpu_tlb(ring, vmid, pd_addr);
  
- 	smu_v14_0_2_set_supported_od_feature_mask(smu);
-@@ -2452,6 +2479,11 @@ static int smu_v14_0_2_od_restore_table_
- 					boot_overdrive_table->OverDriveTable.FanZeroRpmEnable;
- 		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
- 		break;
-+	case PP_OD_EDIT_FAN_ZERO_RPM_STOP_TEMP:
-+		od_table->OverDriveTable.FanZeroRpmStopTemp =
-+					boot_overdrive_table->OverDriveTable.FanZeroRpmStopTemp;
-+		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
-+		break;
- 	case PP_OD_EDIT_ACOUSTIC_LIMIT:
- 		od_table->OverDriveTable.AcousticLimitRpmThreshold =
- 					boot_overdrive_table->OverDriveTable.AcousticLimitRpmThreshold;
-@@ -2758,6 +2790,27 @@ static int smu_v14_0_2_od_edit_dpm_table
- 		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
- 		break;
- 
-+	case PP_OD_EDIT_FAN_ZERO_RPM_STOP_TEMP:
-+		if (!smu_v14_0_2_is_od_feature_supported(smu, PP_OD_FEATURE_ZERO_FAN_BIT)) {
-+			dev_warn(adev->dev, "Zero RPM setting not supported!\n");
-+			return -ENOTSUPP;
-+		}
++	/* Hang workaround */
++	amdgpu_ring_write(ring, SDMA_PKT_NOP_HEADER_OP(SDMA_OP_NOP));
 +
-+		smu_v14_0_2_get_od_setting_limits(smu,
-+						  PP_OD_FEATURE_FAN_ZERO_RPM_STOP_TEMP,
-+						  &minimum,
-+						  &maximum);
-+		if (input[0] < minimum ||
-+		    input[0] > maximum) {
-+			dev_info(adev->dev, "zero RPM stop temperature setting(%ld) must be within [%d, %d]!\n",
-+				 input[0], minimum, maximum);
-+			return -EINVAL;
-+		}
-+
-+		od_table->OverDriveTable.FanZeroRpmStopTemp = input[0];
-+		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
-+		break;
-+
- 	case PP_OD_RESTORE_DEFAULT_TABLE:
- 		if (size == 1) {
- 			ret = smu_v14_0_2_od_restore_table_single(smu, input[0]);
+ 	/* wait for flush */
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_POLL_REGMEM) |
+ 			  SDMA_PKT_POLL_REGMEM_HEADER_HDP_FLUSH(0) |
+@@ -1563,11 +1580,11 @@ static const struct amdgpu_ring_funcs sd
+ 	.get_wptr = sdma_v3_0_ring_get_wptr,
+ 	.set_wptr = sdma_v3_0_ring_set_wptr,
+ 	.emit_frame_size =
+-		6 + /* sdma_v3_0_ring_emit_hdp_flush */
++		6 + 1 + /* sdma_v3_0_ring_emit_hdp_flush */
+ 		3 + /* hdp invalidate */
+-		6 + /* sdma_v3_0_ring_emit_pipeline_sync */
+-		VI_FLUSH_GPU_TLB_NUM_WREG * 3 + 6 + /* sdma_v3_0_ring_emit_vm_flush */
+-		10 + 10 + 10, /* sdma_v3_0_ring_emit_fence x3 for user fence, vm fence */
++		6 + 1 + /* sdma_v3_0_ring_emit_pipeline_sync */
++		VI_FLUSH_GPU_TLB_NUM_WREG * 3 + 6 + 1 + /* sdma_v3_0_ring_emit_vm_flush */
++		(10 + 1) * 3, /* sdma_v3_0_ring_emit_fence x3 for user fence, vm fence */
+ 	.emit_ib_size = 7 + 6, /* sdma_v3_0_ring_emit_ib */
+ 	.emit_ib = sdma_v3_0_ring_emit_ib,
+ 	.emit_fence = sdma_v3_0_ring_emit_fence,
 
 
