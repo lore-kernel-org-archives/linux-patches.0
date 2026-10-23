@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774059;
-	b=kuhlwpLhL6OxkmG5R19B1h3ZXYB3dPhdV2bp/K/bCkVtWF9LOmstteCj8kudHsTY5OGx
-	 roMvA8KNsLhsbEIbSUuxyD6AO1m9czc0MmvLnT/6bPjaEeAWb9R+hl5hNHz+eeRa5M9Gd
-	 JF7e6IHq7A8mQnAPl1wOL09aVAoFzp9p7xE3CfAbxdp2W0HeLVgtOcIs0Idywa2/aL5lt
-	 DcC9PFcOxxxm3AnxwDw1F7yHiHhtLQ7QDdXbMie373dSe3Gh8TeZzsREE6CuY7U4ZVgHW
-	 RMR78G8zhy+B8UVLgxRn1BV15ts6uW4INi98om/DUhaQfasjgvxUMuZmM02bjHg5Z6g==
+	t=1792774062;
+	b=xXEAKgqT7d3R9319I1t/loDRhxnwfamOilYuNR3YP89DdD0muaOMOcYRr52w9UubY+5U
+	 z0M3Q38D53HQeiMmDGO0TxAGOR/vX6UDOyG+2ZoRkzlQsQno3jqgI2vMN5wwDEnXmJifG
+	 8ouAtac7y62opMbDradB1MzO35FyMA+DqJxHrP+UBQBBJ6lqniYAlUnr7TvY7Jf7iUA35
+	 pBQMQpr1l2mk0lREbN30cXfM/xoNCCMC+qnRog9ZtEW8hRgH9Aj7c5zbLKq6T8QPPx0HR
+	 mUEBLoGD0hjPrBHCD0f7VlKQ+w+vws0W9AnXKxUOASVQfF6tWvrWWLPLL6rF36GzCmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V8QZ2cy1ZsK7spOvKm+QnxrmyzoHXrSH3yTZ+v9hNsA=;
-	b=2/B3UlOyV1XgTONYXzqCwDTw48S0B2D/rlTXY1aCLK1Kx37heVvUaHA6Sbc8Dx95Oxm4
-	 rEXugrfIEil0DcvbWq6vxD5BLVbjJcWpt7HfdfLGI8CXSdhrO8EibDcFDGcMAwuEOhnZB
-	 f4QuBO6Yx5yYgbmDBi8dJN0zBxZYGLkj5YZ/7Jfcs8RAp0ThZaFiUzMUTbsW/DYsKfld/
-	 4/YuKJiA/NwYAjM8tjzB1/QTOR1aoLEkxXWL5PUKrjD8gD+DizUXZST+y/OdwqVtGGh5o
-	 GMYF1Rklh/+XyxrPq77RHpznBznCx/I4GQ4/cgrsCibrndjwk+jsR48Y1r+eUvVtOmA==
+	bh=n7mGBk1KYeVebvG5KX0L1RQEqRw6vA1BZz3d95iMFTs=;
+	b=Bb1WE4EAXz4ly0Y2Au1ybYQvpQsmt8FDslgQgqQ8OHO1tBPGqEJHXBozFxSFqyD0L6Ee
+	 zlqW89R/sVoiD5kBqTNp0ClUYWzstwRDktYQXcPstQtqb5pcSVMyj7oGw6sgpQObd2Gyi
+	 21EbPSZQzkeqobh59A2k2NH5A+ArDzPwL/PYKc3uLp4Ea3jCzo/TMkya/WvxUUTUQOuUC
+	 0RbVL0meSEZVi7nD4DgOOClby+oa+Gk64Sndi9SgiGqDrvP5FRrWM76pahivRszT00JQp
+	 yL61xMLx5UXCuqW+Pazhp5nyEqSF7r6WC71ke2+u0GD8K1+F3BbtrKwON1NRdSj50aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ3E9Hn5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qN2idRFl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA0E606A31A;
-	Fri, 23 Oct 2026 16:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23748606A31A;
+	Fri, 23 Oct 2026 16:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ3E9Hn5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507FD1F01825;
-	Fri, 23 Oct 2026 16:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qN2idRFl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C2D1F01825;
+	Fri, 23 Oct 2026 16:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774058;
-	bh=V8QZ2cy1ZsK7spOvKm+QnxrmyzoHXrSH3yTZ+v9hNsA=;
+	s=korg; t=1792774062;
+	bh=n7mGBk1KYeVebvG5KX0L1RQEqRw6vA1BZz3d95iMFTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zJ3E9Hn5YZ25WCvTbesmyP5jDVAeoqITlS5Q4VQd/8mCbjWwbV8cYgm1xemnnuc6B
-	 W4MsZ0P3J3fezkTH3DtozGptYoNAEhbzmOpg+CeDmrfWHszP88HrZKt0akaB/pmeMl
-	 CXi0st/CNU3oazO6qlIYcM/Tu/ilUo+a91fUKolw=
+	b=qN2idRFl+eqbfBgsGrVEVM/STynkTmANqx/Gtj/NAeKowfD/Pp5NGqWF8FUskGjHX
+	 cSUM2Z2zhmNsr5VjTYzTxiXzpjjmHRIRFbLOyF/tilNOKC2wYIQQcQ7kbO/gQ2sS9X
+	 +0xJKq1JZVD9eLI7fZ3LCFUE0slC91aVXCx8PhoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.18 108/193] drm/i915/cx0_phy: Fix ARL-S host bridge detection
-Date: Fri, 23 Oct 2026 18:36:25 +0200
-Message-ID: <20261023163716.763234045@linuxfoundation.org>
+Subject: [PATCH 6.18 109/193] drm/i915/dmc: Add sanity check for DMC load address
+Date: Fri, 23 Oct 2026 18:36:26 +0200
+Message-ID: <20261023163716.787790999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,56 +69,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
+From: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
 
-commit 6a8bf59de3ef47ff51face6ea826395a1098baa0 upstream.
+commit 7dedc5bb11f95e96fe80757c924d8d9aa7327759 upstream.
 
-Fix is_arrowlake_s_by_host_bridge() which always returned false.
-The while loop always exits with pdev as NULL, so the return
-condition was always false, causing the wrong tx_misc value to be used.
+For DMC firmware header version 3, the firmware load address is stored
+in dmc_info->start_mmioaddr and later used by dmc_load_program().
 
-Check the host bridge ID inside the loop body.  Once found early exit
-from the loop release the pci reference "pdev" and return true.
+Unlike the MMIO address table, the firmware load address is not
+validated. Add a sanity check to ensure it is within the valid range.
 
-v2:
- - Update commit message (Chaitanya)
-
-Bspec:74165,74491
-Suggested-by: Jani Nikula <jani.nikula@intel.com>
-Cc: <stable@vger.kernel.org>
-Fixes: 3630a47b700e ("drm/i915/cx0_phy: Update HDMI TMDS C20 algorithm value")
-Signed-off-by: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
-Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Link: https://patch.msgid.link/20260921090226.946472-1-dnyaneshwar.bhadane@intel.com
-(cherry picked from commit 0507cc5a476af0b6d037b19248bdd20dbe27487d)
+BSpec: 69671, 68378
+Fixes: 3d5928a168a9 ("drm/i915/xelpd: Pipe A DMC plugging")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude-Code:Sonnet-5
+Signed-off-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260922133535.3180973-6-dibin.moolakadan.subrahmanian@intel.com
+(cherry picked from commit 5e47ee5c76ca9becde8df4ad5202845b7ffcbc4c)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_cx0_phy.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dmc.c      |   55 ++++++++++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_dmc_regs.h |   12 +++++
+ 2 files changed, 67 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-+++ b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-@@ -2202,12 +2202,14 @@ static void intel_c10pll_dump_hw_state(s
- static bool is_arrowlake_s_by_host_bridge(void)
- {
- 	struct pci_dev *pdev = NULL;
--	u16 host_bridge_pci_dev_id;
-+	while ((pdev = pci_get_class(PCI_CLASS_BRIDGE_HOST << 8, pdev))) {
-+		if (IS_ARROWLAKE_S_BY_HOST_BRIDGE_ID(pdev->device)) {
-+			pci_dev_put(pdev);
-+			return true;
-+		}
-+	}
- 
--	while ((pdev = pci_get_class(PCI_CLASS_BRIDGE_HOST << 8, pdev)))
--		host_bridge_pci_dev_id = pdev->device;
--
--	return pdev && IS_ARROWLAKE_S_BY_HOST_BRIDGE_ID(host_bridge_pci_dev_id);
-+	return false;
+--- a/drivers/gpu/drm/i915/display/intel_dmc.c
++++ b/drivers/gpu/drm/i915/display/intel_dmc.c
+@@ -986,6 +986,55 @@ static void dmc_set_fw_offset(struct int
+ 	}
  }
  
- static u16 intel_c20_hdmi_tmds_tx_cgf_1(struct intel_crtc_state *crtc_state)
++/*
++ * Check if the load address is within the valid range for the given DMC ID.
++ */
++static bool dmc_load_addr_sanity_check(struct intel_dmc *dmc,
++				       u32 start_addr, u32 payload_size,
++				       int header_ver, enum intel_dmc_id dmc_id)
++{
++	u32 start_range, end_range, end_addr;
++
++	if (header_ver != 3)
++		return true;
++
++	switch (dmc_id) {
++	case DMC_FW_MAIN:
++		start_range = DMC_MAIN_PROGRAM_BASE_START;
++		end_range = DMC_MAIN_PROGRAM_BASE_END;
++		break;
++	case DMC_FW_PIPEA:
++		start_range = DMC_PIPEA_PROGRAM_BASE_START;
++		end_range = DMC_PIPEA_PROGRAM_BASE_END;
++		break;
++	case DMC_FW_PIPEB:
++		start_range = DMC_PIPEB_PROGRAM_BASE_START;
++		end_range = DMC_PIPEB_PROGRAM_BASE_END;
++		break;
++	case DMC_FW_PIPEC:
++		start_range = DMC_PIPEC_PROGRAM_BASE_START;
++		end_range = DMC_PIPEC_PROGRAM_BASE_END;
++		break;
++	case DMC_FW_PIPED:
++		start_range = DMC_PIPED_PROGRAM_BASE_START;
++		end_range = DMC_PIPED_PROGRAM_BASE_END;
++		break;
++	default:
++		MISSING_CASE(dmc_id);
++		return false;
++	}
++
++	if (payload_size == 0)
++		end_addr = start_addr;
++	else if (check_add_overflow(start_addr, payload_size - 1, &end_addr))
++		return false;
++
++	if (start_addr < start_range || end_addr > end_range)
++		return false;
++
++	return true;
++}
++
+ static bool dmc_mmio_addr_sanity_check(struct intel_dmc *dmc,
+ 				       const u32 *mmioaddr, u32 mmio_count,
+ 				       int header_ver, enum intel_dmc_id dmc_id)
+@@ -1145,6 +1194,12 @@ static u32 parse_dmc_fw_header(struct in
+ 	}
+ 	dmc_info->dmc_fw_size = dmc_header->fw_size;
+ 
++	if (!dmc_load_addr_sanity_check(dmc, start_mmioaddr, payload_size,
++					dmc_header->header_ver, dmc_id)) {
++		drm_err(display->drm, "DMC %d: firmware has wrong load address\n", dmc_id);
++		return 0;
++	}
++
+ 	dmc_info->payload = kmalloc(payload_size, GFP_KERNEL);
+ 	if (!dmc_info->payload)
+ 		return 0;
+--- a/drivers/gpu/drm/i915/display/intel_dmc_regs.h
++++ b/drivers/gpu/drm/i915/display/intel_dmc_regs.h
+@@ -521,6 +521,18 @@ enum pipedmc_event_id {
+ #define TGL_PIPE_MMIO_END(dmc_id)	_PICK_EVEN(((dmc_id) - 1), _TGL_PIPEA_MMIO_END,\
+ 					      _TGL_PIPEB_MMIO_END)
+ 
++/* For DMC header version v3*/
++#define DMC_MAIN_PROGRAM_BASE_START	0x80000
++#define DMC_MAIN_PROGRAM_BASE_END	0x86fff
++#define DMC_PIPEA_PROGRAM_BASE_START	0x90000
++#define DMC_PIPEA_PROGRAM_BASE_END	0x96fff
++#define DMC_PIPEB_PROGRAM_BASE_START	0x98000
++#define DMC_PIPEB_PROGRAM_BASE_END	0x9efff
++#define DMC_PIPEC_PROGRAM_BASE_START	0x52000
++#define DMC_PIPEC_PROGRAM_BASE_END	0x53fff
++#define DMC_PIPED_PROGRAM_BASE_START	0x59000
++#define DMC_PIPED_PROGRAM_BASE_END	0x5afff
++
+ #define SKL_DMC_DC3_DC5_COUNT	_MMIO(0x80030)
+ #define SKL_DMC_DC5_DC6_COUNT	_MMIO(0x8002C)
+ #define BXT_DMC_DC3_DC5_COUNT	_MMIO(0x80038)
 
 
