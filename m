@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774629;
-	b=IdiXYCwi1nK8iIGWF+zUbeI6XO3m276+5H7pTAn7T3R3pQ8Yx6j7j4WXM95GGhHfUqPQ
-	 HJnqE2l2BGN/j+Yxwj02Qvfcfe2HC56aAfQ5ay1q9SfrCw4nH6Lfj2MDp3MxOUNv34Q6A
-	 9sgUdBy+7kLG6XfmlkBZQdYhVgeimG462Sg+tnCOOa+sQK545TSBo/L8NHaRAwCiz1yam
-	 px480QTdge6IEp2ryBJYDYCSjzQSuuHDtQENevuMOgKx7K2xOnvoJG46zADxr5LCETHjS
-	 4AYCywoOUKusFkED4yzTZ+4jO8a2rlMiFbXjdLp3mFF+6gKM1PCkI/7pLvR0LXSJGNg==
+	t=1792774632;
+	b=3NoG7PZYV1o3P/y+MDd9vktnoWxvm94F9O1xWhvpQOt8fpAHH3Es5JVD9sJ3+hcGObll
+	 4N+biWC2hYM2nW+4u9imyps1nLpI8ke6crb1eb6K5CS+ytJoHAlfo5ukAD2FS4cqqOgLe
+	 4GwLmoqkD6lDXOZPa4w2Umex0T+xPYCusIvXyADeuHLAOSAsrSycSJBdsm60HvJPZ6Gr6
+	 hQ/v78Ji9WqRNaGAzvcEAdIU0fjRAE5Xaw95fzbmrnxg2dV0LxzG48dwg9dRDuqSsQz7p
+	 O6ygc145rq7SO6bSS5TNdNE8h8wv8eSAPnPiT/1SO10RoxwpEmaER2SAuCBpY+veq9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2ja579bQvDKsK4F5HXWaNBk73gbAgjto9VJ6mL282Sk=;
-	b=pc0ZoToMvlI+dhxUBVXcNNDohWcYNgxM9LfIKZXG0ycoLVzqAQNWkdxEOR3qxcXDW+Sn
-	 G4UADTpgnTYLMkBq3QzdZ33byRRywhtIOa76rHwLuE9Owy2uBZU5WOnyCw0ntWW3nPji9
-	 /+DeUtUaiSp448jqCEgXmNZAhgkeSnHkgsIGXd8c9ar+DyqlnC/3vekUO1Hc2wJ2MIL6W
-	 vIds8BtVThi80FmyTM1ZTrKlLIl8Q/oRIklXnii13zPdy3oiqQDpKFFLATsuAzo5hyjer
-	 KtPLFRiYF6Ge6g8lCNF2OZ1/f7IGOLJzXtul4qcU8pA3U2i0RSGpjHfw/xA2/DlXOXg==
+	bh=AVkdv9hGOs9FdXt+70zEYoYAAg9q/BCM4LBhXJOS2Bw=;
+	b=TWgqj2Qh0EJdUMIX9pCeWfjx3iSACJ3Wl+Xrn+P7FjyzI44TekqO2TZwiLuoVBSfCgKf
+	 As1vpaUp7SIHe56+tGdsaptcjPDQQWYvijNtHOFoNI/bbNraTn6sJh4y+E0iQdZDZVXhD
+	 Xw+RvrkdgrunpPIDkMq7/B4FA2LT1Y2BjUmv2vt1x5IEx5CTARrUwZyqI659/6pR6RzoY
+	 RH7wuLRLHrhm0IQhb4U4xMTx7POnE7iWJmykassl2R+/Tpz3w0DRf1OEhov15L3Jzhenc
+	 tz7Hq6HvIc6CIa8CNAxClx0L0IeNonjPTne+2/1dm3tYO+ppwsZRrhRuW/tBLPkfziA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CS8eQZRB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uY1Z0T9x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC18606A31F;
-	Fri, 23 Oct 2026 16:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBDA606A31D;
+	Fri, 23 Oct 2026 16:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CS8eQZRB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2661F01825;
-	Fri, 23 Oct 2026 16:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uY1Z0T9x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6501F01825;
+	Fri, 23 Oct 2026 16:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774629;
-	bh=2ja579bQvDKsK4F5HXWaNBk73gbAgjto9VJ6mL282Sk=;
+	s=korg; t=1792774632;
+	bh=AVkdv9hGOs9FdXt+70zEYoYAAg9q/BCM4LBhXJOS2Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CS8eQZRBp41B1TufZ9xZ9ZOX392V0fSMLjoW5aqlHYJ+A6ZO2QuyaF7qiI8+1F4HU
-	 VtQjrTiwUNtTlDvEAuuUg0wn4rrGgLhblo+tluUTKOHaLXJMcKHHk64jsxmg0fMwm0
-	 095LG6wkbztHsC62jNk0bWQno5xcy2d99SadcrpU=
+	b=uY1Z0T9xNJy1ELHiJTQsoOzl82tl2sLsmnOZjduP3s+N6tcYj63jV7HlXYFap/C3X
+	 LxDOZR950Kl1aDLTGmd4fK4zoVWI91ozNpmI/W0ZScZErsy1zV9fhcvFpnXishQrsv
+	 rKH+2bO2w0tB8/LR5RxRGTaj2yaA4biURBZ5osF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 088/242] gpio: mxc: fix wakeup_pads bit operations
-Date: Fri, 23 Oct 2026 18:38:50 +0200
-Message-ID: <20261023163715.859798630@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.2 106/242] bootconfig: give the footer size static_assert a message
+Date: Fri, 23 Oct 2026 18:39:08 +0200
+Message-ID: <20261023163716.288865596@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -70,83 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Sasha Levin <sashal@kernel.org>
 
-[ Upstream commit 170aeff46fb54f41545c85a72aec525aebc79d44 ]
+commit a1ddc2721467fb68241372db77657fd0dcf6cda5 upstream.
 
-gpio_set_wake_irq() can be called concurrently for different pins on
-the same port. The writer-vs-writer race is the concern: two concurrent
-gpio_set_wake_irq() calls for different pins on the same port both do
-a non-atomic read-modify-write on the same wakeup_pads word. The old
-|= and &= compile to separate load/modify/store instructions that can
-interleave, losing one CPU's update.
+static_assert() without a message is a C23 feature, so clang warns:
 
-assign_bit() uses an atomic RMW instruction, so concurrent writers to
-different bits in the same word are safe.
+  main.c:498:56: warning: '_Static_assert' with no message is a C23 extension [-Wc23-extensions]
 
-The reader side (for_each_set_bit in noirq_suspend, wakeup_pads > 0)
-runs in noirq context where no concurrent writer can execute, so
-reader atomicity is not needed.
+Add a message.
 
-wakeup_pads is a u32, while assign_bit() operates on unsigned long
-pointers. On 64-bit platforms, this causes an 8-byte read-modify-write
-on a 4-byte field, corrupting the adjacent is_pad_wakeup. So change
-wakeup_pads to unsigned long and reorder to avoid wasting words.
+Link: http://lkml.kernel.org/r/20261011223358.2327625-13-sashal@kernel.org
 
-And fix the enable/disable path unconditionally sets/clears the
-wakeup_pads bit even when enable_irq_wake()/disable_irq_wake() fails.
-Only update the bit on success.
-
-Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
+Fixes: 6ed5e20466c79 ("bootconfig: Fix unaligned access when building footer")
+Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-3-c4d769587d3e@nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mxc.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/bootconfig/main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
-index 7e17d7668980d..e3a80f17d0412 100644
---- a/drivers/gpio/gpio-mxc.c
-+++ b/drivers/gpio/gpio-mxc.c
-@@ -72,8 +72,8 @@ struct mxc_gpio_port {
- 	unsigned long both_edges;
- 	struct mxc_gpio_reg_saved gpio_saved_reg;
- 	bool power_off;
--	u32 wakeup_pads;
- 	bool is_pad_wakeup;
-+	unsigned long wakeup_pads;
- 	u32 pad_type[32];
- 	const struct mxc_gpio_hwdata *hwdata;
- };
-@@ -331,16 +331,18 @@ static int gpio_set_wake_irq(struct irq_data *d, u32 enable)
- 			ret = enable_irq_wake(port->irq_high);
- 		else
- 			ret = enable_irq_wake(port->irq);
--		port->wakeup_pads |= BIT(gpio_idx);
- 	} else {
- 		if (port->irq_high && (gpio_idx >= 16))
- 			ret = disable_irq_wake(port->irq_high);
- 		else
- 			ret = disable_irq_wake(port->irq);
--		port->wakeup_pads &= ~BIT(gpio_idx);
- 	}
-+	if (ret)
-+		return ret;
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -495,7 +495,8 @@ static int apply_xbc(const char *path, c
+ 	footer.size = htole32(size);
+ 	footer.csum = htole32(csum);
+ 	memcpy(footer.magic, BOOTCONFIG_MAGIC, BOOTCONFIG_MAGIC_LEN);
+-	static_assert(sizeof(footer) == BOOTCONFIG_FOOTER_SIZE);
++	static_assert(sizeof(footer) == BOOTCONFIG_FOOTER_SIZE,
++		      "bootconfig footer size mismatch");
+ 	memcpy(data + size, &footer, BOOTCONFIG_FOOTER_SIZE);
  
--	return ret;
-+	assign_bit(gpio_idx, &port->wakeup_pads, enable);
-+
-+	return 0;
- }
- 
- static int mxc_gpio_init_gc(struct mxc_gpio_port *port, int irq_base)
--- 
-2.53.0
-
+ 	total_size = size + BOOTCONFIG_FOOTER_SIZE;
 
 
