@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773943;
-	b=3e4IIDKhIxKodWGRQFiR88otd+MgL0DnhDnMo1SGh+FNKdGcxvYDC3n8T3zzmnAQ+EEd
-	 Lc47Shvo381SB/gJaqH67APlIlb8jMZ1B4+Ta0Ld1nJWODrGE2SoTXNbzJAvXxH2yo2nW
-	 L8fx/AfSIm3O4nOPXb/rIM/M0L2E95UmRMXn3AdQyvPXUJd7fDg2c00YWg4mh1QxtoiQx
-	 502DJHeMZThwp9ddhyGOs7XZYxfx1VGPzLsg2+0rDLK8FToTyovc1+dDkQgMSV19vB9/9
-	 UOrzcHRgPUJWuZqIDpb24L/irjVHlZIGLmtQeiztazdDe443CIShxqpjEjjgLofYcKw==
+	t=1792773946;
+	b=S9OFn504ZGx6T8B1qDEalyZ0LLE9Cf03lxuliMsbeYXuXZ1bVS56TxxKoCtmSaYEINHf
+	 9qCPIxEO6Ukn7uaqe7e5RYeRauUsxmEqWIbGkjYbkmRocTUwd4WsLrTPkUxWLayJd4UmU
+	 LiQxBr4O34jpWOYH9pGavRCsi8Bm/c8QrvFb7vzEYhsZnxmlJVeiXsbOLANyetV81k8tM
+	 FXHLkTdJxzOYCgMVBrnD14UvmGAIevD5bpiwlHB2oT/yw3FmFgBqPSTgAUFg60ENYH+YM
+	 FviwPOQR2Yom2NthLCDmyGkkBuQHKMfazjBD6YzIbxrocXsvkJcTwrKRZH1Jyh3PY7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EnGdlOIK/ppaSuLQ5eGYGo3xMlf4eA6KG821GY2LaGg=;
-	b=5ToBxEjvElZFvNVmbpGAFWiDxQk7qEjEfQxYTM7PQ45IswUrS+ZIvIJO5HfOA0qtxf4M
-	 PRz7y3obBhJRDg/kEeKnCfSRhSyyGv9u6tqLhRyBdd1kxz/si6OTRrCRVVlbw9BXH+UaH
-	 KYXDMhdM7Aw2+R3uF5CsPxivYVBARD4IIy+tgYVa5llZUZAKrMgvoKRTpXwrIx0sx5pSb
-	 H7cEHG2jeYOKIPfVyvZBhgGmEPluTO8rcFxQyC5cEtbnviudG++krmCgggsEc1ffmRZKg
-	 /sVJ1fW+4vbrB1u4ehl31TBztAuIbkn6oH+RYyBorz5uG3X4hAsVfCtFwXzHq0oCJHw==
+	bh=iPp6TyqDB7HK84LAXrVeC8oZA8tpXaWh56uTvKkxHmw=;
+	b=ej7KW82N6bq/ko4iGwJILNvG+LMAUd417vAq6Dk1WR4nhfKovZyVSrjPEMcwc05iYCel
+	 msXF46odmpu/gGwouak6O7W+r/UQF15eva+zIFv7WELL5VALMMZ+OPrYz6aqC04zzBHI0
+	 eWH8qHXoBxG3Hwv/0lqoExCXVLCiguEkM0luLyPYgpG5rdvSW5O4LIOrbNicPDRqorhnG
+	 7KP8SNxZbO7pGSWmY7QbVAH0sK6d1dOlqQPJUGe1hellAbWkNr6DgqFDw1287mUs8kxmG
+	 ns/XJpiMeJW7kvH/DPEb6twAS6dlxxUBmzUCVPAxtW5Ib9fSc54TVCNDW9UTMdoDrdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T4B9xw5/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWhcCRfd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5D2606A31B;
-	Fri, 23 Oct 2026 16:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DD7606A31A;
+	Fri, 23 Oct 2026 16:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4B9xw5/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383E41F01825;
-	Fri, 23 Oct 2026 16:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWhcCRfd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158791F01825;
+	Fri, 23 Oct 2026 16:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773942;
-	bh=EnGdlOIK/ppaSuLQ5eGYGo3xMlf4eA6KG821GY2LaGg=;
+	s=korg; t=1792773945;
+	bh=iPp6TyqDB7HK84LAXrVeC8oZA8tpXaWh56uTvKkxHmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T4B9xw5/+5/OdOPJWEXlDtwTL4deftqp31Lpz0ZRhhF6uXCu+yS6XTimhf9L8sauC
-	 5YbbVF8g/ubdijZ6qhn370VZiLG1xi3wIJm0WdAKtntxMTxWZ9umw0RwgkPek17VyW
-	 vCbL9wdgwNoyRXCdvWsmE+aBoQ6yMbs7wQs5quHE=
+	b=fWhcCRfdUKLSthn5I7fWkqjGTCZJFDbennnSgurdUpkXi76tDAuqxLrGpyBKyDxtv
+	 FF/2+likxvq0vbhH3sIdVY2WuekWOL54wdPcB2pRLSTf4+bR44hy1dGB10mLfLjQtB
+	 NgVnfjHSsyHNYeC2WfLxG6IInyURuCzfgIJz+9c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Barbosa <debarbos@redhat.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Alexander Gruhlke <gruhlke@mailbox.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 069/193] printk: Postpone kthread startup
-Date: Fri, 23 Oct 2026 18:35:46 +0200
-Message-ID: <20261023163715.836894399@linuxfoundation.org>
+Subject: [PATCH 6.18 070/193] PCI: Dont treat ~0 as ready in pci_dev_wait() with RRS SV
+Date: Fri, 23 Oct 2026 18:35:47 +0200
+Message-ID: <20261023163715.859884116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,51 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Alexander Gruhlke <gruhlke@mailbox.org>
 
-[ Upstream commit 5f339c46f153184570f16c8e789c9709b14cbe8b ]
+[ Upstream commit e8df1d194c39b7a5159d570798941851f70a8668 ]
 
-There have been various bug reports related to SMP systems hanging
-on boot. The reports vary but seem to have some overlap with regard
-to missed IPI's during SMP setup. The reports also show that
-reverting NBCON console usage allows the bugs to disappear.
+With RRS Software Visibility, pci_dev_wait() considers a device ready as
+soon as reading the Vendor ID doesn't return the RRS value.  Devices aren't
+required to respond with RRS while they aren't ready, so the read may
+return ~0 and pci_dev_wait() stops waiting too early.  This was seen with
+Intel [8086:0a54] and Samsung [144d:a80c] NVMe SSDs.
 
-The NBCON kthreads for console printing are started very early
-during boot using early_initcall(). Since these kthreads are
-asynchronously enabling/disabling interrupts during early boot, they
-may be interfering with early SMP setup on some hardware platforms.
+Also wait while the Vendor ID reads ~0.  A VF's Vendor ID always reads ~0,
+so check its Command register instead, as is done without RRS SV.
 
-Starting the console printing kthreads later has shown to avoid the
-hanging on systems that could previously reproduce the issue.
-
-Postpone kthread starting until after all arch initcalls have
-completed.
-
-Reported-by: Derek Barbosa <debarbos@redhat.com>
-Closes: https://lore.kernel.org/linux-rt-users/arPmYPbFLf2EldIl@debarbos-thinkpadt14gen5.rmtusma.csb
-Fixes: 76f258bf3f2a ("printk: nbcon: Introduce printer kthreads")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Tested-by: Derek Barbosa <debarbos@redhat.com>
-Link: https://patch.msgid.link/20261016085441.857695-1-john.ogness@linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: d591f6804e7e ("PCI: Wait for device readiness with Configuration RRS")
+Link: https://lore.kernel.org/r/20250611101442.387378-1-hui.wang@canonical.com
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Alexander Gruhlke <gruhlke@mailbox.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://patch.msgid.link/20261011190145.23621-3-gruhlke@mailbox.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pci.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index dffdbbfa4a005..d555d05ffa8d4 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -3819,7 +3819,7 @@ static int __init printk_set_kthreads_ready(void)
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 264213aa7630b..78d4411e3255b 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1227,9 +1227,11 @@ static int pci_dev_wait(struct pci_dev *dev, char *reset_type, int timeout)
+ 	 * initialize.
+ 	 *
+ 	 * If the device is below a Root Port with Configuration RRS
+-	 * Software Visibility enabled, reading the Vendor ID returns a
++	 * Software Visibility enabled, reading the Vendor ID may return a
+ 	 * special data value if the device responded with RRS.  Read the
+-	 * Vendor ID until we get non-RRS status.
++	 * Vendor ID until we get non-RRS status and something other than
++	 * ~0.  The Vendor ID of VFs reads ~0, so check their Command
++	 * register instead.
+ 	 *
+ 	 * If there's no Root Port or Configuration RRS Software Visibility
+ 	 * is not enabled, the device may still respond with RRS, but
+@@ -1249,8 +1251,13 @@ static int pci_dev_wait(struct pci_dev *dev, char *reset_type, int timeout)
  
- 	return 0;
- }
--early_initcall(printk_set_kthreads_ready);
-+subsys_initcall(printk_set_kthreads_ready);
- #endif /* CONFIG_PRINTK */
- 
- static int __read_mostly keep_bootcon;
+ 		if (root && root->config_rrs_sv) {
+ 			pci_read_config_dword(dev, PCI_VENDOR_ID, &id);
+-			if (!pci_bus_rrs_vendor_id(id))
+-				break;
++			if (!pci_bus_rrs_vendor_id(id)) {
++				if (PCI_POSSIBLE_ERROR(id) && dev->is_virtfn)
++					pci_read_config_dword(dev, PCI_COMMAND,
++							      &id);
++				if (!PCI_POSSIBLE_ERROR(id))
++					break;
++			}
+ 		} else {
+ 			pci_read_config_dword(dev, PCI_COMMAND, &id);
+ 			if (!PCI_POSSIBLE_ERROR(id))
 -- 
 2.53.0
 
