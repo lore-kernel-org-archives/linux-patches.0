@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773775;
-	b=a23aaUeQ9XU5bJnQPiYMmdl0RnPRtTIaJ+2070CWI3OmGKSTVgKUvlFWX+rKAwm913Ng
-	 CGjYGykjiTJor9I6UzRYGmqMO0JEhcK4pSjtMXL1xMNMEDEMrQkyIkuqpa5wTMl/Cf516
-	 i0LWzwXZ6zWw0wUQgVbCAechCHGn5OdEEWxJHLiOPtrGl6UyTXkVWpyR9nPqkJpEs0N7+
-	 SPdaWdWU1b/yQP6DdCdf29xtkpboE+IYvRkk7s+qU2fsUTTGE1My9o/chzlGLFHgJepgm
-	 l2f6I6B+KfA/dm1hRYP5Ra1c/XkwYZRxXyI9zYv1jgQZw6Izld1tfm3odfWx0zuNZxA==
+	t=1792773778;
+	b=gVUTUgNG9mnnNEcf5hQ9U1kHq6uyJCB+IdxHvM46BToBZ6Ty/lNIgBLM6puWZKxvnX3n
+	 OapHvrq2CAkyL4ri8njhJSEcdSOZul5g/dByB6zjbGao30Lx5P2uMdoLxoPN2ULsVvWrv
+	 +Eh0WV0cI+f8ydZxrLzWgXbFEEIEDzypndWkZHCdfHG8NtU8yFJLG6HgDa47yqpg1v3Sk
+	 bCyH5s76yzXvSzXtWJDaARJed3NgKE6zyFX/ybFZs+B9tzku9D0n12SUrruZHLOu2gsHS
+	 er5JMLLOZiofpC2mwR8YNvEKi2tmZxmBpjjgpPjvoZL1rKnEnZJ5wVDT6wh6iNKjrbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773778;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rj/RHteVbDTprOSbliqb8coeSkXKiMwLp99/jTMlWzI=;
-	b=GxP1iqe5w7rA2C2c4j2sR/Hx8/ep0UnYHi8YWe9DQU0HfPsBJ7Ztr6XaCsIFimPsTzc/
-	 jS4iUWJyD9OgWj+/jPXGYDqns0ZdDt4jEKhJSVawv5j//50vQmFYD2qHVpq6IW7MaIHdp
-	 Tx5laFAkloXLpG1rN43OQcYoUJxOEzQoM/CkW0rhj6w35Rg0M50+bx+SJqxLZgl9AgC30
-	 Apqu9ebNGp8cEBdLd863xX7LEDGcggVXPne7uCbYGTU3RXWFWiAqIPp2VlThdrizyVNCL
-	 UNkOnZQsH/IvRAhSImDrdjxGoFezXi+hYP6qXHYewdxRQnzSIES9bWrjOr6ONzx9BXQ==
+	bh=lIPHjl50k8kLK448OGyXVUft2kvuVsNV+WS3twlPINI=;
+	b=ngbbDjuPNSp2jp4WMGXPGQHZg71OiyLuSH6OBQP/PV9VtWwGY2ABdMl53Z14OUR2cbM7
+	 93+IVlxzGcv5Rvwc0ahzCxWAQVbphWZzCstqHd2kBnCGs9L7ZXHkoYga4oJr4VCKLXKs0
+	 WqGyxLvicDl9xi0st32wPbkeOI3CDT/9KRFyJs0zEpqA1I3kRJlfMWHXwDUYliwc1vYHA
+	 yJPppoc/9JKzEpF4CizBYE5tzgsg1Ckb3ZdOjywPszbGk60hfKuZnGqOXx3A53MnH3iLU
+	 rf/vunW4uXkgFUWAa+uYnpY7eVAST/dAB1CcFy0Ta3A3IRo+VnYxvBpjCmVIzKnSEPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCxi1PBp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuPjNzEL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E61606A31A;
-	Fri, 23 Oct 2026 16:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3BF606A31A;
+	Fri, 23 Oct 2026 16:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCxi1PBp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51601F01825;
-	Fri, 23 Oct 2026 16:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuPjNzEL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8B31F01825;
+	Fri, 23 Oct 2026 16:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773775;
-	bh=Rj/RHteVbDTprOSbliqb8coeSkXKiMwLp99/jTMlWzI=;
+	s=korg; t=1792773778;
+	bh=lIPHjl50k8kLK448OGyXVUft2kvuVsNV+WS3twlPINI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OCxi1PBpYbdlH3QBpzJHSuqL/Jnj2/YEelCXJN72I7uxI1UwAGlgEcujMtOH6b0+u
-	 pa7t62uJHNQNVQ1aV8BRl+y4NM58gIaDE3m45SE4Lr2D45YmtIcRq0H3w3cOhl5KcH
-	 Cdeby/661XjlHGUrqT8dBhLZigOjbGw/WHcbZfSA=
+	b=kuPjNzEL0qr6f5tQUZRXYSxwVSNJLvm4baLd/hhDI2xCavhBsiwg8FpZlZ/7WaS7J
+	 nFtVB+inp48CWVuPIST8v7WuARvjV9sQdqfyMNduPbu+khL2MMjqesZEv+EU/x9CG1
+	 xFZ01xCsaGZ1rgHHzG1dUz63OmBOm5iW/oKzEGwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harin Lee <me@harin.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 004/193] ALSA: ctxfi: Use correct DAIO type for da_desc
-Date: Fri, 23 Oct 2026 18:34:41 +0200
-Message-ID: <20261023163714.307644306@linuxfoundation.org>
+Subject: [PATCH 6.18 005/193] ax25: bound REJ-driven fast retransmits with the existing N2 counter
+Date: Fri, 23 Oct 2026 18:34:42 +0200
+Message-ID: <20261023163714.330615026@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -68,89 +67,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harin Lee <me@harin.net>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit 07b116b44e52d78af40c2d39a8e1e34ef1283d0d ]
+REJ deliberately bypasses the T1/N2 backoff to trigger an immediate
+go-back-N retransmit -- that is the whole point of REJ, fast recovery
+from a single lost or out-of-order frame. But unlike every other
+recovery path in this same state machine (T1 timeout, state 4
+enquiry/DM, state 1/2 SABM retries), the REJ case in
+ax25_std_state3_machine() never touches n2count, so it has no bound.
 
-Skip the unused DAIO type per model (SPDIFIO on CTSB073X, SPDIFI_BAY
-on all others) and use the correct DAIO type directly as da_desc
-type. This removes the mismatch and misleading between the actual
-DAIO resource and the da_desc type like SPDIFI_BAY (formerly SPDIFI1).
-Update related functions accordingly, and drop the unreachable
-SPDIFI_BAY case from the hw20k2 daio_device_index().
+If something keeps corrupting or reordering every retransmitted burst
+-- lossy RF, or packet reordering over a UDP-based transport such as
+axudp -- each attempt draws an immediate fresh REJ and the link
+retransmits at wire/CPU speed indefinitely, a "machine-gun" storm that
+never reaches the N2 give-up already relied on everywhere else in this
+file.
 
-Signed-off-by: Harin Lee <me@harin.net>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260401090159.2404387-3-me@harin.net
+Reported independently twice: Chris Maness (KQ6UP) on a plain AX.25
+link with no ROSE involved at all, and observed live on a ROSE/FPAC
+White Pages link (f6bvp-8<->f6bvp-10, same LAN, so plain network
+reordering over the Internet is not the trigger there -- likely lossy
+retransmission of the same PDU) reaching ~5900 pkt/s. Both hit the same
+code path since ax25_std_in.c is shared regardless of what rides on
+top of AX.25.
+
+Count consecutive REJ-driven fast retransmits the same way a T1
+timeout already does in this state, and once N2 of them have failed to
+get an in-sequence frame through, fall back to the paced state 4
+enquiry -- which will genuinely disconnect after N2 further tries if
+the link stays bad, exactly like every other recovery path already
+does. A single frame accepted in sequence resets the counter, so an
+isolated REJ during otherwise healthy traffic never gets close to N2.
+
+Deployed on three Raspberry Pi nodes (f6bvp-12, f6bvp-8, f6bvp-10)
+since 2026-09-13, running live production AX.25/ROSE/NET-ROM traffic
+since, with no recurrence of the machine-gun storm and no other AX.25
+regression observed.
+
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+(cherry picked from commit a3aa611e37d4345ebcc98c847dedaf4bcf23c7ee)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ctxfi/ctatc.c  | 18 +++++++++++-------
- sound/pci/ctxfi/ctdaio.c |  1 -
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ net/ax25/ax25_std_in.c | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/sound/pci/ctxfi/ctatc.c b/sound/pci/ctxfi/ctatc.c
-index 5f2eef00009c5..da728549ce42b 100644
---- a/sound/pci/ctxfi/ctatc.c
-+++ b/sound/pci/ctxfi/ctatc.c
-@@ -981,6 +981,11 @@ static int atc_select_mic_in(struct ct_atc *atc)
- 	return 0;
- }
- 
-+static inline enum DAIOTYP atc_spdif_in_type(struct ct_atc *atc)
-+{
-+	return (atc->model == CTSB073X) ? SPDIFI_BAY : SPDIFIO;
-+}
-+
- static struct capabilities atc_capabilities(struct ct_atc *atc)
- {
- 	struct hw *hw = atc->hw;
-@@ -1096,7 +1101,7 @@ static int atc_spdif_out_unmute(struct ct_atc *atc, unsigned char state)
- 
- static int atc_spdif_in_unmute(struct ct_atc *atc, unsigned char state)
- {
--	return atc_daio_unmute(atc, state, SPDIFIO);
-+	return atc_daio_unmute(atc, state, atc_spdif_in_type(atc));
- }
- 
- static int atc_spdif_out_get_status(struct ct_atc *atc, unsigned int *status)
-@@ -1401,12 +1406,11 @@ static int atc_get_resources(struct ct_atc *atc)
- 	daio_mgr = (struct daio_mgr *)atc->rsc_mgrs[DAIO];
- 	da_desc.msr = atc->msr;
- 	for (i = 0; i < NUM_DAIOTYP; i++) {
--		if (((i == MIC) && !cap.dedicated_mic) || i == SPDIFI_BAY)
-+		if (((i == SPDIFIO) && (atc->model == CTSB073X)) ||
-+			((i == SPDIFI_BAY) && (atc->model != CTSB073X)) ||
-+			((i == MIC) && !cap.dedicated_mic))
- 			continue;
--		if (atc->model == CTSB073X && i == SPDIFIO)
--			da_desc.type = SPDIFI_BAY;
--		else
--			da_desc.type = i;
-+		da_desc.type = i;
- 		da_desc.output = i < LINEIM;
- 		err = daio_mgr->get_daio(daio_mgr, &da_desc,
- 					(struct daio **)&atc->daios[i]);
-@@ -1535,7 +1539,7 @@ static void atc_connect_resources(struct ct_atc *atc)
- 		mixer->set_input_right(mixer, MIX_MIC_IN, &src->rsc);
- 	}
- 
--	dai = container_of(atc->daios[SPDIFIO], struct dai, daio);
-+	dai = container_of(atc->daios[atc_spdif_in_type(atc)], struct dai, daio);
- 	atc_connect_dai(atc->rsc_mgrs[SRC], dai,
- 			(struct src **)&atc->srcs[0],
- 			(struct srcimp **)&atc->srcimps[0]);
-diff --git a/sound/pci/ctxfi/ctdaio.c b/sound/pci/ctxfi/ctdaio.c
-index 55d9c5c3d9bd3..1c12fffce1a2d 100644
---- a/sound/pci/ctxfi/ctdaio.c
-+++ b/sound/pci/ctxfi/ctdaio.c
-@@ -119,7 +119,6 @@ static int daio_device_index(enum DAIOTYP type, struct hw *hw)
- 		switch (type) {
- 		case SPDIFOO:	return 0;
- 		case SPDIFIO:	return 0;
--		case SPDIFI_BAY:	return 1;
- 		case LINEO1:	return 4;
- 		case LINEO2:	return 7;
- 		case LINEO3:	return 5;
+diff --git a/net/ax25/ax25_std_in.c b/net/ax25/ax25_std_in.c
+index ba176196ae068..f280683f83fcf 100644
+--- a/net/ax25/ax25_std_in.c
++++ b/net/ax25/ax25_std_in.c
+@@ -196,6 +196,38 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
+ 		if (ax25_validate_nr(ax25, nr)) {
+ 			ax25_frames_acked(ax25, nr);
+ 			ax25_calculate_rtt(ax25);
++			/*
++			 * REJ triggers an immediate go-back-N retransmit,
++			 * deliberately bypassing the T1/N2 backoff that
++			 * paces every other recovery path in this state
++			 * machine -- that is the whole point of REJ, fast
++			 * recovery from a single lost/out-of-order frame.
++			 * But unlike every other recovery path here, this
++			 * one never touches n2count, so it has no bound: if
++			 * something keeps corrupting or reordering each
++			 * retransmitted burst (lossy RF, or reordering over
++			 * a UDP-based link such as axudp), every attempt
++			 * draws an immediate fresh REJ and the link is
++			 * retransmitted at wire/CPU speed indefinitely
++			 * ("machine-gun" storm), never reaching the N2 give
++			 * up that bounds every other recovery attempt.
++			 * Count consecutive REJ-driven fast retransmits the
++			 * same way a T1 timeout would in this state, and
++			 * once N2 of them have failed to make it through,
++			 * fall back to the normal paced state 4 enquiry
++			 * (which will genuinely give up and disconnect after
++			 * N2 further tries if the link stays bad). A single
++			 * frame accepted in sequence resets the counter (see
++			 * the AX25_I case below), so an isolated REJ during
++			 * otherwise healthy traffic never gets close to N2.
++			 */
++			if (ax25->n2count == ax25->n2) {
++				ax25->n2count = 1;
++				ax25_std_transmit_enquiry(ax25);
++				ax25->state = AX25_STATE_4;
++				break;
++			}
++			ax25->n2count++;
+ 			ax25_stop_t1timer(ax25);
+ 			ax25_start_t3timer(ax25);
+ 			ax25_requeue_frames(ax25);
+@@ -226,6 +258,10 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
+ 			if (ax25->condition & AX25_COND_OWN_RX_BUSY)
+ 				ax25->vr = ns;	/* ax25->vr - 1 */
+ 			ax25->condition &= ~AX25_COND_REJECT;
++			/* Genuine forward progress: a frame made it through in
++			 * sequence, so this is not part of a REJ storm.
++			 */
++			ax25->n2count = 0;
+ 			if (pf) {
+ 				ax25_std_enquiry_response(ax25);
+ 			} else {
 -- 
 2.53.0
 
