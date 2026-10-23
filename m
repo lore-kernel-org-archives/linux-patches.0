@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775031;
-	b=ynoehkhDYJG+Vbdht6sXx4W/hi4XyRsbn2Q5KwQ2AtwxGD9IBzDRpNzYD0yOe5xX+cj6
-	 /M6vis3BQFp8PW492oeGbD7FxjdVo3EdQPXgaP4GUuBQecZeVrsEn4CujEnxC+rvEGQ+F
-	 j1GBFHomRBMJc5iqynethakSM2Jvc2J9n1Bm+9ewY8DOGvR5zIi9YWD8l9ZOsqumHJ9rp
-	 ABHL1zQQOfGlRvuz1+arOZA1C5tWMKAxOXRoPU093vFUSRASbZou0UMzbaZ8NcdNfubob
-	 D/h6ET9b1fbIxvgw0Ak8QDJC66Dy9jp/zlx74dsa2AcWjjZWQC3rEAVr8DqQE7Phftg==
+	t=1792775034;
+	b=If5NZTPwr5H7Q+J0y18Z/lteVoYvXRn0raHPVJ0pc5E1OnEPbRptb1n/53gK+xG7L9p9
+	 9bESuurqFtY8QOMS/Wd4Jr5MV890DcoFRMs1KtkWjTSZdh48NsxwZcEQ3aqE2GMwhkd01
+	 xAMWmMDpUceJL0rfZrx8t27LM/OIJUrtlmZF6S21jt2JELoG43sHQZDvuMAjjfKKptWv4
+	 zfK/UvzA7c8JGfLn0p4Pp1mX9OrFDOM4U9gPGMYOKYSjYmheUqVkmFROrPyQFQPRhhm4L
+	 ga5mmVFCiv0Vi52aXfa47SsoMXYYHzKx1njHUeY2WUTCrQQ0WTkzPnJKkUtPzkKPuoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775034;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5K07YdRI3QxQkuqC4wfMhF7NoJGEmB2AXA2x27GP5ec=;
-	b=mnQxycc30MykQo6/7pklPDxOZ/I0m9U54vsu097vQMebkymNYVd2o6588v+bywjd65hq
-	 Qyi5WzTViJtOjoBzFm2IIol1b0/qNgL9yjpfGow+2jZosX+LT2fgVp8nwdcX99mDEoJvI
-	 fEbC9IykYmPlmVdy4aq5eQaqdrm9w4/M5viMsjOaAjJRsVbsc2C6NuNYL3mqlkIqA4p44
-	 3OquU36ANG+SXWYf3JrmJnnB97EB8rsBVVndsZsK31RXY9VwcgdUIOkEl+cdXvAzX5oyk
-	 QdT7QTsrPNS8ZI8KSzjsuolZRTjqL+WfKeJIbE3igvjTbkEWLezKEjZnoN7rJTi5+DA==
+	bh=uFJDWPrp4uHvO1X/yWPzaih0hrRe5Dg3iftcLclsWzk=;
+	b=BsFLolxqa8CQWdmPp8nOPYIZ7bdG0PT/9IQT6W4Lk6/x7rrROeZeU+M0kD0zAUS8SiVI
+	 clMJhqpM1BWPwHI/wGWpc+7qAWcVG0YqxiHCRcPvZXDCX1Zk/fGvuoT50cRAyyazi93yo
+	 N/F0UFK3uc+ntkupbbmyYZtgr9TfTQPLGHQ3S3JeMF9gnbJzG2JuxgrAKs0uGbvKGfbmV
+	 h48y5mr6Bs1iwcKiZJhXbH8qxveyvoPC/YOuXnyRGgzfxsIoQbAom/lko/KqYFnuJ8DyC
+	 Tt8U3LZ8tSglBdJPTRESXDzuYz3TplC+BOF2xLWw1jirQgWhyHuPlZz9x3Z1sZvM37g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MR1Qc6gr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhetOnQc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F40D606A31A;
-	Fri, 23 Oct 2026 17:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63180606A31A;
+	Fri, 23 Oct 2026 17:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MR1Qc6gr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE44A1F01825;
-	Fri, 23 Oct 2026 17:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhetOnQc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20491F01825;
+	Fri, 23 Oct 2026 17:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775031;
-	bh=5K07YdRI3QxQkuqC4wfMhF7NoJGEmB2AXA2x27GP5ec=;
+	s=korg; t=1792775034;
+	bh=uFJDWPrp4uHvO1X/yWPzaih0hrRe5Dg3iftcLclsWzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MR1Qc6groWgUOR7o7/65MKovpTtP0A75dRuLy4mo4Sh3CclZsI8ALWs70oam7UJ3s
-	 6yE7iqeosBBzuLLvbH6XUpkykqsNp9Lid+xCzszU7YgBC0ZQ4UNySurtnJCnRUV6Ka
-	 kOz9TeXvFy1g+sdFa6fCNRe1kPmYpP0ASxBwGEd4=
+	b=EhetOnQcDodFxguArsO7q33VCGlwNqAGpmosOpr5Qocl/IUr6HEtLwbclg3x0sMcL
+	 4hhlow1/7gJpBZIkPEv1bFIQqZ7LMcFX9v3TrPFbBnIAW4cQm/nZ0tBwNusB5drwVY
+	 czzOi2N51ZmxDg6BTKC4z7E+uAvfVIw6mwG/jAis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunchul Lee <hyc.lee@gmail.com>,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 238/242] ntfs: take invalidate_lock in ntfs_setattr_size()
-Date: Fri, 23 Oct 2026 18:41:20 +0200
-Message-ID: <20261023163719.482689622@linuxfoundation.org>
+Subject: [PATCH 7.2 212/242] drm/i915/dmc: Harden DMC firmware payload parsing
+Date: Fri, 23 Oct 2026 18:40:54 +0200
+Message-ID: <20261023163718.812805887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -70,65 +70,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
 
-[ Upstream commit 9cc5761b8f28f9cef72061094eb5e37e2cd44d97 ]
+[ Upstream commit 8bb1858db453cd4250e3b633f5d2d09206024ca6 ]
 
-ntfs_setattr_size() updates i_size and resizes the on-disk attribute
-without holding mapping->invalidate_lock.  Page faults take the lock
-shared, so a fault racing the resize can resolve a VCN against the
-transient runlist state of ntfs_non_resident_attr_expand() and fail
-with a spurious SIGBUS, and can interleave with the size-change
-epilogue (truncate_pagecache(), i_size_write(),
-pagecache_isize_extended()).
+Validate the conversion of the DMC firmware size from dwords to bytes
+using check_mul_overflow() before calculating the firmware payload size.
 
-Take invalidate_lock exclusively around the whole resize after
-inode_dio_wait(), matching the fallocate path and other filesystems
-such as xfs, which wraps truncate in its mmaplock (= invalidate_lock).
+Reject zero-length payloads and zero MMIO counts in the DMC firmware
+header so malformed firmware is caught early. Also set dmc_fw_size only
+after the payload allocation succeeds.
 
-Fixes: 9c87959601e8 ("ntfs: update file operations")
+Fixes: eb805623d8b1 ("drm/i915/skl: Add support to load SKL CSR firmware.")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Assisted-by: Claude-Code:Sonnet-5
+Signed-off-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260922133535.3180973-5-dibin.moolakadan.subrahmanian@intel.com
+(cherry picked from commit efde6601a1f1daedfe3dcc2816c934ddb44e3eef)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/file.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dmc.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/fs/ntfs/file.c
-+++ b/fs/ntfs/file.c
-@@ -269,18 +269,25 @@ static int ntfs_setattr_size(struct inod
- 		return err;
+--- a/drivers/gpu/drm/i915/display/intel_dmc.c
++++ b/drivers/gpu/drm/i915/display/intel_dmc.c
+@@ -1165,7 +1165,7 @@ static u32 parse_dmc_fw_header(struct in
+ 	}
  
- 	inode_dio_wait(vi);
-+
-+	/*
-+	 * Serialize with page faults and pagecache instantiation so that
-+	 * readers cannot observe the size change until the attribute
-+	 * updates below have completed.
-+	 */
-+	filemap_invalidate_lock(vi->i_mapping);
- 	if (attr->ia_size > old_size) {
- 		truncate_pagecache(vi, old_size);
- 		i_size_write(vi, attr->ia_size);
- 		pagecache_isize_extended(vi, old_size, attr->ia_size);
--	} else
-+	} else {
- 		truncate_setsize(vi, attr->ia_size);
+ 	/* Cache the dmc header info. */
+-	if (mmio_count > mmio_count_max) {
++	if (!mmio_count || mmio_count > mmio_count_max) {
+ 		drm_err(display->drm, "DMC firmware has wrong mmio count %u\n", mmio_count);
+ 		return 0;
+ 	}
+@@ -1211,13 +1211,21 @@ static u32 parse_dmc_fw_header(struct in
+ 			    disable_dmc_evt(display, dmc_id, dmc_info->mmioaddr[i],
+ 					    dmc_info->mmiodata[i]) ? " (disabling)" : "");
+ 	}
+-	dmc_info->mmio_count = mmio_count;
+-	dmc_info->start_mmioaddr = start_mmioaddr;
+ 
+ 	rem_size -= header_len_bytes;
+ 
+ 	/* fw_size is in dwords, so multiplied by 4 to convert into bytes. */
+-	payload_size = dmc_header->fw_size * 4;
++	if (check_mul_overflow(dmc_header->fw_size, 4u, &payload_size)) {
++		drm_err(display->drm, "DMC fw_size too large (%u dwords)\n",
++			dmc_header->fw_size);
++		return 0;
 +	}
++
++	if (!payload_size) {
++		drm_err(display->drm, "DMC firmware has empty payload\n");
++		return 0;
++	}
++
+ 	if (rem_size < payload_size)
+ 		goto error_truncated;
  
- 	err = ntfs_truncate_vfs(vi, attr->ia_size, old_size);
--	if (err) {
-+	if (err)
- 		i_size_write(vi, old_size);
--		return err;
--	}
-+	filemap_invalidate_unlock(vi->i_mapping);
+@@ -1225,7 +1233,6 @@ static u32 parse_dmc_fw_header(struct in
+ 		drm_err(display->drm, "DMC FW too big (%u bytes)\n", payload_size);
+ 		return 0;
+ 	}
+-	dmc_info->dmc_fw_size = dmc_header->fw_size;
  
- 	return err;
- }
+ 	if (!dmc_load_addr_sanity_check(dmc, start_mmioaddr, payload_size,
+ 					dmc_header->header_ver, dmc_id)) {
+@@ -1237,6 +1244,10 @@ static u32 parse_dmc_fw_header(struct in
+ 	if (!dmc_info->payload)
+ 		return 0;
+ 
++	dmc_info->mmio_count = mmio_count;
++	dmc_info->start_mmioaddr = start_mmioaddr;
++	dmc_info->dmc_fw_size = dmc_header->fw_size;
++
+ 	payload = (u8 *)(dmc_header) + header_len_bytes;
+ 	memcpy(dmc_info->payload, payload, payload_size);
+ 
 
 
