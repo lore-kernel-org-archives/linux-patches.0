@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774846;
-	b=mpsAqDLh9g3CmUv9HbCzqNpsKWm5iPypdNzW0zAgmI7QwWRcQLPvFaNrq4k6qUyHGmOl
-	 Kvyc3fSCvdhRJD+m/pAe3cfFqeYA9dQKWPXLAfJQi2SUdvyzbOUbMfujiFBBhjX6C5T9F
-	 wA8G9SkE7Pfsb//E0cvNleSkkW954npsPEZIBWyyFYtHQ3xVkqv+tWrlzwXFJmZ/A69ns
-	 Ss7+zExpTSH9feMp9U1UMVWuYcVnJHH7Xl65bGOiWR0BBHPwgJrN4XKw6EafsXxXt40qe
-	 dVMuP5si7HEZUmQ+VVDbdvTOqlzaLsQ7ebDexZjfjWUHbiGknSbDsT/5rxlXcX745ng==
+	t=1792774850;
+	b=gciXrNmV8LNc0At+zK/dPbjFHCYRhv8g5g+pLJiBMf/xWHolvudBQGnUl8MopJlhbQVW
+	 OHf1N+4I5VdwIRW0nYTDPaj/qY2n+IpK7c9eyrnnysAoiDrIWwPX+krG/lR9S3sYsTdW7
+	 o6Z8jYl/ajG2kovvh/TkpB52nSp/ptpqBgbH7r8MgWk736riu5d2Xj3e59Os7UlpW0mNA
+	 pqX+Dy9Lw4g6rPP8JKen3QWBs+bq+UBWb5uWR0eceHwAzAzK/A9ag99q9LI9ypGeQziT8
+	 4AG9IOCmLv88rgN9y4+poDwUuQ+jDXekP+PlJESp7He91iFWPPvj4XDf+g4GDqhpqQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774850;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+MMYJKzXMmStxL6SHtQggpGXPvI5gRJaq5cRz64Xdgk=;
-	b=q4YNcK4BGX31FKKRaOI8yGz40UbdRH6+peSck8BozKicIy8lVuZMPjYuWxTsnBB7nVZs
-	 8J08icQ45Tdg/8XMMVgH/0TFnpN+CcLZOBBkfyCOA05V8tqbaWRCnzLHXhwfV8cbDx9Zc
-	 BcY8dowHJ4K+mYVL7cUnTXAzjW/o06HX6R5IQWu+cyLpI/lpnwU8Cl5/0bQ7yXZ2hmpxh
-	 t7uyed/vDRTEkAJr8tI2qlitLT2BNE4UV2gEa+1QvkN6I9FdH5W6Mdk/3/pdd6E0g/WFa
-	 Fw7/4oe70zjTu7qBLKnrAl1pVegvLPaKKesUK0T3CGPD1ZKI6E28HNjOpAm4Ul4SNnA==
+	bh=mRuvDtwZFdG2diVPopnuUHF7yK8nqzHVkbSlif/PhUM=;
+	b=e7+SAjPjVZuNOwIC5zjNrPw5kMMHc3MxHKGqHkfObdtDeLd3rzQ/aoS7Ysu/vH0WEnhE
+	 da7Tl4N4OkI2fODiWvrgCAf6B11k3JnmfO5+UKKzbZpqJiVLBv+MB11auQej74Du0WMFk
+	 TW3LzYa+WZ3EReu3vrTwijJ0p1hTynwO+MkJltupIoLh6IvLpt5dmJgKzfcve/MXxmcfM
+	 quvulFixe2JbXcB18ogj4elge7gP7d2/uPPHMc7mgbnPe21smR19YL703U9PMswTffyYV
+	 MOf/TA+Mgfa6mIX2vvExltOoGRgjwLuy3BpMqesRmvEBh+/o5evLcfVUwcvCuY2xK/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sBcJU+Tt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8O2E23G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C176606A31A;
-	Fri, 23 Oct 2026 17:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B85D606A31A;
+	Fri, 23 Oct 2026 17:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sBcJU+Tt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7BC1F01825;
-	Fri, 23 Oct 2026 17:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8O2E23G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6E31F01825;
+	Fri, 23 Oct 2026 17:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774846;
-	bh=+MMYJKzXMmStxL6SHtQggpGXPvI5gRJaq5cRz64Xdgk=;
+	s=korg; t=1792774849;
+	bh=mRuvDtwZFdG2diVPopnuUHF7yK8nqzHVkbSlif/PhUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sBcJU+TtMlul8aYPXmU/JaYmUUH00PiMH67oPjSLJt6wNz7se6/mjmgHVmoIqX8+O
-	 GHzOiV0RniTaN+qowHAI1uoxbWR0PNhy+SOpYzf6mCXdgEpTppQN9irZKQt0a4kXHB
-	 BYpoIdMOrJ9342c9QbEsTxFjxO1mrJi7DlGquMbg=
+	b=r8O2E23Gw1fgc7AAI8ZjAb7BZzITivMzRxsEr6qeZCbjsDHoOxbBASJeCNR0/XNVl
+	 9GkAl22yFPBowW+xG4VxwXISXpJPngQ8E7J8Ucp9CdteyD2XjHegO9zevsCXCNypI5
+	 Vksue23+a6osUBDBiUQd132nq0i0cFeVcQ9btE6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Etienne Perot <eperot@google.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 179/242] cgroup: fix spurious SIGKILL of CLONE_INTO_CGROUP children
-Date: Fri, 23 Oct 2026 18:40:21 +0200
-Message-ID: <20261023163718.016512551@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.2 180/242] cifs: add revalidation on FSCTL failure in smb2_duplicate_extents()
+Date: Fri, 23 Oct 2026 18:40:22 +0200
+Message-ID: <20261023163718.039516515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,88 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Etienne Perot <eperot@google.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit 8e359920216689b3b79e0fe8961a77fe312a511f upstream.
+commit 53676a5e28231186c9f56d87b7998b640699bc15 upstream.
 
-Since commit b69bb476dee9 ("cgroup: fix race between fork and
-cgroup.kill"), the fork path snapshots the kill_seq of the child's
-future cgroup into kargs->kill_seq, and cgroup_post_fork() SIGKILLs
-the child if that cgroup's kill_seq has changed in the meantime, to
-catch forks racing with a cgroup.kill sweep.
+smb2_duplicate_extents() has no handling for
+FSCTL_DUPLICATE_EXTENTS_TO_FILE failure: when the FSCTL fails, local
+inode metadata may be stale from the pre-extension or from concurrent
+remote writes, but is never refreshed.
 
-For CLONE_INTO_CGROUP, however, the snapshot in cgroup_css_set_fork()
-is taken before the target cgroup has been resolved: kargs->cgrp is
-always NULL at this point (it is only set at the end of the function).
-So the "if (kargs->cgrp)" branch is dead code and the snapshot always
-records the kill_seq of the parent's cgroup. cgroup_post_fork() then
-compares it with the kill_seq of the target cgroup, so the child gets
-SIGKILLed whenever the two cgroups have been killed a different number
-of times.
+Force revalidation on FSCTL failure and use i_size_read() for the
+pre-extension check.
 
-As a result, once cgroup.kill has been written to a cgroup, every
-child subsequently cloned into it with clone3(CLONE_INTO_CGROUP) is
-killed on the spot, for as long as the cgroup exists: kill_seq is not
-exposed to userspace and never resets.
-
-Re-snapshot kill_seq from the target cgroup once it has been resolved,
-and drop the dead branch at the early snapshot site.
-
-This does not reopen the race fixed by b69bb476dee9. For
-CLONE_INTO_CGROUP, everything from the snapshot to the check in
-cgroup_post_fork() runs with cgroup_mutex held, and kill_seq is
-only ever incremented under cgroup_mutex.
-
-tj: Updated the comment above kill_seq to reflect the new serialization
-rules as suggested by Shakeel Butt.
-
-Fixes: b69bb476dee9 ("cgroup: fix race between fork and cgroup.kill")
+Fixes: cfc63fc8126a ("smb3: fix cached file size problems in duplicate extents (reflink)")
 Cc: stable@vger.kernel.org
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Assisted-by: LLM
-Signed-off-by: Etienne Perot <eperot@google.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cgroup-defs.h |    5 ++++-
- kernel/cgroup/cgroup.c      |    6 ++----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ fs/smb/client/smb2ops.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -527,7 +527,10 @@ struct cgroup {
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -2305,7 +2305,7 @@ smb2_duplicate_extents(const unsigned in
+ 			       trgtfile->fid.volatile_fid, tcon->tid,
+ 			       tcon->ses->Suid, src_off, dest_off, len);
+ 	inode = d_inode(trgtfile->dentry);
+-	if (inode->i_size < dest_off + len) {
++	if (i_size_read(inode) < dest_off + len) {
+ 		rc = smb2_set_file_size(xid, tcon, trgtfile, dest_off + len, false);
+ 		if (rc)
+ 			goto duplicate_extents_out;
+@@ -2322,7 +2322,10 @@ smb2_duplicate_extents(const unsigned in
+ 	if (ret_data_len > 0)
+ 		cifs_dbg(FYI, "Non-zero response length in duplicate extents\n");
  
- 	int nr_threaded_children;	/* # of live threaded child cgroups */
- 
--	/* sequence number for cgroup.kill, serialized by css_set_lock. */
-+	/*
-+	 * Sequence number for cgroup.kill. Incremented with both cgroup_mutex
-+	 * and css_set_lock held. Readers hold either one.
-+	 */
- 	unsigned int kill_seq;
- 
- 	struct kernfs_node *kn;		/* cgroup kernfs entry */
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -6801,10 +6801,7 @@ static int cgroup_css_set_fork(struct ke
- 	spin_lock_irq(&css_set_lock);
- 	cset = task_css_set(current);
- 	get_css_set(cset);
--	if (kargs->cgrp)
--		kargs->kill_seq = kargs->cgrp->kill_seq;
--	else
--		kargs->kill_seq = cset->dfl_cgrp->kill_seq;
-+	kargs->kill_seq = cset->dfl_cgrp->kill_seq;
- 	spin_unlock_irq(&css_set_lock);
- 
- 	if (!(kargs->flags & CLONE_INTO_CGROUP)) {
-@@ -6868,6 +6865,7 @@ static int cgroup_css_set_fork(struct ke
- 
- 	put_css_set(cset);
- 	kargs->cgrp = dst_cgrp;
-+	kargs->kill_seq = dst_cgrp->kill_seq;
- 	return ret;
- 
- err:
+-	if (rc == 0) {
++	if (rc) {
++		CIFS_I(inode)->time = 0; /* force reval */
++		cifs_invalidate_cache(inode, 0);
++	} else {
+ 		qrc = SMB2_query_info(xid, tcon, trgtfile->fid.persistent_fid,
+ 				      trgtfile->fid.volatile_fid, &file_inf);
+ 		spin_lock(&inode->i_lock);
 
 
