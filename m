@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774395;
-	b=W6G+ZgCTuSp3RpnR3KXmaFGcpq98hJDpoWMbi2ItNxUIsvv9mD5ppceTZcIwsYfBsHbO
-	 cCaMQ+ZfgtR7mk8nX6wN8OaJ79WaR9NzOQC0kdyM6aXLtpwGYoEcK7uFSoOgsVSMEe+nN
-	 abscyWV3Bf/ZrhEupnYQgpxJrwSw9qMSoHHmUvAJ8mlZjdBpu9esS9IxkTzl97YyldPOG
-	 /KwG/vOTj6ISM2o6RteK9bSNoxdwXztf2wUnG4/jjRN4Z7s9xKvMGlbj2wtTEVldcvIxg
-	 9SSwlJBHSdoK4NncyaJGd/K8bLGGa6OPKUo3SQoG++nqVRcvfaHoSr/gUxPjlBJYCiw==
+	t=1792774398;
+	b=HpI03LcOJ/ZqyjRouByivTNPsPni7TuLiiJzEwPl5dSo1kKmdoVQg6jWC6yVGBv5qx72
+	 +8DmoeJzWG+hwVUBgFQ8AlEmJZw/SbYQAGpZ0pl6GbFa+uFnDzSLm7hUb7RJ3DIYIhSE4
+	 srGzXXuQ034n5Nw9gNcdzrC71bV24elNzh+5TuWuOrcdV/s+QJQr4DNiY31kLLe7LSUrM
+	 3H30a6b0HDYPdPjEJ4rZlSWYeMp4FYtxbURjiRbjMUFcw6nU+/WWHX/dUk+zwRTFt5kAe
+	 BO0mBNgAKLFAWZEdgRhk1jmG5i9UmSwUK1bjL48pfefSrwaOkNGh0O+BYB1ntQ4qDbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774398;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=O4Kk6GRkLxjZczEtkQHinb4/owzOm3n5z38Oqy0JCL4=;
-	b=teNsgMORtqJtI1ntBYALpf87ZVLcr6kiupQpBQn832TaXBI7AWZntSu3yI7jTs2Rz3yQ
-	 BAGbvKbH6zOi9TNEotgxhlao5YgOv5Lm4SX3+Dg0JOz4gwgkkOjHU5Zf5ndu+FZSfv1A/
-	 /5Cp6u2t3D90tN/EEiLzuJ+RgSYNrxtSl3HWBzQIt1BcZ84Qe+IxZoD01s6Mb7sOx2pni
-	 lxsYSUIIygcLSB0uZegBPKXC41ZQs3P2Latp+pXWLyvh9LRWPIpfWCKD2Wo5AgFej+bi6
-	 fuJ09nrPKanWih0QMQRuE+tpml1HwqEnbHUjzAu9gojc1yeOmY+xMhMFZEvhWL6PhuA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ZcQaF5GjdD+s9ByG/L/2IWl3FOeC5x8utfdK0zq0BjA=;
+	b=wjElblIZoYj4OBlHKDSxwDBAYx+O/+9qkuzLJvKP68PKeoXmpA2vCWiYGtcQwUyQF0u/
+	 WxvSL5Ohk6VY3PDfFDKWknsb75CIJm/oITObu+Yw3B13pA3J3As1nMHheWYdoTEhUseIa
+	 qiawuLDPTs18vmDS1joV3KaOwLKJCnnFRIfqaksd+VxHePWVxW9x5EgiVDBUMs5A4ZmX5
+	 LcwzMdHa8ghwypE+wm/FoBS7HlD9PVLVVHQqIAD9AXsv945Sc1fUcDabT8gNlKXm0xwWH
+	 5IVRTDGevCCABjAWmk0DnYWdPZcjrzJp/v7Qi1IYMeoC9ww6wzkr8iJLhTGn8Lv+Paw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H8hiFcib;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=urNszPua;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629DE606A31E;
-	Fri, 23 Oct 2026 16:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BBF606A31A;
+	Fri, 23 Oct 2026 16:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H8hiFcib
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38771F01825;
-	Fri, 23 Oct 2026 16:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=urNszPua
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985A31F01825;
+	Fri, 23 Oct 2026 16:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774395;
-	bh=O4Kk6GRkLxjZczEtkQHinb4/owzOm3n5z38Oqy0JCL4=;
+	s=korg; t=1792774398;
+	bh=ZcQaF5GjdD+s9ByG/L/2IWl3FOeC5x8utfdK0zq0BjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H8hiFcibJlXR541Nb3uplzD5Dbid4Ircs6AwtKH/JPiZozi1XGHoYnTRLy2pGayGa
-	 02PiXkGxKmNhbmIsSA7n12jvWithOXWGq25qtjqGRMCPRZPr7ZTEOY0QtYBmgYwY+K
-	 SV80xYTRziuh3B5JYQBs/7xbt5vptGecX4hVLaxI=
+	b=urNszPuaWS5uCNGLzYkvq5oaGPATMXkVzw/9tmBlYyBtSawaQ43KkVBmtrs2fPbDc
+	 N8xDk1Zoyo2SUiCMfyhG6X+oVq3I7OEXM/Sm0d7M6JHQL8jYdXU9MTOzFsmkd9cP+3
+	 47m4HYso49EGkTTxIUsuSWIbKWlHpPTEO2qkYeH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Ming Yu <a0282524688@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 026/242] drm/vc4: hdmi: Move packet RAM enable to PM runtime
-Date: Fri, 23 Oct 2026 18:37:48 +0200
-Message-ID: <20261023163714.401418555@linuxfoundation.org>
+Subject: [PATCH 7.2 027/242] gpio: nct6694: Mark the GPIO controller as sleeping
+Date: Fri, 23 Oct 2026 18:37:49 +0200
+Message-ID: <20261023163714.425500589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -63,141 +62,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Ming Yu <a0282524688@gmail.com>
 
-[ Upstream commit 3f57b34485dc01e5a2db60a89a6ae5439a897e53 ]
+[ Upstream commit fcbc48dc650d2f58bfe19c4486830de0e9cad62e ]
 
-Audio can be triggered by the HPD handler and start up before video has
-been restored, calling vc4_hdmi_write_infoframe() for the audio infoframe.
-vc4_hdmi_write_infoframe() needs Packet RAM to be on to store the
-infoframe, however, if the video hasn't been enabled,
-vc4_hdmi_encoder_post_crtc_enable() hasn't been called and therefore, the
-Packet RAM can be disabled by the time vc4_hdmi_write_infoframe() executes,
-causing the following splat:
+The GPIO callbacks take a mutex and issue USB transfers, so this GPIO
+chip must not be used in atomic context. Change the can_sleep switch in
+struct gpio_chip to true.
 
-[  201.570266] ------------[ cut here ]------------
-[  201.570293] Packet RAM has to be on to store the packet.
-[  201.570367] WARNING: drivers/gpu/drm/vc4/vc4_hdmi.c:683 at vc4_hdmi_write_infoframe+0x404/0x494 [vc4], CPU#0: wireplumber/1606
-[...]
-[  201.658650] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
-[...]
-[  201.758499] Call trace:
-[  201.760967]  vc4_hdmi_write_infoframe+0x404/0x494 [vc4] (P)
-[  201.766607]  vc4_hdmi_write_audio_infoframe+0x1c/0x28 [vc4]
-[  201.772247]  write_infoframe+0xbc/0x140 [drm_display_helper]
-[  201.777975]  drm_atomic_helper_connector_hdmi_update_audio_infoframe+0x80/0xdc [drm_display_helper]
-[  201.787140]  vc4_hdmi_audio_prepare+0x4ac/0x570 [vc4]
-[  201.792252]  drm_connector_hdmi_audio_prepare+0x24/0x30 [drm_display_helper]
-[  201.799390]  hdmi_codec_prepare+0x100/0x160 [snd_soc_hdmi_codec]
-[  201.805471]  snd_soc_pcm_dai_prepare+0xd4/0x100 [snd_soc_core]
-[  201.811375]  __soc_pcm_prepare+0x60/0x12c [snd_soc_core]
-[  201.816752]  soc_pcm_prepare+0x34/0x58 [snd_soc_core]
-[  201.821863]  snd_pcm_do_prepare+0x70/0x8c [snd_pcm]
-[  201.826798]  snd_pcm_action_nonatomic+0xe4/0x174 [snd_pcm]
-[  201.832350]  snd_pcm_prepare+0xc8/0xd8 [snd_pcm]
-[  201.837021]  snd_pcm_common_ioctl+0x458/0x614 [snd_pcm]
-[  201.842308]  snd_pcm_ioctl+0x30/0x48 [snd_pcm]
-[  201.846802]  __arm64_sys_ioctl+0x88/0xd8
-[  201.850769]  invoke_syscall+0x48/0xf4
-[  201.854470]  el0_svc_common+0x80/0xd8
-[  201.858171]  do_el0_svc+0x1c/0x28
-[  201.861520]  el0_svc+0x3c/0xb0
-[  201.864605]  el0t_64_sync_handler+0x68/0xdc
-[  201.868834]  el0t_64_sync+0x198/0x19c
-[  201.872536] ---[ end trace 0000000000000000 ]---
-
-Considering that Packet RAM enable is essentially a power management
-configuration, move its enabling/disabling to the Runtime PM hooks.
-
-Note that post_crtc_disable() still stops all infoframes, but keeps Packet
-RAM enabled, leaving it to be disabled by runtime suspend.
-
-Link: https://github.com/raspberrypi/linux/issues/7069
-Fixes: b47a72f30768 ("drm/vc4: hdmi: Switch to HDMI connector")
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patch.msgid.link/20261002-vc4-hdmi-packet-ram-fix-v1-1-3d73148096c9@igalia.com
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: 611a995e8ae1 ("gpio: Add Nuvoton NCT6694 GPIO support")
+Signed-off-by: Ming Yu <a0282524688@gmail.com>
+Link: https://patch.msgid.link/20261007092102.3768818-2-a0282524688@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/gpio/gpio-nct6694.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index a161d3b00a255..0692087dda728 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -894,7 +894,7 @@ static void vc4_hdmi_encoder_post_crtc_disable(struct drm_encoder *encoder,
+diff --git a/drivers/gpio/gpio-nct6694.c b/drivers/gpio/gpio-nct6694.c
+index a8607f0d99153..a38add1cde293 100644
+--- a/drivers/gpio/gpio-nct6694.c
++++ b/drivers/gpio/gpio-nct6694.c
+@@ -444,7 +444,7 @@ static int nct6694_gpio_probe(struct platform_device *pdev)
+ 	data->gpio.set_config		= nct6694_set_config;
+ 	data->gpio.init_valid_mask	= nct6694_init_valid_mask;
+ 	data->gpio.base			= -1;
+-	data->gpio.can_sleep		= false;
++	data->gpio.can_sleep		= true;
+ 	data->gpio.owner		= THIS_MODULE;
+ 	data->gpio.ngpio		= NCT6694_NR_GPIO;
  
- 	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
- 
--	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, 0);
-+	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, VC4_HDMI_RAM_PACKET_ENABLE);
- 
- 	HDMI_WRITE(HDMI_VID_CTL, HDMI_READ(HDMI_VID_CTL) | VC4_HD_VID_CTL_CLRRGB);
- 
-@@ -1663,9 +1663,6 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
- 		WARN_ONCE(ret, "Timeout waiting for "
- 			  "VC4_HDMI_SCHEDULER_CONTROL_HDMI_ACTIVE\n");
- 	} else {
--		HDMI_WRITE(HDMI_RAM_PACKET_CONFIG,
--			   HDMI_READ(HDMI_RAM_PACKET_CONFIG) &
--			   ~(VC4_HDMI_RAM_PACKET_ENABLE));
- 		HDMI_WRITE(HDMI_SCHEDULER_CONTROL,
- 			   HDMI_READ(HDMI_SCHEDULER_CONTROL) &
- 			   ~VC4_HDMI_SCHEDULER_CONTROL_MODE_HDMI);
-@@ -1684,9 +1681,6 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
- 		WARN_ON(!(HDMI_READ(HDMI_SCHEDULER_CONTROL) &
- 			  VC4_HDMI_SCHEDULER_CONTROL_HDMI_ACTIVE));
- 
--		HDMI_WRITE(HDMI_RAM_PACKET_CONFIG,
--			   VC4_HDMI_RAM_PACKET_ENABLE);
--
- 		spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
- 		vc4_hdmi->packet_ram_enabled = true;
- 
-@@ -3143,6 +3137,11 @@ static int vc5_hdmi_init_resources(struct drm_device *drm,
- static int vc4_hdmi_runtime_suspend(struct device *dev)
- {
- 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
-+	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, 0);
-+	spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
- 
- 	clk_disable_unprepare(vc4_hdmi->audio_clock);
- 	clk_disable_unprepare(vc4_hdmi->hsm_clock);
-@@ -3153,9 +3152,8 @@ static int vc4_hdmi_runtime_suspend(struct device *dev)
- static int vc4_hdmi_runtime_resume(struct device *dev)
- {
- 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
--	unsigned long __maybe_unused flags;
-+	unsigned long rate, flags;
- 	u32 __maybe_unused value;
--	unsigned long rate;
- 	int ret;
- 
- 	ret = clk_prepare_enable(vc4_hdmi->hsm_clock);
-@@ -3201,6 +3199,10 @@ static int vc4_hdmi_runtime_resume(struct device *dev)
- 	}
- #endif
- 
-+	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
-+	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, VC4_HDMI_RAM_PACKET_ENABLE);
-+	spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
-+
- 	return 0;
- 
- err_disable_clk:
 -- 
 2.53.0
 
