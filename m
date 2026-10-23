@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774808;
-	b=ACrxpnRShdtAPTgUOM22PIV/Yj6vIIQD5XzOC8ItXxUXXQBf4qVDI1WwnDKYb7yg0MYI
-	 Egh+DhtwwaUsXTRLZVXppkizvLLCHrqZffy2XB/XZDdS4RVm+QeBBjxYIKBAVRpXp5twQ
-	 hAKwvTG5l/I0BkZXnfioYaTPwaIsj6sua2cL3QVaCTB5tLVf7OJzgXYMV1sODR78k39uD
-	 L++ucBovYuNitwsaX8hVBROxxQ7Jia3G4MivoBAghWVd7NkCufV41sXsLy40KWR712eIb
-	 mzips+49SqueeNlQzBsb/ZWoS+jcGyqFVnfZ8aWXFSdO1PzDUJFTPyj5gzyq+qN/YLw==
+	t=1792774811;
+	b=AXxuv4ZVLdjmt3zq3TSPORb7dgskM+tIIpoocrnPbDGIiUW8gOkl+GEsvkYobwXK8wKB
+	 ejPuN1E5/Ozts4smDhzZ31asb8qUoIRvSlOcZFeFFrmLIfY4S9YYmdXeCpEISeSItVkio
+	 EVjh2wjaY8cINDXgCXN0AvniMMYrnEYy7WD6tR1TPF/jC+4pry/wiMCluLr4B3HqBx8Ly
+	 8qlyG5Gw1BMZZqrfEm1TT0G8dQdYAe0cKrVgy3g3WnEccjvS3t2l+SXBz2vchyyHqlSf1
+	 tKbAl2KyVurdUhLKAbDQ4ekyPJDNgG1isE/9s90frC38T0erKts57CklFur8Kz2gsug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=OO3YxadxTotsivQmUzIwDqzbxFrfltbxO5y3LvuAy3A=;
-	b=QyNsPdc3mto6MUFP0vrfEYrOo8KhNA6ejCmDLKms2/wBu8DaSvVFQAbV+FS0Ah/Hxos9
-	 1MpnoHi7T7Jd8992ECaci+dgs0U0AsoHnZgA/XSMAI6EOmXFkPv7Z0F61JhMgBnyb00IG
-	 Ol4WAPU0DeRlh0Lbgw9tY/6fTwI9iAtmIXXAx70CFQKB32SKPankCrLtccXt97LE9lCOt
-	 c+zCeeVBk3aCPGYOkSY7dYDeBeDz3sntjRTWPb5WPAv02wDZefW5GOSVDn4w84H7ydHt1
-	 0Y7WZmVbF15rJ76Wdl++Zs6cYfZVvxHtKKv7dKs7NAexn2Dfs4a4xHSjGBgzK6bBN7w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=jSMDH0V7LTaXIaOMJHvylQzsSfaDyuMt72bejhZjG8w=;
+	b=WzrMyheagUBrFZYIBLvYfjbReIqpQ2Phrio0Uaetev868Ugd5pnjk5M9pZPDfStkjakM
+	 SdTVnGAKv96MSGA3/un26LN8lCyVHGB34OZQh9sf8erMFzIzsWydyh6F8KYe1avP2madK
+	 mp77L74H1Xk6J1xFob1SpEDRBbOnQ01FyGSkak0fcrdG18oXVYVSVtu9ndGVGfjBp3upD
+	 hxcLYvfSMunQGRzDiy5z7//McEI2irdyIibI5rRKbDiM+5b5+QdfqHw4EyeBdaBhJvpr1
+	 4Hia5/xG1MVURXtYgCmEiHwEtI+7Cbp6ffjapcv2cHFUXcYlYaCEVosfPTfevsRoC9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2pEE2rF7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SiPJGtNZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91A7606A31E;
-	Fri, 23 Oct 2026 17:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA87F606A31F;
+	Fri, 23 Oct 2026 17:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2pEE2rF7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070E91F01825;
-	Fri, 23 Oct 2026 17:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SiPJGtNZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CA11F01825;
+	Fri, 23 Oct 2026 17:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774807;
-	bh=OO3YxadxTotsivQmUzIwDqzbxFrfltbxO5y3LvuAy3A=;
+	s=korg; t=1792774810;
+	bh=jSMDH0V7LTaXIaOMJHvylQzsSfaDyuMt72bejhZjG8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2pEE2rF7bDlRloxCyktwanggSNBiJM6q7OrEJ1WZHq+5lk4umehc094503S1dsdI5
-	 K9sjgMjay4OOW0yfwaDjr5tlHiBLPvSiLkn1aTOpcfLFusPgTr5lhAD0SMt0lC5Oqd
-	 6h/VtBdwAbpptcZfWXhEuvU8Fh5joi+3yzumvTNI=
+	b=SiPJGtNZDLqRfasG5vGTdsY2Y+O+91GBFNGJ0HgWadvec314clN3JYhHFnuiBZjlR
+	 fMUr/CYMlmguszCttGr8mUrOMdVARFjhCgmwLFrErNLcilVri48Sc/jZda8tEB/P/s
+	 /MC7V4Y+6kah/YIg+2TPnK4txvdz8EzV9c9qWxH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arvind Yadav <arvind.yadav@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	intel-xe@lists.freedesktop.org,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 7.2 164/242] drm/xe: Dont transfer shrinker pages for pinned bos on purgeable state change
-Date: Fri, 23 Oct 2026 18:40:06 +0200
-Message-ID: <20261023163717.662320372@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Hui Su <sh_def@163.com>
+Subject: [PATCH 7.2 165/242] sched_ext: Fix use-after-free of a destroyed user DSQ by a deferred reenqueue
+Date: Fri, 23 Oct 2026 18:40:07 +0200
+Message-ID: <20261023163717.686264679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -66,70 +61,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit ffbfd3f98f4393e91dffce3a46ccb7cf5329cf2f upstream.
+commit 069403dff337feb192bfc70fb28ddc8a171e20c1 upstream.
 
-Pinned bos have their pages removed from the shrinker's shrinkable /
-purgeable counts on pin, and added back on unpin according to the
-bo's purgeable state at that time.
+A deferred reenqueue can read a freed user DSQ. The request stays on its
+CPU's deferred list until run_deferred() takes it, and the RCU callback that
+frees the DSQ assumes that the grace period has flushed it, so exit_dsq()
+checks the per-CPU node without the deferred list lock. A grace period waits
+for readers in flight, not for a pending run_deferred(). A run_deferred()
+which starts after the grace period began can detach the request right
+before the callback looks and then read the freed DSQ's id.
 
-However, xe_bo_set_purgeable_shrinker() unconditionally transfers
-pages between the shrinkable and purgeable counts. If the purgeable
-state of a pinned bo changes, for example by userspace madvising
-DONTNEED on a VMA of a bo that is also pinned as a scanout buffer,
-this underflows one count and, after unpin, leaves the other one
-permanently inflated.
+Cancel the pending requests before the grace period instead. The irq work
+that frees the DSQ unlinks every CPU's request under the per-CPU deferred
+list lock, and schedule_dsq_reenq() ignores a new request under the same
+lock once the id is invalid. Only a run_deferred() that started before the
+grace period can hold a request, and it runs with IRQs disabled, so the
+grace period waits for it and nothing touches the DSQ after the callback.
 
-Only update the purgeable flag for pinned bos, and leave the page
-accounting to unpin.
-
-Fixes: 536a2ead3a8f ("drm/xe/bo: Add purgeable shrinker state helpers")
-Cc: Arvind Yadav <arvind.yadav@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: intel-xe@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v7.1+
-Assisted-by: LLM
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20261009070053.7790-1-thomas.hellstrom@linux.intel.com
-(cherry picked from commit afe6bc012034123fd838328668e609bf57e46bd3)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 84b1a0ea0b7c ("sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs")
+Cc: stable@vger.kernel.org # v7.1+
+Reported-and-tested-by: Hui Su <sh_def@163.com>
+Link: https://lore.kernel.org/all/20261008024753.4096008-1-sh_def@163.com/
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_bo.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/sched/ext/ext.c |   28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_bo.c
-+++ b/drivers/gpu/drm/xe/xe_bo.c
-@@ -938,6 +938,8 @@ static int xe_bo_move_notify(struct xe_b
-  *
-  * Transfers pages between shrinkable and purgeable buckets when the BO
-  * purgeable state changes. Called automatically from xe_bo_set_purgeable_state().
-+ * For pinned BOs, whose pages are not accounted, only the purgeable flag is
-+ * updated, so that the correct bucket is used when the BO is unpinned.
-  */
- static void xe_bo_set_purgeable_shrinker(struct xe_bo *bo,
- 					 enum xe_madv_purgeable_state new_state)
-@@ -954,7 +956,8 @@ static void xe_bo_set_purgeable_shrinker
- 		return;
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1274,6 +1274,10 @@ static void schedule_dsq_reenq(struct sc
  
- 	xe_tt = container_of(tt, struct xe_ttm_tt, ttm);
--	tt_pages = tt->num_pages;
-+	/* Pinned bos are not accounted. Only update the purgeable flag. */
-+	tt_pages = xe_bo_is_pinned(bo) ? 0 : tt->num_pages;
+ 			guard(raw_spinlock_irqsave)(&rq->scx.deferred_reenq_lock);
  
- 	if (!xe_tt->purgeable && new_state == XE_MADV_PURGEABLE_DONTNEED) {
- 		xe_tt->purgeable = true;
++			/* @dsq is being destroyed, see free_dsq_irq_workfn() */
++			if (unlikely(READ_ONCE(dsq->id) == SCX_DSQ_INVALID))
++				return;
++
+ 			if (list_empty(&dru->node))
+ 				list_move_tail(&dru->node, &rq->scx.deferred_reenq_users);
+ 			WRITE_ONCE(dru->flags, dru->flags | reenq_flags);
+@@ -4899,8 +4903,8 @@ static void exit_dsq(struct scx_dispatch
+ 		struct rq *rq = cpu_rq(cpu);
+ 
+ 		/*
+-		 * There must have been a RCU grace period since the last
+-		 * insertion and @dsq should be off the deferred list by now.
++		 * free_dsq_irq_workfn() cancelled the reenqs before the grace
++		 * period and schedule_dsq_reenq() queues nothing after that.
+ 		 */
+ 		if (WARN_ON_ONCE(!list_empty(&dru->node))) {
+ 			guard(raw_spinlock_irqsave)(&rq->scx.deferred_reenq_lock);
+@@ -4924,8 +4928,26 @@ static void free_dsq_irq_workfn(struct i
+ 	struct llist_node *to_free = llist_del_all(&dsqs_to_free);
+ 	struct scx_dispatch_q *dsq, *tmp_dsq;
+ 
+-	llist_for_each_entry_safe(dsq, tmp_dsq, to_free, free_node)
++	llist_for_each_entry_safe(dsq, tmp_dsq, to_free, free_node) {
++		s32 cpu;
++
++		/*
++		 * Cancel pending reenqs. Only a run_deferred() that started
++		 * before the grace period can hold one, and it keeps IRQs off,
++		 * so the grace period waits for it. After this sweep,
++		 * schedule_dsq_reenq() sees the invalid id under the same lock
++		 * and queues nothing.
++		 */
++		for_each_possible_cpu(cpu) {
++			struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
++			struct rq *rq = cpu_rq(cpu);
++
++			guard(raw_spinlock_irqsave)(&rq->scx.deferred_reenq_lock);
++			list_del_init(&pcpu->deferred_reenq_user.node);
++		}
++
+ 		call_rcu(&dsq->rcu, free_dsq_rcufn);
++	}
+ }
+ 
+ static DEFINE_IRQ_WORK(free_dsq_irq_work, free_dsq_irq_workfn);
 
 
