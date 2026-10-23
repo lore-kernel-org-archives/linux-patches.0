@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774793;
-	b=yH+Pzd5Jns8a2Lv5QY0fXjSf2WdCOCDuSsBIXTGwvJXZtHub9JzLtuepmuXhvv+kcZ0Q
-	 goD0otehsuDxb5l7Hb8IWmeOpZI9SuE6kEzJubQ4Ir5SOqt3Zc+nKKE8iJ37PwEeykx3W
-	 nEIMHZ0ORKuNC5jPg6IO+XaPmqomtPRzQJ4RwZXNsbE1dDKpUuPU5iBdEX2aOXXSv/PtT
-	 nE4zwv9cH6IVYoVFP+QbSvfl+ycfcn5BhiX3sFD+u7gudJVtc5V/64nKGjKY0ZWNcvBDR
-	 QJVyAkQ8/WA6AJyNpDiTgsIgEq0PA3zEiyCGxTgil424K6iJ2LdGGp9QoLMOR067OIg==
+	t=1792774796;
+	b=2RgwvFQPGeaBt8eYsVsg80j2AyNCgDYSfzE22+h48teXeTvqJ9hddkc+SbbaIQaJCVWP
+	 V9fRrjAAwyFVyJn5ySuEbOseJ3JINkOCn5wjnUNbMdoVqGM2tE4KC+0f0OWiXWwdFqG/J
+	 dOq8hjGz2JStM0XOWQycMuuLvnwa4Yy2OrB03A5mYSWFvYxlj1R+x/mZMpnMq2RP2qT1g
+	 orQAZ3ac3UW80yU+W89mnURs9eNYqHfmjdTvfkbqw8zHSEggWvz44ilKJg+JHF4X6Jrya
+	 qjqWoYYC/KGnzMNTTxX4JC6YEGhPhZ/xpgPoCBfOIBbFyCiVkpHPj80EKgeAoAfwLGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774796;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=UhQJ1SiWL9uJoHIQuXzKZMsosv6y9BxI0WUZyhLLM9I=;
-	b=3cysp1PmsHLaQSjW64RHI0nhcwRj5cMaqiYEW0eCkcQj58u/5lshFOlTul3+SgMaL212
-	 cEqnKYV1W8408JqEbwCkL2M2B0ZU68NhF2559czXYFJR8NUwm/++06BiZvZYKYQVo5m+j
-	 KWMVlWF0ilo6WVxbVkwlRivEZCKt3fLC+1SUJrgbxMFIYL6R2+7Iug45srLQ1/djvFHJ0
-	 +VTNocRsKTTi9+7+Zy41UKYrK/xiy1T9ZgE3Ae5m8trsEPSa7CPAYYWzCX2nK999Q7WpE
-	 1qa0kR/bshK+iv7fIcMAcKwgTR/MMgEWU0V+0AEDpxDpJhdT1AzMUtrkq5sy8bGBXgA==
+	bh=JRwN7e4A3ntuoWc4n8UkvFGpr4v30z6v7HRtb7UMp4s=;
+	b=Xd2qpFcfysjByNWpiYYn+LQfObKFhjWg2IeesFmc9ZpLbN9HxmnjW/uAHrmXysblqrQ0
+	 uZ868pRgXTe8iOS8o+TaTjadZg6Q6cThcgbY6XYyRGCZsxHfB0XRZciR9ntfvxLMNKCVi
+	 jjX+LpugGzcOuhTUxUsKJibz1SNKGRJzMvt5FSmAaaxMKjnbOyhiv2qbMswqvdVhdHbHL
+	 1IkOY9r0fYXDCo/T2bN2bzk/Jtng3IFpfP1jfXQgdPEWdTcLj9S6s7J5xTJVCLoLcojVx
+	 lIqvfgUS/lHQO7vukk+wWcpANKB2Uc8IGQvFzxMsKsXfjYFluveFKSr0d5YOv+GDfuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5QlhMs2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=orKB8VHc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33D8606A31A;
-	Fri, 23 Oct 2026 16:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC1E606A31B;
+	Fri, 23 Oct 2026 16:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5QlhMs2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CD41F01825;
-	Fri, 23 Oct 2026 16:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=orKB8VHc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20AA31F01825;
+	Fri, 23 Oct 2026 16:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774792;
-	bh=UhQJ1SiWL9uJoHIQuXzKZMsosv6y9BxI0WUZyhLLM9I=;
+	s=korg; t=1792774795;
+	bh=JRwN7e4A3ntuoWc4n8UkvFGpr4v30z6v7HRtb7UMp4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j5QlhMs23sKrXiXX8hLy5QkvmA13EE0VYUWnnAnAImhQ4NDqu9haB3AHaQbfnuc/J
-	 LG5YXcDq2Vg7kOLvh5Uufla19w33s4NQYvCHDPfFw5NquX5gX9ku8vOlcCbtrM/q4u
-	 3JrZJBf19CqPpK0OHW4rsWyrcMucyTS2VRVN0jh4=
+	b=orKB8VHceYx4O8vUklPa8Y0pwrWdRFVtJHk/Gln6SiCl77iWQI14B7CYCK4BUR6rr
+	 G3obcZJqf8rxkk3q+i4La1OxZvstJ87sCd2rjzyvOiCRkbo0ort+rQRWxlexU7U1bj
+	 DeSwjhjcty1tP0SCDDRP/CGVujZCbdQbkSR2evEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 159/242] drm/amdgpu: report the BO alignment in bytes in GEM_LIST_HANDLES
-Date: Fri, 23 Oct 2026 18:40:01 +0200
-Message-ID: <20261023163717.541815221@linuxfoundation.org>
+	Vitaly Prosyak <vitaly.prosyak@amd.com>
+Subject: [PATCH 7.2 160/242] drm/exec: dont immediately add prelocked obj to array of locked objs
+Date: Fri, 23 Oct 2026 18:40:02 +0200
+Message-ID: <20261023163717.567846803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,43 +68,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Christian König <ckoenig.leichtzumerken@gmail.com>
 
-commit d65a459dbc9a6c3b051e22c96f73598e34b31bfc upstream.
+commit 26401a4999f1596a515b2e704e7066ac09306488 upstream.
 
-The uapi documents drm_amdgpu_gem_list_handles_entry.alignment as
-"physical start_addr alignment in bytes", and GEM_OP
-GET_GEM_CREATE_INFO returns the same value in bytes, but
-GEM_LIST_HANDLES returns tbo.page_alignment, which is in pages. For a BO
-created with a 64 KiB alignment on navi31:
+When a contention is detected the drm_exec object grabs a reference to
+the contended object, unlocks all other objects and pre-locks the
+contended one before anything else.
 
-  GET_GEM_CREATE_INFO: alignment=65536
-  GEM_LIST_HANDLES:    alignment=16
+The problem is that it is possible that this pre-locked object was about
+to be destroyed and drm_exec is now holding the last reference to it.
 
-so a user such as CRIU that recreates BOs from this list uses the wrong
-alignment. Convert it to bytes.
+So we never actually see this pre-locked object again to be explicitly
+locked and so also never reserve a slot for a dma_fence object on it.
 
-Fixes: f9db1fc52ceb ("drm/amdgpu: Add ioctl to get all gem handles for a process")
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit aa4493ae949c13e79aba0731394dd7a7e431342b)
-Cc: stable@vger.kernel.org
+Should the driver now use drm_exec_for_each_locked_object() to add a new
+fence to all locked objects we eventually see a warning or even a
+BUG_ON() to prevent random memory corruption.
+
+Fix this by keeping the prelocked object out of the array of locked objs
+until it was explicitly mentioned by the driver again.
+
+If the prelocked object is never mentioned again by the driver
+just unlock and drop the reference at the end of the locking loop.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reported-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Fixes: 09593216bff1 ("drm: execution context for GEM buffers v7")
+CC: stable@vger.kernel.org # v6.6+
+Link: https://lore.kernel.org/r/20261007124657.9664-1-christian.koenig@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_exec.c |   75 ++++++++++++++++++++++++++-------------------
+ include/drm/drm_exec.h     |   15 +++++----
+ 2 files changed, 53 insertions(+), 37 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-@@ -1241,7 +1241,7 @@ int amdgpu_gem_list_handles_ioctl(struct
- 		bo_entry->alloc_flags = bo->flags & AMDGPU_GEM_CREATE_SETTABLE_MASK;
- 		bo_entry->preferred_domains = bo->preferred_domains;
- 		bo_entry->gem_handle = id;
--		bo_entry->alignment = bo->tbo.page_alignment;
-+		bo_entry->alignment = (u64)bo->tbo.page_alignment << PAGE_SHIFT;
+--- a/drivers/gpu/drm/drm_exec.c
++++ b/drivers/gpu/drm/drm_exec.c
+@@ -48,6 +48,16 @@
+  * See struct dma_exec for more details.
+  */
  
- 		if (bo->tbo.base.import_attach)
- 			bo_entry->flags |= AMDGPU_GEM_LIST_HANDLES_FLAG_IS_IMPORT;
++/* Unlock and put the prelocked obj */
++static void drm_exec_drop_prelocked(struct drm_exec *exec)
++{
++	if (exec->prelocked) {
++		dma_resv_unlock(exec->prelocked->resv);
++		drm_gem_object_put(exec->prelocked);
++		exec->prelocked = NULL;
++	}
++}
++
+ /* Unlock all objects and drop references */
+ static void drm_exec_unlock_all(struct drm_exec *exec)
+ {
+@@ -58,8 +68,7 @@ static void drm_exec_unlock_all(struct d
+ 		drm_gem_object_put(obj);
+ 	}
+ 
+-	drm_gem_object_put(exec->prelocked);
+-	exec->prelocked = NULL;
++	drm_exec_drop_prelocked(exec);
+ }
+ 
+ /**
+@@ -118,6 +127,14 @@ EXPORT_SYMBOL(drm_exec_fini);
+ bool drm_exec_cleanup(struct drm_exec *exec)
+ {
+ 	if (likely(!exec->contended)) {
++
++		/*
++		 * The contended and prelocked object might never be passed to
++		 * drm_exec_lock_obj() again. This can happen when the object
++		 * is about to be cleaned up and we now hold the last reference
++		 * to it. Make sure that we don't unnecessarily keep it around.
++		 */
++		drm_exec_drop_prelocked(exec);
+ 		ww_acquire_done(&exec->ticket);
+ 		return false;
+ 	}
+@@ -175,16 +192,16 @@ static int drm_exec_lock_contended(struc
+ 		dma_resv_lock_slow(obj->resv, &exec->ticket);
+ 	}
+ 
+-	ret = drm_exec_obj_locked(exec, obj);
+-	if (unlikely(ret))
+-		goto error_unlock;
++	/*
++	 * It is perfectly possible that we see another contention before the
++	 * first one is fully handled.
++	 */
++	drm_exec_drop_prelocked(exec);
+ 
++	/* We move the reference from contended to prelocked here */
+ 	exec->prelocked = obj;
+ 	return 0;
+ 
+-error_unlock:
+-	dma_resv_unlock(obj->resv);
+-
+ error_dropref:
+ 	drm_gem_object_put(obj);
+ 	return ret;
+@@ -212,35 +229,31 @@ int drm_exec_lock_obj(struct drm_exec *e
+ 	if (exec->prelocked == obj) {
+ 		drm_gem_object_put(exec->prelocked);
+ 		exec->prelocked = NULL;
+-		return 0;
+-	}
++	} else {
++		if (exec->flags & DRM_EXEC_INTERRUPTIBLE_WAIT)
++			ret = dma_resv_lock_interruptible(obj->resv,
++							  &exec->ticket);
++		else
++			ret = dma_resv_lock(obj->resv, &exec->ticket);
++
++		if (unlikely(ret == -EDEADLK)) {
++			drm_gem_object_get(obj);
++			exec->contended = obj;
++			return -EDEADLK;
++		}
++
++		if (unlikely(ret == -EALREADY) &&
++		    exec->flags & DRM_EXEC_IGNORE_DUPLICATES)
++			return 0;
+ 
+-	if (exec->flags & DRM_EXEC_INTERRUPTIBLE_WAIT)
+-		ret = dma_resv_lock_interruptible(obj->resv, &exec->ticket);
+-	else
+-		ret = dma_resv_lock(obj->resv, &exec->ticket);
+-
+-	if (unlikely(ret == -EDEADLK)) {
+-		drm_gem_object_get(obj);
+-		exec->contended = obj;
+-		return -EDEADLK;
++		if (unlikely(ret))
++			return ret;
+ 	}
+ 
+-	if (unlikely(ret == -EALREADY) &&
+-	    exec->flags & DRM_EXEC_IGNORE_DUPLICATES)
+-		return 0;
+-
+-	if (unlikely(ret))
+-		return ret;
+-
+ 	ret = drm_exec_obj_locked(exec, obj);
+ 	if (ret)
+-		goto error_unlock;
+-
+-	return 0;
++		dma_resv_unlock(obj->resv);
+ 
+-error_unlock:
+-	dma_resv_unlock(obj->resv);
+ 	return ret;
+ }
+ EXPORT_SYMBOL(drm_exec_lock_obj);
+--- a/include/drm/drm_exec.h
++++ b/include/drm/drm_exec.h
+@@ -73,13 +73,15 @@ drm_exec_obj(struct drm_exec *exec, unsi
+ 
+ /* Helper for drm_exec_for_each_locked_object(). Internal use only. */
+ #define __drm_exec_for_each_locked_object(exec, obj, __index)		\
+-	for (unsigned long __index = 0; ((obj) = drm_exec_obj(exec, __index)); ++__index)
++	for (unsigned long __index = 0; ((obj) = drm_exec_obj(exec, __index)); \
++	     ++__index)
+ /**
+  * drm_exec_for_each_locked_object - iterate over all the locked objects
+  * @exec: drm_exec object
+  * @obj: the current GEM object
+  *
+- * Iterate over all the locked GEM objects inside the drm_exec object.
++ * Iterate over all the explicitly locked GEM objects inside the drm_exec
++ * container, except for the contended and implicit prelocked one.
+  */
+ #define drm_exec_for_each_locked_object(exec, obj)			\
+ 	__drm_exec_for_each_locked_object(exec, obj, __UNIQUE_ID(drm_exec))
+@@ -94,12 +96,13 @@ drm_exec_obj(struct drm_exec *exec, unsi
+  * @exec: drm_exec object
+  * @obj: the current GEM object
+  *
+- * Iterate over all the locked GEM objects inside the drm_exec object in
+- * reverse locking order. Note that the internal index may wrap around,
+- * but that will be caught by drm_exec_obj(), returning a NULL object.
++ * Iterate over all the explicitly locked GEM objects inside the drm_exec
++ * container in reverse locking order. Note that the internal index may wrap
++ * around, but that will be caught by drm_exec_obj(), returning a NULL object.
+  */
+ #define drm_exec_for_each_locked_object_reverse(exec, obj)		\
+-	__drm_exec_for_each_locked_object_reverse(exec, obj, __UNIQUE_ID(drm_exec))
++	__drm_exec_for_each_locked_object_reverse(exec, obj,		\
++						  __UNIQUE_ID(drm_exec))
+ 
+ /**
+  * drm_exec_until_all_locked - loop until all GEM objects are locked
 
 
