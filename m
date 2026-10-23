@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774787;
-	b=OMPq7TC//NhZ0I91qdvLqf9yAlBr1bojdPhAxjJGn6lLVpvyRlrH3vprPU7fMSwOhHtf
-	 2xg/q6Xx7zuNAQYzJOPkBOYyaHTH+dhpmcg10wKVmbat/+P9f/hfZ4SiBYdZ+VB+ud4n+
-	 IlCLBK539AIyqrZp1CZ+LmQQ7UUpm5bHh5urxRTzvjJku/95bV2YC39fvPQj/1/QGY4S4
-	 lBCrVURBnRz27v2MC2CF11/s2nxISCTb47ETfJqz2GwtHEWLSprh5Vuc8aUoeBpa4kfOz
-	 bf6qw12tvuBOM2G1tym+6FbkQU6QKr6EJpzBfiEWZZdBX+59LRXub5BlUuRMD7GCQJQ==
+	t=1792774790;
+	b=QPPP+1XNmpFGaVIp3W+UtppNbB9DdUhgPiqjWPbxTRZKpMqr15M0b7abizweMVPJGAk2
+	 AI0rVuvP6FfWjmoJmRBBF141xUnuwiWpSdp6v/3yCImrptI4G20+3VMBvq41De524w27b
+	 0lVbOaObhkBKJxIUDfMwHUS89jTGxlrDGBjhrUeSefX5p0s70gdFV6V2t85SLNzqemD+d
+	 zqloF02AaU/jSR9XwY3jOIbjO1ILOzBLznj+4c7qlnYWlUTjQgQNIPr/TAWmfFUfil1c2
+	 q7eGK7FKmt8X0LE0l0DteTyxWjFDxRHe6yPnxbapTaHAwpExbNksLDzTetrr3aYap+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hoVnS/LfoCcl4DYxM+STDAFkbn5mFKRMYsVXY0aiR2M=;
-	b=pEEDysKDboecqqdw6BD8lbWeoV/lZ3IhfGCq8GZcrStDE48IgbMZAp8gMdFSDiCnuDKZ
-	 MBc6tTbf5lrnZPNZxXoaR2siS6B8HtAJRavIVfJAUEkKLWvtIXHBy7RMP3QlG3966YrQp
-	 rEMgURYsfwf2nC3X6Mr5XmlbpYcwbVWy876gXFqnwZYbYwSOtMt43101M3fqzbakmJTMG
-	 F7ttT2GeibP6YaHCVGp2DLh8E9o9VppoM2shZItha0HLTZjzE7ezzl3074abejf/0ejnn
-	 xMrw0Im0pvQqtytIeqGTDqBplsp/s8vFh3PxY6w58Z8fcyWiMyO1YDh25D8+Yu/lQWw==
+	bh=uQqJxF5GnPWbeBcGHfUxpp75olWaA3MsJAcgfj+EQu0=;
+	b=n8Iyu4vT2+zsDAU+ylmzEJkWPrm96/R5qpqIIjL+Y+ICnAMt4iubrSvQVjsHlOCQyRh9
+	 xUQ2v6yU8/Qe0/8pPjkLwMFIFQ1SdzXTGEXYv57WLFKmuA9S33Yd/URvOYXMzQxm5vMYV
+	 yLbF5floIymzsxUULGMd7cS7jWnIduFJYr3EXufv9q+xLd6VsI7bN9ILGgI8EocbAovFc
+	 F799mqB5jYeml0QjEVDz114IejUD2m5R6WZ0Ij0YB+vGjRMNzGzzerx0TvECh39AgHUzl
+	 MSDUNhlWk9rzKujdxC2zoIQqttY5XMsw8AIi3RWtnX9nda/1BpI1BxvOSJn1VdSgUvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3mRFyP1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0EEbTHfr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A06606A31A;
-	Fri, 23 Oct 2026 16:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8154606A31A;
+	Fri, 23 Oct 2026 16:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3mRFyP1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DA91F01825;
-	Fri, 23 Oct 2026 16:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0EEbTHfr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBC91F01825;
+	Fri, 23 Oct 2026 16:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774786;
-	bh=hoVnS/LfoCcl4DYxM+STDAFkbn5mFKRMYsVXY0aiR2M=;
+	s=korg; t=1792774789;
+	bh=uQqJxF5GnPWbeBcGHfUxpp75olWaA3MsJAcgfj+EQu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3mRFyP1Dg1fEehIKlnuXWfUVdcawvGfrvVBazFMW1NRq83RsEquq++JWjYYl4gKT
-	 iujgwMMa8ir3gPjc6nSeRfFl2iiXDm8jSj+YC3qkzaLP2/3ih0JIyGSonUN5kCgOtF
-	 WgEPPVJsg7x7yOKVkJCmucUA1WQmwsigvlcOE2mk=
+	b=0EEbTHfr/LwvxmsVm4t23IiC58dtv3QSfKleIXz9OfbLKNZjl2fy0Kglevokqfdtn
+	 +MM7scmCX871MUtmSqOCng6K6+1D1+IseunCBcJyoLvweVtkiUFGt+pkJgi+xTlPnP
+	 +nnhPjhKGkktlKGraLvTqDi8TxPO5LhBVRp2eXu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Perry Yuan <perry.yuan@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 157/242] drm/amdgpu: fix sched entity leak in ttm buffer entity init
-Date: Fri, 23 Oct 2026 18:39:59 +0200
-Message-ID: <20261023163717.495607827@linuxfoundation.org>
+Subject: [PATCH 7.2 158/242] drm/amdgpu: keep the eviction fence until the last handle is closed
+Date: Fri, 23 Oct 2026 18:40:00 +0200
+Message-ID: <20261023163717.519828775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,47 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-commit b5629f4a0869f4b01cfbfdf27f2c349d68c5d9d4 upstream.
+commit 3c44cbcec5eb370713bbd2c315ed7c34d8ccec2b upstream.
 
-amdgpu_ttm_buffer_entity_init() checks num_gart_windows after
-drm_sched_entity_init() has already attached the entity to a
-scheduler run-queue. Returning -EINVAL from that check leaks the
-entity.
+amdgpu_gem_object_close() detaches the user queue eviction fence from
+the BO before it checks bo_va->ref_count, so closing any handle of a BO
+removes the fence, even when the file still has another handle to the
+BO and the bo_va with its GPU mappings stays. The BO can then be evicted
+without suspending the user queues of the file, which keep accessing it
+through mappings that are only marked for update.
 
-Move the ARRAY_SIZE() check before any resources are acquired.
+Seen on navi31 with a SDMA user queue: a BO opened twice in the same
+file (GEM_FLINK + GEM_OPEN) loses its eviction fence when the second
+handle is closed (traced attach/detach of the fence):
 
-Fixes: 2c3725572561 ("drm/amdgpu: statically assign gart windows to ttm entities")
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+  attach bo=ffff8c78a6c84c00
+  GEM_CLOSE handle=7
+  detach bo=ffff8c78a6c84c00
+
+while handle 6 and the mapping are still in use.
+
+Only detach the fence when the last reference to the bo_va goes away,
+matching amdgpu_gem_object_open(), which attaches it only when the
+bo_va is created. With this the fence stays until the file is closed.
+
+Fixes: 31f7efcdca4d ("drm/amdgpu: enable eviction fence")
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4000d1cdd1eacd3422267d6c8b4f1c9333b0317e)
+(cherry picked from commit 8387982f03d4026b7dc11b0b5e3118298eee4d6a)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -2043,14 +2043,15 @@ static int amdgpu_ttm_buffer_entity_init
- 	int i, r, num_pages;
- 	const u64 GTT_MAX_PAGES = (AMDGPU_GTT_MAX_TRANSFER_SIZE >> PAGE_SHIFT);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -337,11 +337,14 @@ static void amdgpu_gem_object_close(stru
+ 			goto out_unlock;
+ 	}
  
-+	if (ARRAY_SIZE(entity->gart_window_offs) < num_gart_windows)
-+		return -EINVAL;
++	bo_va = amdgpu_vm_bo_find(vm, bo);
++	/* the fence is attached once per bo_va, so keep it for other handles */
++	if (bo_va && --bo_va->ref_count)
++		goto out_unlock;
 +
- 	r = drm_sched_entity_init(&entity->base, prio, scheds, num_schedulers, NULL);
- 	if (r)
- 		return r;
+ 	if (!amdgpu_vm_is_bo_always_valid(vm, bo))
+ 		amdgpu_evf_mgr_detach_fence(&fpriv->evf_mgr, bo);
+-
+-	bo_va = amdgpu_vm_bo_find(vm, bo);
+-	if (!bo_va || --bo_va->ref_count)
++	if (!bo_va)
+ 		goto out_unlock;
  
- 	mutex_init(&entity->lock);
- 
--	if (ARRAY_SIZE(entity->gart_window_offs) < num_gart_windows)
--		return -EINVAL;
- 	if (num_gart_windows == 0)
- 		return 0;
- 
+ 	amdgpu_vm_bo_del(adev, bo_va);
 
 
