@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774434;
-	b=B0GNLDWoVukSRaqwbJVVlQVaWEX1phscPftHhnC+NAonU2mJ83F00VFk6KJrMmT5kt7s
-	 VbnlcpOU2OWEnMfa2Ol3wyet6l0ldkyaNnong/s5GftUl6kYiA6SY8o/G3V/WaJvQsC1H
-	 nIfSrOy6nuCiyO5GtgcrDpvd8btx1n+G5q7UrQPfnp9Ut1pDfZfMatGIFN53NfRpWD5mo
-	 QHLPPugB+UKm2Q7RArDdei4547/lTiQ3g/oh1hR1yE2sVsm8+zKg3yvGf6DUn/uVtueJb
-	 LzKCS82/wOE4vLwAuEUNc4ICdgtFxka626duFEWl3ACmilih7W/lUQjyu1CwEGNEVIA==
+	t=1792774438;
+	b=Be4qIfIRjio9ItGulYmuXf7d9Do3uArraVwoLPJNxoUdUMIxgsav8noUiSF6NQLyiSUI
+	 SEg+GICk6XbPewvBFnGGWopOIaIcRPJmGcO5rsG76wV402geFzEuh5KjSmXybPlaEUSAd
+	 e2J8+w6FOtxTM/vw7eF50efzt9Hfbzdw737rt87kFLaRutyIZO4emHS4inyacfC6ZDkNS
+	 nPMgcZOg0G/4F/Fq1z+6z3Gok7EG8IbuWbtYAzO8Ikots9tgxzqhC99RYX4kFgd7e5vXy
+	 yVEev9uTkp7NpgeSW7JIJzzhkAraGzNIosy9zMZ2difjMyjllkBelGIlifgEgpg8i/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774438;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mYnlb5moLE0qUSVNFpKkDy4L8dTYUqgEaM0bHLCL2gE=;
-	b=K9dus4WKf+SrEKNkOI4Xdb61BGvL/0DTxjh3JD/29wPROoS7AhJ84LgJ0mRtCTCOOMr2
-	 9B8NAi1lDOni40bQ38xecVcHxfncAqITZcidll0egsUMRdgE1ndBHj5NSORyHpxpaC1GE
-	 8XUAWXMwSYGjIddnnYgtN8GY0p84tI1VC/b8NG3yGdlfzhATV4b7HHNkoj8WH8q80DXQO
-	 ivTn3kepVkP6WdUNK1wEbOaw6l6/helbg0IfNnGwK+/cKpLov1EeZ2kRcQeHlHg/a+lhe
-	 0XcKwrJqBFw0AAUEcv42ElC6IsOEtRnGbBdJfJ9dBm1wTWrc0r7N/2zAMowpoe+GvaA==
+	bh=PspgdL78SnLfrhi21SsJvyeeZCrFXRDSXP3cqPH3eB8=;
+	b=zw3qZOWTBfE0Ia2n2ozUysb5VwC/f+v/EeoCDxS2XzHB81/8GE31C4NHwoZEEKaKCh1r
+	 OYQOsEjHeqx+ZbYnu8zBCzVMpGMvNfxoC1SqcGjGZ/foWRjEKLfSm8RnHNnMlwZV+t7cw
+	 SOSt0HsdDLPSYnTxAgv2b3S9JqhrrnZ930nksJyyf//a3pJtmZc7M6ogLwS2BBT93rv0H
+	 HIUKNW9EA7tZF+aCvWihnkS0E4Sdzhya2TVNT7RXBxlmhi0KO5YV5antzFkqaiXz78n7s
+	 XuKei9WEw1YtexGe2qNcSd2wJ+G2bGsV+0IX4YZ/5i260LPKg8ePb8Z+5VTchZ1oVAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k15OJPXs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LebZxz9k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B4D606A31A;
-	Fri, 23 Oct 2026 16:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8927C606A31A;
+	Fri, 23 Oct 2026 16:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k15OJPXs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38941F01825;
-	Fri, 23 Oct 2026 16:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LebZxz9k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A3A1F01825;
+	Fri, 23 Oct 2026 16:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774434;
-	bh=mYnlb5moLE0qUSVNFpKkDy4L8dTYUqgEaM0bHLCL2gE=;
+	s=korg; t=1792774437;
+	bh=PspgdL78SnLfrhi21SsJvyeeZCrFXRDSXP3cqPH3eB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k15OJPXsbcWzzVfdfjgnSD2ur/lj3rdiy6C79xRUynEYCs9x4RvhEYp/Gm1Yv5b4Z
-	 sLSSX2AlNAwKdVGPn4f8MYyHY5HaOAkOz0Edz0ms5XKDEqCmAwckZjVDFHFBqSdVqQ
-	 2Oe6JH7UxvRRLzhExNU6hvA/j41LoLmo77I2uF0w=
+	b=LebZxz9ku+mMmbGlxo9arzVIZIHhRqzPEQU+vpTwgpcf4WcqVQx0I9cZFjgGJAq3Q
+	 179MjG0dmNU+B/ayjdjcjir5CgtCbtL7vUrlfKVQSkng8LuOG0X4pziGu/FDT1+h0f
+	 bvZJcPtUPYszkFbnKrEEblIAAd+/J+q9K+Taa7nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michael Reeves <michael.reeves077@gmail.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 038/242] ASoC: nau8822: Fix the 128x oversampling switch bits
-Date: Fri, 23 Oct 2026 18:38:00 +0200
-Message-ID: <20261023163714.680735951@linuxfoundation.org>
+Subject: [PATCH 7.2 039/242] regmap: Drop map lock during cache init and exit
+Date: Fri, 23 Oct 2026 18:38:01 +0200
+Message-ID: <20261023163714.703754162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,47 +70,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Michael Reeves <michael.reeves077@gmail.com>
 
-[ Upstream commit 4db45fc1da3d62d0fa6e8f1e457ae92e8741ed07 ]
+[ Upstream commit abff0a48b110fe52d43999b4cb7c793a510a6bf1 ]
 
-The DAC and ADC 128x Oversampling Switches use bit 5 of R10 and R14.
-The NAU8822 datasheet register map puts DACOS and ADCOS at bit 3 of
-those registers.
+On systems with CONFIG_PROVE_RAW_LOCK_NESTING enabled, Apple GPIO probe
+triggers an "Invalid wait context" lockdep warning.
 
-In R14, bit 5 is inside HPF[6:4], which the High Pass Cut Off control
-owns. So turning on ADC oversampling changes the high pass cut-off, and
-the oversampling bit cannot be set. In R10, bit 5 is reserved, so the
-DAC switch has no effect.
+The driver uses a regmap with a raw spinlock and REGCACHE_FLAT. During
+regcache_init(), regcache_flat_init() allocates memory while holding the
+raw spinlock. The memory allocator can acquire a non-raw spinlock, which
+causes an invalid raw-to-non-raw lock nesting error. The abbreviated call
+chain is:
 
-Use bit 3 for both.
+  apple_gpio_pinctrl_probe
+    regcache_init
+      regcache_flat_init
+        __kmalloc_noprof
+          __pcs_replace_empty_main
+            refill_objects
+              _raw_spin_lock_irqsave
 
-Fixes: 1e3cb6c321be ("ASoC: nau8822: new codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261008130953.2446692-7-sammiee5311@gmail.com
+Cache allocation occurs before the regmap is published, cache destruction
+occurs after users have stopped accessing it, and regmap_reinit_cache()
+requires callers to prevent concurrent access. Remove the outer map lock
+from cache initialization and destruction. Keep it for cache population
+and normal register access.
+
+The Maple cache still uses its internal spinlock during teardown. That
+lock can also be acquired from hard IRQ context during register access.
+Add Maple-state irqsave helpers and use them during teardown to preserve
+the lock's IRQ-safe lockdep state.
+
+Fixes: fd4ebc07b4df ("regmap: Hold the regmap lock when allocating and freeing the cache")
+Suggested-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Liam R. Howlett <liam@infradead.org>
+Signed-off-by: Michael Reeves <michael.reeves077@gmail.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20261006-regcache-lifecycle-submit-v3-2-37bdd82fd47c@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8822.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/regmap/regcache-maple.c | 9 +++++++--
+ drivers/base/regmap/regcache.c       | 6 ------
+ include/linux/maple_tree.h           | 4 ++++
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/codecs/nau8822.c b/sound/soc/codecs/nau8822.c
-index 830164e991a79..b4ae269873c4a 100644
---- a/sound/soc/codecs/nau8822.c
-+++ b/sound/soc/codecs/nau8822.c
-@@ -383,9 +383,9 @@ static const struct snd_kcontrol_new nau8822_snd_controls[] = {
- 		NAU8822_REG_RIGHT_ADC_BOOST_CONTROL, 0, 7, 0, boost_tlv),
+diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
+index 49ba7282e4b8f..ef682b18ab230 100644
+--- a/drivers/base/regmap/regcache-maple.c
++++ b/drivers/base/regmap/regcache-maple.c
+@@ -312,16 +312,21 @@ static int regcache_maple_exit(struct regmap *map)
+ 	struct maple_tree *mt = map->cache;
+ 	MA_STATE(mas, mt, 0, UINT_MAX);
+ 	unsigned int *entry;
++	unsigned long flags;
  
- 	SOC_SINGLE("DAC 128x Oversampling Switch",
--		NAU8822_REG_DAC_CONTROL, 5, 1, 0),
-+		NAU8822_REG_DAC_CONTROL, 3, 1, 0),
- 	SOC_SINGLE("ADC 128x Oversampling Switch",
--		NAU8822_REG_ADC_CONTROL, 5, 1, 0),
-+		NAU8822_REG_ADC_CONTROL, 3, 1, 0),
+ 	/* if we've already been called then just return */
+ 	if (!mt)
+ 		return 0;
+ 
+-	mas_lock(&mas);
++	/*
++	 * Register access may take the Maple lock from hard IRQ context, so
++	 * preserve its IRQ-safe lockdep state during teardown.
++	 */
++	mas_lock_irqsave(&mas, flags);
+ 	mas_for_each(&mas, entry, UINT_MAX)
+ 		kfree(entry);
+ 	__mt_destroy(mt);
+-	mas_unlock(&mas);
++	mas_unlock_irqrestore(&mas, flags);
+ 
+ 	kfree(mt);
+ 	map->cache = NULL;
+diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
+index 623db7a1f3bd6..456b477749279 100644
+--- a/drivers/base/regmap/regcache.c
++++ b/drivers/base/regmap/regcache.c
+@@ -225,9 +225,7 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
+ 	if (map->cache_ops->init) {
+ 		dev_dbg(map->dev, "Initializing %s cache\n",
+ 			map->cache_ops->name);
+-		map->lock(map->lock_arg);
+ 		ret = map->cache_ops->init(map);
+-		map->unlock(map->lock_arg);
+ 		if (ret)
+ 			goto err_free_reg_defaults;
+ 	}
+@@ -259,9 +257,7 @@ int regcache_init(struct regmap *map, const struct regmap_config *config)
+ err_exit:
+ 	if (map->cache_ops->exit) {
+ 		dev_dbg(map->dev, "Destroying %s cache\n", map->cache_ops->name);
+-		map->lock(map->lock_arg);
+ 		map->cache_ops->exit(map);
+-		map->unlock(map->lock_arg);
+ 	}
+ err_free_reg_defaults:
+ 	kfree(map->reg_defaults);
+@@ -281,9 +277,7 @@ void regcache_exit(struct regmap *map)
+ 	if (map->cache_ops->exit) {
+ 		dev_dbg(map->dev, "Destroying %s cache\n",
+ 			map->cache_ops->name);
+-		map->lock(map->lock_arg);
+ 		map->cache_ops->exit(map);
+-		map->unlock(map->lock_arg);
+ 	}
+ 
+ 	kfree(map->reg_defaults);
+diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
+index 0d712e7be6ddc..0ae7e73dbddcf 100644
+--- a/include/linux/maple_tree.h
++++ b/include/linux/maple_tree.h
+@@ -504,9 +504,13 @@ struct ma_wr_state {
  };
  
- /* LMAIN and RMAIN Mixer */
+ #define mas_lock(mas)           spin_lock(&((mas)->tree->ma_lock))
++#define mas_lock_irqsave(mas, flags) \
++		spin_lock_irqsave(&((mas)->tree->ma_lock), flags)
+ #define mas_lock_nested(mas, subclass) \
+ 		spin_lock_nested(&((mas)->tree->ma_lock), subclass)
+ #define mas_unlock(mas)         spin_unlock(&((mas)->tree->ma_lock))
++#define mas_unlock_irqrestore(mas, flags) \
++		spin_unlock_irqrestore(&((mas)->tree->ma_lock), flags)
+ 
+ /*
+  * Special values for ma_state.node.
 -- 
 2.53.0
 
