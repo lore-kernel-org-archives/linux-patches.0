@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774739;
-	b=O9fVQioWNtB6jCeE7SysnFJ9NAB7bSuuhLhGfkIVY6xJvdCKNhBzM4YXC7b/HkkX/Jyi
-	 00o22/yF9QIajRScNSFTe2tWy+YNstwkBWq2fvm6Wi3kbBdkifoNZGz90MAamBFSEa1Yy
-	 H4MkPXVeA5g05D9MO3Ef5X2VUV+Z6DP/5ZM2t57llGOrr2jYEb0MPZuR3BmcpK7FEaKFg
-	 Aaoq0AwNXt4Etqg08o9sc8AYFXRm6Edw2e9xtNcXipYDzF+sKp66dj9Ff/1hlQAwcfShm
-	 DMeScyrb1HfAXk0XBikTqv1WOMeq8v5T1tqt1QKSJ3H5y++mnuIJytdU+r91vr6PJfw==
+	t=1792774743;
+	b=r4L4RxOwEoygQQK76CkGRCPDyBCq2spu/9iF80j8CqSvx+vevNtqk2gKicueO2LMCJeN
+	 P3rHltM4dEczpytRtYL+1PJ+ETtixEoo0qVQZnh4hktCZKnlKKTtb2L7JvYMGrS+UzuaI
+	 NITYjiUdJ1okKzcMotBM/FjSdSSjVc2i/M44x391VRKNk+3cS6w1kTRcVjHNbKj+7Otv0
+	 FkXrfecqsFV0DuTq/NQEba/xpi1VVpdiL/5543ZTmLoM05ouCgtNpjiIcGs+fW3Uk3Fpc
+	 GXkPHHVa1Gc03uu2kuqwNVZax4jbBZ2o51KvFGIehzeMOte9OK1dmT7a5hhqKdBBRlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NeNXWwueNI9M2SdMCUMAw3WpTpbgkitBtbRF6AKwwqw=;
-	b=K77MNMowHoMwtzL8Lys/fbpFSildUDl0pVopoa31BdRWPDHdlfOJCKWXOclNFHip6/uG
-	 QUTQgq3JxIqs9HhekHAzYcRXCepRtla4M7gI6MyQorc4EVeeK3jr1pAsoQtIGGs7shz/x
-	 HVudJJ6CkYyqJv4vnM9sQTi6PCQx7b6IKpY7bWYD3QYpb53x/5MiW1/MupsPg+xR8ZjNF
-	 d3BbjhLxxQaRIXS7X1pN/+Gar9+Eiq4FWZ95CmwxD9ww8wc7LaQ/S7sqO+TNeYwUKeJ2P
-	 06LLA8Cf+FdkqcApiywznNz8ZQoJQ6dfHtEa6Qaybn+GKrsw7tyMzCo4w3SP0GSI7xA==
+	bh=d3bvCXXkRbbvxSLoeptMg8fZ36x0xnnxhHJIzzVWg0M=;
+	b=SpnT7V1f+TsPNCrLAnHMc2Oe0hfdMqSJg4I+CZz+FwBrUQRvNXkCSymGdDbm5/BKoNYE
+	 07rd4ps+jBXGsMJGpZr/z9YuZa3+iO24zjGgeyZspkX8t93zRKgOjw+iwy5T7G7tZxrlE
+	 yLoVq7wzVNIzV3/tULQH1zvN9XEgC91HmIoCUDbH2AhxyecssBPp2xZcI42Mb+VioqEm4
+	 KpIOfY15R1d2/cAkiZdFSe7g5uJFd5x/34/qU0/IOkG+yLfrvl3PTVG7+Q2lr4j0VyYMk
+	 b4QUWlQR5uOhCWOysarMh/EJJ9YFsjufDAj/c8Tqcv7Xw+30ydpcvwL8dL/GkJJad5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQyfjNlJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WL5Zelwl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D24B606A31A;
-	Fri, 23 Oct 2026 16:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8792606A31F;
+	Fri, 23 Oct 2026 16:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQyfjNlJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990241F01828;
-	Fri, 23 Oct 2026 16:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WL5Zelwl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76E21F01825;
+	Fri, 23 Oct 2026 16:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774739;
-	bh=NeNXWwueNI9M2SdMCUMAw3WpTpbgkitBtbRF6AKwwqw=;
+	s=korg; t=1792774742;
+	bh=d3bvCXXkRbbvxSLoeptMg8fZ36x0xnnxhHJIzzVWg0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uQyfjNlJemmhIYIMIpiQe2PFtHWj+Tnf+gQAh5CpM55z1XGZwFbbWK7BzDu9QeZ2t
-	 e4AZdcnyF1bbry1lrd8ejXnMvdlDZGYPjGdlgANotGnM1IP0yvE3t23tealoOJYmvH
-	 r8WcH7n24xfE/WSIOup6wnjFIYaLAvNuIhRT1vhI=
+	b=WL5ZelwlXLEoCcYZsshSbIJzXY8FwYjhF4Qo29AkF6VnOgP7SiXdEJmZtSk+4T0xZ
+	 +zn1PcJAZI62lp92FJ6Kx+bO31LMaeJAT4lyqWbp1aNFnaf2/Uz7+ZdCPJ/k7ol8Vt
+	 iBlrVJbAPb/9+clO6chFzFfBTgnQBs9h4Pe/MlqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de3d7f9bcc9212f3fae1@syzkaller.appspotmail.com,
-	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 143/242] ring-buffer: Fix false warning in ring_buffer_map_get_reader()
-Date: Fri, 23 Oct 2026 18:39:45 +0200
-Message-ID: <20261023163717.162732457@linuxfoundation.org>
+	Stanley Jhu <stanleyjhu@google.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 7.2 144/242] scsi: bsg: Pass reply_len to bsg_setup_queue() to fit UFS ARPMB replies
+Date: Fri, 23 Oct 2026 18:39:46 +0200
+Message-ID: <20261023163717.186155538@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,55 +67,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-commit 89bab1dba8a0167ef0d819e0f55b6bafa038e87f upstream.
+commit ec6b083915e8146e147314a5f4f1285d07b57bfc upstream.
 
-The mmap reader can warn when it catches up with a writer that is still
-committing events. rb_get_reader_page() returns NULL in this case, but
-ring_buffer_map_get_reader() treats that result as an error.
+bsg-lib allocates a 96-byte (SCSI_SENSE_BUFFERSIZE) reply buffer per
+job, but struct ufs_rpmb_reply is 104 bytes: a 40-byte struct
+ufs_bsg_reply followed by a 64-byte EHS. When an Advanced RPMB command
+returns an EHS, ufshcd_advanced_rpmb_req_handler() copies it right after
+the 40-byte header and writes 8 bytes past the end of the buffer.
 
-The initial rb_per_cpu_empty() check filters out an empty buffer, but it
-does not guarantee that the next reader page has committed data. Writers
-do not take reader_lock and can advance commit_page before publishing the
-committed length on the new page. rb_get_reader_page() can swap to that
-page, catch up with the writer and return NULL.
+Let each BSG transport pass its reply buffer size to bsg_setup_queue()
+and have ufs_bsg request sizeof(struct ufs_rpmb_reply), so the full
+reply reaches user space. Other transports keep SCSI_SENSE_BUFFERSIZE.
 
-Handle NULL through the existing no-data exit without warning. Remove the
-caller's reader_page == commit_page check as well, since the reader-page
-helper already handles that case. The existing metadata update and return
-path remain in place.
-
+Fixes: 6ff265fc5ef6 ("scsi: ufs: core: bsg: Add advanced RPMB support in ufs_bsg")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260924084946.20104-1-krystianmkaniewski@gmail.com
-Fixes: 117c39200d9d ("ring-buffer: Introducing ring-buffer mapping functions")
-Assisted-by: Gemini:gemini-3.8-flash syzbot
-Reported-by: syzbot+de3d7f9bcc9212f3fae1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=de3d7f9bcc9212f3fae1
-Link: https://syzkaller.appspot.com/ai_job?id=488adc18-a10e-42d2-a205-25327c38837f
-Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Link: https://patch.msgid.link/20261013132708.1669415-1-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ block/bsg-lib.c                     |   13 ++++++++++---
+ drivers/scsi/mpi3mr/mpi3mr_app.c    |    2 +-
+ drivers/scsi/scsi_transport_fc.c    |    6 ++++--
+ drivers/scsi/scsi_transport_iscsi.c |    2 +-
+ drivers/scsi/scsi_transport_sas.c   |    6 ++++--
+ drivers/ufs/core/ufs_bsg.c          |    2 +-
+ include/linux/bsg-lib.h             |    3 ++-
+ 7 files changed, 23 insertions(+), 11 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -7982,12 +7982,8 @@ consume:
- 		goto out;
+--- a/block/bsg-lib.c
++++ b/block/bsg-lib.c
+@@ -23,11 +23,14 @@ struct bsg_set {
+ 	struct bsg_device	*bd;
+ 	bsg_job_fn		*job_fn;
+ 	bsg_timeout_fn		*timeout_fn;
++	unsigned int		reply_len;
+ };
+ 
+ static int bsg_transport_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 		bool open_for_write, unsigned int timeout)
+ {
++	struct bsg_set *bset =
++		container_of(q->tag_set, struct bsg_set, tag_set);
+ 	struct bsg_job *job;
+ 	struct request *rq;
+ 	struct bio *bio;
+@@ -50,7 +53,7 @@ static int bsg_transport_sg_io_fn(struct
+ 	reply = job->reply;
+ 	memset(job, 0, sizeof(*job));
+ 	job->reply = reply;
+-	job->reply_len = SCSI_SENSE_BUFFERSIZE;
++	job->reply_len = bset->reply_len;
+ 	job->dd_data = job + 1;
+ 
+ 	job->request_len = hdr->request_len;
+@@ -301,9 +304,10 @@ out:
+ static int bsg_init_rq(struct blk_mq_tag_set *set, struct request *req,
+ 		       unsigned int hctx_idx, int numa_node)
+ {
++	struct bsg_set *bset = container_of(set, struct bsg_set, tag_set);
+ 	struct bsg_job *job = blk_mq_rq_to_pdu(req);
+ 
+-	job->reply = kzalloc(SCSI_SENSE_BUFFERSIZE, GFP_KERNEL);
++	job->reply = kzalloc(bset->reply_len, GFP_KERNEL);
+ 	if (!job->reply)
+ 		return -ENOMEM;
+ 	return 0;
+@@ -358,10 +362,12 @@ static const struct blk_mq_ops bsg_mq_op
+  * @job_fn: bsg job handler
+  * @timeout: timeout handler function pointer
+  * @dd_job_size: size of LLD data needed for each job
++ * @reply_len: size of the reply buffer needed for each job
+  */
+ struct request_queue *bsg_setup_queue(struct device *dev, const char *name,
+ 		struct queue_limits *lim, bsg_job_fn *job_fn,
+-		bsg_timeout_fn *timeout, int dd_job_size)
++		bsg_timeout_fn *timeout, int dd_job_size,
++		unsigned int reply_len)
+ {
+ 	struct bsg_set *bset;
+ 	struct blk_mq_tag_set *set;
+@@ -374,6 +380,7 @@ struct request_queue *bsg_setup_queue(st
+ 
+ 	bset->job_fn = job_fn;
+ 	bset->timeout_fn = timeout;
++	bset->reply_len = reply_len;
+ 
+ 	set = &bset->tag_set;
+ 	set->ops = &bsg_mq_ops;
+--- a/drivers/scsi/mpi3mr/mpi3mr_app.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
+@@ -3053,7 +3053,7 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *
  	}
  
--	/* Did the reader catch up with the writer? */
--	if (cpu_buffer->reader_page == cpu_buffer->commit_page)
--		goto out;
--
- 	reader = rb_get_reader_page(cpu_buffer);
--	if (WARN_ON(!reader))
-+	if (!reader)
+ 	q = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), &lim,
+-			mpi3mr_bsg_request, NULL, 0);
++			mpi3mr_bsg_request, NULL, 0, SCSI_SENSE_BUFFERSIZE);
+ 	if (IS_ERR(q)) {
+ 		ioc_err(mrioc, "%s: bsg registration failed\n",
+ 		    dev_name(bsg_dev));
+--- a/drivers/scsi/scsi_transport_fc.c
++++ b/drivers/scsi/scsi_transport_fc.c
+@@ -4345,7 +4345,8 @@ fc_bsg_hostadd(struct Scsi_Host *shost,
+ 	scsi_init_limits(shost, &lim);
+ 	lim.max_segments = min_not_zero(lim.max_segments, i->f->max_bsg_segments);
+ 	q = bsg_setup_queue(dev, bsg_name, &lim, fc_bsg_dispatch,
+-			fc_bsg_job_timeout, i->f->dd_bsg_size);
++			fc_bsg_job_timeout, i->f->dd_bsg_size,
++			SCSI_SENSE_BUFFERSIZE);
+ 	if (IS_ERR(q)) {
+ 		dev_err(dev,
+ 			"fc_host%d: bsg interface failed to initialize - setup queue\n",
+@@ -4378,7 +4379,8 @@ fc_bsg_rportadd(struct Scsi_Host *shost,
+ 	scsi_init_limits(shost, &lim);
+ 	lim.max_segments = min_not_zero(lim.max_segments, i->f->max_bsg_segments);
+ 	q = bsg_setup_queue(dev, dev_name(dev), &lim, fc_bsg_dispatch_prep,
+-				fc_bsg_job_timeout, i->f->dd_bsg_size);
++				fc_bsg_job_timeout, i->f->dd_bsg_size,
++				SCSI_SENSE_BUFFERSIZE);
+ 	if (IS_ERR(q)) {
+ 		dev_err(dev, "failed to setup bsg queue\n");
+ 		return PTR_ERR(q);
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -1545,7 +1545,7 @@ iscsi_bsg_host_add(struct Scsi_Host *sho
+ 	snprintf(bsg_name, sizeof(bsg_name), "iscsi_host%d", shost->host_no);
+ 	scsi_init_limits(shost, &lim);
+ 	q = bsg_setup_queue(dev, bsg_name, &lim, iscsi_bsg_host_dispatch, NULL,
+-			0);
++			0, SCSI_SENSE_BUFFERSIZE);
+ 	if (IS_ERR(q)) {
+ 		shost_printk(KERN_ERR, shost, "bsg interface failed to "
+ 			     "initialize - no request queue\n");
+--- a/drivers/scsi/scsi_transport_sas.c
++++ b/drivers/scsi/scsi_transport_sas.c
+@@ -199,7 +199,8 @@ static int sas_bsg_initialize(struct Scs
+ 
+ 	if (rphy) {
+ 		q = bsg_setup_queue(&rphy->dev, dev_name(&rphy->dev), NULL,
+-				sas_smp_dispatch, NULL, 0);
++				sas_smp_dispatch, NULL, 0,
++				SCSI_SENSE_BUFFERSIZE);
+ 		if (IS_ERR(q))
+ 			return PTR_ERR(q);
+ 		rphy->q = q;
+@@ -208,7 +209,8 @@ static int sas_bsg_initialize(struct Scs
+ 
+ 		snprintf(name, sizeof(name), "sas_host%d", shost->host_no);
+ 		q = bsg_setup_queue(&shost->shost_gendev, name, NULL,
+-				sas_smp_dispatch, NULL, 0);
++				sas_smp_dispatch, NULL, 0,
++				SCSI_SENSE_BUFFERSIZE);
+ 		if (IS_ERR(q))
+ 			return PTR_ERR(q);
+ 		to_sas_host_attrs(shost)->q = q;
+--- a/drivers/ufs/core/ufs_bsg.c
++++ b/drivers/ufs/core/ufs_bsg.c
+@@ -257,7 +257,7 @@ int ufs_bsg_probe(struct ufs_hba *hba)
  		goto out;
  
- 	/* Check if any events were dropped */
+ 	q = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), NULL, ufs_bsg_request,
+-			NULL, 0);
++			NULL, 0, sizeof(struct ufs_rpmb_reply));
+ 	if (IS_ERR(q)) {
+ 		ret = PTR_ERR(q);
+ 		device_del(bsg_dev);
+--- a/include/linux/bsg-lib.h
++++ b/include/linux/bsg-lib.h
+@@ -66,7 +66,8 @@ void bsg_job_done(struct bsg_job *job, i
+ 		  unsigned int reply_payload_rcv_len);
+ struct request_queue *bsg_setup_queue(struct device *dev, const char *name,
+ 		struct queue_limits *lim, bsg_job_fn *job_fn,
+-		bsg_timeout_fn *timeout, int dd_job_size);
++		bsg_timeout_fn *timeout, int dd_job_size,
++		unsigned int reply_len);
+ void bsg_remove_queue(struct request_queue *q);
+ void bsg_job_put(struct bsg_job *job);
+ int __must_check bsg_job_get(struct bsg_job *job);
 
 
