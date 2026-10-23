@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774826;
-	b=yNHEnnviJ8l93ShzRhRuU0n/TUveqsyqUgASoLfYN2sZS4Wa8IX8yCf+LVQfcDla5gKp
-	 m8jZKZ1EqNmKUUrea1NsnHZn2l+6g5D1XllbPT5iYMX8mhRoLyUs/MVMQ89RtCM+BRSby
-	 SgVTmx/mc+hd2rX6eX5NxirrwkYBOZ3MUzlSvol2+gTbYmKXO6oi22KQjBc/UL/+kJwLi
-	 aaR4naTIlFHFlb06sMAb18zyh2MS8QSU2L4JzPUY1qCuhQVmCzPeG8Y+/8y47ceuHZyqz
-	 ooSsj3CwvBlbTuyIRYxupfPmGAW9DP1mK3cX1Y8woRggCYj+OlBX+y13ciOLmkuZSaA==
+	t=1792774829;
+	b=TpVVrAiaAAJMxwMBWorZmPA7Zu4yZMYUu+YlOmpNeyVyczggxuTaCQs8OzgKWeQ/+g+x
+	 k9w9YdO4UzzUUFfCw54GG82XqZRuxHwEYSMCu3/cp224+YAoaBPbPG/gLptk/5/XI+m9J
+	 SYlwNI78wPzaKYw0Mpoguu+e+pXfCGm/MkwFT2h+UKFh1iJBvJAdPzQvsaM9fgEPHmyy0
+	 Sy6xZbkzo91DxyeDaqMAhOC3XGgF+8ZIAqo3bp0t3XUdddjEYnozm6vq5lMRX9c/Cl2U7
+	 wyq7+6VQmRSHp9kzPInT0+zRvynMIYX9BsM4XXDvQZ9XzSoVaJU1fAoXchBC1EStBEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O+iqF6jjdgTYct0/XTax3W7tShKBSbDEViynd2iCigg=;
-	b=IZu9endMUAZ3BRAVqBmch8dERd2+Tp0wGVNx1yfAx8d7jC1tOJBi0fBXRnJzCx7RChXo
-	 +9vzuvVexeE6KR+wO1wdZT8pROV6tm9k5F+2kxmOXIM780N9vLV9NuEcY57r0OEGwabKL
-	 C4RO4cym3I1NhPG7YsYkwJMGm8sI/01CiPNTD+OThO5FSFKWSlmERCCFwrjGEh5CrOqgA
-	 wGL6qGM9KWVqJg/myJKH81a5jAvNz32q95hE9rssdM7BkXAmFzCMLOWREu0j58mRJkdap
-	 JpgZnRjuPBTEXJbUXcrmDs7QL6y/zKkNSWaRIDnfsfzswyojpGOxSIStW5917Ipm7Pg==
+	bh=uLVXI3hgkbFu8zL7OLLPaa1PQG74JNynQWs2lFl8KB0=;
+	b=n+HJfR7edJiXpyt9TA0haMrKaq4oysWpqljonn6ATzaUbMQJhx5ii2uyMxjphxCFe545
+	 W3qGnCuabqJSJHxOdDohrWhLNE9vyfurlmR805i8QHJGVl/Od2nDkmhZBPG8IZrjmZXXg
+	 zK+7ZZxjsL2LE3KtqqNCGdpIM15uNmORxq4ARa6qLofEBN8ZWG+/RXkfLspihhblBYgYl
+	 CaEK1sglUvv2Tkvr+PI63SE0D53uSgDYWrjLTt+C0jUB6JoNjqAze9WrleflhXzqtE6zX
+	 9DLKAJvy8n9iH6y2L+S4Bpvd+YRiXjqrwyqPK7cMuejLHzAaQktv8vvd6N3wDdht0vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cn5ANvc6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YucFQFuE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B6A606A31A;
-	Fri, 23 Oct 2026 17:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1559E606A321;
+	Fri, 23 Oct 2026 17:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cn5ANvc6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED481F01825;
-	Fri, 23 Oct 2026 17:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YucFQFuE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231301F01828;
+	Fri, 23 Oct 2026 17:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774825;
-	bh=O+iqF6jjdgTYct0/XTax3W7tShKBSbDEViynd2iCigg=;
+	s=korg; t=1792774828;
+	bh=uLVXI3hgkbFu8zL7OLLPaa1PQG74JNynQWs2lFl8KB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cn5ANvc6guNrxSoMUD9sDYRVo2cLeE0gNohDz998Pm3Cp31F2WrxbyrVZAeBPnvWO
-	 iWtIYMmC7BcM+JvYxPE8bagZMDHbZVJANpdXWb6vCvwLMNf612eNVndpEtilZ5JmYQ
-	 x/o5AdWe4nfvRFHxAyyPGj1JyiTwm5/XfY4UufQ8=
+	b=YucFQFuEbphZu4zS4OKIP91dNbb5oCyyP2zccSyA92L/gY7vlSfI9CpSzYOU3dnSR
+	 8LZK/4AzYiQkjyKYBPs7wFTYSbjbjzEP9BvBkcUhTo2iwV9fAkB6Z5xFJLveAQ5jRd
+	 sYSVKTHpTfogXcA/xKiLk/LBxd2BJ52Ddo7GksFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 133/242] tracing/histograms: Reject non-stacktrace fields for synthetic stacktrace fields
-Date: Fri, 23 Oct 2026 18:39:35 +0200
-Message-ID: <20261023163716.924532496@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 7.2 134/242] gpio: shared: fix use-after-free bug when adding shared proxies
+Date: Fri, 23 Oct 2026 18:39:36 +0200
+Message-ID: <20261023163716.947719304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,95 +67,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit a244c241593b5b38a08f0df2cb43c26574efbdcb upstream.
+commit bd22f7e63509fa758cf500d9af3e88a3d3df96be upstream.
 
-In check_synth_field(), when a synthetic event field is a stacktrace
-(field->is_stack) and the histogram field is not a "long[" stacktrace
-array, validation falls through to the generic size and signedness
-comparison.
-
-Because parse_synth_field() sets a stacktrace field's type to
-"__data_loc unsigned long[]", its size is sizeof(u64) and
-synth_field_signed() marks it as signed.  Consequently, any 8-byte
-signed scalar histogram field passes the fallback check, and its scalar
-value is subsequently dereferenced as a kernel stacktrace pointer in
-get_field_size() and trace_stack().
-
-Furthermore, checking strstr(hist_field->type, "long[") is insufficient
-because tracepoint fields defined with __bitmask() or __rel_bitmask()
-also have type "__data_loc unsigned long[]" or "__rel_loc unsigned
-long[]", whilst create_hist_field() treats them as 4-byte scalar values
-without HIST_FIELD_FL_STACKTRACE.
-
-Propagate HIST_FIELD_FL_STACKTRACE to variable references and field
-variables (whilst excluding variable aliases from per-element
-stacktrace capture), and reject any mismatch between
-HIST_FIELD_FL_STACKTRACE and field->is_stack in check_synth_field().
+The GPIO lookup table can stay alive for longer than the kobject whose
+name string's address we're assigning to lookup->dev_id. Fix a potential
+UAF by duplicating the string.
 
 Cc: stable@vger.kernel.org
-Fixes: 00cf3d672a9d ("tracing: Allow synthetic events to pass around stacktraces")
-Link: https://patch.msgid.link/20261013112449.1006088-1-lee@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: a060b8c511ab ("gpiolib: implement low-level, shared GPIO support")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20261014-gpio-shared-fwnode-lookup-v4-1-2253ad645fd6@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib-shared.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -2116,7 +2116,8 @@ static int init_var_ref(struct hist_fiel
- 	ref_field->size = var_field->size;
- 	ref_field->is_signed = var_field->is_signed;
- 	ref_field->flags |= var_field->flags &
--		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS);
-+		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS |
-+		 HIST_FIELD_FL_STACKTRACE);
+--- a/drivers/gpio/gpiolib-shared.c
++++ b/drivers/gpio/gpiolib-shared.c
+@@ -450,7 +450,6 @@ int gpio_shared_add_proxy_lookup(struct
+ 				 const char *con_id, unsigned long lflags)
+ {
+ 	const char *dev_id = dev_name(consumer);
+-	struct gpiod_lookup_table *lookup;
+ 	struct gpio_shared_entry *entry;
+ 	struct gpio_shared_ref *ref;
  
- 	if (system) {
- 		ref_field->system = kstrdup(system, GFP_KERNEL);
-@@ -3298,6 +3299,7 @@ static struct field_var *create_field_va
- 		ret = PTR_ERR(var);
- 		goto err;
- 	}
-+	var->flags |= val->flags & HIST_FIELD_FL_STACKTRACE;
+@@ -480,18 +479,22 @@ int gpio_shared_add_proxy_lookup(struct
+ 			if (!key)
+ 				return -ENOMEM;
  
- 	field_var = kzalloc_obj(struct field_var);
- 	if (!field_var) {
-@@ -3926,7 +3928,10 @@ static int check_synth_field(struct synt
- 	    && field->is_dynamic)
- 		return 0;
+-			lookup = kzalloc_flex(*lookup, table, 2);
++			struct gpiod_lookup_table *lookup __free(kfree) =
++				kzalloc_flex(*lookup, table, 2);
+ 			if (!lookup)
+ 				return -ENOMEM;
  
--	if (strstr(hist_field->type, "long[") && field->is_stack)
-+	if (!!(hist_field->flags & HIST_FIELD_FL_STACKTRACE) != field->is_stack)
-+		return -EINVAL;
+ 			pr_debug("Adding machine lookup entry for a shared GPIO for consumer %s, with key '%s' and con_id '%s'\n",
+ 				 dev_id, key, ref->con_id ?: "none");
+ 
+-			lookup->dev_id = dev_id;
++			lookup->dev_id = kstrdup(dev_id, GFP_KERNEL);
++			if (!lookup->dev_id)
++				return -ENOMEM;
 +
-+	if (field->is_stack)
- 		return 0;
+ 			lookup->table[0] = GPIO_LOOKUP(no_free_ptr(key), 0,
+ 						       ref->con_id, lflags);
  
- 	if (strcmp(field->type, hist_field->type) != 0) {
-@@ -4467,7 +4472,8 @@ static int create_var_field(struct hist_
- 	if (!ret && hist_data->fields[val_idx]->flags & HIST_FIELD_FL_EXECNAME)
- 		update_var_execname(hist_data->fields[val_idx]);
+-			ref->lookup = lookup;
++			ref->lookup = no_free_ptr(lookup);
+ 			gpiod_add_lookup_table(ref->lookup);
  
--	if (!ret && hist_data->fields[val_idx]->flags &
-+	if (!ret && !(hist_data->fields[val_idx]->flags & HIST_FIELD_FL_ALIAS) &&
-+	    hist_data->fields[val_idx]->flags &
- 	    (HIST_FIELD_FL_STRING | HIST_FIELD_FL_STACKTRACE))
- 		hist_data->fields[val_idx]->var_str_idx = hist_data->n_var_str++;
- 
-@@ -5208,7 +5214,8 @@ static void hist_trigger_elt_update(stru
- 		if (hist_field->flags & HIST_FIELD_FL_VAR) {
- 			var_idx = hist_field->var.idx;
- 
--			if (hist_field->flags &
-+			if (!(hist_field->flags & HIST_FIELD_FL_ALIAS) &&
-+			    hist_field->flags &
- 			    (HIST_FIELD_FL_STRING | HIST_FIELD_FL_STACKTRACE)) {
- 				unsigned int str_start, var_str_idx, idx;
- 				char *str, *val_str;
+ 			return 0;
+@@ -611,6 +614,7 @@ void gpio_device_teardown_shared(struct
+ 			if (ref->lookup) {
+ 				gpiod_remove_lookup_table(ref->lookup);
+ 				kfree(ref->lookup->table[0].key);
++				kfree(ref->lookup->dev_id);
+ 				kfree(ref->lookup);
+ 				ref->lookup = NULL;
+ 			}
 
 
