@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775064;
-	b=btRi8uRZsBXtHrhfAZDBuK/A+X3WvhOLVdP14BEnfbBQESD/k5PgTeODF6LUG2iiZsJ0
-	 Lg2andVd9rmh2B9tcH6W2+nCV8pdEqHRQZgHZGZZQM76eALESR6vjxwTvGZXJkgzI2b5Z
-	 Jr7cmQmHy5S1OQHm4Be+KrfteIzly22KO+PDe/mjoOOPjNYf/WLibZAgzhRneMGQGyk69
-	 N6gR/jXOD0Ycw3pGBuxurhOm6X0VPd1wAMsbGsHHT1cbXhOy+jTtn4bi3/jbCNh1HXvKk
-	 uJolF0TiMjWj0qwDeMGL6Oup02Qvm7sg26iojO4A4dcIC26TPIYJR7/HPYXdNLrWeYw==
+	t=1792775067;
+	b=Eimctl835HAzpV66JFR8Z/gt5ZX6Ii3+UoxICKnMQMdkVpQd8q+Y1uMiurGaKbKgahj1
+	 lOZ+ViagTRcQZR9rEpdqpFVcsxL2RD3eS2Sn3Ch+GKNAnBcWdxCUcRgdpVuatxxkOukwA
+	 4mKE5+rGl9US56TTlUwpW3uqFvLYWSYyff4N4QM2tblEAocax1UATOb23R0MUs6ldAC7z
+	 gToXu5nJQxZSKen2vWixxK0ZIUN1Z7qCzEkMnDCR74VueHkTkPfoC6od7uDmfbfOf6L6h
+	 2yXyLchOPH0AJe655Viwk42m5SUarc/OxWHK2J8j575/aWyP6WiBPDmiRtgCZFI1GZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775064;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775067;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1oUvgxK/su3z/KYEFzn/CLbvBZruGmcEY9sNJGQE3qk=;
-	b=lSJMt2mWBQE+I4JL/r4biY2kwf2j/gjfcnL/2rv5ZbrrJAXiMbVdQJL8KlsVwGoha/c7
-	 oUolHNVvpfU/gYnIfceaqMr4l3KfpK4rcIDmfkJQdEmMa25trnWMEak0F7IRgLiJ8N1nw
-	 WdmuioEC8+mxJRXJ1TbUeHEtNv2Se7dU4eS2q0xy7VLSkEGAte4Bi9ylgnXRaPAEjVqgL
-	 pOg2x7apLUHpDtazaHdRQuM6bT/UpIllmWbsn6J/fhCoDCjy44prumb+PBgSWLCFjY3X0
-	 ObILe8yYQHxC6SV2Ot8RH06hBArmdvG2QFv1mUnBAy/q3yktAmVtVQ2W1sheKOF8rxg==
+	bh=jcc7WQ7GJnAzpgAZPD9t75yHryj1cLb5lXSU1+bjYd0=;
+	b=e8GRymKlV/I91Nkq31+ulVw/Pi778TC8D6cebJCO5AjlxJaq0aB4c1hm8NuosL/IHP3H
+	 IXW+cSLiGmiPWCXT9psfwS6DItWI+nwhrLli2Db8MnGnaDB8cDfZ1GlMLb821WTRCk3E4
+	 gt16366Kwdz6o4SaNPZ+b8FXzlmzyBsJMSRHLC0IYk2xWeYH+Im/BU5JDefx+dBubTMgP
+	 ecKA0IFv18+oMv/COE5DLd4hPfVrG+vdXPFspUtXZxDPlpatITiu4G5Kc+L+4LIe0o5Qi
+	 K6RVdZoE/sGgLrDFgtHKujo1srpXishhAs8t3qLb/d64WWQAvZLAD6VUnnPvVK9Yhbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2PbeCGav;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgPOP7Bg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1C2606A31A;
-	Fri, 23 Oct 2026 17:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582BF606A31A;
+	Fri, 23 Oct 2026 17:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2PbeCGav
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEB51F01825;
-	Fri, 23 Oct 2026 17:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgPOP7Bg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B071F01825;
+	Fri, 23 Oct 2026 17:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775064;
-	bh=1oUvgxK/su3z/KYEFzn/CLbvBZruGmcEY9sNJGQE3qk=;
+	s=korg; t=1792775067;
+	bh=jcc7WQ7GJnAzpgAZPD9t75yHryj1cLb5lXSU1+bjYd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2PbeCGav+cFUEymFdxwlDSUMG3j2AJbH1wX2IQSneTnii9ACvWGGm4rQecSJthzcF
-	 XgWes8grAta7u/Kjdn6ooZ27YnaUsAM9FX+WSWTKbqZaIXTFNKRxg226iFzjzfm2Qt
-	 b6HsCOZASHjeBcFuxbQ3yXIL+eqfD004eiV8tab8=
+	b=IgPOP7Bg6/SBc0+n3no85TX7IMdBu/i1FoWbphUlM98MLyK9htZx+s/SHT9k0wz9j
+	 iVwsnNU654C9iUIPjGejWXcBXxA0XbevpprasvsAH0+oqMfqjuqFuFpNhRHcb9M/A5
+	 8WGlqJOcK5dYOpMNkOnORUciXb5wsEE9Sx5G7x1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@chenxiaosong.com>,
-	Aleksandr Khromov <haa@amicon.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.2 218/242] ksmbd: zero the FS_OBJECT_ID_INFORMATION buffer before filling it in
-Date: Fri, 23 Oct 2026 18:41:00 +0200
-Message-ID: <20261023163718.971386606@linuxfoundation.org>
+	SimonP <simonp.git@mailbox.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 209/242] KVM: x86/mmu: Cope with the SS bit being set in #NPF exit codes
+Date: Fri, 23 Oct 2026 18:40:51 +0200
+Message-ID: <20261023163718.740229718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,54 +69,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Khromov <haa@amicon.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 399aa12450a61a5c73dc77e73f069ece9687c95d upstream.
+[ Upstream commit e90ab3669181c6469e3647ef2b30ae408275f496 ]
 
-smb2_get_info_filesystem() reports 64 bytes for FS_OBJECT_ID_INFORMATION,
-that is the whole of struct object_id_info, but writes only 46 of them:
+When running Hyper-V from Windows 11, KVM is seeing the SS bit set
+in nested page fault error codes produced for shadowed NPT.  The AMD
+manual is unclear about when SS is set, including whether it can be set
+when SupervisorShadowStackEn (bit 6) is not set in the MISC_CTL field
+of the VMCB.
 
- - objid[] is 16 bytes, and when the volume UUID is not available only
-   sizeof(stfs.f_fsid) (8) bytes are copied into it;
- - extended_info.version_string[] is STRING_LENGTH (28) bytes, and only
-   strlen("1.1.0") (5) bytes are copied into it.
+Nevertheless, the unexpected SS bit causes out of bounds accesses in
+permission_fault(), seen as either WARNs or UBSAN reports:
 
-The response buffer is zeroed on allocation (kvzalloc() in
-smb2_allocate_rsp_buf()), so for a standalone request the remaining 31
-bytes are zero.  In a compound request they need not be.  The offset of
-the next response is advanced by the length pinned for the previous one,
-so if a preceding command wrote its reply into the buffer and then
-failed, smb2_set_err_rsp() pins only the short error response and the
-next reply lands inside the area that has already been written.  Only
-the header is cleared there:
+  kernel: UBSAN: array-index-out-of-bounds in arch/x86/kvm/mmu.h:225:27
+  kernel: index 34 is out of range for type 'u16 [16]'
 
-	memset((char *)rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+(in this case, the page fault error code is 34*2=0x44, i.e. SS|U; the
+report shows SS|U|W happening as well).  Fix the handling of unknown
+error codes by dropping SS and (with a WARN) any bits not among those
+that permission_fault() expects to receive.
 
-The client then receives up to 31 bytes of a response it was not meant
-to see, including one that failed with an access denied error.
+At the same time, given the uncertainty about when hardware sets SS,
+follow the processor's behavior when constructing the fault's error
+code, and preserve the SS bit as passed to FNAME(walk_addr_generic).
+While the behavior is surprising, there's a possibility that Hyper-V
+expects it (Hyper-V does not even enable CET unless it finds MBEC/GMET!),
+so retain the information when reflecting the fault to L1 instead of
+unconditionally discarding it.
 
-Clear the structure before filling it in.  As a side effect
-version_string is now NUL terminated.
+Bisection shows that this started happening with commit 687ee95c1b6d ("KVM:
+nSVM: enable GMET for guests"), even though SHSTK was available to guests
+since Linux 6.18.  However, this is not because bit 1 of MISC_CTL (GMET)
+somehow enables reporting the SS bit; rather, it's simply that Hyper-V
+never uses CET unless GMET is also present.  The WARN is reproducible
+even with gmet=0, with some hacking of kvm-unit-tests's cet.c testcase
+to ensure that the first access to the shadow stack triggers a page fault.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Suggested-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+Reported-by: SimonP <simonp.git@mailbox.org>
+Fixes: 8db428fd5229 ("KVM: SVM: Enable shadow stack virtualization for SVM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aleksandr Khromov <haa@amicon.ru>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Closes: https://lore.kernel.org/all/asUqYEisPp9MJ8mQ@rika.bernkas.tel
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ sashal: Adapted upstream w and fmt references to the existing mmu structure. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/mmu.h             |   16 ++++++++++++----
+ arch/x86/kvm/mmu/paging_tmpl.h |    3 +--
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6715,6 +6715,7 @@ static int smb2_get_info_filesystem(stru
- 		struct object_id_info *info;
+--- a/arch/x86/kvm/mmu.h
++++ b/arch/x86/kvm/mmu.h
+@@ -198,8 +198,18 @@ static inline u8 permission_fault(struct
+ 				  unsigned pte_access, unsigned pte_pkey,
+ 				  u64 access)
+ {
+-	/* strip nested paging fault error codes */
+-	unsigned int pfec = access;
++	/*
++	 * Of the error codes that do not contribute to the index in
++	 * mmu->permissions, PK and SS are not supported by shadow paging
++	 * and also not provided to EPT violations, but SS *is* included
++	 * in the NPT exit code.  RSVD faults are handled elsewhere.
++	 */
++	unsigned int pfec = access & ~PFERR_SS_MASK;
++	if (WARN_ON_ONCE(pfec & ~(PFERR_PRESENT_MASK | PFERR_WRITE_MASK |
++				  PFERR_USER_MASK | PFERR_FETCH_MASK)))
++		pfec &= (PFERR_PRESENT_MASK | PFERR_WRITE_MASK |
++			 PFERR_USER_MASK | PFERR_FETCH_MASK);
++
+ 	unsigned long rflags = kvm_x86_call(get_rflags)(vcpu);
  
- 		info = (struct object_id_info *)(rsp->Buffer);
-+		memset(info, 0, sizeof(*info));
+ 	/*
+@@ -223,8 +233,6 @@ static inline u8 permission_fault(struct
+ 	kvm_mmu_refresh_passthrough_bits(vcpu, mmu);
  
- 		if (path.mnt->mnt_sb->s_uuid_len == 16)
- 			memcpy(info->objid, path.mnt->mnt_sb->s_uuid.b,
+ 	fault = (mmu->permissions[index] >> pte_access) & 1;
+-
+-	WARN_ON_ONCE(pfec & (PFERR_PK_MASK | PFERR_SS_MASK | PFERR_RSVD_MASK));
+ 	if (unlikely(mmu->pkru_mask)) {
+ 		u32 pkru_bits, offset;
+ 
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -326,7 +326,6 @@ static int FNAME(walk_addr_generic)(stru
+ 	int offset;
+ 	u64 walk_nx_mask = 0;
+ 	const int write_fault = access & PFERR_WRITE_MASK;
+-	const int user_fault  = access & PFERR_USER_MASK;
+ 	const int fetch_fault = access & PFERR_FETCH_MASK;
+ 	/*
+ 	 * Note! Track the error_code that's common to legacy shadow paging
+@@ -484,7 +483,7 @@ retry_walk:
+ 	return 1;
+ 
+ error:
+-	errcode |= write_fault | user_fault;
++	errcode |= access & (PFERR_WRITE_MASK | PFERR_USER_MASK | PFERR_SS_MASK);
+ 	if (fetch_fault && has_pferr_fetch(mmu))
+ 		errcode |= PFERR_FETCH_MASK;
+ 
 
 
