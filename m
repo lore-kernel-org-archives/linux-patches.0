@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773778;
-	b=gVUTUgNG9mnnNEcf5hQ9U1kHq6uyJCB+IdxHvM46BToBZ6Ty/lNIgBLM6puWZKxvnX3n
-	 OapHvrq2CAkyL4ri8njhJSEcdSOZul5g/dByB6zjbGao30Lx5P2uMdoLxoPN2ULsVvWrv
-	 +Eh0WV0cI+f8ydZxrLzWgXbFEEIEDzypndWkZHCdfHG8NtU8yFJLG6HgDa47yqpg1v3Sk
-	 bCyH5s76yzXvSzXtWJDaARJed3NgKE6zyFX/ybFZs+B9tzku9D0n12SUrruZHLOu2gsHS
-	 er5JMLLOZiofpC2mwR8YNvEKi2tmZxmBpjjgpPjvoZL1rKnEnZJ5wVDT6wh6iNKjrbA==
+	t=1792773781;
+	b=cTT4O+ZiLc+dgjCIKkpz1QFUs5luyT/ffaKKIudMCPz56hUDhgw5rDK3NHsQJTABsdA+
+	 uJsfhVfHo0jlmJ9tVqvQEpZqmbCvl3gNIYXTBaDz6D1wd3rK1eil7UW2bzkUG7ltKCGnl
+	 47BTQmBdtLPnudcRSz7HksCUdB37g7TLg+DfuBu6kLzJeuCQSWzaArarDn+SuQIQ13riM
+	 Et0IUKGQitWFfvLUqsQ2uyBGlGYvBX9gNSEZD0GJ1zmpv+sH85D8FZym4JKd2LCnp6P9b
+	 yvWnyCJk5El2YTCzIwiMWzrSx8tUH76SBBhKSHep9ZESFIMxqJbAHmS+9mbZJBi9j4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773778;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773781;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lIPHjl50k8kLK448OGyXVUft2kvuVsNV+WS3twlPINI=;
-	b=ngbbDjuPNSp2jp4WMGXPGQHZg71OiyLuSH6OBQP/PV9VtWwGY2ABdMl53Z14OUR2cbM7
-	 93+IVlxzGcv5Rvwc0ahzCxWAQVbphWZzCstqHd2kBnCGs9L7ZXHkoYga4oJr4VCKLXKs0
-	 WqGyxLvicDl9xi0st32wPbkeOI3CDT/9KRFyJs0zEpqA1I3kRJlfMWHXwDUYliwc1vYHA
-	 yJPppoc/9JKzEpF4CizBYE5tzgsg1Ckb3ZdOjywPszbGk60hfKuZnGqOXx3A53MnH3iLU
-	 rf/vunW4uXkgFUWAa+uYnpY7eVAST/dAB1CcFy0Ta3A3IRo+VnYxvBpjCmVIzKnSEPw==
+	bh=RYiMP0Tigdya7zhZbz9gPe3MNAY7tj0PBGUDNt+05cA=;
+	b=L4z4uFg5BljZG5NvIb5Dq+UGaA809cbcUwsbE/PrvQtdkI0cfmIZjMpzadH63QloQn84
+	 d+dovtm9VpbFGqPmdv/iIi7/SrPZr6ViLqGbwuBjBo/GruWmh3f0vv/Dd3IIfvi9cuTlu
+	 3X5ZGgauVU+ZfJAnRzXW/ZufXnElbt3XiU02aI9WsoMBHFiBMrs41J95xUMB5suk5Lp6L
+	 9JZpBOiR4G+zzbkMhkF79r8FZCZYvLGS2L/CHmDiVgsoGyc6pc5PVWsw/roOMD+Bt2xQ2
+	 SpWVyT/u/OFakrIl/1Rv3e1Jgf7H/nBCpeiLxu9mKgIR2zZqnc6uUKWCFKCP0ByE7zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuPjNzEL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsNIPWpP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3BF606A31A;
-	Fri, 23 Oct 2026 16:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A1C606A31F;
+	Fri, 23 Oct 2026 16:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuPjNzEL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8B31F01825;
-	Fri, 23 Oct 2026 16:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsNIPWpP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AA61F01825;
+	Fri, 23 Oct 2026 16:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773778;
-	bh=lIPHjl50k8kLK448OGyXVUft2kvuVsNV+WS3twlPINI=;
+	s=korg; t=1792773781;
+	bh=RYiMP0Tigdya7zhZbz9gPe3MNAY7tj0PBGUDNt+05cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kuPjNzEL0qr6f5tQUZRXYSxwVSNJLvm4baLd/hhDI2xCavhBsiwg8FpZlZ/7WaS7J
-	 nFtVB+inp48CWVuPIST8v7WuARvjV9sQdqfyMNduPbu+khL2MMjqesZEv+EU/x9CG1
-	 xFZ01xCsaGZ1rgHHzG1dUz63OmBOm5iW/oKzEGwA=
+	b=BsNIPWpP7tJfKunsUYVrHfZ+35JFA0tEa0xeR3VO4DT8qLYR2HoG1oppQAJpaxgeP
+	 vu1EC5pRZpUPC8ZXNXom5X5bbkG8ohW/ai+X9bYIIHueiOPHkfAyJV9hMI/HLSsP7k
+	 YU1+uLtQ9UYXzF8LO22WDj8y+y4P4UJCjnJCEGgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/193] ax25: bound REJ-driven fast retransmits with the existing N2 counter
-Date: Fri, 23 Oct 2026 18:34:42 +0200
-Message-ID: <20261023163714.330615026@linuxfoundation.org>
+Subject: [PATCH 6.18 006/193] rose: purge rose_neigh->queue on final teardown
+Date: Fri, 23 Oct 2026 18:34:43 +0200
+Message-ID: <20261023163714.355984094@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,102 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-REJ deliberately bypasses the T1/N2 backoff to trigger an immediate
-go-back-N retransmit -- that is the whole point of REJ, fast recovery
-from a single lost or out-of-order frame. But unlike every other
-recovery path in this same state machine (T1 timeout, state 4
-enquiry/DM, state 1/2 SABM retries), the REJ case in
-ax25_std_state3_machine() never touches n2count, so it has no bound.
+rose_transmit_link() queues an outgoing frame on rose_neigh->queue
+instead of sending it immediately whenever the neighbour isn't
+"restarted" yet (link not up) -- notably the CLEAR_REQUEST built by
+rose_write_internal() when a socket is released (e.g. its owning
+process is killed) while the underlying AX.25 link to that neighbour
+is still coming up.
 
-If something keeps corrupting or reordering every retransmitted burst
--- lossy RF, or packet reordering over a UDP-based transport such as
-axudp -- each attempt draws an immediate fresh REJ and the link
-retransmits at wire/CPU speed indefinitely, a "machine-gun" storm that
-never reaches the N2 give-up already relied on everywhere else in this
-file.
+rose_neigh_put() already tears down both timers and drops the ax25/
+digipeat references before freeing the neighbour, but never empties
+this queue. kfree(rose_neigh) only frees the rose_neigh struct itself
+(the sk_buff_head embedded in it is just three next/prev/len words),
+not the skbs still linked into it -- every frame still queued here at
+that point leaks for good.
 
-Reported independently twice: Chris Maness (KQ6UP) on a plain AX.25
-link with no ROSE involved at all, and observed live on a ROSE/FPAC
-White Pages link (f6bvp-8<->f6bvp-10, same LAN, so plain network
-reordering over the Internet is not the trigger there -- likely lossy
-retransmission of the same PDU) reaching ~5900 pkt/s. Both hit the same
-code path since ax25_std_in.c is shared regardless of what rides on
-top of AX.25.
+rose_remove_neigh() (rose_route.c) already purges this same queue, but
+it is only one of about two dozen call sites that can drop the last
+reference and trigger the real kfree() in rose_neigh_put() -- every
+socket releasing its own rose->neighbour reference (af_rose.c,
+rose_in.c, rose_timer.c) can just as well be the one that does. Doing
+the purge once, centrally, in rose_neigh_put() itself covers all of
+them regardless of which call site happens to be last, rather than
+relying on whichever caller happened to remember it.
 
-Count consecutive REJ-driven fast retransmits the same way a T1
-timeout already does in this state, and once N2 of them have failed to
-get an in-sequence frame through, fall back to the paced state 4
-enquiry -- which will genuinely disconnect after N2 further tries if
-the link stays bad, exactly like every other recovery path already
-does. A single frame accepted in sequence resets the counter, so an
-isolated REJ during otherwise healthy traffic never gets close to N2.
+Matches a leak pattern observed and documented back in May 2026
+(mailbbs killed -> rose_release() -> rose_write_internal() ->
+rose_transmit_link() queues the CLEAR_REQUEST -> skb never freed),
+never root-caused until now.
 
-Deployed on three Raspberry Pi nodes (f6bvp-12, f6bvp-8, f6bvp-10)
-since 2026-09-13, running live production AX.25/ROSE/NET-ROM traffic
-since, with no recurrence of the machine-gun storm and no other AX.25
-regression observed.
+Deployed and running since 2026-09-13/15 on three independent nodes
+(f6bvp-12, f6bvp-8, f6bvp-10 -- three different kernel bases,
+6.12.94/6.18.46/6.18.34), no regression observed.
 
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit a3aa611e37d4345ebcc98c847dedaf4bcf23c7ee)
+(cherry picked from commit e59e4523182e4f58f4f29b5e4bce44c1ef152d70)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_std_in.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ include/net/rose.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/ax25/ax25_std_in.c b/net/ax25/ax25_std_in.c
-index ba176196ae068..f280683f83fcf 100644
---- a/net/ax25/ax25_std_in.c
-+++ b/net/ax25/ax25_std_in.c
-@@ -196,6 +196,38 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
- 		if (ax25_validate_nr(ax25, nr)) {
- 			ax25_frames_acked(ax25, nr);
- 			ax25_calculate_rtt(ax25);
-+			/*
-+			 * REJ triggers an immediate go-back-N retransmit,
-+			 * deliberately bypassing the T1/N2 backoff that
-+			 * paces every other recovery path in this state
-+			 * machine -- that is the whole point of REJ, fast
-+			 * recovery from a single lost/out-of-order frame.
-+			 * But unlike every other recovery path here, this
-+			 * one never touches n2count, so it has no bound: if
-+			 * something keeps corrupting or reordering each
-+			 * retransmitted burst (lossy RF, or reordering over
-+			 * a UDP-based link such as axudp), every attempt
-+			 * draws an immediate fresh REJ and the link is
-+			 * retransmitted at wire/CPU speed indefinitely
-+			 * ("machine-gun" storm), never reaching the N2 give
-+			 * up that bounds every other recovery attempt.
-+			 * Count consecutive REJ-driven fast retransmits the
-+			 * same way a T1 timeout would in this state, and
-+			 * once N2 of them have failed to make it through,
-+			 * fall back to the normal paced state 4 enquiry
-+			 * (which will genuinely give up and disconnect after
-+			 * N2 further tries if the link stays bad). A single
-+			 * frame accepted in sequence resets the counter (see
-+			 * the AX25_I case below), so an isolated REJ during
-+			 * otherwise healthy traffic never gets close to N2.
-+			 */
-+			if (ax25->n2count == ax25->n2) {
-+				ax25->n2count = 1;
-+				ax25_std_transmit_enquiry(ax25);
-+				ax25->state = AX25_STATE_4;
-+				break;
-+			}
-+			ax25->n2count++;
- 			ax25_stop_t1timer(ax25);
- 			ax25_start_t3timer(ax25);
- 			ax25_requeue_frames(ax25);
-@@ -226,6 +258,10 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
- 			if (ax25->condition & AX25_COND_OWN_RX_BUSY)
- 				ax25->vr = ns;	/* ax25->vr - 1 */
- 			ax25->condition &= ~AX25_COND_REJECT;
-+			/* Genuine forward progress: a frame made it through in
-+			 * sequence, so this is not part of a REJ storm.
-+			 */
-+			ax25->n2count = 0;
- 			if (pf) {
- 				ax25_std_enquiry_response(ax25);
- 			} else {
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 0d957b8dd0ba3..49140668b3dd0 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -180,6 +180,18 @@ static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
+ 		 */
+ 		timer_shutdown_sync(&rose_neigh->ftimer);
+ 		timer_shutdown_sync(&rose_neigh->t0timer);
++		/* rose_transmit_link() queues a frame here instead of sending
++		 * it immediately whenever the neighbour isn't "restarted" yet
++		 * (link not up) -- e.g. the CLEAR_REQUEST built by
++		 * rose_write_internal() when a socket is released while its
++		 * underlying AX.25 link is still coming up. If this neighbour
++		 * is freed before that link ever comes up, nothing else ever
++		 * empties this queue: kfree() below only frees the
++		 * rose_neigh struct itself (including the three next/prev/len
++		 * words of the sk_buff_head), not the skbs it points to,
++		 * leaking every frame still queued here.
++		 */
++		skb_queue_purge(&rose_neigh->queue);
+ 		if (rose_neigh->ax25)
+ 			ax25_cb_put(rose_neigh->ax25);
+ 		kfree(rose_neigh->digipeat);
 -- 
 2.53.0
 
