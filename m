@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774461;
-	b=ALGjz0JVJVugR2Xj/MSoeBnz2F5fU7ZPg5ViBsI7kM2Eh3m7yrMpXoMAPWdEVLE8/I5u
-	 +TBIEmhYGPm3fnOvVJalHGIE7wKKU+E4VeoD7y/Tnvlu8oWLaALmEwworO5dxH3OWrTVF
-	 j+Jd0MQffAVoLwQEme5TtsqicYgAFa0P7R+Yx0QFq0F7E7TEIRAe+d8DF13ipgFtfVFTq
-	 zblNFwjfWQ1NOYnY3h49VulQoKuVOrhGlWlbzunmQIaw9D1CildNOGzx19iSYQZD9MF0g
-	 T/oc1DcS/GhYz7+4BPRLMTLkKNQdzLMor7/Bt5/aojB/D8bZIBMrd7vAGdw6yVnfjxw==
+	t=1792774464;
+	b=jDQab9gjMZPG9U5/DDopZcqgBaQvvZxdMFYjDsfbXjQnmtx8nd+kESO730kDwV5Tgo1t
+	 6EldPwakgfSVidDpNF9dapp/3hCm4izqVx2SYkwrJdDONNBZEahPp0QvV6d2oFoBYhf9m
+	 9Xq0j4Q61SXuMbanSsuGAASkAfZNY20a/Eu00SmXjLzBMmqF9qBqCWegmNm8lk1k82E++
+	 p1prhwsEBkQpGnbpfqtqhYEYlUvobOntjKPuag6p5XubBwRQeYO/wIX+coP7KfH+4zM1s
+	 IO5WjCaNABwE7ZTIgkFtE228UR5wQgN/1PSlVa4yIpmEulU/qE1PAhBCOm73RqcdZPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8H/ijl1v9vMscGI3OIMp5RK2t7VTADUKGzeGmv+7pg8=;
-	b=N/MyaSg+aKIarDtUdJL1MJjEnQ4mC2qVnibyK2ZhpI4mh5rHWGB2qwZvXzknZH5uz0SA
-	 HNSPZdrKKL9Djos81FJSa0usLRZwEsmmQJj2hYaNJWK6xL8pudkU7l0Qbdq4KZskVOkEY
-	 Lt0vQr5D3kDEgseDPhORP4CKkYIyAPyI4lt52a+ImTZ19kMGdq74JGXcU7VrOPGfY2mu2
-	 zHqn6lgYZcOh8QR8Jgw8gGTqpvOVv+2bQvYeB+oli1JIYQYJK6Ah1iqB71Q2s9NLVikx/
-	 P08DWas2i6LUOt+BqkD3Yf6FLh2OhmPJjbCxI0plucIw3t8hL4lvJ6DByQRL/0i7Rpw==
+	bh=3j3UHSIlYAn+P5HIKk7C8yASBayASW7IALdEUUCow+c=;
+	b=u9RWPJjVRRPoEPUFoXsWo1K7Ba2C3/rY5QoCogrD6K5m1tvPJKkLi+2WAGEfIFePVCim
+	 fagwKah9mOFEKdzNm5uh12pVgryAMLzeA1G6CnwHYEV8k9ki/Kxoipv6xhznPet+RU+Ia
+	 PRhEHn8jUuxlInZhOdRZ9t/SVC77cDT7sZxNWBMDWs6zAamf0zW957Fnv/3mbvMnz8WzL
+	 3oSi1oNFE7kLRXfb0gDhycDRxYxA9UGxs2pa88hx/jFlJwVK2rPiT0NwOp3ishv0frcgY
+	 KGgJTOzNQsStHx2YEO8rEeTYRShQ5N4S2UcUSkbx3e6hk9SG2bLXu0zsDWJ7Gc/DZug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kt5k62pz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D/EOWaCt";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FAE606A31D;
-	Fri, 23 Oct 2026 16:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31032606A31B;
+	Fri, 23 Oct 2026 16:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kt5k62pz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738BD1F031E0;
-	Fri, 23 Oct 2026 16:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D/EOWaCt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795D81F01829;
+	Fri, 23 Oct 2026 16:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774461;
-	bh=8H/ijl1v9vMscGI3OIMp5RK2t7VTADUKGzeGmv+7pg8=;
+	s=korg; t=1792774464;
+	bh=3j3UHSIlYAn+P5HIKk7C8yASBayASW7IALdEUUCow+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kt5k62pzL3dkuoE6eutDVPZI+2lBvOVANf+2hO/NRvivqxrKNx8EiiYdv7CBIVRUc
-	 rdIwQRXzSKiLMDt54THp/TDV9LAdGcquCook/GSKf3Nn9FwQx4Hc8dQIg3XpyKxh4w
-	 K9DWBx0yh+rtVi3Y8IL1K20UgVERp3JEcNkXZPRw=
+	b=D/EOWaCtU4f+uIZwQKVGwi6BjN46od0XG1iLCsZLgNAPvgQQRHYpP6HCX/K0Oz/Mm
+	 VEa2QuXVUd8FC5W+zYn6oeWlO7rEE2BLQRuPBrdQ/8DO2X7X5xiZLNZ/lOozwJxbgb
+	 Kx1CWUqW/AbhtrIIsG3EhyH7hk4ydNIWGBHEJvbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Zhangfei Gao <zhangfei.gao@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 010/242] Drivers: hv: Dont reset VMBus connection state on error/exit paths
-Date: Fri, 23 Oct 2026 18:37:32 +0200
-Message-ID: <20261023163714.041651994@linuxfoundation.org>
+Subject: [PATCH 7.2 011/242] pinctrl: qcom: nord: fix GPIO interrupt target width
+Date: Fri, 23 Oct 2026 18:37:33 +0200
+Message-ID: <20261023163714.064534853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,65 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhkelley58@gmail.com>
+From: Zhangfei Gao <zhangfei.gao@oss.qualcomm.com>
 
-[ Upstream commit ec31dc39e835ccde0930daccece8c492d28282fc ]
+[ Upstream commit 68ab4a6a84b92f52650508acb60317eb76454250 ]
 
-In two places, current code forces vmbus_connection.conn_state to
-DISCONNECTED prior to calling vmbus_disconnect(). But vmbus_disconnect()
-calls vmbus_initiate_unload(), which unloads the VMBus connection
-only if the conn_state is CONNECTED. Consequently, the connection
-remains and the Hyper-V host might continue to send messages or post
-VMBus interrupts.
+The TARGET_PROC field in the Nord GPIO_INTR_CFG registers occupies bits
+11:8. Describe it as four bits wide so the common Qualcomm pinctrl code
+clears the complete field before routing an interrupt to the application
+processor.
 
-The problem was introduced in commit 74347a99e73ae ("x86/Hyper-V:
-Unload vmbus channel in hv panic callback"), in that
-vmbus_initiate_unload() started checking the current connection
-state before doing the unload. This commit removed some occurrences
-where conn_state was forced to DISCONNECTED, but these two remained,
-apparently due to an oversight at the time.
+Without intr_target_width, the common code uses its three-bit default
+mask. Since GPIO_INTR_CFG resets with TARGET_PROC set to 0xf (NONE), bit
+11 remains set when the driver programs HMSS target 3. The resulting
+target is 0xb (HPASS_DSP_1), observed as an interrupt configuration value
+of 0xb1b instead of 0x31b.
 
-Fix this by not forcing conn_state to DISCONNECTED during VMBus exit,
-or if a failure occurs when establishing the connection in the first
-place. Whatever value conn_state has at the time is then read by
-vmbus_initiate_unload() to determine if there is a connection to
-be unloaded.
+The GPIO interrupt status is consequently latched, but the HMSS TLMM
+summary interrupt at GIC SPI 208 is never asserted. This affects all Nord
+GPIO interrupts using the TLMM summary path, including the Ethernet PHY
+interrupts on GPIO55 and GPIO141.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hyperv/20260805205806.B5AC31F000E9@smtp.kernel.org/
-Fixes: 74347a99e73ae ("x86/Hyper-V: Unload vmbus channel in hv panic callback")
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: c24dd0826f06 ("pinctrl: qcom: add the TLMM driver for the Nord platforms")
+Signed-off-by: Zhangfei Gao <zhangfei.gao@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916085720.771498-1-zhangfei.gao@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/connection.c | 1 -
- drivers/hv/vmbus_drv.c  | 1 -
- 2 files changed, 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-nord.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
-index 0fd50d4cb5739..4c8bc57fbb5aa 100644
---- a/drivers/hv/connection.c
-+++ b/drivers/hv/connection.c
-@@ -343,7 +343,6 @@ int vmbus_connect(void)
- cleanup:
- 	pr_err("Unable to connect to host\n");
- 
--	vmbus_connection.conn_state = DISCONNECTED;
- 	vmbus_disconnect();
- 
- 	kfree(msginfo);
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 18ee549d98809..300762315b902 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -3049,7 +3049,6 @@ static void __exit vmbus_exit(void)
- 
- 	hv_remove_kexec_handler();
- 	hv_remove_crash_handler();
--	vmbus_connection.conn_state = DISCONNECTED;
- 	hv_stimer_global_cleanup();
- 	vmbus_disconnect();
- 	if (vmbus_irq == -1)
+diff --git a/drivers/pinctrl/qcom/pinctrl-nord.c b/drivers/pinctrl/qcom/pinctrl-nord.c
+index 7f37f8e819bab..010760cf0bf5c 100644
+--- a/drivers/pinctrl/qcom/pinctrl-nord.c
++++ b/drivers/pinctrl/qcom/pinctrl-nord.c
+@@ -32,6 +32,7 @@
+ 		.intr_wakeup_present_bit = 6,                         \
+ 		.intr_wakeup_enable_bit = 7,                          \
+ 		.intr_target_bit = 8,                                 \
++		.intr_target_width = 4,                               \
+ 		.intr_target_kpss_val = 3,                            \
+ 		.intr_raw_status_bit = 4,                             \
+ 		.intr_polarity_bit = 1,                               \
 -- 
 2.53.0
 
