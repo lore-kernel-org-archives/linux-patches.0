@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774440;
-	b=A9AnHJ51AMOLv2NxOyFHO2SayzjW2SQz5sUxhDW4LRvFN90YOJ/JZjUUMxKxgHDelkZM
-	 yfXrtyp+/373/h/YN1Lb3iINOPzEZ+abRN81ovoU6gqmihdyIW35iGKV47LGLIYWK4oBK
-	 fldmWL00OqgqnCwgTM/XXS7v2NCMclvxo3QIf5FRr0gzn8VWwfSQKA2vOHKEErwwkaBKA
-	 MAlC2cOMIaNLJlPAlu8eJjLkvPV8AhmG41TgatISCul0Tu9vv3wa+lrN+dAo0cNaazSah
-	 uKq8IEPyxocFoka2Aht9moDcsWbYdBaFIeHA8WglMm1wDDi3KVcJ50FyKSG14yVS63A==
+	t=1792774443;
+	b=hUggxS1yn3LXG9+QsNVidLIyE5ObxTbvvcIDzAjoMCJwLWUkE3TIHydZ1RSvUFeYwHfj
+	 Loi7O0T3JBLQEOxdi0ZyK9EqbelYLvk8Be3Gx8Xi8KVdmjv6wSCOevlIHBbGybOl8u4ms
+	 0Ly475gSyvZfxcgTJGZNIVP+wJRkfPTiQP1ZddhH6ib1BdYI+uRZdKXdh57yHmwDToGni
+	 3Mj8TGG5UXgldOLxFkNrPPE47prA8ac+Ze3VeE6Xt3jJ2SeBhni2t7k7tWCIU4jzDwyyl
+	 8Qgrld/7eG6UnultdJBIPYz+GvE6QD7358tDu+48UDmO7/Y0IYwyUVRd4o7UI5KrYEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774440;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774443;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y0K5JnBd71RZsTVV1vFSrV5NiojZaBes79u+VOw7sY0=;
-	b=eq4KEgN6h1CbHNQMpgM4RcYihL9xu8L/IGtQkbpMvPKEkmWfve33Sl2Xf+iB0q6Mubrf
-	 cJ9mrWyf0ftASM7aX/qoZpJ5gZu7oDeE1yTnOxOaE8aIGgWWD0/4NoOYngamfYHfT+RHu
-	 D1zhboCgK1rUyzDOthsP3R+N8k7Xo0+m2tLO6Ubrhk4KkUtvjQ2+Fw7OEPblAW3VIf9gg
-	 j3T96WbIwdao0d5Qgx8dVGqI/+eMFQMtFa8zarlkHinIDHLzp8s49iApeDkvhN4epMUcV
-	 QYX6ztpDqH09imKZTlbgS8d1N4zD1gzYii1V08Eayp0QA0PrGA8iX/P66nQofTH2M9A==
+	bh=bc4Ubbgr+bPf6z2FjWRMJ4LHHiXj5ATor/Unufx6Vuw=;
+	b=A5p0e7HpDtC7Bce8n4KNo5YGqtSIGlK5yHk8OM28e7NizmhWAAchFZLzUmru2p6elaVw
+	 pvn1Z/W+844/qTPY3edtMq/tMrFTyjIha42QgLJ9Odoz39yJ/fV64CioTueuTw57TbD3q
+	 18AgEb5mY0rZIRhDSDr8kBdVNpdQkFilfF/pYiYtLabmT87DgRxIe1F2FP6qn8Y5nbKUm
+	 25mCRodwWGyHrf0B3QLta6pCg+G6+gwiNHeSOis9Zj0Bu4ONUH9KRxfe2aElhiskTl4Es
+	 P70g87ooMgo3OgVcxpeGAasAkATVlZkw6SGcHknDaK40w0UTsIcQXxY80QZDdchz53w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xqv6HGvE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wQkk01B8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C61606A31F;
-	Fri, 23 Oct 2026 16:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B4C606A31B;
+	Fri, 23 Oct 2026 16:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xqv6HGvE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975481F01828;
-	Fri, 23 Oct 2026 16:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wQkk01B8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917F71F01825;
+	Fri, 23 Oct 2026 16:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774440;
-	bh=Y0K5JnBd71RZsTVV1vFSrV5NiojZaBes79u+VOw7sY0=;
+	s=korg; t=1792774443;
+	bh=bc4Ubbgr+bPf6z2FjWRMJ4LHHiXj5ATor/Unufx6Vuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xqv6HGvEpjKmu0wIpvdbgMtb9qTYrekttKCasyc1p8e8nnxuqHfYmMeaOUcESl7xx
-	 uiCR7rsWoNAD5xb574aiSwsufPFe2vvXlwM5Ig9R5qXMPkl5mryif0zyJx+jmSnhjR
-	 S/Kfg4EuNqbEZ1xdJX988IFXfn5+s2ssqJoHAyrM=
+	b=wQkk01B80PpPK6FRtMeU2x7l+HrP7UFOfrs7ckAMGVHn7sA3FPmAzX32j7+8OTdBb
+	 WeTKapyP3zBfdjqNo9+8yow1UyUgW+2ehhfQ7Rm/tDo+VDJsvu6CchGLXEhwoey5S6
+	 1vFpNz+nMiGQJzpQ66FIIiDL3jKN4YjN4ciWX2Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Igor Paunovic <royalnet026@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 040/242] netlink: reset skb headers before unicast and multicast filtering
-Date: Fri, 23 Oct 2026 18:38:02 +0200
-Message-ID: <20261023163714.726151415@linuxfoundation.org>
+Subject: [PATCH 7.2 041/242] accel/rocket: clear rdev on device init failure
+Date: Fri, 23 Oct 2026 18:38:03 +0200
+Message-ID: <20261023163714.750307062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,58 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 8bf659bd54e1f00e34cf5244b1d289c506fa47c0 ]
+[ Upstream commit 4ac852419f0d317c7bd8db5b8acb3cc78be7fe33 ]
 
-Socket filters can use SKF_NET_OFF and SKF_LL_OFF to read relative to
-an skb's network and MAC headers. Netlink producers may reserve
-headroom without resetting those headers, allowing a receiving socket's
-filter to read data before the initialized message.
+rocket_probe() stores the return value from rocket_device_init() in the
+file-scoped rdev pointer before checking whether it is an error pointer.
+If rocket_device_init() fails, rdev is left as an ERR_PTR.
 
-For example, IWPM HELLO replies are allocated with dev_alloc_skb(),
-which reserves NET_SKB_PAD bytes. An unprivileged NETLINK_RDMA user can
-attach a classic socket filter and disclose this headroom through the
-length of the delivered reply. The resets in netlink_dump() do not help
-because IWPM sends a separately allocated skb through netlink_unicast().
+The rdev pointer is also used as the marker for whether the shared rocket
+device has already been initialized. A later core probe can therefore see
+a non-NULL rdev, skip rocket_device_init(), and dereference the error
+pointer when reading rdev->num_cores.
 
-Reset both headers before running the receiver's filter in unicast and
-broadcast delivery, as is already done for dump skbs. This also covers
-other netlink producers that reserve headroom without changing their
-allocation or message-building code.
+Save the error code and clear rdev before returning from the
+rocket_device_init() failure path.
 
-Fixes: b1153f29ee07 ("netlink: make socket filters work on netlink")
-Assisted-by: LLM
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20261006224232.50724-1-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ed98261b4168 ("accel/rocket: Add a new driver for Rockchip's NPU")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Igor Paunovic <royalnet026@gmail.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260708062845.716487-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/accel/rocket/rocket_drv.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 7288de715341a..5324edb13760a 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1363,6 +1363,8 @@ int netlink_unicast(struct sock *ssk, struct sk_buff *skb,
- 	if (netlink_is_kernel(sk))
- 		return netlink_unicast_kernel(sk, skb, ssk);
- 
-+	skb_reset_network_header(skb);
-+	skb_reset_mac_header(skb);
- 	if (sk_filter(sk, skb)) {
- 		err = skb->len;
- 		kfree_skb(skb);
-@@ -1497,6 +1499,8 @@ static void do_one_broadcast(struct sock *sk,
- 		goto out;
+diff --git a/drivers/accel/rocket/rocket_drv.c b/drivers/accel/rocket/rocket_drv.c
+index 8bbbce594883e..67e7f543fe4c7 100644
+--- a/drivers/accel/rocket/rocket_drv.c
++++ b/drivers/accel/rocket/rocket_drv.c
+@@ -165,8 +165,11 @@ static int rocket_probe(struct platform_device *pdev)
+ 		/* First core probing, initialize DRM device. */
+ 		rdev = rocket_device_init(drm_dev, &rocket_drm_driver);
+ 		if (IS_ERR(rdev)) {
++			int err = PTR_ERR(rdev);
++
+ 			dev_err(&pdev->dev, "failed to initialize rocket device\n");
+-			return PTR_ERR(rdev);
++			rdev = NULL;
++			return err;
+ 		}
  	}
  
-+	skb_reset_network_header(p->skb2);
-+	skb_reset_mac_header(p->skb2);
- 	if (sk_filter(sk, p->skb2)) {
- 		kfree_skb(p->skb2);
- 		p->skb2 = NULL;
 -- 
 2.53.0
 
