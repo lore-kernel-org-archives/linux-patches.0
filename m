@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774602;
-	b=tHqQB0CH2JwZ0G/t/GW+jF3edbZAEO3nBtnVvUjBrUKK0iKpSoQxJNlDOyPqLZRF34yp
-	 MI58Vre1KnWlF8mo36MP1uqBildNud2qjn2JUVy52PM/ur+1WUlhwB39YFOTS69bXEw0N
-	 6h3bo5kxbXdeZY2hBkUvxb5npZgDKlNOmRsA6XQg25N+08jVARfOC1l8NgxiHNYe8y0iP
-	 BkXlyTy/rFGr87lPcqdUK+UFOGTR+l+ztHmA0ive4sR0S2B13MpWkzIJOoGvfV5bGNedA
-	 s12PkVdIGJCOnMNIip+folVHCiWUECaK+UCBpZX02Ism/zIdEE8JwXbuPbecOEiPDsw==
+	t=1792774599;
+	b=AWVGXhxG5bRfygS98JQ9pxNKLmk4EhsZgq3IZVPk53HS8UKwYJaStq+VN7WQFtMqEqt7
+	 cxBknU/Pfj2FTjMSjnTN8x3j/e/weiwUp8UlZ3UJkhL1OQaQSa0+2TvPRWWQQLvCjyGSm
+	 dFWGTLrDbkMoibNM8gmEYOHsBEjYmnspcjNQErZ1j/t36evCPbAY9eSbm7jpnaP4kHkuf
+	 SSwa5xjFlr37FRWdlNl4LZwr46rrSs4C4nnKG9QPz1YkkKNPtpFh+F4XfmlC7spMlIayC
+	 8DMZcp36ct8iZuR1XpxQ6FBmQz5Fe+thbxU1WmMZ1I8s8NVfJLeoRMYhB7uKj7eWFFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774599;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fz1IYXiS/iyu4RGpyXADii1kr8Hebta4Sw2l4EJGapI=;
-	b=ZR/R7t//55ycujqr6ITFgmYTUNvC3Qh9zlDuyKiF9FMExeC5AVqgqdGlKwlRjnyuTLuL
-	 RF0cyW4kfW52IMD5ScgAOnGDnBa23UcYmxjfFWyUYJQIwvF898bZ4P1TZ11t8LhZemvqL
-	 xVi1d7cNaP4iTzW63xUdoN6JWsgcwSac2YuR/dhygf26sZvLWnASW8fwQLPjO0cT0V875
-	 zUX1MF5yZ5CnvYtIQQP9Di1TxfccpZVMMF+iM496BGsnou+qLmxHSc7qGg+qZcvzztWGI
-	 jax3GUWe7UgU6OukAmPg1OACQwLsR06Evhuu14EubSK4EkdkdRRm4+pRJKPCSbrIJww==
+	bh=kK4NHdhFP0SMnkIOpLM6PHQXivWDmXt4RkHPOEGlBD4=;
+	b=lq1hRmjNTEmkn4+8ENVtv7M6uBBShMi/KuFvyvx91D/AlMglBSffycoPztUE1XKfqeQB
+	 laEE2j/f1R1qCnYIewfll5XPNuBu5UCiUr4OIYWNmA7ft+H8kqWFd6YeOdCIC7yzzd0FQ
+	 LHR4I2qrOqhJpB+BYs+1z6W0WQYBx8HnoGS/1/g6/QaFYq8GcZ/X88FsKh3hbZnTHnPYA
+	 1aDNhOTtK3qiQf4MzCgQB1fbvDPyxrXGlHPdLN1rSLMtfV7Ir+uHxKDyrqOClSyvft3Dq
+	 oAaV15pJM4upt25jK8NlNut+P/2r5hMAhmhNI4VcwCLd+BebfEPdeRcfzxsQGkS7Yyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDPFsZBw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A88/hSjh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB71606A31E;
-	Fri, 23 Oct 2026 16:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DFB606A31B;
+	Fri, 23 Oct 2026 16:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDPFsZBw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEA41F01825;
-	Fri, 23 Oct 2026 16:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A88/hSjh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32E21F01828;
+	Fri, 23 Oct 2026 16:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774602;
-	bh=Fz1IYXiS/iyu4RGpyXADii1kr8Hebta4Sw2l4EJGapI=;
+	s=korg; t=1792774599;
+	bh=kK4NHdhFP0SMnkIOpLM6PHQXivWDmXt4RkHPOEGlBD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sDPFsZBwRS28qk5u2Rt/RJIBvOTntA7SGiiGkxTSPNqChWWc1FyZpCmVU0mtYCPdk
-	 ILcBqKZIssQR1I2EowWJSTE1WwODJsxa7t6H4BepHLJHPLWjj0Fq/bEZywCGj+yxi3
-	 LwIMFVr9v8W/BxtYLwUSnYv4V87aU1Qfmsg+lYzs=
+	b=A88/hSjhRAblO9MbcX0uCCbA30tShkmGsOz+KgJO3u05PL4d3aEKJSxDud515iqqO
+	 N2AYKjC5jOgZJ+D2aEdbf0b78viFjkpd561VnKgLGXDI7Y8XOAeN/pbgSI3nmnwrMA
+	 1yIIg0EuMui5mcasc3n13891tjZn94mqpjZ887bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Zobernig <lukas.zobernig@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Alexander Gruhlke <gruhlke@mailbox.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 097/242] x86/insn-eval: Fix shadowed segment index in get_seg_reg_override_idx()
-Date: Fri, 23 Oct 2026 18:38:59 +0200
-Message-ID: <20261023163716.077239814@linuxfoundation.org>
+Subject: [PATCH 7.2 096/242] PCI: Dont treat ~0 as ready in pci_dev_wait() with RRS SV
+Date: Fri, 23 Oct 2026 18:38:58 +0200
+Message-ID: <20261023163716.049624372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -70,72 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Zobernig <lukas.zobernig@gmail.com>
+From: Alexander Gruhlke <gruhlke@mailbox.org>
 
-[ Upstream commit 32c52ec87d6245ee2d12ed5dd509e40062939b50 ]
+[ Upstream commit e8df1d194c39b7a5159d570798941851f70a8668 ]
 
-Commit 45e1dccc0653 ("x86/insn: Simplify for_each_insn_prefix()") made
-for_each_insn_prefix() declare its own loop counter named idx.
-get_seg_reg_override_idx() keeps its result in a local of the same name,
-so the assignments in the loop body now write the loop counter:
+With RRS Software Visibility, pci_dev_wait() considers a device ready as
+soon as reading the Vendor ID doesn't return the RRS value.  Devices aren't
+required to respond with RRS while they aren't ready, so the read may
+return ~0 and pci_dev_wait() stops waiting too early.  This was seen with
+Intel [8086:0a54] and Samsung [144d:a80c] NVMe SSDs.
 
- - the function always returns INAT_SEG_REG_DEFAULT, so FS and GS
-   overrides are ignored;
+Also wait while the Vendor ID reads ~0.  A VF's Vendor ID always reads ~0,
+so check its Command register instead, as is done without RRS SV.
 
- - a CS override sets the counter to INAT_SEG_REG_CS (2), the increment
-   makes it 3, and prefixes.bytes[3] holds the last prefix, 0x2e again,
-   so the loop never terminates.
-
-The UMIP emulation reaches this from the #GP handler for user space: an
-SGDT, SIDT or SMSW with a memory operand and a CS prefix leaves the task
-spinning in the kernel, never returning to user space, with a SIGKILL
-that is never delivered.  Any user can thus tie up CPUs until reboot.
-With an FS or GS prefix, the emulated result is written to the wrong
-address.
-
-Rename the internal macro iterator variable.
-
-[ Lukas' original patch renamed the use site, I changed it to rename the
-  iterator in the macro instead, but left Lukas' commit message and
-  authorship   - Linus ]
-
-Fixes: 45e1dccc0653 ("x86/insn: Simplify for_each_insn_prefix()")
-Signed-off-by: Lukas Zobernig <lukas.zobernig@gmail.com>
-Acked-by: Peter Zijlstra <peterz@infradead.org>
-Acked-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: d591f6804e7e ("PCI: Wait for device readiness with Configuration RRS")
+Link: https://lore.kernel.org/r/20250611101442.387378-1-hui.wang@canonical.com
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Alexander Gruhlke <gruhlke@mailbox.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://patch.msgid.link/20261011190145.23621-3-gruhlke@mailbox.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/insn.h       | 2 +-
- tools/arch/x86/include/asm/insn.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/pci.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/include/asm/insn.h b/arch/x86/include/asm/insn.h
-index 846d21c1a7f88..8fb92da1a2c46 100644
---- a/arch/x86/include/asm/insn.h
-+++ b/arch/x86/include/asm/insn.h
-@@ -321,7 +321,7 @@ static inline int insn_offset_immediate(struct insn *insn)
-  * are repeated, it cannot be used for looping over the prefixes.
-  */
- #define for_each_insn_prefix(insn, prefix)	\
--	for (int idx = 0; idx < ARRAY_SIZE(insn->prefixes.bytes) && (prefix = insn->prefixes.bytes[idx]) != 0; idx++)
-+	for (int __i = 0; __i < ARRAY_SIZE(insn->prefixes.bytes) && (prefix = insn->prefixes.bytes[__i]) != 0; __i++)
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 80d2338b2a0a8..c8be53376ff3b 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -1213,9 +1213,11 @@ static int pci_dev_wait(struct pci_dev *dev, char *reset_type, int timeout)
+ 	 * initialize.
+ 	 *
+ 	 * If the device is below a Root Port with Configuration RRS
+-	 * Software Visibility enabled, reading the Vendor ID returns a
++	 * Software Visibility enabled, reading the Vendor ID may return a
+ 	 * special data value if the device responded with RRS.  Read the
+-	 * Vendor ID until we get non-RRS status.
++	 * Vendor ID until we get non-RRS status and something other than
++	 * ~0.  The Vendor ID of VFs reads ~0, so check their Command
++	 * register instead.
+ 	 *
+ 	 * If there's no Root Port or Configuration RRS Software Visibility
+ 	 * is not enabled, the device may still respond with RRS, but
+@@ -1235,8 +1237,13 @@ static int pci_dev_wait(struct pci_dev *dev, char *reset_type, int timeout)
  
- #define POP_SS_OPCODE 0x1f
- #define MOV_SREG_OPCODE 0x8e
-diff --git a/tools/arch/x86/include/asm/insn.h b/tools/arch/x86/include/asm/insn.h
-index 8f10f29433703..1d2903508bbeb 100644
---- a/tools/arch/x86/include/asm/insn.h
-+++ b/tools/arch/x86/include/asm/insn.h
-@@ -321,7 +321,7 @@ static inline int insn_offset_immediate(struct insn *insn)
-  * are repeated, it cannot be used for looping over the prefixes.
-  */
- #define for_each_insn_prefix(insn, prefix)	\
--	for (int idx = 0; idx < ARRAY_SIZE(insn->prefixes.bytes) && (prefix = insn->prefixes.bytes[idx]) != 0; idx++)
-+	for (int __i = 0; __i < ARRAY_SIZE(insn->prefixes.bytes) && (prefix = insn->prefixes.bytes[__i]) != 0; __i++)
- 
- #define POP_SS_OPCODE 0x1f
- #define MOV_SREG_OPCODE 0x8e
+ 		if (root && root->config_rrs_sv) {
+ 			pci_read_config_dword(dev, PCI_VENDOR_ID, &id);
+-			if (!pci_bus_rrs_vendor_id(id))
+-				break;
++			if (!pci_bus_rrs_vendor_id(id)) {
++				if (PCI_POSSIBLE_ERROR(id) && dev->is_virtfn)
++					pci_read_config_dword(dev, PCI_COMMAND,
++							      &id);
++				if (!PCI_POSSIBLE_ERROR(id))
++					break;
++			}
+ 		} else {
+ 			pci_read_config_dword(dev, PCI_COMMAND, &id);
+ 			if (!PCI_POSSIBLE_ERROR(id))
 -- 
 2.53.0
 
