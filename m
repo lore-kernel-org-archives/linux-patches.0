@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774651;
-	b=V6374SOGOti5sVsbgKsA5+M/VKM+OE4xmQvShJfpwr+F6deiFFztb/DsZ8KLnS0gm2hO
-	 UMLgDLZTkAhFQsq3RQCgRPfgG1RDXH0W2nyhIPN+kFI9b5jWx/ukswdqJK+sJKwdGtLof
-	 j2wZaol5xQ9ecsaQea8zr//Ssa4MqA8fXgJn5urDCP6bt0iJlnzW7i3ts55loD2VdJyPm
-	 cZeUbYxuCUeVhOrnJwZwY1IUVECrA3//FDZvDYYBX2lgPGkoY5B/PpsbXx9vmQljoTujR
-	 XmiibTjH6KJJbdJBr9w7DLwWguPjucJ3wbmA1SnsrTxVwJl6bBxMuLoVGA8ghaPNILg==
+	t=1792774654;
+	b=ksRw/+1VTwsplDqU2/nRs9GyRa2oZ+cC5M7XIzWrAj21r1VzXZuzZP59nirg59jMpj5g
+	 7QdusH99VqJsl+YHfvkT3gY2e93TjZ1h1PBLXlhNT44RCjBLShi2UfRRRTU6W7d5klF+d
+	 7RfL+To7wHZf6AnjLLt2vfIv8joc+YMcNAeNrpqN2J+i00WUH+A7Weg6KYsVRIJs0m9If
+	 t6zfC9woKm+OwHmPR+mBqWoLm6pcBEOOIdKNok5n7y3uMzfG92h1ou4pnWVQTLDR8cnFV
+	 nAY19nr6BrhQ0s5bb+CuZZY/AwtzgweFhQOMl5/XxRYx2S9nm3h6IV5poO2EZdmEGaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774651;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774654;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wdh6mo0M4GjgaRt38VU6VNEHMQDno+LjyFfWVdVWqUY=;
-	b=zjUx4PcSFpFUG2awgnjtGuGrlHynkhOoq0rAhSJ2S8SnPVM7iw8164YmvkG0zYDqhRYP
-	 yHFtjLIrghJfMILRObRRxzcykFve/5kQUAEh+TUPDZY+9CcsKVkYerJcwWze7Z9Wdtgli
-	 4I3PGr8uDzizMqNoYk2ONcZ16xhmlgTmSFNuilnLJ4yxCf0bVKf9IEq69EqI/MC6VdMyE
-	 l5rljI/3AvwrSHv4O+jfRTmQPdpfoLYwGL7vcD7U5pcquEebqeFFGvqv/H9fDIzv1LKAw
-	 A2Io+XFSecSaILPV1t/FZyUBWuQBuVAosoaJlZpsA3hMg0T7O7qqYPvU7+u9mCFj0qw==
+	bh=25m3RgPO7Ww9GDCOHeWLHRAmkeAtY7WFHQ+HXwinn4M=;
+	b=mCgTSgNjsCXj+meYryl0dVHsFsgfUnKdfqYLDoQ+mCze9YvHnLowPzSgXRrZ6C3md9+m
+	 /MA5EzAE/bqiPFUAfFVNzI30UZelmNiW7Xe5A+xIlkAZT3Ly+tKne19VcfX6oJr443tiQ
+	 u3iOXqDMmRT+qHjXFeUF/zfiCjAtKIePqV0WrLbvyM1s7grYAiYAEvjlaMQirzaB9NxyO
+	 UNOadCARkSxCNNo2X/32A8GV0ZE/nIK2vqVPjCbXhqGzEkT8YqN59+IvPPCs8MMvmZs6R
+	 y1aHLXUwL+2Qhhy1IR+YdHIOCXh00vgPTB25LJ1h9ekNiBS+3qgNWlQfLThxP05Vnyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zb+9fkkt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u/ijncWR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3A6606A31E;
-	Fri, 23 Oct 2026 16:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D612606A31D;
+	Fri, 23 Oct 2026 16:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zb+9fkkt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DC11F01825;
-	Fri, 23 Oct 2026 16:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u/ijncWR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9211F01825;
+	Fri, 23 Oct 2026 16:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774650;
-	bh=Wdh6mo0M4GjgaRt38VU6VNEHMQDno+LjyFfWVdVWqUY=;
+	s=korg; t=1792774653;
+	bh=25m3RgPO7Ww9GDCOHeWLHRAmkeAtY7WFHQ+HXwinn4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zb+9fkktj45BDXWLOTFW0ososAXvElTRsUpECAVchtuhZ6tblw3AIhDLSwbJ+eqS1
-	 AzaIjRFsgLA9eh8jpJvX83es9WfQd35Af8K6xvVj/hcIc9jjYHdkiI/2aWADx87TzL
-	 axdIKjTRftxVToD+6tnzWBN3wP6o7wzBIu2oxGB0=
+	b=u/ijncWReSsuIZLx9DmwYtq/bVJ/mar7ruMiyrqQAeUN6gi/d5bplzuEblzKJXayR
+	 q9CO8J7r0185cMU6jKQOMpan5pRqGEqCq8nVm/jNqEfwmTczwSBcVTM9JiRi4CIB9C
+	 mEKNL4PBgqde6orPVFPhqOlYU2e/erYzIVD0hzxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Aviv Vaknin <vaknins33@gmail.com>,
+	Bradley Morgan <brads@mainlining.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 112/242] fsnotify: prevent mark additions during connector teardown
-Date: Fri, 23 Oct 2026 18:39:14 +0200
-Message-ID: <20261023163716.428390128@linuxfoundation.org>
+Subject: [PATCH 7.2 113/242] pid_namespace: make zap_pid_ns_processes() freezable
+Date: Fri, 23 Oct 2026 18:39:15 +0200
+Message-ID: <20261023163716.452153964@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,86 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Aviv Vaknin <vaknins33@gmail.com>
 
-commit 36ebddca56b9d8993d6dc984fdecc748ee1f5e06 upstream.
+commit 81933038f5e273d17ed22792f906889393b204c5 upstream.
 
-fsnotify_destroy_marks() keeps a reference to its current mark while it
-drops conn->lock to destroy the mark. This stabilizes the forward-walk
-cursor, but does not prevent a new mark from being inserted before it.
-For example, an inotify watch re-added after IN_IGNORED sorts before the
-old, detached mark for the same group. The walk can miss the replacement
-and then detach the entire connector from the object.
+When the init of a pid namespace exits, zap_pid_ns_processes() waits
+until all other pids in the namespace are freed. A tracer outside the
+namespace that does not reap its traced zombies keeps those pids
+allocated, so this wait has no upper bound, and while it lasts every
+suspend attempt fails:
 
-The replacement is still on its group's marks_list and, for inotify, in
-the watch IDR. The group mutex no longer protects the connector's object
-from disappearing. An unprivileged fdinfo read racing the final detach
-can consequently call igrab(NULL):
+  Freezing user space processes failed after 20.006 seconds (2 tasks refusing to freeze, wq_busy=0):
 
-  BUG: KASAN: null-ptr-deref in igrab+0x24/0x100
-  Write of size 4 at addr 0000000000000148
-  Call Trace:
-   igrab+0x24/0x100
-   inotify_show_fdinfo+0x1dc/0x5e0
-   seq_show+0x397/0x690
+Neither wait is freezable. The first loop sleeps in do_wait(), which
+returns -ERESTARTSYS on the freezer's fake signal; the loop then clears
+TIF_SIGPENDING and waits again without ever freezing. The final loop
+sleeps in TASK_INTERRUPTIBLE, and since nothing clears TIF_SIGPENDING
+there, schedule() returns immediately after the first freeze attempt
+and the task spins until the wait ends.
 
-Set a DESTROYING flag under conn->lock before starting the walk, and
-reject new marks on that connector with -ENOENT. The existing add-mark
-error paths undo the temporary group-list entry and the backend's watch
-allocation. Do not wait for teardown while holding the group mutex,
-which the destroyer needs. Once the old connector is detached, an add
-can install a fresh connector as before.
+Sleep in TASK_INTERRUPTIBLE | TASK_FREEZABLE in do_wait(), so that the
+freezer can freeze tasks waiting there directly, and in TASK_IDLE |
+TASK_FREEZABLE in the final loop, like coredump_task_exit() does.
 
-This closes the insertion race for all object types using the common
-connector teardown, without changing the mark reference or SRCU lifetime
-rules.
+This was hit with Chromium-based browsers: crashpad ptrace-attaches the
+threads of a crashed renderer, which is a pid namespace init, and does
+not reap those killed during the dump.
 
-Fixes: 6b3f05d24d35 ("fsnotify: Detach mark from object list when last reference is dropped")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Fixes: 3eb07c8c8adb ("pid namespaces: destroy pid namespace on init's death")
+Fixes: b9a985db9896 ("pid_ns: Sleep in TASK_INTERRUPTIBLE in zap_pid_ns_processes")
+Cc: stable@vger.kernel.org # 6.1+
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Aviv Vaknin <vaknins33@gmail.com>
+Link: https://patch.msgid.link/20261002202820.3433318-1-vaknins33@gmail.com
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/mark.c                 |   11 +++++++++++
- include/linux/fsnotify_backend.h |    1 +
- 2 files changed, 12 insertions(+)
+ kernel/exit.c          |    2 +-
+ kernel/pid_namespace.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/notify/mark.c
-+++ b/fs/notify/mark.c
-@@ -925,6 +925,11 @@ restart:
- 		goto restart;
- 	}
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -1730,7 +1730,7 @@ static long do_wait(struct wait_opts *wo
+ 	add_wait_queue(&current->signal->wait_chldexit, &wo->child_wait);
  
-+	if (conn->flags & FSNOTIFY_CONN_FLAG_DESTROYING) {
-+		err = -ENOENT;
-+		goto out_err;
-+	}
-+
- 	/* is mark the first mark? */
- 	if (hlist_empty(&conn->list)) {
- 		hlist_add_head_rcu(&mark->obj_list, &conn->list);
-@@ -1113,6 +1118,12 @@ void fsnotify_destroy_marks(fsnotify_con
- 	if (!conn)
- 		return;
- 	/*
-+	 * New marks could be inserted before our cursor and survive the final
-+	 * detachment of the connector from the object. Prevent additions to
-+	 * this connector before dropping its lock.
-+	 */
-+	conn->flags |= FSNOTIFY_CONN_FLAG_DESTROYING;
-+	/*
- 	 * We have to be careful since we can race with e.g.
- 	 * fsnotify_clear_marks_by_group() and once we drop the conn->lock, the
- 	 * list can get modified. However we are holding mark reference and
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -566,6 +566,7 @@ struct fsnotify_mark_connector {
- 	unsigned char prio;	/* Highest priority group */
- #define FSNOTIFY_CONN_FLAG_IS_WATCHED	0x01
- #define FSNOTIFY_CONN_FLAG_HAS_IREF	0x02
-+#define FSNOTIFY_CONN_FLAG_DESTROYING	0x04
- 	unsigned short flags;	/* flags [lock] */
- 	union {
- 		/* Object pointer [lock] */
+ 	do {
+-		set_current_state(TASK_INTERRUPTIBLE);
++		set_current_state(TASK_INTERRUPTIBLE | TASK_FREEZABLE);
+ 		retval = __do_wait(wo);
+ 		if (retval != -ERESTARTSYS)
+ 			break;
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -268,7 +268,7 @@ void zap_pid_ns_processes(struct pid_nam
+ 	 * free_pid() will awaken this task.
+ 	 */
+ 	for (;;) {
+-		set_current_state(TASK_INTERRUPTIBLE);
++		set_current_state(TASK_IDLE | TASK_FREEZABLE);
+ 		if (pid_ns->pid_allocated == init_pids)
+ 			break;
+ 		schedule();
 
 
