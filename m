@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774914;
-	b=jGezJjZfSAvfrcF7jbeA/tbJ4IqceomJenewmH6x04xt48zDKjeeC5S2lZqzA72QaJKh
-	 n3d6ejsStWCt1vZh3EcUbMz2sNSdwrS139zqqtz6qZu3ezTUYbxmsK0UzbO4ZMkKhRaR8
-	 Ext3n1WH8lqUZsvXWmvEI+wdbtrCRKXoUOLz75azy/hGXR2dBa30ol5+ldZXjYHzZIUU9
-	 euCPaIwctLvRu7aNLhG8dIpK0qBQjt6cHDH5vp1lPMaKNsyU1pcgtpBOFNJWJPtPvTLtv
-	 ZzX0UBWyUax0jntjY4ZP9PIvWuopyaPfMWJW63uqezSpwrcrLq28j9WsWKSD+OpoO+Q==
+	t=1792774917;
+	b=Vs/b2LsRQCGa00SHSuwtWIcEHGQv7CRzdxFZ4ypUvSr9/gFRlMJNa7A3XGpk4+XkYnYM
+	 A/6ofuGIjLwVlx2LZndxa61A4I3+RHZCkXguPCreYab4oi83ao8z+So79FG8WKprY0Dnr
+	 sAC44YQGhVUOo4OcHKh2/JoRXiky4okad7RfZCawiI2k91yLg9gw5RIVJzrecyyZ1XjeR
+	 m5VQwXrDUfKhmJ6p8ZzakelMBl4dThVAm2QTkRkfHOH9K1R27uGhBWxuNmKqbvVPILLwg
+	 M1GscCo8s/yP9B/PgR8c5V22pr6AGe41cF9J0N1uCKc3r9/ylUbX0BX6C2NiyWTMiKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774914;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774917;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pcwv8+I1FI4huOxLtAuvO6A0vczI+BrqcHVW8Qw62lk=;
-	b=ec0TcgQyNLx+HO3ysK35yhKEUOsrbMi2Icj7O6d5r7hrxDHQlzToTcw/bDwukEPjuyzo
-	 6JJE3gifafQqjI7zhxf8jvgmEf/kvO4nCJYDCltkeKwiXcC3vrnCoP9tp3TXg5b5PWAeU
-	 WY9JloAHc7EB8F5wU86elK/gHvTtLNHO5pkMk30JgT55J0p7u/fR6pSiIPdbn/rw60LVg
-	 UWEYVRfZJptgs7+GoKKdI997B6zHSacoVqEDzph1JcZDVnUVRTmE73fesVCE+pG9ZK7Md
-	 ctnekHgjfeZEy6C/5un+8SFJ+GjpRjS2TMsB9W9tvpLWkiGQ82wbB0P2Y7+is7feOcg==
+	bh=IALod0vEC7M6FPCBDjO8/wOQW0qlHa5SzfuSsyRMSxQ=;
+	b=RUm5I4NQhQTCvFNXT/BxRJ/1iMRq/67Ws3n+R6udgxkcRl/cf6zUgQMzs//QLwC9U/m4
+	 qW4xrBWGPGGyQUxjW8K3EyRxWnxQ8YJOkPbCpCpZ+/Q7ZeIsQMxiPKzG4mWS+gP4JnPBq
+	 NXJqSr9pi1AKC5R7pW1tm06PHGgp22J7AgNbLm5Qj70n84asq+icMbXXkElyl9x3XWi6B
+	 o4Fo4RRmulVR8jwsxvbcaW3y5j8uW9//gOzRiZ+Hgz2HNzDqrZ49fdIRyuMciFAxQE0y8
+	 +Zh5AI2bHEcXAMwWrJe5Gm6NJyOSLrWoHn3gdHHaeXezWyMWzPiR9+61Z023Ij22KxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RA8hSdlu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OP+5Zdqw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CCD606A31D;
-	Fri, 23 Oct 2026 17:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758DB606A31A;
+	Fri, 23 Oct 2026 17:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RA8hSdlu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F521F01825;
-	Fri, 23 Oct 2026 17:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OP+5Zdqw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F6E1F01825;
+	Fri, 23 Oct 2026 17:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774914;
-	bh=pcwv8+I1FI4huOxLtAuvO6A0vczI+BrqcHVW8Qw62lk=;
+	s=korg; t=1792774917;
+	bh=IALod0vEC7M6FPCBDjO8/wOQW0qlHa5SzfuSsyRMSxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RA8hSdluULbcDNffzJ7oRlo71ULg6BTEsH/av1VvMUjqMssdIFd2HybGXaD0aHOp3
-	 MPgxEb00+Rppzji2DSqcC6qaIAAlxfSwj42DwXw3DhGhioSj12evlit8ZWoekk2Xk2
-	 UChsxjhOPOlQJbavr+L6xtugYVLdWn8D+1eAONHg=
+	b=OP+5Zdqwm2N2jp8iMNol0hZbO/5CBeku+guoaigogy9L2wZ8ihCFWpxWjoVPQ0U1O
+	 pOtEtABgFHWFNreESiaqRQ36wh/0UldDTGvBn8UpWakjbovcy7GqzbC/k38aHaMA5u
+	 Nc5UyfV4fBlrWn7YAnv8Ck9eZl2kTn9GO+1zRUrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.2 199/242] selinux: fix BPF token permission checks
-Date: Fri, 23 Oct 2026 18:40:41 +0200
-Message-ID: <20261023163718.499146990@linuxfoundation.org>
+	Charles Vosburgh <theminershive@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 200/242] sctp: validate chunk length in the inqueue parser
+Date: Fri, 23 Oct 2026 18:40:42 +0200
+Message-ID: <20261023163718.521171430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,108 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moore <paul@paul-moore.com>
+From: Charles Vosburgh <theminershive@gmail.com>
 
-commit 77d499e61d36e883a6ad1f10afe05f556aa7e0cc upstream.
+commit 6cfc1b90cb86f4aabc69fb8e30128e07e2cdfa3a upstream.
 
-Avoid multiple lookups of the bpffs creator SID using the token's file
-descriptor when the same information can be found via the resolved
-path/dentry (in selinux_bpf_token_create()) or the token itself (in
-selinux_bpf_map_create() and selinux_bpf_prog_load()).  Not only does
-this simplify the code, it avoids potential TOCTOU issues if the user
-changes the token file descriptor passed into the kernel.
+SCTP chunks always include a four-byte generic header, but
+sctp_inq_pop() currently accepts shorter declared lengths. A zero-length
+chunk leaves chunk_end at the current header.
 
+When ASCONF is covered by the association's SCTP-AUTH policy,
+sctp_assoc_bh_rcv() can continue before the state machine performs its
+normal chunk-length check. sctp_inq_pop() then returns the same malformed
+chunk repeatedly and the receive softirq can lock up.
+
+A remote SCTP peer can trigger this after establishing an association on
+a kernel built with CONFIG_IP_SCTP and configured with
+net.sctp.addip_enable=1 and net.sctp.auth_enable=1. The reproducer did
+not require application credentials, a shared SCTP AUTH key, or
+net.sctp.addip_noauth_enable=1.
+
+On commit f967455fb2a5 ("seg6: reset IP6CB after IPv6 decapsulation"),
+one zero-length ASCONF caused repeated
+watchdog soft-lockup reports in a two-vCPU KVM guest. All 3 pre-trigger
+health probes succeeded, while 36 of 37 post-trigger probes failed. With
+this change, all 37 post-trigger probes succeeded and no equivalent
+soft-lockup signature appeared.
+
+Reject chunks shorter than the generic SCTP header at the shared inqueue
+parser boundary. Mark the packet for discard before either caller can
+continue processing it, while preserving the four-byte generic minimum.
+Declared-length 1 through 4 controls and kernel-generated ASCONF traffic
+remained healthy. The patched sctp_hello selftest passed for IPv4 and
+IPv6.
+
+The complete private reproducer and validation evidence are available
+directly to maintainers on request.
+
+Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
 Cc: stable@vger.kernel.org
-Fixes: 5473a722f782 ("selinux: add support for BPF token access control")
-Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Tested-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Charles Vosburgh <theminershive@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260827-sctp-zero-chunk-inqueue-v2-1-2e7669c6a6cb@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c |   36 ++++++++++--------------------------
- 1 file changed, 10 insertions(+), 26 deletions(-)
+ net/sctp/inqueue.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -7382,24 +7382,6 @@ static int selinux_bpf_prog(struct bpf_p
- 			    BPF__PROG_RUN, NULL);
- }
- 
--static u32 selinux_bpffs_creator_sid(u32 fd)
--{
--	struct path path;
--	struct super_block *sb;
--	struct superblock_security_struct *sbsec;
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -212,8 +212,10 @@ new_skb:
+ 	chunk->chunk_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));
+ 	skb_pull(chunk->skb, sizeof(*ch));
+ 	chunk->subh.v = NULL; /* Subheader is no longer valid.  */
 -
--	CLASS(fd, f)(fd);
--
--	if (fd_empty(f))
--		return SECSID_NULL;
--
--	path = fd_file(f)->f_path;
--	sb = path.dentry->d_sb;
--	sbsec = selinux_superblock(sb);
--
--	return sbsec->creator_sid;
--}
--
- static int selinux_bpf_map_create(struct bpf_map *map, union bpf_attr *attr,
- 				  struct bpf_token *token, bool kernel)
- {
-@@ -7412,7 +7394,7 @@ static int selinux_bpf_map_create(struct
- 	if (!token)
- 		ssid = bpfsec->sid;
- 	else
--		ssid = selinux_bpffs_creator_sid(attr->map_token_fd);
-+		ssid = selinux_bpf_token_security(token)->grantor_sid;
- 
- 	return avc_has_perm(ssid, bpfsec->sid, SECCLASS_BPF, BPF__MAP_CREATE,
- 			    NULL);
-@@ -7430,7 +7412,7 @@ static int selinux_bpf_prog_load(struct
- 	if (!token)
- 		ssid = bpfsec->sid;
- 	else
--		ssid = selinux_bpffs_creator_sid(attr->prog_token_fd);
-+		ssid = selinux_bpf_token_security(token)->grantor_sid;
- 
- 	return avc_has_perm(ssid, bpfsec->sid, SECCLASS_BPF, BPF__PROG_LOAD,
- 			    NULL);
-@@ -7444,12 +7426,14 @@ static int selinux_bpf_token_create(stru
- 				    const struct path *path)
- {
- 	struct bpf_security_struct *bpfsec;
--	u32 sid = selinux_bpffs_creator_sid(attr->token_create.bpffs_fd);
-+	struct superblock_security_struct *sbsec;
- 	int err;
- 
-+	sbsec = selinux_superblock(path->dentry->d_sb);
-+
- 	bpfsec = selinux_bpf_token_security(token);
- 	bpfsec->sid = current_sid();
--	bpfsec->grantor_sid = sid;
-+	bpfsec->grantor_sid = sbsec->creator_sid;
- 
- 	bpfsec->perms = 0;
- 	/**
-@@ -7458,15 +7442,15 @@ static int selinux_bpf_token_create(stru
- 	 * in the allowed_cmds bitmap.
- 	 */
- 	if (bpf_token_cmd(token, BPF_MAP_CREATE)) {
--		err = avc_has_perm(bpfsec->sid, sid, SECCLASS_BPF,
--				   BPF__MAP_CREATE_AS, NULL);
-+		err = avc_has_perm(bpfsec->sid, bpfsec->grantor_sid,
-+				   SECCLASS_BPF, BPF__MAP_CREATE_AS, NULL);
- 		if (err)
- 			return err;
- 		bpfsec->perms |= BPF__MAP_CREATE;
- 	}
- 	if (bpf_token_cmd(token, BPF_PROG_LOAD)) {
--		err = avc_has_perm(bpfsec->sid, sid, SECCLASS_BPF,
--				   BPF__PROG_LOAD_AS, NULL);
-+		err = avc_has_perm(bpfsec->sid, bpfsec->grantor_sid,
-+				   SECCLASS_BPF, BPF__PROG_LOAD_AS, NULL);
- 		if (err)
- 			return err;
- 		bpfsec->perms |= BPF__PROG_LOAD;
+-	if (chunk->chunk_end + sizeof(*ch) <= skb_tail_pointer(chunk->skb)) {
++	if (unlikely(ntohs(ch->length) < sizeof(*ch))) {
++		chunk->pdiscard = 1;
++	} else if (chunk->chunk_end + sizeof(*ch) <=
++		   skb_tail_pointer(chunk->skb)) {
+ 		/* This is not a singleton */
+ 		chunk->singleton = 0;
+ 	} else if (chunk->chunk_end > skb_tail_pointer(chunk->skb)) {
 
 
