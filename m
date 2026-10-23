@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774414;
-	b=JD14RwNeKvIUBJGTKCKQ+6n0DMENQR0wPhG+QpLXMgd/61l/uxczH/GLsuJ6w5qi1Cxv
-	 ytmCBJhmc0ucyvgOf7+EotWkLtyDykfeuk7OLvGUbv368JzXzTY/FH6wFWXyNlcKhuWZ3
-	 IRhy3j0aSyS1B3sMhBnPVzD6D0+VlpumEMfpRhZhLVUqyX4v1TSXEg121RWV7OWjTDexU
-	 tzcjwglqgJRTE9JYPONXJkAvsFey5fyIq8un4L+KG1C4ow3cyckbhCcUP02UibwxLwP5L
-	 rnlfVT+GRSVTKk9uWiy4BMlQ+28uC7DuuvTUoxAypuXXS/rN63QQh4szLud55KVQ2BA==
+	t=1792774417;
+	b=U2ydPXc26+Ncp5+hVhJFH/1FV3isOW28lCrxhgOzxdaZky9bSL5USfDFnMnUS7uHsEde
+	 Ut6dEp9tGY2yv9mFdj4e5WkZpBFhAw+T+RNg13gwmHlHo7i7DM8pc2QhKYaSv2fC54+G4
+	 srcqg6RPV7m2Z2mmG939oopPHMEKhC9HmT+j+8QqVipHJ2TnPafVe7ZwRDr2cb9hDikoW
+	 48lcm6MKx0ex0uocvarM9Nf0h4tt2kNqTqzZmOsTcSoDeZXHOticPCbLZRYD6zRtRpmFy
+	 VZAnneoivK1ORJn19RDQgR6GW1B4eCdarqgZox99nYU3C+0UlqXoSDCxsEmdGmYzI+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xrqHDQAY+cUJDMp9S/au8IJoSwyvKmyLVMVgtNIVxnk=;
-	b=i+vqwV3UukNBzjufeuI0SgUbfWU/GtgfgwpNVmRcziNJV8vrR1YnjnI+N2AmacrlWE0Z
-	 y7b9G7eAp4ah+SEaZ4Nqkpe3HUjkPbV5U9PFBa/Fxw0OPlbBnbwuf/vOYSThqA7jPKOf2
-	 uPjKzjLd+BaNeu0f6F4lRJm7Y/cmJh6/wc0nbrAZB3fIpTJZpB/w0Zeb8traSaNUyabHz
-	 r1FpO0bHoSAur2S303r5uABZeUL4ZHZxWbSVsNsJts3bk6kprvuRrmcqGSFbaHqyX1plw
-	 4M6PbZPQZmFGio+nHnm3ZHIBALXwFhlJQtbO5CQ6MWq2SHjkToOVwDABi1nBP63wL9A==
+	bh=sn9gp/SrFRXOMRNdiPCAN4E/FyIYtknK6bhYCW2ZG38=;
+	b=qav4fbyKBHdRUo8w4NF5D+VCUzIU5VV5KxgjPWdYSYQmKeZpyqFaHfwhOoGFWXRE+Rl0
+	 mEKnskjoFxLUmxHrYDtWRXKSinvYoqjiPI5cE25LSKKzNrb4dSe9TqIHV8R2HuJdaz0Ib
+	 LNH3DAG4YZ5+hLHDzQmCqEpx32XKA/C9DSwnnmpQoRHY3MiZTzKfC/fBMfffWxP6wGGQM
+	 M4uFuUKhsuu/edaFZ4yak5jZqgM1B5OuVLbPXcw3ASTpugoaDSrWLdan4/gu59O/Wpwhh
+	 VdwHlVbYihz8w5wIU+a/EILKFVSiwtfyn+/PNffkTH35NM0C2oiMUXaB2uCZTlnn7Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mif5Urg0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bc3X3zgD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBFC606A31A;
-	Fri, 23 Oct 2026 16:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C776B606A31B;
+	Fri, 23 Oct 2026 16:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mif5Urg0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40D11F01825;
-	Fri, 23 Oct 2026 16:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bc3X3zgD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24101F01825;
+	Fri, 23 Oct 2026 16:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774413;
-	bh=xrqHDQAY+cUJDMp9S/au8IJoSwyvKmyLVMVgtNIVxnk=;
+	s=korg; t=1792774416;
+	bh=sn9gp/SrFRXOMRNdiPCAN4E/FyIYtknK6bhYCW2ZG38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mif5Urg0uGBfmNDbT/sTsmfh4x+8fWGoTwPLguUlBJqSUMG2FwVW5cq+2JHpv5E4G
-	 Q4/VKYli6I9zG0K+OmtszQRhWTx5lZ+723S34fkiGjqFrcCriz3SJnCGGBwlcrVsZG
-	 k2KCvrJfw86UzoWqTUrji+/LpQuLPyxt25MyZprg=
+	b=Bc3X3zgDCOFKCirN7Jj+TcBgG7JbDoSP23YiCil0Fd3gvLd4ugljV3WGnrqtvrlA9
+	 1M2DG/P0J5q+DyTv0qGcfJhd1jLBEq12kVvWECn3eQyWTx7AOouUQhebG7UeHQx+Fr
+	 SbDSeJmx3y3hcXc+VJ/zvOxUzPokqwM6LdfhBW8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 032/242] ASoC: stm32: spdifrx: fix synchronization state check
-Date: Fri, 23 Oct 2026 18:37:54 +0200
-Message-ID: <20261023163714.540875412@linuxfoundation.org>
+Subject: [PATCH 7.2 033/242] ASoC: cs42l56: Put the Limiter Cushion control on the limiter register
+Date: Fri, 23 Oct 2026 18:37:55 +0200
+Message-ID: <20261023163714.564326988@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,46 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 0936bbd35a247665c64886135835faa3c3f4f29f ]
+[ Upstream commit 203436d2aeb7093290459e344e1912a418a6ebfd ]
 
-The interrupt handler uses a logical AND to check whether SPDIFRX
-was in the SYNC state before clearing errors. Since both SYNC (1)
-and ENABLE (3) are nonzero, this also treats ENABLE as SYNC (and
-any other non-zero value that might be added).
+The Limiter Cushion control writes bits 4:2 of the ALC Thresholds
+register. Those bits are ALCMIN, which the ALC MIN control owns. The
+datasheet puts CUSH at bits 4:2 of the Limit Thresholds Control
+register, next to LMAX, which the Limiter MAX control already uses.
 
-The logical && basically just converts this to check for != 0.
+So setting the limiter cushion changes the ALC minimum threshold, and
+the cushion itself cannot be set.
 
-So errors occurring while SPDIFRX is enabled cause the driver
-to retry synch instead of disconnecting the PCM stream.
+Use CS42L56_LIM_THRESHOLD_CTL.
 
-Fix is to change the logical && to equality (==) and only retry
-when exactly in sync state.
-
-Fixes: 0c93c291321f2 ("ASoC: stm32: spdifrx: retry synchronization in sync state")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Reviewed-by: Olivier Moysan <olivier.moysan@foss.st.com>
-Link: https://patch.msgid.link/20261011035459.2289403-1-thnkslprpt@gmail.com
+Fixes: 272b5edd3b8f ("ASoC: Add support for CS42L56 CODEC")
+Link: https://statics.cirrus.com/pubs/proDatasheet/CS42L56_F2.pdf
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20261008130953.2446692-2-sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_spdifrx.c | 2 +-
+ sound/soc/codecs/cs42l56.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/stm/stm32_spdifrx.c b/sound/soc/stm/stm32_spdifrx.c
-index 2f83ca989e688..7ad2e5426bb32 100644
---- a/sound/soc/stm/stm32_spdifrx.c
-+++ b/sound/soc/stm/stm32_spdifrx.c
-@@ -720,7 +720,7 @@ static irqreturn_t stm32_spdifrx_isr(int irq, void *devid)
+diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
+index 4d9a22a1029c6..f0ea5309a6d49 100644
+--- a/sound/soc/codecs/cs42l56.c
++++ b/sound/soc/codecs/cs42l56.c
+@@ -481,7 +481,7 @@ static const struct snd_kcontrol_new cs42l56_snd_controls[] = {
+ 			0, 0x3f, 0, 0),
+ 	SOC_SINGLE_TLV("Limiter MAX", CS42L56_LIM_THRESHOLD_CTL,
+ 			5, 0x07, 1, alc_tlv),
+-	SOC_SINGLE_TLV("Limiter Cushion", CS42L56_ALC_THRESHOLD,
++	SOC_SINGLE_TLV("Limiter Cushion", CS42L56_LIM_THRESHOLD_CTL,
+ 			2, 0x07, 1, alc_tlv),
  
- 	if (err) {
- 		regmap_read(spdifrx->regmap, STM32_SPDIFRX_CR, &cr);
--		sync_state = FIELD_GET(SPDIFRX_CR_SPDIFEN_MASK, cr) &&
-+		sync_state = FIELD_GET(SPDIFRX_CR_SPDIFEN_MASK, cr) ==
- 			     SPDIFRX_SPDIFEN_SYNC;
- 
- 		/* SPDIFRX is in STATE_STOP. Disable SPDIFRX to clear errors */
+ 	SOC_SINGLE("NG Switch", CS42L56_NOISE_GATE_CTL, 6, 1, 1),
 -- 
 2.53.0
 
