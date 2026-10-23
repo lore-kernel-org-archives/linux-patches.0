@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774683;
-	b=LUh0+ybCBWE+OCuofZ8bDbP9pLdnWl1eFwlqWKZA6aQ5hb6+y/PlPBRGhPjTdlC6gSU0
-	 ZLXnHx4ExEcbgcH4Q+25fX4XY8PIKJ0PJouXgW6tnWgyS5DzXSlpHEKJAwYk1w15rZbwW
-	 CZgLdQY+jv6O91JXITOrsM4bA/uQrCb5Jry8pHBVIzdgxN/XqQPNHWM2x84RCbOKAbtgS
-	 uQvI9FH4tXN+tdgCOWiisuj/RZiuCsewyis5NQNSgKidYDrKC6JUpz30lUmMPyet/vbFM
-	 A/cmy4AvN5xg2QkRXDAXLxQP5V74g1tWMRDKSO4b+nXqU77i+4jM58yhq+FINIT4t8A==
+	t=1792774686;
+	b=YZtJsiQwVvn0If16+Pnq7MdIFRxQzOjA3H6/LhwSZwuGewciG6BPjPthfCy8CQvRpbo/
+	 HMdgmUNTyXkTJsZvo/TgK6idPOEjh3Bfk3NOcNq0vwCtuSJbR5FLhrjpgUPXX8B8sZZRS
+	 6mp+PbpPMlzZ+LqkNbcVhGI/pUVUTcWkZuRAqWs/xDng9yTJrYECYGzlAOT7cKriccp3r
+	 61+pLue+ArmHId1LMtnAuof0FVNC4WOZnRyeJsZ0dSAVNTG2JQ0ADNcPoi5STKwI2jNYh
+	 KK/stbhWW1EM04E36DVookvHrFSB9XPScayPDkGqKXHFP6b1A8NqXc0bRKg+/JcGquQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kiqtS73pl7RZxWFAP0InNqRri4XI/5gE86BtTJkaB6A=;
-	b=OmYhzA92A05sLLpMIHHeZvyprq0ZfKTMA94g01inLLUyLj9oU6x3y1wPdvYtMrcW8707
-	 X7fbC+FRWrgpsKrEUmr+UZkcJ5twn/usKjAlIAzUINfnDwnt+4dGNnMXzEr160JTuGItg
-	 19fw7tpL+NuDtbz2BtfIRm1bwoxnOydB5KlmuI6rGrLkTMwumBgOsRoDjM3Z+8oFjGexr
-	 5Wu1UKzNPeEYAzYR+lkGpcHFAXSndVWbiEcjQL32zMKyvM3Vq8XpmSxqPm4oAoZmcQYV3
-	 gp5iRtiFiTYDPvIysEyMl4r5c0zF7itqHFViUbivTLQXS7en9mYTFvM/wVc/ToVLiCA==
+	bh=JJ7shCIwaikpfRnRpheyPKWspDD/yOnO8SEhEsEbvzE=;
+	b=HVvuv6ejMK9Kj3GkR+/8n/If6w4gka8TJS3PswJZAKoyxI52Vv6QwdnTGROtN+WnlmLw
+	 qTuRJWJJOOw6imsnOUCl1audHMItTA6TWOgl81F7Lp6KwYFe8fp4iRd1ynOXhfEyHuX0S
+	 sY4iG9cpU8kSv6TMAQdP29Qpw7nBIVSDfQ20QKwRaL6zLvxqX2rkP4/uydPUdugA/iu/0
+	 j2qcDd1mdr/XHicEXEEUjB5slo+v7sopcIZjGE8ezdAKsUHfw2jXLr45IgQF53pYmadOO
+	 /t4tsTJJRCBolW16uyCuzRTw451ymBTJu3i7yyXQLz6JGLxEu8uL3TkjVKGZCy8TG2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mt2grxeU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="G4ASk3/L";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100CC606A31A;
-	Fri, 23 Oct 2026 16:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11335606A31A;
+	Fri, 23 Oct 2026 16:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mt2grxeU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E711F01825;
-	Fri, 23 Oct 2026 16:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4ASk3/L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE901F01825;
+	Fri, 23 Oct 2026 16:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774682;
-	bh=kiqtS73pl7RZxWFAP0InNqRri4XI/5gE86BtTJkaB6A=;
+	s=korg; t=1792774685;
+	bh=JJ7shCIwaikpfRnRpheyPKWspDD/yOnO8SEhEsEbvzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mt2grxeUy3406Zme/woPYSidYo8JRsGLiCAYem08Lr1S/t3JpumO33mnBN/0dpvCq
-	 9731xb6NPt1Gl7TD3hSAxDizLsZ479NfGaweAIrFC1rigXT0GirR79wp7TdS15H6ip
-	 YI6DRjk72vHdDhIEFJSIB4UXjYaQcV+xlrTnaevo=
+	b=G4ASk3/LEdauKvHiqwp2ouJNN8lL1TjS3h6NcXvmEPEfi670VHgV0ILfRau9Xj/L4
+	 ROwPM5lQG5+0zWJeADh5aiftIX+eWwksgKPKubJP6vmTqruTwiUxxxsCvupUysDatE
+	 tSuNY1PoYetiSzyl8Zn4Q1NOY+IvvzTm8Dqw0xhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.2 122/242] lib/crypto: poly1305: Use memzero_explicit() in poly1305_final()
-Date: Fri, 23 Oct 2026 18:39:24 +0200
-Message-ID: <20261023163716.666719504@linuxfoundation.org>
+	Hardik Garg <hargar@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 7.2 123/242] mshv_vtl: Check per-CPU register page before mmap
+Date: Fri, 23 Oct 2026 18:39:25 +0200
+Message-ID: <20261023163716.690338490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,38 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Hardik Garg <hargar@linux.microsoft.com>
 
-commit da619121a5d271e78ec709a1f9a3c5f99b9e10ad upstream.
+commit 874194a8de75fc2f4d1fb70c670b289b7e48f93e upstream.
 
-Use memzero_explicit() instead of a plain struct assignment to guarantee
-zeroization of the 'struct poly1305_desc_ctx'.
+Register-page setup is optional for each CPU. If allocation or
+registration fails, mshv_vtl_configure_reg_page() warns and leaves that
+CPU's reg_page NULL, but initial context setup continues successfully.
+Meanwhile, successful setup on another CPU sets the global
+mshv_has_reg_page flag.
 
-Note that dead store elimination was only theoretically possible with
-link-time optimization here.  But it's still worth fixing.
+mshv_vtl_fault() checks this global flag before selecting the requested
+CPU's register page. With mixed setup results across online CPUs, the
+check passes even for a CPU with no register page, reaching
+get_page(NULL) when userspace faults in that mapping.
 
-Fixes: a1d93064094c ("crypto: poly1305 - expose init/update/final library interface")
+Check the selected per-CPU register page before taking its reference and
+return VM_FAULT_SIGBUS if it is absent.
+
+Fixes: 7bfe3b8ea6e3 ("Drivers: hv: Introduce mshv_vtl driver")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-c3a6bd76-f6ab-4203-892a-cd06f7aa0c34
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20261006083432.16328-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
+Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/poly1305.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hv/mshv_vtl_main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/lib/crypto/poly1305.c
-+++ b/lib/crypto/poly1305.c
-@@ -78,7 +78,7 @@ void poly1305_final(struct poly1305_desc
+--- a/drivers/hv/mshv_vtl_main.c
++++ b/drivers/hv/mshv_vtl_main.c
+@@ -819,6 +819,9 @@ static vm_fault_t mshv_vtl_fault(struct
+ 		return VM_FAULT_NOPAGE;
  	}
  
- 	poly1305_emit(&desc->state.h, dst, desc->s);
--	*desc = (struct poly1305_desc_ctx){};
-+	memzero_explicit(desc, sizeof(*desc));
- }
- EXPORT_SYMBOL(poly1305_final);
++	if (!page)
++		return VM_FAULT_SIGBUS;
++
+ 	get_page(page);
+ 	vmf->page = page;
  
 
 
