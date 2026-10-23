@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775001;
-	b=EMvMOReAXyTv899HGnMyhJj7ZRrgQl83Es+wPXNyKyShv3K7rnHeDgmESVNwaAkEetfM
-	 c5KmmCD8fNCPVnALteToA9G7Rn2rrV98SNiYbNMOIlt7IRt+Y6nUUfoqbi2d2JZtnhOI7
-	 sM/GRiB+NEBVhv9yJFvBsDpxCYJKiA8z+0mL+C/FRqwzOG2aiQlt2tLIFy2qgWW23xoPt
-	 bsLvtCwa/rUE+iLt5sgUYrTveHqDe79hk0h4s5l+SDBJo8Hoprt/daSQEOxcYV94R4RH8
-	 kirKWUhznHrn+mOOwHYTj+i/UIkJedPXPVTfTWRC0jv1AbX+F0AaYw1KODC1fSLDLCw==
+	t=1792775004;
+	b=AeKrolNaRS422XCU+OiqjjTceagI/HmlN/GOQh+DtWLdBRjHgdT3dTRIVQub3F+wqywX
+	 V/wttRLk+9GqOJraE9eugFrM1qhv3pl5NeGmr2UDiPR2J5pW3luoR3eqcJ8BNi0hBv9zc
+	 OTo0OZ937Rrck1X/Xdu5Su2nydrL0cxkjMozYLATkJiJhXRVP+trtFz2i3pqYLVaueepG
+	 exzf+aKKz3j55h1UJA8P6/RzuimqYW1kEFwzrJKLV1Pi1ByelET05BRpG9F3/TGW6w4ke
+	 xSr7iskKp0oEkxXXM18uWu4WfelhcgOpTqflJvKR7NNak4Da0u33eG/YUPzhMCyqxYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=7m53AaP+qoLRhnf8433h+DOC/yexpebvKI9neReJCTI=;
-	b=gg2fN1iI7W/31DX7S0kJwQ3NRpBMzxmOlqkSIHAo+TvsWle9oBERhyAxNI/ucUkJRAYH
-	 VV8wfc+EHF3Xmlz3YbWLKzJUFTmId78Pc4Ef6dP3AhhN3NQme+qrJShipdGYi+1QEIhdU
-	 lgVZQyamUFH3a6svraJ2ZCXQNFhAWCID11Pq3sDlmqUfkLfwq9HS8chpgr6tKxAjXTFZt
-	 z0B7/jgSZnf4/MyYFd+7IEPSvKKq34Vtaa8/swztfzM1S9kAb8tXtvOZZOjc7QSc+QXus
-	 wvdwtDo1IjCd1hq2mYrczvQrbfNdKsilXLdIB+UMELomT/hri1kPPr4MAY8x0sLVV/g==
+	bh=EQ93C4QkQRtyOioteyT3OE/G/MceWv9I3t/yjBSJAU0=;
+	b=cRlDBsk7rwUyUS2KiPi5I+OpwW2EqaGxqvoHyoMV0Q3Y4ou8xasRzPmkJ0AUDBU5nbGY
+	 RBJTYETCAnKFMXNlwbAA7zz5quMXAL10HaOYu4v3ArPgGu0p8xOAQv59+jTxcCsg7CA1Y
+	 2yY7tPsdQwGJT7pqjWnCRpDJ1pw+lWlRXjjZcecOFEkjxqwMMX8RR0XNOJyHMT1dCCxlG
+	 f2eCj/b6m+GVcN/v5Te5Vp3yBOAqFa2SuYhDWBRyIVCcnumF3xtSKG3gNG11p1tJnqjct
+	 B8ZrUsW1W5g+JcpVe8J0sharJGd5OgubVB6Ss7eoQUuUyQhDXeTruEnSPnPYXeY9CIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEg9iFUv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrXgrUGy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4D3606A31A;
-	Fri, 23 Oct 2026 17:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8C0606A31A;
+	Fri, 23 Oct 2026 17:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEg9iFUv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735F71F01825;
-	Fri, 23 Oct 2026 17:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrXgrUGy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822551F01825;
+	Fri, 23 Oct 2026 17:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775001;
-	bh=7m53AaP+qoLRhnf8433h+DOC/yexpebvKI9neReJCTI=;
+	s=korg; t=1792775004;
+	bh=EQ93C4QkQRtyOioteyT3OE/G/MceWv9I3t/yjBSJAU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LEg9iFUvPU+3KjdtR4TK2Ri8NnvnBXm9CjCNFsPlSHGNhBGS2sOikPVWBM63los3M
-	 rhUNMDLY/4GkJJX0Ok98wE0l6db/nHeqEUtW2oHEP+71fALEHeee4DRapXmorLxPYx
-	 hczUt/7ofVdFJg8AVTIdaVAtpY56MU+jBeq2to2w=
+	b=PrXgrUGy5Jj4KTKHMD0OkksdxQH72kIMIsfmAJlZ5XJHZ1d6DghgGWu8SVJVDJeqA
+	 WyPshoFE84/lDQwPLfCnEOjbGZeoyb7O6bEsPvobjTC1Al1e9JaNbaqJK4NUoRhBI9
+	 AeHKcg9y09e/qah6u7Nhl/AqKkdhM/m45fgqC22U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 211/242] drm/amdgpu/userq: actually validate userq BOs
-Date: Fri, 23 Oct 2026 18:40:53 +0200
-Message-ID: <20261023163718.787775200@linuxfoundation.org>
+Subject: [PATCH 7.2 229/242] drm/amdgpu: Remove the bo list mutex
+Date: Fri, 23 Oct 2026 18:41:11 +0200
+Message-ID: <20261023163719.260660707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -70,58 +70,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Cheng <benjamin.cheng@amd.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit 32d0771ef4ca69c30a1db3aefa34dd177cd2a047 ]
+[ Upstream commit a300c90f00905632ad9f89ad719537941a88600c ]
 
-This was supposed to loop over the individual evicted list, as the
-kernel and always_valid evicted lists were already handled in
-amdgpu_vm_validate.
+The bo list is immutable during command submission since the drm_exec
+conversion so we can remove the mutex.
 
-Without this, BOs that were created and evicted before a userq was made
-would never end up in an eviction fence rearm.
-
-Also add the missing ref to the BO before drm_exec locks and refs it.
-
-Fixes: 4cdbba5a16aa ("drm/amdgpu: restructure VM state machine v4")
-Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 18decfc9e8cc0fa70b6de9944cc27a37729edfbd)
-Cc: stable@vger.kernel.org
+Stable-dep-of: 1b4da805a0ba ("drm/amdgpu: free the userptr ranges when a CS fails after parser_bos")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |    3 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.h |    4 ----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c      |   15 ++++-----------
+ 3 files changed, 5 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -937,19 +937,21 @@ amdgpu_userq_bo_validate(struct amdgpu_d
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
+@@ -42,7 +42,7 @@ static void amdgpu_bo_list_free_rcu(stru
  {
- 	struct ttm_operation_ctx ctx = { false, false };
- 	struct amdgpu_bo_va *bo_va;
--	struct amdgpu_bo *bo;
-+	struct amdgpu_bo *bo, *tmp;
- 	int ret;
+ 	struct amdgpu_bo_list *list = container_of(rcu, struct amdgpu_bo_list,
+ 						   rhead);
+-	mutex_destroy(&list->bo_list_mutex);
++
+ 	kvfree(list);
+ }
  
- 	spin_lock(&vm->individual_lock);
--	while (!list_empty(&vm->always_valid.evicted)) {
--		bo_va = list_first_entry(&vm->always_valid.evicted,
-+	while (!list_empty(&vm->individual.evicted)) {
-+		bo_va = list_first_entry(&vm->individual.evicted,
- 					 struct amdgpu_bo_va,
- 					 base.vm_status);
-+		bo = bo_va->base.bo;
-+		tmp = amdgpu_bo_ref(bo);
- 		spin_unlock(&vm->individual_lock);
+@@ -134,7 +134,6 @@ int amdgpu_bo_list_create(struct amdgpu_
  
--		bo = bo_va->base.bo;
- 		ret = drm_exec_prepare_obj(exec, &bo->tbo.base,
- 					   TTM_NUM_MOVE_FENCES + 1);
-+		amdgpu_bo_unref(&tmp);
- 		if (unlikely(ret))
- 			return ret;
+ 	trace_amdgpu_cs_bo_status(list->num_entries, total_size);
  
+-	mutex_init(&list->bo_list_mutex);
+ 	*result = list;
+ 	return 0;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.h
+@@ -51,10 +51,6 @@ struct amdgpu_bo_list {
+ 	unsigned first_userptr;
+ 	unsigned num_entries;
+ 
+-	/* Protect access during command submission.
+-	 */
+-	struct mutex bo_list_mutex;
+-
+ 	struct amdgpu_bo_list_entry entries[] __counted_by(num_entries);
+ };
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -898,8 +898,6 @@ static int amdgpu_cs_parser_bos(struct a
+ 			return r;
+ 	}
+ 
+-	mutex_lock(&p->bo_list->bo_list_mutex);
+-
+ 	/* Get userptr backing pages. If pages are updated after registered
+ 	 * in amdgpu_gem_userptr_ioctl(), amdgpu_cs_list_validate() will do
+ 	 * amdgpu_ttm_backend_bind() to flush and invalidate new pages
+@@ -1016,7 +1014,6 @@ out_free_user_pages:
+ 		amdgpu_hmm_range_free(e->range);
+ 		e->range = NULL;
+ 	}
+-	mutex_unlock(&p->bo_list->bo_list_mutex);
+ 	return r;
+ }
+ 
+@@ -1385,7 +1382,6 @@ static int amdgpu_cs_submit(struct amdgp
+ 	amdgpu_vm_move_to_lru_tail(p->adev, &fpriv->vm);
+ 
+ 	mutex_unlock(&p->adev->notifier_lock);
+-	mutex_unlock(&p->bo_list->bo_list_mutex);
+ 	return 0;
+ }
+ 
+@@ -1472,28 +1468,25 @@ int amdgpu_cs_ioctl(struct drm_device *d
+ 
+ 	r = amdgpu_cs_patch_jobs(&parser);
+ 	if (r)
+-		goto error_backoff;
++		goto error_fini;
+ 
+ 	r = amdgpu_cs_vm_handling(&parser);
+ 	if (r)
+-		goto error_backoff;
++		goto error_fini;
+ 
+ 	r = amdgpu_cs_sync_rings(&parser);
+ 	if (r)
+-		goto error_backoff;
++		goto error_fini;
+ 
+ 	trace_amdgpu_cs_ibs(&parser);
+ 
+ 	r = amdgpu_cs_submit(&parser, data);
+ 	if (r)
+-		goto error_backoff;
++		goto error_fini;
+ 
+ 	amdgpu_cs_parser_fini(&parser);
+ 	return 0;
+ 
+-error_backoff:
+-	mutex_unlock(&parser.bo_list->bo_list_mutex);
+-
+ error_fini:
+ 	amdgpu_cs_parser_fini(&parser);
+ 	return r;
 
 
