@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774092;
-	b=V33pwX5qb80sFBGYvoDNxXdmtk6eGUH771ogS2RR6TCFr3+RPo8KwZ+ZT7vd2XsUe1D4
-	 TmB3VtvcslCqvEHa+e+8ehRYbLL1dBsyJFRJR1I13T4iyntDFGFfm4rrjlj7ipolbwfuv
-	 NHUsTCfTe+EQkF+mhtG23W2iVQD8nCVo5ekbIRN++v9UUHJZpBO9o4T7vRZlajApUwN7B
-	 05UafNIJ6SMgmgIpo1av0mxef3ux8JEtXwHhdKXzP8LCwuDNaYONkhdGG8+PhYvpWyAQr
-	 q5YT444ffK657jzCXg+tqhdNFwmk+Yfas4qqulUtywjxCf2uJp1iywENfqiHgceNyTg==
+	t=1792774095;
+	b=XVPvcp94s5Ys+1TPs7PaO63fI/wOHDEETX8HnNE1IQ3ol6PxEzsYlNrlbaEKIP4Xl5f4
+	 qTaA9PZeo7CLidP27PAz3BypaKn24ovTn0w7IxUn/0QNBPJOnZ9NdyTZtRy6uX7xUFCqm
+	 Z/anfJpvc5qCPYmQdnIZuR+NCDGGXJuJKiy0gs7rswr4NMgQg8Im8BRYrxaQ7PNKJK7Om
+	 C5AMAO5hGpVOg4Dx2UqsIpP2fQxAFUsujCKXRd9diL679DffqjuT0MAHwj2kDOoSkY/pL
+	 0/8tiUxQDVKuUXkQdmyUCwGahAxtQgpRnQo0fYr26e7XDBlvcPrv5jWYb7a3MXn+Dzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774095;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O2VhRuMUla0BL/pc0NqU/3OoL4uicQPAX0/R+h4zDFw=;
-	b=RsRUf9LbpIgTs0CNXSTEk02fCRS+PH8pn/xLusROvvQnKKKcoqqhOuhCDB2ltKCQ/YmG
-	 bx+lhF0ReTpo05noBrR05bypZ1d5a4bMzb+B2f0u06TctZtODf7PbqsgLPleSeyNguV9M
-	 TK15l0kEPebFYR7D+iwsEYWeEV/4jhX2hmKuvKqu6VLvMx6QHhpvf1jpOsefEuY9TIIKU
-	 YAuk1oiTuMfAbIqzEiQe9L7lopAqN4J5+0QY0bvPN1gKB2VqAsu9kuGJ89ebNSVwnQnqs
-	 aKmoK6folQRK2Sb0P+/JdluXJk0YsSjUtDti9mfMCPBJYfBB0aq4kaQ0nRBBgVZuueg==
+	bh=sMv8RpGO3yFrDchL1pUjkgvFM2HbNayVsPO33zKoHrI=;
+	b=bLrzzCvdWDIZ+wZwZR9nVFBEV6AQ7khrSt8YK6VGFvyhq9uQZFkx8nC/oVrHnQauTYmn
+	 DGANjeJj6HaNOIURfTm4OgluzUv/xufjeyRyIEv1YyNzfv4voz2BOAjsbMmk2gcFBk2/s
+	 riYsMQPnbi8O762dY81MJjHNNEaWoItafDXvflTRxS2dDXtS6bAEI3dJzmAuFwpo4eC2x
+	 YsUv3zAXVqI9oESmruQvhrFuYP2e84MCd6zFv2Fugg7+3Wmn2PaJp40quEYAw36TV4uji
+	 dArIIidHxfjod8/QODAdHgU1E9RZR9zR81wQC74wo9O+PCV/2RpQhYB+9Oh58ZDOU3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFJoCs4o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CGQ2yjyE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16905606A31B;
-	Fri, 23 Oct 2026 16:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1C2606A31B;
+	Fri, 23 Oct 2026 16:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFJoCs4o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3F51F01825;
-	Fri, 23 Oct 2026 16:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CGQ2yjyE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0381F01825;
+	Fri, 23 Oct 2026 16:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774091;
-	bh=O2VhRuMUla0BL/pc0NqU/3OoL4uicQPAX0/R+h4zDFw=;
+	s=korg; t=1792774094;
+	bh=sMv8RpGO3yFrDchL1pUjkgvFM2HbNayVsPO33zKoHrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFJoCs4oEaHH2F1QkE/zOH1duPE9H7yWyIpSDjqDWV1pkynF68MJ8TwEEfFry2LNu
-	 dsUJa8tFfLdvaa1mLJTUtk5XeIDRHcw4rT6kE2GoHVw//4YOcecicHG2EUZ9M4YDEV
-	 iP6xUPLQ2j9GRL0PNhWhsW4IUdjdGNfl6gUDQtRM=
+	b=CGQ2yjyEtS47LG83ZbWpq7RLAgspfidt/TM7+qrN2fLn37iW3rqfw3aJDA9XLkrD2
+	 h9nGGK3/8H6wdnsloMDYdiiDFMDmDSJPeFbzqzwVvGiyNFD93YeMI9GPCjmVDYciw/
+	 IDfLlM8VGxgSfm7xIUWTeroPjWL9QKP3kl49rDWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 118/193] tcp: fix use-after-free in do_tcp_getsockopt(TCP_CC_INFO)
-Date: Fri, 23 Oct 2026 18:36:35 +0200
-Message-ID: <20261023163716.994348191@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Etienne Perot <eperot@google.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.18 119/193] cgroup: fix spurious SIGKILL of CLONE_INTO_CGROUP children
+Date: Fri, 23 Oct 2026 18:36:36 +0200
+Message-ID: <20261023163717.017223926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -71,67 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+From: Etienne Perot <eperot@google.com>
 
-commit 385e474086c2e7e29e2dded690be40dc273e20ee upstream.
+commit 8e359920216689b3b79e0fe8961a77fe312a511f upstream.
 
-do_tcp_getsockopt() reads icsk->icsk_ca_ops and dereferences the
-get_info function pointer without rcu_read_lock(). With BPF struct_ops
-congestion control, ca_ops can point to dynamically allocated memory
-that is freed concurrently, resulting in a use-after-free when the
-kernel dereferences or calls through the stale pointer.
+Since commit b69bb476dee9 ("cgroup: fix race between fork and
+cgroup.kill"), the fork path snapshots the kill_seq of the child's
+future cgroup into kargs->kill_seq, and cgroup_post_fork() SIGKILLs
+the child if that cgroup's kill_seq has changed in the meantime, to
+catch forks racing with a cgroup.kill sweep.
 
-  BUG: KASAN: slab-use-after-free in do_tcp_getsockopt+0x2037/0x23e0
-  Read of size 8 at addr ffff888013701258 by task exploit/149
-   do_tcp_getsockopt+0x2037/0x23e0 (net/ipv4/tcp.c:4564)
-   tcp_getsockopt+0x91/0xf0
-   __sys_getsockopt+0xf7/0x170
+For CLONE_INTO_CGROUP, however, the snapshot in cgroup_css_set_fork()
+is taken before the target cgroup has been resolved: kargs->cgrp is
+always NULL at this point (it is only set at the end of the function).
+So the "if (kargs->cgrp)" branch is dead code and the snapshot always
+records the kill_seq of the parent's cgroup. cgroup_post_fork() then
+compares it with the kill_seq of the target cgroup, so the child gets
+SIGKILLed whenever the two cgroups have been killed a different number
+of times.
 
-Fix this by wrapping the ca_ops load and get_info call within
-rcu_read_lock()/rcu_read_unlock(), and using READ_ONCE() to load
-the icsk_ca_ops pointer.
+As a result, once cgroup.kill has been written to a cgroup, every
+child subsequently cloned into it with clone3(CLONE_INTO_CGROUP) is
+killed on the spot, for as long as the cgroup exists: kill_seq is not
+exposed to userspace and never resets.
 
-Fixes: 0baf26b0fcd7 ("bpf: tcp: Support tcp_congestion_ops in bpf")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Cc: AutonomousCodeSecurity@microsoft.com
+Re-snapshot kill_seq from the target cgroup once it has been resolved,
+and drop the dead branch at the early snapshot site.
+
+This does not reopen the race fixed by b69bb476dee9. For
+CLONE_INTO_CGROUP, everything from the snapshot to the check in
+cgroup_post_fork() runs with cgroup_mutex held, and kill_seq is
+only ever incremented under cgroup_mutex.
+
+tj: Updated the comment above kill_seq to reflect the new serialization
+rules as suggested by Shakeel Butt.
+
+Fixes: b69bb476dee9 ("cgroup: fix race between fork and cgroup.kill")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/65fd3816ed5d541d9edd4bf4fcf97104a2cf907a.1787870710.git.blbllhy@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Assisted-by: LLM
+Signed-off-by: Etienne Perot <eperot@google.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp.c       |    4 +++-
- net/ipv4/tcp_dctcp.c |    2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ include/linux/cgroup-defs.h |    5 ++++-
+ kernel/cgroup/cgroup.c      |    6 ++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4540,9 +4540,11 @@ int do_tcp_getsockopt(struct sock *sk, i
- 		if (copy_from_sockptr(&len, optlen, sizeof(int)))
- 			return -EFAULT;
+--- a/include/linux/cgroup-defs.h
++++ b/include/linux/cgroup-defs.h
+@@ -518,7 +518,10 @@ struct cgroup {
  
--		ca_ops = icsk->icsk_ca_ops;
-+		rcu_read_lock();
-+		ca_ops = READ_ONCE(icsk->icsk_ca_ops);
- 		if (ca_ops && ca_ops->get_info)
- 			sz = ca_ops->get_info(sk, ~0U, &attr, &info);
-+		rcu_read_unlock();
+ 	int nr_threaded_children;	/* # of live threaded child cgroups */
  
- 		len = min_t(unsigned int, len, sz);
- 		if (copy_to_sockptr(optlen, &len, sizeof(int)))
---- a/net/ipv4/tcp_dctcp.c
-+++ b/net/ipv4/tcp_dctcp.c
-@@ -224,7 +224,7 @@ static size_t dctcp_get_info(struct sock
- 	if (ext & (1 << (INET_DIAG_DCTCPINFO - 1)) ||
- 	    ext & (1 << (INET_DIAG_VEGASINFO - 1))) {
- 		memset(&info->dctcp, 0, sizeof(info->dctcp));
--		if (inet_csk(sk)->icsk_ca_ops != &dctcp_reno) {
-+		if (READ_ONCE(inet_csk(sk)->icsk_ca_ops) != &dctcp_reno) {
- 			info->dctcp.dctcp_enabled = 1;
- 			info->dctcp.dctcp_ce_state = (u16) ca->ce_state;
- 			info->dctcp.dctcp_alpha = ca->dctcp_alpha;
+-	/* sequence number for cgroup.kill, serialized by css_set_lock. */
++	/*
++	 * Sequence number for cgroup.kill. Incremented with both cgroup_mutex
++	 * and css_set_lock held. Readers hold either one.
++	 */
+ 	unsigned int kill_seq;
+ 
+ 	struct kernfs_node *kn;		/* cgroup kernfs entry */
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -6734,10 +6734,7 @@ static int cgroup_css_set_fork(struct ke
+ 	spin_lock_irq(&css_set_lock);
+ 	cset = task_css_set(current);
+ 	get_css_set(cset);
+-	if (kargs->cgrp)
+-		kargs->kill_seq = kargs->cgrp->kill_seq;
+-	else
+-		kargs->kill_seq = cset->dfl_cgrp->kill_seq;
++	kargs->kill_seq = cset->dfl_cgrp->kill_seq;
+ 	spin_unlock_irq(&css_set_lock);
+ 
+ 	if (!(kargs->flags & CLONE_INTO_CGROUP)) {
+@@ -6801,6 +6798,7 @@ static int cgroup_css_set_fork(struct ke
+ 
+ 	put_css_set(cset);
+ 	kargs->cgrp = dst_cgrp;
++	kargs->kill_seq = dst_cgrp->kill_seq;
+ 	return ret;
+ 
+ err:
 
 
