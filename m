@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774671;
-	b=uAXJC/fCr2PVSBTCJoJwIZmESEfQP2TM2UuDfgiR08bpGJMytX8w3ebfJmzJI2dSFw5g
-	 1NYh4+W+cgf6KRaEIrQcwnfUfXA56enKfsxImDLXEKeQpOfsPjbMbv+zm4BZP2sK9M3+2
-	 F9C/cwxVctv4Q4e4pnHdhmLWiuJ8cLTJ1mjXHnv3OjV5hu1UCOpf24z0dcN6c/NyeC/Ym
-	 GdNGeMkF5LvlwikUgM+buCeShP7Jkpg/tDrSeB2/nR8DN7SLXpQauqbSKJ5cafHheMHA8
-	 TDFAUvjEi/rA9ONXsMYl4aXiNOkBrX5gqHh76sTjLDMzSv1ERD8N8kiW2tJfoYsVlYw==
+	t=1792774674;
+	b=QZShQJldqV77pNm2AHNqHYlo3tZex7BOwY6E2WPeadMRtGT1++LqeyAJX/BtIciWPtAE
+	 G3HqiC0+V2JP7JwO2759+IK8b5pY8HwTPIFoo4JZmk/2U2k7hQGZvEnLnQD/pyYAG7teC
+	 x5yX/QVWDmIUaHvPJQcSIkVPlieMNUTRViYbD7PdlZpaOEMU85SRkTuxDbHveBnlIhAUK
+	 RJGTbHNW/zwjksOzgErRAq5rCTTGzHaDgDUAFn8rqmrNh8XlITZu9ZO5hU465SxcX4c+b
+	 ptRYSJgpA7YHmj6Yx4Ai4cl0p3T4lE7beEpaqhbjebEvsB418A8KtRNkWx29W+HsZ6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FxdN9TBRrUxtD7T/ICefFifyQJI2WPnC4jhm21El8MU=;
-	b=WRMSIsXZV6BayMOEG5bZB7N+jckssxrl8Y6G23xC2zWsd6I6E1RPeQHRHC+SAeBKYSaA
-	 H5ufp0C8zhYOdebmHkHhsMldzvagUDw7DvsKNjlNqJmZYc5cyVGLxwal1Uk32HViJvHYm
-	 GXjw0+XTLp59xPqZ90UGep5geVgjpj7Jwu6Mp/D5D7rlzigFQPtStC0vvW9TxYhOqeXJ5
-	 UepzTSInC9fBuqmS2N+OHB/XfJ26KM0DhKwHC2c97YdNRHfN/3/ax+ffiKU96k0d6qvit
-	 Re85mUbApol4IYhFeCnGbWTYGMZ3n/WNL+BpYXlYFLdI5d52LruDTWMLhSYCVE49SSg==
+	bh=ZwKH9xRonIftxjbWkoskcvh6m9ty9NQUfFs+oVe/N8g=;
+	b=3hiebcdH48bRS4Qi2Jwx5+iUcMkUMrDj9RjkMcOz7f+qSGitAuASPlEd5+lVD/FSM2nY
+	 eBgCDzD7IKAZbnZlasHFKtZrH31svaMDYA7ckxHA20er684LYsjt9uZ1FaI5Q+hcCmeiS
+	 D2hr//BSYnbXSt+Pvs6Af9V20Obinlv66qQzSyqyqh73+Wp1VxxKn5ivTz0bwijDW2YRC
+	 E+N7fE/2RMxhvYXeMbByQSYPDvt5JnU3LgHuHejZBN+QClUSpKxDKK7WVo8XJ4Qwcno/8
+	 MkQQugBT3++8jFxSIi7oHIk+q7W3mzGunplyt/vaTkgm8aQZBM4QVz8nkabl3MUwSfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hX4KMjKw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I2OjiXe6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1275606A31A;
-	Fri, 23 Oct 2026 16:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF18F606A31A;
+	Fri, 23 Oct 2026 16:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hX4KMjKw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E3C1F01825;
-	Fri, 23 Oct 2026 16:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I2OjiXe6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B4A1F01825;
+	Fri, 23 Oct 2026 16:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774670;
-	bh=FxdN9TBRrUxtD7T/ICefFifyQJI2WPnC4jhm21El8MU=;
+	s=korg; t=1792774673;
+	bh=ZwKH9xRonIftxjbWkoskcvh6m9ty9NQUfFs+oVe/N8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hX4KMjKwuwIqxByJ1VadjtPu9W0fe2NSztS2jtQxnI21z16Fmy+93rNPJjxR46bxg
-	 3IFuOim6cfW/S3g2YDmSdDPOYH4XX7d4+c0tCPLPEscJwcA+oFYhlFJ2r7Rsrxx59n
-	 gzTUnVkRvQjuma6W2kOqdA0TUv/sgvQ/MPQer+bM=
+	b=I2OjiXe6jPQXOJH7EU11kJhcVOYzz1ljL5xuKPT2jPf/N1KZ22iwsY/JPJTnNDO3h
+	 un/t70EtFzwQLdk8uUoi/5JWG1tY4OHg5FD6v/TVRzmENRHgaJ81w6yCzca71IL+8g
+	 +V5j5g3JjgLUZcWSQWfMb2vf39ZpjY1OyLf1n4Dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 118/242] namespace: a mount that copy_tree() leaves out cant take over a lock
-Date: Fri, 23 Oct 2026 18:39:20 +0200
-Message-ID: <20261023163716.571886183@linuxfoundation.org>
+Subject: [PATCH 7.2 119/242] namei: test for a negative dentry the way traverse_mounts() does
+Date: Fri, 23 Oct 2026 18:39:21 +0200
+Message-ID: <20261023163716.598194406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,93 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 69fbe94f80bc423613fa18dae6656757423732a2 upstream.
+commit 98b6cf102b35b2bb48d1fd74d5f664eb66fe83eb upstream.
 
-Since commit c62a4766937e ("move_mount: transfer MNT_LOCKED") a mount
-can be moved beneath a locked mount. The lock moves from the old cover
-to the new mount which takes over the job of hiding what's under it and
-the old cover can be unmounted. That works as long as the new mount
-stays. But the caller picks the new mount and copy_tree() leaves a
-mount of a mount namespace file out of every copy made without
-CL_COPY_MNT_NS_FILE, together with everything mounted on it, and never
-looks at MNT_LOCKED. unshare(CLONE_NEWNS) and mount propagation make
-such copies.
+lookup_fast_for_open() only hands an O_CREAT open a cached dentry if
+it's positive. Otherwise the open goes on to lookup_open(), which takes
+the directory lock and creates the file. It tests for that with
+!dentry->d_inode, but traverse_mounts() later decides with the type in
+d_flags. And when a dentry is instantiated __d_set_inode_and_type()
+stores ->d_inode first and only then releases the type into ->d_flags.
 
-So a task that is root in its own user namespace gets rid of a locked
-cover on a file without a race and without touching the filesystem
-below it. It makes a child with a mount namespace of its own, binds the
-child's /proc/<pid>/ns/mnt beneath the cover with MOVE_MOUNT_BENEATH,
-which hands the lock to that bind, and calls unshare(CLONE_NEWNS). The
-new mount namespace has nothing on the file. That's the usual way to
-mask a single file, a bind of /dev/null or of an empty file. With a
-bind of an ordinary file the file stays covered.
+So a refwalk that took its reference to a negative dentry right before
+another task instantiates it can find ->d_inode already set in
+lookup_fast_for_open(), go on to step_into(), and still find the
+negative type in traverse_mounts(). The open then fails with -ENOENT,
+which an O_CREAT open must never do. rcuwalk doesn't get that far, the
+d_seq check in step_into() catches the instantiation.
 
-copy_tree() already refuses to leave out a locked unbindable mount with
--EPERM since commit df7342b24018 ("mount: Don't allow copying
-MNT_UNBINDABLE|MNT_LOCKED mounts"). Do the same for a locked mount of a
-mount namespace file. That also covers a tree copied with
-CL_COPY_MNT_NS_FILE and attached into a mount namespace of another user
-namespace where lock_mnt_tree() locks it. Note that unshare(CLONE_NEWNS)
-and clone(CLONE_NEWNS) fail with EPERM from such a mount namespace from
-then on. The mount can't be left out and it can't be unmounted.
+Use d_is_negative() so both look at the type. While the type is still
+negative the open takes lookup_open() and waits for the directory lock
+like any other O_CREAT open of a negative dentry.
 
-And refuse to move a mount of a mount namespace file beneath a locked
-mount in the first place. Otherwise the task ends up with a mount it
-can't unmount and an unshare() that fails for good.
+On its own the window is a couple of instructions in the creating task,
+so it takes an interrupt or a preempted vcpu in exactly the right spot.
+I haven't caught it without help in about 600 million racing O_CREAT
+opens.
 
-Chris also found a second mount that goes away by itself, a clone of an
-automounted mount that shrink_submounts() took along with its parent.
-Commit f78ddcc87224 ("namespace: never expire a locked mount") took
-care of that one.
+The debug patch below stalls the creating task between the two stores
+for names starting with "ocrace", the way an interrupt landing there
+would. The reproducer below opens "ocrace" with O_CREAT through
+symlinks on a strictatime tmpfs: following them updates their atime,
+which drops the walk out of rcuwalk, so the name is always looked up in
+refwalk. With
 
-Chris's reproducer is appended. Mode nsfile reads SECRET after the
-unshare() on 7.3-rc7, with this patch the move_mount() fails with
-EINVAL and the file stays covered. nsfile-control uses an ordinary file
-and reads MASK both ways.
+  echo 20 > /proc/sys/fs/ocrace_instantiate_us
+  ./ocreat_enoent -t 60
+
+on a KASAN kernel open() failed with -ENOENT 43 times in 4.9 million
+calls. With this patch it never failed in 4.8 million calls. Tracing
+step_into_slowpath() during such a run, each of the 98 -ENOENTs it
+returned came right after the same task had entered it with a dentry
+that was still typed negative.
 
   // SPDX-License-Identifier: GPL-2.0
   /*
-   * Get rid of a locked cover with MOVE_MOUNT_BENEATH.
+   * ocreat_enoent: open(O_CREAT) racing the creation of the same name.
    *
-   * The "admin" (root) makes a tmpfs W:
-   *     W/D         file, holds SECRET, covered by a bind of a file with MASK
-   *     W/Dd/inner  file, holds SECRET, Dd is covered by a bind of a directory
-   *                 whose "inner" holds MASK
-   *     W/own       directory of uid 1000 with the file "mine" and the
-   *                 directory "minedir", whose "inner" holds MINE
-   *     W/dbg       debugfs, mode 755. dbg/tracing is an automount point
-   * The "attacker" is uid 1000. It enters a new user namespace with a new mount
-   * namespace, so W and both covers are locked there.
+   * Writers unlink "ocrace" and create it again. Readers open it with
+   * O_CREAT through a symlink of their own on a strictatime tmpfs.
+   * Following the symlink updates its atime, which drops the walk out of
+   * rcu mode, so the name is always looked up in refwalk. An O_CREAT open
+   * must never fail with ENOENT.
    *
-   * usage: prog MODE
-   *   plain      put a bind of own/mine beneath the cover of D, unmount the cover
-   *   nsfile     put a bind of the mount namespace file of a child beneath the
-   *              cover of D, then unshare(CLONE_NEWNS)
-   *   nsfile-control    the same with a bind of own/mine
-   *   shrink     put a bind of the automounted tracefs beneath the cover of Dd,
-   *              unmount the cover, put a tmpfs beneath W, call umount(W), which fails
-   *   shrink-control    the same with a bind of own/minedir
-   * The environment variable AUTOMOUNT_DIR names another automount point for "shrink".
+   * -p arms a cpu-clock perf timer with that period in ns on every writer,
+   * so that interrupts land at random points in it.
+   *
+   *   usage: ocreat_enoent [-t secs] [-w writers] [-r readers] [-p ns]
    */
   #define _GNU_SOURCE
   #include <errno.h>
   #include <fcntl.h>
-  #include <grp.h>
-  #include <sched.h>
-  #include <signal.h>
+  #include <pthread.h>
+  #include <stdatomic.h>
   #include <stdio.h>
   #include <stdlib.h>
   #include <string.h>
-  #include <unistd.h>
   #include <sys/mount.h>
-  #include <sys/prctl.h>
   #include <sys/stat.h>
-  #include <sys/wait.h>
+  #include <sys/syscall.h>
+  #include <unistd.h>
+  #include <linux/perf_event.h>
 
-  #ifndef MOVE_MOUNT_BENEATH
-  #define MOVE_MOUNT_BENEATH 0x00000200
-  #endif
-  #define W "/run/x2"
+  #define DIR "/tmp/oc"
+
+  static atomic_int stop;
+  static atomic_long opens, creates, enoent, other;
+  static long period;
 
   static void die(const char *what)
   {
@@ -163,244 +151,158 @@ and reads MASK both ways.
   	exit(2);
   }
 
-  static void put_file(const char *name, const char *content)
+  static void *writer(void *arg)
   {
-  	int fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+  	(void)arg;
+  	if (period) {
+  		struct perf_event_attr attr = {
+  			.type = PERF_TYPE_SOFTWARE,
+  			.size = sizeof(attr),
+  			.config = PERF_COUNT_SW_CPU_CLOCK,
+  			.sample_period = period,
+  		};
 
-  	if (fd < 0 || write(fd, content, strlen(content)) < 0)
-  		die(name);
-  	close(fd);
-  }
-
-  static void show(const char *path)
-  {
-  	char buf[32] = "";
-  	int fd = open(path, O_RDONLY);
-
-  	if (fd < 0) {
-  		printf("attacker: open(%s) = %s\n", path, strerror(errno));
-  		return;
+  		if (syscall(SYS_perf_event_open, &attr, 0, -1, -1, 0) < 0)
+  			die("perf_event_open");
   	}
-  	if (read(fd, buf, sizeof(buf) - 1) < 0)
-  		snprintf(buf, sizeof(buf), "<%s>", strerror(errno));
-  	close(fd);
-  	printf("attacker: read(%s) = \"%s\"%s\n", path, buf,
-  	       strncmp(buf, "SECRET", 6) ? "" : "   <-- HIT");
-  }
+  	while (!atomic_load(&stop)) {
+  		int fd;
 
-  static int say(const char *what, int ret)
-  {
-  	printf("attacker: %s: %s\n", what, ret ? strerror(errno) : "ok");
-  	return ret;
-  }
-
-  static void write_str(const char *path, const char *s)
-  {
-  	int fd = open(path, O_WRONLY);
-
-  	if (fd < 0 || write(fd, s, strlen(s)) < 0)
-  		die(path);
-  	close(fd);
-  }
-
-  static void mounts(void)
-  {
-  	if (system("grep x2 /proc/self/mountinfo"))
-  		printf("attacker: no mounts listed\n");
-  }
-
-  static void admin_setup(void)
-  {
-  	if (unshare(CLONE_NEWNS) || mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL))
-  		die("unshare");
-  	mkdir(W, 0755);
-  	if (mount("W", W, "tmpfs", 0, "mode=755"))
-  		die("mount W");
-  	if (mkdir(W "/Dd", 0755) || mkdir(W "/maskdir", 0755) || mkdir(W "/dbg", 0755) ||
-  	    mkdir(W "/own", 0755) || mkdir(W "/own/minedir", 0755))
-  		die("mkdir");
-  	put_file(W "/D", "SECRET");
-  	put_file(W "/Dd/inner", "SECRET");
-  	put_file(W "/mask", "MASK");
-  	put_file(W "/maskdir/inner", "MASK");
-  	put_file(W "/own/mine", "MINE");
-  	put_file(W "/own/minedir/inner", "MINE");
-  	if (mount(W "/mask", W "/D", NULL, MS_BIND, NULL) ||
-  	    mount(W "/maskdir", W "/Dd", NULL, MS_BIND, NULL))
-  		die("covers");
-  	if (mount("dbg", W "/dbg", "debugfs", 0, "mode=755"))
-  		die("mount debugfs");
-  }
-
-  static void become_attacker(void)
-  {
-  	if (setgroups(0, NULL) || setresgid(1000, 1000, 1000) ||
-  	    setresuid(1000, 1000, 1000) || prctl(PR_SET_DUMPABLE, 1))
-  		die("drop to uid 1000");
-  	if (unshare(CLONE_NEWUSER | CLONE_NEWNS))
-  		die("unshare user and mount namespace");
-  	write_str("/proc/self/setgroups", "deny");
-  	write_str("/proc/self/uid_map", "0 1000 1");
-  	write_str("/proc/self/gid_map", "0 1000 1");
-  }
-
-  /* clone the mount at @src and put the clone beneath the top mount at @where */
-  static int beneath(const char *src, const char *where)
-  {
-  	char what[128];
-  	int fd = open_tree(AT_FDCWD, src, OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-  	int ret;
-
-  	snprintf(what, sizeof(what), "open_tree(%s, OPEN_TREE_CLONE)", src);
-  	if (say(what, fd < 0))
-  		return -1;
-  	ret = move_mount(fd, "", AT_FDCWD, where,
-  			 MOVE_MOUNT_F_EMPTY_PATH | MOVE_MOUNT_BENEATH);
-  	snprintf(what, sizeof(what), "move_mount(clone, %s, MOVE_MOUNT_BENEATH)", where);
-  	say(what, ret);
-  	close(fd);
-  	return ret;
-  }
-
-  static void do_nsfile(int control)
-  {
-  	char path[64] = W "/own/mine";
-  	int pfd[2];
-  	pid_t pid;
-  	char c;
-
-  	if (pipe(pfd))
-  		die("pipe");
-  	pid = fork();
-  	if (pid < 0)
-  		die("fork");
-  	if (!pid) {
-  		if (unshare(CLONE_NEWNS) || write(pfd[1], "g", 1) != 1)
-  			die("child");
-  		pause();
-  		exit(0);
+  		unlink(DIR "/ocrace");
+  		fd = open(DIR "/ocrace", O_CREAT | O_RDWR | O_CLOEXEC, 0644);
+  		if (fd >= 0)
+  			close(fd);
+  		atomic_fetch_add(&creates, 1);
   	}
-  	if (read(pfd[0], &c, 1) != 1)
-  		die("sync");
-  	if (!control)
-  		snprintf(path, sizeof(path), "/proc/%d/ns/mnt", pid);
-  	beneath(path, W "/D");
-  	mounts();
-  	say("unshare(CLONE_NEWNS)", unshare(CLONE_NEWNS));
-  	show(W "/D");
-  	mounts();
-  	kill(pid, SIGKILL);
-  	waitpid(pid, NULL, 0);
+  	return NULL;
   }
 
-  static void do_shrink(int control)
+  static void *reader(void *arg)
   {
-  	const char *automount = getenv("AUTOMOUNT_DIR");
-  	int fd, mfd;
+  	char lnk[64];
 
-  	if (!automount)
-  		automount = W "/dbg/tracing";
-  	beneath(control ? W "/own/minedir" : automount, W "/Dd");
-  	say("umount2(Dd, 0), the old cover", umount2(W "/Dd", 0));
-  	say("umount2(Dd, 0), the mount that was put beneath", umount2(W "/Dd", 0));
-  	show(W "/Dd/inner");
-  	say("umount2(W, 0)", umount2(W, 0));
-  	fd = fsopen("tmpfs", FSOPEN_CLOEXEC);
-  	if (fd < 0 || fsconfig(fd, FSCONFIG_CMD_CREATE, NULL, NULL, 0))
-  		die("fsopen tmpfs");
-  	mfd = fsmount(fd, FSMOUNT_CLOEXEC, 0);
-  	if (mfd < 0)
-  		die("fsmount");
-  	say("move_mount(new tmpfs, W, MOVE_MOUNT_BENEATH)",
-  	    move_mount(mfd, "", AT_FDCWD, W, MOVE_MOUNT_F_EMPTY_PATH | MOVE_MOUNT_BENEATH));
-  	close(mfd);
-  	mounts();
-  	say("umount2(W, 0)", umount2(W, 0));
-  	show(W "/Dd/inner");
-  	mounts();
+  	snprintf(lnk, sizeof(lnk), DIR "/lnk.%ld", (long)arg);
+  	while (!atomic_load(&stop)) {
+  		int fd = open(lnk, O_CREAT | O_RDWR | O_CLOEXEC, 0644);
+
+  		if (fd >= 0)
+  			close(fd);
+  		else if (errno == ENOENT)
+  			atomic_fetch_add(&enoent, 1);
+  		else
+  			atomic_fetch_add(&other, 1);
+  		atomic_fetch_add(&opens, 1);
+  	}
+  	return NULL;
   }
 
   int main(int argc, char **argv)
   {
-  	const char *mode = argc > 1 ? argv[1] : "plain";
+  	int secs = 60, nw = 4, nr = 12, c, n = 0;
+  	pthread_t t[256];
 
-  	setvbuf(stdout, NULL, _IOLBF, 0);
-  	admin_setup();
-  	become_attacker();
-
-  	show(W "/D");
-  	show(W "/Dd/inner");
-  	say("umount2(D, MNT_DETACH)", umount2(W "/D", MNT_DETACH));
-  	say("umount2(Dd, MNT_DETACH)", umount2(W "/Dd", MNT_DETACH));
-
-  	if (!strcmp(mode, "plain")) {
-  		beneath(W "/own/mine", W "/D");
-  		show(W "/D");
-  		say("umount2(D, MNT_DETACH), the old cover", umount2(W "/D", MNT_DETACH));
-  		show(W "/D");
-  		say("umount2(D, MNT_DETACH), the mount that was put beneath",
-  		    umount2(W "/D", MNT_DETACH));
-  		show(W "/D");
-  		mounts();
-  	} else if (!strncmp(mode, "nsfile", 6)) {
-  		do_nsfile(!strcmp(mode, "nsfile-control"));
-  	} else {
-  		do_shrink(!strcmp(mode, "shrink-control"));
+  	while ((c = getopt(argc, argv, "t:w:r:p:")) != -1) {
+  		switch (c) {
+  		case 't': secs = atoi(optarg); break;
+  		case 'w': nw = atoi(optarg); break;
+  		case 'r': nr = atoi(optarg); break;
+  		case 'p': period = atol(optarg); break;
+  		default: return 2;
+  		}
   	}
-  	return 0;
+  	if (nw + nr > 256)
+  		return 2;
+  	mkdir(DIR, 0755);
+  	if (mount("oc", DIR, "tmpfs", MS_STRICTATIME, "mode=0755"))
+  		die("tmpfs");
+  	for (long i = 0; i < nr; i++) {
+  		char lnk[64];
+
+  		snprintf(lnk, sizeof(lnk), DIR "/lnk.%ld", i);
+  		if (symlink("ocrace", lnk))
+  			die("symlink");
+  	}
+  	for (long i = 0; i < nw; i++)
+  		if (pthread_create(&t[n++], NULL, writer, NULL))
+  			die("writer");
+  	for (long i = 0; i < nr; i++)
+  		if (pthread_create(&t[n++], NULL, reader, (void *)i))
+  			die("reader");
+  	sleep(secs);
+  	atomic_store(&stop, 1);
+  	for (int i = 0; i < n; i++)
+  		pthread_join(t[i], NULL);
+  	printf("%ds: %ld opens, %ld creates, ENOENT %ld, other errors %ld\n",
+  	       secs, atomic_load(&opens), atomic_load(&creates),
+  	       atomic_load(&enoent), atomic_load(&other));
+  	umount2(DIR, MNT_DETACH);
+  	return atomic_load(&enoent) ? 1 : 0;
   }
 
-Fixes: c62a4766937e ("move_mount: transfer MNT_LOCKED")
-Reported-by: Chris Mason <mason@kernel.org>
-Cc: stable@vger.kernel.org # v7.1+
-Link: https://patch.msgid.link/20261014-work-namei-locked-mnt_ns_file-v1-1-24035bd5d8e9@kernel.org
+#  diff --git a/fs/dcache.c b/fs/dcache.c
+#  --- a/fs/dcache.c
+#  +++ b/fs/dcache.c
+#  @@ -32,9 +32,13 @@
+#   #include <linux/bit_spinlock.h>
+#   #include <linux/rculist_bl.h>
+#   #include <linux/list_lru.h>
+#  +#include <linux/delay.h>
+#   #include "internal.h"
+#   #include "mount.h"
+#
+#  +/* debug: stall "ocrace*" names between ->d_inode and the type */
+#  +static int sysctl_ocrace_instantiate_us;
+#  +
+#   #include <asm/runtime-const.h>
+#
+#   /*
+#  @@ -200,6 +204,13 @@
+#   }
+#
+#   static const struct ctl_table fs_dcache_sysctls[] = {
+#  +	{
+#  +		.procname	= "ocrace_instantiate_us",
+#  +		.data		= &sysctl_ocrace_instantiate_us,
+#  +		.maxlen		= sizeof(int),
+#  +		.mode		= 0644,
+#  +		.proc_handler	= proc_dointvec,
+#  +	},
+#   	{
+#   		.procname	= "dentry-state",
+#   		.data		= &dentry_stat,
+#  @@ -405,6 +416,10 @@
+#   	unsigned flags;
+#
+#   	dentry->d_inode = inode;
+#  +	/* debug: an interrupt landing right here */
+#  +	if (unlikely(READ_ONCE(sysctl_ocrace_instantiate_us)) &&
+#  +	    !strncmp(dentry->d_name.name, "ocrace", 6))
+#  +		udelay(READ_ONCE(sysctl_ocrace_instantiate_us));
+#   	flags = READ_ONCE(dentry->d_flags);
+#   	flags &= ~DCACHE_ENTRY_TYPE;
+#   	flags |= type_flags;
+
+Fixes: e747e15156b7 ("fs: try an opportunistic lookup for O_CREAT opens too")
+Cc: stable@vger.kernel.org # v6.12+
+Link: https://patch.msgid.link/20261012-work-namei-ocreate-v1-1-c7883b17ee28@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ fs/namei.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2221,6 +2221,11 @@ struct mount *copy_tree(struct mount *sr
- 			}
- 			if (!(flag & CL_COPY_MNT_NS_FILE) &&
- 			    is_mnt_ns_file(src_mnt->mnt.mnt_root)) {
-+				if (src_mnt->mnt.mnt_flags & MNT_LOCKED) {
-+					/* Both a mount namespace file and locked. */
-+					dst_mnt = ERR_PTR(-EPERM);
-+					goto out;
-+				}
- 				src_mnt = skip_mnt_tree(src_mnt);
- 				continue;
- 			}
-@@ -3607,8 +3612,9 @@ static bool mount_is_ancestor(const stru
-  * @mnt_to:   mount under which to mount
-  * @mp:   mountpoint of @mnt_to
-  *
-- * - Make sure that the caller can unmount the topmost mount ensuring
-- *   that the caller could reveal the underlying mountpoint.
-+ * - Make sure that @mnt_from can take over the lock of @mnt_to. A
-+ *   mount of a mount namespace file is left out of a copy of the tree
-+ *   and can't.
-  * - Ensure that nothing has been mounted on top of @mnt_from before we
-  *   grabbed @namespace_sem to avoid creating pointless shadow mounts.
-  * - Prevent mounting beneath a mount if the propagation relationship
-@@ -3624,6 +3630,15 @@ static int can_move_mount_beneath(const
- {
- 	struct mount *parent_mnt_to = mnt_to->mnt_parent;
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -4576,8 +4576,7 @@ static struct dentry *lookup_fast_for_op
+ 		return dentry;
  
-+	/*
-+	 * @mnt_from takes over the lock of @mnt_to. copy_tree() leaves a
-+	 * mount of a mount namespace file out of every copy made without
-+	 * CL_COPY_MNT_NS_FILE, together with what is mounted on it, so it
-+	 * can't keep anything hidden.
-+	 */
-+	if (IS_MNT_LOCKED(mnt_to) && is_mnt_ns_file(mnt_from->mnt.mnt_root))
-+		return -EINVAL;
-+
- 	/* Avoid creating shadow mounts during mount propagation. */
- 	if (mnt_from->overmount)
- 		return -EINVAL;
+ 	if (open_flag & O_CREAT) {
+-		/* Discard negative dentries. Need inode_lock to do the create */
+-		if (!dentry->d_inode) {
++		if (d_is_negative(dentry)) {
+ 			if (!(nd->flags & LOOKUP_RCU))
+ 				dput(dentry);
+ 			dentry = NULL;
 
 
