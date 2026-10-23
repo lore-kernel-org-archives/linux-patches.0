@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773781;
-	b=cTT4O+ZiLc+dgjCIKkpz1QFUs5luyT/ffaKKIudMCPz56hUDhgw5rDK3NHsQJTABsdA+
-	 uJsfhVfHo0jlmJ9tVqvQEpZqmbCvl3gNIYXTBaDz6D1wd3rK1eil7UW2bzkUG7ltKCGnl
-	 47BTQmBdtLPnudcRSz7HksCUdB37g7TLg+DfuBu6kLzJeuCQSWzaArarDn+SuQIQ13riM
-	 Et0IUKGQitWFfvLUqsQ2uyBGlGYvBX9gNSEZD0GJ1zmpv+sH85D8FZym4JKd2LCnp6P9b
-	 yvWnyCJk5El2YTCzIwiMWzrSx8tUH76SBBhKSHep9ZESFIMxqJbAHmS+9mbZJBi9j4Q==
+	t=1792773787;
+	b=QpAo8Txeg+3RrqpHjak5dU9kXdfKbtZAELND33tj6WkMpllyeYmY0gcHOdQM4ZyY8GAf
+	 bzxv3ZbehlnMGsa2zXQla0divXm5AQTwmiedS9sxLCa2HBXOcgrlnf04dJ81CVWWsbJa+
+	 XzTY2JKxGy9Y971toI6PM93AuGlCQJK48hpGNc03JcdSLaxLlK5NbPG3GIdK9v4I3C3vu
+	 hgla6FCRfYTQMMVAdQm7HpuwUDD9gF3M6XsgID7AZnc+gWFSqeKm1ccMWUw9v9hzrqxG9
+	 eSKWvI5B0FrFpZ/3OjW4tPiMle/WjkIMgEURr/OOsuH8A5dO64JyAzYc3WhGFCrRz8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773781;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RYiMP0Tigdya7zhZbz9gPe3MNAY7tj0PBGUDNt+05cA=;
-	b=L4z4uFg5BljZG5NvIb5Dq+UGaA809cbcUwsbE/PrvQtdkI0cfmIZjMpzadH63QloQn84
-	 d+dovtm9VpbFGqPmdv/iIi7/SrPZr6ViLqGbwuBjBo/GruWmh3f0vv/Dd3IIfvi9cuTlu
-	 3X5ZGgauVU+ZfJAnRzXW/ZufXnElbt3XiU02aI9WsoMBHFiBMrs41J95xUMB5suk5Lp6L
-	 9JZpBOiR4G+zzbkMhkF79r8FZCZYvLGS2L/CHmDiVgsoGyc6pc5PVWsw/roOMD+Bt2xQ2
-	 SpWVyT/u/OFakrIl/1Rv3e1Jgf7H/nBCpeiLxu9mKgIR2zZqnc6uUKWCFKCP0ByE7zw==
+	bh=KJbfy8TOLrO0OvX/C1vhQsuI9pgfrOHi4RqOSWgcGd0=;
+	b=ZzJAyZUuua4EXvdCIOVjLAf/nmPWaZI4ETj/qTVrI94D8jL9gpIMoEMVmot/K73J4XsS
+	 +t3EW1SxtNk3Hxzgpi75jDUMuW4yzBhITwHa2A6s2hqYpB7/gr7hqanFJAPJjZYyt4rEp
+	 tXKSawyyandrhf1ESZXpZ8/UHSJ7nOekpwnn1siUqyJ65y1vzvYg8aYiChpiiR9/1mH6D
+	 ZH7Fmi4vO5Z93TZ1DZHH94ouqUd+ILNRLor5/a/E+BjuNQtDJUmgECbL7K/rX15ygH8oA
+	 5eYQK43jzvqPClx+CZKfZ8dHqAgn2cD6ZkpbyxMZBElwHe9TwIl7U0NPzKQpmFYFIOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsNIPWpP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpjpO5qC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A1C606A31F;
-	Fri, 23 Oct 2026 16:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543EC606A31B;
+	Fri, 23 Oct 2026 16:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsNIPWpP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AA61F01825;
-	Fri, 23 Oct 2026 16:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpjpO5qC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1FE1F01825;
+	Fri, 23 Oct 2026 16:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773781;
-	bh=RYiMP0Tigdya7zhZbz9gPe3MNAY7tj0PBGUDNt+05cA=;
+	s=korg; t=1792773787;
+	bh=KJbfy8TOLrO0OvX/C1vhQsuI9pgfrOHi4RqOSWgcGd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BsNIPWpP7tJfKunsUYVrHfZ+35JFA0tEa0xeR3VO4DT8qLYR2HoG1oppQAJpaxgeP
-	 vu1EC5pRZpUPC8ZXNXom5X5bbkG8ohW/ai+X9bYIIHueiOPHkfAyJV9hMI/HLSsP7k
-	 YU1+uLtQ9UYXzF8LO22WDj8y+y4P4UJCjnJCEGgo=
+	b=zpjpO5qCeuJB2OOTZXKdzGIa2DaImEy39HJwCCTa8N7XPHPZkl7fHN+hLfH4W5nre
+	 fa4onuU1olQVwXm00STsd8ccNTi4AlgJizBFt85af3bCpYur2CJkBrwd2b2lv0d74U
+	 5cpzX5+XEa8G8Jyro69i6BlCNwaMTMFAL62175gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Federico Parola <fparola@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 006/193] rose: purge rose_neigh->queue on final teardown
-Date: Fri, 23 Oct 2026 18:34:43 +0200
-Message-ID: <20261023163714.355984094@linuxfoundation.org>
+Subject: [PATCH 6.18 008/193] kho: free phys_bits bitmaps using free_page() in __kho_abort()
+Date: Fri, 23 Oct 2026 18:34:45 +0200
+Message-ID: <20261023163714.401900600@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -67,70 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Federico Parola <fparola@amazon.de>
 
-rose_transmit_link() queues an outgoing frame on rose_neigh->queue
-instead of sending it immediately whenever the neighbour isn't
-"restarted" yet (link not up) -- notably the CLEAR_REQUEST built by
-rose_write_internal() when a socket is released (e.g. its owning
-process is killed) while the underlying AX.25 link to that neighbour
-is still coming up.
+Commit fa759cd75bce ("kho: allocate metadata directly from the buddy
+allocator") switched the allocation of preserved memory bitmaps to
+get_zeroed_page(), but __kho_abort() still releases them with kfree().
+kfree() on a buddy page that is not a large kmalloc allocation hits the
+WARN_ON_ONCE() in free_large_kmalloc() and returns without freeing it,
+so every aborted finalization leaks all bitmap pages.
 
-rose_neigh_put() already tears down both timers and drops the ax25/
-digipeat references before freeing the neighbour, but never empties
-this queue. kfree(rose_neigh) only frees the rose_neigh struct itself
-(the sk_buff_head embedded in it is just three next/prev/len words),
-not the skbs still linked into it -- every frame still queued here at
-that point leaks for good.
+Free the bitmaps with free_page() instead.
 
-rose_remove_neigh() (rose_route.c) already purges this same queue, but
-it is only one of about two dozen call sites that can drop the last
-reference and trigger the real kfree() in rose_neigh_put() -- every
-socket releasing its own rose->neighbour reference (af_rose.c,
-rose_in.c, rose_timer.c) can just as well be the one that does. Doing
-the purge once, centrally, in rose_neigh_put() itself covers all of
-them regardless of which call site happens to be last, rather than
-relying on whichever caller happened to remember it.
+This is a stable-only patch. Upstream fixed it as a side effect of
+commit 99cd2ffac697 ("kho: don't unpreserve memory during abort"), which
+removes the tracking teardown from __kho_abort() altogether. That change
+builds on commit 36f8f7ef7fd2 ("kho: add interfaces to unpreserve
+folios, page ranges, and vmalloc") and commit 70f9133096c8 ("kho: drop
+notifiers"). In 6.18.y, KHO users still preserve memory from the
+KEXEC_KHO_FINALIZE notifier and have no interface to unpreserve it, so
+the teardown on abort is the only way their preservations get dropped.
+Backporting that commit would make preservations outlive every abort,
+so keep the teardown and fix only the mismatched free.
 
-Matches a leak pattern observed and documented back in May 2026
-(mailbbs killed -> rose_release() -> rose_write_internal() ->
-rose_transmit_link() queues the CLEAR_REQUEST -> skb never freed),
-never root-caused until now.
-
-Deployed and running since 2026-09-13/15 on three independent nodes
-(f6bvp-12, f6bvp-8, f6bvp-10 -- three different kernel bases,
-6.12.94/6.18.46/6.18.34), no regression observed.
-
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit e59e4523182e4f58f4f29b5e4bce44c1ef152d70)
+Fixes: fa759cd75bce ("kho: allocate metadata directly from the buddy allocator")
+Signed-off-by: Federico Parola <fparola@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rose.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ kernel/kexec_handover.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/rose.h b/include/net/rose.h
-index 0d957b8dd0ba3..49140668b3dd0 100644
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -180,6 +180,18 @@ static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
- 		 */
- 		timer_shutdown_sync(&rose_neigh->ftimer);
- 		timer_shutdown_sync(&rose_neigh->t0timer);
-+		/* rose_transmit_link() queues a frame here instead of sending
-+		 * it immediately whenever the neighbour isn't "restarted" yet
-+		 * (link not up) -- e.g. the CLEAR_REQUEST built by
-+		 * rose_write_internal() when a socket is released while its
-+		 * underlying AX.25 link is still coming up. If this neighbour
-+		 * is freed before that link ever comes up, nothing else ever
-+		 * empties this queue: kfree() below only frees the
-+		 * rose_neigh struct itself (including the three next/prev/len
-+		 * words of the sk_buff_head), not the skbs it points to,
-+		 * leaking every frame still queued here.
-+		 */
-+		skb_queue_purge(&rose_neigh->queue);
- 		if (rose_neigh->ax25)
- 			ax25_cb_put(rose_neigh->ax25);
- 		kfree(rose_neigh->digipeat);
+diff --git a/kernel/kexec_handover.c b/kernel/kexec_handover.c
+index 9fe5d14f1ec54..9691f6bc2fba7 100644
+--- a/kernel/kexec_handover.c
++++ b/kernel/kexec_handover.c
+@@ -1054,7 +1054,7 @@ static int __kho_abort(void)
+ 		unsigned long phys;
+ 
+ 		xa_for_each(&physxa->phys_bits, phys, bits)
+-			kfree(bits);
++			free_page((unsigned long)bits);
+ 
+ 		xa_destroy(&physxa->phys_bits);
+ 		kfree(physxa);
 -- 
 2.53.0
 
