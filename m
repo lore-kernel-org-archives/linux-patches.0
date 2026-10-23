@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774538;
-	b=C2yOVrWZM7JkplEzeqRs2cHp+eDDk49S+LvU53e/bYvvY7JaPSu4JTtujEviaqdJPBAH
-	 Xy1auicDnwH3qbLvAWiQs+4q0hhAwbJa3AYC+Gjqdq8ZQ9+AzWtQx0xfJH+NKOStfb1fW
-	 uRzzm5QfP6X/ClEWLK07wnCQeMBg0eY6mAlG9MmKkF8HORtUIp12stnAZczZirqa+h2kK
-	 APoMMIK+YvLgalv+H4xeY7qbHNAQdQLMze/vxAeuRUyumehAgVNF8GrAd06OQseOCH/4/
-	 03vmpeUTE5zDbeTHbBFOt4wjaCse6jx0Nf6xVhVy3btPdOvkuHvJ0rlYzBhWaSfhlnA==
+	t=1792774541;
+	b=iVIQiClPRYE0+qzN3/sVUNQqVnQzzIU7B5nOAbtshtc7Kht4GpYl9G47PWUPIMiNmFnQ
+	 KiwQEjciI6Qk9bmtRe4rs1qpq/v4Wyqzhj33XXb/6HnEXwoQ7SE4neq3qqQcP/mBv/TM2
+	 qNBWeNa1b/SlK2FdWAaa/xcN4IhelrZHmE1L+/c1WEXi3nYajpZ64imRk1PjY+gmuAjLQ
+	 L0Njp0YF+SWijQAXrGkpPXCfJ2yOb4DeO8LR7XOZkWiQa78wgb+IJawWDiPrsUa7UC20x
+	 xZsleM4BkXycteB6XUxH3cB4rnNNv21uR3Ho6q2YocaAiViKDLhr2y+PR7EZ9FfnNfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b3W2jnDpxUQKPZ4HEzmxYrlyGW/mSLVWuy8JuI09zIk=;
-	b=uyBxTSPgSr6WaYRtwmqn/uYVOB4Fk1SGufgWwvesKzj1Tw79OgAdrTjcmIGuX4d6IyoJ
-	 vz4E4Y2vxdPgGrF2PVfYRLxnD83Yfoa/GovaMTdso7Rm5ammawXPVdP8F7NO6HuYldNzf
-	 jfZAZwoQKcPmx6hKvFY5x9QuO9O728yqBdRenfeIt8P6mzWPk/iAXKJPCgKhqGSvR6pzB
-	 AVGtUDv/XG2lHAofMc0QggtaWjadyqlDk6AmFOuO+BP3uLBMjMxHO6x5RzDribvg977Oo
-	 rm0cKZaP/vozeIzOtbNF1GJvKainHaEbr299IkN6r9miZ4VITBni/JXJOAPFryCgETQ==
+	bh=B/CdncJzum1aWkjC2I8nIon3w1rn7WMhKBQxbe/o3dk=;
+	b=3U4ESpgXA8fl0tNzsFpm1xI93VHVUcHhcUMvsDM00tj3n6/11DoP8q9drpXwzfWDI2OD
+	 2/SuEKzkDCiXnFBAFPvfEqty0iKBTxJMIMHRsSjxhNpRVAhNugBZjwIZbc4RC8lNBAOUs
+	 NBcP7EHW7di579rK6zZR4WP8xRMJfbsU4x8/xcIOHwUHXDidR7PQmdPCUSTYscKukpqEm
+	 B6vcWNTY+pyjD3sedQuiILsafvHGrZTb7Xq/aFyZ2LW/w78sZn1qfXcdsK1rbepC7PaZG
+	 NV3OfqQFmPlX4be06LsVfeVpYsaIj32TIEn+fnbDX/JLiOTNlDXZD+pBn9f9MJPkavA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yA9dzYHZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NXYyShr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E581606A31E;
-	Fri, 23 Oct 2026 16:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCB7606A31A;
+	Fri, 23 Oct 2026 16:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yA9dzYHZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792F71F01825;
-	Fri, 23 Oct 2026 16:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NXYyShr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5361F01825;
+	Fri, 23 Oct 2026 16:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774538;
-	bh=b3W2jnDpxUQKPZ4HEzmxYrlyGW/mSLVWuy8JuI09zIk=;
+	s=korg; t=1792774540;
+	bh=B/CdncJzum1aWkjC2I8nIon3w1rn7WMhKBQxbe/o3dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yA9dzYHZI3Y0d5vpO6iAyL1B64qgbeoKZzZFdOPWEAL3E2bFH7w5NON/g2Xe5j1Tr
-	 ka4jOUI2NbQvHGE9IgMAg5lhGmTJvN+9Pqox5HAaBoDEVSkerYaEV10wzTmYcu2fmv
-	 NGQAcWAtuTUMF3YyXpHKFbiQn314thIxffNYVAnQ=
+	b=0NXYyShrudgqwQ5PZvoqPOxiyxwQzfaPbDJMLQw/tdj6y08oCIXiIPMBA5DFSiW9T
+	 sdAz6IRJt69DkXR5LFX0ID90PkENx+S+1I1OFndOVrOoQosPqBQaxF8DgzhIPmgKnf
+	 YcDH5iE2kV2XRS3Qyq9/AONIPUeVj07L6oFJ084I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Simon Horman <horms@kernel.org>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 074/242] netlink: avoid hashing the network namespace pointer
-Date: Fri, 23 Oct 2026 18:38:36 +0200
-Message-ID: <20261023163715.530219207@linuxfoundation.org>
+Subject: [PATCH 7.2 048/242] nios2: fix __wsum type degradation in csum_fold()
+Date: Fri, 23 Oct 2026 18:38:10 +0200
+Message-ID: <20261023163714.912930542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -70,78 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit f88bb3606e4bd11ee035b682cddc2999e604609a ]
+[ Upstream commit b963f2345fa20417401c51a69dedb6a58eea33a9 ]
 
-The netlink rhashtable key includes a raw struct net pointer and a
-user-controlled port ID. Both /proc/net/netlink and socket diagnostics
-expose the table's bucket order. By binding and rebinding chosen
-NETLINK_USERSOCK port IDs, an unprivileged reader can distinguish equal
-buckets and recover the low bits of the Jenkins hash. Its 32-bit seed
-and the limited set of kernel-image slides can then be searched offline
-to recover the address of init_net.
+csum_fold() shifts a bitwise __wsum type, which sparse reports as
+"restricted __wsum degrades to integer". Sparse only checks the body of
+a static inline once something instantiates it, so this went unnoticed
+until a recent block layer change added the first csum_fold() caller to
+a file built on this architecture.
 
-Use the namespace's unique, non-address net_cookie in the comparison
-key instead. It is assigned before the per-net initializers run and
-remains unchanged for the namespace's lifetime. The lookup key and
-object hash are still built by netlink_compare_arg_init(), keeping
-lookup, insertion, removal and rehashing consistent while preserving
-namespace separation. Neither public table walker needs to change.
+Force cast to a __u32 for the shift, as the other architectures do.
 
-Reading the socket's namespace cookie in netlink_compare() is safe
-under RCU, including during namespace teardown. netlink_release()
-removes the socket from the hash table and defers its final put with
-call_rcu(). cleanup_net() runs the per-net exit methods and waits for
-outstanding RCU callbacks with rcu_barrier() before freeing namespace
-storage.
-
-Unlike ns.ns_id, net_cookie is also available and initialized during
-setup_net() in older stable kernels, making the change straightforward
-to backport to v5.15 and later.
-
-Fixes: c428ecd1a21f ("netlink: Move namespace into hash key")
-Assisted-by: LLM
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261008011359.63727-2-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: eea9507a69d6 ("nios2: Library functions")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609222053.5gjiJjtb-lkp@intel.com/
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/nios2/include/asm/checksum.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 5324edb13760a..3b980302a7991 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -464,7 +464,7 @@ netlink_unlock_table(void)
- 
- struct netlink_compare_arg
- {
--	possible_net_t pnet;
-+	u64 net_cookie;
- 	u32 portid;
- };
- 
-@@ -479,14 +479,14 @@ static inline int netlink_compare(struct rhashtable_compare_arg *arg,
- 	const struct netlink_sock *nlk = ptr;
- 
- 	return nlk->portid != x->portid ||
--	       !net_eq(sock_net(&nlk->sk), read_pnet(&x->pnet));
-+	       sock_net(&nlk->sk)->net_cookie != x->net_cookie;
+diff --git a/arch/nios2/include/asm/checksum.h b/arch/nios2/include/asm/checksum.h
+index 69004e07a1ba3..b6b415ae17a08 100644
+--- a/arch/nios2/include/asm/checksum.h
++++ b/arch/nios2/include/asm/checksum.h
+@@ -27,7 +27,7 @@ static inline __sum16 csum_fold(__wsum sum)
+ 		"add	%0, %0, r8\n"
+ 		"nor	%0, %0, %0\n"
+ 		: "=r" (sum)
+-		: "r" (sum << 16), "0" (sum)
++		: "r" ((__force u32)sum << 16), "0" (sum)
+ 		: "r8");
+ 	return (__force __sum16) sum;
  }
- 
- static void netlink_compare_arg_init(struct netlink_compare_arg *arg,
- 				     struct net *net, u32 portid)
- {
- 	memset(arg, 0, sizeof(*arg));
--	write_pnet(&arg->pnet, net);
-+	arg->net_cookie = net->net_cookie;
- 	arg->portid = portid;
- }
- 
 -- 
 2.53.0
 
