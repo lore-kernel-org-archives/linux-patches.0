@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774262;
-	b=ICWaP4v0ldAJaFzARBwB8M8wmsW0wMsg+/jyYrLpCBl8ynACgDBSfronYVjPlDF0mnDj
-	 lRSmBYht+WW+Hfi6wlcAv5UUB4OH1S/D0ktjNEEeGk/muowOs1eqXuhra9N7hnurjI1F9
-	 yWiPdvtfES4ShVrl1Ga1SNwfKFQOvsdun5YBX0ZTxuWxeRQKFyWCD/yN3EHIyWiR1AJj9
-	 S5NYqZaDJsigd3l2ZD+cW7/RxmSOkYOBepEJX23IzXeoFRSbzOeeqqHe0EbJcWRBsWGnz
-	 b6Qu6HnKWr3jkZlD63FRogJ9C0uRp37TDKzxBOnFfk5Dat6HZe60RIrmKsxVUmPYP1A==
+	t=1792774265;
+	b=drYtWS1KY4QrUkEvSr/x79XV5iXHu34AxcKOYBgNAD+4+RCh3lKMaSADWHzp66g10JhK
+	 3sz0kyNfxNJ/wT4oVr3N0rw3iV+1Lucm3M5vUzn5jYH2aFLei/L6MP0B3sBSWajyRtHpk
+	 h8uFkcP4tZTVBiJpvp/YqryhQyANJSMLxs2Lq2ZU9ev71yYjXmoDk06hFDH7sA13YawUi
+	 l/nWL7wogzCcQDgXV+ipONdy/8shSYrH7MVyi/draBJz/1iT6TAfWSDV20NsX2x+Z0Aa0
+	 BbRw7StO9b3K9CZo6jptDh9qn2jFMMXzUKEhVP5HJecIYlWb0OLAuPdLM6fOff+HWVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NJ32ltzbc3IRThJyhrpLfBWDQX3QYn79/SSae5wgn/0=;
-	b=lb0/jphzlqYQteEYK8uoO0TFFRKC3IhONI5pukw4rnTHI5xq5dhgda4yuVWFE5sd7go0
-	 tBbYWh1L9j5gR7DTMYfuu2aOTs0GGP9dP2HFBv1wUYbxxqPbIIr8mfeyB9yaZYfZ6gUrj
-	 ahdefAvNL/7AHwd+/p8Ebt6KZCMRc9+djJ0kC9WI+puwz2gm9yv+1xcRtDFTjpIStPga1
-	 VfzBGvMaC2iF5+KUYfCKEzj26HIZ45HFR6Tn/ioE9dgY5B9OtNMfJwcdOY5tvQ2Jh4rNx
-	 HoVBfxlRIs+4O11b7s6TPdiR9+3vPOKlUTQMFMRSQCADctkGV+17hv808Q7uFj6nA5Q==
+	bh=aet5d1VpDMkqmg7sKAMBkyrnbqt1A5iiYmPdMcoduv8=;
+	b=cBqReqr4kgXaOldbSvc9O6V+POT40YZOo7fTeqrPDGbC8W9gIpfxn0h1/WqeV7vrFKT5
+	 JoG65m0G77ElhW1Lh1xbgQEu5GY47K7FdoQBxJSw8UsV6Gj7cn9MrvdT7yghnTHvmI6O6
+	 CgweTKRM+U0Do7VTIdVaU4EO4aQqmCvTgeOGE6Xiolhtm2stDjbrH5PCKLaWE66rOp48c
+	 ixtXzhXBg0wNPCkZxmccPrWDi1BWyG6MB95o8OK6gafOwCGh4R0EhYnfSSfwCpFJumbzV
+	 e6H6vjOfT0Bui12WUMkde/kHHbVfL9QHbqV3BxI5rp1bb0RnTtASJJG4lwfdC4O/OXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IW1ZGC24;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rzS206+F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08439606A31D;
-	Fri, 23 Oct 2026 16:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F105D606A324;
+	Fri, 23 Oct 2026 16:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IW1ZGC24
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586331F01828;
-	Fri, 23 Oct 2026 16:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rzS206+F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF981F01825;
+	Fri, 23 Oct 2026 16:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774261;
-	bh=NJ32ltzbc3IRThJyhrpLfBWDQX3QYn79/SSae5wgn/0=;
+	s=korg; t=1792774264;
+	bh=aet5d1VpDMkqmg7sKAMBkyrnbqt1A5iiYmPdMcoduv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IW1ZGC24kYqNeJO69hvBWnxJ+tuJeLg+vhItmXqJokISXOogwKEemPMlWJyciVzXA
-	 X5FbCk6orjimOMAaVo03nzg4He5XtJHI3dlcwdyXxpFijFHFDpT8WMDw1Su5sqMQGd
-	 Za7qZK+/rD2d/x7yCW4dd0Msm3G4INQjJaUrSo/Q=
+	b=rzS206+F4T0/BwXAOO2g9ghrYHM3bft+MRxvANmAiSgwB+1xcYTegUCU9zrIUhNy6
+	 O+IsHWupkcRX9z2HKGe7bAw1VgBqhCt9a7Wu9MRbO657d8xFHNre8iObuolJFLHxvY
+	 d7nKXB2SXXbeFyI3DnW7EAEeRgak4OLxBc8SN/34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Schauer <florian@schauer.to>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 138/193] page_pool: keep frag_offset aligned for odd-sized requests
-Date: Fri, 23 Oct 2026 18:36:55 +0200
-Message-ID: <20261023163717.472700035@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 174/193] tracing: Fix NULL dereference when copying keys for a field variable
+Date: Fri, 23 Oct 2026 18:37:31 +0200
+Message-ID: <20261023163718.334119226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,126 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Schauer <florian@schauer.to>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit dc0df5a0c62ccea1d0e08d39a4dc9064de81d411 upstream.
+[ Upstream commit a0777b9e53157f1f6848a0fd0650f5465391ea81 ]
 
-page_pool_alloc_frag_netmem() rounds the requested fragment size with
+In event_hist_trigger_parse() where it needs to create actions like
+"onmatch", it calls:
 
-	size = ALIGN(size, dma_get_cache_alignment());
+  event_hist_trigger_parse() {
+    create_actions() {
+      action_create() {
+        trace_action_create() {
+          trace_action_create_field_var() {
+            create_field_var_hist()
 
-dma_get_cache_alignment() returns 1 unless the architecture defines
-ARCH_DMA_MINALIGN, which DMA-coherent architectures such as x86 do not.
-There the ALIGN() is a no-op and pool->frag_offset advances by the raw,
-unrounded size.
+Where create_field_var_hist() does a loop on the hist_data
+representing the keys. The issue is, if the keys uses one of the
+pseudo field types (like common_cpu), the hist_data field element
+will have NULL for its field member causing a NULL pointer
+dereference when accessing the key_field->field->name.
 
-A single caller asking for an odd size then leaves frag_offset misaligned
-for every fragment carved out of that page afterwards.  The pool is shared,
-so the damage is not confined to the caller that caused it.
+  # echo 'hist:keys=common_cpu:ts0=common_timestamp.usecs' > \
+      events/sched/sched_waking/trigger
+  # echo 'my_synth u64 lat; int prio' > synthetic_events
+  # echo 'hist:keys=common_cpu:wakeup_lat=common_timestamp.usecs-$ts0:\
+      onmatch(sched.sched_waking).my_synth($wakeup_lat,prio)' > \
+      events/sched/sched_switch/trigger
 
-The per-cpu system_page_pool used by generic XDP hits this.
-skb_pp_cow_data() allocates its fragments with the raw packet length:
-
-	size = min_t(u32, len, PAGE_SIZE);
-	truesize = size;
-	page = page_pool_dev_alloc(pool, &page_off, &truesize);
-
-leaving frag_offset odd for whatever is carved out of that page next.  Its
-own head allocation is already aligned -- SKB_HEAD_ALIGN(size) plus the
-XDP_PACKET_HEADROOM its callers pass -- so it is a later user of the shared
-pool that pays: page_pool_dev_alloc_va() returns a misaligned buffer,
-napi_build_skb() installs it as skb->head, and skb_shinfo(skb) ==
-skb->head + skb->end is misaligned with it.
-
-skb_shinfo()->dataref is a 4-byte atomic_t at offset 0x20, so the
-atomic_inc() in __skb_clone() straddles a cache line.  On x86 with split
-lock detection -- fatal for kernel split locks by default -- this panics
-the machine:
-
-  Oops: Split lock detected
-  RIP: 0010:skb_clone+0x154/0x1e0
+  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+  RIP: 0010:create_field_var_hist+0x771/0x1380
   Call Trace:
-   <IRQ>
-   raw_local_deliver+0x1ed/0x2c0
-   ip_protocol_deliver_rcu+0x54/0x1c0
-   ip_local_deliver_finish+0x85/0x100
-   ip_local_deliver+0x67/0x100
-   __netif_receive_skb_one_core+0x85/0xa0
-   process_backlog+0x87/0x130
+   trace_action_create_field_var+0x360/0x600
+   trace_action_create+0x393/0xe80
+   event_hist_trigger_parse+0x3e47/0x69e0
+   trigger_process_regex+0x1a6/0x250
+   event_trigger_write+0xce/0x160
 
-Reproduced by attaching any generic-mode XDP program to loopback and
-opening a RAW IPPROTO_UDP socket, which makes raw_local_deliver() clone
-every locally delivered UDP packet; ordinary DNS traffic then triggers it,
-roughly once per 2500 clones.  Observed on 6.12.101 and 7.1.8.
+Instead of accessing it directly, use the proper handler
+expr_field_str() to get the name.
 
-Tracing page_pool_alloc_frag_netmem() over one such run shows the
-amplification -- two odd-sized requests, nine misaligned offsets:
+The three previous patches are prerequisites: without them a .buckets
+key and a common_stacktrace key each render into a command that cannot
+be parsed back.
 
-  requested size & 7:   0: 17035    5: 1    7: 1
-  frag_offset & 7:      0: 17028    3: 1    4: 1    5: 1    6: 1    7: 5
-
-and skb_pp_cow_data() returning heads that were aligned on entry:
-
-  head 0xffff8f4c86aeac00 -> 0xffff8f4c53a9a9c4 (&7=4)
-  head 0xffff8f4d6a8a42c0 -> 0xffff8f4c4f7b7a45 (&7=5)
-
-Round the fragment size up to at least the alignment struct skb_shared_info
-requires, so fragments are always suitably aligned for the objects callers
-build on them.  Architectures needing a larger DMA alignment keep it.
-
-This also makes the remainder computed in page_pool_alloc_netmem(),
-
-	*size = max_size - *offset;
-
-aligned, since max_size is a power of two -- which fixes the matching
-misalignment of skb->end.
-
-Verified with a controlled A/B under QEMU/KVM: same tree, same config,
-same compiler, same rootfs and identical traffic, differing only by this
-patch.  A SEC("xdp.frags") XDP_PASS program on lo plus UDP datagrams
-larger than max_head_size drives skb_pp_cow_data()'s fragment loop, which
-passes raw packet lengths to the pool.  Measured at the return of
-skb_pp_cow_data():
-
-                          unpatched   patched
-  skb_pp_cow_data calls       40800     40800
-  misaligned skb->head         1120         0
-  dataref at line offset >60     80         0
-
-The last row counts the accesses that actually fault:
-skb_shinfo()->dataref sits at head+end+0x20 and is a 4-byte atomic, so
-`lock incl` splits a 64-byte cache line only when that address lands at
-offset 61..63.  All 80 occurrences were at offset 61; the panic reported
-above was at offset 62.  Eliminating the misalignment removes every one
-of them.
-
-Same class of bug as commit 3bed3cc4156e ("net: Do not allocate page
-fragments that are not skb aligned"), which fixed the older
-netdev_alloc_frag()/napi_alloc_frag() allocators.
-
-Fixes: 53e0961da1c7 ("page_pool: add frag page recycling support in page pool")
 Cc: stable@vger.kernel.org
-Signed-off-by: Florian Schauer <florian@schauer.to>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260828060822.2628276-1-florian@schauer.to
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260914053443.981201-5-donggeunyoo.kernel@gmail.com
+Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/page_pool.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -1071,7 +1071,8 @@ netmem_ref page_pool_alloc_frag_netmem(s
- 	if (WARN_ON(size > max_size))
- 		return 0;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -3081,7 +3081,7 @@ create_field_var_hist(struct hist_trigge
+ 		key_field = hist_data->fields[i];
+ 		if (!first)
+ 			seq_buf_putc(&s, ',');
+-		seq_buf_puts(&s, key_field->field->name);
++		expr_field_str(key_field, &s);
+ 		first = false;
+ 	}
  
--	size = ALIGN(size, dma_get_cache_alignment());
-+	size = ALIGN(size, max_t(unsigned int, dma_get_cache_alignment(),
-+				 __alignof__(struct skb_shared_info)));
- 	*offset = pool->frag_offset;
- 
- 	if (netmem && *offset + size > max_size) {
 
 
