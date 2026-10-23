@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774146;
-	b=eo9LpK3tFtpze/W2JSYAJ+mNBX7yrr9rrnBmv4LZtqp8haCc1oRNV6tBbjQ9D8i/wc4a
-	 pFo1IhoFUl8FhN4UOjrdnXznqf/5tUdVyb6S+gv58SJgaogd4nPrzrlFl91EcDfahXpj9
-	 ZbJOeBhFFZYlT4nEjNiP/N3FbTLJQ8aiW/xH0z/IxnwQRaBaemVTevu2h/9bUdQoNgXtx
-	 yZj2Z6BTmYVX/CugbvIHf1H2cGBZdwGKVcqrc8n3IrHlK34Lu6kXYPVEY3fBDZ5ij9j8i
-	 /VYRDXAiULvMj85STWf8XlLezUpSNi7W3JrZswm+4u7UxlFBt3lr2RNNCSAKXXZ97SQ==
+	t=1792774149;
+	b=OlvAkgioA+HdAUz3bwujmBSZ/ZPvwGKvC2tsZj9S4jisZYiPJZYVuyolnOQJm0J+zjUD
+	 tvjUivjxcSppYGDNQQLzPZ8hDgLMyXTUU0myCke35fQ+Dlqyw0CNAE7+aLubQ3pHBwosJ
+	 HSUUQ/WNAJeGYDL8g4gbBvTPxGmDfBbEi36XZ8crjkmlyW80qosfNGtkis/BX3wKZKNXJ
+	 DlxLxUOdmEYPM477yI0G+jWnux1FAT1KJwMWyumN5iqENLpAHU7ghuvfqJi9knZm8pc2g
+	 XVQQPRYfY/OYbDKeo4Xlf5qRufO7yj5Afu2wfZd4mMDOsJCBQkfNZ4l/I/2TC1+jgUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774146;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774149;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j0KwAjfSq7fCnRdDNpq3HFJMpCUShzhUS3AGtyMrm28=;
-	b=2LAMVoLT/g2Q1YmZ46hdnlbMvolM2Vefi+oYFLdhvEFoNOZs9JnXcMTjUzgrirzlrxu8
-	 jSFnBIeXAZ8XFZQg6HMtE6ol91w5bcchXRudJ8MH3xUUONW6/tPfXHRWLMdqt0KfBdYzB
-	 A4AO+rEbBJ7jbIDnJoLUg6mvO2v5Oq0NTsRjrvr+zwGC6jR/Ta0dQRVPODHMFHlXwkWhF
-	 YLRRd9aO8Y5wHlPK9TB6j6CLSkxf1RQOHmJgrFIupdlAIuumV7FxwOXGUuuPCjGlVXeOh
-	 wHaHhET+JPXBRFvIvN/p+vVoSthCVSlfdVNIDafXOrTzAQw4dHSjJYoH9y5gNiTbB5Q==
+	bh=/iD/5X504DTIMFszWBNr34mUV7ovhsFt1hlbSsdg28Q=;
+	b=o/6lBR/AHNuXZ0J4aT0bPuwbBBgzz6OESwL3l0+xdz1hEIWvcMm4DExa2i22B3fGLy5R
+	 7Ib2lh4a/b5ykeH756p/FhOjOwD9b02w1bFpLtXMjImDI89sRs1ZITfp8ZPKLT10owkfk
+	 YPnEbXqRjaQLmEI7s4jc4w+i4JtiJ2V0IRY/6tClgG6qxOy/H3J17TEQAbeYClq2sN10m
+	 K4wNE4tE+crbKthQXaOp/Vfj95PlIk1hGojp44SkvREFIjA/NPi5Dd5F1PW62IXo5ofrW
+	 ChW1hVbmcO0W1Z/YGjEWYLoia+iyuJsY+XlDpibn9YVuLVXgzf1H4UJb5K1U0/AR+cA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKkWmlen;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Chwz/yig";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061BA606A321;
-	Fri, 23 Oct 2026 16:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4845606A321;
+	Fri, 23 Oct 2026 16:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKkWmlen
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F56F1F031E0;
-	Fri, 23 Oct 2026 16:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Chwz/yig
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1311F01825;
+	Fri, 23 Oct 2026 16:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774145;
-	bh=j0KwAjfSq7fCnRdDNpq3HFJMpCUShzhUS3AGtyMrm28=;
+	s=korg; t=1792774148;
+	bh=/iD/5X504DTIMFszWBNr34mUV7ovhsFt1hlbSsdg28Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JKkWmlen6V9v3UH+ku1ZhnsmgLY9tikRJ0nX1e1hSJUc+LAkt842GRkiBkhRkX8l2
-	 t0JGQv25ogRzBa8saltbEuGa5qn0JgTLbAbMTt5jHXSdva8a6GnK3wnm+uv+yXUkeo
-	 UjYAJ2lMccNICIXMpJCf+nplJk6bn16e+ELHf8pY=
+	b=Chwz/yigWKw78IKyQ+QE+q8q57HcAxxEPRPC63GTi6JHzjuhgOhvOjaHcdU860gML
+	 LQfxjxZSfWUmrZ8stFij2MnwDrlnggxx3a1CLiqNvgCRK1EdrK8kfVlxyuNpioULjn
+	 Bpf/NqrN3ZigIvLQBEh+csQRhbbtfNN5VuomRVvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Jhu <stanleyjhu@google.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Juergen Gross <jgross@suse.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.18 098/193] scsi: bsg: Pass reply_len to bsg_setup_queue() to fit UFS ARPMB replies
-Date: Fri, 23 Oct 2026 18:36:15 +0200
-Message-ID: <20261023163716.521609907@linuxfoundation.org>
+Subject: [PATCH 6.18 099/193] scsi: xen/scsifront: Check for a NULL shadow entry on a backend response
+Date: Fri, 23 Oct 2026 18:36:16 +0200
+Message-ID: <20261023163716.546501680@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -67,184 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit ec6b083915e8146e147314a5f4f1285d07b57bfc upstream.
+commit 8c8222c255772713eb36cde695777a1fce224917 upstream.
 
-bsg-lib allocates a 96-byte (SCSI_SENSE_BUFFERSIZE) reply buffer per
-job, but struct ufs_rpmb_reply is 104 bytes: a 40-byte struct
-ufs_bsg_reply followed by a 64-byte EHS. When an Advanced RPMB command
-returns an EHS, ufshcd_advanced_rpmb_req_handler() copies it right after
-the 40-byte header and writes 8 bytes past the end of the buffer.
+scsifront_do_response() validates the rqid in a backend response against
+VSCSIIF_MAX_REQS before using it to index info->shadow[], but then
+dereferences the entry to test ->inflight without checking that the slot
+is populated.  Shadow slots are NULL before a command is submitted (the
+host private area is zeroed at allocation) and are reset to NULL in
+_scsifront_put_rqid() once a request completes, so an in-range rqid that
+does not correspond to an outstanding request makes the frontend
+dereference a NULL pointer.
 
-Let each BSG transport pass its reply buffer size to bsg_setup_queue()
-and have ufs_bsg request sizeof(struct ufs_rpmb_reply), so the full
-reply reaches user space. Other transports keep SCSI_SENSE_BUFFERSIZE.
+A malicious or buggy backend can thus crash the guest by returning a
+response whose rqid is in range but not in flight -- for example a
+spurious response before any command has been issued, or a duplicate of
+one already completed.  The ring has only VSCSIIF_MAX_REQS (16) slots,
+so before the first command every in-range rqid selects a NULL slot.
 
-Fixes: 6ff265fc5ef6 ("scsi: ufs: core: bsg: Add advanced RPMB support in ufs_bsg")
+Reject a response whose shadow slot is not populated.
+
+Fixes: 6d1c2f48f3fc ("xen/scsifront: harden driver against malicious backend")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Link: https://patch.msgid.link/20261013132708.1669415-1-stanleyjhu@google.com
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20261005123555.253995-1-yhlee@isslab.korea.ac.kr
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bsg-lib.c                     |   13 ++++++++++---
- drivers/scsi/mpi3mr/mpi3mr_app.c    |    2 +-
- drivers/scsi/scsi_transport_fc.c    |    6 ++++--
- drivers/scsi/scsi_transport_iscsi.c |    2 +-
- drivers/scsi/scsi_transport_sas.c   |    6 ++++--
- drivers/ufs/core/ufs_bsg.c          |    2 +-
- include/linux/bsg-lib.h             |    3 ++-
- 7 files changed, 23 insertions(+), 11 deletions(-)
+ drivers/scsi/xen-scsifront.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/block/bsg-lib.c
-+++ b/block/bsg-lib.c
-@@ -23,11 +23,14 @@ struct bsg_set {
- 	struct bsg_device	*bd;
- 	bsg_job_fn		*job_fn;
- 	bsg_timeout_fn		*timeout_fn;
-+	unsigned int		reply_len;
- };
+--- a/drivers/scsi/xen-scsifront.c
++++ b/drivers/scsi/xen-scsifront.c
+@@ -367,6 +367,7 @@ static void scsifront_do_response(struct
+ 	struct vscsifrnt_shadow *shadow;
  
- static int bsg_transport_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
- 		bool open_for_write, unsigned int timeout)
- {
-+	struct bsg_set *bset =
-+		container_of(q->tag_set, struct bsg_set, tag_set);
- 	struct bsg_job *job;
- 	struct request *rq;
- 	struct bio *bio;
-@@ -50,7 +53,7 @@ static int bsg_transport_sg_io_fn(struct
- 	reply = job->reply;
- 	memset(job, 0, sizeof(*job));
- 	job->reply = reply;
--	job->reply_len = SCSI_SENSE_BUFFERSIZE;
-+	job->reply_len = bset->reply_len;
- 	job->dd_data = job + 1;
- 
- 	job->request_len = hdr->request_len;
-@@ -301,9 +304,10 @@ out:
- static int bsg_init_rq(struct blk_mq_tag_set *set, struct request *req,
- 		       unsigned int hctx_idx, unsigned int numa_node)
- {
-+	struct bsg_set *bset = container_of(set, struct bsg_set, tag_set);
- 	struct bsg_job *job = blk_mq_rq_to_pdu(req);
- 
--	job->reply = kzalloc(SCSI_SENSE_BUFFERSIZE, GFP_KERNEL);
-+	job->reply = kzalloc(bset->reply_len, GFP_KERNEL);
- 	if (!job->reply)
- 		return -ENOMEM;
- 	return 0;
-@@ -358,10 +362,12 @@ static const struct blk_mq_ops bsg_mq_op
-  * @job_fn: bsg job handler
-  * @timeout: timeout handler function pointer
-  * @dd_job_size: size of LLD data needed for each job
-+ * @reply_len: size of the reply buffer needed for each job
-  */
- struct request_queue *bsg_setup_queue(struct device *dev, const char *name,
- 		struct queue_limits *lim, bsg_job_fn *job_fn,
--		bsg_timeout_fn *timeout, int dd_job_size)
-+		bsg_timeout_fn *timeout, int dd_job_size,
-+		unsigned int reply_len)
- {
- 	struct bsg_set *bset;
- 	struct blk_mq_tag_set *set;
-@@ -374,6 +380,7 @@ struct request_queue *bsg_setup_queue(st
- 
- 	bset->job_fn = job_fn;
- 	bset->timeout_fn = timeout;
-+	bset->reply_len = reply_len;
- 
- 	set = &bset->tag_set;
- 	set->ops = &bsg_mq_ops;
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -3053,7 +3053,7 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *
- 	}
- 
- 	q = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), &lim,
--			mpi3mr_bsg_request, NULL, 0);
-+			mpi3mr_bsg_request, NULL, 0, SCSI_SENSE_BUFFERSIZE);
- 	if (IS_ERR(q)) {
- 		ioc_err(mrioc, "%s: bsg registration failed\n",
- 		    dev_name(bsg_dev));
---- a/drivers/scsi/scsi_transport_fc.c
-+++ b/drivers/scsi/scsi_transport_fc.c
-@@ -4302,7 +4302,8 @@ fc_bsg_hostadd(struct Scsi_Host *shost,
- 	scsi_init_limits(shost, &lim);
- 	lim.max_segments = min_not_zero(lim.max_segments, i->f->max_bsg_segments);
- 	q = bsg_setup_queue(dev, bsg_name, &lim, fc_bsg_dispatch,
--			fc_bsg_job_timeout, i->f->dd_bsg_size);
-+			fc_bsg_job_timeout, i->f->dd_bsg_size,
-+			SCSI_SENSE_BUFFERSIZE);
- 	if (IS_ERR(q)) {
- 		dev_err(dev,
- 			"fc_host%d: bsg interface failed to initialize - setup queue\n",
-@@ -4335,7 +4336,8 @@ fc_bsg_rportadd(struct Scsi_Host *shost,
- 	scsi_init_limits(shost, &lim);
- 	lim.max_segments = min_not_zero(lim.max_segments, i->f->max_bsg_segments);
- 	q = bsg_setup_queue(dev, dev_name(dev), &lim, fc_bsg_dispatch_prep,
--				fc_bsg_job_timeout, i->f->dd_bsg_size);
-+				fc_bsg_job_timeout, i->f->dd_bsg_size,
-+				SCSI_SENSE_BUFFERSIZE);
- 	if (IS_ERR(q)) {
- 		dev_err(dev, "failed to setup bsg queue\n");
- 		return PTR_ERR(q);
---- a/drivers/scsi/scsi_transport_iscsi.c
-+++ b/drivers/scsi/scsi_transport_iscsi.c
-@@ -1545,7 +1545,7 @@ iscsi_bsg_host_add(struct Scsi_Host *sho
- 	snprintf(bsg_name, sizeof(bsg_name), "iscsi_host%d", shost->host_no);
- 	scsi_init_limits(shost, &lim);
- 	q = bsg_setup_queue(dev, bsg_name, &lim, iscsi_bsg_host_dispatch, NULL,
--			0);
-+			0, SCSI_SENSE_BUFFERSIZE);
- 	if (IS_ERR(q)) {
- 		shost_printk(KERN_ERR, shost, "bsg interface failed to "
- 			     "initialize - no request queue\n");
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -199,7 +199,8 @@ static int sas_bsg_initialize(struct Scs
- 
- 	if (rphy) {
- 		q = bsg_setup_queue(&rphy->dev, dev_name(&rphy->dev), NULL,
--				sas_smp_dispatch, NULL, 0);
-+				sas_smp_dispatch, NULL, 0,
-+				SCSI_SENSE_BUFFERSIZE);
- 		if (IS_ERR(q))
- 			return PTR_ERR(q);
- 		rphy->q = q;
-@@ -208,7 +209,8 @@ static int sas_bsg_initialize(struct Scs
- 
- 		snprintf(name, sizeof(name), "sas_host%d", shost->host_no);
- 		q = bsg_setup_queue(&shost->shost_gendev, name, NULL,
--				sas_smp_dispatch, NULL, 0);
-+				sas_smp_dispatch, NULL, 0,
-+				SCSI_SENSE_BUFFERSIZE);
- 		if (IS_ERR(q))
- 			return PTR_ERR(q);
- 		to_sas_host_attrs(shost)->q = q;
---- a/drivers/ufs/core/ufs_bsg.c
-+++ b/drivers/ufs/core/ufs_bsg.c
-@@ -257,7 +257,7 @@ int ufs_bsg_probe(struct ufs_hba *hba)
- 		goto out;
- 
- 	q = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), NULL, ufs_bsg_request,
--			NULL, 0);
-+			NULL, 0, sizeof(struct ufs_rpmb_reply));
- 	if (IS_ERR(q)) {
- 		ret = PTR_ERR(q);
- 		device_del(bsg_dev);
---- a/include/linux/bsg-lib.h
-+++ b/include/linux/bsg-lib.h
-@@ -66,7 +66,8 @@ void bsg_job_done(struct bsg_job *job, i
- 		  unsigned int reply_payload_rcv_len);
- struct request_queue *bsg_setup_queue(struct device *dev, const char *name,
- 		struct queue_limits *lim, bsg_job_fn *job_fn,
--		bsg_timeout_fn *timeout, int dd_job_size);
-+		bsg_timeout_fn *timeout, int dd_job_size,
-+		unsigned int reply_len);
- void bsg_remove_queue(struct request_queue *q);
- void bsg_job_put(struct bsg_job *job);
- int __must_check bsg_job_get(struct bsg_job *job);
+ 	if (ring_rsp->rqid >= VSCSIIF_MAX_REQS ||
++	    !info->shadow[ring_rsp->rqid] ||
+ 	    !info->shadow[ring_rsp->rqid]->inflight) {
+ 		scsifront_set_error(info, "illegal rqid returned by backend!");
+ 		return;
 
 
