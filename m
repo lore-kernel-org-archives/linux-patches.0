@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774730;
-	b=G5xoxivu4w4pk8VLp/dcUaJq48hIuqmR3BXGdJPkedaJkPSd2T9A8Op0p0gl/FA8xELv
-	 4FMRkO5+oR5r0qPIy78Tc0IGE3Ro+KZoPpMoXBQm7F8K+6OhTE7DNB68v+LmV4t4ze2qf
-	 WNRf+zALfm0zcbEFM4jjj4b7BfNstzvC1tQw+/R9xsgvV7sPTpjgkud3AqE6IMVlr9C/l
-	 W36KX53f3ebrlsuRzorxxTSmUIBXT8Hc+amqw5FDi0EuiJe/JoT2k6CBMqdamkQJHLuSA
-	 TP+jwDl8kc4qgWdIhqlctqNhYUG6fQdg9oYjnbvDsj6odAioixUAa5A7vX27hohpYEw==
+	t=1792774733;
+	b=deeYA4+dIrtLQq9u7JgMnU+uTvTJcLgfk9wJrZAH0R6AOQCjtpw06dsHNlnwRDgIMUun
+	 RG49USDBXZ1f2MNWwilja1kVWgtoCHnE1BlU0cpMJKfilIh3r1NngBJWAbr+30r1Egz8S
+	 NW8RlfcQJOZZUc2F9stVljmcaZiB+GbwVhxUkgjXHFSghbNrqDNe18w+AmH00p0jiyNS+
+	 T/WGbQpoKpZdjg9ndudWp0mGduHb7Ohmj4a1X0JwtBARsPspx+l5aRb0Q/APSJ9t0ua8q
+	 BhPnCguLw5C1K887IbLI83RXCv34Jv2QD1hRNo2k/BAQ6Z2aux/stPO8jQuw5yXEutQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7PlDDh9Ooxrv+Kkfk2Q/+Ve7MAFoNG28CGnRC5BR7xw=;
-	b=uIF09vEV7BU9rkr+QDgoRVy1T95flIRzU6ilgF2GUxKiwS/+hM84pZMvC8hJA9Vef+PM
-	 owg3d9HE1f2Psv7hWAIib+8ij611pKhP4PXvuQc3AiY64/wit7gCqh9MspQKdwcaqtHf3
-	 9pQKfp1rLl2XRiF1Gzn4qbTVLeNZy9wuqb0TSTbgSfQFX5VNmt08+hbakcmdfYnHIOiQh
-	 n5LjrhC4chUfyioZVIia4kuUtQOonVr6KL+H9/IrkNqpc1lbhp/PnVfpDsaXrZVI9Fp6G
-	 SRXo/jxPtB0Xn9SWWgL/lbdIWkdKR5y/Uagk3ZASHfg8PFddGQ1WpBgwlhDKmXHwvNQ==
+	bh=VRmArm3hiUnpl4dDefsA28ZQla9ifzc0+eEJdnZ3ras=;
+	b=AeAi33QXty+T+nJF/LBMQZM39D3PZMpvY9mgnEclME8IDWIBm+Ce+QZyn8aeaT0haVts
+	 zZPTABOYlGAS0sWkp5ej6mcxGNO9vT3UDIjKtfJnIkiERG22Sinx5dweBhG4nReYB18Xw
+	 tEuG40NMHqA9nh2YsxUL8BmieKeiQHnPzWqUJzE4Css3jvDfvK+mx/ULs6iJoOslbN3fR
+	 BbIc+JSiloXtLemanQ7XyY52ozczEjEKdFOFaGEDAzjON/OKSNaXHiOddsxnvfBnOCCKS
+	 S4i1rFWr6S1dcCHikqrh9xIR7IK5x5yPLZpNdNC8o2z3GGEvZI5A10nMR7mrJASeHgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DcMyd4Rl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SjqpO5dB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2117606A31A;
-	Fri, 23 Oct 2026 16:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994CB606A31D;
+	Fri, 23 Oct 2026 16:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DcMyd4Rl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D9D1F01825;
-	Fri, 23 Oct 2026 16:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SjqpO5dB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD71E1F01825;
+	Fri, 23 Oct 2026 16:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774730;
-	bh=7PlDDh9Ooxrv+Kkfk2Q/+Ve7MAFoNG28CGnRC5BR7xw=;
+	s=korg; t=1792774733;
+	bh=VRmArm3hiUnpl4dDefsA28ZQla9ifzc0+eEJdnZ3ras=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DcMyd4RlJHXIHt2NjX2vGKaPOc4OMujT17HKMJVQVEY+tCyXT0i7irmAj8zbFKWFZ
-	 +y+JFdheBHEehda23uIzDW0OFLJhXjooJrge4C9Ziiaic+1SOEK/ZVQL2g3BbhnPld
-	 4yCjC/S7CSN5whZBANaD7L24MP5/iQjMGfVpCCiw=
+	b=SjqpO5dB50plMvIaOz6UeOPFitjetJXOoDBPAbt1yvvyvEkUkrRG76tst5EsspI6R
+	 /RCn8aXfutIVtVgQaf+OFMDMOLkzTvMFLp7p+QyVNnC0Mhm5BI2LY5RmqYxYimKyTc
+	 X1+oc+rmk+XwpHL+UPvtczklESO3Hijn3TWXfpVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Huret <antoine.huret@bull.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.2 140/242] perf: Update cgroup time when rotating multiplexed events
-Date: Fri, 23 Oct 2026 18:39:42 +0200
-Message-ID: <20261023163717.090745188@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	David Carlier <devnexen@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 141/242] ring-buffer: Do not show buffer_meta for CPUs without a buffer
+Date: Fri, 23 Oct 2026 18:39:43 +0200
+Message-ID: <20261023163717.113979488@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,51 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Huret <antoine.huret@bull.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit e4c7c401c6b9174c0c893084fdaa6a84bd2520d7 upstream.
+commit 3f23cae09a4677a3f7c163a68388512cb231ff22 upstream.
 
-Since commit bd2756811766 ("perf: Rewrite core context handling"),
-perf_rotate_context() only updates the context time before scheduling
-out the flexible events. It no longer updates the cgroup time, which
-ctx_sched_out() used to do.
+The per_cpu/cpuN/buffer_meta files are created for every possible CPU,
+but buffer->buffers[cpu] is only allocated once that CPU comes online.
+Reading the file of a CPU that never came online dereferences a NULL
+cpu_buffer in rbm_start().
 
-Cgroup events take their times from the per-cpu cgroup clock, so
-between two cgroup switches the rotations see a frozen clock. The
-events rotated out lose the running time they accumulated, and the next
-update, usually a read, credits the whole interval to the events that
-happen to be on the PMU at that moment.
+Fail the open with -ENODEV when the CPU has no buffer, as the other
+per CPU ring buffer interfaces do.
 
-As a result, the time_running of multiplexed cgroup events is wrong,
-and so are their scaled counts, as long as no other cgroup runs on the
-CPU, e.g. a busy job alone on its CPUs. Counting cycles over one second
-of a busy loop in a cgroup gives from half to several times the max
-frequency of the CPU.
-
-Update the cgroup time before rotating the CPU context, as was done
-before the rewrite.
-
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Closes: https://lore.kernel.org/r/PR3PR07MB69223331EED5BEBE150375B7849C2@PR3PR07MB6922.eurprd07.prod.outlook.com/
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Antoine Huret <antoine.huret@bull.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015-perf-cgroup-rotation-time-v1-1-93e177dfee5d@bull.com
+Link: https://patch.msgid.link/20260914133506.4865-3-devnexen@gmail.com
+Fixes: 950032ffcee7 ("ring-buffer: Add output of ring buffer meta page")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260913134906.6E8A01F000FF@smtp.kernel.org/
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ring_buffer.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4639,6 +4639,7 @@ static bool perf_rotate_context(struct p
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2362,6 +2362,9 @@ int ring_buffer_meta_seq_init(struct fil
+ 	struct seq_file *m;
+ 	int ret;
  
- 	if (cpu_event) {
- 		update_context_time(&cpuctx->ctx);
-+		update_cgrp_time_from_cpuctx(cpuctx, false);
- 		__pmu_ctx_sched_out(cpu_epc, EVENT_FLEXIBLE);
- 		rotate_ctx(&cpuctx->ctx, cpu_event);
- 		__pmu_ctx_sched_in(cpu_epc, EVENT_FLEXIBLE);
++	if (!cpumask_test_cpu(cpu, buffer->cpumask))
++		return -ENODEV;
++
+ 	ret = seq_open(file, &rb_meta_seq_ops);
+ 	if (ret)
+ 		return ret;
 
 
