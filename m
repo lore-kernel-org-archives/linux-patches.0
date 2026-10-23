@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774393;
-	b=V0YBNMifZ98oYiL0whUVql4TeBir7daw28RbPJoIhzGqw5SnyiCjgM45mw+wRFGIj/NB
-	 pMSPIiMU3+yFVF6/DEebpnoe/QBeuEzK/hk3CkhGNRFN4XH3L+pLXk1kRc7edT66EuRWq
-	 kX3Vd9IqOlVSRSq0zqx8MJTxd1Lnl4JO445xIClc0ug27l9DRq4DbD/IIQXMR8EtlxwPe
-	 F/QqrE8vedlQ5pYWUqGgepcqlvqNuucazv2ClycXg43rPABdgDYI/tUuR3Ir8ZMLhTdD2
-	 8wwX+4+K/yqrHmoJQzAOkbFllq4qchEP5EcFjqKWTMLx+XyBzSUlBz1yYm6rUWSzg/Q==
+	t=1792774395;
+	b=W6G+ZgCTuSp3RpnR3KXmaFGcpq98hJDpoWMbi2ItNxUIsvv9mD5ppceTZcIwsYfBsHbO
+	 cCaMQ+ZfgtR7mk8nX6wN8OaJ79WaR9NzOQC0kdyM6aXLtpwGYoEcK7uFSoOgsVSMEe+nN
+	 abscyWV3Bf/ZrhEupnYQgpxJrwSw9qMSoHHmUvAJ8mlZjdBpu9esS9IxkTzl97YyldPOG
+	 /KwG/vOTj6ISM2o6RteK9bSNoxdwXztf2wUnG4/jjRN4Z7s9xKvMGlbj2wtTEVldcvIxg
+	 9SSwlJBHSdoK4NncyaJGd/K8bLGGa6OPKUo3SQoG++nqVRcvfaHoSr/gUxPjlBJYCiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=tAhczci+xZ3DrZtrooc4j+QxRHSWXp8F8T069xsZaaU=;
-	b=fX8SznbTuL9dIuA3xWLdk+tx3LCCJWBmN5u3y9HBI6gezeYhswylVRBB4GXHEHJku0xd
-	 bsrTb1ejTjkdNe5WwG3nbt+5TnlTVth6iggL4TPCCvPKdioFL4/j6X+xLA1VHGsR7zndC
-	 DQm0bEshxKEz69S4GyIOOvdqxSz4kOyvzSTFY9PFC+7M5vSGSDMzd9OnkyM4w+hxwfHxG
-	 0iiN3rtDyqDTT5byk/YVaiheX6G1TmSkTEqZUuMw2a2lyQx3XolckVhDdivnuycwrRPr2
-	 Zqj72Qft/gvcvHoK+vzCZjzyYvWt2ReHs1Rf6YDgqiEsFKrp+uqb/W6oehOhEdO5EzA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=O4Kk6GRkLxjZczEtkQHinb4/owzOm3n5z38Oqy0JCL4=;
+	b=teNsgMORtqJtI1ntBYALpf87ZVLcr6kiupQpBQn832TaXBI7AWZntSu3yI7jTs2Rz3yQ
+	 BAGbvKbH6zOi9TNEotgxhlao5YgOv5Lm4SX3+Dg0JOz4gwgkkOjHU5Zf5ndu+FZSfv1A/
+	 /5Cp6u2t3D90tN/EEiLzuJ+RgSYNrxtSl3HWBzQIt1BcZ84Qe+IxZoD01s6Mb7sOx2pni
+	 lxsYSUIIygcLSB0uZegBPKXC41ZQs3P2Latp+pXWLyvh9LRWPIpfWCKD2Wo5AgFej+bi6
+	 fuJ09nrPKanWih0QMQRuE+tpml1HwqEnbHUjzAu9gojc1yeOmY+xMhMFZEvhWL6PhuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=av5SyBQx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H8hiFcib;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91F2606A31F;
-	Fri, 23 Oct 2026 16:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629DE606A31E;
+	Fri, 23 Oct 2026 16:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=av5SyBQx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7B81F01825;
-	Fri, 23 Oct 2026 16:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H8hiFcib
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38771F01825;
+	Fri, 23 Oct 2026 16:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774392;
-	bh=tAhczci+xZ3DrZtrooc4j+QxRHSWXp8F8T069xsZaaU=;
+	s=korg; t=1792774395;
+	bh=O4Kk6GRkLxjZczEtkQHinb4/owzOm3n5z38Oqy0JCL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=av5SyBQxARGmcgASOxEdF6Z9viHdHD7j9beMF4oxfXnyiz2+KUBgQArJDU1GuJtQR
-	 I71qDUeNa+EXjSzbyXHKtuKElSrKh20+I0DRWa/ERgR7yMmDajwjsipS4ZOQ4mKHEK
-	 uNzLcH98P311M4OufHyPbmvaBAJcpatFmv9PCutY=
+	b=H8hiFcibJlXR541Nb3uplzD5Dbid4Ircs6AwtKH/JPiZozi1XGHoYnTRLy2pGayGa
+	 02PiXkGxKmNhbmIsSA7n12jvWithOXWGq25qtjqGRMCPRZPr7ZTEOY0QtYBmgYwY+K
+	 SV80xYTRziuh3B5JYQBs/7xbt5vptGecX4hVLaxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Mazzini <pmazzini@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 025/242] pinctrl: sunxi: dt: do not accumulate npins across probe attempts
-Date: Fri, 23 Oct 2026 18:37:47 +0200
-Message-ID: <20261023163714.378225811@linuxfoundation.org>
+Subject: [PATCH 7.2 026/242] drm/vc4: hdmi: Move packet RAM enable to PM runtime
+Date: Fri, 23 Oct 2026 18:37:48 +0200
+Message-ID: <20261023163714.401418555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -63,41 +63,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Mazzini <pmazzini@gmail.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit c5895eadf287116434b7b01d67b92e8146f7ff61 ]
+[ Upstream commit 3f57b34485dc01e5a2db60a89a6ae5439a897e53 ]
 
-init_pins_table() adds to npins in the driver's static descriptor, so
-after a probe deferral the count doubles and the next probe fails with
-"pin 0 already registered". Reset it first.
+Audio can be triggered by the HPD handler and start up before video has
+been restored, calling vc4_hdmi_write_infoframe() for the audio infoframe.
+vc4_hdmi_write_infoframe() needs Packet RAM to be on to store the
+infoframe, however, if the video hasn't been enabled,
+vc4_hdmi_encoder_post_crtc_enable() hasn't been called and therefore, the
+Packet RAM can be disabled by the time vc4_hdmi_write_infoframe() executes,
+causing the following splat:
 
-Signed-off-by: Pablo Mazzini <pmazzini@gmail.com>
-Fixes: f5e2cd34b12f ("pinctrl: sunxi: allow reading mux values from DT")
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+[  201.570266] ------------[ cut here ]------------
+[  201.570293] Packet RAM has to be on to store the packet.
+[  201.570367] WARNING: drivers/gpu/drm/vc4/vc4_hdmi.c:683 at vc4_hdmi_write_infoframe+0x404/0x494 [vc4], CPU#0: wireplumber/1606
+[...]
+[  201.658650] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
+[...]
+[  201.758499] Call trace:
+[  201.760967]  vc4_hdmi_write_infoframe+0x404/0x494 [vc4] (P)
+[  201.766607]  vc4_hdmi_write_audio_infoframe+0x1c/0x28 [vc4]
+[  201.772247]  write_infoframe+0xbc/0x140 [drm_display_helper]
+[  201.777975]  drm_atomic_helper_connector_hdmi_update_audio_infoframe+0x80/0xdc [drm_display_helper]
+[  201.787140]  vc4_hdmi_audio_prepare+0x4ac/0x570 [vc4]
+[  201.792252]  drm_connector_hdmi_audio_prepare+0x24/0x30 [drm_display_helper]
+[  201.799390]  hdmi_codec_prepare+0x100/0x160 [snd_soc_hdmi_codec]
+[  201.805471]  snd_soc_pcm_dai_prepare+0xd4/0x100 [snd_soc_core]
+[  201.811375]  __soc_pcm_prepare+0x60/0x12c [snd_soc_core]
+[  201.816752]  soc_pcm_prepare+0x34/0x58 [snd_soc_core]
+[  201.821863]  snd_pcm_do_prepare+0x70/0x8c [snd_pcm]
+[  201.826798]  snd_pcm_action_nonatomic+0xe4/0x174 [snd_pcm]
+[  201.832350]  snd_pcm_prepare+0xc8/0xd8 [snd_pcm]
+[  201.837021]  snd_pcm_common_ioctl+0x458/0x614 [snd_pcm]
+[  201.842308]  snd_pcm_ioctl+0x30/0x48 [snd_pcm]
+[  201.846802]  __arm64_sys_ioctl+0x88/0xd8
+[  201.850769]  invoke_syscall+0x48/0xf4
+[  201.854470]  el0_svc_common+0x80/0xd8
+[  201.858171]  do_el0_svc+0x1c/0x28
+[  201.861520]  el0_svc+0x3c/0xb0
+[  201.864605]  el0t_64_sync_handler+0x68/0xdc
+[  201.868834]  el0t_64_sync+0x198/0x19c
+[  201.872536] ---[ end trace 0000000000000000 ]---
+
+Considering that Packet RAM enable is essentially a power management
+configuration, move its enabling/disabling to the Runtime PM hooks.
+
+Note that post_crtc_disable() still stops all infoframes, but keeps Packet
+RAM enabled, leaving it to be disabled by runtime suspend.
+
+Link: https://github.com/raspberrypi/linux/issues/7069
+Fixes: b47a72f30768 ("drm/vc4: hdmi: Switch to HDMI connector")
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patch.msgid.link/20261002-vc4-hdmi-packet-ram-fix-v1-1-3d73148096c9@igalia.com
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c b/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
-index 50a16f3bd1316..8bcd566593ae8 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sunxi-dt.c
-@@ -84,6 +84,7 @@ static struct sunxi_desc_pin *init_pins_table(struct device *dev,
- 	 * Find the total number of pins.
- 	 * Also work out how much memory we need to store all the pin names.
- 	 */
-+	desc->npins = 0;
- 	for (i = 0; i < SUNXI_PINCTRL_MAX_BANKS; i++) {
- 		desc->npins += pins_per_bank[i];
- 		if (pins_per_bank[i] < 10) {
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index a161d3b00a255..0692087dda728 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -894,7 +894,7 @@ static void vc4_hdmi_encoder_post_crtc_disable(struct drm_encoder *encoder,
+ 
+ 	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
+ 
+-	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, 0);
++	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, VC4_HDMI_RAM_PACKET_ENABLE);
+ 
+ 	HDMI_WRITE(HDMI_VID_CTL, HDMI_READ(HDMI_VID_CTL) | VC4_HD_VID_CTL_CLRRGB);
+ 
+@@ -1663,9 +1663,6 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
+ 		WARN_ONCE(ret, "Timeout waiting for "
+ 			  "VC4_HDMI_SCHEDULER_CONTROL_HDMI_ACTIVE\n");
+ 	} else {
+-		HDMI_WRITE(HDMI_RAM_PACKET_CONFIG,
+-			   HDMI_READ(HDMI_RAM_PACKET_CONFIG) &
+-			   ~(VC4_HDMI_RAM_PACKET_ENABLE));
+ 		HDMI_WRITE(HDMI_SCHEDULER_CONTROL,
+ 			   HDMI_READ(HDMI_SCHEDULER_CONTROL) &
+ 			   ~VC4_HDMI_SCHEDULER_CONTROL_MODE_HDMI);
+@@ -1684,9 +1681,6 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
+ 		WARN_ON(!(HDMI_READ(HDMI_SCHEDULER_CONTROL) &
+ 			  VC4_HDMI_SCHEDULER_CONTROL_HDMI_ACTIVE));
+ 
+-		HDMI_WRITE(HDMI_RAM_PACKET_CONFIG,
+-			   VC4_HDMI_RAM_PACKET_ENABLE);
+-
+ 		spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
+ 		vc4_hdmi->packet_ram_enabled = true;
+ 
+@@ -3143,6 +3137,11 @@ static int vc5_hdmi_init_resources(struct drm_device *drm,
+ static int vc4_hdmi_runtime_suspend(struct device *dev)
+ {
+ 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
++	unsigned long flags;
++
++	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
++	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, 0);
++	spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
+ 
+ 	clk_disable_unprepare(vc4_hdmi->audio_clock);
+ 	clk_disable_unprepare(vc4_hdmi->hsm_clock);
+@@ -3153,9 +3152,8 @@ static int vc4_hdmi_runtime_suspend(struct device *dev)
+ static int vc4_hdmi_runtime_resume(struct device *dev)
+ {
+ 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
+-	unsigned long __maybe_unused flags;
++	unsigned long rate, flags;
+ 	u32 __maybe_unused value;
+-	unsigned long rate;
+ 	int ret;
+ 
+ 	ret = clk_prepare_enable(vc4_hdmi->hsm_clock);
+@@ -3201,6 +3199,10 @@ static int vc4_hdmi_runtime_resume(struct device *dev)
+ 	}
+ #endif
+ 
++	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
++	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, VC4_HDMI_RAM_PACKET_ENABLE);
++	spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
++
+ 	return 0;
+ 
+ err_disable_clk:
 -- 
 2.53.0
 
