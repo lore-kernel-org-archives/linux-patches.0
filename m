@@ -1,50 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773965;
-	b=JUtDAnizqeyrvNrtysVgdQbQy0wCDwfRJQJHWJt6BpO8pfwUJdIf6GgYPIhZJpvTDTRV
-	 9R9aDZ2XEsOL9NsDgDaFPPgW2wpg6dJ1FkdMh8FpXaZJzn5sdaTemwGra5Yueq4kUKB/G
-	 fNWXf9nZMpq94mJvbImDWj1+FCugGHdARAiZgd0lx1r+BdRBKCf+CIhoa1Z+nQPAOeLPh
-	 M8mS23K4yLGENLkcuK09AT5AErTnN5Ptw96yLVVFmThomxWENxDC7FoMiychOXuOdJe+7
-	 MbeQzKRX4fkvxzkLPN9ZsaOgkm1AbscXMDRwA0BPiaP7OvpJwewEJ0zDQY4sRVAHU+Q==
+	t=1792773968;
+	b=UjVfCeGXRGpF3b8WyVZ57FcY5g6UKXlE6+swm6QB1SLHnTEWPC2WlgYz7r7qqWVwFQ00
+	 oY8INt7vhmD6AuSsvTjDhXyznbAzKJsRZ5GK+Yi3yONrUOyA2OE1nmodAizwaripV7Efx
+	 Ig0iR1ZFtp/Fo/JTfKmjr/IyTD3ZSMxcW6gns8GROphvyVy9Rdb4ABemJ9CDkteoUYMTK
+	 qYu4Z45vJTLlJyFHBxxqbhO7ZFoyJ9t8IRUt1b6X71ZUvApFVK4Y5yftLBKldUcmeLIBP
+	 8vsLZzrEN+pVG9hKRszo7xLVxHGUWAUxN236TCakO404dopPR2ChFFnV+43nTyhnXMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773968;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l9cW5AI0ZPkXpkONGMmJ7xwIHkh/yOiuUjdtGEfxgBo=;
-	b=DkDNUgBHVYJ5fNhON02KHAjOz7E1+t+rA+8t0yhLZcbwe5QRZYMKe7VOUsLL3rbXVX0x
-	 Xuxe90olEh3dVyB/fTvVoTvP7YDIh8WNrAP0cuAdnuD8B76KaB/E9Oc0ULqLfe4s0Ukiw
-	 UpFjK/jP7W3dxdl76V/2HqqnKmpG8l81rsCuefkMbKRjk4tVPrmZaS8qS2rmNl2pP3PVb
-	 WzzW4CG1REZxdE6aY1MAWXAGLLl/MH52qDrcpuyImzh8J4UZ6EoWJSAZ0nigkCJSSwBkp
-	 lhF/+9MpRU01ItGzoIP7G3tpa4pzWsKQOjllPR0sHCkK8Hpogu6nP68WyVAETFW+eQA==
+	bh=sFX0BvlxZAybs/wDoYtZImiytGdMvGabqvd21YcJYOc=;
+	b=OcM3Utzz3IezdyjPRcUv0VwqioUVtiiqIXLwcfavfI9JY0lO3NfW/DAn86cFtbYj2hye
+	 +OZ0930gGwOJYNrVF03kqItNOth5zJ+2VpJl4dLsIpISXbLkZJ7K8YG+rN3s9lj+GWdbj
+	 foS1rbp8qlQ9ktRhyqF7w+L03JqVq0EtCYKuGL0UdjVaVhGUgaUji/KGp+etse39SF5CO
+	 ELIkVHS9tZDJFcNUJCYDB0xBuh8ENzxK1Jv9nU3rP2nB7Q9xuE6qaYj2c+0KT+7i01D7k
+	 Hg0ujXNJ9ilVSpz4lqOQ0HX0ohiNTkirijrVptQbqrCkrVujg1FNA6GoNInFPvhwRxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QaheqMla;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWM6mfrz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3ACC606A31A;
-	Fri, 23 Oct 2026 16:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1CA606A31A;
+	Fri, 23 Oct 2026 16:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QaheqMla
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202301F01825;
-	Fri, 23 Oct 2026 16:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWM6mfrz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD8D1F01825;
+	Fri, 23 Oct 2026 16:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773964;
-	bh=l9cW5AI0ZPkXpkONGMmJ7xwIHkh/yOiuUjdtGEfxgBo=;
+	s=korg; t=1792773967;
+	bh=sFX0BvlxZAybs/wDoYtZImiytGdMvGabqvd21YcJYOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QaheqMlaD02FDtkTdtAzPtjFnKFPk6mEELQO7QRuBIIlpegjudImzytaRWT983BWZ
-	 foA+C6G+2p7GHn21LWuwyNZYS0Dotlpy/23uBKBhlbgFXMogJuqh5vyMtPE/v3d5aQ
-	 hZqnMuRH06KA8m5Gb1gmGSTS/geBTkMJvAJSqFp0=
+	b=xWM6mfrzbdr49CV/Ow57w2WLdJnDce3KUgtyaInr/TYdcVMaGBHMFhcdrHzfmEBiG
+	 FKNt+gEAqd1430ouxNHtL6+eewO7F4CZ2f1NTD7/uCWpa7e4+lJ5u/jcDwDG2ubKTM
+	 jXhI5Dh7b0EzwncXvaX/4DoFWSUtU08cszhmNjlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Dae R. Jeong" <threeearcat@gmail.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Bradley Morgan <brads@mainlining.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 075/193] unicode: free the map after a grace period
-Date: Fri, 23 Oct 2026 18:35:52 +0200
-Message-ID: <20261023163715.976845173@linuxfoundation.org>
+Subject: [PATCH 6.18 076/193] watch_queue: Fix note pool publication race in watch_queue_set_size()
+Date: Fri, 23 Oct 2026 18:35:53 +0200
+Message-ID: <20261023163716.000454660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -66,122 +70,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-commit a96c5299bd7305eb984377681eb3222a57376405 upstream.
+commit 5e531d62f1f8834faf7a4eed0d41105cf6570a8f upstream.
 
-generic_ci_d_hash() and generic_ci_d_compare() read sb->s_encoding and
-dereference the unicode map while a pathwalk in rcu mode holds nothing
-but rcu_read_lock(). The filesystems that use them, ext4, f2fs and
-tmpfs, drop the map with utf8_unload() from ->put_super(), which runs
-when the last reference to the mount goes away. A lookup that is still
-inside such a filesystem at that point reads a freed map.
+There is a race between watch_queue_set_size() and post_one_notification().
+watch_queue_set_size() publishes wqueue->notes, notes_bitmap, nr_pages and
+nr_notes with plain stores, and post_one_notification() reads them with
+plain loads under a different lock, so nothing orders the four stores
+against the poster's loads: depending on the build, notes can be stored
+last (gcc 14 on x86-64 does this).  Since keyctl_watch_key() lets a watch
+attach to a queue before it is sized, post_one_notification() can already
+be running on another CPU at that moment: it reads nr_notes > 0, passes
+its bounds check, and then reads notes while it is still NULL,
+dereferencing notes[0].
 
-With a pathwalk held up in utf8_casefold_hash() while the last reference
-to a casefolded tmpfs goes away:
+An unprivileged user triggers this reliably by watching one of its own
+keys through a notification pipe and racing ioctl(IOC_WATCH_QUEUE_SET_SIZE)
+on that pipe against keyctl(KEYCTL_SETPERM) on the key from another CPU,
+triggering:
 
-  BUG: KASAN: slab-use-after-free in utf8nlookup+0x74c/0x950
-  Read of size 8 at addr ff110001030fe658 by task walker/98
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: 0010:post_one_notification.isra.0+0xa2/0x1e0
   Call Trace:
-   <TASK>
-   utf8nlookup+0x74c/0x950
-   utf8byte+0x160/0x1560
-   utf8_casefold_hash+0x167/0x230
-   generic_ci_d_hash+0xdd/0x1c0
-   link_path_walk+0x11ad/0x1d30
-   path_lookupat+0x63/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-  [...]
-  Allocated by task 94:
-   __kmalloc_cache_noprof+0x249/0x560
-   utf8_load+0x4e/0x570
-   shmem_parse_opt_casefold.isra.0+0x92/0x270
-  [...]
-  Freed by task 97:
-   kfree+0x1db/0x5b0
-   shmem_put_super+0x72/0x170
-   generic_shutdown_super+0x14c/0x530
-   kill_anon_super+0x3a/0x60
-   deactivate_locked_super+0x9c/0xf0
-   cleanup_mnt+0x9f/0x130
+   __post_watch_notification+0x148/0x180
+   keyctl_setperm_key+0x119/0x130
+   do_syscall_64+0x108/0x4c0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-So far that has been hard to hit. umount(2) waits for a grace period
-in namespace_unlock() before it drops the mount, so only a mount whose
-last reference goes away elsewhere, like the close of a file or a chdir
-out of a lazily unmounted directory, can race a walker. So it is
-reachable.
+Fix this by publishing nr_notes last with smp_store_release(), and by
+reading it once with smp_load_acquire() in post_one_notification() before
+the bitmap and the page array are touched.  A poster that observes a
+non-zero nr_notes then also observes the pool behind it; one that observes
+zero drops the notification as before.
 
-Delay the free until a grace period has passed. The map and the data
-table it holds a reference to then outlive any pathwalk that found the
-superblock before the mount went away. The reference on the data table
-module is dropped from the rcu callback as well. utf8-core is built in
-whenever CONFIG_UNICODE is set, so there is no module exit that would
-have to wait for the callbacks.
-
-Overlayfs points the s_encoding of an overlay at the map of its first
-layer without taking a reference of its own. That stays correct. The
-layer is held by the overlay, so its map is dropped only after the
-overlay is gone.
-
-Fixes: b886ee3e778e ("ext4: Support case-insensitive file name lookups")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-6-7446d2d335e6@kernel.org
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
+Reported-by: Dae R. Jeong <threeearcat@gmail.com>
+Closes: https://lore.kernel.org/all/ZT-S8Q7tyutcvu_q@dragonet/
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Suggested-by: Dae R. Jeong <threeearcat@gmail.com>
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Link: https://patch.msgid.link/20261009224715.46121-1-cenzhang@linux.microsoft.com
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/unicode/utf8-core.c  |   21 +++++++++++++++++----
- include/linux/unicode.h |    1 +
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ kernel/watch_queue.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/unicode/utf8-core.c
-+++ b/fs/unicode/utf8-core.c
-@@ -3,6 +3,7 @@
- #include <linux/kernel.h>
- #include <linux/string.h>
- #include <linux/slab.h>
-+#include <linux/rcupdate.h>
- #include <linux/parser.h>
- #include <linux/errno.h>
- #include <linux/stringhash.h>
-@@ -205,12 +206,24 @@ out_free_um:
- }
- EXPORT_SYMBOL(utf8_load);
+--- a/kernel/watch_queue.c
++++ b/kernel/watch_queue.c
+@@ -101,7 +101,7 @@ static bool post_one_notification(struct
+ 	struct pipe_inode_info *pipe = wqueue->pipe;
+ 	struct pipe_buffer *buf;
+ 	struct page *page;
+-	unsigned int head, tail, note, offset, len;
++	unsigned int head, tail, note, offset, len, nr_notes;
+ 	bool done = false;
  
-+static void utf8_unload_rcu(struct rcu_head *head)
-+{
-+	struct unicode_map *um = container_of(head, struct unicode_map, rcu);
-+
-+	symbol_put(utf8_data_table);
-+	kfree(um);
-+}
-+
-+/*
-+ * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare() of a
-+ * filesystem that is being torn down and read the map through its
-+ * superblock, so the map and the tables it points to have to outlive the
-+ * grace period.
-+ */
- void utf8_unload(struct unicode_map *um)
- {
--	if (um) {
--		symbol_put(utf8_data_table);
--		kfree(um);
--	}
-+	if (um)
-+		call_rcu(&um->rcu, utf8_unload_rcu);
- }
- EXPORT_SYMBOL(utf8_unload);
+ 	spin_lock_irq(&pipe->rd_wait.lock);
+@@ -111,8 +111,10 @@ static bool post_one_notification(struct
+ 	if (pipe_full(head, tail, pipe->ring_size))
+ 		goto lost;
  
---- a/include/linux/unicode.h
-+++ b/include/linux/unicode.h
-@@ -53,6 +53,7 @@ struct unicode_map {
- 	unsigned int version;
- 	const struct utf8data *ntab[UTF8_NMAX];
- 	const struct utf8data_table *tables;
-+	struct rcu_head rcu;
- };
+-	note = find_first_bit(wqueue->notes_bitmap, wqueue->nr_notes);
+-	if (note >= wqueue->nr_notes)
++	/* Pairs with the smp_store_release() in watch_queue_set_size(). */
++	nr_notes = smp_load_acquire(&wqueue->nr_notes);
++	note = find_first_bit(wqueue->notes_bitmap, nr_notes);
++	if (note >= nr_notes)
+ 		goto lost;
  
- int utf8_validate(const struct unicode_map *um, const struct qstr *str);
+ 	page = wqueue->notes[note / WATCH_QUEUE_NOTES_PER_PAGE];
+@@ -297,7 +299,8 @@ long watch_queue_set_size(struct pipe_in
+ 	wqueue->notes = pages;
+ 	wqueue->notes_bitmap = bitmap;
+ 	wqueue->nr_pages = nr_pages;
+-	wqueue->nr_notes = nr_notes;
++	/* Pairs with the smp_load_acquire() in post_one_notification(). */
++	smp_store_release(&wqueue->nr_notes, nr_notes);
+ 	return 0;
+ 
+ error_p:
 
 
