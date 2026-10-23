@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774864;
-	b=2a/nQl1hYTqGpWJ3REQoCCO2EOD8whBjZU9rGCqocVwIdJi/gs+Nmq952fmTpZmTTAdW
-	 JNlVH1KNbQuM6OCvzhJFMWgseTfKlDmnULMu5VJVDnCj+VDJJAXpBoeyP54orVb1in7j0
-	 +H3s+bwt9O2CnOiTA6YAyQQ5day1q9vyJFeiUNb8AINtJG3xpn98ATHdF46ttyFx2BOuL
-	 tYL/OHhsaRFqRXXyLpz3tc6cEI1Gd+TH/IxXCz4No2SBrNv/VqV59113Rmjc8xaE9l/cb
-	 wLU2PvlO8Ow2ClqirTHlnkZixtQkrgRYxBEHVc4tJe8KVjSOvzCQfzauZUPv9MBQAng==
+	t=1792774867;
+	b=49MrSFHGuciEDPBqhfEFI8Z/3WVIQh2saXKgmvuzkWMi92nyhPUPva5+u8fjfidLCbEA
+	 ZGMROR4/wBKYeQaODS7Xh7kX/wo7n6eN8evMvuT32EgSDyRkkJjxN+j7WkjPB9ea5CW5L
+	 djMUuyCEys8NE+EHCr8UcnYzvWkvEFDrPdyOhsYpt69qWGRu6EHF7kCD+t9ScCe0vUvD7
+	 gnJDTao5bB5wg4+4S4lWcf7H54S49Uy2zW874XIFz4fEq/MGv/fh98m4OTT4ckJZID4G6
+	 HebHgpzq2ykyzRqVae61t+iOTLYzMQ4UQI4jYuFhgD/ZjFpkFj8pJbplH8isbhCK48w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774867;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=keGZmw/65TPZrmCINYKAPsTMHSqfcdwFrvNI+uZZu4o=;
-	b=fq7hzNVxaIWDH+J3q9IN0nDmYfnJ1+4TFCGj9mh5MUrFEnxbuet86HDwyWqPYTE/Ip6r
-	 d8JmSCPfzIi6d+xv1D/SpsfoVNK9itduTkJrJ+2fJfQ9XApAhhWUEoUBa/MSE3CdeksAj
-	 4Dj7oeJUZ+/JLvgxuzYYdtC2yUjUY4cFvWvCzdle7ROejHIsePOazqnOSgnWmObQQlwl5
-	 u8PeFwtUdoq+vMjXMwPReQWACH9G/9z4GELb0svIB1pjhLwH5YX+lrMVZQ8Z1GG+oyVRx
-	 HBim+zEYVOXeNdC9gqawQBie6dvi4F0XjU/BWgOL/5OCsQ4G5lLSXSNB0gyx5V7KZSg==
+	bh=DiOtchl5mIwTg1LpclHyfbZrzhHuMobO0OEeyaX1LgY=;
+	b=xabMMSgxRvVQCEC9tIO8cPrnEK58Lc3/ySlO29n+puF/JOYDCCWUbM2mXrf7RsWhb9FI
+	 YQ1fX6VAySFp0CxU/XMBg6kbj9vAsmPfRcXPd8ADbc/Ui5cI5/GLMvpKHU/HXerVxzqoP
+	 PnDIxZ5jRt6WZkj07GdUCk1ZCbJABfEmD3Db4I3rpaMLnKT5Q8LsJmgA94XzKFNvJ/ic2
+	 EOLKlb1gPwEjAxM5GbZwaPPuPw/NQpRWCEYLPaIaE6xVnFXqou223GMByXDt/bw6xaX1J
+	 t0pBHAQU9L4PC+cOAUOGFmS80t0rGALB0/PLLMhDSks1WJdp846t16DlJe+NjU7lPag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N2YyIk0n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zVhL/oBL";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7612C606A31A;
-	Fri, 23 Oct 2026 17:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A9B606A31A;
+	Fri, 23 Oct 2026 17:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N2YyIk0n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A681F01825;
-	Fri, 23 Oct 2026 17:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zVhL/oBL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F9E1F01825;
+	Fri, 23 Oct 2026 17:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774864;
-	bh=keGZmw/65TPZrmCINYKAPsTMHSqfcdwFrvNI+uZZu4o=;
+	s=korg; t=1792774867;
+	bh=DiOtchl5mIwTg1LpclHyfbZrzhHuMobO0OEeyaX1LgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N2YyIk0n8PCqgrUjhji7yRAZ1SVHIoik9LVgNl/pF5R+6GgzNYgiOHhPJtQak1INX
-	 t59yD8+8IeompvIg/RIEdpsfm1uYhb6ihjzGsvfIjxby7ylGQ8FQ6knEKU4bysBHKW
-	 RzN63jIvHGN2i1r9V8wlu1nxfTn6rDTNhuGj0a8k=
+	b=zVhL/oBLQ5E/CgEEmkDGi7ecT4Vo5ADHCHwzwJbYObgPEurTcCx9bwELOQoUjHGEo
+	 oqfCoXGs5lmH2I/Eb7KLapqGIKemv1InOmGjpcpCdUhq7QUK8ZK1250Qtx2FjQPCe0
+	 sXheoX+PZBNb8T609U8rUuSexVyqzFJNPQ0/aBD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Ben Cressey <ben@cressey.dev>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.2 185/242] dm-ebs: fix incorrect device offset check in ebs_ctr()
-Date: Fri, 23 Oct 2026 18:40:27 +0200
-Message-ID: <20261023163718.162390332@linuxfoundation.org>
+Subject: [PATCH 7.2 186/242] dm-integrity: fix infinite loop on discard with large tag size
+Date: Fri, 23 Oct 2026 18:40:28 +0200
+Message-ID: <20261023163718.185774233@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,39 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Genjian Zhang <zhanggenjian@kylinos.cn>
+From: Ben Cressey <ben@cressey.dev>
 
-commit 7ac81e2d2240f2c57bd073b0733e0b2abca38e82 upstream.
+commit 18d80c77b4c7dd20699e81cedfbbff4e9d198f28 upstream.
 
-<offset> is a backing-device sector offset; ti->len is the virtual
-target length. Comparing them rejects valid tables, e.g.:
+When integrity_metadata handles a discard, it fills a buffer with
+DISCARD_FILLER and writes it over the tags, max_blocks blocks at a
+time. If the kmalloc fails, the buffer is the on-stack array
+checksums_onstack and max_size is set to HASH_MAX_DIGESTSIZE. So if the
+tag size is larger than HASH_MAX_DIGESTSIZE, max_blocks is zero, bi_size
+is never decremented and the loop never terminates.
 
-  dmsetup create ebs0 --table "0 1048576 ebs /dev/sda 2097152 1 8"
-  -> ebs: Invalid device offset sector (-EINVAL)
+Fix this by using sizeof(checksums_onstack) as max_size. The array has
+MAX_TAG_SIZE bytes since commit b93b6643e9b5 ("dm integrity: fix a
+crash with unusually large tag size"), so max_blocks is at least 1.
 
-Drop the check. Bounds against the backing device are already
-enforced later by device_area_is_invalid() via ebs_iterate_devices().
-
+Fixes: 84597a44a9d8 ("dm integrity: add optional discard support")
 Cc: stable@vger.kernel.org
-Fixes: d3c7b35c20d6 ("dm: add emulated block size target")
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Ben Cressey <ben@cressey.dev>
+Assisted-by: Claude:unspecified
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ebs-target.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/md/dm-integrity.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-ebs-target.c
-+++ b/drivers/md/dm-ebs-target.c
-@@ -265,8 +265,7 @@ static int ebs_ctr(struct dm_target *ti,
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -1980,7 +1980,7 @@ static void integrity_metadata(struct wo
  
- 	r = -EINVAL;
- 	if (sscanf(argv[1], "%llu%c", &tmp, &dummy) != 1 ||
--	    tmp != (sector_t)tmp ||
--	    (sector_t)tmp >= ti->len) {
-+	    tmp != (sector_t)tmp) {
- 		ti->error = "Invalid device offset sector";
- 		goto bad;
- 	}
+ 		if (unlikely(dio->op == REQ_OP_DISCARD)) {
+ 			unsigned int bi_size = dio->bio_details.bi_iter.bi_size;
+-			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
++			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : sizeof(checksums_onstack);
+ 			unsigned int max_blocks = (max_size - extra_space) / ic->tag_size;
+ 			sector_t sector = dio->range.logical_sector;
+ 
 
 
