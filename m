@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774674;
-	b=QZShQJldqV77pNm2AHNqHYlo3tZex7BOwY6E2WPeadMRtGT1++LqeyAJX/BtIciWPtAE
-	 G3HqiC0+V2JP7JwO2759+IK8b5pY8HwTPIFoo4JZmk/2U2k7hQGZvEnLnQD/pyYAG7teC
-	 x5yX/QVWDmIUaHvPJQcSIkVPlieMNUTRViYbD7PdlZpaOEMU85SRkTuxDbHveBnlIhAUK
-	 RJGTbHNW/zwjksOzgErRAq5rCTTGzHaDgDUAFn8rqmrNh8XlITZu9ZO5hU465SxcX4c+b
-	 ptRYSJgpA7YHmj6Yx4Ai4cl0p3T4lE7beEpaqhbjebEvsB418A8KtRNkWx29W+HsZ6w==
+	t=1792774677;
+	b=k6Od06/iC7UTMU6vs0XZ+698aIM2Gll6X0Au0MDB10Mm7DRjp2cLvr3L93CfgGMpmR51
+	 ayUDobOuYhVrTyc/wsDEd64w0YXcKt+ZkfbtQcz2qg8HiCu7oR9QuzMqlx6CNFqHuckyA
+	 pEfXY4nZxOn1u8CkI8YyXuYZKBMge1/YKDi+61ATuF1SAiFQBEi8Fkc/zOXQK/Milz511
+	 PnWRdohPwwbNLYeNbC/GVOAm6HZ7eVo3YqYa1KM1mopfI6or5sYBNkgKy75d2kvVlHsFt
+	 ww+2Yxe26HfIkkpIxvXn+Yugk43BxMhskP7kaa9S09XA88w+bAJEG00ou17xRMx0Arw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774674;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZwKH9xRonIftxjbWkoskcvh6m9ty9NQUfFs+oVe/N8g=;
-	b=3hiebcdH48bRS4Qi2Jwx5+iUcMkUMrDj9RjkMcOz7f+qSGitAuASPlEd5+lVD/FSM2nY
-	 eBgCDzD7IKAZbnZlasHFKtZrH31svaMDYA7ckxHA20er684LYsjt9uZ1FaI5Q+hcCmeiS
-	 D2hr//BSYnbXSt+Pvs6Af9V20Obinlv66qQzSyqyqh73+Wp1VxxKn5ivTz0bwijDW2YRC
-	 E+N7fE/2RMxhvYXeMbByQSYPDvt5JnU3LgHuHejZBN+QClUSpKxDKK7WVo8XJ4Qwcno/8
-	 MkQQugBT3++8jFxSIi7oHIk+q7W3mzGunplyt/vaTkgm8aQZBM4QVz8nkabl3MUwSfw==
+	bh=Cr3RiknlSvVSvdp1zgATLAG27nHusHTdFBG2FFzrXfI=;
+	b=W5bGvYReaTNJxxADCJCdqaW/SU0Pw/QHXG67t8aMVAzTH5farJalGg2KAqsob+3NCSve
+	 bA08jY/KevEJmB8x05WRw/7nC2yD8CdMcd5UGkJ0DhXZF/tdWb9Z5d4PNFhaaXxik4ZSV
+	 UVOBnuQmUGI5UZrPimue0RHEMnm07XsBq1LxlR9qqBtXS5aHJm8j/aJMtndpUXa8wXuwL
+	 05KPlHnAkXkSQ0+eRRzBvcFZyWohtqEgXO+fdN1UrmMXEfF6D0X1R4RxIyFzvY1sUB1wB
+	 ef7IT8F+aH+KPdqN+WoGdXyXxMTLcw/KEudPdJkKv6zfJuVKH5L6YrECoWur3QXL0xQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I2OjiXe6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sj96JFqL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF18F606A31A;
-	Fri, 23 Oct 2026 16:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5714606A31A;
+	Fri, 23 Oct 2026 16:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I2OjiXe6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B4A1F01825;
-	Fri, 23 Oct 2026 16:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sj96JFqL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A971F01825;
+	Fri, 23 Oct 2026 16:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774673;
-	bh=ZwKH9xRonIftxjbWkoskcvh6m9ty9NQUfFs+oVe/N8g=;
+	s=korg; t=1792774676;
+	bh=Cr3RiknlSvVSvdp1zgATLAG27nHusHTdFBG2FFzrXfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I2OjiXe6jPQXOJH7EU11kJhcVOYzz1ljL5xuKPT2jPf/N1KZ22iwsY/JPJTnNDO3h
-	 un/t70EtFzwQLdk8uUoi/5JWG1tY4OHg5FD6v/TVRzmENRHgaJ81w6yCzca71IL+8g
-	 +V5j5g3JjgLUZcWSQWfMb2vf39ZpjY1OyLf1n4Dc=
+	b=Sj96JFqLhLyaEiRkExAuSrDO/MFxh5zOuCpYmIBdidG28vqFv8ISBieNuoemipu1F
+	 KuLQvqrUAVL+saKYSXXA3i14d7Cn66D1p8GcBNppLCJO1ofpFg1329RNbFKAEf0emt
+	 ymp1x6euM7O9hZSKXqjo2Y34ycstiaDC/41mq21o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 119/242] namei: test for a negative dentry the way traverse_mounts() does
-Date: Fri, 23 Oct 2026 18:39:21 +0200
-Message-ID: <20261023163716.598194406@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 7.2 120/242] futex: Fix mm reuse handling for FUT_OFF_MMSHARED
+Date: Fri, 23 Oct 2026 18:39:22 +0200
+Message-ID: <20261023163716.621469075@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,242 +67,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jann Horn <jannh@google.com>
 
-commit 98b6cf102b35b2bb48d1fd74d5f664eb66fe83eb upstream.
+commit 3267512ad1c2cc0c7768c5b014dc2cceb398a801 upstream.
 
-lookup_fast_for_open() only hands an O_CREAT open a cached dentry if
-it's positive. Otherwise the open goes on to lookup_open(), which takes
-the directory lock and creates the file. It tests for that with
-!dentry->d_inode, but traverse_mounts() later decides with the type in
-d_flags. And when a dentry is instantiated __d_set_inode_and_type()
-stores ->d_inode first and only then releases the type into ->d_flags.
+A FUT_OFF_MMSHARED futex is a shared futex that refers to an MM.
+It is possible for a process to wait on a shared futex with a different MM
+because a FUT_OFF_INODE waiter can be requeued onto a FUT_OFF_MMSHARED
+futex by another process.
+This can cause FUT_OFF_MMSHARED waiters on a freed MM to consume
+wakeups intended for a newly allocated MM at the same address.
 
-So a refwalk that took its reference to a negative dentry right before
-another task instantiates it can find ->d_inode already set in
-lookup_fast_for_open(), go on to step_into(), and still find the
-negative type in traverse_mounts(). The open then fails with -ENOENT,
-which an O_CREAT open must never do. rcuwalk doesn't get that far, the
-d_seq check in step_into() catches the instantiation.
+Fix it by keying FUT_OFF_MMSHARED using a unique 64-bit per-MM ID.
+Leave private futexes as before to avoid influencing the performance of the
+hotpath.
 
-Use d_is_negative() so both look at the type. While the type is still
-negative the open takes lookup_open() and waits for the directory lock
-like any other O_CREAT open of a negative dentry.
+(Multi-threaded processes typically implicitly use FUT_OFF_MMSHARED by
+setting clear_child_tid such that it points into anonymous memory, which
+causes mm_release() in a multi-threaded mm to perform FUTEX_WAKE.)
 
-On its own the window is a couple of instructions in the creating task,
-so it takes an interrupt or a preempted vcpu in exactly the right spot.
-I haven't caught it without help in about 600 million racing O_CREAT
-opens.
-
-The debug patch below stalls the creating task between the two stores
-for names starting with "ocrace", the way an interrupt landing there
-would. The reproducer below opens "ocrace" with O_CREAT through
-symlinks on a strictatime tmpfs: following them updates their atime,
-which drops the walk out of rcuwalk, so the name is always looked up in
-refwalk. With
-
-  echo 20 > /proc/sys/fs/ocrace_instantiate_us
-  ./ocreat_enoent -t 60
-
-on a KASAN kernel open() failed with -ENOENT 43 times in 4.9 million
-calls. With this patch it never failed in 4.8 million calls. Tracing
-step_into_slowpath() during such a run, each of the 98 -ENOENTs it
-returned came right after the same task had entered it with a dentry
-that was still typed negative.
-
-  // SPDX-License-Identifier: GPL-2.0
-  /*
-   * ocreat_enoent: open(O_CREAT) racing the creation of the same name.
-   *
-   * Writers unlink "ocrace" and create it again. Readers open it with
-   * O_CREAT through a symlink of their own on a strictatime tmpfs.
-   * Following the symlink updates its atime, which drops the walk out of
-   * rcu mode, so the name is always looked up in refwalk. An O_CREAT open
-   * must never fail with ENOENT.
-   *
-   * -p arms a cpu-clock perf timer with that period in ns on every writer,
-   * so that interrupts land at random points in it.
-   *
-   *   usage: ocreat_enoent [-t secs] [-w writers] [-r readers] [-p ns]
-   */
-  #define _GNU_SOURCE
-  #include <errno.h>
-  #include <fcntl.h>
-  #include <pthread.h>
-  #include <stdatomic.h>
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <string.h>
-  #include <sys/mount.h>
-  #include <sys/stat.h>
-  #include <sys/syscall.h>
-  #include <unistd.h>
-  #include <linux/perf_event.h>
-
-  #define DIR "/tmp/oc"
-
-  static atomic_int stop;
-  static atomic_long opens, creates, enoent, other;
-  static long period;
-
-  static void die(const char *what)
-  {
-  	fprintf(stderr, "FATAL %s: %s\n", what, strerror(errno));
-  	exit(2);
-  }
-
-  static void *writer(void *arg)
-  {
-  	(void)arg;
-  	if (period) {
-  		struct perf_event_attr attr = {
-  			.type = PERF_TYPE_SOFTWARE,
-  			.size = sizeof(attr),
-  			.config = PERF_COUNT_SW_CPU_CLOCK,
-  			.sample_period = period,
-  		};
-
-  		if (syscall(SYS_perf_event_open, &attr, 0, -1, -1, 0) < 0)
-  			die("perf_event_open");
-  	}
-  	while (!atomic_load(&stop)) {
-  		int fd;
-
-  		unlink(DIR "/ocrace");
-  		fd = open(DIR "/ocrace", O_CREAT | O_RDWR | O_CLOEXEC, 0644);
-  		if (fd >= 0)
-  			close(fd);
-  		atomic_fetch_add(&creates, 1);
-  	}
-  	return NULL;
-  }
-
-  static void *reader(void *arg)
-  {
-  	char lnk[64];
-
-  	snprintf(lnk, sizeof(lnk), DIR "/lnk.%ld", (long)arg);
-  	while (!atomic_load(&stop)) {
-  		int fd = open(lnk, O_CREAT | O_RDWR | O_CLOEXEC, 0644);
-
-  		if (fd >= 0)
-  			close(fd);
-  		else if (errno == ENOENT)
-  			atomic_fetch_add(&enoent, 1);
-  		else
-  			atomic_fetch_add(&other, 1);
-  		atomic_fetch_add(&opens, 1);
-  	}
-  	return NULL;
-  }
-
-  int main(int argc, char **argv)
-  {
-  	int secs = 60, nw = 4, nr = 12, c, n = 0;
-  	pthread_t t[256];
-
-  	while ((c = getopt(argc, argv, "t:w:r:p:")) != -1) {
-  		switch (c) {
-  		case 't': secs = atoi(optarg); break;
-  		case 'w': nw = atoi(optarg); break;
-  		case 'r': nr = atoi(optarg); break;
-  		case 'p': period = atol(optarg); break;
-  		default: return 2;
-  		}
-  	}
-  	if (nw + nr > 256)
-  		return 2;
-  	mkdir(DIR, 0755);
-  	if (mount("oc", DIR, "tmpfs", MS_STRICTATIME, "mode=0755"))
-  		die("tmpfs");
-  	for (long i = 0; i < nr; i++) {
-  		char lnk[64];
-
-  		snprintf(lnk, sizeof(lnk), DIR "/lnk.%ld", i);
-  		if (symlink("ocrace", lnk))
-  			die("symlink");
-  	}
-  	for (long i = 0; i < nw; i++)
-  		if (pthread_create(&t[n++], NULL, writer, NULL))
-  			die("writer");
-  	for (long i = 0; i < nr; i++)
-  		if (pthread_create(&t[n++], NULL, reader, (void *)i))
-  			die("reader");
-  	sleep(secs);
-  	atomic_store(&stop, 1);
-  	for (int i = 0; i < n; i++)
-  		pthread_join(t[i], NULL);
-  	printf("%ds: %ld opens, %ld creates, ENOENT %ld, other errors %ld\n",
-  	       secs, atomic_load(&opens), atomic_load(&creates),
-  	       atomic_load(&enoent), atomic_load(&other));
-  	umount2(DIR, MNT_DETACH);
-  	return atomic_load(&enoent) ? 1 : 0;
-  }
-
-#  diff --git a/fs/dcache.c b/fs/dcache.c
-#  --- a/fs/dcache.c
-#  +++ b/fs/dcache.c
-#  @@ -32,9 +32,13 @@
-#   #include <linux/bit_spinlock.h>
-#   #include <linux/rculist_bl.h>
-#   #include <linux/list_lru.h>
-#  +#include <linux/delay.h>
-#   #include "internal.h"
-#   #include "mount.h"
-#
-#  +/* debug: stall "ocrace*" names between ->d_inode and the type */
-#  +static int sysctl_ocrace_instantiate_us;
-#  +
-#   #include <asm/runtime-const.h>
-#
-#   /*
-#  @@ -200,6 +204,13 @@
-#   }
-#
-#   static const struct ctl_table fs_dcache_sysctls[] = {
-#  +	{
-#  +		.procname	= "ocrace_instantiate_us",
-#  +		.data		= &sysctl_ocrace_instantiate_us,
-#  +		.maxlen		= sizeof(int),
-#  +		.mode		= 0644,
-#  +		.proc_handler	= proc_dointvec,
-#  +	},
-#   	{
-#   		.procname	= "dentry-state",
-#   		.data		= &dentry_stat,
-#  @@ -405,6 +416,10 @@
-#   	unsigned flags;
-#
-#   	dentry->d_inode = inode;
-#  +	/* debug: an interrupt landing right here */
-#  +	if (unlikely(READ_ONCE(sysctl_ocrace_instantiate_us)) &&
-#  +	    !strncmp(dentry->d_name.name, "ocrace", 6))
-#  +		udelay(READ_ONCE(sysctl_ocrace_instantiate_us));
-#   	flags = READ_ONCE(dentry->d_flags);
-#   	flags &= ~DCACHE_ENTRY_TYPE;
-#   	flags |= type_flags;
-
-Fixes: e747e15156b7 ("fs: try an opportunistic lookup for O_CREAT opens too")
-Cc: stable@vger.kernel.org # v6.12+
-Link: https://patch.msgid.link/20261012-work-namei-ocreate-v1-1-c7883b17ee28@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 222993395ed3 ("futex: Remove pointless mmgrap() + mmdrop()")
+Closes: https://lore.kernel.org/r/CAG48ez0dLBpc3QtbAhMMVNHwHL94iHh2G+h-=BVFR4dDuzZr1g@mail.gmail.com/
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260929-futex-mmshared-fix-v1-1-262b1ffeb3d0@google.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namei.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/futex.h       |   19 +++++++++-------
+ include/linux/futex_types.h |    2 +
+ kernel/futex/core.c         |   51 ++++++++++++++++++++++++--------------------
+ 3 files changed, 41 insertions(+), 31 deletions(-)
 
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -4576,8 +4576,7 @@ static struct dentry *lookup_fast_for_op
- 		return dentry;
+--- a/include/linux/futex.h
++++ b/include/linux/futex.h
+@@ -23,28 +23,32 @@ struct task_struct;
+  *  01 : Shared futex (PTHREAD_PROCESS_SHARED)
+  *	mapped on a file (reference on the underlying inode)
+  *  10 : Shared futex (PTHREAD_PROCESS_SHARED)
+- *       (but private mapping on an mm, and reference taken on it)
++ *       (but private mapping on an mm)
+ */
  
- 	if (open_flag & O_CREAT) {
--		/* Discard negative dentries. Need inode_lock to do the create */
--		if (!dentry->d_inode) {
-+		if (d_is_negative(dentry)) {
- 			if (!(nd->flags & LOOKUP_RCU))
- 				dput(dentry);
- 			dentry = NULL;
+-#define FUT_OFF_INODE    1 /* We set bit 0 if key has a reference on inode */
+-#define FUT_OFF_MMSHARED 2 /* We set bit 1 if key has a reference on mm */
++#define FUT_OFF_INODE    1 /* We set bit 0 if shared key identifies an inode */
++#define FUT_OFF_MMSHARED 2 /* We set bit 1 if shared key identifies an mm */
+ 
+ union futex_key {
++	/* For FUT_OFF_INODE */
+ 	struct {
+ 		u64 i_seq;
+ 		unsigned long pgoff;
+ 		unsigned int offset;
+ 		/* unsigned int node; */
+ 	} shared;
++
++	/* For FUT_OFF_MMSHARED or private */
+ 	struct {
+ 		union {
+-			struct mm_struct *mm;
+-			u64 __tmp;
++			struct mm_struct *mm; /* for private */
++			u64 mm_seq; /* for FUT_OFF_MMSHARED */
+ 		};
+ 		unsigned long address;
+ 		unsigned int offset;
+ 		/* unsigned int node; */
+ 	} private;
++
+ 	struct {
+ 		u64 ptr;
+ 		unsigned long word;
+@@ -154,11 +158,10 @@ static inline void futex_set_vdso_cs_ran
+ static inline void futex_fixup_robust_unlock(struct pt_regs *regs) { }
+ #endif /* !CONFIG_FUTEX_ROBUST_UNLOCK */
+ 
+-
+-#if defined(CONFIG_FUTEX_PRIVATE_HASH) || defined(CONFIG_FUTEX_ROBUST_UNLOCK)
++#ifdef CONFIG_FUTEX
+ void futex_mm_init(struct mm_struct *mm);
+ #else
+ static inline void futex_mm_init(struct mm_struct *mm) { }
+-#endif
++#endif /* !CONFIG_FUTEX */
+ 
+ #endif /* _LINUX_FUTEX_H */
+--- a/include/linux/futex_types.h
++++ b/include/linux/futex_types.h
+@@ -85,10 +85,12 @@ struct futex_unlock_cs_ranges { };
+  * struct futex_mm_data - Futex related per MM data
+  * @phash:	Futex private hash related data
+  * @unlock:	Futex unlock VDSO critical sections
++ * @unique_id:	Unique ID of the MM, for FUT_OFF_MMSHARED futexes
+  */
+ struct futex_mm_data {
+ 	struct futex_mm_phash		phash;
+ 	struct futex_unlock_cs_ranges	unlock;
++	atomic64_t			unique_id;
+ };
+ #else  /* CONFIG_FUTEX */
+ struct futex_sched_data { };
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -442,45 +442,51 @@ struct hrtimer_sleeper *futex_setup_time
+ }
+ 
+ /*
+- * Generate a machine wide unique identifier for this inode.
++ * Generate a machine wide unique identifier for this object (inode or mm).
+  *
+  * This relies on u64 not wrapping in the life-time of the machine; which with
+  * 1ns resolution means almost 585 years.
+- *
+- * This further relies on the fact that a well formed program will not unmap
+- * the file while it has a (shared) futex waiting on it. This mapping will have
+- * a file reference which pins the mount and inode.
+- *
+- * If for some reason an inode gets evicted and read back in again, it will get
+- * a new sequence number and will _NOT_ match, even though it is the exact same
+- * file.
+- *
+- * It is important that futex_match() will never have a false-positive, esp.
+- * for PI futexes that can mess up the state. The above argues that false-negatives
+- * are only possible for malformed programs.
+  */
+-static u64 get_inode_sequence_number(struct inode *inode)
++static u64 get_object_id(atomic64_t *object_seq)
+ {
+-	static atomic64_t i_seq;
++	static atomic64_t last_assigned_seq;
+ 	u64 old;
+ 
+-	/* Does the inode already have a sequence number? */
+-	old = atomic64_read(&inode->i_sequence);
++	/* Does the object already have a sequence number? */
++	old = atomic64_read(object_seq);
+ 	if (likely(old))
+ 		return old;
+ 
+ 	for (;;) {
+-		u64 new = atomic64_inc_return(&i_seq);
++		u64 new = atomic64_inc_return(&last_assigned_seq);
+ 		if (WARN_ON_ONCE(!new))
+ 			continue;
+ 
+ 		old = 0;
+-		if (!atomic64_try_cmpxchg_relaxed(&inode->i_sequence, &old, new))
++		if (!atomic64_try_cmpxchg_relaxed(object_seq, &old, new))
+ 			return old;
+ 		return new;
+ 	}
+ }
+ 
++/*
++ * This relies on the fact that a well formed program will not unmap
++ * the file while it has a (shared) futex waiting on it. This mapping will have
++ * a file reference which pins the mount and inode.
++ *
++ * If for some reason an inode gets evicted and read back in again, it will get
++ * a new sequence number and will _NOT_ match, even though it is the exact same
++ * file.
++ *
++ * It is important that futex_match() will never have a false-positive, esp.
++ * for PI futexes that can mess up the state. The above argues that false-negatives
++ * are only possible for malformed programs.
++ */
++static u64 get_inode_sequence_number(struct inode *inode)
++{
++	return get_object_id(&inode->i_sequence);
++}
++
+ /**
+  * get_futex_key() - Get parameters which are the keys for a futex
+  * @uaddr:	virtual address of the futex
+@@ -686,8 +692,8 @@ again:
+ 			goto out;
+ 		}
+ 
+-		key->both.offset |= FUT_OFF_MMSHARED; /* ref taken on mm */
+-		key->private.mm = mm;
++		key->both.offset |= FUT_OFF_MMSHARED;
++		key->private.mm_seq = get_object_id(&mm->futex.unique_id);
+ 		key->private.address = address;
+ 
+ 	} else {
+@@ -2062,13 +2068,12 @@ static void futex_robust_unlock_init_mm(
+ static inline void futex_robust_unlock_init_mm(struct futex_mm_data *fd) { }
+ #endif /* !CONFIG_FUTEX_ROBUST_UNLOCK */
+ 
+-#if defined(CONFIG_FUTEX_PRIVATE_HASH) || defined(CONFIG_FUTEX_ROBUST_UNLOCK)
+ void futex_mm_init(struct mm_struct *mm)
+ {
++	atomic64_set(&mm->futex.unique_id, 0);
+ 	futex_hash_init_mm(&mm->futex);
+ 	futex_robust_unlock_init_mm(&mm->futex);
+ }
+-#endif
+ 
+ int futex_hash_prctl(unsigned long arg2, unsigned long arg3, unsigned long arg4)
+ {
 
 
