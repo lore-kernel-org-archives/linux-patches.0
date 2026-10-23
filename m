@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774000;
-	b=TxicyrhWqd9wSE7T16wX8/MKxLc+RE2HeHziJ2x8e0rrNyQj4FgVVtmZz9TNsfNdou7I
-	 RC4YodnxD1f7FLXd1iivc5vkCkt7wufrjF1kdqRsMz2mVYtnsvJa2Fded1CUcY2XP1b6Z
-	 KUsEQyKHRgqfREnfeMbWAvvm2T3baA4ZImvyMpk+uGAS/19NDmld2CbFpCqdmIUwET5/p
-	 +NAg0oVe/B61AURUuFjhOifhNNdBdLwip5vWuOmzWuvXGSFPUVko2LwjpCVkafv+ftJ5g
-	 BNatiM2qZ72ZGLh2RJSPnJUi8AjLrMkR9pr4BXhRVj7tSKsakNqZICZMUxUarR7Bj3Q==
+	t=1792774003;
+	b=oxOKTrGB1Gd1ZvoY+xbn3GUen8Xnz6a0VDssJTb9qv0YZiEBjso2eeLSrPMkwAChpq4o
+	 WufvdN6u0yhmei4wthtzVPB0uaWbQZa+MlUAwvn9bLjZue1/vNuyfZzn9qGKJTH3+0dza
+	 acRpJSyXsGk8dxnCYnaC1xk6OMxJo/XPjTBsT5nf+MbSonrnJ92meCHl8W2JtumXCemtL
+	 YeK9ABCmBi6k0sVh2gvNJh+kZz5r5OzTPRhkLESjddxOJhTEgvjpeUhBiN22mV+t4AX+G
+	 PU6LTYe7RWEt+bBLYKTh82ibw0Pxj1OdQUvSoxrO0qLXO3xwyp5BX1fE3CIJRt6F0pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lfRBmhkUWWpGV/GDH3+/sdyg7nzOCI66UhZjc/wAgjM=;
-	b=MlFfk7+r+z/ZQaPZAKsz5LIXxZDVT4UIDc/s1wMJ9c0DyacG6I+BzxVYv3jCvky/gDKR
-	 lqdUg09fLSJogc6MHMKTaML6hzK3T4SYLFDbDJJLlZt6mHo7G0bzGPSeRINFImq4L9cRP
-	 3Pf9yoZYzA5SxDzaKYksJfoFoDV55grdCkIYUSzhNMTy9YIPQeQz2YxQa8PVJs6qX2lq1
-	 f3QW/n9C6KCHd+J2TkeCRfSgpeMxZnx+GCfUcYWd3/17LKa+unu2F5xMKmKyYojJENnuN
-	 EfRsKzhTe2CoZeVuXG1y3dj6WdIoyTP6WXm3IRtDMIHfwZbk1rZa2fEgC0XDdnGhAaw==
+	bh=AhYOpk8fHPNBMhk2IGFWr67qH2blaj2ASCb9FTbo0Fg=;
+	b=DTyDM6PB0c8VxG7CAl3zGo2KvP7ovzm0kW3297D6bw3FEH3dqY2A24Aa231eJfZXqdcU
+	 R0jrdYZ4iAzKkUhzdJMpbi2AED0/x9dT2+zP91FJe6M3khEasqEx6e0vFI4R+ZGtJvYD4
+	 UjKUOR0N7/erUdT3rcOu+W4SR+/X9Vqm18SALiuM2PWrVgyiVLlYmStFu6t56TUdjlsPW
+	 fDR1jS0fe+0cqWOWpzJTViRF1HXFN1Jie9nMyvxU7qljt2mqQWziZsuDUlzsbiyVX43TS
+	 yHTfoC7Rt/dhYuNYTbUY8/e2YpTTet+0YG/s7pitJsvz4Z8op9OXD1mWeMBOMpej/7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pRoxpBdf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b/Mdx3OO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B60606A320;
-	Fri, 23 Oct 2026 16:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BB5606A31E;
+	Fri, 23 Oct 2026 16:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pRoxpBdf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA491F01825;
-	Fri, 23 Oct 2026 16:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b/Mdx3OO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794281F01825;
+	Fri, 23 Oct 2026 16:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774000;
-	bh=lfRBmhkUWWpGV/GDH3+/sdyg7nzOCI66UhZjc/wAgjM=;
+	s=korg; t=1792774003;
+	bh=AhYOpk8fHPNBMhk2IGFWr67qH2blaj2ASCb9FTbo0Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pRoxpBdfY+bnIQHxSWFc2gK9D2ETYbAT9PQ/a4iMwho0Kkb54WDZFYvujzdUPrr2I
-	 k4OpsKX6+9mDKyxZZPc1gRii3097h+uzQBOo6g9p9rZW0BlaNyVHPt5M/VoWkrjEUc
-	 82KV5GVR6icHTW0BOhk8Lh6sNpYz1ZW86UAGFDwU=
+	b=b/Mdx3OOw5s2qPmj2bggnEjI/tbPHrfCumZ5ME8fLNL7LLf9pmA6WsQmBqhisUcMa
+	 U2T09iVwj0RkryOt7JjBR5OQguUCg3LzUpTYI/UBxVHJ4jETTKlgdhSMNVw7jo+GKs
+	 4gJ09X8wc6VD/30zaZyKuXVmASwRfsdW4G3UCLWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 086/193] net: rds: fix uninitialized trans dereference in CM event handler
-Date: Fri, 23 Oct 2026 18:36:03 +0200
-Message-ID: <20261023163716.243317154@linuxfoundation.org>
+	Olzhas Marat <marat.olzhas@gmail.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.18 087/193] pinctrl: amd: Clear S4 wake bits when firmware has _AEI
+Date: Fri, 23 Oct 2026 18:36:04 +0200
+Message-ID: <20261023163716.266621505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,121 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 492ba6ac1b1ffb8a06ff52db0825c1af2cdb28c8 upstream.
+commit 1cca81a683da7f0ef2fbaf34442376044cbbad22 upstream.
 
-rds_rdma_cm_event_handler_cmn() assigns trans only when the RDMA
-device is an InfiniBand CA (RDMA_NODE_IB_CA).  On any other device
-type, e.g. an iWARP RNIC such as siw, trans stays uninitialized, but
-the event switch dereferences it: unconditionally in the
-RDMA_CM_EVENT_CONNECT_REQUEST case via trans->cm_handle_connect(),
-and (with a connection context) in the ROUTE_RESOLVED and
-ESTABLISHED cases.
+Commit ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
+preserves firmware-programmed S4 wake sources because some PCIe devices
+rely on them for Wake-on-LAN. The system that motivated that change does
+not expose ACPI GPIO events through _AEI.
 
-An RDS listener on an iWARP device therefore crashes the kernel as
-soon as a connect request arrives: with CONFIG_INIT_STACK_ALL_ZERO
-the wild load becomes a NULL dereference at offset 0xa0
-(&trans->cm_handle_connect) in the iw_cm_wq workqueue.
+On a Chuwi CoreBook Plus, firmware exposes _AEI but also leaves the S4/S5
+wake bit set for GPIO 24. This causes the machine to power back on
+immediately after shutdown even though Wake-on-LAN is not enabled.
 
-GCC masks the bug in default builds by folding the uninitialized
-load into &rds_ib_transport; Clang-built kernels take the real
-uninitialized path and oops.
+GPIO register dumps show that the only relevant difference is bit 15 on
+GPIO 24. Clearing that bit makes the machine remain off. GPIO 24 is not
+itself listed in _AEI, so _AEI is not a per-pin indication of which pins
+the OS manages; it is a platform level signal of which wake model the
+firmware follows.
 
-The active side can land on a non-IB device too: the id that
-rds_ib_conn_path_connect() creates is not restricted to a node type,
-so rdma_resolve_addr() binds it to whichever device serves the local
-address, and an iWARP RNIC on the same netdev qualifies.  The crash
-there is different: resolving a route on an iWARP id never fills in
-cm_id->route.path_rec, and the ROUTE_RESOLVED case writes
-path_rec[0].sl before it calls into the transport.
+Use that signal to decide what to clear. Continue clearing S0i3/S3 bits on
+every system. Clear S4 bits when firmware exposes _AEI, indicating that the
+platform hands GPIO events to the OS, but preserve S4 bits when _AEI is
+absent so that firmware-programmed sources such as PCIe PME that bypass the
+GPIO IRQ wake API keep working.
 
-The iWARP transport was dropped long ago and IB is the only
-transport left, so make that explicit: initialize trans to
-&rds_ib_transport at declaration, drop the conditional assignment,
-reject a connect request that arrives on a non-IB device, and drop a
-connection whose address resolved to one instead of resolving a
-route on it.  The rejection is limited to RDMA_CM_EVENT_CONNECT_REQUEST
-on purpose: a non-zero return from the handler makes rdma_cm destroy
-the id the event was delivered on, which is right for the request's
-freshly created id but would free a connection id that RDS still owns
-for any other event.  On the active side the id stays ic->i_cm_id and
-the connection's shutdown destroys it, so that case returns 0.
+A platform that exposes _AEI for some pins while routing a wake capable
+device through a raw GPIO not listed in _AEI would lose that wake source
+unless firmware re-arms it during the sleep transition. No such system has
+been reported.
 
-Fixes: dcdede0406d3 ("RDS: Drop stale iWARP RDMA transport")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Link: https://lore.kernel.org/netdev/20260824111701.2979194-1-ljp1205831794@gmail.com/
-Link: https://lore.kernel.org/netdev/20260825021223.3483044-1-ljp1205831794@gmail.com/
+Fixes: ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
+Reported-by: Olzhas Marat <marat.olzhas@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222041
 Cc: stable@vger.kernel.org
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-[achender: reject only on RDMA_CM_EVENT_CONNECT_REQUEST instead of
- bailing out for every event on a non-IB device, so that rdma_cm does
- not destroy connection ids RDS still tracks; drop a connection whose
- address resolved to a non-IB device before a route is resolved on it;
- changelog adjusted]
-Assisted-by: LLM
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261003163408.250568-2-achender@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Olzhas Marat <marat.olzhas@gmail.com>
+Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/rdma_transport.c |   26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -52,7 +52,7 @@ static int rds_rdma_cm_event_handler_cmn
- {
- 	/* this can be null in the listening path */
- 	struct rds_connection *conn = cm_id->context;
--	struct rds_transport *trans;
-+	struct rds_transport *trans = &rds_ib_transport;
- 	int ret = 0;
- 	int *err;
- 	u8 len;
-@@ -60,9 +60,6 @@ static int rds_rdma_cm_event_handler_cmn
- 	rdsdebug("conn %p id %p handling event %u (%s)\n", conn, cm_id,
- 		 event->event, rdma_event_msg(event->event));
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -888,6 +888,15 @@ static void amd_gpio_irq_init(struct amd
  
--	if (cm_id->device->node_type == RDMA_NODE_IB_CA)
--		trans = &rds_ib_transport;
--
- 	/* Prevent shutdown from tearing down the connection
- 	 * while we're executing. */
- 	if (conn) {
-@@ -82,11 +79,32 @@ static int rds_rdma_cm_event_handler_cmn
+ 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
  
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_CONNECT_REQUEST:
-+		/* Only the IB transport is supported, but RDS listens on
-+		 * every RDMA device: reject a request that arrived on any
-+		 * other kind.  A non-zero return has rdma_cm destroy the
-+		 * request's id, which is what we want here and only here.
-+		 */
-+		if (cm_id->device->node_type != RDMA_NODE_IB_CA) {
-+			ret = 1;
-+			break;
-+		}
- 		ret = trans->cm_handle_connect(cm_id, event, isv6);
- 		break;
- 
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
- 		if (conn) {
-+			/* The address resolved to a device RDS has no
-+			 * transport for.  Do not go on to resolve a route:
-+			 * an iWARP route leaves cm_id->route.path_rec
-+			 * unset, which the ROUTE_RESOLVED case below
-+			 * dereferences.  Drop the connection instead; the
-+			 * id is still ic->i_cm_id, so return 0 and let the
-+			 * shutdown destroy it.
-+			 */
-+			if (cm_id->device->node_type != RDMA_NODE_IB_CA) {
-+				rds_conn_drop(conn);
-+				break;
-+			}
- 			rdma_set_service_type(cm_id, conn->c_tos);
- 			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
- 			ret = rdma_resolve_route(cm_id,
++#ifdef CONFIG_ACPI
++	/*
++	 * Platforms without _AEI leave GPIO wake sources to firmware, so
++	 * preserve their S4 wake bits.
++	 */
++	if (acpi_has_method(ACPI_HANDLE(&gpio_dev->pdev->dev), "_AEI"))
++		mask |= BIT(WAKE_CNTRL_OFF_S4);
++#endif
++
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
+ 		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
 
 
