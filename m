@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774173;
-	b=lQnErD+gCFsUPLqW8Iu1KxoTkqvX0mlKSLE3Iq1UZPcD5R4B7GXO7WIyLDOepmP1BbDA
-	 I1ge+Xy/b/BIAv5B8Z2Nc1/lutCwpKwd53xtnSo7YRZlCcIZKtbecxDYpmO8Q6jTXs6fW
-	 N70PpY6oSVWoggSRugymSrfvi/QiGhI71AG/Fm/+4nWz3iMhbHooqs58TK69hGcvuwbbI
-	 02KLrJbgcI9r7+VjUbiNMnUHoeKdDb+L5q3hxKnkdrtJoyNIsE3VfvyfGfI8RpIjXWXjg
-	 oS5veFzcfGVqW/GqKHMhpVLY+pc+YbDnUH0xjqWsM9EVW98Nkcennk4LAQ4jjzUDSJQ==
+	t=1792774179;
+	b=fwdctMU9dS2ie9nFzK+PqAk9xXjWFyHpsHf6TE3NhjEK4k5o1ykNyMxJdFyIvjmovD63
+	 3fng94kN5Ol5gG3e9+mnR3dQbzU6RcmDWNT3wqZJ+xsIembDBO34wuwXdkpRPoYJDwHZy
+	 C8NV9fQLvyr/u0GuVAUip2syhw6oZCCtWRoIKraEuY5UjVJDhmMhIsJ8WzXGBCETYZucN
+	 dj0vlt4Tf9M7Xt4C9DuUE4I31ijitAPX1bL/z9qJ5ubkkfTgKZ+I4WBWDnCHS09avffzD
+	 okRHbWRkgAbhlV0wxouG9BbnJqOg1wb55PhgmagTzmolZk/bQDu7q9bpRh7SPPWyHHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=4tYMeib50uGngD/fKnrDQF3E+2eda2J+N7fVBan9apA=;
-	b=ZgLcvXwwwY6siiF13jiEPYYPFU0kTPqYcWL94a3Reni6QbA/jHIhHNHAmfh6NfwuXV9S
-	 6tnMRSa9phy6lpEoI+JpKYoSmGK9XGp67PTSRxFIvfxrdsVdR6uN2gp1k2dGfeMlLczZW
-	 03s178oz6VFHJyssTtiNOH2eefpXyNIyG3cAKMqCdn1sRdkQgv70MthFoHgHpdaRjtEVC
-	 zcgRhKTUKlCkuX1xomD+d1mHVMpejlS+yet+hHH4h3FX+WGBTM7WqxNhP3v+PXNjBgEBb
-	 7r7JA1QOKtPqBiex8hsV+9oqk1m1mVRSoU/TYfOm3TBgO9glhWUU59daxywY7mm/azA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=EXIpwumrLxTqM6Al89eYtUb/0VE1j4pvx6g3MnYJzY0=;
+	b=ONc12GSPRggNvW1US58DZMSnem/gIGO4HoeloyKTOECQmfMcxPBwEUTHPOTAmpd7lrxr
+	 gE0OK9HvmWC2B7pidyFk1+c+9ttzrw8QyGMYi5RoGCzzIUUooVu3fGDjXHaiqfYvkjYn5
+	 /v6hdsWlT+97oW2o9dTJiav7T0rrF0ZjV38na+Geef7G6iTU7D1LvSLTiE5/7zz4xiD3c
+	 ePGvXsOmRCl80+cfS1KmWoq7fNZS0hIv0jIsJX8uKmOYjz47r4v3MSB1gNKZjm3/V1duG
+	 nEvNKRSoAihVDNxbbF/uizg/cKbVMiwF0K3pCOY4Wr4bNaGlOGz4a8lbwGczTpa2ndw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2RN88qN/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLBryXuj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E93E606A31B;
-	Fri, 23 Oct 2026 16:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4095606A330;
+	Fri, 23 Oct 2026 16:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RN88qN/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051C11F01825;
-	Fri, 23 Oct 2026 16:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLBryXuj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C401B1F01825;
+	Fri, 23 Oct 2026 16:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774172;
-	bh=4tYMeib50uGngD/fKnrDQF3E+2eda2J+N7fVBan9apA=;
+	s=korg; t=1792774178;
+	bh=EXIpwumrLxTqM6Al89eYtUb/0VE1j4pvx6g3MnYJzY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2RN88qN/rl9GCWqW+DhHh+1tVSdwVB589VfQT1RzmVRcDYLZWjnnQMDu+RMPf3vJO
-	 T9Zg8A46EirHw5KiTc7fA2RV3csAsHFvWACHc0gb4lOeSckTQun40hIkWkTuYRalQP
-	 Ad+M8fp1az17F40FIhqPqJkGuSUlkKlLywocAOww=
+	b=LLBryXujjhf1NwAapTcNb/hxVUAZOduIbbgywFB4ZxUTmNNPujGoRIYFyaWDqb7Ir
+	 vCEa6ePf5YP8+yTWInmjhkTAon6ca9YbDgsBUslEGUjPr2N3h+EIh9Y5nlnIO79gFG
+	 uA3NnJPwgO+gOVmITpdwqo3cszlctnSWA4Hyw0FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 146/193] KVM: x86/mmu: Preserve nested TDP shadow page tables if they are used as roots
-Date: Fri, 23 Oct 2026 18:37:03 +0200
-Message-ID: <20261023163717.663703579@linuxfoundation.org>
+Subject: [PATCH 6.18 148/193] drm/amdgpu: keep the eviction fence until the last handle is closed
+Date: Fri, 23 Oct 2026 18:37:05 +0200
+Message-ID: <20261023163717.712346128@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -63,50 +63,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 7a2c70e777a00c32ebafd376a6fe31ebb91c5b20 ]
+[ Upstream commit 3c44cbcec5eb370713bbd2c315ed7c34d8ccec2b ]
 
-kvm_mmu_zap_oldest_mmu_pages() excludes a shadow page whose root_count
-is non-zero from top-level reclaim, because such a page cannot be
-freed. The path in mmu_page_zap_pte() that recursively zaps a parentless
-nested TDP child has no such check. As a result, a shadow page can
-be zapped even if the page itself can't be freed; as the comment in
-kvm_mmu_zap_oldest_mmu_pages() notes, zapping it will just force vCPUs
-to rebuild the page.
+amdgpu_gem_object_close() detaches the user queue eviction fence from
+the BO before it checks bo_va->ref_count, so closing any handle of a BO
+removes the fence, even when the file still has another handle to the
+BO and the bo_va with its GPU mappings stays. The BO can then be evicted
+without suspending the user queues of the file, which keep accessing it
+through mappings that are only marked for update.
 
-As in top-level reclaim, do not recursively prepare zapping of a
-nested TDP child whose root_count is non-zero.
+Seen on navi31 with a SDMA user queue: a BO opened twice in the same
+file (GEM_FLINK + GEM_OPEN) loses its eviction fence when the second
+handle is closed (traced attach/detach of the fence):
 
-Fixes: 2de4085cccea ("KVM: x86/MMU: Recursively zap nested TDP SPs when zapping last/only parent")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+  attach bo=ffff8c78a6c84c00
+  GEM_CLOSE handle=7
+  detach bo=ffff8c78a6c84c00
+
+while handle 6 and the mapping are still in use.
+
+Only detach the fence when the last reference to the bo_va goes away,
+matching amdgpu_gem_object_open(), which attaches it only when the
+bo_va is created. With this the fence stays until the file is closed.
+
+Fixes: 31f7efcdca4d ("drm/amdgpu: enable eviction fence")
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8387982f03d4026b7dc11b0b5e3118298eee4d6a)
+Cc: stable@vger.kernel.org
+[ sashal: Changed amdgpu_evf_mgr_detach_fence() calls to the older amdgpu_eviction_fence_detach() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 205d314a7583c..1fa251ca4dccf 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2630,6 +2630,7 @@ static int mmu_page_zap_pte(struct kvm *kvm, struct kvm_mmu_page *sp,
- 			 */
- 			if (tdp_enabled && invalid_list &&
- 			    child->role.guest_mode &&
-+			    !child->root_count &&
- 			    !atomic_long_read(&child->parent_ptes.val))
- 				return kvm_mmu_prepare_zap_page(kvm, child,
- 								invalid_list);
--- 
-2.53.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -325,11 +325,14 @@ static void amdgpu_gem_object_close(stru
+ 			goto out_unlock;
+ 	}
+ 
++	bo_va = amdgpu_vm_bo_find(vm, bo);
++	/* the fence is attached once per bo_va, so keep it for other handles */
++	if (bo_va && --bo_va->ref_count)
++		goto out_unlock;
++
+ 	if (!amdgpu_vm_is_bo_always_valid(vm, bo))
+ 		amdgpu_eviction_fence_detach(&fpriv->evf_mgr, bo);
+-
+-	bo_va = amdgpu_vm_bo_find(vm, bo);
+-	if (!bo_va || --bo_va->ref_count)
++	if (!bo_va)
+ 		goto out_unlock;
+ 
+ 	amdgpu_vm_bo_del(adev, bo_va);
 
 
