@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774814;
-	b=ozsoE9QimV+3CBTKbTUfbCyFGlrjK7kHCzWNkE5pDakqHZDh8oSZ0Ek8qaXCss0tQLbi
-	 JhsGRuu9JqMsIsRtQJdlccb/28dhkpcWr8b9qU7gYdaX6I4jHA0NNkhFrl4KhAiYYjZ4T
-	 11L/+eiFu5NAXBBSJUdq5cRzg/GjTNUtJ8ynZ5oe6eK8mpLwFQKd98cAXMFXP0zJffrht
-	 Tm80aXZnrRmPFI7Qc5cCcOHn3p+Ihj5uF3PR6+qEE/7HMmd9e05eqQEX0UW0r1Wz90QK4
-	 OVNRm0/h4rUg0kSGzkWldnaU8A5tFyg+ea9hWQ8QRnIwCa37JEg1L3jeytvgv4fTWEw==
+	t=1792774817;
+	b=VRrhxeQf0CUZZIvkT9x72ngwuPxG8uh8nYyXPHpvUNgGgyS89m/QJ/FudEYBpFw2n59+
+	 wA4vyGq/BQy7roDhYaYegkq1Vx6NKLDyqmWED5DlCKy45ca9zbpMniUdcTYnFPP2UrkSB
+	 EMMU9Fll2rku91uGjW1d8yxphuAYwczejDdpAqQ5uhqohHhqbO9hYWsPPAROYnbDo67jb
+	 5udxKr7G5zPhzZ+b7iyDl/60RdeIVTy9k0ZmJy/UcpZ/KL2IGbe4QoLZYBzsOBY7/Yylj
+	 YJ3faxBwPpl2OR4+M8ZR+impbXp44rZ+Cjyller6k78tRrQ+90B/1KVG8WCU/CPpWUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rUW9pW/fuGRtkyUqneV5l3eWNswGRWheHd0Ixj0uC8M=;
-	b=ZI1jqpR2LYdZq1+VA3RxbgH5Ox94Gx/T0w2PAyj5dSqvJ2IMwJkYAqigOK240eSPB2RB
-	 DctambVJxIpJRFw4mmxhQ0iGX8AR1e+4y9cMUqhmuN2Pt9j6g2QyUeY9mKeBYSgLAsL2u
-	 DGN9JlFpdlqAcfK9TZ+PS2M8DdEFqscKV9pb4S8AnHD6QpUnYe/jKjDoSi89xNl3X5e1+
-	 WC4AzI5uXtxaQ8xYSsknGIhnyA3L4kLvCAfmkh+lzmBHVkOy48xVr2+JIc8wW3yE+LcnO
-	 gnf1gqLkp0unVjSLeHeK1Aci3uVvmJ8Q1Buw/fsfmw5xVMmqTpsotkgfeKDSsFszVig==
+	bh=rp/8fQ7RmjUP2nqnBoUOYjUoiM1v/VnE1VgKAgTIypI=;
+	b=snDzdB+jQxCIofovm2ik6vIA2trc3+3ErGrAEfOiARilBS+zAtz8m8hWpD6Yj/4nO9r8
+	 +6byvth9G/OReQAeWe9LmvdNIFSRw1jTYnmULaG6aokw1IWy/XGFwPMeCyon1GLTDmebE
+	 A1Usjgxbq4BAR0VvYsj6FjHWpTXUqHAFmwt27IXZEf1fxNX7Rf2ARWcqHblIcc55lJPtb
+	 HQBGKc2Olsit1uCRUWQP0DMU3GgvlXZxqm6FUhJX7lD/MU5M8d11wbN8uVM0iODnPwTnY
+	 EkNBLSm6UJSs7gZz2AEMDzWVl33VwJoVad/DdpUKpK9GY5WwIzWrZ2gUe9BOM09xCHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bcSeBQt0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcnueJ7C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237AF606A31F;
-	Fri, 23 Oct 2026 17:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0113606A31A;
+	Fri, 23 Oct 2026 17:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bcSeBQt0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD521F01825;
-	Fri, 23 Oct 2026 17:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcnueJ7C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1321F01825;
+	Fri, 23 Oct 2026 17:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774813;
-	bh=rUW9pW/fuGRtkyUqneV5l3eWNswGRWheHd0Ixj0uC8M=;
+	s=korg; t=1792774816;
+	bh=rp/8fQ7RmjUP2nqnBoUOYjUoiM1v/VnE1VgKAgTIypI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bcSeBQt0smrUBqicnixUf06axz9oZdSrMtyazWCYKtQZALEqNbCCMJ3HLdN2LTed6
-	 y5z/KEwN6IeXtUecar8hK6DH6E4CbIj+XkusXZXhIcTJdxGSeTg+A+KP2nZzDW6bZa
-	 YzALf6+u9VNMe7hzvXHL069PYbHq4FIFEgRUHgIE=
+	b=NcnueJ7CAkTdy7P3L+niMXpE91Gu2ra7A/ZMprc5iXjMtXSrOG2ocy2gsqw8tftWo
+	 wSBvveFyVpDmqtzaNEq8bjDJPi0tlA9hvjekiiZTSDb6F89Ic9eJ9cdNMdxJ0TDXWU
+	 JRhd7pi0UfaA7JC+FGipI6ieo7T79TRyMQCRi80o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 166/242] sched_ext: idle: Respect task affinity in restricted CPU selection
-Date: Fri, 23 Oct 2026 18:40:08 +0200
-Message-ID: <20261023163717.712017245@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Len Brown <len.brown@intel.com>
+Subject: [PATCH 7.2 131/242] tools/power turbostat: Read complete CPU lists
+Date: Fri, 23 Oct 2026 18:39:33 +0200
+Message-ID: <20261023163716.880071622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,114 +67,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit 6ac4544eff796666ce6fbcc4be8181c81dfccc85 upstream.
+commit c24362650f7a8573dc9a9991a034b8500af8eb19 upstream.
 
-The restricted select_cpu kfunc path handles single-CPU and
-migration-disabled tasks without going through scx_select_cpu_dfl().
+CPU_SUBSET_MAXCPUS accepts CPU IDs through 8191, but the sysfs and
+cgroup CPU-list readers stop at 1024 bytes. A fragmented cpuset or
+hybrid PMU CPU list can exceed that size and be truncated.
+initialize_cpu_set_from_sysfs() can also pass a full, non-NUL-terminated
+buffer to parse_cpu_str(), causing an out-of-bounds read.
 
-It currently uses prev_cpu as the candidate, even though prev_cpu is only a
-hint and may no longer be usable after an affinity change. With a
-caller-provided @allowed mask, this can also return an idle CPU outside
-p->cpus_ptr.
+Additionally, initialize_cpu_set_from_sysfs() returns with the file
+still open on success. It is now called once per CPU for
+thread_siblings_list, so large systems can leak thousands of descriptors
+during topology discovery.
 
-Derive the candidate from task state instead: use the sole CPU in
-p->cpus_ptr for single-CPU tasks and task_cpu(p) for migration-disabled
-tasks. Validate it against p->cpus_ptr and @allowed before claiming its
-idle state.
+Use getline() so both readers receive a complete, NUL-terminated line.
+Close and free the sysfs CPU-list resources on every path, and report
+malformed input from the correct buffer.
 
-Since the derived candidate may be on a different NUMA node from
-prev_cpu, also preserve SCX_PICK_IDLE_IN_NODE by rejecting cross-node
-candidates.
-
-Perform all checks before scx_idle_test_and_clear_cpu(), as a successful
-call consumes the CPU's idle bit.
-
-Fixes: 683d2d0faba1 ("sched_ext: idle: Introduce scx_bpf_select_cpu_and()")
+Fixes: eb187540d13a ("tools/power turbostat: Increase CPU_SUBSET_MAXCPUS to 8192")
+Fixes: 58839fdbd441 ("tools/power turbostat: Process HT siblings in CPU order")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hui Su <sh_def@163.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/idle.c |   50 +++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 39 insertions(+), 11 deletions(-)
+ tools/power/x86/turbostat/turbostat.c |   44 +++++++++++++++++++---------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
---- a/kernel/sched/ext/idle.c
-+++ b/kernel/sched/ext/idle.c
-@@ -907,12 +907,43 @@ static bool is_bpf_migration_disabled(co
- 	return p->migration_disabled;
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -6316,33 +6316,35 @@ int for_all_proc_cpus(int (func) (int))
+ 
+ #define PATH_EFFECTIVE_CPUS	"/sys/fs/cgroup/cpuset.cpus.effective"
+ 
+-static char cpu_effective_str[1024];
++static char *cpu_effective_str;
+ 
+ static int update_effective_str(bool startup)
+ {
+ 	FILE *fp;
+-	char *pos;
+-	char buf[1024];
++	char *buf = NULL;
++	size_t size = 0;
+ 	int ret;
+ 
+-	if (cpu_effective_str[0] == '\0' && !startup)
++	if (!cpu_effective_str && !startup)
+ 		return 0;
+ 
+ 	fp = fopen(PATH_EFFECTIVE_CPUS, "r");
+ 	if (!fp)
+ 		return 0;
+ 
+-	pos = fgets(buf, 1024, fp);
+-	if (!pos)
++	if (getline(&buf, &size, fp) < 0)
+ 		err(1, "%s: file read failed", PATH_EFFECTIVE_CPUS);
+ 
+ 	fclose(fp);
+ 
+-	ret = strncmp(cpu_effective_str, buf, 1024);
+-	if (!ret)
++	ret = cpu_effective_str ? strcmp(cpu_effective_str, buf) : 1;
++	if (!ret) {
++		free(buf);
+ 		return 0;
++	}
+ 
+-	strncpy(cpu_effective_str, buf, 1024);
++	free(cpu_effective_str);
++	cpu_effective_str = buf;
+ 	return 1;
  }
  
-+static s32 select_cpu_restricted(struct task_struct *p, s32 prev_cpu,
-+				 const struct cpumask *allowed, u64 flags,
-+				 bool migration_disabled)
-+{
-+	s32 cpu;
-+
-+	if (migration_disabled)
-+		cpu = task_cpu(p);
-+	else
-+		cpu = cpumask_first(p->cpus_ptr);
-+
-+	if (!cpumask_test_cpu(cpu, p->cpus_ptr))
-+		return -EBUSY;
-+
-+	if (allowed && !cpumask_test_cpu(cpu, allowed))
-+		return -EBUSY;
-+
-+	if (flags & SCX_PICK_IDLE_IN_NODE) {
-+		int node = scx_cpu_node_if_enabled(prev_cpu);
-+
-+		if (scx_cpu_node_if_enabled(cpu) != node)
-+			return -EBUSY;
-+	}
-+
-+	if (!scx_idle_test_and_clear_cpu(cpu))
-+		return -EBUSY;
-+
-+	return cpu;
-+}
-+
- static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
- 				 s32 prev_cpu, u64 wake_flags,
- 				 const struct cpumask *allowed, u64 flags)
+@@ -8534,13 +8536,16 @@ end:
+ 	return ret;
+ }
+ 
+-char cpuset_buf[1024];
+-int initialize_cpu_set_from_sysfs(cpu_set_t *cpu_set, char *sysfs_path, char *sysfs_file)
++int initialize_cpu_set_from_sysfs(cpu_set_t *cpu_set, const char *sysfs_path,
++				  const char *sysfs_file)
  {
- 	unsigned long irq_flags;
- 	bool we_locked = false;
-+	bool migration_disabled;
- 	s32 cpu;
+ 	FILE *fp;
++	char *cpuset_buf = NULL;
++	size_t size = 0;
+ 	char path[128];
++	int ret = -1;
  
- 	if (!scx_cpu_valid(sch, prev_cpu, NULL))
-@@ -949,20 +980,17 @@ static s32 select_cpu_from_kfunc(struct
+-	if (snprintf(path, 128, "%s/%s", sysfs_path, sysfs_file) > 128)
++	if (snprintf(path, sizeof(path), "%s/%s", sysfs_path, sysfs_file) >= (int)sizeof(path))
+ 		err(-1, "%s %s", sysfs_path, sysfs_file);
  
- 	/*
- 	 * This may also be called from ops.enqueue(), so we need to handle
--	 * per-CPU tasks as well. For these tasks, we can skip all idle CPU
--	 * selection optimizations and simply check whether the previously
--	 * used CPU is idle and within the allowed cpumask.
-+	 * per-CPU tasks as well. For these tasks, skip general idle CPU
-+	 * selection and validate the task's only usable CPU directly.
- 	 */
--	if (p->nr_cpus_allowed == 1 || is_bpf_migration_disabled(p)) {
--		if (cpumask_test_cpu(prev_cpu, allowed ?: p->cpus_ptr) &&
--		    scx_idle_test_and_clear_cpu(prev_cpu))
--			cpu = prev_cpu;
--		else
--			cpu = -EBUSY;
--	} else {
-+	migration_disabled = is_bpf_migration_disabled(p);
-+
-+	if (p->nr_cpus_allowed == 1 || migration_disabled)
-+		cpu = select_cpu_restricted(p, prev_cpu, allowed, flags,
-+					    migration_disabled);
-+	else
- 		cpu = scx_select_cpu_dfl(p, prev_cpu, wake_flags,
- 					 allowed ?: p->cpus_ptr, flags);
--	}
+ 	fp = fopen(path, "r");
+@@ -8548,19 +8553,20 @@ int initialize_cpu_set_from_sysfs(cpu_se
+ 		warn("open %s", path);
+ 		return -1;
+ 	}
+-	if (fread(cpuset_buf, sizeof(char), 1024, fp) == 0) {
++	if (getline(&cpuset_buf, &size, fp) < 0) {
+ 		warn("read %s", sysfs_path);
+-		goto err;
++		goto out;
+ 	}
+ 	if (parse_cpu_str(cpuset_buf, cpu_set, cpu_possible_setsize)) {
+-		warnx("%s: cpu str malformat %s\n", sysfs_path, cpu_effective_str);
+-		goto err;
++		warnx("%s: cpu str malformat %s\n", sysfs_path, cpuset_buf);
++		goto out;
+ 	}
+-	return 0;
++	ret = 0;
  
- 	if (we_locked)
- 		raw_spin_unlock_irqrestore(&p->pi_lock, irq_flags);
+-err:
++out:
+ 	fclose(fp);
+-	return -1;
++	free(cpuset_buf);
++	return ret;
+ }
+ 
+ void print_cpu_set(char *s, cpu_set_t *set)
 
 
