@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775004;
-	b=AeKrolNaRS422XCU+OiqjjTceagI/HmlN/GOQh+DtWLdBRjHgdT3dTRIVQub3F+wqywX
-	 V/wttRLk+9GqOJraE9eugFrM1qhv3pl5NeGmr2UDiPR2J5pW3luoR3eqcJ8BNi0hBv9zc
-	 OTo0OZ937Rrck1X/Xdu5Su2nydrL0cxkjMozYLATkJiJhXRVP+trtFz2i3pqYLVaueepG
-	 exzf+aKKz3j55h1UJA8P6/RzuimqYW1kEFwzrJKLV1Pi1ByelET05BRpG9F3/TGW6w4ke
-	 xSr7iskKp0oEkxXXM18uWu4WfelhcgOpTqflJvKR7NNak4Da0u33eG/YUPzhMCyqxYQ==
+	t=1792775007;
+	b=NvEZFwZjugWKBUj/nyBuUk7K5IuurJhvBOJxOJbnrIF2HOzBxZ64mHV+maFTZvUeXx4V
+	 xNb1+xO3F7+jfxbt4mRldsJVNHWzTXoNKFpSOc666vLbf091U5bQl/uFsO6kaJSbT7XhS
+	 +y22P8nGsbf1uOHNn/7TGCYQaa6KDrUeiSKPV3k5wG49UukLVaXs1Wl+qu9XVhI9QYeH4
+	 d55fXfjqLcf822owIg8p8TIZE35jGCNeD610BnPty3aA/PKcEj2P6mIgQhM/nNsR9Q1ZQ
+	 BEqaiBbfphj5PEmZAPHU6F2r5It4Yo6h0RKqRdRT3lrLfPpAFb4td7mXYowuYT59LsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=EQ93C4QkQRtyOioteyT3OE/G/MceWv9I3t/yjBSJAU0=;
-	b=cRlDBsk7rwUyUS2KiPi5I+OpwW2EqaGxqvoHyoMV0Q3Y4ou8xasRzPmkJ0AUDBU5nbGY
-	 RBJTYETCAnKFMXNlwbAA7zz5quMXAL10HaOYu4v3ArPgGu0p8xOAQv59+jTxcCsg7CA1Y
-	 2yY7tPsdQwGJT7pqjWnCRpDJ1pw+lWlRXjjZcecOFEkjxqwMMX8RR0XNOJyHMT1dCCxlG
-	 f2eCj/b6m+GVcN/v5Te5Vp3yBOAqFa2SuYhDWBRyIVCcnumF3xtSKG3gNG11p1tJnqjct
-	 B8ZrUsW1W5g+JcpVe8J0sharJGd5OgubVB6Ss7eoQUuUyQhDXeTruEnSPnPYXeY9CIA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pKfzzh7bpLhBHGv17xx76kouwE9LXCz82bJIN1G3mlM=;
+	b=tIUOnE6QZmucrSI50L6p1zCM+/6rMFKjA4TCm4C7TYumTjEmEhTDYOqzvUQ3CtU8THA/
+	 LiZ+VvDeNUJrMbz07yvmjttU3B4V/fuDyFO1VUbOs6KFdkpTlgI+YeUHJFNXkn3dSHpT6
+	 Kyz2KLXyTtQRqyZ7DgV9X2LEjhZw3xT8qJq8aL8m0PQ7pizT8kjvgTyC6hzEHAwQeQcb5
+	 XG+0sov5deXbNVH7hLBFX2EJkunRWQjtHkeOqT1+rMEpERQcLXvcRXKSpcf7i6coGeKFo
+	 lUWThPXCr0IIvIs1apjJgkVD1Q1ODM2m/8Sxu+coARvmtfeUPKUqHBwkhYolGV+2zZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrXgrUGy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynKbWdK1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8C0606A31A;
-	Fri, 23 Oct 2026 17:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74312606A31A;
+	Fri, 23 Oct 2026 17:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrXgrUGy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822551F01825;
-	Fri, 23 Oct 2026 17:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynKbWdK1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B6C1F01825;
+	Fri, 23 Oct 2026 17:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775004;
-	bh=EQ93C4QkQRtyOioteyT3OE/G/MceWv9I3t/yjBSJAU0=;
+	s=korg; t=1792775007;
+	bh=pKfzzh7bpLhBHGv17xx76kouwE9LXCz82bJIN1G3mlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PrXgrUGy5Jj4KTKHMD0OkksdxQH72kIMIsfmAJlZ5XJHZ1d6DghgGWu8SVJVDJeqA
-	 WyPshoFE84/lDQwPLfCnEOjbGZeoyb7O6bEsPvobjTC1Al1e9JaNbaqJK4NUoRhBI9
-	 AeHKcg9y09e/qah6u7Nhl/AqKkdhM/m45fgqC22U=
+	b=ynKbWdK1ueIecsXfEPkIiUKpVA+1CCKZcPYBtBrT4XXuvoFny2Fcw37XTJ3DiGJee
+	 cjaKEOh0/Oi2JtEJAKxXjxIj2XX1gMHz5d2qpxIvLIiMU4Pkhpbexwk7LpMcBeWPZO
+	 AcVriU0Wp2VCuss95iJhYuCFNJjCU7HeD5jhP/vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 229/242] drm/amdgpu: Remove the bo list mutex
-Date: Fri, 23 Oct 2026 18:41:11 +0200
-Message-ID: <20261023163719.260660707@linuxfoundation.org>
+Subject: [PATCH 7.2 230/242] drm/amdgpu: free the userptr ranges when a CS fails after parser_bos
+Date: Fri, 23 Oct 2026 18:41:12 +0200
+Message-ID: <20261023163719.286086766@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -63,121 +62,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit a300c90f00905632ad9f89ad719537941a88600c ]
+[ Upstream commit 1b4da805a0ba354a549ce07459c871c17dd94fe0 ]
 
-The bo list is immutable during command submission since the drm_exec
-conversion so we can remove the mutex.
+amdgpu_cs_parser_bos() allocates an HMM range for every userptr entry of
+the BO list and looks up the user pages. Those ranges are only freed when
+amdgpu_cs_parser_bos() itself fails or when amdgpu_cs_submit() checks
+them under the notifier lock. If amdgpu_cs_patch_jobs(),
+amdgpu_cs_vm_handling(), amdgpu_cs_sync_rings() or the early part of
+amdgpu_cs_submit() fails, nothing frees them: neither
+amdgpu_cs_parser_fini() nor amdgpu_bo_list_free() touch e->range.
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Each such CS then leaks the range, its hmm_pfns array (8 bytes per page
+of the userptr BO) and the BO reference the range holds. An IB on a ring
+that patches the CS in place (e.g. VCN) with an unmapped va_start fails
+in amdgpu_cs_patch_ibs() and takes this path.
+
+Free the ranges on those error paths. Ranges amdgpu_cs_submit() already
+dropped are NULL, so freeing them again is a no-op.
+
+Fixes: fec8fdb54e8f ("drm/amdgpu: fix userptr HMM range handling v2")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 1b4da805a0ba ("drm/amdgpu: free the userptr ranges when a CS fails after parser_bos")
+(cherry picked from commit c52a9542ed7cfd527feb938bd0accada2ac8d267)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |    3 +--
- drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.h |    4 ----
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c      |   15 ++++-----------
- 3 files changed, 5 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-@@ -42,7 +42,7 @@ static void amdgpu_bo_list_free_rcu(stru
- {
- 	struct amdgpu_bo_list *list = container_of(rcu, struct amdgpu_bo_list,
- 						   rhead);
--	mutex_destroy(&list->bo_list_mutex);
-+
- 	kvfree(list);
- }
- 
-@@ -134,7 +134,6 @@ int amdgpu_bo_list_create(struct amdgpu_
- 
- 	trace_amdgpu_cs_bo_status(list->num_entries, total_size);
- 
--	mutex_init(&list->bo_list_mutex);
- 	*result = list;
- 	return 0;
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.h
-@@ -51,10 +51,6 @@ struct amdgpu_bo_list {
- 	unsigned first_userptr;
- 	unsigned num_entries;
- 
--	/* Protect access during command submission.
--	 */
--	struct mutex bo_list_mutex;
--
- 	struct amdgpu_bo_list_entry entries[] __counted_by(num_entries);
- };
- 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -898,8 +898,6 @@ static int amdgpu_cs_parser_bos(struct a
- 			return r;
- 	}
+@@ -1434,6 +1434,7 @@ static void amdgpu_cs_parser_fini(struct
+ int amdgpu_cs_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ {
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
++	struct amdgpu_bo_list_entry *e;
+ 	struct amdgpu_cs_parser parser;
+ 	int r;
  
--	mutex_lock(&p->bo_list->bo_list_mutex);
--
- 	/* Get userptr backing pages. If pages are updated after registered
- 	 * in amdgpu_gem_userptr_ioctl(), amdgpu_cs_list_validate() will do
- 	 * amdgpu_ttm_backend_bind() to flush and invalidate new pages
-@@ -1016,7 +1014,6 @@ out_free_user_pages:
- 		amdgpu_hmm_range_free(e->range);
- 		e->range = NULL;
- 	}
--	mutex_unlock(&p->bo_list->bo_list_mutex);
- 	return r;
- }
- 
-@@ -1385,7 +1382,6 @@ static int amdgpu_cs_submit(struct amdgp
- 	amdgpu_vm_move_to_lru_tail(p->adev, &fpriv->vm);
- 
- 	mutex_unlock(&p->adev->notifier_lock);
--	mutex_unlock(&p->bo_list->bo_list_mutex);
- 	return 0;
- }
- 
-@@ -1472,28 +1468,25 @@ int amdgpu_cs_ioctl(struct drm_device *d
+@@ -1468,25 +1469,31 @@ int amdgpu_cs_ioctl(struct drm_device *d
  
  	r = amdgpu_cs_patch_jobs(&parser);
  	if (r)
--		goto error_backoff;
-+		goto error_fini;
+-		goto error_fini;
++		goto error_free_user_pages;
  
  	r = amdgpu_cs_vm_handling(&parser);
  	if (r)
--		goto error_backoff;
-+		goto error_fini;
+-		goto error_fini;
++		goto error_free_user_pages;
  
  	r = amdgpu_cs_sync_rings(&parser);
  	if (r)
--		goto error_backoff;
-+		goto error_fini;
+-		goto error_fini;
++		goto error_free_user_pages;
  
  	trace_amdgpu_cs_ibs(&parser);
  
  	r = amdgpu_cs_submit(&parser, data);
  	if (r)
--		goto error_backoff;
-+		goto error_fini;
+-		goto error_fini;
++		goto error_free_user_pages;
  
  	amdgpu_cs_parser_fini(&parser);
  	return 0;
  
--error_backoff:
--	mutex_unlock(&parser.bo_list->bo_list_mutex);
--
++error_free_user_pages:
++	/* amdgpu_cs_submit() only drops the ranges once it got that far. */
++	amdgpu_bo_list_for_each_userptr_entry(e, parser.bo_list) {
++		amdgpu_hmm_range_free(e->range);
++		e->range = NULL;
++	}
  error_fini:
  	amdgpu_cs_parser_fini(&parser);
  	return r;
