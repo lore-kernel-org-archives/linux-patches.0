@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774315;
-	b=qgIbzGlBS1w2agBcJv77Z6hdSv9IabwdY0bLTYKX/8f2phTD5giNhhLze1qnEN4LRBfI
-	 XJpLtjm+IbLo2uzsq8k4u68/PiPXi0shjslZhZPL9iwp6M1gDjrqMCDsGxYtExUT6OBjR
-	 S1oiUPCM0WO3dVbIj1pkZFJhE8GcHdXPLQRLCDexHXezIclQUz1rECOPURqB0dHIvun1X
-	 /cZ8bh/pfPSVso3OZ9kP0ULpa8xbaA1HG0w3nspzh4qxIAKVu0X4zOPWXRPq8ivz8FmJh
-	 u/QtPT4Yg3SmfkE1ZveaiEskVgI60kIquO0kwTZvgJwSEfTGHfCUAFWJ8iq1tBLpu7A==
+	t=1792774318;
+	b=C08d3nHBQaPKq7YRh8cdsfxGJCGTZ/WAGuvoOAskhRCbeKRjzZMDwrgPqzZ7S+bFrxgs
+	 9B4iQsuAjkgkvp8mShF/IA1ZvRoiR8Zsd3hHhHlN+TN9KdUkwIIvO0Ju1l63m2sxbFqZX
+	 TMBVVGxMnA7wcjYH9whDcEguG39/rfLw/7LTh6SMOdgUtjrSgLtda9cJrkjASzDzG5m4Z
+	 TtSHLJQb8aIePKZyDqzMm6GU6MRf4vhNOtsP8SGaq3chBN2ReQpPrMUINc8QpO1KyQxVp
+	 GBnSkG9VciM/+oPwrzZU1FpkUry3fsJhvB2QfWM3gg5qqgOdvV6QSbPQUOR9CCiJFWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774315;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FIPs0wZYT/EukkHklrnwWguaatQsdtAqHx7idejNQe8=;
-	b=aZc29Q2g3b/imgrDXcyg6ZzLbhQxL0HbO7RJPD3qQ25IAo/b6/B6Rz8fCZnvUKPD4mD1
-	 t2lfQ1e1k+4Vp1Lt8Oz8gRFyiGs1xx5Th4RT0taW/dTv/tV50YO4Od4jYhwpP1IBFBIQ5
-	 8dCLMpqdZVKok5R04+hNWSaCaJMJ7QqRc+E3uRZ0bRBTfVtqO8q8nTEVH94ir2CtwZtl9
-	 UwI+59FRQsBZ/rALK9BF7j+3e99o7nInHeJjqu3heZgI7D1Gvaf1vAOLX/ozinAb4Sg3P
-	 6BqJWzS0A+fVI7Vngornc5UR4PF/PYFkoJ/FTQJiXBOwFbL/CSyrWEpxL4zYR3+EVnQ==
+	bh=H9zltSc3uy9vkH3WtYfCgDR3HZCLo6oPDCS6A63ltac=;
+	b=FLw9zy55qPZCzl1UI8j25FzrI9+CsBvERBv522j+6BRM/32+O/owQeRcDo5kK6mj7f3O
+	 yLefD1MrZIqlHFeSYghnKm4oTqvr4iHHf+AskMWMHXLaDiNpTDxHYwVd7ReEt0fBJsKCE
+	 uEondaPKQd8Yzh5aPjWkZtClmWIjghZptURF9HqSO2i+QInueO7YqLkOO6KvvVqCuPzTs
+	 lghXtdGcwDHPIYPgfGrHuxnhghQUxtz9JS4FHpihXgDeruGzER3quj7vK0glTUMg64x9K
+	 leEOgN8N6zW2EsF6JaJ0ke6J6ogSL9T8HeaXlxW2uee8HFqyCzOfPUCCiXKXAGZVv3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUIDLAYg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nzpRTXtb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EAC606A31A;
-	Fri, 23 Oct 2026 16:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1418B606A32A;
+	Fri, 23 Oct 2026 16:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUIDLAYg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348691F01825;
-	Fri, 23 Oct 2026 16:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nzpRTXtb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5821F01825;
+	Fri, 23 Oct 2026 16:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774314;
-	bh=FIPs0wZYT/EukkHklrnwWguaatQsdtAqHx7idejNQe8=;
+	s=korg; t=1792774317;
+	bh=H9zltSc3uy9vkH3WtYfCgDR3HZCLo6oPDCS6A63ltac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUIDLAYgTetkNtyFQtzSB284Tq98j9iQCtxipxFQFA8zSjqxDdbg5Y9Hq16izbOdT
-	 y9xwyhdoNIC3onZK3VfK9AyWAObJA1zVgCvxUMyWLKKb6J7IEqOGb/TcTjm2CbELtG
-	 ZtUPryYiV4d9vuwpd6v8ojyBAs80LufYeaoW2OtM=
+	b=nzpRTXtbQqzsfvzVWGK4/J2m5dNYmr+hII9ujOhuklkUuUQdRyUFbR/iyi9vJvSEw
+	 Jy2vownTg3tCzoMgI+8HONsr39vHj2DsmD+/VS/poeErfnM9oJFwj1YS9FLJofmpWk
+	 rY8/3HODMpvmHveQTZvvPN2udzIuQ1m+muuJAr2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 177/193] io_uring/cancel: move request/task cancelation logic into cancel.c
-Date: Fri, 23 Oct 2026 18:37:34 +0200
-Message-ID: <20261023163718.404527383@linuxfoundation.org>
+Subject: [PATCH 6.18 178/193] io_uring/cancel: move __io_uring_cancel() into cancel.c
+Date: Fri, 23 Oct 2026 18:37:35 +0200
+Message-ID: <20261023163718.427850731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,134 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 0d677936d67774f1b4ebfb3b26f207320f0fe3c6 ]
+[ Upstream commit 01e019b2a30df41c485f602a5246124ea911071b ]
 
-Move io_match_task_safe() and helpers into cancel.c, where it belongs.
+Yet another function that should be in cancel.c, move it over.
 
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: fddcf4c5321b ("io_uring/cancel: don't spin on local work the task can't run")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/cancel.c   |   38 ++++++++++++++++++++++++++++++++++++++
- io_uring/cancel.h   |    2 ++
- io_uring/io_uring.c |   38 --------------------------------------
- io_uring/io_uring.h |    3 ---
- 4 files changed, 40 insertions(+), 41 deletions(-)
+ io_uring/cancel.c   |    6 ++++++
+ io_uring/io_uring.c |    6 ------
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
 --- a/io_uring/cancel.c
 +++ b/io_uring/cancel.c
-@@ -384,3 +384,41 @@ int io_cancel_remove(struct io_ring_ctx
- 	io_ring_submit_unlock(ctx, issue_flags);
- 	return nr ?: -ENOENT;
+@@ -422,3 +422,9 @@ bool io_match_task_safe(struct io_kiocb
+ 	}
+ 	return matched;
  }
 +
-+static bool io_match_linked(struct io_kiocb *head)
++void __io_uring_cancel(bool cancel_all)
 +{
-+	struct io_kiocb *req;
-+
-+	io_for_each_link(req, head) {
-+		if (req->flags & REQ_F_INFLIGHT)
-+			return true;
-+	}
-+	return false;
++	io_uring_unreg_ringfd();
++	io_uring_cancel_generic(cancel_all, NULL);
 +}
-+
-+/*
-+ * As io_match_task() but protected against racing with linked timeouts.
-+ * User must not hold timeout_lock.
-+ */
-+bool io_match_task_safe(struct io_kiocb *head, struct io_uring_task *tctx,
-+			bool cancel_all)
-+{
-+	bool matched;
-+
-+	if (tctx && head->tctx != tctx)
-+		return false;
-+	if (cancel_all)
-+		return true;
-+
-+	if (head->flags & REQ_F_LINK_TIMEOUT) {
-+		struct io_ring_ctx *ctx = head->ctx;
-+
-+		/* protect against races with linked timeouts */
-+		raw_spin_lock_irq(&ctx->timeout_lock);
-+		matched = io_match_linked(head);
-+		raw_spin_unlock_irq(&ctx->timeout_lock);
-+	} else {
-+		matched = io_match_linked(head);
-+	}
-+	return matched;
-+}
---- a/io_uring/cancel.h
-+++ b/io_uring/cancel.h
-@@ -21,6 +21,8 @@ int io_try_cancel(struct io_uring_task *
- 
- int io_sync_cancel(struct io_ring_ctx *ctx, void __user *arg);
- bool io_cancel_req_match(struct io_kiocb *req, struct io_cancel_data *cd);
-+bool io_match_task_safe(struct io_kiocb *head, struct io_uring_task *tctx,
-+			bool cancel_all);
- 
- bool io_cancel_remove_all(struct io_ring_ctx *ctx, struct io_uring_task *tctx,
- 			  struct hlist_head *list, bool cancel_all,
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -210,44 +210,6 @@ static inline unsigned int __io_cqring_e
- 	return READ_ONCE(rings->cq.tail) - READ_ONCE(rings->cq.head);
+@@ -3369,12 +3369,6 @@ end_wait:
+ 	}
  }
  
--static bool io_match_linked(struct io_kiocb *head)
+-void __io_uring_cancel(bool cancel_all)
 -{
--	struct io_kiocb *req;
--
--	io_for_each_link(req, head) {
--		if (req->flags & REQ_F_INFLIGHT)
--			return true;
--	}
--	return false;
+-	io_uring_unreg_ringfd();
+-	io_uring_cancel_generic(cancel_all, NULL);
 -}
 -
--/*
-- * As io_match_task() but protected against racing with linked timeouts.
-- * User must not hold timeout_lock.
-- */
--bool io_match_task_safe(struct io_kiocb *head, struct io_uring_task *tctx,
--			bool cancel_all)
--{
--	bool matched;
--
--	if (tctx && head->tctx != tctx)
--		return false;
--	if (cancel_all)
--		return true;
--
--	if (head->flags & REQ_F_LINK_TIMEOUT) {
--		struct io_ring_ctx *ctx = head->ctx;
--
--		/* protect against races with linked timeouts */
--		raw_spin_lock_irq(&ctx->timeout_lock);
--		matched = io_match_linked(head);
--		raw_spin_unlock_irq(&ctx->timeout_lock);
--	} else {
--		matched = io_match_linked(head);
--	}
--	return matched;
--}
--
- static inline void req_fail_link_node(struct io_kiocb *req, int res)
+ static struct io_uring_reg_wait *io_get_ext_arg_reg(struct io_ring_ctx *ctx,
+ 			const struct io_uring_getevents_arg __user *uarg)
  {
- 	req_set_fail(req);
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -185,9 +185,6 @@ void io_queue_next(struct io_kiocb *req)
- void io_task_refs_refill(struct io_uring_task *tctx);
- bool __io_alloc_req_refill(struct io_ring_ctx *ctx);
- 
--bool io_match_task_safe(struct io_kiocb *head, struct io_uring_task *tctx,
--			bool cancel_all);
--
- void io_activate_pollwq(struct io_ring_ctx *ctx);
- 
- static inline void io_lockdep_assert_cq_locked(struct io_ring_ctx *ctx)
 
 
