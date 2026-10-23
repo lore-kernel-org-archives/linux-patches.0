@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774973;
-	b=fOFWNPV9BV3eFY6fv3wKC6jqpmbK0nOyvaM+sS3kMZitDjQAWJwKDz5U75M7ICQfBYtq
-	 tf1DSxgrd6AqMwoCjQRWtw9bDkMicsYIgbzJ4yQGYic2bLDppiuFM8zBL3w15MH7slAbH
-	 bt964DUA3+DjH5bcoGC5+b1LFWdX/k166qevf0uFmutJO4BKwb/edXWvIMLLCjkz1naKs
-	 4YF5Wy9YZlVEsvYVlH7PodD4775PN7czIk9ggJSrgqKvy6RWDXxq3EPZRnWZhoPs9Yecn
-	 Dmqo4qRHf2GUyemM1CKXT5nbtQOQ21ICWcpgdfnSSi3on/mMC2irmKRNKhYLXLWq3Uw==
+	t=1792774976;
+	b=w52FzIHNBpg2Oc0h+igeKma7mQHQ4qJ5gh5HnyVz+OkWDk4KG7lA1TBDBYma41MTcBVm
+	 zVIL/B2ThQpcAzIVC1zo18Cy/diDiRE2u8szFqRCCFTkp4GK2aw8FUBmg6QP0GaEmB3aw
+	 Xn5ehnpVPSIUBgNwo/Gz/a/4rf/Y83WDtBtbnIhCtp/CLkK09E+Zzk2BKxmG76BgW+vit
+	 SKpxs1z/ETy8xNlBevUstcWEL8DxGekdVAX8hDj9cH6vV/X5J2moQS8GHSwwl6EvQilnr
+	 2p6i65WLaRYx3ZWfnqVPQgLypOVIYsuEFQXPmMSiZJqLDFYfqYAc4VO5Nfu8IuUH+CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774976;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vO8AU9HwWioirwTBbbS6akq8rCLXfBOdkhT9uEcvuCY=;
-	b=d81IkBlWvbjqQGr6SuP2Ufkuzw2r8N/vzcRplrb3AL60oneX76SmDyY95QOQWwWEyPmF
-	 7cUmuQzct+DmwuAGEWTZYkLRPesApeUhGjAXV6SsLAfmzNk6WBilUi8LTcgAaZnSC6R0q
-	 yDrixecw+SLy0nz+6KcVEw9PKUezs0QV0rI+o2V2r56he7fQkbtettdissjrvIgn5pdL4
-	 I15h7GNhWZtDAoXSWjq55551Zf2GJp7xlYzGqqk7Asepu0Xc6KNiG5RwfGDqJLgWFREUM
-	 TCWTUISj4klfEYkR73eM3admzxDhQZ4UDzd4eNMUiB0ju1eTLUGsWpjkws/yUaLrXwQ==
+	bh=2wPL20oMw59TnRQl9rvfdxVQMXHuB4YyjAnyz7Mtaz0=;
+	b=5RiRo5ioTfyOcrBd00SV+/5B2EZ6LfDmz4LimfK5FBGy80otP0vxgR42FXMyjEOn+MVi
+	 D03nS6oNf6bZmxS7UXW8UJV54ldwtudY7netIZHWO/Ia2eya0zOA8yGUj5V59DVP9GoxK
+	 kKWI/Ar5Dm5gHxgdCmE/lM6zWKXIcYJ/MiHkFfxiPbrH+lJu4OwBPFAawyuIoMP8E/FO3
+	 j+ANFlb2ro265ddrjTUXx5yEN1oQDFnpcAfiwx8mzKgRHczwU5foo6i0EL5K7YZWl+QIh
+	 Ywp7stLyKohKFYrZohMxQnpGW6RHCmcCiHoEckcaxvM7Yc1SDCOPf5UF0XPO7qmSRXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuyweluo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u9OI23K+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAA2606A31A;
-	Fri, 23 Oct 2026 17:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB42606A31A;
+	Fri, 23 Oct 2026 17:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuyweluo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783EE1F01825;
-	Fri, 23 Oct 2026 17:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u9OI23K+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BC91F01825;
+	Fri, 23 Oct 2026 17:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774973;
-	bh=vO8AU9HwWioirwTBbbS6akq8rCLXfBOdkhT9uEcvuCY=;
+	s=korg; t=1792774976;
+	bh=2wPL20oMw59TnRQl9rvfdxVQMXHuB4YyjAnyz7Mtaz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xuyweluout49lC3QXGjelb89lT2O8P5yxnAWT7P0OblQXUT+i8i9MhNaWI8LUKabe
-	 ImvZL87vFwwFPs4KNwzb6XKUhBvZhnCUHXK5tqvLXj2DtpHm3t/nrWVDCzC6jFn0dS
-	 gMHE4rfvpUhkk1IGH3vFioOMHq28dnEJ+O25GbuA=
+	b=u9OI23K+9tg6RBesJoc8KOwxt9lkv4VuHACvrUV0UaMfk1D1T4+mxJ7BML8LNiYaw
+	 yxHnjo352p4mPvAM8r6ivNaK+nlG6kgPwjpoIRgGqEUKni4t/M6BpnDHaEw3MuDpxU
+	 pSYsY+ebBjSOXdwzRHZTdDp7SH3PdPjFDXz9bqRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.2 220/242] smb: client: fix data corruption with concurrent writes and O_TRUNC
-Date: Fri, 23 Oct 2026 18:41:02 +0200
-Message-ID: <20261023163719.021933586@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.2 221/242] smb: client: fix heap overflow in cifs_do_set_acl()
+Date: Fri, 23 Oct 2026 18:41:03 +0200
+Message-ID: <20261023163719.048513702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,105 +67,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit a8603b52b39f520ea8a34def74c23fba87396d3e upstream.
+commit 1dac61e2c29d1a71784604b48cf3b1234a65ec29 upstream.
 
-cifs_do_truncate() flushes dirty pages with filemap_write_and_wait()
-and truncates the file on the server, but in the old code both
-operations ran without holding i_rwsem or invalidate_lock.  A
-concurrent buffered write via netfs_perform_write() -- which only
-needs i_rwsem shared -- could dirty new pages after the flush but
-before the local truncation, and those pages would be silently
-discarded by cifs_setsize() -> truncate_pagecache().
+cifs_set_acl() validates ACL size using posix_acl_xattr_size():
 
-Fix by acquiring inode_lock (exclusive i_rwsem) and
-filemap_invalidate_lock at the top of cifs_do_truncate(), so the
-entire flush-truncate-resize sequence is atomic with respect to:
+        4 + (count * 8)  // 4-byte header + 8 bytes per ACE
 
-  - buffered writes (blocked by exclusive i_rwsem, since
-    netfs_start_io_write takes i_rwsem shared),
-  - read page faults (blocked by exclusive invalidate_lock, since
-    filemap_fault takes it shared),
-  - writeback collection (blocked by netfs_wb_begin/netfs_wb_end
-    around the server truncate and local resize, since
-    netfs_writepages also acquires the wb lock).
+cifs_do_set_acl() then calls posix_acl_to_cifs() to write the CIFS
+wire format into the same buffer:
 
-Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+        6 + (count * 10)  // 6-byte header + 10 bytes per ACE
+
+An ACL that passes the xattr-based check in cifs_set_acl() can
+overflow the heap when posix_acl_to_cifs() writes the larger CIFS
+format.
+
+Validate the CIFS format size against the remaining buffer space and
+USHRT_MAX before converting--data_count is __u16, so sizes above
+USHRT_MAX truncate the on-wire packet length, causing the server to
+apply a partial ACL.  Replace MaxDataCount = 1000 with
+min(CIFSMaxBufSize, USHRT_MAX).
+
+Fixes: dc1af4c4b4721 ("cifs: implement set acl method")
 Cc: stable@vger.kernel.org
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |   28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ fs/smb/client/cifssmb.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -999,42 +999,50 @@ static int cifs_do_truncate(const unsign
- 	struct cifs_tcon *tcon;
- 	int rc;
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -3571,6 +3571,7 @@ int cifs_do_set_acl(const unsigned int x
+ 	int rc = 0;
+ 	int bytes_returned = 0;
+ 	__u16 params, byte_count, data_count, param_offset, offset;
++	size_t cifs_acl_size, bytes_available;
  
--	rc = filemap_write_and_wait(inode->i_mapping);
--	if (is_interrupt_error(rc))
-+	rc = inode_lock_killable(inode);
-+	if (rc)
- 		return -ERESTARTSYS;
-+
-+	filemap_invalidate_lock(inode->i_mapping);
-+
-+	rc = filemap_write_and_wait(inode->i_mapping);
-+	if (is_interrupt_error(rc)) {
-+		rc = -ERESTARTSYS;
-+		goto out;
-+	}
- 	mapping_set_error(inode->i_mapping, rc);
- 
- 	cfile = find_writable_file(cinode, FIND_FSUID_ONLY);
- 	rc = cifs_file_flush(xid, inode, cfile);
- 	if (!rc) {
- 		if (cfile) {
-+			struct netfs_inode *ictx = netfs_inode(inode);
-+
- 			tcon = tlink_tcon(cfile->tlink);
- 			server = tcon->ses->server;
-+			netfs_wb_begin(ictx, false);
- 			rc = server->ops->set_file_size(xid, tcon,
- 							cfile, 0, false);
- 			if (!rc) {
--				inode_lock(inode);
--				filemap_invalidate_lock(inode->i_mapping);
- 				netfs_resize_file(&cinode->netfs, 0, true);
- 				cifs_setsize(inode, 0);
--				filemap_invalidate_unlock(inode->i_mapping);
--				inode_unlock(inode);
- 				cifs_invalidate_cache(inode, 0);
- 			}
-+			netfs_wb_end(ictx);
- 		} else {
- 			/*
- 			 * No cached handle; evict stale pages so they can't
- 			 * be served after the file is later extended; let
- 			 * the server's O_TRUNC open response set the i_size
- 			 */
--			inode_lock(inode);
--			filemap_invalidate_lock(inode->i_mapping);
- 			truncate_inode_pages(inode->i_mapping, 0);
--			filemap_invalidate_unlock(inode->i_mapping);
--			inode_unlock(inode);
- 			cifs_invalidate_cache(inode, 0);
- 		}
+ 	cifs_dbg(FYI, "In SetPosixACL (Unix) for path %s\n", fileName);
+ setAclRetry:
+@@ -3590,8 +3591,7 @@ setAclRetry:
  	}
+ 	params = 6 + name_len;
+ 	pSMB->MaxParameterCount = cpu_to_le16(2);
+-	/* BB find max SMB size from sess */
+-	pSMB->MaxDataCount = cpu_to_le16(1000);
++	pSMB->MaxDataCount = cpu_to_le16(min_t(unsigned int, CIFSMaxBufSize, USHRT_MAX));
+ 	pSMB->MaxSetupCount = 0;
+ 	pSMB->Reserved = 0;
+ 	pSMB->Flags = 0;
+@@ -3603,6 +3603,15 @@ setAclRetry:
+ 	parm_data = ((char *)pSMB) + offset;
+ 	pSMB->ParameterOffset = cpu_to_le16(param_offset);
+ 
++	/* make sure we can fit the larger cifs_posix_aces in the buffer */
++	cifs_acl_size = sizeof(struct cifs_posix_acl) +
++		       (acl->a_count * sizeof(struct cifs_posix_ace));
++	bytes_available = (CIFSMaxBufSize + MAX_HEADER_SIZE(tcon->ses->server)) - offset;
++	if (cifs_acl_size > bytes_available || cifs_acl_size > USHRT_MAX) {
++		rc = -E2BIG;
++		goto setACLerrorExit;
++	}
 +
-+out:
-+	filemap_invalidate_unlock(inode->i_mapping);
-+	inode_unlock(inode);
- 	if (cfile)
- 		cifsFileInfo_put(cfile);
- 	return rc;
+ 	/* convert to on the wire format for POSIX ACL */
+ 	data_count = posix_acl_to_cifs(parm_data, acl, acl_type);
+ 
 
 
