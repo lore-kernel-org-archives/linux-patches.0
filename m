@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774771;
-	b=lw5ZSEHbedoPq+KuoAR3XTpYVf/XBBIXQvrZA0m86AOzLg2cVQRCT1FZ8rj4lYXNnC/J
-	 muQ4U2kq3XAVL/zINxAIvGietydoNKYeMdxM8llxiIr1d1SSU+pK4ZugKhYhHkZ2Rk4Yg
-	 SpV2I+aSEaLFhsn3Bz9nHjUUR9RKKC+dtBx8Lkx42WysKv2qEIVo0VJk7tmjV1NW3K9K8
-	 Kc30UIzERmjaj+hy7Qc5oTXt2Gw9gADAhxWbAVvDVNu/9x+JaRGquKSlCM/Zjsnq738w5
-	 DH31Jn715RELzspJJkMSLmr3X9j/w3OvEHUfi6jTM30+aDkRTjvDa40+39HnQvzDREw==
+	t=1792774774;
+	b=z58JGvBQTb7f2TCxTiL5v6tjQ0HJCIOCyHlRwkfKWo+aWYpqCb88uL64E5PH/h9RpEvP
+	 K01LGZWW/9p2PFqdjK6w6E3h9z2ktFEgtvMD/rdPZaq6lRbVB5JHDtdIlqQVUHaFD+uGG
+	 +99Qj3W7YrHsrddoB2U7ReXiQy2ACYa/58HaT6CW14HNuiulSRKSrZDVHjrVW5rMh+UPr
+	 ZGYYhNXuJXsxydVB9QVuhNGYyYh5kjWV2CjABJoO/RXFKoP/S0ULhW37YZgstO8jJFHRT
+	 5xzxkIS//tVkNrSHBFgH0qgxfMKS6MQPfuGhxS35JGGss5ZhSvUE6nWFkeYeFkL30Tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774771;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774774;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=qBVl4dLi/QK/OViN2K6XIWBlvfdsJRbWEAMoXGozaHE=;
-	b=tUiaQpyjHVN2Wli1EeHh4hZaGNfxilmYPt011vlrjuEdnjXNmhxbLUdi1Y6R0+Pykp//
-	 KmCF/ilGcmpX0eCN95lLRMM0pBPqXD59GRhrLS2AyVzDI74YxZ9NvoEMsepEScA22dnMe
-	 gqapugYwb9ZeLhLX1zZAe08WArSLhN2kLPQdpS+6KRIymcrTLutKyZtUMRFeSlP0oP4ln
-	 MSbAcZ4v/nUpZxDwlYjnW/DkP0pYbq2pgc607nZUxmYEyeg2N7YVcTdelISLJ13gnQWJM
-	 ou1jaqF2n/F9fRsgCIcFRVtv1NHi/L0+bcmi8V4xNdZZ07KuxIV5YSAu/iMtWAf0UXQ==
+	bh=kVdqc3F9LHgHR9Pp8VSBl4w/jhSG6+7yWS8YUL/nlJE=;
+	b=nvCxL71uA7IPm73wKzvFGUNoE87ais1xGXDwZGsYlu2Et+hd+Mk1bryHrlYSuUzmQa47
+	 TYuJydPmySy8tC2N//Xnfnae/C8YTx/gDal0RAvTUsWv6NBzTWIuxGbTEGuXiWev6ZIjB
+	 VvklzTL0II/QpG57+3eoKhsx/oYvBqUcYkOO4dZSjBihfnZpxPrFz6g65ePBj8QMxPxcO
+	 UodhumbPJZnhjD6+WWlT9nwio3f0bRGWuJ4JnltL1kkFYrUD8+jky7I9ST+wJeoL8Hn4a
+	 AdrPwKpR2vtlcDpspVhoTp2NlHE1fGq6uJzdZFR7++i0e4o/Xiq0VHX6coI6e4YaBsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cMGALPDH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dY7sK81m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5DA606A31A;
-	Fri, 23 Oct 2026 16:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94826606A31B;
+	Fri, 23 Oct 2026 16:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cMGALPDH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC2FC1F01825;
-	Fri, 23 Oct 2026 16:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dY7sK81m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD6181F01825;
+	Fri, 23 Oct 2026 16:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774771;
-	bh=qBVl4dLi/QK/OViN2K6XIWBlvfdsJRbWEAMoXGozaHE=;
+	s=korg; t=1792774774;
+	bh=kVdqc3F9LHgHR9Pp8VSBl4w/jhSG6+7yWS8YUL/nlJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cMGALPDHf0oGDFLRe1unTK3ZVY2LxMfwjk+io3G3OHLmCeRTUNwpmkeS2CLqJibGs
-	 uuRgOF0GKZg8YD/QEV2hEXyzwUc7cBeuKQR453VtIcC/OVql88a3sVYzkH9J8akaBv
-	 gyaUJIHnfdwKeynOCPQCYWni5RInVCmiQAgY9NZI=
+	b=dY7sK81mVu/AxaM8rIi/g14axHH++piH0u4WqQZGnW6v2ZQSsOmVk2KO9mIt8r2QQ
+	 nEMmzzkchT9spnrXCcyZKF+A5yMDwKaVhQvHAAaNd6qlHXTMKw0hZ/Pl6PScnrJw48
+	 aRGhJxirTL+heavoefLPNK6isdagWhWOFHGgfYEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Perry Yuan <perry.yuan@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 153/242] drm/amdgpu/uvd3.1: Fix checking whether UVD firmware keyselect was already set
-Date: Fri, 23 Oct 2026 18:39:55 +0200
-Message-ID: <20261023163717.402315623@linuxfoundation.org>
+Subject: [PATCH 7.2 154/242] drm/amdgpu: destroy mutex when tearing down ttm buffer entity
+Date: Fri, 23 Oct 2026 18:39:56 +0200
+Message-ID: <20261023163717.425747015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,42 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Perry Yuan <perry.yuan@amd.com>
 
-commit 800ea86e83e137395eba54103e5c459c2bc9965f upstream.
+commit 5b0a459f990be2faba33229fd93f10f23745fab2 upstream.
 
-The PASS_MASK is for a different register not for UVD_FW_START.
-It was a mistake to check this flag. It should be enough to check
-that the register is non-zero.
+Pair mutex_init() with mutex_destroy() on the GART window allocation
+failure path and in amdgpu_ttm_buffer_entity_fini(). This is a no-op
+without CONFIG_DEBUG_MUTEXES, but it keeps lockdep from seeing a live
+mutex after the entity is freed or re-initialized.
 
-Fixes: 889a2cfd889c ("drm/amdgpu/uvd3.1: Don't validate the firmware when already validated")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20261006211607.75407-1-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9dee462c83259ca769aa1bf82228adee9831685c)
+(cherry picked from commit 03ac40aeed034a0a0d5824ad26f8fbe1f6463698)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index efb3fde919ee..b7d451f439a7 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -288,7 +288,7 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
- 	int i;
- 	uint32_t keysel = adev->uvd.keyselect;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -2058,6 +2058,7 @@ static int amdgpu_ttm_buffer_entity_init
+ 	r = amdgpu_gtt_mgr_alloc_entries(mgr, &entity->gart_node, num_pages,
+ 					 DRM_MM_INSERT_BEST);
+ 	if (r) {
++		mutex_destroy(&entity->lock);
+ 		drm_sched_entity_destroy(&entity->base);
+ 		return r;
+ 	}
+@@ -2075,6 +2076,7 @@ static void amdgpu_ttm_buffer_entity_fin
+ 					  struct amdgpu_ttm_buffer_entity *entity)
+ {
+ 	amdgpu_gtt_mgr_free_entries(mgr, &entity->gart_node);
++	mutex_destroy(&entity->lock);
+ 	drm_sched_entity_destroy(&entity->base);
+ }
  
--	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
-+	if (RREG32(mmUVD_FW_START)) {
- 		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
- 			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
- 		return 0;
--- 
-2.56.0
-
 
 
