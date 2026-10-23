@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774751;
-	b=ZuZieJ0A4vYiUCXOd2H2P8E9T98VMvFjDYHzED09vZoibgwIYMhEtBdnnd7I7px5HvGv
-	 BwmSkrXYW/rAdqkntnwxb+ZGR9nKLa8XRy4dd7tea1hc/ugAFqmgWYTFmB0AfPrAwOBKD
-	 xHkiuzuQZQ8TNumKZiqbATmv20UuC5Mw4aMmNCbjjY9cAX/kgcx+Tfmbjmz+yDSVMj1AB
-	 XGCNVXFpGs8R7vu7lfpZcTqkCzoW+LQeSjiLoDyD4vjsnaebMdjbS8dnp6A8Ivpdva6aR
-	 +TT0esZPVmClELEy6iX+pG7uNkPFWKMlkxa4tQm2kV/syUfwzlWag4++4evqXTy/Vpw==
+	t=1792774754;
+	b=o/1r5fiLK0VYrUwRI8v7lyf0Dcm1keDppEe/8AOLV48EkWcBOqinADx1CR0fd8wbGGAQ
+	 qDFuLAk9nAqrcFwAs0/TmKQqUXrSk37mcfBzXl1Us47PjZ/f3b2CZBqBLV3+yIi/yWc+I
+	 ptp4uPBHUg+KfU3xKGju0qyza9tgw1aT26tA1i7d9PcvXSE4egDlZ7RyvisSJMSEj9F4f
+	 FUWuPhV+XlhG6GE35Choewg+vZBgmAecSpCH2rlhj7Gdml1n81sK3ZVao9F/+1k/SoUMR
+	 pOM3frtMha4B+bIgde5LjyaSWJpBesgQ+Xqk2LhYUSI+ZJa1Ez1l3I7TvrAsCN2hf8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774751;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774754;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mfckn4Q3Oj9F5vy+N2N6ScsdiaxvUWzhHkk3A8o0Nmg=;
-	b=I248w6ncRk/g05/DQ/X86vYoxQcL45AHYt/y0weTfW6vMa2/1sMmcop+GVtBk9xvo93e
-	 YwYKf0o6LVkgmXitUZsQFAHfqonTKM7aQxp5l4o3hOB3rN0tgYiAwWcrHdy6WSGo+Dc2s
-	 Xrr45WfPoCvihdX1H3CYKvqty60VQmWFg49URP0zfvzWiUJkIQKql8K+X8XgX1huhn6/k
-	 mWB+wk6QpXvmG1SZ96wa+VflLXCcJpdj/HCux3UQ/y5Y5B4+yjJN2kOWw7dyeKX6Wc2ye
-	 18vYi8xeFApWIzFzsSEWdZE0cx9nZteEFXJs2i8dSj5co+v0Ul5CIMvPHgAdowYBsXg==
+	bh=JR6ubzpFPUd91vSjwltRIqdwE6sn7IekVpsgLU5+4kM=;
+	b=yk6+js5Gwde8sttSzjtT1BiyME2KRsO8cP0CbFCWaarlyvTIWVenxm/XNEk+04YhA/iA
+	 Z8dmwiHAMz9PRIYHxxgyV3YvOANd17Wzdzw3POBI1U+NSm4dYczEVSubsW47hCL+2Lld5
+	 IhzCFJtjDqqMcNhPPvr63FcDis7KfxTxy+OG+NFt9a9HCCeO5HtPA9zKsztiFo4iVFNxe
+	 W5SrA9Kbo088hgYdg+7w93PU1FtM4s1MkvL7xnMxHmZVoyE7b2MMPzIBXwcL+w4FMDioC
+	 cm93UKRxlx16B/pwHK6NCYNHC3qvanKabmJ0VQlSoM8qX9wKbKauPsWBfDkIbPOXXrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sx1XCguU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T+gbX9mg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A316606A31A;
-	Fri, 23 Oct 2026 16:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9782E606A31A;
+	Fri, 23 Oct 2026 16:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sx1XCguU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA151F01825;
-	Fri, 23 Oct 2026 16:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T+gbX9mg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A80CC1F01825;
+	Fri, 23 Oct 2026 16:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774751;
-	bh=Mfckn4Q3Oj9F5vy+N2N6ScsdiaxvUWzhHkk3A8o0Nmg=;
+	s=korg; t=1792774754;
+	bh=JR6ubzpFPUd91vSjwltRIqdwE6sn7IekVpsgLU5+4kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sx1XCguUAq7b1CTHlm10NXmbZ8O1z1uwPw8uYaPkhilio6vWelTfKZlwrSkE3PFuI
-	 nzlM8jEkvDm6inKRcyeWDTmffdcgN8tk6HrNtCV6rKRJNyFskFViFANaHebqxY+DRJ
-	 GYFNmJENCl5hO+ZKhlHEjUABPlaXGTX1J9poe6LA=
+	b=T+gbX9mgOhCd750xi7W+6IzFPCSvIVnzRXe0u90bta+0ezlWAiQpfLPze6QHqngE1
+	 evbDDMJmsEAEfIekCugBBRF/Q3tgHQXQnpkTGunss6YMydkcAwxq0x4nR7lvVmYei+
+	 CgwT18WocmOe+3DWAd/NaJET5UDOfOV2arXftfoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 129/242] sctp: revalidate output stream after association connect wait
-Date: Fri, 23 Oct 2026 18:39:31 +0200
-Message-ID: <20261023163716.834193110@linuxfoundation.org>
+	Mike Christie <michael.christie@oracle.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 7.2 147/242] scsi: libiscsi: Reject a negative task index from parse_pdu_itt
+Date: Fri, 23 Oct 2026 18:39:49 +0200
+Message-ID: <20261023163717.259755162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,118 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit b7ad72414c673ce1fa1f463e807cd4f34f8be9bf upstream.
+commit 8ee2a09a1dbb257c9e828ad2497f8e4832dfb142 upstream.
 
-When message interleaving is enabled, the first send waits for association
-establishment before building its data chunks.  The wait drops the socket
-lock, and handshake processing can reduce the output stream count to the
-peer-advertised inbound stream count.  sctp_stream_init() then frees the
-extension of every removed stream.
+A transport that implements parse_pdu_itt hands libiscsi an index taken
+from the PDU, and both lookups bound it from above only:
 
-The sender resumes with the stream that it checked before the wait.  If the
-peer removed that stream, sctp_outq_tail() later dereferences its NULL
-extension.  Fatal-oops policies then panic the host.
+      if (i >= session->cmds_max)
 
-KASAN: null-ptr-deref in range [0x38-0x3f]
-RIP: sctp_outq_tail+0x49e/0xaa0
-Call Trace:
- sctp_primitive_SEND
- sctp_sendmsg_to_asoc
- sctp_sendmsg
+i and cmds_max are both int, so a negative index passes and
+session->cmds[i] is read from before the array.
 
-A range check alone is insufficient.  Stream reconfiguration can grow the
-output count again while the lock is released without recreating extensions
-freed by the earlier shrink.  The stream can then be in range while its
-extension remains NULL.  The send-buffer wait has the same issue.
+be2iscsi produces one. beiscsi_parse_pdu() assigns the raw tag,
 
-Factor the range and extension checks into a helper and repeat both after
-each send-path wait that drops the socket lock.  Once the lock is
-reacquired, the validation remains stable through data creation and
-queueing.
+      *index = (int)itt;
 
-If validation fails after the connect wait, the auto-created association is
-already established.  Return ESRCH so the existing caller path keeps it
-under state-machine ownership instead of freeing it directly, which would
-leave protocol, counter and socket state inconsistent.
+and beiscsi_complete_pdu() forwards an unsolicited NOP-In from the
+hardware async ring without replacing its ITT, so the value is the
+target's. It also reports the session's own age rather than the one in
+the tag, which leaves the age comparison in iscsi_verify_itt() with
+nothing to reject.
 
-Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
+Bound the index from below in both lookups.
+
+Fixes: bfead3b2cb46 ("[SCSI] be2iscsi: Adding msix and mcc_rings V3")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261007035739.3472432-1-4ncienth@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20261007015842.634893-2-yhlee@isslab.korea.ac.kr
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/socket.c |   33 +++++++++++++++++++++------------
- 1 file changed, 21 insertions(+), 12 deletions(-)
+ drivers/scsi/libiscsi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1786,6 +1786,18 @@ static int sctp_sendmsg_check_sflags(str
- 	return 1;
- }
+--- a/drivers/scsi/libiscsi.c
++++ b/drivers/scsi/libiscsi.c
+@@ -1191,7 +1191,7 @@ struct iscsi_task *iscsi_itt_to_task(str
+ 		session->tt->parse_pdu_itt(conn, itt, &i, NULL);
+ 	else
+ 		i = get_itt(itt);
+-	if (i >= session->cmds_max)
++	if (i < 0 || i >= session->cmds_max)
+ 		return NULL;
  
-+static int sctp_sendmsg_check_stream(struct sctp_association *asoc,
-+				     struct sctp_sndrcvinfo *sinfo)
-+{
-+	if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt))
-+		return -EINVAL;
-+
-+	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext))
-+		return sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
-+
-+	return 0;
-+}
-+
- static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
- 				struct msghdr *msg, size_t msg_len,
- 				struct sctp_transport *transport,
-@@ -1800,16 +1812,9 @@ static int sctp_sendmsg_to_asoc(struct s
- 	long timeo;
- 	int err;
- 
--	if (sinfo->sinfo_stream >= asoc->stream.outcnt) {
--		err = -EINVAL;
-+	err = sctp_sendmsg_check_stream(asoc, sinfo);
-+	if (err)
- 		goto err;
--	}
--
--	if (unlikely(!SCTP_SO(&asoc->stream, sinfo->sinfo_stream)->ext)) {
--		err = sctp_stream_init_ext(&asoc->stream, sinfo->sinfo_stream);
--		if (err)
--			goto err;
--	}
- 
- 	if (sp->disable_fragments && msg_len > asoc->frag_point) {
- 		err = -EMSGSIZE;
-@@ -1830,10 +1835,9 @@ static int sctp_sendmsg_to_asoc(struct s
- 		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
- 		if (err)
- 			goto err;
--		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
--			err = -EINVAL;
-+		err = sctp_sendmsg_check_stream(asoc, sinfo);
-+		if (err)
- 			goto err;
--		}
+ 	return session->cmds[i];
+@@ -1384,7 +1384,7 @@ int iscsi_verify_itt(struct iscsi_conn *
+ 		return ISCSI_ERR_BAD_ITT;
  	}
  
- 	if (sctp_state(asoc, CLOSED)) {
-@@ -1848,6 +1852,11 @@ static int sctp_sendmsg_to_asoc(struct s
- 				err = -ESRCH;
- 				goto err;
- 			}
-+			err = sctp_sendmsg_check_stream(asoc, sinfo);
-+			if (err) {
-+				err = -ESRCH;
-+				goto err;
-+			}
- 		} else {
- 			wait_connect = true;
- 		}
+-	if (i >= session->cmds_max) {
++	if (i < 0 || i >= session->cmds_max) {
+ 		iscsi_conn_printk(KERN_ERR, conn,
+ 				  "received invalid itt index %u (max cmds "
+ 				   "%u.\n", i, session->cmds_max);
 
 
