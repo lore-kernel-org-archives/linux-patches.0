@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775007;
-	b=NvEZFwZjugWKBUj/nyBuUk7K5IuurJhvBOJxOJbnrIF2HOzBxZ64mHV+maFTZvUeXx4V
-	 xNb1+xO3F7+jfxbt4mRldsJVNHWzTXoNKFpSOc666vLbf091U5bQl/uFsO6kaJSbT7XhS
-	 +y22P8nGsbf1uOHNn/7TGCYQaa6KDrUeiSKPV3k5wG49UukLVaXs1Wl+qu9XVhI9QYeH4
-	 d55fXfjqLcf822owIg8p8TIZE35jGCNeD610BnPty3aA/PKcEj2P6mIgQhM/nNsR9Q1ZQ
-	 BEqaiBbfphj5PEmZAPHU6F2r5It4Yo6h0RKqRdRT3lrLfPpAFb4td7mXYowuYT59LsQ==
+	t=1792775010;
+	b=by+svn5/2QFXnz11YTZN0/B7NTXgTCVa9Afsu+PDDbL8vkpo2bvsmaAftUVtD0y1Kacq
+	 3kPH8f/lPuxR/K6lMc4N2c+QQN5hav9oJ99roSjpy9x95iQZ8NNxws2tBpZpgYYghW2Y5
+	 yeZag1DdOMud5t3K1n3WYHyBPGJr/ROSAKboo4PSw/JBJBX1V94/hZ+8QnT+q7JKy/aLX
+	 fE/9Z4a5ttDT27HtZvBB55uieNiKDs9xv1qqeqYXLmCPyukaJY+yTUmYYUpe4BGvBbGC2
+	 BPFk5o8oqzTuOG7DLXMo7yDQ2+Nelk+WITIIvtwvcRcAeVgm1oYRDihdPWN8x6WKcng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pKfzzh7bpLhBHGv17xx76kouwE9LXCz82bJIN1G3mlM=;
-	b=tIUOnE6QZmucrSI50L6p1zCM+/6rMFKjA4TCm4C7TYumTjEmEhTDYOqzvUQ3CtU8THA/
-	 LiZ+VvDeNUJrMbz07yvmjttU3B4V/fuDyFO1VUbOs6KFdkpTlgI+YeUHJFNXkn3dSHpT6
-	 Kyz2KLXyTtQRqyZ7DgV9X2LEjhZw3xT8qJq8aL8m0PQ7pizT8kjvgTyC6hzEHAwQeQcb5
-	 XG+0sov5deXbNVH7hLBFX2EJkunRWQjtHkeOqT1+rMEpERQcLXvcRXKSpcf7i6coGeKFo
-	 lUWThPXCr0IIvIs1apjJgkVD1Q1ODM2m/8Sxu+coARvmtfeUPKUqHBwkhYolGV+2zZw==
+	bh=WuU+zrH9jGDA8Gnuitj7VFrdNDAbuHSJxGI5/c5iJ8M=;
+	b=3FddjHVAN2uH5fPwlXkwYMKFM6TRIYLmLsK/5SiGpidp7ZP5P6brSRj09KQq1h2bzi4A
+	 nJd+h5d83EkNhhp9KDLr2hlCPogpRm3CjFqvMbCx+Gai0zZMtX7SCxIrBqOSB/n0vfGM6
+	 rU1KApQ9pmwXRJ/cmpFVMG9qjl6vwvoEu7Irxkp5N7mxQWhT9IZZ4MjFiht2zqIBAdt+a
+	 b9IuF8urgtxYnJEa1RMgT3beTMZvIFvL8tl5jVm5xRVMWcCY+GtiW/JxMKvQSedXzdGIw
+	 wGRqrq4r7AoknOyYE6KtJL1+9h5DTBCO+S0aYnEmMN6+6uxfoon0kT3XzZc/0j7Jttw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynKbWdK1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qOpZAuJT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74312606A31A;
-	Fri, 23 Oct 2026 17:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78423606A31A;
+	Fri, 23 Oct 2026 17:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ynKbWdK1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B6C1F01825;
-	Fri, 23 Oct 2026 17:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qOpZAuJT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59D81F01825;
+	Fri, 23 Oct 2026 17:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775007;
-	bh=pKfzzh7bpLhBHGv17xx76kouwE9LXCz82bJIN1G3mlM=;
+	s=korg; t=1792775010;
+	bh=WuU+zrH9jGDA8Gnuitj7VFrdNDAbuHSJxGI5/c5iJ8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ynKbWdK1ueIecsXfEPkIiUKpVA+1CCKZcPYBtBrT4XXuvoFny2Fcw37XTJ3DiGJee
-	 cjaKEOh0/Oi2JtEJAKxXjxIj2XX1gMHz5d2qpxIvLIiMU4Pkhpbexwk7LpMcBeWPZO
-	 AcVriU0Wp2VCuss95iJhYuCFNJjCU7HeD5jhP/vI=
+	b=qOpZAuJTvhCjn/ZsyuPBQsHzHn9iB/JzdFII5ieGmMz+CLPnVeYawpNXADvhRvI6M
+	 zoWJvIGanb1DeErNPfGkaQCLXXJgbzYnoDEkEDLBDgmU8VfgkcIphCn8YcelkLdbJn
+	 Sl5IcaKChQA5SdtNQ/Qy+8NJo/5AYXbCq2xTutUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Xiangyu Bu <xbu@meta.com>,
+	Tejun Heo <tj@kernel.org>,
+	Dan Schatzberg <schatzberg.dan@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 230/242] drm/amdgpu: free the userptr ranges when a CS fails after parser_bos
-Date: Fri, 23 Oct 2026 18:41:12 +0200
-Message-ID: <20261023163719.286086766@linuxfoundation.org>
+Subject: [PATCH 7.2 231/242] sched_ext: Fix stall when a task enqueued with SCX_ENQ_LAST lands back on its CPUs local DSQ
+Date: Fri, 23 Oct 2026 18:41:13 +0200
+Message-ID: <20261023163719.309120412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,83 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 1b4da805a0ba354a549ce07459c871c17dd94fe0 ]
+[ Upstream commit 7a9df76679633cf26e0fea882a684012c6ec245a ]
 
-amdgpu_cs_parser_bos() allocates an HMM range for every userptr entry of
-the BO list and looks up the user pages. Those ranges are only freed when
-amdgpu_cs_parser_bos() itself fails or when amdgpu_cs_submit() checks
-them under the notifier lock. If amdgpu_cs_patch_jobs(),
-amdgpu_cs_vm_handling(), amdgpu_cs_sync_rings() or the early part of
-amdgpu_cs_submit() fails, nothing frees them: neither
-amdgpu_cs_parser_fini() nor amdgpu_bo_list_free() touch e->range.
+With SCX_OPS_ENQ_LAST, the last runnable task on a CPU is passed to
+ops.enqueue() instead of being kept running. Exiting tasks without
+SCX_OPS_ENQ_EXITING, migration disabled tasks without
+SCX_OPS_ENQ_MIGRATION_DISABLED and tasks on an offline rq skip ops.enqueue()
+and go straight to the local DSQ. This happens in put_prev_task_scx() after
+the pick has settled on idle, so nothing reschedules the CPU, which idles
+with the task queued until an unrelated wakeup lands on it or the watchdog
+fires.
 
-Each such CS then leaks the range, its hmm_pfns array (8 bytes per page
-of the userptr BO) and the BO reference the range holds. An IB on a ring
-that patches the CS in place (e.g. VCN) with an unmapped va_start fails
-in amdgpu_cs_patch_ibs() and takes this path.
+scx_mitosis, which sets SCX_OPS_ENQ_LAST without SCX_OPS_ENQ_EXITING, hit
+this during mass cgroup teardown: exiting tasks stuck in exit_mmap() for
+over 40 seconds.
 
-Free the ranges on those error paths. Ranges amdgpu_cs_submit() already
-dropped are NULL, so freeing them again is a no-op.
+A task put on the local DSQ runs, as anywhere else. If the SCX_ENQ_LAST
+enqueue left the task on this CPU's local DSQ, set need_resched on the task
+being switched in, as proxy_resched_idle() does. resched_curr() would flag
+the task being put instead, and __schedule() clears that right after the
+pick.
 
-Fixes: fec8fdb54e8f ("drm/amdgpu: fix userptr HMM range handling v2")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c52a9542ed7cfd527feb938bd0accada2ac8d267)
-Cc: stable@vger.kernel.org
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Cc: stable@vger.kernel.org # v6.12+
+Reported-by: Xiangyu Bu <xbu@meta.com>
+Link: https://github.com/sched-ext/scx/pull/3870
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
+[ sashal: Adjusted context to use do_enqueue_task() without the upstream CPU-capability condition. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ kernel/sched/ext/ext.c      |   13 +++++++++++--
+ kernel/sched/ext/internal.h |    5 +++--
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1434,6 +1434,7 @@ static void amdgpu_cs_parser_fini(struct
- int amdgpu_cs_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- {
- 	struct amdgpu_device *adev = drm_to_adev(dev);
-+	struct amdgpu_bo_list_entry *e;
- 	struct amdgpu_cs_parser parser;
- 	int r;
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -3169,8 +3169,7 @@ static void put_prev_task_scx(struct rq
+ 		/*
+ 		 * If @p is runnable but we're about to enter a lower
+ 		 * sched_class, %SCX_OPS_ENQ_LAST must be set. Tell
+-		 * ops.enqueue() that @p is the only one available for this cpu,
+-		 * which should trigger an explicit follow-up scheduling event.
++		 * ops.enqueue() that @p is the only one available for this cpu.
+ 		 *
+ 		 * Under core scheduling, a pick dispatches only when nothing is
+ 		 * locally runnable and can legitimately go idle with @p still
+@@ -3180,6 +3179,16 @@ static void put_prev_task_scx(struct rq
+ 			WARN_ON_ONCE(!sched_core_enabled(rq) &&
+ 				     !(sch->ops.flags & SCX_OPS_ENQ_LAST));
+ 			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
++
++			/*
++			 * A task put on the local DSQ runs, as anywhere else.
++			 * Here the insert can't reschedule on its own: the pick
++			 * has settled on @next and @p is still curr, so
++			 * resched_curr() would flag @p and __schedule() clears
++			 * that right after the pick. Flag @next instead.
++			 */
++			if (p->scx.dsq == &rq->scx.local_dsq)
++				set_tsk_need_resched(next);
+ 		} else {
+ 			do_enqueue_task(rq, p, 0, -1);
+ 		}
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -1291,8 +1291,9 @@ enum scx_enq_flags {
+ 	 * %SCX_OPS_ENQ_LAST is specified, they're ops.enqueue()'d with the
+ 	 * %SCX_ENQ_LAST flag set.
+ 	 *
+-	 * The BPF scheduler is responsible for triggering a follow-up
+-	 * scheduling event. Otherwise, Execution may stall.
++	 * If the task is queued on the local DSQ of the CPU it was running on,
++	 * it continues to run. Otherwise, the CPU goes idle. A scheduler that
++	 * wants a full dispatch cycle on the CPU should kick it.
+ 	 */
+ 	SCX_ENQ_LAST		= 1LLU << 41,
  
-@@ -1468,25 +1469,31 @@ int amdgpu_cs_ioctl(struct drm_device *d
- 
- 	r = amdgpu_cs_patch_jobs(&parser);
- 	if (r)
--		goto error_fini;
-+		goto error_free_user_pages;
- 
- 	r = amdgpu_cs_vm_handling(&parser);
- 	if (r)
--		goto error_fini;
-+		goto error_free_user_pages;
- 
- 	r = amdgpu_cs_sync_rings(&parser);
- 	if (r)
--		goto error_fini;
-+		goto error_free_user_pages;
- 
- 	trace_amdgpu_cs_ibs(&parser);
- 
- 	r = amdgpu_cs_submit(&parser, data);
- 	if (r)
--		goto error_fini;
-+		goto error_free_user_pages;
- 
- 	amdgpu_cs_parser_fini(&parser);
- 	return 0;
- 
-+error_free_user_pages:
-+	/* amdgpu_cs_submit() only drops the ranges once it got that far. */
-+	amdgpu_bo_list_for_each_userptr_entry(e, parser.bo_list) {
-+		amdgpu_hmm_range_free(e->range);
-+		e->range = NULL;
-+	}
- error_fini:
- 	amdgpu_cs_parser_fini(&parser);
- 	return r;
 
 
