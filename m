@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774193;
-	b=hniLDT1f/4IvYG76f9QySPkFT7n4HJ6ZTGmvNY8SZv0ldd2NFsUUPYQHvanUHri6aOfn
-	 Y3TTxhViXOewgHdW62zyzTMmWwTK2f/d6fU+ecJdOPaIKp0pwvrKygLM7j4hDf38XO93P
-	 7B5gFfgwndi9e4UQw2gxk6cUQE3E/0RfWNeP4jt+KMsL70DI8oMaUr0/VtQd8su8SkM+a
-	 zbQMFpOX+p2m2tq5a9AvhewXZLdyTte1Qu0SyBcAh5atIZUPL4cTpDH5JoVKDpT/KAWwO
-	 2fCit4e/U5N/Xitq5qs63Lrtw9goQEcQQXvWiLEzQm050kb841HyVENcjv4CJnutmqg==
+	t=1792774196;
+	b=TpNztXFX2LuHmb4b3xZVgo12AUqD7iA1JqxuFOlP+yEIs1SYg8m73wVUoSyI7GP9YQE0
+	 JptXHRsSJPW6GUFbIoH28xWAz8+VrXj5DicbzW18IHtdMH84Nb+Et3RCXKsoNC5gl2oh0
+	 4p2BOaFwvhkTmqndLUsh3ixBsdb4njsGPQqzsJfgqauaFVZdQhdfs8Il4QUEgDBX/x0jB
+	 pPuhpRDSV2dLpqk/BEqqo9R/8FIi28alL+S9SLks1MtvldJEZdKR4qPUWDoc1INhtUDKo
+	 H3q7omSd1VvJpvDNWIRoSriUGtrMjm1l8b/OzI1IjkMUSGG4UxSrXCP3yW4NR/rFm2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ghqUK07MpGnt6bhDAnCrM/qT2yKQa+7n0pvHZmO+Lmc=;
-	b=Aqm7J3V5RN93CWPFVnZHIs0FJ/rt8fcahGv2IXw3QFfiYEGdRBLI/YVkWwO0hd83996/
-	 RZB1nrTidLS9H8S+IkCI87KKZqsUAhvUJJBau62Px+3gisNIV5TvfiUT+3a1dpXr7SwiG
-	 I31L0z3gTlvhtE8hY8YKq9xsFoPsidXZHCXXYi5al59GhGI1ty8UO+uuzreK6d2PPTo2h
-	 14FeFJyV4qGEhWPo/qJe8ZR2TSoaB3Ta3VLmpwFjSmFgwkXfBBArx/CilQYmxWoqWZVbS
-	 CsvMpZuZQRF7kBK735LBMKaqo1XdTeoJQ9qZ7iilUIYRvMo2FRoQyNcmP3TS+no/Z0Q==
+	bh=Di5zd1qxZiyoO5KB+RAyNhM7MF3EublnBer+1iLu2IA=;
+	b=abIW/s7OlZ0eS5glSdNHcu2gQJVcEWtbMRVLP1gwF/tvaf0rTsgEUNO71i3WO+CfabBv
+	 GXxTX/aJHBjjbD0vNK7hR45lMpXOPY4BqZkHp/Nrv8buHWpa+XoIQaWnyWEx2MmRSZ0Cz
+	 R8b+c1YQRPoCsm4ajjsHSL74cNfmGiniNcDszyEVkPyeE9fvFYUn2Jg8/CBTvKyEZGy07
+	 nFt3HUPndta0ov117qLyvYYkDTsRGsdlpHF+OGS+DjDbchEXXG2sbAwpmmJKrv1WC0pQw
+	 yWM6Y/CnCDuKU4N7FXgNAzsMo3c3yRvdWfFGV1Xa3ZS8Cw8+oINpcVuSG1vnprjaPlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z+htw/6J";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkR76gAf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0034560A260E;
-	Fri, 23 Oct 2026 16:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D436260A263D;
+	Fri, 23 Oct 2026 16:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+htw/6J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD641F01825;
-	Fri, 23 Oct 2026 16:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkR76gAf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305051F031E0;
+	Fri, 23 Oct 2026 16:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774192;
-	bh=ghqUK07MpGnt6bhDAnCrM/qT2yKQa+7n0pvHZmO+Lmc=;
+	s=korg; t=1792774195;
+	bh=Di5zd1qxZiyoO5KB+RAyNhM7MF3EublnBer+1iLu2IA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+htw/6JmDCP630+b8Sb+QIsxmqMdFqE5YscgWD8dS5PS1FpmOiHFUSiWD2OSmRMV
-	 IH5lmzATwsbIynZZi9ZQV7dkZpE+eKjM1KFEabSD3wxvocDgkZxmMQhJBm2z+w4SCd
-	 IJibgPjAdTi6ID/KxDrewRpVeXA0LMIBEDKBJGqg=
+	b=HkR76gAfL+7fkt8RvUjTHBbdYRqEKrN51NDcOlcrM6rBmYRmqvKGAxodZBBCNIf02
+	 3lIKge/062nhJ5DOQnWlw2Ztu77sO1gKL8ijRc3X7oMU/ihgTsiRYH3VIVTTFUbKrB
+	 JKlxnstSgUcorqfHjCDEgAzKYndAdL4hDjR4qhYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Daniel Zahka <daniel.zahka@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 153/193] net: psp: do not inherit the Rx association on clone
-Date: Fri, 23 Oct 2026 18:37:10 +0200
-Message-ID: <20261023163717.831024022@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 136/193] tipc: protect node reset trace dump with node lock
+Date: Fri, 23 Oct 2026 18:36:53 +0200
+Message-ID: <20261023163717.426973497@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -68,58 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 1d2929d0850fff683b8aff051275945e65f082c8 upstream.
+commit dddf197f29ba5e47a476dde82bf542ca2e0d5e5e upstream.
 
-sk->psp_assoc sits past sk_dontcopy_end, so sock_copy() copies it into
-every socket accepted from a listener without taking a reference, while
-inet_sock_destruct() puts for every inet socket. psp_twsk_init() does
-refcount_inc() for the timewait socket, so a child closing through
-TIME_WAIT cancels its own put and leaves the association with one
-reference and N timewait sockets holding the same pointer. Closing the
-listener frees it, and the timewait timers then put freed memory.
+The tipc_node_reset_links trace event asks tipc_node_dump() to walk the
+node's link entries. Unlike the other node events that request link data,
+this event runs without the node lock.
 
-Rejecting the association on a listening socket is not sufficient: a socket
-can acquire one while established and then be turned back into a listener,
-because tcp_disconnect() leaves sk->psp_assoc in place.
+This permits bearer teardown to free a link while the trace callback is
+dumping it:
 
-  BUG: KASAN: slab-use-after-free in psp_twsk_assoc_free+0x6f/0xf0
-  Write of size 4 at addr ffff888110f9255c by task swapper/7/0
-   psp_twsk_assoc_free+0x6f/0xf0
-   inet_twsk_put+0xda/0x1b0
-   call_timer_fn+0x53/0x2e0
-   __run_timers+0x764/0xa80
-  Freed by task 99:
-   kfree+0x1a7/0x500
-   process_one_work+0x7ec/0x1100
+  CPU 0                                CPU 1
+  trace_tipc_node_reset_links()
+    tipc_node_dump()
+      l = n->links[0].link
+                                       tipc_node_write_lock()
+                                       kfree(l)
+                                       n->links[0].link = NULL
+                                       tipc_node_write_unlock()
+      tipc_link_dump(l)
 
-An association carries a per-connection SPI and key, so a child must not
-inherit the parent's. Clear it on clone.
+tipc_link_dump() then dereferences the stale pointer. KASAN reported:
 
-Fixes: 6b46ca260e22 ("net: psp: add socket security association code")
+  BUG: KASAN: slab-use-after-free in tipc_link_dump
+  Read of size 4 by task poc/115
+  Call Trace:
+   tipc_link_dump+0x10cb/0x16b0
+   tipc_node_dump+0x4bb/0x740
+   trace_event_raw_event_tipc_node_class+0x258/0x360
+   tipc_node_reset_links+0x14d/0x1a0
+   tipc_rcv+0x13f5/0x3030
+   tipc_udp_recv+0x4e3/0x670
+  Allocated by task 0:
+   tipc_link_create+0x1e1/0x1020
+   tipc_node_check_dest+0x7d2/0x11a0
+   tipc_disc_rcv+0xdbf/0x1430
+  Freed by task 89:
+   kfree+0x131/0x3c0
+   tipc_node_link_down+0x267/0x4b0
+   tipc_node_delete_links+0xec/0x160
+   bearer_disable+0x107/0x260
+
+Take the node write lock around the trace event. This serializes the
+dump against tipc_node_link_down(delete=true), which frees the link
+under the same write lock.
+
+Fixes: eb18a510b5cd ("tipc: add trace_events for tipc node")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
-Link: https://patch.msgid.link/BC10EB92-ABB3-41B2-AB16-266BEEBE18C0@doyensec.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260825190141.242219-1-nicoyip.dev@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/sock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/tipc/node.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2471,6 +2471,9 @@ struct sock *sk_clone_lock(const struct
- #ifdef CONFIG_BPF_SYSCALL
- 	RCU_INIT_POINTER(newsk->sk_bpf_storage, NULL);
- #endif
-+#if IS_ENABLED(CONFIG_INET_PSP)
-+	RCU_INIT_POINTER(newsk->psp_assoc, NULL);
-+#endif
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1333,7 +1333,9 @@ static void tipc_node_reset_links(struct
  
- 	/* SANITY */
- 	if (likely(newsk->sk_net_refcnt)) {
+ 	pr_warn("Resetting all links to %x\n", n->addr);
+ 
++	tipc_node_write_lock(n);
+ 	trace_tipc_node_reset_links(n, true, " ");
++	tipc_node_write_unlock_fast(n);
+ 	for (i = 0; i < MAX_BEARERS; i++) {
+ 		tipc_node_link_down(n, i, false);
+ 	}
 
 
