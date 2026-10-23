@@ -1,50 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774608;
-	b=jvbZm1giRjtCYmthGVu6JCLw2SzEmzw6QsVRo54Fb3HWxQs2HJVZixXnCo7jy52YX/gb
-	 p7W2FwHdA5fGJIui5UMH8P5LHxfR5xskUsgexJULansm0ENMGW+jQfqTeJ6sWfSWT9kdw
-	 DUXwt7FQPQWvC60zo2lqbwY13udLAp6gKGOfCu3CyVNBO6aws2tgxYXisf3yKMw27ge4y
-	 w6X1CzmtbkbYBD+8DS0XPcCKLQ6fI2rIJ3/crGu2kqcgJr6IdmS5Puj8NTRdosUTe41SB
-	 OEq66Vkn18YAoxblSYK9WejH0Ij69cJjfUGFWpXOWs0I0K7k6YcW4EbahF9c9tPJTQg==
+	t=1792774611;
+	b=Hu7TWyMXyNJE4LGaC2JsM+TX16LEn/cn0y2QxzkahMOQ21WHS2sb/2exvYxYF4THaFSN
+	 EMk/JmwY5XDhhkLbfUsHSV+MUMKfyEia+NNCYl01THEaEOTjfxz/gj/KOEazyvzFvJmTj
+	 14yqM2HU6RWxGA0kHVRAyYt0L9aUmnDSfOLgmJg7Zvu9rDuHB5pWKgfJdSwiCj9NQlRvp
+	 s9Ho9CpW+sNUulsM/WgRvXVyJblbr1uOoj++FZIt8MIwhc3F8MutVnIq+HQ+hcOwgNECV
+	 EIyOeslwGbGFiIY3u3xqg+eiDZCRUuF7F4jrFDYWJReol5J7ZRx0CEboBOhsVdf3Bfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774608;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oInW/Q8I8+pxooyrRqXFWwPmqkX77qFEFIgMCp8Nmq4=;
-	b=qq8aCtVXJQi7X9/5/X1niyEbhVjIw9VGnrDqGSouU/elg6CwLCZ+lbg9eyrc/Crfl7pj
-	 na7CyQeiD54L5F5szkKwZwZzT5jPAD2wwmeusBWHN8tCnXHMc1tom4vA0syT3sPorq1VP
-	 jmvepY/OJlx7JrsPL+nR+wlOrvL+MbpedoClj3WKRwAmRYSoC9KJMJndeddwTBPuOxkIh
-	 HQoEfRgQURCpzg/spjD9EuiI2O2XEGfWq2jxNWPYrRbFrfYW6I9Q6MDK7B0gXcHc7l5UM
-	 /v1ix+Wcd36RKi6g443InQqZs1h1sXd5SzCENcHsnIqh8Xi15IuTMqneDjMN8J5nEnw==
+	bh=AJBzOA57A6S2cLUx/KbDVHgACH6Vfx0Bo3k4t3fkdB0=;
+	b=02jUnoAslpA4rwD6qlutnz+PbVZbA5KfSzhKi0qpgSQOTpXOQ1h/WtbYBCrDlVbglCua
+	 PsDzkFCM9NvxtkogofBTUXAkUloTQMPyvAIecpFbgarAd2BbmNVS0lCt6CInMV+fXuAdo
+	 ZlnDpBG5WoDyIjkOHr7Ku5GgVoaNznzpIJSIwqrO5O8KnvgX/tLXM9d8YGozjdeaFMIJJ
+	 OcMesFrJ1hU+5M/EXEw986scAvLmY/f7UiHZ+pZpiTHgis9moA0UQFIHH1Fqio7KuxomQ
+	 sF2AheVCSVA3yhzOCWGyqffSDuNDKPolJC+XD46xoBjWq+/ZoSgaE9psRgr4F7pq2Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x6QHUzcV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpWXFLUf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78491606A31B;
-	Fri, 23 Oct 2026 16:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BAB606A31A;
+	Fri, 23 Oct 2026 16:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x6QHUzcV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC071F01825;
-	Fri, 23 Oct 2026 16:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpWXFLUf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C101F01829;
+	Fri, 23 Oct 2026 16:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774608;
-	bh=oInW/Q8I8+pxooyrRqXFWwPmqkX77qFEFIgMCp8Nmq4=;
+	s=korg; t=1792774611;
+	bh=AJBzOA57A6S2cLUx/KbDVHgACH6Vfx0Bo3k4t3fkdB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x6QHUzcVosN5LRVeSeiPTXq4wiM5ygq+57S4hheXqojFWbhyXZxnPDAqZpbq5/15I
-	 cZmqQM5KILzzoJ9K20+MIiCu7Yic/WdKT28/HNnqpsYwMMuB9HEX+yzLAoHdIGmCtI
-	 uYMIJriVuoQ5AIVohjsQFOcON2LOlY+026JcvP3M=
+	b=PpWXFLUfRXZa5QCUJ7jfwQ7ADZmFNvvoiVw7B270Ix43pPXGkOz06DOPrrHO1JL3l
+	 Gbgjbo7VhLPbGY7SVUYeSNeqBvcfgXYyp0Q3ucCKuD9lni6kPeR0q+QSvHgYDzKUoy
+	 7wZ1BmL+xyV5ncSsoUlGvuiFZwcJhmkN5lZ4Qvlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 099/242] 9p: free the session after a grace period
-Date: Fri, 23 Oct 2026 18:39:01 +0200
-Message-ID: <20261023163716.123054212@linuxfoundation.org>
+	Igor Paunovic <royalnet026@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jiaxing Hu <gahing@gahingwoo.com>,
+	Sidong Yang <sidong.yang@furiosa.ai>
+Subject: [PATCH 7.2 100/242] accel/rocket: search every core slot when a core is removed
+Date: Fri, 23 Oct 2026 18:39:02 +0200
+Message-ID: <20261023163716.145725731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -66,72 +69,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Igor Paunovic <royalnet026@gmail.com>
 
-commit bcec7fc2e224088daf94448d663b02e0d0b9c717 upstream.
+commit 6eff1d69dae808a1518aee5a58d0853a8db3f1be upstream.
 
-v9fs_vfs_get_link_dotl() reads ->cache from the v9fs_session_info in
-sb->s_fs_info to decide whether the symlink target sits in the page
-cache. It does that before it looks at the dentry, so it also does it in
-rcu pathwalk mode. Without loose or metadata caching the dentries have
-no ->d_revalidate() that would make the walk leave rcu mode before it
-gets there.
+rocket_remove() decrements rdev->num_cores for each core it removes,
+while find_core_for_dev() searches slots 0 to num_cores - 1. Unbinding
+the cores in the order they were bound therefore loses the last one: by
+the time it is removed the search range has already shrunk past its
+slot, so find_core_for_dev() returns -1 and rocket_remove() gives up
+without doing anything.
 
-v9fs_kill_super() frees the session and clears sb->s_fs_info without
-waiting for a grace period. Right now a pathwalk can't still be in
-v9fs_vfs_get_link_dotl() at that point, but only by accident. umount(2)
-waits for a grace period in namespace_unlock() before it drops the
-mount. And a mount whose last reference goes away elsewhere, like the
-chdir out of a lazily unmounted directory, still gets a grace period
-from bdi_unregister(). v9fs_fill_super() sets up a private bdi, so
-generic_shutdown_super() unregisters it from kill_anon_super() and
-bdi_remove_from_list() waits in synchronize_rcu_expedited() before
-v9fs_kill_super() frees the session. That grace period protects the rcu
-readers of bdi_list in the writeback code. It has nothing to do with
-pathwalk.
+num_cores never reaches zero, rocket_device_fini() never runs, and the
+file-scoped rdev keeps pointing at a device that is going away. Binding
+the cores again starts from that stale count, because rocket_probe()
+takes rdev->num_cores as the slot to fill. On an RK3588, which describes
+three cores, the second round lands on slots 1, 2 and 3 while rdev->cores
+was allocated with room for three:
 
-Don't rely on it. Keep sb->s_fs_info and free the session after a grace
-period.
+  rocket fdab0000.npu: Rockchip NPU core 1 version: 1179210309
+  rocket fdac0000.npu: Rockchip NPU core 2 version: 1179210309
+  rocket fdad0000.npu: Rockchip NPU core 3 version: 1179210309
 
-Fixes: 712da38d134b ("9p: Enable symlink caching in page cache")
+The write to rdev->cores[3] is past the end of the array.
+
+Nothing in tree reads the core array often enough to notice, so the
+overrun is silent today. It turned up while testing a devfreq series on
+top of this, where a worker walks every core a few times a second, and
+UBSAN caught the first bool it read out of the overrun entry:
+
+  UBSAN: invalid-load in drivers/accel/rocket/rocket_devfreq.c:47:10
+  load of value 5 is not a valid value for type '_Bool'
+  Workqueue: devfreq_wq devfreq_monitor
+
+Record how many slots were allocated and search all of them. Every core
+is then found on removal, num_cores reaches zero, the device is torn down
+and a later bind starts from a clean rdev.
+
+This does not make unbinding a single core out of several work. probe
+still takes num_cores as the slot to fill, so rebinding one core while
+its siblings stay bound would write over a slot that is already in use,
+and rocket_open() still reaches for cores[0] whether or not anything is
+there. Both of those want more thought than a fix should carry.
+
+Found by unbinding and rebinding all three cores on an Orange Pi 5 Plus.
+With this applied, 25 unbind/rebind rounds and 5 module unload/reload
+rounds run clean there: the cores land in slots 0, 1 and 2 every time,
+whichever order they are bound in, and the shared supply goes back to a
+single user after each round.
+
+Fixes: ed98261b4168 ("accel/rocket: Add a new driver for Rockchip's NPU")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-3-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Igor Paunovic <royalnet026@gmail.com>
+Assisted-by: LLM sparse checkpatch
+Tested-by: Jiaxing Hu <gahing@gahingwoo.com> # RK3576, two cores
+Tested-by: Sidong Yang <sidong.yang@furiosa.ai> # RK3588, 3 cores
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260904125936.26234-1-royalnet026@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/v9fs.h      | 1 +
- fs/9p/vfs_super.c | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/accel/rocket/rocket_device.c |    2 ++
+ drivers/accel/rocket/rocket_device.h |    1 +
+ drivers/accel/rocket/rocket_drv.c    |    2 +-
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/9p/v9fs.h b/fs/9p/v9fs.h
-index a462bcbfc7da..2ac863dc8446 100644
---- a/fs/9p/v9fs.h
-+++ b/fs/9p/v9fs.h
-@@ -137,6 +137,7 @@ struct v9fs_session_info {
- 	struct list_head slist; /* list of sessions registered with v9fs */
- 	struct rw_semaphore rename_sem;
- 	long session_lock_timeout; /* retry interval for blocking locks */
-+	struct rcu_head rcu;	/* v9fs_vfs_get_link_dotl() reads ->cache in rcu pathwalk */
+--- a/drivers/accel/rocket/rocket_device.c
++++ b/drivers/accel/rocket/rocket_device.c
+@@ -31,6 +31,8 @@ struct rocket_device *rocket_device_init
+ 		if (of_device_is_available(core_node))
+ 			num_cores++;
+ 
++	rdev->max_cores = num_cores;
++
+ 	rdev->cores = devm_kcalloc(dev, num_cores, sizeof(*rdev->cores), GFP_KERNEL);
+ 	if (!rdev->cores)
+ 		return ERR_PTR(-ENOMEM);
+--- a/drivers/accel/rocket/rocket_device.h
++++ b/drivers/accel/rocket/rocket_device.h
+@@ -19,6 +19,7 @@ struct rocket_device {
+ 
+ 	struct rocket_core *cores;
+ 	unsigned int num_cores;
++	unsigned int max_cores;
  };
  
- #define NDENTRY_TIMEOUT_NEVER (-1U)
-diff --git a/fs/9p/vfs_super.c b/fs/9p/vfs_super.c
-index 94d6b02c221b..79526044685c 100644
---- a/fs/9p/vfs_super.c
-+++ b/fs/9p/vfs_super.c
-@@ -173,8 +173,8 @@ static void v9fs_kill_super(struct super_block *s)
+ struct rocket_device *rocket_device_init(struct platform_device *pdev,
+--- a/drivers/accel/rocket/rocket_drv.c
++++ b/drivers/accel/rocket/rocket_drv.c
+@@ -226,7 +226,7 @@ static int find_core_for_dev(struct devi
+ {
+ 	struct rocket_device *rdev = dev_get_drvdata(dev);
  
- 	v9fs_session_cancel(v9ses);
- 	v9fs_session_close(v9ses);
--	kfree(v9ses);
--	s->s_fs_info = NULL;
-+	/* v9fs_vfs_get_link_dotl() may still read ->cache in rcu pathwalk */
-+	kfree_rcu(v9ses, rcu);
- 	p9_debug(P9_DEBUG_VFS, "exiting kill_super\n");
- }
- 
--- 
-2.56.0
-
+-	for (unsigned int core = 0; core < rdev->num_cores; core++) {
++	for (unsigned int core = 0; core < rdev->max_cores; core++) {
+ 		if (dev == rdev->cores[core].dev)
+ 			return core;
+ 	}
 
 
