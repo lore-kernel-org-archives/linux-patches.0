@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774746;
-	b=x4PzvpSKjwcorTNuMRHVNhQOFUoLI5otbM/dtH/nwWWldu4uSrTIlLryv8Z3e+hrne6C
-	 GomTvtDG/TLxPnwvQd4OXfvOzjIicYhk9TbhY0RxKNkUrUCEcOrwi6bUR8PwhqKusX7Kr
-	 YnIKOwrV/cPIB56ROkYvEazvcPH7RpW7GA/gensBkQumDHssJ9rBw0RTHF9lKD0ZKWocF
-	 qp76pwmSLF8hKC3LUq7TmTMbjOM4zbsxtE0Brxn8xZj0Rz8HpY1sF6Xsk9hWtzu1NrAQR
-	 5cbimT/MB5IBTjUNrlLCuSOW4M4iBTZWqtKJpXnwDZiXtWaBEI5IrticiTpsYfWgA3g==
+	t=1792774748;
+	b=t+q0cDTxReaZ/daKySV003JRtd1JD9KyqlG/7k8dXP6ejrnak0qryNOaanb8sB5b42hG
+	 n2Sr14JTUsJfDhyq/N7r4tNheQmEfK0m6U4vneBFgn98+YKJuLix4y/m9XWyoJdOIN0j4
+	 7NGTfnYdW3zCELwyQgeYEEdtH6WpQoqsuxblvifzm2DwXwL4u+WWBJi9//YgbI9fj4jWv
+	 8ms5mABr57dvnUpaW0YZcssTt/FNA/ikiQpNrNj0XbplJSKQTRLMXp5h35+RCP28MLezd
+	 FDtF1k+1S0RcLAiubp3tDErR6JOJTKp0Rl95Y+vTU+zZ/fA0YloUGJCpiRBz5otMEJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774748;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T027lGoTuOL7jKhBMZvzlAuYIVuWSSYdVxbhyh94HkQ=;
-	b=rSRfmIrDxOCo+qdNlBuSWczK9GOFsbx95F0MF5dtLbu2QC6XNyweKpw3CIP/XJUvn6zT
-	 am8H2lj2sUQPc4kxUoLTgLBNqo21/oFMZeQxRaRa4mNutqdEFqVTeOFS5p62yPt3AvBaa
-	 ViAw1pcmetpwS1TCKtlsbhi5G8s9PI4lSOLu/ObN3nWNyvm1qQs94mQAL5rQaZlZ5k6N2
-	 D+WcqvQyRRZGAapcB8T5vcv4FFCBKSl9C9GJdhgN/ognOezB+a2D6vsGR6XpaF3xgQX1l
-	 OOg1iwC0xJQM1MtTza8s8MUr6NL/lz0RoYwwFBAAA+ynqv4Dy6DAh/bv8tibAm9oPYQ==
+	bh=tA+oDqZQe/bbuDqugxZCL429UWBLPVtEur42FfPY73w=;
+	b=k+6U5Qcraz7ZRbp6Y2UL4p266JlTHBGvLnEULvB4ml0LucTa0BAzITKwH6Wke6WXpmLU
+	 6HJKkw8e+vfEKZ9/C3YCI5Ii7S6zL+UuosthC7pZB7Jy60N9cIN1PeFL9UfwmPeSyUcvk
+	 BbP6+HHbhv8cQBsSBE0D2h9Tgmk25EAuIb9Ny9XWqlTmith/uV23P8QzNjIup+mK3AYG9
+	 iw6OZh5AMkZ1OzL+d5ocsYiT2kcOCreRlfTC1tYRXYTOhVjLiZFAhOpnO3VLpwGb2comy
+	 v5+nUSWkbh1ouGayAkqVEqLqZVUVR1/EGSpwoU2pIgjNhYPF2sm+9YKhlLwwUPAqFDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rXsvFnjx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1lBZxUqh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BB1606A31B;
-	Fri, 23 Oct 2026 16:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3C606A31A;
+	Fri, 23 Oct 2026 16:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rXsvFnjx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EA41F01825;
-	Fri, 23 Oct 2026 16:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1lBZxUqh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BB51F01825;
+	Fri, 23 Oct 2026 16:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774745;
-	bh=T027lGoTuOL7jKhBMZvzlAuYIVuWSSYdVxbhyh94HkQ=;
+	s=korg; t=1792774748;
+	bh=tA+oDqZQe/bbuDqugxZCL429UWBLPVtEur42FfPY73w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXsvFnjxblRFrysfkyucowd1u0jjklh7wqN9egRF5HWjlLgxN4fVrgfSwo7oZ+9dJ
-	 DsDcUnlmGRAmYWE9VTIngwz8GVXVtiaCt+LsRtcSZt62ahEJLtjRL3eWWligcFocPs
-	 dZzKDytgjHfAXwKxRVjvZebjV3YrRQQBCIzkRM/s=
+	b=1lBZxUqhsRJB6w1jXYScFrmJarckO/XTWnV+1eP9sI/X8fgF3eWc0QGDyfVJnH/Fp
+	 HOkW9WG3F1fSOUzBBeR3nZ1CQaTztl1pxABsJWgfrO3hFy9LS0rZ6vswi0vY6x0RXm
+	 IgSJ6SkaTSrcpjjYZt5iA8AvnhKSJY12UN43UhZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dingisoul <dingiso.kernel@gmail.com>,
-	Laurence Oberman <loberman@redhat.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Juergen Gross <jgross@suse.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 7.2 145/242] scsi: st: Fix use-after-free race between st_remove() and st_open()
-Date: Fri, 23 Oct 2026 18:39:47 +0200
-Message-ID: <20261023163717.212536187@linuxfoundation.org>
+Subject: [PATCH 7.2 146/242] scsi: xen/scsifront: Check for a NULL shadow entry on a backend response
+Date: Fri, 23 Oct 2026 18:39:48 +0200
+Message-ID: <20261023163717.236264404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,68 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurence Oberman <loberman@redhat.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 71caf7f84bd62a4bf91cc95abd2de690afb8d15f upstream.
+commit 8c8222c255772713eb36cde695777a1fce224917 upstream.
 
-st_remove() drops the probe reference on the scsi_tape with kref_put()
-and only afterwards removes its index from st_index_idr. If that was the
-last reference, scsi_tape_release() frees the structure while it is
-still published in the idr.
+scsifront_do_response() validates the rqid in a backend response against
+VSCSIIF_MAX_REQS before using it to index info->shadow[], but then
+dereferences the entry to test ->inflight without checking that the slot
+is populated.  Shadow slots are NULL before a command is submitted (the
+host private area is zeroed at allocation) and are reset to NULL in
+_scsifront_put_rqid() once a request completes, so an in-range rqid that
+does not correspond to an outstanding request makes the frontend
+dereference a NULL pointer.
 
-scsi_tape_get(), called from st_open(), looks up the tape in
-st_index_idr and takes a reference under st_ref_mutex and
-st_index_lock. remove_cdevs() does not wait for opens that are already
-past chrdev_open(), so an open that is blocked on st_ref_mutex while
-st_remove() holds it can take the mutex as soon as st_remove() drops it,
-find the freed tpnt in the idr and call kref_get() on it:
+A malicious or buggy backend can thus crash the guest by returning a
+response whose rqid is in range but not in flight -- for example a
+spurious response before any command has been issued, or a duplicate of
+one already completed.  The ring has only VSCSIIF_MAX_REQS (16) slots,
+so before the first command every in-range rqid selects a NULL slot.
 
-  BUG: KASAN: slab-use-after-free in st_open
-  Write of size 4 ...
-   st_open (drivers/scsi/st.c:254 drivers/scsi/st.c:1291)
-   chrdev_open
-  ...
-  Freed by task ...:
-   kfree
-   st_remove (drivers/scsi/st.c:4512)
+Reject a response whose shadow slot is not populated.
 
-Remove the index from the idr before dropping the reference, all under
-st_ref_mutex. A concurrent scsi_tape_get() now either runs first and
-holds a valid reference that keeps the tape alive, or runs afterwards
-and finds nothing, so st_open() fails with -ENXIO.
-
-This restores the ordering st_remove() had before the conversion to
-st_index_idr, where the tape was unpublished from scsi_tapes[] before
-the final kref_put().
-
-Fixes: 6c648d95a6af ("[SCSI] st: get rid of scsi_tapes array")
+Fixes: 6d1c2f48f3fc ("xen/scsifront: harden driver against malicious backend")
 Cc: stable@vger.kernel.org
-Reported-by: Dingisoul <dingiso.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-scsi/20261007211520.1428497-1-dingiso.kernel@gmail.com/
-Tested-by: Dingisoul <dingiso.kernel@gmail.com>
-Signed-off-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20261013202548.249628-1-loberman@redhat.com
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20261005123555.253995-1-yhlee@isslab.korea.ac.kr
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/st.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/xen-scsifront.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -4515,11 +4515,11 @@ static void st_remove(struct scsi_device
- 	remove_cdevs(tpnt);
+--- a/drivers/scsi/xen-scsifront.c
++++ b/drivers/scsi/xen-scsifront.c
+@@ -367,6 +367,7 @@ static void scsifront_do_response(struct
+ 	struct vscsifrnt_shadow *shadow;
  
- 	mutex_lock(&st_ref_mutex);
--	kref_put(&tpnt->kref, scsi_tape_release);
--	mutex_unlock(&st_ref_mutex);
- 	spin_lock(&st_index_lock);
- 	idr_remove(&st_index_idr, index);
- 	spin_unlock(&st_index_lock);
-+	kref_put(&tpnt->kref, scsi_tape_release);
-+	mutex_unlock(&st_ref_mutex);
- }
- 
- /**
+ 	if (ring_rsp->rqid >= VSCSIIF_MAX_REQS ||
++	    !info->shadow[ring_rsp->rqid] ||
+ 	    !info->shadow[ring_rsp->rqid]->inflight) {
+ 		scsifront_set_error(info, "illegal rqid returned by backend!");
+ 		return;
 
 
