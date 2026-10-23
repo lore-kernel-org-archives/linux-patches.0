@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774357;
-	b=m9125Qt9eM3uYsb5ZtevJswMzEaW7NsRCki3shDxpHZ3/9PCvIOsw3ywWvaVRNi8/XX3
-	 jp3rscTW4kq5w9Ab7K8rNUEHcHXX82D0CTz9rF3HsYH7Dc8Vaq4eiE9E4iWJJbwKhbQlk
-	 7VCBmFtctM6XJy7zHq80KAZNFV3IGTXtogeqMRFD8Ibo4AXQctBKU9FfXG31qAK5VZ8tn
-	 gIWTqt33hnyH1JeZ8oWOiAf45Wbj3Bus2pbMq1P2Xcl1MyDLvc87oxqPOhQoxq/bYooer
-	 qJwXLvRJ2i7nA8oAFJ7qhxYYQn9rDfWMhCHuVKS4ht9FPAHoYAq5rhdst1xLgAoSn3w==
+	t=1792774359;
+	b=tAo8ek6cVON4WTGd2EK68SP01GjAarNfHKYLKA/4nJD56d1FHvIXV1PDscw2Fxgc4D2Y
+	 w94Hxh0dGnEiILZPit39aM1fgY/uZvjjDXhpk1BZgq/Zzhi43PohVZJmMBI2mynel0II4
+	 owDanUp6n1MgvddkKINHn0mlhKsjfcthoarjJ+5JGYV3PNCJyJLcAB0mmaqLbIbN9FVEf
+	 YLBaB340Djwbh1lv/P/Hc2PrAVUkD0ED4YojcV7WQvdcDIEkfq8gTet3bIafGcJ3aM5QT
+	 h3EBPeDlVapz0CBDxNM05Sux+ZfBIs+qhHAPE+XwjYTwAneUTneUdKCCmeBN0lgdBiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774357;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rT6GNgoiSKhBxH+JsGsust0Awm06OCjl1kt2w/fSEHM=;
-	b=cZSeXoKrIMIx6Rc7CaUAZLf6cWNG6vUIgU9sclA56YqLvjq5cYlpyOPN3dwkGKf97oU/
-	 LNgQUWg5zBPUY1ib/AlNpwOYa+TkJSVZrls3E+DGMasF7YZtUhFpUNPz+itTCVwR8Hme1
-	 V9J/LCGp3giJeJ1qcsjxVGuRJBbwIVXB+Ob+oK9DvQR1BtQgsYwoVOf4FE2D+t1IKbLSI
-	 eon5pf9ZV2IPeqCDCuAyn99zNYDChNRJGcPqKiy4yfDNGxp6h5L5Vsm1imllOLXVi/S1Q
-	 P7lCY13uw9G6qxUt34KJ1495Gr9gwamdUzRlfgiw/zxQwBikbFVsVqnFkh8rUYtWbqw==
+	bh=RPJt8IJhM/dkz9Tx8QPnL1ejV0DCSF66+a9pJYMA0UU=;
+	b=UTKCvKkQkVhjNiRELU8gaRRADR7vCXgLwvoaIx8ZdoEJey4AVmki+omb3LD7YcZgI/Sf
+	 JAS7JIjPzVG+7HifIvAsAsWcm7Ixf5jk93f+7GkkQHRVg15RKj42cxNMmvvk7evhMIFvu
+	 HGDYrrd4aU2Ixz/LpM0eG2sybDkjuSqVGS+mZWkGmlLTjX2j4/DbrBApSW6nYv97CZGHF
+	 uo5h/TD/B9P09MAqFE7dw9/w02eeOBEZnoq4i3tAItvwMm+1NjMZZ6HxBJI3tHz9QvQ1z
+	 sZKKWY7+hOPkkAB46J1RUgORL/1rlgiv4PrAvplFdjyTnbU2pd9RVJpKHWllGfiNVew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEK5N4U0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AcUz3jhv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C430B606A31B;
-	Fri, 23 Oct 2026 16:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C899606A31A;
+	Fri, 23 Oct 2026 16:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEK5N4U0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13B81F01829;
-	Fri, 23 Oct 2026 16:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AcUz3jhv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82481F031E0;
+	Fri, 23 Oct 2026 16:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774356;
-	bh=rT6GNgoiSKhBxH+JsGsust0Awm06OCjl1kt2w/fSEHM=;
+	s=korg; t=1792774359;
+	bh=RPJt8IJhM/dkz9Tx8QPnL1ejV0DCSF66+a9pJYMA0UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEK5N4U0bubqj2atOI7i5WSWRU42fnVQocf9Fhi1n07+68r8cyQ9hezsKpih1GDHC
-	 72/0e1QpCcQz4c3w51CGMstTApdFqjfPmSxHeZOY6OvX/BAToRUq/EUWHAsiZap29w
-	 G9bDWX3s6jVTyuRj3+veuuyXpVTreXTuTVqayPwM=
+	b=AcUz3jhvX7VfUY7PWUYTBh2nuPNrwcCLQBBtwwGa7EfkQBPj9yJ960oGteZfGcw58
+	 5SKD5nvxTbuPZQf4xbOqoIoI1spRqbo3KJTsm5vAe+2X0aIEUs2EhTEy2Oeprf1Ou6
+	 77LUgrrOS6lhdFr0eMDJ527coJsY644Vnkcr+O/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Gilberto Conde <gilbertorconde@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 014/242] ARM: configs: sama5: enable current Microchip KSZ DSA symbols
-Date: Fri, 23 Oct 2026 18:37:36 +0200
-Message-ID: <20261023163714.128703743@linuxfoundation.org>
+Subject: [PATCH 7.2 015/242] pinctrl: qcom: ipq5018: add missing pwm3 function on gpio13
+Date: Fri, 23 Oct 2026 18:37:37 +0200
+Message-ID: <20261023163714.151298088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,45 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Gilberto Conde <gilbertorconde@gmail.com>
 
-[ Upstream commit afb1ecfeda3fc31d6300a176f4854cc62e289bf3 ]
+[ Upstream commit c6c159fcdb4e9a678eda0831f971e4a3a488ec47 ]
 
-The Microchip KSZ DSA family now uses NET_DSA_MICROCHIP_KSZ_COMMON
-for the common provider and NET_DSA_MICROCHIP_KSZ_SPI for SPI-attached
-switches.
+GPIO13 supports the PWM3 function at mux select value 4, but the
+pingroup table leaves that slot empty and gpio13 is not listed in
+pwm3_groups. Selecting pwm3 on gpio13 is therefore rejected by the
+pinmux core:
 
-sama5_defconfig still enables the removed KSZ9477-specific symbols even
-though SAMA5 device trees contain KSZ SPI switch consumers. Replace the
-stale entries with the current provider symbols.
+  ipq5018-tlmm: invalid group "gpio13" for function "pwm3"
 
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Fixes: 07bca160469b ("net: dsa: microchip: common menuconfig for ksz series switch")
-Fixes: 4658f2fe8fbc ("net: dsa: microchip: common ksz_spi_probe for ksz switches")
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Link: https://lore.kernel.org/r/20260814075310.11613-1-pengpeng@iscas.ac.cn
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+The GL.iNet GL-X2000 drives its fan from PWM3 on this pin, and the
+vendor firmware muxes it with select value 4:
+
+  gpio13 : out low  func4 8mA no pull
+
+Add pwm3 to the fourth function slot of gpio13 and list gpio13 in
+pwm3_groups. With this the pin muxes as expected:
+
+  pin 13 (GPIO_13): device 1941010.pwm function pwm3 group gpio13
+
+Fixes: 725d1c891658 ("pinctrl: qcom: Add IPQ5018 pinctrl driver")
+Signed-off-by: Gilberto Conde <gilbertorconde@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260921093419.2870168-1-gilbertorconde@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/configs/sama5_defconfig | 4 ++--
+ drivers/pinctrl/qcom/pinctrl-ipq5018.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/configs/sama5_defconfig b/arch/arm/configs/sama5_defconfig
-index bd7f0b5f7d660..46e7f554faa18 100644
---- a/arch/arm/configs/sama5_defconfig
-+++ b/arch/arm/configs/sama5_defconfig
-@@ -70,8 +70,8 @@ CONFIG_BLK_DEV_SD=y
- # CONFIG_BLK_DEV_BSG is not set
- # CONFIG_SCSI_LOWLEVEL is not set
- CONFIG_NETDEVICES=y
--CONFIG_NET_DSA_MICROCHIP_KSZ9477=m
--CONFIG_NET_DSA_MICROCHIP_KSZ9477_SPI=m
-+CONFIG_NET_DSA_MICROCHIP_KSZ_COMMON=m
-+CONFIG_NET_DSA_MICROCHIP_KSZ_SPI=m
- # CONFIG_NET_VENDOR_BROADCOM is not set
- CONFIG_MACB=y
- # CONFIG_NET_VENDOR_CIRRUS is not set
+diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+index 03cfba9534f84..84392fe258c9f 100644
+--- a/drivers/pinctrl/qcom/pinctrl-ipq5018.c
++++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+@@ -563,7 +563,7 @@ static const char * const qdss_cti_trig_out_b1_groups[] = {
+ };
+ 
+ static const char * const pwm3_groups[] = {
+-	"gpio45",
++	"gpio45", "gpio13",
+ };
+ 
+ static const char * const qdss_cti_trig_in_b1_groups[] = {
+@@ -689,7 +689,7 @@ static const struct msm_pingroup ipq5018_groups[] = {
+ 	PINGROUP(10, blsp0_spi, blsp1_uart0, led0, gcc_plltest, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(11, blsp0_spi, blsp1_uart0, _, gcc_tlmm, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(12, blsp0_spi, blsp0_i2c, blsp1_uart0, _, gcc_plltest, qdss_tracedata_a, _, _, _),
+-	PINGROUP(13, blsp0_spi, blsp0_i2c, blsp1_uart0, _, qdss_tracedata_a, _, _, _, _),
++	PINGROUP(13, blsp0_spi, blsp0_i2c, blsp1_uart0, pwm3, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(14, pcie0_clk, _, _, cri_trng0, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(15, _, _, cri_trng1, qdss_tracedata_a, _, _, _, _, _),
+ 	PINGROUP(16, pcie0_wake, _, _, cri_trng, qdss_tracedata_a, _, _, _, _),
 -- 
 2.53.0
 
