@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773898;
-	b=whT0gqXZGTb4pCtgwmdjbV9MjQPxkHE+CfZtj4knmYbv4ftWGtlJe3fVfsxF6WjIczu/
-	 uWyEffShWpklS3j0KwT/bCKGH5+gXJzK3AAWUT45YoKswk2MFodCCwDJNfpo4CcNf67qw
-	 +8Q6KrEzYO+GqGib+FGofuExAnSbHh8S3cyw3pCMQTZUjQpCO0XBt50GsrwcDD6+4quQR
-	 Hz4T137E4Ts8qd5x+XGg9+tHI3B2N7n4rxQGOPDALUvPF/xd4pgNj6R4hhSHShykNQEEH
-	 nKgQHWZrfhsjFX0CV8ggupYoYcJLOx8UfNXGu2WmKYhx4bL7G15vNfv0+AQr+u7mu5g==
+	t=1792773902;
+	b=jP2YoPOkxibxbh8wJqBx2CARmM+idS2BWyqcaj5/7Z9UzO1Vdve5weNVw8rLDTgGndXP
+	 YNqX2OF7nLNQkyZT+Z9Meiy8qx9VWCReHKm34Y4O2oF8w1N1zUp/oAIud7+mBmMpRukc/
+	 yxFqZewJqWIWVS2JJ1xmnEodn0KzCEmTNaaMXlUObI0ijhI5OaBl95D/++lqO8BNbUce4
+	 5iKwPMw9U1+/ORLq1uPcVdQnH9waUZqChBWBHJoDXH7zuu5GN1MYPpAlmgx6Vna3T53YJ
+	 3ayEPexe/b9OHgx+KSIhYtEubHDbMW1wFBQalgtaG0Ya3SCJ11b1z3CuK+6Rvg9cYoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V+mYi12QBLkyth5hwNW3DawAvYbSmu1DQY1IJHfj0ik=;
-	b=w+z4Tvvtvz/28k1XPqTERUI4S6q9B2WKa91xVZ+gKHLudRs4CzJIg6Z4Um8yyIYr0fMW
-	 i46IPOl/80jWAyv7S2RknRLv8fHLluqr6SjULoVAYPQBJZ6uEaBf1vV1N64GpIktdHBR0
-	 n8YDpux/wHd+38nLKZP9prexCbUvrwJiDLIBs8fgmTSa8sfjUobYUltnvDx9bBkxKkUpx
-	 UpUM9vvNv15xJoRpO1bSxTMbJUzOEdq1v5Kz9f3s+oOtZHIqHlQoRmj7NtcUfq7yW/fzG
-	 h9k0hfsm1oi81ygMXQ9csZPd0ulX0ngvwtUDvWh+pHir7Vfav7Lsdicq3otiH4ecizA==
+	bh=e4CILzQQghMFpp/L5C0lsicraL2Zx7F+/cA63IazVqU=;
+	b=adME0wLv+yR/WZOEW7YfsRk/40aQbjeDWn44PK+BFtvR//IGb6Evy6D6KlVk7Ewkz4j5
+	 X7M2d+krb0lrS7Ro2S42QfINt4U9eQ5DamEMFvY5uZMxkagYG09cPzE1WMG7YEOcUhzZD
+	 16jmbqxy+WA6EdFB9wYUQAj44cOwu2uWkGAuoR+BG35FVM0il1PXm+0FCuNLLCmf3JN6n
+	 PlGvRRN+HT0rPWoyY5UOmo6Xhf/oS+SbEnNQOffEtUJ/sQYHGmRur2LBruWf8RdlqM2oF
+	 3rIrXk24y8u4t8BFA5+/DB7JiPsfErET46QTOwvh1m7VyhsTVUCO2AArUbbfnKUTCFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4fsVPSa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E7QvtPXM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9016E606A31B;
-	Fri, 23 Oct 2026 16:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AEA606A31B;
+	Fri, 23 Oct 2026 16:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4fsVPSa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3131F01828;
-	Fri, 23 Oct 2026 16:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E7QvtPXM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3511F01828;
+	Fri, 23 Oct 2026 16:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773898;
-	bh=V+mYi12QBLkyth5hwNW3DawAvYbSmu1DQY1IJHfj0ik=;
+	s=korg; t=1792773901;
+	bh=e4CILzQQghMFpp/L5C0lsicraL2Zx7F+/cA63IazVqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H4fsVPSayfbR5WXOpt5su3QyeZvtDe1QzHCIqQcZnLA6bnedFuIb5XRqOMp/D/eWB
-	 uBxnOjAPpbO7rHgEz/D2N7kouYOQAz3frI+NvlYrs1cvpe1phDIF7OIlaGVpl9+xoY
-	 PE7g4UjIzJq5897UKlFQx17ojzC9KZXmWXCmVH2o=
+	b=E7QvtPXMQpN4BPvYAKeKcAhGcny8sSfoQ0oXIQt3qsedF11Z8PNP32NOhxkgkaYe5
+	 46imwT8sj9xC7fX29qSm+O0PhOrqb6F6FlDjtI92p1saGYwQoaU/0VbVMKl4XC7mQw
+	 6NLdDrJNp2YIPKx6tsEbsCtj/rOScyus5wRwuP6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 051/193] scsi: target: iscsi: Fix race in discovery auth updates
-Date: Fri, 23 Oct 2026 18:35:28 +0200
-Message-ID: <20261023163715.414156937@linuxfoundation.org>
+Subject: [PATCH 6.18 015/193] Drivers: hv: Dont reset VMBus connection state on error/exit paths
+Date: Fri, 23 Oct 2026 18:34:52 +0200
+Message-ID: <20261023163714.564013541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,85 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Michael Kelley <mhkelley58@gmail.com>
 
-[ Upstream commit e15b81f602edbdee39c335546f25486a1747f3f0 ]
+[ Upstream commit ec31dc39e835ccde0930daccece8c492d28282fc ]
 
-Separate configfs opens can concurrently update the discovery AuthMethod
-parameter. Both callers may free the same value in
-iscsi_update_param_value(), causing a double-free.
+In two places, current code forces vmbus_connection.conn_state to
+DISCONNECTED prior to calling vmbus_disconnect(). But vmbus_disconnect()
+calls vmbus_initiate_unload(), which unloads the VMBus connection
+only if the conn_state is CONNECTED. Consequently, the connection
+remains and the Hyper-V host might continue to send messages or post
+VMBus interrupts.
 
-Protect the lookup and replacement with the discovery TPG access lock,
-as used by the other TPG configfs parameter updates.
+The problem was introduced in commit 74347a99e73ae ("x86/Hyper-V:
+Unload vmbus channel in hv panic callback"), in that
+vmbus_initiate_unload() started checking the current connection
+state before doing the unload. This commit removed some occurrences
+where conn_state was forced to DISCONNECTED, but these two remained,
+apparently due to an oversight at the time.
 
-Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Link: https://patch.msgid.link/20260811124843.6817-1-linfeng.sun.dev@gmail.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fix this by not forcing conn_state to DISCONNECTED during VMBus exit,
+or if a failure occurs when establishing the connection in the first
+place. Whatever value conn_state has at the time is then read by
+vmbus_initiate_unload() to determine if there is a connection to
+be unloaded.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-hyperv/20260805205806.B5AC31F000E9@smtp.kernel.org/
+Fixes: 74347a99e73ae ("x86/Hyper-V: Unload vmbus channel in hv panic callback")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_configfs.c | 26 ++++++++++++++------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/hv/connection.c | 1 -
+ drivers/hv/vmbus_drv.c  | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_configfs.c b/drivers/target/iscsi/iscsi_target_configfs.c
-index efe8cdb200609..3b4e7a8d3d317 100644
---- a/drivers/target/iscsi/iscsi_target_configfs.c
-+++ b/drivers/target/iscsi/iscsi_target_configfs.c
-@@ -1306,17 +1306,24 @@ static ssize_t iscsi_disc_enforce_discovery_auth_store(struct config_item *item,
- 		return -EINVAL;
- 	}
+diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
+index 9be2af772867d..4a3bb9ae9250c 100644
+--- a/drivers/hv/connection.c
++++ b/drivers/hv/connection.c
+@@ -340,7 +340,6 @@ int vmbus_connect(void)
+ cleanup:
+ 	pr_err("Unable to connect to host\n");
  
-+	if (iscsit_get_tpg(discovery_tpg) < 0)
-+		return -EINVAL;
-+
- 	param = iscsi_find_param_from_key(AUTHMETHOD,
- 				discovery_tpg->param_list);
--	if (!param)
--		return -EINVAL;
-+	if (!param) {
-+		err = -EINVAL;
-+		goto out;
-+	}
+-	vmbus_connection.conn_state = DISCONNECTED;
+ 	vmbus_disconnect();
  
- 	if (op) {
- 		/*
- 		 * Reset the AuthMethod key to CHAP.
- 		 */
--		if (iscsi_update_param_value(param, CHAP) < 0)
--			return -EINVAL;
-+		if (iscsi_update_param_value(param, CHAP) < 0) {
-+			err = -EINVAL;
-+			goto out;
-+		}
+ 	kfree(msginfo);
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index b1552a26b8d3e..1dc371eb53400 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -3018,7 +3018,6 @@ static void __exit vmbus_exit(void)
  
- 		discovery_tpg->tpg_attrib.authentication = 1;
- 		iscsit_global->discovery_acl.node_auth.enforce_discovery_auth = 1;
-@@ -1327,8 +1334,10 @@ static ssize_t iscsi_disc_enforce_discovery_auth_store(struct config_item *item,
- 		/*
- 		 * Reset the AuthMethod key to CHAP,None
- 		 */
--		if (iscsi_update_param_value(param, "CHAP,None") < 0)
--			return -EINVAL;
-+		if (iscsi_update_param_value(param, "CHAP,None") < 0) {
-+			err = -EINVAL;
-+			goto out;
-+		}
- 
- 		discovery_tpg->tpg_attrib.authentication = 0;
- 		iscsit_global->discovery_acl.node_auth.enforce_discovery_auth = 0;
-@@ -1337,7 +1346,10 @@ static ssize_t iscsi_disc_enforce_discovery_auth_store(struct config_item *item,
- 			" Discovery TPG\n");
- 	}
- 
--	return count;
-+	err = count;
-+out:
-+	iscsit_put_tpg(discovery_tpg);
-+	return err;
- }
- 
- CONFIGFS_ATTR(iscsi_disc_, enforce_discovery_auth);
+ 	hv_remove_kexec_handler();
+ 	hv_remove_crash_handler();
+-	vmbus_connection.conn_state = DISCONNECTED;
+ 	hv_stimer_global_cleanup();
+ 	vmbus_disconnect();
+ 	if (vmbus_irq == -1) {
 -- 
 2.53.0
 
