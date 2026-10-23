@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774617;
-	b=amRp4i5tiftM94WQnscu1BPTVgqMcJfNU1ZE4oIe88mTdc2b2yGUb5sYfggsmWvVroK4
-	 WPaOUMQWp+1axl1fRfObvixGsGAiziqrK7PS+YEbmqHadYcCtAKR1WdRMAv6iIJlqn28r
-	 mf09WzA/XtlCfc9hokCe8o72zeSzz4RHZKiBsqUNYV4Lo9RboxmaYaJDFuj6R5pfDGfiv
-	 RP9tIo8nRSqkV9dbB01nNUYwy9gkquwZrUNJ6fY3pLiM93qVcWpAHHq1+460RX7tcybPi
-	 0y9PrqBOLwiOh8x6NpwNGrqItNB2w3h7RZ4P/BHDeNOch7MZ3m/uBahYmlDWzk/4wvQ==
+	t=1792774620;
+	b=giZlBU6ZbcfXYwbww5YWd8VbuYd99Rf4CCZMy9lT7k2OcvfsDafdDPZOzPNqqXJbHxy9
+	 G5pBs1E9o+qozQBgaEsSRSw2atrvb+Mxyc/SS1nGOudR7HyJHydhfaYxxarSGpwYYfkxf
+	 HKpLI/z8g7ctVtU9WaeUpF94XKioFm3Vk895u3ip7/WQjPimoHQqTo8ovywjqdw08Eqle
+	 ZSv1mqY0gfMyRhW6JMlCpMq5icgnhN7IUPYNusgIaukGhmRiJXjh2t5C9QiraGAQqjv7Z
+	 A9cLxHHPRcHw1zljA4NOdHJKlx7Ps6qi9kyrX7fTFyD8lhMm4uo6YDoAkTWUC52bqVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F6QMhs87baOIkDECRu59eAgPiWgkG6YtzyhVpDxjVKc=;
-	b=SLse++8RFjXl54iEbxuEwTJMLyK7Rioe3lZyEPPI3TMDZg7W6FbTzGMP6Mumgm554ywM
-	 wWW273CZjWvYWj223jZ/Oud2GJF3aEAifYaxgDAO5ieOScsbbiVuSbeUfafWyws1RD6C2
-	 kuf4gh4VqMDcql5HcYycJxQXrmbjJEpix86z3ureUm8/H/6qzq+T0brMnD7qYH3H2Xn24
-	 fI9VyG4w7ajs9ZeztC7+umpnCDA0CFBm7HW+HoSwSwAEF72PbNFNOmb+/NkNDY77iJIjK
-	 PXapFdwZ7+XiNNAW/1faNKAaYaUQTHny+R8YNvuJFZvYdneyBSpZxdBtKVlcJLuNTRQ==
+	bh=ox2dlKHl9rLEBNSHBeX6UD0TdH988KXtQslWiJipwyk=;
+	b=J6TsbSg9VwhDgO8SPeuQG1/DoWZeVwgaexiENxaqFAv3nZ10AhEdzLmue14kDDK4kOfb
+	 SHvehTy2oceckrOAvmXhA3RNM8AEFa+7aWfFD2L+IAt2IseHVIiY4EsCxLelrwkPLq9Io
+	 LWf/G2bU5tJVBB8x0BtBOqONXCWxc+SXb1kLqhUf5hRj/3pgwMSEdFmN/y30deGT3wSBT
+	 N1q1KKh6fn3tHnwauQWwy3qQhU1Qy1Wsn3wUhIob8R6vKZRPIAKiR7CsFf33zA9WSnCSn
+	 WANdrvtzA8k4u0uAHkV+bBIGvk79Q6MJdz6aZphUnw5fnBj9pDj1e22FKqPQ1ZTqeTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dBji04Hv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIYSXyTQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACAD606A31D;
-	Fri, 23 Oct 2026 16:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873E3606A31A;
+	Fri, 23 Oct 2026 16:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dBji04Hv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4C01F01825;
-	Fri, 23 Oct 2026 16:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIYSXyTQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D593B1F01825;
+	Fri, 23 Oct 2026 16:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774617;
-	bh=F6QMhs87baOIkDECRu59eAgPiWgkG6YtzyhVpDxjVKc=;
+	s=korg; t=1792774620;
+	bh=ox2dlKHl9rLEBNSHBeX6UD0TdH988KXtQslWiJipwyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dBji04HvWK/FM72xJlq0Tyr/KIKgx8QO16rDxqCUmQblzjEj7Gpw7bl35VifhN2XL
-	 ora76zkNAehWFRRbDkXwzizFFCzTvtXKWXh7dp+ElPFj+D/ZAo1raDcUwq8IptdwQP
-	 dm+lz86B7Y3yZxc9MwF7y8rbIQ/aWEYrB23xJUq8=
+	b=bIYSXyTQd442bpc+zErHxpTDA7l+5CzbM6GEmcnKdBLjcTGpm/oW2wWtm6ogxUVgG
+	 eA/xKena8/14Vqpy28/uHU+msmQczSWIeopjajEkhPfx79Isup54L6NoCXrs5m01Yx
+	 3P4P88KBeqyj931OUiFkFZpvvknFbq0Wdo9QJ7Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 102/242] afs: free the super info after a grace period
-Date: Fri, 23 Oct 2026 18:39:04 +0200
-Message-ID: <20261023163716.193817373@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.2 103/242] ASoC: SOF: ipc4-topology: Fix shift-out-of-bounds for aggregated ALH capture
+Date: Fri, 23 Oct 2026 18:39:05 +0200
+Message-ID: <20261023163716.218609412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -66,62 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 59e483739f2fd14327ece3f60c4995d060ca46b7 upstream.
+commit 746de48c3a250f0c264105dcbfcdf0c5001e970b upstream.
 
-afs_atcell_get_link() resolves the @cell and .@cell symlinks of a
-dynamic root in rcu pathwalk mode. Before it looks at the dentry it gets
-the afs_net through afs_i2net(), which reads ->net_ns from the
-afs_super_info in sb->s_fs_info. The @cell dentries are kept around when
-unused and the dynamic root has no ->d_revalidate(), so a lookup that
-finds @cell in the dcache gets to ->get_link() in rcu mode.
+When ch_count is smaller than blob->alh_cfg.device_count (e.g. a mono
+capture stream, such as a SmartMic, aggregated across multiple SDW
+links), step = ch_count / blob->alh_cfg.device_count truncates to 0.
+The subsequent GENMASK(step - 1, 0) then underflows step - 1 (u32) to
+UINT_MAX, causing GENMASK()'s internal shift to use an out-of-bounds
+exponent:
 
-afs_kill_super() frees the afs_super_info with a plain kfree() in
-afs_destroy_sbi(). Right now a pathwalk can't still be in
-afs_atcell_get_link() at that point, but only by accident. umount(2)
-waits for a grace period in namespace_unlock() before it drops the
-mount. And a mount whose last reference goes away elsewhere, like the
-chdir out of a lazily unmounted directory, still gets a grace period
-from bdi_unregister(). afs_fill_super() sets up a private bdi, so
-generic_shutdown_super() unregisters it from kill_anon_super() and
-bdi_remove_from_list() waits in synchronize_rcu_expedited() before
-afs_destroy_sbi() runs. That grace period protects the rcu readers of
-bdi_list in the writeback code. It has nothing to do with pathwalk.
+  UBSAN: shift-out-of-bounds in sound/soc/sof/ipc4-topology.c:2363:13
+  shift exponent 18446744069414584384 is too large for 64-bit type 'long unsigned int'
 
-Don't rely on it and free the afs_super_info after a grace period.
+Treat ch_count < device_count the same way as the existing "channels
+equal to output reference channels" case: apply the same ch_mask to
+every aggregated device instead of trying to split channels that
+can't be evenly divided.
 
-Fixes: 30bca65bbbae ("afs: Make /afs/@cell and /afs/.@cell symlinks")
+Fixes: 0390a102cc18 ("ASoC: SOF: ipc4-topology: use different channel mask for each sdw amp feedback")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-2-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20261008090130.15135-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/internal.h |    2 ++
- fs/afs/super.c    |    2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/sof/ipc4-topology.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -251,6 +251,8 @@ struct afs_super_info {
- 	struct afs_volume	*volume;	/* volume record */
- 	enum afs_flock_mode	flock_mode:8;	/* File locking emulation mode */
- 	bool			dyn_root;	/* True if dynamic root */
-+	/* afs_atcell_get_link() reads ->net_ns in rcu pathwalk */
-+	struct rcu_head		rcu;
- };
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -2352,11 +2352,14 @@ sof_ipc4_prepare_copier_module(struct sn
+ 				ch_map >>= 4;
+ 			}
  
- static inline struct afs_super_info *AFS_FS_S(struct super_block *sb)
---- a/fs/afs/super.c
-+++ b/fs/afs/super.c
-@@ -523,7 +523,7 @@ static void afs_destroy_sbi(struct afs_s
- 		afs_put_volume(as->volume, afs_volume_trace_put_destroy_sbi);
- 		afs_unuse_cell(as->cell, afs_cell_trace_unuse_sbi);
- 		put_net(as->net_ns);
--		kfree(as);
-+		kfree_rcu(as, rcu);
- 	}
- }
- 
+-			if (swidget->id == snd_soc_dapm_dai_in && ch_count == out_ref_channels) {
++			if ((swidget->id == snd_soc_dapm_dai_in && ch_count == out_ref_channels) ||
++			    ch_count < blob->alh_cfg.device_count) {
+ 				/*
+ 				 * For playback DAI widgets where the channel number is equal to
+-				 * the output reference channels, set the step = 0 to ensure all
+-				 * the ch_mask is applied to all alh mappings.
++				 * the output reference channels, or when there are fewer
++				 * channels than aggregated devices (e.g. a mono capture
++				 * stream split across multiple links), set step = 0 to
++				 * ensure all the ch_mask is applied to all alh mappings.
+ 				 */
+ 				mask = ch_mask;
+ 				step = 0;
 
 
