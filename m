@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773937;
-	b=dOFPDjY+9dAhQkgv713dnOusGvT4nRZp0EEMLV1ddHBSUhRncWTq7yyfMgvHOPH0ip01
-	 NqA9rX7W2B1U2bqF2mDD2GMUKXMKjtQkY4aIXYzNX4zmOtnol/BvcQB1dQOH7cPAW+nJ7
-	 VnXKnFKNrageXzjrDlWAbWMsAHMdzIGQiaztEwLaRyQEIRr2hBEb+rrv0iPGk6F/nsD9i
-	 7o7RHvf+j30t1RZg1N5FrU2lpo7HEjxyEAf12CGPVhB4x2uCm81pPt52UHawdwFJszmbp
-	 eo+eTDyPt5iqMlMmOY2WXfOUjxH7hiOjgV8ZIPSGuQ0+sNNXxklyPLZl91TYFnsPeiQ==
+	t=1792773940;
+	b=pnU+I/7VVwwjI3/s/SYd/6acYbqyeURFd/ixOcMThl4yiRPfqmQdLwIHebUOnRpOXlOH
+	 Tsff7o0Dl25NEzz9cil0Iqnsr9y9z2RID1UKy2gg09gkoMe2Vsk1hrvZQWG4yHu7ofUIQ
+	 u3OPG936iReQu75FU+9ColnMRx3yaWiZXOPe7Q+phK+MIUK7ZfdYnndlX4042vcqiG0P8
+	 Zmby71DlQ/XA0u7fEgnYIrOnb4gdMBQyR9B/XC+zDbYPYRvGY+pgQ2q3397wYjXHjJqLT
+	 tGyigDT1dOHzXqKvACeCzRS9VFndjpIZoL5vYrB1wfMERrhupTF4u6oC4Wzq/e1A3zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2xi3esEXytCnw8Gxf1wQnA7UET3a58tqMZsx4y8NKhI=;
-	b=zYCqzXlDYUXRG+selEQKfmugxd7/9PgVf/bbnhJAilE0A9NUqg/iL0gkyjhhjd4N+2AA
-	 oD8Ga6H2aU/kMrEVzFlIUHBAJHBCFsi/sO2sHjf4CvAJvbwhXKSJgpFoZvOhZGmAlv4pj
-	 UFnRzrcvewqWZMHyay73qyG466qWofCCL4et4wBPnQ8PH0kPqVtq5+2r/tmHYQBvCosuH
-	 sWwEOa39KAjhbFKw75nbCNm2rGNMgO3zdK+Ed2vIqQR+87tg8EIXbutXKZY+FDRKTAMdh
-	 vlHyPEk/wpbeuoQ2R3Na2/oXVYhpvbkvQmdORXpcRVjvMbwlYjEXFE44SHlHFDXHZfQ==
+	bh=mHHgwiLzHOHnkHbgiEKea4ckTYeNUXSi/aj0EEpQ1DQ=;
+	b=BswCz6/0OmTuPt3AghcKmdxc5LvATKZluC0jgP1CuSthY9RmtRf7WnsrpkwpgXqzpVSm
+	 Me+lwG7A8PlA4Z6CGqYcC8yF/xUCHujlNm5PA58hGgyj01xA9neBjUWM/8b6MbiG1JA5A
+	 9xZgGJvjnKGu6q5FUtdx2eLW1RGjinViPsjIa2zqCAejwrgFvDWVwi55+I/lu4Bo4c2AF
+	 sLrVHB+dAMXprxSxdn58xpGfUGnzytNCQPHOE0WaJ7O4cqYdaqax1LebYovdmCGT0HczH
+	 T83kK2k+1FT8roFHf3uyseuot+qDR3e0tlOMdMEjfGnh38ag7u6vBvIQjGfuOAHlSIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KK8mN1Co;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EgqtBC+Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D94606A31A;
-	Fri, 23 Oct 2026 16:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527BF606A31B;
+	Fri, 23 Oct 2026 16:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KK8mN1Co
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0461F01825;
-	Fri, 23 Oct 2026 16:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EgqtBC+Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD551F01825;
+	Fri, 23 Oct 2026 16:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773936;
-	bh=2xi3esEXytCnw8Gxf1wQnA7UET3a58tqMZsx4y8NKhI=;
+	s=korg; t=1792773939;
+	bh=mHHgwiLzHOHnkHbgiEKea4ckTYeNUXSi/aj0EEpQ1DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KK8mN1CojP2xh6/yloKpUj4IXHU1izX8Pu2i+o42uQKncKT9GIq9P1BrOU4H/WQKL
-	 62AMYkAk02YY0PnBGwo6JFfHZjr2bRE1x0Cd/AedUgXC52Nb6AKkUHcfGH+8ixmEue
-	 /N3CKs3hyI12DD7IT3FwR/T3DvWCt8YCcwKcKdok=
+	b=EgqtBC+YYflmwihFBW7AdvpWcDMprBoIGEHAlsjqhMOAdBx0kfX5eE3j/VTWsX6SA
+	 s6JooY37l3v2SMyNcUi+1L9vqPF8FUkkgXfeVvHdqkAlGEefspf2SgBD/6VzM9tRL/
+	 GKQ4l8IKo5UxKW0lcOSUzPExcpV3N+5GApMQBJ7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Haris Okanovic <harisokn@amazon.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 067/193] gpio: mxc: fix race between gpiochip registration and IRQ domain setup
-Date: Fri, 23 Oct 2026 18:35:44 +0200
-Message-ID: <20261023163715.788613977@linuxfoundation.org>
+Subject: [PATCH 6.18 068/193] perf: Fix perf_pmu_migrate_context() leaving events behind
+Date: Fri, 23 Oct 2026 18:35:45 +0200
+Message-ID: <20261023163715.811828093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -71,63 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Haris Okanovic <harisokn@amazon.com>
 
-[ Upstream commit 205cccd06e545694754e1bf8d626ea96e742cd8a ]
+[ Upstream commit e76b36b4be7160eaa14b416681e548b125702395 ]
 
-devm_gpiochip_add_data() makes the GPIO chip visible to consumers
-immediately. Since the chip sets .to_irq = mxc_gpio_to_irq, which calls
-irq_find_mapping(port->domain, offset), any to_irq() call between
-gpiochip registration and IRQ domain creation will operate on a NULL
-domain.
+__perf_pmu_remove() walks the group leaders of a CPU and PMU with
+perf_event_groups_for_cpu_pmu(), removing each one as it goes.
+perf_remove_from_context() takes the leader out of the groups rbtree,
+after which rb_next() on that node returns NULL, prematurely ending the
+walk. Other groups stay behind in the source context.
 
-Fix by moving devm_gpiochip_add_data() after the IRQ domain and generic
-irq chip are fully initialized, ensuring port->domain and the irq chip
-handlers are ready before the chip becomes visible to consumers.
+On CPU hotplug, they are then torn down with the dying CPU. They keep
+running until teardown, while the PMU's interrupt and migrated events
+are on a new CPU, which drivers rely on never happening.
 
-Fixes: d37a65bb4663 ("gpio/mxc: Move Freescale MXC gpio driver to drivers/gpio")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-4-c4d769587d3e@nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Walk ctx->event_list instead and pick out the PMU's events by their
+pmu_ctx.
+
+Fixes: bd2756811766 ("perf: Rewrite core context handling")
+Signed-off-by: Haris Okanovic <harisokn@amazon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20261013185603.1347265-2-harisokn@amazon.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mxc.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ kernel/events/core.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
-index e3a80f17d0412..32ded7b548fb7 100644
---- a/drivers/gpio/gpio-mxc.c
-+++ b/drivers/gpio/gpio-mxc.c
-@@ -500,10 +500,6 @@ static int mxc_gpio_probe(struct platform_device *pdev)
- 	else /* silence boot time warning */
- 		port->gen_gc.gc.base = -1;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 018a1e4ef5b0d..17499b724f852 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -13978,23 +13978,18 @@ perf_event_create_kernel_counter(struct perf_event_attr *attr, int cpu,
+ }
+ EXPORT_SYMBOL_GPL(perf_event_create_kernel_counter);
  
--	err = devm_gpiochip_add_data(&pdev->dev, &port->gen_gc.gc, port);
--	if (err)
--		goto out_bgio;
--
- 	irq_base = devm_irq_alloc_descs(&pdev->dev, -1, 0, 32, numa_node_id());
- 	if (irq_base < 0) {
- 		err = irq_base;
-@@ -524,6 +520,15 @@ static int mxc_gpio_probe(struct platform_device *pdev)
- 	if (err < 0)
- 		goto out_irqdomain_remove;
- 
-+	/*
-+	 * Register the GPIO chip last: devm_gpiochip_add_data() makes the
-+	 * chip visible to consumers immediately, so the IRQ domain and
-+	 * generic irq chip must be ready before any to_irq() call.
-+	 */
-+	err = devm_gpiochip_add_data(&pdev->dev, &port->gen_gc.gc, port);
-+	if (err)
-+		goto out_irqdomain_remove;
+-static void __perf_pmu_remove(struct perf_event_context *ctx,
+-			      int cpu, struct pmu *pmu,
+-			      struct perf_event_groups *groups,
++static void __perf_pmu_remove(struct perf_event_context *ctx, struct pmu *pmu,
+ 			      struct list_head *events)
+ {
+-	struct perf_event *event, *sibling;
++	struct perf_event *event, *tmp;
 +
- 	list_add_tail(&port->node, &mxc_gpio_ports);
++	list_for_each_entry_safe(event, tmp, &ctx->event_list, event_entry) {
++		if (event->pmu_ctx->pmu != pmu)
++			continue;
  
- 	mxc_update_irq_chained_handler(port, true);
+-	perf_event_groups_for_cpu_pmu(event, groups, cpu, pmu) {
+ 		perf_remove_from_context(event, 0);
+ 		put_pmu_ctx(event->pmu_ctx);
+ 		list_add(&event->migrate_entry, events);
+-
+-		for_each_sibling_event(sibling, event) {
+-			perf_remove_from_context(sibling, 0);
+-			put_pmu_ctx(sibling->pmu_ctx);
+-			list_add(&sibling->migrate_entry, events);
+-		}
+ 	}
+ }
+ 
+@@ -14070,8 +14065,7 @@ void perf_pmu_migrate_context(struct pmu *pmu, int src_cpu, int dst_cpu)
+ 	 */
+ 	mutex_lock_double(&src_ctx->mutex, &dst_ctx->mutex);
+ 
+-	__perf_pmu_remove(src_ctx, src_cpu, pmu, &src_ctx->pinned_groups, &events);
+-	__perf_pmu_remove(src_ctx, src_cpu, pmu, &src_ctx->flexible_groups, &events);
++	__perf_pmu_remove(src_ctx, pmu, &events);
+ 
+ 	if (!list_empty(&events)) {
+ 		/*
 -- 
 2.53.0
 
