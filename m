@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774196;
-	b=TpNztXFX2LuHmb4b3xZVgo12AUqD7iA1JqxuFOlP+yEIs1SYg8m73wVUoSyI7GP9YQE0
-	 JptXHRsSJPW6GUFbIoH28xWAz8+VrXj5DicbzW18IHtdMH84Nb+Et3RCXKsoNC5gl2oh0
-	 4p2BOaFwvhkTmqndLUsh3ixBsdb4njsGPQqzsJfgqauaFVZdQhdfs8Il4QUEgDBX/x0jB
-	 pPuhpRDSV2dLpqk/BEqqo9R/8FIi28alL+S9SLks1MtvldJEZdKR4qPUWDoc1INhtUDKo
-	 H3q7omSd1VvJpvDNWIRoSriUGtrMjm1l8b/OzI1IjkMUSGG4UxSrXCP3yW4NR/rFm2Q==
+	t=1792774199;
+	b=S1kZ42433j4yBiKjoviNbvJ8gLMiFZyhu/aJp3WTC2xgaGp8teDeAh7FaIpnLRrLNoW6
+	 IEdPQkldH9O8D/NUTxCe84C9ZWon3xpyukFW7nS0TQkV8si4C5A3xOyx6J6MxLVijyU09
+	 smKpSSgPCcwwQVbGhech5xKZszcwgEJ5kBlUZSbBrnO+FiLm7jFE1DDMEunUv+dM5r9Js
+	 eOpSrOOtkFjFgFiXRjFrsr3DriCx4vHt8zdRKGb1kE3khCNLwLVCpbn+5gbcnsLEg6XYo
+	 TQxnk74B5DMGStcxNZRRXO4AoRokS2/2aO7nDnZ/thPQ8sLEkVPYAxX8j5tDXc3UONQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Di5zd1qxZiyoO5KB+RAyNhM7MF3EublnBer+1iLu2IA=;
-	b=abIW/s7OlZ0eS5glSdNHcu2gQJVcEWtbMRVLP1gwF/tvaf0rTsgEUNO71i3WO+CfabBv
-	 GXxTX/aJHBjjbD0vNK7hR45lMpXOPY4BqZkHp/Nrv8buHWpa+XoIQaWnyWEx2MmRSZ0Cz
-	 R8b+c1YQRPoCsm4ajjsHSL74cNfmGiniNcDszyEVkPyeE9fvFYUn2Jg8/CBTvKyEZGy07
-	 nFt3HUPndta0ov117qLyvYYkDTsRGsdlpHF+OGS+DjDbchEXXG2sbAwpmmJKrv1WC0pQw
-	 yWM6Y/CnCDuKU4N7FXgNAzsMo3c3yRvdWfFGV1Xa3ZS8Cw8+oINpcVuSG1vnprjaPlw==
+	bh=2ZytVJIKXTQ7v1FGes5NrbpCzK+v2iIOls8M+EBYCYs=;
+	b=z3LNJurlQN/s2AD+IO5XTXP04UQ80uo95GS4yJbedFDnGLNQepQvYEu9TBLRZnPnn32N
+	 JToWBDag1DPzjgXVokefFY+zTrlJMEAE2WwnytaAyuGeuwgXxl+NGWpoBvXk2rpJ5ZgDl
+	 /u7OJcPEtadcL56UzbRhePVnZkPOCbdHGZs4Sk6BSv5bpMSZhzP6U+9v8QrzfiUHaB/FX
+	 o0legd28x+KVVm7gq4EaBRLJLcF0/UmRurNRXm9BW/+INQGRkGInVyP8FCgqP6V9B9vt0
+	 Y4i2xKLrrzB6Lp2TalVthRfj+L8XFysIFopRQFdElEjO9IqExq1Ki3Zz/hT8+KRXVnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkR76gAf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mahiVPVN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D436260A263D;
-	Fri, 23 Oct 2026 16:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C19606A33B;
+	Fri, 23 Oct 2026 16:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkR76gAf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305051F031E0;
-	Fri, 23 Oct 2026 16:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mahiVPVN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2402F1F031E2;
+	Fri, 23 Oct 2026 16:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774195;
-	bh=Di5zd1qxZiyoO5KB+RAyNhM7MF3EublnBer+1iLu2IA=;
+	s=korg; t=1792774198;
+	bh=2ZytVJIKXTQ7v1FGes5NrbpCzK+v2iIOls8M+EBYCYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HkR76gAfL+7fkt8RvUjTHBbdYRqEKrN51NDcOlcrM6rBmYRmqvKGAxodZBBCNIf02
-	 3lIKge/062nhJ5DOQnWlw2Ztu77sO1gKL8ijRc3X7oMU/ihgTsiRYH3VIVTTFUbKrB
-	 JKlxnstSgUcorqfHjCDEgAzKYndAdL4hDjR4qhYg=
+	b=mahiVPVNTmBQLUspgNrsYbJ4H4jZ8toBS80ScI+qzlxb//9ZZWp3JxZxL9g7508jz
+	 J0sFf/Im+E8EnS74K8hug5p5yWCx7dD/ft0qxOasl2p9a8vVeskaB24PxcmviK/KXv
+	 5Gi5i0GV545KfBz6PoIu/JXbKtd9OcIq3qFs8txM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 136/193] tipc: protect node reset trace dump with node lock
-Date: Fri, 23 Oct 2026 18:36:53 +0200
-Message-ID: <20261023163717.426973497@linuxfoundation.org>
+	Aleksandr Khromov <haa@amicon.ru>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.18 154/193] ksmbd: fill in FileSysIdentifier in FS_POSIX_INFORMATION
+Date: Fri, 23 Oct 2026 18:37:11 +0200
+Message-ID: <20261023163717.854794983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -68,74 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Aleksandr Khromov <haa@amicon.ru>
 
-commit dddf197f29ba5e47a476dde82bf542ca2e0d5e5e upstream.
+commit db2267b27c054a6c2151ff7fbb67927e784f31d6 upstream.
 
-The tipc_node_reset_links trace event asks tipc_node_dump() to walk the
-node's link entries. Unlike the other node events that request link data,
-this event runs without the node lock.
+smb2_get_info_filesystem() reports 56 bytes for FS_POSIX_INFORMATION,
+that is the whole of FILE_SYSTEM_POSIX_INFO, but never assigns
+FileSysIdentifier.  Those eight bytes go to the client as they are found
+in the response buffer.
 
-This permits bearer teardown to free a link while the trace callback is
-dumping it:
+The buffer is zeroed on allocation, so a standalone request leaks
+nothing.  A compound request can leak: the offset of the next response
+is advanced by the length pinned for the previous one, so a reply that
+was written into the buffer and then dropped in favour of the short
+error response of smb2_set_err_rsp() stays there, and the next reply is
+laid over it with only the header cleared.
 
-  CPU 0                                CPU 1
-  trace_tipc_node_reset_links()
-    tipc_node_dump()
-      l = n->links[0].link
-                                       tipc_node_write_lock()
-                                       kfree(l)
-                                       n->links[0].link = NULL
-                                       tipc_node_write_unlock()
-      tipc_link_dump(l)
+Report the file system id statfs() returned, which is what the field is
+for.  FileSysIdentifier is __le64 and f_fsid is a pair of ints, so
+assemble the value first, val[0] as the low half, and convert it on the
+way out.
 
-tipc_link_dump() then dereferences the stale pointer. KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in tipc_link_dump
-  Read of size 4 by task poc/115
-  Call Trace:
-   tipc_link_dump+0x10cb/0x16b0
-   tipc_node_dump+0x4bb/0x740
-   trace_event_raw_event_tipc_node_class+0x258/0x360
-   tipc_node_reset_links+0x14d/0x1a0
-   tipc_rcv+0x13f5/0x3030
-   tipc_udp_recv+0x4e3/0x670
-  Allocated by task 0:
-   tipc_link_create+0x1e1/0x1020
-   tipc_node_check_dest+0x7d2/0x11a0
-   tipc_disc_rcv+0xdbf/0x1430
-  Freed by task 89:
-   kfree+0x131/0x3c0
-   tipc_node_link_down+0x267/0x4b0
-   tipc_node_delete_links+0xec/0x160
-   bearer_disable+0x107/0x260
-
-Take the node write lock around the trace event. This serializes the
-dump against tipc_node_link_down(delete=true), which frees the link
-under the same write lock.
-
-Fixes: eb18a510b5cd ("tipc: add trace_events for tipc node")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260825190141.242219-1-nicoyip.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Aleksandr Khromov <haa@amicon.ru>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/node.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/server/smb2pdu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -1333,7 +1333,9 @@ static void tipc_node_reset_links(struct
- 
- 	pr_warn("Resetting all links to %x\n", n->addr);
- 
-+	tipc_node_write_lock(n);
- 	trace_tipc_node_reset_links(n, true, " ");
-+	tipc_node_write_unlock_fast(n);
- 	for (i = 0; i < MAX_BEARERS; i++) {
- 		tipc_node_link_down(n, i, false);
- 	}
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5788,6 +5788,9 @@ static int smb2_get_info_filesystem(stru
+ 			info->UserBlocksAvail = cpu_to_le64(stfs.f_bavail);
+ 			info->TotalFileNodes = cpu_to_le64(stfs.f_files);
+ 			info->FreeFileNodes = cpu_to_le64(stfs.f_ffree);
++			info->FileSysIdentifier =
++				cpu_to_le64((u64)(u32)stfs.f_fsid.val[1] << 32 |
++					    (u32)stfs.f_fsid.val[0]);
+ 			rsp->OutputBufferLength = cpu_to_le32(56);
+ 			fixed_len = 56;
+ 		}
 
 
