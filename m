@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774862;
-	b=BecDTVuGArgDgRU8MxJWKTs1dgG3hdH5oMe2Gy/DxU9+0TjAMOnJ4gCFESRoF3fduRC1
-	 E/8CvaIvlLgsd1aUohLxn0iZOwfE9D1xhdLnrmPsFvBSx1zLMGkqXHkdomGxiUs3fTyaO
-	 3m/NxLjspt020PMU08v4bG2Tpxm5rtnVx65SePByrenuX7A3GY2Ex/yH4NqHj9O3eYPg4
-	 T84+N+XnNQIAgpj5MSPldwxn51hitGFbA4wHI+jTIaPXeM9gvus0pQct68wO9vizipw0e
-	 g0MJFl2SOezQqlDXORxpI2dWM3y2V5weryosVD6yAXe4CmXky94GlOYFc7C8SVzxtwg==
+	t=1792774864;
+	b=2a/nQl1hYTqGpWJ3REQoCCO2EOD8whBjZU9rGCqocVwIdJi/gs+Nmq952fmTpZmTTAdW
+	 JNlVH1KNbQuM6OCvzhJFMWgseTfKlDmnULMu5VJVDnCj+VDJJAXpBoeyP54orVb1in7j0
+	 +H3s+bwt9O2CnOiTA6YAyQQ5day1q9vyJFeiUNb8AINtJG3xpn98ATHdF46ttyFx2BOuL
+	 tYL/OHhsaRFqRXXyLpz3tc6cEI1Gd+TH/IxXCz4No2SBrNv/VqV59113Rmjc8xaE9l/cb
+	 wLU2PvlO8Ow2ClqirTHlnkZixtQkrgRYxBEHVc4tJe8KVjSOvzCQfzauZUPv9MBQAng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hkHOLTjzxEgnuIGSx7CTq2tn5huXdX6HZDy3c7PA0Ls=;
-	b=N7ntr+KPwUn2gmgB5RxAeEKVJRKU6tNbtZPppKajgeGIt/ljVhMbOKmkVXXjizmbuxPb
-	 vyh2vX4tIskDkhAuX7ShU70XuDuV38P1rs8d3/tRKQOvjIGMPcTpb2NzwowevJMTdUzvI
-	 6YMA0p8XQQX3Vb997OsGzGgnxWMViK1TsNEW9/tiar568co1U/Wbbuva1pXAOwzPG6slg
-	 BA3S8VxelOBuz/g9APeXzoWpk0SwoN9QbnplpdBd2R6i3Xe4fsO6NmMBgAu6kIsEx5CQS
-	 YPZpOobBNd+yyXZkk50ZQ0/mQJ2oicFTL5ltvgDheElwGb9tuZqlQ4M+naVBPf5XShA==
+	bh=keGZmw/65TPZrmCINYKAPsTMHSqfcdwFrvNI+uZZu4o=;
+	b=fq7hzNVxaIWDH+J3q9IN0nDmYfnJ1+4TFCGj9mh5MUrFEnxbuet86HDwyWqPYTE/Ip6r
+	 d8JmSCPfzIi6d+xv1D/SpsfoVNK9itduTkJrJ+2fJfQ9XApAhhWUEoUBa/MSE3CdeksAj
+	 4Dj7oeJUZ+/JLvgxuzYYdtC2yUjUY4cFvWvCzdle7ROejHIsePOazqnOSgnWmObQQlwl5
+	 u8PeFwtUdoq+vMjXMwPReQWACH9G/9z4GELb0svIB1pjhLwH5YX+lrMVZQ8Z1GG+oyVRx
+	 HBim+zEYVOXeNdC9gqawQBie6dvi4F0XjU/BWgOL/5OCsQ4G5lLSXSNB0gyx5V7KZSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yy/DEyj8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N2YyIk0n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCD1606A31B;
-	Fri, 23 Oct 2026 17:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7612C606A31A;
+	Fri, 23 Oct 2026 17:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yy/DEyj8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAB91F01825;
-	Fri, 23 Oct 2026 17:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N2YyIk0n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A681F01825;
+	Fri, 23 Oct 2026 17:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774861;
-	bh=hkHOLTjzxEgnuIGSx7CTq2tn5huXdX6HZDy3c7PA0Ls=;
+	s=korg; t=1792774864;
+	bh=keGZmw/65TPZrmCINYKAPsTMHSqfcdwFrvNI+uZZu4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yy/DEyj8kYt8F0SaZ4+dS8SlBlmEK9XdAP54vRc/zD/qUAOZl0noX8PoE1MQXWfQT
-	 Pb5z6MGgbMXp6pvtumlZxcx46SpGScM0G3Xu426Bw5gR3hhZSEz0xUy30ilGd+BKkw
-	 PK85PHJykEBVePv+XF8Tn/YhHDzD0ohXqbuTuzHc=
+	b=N2YyIk0n8PCqgrUjhji7yRAZ1SVHIoik9LVgNl/pF5R+6GgzNYgiOHhPJtQak1INX
+	 t59yD8+8IeompvIg/RIEdpsfm1uYhb6ihjzGsvfIjxby7ylGQ8FQ6knEKU4bysBHKW
+	 RzN63jIvHGN2i1r9V8wlu1nxfTn6rDTNhuGj0a8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	Ben Cressey <ben@cressey.dev>,
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.2 184/242] dm-crypt: fix a tiny race condition in crypt_dec_pending
-Date: Fri, 23 Oct 2026 18:40:26 +0200
-Message-ID: <20261023163718.138493518@linuxfoundation.org>
+Subject: [PATCH 7.2 185/242] dm-ebs: fix incorrect device offset check in ebs_ctr()
+Date: Fri, 23 Oct 2026 18:40:27 +0200
+Message-ID: <20261023163718.162390332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,54 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Cressey <ben@cressey.dev>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-commit 148845aa1921d95ef5dc851c76e6a284f6657df6 upstream.
+commit 7ac81e2d2240f2c57bd073b0733e0b2abca38e82 upstream.
 
-crypt_dec_pending reads io->error before calling atomic_dec_and_test.
-Another context, for example crypt_endio called from an interrupt, may
-set io->error and drop its reference between the read and the
-decrement. crypt_dec_pending then drops the last reference and completes
-the bio with the stale status - so a read that failed and was never
-decrypted, or a write that failed, is reported as successful.
+<offset> is a backing-device sector offset; ti->len is the virtual
+target length. Comparing them rejects valid tables, e.g.:
 
-The read was placed before the decrement by commit b35f8caa0890 ("dm
-crypt: wait for endio to complete before destruction"), because that
-commit freed dm_crypt_io before calling bio_endio. This is no longer the
-case, dm_crypt_io lives in the per-bio data now.
+  dmsetup create ebs0 --table "0 1048576 ebs /dev/sda 2097152 1 8"
+  -> ebs: Invalid device offset sector (-EINVAL)
 
-Read io->error after atomic_dec_and_test instead. atomic_dec_and_test is
-fully ordered, so no additional barrier is needed.
+Drop the check. Bounds against the backing device are already
+enforced later by device_area_is_invalid() via ebs_iterate_devices().
 
-Fixes: b35f8caa0890 ("dm crypt: wait for endio to complete before destruction")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Signed-off-by: Ben Cressey <ben@cressey.dev>
-Assisted-by: Claude:unspecified
+Fixes: d3c7b35c20d6 ("dm: add emulated block size target")
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |    3 +--
+ drivers/md/dm-ebs-target.c |    3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -1745,7 +1745,6 @@ static void crypt_dec_pending(struct dm_
- {
- 	struct crypt_config *cc = io->cc;
- 	struct bio *base_bio = io->base_bio;
--	blk_status_t error = io->error;
+--- a/drivers/md/dm-ebs-target.c
++++ b/drivers/md/dm-ebs-target.c
+@@ -265,8 +265,7 @@ static int ebs_ctr(struct dm_target *ti,
  
- 	if (!atomic_dec_and_test(&io->io_pending))
- 		return;
-@@ -1767,7 +1766,7 @@ static void crypt_dec_pending(struct dm_
- 	else
- 		kfree(io->integrity_metadata);
- 
--	base_bio->bi_status = error;
-+	base_bio->bi_status = io->error;
- 
- 	bio_endio(base_bio);
- }
+ 	r = -EINVAL;
+ 	if (sscanf(argv[1], "%llu%c", &tmp, &dummy) != 1 ||
+-	    tmp != (sector_t)tmp ||
+-	    (sector_t)tmp >= ti->len) {
++	    tmp != (sector_t)tmp) {
+ 		ti->error = "Invalid device offset sector";
+ 		goto bad;
+ 	}
 
 
