@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773994;
-	b=sUjcW1dUb3dXhBE1NkfEYtG1W146TAQvm1iC/6dWGH7mmhRJJem1SLYrVYYUsp+9Ez7P
-	 grQIYWh+sFo20D/sWSRpqLFRgFFXOyRGSUnxfVM7Y2kue09FE7hNMdhyo0rJPRlBolU0F
-	 DDTU3aVGi1XAswMOBZS/hUSHRJDI1ZtIa+Du+KuomPq329uKIY9maUgjav0263W1xilN6
-	 Nehc5ReivIslNUrEkpfUp2xNZ4P/3R9mC5ozSs5BXztcQ3Y3Hk6Xi7ZZLGstqdghf1Pg0
-	 t6Ks/pyRT35oUeSNIf2D1EexAmZP+W7Puh5QRcgpI0OVxUe/86lYTJnod6a2/WJpSNw==
+	t=1792773997;
+	b=WAWR4eCuKDkK5gzpnAcOmnWpETeJEO44d9Bbs/YODn09+5A2YIniK/m4otR2kgREW6vr
+	 0snxcHpYXgtaHsAs/X4aOqL+8VgdCryD8lBo8BOhL2vOY2lnpV6RX+5sR9HSAF/V7zh1N
+	 JnYhfd5GgOH5ddhZQnuhkPn2MMz1z9AOvzYpVdWHaEyOfJcBv5QekYELnLSJAJLuNRNGy
+	 EaNdnMcLn0cHFeC1Yw+lfbGJ0i2esPittXddf13eIGEq7dyKZeUedoCUh/JQ+4xM/nUG1
+	 leT56F7B9qXq/COqt/HVMd9Oqcgs8Ig03j59Z59VjOm7SvpQLSrwKHHNMsLra1Wpt6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773997;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=qq+ZSh0XnxN7sPnJpO3BvgLjtJx/xUPmC28By7FGdFw=;
-	b=JEQ1BqvXnkn3+CSBpfplHN9gSwLrZFmVVuZFpo0fQ5SdeJlXDnSDSU6hh31stscp97Tz
-	 dQyoaUeZCar/HbPh7dB0y24vYaTi/IMg00HnwwY7Ih39Tztf6Hbl9UufOVbdIRl3CMYfg
-	 rEvCpCEIm2tiPDEAITbbA+clAN1JiNtqcWzY9/Pf5reK1Jv1zh8TLJC6CaugDAEkprhWV
-	 Efqjo1OfimltMfXzhqP9ujODsNBjCvnbc4EXz899LL09Id5blcjwqPcjCB1DH7eWJcI6Z
-	 QVaIqQgrUpH6k9qfjSPXxOPWI1z/9w6cY7YzDjKhX0nSs8PHuwOOlYjeIRvcjhtPxiw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=MK/poevvOeNI4Cj2PMMYZQwgm4hixlNcoh1f7lPjTYI=;
+	b=UL83eElWyuKYpV6LlAHjYm3+w9tAwxEI26k4zsKWaRnRodWaLojZr5oYwxk2Qu1/kKXv
+	 g9Ntd5Cv1Jc8yGu3ov8MVU8kETR92rZypyyjAp2r9v5L4HgKTB61Bwl8Y+QAbJBKQtP+Q
+	 TdFnq725Kktyoq4jIzPD9/1taL1TFhei+SkqUawvKgxsCOvVNVPuI8d2QBjhUyA/Bt+uE
+	 Rx7YQVb0WmgQu/+5chw0PoEAUL5gK99ZatoS9/EEkIc7xq10rU3PjJFRwSGavPUYl3ym/
+	 CNJ7MJm/g1y35gqO7Ta35gOY9xm4X8fPC+nln89xkOcqY8n6a4vrPuPcAUvd+AwdFzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jhw0Cvmw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6djHWCL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9573C606A326;
-	Fri, 23 Oct 2026 16:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461D1606A31B;
+	Fri, 23 Oct 2026 16:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jhw0Cvmw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6AD1F031E6;
-	Fri, 23 Oct 2026 16:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6djHWCL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953001F01825;
+	Fri, 23 Oct 2026 16:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773994;
-	bh=qq+ZSh0XnxN7sPnJpO3BvgLjtJx/xUPmC28By7FGdFw=;
+	s=korg; t=1792773997;
+	bh=MK/poevvOeNI4Cj2PMMYZQwgm4hixlNcoh1f7lPjTYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jhw0Cvmwrvama4gZmYn6diC8fp0PHLn3UoapOPzChYC6PHCjjZII9XZaR6DxSbKY7
-	 9S3BB1nutebwoyDe9L/PM1WPJ2mhQDVfnALmFFJcCpazZ0YO3xMMt/kzSCPkg4THbz
-	 nTDsHsx+RJvDdHOBSG8HotZNF6MndQuREuSRLPTs=
+	b=h6djHWCLZsRYRQg//DX4tTMmCoVSmwskyUNa4pfmP2S0AQ7ycwWuMKdL5rtEr5PTR
+	 +/wzTBPZc4f+jqOfhAkobMwRbZ9MllxKp6quT8nmCJozKuBciWwKQ01sK9K8w7FhuS
+	 GhE8RmrP9yRsR8DAKxzDxFld1lRoJGLYIwfZmv2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.18 084/193] lib/crypto: poly1305: Use memzero_explicit() in poly1305_final()
-Date: Fri, 23 Oct 2026 18:36:01 +0200
-Message-ID: <20261023163716.193980033@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 085/193] net/sched: fix use-after-free in __tcf_action_put()
+Date: Fri, 23 Oct 2026 18:36:02 +0200
+Message-ID: <20261023163716.218615349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -62,44 +62,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit da619121a5d271e78ec709a1f9a3c5f99b9e10ad upstream.
+commit 7b16eb911091aae237a8673da94e4dfb9cd21d54 upstream.
 
-Use memzero_explicit() instead of a plain struct assignment to guarantee
-zeroization of the 'struct poly1305_desc_ctx'.
+__tcf_action_put() decrements the reference count before decrementing the
+binding count. Another thread can free the action between these operations,
+causing the binding-count update to access freed memory. KASAN reports it
+as:
 
-Note that dead store elimination was only theoretically possible with
-link-time optimization here.  But it's still worth fixing.
+  BUG: KASAN: slab-use-after-free in __tcf_action_put+0x327/0x340
+  Write of size 4 at addr ff11000000d46420 by task tc-put-pause/64
 
-Fixes: a1d93064094c ("crypto: poly1305 - expose init/update/final library interface")
+Hold the action IDR mutex across both counter updates and IDR removal,
+keeping cleanup outside the lock.
+
+Fixes: 16af6067392c ("net: sched: implement reference counted action release")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-c3a6bd76-f6ab-4203-892a-cd06f7aa0c34
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20261006083432.16328-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261008181348.527035-2-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/poly1305.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_api.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/lib/crypto/poly1305.c
-+++ b/lib/crypto/poly1305.c
-@@ -78,7 +78,7 @@ void poly1305_final(struct poly1305_desc
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -372,9 +372,10 @@ static int __tcf_action_put(struct tc_ac
+ {
+ 	struct tcf_idrinfo *idrinfo = p->idrinfo;
+ 
+-	if (refcount_dec_and_mutex_lock(&p->tcfa_refcnt, &idrinfo->lock)) {
+-		if (bind)
+-			atomic_dec(&p->tcfa_bindcnt);
++	mutex_lock(&idrinfo->lock);
++	if (bind)
++		atomic_dec(&p->tcfa_bindcnt);
++	if (refcount_dec_and_test(&p->tcfa_refcnt)) {
+ 		idr_remove(&idrinfo->action_idr, p->tcfa_index);
+ 		mutex_unlock(&idrinfo->lock);
+ 
+@@ -382,9 +383,7 @@ static int __tcf_action_put(struct tc_ac
+ 		return 1;
  	}
  
- 	poly1305_emit(&desc->state.h, dst, desc->s);
--	*desc = (struct poly1305_desc_ctx){};
-+	memzero_explicit(desc, sizeof(*desc));
+-	if (bind)
+-		atomic_dec(&p->tcfa_bindcnt);
+-
++	mutex_unlock(&idrinfo->lock);
+ 	return 0;
  }
- EXPORT_SYMBOL(poly1305_final);
  
 
 
