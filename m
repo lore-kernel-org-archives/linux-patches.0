@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775022;
-	b=nHrZT1ybOiF7Cyl81UaOaOfthI5yAUxuso7C5dhPNLPFwPuyuBp4068xoOf+1RBSChhV
-	 Ri4g5fikifAUO5LBtQIah7f7MQVGaFluxRff9Hf5YOuVLTtlNTblwE2BzVcuciMrKNtJ8
-	 wqJEOiX+3Ha7WRIojzb40HqN9RBbnkGYNE506wGeBCbJK7bHu5TwsZIwMnaZkeCWCFSfK
-	 r+glYwWRVvxwuMKe+cHEfg6Y6ezcxEludhVvUVzs8kBXulI8CAfS3cE3aV0PnOTlqkjOj
-	 akn9No+ILC3ahT4kBXi0CdSfmkfjpWbZGFKf36TfauQn89GnVt821fpzpnocOLIc6Ig==
+	t=1792775026;
+	b=5kXHXGvNaNVDfZjdAwC50gZeoBj3C1W2s6qFoETYIsXOTiaQ54/2Zi5+f6Y5oYiKrpBI
+	 KcC+cEje6HwNxgHIM4+0g9YtN9cJCyttHK/UJYL84TLUolP7U0uzlCJOVEOjP1iBlEVFM
+	 JE+ben1L3lu2vutYWUZD5PwP9+y6NUCGNHUvwPXKSxMaFOcT4zSqb65cqegbFITCFGHLF
+	 j6Km6lcg858nkne2Vy/Y27r7E8a8xCbIJFPH1Z3cRBXCNoXChm0l5Ma1CZpqaq16Xn730
+	 kg/v/vOoCD3eztWSaVKsg33YRnOXjung6GjvrzStzmInE8bQolu349jO6biPbtVMDkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775026;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6KNIpdftuqhEQZ6vLllPf63pef5VWPpjV2e4OEnLOrc=;
-	b=HigOhdT2ry1pBj6CQuetBryWLEoHHj2VwDDxheYCoEhcAgGGwxY7vbAQf7FHlBXlfIW8
-	 F4xchQ0+c0UR0s90RrSszx0NmU6XFG7tPC5RSDZTwunI70tpudSciQOh8sUdmL1oocX76
-	 IzvRjpF6vaBAgdSORboG9unnKF3PmdeF68XoEEZhlcb7UgyV/0loTOeixj1y1umWUcYUi
-	 tY00Mry4Y6YemA6CTU2iU5vNHSPROPnW6cVoKdfEpmBwJpK1VJFHQZ3eHbgbRV4iexRmw
-	 oX1thKj86Xi+cQdcoN3JEE23uelbWoVoq7VyR6M+UUX6rReX5a65re3E26/Z4F7pCgg==
+	bh=S5Q5dv191sNM7lCplpLIPJhGbnac+3x9k+EP6DsAkcg=;
+	b=DjiovdUtlT+nX8XvTvcofkIoIyOhJ6CZVvQZCJALFen0mei5JMol6rU1WDreSMHaOx8x
+	 GxEEA2nQUxb3rtAZ9H3/05V50VTriZfIotCaGST9qgrlKsedeUI6nWC0LRWzjsqFfe0Pd
+	 CF+Tun/MrDXQWIvjQj/W2YAPC7twc5JKM6IGuXWsisayL2Gm5srZ9vHjRBHlFqqpejdgh
+	 ARoUHoQArySa2SgdX3Eju//mwzS6EoODJq7cEyIKMCfQHf3jpsaVNPewOK3/Cvgg/ZuMs
+	 yi+NIAPqNXBm1f3QpuXBttXV2WRccwJB7YX5daQILtoEVifFMxU+d23ljMQH3sakvMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYpMd3PD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISkEnDYq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7999E606A32C;
-	Fri, 23 Oct 2026 17:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8875606A31A;
+	Fri, 23 Oct 2026 17:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYpMd3PD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BAE1F01825;
-	Fri, 23 Oct 2026 17:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISkEnDYq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3981F01829;
+	Fri, 23 Oct 2026 17:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775022;
-	bh=6KNIpdftuqhEQZ6vLllPf63pef5VWPpjV2e4OEnLOrc=;
+	s=korg; t=1792775025;
+	bh=S5Q5dv191sNM7lCplpLIPJhGbnac+3x9k+EP6DsAkcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TYpMd3PDjZr15sCH9LrIMvGb1qC9+co68wTv8x+QUugPTY8acGpSJLbK5hwtLh0R3
-	 tIrLUPLsS5iWRlEXZtC21u8vBPeD644XGBW+NvkF44r8NL+j/W42TYrRal2EDYy/bW
-	 gdlQEdtsU8N1vG8whKJF7tC6SYZtlxZVoq20kEsk=
+	b=ISkEnDYqA9GqrOr8TT4LsXs4hbvjQwujK+rTab7OoHUWWnCR0NH+8IM8LH+vnXhhl
+	 kafRqDZw8cMco8KPmO8VNlRfiNuAG7FxyzexhegY5symkPWrOgnv3I5QrtqUEIDJjY
+	 qmqN1l+aepZaRuDf8gCfRvcCQqLB3bZo8/ZZHMmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yao Kai <yaokai34@huawei.com>,
 	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 235/242] sched_ext: Fix the bypass dispatch claim for schedulers bypassed by an ancestor
-Date: Fri, 23 Oct 2026 18:41:17 +0200
-Message-ID: <20261023163719.409676525@linuxfoundation.org>
+Subject: [PATCH 7.2 236/242] workqueue: Fix unbound pool lifetime for pending pwqs
+Date: Fri, 23 Oct 2026 18:41:18 +0200
+Message-ID: <20261023163719.434943485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,101 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Yao Kai <yaokai34@huawei.com>
 
-[ Upstream commit 5bdeca322a6f8d10acaf67cccab1f69747ee7be3 ]
+[ Upstream commit cf9c8aaea0d47410df8708bec195889f3a85cd3c ]
 
-scx_bypass() claims bypass dispatch when the scheduler's depth goes from
-zero to one and releases it when the depth returns to zero, but propagates
-only the depth to the descendants, not the claim. A descendant that starts
-bypassing with its ancestor never claims, and one whose own bypass ends
-under the ancestor's keeps its claim, as its depth does not return to zero.
+KASAN reports a use-after-free of an unbound worker_pool in
+node_activate_pending_pwq():
 
-A sub-scheduler enable whose bypass ends under a PM suspend thus leaks its
-claim: the parent keeps hosting bypass dispatch and the sub-scheduler's next
-bypass trips the WARN_ON_ONCE() on the claim. A sub-scheduler disable that
-starts under a PM suspend has no claim, so once the resume lifts the root's
-bypass its tasks sit on the parent's bypass DSQs with nobody consuming them.
+  BUG: KASAN: slab-use-after-free in _raw_spin_trylock+0x6d/0x120
+  Read of size 4 at addr ffff8880089ce000 by task kworker/u22:0/318
 
-Claim for every descendant whose depth goes from zero to one in the
-propagation and release every scheduler in the subtree whose depth returned
-to zero once the tasks have moved out of the bypass DSQs. A parent that is
-bypassing itself when a descendant claims consumes only its own bypass DSQs,
-empty until it leaves bypass and becomes the host.
+  CPU: 1 UID: 0 PID: 318 Comm: kworker/u22:0 Not tainted 7.2.0 #1 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Workqueue:  0x0 (flush-8:0)
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x53/0x70
+   print_report+0xce/0x610
+   kasan_report+0xce/0x100
+   _raw_spin_trylock+0x6d/0x120
+   pwq_dec_nr_in_flight+0x4b4/0xcb0
+   process_one_work+0x921/0x11a0
+   worker_thread+0x4d0/0xd20
+   kthread+0x2de/0x3c0
+   ret_from_fork+0x3aa/0x620
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
 
-Fixes: aa2a0a19686c ("sched_ext: Separate bypass dispatch enabling from bypass depth tracking")
-Cc: stable@vger.kernel.org # v7.1+
+  Allocated by task 311:
+   alloc_pwq+0x439/0xca0
+   apply_wqattrs_prepare+0x75e/0xd10
+   apply_workqueue_attrs_locked+0x44/0xa0
+   wq_nice_store+0x350/0x450
+
+  Freed by task 0:
+   kfree+0x127/0x3b0
+   rcu_core+0x523/0x1780
+   handle_softirqs+0x1b3/0x610
+
+  Last potentially related work creation:
+   put_unbound_pool+0x3f3/0x7d0
+   pwq_release_workfn+0x494/0x8e0
+   kthread_worker_fn+0x1ff/0x790
+
+Canceling the last inactive work skips pwq_dec_nr_active(), so an empty
+pwq can remain on pending_pwqs when its refcnt reaches zero.
+pwq_release_workfn() currently puts the pool before removing that pwq.
+If this drops the last pool reference, the pool can be RCU-freed while
+the pwq remains reachable, and node_activate_pending_pwq() may trylock
+the freed pool->lock.
+
+Remove the pwq from pending_pwqs before putting the pool.
+
+Fixes: 5797b1c18919 ("workqueue: Implement system-wide nr_active enforcement for unbound workqueues")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yao Kai <yaokai34@huawei.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-[ sashal: Changed scx_disable_bypass_dsp() calls to disable_bypass_dsp(). ]
+[ sashal: Replaced `!is_percpu_pool(pool)` with the existing `wq->flags & WQ_UNBOUND` check because the helper is unavailable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |   34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ kernel/workqueue.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -5717,15 +5717,12 @@ static void enable_bypass_dsp(struct scx
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -5229,12 +5229,6 @@ static void pwq_release_workfn(struct kt
+ 		mutex_unlock(&wq->mutex);
+ 	}
+ 
+-	if (wq->flags & WQ_UNBOUND) {
+-		mutex_lock(&wq_pool_mutex);
+-		put_unbound_pool(pool);
+-		mutex_unlock(&wq_pool_mutex);
+-	}
+-
+ 	if (!list_empty(&pwq->pending_node)) {
+ 		struct wq_node_nr_active *nna =
+ 			wq_node_nr_active(pwq->wq, pwq->pool->node);
+@@ -5244,6 +5238,12 @@ static void pwq_release_workfn(struct kt
+ 		raw_spin_unlock_irq(&nna->lock);
+ 	}
+ 
++	if (wq->flags & WQ_UNBOUND) {
++		mutex_lock(&wq_pool_mutex);
++		put_unbound_pool(pool);
++		mutex_unlock(&wq_pool_mutex);
++	}
++
+ 	kfree_rcu(pwq, rcu);
  
  	/*
- 	 * When a sub-sched bypasses, its tasks are queued on the bypass DSQs of
--	 * the nearest non-bypassing ancestor or root. As enable_bypass_dsp() is
--	 * called iff @sch is not already bypassed due to an ancestor bypassing,
--	 * we can assume that the parent is not bypassing and thus will be the
--	 * host of the bypass DSQs.
--	 *
--	 * While the situation may change in the future, the following
--	 * guarantees that the nearest non-bypassing ancestor or root has bypass
--	 * dispatch enabled while a descendant is bypassing, which is all that's
--	 * required.
-+	 * the nearest non-bypassing ancestor or root. The parent hosts them
-+	 * unless it is bypassing too. Then they sit further up and the parent
-+	 * consumes only its own bypass DSQs, empty until it leaves bypass and
-+	 * becomes the host. Either way the nearest non-bypassing ancestor or
-+	 * root has bypass dispatch enabled while a descendant is bypassing,
-+	 * which is all that's required.
- 	 *
- 	 * bypass_dsp_enabled() test is used to determine whether to enter the
- 	 * bypass dispatch handling path from both bypassing and hosting scheds.
-@@ -5818,16 +5815,19 @@ static void scx_bypass(struct scx_sched
- 	 * Bypass state is propagated to all descendants - an scx_sched bypasses
- 	 * if itself or any of its ancestors are in bypass mode. A descendant's
- 	 * depth is the sum of its own bypasses and its ancestors', so every
--	 * call propagates whether or not @sch changed state.
-+	 * call propagates whether or not @sch changed state. The descendants'
-+	 * claims are released below with @sch's, after their tasks have moved.
- 	 */
- 	raw_spin_lock(&scx_sched_lock);
- 	scx_for_each_descendant_pre(pos, sch) {
- 		if (pos == sch)
- 			continue;
--		if (bypass)
--			inc_bypass_depth(pos);
--		else
-+		if (bypass) {
-+			if (inc_bypass_depth(pos))
-+				enable_bypass_dsp(pos);
-+		} else {
- 			dec_bypass_depth(pos);
-+		}
- 	}
- 	raw_spin_unlock(&scx_sched_lock);
- 
-@@ -5903,8 +5903,12 @@ static void scx_bypass(struct scx_sched
- 	}
- 
- 	/* disarming must come after moving all tasks out of the bypass DSQs */
--	if (!bypass)
--		disable_bypass_dsp(sch);
-+	if (!bypass) {
-+		guard(raw_spinlock)(&scx_sched_lock);
-+		scx_for_each_descendant_pre(pos, sch)
-+			if (!pos->bypass_depth)
-+				disable_bypass_dsp(pos);
-+	}
- unlock:
- 	raw_spin_unlock_irqrestore(&scx_bypass_lock, flags);
- }
 
 
