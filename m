@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774901;
-	b=d5g12I8YFyzM3TCY6TTtMiWm4+ZjXfr+XyVoqrEFLa7UdN95Lp5BbcitxDwfVagxDNhU
-	 hdk593U6HaqHpPiSMc6yNcmkGQyRWIkITdN0ndQvPY3SNjUceMciT8bxYQUsOYrHk0d3x
-	 YLSAPtLSMZ0j0nEHjrx8UVmKZxv9DxoZClM+Ythi4GelQJSIFvjR2dMTugXcaaj0c94R4
-	 xori+K8QdOZDGXZFAyX6A2b9RudrfaIt3PTos21TXUCNoCHm/Cbg8/5VRiv0Z+qw+zVSZ
-	 5dd4oRym5Gdcy9VogXEZBGy9kf3hexr0TSBkngwpDAajYgOO6t9MHnaFaqQD17dV1Zg==
+	t=1792774904;
+	b=Lvl80W1luf05ZSwdSxsKluGwpcld2p1gK1OT9GpAn3RheFsU+gso2MZcX+kaitl/CrRk
+	 RkOK61o5Z4Qnjl1xJqDzlUxUMP/CTcFcXURaET0vLSz632lB2R4DyQNvjGyHjmjvKGwSR
+	 Q1AqXaYgU34hr5ED8TxRN7elXzeanFYTUNIgLxAZHCxboyN7a5ML2vjUMpLbwAiZEQFaE
+	 yu7aTGJv++6ovrO6P71rDfHxglhi4Cl0rdpUmVYfXbvEytMbo6GRF2cPa6ibrKfGVxUn3
+	 0VcgYxEgRdWvGKy7AB/sqbc30fByMPcIWMabcU612JEBhC6BpiL0nM6dCzvqlNQ9MmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774901;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774904;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GiIdNkyd4njwC5CfzfI63K3IgGlL7HO9ga8UW2t4o8w=;
-	b=SzJFyz8KLEE+UZcn/GTnqrYRqI+1cy8E+xUN8gGiru6ziXGiRSIVY1EYXAn9zvXTvNW3
-	 NhI4gEGOEvYRyCJi1kT0G+HrT7MB5U2OmgCzb+yYq0gzZvgrhdFY6cvTeRw4kjarbFiLU
-	 HFG0JI+JJSTXT7FtfwKR2lbcN6LYOBVQakZJtvnDAf2bB9WEQ0h5jWKZaUHvQNEiTGZH4
-	 J1zKaL8niWdpTygr/znFch1enOnhc6VLZ1ngxMp8McSDmLC3HMOYiQRNnqflwxlpQ51zs
-	 u3GSaEiDCnfLI4IxXmkIO59fL6/gldI1dM2WLdjTg9liJR5nHcajGvWYxAZ7KepBrvA==
+	bh=czzT1LooFdGUB+VQOpnJRSwBUwl1vyoDB4bzFT1ZWK0=;
+	b=MZ76pj02LGqSgkoFXV87qty05RFusdvEjmgMOZMtVzVWFsy3ZMvcZbtlxjSnIcdfoly6
+	 x6VB6w86hwB6L5g3W903ueSNHGYAI245YGo9s/8YCF4UvOJgiN4F+NN96M+rQu4FOOy8Q
+	 +hoDxXB+3BxhxWuNYDTuEQeItBaxHTCeYsmLbMUpPIitkeNCEQ7rYYsZsB70tBWxry/1a
+	 41W17F1VuhXrgQfEiKKS54HoUOhThTRYsgPL5UVfWCADbamwwqpGDjn0RBQNqZhKiInLF
+	 RZ3J60YSJ6whrA/o30St9EnskDfkuJqJXGxefkZWtjX46BrwtTeDAgzTL8o+/rtrj1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6XIB+AJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DfZq941W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F1F606A31A;
-	Fri, 23 Oct 2026 17:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7852C606A31A;
+	Fri, 23 Oct 2026 17:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6XIB+AJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCBF51F01825;
-	Fri, 23 Oct 2026 17:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DfZq941W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62051F01825;
+	Fri, 23 Oct 2026 17:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774901;
-	bh=GiIdNkyd4njwC5CfzfI63K3IgGlL7HO9ga8UW2t4o8w=;
+	s=korg; t=1792774904;
+	bh=czzT1LooFdGUB+VQOpnJRSwBUwl1vyoDB4bzFT1ZWK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w6XIB+AJzbT+whSxiSGXMiKZm5uT7X5oYCPu9e7pQN9adSClAhh27E+8MLgNQIOA1
-	 GFZKDnbwvT6wUqv3M530fHzrdKZWwzZR4GSYBclen54oCdmxf57hbWp/MAA8wwC36m
-	 IK2IbVXyrJq2ODRrWwNFaOcid6V4o4j2z3dQ9hig=
+	b=DfZq941W5/34lIP8/IosNh7NbXJpwg8d0/XznTlIwRxRnm/sc+eiCI/0wcMZR/X8A
+	 UtMSr/Zme74qFVjQo79+iIPozPjOSK4SLNJchGNduwJkLFTgjsdBFJtHoP0OIsWvL9
+	 5J2wjoHYtx8jk77JPSdPUn12jizAZ/OlBO6SScAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang@linux.dev>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 196/242] workqueue: Use raise_softirq() to trigger softirq in irq_work handler
-Date: Fri, 23 Oct 2026 18:40:38 +0200
-Message-ID: <20261023163718.427133601@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	syzbot+1bd20115328f8254ed62@syzkaller.appspotmail.com
+Subject: [PATCH 7.2 197/242] workqueue: Annotate cb_lock nesting when draining a dead BH pool
+Date: Fri, 23 Oct 2026 18:40:39 +0200
+Message-ID: <20261023163718.450716968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,44 +67,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Tejun Heo <tj@kernel.org>
 
-commit 7e2f2a377ac9f50296ad60bd331f0d4def7aee51 upstream.
+commit 6eca8f94d84106d3754b9df27f46a14572af9e7f upstream.
 
-bh_pool_kick_normal() and bh_pool_kick_highpri() are registered via
-init_irq_work() without the IRQ_WORK_HARD_IRQ flag. On PREEMPT_RT, such
-irq_work items are processed by the per-CPU irq_workd kthread in preemptible
-task context with IRQs enabled. However, raise_softirq_irqoff() requires
-IRQs to be disabled. Calling it from irq_workd trips the lockdep assertion
-in __raise_softirq_irqoff() and the non-atomic update of the softirq pending
-mask can lose bits raised by an interrupt on the same CPU. Replace
-raise_softirq_irqoff() with raise_softirq() in the irq_work handlers.
+On PREEMPT_RT, bh_worker() wraps work item execution in pool->cb_lock to
+provide a handshake for canceling BH work items. When a CPU goes down,
+drain_dead_softirq_workfn() runs the dead pool's bh_worker() nested inside
+the local pool's bh_worker(), acquiring the cb_locks of two different pools
+without a nesting annotation. lockdep reports possible recursive locking:
 
-Fixes: 2f34d7337d98 ("workqueue: Fix queue_work_on() with BH workqueues")
-Cc: stable@vger.kernel.org # v6.9+
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+  ============================================
+  WARNING: possible recursive locking detected
+  --------------------------------------------
+  ktimers/0/16 is trying to acquire lock:
+  ffff8880b873a990 (&pool->cb_lock){+...}-{3:3}, at: bh_worker+0x7d/0x880
+
+  but task is already holding lock:
+  ffff8880b863a990 (&pool->cb_lock){+...}-{3:3}, at: bh_worker+0x7d/0x880
+
+  Call Trace:
+   bh_worker+0x7d/0x880 kernel/workqueue.c:3688
+   drain_dead_softirq_workfn+0x95/0x220 kernel/workqueue.c:3763
+   process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
+   bh_worker+0x46a/0x880 kernel/workqueue.c:3708
+   tasklet_action+0xc/0x70 kernel/softirq.c:965
+
+The nesting can't deadlock. A pool's bh_worker() runs nested only while the
+pool's CPU is dead, entered from a live pool's bh_worker() on the draining
+CPU, so the ordering is always live to dead. CPU hotplug operations are
+serialized and the drain is synchronous, so the nesting depth never exceeds
+two. Annotate the inner acquisition with SINGLE_DEPTH_NESTING.
+
 Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: syzbot+1bd20115328f8254ed62@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1bd20115328f8254ed62
+Fixes: ad7c7f4b9c6c ("workqueue: Provide a handshake for canceling BH workers")
+Cc: stable@vger.kernel.org # v6.18+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/workqueue.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 --- a/kernel/workqueue.c
 +++ b/kernel/workqueue.c
-@@ -7956,12 +7956,12 @@ static inline void wq_watchdog_init(void
- 
- static void bh_pool_kick_normal(struct irq_work *irq_work)
+@@ -3141,7 +3141,16 @@ restart:
+ #ifdef CONFIG_PREEMPT_RT
+ static void worker_lock_callback(struct worker_pool *pool)
  {
--	raise_softirq_irqoff(TASKLET_SOFTIRQ);
-+	raise_softirq(TASKLET_SOFTIRQ);
+-	spin_lock(&pool->cb_lock);
++	/*
++	 * SINGLE_DEPTH_NESTING is for a dead pool's bh_worker() running from
++	 * drain_dead_softirq_workfn() inside a live pool's bh_worker(). The
++	 * unlocked read is stable: the flag is only set while @pool's CPU is
++	 * dead, inside a serialized hotplug operation. data_race() as the value
++	 * only affects the lockdep annotation and the read can be elided when
++	 * lockdep is disabled.
++	 */
++	spin_lock_nested(&pool->cb_lock,
++			 data_race(pool->flags) & POOL_BH_DRAINING ? SINGLE_DEPTH_NESTING : 0);
  }
  
- static void bh_pool_kick_highpri(struct irq_work *irq_work)
- {
--	raise_softirq_irqoff(HI_SOFTIRQ);
-+	raise_softirq(HI_SOFTIRQ);
- }
- 
- static void __init restrict_unbound_cpumask(const char *name, const struct cpumask *mask)
+ static void worker_unlock_callback(struct worker_pool *pool)
 
 
