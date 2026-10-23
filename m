@@ -1,55 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774662;
-	b=PxnvxT/HkDnP5AWH/kIG19UksFTaQvfoc5rnBnqytUNMd6Ra5WInnEqcDoXKxGkNn28J
-	 lD9q93SfNkVaqwwtse1eXJQYmuvvO49SAuUHB7m+8sJCBCsWFbGTjZvr22MlH4uRGJjZM
-	 xsE8NYd/lRQ25ja1qIL7M5crWW85XkbVYk2L+7J/GbyjgKqA5P00XI1UeZUogMLlYMV67
-	 weyjA67rAwSOLsBUNAgh1ALtCgqsj+/2yDK12ULPZRvbKp5WFbAwt9l2lJYt9SeDN6jec
-	 jtYWYo0DNutZgIHir3JMxtpEGL54kSKofeVX3IW2640LBjCy1/sjXnI1OWm7vchBLYA==
+	t=1792774665;
+	b=3n1Y0wjZfHGySh0Gb49bNrL+SdpixXM9S6F6EjRS03oV9kspkHbomehtzhlKfpBPyakB
+	 EGkGxp9KZcP8h5Dlr6UpMUNrmDZjhMfrjMnU4+1X81sMSP3MCaLnoyswOQP2HJ5+fUMyr
+	 a9oTcNG7iAGDvX7f8Sj0yiuDAIJS+SaYUeDO69p5Bk5ZzsAMsBYMigmF6uxu3/iSDUslz
+	 J+2ptFbFK4AOel22E3VypaFeg8y3NRNlFqLI+hnerhYQr67vtlaxY1/yS2L9AnW0iDjeb
+	 2dM3YS8p1xJJj2DCKXPoLiRdnJf84KnvzJvC0gTxC6PHTwg9dqPZZL5M5iO+pz4e6+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774665;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TGeeB+ZSa7VeqqpZDVhtNwlDOt/izxUp3bxFqoFUEmc=;
-	b=2CEAsRRrgzEWiWweBCUafSQZKxCQ0BLYCeo8C/4UCZZ51IwFytOlUEy+O/P7qZMnE8uE
-	 W23TLRTFHnq1CNBYTYIN8EKFPWnEq+xbDVdW7Tkw6qhFNb8W/l5CF+blkMNULn/UWfGvw
-	 2mwNzarkmzsGkkHYfAzRis3SWuXREnU1SKJGJGKe/xPez/NcDZaXuS4YMaE+Puj7S59kk
-	 OvQVrDjUReKmDBxSNDGVJ6ULi8CRf+1wQMDrH+uci/JhSZY25BkHsqbVH4Zm0fG/rp3tP
-	 DNDWvfKGKPQGXlcvH1mkQskFM9Ko2vt06W6qAtiCUpVmUkxktHwsYWZwv9DKRFJgyCw==
+	bh=EMCJkALgsAbo3zSBGE5n2BdgoOtQdLn4fUKoyUJq0+o=;
+	b=i5z9+5PGy53rI3nhjRgnAl+bVPNP/IsqkGw5MUQs8Z9pwmYqaOB07hcRyUzdIOHbC8zp
+	 BRgIPdPesCwfTYzViw5S3QCKt4+M42zhPhdWUCDF1oiPwwjAOvJukW7/hjq1samx81rQb
+	 BYqrThW+eBE2q92UOGGDWUctdJh5MnHvj3zkt4Bl9unh5NAeJMcsObbSMnnmd3moM2KCP
+	 1ce+8ZKQ7yIgNvxL/wRi36ZUqXpSy5UxlG7O6Blbq5+6k+emNyR8EPYYQan1VQZNSErhf
+	 27LQz3LOm2xfmGN7wpFDk9XnXJ9PyfecB+85ym7LqgRf49yXBzr2zPMbiRs3Vj7YNBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BFuC8iyU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVulGZ1i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3650F606A31B;
-	Fri, 23 Oct 2026 16:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147F9606A31D;
+	Fri, 23 Oct 2026 16:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BFuC8iyU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863071F01825;
-	Fri, 23 Oct 2026 16:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVulGZ1i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655F61F01825;
+	Fri, 23 Oct 2026 16:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774662;
-	bh=TGeeB+ZSa7VeqqpZDVhtNwlDOt/izxUp3bxFqoFUEmc=;
+	s=korg; t=1792774664;
+	bh=EMCJkALgsAbo3zSBGE5n2BdgoOtQdLn4fUKoyUJq0+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BFuC8iyUljRbKOk9EOLJ3FfOE2vWEw4dzIpL5oQEMmGCA0797KVr9gdQrnK4kHMRb
-	 oeiaNAg3rEoeKJpI1ea6P7LhED4AtlMIloJobvRPXKrDTefqWYEE6zup/Ou1TMaYcD
-	 +v7oDFMBMSmmP263DUCPF7aN/abvEj+OfqHs/BAA=
+	b=BVulGZ1iROiKlUtdGOjhV+G2jn5DMIpcBPty5TXCsUl94XleZbTJol07fJkK8PCSa
+	 5T2+CriDohmSCIZqTk3GCfs7bDKX3wg4C603o4R++FVuW3ngUUP0us9UkzZtDNwcMv
+	 wA2ftCGdPbhvSD9mZRoS1n0UxOdrAXLIz2ZlvOJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 089/242] gpio: mxc: fix race between gpiochip registration and IRQ domain setup
-Date: Fri, 23 Oct 2026 18:38:51 +0200
-Message-ID: <20261023163715.883473419@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 116/242] ipc: drop the mqueue mount with kern_unmount() on setup failure
+Date: Fri, 23 Oct 2026 18:39:18 +0200
+Message-ID: <20261023163716.521163481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,65 +66,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 205cccd06e545694754e1bf8d626ea96e742cd8a ]
+commit f0e48172a59e517e613b73f73cc35f24fd123aeb upstream.
 
-devm_gpiochip_add_data() makes the GPIO chip visible to consumers
-immediately. Since the chip sets .to_irq = mxc_gpio_to_irq, which calls
-irq_find_mapping(port->domain, offset), any to_irq() call between
-gpiochip registration and IRQ domain creation will operate on a NULL
-domain.
+mq_init_ns() creates the mqueue mount with fc_mount_longterm(), so its
+->mnt_ns is MNT_NS_INTERNAL. When setting up the mqueue or ipc sysctls
+or msg_init_ns() fails afterwards, create_ipc_ns() drops it with a plain
+mntput(). With ->mnt_ns set that takes the fast path of
+mntput_no_expire(). The count drops to zero and nothing ever kills the
+mount, so the mount and the mqueue superblock are leaked.
 
-Fix by moving devm_gpiochip_add_data() after the IRQ domain and generic
-irq chip are fully initialized, ensuring port->domain and the irq chip
-handlers are ready before the chip becomes visible to consumers.
+Commit dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
+added the first failure path after mq_init_ns() and never dropped the
+mount. Commit 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on
+sysctl setup failure") tried to fix that with a mntput() but that
+doesn't help for a long-term mount.
 
-Fixes: d37a65bb4663 ("gpio/mxc: Move Freescale MXC gpio driver to drivers/gpio")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-4-c4d769587d3e@nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use kern_unmount(). free_ipc() open-codes the same thing for a namespace
+that made it.
+
+Fixes: dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
+Fixes: 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-5-7446d2d335e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mxc.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ ipc/namespace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
-index e3a80f17d0412..32ded7b548fb7 100644
---- a/drivers/gpio/gpio-mxc.c
-+++ b/drivers/gpio/gpio-mxc.c
-@@ -500,10 +500,6 @@ static int mxc_gpio_probe(struct platform_device *pdev)
- 	else /* silence boot time warning */
- 		port->gen_gc.gc.base = -1;
- 
--	err = devm_gpiochip_add_data(&pdev->dev, &port->gen_gc.gc, port);
--	if (err)
--		goto out_bgio;
--
- 	irq_base = devm_irq_alloc_descs(&pdev->dev, -1, 0, 32, numa_node_id());
- 	if (irq_base < 0) {
- 		err = irq_base;
-@@ -524,6 +520,15 @@ static int mxc_gpio_probe(struct platform_device *pdev)
- 	if (err < 0)
- 		goto out_irqdomain_remove;
- 
-+	/*
-+	 * Register the GPIO chip last: devm_gpiochip_add_data() makes the
-+	 * chip visible to consumers immediately, so the IRQ domain and
-+	 * generic irq chip must be ready before any to_irq() call.
-+	 */
-+	err = devm_gpiochip_add_data(&pdev->dev, &port->gen_gc.gc, port);
-+	if (err)
-+		goto out_irqdomain_remove;
-+
- 	list_add_tail(&port->node, &mxc_gpio_ports);
- 
- 	mxc_update_irq_chained_handler(port, true);
--- 
-2.53.0
-
+--- a/ipc/namespace.c
++++ b/ipc/namespace.c
+@@ -96,7 +96,7 @@ fail_ipc:
+ fail_mq_sysctls:
+ 	retire_mq_sysctls(ns);
+ fail_mq_mount:
+-	mntput(ns->mq_mnt);
++	kern_unmount(ns->mq_mnt);
+ fail_put:
+ 	put_user_ns(ns->user_ns);
+ 	ns_common_free(ns);
 
 
