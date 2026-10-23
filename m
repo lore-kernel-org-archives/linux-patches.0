@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774341;
-	b=Sz87sDYw2pLcCukN0veWkEiuaS/NWT18Gmo1GaDtpT7tz13djgU5/L+BZdEO3OTIfG0E
-	 UmEKwao9HYlsPh8j2urc0HGj4neNInsdXfk8+F1tm6BuUUUtj/mkk1NPm8rJpif8tTkhH
-	 JyIl8Op5t3drmwsrW5zCOOS61yjeceUwLRpQcpEsly64BaVvc1P9pXVB5KDLru9PRL8ao
-	 4F9s6sxlTUg9GXzN4vMro7WXCNmd4ieZo3ah9mJ8bXxZWeJ9SPq9jioEF5ocEFCT0tvpO
-	 ZT0+byUXIPJCPru9sTWnokvvFPgG+Ni+VCgvnujXYaNutE3lVCE8FrNe0IIu8DVbmvg==
+	t=1792774345;
+	b=r5w0KFVGRd+o+Nlu+IWZBZiJH+UR6W7Wx6l1D5q5HCWCFz3r+x30jSTTlmhrJ8SN+crz
+	 g53G2GMZGxIFPqfdp1UIv+daOWZjlDIhTsrUiogRyI+P6YRcEV21t/7g4GkU9zKD2yF7u
+	 2Psn0lLTxttGjk5iHEdyTZ6YeV1yoaKCRWwExJfKbefuQvaK34R7lztLfdxB3FMkAT7jD
+	 2rCNcENoGViYGwaUGwWquSn+02sMZK/NhMHTYU68WHoeI422k5iYOJygFzh+SL/noek2k
+	 9ELYeJsyUbk8+87LY7FYTqeI1OmqV4KWGKoBEdI8BNckly+1fzjOvo/WYSSoP4XdQWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jPP31pOCEoZUZ9p++sCp+Ro6I3RxuOE4vKvMVGwgUzk=;
-	b=bGgYT0xzkAi6OLT7FIw6l7Alft1mFJIilxQoNPLgiEPU2BKX1fCdTvwgRGMtUnTeeiOr
-	 4phzJIF/yjppOdWZiueTODURyqhu0DKwdIaGRLcI5owf33hZrbHCKpLEIGgbRDyA/cHeh
-	 WWw1LNQWlO0uyeLi4P804GmlBlom1Ff9Ecoi288ONgc6/acYWPIANlM8XVb28eY4WVMo/
-	 G2HQR22CjLrJYj3RBT7cqLHaOLm2oaaVo990Ls9LcD9QRWHZM5uM9GP25l5F/RWNOKPiI
-	 5qlMCl2szMhuySq12XoNEeoLavpTHBxJQpLMsV8SYlULYUaMlX9Nt8e6ttjXsJ+cx9w==
+	bh=SNo/8NL/DP7sUqstKtqzqyblTH24/lmSKIZHiPKlmbI=;
+	b=PODpWISBfh7s9NDjihyC/fXAhjX4ZbzIeOm1zvATzb8cxwE7zKc/ykozW/cM6X7ckpQV
+	 O58QsbOUw2yoyGNDwjViWWsWMC5FPL5otdUuh2yrSxTqVEA3O7TACptBB/HJgwOrVG0m0
+	 5u5xHdlpdWrJfsom8V/3nHP5U2qsYztftM+x/CkM9WHHfdW2ifGOJbqcLZcl7qymJjSBw
+	 2mJQldqwN4PmqLLgqyJe+lZaYJwfWLDym2Be18M9GffR0Enu/g7gZHZ+jb28qm6wXRa73
+	 s2e5X1vBDuzprAKBihigw6LlguGUWo5aHh2XcgEKii+tedPyKdNfKaG0lU71dykFK9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgUcSfSo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NLUlH4qk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554A0606A31A;
-	Fri, 23 Oct 2026 16:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D28606A31E;
+	Fri, 23 Oct 2026 16:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OgUcSfSo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBC91F01825;
-	Fri, 23 Oct 2026 16:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NLUlH4qk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E30E1F01825;
+	Fri, 23 Oct 2026 16:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774341;
-	bh=jPP31pOCEoZUZ9p++sCp+Ro6I3RxuOE4vKvMVGwgUzk=;
+	s=korg; t=1792774344;
+	bh=SNo/8NL/DP7sUqstKtqzqyblTH24/lmSKIZHiPKlmbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OgUcSfSoqNXfTjNFPunuMBghJl9UFnFiU8zAsBfdDU8QXKk1dNcaVjDpnlfxtFLMF
-	 9PrTmOFqCBCtuecrkLFMRpLmUCThKiUySt5quqC4YB117q+DaJd42tKOz5KRGqy1NR
-	 Ln/b0IQJL1DKs8iaIsh+R9Cxlbp/YNSUSxfF2cIQ=
+	b=NLUlH4qkdBmd3fd7u4BYNb9bZvdoFTKT6gckKedJvFvN3POMbC9NeVpKUp2oqktHp
+	 W8LQiIzEgJOVm7+09WCxL39CIEvda5OyxsRQxllNvsdNGIchwPhnCHcx+rSfYKpC/o
+	 JpZbgLsDD8v6Z6d6NCAljMcxDHlRFvtaGl8du5Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gael Blivet <gael.blivet@gmail.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Hasty Heat <hastyheat@gmail.com>,
+	Mitchell Augustin <mitchell.augustin@canonical.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 001/242] ksmbd: exempt FSCTL_PIPE_TRANSCEIVE from the generic file-id lookup
-Date: Fri, 23 Oct 2026 18:37:23 +0200
-Message-ID: <20261023163713.849250995@linuxfoundation.org>
+Subject: [PATCH 7.2 002/242] i2c: qcom-geni: Restore the source-clock selection policy
+Date: Fri, 23 Oct 2026 18:37:24 +0200
+Message-ID: <20261023163713.871199448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,44 +70,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gael Blivet <gael.blivet@gmail.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit a3bcea7c819a6c69ca937a68631311711bf20e66 ]
+[ Upstream commit 8cb5c17be3a2fadc41075d04ce1c24c831546aaf ]
 
-smb2_ioctl() rejects FSCTL_PIPE_TRANSCEIVE with
-STATUS_OBJECT_NAME_NOT_FOUND before fsctl_pipe_transceive() runs. RPC
-pipe IDs live in sess->rpc_handle_list, a separate namespace from the
-ksmbd_file table the generic ksmbd_lookup_fd_slow() gate searches, so
-the lookup always misses.
+Currently, the source clock lookup prefers 32 MHz whenever that rate is
+available, regardless of the rate configured by the platform. Before the
+switch to looking up the clock index, the driver used the 32 MHz timing
+table only if the current source clock rate was 32 MHz, and the 19.2 MHz
+table otherwise.
 
-Found while testing generic SMB browsing (Finder's "Connect to
-Server"): every DCE/RPC bind over a named pipe (SRVSVC, WKSSVC, SAMR,
-LSARPC) failed right after CREATE. Adding FSCTL_PIPE_TRANSCEIVE to the
-same no_fileid_ioctl exemption as FSCTL_PIPE_WAIT fixes it, confirmed
-by testing a build with and without the change.
+On X1E80100 CRD, this results in switching the source clock from 19.2 MHz
+to 32 MHz, which causes intermittent failures when probing the I2C HID
+keyboard. These range from corrupted HID descriptors to failed resets
+and transfer timeouts, which also affect the touchpad on the same bus.
 
-Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
-Assisted-by: Claude:claude-sonnet-5
-Tested-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Restore the original selection policy: use 32 MHz if already selected,
+otherwise request 19.2 MHz. Look up the index for the selected rate and
+keep the check that rejects higher-frequency multiples. This retains
+the dynamic clock index lookup without preferring 32 MHz on platforms
+that previously used 19.2 MHz. Report the requested rate if the lookup
+fails.
+
+Fixes: cb97bf3d4f91 ("i2c: qcom-geni: Fix hardcoded clock index in SE_GENI_CLK_SEL")
+Assisted-by: LLM
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Tested-by: Hasty Heat <hastyheat@gmail.com>
+Tested-by: Mitchell Augustin <mitchell.augustin@canonical.com>
+Reviewed-by: Mitchell Augustin <mitchell.augustin@canonical.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260928-b4-i2c-qcom-geni-preserve-source-clock-v1-1-9aded7552a76@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-qcom-geni.c | 37 ++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 17 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 5f82dcd9a0b55..7cc5ca6a12652 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -9634,6 +9634,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 	case FSCTL_QUERY_NETWORK_INTERFACE_INFO:
- 	case FSCTL_VALIDATE_NEGOTIATE_INFO:
- 	case FSCTL_PIPE_WAIT:
-+	case FSCTL_PIPE_TRANSCEIVE:
- 		no_fileid_ioctl = true;
- 		break;
- 	default:
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index de5bc4b8a3a52..4c9a8f8f127aa 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -188,28 +188,31 @@ static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
+ static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
+ {
+ 	const struct geni_i2c_clk_fld *itr;
+-	unsigned long res_freq;
++	unsigned long req_freq, res_freq;
++	int ret;
+ 
+ 	/*
+-	 * Frequency counter tables are calibrated for a specific source
+-	 * clock frequency and are not valid for any multiple of it
+-	 * (e.g. 64 MHz, 128 MHz).
+-	 * Use exact=true and verify res_freq matches req_freq literally
+-	 * to reject harmonics: a 64 MHz clock that divides evenly to
+-	 * 32 MHz would pass exact matching but produce double the intended
+-	 * I2C frequency with these counter values.
++	 * Use 32 MHz only if already selected, otherwise use 19.2 MHz.
++	 * Preferring 32 MHz merely because DFS supports it breaks I2C
++	 * transfers on X1E80100 CRD.
+ 	 */
+-	if (!geni_se_clk_freq_match(&gi2c->se, GENI_SE_CLK_32MHZ,
+-				    &gi2c->clk_idx, &res_freq, true) &&
+-	    res_freq == GENI_SE_CLK_32MHZ) {
++	if (clk_get_rate(gi2c->se.clk) == GENI_SE_CLK_32MHZ) {
++		req_freq = GENI_SE_CLK_32MHZ;
+ 		itr = geni_i2c_clk_map_32mhz;
+-	} else if (!geni_se_clk_freq_match(&gi2c->se, GENI_SE_CLK_19P2MHZ,
+-					   &gi2c->clk_idx, &res_freq, true) &&
+-		   res_freq == GENI_SE_CLK_19P2MHZ) {
+-		itr = geni_i2c_clk_map_19p2mhz;
+ 	} else {
+-		dev_err(gi2c->se.dev,
+-			"Unsupported SE source clock: must be exactly 32 MHz or 19.2 MHz\n");
++		req_freq = GENI_SE_CLK_19P2MHZ;
++		itr = geni_i2c_clk_map_19p2mhz;
++	}
++
++	ret = geni_se_clk_freq_match(&gi2c->se, req_freq, &gi2c->clk_idx,
++				     &res_freq, true);
++	if (ret)
++		return dev_err_probe(gi2c->se.dev, ret,
++				     "Failed to find SE source clock %lu Hz\n",
++				     req_freq);
++	if (res_freq != req_freq) {
++		dev_err(gi2c->se.dev, "Unsupported SE source clock %lu Hz\n",
++			res_freq);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
