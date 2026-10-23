@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774820;
-	b=2a1q9E2hAkNlEYjs/3MbBGZPtFdJT83NucP6X6vkB2oQXOhrXpP+JhcOC8Zir85xr1tj
-	 JCCw25J2hDklLi0spyWRAgnHZ7WNy4XHNQ4kwhT9ee6tXLIPAEesDJ5MhEZxkAcVQkqHU
-	 J4u1ylX5/haav3i6d7JNpPOl+poWgQUVdZRP7gHJ8IvNP0t5lijQlLhqiqsQvEw68QT7x
-	 T0494qG53wYMRb0uGNZSH+k0HLZuLWn0mJ+hi2RkncRJnD43AH4hNPJBScXu/FQaYF32r
-	 oBHmEX8lH1utYkTW0ehWeHJRZ2/suHXGByH9mJ5YnEacbm5gxEe1GZMxy5BqOVb+THA==
+	t=1792774823;
+	b=RJSCen2VBuDaqADZn1j/nJU/voC15pxL6awQbxzag99G7JoTpWnCWyBFjsCXW2L6Tk6g
+	 CX2hyvOipstyU/uRBzipxphr3TVe8gc7n66NYfPfCmyCskwPpY0far0cOnpjMwVXPvn8X
+	 cBszQ8bEzFYs9jvQRNz0+QRJ5MTiLf6lgkhftQdhxEdypRWm9h+6dbz2czZWhSNTC/bUf
+	 XbVYw0SsXSnvv/xrOvXSOeYmL20EiVoDKPX4i6LdcalS8+zndw4U0mcWqbVg/tYxdcX18
+	 x50auI5qdbwuY1RIG/XEpP/dza7fJkBFJtZHYkdrr93i4YcIUb2RRpTKRZuX3BeKEpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774823;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cdJ2rz4BqCRKvz2w0p5d+T9TXcXXpYiOuAMhPpjsm8U=;
-	b=IV8OW0eGI70Bc4PbTMw8URzdZZ3R/DSaMvRCy9h16AcfyGM1hPA5ZsmkWxJgpWIQFvKW
-	 WJLDUp3aP9J6so8C+0mpQoGgmqpVNbXHJqL/zsvoR55m9kgPGup4RcFtc5VWasxLN52w/
-	 qs7ye0XhC2PRGcYgQ9AMzVa2i70oHXc6vQGkrMqXj/cYDndTcfotO7PJLXJGWkYYeH7Mb
-	 eO7xfEGGkyHlcft+MjSeY+IbmDUAhFoshIHrmLEHvCa04L6ZRU1n+dPAfg6gtfb3fVK3E
-	 FWFwguwdllpVU7DRYBuXiVDVuRZqfgtKyw7cfergczW7lmpk46qvEY12swPhW7RX8Yw==
+	bh=cev86NUIhHQQIUgpvKoTYGCRJp+FSBuICTKfE4ZduAY=;
+	b=KgSBNOikLLzHsXX237pBU7Vl2aiwhWjooDEjiDhiPp+kJR766SFB9QrqHzFhZvGz8xms
+	 WV7ov5kO32hageqQOPmNmsceBoChdTdZiozEWeEDMvNg7L7isSXYGBBOYll15etkw5LZy
+	 l+SPBgNRUAp7YWxg1W05xCp7xaJw1aeqR0o4S1ME6++9Z7nQl6Ud1buw32K6DivgXW3v0
+	 vcfI9yhO+WO5/BXJ2BnjVA/HUgrWginq59XKv6JiGZ9Udrwi9uhfGSNpCfRUaXWXd2cMV
+	 O3PgZgYT5aAqsq9HgZvFXWnoMZCbzqcSLEklQVW5tDbr+JCszy542INwG7sYmYv6Pvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YiQEzJzO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nk/e62HV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CC0606A31A;
-	Fri, 23 Oct 2026 17:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480AD606A31E;
+	Fri, 23 Oct 2026 17:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YiQEzJzO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7251F01825;
-	Fri, 23 Oct 2026 17:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nk/e62HV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416BF1F01825;
+	Fri, 23 Oct 2026 17:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774819;
-	bh=cdJ2rz4BqCRKvz2w0p5d+T9TXcXXpYiOuAMhPpjsm8U=;
+	s=korg; t=1792774822;
+	bh=cev86NUIhHQQIUgpvKoTYGCRJp+FSBuICTKfE4ZduAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YiQEzJzO1aYC5+9j6tKx6bH1MJDBv65SMlnt/xzmtVJkPdD6isrWPvydWZG2v7AtS
-	 pvUVJ23c4X3T9PC8G+WzF7in5t5TjNE76GnfrMOyLlFpl4g1oabwnJjk9ZxGz6S0SW
-	 L7X+JjhEXLI1aUaIV3/O85Dhgj6ehCS44PXod+8I=
+	b=nk/e62HV6iY3uGn6u47/Xsy4jgev9fTy2DljhdvA1HKCpiH4YuxZny/PiGLrQF6hJ
+	 pyGRF+gRggK3fmiPg8yv3VsQ+l+ZRdF4cKE1AGD3cF7en1WQlWS7b5x94A3bpINnZU
+	 iTiR6q4NvyKaUp+8XppaVCxXYGV+vg2yWiVD5Iuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>
-Subject: [PATCH 7.2 167/242] sched_ext: Propagate every bypass depth change to the descendants
-Date: Fri, 23 Oct 2026 18:40:09 +0200
-Message-ID: <20261023163717.734465552@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 7.2 132/242] tools: gpio: fix building from the top level with O=
+Date: Fri, 23 Oct 2026 18:39:34 +0200
+Message-ID: <20261023163716.902535364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,79 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Sasha Levin <sashal@kernel.org>
 
-commit dcf7f650a24897d59b071f7f9a454d8b0b188b27 upstream.
+commit 52336337f1a01ad803c7f3ddb23f40222e9ad58d upstream.
 
-scx_bypass() propagates a depth change to the descendants only when the
-scheduler's own depth crosses zero, so an own bypass that starts under an
-ancestor's never reaches them. When the ancestor's bypass ends first, the
-descendants leave bypass while the scheduler is still bypassing: a
-sub-scheduler disabled under a PM suspend has its children re-queue their
-tasks through their own BPF schedulers at resume, mid-teardown. If the own
-bypass then ends, every descendant is decremented once more than incremented
-and dec_bypass_depth() warns, though no current caller gets there.
+"make O=<dir> tools/gpio" fails:
 
-Propagate on every call so that a descendant's depth is the sum of its own
-bypasses and its ancestors'. The early return follows the walk, as a
-descendant's depth is at least the scheduler's and nothing changes bypass
-state unless the scheduler's own does.
+  Makefile:27: /tools/build/Makefile.include: No such file or directory
 
-Fixes: c7f0e467a27a ("sched_ext: Prepare bypass mode for hierarchical operation")
-Cc: stable@vger.kernel.org # v7.1+
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+tools/Makefile clears srctree, and the gpio Makefile only works it out
+again when building_out_of_srctree is not set, which the top-level
+Makefile sets for O= builds.
+
+Also work out srctree when it is empty, as tools/bpf/Makefile does
+since commit a89b2cbf71d64 ("tools, bpf: Fix build for 'make -s
+tools/bpf O=<dir>'").
+
+Fixes: 4a6a6f5c4aeed ("tools: gpio: Use !building_out_of_srctree to determine srctree")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261011223358.2327625-5-sashal@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ tools/gpio/Makefile |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -5793,22 +5793,23 @@ static void scx_bypass(struct scx_sched
- 	struct scx_sched *pos;
- 	unsigned long flags;
- 	int cpu;
-+	bool changed;
- 
- 	raw_spin_lock_irqsave(&scx_bypass_lock, flags);
- 
- 	if (bypass) {
--		if (!inc_bypass_depth(sch))
--			goto unlock;
--
--		enable_bypass_dsp(sch);
-+		changed = inc_bypass_depth(sch);
-+		if (changed)
-+			enable_bypass_dsp(sch);
- 	} else {
--		if (!dec_bypass_depth(sch))
--			goto unlock;
-+		changed = dec_bypass_depth(sch);
- 	}
- 
- 	/*
- 	 * Bypass state is propagated to all descendants - an scx_sched bypasses
--	 * if itself or any of its ancestors are in bypass mode.
-+	 * if itself or any of its ancestors are in bypass mode. A descendant's
-+	 * depth is the sum of its own bypasses and its ancestors', so every
-+	 * call propagates whether or not @sch changed state.
- 	 */
- 	raw_spin_lock(&scx_sched_lock);
- 	scx_for_each_descendant_pre(pos, sch) {
-@@ -5822,6 +5823,13 @@ static void scx_bypass(struct scx_sched
- 	raw_spin_unlock(&scx_sched_lock);
- 
- 	/*
-+	 * A descendant's depth is at least @sch's, so no bypass state changed
-+	 * unless @sch's did.
-+	 */
-+	if (!changed)
-+		goto unlock;
-+
-+	/*
- 	 * No task property is changing. We just need to make sure all currently
- 	 * queued tasks are re-queued according to the new scx_bypassing()
- 	 * state. As an optimization, walk each rq's runnable_list instead of
+--- a/tools/gpio/Makefile
++++ b/tools/gpio/Makefile
+@@ -7,7 +7,13 @@ bindir ?= /usr/bin
+ # isn't set and when invoked from selftests build, where srctree
+ # is set to ".". building_out_of_srctree is undefined for in srctree
+ # builds
++ifeq ($(srctree),)
++update_srctree := 1
++endif
+ ifndef building_out_of_srctree
++update_srctree := 1
++endif
++ifeq ($(update_srctree),1)
+ srctree := $(patsubst %/,%,$(dir $(CURDIR)))
+ srctree := $(patsubst %/,%,$(dir $(srctree)))
+ endif
 
 
