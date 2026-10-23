@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774970;
-	b=nkXxcACvSiXXDmfnS87uMtkBffKB+f6gT+cNgkjUQJWReZrn1Px2W/wmjoTx75joDcG6
-	 L3knifPjP+QnB8Kew7PFDC2SW/rxNKDZ9FGX2obfG2wcGHj+wdflSRVOpsZ9qakltJmLG
-	 jOMHc56N67B1E5QeQ8+WU23m77rgWcAdo5SUxPpw24+Cmk6nlES8p0bvAXsV/40L9zo/U
-	 QnbcQYILRU3HqPbmyitVox5H+lRWc4UGPnCz+lnBQCYE72bttq301H5yBkSJ4ZXnj2I/b
-	 I0QYnN0SAD5S2pk1TeCudpbDeeHQhROFnhSYAHu3spUrUm94sjsRiH0aB2FOJ9dQ2eg==
+	t=1792774973;
+	b=fOFWNPV9BV3eFY6fv3wKC6jqpmbK0nOyvaM+sS3kMZitDjQAWJwKDz5U75M7ICQfBYtq
+	 tf1DSxgrd6AqMwoCjQRWtw9bDkMicsYIgbzJ4yQGYic2bLDppiuFM8zBL3w15MH7slAbH
+	 bt964DUA3+DjH5bcoGC5+b1LFWdX/k166qevf0uFmutJO4BKwb/edXWvIMLLCjkz1naKs
+	 4YF5Wy9YZlVEsvYVlH7PodD4775PN7czIk9ggJSrgqKvy6RWDXxq3EPZRnWZhoPs9Yecn
+	 Dmqo4qRHf2GUyemM1CKXT5nbtQOQ21ICWcpgdfnSSi3on/mMC2irmKRNKhYLXLWq3Uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774970;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774973;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZgOpZ5ifs5YSf4+WoL5DaKFTQS9aMZOy3OnYi+1VbmM=;
-	b=cIE1GBZ/B0dLswywZzbBDcANYDobxY7WUgKjuOEw8uZl6awzZ1zGJqQNJjdMAZP0xlxc
-	 fOmBS4Rp4/lDcJ+HcG0xQECTW4l+8TGzNuDbvVSMJIlvi77tzqwUWn6pxLIuOmf2F8Zuw
-	 KBQ7+bLhskKYGP6jkgti6guxlW+nH26dVvU0TMxF8XD2qbGzl69pU06hisK8MZGYfUb6m
-	 3iMWNN2Kiew8N6rTMZmreIcZW27B34hzvQjEJKXD82CApn46Kjq4ADkZkal3y6B5aGfoj
-	 fkzZhZKLZ/b5JopCi2/3EWzxQdJfCkAxydqQs0rJ9JhvDmHbpUW/vvQ7LI8USwEdazw==
+	bh=vO8AU9HwWioirwTBbbS6akq8rCLXfBOdkhT9uEcvuCY=;
+	b=d81IkBlWvbjqQGr6SuP2Ufkuzw2r8N/vzcRplrb3AL60oneX76SmDyY95QOQWwWEyPmF
+	 7cUmuQzct+DmwuAGEWTZYkLRPesApeUhGjAXV6SsLAfmzNk6WBilUi8LTcgAaZnSC6R0q
+	 yDrixecw+SLy0nz+6KcVEw9PKUezs0QV0rI+o2V2r56he7fQkbtettdissjrvIgn5pdL4
+	 I15h7GNhWZtDAoXSWjq55551Zf2GJp7xlYzGqqk7Asepu0Xc6KNiG5RwfGDqJLgWFREUM
+	 TCWTUISj4klfEYkR73eM3admzxDhQZ4UDzd4eNMUiB0ju1eTLUGsWpjkws/yUaLrXwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSLknTBq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuyweluo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16245606A31A;
-	Fri, 23 Oct 2026 17:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAA2606A31A;
+	Fri, 23 Oct 2026 17:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSLknTBq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558F81F01825;
-	Fri, 23 Oct 2026 17:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xuyweluo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783EE1F01825;
+	Fri, 23 Oct 2026 17:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774969;
-	bh=ZgOpZ5ifs5YSf4+WoL5DaKFTQS9aMZOy3OnYi+1VbmM=;
+	s=korg; t=1792774973;
+	bh=vO8AU9HwWioirwTBbbS6akq8rCLXfBOdkhT9uEcvuCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xSLknTBqK0Qk8NarI6WUruBfN4NjM/PaYpLrAbjqAmkJybGj5fDfqiqeQjcdrEqQu
-	 7qs5B2JJnA2tWeESF7f/325o4CERzwE2cfbKSqigIKRJiB7JiJ/2HYwxZQYvwieAsS
-	 Uau9CLAm3a32lu9iMrFcwJ7Hc/T2FlVxbKNLHhug=
+	b=xuyweluout49lC3QXGjelb89lT2O8P5yxnAWT7P0OblQXUT+i8i9MhNaWI8LUKabe
+	 ImvZL87vFwwFPs4KNwzb6XKUhBvZhnCUHXK5tqvLXj2DtpHm3t/nrWVDCzC6jFn0dS
+	 gMHE4rfvpUhkk1IGH3vFioOMHq28dnEJ+O25GbuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 219/242] net/sched: cls_flower: validate mask pointer after nla_next()
-Date: Fri, 23 Oct 2026 18:41:01 +0200
-Message-ID: <20261023163718.995980366@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 7.2 220/242] smb: client: fix data corruption with concurrent writes and O_TRUNC
+Date: Fri, 23 Oct 2026 18:41:02 +0200
+Message-ID: <20261023163719.021933586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,66 +71,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit fee10655709c5c597e8e9f722f3035d9ea31ff3a upstream.
+commit a8603b52b39f520ea8a34def74c23fba87396d3e upstream.
 
-fl_set_enc_opt() iterates the key's nested tunnel-option attributes
-with nla_for_each_attr() while advancing a single mask pointer via
-nla_next() at the bottom of each loop, so the mask cursor is driven
-by the number of key attributes rather than by the mask's own
-attributes.  The nla_ok() added by commit c96adff956191 ("cls_flower:
-call nla_ok() before nla_next()") only validates the mask pointer
-that was just consumed; the pointer produced by nla_next() is used by
-the next iteration (fl_set_geneve_opt() and siblings) without any
-validation.
+cifs_do_truncate() flushes dirty pages with filemap_write_and_wait()
+and truncates the file on the server, but in the old code both
+operations ran without holding i_rwsem or invalidate_lock.  A
+concurrent buffered write via netfs_perform_write() -- which only
+needs i_rwsem shared -- could dirty new pages after the flush but
+before the local truncation, and those pages would be silently
+discarded by cifs_setsize() -> truncate_pagecache().
 
-The mask's nested attributes are validated with NL_VALIDATE_LIBERAL,
-which merely warns on trailing bytes that do not form a complete
-attribute.  A mask carrying one valid attribute plus 1-3 residue
-bytes (or a non-aligned attribute length making msk_depth negative)
-therefore reaches the next iteration with msk_depth != 0, so neither
-the !msk_depth check in fl_set_enc_opt() nor the !depth check in the
-per-type helpers fires.  nla_type() then reads past the mask payload
-and nla_parse_nested_deprecated() iterates with an nla_len taken
-from those bytes, reading well beyond the mask attribute (KASAN:
-slab-out-of-bounds read in __nla_validate_parse from fl_change()).
+Fix by acquiring inode_lock (exclusive i_rwsem) and
+filemap_invalidate_lock at the top of cifs_do_truncate(), so the
+entire flush-truncate-resize sequence is atomic with respect to:
 
-Validate the advanced mask pointer as well: when the mask is not
-legitimately exhausted (msk_depth != 0) and the new pointer fails
-nla_ok(), reject the filter with -EINVAL.  An exactly exhausted mask
-still skips the check, preserving exact-match behaviour for the
-remaining key attributes.
+  - buffered writes (blocked by exclusive i_rwsem, since
+    netfs_start_io_write takes i_rwsem shared),
+  - read page faults (blocked by exclusive invalidate_lock, since
+    filemap_fault takes it shared),
+  - writeback collection (blocked by netfs_wb_begin/netfs_wb_end
+    around the server truncate and local resize, since
+    netfs_writepages also acquires the wb lock).
 
-Fixes: c96adff95619 ("cls_flower: call nla_ok() before nla_next()")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Link: https://patch.msgid.link/20260826025123.62758-1-ljp1205831794@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_flower.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/client/file.c |   28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index 0e275b58151c..1cefea571efd 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -1703,6 +1703,11 @@ static int fl_set_enc_opt(struct nlattr **tb, struct fl_flow_key *key,
- 			return -EINVAL;
- 		}
- 		nla_opt_msk = nla_next(nla_opt_msk, &msk_depth);
-+
-+		if (msk_depth && !nla_ok(nla_opt_msk, msk_depth)) {
-+			NL_SET_ERR_MSG(extack, "A mask attribute is invalid");
-+			return -EINVAL;
-+		}
- 	}
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -999,42 +999,50 @@ static int cifs_do_truncate(const unsign
+ 	struct cifs_tcon *tcon;
+ 	int rc;
  
- 	return 0;
--- 
-2.56.0
-
+-	rc = filemap_write_and_wait(inode->i_mapping);
+-	if (is_interrupt_error(rc))
++	rc = inode_lock_killable(inode);
++	if (rc)
+ 		return -ERESTARTSYS;
++
++	filemap_invalidate_lock(inode->i_mapping);
++
++	rc = filemap_write_and_wait(inode->i_mapping);
++	if (is_interrupt_error(rc)) {
++		rc = -ERESTARTSYS;
++		goto out;
++	}
+ 	mapping_set_error(inode->i_mapping, rc);
+ 
+ 	cfile = find_writable_file(cinode, FIND_FSUID_ONLY);
+ 	rc = cifs_file_flush(xid, inode, cfile);
+ 	if (!rc) {
+ 		if (cfile) {
++			struct netfs_inode *ictx = netfs_inode(inode);
++
+ 			tcon = tlink_tcon(cfile->tlink);
+ 			server = tcon->ses->server;
++			netfs_wb_begin(ictx, false);
+ 			rc = server->ops->set_file_size(xid, tcon,
+ 							cfile, 0, false);
+ 			if (!rc) {
+-				inode_lock(inode);
+-				filemap_invalidate_lock(inode->i_mapping);
+ 				netfs_resize_file(&cinode->netfs, 0, true);
+ 				cifs_setsize(inode, 0);
+-				filemap_invalidate_unlock(inode->i_mapping);
+-				inode_unlock(inode);
+ 				cifs_invalidate_cache(inode, 0);
+ 			}
++			netfs_wb_end(ictx);
+ 		} else {
+ 			/*
+ 			 * No cached handle; evict stale pages so they can't
+ 			 * be served after the file is later extended; let
+ 			 * the server's O_TRUNC open response set the i_size
+ 			 */
+-			inode_lock(inode);
+-			filemap_invalidate_lock(inode->i_mapping);
+ 			truncate_inode_pages(inode->i_mapping, 0);
+-			filemap_invalidate_unlock(inode->i_mapping);
+-			inode_unlock(inode);
+ 			cifs_invalidate_cache(inode, 0);
+ 		}
+ 	}
++
++out:
++	filemap_invalidate_unlock(inode->i_mapping);
++	inode_unlock(inode);
+ 	if (cfile)
+ 		cifsFileInfo_put(cfile);
+ 	return rc;
 
 
