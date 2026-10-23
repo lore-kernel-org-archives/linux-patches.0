@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774562;
-	b=4w0xWfmjNYlTf2+1ESHMxsBY27SNznWjwNMzhhGQEWmjBAY0X5cZB8zUcZcSv4+36PyD
-	 WF43nCuxntj+8plqXhgrDjD2NMrdoSfcelAaetyCiG69jdqCchL+d1wIPDkGMiRprRoHF
-	 e7eCG3HlAC0pzf/6Qqfg5UdSmOll7wTiCmXlwGW3fUPHKe/06diIrciZuMfp/tePSq2tt
-	 8lg4oYZKiksAOy6rSeaKqzE9UA77+9O9pApam59X0FSkSVTPwEDxnnE0+fEHD38SVI5ky
-	 sA9AQYTBJ/0QMfdJJTD/YFJ186NuMB+IdKoOyu5YEsFYHgWvLBJFwtYWPvlbO2AC8GQ==
+	t=1792774565;
+	b=ZIZm4h/eZVwO4iynf6dCx3HsK54jGjMUEQPlzVTGp7pBCYUX6vB3eGRgtwlatZCVLBE9
+	 CRPMCqtVOrNvqvdzsNdLIQVVDPStMuVmdNEc+Mgg7+NKjYNaM8a/bZ2rKBprOxQAHJrKu
+	 Vf0VQjJBhVbTqlBDti+YM0otj2vhODyOfqMqHezqgnaALqsypqk+VaQj29RKTjcxST4Rh
+	 foV+FWtCSq7R7PYuoBa6iQygCqKo6f7RamkVUfUM0F63fM658cII9qd2kWOAsJOaWT3g4
+	 OfDezlFwQC+OXHDeT7R0xFLdiTgOUtJTb3n7RPRiiIiRLGSX4+cBoym6bGw1+Omthtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774562;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774565;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rR+5/INJdDdKmKkXM8oPg+uCh5M9FxtAQ9GKZ1MbKhE=;
-	b=FHuRppsQX4f33cetdQEcm6mRhwj9s3/JR8533VooCS36P9xAaVUs+R/PhhJ8TH7cD8pn
-	 BAsOAc9uQrh/Nhmtg5PSiJ3CW552zcvcI9qDwLKPwj16czG2izs8PxBny/HG+MbT7mirh
-	 lSH5sL38R9ocHuh/wCB/fcEZJMOY2+3YqeCTp5rGzZf+hCntthTUwJ2xmpGuSUHPrdXeu
-	 4BHZ4/TXXjB588iUODgd4of7Vbtbw9lxXFZuZSOyU5uPcwQKKOH4M+eK9AKCaJZxyeCjo
-	 hqYiGkQHorPBzL3bP+BgvrInsU6kN1qaQQIf2VKXP8jeNBjrsbyNhTmg87negFfhNRA==
+	bh=/V6x0+FB/Kqx0jH7UKo78GVKWv15ZvUA0M+GQjv7YyI=;
+	b=gZG1EHzh92g2kyMqwpLCWZ9zpVIYO7D/KDgIdNXcBtK3aylOwGOfDL6Et6CLDMzYFdrs
+	 Y7LfbXwCfKj4B4kfP+j7kxcBOYOtCqAhNjRTls4yqs4XcU7xkUSEAVfFcts8Gwujp/oV4
+	 EMiIz3VzO7x6rF7t7UEsoDfdn0WN6+D0/3eZqgjJNG7FvDlWm9qi2kySgAeM/oVEbuZbQ
+	 X9RF4Z4i/UhNSv77g2Pnu9s2yf7POOR4qeVL155ShynaD8ig+7aSn/wcIza9eempbPEDs
+	 Li8ZcpVTdJFkLwocjczyyS+7GcvGeYITty40A8XB+t8twa0zx3bP01UBB7SxP3nDYpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ClL6tCex;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pF/t7vMj";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA05D606A31E;
-	Fri, 23 Oct 2026 16:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C26606A31D;
+	Fri, 23 Oct 2026 16:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ClL6tCex
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3A41F01825;
-	Fri, 23 Oct 2026 16:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pF/t7vMj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA761F01825;
+	Fri, 23 Oct 2026 16:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774561;
-	bh=rR+5/INJdDdKmKkXM8oPg+uCh5M9FxtAQ9GKZ1MbKhE=;
+	s=korg; t=1792774564;
+	bh=/V6x0+FB/Kqx0jH7UKo78GVKWv15ZvUA0M+GQjv7YyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ClL6tCexYRUe/N5YiJmWsgD131P1XStXaulduIHMSRXplaTocuSG+ICD1/l2kWBgw
-	 sAaOMjLRfwDzPUK05yH0kN2AvTW1R5Wvuo327SmuMi9cmNofw5GjsKIT89zsStpaRh
-	 rb92z4xpIQWFEs9XfGRiQk5U/Y3cshK0KYDwCbwE=
+	b=pF/t7vMjZdyyAj1qEVkNu50XGuuR2Ld7TpLM69g7ikHb35X7GY/YGK83CW5ZS6MWI
+	 92RqsJARxG62Ki8fB0Z3ny/i9gJfNBE+hcSGbOS/LjzIWTrB8wOvslYj6GQaShLRdw
+	 dcJYqzr69CJa7LitAoHmIr6tutuYbntrmopbfBys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Yang <mmyangfl@gmail.com>,
 	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Andreas Larsson <andreas@gaisler.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 081/242] net: ethernet: aeroflex: move setting of netops to fix crash
-Date: Fri, 23 Oct 2026 18:38:43 +0200
-Message-ID: <20261023163715.695355017@linuxfoundation.org>
+Subject: [PATCH 7.2 082/242] net: ti: icssm-prueth: Move setting of netops to fix crash
+Date: Fri, 23 Oct 2026 18:38:44 +0200
+Message-ID: <20261023163715.717236981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -66,7 +65,6 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Message-ID: <20261023163843._kj1dtQEr2S_cjhjivuSu-YgyRYCLQ_60hZOGTDog-0@z>
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
@@ -74,10 +72,10 @@ Message-ID: <20261023163843._kj1dtQEr2S_cjhjivuSu-YgyRYCLQ_60hZOGTDog-0@z>
 
 From: David Yang <mmyangfl@gmail.com>
 
-[ Upstream commit d71483f0716e7ae98578817bfdc8a5b822d250f8 ]
+[ Upstream commit 955bb7cf680d8699ce94c73539af882840a9be43 ]
 
-greth_of_probe() calls greth_mdio_init(), which connects the PHY,
-before dev->netdev_ops is assigned. phy_attach_direct() ->
+icssm_prueth_netdev_init() calls of_phy_get_and_connect() before
+ndev->netdev_ops is assigned. phy_attach_direct() ->
 phy_link_topo_add_phy() reads dev->netdev_ops through
 netdev_need_ops_lock() since the commit in question, so probing crashes
 with a NULL pointer dereference when CONFIG_NET_SHAPER is enabled.
@@ -88,36 +86,35 @@ Assign netdev_ops before the PHY attach, as was done for emac in commit
 Fixes: ded86da4bbb7 ("net: ethtool: relax ethnl_req_get_phydev() locking assertion")
 Signed-off-by: David Yang <mmyangfl@gmail.com>
 Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Acked-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://patch.msgid.link/20261008022656.3592191-9-mmyangfl@gmail.com
+Link: https://patch.msgid.link/20261008022656.3592191-10-mmyangfl@gmail.com
 Reviewed-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aeroflex/greth.c | 3 ++-
+ drivers/net/ethernet/ti/icssm/icssm_prueth.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/aeroflex/greth.c b/drivers/net/ethernet/aeroflex/greth.c
-index a593adc16c78a..fccb67beebee1 100644
---- a/drivers/net/ethernet/aeroflex/greth.c
-+++ b/drivers/net/ethernet/aeroflex/greth.c
-@@ -1421,6 +1421,8 @@ static int greth_of_probe(struct platform_device *ofdev)
- 	/* Check if MAC can handle MDIO interrupts */
- 	greth->mdio_int_en = (tmp >> 26) & 1;
+diff --git a/drivers/net/ethernet/ti/icssm/icssm_prueth.c b/drivers/net/ethernet/ti/icssm/icssm_prueth.c
+index b7e94244355a3..b42c98e861e08 100644
+--- a/drivers/net/ethernet/ti/icssm/icssm_prueth.c
++++ b/drivers/net/ethernet/ti/icssm/icssm_prueth.c
+@@ -1563,6 +1563,8 @@ static int icssm_prueth_netdev_init(struct prueth *prueth,
+ 	}
+ 	ether_addr_copy(emac->mac_addr, ndev->dev_addr);
  
-+	dev->netdev_ops = &greth_netdev_ops;
++	ndev->netdev_ops = &emac_netdev_ops;
 +
- 	err = greth_mdio_init(greth);
- 	if (err) {
- 		if (netif_msg_probe(greth))
-@@ -1498,7 +1500,6 @@ static int greth_of_probe(struct platform_device *ofdev)
- 		dev->flags &= ~IFF_MULTICAST;
+ 	/* connect PHY */
+ 	emac->phydev = of_phy_get_and_connect(ndev, eth_node,
+ 					      icssm_emac_adjust_link);
+@@ -1590,7 +1592,6 @@ static int icssm_prueth_netdev_init(struct prueth *prueth,
  	}
  
--	dev->netdev_ops = &greth_netdev_ops;
- 	dev->ethtool_ops = &greth_ethtool_ops;
+ 	ndev->dev.of_node = eth_node;
+-	ndev->netdev_ops = &emac_netdev_ops;
  
- 	err = register_netdev(dev);
+ 	netif_napi_add(ndev, &emac->napi, icssm_emac_napi_poll);
+ 
 -- 
 2.53.0
 
