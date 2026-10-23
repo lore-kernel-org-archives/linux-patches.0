@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773875;
-	b=gbdpDBCJp1HwpDAoziLgBZRMnWj5BukqZBqOgz8yrERSVf5nEK8KfkzHvYbi5PAqHgIB
-	 kOWbuzPTdHVWNNSxgktBId/r9rshHNcG1d+nWWuR6NAWKsskmVOuEF7gLs7YPIjw26Ojt
-	 HFCECMAAh/09+tMkvfh3HhhkoZit6F5S7qjVuDoUygpCgVk8NzuX4kOX5h8G6QlOo27Eu
-	 TKv4DF7qr18wE94buXQxy7jJTR58e4v0dPaKq06D9DBMWQNdL7Lu9eiOYJ6LWJRPI6xBM
-	 OF01s+eE7mdKPTL8J/thqIJZel1cw+GPxostmJ8FLDQVyL/0kXbQ7zXepiG2HIk46ng==
+	t=1792773878;
+	b=akjM66hp4xdZBgVmdq4CAndM9FrZ9+PlFcEa1zQF20qKH9/+KGschCXlxfFOqEfCUvZq
+	 eKrEQYETq9K4K+TGoYVkVqHJo/HWQV0rkaiDOf1sL1/wj5+tpYA/dmoF0XT/Xj1EbiPyI
+	 ug13rDWm7ZDsCn+97QTeHzlosvvjimeGhxKMhQ/Jc589set+vuuZwoKA9EN3Dp0/rATAw
+	 JI6EwqKVu/2FGOjvsyjOWIECqd21ynLwhlf6JILsR7baI9OiKT5pNWqADidNQygzX9C5H
+	 0JkqErweouUjldExHnkXZ0ykjFVdbzxTKwRGYVLF0XAS42ci31uhmES+vrGJmL2dcSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773875;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773878;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ls3GMEjz/1C1XRtA3jP9tosNRIGd/DodGTqWMQ0HW/s=;
-	b=xqHxVTjLmTo7/mFC2lgeMmnxdPpjnuO70v40JEk5fGnEsQ/p5RX0jt/7ejz2pgzXhS/5
-	 Q1DcqFaLgUlb6lLSlwy5Olswe/oNYxlb91OZEtHq6xBKLN51qFOiKGLPJey50M7iE6FWe
-	 SHbDQSdI1jlkR8+u6f5jFHy7ex3etacXk7cA/Fc3s4xbYvWrqnn8Q9vPKvkn9T04Z42dh
-	 tr1O73x8W2TUj++MF2ucz92Oml/5iTQzu2nZI7GE+Ssv4ayUQVoOQ/6gz+moVsg6N7Qv9
-	 ZIOSoPObxMfPRWKIlgP6n24G1wXta8GlTeR/pVHxz8dIdkwiJoI0YD9L31rxcE3tGiQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=bc+Hvb6ExZn7/bwQ3oc1bxytZQVNNrInVHWOjUuZvTY=;
+	b=aiRfEgP5Mw8O7sQ/Y6rnB52+ClUj3Ga+2AzqEueL5tXN7+P1WLyjkhxGW2AAI72D8jtW
+	 L+FWqUUQ0QjtZsdpcvyz64khfUqMDzVKNkUd5aayUc/fQDFiq2Z39BlaJzTTWhy+CNAZo
+	 4rMTWYBWDosIJKbCXh8KgXARz/C0STVG6J0nIeTIOVU4pafaPcIA8827f4XEazo9r9x9J
+	 Y63DGWjAUOIk6d18J/p9iFJV4Qp5dZq0YMlnKyiVpSlLxjVbDpwNzU8mLxIS8l74HAc/c
+	 mdkcdyFDYf75TC1fD2DlvZ1Ru0NIB+JSN47+cgXEVCdBxf5jSXEC1rfsNTEv0ZjTFuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+VavKtA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8Zt145f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A933606A31A;
-	Fri, 23 Oct 2026 16:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E91606A31A;
+	Fri, 23 Oct 2026 16:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+VavKtA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E42B1F01828;
-	Fri, 23 Oct 2026 16:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8Zt145f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A3E1F01825;
+	Fri, 23 Oct 2026 16:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773874;
-	bh=ls3GMEjz/1C1XRtA3jP9tosNRIGd/DodGTqWMQ0HW/s=;
+	s=korg; t=1792773877;
+	bh=bc+Hvb6ExZn7/bwQ3oc1bxytZQVNNrInVHWOjUuZvTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+VavKtAfsQNqPtNeWM+f5VOWx36JexAklgY+05jJGxYfvQ7ZFEVzECCn9fimdKCY
-	 dkjjG6E2gF7I1lHlmHoxodaTs1icIOiNmxE0QKApG8+lFvE8Je5Kerh+qG3XUCzChB
-	 0H+3rrqXo534gEck6cr3zDKZhlf9e/LWh1xM2IBA=
+	b=G8Zt145fMRhtlzMtKuuRtB7bkLHGh426dTD1n6fkvVwTzX4FspdfXbqc3wwK/X694
+	 q/XPb50hlduzWzwmku+UWMYpZ2/oYYFNrIiNDM5oFyxQ8oME4RUXAlnuhS06ROKMAz
+	 MpcWesffrp7+E9jo+mpWmhUgZVnSxzlw5nQyR8Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Cassen <acassen@corp.free.fr>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Marek=20Bor=C5=AFvka?= <boruvka.marek@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/193] net/mlx5: HWS, fix flow meter offset within its bulk
-Date: Fri, 23 Oct 2026 18:35:21 +0200
-Message-ID: <20261023163715.247626047@linuxfoundation.org>
+Subject: [PATCH 6.18 045/193] ASoC: amd: yc: disable MSI on resume
+Date: Fri, 23 Oct 2026 18:35:22 +0200
+Message-ID: <20261023163715.272306481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -64,43 +63,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Cassen <acassen@corp.free.fr>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 1b0aad53ad715b15ccbad8c65d15c149c925f00a ]
+[ Upstream commit 2a31b5378c6db9c4a8d399e5d10d32cd4b732bef ]
 
-The flow meter action is bound to the first ASO object of the bulk but
-the rule offset only indexes the meter within its own object. A rule
-past the first object runs on the wrong meter.
+BIOS/firmware may re-enable MSI in PCI config space during system
+resume even though this driver only uses legacy INTx interrupts. If MSI
+is left enabled with stale address and data registers, the device can
+write interrupts to a bogus address and cause an IOMMU IO_PAGE_FAULT.
 
-Fixes: 82d3639ef7dc ("net/mlx5: fs, add support for flow meters HWS action")
-Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261007143830.1733583-3-acassen@corp.free.fr
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Clear the MSI Enable bit before reinitializing ACP hardware on system
+resume. Keep runtime resume separate because firmware does not restore
+PCI configuration on that path.
+
+Fixes: c8212df7bc0f ("ASoC: amd: add acp6x pci driver pm ops")
+Reported-by: Marek Borůvka <boruvka.marek@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222119
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20261013125425.3541206-1-mario.limonciello@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/yc/pci-acp6x.c | 38 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-index 9e8dd5241ff4b..5745ba84c3a0f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-@@ -931,6 +931,7 @@ static int mlx5_fs_fte_get_hws_actions(struct mlx5_flow_root_namespace *ns,
- 			goto free_actions;
- 		}
- 		(*ractions)[num_actions].aso_meter.offset =
-+			(fte_action->exe_aso.object_id - fte_action->exe_aso.base_id) * 2 +
- 			fte_action->exe_aso.flow_meter.meter_idx;
- 		(*ractions)[num_actions].aso_meter.init_color =
- 			fte_action->exe_aso.flow_meter.init_color;
+diff --git a/sound/soc/amd/yc/pci-acp6x.c b/sound/soc/amd/yc/pci-acp6x.c
+index 1140ed1cbb3d1..b72b7ae1a2563 100644
+--- a/sound/soc/amd/yc/pci-acp6x.c
++++ b/sound/soc/amd/yc/pci-acp6x.c
+@@ -289,7 +289,7 @@ static int snd_acp6x_suspend(struct device *dev)
+ 	return ret;
+ }
+ 
+-static int snd_acp6x_resume(struct device *dev)
++static int snd_acp6x_runtime_resume(struct device *dev)
+ {
+ 	struct acp6x_dev_data *adata;
+ 	int ret;
+@@ -301,8 +301,42 @@ static int snd_acp6x_resume(struct device *dev)
+ 	return ret;
+ }
+ 
++static void acp6x_disable_msi_on_resume(struct pci_dev *pdev)
++{
++	u16 control;
++
++	if (!pdev->msi_cap)
++		return;
++
++	pci_read_config_word(pdev, pdev->msi_cap + PCI_MSI_FLAGS, &control);
++	if (control & PCI_MSI_FLAGS_ENABLE) {
++		dev_warn(&pdev->dev,
++			 "ACP: MSI unexpectedly enabled after resume (flags=0x%04x), disabling\n",
++			 control);
++		control &= ~PCI_MSI_FLAGS_ENABLE;
++		pci_write_config_word(pdev, pdev->msi_cap + PCI_MSI_FLAGS, control);
++	}
++}
++
++static int snd_acp6x_resume(struct device *dev)
++{
++	struct pci_dev *pdev = to_pci_dev(dev);
++
++	/*
++	 * BIOS/firmware may re-enable MSI in PCI config space during
++	 * system resume even though this driver only uses legacy INTx
++	 * interrupts. If MSI is left enabled with stale address/data
++	 * registers, the device will write interrupts to a bogus address
++	 * causing IOMMU IO_PAGE_FAULT and interrupt delivery failure.
++	 * Explicitly clear the MSI Enable bit before reinitializing
++	 * the ACP hardware.
++	 */
++	acp6x_disable_msi_on_resume(pdev);
++	return snd_acp6x_runtime_resume(dev);
++}
++
+ static const struct dev_pm_ops acp6x_pm = {
+-	RUNTIME_PM_OPS(snd_acp6x_suspend, snd_acp6x_resume, NULL)
++	RUNTIME_PM_OPS(snd_acp6x_suspend, snd_acp6x_runtime_resume, NULL)
+ 	SYSTEM_SLEEP_PM_OPS(snd_acp6x_suspend, snd_acp6x_resume)
+ };
+ 
 -- 
 2.53.0
 
