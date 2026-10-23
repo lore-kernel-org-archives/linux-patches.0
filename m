@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774811;
-	b=AXxuv4ZVLdjmt3zq3TSPORb7dgskM+tIIpoocrnPbDGIiUW8gOkl+GEsvkYobwXK8wKB
-	 ejPuN1E5/Ozts4smDhzZ31asb8qUoIRvSlOcZFeFFrmLIfY4S9YYmdXeCpEISeSItVkio
-	 EVjh2wjaY8cINDXgCXN0AvniMMYrnEYy7WD6tR1TPF/jC+4pry/wiMCluLr4B3HqBx8Ly
-	 8qlyG5Gw1BMZZqrfEm1TT0G8dQdYAe0cKrVgy3g3WnEccjvS3t2l+SXBz2vchyyHqlSf1
-	 tKbAl2KyVurdUhLKAbDQ4ekyPJDNgG1isE/9s90frC38T0erKts57CklFur8Kz2gsug==
+	t=1792774814;
+	b=ozsoE9QimV+3CBTKbTUfbCyFGlrjK7kHCzWNkE5pDakqHZDh8oSZ0Ek8qaXCss0tQLbi
+	 JhsGRuu9JqMsIsRtQJdlccb/28dhkpcWr8b9qU7gYdaX6I4jHA0NNkhFrl4KhAiYYjZ4T
+	 11L/+eiFu5NAXBBSJUdq5cRzg/GjTNUtJ8ynZ5oe6eK8mpLwFQKd98cAXMFXP0zJffrht
+	 Tm80aXZnrRmPFI7Qc5cCcOHn3p+Ihj5uF3PR6+qEE/7HMmd9e05eqQEX0UW0r1Wz90QK4
+	 OVNRm0/h4rUg0kSGzkWldnaU8A5tFyg+ea9hWQ8QRnIwCa37JEg1L3jeytvgv4fTWEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jSMDH0V7LTaXIaOMJHvylQzsSfaDyuMt72bejhZjG8w=;
-	b=WzrMyheagUBrFZYIBLvYfjbReIqpQ2Phrio0Uaetev868Ugd5pnjk5M9pZPDfStkjakM
-	 SdTVnGAKv96MSGA3/un26LN8lCyVHGB34OZQh9sf8erMFzIzsWydyh6F8KYe1avP2madK
-	 mp77L74H1Xk6J1xFob1SpEDRBbOnQ01FyGSkak0fcrdG18oXVYVSVtu9ndGVGfjBp3upD
-	 hxcLYvfSMunQGRzDiy5z7//McEI2irdyIibI5rRKbDiM+5b5+QdfqHw4EyeBdaBhJvpr1
-	 4Hia5/xG1MVURXtYgCmEiHwEtI+7Cbp6ffjapcv2cHFUXcYlYaCEVosfPTfevsRoC9g==
+	bh=rUW9pW/fuGRtkyUqneV5l3eWNswGRWheHd0Ixj0uC8M=;
+	b=ZI1jqpR2LYdZq1+VA3RxbgH5Ox94Gx/T0w2PAyj5dSqvJ2IMwJkYAqigOK240eSPB2RB
+	 DctambVJxIpJRFw4mmxhQ0iGX8AR1e+4y9cMUqhmuN2Pt9j6g2QyUeY9mKeBYSgLAsL2u
+	 DGN9JlFpdlqAcfK9TZ+PS2M8DdEFqscKV9pb4S8AnHD6QpUnYe/jKjDoSi89xNl3X5e1+
+	 WC4AzI5uXtxaQ8xYSsknGIhnyA3L4kLvCAfmkh+lzmBHVkOy48xVr2+JIc8wW3yE+LcnO
+	 gnf1gqLkp0unVjSLeHeK1Aci3uVvmJ8Q1Buw/fsfmw5xVMmqTpsotkgfeKDSsFszVig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SiPJGtNZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bcSeBQt0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA87F606A31F;
-	Fri, 23 Oct 2026 17:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237AF606A31F;
+	Fri, 23 Oct 2026 17:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SiPJGtNZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CA11F01825;
-	Fri, 23 Oct 2026 17:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bcSeBQt0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD521F01825;
+	Fri, 23 Oct 2026 17:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774810;
-	bh=jSMDH0V7LTaXIaOMJHvylQzsSfaDyuMt72bejhZjG8w=;
+	s=korg; t=1792774813;
+	bh=rUW9pW/fuGRtkyUqneV5l3eWNswGRWheHd0Ixj0uC8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SiPJGtNZDLqRfasG5vGTdsY2Y+O+91GBFNGJ0HgWadvec314clN3JYhHFnuiBZjlR
-	 fMUr/CYMlmguszCttGr8mUrOMdVARFjhCgmwLFrErNLcilVri48Sc/jZda8tEB/P/s
-	 /MC7V4Y+6kah/YIg+2TPnK4txvdz8EzV9c9qWxH4=
+	b=bcSeBQt0smrUBqicnixUf06axz9oZdSrMtyazWCYKtQZALEqNbCCMJ3HLdN2LTed6
+	 y5z/KEwN6IeXtUecar8hK6DH6E4CbIj+XkusXZXhIcTJdxGSeTg+A+KP2nZzDW6bZa
+	 YzALf6+u9VNMe7hzvXHL069PYbHq4FIFEgRUHgIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Hui Su <sh_def@163.com>
-Subject: [PATCH 7.2 165/242] sched_ext: Fix use-after-free of a destroyed user DSQ by a deferred reenqueue
-Date: Fri, 23 Oct 2026 18:40:07 +0200
-Message-ID: <20261023163717.686264679@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 7.2 166/242] sched_ext: idle: Respect task affinity in restricted CPU selection
+Date: Fri, 23 Oct 2026 18:40:08 +0200
+Message-ID: <20261023163717.712017245@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,86 +68,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Hui Su <sh_def@163.com>
 
-commit 069403dff337feb192bfc70fb28ddc8a171e20c1 upstream.
+commit 6ac4544eff796666ce6fbcc4be8181c81dfccc85 upstream.
 
-A deferred reenqueue can read a freed user DSQ. The request stays on its
-CPU's deferred list until run_deferred() takes it, and the RCU callback that
-frees the DSQ assumes that the grace period has flushed it, so exit_dsq()
-checks the per-CPU node without the deferred list lock. A grace period waits
-for readers in flight, not for a pending run_deferred(). A run_deferred()
-which starts after the grace period began can detach the request right
-before the callback looks and then read the freed DSQ's id.
+The restricted select_cpu kfunc path handles single-CPU and
+migration-disabled tasks without going through scx_select_cpu_dfl().
 
-Cancel the pending requests before the grace period instead. The irq work
-that frees the DSQ unlinks every CPU's request under the per-CPU deferred
-list lock, and schedule_dsq_reenq() ignores a new request under the same
-lock once the id is invalid. Only a run_deferred() that started before the
-grace period can hold a request, and it runs with IRQs disabled, so the
-grace period waits for it and nothing touches the DSQ after the callback.
+It currently uses prev_cpu as the candidate, even though prev_cpu is only a
+hint and may no longer be usable after an affinity change. With a
+caller-provided @allowed mask, this can also return an idle CPU outside
+p->cpus_ptr.
 
-Fixes: 84b1a0ea0b7c ("sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs")
-Cc: stable@vger.kernel.org # v7.1+
-Reported-and-tested-by: Hui Su <sh_def@163.com>
-Link: https://lore.kernel.org/all/20261008024753.4096008-1-sh_def@163.com/
+Derive the candidate from task state instead: use the sole CPU in
+p->cpus_ptr for single-CPU tasks and task_cpu(p) for migration-disabled
+tasks. Validate it against p->cpus_ptr and @allowed before claiming its
+idle state.
+
+Since the derived candidate may be on a different NUMA node from
+prev_cpu, also preserve SCX_PICK_IDLE_IN_NODE by rejecting cross-node
+candidates.
+
+Perform all checks before scx_idle_test_and_clear_cpu(), as a successful
+call consumes the CPU's idle bit.
+
+Fixes: 683d2d0faba1 ("sched_ext: idle: Introduce scx_bpf_select_cpu_and()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hui Su <sh_def@163.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |   28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ kernel/sched/ext/idle.c |   50 +++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 39 insertions(+), 11 deletions(-)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1274,6 +1274,10 @@ static void schedule_dsq_reenq(struct sc
- 
- 			guard(raw_spinlock_irqsave)(&rq->scx.deferred_reenq_lock);
- 
-+			/* @dsq is being destroyed, see free_dsq_irq_workfn() */
-+			if (unlikely(READ_ONCE(dsq->id) == SCX_DSQ_INVALID))
-+				return;
-+
- 			if (list_empty(&dru->node))
- 				list_move_tail(&dru->node, &rq->scx.deferred_reenq_users);
- 			WRITE_ONCE(dru->flags, dru->flags | reenq_flags);
-@@ -4899,8 +4903,8 @@ static void exit_dsq(struct scx_dispatch
- 		struct rq *rq = cpu_rq(cpu);
- 
- 		/*
--		 * There must have been a RCU grace period since the last
--		 * insertion and @dsq should be off the deferred list by now.
-+		 * free_dsq_irq_workfn() cancelled the reenqs before the grace
-+		 * period and schedule_dsq_reenq() queues nothing after that.
- 		 */
- 		if (WARN_ON_ONCE(!list_empty(&dru->node))) {
- 			guard(raw_spinlock_irqsave)(&rq->scx.deferred_reenq_lock);
-@@ -4924,8 +4928,26 @@ static void free_dsq_irq_workfn(struct i
- 	struct llist_node *to_free = llist_del_all(&dsqs_to_free);
- 	struct scx_dispatch_q *dsq, *tmp_dsq;
- 
--	llist_for_each_entry_safe(dsq, tmp_dsq, to_free, free_node)
-+	llist_for_each_entry_safe(dsq, tmp_dsq, to_free, free_node) {
-+		s32 cpu;
-+
-+		/*
-+		 * Cancel pending reenqs. Only a run_deferred() that started
-+		 * before the grace period can hold one, and it keeps IRQs off,
-+		 * so the grace period waits for it. After this sweep,
-+		 * schedule_dsq_reenq() sees the invalid id under the same lock
-+		 * and queues nothing.
-+		 */
-+		for_each_possible_cpu(cpu) {
-+			struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
-+			struct rq *rq = cpu_rq(cpu);
-+
-+			guard(raw_spinlock_irqsave)(&rq->scx.deferred_reenq_lock);
-+			list_del_init(&pcpu->deferred_reenq_user.node);
-+		}
-+
- 		call_rcu(&dsq->rcu, free_dsq_rcufn);
-+	}
+--- a/kernel/sched/ext/idle.c
++++ b/kernel/sched/ext/idle.c
+@@ -907,12 +907,43 @@ static bool is_bpf_migration_disabled(co
+ 	return p->migration_disabled;
  }
  
- static DEFINE_IRQ_WORK(free_dsq_irq_work, free_dsq_irq_workfn);
++static s32 select_cpu_restricted(struct task_struct *p, s32 prev_cpu,
++				 const struct cpumask *allowed, u64 flags,
++				 bool migration_disabled)
++{
++	s32 cpu;
++
++	if (migration_disabled)
++		cpu = task_cpu(p);
++	else
++		cpu = cpumask_first(p->cpus_ptr);
++
++	if (!cpumask_test_cpu(cpu, p->cpus_ptr))
++		return -EBUSY;
++
++	if (allowed && !cpumask_test_cpu(cpu, allowed))
++		return -EBUSY;
++
++	if (flags & SCX_PICK_IDLE_IN_NODE) {
++		int node = scx_cpu_node_if_enabled(prev_cpu);
++
++		if (scx_cpu_node_if_enabled(cpu) != node)
++			return -EBUSY;
++	}
++
++	if (!scx_idle_test_and_clear_cpu(cpu))
++		return -EBUSY;
++
++	return cpu;
++}
++
+ static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
+ 				 s32 prev_cpu, u64 wake_flags,
+ 				 const struct cpumask *allowed, u64 flags)
+ {
+ 	unsigned long irq_flags;
+ 	bool we_locked = false;
++	bool migration_disabled;
+ 	s32 cpu;
+ 
+ 	if (!scx_cpu_valid(sch, prev_cpu, NULL))
+@@ -949,20 +980,17 @@ static s32 select_cpu_from_kfunc(struct
+ 
+ 	/*
+ 	 * This may also be called from ops.enqueue(), so we need to handle
+-	 * per-CPU tasks as well. For these tasks, we can skip all idle CPU
+-	 * selection optimizations and simply check whether the previously
+-	 * used CPU is idle and within the allowed cpumask.
++	 * per-CPU tasks as well. For these tasks, skip general idle CPU
++	 * selection and validate the task's only usable CPU directly.
+ 	 */
+-	if (p->nr_cpus_allowed == 1 || is_bpf_migration_disabled(p)) {
+-		if (cpumask_test_cpu(prev_cpu, allowed ?: p->cpus_ptr) &&
+-		    scx_idle_test_and_clear_cpu(prev_cpu))
+-			cpu = prev_cpu;
+-		else
+-			cpu = -EBUSY;
+-	} else {
++	migration_disabled = is_bpf_migration_disabled(p);
++
++	if (p->nr_cpus_allowed == 1 || migration_disabled)
++		cpu = select_cpu_restricted(p, prev_cpu, allowed, flags,
++					    migration_disabled);
++	else
+ 		cpu = scx_select_cpu_dfl(p, prev_cpu, wake_flags,
+ 					 allowed ?: p->cpus_ptr, flags);
+-	}
+ 
+ 	if (we_locked)
+ 		raw_spin_unlock_irqrestore(&p->pi_lock, irq_flags);
 
 
