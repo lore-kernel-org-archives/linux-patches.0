@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774695;
-	b=G258J5bMO7JJg38PaGa/iaU5tn/XVr1Y2aqGIeSGgsyBWcSTVeWFToZIIwsWV4fvZHRb
-	 6eF10nYazoW4Y/SKpF0zytiBRLQdmK1+82gi6ei65fYJepW+MiAv0Gp36i8CgZ4Fgnd+1
-	 cSetZCi7hR2oTOreuTbTOjx9XEDwe0fZ6kmfiN6H63VlOsU6XJHePUliNTYyeRj46aps+
-	 N3mNW9RwOn4RgiN/MLXbgINcpNa9XHk2Mp/P4FXK6+xeODzYpQvvU2HQavojf9U3tTpUM
-	 HXAnKisl8htFsokPHKitofp+azWS3wRscLnGaiHa1NyPk+hGbeLmAvKbB3AHJqHtJCg==
+	t=1792774698;
+	b=jHWahhNSg2Xxi8uIZv8fDR8YImkkxn+pqbWw9uLUfzHFMy8Qnu6EiupeF3+eSRYDCqI3
+	 ruVlpCmdmtACYjZ5wJv+DA9L3tOiu4+XhJH7hhwTox6axgWnLqtRvsMrG8Pqms0KWKOoH
+	 lpdc37UlSJJPjLiUQJF0hQBBbJuizejlVaIh/D07Vx76nouvE02XyRmEETj/xIPTXRwRD
+	 4wlGigQ7lNRIwDukJDVulb4y3Pwovg5qRXRsrCmmkX01fqXJ7SP3aWAxdBudiGnEvbHht
+	 2lJlLPJPjmdr5s204wUSFL/SFDUHOrlH1R2ba12kzPN7Mt37/9euB3+7E1WR/kwXfwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774695;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774698;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=arjfsddaGsNquYVQI75TxBpBkpIhfgw0nKEwu48blj4=;
-	b=fWQsbyXinm7XKw6B8m9R3MnXopu6cdASNlQruP/1hA1+37ZVeETguRT6i7UOmFfGNWON
-	 6GFHv8GoKfCTCeZXq2IbdwgjkwRL1AeuZ94SS13BRlP80viMNPrg6URV8B961ZbxtCa4g
-	 FE+vIyJjSnozjipDCqdpT8/Wt9cX/X0dUW6ZYJDQCnov/mRrH0WzFomZkCAQKJz9IemYo
-	 9e2Yy9fgyjGoksfIEkMo8lwMB84vMiwlmfTLWt2L+J8oix6cm7XC/jEWj+e1KPGMnRfs4
-	 dNSpi3HicwxnYBEUt+gVPNm1QIba/CvR+CrmH4mo0JjPEiIBdzltOUAD6xTbL5WDBFw==
+	bh=VEltbtQOe+3jQU8sIpFdZ435uHw0wBVB6CVBod0HCM8=;
+	b=kuCsR25hOG3FPgClr5Hq3QftfoZMtHfKMpV24Fg3m+ftRiu6sTBX1H5FtFeP+C7psRTK
+	 rBhcNmu0YCcvu6cvjgbVMK15nyU4hR3CYCsIcMlsDrpP6D1J7CbuNdGQStTnLU248XI9G
+	 69fZ8tpTmqIdCTgt8HFmOKMY2BD62hnCJNjZlKBFv/42H/ExCVmLBgVPLxnKb8IwKNaTN
+	 BpIrcrfUJs41rkzriuzEIuxuaAXuLNYp7rh/7vBT/l1QpmIWUvq9tWVPox1FADhClQmw2
+	 afxE60yO1gOoOMB85cuczghIxf1ysrWzK2txkPoBNGiSaLfk4oSDiqh9dyEKQHIQf3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xh0MWi3D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lf10nkHg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FBA606A31B;
-	Fri, 23 Oct 2026 16:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5813606A31A;
+	Fri, 23 Oct 2026 16:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xh0MWi3D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5331B1F01825;
-	Fri, 23 Oct 2026 16:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lf10nkHg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD201F01825;
+	Fri, 23 Oct 2026 16:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774694;
-	bh=arjfsddaGsNquYVQI75TxBpBkpIhfgw0nKEwu48blj4=;
+	s=korg; t=1792774697;
+	bh=VEltbtQOe+3jQU8sIpFdZ435uHw0wBVB6CVBod0HCM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xh0MWi3D0WS7bvCC9PgVSYu0GQruhobfktF6NgGO3mh8/h53aZPQxKOuRj7uq3zFF
-	 Cqbq4Hqmk1xl43FXAfY2iYyDuj3HL+6fzWjQ/Xe1m62+Rh11fzYgD9yHFLkBLmTjxg
-	 QxXJdTkF+ZGUUF0oGtBiTj5Af3uDG9zZOBkxM+U4=
+	b=Lf10nkHgOxZpUe2GAcSjNpKA930LTcsGjj3SVDXr3Vec0CDkuyzE3BAqJKNOoM4uA
+	 HzA0e28MA6gRseCot6ioFpOhnq5IOlCFKX+Fua3V7QUUC0lJ7nzf53QsauI1Xg7pMn
+	 DBUmbHjJM7Lmdr0/fBtw8uCXpY+a2RpG1UCIXmFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 090/242] ring-buffer: Use subbuf_order in available memory estimation
-Date: Fri, 23 Oct 2026 18:38:52 +0200
-Message-ID: <20261023163715.906838323@linuxfoundation.org>
+	Olzhas Marat <marat.olzhas@gmail.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 7.2 126/242] pinctrl: amd: Clear S4 wake bits when firmware has _AEI
+Date: Fri, 23 Oct 2026 18:39:28 +0200
+Message-ID: <20261023163716.762747251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,63 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 13d530f2daeda9493f4d07ddc5ca13e21318fbeb ]
+commit 1cca81a683da7f0ef2fbaf34442376044cbbad22 upstream.
 
-To avoid failing in the middle of an allocation of a ring-buffer,
-__rb_allocate_pages() looks at the available memory estimation with
-si_mem_available(). Use the subbuffer order with this estimation to fail
-early if necessary for ring-buffers with an order > 0.
+Commit ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
+preserves firmware-programmed S4 wake sources because some PCIe devices
+rely on them for Wake-on-LAN. The system that motivated that change does
+not expose ACPI GPIO events through _AEI.
 
-Link: https://patch.msgid.link/20261013102047.1488347-3-vdonnefort@google.com
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+On a Chuwi CoreBook Plus, firmware exposes _AEI but also leaves the S4/S5
+wake bit set for GPIO 24. This causes the machine to power back on
+immediately after shutdown even though Wake-on-LAN is not enabled.
+
+GPIO register dumps show that the only relevant difference is bit 15 on
+GPIO 24. Clearing that bit makes the machine remain off. GPIO 24 is not
+itself listed in _AEI, so _AEI is not a per-pin indication of which pins
+the OS manages; it is a platform level signal of which wake model the
+firmware follows.
+
+Use that signal to decide what to clear. Continue clearing S0i3/S3 bits on
+every system. Clear S4 bits when firmware exposes _AEI, indicating that the
+platform hands GPIO events to the OS, but preserve S4 bits when _AEI is
+absent so that firmware-programmed sources such as PCIe PME that bypass the
+GPIO IRQ wake API keep working.
+
+A platform that exposes _AEI for some pins while routing a wake capable
+device through a raw GPIO not listed in _AEI would lose that wake source
+unless firmware re-arms it during the sleep transition. No such system has
+been reported.
+
+Fixes: ffe8a0c6b552 ("pinctrl-amd: Don't clear S4 wake bits at probe")
+Reported-by: Olzhas Marat <marat.olzhas@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222041
+Cc: stable@vger.kernel.org
+Tested-by: Olzhas Marat <marat.olzhas@gmail.com>
+Reviewed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 4c0141d8e0622..6a3b4da37fc2e 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -2422,6 +2422,7 @@ static int __rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
- 		long nr_pages, struct list_head *pages)
- {
- 	struct trace_buffer *buffer = cpu_buffer->buffer;
-+	unsigned int subbuf_order = buffer->subbuf_order;
- 	struct ring_buffer_cpu_meta *meta = NULL;
- 	struct buffer_page *bpage, *tmp;
- 	struct ring_buffer_desc *desc = NULL;
-@@ -2443,7 +2444,7 @@ static int __rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
- 		 * not going to succeed.
- 		 */
- 		i = si_mem_available();
--		if (i < nr_pages)
-+		if (i < (nr_pages << subbuf_order))
- 			return -ENOMEM;
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -886,6 +886,15 @@ static void amd_gpio_irq_init(struct amd
  
- 		user_thread = current->mm != NULL;
-@@ -2496,12 +2497,11 @@ static int __rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
- 			bpage->id = i + 1;
- 			cpu_buffer->subbuf_ids[i + 1] = bpage;
- 		} else {
--			bpage->page = alloc_cpu_data(cpu_buffer->cpu,
--						     cpu_buffer->buffer->subbuf_order);
-+			bpage->page = alloc_cpu_data(cpu_buffer->cpu, subbuf_order);
- 			if (!bpage->page)
- 				goto free_pages;
- 		}
--		bpage->order = cpu_buffer->buffer->subbuf_order;
-+		bpage->order = subbuf_order;
+ 	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
  
- 		if (user_thread && fatal_signal_pending(current))
- 			goto free_pages;
--- 
-2.53.0
-
++#ifdef CONFIG_ACPI
++	/*
++	 * Platforms without _AEI leave GPIO wake sources to firmware, so
++	 * preserve their S4 wake bits.
++	 */
++	if (acpi_has_method(ACPI_HANDLE(&gpio_dev->pdev->dev), "_AEI"))
++		mask |= BIT(WAKE_CNTRL_OFF_S4);
++#endif
++
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
+ 		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
 
 
