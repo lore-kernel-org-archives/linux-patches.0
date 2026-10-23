@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773832;
-	b=WUMEyRb2VDThGYJ07FEd6SUWHA/vV6zUc+SmyQPS+VC5dMOaqjqZWPlV+iNL9IHotn1V
-	 aKiGlz7A3sbWJ+TGzfl1JwvdpTnsHqD244983tCFkC3s4rLqUnT5kDdAziCNGYhnM8Qow
-	 Mo0+TURYadgDzqt/vfe6tGCsQZ7Q96viZCgc9+3dVLHe52cgqvKER1ENghpfNmsaUrWiX
-	 7KVqRaXJPHQNogXgTncaPyI6gLwdpvdeCfNsynfETTnrMmGJnHU93HOjjJSHbp+JbsdFe
-	 17hWYf5IbKkDwk/K4mMLoGgyqq6+T7xD5sbykdMDwyxJlJPoLuK+EscOxEvEpvKgcPQ==
+	t=1792773835;
+	b=j+8jYSwksZZrNSvCddoErkUsD3opxKNhGkl6OJHt261KK//wsAtnDMg+BzwkA9QzR25g
+	 gkKigLjvzlsfdWgjH7zinIwSJ+yr9VQb5CzbPW7AtXBFv+0ITQglVRs1VUxPf/jaFngjp
+	 9lfa51QEAGevpCoDKhdGiwYlWzZ/Wm+191uR928kTLuI3Z3OrGkhf84MGC/khoTi4GPrY
+	 EOrHPDP1UIxFcgtlHRtyvP8ZEPb9kZyILj8ug2YIlh+ahIikzVYywzNezi3LLAnbAk6Zd
+	 emb//howj0jRRfwokxukAyvwQSD1ueDSnN+BmlW4/qKN7AkqbLE4O3rGYPQVRTdOE2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HI9I6OC2N2onLdpTc0TRpgKjNvPWxdGYDIVbKW7iVEU=;
-	b=keK6NyfJkxTvNSO7MCd1sAB4BCVOD0RVNgGcdItHarLeio/u/OsK6ESSTF59lW6pIujL
-	 GGRfBZhBMprQjmwc5s8qLzielkyC1htB30MQt962Fjm4y2MW9/lsPbA1WzPTiVSA5PrHP
-	 vJ+/slC8zs3CvanvN5lh1XmvOtemz7Ov4qqNeBwHbwJi64P0OYiXwXNq3xO72lItQdePW
-	 8kr1eZgZfLp4ZD2A4xg71XBK1qkw0iWh4JsEuIJNg8xGHMOLYuzO64T9LWIelL9F80pHc
-	 t6UUbGgJcPKHMPsYku0+z42jhFbxoC5VvjO6+xXVOY/XrA87G51PYOyMCpFnasUVMgQ==
+	bh=zosXpn1+UGU9IcTdqFIRBLwmlSiychN2BxZGwHLiXiY=;
+	b=COPvp2XKVNYJIQZVFKYs8oGa2ae9hJzUpM3d1X3ACHhRFMQY8Tfzz2absZBPOY4Ut3pY
+	 3IWh+XmuvuwQrkWjYerfR4ve+VAOq8oLL/O5Ep4AoxY5AMyjHuD4vd2qycMy8cX9ol/1V
+	 l62OMuKTsBETihF09bdfM9zEMFZ4+9ZCnsuz9ZHdHH1sCDnu4ioBke/HRRdAHIb9kuMYo
+	 2WmlpylM8iHSzlFSozKg12PlecQHzweulO6l2PZH0KLrg/GbqHGMEEOlLhiROdWFB2nXb
+	 0R1gN+fujDzYKuFWng+gAvvQPdEkhU++CL8zbk8W3KnnccpXx7TcqlDaFpQ65IyCtKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFTXrjGG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOMM1oyf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B344360A2611;
-	Fri, 23 Oct 2026 16:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC78460A380C;
+	Fri, 23 Oct 2026 16:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFTXrjGG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8931F01829;
-	Fri, 23 Oct 2026 16:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOMM1oyf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78551F031E6;
+	Fri, 23 Oct 2026 16:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773831;
-	bh=HI9I6OC2N2onLdpTc0TRpgKjNvPWxdGYDIVbKW7iVEU=;
+	s=korg; t=1792773834;
+	bh=zosXpn1+UGU9IcTdqFIRBLwmlSiychN2BxZGwHLiXiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MFTXrjGG0zu+OoHuZs6WGsJvj154CoUhssChc8DTJzwF9YAHig7JH+auMDyK75MgZ
-	 zFcE7/nhxg9AIN9PsZ0FUHp8dYlt11he5sMeK6AJrwJp6Fsfr5FxFABLoC8bbJQal3
-	 F6wy69S86nWSw+yqvsfkgia37lri/7yubOiqgYFM=
+	b=cOMM1oyfEEHuQlUl7/nR0TIlaw9jcc8b86aYTePen8BUfpx76c+GHPkieMBaJfn4l
+	 bz2gzYnd/WR0mizoIdId9c5Tsuf/wqYHAmxbRq9u8u9EibtsCVgZ0GS3QVz7bWB1zt
+	 rzo0Qh36BRD8/FFaPpi69M8npebGQlt/FwXigQO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Tiraspolsky <stiraspo@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/193] ASoC: Intel: avs: Reset the stream unless it is already prepared
-Date: Fri, 23 Oct 2026 18:35:07 +0200
-Message-ID: <20261023163714.913144257@linuxfoundation.org>
+Subject: [PATCH 6.18 031/193] ASoC: stm32: spdifrx: fix synchronization state check
+Date: Fri, 23 Oct 2026 18:35:08 +0200
+Message-ID: <20261023163714.937387763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,57 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Tiraspolsky <stiraspo@gmail.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit f6be9f558a83fe30a03bd3adae461c821a0cef8c ]
+[ Upstream commit 0936bbd35a247665c64886135835faa3c3f4f29f ]
 
-Commit cfca1637bc2b ("ASoC: Intel: avs: Unprepare a stream when XRUN
-occurs") resets the HDA stream when ->prepare() is called in the XRUN
-state. User space does not always recover that way. PipeWire's ALSA
-backend recovers from an underrun with snd_pcm_drop(), snd_pcm_prepare()
-and a new start, so ->prepare() runs in the SETUP state,
-hdac_stream->prepared is still set and the reset is skipped. Every
-recovery attempt then fails the same way:
+The interrupt handler uses a logical AND to check whether SPDIFRX
+was in the SYNC state before clearing errors. Since both SYNC (1)
+and ENABLE (3) are nonzero, this also treats ENABLE as SYNC (and
+any other non-zero value that might be added).
 
-  spa.alsa: hw:avsmax98927,1p: snd_pcm_avail after recover: Broken pipe
+The logical && basically just converts this to check for != 0.
 
-On a Google Pixelbook (Kaby Lake, max98927 speakers) this happens after
-an occasional underrun during normal playback and silences the speakers
-for one to four minutes, until the PCM is closed. It can be provoked by
-stopping PipeWire with SIGSTOP for 0.5 s during playback: in one run
-that single underrun led to 1297 failed recoveries over two minutes,
-until the sink was suspended. A plain alsa-lib program that recovers
-with snd_pcm_drop() and snd_pcm_prepare() hits the same loop, while
-snd_pcm_prepare() straight from XRUN recovers at once.
+So errors occurring while SPDIFRX is enabled cause the driver
+to retry synch instead of disconnecting the PCM stream.
 
-Skip the reset only when the stream is already PREPARED, the repeated
-->prepare() case the check exists for, and reset it otherwise. With
-this change both kinds of recovery succeed with a single restart.
+Fix is to change the logical && to equality (==) and only retry
+when exactly in sync state.
 
-Fixes: cfca1637bc2b ("ASoC: Intel: avs: Unprepare a stream when XRUN occurs")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Sergey Tiraspolsky <stiraspo@gmail.com>
-Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261010103753.16969-1-stiraspo@gmail.com
+Fixes: 0c93c291321f2 ("ASoC: stm32: spdifrx: retry synchronization in sync state")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://patch.msgid.link/20261011035459.2289403-1-thnkslprpt@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/pcm.c | 2 +-
+ sound/soc/stm/stm32_spdifrx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index a2c05a4ced72b..8f09d539e2246 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -756,7 +756,7 @@ static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_so
- 	data = snd_soc_dai_get_dma_data(dai, substream);
- 	host_stream = data->host_stream;
+diff --git a/sound/soc/stm/stm32_spdifrx.c b/sound/soc/stm/stm32_spdifrx.c
+index 57b711c442784..47cd3efcadc1a 100644
+--- a/sound/soc/stm/stm32_spdifrx.c
++++ b/sound/soc/stm/stm32_spdifrx.c
+@@ -728,7 +728,7 @@ static irqreturn_t stm32_spdifrx_isr(int irq, void *devid)
  
--	if (runtime->state == SNDRV_PCM_STATE_XRUN)
-+	if (runtime->state != SNDRV_PCM_STATE_PREPARED)
- 		hdac_stream(host_stream)->prepared = false;
- 	if (hdac_stream(host_stream)->prepared)
- 		return 0;
+ 	if (err) {
+ 		regmap_read(spdifrx->regmap, STM32_SPDIFRX_CR, &cr);
+-		sync_state = FIELD_GET(SPDIFRX_CR_SPDIFEN_MASK, cr) &&
++		sync_state = FIELD_GET(SPDIFRX_CR_SPDIFEN_MASK, cr) ==
+ 			     SPDIFRX_SPDIFEN_SYNC;
+ 
+ 		/* SPDIFRX is in STATE_STOP. Disable SPDIFRX to clear errors */
 -- 
 2.53.0
 
