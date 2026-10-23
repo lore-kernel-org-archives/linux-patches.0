@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775034;
-	b=If5NZTPwr5H7Q+J0y18Z/lteVoYvXRn0raHPVJ0pc5E1OnEPbRptb1n/53gK+xG7L9p9
-	 9bESuurqFtY8QOMS/Wd4Jr5MV890DcoFRMs1KtkWjTSZdh48NsxwZcEQ3aqE2GMwhkd01
-	 xAMWmMDpUceJL0rfZrx8t27LM/OIJUrtlmZF6S21jt2JELoG43sHQZDvuMAjjfKKptWv4
-	 zfK/UvzA7c8JGfLn0p4Pp1mX9OrFDOM4U9gPGMYOKYSjYmheUqVkmFROrPyQFQPRhhm4L
-	 ga5mmVFCiv0Vi52aXfa47SsoMXYYHzKx1njHUeY2WUTCrQQ0WTkzPnJKkUtPzkKPuoA==
+	t=1792775037;
+	b=a1c5ZUuMKQYSL90kW5dfV6Z4kyY2JetTAEcDQ7Xx6AxmfrmQiKTxWdDXPfwg0T510KYM
+	 zq55w+vZ5A5tGEOWmaWuLtcyxcupxHmm1MUWQMQScC7/z/CH9X84d3UJMBBpPsNOjgG5R
+	 xpwj19tMTR6Xtn4rR/LPJcnffEC97Y1poRZc+dLRG1mIRyDGYNhEg2DNQM0TN1APGN5F6
+	 eZYvWdPFtRiWOWnhPIEuzRCY7cSRmY8PvrJTshIhyMzbK3MnSs4OhLomvkhoa3eGNyRyl
+	 6/5kDP9s/0Sfus7ctOOWxb4+4YzTYes4Glu4RA91B+dw0DqcTOChjrodtOi/lHKHcPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775034;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775037;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uFJDWPrp4uHvO1X/yWPzaih0hrRe5Dg3iftcLclsWzk=;
-	b=BsFLolxqa8CQWdmPp8nOPYIZ7bdG0PT/9IQT6W4Lk6/x7rrROeZeU+M0kD0zAUS8SiVI
-	 clMJhqpM1BWPwHI/wGWpc+7qAWcVG0YqxiHCRcPvZXDCX1Zk/fGvuoT50cRAyyazi93yo
-	 N/F0UFK3uc+ntkupbbmyYZtgr9TfTQPLGHQ3S3JeMF9gnbJzG2JuxgrAKs0uGbvKGfbmV
-	 h48y5mr6Bs1iwcKiZJhXbH8qxveyvoPC/YOuXnyRGgzfxsIoQbAom/lko/KqYFnuJ8DyC
-	 Tt8U3LZ8tSglBdJPTRESXDzuYz3TplC+BOF2xLWw1jirQgWhyHuPlZz9x3Z1sZvM37g==
+	bh=vQG1/H23fAkUOA2BU2nuAZVhHNmUYkym05Z6uN8p2xY=;
+	b=COKGDMzN1ND7X9dbQXqq9Eq3EVpZFXierMKj3YUpdMFuizH1Ky1GjAoDwymcUZyYrnvJ
+	 N3QAlTYjJXrU0c6pGVvDmtue1rGf2jhzYZAurNfxJ120LT09AG+jYB+uZ651tKl/uLuVp
+	 U5gAvQ/sDuThwTTOiMtliTS3IokYTqkO5ZHKOajwjvygW5WpB3asKCmztmR/qDRBo6kzZ
+	 i9V97jjQoT1oXJpc+USzIEIQSqjAtZGwR9j++IKmbv3OpImpK/UjSq2RRSXDqmauR5Ga4
+	 0zIxxZw+ugjMd22PdxARKNbuLXj+NUDa6uvPwfxLm0zUKLA1PEYgcklVLzgO7wiu99g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhetOnQc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n1dmulOq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63180606A31A;
-	Fri, 23 Oct 2026 17:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70563606A31D;
+	Fri, 23 Oct 2026 17:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhetOnQc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20491F01825;
-	Fri, 23 Oct 2026 17:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n1dmulOq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6531F01825;
+	Fri, 23 Oct 2026 17:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775034;
-	bh=uFJDWPrp4uHvO1X/yWPzaih0hrRe5Dg3iftcLclsWzk=;
+	s=korg; t=1792775037;
+	bh=vQG1/H23fAkUOA2BU2nuAZVhHNmUYkym05Z6uN8p2xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EhetOnQcDodFxguArsO7q33VCGlwNqAGpmosOpr5Qocl/IUr6HEtLwbclg3x0sMcL
-	 4hhlow1/7gJpBZIkPEv1bFIQqZ7LMcFX9v3TrPFbBnIAW4cQm/nZ0tBwNusB5drwVY
-	 czzOi2N51ZmxDg6BTKC4z7E+uAvfVIw6mwG/jAis=
+	b=n1dmulOqBzSHHE33P3xlOja1jEbotRbMhZVzQICgPFCsUE4EwiQHb4bF+c0aQMdpO
+	 2CMGH1Z3wAew1EuCiZTdBfiU2kCvKzH6aOpWI6Y/Z1DEZaSHJm9JwwqRjfsLFGJH4h
+	 V7/ni0qOZUy87HjCCpugnFNeft/kJL768MGtLLAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 212/242] drm/i915/dmc: Harden DMC firmware payload parsing
-Date: Fri, 23 Oct 2026 18:40:54 +0200
-Message-ID: <20261023163718.812805887@linuxfoundation.org>
+Subject: [PATCH 7.2 239/242] ntfs: fix resident conversion in ntfs_new_attr_flags
+Date: Fri, 23 Oct 2026 18:41:21 +0200
+Message-ID: <20261023163719.506459395@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -70,86 +68,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+From: Hyunchul Lee <hyc.lee@gmail.com>
 
-[ Upstream commit 8bb1858db453cd4250e3b633f5d2d09206024ca6 ]
+[ Upstream commit 7ed0028126b5a19f278183abbae2b3166d3ca9ac ]
 
-Validate the conversion of the DMC firmware size from dwords to bytes
-using check_mul_overflow() before calculating the firmware payload size.
+When setting sparse/compressed flags on a resident attribute, the
+function skipped the resident-to-non-resident conversion and
+terminated.
 
-Reject zero-length payloads and zero MMIO counts in the DMC firmware
-header so malformed firmware is caught early. Also set dmc_fw_size only
-after the payload allocation succeeds.
-
-Fixes: eb805623d8b1 ("drm/i915/skl: Add support to load SKL CSR firmware.")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude-Code:Sonnet-5
-Signed-off-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
-Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260922133535.3180973-5-dibin.moolakadan.subrahmanian@intel.com
-(cherry picked from commit efde6601a1f1daedfe3dcc2816c934ddb44e3eef)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: acb1095fd2db ("ntfs: fix memmove overlap in ntfs_new_attr_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dmc.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ fs/ntfs/ea.c |   94 +++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 72 insertions(+), 22 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dmc.c
-+++ b/drivers/gpu/drm/i915/display/intel_dmc.c
-@@ -1165,7 +1165,7 @@ static u32 parse_dmc_fw_header(struct in
+--- a/fs/ntfs/ea.c
++++ b/fs/ntfs/ea.c
+@@ -630,6 +630,7 @@ static int ntfs_new_attr_flags(struct nt
+ 	struct mft_record *m;
+ 	struct attr_record *a;
+ 	__le16 new_aflags;
++	u16 old_name_ofs, old_mp_ofs;
+ 	int mp_size, mp_ofs, name_ofs, arec_size, err;
+ 
+ 	m = map_mft_record(ni);
+@@ -662,8 +663,10 @@ static int ntfs_new_attr_flags(struct nt
+ 	else
+ 		new_aflags &= ~ATTR_IS_COMPRESSED;
+ 
+-	if (new_aflags == a->flags)
+-		return 0;
++	if (new_aflags == a->flags) {
++		err = 0;
++		goto err_out;
++	}
+ 
+ 	if ((new_aflags & (ATTR_IS_SPARSE | ATTR_IS_COMPRESSED)) ==
+ 			  (ATTR_IS_SPARSE | ATTR_IS_COMPRESSED)) {
+@@ -672,15 +675,40 @@ static int ntfs_new_attr_flags(struct nt
+ 		goto err_out;
  	}
  
- 	/* Cache the dmc header info. */
--	if (mmio_count > mmio_count_max) {
-+	if (!mmio_count || mmio_count > mmio_count_max) {
- 		drm_err(display->drm, "DMC firmware has wrong mmio count %u\n", mmio_count);
- 		return 0;
- 	}
-@@ -1211,13 +1211,21 @@ static u32 parse_dmc_fw_header(struct in
- 			    disable_dmc_evt(display, dmc_id, dmc_info->mmioaddr[i],
- 					    dmc_info->mmiodata[i]) ? " (disabling)" : "");
- 	}
--	dmc_info->mmio_count = mmio_count;
--	dmc_info->start_mmioaddr = start_mmioaddr;
+-	if (!a->non_resident)
+-		goto out;
++	if (!a->non_resident) {
++		if (!(new_aflags & (ATTR_IS_SPARSE | ATTR_IS_COMPRESSED)))
++			return 0;
++
++		if (le32_to_cpu(a->data.resident.value_length)) {
++			pr_err("Can't change sparse/compressed for non-empty file");
++			err = -EOPNOTSUPP;
++			goto err_out;
++		}
  
- 	rem_size -= header_len_bytes;
+-	if (a->data.non_resident.data_size) {
+-		pr_err("Can't change sparsed/compressed for non-empty file\n");
+-		err = -EOPNOTSUPP;
+-		goto err_out;
++		err = ntfs_attr_make_non_resident(ni, 0);
++		if (err)
++			goto err_out;
++
++		ntfs_attr_reinit_search_ctx(ctx);
++		err = ntfs_attr_lookup(ni->type, ni->name,
++				ni->name_len, CASE_SENSITIVE,
++				0, NULL, 0, ctx);
++		if (err) {
++			err = -EINVAL;
++			goto err_out;
++		}
++		a = ctx->attr;
++	} else {
++		if (a->data.non_resident.data_size) {
++			pr_err("Can't change sparsed/compressed for non-empty file");
++			err = -EOPNOTSUPP;
++			goto err_out;
++		}
+ 	}
  
- 	/* fw_size is in dwords, so multiplied by 4 to convert into bytes. */
--	payload_size = dmc_header->fw_size * 4;
-+	if (check_mul_overflow(dmc_header->fw_size, 4u, &payload_size)) {
-+		drm_err(display->drm, "DMC fw_size too large (%u dwords)\n",
-+			dmc_header->fw_size);
-+		return 0;
++	old_name_ofs = le16_to_cpu(a->name_offset);
++	old_mp_ofs = le16_to_cpu(a->data.non_resident.mapping_pairs_offset);
++
+ 	if (new_aflags & (ATTR_IS_SPARSE | ATTR_IS_COMPRESSED))
+ 		name_ofs = (offsetof(struct attr_record,
+ 				     data.non_resident.compressed_size) +
+@@ -703,6 +731,25 @@ static int ntfs_new_attr_flags(struct nt
+ 	if (unlikely(err))
+ 		goto err_out;
+ 
++	/*
++	 * When compressed/sparse state changes, the non-resident header grows or
++	 * shrinks by the compressed_size field. Update the in-record payload layout
++	 * to match the new offsets before exposing the new mapping_pairs_offset.
++	 */
++	if (name_ofs > old_name_ofs) {
++		if (mp_ofs != old_mp_ofs)
++			memmove((u8 *)a + mp_ofs, (u8 *)a + old_mp_ofs, mp_size);
++		if (a->name_length)
++			memmove((u8 *)a + name_ofs, (u8 *)a + old_name_ofs,
++				a->name_length * sizeof(__le16));
++	} else {
++		if (a->name_length && name_ofs != old_name_ofs)
++			memmove((u8 *)a + name_ofs, (u8 *)a + old_name_ofs,
++				a->name_length * sizeof(__le16));
++		if (mp_ofs != old_mp_ofs)
++			memmove((u8 *)a + mp_ofs, (u8 *)a + old_mp_ofs, mp_size);
 +	}
 +
-+	if (!payload_size) {
-+		drm_err(display->drm, "DMC firmware has empty payload\n");
-+		return 0;
+ 	if (new_aflags & (ATTR_IS_SPARSE | ATTR_IS_COMPRESSED)) {
+ 		a->data.non_resident.compression_unit = 0;
+ 		if (new_aflags & ATTR_IS_COMPRESSED || ni->vol->major_ver < 3)
+@@ -723,28 +770,31 @@ static int ntfs_new_attr_flags(struct nt
+ 			ni->itype.compressed.block_size_bits = 0;
+ 			ni->itype.compressed.block_clusters = 0;
+ 		}
+-
+-		if (new_aflags & ATTR_IS_SPARSE) {
+-			NInoSetSparse(ni);
+-			ni->flags |= FILE_ATTR_SPARSE_FILE;
+-		}
+-
+-		if (new_aflags & ATTR_IS_COMPRESSED) {
+-			NInoSetCompressed(ni);
+-			ni->flags |= FILE_ATTR_COMPRESSED;
+-		}
+ 	} else {
+-		ni->flags &= ~(FILE_ATTR_SPARSE_FILE | FILE_ATTR_COMPRESSED);
+ 		a->data.non_resident.compression_unit = 0;
+-		NInoClearSparse(ni);
+-		NInoClearCompressed(ni);
+ 	}
+ 
+ 	a->name_offset = cpu_to_le16(name_ofs);
+ 	a->data.non_resident.mapping_pairs_offset = cpu_to_le16(mp_ofs);
+ 
+-out:
+ 	a->flags = new_aflags;
++
++	if (new_aflags & ATTR_IS_SPARSE) {
++		NInoSetSparse(ni);
++		ni->flags |= FILE_ATTR_SPARSE_FILE;
++	} else {
++		NInoClearSparse(ni);
++		ni->flags &= ~FILE_ATTR_SPARSE_FILE;
 +	}
 +
- 	if (rem_size < payload_size)
- 		goto error_truncated;
- 
-@@ -1225,7 +1233,6 @@ static u32 parse_dmc_fw_header(struct in
- 		drm_err(display->drm, "DMC FW too big (%u bytes)\n", payload_size);
- 		return 0;
- 	}
--	dmc_info->dmc_fw_size = dmc_header->fw_size;
- 
- 	if (!dmc_load_addr_sanity_check(dmc, start_mmioaddr, payload_size,
- 					dmc_header->header_ver, dmc_id)) {
-@@ -1237,6 +1244,10 @@ static u32 parse_dmc_fw_header(struct in
- 	if (!dmc_info->payload)
- 		return 0;
- 
-+	dmc_info->mmio_count = mmio_count;
-+	dmc_info->start_mmioaddr = start_mmioaddr;
-+	dmc_info->dmc_fw_size = dmc_header->fw_size;
++	if (new_aflags & ATTR_IS_COMPRESSED) {
++		NInoSetCompressed(ni);
++		ni->flags |= FILE_ATTR_COMPRESSED;
++	} else {
++		NInoClearCompressed(ni);
++		ni->flags &= ~FILE_ATTR_COMPRESSED;
++	}
 +
- 	payload = (u8 *)(dmc_header) + header_len_bytes;
- 	memcpy(dmc_info->payload, payload, payload_size);
- 
+ 	mark_mft_record_dirty(ctx->ntfs_ino);
+ err_out:
+ 	if (ctx)
 
 
