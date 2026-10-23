@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774944;
-	b=bX7pfgtgf6ojygnUoBmkx8vH/4WVelodWTiWbDH/mjmnw2KmE8UXIXNzbtJb0odGSgE1
-	 rA71gngb1amP24EgQXz4RNu8sXGnPb6Jr5VPSrBfOOZxedANLa6WxCKugfKW4JNmdQRTg
-	 3pOzAoBqtMRdPtR3CHhCXVQuHoO4rBmeZCoxVpDvd0udWci1xw06TG3UT947Vz2YkNVTF
-	 6Fl2fhxm98Ez7NiNeCx6kLbLRk5S+PtATsx7BBbqrrY24G5JUDm90S+DjNhyFC4aXT5AK
-	 2wAvqfpXmaBFigoHkYVFX1cq+yjp1RjymuedIOQ4s/Wz0i0mSwW/5e8wSAQvLpCa5PA==
+	t=1792774948;
+	b=eAUmhWSyopeDe1id8tJXywCb17FnPw7xFGCkdHGHGAyrZwH1WL3KN38Nq9WkzaTUAa0j
+	 h7NYngf+QowXoQfpDS0d2nPEnrS3QE8rN+Ta+u3kni03BURCiGWaFYcDBmLuizlTeELf1
+	 FqCwjyRhD3OohnZhxCJNoB+6HqXJNS2gkAb3JmZZMy7vziFrTN5IOcEh6tiN9fegRmh7j
+	 z0UHf/MDkklBtmZryui43o0n0gNpZixxnl3FwcahFZ8dWZKHLPElXoSAqPx1HpIsMi5LJ
+	 86aJ9s4WNrtqBEd8trfc/SRGRCdG7zaoyN1S1Q5D0O3g5JSGQCMjZHT9SCuk5k1uLLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774944;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774948;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uNf/w3r1KVeuJz4Mmijj6Udghkbilrdice0PNH5G46E=;
-	b=EMO+8936nOp6yEHzQzaSbIpA0JOuoOvbuzAp3VFDxWw97jjvB88+L2bv4Vng0mnwP7iL
-	 jWmTqj6i+8W8mKcsgtCDnE6Ptu1S7ATsKI2VToinamiY689m3wQgm/PtCdY7k8lC9dt05
-	 JA9Zc7EU7vm5fgsUIINtgOGy0GZa32eFiqi13sDhFT5Q3U25Fcd71AmLFzWkDMKBhcMGE
-	 4mgot4D7XFHGLD6rB4JsKYLl7Z+jCqAXh0ZgxyhnpLqUPGKjP60Vqr03IdaqsSVmpZzVO
-	 SfszpSSHXGG5rxSgtatsXouTXvJHOMZYj2u7pKaADmiGTntKfCPjCGwOilqcCl8P4Bw==
+	bh=VM7FCC/ovNePJwV257e/EzzP+dcwhSBwaeo9BzPR4Ww=;
+	b=ru9mkq80fLYzfPqtSbSiczL1fxosuj3WY4jUknXz6qMWz60ynUcvfDMacR5hnCMNZfC3
+	 Mcr5xHx/SK0JQ6NDEmNblNPBtiI9dTj3+NoK6PY6t4xczeYs/XL/m1o/Lc7fUBj2/h8EP
+	 xdLSkapQPaoJZ5ikSvinRu7hWVY4nB2mfEkkkxDYyA6HFNp6pZlHCv4T7dX0lu+c3a43u
+	 G4Lye62k3inudvcO1UusxeuQlY3n8FFZPVcFJjqROXxHo1jpgunmPp2FWqkIJeuqSfedi
+	 En1B49noENqqASYIxINKJ475PEE5qxm8i9MyQQ+3sWURKM9gc8t2NH4GGGQSAWIsC2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svyZj9ou;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ir8cBt3o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95251606A31A;
-	Fri, 23 Oct 2026 17:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E85E606A31A;
+	Fri, 23 Oct 2026 17:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svyZj9ou
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4DA1F01825;
-	Fri, 23 Oct 2026 17:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ir8cBt3o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC0C1F01825;
+	Fri, 23 Oct 2026 17:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774944;
-	bh=uNf/w3r1KVeuJz4Mmijj6Udghkbilrdice0PNH5G46E=;
+	s=korg; t=1792774947;
+	bh=VM7FCC/ovNePJwV257e/EzzP+dcwhSBwaeo9BzPR4Ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=svyZj9ousQFjrQMdDsyFoxmGNG465tZbVGSlK0fJH9aGOFGzNvx5QGn9BQVqJof6q
-	 n0Zl1x/Li9iK73KT054fsEZdTnDzKguomfn3BldFObxg3h0fsR/okI6bgurHGa/ueS
-	 2ll6eXtye9wMl0+ihWQD2YHpewtlCsJ7ZvvV6AkY=
+	b=ir8cBt3o+viYkMsYit/LGEZHq3U2mmsZ6GRpxoplozcINZqhIltjRV6ffvknyt/HD
+	 HIxS3hgghO90uDJvCX95wntOZDsqtkNq9J+lx1uUY6/MPFgVuP+p4kRfDrxyZjNKcZ
+	 +6xBgtNhpfEFviv2qJFbF7n0YefnvCeRUjJuUuk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	David Rosca <david.rosca@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 208/242] drm/amdgpu: Fix VCE 3 ring align_mask
-Date: Fri, 23 Oct 2026 18:40:50 +0200
-Message-ID: <20261023163718.714946135@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	Hao Ge <hao.ge@linux.dev>
+Subject: [PATCH 7.2 173/242] tracing: Fix crash in print_graph_function_event()
+Date: Fri, 23 Oct 2026 18:40:15 +0200
+Message-ID: <20261023163717.877548426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,39 +67,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Hao Ge <hao.ge@linux.dev>
 
-[ Upstream commit 2ee9836545e690c9e66ec203445d7705959fd7a8 ]
+commit 3cc117514d69067a94d6c7479730dce41e678f50 upstream.
 
-The largest frame is 20 dwords, so 0xf mask is too small.
-This was always wrong, but we were lucky with the VCE_CMD_END
-commands inserted after fence and vm_flush.
+tracing_set_tracer() assigns the flags of the newly selected tracer
+with:
 
-Fixes: 8897ea8c761b ("drm/amdgpu: Implement insert_end for VCE 3")
+	tr->current_trace_flags = t->flags ? : t->tracer->flags;
+
+If the new tracer defines neither static flags nor default flags, like
+hwlat, irqsoff or wakeup, add_tracer() has no per instance flags copy
+for it, and both operands are NULL, so tr->current_trace_flags ends up
+being NULL as well.
+
+The ring buffer is not cleared when switching tracers: it is reset
+inside tracer_init(), after current_trace_flags was already assigned.
+If the buffer still holds function_graph entries of the previous
+tracer, printing one of them dereferences the NULL pointer. This was
+hit by cat trace during an ftrace stress test:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  #PF: supervisor read access in kernel mode
+  RIP: 0010:print_graph_function_event+0xe/0x20
+  Call Trace:
+   s_show+0x4d/0x110
+   seq_read_iter+0x2d4/0x490
+   seq_read+0x130/0x170
+   vfs_read+0xb5/0x370
+   ksys_read+0x6d/0xe0
+   do_syscall_64+0xbc/0x450
+
+The snapshot buffer is not reset at all, so this can be reproduced
+without a race:
+
+  echo function_graph > /sys/kernel/tracing/current_tracer
+  echo 1 > /sys/kernel/tracing/snapshot
+  echo hwlat > /sys/kernel/tracing/current_tracer
+  cat /sys/kernel/tracing/snapshot
+
+Rather than teaching every user of tr->current_trace_flags about this
+corner case, make sure it is never NULL: when the newly selected
+tracer has no flags at all, tracing_set_tracer() falls back to a
+static empty no_tracer_flags. run_tracer_selftest() can hit the same
+case, so the same fallback is added there too. The existing users
+already handle opts == NULL, so these tracers keep behaving as before.
+
 Cc: stable@vger.kernel.org
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261015130658.221198-1-hao.ge@linux.dev
+Fixes: e29aa918a928 ("tracing: Have function graph tracer define options per instance")
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Hao Ge <hao.ge@linux.dev>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vce_v3_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-index a3eae7d4b57ed..0bceedadfa3fd 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-@@ -960,7 +960,7 @@ static const struct amdgpu_ring_funcs vce_v3_0_ring_phys_funcs = {
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -100,6 +100,12 @@ struct tracers {
+ };
  
- static const struct amdgpu_ring_funcs vce_v3_0_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCE,
--	.align_mask = 0xf,
-+	.align_mask = 0x1f,
- 	.nop = VCE_CMD_NO_OP,
- 	.support_64bit_ptrs = false,
- 	.no_user_fence = true,
--- 
-2.53.0
-
+ /*
++ * Tracers that do not define their own flags use these empty flags,
++ * as tr->current_trace_flags must never be NULL.
++ */
++static struct tracer_flags no_tracer_flags;
++
++/*
+  * To prevent the comm cache from being overwritten when no
+  * tracing is active, only save the comm when a trace event
+  * occurred.
+@@ -1318,7 +1324,12 @@ static int run_tracer_selftest(struct tr
+ 	tracing_reset_online_cpus(&tr->array_buffer);
+ 
+ 	tr->current_trace = type;
+-	tr->current_trace_flags = type->flags ? : type->default_flags;
++	if (type->flags)
++		tr->current_trace_flags = type->flags;
++	else if (type->default_flags)
++		tr->current_trace_flags = type->default_flags;
++	else
++		tr->current_trace_flags = &no_tracer_flags;
+ 
+ #ifdef CONFIG_TRACER_MAX_TRACE
+ 	if (tracer_uses_snapshot(type)) {
+@@ -5087,7 +5098,12 @@ int tracing_set_tracer(struct trace_arra
+ 			return ret;
+ 	}
+ 
+-	tr->current_trace_flags = t->flags ? : t->tracer->flags;
++	if (t->flags)
++		tr->current_trace_flags = t->flags;
++	else if (t->tracer->flags)
++		tr->current_trace_flags = t->tracer->flags;
++	else
++		tr->current_trace_flags = &no_tracer_flags;
+ 
+ 	if (trace->init) {
+ 		ret = tracer_init(trace, tr);
 
 
