@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774226;
-	b=Fj5+J9RlywUN/ll9BKtLDcHShnK4yF1UaOOWHOxOAN96frokHuuH712QvIv1b5kksob4
-	 Ry/+dazR9E9nqovo5nDSe+uGrlK41i26P8xpmcN9cmH5gkKaNiy4fTwVAiD9PPxI+UaV2
-	 53b4VScXJi6SnAXUU44hphYlOn77ogoHMCCujr4nUW+biCIdRFSUr/bfkXIYw0QlUg4mq
-	 6CZ5VJ0IlWCjDAr3yU7aoF+XNVUqJp9WY94NSnEs8IZCx8TKluWigJE4Wxw6rQDm1Qu4z
-	 R4Kr56iS9daJHazpzzpAINRaf+6MrFWXdUOPZDzEeOy+Lf/yMYhdL7DIrDKKWPrpo1A==
+	t=1792774230;
+	b=4/6chRD9AZV2MlUSPXqstqmaOBHfJNlbSsROHTZ8a8V+QnCLnJ9BdmPMwCRJYR7NUHKG
+	 X8Rg3YPcbOXqtoCRMf3RVjbwb2HqxDWRhQ1p4EJLnhr5ToGca/VVvz2gy5HbP+RyitzYB
+	 81d0B1B3ChQNqm5SatqprA56nMZPLQ8bvnMGfiN8lNBjrYrk7m42PAtbT5EI2rzKLCzDl
+	 letsDVQ+28eOZyxrQenwVBmi9u/ggZVmnwicUZT40B63FOq25zsgK+J7nGcHxLbSpOvHN
+	 gu9cpZ4SnTHo/G2URf9/Qsewm3cVoa9dufya4Wh7RoVMXCR9oFO9sOT2E4tuqdBx2tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774226;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o1NuP+bk0dU1bGMxZMkdFT6qDkltRHQvCYtBMVHIGHo=;
-	b=hrCg9TS8r5FzV9gUYVsYWcjR1axSKfOvFpk5HBIWrLzdwcHLG2eyLxnZa14lH1Di5c+N
-	 oRnPrY/eBiSZYWJThaqhx9gYM4DkHjUt1xEbmLAs/5aA+PHCs0RCPj/Fn2O9lOeWiXx0b
-	 t+Xp03xom02qYTUy94zidxG3ZVoneFjoKOuDGltsUakK7pcdAAfyr34Gv1nu1F7xqgCUX
-	 PsBQPLei8bBDzKyorIcz5N/w8uDkYxhSEdjTgSIMiVEQ7nAdr9frG9DajW4wHGkssZ7W2
-	 mCY3UNX9bwT6LTh8DdKQRX2DMFOan8OyDQvJG4akk5y/uvpOJQf6mYboOSNxDhto/gQ==
+	bh=nOBB+2YaGRd8FJIFnsRSqRihs5+VPD8v0kmYGnpprfs=;
+	b=xQEMuchZYZ2Mnp34GNe7Vl3i/t8maLJ6YM0aEujhcM7BJ4v44pcrzn4RIeq9XSsQQszJ
+	 +ZkfA9c3oXRNfRDPwf/cjRtGHYxgo6OIsLLhcGCk1nijcLPlavs7uszgtppp4OGb7Cvk+
+	 BgIKmEarLzzNzDgjVyI/NpJmmJqB/V3sjffIxCTl/MlUHPB/cuQ+MszLLkRVE2hSBo6k/
+	 TQVPTVZembp7UBaa0u8yREh/wgDFzMVvcU7fkVx/M9wT3VkSEIKU695FEDRcy9Pa0M04K
+	 oUbTfTKmEZtPqcSwOBDtNScVkirZu+WSWSjwBbr5ewf/DQi7QGvy3sE/pwTarjSNYFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TZ5vXdbG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jyrb0+hd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64647606A31A;
-	Fri, 23 Oct 2026 16:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B79C606A322;
+	Fri, 23 Oct 2026 16:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TZ5vXdbG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9E91F01825;
-	Fri, 23 Oct 2026 16:50:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jyrb0+hd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1281F01825;
+	Fri, 23 Oct 2026 16:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774225;
-	bh=o1NuP+bk0dU1bGMxZMkdFT6qDkltRHQvCYtBMVHIGHo=;
+	s=korg; t=1792774229;
+	bh=nOBB+2YaGRd8FJIFnsRSqRihs5+VPD8v0kmYGnpprfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZ5vXdbGmzDlYeOr4hVaoptHy7Lj93JUGLP4QRcnwmK5Yjl8K0ehMIBjf4m8xG0Qg
-	 R+HOaWmnPQXx5VICgTEfgFD/sioJGEhTjBunXaKdD/jyArIeQ5BNnf2GDoshHC02Cy
-	 KHm53eIjJDYE0o/GnJF1HFxT+vWsjkDIgMDCitZg=
+	b=Jyrb0+hdpJMOyqtc9Evg5rjeKo8lWxVL63c3A58cl30x1dGDv5od33I1nK8GcQWXC
+	 H581+WBOu95LZHjNYaHy3stHKC7oK/k0ERJqfksIu+0uLzcRizOPV3bygOWfEnj0od
+	 GXi3nBO2B7mBSx3tC64uLoMdjir+b1nNMYqCFfyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+23aee7afc440fe803545@syzkaller.appspotmail.com,
-	Baokun Li <libaokun1@huawei.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 163/193] fs/ntfs3: fix ntfs_mount_options leak in ntfs_fill_super()
-Date: Fri, 23 Oct 2026 18:37:20 +0200
-Message-ID: <20261023163718.068562656@linuxfoundation.org>
+	Charles Vosburgh <theminershive@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 137/193] sctp: validate chunk length in the inqueue parser
+Date: Fri, 23 Oct 2026 18:36:54 +0200
+Message-ID: <20261023163717.449399245@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,89 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Charles Vosburgh <theminershive@gmail.com>
 
-[ Upstream commit f7edab0cee03a1cbe0e55a7bcab8d2d8b6b74278 ]
+commit 6cfc1b90cb86f4aabc69fb8e30128e07e2cdfa3a upstream.
 
-In ntfs_fill_super(), the fc->fs_private pointer is set to NULL without
-first freeing the memory it points to. This causes the subsequent call to
-ntfs_fs_free() to skip freeing the ntfs_mount_options structure.
+SCTP chunks always include a four-byte generic header, but
+sctp_inq_pop() currently accepts shorter declared lengths. A zero-length
+chunk leaves chunk_end at the current header.
 
-This results in a kmemleak report:
+When ASCONF is covered by the association's SCTP-AUTH policy,
+sctp_assoc_bh_rcv() can continue before the state machine performs its
+normal chunk-length check. sctp_inq_pop() then returns the same malformed
+chunk repeatedly and the receive softirq can lock up.
 
-  unreferenced object 0xff1100015378b800 (size 32):
-    comm "mount", pid 582, jiffies 4294890685
-    hex dump (first 32 bytes):
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 ed ff ed ff 00 04 00 00  ................
-    backtrace (crc ed541d8c):
-      __kmalloc_cache_noprof+0x424/0x5a0
-      __ntfs_init_fs_context+0x47/0x590
-      alloc_fs_context+0x5d8/0x960
-      __x64_sys_fsopen+0xb1/0x190
-      do_syscall_64+0x50/0x1f0
-      entry_SYSCALL_64_after_hwframe+0x76/0x7e
+A remote SCTP peer can trigger this after establishing an association on
+a kernel built with CONFIG_IP_SCTP and configured with
+net.sctp.addip_enable=1 and net.sctp.auth_enable=1. The reproducer did
+not require application credentials, a shared SCTP AUTH key, or
+net.sctp.addip_noauth_enable=1.
 
-This issue can be reproduced using the following commands:
-        fallocate -l 100M test.file
-        mount test.file /tmp/test
+On commit f967455fb2a5 ("seg6: reset IP6CB after IPv6 decapsulation"),
+one zero-length ASCONF caused repeated
+watchdog soft-lockup reports in a two-vCPU KVM guest. All 3 pre-trigger
+health probes succeeded, while 36 of 37 post-trigger probes failed. With
+this change, all 37 post-trigger probes succeeded and no equivalent
+soft-lockup signature appeared.
 
-Since sbi->options is duplicated from fc->fs_private and does not
-directly use the memory allocated for fs_private, it is unnecessary to
-set fc->fs_private to NULL.
+Reject chunks shorter than the generic SCTP header at the shared inqueue
+parser boundary. Mark the packet for discard before either caller can
+continue processing it, while preserving the four-byte generic minimum.
+Declared-length 1 through 4 controls and kernel-generated ASCONF traffic
+remained healthy. The patched sctp_hello selftest passed for IPv4 and
+IPv6.
 
-Additionally, this patch simplifies the code by utilizing the helper
-function put_mount_options() instead of open-coding the cleanup logic.
+The complete private reproducer and validation evidence are available
+directly to maintainers on request.
 
-Reported-by: syzbot+23aee7afc440fe803545@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=23aee7afc440fe803545
-Fixes: aee4d5a521e9 ("ntfs3: fix double free of sbi->options->nls and clarify ownership of fc->fs_private")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-
-Preserve the existing sbi && sbi->options guard in the failed-mount
-cleanup while replacing the open-coded frees with put_mount_options().
-Keep clearing sbi->options after release so later cleanup cannot
-free the same options again.
-
-Stable-dep-of: c01b091b0641 ("ntfs3: free the sbi after a grace period")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
+Cc: stable@vger.kernel.org
+Signed-off-by: Charles Vosburgh <theminershive@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260827-sctp-zero-chunk-inqueue-v2-1-2e7669c6a6cb@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/super.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ net/sctp/inqueue.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -705,9 +705,7 @@ static void ntfs_put_super(struct super_
- 	ntfs_set_state(sbi, NTFS_DIRTY_CLEAR);
- 
- 	if (sbi->options) {
--		unload_nls(sbi->options->nls);
--		kfree(sbi->options->nls_name);
--		kfree(sbi->options);
-+		put_mount_options(sbi->options);
- 		sbi->options = NULL;
- 	}
- 
-@@ -1264,7 +1262,6 @@ static int ntfs_fill_super(struct super_
- 		}
- 	}
- 	sbi->options = options;
--	fc->fs_private = NULL;
- 	sb->s_flags |= SB_NODIRATIME;
- 	sb->s_magic = 0x7366746e; // "ntfs"
- 	sb->s_op = &ntfs_sops;
-@@ -1694,9 +1691,7 @@ put_inode_out:
- 	iput(inode);
- out:
- 	if (sbi && sbi->options) {
--		unload_nls(sbi->options->nls);
--		kfree(sbi->options->nls_name);
--		kfree(sbi->options);
-+		put_mount_options(sbi->options);
- 		sbi->options = NULL;
- 	}
- 
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -212,8 +212,10 @@ new_skb:
+ 	chunk->chunk_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));
+ 	skb_pull(chunk->skb, sizeof(*ch));
+ 	chunk->subh.v = NULL; /* Subheader is no longer valid.  */
+-
+-	if (chunk->chunk_end + sizeof(*ch) <= skb_tail_pointer(chunk->skb)) {
++	if (unlikely(ntohs(ch->length) < sizeof(*ch))) {
++		chunk->pdiscard = 1;
++	} else if (chunk->chunk_end + sizeof(*ch) <=
++		   skb_tail_pointer(chunk->skb)) {
+ 		/* This is not a singleton */
+ 		chunk->singleton = 0;
+ 	} else if (chunk->chunk_end > skb_tail_pointer(chunk->skb)) {
 
 
