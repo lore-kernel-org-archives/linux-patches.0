@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774615;
-	b=TNjy9jQu3rANLmI0qqWbvh7RKOm4nle1F9bhd231fqbtTaqiiMLq2p0UaPD53klnqFhK
-	 pc2zES7hYBX8S4F46tsSUIhbrzULwvp4D3/4I+USgY0iNi0D/t8xemCrb+yUqpFCDUcxa
-	 kYDEj7Iz9Y/eaI7KPHrs8Mv/VpJYiZq2z0HAz9s+bL7HK+WOD1gVYWIyq72FA4O5mLwUr
-	 aGT7K9UH/HgAoN7rUAhdeEAWR4V9rH0dcHDIR7b8jP4qtOCLQpST32qBgf6UT9qBrl5Bm
-	 IhWB8WrF5/tA4ypYB/44FCRsWcD+tYqK5C0Q3ZIgtktKp9K0ULeUsGfLsjszxHvMM4w==
+	t=1792774617;
+	b=amRp4i5tiftM94WQnscu1BPTVgqMcJfNU1ZE4oIe88mTdc2b2yGUb5sYfggsmWvVroK4
+	 WPaOUMQWp+1axl1fRfObvixGsGAiziqrK7PS+YEbmqHadYcCtAKR1WdRMAv6iIJlqn28r
+	 mf09WzA/XtlCfc9hokCe8o72zeSzz4RHZKiBsqUNYV4Lo9RboxmaYaJDFuj6R5pfDGfiv
+	 RP9tIo8nRSqkV9dbB01nNUYwy9gkquwZrUNJ6fY3pLiM93qVcWpAHHq1+460RX7tcybPi
+	 0y9PrqBOLwiOh8x6NpwNGrqItNB2w3h7RZ4P/BHDeNOch7MZ3m/uBahYmlDWzk/4wvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BVTWSdHkBjAQuWVaBcE0DROR5poacp6QHRnznnF//cs=;
-	b=Ho2X5WN+hmWGy/pPneCmqxf0U0fjUV3+fqOnNVY67VV1lzSSZJZzdHis4/Gwx2XNRux+
-	 nwvQLNpqZbHdjIORzN3Nc9IK+dBNOmhWfSPp0Zsv0pbouif6zoLvupaghQnP4VbB0F7i6
-	 aq8Mz6liLC5Xr4q2sBWSA5MiITz9ATp6J1EMHkdGe0+5h10/OlmWc5jN3kXNM+E2/E38i
-	 11di/VxdY5RwBkf66ABZpHVc+uPOtvq5JhsGFODoWfc7BEnaHs8b7zmR5istuFwKnzv2c
-	 qPLMYy4S8izybfxoLjoi5JfZQyMiu3XYD0LImSYOJb94eYUNSJR6HG4+I12IqGTaZ5A==
+	bh=F6QMhs87baOIkDECRu59eAgPiWgkG6YtzyhVpDxjVKc=;
+	b=SLse++8RFjXl54iEbxuEwTJMLyK7Rioe3lZyEPPI3TMDZg7W6FbTzGMP6Mumgm554ywM
+	 wWW273CZjWvYWj223jZ/Oud2GJF3aEAifYaxgDAO5ieOScsbbiVuSbeUfafWyws1RD6C2
+	 kuf4gh4VqMDcql5HcYycJxQXrmbjJEpix86z3ureUm8/H/6qzq+T0brMnD7qYH3H2Xn24
+	 fI9VyG4w7ajs9ZeztC7+umpnCDA0CFBm7HW+HoSwSwAEF72PbNFNOmb+/NkNDY77iJIjK
+	 PXapFdwZ7+XiNNAW/1faNKAaYaUQTHny+R8YNvuJFZvYdneyBSpZxdBtKVlcJLuNTRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0knm35d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dBji04Hv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A33606A31A;
-	Fri, 23 Oct 2026 16:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACAD606A31D;
+	Fri, 23 Oct 2026 16:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0knm35d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01661F01825;
-	Fri, 23 Oct 2026 16:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dBji04Hv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4C01F01825;
+	Fri, 23 Oct 2026 16:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774614;
-	bh=BVTWSdHkBjAQuWVaBcE0DROR5poacp6QHRnznnF//cs=;
+	s=korg; t=1792774617;
+	bh=F6QMhs87baOIkDECRu59eAgPiWgkG6YtzyhVpDxjVKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t0knm35d/EpcTjGKp3OlMtJljV0ZARGqSDhJ7wcms+B540Fhf8T2WgudYcr5LpbPB
-	 arJBIUsMBKZIWJNzgt2cVVT2hO4KDebrHibbVhBbj+phbLhE4KcI8ah98gaVqNnZ6u
-	 BBRIB+0vgp+L+A6xTzY+au16RSQYhnvKRUJefWyQ=
+	b=dBji04HvWK/FM72xJlq0Tyr/KIKgx8QO16rDxqCUmQblzjEj7Gpw7bl35VifhN2XL
+	 ora76zkNAehWFRRbDkXwzizFFCzTvtXKWXh7dp+ElPFj+D/ZAo1raDcUwq8IptdwQP
+	 dm+lz86B7Y3yZxc9MwF7y8rbIQ/aWEYrB23xJUq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sidong Yang <sidong.yang@furiosa.ai>,
-	Igor Paunovic <royalnet026@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 7.2 101/242] accel/rocket: search every core slot when looking up a scheduler
-Date: Fri, 23 Oct 2026 18:39:03 +0200
-Message-ID: <20261023163716.169873066@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 102/242] afs: free the super info after a grace period
+Date: Fri, 23 Oct 2026 18:39:04 +0200
+Message-ID: <20261023163716.193817373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,80 +66,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Paunovic <royalnet026@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 89c2c777df17eb0201c8e22afabbf3691f2a28fe upstream.
+commit 59e483739f2fd14327ece3f60c4995d060ca46b7 upstream.
 
-sched_to_core() walks rdev->cores[] up to rdev->num_cores, and
-rocket_remove() decrements num_cores for every core it removes. Unbind a
-core that is not the last one and the cores behind it fall outside the
-search, so sched_to_core() returns NULL for a core that is still bound and
-still running jobs. Neither caller checks the result:
+afs_atcell_get_link() resolves the @cell and .@cell symlinks of a
+dynamic root in rcu pathwalk mode. Before it looks at the dentry it gets
+the afs_net through afs_i2net(), which reads ->net_ns from the
+afs_super_info in sb->s_fs_info. The @cell dentries are kept around when
+unused and the dynamic root has no ->d_revalidate(), so a lookup that
+finds @cell in the dcache gets to ->get_link() in rcu mode.
 
-  rocket_job_run():      rocket_fence_create(core), core->dev
-  rocket_job_timedout(): dev_err(core->dev, "NPU job timed out")
+afs_kill_super() frees the afs_super_info with a plain kfree() in
+afs_destroy_sbi(). Right now a pathwalk can't still be in
+afs_atcell_get_link() at that point, but only by accident. umount(2)
+waits for a grace period in namespace_unlock() before it drops the
+mount. And a mount whose last reference goes away elsewhere, like the
+chdir out of a lazily unmounted directory, still gets a grace period
+from bdi_unregister(). afs_fill_super() sets up a private bdi, so
+generic_shutdown_super() unregisters it from kill_anon_super() and
+bdi_remove_from_list() waits in synchronize_rcu_expedited() before
+afs_destroy_sbi() runs. That grace period protects the rcu readers of
+bdi_list in the writeback code. It has nothing to do with pathwalk.
 
-Unbinding the middle core of the three on an RK3588 while three clients are
-submitting to all of them faults twice, once from the surviving core's
-job queue and once from its reset work:
+Don't rely on it and free the afs_super_info after a grace period.
 
-  KASAN: null-ptr-deref in range [0x0000000000000220-0x0000000000000227]
-  Workqueue: fdad0000.npu drm_sched_run_job_work [gpu_sched]
-  pc : rocket_job_run+0x234/0x838 [rocket]
-  Call trace:
-   rocket_job_run+0x234/0x838 [rocket]
-   drm_sched_run_job_work+0x2cc/0xad8 [gpu_sched]
-   process_one_work+0x640/0x14f0
-
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  Workqueue: rocket-reset-2 drm_sched_job_timedout [gpu_sched]
-  pc : rocket_job_timedout+0xf0/0x1e0 [rocket]
-  Call trace:
-   rocket_job_timedout+0xf0/0x1e0 [rocket]
-   drm_sched_job_timedout+0x188/0x6a0 [gpu_sched]
-
-Both are the third core: the workqueue names are its device and its
-core->index, and it was left at slot 2 while num_cores had dropped to 2.
-
-Search all the slots that were allocated, the way find_core_for_dev() now
-does. A core that is still bound is then found, and the two callers get
-the pointer they already assume they have.
-
-This does not make unbinding one core out of several safe. An open client
-keeps an entity pointing at the scheduler of the core that went away:
-drm_sched reports it as not ready for every job that lands on it, and the
-client waits in dma_fence_default_wait for a fence that will never signal.
-Stopping the NULL dereference is what belongs in a fix; the rest wants
-more thought.
-
-Reported-by: Sidong Yang <sidong.yang@furiosa.ai>
-Closes: https://lore.kernel.org/dri-devel/apwUewaRnoTNXHCt@rock-5b-plus/
-Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
+Fixes: 30bca65bbbae ("afs: Make /afs/@cell and /afs/.@cell symlinks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Igor Paunovic <royalnet026@gmail.com>
-Assisted-by: LLM sparse checkpatch
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260905150432.7477-1-royalnet026@gmail.com
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-2-7446d2d335e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/rocket/rocket_job.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/afs/internal.h |    2 ++
+ fs/afs/super.c    |    2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/rocket/rocket_job.c b/drivers/accel/rocket/rocket_job.c
-index f40435505818..4bc4f9c8ee40 100644
---- a/drivers/accel/rocket/rocket_job.c
-+++ b/drivers/accel/rocket/rocket_job.c
-@@ -283,7 +283,7 @@ static struct rocket_core *sched_to_core(struct rocket_device *rdev,
- {
- 	unsigned int core;
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -251,6 +251,8 @@ struct afs_super_info {
+ 	struct afs_volume	*volume;	/* volume record */
+ 	enum afs_flock_mode	flock_mode:8;	/* File locking emulation mode */
+ 	bool			dyn_root;	/* True if dynamic root */
++	/* afs_atcell_get_link() reads ->net_ns in rcu pathwalk */
++	struct rcu_head		rcu;
+ };
  
--	for (core = 0; core < rdev->num_cores; core++) {
-+	for (core = 0; core < rdev->max_cores; core++) {
- 		if (&rdev->cores[core].sched == sched)
- 			return &rdev->cores[core];
+ static inline struct afs_super_info *AFS_FS_S(struct super_block *sb)
+--- a/fs/afs/super.c
++++ b/fs/afs/super.c
+@@ -523,7 +523,7 @@ static void afs_destroy_sbi(struct afs_s
+ 		afs_put_volume(as->volume, afs_volume_trace_put_destroy_sbi);
+ 		afs_unuse_cell(as->cell, afs_cell_trace_unuse_sbi);
+ 		put_net(as->net_ns);
+-		kfree(as);
++		kfree_rcu(as, rcu);
  	}
--- 
-2.56.0
-
+ }
+ 
 
 
