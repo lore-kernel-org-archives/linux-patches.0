@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774774;
-	b=z58JGvBQTb7f2TCxTiL5v6tjQ0HJCIOCyHlRwkfKWo+aWYpqCb88uL64E5PH/h9RpEvP
-	 K01LGZWW/9p2PFqdjK6w6E3h9z2ktFEgtvMD/rdPZaq6lRbVB5JHDtdIlqQVUHaFD+uGG
-	 +99Qj3W7YrHsrddoB2U7ReXiQy2ACYa/58HaT6CW14HNuiulSRKSrZDVHjrVW5rMh+UPr
-	 ZGYYhNXuJXsxydVB9QVuhNGYyYh5kjWV2CjABJoO/RXFKoP/S0ULhW37YZgstO8jJFHRT
-	 5xzxkIS//tVkNrSHBFgH0qgxfMKS6MQPfuGhxS35JGGss5ZhSvUE6nWFkeYeFkL30Tw==
+	t=1792774778;
+	b=j6gp41J7nz4xeXl9y3TRWJZIj547FY4pjJGof6flphTtEXQOFogV3mxq5IichHDQdaTq
+	 E1EQ5Bar/MUj3iWxf8NfJ+MC0KtEhFiy+RyYYpCObBwvc7wE5RPrEmwhQo1GF/ZBI6FZV
+	 KN+G7BV3sXifsKLe5N8ctO0uTDBfmo4mXRfP6H6P3dAa1aU95cA7/Cgg/r4MyyvvwLODY
+	 pyFBDbppus/NmhyYcOc/xVT9leiLr8U+S4jlITayxq0IMN76zuqZ5xN0d8on+G2ib+X4D
+	 kc2tYOWaO+sF8RiWVyaxsSzIlwX+ozGeZYSPVu8e8c0HrA1jWu2JJKmqSFng+6HyuTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774778;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=kVdqc3F9LHgHR9Pp8VSBl4w/jhSG6+7yWS8YUL/nlJE=;
-	b=nvCxL71uA7IPm73wKzvFGUNoE87ais1xGXDwZGsYlu2Et+hd+Mk1bryHrlYSuUzmQa47
-	 TYuJydPmySy8tC2N//Xnfnae/C8YTx/gDal0RAvTUsWv6NBzTWIuxGbTEGuXiWev6ZIjB
-	 VvklzTL0II/QpG57+3eoKhsx/oYvBqUcYkOO4dZSjBihfnZpxPrFz6g65ePBj8QMxPxcO
-	 UodhumbPJZnhjD6+WWlT9nwio3f0bRGWuJ4JnltL1kkFYrUD8+jky7I9ST+wJeoL8Hn4a
-	 AdrPwKpR2vtlcDpspVhoTp2NlHE1fGq6uJzdZFR7++i0e4o/Xiq0VHX6coI6e4YaBsQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=J63N84WUFnZy6kH4d4PC1RLZzXJr1QWTl93dz1e/Bhg=;
+	b=WmQZUXkMXA4tyRcV+D5r4PgVW5QtuYBqE1fXVB3h+mcaPMTaM84BfawKT9aKlQGMdmti
+	 JQwYDQuW7XUdEZKqJy7iHeylACTlGY3BGTS9HRcKx8qcAw6Yza1/fg7wMhV98tx/1z6xA
+	 Pc8DWxBe8x9fboRf+OHon2NnIfwgBFnPjBibHltmEhfes83UQ9URHNC4hH4d1LigxMBVl
+	 t3kYXH926mGH9I0+yIAskElg7jdyYfiElXwkwN6ITf/feXT6TYQPHYtpp3taS8nQo8zSX
+	 /JvHcqKtpzdwHhfzUvvq8exDNq5ymnUCRO+3TckOIECG8fpVVXbiNINI99AymLqPwpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dY7sK81m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GO5nXiNP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94826606A31B;
-	Fri, 23 Oct 2026 16:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8072606A31B;
+	Fri, 23 Oct 2026 16:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dY7sK81m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD6181F01825;
-	Fri, 23 Oct 2026 16:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GO5nXiNP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055251F01825;
+	Fri, 23 Oct 2026 16:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774774;
-	bh=kVdqc3F9LHgHR9Pp8VSBl4w/jhSG6+7yWS8YUL/nlJE=;
+	s=korg; t=1792774777;
+	bh=J63N84WUFnZy6kH4d4PC1RLZzXJr1QWTl93dz1e/Bhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dY7sK81mVu/AxaM8rIi/g14axHH++piH0u4WqQZGnW6v2ZQSsOmVk2KO9mIt8r2QQ
-	 nEMmzzkchT9spnrXCcyZKF+A5yMDwKaVhQvHAAaNd6qlHXTMKw0hZ/Pl6PScnrJw48
-	 aRGhJxirTL+heavoefLPNK6isdagWhWOFHGgfYEY=
+	b=GO5nXiNPg19zyzaluEt5f51nOlqcQasqU5AFgs7x+rz3yEZz6Cu7Kl7Lo5kDPnFfv
+	 wBtL3XaK/yAK/zmMfJ1S83koEjEq7IGMDDmEOuRHJOd3lPUMl8oJTTIdka13wD6Pj1
+	 aevehAFFv0GXL9FNIMDs+0FX97VdSCjxbsIXsPNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Perry Yuan <perry.yuan@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 154/242] drm/amdgpu: destroy mutex when tearing down ttm buffer entity
-Date: Fri, 23 Oct 2026 18:39:56 +0200
-Message-ID: <20261023163717.425747015@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>
+Subject: [PATCH 7.2 155/242] drm/amdgpu: dont drop the runtime PM reference twice in amdgpu_gpr
+Date: Fri, 23 Oct 2026 18:39:57 +0200
+Message-ID: <20261023163717.448913639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -62,49 +61,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-commit 5b0a459f990be2faba33229fd93f10f23745fab2 upstream.
+commit de9f6bcdb44f0e410031002e2f103826ea6b6259 upstream.
 
-Pair mutex_init() with mutex_destroy() on the GART window allocation
-failure path and in amdgpu_ttm_buffer_entity_fini(). This is a no-op
-without CONFIG_DEBUG_MUTEXES, but it keeps lockdep from seeing a live
-mutex after the entity is freed or re-initialized.
+amdgpu_debugfs_gpr_read() drops its runtime PM reference right after
+reading the wave registers. When copying them to userspace fails, it
+jumps to the err label, which drops the reference a second time. A read
+into a bad buffer on Navi31 either steals a reference somebody else
+holds (power/runtime_usage goes from 1 to 0) or underflows the count:
 
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+  amdgpu 0000:03:00.0: Runtime PM usage count underflow!
+
+The registers are already in the kernel buffer at that point, so finish
+the hardware access first and copy the buffer with a single
+copy_to_user() instead of the put_user() loop with its own error path.
+
+Fixes: 9eee152aab56 ("drm/amdgpu/debugfs: fix ref count leak when pm_runtime_get_sync fails")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 03ac40aeed034a0a0d5824ad26f8fbe1f6463698)
+(cherry picked from commit 31035bbd74f7c3e10c163db875b8e67f8b50ee6a)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |   21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -2058,6 +2058,7 @@ static int amdgpu_ttm_buffer_entity_init
- 	r = amdgpu_gtt_mgr_alloc_entries(mgr, &entity->gart_node, num_pages,
- 					 DRM_MM_INSERT_BEST);
- 	if (r) {
-+		mutex_destroy(&entity->lock);
- 		drm_sched_entity_destroy(&entity->base);
- 		return r;
- 	}
-@@ -2075,6 +2076,7 @@ static void amdgpu_ttm_buffer_entity_fin
- 					  struct amdgpu_ttm_buffer_entity *entity)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -1265,7 +1265,6 @@ static ssize_t amdgpu_debugfs_gpr_read(s
  {
- 	amdgpu_gtt_mgr_free_entries(mgr, &entity->gart_node);
-+	mutex_destroy(&entity->lock);
- 	drm_sched_entity_destroy(&entity->base);
- }
+ 	struct amdgpu_device *adev = f->f_inode->i_private;
+ 	int r;
+-	ssize_t result = 0;
+ 	uint32_t offset, se, sh, cu, wave, simd, thread, bank, *data;
  
+ 	if (size > 4096 || size & 3 || *pos & 3)
+@@ -1309,25 +1308,11 @@ static ssize_t amdgpu_debugfs_gpr_read(s
+ 	mutex_unlock(&adev->grbm_idx_mutex);
+ 
+ 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
++	amdgpu_virt_disable_access_debugfs(adev);
+ 
+-	while (size) {
+-		uint32_t value;
+-
+-		value = data[result >> 2];
+-		r = put_user(value, (uint32_t *)buf);
+-		if (r) {
+-			amdgpu_virt_disable_access_debugfs(adev);
+-			goto err;
+-		}
+-
+-		result += 4;
+-		buf += 4;
+-		size -= 4;
+-	}
+-
++	r = copy_to_user(buf, data, size) ? -EFAULT : size;
+ 	kfree(data);
+-	amdgpu_virt_disable_access_debugfs(adev);
+-	return result;
++	return r;
+ 
+ err:
+ 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
 
 
