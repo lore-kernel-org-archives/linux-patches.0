@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774677;
-	b=k6Od06/iC7UTMU6vs0XZ+698aIM2Gll6X0Au0MDB10Mm7DRjp2cLvr3L93CfgGMpmR51
-	 ayUDobOuYhVrTyc/wsDEd64w0YXcKt+ZkfbtQcz2qg8HiCu7oR9QuzMqlx6CNFqHuckyA
-	 pEfXY4nZxOn1u8CkI8YyXuYZKBMge1/YKDi+61ATuF1SAiFQBEi8Fkc/zOXQK/Milz511
-	 PnWRdohPwwbNLYeNbC/GVOAm6HZ7eVo3YqYa1KM1mopfI6or5sYBNkgKy75d2kvVlHsFt
-	 ww+2Yxe26HfIkkpIxvXn+Yugk43BxMhskP7kaa9S09XA88w+bAJEG00ou17xRMx0Arw==
+	t=1792774680;
+	b=ZHbAoHGT9HP7KBDMDPo6+Ltye+C2LejfhAanIEEzDcnRJhmVjUPupQtC1SJ5apdF8fr/
+	 ifzl4I/DowIX3oHODWz0YzLWqfTx35RfrGX4NryNy8KBTGJiJ3V+LS2hPnHznrtob+b1e
+	 wx1H/aYLp3AtufMG2Yw04azTV2lh3MyMfTrbDCbB+mg8dSgkvkfxI5+np/iMxpGwNxPK9
+	 hweAU8kI61ayMWTN2GCiwHZ7DEvd8PSf2C9/Zqdrz2tCybIDYZmDB/2udIAZNeiKg6GSI
+	 jmCbecCNn8aA8OeuNOgjrcu/AdQtx7MLg05YyAf1bUlTDwFTLL1ZW8Vin3JG313HzmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cr3RiknlSvVSvdp1zgATLAG27nHusHTdFBG2FFzrXfI=;
-	b=W5bGvYReaTNJxxADCJCdqaW/SU0Pw/QHXG67t8aMVAzTH5farJalGg2KAqsob+3NCSve
-	 bA08jY/KevEJmB8x05WRw/7nC2yD8CdMcd5UGkJ0DhXZF/tdWb9Z5d4PNFhaaXxik4ZSV
-	 UVOBnuQmUGI5UZrPimue0RHEMnm07XsBq1LxlR9qqBtXS5aHJm8j/aJMtndpUXa8wXuwL
-	 05KPlHnAkXkSQ0+eRRzBvcFZyWohtqEgXO+fdN1UrmMXEfF6D0X1R4RxIyFzvY1sUB1wB
-	 ef7IT8F+aH+KPdqN+WoGdXyXxMTLcw/KEudPdJkKv6zfJuVKH5L6YrECoWur3QXL0xQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=bqzo5Qdi7Vk6N3ApEYoFh3kwE9VcfZnMaTUe/jzHXRY=;
+	b=j+luwDEYmprGri5iDn2w8kW3HQUj7Lt5JDa017ASJt/WJ8UpcVCjM5+tpO1fVpNsCB+6
+	 E7PNv8XJtAcdxd1iyxowQdmhXQgIjSxDgKfZq8UPyLEc9VrKswNoGf5N/LdhHavspUEJo
+	 oGYHeONrjaUIECcTXZm4W1u5PcLVDrmhtHUCpQVbZ8Epab5YtNmEE9kQ8uE6fefxgUuMV
+	 YtoOqrWc57uTlUNu2NaXORmBnqaORMAv5C4Uv6kwZUUw7PbdNSROGicrG+QmRdbcpPaJr
+	 MMlYPWwsoXbcYYH0bhkmPjBXE3jct1Ue4ZpuaZsPrXarqA3ZKNOMbsemnf1R14mkFQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sj96JFqL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyVuDwFF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5714606A31A;
-	Fri, 23 Oct 2026 16:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C85A606A31A;
+	Fri, 23 Oct 2026 16:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sj96JFqL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A971F01825;
-	Fri, 23 Oct 2026 16:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyVuDwFF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E35A1F01825;
+	Fri, 23 Oct 2026 16:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774676;
-	bh=Cr3RiknlSvVSvdp1zgATLAG27nHusHTdFBG2FFzrXfI=;
+	s=korg; t=1792774679;
+	bh=bqzo5Qdi7Vk6N3ApEYoFh3kwE9VcfZnMaTUe/jzHXRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sj96JFqLhLyaEiRkExAuSrDO/MFxh5zOuCpYmIBdidG28vqFv8ISBieNuoemipu1F
-	 KuLQvqrUAVL+saKYSXXA3i14d7Cn66D1p8GcBNppLCJO1ofpFg1329RNbFKAEf0emt
-	 ymp1x6euM7O9hZSKXqjo2Y34ycstiaDC/41mq21o=
+	b=uyVuDwFF5fwi7XROlELfxP6n8D3VmMxWqa574eI5ayvnxcaAaGSvXW9dbHMWz+P19
+	 jEDNfUze3FcXT6sNrjIKgtKkjfNQDM4QZTz1FkIpU0Q9y37z40RvSB/pKjPDyMVHRQ
+	 W89OGzP3B4soFXtZNQg1XX0oHprV51DVB4+N8plk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.2 120/242] futex: Fix mm reuse handling for FUT_OFF_MMSHARED
-Date: Fri, 23 Oct 2026 18:39:22 +0200
-Message-ID: <20261023163716.621469075@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 7.2 121/242] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
+Date: Fri, 23 Oct 2026 18:39:23 +0200
+Message-ID: <20261023163716.643848518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -61,211 +62,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 3267512ad1c2cc0c7768c5b014dc2cceb398a801 upstream.
+commit 24f07e8c07a0c0dd275331cbb41c79a78741eef9 upstream.
 
-A FUT_OFF_MMSHARED futex is a shared futex that refers to an MM.
-It is possible for a process to wait on a shared futex with a different MM
-because a FUT_OFF_INODE waiter can be requeued onto a FUT_OFF_MMSHARED
-futex by another process.
-This can cause FUT_OFF_MMSHARED waiters on a freed MM to consume
-wakeups intended for a newly allocated MM at the same address.
+When poly1305_blocks_neon() resumes from a base 2^26 accumulator and the
+next update contains an odd number of full 16-byte blocks, it processes
+one leading block through poly1305_mult() so that the remaining NEON
+work has an even block count.  That requires converting the accumulator
+to the base 2^64 form used by poly1305_mult().  The final ADC of that
+conversion stores the carry into d2, but the following accumulation and
+poly1305_mult() use h2.  If the conversion carries across bit 128, the
+carry is dropped and the emitted tag is wrong.
 
-Fix it by keying FUT_OFF_MMSHARED using a unique 64-bit per-MM ID.
-Leave private futexes as before to avoid influencing the performance of the
-hotpath.
+This was introduced by Cryptogams commit 03dc4adf91c8
+("arm/poly1305-armv*.pl: optimize branches."), which removed the
+reduction that consumed d2 shortly before Linux imported the code.
+OpenSSL's copy did not take that change.
 
-(Multi-threaded processes typically implicitly use FUT_OFF_MMSHARED by
-setting clear_child_tid such that it points into anonymous memory, which
-causes mm_release() in a multi-threaded mm to perform FUTEX_WAKE.)
+The carry is possible because the NEON code stores the accumulator [h0,
+h1, h2, h3, h4] in a lazily reduced, redundant base 2^26 form: its final
+carry chain leaves h0, h2, h3 < 2^26, but h1 and h4 may slightly exceed
+2^26 - 1.  For example, the reachable state
 
-Fixes: 222993395ed3 ("futex: Remove pointless mmgrap() + mmdrop()")
-Closes: https://lore.kernel.org/r/CAG48ez0dLBpc3QtbAhMMVNHwHL94iHh2G+h-=BVFR4dDuzZr1g@mail.gmail.com/
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260929-futex-mmshared-fix-v1-1-262b1ffeb3d0@google.com
+  h0 = 4
+  h1 = 2^26
+  h2 = 2^26 - 1
+  h3 = 2^26 - 1
+  h4 = 2^24 - 1
+
+represents 4 + 2^26*2^26 + (2^26-1)*2^52 + (2^26-1)*2^78 +
+(2^24-1)*2^104 = 2^128 + 4, despite the bit representing the 2^128 term
+(bit 24 of h4) not being set; the extra comes from the h1 limb being
+above the normal base 2^26 range.  When this value is converted into the
+non-redundant base 2^64 form, a carry into the new 2^128 bit (in bit 0
+of h2) is necessary to preserve the value.
+
+Given the above bounds, a carry into bit 128 happens exactly when
+h1 >= 2^26, h2 = h3 = 2^26 - 1, and h4 mod 2^24 = 2^24 - 1.
+
+Store the carry into h2, matching the other base 2^26 to base 2^64
+conversions in poly1305_blocks() and poly1305_emit().
+
+This bug causes an incorrect tag to be emitted.  However, this is
+unlikely to happen in practice where Poly1305 is used with a random key,
+since the random key tends to distribute the accumulator values
+throughout their valid range.  There isn't an obvious way for an
+attacker without knowledge of the r_key to cause [h0, h1, h2, h3, h4] to
+land on the precise values where this bug occurs.
+
+[EB: Rewrote the commit message to more clearly describe the bug and
+ its impact, and simplified explanation about why there's a carry bit.]
+
+Fixes: f569ca164751 ("crypto: arm64/poly1305 - incorporate OpenSSL/CRYPTOGAMS NEON implementation")
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20261009125354.315476-2-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/futex.h       |   19 +++++++++-------
- include/linux/futex_types.h |    2 +
- kernel/futex/core.c         |   51 ++++++++++++++++++++++++--------------------
- 3 files changed, 41 insertions(+), 31 deletions(-)
+ lib/crypto/arm64/poly1305-armv8.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/futex.h
-+++ b/include/linux/futex.h
-@@ -23,28 +23,32 @@ struct task_struct;
-  *  01 : Shared futex (PTHREAD_PROCESS_SHARED)
-  *	mapped on a file (reference on the underlying inode)
-  *  10 : Shared futex (PTHREAD_PROCESS_SHARED)
-- *       (but private mapping on an mm, and reference taken on it)
-+ *       (but private mapping on an mm)
- */
+--- a/lib/crypto/arm64/poly1305-armv8.pl
++++ b/lib/crypto/arm64/poly1305-armv8.pl
+@@ -375,7 +375,7 @@ poly1305_blocks_neon:
+ 	adc	$h1,$h1,xzr
+ 	lsr	$h2,x14,#24
+ 	adds	$h1,$h1,x14,lsl#40
+-	adc	$d2,$h2,xzr		// can be partially reduced...
++	adc	$h2,$h2,xzr		// preserve carry into top limb
  
--#define FUT_OFF_INODE    1 /* We set bit 0 if key has a reference on inode */
--#define FUT_OFF_MMSHARED 2 /* We set bit 1 if key has a reference on mm */
-+#define FUT_OFF_INODE    1 /* We set bit 0 if shared key identifies an inode */
-+#define FUT_OFF_MMSHARED 2 /* We set bit 1 if shared key identifies an mm */
- 
- union futex_key {
-+	/* For FUT_OFF_INODE */
- 	struct {
- 		u64 i_seq;
- 		unsigned long pgoff;
- 		unsigned int offset;
- 		/* unsigned int node; */
- 	} shared;
-+
-+	/* For FUT_OFF_MMSHARED or private */
- 	struct {
- 		union {
--			struct mm_struct *mm;
--			u64 __tmp;
-+			struct mm_struct *mm; /* for private */
-+			u64 mm_seq; /* for FUT_OFF_MMSHARED */
- 		};
- 		unsigned long address;
- 		unsigned int offset;
- 		/* unsigned int node; */
- 	} private;
-+
- 	struct {
- 		u64 ptr;
- 		unsigned long word;
-@@ -154,11 +158,10 @@ static inline void futex_set_vdso_cs_ran
- static inline void futex_fixup_robust_unlock(struct pt_regs *regs) { }
- #endif /* !CONFIG_FUTEX_ROBUST_UNLOCK */
- 
--
--#if defined(CONFIG_FUTEX_PRIVATE_HASH) || defined(CONFIG_FUTEX_ROBUST_UNLOCK)
-+#ifdef CONFIG_FUTEX
- void futex_mm_init(struct mm_struct *mm);
- #else
- static inline void futex_mm_init(struct mm_struct *mm) { }
--#endif
-+#endif /* !CONFIG_FUTEX */
- 
- #endif /* _LINUX_FUTEX_H */
---- a/include/linux/futex_types.h
-+++ b/include/linux/futex_types.h
-@@ -85,10 +85,12 @@ struct futex_unlock_cs_ranges { };
-  * struct futex_mm_data - Futex related per MM data
-  * @phash:	Futex private hash related data
-  * @unlock:	Futex unlock VDSO critical sections
-+ * @unique_id:	Unique ID of the MM, for FUT_OFF_MMSHARED futexes
-  */
- struct futex_mm_data {
- 	struct futex_mm_phash		phash;
- 	struct futex_unlock_cs_ranges	unlock;
-+	atomic64_t			unique_id;
- };
- #else  /* CONFIG_FUTEX */
- struct futex_sched_data { };
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -442,45 +442,51 @@ struct hrtimer_sleeper *futex_setup_time
- }
- 
- /*
-- * Generate a machine wide unique identifier for this inode.
-+ * Generate a machine wide unique identifier for this object (inode or mm).
-  *
-  * This relies on u64 not wrapping in the life-time of the machine; which with
-  * 1ns resolution means almost 585 years.
-- *
-- * This further relies on the fact that a well formed program will not unmap
-- * the file while it has a (shared) futex waiting on it. This mapping will have
-- * a file reference which pins the mount and inode.
-- *
-- * If for some reason an inode gets evicted and read back in again, it will get
-- * a new sequence number and will _NOT_ match, even though it is the exact same
-- * file.
-- *
-- * It is important that futex_match() will never have a false-positive, esp.
-- * for PI futexes that can mess up the state. The above argues that false-negatives
-- * are only possible for malformed programs.
-  */
--static u64 get_inode_sequence_number(struct inode *inode)
-+static u64 get_object_id(atomic64_t *object_seq)
- {
--	static atomic64_t i_seq;
-+	static atomic64_t last_assigned_seq;
- 	u64 old;
- 
--	/* Does the inode already have a sequence number? */
--	old = atomic64_read(&inode->i_sequence);
-+	/* Does the object already have a sequence number? */
-+	old = atomic64_read(object_seq);
- 	if (likely(old))
- 		return old;
- 
- 	for (;;) {
--		u64 new = atomic64_inc_return(&i_seq);
-+		u64 new = atomic64_inc_return(&last_assigned_seq);
- 		if (WARN_ON_ONCE(!new))
- 			continue;
- 
- 		old = 0;
--		if (!atomic64_try_cmpxchg_relaxed(&inode->i_sequence, &old, new))
-+		if (!atomic64_try_cmpxchg_relaxed(object_seq, &old, new))
- 			return old;
- 		return new;
- 	}
- }
- 
-+/*
-+ * This relies on the fact that a well formed program will not unmap
-+ * the file while it has a (shared) futex waiting on it. This mapping will have
-+ * a file reference which pins the mount and inode.
-+ *
-+ * If for some reason an inode gets evicted and read back in again, it will get
-+ * a new sequence number and will _NOT_ match, even though it is the exact same
-+ * file.
-+ *
-+ * It is important that futex_match() will never have a false-positive, esp.
-+ * for PI futexes that can mess up the state. The above argues that false-negatives
-+ * are only possible for malformed programs.
-+ */
-+static u64 get_inode_sequence_number(struct inode *inode)
-+{
-+	return get_object_id(&inode->i_sequence);
-+}
-+
- /**
-  * get_futex_key() - Get parameters which are the keys for a futex
-  * @uaddr:	virtual address of the futex
-@@ -686,8 +692,8 @@ again:
- 			goto out;
- 		}
- 
--		key->both.offset |= FUT_OFF_MMSHARED; /* ref taken on mm */
--		key->private.mm = mm;
-+		key->both.offset |= FUT_OFF_MMSHARED;
-+		key->private.mm_seq = get_object_id(&mm->futex.unique_id);
- 		key->private.address = address;
- 
- 	} else {
-@@ -2062,13 +2068,12 @@ static void futex_robust_unlock_init_mm(
- static inline void futex_robust_unlock_init_mm(struct futex_mm_data *fd) { }
- #endif /* !CONFIG_FUTEX_ROBUST_UNLOCK */
- 
--#if defined(CONFIG_FUTEX_PRIVATE_HASH) || defined(CONFIG_FUTEX_ROBUST_UNLOCK)
- void futex_mm_init(struct mm_struct *mm)
- {
-+	atomic64_set(&mm->futex.unique_id, 0);
- 	futex_hash_init_mm(&mm->futex);
- 	futex_robust_unlock_init_mm(&mm->futex);
- }
--#endif
- 
- int futex_hash_prctl(unsigned long arg2, unsigned long arg3, unsigned long arg4)
- {
+ 	ldp	$d0,$d1,[$inp],#16	// load input
+ 	sub	$len,$len,#16
 
 
