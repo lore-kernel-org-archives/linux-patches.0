@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773956;
-	b=uKZjRW+OuK27N8+/+ireRacsolkQaGjf78aYSeOeCQtrpUzOmEVVCfPAHCF8gO1xlHMR
-	 z5FmE0l7WsChSHOzK4j8DLVaXxaRYKUDZZPGmRt1iH5Qap6N1wzF4BSDyCG4UkvPyenJ1
-	 D3sYAoeys0NzktiORn1DDXK1plaZnQdCi3/XCuLB73YAjDV/mVLyV8YtgegcPbnmee9JS
-	 RGTJ4QXwtUi+VJk0w3DbGBVUWWeG3QtpbVhs+6r/bfBvbLJUpJECKBjfue4Sty8Ic7/hI
-	 9SqCkQ/vfRSPwazJI1583QOzeG/rPTra0e+VXj+5ADm4E5I++tK9e033nEfor8mpc5A==
+	t=1792773959;
+	b=2qehXHMktLl0bPURZ3law8YaLLHbAw9hxKC2X2WLQKtcijZyGC4YTeUxZKDQdTiOHgaY
+	 U+uCXrvvW/im8Gm6WVUAV127nNhN+t6c3JWPb+TRWUjd1Qobb2e2p1HauHeAX/kMSoT4N
+	 GEVneikJYXpTLx8yhRDUKoh2KWiTnRclf/Qhl9/U54ydy289Mz0lu0M2cCP/Sp4P1kxzd
+	 2R89f5Z1qEo9c1u7NTrkNrX2b/aisPE/1VBJelC9Qh6WLCgtAnmJfDK3GnND8gWvPGm8K
+	 OgCdhTFf53dONaGY+IybYOsuqvc1NQG69hFswZq3MNB50rJofcBS6PPpQb/RnSe/ixQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oKWz8e+btx/GYJbC/jy77r0N2dDeerfr5pNZjUaPSxQ=;
-	b=4LB6WfyhR/4DvVEYtm8WcWhA4AWhYe+n8ngxtGkXdf6sfoJ7ifEoioqjPFjbDDffOezs
-	 roo6eYNSJ33vpnMCZwgaBHAMsBx+cfc5ubIlMxG+3YfqzLEB5xGps7bTi9AxRJYRFdIE7
-	 HRmzQ+yLy1ci4toVtbOrIWatJdqd8kll9nkrH8g0uzICiqjeUDgmWYqnLSf9H3FnUKF3k
-	 YWQob+u5lwY1aBF+u+hkiNH/QwJ60pDsn3XQLCD/u+TQJwKAzqoTfh0Mvv1SUs5Bj6k6q
-	 hcbTRULZT4WPIorhHzxYSJceRLfhkK1GCwp9f8Gth+zqcd7RN9sOL81svy2ddJDENdA==
+	bh=02EhcXhkLPQLZ+mro3BC2OjImTHOn7ekF7gf+MHmTVM=;
+	b=12yaUt2bvNseZuKx0mSbAfESRCmk0E1S2mt2lMTZLepEW79EJUDbKYehx3Ryhr7c+Vz9
+	 00WwMe1h5+UP0FKCiCgs998Hz5HA8u6xINiUxclDNlAFv5dOGo99BcHsydempqAYQDyeM
+	 yJJrfl6daaGevJSZmcL8bJ+/NrCpdTI/AFu7e3BYxGtiN0y7B5jfMmYzdhzvk7lIpsHfA
+	 jTGJyenlpLz3SU7PpqCMrCBpi39GjxRSm+z4gaMu+8XbNYdFt6gaa2swRFqJntmqmTf7N
+	 qASSKd71YuMhn0BuOWUoIdSpm//rRl4c7wQdL8vPAn2CH+n25eZC42bpaVQvfgylSIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L/cdAEcT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xN/f7bYA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32626606A31B;
-	Fri, 23 Oct 2026 16:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1843C606A31D;
+	Fri, 23 Oct 2026 16:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L/cdAEcT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C49F1F01825;
-	Fri, 23 Oct 2026 16:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xN/f7bYA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680831F01825;
+	Fri, 23 Oct 2026 16:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773956;
-	bh=oKWz8e+btx/GYJbC/jy77r0N2dDeerfr5pNZjUaPSxQ=;
+	s=korg; t=1792773959;
+	bh=02EhcXhkLPQLZ+mro3BC2OjImTHOn7ekF7gf+MHmTVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/cdAEcT175S6toYVCPmtmqtbrK2sZ3D7Bv8Cqc0eNbmD6rGXNf9s/ck8mhV7te/C
-	 +A/lAqHcR97gZVPVKLzsTYJxDCBpczkztmTDqHgBpEUsVRBuq0j2boXTbEenVJRXBC
-	 hfymmz/R0Nc3d/J/SR56H8BYg3BzutmRaioqi4Tg=
+	b=xN/f7bYATmLHQvr3U8oWGwLAZH6lKKt28FzIBYe7bbkr873vanQTUhsma7oXIED18
+	 Z545uAgE1RVJZpAzoxooboMrTHVoMHP23/SxeHM959FOJUgABJ90S6/RSItm0V8VUW
+	 z9I60pXcrS+N5rcDypirFg+ZckaCCWUEgtYw3Kis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
+	Ian Kent <raven@themaw.net>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 072/193] afs: free the super info after a grace period
-Date: Fri, 23 Oct 2026 18:35:49 +0200
-Message-ID: <20261023163715.908596716@linuxfoundation.org>
+Subject: [PATCH 6.18 073/193] autofs: ignore notification errors from a replaced pipe
+Date: Fri, 23 Oct 2026 18:35:50 +0200
+Message-ID: <20261023163715.930549918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -66,62 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-commit 59e483739f2fd14327ece3f60c4995d060ca46b7 upstream.
+commit 65676cd4203c0e41a94caf54080a7f0a95434bda upstream.
 
-afs_atcell_get_link() resolves the @cell and .@cell symlinks of a
-dynamic root in rcu pathwalk mode. Before it looks at the dentry it gets
-the afs_net through afs_i2net(), which reads ->net_ns from the
-afs_super_info in sb->s_fs_info. The @cell dentries are kept around when
-unused and the dynamic root has no ->d_revalidate(), so a lookup that
-finds @cell in the dcache gets to ->get_link() in rcu mode.
+autofs_notify_daemon() takes a reference to the current notification
+pipe under wq_mutex, then drops the mutex before writing the request. The
+write can block while the daemon enters catatonic mode and installs a
+replacement pipe.
 
-afs_kill_super() frees the afs_super_info with a plain kfree() in
-afs_destroy_sbi(). Right now a pathwalk can't still be in
-afs_atcell_get_link() at that point, but only by accident. umount(2)
-waits for a grace period in namespace_unlock() before it drops the
-mount. And a mount whose last reference goes away elsewhere, like the
-chdir out of a lazily unmounted directory, still gets a grace period
-from bdi_unregister(). afs_fill_super() sets up a private bdi, so
-generic_shutdown_super() unregisters it from kill_anon_super() and
-bdi_remove_from_list() waits in synchronize_rcu_expedited() before
-afs_destroy_sbi() runs. That grace period protects the rcu readers of
-bdi_list in the writeback code. It has nothing to do with pathwalk.
+If the old pipe's reader is then closed, the delayed write returns -EPIPE
+and the generic error path enters catatonic mode again. That transition
+acts on the current superblock state, closes the replacement pipe, and
+releases the new daemon generation's wait queues.
 
-Don't rely on it and free the afs_super_info after a grace period.
+Only enter catatonic mode when the pipe which failed is still the current
+pipe. Factor the already-locked transition so the identity check and state
+change are atomic with respect to another replacement.
 
-Fixes: 30bca65bbbae ("afs: Make /afs/@cell and /afs/.@cell symlinks")
+This was reproduced on v7.3-rc5-337-gff47652a4b66c in a local QEMU guest.
+An unprivileged UID 65534 lookup filled the old packet pipe before a
+normal CATATONIC/SETPIPEFD restart. On the unmodified kernel, the new pipe
+received HUP and both a pending victim lookup and a later lookup failed
+with ENOENT in two out of two fresh-mount runs.
+
+With this change, the new pipe remained active, received an intact
+304-byte request, and both victim lookups completed in two out of two
+runs. Normal lookup and restart-without-a-blocked-writer controls passed.
+No KASAN, oops, refcount, or lock diagnostic was observed. A source
+reproducer and complete local logs are available privately on request.
+
+The demonstrated impact is limited to denial of a shared autofs service
+during a legitimate daemon restart. No memory corruption, information leak,
+privilege escalation, or code execution primitive was observed.
+
+Fixes: 8d7b48e0bc5fa ("autofs4: add miscellaneous device for ioctls")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-2-7446d2d335e6@kernel.org
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
+Link: https://patch.msgid.link/20261007173542.593624-1-tjdqudcks0424@naver.com
+Acked-by: Ian Kent <raven@themaw.net>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/internal.h |    2 ++
- fs/afs/super.c    |    2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ fs/autofs/waitq.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -252,6 +252,8 @@ struct afs_super_info {
- 	struct afs_volume	*volume;	/* volume record */
- 	enum afs_flock_mode	flock_mode:8;	/* File locking emulation mode */
- 	bool			dyn_root;	/* True if dynamic root */
-+	/* afs_atcell_get_link() reads ->net_ns in rcu pathwalk */
-+	struct rcu_head		rcu;
- };
+--- a/fs/autofs/waitq.c
++++ b/fs/autofs/waitq.c
+@@ -12,15 +12,13 @@
+  */
+ static autofs_wqt_t autofs_next_wait_queue = 1;
  
- static inline struct afs_super_info *AFS_FS_S(struct super_block *sb)
---- a/fs/afs/super.c
-+++ b/fs/afs/super.c
-@@ -523,7 +523,7 @@ static void afs_destroy_sbi(struct afs_s
- 		afs_put_volume(as->volume, afs_volume_trace_put_destroy_sbi);
- 		afs_unuse_cell(as->cell, afs_cell_trace_unuse_sbi);
- 		put_net(as->net_ns);
--		kfree(as);
-+		kfree_rcu(as, rcu);
- 	}
+-void autofs_catatonic_mode(struct autofs_sb_info *sbi)
++static void autofs_catatonic_mode_locked(struct autofs_sb_info *sbi)
+ {
+ 	struct autofs_wait_queue *wq, *nwq;
+ 
+-	mutex_lock(&sbi->wq_mutex);
+-	if (sbi->flags & AUTOFS_SBI_CATATONIC) {
+-		mutex_unlock(&sbi->wq_mutex);
++	lockdep_assert_held(&sbi->wq_mutex);
++	if (sbi->flags & AUTOFS_SBI_CATATONIC)
+ 		return;
+-	}
+ 
+ 	pr_debug("entering catatonic mode\n");
+ 
+@@ -40,6 +38,21 @@ void autofs_catatonic_mode(struct autofs
+ 	fput(sbi->pipe);	/* Close the pipe */
+ 	sbi->pipe = NULL;
+ 	sbi->pipefd = -1;
++}
++
++void autofs_catatonic_mode(struct autofs_sb_info *sbi)
++{
++	mutex_lock(&sbi->wq_mutex);
++	autofs_catatonic_mode_locked(sbi);
++	mutex_unlock(&sbi->wq_mutex);
++}
++
++static void autofs_catatonic_mode_for_pipe(struct autofs_sb_info *sbi,
++					   struct file *pipe)
++{
++	mutex_lock(&sbi->wq_mutex);
++	if (sbi->pipe == pipe)
++		autofs_catatonic_mode_locked(sbi);
+ 	mutex_unlock(&sbi->wq_mutex);
  }
  
+@@ -170,7 +183,7 @@ static void autofs_notify_daemon(struct
+ 		autofs_wait_release(sbi, wq->wait_queue_token, ret);
+ 		break;
+ 	default:
+-		autofs_catatonic_mode(sbi);
++		autofs_catatonic_mode_for_pipe(sbi, pipe);
+ 		break;
+ 	}
+ 	fput(pipe);
 
 
