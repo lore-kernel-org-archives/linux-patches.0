@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773787;
-	b=QpAo8Txeg+3RrqpHjak5dU9kXdfKbtZAELND33tj6WkMpllyeYmY0gcHOdQM4ZyY8GAf
-	 bzxv3ZbehlnMGsa2zXQla0divXm5AQTwmiedS9sxLCa2HBXOcgrlnf04dJ81CVWWsbJa+
-	 XzTY2JKxGy9Y971toI6PM93AuGlCQJK48hpGNc03JcdSLaxLlK5NbPG3GIdK9v4I3C3vu
-	 hgla6FCRfYTQMMVAdQm7HpuwUDD9gF3M6XsgID7AZnc+gWFSqeKm1ccMWUw9v9hzrqxG9
-	 eSKWvI5B0FrFpZ/3OjW4tPiMle/WjkIMgEURr/OOsuH8A5dO64JyAzYc3WhGFCrRz8g==
+	t=1792773784;
+	b=KyW4n6wvcYwaXSzKt58HVrQzb7SU/Dvn6+GSsST1uDW5Sfz2BRqNTvKBgUNQJgNyTn2N
+	 bzJss0NrVaL4vzdCDqzRAwiVTFOBLbx5+3X81s/27hRO+Xmqw7zozUpNe48z3aEDGW7SO
+	 2558A8jagBtYC3WEF/l2OdXzGeqf/JOqj50C8ijeDmTXL0I6KzEdEuLZOYflLe+cos5Ra
+	 iiwiow6uIzyCYNLy702EXSbsiuFnjSXcovCeGELxApwm9lARTggG30t0wA6n+7LvQdGOo
+	 UNu1YdV1mPWOs/VHO9oQG0nTAPLxBfAdTTHMsK1V8/nQtne7O+QVPWvUvSSz6rNgu7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773784;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KJbfy8TOLrO0OvX/C1vhQsuI9pgfrOHi4RqOSWgcGd0=;
-	b=ZzJAyZUuua4EXvdCIOVjLAf/nmPWaZI4ETj/qTVrI94D8jL9gpIMoEMVmot/K73J4XsS
-	 +t3EW1SxtNk3Hxzgpi75jDUMuW4yzBhITwHa2A6s2hqYpB7/gr7hqanFJAPJjZYyt4rEp
-	 tXKSawyyandrhf1ESZXpZ8/UHSJ7nOekpwnn1siUqyJ65y1vzvYg8aYiChpiiR9/1mH6D
-	 ZH7Fmi4vO5Z93TZ1DZHH94ouqUd+ILNRLor5/a/E+BjuNQtDJUmgECbL7K/rX15ygH8oA
-	 5eYQK43jzvqPClx+CZKfZ8dHqAgn2cD6ZkpbyxMZBElwHe9TwIl7U0NPzKQpmFYFIOQ==
+	bh=8Mgd4icOK4KzD10Y92Quayb9G9dEUjvHTk4pHsJ0gGs=;
+	b=pp0mQSALvFVaO6VQFXqUjwd4XboitGv1PFUpRpUVDfR0jo2/AfdmKNV5FTe/fXj9v6h2
+	 DNzO0IE4cc9kHbM3h+sMM/0J+HXwjEVN6zndH12netLJmrGl9T8LGbcDt7ScVXV1bMwIk
+	 B0P/UxM3vsSAfyawQU6EiGXJzFsa4x50jJKu6xrr3RUzaNS6Mw62YVfAhd1I59pApXMM5
+	 h5KDUFYPTKHFnKGpj+QHwt7SCyMmMG3daJBqFVYc62WpXj1vVnuIggHhP8KE/cLI0adUw
+	 sVpVfreMx3oP2LUnubJLxX9HaDUq5A1U1ngrWOgdgLEpmiQs0oMfeTgvBy3wVfU+WYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpjpO5qC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i6dTP6Ub;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543EC606A31B;
-	Fri, 23 Oct 2026 16:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E6C606A31A;
+	Fri, 23 Oct 2026 16:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpjpO5qC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1FE1F01825;
-	Fri, 23 Oct 2026 16:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i6dTP6Ub
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A491F01825;
+	Fri, 23 Oct 2026 16:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773787;
-	bh=KJbfy8TOLrO0OvX/C1vhQsuI9pgfrOHi4RqOSWgcGd0=;
+	s=korg; t=1792773784;
+	bh=8Mgd4icOK4KzD10Y92Quayb9G9dEUjvHTk4pHsJ0gGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zpjpO5qCeuJB2OOTZXKdzGIa2DaImEy39HJwCCTa8N7XPHPZkl7fHN+hLfH4W5nre
-	 fa4onuU1olQVwXm00STsd8ccNTi4AlgJizBFt85af3bCpYur2CJkBrwd2b2lv0d74U
-	 5cpzX5+XEa8G8Jyro69i6BlCNwaMTMFAL62175gI=
+	b=i6dTP6Ub+zp8XvgyptDuZaj664jnZ2zf8IN6ojCIB7qkq4mZQq/f/UfU1W6AWGZ63
+	 uhaMYyG9O0qn6kNcVKYhA+FFovXguApTR4MfJfQ5sLWtlIx+yKotI5V58kU1LwE5XK
+	 tBVB78kX7VaSzq7gV6nK6miorDipqT7XMGIpFBv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Parola <fparola@amazon.de>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Hasty Heat <hastyheat@gmail.com>,
+	Mitchell Augustin <mitchell.augustin@canonical.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/193] kho: free phys_bits bitmaps using free_page() in __kho_abort()
-Date: Fri, 23 Oct 2026 18:34:45 +0200
-Message-ID: <20261023163714.401900600@linuxfoundation.org>
+Subject: [PATCH 6.18 007/193] i2c: qcom-geni: Restore the source-clock selection policy
+Date: Fri, 23 Oct 2026 18:34:44 +0200
+Message-ID: <20261023163714.378050090@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -67,48 +70,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Federico Parola <fparola@amazon.de>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-Commit fa759cd75bce ("kho: allocate metadata directly from the buddy
-allocator") switched the allocation of preserved memory bitmaps to
-get_zeroed_page(), but __kho_abort() still releases them with kfree().
-kfree() on a buddy page that is not a large kmalloc allocation hits the
-WARN_ON_ONCE() in free_large_kmalloc() and returns without freeing it,
-so every aborted finalization leaks all bitmap pages.
+[ Upstream commit 8cb5c17be3a2fadc41075d04ce1c24c831546aaf ]
 
-Free the bitmaps with free_page() instead.
+Currently, the source clock lookup prefers 32 MHz whenever that rate is
+available, regardless of the rate configured by the platform. Before the
+switch to looking up the clock index, the driver used the 32 MHz timing
+table only if the current source clock rate was 32 MHz, and the 19.2 MHz
+table otherwise.
 
-This is a stable-only patch. Upstream fixed it as a side effect of
-commit 99cd2ffac697 ("kho: don't unpreserve memory during abort"), which
-removes the tracking teardown from __kho_abort() altogether. That change
-builds on commit 36f8f7ef7fd2 ("kho: add interfaces to unpreserve
-folios, page ranges, and vmalloc") and commit 70f9133096c8 ("kho: drop
-notifiers"). In 6.18.y, KHO users still preserve memory from the
-KEXEC_KHO_FINALIZE notifier and have no interface to unpreserve it, so
-the teardown on abort is the only way their preservations get dropped.
-Backporting that commit would make preservations outlive every abort,
-so keep the teardown and fix only the mismatched free.
+On X1E80100 CRD, this results in switching the source clock from 19.2 MHz
+to 32 MHz, which causes intermittent failures when probing the I2C HID
+keyboard. These range from corrupted HID descriptors to failed resets
+and transfer timeouts, which also affect the touchpad on the same bus.
 
-Fixes: fa759cd75bce ("kho: allocate metadata directly from the buddy allocator")
-Signed-off-by: Federico Parola <fparola@amazon.de>
+Restore the original selection policy: use 32 MHz if already selected,
+otherwise request 19.2 MHz. Look up the index for the selected rate and
+keep the check that rejects higher-frequency multiples. This retains
+the dynamic clock index lookup without preferring 32 MHz on platforms
+that previously used 19.2 MHz. Report the requested rate if the lookup
+fails.
+
+Fixes: cb97bf3d4f91 ("i2c: qcom-geni: Fix hardcoded clock index in SE_GENI_CLK_SEL")
+Assisted-by: LLM
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Tested-by: Hasty Heat <hastyheat@gmail.com>
+Tested-by: Mitchell Augustin <mitchell.augustin@canonical.com>
+Reviewed-by: Mitchell Augustin <mitchell.augustin@canonical.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260928-b4-i2c-qcom-geni-preserve-source-clock-v1-1-9aded7552a76@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_handover.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-qcom-geni.c | 37 ++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 17 deletions(-)
 
-diff --git a/kernel/kexec_handover.c b/kernel/kexec_handover.c
-index 9fe5d14f1ec54..9691f6bc2fba7 100644
---- a/kernel/kexec_handover.c
-+++ b/kernel/kexec_handover.c
-@@ -1054,7 +1054,7 @@ static int __kho_abort(void)
- 		unsigned long phys;
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 307e2e4030af9..fbfffbec05e14 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -169,28 +169,31 @@ static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
+ static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
+ {
+ 	const struct geni_i2c_clk_fld *itr;
+-	unsigned long res_freq;
++	unsigned long req_freq, res_freq;
++	int ret;
  
- 		xa_for_each(&physxa->phys_bits, phys, bits)
--			kfree(bits);
-+			free_page((unsigned long)bits);
+ 	/*
+-	 * Frequency counter tables are calibrated for a specific source
+-	 * clock frequency and are not valid for any multiple of it
+-	 * (e.g. 64 MHz, 128 MHz).
+-	 * Use exact=true and verify res_freq matches req_freq literally
+-	 * to reject harmonics: a 64 MHz clock that divides evenly to
+-	 * 32 MHz would pass exact matching but produce double the intended
+-	 * I2C frequency with these counter values.
++	 * Use 32 MHz only if already selected, otherwise use 19.2 MHz.
++	 * Preferring 32 MHz merely because DFS supports it breaks I2C
++	 * transfers on X1E80100 CRD.
+ 	 */
+-	if (!geni_se_clk_freq_match(&gi2c->se, GENI_SE_CLK_32MHZ,
+-				    &gi2c->clk_idx, &res_freq, true) &&
+-	    res_freq == GENI_SE_CLK_32MHZ) {
++	if (clk_get_rate(gi2c->se.clk) == GENI_SE_CLK_32MHZ) {
++		req_freq = GENI_SE_CLK_32MHZ;
+ 		itr = geni_i2c_clk_map_32mhz;
+-	} else if (!geni_se_clk_freq_match(&gi2c->se, GENI_SE_CLK_19P2MHZ,
+-					   &gi2c->clk_idx, &res_freq, true) &&
+-		   res_freq == GENI_SE_CLK_19P2MHZ) {
+-		itr = geni_i2c_clk_map_19p2mhz;
+ 	} else {
+-		dev_err(gi2c->se.dev,
+-			"Unsupported SE source clock: must be exactly 32 MHz or 19.2 MHz\n");
++		req_freq = GENI_SE_CLK_19P2MHZ;
++		itr = geni_i2c_clk_map_19p2mhz;
++	}
++
++	ret = geni_se_clk_freq_match(&gi2c->se, req_freq, &gi2c->clk_idx,
++				     &res_freq, true);
++	if (ret)
++		return dev_err_probe(gi2c->se.dev, ret,
++				     "Failed to find SE source clock %lu Hz\n",
++				     req_freq);
++	if (res_freq != req_freq) {
++		dev_err(gi2c->se.dev, "Unsupported SE source clock %lu Hz\n",
++			res_freq);
+ 		return -EINVAL;
+ 	}
  
- 		xa_destroy(&physxa->phys_bits);
- 		kfree(physxa);
 -- 
 2.53.0
 
