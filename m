@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774122;
-	b=WJjOc0sSreoIknHDXT/QE/g1fMhlPBU9NAFNe7bRCNyztA6iP87F4fuLdyYBy8ccvewX
-	 Iv9pJnMCQ1XNfORc20JRzp0B70LHFdBuRLJcFdsvFg9cg7M6oQZ3G+36RcSrV/KD3YZE2
-	 H462FWTO4hCpJmxxMy0PQpRXbjGErjjB/oBToGQQWpwDd28+dIUgtfPwV5Dk4e6igCqiL
-	 2qtqzQ+VpNWZ+dydAqWnLtxBT1xNOMC9rvS+7cDgF/blSFOsykVSmFlHMAr5lhWSdrodS
-	 YQoC5Q0n8gITcORjbKKfxG+LLZyRU6w0Grsc/vRYl2rqORmis3sX1U6MDXYKFZfSz7g==
+	t=1792774125;
+	b=gsYc8X30Ta1dA3J6w/D/ZGta1QuQF4hfBejMnS6p2mt6uNp374vFeweDKk0d+7+Uon19
+	 14LGqiTaDvN6Y4UNvYsqlgmD1IkaFwWiWG9Mw/eOwJkgXxbKL3QgH6KKTmw01COdRWctY
+	 6QKeo4oRPA5+EeIcQEU9mLQph33nTmFCBj2kA65/8fw5pl3dtyIvo2vLbFoKJwtSvguD2
+	 b+XhkJN1U5PnbtU1tv4P1/+IdyZAW9KVht9zLYd9XohBYj9B6yej4dQefcD/OqllUJTu1
+	 xrolpEH3J48wMnrT9VF6+wVI4ObWk7V+EWxdAyfABf4P1DJRzE9GL+HwpPDKt0DvaXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tZcZNTo05Xv9pyMcRDzLsAcTBkkOy8o9nb6lnbl321s=;
-	b=Oww2t7huSqWEPkC5gUzaWdKL54NndRjtcDv7V1hiHYwDQITqQ3zayky+Wz80s9VgVD7c
-	 lyEUFo2sRcL4BSvbPybIrGys6aj3rGgQ9LJGd5hp5MgKXnmBAY/Ul2o2oIugiHrHLmqAY
-	 AZsI9n2bCHNbsBf/PlnkWB0f7fGmkJ5GlItBm/PfeYKBIQgT0AStHw+iHGytzwFJFqrVT
-	 h2KNE7luZWZ1S6bp65QlXOIDzLeW2/HQYhbtLLn2YAxFQR1r4+LGgKB53N0/YEX6bhVJz
-	 SoohyhdMvFf5GudmDZ0BZWaJQzGIponxLIf+LkCHnnGMKSy94RJJNsodb5/ovErOMUA==
+	bh=93e1ppYfbVxIvLEYOZdFEOUxyZodGu1wCd2Jj/xmZss=;
+	b=Wl9YVcyxqkGBuOpI5u9Ji4mdBxMvDUMspNe1VmpF4wfG7kqPcd6vTcdqTyCgWsb6Aw9j
+	 QdjsFuTqGD0wsxVcUQdOUoOGEcWX3nEQqeA0aYg/yR/6WQAopC4p1vTZG9l23UM9Erymx
+	 3HGfEsGafpr02KmxALBZFHALA+fRQx2xc3OXcq/X98Oxxvp2Zpnpn07ifwE5tzNlmSooo
+	 LVtReCMfWyNPMxQjn8tqTyTE2BZ8SQPLv3/IkYzKasgANC1ShikgXEb0Hi5aVz+ArWXrR
+	 D7NtRU3YrbSI5QBspKWiiiAVmQheurMOpF3bhq0c+6Fjlma+zUyXd1WxlInLLt78RyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZOC44lW/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRF8F4TG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69E8606A31E;
-	Fri, 23 Oct 2026 16:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40476606A31E;
+	Fri, 23 Oct 2026 16:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZOC44lW/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1631F031E4;
-	Fri, 23 Oct 2026 16:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRF8F4TG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E24B1F01828;
+	Fri, 23 Oct 2026 16:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774121;
-	bh=tZcZNTo05Xv9pyMcRDzLsAcTBkkOy8o9nb6lnbl321s=;
+	s=korg; t=1792774124;
+	bh=93e1ppYfbVxIvLEYOZdFEOUxyZodGu1wCd2Jj/xmZss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZOC44lW/6RIK9JOQz3nCTiwV0VRKh307dm53ZuDlnZZOUKhNwKQY1bpfW0nvfuU8p
-	 DEIdoZr6WpFdF5qnmesqcwArQ3b4WQChfsh5ijMTrDAIa5iLisMnNY+ounseMBlebv
-	 aJlnyuptpxSIw8vl1pX42zOZ9Eb29ZtpXhGOARfY=
+	b=cRF8F4TGKaTcpcLct7OEUy9lJH3Qe1qYTvdEfA7ApVGnsO+LBVXQeBnC8xbDfCbss
+	 CrRJzoRWO+ZBX67+yIUkThFqV94NTptWTxNaJHFdHr6j1iH7hZLejHF4BBh0a4s/b4
+	 ats6JABktqI49S8R9K18LdHp1xoT03ZF+9QcWZ+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Xuanqiang Luo <xuanqiang.luo@linux.dev>,
-	Kaiwen Shi <skwkevin@mail.ustc.edu.cn>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 127/193] mac802154: fix data race and NULL deref on local->assoc_dev
-Date: Fri, 23 Oct 2026 18:36:44 +0200
-Message-ID: <20261023163717.211909291@linuxfoundation.org>
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 128/193] net/iucv: fix the recvmsg window update
+Date: Fri, 23 Oct 2026 18:36:45 +0200
+Message-ID: <20261023163717.236101744@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -70,208 +69,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaiwen Shi <skwkevin@mail.ustc.edu.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit c037915f80c4db47f7d061d68e703ffd551b1a34 upstream.
+commit fa5acd038ea657ad5033713d6916214cbd349151 upstream.
 
-local->assoc_dev is shared between the association path and the
-association-response worker without common synchronization.
+iucv_sock_recvmsg() sends the HiperSockets-only AF_IUCV_FLAG_WIN without
+testing the transport, so on a classic z/VM socket iucv_send_ctrl() sizes
+the skb through a NULL iucv->hs_dev. SO_MSGLIMIT accepts 1, so msglimit / 2
+is zero and one recvmsg() on its own socket is enough for an unprivileged
+process to take a spurious disconnect.
 
-mac802154_perform_association() stores the coordinator pointer and waits
-for a response. Its timeout and error paths clear the pointer and return
-to mac802154_associate(), which may then free the coordinator object.
-Meanwhile, mac802154_rx_mac_cmd_worker() may observe the associating bit
-and enter mac802154_process_association_resp(), which dereferences
-assoc_dev.
+It also calls iucv_send_ctrl() under spin_lock_bh(&message_q.lock), which
+allocates GFP_KERNEL inside a section the code treats as atomic. Sending
+outside that lock lets two recvmsg() reach afiucv_hs_send() at once, where
+msg_recv is sampled for the advertised window and subtracted after
+dev_queue_xmit() -- and sendmsg reaches that counter under lock_sock()
+while recvmsg holds no socket lock, so both can subtract the same value,
+the counter goes negative and the credit reaches the peer twice.
 
-The worker's bit test and the handler's pointer dereference are not
-atomic with respect to cleanup. Cleanup can clear assoc_dev between them,
-causing a NULL dereference, or free the coordinator while the response
-handler still uses the pointer.
+Test the transport, claim the credit with atomic_xchg() after the last
+error exit and hand it back if the transmit fails, and send once the lock
+is dropped.
 
-The recorded result is exposed to the same window. assoc_status and
-assoc_addr are written by the handler but read by the association path
-while the associating bit is still set, so a second response for the same
-request - a malicious one, for instance - can replace them between those
-reads and leave the caller with an incoherent status and address pair.
-
-The response handler only needs the coordinator extended address.
-Replace assoc_dev with a cached address, removing the pointer lifetime
-dependency. Protect the cached address and the associating bit with a
-dedicated spinlock. A READ_ONCE()/WRITE_ONCE() pair would not guarantee
-an atomic __le64 access on all 32-bit architectures.
-
-wpan_dev->association_lock cannot be reused here: nl802154_associate()
-holds it across rdev_associate(), hence for the whole of
-mac802154_perform_association() including the wait for the response.
-A response handler taking that lock would only get it once the
-association has already given up.
-
-Reset the completion, publish the cached address, and set the associating
-bit while holding the lock. The response handler takes the lock, rechecks
-the bit and the cached address, records the response, clears the bit, and
-only then completes the waiter. Thus cleanup cannot pass the handler
-between its state check and completion, and the cached 64-bit value
-cannot tear.
-
-The handler clears the bit before completing, not the woken waiter:
-otherwise complete() is issued under the lock and a second (e.g.
-malicious) response can reacquire it before the waiter and replace the
-result. So a wait that returns success implies the bit is already clear,
-and the success and negative-response paths return directly. The
-transmit-error and timeout paths still clear it under assoc_lock, which
-serializes any racing response against the cleanup while the call returns
-the error it already selected. Both paths snapshot assoc_status and
-assoc_addr under the same lock.
-
-Both users run in process context, so a plain spinlock is sufficient.
-The lock is not held while waiting for the completion.
-
-Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Suggested-by: Xuanqiang Luo <xuanqiang.luo@linux.dev>
-Fixes: fefd19807fe9 ("mac802154: Handle associating")
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Fixes: 238965b71b96 ("net/af_iucv: build proper skbs for HiperTransport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kaiwen Shi <skwkevin@mail.ustc.edu.cn>
-Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260829230551.1787432-1-skwkevin@mail.ustc.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Aswin Karuvally <aswin@linux.ibm.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260828-b4-disp-33fac0ed-v3-1-e6d061880ee0@proton.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/ieee802154_i.h |    7 +++++
- net/mac802154/main.c         |    1 
- net/mac802154/scan.c         |   51 ++++++++++++++++++++++++++++++++-----------
- 3 files changed, 45 insertions(+), 14 deletions(-)
+ net/iucv/af_iucv.c |   42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
---- a/net/mac802154/ieee802154_i.h
-+++ b/net/mac802154/ieee802154_i.h
-@@ -80,7 +80,12 @@ struct ieee802154_local {
- 	spinlock_t rx_lock;
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -208,12 +208,6 @@ static int afiucv_hs_send(struct iucv_me
+ 	phs_hdr->flags = flags;
+ 	if (flags == AF_IUCV_FLAG_SYN)
+ 		phs_hdr->window = iucv->msglimit;
+-	else if ((flags == AF_IUCV_FLAG_WIN) || !flags) {
+-		confirm_recv = atomic_read(&iucv->msg_recv);
+-		phs_hdr->window = confirm_recv;
+-		if (confirm_recv)
+-			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
+-	}
+ 	memcpy(phs_hdr->destUserID, iucv->dst_user_id, 8);
+ 	memcpy(phs_hdr->destAppName, iucv->dst_name, 8);
+ 	memcpy(phs_hdr->srcUserID, iucv->src_user_id, 8);
+@@ -248,13 +242,22 @@ static int afiucv_hs_send(struct iucv_me
+ 	}
+ 	skb->protocol = cpu_to_be16(ETH_P_AF_IUCV);
  
- 	/* Association */
--	struct ieee802154_pan_device *assoc_dev;
-+	/* assoc_lock protects assoc_dev_extended_addr, assoc_addr,
-+	 * assoc_status, the assoc_done reinit/complete pairing and the
-+	 * IEEE802154_IS_ASSOCIATING bit in @ongoing.
++	/* Claim the receive credit here, not while building the header: every
++	 * way this frame can be dropped has now been ruled out, so the window
++	 * is zeroed only for as long as the transmit itself takes.
 +	 */
-+	spinlock_t assoc_lock;
-+	__le64 assoc_dev_extended_addr;
- 	struct completion assoc_done;
- 	__le16 assoc_addr;
- 	u8 assoc_status;
---- a/net/mac802154/main.c
-+++ b/net/mac802154/main.c
-@@ -105,6 +105,7 @@ ieee802154_alloc_hw(size_t priv_data_len
- 	INIT_WORK(&local->rx_mac_cmd_work, mac802154_rx_mac_cmd_worker);
- 
- 	init_completion(&local->assoc_done);
-+	spin_lock_init(&local->assoc_lock);
- 
- 	/* init supported flags with 802.15.4 default ranges */
- 	phy->supported.max_minbe = 8;
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -532,7 +532,9 @@ int mac802154_perform_association(struct
- 	struct ieee802154_association_req_frame frame = {};
- 	struct ieee802154_local *local = sdata->local;
- 	struct wpan_dev *wpan_dev = &sdata->wpan_dev;
-+	__le16 resp_short_addr;
- 	struct sk_buff *skb;
-+	u8 resp_status;
- 	int ret;
- 
- 	frame.mhr.fc.type = IEEE802154_FC_TYPE_MAC_CMD;
-@@ -574,9 +576,11 @@ int mac802154_perform_association(struct
- 		return ret;
- 	}
- 
--	local->assoc_dev = coord;
-+	spin_lock(&local->assoc_lock);
- 	reinit_completion(&local->assoc_done);
-+	local->assoc_dev_extended_addr = coord->extended_addr;
- 	set_bit(IEEE802154_IS_ASSOCIATING, &local->ongoing);
-+	spin_unlock(&local->assoc_lock);
- 
- 	ret = ieee802154_mlme_tx_one_locked(local, sdata, skb);
- 	if (ret) {
-@@ -595,25 +599,37 @@ int mac802154_perform_association(struct
- 		goto clear_assoc;
- 	}
- 
--	if (local->assoc_status != IEEE802154_ASSOCIATION_SUCCESSFUL) {
--		if (local->assoc_status == IEEE802154_PAN_AT_CAPACITY)
-+	/* The association is complete: mac802154_process_association_resp()
-+	 * cleared the associating bit before waking us, so a second (e.g.
-+	 * malicious) ASSOC RESP can no longer pass the recheck and overwrite
-+	 * the result.  Snapshot assoc_status/assoc_addr under the lock.
-+	 */
-+	spin_lock(&local->assoc_lock);
-+	resp_status = local->assoc_status;
-+	resp_short_addr = local->assoc_addr;
-+	spin_unlock(&local->assoc_lock);
-+
-+	if (resp_status != IEEE802154_ASSOCIATION_SUCCESSFUL) {
-+		if (resp_status == IEEE802154_PAN_AT_CAPACITY)
- 			ret = -ERANGE;
- 		else
- 			ret = -EPERM;
- 
- 		dev_warn(&sdata->dev->dev,
- 			 "Negative ASSOC RESP received from %8phC: %s\n", &ceaddr,
--			 local->assoc_status == IEEE802154_PAN_AT_CAPACITY ?
-+			 resp_status == IEEE802154_PAN_AT_CAPACITY ?
- 			 "PAN at capacity" : "access denied");
--		goto clear_assoc;
-+		return ret;
- 	}
- 
--	ret = 0;
--	*short_addr = local->assoc_addr;
-+	*short_addr = resp_short_addr;
-+
-+	return 0;
- 
- clear_assoc:
-+	spin_lock(&local->assoc_lock);
- 	clear_bit(IEEE802154_IS_ASSOCIATING, &local->ongoing);
--	local->assoc_dev = NULL;
-+	spin_unlock(&local->assoc_lock);
- 
- 	return ret;
- }
-@@ -635,19 +651,28 @@ int mac802154_process_association_resp(s
- 		     dest->mode != IEEE802154_EXTENDED_ADDRESSING))
- 		return -EINVAL;
- 
--	if (unlikely(dest->extended_addr != wpan_dev->extended_addr ||
--		     src->extended_addr != local->assoc_dev->extended_addr))
-+	spin_lock(&local->assoc_lock);
-+	if (unlikely(!test_bit(IEEE802154_IS_ASSOCIATING, &local->ongoing) ||
-+		     dest->extended_addr != wpan_dev->extended_addr ||
-+		     src->extended_addr != local->assoc_dev_extended_addr)) {
-+		spin_unlock(&local->assoc_lock);
- 		return -ENODEV;
++	if (flags == AF_IUCV_FLAG_WIN || !flags) {
++		confirm_recv = atomic_xchg(&iucv->msg_recv, 0);
++		phs_hdr->window = confirm_recv;
++		if (confirm_recv)
++			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
 +	}
++
+ 	atomic_inc(&iucv->skbs_in_xmit);
+ 	err = dev_queue_xmit(skb);
+ 	if (net_xmit_eval(err)) {
+ 		atomic_dec(&iucv->skbs_in_xmit);
+-	} else {
+-		atomic_sub(confirm_recv, &iucv->msg_recv);
+-		WARN_ON(atomic_read(&iucv->msg_recv) < 0);
++		atomic_add(confirm_recv, &iucv->msg_recv);
+ 	}
+ 	return net_xmit_eval(err);
  
- 	memcpy(&resp_pl, skb->data, sizeof(resp_pl));
- 	local->assoc_addr = resp_pl.short_addr;
- 	local->assoc_status = resp_pl.status;
-+	/* Clear the associating bit before waking the waiter: once the result
-+	 * is saved, any subsequent (e.g. malicious) ASSOC RESP must fail the
-+	 * test_bit() recheck above and can no longer overwrite the result.
-+	 */
-+	clear_bit(IEEE802154_IS_ASSOCIATING, &local->ongoing);
-+	complete(&local->assoc_done);
-+	spin_unlock(&local->assoc_lock);
+@@ -1238,6 +1241,7 @@ static int iucv_sock_recvmsg(struct sock
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	unsigned int copied, rlen;
+ 	struct sk_buff *skb, *rskb, *cskb;
++	bool send_win = false;
+ 	int err = 0;
+ 	u32 offset;
  
- 	dev_dbg(&skb->dev->dev,
- 		"ASSOC RESP 0x%x received from %8phC, getting short address %04x\n",
--		local->assoc_status, &deaddr, local->assoc_addr);
--
--	complete(&local->assoc_done);
-+		resp_pl.status, &deaddr, resp_pl.short_addr);
+@@ -1328,16 +1332,20 @@ static int iucv_sock_recvmsg(struct sock
+ 		if (skb_queue_empty(&iucv->backlog_skb_q)) {
+ 			if (!list_empty(&iucv->message_q.list))
+ 				iucv_process_message_q(sk);
+-			if (atomic_read(&iucv->msg_recv) >=
+-							iucv->msglimit / 2) {
+-				err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
+-				if (err) {
+-					sk->sk_state = IUCV_DISCONN;
+-					sk->sk_state_change(sk);
+-				}
+-			}
++			if (iucv->transport == AF_IUCV_TRANS_HIPER &&
++			    atomic_read(&iucv->msg_recv) >=
++							iucv->msglimit / 2)
++				send_win = true;
+ 		}
+ 		spin_unlock_bh(&iucv->message_q.lock);
++
++		if (send_win) {
++			err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
++			if (err) {
++				sk->sk_state = IUCV_DISCONN;
++				sk->sk_state_change(sk);
++			}
++		}
+ 	}
  
- 	return 0;
- }
+ done:
 
 
