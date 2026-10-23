@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773946;
-	b=S9OFn504ZGx6T8B1qDEalyZ0LLE9Cf03lxuliMsbeYXuXZ1bVS56TxxKoCtmSaYEINHf
-	 9qCPIxEO6Ukn7uaqe7e5RYeRauUsxmEqWIbGkjYbkmRocTUwd4WsLrTPkUxWLayJd4UmU
-	 LiQxBr4O34jpWOYH9pGavRCsi8Bm/c8QrvFb7vzEYhsZnxmlJVeiXsbOLANyetV81k8tM
-	 FXHLkTdJxzOYCgMVBrnD14UvmGAIevD5bpiwlHB2oT/yw3FmFgBqPSTgAUFg60ENYH+YM
-	 FviwPOQR2Yom2NthLCDmyGkkBuQHKMfazjBD6YzIbxrocXsvkJcTwrKRZH1Jyh3PY7A==
+	t=1792773949;
+	b=QID/YMPgnueK3jGZxDB38BrpYFRxkWwOoUcmKd3dK3DJOBX8TLiA8t8qbNF8+EQwATYj
+	 DpsleoBgF5h/pNKqtYwQESIDu0U9YS9l16ydsYspxy1Ona+b6fZHCNVNu5VFNb5zW6Wpr
+	 DKU1Ro9fUHmYfSkq8I441gjXUYG2cXqGdX5nZiuUfM9AdHjoDY4NJcVhs5YirYk8eTJdZ
+	 1hqYXVPz4Jloc4fFXwCl1LwbftZ4SuiX9kAa5tjgTQ7ZbvneBj+sp8S0d0as9hYtV0fFw
+	 UwRf4XTYLugQeyNPdyv6Pzf7uzbb/VpLZFZDNGqolql5qqLD9cUhWl+RbzjPr/VN3Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773946;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iPp6TyqDB7HK84LAXrVeC8oZA8tpXaWh56uTvKkxHmw=;
-	b=ej7KW82N6bq/ko4iGwJILNvG+LMAUd417vAq6Dk1WR4nhfKovZyVSrjPEMcwc05iYCel
-	 msXF46odmpu/gGwouak6O7W+r/UQF15eva+zIFv7WELL5VALMMZ+OPrYz6aqC04zzBHI0
-	 eWH8qHXoBxG3Hwv/0lqoExCXVLCiguEkM0luLyPYgpG5rdvSW5O4LIOrbNicPDRqorhnG
-	 7KP8SNxZbO7pGSWmY7QbVAH0sK6d1dOlqQPJUGe1hellAbWkNr6DgqFDw1287mUs8kxmG
-	 ns/XJpiMeJW7kvH/DPEb6twAS6dlxxUBmzUCVPAxtW5Ib9fSc54TVCNDW9UTMdoDrdA==
+	bh=QbKX+0yuImIs+pGi1XvE8VZhobSujsq+FCT1C1wBDk0=;
+	b=GXZEPWu/EBBhJp5Hh9qG5/Ekv6Or5V+MO6ADUFEv/fNWZFNKgE7myfDE0y1LavgptP8m
+	 w54vq+bBFlPXDFTwDnfAbokDGHSIZddDzkXGnw52Wpt7EB0+6Jh2fEdTjW6pLNqUhRrT1
+	 7frq6euLwBKPG8IOBpmnCdY7SquqbxhD9b6DfxIBKV9ERRjlvaTKoyuo0DJmCBPhK7N34
+	 V28aXz1vTo4wjGblLnNmDOp05EM03NjOXLhNG3nubZbEkWadFEwXIQqgYp0SGgw/aAEJ+
+	 5x4cexDC3iVnzFNJjD2gxbPgMog4Ie3KCknAWptL5ulA+LFCEz6PTOMm6WY7ygviK4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWhcCRfd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbH5Et6e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DD7606A31A;
-	Fri, 23 Oct 2026 16:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB34606A31A;
+	Fri, 23 Oct 2026 16:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWhcCRfd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158791F01825;
-	Fri, 23 Oct 2026 16:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbH5Et6e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622301F01825;
+	Fri, 23 Oct 2026 16:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773945;
-	bh=iPp6TyqDB7HK84LAXrVeC8oZA8tpXaWh56uTvKkxHmw=;
+	s=korg; t=1792773949;
+	bh=QbKX+0yuImIs+pGi1XvE8VZhobSujsq+FCT1C1wBDk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWhcCRfdUKLSthn5I7fWkqjGTCZJFDbennnSgurdUpkXi76tDAuqxLrGpyBKyDxtv
-	 FF/2+likxvq0vbhH3sIdVY2WuekWOL54wdPcB2pRLSTf4+bR44hy1dGB10mLfLjQtB
-	 NgVnfjHSsyHNYeC2WfLxG6IInyURuCzfgIJz+9c8=
+	b=BbH5Et6eRgYDmi+YIUs4dFdO0wL/JCCp9RgQvhxFyQBO3ZCX6xGUxU/2drTZBGkjB
+	 T/D302zLVHgUa35ZMZk/PL1S3SKifFZCpm2z4wsMMjjANUePFikwyewMaQBDugX/Fr
+	 j74926i+oNuoD4NJCgcTjLod5cSFF6mBej6iu7Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Alexander Gruhlke <gruhlke@mailbox.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 070/193] PCI: Dont treat ~0 as ready in pci_dev_wait() with RRS SV
-Date: Fri, 23 Oct 2026 18:35:47 +0200
-Message-ID: <20261023163715.859884116@linuxfoundation.org>
+	Igor Paunovic <royalnet026@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jiaxing Hu <gahing@gahingwoo.com>,
+	Sidong Yang <sidong.yang@furiosa.ai>
+Subject: [PATCH 6.18 071/193] accel/rocket: search every core slot when a core is removed
+Date: Fri, 23 Oct 2026 18:35:48 +0200
+Message-ID: <20261023163715.883397432@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,68 +69,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gruhlke <gruhlke@mailbox.org>
+From: Igor Paunovic <royalnet026@gmail.com>
 
-[ Upstream commit e8df1d194c39b7a5159d570798941851f70a8668 ]
+commit 6eff1d69dae808a1518aee5a58d0853a8db3f1be upstream.
 
-With RRS Software Visibility, pci_dev_wait() considers a device ready as
-soon as reading the Vendor ID doesn't return the RRS value.  Devices aren't
-required to respond with RRS while they aren't ready, so the read may
-return ~0 and pci_dev_wait() stops waiting too early.  This was seen with
-Intel [8086:0a54] and Samsung [144d:a80c] NVMe SSDs.
+rocket_remove() decrements rdev->num_cores for each core it removes,
+while find_core_for_dev() searches slots 0 to num_cores - 1. Unbinding
+the cores in the order they were bound therefore loses the last one: by
+the time it is removed the search range has already shrunk past its
+slot, so find_core_for_dev() returns -1 and rocket_remove() gives up
+without doing anything.
 
-Also wait while the Vendor ID reads ~0.  A VF's Vendor ID always reads ~0,
-so check its Command register instead, as is done without RRS SV.
+num_cores never reaches zero, rocket_device_fini() never runs, and the
+file-scoped rdev keeps pointing at a device that is going away. Binding
+the cores again starts from that stale count, because rocket_probe()
+takes rdev->num_cores as the slot to fill. On an RK3588, which describes
+three cores, the second round lands on slots 1, 2 and 3 while rdev->cores
+was allocated with room for three:
 
-Fixes: d591f6804e7e ("PCI: Wait for device readiness with Configuration RRS")
-Link: https://lore.kernel.org/r/20250611101442.387378-1-hui.wang@canonical.com
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Alexander Gruhlke <gruhlke@mailbox.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20261011190145.23621-3-gruhlke@mailbox.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  rocket fdab0000.npu: Rockchip NPU core 1 version: 1179210309
+  rocket fdac0000.npu: Rockchip NPU core 2 version: 1179210309
+  rocket fdad0000.npu: Rockchip NPU core 3 version: 1179210309
+
+The write to rdev->cores[3] is past the end of the array.
+
+Nothing in tree reads the core array often enough to notice, so the
+overrun is silent today. It turned up while testing a devfreq series on
+top of this, where a worker walks every core a few times a second, and
+UBSAN caught the first bool it read out of the overrun entry:
+
+  UBSAN: invalid-load in drivers/accel/rocket/rocket_devfreq.c:47:10
+  load of value 5 is not a valid value for type '_Bool'
+  Workqueue: devfreq_wq devfreq_monitor
+
+Record how many slots were allocated and search all of them. Every core
+is then found on removal, num_cores reaches zero, the device is torn down
+and a later bind starts from a clean rdev.
+
+This does not make unbinding a single core out of several work. probe
+still takes num_cores as the slot to fill, so rebinding one core while
+its siblings stay bound would write over a slot that is already in use,
+and rocket_open() still reaches for cores[0] whether or not anything is
+there. Both of those want more thought than a fix should carry.
+
+Found by unbinding and rebinding all three cores on an Orange Pi 5 Plus.
+With this applied, 25 unbind/rebind rounds and 5 module unload/reload
+rounds run clean there: the cores land in slots 0, 1 and 2 every time,
+whichever order they are bound in, and the shared supply goes back to a
+single user after each round.
+
+Fixes: ed98261b4168 ("accel/rocket: Add a new driver for Rockchip's NPU")
+Cc: stable@vger.kernel.org
+Signed-off-by: Igor Paunovic <royalnet026@gmail.com>
+Assisted-by: LLM sparse checkpatch
+Tested-by: Jiaxing Hu <gahing@gahingwoo.com> # RK3576, two cores
+Tested-by: Sidong Yang <sidong.yang@furiosa.ai> # RK3588, 3 cores
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260904125936.26234-1-royalnet026@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/accel/rocket/rocket_device.c |    2 ++
+ drivers/accel/rocket/rocket_device.h |    1 +
+ drivers/accel/rocket/rocket_drv.c    |    2 +-
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 264213aa7630b..78d4411e3255b 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1227,9 +1227,11 @@ static int pci_dev_wait(struct pci_dev *dev, char *reset_type, int timeout)
- 	 * initialize.
- 	 *
- 	 * If the device is below a Root Port with Configuration RRS
--	 * Software Visibility enabled, reading the Vendor ID returns a
-+	 * Software Visibility enabled, reading the Vendor ID may return a
- 	 * special data value if the device responded with RRS.  Read the
--	 * Vendor ID until we get non-RRS status.
-+	 * Vendor ID until we get non-RRS status and something other than
-+	 * ~0.  The Vendor ID of VFs reads ~0, so check their Command
-+	 * register instead.
- 	 *
- 	 * If there's no Root Port or Configuration RRS Software Visibility
- 	 * is not enabled, the device may still respond with RRS, but
-@@ -1249,8 +1251,13 @@ static int pci_dev_wait(struct pci_dev *dev, char *reset_type, int timeout)
+--- a/drivers/accel/rocket/rocket_device.c
++++ b/drivers/accel/rocket/rocket_device.c
+@@ -31,6 +31,8 @@ struct rocket_device *rocket_device_init
+ 		if (of_device_is_available(core_node))
+ 			num_cores++;
  
- 		if (root && root->config_rrs_sv) {
- 			pci_read_config_dword(dev, PCI_VENDOR_ID, &id);
--			if (!pci_bus_rrs_vendor_id(id))
--				break;
-+			if (!pci_bus_rrs_vendor_id(id)) {
-+				if (PCI_POSSIBLE_ERROR(id) && dev->is_virtfn)
-+					pci_read_config_dword(dev, PCI_COMMAND,
-+							      &id);
-+				if (!PCI_POSSIBLE_ERROR(id))
-+					break;
-+			}
- 		} else {
- 			pci_read_config_dword(dev, PCI_COMMAND, &id);
- 			if (!PCI_POSSIBLE_ERROR(id))
--- 
-2.53.0
-
++	rdev->max_cores = num_cores;
++
+ 	rdev->cores = devm_kcalloc(dev, num_cores, sizeof(*rdev->cores), GFP_KERNEL);
+ 	if (!rdev->cores)
+ 		return ERR_PTR(-ENOMEM);
+--- a/drivers/accel/rocket/rocket_device.h
++++ b/drivers/accel/rocket/rocket_device.h
+@@ -19,6 +19,7 @@ struct rocket_device {
+ 
+ 	struct rocket_core *cores;
+ 	unsigned int num_cores;
++	unsigned int max_cores;
+ };
+ 
+ struct rocket_device *rocket_device_init(struct platform_device *pdev,
+--- a/drivers/accel/rocket/rocket_drv.c
++++ b/drivers/accel/rocket/rocket_drv.c
+@@ -225,7 +225,7 @@ static int find_core_for_dev(struct devi
+ {
+ 	struct rocket_device *rdev = dev_get_drvdata(dev);
+ 
+-	for (unsigned int core = 0; core < rdev->num_cores; core++) {
++	for (unsigned int core = 0; core < rdev->max_cores; core++) {
+ 		if (dev == rdev->cores[core].dev)
+ 			return core;
+ 	}
 
 
