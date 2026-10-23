@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774056;
-	b=S2+S/7/y5d2Vink6zlq7INLXYo58bkbZMUYIg7qtOvjQV7ySpUU1AoKzhYuG/odFAqWZ
-	 khekgXFx1EHb0Hgq1sdeLAMLW6fp4zRC3P48PSZshMTTbNerss/xUZkY59pQQ0eMwpuLz
-	 czE35/3je+H8oGBuQUyR4yNpZYIkp4UtqZucYJIsCypWxrnl4SgKgBCZoLuU+dbWwCc1U
-	 ngbtcgGk86tdsxn3SyuPebZnCyT+uArLHG91M8DS5NxmY8vTo4quKnYHQ/4DH+Zw9mRm8
-	 9aj+P3fZR1Vhj22r9Rvgaz8g4dFwsipPVpML+68oslYzmc29bWDPNH7lu2HN8kJ5PYQ==
+	t=1792774059;
+	b=kuhlwpLhL6OxkmG5R19B1h3ZXYB3dPhdV2bp/K/bCkVtWF9LOmstteCj8kudHsTY5OGx
+	 roMvA8KNsLhsbEIbSUuxyD6AO1m9czc0MmvLnT/6bPjaEeAWb9R+hl5hNHz+eeRa5M9Gd
+	 JF7e6IHq7A8mQnAPl1wOL09aVAoFzp9p7xE3CfAbxdp2W0HeLVgtOcIs0Idywa2/aL5lt
+	 DcC9PFcOxxxm3AnxwDw1F7yHiHhtLQ7QDdXbMie373dSe3Gh8TeZzsREE6CuY7U4ZVgHW
+	 RMR78G8zhy+B8UVLgxRn1BV15ts6uW4INi98om/DUhaQfasjgvxUMuZmM02bjHg5Z6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774056;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=nh57ddiEG4OFCMp5QpnETkgBhxInxzIIFpSf6Wvd2Hk=;
-	b=hfa2Uxny5fwj3XeAFDsITrne6zPXLvkQ5ms9/XpYFLU87bd6o9S6tAq0/pW1ymQYsZOM
-	 LGr9y2W6tV56l0QVw2g+hp1HscsCWBZ6t64OrDwnUGwRNs7MhPbOF2JmLBTjQTJmG+hoz
-	 YKwtOjeb012/XhUUhCkzUkuhlkjvKxb9CkdhUVDgpqKpya9X3FxKkcCJFJ4BHW4EpzLBi
-	 p4/ziI0uW/LF3SZ5hwm3i5EkBYP40L6i2hxmZucmz2ulNbSSQHUm56s+wKBs0GEyQjolv
-	 JrgPn1WwOKROmJeWNXJyezfdkIO16zif75hHpN806EEoP5zxbvjtjJsxsQ2D8OnXBwg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=V8QZ2cy1ZsK7spOvKm+QnxrmyzoHXrSH3yTZ+v9hNsA=;
+	b=2/B3UlOyV1XgTONYXzqCwDTw48S0B2D/rlTXY1aCLK1Kx37heVvUaHA6Sbc8Dx95Oxm4
+	 rEXugrfIEil0DcvbWq6vxD5BLVbjJcWpt7HfdfLGI8CXSdhrO8EibDcFDGcMAwuEOhnZB
+	 f4QuBO6Yx5yYgbmDBi8dJN0zBxZYGLkj5YZ/7Jfcs8RAp0ThZaFiUzMUTbsW/DYsKfld/
+	 4/YuKJiA/NwYAjM8tjzB1/QTOR1aoLEkxXWL5PUKrjD8gD+DizUXZST+y/OdwqVtGGh5o
+	 GMYF1Rklh/+XyxrPq77RHpznBznCx/I4GQ4/cgrsCibrndjwk+jsR48Y1r+eUvVtOmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gr5AIuXE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ3E9Hn5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FED1606A31B;
-	Fri, 23 Oct 2026 16:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA0E606A31A;
+	Fri, 23 Oct 2026 16:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gr5AIuXE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662371F01825;
-	Fri, 23 Oct 2026 16:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ3E9Hn5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507FD1F01825;
+	Fri, 23 Oct 2026 16:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774055;
-	bh=nh57ddiEG4OFCMp5QpnETkgBhxInxzIIFpSf6Wvd2Hk=;
+	s=korg; t=1792774058;
+	bh=V8QZ2cy1ZsK7spOvKm+QnxrmyzoHXrSH3yTZ+v9hNsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gr5AIuXE+DXHV7NDlNsKt21u4UbsMR9xpYSsh/lSs8goJJqrCmFX9DCMqZ4JLfoA6
-	 ElMftHjCFH4WYDjqVUUmi1uxjgLqBfpwD3ZJUDpZuzBN7pQ3+iGKrlZpBT5DPXaCJ6
-	 jK/bvBB4viyFvbRhSDn3YgDqmGZV7cu+CFZa8IrY=
+	b=zJ3E9Hn5YZ25WCvTbesmyP5jDVAeoqITlS5Q4VQd/8mCbjWwbV8cYgm1xemnnuc6B
+	 W4MsZ0P3J3fezkTH3DtozGptYoNAEhbzmOpg+CeDmrfWHszP88HrZKt0akaB/pmeMl
+	 CXi0st/CNU3oazO6qlIYcM/Tu/ilUo+a91fUKolw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>
-Subject: [PATCH 6.18 107/193] drm/exec: dont immediately add prelocked obj to array of locked objs
-Date: Fri, 23 Oct 2026 18:36:24 +0200
-Message-ID: <20261023163716.738858748@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.18 108/193] drm/i915/cx0_phy: Fix ARL-S host bridge detection
+Date: Fri, 23 Oct 2026 18:36:25 +0200
+Message-ID: <20261023163716.763234045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -61,209 +63,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <ckoenig.leichtzumerken@gmail.com>
+From: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
 
-commit 26401a4999f1596a515b2e704e7066ac09306488 upstream.
+commit 6a8bf59de3ef47ff51face6ea826395a1098baa0 upstream.
 
-When a contention is detected the drm_exec object grabs a reference to
-the contended object, unlocks all other objects and pre-locks the
-contended one before anything else.
+Fix is_arrowlake_s_by_host_bridge() which always returned false.
+The while loop always exits with pdev as NULL, so the return
+condition was always false, causing the wrong tx_misc value to be used.
 
-The problem is that it is possible that this pre-locked object was about
-to be destroyed and drm_exec is now holding the last reference to it.
+Check the host bridge ID inside the loop body.  Once found early exit
+from the loop release the pci reference "pdev" and return true.
 
-So we never actually see this pre-locked object again to be explicitly
-locked and so also never reserve a slot for a dma_fence object on it.
+v2:
+ - Update commit message (Chaitanya)
 
-Should the driver now use drm_exec_for_each_locked_object() to add a new
-fence to all locked objects we eventually see a warning or even a
-BUG_ON() to prevent random memory corruption.
-
-Fix this by keeping the prelocked object out of the array of locked objs
-until it was explicitly mentioned by the driver again.
-
-If the prelocked object is never mentioned again by the driver
-just unlock and drop the reference at the end of the locking loop.
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reported-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Fixes: 09593216bff1 ("drm: execution context for GEM buffers v7")
-CC: stable@vger.kernel.org # v6.6+
-Link: https://lore.kernel.org/r/20261007124657.9664-1-christian.koenig@amd.com
+Bspec:74165,74491
+Suggested-by: Jani Nikula <jani.nikula@intel.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 3630a47b700e ("drm/i915/cx0_phy: Update HDMI TMDS C20 algorithm value")
+Signed-off-by: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
+Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Link: https://patch.msgid.link/20260921090226.946472-1-dnyaneshwar.bhadane@intel.com
+(cherry picked from commit 0507cc5a476af0b6d037b19248bdd20dbe27487d)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_exec.c |   75 ++++++++++++++++++++++++++-------------------
- include/drm/drm_exec.h     |   15 +++++----
- 2 files changed, 53 insertions(+), 37 deletions(-)
+ drivers/gpu/drm/i915/display/intel_cx0_phy.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/drm_exec.c
-+++ b/drivers/gpu/drm/drm_exec.c
-@@ -51,6 +51,16 @@
- /* Dummy value used to initially enter the retry loop */
- #define DRM_EXEC_DUMMY ((void *)~0)
- 
-+/* Unlock and put the prelocked obj */
-+static void drm_exec_drop_prelocked(struct drm_exec *exec)
-+{
-+	if (exec->prelocked) {
-+		dma_resv_unlock(exec->prelocked->resv);
-+		drm_gem_object_put(exec->prelocked);
-+		exec->prelocked = NULL;
-+	}
-+}
-+
- /* Unlock all objects and drop references */
- static void drm_exec_unlock_all(struct drm_exec *exec)
+--- a/drivers/gpu/drm/i915/display/intel_cx0_phy.c
++++ b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
+@@ -2202,12 +2202,14 @@ static void intel_c10pll_dump_hw_state(s
+ static bool is_arrowlake_s_by_host_bridge(void)
  {
-@@ -61,8 +71,7 @@ static void drm_exec_unlock_all(struct d
- 		drm_gem_object_put(obj);
- 	}
- 
--	drm_gem_object_put(exec->prelocked);
--	exec->prelocked = NULL;
-+	drm_exec_drop_prelocked(exec);
- }
- 
- /**
-@@ -121,6 +130,14 @@ EXPORT_SYMBOL(drm_exec_fini);
- bool drm_exec_cleanup(struct drm_exec *exec)
- {
- 	if (likely(!exec->contended)) {
-+
-+		/*
-+		 * The contended and prelocked object might never be passed to
-+		 * drm_exec_lock_obj() again. This can happen when the object
-+		 * is about to be cleaned up and we now hold the last reference
-+		 * to it. Make sure that we don't unnecessarily keep it around.
-+		 */
-+		drm_exec_drop_prelocked(exec);
- 		ww_acquire_done(&exec->ticket);
- 		return false;
- 	}
-@@ -178,16 +195,16 @@ static int drm_exec_lock_contended(struc
- 		dma_resv_lock_slow(obj->resv, &exec->ticket);
- 	}
- 
--	ret = drm_exec_obj_locked(exec, obj);
--	if (unlikely(ret))
--		goto error_unlock;
-+	/*
-+	 * It is perfectly possible that we see another contention before the
-+	 * first one is fully handled.
-+	 */
-+	drm_exec_drop_prelocked(exec);
- 
-+	/* We move the reference from contended to prelocked here */
- 	exec->prelocked = obj;
- 	return 0;
- 
--error_unlock:
--	dma_resv_unlock(obj->resv);
--
- error_dropref:
- 	drm_gem_object_put(obj);
- 	return ret;
-@@ -215,35 +232,31 @@ int drm_exec_lock_obj(struct drm_exec *e
- 	if (exec->prelocked == obj) {
- 		drm_gem_object_put(exec->prelocked);
- 		exec->prelocked = NULL;
--		return 0;
--	}
-+	} else {
-+		if (exec->flags & DRM_EXEC_INTERRUPTIBLE_WAIT)
-+			ret = dma_resv_lock_interruptible(obj->resv,
-+							  &exec->ticket);
-+		else
-+			ret = dma_resv_lock(obj->resv, &exec->ticket);
-+
-+		if (unlikely(ret == -EDEADLK)) {
-+			drm_gem_object_get(obj);
-+			exec->contended = obj;
-+			return -EDEADLK;
+ 	struct pci_dev *pdev = NULL;
+-	u16 host_bridge_pci_dev_id;
++	while ((pdev = pci_get_class(PCI_CLASS_BRIDGE_HOST << 8, pdev))) {
++		if (IS_ARROWLAKE_S_BY_HOST_BRIDGE_ID(pdev->device)) {
++			pci_dev_put(pdev);
++			return true;
 +		}
-+
-+		if (unlikely(ret == -EALREADY) &&
-+		    exec->flags & DRM_EXEC_IGNORE_DUPLICATES)
-+			return 0;
++	}
  
--	if (exec->flags & DRM_EXEC_INTERRUPTIBLE_WAIT)
--		ret = dma_resv_lock_interruptible(obj->resv, &exec->ticket);
--	else
--		ret = dma_resv_lock(obj->resv, &exec->ticket);
+-	while ((pdev = pci_get_class(PCI_CLASS_BRIDGE_HOST << 8, pdev)))
+-		host_bridge_pci_dev_id = pdev->device;
 -
--	if (unlikely(ret == -EDEADLK)) {
--		drm_gem_object_get(obj);
--		exec->contended = obj;
--		return -EDEADLK;
-+		if (unlikely(ret))
-+			return ret;
- 	}
- 
--	if (unlikely(ret == -EALREADY) &&
--	    exec->flags & DRM_EXEC_IGNORE_DUPLICATES)
--		return 0;
--
--	if (unlikely(ret))
--		return ret;
--
- 	ret = drm_exec_obj_locked(exec, obj);
- 	if (ret)
--		goto error_unlock;
--
--	return 0;
-+		dma_resv_unlock(obj->resv);
- 
--error_unlock:
--	dma_resv_unlock(obj->resv);
- 	return ret;
+-	return pdev && IS_ARROWLAKE_S_BY_HOST_BRIDGE_ID(host_bridge_pci_dev_id);
++	return false;
  }
- EXPORT_SYMBOL(drm_exec_lock_obj);
---- a/include/drm/drm_exec.h
-+++ b/include/drm/drm_exec.h
-@@ -67,13 +67,15 @@ drm_exec_obj(struct drm_exec *exec, unsi
  
- /* Helper for drm_exec_for_each_locked_object(). Internal use only. */
- #define __drm_exec_for_each_locked_object(exec, obj, __index)		\
--	for (unsigned long __index = 0; ((obj) = drm_exec_obj(exec, __index)); ++__index)
-+	for (unsigned long __index = 0; ((obj) = drm_exec_obj(exec, __index)); \
-+	     ++__index)
- /**
-  * drm_exec_for_each_locked_object - iterate over all the locked objects
-  * @exec: drm_exec object
-  * @obj: the current GEM object
-  *
-- * Iterate over all the locked GEM objects inside the drm_exec object.
-+ * Iterate over all the explicitly locked GEM objects inside the drm_exec
-+ * container, except for the contended and implicit prelocked one.
-  */
- #define drm_exec_for_each_locked_object(exec, obj)			\
- 	__drm_exec_for_each_locked_object(exec, obj, __UNIQUE_ID(drm_exec))
-@@ -88,12 +90,13 @@ drm_exec_obj(struct drm_exec *exec, unsi
-  * @exec: drm_exec object
-  * @obj: the current GEM object
-  *
-- * Iterate over all the locked GEM objects inside the drm_exec object in
-- * reverse locking order. Note that the internal index may wrap around,
-- * but that will be caught by drm_exec_obj(), returning a NULL object.
-+ * Iterate over all the explicitly locked GEM objects inside the drm_exec
-+ * container in reverse locking order. Note that the internal index may wrap
-+ * around, but that will be caught by drm_exec_obj(), returning a NULL object.
-  */
- #define drm_exec_for_each_locked_object_reverse(exec, obj)		\
--	__drm_exec_for_each_locked_object_reverse(exec, obj, __UNIQUE_ID(drm_exec))
-+	__drm_exec_for_each_locked_object_reverse(exec, obj,		\
-+						  __UNIQUE_ID(drm_exec))
- 
- /**
-  * drm_exec_until_all_locked - loop until all GEM objects are locked
+ static u16 intel_c20_hdmi_tmds_tx_cgf_1(struct intel_crtc_state *crtc_state)
 
 
