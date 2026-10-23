@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774596;
-	b=mvi7GZZpEKuPJKJ+HjVslU3LVX4SDHAXGsRRy49lRrBVdZdhHe+wx4+xHnLbHbIuOVgN
-	 zPdFXfVNL8iZBb/wui+uXtkA+bKBXHS23QrUbEluh5c9qh7hv8bhXi76DssFQ/SatxwNp
-	 EEVQbk/S2Q9OOQPcchBOj5/R5obPwzKlWl5V4VTgu6ACyeijaFINgQDOqhpit5E4z1yxi
-	 urN/F/SsLkG9/TuFEgu7dusFyKzyUcB4lhmDlhQW1bNv/LPPX0AZj+pRT5ZFbPbGmX33P
-	 SeasPNn+WxAugMRO+Q9S8jpoqic7oAZ6sp1DfJUw+owruQTdWhzGclP53yG9yyE4u6g==
+	t=1792774602;
+	b=tHqQB0CH2JwZ0G/t/GW+jF3edbZAEO3nBtnVvUjBrUKK0iKpSoQxJNlDOyPqLZRF34yp
+	 MI58Vre1KnWlF8mo36MP1uqBildNud2qjn2JUVy52PM/ur+1WUlhwB39YFOTS69bXEw0N
+	 6h3bo5kxbXdeZY2hBkUvxb5npZgDKlNOmRsA6XQg25N+08jVARfOC1l8NgxiHNYe8y0iP
+	 BkXlyTy/rFGr87lPcqdUK+UFOGTR+l+ztHmA0ive4sR0S2B13MpWkzIJOoGvfV5bGNedA
+	 s12PkVdIGJCOnMNIip+folVHCiWUECaK+UCBpZX02Ism/zIdEE8JwXbuPbecOEiPDsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774596;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yZrfFADB5Q10Zx1aPp6A6FJCmRxNE+l59+Ptb67yiYE=;
-	b=XtHv7IcsjeLLgcuWjLfEMArvT3r+116bCjfRBqs5Oh36Aw0heNZ53DglmE0U4eTzFRIm
-	 53ORPeZ1rwmfJJHMJUav4WhScoWSzUzQVBhCdZOOFP63qvzUDIBUDYpCQ7pQmJ/rlxtV8
-	 TLVpyDewzhVW74c0JPFA/v1oNShg4SXQ8MiNfvOdA+boC3s+AOW91/DM8mHxnguVlBCFM
-	 59xOn8hsQF0az55fCCu9ZZzUhu2JGCMICSOUlz/xG5TQadygkqhWsk0mG8FNTIVotcW1q
-	 NzMuhAqWfvI6Cu0h2/9/uLgzQl6uQosi02RNH3FztUmVul5ghhzCDTbqE+Ss/n9v4IQ==
+	bh=Fz1IYXiS/iyu4RGpyXADii1kr8Hebta4Sw2l4EJGapI=;
+	b=ZR/R7t//55ycujqr6ITFgmYTUNvC3Qh9zlDuyKiF9FMExeC5AVqgqdGlKwlRjnyuTLuL
+	 RF0cyW4kfW52IMD5ScgAOnGDnBa23UcYmxjfFWyUYJQIwvF898bZ4P1TZ11t8LhZemvqL
+	 xVi1d7cNaP4iTzW63xUdoN6JWsgcwSac2YuR/dhygf26sZvLWnASW8fwQLPjO0cT0V875
+	 zUX1MF5yZ5CnvYtIQQP9Di1TxfccpZVMMF+iM496BGsnou+qLmxHSc7qGg+qZcvzztWGI
+	 jax3GUWe7UgU6OukAmPg1OACQwLsR06Evhuu14EubSK4EkdkdRRm4+pRJKPCSbrIJww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CD18psFr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDPFsZBw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B98606A31D;
-	Fri, 23 Oct 2026 16:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB71606A31E;
+	Fri, 23 Oct 2026 16:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CD18psFr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958601F01825;
-	Fri, 23 Oct 2026 16:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sDPFsZBw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEA41F01825;
+	Fri, 23 Oct 2026 16:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774596;
-	bh=yZrfFADB5Q10Zx1aPp6A6FJCmRxNE+l59+Ptb67yiYE=;
+	s=korg; t=1792774602;
+	bh=Fz1IYXiS/iyu4RGpyXADii1kr8Hebta4Sw2l4EJGapI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CD18psFrhtaiMctxfvG4DVSoCGdtn4GJc+MZwz9++bxrE2RxpPmM/dPe20dXN8zDw
-	 5PgTLQgkdqZzLmUAEJVSh0q80+eHcOG7IwS/UZBYcJ2np8110UzePqg+SunUtOQpyv
-	 zwEQScNNNmNZdL9lPyRtjqHySDx9PcFM07GLJ4Sw=
+	b=sDPFsZBwRS28qk5u2Rt/RJIBvOTntA7SGiiGkxTSPNqChWWc1FyZpCmVU0mtYCPdk
+	 ILcBqKZIssQR1I2EowWJSTE1WwODJsxa7t6H4BepHLJHPLWjj0Fq/bEZywCGj+yxi3
+	 LwIMFVr9v8W/BxtYLwUSnYv4V87aU1Qfmsg+lYzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Lukas Zobernig <lukas.zobernig@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 087/242] gpio: mxc: fix both_edges bit operations
-Date: Fri, 23 Oct 2026 18:38:49 +0200
-Message-ID: <20261023163715.836258006@linuxfoundation.org>
+Subject: [PATCH 7.2 097/242] x86/insn-eval: Fix shadowed segment index in get_seg_reg_override_idx()
+Date: Fri, 23 Oct 2026 18:38:59 +0200
+Message-ID: <20261023163716.077239814@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,89 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Lukas Zobernig <lukas.zobernig@gmail.com>
 
-[ Upstream commit b7719c575dec69146f6d537fd616b27083c0cf45 ]
+[ Upstream commit 32c52ec87d6245ee2d12ed5dd509e40062939b50 ]
 
-gpio_set_irq_type() can be called concurrently for different pins on
-the same port.  The IRQ core serializes per irq descriptor, but
-different pins have different descriptors, so on SMP systems two
-concurrent gpio_set_irq_type() calls for pins on the same port run
-without mutual exclusion.
+Commit 45e1dccc0653 ("x86/insn: Simplify for_each_insn_prefix()") made
+for_each_insn_prefix() declare its own loop counter named idx.
+get_seg_reg_override_idx() keeps its result in a local of the same name,
+so the assignments in the loop body now write the loop counter:
 
-The read-modify-write of port->both_edges is performed outside the
-port-wide scoped_guard(gpio_generic_lock_irqsave) section, so
-concurrent updates for different pins can overwrite each other,
-causing missed interrupts or stuck IRQ lines on dual-edge triggered
-pins.
+ - the function always returns INAT_SEG_REG_DEFAULT, so FS and GS
+   overrides are ignored;
 
-The original uniprocessor MXC SoCs were not affected; the race
-became reachable on multi-core i.MX7 and i.MX8 SoCs that reuse this
-driver.
+ - a CS override sets the counter to INAT_SEG_REG_CS (2), the increment
+   makes it 3, and prefixes.bytes[3] holds the last prefix, 0x2e again,
+   so the loop never terminates.
 
-Convert both_edges from u32 to unsigned long and use set_bit(),
-clear_bit(), and test_bit() to make the modifications atomic.
+The UMIP emulation reaches this from the #GP handler for user space: an
+SGDT, SIDT or SMSW with a memory operand and a CS prefix leaves the task
+spinning in the kernel, never returning to user space, with a SIGKILL
+that is never delivered.  Any user can thus tie up CPUs until reboot.
+With an FS or GS prefix, the emulated result is written to the wrong
+address.
 
-Fixes: 910862ec092c ("mxc: emulate GPIO interrupt on both-edges")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-2-c4d769587d3e@nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Rename the internal macro iterator variable.
+
+[ Lukas' original patch renamed the use site, I changed it to rename the
+  iterator in the macro instead, but left Lukas' commit message and
+  authorship   - Linus ]
+
+Fixes: 45e1dccc0653 ("x86/insn: Simplify for_each_insn_prefix()")
+Signed-off-by: Lukas Zobernig <lukas.zobernig@gmail.com>
+Acked-by: Peter Zijlstra <peterz@infradead.org>
+Acked-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mxc.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/insn.h       | 2 +-
+ tools/arch/x86/include/asm/insn.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
-index e05f276a50e8d..7e17d7668980d 100644
---- a/drivers/gpio/gpio-mxc.c
-+++ b/drivers/gpio/gpio-mxc.c
-@@ -7,6 +7,7 @@
- // Authors: Daniel Mack, Juergen Beisert.
- // Copyright (C) 2004-2010 Freescale Semiconductor, Inc. All Rights Reserved.
+diff --git a/arch/x86/include/asm/insn.h b/arch/x86/include/asm/insn.h
+index 846d21c1a7f88..8fb92da1a2c46 100644
+--- a/arch/x86/include/asm/insn.h
++++ b/arch/x86/include/asm/insn.h
+@@ -321,7 +321,7 @@ static inline int insn_offset_immediate(struct insn *insn)
+  * are repeated, it cannot be used for looping over the prefixes.
+  */
+ #define for_each_insn_prefix(insn, prefix)	\
+-	for (int idx = 0; idx < ARRAY_SIZE(insn->prefixes.bytes) && (prefix = insn->prefixes.bytes[idx]) != 0; idx++)
++	for (int __i = 0; __i < ARRAY_SIZE(insn->prefixes.bytes) && (prefix = insn->prefixes.bytes[__i]) != 0; __i++)
  
-+#include <linux/bitops.h>
- #include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/err.h>
-@@ -68,7 +69,7 @@ struct mxc_gpio_port {
- 	struct irq_domain *domain;
- 	struct gpio_generic_chip gen_gc;
- 	struct device *dev;
--	u32 both_edges;
-+	unsigned long both_edges;
- 	struct mxc_gpio_reg_saved gpio_saved_reg;
- 	bool power_off;
- 	u32 wakeup_pads;
-@@ -168,7 +169,7 @@ static int gpio_set_irq_type(struct irq_data *d, u32 type)
- 	int edge;
- 	void __iomem *reg = port->base;
+ #define POP_SS_OPCODE 0x1f
+ #define MOV_SREG_OPCODE 0x8e
+diff --git a/tools/arch/x86/include/asm/insn.h b/tools/arch/x86/include/asm/insn.h
+index 8f10f29433703..1d2903508bbeb 100644
+--- a/tools/arch/x86/include/asm/insn.h
++++ b/tools/arch/x86/include/asm/insn.h
+@@ -321,7 +321,7 @@ static inline int insn_offset_immediate(struct insn *insn)
+  * are repeated, it cannot be used for looping over the prefixes.
+  */
+ #define for_each_insn_prefix(insn, prefix)	\
+-	for (int idx = 0; idx < ARRAY_SIZE(insn->prefixes.bytes) && (prefix = insn->prefixes.bytes[idx]) != 0; idx++)
++	for (int __i = 0; __i < ARRAY_SIZE(insn->prefixes.bytes) && (prefix = insn->prefixes.bytes[__i]) != 0; __i++)
  
--	port->both_edges &= ~(1 << gpio_idx);
-+	clear_bit(gpio_idx, &port->both_edges);
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
- 		edge = GPIO_INT_RISE_EDGE;
-@@ -188,7 +189,7 @@ static int gpio_set_irq_type(struct irq_data *d, u32 type)
- 				edge = GPIO_INT_HIGH_LEV;
- 				pr_debug("mxc: set GPIO %d to high trigger\n", gpio_idx);
- 			}
--			port->both_edges |= 1 << gpio_idx;
-+			set_bit(gpio_idx, &port->both_edges);
- 		}
- 		break;
- 	case IRQ_TYPE_LEVEL_LOW:
-@@ -259,7 +260,7 @@ static void mxc_gpio_irq_handler(struct mxc_gpio_port *port, u32 irq_stat)
- 	while (irq_stat != 0) {
- 		int irqoffset = fls(irq_stat) - 1;
- 
--		if (port->both_edges & (1 << irqoffset))
-+		if (test_bit(irqoffset, &port->both_edges))
- 			mxc_flip_edge(port, irqoffset);
- 
- 		generic_handle_domain_irq(port->domain, irqoffset);
+ #define POP_SS_OPCODE 0x1f
+ #define MOV_SREG_OPCODE 0x8e
 -- 
 2.53.0
 
