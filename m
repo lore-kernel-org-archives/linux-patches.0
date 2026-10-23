@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773884;
-	b=N/ttzI6MXUbYvKR8pFvCNroCX/xG7TQ/uXqUX0V6+g50Svv4UfCU32lxsK2mCxzk1vIs
-	 lmMdTk5dJ9monqo9H3th4t5qX2cu/kxoatX/AhAiW4WUs83RHFxI2ImUbi+sqcHmyJT8c
-	 kOaZ+KPgUs7m0kLbOowCWS74a9ZqMTSLNK8FyAfjrl1MGLThgRHIFy6qqIioGNixHzS88
-	 5XAnnFaJLfFvZOmo6ywP57w/8LNLKRSpijetC6q4th+tGn43SKaFTbtdpsl3xAtGTAWSu
-	 ol6TjFLUxFTgqcy5QiSmUgZQqGT56nI1iz3STtPxu4VlByfLm/Ol/FS4yLnsGgNHNMw==
+	t=1792773887;
+	b=yyu3KWNsfGlYEkCZVWQJRmyoBjaAUxCItKIJvWSwtnsMmRpZHOZJKEcg1nihGPgzdV82
+	 as6wRI1AQNySPi1AXXvggjyuy5SeMJNxWFjq9k3AEsy4UW83e9/9vQ3DydbZi8KZZ01lH
+	 hNvsDeNBZ70ylpWyCdw9BvNTJHfcIHMuD3SmQbxLC2A6yVgwD//Hn8afySeggD25YNnML
+	 igESbh5tJvwIQgnJLYhDQxGaTQBVlOxlSLVj8/Kc3iW55kCqyHgDD1j6HcWNfUXzGsYvG
+	 /m9cB5YPbDpe1Mil6jnIjMGnulHty0REfqOSl/2rBsfJ0VuA1FKDWQINl4oqbLPqVVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773884;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773887;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8PWJgymDzzViirqo573X34eppIWA6sbEcO64Ew1ruXI=;
-	b=PZ80cGUa8qCemTBl4tZyfNuF3V4fyCcJUCLl2KhCGvodHFHmORYr0rK5gLxZVNA100lm
-	 coh34kI0cllG2wDQdVue2O+pf4VaH504DH3UDz7iaX+YIyG54Q/j4dU7Vh8MQQFAD/8fA
-	 vhCZMxgYBXdDyKo75G6GhQpOJ+Aj5pTIe7Ng9J309/HgfW5IyWHSVHGOfHKZnv1hjS/Vd
-	 1jWTjgH1ppq2U73CVTsjPgik/VIjWlcvdPQB+tbv8dj2aXBvQ8LoyZqCc/H1gaEBP48oS
-	 dndM2pErfLDg4G6RYYb89kDP3ElLMYF6hmo0N3LOgNa2qNy2cClrQOD92y/vcebAxjA==
+	bh=StjKLcccOl+3ULPLOe7OnEX9iL11DeVAXq1ubRm/Zog=;
+	b=uab6Xu8wS6CooPGy2c5cwo7FTq3TyMWIDacJhLaPQDcYT5HRTgXqq66g2rUwdu5Lr+3m
+	 nlzl0BgNZ0CUUAn88tweNGLM6FrdDy1vlm5p5Qh4qH1Lha/pDv6CaMlf26zCILjM9wQKl
+	 aV/sZ+RaLpw4UQtHwfGkv5Lq2uXrqH+DYudYmKA9eHr2XV8OFrUaQ0UAwfYBUWSQJPFQe
+	 bTuoOY8wfVmZ2a3zY0GQwxlK3xw7shChIlEM/07rO1aUL/8Drhl4NlNW6R5qATl5Ugkm4
+	 49lqL8SQMxmbUWE+Ad343LtWNRlzBOCEHAB85vOfiQu16glkAghDQk1LCVZ26Gc2xUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r9dlFMAw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7B7rUWi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4B1606A31D;
-	Fri, 23 Oct 2026 16:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE547606A31A;
+	Fri, 23 Oct 2026 16:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r9dlFMAw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC491F01825;
-	Fri, 23 Oct 2026 16:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7B7rUWi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0301F01825;
+	Fri, 23 Oct 2026 16:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773883;
-	bh=8PWJgymDzzViirqo573X34eppIWA6sbEcO64Ew1ruXI=;
+	s=korg; t=1792773886;
+	bh=StjKLcccOl+3ULPLOe7OnEX9iL11DeVAXq1ubRm/Zog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r9dlFMAwa8NGvRB19nrmnfoGumFedSBIgKkMWCTRgp4qQd0im3XGqAvvNukTHCCL4
-	 YIGKRzupu4hnjg/ZNY/yb5/LIaCGFo7EhQyaf1IU0dkDM3aImOJShqyEwkn2I1OdhL
-	 n+TizkLPfJP2+lN5I8wWiQ3MMC5MGMiPwWib1EL4=
+	b=g7B7rUWir4VH2v5TBBm9dANSUp04pxsuq1GTZS637J6zu41PfjdEpvW6ctmUIFDFB
+	 ucN8gxE3xXSUCpBxZSm5fY+rZ40zH29JmAETPuM2lfMuKPqajEH8denEalsRkJ3vKT
+	 WGq4Wk+oyDTt/Dzi7mf2ftnUIvm6vGBoCDORzbFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	"Ghimiray, Himal Prasad" <himal.prasad.ghimiray@intel.com>,
-	Bommu Krishnaiah <krishnaiah.bommu@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Carlos Jones Jr <carlosjr.jones@analog.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 047/193] drm/xe/oa: Zero OA buffer at allocation
-Date: Fri, 23 Oct 2026 18:35:24 +0200
-Message-ID: <20261023163715.322593443@linuxfoundation.org>
+Subject: [PATCH 6.18 048/193] spi: tegra114: assert CS GPIO for every transfer in a message
+Date: Fri, 23 Oct 2026 18:35:25 +0200
+Message-ID: <20261023163715.344240321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -71,56 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bommu Krishnaiah <krishnaiah.bommu@intel.com>
+From: Carlos Jones Jr <carlosjr.jones@analog.com>
 
-[ Upstream commit fd8662823caa114a63f07222d2aa448f6ac5e864 ]
+[ Upstream commit 8980bc573ae2d2b9d86d76aeb86c76e1597070bf ]
 
-ttm_bo_type_kernel BOs are not guaranteed to be zeroed on allocation and
-may contain data from previously freed pages. Since the OA buffer is
-mmap'able by userspace, this can expose stale kernel memory contents.
+The driver provides its own transfer_one_message() and therefore drives
+the chip-select GPIO itself rather than through the SPI core. The GPIO is
+asserted only in the is_first_of_msg path of
+tegra_spi_setup_transfer_one(), but tegra_spi_transfer_end() deasserts it
+whenever a transfer has cs_change set. For a multi-transfer message whose
+earlier transfers request cs_change -- for example a register read that
+sends the address in one transfer and clocks the data back in the next --
+the CS GPIO is released after the first transfer and never re-asserted,
+so the remaining transfers are clocked with chip-select inactive and the
+peripheral never drives the bus.
 
-Streams opened with DRM_XE_OA_PROPERTY_OA_DISABLED allocate the OA
-buffer without calling xe_oa_init_oa_buffer(). Zero the buffer at
-allocation to prevent information disclosure through mmap.
+This was observed with an ADIS16470 IMU (adis16475 driver), whose
+register read is a two-transfer, cs_change-framed exchange: a logic
+analyzer showed the data frame clocked with CS high, and the driver read
+0 while the device drove 0x4056 on the wire.
 
-The existing zeroing in xe_oa_init_oa_buffer() remains necessary for
-zero report-id/timestamp detection on enable/re-enable.
+Re-assert the CS GPIO for every transfer so that multi-transfer messages
+keep chip-select active across the whole message. gpiod_set_value() is
+idempotent and polarity-aware, so this is a no-op for the first transfer
+and for messages that keep CS asserted throughout.
 
-Fixes: 392bf22238ff ("drm/xe/oa/uapi: OA buffer mmap")
-Assisted-by: LLM
-Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Cc: Ghimiray, Himal Prasad <himal.prasad.ghimiray@intel.com>
-Signed-off-by: Bommu Krishnaiah <krishnaiah.bommu@intel.com>
-Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Link: https://patch.msgid.link/20261006020314.2711762-1-krishnaiah.bommu@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit 126c4c5388f9311a390b9b254a835b0cf0f55331)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 63c1440596ff ("spi: tegra114: add support for gpio based CS")
+Signed-off-by: Carlos Jones Jr <carlosjr.jones@analog.com>
+Link: https://patch.msgid.link/20261002085540.1625-1-carlosjr.jones@analog.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 7 +++++++
+ drivers/spi/spi-tegra114.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index a753ac7ecc860..b88d3d39aea66 100644
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -893,6 +893,13 @@ static int xe_oa_alloc_oa_buffer(struct xe_oa_stream *stream, size_t size)
- 	if (IS_ERR(bo))
- 		return PTR_ERR(bo);
+diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
+index a28597b6b80d6..b696c34d83de3 100644
+--- a/drivers/spi/spi-tegra114.c
++++ b/drivers/spi/spi-tegra114.c
+@@ -859,6 +859,13 @@ static u32 tegra_spi_setup_transfer_one(struct spi_device *spi,
+ 		command1 |= SPI_BIT_LENGTH(bits_per_word - 1);
+ 	}
  
 +	/*
-+	 * ttm_bo_type_kernel BOs are not zeroed on allocation, so the buffer can
-+	 * hold stale data from previously freed pages. Since the OA buffer is
-+	 * mmap'able by userspace, clear it here to avoid leaking kernel memory.
++	 * Re-assert the CS GPIO for every transfer: transfer_end() drops it
++	 * on cs_change, and the assert above only covers is_first_of_msg.
 +	 */
-+	xe_map_memset(stream->oa->xe, &bo->vmap, 0, 0, xe_bo_size(bo));
++	if (spi_get_csgpiod(spi, 0))
++		gpiod_set_value(spi_get_csgpiod(spi, 0), 1);
 +
- 	stream->oa_buffer.bo = bo;
- 	/* mmap implementation requires OA buffer to be in system memory */
- 	xe_assert(stream->oa->xe, bo->vmap.is_iomem == 0);
+ 	return command1;
+ }
+ 
 -- 
 2.53.0
 
