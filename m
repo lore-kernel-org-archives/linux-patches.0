@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773829;
-	b=RVtV4xOef0mzpZTah4WSAvZBqgL7yX7Gw/Z+mNjSb18QTLFuHBEyMmAysqMXHqUzV73+
-	 gu3lTJEwPGlLoTb283gAwpHyn0nJYGZGzfpkgNlkQcjdBhlmRXYZEzGs73pxsQN7XXhfZ
-	 NyIdEeHsQir3tkHLlWjKZUcMuZgX84lTWtcZqq4fsZoN2hdK0Ut0Cjm8I/QVunTu+tNEZ
-	 xBxiBcGWtVwqhw/NPBP+gY6H/VLjikuiRNB3vJTTTbZT6xWnGH8qD9vM4lMu3CJXUMXoF
-	 qhjYcOAVaJ8ZVVVUHlCQnvfJI4n63wvhZMg4C7HXHa/4fJMIVja21zr1a+1M252ANhg==
+	t=1792773832;
+	b=WUMEyRb2VDThGYJ07FEd6SUWHA/vV6zUc+SmyQPS+VC5dMOaqjqZWPlV+iNL9IHotn1V
+	 aKiGlz7A3sbWJ+TGzfl1JwvdpTnsHqD244983tCFkC3s4rLqUnT5kDdAziCNGYhnM8Qow
+	 Mo0+TURYadgDzqt/vfe6tGCsQZ7Q96viZCgc9+3dVLHe52cgqvKER1ENghpfNmsaUrWiX
+	 7KVqRaXJPHQNogXgTncaPyI6gLwdpvdeCfNsynfETTnrMmGJnHU93HOjjJSHbp+JbsdFe
+	 17hWYf5IbKkDwk/K4mMLoGgyqq6+T7xD5sbykdMDwyxJlJPoLuK+EscOxEvEpvKgcPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773829;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773832;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e9gk00pEnHIMEYJJq2MJF4fmLq0yKhm49q05PmppfCc=;
-	b=soh835iGOuIDVc1UDT6xLbM126DBzstFxDtB5LBueA/8EB0Z+509LP+fKd1Kzbjngew5
-	 HCyBrEoDtl0Nx5w+i3NlnMX928cIICJdLhEyKotAgfjm62P9F1NA9qh5q+AhFWBVDcuHm
-	 diHVFHNTR25LZlzcnkzb0jeM+geW9NtUqeBfMkaI9KAR3vdSXE2IQko5ahFNybEugPGJH
-	 8sU77BGrv+uV5Y37lQwlTBYl75cewvH9R6gJ0fSHYakn5YceVy5s9kOuoxMqLfDBbu4QP
-	 ytlGK50BN0pYNi6QDtHTnXWYxSx3pV4hArG2e/ejKImUYPfpQEdXA+YmIcRaKS6MNBg==
+	bh=HI9I6OC2N2onLdpTc0TRpgKjNvPWxdGYDIVbKW7iVEU=;
+	b=keK6NyfJkxTvNSO7MCd1sAB4BCVOD0RVNgGcdItHarLeio/u/OsK6ESSTF59lW6pIujL
+	 GGRfBZhBMprQjmwc5s8qLzielkyC1htB30MQt962Fjm4y2MW9/lsPbA1WzPTiVSA5PrHP
+	 vJ+/slC8zs3CvanvN5lh1XmvOtemz7Ov4qqNeBwHbwJi64P0OYiXwXNq3xO72lItQdePW
+	 8kr1eZgZfLp4ZD2A4xg71XBK1qkw0iWh4JsEuIJNg8xGHMOLYuzO64T9LWIelL9F80pHc
+	 t6UUbGgJcPKHMPsYku0+z42jhFbxoC5VvjO6+xXVOY/XrA87G51PYOyMCpFnasUVMgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxqupiB4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFTXrjGG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19D660A2608;
-	Fri, 23 Oct 2026 16:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B344360A2611;
+	Fri, 23 Oct 2026 16:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxqupiB4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB3A1F01825;
-	Fri, 23 Oct 2026 16:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFTXrjGG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8931F01829;
+	Fri, 23 Oct 2026 16:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773828;
-	bh=e9gk00pEnHIMEYJJq2MJF4fmLq0yKhm49q05PmppfCc=;
+	s=korg; t=1792773831;
+	bh=HI9I6OC2N2onLdpTc0TRpgKjNvPWxdGYDIVbKW7iVEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rxqupiB4Vu2RKTZPt9avMbfAdkQekUrEJbLGOLZGWnDHg0sioeVzWec1lOi9AOb3p
-	 nKYUMOGtTCaQ7thaQDltY+fVjkBMMhAmCATt4VADJo7tsTihM0XU5sX9wPeVqHmoqB
-	 XigXI+nq8z6l+6YV4vet4+wikbIhbY6vZpuWSKRo=
+	b=MFTXrjGG0zu+OoHuZs6WGsJvj154CoUhssChc8DTJzwF9YAHig7JH+auMDyK75MgZ
+	 zFcE7/nhxg9AIN9PsZ0FUHp8dYlt11he5sMeK6AJrwJp6Fsfr5FxFABLoC8bbJQal3
+	 F6wy69S86nWSw+yqvsfkgia37lri/7yubOiqgYFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sergey Tiraspolsky <stiraspo@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 012/193] power: supply: ds2780: Fix ds2780_get_capacity() returning raw value
-Date: Fri, 23 Oct 2026 18:34:49 +0200
-Message-ID: <20261023163714.493470030@linuxfoundation.org>
+Subject: [PATCH 6.18 030/193] ASoC: Intel: avs: Reset the stream unless it is already prepared
+Date: Fri, 23 Oct 2026 18:35:07 +0200
+Message-ID: <20261023163714.913144257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -68,36 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Sergey Tiraspolsky <stiraspo@gmail.com>
 
-[ Upstream commit a58cbc8b36ec0cd00d2ba3de7d003de818a27523 ]
+[ Upstream commit f6be9f558a83fe30a03bd3adae461c821a0cef8c ]
 
-ds2780_get_capacity() returns the raw register value instead of 0 on
-success.  The capacity is already stored in *capacity, so the function
-should return 0 to indicate success.
+Commit cfca1637bc2b ("ASoC: Intel: avs: Unprepare a stream when XRUN
+occurs") resets the HDA stream when ->prepare() is called in the XRUN
+state. User space does not always recover that way. PipeWire's ALSA
+backend recovers from an underrun with snd_pcm_drop(), snd_pcm_prepare()
+and a new start, so ->prepare() runs in the SETUP state,
+hdac_stream->prepared is still set and the reset is skipped. Every
+recovery attempt then fails the same way:
 
-Fixes: 275ac74629c4 ("w1: add Maxim/Dallas DS2780 Stand-Alone Fuel Gauge IC support")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Link: https://patch.msgid.link/20260901072954.1953121-1-luoxueqin@kylinos.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+  spa.alsa: hw:avsmax98927,1p: snd_pcm_avail after recover: Broken pipe
+
+On a Google Pixelbook (Kaby Lake, max98927 speakers) this happens after
+an occasional underrun during normal playback and silences the speakers
+for one to four minutes, until the PCM is closed. It can be provoked by
+stopping PipeWire with SIGSTOP for 0.5 s during playback: in one run
+that single underrun led to 1297 failed recoveries over two minutes,
+until the sink was suspended. A plain alsa-lib program that recovers
+with snd_pcm_drop() and snd_pcm_prepare() hits the same loop, while
+snd_pcm_prepare() straight from XRUN recovers at once.
+
+Skip the reset only when the stream is already PREPARED, the repeated
+->prepare() case the check exists for, and reset it otherwise. With
+this change both kinds of recovery succeed with a single restart.
+
+Fixes: cfca1637bc2b ("ASoC: Intel: avs: Unprepare a stream when XRUN occurs")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Sergey Tiraspolsky <stiraspo@gmail.com>
+Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261010103753.16969-1-stiraspo@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ds2780_battery.c | 2 +-
+ sound/soc/intel/avs/pcm.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/ds2780_battery.c b/drivers/power/supply/ds2780_battery.c
-index 5b57bbba79d44..ef2446386c2af 100644
---- a/drivers/power/supply/ds2780_battery.c
-+++ b/drivers/power/supply/ds2780_battery.c
-@@ -304,7 +304,7 @@ static int ds2780_get_capacity(struct ds2780_device_info *dev_info,
- 		return ret;
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index a2c05a4ced72b..8f09d539e2246 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -756,7 +756,7 @@ static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_so
+ 	data = snd_soc_dai_get_dma_data(dai, substream);
+ 	host_stream = data->host_stream;
  
- 	*capacity = raw;
--	return raw;
-+	return 0;
- }
- 
- static int ds2780_get_status(struct ds2780_device_info *dev_info, int *status)
+-	if (runtime->state == SNDRV_PCM_STATE_XRUN)
++	if (runtime->state != SNDRV_PCM_STATE_PREPARED)
+ 		hdac_stream(host_stream)->prepared = false;
+ 	if (hdac_stream(host_stream)->prepared)
+ 		return 0;
 -- 
 2.53.0
 
