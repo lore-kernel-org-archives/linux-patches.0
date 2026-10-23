@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774567;
-	b=iNA6o61CdThbFBYdcUon4meGjKrQSky7CQAcCpkiv3ZeHY8u3z1qF4YMGbIpB7AzoJ34
-	 //c8eIOLOoiqw1og+eLfB2gESBuw3HCMLdPPfREu29rz5JeNpj+qHlFvj6FOhLtUmjyG2
-	 Nd8peN+8BAdEgbcuO1Ou88kAX4Fzz9oge8JyhpuXVjwxVjXaAgtlBlNxaRcWpT9c5is4x
-	 n18sAv7pIeZMiv5q5/jBXWo+Dfrlq36kcL9Ha3ULEkSsgoNBbYi8VzPgQ9pu/+1Q0GO+J
-	 uiIJfDdLBshYxXQhECN56uClUsT7vVIIsFcDleaS1qLBGAojntqzHjyiv9F0qYNCIqA==
+	t=1792774570;
+	b=sx61EOR7h3abhGmnZIPJ8fZiien0wsBatmxQNjnXWVRpL0A0Rrqn2jrgri9q3VwWq7Eh
+	 eXh01eVaBn9xyQ6dOd3B1jWN7p9+Np1gACrrJvbC0ETiyFuytoXfWQqlE06/s3OxtoNTI
+	 AlHA8PZcmPwMYzkKrS2Wg7je8+w21MiX1mXwV7ozoW8Atnf0iCkALg5GzhJB77PM8ks8t
+	 1hgAj0XsPTf3LYOnyjlds/YhVn7Eh8OAHzPbvo54Fl/FK+4x+Tduangpg+orZcSMiqgWw
+	 VGi6bNDq/O/tWvLe6/wymNIafXiPKPTW9bYt2aidKHXqtXu9Z7MlyHTkADlJEOHCzZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+FVLbHrp2pgJo7rsU65PwOW0ZL4kf/XkY6xET8xB2Gk=;
-	b=o0szInkVrKG4R73X2Yf3RrsLzgk3kPAsmZNyozbVR8163kDajlPDN7KQMCIZxaC7SJiY
-	 DhseKHo3OilfU8C/C/04yyDMe5DPrGUMrUvX3wuhhWIXah4nN0/JS0FZ2GZF8wt/8Ud7w
-	 jMrckWC6nDHUTYS9WX2Jpjxb5cAjvBW+2InJwk60Ijw+M0WtLvLi9jcNnzYk1gPexJ4KW
-	 MdQW5dH5Ad2x0ccFlR+DOQeDM5rEWEIT/AFWZ9HyWbJFoiMMJqIwQPVE978bNpcWoiikJ
-	 OcHaNoJSzwt0MItaA+T0iluxalW4TC7KkUGYYQm70ms1qb5YmR8k8Fl6gzpjDJIQlxw==
+	bh=t0CnzxOTt0l9mdwFNXCzYBfClSf7+o8Paddgqqwai64=;
+	b=Kww00czrUqFGb96Xy1PTJV0j3ma8zL31qRpWhvoyuofLqnuy3vwT6fJ3n5ABVHMMljUb
+	 9Sy6rM3TDMlaCTiLLXQGaA75WYd0YgyLZqHkZC4c5kCGw09smCF3SSGJNDr8pSkLaf8cr
+	 QezC8pZY31PHQRbRWSxLsszUgLqIYbtclW1tyWuYmsKY/DGgGBlxWgCWY5JM3gObbWlkj
+	 nfb0FGXSorhlIMb7jbWr4RbQpRiuzzUM8ez7eeOwMD9skYXqurXoGdDuqAkk6/I3fCqD5
+	 7VqXvnh+z7EV1d4XqawBa69Te3PN3yKvDJSWUmQiEsdmN4X/7k67nNjj0akdTjs3X+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q5gCQbTh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bEsloqMX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8098E606A31A;
-	Fri, 23 Oct 2026 16:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9A2606A31A;
+	Fri, 23 Oct 2026 16:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q5gCQbTh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBD61F01825;
-	Fri, 23 Oct 2026 16:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bEsloqMX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DC91F01825;
+	Fri, 23 Oct 2026 16:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774567;
-	bh=+FVLbHrp2pgJo7rsU65PwOW0ZL4kf/XkY6xET8xB2Gk=;
+	s=korg; t=1792774570;
+	bh=t0CnzxOTt0l9mdwFNXCzYBfClSf7+o8Paddgqqwai64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q5gCQbThDJzsFndI1Q2uvyKC+x81+x8+iRR3rH96VBE+doorPHAGy/A7BNgF2IkQO
-	 /B60K9DKjuCTd0iJuVyHLhAX7OCYbElKbU2TxYrvSUcStDN2mJ2qVSegeiFkDMdPpE
-	 WtrAUWTedNOSPBk1UXw8OFR5HoPR/o4pBZXeMHpc=
+	b=bEsloqMXUYJCFTfN60Iyakz4mdQGeJYyvtrHGkAPRVA/RD0YOtdWeuvpGQXDAzDCr
+	 djtCMl09Mlw8eQcXXIcXjf2sY4PzMPykoVc6mfJCjXVxrku+p+GAPfktOB40/4/gul
+	 gDoT46zAyIHMMuEKxbgWVnKvgLZVmwXSA455ROUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Wang Zhan <wang.zhan@smartx.com>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 083/242] net: bcmgenet: unshare the skb before writing the control block
-Date: Fri, 23 Oct 2026 18:38:45 +0200
-Message-ID: <20261023163715.741164665@linuxfoundation.org>
+Subject: [PATCH 7.2 084/242] calipso: keep BIG TCP payload_len in calipso_skbuff_setattr()
+Date: Fri, 23 Oct 2026 18:38:46 +0200
+Message-ID: <20261023163715.764341975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,69 +71,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 89771ce4f8f67dcffae561b2ccac95c0f6e3aa01 ]
+[ Upstream commit 8070ed578b6b9134e045627fb745c887a806d46e ]
 
-bcmgenet stores first_cb, last_cb and bytes_sent in the skb control
-block and reads them back on completion to free the skb and credit BQL.
-ether_setup() leaves IFF_TX_SKB_SHARING set, so the stack can resubmit
-a shared skb that is still in the ring. The next transmit overwrites
-last_cb, so the earlier slots complete without crediting their bytes
-and BQL stalls the queue until the watchdog resets it.
+calipso_skbuff_setattr() adjusts payload_len by the length of the
+option it inserts or resizes:
 
-Unshare the skb before writing the control block.
+	payload = ntohs(ip6_hdr->payload_len);
+	ip6_hdr->payload_len = htons(payload + len_delta);
 
-Reproduce with pktgen in clone_skb mode, which hands the driver the same
-skb while earlier copies are still in the ring:
+GRO can build BIG TCP packets larger than IPV6_MAXPLEN, and stores
+payload_len == 0 for them; ipv6_payload_len() then falls back to
+skb->len.  For such a packet forwarded to a destination mapped to
+CALIPSO, the code above writes len_delta (or 65536 + len_delta when
+shrinking) into payload_len, and ipv6_payload_len() no longer falls
+back to skb->len.  nf_tables, conntrack and sch_cake rely on it.
 
-  modprobe pktgen
-  pg=/proc/net/pktgen
-  echo "add_device eth0" > $pg/kpktgend_0
-  echo "dst_mac AA:BB:CC:DD:EE:FF" > $pg/eth0
-  echo "dst 192.0.2.1" > $pg/eth0
-  echo "clone_skb 8" > $pg/eth0
-  echo "count 0" > $pg/eth0
-  echo start > $pg/pgctrl &
-  sleep 5
-  echo stop > $pg/pgctrl
-  wait
-  cat /sys/class/net/eth0/queues/tx-0/byte_queue_limits/inflight
+The same arithmetic also wraps when a packet grows past IPV6_MAXPLEN,
+and a BIG TCP packet that shrinks below IPV6_MAXPLEN should get its
+real length back.
 
-inflight stays nonzero on the now idle queue. clone_skb 0 leaves it at
-zero.
+Set payload_len from the skb length with ipv6_set_payload_len(), which
+stores 0 above IPV6_MAXPLEN and the real length otherwise, as
+ipv6_gro_complete() does.  The network header was just reset to
+skb->data, so skb->len - sizeof(*ip6_hdr) is the payload length.
 
-Fixes: f48bed16a756 ("net: bcmgenet: Free skb after last Tx frag")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261009-nb-genet-shared-skb-net-v1-1-c6d0a841977d@tipi-net.de
+Tested on one kernel (arm64, QEMU) with SELinux permissive, a minimal
+mdp-generated policy (network_peer_controls=1), "netlabelctl calipso
+add pass doi:16" and a NetLabel mapping of fd00:2::/64 to CALIPSO
+DOI 16.  calipso_skbuff_setattr() was called through
+netlbl_skbuff_setattr() from a test-only debugfs hook (not part of
+this patch) adding a level-only label; payload_len after the call:
+
+  case                         before fix   after fix   real length
+  1000, unlabeled                    1016        1016          1016
+  70000 GSO, payload_len 0             16           0         70016
+  65530 GSO, grows past MAXPLEN        10           0         65546
+  65540 GSO with a 24 byte hop
+  header, shrinks below MAXPLEN     65528       65532         65532
+  1000 with a 24 byte hop header      992         992           992
+
+(0 means ipv6_payload_len() returns the real length.)  On the forward
+path, with a client injecting unlabeled UDP through a router to a
+server, the router adds the CALIPSO option and the server delivers all
+datagrams (Udp6InDatagrams 5, Ip6InTruncatedPkts 0) with this patch.
+
+Fixes: 81fbc812132c ("ipv6/gro: insert temporary HBH/jumbo header")
+Suggested-by: Eric Dumazet <edumazet@kernel.org>
+Suggested-by: Wang Zhan <wang.zhan@smartx.com>
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Wang Zhan <wang.zhan@smartx.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/179156155963.36253.400481753322266658@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/ipv6/calipso.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index e8908916558b1..f4cfbff49a1b8 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -2153,6 +2153,16 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
- 		goto out;
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index c6a34334e657e..a0192b4fef334 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1318,7 +1318,7 @@ static int calipso_skbuff_setattr(struct sk_buff *skb,
+ 	struct ipv6hdr *ip6_hdr;
+ 	struct ipv6_opt_hdr *hop;
+ 	unsigned char buf[CALIPSO_MAX_BUFFER];
+-	int len_delta, new_end, pad, payload;
++	int len_delta, new_end, pad;
+ 	unsigned int start, end;
+ 
+ 	ip6_hdr = ipv6_hdr(skb);
+@@ -1357,8 +1357,8 @@ static int calipso_skbuff_setattr(struct sk_buff *skb,
+ 			sizeof(*ip6_hdr) + start);
+ 		skb_reset_network_header(skb);
+ 		ip6_hdr = ipv6_hdr(skb);
+-		payload = ntohs(ip6_hdr->payload_len);
+-		ip6_hdr->payload_len = htons(payload + len_delta);
++		/* 0 above IPV6_MAXPLEN (BIG TCP), the real length otherwise */
++		ipv6_set_payload_len(ip6_hdr, skb->len - sizeof(*ip6_hdr));
  	}
  
-+	/* We store Tx state in the control block, so the skb must not be
-+	 * shared, but ether_setup() leaves IFF_TX_SKB_SHARING set.
-+	 */
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb) {
-+		BCMGENET_STATS64_INC((&ring->stats64), dropped);
-+		ret = NETDEV_TX_OK;
-+		goto out;
-+	}
-+
- 	/* Retain how many bytes will be sent on the wire, without TSB inserted
- 	 * by transmit checksum offload
- 	 */
+ 	hop = (struct ipv6_opt_hdr *)(ip6_hdr + 1);
 -- 
 2.53.0
 
