@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774713;
-	b=ZsrFJLg3PXdB8hi7mRvd7vIcJRDjzvm5U/YLLBzYQ66gRBsQphsa9WN9Wp9zbruNNeiL
-	 +baiCeJfbZ5RgZmSGsKbA3XDjwqx7yWh9m/L821ec3x74KFrdKjkQnIgPMtsq/6vhNLz/
-	 byjtG0Vujwn49OU9OirS+i9BJXhBvY2QCEsmGgEdJhv4qCYoUiA+y6H/c3kReNYZVI5wQ
-	 yo3Ia0rDJVkoM6zUGphTXdeEgJLSkUal49Qg7bQRAHWahStGBRR+yPnXzZvXH8dz+nciB
-	 Mgr9VM0aYTydGHM6bwJyVNwPcnTp4nQ60iXdQWtu6hWygQ6DlisJnwvhaGd2+p4XX9A==
+	t=1792774716;
+	b=rDYfm+8MkJ6Nip+oiNUHh1++JXd1OlT5JS3uznMRY0X4qBbPZDaZC6xwtWW6auYCYrBD
+	 EzPO7RkIlr7P8On8g9a6tIIDlQX/p4RJNRaVb0SuKUBH+KIAB7djCAxq+q5KWC23I/0XI
+	 zGyWv3ZFYneNlqtI12GhX2c324LBGl/KN+EStnSgE1/iby7I631ggy5KZivTE47bXOHeY
+	 LaXuHQCfgBwTanqdWVzaXTrgcgbsI3T1U7/dVHc5yR8DtUdGRW9egFzo0IlIkgOFftWhj
+	 DZLwV1DnHQV6IiXbHgiKI/blAekryhWWGNyJHPwWLobylctSXXiseo9+93KM5lMX3qA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774713;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774716;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lnTiUw49EPLWQUkECAQ+/vAwwIL46fXwMRpVvYmZY8E=;
-	b=iTWtPI9AjLN5EixYdaMkOwdSjIZEi5sT/z72nEbI8ihoZHNMTdZp90Vw/ygm6j8GpKo7
-	 gwaQ15TjVDwJ8DwrVBK15OrDO2fJJwOznGbJ1iB9NGrxT47PVTelkUI6wkGZB7/ObXja8
-	 iFkzAMv3MODzFrtLbTYm4dOYPgYd+M/VIGyF/QAvlBbfZhWwjTr0vRM1R/exoSEdBmdxN
-	 AZRyiRL31zLXm8Ol9yFUYf7kPddGOGC0cF4z338I1YXtPUKK0r6qXjncLmd6DU5RhZD7P
-	 03ReLt3Ff+QdVi3k26KTqwTPxskkUSpOSHBQ/hqVYpaY3yFNRwVDIsjbzbdK1VfSfsw==
+	bh=BR87p2nQDlbVSrjfrkhDwKkawVfPoPMNQwmcezsLcow=;
+	b=eAi2Iw9mXfw7cTKMzXQnGqWx3oBers6YzEcjke+rnX8niEIxk+V9w+RY75cR2wz4OIig
+	 AlYfIWSVGQrazaLHE6L6drrmw0kBGWB+iBUxyPtAO0VHBZHhGLnlBRBSaI8QNQQo1bXSv
+	 i2rWKipCK2ZjCpG4ED2jv8s7iBA6mLr/HLWuoAGX/MwwKjDFRSiTftEueXNrNOA2+E3zr
+	 hcy5tMd4m7VHnnEd9mDma/kojdNfGpJGjaq3Foj9FWzhtw+QsHwbfZAqURHX1LHtMZNoI
+	 dOkfpTvh12D7NONPOFKp+1Nj77e9oRZvr91LHmWYi8/oEWG5y9fPotGjihZhoRynRGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sd3xQbIO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KR9H5/QA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DA2606A31A;
-	Fri, 23 Oct 2026 16:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93B1606A31B;
+	Fri, 23 Oct 2026 16:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sd3xQbIO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192841F01825;
-	Fri, 23 Oct 2026 16:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KR9H5/QA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5F31F01825;
+	Fri, 23 Oct 2026 16:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774712;
-	bh=lnTiUw49EPLWQUkECAQ+/vAwwIL46fXwMRpVvYmZY8E=;
+	s=korg; t=1792774715;
+	bh=BR87p2nQDlbVSrjfrkhDwKkawVfPoPMNQwmcezsLcow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sd3xQbIO+NL+1aIufb8NnQxmutuQhoUMP2A2KH3FtUwBTh8S930EFnOZ6yYBR5f/d
-	 S/VJQ3xEEEF1pANCckic3YLZXWmoj++FGfVqH6RNVVBVgOkbOQxcdpDAxucEjpi3aa
-	 YXc3dQI8A5PYCnHNaA/ZhJ9+4XAtlkcC1jDWM5KE=
+	b=KR9H5/QA9EzJDUvR5H09+5HOMr4uQVjw1XYljgsOB2Md0VO5BS2ny/YW6IGQYaOjZ
+	 M5rXYLMYLl1IYA+SzsmlQliQWL1KvStNSC1QrBQE117uA9bJUbc/PXdoR9RoTeOMs3
+	 QnEujTELX4zWsuQH49zw7YeWqhRKWQeMj9ts+O9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Alexander Gruhlke <gruhlke@mailbox.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 095/242] PCI: Ignore Immediate Readiness on Samsung 990 PRO and 990 EVO Plus NVMe
-Date: Fri, 23 Oct 2026 18:38:57 +0200
-Message-ID: <20261023163716.024332478@linuxfoundation.org>
+Subject: [PATCH 7.2 086/242] gpio: mxc: fix race between chained IRQ handler install and probe completion
+Date: Fri, 23 Oct 2026 18:38:48 +0200
+Message-ID: <20261023163715.811249877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,63 +71,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gruhlke <gruhlke@mailbox.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 0f8b5d90d179b9639be1dbeff59d6d971e6b0527 ]
+[ Upstream commit 38d44f78f041ffe60c8e2443b99434a199e7541d ]
 
-The Samsung 990 PRO [144d:a80c] advertises Immediate Readiness, so
-pcie_flr() doesn't wait after FLR, but the drive returns ~0 for up to 7 ms.
-Since commit 10baa9b4df40 ("PCI: Drop unnecessary retries when restoring
-BARs"), the config restore after FLR is lost, which breaks VFIO passthrough
-of the drive.  Firmware 8B2QJXD7 responds right after FLR, but older
-firmware such as 1B2QJXD7 doesn't, and the firmware version isn't visible
-here.
+mxc_update_irq_chained_handler() is called before the IRQ domain, the
+generic IRQ chip, and the port list entry are set up. If an interrupt
+arrives in that window:
 
-[bhelgaas: The Samsung 990 EVO Plus [144d:a80d] with 2B2QKXG7 firmware
-seems to have the same problem.]
+ - mx3_gpio_irq_handler() calls generic_handle_domain_irq() with
+   port->domain still NULL.
+ - mx2_gpio_irq_handler() walks mxc_gpio_ports, but the port has not
+   been added to the list yet.
 
-Ignore Immediate Readiness on these devices, so pcie_flr() waits.
+Additionally, if any of the subsequent probe steps
+(gpio_generic_chip_init(), devm_gpiochip_add_data(),
+irq_domain_create_legacy(), or mxc_gpio_init_gc()) fail, the error
+paths never unregister the chained handler, leaving a dangling handler
+that points at freed memory.
 
-Fixes: 10baa9b4df40 ("PCI: Drop unnecessary retries when restoring BARs")
-Link: https://bbs.archlinux.org/viewtopic.php?id=314833
-Link: https://bbs.archlinux.org/viewtopic.php?pid=2312085#p2312085
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Alexander Gruhlke <gruhlke@mailbox.org>
-[bhelgaas: squashed in Samsung 990 EVO Plus from
-https://lore.kernel.org/all/20261016102042.641801-1-gruhlke@mailbox.org]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20261011190145.23621-2-gruhlke@mailbox.org
-Link: https://patch.msgid.link/20261016102042.641801-1-gruhlke@mailbox.org
+Move the handler installation after all its dependencies are ready and
+after list_add_tail(), so the handler is never live while the data
+structures it touches are incomplete, and is never installed if probe
+fails.
+
+Fixes: 5f6d1998adeb ("gpio: mxc: release the parent IRQ in runtime suspend")
+Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-1-c4d769587d3e@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpio/gpio-mxc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 0500d5fd4f112..86e6af409da23 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5623,6 +5623,18 @@ static void quirk_no_flr_snet(struct pci_dev *dev)
- }
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SOLIDRUN, 0x1000, quirk_no_flr_snet);
+diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
+index 7e2690d92df6f..e05f276a50e8d 100644
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -474,8 +474,6 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+ 	} else
+ 		port->mx_irq_handler = mx3_gpio_irq_handler;
  
-+/* Some Samsung SSDs advertise Immediate Readiness but aren't ready after FLR */
-+static void quirk_no_imm_ready(struct pci_dev *dev)
-+{
-+	if (!dev->imm_ready)
-+		return;
+-	mxc_update_irq_chained_handler(port, true);
+-
+ 	config.dev = &pdev->dev;
+ 	config.sz = 4;
+ 	config.dat = port->base + GPIO_PSR;
+@@ -525,6 +523,8 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+ 
+ 	list_add_tail(&port->node, &mxc_gpio_ports);
+ 
++	mxc_update_irq_chained_handler(port, true);
 +
-+	pci_info(dev, "Ignoring incorrectly advertised Immediate Readiness support\n");
-+	dev->imm_ready = 0;
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_SAMSUNG, 0xa80c, quirk_no_imm_ready);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_SAMSUNG, 0xa80d, quirk_no_imm_ready);
-+
- static void quirk_no_ext_tags(struct pci_dev *pdev)
- {
- 	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
+ 	platform_set_drvdata(pdev, port);
+ 	pm_runtime_put_autosuspend(&pdev->dev);
+ 
 -- 
 2.53.0
 
