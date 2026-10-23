@@ -1,55 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774716;
-	b=rDYfm+8MkJ6Nip+oiNUHh1++JXd1OlT5JS3uznMRY0X4qBbPZDaZC6xwtWW6auYCYrBD
-	 EzPO7RkIlr7P8On8g9a6tIIDlQX/p4RJNRaVb0SuKUBH+KIAB7djCAxq+q5KWC23I/0XI
-	 zGyWv3ZFYneNlqtI12GhX2c324LBGl/KN+EStnSgE1/iby7I631ggy5KZivTE47bXOHeY
-	 LaXuHQCfgBwTanqdWVzaXTrgcgbsI3T1U7/dVHc5yR8DtUdGRW9egFzo0IlIkgOFftWhj
-	 DZLwV1DnHQV6IiXbHgiKI/blAekryhWWGNyJHPwWLobylctSXXiseo9+93KM5lMX3qA==
+	t=1792774718;
+	b=jaK6FbY2NrWe44EJl/zklMn5X8QOiLGyh81pL3lgQZSTu152Mx6fmFYsOfpusPYc0LX+
+	 yCZ35XuKsJMrBzOW4Vv2NMetT8I1YM2WIQGX+l/Chk6EMDONGXF8ZH+Y9LQbnYHxeKr2j
+	 bM3/SB5YS+x/SQ42x5yCM0b2I+Pk5BjNka8iJQ1CNWrJ3DLQq9Kps2J9qjR54503qWXsI
+	 quBfCY2/qlkrappX6kAdVtE5fs1OUEntzM69aDJSeUj06RqIrbwErrhWAjh2v6zKOmuha
+	 yreM8j7npaMhHUPj+zKLp5aCa03G48K6XSwnk+PqW6LUAufu0iUASdrLwBeBaJCMFzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BR87p2nQDlbVSrjfrkhDwKkawVfPoPMNQwmcezsLcow=;
-	b=eAi2Iw9mXfw7cTKMzXQnGqWx3oBers6YzEcjke+rnX8niEIxk+V9w+RY75cR2wz4OIig
-	 AlYfIWSVGQrazaLHE6L6drrmw0kBGWB+iBUxyPtAO0VHBZHhGLnlBRBSaI8QNQQo1bXSv
-	 i2rWKipCK2ZjCpG4ED2jv8s7iBA6mLr/HLWuoAGX/MwwKjDFRSiTftEueXNrNOA2+E3zr
-	 hcy5tMd4m7VHnnEd9mDma/kojdNfGpJGjaq3Foj9FWzhtw+QsHwbfZAqURHX1LHtMZNoI
-	 dOkfpTvh12D7NONPOFKp+1Nj77e9oRZvr91LHmWYi8/oEWG5y9fPotGjihZhoRynRGQ==
+	bh=Y2K9BGukUVmb/jXAbsIVLyZgFuCwMKmOSyLrx56+fCI=;
+	b=E3vbfoQA/4wim4pgj2uZRCw8MoASOwcu+brUk1r3WwiQerM41g8m/zF9tmM7dGXU7MRR
+	 mTeCfs+SxJX+SQCFM5HbLluBzJ9xylPfgIo4s3SaoX/ANEsG+FvuHt2Lqnn9Dw0kvOjed
+	 iT06Gr3iZPFeYBKQNcAa1bBT17aETOjDqzsVpzlpsxpI4UW5AwGH0vge2aItkgvHR2zNq
+	 qQOKEemnPu5pi+AoiRT/YgLFUg4W7C7ZTnWOxMrK2EjmY61Fnk/XOG+mxAlj5JMbDN1Lr
+	 H2MtTKX57mzMnRIRn0z91GPzeEvadHHzX9ev8u5NiAklopQ+n2FyehgCNOmRClg15fA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KR9H5/QA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yy+Echr8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93B1606A31B;
-	Fri, 23 Oct 2026 16:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FEA606A31B;
+	Fri, 23 Oct 2026 16:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KR9H5/QA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5F31F01825;
-	Fri, 23 Oct 2026 16:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yy+Echr8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85781F01825;
+	Fri, 23 Oct 2026 16:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774715;
-	bh=BR87p2nQDlbVSrjfrkhDwKkawVfPoPMNQwmcezsLcow=;
+	s=korg; t=1792774718;
+	bh=Y2K9BGukUVmb/jXAbsIVLyZgFuCwMKmOSyLrx56+fCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KR9H5/QA9EzJDUvR5H09+5HOMr4uQVjw1XYljgsOB2Md0VO5BS2ny/YW6IGQYaOjZ
-	 M5rXYLMYLl1IYA+SzsmlQliQWL1KvStNSC1QrBQE117uA9bJUbc/PXdoR9RoTeOMs3
-	 QnEujTELX4zWsuQH49zw7YeWqhRKWQeMj9ts+O9Q=
+	b=Yy+Echr83vIalGQCUBFf+htL3zlxYmXPwDtRwtkiB+jZsMswZ4Uxg+y/jzWonpFRn
+	 Pq4EhdWgi05jajDPTV9ZAg23GQp2J3+LwIB4W6aVNB3ETJHt9XnUkcZDzwn/5ZCzY4
+	 BtOROT0t5QJYbd59DwFeAK/qsU03S1T9ss5QNbEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 086/242] gpio: mxc: fix race between chained IRQ handler install and probe completion
-Date: Fri, 23 Oct 2026 18:38:48 +0200
-Message-ID: <20261023163715.811249877@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 7.2 128/242] riscv: dts: microchip: beaglev-fire: remove double definition of gpio interrupts
+Date: Fri, 23 Oct 2026 18:39:30 +0200
+Message-ID: <20261023163716.810077832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,67 +66,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 38d44f78f041ffe60c8e2443b99434a199e7541d ]
+commit 0f70fd6f4c1d6c1f2ea298d8dd07c4a4d5dff9af upstream.
 
-mxc_update_irq_chained_handler() is called before the IRQ domain, the
-generic IRQ chip, and the port list entry are set up. If an interrupt
-arrives in that window:
+When the irq-mux and its interrupt-map were added to the mpfs
+devicetree, the gpio interrupts became fixed at the SoC level rather
+than dependant on the design - the interrupt-map is now what varies.
+The beaglev-fire should have had its dts copy of the interrupts removed
+but did not. As a result, the mcp3564 driver does not probe, because
+even though it doesn't use the interrupt at present, the SPI core still
+looks it up. This lookup fails because the second copy of the interrupts
+property doesn't resolve to something valid when passed via the
+interrupt-map. Remove the second/incorrect set of interrupts properties.
 
- - mx3_gpio_irq_handler() calls generic_handle_domain_irq() with
-   port->domain still NULL.
- - mx2_gpio_irq_handler() walks mxc_gpio_ports, but the port has not
-   been added to the list yet.
-
-Additionally, if any of the subsequent probe steps
-(gpio_generic_chip_init(), devm_gpiochip_add_data(),
-irq_domain_create_legacy(), or mxc_gpio_init_gc()) fail, the error
-paths never unregister the chained handler, leaving a dangling handler
-that points at freed memory.
-
-Move the handler installation after all its dependencies are ready and
-after list_add_tail(), so the handler is never live while the data
-structures it touches are incomplete, and is never installed if probe
-fails.
-
-Fixes: 5f6d1998adeb ("gpio: mxc: release the parent IRQ in runtime suspend")
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-1-c4d769587d3e@nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b0258f69f1e0 ("riscv: dts: microchip: update mpfs gpio interrupts to better match the SoC")
+CC: stable@vger.kernel.org
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mxc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../boot/dts/microchip/mpfs-beaglev-fire.dts   | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
-index 7e2690d92df6f..e05f276a50e8d 100644
---- a/drivers/gpio/gpio-mxc.c
-+++ b/drivers/gpio/gpio-mxc.c
-@@ -474,8 +474,6 @@ static int mxc_gpio_probe(struct platform_device *pdev)
- 	} else
- 		port->mx_irq_handler = mx3_gpio_irq_handler;
+diff --git a/arch/riscv/boot/dts/microchip/mpfs-beaglev-fire.dts b/arch/riscv/boot/dts/microchip/mpfs-beaglev-fire.dts
+index 6d7037c9528d..a09371d9d064 100644
+--- a/arch/riscv/boot/dts/microchip/mpfs-beaglev-fire.dts
++++ b/arch/riscv/boot/dts/microchip/mpfs-beaglev-fire.dts
+@@ -90,10 +90,6 @@ regulator-1v8-syzygy {
+ };
  
--	mxc_update_irq_chained_handler(port, true);
--
- 	config.dev = &pdev->dev;
- 	config.sz = 4;
- 	config.dat = port->base + GPIO_PSR;
-@@ -525,6 +523,8 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+ &gpio0 {
+-	interrupts = <13>, <14>, <15>, <16>,
+-		     <17>, <18>, <19>, <20>,
+-		     <21>, <22>, <23>, <24>,
+-		     <25>, <26>;
+ 	ngpios = <14>;
+ 	gpio-line-names = "", "", "", "", "", "", "",
+ 			  "", "", "", "", "", "SD_CARD_CS", "USER_BUTTON";
+@@ -101,12 +97,6 @@ &gpio0 {
+ };
  
- 	list_add_tail(&port->node, &mxc_gpio_ports);
+ &gpio1 {
+-	interrupts = <27>, <28>, <29>, <30>,
+-		     <31>, <32>, <33>, <34>,
+-		     <35>, <36>, <37>, <38>,
+-		     <39>, <40>, <41>, <42>,
+-		     <43>, <44>, <45>, <46>,
+-		     <47>, <48>, <49>, <50>;
+ 	ngpios = <24>;
+ 	gpio-line-names = "", "", "", "", "", "", "", "", "", "",
+ 			  "", "", "", "", "", "", "", "", "", "",
+@@ -115,14 +105,6 @@ &gpio1 {
+ };
  
-+	mxc_update_irq_chained_handler(port, true);
-+
- 	platform_set_drvdata(pdev, port);
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 
+ &gpio2 {
+-	interrupts = <53>, <53>, <53>, <53>,
+-		     <53>, <53>, <53>, <53>,
+-		     <53>, <53>, <53>, <53>,
+-		     <53>, <53>, <53>, <53>,
+-		     <53>, <53>, <53>, <53>,
+-		     <53>, <53>, <53>, <53>,
+-		     <53>, <53>, <53>, <53>,
+-		     <53>, <53>, <53>, <53>;
+ 	ngpios = <32>;
+ 	gpio-line-names = "P8_PIN3_USER_LED_0", "P8_PIN4_USER_LED_1", "P8_PIN5_USER_LED_2",
+ 			  "P8_PIN6_USER_LED_3", "P8_PIN7_USER_LED_4", "P8_PIN8_USER_LED_5",
 -- 
-2.53.0
+2.56.0
 
 
 
