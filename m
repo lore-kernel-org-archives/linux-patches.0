@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774573;
-	b=Ai8Eal2vzHSZXqhKWakNIpR30OOphrfZYRVhuMRuiJgHfFzwKnx0mDIvJ62xLUkf2OB0
-	 QfePqAHHGdctyt5qbxkZprgzEsOhL+SbvTxidMmmD+E2svF8ppGpZbBIzQhKbvOlUyjYz
-	 Ub6qBn70isWXlzrjiouWvtjUZPX+1yCPW3KNqPrxImSjndITokg3/GdNNsnetCHEN1FHG
-	 moatE1RfYksOOWin+Hm7iqK/NEiuu4uHx+L6Amc1lmDmAB8oeEAa30IX/SK5SdRCaliso
-	 KNAI0Q5rwJji3DzN4Ieag9gaZgfHywJ1JjqXl2qkleKAGdfPd2Q+u7xUCsy5eHhzhiA==
+	t=1792774576;
+	b=uQxP7taFdC2jZ2jtlr71AQSVCRSWBLh/f5mbsYpcCKslT87I0aWWMTcmnkWIUDkSSo4h
+	 zIufpcvBixi88inKBSONIQWtARIsVCHdQUuelA4o2mHOBRztsVutAiFGv41ZflVZHZ2PN
+	 x5aK9uniRCSTkdr3gAZnC5YDlHSWKdZy4MeIMSuWHT4hRhjgK2uXfDXQq4LYFGXHfapIA
+	 GjVmw0aFWSL1wBI8aOkXvaXtZcEuEnq0AfN3mK11qPI+dPysHaQD/uT7zNbojqElQb7Qe
+	 D++G690MIsjmnxloMQ8lkdzpVF6UWwpSFPS37H5vEtfeu8NDBwkKvBKo1zk2GToqgOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pjqE1Veh0JcWJ305qYuFSJ7Yui+Lh+v1aC1Ht99U0WY=;
-	b=si2ggSjJlFjj4mAbO8qId4zNfm+dsgWQ7HqwQR3pVMZ0ic+eT+xhc6gmGUY/lTTNPGQ0
-	 JaxAtf3gbc5QaAvUmKrer6JTcPkyRvfZkhYbRkqj38QPsA7pGpWNu2YeuIhf4b/1kLq6l
-	 sMmLJBPyfSTPd/y5Rr0O2sxnfl4doPzGiMA5qAAplJGlNpAvBIB4Ck3C5N7rTbzwwpV+l
-	 CtH3b03npoj+QQe7wu51thCfpL98g907Naufnemvr5qbhTPP8EXigvdLLgdbbkLZXbreX
-	 dv9zVbCrC4wqksDIuaubKJbWSTCd2YNIOCISw2plVvDXqIVARYRYC+A+i1JAZQ5sR5A==
+	bh=s6cd17LVpbh19h5/fzMxVXm37iIFhLm/C3hEAivIKfg=;
+	b=DOWnn9VTT2qOw/sM0AC7p+dGf9MJbQ1f2G/84BZSAL1JX6h/zcVszjtFHKReUnxiirSL
+	 pu8TOOqDHuUHaMVRxPRes7qqRlj3ulPG6pgtDTMRfFnT94Yf21ZJEK0azicHRt5yLZeym
+	 fdCCH+3hyN9xbdSc8ho2Ul8dxU/HwE1MUQ711zTx4+tgrVGsZQK97G85SbUzjSSoV9Rc+
+	 8qOP+NSHE9mypME1wFwv+P8+ZLUZ3IAk7u7sWL5rucEAraaIEYnvBGdFuZIZvjQEBqatk
+	 G/csjrZAiDYLFkYFTcT/PcrT5HRXnxed0YjGlP3/FxBBA5qKuJMN65bN76bDosQXRuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adiHtrxP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5WeL2AB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453AD606A31A;
-	Fri, 23 Oct 2026 16:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272A4606A31B;
+	Fri, 23 Oct 2026 16:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adiHtrxP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D971F01825;
-	Fri, 23 Oct 2026 16:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5WeL2AB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CBF1F01825;
+	Fri, 23 Oct 2026 16:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774573;
-	bh=pjqE1Veh0JcWJ305qYuFSJ7Yui+Lh+v1aC1Ht99U0WY=;
+	s=korg; t=1792774576;
+	bh=s6cd17LVpbh19h5/fzMxVXm37iIFhLm/C3hEAivIKfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adiHtrxPUUDV3YOiUlAw59fV1lyq66p5oxk/Yd0sqAlEjO7n2vt4LCqzjGLH33hCu
-	 LYlvUKRRuV44Uyq+s/F37mYb2hnCY5k3UAthEvk4M0X+0oZ048sHq76cysyJIUhS6t
-	 emsepuVpRq4Y5xbtmPZo+PwBwqiYvkL5Ct4raZs8=
+	b=s5WeL2ABTEKDpu7LbWS+/sv2TPYTdwZ2jrjsFnPtrvYi/wjkf5iGPEpAGwcAqS4Kr
+	 Cz5zzPpOpK9MQOdlr7Qh+nENN8YPdRyvgm3xEhYW8wg02dSJd/iX8K761mQKDXLmPu
+	 ZKco8VTQSPNsTSJhARQigbxawumxaHi/OEeJPQLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 049/242] scsi: st: Save the visited block for the partition the drive is in
-Date: Fri, 23 Oct 2026 18:38:11 +0200
-Message-ID: <20261023163714.936364309@linuxfoundation.org>
+Subject: [PATCH 7.2 085/242] gpiolib: fix memory leak in gpiod_set_array_value_complex() on error paths
+Date: Fri, 23 Oct 2026 18:38:47 +0200
+Message-ID: <20261023163715.788475062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,91 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurence Oberman <loberman@redhat.com>
+From: Kent Gibson <warthog618@gmail.com>
 
-[ Upstream commit c9e9f024dd4f61f0f6636c9f2ed0830f87060e11 ]
+[ Upstream commit c28846ca1ac6134881114d272314623c8433e372 ]
 
-set_location() saves the current tape location before switching
-partitions, so that switch_partition() can return to it later. It reads
-the location with READ POSITION but stores it in the st_partstat of
-STp->partition, ignoring the partition the drive reports.
+A drive-by review by Sashiko reports that, after a failed call to
+gpiochip_set_multiple(), gpiod_set_array_value() returns abruptly,
+bypassing the freeing of possibly alloced bitmaps, potentially leaking
+memory. It is an unlikely error path, but is possible.
 
-The two differ after a device reset. When the reset is recovered with
-MTREW, MTSEEK or MTEOM, st_ioctl() sets STp->partition = 0 and calls
-switch_partition() to return to STp->new_partition. A drive that was in
-partition 1 is still there, so set_location() files the partition 1
-position under partition 0. The next switch to partition 0 locates to
-that block: if partition 0 holds less data, MTSETPART fails with EIO
-(BLANK CHECK), otherwise the tape is silently positioned at the wrong
-block.
+Defer the return code check until after the bitmap_free() block.
 
-IBM ULTRIUM-TD5 (LTO-5), LU reset in partition 1 at block 1025:
-
-  st 12:0:0:0: [st0] Visited block 1025 for partition 0 saved.
-  ...
-  st 12:0:0:0: [st0] Setting block to 1025 and partition to 0.
-  st 12:0:0:0: [st0] Error: 402, cmd: 2b 2 0 0 0 4
-  st 12:0:0:0: [st0] Sense Key : Blank Check [current]
-  st 12:0:0:0: [st0] Add. Sense: End-of-data detected
-
-Store the location in the st_partstat of the partition reported by READ
-POSITION. With the fix:
-
-  st 12:0:0:0: [st0] Visited block 1025 for partition 1 saved.
-
-This is a pre-existing issue. It was not caught when testing the recent
-st reset series because the partition test was only run on scsi_debug:
-on the LTO drive it was skipped, since can-partitions is off in the test
-harness's stinit.conf, as is normal for LTO. scsi_debug hides the
-problem because its emulated tape returns to the beginning of partition
-0 on an LU reset. It was found while validating a backport of that
-series to RHEL 9.8, when the partition tests were run on real hardware
-with can-partitions enabled. The same failure then reproduced on
-unmodified RHEL 9.8 and on upstream, and the fix makes the test pass on
-v7.3-rc3 and RHEL 9.8 with an LTO-5.
-
-The harness (https://gitlab.com/loberman/tapetest, test X03) now refuses
-to silently skip the partition tests on hardware.
-
-Fixes: 7081dc75df79 ("scsi: st: Restore some drive settings after reset")
-Assisted-by: Claude
-Signed-off-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20261006164250.773840-1-loberman@redhat.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 9b407312755f ("gpiolib: rework the wrapper around gpio_chip::set_multiple()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-gpio/sashiko-outbox-168233@kernel.org/
+Signed-off-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20261015025749.47039-1-warthog618@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index f1c3c49466379..cab8aa73969c3 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -3217,14 +3217,20 @@ static int set_location(struct scsi_tape *STp, unsigned int block, int partition
- 	    partition >= ST_NBR_PARTITIONS)
- 		return (-EINVAL);
- 	if (partition != STp->partition) {
--		if (get_location(STp, &blk, &p, 1))
-+		/*
-+		 * Save the location for the partition the drive reports,
-+		 * not for STp->partition: after a reset STp->partition may
-+		 * not match the partition the drive is in.
-+		 */
-+		if (get_location(STp, &blk, &p, 1) ||
-+		    p < 0 || p >= ST_NBR_PARTITIONS)
- 			STps->last_block_valid = 0;
- 		else {
--			STps->last_block_valid = 1;
--			STps->last_block_visited = blk;
-+			STp->ps[p].last_block_valid = 1;
-+			STp->ps[p].last_block_visited = blk;
- 			DEBC_printk(STp, "Visited block %d for "
- 				    "partition %d saved.\n",
--				    blk, STp->partition);
-+				    blk, p);
- 		}
- 	}
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 28f7265c5d569..6e8bcf0d9da00 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -3954,16 +3954,17 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
+ 		} while ((i < array_size) &&
+ 			 gpio_device_chip_cmp(desc_array[i]->gdev, guard.gc));
+ 		/* push collected bits to outputs */
+-		if (count != 0) {
++		ret = 0;
++		if (count != 0)
+ 			ret = gpiochip_set_multiple(guard.gc, mask, bits);
+-			if (ret)
+-				return ret;
+-		}
  
+ 		if (mask != fastpath_mask)
+ 			bitmap_free(mask);
+ 		if (bits != fastpath_bits)
+ 			bitmap_free(bits);
++
++		if (ret)
++			return ret;
+ 	}
+ 	return 0;
+ }
 -- 
 2.53.0
 
