@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774065;
-	b=sPDNsXB/Y5T4TduIYja2YIw9RIZUUDP5m++inQ/F6559k1pZ2cJbhNslkWzbnGRsKvCp
-	 tvInELR64wPtIBtzTPDePiHmWrs8zuvzObLn5RAyOX3mwyVM9QUjUyCSISQbPPd3cFNua
-	 2EFPXVlLY0Ky3E4gIdju3IKfOYMOK+NryxxK2SAn9yf0yFVcvRVqsfhyWxRUCXVXHAYY7
-	 dm0a3i2zm28PGU+bBJ3pqadwX+tFI0x7h9qrJguilsfk8vrHfx3nYTeHHhrac4wIytBBs
-	 UIiXZgkNrknEiJl3OYjPU7m2xcVOiUn2K6rqEZMOY4rjeVbQ9a0yBSh7a7+hoKreZZw==
+	t=1792774068;
+	b=wTPM+LH4ux+0YZtWxKy4fdS1M85CChxCc3VK/9HmMyFPJTVkChrsiS94/iMz9n/2/zys
+	 WgRxygIJ776H1QL5zzUyAqP4MKLe8RWAQzdVxG191BBEE4+02lCoWd8wD0b9dN5IFVnRW
+	 NOouuQXnf9qxcpEsoyY7lL8wXT9fuKOObrO8+l9c7Q/mIYpzwDhXMX1z8ciEhJWO5MEc3
+	 CV1ERiMPkku4fiEkKyGMcePbH/FkhCwIpV/gYeWI57w6vcMOkybrnOfqNtlCuvmhTAU7G
+	 SwWjdeNxVo//ZBYvUCMSJ6dm/WUM31CyhfTbZe7BA/no+cXbyGO1zMopZm2dMpwcm+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=46NBqo6Xd0YPzGZkHLgWzKW+awKLtg6iLxqN0jGkzTY=;
-	b=d0jh1q0V/0MI5uS6F7fLdl4slBtQeOnDJEF4+76gRm6EC7jnPnzq9YuZpCx2NxogE58W
-	 kPE36q3SsucQyHJzhqvXJMVlkRXpTVPohLg+LkLdWOWb+w0/z2pcWaA4udAel5nYx6AI1
-	 +slwZXiBXHaM6b2EXoroDpBypN33mjZTidbblcV3+Gg6Vf2+CSGySRFmz1zRsWQKSxgak
-	 kI4/yS07mpgyhfDTVqrczdhy6vesvv2KqRXEt2Cw92RM+VTgJTtvJaCqnD4nM4oA+BSVq
-	 KD6wHdVHhhLS9GjHz1c39Yr1o8mLYtrDGN4GXlaJC9LcYKZogIMajF2VGPCvo4/cZxg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=WkiarrDc+iG75qK2XfNJK3I8g2GU7k2VJdQQ0w5BkCE=;
+	b=l8z64VsFeyn69CnfNruHoP8eLRI/kr8UlxjBdTBhPgVsNAHFUyQH9Z5XWkdNzGsbPGin
+	 g5jVP4/68XhKJ00n7yN/bTvl929SD8Mz+Ud5JSaPStVu2kSKJL64A3weCQeJuSscj2rgG
+	 HD+3apmF0sNB7kt1LXDCYRSwp0WUuIYQMiSaAsMX64mr3NCpac24nt14i57WirbjkDfoO
+	 4R0k25RjgvxL8wTG9OjKUDupu/uWGkTRYM7qloTB7renRolvVbyL5nlFZBwo8r/JRWPg6
+	 WLLk+0a2LHCXuU4KCf4ZUObl8Erg2Jipfjk1Pthp6cr2Dt3yFBXHJuOn01QyPlZEIkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=At4g6caD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bfB3iZ8W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1638D606A31A;
-	Fri, 23 Oct 2026 16:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87015606A328;
+	Fri, 23 Oct 2026 16:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=At4g6caD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650B21F01825;
-	Fri, 23 Oct 2026 16:47:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bfB3iZ8W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E721F01828;
+	Fri, 23 Oct 2026 16:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774064;
-	bh=46NBqo6Xd0YPzGZkHLgWzKW+awKLtg6iLxqN0jGkzTY=;
+	s=korg; t=1792774068;
+	bh=WkiarrDc+iG75qK2XfNJK3I8g2GU7k2VJdQQ0w5BkCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=At4g6caD91TjfhtTo6EApXvJqupDsk8t2YxIe43tkKOmjb8+cj9KbpsaRxTxaQQzR
-	 WLuV2mcOHMyOIVns5k5cBUTa2PqQPGqFNWyuggzlo+3rEV/kCJE2CVrvOSe2mKE4an
-	 28/2j7J7SuZO+9j19m4ZJRkTgw693/da5DRJ2YCc=
+	b=bfB3iZ8WKpsX6QKytaMpmAYryshWQmpzTRHRCOOAC4FDdaOeQp6ZNqdQ7NwBb8h6n
+	 DAR0fbIgMHFRp0W2WTUBP6IfYgnQDTqx5E0NT7/AjJIZRGvk0HUAgLHSJmfOyPmIdH
+	 pt6Xj6rXACV3GZm3IFePSC9IAKn3U2sekWL//CVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.18 110/193] drm/xe: Bump LRU for external objects on exec and rebind
-Date: Fri, 23 Oct 2026 18:36:27 +0200
-Message-ID: <20261023163716.810263051@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 111/193] tracing: Fix the shift out of bounds in the log2 histogram modifier
+Date: Fri, 23 Oct 2026 18:36:28 +0200
+Message-ID: <20261023163716.834783199@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -63,121 +61,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit d2ce8fcd778ee6d92748c92d23a56d4416c29d86 upstream.
+commit 647c2f97fcb94bc642cefe6db004999974563f06 upstream.
 
-The VM's private BOs get their LRU position refreshed in bulk via
-ttm_lru_bulk_move_tail() on vm->lru_bulk_move, both after a successful
-non-LR exec and after the LR preempt-fence rebind worker runs. External
-objects (BOs potentially shared across VMs) are never added to that
-per-VM bulk move list, so their LRU position is never refreshed by
-either path. This makes external objects in active use look more
-evictable than they are.
+The .log2 key modifier files a value under its base-2 order:
 
-Add xe_vm_bump_lru(), which, under a single lru_lock critical section,
-performs the bulk move of the VM's private BOs and bumps each external
-object locked by the drm_exec transaction. Use it from both the non-LR
-exec path and the LR rebind worker, replacing the open-coded bulk move.
+  # echo 'hist:keys=bytes_req.log2' > events/kmem/kmalloc/trigger
 
-Fixes: d490ecf57790 ("drm/xe: Rework xe_exec and the VM rebind worker to use the drm_exec helper")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Assisted-by: LLM
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20261012132607.21387-1-thomas.hellstrom@linux.intel.com
-(cherry picked from commit 324ba30cca180c2e1d02090743dd78ccb15b9e4a)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+hist_field_log2() computes that as ilog2(roundup_pow_of_two(val)). The
+out-of-line form of roundup_pow_of_two() is
+
+	return 1UL << fls_long(n - 1);
+
+which shifts by 64 on a 64-bit kernel both when n is 0, where n - 1
+wraps to ULONG_MAX, and when n is above 2^63. Both are ordinary keys,
+because the field fetch hands every value over as a u64: a syscall
+argument of 0 reaches the first, and one above 2^63 reaches the second.
+
+Keying sys_enter_lseek on offset.log2 and passing 0, 1, 2, 3, 1000,
+2^63+1 and U64_MAX gives
+
+  { offset: ~ 2^1  } hitcount:          1
+  { offset: ~ 2^10 } hitcount:          1
+  { offset: ~ 2^2  } hitcount:          1
+  { offset: ~ 2^0  } hitcount:          4
+
+Keys above 2^63 land in the lowest bucket. With CONFIG_UBSAN_SHIFT=y
+the shift is also reported:
+
+  UBSAN: shift-out-of-bounds in include/linux/log2.h:57:13
+  shift exponent 64 is too large for 64-bit type 'long unsigned int'
+   __ubsan_handle_shift_out_of_bounds.cold+0xdd/0x1cb
+   hist_fn_call.cold+0x8b/0xd9
+   event_hist_trigger+0x1cc/0x790
+   ftrace_syscall_enter+0x197/0x360
+   do_syscall_64+0x402/0x4b0
+
+Use order_base_2(), which is ilog2(n - 1) + 1 for n > 1 and 0 below
+that. It returns what the old expression returned on every input the
+old one was defined for. Where it was not, 0 stays in bucket 0, which
+is where x86_64 had been putting it, and the keys above 2^63 move into
+bucket 64.
+
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260916002735.808520-1-donggeunyoo.kernel@gmail.com
+Fixes: 4b94f5b7b4a5 ("tracing: Add hist trigger 'log2' modifier")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_exec.c |    7 ++-----
- drivers/gpu/drm/xe/xe_vm.c   |   31 ++++++++++++++++++++++++++++---
- drivers/gpu/drm/xe/xe_vm.h   |    2 ++
- 3 files changed, 32 insertions(+), 8 deletions(-)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_exec.c
-+++ b/drivers/gpu/drm/xe/xe_exec.c
-@@ -346,11 +346,8 @@ retry:
- 	xe_sched_job_push(job);
- 	xe_vm_reactivate_rebind(vm);
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -284,7 +284,7 @@ static u64 hist_field_log2(struct hist_f
  
--	if (!err && !xe_vm_in_lr_mode(vm)) {
--		spin_lock(&xe->ttm.lru_lock);
--		ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
--		spin_unlock(&xe->ttm.lru_lock);
--	}
-+	if (!err && !xe_vm_in_lr_mode(vm))
-+		xe_vm_bump_lru(vm, exec);
+ 	u64 val = hist_fn_call(operand, elt, buffer, rbe, event);
  
- 	if (mode == EXEC_MODE_LR)
- 		xe_hw_engine_group_resume_faulting_lr_jobs(group);
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -376,6 +376,33 @@ int xe_vm_validate_rebind(struct xe_vm *
- 	return 0;
+-	return (u64) ilog2(roundup_pow_of_two(val));
++	return order_base_2(val);
  }
  
-+/**
-+ * xe_vm_bump_lru() - Bump the LRU position of BOs used by a submission
-+ * @vm: The vm for which we are bumping LRUs.
-+ * @exec: The struct drm_exec with the locked GEM objects.
-+ *
-+ * Move the VM's private BOs, and all external objects locked by @exec,
-+ * to the LRU tail. Private BOs are moved in bulk using @vm's
-+ * &xe_vm.lru_bulk_move. External objects, which may be shared with other
-+ * VMs, are not part of that bulk move and are bumped individually.
-+ */
-+void xe_vm_bump_lru(struct xe_vm *vm, struct drm_exec *exec)
-+{
-+	spinlock_t *lru_lock = &vm->xe->ttm.lru_lock;
-+	struct drm_gem_object *obj;
-+
-+	spin_lock(lru_lock);
-+	ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
-+	drm_exec_for_each_locked_object(exec, obj) {
-+		if (!drm_gpuvm_is_extobj(&vm->gpuvm, obj))
-+			continue;
-+
-+		ttm_bo_move_to_lru_tail(&gem_to_xe_bo(obj)->ttm);
-+		cond_resched_lock(lru_lock);
-+	}
-+	spin_unlock(lru_lock);
-+}
-+
- static int xe_preempt_work_begin(struct drm_exec *exec, struct xe_vm *vm,
- 				 bool *done)
- {
-@@ -524,9 +551,7 @@ retry:
- 
- #undef retry_required
- 
--	spin_lock(&vm->xe->ttm.lru_lock);
--	ttm_lru_bulk_move_tail(&vm->lru_bulk_move);
--	spin_unlock(&vm->xe->ttm.lru_lock);
-+	xe_vm_bump_lru(vm, &exec);
- 
- 	/* Point of no return. */
- 	arm_preempt_fences(vm, &preempt_fences);
---- a/drivers/gpu/drm/xe/xe_vm.h
-+++ b/drivers/gpu/drm/xe/xe_vm.h
-@@ -265,6 +265,8 @@ int xe_vm_lock_vma(struct drm_exec *exec
- int xe_vm_validate_rebind(struct xe_vm *vm, struct drm_exec *exec,
- 			  unsigned int num_fences);
- 
-+void xe_vm_bump_lru(struct xe_vm *vm, struct drm_exec *exec);
-+
- struct dma_fence *xe_vm_bind_kernel_bo(struct xe_vm *vm, struct xe_bo *bo,
- 				       struct xe_exec_queue *q, u64 addr,
- 				       enum xe_cache_level cache_lvl);
+ static u64 hist_field_bucket(struct hist_field *hist_field,
 
 
