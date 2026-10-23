@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773808;
-	b=4F8RKS6zqqUjAe/4aOiKWAq5zjgqEFcncej7TZSrkRYTtCq+8RlG4CQqV/vEeJ3yiOox
-	 N9OfiwTYlBz3ukb+JkbFnvEHLuM5JRi6c3oQOi+29w6pQPhgMGBMhwCfar9AG0ZnCiL7Y
-	 bQSjB0rpMfG/CSCSoIaeLc6UpoS8GIpwn5LGPDBoSpVH8kmYJJ7mrNwI4womF7v0CKi/W
-	 V6NOd1u9WhUrdTJW/YLPeabbtwnOYHDEX6rG3qAU2HK7pLp3O5xLnSTjIo011HpJrGHFZ
-	 z8k4J6Hzotd2D5QkJYnBNCeKkdlTnk1QkJiKgivU+QoA2gdTlaO8tF58dqQALoiHVJQ==
+	t=1792773811;
+	b=ma20TN2e8Qi+Ya5bIuPh5LaxmqsoBt9NfpFE1LTvN9Yh9r/70VyjsnZspk1PDe8RviPf
+	 jXgPTX5uVMS22psXcfrlA1GCeWjUDy+6ubVz8+TpREr4X8b66YgnWNd6GZ2/qOtStaU8a
+	 Wh3yd32KY3PQgeRNWb/pKS5Jbt4cdUvaYXrvJcodAlIP37CDOYCIT5Ffoo9BXEqIQpffw
+	 R3vt5bkVHGgKffLcBchGkqBSnK6541tTuyM+KAIdVIK1Wj2CsB6RzbMg41HzgXArgu/nT
+	 cDPVxTBy/foUYeb6TCKkb+CDCvm8uIJh3QqIgoWAsDRa+yNQuGrO0C54/t2qzLigotw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T+7RLdg60mKL2WRr6Mg7xk6Kxk25fLuBdUH1wTm0okQ=;
-	b=xAHJe9rppvosbJBLzRRwpo73vmIRb2XWIi+ryl9D8Bao4ZrwheH1jPTTg0gh5yJGmwUM
-	 t97+QFjkPOaJYJJAw9O4KMg3SFSI/VuWcooEbUGCAjCU6D+/DE9rgps0ia8EfHvPBK0Yz
-	 XrYlT9+0J5sF8OIQOgTJuUujt3SESJXu+i+myha/zVHGOgdq6/k2Dp/VUHzM3Kp5Cabxh
-	 srqiJf91VzeMmtbG0W8fmBFdUaMC7Buvj4SBWVd8mkzyGziNJk+hdxftHsEhsGdKaFNuw
-	 d5AjT1BzaDBHKYSeGlhdBzzPW3c4Zgc7UNvAifg/kdKuH380xl1U3GluAi6AhHLfzbQ==
+	bh=XbeDFA5oFt2TODcwfDu/gXyj53103h9HB79LKkYHs7g=;
+	b=2RIbNiNDPdv95DfN2O+92lUm8Ji6AYuUB+8PNRhkJ2noz8/9HzIaHr3AOxein9vNNdDe
+	 XcKK1LB8QypKZ09eh5b5fxFMr7sEUN8TzCAQ+S9+9ilnLFcBiY9GlNV1c9gFfBAe+cuop
+	 /URFxuposyuAhu23zEdfdejxW/t37RfApUpzq/VLLgVGieK1/baZz8A6oRoUJxBw2nR7M
+	 lzJIStQ8fNjzq8e+TDjlCfr0env5h9bNDOR6g5ntlQ9uyXFVx9X54OqwfBDZmdW+QPTsw
+	 pCIC+uyJqgE5dd0C/ib0M44ntRb0L/HV/eg/G9QW4eH9WLYpst5O7PktXcfAmSEfdfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O/Uj0/a4";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PjPSjY8S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CD8606A31D;
-	Fri, 23 Oct 2026 16:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FA1606A31A;
+	Fri, 23 Oct 2026 16:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O/Uj0/a4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480761F01825;
-	Fri, 23 Oct 2026 16:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PjPSjY8S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA0A1F01825;
+	Fri, 23 Oct 2026 16:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773807;
-	bh=T+7RLdg60mKL2WRr6Mg7xk6Kxk25fLuBdUH1wTm0okQ=;
+	s=korg; t=1792773810;
+	bh=XbeDFA5oFt2TODcwfDu/gXyj53103h9HB79LKkYHs7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O/Uj0/a49q2AcQRpRBaOfhm1pcxAIlXDi5NYVb0sn0BPhTla9kbrkwR9c2uFiD/gf
-	 Ye07up0D3WL2lUlundFpTDW5cSoznpSZMLMw7IbARvx+lSaeIPWZVHeULhdRnkSILP
-	 QVTFeZsz1JhhsKF2lQm6nDbqCDFz4/SDKtMv6vSs=
+	b=PjPSjY8SGLQ3G1qwY9Mt6LN1ouTd70aTn03o9McWDAMuoU1DbQYgZuZjFN+Ypuxsr
+	 xVaHtr5TzjyUKRFdAjOJ4xEB8ZLdUKHXaM2etShbQ9A27Sdk3nDB5tYDIytPdvfg5w
+	 s5l8Rqosy5/VqURgM7UTXEKi/1mdZMBOQxSak3n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Charkov <alchark@flipper.net>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Adriel Santos <adriel@adriel.eu>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 023/193] power: supply: core: prevent unregistering a power supply while a callback runs
-Date: Fri, 23 Oct 2026 18:35:00 +0200
-Message-ID: <20261023163714.750147963@linuxfoundation.org>
+Subject: [PATCH 6.18 024/193] pinctrl: qcom: ipq5018: replace gcc_plltest with pwm2 on gpio12
+Date: Fri, 23 Oct 2026 18:35:01 +0200
+Message-ID: <20261023163714.774377222@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -68,157 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Adriel Santos <adriel@adriel.eu>
 
-[ Upstream commit 5b4bd13e0552926648a46c2c9a12a24dfaee3715 ]
+[ Upstream commit 709ba1c547eaf37da36ded2ecf3ea4e304cdfa9a ]
 
-Once a power supply is registered, its callbacks can immediately start
-firing from other contexts, such as external_power_changed() triggered by
-the TCPM stack. If a power supply is unregistered while the callback is
-still running, the driver data can already be freed when the callback
-tries to access it, leading to a use-after-free.
+The pingroup table has gcc_plltest at function 5 of gpio12 and does not
+offer pwm2 on that pin, so the pinmux core rejects a request for pwm2 on
+gpio12 as an invalid group. On the hardware, function 5 of gpio12
+carries the PWM2 output: the Xiaomi AX3000T v2 drives its blue status
+LED from PWM2 on gpio12.
 
-This happens e.g. when the hardware bus carrying the power supply device
-malfunctions (e.g. I2C is hogged down by another malfunctioning device)
-immediately after the power supply is registered, and thus the core is
-still processing the callbacks which were queued up when the driver
-starts the removal, leading in some cases to a kernel crash, e.g.:
+The vendor kernel shipped on that router (Linux 4.4, stock firmware
+2.0.28) has pwm2 in this slot. Its pingroup table, as read from the
+firmware image, lists these functions for gpio12:
 
-[   11.645942] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000005
-[   11.646751] Mem abort info:
-[   11.647006]   ESR = 0x0000000096000004
-[   11.647338]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   11.647806]   SET = 0, FnV = 0
-[   11.648077]   EA = 0, S1PTW = 0
-[   11.648356]   FSC = 0x04: level 0 translation fault
-[   11.648785] Data abort info:
-[   11.649041]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[   11.649524]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[   11.649981]   GCS = 0, Overlay = 0, DirtyBit = 0
-[   11.650390] [0000000000000005] user address but active_mm is swapper
-[   11.650955] Internal error: Oops: 0000000096000004 [#1]  SMP
-[   11.651460] Modules linked in:
-[   11.651742] CPU: 1 UID: 0 PID: 144 Comm: kworker/1:2 Not tainted 7.2.0-rc6-g62a9297af2cd #1 PREEMPT
-[   11.652553] Hardware name: Flipper One rev. F0B1C2 (DT)
-[   11.653024] Workqueue: events power_supply_changed_work
-[   11.653511] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   11.654135] pc : __power_supply_is_supplied_by+0x18/0x100
-[   11.654624] lr : __power_supply_am_i_supplied+0x40/0xb8
-[   11.655098] sp : ffff80008192bb30
-[   11.655399] x29: ffff80008192bb30 x28: 0000000000000000 x27: 0000000000000000
-[   11.656049] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-[   11.656695] x23: ffff0000c19f4200 x22: ffffdb2232ba4ea8 x21: ffff80008192bc28
-[   11.657344] x20: ffff0000c1eef000 x19: ffff80008192bc18 x18: 00000000a0886e62
-[   11.657991] x17: 000000040044ffff x16: 04500072b5503510 x15: 0000000000000000
-[   11.658639] x14: 0000000000000000 x13: 0000000000000220 x12: 0000000000000000
-[   11.659286] x11: 0000000000000000 x10: ffff0000c1fdb2b0 x9 : ffffdb2232ba5590
-[   11.659934] x8 : 00000000e5b906e6 x7 : ffff0000c2502778 x6 : ffffdb22339793d0
-[   11.660581] x5 : ffff80008192bc18 x4 : ffff0000c19cbca0 x3 : 0000000000000000
-[   11.661228] x2 : ffff0000c1fdaf40 x1 : ffffffffffffffed x0 : ffff0000c1eef000
-[   11.661878] Call trace:
-[   11.662103]  __power_supply_is_supplied_by+0x18/0x100 (P)
-[   11.662596]  __power_supply_am_i_supplied+0x40/0xb8
-[   11.663040]  psy_for_each_psy_cb+0x20/0x40
-[   11.663416]  class_for_each_device+0x110/0x150
-[   11.663825]  power_supply_am_i_supplied+0x68/0x100
-[   11.664262]  bq257xx_external_power_changed+0x58/0x140
-[   11.664733]  __power_supply_changed_work+0x60/0x80
-[   11.665170]  psy_for_each_psy_cb+0x20/0x40
-[   11.665545]  class_for_each_device+0x110/0x150
-[   11.665953]  power_supply_changed_work+0x98/0x1b8
-[   11.666382]  process_one_work+0x164/0x4c0
-[   11.666758]  worker_thread+0x19c/0x320
-[   11.667104]  kthread+0x138/0x150
-[   11.667408]  ret_from_fork+0x10/0x20
-[   11.667744] Code: d503233f a9bd7bfd 910003fd a90153f3 (f9400c34)
-[   11.668294] ---[ end trace 0000000000000000 ]---
+  gpio, blsp0_spi, blsp0_i2c, blsp1_uart0, _, pwm2, qdss_tracedata_a,
+  _, _, _
 
-Add a read-write semaphore between external_power_changed() and
-power_supply_unregister() to prevent the latter from returning (and thus
-the driver from freeing its data) while the callback is still running.
+and has pwm3 at function 4 of gpio13, matching commit c6c159fcdb4e
+("pinctrl: qcom: ipq5018: add missing pwm3 function on gpio13").
 
-Fixes: bc1540561c9e ("power_supply: Add API for safe access of power supply function attrs")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Link: https://patch.msgid.link/20260910-bq257xx-init-v3-1-4e219a1a04a5@flipper.net
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Measured on the board: with gpio12 set to each of the 16 function
+values in turn, and PWM2 held at 0% and then at 100% duty, the pad
+level read back from GPIO_IN follows PWM2 only at function 5. There it
+does not follow PWM channels 0, 1 or 3, and the LED switches with PWM2.
+Functions 4 and 7, which the table leaves empty, do not carry PWM2.
+
+Put pwm2 in function 5 of gpio12 and list gpio12 in pwm2_groups. Drop
+gpio12 from gcc_plltest_groups: none of its functions is gcc_plltest
+any more, and selecting it would trigger the WARN_ON() in
+msm_pinmux_set_mux().
+
+Fixes: 725d1c891658 ("pinctrl: qcom: Add IPQ5018 pinctrl driver")
+Assisted-by: LLM
+Signed-off-by: Adriel Santos <adriel@adriel.eu>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261002160958.908424-1-adriel@adriel.eu
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 26 +++++++++++++++++++++++-
- include/linux/power_supply.h             | 10 +++++++++
- 2 files changed, 35 insertions(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-ipq5018.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 42ad333394d94..615dc27089a3a 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -1377,6 +1377,19 @@ void power_supply_external_power_changed(struct power_supply *psy)
- 			!psy->desc->external_power_changed)
- 		return;
+diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+index 4e1f033ee2d62..c6e52615b36ec 100644
+--- a/drivers/pinctrl/qcom/pinctrl-ipq5018.c
++++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+@@ -363,7 +363,7 @@ static const char * const blsp1_uart0_groups[] = {
+ };
  
-+	/*
-+	 * Keep power_supply_unregister() from returning, and thus from letting
-+	 * the driver's data be freed, while the callback is running. The
-+	 * ->removing check has to happen under the lock: on its own, just like
-+	 * the use_cnt check above, it only tells us the supply was still there
-+	 * when we looked, not that it still is by the time the callback
-+	 * dereferences its driver data.
-+	 */
-+	guard(rwsem_read)(&psy->epc_sem);
-+
-+	if (psy->removing)
-+		return;
-+
- 	psy->desc->external_power_changed(psy);
- }
- EXPORT_SYMBOL_GPL(power_supply_external_power_changed);
-@@ -1621,6 +1634,7 @@ __power_supply_register(struct device *parent,
- 	}
+ static const char * const gcc_plltest_groups[] = {
+-	"gpio10", "gpio12",
++	"gpio10",
+ };
  
- 	spin_lock_init(&psy->changed_lock);
-+	init_rwsem(&psy->epc_sem);
- 	init_rwsem(&psy->extensions_sem);
- 	INIT_LIST_HEAD(&psy->extensions);
+ static const char * const gcc_tlmm_groups[] = {
+@@ -557,7 +557,7 @@ static const char * const qdss_cti_trig_in_b0_groups[] = {
+ };
  
-@@ -1753,7 +1767,17 @@ EXPORT_SYMBOL_GPL(devm_power_supply_register);
- void power_supply_unregister(struct power_supply *psy)
- {
- 	WARN_ON(atomic_dec_return(&psy->use_cnt));
--	psy->removing = true;
-+
-+	/*
-+	 * Publish ->removing so that no new ->external_power_changed() call can
-+	 * start, and wait via semaphore for one that is already running: it may
-+	 * be a supplier's changed_work, which cancel_work_sync() below does not
-+	 * cover, and it may still dereference driver data that the caller is
-+	 * about to free.
-+	 */
-+	scoped_guard(rwsem_write, &psy->epc_sem)
-+		psy->removing = true;
-+
- 	cancel_work_sync(&psy->changed_work);
- 	cancel_delayed_work_sync(&psy->deferred_register_work);
- 	sysfs_remove_link(&psy->dev.kobj, "powers");
-diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
-index 2a8266b125618..8f9e4d0843059 100644
---- a/include/linux/power_supply.h
-+++ b/include/linux/power_supply.h
-@@ -335,6 +335,16 @@ struct power_supply {
- 	bool removing;
- 	atomic_t use_cnt;
- 	struct power_supply_battery_info *battery_info;
-+	/*
-+	 * Held for read while ->external_power_changed() runs, and for write by
-+	 * power_supply_unregister() when it publishes @removing, so that it
-+	 * waits for an in-flight callback to finish. Without this a driver's
-+	 * data, typically devm-allocated on its own device, can be freed while
-+	 * the callback is still using it.
-+	 * Must not be shared with extensions_sem: callbacks may read their own
-+	 * properties, which takes that one for read.
-+	 */
-+	struct rw_semaphore epc_sem;
- 	struct rw_semaphore extensions_sem; /* protects "extensions" */
- 	struct list_head extensions;
- #ifdef CONFIG_THERMAL
+ static const char * const pwm2_groups[] = {
+-	"gpio44",
++	"gpio12", "gpio44",
+ };
+ 
+ static const char * const qdss_cti_trig_out_b1_groups[] = {
+@@ -690,7 +690,7 @@ static const struct msm_pingroup ipq5018_groups[] = {
+ 	PINGROUP(9, sdc1_clk, qspi_clk, _, qdss_tracedata_a, _, _, _, _, _),
+ 	PINGROUP(10, blsp0_spi, blsp1_uart0, led0, gcc_plltest, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(11, blsp0_spi, blsp1_uart0, _, gcc_tlmm, qdss_tracedata_a, _, _, _, _),
+-	PINGROUP(12, blsp0_spi, blsp0_i2c, blsp1_uart0, _, gcc_plltest, qdss_tracedata_a, _, _, _),
++	PINGROUP(12, blsp0_spi, blsp0_i2c, blsp1_uart0, _, pwm2, qdss_tracedata_a, _, _, _),
+ 	PINGROUP(13, blsp0_spi, blsp0_i2c, blsp1_uart0, pwm3, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(14, pcie0_clk, _, _, cri_trng0, qdss_tracedata_a, _, _, _, _),
+ 	PINGROUP(15, _, _, cri_trng1, qdss_tracedata_a, _, _, _, _, _),
 -- 
 2.53.0
 
