@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773796;
-	b=pV91htV+Co7atkMboXUsWacOTUbaU833uOQaIW6D0x8eetAO8nrozU4zRFS4O/Jq5pfc
-	 KHS2CFNZvcGj0i7/D4hMtK/guzWDINrgjzoUeFE9qbHxtn5d50LQy/ebS70bKZB5U9vDw
-	 KkN4QggL1XSrXb9ZdvnkT5BPlF+onbkd0f/lGO5Iq9IGlBm/aJQxu//TPyecl9qKfpi56
-	 z5XjjZTtmL7MiXRHJLx45LUHI3whAv8QA17efMvge4J7LSJ5+S+FMEV/wxJwuCI4KdijC
-	 V2Yee3vccDw3ygEYJC9r0Hy5HvBVC5Mw/Rf8vQslbFt1okoIGKCoGuXx8lONTEpGLxA==
+	t=1792773799;
+	b=Vr/IFFEDICYsFfg3wyKy2DtntPvJJ8/0KHwJ6OEWGfurQ9QrK5mGia17cnbhKVDPj5yL
+	 uu/ygrjjuO2WW6RIEsVInqeNBw0z72/nez104qKB2UDRyv6TXhYpqH8+NMni1C1Mn4WAS
+	 rTC3mn1uiMRAO8JntJCqxNzTPRvOgRZmnhy7fLRnpsGeY5fA5SPFH3JNmZpfQZZ6u6/B7
+	 HlVcCJu/mLIf2Jbw5w3Kl9c6d2GLFj1WwKixsdM+932bEsewAaLb1Mfnw//IhgDoXZO3k
+	 tYfm0FKd0GcYL+nOEOXVTLadoypZvEGGde7wQQ6FP/FK1jcLYHM6PPXL4zX1vzZTtcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vlmx/guPJThAoqssX1ETfj18gaHZY+sQ+j84iajtzfk=;
-	b=Lm5k5TnRZeVb5D2ysxcIctFIkY0nVWWRKfqE5dCAR+DvDBWmQ4WYlsg79VWFMjKWhWZS
-	 Hdtp5L/CfCU1GS//PsQRtRWaeG+KKRrjcj1aU6nQT38loTK4Ruo/U77MsfVauuv5O6Nyj
-	 VlgruWILIt3iRqeH9gg3BF8p1nTlEOjskZYwoJyRYqxMbHxkN6MDu0mxIwQ1aFjwIXc6s
-	 A2SYiUsqI+x3+utfyvzF4LLWHA2tA4JvI23W5HvbGgPCKIoPjIwC1hVaL4UJujtaT3WaK
-	 4gbXr/4gU9G63nokNyak9yYlqTzJhcsBMuZYIXjM473im/Qi2A/CSrmOXi6fiZ8d+LA==
+	bh=yXqHMBDzrt22WK+6FlwoaCglb3C+bjTrYk/wCUJ4MWI=;
+	b=Bx798/rB9X9tVQt9qu/b44yEDlmT09GESbQqlM0SAMS/U03N9md5yNzeiAQLHipD0wmy
+	 y/L6xBFYp6ADdtiz6mvtlvV4k9uUhRg+4lC8PI/ku/njakQIBkatg819x5zeWd4bAql/E
+	 tAtbrSnCV1iRwiJ+DM8tsDUP94eFJaohb6M/MBSxdzZkioyd68yxV3W6oKjkZgkCkQdJI
+	 yhqWAluUyVhOPvA/+gyFru0zexzMt4gzijGUh7WsvCeF1pFSxlixddNrI8dpntLaLfsK9
+	 MyJWTdAj0Vm+375D+hwdOtMaJp9ITXhi7r0jw8IyXY8cKYO3I7VPPV4WQlK8Dsn/ajQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZRcG5Y7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wCezHFVr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD27D606A320;
-	Fri, 23 Oct 2026 16:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC78606A320;
+	Fri, 23 Oct 2026 16:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZRcG5Y7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366691F01825;
-	Fri, 23 Oct 2026 16:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wCezHFVr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AE71F01825;
+	Fri, 23 Oct 2026 16:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773795;
-	bh=Vlmx/guPJThAoqssX1ETfj18gaHZY+sQ+j84iajtzfk=;
+	s=korg; t=1792773798;
+	bh=yXqHMBDzrt22WK+6FlwoaCglb3C+bjTrYk/wCUJ4MWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZRcG5Y7WdoiWHQ/5ptHmu4Ij+o95oIedIFvrdx4pVATs9OJFfd0bCvS4Uw2uKJIw
-	 WtrHf7k9XxmHtQJEtVMjtRsHZSlUiGLHVc1Goa92jldrHtQ0kbtuxA1e0lM9N6e/IP
-	 wMB6H0fPbjTyJjK/JCTqXk1kXPnxAJH5fpyaCPso=
+	b=wCezHFVrBW7QO8IyOovWO3Ups+kXQpYNYC4UVlQBRkrgzyW+45Fq8wGVHqTuQiZx0
+	 M4cnSuSLoTePixFWGn/JS8412wJVuJwhcNO9x0N7vWPK7/6nghmTlmEq17ki1qZege
+	 q33KJ4o/GipoKY/XcVIe0Ec9VfPg6HGW2DO30M+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 011/193] power: supply: Fix maintenance charge table kernel-doc
-Date: Fri, 23 Oct 2026 18:34:48 +0200
-Message-ID: <20261023163714.470842441@linuxfoundation.org>
+Subject: [PATCH 6.18 020/193] tools/power turbostat: Fix PMT error path fd handling
+Date: Fri, 23 Oct 2026 18:34:57 +0200
+Message-ID: <20261023163714.679057107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -68,44 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 45d4af4e80a25881b6b75e8e34872c555c43a41d ]
+[ Upstream commit 11741cc90f9176746b8595beab4fec8d736ebd18 ]
 
-struct power_supply_maintenance_charge_table contains
-charge_safety_timer_minutes, but its kernel-doc describes
-safety_timer_minutes. This leaves the real member undescribed and adds a
-nonexistent member to the generated documentation.
+It is possible to leak a file descriptor if a diretory
+open succeeds, but the scan fails.  Close the fd on error.
 
-Use the member's actual name.
+Also, on cleanup, check for NULL fd.
 
-Fixes: d72ce7d32478 ("power: supply: ab8500: Standardize maintenance charging")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260909064623.90737-1-kmehltretter@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Assisted-by: Claude: Claude Sonnet 4.6
+Fixes: 4265a86582ea ("tools/power turbostat: Add PMT directory iterator helper")
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/power_supply.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
-index 360ffdf272dab..2a8266b125618 100644
---- a/include/linux/power_supply.h
-+++ b/include/linux/power_supply.h
-@@ -397,9 +397,9 @@ struct power_supply_vbat_ri_table {
-  * @charge_voltage_max_uv: maintenance charging voltage that is usually a bit
-  *   lower than the constant_charge_voltage_max_uv. We can apply this settings
-  *   charge_current_max_ua until we get back up to this voltage.
-- * @safety_timer_minutes: maintenance charging safety timer, with an expiry
-- *   time in minutes. We will only use maintenance charging in this setting
-- *   for a certain amount of time, then we will first move to the next
-+ * @charge_safety_timer_minutes: maintenance charging safety timer, with an
-+ *   expiry time in minutes. We will only use maintenance charging in this
-+ *   setting for a certain amount of time, then we will first move to the next
-  *   maintenance charge current and voltage pair in respective array and wait
-  *   for the next safety timer timeout, or, if we reached the last maintencance
-  *   charging setting, disable charging until we reach
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index b8ccf277acb23..d7b079d45d365 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -1919,8 +1919,11 @@ const struct dirent *pmt_diriter_begin(struct pmt_diriter_t *iter, const char *p
+ 			return NULL;
+ 
+ 		num_names = scandir(pmt_root_path, &iter->namelist, pmt_telemdir_filter, pmt_telemdir_sort);
+-		if (num_names == -1)
++		if (num_names == -1) {
++			closedir(iter->dir);
++			iter->dir = NULL;
+ 			return NULL;
++		}
+ 	}
+ 
+ 	iter->current_name_idx = 0;
+@@ -1948,8 +1951,10 @@ void pmt_diriter_remove(struct pmt_diriter_t *iter)
+ 	iter->num_names = 0;
+ 	iter->current_name_idx = 0;
+ 
+-	closedir(iter->dir);
+-	iter->dir = NULL;
++	if (iter->dir) {
++		closedir(iter->dir);
++		iter->dir = NULL;
++	}
+ }
+ 
+ unsigned int pmt_counter_get_width(const struct pmt_counter *p)
 -- 
 2.53.0
 
