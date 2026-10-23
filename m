@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774817;
-	b=VRrhxeQf0CUZZIvkT9x72ngwuPxG8uh8nYyXPHpvUNgGgyS89m/QJ/FudEYBpFw2n59+
-	 wA4vyGq/BQy7roDhYaYegkq1Vx6NKLDyqmWED5DlCKy45ca9zbpMniUdcTYnFPP2UrkSB
-	 EMMU9Fll2rku91uGjW1d8yxphuAYwczejDdpAqQ5uhqohHhqbO9hYWsPPAROYnbDo67jb
-	 5udxKr7G5zPhzZ+b7iyDl/60RdeIVTy9k0ZmJy/UcpZ/KL2IGbe4QoLZYBzsOBY7/Yylj
-	 YJ3faxBwPpl2OR4+M8ZR+impbXp44rZ+Cjyller6k78tRrQ+90B/1KVG8WCU/CPpWUQ==
+	t=1792774820;
+	b=2a1q9E2hAkNlEYjs/3MbBGZPtFdJT83NucP6X6vkB2oQXOhrXpP+JhcOC8Zir85xr1tj
+	 JCCw25J2hDklLi0spyWRAgnHZ7WNy4XHNQ4kwhT9ee6tXLIPAEesDJ5MhEZxkAcVQkqHU
+	 J4u1ylX5/haav3i6d7JNpPOl+poWgQUVdZRP7gHJ8IvNP0t5lijQlLhqiqsQvEw68QT7x
+	 T0494qG53wYMRb0uGNZSH+k0HLZuLWn0mJ+hi2RkncRJnD43AH4hNPJBScXu/FQaYF32r
+	 oBHmEX8lH1utYkTW0ehWeHJRZ2/suHXGByH9mJ5YnEacbm5gxEe1GZMxy5BqOVb+THA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rp/8fQ7RmjUP2nqnBoUOYjUoiM1v/VnE1VgKAgTIypI=;
-	b=snDzdB+jQxCIofovm2ik6vIA2trc3+3ErGrAEfOiARilBS+zAtz8m8hWpD6Yj/4nO9r8
-	 +6byvth9G/OReQAeWe9LmvdNIFSRw1jTYnmULaG6aokw1IWy/XGFwPMeCyon1GLTDmebE
-	 A1Usjgxbq4BAR0VvYsj6FjHWpTXUqHAFmwt27IXZEf1fxNX7Rf2ARWcqHblIcc55lJPtb
-	 HQBGKc2Olsit1uCRUWQP0DMU3GgvlXZxqm6FUhJX7lD/MU5M8d11wbN8uVM0iODnPwTnY
-	 EkNBLSm6UJSs7gZz2AEMDzWVl33VwJoVad/DdpUKpK9GY5WwIzWrZ2gUe9BOM09xCHw==
+	bh=cdJ2rz4BqCRKvz2w0p5d+T9TXcXXpYiOuAMhPpjsm8U=;
+	b=IV8OW0eGI70Bc4PbTMw8URzdZZ3R/DSaMvRCy9h16AcfyGM1hPA5ZsmkWxJgpWIQFvKW
+	 WJLDUp3aP9J6so8C+0mpQoGgmqpVNbXHJqL/zsvoR55m9kgPGup4RcFtc5VWasxLN52w/
+	 qs7ye0XhC2PRGcYgQ9AMzVa2i70oHXc6vQGkrMqXj/cYDndTcfotO7PJLXJGWkYYeH7Mb
+	 eO7xfEGGkyHlcft+MjSeY+IbmDUAhFoshIHrmLEHvCa04L6ZRU1n+dPAfg6gtfb3fVK3E
+	 FWFwguwdllpVU7DRYBuXiVDVuRZqfgtKyw7cfergczW7lmpk46qvEY12swPhW7RX8Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcnueJ7C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YiQEzJzO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0113606A31A;
-	Fri, 23 Oct 2026 17:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CC0606A31A;
+	Fri, 23 Oct 2026 17:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcnueJ7C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1321F01825;
-	Fri, 23 Oct 2026 17:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YiQEzJzO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7251F01825;
+	Fri, 23 Oct 2026 17:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774816;
-	bh=rp/8fQ7RmjUP2nqnBoUOYjUoiM1v/VnE1VgKAgTIypI=;
+	s=korg; t=1792774819;
+	bh=cdJ2rz4BqCRKvz2w0p5d+T9TXcXXpYiOuAMhPpjsm8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NcnueJ7CAkTdy7P3L+niMXpE91Gu2ra7A/ZMprc5iXjMtXSrOG2ocy2gsqw8tftWo
-	 wSBvveFyVpDmqtzaNEq8bjDJPi0tlA9hvjekiiZTSDb6F89Ic9eJ9cdNMdxJ0TDXWU
-	 JRhd7pi0UfaA7JC+FGipI6ieo7T79TRyMQCRi80o=
+	b=YiQEzJzO1aYC5+9j6tKx6bH1MJDBv65SMlnt/xzmtVJkPdD6isrWPvydWZG2v7AtS
+	 pvUVJ23c4X3T9PC8G+WzF7in5t5TjNE76GnfrMOyLlFpl4g1oabwnJjk9ZxGz6S0SW
+	 L7X+JjhEXLI1aUaIV3/O85Dhgj6ehCS44PXod+8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Len Brown <len.brown@intel.com>
-Subject: [PATCH 7.2 131/242] tools/power turbostat: Read complete CPU lists
-Date: Fri, 23 Oct 2026 18:39:33 +0200
-Message-ID: <20261023163716.880071622@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>
+Subject: [PATCH 7.2 167/242] sched_ext: Propagate every bypass depth change to the descendants
+Date: Fri, 23 Oct 2026 18:40:09 +0200
+Message-ID: <20261023163717.734465552@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,129 +67,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit c24362650f7a8573dc9a9991a034b8500af8eb19 upstream.
+commit dcf7f650a24897d59b071f7f9a454d8b0b188b27 upstream.
 
-CPU_SUBSET_MAXCPUS accepts CPU IDs through 8191, but the sysfs and
-cgroup CPU-list readers stop at 1024 bytes. A fragmented cpuset or
-hybrid PMU CPU list can exceed that size and be truncated.
-initialize_cpu_set_from_sysfs() can also pass a full, non-NUL-terminated
-buffer to parse_cpu_str(), causing an out-of-bounds read.
+scx_bypass() propagates a depth change to the descendants only when the
+scheduler's own depth crosses zero, so an own bypass that starts under an
+ancestor's never reaches them. When the ancestor's bypass ends first, the
+descendants leave bypass while the scheduler is still bypassing: a
+sub-scheduler disabled under a PM suspend has its children re-queue their
+tasks through their own BPF schedulers at resume, mid-teardown. If the own
+bypass then ends, every descendant is decremented once more than incremented
+and dec_bypass_depth() warns, though no current caller gets there.
 
-Additionally, initialize_cpu_set_from_sysfs() returns with the file
-still open on success. It is now called once per CPU for
-thread_siblings_list, so large systems can leak thousands of descriptors
-during topology discovery.
+Propagate on every call so that a descendant's depth is the sum of its own
+bypasses and its ancestors'. The early return follows the walk, as a
+descendant's depth is at least the scheduler's and nothing changes bypass
+state unless the scheduler's own does.
 
-Use getline() so both readers receive a complete, NUL-terminated line.
-Close and free the sysfs CPU-list resources on every path, and report
-malformed input from the correct buffer.
-
-Fixes: eb187540d13a ("tools/power turbostat: Increase CPU_SUBSET_MAXCPUS to 8192")
-Fixes: 58839fdbd441 ("tools/power turbostat: Process HT siblings in CPU order")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Fixes: c7f0e467a27a ("sched_ext: Prepare bypass mode for hierarchical operation")
+Cc: stable@vger.kernel.org # v7.1+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/power/x86/turbostat/turbostat.c |   44 +++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+ kernel/sched/ext/ext.c |   22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -6316,33 +6316,35 @@ int for_all_proc_cpus(int (func) (int))
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -5793,22 +5793,23 @@ static void scx_bypass(struct scx_sched
+ 	struct scx_sched *pos;
+ 	unsigned long flags;
+ 	int cpu;
++	bool changed;
  
- #define PATH_EFFECTIVE_CPUS	"/sys/fs/cgroup/cpuset.cpus.effective"
+ 	raw_spin_lock_irqsave(&scx_bypass_lock, flags);
  
--static char cpu_effective_str[1024];
-+static char *cpu_effective_str;
- 
- static int update_effective_str(bool startup)
- {
- 	FILE *fp;
--	char *pos;
--	char buf[1024];
-+	char *buf = NULL;
-+	size_t size = 0;
- 	int ret;
- 
--	if (cpu_effective_str[0] == '\0' && !startup)
-+	if (!cpu_effective_str && !startup)
- 		return 0;
- 
- 	fp = fopen(PATH_EFFECTIVE_CPUS, "r");
- 	if (!fp)
- 		return 0;
- 
--	pos = fgets(buf, 1024, fp);
--	if (!pos)
-+	if (getline(&buf, &size, fp) < 0)
- 		err(1, "%s: file read failed", PATH_EFFECTIVE_CPUS);
- 
- 	fclose(fp);
- 
--	ret = strncmp(cpu_effective_str, buf, 1024);
--	if (!ret)
-+	ret = cpu_effective_str ? strcmp(cpu_effective_str, buf) : 1;
-+	if (!ret) {
-+		free(buf);
- 		return 0;
-+	}
- 
--	strncpy(cpu_effective_str, buf, 1024);
-+	free(cpu_effective_str);
-+	cpu_effective_str = buf;
- 	return 1;
- }
- 
-@@ -8534,13 +8536,16 @@ end:
- 	return ret;
- }
- 
--char cpuset_buf[1024];
--int initialize_cpu_set_from_sysfs(cpu_set_t *cpu_set, char *sysfs_path, char *sysfs_file)
-+int initialize_cpu_set_from_sysfs(cpu_set_t *cpu_set, const char *sysfs_path,
-+				  const char *sysfs_file)
- {
- 	FILE *fp;
-+	char *cpuset_buf = NULL;
-+	size_t size = 0;
- 	char path[128];
-+	int ret = -1;
- 
--	if (snprintf(path, 128, "%s/%s", sysfs_path, sysfs_file) > 128)
-+	if (snprintf(path, sizeof(path), "%s/%s", sysfs_path, sysfs_file) >= (int)sizeof(path))
- 		err(-1, "%s %s", sysfs_path, sysfs_file);
- 
- 	fp = fopen(path, "r");
-@@ -8548,19 +8553,20 @@ int initialize_cpu_set_from_sysfs(cpu_se
- 		warn("open %s", path);
- 		return -1;
+ 	if (bypass) {
+-		if (!inc_bypass_depth(sch))
+-			goto unlock;
+-
+-		enable_bypass_dsp(sch);
++		changed = inc_bypass_depth(sch);
++		if (changed)
++			enable_bypass_dsp(sch);
+ 	} else {
+-		if (!dec_bypass_depth(sch))
+-			goto unlock;
++		changed = dec_bypass_depth(sch);
  	}
--	if (fread(cpuset_buf, sizeof(char), 1024, fp) == 0) {
-+	if (getline(&cpuset_buf, &size, fp) < 0) {
- 		warn("read %s", sysfs_path);
--		goto err;
-+		goto out;
- 	}
- 	if (parse_cpu_str(cpuset_buf, cpu_set, cpu_possible_setsize)) {
--		warnx("%s: cpu str malformat %s\n", sysfs_path, cpu_effective_str);
--		goto err;
-+		warnx("%s: cpu str malformat %s\n", sysfs_path, cpuset_buf);
-+		goto out;
- 	}
--	return 0;
-+	ret = 0;
  
--err:
-+out:
- 	fclose(fp);
--	return -1;
-+	free(cpuset_buf);
-+	return ret;
- }
+ 	/*
+ 	 * Bypass state is propagated to all descendants - an scx_sched bypasses
+-	 * if itself or any of its ancestors are in bypass mode.
++	 * if itself or any of its ancestors are in bypass mode. A descendant's
++	 * depth is the sum of its own bypasses and its ancestors', so every
++	 * call propagates whether or not @sch changed state.
+ 	 */
+ 	raw_spin_lock(&scx_sched_lock);
+ 	scx_for_each_descendant_pre(pos, sch) {
+@@ -5822,6 +5823,13 @@ static void scx_bypass(struct scx_sched
+ 	raw_spin_unlock(&scx_sched_lock);
  
- void print_cpu_set(char *s, cpu_set_t *set)
+ 	/*
++	 * A descendant's depth is at least @sch's, so no bypass state changed
++	 * unless @sch's did.
++	 */
++	if (!changed)
++		goto unlock;
++
++	/*
+ 	 * No task property is changing. We just need to make sure all currently
+ 	 * queued tasks are re-queued according to the new scx_bypassing()
+ 	 * state. As an optimization, walk each rq's runnable_list instead of
 
 
