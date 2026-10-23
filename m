@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774570;
-	b=sx61EOR7h3abhGmnZIPJ8fZiien0wsBatmxQNjnXWVRpL0A0Rrqn2jrgri9q3VwWq7Eh
-	 eXh01eVaBn9xyQ6dOd3B1jWN7p9+Np1gACrrJvbC0ETiyFuytoXfWQqlE06/s3OxtoNTI
-	 AlHA8PZcmPwMYzkKrS2Wg7je8+w21MiX1mXwV7ozoW8Atnf0iCkALg5GzhJB77PM8ks8t
-	 1hgAj0XsPTf3LYOnyjlds/YhVn7Eh8OAHzPbvo54Fl/FK+4x+Tduangpg+orZcSMiqgWw
-	 VGi6bNDq/O/tWvLe6/wymNIafXiPKPTW9bYt2aidKHXqtXu9Z7MlyHTkADlJEOHCzZA==
+	t=1792774573;
+	b=Ai8Eal2vzHSZXqhKWakNIpR30OOphrfZYRVhuMRuiJgHfFzwKnx0mDIvJ62xLUkf2OB0
+	 QfePqAHHGdctyt5qbxkZprgzEsOhL+SbvTxidMmmD+E2svF8ppGpZbBIzQhKbvOlUyjYz
+	 Ub6qBn70isWXlzrjiouWvtjUZPX+1yCPW3KNqPrxImSjndITokg3/GdNNsnetCHEN1FHG
+	 moatE1RfYksOOWin+Hm7iqK/NEiuu4uHx+L6Amc1lmDmAB8oeEAa30IX/SK5SdRCaliso
+	 KNAI0Q5rwJji3DzN4Ieag9gaZgfHywJ1JjqXl2qkleKAGdfPd2Q+u7xUCsy5eHhzhiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774570;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774573;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t0CnzxOTt0l9mdwFNXCzYBfClSf7+o8Paddgqqwai64=;
-	b=Kww00czrUqFGb96Xy1PTJV0j3ma8zL31qRpWhvoyuofLqnuy3vwT6fJ3n5ABVHMMljUb
-	 9Sy6rM3TDMlaCTiLLXQGaA75WYd0YgyLZqHkZC4c5kCGw09smCF3SSGJNDr8pSkLaf8cr
-	 QezC8pZY31PHQRbRWSxLsszUgLqIYbtclW1tyWuYmsKY/DGgGBlxWgCWY5JM3gObbWlkj
-	 nfb0FGXSorhlIMb7jbWr4RbQpRiuzzUM8ez7eeOwMD9skYXqurXoGdDuqAkk6/I3fCqD5
-	 7VqXvnh+z7EV1d4XqawBa69Te3PN3yKvDJSWUmQiEsdmN4X/7k67nNjj0akdTjs3X+A==
+	bh=pjqE1Veh0JcWJ305qYuFSJ7Yui+Lh+v1aC1Ht99U0WY=;
+	b=si2ggSjJlFjj4mAbO8qId4zNfm+dsgWQ7HqwQR3pVMZ0ic+eT+xhc6gmGUY/lTTNPGQ0
+	 JaxAtf3gbc5QaAvUmKrer6JTcPkyRvfZkhYbRkqj38QPsA7pGpWNu2YeuIhf4b/1kLq6l
+	 sMmLJBPyfSTPd/y5Rr0O2sxnfl4doPzGiMA5qAAplJGlNpAvBIB4Ck3C5N7rTbzwwpV+l
+	 CtH3b03npoj+QQe7wu51thCfpL98g907Naufnemvr5qbhTPP8EXigvdLLgdbbkLZXbreX
+	 dv9zVbCrC4wqksDIuaubKJbWSTCd2YNIOCISw2plVvDXqIVARYRYC+A+i1JAZQ5sR5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bEsloqMX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adiHtrxP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9A2606A31A;
-	Fri, 23 Oct 2026 16:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453AD606A31A;
+	Fri, 23 Oct 2026 16:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bEsloqMX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DC91F01825;
-	Fri, 23 Oct 2026 16:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adiHtrxP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D971F01825;
+	Fri, 23 Oct 2026 16:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774570;
-	bh=t0CnzxOTt0l9mdwFNXCzYBfClSf7+o8Paddgqqwai64=;
+	s=korg; t=1792774573;
+	bh=pjqE1Veh0JcWJ305qYuFSJ7Yui+Lh+v1aC1Ht99U0WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bEsloqMXUYJCFTfN60Iyakz4mdQGeJYyvtrHGkAPRVA/RD0YOtdWeuvpGQXDAzDCr
-	 djtCMl09Mlw8eQcXXIcXjf2sY4PzMPykoVc6mfJCjXVxrku+p+GAPfktOB40/4/gul
-	 gDoT46zAyIHMMuEKxbgWVnKvgLZVmwXSA455ROUA=
+	b=adiHtrxPUUDV3YOiUlAw59fV1lyq66p5oxk/Yd0sqAlEjO7n2vt4LCqzjGLH33hCu
+	 LYlvUKRRuV44Uyq+s/F37mYb2hnCY5k3UAthEvk4M0X+0oZ048sHq76cysyJIUhS6t
+	 emsepuVpRq4Y5xbtmPZo+PwBwqiYvkL5Ct4raZs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Wang Zhan <wang.zhan@smartx.com>,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 084/242] calipso: keep BIG TCP payload_len in calipso_skbuff_setattr()
-Date: Fri, 23 Oct 2026 18:38:46 +0200
-Message-ID: <20261023163715.764341975@linuxfoundation.org>
+Subject: [PATCH 7.2 049/242] scsi: st: Save the visited block for the partition the drive is in
+Date: Fri, 23 Oct 2026 18:38:11 +0200
+Message-ID: <20261023163714.936364309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,90 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Laurence Oberman <loberman@redhat.com>
 
-[ Upstream commit 8070ed578b6b9134e045627fb745c887a806d46e ]
+[ Upstream commit c9e9f024dd4f61f0f6636c9f2ed0830f87060e11 ]
 
-calipso_skbuff_setattr() adjusts payload_len by the length of the
-option it inserts or resizes:
+set_location() saves the current tape location before switching
+partitions, so that switch_partition() can return to it later. It reads
+the location with READ POSITION but stores it in the st_partstat of
+STp->partition, ignoring the partition the drive reports.
 
-	payload = ntohs(ip6_hdr->payload_len);
-	ip6_hdr->payload_len = htons(payload + len_delta);
+The two differ after a device reset. When the reset is recovered with
+MTREW, MTSEEK or MTEOM, st_ioctl() sets STp->partition = 0 and calls
+switch_partition() to return to STp->new_partition. A drive that was in
+partition 1 is still there, so set_location() files the partition 1
+position under partition 0. The next switch to partition 0 locates to
+that block: if partition 0 holds less data, MTSETPART fails with EIO
+(BLANK CHECK), otherwise the tape is silently positioned at the wrong
+block.
 
-GRO can build BIG TCP packets larger than IPV6_MAXPLEN, and stores
-payload_len == 0 for them; ipv6_payload_len() then falls back to
-skb->len.  For such a packet forwarded to a destination mapped to
-CALIPSO, the code above writes len_delta (or 65536 + len_delta when
-shrinking) into payload_len, and ipv6_payload_len() no longer falls
-back to skb->len.  nf_tables, conntrack and sch_cake rely on it.
+IBM ULTRIUM-TD5 (LTO-5), LU reset in partition 1 at block 1025:
 
-The same arithmetic also wraps when a packet grows past IPV6_MAXPLEN,
-and a BIG TCP packet that shrinks below IPV6_MAXPLEN should get its
-real length back.
+  st 12:0:0:0: [st0] Visited block 1025 for partition 0 saved.
+  ...
+  st 12:0:0:0: [st0] Setting block to 1025 and partition to 0.
+  st 12:0:0:0: [st0] Error: 402, cmd: 2b 2 0 0 0 4
+  st 12:0:0:0: [st0] Sense Key : Blank Check [current]
+  st 12:0:0:0: [st0] Add. Sense: End-of-data detected
 
-Set payload_len from the skb length with ipv6_set_payload_len(), which
-stores 0 above IPV6_MAXPLEN and the real length otherwise, as
-ipv6_gro_complete() does.  The network header was just reset to
-skb->data, so skb->len - sizeof(*ip6_hdr) is the payload length.
+Store the location in the st_partstat of the partition reported by READ
+POSITION. With the fix:
 
-Tested on one kernel (arm64, QEMU) with SELinux permissive, a minimal
-mdp-generated policy (network_peer_controls=1), "netlabelctl calipso
-add pass doi:16" and a NetLabel mapping of fd00:2::/64 to CALIPSO
-DOI 16.  calipso_skbuff_setattr() was called through
-netlbl_skbuff_setattr() from a test-only debugfs hook (not part of
-this patch) adding a level-only label; payload_len after the call:
+  st 12:0:0:0: [st0] Visited block 1025 for partition 1 saved.
 
-  case                         before fix   after fix   real length
-  1000, unlabeled                    1016        1016          1016
-  70000 GSO, payload_len 0             16           0         70016
-  65530 GSO, grows past MAXPLEN        10           0         65546
-  65540 GSO with a 24 byte hop
-  header, shrinks below MAXPLEN     65528       65532         65532
-  1000 with a 24 byte hop header      992         992           992
+This is a pre-existing issue. It was not caught when testing the recent
+st reset series because the partition test was only run on scsi_debug:
+on the LTO drive it was skipped, since can-partitions is off in the test
+harness's stinit.conf, as is normal for LTO. scsi_debug hides the
+problem because its emulated tape returns to the beginning of partition
+0 on an LU reset. It was found while validating a backport of that
+series to RHEL 9.8, when the partition tests were run on real hardware
+with can-partitions enabled. The same failure then reproduced on
+unmodified RHEL 9.8 and on upstream, and the fix makes the test pass on
+v7.3-rc3 and RHEL 9.8 with an LTO-5.
 
-(0 means ipv6_payload_len() returns the real length.)  On the forward
-path, with a client injecting unlabeled UDP through a router to a
-server, the router adds the CALIPSO option and the server delivers all
-datagrams (Udp6InDatagrams 5, Ip6InTruncatedPkts 0) with this patch.
+The harness (https://gitlab.com/loberman/tapetest, test X03) now refuses
+to silently skip the partition tests on hardware.
 
-Fixes: 81fbc812132c ("ipv6/gro: insert temporary HBH/jumbo header")
-Suggested-by: Eric Dumazet <edumazet@kernel.org>
-Suggested-by: Wang Zhan <wang.zhan@smartx.com>
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Wang Zhan <wang.zhan@smartx.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/179156155963.36253.400481753322266658@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7081dc75df79 ("scsi: st: Restore some drive settings after reset")
+Assisted-by: Claude
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20261006164250.773840-1-loberman@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/st.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index c6a34334e657e..a0192b4fef334 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -1318,7 +1318,7 @@ static int calipso_skbuff_setattr(struct sk_buff *skb,
- 	struct ipv6hdr *ip6_hdr;
- 	struct ipv6_opt_hdr *hop;
- 	unsigned char buf[CALIPSO_MAX_BUFFER];
--	int len_delta, new_end, pad, payload;
-+	int len_delta, new_end, pad;
- 	unsigned int start, end;
- 
- 	ip6_hdr = ipv6_hdr(skb);
-@@ -1357,8 +1357,8 @@ static int calipso_skbuff_setattr(struct sk_buff *skb,
- 			sizeof(*ip6_hdr) + start);
- 		skb_reset_network_header(skb);
- 		ip6_hdr = ipv6_hdr(skb);
--		payload = ntohs(ip6_hdr->payload_len);
--		ip6_hdr->payload_len = htons(payload + len_delta);
-+		/* 0 above IPV6_MAXPLEN (BIG TCP), the real length otherwise */
-+		ipv6_set_payload_len(ip6_hdr, skb->len - sizeof(*ip6_hdr));
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index f1c3c49466379..cab8aa73969c3 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -3217,14 +3217,20 @@ static int set_location(struct scsi_tape *STp, unsigned int block, int partition
+ 	    partition >= ST_NBR_PARTITIONS)
+ 		return (-EINVAL);
+ 	if (partition != STp->partition) {
+-		if (get_location(STp, &blk, &p, 1))
++		/*
++		 * Save the location for the partition the drive reports,
++		 * not for STp->partition: after a reset STp->partition may
++		 * not match the partition the drive is in.
++		 */
++		if (get_location(STp, &blk, &p, 1) ||
++		    p < 0 || p >= ST_NBR_PARTITIONS)
+ 			STps->last_block_valid = 0;
+ 		else {
+-			STps->last_block_valid = 1;
+-			STps->last_block_visited = blk;
++			STp->ps[p].last_block_valid = 1;
++			STp->ps[p].last_block_visited = blk;
+ 			DEBC_printk(STp, "Visited block %d for "
+ 				    "partition %d saved.\n",
+-				    blk, STp->partition);
++				    blk, p);
+ 		}
  	}
  
- 	hop = (struct ipv6_opt_hdr *)(ip6_hdr + 1);
 -- 
 2.53.0
 
