@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774359;
-	b=tAo8ek6cVON4WTGd2EK68SP01GjAarNfHKYLKA/4nJD56d1FHvIXV1PDscw2Fxgc4D2Y
-	 w94Hxh0dGnEiILZPit39aM1fgY/uZvjjDXhpk1BZgq/Zzhi43PohVZJmMBI2mynel0II4
-	 owDanUp6n1MgvddkKINHn0mlhKsjfcthoarjJ+5JGYV3PNCJyJLcAB0mmaqLbIbN9FVEf
-	 YLBaB340Djwbh1lv/P/Hc2PrAVUkD0ED4YojcV7WQvdcDIEkfq8gTet3bIafGcJ3aM5QT
-	 h3EBPeDlVapz0CBDxNM05Sux+ZfBIs+qhHAPE+XwjYTwAneUTneUdKCCmeBN0lgdBiw==
+	t=1792774362;
+	b=ckhyzAf+C70dqrj4FzZ4XqmIzMYYvpY9wRcgXGv03XtBCOC35AG0uMafJxJCzTn/lQpn
+	 wlq934TABcG5vN0hro6pdyYG691mA1PkcOWy7K8MvmV3o8bRuqtJzAHOhzQCRDAKc6vzy
+	 V0mKmBAYbVM2Ulm2sABrsT0TXYckg3YGbJibo7eZpzZQ3F3HeqUohciFn1TBzDKbz0ijP
+	 K24Nq39Af3vq9dQGkwepCvQUynXvLXdHb5UxGMhPpJVApg8YPLaUkGVlqa5qBaVgEcNi8
+	 UkmldbzmhU/roI8HUweFpZMw5SZPEacZ2/VdUt0wEwOWY+q8XIh9guchMKO5rMatzuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RPJt8IJhM/dkz9Tx8QPnL1ejV0DCSF66+a9pJYMA0UU=;
-	b=UTKCvKkQkVhjNiRELU8gaRRADR7vCXgLwvoaIx8ZdoEJey4AVmki+omb3LD7YcZgI/Sf
-	 JAS7JIjPzVG+7HifIvAsAsWcm7Ixf5jk93f+7GkkQHRVg15RKj42cxNMmvvk7evhMIFvu
-	 HGDYrrd4aU2Ixz/LpM0eG2sybDkjuSqVGS+mZWkGmlLTjX2j4/DbrBApSW6nYv97CZGHF
-	 uo5h/TD/B9P09MAqFE7dw9/w02eeOBEZnoq4i3tAItvwMm+1NjMZZ6HxBJI3tHz9QvQ1z
-	 sZKKWY7+hOPkkAB46J1RUgORL/1rlgiv4PrAvplFdjyTnbU2pd9RVJpKHWllGfiNVew==
+	bh=IdmcBgcnPFcEUljtVVqFqsNBoq3bwEWGE3nrHnsHOSE=;
+	b=PKM+NV3C3FMhS+wpm/LXqGmstnJpnuyEz4iLXNUmWIqBmGp84PFWjlrIC/WKRW+CGYlT
+	 hdXgQeamYJXDnPdMPpAYf54DWGXIypQNBTfJKc3+O/PDolK4Ibg6JyrDE4bv+IRKhyCe4
+	 tiwswkyLLWlQcbhqXwp+qIR/1j+9B4avjeuZEyrmiODQxf7MhTcWt70juwVjgqE1AQulZ
+	 bIuuDMOqP/fAR0+7h9JbYAhjrAylhB2OpjtLwtjkZgMH77eiA3SNi8u07QPwQVQM90PE7
+	 okFoLE2UCQ1193rCAFRaU5Tp78GHzydL0EZA3yDOtHXfa5bY1+2XWcg/38+9YHLPhzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AcUz3jhv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GE1o7YBa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C899606A31A;
-	Fri, 23 Oct 2026 16:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97963606A31D;
+	Fri, 23 Oct 2026 16:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AcUz3jhv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82481F031E0;
-	Fri, 23 Oct 2026 16:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GE1o7YBa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF621F01828;
+	Fri, 23 Oct 2026 16:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774359;
-	bh=RPJt8IJhM/dkz9Tx8QPnL1ejV0DCSF66+a9pJYMA0UU=;
+	s=korg; t=1792774362;
+	bh=IdmcBgcnPFcEUljtVVqFqsNBoq3bwEWGE3nrHnsHOSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AcUz3jhvX7VfUY7PWUYTBh2nuPNrwcCLQBBtwwGa7EfkQBPj9yJ960oGteZfGcw58
-	 5SKD5nvxTbuPZQf4xbOqoIoI1spRqbo3KJTsm5vAe+2X0aIEUs2EhTEy2Oeprf1Ou6
-	 77LUgrrOS6lhdFr0eMDJ527coJsY644Vnkcr+O/M=
+	b=GE1o7YBasPV4SdvbK87HgK4Te1i/tty4oG+O0qU86bp963CRfp8Od7mjueOPMM/5v
+	 +Qz1H4P1SpdkgYRgFu8dXJ9PAxU2Ykt3PhBajy7PKqRkwB49b2lGMLXX/Gx6Q5wVwt
+	 IYJq+PgvXWAYaxVYFXGt9Dg/v/KGchjb+EHWRsKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilberto Conde <gilbertorconde@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 015/242] pinctrl: qcom: ipq5018: add missing pwm3 function on gpio13
-Date: Fri, 23 Oct 2026 18:37:37 +0200
-Message-ID: <20261023163714.151298088@linuxfoundation.org>
+Subject: [PATCH 7.2 016/242] pinctrl: qcom: spmi-gpio: make direction changes exclusive
+Date: Fri, 23 Oct 2026 18:37:38 +0200
+Message-ID: <20261023163714.174230814@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,59 +69,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gilberto Conde <gilbertorconde@gmail.com>
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
 
-[ Upstream commit c6c159fcdb4e9a678eda0831f971e4a3a488ec47 ]
+[ Upstream commit 19fc4240358be2a25ce8e0a49a2819588ed61c5d ]
 
-GPIO13 supports the PWM3 function at mux select value 4, but the
-pingroup table leaves that slot empty and gpio13 is not listed in
-pwm3_groups. Selecting pwm3 on gpio13 is therefore rejected by the
-pinmux core:
+Neither direction callback clears the opposite buffer: .direction_output()
+only packs PIN_CONFIG_LEVEL and .direction_input() only packs
+PIN_CONFIG_INPUT_ENABLE.  As pmic_gpio_populate() seeds input_enabled and
+output_enabled from MODE_CTL, a pad left in DIGITAL_INPUT[_OUTPUT] by the
+bootloader ends up in DIGITAL_INPUT_OUTPUT whichever direction is
+requested.  That leaves an input still driving the line, and makes
+pmic_gpio_get_direction() report an output as an input, which breaks
+consumers that read the direction back:
 
-  ipq5018-tlmm: invalid group "gpio13" for function "pwm3"
+  reg-fixed-voltage regulator-wcn-core-vm-1p35: setup of GPIO (default) failed: -1
+  reg-fixed-voltage regulator-wcn-core-vm-1p35: error -EPERM: can't get GPIO
 
-The GL.iNet GL-X2000 drives its fan from PWM3 on this pin, and the
-vendor firmware muxes it with select value 4:
+Pack the opposite buffer's PIN_CONFIG_*_ENABLE along with the requested
+direction, so MODE_CTL becomes DIGITAL_INPUT or DIGITAL_OUTPUT, never
+both.  pmic_gpio_config_set() writes the registers once after walking all
+configs, so this stays a single write.
 
-  gpio13 : out low  func4 8mA no pull
+An open-drain or open-source output is the exception: it only drives one
+rail, so pmic_gpio_get() needs the input buffer to sample the line rather
+than return the value last written.  Program the input buffer from
+pad->buffer_type, which gpiolib has already updated via
+PIN_CONFIG_DRIVE_OPEN_DRAIN, and key pmic_gpio_get_direction() off
+output_enabled so such pads still read back as outputs.
 
-Add pwm3 to the fourth function slot of gpio13 and list gpio13 in
-pwm3_groups. With this the pin muxes as expected:
+Genuinely bidirectional pads can still be described that way through
+pinconf; the gpiolib callbacks now mean what gpiolib says they mean.
 
-  pin 13 (GPIO_13): device 1941010.pwm function pwm3 group gpio13
-
-Fixes: 725d1c891658 ("pinctrl: qcom: Add IPQ5018 pinctrl driver")
-Signed-off-by: Gilberto Conde <gilbertorconde@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260921093419.2870168-1-gilbertorconde@gmail.com
+Fixes: 263447532463 ("pinctrl: qcom: spmi-gpio: implement .get_direction()")
+Assisted-by: LLM
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260927010913.1212600-1-shengchao.guo@oss.qualcomm.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-ipq5018.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 37 +++++++++++++++++++-----
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-index 03cfba9534f84..84392fe258c9f 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-@@ -563,7 +563,7 @@ static const char * const qdss_cti_trig_out_b1_groups[] = {
- };
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index cdd61dae74cf9..9fc6230ffc36c 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -734,29 +734,50 @@ static int pmic_gpio_get_direction(struct gpio_chip *chip, unsigned pin)
+ 	    (!pad->input_enabled && !pad->output_enabled))
+ 		return -EINVAL;
  
- static const char * const pwm3_groups[] = {
--	"gpio45",
-+	"gpio45", "gpio13",
- };
+-	/* Make sure the state is aligned on what pmic_gpio_get() returns */
+-	return pad->input_enabled ? GPIO_LINE_DIRECTION_IN : GPIO_LINE_DIRECTION_OUT;
++	/*
++	 * An open-drain or open-source pad keeps its input buffer enabled while
++	 * driving, so the output buffer is what tells the direction.
++	 */
++	return pad->output_enabled ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
+ }
  
- static const char * const qdss_cti_trig_in_b1_groups[] = {
-@@ -689,7 +689,7 @@ static const struct msm_pingroup ipq5018_groups[] = {
- 	PINGROUP(10, blsp0_spi, blsp1_uart0, led0, gcc_plltest, qdss_tracedata_a, _, _, _, _),
- 	PINGROUP(11, blsp0_spi, blsp1_uart0, _, gcc_tlmm, qdss_tracedata_a, _, _, _, _),
- 	PINGROUP(12, blsp0_spi, blsp0_i2c, blsp1_uart0, _, gcc_plltest, qdss_tracedata_a, _, _, _),
--	PINGROUP(13, blsp0_spi, blsp0_i2c, blsp1_uart0, _, qdss_tracedata_a, _, _, _, _),
-+	PINGROUP(13, blsp0_spi, blsp0_i2c, blsp1_uart0, pwm3, qdss_tracedata_a, _, _, _, _),
- 	PINGROUP(14, pcie0_clk, _, _, cri_trng0, qdss_tracedata_a, _, _, _, _),
- 	PINGROUP(15, _, _, cri_trng1, qdss_tracedata_a, _, _, _, _, _),
- 	PINGROUP(16, pcie0_wake, _, _, cri_trng, qdss_tracedata_a, _, _, _, _),
+ static int pmic_gpio_direction_input(struct gpio_chip *chip, unsigned pin)
+ {
+ 	struct pmic_gpio_state *state = gpiochip_get_data(chip);
+-	unsigned long config;
++	unsigned long configs[2];
+ 
+-	config = pinconf_to_config_packed(PIN_CONFIG_INPUT_ENABLE, 1);
++	configs[0] = pinconf_to_config_packed(PIN_CONFIG_OUTPUT_ENABLE, 0);
++	configs[1] = pinconf_to_config_packed(PIN_CONFIG_INPUT_ENABLE, 1);
+ 
+-	return pmic_gpio_config_set(state->ctrl, pin, &config, 1);
++	return pmic_gpio_config_set(state->ctrl, pin, configs,
++				    ARRAY_SIZE(configs));
+ }
+ 
+ static int pmic_gpio_direction_output(struct gpio_chip *chip,
+ 				      unsigned pin, int val)
+ {
+ 	struct pmic_gpio_state *state = gpiochip_get_data(chip);
+-	unsigned long config;
++	struct pmic_gpio_pad *pad = state->ctrl->desc->pins[pin].drv_data;
++	unsigned long configs[2];
+ 
+-	config = pinconf_to_config_packed(PIN_CONFIG_LEVEL, val);
++	/*
++	 * An open-drain or open-source pad only ever drives one rail, so the
++	 * line can still be sampled while the pad is an output.  Keep the input
++	 * buffer enabled for those, so that pmic_gpio_get() reports what is on
++	 * the wire rather than the value last written, and disable it for a
++	 * CMOS pad, so that the pad ends up in DIGITAL_OUTPUT rather than
++	 * DIGITAL_INPUT_OUTPUT.  Program it either way, as the buffer may have
++	 * been left in the opposite state by the bootloader or by an earlier
++	 * direction change with a different buffer type.  gpiolib applies
++	 * PIN_CONFIG_DRIVE_OPEN_DRAIN before calling this, so buffer_type is
++	 * already up to date here.
++	 */
++	configs[0] = pinconf_to_config_packed(PIN_CONFIG_INPUT_ENABLE,
++					     pad->buffer_type != PMIC_GPIO_OUT_BUF_CMOS);
++	configs[1] = pinconf_to_config_packed(PIN_CONFIG_LEVEL, val);
+ 
+-	return pmic_gpio_config_set(state->ctrl, pin, &config, 1);
++	return pmic_gpio_config_set(state->ctrl, pin, configs,
++				    ARRAY_SIZE(configs));
+ }
+ 
+ static int pmic_gpio_get(struct gpio_chip *chip, unsigned pin)
 -- 
 2.53.0
 
