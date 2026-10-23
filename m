@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774398;
-	b=HpI03LcOJ/ZqyjRouByivTNPsPni7TuLiiJzEwPl5dSo1kKmdoVQg6jWC6yVGBv5qx72
-	 +8DmoeJzWG+hwVUBgFQ8AlEmJZw/SbYQAGpZ0pl6GbFa+uFnDzSLm7hUb7RJ3DIYIhSE4
-	 srGzXXuQ034n5Nw9gNcdzrC71bV24elNzh+5TuWuOrcdV/s+QJQr4DNiY31kLLe7LSUrM
-	 3H30a6b0HDYPdPjEJ4rZlSWYeMp4FYtxbURjiRbjMUFcw6nU+/WWHX/dUk+zwRTFt5kAe
-	 BO0mBNgAKLFAWZEdgRhk1jmG5i9UmSwUK1bjL48pfefSrwaOkNGh0O+BYB1ntQ4qDbA==
+	t=1792774401;
+	b=bJNflvc973uSTqXaW3SZ7fl1ye8ZUmjhM0QuqQ12ew5H1RAp02E2JWY6i7/P7J9wtCUW
+	 6AcaGdj7rTCOQQblpTn/FjgPBdYEg3QIWNkmv+Zo+zdMEBTs72HCWJ885pbXzUDduTTNB
+	 NUF7aGU0Memf1vSfnkdGSUlBYrW/x/IcqVHuBL8JT36rNlXeW7Yivp+ZyXjFpxsdSygbf
+	 M7GuvZo0bNfM15KBMHkZe8NC7lVrAe+s/liNirma1fvnbtsCm0oSO63rncjSGLQg55SSc
+	 yMHc1D6VlZPhB0ElTpzO5VdcSnnxsUFAPkBknFdsZxekc7O5bSZVw1f1yWAZQkmk+OQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774401;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZcQaF5GjdD+s9ByG/L/2IWl3FOeC5x8utfdK0zq0BjA=;
-	b=wjElblIZoYj4OBlHKDSxwDBAYx+O/+9qkuzLJvKP68PKeoXmpA2vCWiYGtcQwUyQF0u/
-	 WxvSL5Ohk6VY3PDfFDKWknsb75CIJm/oITObu+Yw3B13pA3J3As1nMHheWYdoTEhUseIa
-	 qiawuLDPTs18vmDS1joV3KaOwLKJCnnFRIfqaksd+VxHePWVxW9x5EgiVDBUMs5A4ZmX5
-	 LcwzMdHa8ghwypE+wm/FoBS7HlD9PVLVVHQqIAD9AXsv945Sc1fUcDabT8gNlKXm0xwWH
-	 5IVRTDGevCCABjAWmk0DnYWdPZcjrzJp/v7Qi1IYMeoC9ww6wzkr8iJLhTGn8Lv+Paw==
+	bh=slYivxUbP3TpetyLDHUzK20wUmmKNQhRNO2EfGN5FcE=;
+	b=wrPkqH1of6LeFeRjOqOHjvUsxvEMBmQTucCWTsvKsjlFBTHcZfG8Y6jjie66Kv4q1nmW
+	 WCeC4+VvvxHJWOsmhAk1cUFc5fn/ax+mKcluOZlHWGTWQXAxafxCpBy+Deq6JuSgzuVqG
+	 9lL35NjbX5DNbI1xVO10Nx1cE0aSbSksCQvLBymgR52024ayAvLVGAxc8PdPIXYeNcn2Y
+	 3sxF0wkDLOFbzkOFMfAdFhBgp23OwKRxPoU5rfZPDyoKmII/3mwHqmY02w26DLMLN2CKX
+	 tvvEeDcV7tIUz2bLxy1/W97R8UMZsH38ypgNlK8TEtobHZ43TMjTMXLcxbhz+tUjZ2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=urNszPua;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Csu6eFsj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BBF606A31A;
-	Fri, 23 Oct 2026 16:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51394606A31E;
+	Fri, 23 Oct 2026 16:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=urNszPua
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985A31F01825;
-	Fri, 23 Oct 2026 16:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Csu6eFsj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DD31F01825;
+	Fri, 23 Oct 2026 16:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774398;
-	bh=ZcQaF5GjdD+s9ByG/L/2IWl3FOeC5x8utfdK0zq0BjA=;
+	s=korg; t=1792774401;
+	bh=slYivxUbP3TpetyLDHUzK20wUmmKNQhRNO2EfGN5FcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=urNszPuaWS5uCNGLzYkvq5oaGPATMXkVzw/9tmBlYyBtSawaQ43KkVBmtrs2fPbDc
-	 N8xDk1Zoyo2SUiCMfyhG6X+oVq3I7OEXM/Sm0d7M6JHQL8jYdXU9MTOzFsmkd9cP+3
-	 47m4HYso49EGkTTxIUsuSWIbKWlHpPTEO2qkYeH4=
+	b=Csu6eFsj+zBqbhnxiSi7fGe5TWNO20CVuvqwGXJjufy/8gd6mETDckjTlBzJ+MupF
+	 6DOTnKPf/DY2u+CpqqO5Omor9qwLMKm+qNdgPaguxGE/nYMLKdif8+CFSY+3yR39VU
+	 2VHFZE2Kk0PwnoJN2KlIB4aafgmhzeYyB2kYFyts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yu <a0282524688@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 027/242] gpio: nct6694: Mark the GPIO controller as sleeping
-Date: Fri, 23 Oct 2026 18:37:49 +0200
-Message-ID: <20261023163714.425500589@linuxfoundation.org>
+Subject: [PATCH 7.2 028/242] vsock: treat TCP_CLOSING as once-established
+Date: Fri, 23 Oct 2026 18:37:50 +0200
+Message-ID: <20261023163714.449072083@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,36 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yu <a0282524688@gmail.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit fcbc48dc650d2f58bfe19c4486830de0e9cad62e ]
+[ Upstream commit 4f6ac74fa594a918d41255c941256e1d51592d3b ]
 
-The GPIO callbacks take a mutex and issue USB transfers, so this GPIO
-chip must not be used in atomic context. Change the can_sleep switch in
-struct gpio_chip to true.
+Handle the TCP_ESTABLISHED -> TCP_CLOSING transition on OP_RST, which can
+race with the connect loop. Immediately break and return 0 on
+ESTABLISHED/CLOSING. The return value of connect() should reflect what
+happened up to the point the connection was established or failed. Events
+that occur afterwards must not affect it. E.g. even if OP_RW has already
+set sk_err, connect() should still return 0, not ENOBUFS because of it.
+Adapt the inaccurate comment above signal_pending().
 
-Fixes: 611a995e8ae1 ("gpio: Add Nuvoton NCT6694 GPIO support")
-Signed-off-by: Ming Yu <a0282524688@gmail.com>
-Link: https://patch.msgid.link/20261007092102.3768818-2-a0282524688@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Resetting a socket that is still present in connected_table can lead to
+memory corruption. The reporter noted lost transports for in-flight skbs,
+and I have reproduced crashes caused by re-insertion into connected_table.
+
+  list_add double add: new=, prev=, next=.
+  kernel BUG at lib/list_debug.c:35!
+  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+  Workqueue: vsock-loopback vsock_loopback_work
+  RIP: 0010:__list_add_valid_or_report+0x11f/0x130
+  Call Trace:
+   vsock_insert_connected.cold+0xe/0x13
+   virtio_transport_recv_pkt+0x10e9/0x1460
+   vsock_loopback_work+0x305/0x480
+   process_one_work+0xe4c/0x1560
+   worker_thread+0x4f1/0xd60
+   kthread+0x36e/0x470
+   ret_from_fork+0x47b/0x6b0
+   ret_from_fork_asm+0x1a/0x30
+
+This fix is supplementary to commit 002541ef650b ("vsock: Ignore
+signal/timeout on connect() if already established"). Details under Link.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/netdev/anzT1fREOSyHT99k@v4bel/
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20261005-vsock-connect-reset-closing-v4-1-15d41cfda3ed@rbox.co
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-nct6694.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/af_vsock.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpio/gpio-nct6694.c b/drivers/gpio/gpio-nct6694.c
-index a8607f0d99153..a38add1cde293 100644
---- a/drivers/gpio/gpio-nct6694.c
-+++ b/drivers/gpio/gpio-nct6694.c
-@@ -444,7 +444,7 @@ static int nct6694_gpio_probe(struct platform_device *pdev)
- 	data->gpio.set_config		= nct6694_set_config;
- 	data->gpio.init_valid_mask	= nct6694_init_valid_mask;
- 	data->gpio.base			= -1;
--	data->gpio.can_sleep		= false;
-+	data->gpio.can_sleep		= true;
- 	data->gpio.owner		= THIS_MODULE;
- 	data->gpio.ngpio		= NCT6694_NR_GPIO;
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index f271a095996c9..db62ee41f1061 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1809,23 +1809,22 @@ static int vsock_connect(struct socket *sock, struct sockaddr_unsized *addr,
+ 		timeout = schedule_timeout(timeout);
+ 		lock_sock(sk);
  
+-		/* Connection established. Whatever happens to socket once we
+-		 * release it, that's not connect()'s concern. No need to go
++		/* Connection was established. Whatever happens to socket once
++		 * we release it, that's not connect()'s concern. No need to go
+ 		 * into signal and timeout handling. Call it a day.
+ 		 *
+ 		 * Note that allowing to "reset" an already established socket
+ 		 * here is racy and insecure.
+ 		 */
+-		if (sk->sk_state == TCP_ESTABLISHED)
+-			break;
++		if (sk->sk_state == TCP_ESTABLISHED ||
++		    sk->sk_state == TCP_CLOSING) {
++			err = 0;
++			goto out_wait;
++		}
+ 
+ 		/* If connection was _not_ established and a signal/timeout came
+ 		 * to be, we want the socket's state reset. User space may want
+-		 * to retry.
+-		 *
+-		 * sk_state != TCP_ESTABLISHED implies that socket is not on
+-		 * vsock_connected_table. We keep the binding and the transport
+-		 * assigned.
++		 * to retry, so we keep the binding and the transport assigned.
+ 		 */
+ 		if (signal_pending(current) || timeout == 0) {
+ 			err = timeout == 0 ? -ETIMEDOUT : sock_intr_errno(timeout);
 -- 
 2.53.0
 
