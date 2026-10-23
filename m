@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774467;
-	b=ehFdOkpA5aGZSKp/mtaXOEMnXlv2H2LKQEJit/YV4L7bBZR3OO+k/bAwp2ftPpQBbSHt
-	 EWJSV26bv+duWb9q/qohWgBRxwfuJExxZS4bqA/7OnSgNFO7MZDct+63sezQm/C8Fn88Z
-	 UHOGUy/T5UEhf4duZ4TmhSNeOe4CEFF8l8MjR20VfAkE7cQ8L9Vgu5hwWqoFVY9Tpf8dI
-	 PJUh8lfQt59MbwW/YkQMF5CK5Hd5cwDnQSm6KyeppeJIuk2+UpyNgwZ2KO8Y0md/QzJNk
-	 IGfWV50KMzcrXc6b4/NR/qZklQzzW3+F+v1fUcJENPGITc/zZa+3/fsgfSDOPuRm1YA==
+	t=1792774470;
+	b=jtLh4a6pnmrSyPLyMNChmmueBGbj53WNbShR2tVnQlzNNpbGrafxmukxmKHOxA2ncuCt
+	 XDeoOv6gwyU9ZxxoiNjOJP61E1T2SywW46bNedkOHONs4/8bNz1XLvkrIJ9NvmcU1AfbF
+	 bXnMs8peekkjQCVwGfHw1mi6o9BZBxrsgLm2jYQpx/3sG3K56oFAf59aFwjT+1MYCnwPH
+	 8DBSa/jHFo3WT1JSYkzSkT5a9gDM8L+/ZDnY953ACcRBVEPHebnb6261Biv7RCRzNWZNE
+	 l4cwJLMutJcvYrKDn+Qc2AJLvJ5hRrY8XBhOzLuLANmjlYgH+TxKD9ZlA5I3RCD9/Mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774470;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vJPM5/9Efk8n2xrI7TtQ9Wesrt8S8hSL+OfefIreFio=;
-	b=NV6a6We30cBqIKtjsHJ2kFUiHaXbymntWevnKYvz1J1X5z8Nzt8loxIqbYfJYKDPEcB4
-	 LL2fdaH5sWgO78s5a5YXBT8VMz+CHywVdCbUs1rRCPIHB6HDAVyIWtQhtZQySpN17tGWR
-	 AoHAZ7dvQMO1UTd3RmUYB+Sbhi+3Q38+cQ5jBPyA3Nr82kpJe44rYdYi+gu9zneZcH+q2
-	 Bih6wQv+44VOsDOnNz8qzsTFA61O9yh0H/aTN15TbHJUaMg2d7ozKjZojw3EYSDjnH+D/
-	 N1XUJErFJJQTeZ8mIuUI7zsFiwmMIIgv12r2Z/Si/D4AkHsrIbG8eHK2fnwmBNvA8Ww==
+	bh=8Z/R7fH3jSHOQrnO+5JCpuqEqxx+MM6HsbSd69L9og8=;
+	b=saQ2qyPc4OXXdoU0n8OAogkHAL516oKwxPCBwOWm9MO4a3VzYkuLPJF4Kfk13Ty6DnXf
+	 8Cb8pK63woir/HNI5tuahh8Liqqi7C/335QZhlOkFpJ10H+wUgL6AmUFZ1JcGXV0MGM4a
+	 8oSxz0H/D2igd+i3YJcJL7IzWWJerg7l25osGhZ43amW6ZG8nYXB+TsBtDrCtmuiV5hvq
+	 uUU4J1CyKxHLd61XrGClgw6AE+3Zxon/l4zgrw4k1LjkBam1jwGRPOn7FieH56UPY954+
+	 GEtEI1CJSeip/WrhzkdWffnZ3iUX/BLoH2Hqi76H9y60bJWNh/FcmEvCbCWpH2AZ04A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3E2t9uA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBBpPf8q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2159F606A31D;
-	Fri, 23 Oct 2026 16:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67233606A31E;
+	Fri, 23 Oct 2026 16:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3E2t9uA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716E51F031E2;
-	Fri, 23 Oct 2026 16:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBBpPf8q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1C91F031E3;
+	Fri, 23 Oct 2026 16:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774467;
-	bh=vJPM5/9Efk8n2xrI7TtQ9Wesrt8S8hSL+OfefIreFio=;
+	s=korg; t=1792774470;
+	bh=8Z/R7fH3jSHOQrnO+5JCpuqEqxx+MM6HsbSd69L9og8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y3E2t9uApXBRkid8UT21pjebG/BVP7JhoBvC3pvs0kkl2W539hhDcX8S2ZGHH06RR
-	 bByDaJO9x6NonkfhGGbXLWKazmOrl3tkWG1J/DjhLNaCmwDdZjF2A1PLUUnSXRB7DM
-	 o4B0Nsla3xp9CYNsUmPg8I3g2bc2zKmOJNuYcWKk=
+	b=HBBpPf8qoU4nA7CqX9wa34+97UpSOeaj7PEX1OnJa4Q1wx9kSQw+wCbCA1B4j23WO
+	 K7BEORTkVw9HvVmHyTnWVwlKcyfhsJP96+hSfiZTmr2Jy8VasKtv6ljnNwXeoYzfyL
+	 8ubB9En+Q+pg32V4nyuPHJzvCP7aYTx+3RE7FKho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 012/242] pinctrl: qcom: hawi: Fix intr_target_width
-Date: Fri, 23 Oct 2026 18:37:34 +0200
-Message-ID: <20261023163714.085234265@linuxfoundation.org>
+Subject: [PATCH 7.2 013/242] pinctrl: qcom: qcs8300: Fix intr_target_width
+Date: Fri, 23 Oct 2026 18:37:35 +0200
+Message-ID: <20261023163714.106738668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -71,34 +71,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 9d4c3e0c6a53eb390d58b8d7aaf08885e46f93fd ]
+[ Upstream commit dcb5df182b37587d5ad6bb4388751bf5180957ac ]
 
 The default width of the interrupt target field doesn't match the actual
 register layout. Fix it.
 
-Fixes: 90700e10d2ad ("pinctrl: qcom: Add Hawi pinctrl driver")
+Fixes: 0c4cd2cc87c8 ("pinctrl: qcom: add the tlmm driver for QCS8300 platforms")
 Assisted-by: LLM
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260917-topic-tlmm_intr_width_fixes-v1-1-3bc1d056aa6b@oss.qualcomm.com
+Link: https://patch.msgid.link/20260917-topic-tlmm_intr_width_fixes-v1-3-3bc1d056aa6b@oss.qualcomm.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-hawi.c | 1 +
+ drivers/pinctrl/qcom/pinctrl-qcs8300.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-hawi.c b/drivers/pinctrl/qcom/pinctrl-hawi.c
-index cdde69e954a76..3486a6d63d10e 100644
---- a/drivers/pinctrl/qcom/pinctrl-hawi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-hawi.c
-@@ -47,6 +47,7 @@
- 		.intr_wakeup_present_bit = 6,	\
- 		.intr_wakeup_enable_bit = 7,	\
- 		.intr_target_bit = 8,			\
+diff --git a/drivers/pinctrl/qcom/pinctrl-qcs8300.c b/drivers/pinctrl/qcom/pinctrl-qcs8300.c
+index 9a904d809e11d..fec86818c5118 100644
+--- a/drivers/pinctrl/qcom/pinctrl-qcs8300.c
++++ b/drivers/pinctrl/qcom/pinctrl-qcs8300.c
+@@ -45,6 +45,7 @@
+ 		.intr_enable_bit = 0,		\
+ 		.intr_status_bit = 0,		\
+ 		.intr_target_bit = 5,		\
 +		.intr_target_width = 4,		\
- 		.intr_target_kpss_val = 3,		\
- 		.intr_raw_status_bit = 4,		\
- 		.intr_polarity_bit = 1,			\
+ 		.intr_target_kpss_val = 3,	\
+ 		.intr_raw_status_bit = 4,	\
+ 		.intr_polarity_bit = 1,		\
 -- 
 2.53.0
 
