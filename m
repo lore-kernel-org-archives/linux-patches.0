@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774509;
-	b=NoZZUx7MXBrcE4ETHGdANRAo3lRdUPNifTEg/tG4J+aymj6EDVrSWXkf8+mHhy2ATpOP
-	 YoBHp+akhNBVGYsNNVW01v7HQTlZgcQP7H5jjaPvKKxUQNQdxc9SSyUTba0DrpQw0Luqn
-	 FPNMqQKFR3qNkctdjizs+1l4YVA00oPnrSbPWwkB2pznbeMYOYfhl7dvXlus33saNm85q
-	 yEaL0JI4ppH3RN7nxkEFx7552fPI7j9Ygju+WYLxqvAnsdqs92wfXVluI5QnW4356Pauv
-	 zWa4HJrV6D+KTpAVwtW2pQr87h7lkkgcYT3ErjtvkvEpI73PFpVCTJzkZDh4jPrAnVA==
+	t=1792774512;
+	b=qIzJ+dYkXMEdpBmvJpXW5oRkzWGeSu9Q4SbkTftsSPH1k5M4UwPMS0tSSSxq5H2bw7bq
+	 siYHxjHvxnJMqQfkwKNTTrcnYONMDysPI27E3YGq4yKTeddGyLBp9BiyylpJWlukEuCJA
+	 /82Ifdyvm5Js8WpuoS/ydOOc1NXzF+cmY72NdZY6OTA0nbvKdHCW5dkYIcFCZpyXN2ZJB
+	 OYMl4Vi6ysnxccgLgrfwX3xQ3avstskwQZhqC4MtwPAvmIE0/hKfqdLF8RTX6qVP2Gbkb
+	 DI+TIk5s5bG5g+wkNpxVvoRN4lOhAN/7v+R+ewpw3HRpqmOucwSP0BoDFn6CCNjgamQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=frxvBfEXdIst9+fMqkndYyjlzcmwZ3gaHtHMC7m4AMA=;
-	b=2ky1vdmjkvDSvNLRmECj2a4Kyvzm3dATW6kkXHRyc9XveK4Cdt3TZUI8YosMFiJOJpdQ
-	 8ABkBn1hQCXkDgM2kj0FB9DeA2agXvRA5XZup2RrHO9z5EAUF96992XduEjCgx5lN9I9E
-	 o5iRyNwxLwFZSslGeByR2ZHLzf513Qufyi+D6STAtF/XwkxwZrHgQjQek222I1DyAiv0o
-	 iya3u2leZ74BDlxPgWAOOvMBeLircjb9hsBYdlls5prxsxP4jRxu7AiuLAQQIfPnmfui2
-	 AWgfy90NSqyFDm5TKG7nBWmWOA/VmG1lbSY+6HMXixOmTyjaYAzGXrzFZElU8IYJysg==
+	bh=ODUn0Sdt8ZlKzRTfLz4SIBt7dG9lOxAASCZdUD6DD7U=;
+	b=rXNJ1SWkzB/jfiNVJPrvOc4L64FwaR/Ww8HUwC5LgXo72Ay2WcJ0c2F6/PfnPTRkUSyh
+	 4zDmYyZ38PbfLfZDqw4YtRptEPnFhqwWzhECSPyaer+8sNMMG8Mj5Ib4+cSSBbyLRpXkR
+	 E9LKNlMkwBnTFwUEvnAqaGTOxls8cA2G/BP7CNVOkzg07+Seiv2wVxPYWnxWYO3qI6SNL
+	 YdpycKeprLyVkVclGLKVXBZiSJ5uktRmbOE6lA2zQDMQSyO8Wct3dBohg8oJckKvWhQwd
+	 l5OJaswQunrxnPguBBATd2/CpytXpOqPIw/gi12OpKkf0AOzYyT0wjydv6kWVpcYe5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u0u/Pdc7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTN2VtOV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58530606A31A;
-	Fri, 23 Oct 2026 16:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF6C606A31A;
+	Fri, 23 Oct 2026 16:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u0u/Pdc7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0241F1F01825;
-	Fri, 23 Oct 2026 16:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTN2VtOV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3751F01825;
+	Fri, 23 Oct 2026 16:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774508;
-	bh=frxvBfEXdIst9+fMqkndYyjlzcmwZ3gaHtHMC7m4AMA=;
+	s=korg; t=1792774511;
+	bh=ODUn0Sdt8ZlKzRTfLz4SIBt7dG9lOxAASCZdUD6DD7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u0u/Pdc7+A81GvU5uyUiGx2EwLz9tDs1hlqFO00hyTE9T+kWtKZSIJdhQ1Or/3JfH
-	 E3MZTfWJgpMDsBJKjyBrmSVIhDSrTIYmuJrbkJ0pl0STqeLgMP4WyFh70LlRH9h5F7
-	 t4uQ0bWItGlcMVDtEe9hRkrbNlUqxYk+39XPtn5Y=
+	b=qTN2VtOVOHweLpp4z1aIri60E3Qy/YWsWeIms4w8t8K7QN/Q6gXNqEjPsBoJN51ZI
+	 Slkr/n5U2a4MkIMUuJ9HLChoOQ2Dw95fg5Gw51hrmi+kCG5s9lmOTdFg9FJLRUqlwe
+	 kIS8G7/TSTWFXpOq39sfOJpp1j3gcVNQkH5ib3Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Jones Jr <carlosjr.jones@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 047/242] spi: tegra114: assert CS GPIO for every transfer in a message
-Date: Fri, 23 Oct 2026 18:38:09 +0200
-Message-ID: <20261023163714.890224591@linuxfoundation.org>
+Subject: [PATCH 7.2 065/242] fs: add umh argument to struct kernel_clone_args
+Date: Fri, 23 Oct 2026 18:38:27 +0200
+Message-ID: <20261023163715.321389519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,57 +67,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Jones Jr <carlosjr.jones@analog.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 8980bc573ae2d2b9d86d76aeb86c76e1597070bf ]
+[ Upstream commit ed4b1672529018b2013c62235c4bf1ab0ae0e3d4 ]
 
-The driver provides its own transfer_one_message() and therefore drives
-the chip-select GPIO itself rather than through the SPI core. The GPIO is
-asserted only in the is_first_of_msg path of
-tegra_spi_setup_transfer_one(), but tegra_spi_transfer_end() deasserts it
-whenever a transfer has cs_change set. For a multi-transfer message whose
-earlier transfers request cs_change -- for example a register read that
-sends the address in one transfer and clocks the data back in the next --
-the CS GPIO is released after the first transfer and never re-asserted,
-so the remaining transfers are clocked with chip-select inactive and the
-peripheral never drives the bus.
+Add a umh field to struct kernel_clone_args. When set, copy_fs() copies
+from pid 1's fs_struct instead of the kthread's fs_struct. This ensures
+usermodehelper threads always get init's filesystem state regardless of
+their parent's (kthreadd's) fs.
 
-This was observed with an ADIS16470 IMU (adis16475 driver), whose
-register read is a two-transfer, cs_change-framed exchange: a logic
-analyzer showed the data frame clocked with CS high, and the driver read
-0 while the device drove 0x4056 on the wire.
+Usermodehelper threads are not allowed to create mount namespaces
+(CLONE_NEWNS), share filesystem state (CLONE_FS), or be started from
+a non-initial mount namespace. No usermodehelper currently does this so
+we don't need to worry about this restriction.
 
-Re-assert the CS GPIO for every transfer so that multi-transfer messages
-keep chip-select active across the whole message. gpiod_set_value() is
-idempotent and polarity-aware, so this is a no-op for the first transfer
-and for messages that keep CS asserted throughout.
+Set .umh = 1 in user_mode_thread(). At this stage pid 1's fs points to
+rootfs which is the same as kthreadd's fs, so this is functionally
+equivalent.
 
-Fixes: 63c1440596ff ("spi: tegra114: add support for gpio based CS")
-Signed-off-by: Carlos Jones Jr <carlosjr.jones@analog.com>
-Link: https://patch.msgid.link/20261002085540.1625-1-carlosjr.jones@analog.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260601-work-kthread-nullfs-v4-20-77ee053060e0@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: d2bdb9b61b42 ("fs: let idle threads share init_fs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra114.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/linux/sched/task.h |  1 +
+ kernel/fork.c              | 25 +++++++++++++++++++++----
+ kernel/umh.c               |  6 ++----
+ 3 files changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index aa44ffd09e61b..976bf735378a2 100644
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -859,6 +859,13 @@ static u32 tegra_spi_setup_transfer_one(struct spi_device *spi,
- 		command1 |= SPI_BIT_LENGTH(bits_per_word - 1);
- 	}
- 
-+	/*
-+	 * Re-assert the CS GPIO for every transfer: transfer_end() drops it
-+	 * on cs_change, and the assert above only covers is_first_of_msg.
-+	 */
-+	if (spi_get_csgpiod(spi, 0))
-+		gpiod_set_value(spi_get_csgpiod(spi, 0), 1);
-+
- 	return command1;
+diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
+index 41ed884cffc96..e0c1ca8c6a188 100644
+--- a/include/linux/sched/task.h
++++ b/include/linux/sched/task.h
+@@ -31,6 +31,7 @@ struct kernel_clone_args {
+ 	u32 io_thread:1;
+ 	u32 user_worker:1;
+ 	u32 no_files:1;
++	u32 umh:1;
+ 	unsigned long stack;
+ 	unsigned long stack_size;
+ 	unsigned long tls;
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 4441d415480c6..2f736fa44798b 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1618,11 +1618,27 @@ static int copy_exec_state(u64 clone_flags, struct task_struct *tsk)
+ 	return task_exec_state_copy(tsk);
  }
+ 
+-static int copy_fs(u64 clone_flags, struct task_struct *tsk)
++static int copy_fs(u64 clone_flags, struct task_struct *tsk, bool umh)
+ {
+-	struct fs_struct *fs = current->fs;
++	struct fs_struct *fs;
++
++	/*
++	 * Usermodehelper may copy userspace_init_fs filesystem state but
++	 * they don't get to create mount namespaces, share the
++	 * filesystem state, or be started from a non-initial mount
++	 * namespace.
++	 */
++	if (umh) {
++		if (clone_flags & (CLONE_NEWNS | CLONE_FS))
++			return -EINVAL;
++		if (current->nsproxy->mnt_ns != &init_mnt_ns)
++			return -EINVAL;
++		fs = userspace_init_fs;
++	} else {
++		fs = current->fs;
++		VFS_WARN_ON_ONCE(current->fs != current->real_fs);
++	}
+ 
+-	VFS_WARN_ON_ONCE(current->fs != current->real_fs);
+ 	if (clone_flags & CLONE_FS) {
+ 		/* tsk->fs is already what we want */
+ 		read_seqlock_excl(&fs->seq);
+@@ -2282,7 +2298,7 @@ __latent_entropy struct task_struct *copy_process(
+ 	retval = copy_files(clone_flags, p, args->no_files);
+ 	if (retval)
+ 		goto bad_fork_cleanup_semundo;
+-	retval = copy_fs(clone_flags, p);
++	retval = copy_fs(clone_flags, p, args->umh);
+ 	if (retval)
+ 		goto bad_fork_cleanup_files;
+ 	retval = copy_sighand(clone_flags, p);
+@@ -2825,6 +2841,7 @@ pid_t user_mode_thread(int (*fn)(void *), void *arg, unsigned long flags)
+ 		.exit_signal	= (flags & CSIGNAL),
+ 		.fn		= fn,
+ 		.fn_arg		= arg,
++		.umh		= 1,
+ 	};
+ 
+ 	return kernel_clone(&args);
+diff --git a/kernel/umh.c b/kernel/umh.c
+index 48117c569e1aa..6e2c7bb315c68 100644
+--- a/kernel/umh.c
++++ b/kernel/umh.c
+@@ -71,10 +71,8 @@ static int call_usermodehelper_exec_async(void *data)
+ 	spin_unlock_irq(&current->sighand->siglock);
+ 
+ 	/*
+-	 * Initial kernel threads share ther FS with init, in order to
+-	 * get the init root directory. But we've now created a new
+-	 * thread that is going to execve a user process and has its own
+-	 * 'struct fs_struct'. Reset umask to the default.
++	 * Usermodehelper threads get a copy of userspace init's
++	 * fs_struct. Reset umask to the default.
+ 	 */
+ 	current->fs->umask = 0022;
  
 -- 
 2.53.0
