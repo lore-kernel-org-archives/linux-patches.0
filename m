@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773872;
-	b=DBS2jyBIj2stnaVecAjqxy2WDl/Xkdij1Afd3mSdZaCng7Tb3SY++yK/F0lGkpI0L3fk
-	 wYPGZBD9YV3yHS6FZw64PWX0qfFt4fP5N3GFlCLAEtqzDcGVi64h6dOflz1yScdpw28in
-	 /CfZwM9E5Dw++Gw/YpscP2VmldfZL/WFqyk8Z1pi+ak7cF7gN1LiAnryya2TXWTw9Tr6K
-	 aQ8uEg+dxrJDqfGfstWWF8nbKUWxszkz/sQwFIU3+tnOKZ45GtolZhKpVZ1rUoduXHetL
-	 8Mh61DNg8eKUVL44Rpyu+ETz5XKxghKPGEkCoeyACn8hXYR5bqxqlCpzxcyVGfkZCBw==
+	t=1792773875;
+	b=gbdpDBCJp1HwpDAoziLgBZRMnWj5BukqZBqOgz8yrERSVf5nEK8KfkzHvYbi5PAqHgIB
+	 kOWbuzPTdHVWNNSxgktBId/r9rshHNcG1d+nWWuR6NAWKsskmVOuEF7gLs7YPIjw26Ojt
+	 HFCECMAAh/09+tMkvfh3HhhkoZit6F5S7qjVuDoUygpCgVk8NzuX4kOX5h8G6QlOo27Eu
+	 TKv4DF7qr18wE94buXQxy7jJTR58e4v0dPaKq06D9DBMWQNdL7Lu9eiOYJ6LWJRPI6xBM
+	 OF01s+eE7mdKPTL8J/thqIJZel1cw+GPxostmJ8FLDQVyL/0kXbQ7zXepiG2HIk46ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E9lpGUNLN/LDAL27PeLCkJZVgL8iKWL4RuZArtScuWI=;
-	b=yLcdIpU/qw+MEqRbkVN4EeGZMIOp/gKab7isVnr/uKit7ZJ0bggCe0m6IH6evYcPMpaC
-	 EazF0B+sqR/yNs9p5X3G98+GxNK2QOplS+iAlhkePgBgyLiMF39e+KezvHm4m4rQclRKt
-	 CMpGVHhKoHZJP7Lm9amyCunQNGLiDUX4xioixBAu6Ed9RosFoSnbml2qHvd44pEY702TY
-	 c8gJqbPxk0AePr1k9PXLfqtbYFc9V71LdTpMvHAR0A1qhLkxbV53SRCDXDBvuHxb8gQI5
-	 9AmwN+g+512586KAK+GxxsXg9Y28F3AqqxFymOswXWekXSA4aHMFDCb2MhoLzPsrc0g==
+	bh=ls3GMEjz/1C1XRtA3jP9tosNRIGd/DodGTqWMQ0HW/s=;
+	b=xqHxVTjLmTo7/mFC2lgeMmnxdPpjnuO70v40JEk5fGnEsQ/p5RX0jt/7ejz2pgzXhS/5
+	 Q1DcqFaLgUlb6lLSlwy5Olswe/oNYxlb91OZEtHq6xBKLN51qFOiKGLPJey50M7iE6FWe
+	 SHbDQSdI1jlkR8+u6f5jFHy7ex3etacXk7cA/Fc3s4xbYvWrqnn8Q9vPKvkn9T04Z42dh
+	 tr1O73x8W2TUj++MF2ucz92Oml/5iTQzu2nZI7GE+Ssv4ayUQVoOQ/6gz+moVsg6N7Qv9
+	 ZIOSoPObxMfPRWKIlgP6n24G1wXta8GlTeR/pVHxz8dIdkwiJoI0YD9L31rxcE3tGiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gpazPDWh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+VavKtA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3997D606A31B;
-	Fri, 23 Oct 2026 16:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A933606A31A;
+	Fri, 23 Oct 2026 16:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gpazPDWh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850441F01825;
-	Fri, 23 Oct 2026 16:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X+VavKtA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E42B1F01828;
+	Fri, 23 Oct 2026 16:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773872;
-	bh=E9lpGUNLN/LDAL27PeLCkJZVgL8iKWL4RuZArtScuWI=;
+	s=korg; t=1792773874;
+	bh=ls3GMEjz/1C1XRtA3jP9tosNRIGd/DodGTqWMQ0HW/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gpazPDWhwLc4DHKXl6J1sQgN/hh9Wse0BRMcGfd8dbf5+Pqnu7CKDOS5V0gGvH9pp
-	 3whrn8N+53Q010zZTvcLSZBX6gnGXv7+NYZLEz+KMP5MSlOrncaykO30PyJSEU/t1y
-	 xnj0U0qA1+0bK3W3iwRVheUzg9X5C+SDA8w9K6vg=
+	b=X+VavKtAfsQNqPtNeWM+f5VOWx36JexAklgY+05jJGxYfvQ7ZFEVzECCn9fimdKCY
+	 dkjjG6E2gF7I1lHlmHoxodaTs1icIOiNmxE0QKApG8+lFvE8Je5Kerh+qG3XUCzChB
+	 0H+3rrqXo534gEck6cr3zDKZhlf9e/LWh1xM2IBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexandre Cassen <acassen@corp.free.fr>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/193] net/mlx5: HWS, release L2 to L3 tunnel reformats to their own pool
-Date: Fri, 23 Oct 2026 18:35:20 +0200
-Message-ID: <20261023163715.223776725@linuxfoundation.org>
+Subject: [PATCH 6.18 044/193] net/mlx5: HWS, fix flow meter offset within its bulk
+Date: Fri, 23 Oct 2026 18:35:21 +0200
+Message-ID: <20261023163715.247626047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -72,36 +72,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit 39e02ddf74bbe9c9080555232ba8100462cba2ad ]
+[ Upstream commit 1b0aad53ad715b15ccbad8c65d15c149c925f00a ]
 
-L2 to L3 tunnel reformats are now released to the el2tol3tnl pools.
+The flow meter action is bound to the first ASO object of the bulk but
+the rule offset only indexes the meter within its own object. A rule
+past the first object runs on the wrong meter.
 
-Fixes: aecd9d1020e3 ("net/mlx5: fs, add HWS packet reformat API function")
+Fixes: 82d3639ef7dc ("net/mlx5: fs, add support for flow meters HWS action")
 Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261007143830.1733583-2-acassen@corp.free.fr
+Link: https://patch.msgid.link/20261007143830.1733583-3-acassen@corp.free.fr
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-index c45a7ca66ad8e..9e8dd5241ff4b 100644
+index 9e8dd5241ff4b..5745ba84c3a0f 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-@@ -1401,8 +1401,8 @@ static void mlx5_cmd_hws_packet_reformat_dealloc(struct mlx5_flow_root_namespace
- 						    pr_data->data_size);
- 		break;
- 	case MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL:
--		pr_pool = mlx5_fs_get_pr_encap_pool(dev, &hws_pool->el2tol2tnl_pools,
--						    MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L2,
-+		pr_pool = mlx5_fs_get_pr_encap_pool(dev, &hws_pool->el2tol3tnl_pools,
-+						    MLX5HWS_ACTION_TYP_REFORMAT_L2_TO_TNL_L3,
- 						    pr_data->data_size);
- 		break;
- 	case MLX5_REFORMAT_TYPE_L3_TUNNEL_TO_L2:
+@@ -931,6 +931,7 @@ static int mlx5_fs_fte_get_hws_actions(struct mlx5_flow_root_namespace *ns,
+ 			goto free_actions;
+ 		}
+ 		(*ractions)[num_actions].aso_meter.offset =
++			(fte_action->exe_aso.object_id - fte_action->exe_aso.base_id) * 2 +
+ 			fte_action->exe_aso.flow_meter.meter_idx;
+ 		(*ractions)[num_actions].aso_meter.init_color =
+ 			fte_action->exe_aso.flow_meter.init_color;
 -- 
 2.53.0
 
