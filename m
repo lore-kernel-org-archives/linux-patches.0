@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774957;
-	b=c07LJwqKoYmAQn4xdarmckRbeTDxhUgaMX+AIugenb24EMV6uDIGKmSV4IN9m373thci
-	 ErWKxEZEHni/qX7XskydBQm2hOFgFPlJTc2Q8cVCjUijyCoVUDxpllgFJimo0wo+A3ogg
-	 vKexSyMmAme/IR9VL2blksZce4uhKcFZATLVTqeMuPJqHSnt9mxkdT9C8sno71Hkv96gu
-	 kb+2jXm0fpDFrY+iOiqM0ODrS1R/YxNK/eo/dYU2EJo6LhF2mEoMMPJ6aKOLl0IxEmfiH
-	 d4iT0kW9TBerlNB713tEmvOt/yNVJQuCbNl34kuC9i7V6YRzD/tGxutyXgJoRk/ueXw==
+	t=1792774960;
+	b=LsAhYsMjEwQPJmBSSyeQcEI8GI7PHgieTVymSNkLJ30rjj8XmzTxQjK4vfBhvs1twvsd
+	 7vWeMxd4wcq5x+g/jO0BLMEdJfRjER0yR3MbzdjF+gOw0Wvi91+xGEG2GgsZV9kk2nVt1
+	 EIlPC7E8ZGDn8UClVKIG1e6nSM+Cmgc3Hl3svOAasFZq8VgygIXGkZGirn7Jxg1Icq15n
+	 kFqFSv69BTtmREOuSQlcSDv/rmhZ2A7rqOSnfBzokANsnCqtpYrkhaL3d+ULG4Oah4vNm
+	 gAr7kBjAMlCtJiTSaNFwtNN7SN2r8qqv7R3lkRsC/j/ocKLruClE/6z13TgvnKXdjDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774957;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rRJZ8/Uxb3S6OSZC6q7Rp21XqymygsT4sHLMbuFCIZA=;
-	b=jt1TQy3KBHhGInWQI/rpACEnL9we3mENWD0kLf7yINinDKt6Rc1pEe4p9wKjvYRuBieN
-	 WDCp42bFY2IuFMjscxs5o+ck9AKKyhc6LeVrj8H/hRnpDG7Tq4n8RfhjuS0LyeoSIDS1L
-	 llHNqQq64+dvaOqqVsO4LEvNhJ34KQFXnFNoCBEKZeXDy4U9MTjjWVQp8963s/NWEeK+5
-	 C93s53XUDHCwdYhFSLDhWNBOSq6yOCk2oqrcxnTHASnO8B2Rs2AdhD5nwyKeIlZLO0H1T
-	 CkTLu+6jzgdVHCeVlNLjD23nSJm/nS62rzOXlgCsWU9Wq50yVuVccnH/B3Si+4n1UJQ==
+	bh=WQBrc+5SIVL4JwCgDW43/a7Dk6/SNHh2n/ykL0p5NtI=;
+	b=0diWJWFf291qi39v0tsoQf+XPd3X/iX7xwlR6LEZepUK/IhseS88L5kl6826R7bIKP3B
+	 BQRRPFnC8RA1WyXVpEyTdRT+SR254WMTwc/714T9eJPq/0N1SAO/gyOuK3qoHE+A8B1Ed
+	 XhEFsKIgxLww3nMVPFlMfVvB0mSeviSaRr1VT1+T/7nvkjnQiyfro2eV0PJuWIBoan4wM
+	 QWeQk1ZKgHFj9nIuALqrDwafJtljTcP7NzYHiNcdRCwJ2kKk9uF4gyIPrN2lduakE/Gl6
+	 y6t2j7alh6TYfZvt9BN7sHBy6DqK2lF8EClzvDvbyrtQpsCPaUa7dm1OhZmSlHqrlcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bud3hQkl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AHHF4qM/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73092606A31A;
-	Fri, 23 Oct 2026 17:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02FC606A31D;
+	Fri, 23 Oct 2026 17:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bud3hQkl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68E81F01825;
-	Fri, 23 Oct 2026 17:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AHHF4qM/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2FA1F01825;
+	Fri, 23 Oct 2026 17:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774957;
-	bh=rRJZ8/Uxb3S6OSZC6q7Rp21XqymygsT4sHLMbuFCIZA=;
+	s=korg; t=1792774960;
+	bh=WQBrc+5SIVL4JwCgDW43/a7Dk6/SNHh2n/ykL0p5NtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bud3hQkltLUBb/LoVv5K0QL2DoC87Z/1408kYzesz2oYpTe2rgFBKr5cPJhPTXJaa
-	 4kQqKFukbxdo8yOS2MMXJzxKFHOgImZjJ1EtTor6hTdYUd4Ht5TjzNOO74ityYSjIV
-	 dacYbX0EAHhv4QA9noduN4vH2RnQDhfRzMndNLgM=
+	b=AHHF4qM/MSmg4Nknh2RddnH3LaRdiHHlyEjmd5OjWXnbo7ItnhygFUXG6x2sJgDnZ
+	 1b4kxb8xVP+xTa7zcqcZKAE8bgUVGO4nZf+ojW1MNAWdK5A3+ELYiCLv8cL8LB6JJb
+	 zlv4915LxL+N2PBViFoOXrScZxoca5K1F4+yNwN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heyang Tan <thy15333007817@163.com>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.2 176/242] wifi: p54: validate firmware record lengths
-Date: Fri, 23 Oct 2026 18:40:18 +0200
-Message-ID: <20261023163717.946736038@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 177/242] tcp: fix use-after-free in do_tcp_getsockopt(TCP_CONGESTION)
+Date: Fri, 23 Oct 2026 18:40:19 +0200
+Message-ID: <20261023163717.970203049@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,93 +73,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heyang Tan <thy15333007817@163.com>
+From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
 
-commit db7b86bd97b380ece8fa39cfdd7502a9fd35e56f upstream.
+commit 5271b79b7ad68dcb222e893773f92bdabf7750f3 upstream.
 
-The p54 firmware parser accesses component ID and component version
-records without checking that their lengths cover the fields being read.
-A malformed record can therefore make the parser read past the record.
+do_tcp_getsockopt() reads icsk->icsk_ca_ops->name without holding
+rcu_read_lock(). Since commit 0baf26b0fcd7 ("bpf: tcp: Support
+tcp_congestion_ops in bpf"), icsk_ca_ops can point to dynamically
+allocated BPF struct_ops memory that may be freed concurrently via
+setsockopt(TCP_CONGESTION), leading to a use-after-free.
 
-Validate the component ID and component version record lengths before
-accessing their data. The descriptor record is also checked against the
-shortest descriptor length found in the supported firmware images.
+  BUG: KASAN: slab-use-after-free in _copy_to_user+0x37/0x60
+  Read of size 16 at addr ffff888013505260 by task exploit/149
+   _copy_to_user+0x37/0x60
+   do_tcp_getsockopt+0x158a/0x2460 (net/ipv4/tcp.c:4585)
+   tcp_getsockopt+0x91/0xf0
+   __sys_getsockopt+0xf7/0x170
 
-Reject descriptor values that underflow the RX offset or produce an empty
-RX range before updating the driver state.
+Fix this by holding rcu_read_lock() around the ca_ops->name access,
+using READ_ONCE() to load icsk_ca_ops, and copying the name to a
+stack buffer before releasing the lock. Also annotate the relevant
+icsk_ca_ops stores with WRITE_ONCE() to fix the accompanying KCSAN
+data-race issue.
 
-Assisted-by: LLM Codex
-Signed-off-by: Heyang Tan <thy15333007817@163.com>
-Tested-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20260918083349.891-1-thy15333007817@163.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 0baf26b0fcd7 ("bpf: tcp: Support tcp_congestion_ops in bpf")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Link: https://lore.kernel.org/all/20260821182449.79785-2-blbllhy@gmail.com/
+Cc: AutonomousCodeSecurity@microsoft.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/d3f97f1acbf0010898148be6e6406e4b8b4a5c84.1787870710.git.blbllhy@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intersil/p54/fwio.c |   42 +++++++++++++++++++++++++++----
- 1 file changed, 37 insertions(+), 5 deletions(-)
+ net/ipv4/tcp.c           |   14 +++++++++++---
+ net/ipv4/tcp_cong.c      |    4 ++--
+ net/ipv4/tcp_dctcp.c     |    2 +-
+ net/ipv4/tcp_minisocks.c |    2 +-
+ net/ipv4/tcp_output.c    |    2 +-
+ 5 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/drivers/net/wireless/intersil/p54/fwio.c
-+++ b/drivers/net/wireless/intersil/p54/fwio.c
-@@ -52,6 +52,13 @@ int p54_parse_firmware(struct ieee80211_
- 		u32 code = le32_to_cpu(bootrec->code);
- 		switch (code) {
- 		case BR_CODE_COMPONENT_ID:
-+			if (len < sizeof(struct bootrec_comp_id) /
-+				sizeof(*bootrec->data)) {
-+				wiphy_err(priv->hw->wiphy,
-+					  "firmware component ID is too short\n");
-+				return -EINVAL;
-+			}
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -4577,16 +4577,24 @@ int do_tcp_getsockopt(struct sock *sk, i
+ 		val = !inet_csk_in_pingpong_mode(sk);
+ 		break;
+ 
+-	case TCP_CONGESTION:
++	case TCP_CONGESTION: {
++		char ca_name[TCP_CA_NAME_MAX] = {};
 +
- 			priv->fw_interface = be32_to_cpup((__be32 *)
- 					     bootrec->data);
- 			switch (priv->fw_interface) {
-@@ -72,16 +79,41 @@ int p54_parse_firmware(struct ieee80211_
- 			}
- 			break;
- 		case BR_CODE_COMPONENT_VERSION:
-+			if (len < DIV_ROUND_UP(sizeof(struct bootrec_comp_ver),
-+					       sizeof(*bootrec->data))) {
-+				wiphy_err(priv->hw->wiphy,
-+					  "firmware component version is too short\n");
-+				return -EINVAL;
-+			}
+ 		if (copy_from_sockptr(&len, optlen, sizeof(int)))
+ 			return -EFAULT;
+ 		len = min_t(unsigned int, len, TCP_CA_NAME_MAX);
+ 		if (copy_to_sockptr(optlen, &len, sizeof(int)))
+ 			return -EFAULT;
+-		if (copy_to_sockptr(optval, icsk->icsk_ca_ops->name, len))
 +
- 			/* 24 bytes should be enough for all firmwares */
--			if (strnlen((unsigned char *) bootrec->data, 24) < 24)
--				fw_version = (unsigned char *) bootrec->data;
-+			if (strnlen((unsigned char *)bootrec->data,
-+				    sizeof(struct bootrec_comp_ver)) <
-+				    sizeof(struct bootrec_comp_ver))
-+				fw_version = (unsigned char *)bootrec->data;
- 			break;
- 		case BR_CODE_DESCR: {
- 			struct bootrec_desc *desc =
- 				(struct bootrec_desc *)bootrec->data;
--			priv->rx_start = le32_to_cpu(desc->rx_start);
--			/* FIXME add sanity checking */
--			priv->rx_end = le32_to_cpu(desc->rx_end) - 0x3500;
-+			u32 rx_start, rx_end;
++		rcu_read_lock();
++		memcpy(ca_name, READ_ONCE(icsk->icsk_ca_ops)->name,
++		       sizeof(ca_name));
++		rcu_read_unlock();
 +
-+			/* 0xa is the shortest descriptor in supported firmware. */
-+			if (len < 0xa) {
-+				wiphy_err(priv->hw->wiphy,
-+					  "firmware descriptor is too short\n");
-+				return -EINVAL;
-+			}
-+
-+			rx_start = le32_to_cpu(desc->rx_start);
-+			rx_end = le32_to_cpu(desc->rx_end);
-+			if (rx_end < 0x3500 || rx_end - 0x3500 <= rx_start) {
-+				wiphy_err(priv->hw->wiphy,
-+					  "firmware descriptor has invalid RX range\n");
-+				return -EINVAL;
-+			}
-+
-+			priv->rx_start = rx_start;
-+			priv->rx_end = rx_end - 0x3500;
- 			priv->headroom = desc->headroom;
- 			priv->tailroom = desc->tailroom;
- 			priv->privacy_caps = desc->privacy_caps;
++		if (copy_to_sockptr(optval, ca_name, len))
+ 			return -EFAULT;
+ 		return 0;
+-
++	}
+ 	case TCP_ULP:
+ 		if (copy_from_sockptr(&len, optlen, sizeof(int)))
+ 			return -EFAULT;
+--- a/net/ipv4/tcp_cong.c
++++ b/net/ipv4/tcp_cong.c
+@@ -223,7 +223,7 @@ void tcp_assign_congestion_control(struc
+ 	ca = rcu_dereference(net->ipv4.tcp_congestion_control);
+ 	if (unlikely(!bpf_try_module_get(ca, ca->owner)))
+ 		ca = &tcp_reno;
+-	icsk->icsk_ca_ops = ca;
++	WRITE_ONCE(icsk->icsk_ca_ops, ca);
+ 	rcu_read_unlock();
+ 
+ 	memset(icsk->icsk_ca_priv, 0, sizeof(icsk->icsk_ca_priv));
+@@ -253,7 +253,7 @@ static void tcp_reinit_congestion_contro
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 
+ 	tcp_cleanup_congestion_control(sk);
+-	icsk->icsk_ca_ops = ca;
++	WRITE_ONCE(icsk->icsk_ca_ops, ca);
+ 	icsk->icsk_ca_setsockopt = 1;
+ 	memset(icsk->icsk_ca_priv, 0, sizeof(icsk->icsk_ca_priv));
+ 
+--- a/net/ipv4/tcp_dctcp.c
++++ b/net/ipv4/tcp_dctcp.c
+@@ -111,7 +111,7 @@ __bpf_kfunc static void dctcp_init(struc
+ 	/* No ECN support? Fall back to Reno. Also need to clear
+ 	 * ECT from sk since it is set during 3WHS for DCTCP.
+ 	 */
+-	inet_csk(sk)->icsk_ca_ops = &dctcp_reno;
++	WRITE_ONCE(inet_csk(sk)->icsk_ca_ops, &dctcp_reno);
+ 	INET_ECN_dontxmit(sk);
+ }
+ 
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -507,7 +507,7 @@ void tcp_ca_openreq_child(struct sock *s
+ 		ca = tcp_ca_find_key(ca_key);
+ 		if (likely(ca && bpf_try_module_get(ca, ca->owner))) {
+ 			icsk->icsk_ca_dst_locked = tcp_ca_dst_locked(dst);
+-			icsk->icsk_ca_ops = ca;
++			WRITE_ONCE(icsk->icsk_ca_ops, ca);
+ 			ca_got_dst = true;
+ 		}
+ 		rcu_read_unlock();
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -4095,7 +4095,7 @@ static void tcp_ca_dst_init(struct sock
+ 	if (likely(ca && bpf_try_module_get(ca, ca->owner))) {
+ 		bpf_module_put(icsk->icsk_ca_ops, icsk->icsk_ca_ops->owner);
+ 		icsk->icsk_ca_dst_locked = tcp_ca_dst_locked(dst);
+-		icsk->icsk_ca_ops = ca;
++		WRITE_ONCE(icsk->icsk_ca_ops, ca);
+ 	}
+ 	rcu_read_unlock();
+ }
 
 
