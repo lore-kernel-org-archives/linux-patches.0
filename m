@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792775049;
-	b=Ku1rBIz7QQOIaiO5NCcJK1PGohJKivwvNXTwyNYEyn8GwN3k2jB2zT6XKfLOCb5D/ajA
-	 zWxcKq8IKS3/xTkglqWbyQExG6Ys6gIxpkiQBCyjLg5lmAdU4mLweNCAUoml47VWVK825
-	 o9oO92h2xkwsAjpg67007CK0/KdsC52FGSaKZjfA4PQIejHAGOyQYRAHsms192mUzknpy
-	 AW2rQfmcBu3aJGyODE8xAV3WpQZEb7sGtgQzR18RSuk4iPe1iHMRWJ1J0QhclF/9EsLUM
-	 qPhkYiTA34lHsmhgiSBrmV8GGtymMQrcR7HYkUx2+JOVPkIiFmXkGbegh+0jzKDtZKw==
+	t=1792775053;
+	b=5U49PkNS2/kDS5AtcI3j5GH/P8sFSBMAMxlPHYyM2Oud8Y+4JK+XK4St0ldbA99Yhagu
+	 56F4py44Gkx1AUhC13DNaICu/6mk3EgEFsPJC/3Fi9i6t0ktRxqF0FU8fnfaDGezFFUu4
+	 LE78av9kfdfMC2qeXKKAoxnEHAqiGxtKBGTMpux3XJ0PjIHOUEuHJTTVHCXpvDHEN/bZH
+	 8ioIFWmrPXGPAG6YcsgkZkfkCOy7kcdmsWWYWPs1GM/OlFFQRae8rYqVWkw1x9hOC4npn
+	 5Nsok9ofnTrOnP8vScogsRIwn/TUJD2yd93B1c5ZTGb8g986ks+84aOMd9c7q74wSkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792775049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792775053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3G+uw1T/EPkmFMIXsA8hwSwiMJutHHk+/Wpu7gAeqxQ=;
-	b=i3kzEr3a24Q/ca6YRJiwBPcZ455eyhRJKTCHO41NhemPCHg0MuvxtpvaGncmoAnPTig9
-	 oAhAf4EB4H7vqihcplEj/i1Cdza7+wgtvQHo1fT52YgAQY4qJcF9zOsyW6cq1CwsQ3s1G
-	 TIGf9h+IlqdQrr2PAfYg1kk6LwYux3RmaJC/yk6gyrTez57oVJAyibvSZ7h3rUG6OOg8y
-	 Kn5qYP3HNH4bYLAKzi6n733+GweLwylcEXLM4UuChFoDyzNhqWfl9v78klEE17ZRe8Pwg
-	 vwHDFbOHtfRP9lSZzI9P3HJ6OtjL5P9/ntD6Bsf/oLsVIi2nBasX2ZDKWeTO8TrS2Gg==
+	bh=Qp+yr5BtRHRP/7J2ondWZIz2kKER/wdl/0xNd3LQZUc=;
+	b=xwn3D91p3VuEZavTfnboiPAKBBUN1FRETP41D/DkFk2o0p9pLWDBI1ajHa2XwZE6VzBV
+	 jWO9hH2kurEDTuEWyxdtdQlkMAVV5gI5q3eExh4ufpFfem2gRCvRbc9wWRCVls0cdmcpO
+	 msX9jT05WixErrN11Qj6+Q2YyGA6wQv8P1dj6frT1C4KfXa5NgyU47fzHGPNXoe6b7D4r
+	 slvTjU2ISpArrUKGtK6Jx/nYIT/aC10hvVxDRVARy7/Ui7xnEo9GpYVN8MsEE7qaZZFPy
+	 gUDomVCJRXXRkfn9mQTYvxpsyxKlThmoEJsa/qQITgcSmiZYDg/sJZcYvqlZAN5mWOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p8LhfMQI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CvUCTDTj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EBB606A320;
-	Fri, 23 Oct 2026 17:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA554606A31A;
+	Fri, 23 Oct 2026 17:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p8LhfMQI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF34A1F01825;
-	Fri, 23 Oct 2026 17:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CvUCTDTj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD831F01825;
+	Fri, 23 Oct 2026 17:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792775049;
-	bh=3G+uw1T/EPkmFMIXsA8hwSwiMJutHHk+/Wpu7gAeqxQ=;
+	s=korg; t=1792775052;
+	bh=Qp+yr5BtRHRP/7J2ondWZIz2kKER/wdl/0xNd3LQZUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8LhfMQIdl+nUa2UWrr74TfeWBaQZNBEe+MY4Uhuk9gt3Rez5Y2xRbN20IOdKFDIe
-	 RfSCFxECKOi1C8t8qC7W30wOlmxu2uCAwg6jCr0/ia1GSIAhbmQLuVDdcfBbZx4cTd
-	 Cn8yGaQWzIkDLlc7/i4ceb1eD9OnnIrjIfCXy3VU=
+	b=CvUCTDTjvemY/GzC1iIJMdgSnXdFdX1EenfEJhUAloUZqA1M7s/n1DG5Y/ZlGvMXM
+	 V3wR1sgrrYiQOdQdqPZ3S/nIEX3qXVP2OQy/t/d8e62yVG4nb0GB75jbKh/Vdlitd4
+	 eS9CH2P9KsLMnvaJcGG1fqe/ryq+3Fb0k87nFACs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 213/242] net: bridge: mcast: dont truncate the port group walk on teardown
-Date: Fri, 23 Oct 2026 18:40:55 +0200
-Message-ID: <20261023163718.838177330@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Eric Dumazet <edumazet@google.com>
+Subject: [PATCH 7.2 214/242] net: ntb_netdev: Fix statistics races
+Date: Fri, 23 Oct 2026 18:40:56 +0200
+Message-ID: <20261023163718.866536023@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -69,79 +68,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <littleddfu@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 5a3f7a683aee56e1f15c9d53041f3236767eaae7 upstream.
+commit 545b63503c696c4ce0663b3fcd37f41169aec1eb upstream.
 
-__br_multicast_disable_port_ctx() and br_multicast_del_port() walk
-port->mglist with hlist_for_each_entry_safe(). However,
-br_multicast_find_del_pg() can also delete other entries from the same
-list through br_multicast_fwd_src_remove() or __fwd_del_star_excl().
+ntb_netdev updates shared net_device stats from per-QP RX and TX
+callbacks. Once multiple queues are enabled, concurrent updates can be
+lost.
 
-If such an entry is the iterator's saved next node, hlist_del_init()
-clears its ->next and terminates the walk early. The reproducer triggers
-this in both teardown walks, leaving port groups in the bridge mdb with
-a dangling ->key.port after del_nbp() frees the port:
+Use per-CPU tstats for packet and byte counters and DEV_STATS_INC() for
+less frequent drop and error counters. Callbacks can run synchronously
+in the xmit path or asynchronously from a tasklet or the memcpy kthread.
+Pin TX updates against migration in the kthread path. Use the IRQ-safe
+u64_stats helpers because netpoll can invoke the synchronous path with
+IRQs disabled.
 
-  BUG: KASAN: slab-use-after-free in __mdb_fill_info+0x1191/0x1320
-   __mdb_fill_info+0x1191/0x1320
-   br_mdb_dump+0x594/0xe40
-   rtnl_mdb_dump+0x1cf/0x5d0
+Let the core manage tstats while keeping transport teardown after
+unregister_netdev(), outside RTNL. RCU lets unregister wait for TX
+completions already updating stats, while later completions only consume
+the skb and skip accounting and queue wake.
 
-Use hlist_del_init_rcu() to unlink the group while preserving ->next.
-br_multicast_del_pg() and the teardown walks run under
-br->multicast_lock. The GC worker must acquire the same lock before
-detaching the group for destruction, so the node remains alive while
-the walk uses the preserved pointer.
-
-Preserving ->next means a walk can now reach a group that an earlier
-iteration already deleted as a side effect. That group is off mp->ports,
-so br_multicast_find_del_pg() would fall through its port scan and hit
-the trailing WARN_ON(1). Skip such groups at the top of that helper: a
-port group is put on port->mglist when it is created and only unlinked
-when it is deleted, so hlist_unhashed() identifies exactly this case.
-
-Fixes: b08123684bd5 ("net: bridge: mcast: install S,G entries automatically based on reports")
+Fixes: 24d9e73c7e00 ("net: ntb_netdev: Support ethtool channels for multi-queue")
 Cc: stable@vger.kernel.org
-Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260831111330.199543-1-junvyyang@tencent.com
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260830151617.3546585-1-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/ntb_netdev.c |   47 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 34 insertions(+), 13 deletions(-)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -813,7 +813,11 @@ static void __br_multicast_del_pg(struct
- 	struct hlist_node *tmp;
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -127,8 +127,10 @@ static void ntb_netdev_rx_handler(struct
+ {
+ 	struct ntb_netdev_queue *q = qp_data;
+ 	struct ntb_netdev *dev = q->ntdev;
++	struct pcpu_sw_netstats *tstats;
+ 	struct sk_buff *skb, *new_skb;
+ 	struct net_device *ndev;
++	unsigned long flags;
+ 	int rc;
  
- 	rcu_assign_pointer(*pp, pg->next);
--	hlist_del_init(&pg->mglist);
-+	/* Keep ->next (held under multicast_lock, freed later by the GC work):
-+	 * a port->mglist teardown walk may have latched this node as its next,
-+	 * and deleting other groups of the same port must not truncate it.
-+	 */
-+	hlist_del_init_rcu(&pg->mglist);
- 	br_multicast_eht_clean_sets(pg);
- 	hlist_for_each_entry_safe(ent, tmp, &pg->src_list, node)
- 		br_multicast_del_group_src(ent, false);
-@@ -848,6 +852,13 @@ static void br_multicast_find_del_pg(str
- 	struct net_bridge_mdb_entry *mp;
- 	struct net_bridge_port_group *p;
+ 	ndev = dev->ndev;
+@@ -139,17 +141,20 @@ static void ntb_netdev_rx_handler(struct
+ 	netdev_dbg(ndev, "%s: %d byte payload received\n", __func__, len);
  
-+	/* A teardown walk over port->mglist can reach a group that an earlier
-+	 * iteration already deleted as a side effect. It is off mp->ports by
-+	 * now, so skip it instead of falling through to the WARN_ON() below.
-+	 */
-+	if (hlist_unhashed(&pg->mglist))
-+		return;
-+
- 	mp = br_mdb_ip_get(br, &pg->key.addr);
- 	if (WARN_ON(!mp))
+ 	if (len < 0) {
+-		ndev->stats.rx_errors++;
+-		ndev->stats.rx_length_errors++;
++		DEV_STATS_INC(ndev, rx_errors);
++		DEV_STATS_INC(ndev, rx_length_errors);
+ 		goto enqueue_again;
+ 	}
+ 
+-	ndev->stats.rx_packets++;
+-	ndev->stats.rx_bytes += len;
++	tstats = this_cpu_ptr(ndev->tstats);
++	flags = u64_stats_update_begin_irqsave(&tstats->syncp);
++	u64_stats_inc(&tstats->rx_packets);
++	u64_stats_add(&tstats->rx_bytes, len);
++	u64_stats_update_end_irqrestore(&tstats->syncp, flags);
+ 
+ 	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
+ 	if (!new_skb) {
+-		ndev->stats.rx_dropped++;
++		DEV_STATS_INC(ndev, rx_dropped);
+ 		goto enqueue_again;
+ 	}
+ 
+@@ -166,8 +171,8 @@ enqueue_again:
+ 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
+ 	if (rc) {
+ 		dev_kfree_skb_any(skb);
+-		ndev->stats.rx_errors++;
+-		ndev->stats.rx_fifo_errors++;
++		DEV_STATS_INC(ndev, rx_errors);
++		DEV_STATS_INC(ndev, rx_fifo_errors);
+ 	}
+ }
+ 
+@@ -210,25 +215,39 @@ static void ntb_netdev_tx_handler(struct
+ {
+ 	struct ntb_netdev_queue *q = qp_data;
+ 	struct ntb_netdev *dev = q->ntdev;
++	struct pcpu_sw_netstats *tstats;
+ 	struct net_device *ndev;
+ 	struct sk_buff *skb;
++	unsigned long flags;
++	bool registered;
+ 
+ 	ndev = dev->ndev;
+ 	skb = data;
+ 	if (!skb || !ndev)
  		return;
+ 
++	rcu_read_lock();
++	registered = READ_ONCE(ndev->reg_state) == NETREG_REGISTERED;
++	if (!registered)
++		goto free_skb;
++
+ 	if (len > 0) {
+-		ndev->stats.tx_packets++;
+-		ndev->stats.tx_bytes += skb->len;
++		/* The memcpy kthread can migrate, so pin the per-CPU update. */
++		tstats = get_cpu_ptr(ndev->tstats);
++		flags = u64_stats_update_begin_irqsave(&tstats->syncp);
++		u64_stats_inc(&tstats->tx_packets);
++		u64_stats_add(&tstats->tx_bytes, skb->len);
++		u64_stats_update_end_irqrestore(&tstats->syncp, flags);
++		put_cpu_ptr(ndev->tstats);
+ 	} else {
+-		ndev->stats.tx_errors++;
+-		ndev->stats.tx_aborted_errors++;
++		DEV_STATS_INC(ndev, tx_errors);
++		DEV_STATS_INC(ndev, tx_aborted_errors);
+ 	}
+ 
++free_skb:
+ 	dev_kfree_skb_any(skb);
+ 
+-	if (ntb_transport_tx_free_entry(qp) >= tx_start) {
++	if (registered && ntb_transport_tx_free_entry(qp) >= tx_start) {
+ 		/* Make sure anybody stopping the queue after this sees the new
+ 		 * value of ntb_transport_tx_free_entry()
+ 		 */
+@@ -237,6 +256,7 @@ static void ntb_netdev_tx_handler(struct
+ 		    ntb_transport_link_query(q->qp))
+ 			netif_wake_subqueue(ndev, q->qid);
+ 	}
++	rcu_read_unlock();
+ }
+ 
+ static const struct ntb_queue_handlers ntb_netdev_handlers = {
+@@ -277,7 +297,7 @@ static netdev_tx_t ntb_netdev_start_xmit
+ 
+ drop:
+ 	dev_kfree_skb_any(skb);
+-	ndev->stats.tx_dropped++;
++	DEV_STATS_INC(ndev, tx_dropped);
+ 	return NETDEV_TX_OK;
+ }
+ 
+@@ -647,6 +667,7 @@ static int ntb_netdev_probe(struct devic
+ 	}
+ 
+ 	ndev->features = NETIF_F_HIGHDMA;
++	ndev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
+ 
+ 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
+ 
 
 
