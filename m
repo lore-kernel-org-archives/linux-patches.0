@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774659;
-	b=ERwAw0MYGss0T3udNIRCJIshP8XJCdL7f3wiFZAbB0n1G0dDwhxOhetBC1ok0wtD5ZC5
-	 BoW73UAR2gprCo/N4++9C9Rb4+euvnewCdpv8Znt0oyzeR99KJha0FqyN4sckdoZDE2PX
-	 dczNJ5+6aeU76F/gqHbKWaKYEz691gOFoyZni0NFvKsBr8YHVMiwvhzhu5FG7ifOtalv1
-	 bJ2+8J/kJ3TRtN55DfFps/Y94p+S0JBMktTXwRt/yVTXK0TpvhWGvlzV/2PXz1daADGyv
-	 TmMHkZt911p/JZ5SJz6mgWleq61q90WQW6XFLeIhv78/j2F7V2MJdqwuiL3n4emLiBQ==
+	t=1792774662;
+	b=PxnvxT/HkDnP5AWH/kIG19UksFTaQvfoc5rnBnqytUNMd6Ra5WInnEqcDoXKxGkNn28J
+	 lD9q93SfNkVaqwwtse1eXJQYmuvvO49SAuUHB7m+8sJCBCsWFbGTjZvr22MlH4uRGJjZM
+	 xsE8NYd/lRQ25ja1qIL7M5crWW85XkbVYk2L+7J/GbyjgKqA5P00XI1UeZUogMLlYMV67
+	 weyjA67rAwSOLsBUNAgh1ALtCgqsj+/2yDK12ULPZRvbKp5WFbAwt9l2lJYt9SeDN6jec
+	 jtYWYo0DNutZgIHir3JMxtpEGL54kSKofeVX3IW2640LBjCy1/sjXnI1OWm7vchBLYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774659;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6q/du3sZ7G9NzNhDK3feKyGlyMsMuGZK7X5pMXhgxhQ=;
-	b=fwGuJmf4kglxQFUU8LUQp3i9mjeZ2zITm/K+jYUzK5oF9IDPQfPOkOplNE+67icvXr2R
-	 rAc3J0G8EIBs1gh6ihqjq5eT3TB3TEPcZonMYrFASp3PAx2ggUms3Zkd4KUTL59v+nQA9
-	 fB9lzJDADBcTLGgtboo3CvPAGA25ksFz3fUJI3tnUIcQl5VLu6JwhNFhHfFu3EOjwvrsf
-	 enc5vEWiFBe7H2pad7DdWoF81EvDbHyM/aSi8fiF/dkVWSTjqP83T7l6k1rjbL7XV4/Az
-	 rJZ+SyTqBvtokuYdoSHfMlPSYDYZpXgFR9lq1n99/ypshpKIolOfCau726f7X3e8NUw==
+	bh=TGeeB+ZSa7VeqqpZDVhtNwlDOt/izxUp3bxFqoFUEmc=;
+	b=2CEAsRRrgzEWiWweBCUafSQZKxCQ0BLYCeo8C/4UCZZ51IwFytOlUEy+O/P7qZMnE8uE
+	 W23TLRTFHnq1CNBYTYIN8EKFPWnEq+xbDVdW7Tkw6qhFNb8W/l5CF+blkMNULn/UWfGvw
+	 2mwNzarkmzsGkkHYfAzRis3SWuXREnU1SKJGJGKe/xPez/NcDZaXuS4YMaE+Puj7S59kk
+	 OvQVrDjUReKmDBxSNDGVJ6ULi8CRf+1wQMDrH+uci/JhSZY25BkHsqbVH4Zm0fG/rp3tP
+	 DNDWvfKGKPQGXlcvH1mkQskFM9Ko2vt06W6qAtiCUpVmUkxktHwsYWZwv9DKRFJgyCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F6gJ8q9n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BFuC8iyU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C922606A31E;
-	Fri, 23 Oct 2026 16:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3650F606A31B;
+	Fri, 23 Oct 2026 16:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F6gJ8q9n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9858D1F01825;
-	Fri, 23 Oct 2026 16:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BFuC8iyU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863071F01825;
+	Fri, 23 Oct 2026 16:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774659;
-	bh=6q/du3sZ7G9NzNhDK3feKyGlyMsMuGZK7X5pMXhgxhQ=;
+	s=korg; t=1792774662;
+	bh=TGeeB+ZSa7VeqqpZDVhtNwlDOt/izxUp3bxFqoFUEmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F6gJ8q9n9+TEpBYhun9KZGLXmHTP3STBM4HAr8W/4akSpaaTIeNRuoChqJO+v/3qr
-	 0UAXWf9cO6k2X35PeCanu1uWvC19tiaXoZxpHEtzrEmJyh3ck56g1HQCrPEVj7HKuo
-	 gfW+CuN4iFxf0gYk2CGABKbiBDJnjyw6kpP1aZXo=
+	b=BFuC8iyUljRbKOk9EOLJ3FfOE2vWEw4dzIpL5oQEMmGCA0797KVr9gdQrnK4kHMRb
+	 oeiaNAg3rEoeKJpI1ea6P7LhED4AtlMIloJobvRPXKrDTefqWYEE6zup/Ou1TMaYcD
+	 +v7oDFMBMSmmP263DUCPF7aN/abvEj+OfqHs/BAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 115/242] eventfs: Free the eventfs_inode after an rcu grace period too
-Date: Fri, 23 Oct 2026 18:39:17 +0200
-Message-ID: <20261023163716.498723486@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 089/242] gpio: mxc: fix race between gpiochip registration and IRQ domain setup
+Date: Fri, 23 Oct 2026 18:38:51 +0200
+Message-ID: <20261023163715.883473419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -67,88 +71,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-commit 2cd88c498ecff8e22bf4c397b8eb226db70ac343 upstream.
+[ Upstream commit 205cccd06e545694754e1bf8d626ea96e742cd8a ]
 
-tracefs_d_revalidate() reads ->is_freed of the eventfs_inode that
-dentry->d_fsdata points to, and ->d_revalidate() is called in rcu
-pathwalk mode with nothing but rcu_read_lock() held. The dentry itself
-stays around for such a walker, but tracefs_d_release() drops its
-reference to the eventfs_inode when the dentry is killed, and
-release_ei() then frees it after a grace period of eventfs_srcu. An
-SRCU grace period doesn't wait for rcu_read_lock() sections, so the
-walker can read an eventfs_inode that is already gone.
+devm_gpiochip_add_data() makes the GPIO chip visible to consumers
+immediately. Since the chip sets .to_irq = mxc_gpio_to_irq, which calls
+irq_find_mapping(port->domain, offset), any to_irq() call between
+gpiochip registration and IRQ domain creation will operate on a NULL
+domain.
 
-With a pathwalk held up in tracefs_d_revalidate() while the dentry goes
-away:
+Fix by moving devm_gpiochip_add_data() after the IRQ domain and generic
+irq chip are fully initialized, ensuring port->domain and the irq chip
+handlers are ready before the chip becomes visible to consumers.
 
-  BUG: KASAN: slab-use-after-free in tracefs_d_revalidate+0x76/0x90
-  Read of size 1 at addr ff1100010152d8d0 by task walker/97
-  Call Trace:
-   <TASK>
-   tracefs_d_revalidate+0x76/0x90
-   lookup_fast+0x320/0x640
-   path_lookupat+0x160/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-   vfs_fstatat+0x4d/0x90
-   __do_sys_newfstatat+0xa0/0x100
-   do_syscall_64+0x10e/0x5e0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  [...]
-  Allocated by task 1:
-   __kmalloc_cache_noprof+0x249/0x560
-   eventfs_create_dir+0x7a/0x590
-   event_create_dir+0x2fb/0xcf0
-   trace_add_event_call+0xbf/0x150
-  [...]
-  Freed by task 11:
-   kfree+0x1db/0x5b0
-   srcu_invoke_callbacks+0x3a3/0x620
-   process_one_work+0x937/0x1810
-   worker_thread+0x4f1/0xd60
-
-Before commit 8e556432477e ("eventfs: Use SRCU for freeing
-eventfs_inodes") release_ei() used call_rcu(), which covered the walker,
-while eventfs_iterate() needs the SRCU grace period. Wait for both and
-chain call_rcu() from the SRCU callback.
-
-Cc: stable@vger.kernel.org
-Fixes: 8e556432477e ("eventfs: Use SRCU for freeing eventfs_inodes")
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-4-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d37a65bb4663 ("gpio/mxc: Move Freescale MXC gpio driver to drivers/gpio")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-4-c4d769587d3e@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tracefs/event_inode.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-mxc.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -91,6 +91,14 @@ static void free_ei_rcu(struct rcu_head
- 	}
- }
+diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
+index e3a80f17d0412..32ded7b548fb7 100644
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -500,10 +500,6 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+ 	else /* silence boot time warning */
+ 		port->gen_gc.gc.base = -1;
  
-+/* read under eventfs_srcu and, by tracefs_d_revalidate(), in rcu pathwalk */
-+static void free_ei_srcu(struct rcu_head *rcu)
-+{
-+	struct eventfs_inode *ei = container_of(rcu, struct eventfs_inode, rcu);
+-	err = devm_gpiochip_add_data(&pdev->dev, &port->gen_gc.gc, port);
+-	if (err)
+-		goto out_bgio;
+-
+ 	irq_base = devm_irq_alloc_descs(&pdev->dev, -1, 0, 32, numa_node_id());
+ 	if (irq_base < 0) {
+ 		err = irq_base;
+@@ -524,6 +520,15 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+ 	if (err < 0)
+ 		goto out_irqdomain_remove;
+ 
++	/*
++	 * Register the GPIO chip last: devm_gpiochip_add_data() makes the
++	 * chip visible to consumers immediately, so the IRQ domain and
++	 * generic irq chip must be ready before any to_irq() call.
++	 */
++	err = devm_gpiochip_add_data(&pdev->dev, &port->gen_gc.gc, port);
++	if (err)
++		goto out_irqdomain_remove;
 +
-+	call_rcu(&ei->rcu, free_ei_rcu);
-+}
-+
- /*
-  * eventfs_inode reference count management.
-  *
-@@ -112,7 +120,7 @@ static void release_ei(struct kref *ref)
- 			entry->release(entry->name, ei->data);
- 	}
+ 	list_add_tail(&port->node, &mxc_gpio_ports);
  
--	call_srcu(&eventfs_srcu, &ei->rcu, free_ei_rcu);
-+	call_srcu(&eventfs_srcu, &ei->rcu, free_ei_srcu);
- }
- 
- static inline void put_ei(struct eventfs_inode *ei)
+ 	mxc_update_irq_chained_handler(port, true);
+-- 
+2.53.0
+
 
 
