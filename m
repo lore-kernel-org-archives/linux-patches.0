@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792773799;
-	b=Vr/IFFEDICYsFfg3wyKy2DtntPvJJ8/0KHwJ6OEWGfurQ9QrK5mGia17cnbhKVDPj5yL
-	 uu/ygrjjuO2WW6RIEsVInqeNBw0z72/nez104qKB2UDRyv6TXhYpqH8+NMni1C1Mn4WAS
-	 rTC3mn1uiMRAO8JntJCqxNzTPRvOgRZmnhy7fLRnpsGeY5fA5SPFH3JNmZpfQZZ6u6/B7
-	 HlVcCJu/mLIf2Jbw5w3Kl9c6d2GLFj1WwKixsdM+932bEsewAaLb1Mfnw//IhgDoXZO3k
-	 tYfm0FKd0GcYL+nOEOXVTLadoypZvEGGde7wQQ6FP/FK1jcLYHM6PPXL4zX1vzZTtcg==
+	t=1792773802;
+	b=n+Trr63CBkMbsZO0rufT3FJ3LK0j40dK5jw278Trs4DrLvXPatCcBrOmcBgiBZwwta3A
+	 qfpKP3vlYVua+GQHOchsqOYnDhITbMvwCEgoRJ7YMnGB1SVq4pzZgoQyJ5BTlZLcd7cr2
+	 uY5Y8tq1qnyMeAgXLjhAhc4tBL10TKOQbJnUSpC6HdQAGVnxNZ6uPPRZqF0XUTtaU0WA6
+	 /I8t98wxsTw37++BFNjzWKvAwpor15fDU2h4GVS6Y1Hz5xb51PZyjuKjvhySuYgxajznZ
+	 3bdhA9KGbv6OcRTbkcOwjMT+BuYTNYvumzW10XEtB1gXkcEP/JOVxltakKrDKM9qE6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773799;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773802;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yXqHMBDzrt22WK+6FlwoaCglb3C+bjTrYk/wCUJ4MWI=;
-	b=Bx798/rB9X9tVQt9qu/b44yEDlmT09GESbQqlM0SAMS/U03N9md5yNzeiAQLHipD0wmy
-	 y/L6xBFYp6ADdtiz6mvtlvV4k9uUhRg+4lC8PI/ku/njakQIBkatg819x5zeWd4bAql/E
-	 tAtbrSnCV1iRwiJ+DM8tsDUP94eFJaohb6M/MBSxdzZkioyd68yxV3W6oKjkZgkCkQdJI
-	 yhqWAluUyVhOPvA/+gyFru0zexzMt4gzijGUh7WsvCeF1pFSxlixddNrI8dpntLaLfsK9
-	 MyJWTdAj0Vm+375D+hwdOtMaJp9ITXhi7r0jw8IyXY8cKYO3I7VPPV4WQlK8Dsn/ajQ==
+	bh=rg886dStneh1dNd4N2UCmUyJLnr/T6nLPI7IpYO9Gsk=;
+	b=XBb2CFNPG9ePRS23VSg55qCdQsJfz9Lb9BjXnU8HbE3K9BMVZxxQBlec7yPjCUMBExNJ
+	 woDP2cgdiffGYR9hKd5hqFH5kv+1BY0xfJarN/46N2Mj821yIj1ldqEZf/s63AwUmzAQY
+	 xsVF+71c2leeYw/QrZgvtwgyGQ1Wc9IZjdIjS0QTWcAb4gE1i4ZoZP5rayG9+JEAVzjkY
+	 DQaa3Y1Cvv9pnWhMJGOBcKZis7YOYMY4G8y5QfUXXUWXf1jWmNffMWKBiUnGIVYCjxV9v
+	 VCBOwGm53emSXDmgny8DvHk+TJlA5Y2YK2cS2p5mlwfYvPaY1Pt+kwYSaEwYEotUoNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wCezHFVr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCf5myq2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC78606A320;
-	Fri, 23 Oct 2026 16:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0066C606A323;
+	Fri, 23 Oct 2026 16:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wCezHFVr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AE71F01825;
-	Fri, 23 Oct 2026 16:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCf5myq2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498661F01825;
+	Fri, 23 Oct 2026 16:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792773798;
-	bh=yXqHMBDzrt22WK+6FlwoaCglb3C+bjTrYk/wCUJ4MWI=;
+	s=korg; t=1792773801;
+	bh=rg886dStneh1dNd4N2UCmUyJLnr/T6nLPI7IpYO9Gsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wCezHFVrBW7QO8IyOovWO3Ups+kXQpYNYC4UVlQBRkrgzyW+45Fq8wGVHqTuQiZx0
-	 M4cnSuSLoTePixFWGn/JS8412wJVuJwhcNO9x0N7vWPK7/6nghmTlmEq17ki1qZege
-	 q33KJ4o/GipoKY/XcVIe0Ec9VfPg6HGW2DO30M+4=
+	b=iCf5myq2cg5/sUHuxMlo1snJLommGcSc8cIWx7AlzBBP1Ur0ExW2QxnTfmlQwzW+o
+	 l317nWcvQ2sVE/8A3srtODV055DAgvVkgChGIO2RXS2G+nyZ0G8Xpb65zSrQCeOZhX
+	 nNYSsP+FnpOW277iWe2hMSFEJ3T9HY9bknxLvmRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/193] tools/power turbostat: Fix PMT error path fd handling
-Date: Fri, 23 Oct 2026 18:34:57 +0200
-Message-ID: <20261023163714.679057107@linuxfoundation.org>
+Subject: [PATCH 6.18 021/193] tools/power turbostat: Fix add_counter issue if > 24 counters.
+Date: Fri, 23 Oct 2026 18:34:58 +0200
+Message-ID: <20261023163714.703104709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
 References: <20261023163714.201276352@linuxfoundation.org>
@@ -69,51 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 11741cc90f9176746b8595beab4fec8d736ebd18 ]
+[ Upstream commit 154b96dab83fd953b9b82c8bcfa041cd6a9d74d3 ]
 
-It is possible to leak a file descriptor if a diretory
-open succeeds, but the scan fails.  Close the fd on error.
+We allocate space for added counters ahead of time,
+and we arbitrarily chose 24 added counters of each type.
+If a future code flow hits this limit and continues,
+and then removes counters, we do a phantom increment
+and lose track of the number of added counters.
 
-Also, on cleanup, check for NULL fd.
+Increment the count only if there is no error.
 
+Fixes: 388e9c8134be ("tools/power turbostat: Make extensible via the --add parameter")
 Assisted-by: Claude: Claude Sonnet 4.6
-Fixes: 4265a86582ea ("tools/power turbostat: Add PMT directory iterator helper")
 Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index b8ccf277acb23..d7b079d45d365 100644
+index d7b079d45d365..3bab2677b0670 100644
 --- a/tools/power/x86/turbostat/turbostat.c
 +++ b/tools/power/x86/turbostat/turbostat.c
-@@ -1919,8 +1919,11 @@ const struct dirent *pmt_diriter_begin(struct pmt_diriter_t *iter, const char *p
- 			return NULL;
- 
- 		num_names = scandir(pmt_root_path, &iter->namelist, pmt_telemdir_filter, pmt_telemdir_sort);
--		if (num_names == -1)
-+		if (num_names == -1) {
-+			closedir(iter->dir);
-+			iter->dir = NULL;
- 			return NULL;
-+		}
- 	}
- 
- 	iter->current_name_idx = 0;
-@@ -1948,8 +1951,10 @@ void pmt_diriter_remove(struct pmt_diriter_t *iter)
- 	iter->num_names = 0;
- 	iter->current_name_idx = 0;
- 
--	closedir(iter->dir);
--	iter->dir = NULL;
-+	if (iter->dir) {
-+		closedir(iter->dir);
-+		iter->dir = NULL;
-+	}
- }
- 
- unsigned int pmt_counter_get_width(const struct pmt_counter *p)
+@@ -10195,10 +10195,11 @@ int add_counter(unsigned int msr_num, char *path, char *name,
+ 				fprintf(stderr, "%s: %s FOUND\n", __func__, name);
+ 			break;
+ 		}
+-		if (sys.added_thread_counters++ >= MAX_ADDED_THREAD_COUNTERS) {
++		if (sys.added_thread_counters >= MAX_ADDED_THREAD_COUNTERS) {
+ 			warnx("ignoring thread counter %s", name);
+ 			return -1;
+ 		}
++		sys.added_thread_counters++;
+ 		break;
+ 	case SCOPE_CORE:
+ 		msrp = find_msrp_by_name(sys.cp, name);
+@@ -10207,10 +10208,11 @@ int add_counter(unsigned int msr_num, char *path, char *name,
+ 				fprintf(stderr, "%s: %s FOUND\n", __func__, name);
+ 			break;
+ 		}
+-		if (sys.added_core_counters++ >= MAX_ADDED_CORE_COUNTERS) {
++		if (sys.added_core_counters >= MAX_ADDED_CORE_COUNTERS) {
+ 			warnx("ignoring core counter %s", name);
+ 			return -1;
+ 		}
++		sys.added_core_counters++;
+ 		break;
+ 	case SCOPE_PACKAGE:
+ 		msrp = find_msrp_by_name(sys.pp, name);
+@@ -10219,10 +10221,11 @@ int add_counter(unsigned int msr_num, char *path, char *name,
+ 				fprintf(stderr, "%s: %s FOUND\n", __func__, name);
+ 			break;
+ 		}
+-		if (sys.added_package_counters++ >= MAX_ADDED_PACKAGE_COUNTERS) {
++		if (sys.added_package_counters >= MAX_ADDED_PACKAGE_COUNTERS) {
+ 			warnx("ignoring package counter %s", name);
+ 			return -1;
+ 		}
++		sys.added_package_counters++;
+ 		break;
+ 	default:
+ 		warnx("ignoring counter %s with unknown scope", name);
 -- 
 2.53.0
 
