@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792774995;
-	b=3weQsJQkbCJfZb3S4gz2HZ2g+x7KqC1vaKVlkkPFEQktytkYIrCL+fejxWpgAG0tajaE
-	 sm7Z5xlYVEq9IRBmvJRlue8FNqg+kP5MG3xsifdMdD9wbUPRWZjWhH2BYSkdtHMlJhMjL
-	 HNYJ3oqfTFGdAay1JYVWlskZSbk8wtxFKC+rMGY+Hgsldl8lmIqac7hF8Or2mg+EaFKAG
-	 CsXCfkhBB91t1H25P3ON6Ge72Fke7yCXAgVdKkcDhcC2YxOg0/ADZU62q3UoRaJcD9z7J
-	 cvquziPxd/01/GkVS14swAQP3bMn5XPEElaHu3jvKZm2GfHocKhPa3RMYzkKIo7T1kg==
+	t=1792774998;
+	b=VcC7f1jYkr1ySMm/NHpPQY/ZOLMjBTfYLZSFxZ4hTjK9H+gGjlFRWi16MQ5m8oA2y4H9
+	 e+fR+mLzajl7mA4NOSIZrHLLbZA9MSlXUbsuk7hqmZHq0MToaBWEeyRyZhsSLj7UZKNBQ
+	 0uk/K9QJ9Th3BEjMCp9UKIMuWpjGRcfwD2IHDEVVRSInYXWbpw76tCwoOyabap/OcPpZs
+	 qtBi2uP8tmAd1dJM/sxzMrSVn308N/2XKV+4EFMeBGd6zoz6bmdaNaWM0PeA7j06blLw/
+	 tthPMIUDNlqfgy7fA7cCGN1EN0Cmma/jS3f2PiNq3rrWz31znNjsDIOyraeVrEDZ3gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792774995;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792774998;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pu5zSZdttZJSgXmUMy0vkx+5EJ3fEPN5qXydSYm2lbg=;
-	b=Op9g8R9g+ti41J4T2urhwrZCjfdLvxc/KcywhW/i7GKAW6+42qJnniUbt7iak62A8CYS
-	 p6krTi4KG+gmppUzLAJw7rVsX8dJtrflTlIrPFaJrsn65r2jGbGiFaSVu9LWEVfHbCyxd
-	 ucmRKvUVLSqmL9hDXBssJO6zNc7k3aG4jzPqYfD4Qgj9wnP6dqgrv5lMp+KDmzJUxOAcg
-	 lNXab0t7soenouUcgV18WArXvnkpM2MQPz3aeM364F1xBHJ9J9ZwfD+vFA4lbAx2xFWEf
-	 Xva0HdJxZWTEw3Wbx4Wzd3iFP0/DDUOatmO6ta1xYl2lFuMJUc0hZBjO+9/Twy+uGpg==
+	bh=Tdrs+v61jPH4jgymkFir/d4+JVF22h5SMJpLAQMbyPI=;
+	b=ufFB9rbN73ydBQSgXjfhG5iuQITan7IZGg2duuz9E+6lOEQrPSdnOglFUrtKCHohtvHQ
+	 nB86ERswV0vsgjLOFG72agUQpdZyYQsPm5yOGNnCznuE4l6mCRI4mubzNT7m8RV7fNHtL
+	 nr+i53Weom7rYm+x2EWb6Geg4a1a7frwyrSMALkJ+EXcBqEmvNUGWyD9z8mQxggmlmEX3
+	 WAfB3AuxR47M6KRd7goPWvPJRGhSnBLh0+B+vp6LxLl2Pdib8kY8fBd8kz7/9nhD0JB5m
+	 HKXWJCp08f4hn5NlVpGgkboPZ/mNSM6/CcFHRWChLcGa48aLjxj/AR+PUu0bdQbax7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n8SzfGu7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Mgl/XMbg";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71862606A31B;
-	Fri, 23 Oct 2026 17:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F203606A31A;
+	Fri, 23 Oct 2026 17:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n8SzfGu7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596881F01825;
-	Fri, 23 Oct 2026 17:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mgl/XMbg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670941F01825;
+	Fri, 23 Oct 2026 17:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792774995;
-	bh=Pu5zSZdttZJSgXmUMy0vkx+5EJ3fEPN5qXydSYm2lbg=;
+	s=korg; t=1792774998;
+	bh=Tdrs+v61jPH4jgymkFir/d4+JVF22h5SMJpLAQMbyPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8SzfGu7FgXH5C9Jm9Klb4Ly05meHc5jxVdzUknuxAXHeT6HqMYaxK9TrIMkrGFDe
-	 O04crcQLpsOu1Ysl8upxTzW1wJiQQ5bsSz3q3BpWi5BBSDjUgiaGdI8O75EasTU4uj
-	 6IVi4yguNjSIPoft3onamqhEVhj9PUx42OMIPADg=
+	b=Mgl/XMbgOpqjzaZ8OWFa8MudTEG3zWB2pEpLDT5erwFEPm+iA1Y78LmQGuyhl+awR
+	 nTDqIodsJHesSul4Dk/9PGQfR8Yks9WVkYKBIamtqGzQ2AvC9Ytp/AKghZ0iKBWwA6
+	 /IexbMPdUZpcM46lgxx3mXivSYqiw/9mX9WAXlNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.2 227/242] ntfs: fix undefined behavior in mft/index record size calculation
-Date: Fri, 23 Oct 2026 18:41:09 +0200
-Message-ID: <20261023163719.210331003@linuxfoundation.org>
+	Haris Okanovic <harisokn@amazon.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Radu Rendec <radu@rendec.net>
+Subject: [PATCH 7.2 228/242] genirq/proc: Fix missing CPU header in /proc/interrupts
+Date: Fri, 23 Oct 2026 18:41:10 +0200
+Message-ID: <20261023163719.235766560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023163713.816071858@linuxfoundation.org>
 References: <20261023163713.816071858@linuxfoundation.org>
@@ -68,56 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Haris Okanovic <harisokn@amazon.com>
 
-commit a79899ca38af4ce5518a59a22f0eb1f59f7e6089 upstream.
+commit e74798f2f8e1562f2bbd2fed8d81929eeef39ffc upstream.
 
-The boot sector validation allows clusters_per_mft_record and
-clusters_per_index_record to range from 0xE1 (-31) to 0xF7 (-9) when
-interpreted as signed values. When these are used as negative shift
-counts in expressions like `1 << -clusters_per_mft_record`, values
-like 0xE1 cause `1 << 31`, which shifts into the sign bit of a 32-bit
-signed integer, resulting in undefined behavior.
+irq_seq_show() must be idempotent since it may be called multiple times
+to render the same record, e.g. when seq_file's buffer is exceeded. It
+emits the CPU header behind the one-shot print_header flag, which the
+first pass clears, so the header is lost with the discarded buffer.
 
-Fix by using unsigned shift (1U << ...) instead of signed shift.
-This prevents undefined behavior while preserving the full valid
-range of negative values (-31 to -9) that may appear in NTFS boot
-sectors.
+This can be seen on large systems, such as 8g.48xl (192 CPUs) and
+8i.96xl (384 CPUs) AWS instance types:
 
-The encoding scheme uses negative values to represent record sizes
-smaller than cluster_size: -log2(record_size). Common values include
--10 (1024 bytes) for mft_record_size and -12 (4096 bytes) for
-index_record_size.
+  $ head -1 /proc/interrupts
+     9:          0          0 ...  0  GICv3  25 Level  vgic
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Replace print_header with the position of the first record and include
+the header whenever that record is emitted.
+
+Fixes: 171cc0d9eed1 ("genirq/proc: Speed up /proc/interrupts iteration")
+Signed-off-by: Haris Okanovic <harisokn@amazon.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Link: https://patch.msgid.link/20260911-dev-harisokn-proc-interrupts-fix-b4-v1-1-f9ff208efcfa@amazon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/super.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/irq/proc.c |   24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
---- a/fs/ntfs/super.c
-+++ b/fs/ntfs/super.c
-@@ -695,7 +695,7 @@ static bool parse_ntfs_boot_sector(struc
- 		 * = -log2(mft_record_size) bytes. mft_record_size normaly is
- 		 * 1024 bytes, which is encoded as 0xF6 (-10 in decimal).
- 		 */
--		vol->mft_record_size = 1 << -clusters_per_mft_record;
-+		vol->mft_record_size = 1U << -clusters_per_mft_record;
- 	vol->mft_record_size_mask = vol->mft_record_size - 1;
- 	vol->mft_record_size_bits = ffs(vol->mft_record_size) - 1;
- 	ntfs_debug("vol->mft_record_size = %i (0x%x)", vol->mft_record_size,
-@@ -732,7 +732,7 @@ static bool parse_ntfs_boot_sector(struc
- 		 * index_record_size normaly equals 4096 bytes, which is
- 		 * encoded as 0xF4 (-12 in decimal).
- 		 */
--		vol->index_record_size = 1 << -clusters_per_index_record;
-+		vol->index_record_size = 1U << -clusters_per_index_record;
- 	vol->index_record_size_mask = vol->index_record_size - 1;
- 	vol->index_record_size_bits = ffs(vol->index_record_size) - 1;
- 	ntfs_debug("vol->index_record_size = %i (0x%x)",
+--- a/kernel/irq/proc.c
++++ b/kernel/irq/proc.c
+@@ -462,7 +462,7 @@ int __weak arch_show_interrupts(struct s
+ static DEFINE_RAW_SPINLOCK(irq_proc_constraints_lock);
+ 
+ static struct irq_proc_constraints {
+-	bool		print_header;
++	loff_t		first_pos;
+ 	unsigned int	num_prec;
+ 	unsigned int	chip_width;
+ } irq_proc_constraints __read_mostly = {
+@@ -543,14 +543,13 @@ static int irq_seq_show(struct seq_file
+ 	struct irqaction *action;
+ 
+ 	/* Print header for the first interrupt? */
+-	if (constr->print_header) {
++	if (p->index == constr->first_pos) {
+ 		unsigned int cpu;
+ 
+ 		seq_printf(p, "%*s", constr->num_prec + 8, "");
+ 		for_each_online_cpu(cpu)
+ 			seq_printf(p, "CPU%-8d", cpu);
+ 		seq_putc(p, '\n');
+-		constr->print_header = false;
+ 	}
+ 
+ 	if (desc == ARCH_PROC_IRQDESC)
+@@ -635,14 +634,25 @@ static void *irq_seq_next_desc(loff_t *p
+ 
+ static void *irq_seq_start(struct seq_file *f, loff_t *pos)
+ {
+-	if (!*pos) {
+-		struct irq_proc_constraints *constr = f->private;
++	struct irq_proc_constraints *constr = f->private;
++	bool first = !*pos;
++	void *ret;
+ 
++	if (first) {
+ 		constr->num_prec = READ_ONCE(irq_proc_constraints.num_prec);
+ 		constr->chip_width = READ_ONCE(irq_proc_constraints.chip_width);
+-		constr->print_header = true;
+ 	}
+-	return irq_seq_next_desc(pos);
++
++	ret = irq_seq_next_desc(pos);
++
++	/*
++	 * Record position of the first output record so that irq_seq_show()
++	 * knows where to write the header.
++	 */
++	if (first)
++		constr->first_pos = *pos;
++
++	return ret;
+ }
+ 
+ static void *irq_seq_next(struct seq_file *f, void *v, loff_t *pos)
 
 
