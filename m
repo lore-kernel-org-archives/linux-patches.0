@@ -1,85 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792808835;
-	b=jGlmZElrEwBGiozyzEF2Zfl1R9WUuC/VDrUFKzw9OI4fHgxPr1/fOgxuBOw5x9bbyQ+e
-	 Emy7UzBM792lYCte/vmpkbuEf8MLLqTXICYgANVjDxgiIR2JNnuxxcCgi4Dr4kA8LyCWq
-	 +xN4deu7g9yJu+Mj4jzZJPbbi7YzusWhNxtW/5lgMTVfhxQHZTmBcn+MwW0S09Pob+3XU
-	 EEcxy9C4d1E8GsErtsU5JOyyad2C0UKnJq8btlBh1tdyjfpDEmXdu+2fezV0NUWawo3Qt
-	 zUYgcimzOPSSYkaG33sdwSrJqK4WZUGP8vexBVLzF6MwQ8g5PcHhN+s9bqkHxv0vmSA==
+	t=1792819974;
+	b=XO2nFSYLTsbSo3v8Iai0TJfQjeT5Yq9KSwyBvabaHSBJLhsgqzjbMWnafQAHxt0eAQMO
+	 xFzAE6cBspR4HK9birTzfEhn4XurS6LnTWrr7POXikHbV8Tr73JmyvgCSEFmIbzsCRX4Y
+	 A4Z9vutp5tj3uP7QaLsTSopmyH5PoL1E/SjsHd1m9KovtENHCZ3dQmCSWmpHQ4ZCCN92W
+	 PUBg8I1HoAISs07Qu5XmGDame+dKVroJ2gfX9hI2vxdRp062rHeSnq+1aTye5+DW8vbTZ
+	 WBzsBl3pzxPJYy6WorYHud2ybagfhgHu+COznQVhj7GyYNQ/wdfSoz5SCJq2sjLhf+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792808835;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=dbq+C1knGtel/8heo5gmPJKIJmhELJ53YLi5og68HsI=;
-	b=eaOGGj7cwSOqnCLzDqN2wM96Q+hP4Q+qUB/4dJaJCDplg3QKawhIUiMkwTl2kMFVlpDb
-	 CfFNA33BCbdYAhK0I6mdIFT7iGumyI8D5vtm9wnotAc7fglL18PhJ2iCsIVZMmSzfxGnR
-	 /DOz2Bd5kxl7OfKNbt3Xi/lEEmgT1mhbI1W9JzXzyL8OS7Qy4+vFewwQE8gv+LrY7jcE3
-	 gEWwfbcRb2BoJsYkph0G0BVN1wLJSbvSYyNSclxibd6WzunY9+5vKdFOWgcCaWwOkDHU1
-	 vmyShnVMcs4UWtdvFjArUnWRZxiGa/lDUXEZg9rH5YFieRyU6Ser5DEN7KNnw0hNNdg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792819974;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=jZHFuBoh3O8SvdWvlL7mEgQWiQcN8okpZlrSpdY258o=;
+	b=i9+8+XiHv0mF3CjXHofMkQe1MkydisUGxDS9aUqqN44E2MFuD6aKAxjXtAYruqhkgluv
+	 YcPzQ/7D4sji5tVdnuHYTBDXsf68sHCWO2yxV7BgIr9spGWe6ZKxVsApRut+DQH7cXuy2
+	 qJphP6cLtzOv2iqOBhXxM+Y3cZ2M7sGLHq6SeBL6BbseLJ39s14zqaVRDZj6vhF+SCo3D
+	 EfENyPIwOU6Un+3NzCtmCkelgglP81rCbGOPf6xHjIYxuk0vzBKIovsLsAzN7XKpSElOE
+	 +HsykXu7mIWGh10Xgj7gXwHWj8tBCBosoQqPeCpz61Za1S6Mv9JkbryuFgnLnrPvzWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=googlemail.com;
-	spf=pass smtp.mailfrom=googlemail.com;
-	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20251104 header.b="RUv/hjGK";
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aksZiEgy;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0BB606A31A
-	for <patches@lists.linux.dev>; Sat, 24 Oct 2026 02:27:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6F0BB606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D55606A331;
+	Sat, 24 Oct 2026 05:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20251104 header.b=RUv/hjGK
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a210470b49so10786415e9.2
-        for <patches@lists.linux.dev>; Fri, 23 Oct 2026 19:27:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1792808834; x=1793413634; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dbq+C1knGtel/8heo5gmPJKIJmhELJ53YLi5og68HsI=;
-        b=RUv/hjGKn1uJchGnixvgFJslxHASXrVtLG4hKJxi45e6h/bM8mx4IdkIoijYY5M/E2
-         tr7Bcggk3NsDwMmupM4M+DFD3u7h3vO8WIGe9rqoGbllm9znO+nVdswROi/ZqLUVqalb
-         dGCXiT07vOJXuoeN5brAl0O5TDYLxeNY6GEW0KslcG9FHfmQnhlo170reXLkbuXQWLxH
-         dQva5xIu28HADeAm8o201UkF42jXDHF9C9PpQuBxlPY+wVqbkW+Ec8F8ryAZY94O7afh
-         xysgFqZufrtxLKnujtEuYDynzAYTKIsd+QTKlcj5rEo7IMaujKvZtTOX9peopvKu/NmF
-         4KlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792808834; x=1793413634;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=dbq+C1knGtel/8heo5gmPJKIJmhELJ53YLi5og68HsI=;
-        b=IWInqwrBcYGBYdXlBSAuq9GCcOi7gUBHS6SzbKtlIL+J+JYWqU74R1DKy0VFyFZhfT
-         sdmWHuhU2+1IteuPiSePJqrn8mywwwvXVSMvy4KL3MOMzx8ctCXjyxIDzm7SXubEIu7Q
-         /VzqVksrINC/wQxFpPT4xJNePeI3l9u0ikH6mkDgVwuhrcYWO2FyPKhv2S2/X5fp3lyj
-         viNytQYgWK4fgixwE9HDw9dmJGzDE+rSwn38cl0WSFuUPVEJCtj3n217+Kx4lKOu5+0p
-         SgqVzyX/HV8LECw4VG0V4rPvvGfqrwyZuNy0MzklTA70EOmDQzTZmxBfi+1UQoFIJLYQ
-         Y/Rg==
-X-Gm-Message-State: AFq9FYJzovZagKatb5mO8wCqUxVtCe3a0lvvxBYBX3UTSldSboyeqX4K
-	oYEhiEj2gTnJF8yETO+ts2keFMBdMwJGEUbbHlIrjrZ9iWiR/6ywSbA=
-X-Gm-Gg: AYBFou2tBpXCw6C8X6w8TlyBbVfK6RB7p9oR7jjZTbvwpo81bnHYvsVQgXPeksV5Ra3
-	oum/d+NFoIs0NXErwO1m8GY9VoxlHtx8/fQPh8MTum746V161cDrMOQjPnZi9Vtmfk8gerDFjzB
-	Rp+aaiU9IYriiTu+krPB+wYh6BlDggDTcIIFGYQAF5Gx9IcxWzbvZKkAWHIPULdYBC5IBMCQRIK
-	4x6cA4trk7Qin3efdtRFatbwkPHIiKp8+xvUoFR1O/1uWNhwYzWFmzQ+E2M+9KuAdMJqmcY2yzh
-	XmMCqOC55P4OtDMi8A2MW8MQRgz7EPXYjgagAhhnl87cRkslmIq5iBWcR9qRb53DvZJTCTNa+yt
-	tjFFsKghfJAlm+/cKR8po+9MHFvfPtU6U+MIb6UhTkWKuRRunn8cp8BgUHMF5h857wbBAlptkA6
-	QwIsr6hT3Z6BHAk2UJhJrQtTfeo5D2Pf/kprF8A1ViaPSSAwAxRuWhpcWxGXL3WAvvNM4Q7mlRr
-	WD8xZsuWUeSLZxUxQb5H6sO0cFgwCSt4txF+ShS0CDrcKJ7K/s5UQcybKq6iO36CaRUoINi6OoF
-	Ib7O/nU5dCWS7V2+75xRTjwVsn9L/jqhTOIXZZdmgIM+f2wb/vxVcA==
-X-Received: by 2002:adf:ed8f:0:b0:48e:1d87:f170 with SMTP id ffacd0b85a97d-48e3eb83fffmr740933f8f.12.1792808833581;
-        Fri, 23 Oct 2026 19:27:13 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac555.dip0.t-ipconnect.de. [91.42.197.85])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ecd37f4sm1742797f8f.44.2026.10.23.19.27.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Oct 2026 19:27:12 -0700 (PDT)
-Message-ID: <a4ebdccd-4f47-4449-b120-59e1d6bc4951@googlemail.com>
-Date: Sat, 24 Oct 2026 04:27:09 +0200
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aksZiEgy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925C61F01825;
+	Sat, 24 Oct 2026 05:32:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1792819974;
+	bh=jZHFuBoh3O8SvdWvlL7mEgQWiQcN8okpZlrSpdY258o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=aksZiEgyHKSbd31vCh540tOm5q6v6AsQMCd1mWZIdK7W4rti5Q+P7DzE811VpsP9m
+	 SWbrTkhC9jIesYRProuV98r/2BAZfLDX1otBVJrk4r5QVSOcjL9a0YOA9Ge8xEa/fd
+	 AhPKd56cddMtHBnFXsFZrma/XMowwRHhVHyJT1RQ=
+Date: Sat, 24 Oct 2026 07:32:51 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Salvatore Bonaccorso <carnil@debian.org>,
+	Pavel Machek <pavel@nabladev.com>,
+	"stable # v4 . 9+" <stable@vger.kernel.org>,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.2 000/242] 7.2.13-rc1 review
+Message-ID: <2026102452-upstream-plod-9ed4@gregkh>
+References: <20261023163713.816071858@linuxfoundation.org>
+ <atvHKoRHHjKV4l8A@duo.ucw.cz>
+ <atvS68GhCvmAphrQ@eldamar.lan>
+ <7540e723-054e-43a2-859d-616010fc7bea@gmail.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -89,43 +64,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.18 000/193] 6.18.59-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261023163714.201276352@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7540e723-054e-43a2-859d-616010fc7bea@gmail.com>
 
-Am 23.10.2026 um 18:34 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.18.59 release.
-> There are 193 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Oct 23, 2026 at 03:44:07PM -0700, Florian Fainelli wrote:
+> On 10/23/26 14:34, Salvatore Bonaccorso wrote:
+> > Hi,
+> > 
+> > On Fri, Oct 23, 2026 at 10:44:26PM +0200, Pavel Machek wrote:
+> > > Hi!
+> > > 
+> > > > This is the start of the stable review cycle for the 7.2.13 release.
+> > > > There are 242 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > 
+> > > Either something went very wrong with our testing, or this fails on
+> > > all our targets. 6.18.59-rc1 does not seem to have those widespread
+> > > failures.
+> > > 
+> > > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/2982452623
+> > > 
+> > > Example failure is:
+> > > 
+> > > I'll look some more to try to figure out what is going on there.
+> > > 
+> > > Best regards,
+> > > 
+> > > 								Pavel
+> > > 
+> > > 
+> > > [    1.238864] Yama: becoming mindful.
+> > > L426[    1.238864] Mount-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+> > > L427[    1.238864] Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+> > > L428[    1.238864] VFS: Finished mounting rootfs on nullfs
+> > > L431[    1.238864] BUG: kernel NULL pointer dereference, address: 000000000000002c
+> > > L436[    1.238864] #PF: supervisor write access in kernel mode
+> > > L437[    1.238864] #PF: error_code(0x0002) - not-present page
+> > > L438[    1.238864] PGD 0 P4D 0
+> > > L441[    1.238864] Oops: Oops: 0002 [#1] SMP PTI
+> > > L446[    1.238864] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G S                  7.2.13-rc1+ #1 PREEMPT(lazy)
+> > > L447[    1.238864] Tainted: [S]=CPU_OUT_OF_SPEC
+> > > L448[    1.238864] Hardware name: SIEMENS AG SIMATIC IPC227E/A5E42630598, BIOS V20.01.11 03/15/2018
+> > > L449[    1.238864] RIP: 0010:rest_init+0x33/0xd0
+> > > L450[    1.238864] Code: 34 ff ba 00 02 00 00 31 f6 48 c7 c7 70 a2 e6 b2 e8 52 d3 28 ff 89 c3 e8 bb 2d 34 ff 89 df 48 c7 c6 80 db 85 b3 e8 9d d7 2b ff <81> 48 2c 00 00 00 04 65 8b 15 63 6e 45 01 48 89 c7 89 d0 c1 ea 06
+> > > L451[    1.238864] RSP: 0000:ffffffffb3803ee0 EFLAGS: 00010246
+> > > L452[    1.238864] RAX: 0000000000000000 RBX: 00000000ffffffea RCX: 0000000000000000
+> > > L453[    1.238864] RDX: 0000000000000000 RSI: ffffffffffffffea RDI: ffffffffffffffea
+> > > L454[    1.238864] RBP: ffff8cf23ffed080 R08: ffffffffb385db88 R09: ffffffffb385db80
+> > > L455[    1.238864] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8cf23ffed0ab
+> > > L456[    1.238864] R13: 0000000000000000 R14: ffffffffb380c040 R15: 00000000b43e8000
+> > > L457[    1.238864] FS:  0000000000000000(0000) GS:ffff8cf287953000(0000) knlGS:0000000000000000
+> > > L458[    1.238864] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> > > L459[    1.238864] CR2: 000000000000002c CR3: 000000000d630000 CR4: 00000000001006f0
+> > > L460[    1.238864] Call Trace:
+> > > L461[    1.238864]  <TASK>
+> > > L462[    1.238864]  start_kernel+0x7a2/0x7b0
+> > > L463[    1.238864]  x86_64_start_reservations+0x24/0x30
+> > > L464[    1.238864]  x86_64_start_kernel+0xcd/0xd0
+> > > L465[    1.238864]  common_startup_64+0x13e/0x158
+> > > L466[    1.238864]  </TASK>
+> > > L467[    1.238864] Modules linked in:
+> > > L468[    1.238864] CR2: 000000000000002c
+> > > L469[    1.238864] ---[ end trace 0000000000000000 ]---
+> > > L470[    1.238864] RIP: 0010:rest_init+0x33/0xd0
+> > 
+> > Same here indepently, but not yet bisected.
+> 
+> Same here as well, bisected down to: a0c935bd1f76 ("fs: add umh argument to
+> struct kernel_clone_args"), it looks like we need to cherry-pick
+> 14adbd5341aa ("fs: stop sharing fs_struct between init_task and pid 1"),
+> with that I can boot a kernel.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
+Thanks for the bisection, I'll go queue that up now and push out a -rc2
+soon.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-
-
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+greg k-h
