@@ -1,100 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792924601;
-	b=nAQ8XB2Ci4YhcQrovuter+hUXs84+jAgilKeWTOZ9cpAyYmJ/8dBRUDdOiKs1Pijc81Z
-	 /hgM/Cvx0cjQ/NBH+aItY0W5TXk/DhOYlwNMi3lwHnXXnHPG1zG/pHh2lZQwhaHhm+Rtw
-	 2Rj274+gftD15Vx23RFnAKfzy5oD0SmmsmLBtKVLtIO+4w/L3VluZtONswbp4xAXh9ztK
-	 iugFDwGTEiwdvkaRYFbVEfTORgaO0MWYyIgz8jufvbvlMa5P6/VzDlzTWzdD0BAwgcGqB
-	 iEPKqO8kdV3g8Re3+Rn52y0caJPELP0ZHnsPN545Ar0PjAajk6bMRR6PzqMuMDQRRJQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792924601;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=24txbqcyguXG46xJluEhBf0wsoM68TC1uArTVqKrpRo=;
-	b=FK80sD+q9Mxn+mdXP10kYaX3Yfu5BQphpOl+4S7uj2KemvhVRWwzFolKD0HunvSJm9zs
-	 hRsTMmI0TyWw2owSlP5E+ForVNALJdz6o7v7I+EaSyuzQm5jK8Y8WYthtMAObwnGWQnPu
-	 WNuN8H41FVKb4ViqxI0/cA4qeRMeSj8VJ1d8ViCY6WOgmm+9o+MuNriccdF+jZWUH43Z3
-	 tHMV53bMqaR++iA+M3kMDJ+JQSl/4kTrvgTEXrG7uhKKtdJzU2eT6e5QzRikE5YBO75AT
-	 mncEMLaxPXji6zNnZxVgeg1DQw+8wD3xP82FY1/6zPHwz4wapLRSMRjdLYfaE463vTg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=futuring-girl.com;
-	spf=pass smtp.mailfrom=futuring-girl.com;
-	dkim=pass header.d=futuring-girl.com header.i=@futuring-girl.com header.a=rsa-sha256 header.s=google header.b=uaYO7s6t;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.37
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792930373;
+	b=TWfzAPBmKmsjdFnJxh25mpNLc102RGDi/L5ounZEUJaFlyzNkmUbSesuYOZ5CFh7J1Qa
+	 Nn0mi98n/TXBtOJYcixwn9AGoWj5ChUBLznN7eqiw1PKBYL0tW3uvlqZrE8JYzEUv3Zgo
+	 JJ/7QVM86MTXoLd1+SPuF48ZkySi1KJa2mex1CMwMGYwkdkD8KpKfP5ZXDRz7uzjYlcUL
+	 FbPL+66w6sdlPOz2V6GDaj7EhQN3y4QVYKsyRmK9IdaJ0u+1RjzGCxiMbf0J8/N1UM/S0
+	 bxWMBvVjZ6osN0VJWIgoCuJDJOi1TqFA+T3t416KOj8htCKBG+ToSkSG+V4PXHsr+vQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792930373;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=1FkAHFrZwr/cZl6m1vojFQ55ADEqETD6Ysw/d07Oc7Y=;
+	b=zYH0tiG4TO6yCIcth3ayNT14ugOhltbBqSMrHgc30I95RaJhAKX7ZPYzvAzOkuHSOjRJ
+	 chR9+IUHhojkPMiHQYQOtFO0XyrBUeuW4WqHh3LltNV7XPh7qIOySmH5UaqL9M6/xwdPX
+	 fHA0egpI737xPaYIEzQ4x04PVj9vm81jbBstL20pm2C6XytccZyGLF6m+n2JG9QbutVwS
+	 z8lDGrUVAUWizCU1A8tws4OIVd1tBvZr7JfRL5mmP/h6Of/pnIo8z6f/aYio06YFdBw1g
+	 Civd8khz278YiIzez2zkRvECB7fKM6r+GsNzwNXTw7lCCEJrpBLjIKyEzekkk+Z+e7A==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=w6rz.net;
+	spf=pass smtp.mailfrom=w6rz.net;
+	dkim=pass header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b="IXYtTV/2";
+	arc=none smtp.remote-ip=44.202.169.37
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD21606A31B
-	for <patches@lists.linux.dev>; Sun, 25 Oct 2026 10:36:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BDD21606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC98606A326
+	for <patches@lists.linux.dev>; Sun, 25 Oct 2026 12:12:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BBC98606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=futuring-girl.com header.i=@futuring-girl.com header.a=rsa-sha256 header.s=google header.b=uaYO7s6t
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6b1aa27963eso4538162a12.1
-        for <patches@lists.linux.dev>; Sun, 25 Oct 2026 03:36:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792924599; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Rzzp2+7GWI0WDxp3tboNWgwDje83D82ENLTCh1N5J4S/6f4PBcBWr6DBC0VlmY8Jax
-         54+7gk4HfaHWe5lTDac8v41fpwkeG3R8Rf/BwL+xslVzxyGR5pbH2RrXfsUsUoFZJp4P
-         Y9tZhWoe4HFdmGuOuj5KC4bnxkuzfhpGm2kvFLPf8eZHMwc4ng+wx2n+IHZvuO4RqyuP
-         jaVMT04+Z4lT/sjZB0eU/vDNgC0xC9xizqUtAvlEChPUX0/CEeezD3xrpKQt9dd/JwrS
-         Uy+9izew/n1GQ75mSynIanqiepfOPufWixP63ilN1609RchhlmCtTp+4DpLLQX549S/e
-         IZcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=24txbqcyguXG46xJluEhBf0wsoM68TC1uArTVqKrpRo=;
-        fh=NPSxaNCpRXX/DII+K1QOT2k7sFBykyUisgeJzsAdGms=;
-        b=emZRUZ1N3If/8iAz6rg4e7KOuh+eX+DVQrrTujxHWpdNQ2E3XP1FJ5QuqoMUVuJ8Gc
-         7HpxppBKX9xczcQUVA8fipJwrWZYK0i3Pt/Be+T670nDqVM3SsIiHnlG7gr6U66LvdrU
-         gW5MZVpiBdcBd+Sor6nmcnKsli9R/O7p44vAKuRF3ZZFGg25rHSrpFHUqZu+PkvELotM
-         XaEhykxFxzMTLml+ASSQbD7g8631sKRyJYm76xlI/FIiKsiymg6IkMPZkz6sOLQQHq3l
-         UNXQSwAykHNoKeLYyuTpRfK6XzMy51RzsYXp1xB9PvgHjBuBhrjCQY5D5Ayd0UGS75Is
-         0YUg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1792924599; x=1793529399; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=24txbqcyguXG46xJluEhBf0wsoM68TC1uArTVqKrpRo=;
-        b=uaYO7s6tzjNW7f3QXd9d4gl59szGBCZhc9/JvWEcf+X5j3jPazMu39XJiowfOMzCD4
-         LCKVOMUXCHpNQWHnQz47/kmdci0p2GQPl7OXdopJRkqyZz0km4/fB4uq+NORrwx73rHn
-         +pl0u2X9bOm5gcLABC1DguOJRM+xe6WgvYRelRWVfBrPRV42JsnRP3bNh1vmIovMaB9s
-         ziiVW2P2AIu7uCsQY1eTLAZd2S7+bWkHgf5m/ZFA7NJweqIC+sk47IBfxTQUqPXkJrBE
-         U1wAVSXFtbDYbfRAkG+7DnIOQvoeo8fmTeEUrG/3Ezo2OSgXKY5QOASIy0ucZsAgn4Oe
-         UaHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792924599; x=1793529399;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=24txbqcyguXG46xJluEhBf0wsoM68TC1uArTVqKrpRo=;
-        b=ZW8thEFQrxoeYlZwybkibJBOLxO1oH3qKjrMskx0B2GYigFUeDnnSfd2wTBI+BiMa/
-         HHQO0v69wdked0dOHYdgk7fOSd1UCdUrZCKfE5dpMaRsc8rOyVCzRDGTxy/eDLGuVCpe
-         2us9rOFhcWWotLjxh9KhQuxQHvNroM7CFYE/eXlKcAh5PKuG2z3t7dxp5zsAKVABOm6r
-         3/+2gAT68O4LoOlmvXqHra2TlfwZY5RnpS4XXwkFzGPkOzwuf17oSQq3ABKrTAqk47fQ
-         6a4TzMVHboHcvXV+fVAMy9YAJJDUz4nHaR4MspTf2tjeRj31RcqxQTDrWLQBYEXBWjF9
-         ZYOg==
-X-Forwarded-Encrypted: i=1; AKwUvBzhEf+i5wIDHG3vfpz5CEAwWXkbBOjpQV+KfzFT8iQlCEwFgockbeC326MWebpptphW3gNu7cAM@lists.linux.dev
-X-Gm-Message-State: AFq9FYKsh42UXrrH5RvQnBGW863LxpvBH+ImXz8KiOPzbcn/YhGJevM0
-	L0Yv0XCiXRLtIS+Hubh+auMtVQw/XQgOEBofT6cBQq55n2wdDGqqCVpBgMHqzrNrTQ3T3y1jotu
-	HB8UszGE56cBBrCYs1tFpY5kvp4Bmna7UvRVJCtGPGw==
-X-Gm-Gg: AYBFou275eCgdBcx5RCohjyBY49VC7yBlh9TVnK/ffHOf+2Ru8u03tYEf13cB4rLrRF
-	v6N+KyFl30rVXlrkh3o9W0pwa1wxNQQ28fagegBi6zxV8XUWeAaR7GC1Uj7GD6OtQlyBWYgO6V/
-	zeL3OZ0dB/+nzpbCmgR6v1MuWQqye2qVFhg+Jn2tvcoLcWn1cPHN54Ah/Sit9crB1nOoYnLp/dQ
-	CrVcQs0VNchThHFRPXQeuWzEIucZREGfBOPVSbHgeKljE7B0XG81QYu5GlV4NlIi0gVydMFI84p
-	EHlQmdGd5/BvAnQ0biZsWmOyU9uPtsPvhGdYcMHPjijYSrOKtCroC7KZMq+ZBNE8jLpMLB1ctYf
-	fiU36Gi1DrhChdJ0jpNCuiXKuJmUSAwCTLnfUMhoAtJQ4vfD4acNiDwevyYEhViBUXNlPhw==
-X-Received: by 2002:a17:907:96a4:b0:c26:1cfd:4244 with SMTP id
- a640c23a62f3a-c46bdbf337bmr464489666b.11.1792924598905; Sun, 25 Oct 2026
- 03:36:38 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=IXYtTV/2
+Received: from eig-obgw-5001b.ext.cloudfilter.net ([10.0.29.181])
+	by cmsmtp with ESMTPS
+	id KwZPxPhKRJFmFKx5nxzqET; Sun, 25 Oct 2026 12:12:51 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id Kx5mxPzRHQhdvKx5nxCJLJ; Sun, 25 Oct 2026 12:12:51 +0000
+X-Authority-Analysis: v=2.4 cv=Lfk86ifi c=1 sm=1 tr=0 ts=6addf243
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=3X-YNANvarMDBeD6avQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=L5EjiQpGQaFGZdqT14z7:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=1FkAHFrZwr/cZl6m1vojFQ55ADEqETD6Ysw/d07Oc7Y=; b=IXYtTV/2CWD0yeWGjVN4k3k48J
+	H7P4RGT6fcWXNIakTvBGy4Fv1aqpTMfrRXs3mT8GuAMXckPMgIIYHSeASbykYiNOV6XzNJ3BlPl0a
+	lhee0qp2LhOhxa9uzGl/v7UqM5/D1PcKbkZgnhmrDg+qeSyumbfotfvm0s1thlp9QUrFV1WonSqwY
+	6PUiiyoYwpDCufaTkSzKcv8zLVSSKVcKg1P1+ks3hoCOqBdTHUsxtfB3uSq3Z7klGLDwcjlFev5p+
+	I8Sep+TUeXNBxYWyOfHxauz7ADSK3iwaCk8wgH1goNqV4x9QgDZDCdsqrGng+FniDZvaJdfyz5B7N
+	R8Tqb4MA==;
+Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:57588 helo=[10.0.1.180])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.100.1)
+	(envelope-from <re@w6rz.net>)
+	id 1xKx5m-00000001pF3-0Y36;
+	Sun, 25 Oct 2026 06:12:50 -0600
+Message-ID: <567fa279-bdf9-4634-8b4d-ec64c627ebb7@w6rz.net>
+Date: Sun, 25 Oct 2026 05:12:48 -0700
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -104,29 +76,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261024064731.125251200@linuxfoundation.org>
-In-Reply-To: <20261024064731.125251200@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Sun, 25 Oct 2026 19:36:22 +0900
-X-Gm-Features: AclHuK_Ev7MJ0UlkIUNpIuHy-qSRb0ZmswNvaVNZebfMs2Yp7BHznY1L4EcdhRA
-Message-ID: <CAKL4bV72vvEwMwvDXvgZWio85xJf_SF1-XsNJOtXYdXR9hN5ug@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 7.2 000/243] 7.2.13-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261024064731.125251200@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20261024064731.125251200@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.206.103
+X-Source-L: No
+X-Exim-ID: 1xKx5m-00000001pF3-0Y36
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:57588
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 18
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfAu3MeIYY4XZdf1L/v7SikHJkkPzd70XGNMum79x/jcydEVBna3AGECW2gQ5yzALsbj59XL21x8CRXVWIxs3e+yMfCRPcBfQlOHbleLbK4RxhGyGMBJy
+ YcdOcUrajfLaiZ568Sw2QZfgD3XmMKKukWPb77Zm5XX2zjfzg6lc6dZW48DieR0oj365ERXQZMDQZA==
 
-Hi Greg
-
-On Sat, Oct 24, 2026 at 3:59=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
+On 10/23/26 23:59, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 7.2.13 release.
 > There are 243 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -136,29 +123,44 @@ On Sat, Oct 24, 2026 at 3:59=E2=80=AFPM Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
-7.2.13-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.13-rc2.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-7.2.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-Linux version 7.2.13-rc2 tested.
+Upon further inspection, I've found a dmesg regression:
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+Oct 25 04:01:40 riscv64 kernel: faux_driver regulatory: Direct firmware load for regulatory.db failed with error -2
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+Unfortunately, the bisect fails to boot on the very last step. But it's either commit "fs: stop sharing fs_struct between init_task 
+and pid 1" or commit "fs: add umh argument to struct kernel_clone_args".
 
-[    0.000000] Linux version 7.2.13-rc2rv-g7694d244b4f8
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 16.2.1 20260810, GNU ld (GNU
-Binutils) 2.47) #1 SMP PREEMPT_DYNAMIC Sun Oct 25 18:47:34 JST 2026
+Note that in the commit message of "fs: let idle threads share init_fs" it states "Note that kernels before 7.3 need a different 
+backport.". I'm guessing all the fs: patches from Christian Brauner should be dropped.
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+git bisect start
+# status: waiting for both good and bad commits
+# bad: [7694d244b4f8a6e187060f1f66cc734f5ed16d7b] Linux 7.2.13-rc2
+git bisect bad 7694d244b4f8a6e187060f1f66cc734f5ed16d7b
+# status: waiting for good commit(s), bad commit known
+# good: [cc9de5d4b5ab6459f5774946aa3195ad51236fa8] Linux 7.2.12
+git bisect good cc9de5d4b5ab6459f5774946aa3195ad51236fa8
+# bad: [fa9a1ea1fe845ef8d55048bec58f0c1914f98190] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
+git bisect bad fa9a1ea1fe845ef8d55048bec58f0c1914f98190
+# good: [8e0e8f6a2381e3a945953f522af34add71424c89] fs: notice when init abandons fs sharing
+git bisect good 8e0e8f6a2381e3a945953f522af34add71424c89
+# bad: [77d6387712803b293c9735c1511a70d38d746590] ring-buffer: Use subbuf_order in available memory estimation
+git bisect bad 77d6387712803b293c9735c1511a70d38d746590
+# bad: [25afd3de9842d1c1f2c443fb673bf9dabd2e5ea3] net: hisilicon: hisi_femac: Move setting of netops to fix crash
+git bisect bad 25afd3de9842d1c1f2c443fb673bf9dabd2e5ea3
+# bad: [fc4fb8a05292c20b1f7cdc310e10dad30da3ccdc] fs: let idle threads share init_fs
+git bisect bad fc4fb8a05292c20b1f7cdc310e10dad30da3ccdc
+# good: [7af0a9a193154ea8818b1d46930646d94818fbc2] fs: make userspace_init_fs a dynamically-initialized pointer
+git bisect good 7af0a9a193154ea8818b1d46930646d94818fbc2
+# bad: [14ec8230d78887f5018867013520f05e212aa701] fs: stop sharing fs_struct between init_task and pid 1
+git bisect bad 14ec8230d78887f5018867013520f05e212aa701
+
