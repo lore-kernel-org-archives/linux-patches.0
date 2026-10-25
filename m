@@ -1,72 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.35
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792888629;
-	b=GsQWPmsjTC8D/tzozrGJIjweyKHV0Is1/4rgrFwEohGtiUQRMY6F0KSEvwOSbIL+O+UY
-	 isGrrLzQR2GEZVY4sttdgolnLRy0XJfyXS4YdZWw8seUiXmqullGyk0rP0pwb89AaIHZq
-	 K1/hwjdGOG4C8m0HncKQqGoCFkGPDr+6FYmkFpUw431XWwyXyfF241+0QwaG/DktvHxb6
-	 5E5bE7BQID2mnlbZ/jDGoF2JuK4JVyYdi/kg7MxdoBuHoiJl5VkMOSQTwclXJNI1VvjBb
-	 r4zO0/T85/T5zWVjZaNKa+mFfBvxTF/MXG4hiBvOxaxmUvwnJUSptbMHXhmef+pLzYw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792888629;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=y0J6f+7fz9qiuM+nKAPfCcyE4UpIjVqLueVjidOj29M=;
-	b=aepVj1yrQ5ufOYDfdQJMq/uqE91QmUWRTL/3V62OxYbhsncV5I+KGNA0jm6Cs52AcaUr
-	 TkqQdS1QJHQrwPRbRzBLLWrr8uJOjZ00n990um0JUJaB+Irku9oZalYMH/c7QPPD5/u+a
-	 eBm58RWaft6m982u+XfoAu9bjE69aKLesbbduR0OccfiPpEiZ0MgtZye8WDmr/eZnJixH
-	 fsNfEKts2xdpx3Wkr3TcOkiLDxwzKtk8cSZuWUcqU9F+yRDDKgj3j/hjhqUM9I4oaDBWb
-	 Jw+jIXINyxw82i78xr4ztgKXks7Kc4lOsO7bQCgGiIaHIXPSvcnUBEU5SScfrXkQmCg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=w6rz.net;
-	spf=pass smtp.mailfrom=w6rz.net;
-	dkim=pass header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=l7Pi0M1o;
-	arc=none smtp.remote-ip=35.89.44.35
-Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792924601;
+	b=nAQ8XB2Ci4YhcQrovuter+hUXs84+jAgilKeWTOZ9cpAyYmJ/8dBRUDdOiKs1Pijc81Z
+	 /hgM/Cvx0cjQ/NBH+aItY0W5TXk/DhOYlwNMi3lwHnXXnHPG1zG/pHh2lZQwhaHhm+Rtw
+	 2Rj274+gftD15Vx23RFnAKfzy5oD0SmmsmLBtKVLtIO+4w/L3VluZtONswbp4xAXh9ztK
+	 iugFDwGTEiwdvkaRYFbVEfTORgaO0MWYyIgz8jufvbvlMa5P6/VzDlzTWzdD0BAwgcGqB
+	 iEPKqO8kdV3g8Re3+Rn52y0caJPELP0ZHnsPN545Ar0PjAajk6bMRR6PzqMuMDQRRJQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792924601;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=24txbqcyguXG46xJluEhBf0wsoM68TC1uArTVqKrpRo=;
+	b=FK80sD+q9Mxn+mdXP10kYaX3Yfu5BQphpOl+4S7uj2KemvhVRWwzFolKD0HunvSJm9zs
+	 hRsTMmI0TyWw2owSlP5E+ForVNALJdz6o7v7I+EaSyuzQm5jK8Y8WYthtMAObwnGWQnPu
+	 WNuN8H41FVKb4ViqxI0/cA4qeRMeSj8VJ1d8ViCY6WOgmm+9o+MuNriccdF+jZWUH43Z3
+	 tHMV53bMqaR++iA+M3kMDJ+JQSl/4kTrvgTEXrG7uhKKtdJzU2eT6e5QzRikE5YBO75AT
+	 mncEMLaxPXji6zNnZxVgeg1DQw+8wD3xP82FY1/6zPHwz4wapLRSMRjdLYfaE463vTg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=futuring-girl.com;
+	spf=pass smtp.mailfrom=futuring-girl.com;
+	dkim=pass header.d=futuring-girl.com header.i=@futuring-girl.com header.a=rsa-sha256 header.s=google header.b=uaYO7s6t;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FB7606A31A
-	for <patches@lists.linux.dev>; Sun, 25 Oct 2026 00:37:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9FB7606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD21606A31B
+	for <patches@lists.linux.dev>; Sun, 25 Oct 2026 10:36:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BDD21606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=l7Pi0M1o
-Received: from eig-obgw-5001b.ext.cloudfilter.net ([10.0.29.181])
-	by cmsmtp with ESMTPS
-	id KdVTxbsT4usRSKmEWxgD7w; Sun, 25 Oct 2026 00:37:08 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id KmEVxFmzoP7wgKmEVxduPo; Sun, 25 Oct 2026 00:37:08 +0000
-X-Authority-Analysis: v=2.4 cv=NMzV+16g c=1 sm=1 tr=0 ts=6add4f34
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=6m-s6s55t6cD9z_nMwYA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=y0J6f+7fz9qiuM+nKAPfCcyE4UpIjVqLueVjidOj29M=; b=l7Pi0M1o1eL5xp7giHgphqSqqV
-	IDdfjo8e29J0r8hNPso6l3gU6U2S9y7CCWwXpyXegh29BpA/paBbRiiFVl2lMRHbRR6xLoWBaZHKZ
-	6fe9UyDCupD0Q5xSrWhCK9RDPUZrb8C0bZIoA3Oqnw7hBBJvPEbUL0zI6sjByVhXaSTRVWx1Z33ZV
-	VeZ2gEx55XQ7kpK+H9kVcWwTmSzDCfkCcYzVmYM8Ca5aAIiCshHjMOu2QCHTUYCev/WW10yXfyhjK
-	s1hgCaOW56+MHGwptoiZAiA6r+Zy8lagcvQEq1IdCS7ITPNqSV+7qFKwjV+souGcinARnuEwTD1Ch
-	mf0ngrCg==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:51622 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.100.1)
-	(envelope-from <re@w6rz.net>)
-	id 1xKmEU-00000003BgT-3Vzq;
-	Sat, 24 Oct 2026 18:37:06 -0600
-Message-ID: <f6d268fa-e8e4-462c-86ff-58c0eacbea5b@w6rz.net>
-Date: Sat, 24 Oct 2026 17:37:05 -0700
+	dkim=pass (2048-bit key, unprotected) header.d=futuring-girl.com header.i=@futuring-girl.com header.a=rsa-sha256 header.s=google header.b=uaYO7s6t
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6b1aa27963eso4538162a12.1
+        for <patches@lists.linux.dev>; Sun, 25 Oct 2026 03:36:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792924599; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Rzzp2+7GWI0WDxp3tboNWgwDje83D82ENLTCh1N5J4S/6f4PBcBWr6DBC0VlmY8Jax
+         54+7gk4HfaHWe5lTDac8v41fpwkeG3R8Rf/BwL+xslVzxyGR5pbH2RrXfsUsUoFZJp4P
+         Y9tZhWoe4HFdmGuOuj5KC4bnxkuzfhpGm2kvFLPf8eZHMwc4ng+wx2n+IHZvuO4RqyuP
+         jaVMT04+Z4lT/sjZB0eU/vDNgC0xC9xizqUtAvlEChPUX0/CEeezD3xrpKQt9dd/JwrS
+         Uy+9izew/n1GQ75mSynIanqiepfOPufWixP63ilN1609RchhlmCtTp+4DpLLQX549S/e
+         IZcg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=24txbqcyguXG46xJluEhBf0wsoM68TC1uArTVqKrpRo=;
+        fh=NPSxaNCpRXX/DII+K1QOT2k7sFBykyUisgeJzsAdGms=;
+        b=emZRUZ1N3If/8iAz6rg4e7KOuh+eX+DVQrrTujxHWpdNQ2E3XP1FJ5QuqoMUVuJ8Gc
+         7HpxppBKX9xczcQUVA8fipJwrWZYK0i3Pt/Be+T670nDqVM3SsIiHnlG7gr6U66LvdrU
+         gW5MZVpiBdcBd+Sor6nmcnKsli9R/O7p44vAKuRF3ZZFGg25rHSrpFHUqZu+PkvELotM
+         XaEhykxFxzMTLml+ASSQbD7g8631sKRyJYm76xlI/FIiKsiymg6IkMPZkz6sOLQQHq3l
+         UNXQSwAykHNoKeLYyuTpRfK6XzMy51RzsYXp1xB9PvgHjBuBhrjCQY5D5Ayd0UGS75Is
+         0YUg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl.com; s=google; t=1792924599; x=1793529399; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=24txbqcyguXG46xJluEhBf0wsoM68TC1uArTVqKrpRo=;
+        b=uaYO7s6tzjNW7f3QXd9d4gl59szGBCZhc9/JvWEcf+X5j3jPazMu39XJiowfOMzCD4
+         LCKVOMUXCHpNQWHnQz47/kmdci0p2GQPl7OXdopJRkqyZz0km4/fB4uq+NORrwx73rHn
+         +pl0u2X9bOm5gcLABC1DguOJRM+xe6WgvYRelRWVfBrPRV42JsnRP3bNh1vmIovMaB9s
+         ziiVW2P2AIu7uCsQY1eTLAZd2S7+bWkHgf5m/ZFA7NJweqIC+sk47IBfxTQUqPXkJrBE
+         U1wAVSXFtbDYbfRAkG+7DnIOQvoeo8fmTeEUrG/3Ezo2OSgXKY5QOASIy0ucZsAgn4Oe
+         UaHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792924599; x=1793529399;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=24txbqcyguXG46xJluEhBf0wsoM68TC1uArTVqKrpRo=;
+        b=ZW8thEFQrxoeYlZwybkibJBOLxO1oH3qKjrMskx0B2GYigFUeDnnSfd2wTBI+BiMa/
+         HHQO0v69wdked0dOHYdgk7fOSd1UCdUrZCKfE5dpMaRsc8rOyVCzRDGTxy/eDLGuVCpe
+         2us9rOFhcWWotLjxh9KhQuxQHvNroM7CFYE/eXlKcAh5PKuG2z3t7dxp5zsAKVABOm6r
+         3/+2gAT68O4LoOlmvXqHra2TlfwZY5RnpS4XXwkFzGPkOzwuf17oSQq3ABKrTAqk47fQ
+         6a4TzMVHboHcvXV+fVAMy9YAJJDUz4nHaR4MspTf2tjeRj31RcqxQTDrWLQBYEXBWjF9
+         ZYOg==
+X-Forwarded-Encrypted: i=1; AKwUvBzhEf+i5wIDHG3vfpz5CEAwWXkbBOjpQV+KfzFT8iQlCEwFgockbeC326MWebpptphW3gNu7cAM@lists.linux.dev
+X-Gm-Message-State: AFq9FYKsh42UXrrH5RvQnBGW863LxpvBH+ImXz8KiOPzbcn/YhGJevM0
+	L0Yv0XCiXRLtIS+Hubh+auMtVQw/XQgOEBofT6cBQq55n2wdDGqqCVpBgMHqzrNrTQ3T3y1jotu
+	HB8UszGE56cBBrCYs1tFpY5kvp4Bmna7UvRVJCtGPGw==
+X-Gm-Gg: AYBFou275eCgdBcx5RCohjyBY49VC7yBlh9TVnK/ffHOf+2Ru8u03tYEf13cB4rLrRF
+	v6N+KyFl30rVXlrkh3o9W0pwa1wxNQQ28fagegBi6zxV8XUWeAaR7GC1Uj7GD6OtQlyBWYgO6V/
+	zeL3OZ0dB/+nzpbCmgR6v1MuWQqye2qVFhg+Jn2tvcoLcWn1cPHN54Ah/Sit9crB1nOoYnLp/dQ
+	CrVcQs0VNchThHFRPXQeuWzEIucZREGfBOPVSbHgeKljE7B0XG81QYu5GlV4NlIi0gVydMFI84p
+	EHlQmdGd5/BvAnQ0biZsWmOyU9uPtsPvhGdYcMHPjijYSrOKtCroC7KZMq+ZBNE8jLpMLB1ctYf
+	fiU36Gi1DrhChdJ0jpNCuiXKuJmUSAwCTLnfUMhoAtJQ4vfD4acNiDwevyYEhViBUXNlPhw==
+X-Received: by 2002:a17:907:96a4:b0:c26:1cfd:4244 with SMTP id
+ a640c23a62f3a-c46bdbf337bmr464489666b.11.1792924598905; Sun, 25 Oct 2026
+ 03:36:38 -0700 (PDT)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -76,63 +104,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 000/193] 6.18.59-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261023163714.201276352@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20261023163714.201276352@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1xKmEU-00000003BgT-3Vzq
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:51622
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 38
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfLETUF/dEdpFm1czHuAl3YV3nJxYX8T8Qz6ONlyE8YOX2N7RKg7VKz4Xibau4j7aSYlLjgjMbBUysy7WgHT3kooDLQoEhCoUJSCvVREO3gzOhKwKgCKR
- rz7PZkdKgab3GlqINNnh1tEgvR5ONIWfFo1R0Wbwg1rvFhV9isrOKiPdr2lDnnxkC8aNfWUH9z6sGg==
+References: <20261024064731.125251200@linuxfoundation.org>
+In-Reply-To: <20261024064731.125251200@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Sun, 25 Oct 2026 19:36:22 +0900
+X-Gm-Features: AclHuK_Ev7MJ0UlkIUNpIuHy-qSRb0ZmswNvaVNZebfMs2Yp7BHznY1L4EcdhRA
+Message-ID: <CAKL4bV72vvEwMwvDXvgZWio85xJf_SF1-XsNJOtXYdXR9hN5ug@mail.gmail.com>
+Subject: Re: [PATCH 7.2 000/243] 7.2.13-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/23/26 09:34, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.59 release.
-> There are 193 patches in this series, all will be posted as a response
+Hi Greg
+
+On Sat, Oct 24, 2026 at 3:59=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 7.2.13 release.
+> There are 243 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Sun, 25 Oct 2026 16:36:50 +0000.
+> Responses should be made by Mon, 26 Oct 2026 06:46:54 +0000.
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.59-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
+7.2.13-rc2.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-7.2.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Linux version 7.2.13-rc2 tested.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 7.2.13-rc2rv-g7694d244b4f8
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 16.2.1 20260810, GNU ld (GNU
+Binutils) 2.47) #1 SMP PREEMPT_DYNAMIC Sun Oct 25 18:47:34 JST 2026
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
