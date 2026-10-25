@@ -1,45 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792933105;
-	b=WtApW5M5S8VmD2a3jbxQTWFGIMxu09aIqIu3sPmzegorUqWKfELrcKszMu/YUH5VzYqs
-	 3YIpqM1cphxBy6VQMqq27x0qKDE1bTpa/H3tOEzm/ovA4JAfwoyjvJ+tDf/uSUBLd79Ut
-	 Dxtoz0kWUVEMbtCzuCB776myZ0dC6Xf+LjvKWHHeLrq7f6Wckbe+r+Bzzrhbwii8oHH6V
-	 r2dK4l95bV8H5plgujG2Y4OxhU515AQJPtNruTE2vjcasr7aKE5M2FGGcvCApVJVakuPW
-	 s9YZSYguWekIrt5x+uwqu6wUMfaeaXU4hT6CN3QleUrb/jYOINrpciL2UeIhDzTWa2g==
+	t=1792933117;
+	b=MYhmC/fxWItsMj/H2sOa36Up8mq7J1XrFujmQwoAAsRc0nWnxQiyY1bKei+woeoOWv/n
+	 Mv8AjWOYn0nWKfGzVDCHpMixHzU97V8KWayiJTIqhNNlxa5f5ikqMWO0kXmQJvm8vnBfv
+	 vUIMjaf4Fxnf9L3j7zQovHiXEwVo0Fy0dp53Hq6sVii7ldv3pJ1JwkdbQXVCB3gT8W8E9
+	 XkWRtMCuW0Chlnv1yXc3vSpKY8anv8K/C+2rGjzWeo3BKJYNXO0xwq9C0f7TgC3tEsMj2
+	 Tppl3ABAFCf1nI1/hwwvQRBOLFV7NqUXBdenw2fG2ut7l3OVuD8/Hoqiyhs8wV+3uqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792933105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792933117;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=7uRCpw0dTORorjAakPr9rmxV64BViqawQfWAhL5Kh1M=;
-	b=s/48Fzq7Kn+juzCA9WlG78p3LEPyWFVU80gc2jzqfszqKw846TwEpimbCk8IgBTzubom
-	 Q+X6SzIvOFWO6+tB20hKnHPJ40ggBw5XNjpSvOt0rByoufRwke3HdwjX1wAsWy8aWq/cK
-	 NievWboH9gMjqq/uA+xDvKqQRmMdYOAU0TNKVdLyqwR8g9hC9AtojGszYcpGqsQZKDXff
-	 Tp80F5dPslIy3CAyvS4EyDlMVFtaiVa1gDdGXUnS0fiVgWfZMyIaaTXfNwTfLYYso1WYL
-	 yfFGKNpoHBwdt6EFbyIQXUNCCcX59h4QpMIlUfJjkJNQS3iTnrmhtpT/lI0qfwL9UXg==
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=3yzllJ8+rvuvg0LYjJq3GvvFbCs2pZRYE5PWz9v78Wc=;
+	b=Grugz2QHRLdW5MI3KUaVj/MBckxTz8t8xRdyGK4EP7/stVeZ4HUJnGcAOcbKy8RP+BCw
+	 DHSBH0cPP8OknT/Zo2Afkh4NMZBZDlnhirMCDmwLTYHjzVjpv5UuTtfLATWhArrIwN6SO
+	 6h4qfxdetTsZrCFEA6vUvmSe1tgqHRMb38b/ZFtaTi8vsoxUzgH/zm3mAk5oVZzL1hUzX
+	 VTIXWzpttC+Ww6Mzid/hVH5Mqp5V9Xn4ROR5E5VF/zXAJjHUQxMzR10bEcFdFmp2SQ7/t
+	 EzMTmeK0U6zt/eBVQyUfO4d3m8qYoqozP+aI4HdMiXBf5dq/8oN75/GVsWbyYVYgNZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zLButuvh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jcu7KCoA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E08606A31B;
-	Sun, 25 Oct 2026 12:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DA8606A31B;
+	Sun, 25 Oct 2026 12:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zLButuvh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F681F031E0;
-	Sun, 25 Oct 2026 12:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jcu7KCoA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9569E1F01828;
+	Sun, 25 Oct 2026 12:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1792933104;
-	bh=7uRCpw0dTORorjAakPr9rmxV64BViqawQfWAhL5Kh1M=;
+	s=korg; t=1792933117;
+	bh=3yzllJ8+rvuvg0LYjJq3GvvFbCs2pZRYE5PWz9v78Wc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=zLButuvhg6zx06pj4hSLNrCGl6COl5emJ8yVzSk8fmU+dIypYeHqYKKoK8sBkznif
-	 lFYAt4erIGM8ZbtC07TW3OuZ8Vob0gQ0gN1mIpz9otTXaQhttVxtRye0ViISy14hzj
-	 5xkHuL3jM1oCFj23Y0Gv8+K+9TNh4r1WiBTi6rr4=
-Date: Sun, 25 Oct 2026 13:58:24 +0100
+	b=jcu7KCoAwaqeDRdFmBUFq3EYgMvna8p8bwX88ffnZQQKnGcPjDV2ImApgPdeuT5Zw
+	 3LGvsF1lRVtD+M+/gmzM6KIGXWMGZhGik1YSrlvRzkCkq5iZg0wvEotNjcVC7r/4m3
+	 JK2ZcteQWlcmMJwPw6YL/a10n23/inoqBjFemGXk=
+Date: Sun, 25 Oct 2026 13:58:37 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ron Economos <re@w6rz.net>
+To: Benjamin Boortz <bennib@mailbox.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
@@ -49,9 +48,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
 	sr@sladewatkins.com
 Subject: Re: [PATCH 7.2 000/243] 7.2.13-rc2 review
-Message-ID: <2026102514-mantra-hypocrite-3567@gregkh>
+Message-ID: <2026102527-deniable-crowd-d7cc@gregkh>
 References: <20261024064731.125251200@linuxfoundation.org>
- <567fa279-bdf9-4634-8b4d-ec64c627ebb7@w6rz.net>
+ <at3xpGSor_VQBC9Q@bb-82jq>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -61,66 +60,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <567fa279-bdf9-4634-8b4d-ec64c627ebb7@w6rz.net>
+In-Reply-To: <at3xpGSor_VQBC9Q@bb-82jq>
 
-On Sun, Oct 25, 2026 at 05:12:48AM -0700, Ron Economos wrote:
-> On 10/23/26 23:59, Greg Kroah-Hartman wrote:
+On Sun, Oct 25, 2026 at 01:35:00PM +0100, Benjamin Boortz wrote:
+> On Sat, Oct 24, 2026 at 08:59:39AM +0200, Greg Kroah-Hartman wrote:
+> 
 > > This is the start of the stable review cycle for the 7.2.13 release.
 > > There are 243 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
-> > 
-> > Responses should be made by Mon, 26 Oct 2026 06:46:54 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.13-rc2.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
 > 
-> Upon further inspection, I've found a dmesg regression:
+> QEMU tests pass: Build and boot tested for x86_64, i386, arm64, and riscv
+> across multiple configurations.
+> But on Lenovo IdeaPad, AMD Ryzen 7 5800H, it breaks firmware loading.
 > 
-> Oct 25 04:01:40 riscv64 kernel: faux_driver regulatory: Direct firmware load for regulatory.db failed with error -2
 > 
-> Unfortunately, the bisect fails to boot on the very last step. But it's
-> either commit "fs: stop sharing fs_struct between init_task and pid 1" or
-> commit "fs: add umh argument to struct kernel_clone_args".
+> 7.2.13-rc2 stable-rc (broken):
+>   Linux bb-82jq 7.2.13-rc2-localconfig+ #37 SMP PREEMPT_DYNAMIC 2026-10-25T10:58:13Z x86_64 GNU/Linux
+>   [    4.115429] faux_driver regulatory: Direct firmware load for regulatory.db failed with error -2
+>   [    4.247951] nvidia 0000:01:00.0: Direct firmware load for nvidia/610.57.04/gsp_ga10x.bin failed with error -2
+>   [    4.293594] mt7921e 0000:04:00.0: Direct firmware load for mediatek/WIFI_RAM_CODE_MT7961_1.bin failed with error -2
+>   [    5.270053] bluetooth hci0: Direct firmware load for mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin failed with error -2
+>   [    5.270059] Bluetooth: hci0: Failed to set up firmware (-2)
+>   [    5.285865] mt7921e 0000:04:00.0: hardware init failed
+>   [    6.777226] r8169 0000:03:00.0: Unable to load firmware rtl_nic/rtl8168h-2.fw (-2)
 > 
-> Note that in the commit message of "fs: let idle threads share init_fs" it
-> states "Note that kernels before 7.3 need a different backport.". I'm
-> guessing all the fs: patches from Christian Brauner should be dropped.
+>   dmesg: https://benni.tech/pub/2026-10-25-354214524bc50442-linux_7.2.13-rc2_dmesg.out
 > 
-> git bisect start
-> # status: waiting for both good and bad commits
-> # bad: [7694d244b4f8a6e187060f1f66cc734f5ed16d7b] Linux 7.2.13-rc2
-> git bisect bad 7694d244b4f8a6e187060f1f66cc734f5ed16d7b
-> # status: waiting for good commit(s), bad commit known
-> # good: [cc9de5d4b5ab6459f5774946aa3195ad51236fa8] Linux 7.2.12
-> git bisect good cc9de5d4b5ab6459f5774946aa3195ad51236fa8
-> # bad: [fa9a1ea1fe845ef8d55048bec58f0c1914f98190] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
-> git bisect bad fa9a1ea1fe845ef8d55048bec58f0c1914f98190
-> # good: [8e0e8f6a2381e3a945953f522af34add71424c89] fs: notice when init abandons fs sharing
-> git bisect good 8e0e8f6a2381e3a945953f522af34add71424c89
-> # bad: [77d6387712803b293c9735c1511a70d38d746590] ring-buffer: Use subbuf_order in available memory estimation
-> git bisect bad 77d6387712803b293c9735c1511a70d38d746590
-> # bad: [25afd3de9842d1c1f2c443fb673bf9dabd2e5ea3] net: hisilicon: hisi_femac: Move setting of netops to fix crash
-> git bisect bad 25afd3de9842d1c1f2c443fb673bf9dabd2e5ea3
-> # bad: [fc4fb8a05292c20b1f7cdc310e10dad30da3ccdc] fs: let idle threads share init_fs
-> git bisect bad fc4fb8a05292c20b1f7cdc310e10dad30da3ccdc
-> # good: [7af0a9a193154ea8818b1d46930646d94818fbc2] fs: make userspace_init_fs a dynamically-initialized pointer
-> git bisect good 7af0a9a193154ea8818b1d46930646d94818fbc2
-> # bad: [14ec8230d78887f5018867013520f05e212aa701] fs: stop sharing fs_struct between init_task and pid 1
-> git bisect bad 14ec8230d78887f5018867013520f05e212aa701
+> 7.2.12 stable (working):
+>   Linux bb-82jq 7.2.12-localconfig #15 SMP PREEMPT_DYNAMIC 2026-10-25T11:34:55Z x86_64 GNU/Linux
+>   [    4.187538] r8169 0000:03:00.0 eth0: RTL8168h/8111h, 90:2e:16:f4:c1:ac, XID 541, IRQ 99
+>   [    4.317243] mt7921e 0000:04:00.0: HW/SW Version: 0x8a108a10, Build Time: 20260224110909a
+>   [    4.329703] mt7921e 0000:04:00.0: WM Firmware Version: ____010000, Build Time: 20260224110949
+>   [    5.209980] Bluetooth: hci0: HW/SW Version: 0x008a008a, Build Time: 20260224111243
+>   [    5.363124] Bluetooth: hci0: Device setup in 152450 usecs
 > 
+>   dmesg: https://benni.tech/pub/2026-10-25-741af2903c635793-linux_7.2.12-stable_dmesg.out
+> 
+> 
+> The firmware files on my system exist:
+> -rw-r--r-- 1 root root   382295 14. Aug 17:40 /lib/firmware/mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin.zst
+> -rw-r--r-- 1 root root    48310 14. Aug 17:40 /lib/firmware/mediatek/WIFI_MT7961_patch_mcu_1_2_hdr.bin.zst
+> -rw-r--r-- 1 root root   359887 14. Aug 17:40 /lib/firmware/mediatek/WIFI_RAM_CODE_MT7961_1.bin.zst
+> -rw-r--r-- 1 root root 84310168  3. Aug 19:30 /lib/firmware/nvidia/610.57.04/gsp_ga10x.bin
+> -rw-r--r-- 1 root root     6380 31. Mai 10:41 /lib/firmware/regulatory.db
+> -rw-r--r-- 1 root root      762 14. Aug 17:40 /lib/firmware/rtl_nic/rtl8168h-2.fw.zst
 
-Thanks, will push out a -rc3 soon with these dropped.
+Thanks for the report, will push out a -rc3 soon.
 
 greg k-h
