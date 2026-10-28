@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210843;
-	b=ruGFZAEyhb5w/5K8PqVVH8TkoMmE3VHTzefUz2tO4xPR5e6yJJA7TyfDY64qL1cHys0k
-	 KsCW1PjvwAIIjHTu/t4h5shVPHXNEPNAIhnzqrCX1jhmds//0MSl8Lyhb2M2xMwiAPtt7
-	 +CyoueR5veKk89R6hiCqCoQh/aEEzHk/D9TYZcFTlw07izin4OEbu/wAydD69Ordg/MhK
-	 sqQjjJKjxSy9qrQ3xNHjTDLxqokRD5fw8AKbcL7kI8Odi6sYaVJEQJXVkPUnJWj82Y26B
-	 HbayYL3+zqPJ8tbka4mZLDxx374WdosDcWTbNmItkKDNtTuF1SLnMhx5dsCihWjEgqA==
+	t=1793210845;
+	b=c9ggZKGRAAb+vX/puEXRtMOUUVCtgebotnfVBo0Zqv/fMjEh3+W0g2tUc1skYJDbGqMF
+	 rpyAAnSZzos/ljP1MMtLicziNprUfOxWqk84qK8DS8Xc+MdsUf0Ulf/G+EcmqyRK0XyE/
+	 8I/RSHSUcrVL+aEpnSNtWV2eIfa4PD3SsKdAynYe85ivYFJCzI6VOw0auXzkEEQqVi5kH
+	 xfBEyO6QRYngW2An0r0imueZXw/ODb+QpiEgceTvXJg5fYbjRb0N/KY2cNzYc8ZfCRmLh
+	 j9swSu/HPPR1pS0+z2gAdXlxW1vpUsMUK+IM2gnOOYFDA4q2IS6QHo9JopD/0py93YQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210843;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210845;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6p46i9P9hpwIeJ0dYgf4cB0tBtYTOnW01GoFp6+cXOU=;
-	b=WfAJVEmpzid+avZo0sgia9+6tR956u+mHoOHsNMtp/9op37Zr2OTvg+N9rWjC2hWyyX7
-	 wb8VKgeITUzRBbKvhfaLMBjJO9EvVLB5eITSK64LCVkpjAMz3BvmwIFrY0yBFAYCvH9pI
-	 8H29pnoi/rpCX9ojAdnIUIg2v13gqFAgdGyo55cUGTZE+TUtojW5glAeUxiS1iWFLWp/6
-	 Az0WjrwOi22zY6PNF/HjvSCwih9uZAx2P1w9yeWtkmWSl5Ndh9JYakFmQ39YEW9Sj6afj
-	 Ecx6pldXcBIXe3EEOwqVjQ2jvurkaKH6aCgHH5tnlHltjAXcKbQT+SRs1MqSDXgi+PA==
+	bh=4wZCV2LYE9ZUy2FGCnrMnIlkLkK8sEyvhO/ERAcPnI4=;
+	b=u/fAO0wrObnPTnwdF/BM+K0mduLV+x9iLgl5zuCGAQL+n7Ho4CIdpWiJTdgH7NWBY+fC
+	 pXL3faP1jlGuLgmGTkAFySIYZG5kPdqtdTnQJ9wrnOYAqfiHX9TzXPRCXVn23SYO9A1ua
+	 4EoaNlFS0mgefugeDwTAD1rH6V72Axfnl+M64S5Vm0q4nPHljOReGIp0JfjtIU1lGz6Qb
+	 qqcO0nyLMQAzfsNCFf8a/8LfpajvRV+qTnXKyzxItrV6QC8oDsx0JVqnNfxpSbkYoqf6n
+	 syktL87jaljH+XEXJgfZxuIO9qCBLFpDXky8+8OL3/suiq+yL9gjYT7urxIE97xJ/oQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9Ud9tDh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tkj2+ep0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA872606A324;
-	Wed, 28 Oct 2026 18:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946B0606A32D;
+	Wed, 28 Oct 2026 18:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9Ud9tDh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169FB1F01825;
-	Wed, 28 Oct 2026 18:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tkj2+ep0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46991F01829;
+	Wed, 28 Oct 2026 18:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210842;
-	bh=6p46i9P9hpwIeJ0dYgf4cB0tBtYTOnW01GoFp6+cXOU=;
+	s=korg; t=1793210845;
+	bh=4wZCV2LYE9ZUy2FGCnrMnIlkLkK8sEyvhO/ERAcPnI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9Ud9tDhnQNmxuDS9NT3J3dK1ty9orIYqZcSldteMUnT8qKInwvzfeEfPNFmbY42r
-	 oaXP2H69zg4Dhei1OvZBngPwMD0aN3eV9v2RhW11PQzNdWQ2hRhW+hdZCq6kp1H5pG
-	 RiaLeD7+psloVQTbEqobNh5AHYGJjKL+VVZqr6aY=
+	b=Tkj2+ep0BjJKaxupNKT4VVq8CdZfmgaawGy0vNFGsEy6YXch6raQpZHEKF7hQ2zhW
+	 2SSOrD9ke1JJ2gJ39XGkUkGtdZqhMo9rCTHz1luJZC9wlQlRlLxpe48o9WXoTD1tP3
+	 eOhDDmMwIczHpnVGSlQ0IdOxt+JxxCK1sdm2ZPm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/571] smb/client: pass cifs_open_info_data to SMB2_open()
-Date: Wed, 28 Oct 2026 17:54:38 +0100
-Message-ID: <20261028170011.126747102@linuxfoundation.org>
+Subject: [PATCH 5.15 167/571] ASoC: wm8903: Move the DRC QR threshold to the register that holds it
+Date: Wed, 28 Oct 2026 17:55:14 +0100
+Message-ID: <20261028170011.977933076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,105 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 1f551e407bb49dce0bbd34ed6a499dad69e18020 ]
+[ Upstream commit e31ae4aeb049983fe3be0cf1e12c8074811a7685 ]
 
-Let SMB2_open() fill the smb2_file_all_info embedded in cifs_open_info_data
-directly. This removes the temporary smb2_file_all_info copy in
-smb2_open_file().
+The DRC_THRESH_QR field is bits 7 and 6 of DRC_1, but the control sits on
+DRC_0. Its shift and max are right for the field, only the register is
+wrong.
 
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Those bits of DRC_0 belong to DRC_STARTUP_GAIN, which "DRC Startup
+Volume" claims as bits 10 to 6. So the two controls share bits 7 and 6.
+Writing either one moves the other, and the quick release threshold is
+never reached at all.
 
-[5.15 dependency adaptation]
-The cifs_open_info_data wrapper is absent from this stable tree. Keep the
-existing SMB2_open() argument type and callers, and use the file_info
-alias directly for the supplied smb2_file_all_info buffer. Drop the
-upstream caller and prototype changes instead of importing newer open
-and symlink handling APIs into fs/cifs.
+The six fields of DRC_1 tile it exactly, so there is nowhere else the
+threshold could live. Point the control at DRC_1.
 
-Move the existing success trace after smb2_parse_contexts(), retaining
-the six-argument trace interface in 5.15. Together with the file_info
-alias, this provides the merge context needed by 566820af017e ("smb:
-client: close handle after create-context parsing failure"). No functions
-are added, and the handle-close fix remains in the target commit.
+Found by a sweep for two controls claiming the same bits of one
+register. No board with this codec was to hand, the register map is
+the driver's own wm8903.h.
 
-[ sashal: Reduced backport -- upstream 1f551e407bb49 touches 4 file(s), this
-  backport carries 1. Not backported here:
-  fs/smb/client/link.c
-  fs/smb/client/smb2file.c
-  fs/smb/client/smb2pdu.c
-  fs/smb/client/smb2proto.h
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
-
-Stable-dep-of: 566820af017e ("smb: client: close handle after create-context parsing failure")
+Fixes: f1c0a02f32f8 ("ALSA: ASoC: Add WM8903 CODEC driver")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260920135327.3628704-1-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2pdu.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ sound/soc/codecs/wm8903.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
-index 11fe130a30cbe..8ed13e21a8480 100644
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -2966,6 +2966,7 @@ SMB2_open(const unsigned int xid, struct cifs_open_parms *oparms, __le16 *path,
- 	int resp_buftype = CIFS_NO_BUFFER;
- 	int rc = 0;
- 	int flags = 0;
-+	struct smb2_file_all_info *file_info = buf;
- 
- 	cifs_dbg(FYI, "create/open\n");
- 	if (!ses || !server)
-@@ -3008,10 +3009,7 @@ SMB2_open(const unsigned int xid, struct cifs_open_parms *oparms, __le16 *path,
- 			tcon->need_reconnect = true;
- 		}
- 		goto creat_exit;
--	} else
--		trace_smb3_open_done(xid, rsp->PersistentFileId, tcon->tid,
--				     ses->Suid, oparms->create_options,
--				     oparms->desired_access);
-+	}
- 
- 	atomic_inc(&tcon->num_remote_opens);
- 	oparms->fid->persistent_fid = rsp->PersistentFileId;
-@@ -3021,21 +3019,24 @@ SMB2_open(const unsigned int xid, struct cifs_open_parms *oparms, __le16 *path,
- 	oparms->fid->mid = le64_to_cpu(rsp->hdr.MessageId);
- #endif /* CIFS_DEBUG2 */
- 
--	if (buf) {
--		buf->CreationTime = rsp->CreationTime;
--		buf->LastAccessTime = rsp->LastAccessTime;
--		buf->LastWriteTime = rsp->LastWriteTime;
--		buf->ChangeTime = rsp->ChangeTime;
--		buf->AllocationSize = rsp->AllocationSize;
--		buf->EndOfFile = rsp->EndofFile;
--		buf->Attributes = rsp->FileAttributes;
--		buf->NumberOfLinks = cpu_to_le32(1);
--		buf->DeletePending = 0;
-+	if (file_info) {
-+		file_info->CreationTime = rsp->CreationTime;
-+		file_info->LastAccessTime = rsp->LastAccessTime;
-+		file_info->LastWriteTime = rsp->LastWriteTime;
-+		file_info->ChangeTime = rsp->ChangeTime;
-+		file_info->AllocationSize = rsp->AllocationSize;
-+		file_info->EndOfFile = rsp->EndofFile;
-+		file_info->Attributes = rsp->FileAttributes;
-+		file_info->NumberOfLinks = cpu_to_le32(1);
-+		file_info->DeletePending = 0;
- 	}
- 
- 
- 	rc = smb2_parse_contexts(server, &rsp_iov, &oparms->fid->epoch,
--				 oparms->fid->lease_key, oplock, buf, posix);
-+				 oparms->fid->lease_key, oplock, file_info, posix);
-+
-+	trace_smb3_open_done(xid, rsp->PersistentFileId, tcon->tid, ses->Suid,
-+			     oparms->create_options, oparms->desired_access);
- creat_exit:
- 	SMB2_open_free(&rqst);
- 	free_rsp_buf(resp_buftype, rsp);
+diff --git a/sound/soc/codecs/wm8903.c b/sound/soc/codecs/wm8903.c
+index 75f30154c809f..168d4f680a654 100644
+--- a/sound/soc/codecs/wm8903.c
++++ b/sound/soc/codecs/wm8903.c
+@@ -678,7 +678,7 @@ SOC_ENUM("DRC Decay Rate", drc_decay),
+ SOC_ENUM("DRC FF Delay", drc_ff_delay),
+ SOC_SINGLE("DRC Anticlip Switch", WM8903_DRC_0, 1, 1, 0),
+ SOC_SINGLE("DRC QR Switch", WM8903_DRC_0, 2, 1, 0),
+-SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_0, 6, 3, 0, drc_tlv_max),
++SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_1, 6, 3, 0, drc_tlv_max),
+ SOC_ENUM("DRC QR Decay Rate", drc_qr_decay),
+ SOC_SINGLE("DRC Smoothing Switch", WM8903_DRC_0, 3, 1, 0),
+ SOC_SINGLE("DRC Smoothing Hysteresis Switch", WM8903_DRC_0, 0, 1, 0),
 -- 
 2.53.0
 
