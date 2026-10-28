@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207204;
-	b=z4VAe5F63UhM1gZb1T/V5+Ew/n+UBIawSpoWCUIXdZe07tnwMR1Ael9YwNlPzN5wwQ1U
-	 +wwkmUebtFRfal9mzlKDkWRGac7i9HYOjzosOK6tbQ9Dlr6wj1+3xQuR3CR0E/z8abl5E
-	 Y6QQ4xNjZFKA+qwUM0UDf8MyPYn7N/Jst0TfmhrNMlATGR7k76jF9uIQ/8teem+n5/LwL
-	 pO7318kRR43MD5tAeKiTRot17q4rNKELNxcp9OS0AaMxzY5tOXYBd3ZXF2IPkJ9rrJ5cu
-	 t8vz4jhXaviu/PsEkSe0Aa4i7g972MgVv9CW4ifaWUh/wL9PPw7ZA2eTJ31JtwKcsOw==
+	t=1793207207;
+	b=u7OL+0+o6fy6aYffjcq9W1O17iUYQ8T4YMenWntrBvX6Ip/Cu1//ehYzaTCpHDcyJY2Q
+	 dmzMDAmvX7xI4yOVA00ZREk0U40LKbeWpv84AhkX+ltXeBqWFxA8l+QOjjO04Usn8zTsM
+	 aRp1IGt4KjOFAJ4n6G3SjzdkYV0f3guMM6W1uLH0gIAbkjd4xALqePMNbmFAqTQViMcs0
+	 iMn6drAJjtrM6XT3XphBuJXHHnssUf41ShIRWkRwUaaq2Rpt9eoEuDi1GxS/iGK28O80L
+	 F6DKxCM/0HO4WSSYBLE/pnR+MdLcTT0vfTpFc2EqhbN2EdHCyBposVd1oN0szxyf+Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207204;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0TFtC0w1r1pEPqbXbAZL/ikZMCX+fWMsBM9nuRTv3FY=;
-	b=3zxShygAuni0mGBJUWh9vCVxdVn8e3akYj34s7EgjT/HTzugNepvK6GjLLWfJOUopS3m
-	 rwBKLBT39KjU0urvTlCFgk5Cvx/qW8HM6CrgtT76f+WPNkg9J7SlA7w1cCMLVt5hU2hqQ
-	 j/ZFCjB6mGFif2MTmrwNtdMAxtJOuM7fdyyQpHGAxrbR51fqakUZs+nDQPWRDlexZ3UtI
-	 k90M6zwEgZXUlIRlSLSW5gX77fRKUtfk/4V/S+ZE3lolJE+Zwf177tXNcH/+2/YQn9wPX
-	 f58kZ22yw4gQeST8eddO7faYWiR/9NuSWc7L0ja/bavmsPV6wxtIujpwv9bgRwIGbUQ==
+	bh=TJUwJPuu66rbQhP29of1ez5YDFyA3F6o+DJlotKFMsQ=;
+	b=N5KqiLWT0khPyJiWfb7NT/MTXfD5eIvOh0M2HUjHndaZM82drbroD4zPxQFOjQbk2952
+	 fNfVKahbY2XoVq1B3LrI8v22sqjn2LVCe/7wLOWY10UkaXgddUlqTqinR/HL5xyrxHo9A
+	 xRiEizqCJ2dEofoOAVHQbPzK4q0ZLU+zFPoHMeFvjq35H8SDsd50PBJvjTimVRVQ7FmkM
+	 fpX1kyr9fTo87WaUQGUTH6DHGJiCFk1klIOl7n46GOe1eqRX4OzLW8bO8kwt0VwG2eByk
+	 O7/pVzVAn0nIOljc61GVewH7aM0Uht037OiSigzaRwDNAWt5mzcsQzkpXIiwhv1KIrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwtETpb1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bzKJssHg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4773606A31E;
-	Wed, 28 Oct 2026 17:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC3A606A31A;
+	Wed, 28 Oct 2026 17:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwtETpb1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74E91F031E7;
-	Wed, 28 Oct 2026 17:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bzKJssHg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A1A1F031E9;
+	Wed, 28 Oct 2026 17:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207204;
-	bh=0TFtC0w1r1pEPqbXbAZL/ikZMCX+fWMsBM9nuRTv3FY=;
+	s=korg; t=1793207207;
+	bh=TJUwJPuu66rbQhP29of1ez5YDFyA3F6o+DJlotKFMsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TwtETpb1EFZIjWTIONUNxH3S6dxydVDTJ3X0sqNPfHEkDmkmDQOPpIZOqM1WicloW
-	 UK7R+c8ViNptsY74XgB6oyBlnPu3z274D2j+9FC0lOUdtI0rBFxA0839jfmkDomKtt
-	 A4wYZZaVniQ9x2El786wy3VkQPwUUCSuXwaH4atQ=
+	b=bzKJssHg7/CdnCQ5/mrhRQ0iSkw58Pgb6gkzMp6UPtpnRBEuZ+cwYlX4L1N7WL2ch
+	 LCuBP4Sh682qWMZHxwgs4I6d4CcX2JYBlZs18EMJNjKn1CVNBrWYDlvDJfIVQaMOa0
+	 V639inUy8EUJDYChzSOedZudLmSYAOZ+t5xtcQBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Carlier <devnexen@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 08/88] tracing: Hold trace_types_lock when updating modules in persistent instances
-Date: Wed, 28 Oct 2026 17:59:16 +0100
-Message-ID: <20261028165942.310825965@linuxfoundation.org>
+Subject: [PATCH 7.2 09/88] tracing: Hold trace_types_lock when resetting last boot data from readers
+Date: Wed, 28 Oct 2026 17:59:17 +0100
+Message-ID: <20261028165942.333827438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,33 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 From: David Carlier <devnexen@gmail.com>
 
-commit 66877a312ae3c2c3d849e82e882f642ffd4ec3e2 upstream.
+commit 5a6bd62f09147b49b31fd19d4eba122cb5f941a1 upstream.
 
-trace_module_record() walks ftrace_trace_arrays from the module notifier
-without trace_types_lock. A concurrent rmdir of an instance removes it
-from the list and frees it under that lock, so a module load or unload
-can walk into a freed trace_array.
+update_last_data_if_empty() is called from tracing_open() with O_TRUNC,
+tracing_read_pipe() and tracing_buffers_read() without trace_types_lock.
+Two readers can both pass the LAST_BOOT test and free module_delta
+twice, and a module notifier can update module_delta while it is being
+freed.
+
+Take trace_types_lock in those paths and keep the callers that already
+hold it on an unlocked variant.
 
 Cc: stable@vger.kernel.org
-Fixes: 5f3719f697c3 ("tracing: Update modules to persistent instances when loaded")
-Link: https://patch.msgid.link/20261016061638.214847-1-devnexen@gmail.com
+Fixes: 32dc0042528d ("tracing: Reset last-boot buffers when reading out all cpu buffers")
+Link: https://patch.msgid.link/20261016061638.214847-2-devnexen@gmail.com
 Signed-off-by: David Carlier <devnexen@gmail.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -9261,6 +9261,8 @@ static void trace_module_record(struct m
- 	struct trace_array *tr;
- 	unsigned long flags;
+@@ -3614,6 +3614,7 @@ static int tracing_single_release_tr(str
+ 	return single_release(inode, file);
+ }
  
-+	guard(mutex)(&trace_types_lock);
++static bool __update_last_data_if_empty(struct trace_array *tr);
+ static bool update_last_data_if_empty(struct trace_array *tr);
+ 
+ static int tracing_open(struct inode *inode, struct file *file)
+@@ -4706,7 +4707,7 @@ tracing_set_trace_read(struct file *filp
+ int tracer_init(struct tracer *t, struct trace_array *tr)
+ {
+ 	tracing_reset_online_cpus(&tr->array_buffer);
+-	update_last_data_if_empty(tr);
++	__update_last_data_if_empty(tr);
+ 	return t->init(tr);
+ }
+ 
+@@ -5385,8 +5386,10 @@ static int tracing_wait_pipe(struct file
+ 	return 1;
+ }
+ 
+-static bool update_last_data_if_empty(struct trace_array *tr)
++static bool __update_last_data_if_empty(struct trace_array *tr)
+ {
++	lockdep_assert_held(&trace_types_lock);
 +
- 	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
- 		flags = tr->flags & (TRACE_ARRAY_FL_BOOT | TRACE_ARRAY_FL_LAST_BOOT);
- 		/* Update any persistent trace array that has already been started */
+ 	if (!(tr->flags & TRACE_ARRAY_FL_LAST_BOOT))
+ 		return false;
+ 
+@@ -5401,6 +5404,16 @@ static bool update_last_data_if_empty(st
+ 	return true;
+ }
+ 
++static bool update_last_data_if_empty(struct trace_array *tr)
++{
++	/* Avoid the lock on the read path unless this is a last boot buffer */
++	if (!(tr->flags & TRACE_ARRAY_FL_LAST_BOOT))
++		return false;
++
++	guard(mutex)(&trace_types_lock);
++	return __update_last_data_if_empty(tr);
++}
++
+ /*
+  * Consumer reader.
+  */
+@@ -6493,7 +6506,7 @@ int tracing_set_clock(struct trace_array
+ 		ring_buffer_set_clock(tr->snapshot_buffer.buffer, trace_clocks[i].func);
+ 	tracing_reset_online_cpus(&tr->snapshot_buffer);
+ #endif
+-	update_last_data_if_empty(tr);
++	__update_last_data_if_empty(tr);
+ 
+ 	if (tr->scratch && !(tr->flags & TRACE_ARRAY_FL_LAST_BOOT)) {
+ 		struct trace_scratch *tscratch = tr->scratch;
 
 
