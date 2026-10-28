@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208326;
-	b=gg9wsTyGbePjqSB5huVyQOUJbgGia5PlIU52RrN43vn8g6hrJiRHlIIecuA1tXC7A3vU
-	 wdt0tQmV8aPYogB8WYVXXv2s74XlSEcB/IE/YTopJz2mYxVev+dzOGH9BAVFlttsI5Hzb
-	 DB+YU4jcjecpNBfg13ujg7yInBoDxKv19UUFCfRLiBYMRR2XP3km3ywm85gqx0pjo3oe+
-	 1ZwR4Lft0C7Ygsfh99hgRyuE2/MrabhAIrwCOY/xpFqvuM2ke5UwtzTIKRL+oy28CAgL3
-	 M7newi6h/Z7URhGujXmLiWTOoYtJbVnai7W4jzMMqqNobBMHxXz6vBXyS0JKYiINTIA==
+	t=1793208329;
+	b=G1Nliraoni/N57neuXfiAp1DLK75CFqhN6cgWVCKcODv/gouevPLFwsReO85XDqTV9E6
+	 UmXwLoXLJ6LqYh5a78r2+/ciM1Cx+Lt5Wsu1Uf21TOHrZn6mgfenuljO12sPEkNAftmnJ
+	 mZsOI1xCktFsrQOZWh5XEifHBdjHsTuz4Jxq/2gUeVIUdSs5ROkze/f5thDy/R7JFCki1
+	 D3MD7L8WcgVg1rTezerP7tPc/oqc2Wxj9VmsYa3EM4GNAJo6oIsZQirwzVzuIamNlurpv
+	 zSWsQSi6WjMHRYkRishUcQ9jN1S3XrRCB6dtaisMlVqhJkI82DZZxUmgX3phvHYl81g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gHJhOjXyWmdX7N1PI5P2DTbWQTYSMzazzmsZeexRjbQ=;
-	b=KYDvMisJ3oe6wMV6IwITiDtS3CTsux0DfsNVQRTCtOW85igEP8LW1gTfEzoU9qKpLuxE
-	 zSmDZXxMDy8cI9xAIsSRbR9qVANBeJ3XdLpMQY17W+11Lt5EfvWA2c+j5e/Dugl/dWmS8
-	 7wJ8pYtu+meDjrgPDq7I57JAMI4+X7hoEA1riPJX9JqQo/mSgd7mDGtRlRKuEwlOKrJUa
-	 PAzobxKOkIIjQFHREnas4to1Joi487O6X5frCYhJacIzgXhd99FW3vzaQbVBH6sGoAPvw
-	 82iG2bImNGguORiwPnhqusPQ1iC1lpEHtX9chWJw0PGbhm0VFIatRrzNT6/F526T23A==
+	bh=i1Pt4yD0CA+PqOKJiq8TcrLc4CpDOoA0dInOTbXEbbo=;
+	b=JSzPoRbjvF2xguF7qRy5EWjlNWaMo2uAghMhvleQMUJeWky8FrtIkwZ9F4U70RX500RC
+	 qvOt9N745hKME7Xi8k99MPNVrmUWwQ++ocaGTJQ214x9wpBLOL7NNauxqDiOp3+mQJgh5
+	 ho0gRv/WyIy1iErytjaOpShfL0uxo/OQpo0Rrcc0YmC1DG1kOZ1Wbh8dsTAZG4u//fr29
+	 79yOQ9ndNevKOBw2VpAawRci7yMMxKIgeLyuVhY+B/L8mRKUTA0sAWea1RK9E7VIQKUGW
+	 ihJzaRQjcaeyErtK5kBIXlUmshyP3c+GJ32Oc70fHLpq3+6557axF6LZx+4F639bfGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iz9C5JVv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NbUNxQ9L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13ADB606A31A;
-	Wed, 28 Oct 2026 17:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22DE606A31D;
+	Wed, 28 Oct 2026 17:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iz9C5JVv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E4D1F01825;
-	Wed, 28 Oct 2026 17:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NbUNxQ9L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CABB1F01828;
+	Wed, 28 Oct 2026 17:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208325;
-	bh=gHJhOjXyWmdX7N1PI5P2DTbWQTYSMzazzmsZeexRjbQ=;
+	s=korg; t=1793208328;
+	bh=i1Pt4yD0CA+PqOKJiq8TcrLc4CpDOoA0dInOTbXEbbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iz9C5JVvqyIz5RPfYXQxAuPruCLJFpdpppFNZtRACQnxWlb8CYLHqCLdTHPxzsGYL
-	 1eNxzu2yBVgaMU7qtBb8Gx8cJ2OoVxzBaM4CZH3TuXxRWNx1l4g+rDJdKpLwDTLPNi
-	 bw9c3rlq9tyU9d3FTUGLTxnmQgboo8c1ClbE/a04=
+	b=NbUNxQ9Lr+gPIy+CJc3+kE9XS1jMJMuuC0o6wkOkXcy8R1T69dqOprfuFFGOgqoPe
+	 YJhcIIeZYD6/WECj7AcE0rQKckyGMh3fI0tvvMEi9STNTtRF8lhqnnElLgGwnw9XK8
+	 z8j5BAjG7vAn3QWYP+jtC5uoAKn/Q7lrN9UWFbg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
-	Teddy Wang <teddy.wang@siliconmotion.com>,
-	linux-fbdev@vger.kernel.org,
-	linux-staging@lists.linux.dev,
-	Lee Jones <lee.jones@linaro.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/516] staging: sm750fb: sm750_accel: Provide description for accel and fix function naming
-Date: Wed, 28 Oct 2026 17:53:51 +0100
-Message-ID: <20261028170005.392470895@linuxfoundation.org>
+Subject: [PATCH 5.10 080/516] staging: sm750fb: fix mono image source stride mismatch in lynxfb_ops_imageblit()
+Date: Wed, 28 Oct 2026 17:53:52 +0100
+Message-ID: <20261028170005.415003375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -71,52 +68,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee.jones@linaro.org>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit d12dd1e0e3b96b1a2c9ffdb0fa9c115aeb82b569 ]
+[ Upstream commit cc7cd2a9228175c975f62ad56ed7c767701cb4fa ]
 
-Fixes the following W=1 kernel build warning(s):
+sm750_hw_imageblit() advances its monochrome source pointer by
+src_delta per scanline, and computes the correct rounded-up stride
+internally as:
 
- drivers/staging/sm750fb/sm750_accel.c:155: warning: Function parameter or member 'accel' not described in 'sm750_hw_copyarea'
- drivers/staging/sm750fb/sm750_accel.c:155: warning: expecting prototype for sm750_hm_copyarea(). Prototype was for sm750_hw_copyarea() instead
- drivers/staging/sm750fb/sm750_accel.c:321: warning: Function parameter or member 'accel' not described in 'sm750_hw_imageblit'
+        bytes_per_scan = (width + start_bit + 7) / 8;
 
-Cc: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Cc: Teddy Wang <teddy.wang@siliconmotion.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-fbdev@vger.kernel.org
-Cc: linux-staging@lists.linux.dev
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Link: https://lore.kernel.org/r/20210414181129.1628598-26-lee.jones@linaro.org
+Its only caller, lynxfb_ops_imageblit(), instead passed src_delta as
+image->width >> 3. For widths not a multiple of 8 this under-counted
+the stride, so the source pointer fell further behind the real
+per-scanline layout on every line, corrupting the rendered image.
+
+Rather than just fixing the caller's calculation, remove src_delta
+as a parameter entirely and have sm750_hw_imageblit() advance by the
+bytes_per_scan it already computes for itself. There has only ever
+been one caller, and that caller was passing an out-of-sync
+derivative of the same width/start_bit values sm750_hw_imageblit()
+already has, so keeping stride as a separate parameter served no
+purpose beyond letting the two calculations drift apart, which is
+exactly what happened here.
+
+Rounding up, rather than down, is the direction consistent with the
+rest of the fbdev core: struct fb_image mono bitmap data (the same
+image->data this driver receives) is walked elsewhere with byte
+strides derived from a ceiling division of width by 8. The generic
+mono bit iterator in drivers/video/fbdev/core/fb_imageblit.h advances
+scanlines with "iter->data += BITS_TO_BYTES(iter->width)", and
+BITS_TO_BYTES() (include/linux/bitops.h) is a ceiling division.
+sm750_hw_imageblit()'s own "(width + start_bit + 7) / 8" is that same
+ceiling division with an added start_bit offset, so the caller's
+">> 3" (floor) was the one calculation out of step with how this data
+layout is handled everywhere else.
+
+Found by code review of sm750_hw_imageblit()'s internal stride
+calculation against what its only caller was passing in, and
+confirmed with a clean -Werror build. I do not have this hardware,
+so this has not been exercised at runtime on real sm750 silicon.
+
+Fixes: 81dee67e215b2 ("staging: sm750fb: add sm750 to staging")
+Cc: stable@vger.kernel.org
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260901113031.161610-1-meatuni001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: cc7cd2a92281 ("staging: sm750fb: fix mono image source stride mismatch in lynxfb_ops_imageblit()")
+[ adapted the patch to older sm750fb identifiers and unnamed de_imageblit parameters. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/sm750fb/sm750_accel.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/sm750fb/sm750.c       | 2 +-
+ drivers/staging/sm750fb/sm750.h       | 2 +-
+ drivers/staging/sm750fb/sm750_accel.c | 6 ++----
+ drivers/staging/sm750fb/sm750_accel.h | 4 +---
+ 4 files changed, 5 insertions(+), 9 deletions(-)
 
+diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
+index 6e3451d08e013..1701aade50348 100644
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -275,7 +275,7 @@ static void lynxfb_ops_imageblit(struct fb_info *info,
+ 	spin_lock(&sm750_dev->slock);
+ 
+ 	sm750_dev->accel.de_imageblit(&sm750_dev->accel,
+-				      image->data, image->width >> 3, 0,
++				      image->data, 0,
+ 				      base, pitch, Bpp,
+ 				      image->dx, image->dy,
+ 				      image->width, image->height,
+diff --git a/drivers/staging/sm750fb/sm750.h b/drivers/staging/sm750fb/sm750.h
+index 19823c7277a44..31aa6a19b9637 100644
+--- a/drivers/staging/sm750fb/sm750.h
++++ b/drivers/staging/sm750fb/sm750.h
+@@ -69,7 +69,7 @@ struct lynx_accel {
+ 			   u32, u32, u32, u32);
+ 
+ 	int (*de_imageblit)(struct lynx_accel *, const char *,
+-			    u32, u32, u32, u32,
++			    u32, u32, u32,
+ 			    u32, u32, u32, u32,
+ 			    u32, u32, u32, u32);
+ 
 diff --git a/drivers/staging/sm750fb/sm750_accel.c b/drivers/staging/sm750fb/sm750_accel.c
-index 8faa601c700b2..24b9077a634a6 100644
+index 24b9077a634a6..eb47c18a585d0 100644
 --- a/drivers/staging/sm750fb/sm750_accel.c
 +++ b/drivers/staging/sm750fb/sm750_accel.c
-@@ -131,7 +131,8 @@ int sm750_hw_fillrect(struct lynx_accel *accel,
- }
+@@ -301,8 +301,6 @@ static unsigned int deGetTransparency(struct lynx_accel *accel)
+  * sm750_hw_imageblit
+  * @accel: Acceleration device data
+  * @pSrcbuf: pointer to start of source buffer in system memory
+- * @srcDelta: Pitch value (in bytes) of the source buffer, +ive means top down
+- *	      and -ive mean button up
+  * @startBit: Mono data can start at any bit in a byte, this value should be
+  *	      0 to 7
+  * @dBase: Address of destination: offset in frame buffer
+@@ -317,7 +315,7 @@ static unsigned int deGetTransparency(struct lynx_accel *accel)
+  * @rop2: ROP value
+  */
+ int sm750_hw_imageblit(struct lynx_accel *accel, const char *pSrcbuf,
+-		       u32 srcDelta, u32 startBit, u32 dBase, u32 dPitch,
++		       u32 startBit, u32 dBase, u32 dPitch,
+ 		       u32 bytePerPixel, u32 dx, u32 dy, u32 width,
+ 		       u32 height, u32 fColor, u32 bColor, u32 rop2)
+ {
+@@ -406,7 +404,7 @@ int sm750_hw_imageblit(struct lynx_accel *accel, const char *pSrcbuf,
+ 			write_dpPort(accel, *(unsigned int *)ajRemain);
+ 		}
  
- /**
-- * sm750_hm_copyarea
-+ * sm750_hw_copyarea
-+ * @accel: Acceleration device data
-  * @sBase: Address of source: offset in frame buffer
-  * @sPitch: Pitch value of source surface in BYTE
-  * @sx: Starting x coordinate of source surface
-@@ -298,6 +299,7 @@ static unsigned int deGetTransparency(struct lynx_accel *accel)
+-		pSrcbuf += srcDelta;
++		pSrcbuf += ulBytesPerScan;
+ 	}
  
+ 	return 0;
+diff --git a/drivers/staging/sm750fb/sm750_accel.h b/drivers/staging/sm750fb/sm750_accel.h
+index 2c79cb730a0a6..df48ed57a054e 100644
+--- a/drivers/staging/sm750fb/sm750_accel.h
++++ b/drivers/staging/sm750fb/sm750_accel.h
+@@ -220,8 +220,6 @@ int sm750_hw_copyarea(struct lynx_accel *accel,
  /**
   * sm750_hw_imageblit
-+ * @accel: Acceleration device data
   * @pSrcbuf: pointer to start of source buffer in system memory
-  * @srcDelta: Pitch value (in bytes) of the source buffer, +ive means top down
-  *	      and -ive mean button up
+- * @srcDelta: Pitch value (in bytes) of the source buffer, +ive means top down
+- *>-----      and -ive mean button up
+  * @startBit: Mono data can start at any bit in a byte, this value should be
+  *>-----      0 to 7
+  * @dBase: Address of destination: offset in frame buffer
+@@ -236,7 +234,7 @@ int sm750_hw_copyarea(struct lynx_accel *accel,
+  * @rop2: ROP value
+  */
+ int sm750_hw_imageblit(struct lynx_accel *accel, const char *pSrcbuf,
+-		       u32 srcDelta, u32 startBit, u32 dBase, u32 dPitch,
++		       u32 startBit, u32 dBase, u32 dPitch,
+ 		       u32 bytePerPixel, u32 dx, u32 dy, u32 width,
+ 		       u32 height, u32 fColor, u32 bColor, u32 rop2);
+ 
 -- 
 2.53.0
 
