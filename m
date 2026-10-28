@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212393;
-	b=fAiPlKyKM2rEwTb06P0qjarifNuMyehtZ1os7ducfAKCx1HJEI3WiSaH8Hm7r4J0Xz+w
-	 sU5XhDIsNYGFwL3mQeRNxDMXO20f2/+XvgWiLpcD5LgCmel6CtZTEnHVQ4wt7FcBIvKKJ
-	 qWaA19QcHz/wPGmFJmRroVHPgF684UMp8/ci27PBHG9xEXWeTJm4XPrdJ3l38ImP0orNl
-	 alMwdMM6bXp43UiLyVqmLr/xZpf6fruItCu7GBSI5iYFz/urF+ekkOhPt9/CBPiH5bH94
-	 8sMbiQxiJIpWxZ+w8ouINCh4SLrDIcbZkIY0SQsL+rA1yLhQ9xurRnyfpYlv6ExWVhg==
+	t=1793212396;
+	b=cfXhkE6jfZUYKcQKBUCX/upfJGN2zFchwE0tiABJm/z+PKjy8sZdDA6XBLg0OInDHLXf
+	 ui29uv1kTbhx7VrWfRDjes6Yw7Q5pEsNpA555eL2K4rwcnd78RrSy5dD7h+3Y+26fSApM
+	 IcNibyqaj3EbYWD4EeBKQojVIq+WKnZabFXMLcpl5tu0zsgJaMCsgO2DJ9pshe47b6HTb
+	 Rz4GFsT0klux7cmjaFFcTaTOGZJG7C//0hRqEnnfXI+BNVwbwrLb8BTVnRVXBsv7pepDW
+	 at4l9g8awSj4yTzI4I/MxQEohMiQEOH3F1Rcp0nGwtWN+Gpo9Ia93BgLkoyz33XpLbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R7Q5OG18ZCn6gNAPXMQU7ISSLsXnt29jUC0D0R5JVD0=;
-	b=QM4NqR5YAVW3j/4vV1KeGs8CmUmoXpHFs+wwdlYQMlLdibnmkKjizFoDr1l+Z9+OJwVV
-	 7vNzOqytM+rhnWT+VpgDQro4ajMumj0sU9RIhQpck7UlxaPyKgT+H8YLqxDrLqHhyHLIQ
-	 Wdj6+6ky0RRgurBsBaTkgEmm3uEIRsA5xlrzeAusLsO82tBP1dkZvgB2l8lceD+KUyyxG
-	 oF0LXOsUXRO5P8sojqLnJGqifp/9f2TqpJVsufHog9iaZDwgWnOOBrZLtV+XWdKGKfL+b
-	 P7IfIXRjp6maUJibSpZxuM0Kj45gf478OTNiZBuqJJmmlJGudcI2etqLASjNwBgdALA==
+	bh=ci3WYJ6gGef8E+5X2WDXyQXFqLakXRgbzxhNPfR1lxw=;
+	b=27fRT7OsMMbtcT+A6Oq2iHTnBph9NmyKm9aYI+27lKjbK4QSp3w4Z7UJm597PpCR3qbv
+	 TrftYx83L2PMe0xqIcPHUofflk3RDmeuZYeaaf3YMP33wsIJACeUsRuyspLeyK31Pglu5
+	 4e0sGRzRhKifzI5BH81Nt17XVeWuvI8ipAul/bgmBLiDGzeBdbtbuobDHqy3sJ4AErjUX
+	 ubPwPsqtgOV4KTYBhutlq2nq3+l8mT0dd7JvC7YKWc3lNKPfc0zCxG4O6oTK2Y/AR2B/X
+	 A3etPRteYpfLVDnHI9/ngUQH68atU2dX3bZqgmUH3OXykyFU/qu+SByu8Oa9Nm98meQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eG/Vw8M1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lQYhde/T";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A37606A31C;
-	Wed, 28 Oct 2026 18:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED37606A322;
+	Wed, 28 Oct 2026 18:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eG/Vw8M1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CC01F01825;
-	Wed, 28 Oct 2026 18:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lQYhde/T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2251F01828;
+	Wed, 28 Oct 2026 18:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212393;
-	bh=R7Q5OG18ZCn6gNAPXMQU7ISSLsXnt29jUC0D0R5JVD0=;
+	s=korg; t=1793212396;
+	bh=ci3WYJ6gGef8E+5X2WDXyQXFqLakXRgbzxhNPfR1lxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eG/Vw8M1sgmGetAm+4Oo/B75oM4ImO9Q30x5i8MR6G8k3aw19VgP7OWdADtkbBWSw
-	 9HiRN1t6WuxqHUtOQQEBJ4nxQT4/jEMjhNOpm+6Kju/ysXN+ddpKSnbb8QSDhE7VfB
-	 9vggQiCfIuBIiF2uP+jUaFmEms21+qrXht/P9Ou4=
+	b=lQYhde/TxL7SX/sFJ35w0Rxcs88gV/7LRkpoNgFz/AQF7o9xARg+0N0V9VaU5NmiD
+	 Eqt5tse76rgjno2GIVfYlNnI/HpbUP8y7RoxGgCZGGi3LC6P+WPjgZmkrMUFcPT+Y9
+	 0F3arDF82Xjkupzn3VpiKCgcjIokfhTQO9s6uWe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Zahka <daniel.zahka@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0111/1887] scsi: qla2xxx: Use memset_io() to clear QLAFX00 request ring slot
-Date: Wed, 28 Oct 2026 17:36:47 +0100
-Message-ID: <20261028170501.762571635@linuxfoundation.org>
+Subject: [PATCH 6.1 0138/1887] tcp: prevent collapsing skbs across boundary in rtx queue
+Date: Wed, 28 Oct 2026 17:37:14 +0100
+Message-ID: <20261028170502.374948322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,55 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 626e44f3d8a924a97a3848a9fd45833947e081e9 ]
+[ Upstream commit fc6d80eb504458d6416b75a94188b268c95c6533 ]
 
-For QLAFX00 the request ring is ioremapped device I/O memory
-(ha->iobase + req_que_off), not DMA-coherent RAM, which is why the rest
-of the FX00 path accesses it through memcpy_toio() and the wrt_reg_*
-helpers. __qla2x00_alloc_iocbs() however zeroed the producer slot with a
-plain memset(). On architectures such as ARM64 a regular memset() may
-emit unaligned or block-zeroing instructions (e.g. DC ZVA) that are
-invalid on Device memory, leading to a synchronous external abort.
+tcp_write_collapse_fence() sets TCP_SKB_CB(skb)->eor = 1 on
+tcp_write_queue_tail(sk) to prevent skbs queued after a switch to
+device encryption from being collapsed into earlier skbs.
 
-Use memset_io() to clear the slot for QLAFX00, matching the I/O
-accessors used elsewhere on this ring. Other adapters keep the plain
-memset() on their DMA-coherent rings. The zero-fill is retained for FX00
-because its IOCB builders (e.g. qlafx00_fxdisc_iocb()) copy only part of
-the entry and rely on the unused tail being pre-zeroed.
+The fence is a no-op if all earlier data has already been transmitted
+when the switch happens: sk->sk_write_queue is empty. The not yet
+acknowledged earlier skbs wait in sk->tcp_rtx_queue with eor 0.
 
-Fixes: 8ae6d9c7eb10 ("[SCSI] qla2xxx: Enhancements to support ISPFx00.")
+On a subsequent retransmit or SACK shift, tcp_retrans_try_collapse() or
+tcp_shift_skb_data() can then merge an skb queued after the switch into
+one queued before it.
+
+Both users of the fence are affected:
+
+- psp: devices only encrypt skbs with skb->decrypted set. The merged skb
+  keeps decrypted = 0 from the earlier skb, so merged data sent after
+  psp_sock_assoc_set_tx() is retransmitted in cleartext.
+
+- tls device offload: the merged skb straddles the start marker set in
+  tls_set_device_offload(). The software fallback (fill_sg_in() returns
+  -EINVAL) and the mlx5, nfp and funeth drivers cannot handle such an
+  skb and drop it. Every retransmit rebuilds the same skb, so the
+  connection stalls.
+
+Fix this in two places, for defense in depth:
+
+1. Fall back to tcp_rtx_queue_tail(sk) in tcp_write_collapse_fence()
+   when tcp_write_queue_tail(sk) is NULL.
+
+2. Check !skb_cmp_decrypted(to, from) in tcp_skb_can_collapse(), as
+   tcp_skb_can_collapse_rx() does on receive. skb_shift(), which both
+   collapse paths call, already has a DEBUG_NET_WARN_ON_ONCE() for this
+   condition.
+
+Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-12-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ replaced qla_req_ring_slot() and qla_req_entry_size() with req->ring_ptr and REQUEST_ENTRY_SIZE. ]
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+Link: https://patch.msgid.link/20260924154427.953800-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Applied tcp_write_collapse_fence() changes directly to the existing TLS code blocks because the helper is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_iocb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/tcp.h    | 1 +
+ net/tls/tls_device.c | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
-index 7bccd525ee19b..f080e19529272 100644
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -2347,11 +2347,13 @@ __qla2x00_alloc_iocbs(struct qla_qpair *qpair, srb_t *sp)
- 	/* Prep packet */
- 	req->cnt -= req_cnt;
- 	pkt = req->ring_ptr;
--	memset(pkt, 0, REQUEST_ENTRY_SIZE);
- 	if (IS_QLAFX00(ha)) {
-+		memset_io((void __iomem __force *)pkt, 0,
-+			  REQUEST_ENTRY_SIZE);
- 		wrt_reg_byte((u8 __force __iomem *)&pkt->entry_count, req_cnt);
- 		wrt_reg_dword((__le32 __force __iomem *)&pkt->handle, handle);
- 	} else {
-+		memset(pkt, 0, REQUEST_ENTRY_SIZE);
- 		pkt->entry_count = req_cnt;
- 		pkt->handle = handle;
- 	}
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index c25cd0df7a904..245c522387315 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -1019,6 +1019,7 @@ static inline bool tcp_skb_can_collapse(const struct sk_buff *to,
+ {
+ 	return likely(tcp_skb_can_collapse_to(to) &&
+ 		      mptcp_skb_can_collapse(to, from) &&
++		      !skb_cmp_decrypted(to, from) &&
+ 		      skb_pure_zcopy_same(to, from));
+ }
+ 
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 753c45ecc3562..74b61318a60ac 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -239,7 +239,7 @@ static void tls_device_resync_tx(struct sock *sk, struct tls_context *tls_ctx,
+ 	int err = 0;
+ 	u8 *rcd_sn;
+ 
+-	skb = tcp_write_queue_tail(sk);
++	skb = tcp_write_queue_tail(sk) ?: tcp_rtx_queue_tail(sk);
+ 	if (skb)
+ 		TCP_SKB_CB(skb)->eor = 1;
+ 
+@@ -1181,7 +1181,7 @@ int tls_set_device_offload(struct sock *sk, struct tls_context *ctx)
+ 	 * SKBs where only part of the payload needs to be encrypted.
+ 	 * So mark the last skb in the write queue as end of record.
+ 	 */
+-	skb = tcp_write_queue_tail(sk);
++	skb = tcp_write_queue_tail(sk) ?: tcp_rtx_queue_tail(sk);
+ 	if (skb)
+ 		TCP_SKB_CB(skb)->eor = 1;
+ 
 -- 
 2.53.0
 
