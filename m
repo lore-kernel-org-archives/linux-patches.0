@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214450;
-	b=1uWwO9usXEV0hyEaFK/2A9ejp1WSFAufecNqfvnKEIQyW2ruVlTCtAO4QbqUYE+WFLou
-	 /yP9erIRjAIxnz/H61muvf+T5cQafyOUq66zwPCKSvwmnfHEWINYKN+KkSK8feRuG2KRD
-	 Hmi4jqCeZKj7XbEcbr+Q4UJ/rIF2IWR2QiZR/tIEKbq3H77nbbsy4ce93pAWz6ok/fytm
-	 wkc5UyKSb5zlYCQmAdhR5tb730xum1pFbPNx9JIVr1qJTyV7O4Ecb6ZvSN7PoiET1oooT
-	 /ZFqBks2DPzLHGnikDmi/33Lt/P7SyOHitlNyrlcpsSipgR/jaxxRWDdX61acZ/lE1A==
+	t=1793214453;
+	b=a7AhgPHW8cym7ZvRd+uNDoikmDaddULLPVEoI9zVv1uq73Oo0l6EYncRndS8fEj9EDBg
+	 5pMj+55omR5uwuUpYZSpTS2+A+yaCM1Y3l/stnC3tSOlKUHDSg5uUMfmaBa9p5npcFS8y
+	 5lD9cxcAYyhxX+dU+LFPZgVEzHgf22PRwgtrkNj5LiGPiQ1guvR2dU5RaR9V7821qzJym
+	 p6aTKzzqP61lzacgO6LNjEVEVdhsa7LZugqSO6oAzpOevqdTWS+oCpCKOqKHkiROGSGcN
+	 NQeGIOvYSdOvCBn4Vnq3RXjFKW91e1xj16xdTUOwJS+Zbx0Cj9dBkADJaoq1e/WaDdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214450;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214453;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1ERfc572c/Z4+ti3JlWY5vXexgamX9v9x/s/Iv4cDwY=;
-	b=iDzgIPQl+8WnDxrLkBniC1jlDIpfKftq0FzxHkgGmbpv2bqFOH4EF5+EB6Nw88lAMBoK
-	 PpwATWxfkUd4PIpYLHi6OLtM1+kRRQLYdIsf8EEUmCMkJIAoCZY1uD/eVfELzLEDsLjrK
-	 yPO+Cxhu/lqdDKZw145SMgMGktkzARL8F+IecEbl4UAf2heRf3nGzOnlbm7+RNN4O654j
-	 Al1T7m8htXIM8rKnQNkm5W7NAdU5zdrjoOJDtGuFp4vMph13P9w9Q6Cihalb5aLIAfUBb
-	 d4dOJv1LiaKM6+9qsUCgMxoiyJ6Av9oXCxZK+1NT62TWHEkAnNyX0NhFchNTfR3okJg==
+	bh=g87ee+dFOk6UW5GnGFOEPtl6gGtMxjL6tzuxwURoMTw=;
+	b=sJ+AhrejdBDXGg9FzKMU7CO1B2mEr7Bd+0SPN8H1EH+C/iDMSH0hc6Y1Tw7ZOhngrkMI
+	 v8BDvU+BGAUXoVlNAgKaBL5B9k5QZVZIpVJUtsLLjbWWUsHhYThn7whYkhLLlCXsr7bdD
+	 k28sbzubWq2i8ixRuANzd9AC6PxZ5Z8sQ7coex4ErNmJWmaVGTkcb3BvWIfy3E/8jmH8r
+	 y57NapQcFxElGasIJodGZ4VA2uQXH75zirK+d0kBgdc4Eeec21YXyvGNAMe6dV4o/x3s4
+	 aSL6fEQufnaY4kQKMVLvh7QYDdmGmF7BONw8B3YzHVuShafPPPrOelOKmhTYj64CRGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N12iW7LO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mzNBO3Cq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B49606BFAD;
-	Wed, 28 Oct 2026 19:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735CC60A260F;
+	Wed, 28 Oct 2026 19:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N12iW7LO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB041F01825;
-	Wed, 28 Oct 2026 19:07:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mzNBO3Cq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35B21F01828;
+	Wed, 28 Oct 2026 19:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214450;
-	bh=1ERfc572c/Z4+ti3JlWY5vXexgamX9v9x/s/Iv4cDwY=;
+	s=korg; t=1793214453;
+	bh=g87ee+dFOk6UW5GnGFOEPtl6gGtMxjL6tzuxwURoMTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N12iW7LOTrLbx5dG/coFTPKnBt61IGVWaJ6Mxva1yXECbbGHCPgYVQgIAIx+lIt9b
-	 7KvOmmV0ngYd3Hh8sZ6MYZuu1VHTyBSunN3CR38aRWpkehbDqscetIVI2wY6LqUFq5
-	 izmDo0OQht2rTd0bbgWz0jT3YrbSVxGCbA/ExSn4=
+	b=mzNBO3CqhuBuyVJq8nHbX3GnoCd2qXOLlGDJGdKgc7uN6OknoAaEhNwsgfZBpt/5T
+	 kfW/6xJ9uWXb639GUubGOtDgQNES0my5gSG4c3b6KKXlsL8Pf9zFEgAon/aBS0YtGy
+	 fHsTgCYbqWNHKHbc3Ur4LzV8WA5mJEkIxfyMyuM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0864/1887] ipv6: use RCU in ip6_output()
-Date: Wed, 28 Oct 2026 17:49:20 +0100
-Message-ID: <20261028170519.079511097@linuxfoundation.org>
+Subject: [PATCH 6.1 0865/1887] xen/events: avoid using info_for_irq() in xen_send_IPI_one()
+Date: Wed, 28 Oct 2026 17:49:21 +0100
+Message-ID: <20261028170519.101745930@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,117 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 11709573cc4e48dc34c80fc7ab9ce5b159e29695 ]
+[ Upstream commit e64e7c74b99ec9e439abca75f522f4b98f220bd1 ]
 
-Use RCU in ip6_output() in order to use dst_dev_rcu() to prevent
-possible UAF.
+xen_send_IPI_one() is being used by cpuhp_report_idle_dead() after
+it calls rcu_report_dead(), meaning that any RCU usage by
+xen_send_IPI_one() is a bad idea.
 
-We can remove rcu_read_lock()/rcu_read_unlock() pairs
-from ip6_finish_output2().
+Unfortunately xen_send_IPI_one() is using notify_remote_via_irq()
+today, which is using irq_get_chip_data() via info_for_irq(). And
+irq_get_chip_data() in turn is using a maple-tree lookup requiring
+RCU.
 
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Avoid this problem by caching the ipi event channels in another
+percpu variable, allowing the use notify_remote_via_evtchn() in
+xen_send_IPI_one().
+
+Fixes: 721255b9826b ("genirq: Use a maple tree for interrupt descriptor management")
+Reported-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: David Woodhouse <dwmw@amazon.co.uk>
+Acked-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: 07ce121d93a5 ("xen/events: Return -EEXIST for bound VIRQs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ drivers/xen/events/events_base.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 7ad60793c853c..3ff6f43bd40ae 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -59,7 +59,7 @@
- static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
+diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
+index 9052a4873bca8..b8dd604f82b41 100644
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -163,6 +163,8 @@ static DEFINE_PER_CPU(int [NR_VIRQS], virq_to_irq) = {[0 ... NR_VIRQS-1] = -1};
+ 
+ /* IRQ <-> IPI mapping */
+ static DEFINE_PER_CPU(int [XEN_NR_IPIS], ipi_to_irq) = {[0 ... XEN_NR_IPIS-1] = -1};
++/* Cache for IPI event channels - needed for hot cpu unplug (avoid RCU usage). */
++static DEFINE_PER_CPU(evtchn_port_t [XEN_NR_IPIS], ipi_to_evtchn) = {[0 ... XEN_NR_IPIS-1] = 0};
+ 
+ /* Event channel distribution data */
+ static atomic_t channels_on_cpu[NR_CPUS];
+@@ -365,6 +367,7 @@ static int xen_irq_info_ipi_setup(unsigned cpu,
+ 	info->u.ipi = ipi;
+ 
+ 	per_cpu(ipi_to_irq, cpu)[ipi] = irq;
++	per_cpu(ipi_to_evtchn, cpu)[ipi] = evtchn;
+ 
+ 	return xen_irq_info_common_setup(info, irq, IRQT_IPI, evtchn, 0);
+ }
+@@ -988,6 +991,7 @@ static void __unbind_from_irq(unsigned int irq)
+ 			break;
+ 		case IRQT_IPI:
+ 			per_cpu(ipi_to_irq, cpu)[ipi_from_irq(irq)] = -1;
++			per_cpu(ipi_to_evtchn, cpu)[ipi_from_irq(irq)] = 0;
+ 			break;
+ 		case IRQT_EVTCHN:
+ 			dev = info->u.interdomain;
+@@ -1639,7 +1643,7 @@ EXPORT_SYMBOL_GPL(evtchn_put);
+ 
+ void xen_send_IPI_one(unsigned int cpu, enum ipi_vector vector)
  {
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net_device *dev = dst->dev;
-+	struct net_device *dev = dst_dev_rcu(dst);
- 	struct inet6_dev *idev = ip6_dst_idev(dst);
- 	unsigned int hh_len = LL_RESERVED_SPACE(dev);
- 	const struct in6_addr *daddr, *nexthop;
-@@ -69,15 +69,12 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+-	int irq;
++	evtchn_port_t evtchn;
  
- 	/* Be paranoid, rather than too clever. */
- 	if (unlikely(hh_len > skb_headroom(skb)) && dev->header_ops) {
--		/* Make sure idev stays alive */
--		rcu_read_lock();
-+		/* idev stays alive because we hold rcu_read_lock(). */
- 		skb = skb_expand_head(skb, hh_len);
- 		if (!skb) {
- 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
--			rcu_read_unlock();
- 			return -ENOMEM;
- 		}
--		rcu_read_unlock();
+ #ifdef CONFIG_X86
+ 	if (unlikely(vector == XEN_NMI_VECTOR)) {
+@@ -1650,9 +1654,9 @@ void xen_send_IPI_one(unsigned int cpu, enum ipi_vector vector)
+ 		return;
  	}
- 
- 	hdr = ipv6_hdr(skb);
-@@ -122,7 +119,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
- 		daddr = &hdr->daddr;
- 	}
- 
--	rcu_read_lock();
- 	nexthop = rt6_nexthop(dst_rt6_info(dst), daddr);
- 	neigh = __ipv6_neigh_lookup_noref(dev, nexthop);
- 
-@@ -130,7 +126,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
- 		if (unlikely(!neigh))
- 			neigh = __neigh_create(&nd_tbl, nexthop, dev, false);
- 		if (IS_ERR(neigh)) {
--			rcu_read_unlock();
- 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTNOROUTES);
- 			kfree_skb_reason(skb, SKB_DROP_REASON_NEIGH_CREATEFAIL);
- 			return -EINVAL;
-@@ -138,7 +133,6 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
- 	}
- 	sock_confirm_neigh(skb, neigh);
- 	ret = neigh_output(neigh, skb, false);
--	rcu_read_unlock();
- 	return ret;
+ #endif
+-	irq = per_cpu(ipi_to_irq, cpu)[vector];
+-	BUG_ON(irq < 0);
+-	notify_remote_via_irq(irq);
++	evtchn = per_cpu(ipi_to_evtchn, cpu)[vector];
++	BUG_ON(evtchn == 0);
++	notify_remote_via_evtchn(evtchn);
  }
  
-@@ -224,22 +218,30 @@ static int ip6_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
- 
- int ip6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- {
--	struct net_device *dev = skb_dst(skb)->dev, *indev = skb->dev;
--	struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
-+	struct dst_entry *dst = skb_dst(skb);
-+	struct net_device *dev, *indev = skb->dev;
-+	struct inet6_dev *idev;
-+	int ret;
- 
- 	skb->protocol = htons(ETH_P_IPV6);
-+	rcu_read_lock();
-+	dev = dst_dev_rcu(dst);
-+	idev = ip6_dst_idev(dst);
- 	skb->dev = dev;
- 
- 	if (unlikely(!idev || READ_ONCE(idev->cnf.disable_ipv6))) {
- 		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
-+		rcu_read_unlock();
- 		kfree_skb_reason(skb, SKB_DROP_REASON_IPV6DISABLED);
- 		return 0;
- 	}
- 
--	return NF_HOOK_COND(NFPROTO_IPV6, NF_INET_POST_ROUTING,
--			    net, sk, skb, indev, dev,
--			    ip6_finish_output,
--			    !(IP6CB(skb)->flags & IP6SKB_REROUTED));
-+	ret = NF_HOOK_COND(NFPROTO_IPV6, NF_INET_POST_ROUTING,
-+			   net, sk, skb, indev, dev,
-+			   ip6_finish_output,
-+			   !(IP6CB(skb)->flags & IP6SKB_REROUTED));
-+	rcu_read_unlock();
-+	return ret;
- }
- EXPORT_SYMBOL(ip6_output);
- 
+ struct evtchn_loop_ctrl {
 -- 
 2.53.0
 
