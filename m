@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208659;
-	b=KJiDQPO5m/mWFTMD2ibnwF7ZXNkzAy5Cg5G1BGoRx+z4MhgYzzo5TOYwyl789tuUJM1r
-	 s3zU4cs/1e1xbFSd3Za/Ok8s0cNvbjlE7lIPRPixKMJmiO1q8WWsU1hbtuFQyCoctw2xQ
-	 cJKfQFKOkSGkeyPd8L48mmtX0YERMfhCHbiBf5tOFh/Ja1opvtkfMgWpr+WsuE9WvjTR+
-	 RpiX8S2Ck9/ImpqROX1lSGyRV15Fe1Rr8AGZI4giN86ir/AUpPyT+98NGfzKWUYbc++R9
-	 voMqDs5k8acqVzYSGH9KyMRSd7ZH8PVnLFvrKphIgW7k8uFi1HRSljS4vPWeJ7Egncw==
+	t=1793208662;
+	b=VWUTM54ZCh2Lf1A1Lc9vZQqCLbGPwNXiOlUJ7f4qofEHf3n9TMaF8XmwJWU8U7tQh5vm
+	 nsutgal4raEQ6FN8X/Lf5B2GfElmlAha+GQ+qRtuPKJHjIhkGPE3Q0pb7xUBhpsizS6x6
+	 JzHjt5SObF4A5vaWJVg/HzYw94D/WVi9kXQl1SbsAZa/p/O+QkB9hunaxKXNyGOiPTEch
+	 ZcvFGHXLIJslkG0RLJjdvG70HavYGKDkBK0/Bt3CqTFGpEkTP88ML9/XPRxA1jSs9P8K8
+	 IIdC/DBa9Kuk7gK2/RlzwaSDTNVhr5OcZ6ASaegZTcmkODQhB84VGU6e4mpd8FPErxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208659;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kWtSQs22tpQImr0CXEE1ur6Vh4F3pC8mIzJq823b7cU=;
-	b=yDjkMZGHltSCfUCn10lD+aRXPDFVb6GGEVLgv4G7zdEfPkcTaEYfkI8wYH1tj/StNplv
-	 ZQTGlBFZ8/lhp7Hqs8indX1SNnrxY9apaTl8VdJLtXRENpBUYs5kV7B5paD/a0KKEUFo/
-	 a9dLcsKyaK0fVxhEnuIXXd6RX8VaN+PZVS4WCQabjlkGYTCDdHtc2Mm7LbYd9CNaEpI64
-	 v0HrTFkYbaQFIhg1kQQsmHJ1EO9F79D+jCGA7eZrORU06A21Ln+ngCXdCGWvjuDkVQu+P
-	 /E8MzyrIG4lS3pMhDZbTuRUFkhndiTj9GHF651a6p62QK/xCAQfW2JLgYdYA1bEDPJA==
+	bh=wt980Kx8ziiwWVhjDRydgQlPJ2K3x3VyMDYXI3iV/t0=;
+	b=kXmD9NdMOGvFo4Q83qmAnCRZfYdSjZlvi3uPoXZpv5ZFml/cs4Y1i/LzTGsK5tEp4Rux
+	 +eMf/23gCXiyPZu7AdAjOH9LX5vGzhyCb2TKDOiAnzrdJDs+ivLHJkFp65r3AG3yQNX+i
+	 e0QCa/brQIJ4FBjw5hObBlX+kGO5k919Hca/UfhiqLbTYBBZanTPAvePMmjUdXImmrS0r
+	 oLVjSRGQkUVQTfTBblEhWChkOteioYlFqkWuQnk7ov+NkPVjd9ZxPW2UnPBtI68pZ9o0R
+	 UfwPWwj7cntEU+RQqRwvNRgFaU/1Q6Ub8Cg1EX78k89zLJXo0b079cHcA79yMDz2rvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcMameW7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWJQMO4r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3796D606A31A;
-	Wed, 28 Oct 2026 17:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B28606A31A;
+	Wed, 28 Oct 2026 17:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcMameW7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877241F01825;
-	Wed, 28 Oct 2026 17:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWJQMO4r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62AC01F01825;
+	Wed, 28 Oct 2026 17:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208659;
-	bh=kWtSQs22tpQImr0CXEE1ur6Vh4F3pC8mIzJq823b7cU=;
+	s=korg; t=1793208661;
+	bh=wt980Kx8ziiwWVhjDRydgQlPJ2K3x3VyMDYXI3iV/t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XcMameW7oBUHGzTw40w+iDK5e3DN5ylBVW5KlZAfpukT0ZuUg1OCibayLBFs6bfWD
-	 YQWjSEkbqlBY3TOdDZXiz/bDFugGyMe7m+G4lITxVvEuG20xkz5c6IW/epD/IuVDEE
-	 +WPAFzrGQWk5tXMEe6sBvb9Yhv4dWMHvzJt2ZqWc=
+	b=kWJQMO4rQZkRw9oy+pksUs2k93hFHhXS8/77TsGwYlkO0XR2KaJvpFGjj48vt2SWH
+	 E9FC7ZzZOUm91O3UEHLZcfP4P1VHGWGm5RTAERzWKxLeh2vjUX1JdEz2nJgRSlHXh6
+	 X/y+oPYi8x1kAIAcqCqtdFwvVlHNYPN7O1qzkyow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Hui Peng <benquike@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 198/516] usb: core: clear both ep_in and ep_out for non-ep0 control endpoints
-Date: Wed, 28 Oct 2026 17:55:50 +0100
-Message-ID: <20261028170008.192184109@linuxfoundation.org>
+	Prashanth K <prashanth.k@oss.qualcomm.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.10 199/516] usb: typec: ucsi: Get the connector fwnode based on reg value
+Date: Wed, 28 Oct 2026 17:55:51 +0100
+Message-ID: <20261028170008.215266062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,64 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Prashanth K <prashanth.k@oss.qualcomm.com>
 
-commit 0e8baa78d872f2db440d8b9ded946ab8dceb89eb upstream.
+commit 6c51f09c6db5868a5090e8dd4d7764660c87f1ad upstream.
 
-In usb_enable_endpoint(), non-zero control endpoints (where
-usb_endpoint_xfer_control(&ep->desc) is true) populate both
-dev->ep_in[epnum] and dev->ep_out[epnum] with the same struct
-usb_host_endpoint pointer.
+ucsi_find_fwnode() currently maps UCSI connectors to Device tree
+connector nodes based on the order in which connector child nodes
+are described in DT.
 
-However, usb_disable_endpoint() only clears either dev->ep_out[epnum] or
-dev->ep_in[epnum] depending on the direction bit of epaddr when
-reset_hardware is set, leaving the opposite direction's array slot
-pointing to the disabled/freed endpoint.
+This can fail because the ordering of child nodes isn't guaranteed
+in Device-tree. For example, DTB may contain connector@1 before
+connector@0, causing connector numbers to be associated with the wrong
+fwnode. As a result, role switch and Type-C notifications can be
+delivered to the wrong remote endpoints.
 
-Clear both dev->ep_out[epnum] and dev->ep_in[epnum] when disabling a
-non-ep0 control endpoint with reset_hardware set, and update the
-function kerneldoc accordingly.
+Fix this by using the "reg" property of each connector to match
+its corresponding fwnode. While at it, if the reg property isn't
+present, then fall back to the old method.
 
-Tested in QEMU against Linux 7.3.0-rc3 using dummy_hcd and raw-gadget to
-enumerate a USB device with a non-zero control endpoint
-(bEndpointAddress 0x01, bmAttributes USB_ENDPOINT_XFER_CONTROL),
-verifying that both dev->ep_in[1] and dev->ep_out[1] are cleared when
-the interface is disabled.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
 Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260920231702.110963-1-benquike@gmail.com
+Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260916042808.2879079-1-prashanth.k@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/message.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -1329,7 +1329,8 @@ static void remove_intf_ep_devs(struct u
-  *
-  * Disables the endpoint for URB submission and nukes all pending URBs.
-  * If @reset_hardware is set then also deallocates hcd/hardware state
-- * for the endpoint.
-+ * for the endpoint (clearing both ep_in and ep_out pointers for
-+ * bidirectional non-ep0 control endpoints).
-  */
- void usb_disable_endpoint(struct usb_device *dev, unsigned int epaddr,
- 		bool reset_hardware)
-@@ -1350,6 +1351,11 @@ void usb_disable_endpoint(struct usb_dev
- 			dev->ep_in[epnum] = NULL;
- 	}
- 	if (ep) {
-+		if (reset_hardware && epnum != 0 &&
-+		    usb_endpoint_xfer_control(&ep->desc)) {
-+			dev->ep_out[epnum] = NULL;
-+			dev->ep_in[epnum] = NULL;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1060,10 +1060,21 @@ static struct fwnode_handle *ucsi_find_f
+ {
+ 	struct fwnode_handle *fwnode;
+ 	int i = 1;
++	int ret;
++	u32 port;
+ 
+-	device_for_each_child_node(con->ucsi->dev, fwnode)
+-		if (i++ == con->num)
+-			return fwnode;
++	device_for_each_child_node(con->ucsi->dev, fwnode) {
++		ret = fwnode_property_read_u32(fwnode, "reg", &port);
++		if (ret < 0) {
++			if (i == con->num)
++				return fwnode;
++		} else {
++			if (port == con->num - 1)
++				return fwnode;
 +		}
- 		ep->enabled = 0;
- 		usb_hcd_flush_endpoint(dev, ep);
- 		if (reset_hardware)
++
++		i++;
++	}
+ 	return NULL;
+ }
+ 
 
 
