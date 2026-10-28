@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216848;
-	b=5Qj3k6XjifBhWXl0EgvWIyEp9XfwMzA6aKcr1SCr9fGvCSJf9aEKYww3lRLMqbQvIHVu
-	 7klAiNP+iOF/kNBn9+6FXJHJ5PwM1Il9ni5P0+wmWvgGUWzJXbCYPgT46qXHP1d27yfTu
-	 XBqbX5RMEbgivJB3dHXhjO2iZuKcjBpoy5IEuVezZDvhbLYctK8h+bygBTJeS1xokTuLu
-	 T/fjo4+HKFtrAU1MXA4PPpANEpgfsg8Rva9X63MOI3usk4PENxLMEic7yRMk5IgnnrXpI
-	 Xsr+HiKCaqw4lTdaRkMnY40OUo/qC4VWfPUvMBLmA+QcywVR1s7ikbALGnUX8ianrMg==
+	t=1793216851;
+	b=rO4rX+OP6OZJL7eaaCYoalObGX5OJaWTeE3KNG81QvJRYqZWnJlT1Czk0uMwUJSJFrxI
+	 qwu+pAm9XGHS6Z4Mydxgz51m3t/u5OBJxiNAYLgMpYR+8BGQvc5SvvOooA9998AGo7rTn
+	 YYERuwxkPIprL4VPPbSUjorbkisKgAo4I4RCOYONGABCj/KaI52ZcuNRtwiCSbME/8Qdy
+	 MDlQbEAI6QICAwkjGBKA6I4JPasJI/wIt5/fQCId8GoRU28ZLM3rf6pDYDBnyNiYNRYXY
+	 DFgodJ8KUPmmTWWEge5KZ5wJt7kwO7t4V1QDvm2CsJ786v7pEcHO/jgwY93UvtZO4uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216848;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216851;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MQeFJQlP8QRT4etJDZY6Of1v/oLPUtuLP4soxOHOlys=;
-	b=XHxekSFkp2gPnlpuOGGClD/Fs3BRjdQzAHbNm9sgnMjwZFAWQCQWeS37TnQD3OCoZ2Tt
-	 K8cWZoieoaTdJGCRiCx5Vrn94m8sSKsmQfCcollQJkIwj/41IyGXafcrG4j3J23zHFm6X
-	 L7MZQJsUPc3VDQPQGU028yCPV68yL7cid4dGd/NMQ+OIu/KIqK0OW3ynskiDRTaHYfVjt
-	 taoaL4AlqQN4PlVrAPEpXL16gtm7lFsuVxefmMcPZ5p2gFYWw/IS0gW4uACaY3Z6JdnDy
-	 yDO7/uLNdgKOq4TitI8xQ500ZzMn8NbHTkigjaW8VprC3a8srU7TnqfzehlRqL67d3A==
+	bh=VDvlFcE9XpRRGOzKGNKKT/sk88ff/onrpnbPp4ZVrj8=;
+	b=BNwFn736PBZNRNqLkANv5Q/44a9dL+F4/xjn2S5mJ3z1+iQM+8HksD0qoiUkBA+d0MEF
+	 jZ0PD7G2i8ODyIfXpkTySpOwzuCosoT8FlP+Ul5z4XjZhHmLrWh9BnsLdeUV0RGft3EgH
+	 9ofq0oZVR/rUotFC5dViMnU1DuDuUPctMu2Tlb40IX5iRMA7NVSKUM0dQa6MlsR6pozMh
+	 eW9+vZz2iUfAHcJu+DS819eDvEHOeGReaKkZq6AG72DiKbUmwYRq8pnBqh16I8h8CNVF0
+	 /kno043ietSmI8baDfM+rxy7LTK/T3TuCoZjGkBteutAaz4eG5nhPUNtnzDnv1RhAFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YkiTs2E2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihPw41dz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71774606A31C;
-	Wed, 28 Oct 2026 19:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42564606A31A;
+	Wed, 28 Oct 2026 19:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YkiTs2E2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4261F01825;
-	Wed, 28 Oct 2026 19:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihPw41dz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9371A1F01825;
+	Wed, 28 Oct 2026 19:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216848;
-	bh=MQeFJQlP8QRT4etJDZY6Of1v/oLPUtuLP4soxOHOlys=;
+	s=korg; t=1793216851;
+	bh=VDvlFcE9XpRRGOzKGNKKT/sk88ff/onrpnbPp4ZVrj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YkiTs2E25TGk+k7QH2Vu2AnTfwX9kVmGgKkh7O+NoBNKiLgo1eNaC47/o3iDhOBk6
-	 wCe1Sm3EGCGjHt+jczI8wsmmZQpL+TZpo8AOCSgEBql6WHa0gfib0PNKWaqAjAZKIm
-	 jrUAXX4y8b7tQgCr3e7TLygI13aGvYTM6rFULohQ=
+	b=ihPw41dzPGVC2R7kiycysPvupt5TS4p+YP3izgfARHtFqoHlAods01qwKnH2y2acH
+	 G9mWJxITMY1f2pGnS8dpmnnzSlAXh9TNugXXs3do6xAmgbOpljZ5IlB6QCYosGaK57
+	 9fYzpjKLJKBVH2fsja2VIP9nbn6w/CsZP9bbMikU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdul Wasey <w453y.me@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1701/1887] mptcp: move the OoO check back into __mptcp_try_fallback()
-Date: Wed, 28 Oct 2026 18:03:17 +0100
-Message-ID: <20261028170538.162116150@linuxfoundation.org>
+Subject: [PATCH 6.1 1702/1887] power: supply: Fix maintenance charge table kernel-doc
+Date: Wed, 28 Oct 2026 18:03:18 +0100
+Message-ID: <20261028170538.185355479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,72 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdul Wasey <w453y.me@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-The 6.1.y backport of upstream commit 1bba3f219c5e ("mptcp: do not
-fallback when OoO is present") put the out-of-order queue check
-in __mptcp_finish_join() instead of __mptcp_try_fallback().
+[ Upstream commit 45d4af4e80a25881b6b75e8e34872c555c43a41d ]
 
-So the fix itself is missing, as fallback still happens with OoO data
-queued. Worse, the passive side now refuses every MP_JOIN while its
-OoO queue is not empty, which is the normal state of a connection
-already sending data over more than one subflow. The joining subflow
-is reset, so such a connection can't add a new path, and a path that
-comes back after an outage can't rejoin while data is in flight.
+struct power_supply_maintenance_charge_table contains
+charge_safety_timer_minutes, but its kernel-doc describes
+safety_timer_minutes. This leaves the real member undescribed and adds a
+nonexistent member to the generated documentation.
 
-Move the check to __mptcp_try_fallback(), as upstream does. On this
-branch that function is in protocol.h.
+Use the member's actual name.
 
-Tested on 6.1.190 in netns: 6 connections (5 uploading) over two paths,
-then a third endpoint added mid-transfer. Without this patch only the
-idle connection gets a subflow on the new path and the other 5 joins
-are reset. With it, all 6 join. Same result in 3 of 3 runs each.
-
-Fixes: 9074732c1caf ("mptcp: do not fallback when OoO is present")
-Signed-off-by: Abdul Wasey <w453y.me@gmail.com>
+Fixes: d72ce7d32478 ("power: supply: ab8500: Standardize maintenance charging")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260909064623.90737-1-kmehltretter@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 7 -------
- net/mptcp/protocol.h | 8 ++++++++
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ include/linux/power_supply.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 5d6dff88bf209..bdace644dbc6a 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -930,13 +930,6 @@ static bool __mptcp_finish_join(struct mptcp_sock *msk, struct sock *ssk)
- 	if (sk->sk_state != TCP_ESTABLISHED)
- 		return false;
- 
--	/* The caller possibly is not holding the msk socket lock, but
--	 * in the fallback case only the current subflow is touching
--	 * the OoO queue.
--	 */
--	if (!RB_EMPTY_ROOT(&msk->out_of_order_queue))
--		return false;
--
- 	spin_lock_bh(&msk->fallback_lock);
- 	if (!msk->allow_subflows) {
- 		spin_unlock_bh(&msk->fallback_lock);
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 6728f08970f2f..31ea91b45363c 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1005,6 +1005,14 @@ static inline bool __mptcp_try_fallback(struct mptcp_sock *msk)
- 		pr_debug("TCP fallback already done (msk=%p)\n", msk);
- 		return true;
- 	}
-+
-+	/* The caller possibly is not holding the msk socket lock, but
-+	 * in the fallback case only the current subflow is touching
-+	 * the OoO queue.
-+	 */
-+	if (!RB_EMPTY_ROOT(&msk->out_of_order_queue))
-+		return false;
-+
- 	spin_lock_bh(&msk->fallback_lock);
- 	if (!msk->allow_infinite_fallback) {
- 		spin_unlock_bh(&msk->fallback_lock);
+diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
+index a10428884e6a5..049ca48a98385 100644
+--- a/include/linux/power_supply.h
++++ b/include/linux/power_supply.h
+@@ -364,9 +364,9 @@ struct power_supply_vbat_ri_table {
+  * @charge_voltage_max_uv: maintenance charging voltage that is usually a bit
+  *   lower than the constant_charge_voltage_max_uv. We can apply this settings
+  *   charge_current_max_ua until we get back up to this voltage.
+- * @safety_timer_minutes: maintenance charging safety timer, with an expiry
+- *   time in minutes. We will only use maintenance charging in this setting
+- *   for a certain amount of time, then we will first move to the next
++ * @charge_safety_timer_minutes: maintenance charging safety timer, with an
++ *   expiry time in minutes. We will only use maintenance charging in this
++ *   setting for a certain amount of time, then we will first move to the next
+  *   maintenance charge current and voltage pair in respective array and wait
+  *   for the next safety timer timeout, or, if we reached the last maintencance
+  *   charging setting, disable charging until we reach
 -- 
 2.53.0
 
