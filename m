@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208152;
-	b=zp445LrVhmHGA5r1aoHYfOmE6RG7vR/PZpwW41svwa+gdfjfQc1Ao6O2KCG65v/mKPip
-	 uIgpWWhIdUmcDa7g67qViHoWXfeNbxquSudgp1wp7jZvo0jsUZpShbbPxVfQOYS0Rr/w/
-	 08JAnHYsQlSpXiWv1SBNJEd4RvhRtOSKYnaqoOcl7ON/etje5yHkNnQ8xoViIJ321XH8I
-	 ouFy9M1MVENAegSas6XYaOJESJ+hoxNwjn7HXOMlzz5UVwSdHpWVZ3Ryf5/0aDzqOQVFQ
-	 kHcWI+sATWRCaOCeFpc4jYchQM9PAhE0gGctVIrKOrh4lw8Hz64ycvApJupwOn+wM+Q==
+	t=1793208155;
+	b=vCeYxAYEVxwu4k0m2UKRiQktcia1h0r/xYOfsf5b7rI4MuZIvAgY+nhpiF9H8b0LtHIR
+	 K7Kn2Y6L37xlokRffdEWgC97a3cyR1GGimaY99umXTLnOjw9+gMqWkL/kn5KVQhpQ5JWL
+	 n6e06kuvKjxix7SXkvYf8W6LlIYWSIbvvoeF0XlHbYf96Aee62/xYy7W16qrEQwGKP6wU
+	 +AMdN5HW158eIQUjMTYzuwAczj427epDNGHqcSRNL/8diU2ZDzCjfXdN+7jaeTPrACS/O
+	 QauKh7qh1d3NqfLd8eFJpvwaX+o3WmCwGSByxb3YBmqpuU3MlbUJ4A3UuA2fwt1W1+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208155;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7f1Np7COhW3ocT8RKhFRjYg35M4T1b4lBHrmx3GGddY=;
-	b=Zt/9bRioN+JrSbiQsM6Pzg5JdvlJ+SPhxcfH+I752oH0XXNb8z5M9ulJbmZMDfCx8qu+
-	 DvEyDCOXfyX6ExwnxnwmzS9+Lfn8gvlAYGQeN2F8FO4r229ASwvNXNjxSL498Pjsj6jHB
-	 cJJRaxqun+2cLi11ncpAIhaVrIfXsBQj41buku6CvIE9ehxsxyWxqDa6XzRF8t+IprhOH
-	 o2Bp3fzsqhDdS0ifwg9aCk0FQyCM1f7RWrZnU7DuasM9o+gWinD6zewaFZSMCPb9d9NB4
-	 d34rYOrxNIkEGqGNiHm+ZcmWzL+CohtqVlxYJelgWW2L0sxcpNdfF9z/5pWpbvkaqbg==
+	bh=fnKp7G7Ht5DhzH6FJZws6ebRINCSicj0r0L9RCHegbA=;
+	b=k0i7hpWRGwzrgjRM/EZSiDaxdFn/NseEc0F2OBmx20pkGBXGQXtI39/d5tdJh3TjNp4l
+	 o8q4GT0POa4kPDyZmGCzsMmtW0K4I4csIMbLPPEuxuP93DnfyTkFtxCJ4+wZD8cijWa1i
+	 w/GzZUOUDHrNSgTrYBTJkQJg4UWzLvJ5OnhtT+UPujOji8sDhkgrLGw/4mbBR1FERQpev
+	 fi2Z5xif0i+AZsobT2qoMiGvnjpVaaA1Y7qlPrhI+LRtLPRcCYHEiPqHJxXwNeMUbl2bG
+	 faeRTW4PpxIswLyZ/o5B0J36IJbs9J89JLorK+2evr06rGUfjJ3dVTSFGzeAADh6rkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SgW4BvGR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CVmQzF/M";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6216A606A31A;
-	Wed, 28 Oct 2026 17:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D51606A31A;
+	Wed, 28 Oct 2026 17:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SgW4BvGR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAE41F01825;
-	Wed, 28 Oct 2026 17:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CVmQzF/M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6944C1F01825;
+	Wed, 28 Oct 2026 17:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208152;
-	bh=7f1Np7COhW3ocT8RKhFRjYg35M4T1b4lBHrmx3GGddY=;
+	s=korg; t=1793208154;
+	bh=fnKp7G7Ht5DhzH6FJZws6ebRINCSicj0r0L9RCHegbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SgW4BvGR/9H7TZzryLsyIPNJWGDiMrdaNnxFSYByySIO0+bl06oZI0Kxu2AIgtoHY
-	 BrlzAqWQ6UxeXaDGa3uYgUxuSopv2ygwR7DHn3kd9CQjft1W0p7pZhUS+VP4k0T6Yz
-	 66Rwivl4sRCQWdvnXe/5zlsRGaAhNz75ksn8iWk0=
+	b=CVmQzF/MmtXDxQePDUAtLUapBtLftUCGv1PO8bvA8ahamzzz8iLaaizLmH45s2fut
+	 bzF4Tz1+Rtjt7z9qCgxhc80Nj0yQU8uskd7vRUPDKG63MfqTwo8QeJWwBTkjzC8Btz
+	 lG6+8qWL/AyKgh3/ES0Lz+kQBs69wKP/SNpktXAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/516] kprobes: Protect kprobe_blacklist with RCU
-Date: Wed, 28 Oct 2026 17:52:52 +0100
-Message-ID: <20261028170004.006022796@linuxfoundation.org>
+Subject: [PATCH 5.10 021/516] nvme: add missing SRCU grace period in error path
+Date: Wed, 28 Oct 2026 17:52:53 +0100
+Message-ID: <20261028170004.030482525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,98 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 0c4256196b3a105307e2235fbfd85e768bbcdd0f ]
+[ Upstream commit ef248d5de4469fb6bbaf8dbe0c4c47800080d648 ]
 
-__within_kprobe_blacklist() traverses kprobe_blacklist without holding
-kprobe_mutex. When a module is unloaded, kprobe_remove_area_blacklist()
-removes blacklist entries and immediately frees them with kfree().
-A concurrent call to within_kprobe_blacklist() can therefore dereference
-freed memory.
+nvme_alloc_ns() error path at out_unlink_ns removes ns from the
+namespace head siblings list with list_del_rcu(&ns->siblings) but
+does not wait for SRCU readers before freeing the namespace struct.
+Multipath code iterates the head->list under srcu_read_lock() in
+nvme_find_path() and nvme_mpath_revalidate_paths(), so a concurrent
+reader can still hold a reference to ns when kfree(ns) runs.
 
-Furthermore, within_kprobe_blacklist() can be called in atomic or
-non-preemptible contexts where the sleeping kprobe_mutex cannot be taken.
+The normal removal path in nvme_ns_remove() correctly calls
+synchronize_srcu(&ns->head->srcu) after list_del_rcu() to wait for
+in-progress readers. Add the same grace period in the error path.
 
-Protect kprobe_blacklist with RCU. Use guard(rcu)() and
-list_for_each_entry_rcu() for traversal, list_add_tail_rcu() for
-insertions, list_del_rcu() for deletions, and kfree_rcu() to reclaim
-entries safely after a grace period.
-
-Link: https://lore.kernel.org/all/178810004323.64882.16493230858653316962.stgit@devnote2/
-
-Fixes: 376e242429bf ("kprobes: Introduce NOKPROBE_SYMBOL() macro to maintain kprobes blacklist")
+Fixes: ed754e5deeb1 ("nvme: track shared namespaces")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260807155802.F06041F000E9@smtp.kernel.org/
-Assisted-by: Antigravity:gemini-3.7-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-[ Replaced guard(rcu)() with explicit rcu_read_lock()/rcu_read_unlock() to avoid declaration-after-statement warnings. ]
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ Adjusted patch context to account for missing last_path reference-counting code. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kprobes.h |  1 +
- kernel/kprobes.c        | 19 ++++++++++++++-----
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ drivers/nvme/host/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/kprobes.h b/include/linux/kprobes.h
-index 18b7c40ffb37a..71b15c923077e 100644
---- a/include/linux/kprobes.h
-+++ b/include/linux/kprobes.h
-@@ -178,6 +178,7 @@ struct kprobe_blacklist_entry {
- 	struct list_head list;
- 	unsigned long start_addr;
- 	unsigned long end_addr;
-+	struct rcu_head rcu;
- };
- 
- #ifdef CONFIG_KPROBES
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 551ac118159f9..46398072b5bea 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1513,11 +1513,20 @@ static bool __within_kprobe_blacklist(unsigned long addr)
- 	/*
- 	 * If there exists a kprobe_blacklist, verify and
- 	 * fail any probe registration in the prohibited area
-+	 * Note: this can return true during transition period where
-+	 * (start_addr, end_addr) in the black list is shrinking
-+	 * but old entry has not been removed yet. This is acceptable
-+	 * because the worst case is that we reject more probes than
-+	 * we should.
- 	 */
--	list_for_each_entry(ent, &kprobe_blacklist, list) {
--		if (addr >= ent->start_addr && addr < ent->end_addr)
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(ent, &kprobe_blacklist, list) {
-+		if (addr >= ent->start_addr && addr < ent->end_addr) {
-+			rcu_read_unlock();
- 			return true;
-+		}
- 	}
-+	rcu_read_unlock();
- 	return false;
- }
- 
-@@ -2388,7 +2397,7 @@ int kprobe_add_ksym_blacklist(unsigned long entry)
- 	ent->start_addr = entry;
- 	ent->end_addr = entry + size;
- 	INIT_LIST_HEAD(&ent->list);
--	list_add_tail(&ent->list, &kprobe_blacklist);
-+	list_add_tail_rcu(&ent->list, &kprobe_blacklist);
- 
- 	return (int)size;
- }
-@@ -2417,8 +2426,8 @@ static void kprobe_remove_area_blacklist(unsigned long start, unsigned long end)
- 	list_for_each_entry_safe(ent, n, &kprobe_blacklist, list) {
- 		if (ent->start_addr < start || ent->start_addr >= end)
- 			continue;
--		list_del(&ent->list);
--		kfree(ent);
-+		list_del_rcu(&ent->list);
-+		kfree_rcu(ent, rcu);
- 	}
- }
- 
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index baad684d9eb36..8a476ed8099c1 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4019,6 +4019,9 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
+ 	if (list_empty(&ns->head->list))
+ 		list_del_init(&ns->head->entry);
+ 	mutex_unlock(&ctrl->subsys->lock);
++
++	/* guarantee not available in head->list */
++	synchronize_srcu(&ns->head->srcu);
+ 	nvme_put_ns_head(ns->head);
+  out_free_queue:
+ 	blk_cleanup_queue(ns->queue);
 -- 
 2.53.0
 
