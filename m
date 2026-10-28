@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213483;
-	b=dGuMIm51RLL3jmKvBNch0nVmWA3s3Qz+r6hagRuJ9L/xGbTmeqHven+OPnBkf0Zu3DGY
-	 638Vt7v+uVWnC6StMIYqykbkhNVjmcGgjmuXOWCS28+fYE+YUWRZMCPGlMglyihv0rA6I
-	 nI0WS+ZrV/w319jLeZstUrTAYoqNvDmgmBy0PV3AQUojHh6/q5M+FOM9SGOg04yuwpcY7
-	 ku5bxXHPAmZ8z+1k+rmHxwOtl/wA0Xxkq3dIO361mEgfO0yYANC8Rzp+URuoxTwD62msC
-	 PTegVEOCMIWWvALT/P48Q8JO4w1AozCAeqM0WHtVAH3IaYIVlZ+rBzDtl0VFv5mtMRw==
+	t=1793213484;
+	b=VG1uXx40/ADua0u7BNsTa7GSoLi/EOBeWN4DimWJgEwgRQNSSRqQ5ascKnGpv7fIKk9d
+	 TKWcCez1/DZnkTqxt4uzLOs/mH82SefbzwTpQTC1kIBFxLPjg4zJh4l66zwuhrhQJpTic
+	 +al4obaM/sJneiprWGd5IVJHHwDVOTA6g/fhtGfsK32S9XX2wE/g602B2og4xhtj6BIqv
+	 624k2aHTPCGdLE/OXKR/GgwVDN1LwaCCuikXiTBPTgbhcFv0TxzYDx8smOsiIq6Ws9JGM
+	 nfkMhAVNUAdo3oTy0WflEJy1XpnwHLUvUdH7pRlh7EA5AHxLN6gObQLkuUI4wb/C0Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213484;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lWasm+OqxAzG/iv6x5zSkcSokui9n/c/CHRMqBxmjnI=;
-	b=e5XpG1iR6lBsJIm1uaHySGcBtRDFnvA6lEuLsbzj3+aynaMlJWc8RwopP7Lb57R/aeZh
-	 tLSO2+vKnwoYHcpNnPetdwp+0x62/PXti23AJZeqjbOuORpjzNJx+pdVIDhzxDPpVIGde
-	 YbZGdcwtzkQjtwVNhsJ80m0WhtS8DtZjcGng+YV3fGd/ZBaajLiMvGBMID8zapaYX8Jb/
-	 tZFzuotzgVoUAP9puWTLffnoDr9Bhu71d7VVwfQJzQHaCKFiUcPgudwMeT+Lns59AvlAX
-	 GPwCerWE/MIj/DyZo8/FBNLTjtw2FLhl4q835cMPn2/zV8pvfj+Wxq1lkADU0XZ3h5A==
+	bh=wfbTCLduGdpRUR5Grbgi8VPlLZHzRs0CSbXDt6WnhKQ=;
+	b=bfsTfLhCub534x4hXKoDqble9HD5R4WMUz0jcVs0oUG40wM+gvnb10QUFRM45/52X0tV
+	 /UU8fpjkOssEFjT9wYCxPRtTeZapv2pWM0vbqzGrfnJQJ9XJg6e5kDmvfY9lI5YLlCe4w
+	 nxrRRlXp6y7NxmtjOVt/SLzmTmaKx2zHjC1jJ6vBbdgofO07tNc+emU5YyhnW6p4YWbGY
+	 MFbUdps0b5ycAKKd3ynhtW8rrhE3TfCdpBOj7Pi3ef38d3C5FzlAB/82OerEbPOHEikjR
+	 RmtD+9fiZdMhL69TkLCRDr6rrzqLcVfz/tKVfXFLjrFfZuft9KpjxbUsq9KiMb0ANpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1A5gPvG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZSeJphK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4B5606A31C;
-	Wed, 28 Oct 2026 18:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA6F606A31A;
+	Wed, 28 Oct 2026 18:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1A5gPvG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00EC1F01828;
-	Wed, 28 Oct 2026 18:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZSeJphK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8030F1F01825;
+	Wed, 28 Oct 2026 18:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213478;
-	bh=lWasm+OqxAzG/iv6x5zSkcSokui9n/c/CHRMqBxmjnI=;
+	s=korg; t=1793213484;
+	bh=wfbTCLduGdpRUR5Grbgi8VPlLZHzRs0CSbXDt6WnhKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i1A5gPvG6CUXXOY4cjEGn5PmdW2nBD+lSz980+AAadWBjJarpb1pwaqOcW+y5URoB
-	 2B/QeHAqjGBNuqAgIRC4SYG4Q2mTeOhc447RiRgHhNZdL0ALV3879TSfKTc/on2QuX
-	 zbsYzI/prqx/zcFRlYuFLG5szQBZUl1Rg0u8wjak=
+	b=GZSeJphKhUzJUvwlCulovNsKeqo8PaDkKzYPQzr+qBap9NHdL1al6mVx6/Yu9MB/u
+	 rxzsdrfWyzAFyqAm/Fqis+rXgLs/40NKeQ2mwP12Z4PSEyYlLrcD+7vsFq2PfepDzD
+	 DRusy5DHMbAJ6Y00cEN0ehYnCF/2Ks8O+yilfJTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tahera Fahimi <taherafahimi@linux.microsoft.com>,
-	Allen Pais <apais@linux.microsoft.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Marc Harvey <marcharvey@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0519/1887] xfrm: prevent policy_hthresh.work from racing with netns teardown
-Date: Wed, 28 Oct 2026 17:43:35 +0100
-Message-ID: <20261028170511.134536639@linuxfoundation.org>
+Subject: [PATCH 6.1 0521/1887] net: team: Remove unused team_mode_op, port_enabled
+Date: Wed, 28 Oct 2026 17:43:37 +0100
+Message-ID: <20261028170511.184556188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,90 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tahera Fahimi <taherafahimi@linux.microsoft.com>
+From: Marc Harvey <marcharvey@google.com>
 
-An XFRM_MSG_NEWSPDINFO request can queue the per-net work item
-policy_hthresh.work onto the system workqueue. xfrm_hash_rebuild()
-retrieves the enclosing struct net from the work item, so the callback
-can dereference freed memory if it runs after net namespace teardown.
+[ Upstream commit 014f249121d73909528df320818fba7693d0ec92 ]
 
-Mainline commit 29fe3a61bcdc ("xfrm: prevent policy_hthresh.work
-from racing with netns teardown") fixes this issue using
-disable_work_sync(). That API is not available in Linux 6.1, so the
-mainline change cannot be directly backported.
+This team_mode_op wasn't used by any of the team modes, so remove it.
 
-Provide the same guarantee with an XFRM-local work_disabled flag. Protect
-the flag and schedule_work() with the existing policy_hthresh seqlock so
-teardown can atomically stop new queueing attempts. Then use
-cancel_work_sync() to synchronize work that was queued before the flag was
-set. This ensures policy_hthresh.work cannot outlive its struct net.
-
-Fixes: 880a6fab8f6b ("xfrm: configure policy hash table thresholds by netlink")
-Assisted-by: GitHub-Copilot:GPT-5.6 Sol
-Signed-off-by: Tahera Fahimi <taherafahimi@linux.microsoft.com>
-Reviewed-by: Allen Pais <apais@linux.microsoft.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Marc Harvey <marcharvey@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260409-teaming-driver-internal-v7-2-f47e7589685d@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: b7454f1940c5 ("net: team: stop reusing skb after queue override")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netns/xfrm.h |  1 +
- net/xfrm/xfrm_policy.c   | 19 ++++++++++++++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ drivers/net/team/team.c | 2 --
+ include/linux/if_team.h | 1 -
+ 2 files changed, 3 deletions(-)
 
-diff --git a/include/net/netns/xfrm.h b/include/net/netns/xfrm.h
-index 7922ec72eaa68..eb9edddd73092 100644
---- a/include/net/netns/xfrm.h
-+++ b/include/net/netns/xfrm.h
-@@ -23,6 +23,7 @@ struct xfrm_policy_hash {
- struct xfrm_policy_hthresh {
- 	struct work_struct	work;
- 	seqlock_t		lock;
-+	bool			work_disabled;
- 	u8			lbits4;
- 	u8			rbits4;
- 	u8			lbits6;
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 2a47f5b5776e8..76b7b94132c00 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1381,7 +1381,10 @@ static void xfrm_hash_rebuild(struct work_struct *work)
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index ea2a7cea3f6a0..32ca12211e7e6 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -945,8 +945,6 @@ static void team_port_enable(struct team *team,
+ 			   team_port_index_hash(team, port->index));
+ 	team_adjust_ops(team);
+ 	team_queue_override_port_add(team, port);
+-	if (team->ops.port_enabled)
+-		team->ops.port_enabled(team, port);
+ 	team_notify_peers(team);
+ 	team_mcast_rejoin(team);
+ 	team_lower_state_changed(port);
+diff --git a/include/linux/if_team.h b/include/linux/if_team.h
+index 34bcba5a70677..1e378d3a7eaa0 100644
+--- a/include/linux/if_team.h
++++ b/include/linux/if_team.h
+@@ -121,7 +121,6 @@ struct team_mode_ops {
+ 	int (*port_enter)(struct team *team, struct team_port *port);
+ 	void (*port_leave)(struct team *team, struct team_port *port);
+ 	void (*port_change_dev_addr)(struct team *team, struct team_port *port);
+-	void (*port_enabled)(struct team *team, struct team_port *port);
+ 	void (*port_disabled)(struct team *team, struct team_port *port);
+ };
  
- void xfrm_policy_hash_rebuild(struct net *net)
- {
--	schedule_work(&net->xfrm.policy_hthresh.work);
-+	write_seqlock(&net->xfrm.policy_hthresh.lock);
-+	if (!net->xfrm.policy_hthresh.work_disabled)
-+		schedule_work(&net->xfrm.policy_hthresh.work);
-+	write_sequnlock(&net->xfrm.policy_hthresh.lock);
- }
- EXPORT_SYMBOL(xfrm_policy_hash_rebuild);
- 
-@@ -4094,6 +4097,7 @@ static int __net_init xfrm_policy_init(struct net *net)
- 	net->xfrm.policy_hthresh.rbits6 = 128;
- 
- 	seqlock_init(&net->xfrm.policy_hthresh.lock);
-+	net->xfrm.policy_hthresh.work_disabled = false;
- 
- 	INIT_LIST_HEAD(&net->xfrm.policy_all);
- 	INIT_LIST_HEAD(&net->xfrm.inexact_bins);
-@@ -4119,6 +4123,19 @@ static void xfrm_policy_fini(struct net *net)
- 	unsigned int sz;
- 	int dir;
- 
-+	/* Prevent new policy hash rebuilds before draining the work item.
-+	 *
-+	 * The upstream fix uses disable_work_sync(), which is unavailable
-+	 * in v6.6. Protecting work_disabled and schedule_work() with the
-+	 * same seqlock closes the check-to-queue race, while the subsequent
-+	 * cancel_work_sync() drains work that was queued or running before
-+	 * teardown disabled it.
-+	 */
-+	write_seqlock(&net->xfrm.policy_hthresh.lock);
-+	net->xfrm.policy_hthresh.work_disabled = true;
-+	write_sequnlock(&net->xfrm.policy_hthresh.lock);
-+	cancel_work_sync(&net->xfrm.policy_hthresh.work);
-+
- 	flush_work(&net->xfrm.policy_hash_work);
- #ifdef CONFIG_XFRM_SUB_POLICY
- 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_SUB, false);
 -- 
 2.53.0
 
