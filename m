@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217326;
-	b=ZcJYao9/i7HZAn+Hu97TJbkTRqs1K4HRDDNGZ00TUB8VfSWf38wlFEo5I9Plcj677eR7
-	 ANvv/bS1zI+TcQZl32rYKrnhu3FLra3nhEM1lxgVuoGGH8dczUhiIUSVR+r7PDVpxsUHJ
-	 pZH92HmdNLhXFB+BOQN4CwQvOhLaMvBNSdy06Yk1rq5E+Ey1AaG7HTuM2N449q+9t27cB
-	 V4KY3zGtTFWNMpceI9oMmvyMwZip73SPrs/37N9a9djJvoM6NtlZEbRv9F0rTlOkuw3G4
-	 bZnEe1E5bUsXfWys+g6wxhWwkXGFVYCLsDeEfoJl2xQJrd3rOlQYmPP/pNN+GOQ8fuA==
+	t=1793217329;
+	b=1IjdfXmiGsVin6KhndvoZv5olXNNXf73DaL4SVQO4WBEk1AvuMh5dmwyieY+kAXN1tU2
+	 QSF2T6pDtkWYkOEgEbI0d27Eu8p51iDQXpwjYnI/WJVWM7+gtZP+uWhk8gZnKeLlFI+B+
+	 h08yotYhSf5gyMdnuEKuxaznd83zWbWB6P1KHqycUNYN89JiAXRcvFrznx3gxRfNhJhSC
+	 m9CR4HAykTrf2MbQZ/b0zbh3c6Pt2O/X+daxHeEb9PWlSFx7/EO5mA5fwcpUhLnc5Xrka
+	 vjvFPPRiTunOFqY7Xo9OWWbUWAYkExRoJcPH1Hq9fyEw3wAKzAh9wom3M2K80epKn1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qbI3JsjYLoGPlQiiZoBRCt+KsdOXzXhRrcb1CVMcnYY=;
-	b=3pnrelRLglv1H5uOHxb+YE0ULKffG80vfoxWyK9VHKB6CEvd0oAiqVZKCWM/aOH+tiVy
-	 G8IK1EHcbQYxY8KVQLmDe4wVpMMgLKAfoM0KYOLEKRKNYN4SzjF4M4HwdLdRNV6daeu78
-	 CPjKJy46Id34vX6b/XFJY2FAKzRHmch3JZ87I/3Hjgdw6tr3mGDMPGRsVi4ji8mgKgzn6
-	 rVBxEc1Eogf4WQjHYNGKWIITbHnLxx7foqv13c06RGachCzdnS/9/ZEts8lxFAQvuoolK
-	 TPtQM7s4bVXLovtBFoBm781752PBgQJ6JwC4mgazpS+YDkH00OygIng5AdcpMk1Pc3w==
+	bh=drbuFsWrl100AN1mmjvgJ3GrvbfZ+2lF98lt/pDyYsM=;
+	b=v8QTGDqsf/FCqVo+mLS7rOPXjNegDIQ6voQtz3rHuzsZzHUoEBRu6lQG5qPlcgIr89VA
+	 jy4iMZ+YgFa5trrIqA/qr1aTQXwFv05Uu90jQ3+ToDazEPAhLyO/uI5nJk42JrKQeR+M6
+	 TPitwgG1ePlHoTK/+mPesmeMT0Q8svZK/y1osXIiInWsVygSjEa9yNGeNTegjVH6vmxa6
+	 UixOl2r6mgrCYrkvuYMika6G0a/t8DuyfOuxF87hK6r2cVi1k6ZUnj+/TBQcYw80+J5Oj
+	 s7qeb9NA6x2ZSvv68cisA4Ga/ob4Kro0A+9DV+R08VthD/oQM0nL86QTeO3AuMPXPtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJWwNyyw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfr8l0Hk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D113606A31A;
-	Wed, 28 Oct 2026 19:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD275606A31A;
+	Wed, 28 Oct 2026 19:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJWwNyyw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440CC1F01825;
-	Wed, 28 Oct 2026 19:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hfr8l0Hk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6761F01825;
+	Wed, 28 Oct 2026 19:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217325;
-	bh=qbI3JsjYLoGPlQiiZoBRCt+KsdOXzXhRrcb1CVMcnYY=;
+	s=korg; t=1793217328;
+	bh=drbuFsWrl100AN1mmjvgJ3GrvbfZ+2lF98lt/pDyYsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qJWwNyyweJU2jIAK6pDv+wZeWXapMaLh7p6SKDXakKCut0ah0PlJDXC4hOvki0NBJ
-	 J/R+zVOMGNlSpNLPdAIDntrQQ1QQEDIFAxfXQu7Ot0QfsI7aTfrabh+p0rSLBQHNEV
-	 diK0yoo5UcMedWAhLy+4cRSYRMZlTEWbSJ21kZNg=
+	b=hfr8l0HkTFAgl9ZcjkRPSXgX8HddSls7tKKQBl6oBHl6YIXvgZIGg2BafNOqW5B0O
+	 5ZwzzLmJDP7B/Ire0Job918jLsec1V3iBgyqNeAe3AwHru8mz/ht2q5rw4cweCVU9j
+	 jN/f7/5d4jGt9Wr4mnJYuEhpKc0EK2Vc3oRpkLik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	stable@kernel.org,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1864/1887] alpha: do not clear remote MMU contexts in migrate_flush_tlb_page()
-Date: Wed, 28 Oct 2026 18:06:00 +0100
-Message-ID: <20261028170541.871105098@linuxfoundation.org>
+Subject: [PATCH 6.1 1865/1887] media: verisilicon: Fix kernel panic due to __initconst misuse
+Date: Wed, 28 Oct 2026 18:06:01 +0100
+Message-ID: <20261028170541.894719840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,65 +74,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-[ Upstream commit 16266d50c51eb5eb98f1c345c5aa9ff359a305aa ]
+[ Upstream commit e8d97c270cb46a2a88739019d0f8547adc7d97da ]
 
-After the on_each_cpu() rendezvous, migrate_flush_tlb_page() walks the
-other CPUs and zeroes their mm->context[cpu] when mm_users is at most one,
-described as mimicking flush_tlb_mm()'s mm_users<=1 optimization.
+Fix a kernel panic when probing the driver as a module:
 
-It is not one. flush_tlb_mm() tests mm_users before deciding whether to
-send the IPIs; here every CPU has already been visited and waited for, so
-nothing is saved. The callback has also just set each CPU's own slot
-correctly, so the loop only overwrites it, and does so while that CPU may
-still be running in the address space.
+  Unable to handle kernel paging request at virtual address
+  ffffd9c18eb05000
+  of_find_matching_node_and_match+0x5c/0x1a0
+  hantro_probe+0x2f4/0x7d0 [hantro_vpu]
 
-Remove it. The shootdown shortcuts in flush_tlb_mm(), flush_tlb_page()
-and flush_icache_user_page() clear remote slots too; once the next patch
-removes those as well, every runtime update of mm->context[cpu] is made by
-CPU cpu itself. That patch relies on the invariant when it reads those
-slots to decide whether a shootdown can be skipped, so this one is tagged
-for stable as its prerequisite.
+The imx8mq_vpu_shared_resources array is referenced by variant
+structures through their shared_devices field. When built as a
+module, __initconst causes this data to be freed after module
+init, but it's later accessed during probe, causing a page fault.
 
-Fixes: dd5712f3379c ("alpha: fix user-space corruption during memory compaction")
-Cc: stable@vger.kernel.org
-Reviewed-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010144621.974850-2-linmag7@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+The imx8mq_vpu_shared_resources is referenced from non-init code,
+so keeping __initconst or __initconst_or_module here is wrong.
+
+Drop the __initconst annotation and let it live in the normal .rodata
+section.
+
+A bug of __initconst called from regular non-init probe code
+leading to bugs during probe deferrals or during unbind-bind cycles.
+
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Closes: https://lore.kernel.org/all/68ef934f-baa0-4bf6-93d8-834bbc441e66@kernel.org/
+Reported-by: Franz Schnyder <franz.schnyder@toradex.com>
+Closes: https://lore.kernel.org/all/n3qmcb62tepxltoskpf7ws6yiirc2so62ia23b42rj3wlmpl67@rvkbuirx7kkp/
+Fixes: e0203ddf9af7 ("media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC")
+Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Suggested-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: stable@kernel.org
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/mm/tlbflush.c | 16 ----------------
- 1 file changed, 16 deletions(-)
+ drivers/media/platform/verisilicon/imx8m_vpu_hw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/alpha/mm/tlbflush.c b/arch/alpha/mm/tlbflush.c
-index ccbc317b9a348..239c72b8a7412 100644
---- a/arch/alpha/mm/tlbflush.c
-+++ b/arch/alpha/mm/tlbflush.c
-@@ -90,22 +90,6 @@ void migrate_flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
- 	 */
- 	preempt_disable();
- 	on_each_cpu(ipi_flush_mm_and_page, &d, 1);
--
--	/*
--	 * mimic flush_tlb_mm()'s mm_users<=1 optimization.
--	 */
--	if (atomic_read(&mm->mm_users) <= 1) {
--
--		int cpu, this_cpu;
--		this_cpu = smp_processor_id();
--
--		for (cpu = 0; cpu < NR_CPUS; cpu++) {
--			if (!cpu_online(cpu) || cpu == this_cpu)
--				continue;
--			if (READ_ONCE(mm->context[cpu]))
--				WRITE_ONCE(mm->context[cpu], 0);
--		}
--	}
- 	preempt_enable();
- }
+diff --git a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
+index 80539f7573c18..984a42db38824 100644
+--- a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
++++ b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
+@@ -359,7 +359,7 @@ const struct hantro_variant imx8mq_vpu_variant = {
+ 	.num_regs = ARRAY_SIZE(imx8mq_reg_names)
+ };
  
+-static const struct of_device_id imx8mq_vpu_shared_resources[] __initconst = {
++static const struct of_device_id imx8mq_vpu_shared_resources[] = {
+ 	{ .compatible = "nxp,imx8mq-vpu-g1", },
+ 	{ .compatible = "nxp,imx8mq-vpu-g2", },
+ 	{ /* sentinel */ }
 -- 
 2.53.0
 
