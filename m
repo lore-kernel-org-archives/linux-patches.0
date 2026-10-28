@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216331;
-	b=lWRXV3XPq858qc8hM8IWe+4Xhj81j2Rn7PuX2Xm4rNFzkuCwjZvhku4ev+TNer1z/cUz
-	 TxawpEwL0Rl7XBFEDx5D9TVojnmqc70XVNYvTCYw6QwalucCHjYJsDO/JjxjTdm27NG6v
-	 dwOSvNK4K10qi7VgyWEU3yghi0ZznIPN/8BLvAvG+sPPlhYEsXhdCD2iwnncsJKp+r8vZ
-	 FIMfwE5VwN1dBdJ+8A9IIscWLWjNJNXfSNfnbs6UTXWJvkihM1sqe75u7IYBUXNS/MlwE
-	 hjPnaHN7R0hZ4rJQ9pDDvtwCVUy3p786GNDCMm0bBaiL+rbhXdzgXiKgVpGIZPepBxw==
+	t=1793216334;
+	b=kG7Yngg83WmWbbMVxmyGPvTGFmZN//Sdd+RhIhW5j9f8Qy8qn3HOblThYyJmm0tL8ksK
+	 xs2yqzxVabED7HtMx9u23EcZhaLG3Szg3INub9hqzx1LLClP7zKSBE9FYrUtvSynSt1sF
+	 fazmEZfD9tU/oIYPfpHLqjjaUGKM4S9neIipvAepUCn+rK/6hrKIjHGIsIOG7pMdmiUGR
+	 M9DBshE081D76LjO6yWalz7YlnB8UR4xVuWA2w6C4xfQb1dxa4SN5HH/idcbtXB49Egp4
+	 CCHmD0c9ONZqdrCijqK9EjO4fWw6pXRJNhfTQu2l603zXTkc2eymJ0QQBDpsMHOV1ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216331;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Osp7STGqAWO0Y9AgJ2Ohvu7XhdLn68Pvdc9bC0jV3cI=;
-	b=yr2/GQ0OzGWNpej8oY9elHVh0IzZxARLa6x4dSRM6mQFkFQlGKfwqPDuUFRk+llSKyeo
-	 zP4+sMA1Md1hMo6kwYCSPJP9yMmV+ozy9e39F7YmMTLpctMk3j08x1MODVjiTFjjmQPph
-	 5Y2pNu9vIKAcAZjSsUnQDHjj2kyOR0Sg7LwElyMlBClZWAbOEQSuTxB8YJVOo3mI0xIbA
-	 K7WYL8N4c6FixjvxgYA9pB6Ix+DFONiRS8xzlSVTtPXCkAGxkLtCygAMJPvQY6DzFZpgR
-	 Dmt7JzIOPSxEMgm1pTx3QifNwG3Ch9dlVfHR49ZHbqMyKikY1pLKjHQMnh1vQUHdXNw==
+	bh=xkmh9QjUrnWWs1yEQz3jSOi/bEVFx5VwaBHgV2DFWE8=;
+	b=rXtnwTWJdHsg/pTMenAvIwQoNijj9Pr0l2hO6O/ROkUb09NMjzS9JMsxQXXjjYApxeXk
+	 jMu3iU6k1JdzrDFT3DeOH7ubrxkYo6o1gpiIE4T+/szQtCnEKKo9MIcLwdGcekealktPN
+	 rKU0rD9vN00wOYsF2CplsvjuXM9Z5lir7QOcxT3hi3jge0E9NJeeQxQpqtepFk2MZicYf
+	 Fa2S91j5TqkFoB7qVPjGMHhpRX5vEqozGKLffJ6s79+dTn7DnuzxWISsjXi0zv/5HxDKq
+	 4E2jPprs63nNa6iVZhA094+WgaJIlgBV4PZmvgLYSslbI7cZ3AWV2Vgi8Oyuh2JMmYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Nt/JDYTs";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Xc07a0z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0873C606A31D;
-	Wed, 28 Oct 2026 19:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1852606A31C;
+	Wed, 28 Oct 2026 19:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nt/JDYTs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FBD1F01825;
-	Wed, 28 Oct 2026 19:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Xc07a0z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF461F01825;
+	Wed, 28 Oct 2026 19:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216330;
-	bh=Osp7STGqAWO0Y9AgJ2Ohvu7XhdLn68Pvdc9bC0jV3cI=;
+	s=korg; t=1793216333;
+	bh=xkmh9QjUrnWWs1yEQz3jSOi/bEVFx5VwaBHgV2DFWE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nt/JDYTs6FuOsDAWT1Dux8DDxKOfXOITPu+JYGKJ8Pz9ZBX/bokF+Ene0/+OF67mV
-	 6IEdJ6Pzi61Xlq2xdYEawBo5FgXfiIBNJ3C/ZVOm9hzG5Au3F36ib9D3ggguKCg4hN
-	 N2eZB71wW0vL8lC0Cjt49Ym8mLEUE1zZryqA5o9w=
+	b=1Xc07a0zJrcF9PA5+Ddc2X32bT8g3DAdMB1HGIijlV+EuCbuROvkAnFLSLgSM6lt7
+	 9JcaNu24J+59eraj/TaNReiYACN+yc+ybnIzYaiA3cB4yGA6mqYsVC9FPoi8asAYin
+	 1D3xmPo7qm5sVHk/ImHBK0pOR4VVLEb3JlvrHCCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1522/1887] net_sched: sch_fifo: implement lockless __fifo_dump()
-Date: Wed, 28 Oct 2026 18:00:18 +0100
-Message-ID: <20261028170534.100259784@linuxfoundation.org>
+Subject: [PATCH 6.1 1523/1887] net: sched: fix 32-bit backlog wrap in gred, bfifo and plug enqueue
+Date: Wed, 28 Oct 2026 18:00:19 +0100
+Message-ID: <20261028170534.121776109@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,83 +71,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 01daf66b791e1ddd1a4aae2a65ea65fa1d4a96ef ]
+[ Upstream commit 4c660ee8c809637909f4f7eb1017f7b9401c75c4 ]
 
-Instead of relying on RTNL, __fifo_dump() can use READ_ONCE()
-annotations, paired with WRITE_ONCE() ones in __fifo_init().
+gred_enqueue(), bfifo_enqueue() and plug_enqueue() admit a packet when the
+current backlog plus the packet length fits within the queue limit:
 
-Also add missing READ_ONCE(sh->limit) in bfifo_enqueue(),
-pfifo_enqueue() and pfifo_tail_enqueue().
+  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (gred default VQ)
+  gred_backlog+qdisc_pkt_len(skb) <= q->limit  (gred configured VQ)
+  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (bfifo)
+  sch->qstats.backlog + skb->len <= q->limit             (plug)
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+sch->qstats.backlog and q->backlog are u32, and qdisc_pkt_len()/skb->len
+are unsigned int, so all sums are computed in 32 bits and wrap at 2^32.
+Once the true backlog exceeds 4 GiB the wrapped sum becomes small and
+admission keeps succeeding, so the queue grows without bound and the kernel
+can be driven to OOM.
+
+Promote the sums to u64 so admission stops once the true backlog exceeds
+the limit.  The limit is u32, so the bounded queue stays below 2^32 and
+the stored u32 backlog never wraps.
+
+The bug can only be reproduced as root (albeit with ridiculous setup):
+ attach a gred (or bfifo/plug) qdisc with a limit near 4 GiB,
+ leaving the default VQ unconfigured (for gred), and drive >4 GiB of
+ queued traffic (e.g. via a size table / stab to inflate qdisc_pkt_len,
+ or sustained high-rate traffic). The u32 backlog+len sum wraps at 2^32,
+ admission keeps succeeding, and the queue grows unboundedly to OOM.
+
+Fixes: a3eb95f891d6 ("net_sched: gred: add TCA_GRED_LIMIT attribute")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 4c660ee8c809 ("net: sched: fix 32-bit backlog wrap in gred, bfifo and plug enqueue")
+Link: https://patch.msgid.link/20260818095927.15901-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fifo.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ net/sched/sch_fifo.c | 2 +-
+ net/sched/sch_gred.c | 4 ++--
+ net/sched/sch_plug.c | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/net/sched/sch_fifo.c b/net/sched/sch_fifo.c
-index af5f2ab69b8d2..739432c4d8d39 100644
+index 739432c4d8d39..91c9bd34a4a9d 100644
 --- a/net/sched/sch_fifo.c
 +++ b/net/sched/sch_fifo.c
-@@ -19,7 +19,8 @@
+@@ -19,7 +19,7 @@
  static int bfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  			 struct sk_buff **to_free)
  {
--	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit))
-+	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
-+		   READ_ONCE(sch->limit)))
+-	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
++	if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
+ 		   READ_ONCE(sch->limit)))
  		return qdisc_enqueue_tail(skb, sch);
  
- 	return qdisc_drop(skb, sch, to_free);
-@@ -28,7 +29,7 @@ static int bfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- static int pfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			 struct sk_buff **to_free)
- {
--	if (likely(sch->q.qlen < sch->limit))
-+	if (likely(sch->q.qlen < READ_ONCE(sch->limit)))
- 		return qdisc_enqueue_tail(skb, sch);
- 
- 	return qdisc_drop(skb, sch, to_free);
-@@ -42,7 +43,7 @@ static int pfifo_tail_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	if (unlikely(READ_ONCE(sch->limit) == 0))
- 		return qdisc_drop(skb, sch, to_free);
- 
--	if (likely(sch->q.qlen < sch->limit))
-+	if (likely(sch->q.qlen < READ_ONCE(sch->limit)))
- 		return qdisc_enqueue_tail(skb, sch);
- 
- 	prev_backlog = sch->qstats.backlog;
-@@ -108,14 +109,14 @@ static int __fifo_init(struct Qdisc *sch, struct nlattr *opt,
- 		if (is_bfifo)
- 			limit *= psched_mtu(qdisc_dev(sch));
- 
--		sch->limit = limit;
-+		WRITE_ONCE(sch->limit, limit);
- 	} else {
- 		struct tc_fifo_qopt *ctl = nla_data(opt);
- 
- 		if (nla_len(opt) < sizeof(*ctl))
- 			return -EINVAL;
- 
--		sch->limit = ctl->limit;
-+		WRITE_ONCE(sch->limit, ctl->limit);
+diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
+index fa7a1b69c0f35..4f44a268286fa 100644
+--- a/net/sched/sch_gred.c
++++ b/net/sched/sch_gred.c
+@@ -179,7 +179,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			 * if no default DP has been configured. This
+ 			 * allows for DP flows to be left untouched.
+ 			 */
+-			if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
++			if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
+ 					sch->limit))
+ 				return qdisc_enqueue_tail(skb, sch);
+ 			else
+@@ -244,7 +244,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		break;
  	}
  
- 	if (is_bfifo)
-@@ -157,7 +158,7 @@ static void fifo_destroy(struct Qdisc *sch)
- 
- static int __fifo_dump(struct Qdisc *sch, struct sk_buff *skb)
+-	if (gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
++	if ((u64)gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
+ 		q->backlog += qdisc_pkt_len(skb);
+ 		return qdisc_enqueue_tail(skb, sch);
+ 	}
+diff --git a/net/sched/sch_plug.c b/net/sched/sch_plug.c
+index 35f49edf63dbf..6638343ca671a 100644
+--- a/net/sched/sch_plug.c
++++ b/net/sched/sch_plug.c
+@@ -89,7 +89,7 @@ static int plug_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  {
--	struct tc_fifo_qopt opt = { .limit = sch->limit };
-+	struct tc_fifo_qopt opt = { .limit = READ_ONCE(sch->limit) };
+ 	struct plug_sched_data *q = qdisc_priv(sch);
  
- 	if (nla_put(skb, TCA_OPTIONS, sizeof(opt), &opt))
- 		goto nla_put_failure;
+-	if (likely(sch->qstats.backlog + skb->len <= q->limit)) {
++	if (likely((u64)sch->qstats.backlog + skb->len <= q->limit)) {
+ 		if (!q->unplug_indefinite)
+ 			q->pkts_current_epoch++;
+ 		return qdisc_enqueue_tail(skb, sch);
 -- 
 2.53.0
 
