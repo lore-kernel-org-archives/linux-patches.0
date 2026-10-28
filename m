@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215207;
-	b=w0pwwazNSbK68lHk3t0UgYoSGyusalmdwvkb08mAc9dlDSpSoZdlIhUlIsHvMFS7Ki3z
-	 yqnFFs7FA9em/Ty2/CHm7ISqBAhZIhF9LRDaAaFhWK/qJakgX17fbcwyNO6Qcym4nINdW
-	 olYCZvYJvxb5HfrZt05iOIAFffH4Odpl+6IPMtnN8wNYZ1DgCKdxemoBuXxD3oxcQfQp8
-	 xSsuhHjFm5YMGZQl5UvgH4r4tqYFpg/3RiY/rxx1nP5KUSamdO6FGvnGWYa3YHsihVRxB
-	 AJI1JIk1zwNVdFVzdOF9p+rEBGy44bkz+rCIRdruuZVALpMwVRHsCW0Uxbyvva7m14w==
+	t=1793215210;
+	b=s5VaE/B+onYQMfwhyF4FBYjy0wznmnYzBdHyVlDrc4b90h0GTjV945cJB99PgzJJSzQ4
+	 GpemYJKfifWbe8yT2538o5Bx5OpBpWA7cQJf8ApF3qEBUn+YiKVT329nsmPLQFhzDcgOZ
+	 3qfUTz8VTstbWoOhEYwY/bwHQ0FEmUAjUAGdlgeJ8jpZMOLYLfwmEW/rqW5DetjhtAaQN
+	 dRiHXz1ttxPP4nzKRkGfCxKkL9mAJ2jhYetbrsWvnX6Njqq8M9c7BR1d7OF8LB5N9y5Vk
+	 BYHQ0qLAILRroyyv/RwsFhSSpwCAW4vlnuCPzi3zSxLZtABGfcnYqe4pSspjl2vDDgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215207;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215210;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lpDf7IKgXcCpc/OdqXP0gb7/nRe/CW9IEhGWFEJC6jQ=;
-	b=LHB1x4lDw2ZLHzfnL0C+EiqUrzXHqyV1Oi2GLNEIskVWbcicmhWgTabKEqJ6n5Tfh8O4
-	 goUYOiM2B/1l2zsSs8ncMH9gIVP4fJRbNGbEuD02ykItx6nSpyYYDU+IDCCHWNZXnR/9V
-	 6lh3nFIwtPgNWOvzwFM2GmALJPm1YDS1W3p6ivpMcpIkMOZVzdHyVUrjnaNxXWjNQr3nu
-	 QLL5yjxmGepEBHJPevLDB5bPKISzFeEv8wPX9VDTgIMEu4ad2Lb8RZHa5qwiQkZcgNe81
-	 s6fg710eY9G2XM1P9yh2Z02Vys4GVk3WEJiEG6TCSF4HdAkK9v+1FOWFgPbcvoxQpdg==
+	bh=1s7ncQv28TACMDmuH6yQojrODS/uxQMmH4wUu0NHe2E=;
+	b=YhenOVgT36cuZyjmiVAzqIp15n8w/a4Di9pm7Ke4LSfTSKekxMJgGPfPYojnQMVWQ3gj
+	 h3nEJYWaFxpetXFqRGDjBg4GrqBkxqqP1IKtNUZyCGsEDjQ7YLwPPjOSaVmdBRgzAs/FF
+	 HDPpmGGVRBSNx7wtQcU3zoraXZeDjaFIdGO400VmZzinL6NvHvkI1N6Lknz2Fd4AY7TEN
+	 JS2vFrHJaoqu/c1mehcPicwt4jqGxufuvDEcqNDNKgUgD1TnypKIsCVeVLpm5MfnWReUQ
+	 O0lwMlhTrgipovU4RmJ7s8Yo7HdwJL443urBhr/pEpkGbstLa72qafomQi7AG4CTFpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNlCOd0j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPz3pS+V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072CC606A31A;
-	Wed, 28 Oct 2026 19:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1B2606A31C;
+	Wed, 28 Oct 2026 19:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNlCOd0j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571991F01828;
-	Wed, 28 Oct 2026 19:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPz3pS+V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299281F01825;
+	Wed, 28 Oct 2026 19:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215206;
-	bh=lpDf7IKgXcCpc/OdqXP0gb7/nRe/CW9IEhGWFEJC6jQ=;
+	s=korg; t=1793215209;
+	bh=1s7ncQv28TACMDmuH6yQojrODS/uxQMmH4wUu0NHe2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNlCOd0jtusTZE3zuc4kQbdHEbGhADUZuJdKuU8W0NCFJy+Cmm7Zoky53Ui/XvbnE
-	 FGYmpHFOJKBwlCtMb9qQV1R3xhicgM8rJpOG//N35GUA/5EKIINcUm9Q3bMjncWf8J
-	 webtrYDbFvBYLVdPyncsyZu4XewH0//blIxW8hs4=
+	b=HPz3pS+VMkChf3vhXTP8NuhyjvxcI0Hg7y/WY0xNkRxrWqVCcG7OYVsbcU41YuXI7
+	 jBQ5GEdW5tY82x8EdoCRleiYtlgnrRTXllJuX0x/Ukt6ZKJJDc9USaqIVRthqNMyV4
+	 hropcXtb0ESFGz4ZHpNwX0UI72XCYmb+TkqtWD5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	stable <stable@kernel.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1128/1887] usb: typec: tcpm: bound altmode_desc[] per iteration in svdm_consume_modes()
-Date: Wed, 28 Oct 2026 17:53:44 +0100
-Message-ID: <20261028170525.071718336@linuxfoundation.org>
+Subject: [PATCH 6.1 1129/1887] usb: typec: tcpm: validate VDO count in Discover Identity ACK handlers
+Date: Wed, 28 Oct 2026 17:53:45 +0100
+Message-ID: <20261028170525.093530405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,67 +71,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 3389c149c68c3fea61910ad5d34f7bf3bff44e32 ]
+[ Upstream commit 8fbc349e8383125dd2d8de1c1e926279d398ab17 ]
 
-svdm_consume_modes() checks pmdata->altmodes against the array size once
-before the loop over the count, but forgot to check the bound at every
-point in the loop.
-
-In the well-behaved SVDM discovery flow this is harmless because each of
-at most SVID_DISCOVERY_MAX SVIDs contributes at most MODE_DISCOVERY_MAX
-modes, exactly filling altmode_desc[ALTMODE_DISCOVERY_MAX].  But the
-CMDT_RSP_ACK handler in tcpm_pd_svdm() does not correlate an incoming
-ACK with any request the port actually sent.  Once port->partner is set,
-an unsolicited Discover Modes ACK is consumed unconditionally.  A broken
-or malicious port partner can therefore drive altmodes to
-ALTMODE_DISCOVERY_MAX - 1 via the normal flow, and then send one extra
-Discover Modes ACK with seven VDOs.  Because the pre-loop check passes,
-the loop could then writes up to five entries past altmode_desc[].  For
-mode_data_prime the next field in struct tcpm_port is the
-partner_altmode[] pointer array, which then receives partner-chosen
-SVID/VDO bytes.
-
-Move the bound check inside the loop so the array can never be indexed
-past ALTMODE_DISCOVERY_MAX regardless of how many VDOs the partner
-supplies or how the function was reached.
+Properly validate the count passed from a device when calling
+svdm_consume_identity() or svdm_consume_identity_sop_prime() as the
+device-controlled value could index off of the static arrays, which
+could leak data.
 
 Assisted-by: gkh_clanker_t1000
-Cc: Badhri Jagan Sridharan <badhri@google.com>
 Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026051351-reshuffle-skillful-90af@gregkh
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://patch.msgid.link/2026051350-plated-salute-0efe@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index e18c59ae778e9..685a08a659d73 100644
+index 685a08a659d73..b7f81db5f371a 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1544,17 +1544,16 @@ static void svdm_consume_modes(struct tcpm_port *port, const u32 *p, int cnt)
- 	struct typec_altmode_desc *paltmode;
- 	int i;
+@@ -1476,6 +1476,9 @@ static void svdm_consume_identity(struct tcpm_port *port, const u32 *p, int cnt)
+ 	u32 vdo = p[VDO_INDEX_IDH];
+ 	u32 product = p[VDO_INDEX_PRODUCT];
  
--	if (pmdata->altmodes >= ARRAY_SIZE(port->partner_altmode)) {
--		/* Already logged in svdm_consume_svids() */
--		return;
--	}
--
- 	if (pmdata->svid_index < 0 || pmdata->svid_index >= pmdata->nsvids) {
- 		tcpm_log(port, "Invalid SVID index %d", pmdata->svid_index);
- 		return;
- 	}
++	if (cnt <= VDO_INDEX_PRODUCT)
++		return;
++
+ 	memset(&port->mode_data, 0, sizeof(port->mode_data));
  
- 	for (i = 1; i < cnt; i++) {
-+		if (pmdata->altmodes >= ALTMODE_DISCOVERY_MAX) {
-+			/* Already logged in svdm_consume_svids() */
-+			return;
-+		}
- 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
- 		memset(paltmode, 0, sizeof(*paltmode));
- 
+ 	port->partner_ident.id_header = vdo;
 -- 
 2.53.0
 
