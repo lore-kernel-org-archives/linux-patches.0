@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216563;
-	b=2J80SDp8a2YSSgXS6CgIzokrcF4VZ9jOdORqjMMTnoOrRbl2IaFL8KfdKA+1h9aNvocT
-	 RX6EekT2+wi8SLl04SOMMdEtC09rNVFH9MWvVtIJUhYsoGfTLCIVY8LBLkGLoffEyVVPt
-	 heHhhUsJPjCJRueW8/IpWXgGa7fps5zY7BeDQhOiYZ1ODJ06PO/n616BDfs3hTQv9bepM
-	 Ol/iMS90XEQaN4Bl/1eTmM7SEZVOUPWgCfwW8kMgYDaJVnMuI0tGNzKGGBqphPZQzfLAp
-	 /1FR4ohS24eXW+bCltd5HTbi7NN9EuZ3Cbn2r+WzR2A2fQQiV9ErI4zzT5al90uH6Nw==
+	t=1793216566;
+	b=enVovCbqOfhTVG/wo4iWJwdtrGFxuP811aTOn0d9E2g7fTS6RzqkrPs/epo92MZo3pgH
+	 PGKzRJSQ5WuBIGdPlne1/VWybkzwrKWqPJ0Sfh06N8lKc9OS+SJ1kJjhUYe+nmBDcFTkm
+	 6dsg3j0vrKvG0eAGm39nLghhlXBKgbkhJCxDUjZvLRti0qNPtry6pVaDQ0sCKClclXZU8
+	 KiYtyhcvFogrKtzjUsXLFxyZ5pFMCeidz2uD1bcgSqGYYtWFPCJGT3m9/LogTU2szdSEK
+	 DPFiCGAlMrfTWjAiMM00ifXyDNkmABzbLS55bbbCewyKO/BpFSXb1tKjtul9ZcSvv2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216563;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216566;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zQswbcZqPk68i2cM5WMH0EzKzWFTGGPy9Ksz0eMHXb4=;
-	b=nFp0QdRWZX3gM7WXDNDV4P7P6TFE8ItljaxTmZ1UusZzopIqYWtBI+SMy12M4FehJpq/
-	 kirH5bkqlBrOG/4c+QfKy1QXdFP1VcTy1Wk5LRDvOIiHRpLZVqICLrULtOW1i41miW0C2
-	 cMwFg8bPjQKX3GSwseCWdBK438U/49MLfGivSPokPlcSiKLeQhfFOFho8UDObVE5sRpGG
-	 q1gYGuyPXDUPNFm41ypUUVL/7TaylQt4IKH3N7cNX3rbYVq0RT5vpwNTEVrCjT474ECOJ
-	 b2j1OEN7VID7QT7idp62l7RMEvTuML/23z7URK9c86anr744rFnk/c0uzGIv+r8HfNw==
+	bh=3tuYAjmApFv+ieLC25xayEDQg3VmcI0W5n3Eq5nJZxU=;
+	b=3AY1qdKIX+eV+jHYAB6KEqYa7Dqe0IGyW8xuUvWshqT00BQwZa9RyFAhLYEtiG6WZ3/Q
+	 KwN/6Cm766cnWRJO9fYPiMCpcxgPFvUk2D5PjXOChNTodDjaNL4r16DML3vrZYG9UROk6
+	 lBa3TuMi14Rgd98lbVyBm8bUgkcbJyFNbIvO/5Scsy857pedzTNJu8X7rdHtPSW2jogqw
+	 WkZlE7ARwnBE7bVNK5Xgs+1d/vbvEchOF/D+bnhD/ODUMqVmyDKjFrkTM4ltOkatAS4vj
+	 oi2XGyf0IlBWsdtyQP5SQDkHjAiIGPezV3Da4xuPtWY4EyT6Lag3JPUIZbFSQm1JIMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qde0A7so;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dwowTrZF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D18A606A31C;
-	Wed, 28 Oct 2026 19:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FB1606A31C;
+	Wed, 28 Oct 2026 19:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qde0A7so
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2D91F01825;
-	Wed, 28 Oct 2026 19:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dwowTrZF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832961F01825;
+	Wed, 28 Oct 2026 19:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216563;
-	bh=zQswbcZqPk68i2cM5WMH0EzKzWFTGGPy9Ksz0eMHXb4=;
+	s=korg; t=1793216566;
+	bh=3tuYAjmApFv+ieLC25xayEDQg3VmcI0W5n3Eq5nJZxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qde0A7so44ERmnTSYLGAHIfukgda5xg3UIaerKJ4ZzOJIqC2MAP1wLKf7AzLacl5T
-	 r6Nf+IgVaGhzba8r2YW+Nn55W5sOF7eyzNbeXagq+0tJgapmB5PddR0dhdJUzLu6lg
-	 HArN9fLhSix33cNvwsslBEHL0ypndZCuQluwqw8Q=
+	b=dwowTrZF+Wks6mq/DLWQDHch0AyyErJYW4lP+1nNb15IZSto95OE2/sScNC3Vf2Ui
+	 OlZP1HGdqXv2bX6PO1sBBsIkq0zFraG/EM0JBRAUt4v0zEcO4SNQ/gIZISulIceN8/
+	 Es9toZ2XXxVxwB/IwtTjvkD4I5XPfji3xy2Wnprk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Peisach <jpeisach@ubuntu.com>,
-	Janne Grunau <j@jannau.net>,
-	Nick Chan <towinchenmi@gmail.com>,
-	Sven Peter <sven@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1556/1887] nvme-apple: Destroy the admin queue on removal
-Date: Wed, 28 Oct 2026 18:00:52 +0100
-Message-ID: <20261028170534.873909975@linuxfoundation.org>
+Subject: [PATCH 6.1 1557/1887] amt: Dont support cross-netns setup.
+Date: Wed, 28 Oct 2026 18:00:53 +0100
+Message-ID: <20261028170534.896305369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,139 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 87d5b9864c8118d26f54de4b66d2bddf2c659272 ]
+[ Upstream commit e99ecc3046ea5f5c6b5e1f8b4ef854c6c6998e06 ]
 
-The admin queue is allocated with blk_mq_alloc_queue() but never
-destroyed. nvme_free_ctrl() only drops the last reference and
-blk_mq_exit_queue() and blk_sync_queue() never run: the hctx is never
-moved to q->unused_hctx_list and the timeout timer and work stay armed on
-a queue that is about to be freed which will eventually oops inside
-blk_mq_timeout_work().
+When a lower device is unregistered, amt_device_event() tries
+to unregister its upper AMT device, but it has two problems.
 
-This can only be triggered when the controller fails to come up and is
-then immediately torn down again which is why no one ever ran into this
-before.
+  1. amt_lookup_upper_dev() looks up an upper device in the
+      lower device's netns only
 
-Let's just copy what the pcie driver does: unquiesce and destroy the admin
-queue before nvme_uninit_ctrl().
+  2. amt_device_event() unregisters a single upper device only
 
-With this the following WARN followed by a panic no longer happens:
+If AMT device is created on a lower device in another netns,
+removing the lower device triggers the splat below and gets
+stuck until all upper devices are removed. [0]
 
-  WARNING: block/blk-mq.c:4390 at blk_mq_release+0x194/0x238, CPU#4: kworker/u34:4/119
-  CPU: 4 UID: 0 PID: 119 Comm: kworker/u34:4 Not tainted 7.2.0-rc1-dirty #248 PREEMPT
-  Hardware name: Apple Mac mini (M1, 2020) (DT)
-  Workqueue: nvme-wq apple_nvme_remove_dead_ctrl_work
-  pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-  pc : blk_mq_release+0x194/0x238
-  lr : blk_mq_release+0x58/0x238
-  sp : ffffc000833a3b50
-  x29: ffffc000833a3b50 x28: ffff80001d0450f8 x27: ffff800020c95200
-  x26: 0000000000000088 x25: 0000000000000000 x24: ffff800020f36805
-  x23: 0000000000000000 x22: ffffc00081a86878 x21: ffff800020be9c60
-  x20: 0000000000000000 x19: ffff800022501698 x18: 000000000000000a
-  x17: 7365757165722066 x16: 666f7265776f7020 x15: 0000000000000000
-  x14: 0000000000000028 x13: 0000000000004def x12: 0000000000000003
-  x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc000805b4fc8
-  x8 : ffffc00081915820 x7 : ffffc00081c4f3c8 x6 : 0000000000000001
-  x5 : 0000000000000004 x4 : ffff800022498d80 x3 : ffffc000833a3b14
-  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff800022501698
-  Call trace:
-   blk_mq_release+0x194/0x238 (P)
-   blk_put_queue+0x8c/0xf0
-   nvme_free_ctrl+0x4c/0x260
-   device_release+0x44/0x128
-   kobject_put+0xa0/0x120
-   put_device+0x1c/0x40
-   nvme_uninit_ctrl+0x48/0x60
-   apple_nvme_remove+0x54/0xb0
-   platform_remove+0x28/0x40
-   device_remove+0x54/0x98
-   device_release_driver_internal+
-   device_release_driver+0x20/0x38
-   apple_nvme_remove_dead_ctrl_wor
-   process_one_work+0x1f4/0x770
-   worker_thread+0x1b8/0x360
-   kthread+0x140/0x160
-   ret_from_fork+0x10/0x20
-  irq event stamp: 448
-  hardirqs last  enabled at (447):in_unlock_irqrestore+0x74/0x80
-  hardirqs last disabled at (448): [<ffffc000811cf5c0>] el1_brk64+0x20/0x60
-  softirqs last  enabled at (0): [ess+0xb28/0x2698
-  softirqs last disabled at (0): [<0000000000000000>] 0x0
-  ---[ end trace 0000000000000000
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  Mem abort info:
-    ESR = 0x0000000096000005
-    EC = 0x25: DABT (current EL),
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-    FSC = 0x05: level 1 translation fault
-  Data abort info:
-    ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-    CM = 0, WnR = 0, TnD = 0, TagA
-    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-  [0000000000000000] user address
-  Internal error: Oops: 0000000096000005 [#1]  SMP
-  CPU: 7 UID: 0 PID: 54 Comm: kwor          7.2.0-rc1-dirty #248PREEMPT
-  Tainted: [W]=WARN
-  Hardware name: Apple Mac mini (M1, 2020) (DT)
-  Workqueue: kblockd blk_mq_timeou
-  pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-  pc : percpu_ref_tryget_many.cons
-  lr : percpu_ref_tryget_many.constprop.0+0xc0/0x168
-  sp : ffffc000829cbce0
-  x29: ffffc000829cbce0 x28: ffff800020be9f48 x27: ffff800013e503c0
-  x26: 0000000000000108 x25: 000009c05
-  x23: 0000000000000000 x22: ffffc000819f5000 x21: ffff800020be9f48
-  x20: ffff8001deda4808 x19: ffff8000a
-  x17: 00000000580e1fac x16: ffffc00082bbbb7c x15: 0000000000000000
-  x14: 0000000000000028 x13: 000000001
-  x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc000829cbc20
-  x8 : ffffc00081915820 x7 : ffffc0001
-  x5 : ffff80001ca77d08 x4 : 0000000000000000 x3 : ffff80001ca77cb8
-  x2 : 0000000000000000 x1 : 000000007
-  Call trace:
-   percpu_ref_tryget_many.constpro
-   blk_mq_timeout_work+0x48/0x298
-   process_one_work+0x1f4/0x770
-   worker_thread+0x1b8/0x360
-   kthread+0x140/0x160
-   ret_from_fork+0x10/0x20
-  Code: 91282000 97ed44b2 17ffffd2
-  ---[ end trace 0000000000000000 ]---
+The cross-netns setup seems unintentional considering 1. and
+the following points:
 
-Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
-Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
-Tested-by: Janne Grunau <j@jannau.net>
-Tested-by: Nick Chan <towinchenmi@gmail.com>
-Signed-off-by: Sven Peter <sven@kernel.org>
+  * amt_link_setup() sets dev->netns_immutable to true
+  * skb_scrub_packet() is not called in the fast path
+  * iproute2 binary fails to find cross-netns lower device via
+    link-netns:
+      # ip -n ns1 link add amt0 link-netns ns2 type amt dev veth1
+      Cannot find device "veth1"
+
+Instead of supporting it properly and preparing for per-netns
+netdev unreg, let's forbid cross-netns setup.
+
+Note that the problem 2. needs a separate fix.
+
+[0]:
+WARNING: net/core/dev.c:12518 at unregister_netdevice_many_notify+0x1cce/0x2250, CPU#48: ip/2031
+Modules linked in:
+CPU: 48 UID: 0 PID: 2031 Comm: ip Not tainted 7.2.0-rc5+ #27 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+RIP: 0010:unregister_netdevice_many_notify (net/core/dev.c:12518)
+Code: 89 ef e8 d5 52 ae fe e9 d0 f4 ff ff 48 8d 3d f9 3b 9c 02 48 c7 c6 c0 0b 63 84 ba ab 1f 00 00 67 48 0f b9 3a e9 65 ff ff ff 90 <0f> 0b 90 eb 81 48 8d 3d f6 3b 9c 02 48 c7 c6 c0 0b 63 84 ba e2 1f
+RSP: 0018:ffffc90004abf160 EFLAGS: 00010212
+RAX: ffff888104d38260 RBX: ffff88800b0911b8 RCX: dffffc0000000000
+RDX: 0000000000000000 RSI: 0000000000000008 RDI: ffffffff85b9f880
+RBP: ffffc90004abf2d0 R08: ffffffff85b9f887 R09: 1ffffffff0b73f10
+R10: dffffc0000000000 R11: fffffbfff0b73f11 R12: ffff88800b091d08
+R13: ffff88800b091178 R14: dffffc0000000000 R15: ffff88800b091000
+FS:  00007f555b86c600(0000) GS:ffff8881942a0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000562107d489c0 CR3: 0000000109a40002 CR4: 0000000000372ef0
+Call Trace:
+ <TASK>
+ rtnl_dellink (net/core/rtnetlink.c:3632 net/core/rtnetlink.c:3674)
+ rtnetlink_rcv_msg (net/core/rtnetlink.c:7112)
+ netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+ netlink_unicast (net/netlink/af_netlink.c:1319)
+ netlink_sendmsg (net/netlink/af_netlink.c:1900)
+ ____sys_sendmsg (net/socket.c:775)
+ __sys_sendmsg (net/socket.c:2738)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+...
+unregister_netdevice: waiting for veth0 to become free. Usage count = 7
+ref_tracker: netdev@ffff88800d7496d8 has 3/3 users at
+     __netdev_adjacent_dev_insert (./include/linux/netdevice.h:4525 ./include/linux/netdevice.h:4554 net/core/dev.c:8791)
+     __netdev_upper_dev_link (net/core/dev.c:8879 net/core/dev.c:8963)
+     netdev_upper_dev_link (net/core/dev.c:9009)
+     amt_newlink (drivers/net/amt.c:3321)
+
+Fixes: b9022b53adad ("amt: add control plane of amt interface")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20260807020326.2519445-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/apple.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/amt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
-index 4822248a624ad..2d8904505b5ac 100644
---- a/drivers/nvme/host/apple.c
-+++ b/drivers/nvme/host/apple.c
-@@ -1566,6 +1566,15 @@ static int apple_nvme_remove(struct platform_device *pdev)
- 	nvme_stop_ctrl(&anv->ctrl);
- 	nvme_remove_namespaces(&anv->ctrl);
- 	apple_nvme_disable(anv, true);
-+	if (anv->ctrl.admin_q && !blk_queue_dying(anv->ctrl.admin_q)) {
-+		/*
-+		 * If the controller was reset during removal, it's possible
-+		 * user requests may be waiting on a stopped queue. Start the
-+		 * queue to flush these to completion.
-+		 */
-+		nvme_start_admin_queue(&anv->ctrl);
-+		blk_mq_destroy_queue(anv->ctrl.admin_q);
-+	}
- 	nvme_uninit_ctrl(&anv->ctrl);
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 33614c802be1c..9bdc6c0e7bf9c 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -3195,6 +3195,9 @@ static int amt_newlink(struct net *net, struct net_device *dev,
+ 	struct amt_dev *amt = netdev_priv(dev);
+ 	int err = -EINVAL;
  
- 	if (apple_rtkit_is_running(anv->rtk))
++	if (!net_eq(net, dev_net(dev)))
++		return err;
++
+ 	amt->net = net;
+ 	amt->mode = nla_get_u32(data[IFLA_AMT_MODE]);
+ 
 -- 
 2.53.0
 
