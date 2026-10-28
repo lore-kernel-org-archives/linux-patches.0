@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216358;
-	b=0mvqcsc96kYy0cXUwXJPj6zrdDq6hLVHBuUUllSY537cpHtvtbT8gEbEetKPP3KlgmS9
-	 x4jz/sQaQhWSz1G0gA5DXdCSrZn3L9720uSXikher4K9ABrwmNAJg4XkREMyrj29iPabY
-	 UIFlHnccYyai2vekCJI7tqlMTkfRmvRCqs7vsVUmIA9BK2wGGmMtelPWjSA/zfujKyGJm
-	 W3tlSzM5W4NfTrHbVmzRwg8yIcrTXs0iRV04SxXP8p8z168Nd0RBBR370p1zA5DFZBRjJ
-	 qWk8L106+2XuhSD4oQq3BHck2MOB2EgiCbLitgbqyNQIuXM/8e7ySTmy0GcbIBzMg5Q==
+	t=1793216361;
+	b=Ye39PMsSMkBEZdyvZds2whotnSbAhmkIC+/8tPCZ3lGxPaDC4Nww8eth2N43PlOmBJjA
+	 K0dX39taXSADGtLZS/OJ0CSxPBE6vZreoJbJmMyatFNENE61WlZTUFBNjo/XVvMI21qbi
+	 QxGHtDqA+QoDuKdBM31jla5s3x0puKRKFOcj+Y/3om1mF+5ldnmlDbl7BH4X6bK6LMuv6
+	 TeiYRrc2eoDdP4oLyguQhEqOA3UwMMrdd5PyGBeeg782GMQcwrGCVJmDaW/PaekBoGQxb
+	 E3yzCXQJVIPLk32oE80+ILBaEqsrKCHM9hFftp2boZYKNpXhJYztVluFk5SWazzy+Tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216361;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I7qUI1QfzJcV/rKyNQxiwk485vaBzPBqz7+kxjjkH6o=;
-	b=OV/J/s8lfACd+AP623ufkUc08rythqnejiqtNCGbsQFndUy8FX/cZpCXlwLKzDu7wRwa
-	 zN8DyM+Gs8GUQ10MJVhy+wF7JpM3ELk695T4+FXuu5rjYKnZSXITKV9OBSVU2VVEEup5T
-	 HqqVcQpeiIlNq/kU0FgLNAyN4KuomYCzL+NmZlLY5N454uG/POudL9JjNkeI4eKbm0XPN
-	 VyQukwKwtIZpNqbB0vuO/PV0aVvhUp6XXzsF7nOta8SX+HrqTP0ofTAU/jeFt2qycprRo
-	 Qs3Lv7s4tcZcIIzZql6y2N4SOz6Hy0a6lBBjku5a0YKrtc6nH/YyCL9CbSiy9yUi4nw==
+	bh=hRm/NNZA0s3haJPKJc6U3ZQH7BeydrrRFajwxWfDmxA=;
+	b=OXNbLF7O7pRAFTbfOpTZMUch4bYtjtSaPtMeoB1YCxftx2zWx4H7aRA+aPG/yoT3snKj
+	 SfNLsFvAV3zIZxkHCQJtvmLQ3WnMGDR+h7+l6L/1UnS7v6ufgC/H4GBWQQGHehGC8+/A9
+	 9yd1sVzAjDbbd0EZNWX3Tx/sqnJkpTVLICDbaCfx12ki/l3xHC/ZvSg+N6NKI3U2dJf7B
+	 9eEyNqZII3afZLr/3SiP9fYnqM5s7HHF42nV0RNKwiilltoMt7BVN/qsk3ZcEiRKUlMeu
+	 IC+LQeitkzZgNDsiFybQgCGHUrIVvns8t9e76u9FULZpU1BpZ8xjB7re/ZwshOzymcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdR4AtUA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6BFEym3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5D8606A31A;
-	Wed, 28 Oct 2026 19:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993E2606A31D;
+	Wed, 28 Oct 2026 19:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdR4AtUA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AAA1F01825;
-	Wed, 28 Oct 2026 19:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6BFEym3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A091F01825;
+	Wed, 28 Oct 2026 19:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216358;
-	bh=I7qUI1QfzJcV/rKyNQxiwk485vaBzPBqz7+kxjjkH6o=;
+	s=korg; t=1793216361;
+	bh=hRm/NNZA0s3haJPKJc6U3ZQH7BeydrrRFajwxWfDmxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdR4AtUADIYhpMZx1XjWZXtIM/pFnc2aV+mXdq9ve3Ofgx1tTwhHtf2YJ9l6Dpu6e
-	 tMDXg7jmcFt+JPfO5D3gvF9E7RVFbAcrMTdhgwwTUoMZmM9td87Z+dqrNSLoSOuB3X
-	 XxzYdxIklsxdAGGtpOPjcXS6ywT7NQR39uGwdwQc=
+	b=D6BFEym3lA3gn4iLGqADJ6TXj5iVXqb+fToo++6d1gEIKrBgIONgPO8Et1ETC8BL9
+	 XOh1laGVaa3QIpEQld74TaFUuEk+0z1EsMoZHq89fAIkayfgfOUZ2pNMVjtoSZjLgn
+	 yKqxb2Mvaf3ZtcPVKVWMwE02fKfEZdG20FGSlsOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1530/1887] fuse: check for NULL root inode in fuse_fill_super_submount
-Date: Wed, 28 Oct 2026 18:00:26 +0100
-Message-ID: <20261028170534.281382815@linuxfoundation.org>
+Subject: [PATCH 6.1 1531/1887] bpf, xdp: move offload check into dev_xdp_install()
+Date: Wed, 28 Oct 2026 18:00:27 +0100
+Message-ID: <20261028170534.303563406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,82 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 928f659a3e3650978a5b4829cc982324f72b474b ]
+[ Upstream commit ad27ed7d2309419a129078d781504f486b1b469a ]
 
-fuse_iget() can return NULL when its inode allocation fails, but
-fuse_fill_super_submount() passed the result straight to get_fuse_inode()
-and decremented fi->nlookup without checking it:
+bpf_xdp_link_update() calls dev_xdp_install() directly and skips
+dev_xdp_attach(), so the checks in dev_xdp_attach() do not run. A user can
+make an XDP link with a normal program and then swap in an offloaded or
+device-bound program with BPF_LINK_UPDATE, which puts it on the software
+path.
 
-        root = fuse_iget(sb, parent_fi->nodeid, ...);
-        fi = get_fuse_inode(root);
-        fi->nlookup--;
+dev_xdp_install() is the one place all three paths go through:
+"ip link set xdp" and BPF_LINK_CREATE reach it via dev_xdp_attach(), and
+BPF_LINK_UPDATE calls it directly. So move the program checks (offloaded,
+bound to another device, device-bound in generic mode, native vs generic,
+DEVMAP and CPUMAP) there, and keep only the netlink-flag check
+(XDP_FLAGS_UPDATE_IF_NOEXIST) in dev_xdp_attach().
 
-Inside fuse_iget() the inode allocation can fail and return NULL.  The
-submount root takes the iget5_locked() path, whose alloc_inode() can fail
-under memory pressure (the auto-submount branch can fail the same way in
-new_inode() or fuse_alloc_submount_lookup()):
-
-        inode = iget5_locked(sb, nodeid, fuse_inode_eq, fuse_inode_set,
-                             &nodeid);
-        if (!inode)
-                return NULL;
-
-A NULL root makes get_fuse_inode() a container_of() on NULL and the
-nlookup decrement a write to a bogus address, oopsing the mount.  With
-CONFIG_KASAN the following null pointer dereference is reported when the
-root inode allocation of an auto-submount fails (e.g. under memory
-pressure):
-
-==================================================================
-BUG: KASAN: null-ptr-deref in fuse_get_tree_submount+0x656/0x8b0
-Read of size 8 at addr 00000000000002b0 by task ls/942
-CPU: 0 PID: 942 Comm: ls Tainted: G W 6.6 #15
-Call Trace:
- <TASK>
- fuse_get_tree_submount+0x656/0x8b0
- vfs_get_tree+0x48/0x140
- fc_mount+0x13/0x50
- fuse_dentry_automount+0x7a/0xb0
- __traverse_mounts+0xca/0x330
- step_into+0x339/0xac0
- path_lookupat+0xc5/0x2f0
- filename_lookup+0x163/0x2a0
- vfs_statx+0xd5/0x200
- do_statx+0x83/0xd0
- __x64_sys_statx+0xa0/0xc0
- do_syscall_64+0x37/0x90
- entry_SYSCALL_64_after_hwframe+0x78/0xe2
- </TASK>
-==================================================================
-
-Return -ENOMEM instead; the caller tears down the partially built
-superblock on error, matching the other error returns in this
-function.
-
-Fixes: 1866d779d5d2 ("fuse: Allow fuse_fill_super_common() for submounts")
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: 026a4c28e1db3 ("bpf, xdp: Implement LINK_UPDATE for BPF XDP link")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/dev.c | 43 +++++++++++++++++++++++--------------------
+ 1 file changed, 23 insertions(+), 20 deletions(-)
 
-diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
-index 332cc885b815e..269699abdbfc7 100644
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -1537,6 +1537,8 @@ static int fuse_fill_super_submount(struct super_block *sb,
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 804752cc864f4..7c0d0905dd31b 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9249,6 +9249,29 @@ static int dev_xdp_install(struct net_device *dev, enum bpf_xdp_mode mode,
+ 	struct netdev_bpf xdp;
+ 	int err;
  
- 	fuse_fill_attr_from_inode(&root_attr, parent_fi);
- 	root = fuse_iget(sb, parent_fi->nodeid, 0, &root_attr, 0, 0);
-+	if (!root)
-+		return -ENOMEM;
- 	/*
- 	 * This inode is just a duplicate, so it is not looked up and
- 	 * its nlookup should not be incremented.  fuse_iget() does
++	if (prog) {
++		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
++					       ? XDP_MODE_DRV : XDP_MODE_SKB;
++		bool offload = mode == XDP_MODE_HW;
++
++		if (!offload && dev_xdp_prog(dev, other_mode)) {
++			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
++			return -EEXIST;
++		}
++		if (!offload && bpf_prog_is_dev_bound(prog->aux)) {
++			NL_SET_ERR_MSG(extack, "Using device-bound program without HW_MODE flag is not supported");
++			return -EINVAL;
++		}
++		if (prog->expected_attach_type == BPF_XDP_DEVMAP) {
++			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
++			return -EINVAL;
++		}
++		if (prog->expected_attach_type == BPF_XDP_CPUMAP) {
++			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
++			return -EINVAL;
++		}
++	}
++
+ 	memset(&xdp, 0, sizeof(xdp));
+ 	xdp.command = mode == XDP_MODE_HW ? XDP_SETUP_PROG_HW : XDP_SETUP_PROG;
+ 	xdp.extack = extack;
+@@ -9377,30 +9400,10 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
+ 		new_prog = link->link.prog;
+ 
+ 	if (new_prog) {
+-		bool offload = mode == XDP_MODE_HW;
+-		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
+-					       ? XDP_MODE_DRV : XDP_MODE_SKB;
+-
+ 		if ((flags & XDP_FLAGS_UPDATE_IF_NOEXIST) && cur_prog) {
+ 			NL_SET_ERR_MSG(extack, "XDP program already attached");
+ 			return -EBUSY;
+ 		}
+-		if (!offload && dev_xdp_prog(dev, other_mode)) {
+-			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
+-			return -EEXIST;
+-		}
+-		if (!offload && bpf_prog_is_dev_bound(new_prog->aux)) {
+-			NL_SET_ERR_MSG(extack, "Using device-bound program without HW_MODE flag is not supported");
+-			return -EINVAL;
+-		}
+-		if (new_prog->expected_attach_type == BPF_XDP_DEVMAP) {
+-			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
+-			return -EINVAL;
+-		}
+-		if (new_prog->expected_attach_type == BPF_XDP_CPUMAP) {
+-			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
+-			return -EINVAL;
+-		}
+ 	}
+ 
+ 	/* don't call drivers if the effective program didn't change */
 -- 
 2.53.0
 
