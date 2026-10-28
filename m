@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207972;
-	b=PPBTL18ii/IdhqcZ1Pso4bM95ewA7BGVktQi+y4mxP2dAcbl6kpUZ/kaOtVxTpkLvnG8
-	 eHRWR0Kao33U8cEPV9h5h7nmcHDrHxavfydh1IQuWcgVjskeVTMeiipqXTGVlnmhWAkWG
-	 q4sqWrwnFuumhb1EGt3vJnLN67xkbutnUAxK2COGaL+YSf06Y6aqL05bMwYoQ7MF6IAy6
-	 lxS8LLbsGbfYNedJmHYcD/ChO45GgHc0mVSKdMJ5MTpcz86sKbY70+xjfo829qYzzYRks
-	 mm5hJ4UnE0Duj891RAQOiNFtpUfzl02VS6ire52tFaMGJ9bpdfVyFaq/8oW4imjG8zw==
+	t=1793207975;
+	b=bgNBXf/5eFa2H65TraB4lHHTc5HBVq8F23Z/GJ6Ih6mVeDlWgb8wXLA0FajoK50AYEKf
+	 WDIAJCSspcxaCAsPeIuRXulWvHPjY9pI2mISb4KJozQDc+bouH4FfnjqgC5bnQ9t+upy5
+	 5oQae9off1Qm0SPcJYzc5aX/r/AkYtRfNPccm3D2fkOxOI8wgjlFAd116lfnbYahK1XD3
+	 1cMgd6IJQxDXECV2nBWShMyzp18iYQRVEHb8nhcjBSP9tdi7s3eQHYCHYsBrsSrO4HuBW
+	 UP2wezgx47yoldf0cX4EL+J7/HnKui13tqJh6SDuTl8yVwuHUB4i21ONBtlCR4dxgBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BmHYuWKOQfbZKrOhn2kFpTaThZ1lxQey9EiyI8u6PeU=;
-	b=yRKeYDYqMQVlmU+pn7AREIKo6uuce05eYONJzJ7q8+KAdz9ds2UQzyG8I0h9kxK0JqSp
-	 93+mjTxd25N3mqp2nY+7QxyeRpQdrMixBh79f2ziI4H1BlciS+nN9by6aytx+Bz/D3S3x
-	 F5Ox+Agm0b8Bvqh2DmAZb9atYL/Rt9vPDWkWpGvJmr78sQbQx4ieKiQLNaDZgiFdlvkxP
-	 picr2o4rKym9oz8t6NLtk6DcdAV/R3PGL7pjHubTJ4Hivnl1XtowqjRMqSWUPNqARJLsd
-	 dae/bciDJ9QH3q/GSxwnV65J7SG2VL0gZAznXF7Qf10iEI52ZPRm1aIlO/zYDDwj3zw==
+	bh=y7g6IxjbxCfSeG0uMdBbiwwzZnD6g4OCjJltLNgJuVI=;
+	b=ChEo5bU/txKle4RX7MDF6fH28/no0FEvDmVLiRxL541IM3J1eyb70hCZSyWy7jeG+cTJ
+	 It32LEvHAqiqyloNsPl6aFIgfQgtbTprABuF481+9hHu3e+rbNYU1ehl4cHy3pgoYMPFF
+	 GzPT03n9TDWtU37rkXbgXK/e2HVcC8LapjNyQMRfOVjaG51MiP1xbBXHX2ssBuRFF76pR
+	 LWpJ/oB5IEZ/naqD1PbNbCcPoQl6tVRJLGzr43g0C36zvp4RObwJTYlCk9isLKsaiHwXi
+	 cO2+O/jDu+erysjMtNJgzn1t/2rB8IMi9O6lQI0GzEWhPtxO1aYVYqdwlso3cp97z2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KRyyRQtt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQtY1Ta0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01577606A31D;
-	Wed, 28 Oct 2026 17:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD239606A31C;
+	Wed, 28 Oct 2026 17:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KRyyRQtt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524391F01825;
-	Wed, 28 Oct 2026 17:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQtY1Ta0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27AEA1F01825;
+	Wed, 28 Oct 2026 17:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207971;
-	bh=BmHYuWKOQfbZKrOhn2kFpTaThZ1lxQey9EiyI8u6PeU=;
+	s=korg; t=1793207974;
+	bh=y7g6IxjbxCfSeG0uMdBbiwwzZnD6g4OCjJltLNgJuVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KRyyRQttf19QQTvKvTrXoR/Y3HSn0uMCb7iNXNuNHj6cRVrnsiyNt53t0g8v1VEFM
-	 L7jUQ09SINXFgO1Fag05Q8HFvvnXk0FX5bSCUjPhBLbdMW0DbEL8k4As+Wl1ukOj9D
-	 cOiadF+e3Z63BcnwrB3a+mh5JJ9nCcp99S99wYLA=
+	b=sQtY1Ta0m3/d5AN4zZHJnpPrDgeGcm2Hl7rlunQgKZSm9bjum0zFpFgkErMkvdnP3
+	 fBuDWbBgBWbA01ZB7ZvzX5XdyY/DYupG9+SUhU1MsjD4J2OaziFrgEndOUohHyhnpE
+	 kyoOaMY5AB7NQgvPCb3/9V/K72tSA8byZGHlLEsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	"Claude Fable 5.1" <noreply@anthropic.com>
-Subject: [PATCH 6.12 203/247] io_uring: dont lose a cancel as io-wq parks a request
-Date: Wed, 28 Oct 2026 18:00:06 +0100
-Message-ID: <20261028165952.227895825@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 204/247] io_uring/cancel: dont forget that the work was running
+Date: Wed, 28 Oct 2026 18:00:07 +0100
+Message-ID: <20261028165952.251476367@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -70,124 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 5cb049d2203d7a81a1c1a737c8df4575e71078e3 upstream.
+Commit 8aa0e5db4845fb5ac11abe40d7b1cac0656c3ee3 upstream.
 
-IORING_OP_FUTEX_WAIT, IORING_OP_FUTEX_WAITV and IORING_OP_WAITID don't
-block. They put the request on a list of the ring, where a wake up or a
-cancellation finds it, and return IOU_ISSUE_SKIP_COMPLETE. They do so as
-well if they are run by io-wq, e.g. because of IOSQE_ASYNC.
+If the request to be cancelled is being run by io-wq,
+io_async_cancel_one() flags the work, signals the worker and returns
+-EALREADY. Since commit ccbf726171b7 ("io_uring: perform poll removal even
+if async work removal is successful") io_try_cancel() goes on regardless,
+as poll may be armed for the request. If it isn't, and nothing else turns
+up, the result is the -ENOENT of the last search.
 
-io_wq_submit_work() looks at IO_WQ_WORK_CANCEL once, before it issues the
-request. Somebody who wants to cancel the request after that, and before
-it is on the list, finds it running:
+__io_async_cancel() makes up for that. On -ENOENT it tries the io-wq of
+every task that uses the ring, and that of the caller is one of them. So
+the work is found a second time, and the result is -EALREADY after all.
 
-  io-wq worker                          io_try_cancel()
-  io_wq_submit_work()
-    IO_WQ_WORK_CANCEL isn't set
-                                        io_async_cancel_one()
-                                          sets IO_WQ_WORK_CANCEL
-                                          signals the worker
-                                          = -EALREADY
-                                        ...
-                                        io_futex_cancel() = -ENOENT
-                                        ...
-    io_futex_wait()
-      adds the request to ->futex_list
-    = IOU_ISSUE_SKIP_COMPLETE
+Unless the worker is done with it by then. If the work is flagged before
+io_wq_submit_work() looks at IO_WQ_WORK_CANCEL, all the worker does is to
+queue the request to be failed by task work. Then it isn't anywhere to be
+found until the task work has run, and
 
-Nobody looks at the flag again. IORING_OP_ASYNC_CANCEL returns -EALREADY
-and the request stays.
+ - IORING_REGISTER_SYNC_CANCEL returns -ENOENT,
+ - IORING_OP_ASYNC_CANCEL completes with -ENOENT,
 
-It is the problem that "io_uring/poll: don't lose a cancel as io-wq arms
-poll" deals with for poll.
+for a request that they have just cancelled, and that completes with
+-ECANCELED.
 
-Look at the flag once the request is on the list, and cancel it if it is
-set. The lists are searched and the requests are added with ->uring_lock
-held, and the flag is set before the search. So either the search finds
-the request, or it came first and the flag is seen.
+With a read of an empty pipe, IOSQE_ASYNC, and a sync cancel right behind
+it, 1 to 3 of 1,000,000 calls return -ENOENT, and 50 to 110 with
+IORING_SETUP_DEFER_TASKRUN (4 CPUs, KVM). Nothing is written to the pipe,
+and all of these reads end with -ECANCELED.
 
-What the canceller is told doesn't change, see the other patch, also for
-IORING_ASYNC_CANCEL_ALL and _ANY.
+Remember that the work was found. IORING_OP_ASYNC_CANCEL completes with
+-EALREADY, as it does if the worker is a bit slower. For
+IORING_REGISTER_SYNC_CANCEL it means to try again, which ends with 0.
 
-[ 6.12: __io_futex_cancel() and __io_waitid_cancel() take the ctx as well.
-  futex_wait_setup() returns with the hash bucket locked and the futex_q
-  not queued yet, so io_futex_wait() queues it before the check, with
-  ->uring_lock still held ]
-Fixes: 194bb58c6090 ("io_uring: add support for futex wake and wait")
-Fixes: 8f350194d5cf ("io_uring: add support for vectored futex waits")
-Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
+The result of a linked timeout, which calls io_try_cancel() by itself,
+and the number that is returned for IORING_ASYNC_CANCEL_ALL and _ANY don't
+change.
+
+Fixes: ccbf726171b7 ("io_uring: perform poll removal even if async work removal is successful")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-15-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-16-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/futex.c    |    7 +++++--
- io_uring/io_uring.h |   17 +++++++++++++++++
- io_uring/waitid.c   |    2 ++
- 3 files changed, 24 insertions(+), 2 deletions(-)
+ io_uring/cancel.c |   13 ++++++++++++-
+ io_uring/cancel.h |    2 ++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/io_uring/futex.c
-+++ b/io_uring/futex.c
-@@ -307,6 +307,8 @@ int io_futexv_wait(struct io_kiocb *req,
- 		 */
- 		__set_current_state(TASK_RUNNING);
- 		hlist_add_head(&req->hash_node, &ctx->futex_list);
-+		if (io_wq_cancel_seen(req, issue_flags))
-+			__io_futex_cancel(ctx, req);
- 	} else {
- 		iof->futexv_unqueued = 1;
- 		if (woken != -1)
-@@ -348,9 +350,10 @@ int io_futex_wait(struct io_kiocb *req,
- 			       &ifd->q, &hb);
- 	if (!ret) {
- 		hlist_add_head(&req->hash_node, &ctx->futex_list);
--		io_ring_submit_unlock(ctx, issue_flags);
--
- 		futex_queue(&ifd->q, hb, NULL);
-+		if (io_wq_cancel_seen(req, issue_flags))
-+			__io_futex_cancel(ctx, req);
-+		io_ring_submit_unlock(ctx, issue_flags);
- 		return IOU_ISSUE_SKIP_COMPLETE;
- 	}
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -115,6 +115,8 @@ int io_try_cancel(struct io_uring_task *
+ 	 */
+ 	if (!ret)
+ 		return 0;
++	if (ret == -EALREADY)
++		cd->running = true;
  
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -251,6 +251,23 @@ static inline void io_ring_submit_lock(s
- 	lockdep_assert_held(&ctx->uring_lock);
+ 	ret = io_poll_cancel(ctx, cd, issue_flags);
+ 	if (ret != -ENOENT)
+@@ -171,6 +173,7 @@ static int __io_async_cancel(struct io_c
+ 	struct io_tctx_node *node;
+ 	int ret, nr = 0;
+ 
++	cd->running = false;
+ 	do {
+ 		ret = io_try_cancel(tctx, cd, issue_flags);
+ 		if (ret == -ENOENT)
+@@ -192,7 +195,15 @@ static int __io_async_cancel(struct io_c
+ 		}
+ 	}
+ 	io_ring_submit_unlock(ctx, issue_flags);
+-	return all ? nr : ret;
++	if (all)
++		return nr;
++	/*
++	 * The worker may be done with the work that was found running, and
++	 * flagged, above. That isn't the same as not having found it.
++	 */
++	if (ret == -ENOENT && cd->running)
++		ret = -EALREADY;
++	return ret;
  }
  
-+/*
-+ * For a handler that is run by io-wq and parks the request on a list where
-+ * cancellations find it, rather than completing it. Whoever tried to cancel
-+ * the request before that found it running. It has flagged the work item,
-+ * has searched the list in vain, and won't come back. To be called with
-+ * ->uring_lock held, which the search needs as well, once the request is on
-+ * the list: if the search came first, the flag is visible.
-+ */
-+static inline bool io_wq_cancel_seen(struct io_kiocb *req,
-+				     unsigned int issue_flags)
-+{
-+	lockdep_assert_held(&req->ctx->uring_lock);
-+
-+	return (issue_flags & IO_URING_F_IOWQ) &&
-+	       (atomic_read(&req->work.flags) & IO_WQ_WORK_CANCEL);
-+}
-+
- static inline void io_commit_cqring(struct io_ring_ctx *ctx)
- {
- 	/* order cqe stores with ring update */
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -375,6 +375,8 @@ int io_waitid(struct io_kiocb *req, unsi
- 		 * a waitqueue callback, or if someone cancels it.
- 		 */
- 		if (!io_waitid_drop_issue_ref(req)) {
-+			if (io_wq_cancel_seen(req, issue_flags))
-+				__io_waitid_cancel(ctx, req, true);
- 			io_ring_submit_unlock(ctx, issue_flags);
- 			return IOU_ISSUE_SKIP_COMPLETE;
- 		}
+ int io_async_cancel(struct io_kiocb *req, unsigned int issue_flags)
+--- a/io_uring/cancel.h
++++ b/io_uring/cancel.h
+@@ -11,6 +11,8 @@ struct io_cancel_data {
+ 	u8 opcode;
+ 	u32 flags;
+ 	int seq;
++	/* io_try_cancel() has found it being run by io-wq, and flagged it */
++	bool running;
+ };
+ 
+ int io_async_cancel_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
 
 
