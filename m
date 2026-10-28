@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213926;
-	b=h42eA/cEMju/SK1yoxrulHluaTpPKNh5N5+iojlrfvd/3+GTYMh9gIV+oRXp0zkzyV6o
-	 eETbk03qAK56+4bVsCyTHThJEn02Ow5lUo0PfWANZlI2pTfTAj/2VU6aL/zay7NTztZLQ
-	 I5B4IS8hDs+CJvcq/ohjKy5Tp+l63+2IDC4IStRadx5ZN7RYlpavHOZV4GVTMfA6gOHMu
-	 x37tmRrWCMdHUiTTUQGm0wIDAq0xmIA6YS2xgOQ/+dhNjXO/vRl+HJBL45yYJSc3koOeS
-	 cW5fe1oF1GgSDRb54NkH0EeEOaIIhxjn9ZPomVk8zB6f9Z5iNystY+P3rW3wX+cA8QA==
+	t=1793213928;
+	b=Y0/hSL5fT+nHxqE2b8ews6XCcVIgpqSOeNW1RCe0HkEXaP1NeBumWPLUTwkFRAfTUUry
+	 UkDh6ufeaKbjHEz8661soYkj9JZ1WI1vuyHrB6vOv6yznxx7Un7EfXR6PzmYp0IcDQwPL
+	 87lTBWYwbMt9p4TWgNv8hgDZizmUtwAs32EAarL6uoxZmBSjwUK1LK67oHrIO9RrPAJIV
+	 5KEuYgA3EmnkljvAtPsVr9x1f/hFCzN5mB/Rc/Sv3oMNVig5T+r0y394I8EXtZfJq39yl
+	 J5nVWtIYjlXjfGpemtUwyVqxftIGz9gMI/Yurd1t9r3kClj9UZmZNTNVTysMttJildw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213926;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xi/IVSoB6jqIl0SyRRTCiGJmDicgQWVJYmMG4IMtf8o=;
-	b=0osnWz1FWBMx88V3Cu26OjtUBYXVcth0YiU9B4SdNqIR0VikvbCyXlNM9SXQCChn7vvL
-	 Q8QTVGtNW0GDnPo4fS2KgqXHeVcxoZitJOxA3DO6XtC16uC1izeOFhWVkqwuGs3X/XEKc
-	 W/AsPVxC89iA6I0INdC5Af/iA+niBUpd9RLYqPIh5S9Q60SaXe0LHQp4Rn3+RCG7Cf4Qt
-	 tBknESIQGqvEGiOoG5e18wkCzWdMpxTj6Nc47FRQ0sYj6roOruMe/xjH8mN18nWMwudPK
-	 23a7/71gjkvFgrWhqf0EhqMyG7ND60INSr3ktxO3QaynSdp+dUfZCIQbT0vgKLbwyKQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=T1IjRyUtizqlaczNpEsHHETjxSA3EYznVzEKsBTewIU=;
+	b=zCksuAPd/54JlmmGgfY7qV5Fhx8kPnxrFp0C4NMl98yyhqpdBIwLpNzmmqvBFfl31LR7
+	 AZ4/6fgRan75LvWhZn+NZNSrQFEoOVI0y3nxf4ru7M2Tj4yey5K0TlbJ1ldHnDb65mrbs
+	 1Gaf2VtYQAWkBFQ/8JR3xOrsLs+05LuZVhjz2E4XVwjl89/YNcXARw2BrWo3zTFl3RRz+
+	 9WsXL3fs2Cd2cEiErxh+DYsywWgBHgkBkq7v0o1sOgXUWIgUEAUgeC4dyaYg/kyatbUp6
+	 902Ukw4ojilJx5onjymPkAvyCzyyUzaIGbbM6i3k2efAR76HifSeZqMMr9cAq6pJK1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RmVjt02T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cMiHqUyR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0468C606A31A;
-	Wed, 28 Oct 2026 18:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B01D606A31E;
+	Wed, 28 Oct 2026 18:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RmVjt02T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162E71F01825;
-	Wed, 28 Oct 2026 18:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cMiHqUyR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE641F01825;
+	Wed, 28 Oct 2026 18:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213925;
-	bh=Xi/IVSoB6jqIl0SyRRTCiGJmDicgQWVJYmMG4IMtf8o=;
+	s=korg; t=1793213928;
+	bh=T1IjRyUtizqlaczNpEsHHETjxSA3EYznVzEKsBTewIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RmVjt02T+939RdOaPqVo4s7d/DqS1TqLsKahyAmYYod956On0jQVDMJAk9GGh47VP
-	 tMm6cWUbynFXamy+2Iji5K/I8qiiwQMeiC2a0oOWq6uEbz5DvjY+nI6xJoqDaLKbwR
-	 ulMytco5lEVP7YtC38yWPkMTgIO8yjEci09OayhA=
+	b=cMiHqUyRpJcc2klGAID12TL3/tKdc1Jy61oT/mXkYaelDB7D1lXxCjMKONKJe75Rd
+	 LfNej8TPvXrBEgDBnj4ZNihSp64GrabN4XEQ9RJ1Df0T9WztbkvKAU7YxOUQTvGTGj
+	 /nJmzI5zipW8+WTqgs6MBGUCQkDq0nhjLdPSGzs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0679/1887] cxl/port: Fix use-after-free, permit out-of-order decoder shutdown
-Date: Wed, 28 Oct 2026 17:46:15 +0100
-Message-ID: <20261028170514.862431679@linuxfoundation.org>
+Subject: [PATCH 6.1 0680/1887] ksmbd: check outstanding simultaneous SMB operations
+Date: Wed, 28 Oct 2026 17:46:16 +0100
+Message-ID: <20261028170514.886620743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,368 +63,152 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 101c268bd2f37e965a5468353e62d154db38838e ]
+[ Upstream commit 0a77d947f599b1f39065015bec99390d0c0022ee ]
 
-In support of investigating an initialization failure report [1],
-cxl_test was updated to register mock memory-devices after the mock
-root-port/bus device had been registered. That led to cxl_test crashing
-with a use-after-free bug with the following signature:
+If Client send simultaneous SMB operations to ksmbd, It exhausts too much
+memory through the "ksmbd_work_cache”. It will cause OOM issue.
+ksmbd has a credit mechanism but it can't handle this problem. This patch
+add the check if it exceeds max credits to prevent this problem by assuming
+that one smb request consumes at least one credit.
 
-    cxl_port_attach_region: cxl region3: cxl_host_bridge.0:port3 decoder3.0 add: mem0:decoder7.0 @ 0 next: cxl_switch_uport.0 nr_eps: 1 nr_targets: 1
-    cxl_port_attach_region: cxl region3: cxl_host_bridge.0:port3 decoder3.0 add: mem4:decoder14.0 @ 1 next: cxl_switch_uport.0 nr_eps: 2 nr_targets: 1
-    cxl_port_setup_targets: cxl region3: cxl_switch_uport.0:port6 target[0] = cxl_switch_dport.0 for mem0:decoder7.0 @ 0
-1)  cxl_port_setup_targets: cxl region3: cxl_switch_uport.0:port6 target[1] = cxl_switch_dport.4 for mem4:decoder14.0 @ 1
-    [..]
-    cxld_unregister: cxl decoder14.0:
-    cxl_region_decode_reset: cxl_region region3:
-    mock_decoder_reset: cxl_port port3: decoder3.0 reset
-2)  mock_decoder_reset: cxl_port port3: decoder3.0: out of order reset, expected decoder3.1
-    cxl_endpoint_decoder_release: cxl decoder14.0:
-    [..]
-    cxld_unregister: cxl decoder7.0:
-3)  cxl_region_decode_reset: cxl_region region3:
-    Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6bc3: 0000 [#1] PREEMPT SMP PTI
-    [..]
-    RIP: 0010:to_cxl_port+0x8/0x60 [cxl_core]
-    [..]
-    Call Trace:
-     <TASK>
-     cxl_region_decode_reset+0x69/0x190 [cxl_core]
-     cxl_region_detach+0xe8/0x210 [cxl_core]
-     cxl_decoder_kill_region+0x27/0x40 [cxl_core]
-     cxld_unregister+0x5d/0x60 [cxl_core]
-
-At 1) a region has been established with 2 endpoint decoders (7.0 and
-14.0). Those endpoints share a common switch-decoder in the topology
-(3.0). At teardown, 2), decoder14.0 is the first to be removed and hits
-the "out of order reset case" in the switch decoder. The effect though
-is that region3 cleanup is aborted leaving it in-tact and
-referencing decoder14.0. At 3) the second attempt to teardown region3
-trips over the stale decoder14.0 object which has long since been
-deleted.
-
-The fix here is to recognize that the CXL specification places no
-mandate on in-order shutdown of switch-decoders, the driver enforces
-in-order allocation, and hardware enforces in-order commit. So, rather
-than fail and leave objects dangling, always remove them.
-
-In support of making cxl_region_decode_reset() always succeed,
-cxl_region_invalidate_memregion() failures are turned into warnings.
-Crashing the kernel is ok there since system integrity is at risk if
-caches cannot be managed around physical address mutation events like
-CXL region destruction.
-
-A new device_for_each_child_reverse_from() is added to cleanup
-port->commit_end after all dependent decoders have been disabled. In
-other words if decoders are allocated 0->1->2 and disabled 1->2->0 then
-port->commit_end only decrements from 2 after 2 has been disabled, and
-it decrements all the way to zero since 1 was disabled previously.
-
-Link: http://lore.kernel.org/20241004212504.1246-1-gourry@gourry.net [1]
-Cc: stable@vger.kernel.org
-Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Alison Schofield <alison.schofield@intel.com>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Cc: Zijun Hu <quic_zijuhu@quicinc.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/172964782781.81806.17902885593105284330.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Cc: stable@vger.kernel.org # v5.15+
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c          | 35 ++++++++++++++++++++++++++
- drivers/cxl/core/hdm.c       | 48 ++++++++++++++++++++++++++++++------
- drivers/cxl/core/region.c    | 29 ++++++----------------
- drivers/cxl/cxl.h            |  3 ++-
- include/linux/device.h       |  3 +++
- tools/testing/cxl/test/cxl.c | 14 ++++-------
- 6 files changed, 93 insertions(+), 39 deletions(-)
+ fs/smb/server/connection.c |  1 +
+ fs/smb/server/connection.h |  1 +
+ fs/smb/server/server.c     | 16 ++++++++++------
+ fs/smb/server/smb_common.c | 10 +++++++---
+ fs/smb/server/smb_common.h |  2 +-
+ 5 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 00737fc051575..6427d8e43347b 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -4076,6 +4076,41 @@ int device_for_each_child_reverse(struct device *parent, void *data,
- }
- EXPORT_SYMBOL_GPL(device_for_each_child_reverse);
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 0d27651aa4cc5..d99e1343955a3 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -115,6 +115,7 @@ struct ksmbd_conn *ksmbd_conn_alloc(void)
+ 	atomic_set(&conn->req_running, 0);
+ 	atomic_set(&conn->r_count, 0);
+ 	atomic_set(&conn->refcnt, 1);
++	atomic_set(&conn->mux_smb_requests, 0);
+ 	conn->total_credits = 1;
+ 	conn->outstanding_credits = 0;
  
-+/**
-+ * device_for_each_child_reverse_from - device child iterator in reversed order.
-+ * @parent: parent struct device.
-+ * @from: optional starting point in child list
-+ * @fn: function to be called for each device.
-+ * @data: data for the callback.
-+ *
-+ * Iterate over @parent's child devices, starting at @from, and call @fn
-+ * for each, passing it @data. This helper is identical to
-+ * device_for_each_child_reverse() when @from is NULL.
-+ *
-+ * @fn is checked each iteration. If it returns anything other than 0,
-+ * iteration stop and that value is returned to the caller of
-+ * device_for_each_child_reverse_from();
-+ */
-+int device_for_each_child_reverse_from(struct device *parent,
-+				       struct device *from, const void *data,
-+				       int (*fn)(struct device *, const void *))
-+{
-+	struct klist_iter i;
-+	struct device *child;
-+	int error = 0;
-+
-+	if (!parent->p)
-+		return 0;
-+
-+	klist_iter_init_node(&parent->p->klist_children, &i,
-+			     (from ? &from->p->knode_parent : NULL));
-+	while ((child = prev_device(&i)) && !error)
-+		error = fn(child, data);
-+	klist_iter_exit(&i);
-+	return error;
-+}
-+EXPORT_SYMBOL_GPL(device_for_each_child_reverse_from);
-+
- /**
-  * device_find_child - device iterator for locating a particular device.
-  * @parent: parent struct device
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index 7d48f5a575ceb..580cf7834cf11 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -641,7 +641,42 @@ static int cxl_decoder_commit(struct cxl_decoder *cxld)
- 	return 0;
- }
- 
--static int cxl_decoder_reset(struct cxl_decoder *cxld)
-+static int commit_reap(struct device *dev, const void *data)
-+{
-+	struct cxl_port *port = to_cxl_port(dev->parent);
-+	struct cxl_decoder *cxld;
-+
-+	if (!is_switch_decoder(dev) && !is_endpoint_decoder(dev))
-+		return 0;
-+
-+	cxld = to_cxl_decoder(dev);
-+	if (port->commit_end == cxld->id &&
-+	    ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)) {
-+		port->commit_end--;
-+		dev_dbg(&port->dev, "reap: %s commit_end: %d\n",
-+			dev_name(&cxld->dev), port->commit_end);
-+	}
-+
-+	return 0;
-+}
-+
-+void cxl_port_commit_reap(struct cxl_decoder *cxld)
-+{
-+	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
-+
-+	/*
-+	 * Once the highest committed decoder is disabled, free any other
-+	 * decoders that were pinned allocated by out-of-order release.
-+	 */
-+	port->commit_end--;
-+	dev_dbg(&port->dev, "reap: %s commit_end: %d\n", dev_name(&cxld->dev),
-+		port->commit_end);
-+	device_for_each_child_reverse_from(&port->dev, &cxld->dev, NULL,
-+					   commit_reap);
-+}
-+EXPORT_SYMBOL_NS_GPL(cxl_port_commit_reap, CXL);
-+
-+static void cxl_decoder_reset(struct cxl_decoder *cxld)
- {
- 	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
- 	struct cxl_hdm *cxlhdm = dev_get_drvdata(&port->dev);
-@@ -650,14 +685,14 @@ static int cxl_decoder_reset(struct cxl_decoder *cxld)
- 	u32 ctrl;
- 
- 	if ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)
--		return 0;
-+		return;
- 
--	if (port->commit_end != id) {
-+	if (port->commit_end == id)
-+		cxl_port_commit_reap(cxld);
-+	else
- 		dev_dbg(&port->dev,
- 			"%s: out of order reset, expected decoder%d.%d\n",
- 			dev_name(&cxld->dev), port->id, port->commit_end);
--		return -EBUSY;
--	}
- 
- 	down_read(&cxl_dpa_rwsem);
- 	ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(id));
-@@ -670,10 +705,7 @@ static int cxl_decoder_reset(struct cxl_decoder *cxld)
- 	writel(0, hdm + CXL_HDM_DECODER0_BASE_LOW_OFFSET(id));
- 	up_read(&cxl_dpa_rwsem);
- 
--	port->commit_end--;
- 	cxld->flags &= ~CXL_DECODER_F_ENABLE;
--
--	return 0;
- }
- 
- static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 0e03c4908050b..cd53738a628de 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -121,7 +121,7 @@ static struct cxl_region_ref *cxl_rr_load(struct cxl_port *port,
- 	return xa_load(&port->regions, (unsigned long)cxlr);
- }
- 
--static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
-+static void cxl_region_decode_reset(struct cxl_region *cxlr, int count)
- {
- 	struct cxl_region_params *p = &cxlr->params;
- 	int i;
-@@ -131,7 +131,6 @@ static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
- 		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
- 		struct cxl_port *iter = cxled_to_port(cxled);
- 		struct cxl_ep *ep;
--		int rc = 0;
- 
- 		while (!is_cxl_root(to_cxl_port(iter->dev.parent)))
- 			iter = to_cxl_port(iter->dev.parent);
-@@ -144,17 +143,11 @@ static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
- 			cxl_rr = cxl_rr_load(iter, cxlr);
- 			cxld = cxl_rr->decoder;
- 			if (cxld->reset)
--				rc = cxld->reset(cxld);
--			if (rc)
--				return rc;
-+				cxld->reset(cxld);
- 		}
- 
--		rc = cxled->cxld.reset(&cxled->cxld);
--		if (rc)
--			return rc;
-+		cxled->cxld.reset(&cxled->cxld);
- 	}
--
--	return 0;
- }
- 
- static int cxl_region_decode_commit(struct cxl_region *cxlr)
-@@ -244,8 +237,10 @@ static ssize_t commit_store(struct device *dev, struct device_attribute *attr,
- 		 * The lock was dropped, so need to revalidate that the reset is
- 		 * still pending.
- 		 */
--		if (p->state == CXL_CONFIG_RESET_PENDING)
--			rc = cxl_region_decode_reset(cxlr, p->interleave_ways);
-+		if (p->state == CXL_CONFIG_RESET_PENDING) {
-+			cxl_region_decode_reset(cxlr, p->interleave_ways);
-+			p->state = CXL_CONFIG_ACTIVE;
-+		}
- 	}
- 
- 	if (rc)
-@@ -253,8 +248,6 @@ static ssize_t commit_store(struct device *dev, struct device_attribute *attr,
- 
- 	if (commit)
- 		p->state = CXL_CONFIG_COMMIT;
--	else if (p->state == CXL_CONFIG_RESET_PENDING)
--		p->state = CXL_CONFIG_ACTIVE;
- 
- out:
- 	up_write(&cxl_region_rwsem);
-@@ -1393,13 +1386,7 @@ static int cxl_region_detach(struct cxl_endpoint_decoder *cxled)
- 	get_device(&cxlr->dev);
- 
- 	if (p->state > CXL_CONFIG_ACTIVE) {
--		/*
--		 * TODO: tear down all impacted regions if a device is
--		 * removed out of order
--		 */
--		rc = cxl_region_decode_reset(cxlr, p->interleave_ways);
--		if (rc)
--			goto out;
-+		cxl_region_decode_reset(cxlr, p->interleave_ways);
- 		p->state = CXL_CONFIG_ACTIVE;
- 	}
- 
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 827fa94cddda1..0f3568071966d 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -273,7 +273,7 @@ struct cxl_decoder {
- 	struct cxl_region *region;
- 	unsigned long flags;
- 	int (*commit)(struct cxl_decoder *cxld);
--	int (*reset)(struct cxl_decoder *cxld);
-+	void (*reset)(struct cxl_decoder *cxld);
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index d01f137223b42..a38e264889eea 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -113,6 +113,7 @@ struct ksmbd_conn {
+ 	__le16				signing_algorithm;
+ 	bool				binding;
+ 	atomic_t			refcnt;
++	atomic_t			mux_smb_requests;
  };
  
- /*
-@@ -555,6 +555,7 @@ static inline bool is_cxl_root(struct cxl_port *port)
+ struct ksmbd_conn_ops {
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index a5e9bb40e2191..a61488b6b5904 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -290,6 +290,7 @@ static void handle_ksmbd_work(struct work_struct *wk)
  
- bool is_cxl_port(struct device *dev);
- struct cxl_port *to_cxl_port(struct device *dev);
-+void cxl_port_commit_reap(struct cxl_decoder *cxld);
- struct pci_bus;
- int devm_cxl_register_pci_bus(struct device *host, struct device *uport,
- 			      struct pci_bus *bus);
-diff --git a/include/linux/device.h b/include/linux/device.h
-index eae657af3a0e5..0e83be1bccc44 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -957,6 +957,9 @@ int device_for_each_child(struct device *dev, void *data,
- 			  int (*fn)(struct device *dev, void *data));
- int device_for_each_child_reverse(struct device *dev, void *data,
- 				  int (*fn)(struct device *dev, void *data));
-+int device_for_each_child_reverse_from(struct device *parent,
-+				       struct device *from, const void *data,
-+				       int (*fn)(struct device *, const void *));
- struct device *device_find_child(struct device *dev, void *data,
- 				 int (*match)(struct device *dev, void *data));
- struct device *device_find_child_by_name(struct device *parent,
-diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
-index 7be8bc4e4500e..37bd29e555903 100644
---- a/tools/testing/cxl/test/cxl.c
-+++ b/tools/testing/cxl/test/cxl.c
-@@ -533,26 +533,22 @@ static int mock_decoder_commit(struct cxl_decoder *cxld)
+ 	ksmbd_conn_try_dequeue_request(work);
+ 	ksmbd_free_work_struct(work);
++	atomic_dec(&conn->mux_smb_requests);
+ 	/*
+ 	 * Checking waitqueue to dropping pending requests on
+ 	 * disconnection. waitqueue_active is safe because it
+@@ -311,6 +312,15 @@ static int queue_ksmbd_work(struct ksmbd_conn *conn)
+ 	struct ksmbd_work *work;
+ 	int err;
+ 
++	err = ksmbd_init_smb_server(conn);
++	if (err)
++		return 0;
++
++	if (atomic_inc_return(&conn->mux_smb_requests) >= conn->vals->max_credits) {
++		atomic_dec_return(&conn->mux_smb_requests);
++		return -ENOSPC;
++	}
++
+ 	work = ksmbd_alloc_work_struct();
+ 	if (!work) {
+ 		pr_err("allocation for work failed\n");
+@@ -321,12 +331,6 @@ static int queue_ksmbd_work(struct ksmbd_conn *conn)
+ 	work->request_buf = conn->request_buf;
+ 	conn->request_buf = NULL;
+ 
+-	err = ksmbd_init_smb_server(work);
+-	if (err) {
+-		ksmbd_free_work_struct(work);
+-		return 0;
+-	}
+-
+ 	ksmbd_conn_enqueue_request(work);
+ 	atomic_inc(&conn->r_count);
+ 	/* update activity on connection */
+diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
+index bcecbd67189ad..0350697c9093b 100644
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -388,6 +388,10 @@ static struct smb_version_ops smb1_server_ops = {
+ 	.set_rsp_status = set_smb1_rsp_status,
+ };
+ 
++static struct smb_version_values smb1_server_values = {
++	.max_credits = SMB2_MAX_CREDITS,
++};
++
+ static int smb1_negotiate(struct ksmbd_work *work)
+ {
+ 	return ksmbd_smb_negotiate_common(work, SMB_COM_NEGOTIATE);
+@@ -399,18 +403,18 @@ static struct smb_version_cmds smb1_server_cmds[1] = {
+ 
+ static int init_smb1_server(struct ksmbd_conn *conn)
+ {
++	conn->vals = &smb1_server_values;
+ 	conn->ops = &smb1_server_ops;
+ 	conn->cmds = smb1_server_cmds;
+ 	conn->max_cmds = ARRAY_SIZE(smb1_server_cmds);
  	return 0;
  }
  
--static int mock_decoder_reset(struct cxl_decoder *cxld)
-+static void mock_decoder_reset(struct cxl_decoder *cxld)
+-int ksmbd_init_smb_server(struct ksmbd_work *work)
++int ksmbd_init_smb_server(struct ksmbd_conn *conn)
  {
- 	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
- 	int id = cxld->id;
+-	struct ksmbd_conn *conn = work->conn;
+ 	__le32 proto;
  
- 	if ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)
--		return 0;
-+		return;
+-	proto = *(__le32 *)((struct smb_hdr *)work->request_buf)->Protocol;
++	proto = *(__le32 *)((struct smb_hdr *)conn->request_buf)->Protocol;
+ 	if (conn->need_neg == false) {
+ 		if (proto == SMB1_PROTO_NUMBER)
+ 			return -EINVAL;
+diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
+index d4291834b04f1..75de404a9efcc 100644
+--- a/fs/smb/server/smb_common.h
++++ b/fs/smb/server/smb_common.h
+@@ -391,7 +391,7 @@ bool ksmbd_smb_request(struct ksmbd_conn *conn);
  
- 	dev_dbg(&port->dev, "%s reset\n", dev_name(&cxld->dev));
--	if (port->commit_end != id) {
-+	if (port->commit_end == id)
-+		cxl_port_commit_reap(cxld);
-+	else
- 		dev_dbg(&port->dev,
- 			"%s: out of order reset, expected decoder%d.%d\n",
- 			dev_name(&cxld->dev), port->id, port->commit_end);
--		return -EBUSY;
--	}
--
--	port->commit_end--;
- 	cxld->flags &= ~CXL_DECODER_F_ENABLE;
--
--	return 0;
- }
+ int ksmbd_lookup_dialect_by_id(__le16 *cli_dialects, __le16 dialects_count);
  
- static void default_mock_decoder(struct cxl_decoder *cxld)
+-int ksmbd_init_smb_server(struct ksmbd_work *work);
++int ksmbd_init_smb_server(struct ksmbd_conn *conn);
+ 
+ struct ksmbd_kstat;
+ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work,
 -- 
 2.53.0
 
