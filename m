@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216291;
-	b=nozX4PgsQF+z/Wj5uGtzIgkHNMEPPD74KvVO1arg00rO1q84kWjGZhJ24O4tj3BeNv/b
-	 T5T5mCtSxJntZy+M/lzzpNahVhOq+1Ix9k2mcYS2q2cLD7PlrOsNZgrQordF7CBMXVjtG
-	 jBYZI5k1Oft/ZeZUUWzzNwI0TzVRbeozpRDFkOX2BS5H5t3sgMoaxd3vmxviIwh5FpWkQ
-	 cbY2MAzfty5pWpMvEduLkwV02zwtv58VmcmDNc95tSHUP5kBdsCoqgbL/jwYwPyyGwzyh
-	 yJ0qiPUE6c6jxuQek6qpFsEQBGS7WfeJ2A/+QrK4CG3UkOE66kN27sqpbXUyR3wHD1w==
+	t=1793216294;
+	b=Y1QASvprC3Ijjaj4nPRe7MHzCLbORJBgqvOnw1sjqR34YmcQS+4JJ2y/ExzFDc1TehE7
+	 mkTOFMnWxsBGaFuDLY5oeeWdNvU5JU9DN2y/0RXW7gQ66WlTS1nvTXkyj8jPTWXECM5Ep
+	 J2b9bqWU1fIwFTtt56MsK7+3sh8vtD4ObydB4pKHBh04R9DE1PaYSwx2K2Ost7lrddLIb
+	 wfKMGr2wJ7oYU/YgREYcuy+ZNIqgML3freZ+PSGd/1Gy3jtvJ7RgKuRyxB1/I0vVU6uwy
+	 Lj4Fzmct/X89QflOmWF5dq5SXLi52E3iowocZreGtQau1e4pGOHR65OZwOQ8XIV7qlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216294;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=unNoqfNuHciDPiPTn9m5yHDDRLbILKw8asRCcUBVfUo=;
-	b=RLT2DjtiYJTEHv7vs1d7Mt45rs6OgWkX/n1qfw+fO3NzaoYDh7V/Yqz9VB+9bMCa9hZD
-	 TC7a80T7bb1Esz2Fc0H1Q6RWaH7X5XiajCQnFHLBVQYxjEfWZvIZRnNB/QK/tRmS+ishj
-	 Xu8xHfbTeHWBEU1d6u0tRZ7j8Qt58bPaqkW5/qzrNEJq0NsN1fVSQYHkG8aBZfIiq/WFi
-	 IgkkUnxY62NZEgCBPl9by+oPSGEY4gulsgkxqq9LEOfqImOiDPSwkpYM9tfdeoi69ugFK
-	 Q1BhjoYO15l5fZsctkQ8Ep07iFaJKC6V2AKM79ASRE0B7TdaXWEVanA0bwHbkOgOW9Q==
+	bh=uIH5bxeYZ8+JGkQobI4+++58Id1xLqyurBIj2IVkN+A=;
+	b=WCiuO2ww7+SiSKHzabjqB0lyIyTh2h7QJldFWYZ4FA9yxEl3svM9t37BQpDu4Y1mIsLl
+	 OJk7pMv1LrY1vrH5dDlTusTwj1dPA5FKQTRxUeqVgUzx38hGKFpKIzghJBMk2/xYbh73O
+	 PiDTU6S7IiUS1vQIk6m4ZUY2+XHm9yecl8k5TEhfgjtm0gWcZ0YLL1kNHdnjZO8BEGl7C
+	 vXXAovmnhwfNKrL0YKdFXHBEafjtOVULuMU/znDJwN9O370Ub9M0v5j/LssN6usPHki0y
+	 +9oO/DKKDs7FihgrCmHcbrCBW8nZe4C0laD9BKvkGXj6LDPZUwEMFHqjacPr2YDYTog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K5YmgrN7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4IFYCTz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092B5606A31E;
-	Wed, 28 Oct 2026 19:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E7B60A2601;
+	Wed, 28 Oct 2026 19:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K5YmgrN7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C7F1F01825;
-	Wed, 28 Oct 2026 19:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4IFYCTz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C2A1F01829;
+	Wed, 28 Oct 2026 19:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216290;
-	bh=unNoqfNuHciDPiPTn9m5yHDDRLbILKw8asRCcUBVfUo=;
+	s=korg; t=1793216293;
+	bh=uIH5bxeYZ8+JGkQobI4+++58Id1xLqyurBIj2IVkN+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K5YmgrN76Kw+M9XdzBiPruDnxXIg1Y9hxikwUNzp1EFzx5EoXIt9GgCC/cP2suiFz
-	 BPsliA8SkAoIBwajy0ZjzExEkjltI2YQBRgguzd/SGCk9yVu75Q5ogs3gCWMX0gRTA
-	 JwSz7wzUwQabwZhvndFFVsofPMKDEMbqWsBXXsYs=
+	b=q4IFYCTz55im46PsNZx+t+L8Q6+2K72MkwrAYx6Mf0331Y0b0cSSJfyQdvXYDrHe3
+	 X0UGudsQ9y2UB/QHKiBGNe0TSYMFEyfmM9kIyKtH5MOh+I0umf4BMWZud5+HjcMzsm
+	 YIYTKcFn3HtnKZdglQc1XnSnVBYrQzm+et4sTmN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	sashiko-bot@kernel.org,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1463/1887] s390/vfio_ccw: Ensure first IDAW remains constant
-Date: Wed, 28 Oct 2026 17:59:19 +0100
-Message-ID: <20261028170532.749238720@linuxfoundation.org>
+Subject: [PATCH 6.1 1464/1887] HID: nintendo: register input device after capabilities are set
+Date: Wed, 28 Oct 2026 17:59:20 +0100
+Message-ID: <20261028170532.771154054@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,45 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 565bef268d75bf7df665bce6923a88cd0eb74592 ]
+[ Upstream commit d723bc1fe2e72b9252234e94c11af644ec477bf7 ]
 
-The first IDAW in a list does not need to be on a 2K/4K boundary
-like all others, and so is read separately to accurately calculate
-the size of the buffer needed to read the full IDAL.
+input_register_device() exposes the device to userspace immediately.
+In joycon_input_create() it was called before joycon_config_rumble()
+configures the FF_RUMBLE capability and the memless force-feedback
+device, so a concurrent EVIOCSFF could dereference a NULL dev->ff.
 
-Verify that the address found in the first IDAW is unchanged between
-reads, to ensure a consistent set of IDAWs being worked with.
+Registering early also means the initial udev event lacks button and
+axis information, which can make input managers ignore the device.
 
-Fixes: 01aa26c672c0 ("s390/cio: Combine direct and indirect CCW paths")
+Move input_register_device() to the end of joycon_input_create(), after
+all capabilities, the IMU input device and the force-feedback callbacks
+have been configured.
+
+Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Link: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/hid-nintendo.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/s390/cio/vfio_ccw_cp.c b/drivers/s390/cio/vfio_ccw_cp.c
-index 3a234cd20cfb0..96e8d5eb2a9f6 100644
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -617,6 +617,13 @@ static int ccwchain_fetch_direct(struct ccwchain *chain,
- 		if (ret)
- 			goto out_unpin;
+diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+index 7a1bb4c876659..6a57681fe123e 100644
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -1719,10 +1719,6 @@ static int joycon_input_create(struct joycon_ctlr *ctlr)
+ 	ctlr->rumble_msecs = jiffies_to_msecs(jiffies);
+ #endif
  
-+		/* Unexpected mismatch from earlier read */
-+		if (idaws[0] != iova) {
-+			pa->pa_nr = 0;
-+			ret = -EINVAL;
-+			goto out_unpin;
-+		}
+-	ret = input_register_device(ctlr->input);
+-	if (ret)
+-		return ret;
+-
+ 	/* configure the imu input device */
+ 	ctlr->imu_input = devm_input_allocate_device(&hdev->dev);
+ 	if (!ctlr->imu_input)
+@@ -1773,6 +1769,10 @@ static int joycon_input_create(struct joycon_ctlr *ctlr)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = input_register_device(ctlr->input);
++	if (ret)
++		return ret;
 +
- 		/*
- 		 * Copy guest IDAWs into page_array, in case the memory they
- 		 * occupy is not contiguous.
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
