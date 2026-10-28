@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211137;
-	b=Azwm+Qg3i1VhT0VpRMYncP3RFubx3jccKnxAJh0K2OyQFuTa3eST3mbtwmr13Q0oHZti
-	 0oSkw6FOVEycsiTGdfVtJ4qbVAnhvUbE7KhJhFmun7gnsVC5ho/7jot8HWgUuu/8YQVXI
-	 nH8/wVc6kDLdvHCLzzdyLA6I2d040uzBlFu9UIlJeJcjxRFUn3RFaTyUsagH02Bh8IZB6
-	 GI7eFPrlWovVhyVl7KWXd3kctd+sVBf7UWCJNWnijWzp4N5yqvWyo7wYOdkQHhA+7DDEz
-	 4tATxKK08SqVO6rBx5ijB+OlXbW7FC8F3THsGGpint0ZSpSw62asup+pyn0qiVs324Q==
+	t=1793211140;
+	b=RbNztLvO6vxl+uUritTDDT+RfFbEEBJp9AKOO+/odU27BdSNZnyLbWQeWp3yAR8iXtkk
+	 uPppmQMt+rWTFJC7takLcThqnKsk7fdU7+PwI39nxaxqsUoGhFAsA3ZzDcqnGuD9EaMGw
+	 pImdQjWmHiqJbGf0RfwDGcU9aL+GS/+98Ge5XFeknpYoBcPARLSBhrQTJX3kS7gE30T9v
+	 ZPF9Oisv/zWLtFhiKMGIjXmjLEXaNJYjMwqH1yeVr2Tgez6phe74g/hHNyazy3ENGriVc
+	 NlGVQTTIiuDBbmImJ8akiniLpV6Aw7aKg/HVItVeGR2cfBKUQSAos2hD0DQdKpcmE2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211137;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pLWu6pvfQCr9139WMpnyaLEMDIfFC7YP5hSS10KHWA0=;
-	b=I1+7xopWxtxyabfXuX4ZR8J8xP3cf2thItxid8Ep5ZiA+s5+kiiaGkoKUqJdyted5U5I
-	 C0VbemsDzrHK7NQ9jpxAnRfPhdM1DjNV/6DqCuXG0xNdLq8p8twKvjlsMYk+bzxyXRWl+
-	 HFoxm/DuGvBmYLmAOkeu4Haa/inLDLQA7N57IyKzFbwsPuMvIhjGBqToS66XjUK1aAx6+
-	 fwb/tso4lJ8uMSafP0kBE9CA1qi8e/05Q4FuFwydfi7v4YSPkgBYYnXGKspi52hSj32xp
-	 L0kXbwOV+ZeLyb0fONtBucYn6NDt3cPR/7u1UkQ7TaC8WYtZaktcCxAjDQ8rmAQkw0A==
+	bh=BQG6w4cWXXT+sy6d3xdm/vKGHBRWUI0a5Ww++d9Zcfc=;
+	b=txiVPK41UhrjY0paXbxUNNfFJH/53/sSeeT94WiMjzw0kJ5pZALL2Yh6LTUweg2zdCeQ
+	 1vyP4MMy5zHlOU8tZE4eHXmYuDbQvSlUGPomST9IsVS2bfD2+rQ2SC0sgVgQd6YNYe/xn
+	 8eumEV92fLpgDMdvTibxYdzzyrXmo24T1nYDCFZEp5ArRavnsyk9IGPWRJAZk137HCNXu
+	 Fi8r/Xv7yUhrF/rMBQVODPtHuVDJvzSdKbf+hNhFygUIlE2w5EPDVUBx0ZYGkbHT/C0GP
+	 S1oCXN+56ZMtgxxl61LMvuCNdBb7xVTPQqasXWO/wOyte2xcZp3CZ7ct2ta0mkoJHTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MtrBNf7S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CTBwXdN5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794C5606A961;
-	Wed, 28 Oct 2026 18:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617D2606A96C;
+	Wed, 28 Oct 2026 18:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MtrBNf7S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB521F01828;
-	Wed, 28 Oct 2026 18:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CTBwXdN5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04211F01825;
+	Wed, 28 Oct 2026 18:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211137;
-	bh=pLWu6pvfQCr9139WMpnyaLEMDIfFC7YP5hSS10KHWA0=;
+	s=korg; t=1793211140;
+	bh=BQG6w4cWXXT+sy6d3xdm/vKGHBRWUI0a5Ww++d9Zcfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MtrBNf7Sm/xVDe49EvzBcGunkHHJqTuW9R1BZXoAgLlVPThH7u4k1cQFMIHzcQa49
-	 z0eLnCPwCBds+rVV5In53JhTmXOo9RhlnS7sV6nIyPFBgMbQilt4o5Hd1RoqEILsIV
-	 4ITv0dJsFSNuSlQ5x3EiB4ncxqkaOMjJ3vMwl+14=
+	b=CTBwXdN5LtSmgBZMjtTJqWY7Xymoc+2ZByVVh2r1KLq2/wgCMTQFKK2R52h3eUqSi
+	 eX56b4LyJDX+ksAi0zKDo8NhwP4hu6wjAIz6oK5lpTIeKJWclA3qe2oA6bfJhVQInk
+	 Z0w4liTK6MT1VIxoB2QIXDL/HFBmr6GcFhmI5jFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 228/571] Bluetooth: btintel: fix buffer over-read in btintel_hw_error()
-Date: Wed, 28 Oct 2026 17:56:15 +0100
-Message-ID: <20261028170013.414132432@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Julian Anastasov <ja@ssi.bg>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 229/571] ipvs: bound LBLCR and LBLC cache growth
+Date: Wed, 28 Oct 2026 17:56:16 +0100
+Message-ID: <20261028170013.437359743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,36 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 40eb4b18ad167b63644c27fa67a7400ba050379a upstream.
+[ Upstream commit 2a3c3de660f96865f303fd25f1285f2ffbfd521d ]
 
-The "Exception info %s" print uses skb->data + 1, but the 12-byte
-payload is not guaranteed to be NUL-terminated and can be read past
-its end.
+ip_vs_lblcr_new() and ip_vs_lblc_new() create cache entries for
+every previously unseen destination address. The table max_size only
+tells the periodic collector to reclaim entries after the cache has
+already exceeded the limit. It does not reclaim entries that the
+attacker continues to use.
 
-Bound the print with "%.*s" and skb->len - 1.
+Reject new cache entries once either table reaches max_size * 3 / 2.
+The extra headroom lets the periodic collector catch up while the
+existing scheduler fallback continues to use the selected destination
+when cache creation fails. New traffic therefore stays serviceable
+without growing the tables further.
 
-Fixes: 973bb97e5aee ("Bluetooth: btintel: Add generic function for handling hardware errors")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ sashal: Retained kmalloc() instead of kmalloc_obj(). ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_lblc.c  | 3 +++
+ net/netfilter/ipvs/ip_vs_lblcr.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -246,7 +246,8 @@ static void btintel_hw_error(struct hci_
- 		return;
+diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
+index 9b0832f56f14e..49ff1f9fe1474 100644
+--- a/net/netfilter/ipvs/ip_vs_lblc.c
++++ b/net/netfilter/ipvs/ip_vs_lblc.c
+@@ -207,6 +207,9 @@ ip_vs_lblc_new(struct ip_vs_lblc_table *tbl, const union nf_inet_addr *daddr,
+ 		ip_vs_lblc_del(en);
+ 		atomic_dec(&tbl->entries);
  	}
++	if (atomic_read(&tbl->entries) >= tbl->max_size * 3 / 2)
++		return NULL;
++
+ 	en = kmalloc(sizeof(*en), GFP_ATOMIC);
+ 	if (!en)
+ 		return NULL;
+diff --git a/net/netfilter/ipvs/ip_vs_lblcr.c b/net/netfilter/ipvs/ip_vs_lblcr.c
+index 7469547c8a440..6feab18861e16 100644
+--- a/net/netfilter/ipvs/ip_vs_lblcr.c
++++ b/net/netfilter/ipvs/ip_vs_lblcr.c
+@@ -365,6 +365,9 @@ ip_vs_lblcr_new(struct ip_vs_lblcr_table *tbl, const union nf_inet_addr *daddr,
  
--	bt_dev_err(hdev, "Exception info %s", (char *)(skb->data + 1));
-+	bt_dev_err(hdev, "Exception info %.*s", (int)(skb->len - 1),
-+		   (char *)(skb->data + 1));
- 
- 	kfree_skb(skb);
- }
+ 	en = ip_vs_lblcr_get(af, tbl, daddr);
+ 	if (!en) {
++		if (atomic_read(&tbl->entries) >= tbl->max_size * 3 / 2)
++			return NULL;
++
+ 		en = kmalloc(sizeof(*en), GFP_ATOMIC);
+ 		if (!en)
+ 			return NULL;
+-- 
+2.53.0
+
 
 
