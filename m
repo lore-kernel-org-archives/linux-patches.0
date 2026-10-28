@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214768;
-	b=Xf6wmHAmaauuQvcO8FxkxM73tny1r4BhyJFZLKiAuMycMN/+72wvTzVJ6sMGkJ47gOvL
-	 ESzaAr3Tt7EvEo2iHyLx9E5H4muHDKrM6xu5ius58f++YXUmnE0UBcGFG+M/Z1vGvyG89
-	 4qE1A/PMexfvmA2MShrRClnhKUaCuLs0Zv8fMI3oPl8rZhySEGoFh5b2JCC7beye1k99k
-	 dr85jTUT6lCD9mJ3GrmD9CAMjVKCb81pLQrIMyXp8qjZUZNvrOcDH6SvBViwLrh718Gfd
-	 g+mK1Y0/j2I9hyJg+KgnLzYPZFD018qqAQowS0CNq8f6f+eK1eRT6q9+zv+zYkZvNzg==
+	t=1793214771;
+	b=oVmoR5SNd7yDBup6TROb9U2cE6982L2DUol568shMbxWpeB1/bhs8SSHNnpjIEBAMZaY
+	 TlWXqVywHBAdcttgKbpCB6bJH3RLlJW+x3502VeKcfpjGaYL5YmKy1sAPR78pjbNX93BL
+	 TErhukDbLXCQvbkG8KCXPt29o2ixCeG34yXOlv4j5X81SHEWeZXx7C5ZGYs8ghAxoniRc
+	 D2fHgbHutRTLjoEJwxyt1Lfo54+sWprssPQN+BRR0o3GspC1API4NzglCKbmIYw+4tCbV
+	 EAFM2GohC9TRVNDwMRzjknjwZ3hE9B8aZf6rhiytCqkrTg8AaP4HjLBSIYz3QufJbvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214768;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214771;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3mIbD/0ge9o46+zHmSYVFFq0k7UHUOnwkmXAQrp87cI=;
-	b=BDzombOW63QPIeqbs07vRQzsmBp1nQ6mOvYH7+ltTqeFec2FoIc3+PQVb3EXwwPhE3Ac
-	 bdvFOCRioYwML3KSyrbaHl3r4uSTTPmSZC0VKgZlQq06wYQowyknYShktn38CeqWnHXpL
-	 c+EvcTZJrz51sKDD4lMSQHZjMw+aZPAh19v4/IJwLmATNhgqOSpGriDB1HG+UYvB3sTNN
-	 N6q2Z8JVak1GEEXT4B51ExVOOXtRo6V3BNVk+x0Dgwo2VG3F4QSHZcpZVjtMUQal+KsJ/
-	 cxo8t1dXAu1Jl32kEW4zDyz6hV2lP8nCrt5tWuWpzdzdfxbdQRHGAtpVvFGkj5GA5cw==
+	bh=8+RsDvJJ68t9qscwj9TK477nMtoAAz+R0I+ZGFBIAkE=;
+	b=QGCxwLKCOd+irylbYnmGysqqMxRRrh2kON/0yltsmO5RWkOnAdCFxzwKNJYhNvh+z7Qf
+	 2mIvMt7rvDaXJtD9W6G4ET4+6hzq6xXBHLtSQD0LjCfLDtOmjJnr9LdUfSfIETd1Fjthx
+	 P38NjP5INXFREjzXXz84udatZr8UifbBW2eN5baf+TCeCgVTnOUzhXlmNLR7uQNcMQjJG
+	 38idMvITF3hFSz6CeoWJj8McUXBQRURRiBfJHr/Kn7QMqQHVR5he62StOQD+i+AWjjgei
+	 H6foyZLCjJDDHmS2hjDJQUCqxKrDJTWK63LrQMVGjfB2kzQLdWkSSVdjAEiTPGAyiYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1w480cVA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tvzl+ymR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15717606A322;
-	Wed, 28 Oct 2026 19:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BAC606A338;
+	Wed, 28 Oct 2026 19:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1w480cVA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4081F01825;
-	Wed, 28 Oct 2026 19:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tvzl+ymR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345CC1F01825;
+	Wed, 28 Oct 2026 19:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214767;
-	bh=3mIbD/0ge9o46+zHmSYVFFq0k7UHUOnwkmXAQrp87cI=;
+	s=korg; t=1793214770;
+	bh=8+RsDvJJ68t9qscwj9TK477nMtoAAz+R0I+ZGFBIAkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1w480cVAdlO0AFn+RV+j0ssPxFtBkAFgCcFo7T3bbEIAgnWplL6GmiuLOtWz4RFWw
-	 xSYcKyHqspVt/qKzkJPn/5UejLJtwtxG3SzW3PbfbWvE276d2b8nbwXk2SdgK5HhdM
-	 z7oD14dz5KrTec8qOoLS5OHwrU4wp9OcCFTo9kcs=
+	b=tvzl+ymRVUk/pGX7piyUiV6HjPTEN4o9obgxckkagEsy6xHalRq5N5MyUukcsBEtX
+	 LhUGnbaRx+i5xfqpNkF5KANakMBoJTdmvmtaTg7ICLV+yA2MCLdKAyZb9+E+IQD6l6
+	 4ZpkCMUDZQ9O46m0nWNIUwt/yz/LN+tpShQ1a2l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0975/1887] mpls: add seqcount to protect the platform_label{,s} pair
-Date: Wed, 28 Oct 2026 17:51:11 +0100
-Message-ID: <20261028170521.597561490@linuxfoundation.org>
+Subject: [PATCH 6.1 0949/1887] hwmon: (pmbus/core) Protect regulator operations with mutex
+Date: Wed, 28 Oct 2026 17:50:45 +0100
+Message-ID: <20261028170521.002452789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,126 +68,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 629ec78ef8608d955ce217880cdc3e1873af3a15 ]
+[ Upstream commit 754bd2b4a084b90b5e7b630e1f423061a9b9b761 ]
 
-The RCU-protected codepaths (mpls_forward, mpls_dump_routes) can have
-an inconsistent view of platform_labels vs platform_label in case of a
-concurrent resize (resize_platform_label_table, under
-platform_mutex). This can lead to OOB accesses.
+The regulator operations pmbus_regulator_get_voltage(),
+pmbus_regulator_set_voltage(), and pmbus_regulator_list_voltage()
+access PMBus registers and shared data but were not protected by
+the update_lock mutex. This could lead to race conditions.
 
-This patch adds a seqcount, so that we get a consistent snapshot.
+However, adding mutex protection directly to these functions causes
+a deadlock because pmbus_regulator_notify() (which calls
+regulator_notifier_call_chain()) is often called with the mutex
+already held (e.g., from pmbus_fault_handler()). If a regulator
+callback then calls one of the now-protected voltage functions,
+it will attempt to acquire the same mutex.
 
-Note that mpls_label_ok is also susceptible to this, so the check
-against RTA_DST in rtm_to_route_config, done outside platform_mutex,
-is not sufficient. This value gets passed to mpls_label_ok once more
-in both mpls_route_add and mpls_route_del, so there is no issue, but
-that additional check must not be removed.
+Rework pmbus_regulator_notify() to utilize a worker function to
+send notifications outside of the mutex protection. Events are
+stored as atomics in a per-page bitmask and processed by the worker.
 
-Reported-by: Yuan Tan <tanyuan98@outlook.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Fixes: 7720c01f3f590 ("mpls: Add a sysctl to control the size of the mpls label table")
-Fixes: dde1b38e873c ("mpls: Convert mpls_dump_routes() to RCU.")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/cd8fca15e3eb7e212b094064cd83652e20fd9d31.1774284088.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Initialize the worker and its associated data during regulator
+registration, and ensure it is cancelled on device removal using
+devm_add_action_or_reset().
+
+While at it, remove the unnecessary include of linux/of.h.
+
+Cc: Sanman Pradhan <psanman@juniper.net>
+Fixes: ddbb4db4ced1b ("hwmon: (pmbus) Add regulator support")
+Reviewed-by: Sanman Pradhan <psanman@juniper.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netns/mpls.h |  1 +
- net/mpls/af_mpls.c       | 40 ++++++++++++++++++++++++++++++----------
- 2 files changed, 31 insertions(+), 10 deletions(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 60 +++++++++++++++++++++++---------
+ 1 file changed, 44 insertions(+), 16 deletions(-)
 
-diff --git a/include/net/netns/mpls.h b/include/net/netns/mpls.h
-index 19ad2574b267c..f364286adf288 100644
---- a/include/net/netns/mpls.h
-+++ b/include/net/netns/mpls.h
-@@ -16,6 +16,7 @@ struct netns_mpls {
- 	int default_ttl;
- 	size_t platform_labels;
- 	struct mpls_route __rcu * __rcu *platform_label;
-+	seqcount_t platform_label_seq;
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index 11c95fc3305a1..44e4d47372a6f 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -19,7 +19,6 @@
+ #include <linux/pmbus.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
+-#include <linux/of.h>
+ #include <linux/thermal.h>
+ #include "pmbus.h"
  
- 	struct ctl_table_header *ctl;
- };
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 5e0900bd48b6b..73443cf8b69ce 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -74,16 +74,31 @@ static void rtmsg_lfib(int event, u32 label, struct mpls_route *rt,
- 		       struct nlmsghdr *nlh, struct net *net, u32 portid,
- 		       unsigned int nlm_flags);
+@@ -2926,12 +2925,19 @@ static int pmbus_regulator_get_voltage(struct regulator_dev *rdev)
+ 		.class = PSC_VOLTAGE_OUT,
+ 		.convert = true,
+ 	};
++	int ret;
  
--static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned index)
-+static struct mpls_route __rcu **mpls_platform_label_rcu(struct net *net, size_t *platform_labels)
- {
--	struct mpls_route *rt = NULL;
-+	struct mpls_route __rcu **platform_label;
-+	unsigned int sequence;
++	mutex_lock(&data->update_lock);
+ 	s.data = _pmbus_read_word_data(client, s.page, 0xff, PMBUS_READ_VOUT);
+-	if (s.data < 0)
+-		return s.data;
++	if (s.data < 0) {
++		ret = s.data;
++		goto unlock;
++	}
  
--	if (index < net->mpls.platform_labels) {
--		struct mpls_route __rcu **platform_label =
--			rcu_dereference_rtnl(net->mpls.platform_label);
--		rt = rcu_dereference_rtnl(platform_label[index]);
--	}
--	return rt;
-+	do {
-+		sequence = read_seqcount_begin(&net->mpls.platform_label_seq);
-+		platform_label = rcu_dereference_rtnl(net->mpls.platform_label);
-+		*platform_labels = net->mpls.platform_labels;
-+	} while (read_seqcount_retry(&net->mpls.platform_label_seq, sequence));
-+
-+	return platform_label;
-+}
-+
-+static struct mpls_route *mpls_route_input_rcu(struct net *net, unsigned int index)
-+{
-+	struct mpls_route __rcu **platform_label;
-+	size_t platform_labels;
-+
-+	platform_label = mpls_platform_label_rcu(net, &platform_labels);
-+
-+	if (index >= platform_labels)
-+		return NULL;
-+
-+	return rcu_dereference_rtnl(platform_label[index]);
+-	return (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
++	ret = (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
  }
  
- bool mpls_output_possible(const struct net_device *dev)
-@@ -2209,8 +2224,7 @@ static int mpls_dump_routes(struct sk_buff *skb, struct netlink_callback *cb)
- 	if (index < MPLS_LABEL_FIRST_UNRESERVED)
- 		index = MPLS_LABEL_FIRST_UNRESERVED;
+ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+@@ -2948,16 +2954,22 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 	};
+ 	int val = DIV_ROUND_CLOSEST(min_uv, 1000); /* convert to mV */
+ 	int low, high;
++	int ret;
  
--	platform_label = rtnl_dereference(net->mpls.platform_label);
--	platform_labels = net->mpls.platform_labels;
-+	platform_label = mpls_platform_label_rcu(net, &platform_labels);
+ 	*selector = 0;
  
- 	if (filter.filter_set)
- 		flags |= NLM_F_DUMP_FILTERED;
-@@ -2597,8 +2611,12 @@ static int resize_platform_label_table(struct net *net, size_t limit)
- 	}
++	mutex_lock(&data->update_lock);
+ 	low = pmbus_regulator_get_low_margin(client, s.page);
+-	if (low < 0)
+-		return low;
++	if (low < 0) {
++		ret = low;
++		goto unlock;
++	}
  
- 	/* Update the global pointers */
-+	local_bh_disable();
-+	write_seqcount_begin(&net->mpls.platform_label_seq);
- 	net->mpls.platform_labels = limit;
- 	rcu_assign_pointer(net->mpls.platform_label, labels);
-+	write_seqcount_end(&net->mpls.platform_label_seq);
-+	local_bh_enable();
+ 	high = pmbus_regulator_get_high_margin(client, s.page);
+-	if (high < 0)
+-		return high;
++	if (high < 0) {
++		ret = high;
++		goto unlock;
++	}
  
- 	rtnl_unlock();
+ 	/* Make sure we are within margins */
+ 	if (low > val)
+@@ -2967,7 +2979,10 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
  
-@@ -2679,6 +2697,8 @@ static int mpls_net_init(struct net *net)
- 	struct ctl_table *table;
- 	int i;
+ 	val = pmbus_data2reg(data, &s, val);
  
-+	seqcount_init(&net->mpls.platform_label_seq);
+-	return _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
++	ret = _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+@@ -2975,7 +2990,9 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ {
+ 	struct device *dev = rdev_get_dev(rdev);
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
++	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	int val, low, high;
++	int ret;
+ 
+ 	if (selector >= rdev->desc->n_voltages ||
+ 	    selector < rdev->desc->linear_min_sel)
+@@ -2985,18 +3002,29 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ 	val = DIV_ROUND_CLOSEST(rdev->desc->min_uV +
+ 				(rdev->desc->uV_step * selector), 1000); /* convert to mV */
+ 
++	mutex_lock(&data->update_lock);
 +
- 	net->mpls.platform_labels = 0;
- 	net->mpls.platform_label = NULL;
- 	net->mpls.ip_ttl_propagate = 1;
+ 	low = pmbus_regulator_get_low_margin(client, rdev_get_id(rdev));
+-	if (low < 0)
+-		return low;
++	if (low < 0) {
++		ret = low;
++		goto unlock;
++	}
+ 
+ 	high = pmbus_regulator_get_high_margin(client, rdev_get_id(rdev));
+-	if (high < 0)
+-		return high;
++	if (high < 0) {
++		ret = high;
++		goto unlock;
++	}
+ 
+-	if (val >= low && val <= high)
+-		return val * 1000; /* unit is uV */
++	if (val >= low && val <= high) {
++		ret = val * 1000; /* unit is uV */
++		goto unlock;
++	}
+ 
+-	return 0;
++	ret = 0;
++unlock:
++	mutex_unlock(&data->update_lock);
++	return ret;
+ }
+ 
+ const struct regulator_ops pmbus_regulator_ops = {
 -- 
 2.53.0
 
