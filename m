@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214108;
-	b=DIwzZ0FyrJ/UJUmvpARfFwBUIETtnpxwiogLAJ9WwrP+YeNaOqk0sB5rHRPmvqnwtBCC
-	 vppWRDm6jx8fZuQpKsS6f8GU1T2P4sS000dIkXPt95SxeaX0VTL4jR7G9ScTPg08R+kDV
-	 GDrbCxWKhEFuEEHP5SPxErhjxg0I0fWv9b+iA2qyBR/OEpbZs0ab9B7RGdzbCxQHSreq/
-	 rPkZ9DJayC1H16iJbTUWR7tc5fnx104bjmtIDC5vn/gSdTlcHDYLwTtTFw4O6aC+5RqIr
-	 0QGngDR+vacHyHjYXAtqpTJvXz/XzlsRzRHPTpfXPJXpz7i20y+efsdwARfnsLcGWGQ==
+	t=1793214110;
+	b=0T3uAJVsG7C5WLBxPOo7rK+zgXSoIwY4dKbgFQsv930ZdXiAOCReWOV4PsoEdR1/FcQ6
+	 7PZsDFa7KDqHil3uk3IUY/Csn4wlOTMqKZD7kn+qkC3H5UBKfYpupv4RrRIk7TqpZXHKl
+	 jVGmQL22Jm3Jq3HvTuGRc/zY8fAk7EiIsx99pLI6HTikmWRj+9R760h1QlajEIsSOid8W
+	 +SYbdIIZ1pfajvUEFuB+VF7NyfUmMpxVOgX2ywKbWi1gjhYl3d2sgUM+cTo4nwE02NLZi
+	 enwMlAdEuU1LfxoDUectd7chBIfz6e/ok1lek9O6+gCU4M0E61WPWugs0IEQz73d7nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fH9OdVqUFe3KXZIxBNsu47v4NdgRfZ2zZOIpQklkn2Y=;
-	b=nllqlMVmkUXJY+ZlazjMNoESn1ftcoxbE3qnoiZBbUOZUhfcb7CQ/jpL2x0tpoBJdQlr
-	 lwNXsFpf4sbks2DFwoAbdItV/VB5cJio6qT0Id2tpqL1/yTkZMg3bXv2qxgm+h6C/njlB
-	 rwcJzFaszCQ2OopYOTS8JVDg3f02ToagoaD5mH1hkxckLs5fYAfJ8HqqmiiGJxXYcJBD9
-	 Yyi9fS0jTU6qg20sAx6pSMKI7s+iGFzgfZ0NT2GjnBi9bhpx2jYdqJc2mCgEh4xa4hOgb
-	 QxLF72KiB9w4ML/N3JroSqsZUoTg6xpLDISpZk+jBn0Bx89Jz3ZAF63p8mW9Zl8G2ew==
+	bh=0qdqWyH0sxQADEvK5uiGcFIjWOIejQXchNqUtt6vg6c=;
+	b=31faNjIGTs9Wi3GsT549gFAm223aXDnqI2U7TI5SS8nIZvB0q3tTqZgdNOIwR+Sxj7Xj
+	 GD4GBkFblM8FKCIemF3ab7XFEJm2um2BWOqaDDJmgvkSnF/Ja0bmBAKE00/kbquLlMSoc
+	 NGg1dzXOj8XrBkHeOpeY7QT3cSFqKXv4RS9K0QZAM66y+YmY+XxwYIg/tlEoAG47lWDNS
+	 7HF9g7720HCy3kp7mP2vkeZqjNzIBqeIw1hFGcYS2kMtfiIWKQSkjPw51miYD0g1G+nYD
+	 tOZZWaqR1TNzURlJvAB3yKkrEtniNqBwFt6N63IfxkLCRlAxcOsksByVUpRPh5DktwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QoTLw5Ai;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cCH8bKR6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B627E606A31D;
-	Wed, 28 Oct 2026 19:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A596606A31C;
+	Wed, 28 Oct 2026 19:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QoTLw5Ai
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C151F01825;
-	Wed, 28 Oct 2026 19:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cCH8bKR6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C971F01825;
+	Wed, 28 Oct 2026 19:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214107;
-	bh=fH9OdVqUFe3KXZIxBNsu47v4NdgRfZ2zZOIpQklkn2Y=;
+	s=korg; t=1793214110;
+	bh=0qdqWyH0sxQADEvK5uiGcFIjWOIejQXchNqUtt6vg6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QoTLw5AizFKhDRS3ILPK3cie+ixS5i/yXQi3opWlJktyF8DoZ9sEB4znndDD5aJhr
-	 Ur/YQ/DSxxjT7XB+otai6+uAg9urXvhQRKQLzOS7HUfgPalHdxb6Rzz2aeM4gQNZHb
-	 CPuB7cNxKsNxZcu6JzZnTfv4c7UPeZLi45zPgKe4=
+	b=cCH8bKR6MmYE6WERnyJVWAN2AsOmk6voHWItg1CUqC/pPyJV17ZBLLuENpeqb+9ds
+	 oTI5NMi5hveCrhC6LfaaR49PZPbu56VosylIRNTagaGXgFQiy3I8+67zgCPuLMJgIU
+	 YBl3+3yZ0uN9fI44FbwM0ylhexNKV/RFlMDhDSkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Jones <pjones@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0742/1887] efi: Dont map the entire mokvar table to determine its size
-Date: Wed, 28 Oct 2026 17:47:18 +0100
-Message-ID: <20261028170516.333007466@linuxfoundation.org>
+Subject: [PATCH 6.1 0743/1887] RDMA/bnxt_re: Fix the page details for the srq created by kernel consumers
+Date: Wed, 28 Oct 2026 17:47:19 +0100
+Message-ID: <20261028170516.354818554@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,130 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Jones <pjones@redhat.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 2b90e7ace79774a3540ce569e000388f8d22c9e0 ]
+[ Upstream commit b66535356a4834a234f99e16a97eb51f2c6c5a7d ]
 
-Currently, when validating the mokvar table, we (re)map the entire table
-on each iteration of the loop, adding space as we discover new entries.
-If the table grows over a certain size, this fails due to limitations of
-early_memmap(), and we get a failure and traceback:
+While using nvme target with use_srq on, below kernel panic is noticed.
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 0 at mm/early_ioremap.c:139 __early_ioremap+0xef/0x220
-  ...
-  Call Trace:
-   <TASK>
-   ? __early_ioremap+0xef/0x220
-   ? __warn.cold+0x93/0xfa
-   ? __early_ioremap+0xef/0x220
-   ? report_bug+0xff/0x140
-   ? early_fixup_exception+0x5d/0xb0
-   ? early_idt_handler_common+0x2f/0x3a
-   ? __early_ioremap+0xef/0x220
-   ? efi_mokvar_table_init+0xce/0x1d0
-   ? setup_arch+0x864/0xc10
-   ? start_kernel+0x6b/0xa10
-   ? x86_64_start_reservations+0x24/0x30
-   ? x86_64_start_kernel+0xed/0xf0
-   ? common_startup_64+0x13e/0x141
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  mokvar: Failed to map EFI MOKvar config table pa=0x7c4c3000, size=265187.
+[  549.698111] bnxt_en 0000:41:00.0 enp65s0np0: FEC autoneg off encoding: Clause 91 RS(544,514)
+[  566.393619] Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
+..
+[  566.393799]  <TASK>
+[  566.393807]  ? __die_body+0x1a/0x60
+[  566.393823]  ? die+0x38/0x60
+[  566.393835]  ? do_trap+0xe4/0x110
+[  566.393847]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393867]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393881]  ? do_error_trap+0x7c/0x120
+[  566.393890]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393911]  ? exc_divide_error+0x34/0x50
+[  566.393923]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393939]  ? asm_exc_divide_error+0x16/0x20
+[  566.393966]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393997]  bnxt_qplib_create_srq+0xc9/0x340 [bnxt_re]
+[  566.394040]  bnxt_re_create_srq+0x335/0x3b0 [bnxt_re]
+[  566.394057]  ? srso_return_thunk+0x5/0x5f
+[  566.394068]  ? __init_swait_queue_head+0x4a/0x60
+[  566.394090]  ib_create_srq_user+0xa7/0x150 [ib_core]
+[  566.394147]  nvmet_rdma_queue_connect+0x7d0/0xbe0 [nvmet_rdma]
+[  566.394174]  ? lock_release+0x22c/0x3f0
+[  566.394187]  ? srso_return_thunk+0x5/0x5f
 
-Mapping the entire structure isn't actually necessary, as we don't ever
-need more than one entry header mapped at once.
+Page size and shift info is set only for the user space SRQs.
+Set page size and page shift for kernel space SRQs also.
 
-Changes efi_mokvar_table_init() to only map each entry header, not the
-entire table, when determining the table size.  Since we're not mapping
-any data past the variable name, it also changes the code to enforce
-that each variable name is NUL terminated, rather than attempting to
-verify it in place.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Peter Jones <pjones@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/1740237621-29291-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/mokvar-table.c | 42 +++++++++--------------------
- 1 file changed, 13 insertions(+), 29 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/efi/mokvar-table.c b/drivers/firmware/efi/mokvar-table.c
-index 37e1fe7a2f2b3..bd84a22805b56 100644
---- a/drivers/firmware/efi/mokvar-table.c
-+++ b/drivers/firmware/efi/mokvar-table.c
-@@ -103,9 +103,7 @@ void __init efi_mokvar_table_init(void)
- 	void *va = NULL;
- 	unsigned long cur_offset = 0;
- 	unsigned long offset_limit;
--	unsigned long map_size = 0;
- 	unsigned long map_size_needed = 0;
--	unsigned long size;
- 	struct efi_mokvar_table_entry *mokvar_entry;
- 	int err;
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 63fae7263c89c..9db0d824d4627 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1659,6 +1659,8 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 	srq->qplib_srq.threshold = srq_init_attr->attr.srq_limit;
+ 	srq->srq_limit = srq_init_attr->attr.srq_limit;
+ 	srq->qplib_srq.eventq_hw_ring_id = rdev->nq[0].ring_id;
++	srq->qplib_srq.sg_info.pgsize = PAGE_SIZE;
++	srq->qplib_srq.sg_info.pgshft = PAGE_SHIFT;
+ 	nq = &rdev->nq[0];
  
-@@ -134,48 +132,34 @@ void __init efi_mokvar_table_init(void)
- 	 */
- 	err = -EINVAL;
- 	while (cur_offset + sizeof(*mokvar_entry) <= offset_limit) {
--		mokvar_entry = va + cur_offset;
--		map_size_needed = cur_offset + sizeof(*mokvar_entry);
--		if (map_size_needed > map_size) {
--			if (va)
--				early_memunmap(va, map_size);
--			/*
--			 * Map a little more than the fixed size entry
--			 * header, anticipating some data. It's safe to
--			 * do so as long as we stay within current memory
--			 * descriptor.
--			 */
--			map_size = min(map_size_needed + 2*EFI_PAGE_SIZE,
--				       offset_limit);
--			va = early_memremap(efi.mokvar_table, map_size);
--			if (!va) {
--				pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%lu.\n",
--				       efi.mokvar_table, map_size);
--				return;
--			}
--			mokvar_entry = va + cur_offset;
-+		if (va)
-+			early_memunmap(va, sizeof(*mokvar_entry));
-+		va = early_memremap(efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
-+		if (!va) {
-+			pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%zu.\n",
-+			       efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
-+			return;
- 		}
-+		mokvar_entry = va;
- 
- 		/* Check for last sentinel entry */
- 		if (mokvar_entry->name[0] == '\0') {
- 			if (mokvar_entry->data_size != 0)
- 				break;
- 			err = 0;
-+			map_size_needed = cur_offset + sizeof(*mokvar_entry);
- 			break;
- 		}
- 
--		/* Sanity check that the name is null terminated */
--		size = strnlen(mokvar_entry->name,
--			       sizeof(mokvar_entry->name));
--		if (size >= sizeof(mokvar_entry->name))
--			break;
-+		/* Enforce that the name is NUL terminated */
-+		mokvar_entry->name[sizeof(mokvar_entry->name) - 1] = '\0';
- 
- 		/* Advance to the next entry */
--		cur_offset = map_size_needed + mokvar_entry->data_size;
-+		cur_offset += sizeof(*mokvar_entry) + mokvar_entry->data_size;
- 	}
- 
- 	if (va)
--		early_memunmap(va, map_size);
-+		early_memunmap(va, sizeof(*mokvar_entry));
- 	if (err) {
- 		pr_err("EFI MOKvar config table is not valid\n");
- 		return;
+ 	if (udata) {
 -- 
 2.53.0
 
