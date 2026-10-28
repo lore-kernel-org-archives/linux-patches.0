@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216986;
-	b=fKR7XrgIVVDRr2Wzri4q8+StIQr6+dUsccGKBDg/H6IPgYKxs44t0fc+5Oe7DzbxX7Re
-	 0KOPHjBqd5ocLG9tUHM/5cq+UErq/WX1kPm6NIYT9i6htax9vyHcnJLnvoNQprfT7jntf
-	 LRf7AdbA/RMa9/S3Ni740pGlFv+3yg7dgFbq843hiEotCID+iz7EVtionwmv9f+7WYkMu
-	 6BfBqGc6Fp3OIz0IaWmZ7nYKTwbC5dfZf/G3VLIbqK9IsG7egznzcK+MfTQ/Ey1rI4v/w
-	 AknwgX5QsnCQwoP9+jFvOa94ojz3MfCr2u50rq0k2cT1YHY6OGAFtAnWdV64XspcgFA==
+	t=1793216989;
+	b=YqH+lkCQ9sXt0Yk30ZVQLPoPH9suxFfQihwt5mFxlMG4B4HWgH5jJFSM4SUJ2nh7z97f
+	 XFRuXzssTirJ5jDaYtYcVXklA0aE5aNCEDh+iLOcIzPI4weZZbaBBViBNw+YsVZx8SJQ6
+	 jh/a6Ma+imz07kMC1JfqMIxm/DCsERu/8bVXw6m4KqIBeq68eZL7hR0Q0L/x8hz8SpwtH
+	 /f57ZGNcNkbu/aHByOaEth1SjU8IP8cS+LFU4O6hoAQO+d92ZdrqWIUO7bHsno2Mz3PrB
+	 p5XyC4pO8QTzY3upTU5dXBJ/BPHGC150c185mvoLL6elwCV0AOAVx50iwTozYwC9Ujw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9VvzlFxVLlhKnLzMnfJWsnC2ny+Zsrj3sIlXmAvUZh0=;
-	b=YdMWLPrbbql3xidTbv7g3SwDbIRQQwshGKxOEmttW4Vp+PaAceupjDepa3WM05SQsZLZ
-	 /wNNxNj3zoxcg1mOqc8NTKL8jYRWGCD52Nc3OyzBDC0CPIGp0rRQoS9IfaLecZAG3be0N
-	 /FZNq5EDwJ3nY3ZDehZ2jRAwr0cTEaJnTgakFV6gTAKja1RZTkKGZuB60+ZUj3+Q8Cp1w
-	 IYU0ofjo70jv6mlwa4FKCIABFO4r97adNn62IiaaKeOJpC/Vv6RMlTvd8M44fP+c0YY+T
-	 Ayca34BbBOCfXmEkg2UJimQs6MmcFZpI7iRWdxw61rkVhrHZ37bo6IG1tI32e/oGfkw==
+	bh=Jfk8pIZoWCYHu+JioM1l+Rgu/BqYk/zvmByXhGYktzE=;
+	b=IcQ1lxXEG/7XFYoUK5k+FkDeS4auU1s+zHmde9yzgr/xd6ANQNUqX2S+7urDzPa0RpDi
+	 2AuA+mTvx9FkIIwxTQJ8h1h+pNiJw/qUe6kczlsmoksUXsgY3e08YEPCtPLxa2EXh2xf7
+	 ECMos/huTS4ZI+mHWcn5Z8+Gt3Yf+2Z6jZf5lIMgz+wrhofBT/rDq/GrWqmqiWab5Wjra
+	 TsvfFXYi3PVMhojVl3/bdvsmdSnxwF5fhKxzSiSDHzohG9rhMrKS53rviC3EfqiZ8B+tm
+	 CKJDb5pj2CghTKE2WRnE7Qy0CjbZ9dZUKi0SYwPN0kpixZEDdPh0UJVIX25ep9SwX1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uQ/JBjW8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OCz619p/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E566C606A320;
-	Wed, 28 Oct 2026 19:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C571C606A322;
+	Wed, 28 Oct 2026 19:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uQ/JBjW8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4224A1F01825;
-	Wed, 28 Oct 2026 19:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCz619p/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CC61F01825;
+	Wed, 28 Oct 2026 19:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216985;
-	bh=9VvzlFxVLlhKnLzMnfJWsnC2ny+Zsrj3sIlXmAvUZh0=;
+	s=korg; t=1793216988;
+	bh=Jfk8pIZoWCYHu+JioM1l+Rgu/BqYk/zvmByXhGYktzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uQ/JBjW8YQPa06emhsyfrd0+zKcm7+ZRtfkrH5Ch+mVmOvOzpwV07SNl7biLs40ek
-	 Alcel5XuG7/cw6le8jKcECCPXHwQimY+Cf3rWbvf+Ud7i8PkBf+7COEHoRNalrfqAw
-	 0AGD2I2ttGr647EDEKFfF+jOSC3sGWdMXjDKtju0=
+	b=OCz619p/y0WrtKd1qTIgYg8/oFYxoSz0V/9mGiA5KCeNAkokB7UMOhwibkr15daFd
+	 kmuaLK4UEH3RgBOr3uz/LNusqymrGyi3elMXn+yKtXV8CA4dgc76sDPvq6UALgFf1l
+	 x6Fxtska8VcEbA6J6EEQ2nPkqfwFWOMtLMMp4CdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 1749/1887] tracing: Fix hist trigger timestamps for buffered events
-Date: Wed, 28 Oct 2026 18:04:05 +0100
-Message-ID: <20261028170539.258881262@linuxfoundation.org>
+	Heyang Tan <thy15333007817@163.com>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 1750/1887] wifi: p54: validate firmware record lengths
+Date: Wed, 28 Oct 2026 18:04:06 +0100
+Message-ID: <20261028170539.280895324@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,93 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Heyang Tan <thy15333007817@163.com>
 
-commit 9414ca3b99e5a7f1f3bf51c2a01b383e1b355dd0 upstream.
+commit db7b86bd97b380ece8fa39cfdd7502a9fd35e56f upstream.
 
-Syzkaller triggered a WARN_ON_ONCE(!nest) warning:
+The p54 firmware parser accesses component ID and component version
+records without checking that their lengths cover the fields being read.
+A malformed record can therefore make the parser read past the record.
 
-  WARNING: kernel/trace/ring_buffer.c:821 at ring_buffer_event_time_stamp
-  Call trace:
-    ring_buffer_event_time_stamp
-    hist_field_timestamp
-    hist_fn_call
-    event_hist_trigger
-    event_triggers_call
-    __event_trigger_test_discard
-    trace_event_buffer_commit
-    do_trace_event_raw_event_sched_switch
-    trace_event_raw_event_sched_switch
+Validate the component ID and component version record lengths before
+accessing their data. The descriptor record is also checked against the
+shortest descriptor length found in the supported firmware images.
 
-The warning is probabilistically reproducible and is related to syzkaller
-executing the following commands:
+Reject descriptor values that underflow the RX offset or produce an empty
+RX range before updating the driver state.
 
-  echo 'prev_pid == 999999' > events/sched/sched_switch/filter
-  echo 'hist:keys=common_timestamp' > events/sched/sched_switch/trigger
-
-The specific triggering process is as follows:
-
-CPU 0                                           CPU 1
-(context switching)                             (echo 'hist:keys=common_timestamp' > \
-                                                        events/sched/sched_switch/trigger)
-do_trace_event_raw_event_##call
-  trace_event_buffer_lock_reserve
-    if (!tr->no_filter_buffering_ref &&
-        trace_file->flags & EVENT_FILE_FL_FILTERED)
-        return entry;  // return directly
-                                                event_hist_trigger_parse
-                                                  hist_register_trigger
-                                                    tracing_set_filter_buffering(file->tr, true);
-                                                      tr->no_filter_buffering_ref++;
-    __trace_buffer_lock_reserve
-      rb_start_commit
-        local_inc(&cpu_buffer->committing);  // skipped and not executed
-  trace_event_buffer_commit
-    __event_trigger_test_discard
-      event_triggers_call
-        event_hist_trigger
-          hist_fn_call
-            hist_field_timestamp
-              ring_buffer_event_time_stamp
-                nest = local_read(&cpu_buffer->committing);
-                WARN_ON_ONCE(!nest)  // trigger warning
-
-The root cause is that when an event file has a filter attached and the
-hist trigger has not yet been attached, trace_event_buffer_lock_reserve()
-writes the event into the per-CPU trace_buffered_event temp buffer instead
-of reserving it in the ring buffer, so cpu_buffer->committing is not
-incremented. When the event is later processed at commit time by a hist
-trigger, hist_field_timestamp() -> ring_buffer_event_time_stamp() sees a
-zero committing count, triggering WARN_ON_ONCE(!nest).
-
-tracing_event_time_stamp() was added by commit d8279bfc5e959 ("tracing:
-Add tracing_event_time_stamp() API") for exactly this case: if the event
-is the per-CPU trace_buffered_event, it returns the current ring buffer
-timestamp. But it never gained a caller. Use it in hist_field_timestamp(),
-so that a hist trigger that races onto a buffered event records the
-current time, which is only marginally later than when the event was
-recorded, instead of warning and recording a bogus timestamp.
-
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260929104015.1689921-1-wutengda@huaweicloud.com
-Fixes: b94bc80df648 ("tracing: Use a no_filter_buffering_ref to stop using the filter buffer")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Assisted-by: LLM Codex
+Signed-off-by: Heyang Tan <thy15333007817@163.com>
+Tested-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20260918083349.891-1-thy15333007817@163.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intersil/p54/fwio.c |   42 +++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -863,7 +863,7 @@ static u64 hist_field_timestamp(struct h
- 	struct hist_trigger_data *hist_data = hist_field->hist_data;
- 	struct trace_array *tr = hist_data->event_file->tr;
- 
--	u64 ts = ring_buffer_event_time_stamp(buffer, rbe);
-+	u64 ts = tracing_event_time_stamp(buffer, rbe);
- 
- 	if (hist_data->attrs->ts_in_usecs && trace_clock_in_ns(tr))
- 		ts = ns2usecs(ts);
+--- a/drivers/net/wireless/intersil/p54/fwio.c
++++ b/drivers/net/wireless/intersil/p54/fwio.c
+@@ -52,6 +52,13 @@ int p54_parse_firmware(struct ieee80211_
+ 		u32 code = le32_to_cpu(bootrec->code);
+ 		switch (code) {
+ 		case BR_CODE_COMPONENT_ID:
++			if (len < sizeof(struct bootrec_comp_id) /
++				sizeof(*bootrec->data)) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware component ID is too short\n");
++				return -EINVAL;
++			}
++
+ 			priv->fw_interface = be32_to_cpup((__be32 *)
+ 					     bootrec->data);
+ 			switch (priv->fw_interface) {
+@@ -72,16 +79,41 @@ int p54_parse_firmware(struct ieee80211_
+ 			}
+ 			break;
+ 		case BR_CODE_COMPONENT_VERSION:
++			if (len < DIV_ROUND_UP(sizeof(struct bootrec_comp_ver),
++					       sizeof(*bootrec->data))) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware component version is too short\n");
++				return -EINVAL;
++			}
++
+ 			/* 24 bytes should be enough for all firmwares */
+-			if (strnlen((unsigned char *) bootrec->data, 24) < 24)
+-				fw_version = (unsigned char *) bootrec->data;
++			if (strnlen((unsigned char *)bootrec->data,
++				    sizeof(struct bootrec_comp_ver)) <
++				    sizeof(struct bootrec_comp_ver))
++				fw_version = (unsigned char *)bootrec->data;
+ 			break;
+ 		case BR_CODE_DESCR: {
+ 			struct bootrec_desc *desc =
+ 				(struct bootrec_desc *)bootrec->data;
+-			priv->rx_start = le32_to_cpu(desc->rx_start);
+-			/* FIXME add sanity checking */
+-			priv->rx_end = le32_to_cpu(desc->rx_end) - 0x3500;
++			u32 rx_start, rx_end;
++
++			/* 0xa is the shortest descriptor in supported firmware. */
++			if (len < 0xa) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware descriptor is too short\n");
++				return -EINVAL;
++			}
++
++			rx_start = le32_to_cpu(desc->rx_start);
++			rx_end = le32_to_cpu(desc->rx_end);
++			if (rx_end < 0x3500 || rx_end - 0x3500 <= rx_start) {
++				wiphy_err(priv->hw->wiphy,
++					  "firmware descriptor has invalid RX range\n");
++				return -EINVAL;
++			}
++
++			priv->rx_start = rx_start;
++			priv->rx_end = rx_end - 0x3500;
+ 			priv->headroom = desc->headroom;
+ 			priv->tailroom = desc->tailroom;
+ 			priv->privacy_caps = desc->privacy_caps;
 
 
