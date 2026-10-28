@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208415;
-	b=lXN2f164p9VOquhXaym0snetlB+ASgMvJu8Cv/97vqF4UyjcoM/0fVViB27JHBXmZmzC
-	 GZbojmHIdM2wI0T64symqh5ZMZBOAh4wENc2mbC/0ENx4zeA/+1dGa0zCh/DutHkkMICu
-	 YyIkiUpGOcWIMzLwFVSxpyaj5SH4cEoSDCObBgQWKdo9zTW4myexNlZD5m1YFhBp2PIhh
-	 Vh8l11A2SgQTJXwO3j2yywlRHLUvJUNIMCO6NQh21yuA9e+s5ZOaH5+zflCUzkS5OhR6G
-	 BUMwCICNhIr78jxYVaWYujWhWKNpS0IMLVFRf89HBLo9IHF2M0VoSiKr8Jjbeo6MHiw==
+	t=1793208417;
+	b=XguutjMyQdUGTjmfvM5Kmug4YnPVKPzS4HiRB8wU44/7cZqzIQVKGxKuh+xL5L/1paUF
+	 UmH9IDybindvH2ZzyAPnlfI2mxcvPKnoSQNwgeIiEWWQD/3u2ARrwJAWsrWRgf2sjDTiT
+	 i0q6jOT3rm3YCBnB4zP7Sgv2Ku9Rb3ZxQQPdA7r1h4ouPNO1VUKkruHpo4U+0rNwMJ9zP
+	 A4vTSDe2np2v59U2NVnxxDcJYc7Vt4XyBkd6Cstg7RbBjK2EcWvetX2k1lPY8OISeAW4B
+	 Wi/N5ojy6m8mNIH6kPO1ll5zy+LiWaPlefmEhhOKooajhu+txAdUdjno1PVQxAWF5rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208415;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w8ZpWsvV/LvTngVtLYz4HJbEg5cUki4zi3LOZhXmmEE=;
-	b=2RMApBDTeKkGmMjQa0b0Rh324alr5/c44rVYVvXj/9SS6cn0u1HNCMOm2o1aN9EhdRE/
-	 WdmkSZHHyr38BBBhPrLneObsfyyjMvhi+o8Anmd4dXcK0hr8OA2D1NauEjwv4Ls512cHN
-	 ZBdXwffdPhYCvkmRC+eMuZf3wNYUoXOuynVK3IqeRqfiST8h27JU4Ky+Vpvpz9rYHAOmf
-	 bLCsy0bwmGlC3Ic2/p94mSj7Mby9ylRmPb20JVnoBtNwXwpb+iUpR4DYokbcNIR33mV5b
-	 uQgs9DywBJqxmPgH6cPAu+OyeWxgiWD/6s9wsB6aplDSUyismdZipfxL4Ido2qgDMpA==
+	bh=owGm5EeWyinSgEsgPVv/teLyBOlsyG9PBGwqAUdyLYU=;
+	b=wv1oASnAlsKzZU1dC1MrET4w2oaj57k2qFhWPWVz2rwUJVfKFauRfL0i5DxrX/uC2ttV
+	 5Vsts9NyDHekwKlCnGubVZ4bPT3vNYpRukwWgWg5Uy2YttjtxkHB+y3KIEfEtjfv8DpcT
+	 LiFAGC57lK90bsovF1szMDWLkjMhNA8C4kQoWv0IbiaVU1xQN1b5P8nH5zS0SlehF+sSE
+	 hS/aRok8HGRsyRSDL4VaUsUKAOCrWLltWvMf1/tvGe30BZJImK/NiYWf7tq0pnxPF51He
+	 Cl8hLCfnd2lf/o/qLInY6+C/aSCpdW7LYyimvoHsJPamcgW99JnyzF0kQmkUTG9BYrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cM9bVmvu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bh/P5/mn";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC156606A31E;
-	Wed, 28 Oct 2026 17:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FC8606A31A;
+	Wed, 28 Oct 2026 17:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cM9bVmvu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BD51F01825;
-	Wed, 28 Oct 2026 17:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bh/P5/mn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F871F01825;
+	Wed, 28 Oct 2026 17:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208414;
-	bh=w8ZpWsvV/LvTngVtLYz4HJbEg5cUki4zi3LOZhXmmEE=;
+	s=korg; t=1793208417;
+	bh=owGm5EeWyinSgEsgPVv/teLyBOlsyG9PBGwqAUdyLYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cM9bVmvu7VOPaQt8EC/IeDtSOhSWK8r70EjBSO7fETr/HMkISW8mvgMlGlLsLD5P/
-	 M1J6tdBcuO/0YkSmdke7gqTLGIe6yBjIfKbQYtylBKMe2bh/RzcDOeamyCGmm0qY59
-	 +2v4luD6QPJxAZKm/nWoDbODC9qBNUumSSQ6wceU=
+	b=bh/P5/mnmGi92xd8Y3Lc86+xBD1lYGK879U07HL5haNll0ggI0SmSvnA2FBbiV7Qj
+	 4k5FFyBnXahuVE6bcr314wHWYhJXYb3Lzb1jNyT5bFn60Q2ow86kd8U/U0b4Zl7nqP
+	 SsO4XxKZc31a6SGG5hi4ZI2YyORyJGci6xD5JuhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Mierczuk <axel.mierczuk@1password.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/516] net: openvswitch: conntrack: fix helper UAF due to extensions realloc
-Date: Wed, 28 Oct 2026 17:54:24 +0100
-Message-ID: <20261028170006.172165390@linuxfoundation.org>
+Subject: [PATCH 5.10 113/516] smb3: make query_on_disk_id open context consistent and move to common code
+Date: Wed, 28 Oct 2026 17:54:25 +0100
+Message-ID: <20261028170006.195677549@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,84 +68,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 1a4151e6be57b098b7a5ebfbde58585e83200cdc ]
+[ Upstream commit 1149c8467ddebfb6bb9aab37830f70a49cab7085 ]
 
-While calling the helpers, a raw pointer to the extensions area is
-wired into expectations list:
+cifs and ksmbd were using a slightly different version of the query_on_disk_id
+struct which could be confusing. Use the ksmbd version of this struct, and
+move it to common code.
 
-  -> nf_ct_helper()
-   -> helper->help()
-    -> nf_ct_expect_related_report()
-     -> nf_ct_expect_insert()
-      -> hlist_add_head_rcu(&exp->lnode, &master_help->expectations)
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 
-In case the connection is not confirmed yet, more extensions can be
-added afterwards with *_ext_add() calls reallocating the extension
-space and leaving the now invalid pointer in the expectations list
-that is later accessed while removing the expectation.
+[5.15 dependency adaptation for 67f4c1c6a1b:
+Keep the create-context declarations in the existing per-subsystem headers.
+This tree has not consolidated create_context into smbfs_common, and ksmbd
+still defines its own SMB2 headers. Moving the response into the common
+header would require unrelated header conversions.
 
-Make sure that helpers are called at the end after all the other
-extensions are already added.
+Retain the client response rename and match ksmbd's 16-byte Reserved array,
+without changing the packed wire layout. Leave the ksmbd and common headers
+unchanged and omit the upstream common-header lease comments.
 
-Note that the helper rejection now leaves the mark and labels set,
-but that's not different from how the NAT was handled before or how
-the mark and the labels were handled on confirmation failure.  And
-there are no atomicity guarantees provided by the API anyway.
+Rename the client's lease-break flag and both existing parser uses to the
+upstream _LE spelling. This is a value-preserving prerequisite for the
+target's lease-parser changes; no functions are added.]
 
-Fixes: cae3a2627520 ("openvswitch: Allow attaching helpers to ct action")
-Cc: stable@vger.kernel.org
-Reported-by: Axel Mierczuk <axel.mierczuk@1password.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260921145655.3167436-4-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted nf_ct_helper() calls to the existing ovs_ct_helper() API. ]
+[ sashal: Reduced backport -- upstream 1149c8467ddeb touches 4 file(s), this
+  backport carries 3. Not backported here:
+  fs/ksmbd/smb2pdu.h
+  fs/smbfs_common/smb2pdu.h
+  This note is generated from the file lists only; see the resolution record
+  for the reasoning. ]
+
+Stable-dep-of: 67f4c1c6a1b5 ("smb: client: fix create context out-of-bounds reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/conntrack.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ fs/cifs/smb2ops.c | 4 ++--
+ fs/cifs/smb2pdu.c | 2 +-
+ fs/cifs/smb2pdu.h | 6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 340f7dde559f5..196e7f7c82e1c 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1038,14 +1038,14 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
- 			}
- 		}
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 65a85f7388eef..8261e08080d09 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -4174,7 +4174,7 @@ smb2_parse_lease_buf(void *buf, unsigned int *epoch, char *lease_key)
+ 	struct create_lease *lc = (struct create_lease *)buf;
  
--		/* Call the helper only if:
--		 * - nf_conntrack_in() was executed above ("!cached") or a
--		 *   helper was just attached ("add_helper") for a confirmed
--		 *   connection, or
--		 * - When committing an unconfirmed connection.
-+		/* Call the helper only if nf_conntrack_in() was executed
-+		 * above ("!cached") or a helper was just attached ("add_helper").
-+		 *
-+		 * For unconfirmed connections it will be called later during
-+		 * commit as we need to have all the other extensions allocated
-+		 * before the call.
- 		 */
--		if ((nf_ct_is_confirmed(ct) ? !cached || add_helper :
--					      info->commit) &&
-+		if (nf_ct_is_confirmed(ct) && (!cached || add_helper) &&
- 		    ovs_ct_helper(skb, info->family) != NF_ACCEPT) {
- 			return -EINVAL;
- 		}
-@@ -1253,6 +1253,12 @@ static int ovs_ct_commit(struct net *net, struct sw_flow_key *key,
- 					 &info->labels.mask);
- 		if (err)
- 			return err;
-+
-+		/* Call the helpers now.  We couldn't do this before as
-+		 * all the extensions must be allocated before the call.
-+		 */
-+		if (ovs_ct_helper(skb, info->family) != NF_ACCEPT)
-+			return -EINVAL;
- 	} else if (IS_ENABLED(CONFIG_NF_CONNTRACK_LABELS) &&
- 		   labels_nonzero(&info->labels.mask)) {
- 		err = ovs_ct_set_labels(ct, key, &info->labels.value,
+ 	*epoch = 0; /* not used */
+-	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS)
++	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
+ 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
+ 	return le32_to_cpu(lc->lcontext.LeaseState);
+ }
+@@ -4185,7 +4185,7 @@ smb3_parse_lease_buf(void *buf, unsigned int *epoch, char *lease_key)
+ 	struct create_lease_v2 *lc = (struct create_lease_v2 *)buf;
+ 
+ 	*epoch = le16_to_cpu(lc->lcontext.Epoch);
+-	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS)
++	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
+ 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
+ 	if (lease_key)
+ 		memcpy(lease_key, &lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
+index 19b4f426e9afa..a10431a9f9e99 100644
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -1955,7 +1955,7 @@ create_reconnect_durable_buf(struct cifs_fid *fid)
+ static void
+ parse_query_id_ctxt(struct create_context *cc, struct smb2_file_all_info *buf)
+ {
+-	struct create_on_disk_id *pdisk_id = (struct create_on_disk_id *)cc;
++	struct create_disk_id_rsp *pdisk_id = (struct create_disk_id_rsp *)cc;
+ 
+ 	cifs_dbg(FYI, "parse query id context 0x%llx 0x%llx\n",
+ 		pdisk_id->DiskFileId, pdisk_id->VolumeId);
+diff --git a/fs/cifs/smb2pdu.h b/fs/cifs/smb2pdu.h
+index f92a431617d58..e2f2cdb7d7c3c 100644
+--- a/fs/cifs/smb2pdu.h
++++ b/fs/cifs/smb2pdu.h
+@@ -555,7 +555,7 @@ struct create_context {
+ #define SMB2_LEASE_HANDLE_CACHING	cpu_to_le32(0x02)
+ #define SMB2_LEASE_WRITE_CACHING	cpu_to_le32(0x04)
+ 
+-#define SMB2_LEASE_FLAG_BREAK_IN_PROGRESS cpu_to_le32(0x00000002)
++#define SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE cpu_to_le32(0x00000002)
+ #define SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET cpu_to_le32(0x00000004)
+ 
+ #define SMB2_LEASE_KEY_SIZE 16
+@@ -637,12 +637,12 @@ struct durable_reconnect_context_v2 {
+ } __packed;
+ 
+ /* See MS-SMB2 2.2.14.2.9 */
+-struct create_on_disk_id {
++struct create_disk_id_rsp {
+ 	struct create_context ccontext;
+ 	__u8   Name[8];
+ 	__le64 DiskFileId;
+ 	__le64 VolumeId;
+-	__u32  Reserved[4];
++	__u8  Reserved[16];
+ } __packed;
+ 
+ /* See MS-SMB2 2.2.14.2.12 */
 -- 
 2.53.0
 
