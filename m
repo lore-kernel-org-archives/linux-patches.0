@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212854;
-	b=RsKBU/d/Pc/UJI80fbBXZcJIskFMJPSghG6yz0sxxTX8MjcGDRWF0E17Bi0mZB9XQBMe
-	 T2Tr3Q6hFQdwbZutRa6tYTJpcYeNk3DQ2+AFLUZbCaDoupANebkYG/RrCl9S+buEPza3H
-	 POvS2B6xBJfLrPhBXwvv/+Yui6o8R02b63aerGpKo55icCfXuBj4E3Nt0uX/GTFoxboK+
-	 7yYiwMEiy+0KnOcGIWlgEYJHmg9zRfFlxnNnZsbFO3yt7DMrf4Woa7GlJeiGSKgrAQadQ
-	 DVv+Uz5KbO/rO2Z2BQB1u+FPFqA0dJ1YuOyKrYgvaQqWJMXA0x65DHs/Hlei+r47egg==
+	t=1793212857;
+	b=MWlIAlnZeQUg8UitqksVvSLCaMBfpKJpjZosGVxGWffX8WDPBxs+Y4lsJOXfbthsWw3D
+	 9bXoorpOgInh0/SOZX7SLSY006q6j4JXuSPrdpuFYe7SRy993DxHneDauFyEhao/OmFFW
+	 jSTn0TMOIgXCW6N56HjHdDVAKEwOF6tCPWANdhnEC+n1aaScZfrKF25n488VDfL/moP5W
+	 IVbMT75vOJRd7IIsHANOzCOeOhJ8WaiGGSE2dj4rcX9GbOi5iZzRrhNlqfB26JKN7NC/U
+	 YbOegYtowJL0rOetqqWVzdro0KcH/dU+Xk7WqFhJN2HR54DaxnscGToBizw2Bo8ZuJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212854;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212857;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NGL8HyhYv6Dcge+GicwXpD5ymhr7uEZpPv3wvpS2aic=;
-	b=Lp7y/jQZbGOrvbvV5r8Uf2fylt445W4cZ+o7xkqsYMF3HEL7986PDAm6A60J5QKUGPUx
-	 EQQz6GUEeoeFZ/NCiSyiUFkctkxSghQ9cyyjo3MGGUtNxFQuJf+Lx6c+0nuXqYOO1o6T7
-	 Mq6KQWyctGLHp+mYwfeAAp+wDQgEMzSTj4MmhqbwfX+Of5NkTrdqWDkVVemzKPZZhexYQ
-	 q4J8d89MgHqnGoQUvHMQFz9J7rQVTC7Zf5cBX4AVGWSqK/oLGZtaC77OmEF8GhPXQLwfA
-	 cduhw12x+00k+QDPlBkNkNzUZMGTNwc4SjvqnmZ0qw9HtdMSInW7x47niZSpnyBQF4A==
+	bh=ye8jE+XriR0eZdhIa0R+CThbgGWIR13MqqYvq/ytQlw=;
+	b=1WZs7zWxb7u8KcF+LTh9na5yb9tYBkVGSbHfksnEPOa0EJNviRvwGlitH+C1eg8Wk5xd
+	 Kvx0XGQfr4yCbgt3+PyYobKYl5mmex6qa9WpesbDyv98XJ+tmxIUauMhFp6UH0qxrV3Y2
+	 xW/lJ0hCz4tDimFY7jStmLAr6A8+dyEtF0woRNAkSOQFphWb+K5UlvxrRyXLTFQlj1dwo
+	 wStPl7THMy78ekDkvuHUbl7wEnZ2BG4jNxwgmLeUCQltMNM1DSXA8rBpWNONCmL1waYPZ
+	 GKmmtZCkHi0EYOgZBfwLfbPk46xbUq5bE0pukmbPEJHtA72oH/bo/vCijN5YfrtO7YA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TGthuHmO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTuzOY1N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A52E606A31A;
-	Wed, 28 Oct 2026 18:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFEC606A31C;
+	Wed, 28 Oct 2026 18:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TGthuHmO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD451F01825;
-	Wed, 28 Oct 2026 18:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTuzOY1N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3CF1F01825;
+	Wed, 28 Oct 2026 18:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212854;
-	bh=NGL8HyhYv6Dcge+GicwXpD5ymhr7uEZpPv3wvpS2aic=;
+	s=korg; t=1793212857;
+	bh=ye8jE+XriR0eZdhIa0R+CThbgGWIR13MqqYvq/ytQlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TGthuHmOUjQSGFjc24sCWWtCAK289+7TV1ZBGrIagCwjTllmpT7RAzDj2E1fTIPC9
-	 lIT8h7daP8Zg2fx+X806AoE75c5LAcyjPP68+tfrLCjlvpRLgFuASKwmbOSttaT4Ud
-	 OikD5U0ZtSLWvHZyjFidGGMoCmIcZsGNtfHlVoUg=
+	b=yTuzOY1NlajxxFAG2RDZ9pA657hKa2luh9Dcj0tH9vbN3rAhPccMekvIEuVnnF8ws
+	 YZeJJ1J9LmvRsuI8Zyz1CkIGr48aIYtLg78ZL1Hfo/nT1PLwf4iZR6gZQvKNt5J2m/
+	 OeDJcMrYuNkLxooE8S3AiJPo9xTt7kIPkYo2C3FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tomer Pomeranc <tomerpo@gmail.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.1 0257/1887] binder: fix is_failure flag for superseded transaction cleanup
-Date: Wed, 28 Oct 2026 17:39:13 +0100
-Message-ID: <20261028170505.077892551@linuxfoundation.org>
+	Hongjian Dai <daihongjian@kylinsec.com.cn>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0248/1887] i2c: at91: release DMA channels when probe defers
+Date: Wed, 28 Oct 2026 17:39:04 +0100
+Message-ID: <20261028170504.874000666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,43 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomer Pomeranc <tomerpo@gmail.com>
+From: Hongjian Dai <daihongjian@kylinsec.com.cn>
 
-commit 22c135635fdd9816c0ef140d6de7b2e4fdf73e89 upstream.
+[ Upstream commit c98bf3b86609a18ab16d067280257326e557c636 ]
 
-When a TF_UPDATE_TXN transaction supersedes a pending async transaction,
-binder_release_entire_buffer() is called with is_failure=false. Since the
-superseded transaction was never delivered, binder_apply_fd_fixups() was
-never called and no fds were installed in the target process.
+at91_twi_probe_master() can return -EPROBE_DEFER from
+at91_init_twi_recovery_info() after at91_twi_configure_dma() has already
+claimed the tx/rx DMA channels. at91_twi_probe() then returns without
+releasing them, and since dma_request_chan() is not devres-managed the
+channels leak on every deferred probe attempt.
 
-With is_failure=false, the BINDER_TYPE_FDA cleanup handler interprets
-stale buffer contents as installed fd numbers and passes them to
-binder_deferred_fd_close(), closing unrelated file descriptors.
+Release the channels before deferring the probe.
 
-Pass is_failure=true since the transaction was never delivered to the
-target, matching the semantics of all other undelivered-transaction
-cleanup paths.
-
-Fixes: 9864bb480133 ("Binder: add TF_UPDATE_TXN to replace outdated txn")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Tomer Pomeranc <tomerpo@gmail.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260812195316.259136-3-tomerpo@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f7eeb1af8537 ("i2c: at91: release DMA channels on remove and probe error")
+Assisted-by: LLM
+Signed-off-by: Hongjian Dai <daihongjian@kylinsec.com.cn>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/7D85C6CB6BF0A82E+20260929164340.41628-1-daihongjian@kylinsec.com.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-at91-master.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -2833,7 +2833,7 @@ static int binder_proc_transaction(struc
- 		t_outdated->buffer = NULL;
- 		buffer->transaction = NULL;
- 		trace_binder_transaction_update_buffer_release(buffer);
--		binder_release_entire_buffer(proc, NULL, buffer, false);
-+		binder_release_entire_buffer(proc, NULL, buffer, true);
- 		binder_alloc_free_buf(&proc->alloc, buffer);
- 		kfree(t_outdated);
- 		binder_stats_deleted(BINDER_STAT_TRANSACTION);
+diff --git a/drivers/i2c/busses/i2c-at91-master.c b/drivers/i2c/busses/i2c-at91-master.c
+index 28ed1bde3d68a..593881902a0d9 100644
+--- a/drivers/i2c/busses/i2c-at91-master.c
++++ b/drivers/i2c/busses/i2c-at91-master.c
+@@ -919,8 +919,14 @@ int at91_twi_probe_master(struct platform_device *pdev,
+ 	at91_calc_twi_clock(dev);
+ 
+ 	rc = at91_init_twi_recovery_info(pdev, dev);
+-	if (rc == -EPROBE_DEFER)
++	if (rc == -EPROBE_DEFER) {
++		/*
++		 * The DMA channels were already set up above, release them
++		 * before deferring the probe so they are not leaked.
++		 */
++		at91_twi_dma_release(dev);
+ 		return rc;
++	}
+ 
+ 	dev->adapter.algo = &at91_twi_algorithm;
+ 	dev->adapter.quirks = &at91_twi_quirks;
+-- 
+2.53.0
+
 
 
