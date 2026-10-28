@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217311;
-	b=B3LAZtS1gOokJEJixQSS8fAgERSP833zr7sOpJLzdZa04KlEXxNQOmgQ3SieqNKpKIS6
-	 aBr5rIASc387fviMEqSl926sJ7Hn5njc6DeohTTQsvSjKOqcwdsEB302nHUNYlASWWdxm
-	 /yHJE3Lv1A09cFySJfZBCkUHe5q+z0rIvcc6tn+Lv1JArLPwCNB6wuaqd/ClpH2qF5sS7
-	 nfuEot9P4wCoUSzWRsJARn4DkKj+xcrQGr+PeYojasZOfKQgNyymj9DgMHIKiLaNED5E5
-	 jaIixsEHVs0J7YZ/PONdgQ0KjYSePXEFcPxAX0INySVypXiU5rA62JN1kPQz+qk1wJw==
+	t=1793217314;
+	b=QEagFo3qadIawFoi0Dx0SFSdWHr0ZUnFopLjiZQyVFkglcXQOwe+m7miC0OSzPh1a6hI
+	 kPqLtQfPHJ9DwDNYH8eFCZ3hNVj4hoxp9/Hud2IoU7MmZYtqrbN0PeXTlS1LidjnZ56dC
+	 qwTn+VmsKQVT/uXsmqKDWb1721ANzRecv7ElPtzGBrUFfzAVWp9DzNXCujP9TmTDCTbdm
+	 3LyfRXXB36XRXa/gtfGFH5CrzbLNw+u/Wwk9Gre4R6eDJV2vl+Sojm8reC4Dp542OGyFa
+	 RsCJH+24PC6A6AA4JSL8RpyoFaRRYaEd4gdJV6QOXEFR0EIJRFDWvaWrEUvbCP7itnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217314;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BnppxMIm+s7wHqLJ2k+ItiSJ4m4XNXlJOdtniAfzX5g=;
-	b=BGMRG0zbihypq07AyL39fWlus8lKPRTWncuwBFeNqFsaWsnOsV6LefdVNZi33hgNps2R
-	 wUlVFQeBzL5aC06categh58+Ng9UtMoIqifwpnm5vXHwsl4buE4NHKl0ufNmn1qLYKmlF
-	 YOAIvqoQebpJcQncSJ9Qd5UXs8veSoTuIueCEEUOinvBwNelHM/UMepiwIRcKiHyO5RBo
-	 Zn9ofAe7ptAqbR2e7rcGO1xFiInnpWBZAEoE2FdRy/EXyI8JhZVhebTKL/bwA5Ip4zpzm
-	 C5/gUgmsROG9UbtiXAh1UhdL77thYupPhN9OcW/TFvcKhNsKn7J+gawUCkUlgrKR3Zg==
+	bh=AR/UMl4M8e4AqqEVdb9oo5xH5DS5hSQKnVuCHKHzjGw=;
+	b=mKvN+65NhK23mLBh3m6hmLKn2kaYfI4qGKHqmC2m3mDDDKTORpCWrC0mEdKhqaON+/p5
+	 ub4m6FtXQOwET5neNnqYFajglVOExceYOu/WidzrjUduT+CjZsWuM7VHysnq/K5PwlLMl
+	 TcjhgzActYyYiWmcFXKVRTEqkxboYc00t3hUxk8G4FS3IltKpEdfFp34Iv5utoUeZwjSo
+	 E2wX0uYDirJgtNChUFBO7rYKQed8NwPzcDQRseBMghKRYGsG8EQQlhXpXaCsXNIx68pDh
+	 ohajO4VI1LL155kZD9Inkki/kg0PIbVFjXkUa/s0SAAfGlRZmy0sNqZ2SKp9grutgiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mDsmfpLr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfUyKNXT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C72606A31C;
-	Wed, 28 Oct 2026 19:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB1E606A325;
+	Wed, 28 Oct 2026 19:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mDsmfpLr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56011F01825;
-	Wed, 28 Oct 2026 19:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfUyKNXT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF701F01829;
+	Wed, 28 Oct 2026 19:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217311;
-	bh=BnppxMIm+s7wHqLJ2k+ItiSJ4m4XNXlJOdtniAfzX5g=;
+	s=korg; t=1793217314;
+	bh=AR/UMl4M8e4AqqEVdb9oo5xH5DS5hSQKnVuCHKHzjGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mDsmfpLr7vihi3EkpDGzr8yqoyrpUhUUuO7LlJRU8lQKGxFrXA/FIlTcMUEdUzIbl
-	 hhspPSL3wA6ptyjW8+OShipPqZ4q6VYCJ44ne4Kps9jqLxUmz1dmOEX26X+1Yry1C3
-	 xzpon3KMiEIYEutG8/slggv6PYXMTiR3cD8l6k7w=
+	b=YfUyKNXToAn/iBkWVTmbhKh1fA2c8yeI4LhiMMIe7FiCWrJzis7RzOzViLReDCCG4
+	 l4OQW9vwpyqZTKzZ0aqz7SChhfOxdkhyWmDXxy02ULUjG5hyY07qFpEwYJn1PwvNop
+	 wqDZnSWhW2SafQ+TNUNDTWs+m3mQZDI4TUUb6Zec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1860/1887] KVM: SEV: Drop FOLL_WRITE for encrypted region registration
-Date: Wed, 28 Oct 2026 18:05:56 +0100
-Message-ID: <20261028170541.778822011@linuxfoundation.org>
+Subject: [PATCH 6.1 1834/1887] firmware: arm_scmi: Use channel ID for transport teardown
+Date: Wed, 28 Oct 2026 18:05:30 +0100
+Message-ID: <20261028170541.180944277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,66 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pankaj Gupta <pankaj.gupta@amd.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit ee1a586dd1fa2f245b3b753a3e44d9263a49240b ]
+[ Upstream commit a71a3d4d8a6e9e399fd988c0e6da47a6ee21c99e ]
 
-When pinning SEV guest memory, drop FOLL_WRITE and rely on FOLL_LONGTERM
-to break CoW, as *KVM* doesn't actually to the memory using the GUP'd
-pages.  Omitting FOLL_WRITE fixes a regression when using file-backed guest
-memory that was introduced when KVM (correctly) added FOLL_LONG (e.g. to
-ensure anonymous memory is migrated out of MIGRATE_CMA/ZONE_MOVABLE before
-a long term pin).
+SCMI protocols can share the BASE transport channel when firmware does
+not describe a dedicated channel for the protocol. In that case multiple
+IDR entries can point at the same scmi_chan_info, whose owning transport
+device was created with cinfo->id.
 
-Unfortunately, as of commits:
+scmi_chan_destroy() used the IDR iterator key when destroying the
+transport device. If an alias entry is visited before the owning channel
+entry, the lookup can miss the device because the iterator key does not
+match the protocol ID used when the transport device was created. The
+code then clears cinfo->dev, so the later owning entry skips teardown and
+leaks the transport device.
 
-  8ac268436e6d ("mm/gup: disallow FOLL_LONGTERM GUP-nonfast writing to file-backed mappings")
-  a6e79df92e4a ("mm/gup: disallow FOLL_LONGTERM GUP-fast writing to file-backed mappings")
+Destroy the transport device using cinfo->id, which is the protocol ID
+that owns the channel and was used when creating the transport device.
 
-GUP uses FOLL_LONGTERM as a canary of sorts to detect pins that are likely
-to be problematic, and disallows WRITE+LONGTERM pins for file-backed memory.
-As a result, backing SEV+ guests with file-backed memory, e.g. virtio-pmem,
-fails due to the disallowed FOLL_LONGTERM+FOLL_WRITE combination.
-
-Note, in the past, FOLL_WRITE was required to trigger CoW unsharing, to
-prevent replacing the page in the (primary MMU's) page tables during a
-later write fault after already having pinned a (shared) page in
-MAP_PRIVATE mappings.  FOLL_LONGTERM does that nowadays, even without
-FOLL_WRITE (see gup_must_unshare()).
-
-Fixes: 7e066cb9b71a ("KVM: SEV: Use long-term pin when registering encrypted memory regions")
-Cc: stable@vger.kernel.org
-Suggested-by: "David Hildenbrand (Arm)" <david@kernel.org>
-Link: https://lore.kernel.org/all/ad784f05-b36c-4e91-9f17-4c5b826735d0@kernel.org/
-Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Link: https://patch.msgid.link/20260715063626.65899-1-pankaj.gupta@amd.com
-[sean: massage changelog, add comment about CoW unsharing]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 05a2801d8b90 ("firmware: arm_scmi: Use dedicated devices to initialize channels")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-8-3afe499d46e3@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 0c182fd09fa60..52592ebc156d5 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -1972,8 +1972,12 @@ int sev_mem_enc_register_region(struct kvm *kvm,
- 	if (!region)
- 		return -ENOMEM;
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index 6c9107c32993c..2f959a3183273 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -2217,7 +2217,7 @@ static int scmi_chan_destroy(int id, void *p, void *idr)
+ 		struct scmi_device *sdev = to_scmi_dev(cinfo->dev);
  
-+	/*
-+	 * Do NOT specify FOLL_WRITE, as KVM isn't using the pinned pages to
-+	 * write memory, and FOLL_LONGTERM itself triggers CoW unshare.
-+	 */
- 	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages,
--				       FOLL_WRITE | FOLL_LONGTERM);
-+				       FOLL_LONGTERM);
- 	if (IS_ERR(region->pages)) {
- 		ret = PTR_ERR(region->pages);
- 		goto e_free;
+ 		of_node_put(cinfo->dev->of_node);
+-		scmi_device_destroy(info->dev, id, sdev->name);
++		scmi_device_destroy(info->dev, cinfo->id, sdev->name);
+ 		cinfo->dev = NULL;
+ 	}
+ 
 -- 
 2.53.0
 
