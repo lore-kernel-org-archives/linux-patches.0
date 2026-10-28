@@ -1,60 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208032;
-	b=AuC+fjDRAw2Bj5pe/IaKinbmVWvZH2dlgZqYhoPBRwnKH0GSHgMhjmSCo/gPivsJyC1L
-	 GvIyyECIHmxP45TLtVu3lZiKlBxa0XvSVGG7v//o7QpU3Z4d9KYr5uP9TjOvHHJBV9jRn
-	 buLUxzwVaVg81eGi8x4ne7hUtZs+DQkdI2Wod5L4F9FFPP1wQPhchERJ5fMZvpkpS972t
-	 e+VaXl/KJII4XBBv5eDwi+UpwQiLldf6D2yGWuT7Dosi9I17Lh+wGnnHriFi3npW/X5v1
-	 uknEIHMMhuUa0Mv2+H4UQb/tdd9TfZjn+/areo49z03nSNMLkdFwKdVIIs0aHmRsx/w==
+	t=1793208035;
+	b=dZFQBStCR9PQI+kLAIx+cLvJEcI3NS+TnRF+pyhVs09AFQnqhaI/4q5NzNwcOMRCY3B6
+	 QBakAXcuUFrycGD2SNGWOV5PNPpvUZtVpZiQcIXfsY2yPq+i+loryES+5MCrnmdYuyWHk
+	 IbK5597vGfb4LmWeFbB25yft2zqLpG9BAKr/trvcCVG2mBK0WuP8+dh4S4QmVZRRLb6Y6
+	 pEfy3UobvW+7A2ciiuv6y/5rbHCwuKzx5TAMDZy/Io2NvT7Xp/nBtERLAeZYCbI4kiolN
+	 qNKbZft1u3MHo3ymwFeKzFwDVfulBQfubUsy7gaRgyurceSlkYQnB5LmncJaEte8WMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l/xhMgZFcrbYkuA7b09PddJ7yyCB1RGBpKl71+GJU/0=;
-	b=Jtt3xUi3VG6qbu6qlNChwzCrFgjByJDCd74ppPioLMDIR9MOJz4zizAQHYAdipJ+ePNa
-	 sDjcwfeFFnV1Nf2QDt1s754rXOGVpdOoFxzIBptl36kVQC79Slec4JLjFeR4rEgwtirUG
-	 nTweE1KpTKFcw+jYg20GJ+P8Fug4qiEGg4LSJT5TUw79Lsab2fdY5IWXVljN+TLkl1VhZ
-	 Q6NbceD+8sZYxlWjMFXBYJdIrUfgukkJt/Xaf9p/49O5XsQnlSsrR9Y1YNOVUHIIjMh2y
-	 Cuo0WqYjDA8wKnW6cnvFR+pHskcacOtS/GD/Nj39G3eqSalyP0md7XHOWZbddmxozng==
+	bh=fCDdpZZIEhUs/N9meLjaeoB/LZ0RW7NgmjKsWH4zYdg=;
+	b=FOqDnjDQxI7BMNiinMar9kkZ1ViwkVdSmomFI8wak5gSQGfufd0bUAwCvIotwkQ4SAKs
+	 Gkf+MfCsbdMZGsA0pWt+2Xvb6tHo8C1S1aW8aSAnA5pXWC7OW5rSPFQY8u+ohTihwGAMv
+	 zpOf2tcmGA+FEQPMo7SWQXD9y0j8nnlzI6lWOn2CUhceB6l/NPJCjkRyoq5uROAVKj9He
+	 w8DWFYYzznWQpW0oK9lG4qGz+AUcfJYaXokZj6Qv83OUp1ZpebwX+2B0mcSU/fcnDjeBj
+	 CvyaNgNX3u66rfebDS432X55LlvYJzCJPAn6cdVxjjBXulHLhIgFhEL2qs9EeNcSafg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOZpWrif;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iv3gAGzb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220F0606A31C;
-	Wed, 28 Oct 2026 17:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000C8606A31C;
+	Wed, 28 Oct 2026 17:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOZpWrif
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6E51F01825;
-	Wed, 28 Oct 2026 17:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iv3gAGzb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7A11F01825;
+	Wed, 28 Oct 2026 17:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208032;
-	bh=l/xhMgZFcrbYkuA7b09PddJ7yyCB1RGBpKl71+GJU/0=;
+	s=korg; t=1793208034;
+	bh=fCDdpZZIEhUs/N9meLjaeoB/LZ0RW7NgmjKsWH4zYdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cOZpWrifHaY6REGZS6eorV8ta9hoz87v2OZgSMzQjOKSy3A5HGg/M5lkZpzQyyl3E
-	 w2peYAdyPtS1jk0fXNwHrK0r95WbAnfB4Io7ifERSvqAF7y893TXVfYxTLOyEfnFqy
-	 wzlyBd3NLeSzbKa+oJFxuDABIcabQW+TR1h3Xoco=
+	b=iv3gAGzb3vDY2CoeVhVsqAZl8t6dX7wMCG+/i/ATVzZvtI9UURyGRmDoDQCiAA9ul
+	 E2H5FbJuZiDENySNtTN6WfHdPhhX5/+Vmt++jAmiK3rH3fd0lUd8Qr+3+NaT96PYq2
+	 pO8BrsMJ+Xjwc2XKn8E0IEIsifm3koZcs/FrBkq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Max Boone <mboone@akamai.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 182/247] mm/pagewalk: fix stale walk->action escaping walk_pmd_range()
-Date: Wed, 28 Oct 2026 17:59:45 +0100
-Message-ID: <20261028165951.728820435@linuxfoundation.org>
+Subject: [PATCH 6.12 173/247] ax25: dont create two connections for the same link in ax25_send_frame()
+Date: Wed, 28 Oct 2026 17:59:36 +0100
+Message-ID: <20261028165951.518797486@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -76,162 +67,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit aedf2efd18977e0cef7eb963166e2b1fcc0aa321 ]
+ax25_send_frame() looks for an existing connection with ax25_find_cb()
+and, when there is none, creates one and adds it to the list. The
+lookup and the insertion are not done under the same lock, so two
+callers sending to a neighbour at the same time both find nothing and
+both create a control block: the same link ends up with several
+connections, each sending its own SABM, and the frames queued on the
+ones that lose are never delivered.
 
-If ->pmd_entry() sets walk->action = ACTION_AGAIN, the pmd_none() check is
-retried.  The PMD entry may be cleared at the point of retry.
+ROSE and NET/ROM call ax25_send_frame() for every frame they send to a
+neighbour, from process context and from softirq context, so this
+happens as soon as several circuits start together on a link that is
+not established yet.
 
-In this case, if walk->ops->install_pte is not specified, the code
-continues to the next PMD entry in the range without resetting
-walk->action to ACTION_SUBTREE.
+Add ax25_cb_add_unique(), which searches the list and inserts the new
+control block under ax25_list_lock, and returns the existing connection
+when another sender got there first; ax25_send_frame() then drops its
+own control block and queues the frame on that connection. The SABM is
+only sent once the control block is known to be the one in the list.
 
-This leaves walk->action erroneously set to ACTION_AGAIN, which is
-incorrect.
+Tested in QEMU, two 4-CPU nodes with lockdep and KASAN over a KISS
+serial link, eight ROSE calls started at the same instant with no AX.25
+connection up: before, /proc/net/ax25 shows four connections for the
+same pair of callsigns on three runs out of three; after, one. No
+lockdep, KASAN or refcount report.
 
-This was incorrect but not problematic up until commit 3b89863c3fa4
-("mm/pagewalk: fix race between concurrent split and refault") which
-updated walk_pud_range() to check for walk->action == ACTION_AGAIN upon
-walk_pmd_range()'s return, causing the PUD walk to be retried.
-
-In this case this results in duplicate walk callbacks being invoked,
-which is erroneous and will break any caller that is not idempotent
-with respect to this (and waste time for those which are).  The result
-is an out-of-bounds write, triggered by a local fuzzer:
-
-[    2.272695] ==================================================================
-[    2.273471] BUG: KASAN: slab-out-of-bounds in __mincore_unmapped_range+0x14f/0x190
-[    2.274302] Write of size 1 at addr ffff888008d9b000 by task poc/106
-[    2.274966]
-[    2.275154] CPU: 0 UID: 1000 PID: 106 Comm: poc Not tainted 7.2.0-rc6-00429-ga7c7074b58d2 #55 PREEMPT(lazy)
-[    2.275159] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    2.275164] Call Trace:
-[    2.275170]  <TASK>
-[    2.275172]  dump_stack_lvl+0x53/0x70
-[    2.275200]  print_report+0xd0/0x630
-[    2.275210]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[    2.275219]  ? irqentry_exit+0xd2/0x670
-[    2.275224]  ? irqentry_exit+0xd2/0x670
-[    2.275226]  ? __virt_addr_valid+0xef/0x1a0
-[    2.275239]  ? __mincore_unmapped_range+0x14f/0x190
-[    2.275242]  kasan_report+0xce/0x100
-[    2.275245]  ? __mincore_unmapped_range+0x14f/0x190
-[    2.275248]  __mincore_unmapped_range+0x14f/0x190
-[    2.275252]  mincore_unmapped_range+0x45/0x70
-[    2.275254]  walk_pgd_range+0xafc/0xfc0
-[    2.275261]  ? __pfx_walk_pgd_range+0x10/0x10
-[    2.275264]  ? __update_load_avg_se+0x3d1/0x670
-[    2.275275]  __walk_page_range+0xc0/0x310
-[    2.275278]  ? __pfx_find_vma+0x10/0x10
-[    2.275281]  ? finish_task_switch.isra.0+0x16d/0x4f0
-[    2.275290]  walk_page_range_mm_unsafe+0x26f/0x3a0
-[    2.275293]  ? __pfx_mtree_load+0x10/0x10
-[    2.275298]  ? __pfx_walk_page_range_mm_unsafe+0x10/0x10
-[    2.275302]  ? __free_frozen_pages+0x54d/0x7e0
-[    2.275308]  __do_sys_mincore+0x132/0x380
-[    2.275311]  do_syscall_64+0xf9/0x540
-[    2.275316]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[    2.275322] RIP: 0033:0x422ccd
-[    2.275326] Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-[    2.275329] RSP: 002b:00007fffffffec18 EFLAGS: 00000287 ORIG_RAX: 000000000000001b
-[    2.275337] RAX: ffffffffffffffda RBX: 0000000000000066 RCX: 0000000000422ccd
-[    2.275339] RDX: 00000000004d0940 RSI: 0000000001000000 RDI: 00007ffff4000000
-[    2.275340] RBP: 00000000004d0940 R08: 0000000000000100 R09: 0000000000000100
-[    2.275342] R10: 0000000000000100 R11: 0000000000000287 R12: 20c49ba5e353f7cf
-[    2.275343] R13: 00000000004990d3 R14: 0000000000000000 R15: 0000000000000001
-[    2.275346]  </TASK>
-[    2.275347]
-[    2.296904] The buggy address belongs to the object at ffff888008d9b000
-[    2.296904]  which belongs to the cache sigqueue of size 80
-[    2.298151] The buggy address is located 0 bytes inside of
-[    2.298151]  allocated 80-byte region [ffff888008d9b000, ffff888008d9b050)
-[    2.299408]
-[    2.299601] The buggy address belongs to the physical page:
-[    2.300191] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8d9b
-[    2.301001] flags: 0x100000000000000(node=0|zone=1)
-[    2.301535] page_type: f5(slab)
-[    2.301884] raw: 0100000000000000 ffff888107e46780 dead000000000122 0000000000000000
-[    2.302687] raw: 0000000000000000 0000000800240024 00000000f5000000 0000000000000000
-[    2.303489] page dumped because: kasan: bad access detected
-[    2.304092]
-[    2.304276] Memory state around the buggy address:
-[    2.304801]  ffff888008d9af00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    2.305567]  ffff888008d9af80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    2.306340] >ffff888008d9b000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    2.307115]                    ^
-[    2.307474]  ffff888008d9b080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    2.308237]  ffff888008d9b100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    2.308997] ==================================================================
-
-A specific example of this breaking things is mincore which walks an
-internal cursor data structure a byte at a time on assumption that page
-table entry callbacks are called only once for each entry.
-
-Fix the problem by resetting walk->action to ACTION_SUBTREE prior to the
-none check.
-
-The pattern also exists in walk_pud_range() so fix it there too.
-
-This issue was found through AI-based fuzzing.
-
-Link: https://lore.kernel.org/20260811161949.3879321-2-imv4bel@gmail.com
-Fixes: 3b89863c3fa4 ("mm/pagewalk: fix race between concurrent split and refault")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Max Boone <mboone@akamai.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+(cherry picked from commit 2649f91b6dd2c48348975d03e8f94d8e6a09cf71)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/pagewalk.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ include/net/ax25.h  |  1 +
+ net/ax25/af_ax25.c  | 49 ++++++++++++++++++++++++++++++++++++++-------
+ net/ax25/ax25_out.c | 16 ++++++++++++---
+ 3 files changed, 56 insertions(+), 10 deletions(-)
 
-diff --git a/mm/pagewalk.c b/mm/pagewalk.c
-index 3d795ad47a897..150e641d03913 100644
---- a/mm/pagewalk.c
-+++ b/mm/pagewalk.c
-@@ -108,6 +108,7 @@ static int walk_pmd_range(pud_t *pud, unsigned long addr, unsigned long end,
- 	pmd = pmd_offset(pud, addr);
- 	do {
- again:
-+		walk->action = ACTION_SUBTREE;
- 		next = pmd_addr_end(addr, end);
- 		if (pmd_none(*pmd)) {
- 			if (ops->pte_hole)
-@@ -117,8 +118,6 @@ static int walk_pmd_range(pud_t *pud, unsigned long addr, unsigned long end,
- 			continue;
- 		}
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 0fe92fa6ef075..e3c10a9395944 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -311,6 +311,7 @@ static inline __be16 ax25_type_trans(struct sk_buff *skb, struct net_device *dev
+ extern struct hlist_head ax25_list;
+ extern spinlock_t ax25_list_lock;
+ void ax25_cb_add(ax25_cb *);
++ax25_cb *ax25_cb_add_unique(ax25_cb *ax25);
+ struct sock *ax25_find_listener(ax25_address *, int, struct net_device *, int);
+ struct sock *ax25_get_socket(ax25_address *, ax25_address *, int);
+ ax25_cb *ax25_find_cb(const ax25_address *, ax25_address *, ax25_digi *,
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 164e9f46f0e77..9f7bda3b511e3 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -222,12 +222,12 @@ struct sock *ax25_get_socket(ax25_address *my_addr, ax25_address *dest_addr,
+  *	Find an AX.25 control block given both ends. It will only pick up
+  *	floating AX.25 control blocks or non Raw socket bound control blocks.
+  */
+-ax25_cb *ax25_find_cb(const ax25_address *src_addr, ax25_address *dest_addr,
+-	ax25_digi *digi, struct net_device *dev)
++static ax25_cb *__ax25_find_cb(const ax25_address *src_addr,
++			       ax25_address *dest_addr, ax25_digi *digi,
++			       struct net_device *dev)
+ {
+ 	ax25_cb *s;
  
--		walk->action = ACTION_SUBTREE;
--
- 		/*
- 		 * This implies that each ->pmd_entry() handler
- 		 * needs to know about pmd_trans_huge() pmds
-@@ -167,6 +166,7 @@ static int walk_pud_range(p4d_t *p4d, unsigned long addr, unsigned long end,
- 	pud = pud_offset(p4d, addr);
- 	do {
-  again:
-+		walk->action = ACTION_SUBTREE;
- 		next = pud_addr_end(addr, end);
- 		if (pud_none(*pud)) {
- 			if (ops->pte_hole)
-@@ -176,8 +176,6 @@ static int walk_pud_range(p4d_t *p4d, unsigned long addr, unsigned long end,
+-	spin_lock_bh(&ax25_list_lock);
+ 	ax25_for_each(s, &ax25_list) {
+ 		if (s->sk && s->sk->sk_type != SOCK_SEQPACKET)
  			continue;
- 		}
- 
--		walk->action = ACTION_SUBTREE;
+@@ -243,19 +243,54 @@ ax25_cb *ax25_find_cb(const ax25_address *src_addr, ax25_address *dest_addr,
+ 				if (s->digipeat != NULL && s->digipeat->ndigi != 0)
+ 					continue;
+ 			}
+-			ax25_cb_hold(s);
+-			spin_unlock_bh(&ax25_list_lock);
 -
- 		if (ops->pud_entry)
- 			err = ops->pud_entry(pud, addr, next, walk);
- 		if (err)
+ 			return s;
+ 		}
+ 	}
+-	spin_unlock_bh(&ax25_list_lock);
+ 
+ 	return NULL;
+ }
+ 
++ax25_cb *ax25_find_cb(const ax25_address *src_addr, ax25_address *dest_addr,
++		      ax25_digi *digi, struct net_device *dev)
++{
++	ax25_cb *s;
++
++	spin_lock_bh(&ax25_list_lock);
++	s = __ax25_find_cb(src_addr, dest_addr, digi, dev);
++	if (s)
++		ax25_cb_hold(s);
++	spin_unlock_bh(&ax25_list_lock);
++
++	return s;
++}
++
+ EXPORT_SYMBOL(ax25_find_cb);
+ 
++/*
++ *	Add a new connection to the list unless one already exists for the
++ *	same addresses, path and device. Returns NULL when the control block
++ *	has been added, or the existing one, held, when there is one: looking
++ *	it up and adding it are done under the same lock, so that two senders
++ *	cannot both create a connection for the same link.
++ */
++ax25_cb *ax25_cb_add_unique(ax25_cb *ax25)
++{
++	ax25_cb *s;
++
++	spin_lock_bh(&ax25_list_lock);
++	s = __ax25_find_cb(&ax25->source_addr, &ax25->dest_addr,
++			   ax25->digipeat, ax25->ax25_dev->dev);
++	if (s) {
++		ax25_cb_hold(s);
++	} else {
++		ax25_cb_hold(ax25);
++		hlist_add_head(&ax25->ax25_node, &ax25_list);
++	}
++	spin_unlock_bh(&ax25_list_lock);
++
++	return s;
++}
++
+ void ax25_send_to_raw(ax25_address *addr, struct sk_buff *skb, int proto)
+ {
+ 	ax25_cb *s;
+diff --git a/net/ax25/ax25_out.c b/net/ax25/ax25_out.c
+index 1b9a91b9c9831..eeb2aa1e2186f 100644
+--- a/net/ax25/ax25_out.c
++++ b/net/ax25/ax25_out.c
+@@ -32,7 +32,7 @@ static DEFINE_SPINLOCK(ax25_frag_lock);
+ ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen, const ax25_address *src, ax25_address *dest, ax25_digi *digi, struct net_device *dev)
+ {
+ 	ax25_dev *ax25_dev;
+-	ax25_cb *ax25;
++	ax25_cb *ax25, *existing;
+ 
+ 	/*
+ 	 * Take the default packet length for the device if zero is
+@@ -82,6 +82,18 @@ ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen, const ax25_address *sr
+ 		}
+ 	}
+ 
++	/*
++	 * Another sender may have created the connection since the lookup
++	 * above: the list is searched again and the new control block added
++	 * under one lock. If we lost, use the other one.
++	 */
++	existing = ax25_cb_add_unique(ax25);
++	if (existing) {
++		ax25_cb_put(ax25);
++		ax25_output(existing, paclen, skb);
++		return existing;
++	}
++
+ 	switch (ax25->ax25_dev->values[AX25_VALUES_PROTOCOL]) {
+ 	case AX25_PROTO_STD_SIMPLEX:
+ 	case AX25_PROTO_STD_DUPLEX:
+@@ -104,8 +116,6 @@ ax25_cb *ax25_send_frame(struct sk_buff *skb, int paclen, const ax25_address *sr
+ 	 */
+ 	ax25_cb_hold(ax25);
+ 
+-	ax25_cb_add(ax25);
+-
+ 	ax25->state = AX25_STATE_1;
+ 
+ 	ax25_start_heartbeat(ax25);
 -- 
 2.53.0
 
