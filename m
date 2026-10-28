@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213821;
-	b=XC0A6OYuRhCBf4QLA4OY4AUNmmyg5/UjiCz+6boQLHml+vMQ2YojEZKVUeSuSVp1L+oM
-	 D4qQUqQoNQJr67PTpByWI+sKQNR4+6opmwPP8OT5nZQMMaxJJmrAKHiZ16IC7hnggORRp
-	 WuhmS6vfTqVUlMkNuA0HWYIWRIjgBF6+/+Qe6bUQ+IGbGJVzcnygRh6P3r36BWNf8/ISC
-	 2ls7cq+2qg58Oe3rpDmgHw7guYKz+qkuH0wsOpdXnKwLWzSyHrDhS25E3awgix/hI0iyK
-	 Qdb4AnGKL8HQQxIr+/UxQPYGkYFiS0fVF8KZjE0Kvwp/ILwxEax+9PW1vUeHgX2epPA==
+	t=1793213824;
+	b=bVZ/h7Ir5Ei1eNyynF3rWQOYjgJQ35q/arrUjbDBvm3hTEfJ+Leo3+KAtkegTggq8lBT
+	 KGI3odau0TJoiFxhoO364VD9uukmwY0VlF0pDoXjF96j+nymqDAeahnwK30I5jnRHVu+l
+	 Is52EHwTUlL5oDlrW5calAE89m0K+Ujn/aqaa8n7Hk/Upmu1kcII6x6N8fgG1cc2fjvkP
+	 /YrkwCce6Ivcf3vwJLfQccaBWRQdLy8H74Q/Gl/MBLedj6SsHma8nlc+d/cr88GekEZpp
+	 7MORWeH5bVF4BcA/CcJtyGwE8OcU98xKA8re4bCXUyFxtf4je05quTMjLEyzEDdiv9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213821;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i56M0XgOhjA5DO81mbm8Gc4AsiJ4waoocAcK77c6RCQ=;
-	b=mTr5zzDOs75vy4eb09LHaWSe3uI/vhLpFnYAs2zLTiIqBPbv12x1z0WLyFKTY52PsmTs
-	 bAwM/JThi01YXUqbi+Uv4laE8LPD7XwJEcp6MrXdqGvjkbQ0jEjg/8ijIF+U4R4AjAdot
-	 fAutaXEPwLOrWFfUzdkeWJ0cpAmXHgOMql2RPV7j19eRkK2AlsI7mk4A00FfmPJnQPoyk
-	 fgb7WaRbIL5o+wfrUADyAoFVv40c/VmX7mQP/LyojxrmG01r1tzg6ShUwoJsvCv9hLNZs
-	 FGyUlODla35k1YphiLv9yUdTR7tw/TjsVe30kBDX5amR47miJp+p2YTOTwKByEFQsyA==
+	bh=faJIOs7e/MDyTb63EupV4+84tD5gWayNsAc897srWbE=;
+	b=O9k0Lh7viwj0msTA8WGAh8qyktTlAMookSbqrENWaHzkJSAcPfdr5dhcoqOQW0Y50GMq
+	 2RYklo1LGnSTV7rkYzDCCdc2hJV53/CWO5vSIrptBlJWwgRSRT99GTUabRqT7kqf6t8rW
+	 AHjk13xueGzwuWhKrKDUleYuVN5Rs4ztoTpSpc7HYgH5iVBDqPxo2aYdnc2delrbxdMie
+	 oku6aGhTiHIMvR0rlNnQrUnecl7v66/q0p5LHqHqLVMtUn4+3Ez6CliOuS1/wa2NHDfL8
+	 7hSPXiMHlqip7Y6tWbWZO4sGiCYlubGWl8u7gVbdaJklngHNB91fIJ2qIfbTC9ocBpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtGzlO6i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEiE2i2i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8DC606A31D;
-	Wed, 28 Oct 2026 18:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC0A606A31A;
+	Wed, 28 Oct 2026 18:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtGzlO6i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6A41F01825;
-	Wed, 28 Oct 2026 18:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEiE2i2i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9251F01825;
+	Wed, 28 Oct 2026 18:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213821;
-	bh=i56M0XgOhjA5DO81mbm8Gc4AsiJ4waoocAcK77c6RCQ=;
+	s=korg; t=1793213824;
+	bh=faJIOs7e/MDyTb63EupV4+84tD5gWayNsAc897srWbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KtGzlO6iwlKxiXWHxtNxZ5WWn91+aFE/eGBgdlrA2aq4wa1hEKLThNzkpuCAxyTxO
-	 mrYmwz+1ixmuqqaAELHTFdM7eDwVhAz+3j3UsUF4SRW2hwCoAhCe3H04mxIYPMfdg0
-	 /RVJk2CDBcqeBJgzBNurPOQf83aN+AQzSGCi62DY=
+	b=JEiE2i2ix1MrA0/MKQpS92JtjX+9UlcM0q7SZ8uuneMGWL0o+3Ni+cDa3dYXBIYIu
+	 H0cwQrHQH/ka30xDng4U6gkFiFQoi39S3kTnqk5WwtGzIC//D2a5ukklRgLVzVoGM+
+	 Wgtfosb1Apoe6eqU6a9X8lUxsZHxfWILaGF04Lzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0624/1887] ext4: refactoring to use the unified helper ext4_quotas_off()
-Date: Wed, 28 Oct 2026 17:45:20 +0100
-Message-ID: <20261028170513.609516655@linuxfoundation.org>
+Subject: [PATCH 6.1 0642/1887] drm/amd/display: Fix null pointer deref in dcn20_resource.c
+Date: Wed, 28 Oct 2026 17:45:38 +0100
+Message-ID: <20261028170514.020176718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,92 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit f3c1c42e0c40656e73f12ab5dcb1110f83ef8e65 ]
+[ Upstream commit ecbf60782662f0a388493685b85a645a0ba1613c ]
 
-Rename ext4_quota_off_umount() to ext4_quotas_off(), and add type
-parameter to replace open code in ext4_enable_quotas().
+Fixes a hang thats triggered when MPV is run on a DCN401 dGPU:
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230327141630.156875-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: b4b4fda34e53 ("ext4: fix uninitialized ratelimit_state->lock access in __ext4_fill_super()")
+mpv --hwdec=vaapi --vo=gpu --hwdec-codecs=all
+
+and then enabling fullscreen playback (double click on the video)
+
+The following calltrace will be seen:
+
+[  181.843989] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  181.843997] #PF: supervisor instruction fetch in kernel mode
+[  181.844003] #PF: error_code(0x0010) - not-present page
+[  181.844009] PGD 0 P4D 0
+[  181.844020] Oops: 0010 [#1] PREEMPT SMP NOPTI
+[  181.844028] CPU: 6 PID: 1892 Comm: gnome-shell Tainted: G        W  OE      6.5.0-41-generic #41~22.04.2-Ubuntu
+[  181.844038] Hardware name: System manufacturer System Product Name/CROSSHAIR VI HERO, BIOS 6302 10/23/2018
+[  181.844044] RIP: 0010:0x0
+[  181.844079] Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+[  181.844084] RSP: 0018:ffffb593c2b8f7b0 EFLAGS: 00010246
+[  181.844093] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000004
+[  181.844099] RDX: ffffb593c2b8f804 RSI: ffffb593c2b8f7e0 RDI: ffff9e3c8e758400
+[  181.844105] RBP: ffffb593c2b8f7b8 R08: ffffb593c2b8f9c8 R09: ffffb593c2b8f96c
+[  181.844110] R10: 0000000000000000 R11: 0000000000000000 R12: ffffb593c2b8f9c8
+[  181.844115] R13: 0000000000000001 R14: ffff9e3c88000000 R15: 0000000000000005
+[  181.844121] FS:  00007c6e323bb5c0(0000) GS:ffff9e3f85f80000(0000) knlGS:0000000000000000
+[  181.844128] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  181.844134] CR2: ffffffffffffffd6 CR3: 0000000140fbe000 CR4: 00000000003506e0
+[  181.844141] Call Trace:
+[  181.844146]  <TASK>
+[  181.844153]  ? show_regs+0x6d/0x80
+[  181.844167]  ? __die+0x24/0x80
+[  181.844179]  ? page_fault_oops+0x99/0x1b0
+[  181.844192]  ? do_user_addr_fault+0x31d/0x6b0
+[  181.844204]  ? exc_page_fault+0x83/0x1b0
+[  181.844216]  ? asm_exc_page_fault+0x27/0x30
+[  181.844237]  dcn20_get_dcc_compression_cap+0x23/0x30 [amdgpu]
+[  181.845115]  amdgpu_dm_plane_validate_dcc.constprop.0+0xe5/0x180 [amdgpu]
+[  181.845985]  amdgpu_dm_plane_fill_plane_buffer_attributes+0x300/0x580 [amdgpu]
+[  181.846848]  fill_dc_plane_info_and_addr+0x258/0x350 [amdgpu]
+[  181.847734]  fill_dc_plane_attributes+0x162/0x350 [amdgpu]
+[  181.848748]  dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]
+[  181.849791]  ? dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]
+[  181.850840]  amdgpu_dm_atomic_check+0xdfe/0x1760 [amdgpu]
+
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index f2a569868e416..76c8c364c5dd1 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1167,12 +1167,12 @@ static void dump_orphan_list(struct super_block *sb, struct ext4_sb_info *sbi)
- #ifdef CONFIG_QUOTA
- static int ext4_quota_off(struct super_block *sb, int type);
- 
--static inline void ext4_quota_off_umount(struct super_block *sb)
-+static inline void ext4_quotas_off(struct super_block *sb, int type)
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
+index 8224b9bf01d1b..2a567c4fd80b6 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
+@@ -2173,10 +2173,11 @@ bool dcn20_get_dcc_compression_cap(const struct dc *dc,
+ 		const struct dc_dcc_surface_param *input,
+ 		struct dc_surface_dcc_cap *output)
  {
--	int type;
-+	BUG_ON(type > EXT4_MAXQUOTAS);
- 
- 	/* Use our quota_off function to clear inode flags etc. */
--	for (type = 0; type < EXT4_MAXQUOTAS; type++)
-+	for (type--; type >= 0; type--)
- 		ext4_quota_off(sb, type);
+-	return dc->res_pool->hubbub->funcs->get_dcc_compression_cap(
+-			dc->res_pool->hubbub,
+-			input,
+-			output);
++	if (dc->res_pool->hubbub->funcs->get_dcc_compression_cap)
++		return dc->res_pool->hubbub->funcs->get_dcc_compression_cap(
++			dc->res_pool->hubbub, input, output);
++
++	return false;
  }
  
-@@ -1188,7 +1188,7 @@ static inline char *get_qf_name(struct super_block *sb,
- 					 lockdep_is_held(&sb->s_umount));
- }
- #else
--static inline void ext4_quota_off_umount(struct super_block *sb)
-+static inline void ext4_quotas_off(struct super_block *sb, int type)
- {
- }
- #endif
-@@ -1283,7 +1283,7 @@ static void ext4_put_super(struct super_block *sb)
- 		ext4_msg(sb, KERN_INFO, "unmounting filesystem.");
- 
- 	ext4_unregister_li_request(sb);
--	ext4_quota_off_umount(sb);
-+	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
- 
- 	flush_work(&sbi->s_error_work);
- 	destroy_workqueue(sbi->rsv_conversion_wq);
-@@ -5605,7 +5605,7 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 	return 0;
- 
- failed_mount10:
--	ext4_quota_off_umount(sb);
-+	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
- failed_mount9: __maybe_unused
- 	ext4_release_orphan_info(sb);
- failed_mount8:
-@@ -7091,20 +7091,8 @@ int ext4_enable_quotas(struct super_block *sb)
- 					"(type=%d, err=%d, ino=%lu). "
- 					"Please run e2fsck to fix.", type,
- 					err, qf_inums[type]);
--				for (type--; type >= 0; type--) {
--					struct inode *inode;
--
--					inode = sb_dqopt(sb)->files[type];
--					if (inode)
--						inode = igrab(inode);
--					dquot_quota_off(sb, type);
--					if (inode) {
--						lockdep_set_quota_inode(inode,
--							I_DATA_SEM_NORMAL);
--						iput(inode);
--					}
--				}
- 
-+				ext4_quotas_off(sb, type);
- 				return err;
- 			}
- 		}
+ static void dcn20_destroy_resource_pool(struct resource_pool **pool)
 -- 
 2.53.0
 
