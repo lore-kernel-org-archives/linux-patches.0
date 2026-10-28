@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215532;
-	b=UUUKUtjqLwCM5KC72Fz68XPHyp0r8/yeeVV2H87TMStPVWAoe5505FFNn9YItxswg9af
-	 ag2SDr0oJOT9A4heML6iSvc2ohamdL6nhbv5tIXOCOuRBSU4CQwx5DUQaH0HydjaRZmR1
-	 OGfuhXCy9+ZWZw9lPGMH0vYiB+kQ2PjuHth9a5E+20hBsdg59snu8M9US3dy9pzgXa956
-	 7ZZlRJdSbK+S9r4n/TdYZeh9nU0bn3k6tvohPgREL5XdRKRx3HnXKpE4KFhDN0aQFPKiw
-	 py/tHfG7lh6SCdxf7sI6Dr/75VX+a4qWZ6HZO3fT7hBthdtZvRDycqmrLydj3Xi0jxA==
+	t=1793215535;
+	b=tGU/JpcofTiJJSnztO40S/mZG/05d+9GNnhocFVB+xES5UD4ctMOd7lYNympLB7ZCCPU
+	 AiDQakMnThaoPaQAS3t8WhtNv/UonaoKI+SYoMxKoL3WnAUxyegFMp8a/Q5MmwlAz8GeA
+	 8K/rhnJzSHyol4lZbrJcHW6qEDShGKEZ0+wH6MlbH/Nut4rISoDdl8rf0a1BthS2GGtlB
+	 Z0qaglwPKMN8eBsw07uRBTXURljaBgzovSchNZ2kfeMxKq9T/pQKWyhdCQZZGKJtlHboM
+	 lTktLkFXBu0sIRyR5Kk6V0/qJbutHEQEcM3DKYITcCDQxMye1CFO3Z5vItoJAVbM4GQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BzqOo9E8UpqUeTY32+fVl2Tbs2OjylRwNsLcYNXmBwE=;
-	b=2TGLhb/lPwG/5WE57r9OeeqnNtEix2DzVpu4cPI82R2JkjtCeDavXzJaVaFZbB+XANIv
-	 uSyk01X+u8uHsmwIJBgshdRXoTDjLZIMNYB6sO6PbEpYgB6YCf3S0jxPVzgzD+V2J3/k7
-	 EjVb5HwqlabXyq0W2Zj40aP2l4xva6vi12MZ3/3R556ufajsq1gwc4dLS1nfyD5xRBsjv
-	 KZ+a54dxPaBo+sPkDfNyAV8N21n3nnc7iBY11BsyqzLlQd/munRc+gV9uDcT/Ub4mDhnK
-	 HoJWnoDhX6gJjfkFF6niqm2PgKl+BY0wz2tRefzXREY0FuZenTwhmSdG0PLUrEg8LAA==
+	bh=R4YCNfjNyMfFhtIhy58xfwNqV4/2F0BhgAZHeaW2ZgA=;
+	b=OdysLEbJgx7k2JeshXaBdKOhxafdGIJoiOkZWhpTtgBYUjuYzqxnq852lBW5HKi4D9qI
+	 uNHFnsSbf+vuBApBLexgFBToqHhPBpK06CZzMRbPZX3mA0Q43sGvKQXHR5znMBpzLLnyK
+	 XVPMPrWiKbJC5ER/DWLoCqeSEHzY2PP34u8rb4u63wTsYHRzpHRQpTtL83GgaHesWv0EO
+	 vhS5/cdGS+qWUe1HK6U8FuqiiyhRqj/I5Pg87e1bCKZj4DT687737qBWAobuBa2NMpnCQ
+	 o2k0/FR+tbrP2CTSZE0sFw0Lz9eJQ0HNE37P6jpGwDpPTkOdHddrX/fRk3dPaDYj5cQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yto7MOCl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hzB969W6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447C7606A31A;
-	Wed, 28 Oct 2026 19:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59724606A31A;
+	Wed, 28 Oct 2026 19:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yto7MOCl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934761F01825;
-	Wed, 28 Oct 2026 19:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hzB969W6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B93C1F01825;
+	Wed, 28 Oct 2026 19:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215532;
-	bh=BzqOo9E8UpqUeTY32+fVl2Tbs2OjylRwNsLcYNXmBwE=;
+	s=korg; t=1793215535;
+	bh=R4YCNfjNyMfFhtIhy58xfwNqV4/2F0BhgAZHeaW2ZgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yto7MOClQCOsK78CJetjU91y7UjSYRWvp7Wmp5mhymj3QOfslZvsAT2O5ivTZOtIM
-	 JfZymcUajrintt+mgdEHh1+z1rwnvqyLSI7E1tr8QCIPNoVhlNQcmBq5RNENua6xZ1
-	 3JVVTG+p7jRKEKQ8sfX5gVVsy3fy3K5uwIB+vD3Q=
+	b=hzB969W6SEIWXUDl1QV+KNZCCcjIQ1uHRg20i7lYGrXmqxhz4aTihVwyBMVa02DNv
+	 nlUMPlAcfq+yY2hDR/RBXfxNGyIXRE88TG0xSSfMSivJ/7VfpGo6Z7BywnDbS9ahtm
+	 w08xSNEglGhOgQ4hOmeXv3LlV2WNXA1bvzSiQhKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Yang Erkun <yangerkun@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	zdi-disclosures@trendmicro.com,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1244/1887] nfs: use nfsi->rwsem to protect traversal of the file lock list
-Date: Wed, 28 Oct 2026 17:55:40 +0100
-Message-ID: <20261028170527.733450634@linuxfoundation.org>
+Subject: [PATCH 6.1 1227/1887] net/sched: act_pedit: fix TOCTOU heap OOB write in tc offload
+Date: Wed, 28 Oct 2026 17:55:23 +0100
+Message-ID: <20261028170527.346361988@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,162 +70,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 4837fb36219e6c08b666bc31a86841bad8526358 ]
+[ Upstream commit 8b519cbcabe836a441369fbec1a8a6518a709251 ]
 
-Lingfeng identified a bug and suggested two solutions, but both appear
-to have issues.
+There is a TOCTOU race condition in flower lockless approach between sizing
+a flow_rule buffer and filling it.
+zdi-disclosures@trendmicro.com reports:
+The cls_flower classifier operates with TCF_PROTO_OPS_DOIT_UNLOCKED
+(fl_change runs without RTNL), while RTM_NEWACTION holds RTNL, so the
+independent locking domains make the race reachable in practice.  KASAN
+confirms:
+  BUG: KASAN: slab-out-of-bounds in tcf_pedit_offload_act_setup+0x81b/0x930
+  Write of size 4 at addr ffff888001f27520 by task poc-toctou/312
+  The buggy address is located 0 bytes to the right of
+   allocated 288-byte region [ffff888001f27400, ffff888001f27520)
+   (cache kmalloc-512)
 
-Generally, we cannot release flc_lock while iterating over the file lock
-list to avoid use-after-free (UAF) problems with file locks. However,
-functions like nfs_delegation_claim_locks and nfs4_reclaim_locks cannot
-adhere to this rule because recover_lock or nfs4_lock_delegation_recall
-may take a long time. To resolve this, NFS switches to using nfsi->rwsem
-for the same protection, and nfs_reclaim_locks follows this approach.
-Although nfs_delegation_claim_locks uses so_delegreturn_mutex instead,
-this is inadequate since a single inode can have multiple nfs4_state
-instances. Therefore, the fix is to also use nfsi->rwsem in this case.
+Note: The result is a heap OOB write attacker-controlled content into the
+adjacent slab object (requires CAP_NET_ADMIN).
 
-Furthermore, after commit c69899a17ca4 ("NFSv4: Update of VFS byte range
-lock must be atomic with the stateid update"), the functions
-nfs4_locku_done and nfs4_lock_done also break this rule because they
-call locks_lock_inode_wait without holding nfsi->rwsem. Simply adding
-this protection could cause many deadlocks, so instead, the call to
-locks_lock_inode_wait is moved into _nfs4_proc_setlk. Regarding the bug
-fixed by commit c69899a17ca4 ("NFSv4: Update of VFS byte range
-lock must be atomic with the stateid update"), it has been resolved
-after commit 0460253913e5 ("NFSv4: nfs4_do_open() is incorrectly triggering
-state recovery") because all slots are drained before calling
-nfs4_do_reclaim, which prevents concurrent stateid changes along this path.
-Also, nfs_delegation_claim_locks does not cause this concurrency either
-since when _nfs4_proc_setlk is called with NFS_DELEGATED_STATE, no RPC is
-sent, so nfs4_lock_done is not called. Therefore,
-nfs4_lock_delegation_recall from nfs_delegation_claim_locks is the first
-time the stateid is set.
+The fix introduces reading tcfp_nkeys under act->tcfa_lock in all places
+using a new tcf_pedit_nkeys_locked() which replaces the old tcf_pedit_nkeys().
+Additionally we close the remaining TOCTOU window between the sizing read and
+the fill reads by more careful accounting.
+Rather than silently truncating the key count, which leads to incorrect
+action semantics offloaded to hardware and secondary OOB writes if
+the remaining capacity is zero or consumed by prior actions, we enforce
+remaining capacity checks and return -ENOSPC if the required space exceeds
+the remaining capacity.
 
-Reported-by: Li Lingfeng <lilingfeng3@huawei.com>
-Closes: https://lore.kernel.org/all/20250419085709.1452492-1-lilingfeng3@huawei.com/
-Closes: https://lore.kernel.org/all/20250715030559.2906634-1-lilingfeng3@huawei.com/
-Fixes: c69899a17ca4 ("NFSv4: Update of VFS byte range lock must be atomic with the stateid update")
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to the conventional network headers")
+Reported-by: zdi-disclosures@trendmicro.com
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260701161912.125355-1-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/delegation.c     |  9 ++++++++-
- fs/nfs/nfs4proc.c       | 22 +++++++++++-----------
- include/linux/nfs_xdr.h |  1 -
- 3 files changed, 19 insertions(+), 13 deletions(-)
+ include/net/tc_act/tc_pedit.h | 18 ++++++++----------
+ net/sched/act_api.c           | 13 +++++++++----
+ net/sched/act_pedit.c         | 11 ++++++++++-
+ net/sched/cls_api.c           | 22 +++++++++++++++++-----
+ 4 files changed, 44 insertions(+), 20 deletions(-)
 
-diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
-index 17b38da17288b..9002b479a125b 100644
---- a/fs/nfs/delegation.c
-+++ b/fs/nfs/delegation.c
-@@ -145,6 +145,7 @@ int nfs4_check_delegation(struct inode *inode, fmode_t flags)
- static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_stateid *stateid)
- {
- 	struct inode *inode = state->inode;
-+	struct nfs_inode *nfsi = NFS_I(inode);
- 	struct file_lock *fl;
- 	struct file_lock_context *flctx = inode->i_flctx;
- 	struct list_head *list;
-@@ -154,6 +155,9 @@ static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_state
- 		goto out;
- 
- 	list = &flctx->flc_posix;
-+
-+	/* Guard against reclaim and new lock/unlock calls */
-+	down_write(&nfsi->rwsem);
- 	spin_lock(&flctx->flc_lock);
- restart:
- 	list_for_each_entry(fl, list, fl_list) {
-@@ -161,8 +165,10 @@ static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_state
- 			continue;
- 		spin_unlock(&flctx->flc_lock);
- 		status = nfs4_lock_delegation_recall(fl, state, stateid);
--		if (status < 0)
-+		if (status < 0) {
-+			up_write(&nfsi->rwsem);
- 			goto out;
-+		}
- 		spin_lock(&flctx->flc_lock);
- 	}
- 	if (list == &flctx->flc_posix) {
-@@ -170,6 +176,7 @@ static int nfs_delegation_claim_locks(struct nfs4_state *state, const nfs4_state
- 		goto restart;
- 	}
- 	spin_unlock(&flctx->flc_lock);
-+	up_write(&nfsi->rwsem);
- out:
- 	return status;
+diff --git a/include/net/tc_act/tc_pedit.h b/include/net/tc_act/tc_pedit.h
+index a26d4cd3b8d6f..fa4cd4fc36740 100644
+--- a/include/net/tc_act/tc_pedit.h
++++ b/include/net/tc_act/tc_pedit.h
+@@ -36,17 +36,15 @@ static inline bool is_tcf_pedit(const struct tc_action *a)
+ 	return false;
  }
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 333ed7e8d4c68..bde81060f833e 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -6961,7 +6961,6 @@ static void nfs4_locku_done(struct rpc_task *task, void *data)
- 	switch (task->tk_status) {
- 		case 0:
- 			renew_lease(calldata->server, calldata->timestamp);
--			locks_lock_inode_wait(calldata->lsp->ls_state->inode, &calldata->fl);
- 			if (nfs4_update_lock_stateid(calldata->lsp,
- 					&calldata->res.stateid))
- 				break;
-@@ -7224,11 +7223,6 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
- 	case 0:
- 		renew_lease(NFS_SERVER(d_inode(data->ctx->dentry)),
- 				data->timestamp);
--		if (data->arg.new_lock && !data->cancelled) {
--			data->fl.fl_flags &= ~(FL_SLEEP | FL_ACCESS);
--			if (locks_lock_inode_wait(lsp->ls_state->inode, &data->fl) < 0)
--				goto out_restart;
--		}
- 		if (data->arg.new_lock_owner != 0) {
- 			nfs_confirm_seqid(&lsp->ls_seqid, 0);
- 			nfs4_stateid_copy(&lsp->ls_stateid, &data->res.stateid);
-@@ -7337,11 +7331,10 @@ static int _nfs4_do_setlk(struct nfs4_state *state, int cmd, struct file_lock *f
- 	msg.rpc_argp = &data->arg;
- 	msg.rpc_resp = &data->res;
- 	task_setup_data.callback_data = data;
--	if (recovery_type > NFS_LOCK_NEW) {
--		if (recovery_type == NFS_LOCK_RECLAIM)
--			data->arg.reclaim = NFS_LOCK_RECLAIM;
--	} else
--		data->arg.new_lock = 1;
-+
-+	if (recovery_type == NFS_LOCK_RECLAIM)
-+		data->arg.reclaim = NFS_LOCK_RECLAIM;
-+
- 	task = rpc_run_task(&task_setup_data);
- 	if (IS_ERR(task))
- 		return PTR_ERR(task);
-@@ -7453,6 +7446,13 @@ static int _nfs4_proc_setlk(struct nfs4_state *state, int cmd, struct file_lock
- 	up_read(&nfsi->rwsem);
- 	mutex_unlock(&sp->so_delegreturn_mutex);
- 	status = _nfs4_do_setlk(state, cmd, request, NFS_LOCK_NEW);
-+	if (status)
-+		goto out;
-+
-+	down_read(&nfsi->rwsem);
-+	request->fl_flags &= ~(FL_SLEEP | FL_ACCESS);
-+	status = locks_lock_inode_wait(state->inode, request);
-+	up_read(&nfsi->rwsem);
- out:
- 	request->fl_flags = fl_flags;
- 	return status;
-diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
-index ec796b85938e3..31d77c029bc33 100644
---- a/include/linux/nfs_xdr.h
-+++ b/include/linux/nfs_xdr.h
-@@ -563,7 +563,6 @@ struct nfs_lock_args {
- 	struct nfs_lowner	lock_owner;
- 	unsigned char		block : 1;
- 	unsigned char		reclaim : 1;
--	unsigned char		new_lock : 1;
- 	unsigned char		new_lock_owner : 1;
- };
  
+-static inline int tcf_pedit_nkeys(const struct tc_action *a)
++/* Must be called with act->tcfa_lock held to ensure consistency of parallel
++ * reads of the same action's pedit keys (e.g. flow_offload count vs fill).
++ * Note, this is only used for pedit offload.
++ */
++static inline int tcf_pedit_nkeys_locked(const struct tc_action *a)
+ {
+-	struct tcf_pedit_parms *parms;
+-	int nkeys;
+-
+-	rcu_read_lock();
+-	parms = to_pedit_parms(a);
+-	nkeys = parms->tcfp_nkeys;
+-	rcu_read_unlock();
+-
+-	return nkeys;
++	lockdep_assert_held(&a->tcfa_lock);
++	return rcu_dereference_protected(to_pedit(a)->parms,
++					 lockdep_is_held(&a->tcfa_lock))->tcfp_nkeys;
+ }
+ 
+ static inline u32 tcf_pedit_htype(const struct tc_action *a, int index)
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 8aa291b835e9b..a24e8327e7e7b 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -147,10 +147,15 @@ static void offload_action_hw_count_dec(struct tc_action *act,
+ 
+ static unsigned int tcf_offload_act_num_actions_single(struct tc_action *act)
+ {
+-	if (is_tcf_pedit(act))
+-		return tcf_pedit_nkeys(act);
+-	else
+-		return 1;
++	unsigned int count;
++
++	if (is_tcf_pedit(act)) {
++		spin_lock_bh(&act->tcfa_lock);
++		count = tcf_pedit_nkeys_locked(act);
++		spin_unlock_bh(&act->tcfa_lock);
++		return count;
++	}
++	return 1;
+ }
+ 
+ static bool tc_act_skip_hw(u32 flags)
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 1d06873da8f12..e1be146b0463f 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -556,9 +556,18 @@ static int tcf_pedit_offload_act_setup(struct tc_action *act, void *entry_data,
+ {
+ 	if (bind) {
+ 		struct flow_action_entry *entry = entry_data;
++		int nkeys = tcf_pedit_nkeys_locked(act);
+ 		int k;
+ 
+-		for (k = 0; k < tcf_pedit_nkeys(act); k++) {
++		/* If the required keys exceed the remaining capacity return
++		 * -ENOSPC to abort the offload and fallback to software.
++		 */
++		if (nkeys > *index_inc) {
++			NL_SET_ERR_MSG_MOD(extack, "Not enough space to offload all pedit keys");
++			return -ENOSPC;
++		}
++
++		for (k = 0; k < nkeys; k++) {
+ 			switch (tcf_pedit_cmd(act, k)) {
+ 			case TCA_PEDIT_KEY_EX_CMD_SET:
+ 				entry->id = FLOW_ACTION_MANGLE;
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 9ee545b0364ad..44139ca96a1e7 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3631,12 +3631,21 @@ int tc_setup_action(struct flow_action *flow_action,
+ 
+ 		entry = &flow_action->entries[j];
+ 		spin_lock_bh(&act->tcfa_lock);
++
++		/* Abort the offload if we have exhausted the allocated capacity */
++		if (j >= flow_action->num_entries) {
++			NL_SET_ERR_MSG_MOD(extack, "Flow action buffer overflow");
++			err = -ENOSPC;
++			goto err_out_locked;
++		}
++
+ 		err = tcf_act_get_cookie(entry, act);
+ 		if (err)
+ 			goto err_out_locked;
+ 
+-		index = 0;
+-		err = tc_setup_offload_act(act, entry, &index, extack);
++		index = flow_action->num_entries - j;
++		err = tc_setup_offload_act(act, entry, &index,
++					   extack);
+ 		if (err)
+ 			goto err_out_locked;
+ 
+@@ -3682,10 +3691,13 @@ unsigned int tcf_exts_num_actions(struct tcf_exts *exts)
+ 	int i;
+ 
+ 	tcf_exts_for_each_action(i, act, exts) {
+-		if (is_tcf_pedit(act))
+-			num_acts += tcf_pedit_nkeys(act);
+-		else
++		if (is_tcf_pedit(act)) {
++			spin_lock_bh(&act->tcfa_lock);
++			num_acts += tcf_pedit_nkeys_locked(act);
++			spin_unlock_bh(&act->tcfa_lock);
++		} else {
+ 			num_acts++;
++		}
+ 	}
+ 	return num_acts;
+ }
 -- 
 2.53.0
 
