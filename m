@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215853;
-	b=ZinajqXP0iWV0e0imVz/9tumQE7MfyeLUndEU1umcsYUTkllDtJLbq0SPh4BS+XnAJVQ
-	 RowinXhatf77KsY8IohH+lbqLr4zX7S4maG4pE3qvOPpyqv30jRcZIXK68KWzs0+CTtzT
-	 Xsw1NthBSlPpK0nG3L2RQwBbVgWSHXIO1a9IpUUcMaZiOjJqpHj03XQv6abyUwCU6Eg2k
-	 n1qg7aXzcNbXklcT8uB1EeRTYOc6+lCpF1+bJ2S3AAQYqRS7KXxD8/Gk7KShyd3rNchul
-	 9fOv6uRqpOQtar7QC8NWdr8sq9g/f7TGyDqyk4+Iu1y6FYN6auXFE4HLCSkRFD4JtOA==
+	t=1793215856;
+	b=gtaGggAiVy1tf4bEbJwmNWhOFHb8kqkCQPGaonRGPOxcB7aji88ml8Xd6MHW+oVbc8nX
+	 +MeRtmqKZKDLq6qbN4jlClx6TN8VGsQVZSqWIUFMRGSduuSCXhSDALCvzjzjTBFY+U0qU
+	 KSrpqAezODhOS961iUpm+qKh8Mt0LAEwr3DOKFWLWDYD8K3hzzLjHOUJAvYd4QLeOPfmO
+	 5/RD/IId6KWZ/wi75MVXjYEjShThltPHGX8Vdo90ZycxOSiMPS7jM5ddTNpo0xXbWcvCr
+	 p5rfKZ3LtXrqmXT9NqWuuh1r0PoY94KAycilKrJl3Op0n7xKkE6fwrrzrGD3Ys6ok/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fvlzorDNE1X4fzMe3q3exnmUI7hYWkZSJKlFFvO8/QY=;
-	b=AQUqFxTb/ipiVYWnS7WuKHFDQtZhH4098Xtr/AEtWX++N+r0BQYiNbPAAIg8oLit0hmX
-	 1bGA/rOAQ5QQVpv/m8R7jSrKpdgpNWA9/A9ep/rtOgrwHmr/Aw/wWNhw+78CsQ8acqB1O
-	 d1SRNkNSkbdRAz1Kdqb9b1ZUzA4dCTZopTAXmdz6uU2kVlqfj3Fs+zqHgeoSswqU7+Jp2
-	 EZ02tyuMvUx5aeQ9O3R/69TD66g7eyxsn4gmYX+c2uTAGLr89KXPa6npQvWknuPwnH/w2
-	 c8Q2ZTp3vBOZQd2zdlZPVolMLs6l04uSY0KZYpzDb4TbsYDggD+V40k4NZmrGAmWeyw==
+	bh=RLTuwWLUPLh4QZ9TibXB5tTe9wI/wCgJWUllUxVUAAE=;
+	b=wBqn//egrdaNiCMgGsAPMiCMyUHL/50T1d8fPgR7OcrazhZVDY7/EYBOr+xDyvxbRvaX
+	 h8y7X2sMjUjr8bUPLw6wJOzdLfZ7bs/dlQzqX52Hx4ytXol0by24F4ufK6Hd14QBOJ03w
+	 uMTrn4SWwVxOexHg5Ed2Xr6yn8J9dRl1izYLgyPQ0Czpa/DPU7PhL5Pf7GIhe8qsS9hoR
+	 I78tdW+zg3jxa9wXMiPBSmw+YxvOLZCQtvJCG5mSkD5ExWu+aFX8ulwgsiG6r3aANv23i
+	 e4sRwe8Ncv+va0DuuViEgajtDAWwz51xWoExtelwrD7qaWrD67bl5LqCJnavoNdwPlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WZ9l718H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7MVXFm1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515F2606A31F;
-	Wed, 28 Oct 2026 19:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CCF606A321;
+	Wed, 28 Oct 2026 19:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WZ9l718H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AE81F01825;
-	Wed, 28 Oct 2026 19:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7MVXFm1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480501F01825;
+	Wed, 28 Oct 2026 19:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215852;
-	bh=fvlzorDNE1X4fzMe3q3exnmUI7hYWkZSJKlFFvO8/QY=;
+	s=korg; t=1793215855;
+	bh=RLTuwWLUPLh4QZ9TibXB5tTe9wI/wCgJWUllUxVUAAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZ9l718HN+AI57R8DRzrP1+URRJlekIj0RQueL5K5xOx2Jbc5CaVbh+LeVQY1A23/
-	 xfCFyN22QxjXpzYu48LKQFMrkYN03bGyMsohS/IMvZCt78uWD+Sxh6RJIDzkPmag3n
-	 A4CTEdPfOMOuBF+7hVrkPUmNb5Q0ckmNb9C0kOBQ=
+	b=a7MVXFm1URdVE55rW7+6rVGaNPldWTeAcWw1kco/u69Xz8TBqnjCZLWF/5943qGEB
+	 aoxcLEAP1ZgIdADG0mThpCYAuCqFHsDuERrrx+egg1Rk5Zz7nG3sRXjZMtgpfBlXTT
+	 JT2IWLvwGwtSkJEDrNRJe5zOxYegvVCJIw5Y4/l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Fourie Zhang <fouriezhang@tencent.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1354/1887] netfilter: nf_tables: dont queue packet path object notifications
-Date: Wed, 28 Oct 2026 17:57:30 +0100
-Message-ID: <20261028170530.252517822@linuxfoundation.org>
+Subject: [PATCH 6.1 1355/1887] net/packet: defer vmalloc TX_RING free until skbs finish
+Date: Wed, 28 Oct 2026 17:57:31 +0100
+Message-ID: <20261028170530.276693235@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,174 +71,253 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fourie Zhang <littleddfu@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 7904b94768e983bcb2be34a8d6d1f3450f5b838b ]
+[ Upstream commit 992cc9f94ca924089a506ba9b327caa9af797529 ]
 
-All file:line references below are against v7.2-rc4 (ac5b0e5651b1). The
-trace was captured on 7.2.0-rc6-kasan72rc6 (075b74841bd0), where the same
-lines apply.
+AF_PACKET TX_RING skbs keep a raw pointer to their ring frame. The skb
+page references preserve page-backed ring blocks after pg_vec is freed,
+but they do not preserve a vmalloc mapping.
 
-nft_obj_notify() is exported and reached from the packet path. Its only
-in-tree caller is nft_quota_obj_eval() (net/netfilter/nft_quota.c:68),
-which notifies with GFP_ATOMIC while evaluating a rule for a transiting
-packet, holding no mutex.
+tpacket_destruct_skb() currently drops the pending reference before
+writing the timestamp and TP_STATUS_AVAILABLE to the frame. Move the
+decrement after those stores. The smp_wmb() in __packet_set_status()
+orders the frame stores before the decrement.
 
-Since commit 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple
-notifications into one skbuff") that notification is no longer sent
-immediately. __nft_obj_notify() queues it onto nft_net->notify_list via
-nft_notify_enqueue() (net/netfilter/nf_tables_api.c:1211), which is a bare
-list_add_tail(). notify_list has no lock of its own
-(include/net/netfilter/nf_tables.h:1951), it is serialised by commit_mutex:
-the six other enqueue sites all run inside a netlink transaction, and the
-drain in nft_commit_notify() (net/netfilter/nf_tables_api.c:10746) does
-list_del() + kfree_skb() from nf_tables_commit() with commit_mutex held.
+Also recheck pending TX frames under pg_vec_lock before non-closing
+ring replacement, so a racing send cannot add a pending skb between
+the initial check and the ring swap.
 
-Sending packets through a chain that references a depleted quota object
-therefore races an unlocked list_add_tail() against list_del() +
-kfree_skb() on another CPU. The WRITE_ONCE(prev->next, new) in __list_add()
-then stores through an sk_buff that has already been freed:
+Ring allocation can produce a mixture of page-backed and vmalloc-backed
+blocks. Allocate deferred-work storage during TX ring setup when the
+first vmalloc-backed block is encountered, and keep its pointer in the
+pg_vec allocation header. If allocation fails, return -ENOMEM from ring
+setup. On socket close, a non-NULL pointer identifies a vmalloc-backed
+vector without a scan. If TX skbs remain, defer the whole vector to
+system_long_wq.
 
-  BUG: KASAN: slab-use-after-free in __nft_obj_notify+0x2c5/0x2d0
-  Write of size 8 at addr ff110001047183c0 by task poc/76
-  CPU: 0 UID: 1000 PID: 76 Comm: poc Tainted: G  W  7.2.0-rc6-kasan72rc6 #4
-  Call Trace:
-   <IRQ>
-   __nft_obj_notify (include/linux/list.h:164 include/linux/list.h:191
-                     net/netfilter/nf_tables_api.c:1211
-                     net/netfilter/nf_tables_api.c:8743)
-   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
-   nft_do_chain_inet
-   nf_hook_slow
-   __ip_local_out
-   ip_push_pending_frames
-   udp_send_skb
-   udp_sendmsg
-   __x64_sys_sendto
+After pg_vec is detached, a late destructor can skip the pending
+decrement. Use socket write-memory accounting as the deferred lifetime
+gate instead: an skb remains charged through its final sock_wfree(),
+after all ring-frame accesses. The delayed work retains a socket
+reference and reschedules itself until no TX skbs remain.
 
-  Allocated by task 77:
-   __alloc_skb (net/core/skbuff.c:704)
-   __nft_obj_notify (include/net/netlink.h:1055
-                     net/netfilter/nf_tables_api.c:8731)
-   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
-   nft_do_chain
+Move pending_refcnt release to packet_sock_destruct() so late skb
+destructors and deferred cleanup can safely use it after
+packet_release(). Page-backed teardown remains synchronous, and no lock
+is added to the TX completion hot path.
 
-  Freed by task 79:
-   nf_tables_commit (include/linux/skbuff.h:1332
-                     net/netfilter/nf_tables_api.c:10759
-                     net/netfilter/nf_tables_api.c:11185)
-   nfnetlink_rcv_batch (net/netfilter/nfnetlink.c:574)
-   netlink_unicast
-   netlink_sendmsg
-
-  The buggy address belongs to the cache skbuff_head_cache of size 232
-
-Queueing from the packet path is wrong even leaving the race aside:
-notify_list is only drained by nft_commit_notify() from nf_tables_commit()
-(:11185), so a notification enqueued outside a transaction is not sent
-until some later netlink batch commits, if one ever does.
-
-The gfp argument that nft_obj_notify() still takes is a leftover of the
-pre-67cc570edaa0 behaviour, where this path called nfnetlink_send()
-directly. Restore that: split the message construction out into
-nft_obj_notify_alloc() and let each caller decide what to do with the skb.
-nft_obj_notify(), the exported one reached from the packet path, sends it
-straight away; nf_tables_obj_notify(), which runs under commit_mutex, keeps
-queueing it, so transaction notifications are still coalesced.
-
-Fixes: 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple notifications into one skbuff")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Assisted-by: tencentos-corvus-ai:kimi-k3
-Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b013840810c2 ("packet: use percpu mmap tx frame pending refcount")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/netdev/20260721015824.45829-1-kylebot@openai.com/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20260816235646.76500-1-kylebot@openai.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 36 ++++++++++++++++++++++-------------
- 1 file changed, 23 insertions(+), 13 deletions(-)
+ net/packet/af_packet.c | 97 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 88 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index e09b41468b1e6..afc7f369b8f69 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7831,18 +7831,17 @@ static int nf_tables_delobj(struct sk_buff *skb, const struct nfnl_info *info,
- 	return nft_delobj(&ctx, obj);
- }
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index ebdcf42e44ff0..73663db442cce 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -87,6 +87,7 @@
+ #include <linux/errqueue.h>
+ #include <linux/net_tstamp.h>
+ #include <linux/percpu.h>
++#include <linux/workqueue.h>
+ #ifdef CONFIG_INET
+ #include <net/inet_common.h>
+ #endif
+@@ -1396,6 +1397,8 @@ static void packet_sock_destruct(struct sock *sk)
+ 	WARN_ON(atomic_read(&sk->sk_rmem_alloc));
+ 	WARN_ON(refcount_read(&sk->sk_wmem_alloc));
  
--static void
--__nft_obj_notify(struct net *net, const struct nft_table *table,
--		 struct nft_object *obj, u32 portid, u32 seq, int event,
--		 u16 flags, int family, int report, gfp_t gfp)
-+static struct sk_buff *
-+nft_obj_notify_alloc(struct net *net, const struct nft_table *table,
-+		     struct nft_object *obj, u32 portid, u32 seq, int event,
-+		     u16 flags, int family, int report, gfp_t gfp)
- {
--	struct nftables_pernet *nft_net = nft_pernet(net);
- 	struct sk_buff *skb;
- 	int err;
++	packet_free_pending(pkt_sk(sk));
++
+ 	if (!sock_flag(sk, SOCK_DEAD)) {
+ 		pr_err("Attempt to release alive packet socket: %p\n", sk);
+ 		return;
+@@ -2598,11 +2601,11 @@ static void tpacket_destruct_skb(struct sk_buff *skb)
+ 		__u32 ts;
  
- 	if (!report &&
- 	    !nfnetlink_has_listeners(net, NFNLGRP_NFTABLES))
--		return;
-+		return NULL;
+ 		ph = skb_zcopy_get_nouarg(skb);
+-		packet_dec_pending(&po->tx_ring);
  
- 	skb = nlmsg_new(NLMSG_GOODSIZE, gfp);
- 	if (skb == NULL)
-@@ -7856,10 +7855,10 @@ __nft_obj_notify(struct net *net, const struct nft_table *table,
- 		goto err;
+ 		ts = __packet_set_timestamp(po, ph, skb);
+ 		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
+ 
++		packet_dec_pending(&po->tx_ring);
+ 		complete(&po->skb_completion);
  	}
  
--	nft_notify_enqueue(skb, report, &nft_net->notify_list);
--	return;
-+	return skb;
- err:
- 	nfnetlink_set_err(net, portid, NFNLGRP_NFTABLES, -ENOBUFS);
-+	return NULL;
- }
+@@ -3266,7 +3269,6 @@ static int packet_release(struct socket *sock)
+ 	/* Purge queues */
  
- void nft_obj_notify(struct net *net, const struct nft_table *table,
-@@ -7869,6 +7868,7 @@ void nft_obj_notify(struct net *net, const struct nft_table *table,
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 	char *buf = kasprintf(gfp, "%s:%u",
- 			      table->name, nft_net->base_seq);
-+	struct sk_buff *skb;
+ 	skb_queue_purge(&sk->sk_receive_queue);
+-	packet_free_pending(po);
+ 	sk_refcnt_debug_release(sk);
  
- 	audit_log_nfcfg(buf,
- 			family,
-@@ -7879,17 +7879,27 @@ void nft_obj_notify(struct net *net, const struct nft_table *table,
- 			gfp);
- 	kfree(buf);
+ 	sock_put(sk);
+@@ -4402,11 +4404,26 @@ static const struct vm_operations_struct packet_mmap_ops = {
+ 	.close	=	packet_mm_close,
+ };
  
--	__nft_obj_notify(net, table, obj, portid, seq, event,
--			 flags, family, report, gfp);
-+	/* Called from the packet path, holding no mutex: notify_list is
-+	 * serialised by commit_mutex, so send this notification directly.
-+	 */
-+	skb = nft_obj_notify_alloc(net, table, obj, portid, seq, event,
-+				   flags, family, report, gfp);
-+	if (skb)
-+		nfnetlink_send(skb, net, portid, NFNLGRP_NFTABLES, report, gfp);
- }
- EXPORT_SYMBOL_GPL(nft_obj_notify);
- 
- static void nf_tables_obj_notify(const struct nft_ctx *ctx,
- 				 struct nft_object *obj, int event)
- {
--	__nft_obj_notify(ctx->net, ctx->table, obj, ctx->portid,
--			 ctx->seq, event, ctx->flags, ctx->family,
--			 ctx->report, GFP_KERNEL);
-+	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
-+	struct sk_buff *skb;
++struct packet_pg_vec {
++	struct packet_pg_vec_free *deferred;
++	unsigned int order;
++	unsigned int len;
++	struct pgv pg_vec[];
++};
 +
-+	skb = nft_obj_notify_alloc(ctx->net, ctx->table, obj, ctx->portid,
-+				   ctx->seq, event, ctx->flags, ctx->family,
-+				   ctx->report, GFP_KERNEL);
-+	if (skb)
-+		nft_notify_enqueue(skb, ctx->report, &nft_net->notify_list);
++struct packet_pg_vec_free {
++	struct delayed_work work;
++	struct sock *sk;
++	struct packet_pg_vec *vec;
++};
++
+ static void free_pg_vec(struct pgv *pg_vec, unsigned int order,
+ 			unsigned int len)
+ {
++	struct packet_pg_vec *vec;
+ 	int i;
+ 
++	vec = container_of_const(pg_vec, struct packet_pg_vec, pg_vec[0]);
+ 	for (i = 0; i < len; i++) {
+ 		if (likely(pg_vec[i].buffer)) {
+ 			if (is_vmalloc_addr(pg_vec[i].buffer))
+@@ -4417,7 +4434,46 @@ static void free_pg_vec(struct pgv *pg_vec, unsigned int order,
+ 			pg_vec[i].buffer = NULL;
+ 		}
+ 	}
+-	kfree(pg_vec);
++	kfree(vec->deferred);
++	kfree(vec);
++}
++
++static void packet_free_pg_vec_work(struct work_struct *work)
++{
++	struct packet_pg_vec_free *deferred;
++	struct packet_pg_vec *vec;
++	struct sock *sk;
++
++	deferred = container_of_const(to_delayed_work(work),
++				      struct packet_pg_vec_free, work);
++	vec = deferred->vec;
++	sk = deferred->sk;
++	if (sk_wmem_alloc_get(sk)) {
++		queue_delayed_work(system_long_wq, &deferred->work, 1);
++		return;
++	}
++
++	free_pg_vec(vec->pg_vec, vec->order, vec->len);
++	sock_put(sk);
++}
++
++static void packet_free_tx_ring(struct sock *sk, struct pgv *pg_vec,
++				unsigned int order, unsigned int len)
++{
++	struct packet_pg_vec_free *deferred;
++	struct packet_pg_vec *vec;
++
++	vec = container_of_const(pg_vec, struct packet_pg_vec, pg_vec[0]);
++	deferred = vec->deferred;
++	if (!deferred || !sk_wmem_alloc_get(sk)) {
++		free_pg_vec(pg_vec, order, len);
++		return;
++	}
++
++	/* A detached ring's pending count can miss late skb destructors. */
++	deferred->sk = sk;
++	sock_hold(sk);
++	queue_delayed_work(system_long_wq, &deferred->work, 0);
  }
  
- /*
+ static char *alloc_one_pg_vec_page(unsigned long order)
+@@ -4445,20 +4501,36 @@ static char *alloc_one_pg_vec_page(unsigned long order)
+ 	return NULL;
+ }
+ 
+-static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order)
++static struct pgv *alloc_pg_vec(struct tpacket_req *req, int order, bool tx_ring)
+ {
+ 	unsigned int block_nr = req->tp_block_nr;
++	struct packet_pg_vec *vec;
+ 	struct pgv *pg_vec;
+ 	int i;
+ 
+-	pg_vec = kcalloc(block_nr, sizeof(struct pgv), GFP_KERNEL | __GFP_NOWARN);
+-	if (unlikely(!pg_vec))
+-		goto out;
++	vec = kzalloc(struct_size(vec, pg_vec, block_nr),
++		      GFP_KERNEL | __GFP_NOWARN);
++	if (unlikely(!vec))
++		return NULL;
++	vec->order = order;
++	vec->len = block_nr;
++	pg_vec = vec->pg_vec;
+ 
+ 	for (i = 0; i < block_nr; i++) {
+ 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
+ 		if (unlikely(!pg_vec[i].buffer))
+ 			goto out_free_pgvec;
++
++		if (tx_ring && !vec->deferred &&
++		    is_vmalloc_addr(pg_vec[i].buffer)) {
++			vec->deferred = kzalloc(sizeof(*vec->deferred),
++						GFP_KERNEL | __GFP_NOWARN);
++			if (!vec->deferred)
++				goto out_free_pgvec;
++			vec->deferred->vec = vec;
++			INIT_DELAYED_WORK(&vec->deferred->work,
++					  packet_free_pg_vec_work);
++		}
+ 	}
+ 
+ out:
+@@ -4541,7 +4613,7 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
+ 
+ 		err = -ENOMEM;
+ 		order = get_order(req->tp_block_size);
+-		pg_vec = alloc_pg_vec(req, order);
++		pg_vec = alloc_pg_vec(req, order, tx_ring);
+ 		if (unlikely(!pg_vec))
+ 			goto out;
+ 		switch (po->tp_version) {
+@@ -4593,6 +4665,9 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
+ 	err = -EBUSY;
+ 	mutex_lock(&po->pg_vec_lock);
+ 	if (closing || atomic_long_read(&po->mapped) == 0) {
++		if (tx_ring && !closing && packet_read_pending(rb))
++			goto out_unlock;
++
+ 		err = 0;
+ 		spin_lock_bh(&rb_queue->lock);
+ 		swap(rb->pg_vec, pg_vec);
+@@ -4614,6 +4689,7 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
+ 			pr_err("packet_mmap: vma is busy: %ld\n",
+ 			       atomic_long_read(&po->mapped));
+ 	}
++out_unlock:
+ 	mutex_unlock(&po->pg_vec_lock);
+ 
+ 	spin_lock(&po->bind_lock);
+@@ -4635,7 +4711,10 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
+ out_free_pg_vec:
+ 	if (pg_vec) {
+ 		bitmap_free(rx_owner_map);
+-		free_pg_vec(pg_vec, order, req->tp_block_nr);
++		if (tx_ring && closing)
++			packet_free_tx_ring(sk, pg_vec, order, req->tp_block_nr);
++		else
++			free_pg_vec(pg_vec, order, req->tp_block_nr);
+ 	}
+ out:
+ 	return err;
 -- 
 2.53.0
 
