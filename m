@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216957;
-	b=DYfMWFgULwiIdyvrbxTj+FvDSvYRHGzKMkpSaDTeWVIy17+CtTNSPs6B4AkTus1qJyK5
-	 SCfQM3BoaV/AS2ClycaJR7aruLcqLt/Sf8GhwesXFWVf+iJuNenbqTT4CyMyp6Kz9bTbg
-	 8lMoTo1WyHOECEqY+02ZirwqAVZ+Li4YAPIQFlFWZOTcW7dmeHCeI04rs5Hh8GhOvoAnT
-	 765Fc+CxCXPWt58Vf6Hen6nxzo80P1hbBv7OLAZDRvB0DWz55vzE57MWFxRa8raXNXcNk
-	 M+2T9eVheMAs8A0SD+R/3lO0VckDtHauxgPJUKTAl6UrtBKf7UOaai22sfHxZ0ERIyA==
+	t=1793216960;
+	b=PQJb7AKLn+zDhsOSurBMO5UHdnhrdsU4e/LTSyyXCD7glQccEHmzXCgtpAJf5dyrxoHC
+	 WdIdr+UleTgMY9wA/jEcT7r+q9+FqzyJ0VYt7EC4nYu5WqV92glSZldLilEUqwRKaMc7U
+	 dWp/3xj5UG6emkp2oMnTKqBE837owHCmGNHTQyRiuZiaEsHca2flEJ6vAKI6G4ON/3Cip
+	 /5+vOB57C55V+A5UAnTZE9sgRBWME0Sf31tq+ICLFom96UL0FoQ8gFiD/Enhld13JmCgu
+	 PjtMWv9UhJyXEH2A3F3qNHpP7ughi0TT5okuWCqEbgwkbS6XhnBIfiLyzwPerTCnJUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216957;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LF/K3fzOylD/7BWl+6gzxO1/0XJs46lLUTlR0qCXVOU=;
-	b=y3e4NQ9+t/yrfgMtlP2ypa7YriJsFY7j5YkzqHW8itEdDSk4NreB46oz5hla4uTd3pkk
-	 sG4lzRb3/uLvIJGhaVhe3BJRRmeP+V/RoRp/a1mvKY+LTbgQ3/oUOPfNVfwqtQHqosyJ8
-	 2Rm/jYA/3dFGI4TXXrGBoC/1oN6nExG5aFfhQhC8YRwb0DEL4/HvZXFIV7eDCfew6bbub
-	 3zoJlQAzTF2EDGZqRxgKtBzAvnCzPSsU7yAIqi0nw0vcJsupHfqLFsgYGQ8afqDnGMPw4
-	 r67+cXNR9hGWF04tgmwyPo98nO8/5eI+F9olxklKrGEiThORmXOHs2pS6jX9rUhdO5A==
+	bh=o0+QEtSLQbuvW65SrNnNzd5Js/6ASD356qfLKxtd25k=;
+	b=e5KEtjUwC7XzdnAXWypqkUOdeeiKieQeeodd/E8l/GOFthcCjYJ5J9suE8To45eZ/O2b
+	 J5j3U9KLLidPRfcLfyv3SUiD7HRwsbNMlcsUt77xYFUOR1gVeveeP0xpTRUMaZMqEksQw
+	 4XFQ2b5FQcP4FXmX3QjugAG+Ed/53q/qPCBGBt+ZRfcAAbLpzQb5vHG23Nkbq2zCZ4llz
+	 K58R1uybjFsmOss4+aIOExFRZCuvPiGNy47xtd/P1hTWfNfXgHuMs+MMh8mi3b6+IeykE
+	 JMPfMsWthIsh69R8D7wbcogtYSbxUd48J7rs52jyUUjyCHRvMWDgmM7+Hd+B7y1JAHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOA3g24b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZTI6ud7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC60606A31C;
-	Wed, 28 Oct 2026 19:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA16606A31C;
+	Wed, 28 Oct 2026 19:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOA3g24b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1AE1F01825;
-	Wed, 28 Oct 2026 19:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZTI6ud7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0041F01825;
+	Wed, 28 Oct 2026 19:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216956;
-	bh=LF/K3fzOylD/7BWl+6gzxO1/0XJs46lLUTlR0qCXVOU=;
+	s=korg; t=1793216959;
+	bh=o0+QEtSLQbuvW65SrNnNzd5Js/6ASD356qfLKxtd25k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cOA3g24bArLbmA2kslxHbBrKPdzNv4VGkTyAJakIBmqMsizFvis/CCpLg3+gtqhcp
-	 VvJ34vpGU5WObMgj7/0SyBAfG/1MQO56Jd2YJfK9l2YwqG6G1HBkfAK8zkDTEfzYFm
-	 LAvSvDGODzCU2W55UZAT4s5Ex0m3kV5og6P8T+P0=
+	b=wZTI6ud7nmGMZAv20ysszVLQsLZw4F4B+LbLz/SNCPYmkGQkfdlwFxYqF4uA59VJG
+	 ejyjjwojIOgPUQk97Cv0HySW3w2ud6AALRp29wDuhCy+I226CVKzz7TrCJAueQ9hwZ
+	 uWcYAumVkum75aAOgWIC8QntSkuabyiZjMdbDqmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 1736/1887] net: rds: fix uninitialized trans dereference in CM event handler
-Date: Wed, 28 Oct 2026 18:03:52 +0100
-Message-ID: <20261028170538.958608034@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1695/1887] ipv6: flowlabel: cap duplicate leases per socket
+Date: Wed, 28 Oct 2026 18:03:11 +0100
+Message-ID: <20261028170538.026658478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,121 +71,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 492ba6ac1b1ffb8a06ff52db0825c1af2cdb28c8 upstream.
+[ Upstream commit 8d6cd188508513503805c156165de38e4e4a8615 ]
 
-rds_rdma_cm_event_handler_cmn() assigns trans only when the RDMA
-device is an InfiniBand CA (RDMA_NODE_IB_CA).  On any other device
-type, e.g. an iWARP RNIC such as siw, trans stays uninitialized, but
-the event switch dereferences it: unconditionally in the
-RDMA_CM_EVENT_CONNECT_REQUEST case via trans->cm_handle_connect(),
-and (with a connection context) in the ROUTE_RESOLVED and
-ESTABLISHED cases.
+ipv6_flowlabel_get() allocates an ipv6_fl_socklist entry for every
+successful GET. The recheck path for a compatible existing flowlabel
+links another lease without applying any lease admission check. Repeated
+GET requests for one shareable label can therefore grow a socket's lease
+list without bound.
 
-An RDS listener on an iWARP device therefore crashes the kernel as
-soon as a connect request arrives: with CONFIG_INIT_STACK_ALL_ZERO
-the wild load becomes a NULL dereference at offset 0xa0
-(&trans->cm_handle_connect) in the iw_cm_wq workqueue.
+Reject a new unprivileged lease once the socket already holds
+FL_MAX_PER_SOCK leases. Check this on the shared recheck path so reuse
+of a globally interned label, including the fl_intern() collision path,
+is covered as well. New-label admission remains under the existing
+mem_check() policy.
 
-GCC masks the bug in default builds by folding the uninitialized
-load into &rds_ib_transport; Clang-built kernels take the real
-uninitialized path and oops.
+Use capable(CAP_NET_ADMIN) rather than ns_capable(), matching
+mem_check(). An unprivileged user must not bypass the cap by creating a
+user namespace and a netns where they have CAP_NET_ADMIN, which would
+still consume host memory.
 
-The active side can land on a non-IB device too: the id that
-rds_ib_conn_path_connect() creates is not restricted to a node type,
-so rdma_resolve_addr() binds it to whichever device serves the local
-address, and an iWARP RNIC on the same netdev qualifies.  The crash
-there is different: resolving a route on an iWARP id never fills in
-cm_id->route.path_rec, and the ROUTE_RESOLVED case writes
-path_rec[0].sl before it calls into the transport.
+Check the capability only when the socket reaches the limit, so
+successful unprivileged GET requests below the cap do not generate a
+capability audit. Do the admission check before updating linger and
+expires so a rejected GET does not refresh the shared label, matching
+the existing socket-list allocation failure path.
 
-The iWARP transport was dropped long ago and IB is the only
-transport left, so make that explicit: initialize trans to
-&rds_ib_transport at declaration, drop the conditional assignment,
-reject a connect request that arrives on a non-IB device, and drop a
-connection whose address resolved to one instead of resolving a
-route on it.  The rejection is limited to RDMA_CM_EVENT_CONNECT_REQUEST
-on purpose: a non-zero return from the handler makes rdma_cm destroy
-the id the event was delivered on, which is right for the request's
-freshly created id but would free a connection id that RDS still owns
-for any other event.  On the active side the id stays ic->i_cm_id and
-the connection's shutdown destroys it, so that case returns 0.
-
-Fixes: dcdede0406d3 ("RDS: Drop stale iWARP RDMA transport")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Link: https://lore.kernel.org/netdev/20260824111701.2979194-1-ljp1205831794@gmail.com/
-Link: https://lore.kernel.org/netdev/20260825021223.3483044-1-ljp1205831794@gmail.com/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-[achender: reject only on RDMA_CM_EVENT_CONNECT_REQUEST instead of
- bailing out for every event on a non-IB device, so that rdma_cm does
- not destroy connection ids RDS still tracks; drop a connection whose
- address resolved to a non-IB device before a route is resolved on it;
- changelog adjusted]
-Assisted-by: LLM
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261003163408.250568-2-achender@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/83f8535972ff6e3741548476a1d50dec24c758be.1788415194.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rdma_transport.c |   26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ net/ipv6/ip6_flowlabel.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -52,7 +52,7 @@ static int rds_rdma_cm_event_handler_cmn
- {
- 	/* this can be null in the listening path */
- 	struct rds_connection *conn = cm_id->context;
--	struct rds_transport *trans;
-+	struct rds_transport *trans = &rds_ib_transport;
- 	int ret = 0;
- 	int *err;
- 	u8 len;
-@@ -60,9 +60,6 @@ static int rds_rdma_cm_event_handler_cmn
- 	rdsdebug("conn %p id %p handling event %u (%s)\n", conn, cm_id,
- 		 event->event, rdma_event_msg(event->event));
+diff --git a/net/ipv6/ip6_flowlabel.c b/net/ipv6/ip6_flowlabel.c
+index eb0d517aa6cb3..ce441f7970a91 100644
+--- a/net/ipv6/ip6_flowlabel.c
++++ b/net/ipv6/ip6_flowlabel.c
+@@ -460,6 +460,22 @@ fl_create(struct net *net, struct sock *sk, struct in6_flowlabel_req *freq,
+ 	return NULL;
+ }
  
--	if (cm_id->device->node_type == RDMA_NODE_IB_CA)
--		trans = &rds_ib_transport;
--
- 	/* Prevent shutdown from tearing down the connection
- 	 * while we're executing. */
- 	if (conn) {
-@@ -82,11 +79,32 @@ static int rds_rdma_cm_event_handler_cmn
- 
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_CONNECT_REQUEST:
-+		/* Only the IB transport is supported, but RDS listens on
-+		 * every RDMA device: reject a request that arrived on any
-+		 * other kind.  A non-zero return has rdma_cm destroy the
-+		 * request's id, which is what we want here and only here.
-+		 */
-+		if (cm_id->device->node_type != RDMA_NODE_IB_CA) {
-+			ret = 1;
++static bool fl_sock_at_lease_limit(const struct sock *sk)
++{
++	const struct ipv6_pinfo *np = inet6_sk(sk);
++	const struct ipv6_fl_socklist *sfl;
++	int count = 0;
++
++	rcu_read_lock_bh();
++	for_each_sk_fl_rcu(np, sfl) {
++		if (++count >= FL_MAX_PER_SOCK)
 +			break;
-+		}
- 		ret = trans->cm_handle_connect(cm_id, event, isv6);
- 		break;
- 
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
- 		if (conn) {
-+			/* The address resolved to a device RDS has no
-+			 * transport for.  Do not go on to resolve a route:
-+			 * an iWARP route leaves cm_id->route.path_rec
-+			 * unset, which the ROUTE_RESOLVED case below
-+			 * dereferences.  Drop the connection instead; the
-+			 * id is still ic->i_cm_id, so return 0 and let the
-+			 * shutdown destroy it.
-+			 */
-+			if (cm_id->device->node_type != RDMA_NODE_IB_CA) {
-+				rds_conn_drop(conn);
-+				break;
-+			}
- 			rdma_set_service_type(cm_id, conn->c_tos);
- 			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
- 			ret = rdma_resolve_route(cm_id,
++	}
++	rcu_read_unlock_bh();
++
++	return count >= FL_MAX_PER_SOCK;
++}
++
+ static int mem_check(struct sock *sk)
+ {
+ 	struct ipv6_pinfo *np = inet6_sk(sk);
+@@ -670,6 +686,10 @@ static int ipv6_flowlabel_get(struct sock *sk, struct in6_flowlabel_req *freq,
+ 			err = -ENOMEM;
+ 			if (!sfl1)
+ 				goto release;
++			err = -ENOBUFS;
++			if (fl_sock_at_lease_limit(sk) &&
++			    !capable(CAP_NET_ADMIN))
++				goto release;
+ 			if (fl->linger > fl1->linger)
+ 				fl1->linger = fl->linger;
+ 			if ((long)(fl->expires - fl1->expires) > 0)
+-- 
+2.53.0
+
 
 
