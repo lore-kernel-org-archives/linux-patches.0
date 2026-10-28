@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209779;
-	b=2E4VFhAvGYsnbAwNFX6fPbgN1bZ1EelOEYYZCCpRhLIQGv/lqnut4X4P7UVMl5mRtgpN
-	 yy0CYnDuTNqJcKppeF9k63B1iY57qs3kNLZKYUSB9J0MraTSX0Pyds8VYh0P4rTmR8k42
-	 8xQwlWLa8CDTVFBrAIhn8KkJbm0vomKbs5cc/tHtNjCIl9esLWi2zKyWBsIsAy+I0Nv3Q
-	 BXQZJOj5NdSY/rim8g/9HpWXQ7zERkYuFeOpb3pyOxzb5B1E1hIz1XMcU6swFSu2hgcO1
-	 vOZO8NzFnFekdLWSqK620Hi2dQ643h6A7ShnRAUplZ/EQrjpZaW0NN8vzW1PCIf+W6A==
+	t=1793209782;
+	b=sTsHeFgrnG2fUBUvSayg23sQ6yhaIqWts3tbc/cYjaZ7tE1kIdtf0DaJkZ7EM+EV6j6G
+	 KXpi/0xl/a69HJrFJ83k/KZcAy0UL+FaYCUmn8xipmY4qqb4VqpkigcrvbqjMnOCiuAii
+	 eLwz8qL60n38ag8jHXefxqkCRr7Gy/9aNXjysZr8+sBZkuAj9FsFHIUgyMDOy9GfqAd7y
+	 3rWaGZcSBoorR6Qd0Z/WfPLDw3xnxcMSL2IEfi8CctdL9yDxBZcblSrsBaRZWPoZLNj9n
+	 6tyA5FheKgB80N5ziruBRLAcF8sCXjFWXVjTDDLHPGV26wYSY4lf2E1A/sXjZ1HmofA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209779;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209782;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TgSNqoLTbbPGQxGND6lhKbn21vAhPnFrnnaU5vHboCg=;
-	b=Tj6fz526CpBeoMg8C5T7DOv1TFmJUiwtfQeaJgUrh6NCWWP+KDOg3m75MvyU3/6YKnHk
-	 StqLj9RwkHzfnvIEwTtf9hMh6sIzhHYdrGhf/a4aQ8QpeCdRCw61U2MMqHAsfz/q+vbQR
-	 6KOBtrFqsHWZzCwfb4aTLhttZZeUsknbwZyAJxgaF7tJeksPtYBDRHcgT8DnJqmgpTHL1
-	 dPU+GXEExYTmbqMuhc+93BvBIvKkKZThJu6K9PsClmf5r9F8ISYuqkFQGQ+2/alut5jz0
-	 mBGPsDofyF3HnTe2nIYJNqD7gg9SBeOZ693QLR+OrKsiypGHSL1H/i3Ef0UOPNdY83w==
+	bh=ediZX0r1HWYG3XmyJYZ1Jj5rkwr3YtkBn6pE6yuN8sg=;
+	b=kg4i7rLi0dTW8YXxYA5cK1GtV2UdJXrouUSX8K34C+izjX4MYTNv1c7iKzms+YzI3OzI
+	 pVnm4wdqxDsNdx6a9cqOIasuQ6SGVUVD0msIx518huTVZjBJyF22/FWMAAyRdGOCMIrFc
+	 tZ1qZPphwJS+zH4ctS/o60GmGJhy7IMLwX92MdZbilL88hEU+AsuRas1WnvOK4jzCiemU
+	 tZIDlStRtiKaUQLemtwZPgLuHu/wtGYvehNZ3u03indOxU2Fgc1eGRiN7zVZffUTS8EtI
+	 8T2vSJNVhUDhyBsZydaDG8ykIpbrYtWB0ME53hDNYO4dWE8eQr1EyesqBKqVEsu3s0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXTgXkIy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwzBa0Pn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D412606A31E;
-	Wed, 28 Oct 2026 17:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A475606A31C;
+	Wed, 28 Oct 2026 17:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXTgXkIy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF841F01829;
-	Wed, 28 Oct 2026 17:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwzBa0Pn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892321F01825;
+	Wed, 28 Oct 2026 17:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209779;
-	bh=TgSNqoLTbbPGQxGND6lhKbn21vAhPnFrnnaU5vHboCg=;
+	s=korg; t=1793209782;
+	bh=ediZX0r1HWYG3XmyJYZ1Jj5rkwr3YtkBn6pE6yuN8sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXTgXkIyhdK3vF231sp+zTer2WVCpVZCm06Hi4Yc6QaNRHIvWESS5mA8nzDUlwSEV
-	 omf6aQTkLIKxIMpvjtot47SsKyzQlyYChpX42L+Im8n2/3fFlU8vLbbbJ6rxBXVeGK
-	 DFnQfKIsq71RFmJIjzhmii3Bc0WdiaORAhaZZpEM=
+	b=rwzBa0PneOXAsUtJ5q4Ifi71cvEnhRF7w5F60U3VeuOCP6EL53/tzHddrRmKSSA26
+	 iqapN1rn+E5oPfYAlC4/iet4bo8aCFQZ1YF45igFrjl9ywUbzz3Q/gV0qihiA5cSA2
+	 VzeUq8Qbqh2Lkqzrhnguuq/+WiC71iAXyJ5GWPxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 073/109] io_uring/kbuf: handle index wrap in last buffer check
-Date: Wed, 28 Oct 2026 18:00:57 +0100
-Message-ID: <20261028165944.075282584@linuxfoundation.org>
+Subject: [PATCH 6.18 074/109] io_uring/sqpoll: let the thread sleep on disabled rings
+Date: Wed, 28 Oct 2026 18:00:58 +0100
+Message-ID: <20261028165944.098607372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,38 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 6e773b5161506a4d0e739eb3aa4667d28f20219c upstream.
+Commit d492dcbb3b81c1c2d0aabef41fa1307093f3a556 upstream.
 
-io_ring_buffer_select() flags the request with REQ_F_BL_EMPTY if it takes
-the last buffer of the ring. Head and tail are 16-bit counters, but
-"head + 1" is computed as an int. If head is 65535 and tail has wrapped
-to 0, that compares 65536 to 0 and the flag isn't set.
+__io_sq_thread() doesn't submit anything as long as the ring has
+IORING_SETUP_R_DISABLED set. The check that keeps the SQPOLL thread from
+going to sleep while the SQ ring holds entries doesn't know about that.
+If an application fills in SQEs first and enables the ring later, the
+thread finds that there is work each time it is about to sleep, goes
+around, doesn't submit it, and so on. It uses up a CPU until the ring
+gets enabled.
 
-A bundle receive relies on the flag to tell that there is no point in
-trying to get more data. Without it, it goes for another round, finds no
-buffer, and the request, which has received data, is marked as failed on
-account of the -ENOBUFS. That severs a link, and ends a multishot.
+Entries in the SQ ring of a disabled ring are no reason to stay awake.
+io_register_enable_rings() clears the flag and then wakes the thread, and
+the flag is looked at after prepare_to_wait(), so the thread can't miss
+that.
 
-Fixes: c3f9109dbc9e ("io_uring/kbuf: flag request if buffer pool is empty after buffer pick")
+Fixes: 0298ef969a11 ("io_uring: clean R_DISABLED startup mess")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-36-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-37-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/sqpoll.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -203,7 +203,7 @@ static struct io_br_sel io_ring_buffer_s
- 	if (unlikely(tail == head))
- 		return sel;
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -390,6 +390,13 @@ static int io_sq_thread(void *data)
+ 				 */
+ 				smp_mb__after_atomic();
  
--	if (head + 1 == tail)
-+	if ((__u16)(head + 1) == tail)
- 		req->flags |= REQ_F_BL_EMPTY;
- 
- 	buf = io_ring_head_to_buf(br, head, bl->mask);
++				/*
++				 * Nothing gets submitted before the ring is
++				 * enabled, which comes with a wake up.
++				 */
++				if (READ_ONCE(ctx->flags) & IORING_SETUP_R_DISABLED)
++					continue;
++
+ 				if (io_sqring_entries(ctx)) {
+ 					needs_sched = false;
+ 					break;
 
 
