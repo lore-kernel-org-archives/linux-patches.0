@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216705;
-	b=RkLsYSyF4y+WQjPyoTgxFy2HfPgiOmnqMBTh3YhlPlXEvOzNbV4MH635hWpb3QNi4Wg9
-	 jw0uYVDvRcnMio1PkYm7YxwhBEEzdEfxhwVjGodTzLaVUmxYVBW6qHy3Y81RLa0sMj6xe
-	 LggGZyti59LPlle4vBWMJITjXBh3FmEkxNsQYsJvxLCZ/y8Kg7oZosCB2p0unVFqWSGyS
-	 oSO0HS2KgnQ0Q8Pb4v88wTvhwHY/8HCcOY3Baw9jsPrtSAnHWg/niGq8bKlV/gquQbOa6
-	 SygpKzF4Vzi9yTmOc9VywsZEyI6TA8J8heQaOpwRDETff5KpfxkoKbUKVhGtUEunBAw==
+	t=1793216708;
+	b=VuA0TZUHnb5CfM5o/2HR92Q6/WZ3+3XjMw2jkRlwXYVmQ1s/m6M0L6b6BF/TqBw4I7v2
+	 xEZFAY/zBw9Uy1UtQJ9WdFxbC+/Covt04ZtGKLXamyhsXh8/Fp+6RCNwPY2qjgkZnZJ9/
+	 1CCNmVNpDFy4fltp1D25x7Xzn4HxcO2ASYck5Q4jTtUDU6FOAtn/3ZyAzh08qxlXBv1DB
+	 jVgRAXJ9fe4SFjjQTeY9zpxuzE+alEDKg3SzO84JWGh5p9t6EHtB8nqewSEe84i3RgEUE
+	 zxa8QLjglaBCFihJnwPC4mSy1lfumst4ZshTc6JlWOisT9E+OLy0A0qnqw7YWDt9ZXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216705;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216708;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=urt70yWYOn2S4aLQaed4vyRtn+omh/rJ6TJLk6mxdOo=;
-	b=JbQyCkxfkPxwn9AzsFYjZ3zFAW1bfGZCYBxuJ0HL8QZn2lW0+0yOG/8xQKq1grKDLbUZ
-	 kyDS2EdsLXKxilM+lF9cP0Z3BHGJTNeUAiI0KLIh2CjrqoKP7S1ivzfI7Q7BWYdPsBlct
-	 hhJXKpa4hW7p8NDR3qnoocgwC7jxB/6ARlh07JBvNeI54wSsDOhx2rvdkW1crdjA8gwMX
-	 h/b3TTDZSH+QyGk+Ej4qZb2nqywd0qI4mSQNL30T99a0ZkI/e3iTRWyIX5bzFDxF+LD6m
-	 K9QND9qtJD9m7hzf5ZdikgHpFgS5FOrD1DNEVxUetqffM3OM97wpE24ngMz0gFqyxxg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=uXdKjheeyLX4gR3Dfi8fcJRHHVUyBO5HocQhuZ7M8V0=;
+	b=sqlW+rRqhYlTk4IwSmjN/A/mKfypF8VFLGmvN2qocwlvPLzq2TWXYXMZd35aMJ6kSuQ5
+	 BLikM+dxOOfoV7WXp/OkffppnfROvzTQIBMTJaotk88NI8vX2692XtZEUpjyloaSQQr45
+	 bytV9Zxk0aD2IobBuSlqhAKfVkHoOP7XaU0ZdYyv0LUBBRZ5Dw07tOgmcQwz9+i+BiTSw
+	 vpTZOmjcpaTWcxZAz45Lyr8Ma6DzNvmJbSEa0kSofnURC+INjEPWlPPgoKxZTjjd1s87Q
+	 qNF/zBWSf04iTLp9tzNy9cYiDT7b7TGjBkgD3I/c15DsONnpqiodunfqW+BmioYKJlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7LFhcq7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Bg/btsjL";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64891606A31E;
-	Wed, 28 Oct 2026 19:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4158E606A31A;
+	Wed, 28 Oct 2026 19:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7LFhcq7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B361F01825;
-	Wed, 28 Oct 2026 19:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bg/btsjL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 911C51F01825;
+	Wed, 28 Oct 2026 19:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216705;
-	bh=urt70yWYOn2S4aLQaed4vyRtn+omh/rJ6TJLk6mxdOo=;
+	s=korg; t=1793216708;
+	bh=uXdKjheeyLX4gR3Dfi8fcJRHHVUyBO5HocQhuZ7M8V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b7LFhcq7SEW1Rtle09VeSd/bJO9H11P37hthtvIYeckzBcgBhDWbJEv6qvjfg9Viv
-	 JCjpxBRT3EB5f+6YTWb3R8PfRZPSYhx8Tn2e0K93ukXyihnCjbGYN4uSDf3HK/Yekj
-	 nq7jW1fnioWiRNt/bPoNrezPVym+a8B6kUhAMYmk=
+	b=Bg/btsjLAPoTDOYWCLiVkFzvR2LU1J/7QIqjcteqdo6jGv2EluAFVhWSsGzoXppw5
+	 W0Qge33sqjOsDAq0gXKAIU+Tq+aPyJwKxYV5FcEk7fsvqhAA5WGAjbTIKqlIcYeFJT
+	 R46lRmt499jFnL5UjtJadUOnzNOLkPVGbPzxCWsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1597/1887] misc: sgi-gru: remove interrupt-context page-table walks
-Date: Wed, 28 Oct 2026 18:01:33 +0100
-Message-ID: <20261028170535.812451757@linuxfoundation.org>
+Subject: [PATCH 6.1 1644/1887] drm/v3d: Clear queue->active_job when v3d_fence_create() fails
+Date: Wed, 28 Oct 2026 18:02:20 +0100
+Message-ID: <20261028170536.877053187@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -61,199 +62,188 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 928a8e9f523df845fc496bcb9811013b67aabec5 ]
+[ Upstream commit 25a1669907512e927fab9ad4d4fb74ff57f63cd9 ]
 
-The GRU TLB miss handler walks a process's page tables without holding
-page-table locks or a reference to the mapped page. It also uses a kernel
-page-table accessor on user page tables and supports only PMD-level large
-mappings on x86-64.
+The run_job() callbacks for BIN, RENDER, TFU and CSD assign the incoming
+job to queue->active_job before calling v3d_fence_create(). If
+v3d_fence_create() fails, the callback returns NULL without clearing
+active_job, leaving a dangling pointer.
 
-Remove the direct walker. Send interrupt faults directly to user polling
-mode so the existing call-OS fallback retries them in process context.
+Create a failure path in all run_job() callbacks that clears the active
+job before returning NULL. The BIN path takes queue->queue_lock around the
+clear as it races against v3d_overflow_mem_work(); RENDER, TFU and CSD
+paths have no concurrent reader, so the clear is lock-free.
 
-Remove the mmap-lock failure statistic that can no longer be incremented.
-
-Fixes: 142586409c8b ("GRU Driver: page faults & exceptions")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20260730111316.3672672-2-usama.anjum@arm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a783a09ee76d ("drm/v3d: Refactor job management.")
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Link: https://patch.msgid.link/20260604-v3d-sched-misc-fixes-v4-2-c068f5bf5ccf@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/sgi-gru/grufault.c  | 101 ++++---------------------------
- drivers/misc/sgi-gru/gruprocfs.c |   1 -
- drivers/misc/sgi-gru/grutables.h |   1 -
- 3 files changed, 12 insertions(+), 91 deletions(-)
+ drivers/gpu/drm/v3d/v3d_sched.c | 60 +++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
-index b836936e97471..c2f38e650b66b 100644
---- a/drivers/misc/sgi-gru/grufault.c
-+++ b/drivers/misc/sgi-gru/grufault.c
-@@ -166,13 +166,8 @@ static void get_clear_fault_map(struct gru_state *gru,
- }
+diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
+index ad979e7d33150..e31a3c8ff924f 100644
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -77,15 +77,11 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
+ 	struct v3d_bin_job *job = to_bin_job(sched_job);
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	struct drm_device *dev = &v3d->drm;
+-	struct dma_fence *fence;
++	struct dma_fence *fence = NULL;
+ 	unsigned long irqflags;
  
- /*
-- * Atomic (interrupt context) & non-atomic (user context) functions to
-- * convert a vaddr into a physical address. The size of the page
-- * is returned in pageshift.
-- * 	returns:
-- * 		  0 - successful
-- * 		< 0 - error code
-- * 		  1 - (atomic only) try again in non-atomic context
-+ * Convert a user virtual address to a physical address in process context.
-+ * The size of the page is returned in pageshift.
-  */
- static int non_atomic_pte_lookup(struct vm_area_struct *vma,
- 				 unsigned long vaddr, int write,
-@@ -192,87 +187,25 @@ static int non_atomic_pte_lookup(struct vm_area_struct *vma,
- 	return 0;
- }
- 
--/*
-- * atomic_pte_lookup
-- *
-- * Convert a user virtual address to a physical address
-- * Only supports Intel large pages (2MB only) on x86_64.
-- *	ZZZ - hugepage support is incomplete
-- *
-- * NOTE: mmap_lock is already held on entry to this function. This
-- * guarantees existence of the page tables.
-- */
--static int atomic_pte_lookup(struct vm_area_struct *vma, unsigned long vaddr,
--	int write, unsigned long *paddr, int *pageshift)
--{
--	pgd_t *pgdp;
--	p4d_t *p4dp;
--	pud_t *pudp;
--	pmd_t *pmdp;
--	pte_t pte;
--
--	pgdp = pgd_offset(vma->vm_mm, vaddr);
--	if (unlikely(pgd_none(*pgdp)))
--		goto err;
--
--	p4dp = p4d_offset(pgdp, vaddr);
--	if (unlikely(p4d_none(*p4dp)))
--		goto err;
--
--	pudp = pud_offset(p4dp, vaddr);
--	if (unlikely(pud_none(*pudp)))
--		goto err;
--
--	pmdp = pmd_offset(pudp, vaddr);
--	if (unlikely(pmd_none(*pmdp)))
--		goto err;
--#ifdef CONFIG_X86_64
--	if (unlikely(pmd_large(*pmdp)))
--		pte = *(pte_t *) pmdp;
--	else
--#endif
--		pte = *pte_offset_kernel(pmdp, vaddr);
--
--	if (unlikely(!pte_present(pte) ||
--		     (write && (!pte_write(pte) || !pte_dirty(pte)))))
--		return 1;
--
--	*paddr = pte_pfn(pte) << PAGE_SHIFT;
--#ifdef CONFIG_HUGETLB_PAGE
--	*pageshift = is_vm_hugetlb_page(vma) ? HPAGE_SHIFT : PAGE_SHIFT;
--#else
--	*pageshift = PAGE_SHIFT;
--#endif
--	return 0;
--
--err:
--	return 1;
--}
--
- static int gru_vtop(struct gru_thread_state *gts, unsigned long vaddr,
- 		    int write, int atomic, unsigned long *gpa, int *pageshift)
- {
- 	struct mm_struct *mm = gts->ts_mm;
- 	struct vm_area_struct *vma;
- 	unsigned long paddr;
--	int ret, ps;
-+	int ps;
- 
- 	vma = find_vma(mm, vaddr);
- 	if (!vma)
- 		goto inval;
- 
--	/*
--	 * Atomic lookup is faster & usually works even if called in non-atomic
--	 * context.
--	 */
--	rmb();	/* Must/check ms_range_active before loading PTEs */
--	ret = atomic_pte_lookup(vma, vaddr, write, &paddr, &ps);
--	if (ret) {
--		if (atomic)
--			goto upm;
--		if (non_atomic_pte_lookup(vma, vaddr, write, &paddr, &ps))
--			goto inval;
+-	if (unlikely(job->base.base.s_fence->finished.error)) {
+-		spin_lock_irqsave(&v3d->job_lock, irqflags);
+-		v3d->queue[V3D_BIN].active_job = NULL;
+-		spin_unlock_irqrestore(&v3d->job_lock, irqflags);
+-		return NULL;
 -	}
-+	if (atomic)
-+		goto upm;
-+
-+	/* Order the caller's ms_range_active check before loading PTEs. */
-+	rmb();
-+	if (non_atomic_pte_lookup(vma, vaddr, write, &paddr, &ps))
-+		goto inval;
- 	if (is_gru_paddr(paddr))
- 		goto inval;
- 	paddr = paddr & ~((1UL << ps) - 1);
-@@ -569,19 +502,9 @@ static irqreturn_t gru_intr(int chiplet, int blade)
- 			continue;
- 		}
++	if (unlikely(job->base.base.s_fence->finished.error))
++		goto out_clean_job;
  
--		/*
--		 * This is running in interrupt context. Trylock the mmap_lock.
--		 * If it fails, retry the fault in user context.
--		 */
-+		/* Address translation may sleep, so retry the fault in user context. */
- 		gts->ustats.fmm_tlbmiss++;
--		if (!gts->ts_force_cch_reload &&
--					mmap_read_trylock(gts->ts_mm)) {
--			gru_try_dropin(gru, gts, tfh, NULL);
--			mmap_read_unlock(gts->ts_mm);
--		} else {
--			tfh_user_polling_mode(tfh);
--			STAT(intr_mm_lock_failed);
--		}
-+		tfh_user_polling_mode(tfh);
- 	}
- 	return IRQ_HANDLED;
+ 	/* Lock required around bin_job update vs
+ 	 * v3d_overflow_mem_work().
+@@ -102,7 +98,7 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
+ 
+ 	fence = v3d_fence_create(v3d, V3D_BIN);
+ 	if (IS_ERR(fence))
+-		return NULL;
++		goto out_clean_job;
+ 
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+@@ -129,6 +125,12 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
+ 	V3D_CORE_WRITE(0, V3D_CLE_CT0QEA, job->end);
+ 
+ 	return fence;
++
++out_clean_job:
++	spin_lock_irqsave(&v3d->job_lock, irqflags);
++	v3d->queue[V3D_BIN].active_job = NULL;
++	spin_unlock_irqrestore(&v3d->job_lock, irqflags);
++	return fence;
  }
-diff --git a/drivers/misc/sgi-gru/gruprocfs.c b/drivers/misc/sgi-gru/gruprocfs.c
-index 97b8b38ab47df..b8139c27bc7f8 100644
---- a/drivers/misc/sgi-gru/gruprocfs.c
-+++ b/drivers/misc/sgi-gru/gruprocfs.c
-@@ -54,7 +54,6 @@ static int statistics_show(struct seq_file *s, void *p)
- 	printstat(s, intr_cbr);
- 	printstat(s, intr_tfh);
- 	printstat(s, intr_spurious);
--	printstat(s, intr_mm_lock_failed);
- 	printstat(s, call_os);
- 	printstat(s, call_os_wait_queue);
- 	printstat(s, user_flush_tlb);
-diff --git a/drivers/misc/sgi-gru/grutables.h b/drivers/misc/sgi-gru/grutables.h
-index 640daf1994df7..3348552925c61 100644
---- a/drivers/misc/sgi-gru/grutables.h
-+++ b/drivers/misc/sgi-gru/grutables.h
-@@ -182,7 +182,6 @@ struct gru_stats_s {
- 	atomic_long_t intr_cbr;
- 	atomic_long_t intr_tfh;
- 	atomic_long_t intr_spurious;
--	atomic_long_t intr_mm_lock_failed;
- 	atomic_long_t call_os;
- 	atomic_long_t call_os_wait_queue;
- 	atomic_long_t user_flush_tlb;
+ 
+ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
+@@ -136,12 +138,10 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
+ 	struct v3d_render_job *job = to_render_job(sched_job);
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	struct drm_device *dev = &v3d->drm;
+-	struct dma_fence *fence;
++	struct dma_fence *fence = NULL;
+ 
+-	if (unlikely(job->base.base.s_fence->finished.error)) {
+-		v3d->queue[V3D_RENDER].active_job = NULL;
+-		return NULL;
+-	}
++	if (unlikely(job->base.base.s_fence->finished.error))
++		goto out_clean_job;
+ 
+ 	v3d->queue[V3D_RENDER].active_job = &job->base;
+ 
+@@ -155,7 +155,7 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
+ 
+ 	fence = v3d_fence_create(v3d, V3D_RENDER);
+ 	if (IS_ERR(fence))
+-		return NULL;
++		goto out_clean_job;
+ 
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+@@ -175,6 +175,10 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
+ 	V3D_CORE_WRITE(0, V3D_CLE_CT1QEA, job->end);
+ 
+ 	return fence;
++
++out_clean_job:
++	v3d->queue[V3D_RENDER].active_job = NULL;
++	return fence;
+ }
+ 
+ static struct dma_fence *
+@@ -183,18 +187,16 @@ v3d_tfu_job_run(struct drm_sched_job *sched_job)
+ 	struct v3d_tfu_job *job = to_tfu_job(sched_job);
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	struct drm_device *dev = &v3d->drm;
+-	struct dma_fence *fence;
++	struct dma_fence *fence = NULL;
+ 
+-	if (unlikely(job->base.base.s_fence->finished.error)) {
+-		v3d->queue[V3D_TFU].active_job = NULL;
+-		return NULL;
+-	}
++	if (unlikely(job->base.base.s_fence->finished.error))
++		goto out_clean_job;
+ 
+ 	v3d->queue[V3D_TFU].active_job = &job->base;
+ 
+ 	fence = v3d_fence_create(v3d, V3D_TFU);
+ 	if (IS_ERR(fence))
+-		return NULL;
++		goto out_clean_job;
+ 
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+@@ -218,6 +220,10 @@ v3d_tfu_job_run(struct drm_sched_job *sched_job)
+ 	V3D_WRITE(V3D_TFU_ICFG, job->args.icfg | V3D_TFU_ICFG_IOC);
+ 
+ 	return fence;
++
++out_clean_job:
++	v3d->queue[V3D_TFU].active_job = NULL;
++	return fence;
+ }
+ 
+ static struct dma_fence *
+@@ -226,13 +232,11 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 	struct v3d_csd_job *job = to_csd_job(sched_job);
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	struct drm_device *dev = &v3d->drm;
+-	struct dma_fence *fence;
++	struct dma_fence *fence = NULL;
+ 	int i;
+ 
+-	if (unlikely(job->base.base.s_fence->finished.error)) {
+-		v3d->queue[V3D_CSD].active_job = NULL;
+-		return NULL;
+-	}
++	if (unlikely(job->base.base.s_fence->finished.error))
++		goto out_clean_job;
+ 
+ 	/* The HW interprets a workgroup size of 0 as 65536; however, the
+ 	 * user-space driver exposes a maximum of 65535. Therefore, a 0 in
+@@ -250,7 +254,7 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 
+ 	fence = v3d_fence_create(v3d, V3D_CSD);
+ 	if (IS_ERR(fence))
+-		return NULL;
++		goto out_clean_job;
+ 
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+@@ -266,6 +270,10 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 	V3D_CORE_WRITE(0, V3D_CSD_QUEUED_CFG0, job->args.cfg[0]);
+ 
+ 	return fence;
++
++out_clean_job:
++	v3d->queue[V3D_CSD].active_job = NULL;
++	return fence;
+ }
+ 
+ static struct dma_fence *
 -- 
 2.53.0
 
