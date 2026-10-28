@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212661;
-	b=KNaHj45hMkAv00bdrszeKoY+8TPVr45r0NWzVqRjoo0Q1WqbTb96jPJzHYA/PC96i1YL
-	 cCE2/YCVPnHgdDXaWs0YI35bzHeaQCb3fDcsLDTSnU1FDWp+khpBGegSVGUmsA6Rd6eZ8
-	 MFoBKYMJiu1rRsxzYxWQTxgpyaBVTLAEIWF9JWWM7dOQVfBGhGfxN/30DEf6kBTkxegC8
-	 RJ7qyzpWqVR9RkFpHBGFgbCCvw654MaqsfBGPRJFJtPUFyJ1V3R/ls7AJGuwSsyqZ5V8b
-	 kh/OZKAeFodX/jz09lnQc4yCVtaEOz+US9Gr5Y55Fd3L2BDI13gp3bLqvIb6GyB7RWw==
+	t=1793212664;
+	b=hzxrCgl2poqa2zdkNOipLL/9N2h3n5EV3rdDroCilSP5F9HVhz5Vr5CMi6fE97F0JGML
+	 GZ/hpYOeuk4z23zupHewOUV5CbPZHJ5+x243sKNpwZM16CD3/vdO20uMqep/ToiI0j6cI
+	 BpGEx84DLwG4lzPp3WTgxJltwBjpm7/ww0cG6VxL3b7LVPvvDi1gJRXG11+Zz92ny88ah
+	 JrLazkpi2FLx75ohxItOLcMgHFYF+wv4K2qrXT0WaTekJO9RM5bpl4em3xxKVRFt6ne2X
+	 EkYPQYWWmo4SDq5nNzOJM3xAQRKDMxkwmJ355I6pOl/D7I4XtS6nZu3T8+GzhLWsN0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212661;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nme9YB+MKGzqQHURsOOl3aL6rJF77KJlrphQ4dNPT/o=;
-	b=HPMZYpF4rDnbwE4WFbxYoD2Ii08zbP2PaWwGlTWXNs0TaknKKyoomuB434RrXDIgDhgR
-	 QFVsEmmU0ZWOiYdzBM0DLOylXlqTd4naUDun2y9CLWNl1G8Yaz0L4DCRFAd3ekVzxYP70
-	 w3wZ+MlJhEb6HYo9sKjzjyj0qW5b8LY/1oCJNfO7p+8e9AIAsQm0BeuMGGimty4Ek58/A
-	 i2W3azn9Gs5ZWWY1vItp+gGxlZ/o0h6UPN+5bGd0HNMLtB7oL77Np9+XYMODAhDXcLvMw
-	 A1phPBdVMc5mik6fMu88SlvDuw7wpVhZ0NIduyLEiVQdjS64sPKWT4SgZtakH6i95fQ==
+	bh=Q0MusYc/5Mdr6xz14BGkbPpOYYchRBDfUae1r81B76U=;
+	b=Q/RywOuujNqJ3pUNRee9Bczj0ZCRRO0v9Y1SK96715kI1UfEubxkNcM3PhQ+jWpEH+Wm
+	 HkHo9D3p37LNW3ehO7SusIabvJk3BajwPTMhhgFpI/7ReIwvv8cwo9Lx0qnYipoNolTuO
+	 l8quQNoA0k8IRjcc9caMAmJn+7MZipvExxA5d61T+P3/NGM6FqPaJ3UZ0402emWfresIx
+	 X4Me/Mmt4FzUQb9pnZCpANnyR4Tqx1I/zavsvIvOZ1oqk0A6Kt2PblM6n4/SikczY/mMN
+	 OFAYy0To/fHDj5oz6/gJm0uBoTQUUqU4JOU33lCTcfE98TR/Qp2SVt6Ml4LB54iDMzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ijcJpC6h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVjGqLHe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10FA606A31C;
-	Wed, 28 Oct 2026 18:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39E1606A31A;
+	Wed, 28 Oct 2026 18:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ijcJpC6h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6971F01825;
-	Wed, 28 Oct 2026 18:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVjGqLHe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD1D1F01825;
+	Wed, 28 Oct 2026 18:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212660;
-	bh=Nme9YB+MKGzqQHURsOOl3aL6rJF77KJlrphQ4dNPT/o=;
+	s=korg; t=1793212663;
+	bh=Q0MusYc/5Mdr6xz14BGkbPpOYYchRBDfUae1r81B76U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ijcJpC6h4afGCi4RV86R1pmVtejMd/n2fT1p5HEuZgG4f+/Vd2jOw8Nw2DFIJUwSJ
-	 16ugw3BzMpQdNWMOwStvy6mrm1Uu9jfEYwJ1DxiblDsIaWYLmAhoqYAl0NG191+b4L
-	 /GwrYPuisrTcjRdKWt8wlmPtwwTl4QfHyI8hl4T0=
+	b=eVjGqLHebKx/6o0EpfvVMC6k9/sS4cdBXT6gNjdjM/m6Xg4zVzbvtC8W7Y26TKdkq
+	 VGRQhIDz75DMRzYjZ35ZvXgAzODH/LVjshiU8pAWxI1E3McsM5+V67w81/EXkyZBCm
+	 qbIOBfxG7yusOZvu8YuUsTA3mg3xOlhrAr8FZXN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0231/1887] net/sched: cls_api: reclaim an empty proto on the error path
-Date: Wed, 28 Oct 2026 17:38:47 +0100
-Message-ID: <20261028170504.488179481@linuxfoundation.org>
+Subject: [PATCH 6.1 0232/1887] netfilter: ipset: do not update comments from kernel-side adds
+Date: Wed, 28 Oct 2026 17:38:48 +0100
+Message-ID: <20261028170504.510896027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,83 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 0bb8eab29b55045281a4963d4557f2776cdf8cfa ]
+[ Upstream commit a442c8a89fb9c531f9d6ab86120c31decd778d51 ]
 
-Two racing tc filter add requests on the same chain/prio of an
-unlocked classifier both run change() on the shared proto and both
-can fail: the winner's tcf_chain_tp_delete_empty() attempt gives up
-because the loser's handle is still in the idr, and the loser's
-error path drops only its own reference without a second reclamation
-attempt. The empty proto stays linked in the chain, holding the
-chain reference, a block reference and the classifier module
-reference until the chain or block is torn down.
+'Fixes' commit stopped calling ip_set_init_comment() for hash types
+from kernel-side-adds (xtables .. -j SET).  ip_set_init_comment() says:
 
-Reclaim the proto on the error path of any failed request that holds
-a proto reference. The reclamation is emptiness-gated:
-tcf_chain_tp_delete_empty() unlinks the proto only when
-delete_empty() admits it is empty, so a live shared proto is never
-unlinked. A proto the request created is reclaimed unconditionally -
-it is the only owner, so marking it for deletion is safe even without
-a delete_empty callback. Classifiers without one (the check marks the
-proto unconditionally) are rtnl-serialized, so the raced window this
-guard closes cannot arise for them.
+   "The kadt functions don't use the comment extensions in any way."
 
-This is a follow-up to commit d4e359b3608a ("net/sched: cls_api: fix
-teardown of an adopted proto on insert-race loss"), which stopped the
-loser of the insert race from unlinking the winner's live proto but
-left the empty-proto residual in place.
+But bitmap set type calls the function from kadt cb too.
 
-Conditions to recreate:
-- CONFIG_NET_CLS_FLOWER=y; veth pair
-- tc qdisc add dev veth0 ingress
-- two concurrent `tc filter add dev veth0 ingress protocol ip pref 1
-  flower skip_sw ... action drop` (both fail in fl_hw_replace_filter
-  after publishing their handle in the idr); repeat in a loop
-- an empty flower tp stays linked after both requests fail; visible
-  as a bare `filter protocol ip pref 1 flower chain 0` header in
-  `tc filter show` with no filter entries
-- CAP_NET_ADMIN (namespace-local via unshare -Urn suffices)
+While this appears to be safe (serialized via the set spinlock), it seems
+better to not call the init function either, least of all to keep
+behaviour consistent.
 
-Fixes: 8b64678e0af8 ("net: sched: refactor tp insert/delete for concurrent execution")
-Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260805134049.927864-1-victor@mojatatu.com
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-JCOT.v1.20260910090924@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ip_set_list calls ip_set_init_comment() only from uadt cb, it can be
+kept as-is.
+
+This was triggered by yet another LLM review, hinting that the existing
+rcu_dereference_protected() cannot be downgraded to only check if the
+nfnl mutex is held.
+
+Fixes: f30415929be8 ("netfilter: ipset: do not update comments from kernel-side hash adds")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ net/netfilter/ipset/ip_set_bitmap_gen.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 341128a00420c..dbaf6e72aa2da 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -2211,7 +2211,20 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 	}
+diff --git a/net/netfilter/ipset/ip_set_bitmap_gen.h b/net/netfilter/ipset/ip_set_bitmap_gen.h
+index 605d54d2bd7e6..3dc2ebbe4800c 100644
+--- a/net/netfilter/ipset/ip_set_bitmap_gen.h
++++ b/net/netfilter/ipset/ip_set_bitmap_gen.h
+@@ -157,7 +157,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
  
- errout:
--	if (err && tp_state == TP_CREATED)
-+	if (err && !IS_ERR_OR_NULL(tp) &&
-+	    (tp_state == TP_CREATED || tp->ops->delete_empty))
-+		/*
-+		 * The request is dropping its reference to tp. If it was
-+		 * the last user (the idr is empty now), reclaim the proto.
-+		 * A tp this request created is reclaimed unconditionally:
-+		 * it is the only owner, so marking it for deletion is
-+		 * safe. Otherwise only classifiers with a delete_empty
-+		 * callback are reclaimed -- the callback admits an empty
-+		 * proto only, so a live shared proto is never unlinked.
-+		 * Classifiers without one (deleting is set
-+		 * unconditionally) are rtnl-serialized, so the raced
-+		 * window this guard closes cannot arise for them.
-+		 */
- 		tcf_chain_tp_delete_empty(chain, tp, rtnl_held, NULL);
- errout_tp:
- 	if (chain) {
+ 	if (SET_WITH_COUNTER(set))
+ 		ip_set_init_counter(ext_counter(x, set), ext);
+-	if (SET_WITH_COMMENT(set))
++	if (SET_WITH_COMMENT(set) && !ext->target)
+ 		ip_set_init_comment(set, ext_comment(x, set), ext);
+ 	if (SET_WITH_SKBINFO(set))
+ 		ip_set_init_skbinfo(ext_skbinfo(x, set), ext);
 -- 
 2.53.0
 
