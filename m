@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211958;
-	b=YnX33Eg4p4v6yZwqwLfDxMOZF0rGPiT7ebvs7q8gxOjAxFg4yYWzmnn5KF+XMyC4mGUQ
-	 fMoeszRax1WsNbYAZf7YvptVVDlg9r+4a1RAFmIk5353ioNFWzR3neXvq3Ij0bNyorTM+
-	 7T9sNvvs/drZZ8doW/ND/VfX0nyTK5tZO/1f6R/g923ExGlEEtW/i+BiamPnNskYrgHdc
-	 vAajsapMaXMQPsDBPJgDIyEOp+lTMpczk3IDZAU6QyoYGHJp0sBZap+4/XB1BbhIZoSSN
-	 WJG/C2u0Rf9AcR+zQ/XmmYMx2pqMfPFeeLA9Pm+HXcE9mB0za6KbpJdIhfgTN8PY7Fg==
+	t=1793211960;
+	b=I+uisYu+Hbft89Qr6TR67dGI+rGSd5BqLaRWo5OzoSEasqLHJvNT5j+DCrmPt+IVwT8F
+	 69XHajGr6c8XQfvgU7GjqzOn4Z23V2oad/iAoPac4VKmC+Gf4wzLN1jSZEnzIQDoaF2kf
+	 N6b5JqdjnD6C1IqZ1BJEzUOzAGsWUqN7l7xw9g7ZWVKFCgz+INpWSNli+pr7mALIsTVSt
+	 k4B6Pjfpt9cpGpSIu+GtCmEnWWP6s/WAMwLFcu7ccLDANruiBkjkBJ6ZV9c6r76j7fIdt
+	 joauT+KHc2clid0bo8UHJ8WGZ3LxLSmxWScmKS01C2c6SlKixid9igcYR8U/GooXeqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VGhMfKUot/yMZCe2yMnX4/csWflSinWlHnppM21O7g4=;
-	b=iph8zUkLQhscNRpObV0XXMmq4AJKICJdw+qQFVyY91H2ULHLKvT4DKZpigxHz74vwFj0
-	 yPrdEMTuzbcRe3wa7UI4g5opJ9yn1cAvu/sSux7mJP+psbR8CzGUp06sUOV+5uhq9d/Vt
-	 Eka/dwv5YcJUy8GTQIp38woLlR0w1dEMhtSigLWfeSvzhiqsREtn0EQxSExzVxnjQYtna
-	 eSRyOmYOL5u/xanELkVBHPc/2i8rv4bXOGXDuuZzdp5qUkoyPQE3VBfR556Qoekc+2L0p
-	 hq8SmjstW12yI9xkVFu9CKfNjbYC91hHG8bBbBAP3STSISe8cCdIcexydBKS6KznGeQ==
+	bh=kZxIhZFOHNqbfukmd7aKlZxvDzTm4Xf8Wt1fefBAjvo=;
+	b=vzSmuL3yj4uro1cgI5a8yz5K3ZGzw5J+sKhK63l2HZu5zX4z1v3ansvm6/RgjeWdr8Mu
+	 kqOF/ZYqtp+bxg5+7XGrlIwesqg5q03YZ6PQRk5E2U7hFm6fcVtRIeBvix8zNvvRTZhva
+	 4bYakriXMJy4vB7NkgNK9NafYyaLLCAV7UxFKvV+eLa0Wu4h9442dT/O6jnzXrIoUgCUh
+	 23T42vztIFhPulvMO07gvHfVrPELS5xUyMM/YQ3hWPIC7gs8Sjd/HfxOQrxwdVrV5PyFq
+	 r9R51Pe1QWNVk/ZU/dFYKeZnDRNhqElxMMSij6UElmFgX+XJokDBECt8FCVUT38Ovhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sbuXqLR+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8xJYwdC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA305606A31D;
-	Wed, 28 Oct 2026 18:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747E5606A31C;
+	Wed, 28 Oct 2026 18:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sbuXqLR+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A561F01825;
-	Wed, 28 Oct 2026 18:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8xJYwdC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C543D1F01825;
+	Wed, 28 Oct 2026 18:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211957;
-	bh=VGhMfKUot/yMZCe2yMnX4/csWflSinWlHnppM21O7g4=;
+	s=korg; t=1793211960;
+	bh=kZxIhZFOHNqbfukmd7aKlZxvDzTm4Xf8Wt1fefBAjvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sbuXqLR+JZMjUIVaewkWEIxrblxsLjNS1uDSckACurqzeOqbv7IM7coP7TDU9vEPs
-	 cavUPbWlxVv+CWM4hyuG9rKOKCsZpNRiHNv92ZDAnodWpkjoWX9UHN9kwszr6AeM9t
-	 6yqyRwhnBs8mG8s1Pe8cYMj2cuWhuTf6PGoMknFY=
+	b=J8xJYwdC3vdSX6W52B7ZTP+eXUOUUF8y4TJWIP9QJkU7VOuKxhd6jCkwhyRHHJKGL
+	 LspAlhv5c4aU341sEzGbogGeIHQI338h2o3s+AoHSdfaey+oejtFCJ/aJgKUNw9gz7
+	 osQ12yfIcadUwMNCom6ai5ZG8X4v1wkOUm81VzJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"JongHyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Kyle Zeng <kylebot@openai.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.15 558/571] tracing: Reject incomplete event filter expressions
-Date: Wed, 28 Oct 2026 18:01:45 +0100
-Message-ID: <20261028170021.276722887@linuxfoundation.org>
+	Charles Vosburgh <theminershive@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 516/571] sctp: validate chunk length in the inqueue parser
+Date: Wed, 28 Oct 2026 18:01:03 +0100
+Message-ID: <20261028170020.274043665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,85 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Charles Vosburgh <theminershive@gmail.com>
 
-commit 1fdc4164e488916402badddbb1f51e9380dabb91 upstream.
+commit 6cfc1b90cb86f4aabc69fb8e30128e07e2cdfa3a upstream.
 
-A non-empty expression normally finishes in predicate_parse()'s inner
-loop, which resolves the pending logical operators before jumping to
-finalization. If the input ends after an operator, possibly followed by
-unary '!' tokens, the outer loop instead falls through with unresolved
-operator state.
+SCTP chunks always include a four-byte generic header, but
+sctp_inq_pop() currently accepts shorter declared lengths. A zero-length
+chunk leaves chunk_end at the current header.
 
-For example, "common_pid == 1 || common_pid == 2 &&" leaves
-prog[0].target equal to -1. The second pass then reads prog[-1] before
-the forward-jump check can reject it. Depending on adjacent slab
-contents, it can also copy an out-of-bounds word into a branch target
-that passes the forward-only check. A self-targeted perf tracepoint
-counting event can reach this path through PERF_EVENT_IOC_SET_FILTER.
+When ASCONF is covered by the association's SCTP-AUTH policy,
+sctp_assoc_bh_rcv() can continue before the state machine performs its
+normal chunk-length check. sctp_inq_pop() then returns the same malformed
+chunk repeatedly and the receive softirq can lock up.
 
-Reject the outer-loop fallthrough when a predicate has already been
-parsed. This ensures that non-empty expressions only reach finalization
-after the inner loop has resolved their operators. Keep the existing
-no-filter error for input that has no predicates. Add a regression test
-for trailing logical operators and unary negations.
+A remote SCTP peer can trigger this after establishing an association on
+a kernel built with CONFIG_IP_SCTP and configured with
+net.sctp.addip_enable=1 and net.sctp.auth_enable=1. The reproducer did
+not require application credentials, a shared SCTP AUTH key, or
+net.sctp.addip_noauth_enable=1.
 
-Fixes: 80765597bc587 ("tracing: Rewrite filter logic to be simpler and faster")
+On commit f967455fb2a5 ("seg6: reset IP6CB after IPv6 decapsulation"),
+one zero-length ASCONF caused repeated
+watchdog soft-lockup reports in a two-vCPU KVM guest. All 3 pre-trigger
+health probes succeeded, while 36 of 37 post-trigger probes failed. With
+this change, all 37 post-trigger probes succeeded and no equivalent
+soft-lockup signature appeared.
+
+Reject chunks shorter than the generic SCTP header at the shared inqueue
+parser boundary. Mark the packet for discard before either caller can
+continue processing it, while preserving the four-byte generic minimum.
+Declared-length 1 through 4 controls and kernel-generated ASCONF traffic
+remained healthy. The patched sctp_hello selftest passed for IPv4 and
+IPv6.
+
+The complete private reproducer and validation evidence are available
+directly to maintainers on request.
+
+Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261023174620.91969-1-kylebot@openai.com
-Assisted-by: Codex:gpt-6-astra
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Tested-by: JongHyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Charles Vosburgh <theminershive@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260827-sctp-zero-chunk-inqueue-v2-1-2e7669c6a6cb@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_filter.c                                      |    6 ++
- tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc |   24 ++++++++++
- 2 files changed, 30 insertions(+)
- create mode 100644 tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc
+ net/sctp/inqueue.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -537,6 +537,12 @@ predicate_parse(const char *str, int nr_
- 			top--;					/* #12 */
- 		}
- 	}
-+	/* Only the inner loop can complete a non-empty expression. */
-+	if (N) {
-+		ret = -EINVAL;
-+		parse_error(pe, FILT_ERR_INVALID_FILTER, ptr - str);
-+		goto out_free;
-+	}
-  out:
- 	if (top != op_stack) {
- 		/* Too many '(' */
---- /dev/null
-+++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-incomplete.tc
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0
-+# description: event filter - reject incomplete logical expressions
-+# requires: events/sched/sched_switch/filter
-+# flags: instance
-+
-+filter=events/sched/sched_switch/filter
-+
-+for base in \
-+    'common_pid == 1' \
-+    'common_pid == 1 || common_pid == 2' \
-+    'common_pid == 1 && common_pid == 2' \
-+    '!(common_pid == 1 || common_pid == 2)'
-+do
-+    printf '%s' "$base" > "$filter"
-+    for tail in '&&' '||' '&& !' '|| !' '&& !! ' '|| !! '; do
-+        if printf '%s' "$base $tail" > "$filter" 2>/dev/null; then
-+            echo "Accepted incomplete filter: $base $tail"
-+            exit_fail
-+        fi
-+    done
-+done
-+
-+echo 0 > "$filter"
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -206,8 +206,10 @@ new_skb:
+ 	chunk->chunk_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));
+ 	skb_pull(chunk->skb, sizeof(*ch));
+ 	chunk->subh.v = NULL; /* Subheader is no longer valid.  */
+-
+-	if (chunk->chunk_end + sizeof(*ch) <= skb_tail_pointer(chunk->skb)) {
++	if (unlikely(ntohs(ch->length) < sizeof(*ch))) {
++		chunk->pdiscard = 1;
++	} else if (chunk->chunk_end + sizeof(*ch) <=
++		   skb_tail_pointer(chunk->skb)) {
+ 		/* This is not a singleton */
+ 		chunk->singleton = 0;
+ 	} else if (chunk->chunk_end > skb_tail_pointer(chunk->skb)) {
 
 
