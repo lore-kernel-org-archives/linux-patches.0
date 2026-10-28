@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213118;
-	b=HYR0rZ2HEWwxaEmUXqjkxVImHtMnZUlG+hBFoKPVX02K/3SCCfnU7XVsEiRZLNyhEbre
-	 lN8C8pyFfpbyoR+qSVhMFJL6OhYa+29yYta96ncQ5MJHlpdrYhED/z13tBrenyYPfuMfm
-	 D5PlAZ+UXlRvRjAZgUkqReEj9Cjb36US1HB012DJto8bbsLLLDmasGaszFby4uxhSzLK6
-	 tNAm/NBLGo2XtTOWvnnVVfQljZ9q0hPmorpICfJBhJ1p+bQ6q1bk1wD8tbo4+fj3uCY2T
-	 q3x20aH4bDQJEWF6G9MKWJFC7nbIHU/u736DbKcbZI+UfJkd2rgxir8a0Lfkfsmkoxw==
+	t=1793213121;
+	b=cfmEIoZEFX2UX+FUK3JIrER7n84ZUAsi0Qo1QouZYujtn7RyaqKLIzplMlM4dR0RNs+f
+	 BdAqPLeVsCSYz/G41WXu9ISpNr7DbU5bjAyG/UpYJPcL2YJad7q2Da8iLmWESTK2Nc9Wa
+	 AtzevL20haGVvz2pb2XGQJKAaC849mxP717RtIukraSzFoKfDVCHcGvGEG0jmqmE0hQR3
+	 cX8lbF1qjk+gYKQNewZ9LIrtp3F1dsVKqT29GlE6iwKrCoHVUN0CpftQuFSWpZlF5FrI+
+	 KESTa78qW2KuqCqswy+mWwlyywhraqm2TpbBvGAibTqdkIKgIRIZRZsVFJTFsC36xSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213121;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2qzCrGKcAuJOUG5/lCfjIGSMovo+ZRfzC+46yVv1OXw=;
-	b=dNFe+8tP8msCzJeZyycv5Xn2jR/t2XVKoLj4oylVQpKPfxWSLgG7Q22/fxdZWNR0j4EP
-	 4uSt4BJ2vL2G7bgL8q0/vVhwuvadtkGK/KlKQ8DC9YcYXxx8L6K3jWNnvnJgJq5DoW5c+
-	 XDBSwbYkN3mh5vcC8qTpbDpJmWaOzAQG2MrkdcGo1FOrB1y1sttd4iTuash+zRnEQVdIX
-	 3vPdlM6pZ/pQsqsrqMR03cw7TQu42DXmJAGeacCI9n9Me8NuZhZmoQeQa6tZjO3x9TCQz
-	 nDo95dZRAXN7tm3pMBYJFw60JLbIAPovFUjVltSvW7UvnGXWGel3IwvkjbE2mbyLqHg==
+	bh=GUNyshIph/9aJ6SQt0lXMe7sYt1c19M4KTGfRp/eRgQ=;
+	b=NsSprgY8kASfQSF01en5L7Cd7GCAmBEtKGpMMhJSgYW9yOgd2Y+3Aq5RkxRyl0nkXyxl
+	 y/r37SZPdLjLCXRcD2d8tfNablQkSVfOvONdyzu7suyXKby1MEnFFpH+BCg8Esu5Y0BSi
+	 eVT59WXS2TUTekKioP7JYCbDhpUFmfB5IrjoTJhtl/KE+vgS8QfMc1EjmOEpu0AyecH4w
+	 gEuyeGpYZAw5NlhE1fuo3azPkmBjqEeAOTXSHm6yrYaR1FXGLFfp0PEF2F2aXTQXD+9jb
+	 eknWtjsGo9YeTzZwvkP2s/x3h3ZngZt2mgGAwSwcfnigvKyfDTllHlxxzmPO80ez+fQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YcrIWR3X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5mBWnhb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67570606A31D;
-	Wed, 28 Oct 2026 18:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3802E606A31A;
+	Wed, 28 Oct 2026 18:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YcrIWR3X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EE11F01825;
-	Wed, 28 Oct 2026 18:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5mBWnhb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC8E1F01825;
+	Wed, 28 Oct 2026 18:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213118;
-	bh=2qzCrGKcAuJOUG5/lCfjIGSMovo+ZRfzC+46yVv1OXw=;
+	s=korg; t=1793213121;
+	bh=GUNyshIph/9aJ6SQt0lXMe7sYt1c19M4KTGfRp/eRgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YcrIWR3XXYN3/lqIkz/YLlGXDLsVIlh40cmvXZjlZAvJoXgJygEis20wQpLkwAFxy
-	 DJP6L35LwT4u7NmRswi4g+IRM8wCmQL3yuKSmGEb7Vw5++cBi6K8HitzpQUXiS0mS8
-	 oN0Bafq0PwuEGUO30JKu+PPdKFwSxHG65BVv5hFs=
+	b=j5mBWnhbz9hZOR6TO7vFzOfVTipoqFf7b3Ie35pN2zDBM0rC1d4PJpwSRFJwh6uHM
+	 mr3lINcu+RuRl6Ws3oGr0HD1auv9YufVnbQlYOrvHgfXzMwK7q3Rw3QkiWX0/vnziV
+	 O4e5klH6EK6UXkx+WTwP8bUe2av/nBNP5gWt8dlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com,
-	Aditya Dutt <duttaditya18@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0349/1887] jfs: fix array-index-out-of-bounds read in add_missing_indices
-Date: Wed, 28 Oct 2026 17:40:45 +0100
-Message-ID: <20261028170507.172015255@linuxfoundation.org>
+Subject: [PATCH 6.1 0350/1887] drm/amd/powerplay: fix VoltageObjectInfo zero-stride loop and OOB read
+Date: Wed, 28 Oct 2026 17:40:46 +0100
+Message-ID: <20261028170507.194309257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,83 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Dutt <duttaditya18@gmail.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 5dff41a86377563f7a2b968aae00d25b4ceb37c9 ]
+[ Upstream commit 5d3cc8e388464f485d0944b87b8f9426e637d082 ]
 
-stbl is s8 but it must contain offsets into slot which can go from 0 to
-127.
+Reject voltage objects whose usSize is smaller than the header or would
+advance the cursor past the table end, preventing an infinite loop or
+heap OOB read when the VBIOS supplies a malformed VoltageObjectInfo table.
 
-Added a bound check for that error and return -EIO if the check fails.
-Also make jfs_readdir return with error if add_missing_indices returns
-with an error.
-
-Reported-by: syzbot+b974bd41515f770c608b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com./bug?extid=b974bd41515f770c608b
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: c82baa281843 ("drm/amd/powerplay: add Tonga dpm support (v3)")
+Fixes: 0d2c7569e196 ("drm/amdgpu: add new atomfirmware based helpers for powerplay")
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dtree.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c   | 10 ++++++++--
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c | 11 ++++++++---
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
-index 93db6eec44655..ab11849cf9cc3 100644
---- a/fs/jfs/jfs_dtree.c
-+++ b/fs/jfs/jfs_dtree.c
-@@ -2613,7 +2613,7 @@ void dtInitRoot(tid_t tid, struct inode *ip, u32 idotdot)
-  *	     fsck.jfs should really fix this, but it currently does not.
-  *	     Called from jfs_readdir when bad index is detected.
-  */
--static void add_missing_indices(struct inode *inode, s64 bn)
-+static int add_missing_indices(struct inode *inode, s64 bn)
- {
- 	struct ldtentry *d;
- 	struct dt_lock *dtlck;
-@@ -2622,7 +2622,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	struct lv *lv;
- 	struct metapage *mp;
- 	dtpage_t *p;
--	int rc;
-+	int rc = 0;
- 	s8 *stbl;
- 	tid_t tid;
- 	struct tlock *tlck;
-@@ -2647,6 +2647,16 @@ static void add_missing_indices(struct inode *inode, s64 bn)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index 7e37354a03411..640350bbd9085 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -269,15 +269,21 @@ static const ATOM_VOLTAGE_OBJECT_V3 *atomctrl_lookup_voltage_type_v3(
+ 	unsigned int offset = offsetof(ATOM_VOLTAGE_OBJECT_INFO_V3_1, asVoltageObj[0]);
+ 	uint8_t *start = (uint8_t *)voltage_object_info_table;
  
- 	stbl = DT_GETSTBL(p);
- 	for (i = 0; i < p->header.nextindex; i++) {
-+		if (stbl[i] < 0) {
-+			jfs_err("jfs: add_missing_indices: Invalid stbl[%d] = %d for inode %ld, block = %lld",
-+				i, stbl[i], (long)inode->i_ino, (long long)bn);
-+			rc = -EIO;
+-	while (offset < size) {
++	while (offset + sizeof(ATOM_VOLTAGE_OBJECT_HEADER_V3) <= size) {
+ 		const ATOM_VOLTAGE_OBJECT_V3 *voltage_object =
+ 			(const ATOM_VOLTAGE_OBJECT_V3 *)(start + offset);
++		u16 obj_size;
 +
-+			DT_PUTPAGE(mp);
-+			txAbort(tid, 0);
-+			goto end;
-+		}
++		obj_size = le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
++		if (obj_size < sizeof(voltage_object->asGpioVoltageObj.sHeader) ||
++		    offset + obj_size > size)
++			break;
+ 
+ 		if (voltage_type == voltage_object->asGpioVoltageObj.sHeader.ucVoltageType &&
+ 			voltage_mode == voltage_object->asGpioVoltageObj.sHeader.ucVoltageMode)
+ 			return voltage_object;
+ 
+-		offset += le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
++		offset += obj_size;
+ 	}
+ 
+ 	return NULL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
+index a47a47238e2b9..e5aa787182025 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
+@@ -36,16 +36,21 @@ static const union atom_voltage_object_v4 *pp_atomfwctrl_lookup_voltage_type_v4(
+ 			offsetof(struct atom_voltage_objects_info_v4_1, voltage_object[0]);
+ 	unsigned long start = (unsigned long)voltage_object_info_table;
+ 
+-	while (offset < size) {
++	while (offset + sizeof(struct atom_voltage_object_header_v4) <= size) {
+ 		const union atom_voltage_object_v4 *voltage_object =
+ 			(const union atom_voltage_object_v4 *)(start + offset);
++		u16 obj_size;
 +
- 		d = (struct ldtentry *) &p->slot[stbl[i]];
- 		index = le32_to_cpu(d->index);
- 		if ((index < 2) || (index >= JFS_IP(inode)->next_index)) {
-@@ -2664,6 +2674,7 @@ static void add_missing_indices(struct inode *inode, s64 bn)
- 	(void) txCommit(tid, 1, &inode, 0);
- end:
- 	txEnd(tid);
-+	return rc;
- }
++		obj_size = le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
++		if (obj_size < sizeof(voltage_object->gpio_voltage_obj.header) ||
++		    offset + obj_size > size)
++			break;
  
- /*
-@@ -3017,7 +3028,8 @@ int jfs_readdir(struct file *file, struct dir_context *ctx)
- 		}
+ 		if (voltage_type == voltage_object->gpio_voltage_obj.header.voltage_type &&
+ 		    voltage_mode == voltage_object->gpio_voltage_obj.header.voltage_mode)
+ 			return voltage_object;
  
- 		if (fix_page) {
--			add_missing_indices(ip, bn);
-+			if ((rc = add_missing_indices(ip, bn)))
-+				goto out;
- 			page_fixed = 1;
- 		}
+-		offset += le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
+-
++		offset += obj_size;
+ 	}
  
+ 	return NULL;
 -- 
 2.53.0
 
