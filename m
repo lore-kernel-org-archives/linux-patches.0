@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214179;
-	b=lilZ75DpVNzqxxHY1cfkUDxgwQUr3oy4JwNm9cNaEH9DC0BNeDyY12ZuHDB2l2RjuWJO
-	 mgdlDO+5vbCUT/SyFdLhLzs8bgypqpa997eGFoC7SqWQE4GxZ6AKS3YeLhSy+VbaKD5bq
-	 AhlYRr/nHH99vF7QKp3EXduNSlcUHEPlHpTsEbC2qo+PB3qGAHRwhWr0ZW3r+79pM7TPg
-	 chKbCAgOStUVCga7A8h7JaOjZfxpeXRsu97ErVU2bAspnLn1OdjVUxmVqJq9GY/xxILss
-	 u0nWQZeebJANjdTPXb0lMb4XK170WzjzCZn9oq5q7AbR1CAoaAVqVHGQkM0oEChjZ7A==
+	t=1793214181;
+	b=XLfjHBrq+M/dMzTvz49ydO9EZqqTNgPVna7OcVYOZmrTT7YVwVpmHIUbCK3O0WSKKdU0
+	 WZztOQPN0Anyq2plFGmxGrmrkUP8IxyZhXud0t9wCZ9gxd9OJr/AZdjKy6rU/Whs+wyGH
+	 8Bx1h3z5lDa9uSHPLbfno7cU280YuMzFWy8dl++K/cfTAS3c9bWEjycZEP4zVRmjo6i6j
+	 4QN7mK63ru5AVVKr2jsYs5YhWg+Lm05RbUQ0dhW3TcodFvOugKyW3Gv7Rf1yS0cKHBkwY
+	 3UDWaJACn3qHk7pnmkv4wRsPMg5bA71YoL5j1LC1SNF6P9HpbEgFfYkH9kpr09IEcWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214179;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214181;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cRcjWdaPLq99uo3Z44eB1i1u8QaY2tKj2C2KjZmlqu0=;
-	b=vaIB05iOLcf9QQau1HLbQqovmOyMX61bfDJoz1/szDh6RhIYn4yNzLv58eARdLwoDi70
-	 hjDa97ZMqOVsQI1YjrFDNDKs7WmBRnx71kFAKi6Y3CdLjL0Ooq6hwj0UIDvLiHKFUF4mU
-	 bRm2Z+OnAHwfEb6cbvGu9MnPJXMSrm3gv1pZ208aYhCoBAFAqTNZp7FuzxxrP1tXgX8Rh
-	 2F47tBgWSmw9KRzGdYkA7DvPntx4gBwctN1RmjvN8WfQoFFNINmby+APPC2i10NMFGcQz
-	 +08BhIi0tFrTkMVSjYh3/vaZ9TsuHJoRs8jAp+IlPgfiRPp9koC/OYrig6NnBHyE6Og==
+	bh=o4dtU7tE/XlFRu3R6VHDXZLOAbeAQlH0OkIYyMeelt4=;
+	b=VLu8kaGYotCYqa0JCSITiuTiy84kXLpIaeLiGUbKu8r7JoGElSDBPl22XKFSL1pZEvHM
+	 9Q4eH/VdlVfSeb+cSklrb7itXutp9LiD8H9YvYzDvMHn4NgYwt/11a3jZPjkcx5CyZNNk
+	 LCqSUGxpfnd80Y0uT+LD2wWWSrP1+x3rBXPsnFQkL4nvHcWi9FenmwzaqUPI17W8cHWqV
+	 kEbCdCeIv42O9xbeOwpp4WIScp1FWxNFBAC2BZfXfjqqIc2mhahkObfu/2LQaCRfUzjIj
+	 LElW7FgkP3B0dEfGlC0VXz0C1UNn4A9wv2KmwnKd3eMk+C/hqSe3RUksRWxT3URb60g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yD6chgu7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kvDhFsb4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD18B606A31D;
-	Wed, 28 Oct 2026 19:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F35606A31D;
+	Wed, 28 Oct 2026 19:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yD6chgu7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9E11F01825;
-	Wed, 28 Oct 2026 19:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kvDhFsb4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D225A1F01825;
+	Wed, 28 Oct 2026 19:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214178;
-	bh=cRcjWdaPLq99uo3Z44eB1i1u8QaY2tKj2C2KjZmlqu0=;
+	s=korg; t=1793214181;
+	bh=o4dtU7tE/XlFRu3R6VHDXZLOAbeAQlH0OkIYyMeelt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yD6chgu7c4KWyS+k1UIFDvJkaIxxdxHqTta5AnPJ8WOXbI0lsW1MLqxxQOSe/FvKj
-	 kIh5kjnak9fYruaSbYAFIRN2psBaIr0Q7pvEPPbseK6b71XGOxsNa0C9njPD50m+bx
-	 9LzKjDjVyzvr28wFbalshk/LlgmLUW0QuWRm8xeo=
+	b=kvDhFsb4GfMh/JnTUVzs0NtuKo9WH6LNiguuod5hluxtwz8wAPyKJPP0eJqiA9fvJ
+	 0KpBxbTz5yrS2Nq/2u26dB05gODHmp59rU6Ho9tFDUyw6ULMc6aJtYQ8s1s5w8DE1I
+	 vGB6NR1dsE7HsjlLqpY17yP4mXgl5Gley9EizIPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ed Santiago <santiago@redhat.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	David Gibson <david@gibson.dropbear.id.au>
-Subject: [PATCH 6.1 0724/1887] udp: Deal with race between UDP socket address change and rehash
-Date: Wed, 28 Oct 2026 17:47:00 +0100
-Message-ID: <20261028170515.920434604@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0715/1887] bpf: Call free_htab_elem() after htab_unlock_bucket()
+Date: Wed, 28 Oct 2026 17:46:51 +0100
+Message-ID: <20261028170515.701769145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,299 +69,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Brivio <sbrivio@redhat.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit a502ea6fa94b1f7be72a24bcf9e3f5f6b7e6e90c ]
+[ Upstream commit b9e9ed90b10c82a4e9d4d70a2890f06bfcdd3b78 ]
 
-If a UDP socket changes its local address while it's receiving
-datagrams, as a result of connect(), there is a period during which
-a lookup operation might fail to find it, after the address is changed
-but before the secondary hash (port and address) and the four-tuple
-hash (local and remote ports and addresses) are updated.
+For htab of maps, when the map is removed from the htab, it may hold the
+last reference of the map. bpf_map_fd_put_ptr() will invoke
+bpf_map_free_id() to free the id of the removed map element. However,
+bpf_map_fd_put_ptr() is invoked while holding a bucket lock
+(raw_spin_lock_t), and bpf_map_free_id() attempts to acquire map_idr_lock
+(spinlock_t), triggering the following lockdep warning:
 
-Secondary hash chains were introduced by commit 30fff9231fad ("udp:
-bind() optimisation") and, as a result, a rehash operation became
-needed to make a bound socket reachable again after a connect().
+  =============================
+  [ BUG: Invalid wait context ]
+  6.11.0-rc4+ #49 Not tainted
+  -----------------------------
+  test_maps/4881 is trying to lock:
+  ffffffff84884578 (map_idr_lock){+...}-{3:3}, at: bpf_map_free_id.part.0+0x21/0x70
+  other info that might help us debug this:
+  context-{5:5}
+  2 locks held by test_maps/4881:
+   #0: ffffffff846caf60 (rcu_read_lock){....}-{1:3}, at: bpf_fd_htab_map_update_elem+0xf9/0x270
+   #1: ffff888149ced148 (&htab->lockdep_key#2){....}-{2:2}, at: htab_map_update_elem+0x178/0xa80
+  stack backtrace:
+  CPU: 0 UID: 0 PID: 4881 Comm: test_maps Not tainted 6.11.0-rc4+ #49
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), ...
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x6e/0xb0
+   dump_stack+0x10/0x20
+   __lock_acquire+0x73e/0x36c0
+   lock_acquire+0x182/0x450
+   _raw_spin_lock_irqsave+0x43/0x70
+   bpf_map_free_id.part.0+0x21/0x70
+   bpf_map_put+0xcf/0x110
+   bpf_map_fd_put_ptr+0x9a/0xb0
+   free_htab_elem+0x69/0xe0
+   htab_map_update_elem+0x50f/0xa80
+   bpf_fd_htab_map_update_elem+0x131/0x270
+   htab_map_update_elem+0x50f/0xa80
+   bpf_fd_htab_map_update_elem+0x131/0x270
+   bpf_map_update_value+0x266/0x380
+   __sys_bpf+0x21bb/0x36b0
+   __x64_sys_bpf+0x45/0x60
+   x64_sys_call+0x1b2a/0x20d0
+   do_syscall_64+0x5d/0x100
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-This operation was introduced by commit 719f835853a9 ("udp: add
-rehash on connect()") which isn't however a complete fix: the
-socket will be found once the rehashing completes, but not while
-it's pending.
+One way to fix the lockdep warning is using raw_spinlock_t for
+map_idr_lock as well. However, bpf_map_alloc_id() invokes
+idr_alloc_cyclic() after acquiring map_idr_lock, it will trigger a
+similar lockdep warning because the slab's lock (s->cpu_slab->lock) is
+still a spinlock.
 
-This is noticeable with a socat(1) server in UDP4-LISTEN mode, and a
-client sending datagrams to it. After the server receives the first
-datagram (cf. _xioopen_ipdgram_listen()), it issues a connect() to
-the address of the sender, in order to set up a directed flow.
+Instead of changing map_idr_lock's type, fix the issue by invoking
+htab_put_fd_value() after htab_unlock_bucket(). However, only deferring
+the invocation of htab_put_fd_value() is not enough, because the old map
+pointers in htab of maps can not be saved during batched deletion.
+Therefore, also defer the invocation of free_htab_elem(), so these
+to-be-freed elements could be linked together similar to lru map.
 
-Now, if the client, running on a different CPU thread, happens to
-send a (subsequent) datagram while the server's socket changes its
-address, but is not rehashed yet, this will result in a failed
-lookup and a port unreachable error delivered to the client, as
-apparent from the following reproducer:
+There are four callers for ->map_fd_put_ptr:
 
-  LEN=$(($(cat /proc/sys/net/core/wmem_default) / 4))
-  dd if=/dev/urandom bs=1 count=${LEN} of=tmp.in
+(1) alloc_htab_elem() (through htab_put_fd_value())
+It invokes ->map_fd_put_ptr() under a raw_spinlock_t. The invocation of
+htab_put_fd_value() can not simply move after htab_unlock_bucket(),
+because the old element has already been stashed in htab->extra_elems.
+It may be reused immediately after htab_unlock_bucket() and the
+invocation of htab_put_fd_value() after htab_unlock_bucket() may release
+the newly-added element incorrectly. Therefore, saving the map pointer
+of the old element for htab of maps before unlocking the bucket and
+releasing the map_ptr after unlock. Beside the map pointer in the old
+element, should do the same thing for the special fields in the old
+element as well.
 
-  while :; do
-  	taskset -c 1 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc &
-  	sleep 0.1 || sleep 1
-  	taskset -c 2 socat OPEN:tmp.in UDP4:localhost:1337,shut-null
-  	wait
-  done
+(2) free_htab_elem() (through htab_put_fd_value())
+Its caller includes __htab_map_lookup_and_delete_elem(),
+htab_map_delete_elem() and __htab_map_lookup_and_delete_batch().
 
-where the client will eventually get ECONNREFUSED on a write()
-(typically the second or third one of a given iteration):
+For htab_map_delete_elem(), simply invoke free_htab_elem() after
+htab_unlock_bucket(). For __htab_map_lookup_and_delete_batch(), just
+like lru map, linking the to-be-freed element into node_to_free list
+and invoking free_htab_elem() for these element after unlock. It is safe
+to reuse batch_flink as the link for node_to_free, because these
+elements have been removed from the hash llist.
 
-  2024/11/13 21:28:23 socat[46901] E write(6, 0x556db2e3c000, 8192): Connection refused
+Because htab of maps doesn't support lookup_and_delete operation,
+__htab_map_lookup_and_delete_elem() doesn't have the problem, so kept
+it as is.
 
-This issue was first observed as a seldom failure in Podman's tests
-checking UDP functionality while using pasta(1) to connect the
-container's network namespace, which leads us to a reproducer with
-the lookup error resulting in an ICMP packet on a tap device:
+(3) fd_htab_map_free()
+It invokes ->map_fd_put_ptr without raw_spinlock_t.
 
-  LOCAL_ADDR="$(ip -j -4 addr show|jq -rM '.[] | .addr_info[0] | select(.scope == "global").local')"
+(4) bpf_fd_htab_map_update_elem()
+It invokes ->map_fd_put_ptr without raw_spinlock_t.
 
-  while :; do
-  	./pasta --config-net -p pasta.pcap -u 1337 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc &
-  	sleep 0.2 || sleep 1
-  	socat OPEN:tmp.in UDP4:${LOCAL_ADDR}:1337,shut-null
-  	wait
-  	cmp tmp.in tmp.out
-  done
+After moving free_htab_elem() outside htab bucket lock scope, using
+pcpu_freelist_push() instead of __pcpu_freelist_push() to disable
+the irq before freeing elements, and protecting the invocations of
+bpf_mem_cache_free() with migrate_{disable|enable} pair.
 
-Once this fails:
-
-  tmp.in tmp.out differ: char 8193, line 29
-
-we can finally have a look at what's going on:
-
-  $ tshark -r pasta.pcap
-      1   0.000000           :: ? ff02::16     ICMPv6 110 Multicast Listener Report Message v2
-      2   0.168690 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
-      3   0.168767 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
-      4   0.168806 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
-      5   0.168827 c6:47:05:8d:dc:04 ? Broadcast    ARP 42 Who has 88.198.0.161? Tell 88.198.0.164
-      6   0.168851 9a:55:9a:55:9a:55 ? c6:47:05:8d:dc:04 ARP 42 88.198.0.161 is at 9a:55:9a:55:9a:55
-      7   0.168875 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
-      8   0.168896 88.198.0.164 ? 88.198.0.161 ICMP 590 Destination unreachable (Port unreachable)
-      9   0.168926 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
-     10   0.168959 88.198.0.161 ? 88.198.0.164 UDP 8234 60260 ? 1337 Len=8192
-     11   0.168989 88.198.0.161 ? 88.198.0.164 UDP 4138 60260 ? 1337 Len=4096
-     12   0.169010 88.198.0.161 ? 88.198.0.164 UDP 42 60260 ? 1337 Len=0
-
-On the third datagram received, the network namespace of the container
-initiates an ARP lookup to deliver the ICMP message.
-
-In another variant of this reproducer, starting the client with:
-
-  strace -f pasta --config-net -u 1337 socat UDP4-LISTEN:1337,null-eof OPEN:tmp.out,create,trunc 2>strace.log &
-
-and connecting to the socat server using a loopback address:
-
-  socat OPEN:tmp.in UDP4:localhost:1337,shut-null
-
-we can more clearly observe a sendmmsg() call failing after the
-first datagram is delivered:
-
-  [pid 278012] connect(173, 0x7fff96c95fc0, 16) = 0
-  [...]
-  [pid 278012] recvmmsg(173, 0x7fff96c96020, 1024, MSG_DONTWAIT, NULL) = -1 EAGAIN (Resource temporarily unavailable)
-  [pid 278012] sendmmsg(173, 0x561c5ad0a720, 1, MSG_NOSIGNAL) = 1
-  [...]
-  [pid 278012] sendmmsg(173, 0x561c5ad0a720, 1, MSG_NOSIGNAL) = -1 ECONNREFUSED (Connection refused)
-
-and, somewhat confusingly, after a connect() on the same socket
-succeeded.
-
-Until commit 4cdeeee9252a ("net: udp: prefer listeners bound to an
-address"), the race between receive address change and lookup didn't
-actually cause visible issues, because, once the lookup based on the
-secondary hash chain failed, we would still attempt a lookup based on
-the primary hash (destination port only), and find the socket with the
-outdated secondary hash.
-
-That change, however, dropped port-only lookups altogether, as side
-effect, making the race visible.
-
-To fix this, while avoiding the need to make address changes and
-rehash atomic against lookups, reintroduce primary hash lookups as
-fallback, if lookups based on four-tuple and secondary hashes fail.
-
-To this end, introduce a simplified lookup implementation, which
-doesn't take care of SO_REUSEPORT groups: if we have one, there are
-multiple sockets that would match the four-tuple or secondary hash,
-meaning that we can't run into this race at all.
-
-v2:
-  - instead of synchronising lookup operations against address change
-    plus rehash, reintroduce a simplified version of the original
-    primary hash lookup as fallback
-
-v1:
-  - fix build with CONFIG_IPV6=n: add ifdef around sk_v6_rcv_saddr
-    usage (Kuniyuki Iwashima)
-  - directly use sk_rcv_saddr for IPv4 receive addresses instead of
-    fetching inet_rcv_saddr (Kuniyuki Iwashima)
-  - move inet_update_saddr() to inet_hashtables.h and use that
-    to set IPv4/IPv6 addresses as suitable (Kuniyuki Iwashima)
-  - rebase onto net-next, update commit message accordingly
-
-Reported-by: Ed Santiago <santiago@redhat.com>
-Link: https://github.com/containers/podman/issues/24147
-Analysed-by: David Gibson <david@gibson.dropbear.id.au>
-Fixes: 30fff9231fad ("udp: bind() optimisation")
-Signed-off-by: Stefano Brivio <sbrivio@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20241106063542.357743-2-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++
- net/ipv6/udp.c | 50 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 106 insertions(+)
+ kernel/bpf/hashtab.c | 55 ++++++++++++++++++++++++++++++--------------
+ 1 file changed, 38 insertions(+), 17 deletions(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 6f745efa0db4b..271bf781fe54b 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -414,6 +414,49 @@ u32 udp_ehashfn(const struct net *net, const __be32 laddr, const __u16 lport,
- 			      udp_ehash_secret + net_hash_mix(net));
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 291c2befa120d..56d2879c64699 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -873,10 +873,12 @@ static int htab_map_get_next_key(struct bpf_map *map, void *key, void *next_key)
+ 
+ static void htab_elem_free(struct bpf_htab *htab, struct htab_elem *l)
+ {
++	migrate_disable();
+ 	if (htab->map.map_type == BPF_MAP_TYPE_PERCPU_HASH)
+ 		bpf_mem_cache_free(&htab->pcpu_ma, l->ptr_to_pptr);
+ 	check_and_free_fields(htab, l);
+ 	bpf_mem_cache_free(&htab->ma, l);
++	migrate_enable();
  }
  
-+/**
-+ * udp4_lib_lookup1() - Simplified lookup using primary hash (destination port)
-+ * @net:	Network namespace
-+ * @saddr:	Source address, network order
-+ * @sport:	Source port, network order
-+ * @daddr:	Destination address, network order
-+ * @hnum:	Destination port, host order
-+ * @dif:	Destination interface index
-+ * @sdif:	Destination bridge port index, if relevant
-+ * @udptable:	Set of UDP hash tables
-+ *
-+ * Simplified lookup to be used as fallback if no sockets are found due to a
-+ * potential race between (receive) address change, and lookup happening before
-+ * the rehash operation. This function ignores SO_REUSEPORT groups while scoring
-+ * result sockets, because if we have one, we don't need the fallback at all.
-+ *
-+ * Called under rcu_read_lock().
-+ *
-+ * Return: socket with highest matching score if any, NULL if none
-+ */
-+static struct sock *udp4_lib_lookup1(struct net *net,
-+				     __be32 saddr, __be16 sport,
-+				     __be32 daddr, unsigned int hnum,
-+				     int dif, int sdif,
-+				     const struct udp_table *udptable)
-+{
-+	unsigned int slot = udp_hashfn(net, hnum, udptable->mask);
-+	struct udp_hslot *hslot = &udptable->hash[slot];
-+	struct sock *sk, *result = NULL;
-+	int score, badness = 0;
+ static void htab_put_fd_value(struct bpf_htab *htab, struct htab_elem *l)
+@@ -921,7 +923,7 @@ static void free_htab_elem(struct bpf_htab *htab, struct htab_elem *l)
+ 
+ 	if (htab_is_prealloc(htab)) {
+ 		check_and_free_fields(htab, l);
+-		__pcpu_freelist_push(&htab->freelist, &l->fnode);
++		pcpu_freelist_push(&htab->freelist, &l->fnode);
+ 	} else {
+ 		dec_elem_count(htab);
+ 		htab_elem_free(htab, l);
+@@ -994,7 +996,6 @@ static struct htab_elem *alloc_htab_elem(struct bpf_htab *htab, void *key,
+ 			 */
+ 			pl_new = this_cpu_ptr(htab->extra_elems);
+ 			l_new = *pl_new;
+-			htab_put_fd_value(htab, old_elem);
+ 			*pl_new = old_elem;
+ 		} else {
+ 			struct pcpu_freelist_node *l;
+@@ -1079,6 +1080,7 @@ static int htab_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 	struct htab_elem *l_new = NULL, *l_old;
+ 	struct hlist_nulls_head *head;
+ 	unsigned long flags;
++	void *old_map_ptr;
+ 	struct bucket *b;
+ 	u32 key_size, hash;
+ 	int ret;
+@@ -1156,12 +1158,27 @@ static int htab_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 	hlist_nulls_add_head_rcu(&l_new->hash_node, head);
+ 	if (l_old) {
+ 		hlist_nulls_del_rcu(&l_old->hash_node);
 +
-+	sk_for_each_rcu(sk, &hslot->head) {
-+		score = compute_score(sk, net,
-+				      saddr, sport, daddr, hnum, dif, sdif);
-+		if (score > badness) {
-+			result = sk;
-+			badness = score;
++		/* l_old has already been stashed in htab->extra_elems, free
++		 * its special fields before it is available for reuse. Also
++		 * save the old map pointer in htab of maps before unlock
++		 * and release it after unlock.
++		 */
++		old_map_ptr = NULL;
++		if (htab_is_prealloc(htab)) {
++			if (map->ops->map_fd_put_ptr)
++				old_map_ptr = fd_htab_map_get_ptr(map, l_old);
++			check_and_free_fields(htab, l_old);
 +		}
 +	}
++	htab_unlock_bucket(htab, b, hash, flags);
++	if (l_old) {
++		if (old_map_ptr)
++			map->ops->map_fd_put_ptr(map, old_map_ptr, true);
+ 		if (!htab_is_prealloc(htab))
+ 			free_htab_elem(htab, l_old);
+-		else
+-			check_and_free_fields(htab, l_old);
+ 	}
+-	ret = 0;
++	return 0;
+ err:
+ 	htab_unlock_bucket(htab, b, hash, flags);
+ 	return ret;
+@@ -1398,15 +1415,15 @@ static int htab_map_delete_elem(struct bpf_map *map, void *key)
+ 		return ret;
+ 
+ 	l = lookup_elem_raw(head, hash, key, key_size);
+-
+-	if (l) {
++	if (l)
+ 		hlist_nulls_del_rcu(&l->hash_node);
+-		free_htab_elem(htab, l);
+-	} else {
++	else
+ 		ret = -ENOENT;
+-	}
+ 
+ 	htab_unlock_bucket(htab, b, hash, flags);
 +
-+	return result;
-+}
-+
- /* called with rcu_read_lock() */
- static struct sock *udp4_lib_lookup2(struct net *net,
- 				     __be32 saddr, __be16 sport,
-@@ -541,6 +584,19 @@ struct sock *__udp4_lib_lookup(struct net *net, __be32 saddr,
- 	result = udp4_lib_lookup2(net, saddr, sport,
- 				  htonl(INADDR_ANY), hnum, dif, sdif,
- 				  hslot2, skb);
-+	if (!IS_ERR_OR_NULL(result))
-+		goto done;
-+
-+	/* Primary hash (destination port) lookup as fallback for this race:
-+	 *   1. __ip4_datagram_connect() sets sk_rcv_saddr
-+	 *   2. lookup (this function): new sk_rcv_saddr, hashes not updated yet
-+	 *   3. rehash operation updating _secondary and four-tuple_ hashes
-+	 * The primary hash doesn't need an update after 1., so, thanks to this
-+	 * further step, 1. and 3. don't need to be atomic against the lookup.
-+	 */
-+	result = udp4_lib_lookup1(net, saddr, sport, daddr, hnum, dif, sdif,
-+				  udptable);
-+
- done:
- 	if (IS_ERR(result))
- 		return NULL;
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 96a46dc473360..8697f473357c2 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -160,6 +160,49 @@ static int compute_score(struct sock *sk, struct net *net,
- 	return score;
++	if (l)
++		free_htab_elem(htab, l);
+ 	return ret;
  }
  
-+/**
-+ * udp6_lib_lookup1() - Simplified lookup using primary hash (destination port)
-+ * @net:	Network namespace
-+ * @saddr:	Source address, network order
-+ * @sport:	Source port, network order
-+ * @daddr:	Destination address, network order
-+ * @hnum:	Destination port, host order
-+ * @dif:	Destination interface index
-+ * @sdif:	Destination bridge port index, if relevant
-+ * @udptable:	Set of UDP hash tables
-+ *
-+ * Simplified lookup to be used as fallback if no sockets are found due to a
-+ * potential race between (receive) address change, and lookup happening before
-+ * the rehash operation. This function ignores SO_REUSEPORT groups while scoring
-+ * result sockets, because if we have one, we don't need the fallback at all.
-+ *
-+ * Called under rcu_read_lock().
-+ *
-+ * Return: socket with highest matching score if any, NULL if none
-+ */
-+static struct sock *udp6_lib_lookup1(struct net *net,
-+				     const struct in6_addr *saddr, __be16 sport,
-+				     const struct in6_addr *daddr,
-+				     unsigned int hnum, int dif, int sdif,
-+				     const struct udp_table *udptable)
-+{
-+	unsigned int slot = udp_hashfn(net, hnum, udptable->mask);
-+	struct udp_hslot *hslot = &udptable->hash[slot];
-+	struct sock *sk, *result = NULL;
-+	int score, badness = 0;
-+
-+	sk_for_each_rcu(sk, &hslot->head) {
-+		score = compute_score(sk, net,
-+				      saddr, sport, daddr, hnum, dif, sdif);
-+		if (score > badness) {
-+			result = sk;
-+			badness = score;
-+		}
-+	}
-+
-+	return result;
-+}
-+
- /* called with rcu_read_lock() */
- static struct sock *udp6_lib_lookup2(struct net *net,
- 		const struct in6_addr *saddr, __be16 sport,
-@@ -288,6 +331,13 @@ struct sock *__udp6_lib_lookup(struct net *net,
- 	result = udp6_lib_lookup2(net, saddr, sport,
- 				  &in6addr_any, hnum, dif, sdif,
- 				  hslot2, skb);
-+	if (!IS_ERR_OR_NULL(result))
-+		goto done;
-+
-+	/* Cover address change/lookup/rehash race: see __udp4_lib_lookup() */
-+	result = udp6_lib_lookup1(net, saddr, sport, daddr, hnum, dif, sdif,
-+				  udptable);
-+
- done:
- 	if (IS_ERR(result))
- 		return NULL;
+@@ -1824,13 +1841,14 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 			 * may cause deadlock. See comments in function
+ 			 * prealloc_lru_pop(). Let us do bpf_lru_push_free()
+ 			 * after releasing the bucket lock.
++			 *
++			 * For htab of maps, htab_put_fd_value() in
++			 * free_htab_elem() may acquire a spinlock with bucket
++			 * lock being held and it violates the lock rule, so
++			 * invoke free_htab_elem() after unlock as well.
+ 			 */
+-			if (is_lru_map) {
+-				l->batch_flink = node_to_free;
+-				node_to_free = l;
+-			} else {
+-				free_htab_elem(htab, l);
+-			}
++			l->batch_flink = node_to_free;
++			node_to_free = l;
+ 		}
+ 		dst_key += key_size;
+ 		dst_val += value_size;
+@@ -1842,7 +1860,10 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 	while (node_to_free) {
+ 		l = node_to_free;
+ 		node_to_free = node_to_free->batch_flink;
+-		htab_lru_push_free(htab, l);
++		if (is_lru_map)
++			htab_lru_push_free(htab, l);
++		else
++			free_htab_elem(htab, l);
+ 	}
+ 
+ next_batch:
 -- 
 2.53.0
 
