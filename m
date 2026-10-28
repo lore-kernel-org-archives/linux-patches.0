@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210309;
-	b=SFiJ+TNhojGpbSTfIv5IR39p9J19Sgi2T4OEsnQNblnNDRZw6OlTsrxUiR4ogLvT5/Ah
-	 vJdrUJDYZjCuNTZIRDN1yKcGIgeaCX6yWvTDpOK8nHl6WUGWF1hDXALtZs4YWKYPlQn0s
-	 oZXvszSZ6oWCyod+4ZEbCY7x2olOLqkL6tAOBBcyvEAgS6KhXf5swfiYV0jMHEyhrdyQF
-	 EtgjNNmhn+2Aq2a4oh16ZoP5LL8/8Ql2sC/oTkWQZJ23AqSTUK9HoWV4WH5pEtf8KfaZD
-	 3HMIt/XRbXAvenRwps1VBmAoI5hrTkDhcfVeJi73THktbJdKB81YyLxV2jTPTlE39lQ==
+	t=1793210312;
+	b=sakFJuyNuNQKbMjc0enM5d9BeoilbnEYf1Br3frQV9LvrFSd+sWhsBp3VM5JVGoroDYQ
+	 GWjUYf78LzjfLmmVQw/t6ge9cihQnvKDVLy0wGgT25Lz27Sa2+GYiZoBhQL0Zxzo1dvav
+	 O1YrVQXXXPhoHdEg888dUCiA8IF1qrwcuaPP9pkUOndyva6vQsPix7HLROs4c/q5vwY8Z
+	 iiVadJB18kUXAMddFHAwOX2bbH3F1Tz85g0EoxOzO2oOHd0xG6E6qEHr/8UU/IAdV/kmN
+	 /mvDwhOd7Uh2B4jud1VJk7fd80NdANThXql5wvJYkr+8KI3MIjTYHdPTzbik/Wi8M4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210309;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210312;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IJcZZfx/WfqBzDzfRC5mK2rCB78XD5/AGvhyAYzk8HU=;
-	b=t8k8NAl4nF2Esv5KHMxuwE8JYdkVVfnIG3ascfgyHBAhHPn9NFYRM3o1FNC5eXe6Z4+b
-	 UDxTclS8LUOggbmKs68XJtZnb49KxllfGBTnKlLfpQ9ICEqF6/xZxguaTHfowaDBlfF7Y
-	 fAaMgKa/6nOE5x0Zx6La9F9ZD6awGozRqJqfYTCQzHUB5Tx750uGXoajT0yIH9PwZ/xql
-	 e0by4E4EMePfwPaLMa1y5KuloI0U5v2dkvfb5BTYvLamwkQlL5twF6eSxueb54x7cc9h+
-	 dCfWeGRPM5ZDuCNf6mQYrpl8N4hIVFTb3bd/Hq5d/GBTYPibnWsMouZYqzJhicGxV+g==
+	bh=GdUPDjA1RgvZNfRM6cUNnQmRFWHGtZgM397W4gboW+w=;
+	b=vzrUUK+AMt0U0HpRbTLw2yqzMDxB1dZqHDJiRKIM8quhoBFJ1r32eJoW2WbtS8mLXYBf
+	 nSY38Sl0AB0tYoSpYheZkG/ph9FO/xwPYgia80qPfVLGAIl8HXJclrfpuxC4OSMirz/Go
+	 zOxKlSgiU3Y+xreuUrDQGFnBDooIWJQ5mLNRbS/x5bTIP4bYR+o/cVzTGYmZAFhWXMn0j
+	 QrIRzxgU/cIMUQTCsjwqApCBm/+9gS/Xk06t9Gj0viyfBqrxQD8Oe1y6fim7KOll7WBb5
+	 xbZE1+kN0GLXY94tIjPhB0he/plXZN11V1I/CnD/OV8vFKxPQmh0/2twsyJTdwpnVng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yK0eimSy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SuWHNj6J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF2F606A31A;
-	Wed, 28 Oct 2026 17:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACFD606A31C;
+	Wed, 28 Oct 2026 17:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yK0eimSy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D106C1F01825;
-	Wed, 28 Oct 2026 17:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SuWHNj6J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA85E1F01825;
+	Wed, 28 Oct 2026 17:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210309;
-	bh=IJcZZfx/WfqBzDzfRC5mK2rCB78XD5/AGvhyAYzk8HU=;
+	s=korg; t=1793210312;
+	bh=GdUPDjA1RgvZNfRM6cUNnQmRFWHGtZgM397W4gboW+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yK0eimSyNFolJFil86oU2/OnJkMPuiW916YldeP/VGRMZ8sFcvR8aL9vZ41k7MtFp
-	 r4osxkSzwtFJm6+fh1LORgQGC7bwfd5fXW5XluQJca0vtYsRDuaJaQGx/ps8lSqAUZ
-	 ceOFX48z7gEiSBrYYMqRgkzEAZdMjwmuN6mp6vAI=
+	b=SuWHNj6JI7uZvJRbbwj2ksVNGyQbUHVasvPbwBYzngXS6/KHTBgjsr/b8odjRr9jc
+	 WLhwD29X6XK4MIjx1YCpYSINBOCEhKZSGzBnHC3/N40dQVIKoRYVI1sI0HHLPxE8Kr
+	 B4zEAKi9mqpWvEYNWpgIC4gepNFminrONQ1FeGMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft Security FORGE Labs)" <cenzhang@linux.microsoft.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/168] io_uring/cancel: dont spin on local work the task cant run
-Date: Wed, 28 Oct 2026 18:00:41 +0100
-Message-ID: <20261028165945.574086131@linuxfoundation.org>
+Subject: [PATCH 6.6 106/168] vsock/virtio: validate packet source for connected sockets
+Date: Wed, 28 Oct 2026 18:00:42 +0100
+Message-ID: <20261028165945.599535565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,65 +70,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit fddcf4c5321b3ea5f72166c3fd36a9d1c34f80c7 ]
+[ Upstream commit dee44f41f206becb41c492899c1996cfd7f82a1b ]
 
-io_uring_cancel_generic() refuses to sleep while any ring on the exiting
-task's tctx has local work pending. It assumes the task is that ring's
-submitter and that the next io_uring_try_cancel_requests() pass will run
-the work. This does not hold for a ring that was still
-IORING_SETUP_R_DISABLED when the task got its tctx node from
-io_uring_create() or io_ringfd_register(). The submitter is set later by
-IORING_REGISTER_ENABLE_RINGS, possibly from another task, and only the
-submitter may run local work on an IORING_SETUP_DEFER_TASKRUN ring. To
-the exiting task the work stays pending forever, the loop never reaches
-schedule(), and the task trips the WARN_ON_ONCE() once and then spins in
-do_exit().
+virtio_transport_recv_pkt() looks up sockets first by the full source and
+destination tuple, then by destination only in the bound table. The
+fallback is needed for listening and connecting sockets, but sockets remain
+in the bound table after connect(), so it can also return a non-listening
+socket.
 
-An unprivileged user can set this up at will by creating a disabled
-ring, having a child enable it and stop, posting to the ring with
-IORING_OP_MSG_RING and exiting with a request in flight that only the
-child can complete. The exiting thread burns a CPU until the child runs
-or dies, and with panic_on_warn set the WARN panics the kernel.
+The fallback does not validate the source address. In TCP_SYN_SENT, a
+RESPONSE from an unrelated source can transition the victim socket to
+TCP_ESTABLISHED while its stored remote address remains unchanged.
+Subsequent RW packets from that source are delivered through the same
+destination-only fallback.
 
-Fix by skipping the sleep only when io_allowed_defer_tw_run() allows the
-task to run the work. This is reasonable since work it cannot run cannot
-complete any of its requests either, so nothing is lost by sleeping.
-Drop the WARN_ON_ONCE() since handing a disabled ring to another thread
-is a supported scenario, not a bug state.
+This was reproduced with capability-empty processes under different UIDs.
+The attacker discovered the target tuple through unprivileged AF_VSOCK
+sock_diag and caused the victim socket to read 16 attacker-chosen bytes;
+the intended peer-side socket read 0 of those 16 bytes.
 
-Fixes: 360cd42c4e95 ("io_uring: optimise io_req_local_work_add")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
-Link: https://patch.msgid.link/20261008191602.45101-1-cenzhang@linux.microsoft.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ sashal: replaced io_local_work_pending() with a direct !llist_empty() check on work_llist ]
+Add vsock_check_source() to validate the transport, source port and source
+CID against the peer stored in a non-listening socket. The local transport
+is the CID exception because its packets are generated internally with
+VMADDR_CID_LOCAL as their source, including connections using CID aliases.
+
+Use the helper after lock_sock() in the virtio receive path.
+
+Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
+Closes: https://lore.kernel.org/netdev/20260813121236.2328599-1-4ncienth@gmail.com/
+Cc: stable@vger.kernel.org
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20260826003929.966160-2-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: adjusted context for vsock lookup and reset helpers without network namespace arguments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ include/net/af_vsock.h                  |  3 +++
+ net/vmw_vsock/af_vsock.c                | 32 +++++++++++++++++++++++++
+ net/vmw_vsock/virtio_transport_common.c |  3 ++-
+ 3 files changed, 37 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index d4973d0d4e434..e74f49546961f 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3491,12 +3491,11 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
- 		prepare_to_wait(&tctx->wait, &wait, TASK_INTERRUPTIBLE);
- 		io_run_task_work();
- 		io_uring_drop_tctx_refs(current);
-+		/* only skip the sleep for local work this task may run */
- 		xa_for_each(&tctx->xa, index, node) {
--			if (!llist_empty(&node->ctx->work_llist)) {
--				WARN_ON_ONCE(node->ctx->submitter_task &&
--					     node->ctx->submitter_task != current);
-+			if (!llist_empty(&node->ctx->work_llist) &&
-+			    io_allowed_defer_tw_run(node->ctx))
- 				goto end_wait;
--			}
- 		}
- 		/*
- 		 * If we've seen completions, retry without waiting. This
+diff --git a/include/net/af_vsock.h b/include/net/af_vsock.h
+index 1820b87b8b7ff..d00f017948ed7 100644
+--- a/include/net/af_vsock.h
++++ b/include/net/af_vsock.h
+@@ -210,6 +210,9 @@ void vsock_remove_connected(struct vsock_sock *vsk);
+ struct sock *vsock_find_bound_socket(struct sockaddr_vm *addr);
+ struct sock *vsock_find_connected_socket(struct sockaddr_vm *src,
+ 					 struct sockaddr_vm *dst);
++bool vsock_check_source(const struct vsock_sock *vsk,
++			const struct vsock_transport *transport,
++			const struct sockaddr_vm *src);
+ void vsock_remove_sock(struct vsock_sock *vsk);
+ void vsock_for_each_connected_socket(struct vsock_transport *transport,
+ 				     void (*fn)(struct sock *sk));
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 8be8d7c55034c..9d6dce5311990 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -334,6 +334,38 @@ struct sock *vsock_find_connected_socket(struct sockaddr_vm *src,
+ }
+ EXPORT_SYMBOL_GPL(vsock_find_connected_socket);
+ 
++/**
++ * vsock_check_source - validate a packet source against a socket peer
++ * @vsk: socket receiving the packet
++ * @transport: transport receiving the packet
++ * @src: source address from the packet
++ *
++ * Return: true if the packet arrived on the socket's assigned transport and
++ * its source matches the stored peer. Loopback packets are generated
++ * internally and always use the local CID as their source, including
++ * connections using a valid CID alias.
++ *
++ * The caller must hold the socket lock and must not call this for listening
++ * sockets, which accept packets from any source and have no assigned
++ * transport.
++ */
++bool vsock_check_source(const struct vsock_sock *vsk,
++			const struct vsock_transport *transport,
++			const struct sockaddr_vm *src)
++{
++	if (vsk->transport != transport)
++		return false;
++
++	if (src->svm_port != vsk->remote_addr.svm_port)
++		return false;
++
++	if (src->svm_cid == vsk->remote_addr.svm_cid)
++		return true;
++
++	return transport->get_local_cid() == VMADDR_CID_LOCAL;
++}
++EXPORT_SYMBOL_GPL(vsock_check_source);
++
+ void vsock_remove_sock(struct vsock_sock *vsk)
+ {
+ 	/* Transport reassignment must not remove the binding. */
+diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
+index 16431ef52799d..e6e04cbb7a4be 100644
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1470,7 +1470,8 @@ void virtio_transport_recv_pkt(struct virtio_transport *t,
+ 	 * lock_sock (note: listener sockets are not assigned to any transport)
+ 	 */
+ 	if (sock_flag(sk, SOCK_DONE) ||
+-	    (sk->sk_state != TCP_LISTEN && vsk->transport != &t->transport)) {
++	    (sk->sk_state != TCP_LISTEN &&
++	     !vsock_check_source(vsk, &t->transport, &src))) {
+ 		(void)virtio_transport_reset_no_sock(t, skb);
+ 		release_sock(sk);
+ 		sock_put(sk);
 -- 
 2.53.0
 
