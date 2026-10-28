@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208292;
-	b=iHYBh+glILLnLFl3prH0tWMGqpUUTq5YCWJOIb9tUn32JirkwqPCUUkfBKPj/TmKhgUp
-	 UaxqYUVMfd6n/LlqOcAe2gsO8T3i+9nTcMK0Dkmh4ArkaYbqS2f2fyiHy+htgKmcMrfD5
-	 IariUEptujm2NgE9up0gMWQEcxu9C93KDt6Bd6wRyMEz7kxSGP32rMNwLEZ7x8BBRsQi0
-	 7vfUm/7HHKs9dEgE+Od37mcZgfkcIiDVkgI3IFRthv6npYKr9mkZKxoZRXd54WjkThu/Q
-	 xC4Us+Dw9bxK3ieILBKA6+LyKoQWq5YqotibByb3T8qEqXHogfytRHJxfTgfHceB1pA==
+	t=1793208295;
+	b=O/mUhBU5LOzdNf7qX/vSRvEb7YMRIcwO+OjcXBg4HClhL3wt9GmndIU4QBQE/N6tBupo
+	 hOL5612uWEM+zj2u9FPdRfuRePq0Lt2xXCESMvsM05xhbIh+yZ6EL+4jfXjIPF5HiOu0W
+	 SJmfTdySGZ/h5/apWcGwKkX2iP28mDVOR5lJd0XLNfdDVnVnH0CRzUwlGGEsl7jxr51hD
+	 GxU/F/3CzF93o6dbdsVnXVBiGfOzXm5ZsYphKndpI533hrjxpAJB1eXZ5VEB5O5YqLXE5
+	 VWnlcQwL0/FfaRF6rKYJlGm6O3H/mq6dbyD4F+4mVJnjlgKhxYXPli1xCVEGgyRgJFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208292;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208295;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jm0X0d7IVRrUN78rD+P8RIZEewk+7Z5NbeG3N1ZCEaM=;
-	b=48FbqROv3Iow7DeURL8oIhYmUatyjWKqwdxeUMse1uE3HnP+uNE3s1uSATcykHz9DL55
-	 PWUqv9zkULXHBZU2N+ER+s66M8F/meOY/VAzcMhVjSe1It8o/bOI41o12Kt4cL9qUeEYU
-	 ZSagLb7ngbRO1DtvFNhTCV3RypJtL/hKB1SvYeppwyU3LxedWTtyxPdzLV+DRo6p2epiu
-	 eXSusf5XRi8CvXU4LMJuT5hWOmYMX1boNiYmrWI3K6rCWO72EWr7ENhSAKXHhsu4CUCew
-	 NTl6nx+sNCqYwFZCe3Gj70q739i74M4dLZo8u5HlLriUdbb27ug3Wzq5CAqJjnLug/g==
+	bh=hUem9dreCLUBOZE3Lx38RNxjy3GQgC9X9wnwLC5YrvA=;
+	b=CNm3TkfUw0uEBb9IlpTL+uf5Qihb2TBI9U3W83Vf60D5R3x5ld7xi7/yVajlXWIFYlLo
+	 tyJDt8AYrOBvNlzP+MTAp9dsJSsJpIpfPGWWxK1K1yMtuduNiprS/OJF/UbSNNXFefl6t
+	 ydA/dKSZDMNTWVSgEa7WSNXrW5wDbmJ/E2ZBAwm+/N4OE2EzCswVVhZk7gMZiLwFF8xA1
+	 5K7+xt+5e7puRYjUdyFhiIGYvQ75nqofdWErqZLGiy55EfEjGivpDPcvrh2a3QKYjdqcP
+	 tP/owbof+6pcdEheGA78WCS41iEM4psibsFOT8i4SHUa6oKd+Zx6OFfst0Gl42Ez5Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNIKNiYZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1zGn9XS7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4523606A32A;
-	Wed, 28 Oct 2026 17:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D2C606A329;
+	Wed, 28 Oct 2026 17:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNIKNiYZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF321F01828;
-	Wed, 28 Oct 2026 17:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1zGn9XS7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6DC1F01825;
+	Wed, 28 Oct 2026 17:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208291;
-	bh=jm0X0d7IVRrUN78rD+P8RIZEewk+7Z5NbeG3N1ZCEaM=;
+	s=korg; t=1793208294;
+	bh=hUem9dreCLUBOZE3Lx38RNxjy3GQgC9X9wnwLC5YrvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNIKNiYZWGrYDU4srtjRoLlwx3Rp9J35mDT3mCfEi4niHW8HjvMUMeb2zmC6ASy4B
-	 sUugFUeJSRmSEDrzYy9sox73UG/ThdKNpBfbMso9AdvFTb9GXOF7q8JeoXDnKfNKm2
-	 xo4cnc+auZui9F+fyBHKJhKJF5C6x2ucfnZJKETE=
+	b=1zGn9XS7nMtZEVjRfB3q6pSkX5TVGbqXGb1Wfb39dn4j8Xvdg6fjadCXH4f97DEq9
+	 zNprKsHQXJKGz6XXXmm0N1+5+JNoBof8bPiyrCCv0yvz7Pjf5gXyqHfWo0cOnF87Kz
+	 rYbcyI9w3DlRWomeZAljchuuSXj2ryBNCK2lSTHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/516] cifs: fix loff_t underflow in cifs_remap_file_range() when len == 0
-Date: Wed, 28 Oct 2026 17:53:23 +0100
-Message-ID: <20261028170004.740910519@linuxfoundation.org>
+Subject: [PATCH 5.10 069/516] power: supply: bq24257: fix use-after-free on remove
+Date: Wed, 28 Oct 2026 17:53:41 +0100
+Message-ID: <20261028170005.159274135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,69 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 6c322f5cf7476ded7a9a20f7be72462065a03c68 ]
+[ Upstream commit 9d34c9d660c3d0931d2cc749c46c47cf31f96e48 ]
 
-With len == 0 (clone to EOF), the effective length is computed as:
+The STAT-pin interrupt is devm-managed, so it stays armed until the devm
+cleanup that runs after remove() returns. remove() cancels
+bq->iilimit_setup_work while the threaded handler can still fire; that
+handler reschedules the work and dereferences bq, so the work runs
+against freed memory once devm frees bq.
 
-    len = src_inode->i_size - off;
+Make the delayed work device-managed with devm_delayed_work_autocancel(),
+registered before the interrupt request. The devm cleanup then releases
+the interrupt first, so the handler can no longer reschedule the work,
+and cancels the work before bq is freed. The explicit
+cancel_delayed_work_sync() in remove() is no longer needed and is dropped.
 
-If off > i_size, this is a negative loff_t, corrupting the ByteCount
-in the FSCTL_DUPLICATE_EXTENTS_TO_FILE request and inverting the range
-in filemap_write_and_wait_range().  The existing off >= i_size check
-fires only after the ioctl has already been sent.
+Found by static analysis.
 
-Snapshot i_size_read() once for both the bounds check and the length
-calculation, eliminating the TOCTOU and 32-bit torn-read risk.  Reject
-off > src_size with -EINVAL.  Treat off == src_size as a no-op,
-consistent with __generic_remap_file_range_prep().
-
-Fixes: 04b38d601239 ("vfs: pull btrfs clone API to vfs layer")
+Fixes: 2219a935963e ("power_supply: Add TI BQ24257 charger driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ added the missing unlock label at the existing common unlock path ]
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260731143554.334179-1-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260801051958.354528-1-fanwu01@zju.edu.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsfs.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/power/supply/bq24257_charger.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
-index 900ac4d04d901..228087c90de25 100644
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -1117,8 +1117,19 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	 */
- 	lock_two_nondirectories(target_inode, src_inode);
+diff --git a/drivers/power/supply/bq24257_charger.c b/drivers/power/supply/bq24257_charger.c
+index 96cb3290bcaa1..5c331bba3b35b 100644
+--- a/drivers/power/supply/bq24257_charger.c
++++ b/drivers/power/supply/bq24257_charger.c
+@@ -18,6 +18,7 @@
+ #include <linux/gpio/consumer.h>
+ #include <linux/interrupt.h>
+ #include <linux/delay.h>
++#include <linux/devm-helpers.h>
  
--	if (len == 0)
--		len = src_inode->i_size - off;
-+	if (len == 0) {
-+		loff_t src_size = i_size_read(src_inode);
-+
-+		if (off > src_size) {
-+			rc = -EINVAL;
-+			goto unlock;
-+		}
-+		len = src_size - off;
-+		if (!len) {
-+			rc = 0;
-+			goto unlock;
-+		}
+ #include <linux/acpi.h>
+ #include <linux/of.h>
+@@ -1020,10 +1021,6 @@ static int bq24257_probe(struct i2c_client *client,
+ 	if (bq->chip == BQ24250)
+ 		bq->iilimit_autoset_enable = false;
+ 
+-	if (bq->iilimit_autoset_enable)
+-		INIT_DELAYED_WORK(&bq->iilimit_setup_work,
+-				  bq24257_iilimit_setup_work);
+-
+ 	/*
+ 	 * The BQ24250 doesn't have a dedicated Power Good (PG) pin so let's
+ 	 * not probe for it and instead use a SW-based approach to determine
+@@ -1064,6 +1061,14 @@ static int bq24257_probe(struct i2c_client *client,
+ 		return ret;
+ 	}
+ 
++	if (bq->iilimit_autoset_enable) {
++		ret = devm_delayed_work_autocancel(dev,
++						   &bq->iilimit_setup_work,
++						   bq24257_iilimit_setup_work);
++		if (ret)
++			return ret;
 +	}
++
+ 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
+ 					bq24257_irq_handler_thread,
+ 					IRQF_TRIGGER_FALLING |
+@@ -1081,9 +1086,6 @@ static int bq24257_remove(struct i2c_client *client)
+ {
+ 	struct bq24257_device *bq = i2c_get_clientdata(client);
  
- 	cifs_dbg(FYI, "about to flush pages\n");
- 	/* should we flush first and last page first */
-@@ -1134,6 +1145,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	/* force revalidate of size and timestamps of target file now
- 	   that target is updated on the server */
- 	CIFS_I(target_inode)->time = 0;
-+unlock:
- 	/* although unlocking in the reverse order from locking is not
- 	   strictly necessary here it is a little cleaner to be consistent */
- 	unlock_two_nondirectories(src_inode, target_inode);
+-	if (bq->iilimit_autoset_enable)
+-		cancel_delayed_work_sync(&bq->iilimit_setup_work);
+-
+ 	bq24257_field_write(bq, F_RESET, 1); /* reset to defaults */
+ 
+ 	return 0;
 -- 
 2.53.0
 
