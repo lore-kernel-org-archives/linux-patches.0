@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213209;
-	b=rt6/NWfcj/DQ6d5ltWu/scra7e958gcYU33gjZI2kqfdF8NBLC6z+ZpaBtDiVvDXrIwR
-	 KG72YUyuXMgRIGgD1VCCOPx244OClQyaJfy5Chyv0bE/vpmSWee5xI/blx0gdYAr4Cbpd
-	 KYjpWz7L9wnikZP1NJr1PlqyZ+YyvV3dF3qBZyP9uCEaytpMIiebFhuiNI+R37TUSDmiZ
-	 2a6ekvmhu3vBtHBZWhwCIYAUF7L/VqkFaFhucBrdxJ1/qy+7PcUuarYJ4yD15SjJOUnpU
-	 mlq0ktI8IPlHLOhUzOrZbdEoS72Odp4rqPtn/j5fabh56hTzftp0syWG1dI8KwEH1WA==
+	t=1793213212;
+	b=shIG9F6fbuTkN5FK3e4LHgvKjD6HxNQC66YcLoTdh6yw1soYK/r33IGSWGI8A3jrT+VC
+	 KZM9n8PvKa6IND2TKkmAqeYnWWwp4tMXZJb3nATq4xwBAVlNMmDVSW+rwHrgIcdSAd6CX
+	 B2YsMY15Oa8GLbUVJu8wsujBLRwLztIkAwGtUD6alojzA92caWCl3uumgeZ42UAcaf2P0
+	 Rdfc7cinkHI4c5vfhyrTG4yxQRvKHUPqkIVyMvwaN/9S3gVSojlpzq+UWOWv/sA6ACxsK
+	 14ovl6DDUCfsdATXOCZFbEdQiEcms87yHw6WAhnSaEhjK0lAjNq0WvcQZQUYhfd2oAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213209;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213212;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m3SYhEP3JYNkw+BC59yJpLpoX6hMj+a+RVac22VAeyg=;
-	b=1WyAW9y4usOP+5aClN+wn7zfCzXiBRe+pChFbazZMD0suBwgadqmJgnRhk1/SLGLM8Ja
-	 uxmE3+NDKItTHCIRIGBp377f2srVuqUPgUlv9NXtCml9wXKEASmhMvuGKwkqmAwNBUzPK
-	 mZ3JUWCJHsRijNVzTDvKow1axLMsIHT+vHU7ZoYbH1SgsfhVovXiPYN26A8fAOITaRaBM
-	 yt14AljO9FIKUpsKSQhLsZ1yWvsagwPz45GBtVW6Mrc+EgZOYoHqOrwAriUPj2ZUn9W3H
-	 /laEY2WyXMv41h6EJXh/mBaPP7wSL321FvwUz6Rkaqo/8uKzL0c8b1kIemSfimMuBXQ==
+	bh=RKzyc7UsO/kmeHWqluL5gSuNMGjk1I5P986VkSHgdDM=;
+	b=3ccVCaKJ8sgLbI7rD2PBL3ySPsgJzdWQMW9tWaC/U6fAtIypa+QUyXU1BHEICYjZBYDP
+	 YQvwcf7k5rJGxoV3ZgwDCvLFuSTe++nrIeEyPiZOJgX1b0/f+QH82PFZRCNm5xiWJ3MMC
+	 3rKBm1K/a8HnQXB0wp9HGf8CFCPBtbJ2/Rl9j9k6Uf+J4f6JPb1d4JN0j1LZm3g/btDoD
+	 cMj8Ug/xKk3veUGOU4bAvwaGcb9/LDdpQpev9ucBtgwHFGvSaJcWygeSgBHIDGsOaZJhg
+	 4UzIJ2CFg3Xnzvt76CgnpcE425lbD5hT9SSaYxyLj1zHiXfuD40Qq3832sQ7FB7+DTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhRYVHP3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsW43rq+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A70D606A31A;
-	Wed, 28 Oct 2026 18:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2070E606A31A;
+	Wed, 28 Oct 2026 18:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhRYVHP3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988021F01825;
-	Wed, 28 Oct 2026 18:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsW43rq+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707401F01825;
+	Wed, 28 Oct 2026 18:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213209;
-	bh=m3SYhEP3JYNkw+BC59yJpLpoX6hMj+a+RVac22VAeyg=;
+	s=korg; t=1793213212;
+	bh=RKzyc7UsO/kmeHWqluL5gSuNMGjk1I5P986VkSHgdDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JhRYVHP30kp2v0/SSAceCsPl9Z4+BwtW6BDG94iLtoeWFxVVshVqRkX/RdqOV/7Ky
-	 h7TenbbNdpmD13REN8sW9AwVlcUAzdnUS+nDHMA5kj9h1pZOFOAMzCW4PljOSTFdai
-	 ljZYs99f0cxAIqHzgP4yijiNlN+53MNv/Ba88/kc=
+	b=IsW43rq+8MUvYcFBhQd+zJayWi7gBudGeXXKZlaHem2dLx1xxnaitkEprgncLIqB/
+	 vGwu05JJQDm12vbkILIy3q1FgGyr5XHcHullfGXqCUigG2o/0IJfJlgLK04BVFY0Xf
+	 hgKOMV3JhbBn+SDegUmd6aSJ1unyZj5KiyjTS6po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>,
-	Lee Jones <lee@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0424/1887] HID: uhid: convert to hid_safe_input_report()
-Date: Wed, 28 Oct 2026 17:42:00 +0100
-Message-ID: <20261028170508.883279337@linuxfoundation.org>
+Subject: [PATCH 6.1 0425/1887] mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
+Date: Wed, 28 Oct 2026 17:42:01 +0100
+Message-ID: <20261028170508.906011466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,67 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 63a694c51bf120a37550890b8e7736b4888985e9 ]
+[ Upstream commit 1745ccbd2907db2bdaa843e4abccde4fdaccbe5d ]
 
-Commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
-bogus memset()"), added a check in hid_report_raw_event() to reject
-reports if the received data size is smaller than expected. This was
-intended to prevent OOB errors by no longer allowing zeroing-out of
-shorter reports due to the lack of buffer size information.
+kdamond_apply_schemes() is using damon_for_each_region_safe(), which is
+safe for deallocation of the region inside the loop.  However, the loop
+internal logic does not deallocate regions.  Hence it is only wasting the
+next pointer.  Also, it causes a problem.
 
-However, this leads to regressions in hid_report_raw_event(), where
-shorter than expected reports are rejected, even though their buffers
-are sufficiently large to be zero-padded.
+When an address filter is applied, and there is a region that intersects
+with the filter, the filter splits the region on the filter boundary.  The
+intention is to let DAMOS apply action to only filtered-in address ranges.
+However, it is using damon_for_each_region_safe(), which sets the next
+region before the execution of the iteration.  Hence, the region that
+split and now will be next to the previous region, is simply ignored.  As
+a result, DAMOS applies the action to target regions bit slower than
+expected, when the address filter is used.  Shouldn't be a big problem but
+definitely better to be fixed.  damos_skip_charged_region() was working
+around the issue using a double pointer hack.
 
-To solve this issue, Benjamin introduced a safer alternative in commit
-206342541fc8 ("HID: core: introduce hid_safe_input_report()"), which
-forwards the buffer size and allows hid_report_raw_event() to safely
-zero-pad the data.
+Use damon_for_each_region(), which is safe for this use case.  And drop
+the work around in damos_skip_charged_region().
 
-Convert uhid to use hid_safe_input_report() and pass UHID_DATA_MAX as
-the buffer size. This prevents the reported regressions [1], allowing
-hid core to zero-pad the shorter reports safely as expected.
-
-Cc: stable@vger.kernel.org
-Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
-Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/ [1]
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Closes: https://lore.kernel.org/all/ahsh0UtTX6e0ZeHa@google.com/
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lkml.kernel.org/r/20260227170623.95384-3-sj@kernel.org
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/uhid.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/damon/core.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/uhid.c b/drivers/hid/uhid.c
-index 59ac757c1d471..72baf8adf46cf 100644
---- a/drivers/hid/uhid.c
-+++ b/drivers/hid/uhid.c
-@@ -597,8 +597,8 @@ static int uhid_dev_input(struct uhid_device *uhid, struct uhid_event *ev)
- 	if (!READ_ONCE(uhid->running))
- 		return -EINVAL;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 568f24da26e6e..6d7a5f18158a0 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -788,8 +788,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 					sz = DAMON_MIN_REGION;
+ 				}
+ 				damon_split_region_at(t, r, sz);
+-				r = damon_next_region(r);
+-				sz = damon_sz_region(r);
++				continue;
+ 			}
+ 			quota->charge_target_from = NULL;
+ 			quota->charge_addr_from = 0;
+@@ -858,7 +857,7 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+ static void kdamond_apply_schemes(struct damon_ctx *c)
+ {
+ 	struct damon_target *t;
+-	struct damon_region *r, *next_r;
++	struct damon_region *r;
+ 	struct damos *s;
  
--	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data,
--			 min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
-+	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input.data, UHID_DATA_MAX,
-+			      min_t(size_t, ev->u.input.size, UHID_DATA_MAX), 0);
+ 	damon_for_each_scheme(s, c) {
+@@ -912,7 +911,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+ 	}
  
- 	return 0;
- }
-@@ -608,8 +608,8 @@ static int uhid_dev_input2(struct uhid_device *uhid, struct uhid_event *ev)
- 	if (!READ_ONCE(uhid->running))
- 		return -EINVAL;
- 
--	hid_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data,
--			 min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
-+	hid_safe_input_report(uhid->hid, HID_INPUT_REPORT, ev->u.input2.data, UHID_DATA_MAX,
-+			      min_t(size_t, ev->u.input2.size, UHID_DATA_MAX), 0);
- 
- 	return 0;
+ 	damon_for_each_target(t, c) {
+-		damon_for_each_region_safe(r, next_r, t)
++		damon_for_each_region(r, t)
+ 			damon_do_apply_schemes(c, t, r);
+ 	}
  }
 -- 
 2.53.0
