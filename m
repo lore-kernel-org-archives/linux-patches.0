@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211209;
-	b=1aT31w/K0IhRjN0EFurcsvontOSJAP6kFw+YNg4G3JP+3yz6DlGChlfo1vFXl/K8rwwp
-	 A3fnUU/EtuvL/rUnpdHp5CbbploM77FSPRAesUbWdFKyr4fRdtBqrm0HrxcXpyMTgSsff
-	 8UBfGoZkvs4hyDJcqYdhUA/1uYvDGkKHjk+5vyVNpsP7dtC8x1i0r71zHMg6qHfCCeutm
-	 2HhTTvbKATuZ00j4EdVdtPOQGU+4Dy+fHsEgXbMpjT6mWVux4swCgamcMEqtA5X8RIr5l
-	 T2cXCSdnvAWdtzeq/zbcT4Y6Arb4Z9mrEJpb2dwKk8qNMXi2Z48JrtOCSVnjpERgwJA==
+	t=1793211211;
+	b=R2f0OnM8MFZyL1fp+GLeL6WwyAPwtvHX9LXvGjeTcAq/DSU0Jrpg97yy/n97X8k4owpB
+	 DoCb9Ia5w1sGvPlwOZAWlvWEUWgpmV0VRiRKKbpnAS4C3x1GD79HNtV+L8vD3ksFAUUs6
+	 iqL5MicSJU+E/TF0DmGYZHUNuZ0JpuDzSweJlytMqG0I5l1Ms++ALbwKrmrvRm+tGM5ND
+	 R9JAmwSasN07Hmapusi8oZDIjJ6yM2tvEVApgIW3bgkn64lN4SQnd6J/g73Uefo6kjR5/
+	 +Fq4H91du40GayqMuixk2p4My9O6TLfJzSFFq+whndjGpcP+Xzw5UYs2SOslG2Yz4xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211209;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q+jRH3x57p+rkcNIYpWLUxvFtXVtvmGrO1/Phg2WDmU=;
-	b=0SAuCj/qR8cnvyyYrVugrbI01/j8GXrwFlwuhUfiAx9bgEmdnORoSO8N3aClmg1qfzH2
-	 +uGtnHunuaOgLxRdkQ3W7mK36UCP60z5m+iZStKWMNju2u5fwHWBAAb+E1QYhAq4q5Gvv
-	 5jKF2gysV9UEZi/01KSrEukHT0uZmZ9seXupbjBDwCQArHYKX9mGJe9LTTD0omCUG9OlL
-	 O6jyrkJJhSel0Yi+1Oc9xDVhAHlfFzvJEstkOSiCoBT+1UbCXBmQn2ObM1tXuEMrTau0o
-	 L50oa9mgC8o1AMOzkr6b5yk89oxtKdf8m+yjg7mcRal3LIa8PGKqJYohBBnl8oFgtBw==
+	bh=tD2Q+XOzgy8zaqeFXxTCtpWvvlAmnnRIPvJsgQ+DBBI=;
+	b=Pu1xWOU0p+wXamGN/sTcLqGdUjeW6zzZ1Rv9r/6Z8FvPDz41SDlgBY1e95yGIBQC+x6E
+	 IxPe447Iie5uOX4h0YIpfapSGg2pzPoZJFF/BV/Dp46nNhBREyuqFc1j67UZWIRImHNcG
+	 lWr7delfsLsyW/iq2eSVMjcub30UVpKc4jiq8GGb0SyiZEO3tfF0K05IyudMujeH8dFDk
+	 l7zIW6kxM5Vxi66LIUKdyJkLD+1MDLKewnXdu4op8AKsbN1YGDJVsE3QlVbNKaMMNKhpV
+	 zgW8DwJNq2zns67E66aUZyJlzg04ymattEz2pYypWy3M7JcLfBMMx1xH1Q738TNv+qA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsnAOsVO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dh5urwK+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B293C606A951;
-	Wed, 28 Oct 2026 18:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E104606A33C;
+	Wed, 28 Oct 2026 18:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsnAOsVO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA191F01825;
-	Wed, 28 Oct 2026 18:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dh5urwK+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F6A1F01828;
+	Wed, 28 Oct 2026 18:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211208;
-	bh=Q+jRH3x57p+rkcNIYpWLUxvFtXVtvmGrO1/Phg2WDmU=;
+	s=korg; t=1793211211;
+	bh=tD2Q+XOzgy8zaqeFXxTCtpWvvlAmnnRIPvJsgQ+DBBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KsnAOsVOMWBJQcz5unFE0gXBXRQiszV0S9BXoqC55U2/AOvBWStDvNfcfHz+dA4v6
-	 AgRX2S+rjdvSnFQw6MLhJL8vsFJN+BMJdNcoffPHKxnC398xkFMA29yYKRvOGXIBSo
-	 Vxy106NfB0Y60fL1/zrWwBC5hoWsr78wfWMAyaGg=
+	b=dh5urwK+KSiufN8cjxj+Z+69JBvm0o3V/DsZ/f79df4QzXdUuQwaYvrBG3nyl2uQ+
+	 L/DXNc1u4ocG2eMXQKpznQPYs4fANzgNWSXkal250Z4T7yjmgp8JKmDJS4Sn9Kz0QY
+	 MtjYjaX1KjHZrIO4jvu5+DD7WYGl+KGSqZU4GI3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Theodore Tso <tytso@mit.edu>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 297/571] KVM: arm64: Dont use the VMA to size stage-2 block mappings for VM_PFNMAP
-Date: Wed, 28 Oct 2026 17:57:24 +0100
-Message-ID: <20261028170015.047191948@linuxfoundation.org>
+Subject: [PATCH 5.15 298/571] fsverity: add dependency on 64K or smaller pages
+Date: Wed, 28 Oct 2026 17:57:25 +0100
+Message-ID: <20261028170015.070344678@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,77 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 71cc2c67fb8f8d5aa8154eb482e9846d2214f11b ]
+commit a300000233a9ff842e2fb450fb9a79f7827a586d upstream.
 
-get_vma_page_shift() derives the stage-2 block size for VM_PFNMAP VMAs
-from the VMA layout alone, which does not necessarily match what
-stage-1 maps for that VMA.
+Currently, all filesystems that support fsverity (ext4, f2fs, and btrfs)
+cache the Merkle tree in the pagecache at a 64K aligned offset after the
+end of the file data.  This offset needs to be a multiple of the page
+size, which is guaranteed only when the page size is 64K or smaller.
 
-Upstream commit 71cc2c67fb8f ("KVM: arm64: Use stage-1 leaf size for
-VM_PFNMAP") drops that calculation and lets transparent_hugepage_adjust()
-derive the mapping size from the stage-1 leaf instead. The second part
-is not applicable here: in this kernel transparent_hugepage_adjust()
-takes a reference on the backing struct page, which is not safe for
-MMIO, and stage-1 has no huge PFNMAP before v6.12 anyway. Only drop the
-VMA-based calculation, so VM_PFNMAP VMAs are mapped at PAGE_SIZE.
+64K was chosen to be the "largest reasonable page size".  But it isn't
+the largest *possible* page size: the hexagon and powerpc ports of Linux
+support 256K pages, though that configuration is rarely used.
 
-Fixes: 2aa53d68cee6 ("KVM: arm64: Try stage2 block mapping for host device MMIO")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
+For now, just disable support for FS_VERITY in these odd configurations
+to ensure it isn't used in cases where it would have incorrect behavior.
+
+Fixes: 671e67b47e9f ("fs-verity: add Kconfig and the helper functions for hashing")
+Reported-by: Christoph Hellwig <hch@lst.de>
+Closes: https://lore.kernel.org/r/20260119063349.GA643@lst.de
+Reviewed-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20260221204525.30426-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/mmu.c | 25 ++-----------------------
- 1 file changed, 2 insertions(+), 23 deletions(-)
+ fs/verity/Kconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 7d04f96706447..c5697cbbfabea 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -904,32 +904,11 @@ transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
- 	return PAGE_SIZE;
- }
+diff --git a/fs/verity/Kconfig b/fs/verity/Kconfig
+index 24d1b54de8079..4e3327ce27561 100644
+--- a/fs/verity/Kconfig
++++ b/fs/verity/Kconfig
+@@ -2,6 +2,9 @@
  
--static int get_vma_page_shift(struct vm_area_struct *vma, unsigned long hva)
-+static int get_vma_page_shift(struct vm_area_struct *vma)
- {
--	unsigned long pa;
--
- 	if (is_vm_hugetlb_page(vma) && !(vma->vm_flags & VM_PFNMAP))
- 		return huge_page_shift(hstate_vma(vma));
- 
--	if (!(vma->vm_flags & VM_PFNMAP))
--		return PAGE_SHIFT;
--
--	VM_BUG_ON(is_vm_hugetlb_page(vma));
--
--	pa = (vma->vm_pgoff << PAGE_SHIFT) + (hva - vma->vm_start);
--
--#ifndef __PAGETABLE_PMD_FOLDED
--	if ((hva & (PUD_SIZE - 1)) == (pa & (PUD_SIZE - 1)) &&
--	    ALIGN_DOWN(hva, PUD_SIZE) >= vma->vm_start &&
--	    ALIGN(hva, PUD_SIZE) <= vma->vm_end)
--		return PUD_SHIFT;
--#endif
--
--	if ((hva & (PMD_SIZE - 1)) == (pa & (PMD_SIZE - 1)) &&
--	    ALIGN_DOWN(hva, PMD_SIZE) >= vma->vm_start &&
--	    ALIGN(hva, PMD_SIZE) <= vma->vm_end)
--		return PMD_SHIFT;
--
- 	return PAGE_SHIFT;
- }
- 
-@@ -1038,7 +1017,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 		force_pte = true;
- 		vma_shift = PAGE_SHIFT;
- 	} else {
--		vma_shift = get_vma_page_shift(vma, hva);
-+		vma_shift = get_vma_page_shift(vma);
- 	}
- 
- 	shared = (vma->vm_flags & VM_SHARED);
+ config FS_VERITY
+ 	bool "FS Verity (read-only file-based authenticity protection)"
++	# Filesystems cache the Merkle tree at a 64K aligned offset in the
++	# pagecache.  That approach assumes the page size is at most 64K.
++	depends on !PAGE_SIZE_256KB && !PPC_256K_PAGES
+ 	select CRYPTO
+ 	# SHA-256 is implied as it's intended to be the default hash algorithm.
+ 	# To avoid bloat, other wanted algorithms must be selected explicitly.
 -- 
 2.53.0
 
