@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213629;
-	b=VNw69lirKYZZbE0TnsN7+Ta8neu+EGvxBGu6QmAza4JRHFn94t5t9+vz3/1AJpC0kbKm
-	 2OZrAEaHJCt0Tgg0axE7MEOM8nnpH6/roGCtKjbMj1zVrc860/o1DmWezTUyeyq1+NRqI
-	 /VRGcgThXbbpVbLrnGLcms6a6ftJAqeLa7xmQ1AaZsgcXRTssKGBc7xlo7/TLuuYh1ARW
-	 vaCEX3y75J57+tY30rca4yWZJ1op/32l2wz4A8sROJzR/yKRDbOunwWAW7yDyL05M6pK1
-	 Wc1IFp5tlcUPl2/yLKVxPro+mtlCzQdIdurTZ7il22k2DhALw7ox640ZPeXwxOLM+Hg==
+	t=1793213631;
+	b=dusOjP/LA8HKbFiiP7zDVuFlGqnLBe2TDO5QgxFWVAVGL5bH7s+F6TGP/C+yE9j1eG7B
+	 yAc/+SRwJUmWttzgwAMOmZnZkyzZ0BcKT10OMWdFgEalg97RBrnbV/5pTZ6fZ1z8MuCYu
+	 I6CKlKljCEAJRWmYd5W5nhYhMph+dolPihR20PWh5K/lqiyaQ/mexksvDRYlSlz4s60uD
+	 F16fso//5lTpdIY2Hvby/DqfUEanRjviDfqM2E5b+NXc2/au0k/wcm/rAQ7M8v3w3w0w3
+	 HcHEEYUFdrsFjepT+3678+ObggZbqngBl3RjE3fgJfQqhDgVcSNx1b/acCchePdb43A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JKB9YC9IIh6capkp7MLFqMM1p0ygRL/mAmRxJ93wqCc=;
-	b=R7/6wgKmHGDNeNRPyUDh4yJFj7qG+rDQqQxSjBdNpziNJ/XpUWGsII1OBMDcfY8O1HfW
-	 Du9xBPMOjTyEBTF4hqKEqBHRVOYBKJeYhFehNOSohsUIAnZPuHKy6xUj0gd6V5Taq1rCj
-	 xv7y+TI3B4dkQV/KOjKsK12ZO3qc0zjx4cEaW1qavPYQiq3eK9/LDWssy0gxUIxp5oxHF
-	 /6xWmvlhhJb9mdFRAzxVD3SMXdoV5rAz9gzCanLxJrWj1L/dBx0C5KldAniPgbG8qAnMQ
-	 zXZ0Jf/J2hf7A5EuIr6K2aIC+1jj9+2yOiWH5tF5ieC8P8vLZAC4jEYn8+4H5Azwv7A==
+	bh=rk5WKpLam4nQiTJyGhhTDJAVGMgNYPXXcD/8tNkcxo0=;
+	b=DFIlKXD5Pjs1EgpwuvXb7BZ5L+6/s8zJK69EvwqTiZ/dAL6DCp80bqnZwgLubXfA9TXt
+	 nivRC81ScJZM9n9mUSxyS5iyFtSMNwK8aQgDNtdj7XmF3tSHe+slmJOy7g/YvuONHr+Cd
+	 t9yKAf/d6ZdLyR3pdB2ddg6wcGS1cjMR/+fqZ7yDrvJNb8QCUlmliFEuNc8pMk0UOQ9nj
+	 3WJntmx7FPEmVfHyrdBnwgQ3DDzVY9x+hziK7HyRJKF89hCGdyYL0x/F2z1ZTGDw/HFAw
+	 Cero3KZM8mmT+WdgUtmsv0eB7LCeaBhO7MBF8qQ2r+Y1WXTtv903CsVwlgv5EAoBjNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1u7WWdr7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9flKOU+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38B3606A31A;
-	Wed, 28 Oct 2026 18:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78621606A31A;
+	Wed, 28 Oct 2026 18:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1u7WWdr7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005E01F01825;
-	Wed, 28 Oct 2026 18:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9flKOU+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6ED41F01825;
+	Wed, 28 Oct 2026 18:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213628;
-	bh=JKB9YC9IIh6capkp7MLFqMM1p0ygRL/mAmRxJ93wqCc=;
+	s=korg; t=1793213631;
+	bh=rk5WKpLam4nQiTJyGhhTDJAVGMgNYPXXcD/8tNkcxo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1u7WWdr73Zvpf6jfqomLx4dm6LOE2hLhFzyPywPjtBnf1vxM4XGGS+m7hof2TH26E
-	 kfYvAb0NryF0qVsxG4PUntCHTWNOZQ/36CCnHYYgg7xtlgpQCjk6jOHyB4O10YIUTw
-	 61T+TmEM+QTvi68CNv62/QxrezL+xCIQyEoVCN0Q=
+	b=Y9flKOU+FRDzBFl2elMx9A8mI3rVJ+Cet96dy43aVEWVm7dNRKTzZOr5/RIJNDiSU
+	 VT0/C5SmdpI3FUY4qczCEr8XJUlkoI4PyPW2Qq0joBRGHd0KSJIqcEebEicoeFgnsE
+	 BAiMGyUW6JDNpwDC/xs/3DFaSAVmu5+2Zj3eVz94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+12cb4425b22169b52036@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 0571/1887] f2fs: fix to do sanity check on direct node in truncate_dnode()
-Date: Wed, 28 Oct 2026 17:44:27 +0100
-Message-ID: <20261028170512.397740943@linuxfoundation.org>
+	Rob Clark <robdclark@chromium.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0572/1887] interconnect: Fix locking for runpm vs reclaim
+Date: Wed, 28 Oct 2026 17:44:28 +0100
+Message-ID: <20261028170512.421618910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,140 +68,247 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit a6ec83786ab9f13f25fb18166dee908845713a95 ]
+[ Upstream commit af42269c3523492d71ebbe11fefae2653e9cdc78 ]
 
-syzbot reports below bug:
+For cases where icc_bw_set() can be called in callbaths that could
+deadlock against shrinker/reclaim, such as runpm resume, we need to
+decouple the icc locking.  Introduce a new icc_bw_lock for cases where
+we need to serialize bw aggregation and update to decouple that from
+paths that require memory allocation such as node/link creation/
+destruction.
 
-BUG: KASAN: slab-use-after-free in f2fs_truncate_data_blocks_range+0x122a/0x14c0 fs/f2fs/file.c:574
-Read of size 4 at addr ffff88802a25c000 by task syz-executor148/5000
+Fixes this lockdep splat:
 
-CPU: 1 PID: 5000 Comm: syz-executor148 Not tainted 6.4.0-rc7-syzkaller-00041-ge660abd551f1 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd9/0x150 lib/dump_stack.c:106
- print_address_description.constprop.0+0x2c/0x3c0 mm/kasan/report.c:351
- print_report mm/kasan/report.c:462 [inline]
- kasan_report+0x11c/0x130 mm/kasan/report.c:572
- f2fs_truncate_data_blocks_range+0x122a/0x14c0 fs/f2fs/file.c:574
- truncate_dnode+0x229/0x2e0 fs/f2fs/node.c:944
- f2fs_truncate_inode_blocks+0x64b/0xde0 fs/f2fs/node.c:1154
- f2fs_do_truncate_blocks+0x4ac/0xf30 fs/f2fs/file.c:721
- f2fs_truncate_blocks+0x7b/0x300 fs/f2fs/file.c:749
- f2fs_truncate.part.0+0x4a5/0x630 fs/f2fs/file.c:799
- f2fs_truncate include/linux/fs.h:825 [inline]
- f2fs_setattr+0x1738/0x2090 fs/f2fs/file.c:1006
- notify_change+0xb2c/0x1180 fs/attr.c:483
- do_truncate+0x143/0x200 fs/open.c:66
- handle_truncate fs/namei.c:3295 [inline]
- do_open fs/namei.c:3640 [inline]
- path_openat+0x2083/0x2750 fs/namei.c:3791
- do_filp_open+0x1ba/0x410 fs/namei.c:3818
- do_sys_openat2+0x16d/0x4c0 fs/open.c:1356
- do_sys_open fs/open.c:1372 [inline]
- __do_sys_creat fs/open.c:1448 [inline]
- __se_sys_creat fs/open.c:1442 [inline]
- __x64_sys_creat+0xcd/0x120 fs/open.c:1442
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+   ======================================================
+   WARNING: possible circular locking dependency detected
+   6.2.0-rc8-debug+ #554 Not tainted
+   ------------------------------------------------------
+   ring0/132 is trying to acquire lock:
+   ffffff80871916d0 (&gmu->lock){+.+.}-{3:3}, at: a6xx_pm_resume+0xf0/0x234
 
-The root cause is, inodeA references inodeB via inodeB's ino, once inodeA
-is truncated, it calls truncate_dnode() to truncate data blocks in inodeB's
-node page, it traverse mapping data from node->i.i_addr[0] to
-node->i.i_addr[ADDRS_PER_BLOCK() - 1], result in out-of-boundary access.
+   but task is already holding lock:
+   ffffffdb5aee57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
 
-This patch fixes to add sanity check on dnode page in truncate_dnode(),
-so that, it can help to avoid triggering such issue, and once it encounters
-such issue, it will record newly introduced ERROR_INVALID_NODE_REFERENCE
-error into superblock, later fsck can detect such issue and try repairing.
+   which lock already depends on the new lock.
 
-Also, it removes f2fs_truncate_data_blocks() for cleanup due to the
-function has only one caller, and uses f2fs_truncate_data_blocks_range()
-instead.
+   the existing dependency chain (in reverse order) is:
 
-Reported-and-tested-by: syzbot+12cb4425b22169b52036@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000f3038a05fef867f8@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+   -> #4 (dma_fence_map){++++}-{0:0}:
+          __dma_fence_might_wait+0x74/0xc0
+          dma_resv_lockdep+0x1f4/0x2f4
+          do_one_initcall+0x104/0x2bc
+          kernel_init_freeable+0x344/0x34c
+          kernel_init+0x30/0x134
+          ret_from_fork+0x10/0x20
+
+   -> #3 (mmu_notifier_invalidate_range_start){+.+.}-{0:0}:
+          fs_reclaim_acquire+0x80/0xa8
+          slab_pre_alloc_hook.constprop.0+0x40/0x25c
+          __kmem_cache_alloc_node+0x60/0x1cc
+          __kmalloc+0xd8/0x100
+          topology_parse_cpu_capacity+0x8c/0x178
+          get_cpu_for_node+0x88/0xc4
+          parse_cluster+0x1b0/0x28c
+          parse_cluster+0x8c/0x28c
+          init_cpu_topology+0x168/0x188
+          smp_prepare_cpus+0x24/0xf8
+          kernel_init_freeable+0x18c/0x34c
+          kernel_init+0x30/0x134
+          ret_from_fork+0x10/0x20
+
+   -> #2 (fs_reclaim){+.+.}-{0:0}:
+          __fs_reclaim_acquire+0x3c/0x48
+          fs_reclaim_acquire+0x54/0xa8
+          slab_pre_alloc_hook.constprop.0+0x40/0x25c
+          __kmem_cache_alloc_node+0x60/0x1cc
+          __kmalloc+0xd8/0x100
+          kzalloc.constprop.0+0x14/0x20
+          icc_node_create_nolock+0x4c/0xc4
+          icc_node_create+0x38/0x58
+          qcom_icc_rpmh_probe+0x1b8/0x248
+          platform_probe+0x70/0xc4
+          really_probe+0x158/0x290
+          __driver_probe_device+0xc8/0xe0
+          driver_probe_device+0x44/0x100
+          __driver_attach+0xf8/0x108
+          bus_for_each_dev+0x78/0xc4
+          driver_attach+0x2c/0x38
+          bus_add_driver+0xd0/0x1d8
+          driver_register+0xbc/0xf8
+          __platform_driver_register+0x30/0x3c
+          qnoc_driver_init+0x24/0x30
+          do_one_initcall+0x104/0x2bc
+          kernel_init_freeable+0x344/0x34c
+          kernel_init+0x30/0x134
+          ret_from_fork+0x10/0x20
+
+   -> #1 (icc_lock){+.+.}-{3:3}:
+          __mutex_lock+0xcc/0x3c8
+          mutex_lock_nested+0x30/0x44
+          icc_set_bw+0x88/0x2b4
+          _set_opp_bw+0x8c/0xd8
+          _set_opp+0x19c/0x300
+          dev_pm_opp_set_opp+0x84/0x94
+          a6xx_gmu_resume+0x18c/0x804
+          a6xx_pm_resume+0xf8/0x234
+          adreno_runtime_resume+0x2c/0x38
+          pm_generic_runtime_resume+0x30/0x44
+          __rpm_callback+0x15c/0x174
+          rpm_callback+0x78/0x7c
+          rpm_resume+0x318/0x524
+          __pm_runtime_resume+0x78/0xbc
+          adreno_load_gpu+0xc4/0x17c
+          msm_open+0x50/0x120
+          drm_file_alloc+0x17c/0x228
+          drm_open_helper+0x74/0x118
+          drm_open+0xa0/0x144
+          drm_stub_open+0xd4/0xe4
+          chrdev_open+0x1b8/0x1e4
+          do_dentry_open+0x2f8/0x38c
+          vfs_open+0x34/0x40
+          path_openat+0x64c/0x7b4
+          do_filp_open+0x54/0xc4
+          do_sys_openat2+0x9c/0x100
+          do_sys_open+0x50/0x7c
+          __arm64_sys_openat+0x28/0x34
+          invoke_syscall+0x8c/0x128
+          el0_svc_common.constprop.0+0xa0/0x11c
+          do_el0_svc+0xac/0xbc
+          el0_svc+0x48/0xa0
+          el0t_64_sync_handler+0xac/0x13c
+          el0t_64_sync+0x190/0x194
+
+   -> #0 (&gmu->lock){+.+.}-{3:3}:
+          __lock_acquire+0xe00/0x1060
+          lock_acquire+0x1e0/0x2f8
+          __mutex_lock+0xcc/0x3c8
+          mutex_lock_nested+0x30/0x44
+          a6xx_pm_resume+0xf0/0x234
+          adreno_runtime_resume+0x2c/0x38
+          pm_generic_runtime_resume+0x30/0x44
+          __rpm_callback+0x15c/0x174
+          rpm_callback+0x78/0x7c
+          rpm_resume+0x318/0x524
+          __pm_runtime_resume+0x78/0xbc
+          pm_runtime_get_sync.isra.0+0x14/0x20
+          msm_gpu_submit+0x58/0x178
+          msm_job_run+0x78/0x150
+          drm_sched_main+0x290/0x370
+          kthread+0xf0/0x100
+          ret_from_fork+0x10/0x20
+
+   other info that might help us debug this:
+
+   Chain exists of:
+     &gmu->lock --> mmu_notifier_invalidate_range_start --> dma_fence_map
+
+    Possible unsafe locking scenario:
+
+          CPU0                    CPU1
+          ----                    ----
+     lock(dma_fence_map);
+                                  lock(mmu_notifier_invalidate_range_start);
+                                  lock(dma_fence_map);
+     lock(&gmu->lock);
+
+    *** DEADLOCK ***
+
+   2 locks held by ring0/132:
+    #0: ffffff8087191170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x64/0x150
+    #1: ffffffdb5aee57e8 (dma_fence_map){++++}-{0:0}, at: msm_job_run+0x68/0x150
+
+   stack backtrace:
+   CPU: 7 PID: 132 Comm: ring0 Not tainted 6.2.0-rc8-debug+ #554
+   Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
+   Call trace:
+    dump_backtrace.part.0+0xb4/0xf8
+    show_stack+0x20/0x38
+    dump_stack_lvl+0x9c/0xd0
+    dump_stack+0x18/0x34
+    print_circular_bug+0x1b4/0x1f0
+    check_noncircular+0x78/0xac
+    __lock_acquire+0xe00/0x1060
+    lock_acquire+0x1e0/0x2f8
+    __mutex_lock+0xcc/0x3c8
+    mutex_lock_nested+0x30/0x44
+    a6xx_pm_resume+0xf0/0x234
+    adreno_runtime_resume+0x2c/0x38
+    pm_generic_runtime_resume+0x30/0x44
+    __rpm_callback+0x15c/0x174
+    rpm_callback+0x78/0x7c
+    rpm_resume+0x318/0x524
+    __pm_runtime_resume+0x78/0xbc
+    pm_runtime_get_sync.isra.0+0x14/0x20
+    msm_gpu_submit+0x58/0x178
+    msm_job_run+0x78/0x150
+    drm_sched_main+0x290/0x370
+    kthread+0xf0/0x100
+    ret_from_fork+0x10/0x20
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://lore.kernel.org/r/20230807171148.210181-7-robdclark@gmail.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h |  1 -
- fs/f2fs/file.c |  5 -----
- fs/f2fs/node.c | 14 ++++++++++++--
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ drivers/interconnect/core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 3b1d99d03ab1b..971d45979ce40 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3466,7 +3466,6 @@ static inline bool __is_valid_data_blkaddr(block_t blkaddr)
-  * file.c
-  */
- int f2fs_sync_file(struct file *file, loff_t start, loff_t end, int datasync);
--void f2fs_truncate_data_blocks(struct dnode_of_data *dn);
- int f2fs_do_truncate_blocks(struct inode *inode, u64 from, bool lock);
- int f2fs_truncate_blocks(struct inode *inode, u64 from, bool lock);
- int f2fs_truncate(struct inode *inode);
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 36c3103035c3d..6755d23a90512 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -666,11 +666,6 @@ void f2fs_truncate_data_blocks_range(struct dnode_of_data *dn, int count)
- 					 dn->ofs_in_node, nr_free);
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index 09143aae680ef..40e2f110c5339 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -29,6 +29,7 @@ static LIST_HEAD(icc_providers);
+ static int providers_count;
+ static bool synced_state;
+ static DEFINE_MUTEX(icc_lock);
++static DEFINE_MUTEX(icc_bw_lock);
+ static struct dentry *icc_debugfs_dir;
+ 
+ static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
+@@ -635,7 +636,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+ 	if (WARN_ON(IS_ERR(path) || !path->num_nodes))
+ 		return -EINVAL;
+ 
+-	mutex_lock(&icc_lock);
++	mutex_lock(&icc_bw_lock);
+ 
+ 	old_avg = path->reqs[0].avg_bw;
+ 	old_peak = path->reqs[0].peak_bw;
+@@ -667,7 +668,7 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+ 		apply_constraints(path);
+ 	}
+ 
+-	mutex_unlock(&icc_lock);
++	mutex_unlock(&icc_bw_lock);
+ 
+ 	trace_icc_set_bw_end(path, ret);
+ 
+@@ -971,6 +972,7 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+ 		return;
+ 
+ 	mutex_lock(&icc_lock);
++	mutex_lock(&icc_bw_lock);
+ 
+ 	node->provider = provider;
+ 	list_add_tail(&node->node_list, &provider->nodes);
+@@ -996,6 +998,7 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+ 	node->avg_bw = 0;
+ 	node->peak_bw = 0;
+ 
++	mutex_unlock(&icc_bw_lock);
+ 	mutex_unlock(&icc_lock);
  }
+ EXPORT_SYMBOL_GPL(icc_node_add);
+@@ -1135,6 +1138,7 @@ void icc_sync_state(struct device *dev)
+ 		return;
  
--void f2fs_truncate_data_blocks(struct dnode_of_data *dn)
--{
--	f2fs_truncate_data_blocks_range(dn, ADDRS_PER_BLOCK(dn->inode));
--}
--
- static int truncate_partial_data_page(struct inode *inode, u64 from,
- 								bool cache_only)
- {
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 8d2e5d3910c59..9d4ec1a061bfb 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -946,6 +946,7 @@ static int truncate_node(struct dnode_of_data *dn)
- 
- static int truncate_dnode(struct dnode_of_data *dn)
- {
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(dn->inode);
- 	struct page *page;
- 	int err;
- 
-@@ -953,16 +954,25 @@ static int truncate_dnode(struct dnode_of_data *dn)
- 		return 1;
- 
- 	/* get direct node */
--	page = f2fs_get_node_page(F2FS_I_SB(dn->inode), dn->nid);
-+	page = f2fs_get_node_page(sbi, dn->nid);
- 	if (PTR_ERR(page) == -ENOENT)
- 		return 1;
- 	else if (IS_ERR(page))
- 		return PTR_ERR(page);
- 
-+	if (IS_INODE(page) || ino_of_node(page) != dn->inode->i_ino) {
-+		f2fs_err(sbi, "incorrect node reference, ino: %lu, nid: %u, ino_of_node: %u",
-+				dn->inode->i_ino, dn->nid, ino_of_node(page));
-+		set_sbi_flag(sbi, SBI_NEED_FSCK);
-+		f2fs_handle_error(sbi, ERROR_INVALID_NODE_REFERENCE);
-+		f2fs_put_page(page, 1);
-+		return -EFSCORRUPTED;
-+	}
-+
- 	/* Make dnode_of_data for parameter */
- 	dn->node_page = page;
- 	dn->ofs_in_node = 0;
--	f2fs_truncate_data_blocks(dn);
-+	f2fs_truncate_data_blocks_range(dn, ADDRS_PER_BLOCK(dn->inode));
- 	err = truncate_node(dn);
- 	if (err) {
- 		f2fs_put_page(page, 1);
+ 	mutex_lock(&icc_lock);
++	mutex_lock(&icc_bw_lock);
+ 	synced_state = true;
+ 	list_for_each_entry(p, &icc_providers, provider_list) {
+ 		dev_dbg(p->dev, "interconnect provider is in synced state\n");
 -- 
 2.53.0
 
