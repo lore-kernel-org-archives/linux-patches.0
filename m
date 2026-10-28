@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207864;
-	b=XM2wA8bMpFG/fgvonzaY6ZbvRquYr3MNw/2MGeksJlQe4mjHhJiEt+ixL8MO01mIsNci
-	 oqZ0ouFoWWovb8bI0TQ+XVEEdBd3g1QwQGeSFFJ9eQBFwLMlABbkapOFQa6Bs3PPGzb4W
-	 3x1Esebk03/GVF1YAHQ5l1JPVB3fK3qGmJUbSsld8p2Eu+zcTaURjKBdKbuZnOhJW1nqm
-	 5BumDgUIEXRNQdEKyMnWWX3FneAQKOXJ1tQdA/W0GcNm5ARt304ASsAkFTvyWfRik50Vj
-	 yzWUPbUf2UP9YqDCVblS88Mb5CBD8ym016muYRPeAMgCE0qT5xU9uWOrCwuZ41MLqAw==
+	t=1793207867;
+	b=g+dFmPtVVQJbnxdlRVncJXIPqn2f5O7CpR70C2Na1ihXMT3H+apmg60S14Id7NW1uSCq
+	 M4tR4HtdIEaPsqFYmEXFHLUUR6M3sjlLkz2fxLzKxJB2hGqtoIG/5xQ/mV1GfZu0yEYq0
+	 tXv14s13qaWy8vT/b9Ofe3IwiFZFh8w/zujWten6o+QKinin9tjoUZ6oYAEssx+N4t2z8
+	 aHwfVlnPPeMHjfao62Wb6EoMhdOL82HOHNLpVstyOdYpE0rDqXjgtVPVYhwQSOLrsiprc
+	 p7kCPYzCCm5jFBLps2Fnkbnq6penpWXLQveJlR0I6/d+xNqXCxyuBtb416y3gilux6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207867;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0tC95/yStllmBjSsnQtjVMgqfOwAdykpaGQ90zeX9ok=;
-	b=EWRZudPUVrQ3vm3Yw7y46rpFOyIcNZ+SUpAlkOmtXaoHsa0eFxTwjjsV9yKbWnHZhcRT
-	 myYBlnRM0CXLxDT5vDYz9wqQza9peWx7OTx8Ob6bm5to5QjcoDTyxo1smXCGfI23Bg5qN
-	 JtqHUjhwijlJpQ0uWfRiTAXqU0hkFFSxjNR3LcjlC9DoBkDTC/ioEgGUcuRzPk4BFvAWd
-	 2dl8oBrv9pnIMTNVzNNClTZLL0an8YkCpWCEGiNHEyyth+XV++Xsd4qL7zhjXzSlagS7I
-	 9yZ+9bn+RhfQ9t5IkImhuYtvFb8DzYDYSJj3v6OcXTrKnLTZGCDn7ShmecnUkkfyJew==
+	bh=sTlDlhSafCMY3Z4KzRHJacyvDiwqEUTyU7urvpA8+9U=;
+	b=QJhcbnS2F79swCjg3UogrZQRud0FpA3S9U/VNgVKGUKG9MCjhfET89d9Wt2/wuBd+60E
+	 qjxeHyvAiyJJq4FDXd63e6VFvo48XmMtlPPUUoLfCXv7N9BGMmyp3u1luSD/PNXv0vyOU
+	 5fOVkZ6R2A5uhd8P9Lde+n5wZxKfC0gvFmEGvndvg400W5gDo5rHxZvXyVulA/onclnBj
+	 NPad5sYW6FxP5HE9Kzub3ut5ADQmVvGASGMXWL/spclUWbCUvi/HnnqQAw57TX0yiwTfm
+	 oHcZVKgbKsM/wzf/Am0CSyHuu5g9fScZXvxKRgZCFD/90FMTidHqgtJwoif8RgE4iFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXJhtDRW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcVPeTdC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01CB606A331;
-	Wed, 28 Oct 2026 17:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C763560A2604;
+	Wed, 28 Oct 2026 17:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXJhtDRW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040761F01828;
-	Wed, 28 Oct 2026 17:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcVPeTdC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D654F1F01828;
+	Wed, 28 Oct 2026 17:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207863;
-	bh=0tC95/yStllmBjSsnQtjVMgqfOwAdykpaGQ90zeX9ok=;
+	s=korg; t=1793207866;
+	bh=sTlDlhSafCMY3Z4KzRHJacyvDiwqEUTyU7urvpA8+9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXJhtDRW8fSxGXqPYBD8dkSYSh/p6zoXpJtvNwRm6A9bUwhrSxLStFt3vnp+VfhcY
-	 ZyE7aBCb9R/YoaFsjL6EOm1swsBmL6MscryLXzuhomsYM/z2eP545/V40J/bYvGFJv
-	 NqYuxBRWZkNnBSJjgMGiLm/lZXj6E/GCVHrnl95I=
+	b=JcVPeTdCjDYYzmU08DDyUJnwbmcUmtnGeocNpgM2l3SjldHZrAG9doKs/szXfKz19
+	 1vnUsGxR2DzIr+uUW47gHbolmRNJD3MGTBQp19FaePY7ySNtknD3aNG+Zlgw6KB+V6
+	 9qx/vHBC6w/m4+QxZnyjR+xe/m2afqT3EUbVod9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2860e75836a08b172755@syzkaller.appspotmail.com,
-	syzbot+df52f4216bf7b4d768e7@syzkaller.appspotmail.com,
+	Junjie Cao <junjie.cao@intel.com>,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 165/247] netrom: look up and update routes in one critical section
-Date: Wed, 28 Oct 2026 17:59:28 +0100
-Message-ID: <20261028165951.326526968@linuxfoundation.org>
+Subject: [PATCH 6.12 166/247] netrom: fix reference count leak in nr_rt_device_down
+Date: Wed, 28 Oct 2026 17:59:29 +0100
+Message-ID: <20261028165951.350748510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,508 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-nr_add_node(), nr_del_node(), nr_add_neigh() and nr_del_neigh() look up
-a node or neighbour with nr_node_get()/nr_neigh_get_dev(), which take
-and drop the routing lock, and only then take the lock again to change
-the routes. In between, another task can unlink the object they found.
-nr_add_node() can then store a neighbour that is no longer on
-nr_neigh_list in a node's routes; that route's reference becomes the
-last one, and the next time the route is dropped the neighbour is freed
-and read again straight away:
+When a device goes down, nr_rt_device_down() clears the routes that
+use this device. However, it fails to drop the per-route reference to
+the neighbour (nr_neigh): neither nr_neigh->count nor its refcount
+is decremented when the route is removed.
 
-	nr_neigh->count--;
-	nr_neigh_put(nr_neigh);			/* frees it */
-	if (nr_neigh->count == 0 && ...)	/* use after free */
+Mirror the behaviour of nr_dec_obs() / nr_del_node() by decrementing
+nr_neigh->count and calling nr_neigh_put(), so that the neighbour
+reference is properly released when a device goes down.
 
-This is what syzbot reports in nr_add_node() (evicting the worst of
-three routes) and in nr_dec_obs() through nr_rt_ioctl(). Lizhi Xu
-analysed the first race; the fix posted then filtered neighbours by
-refcount and was not taken.
-
-Now that one lock covers both lists and the routes, do the lookup and
-the update in a single critical section in all four functions, using
-new __nr_node_get()/__nr_neigh_get_dev() variants that expect the lock
-to be held. A node or neighbour found there stays linked while it is
-used, so a route can no longer outlive its neighbour's list entry.
-Concurrent additions of the same node or neighbour no longer create
-duplicate entries either.
-
-Also factor the "drop one route's use of a neighbour" sequence into
-nr_neigh_route_put_locked(), which reads count and locked before
-dropping the reference, and use it in nr_add_node(), nr_del_node() and
-nr_dec_obs().
-
-nr_add_node() is also called from nr_route_frame() in softirq context,
-where the kmemdup(GFP_KERNEL) of the digipeater list could sleep; the
-neighbour creation shared with nr_add_neigh() now allocates with
-GFP_ATOMIC, like the rest of nr_add_node() already did.
-
-This depends on "netrom: use a single lock for the node and neighbour
-lists".
-
-Reported-by: syzbot+2860e75836a08b172755@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2860e75836a08b172755
-Reported-by: syzbot+df52f4216bf7b4d768e7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=df52f4216bf7b4d768e7
-Link: https://patchwork.kernel.org/project/netdevbpf/patch/20251023135032.3759443-1-lizhi.xu@windriver.com/
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+[F6BVP: rebased on the single nr_route_lock; the list reference is
+still dropped last by nr_remove_neigh_locked(), so the neighbour stays
+valid while its routes are removed.]
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 1292cb18feed7503f861695134206c99347cc7bb)
+(cherry picked from commit b0f6830b24b75618e299c8e5451367e8742272da)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 264 ++++++++++++++++++++++--------------------
- 1 file changed, 138 insertions(+), 126 deletions(-)
+ net/netrom/nr_route.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index e3effc85d3106..10294cf068f8a 100644
+index 10294cf068f8a..67d9ed0006b40 100644
 --- a/net/netrom/nr_route.c
 +++ b/net/netrom/nr_route.c
-@@ -47,38 +47,44 @@ static DEFINE_SPINLOCK(nr_route_lock);
- static HLIST_HEAD(nr_node_list);
- static HLIST_HEAD(nr_neigh_list);
- 
--static struct nr_node *nr_node_get(ax25_address *callsign)
-+static struct nr_node *__nr_node_get(ax25_address *callsign)
- {
--	struct nr_node *found = NULL;
- 	struct nr_node *nr_node;
- 
--	spin_lock_bh(&nr_route_lock);
-+	lockdep_assert_held(&nr_route_lock);
+@@ -526,6 +526,9 @@ void nr_rt_device_down(struct net_device *dev)
+ 			nr_node_for_each_safe(t, node2t, &nr_node_list) {
+ 				for (i = 0; i < t->count; i++) {
+ 					if (t->routes[i].neighbour == s) {
++						s->count--;
++						nr_neigh_put(s);
 +
- 	nr_node_for_each(nr_node, &nr_node_list)
- 		if (ax25cmp(callsign, &nr_node->callsign) == 0) {
- 			nr_node_hold(nr_node);
--			found = nr_node;
--			break;
-+			return nr_node;
- 		}
-+	return NULL;
-+}
-+
-+static struct nr_node *nr_node_get(ax25_address *callsign)
-+{
-+	struct nr_node *found;
-+
-+	spin_lock_bh(&nr_route_lock);
-+	found = __nr_node_get(callsign);
- 	spin_unlock_bh(&nr_route_lock);
- 	return found;
- }
+ 						t->count--;
  
--static struct nr_neigh *nr_neigh_get_dev(ax25_address *callsign,
--					 struct net_device *dev)
-+static struct nr_neigh *__nr_neigh_get_dev(ax25_address *callsign,
-+					   struct net_device *dev)
- {
--	struct nr_neigh *found = NULL;
- 	struct nr_neigh *nr_neigh;
- 
--	spin_lock_bh(&nr_route_lock);
-+	lockdep_assert_held(&nr_route_lock);
-+
- 	nr_neigh_for_each(nr_neigh, &nr_neigh_list)
- 		if (ax25cmp(callsign, &nr_neigh->callsign) == 0 &&
- 		    nr_neigh->dev == dev) {
- 			nr_neigh_hold(nr_neigh);
--			found = nr_neigh;
--			break;
-+			return nr_neigh;
- 		}
--	spin_unlock_bh(&nr_route_lock);
--	return found;
-+	return NULL;
- }
- 
- static void nr_remove_neigh_locked(struct nr_neigh *nr_neigh);
-@@ -96,6 +102,66 @@ static void re_sort_routes(struct nr_node *nr_node, int x, int y)
- 	}
- }
- 
-+/*
-+ * Allocate a neighbour and link it into nr_neigh_list. The list holds one
-+ * reference and the caller gets another one. Called with nr_route_lock held.
-+ */
-+static struct nr_neigh *nr_neigh_create_locked(ax25_address *callsign,
-+					       ax25_digi *ax25_digi,
-+					       struct net_device *dev,
-+					       unsigned int quality,
-+					       unsigned char locked)
-+{
-+	struct nr_neigh *nr_neigh;
-+
-+	lockdep_assert_held(&nr_route_lock);
-+
-+	nr_neigh = kmalloc(sizeof(*nr_neigh), GFP_ATOMIC);
-+	if (!nr_neigh)
-+		return NULL;
-+
-+	nr_neigh->callsign = *callsign;
-+	nr_neigh->digipeat = NULL;
-+	nr_neigh->ax25     = NULL;
-+	nr_neigh->dev      = dev;
-+	nr_neigh->quality  = quality;
-+	nr_neigh->locked   = locked;
-+	nr_neigh->count    = 0;
-+	nr_neigh->number   = nr_neigh_no++;
-+	nr_neigh->failed   = 0;
-+	refcount_set(&nr_neigh->refcount, 1);
-+
-+	if (ax25_digi && ax25_digi->ndigi > 0) {
-+		nr_neigh->digipeat = kmemdup(ax25_digi, sizeof(*ax25_digi),
-+					     GFP_ATOMIC);
-+		if (!nr_neigh->digipeat) {
-+			kfree(nr_neigh);
-+			return NULL;
-+		}
-+	}
-+
-+	hlist_add_head(&nr_neigh->neigh_node, &nr_neigh_list);
-+	nr_neigh_hold(nr_neigh);
-+
-+	return nr_neigh;
-+}
-+
-+/*
-+ * Drop one route's use of a neighbour. The neighbour is unlinked when no
-+ * route uses it any more and it was not added explicitly; count and locked
-+ * are read before the route's reference is dropped, since that reference
-+ * may be the last one. Called with nr_route_lock held.
-+ */
-+static void nr_neigh_route_put_locked(struct nr_neigh *nr_neigh)
-+{
-+	lockdep_assert_held(&nr_route_lock);
-+
-+	nr_neigh->count--;
-+	if (nr_neigh->count == 0 && !nr_neigh->locked)
-+		nr_remove_neigh_locked(nr_neigh);
-+	nr_neigh_put(nr_neigh);
-+}
-+
- /*
-  *	Add a new route to a node, and in the process add the node and the
-  *	neighbour if it is new.
-@@ -106,7 +172,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- {
- 	struct nr_node  *nr_node;
- 	struct nr_neigh *nr_neigh;
--	int i, found;
-+	int i, found, ret = 0;
- 	struct net_device *odev;
- 
- 	if ((odev=nr_dev_get(nr)) != NULL) {	/* Can't add routes to ourself */
-@@ -114,9 +180,15 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 		return -EINVAL;
- 	}
- 
--	nr_node = nr_node_get(nr);
-+	/*
-+	 * Look up and update under one critical section, so that a node or
-+	 * neighbour found here cannot be unlinked before it is used.
-+	 */
-+	spin_lock_bh(&nr_route_lock);
-+
-+	nr_node = __nr_node_get(nr);
- 
--	nr_neigh = nr_neigh_get_dev(ax25, dev);
-+	nr_neigh = __nr_neigh_get_dev(ax25, dev);
- 
- 	/*
- 	 * The L2 link to a neighbour has failed in the past
-@@ -127,14 +199,12 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 	if (nr_neigh != NULL && nr_neigh->failed != 0 && quality == 0) {
- 		struct nr_node *nr_nodet;
- 
--		spin_lock_bh(&nr_route_lock);
- 		nr_node_for_each(nr_nodet, &nr_node_list) {
- 			for (i = 0; i < nr_nodet->count; i++)
- 				if (nr_nodet->routes[i].neighbour == nr_neigh)
- 					if (i < nr_nodet->which)
- 						nr_nodet->which = i;
- 		}
--		spin_unlock_bh(&nr_route_lock);
- 	}
- 
- 	if (nr_neigh != NULL)
-@@ -143,43 +213,19 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 	if (quality == 0 && nr_neigh != NULL && nr_node != NULL) {
- 		nr_neigh_put(nr_neigh);
- 		nr_node_put(nr_node);
--		return 0;
-+		goto out;
- 	}
- 
- 	if (nr_neigh == NULL) {
--		if ((nr_neigh = kmalloc(sizeof(*nr_neigh), GFP_ATOMIC)) == NULL) {
-+		unsigned int q = READ_ONCE(sysctl_netrom_default_path_quality);
-+
-+		nr_neigh = nr_neigh_create_locked(ax25, ax25_digi, dev, q, 0);
-+		if (!nr_neigh) {
- 			if (nr_node)
- 				nr_node_put(nr_node);
--			return -ENOMEM;
--		}
--
--		nr_neigh->callsign = *ax25;
--		nr_neigh->digipeat = NULL;
--		nr_neigh->ax25     = NULL;
--		nr_neigh->dev      = dev;
--		nr_neigh->quality  = READ_ONCE(sysctl_netrom_default_path_quality);
--		nr_neigh->locked   = 0;
--		nr_neigh->count    = 0;
--		nr_neigh->number   = nr_neigh_no++;
--		nr_neigh->failed   = 0;
--		refcount_set(&nr_neigh->refcount, 1);
--
--		if (ax25_digi != NULL && ax25_digi->ndigi > 0) {
--			nr_neigh->digipeat = kmemdup(ax25_digi,
--						     sizeof(*ax25_digi),
--						     GFP_KERNEL);
--			if (nr_neigh->digipeat == NULL) {
--				kfree(nr_neigh);
--				if (nr_node)
--					nr_node_put(nr_node);
--				return -ENOMEM;
--			}
-+			ret = -ENOMEM;
-+			goto out;
- 		}
--
--		spin_lock_bh(&nr_route_lock);
--		hlist_add_head(&nr_neigh->neigh_node, &nr_neigh_list);
--		nr_neigh_hold(nr_neigh);
--		spin_unlock_bh(&nr_route_lock);
- 	}
- 
- 	if (quality != 0 && ax25cmp(nr, ax25) == 0 && !nr_neigh->locked)
-@@ -187,9 +233,9 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 
- 	if (nr_node == NULL) {
- 		if ((nr_node = kmalloc(sizeof(*nr_node), GFP_ATOMIC)) == NULL) {
--			if (nr_neigh)
--				nr_neigh_put(nr_neigh);
--			return -ENOMEM;
-+			nr_neigh_put(nr_neigh);
-+			ret = -ENOMEM;
-+			goto out;
- 		}
- 
- 		nr_node->callsign = *nr;
-@@ -206,15 +252,12 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 		nr_neigh_hold(nr_neigh);
- 		nr_neigh->count++;
- 
--		spin_lock_bh(&nr_route_lock);
- 		hlist_add_head(&nr_node->node_node, &nr_node_list);
- 		/* refcount initialized at 1 */
--		spin_unlock_bh(&nr_route_lock);
- 
- 		nr_neigh_put(nr_neigh);
--		return 0;
-+		goto out;
- 	}
--	spin_lock_bh(&nr_route_lock);
- 
- 	if (quality != 0)
- 		strscpy(nr_node->mnemonic, mnemonic);
-@@ -245,11 +288,7 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 		} else {
- 			/* It must be better than the worst */
- 			if (quality > nr_node->routes[2].quality) {
--				nr_node->routes[2].neighbour->count--;
--				nr_neigh_put(nr_node->routes[2].neighbour);
--
--				if (nr_node->routes[2].neighbour->count == 0 && !nr_node->routes[2].neighbour->locked)
--					nr_remove_neigh_locked(nr_node->routes[2].neighbour);
-+				nr_neigh_route_put_locked(nr_node->routes[2].neighbour);
- 
- 				nr_node->routes[2].quality   = quality;
- 				nr_node->routes[2].obs_count = obs_count;
-@@ -283,9 +322,10 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 	}
- 
- 	nr_neigh_put(nr_neigh);
--	spin_unlock_bh(&nr_route_lock);
- 	nr_node_put(nr_node);
--	return 0;
-+out:
-+	spin_unlock_bh(&nr_route_lock);
-+	return ret;
- }
- 
- static void nr_remove_node_locked(struct nr_node *nr_node)
-@@ -304,13 +344,6 @@ static void nr_remove_neigh_locked(struct nr_neigh *nr_neigh)
- 	nr_neigh_put(nr_neigh);
- }
- 
--static void nr_remove_neigh(struct nr_neigh *nr_neigh)
--{
--	spin_lock_bh(&nr_route_lock);
--	nr_remove_neigh_locked(nr_neigh);
--	spin_unlock_bh(&nr_route_lock);
--}
--
- /*
-  *	"Delete" a node. Strictly speaking remove a route to a node. The node
-  *	is only deleted if no routes are left to it.
-@@ -319,28 +352,25 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- {
- 	struct nr_node  *nr_node;
- 	struct nr_neigh *nr_neigh;
--	int i;
-+	int i, ret = -EINVAL;
- 
--	nr_node = nr_node_get(callsign);
-+	spin_lock_bh(&nr_route_lock);
-+
-+	nr_node = __nr_node_get(callsign);
- 
- 	if (nr_node == NULL)
--		return -EINVAL;
-+		goto out;
- 
--	nr_neigh = nr_neigh_get_dev(neighbour, dev);
-+	nr_neigh = __nr_neigh_get_dev(neighbour, dev);
- 
- 	if (nr_neigh == NULL) {
- 		nr_node_put(nr_node);
--		return -EINVAL;
-+		goto out;
- 	}
- 
--	spin_lock_bh(&nr_route_lock);
- 	for (i = 0; i < nr_node->count; i++) {
- 		if (nr_node->routes[i].neighbour == nr_neigh) {
--			nr_neigh->count--;
--			nr_neigh_put(nr_neigh);
--
--			if (nr_neigh->count == 0 && !nr_neigh->locked)
--				nr_remove_neigh_locked(nr_neigh);
-+			nr_neigh_route_put_locked(nr_neigh);
- 			nr_neigh_put(nr_neigh);
- 
- 			nr_node->count--;
-@@ -360,16 +390,15 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 				}
- 				nr_node_put(nr_node);
- 			}
--			spin_unlock_bh(&nr_route_lock);
--
--			return 0;
-+			ret = 0;
-+			goto out;
- 		}
- 	}
- 	nr_neigh_put(nr_neigh);
--	spin_unlock_bh(&nr_route_lock);
- 	nr_node_put(nr_node);
--
--	return -EINVAL;
-+out:
-+	spin_unlock_bh(&nr_route_lock);
-+	return ret;
- }
- 
- /*
-@@ -379,44 +408,25 @@ static int __must_check nr_add_neigh(ax25_address *callsign,
- 	ax25_digi *ax25_digi, struct net_device *dev, unsigned int quality)
- {
- 	struct nr_neigh *nr_neigh;
-+	int ret = 0;
- 
--	nr_neigh = nr_neigh_get_dev(callsign, dev);
-+	spin_lock_bh(&nr_route_lock);
-+
-+	nr_neigh = __nr_neigh_get_dev(callsign, dev);
- 	if (nr_neigh) {
- 		nr_neigh->quality = quality;
- 		nr_neigh->locked  = 1;
--		nr_neigh_put(nr_neigh);
--		return 0;
--	}
--
--	if ((nr_neigh = kmalloc(sizeof(*nr_neigh), GFP_ATOMIC)) == NULL)
--		return -ENOMEM;
--
--	nr_neigh->callsign = *callsign;
--	nr_neigh->digipeat = NULL;
--	nr_neigh->ax25     = NULL;
--	nr_neigh->dev      = dev;
--	nr_neigh->quality  = quality;
--	nr_neigh->locked   = 1;
--	nr_neigh->count    = 0;
--	nr_neigh->number   = nr_neigh_no++;
--	nr_neigh->failed   = 0;
--	refcount_set(&nr_neigh->refcount, 1);
--
--	if (ax25_digi != NULL && ax25_digi->ndigi > 0) {
--		nr_neigh->digipeat = kmemdup(ax25_digi, sizeof(*ax25_digi),
--					     GFP_KERNEL);
--		if (nr_neigh->digipeat == NULL) {
--			kfree(nr_neigh);
--			return -ENOMEM;
--		}
-+	} else {
-+		nr_neigh = nr_neigh_create_locked(callsign, ax25_digi, dev,
-+						  quality, 1);
-+		if (!nr_neigh)
-+			ret = -ENOMEM;
- 	}
-+	if (nr_neigh)
-+		nr_neigh_put(nr_neigh);
- 
--	spin_lock_bh(&nr_route_lock);
--	hlist_add_head(&nr_neigh->neigh_node, &nr_neigh_list);
--	/* refcount is initialized at 1 */
- 	spin_unlock_bh(&nr_route_lock);
--
--	return 0;
-+	return ret;
- }
- 
- /*
-@@ -427,17 +437,23 @@ static int nr_del_neigh(ax25_address *callsign, struct net_device *dev, unsigned
- {
- 	struct nr_neigh *nr_neigh;
- 
--	nr_neigh = nr_neigh_get_dev(callsign, dev);
-+	spin_lock_bh(&nr_route_lock);
-+
-+	nr_neigh = __nr_neigh_get_dev(callsign, dev);
- 
--	if (nr_neigh == NULL) return -EINVAL;
-+	if (nr_neigh == NULL) {
-+		spin_unlock_bh(&nr_route_lock);
-+		return -EINVAL;
-+	}
- 
- 	nr_neigh->quality = quality;
- 	nr_neigh->locked  = 0;
- 
- 	if (nr_neigh->count == 0)
--		nr_remove_neigh(nr_neigh);
-+		nr_remove_neigh_locked(nr_neigh);
- 	nr_neigh_put(nr_neigh);
- 
-+	spin_unlock_bh(&nr_route_lock);
- 	return 0;
- }
- 
-@@ -463,11 +479,7 @@ static int nr_dec_obs(void)
- 			case 1:		/* From 1 -> 0 */
- 				nr_neigh = s->routes[i].neighbour;
- 
--				nr_neigh->count--;
--				nr_neigh_put(nr_neigh);
--
--				if (nr_neigh->count == 0 && !nr_neigh->locked)
--					nr_remove_neigh_locked(nr_neigh);
-+				nr_neigh_route_put_locked(nr_neigh);
- 
- 				s->count--;
- 
+ 						switch (i) {
 -- 
 2.53.0
 
