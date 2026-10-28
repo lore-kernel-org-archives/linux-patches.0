@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215780;
-	b=Vc7ZqY99b7Tr3P4dqO209+EDxiWnEqQ8coOL1xUBXQWzAifLLarsq61vLR2yUBp+OZ+X
-	 TB4b9s92EZXwS1yylw2yLY7+mQWL1nExbmnrsXoTg0eEXlkkB255zbOFh2tNJvF2BU8gp
-	 cR5t1c8SXh1aC/qSdf9heT1NlnfosSzwYFw8/8pAge+RbUgDcoFgev3nHn5wPEO3KI3Px
-	 S5rKohSMPAsdI/B3r2+PIupBE+9eb8nalY/2xJ5KGdPr0C5krECbjYwCZjBIO1fChcFlm
-	 YK+qwRU3Owz07PY2JvIxIfuPkJs+8w/MeWSFDCBl/9IgA25wP6z3f/OYfML/EvPSEVA==
+	t=1793215783;
+	b=G3XU7ISNsBMks8r9aMg4dbRRYteFLI4rVKOiW4STVIdwkzgn7TWot9g2PuZnVGwb4nWs
+	 +BUr4NjGJTy284EncfnosWiVwsJDquJGCA54EtF9WIa5rJLissRC6Off2gvsD1wW5Mvf/
+	 4ebkqF/v4jdu6plvnqkSmalKtZsg63au0SCrxStCwKIBp1IIP0EwwonZW0UPMDoxMKHMU
+	 gX9sKstiM/MHapSF47TyZhi+g/ybpOExpJVXzPqMHT5O8fSlgVvqKjyT+Y5s1mbOMm1Yc
+	 2O9RAkFkOU3+eq9ntcgITQHs5CRpO5iJetO4i545wrub6RsdCpXnaW1tk7dIIQa6M+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215783;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=BrRtIIRmbWcG1NQrCu0h9BZA7B/nhl/BfGW67iWsMNM=;
-	b=spqaqZ+KqgwBT0L+WNNAXaCIVAKSztlgV6RdXji4S/LO8rBbUk9Q1BpXpgfreyegzkYr
-	 VNz65lMvoYRIaGP1Dn4CeqibbLYNYrlukZJKRuesaDbiQIr12O7CxXyuocF+BFYR36WfY
-	 zyj5OYMLaw3UwA3nKBcCf+vdBLtCFyqrgLsIlL0e+5Egsix9XLKpa1cV68qQimBOsrX7m
-	 VHlDXSCvEYaBtxeeJatHAmghnS8Cz3kPAW0dplul29yXgOvGMvVar3Qr3O2DEUxTQ/5I4
-	 f2JkuSBrkTvH7CdlwcjS59vj0ZbWI8FodYjdtR1E9anZCFoqS1kTPkd2sz2mtjH55SQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yw1F06A3DceixhU3XrUIt3ebJYMiXoOlFxw4zu7QmfY=;
+	b=v/f0ao8XYaadTgBl4skD2iIN0eyvXXUO18S3A4czCbOYcPcfSdhzFrBhUp5msD2hvkPy
+	 Rfa0NZmAdCB+2NMWi7khD0lHg7FskBwz2TYeZ819ktul+OA41zqfDIJUwADeHIuu6jnc9
+	 Uu1NdVk4Nc6069jREeVKsWnmN97UQZWKoWEqS7xIzCaJyzLWE0VB6Qupz1f3tiduJw41f
+	 wF1ZsjHui242rS50RqS1R1OLntW3q+fJfiPHPfgGyphF9LUoTxKu5d9Ym81NWHbb6ugKQ
+	 7Z8EhUlUqRGVX+DdYTexAw7bt4DDgFICsjELwJiio3jaCxxGwA9TPNssw0HvIXFm7ZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEYS8hEM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpyVRG26;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AE6606A31E;
-	Wed, 28 Oct 2026 19:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632CF606A327;
+	Wed, 28 Oct 2026 19:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEYS8hEM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9209A1F01825;
-	Wed, 28 Oct 2026 19:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zpyVRG26
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED551F01825;
+	Wed, 28 Oct 2026 19:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215780;
-	bh=BrRtIIRmbWcG1NQrCu0h9BZA7B/nhl/BfGW67iWsMNM=;
+	s=korg; t=1793215783;
+	bh=yw1F06A3DceixhU3XrUIt3ebJYMiXoOlFxw4zu7QmfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yEYS8hEMBQ9bK8zhScj4WXcnIHZTbllzYifQ6+JFrTfNyBjj+P6D/EBS7VjvYe43v
-	 RtTdhipxoeRw0andHoGyDbVmVrZDze94/Ad7C8I7SXvObUWDSczhZ1Vvgt2yZR684g
-	 tmBhoXPHHYWs/8P6u31SwhzjRTLo7kDGwKjJev4M=
+	b=zpyVRG26442eTnSyK8Bh7AObvsRIaVzupwrmb2WdLYcS1LIVgLay5Sys0TkqtWCZS
+	 3doj5jqcXnJ+LrVPK0FuiSeIwrJLXeFHPqtN/kXbMmxVX0RggiBnq/L2hFd2Wbocvs
+	 NDR+prTT9y2iVSsJmIUuEypX9M174DIyuij94pkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
 	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1331/1887] soc/xilinx: zynqmp_power: Convert to platform remove callback returning void
-Date: Wed, 28 Oct 2026 17:57:07 +0100
-Message-ID: <20261028170529.720695835@linuxfoundation.org>
+Subject: [PATCH 6.1 1332/1887] soc: xilinx: Shutdown and free rx mailbox channel
+Date: Wed, 28 Oct 2026 17:57:08 +0100
+Message-ID: <20261028170529.745749415@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,69 +62,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
 
-[ Upstream commit f1013d8405af0f4fe1812b5901cbac9ce4d1fb6f ]
+[ Upstream commit fdee7c66c0d7b6869c36b9f9a915abf29ab5b550 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+A mbox rx channel is requested using mbox_request_channel_byname() in
+probe. In remove callback, the rx mailbox channel is cleaned up when the
+rx_chan is NULL due to incorrect condition check. The mailbox channel is
+not shutdown and it can receive messages even after the device removal.
+This leads to use after free. Also the channel resources are not freed.
+Fix this by checking the rx_chan correctly.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230925095532.1984344-41-u.kleine-koenig@pengutronix.de
+Fixes: ffdbae28d9d1a ("drivers: soc: xilinx: Use mailbox IPI callback")
+Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
 Signed-off-by: Michal Simek <michal.simek@amd.com>
-Stable-dep-of: fdee7c66c0d7 ("soc: xilinx: Shutdown and free rx mailbox channel")
+Link: https://lore.kernel.org/r/20260320060445.1541017-1-ptsm@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/xilinx/zynqmp_power.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/soc/xilinx/zynqmp_power.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/soc/xilinx/zynqmp_power.c b/drivers/soc/xilinx/zynqmp_power.c
-index 5d41763414ad0..f50fc8bf67e9e 100644
+index f50fc8bf67e9e..b2e36a06921f2 100644
 --- a/drivers/soc/xilinx/zynqmp_power.c
 +++ b/drivers/soc/xilinx/zynqmp_power.c
-@@ -276,7 +276,7 @@ static int zynqmp_pm_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int zynqmp_pm_remove(struct platform_device *pdev)
-+static void zynqmp_pm_remove(struct platform_device *pdev)
- {
- 	sysfs_remove_file(&pdev->dev.kobj, &dev_attr_suspend_mode.attr);
+@@ -282,8 +282,10 @@ static void zynqmp_pm_remove(struct platform_device *pdev)
  	if (event_registered)
-@@ -284,8 +284,6 @@ static int zynqmp_pm_remove(struct platform_device *pdev)
+ 		xlnx_unregister_event(PM_INIT_SUSPEND_CB, 0, 0, suspend_event_callback, NULL);
  
- 	if (!rx_chan)
+-	if (!rx_chan)
++	if (rx_chan) {
  		mbox_free_channel(rx_chan);
--
--	return 0;
++		rx_chan = NULL;
++	}
  }
  
  static const struct of_device_id pm_of_match[] = {
-@@ -296,7 +294,7 @@ MODULE_DEVICE_TABLE(of, pm_of_match);
- 
- static struct platform_driver zynqmp_pm_platform_driver = {
- 	.probe = zynqmp_pm_probe,
--	.remove = zynqmp_pm_remove,
-+	.remove_new = zynqmp_pm_remove,
- 	.driver = {
- 		.name = "zynqmp_power",
- 		.of_match_table = pm_of_match,
 -- 
 2.53.0
 
