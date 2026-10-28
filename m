@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210256;
-	b=5F7sZ3Qxc2BNotQg/6jOdKp/zOYZzO0B0lRWELdPQrUdnmrPBlVpqwaRbXbFtKRDJ2lR
-	 sVG51/QANwy5wDBKeimo7YzpUCEmOMjS8kQEUBxjF63KT4Q/QrqVYNk3AStSb9PlM29Os
-	 TkecDZKqJBCaqBf6dH58Q8D+Wl9KDeZ6lATy7UyHVCEjXOyrWYTyLnQPtXpWLb5fLb+IK
-	 KUa5r/VvwSbheyKePbFCYQXl79UODRb1867U8WF5xNS7yAjJc0s+TwJ34lCaU8bg1azY6
-	 tkmXwDuqxRv6+/Q3G8xNGRtqlvlA3D9Eim12AfJ/u0hpybZJG6wqSsXunCa+JfOnPkg==
+	t=1793210258;
+	b=eoTAEeLIn74DTzPyagiImTfubLPdYkCXtJzrTom1W1XrVriUS4kHowLvxw/899coQaSi
+	 SoUlVc+8/b8vgRsGQwvOhtSHTfyNHqzpaF2OLvekLRX+Z3IOxU/XKJ3wmG0TfdW3yfeWH
+	 C4bSVbgP59ONScSebo+2dNvSrEYJ8WwMH8Rb/XYpnXzB1s+lks6GytvhSmEeYcN/tO0OW
+	 L+0no9iNcuT2JbCWc20LAL3RYPItWJ4hmwjicMUyqUjDz5qXUWAqJlVH8C1TLXo4+ZCNj
+	 SP2ii5Gss7JyRiIcIkJq1zwVoQLtJ+oOvcm7VnQUbsUi2yxYZO2t28Wk17YOn964iqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210258;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4o+HPqDj4dzFtJCYI+MB359F6BQJ6mjivOp5kZM3Pd8=;
-	b=oYFRsP9CKxWy6YqAMsmg0uO7PuhPBj2yKNUhxpqZ4m6JOQ1mgupAZgX872LPyaCF4l+C
-	 6vzAh3mv91p6oJ+WFE2yEhBK6L+00oD+iHLrUW8AgItbtV7U5Pi/V6l7qeK2hzgMU7vVT
-	 tME+wpv3gjd22QuB0N52vy/TgURyFhR+BpqzS6ETbjc0QOMJCl+4EPa4hK39cqF2zmEW9
-	 8LZMm/OsLVSOFgb4fhUVJkBDDGD7JRSPYdsFx1lmFrFVkr+Ep06NBwLhewGnT4Ipnf6yU
-	 R+sqAnUJP6m0fCEE25X67iDxERlapptGI7ru20VL8HneCihQJXgi+CVdi7hRXb7zVMg==
+	bh=1y8PrRzxT52S4irhJsPxLzzhmnkBV2Wfnqzj0SDMiVs=;
+	b=LAIbGrJE8zZO+l63DRVvtMvO0Aq1N4vdy8Uwf8xQRpa7SkxkdcIjARq+eOc3fCBkXZyr
+	 XLZfZq9sbq5qBJFSO4x73A1pM+GvbS3R/gWbreWpHwvEyAHByKdht1NI5dOPwOD4C3Puh
+	 NtOQKZyoZMuJtuyxCQfBW32u6wsk9C3PhmZt2PvHck8ONuuJ/+9ZMXzudtNHMMvkYBj64
+	 QygQSPqF+Gp7VdP/zONcWNA2/rtoTcLXkB5sgyc8w3qleGJE1DPgL9rnYGxn3Ei+MFFgg
+	 dj1Xj6cqwtuiU23jRNrwJX30g5JXI4NhLINt2abrgL9+H32R9kgAv/hJeB6opaVDQMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sm9Gz1Zg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ijeG0PZ4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E172F606A324;
-	Wed, 28 Oct 2026 17:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78937606A321;
+	Wed, 28 Oct 2026 17:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sm9Gz1Zg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6FB1F01825;
-	Wed, 28 Oct 2026 17:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ijeG0PZ4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E361F031E3;
+	Wed, 28 Oct 2026 17:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210255;
-	bh=4o+HPqDj4dzFtJCYI+MB359F6BQJ6mjivOp5kZM3Pd8=;
+	s=korg; t=1793210258;
+	bh=1y8PrRzxT52S4irhJsPxLzzhmnkBV2Wfnqzj0SDMiVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sm9Gz1ZgQgW3KMKYiXMcQNkyLm4lKrfqqwgufC7KqtNkyIIQ0SYYGORkBVGLQn+6o
-	 odQ+oQpftRKJfPxmW3iIH6BrvSYfChDKQdhYYj4fdDTA0RnEAMF+3xIyyRRNrelMFf
-	 0Pt8Xjw0VjEq4w+cWu47X9scmJ6lSJ/spWjqtPhk=
+	b=ijeG0PZ4yLK9efFdICFDD8Y20/wKM80caVQv98MscOnpka78HrWqDhzDX1qjGTiPw
+	 TDlUySExNEeuz1YpdJwSLdHJrXrhHORAfb9nd1nC7aS12zZJuTVKiwnG8EwfHRaZhY
+	 9mlR6ipbxYGzsFMAZsUc+kRO+E0XIK/opUr3vmZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 130/168] io_uring: dont flood a cancelling task with task_work
-Date: Wed, 28 Oct 2026 18:01:06 +0100
-Message-ID: <20261028165946.164090058@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	"Claude Fable 5.1" <noreply@anthropic.com>
+Subject: [PATCH 6.6 131/168] io_uring/io-wq: dont strand work when a worker exits
+Date: Wed, 28 Oct 2026 18:01:07 +0100
+Message-ID: <20261028165946.186813694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,79 +70,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 22e643e61b9b6299b42ff7d88bab48bccada8a5d upstream.
+Commit ad41f325be1271b22d99353819c90f0d5e45acc8 upstream.
 
-io_ring_exit_work() asks each task which has used the ring to remove its
-tctx node, by task_work, and repeats that until the list is empty.
-io_tctx_exit_cb() doesn't touch the node while the task is in
-io_uring_cancel_generic(), which removes all the nodes at its end. So the
-work item queues the callback again as soon as it has completed, for
-nothing.
+A worker exits if its idle timeout fired and it isn't the last one, if
+its affinity was changed, or if the wq is marked exit-on-idle. It decides
+so after it found the work list empty, and until io_worker_exit() is
+through it stays on the free list and in ->nr_running:
 
-That is more than a waste of time. task_work_run() only returns when it
-finds the list empty. If the rings are released from inside the
-cancellation, because requests of other rings held the last references to
-their files, up to 64 work items keep sending callbacks to the one task
-which is running them. It never finds the list empty, never gets back to
-the cancellation, the nodes stay, and so it goes on: a task with 60 pairs
-of rings which poll each other ran 280000 callbacks in 5 seconds, 20
-seconds after exit_group(). It ends when all the senders happen to be late
-at the same time. Until then the task keeps a CPU and the work items busy.
+worker                                io_wq_enqueue()
+io_acct_run_queue() == false
+                                      queues work
+                                      io_acct_activate_free_worker()
+                                        wake_up_process(worker)
+                                      // found one, nothing to create
+acct->nr_workers--
+break
+io_worker_exit()
 
-An exiting task can't be killed meanwhile. execve() cancels the requests in
-the same way, so a live task can get stuck there as well, for minutes. If
-it takes more than five, the work items run into the
-WARN_ON_ONCE(time_after(jiffies, timeout)) of io_ring_exit_work(). No
-privilege is needed for any of this.
+Nobody is going to look at the work. If other workers exist, it has to
+wait until one of them finishes what it is blocked on or hits its idle
+timeout. If not, which is possible for the affinity and the exit-on-idle
+case, it sits there until something else is queued. For exit-on-idle it
+takes a task that closes its last ring and sets up a new one while the
+workers are on their way out.
 
-If the callback has met a task in cancellation, wait a little before it is
-sent again. Nobody has to wake the work item up for that: either the node
-is gone by then, or it is the turn of the next round.
+Make the worker take itself off the free list when it gives up its
+->nr_workers slot, then leave ->nr_running, and only then take the final
+look at the work list. That look and queueing work are both done under
+acct->lock, so either the worker sees the work and stays, or the enqueue
+side sees that the worker is gone and wakes or creates another one. If it
+wants to stay and finds that its slot has been taken, a worker has been
+created in its place, which is going to look at the work list, and it can
+leave after all.
 
-Fixes: d56d938b4bef ("io_uring: do ctx initiated file note removal")
+[ 6.6: no exit-on-idle state, ->nr_workers and the free list are under wq->lock ]
+Fixes: 38aa434ab933 ("io_uring/io-wq: add exit-on-idle state")
+Fixes: 05c5f4ee4da7 ("io-wq: get rid of FIXED worker flag")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-6-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-11-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ io_uring/io-wq.c |   37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3169,6 +3169,7 @@ struct io_tctx_exit {
- 	struct callback_head		task_work;
- 	struct completion		completion;
- 	struct io_ring_ctx		*ctx;
-+	bool				in_cancel;
- };
- 
- static __cold void io_tctx_exit_cb(struct callback_head *cb)
-@@ -3183,7 +3184,8 @@ static __cold void io_tctx_exit_cb(struc
- 	 * tctx can be NULL if the queueing of this task_work raced with
- 	 * work cancelation off the exec path.
- 	 */
--	if (tctx && !atomic_read(&tctx->in_cancel))
-+	work->in_cancel = tctx && atomic_read(&tctx->in_cancel);
-+	if (tctx && !work->in_cancel)
- 		io_uring_del_tctx_node((unsigned long)work->ctx);
- 	complete(&work->completion);
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -648,6 +648,36 @@ static void io_worker_handle_work(struct
+ 	} while (1);
  }
-@@ -3277,6 +3279,14 @@ static __cold void io_ring_exit_work(str
- 		 * wait is marked as interruptible.
+ 
++/*
++ * The worker has decided to exit, and has given up its ->nr_workers slot and
++ * its place on the free list. io_wq_enqueue() may have picked it from that
++ * list, or seen it running, after it last looked at the work list. Leave
++ * ->nr_running as well and check again. Returns false if the worker has to
++ * stay.
++ */
++static bool io_worker_retire(struct io_wq *wq, struct io_wq_acct *acct,
++			     struct io_worker *worker)
++{
++	/* turns io_wq_dec_running() and the scheduler hooks into no-ops */
++	clear_bit(IO_WORKER_F_UP, &worker->flags);
++	atomic_dec(&acct->nr_running);
++	if (!io_acct_run_queue(acct))
++		return true;
++	raw_spin_unlock(&acct->lock);
++
++	raw_spin_lock(&wq->lock);
++	if (acct->nr_workers >= acct->max_workers) {
++		/* a worker was created in our place, the work is its business */
++		raw_spin_unlock(&wq->lock);
++		return true;
++	}
++	acct->nr_workers++;
++	raw_spin_unlock(&wq->lock);
++	atomic_inc(&acct->nr_running);
++	set_bit(IO_WORKER_F_UP, &worker->flags);
++	return false;
++}
++
+ static int io_wq_worker(void *data)
+ {
+ 	struct io_worker *worker = data;
+@@ -681,9 +711,14 @@ static int io_wq_worker(void *data)
  		 */
- 		wait_for_completion_interruptible(&exit.completion);
-+		/*
-+		 * The task removes the node when it is done with its
-+		 * cancellation. Give it the time for that: it doesn't get back
-+		 * to it as long as it finds new task_work each time it has run
-+		 * the old one, and we may be one of many who send it.
-+		 */
-+		if (exit.in_cancel)
-+			schedule_timeout_idle(HZ / 20);
- 		mutex_lock(&ctx->uring_lock);
- 	}
- 	mutex_unlock(&ctx->uring_lock);
+ 		if (last_timeout && (exit_mask || acct->nr_workers > 1)) {
+ 			acct->nr_workers--;
++			if (test_and_clear_bit(IO_WORKER_F_FREE, &worker->flags))
++				hlist_nulls_del_init_rcu(&worker->nulls_node);
+ 			raw_spin_unlock(&wq->lock);
+ 			__set_current_state(TASK_RUNNING);
+-			break;
++			if (io_worker_retire(wq, acct, worker))
++				break;
++			last_timeout = false;
++			continue;
+ 		}
+ 		last_timeout = false;
+ 		__io_worker_idle(wq, worker);
 
 
