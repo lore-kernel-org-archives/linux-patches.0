@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793214031;
-	b=gc9pTx5Ro3IMvdMNmWZJvVJHXH5icYpSxm3o3IcmsgKYTdfpa+aJqBkycTKF2lBwk/QF
-	 tGTT5kfRR8ggEUFetrYfjgzs49H5NV/M6TV3ceevQuaeEEMSqi0b+OzTbmHb2RuGpdFmS
-	 BLCPdPEUBtFImEq134CCNUBQ2lo0Aw/jbEIqzSYyhmMa9UxAO9mr/Dxm7yDZ4QD6HUwEn
-	 WIoAoItTRmN9p/eUGQXDhkpcCk+PAN1ndMDzKUfUSgqbAkPKyuj6ii0kvNCBqG3xB55qi
-	 llS8twmCMUPyLRekWyGTkEUe4C2jW5tBQTu2pKQu4UXekhrZfUqPSwtmd3ArAfqpa7Q==
+	b=jD4TXvoHAPw4co7wcSBAR4IobFGVjDv3VALaw1Z23n24F/1MlyzmS3cltdtPi0ungUgu
+	 NlM9AICG2WD0qafk/26+H2PrESPlHfdd2LmPACEcFu+VPHsThgdyuA0Sj6U15iYw2435D
+	 OkxzHsvpw282M8IDNu/9+H1uwoJ7BOmjVKLttoyLjpi48CbI17xd+G64nhYPlcEL6l62j
+	 I/8qA5I5OF34k1CFlVw4+uO99K7suSs6OlDruRYUpqDpaC+rW75Nc900q/6FsfwTOfwhm
+	 mSjGKBtiTr0HQIsN8qCsObk353tN+thNaBMmQXFe3LuhrwuGu35zitHQyPqVfU9zHeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793214031;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kDf6pDefgK1/8Frsx1uOedQukB6Kdb8Nd3J2X5rc2Ow=;
-	b=EglSWa5cANepbwazak72WHU4x0mXAxJ65yOZWgarhQYrL35Xmq2fOYIopRiIIlLKkKq8
-	 z6QA30J4JtZsHx5YvrG5RR5RkGhgFkvZ7P4gfdhgUep+9/hcISxsCZH00hKsRHIrxsZlP
-	 7+T1k3OQ7mSWIMsvG7X8wEb7pCttIyH2UoyN/gzJv6wEIkxPIjz8K2nRwUJzWQTs8R1O5
-	 dkdLT9k6M3C0vN2xWBWfLhhV9GROi9N14RKf5V9oAEECiPjLIaSRlZc/6yE8vM+RJ4X8s
-	 Gyw4vZOUYLq2Au0bWa0Mdb5lIIdwrSmqAg4m4kpiJ2of6Pu9hddqiJtDmyMuVRaGtIA==
+	bh=TlxREeUAjQPCnbe4S4HUVk7uGFrUubcdcbgkt2T3XlE=;
+	b=SpIY1M6FT+eK7At3ScTxv6pW48a3G8HEbgqNvTTBotMjKGSMq7RCS745r9pTCRtTUBys
+	 wo+Q4TQhFdc1DXiK5lGOEwTwwLyADrdimkUrqnTrn3+IB1ZVpDspo7yP1HHRUbqNAKE5T
+	 opsePbnucL2TqUZ4eR3V0QBpZrJ9nkWF8NtjDS/M258iZ+uQ/eyIIIICptOVUtKTmjyyg
+	 +NbeypzCjQLZQW/EqVZbv4LfhdFKnF+m4e6CeMKID60K+/it1LObsljgV9DRKkLkgTXGm
+	 jxR8V0BDadQCIoBiOQJGpcR8tZVZu7MPa9iO0SWh2jgLByptkD3v3GlfJrdzwjy5/bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOl+6DCD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKcrQeNA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654C3606A331;
-	Wed, 28 Oct 2026 19:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59462606A332;
+	Wed, 28 Oct 2026 19:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOl+6DCD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53481F01829;
-	Wed, 28 Oct 2026 19:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKcrQeNA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AFE1F031E6;
+	Wed, 28 Oct 2026 19:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214020;
-	bh=kDf6pDefgK1/8Frsx1uOedQukB6Kdb8Nd3J2X5rc2Ow=;
+	s=korg; t=1793214023;
+	bh=TlxREeUAjQPCnbe4S4HUVk7uGFrUubcdcbgkt2T3XlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cOl+6DCD3CSwls+JDsqSvRdIWlHknAAvqR2+VjeCAAC4gpElTPe1LazLVpP5IhgE7
-	 +pCzgGr/7b80m9YPEELxGUivTvxihz7PAqDvpaLSeGH8Mgc6Y0SHk4q5X1Gaj834yX
-	 qB7OfGtOWY59DY3Hbu1XcGL4ZFyB8lPIvw9TStXo=
+	b=mKcrQeNAq2LMDQEnKLhTW9gFzjtUGzzKMkU5EN7+Qbzm9ABZ7jlSh1YlwIp2uutqx
+	 xyDt2QfZu+lJsYPgitRocfs1HB4htmYfLZETJGvX3YDbO2aLE8LGbaG+u6sZ83mkh3
+	 Pb+RBN8x2hX8Rbjy56mKiOOmPdWGywLfFbWBSu3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Garry <john.garry@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0709/1887] scsi: hisi_sas: Move slot variable definition in hisi_sas_abort_task()
-Date: Wed, 28 Oct 2026 17:46:45 +0100
-Message-ID: <20261028170515.552519090@linuxfoundation.org>
+Subject: [PATCH 6.1 0710/1887] scsi: hisi_sas: Add SATA_DISK_ERR bit handling for v3 hw
+Date: Wed, 28 Oct 2026 17:46:46 +0100
+Message-ID: <20261028170515.577932500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,62 +71,175 @@ Content-Transfer-Encoding: 8bit
 
 From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 4b329abc91800d23941ac773e69b322a13981ecb ]
+[ Upstream commit 930d97dabdd56681aef752a35475f0212a171741 ]
 
-Each branch currently defines a slot variable independently, and it is
-neater to move it to the function head.
+When CQ header dw3 SATA_DISK_ERR is set it means this SATA disk is in error
+state and the current IPTT is invalid. An invalid IPTT does not correspond
+to any slot.
+
+In this scenario, new I/Os that delivered to disk will be rejected by the
+controller and all I/Os remaining in the disk should be aborted, which we
+add here with the sas_ata_device_link_abort() call.
+
+In hisi_sas_abort_task() we don't want to issue a soft reset as it may
+cause info to be lost in the target disk for the ATA EH autopsy. In this
+case, just release resources - the disk won't return other I/Os normally
+after NCQ Error, so this is safe.
 
 Signed-off-by: Xingui Yang <yangxingui@huawei.com>
 Signed-off-by: John Garry <john.garry@huawei.com>
-Link: https://lore.kernel.org/r/1665998435-199946-3-git-send-email-john.garry@huawei.com
+Link: https://lore.kernel.org/r/1665998435-199946-4-git-send-email-john.garry@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 9f564f15f884 ("scsi: hisi_sas: Create all dump files during debugfs initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas.h       |  1 +
+ drivers/scsi/hisi_sas/hisi_sas_main.c  | 18 +++++++++-
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 48 ++++++++++++++++++++++++--
+ 3 files changed, 64 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
+index 2ecf97f7ae525..423af1dc36487 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas.h
++++ b/drivers/scsi/hisi_sas/hisi_sas.h
+@@ -104,6 +104,7 @@ enum {
+ enum dev_status {
+ 	HISI_SAS_DEV_INIT,
+ 	HISI_SAS_DEV_NORMAL,
++	HISI_SAS_DEV_NCQ_ERR,
+ };
+ 
+ enum {
 diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 290c9915fb9b2..ae7383e9e5fc1 100644
+index ae7383e9e5fc1..2f13bb9771d64 100644
 --- a/drivers/scsi/hisi_sas/hisi_sas_main.c
 +++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1574,6 +1574,7 @@ static int hisi_sas_abort_task(struct sas_task *task)
- 	struct hisi_sas_internal_abort_data internal_abort_data = { false };
- 	struct domain_device *device = task->dev;
- 	struct hisi_sas_device *sas_dev = device->lldd_dev;
-+	struct hisi_sas_slot *slot = task->lldd_task;
- 	struct hisi_hba *hisi_hba;
- 	struct device *dev;
- 	int rc = TMF_RESP_FUNC_FAILED;
-@@ -1587,7 +1588,6 @@ static int hisi_sas_abort_task(struct sas_task *task)
- 
- 	spin_lock_irqsave(&task->task_state_lock, flags);
- 	if (task->task_state_flags & SAS_TASK_STATE_DONE) {
--		struct hisi_sas_slot *slot = task->lldd_task;
- 		struct hisi_sas_cq *cq;
- 
- 		if (slot) {
-@@ -1605,8 +1605,7 @@ static int hisi_sas_abort_task(struct sas_task *task)
- 	task->task_state_flags |= SAS_TASK_STATE_ABORTED;
- 	spin_unlock_irqrestore(&task->task_state_lock, flags);
- 
--	if (task->lldd_task && task->task_proto & SAS_PROTOCOL_SSP) {
--		struct hisi_sas_slot *slot = task->lldd_task;
-+	if (slot && task->task_proto & SAS_PROTOCOL_SSP) {
- 		u16 tag = slot->idx;
- 		int rc2;
- 
-@@ -1640,9 +1639,8 @@ static int hisi_sas_abort_task(struct sas_task *task)
+@@ -1631,13 +1631,26 @@ static int hisi_sas_abort_task(struct sas_task *task)
+ 	} else if (task->task_proto & SAS_PROTOCOL_SATA ||
+ 		task->task_proto & SAS_PROTOCOL_STP) {
+ 		if (task->dev->dev_type == SAS_SATA_DEV) {
++			struct ata_queued_cmd *qc = task->uldd_task;
++
+ 			rc = hisi_sas_internal_task_abort_dev(sas_dev, false);
+ 			if (rc < 0) {
+ 				dev_err(dev, "abort task: internal abort failed\n");
+ 				goto out;
+ 			}
  			hisi_sas_dereg_device(hisi_hba, device);
- 			rc = hisi_sas_softreset_ata_disk(device);
+-			rc = hisi_sas_softreset_ata_disk(device);
++
++			/*
++			 * If an ATA internal command times out in ATA EH, it
++			 * need to execute soft reset, so check the scsicmd
++			 */
++			if ((sas_dev->dev_status == HISI_SAS_DEV_NCQ_ERR) &&
++			    qc && qc->scsicmd) {
++				hisi_sas_do_release_task(hisi_hba, task, slot);
++				rc = TMF_RESP_FUNC_COMPLETE;
++			} else {
++				rc = hisi_sas_softreset_ata_disk(device);
++			}
  		}
--	} else if (task->lldd_task && task->task_proto & SAS_PROTOCOL_SMP) {
-+	} else if (slot && task->task_proto & SAS_PROTOCOL_SMP) {
+ 	} else if (slot && task->task_proto & SAS_PROTOCOL_SMP) {
  		/* SMP */
--		struct hisi_sas_slot *slot = task->lldd_task;
- 		u32 tag = slot->idx;
- 		struct hisi_sas_cq *cq = &hisi_hba->cq[slot->dlvry_queue];
+@@ -1756,6 +1769,9 @@ static int hisi_sas_I_T_nexus_reset(struct domain_device *device)
+ 	struct device *dev = hisi_hba->dev;
+ 	int rc;
  
++	if (sas_dev->dev_status == HISI_SAS_DEV_NCQ_ERR)
++		sas_dev->dev_status = HISI_SAS_DEV_NORMAL;
++
+ 	rc = hisi_sas_internal_task_abort_dev(sas_dev, false);
+ 	if (rc < 0) {
+ 		dev_err(dev, "I_T nexus reset: internal abort (%d)\n", rc);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 3db206c743831..2b19c515acdeb 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -408,6 +408,11 @@
+ #define CMPLT_HDR_CMPLT_MSK		(0x3 << CMPLT_HDR_CMPLT_OFF)
+ #define CMPLT_HDR_ERROR_PHASE_OFF   2
+ #define CMPLT_HDR_ERROR_PHASE_MSK   (0xff << CMPLT_HDR_ERROR_PHASE_OFF)
++/* bit[9:2] Error Phase */
++#define ERR_PHASE_RESPONSE_FRAME_REV_STAGE_OFF	\
++					8
++#define ERR_PHASE_RESPONSE_FRAME_REV_STAGE_MSK	\
++	(0x1 << ERR_PHASE_RESPONSE_FRAME_REV_STAGE_OFF)
+ #define CMPLT_HDR_RSPNS_XFRD_OFF	10
+ #define CMPLT_HDR_RSPNS_XFRD_MSK	(0x1 << CMPLT_HDR_RSPNS_XFRD_OFF)
+ #define CMPLT_HDR_RSPNS_GOOD_OFF	11
+@@ -427,8 +432,15 @@
+ #define CMPLT_HDR_DEV_ID_OFF		16
+ #define CMPLT_HDR_DEV_ID_MSK		(0xffff << CMPLT_HDR_DEV_ID_OFF)
+ /* dw3 */
++#define CMPLT_HDR_SATA_DISK_ERR_OFF	16
++#define CMPLT_HDR_SATA_DISK_ERR_MSK	(0x1 << CMPLT_HDR_SATA_DISK_ERR_OFF)
+ #define CMPLT_HDR_IO_IN_TARGET_OFF	17
+ #define CMPLT_HDR_IO_IN_TARGET_MSK	(0x1 << CMPLT_HDR_IO_IN_TARGET_OFF)
++/* bit[23:18] ERR_FIS_ATA_STATUS */
++#define FIS_ATA_STATUS_ERR_OFF		18
++#define FIS_ATA_STATUS_ERR_MSK		(0x1 << FIS_ATA_STATUS_ERR_OFF)
++#define FIS_TYPE_SDB_OFF		31
++#define FIS_TYPE_SDB_MSK		(0x1 << FIS_TYPE_SDB_OFF)
+ 
+ /* ITCT header */
+ /* qw0 */
+@@ -2160,6 +2172,18 @@ static irqreturn_t fatal_axi_int_v3_hw(int irq_no, void *p)
+ 	return IRQ_HANDLED;
+ }
+ 
++static bool is_ncq_err_v3_hw(struct hisi_sas_complete_v3_hdr *complete_hdr)
++{
++	u32 dw0, dw3;
++
++	dw0 = le32_to_cpu(complete_hdr->dw0);
++	dw3 = le32_to_cpu(complete_hdr->dw3);
++
++	return (dw0 & ERR_PHASE_RESPONSE_FRAME_REV_STAGE_MSK) &&
++	       (dw3 & FIS_TYPE_SDB_MSK) &&
++	       (dw3 & FIS_ATA_STATUS_ERR_MSK);
++}
++
+ static bool
+ slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 	       struct hisi_sas_slot *slot)
+@@ -2400,14 +2424,34 @@ static irqreturn_t  cq_thread_v3_hw(int irq_no, void *p)
+ 	while (rd_point != wr_point) {
+ 		struct hisi_sas_complete_v3_hdr *complete_hdr;
+ 		struct device *dev = hisi_hba->dev;
+-		u32 dw1;
++		u32 dw0, dw1, dw3;
+ 		int iptt;
+ 
+ 		complete_hdr = &complete_queue[rd_point];
++		dw0 = le32_to_cpu(complete_hdr->dw0);
+ 		dw1 = le32_to_cpu(complete_hdr->dw1);
++		dw3 = le32_to_cpu(complete_hdr->dw3);
+ 
+ 		iptt = dw1 & CMPLT_HDR_IPTT_MSK;
+-		if (likely(iptt < HISI_SAS_COMMAND_ENTRIES_V3_HW)) {
++		if (unlikely((dw0 & CMPLT_HDR_CMPLT_MSK) == 0x3) &&
++			     (dw3 & CMPLT_HDR_SATA_DISK_ERR_MSK)) {
++			int device_id = (dw1 & CMPLT_HDR_DEV_ID_MSK) >>
++					CMPLT_HDR_DEV_ID_OFF;
++			struct hisi_sas_itct *itct =
++				&hisi_hba->itct[device_id];
++			struct hisi_sas_device *sas_dev =
++				&hisi_hba->devices[device_id];
++			struct domain_device *device = sas_dev->sas_device;
++
++			dev_err(dev, "erroneous completion disk err dev id=%d sas_addr=0x%llx CQ hdr: 0x%x 0x%x 0x%x 0x%x\n",
++				device_id, itct->sas_addr, dw0, dw1,
++				complete_hdr->act, dw3);
++
++			if (is_ncq_err_v3_hw(complete_hdr))
++				sas_dev->dev_status = HISI_SAS_DEV_NCQ_ERR;
++
++			sas_ata_device_link_abort(device, true);
++		} else if (likely(iptt < HISI_SAS_COMMAND_ENTRIES_V3_HW)) {
+ 			slot = &hisi_hba->slot_info[iptt];
+ 			slot->cmplt_queue_slot = rd_point;
+ 			slot->cmplt_queue = queue;
 -- 
 2.53.0
 
