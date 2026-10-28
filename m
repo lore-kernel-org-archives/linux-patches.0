@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211901;
-	b=EdbUsRv+6/uITmxzhGYIGGWEgiMg3jgjxcI+48naZpFsFIbrzR2zRimVL4tq17b9bU91
-	 AWm+wej35y4qATxCv1KkRzDhn9+PK8Lhs3syE90Yh1Fy7GybZ7sGQ5WAvtvWjoIe4nMxX
-	 xttrBLGsaPsddoh4CdzpZTOBf6IQlZMTPSFVjHgygeL3K3IIev9V+o2mYbJhoBM6oIVSz
-	 efcuvU5dmkuZhdy+DZud2GKf1zpnsf+IMJvqL+llp/uEKXtpytEjsqriAP5b9xq4jzCrn
-	 b1gPQ5oIxP5ls9W8iyKXxqKoqUgH4NyWHV3T6YXsciqlraFJ65tM0RBS+YW4Fb0vYug==
+	t=1793211904;
+	b=caIsfi4Gdc113qbQwcRnvHZxajwik5ggleiQrwwmfP4isgkNu+lezrvpcrUSr9dikGmF
+	 qGnioCKfQlW1Q4kP7colHBI1FrLnhxzY9MS3OjKNh2IcPbsaKhePikgW8wD+7uziKdoH6
+	 7AsqpG+KvaHaB0f6AvoZZ5cujG++14NHARa0w8/XCOAZ1Qjfu0PKI2JC6N+A0KpD+DJ5M
+	 cLDE9cLsrrVS/ayy8GtqX5EhQQxpYXDmY5W7TWhK2uolZM8OqEz4IfhC7yUMaTBD5yPOO
+	 YV+/QhcE3nocEu2wHCIhGsCPyNBjoF91qrAWrp3d4DPJwayMSRFrytOdn1FBjKnzLSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211901;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211904;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cAb24yEAAaFH7UL60abRAVxEN3DXknwHzxpfC0sDKDM=;
-	b=Nde6CZsp1Isf30J041ZtNUpoNL+2RjVu6fs5BkQefE0+QHVwZ4jXZ/pU2iL7+PZc/4s+
-	 1/e/aC/bCA9RrSI0DJzMy9vAOKnAwp0W4BY4LlEnTq7QFyiutAex9Su2nfDfVnaFV1tE6
-	 QgEZooz7VPGCly2Gj4IXbL5Y/lUuUmMGP5R+ZRZHgGAU2vRnORTNWzagCeCNmkhFcUZB3
-	 Z7JyLyx6WxWuMWRqi9OcWaqzgHpniZbzM42Zm7wwFx4A+GiNSBsWy3XTWZca5QnaUdEf3
-	 YDHgT2tDXrsaX4DC+evH18tYAlLrlEbGRIxHOOJdkzaErpVjkbORtRtemuWPPnquU+w==
+	bh=JLKxtmphp6PoBUr9vb6xryN/umL0LI8Fuxbk34/X8mc=;
+	b=BBgFISyL8K/Ijxo5lDtld/peUMLAFS2Q1eO8u8dGLM0E9W6gpaAqN6zr2IBq97wLhgpr
+	 HTTctc0anxKg6tjeXWDQ0o0f0eze/RBGpS7VM19W4/V2PMjnVqgMSUwdW1/kIKBqDvco3
+	 hzMW19paMRW+2+usZWvsL0oZXtaPDYXSb3rdJIKL85Bv7u7NlPfcyuhvRqxidBSc3xkk7
+	 +1RWpk/xUiBWwkkI5v6O0ogjXgoX538T5834icSn52xBK/V/XVqSO33Yo9D4fv/dsOJVW
+	 OI3YIHymbgqTQj76n9xLzjNt5fdfAazlS3QIFsXFlXWu4c4JLQPgQnc2jREorIZKB3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXWmDFOE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WlhsmOSr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37F9606A321;
-	Wed, 28 Oct 2026 18:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB60D606A31A;
+	Wed, 28 Oct 2026 18:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXWmDFOE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064691F01825;
-	Wed, 28 Oct 2026 18:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WlhsmOSr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B7F1F01825;
+	Wed, 28 Oct 2026 18:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211900;
-	bh=cAb24yEAAaFH7UL60abRAVxEN3DXknwHzxpfC0sDKDM=;
+	s=korg; t=1793211903;
+	bh=JLKxtmphp6PoBUr9vb6xryN/umL0LI8Fuxbk34/X8mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IXWmDFOEqSYKS6aJPC+VK4xwGWikLDmMO55Pbbar6RidjfKB1toc+BlvGDnXdH7ZM
-	 FUNlLysob1lczaBqgn4MFR8BbdtSWnE7pRLo2+pakPfR0oie4O5NHlHGzIrSpEPOKl
-	 8Tilr8LjW38qpEur5Eblxu+qLUFunOyy3KDUeueA=
+	b=WlhsmOSrhQCK5xQMuAZ7uYv8mpjPdzEWt0pU1/PIztFrPcG4mcsghGS50KrNQ2sIJ
+	 qAscEY0MDv5f5uN//qZwL7U+OD8HFf0XowP5f/90CQ4Wvy1ikW94bBl5mxest7l4LO
+	 t0cRQaeldIvZQYFmHYIY1V+UU9InaxAMY7c4a2sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 540/571] vsock/virtio: validate packet source for connected sockets
-Date: Wed, 28 Oct 2026 18:01:27 +0100
-Message-ID: <20261028170020.848361538@linuxfoundation.org>
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 514/571] net/iucv: fix the recvmsg window update
+Date: Wed, 28 Oct 2026 18:01:01 +0100
+Message-ID: <20261028170020.225607170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,123 +69,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit dee44f41f206becb41c492899c1996cfd7f82a1b ]
+commit fa5acd038ea657ad5033713d6916214cbd349151 upstream.
 
-virtio_transport_recv_pkt() looks up sockets first by the full source and
-destination tuple, then by destination only in the bound table. The
-fallback is needed for listening and connecting sockets, but sockets remain
-in the bound table after connect(), so it can also return a non-listening
-socket.
+iucv_sock_recvmsg() sends the HiperSockets-only AF_IUCV_FLAG_WIN without
+testing the transport, so on a classic z/VM socket iucv_send_ctrl() sizes
+the skb through a NULL iucv->hs_dev. SO_MSGLIMIT accepts 1, so msglimit / 2
+is zero and one recvmsg() on its own socket is enough for an unprivileged
+process to take a spurious disconnect.
 
-The fallback does not validate the source address. In TCP_SYN_SENT, a
-RESPONSE from an unrelated source can transition the victim socket to
-TCP_ESTABLISHED while its stored remote address remains unchanged.
-Subsequent RW packets from that source are delivered through the same
-destination-only fallback.
+It also calls iucv_send_ctrl() under spin_lock_bh(&message_q.lock), which
+allocates GFP_KERNEL inside a section the code treats as atomic. Sending
+outside that lock lets two recvmsg() reach afiucv_hs_send() at once, where
+msg_recv is sampled for the advertised window and subtracted after
+dev_queue_xmit() -- and sendmsg reaches that counter under lock_sock()
+while recvmsg holds no socket lock, so both can subtract the same value,
+the counter goes negative and the credit reaches the peer twice.
 
-This was reproduced with capability-empty processes under different UIDs.
-The attacker discovered the target tuple through unprivileged AF_VSOCK
-sock_diag and caused the victim socket to read 16 attacker-chosen bytes;
-the intended peer-side socket read 0 of those 16 bytes.
+Test the transport, claim the credit with atomic_xchg() after the last
+error exit and hand it back if the transmit fails, and send once the lock
+is dropped.
 
-Add vsock_check_source() to validate the transport, source port and source
-CID against the peer stored in a non-listening socket. The local transport
-is the CID exception because its packets are generated internally with
-VMADDR_CID_LOCAL as their source, including connections using CID aliases.
-
-Use the helper after lock_sock() in the virtio receive path.
-
-Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
-Closes: https://lore.kernel.org/netdev/20260813121236.2328599-1-4ncienth@gmail.com/
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Fixes: 238965b71b96 ("net/af_iucv: build proper skbs for HiperTransport")
 Cc: stable@vger.kernel.org
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260826003929.966160-2-4ncienth@gmail.com
+Tested-by: Aswin Karuvally <aswin@linux.ibm.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260828-b4-disp-33fac0ed-v3-1-e6d061880ee0@proton.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: adjusted receive-path context to retain virtio_transport_reset_no_sock(t, pkt). ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/af_vsock.h                  |  3 +++
- net/vmw_vsock/af_vsock.c                | 32 +++++++++++++++++++++++++
- net/vmw_vsock/virtio_transport_common.c |  3 ++-
- 3 files changed, 37 insertions(+), 1 deletion(-)
+ net/iucv/af_iucv.c |   42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/include/net/af_vsock.h b/include/net/af_vsock.h
-index f742e50207fbd..2b5dd17cb58a5 100644
---- a/include/net/af_vsock.h
-+++ b/include/net/af_vsock.h
-@@ -204,6 +204,9 @@ void vsock_remove_connected(struct vsock_sock *vsk);
- struct sock *vsock_find_bound_socket(struct sockaddr_vm *addr);
- struct sock *vsock_find_connected_socket(struct sockaddr_vm *src,
- 					 struct sockaddr_vm *dst);
-+bool vsock_check_source(const struct vsock_sock *vsk,
-+			const struct vsock_transport *transport,
-+			const struct sockaddr_vm *src);
- void vsock_remove_sock(struct vsock_sock *vsk);
- void vsock_for_each_connected_socket(struct vsock_transport *transport,
- 				     void (*fn)(struct sock *sk));
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index c89f7b2df4ec1..0712c8339f927 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -328,6 +328,38 @@ struct sock *vsock_find_connected_socket(struct sockaddr_vm *src,
- }
- EXPORT_SYMBOL_GPL(vsock_find_connected_socket);
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -206,12 +206,6 @@ static int afiucv_hs_send(struct iucv_me
+ 	phs_hdr->flags = flags;
+ 	if (flags == AF_IUCV_FLAG_SYN)
+ 		phs_hdr->window = iucv->msglimit;
+-	else if ((flags == AF_IUCV_FLAG_WIN) || !flags) {
+-		confirm_recv = atomic_read(&iucv->msg_recv);
+-		phs_hdr->window = confirm_recv;
+-		if (confirm_recv)
+-			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
+-	}
+ 	memcpy(phs_hdr->destUserID, iucv->dst_user_id, 8);
+ 	memcpy(phs_hdr->destAppName, iucv->dst_name, 8);
+ 	memcpy(phs_hdr->srcUserID, iucv->src_user_id, 8);
+@@ -246,13 +240,22 @@ static int afiucv_hs_send(struct iucv_me
+ 	}
+ 	skb->protocol = cpu_to_be16(ETH_P_AF_IUCV);
  
-+/**
-+ * vsock_check_source - validate a packet source against a socket peer
-+ * @vsk: socket receiving the packet
-+ * @transport: transport receiving the packet
-+ * @src: source address from the packet
-+ *
-+ * Return: true if the packet arrived on the socket's assigned transport and
-+ * its source matches the stored peer. Loopback packets are generated
-+ * internally and always use the local CID as their source, including
-+ * connections using a valid CID alias.
-+ *
-+ * The caller must hold the socket lock and must not call this for listening
-+ * sockets, which accept packets from any source and have no assigned
-+ * transport.
-+ */
-+bool vsock_check_source(const struct vsock_sock *vsk,
-+			const struct vsock_transport *transport,
-+			const struct sockaddr_vm *src)
-+{
-+	if (vsk->transport != transport)
-+		return false;
++	/* Claim the receive credit here, not while building the header: every
++	 * way this frame can be dropped has now been ruled out, so the window
++	 * is zeroed only for as long as the transmit itself takes.
++	 */
++	if (flags == AF_IUCV_FLAG_WIN || !flags) {
++		confirm_recv = atomic_xchg(&iucv->msg_recv, 0);
++		phs_hdr->window = confirm_recv;
++		if (confirm_recv)
++			phs_hdr->flags = phs_hdr->flags | AF_IUCV_FLAG_WIN;
++	}
 +
-+	if (src->svm_port != vsk->remote_addr.svm_port)
-+		return false;
+ 	atomic_inc(&iucv->skbs_in_xmit);
+ 	err = dev_queue_xmit(skb);
+ 	if (net_xmit_eval(err)) {
+ 		atomic_dec(&iucv->skbs_in_xmit);
+-	} else {
+-		atomic_sub(confirm_recv, &iucv->msg_recv);
+-		WARN_ON(atomic_read(&iucv->msg_recv) < 0);
++		atomic_add(confirm_recv, &iucv->msg_recv);
+ 	}
+ 	return net_xmit_eval(err);
+ 
+@@ -1241,6 +1244,7 @@ static int iucv_sock_recvmsg(struct sock
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	unsigned int copied, rlen;
+ 	struct sk_buff *skb, *rskb, *cskb;
++	bool send_win = false;
+ 	int err = 0;
+ 	u32 offset;
+ 
+@@ -1333,16 +1337,20 @@ static int iucv_sock_recvmsg(struct sock
+ 		if (skb_queue_empty(&iucv->backlog_skb_q)) {
+ 			if (!list_empty(&iucv->message_q.list))
+ 				iucv_process_message_q(sk);
+-			if (atomic_read(&iucv->msg_recv) >=
+-							iucv->msglimit / 2) {
+-				err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
+-				if (err) {
+-					sk->sk_state = IUCV_DISCONN;
+-					sk->sk_state_change(sk);
+-				}
+-			}
++			if (iucv->transport == AF_IUCV_TRANS_HIPER &&
++			    atomic_read(&iucv->msg_recv) >=
++							iucv->msglimit / 2)
++				send_win = true;
+ 		}
+ 		spin_unlock_bh(&iucv->message_q.lock);
 +
-+	if (src->svm_cid == vsk->remote_addr.svm_cid)
-+		return true;
-+
-+	return transport->get_local_cid() == VMADDR_CID_LOCAL;
-+}
-+EXPORT_SYMBOL_GPL(vsock_check_source);
-+
- void vsock_remove_sock(struct vsock_sock *vsk)
- {
- 	/* Transport reassignment must not remove the binding. */
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 12eb365c1603d..9216ffe6a88a6 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1320,7 +1320,8 @@ void virtio_transport_recv_pkt(struct virtio_transport *t,
- 	 * lock_sock (note: listener sockets are not assigned to any transport)
- 	 */
- 	if (sock_flag(sk, SOCK_DONE) ||
--	    (sk->sk_state != TCP_LISTEN && vsk->transport != &t->transport)) {
-+	    (sk->sk_state != TCP_LISTEN &&
-+	     !vsock_check_source(vsk, &t->transport, &src))) {
- 		(void)virtio_transport_reset_no_sock(t, pkt);
- 		release_sock(sk);
- 		sock_put(sk);
--- 
-2.53.0
-
++		if (send_win) {
++			err = iucv_send_ctrl(sk, AF_IUCV_FLAG_WIN);
++			if (err) {
++				sk->sk_state = IUCV_DISCONN;
++				sk->sk_state_change(sk);
++			}
++		}
+ 	}
+ 
+ done:
 
 
