@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216084;
-	b=cDT+qMqEbI1VMdLhranP+/4Qxidp3XMknXqts1rLbWUOs2cIOrv4l7en4UwyFm4Q5esL
-	 L0OtyCu15TLxotphaM+7XUN1lWcb1TYWRDEpcXR86/7JgcuxQ8kZ/2jdqR0ta3c1ES+mE
-	 wHaLTJTiV5zsde1FVs9n/ps3venAACJsauiTN7rfXMoxdcqZp62Mb1IDjMzu2ynE4sXk1
-	 MYheB1n8OFfYGlTtF1ggIi/bY+A+BisMhAhbcJsbmHjahbINcDWI2zIUKE2oEzFPHnnsa
-	 /++TEZnPuUZpPL6aimD5Y7iZHiE1fcbFKnJEesfj7SwepKPupEF7U25JW+KGMZUWJ9A==
+	t=1793216087;
+	b=e9oGBatd2Xt7yqwGXpuGgBXCEuxtYhWeQir1WuFm5D1mN0m+navdkt5IDOB5ny5Z7gfm
+	 PiN1hAIqOc9QdX8LvYdHuhVomtzzwH//mwvUpM7kD67v/qSIJuoyjil2NkG4N3wPEfqmS
+	 KCBT7Lh/WeF+Y4hMHKjQBt1G9C6cnSrdjoOaGBIpZD8BoXbwoTXie8ZnD3oMWsyEJAdMM
+	 fddgoMIbWzPzYsad7FsOUcign/2fIdtHvVRAOpSMMU52fEObsDITq+H6gJ6bBrQBvsBwH
+	 mqWiuZdH6rLupDlbr13whUUAZBFMinw88GKQoYhq/4Snva/HehRZkBTQ5wZAz5sN+Yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216084;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216087;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d5/TLweTaMJhWIHq2f0yhTMA37OZscBGGoc+eIQzUW0=;
-	b=g5W0uH5HI0oRlKOsHjNY4k4VSOivSEI2UiOQVXudj7VhlqxNQ6JMsfBOfCER+W3qAndX
-	 xPzwj8qqgCotNeZtPu0oR0jbhZ6WqxMwyCIOq5WHMSmZHtB8ChKjhNzgq22/Kq8UTYjXZ
-	 jFx59n/OvNFUsJDvPv6JElCgyzDyOkUHUgK8LW1RK3/BQrZsff5WjMVgaHKHsMbHPbg+8
-	 2gSLRqqRW5SbDdtjzLK3w4++Diop/p4uMG3lwEy3ecsOAuPNSbYd09+IXK2UtKpBDDzvq
-	 xsyYOG5EUiJYn6upVDhqIWD7QFhm6lAxdQ+CFLv/mxNO0CtcXHjqlmy2V/YVPEzXw8g==
+	bh=iAXHTBqjcYve51OuhvykMVLi9Yt+Xx9r7lcb/6+nk44=;
+	b=Vl5c6BA1WDFsGQjAyu7uJfKy53nFR+sLJPH1Feij8aF3Nh5Mi81HzUIyW6K/UV8L/kjr
+	 UAy2YJTtCB2GV+6fzps+A08RAAg+u/Ft/FJfmx0mxogpy8ujWkzh6S7H+QWjIKVrUQy+t
+	 0zCI0ym7FMAwqs8hLyttvVzDnTgfoCOYXM1li8USnRr8oC6B1VLxZ1xJGgJbfbuAPil6B
+	 HnxJrSQzXnruG2blYYXxEyDGbe92dY6y8tGOQa8czPIx4FHNXjPS625/KCOVCJUUJBeAE
+	 YfASPsDRi+IJzj4Ps2cKoHAAtzlpsoBA8quiNc8pRFDT8oBW94dUkLfQliw30DYTglg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m73mEDBf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc4m34dI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C6C606A31A;
-	Wed, 28 Oct 2026 19:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8504B606A31C;
+	Wed, 28 Oct 2026 19:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m73mEDBf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C299C1F01825;
-	Wed, 28 Oct 2026 19:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc4m34dI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FBE1F01825;
+	Wed, 28 Oct 2026 19:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216084;
-	bh=d5/TLweTaMJhWIHq2f0yhTMA37OZscBGGoc+eIQzUW0=;
+	s=korg; t=1793216087;
+	bh=iAXHTBqjcYve51OuhvykMVLi9Yt+Xx9r7lcb/6+nk44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m73mEDBfkodQ3Mowmuq4phuylXQd0f5XTmWaoObbPFoqUGCnXA/+Ltj+a8/x6q+eC
-	 CxZsBw6dulwGdYH2WKUf18JpQJ5uUyRlOxAaLeLG37rxcGxx/2D3CB2Q3QtZX+3hAE
-	 qRVpGtrJ0iXOa+uSzmoIqWWJifo2PRsTIbuX4Jes=
+	b=sc4m34dI4rJjquSqlrnsrXqGLHnT7E9rWtctcem2IjPfxFUYFSrGnBAOs/KRTfrg4
+	 pqFpbMG6K8GkLfhCdt5gniwuWjhI0hvVrAukVMZ7DQxnnGu6aCgKxsGQ05wi/ivEn8
+	 cCbkTLxQquc+WPzmspuVt/NIfRxL4JmIUIgoBZq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Longlong Xia <xialonglong@kylinos.cn>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Minchan Kim <minchan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1435/1887] NFSD: check truncate permission under inode lock
-Date: Wed, 28 Oct 2026 17:58:51 +0100
-Message-ID: <20261028170532.115051216@linuxfoundation.org>
+Subject: [PATCH 6.1 1436/1887] zram: fix out-of-bounds access in writeback_store()
+Date: Wed, 28 Oct 2026 17:58:52 +0100
+Message-ID: <20261028170532.138022584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,101 +71,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit b778e0e0a16759f22a70579c3cf8d254a40d4a7f ]
+[ Upstream commit 894913e2d35c46ff19a77530907771ae57862b96 ]
 
-nfsd_setattr() checks whether a size update needs NFSD_MAY_TRUNC
-before it takes inode_lock(). The comparison uses the file size sampled
-by that unlocked read, but the actual ATTR_SIZE update is applied later
-under inode_lock() by notify_change().
+Patch series "zram: fix stale scan bounds after reinitialization".
 
-This leaves a TOCTOU window for append-only files. If a client sends a
-SETATTR that does not shrink the file at the time of the unlocked
-sample, a concurrent append can extend the file before nfsd_setattr()
-takes inode_lock(). notify_change() then applies a real truncation
-without the NFSD_MAY_TRUNC check that rejects IS_APPEND(inode). The VFS
-truncate syscall paths perform their own append-only checks before
-calling notify_change(), so NFSD must make this decision against the
-locked size it is about to change.
+Both writeback_store() and read_block_state() derive their table scan
+bounds from zram->disksize before acquiring dev_lock.  If the device is
+reset and reinitialized with a smaller disksize between that read and lock
+acquisition, the bound can describe the old table while the scan operates
+on the new one.  This can lead to out-of-bounds slot accesses.
 
-Split the write-count acquisition from the truncation permission check.
-Keep get_write_access() before the locked setattr work, then recheck
-whether the requested size is below i_size_read(inode) after inode_lock()
-has been acquired and before notify_change(ATTR_SIZE). This also avoids
-the plain unlocked inode->i_size load.
+Move both bound calculations under dev_lock so each bound remains
+consistent with the table throughout its scan.  Keep the fixes separate
+because the affected interfaces originate from different commits and can
+be backported independently.
 
-Fixes: 783112f7401f ("nfsd: special case truncates some more")
-Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-6-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+This patch (of 2):
+
+writeback_store() calculates the table scan bounds before taking dev_lock.
+A reset followed by reconfiguration with a smaller disksize can therefore
+replace zram->table while writeback_store() is waiting for the lock.  Once
+it acquires the lock, it sees an initialized device but scans the new
+table using the old upper bound, resulting in an out-of-bounds access.
+
+Calculate the number of pages while holding dev_lock so the scan bound
+matches the table protected by the lock.
+
+Link: https://lore.kernel.org/20260804065919.3970386-1-xialonglong2025@163.com
+Link: https://lore.kernel.org/20260804065919.3970386-2-xialonglong2025@163.com
+Fixes: a939888ec38b ("zram: support idle/huge page writeback")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ drivers/block/zram/zram_drv.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index ec28429c29462..4ae834b9db878 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -413,20 +413,22 @@ nfsd_sanitize_attrs(struct inode *inode, struct iattr *iap)
- }
- 
- static __be32
--nfsd_get_write_access(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		struct iattr *iap)
-+nfsd_may_truncate(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+		  struct iattr *iap)
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index 740ca88bb6733..b8a2cb2f901cf 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -644,7 +644,7 @@ static ssize_t writeback_store(struct device *dev,
+ 		struct device_attribute *attr, const char *buf, size_t len)
  {
- 	struct inode *inode = d_inode(fhp->fh_dentry);
+ 	struct zram *zram = dev_to_zram(dev);
+-	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
++	unsigned long nr_pages;
+ 	unsigned long index = 0;
+ 	struct bio bio;
+ 	struct bio_vec bio_vec;
+@@ -663,11 +663,9 @@ static ssize_t writeback_store(struct device *dev,
+ 		if (strncmp(buf, PAGE_WB_SIG, sizeof(PAGE_WB_SIG) - 1))
+ 			return -EINVAL;
  
--	if (iap->ia_size < inode->i_size) {
--		__be32 err;
-+	if (iap->ia_size >= i_size_read(inode))
-+		return nfs_ok;
+-		if (kstrtol(buf + sizeof(PAGE_WB_SIG) - 1, 10, &index) ||
+-				index >= nr_pages)
++		if (kstrtol(buf + sizeof(PAGE_WB_SIG) - 1, 10, &index))
+ 			return -EINVAL;
  
--		err = nfsd_permission(rqstp, fhp->fh_export, fhp->fh_dentry,
--				NFSD_MAY_TRUNC | NFSD_MAY_OWNER_OVERRIDE);
--		if (err)
--			return err;
--	}
--	return nfserrno(get_write_access(inode));
-+	return nfsd_permission(rqstp, fhp->fh_export, fhp->fh_dentry,
-+			       NFSD_MAY_TRUNC | NFSD_MAY_OWNER_OVERRIDE);
-+}
-+
-+static __be32
-+nfsd_get_write_access(struct svc_fh *fhp)
-+{
-+	return nfserrno(get_write_access(d_inode(fhp->fh_dentry)));
- }
- 
- static int __nfsd_setattr(struct dentry *dentry, struct iattr *iap)
-@@ -548,12 +550,20 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	 * setattr call.
- 	 */
- 	if (size_change) {
--		err = nfsd_get_write_access(rqstp, fhp, iap);
-+		err = nfsd_get_write_access(fhp);
- 		if (err)
- 			return err;
+-		nr_pages = 1;
+ 		mode = PAGE_WRITEBACK;
  	}
  
- 	inode_lock(inode);
-+	if (size_change) {
-+		err = nfsd_may_truncate(rqstp, fhp, iap);
-+		if (err) {
-+			inode_unlock(inode);
-+			put_write_access(inode);
-+			return err;
+@@ -682,6 +680,15 @@ static ssize_t writeback_store(struct device *dev,
+ 		goto release_init_lock;
+ 	}
+ 
++	nr_pages = zram->disksize >> PAGE_SHIFT;
++	if (mode == PAGE_WRITEBACK) {
++		if (index >= nr_pages) {
++			ret = -EINVAL;
++			goto release_init_lock;
 +		}
++		nr_pages = 1;
 +	}
- 	fh_fill_pre_attrs(fhp);
- 	for (retries = 1;;) {
- 		struct iattr attrs;
++
+ 	page = alloc_page(GFP_KERNEL);
+ 	if (!page) {
+ 		ret = -ENOMEM;
 -- 
 2.53.0
 
