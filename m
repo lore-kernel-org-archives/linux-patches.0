@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215692;
-	b=QUcQcCLQ6k5nQQkKjocTxKb0oAatVcJgZJr7NrU1H9a/I8KeHx2mmbSvdoOwkcHcN+HY
-	 jYXY+fz0fYacYXTxN0yiDLgR65iLcWr9VP/kOr1yrQIzQRSLvt3yBbZvb/eaOBxrbT3FT
-	 iLM036krcFCLQrtzeSGocUeK0Da43q2wRZEAlNqUjnv4wBapEDzBBAizdlaIhQXepRq8Z
-	 XISbN+7hZHaRbjHqM320k9RKaj5fhR9Ywy/eW6OGJCQ4f5aUKaNx34DLfx00knTEKduG1
-	 TTNUVHEXDPj7QgLBIH8zYeS30UAnAM2DyfAokMI0/eQxlCWOGyyM7B3LjvF1/F/ySgA==
+	t=1793215695;
+	b=DdiaZy4VgpfPsqZi6LZMWSBNyNpCQdmjwQaAhz73MRvRdsNQfo2Wt35/bL84dM5mjVMH
+	 5x5hI+KlRIK8aHQMIcj6sDD1+Z1Vpttp8C/CQsFKfqLONpuYq8lrMTZSSDgZCO0Sdqna/
+	 AXPFLn86CTgpWjo9ntggpK+xmLlajfrOZK23lKXl8A3VrTVCWtstpfNvFBpOaTB+b/mGK
+	 KXEcci314FUieakn2MuPoAhPoNbr8XY3qWVjZM5TCR/npBSKOaWF5vmFMWrzweb6waoCn
+	 WUbnk1SxEfEsTxfmsJPgdyIVdVH38gPGXe6FLbai4pH7mPXvpXFeuZZ9Ja5u47TY65w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215695;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=X0K9TmcSl8xZZEag/MSo7UTFWo6iFgDirAxlJQhDSbY=;
-	b=INUlIkPJrgw7gmgPhc9EDxDy1V58+qnEgrPdiQDtLKQ8pYj19Cf2beUypZul3LyYfbxv
-	 tkR+Z7YZu65+fBb02HTVpaOLrTsAuhP31XkbOc+6531MhzZG51JA8K6yjmX7mDnuFXzOQ
-	 yDVsUMtZaYCIHGgYvBL3FtecCiJLIU39nH6xubeO5IcbOKzjCiv9zgGORyH9JUfbNOziO
-	 NStn9fRk2IZ2Ba1XLBSVD9asLnzaYoAU+fdIroaJ97r1S/l6AQap5deQADglFPp8lf/F2
-	 YCsSYdn7WuU4BHougygUL821Nb2tAwGb46wUsT8S+ZLFgydzvVhy180S5zIS8lgY85g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ZouoRQvHfpJ7QjNSjeDsbikmR/9KH2w/ZVS9g8OyG8g=;
+	b=AwUqS4XnR0HWN3khuirzdWQzA+4UfCacxf7zXKRCzyZfz5esCQr5+PWDvGgvipbU7/0y
+	 nGdMZ1lsl3bNqCWaa1j6qdtCJAYCde6/VEu4rEwJdekroMG30dB/owJLtQZqPFyGBBN3/
+	 +Q+GZGFz1pTvQK+LmGnU4K05lwRWh15l7qN6dZ7xw8h9hyz7GgvRK1X7hvC5wdl+s1Ga9
+	 QJ3laXseaPDLmjyHPwYhPD+k6npxRG+UA8Vx/qERhyD5j3eIyDLIEnwuRghsnIKyLgG4w
+	 WOcQHDtJgZTI4qo61imJlXbyKcHONjUOxNpLmsurioWjbM3nRXCqRXbBvKMLI86ZLtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vu+Eja7+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t/iiCs10";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CF2606A31A;
-	Wed, 28 Oct 2026 19:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D94606A322;
+	Wed, 28 Oct 2026 19:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vu+Eja7+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0099C1F01825;
-	Wed, 28 Oct 2026 19:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t/iiCs10
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1EFB1F01828;
+	Wed, 28 Oct 2026 19:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215691;
-	bh=X0K9TmcSl8xZZEag/MSo7UTFWo6iFgDirAxlJQhDSbY=;
+	s=korg; t=1793215694;
+	bh=ZouoRQvHfpJ7QjNSjeDsbikmR/9KH2w/ZVS9g8OyG8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vu+Eja7+BrkSBNTqGcG3/rth3H+P7dM17XOC9WWSHF5+IpNX/OMbafBAuhDIXmjUj
-	 +NE2Acnom124Da+YngM9wb3l548Vib9Kw/XePM4+P2oCm8O+WIkgwnM6pKYc63+uTk
-	 AS8GbZYTZar2NJjyZw0JPsoP8bwrWDFMikY1BhfM=
+	b=t/iiCs10NopwGXJg69YZw3nhj4IWk3nwGKsU4KVRH9pTsCpXXBgRmLlPI8xsWRy8p
+	 BmYU+n+8hzZiYDQEml9kAquBtMtohv7Sd8aWwrw97D6qr81PfR+OAQRxu9S49uZDdL
+	 ehkk4yIPq8eLJKT8mRdFctsobJod1I5y26J2X8Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Xue <feng.xue@outlook.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1299/1887] net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers
-Date: Wed, 28 Oct 2026 17:56:35 +0100
-Message-ID: <20261028170528.987832868@linuxfoundation.org>
+Subject: [PATCH 6.1 1300/1887] vhost_iotlb: bound map allocation in add_range
+Date: Wed, 28 Oct 2026 17:56:36 +0100
+Message-ID: <20261028170529.011248482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,119 +62,338 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
 
-[ Upstream commit a347304b2ca1a5377d5bd2d8a72e4b4f12afe648 ]
+[ Upstream commit 1ed35ac7f3fe2b4396bdd29ac3a7f0ebc0829e94 ]
 
-Another challenge with unlocked filters.
-There is a short window in tc_new_tfilter where a tcf_proto can be found
-and briefly referenced by a totally unrelated, unlocked classifier's request
-and cause a race.
+vhost_iotlb_add_range_ctx() only retires an old entry when the table
+has a non-zero limit, has exactly reached that limit and has
+VHOST_IOTLB_FLAG_RETIRE set. Non-retiring tables can keep allocating
+entries after reaching their configured limit.
 
-Feng created a poc which created this race with two threads, one creating a
-u32 filter and other a flower filter in the same chain/prio:
+Existing vhost devices allocate their IOTLB with max_iotlb_entries from
+vhost.c, which defaults to 2048 and is tunable by module parameter. Use
+the caller-provided limit at the allocation point instead of adding a
+separate default in the common IOTLB helper, and reject non-positive
+values in vhost paths that can report an error.
 
-1. Both threads enter tc_new_tfilter, both find the chain empty, both
-   drop filter_chain_lock
-2. u32 finishes tcf_proto_create("u32") first, calls
-   tcf_chain_tp_insert_unique() -> inserts u32_tp into the chain
-3. flower finishes tcf_proto_create("flower") later, calls
-   tcf_chain_tp_insert_unique() -> tcf_chain_tp_find() now sees u32_tp
-   already there, takes a reference on it, destroys flower's own tp_new
-   and returns u32_tp to the caller.
+Other vhost IOTLB users should not create zero-limit tables when entries
+can be populated from userspace or guest-controlled requests. Add
+caller-side max_iotlb_entries parameters for mlx5 vDPA, VDUSE and
+vhost-vDPA. Reject non-positive VDUSE and vhost-vDPA values, and require
+at least two entries for vdpa_sim and mlx5 vDPA paths that install
+full-range mappings, since those mappings are split into two IOTLB
+entries.
 
-Flower then hits the kind mismatch check (because it requested for kind
-"flower" but tp->ops->kind is "u32") and goes through the errout path
-which calls tcf_proto_put() on u32_tp. If the u32 thread has already
-gone through its own errout (its change() call failed on the PoC's empty
-options) and dropped its create and insert refs, flower's put is the
-last one and drops u32_tp's refcnt to zero.
+Handle full-range mappings in the common helper by checking that the
+IOTLB can hold both split entries before inserting the first half. This
+avoids returning an error after leaving a half mapping behind.
 
-At this point tp->ops->destroy() runs in a context that never took
-rtnl_lock. When that happens, it might cause a UAF like the following
-(illustrated by the PoC):
+When the table is full, keep the existing retire behavior for retiring
+tables and return -ENOSPC for non-retiring tables. Reuse the retired map
+node instead of freeing it and allocating a replacement, so a stream of
+IOTLB updates cannot keep forcing GFP_ATOMIC allocations after the table
+has reached its limit. If a zero-limit IOTLB still reaches the common
+helper, treat it as a configuration error and return -EINVAL.
 
-[  +0.000710] BUG: KASAN: slab-use-after-free in u32_init (net/sched/cls_u32.c:393)
-[  +0.000281] Read of size 8 at addr ffff888120022f00 by task poc_feng_xue/524
+I found this bug myself, though the patch was written with AI assistance.
 
-  Call Trace:
-   u32_init (net/sched/cls_u32.c:393)
-   tc_new_tfilter (net/sched/cls_api.c:2378)
-
-  Allocated by task 526:
-   u32_init (net/sched/cls_u32.c:378)
-   tc_new_tfilter (net/sched/cls_api.c:2378)
-
-  Freed by task 522:
-   kfree
-   u32_destroy (net/sched/cls_u32.c:662)
-   tcf_proto_destroy (net/sched/cls_api.c:446)
-   tcf_proto_put (net/sched/cls_api.c:459)
-   tc_new_tfilter (net/sched/cls_api.c:2459)
-
-Fix this by having tcf_proto_destroy() take rtnl_lock around
-tp->ops->destroy() for locked classifiers whenever rtnl is not held.
-
-To explain why I used a temp variable "not_lockless" I'd like to point to a
-semi-related note on rtnl_held vs TCF_PROTO_OPS_DOIT_UNLOCKED (adding here
-for future cleanup if deemed necessary):
-The rtnl_held parameter and the TCF_PROTO_OPS_DOIT_UNLOCKED flag are
-redundant sources of truth for whether rtnl_lock is held. Among the nine
-classifier destroy(..rtnl_held..) callbacks, only flower consults the
-rtnl_held parameter which it propagates to tc_setup_cb_destroy()
-and tc_setup_cb_call(). The other eight (u32, flow, bpf, cgroup, route, basic,
-fw, mall) ignore it entirely;-> those that call tc_setup_cb_destroy()
-(u32, bpf, mall) hardcode true always instead of forwarding the parameter.
-
-A future cleanup should remove the rtnl_held parameter from the destroy callback
-signature entirely and have callers rely solely on their knowledge whether
-they are running in an unlocked context.
-
-Fixes: 12db03b65c2b ("net: sched: extend proto ops to support unlocked classifiers")
-Reported-by: Feng Xue <feng.xue@outlook.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260801125632.360365-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0bbe30668d89 ("vhost: factor out IOTLB")
+Assisted-by: OpenAI-Codex:GPT-5
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
+Message-ID: <AMYAtgAiKmgYcSQT5ukl-4qq.3.1781960405943.Hmail.241270009@hdu.edu.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/vdpa/mlx5/core/mlx5_vdpa.h   |  2 ++
+ drivers/vdpa/mlx5/core/mr.c          |  3 ++
+ drivers/vdpa/mlx5/core/resources.c   | 11 ++++++-
+ drivers/vdpa/vdpa_sim/vdpa_sim.c     |  5 ++-
+ drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++-
+ drivers/vhost/iotlb.c                | 47 +++++++++++++++++++---------
+ drivers/vhost/vdpa.c                 |  9 +++++-
+ drivers/vhost/vhost.c                |  8 +++++
+ 8 files changed, 78 insertions(+), 18 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index ad8514da40c80..603b7caebad2b 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -338,7 +338,22 @@ static void tcf_chain_put(struct tcf_chain *chain);
- static void tcf_proto_destroy(struct tcf_proto *tp, bool rtnl_held,
- 			      bool sig_destroy, struct netlink_ext_ack *extack)
- {
--	tp->ops->destroy(tp, rtnl_held, extack);
-+	/* A locked classifier's destroy callback (e.g. u32_destroy) uses
-+	 * rtnl_dereference() and mutates shared structures (e.g. the
-+	 * tc_u_common hash list) that are only safe under rtnl_lock. When an
-+	 * unlocked classifier's request (e.g. flower on ingress) loses the
-+	 * tcf_chain_tp_insert_unique() race and ends up dropping the last
-+	 * reference on a locked classifier's proto, destroy() would run
-+	 * without rtnl held. Take it here in that case.
-+	 */
-+	bool not_lockless = !rtnl_held &&
-+		!(tp->ops->flags & TCF_PROTO_OPS_DOIT_UNLOCKED);
+diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+index b53420e874acb..9727b4352c40b 100644
+--- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
++++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+@@ -11,6 +11,8 @@
+ 
+ #define MLX5V_ETH_HARD_MTU (ETH_HLEN + VLAN_HLEN + ETH_FCS_LEN)
+ 
++extern int mlx5_vdpa_max_iotlb_entries;
 +
-+	if (not_lockless)
-+		rtnl_lock();
-+	tp->ops->destroy(tp, rtnl_held || not_lockless, extack);
-+	if (not_lockless)
-+		rtnl_unlock();
- 	tcf_proto_count_usesw(tp, false);
- 	if (sig_destroy)
- 		tcf_proto_signal_destroyed(tp->chain, tp);
+ struct mlx5_vdpa_direct_mr {
+ 	u64 start;
+ 	u64 end;
+diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
+index 41489d4371f35..2c0e3ae87476a 100644
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -562,6 +562,9 @@ static int _mlx5_vdpa_create_dvq_mr(struct mlx5_vdpa_dev *mvdev,
+ 	if (mr->initialized)
+ 		return 0;
+ 
++	if (mlx5_vdpa_max_iotlb_entries < 2)
++		return -EINVAL;
++
+ 	if (iotlb)
+ 		err = create_user_mr(mvdev, iotlb);
+ 	else
+diff --git a/drivers/vdpa/mlx5/core/resources.c b/drivers/vdpa/mlx5/core/resources.c
+index 9800f9bec225a..f249f98a3e174 100644
+--- a/drivers/vdpa/mlx5/core/resources.c
++++ b/drivers/vdpa/mlx5/core/resources.c
+@@ -3,8 +3,14 @@
+ 
+ #include <linux/iova.h>
+ #include <linux/mlx5/driver.h>
++#include <linux/moduleparam.h>
+ #include "mlx5_vdpa.h"
+ 
++int mlx5_vdpa_max_iotlb_entries = 2048;
++module_param_named(max_iotlb_entries, mlx5_vdpa_max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
++
+ static int alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid)
+ {
+ 	struct mlx5_core_dev *mdev = dev->mdev;
+@@ -229,7 +235,10 @@ int mlx5_vdpa_destroy_mkey(struct mlx5_vdpa_dev *mvdev, u32 mkey)
+ 
+ static int init_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
+ {
+-	mvdev->cvq.iotlb = vhost_iotlb_alloc(0, 0);
++	if (mlx5_vdpa_max_iotlb_entries < 2)
++		return -EINVAL;
++
++	mvdev->cvq.iotlb = vhost_iotlb_alloc(mlx5_vdpa_max_iotlb_entries, 0);
+ 	if (!mvdev->cvq.iotlb)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+index 74d8de5f1e8ba..68d63bb17cac9 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+@@ -34,7 +34,7 @@ MODULE_PARM_DESC(batch_mapping, "Batched mapping 1 -Enable; 0 - Disable");
+ static int max_iotlb_entries = 2048;
+ module_param(max_iotlb_entries, int, 0444);
+ MODULE_PARM_DESC(max_iotlb_entries,
+-		 "Maximum number of iotlb entries for each address space. 0 means unlimited. (default: 2048)");
++		 "Maximum number of iotlb entries for each address space. (default: 2048)");
+ 
+ #define VDPASIM_QUEUE_ALIGN PAGE_SIZE
+ #define VDPASIM_QUEUE_MAX 256
+@@ -266,6 +266,9 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
+ 	struct device *dev;
+ 	int i, ret = -ENOMEM;
+ 
++	if (max_iotlb_entries < 2)
++		return ERR_PTR(-EINVAL);
++
+ 	if (config->mask & BIT_ULL(VDPA_ATTR_DEV_FEATURES)) {
+ 		if (config->device_features &
+ 		    ~dev_attr->supported_features)
+diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
+index 82b796332564b..e60a2b4065af9 100644
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -12,11 +12,17 @@
+ #include <linux/file.h>
+ #include <linux/anon_inodes.h>
+ #include <linux/highmem.h>
++#include <linux/moduleparam.h>
+ #include <linux/vmalloc.h>
+ #include <linux/vdpa.h>
+ 
+ #include "iova_domain.h"
+ 
++static int max_iotlb_entries = 2048;
++module_param(max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
++
+ static int vduse_iotlb_add_range(struct vduse_iova_domain *domain,
+ 				 u64 start, u64 last,
+ 				 u64 addr, unsigned int perm,
+@@ -608,11 +614,14 @@ vduse_domain_create(unsigned long iova_limit, size_t bounce_size)
+ 	if (iova_limit <= bounce_size)
+ 		return NULL;
+ 
++	if (max_iotlb_entries <= 0)
++		return NULL;
++
+ 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
+ 	if (!domain)
+ 		return NULL;
+ 
+-	domain->iotlb = vhost_iotlb_alloc(0, 0);
++	domain->iotlb = vhost_iotlb_alloc(max_iotlb_entries, 0);
+ 	if (!domain->iotlb)
+ 		goto err_iotlb;
+ 
+diff --git a/drivers/vhost/iotlb.c b/drivers/vhost/iotlb.c
+index ea61330a34310..a6228dd249316 100644
+--- a/drivers/vhost/iotlb.c
++++ b/drivers/vhost/iotlb.c
+@@ -20,6 +20,14 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
+ 		     rb, __u64, __subtree_last,
+ 		     START, LAST, static inline, vhost_iotlb_itree);
+ 
++static void vhost_iotlb_map_unlink(struct vhost_iotlb *iotlb,
++				   struct vhost_iotlb_map *map)
++{
++	vhost_iotlb_itree_remove(map, &iotlb->root);
++	list_del(&map->link);
++	iotlb->nmaps--;
++}
++
+ /**
+  * vhost_iotlb_map_free - remove a map node and free it
+  * @iotlb: the IOTLB
+@@ -28,10 +36,8 @@ INTERVAL_TREE_DEFINE(struct vhost_iotlb_map,
+ void vhost_iotlb_map_free(struct vhost_iotlb *iotlb,
+ 			  struct vhost_iotlb_map *map)
+ {
+-	vhost_iotlb_itree_remove(map, &iotlb->root);
+-	list_del(&map->link);
++	vhost_iotlb_map_unlink(iotlb, map);
+ 	kfree(map);
+-	iotlb->nmaps--;
+ }
+ EXPORT_SYMBOL_GPL(vhost_iotlb_map_free);
+ 
+@@ -57,14 +63,25 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
+ 	if (last < start)
+ 		return -EFAULT;
+ 
++	if (!iotlb->limit)
++		return -EINVAL;
++
+ 	/* If the range being mapped is [0, ULONG_MAX], split it into two entries
+ 	 * otherwise its size would overflow u64.
+ 	 */
+ 	if (start == 0 && last == ULONG_MAX) {
+ 		u64 mid = last / 2;
+-		int err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
+-				perm, opaque);
++		int err;
++
++		if (iotlb->limit < 2)
++			return -ENOSPC;
+ 
++		if (!(iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) &&
++		    iotlb->nmaps > iotlb->limit - 2)
++			return -ENOSPC;
++
++		err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
++						perm, opaque);
+ 		if (err)
+ 			return err;
+ 
+@@ -72,17 +89,19 @@ int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
+ 		start = mid + 1;
+ 	}
+ 
+-	if (iotlb->limit &&
+-	    iotlb->nmaps == iotlb->limit &&
+-	    iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
+-		map = list_first_entry(&iotlb->list, typeof(*map), link);
+-		vhost_iotlb_map_free(iotlb, map);
++	if (iotlb->nmaps >= iotlb->limit) {
++		if (iotlb->flags & VHOST_IOTLB_FLAG_RETIRE) {
++			map = list_first_entry(&iotlb->list, typeof(*map), link);
++			vhost_iotlb_map_unlink(iotlb, map);
++		} else {
++			return -ENOSPC;
++		}
++	} else {
++		map = kmalloc(sizeof(*map), GFP_ATOMIC);
++		if (!map)
++			return -ENOMEM;
+ 	}
+ 
+-	map = kmalloc(sizeof(*map), GFP_ATOMIC);
+-	if (!map)
+-		return -ENOMEM;
+-
+ 	map->start = start;
+ 	map->size = last - start + 1;
+ 	map->last = last;
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 27a7a168e5bd9..03bc085358ad3 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -34,6 +34,11 @@ enum {
+ 
+ #define VHOST_VDPA_DEV_MAX (1U << MINORBITS)
+ 
++static int max_iotlb_entries = 2048;
++module_param(max_iotlb_entries, int, 0444);
++MODULE_PARM_DESC(max_iotlb_entries,
++		 "Maximum number of iotlb entries. (default: 2048)");
++
+ #define VHOST_VDPA_IOTLB_BUCKETS 16
+ 
+ struct vhost_vdpa_as {
+@@ -108,12 +113,14 @@ static struct vhost_vdpa_as *vhost_vdpa_alloc_as(struct vhost_vdpa *v, u32 asid)
+ 
+ 	if (asid >= v->vdpa->nas)
+ 		return NULL;
++	if (max_iotlb_entries <= 0)
++		return NULL;
+ 
+ 	as = kmalloc(sizeof(*as), GFP_KERNEL);
+ 	if (!as)
+ 		return NULL;
+ 
+-	vhost_iotlb_init(&as->iotlb, 0, 0);
++	vhost_iotlb_init(&as->iotlb, max_iotlb_entries, 0);
+ 	as->id = asid;
+ 	hlist_add_head(&as->hash_link, head);
+ 
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 85d4585c526cc..d68f61cef67e2 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -622,6 +622,9 @@ EXPORT_SYMBOL_GPL(vhost_dev_set_owner);
+ 
+ static struct vhost_iotlb *iotlb_alloc(void)
+ {
++	if (max_iotlb_entries <= 0)
++		return NULL;
++
+ 	return vhost_iotlb_alloc(max_iotlb_entries,
+ 				 VHOST_IOTLB_FLAG_RETIRE);
+ }
+@@ -1470,6 +1473,8 @@ static long vhost_set_memory(struct vhost_dev *d, struct vhost_memory __user *m)
+ 		return -EOPNOTSUPP;
+ 	if (mem.nregions > max_mem_regions)
+ 		return -E2BIG;
++	if (max_iotlb_entries <= 0)
++		return -EINVAL;
+ 	newmem = kvzalloc(struct_size(newmem, regions, mem.nregions),
+ 			GFP_KERNEL);
+ 	if (!newmem)
+@@ -1778,6 +1783,9 @@ int vhost_init_device_iotlb(struct vhost_dev *d, bool enabled)
+ 	struct vhost_iotlb *niotlb, *oiotlb;
+ 	int i;
+ 
++	if (max_iotlb_entries <= 0)
++		return -EINVAL;
++
+ 	niotlb = iotlb_alloc();
+ 	if (!niotlb)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
