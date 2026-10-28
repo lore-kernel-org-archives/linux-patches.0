@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216122;
-	b=3hFo5vZSuqJp8tqd8Y2KajH/wS6rspzJMe042E8vRVYt8QWnq9DsO32HbEZM9lGPwXh2
-	 sfh3hPnMI0hrAsdk8lkfzHadC7KIJx8VPolnOrZcIOfOuODOI1K78qRPkAnUzGDrKz+3g
-	 VsB2PgmtzsELLFQukRgeQaizGg1Mlka9PrqkuMAQ81/iah4PCMsMQcQp+czBgWkyQeI/w
-	 TXeDNgZCOYq0mvhfgB2GwwFZ/k759oyn1yBtfA5UD32uKWEVgKnqFhVfwUkTSoFVFdCyF
-	 HSAPZkCyfDVcUkMYJ6tBMGUIxRvG3/rgTwcLOLnWqCfjv6TzXOyeEBBXU/BM+2S1h+g==
+	t=1793216125;
+	b=M79mwv+KLbRlUXQUd9ggs+XNyFHCglSWRd1e2Q7atDphhxh/xllJmv4C9VCKwCH0I+n5
+	 UiHFANJGH5tKJJ0/Ewi9g1DvJPsKZn8hnX5LBth+v2/XPY2CsWJMPQ7kaSqcyDekgeG6+
+	 lv/dvUfBIg78yu8mrf3I9iSgWGvOTpocHH9qSLv8eBqVrkDc9qdV2wqSuTYsD6dcfuqJH
+	 98CEuCCTcmS/VzUiQcgww9NU6eDDR3VOx7KKnMix3GNxGUbgWJDtjixHk8jQwCq1pz8IJ
+	 0C0IfugABJ4/QoUAPGejFESFc8dvavR6PxI1Zyn9ZM3tFmzZIfpVAACtHTqj8Mv6V2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+l/EMqtnV/RDV60Y0Lvxb5gVMz+XwpgcJ9blwkdKrzI=;
-	b=MtOCyOA/hZ3u9cFxOxC9oJbRNTZC30VCCzXKM/5AHKEr7vD0Jd1lrWHGGH+OolU+kfkj
-	 5i1Cx2RuW/7eeWe8WRBUSXVSBrb99jQsNRippsEd4PdLvBEB0vEExysT0sk9hvNDr9S2d
-	 M3gZXLMDdovGQZmlLadVJu0vW56AnigQeN0EZ/tKO0ZJsvwjRu/zf6fdQjEI3AcyUksyf
-	 zE+L1nnY4cyqLvR8GVpaVhYuHgps8DvsPusNPhqBpTyI3kG7RxSW1NOfPdalk+nb8JOTf
-	 yVCiWo164dw/aIApHqcx3i1E0o4aexWq8K7O5UyZ34MJ6YefX1HAENr/pK76D80SyHA==
+	bh=y3L4Lc9exEo0lhHv2Yog/UApLJnl0xGDhdERyMm4zrI=;
+	b=lL4XNc4nefzsSNbnFVbfhXp5oR75xhcEOvpvM1jImmXhsZ2wbWGxtuWUKUYz80jUH1lh
+	 4PmAD1F2ObKgnxOxErI+1tH3cCQN2CbuIn7sQjKUNpRrZQ12+yqjiWwMorgFoPHb7CE8p
+	 ba9+hAvZC7fP0hdB/9AsgvkJH8VKqp8j4r809hUwjzsZrev/stBJcDPJD394eeq9IYIaV
+	 o76sZBjvdOgNXt7FOyLp3SHoT7f58Rk1q8knFfBF16sGvdOWv+ialtChL8fdCMd93putT
+	 kjNlKnFkUqkT6Y2UYyqFgPGsoKMkfKRhL7drIsZ9IMeMrC0bU1HCzeMePks2Za76BRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IrchpRXH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yYwBFCSV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12F6606A31A;
-	Wed, 28 Oct 2026 19:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D174A606A31A;
+	Wed, 28 Oct 2026 19:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IrchpRXH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA141F01825;
-	Wed, 28 Oct 2026 19:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yYwBFCSV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B141F01825;
+	Wed, 28 Oct 2026 19:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216121;
-	bh=+l/EMqtnV/RDV60Y0Lvxb5gVMz+XwpgcJ9blwkdKrzI=;
+	s=korg; t=1793216124;
+	bh=y3L4Lc9exEo0lhHv2Yog/UApLJnl0xGDhdERyMm4zrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IrchpRXHA2eQ3Os2VCRnLKNBebUJvm7D8c2XwC2K8BZyl4ShZ8cfWIy5PopHedHd+
-	 pOdu+rWLGiSF/VFvV2EVgIvjz2PVbNt5HABqoBaxOO2RZAtYHGHv8l/fSLj2YYEOUA
-	 wg9Fc9QZ7ozUfJmCAkTjaYNY/9OP2LoBZvcs2T0w=
+	b=yYwBFCSVOfFmcbfgtbt8jAqLpkM5zPTvzkFEgUJZO/Tex7uc+xdHN7K2MggkmhlND
+	 DLDNBpI51tTIkEV9vLk9+1W1DGl5uT9GNGtd2zwHhqHa9dFhIGl2fA9cQujIr+1NLq
+	 AQC3epJUmQ9W1X2qaYbZSL9XEoc0DR7BqnXGni78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4924a0edc148e8b4b342@syzkaller.appspotmail.com,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1447/1887] netfilter: nf_tables: clone set on flush only
-Date: Wed, 28 Oct 2026 17:59:03 +0100
-Message-ID: <20261028170532.389278696@linuxfoundation.org>
+Subject: [PATCH 6.1 1448/1887] ipv4: nexthop: allocate skb dynamically in rtm_get_nexthop()
+Date: Wed, 28 Oct 2026 17:59:04 +0100
+Message-ID: <20261028170532.411398817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,149 +71,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit fb7fb4016300ac622c964069e286dc83166a5d52 ]
+[ Upstream commit 14cf0cd35361f4e94824bf8a42f72713d7702a73 ]
 
-Syzbot with fault injection triggered a failing memory allocation with
-GFP_KERNEL which results in a WARN splat:
+When querying a nexthop object via RTM_GETNEXTHOP, the kernel currently
+allocates a fixed-size skb using NLMSG_GOODSIZE. While sufficient for
+single nexthops and small Equal-Cost Multi-Path groups, this fixed
+allocation fails for large nexthop groups like 512 nexthops.
 
-iter.err
-WARNING: net/netfilter/nf_tables_api.c:845 at nft_map_deactivate+0x34e/0x3c0 net/netfilter/nf_tables_api.c:845, CPU#0: syz.0.17/5992
-Modules linked in:
-CPU: 0 UID: 0 PID: 5992 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
-RIP: 0010:nft_map_deactivate+0x34e/0x3c0 net/netfilter/nf_tables_api.c:845
-Code: 8b 05 86 5a 4e 09 48 3b 84 24 a0 00 00 00 75 62 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc e8 63 6d fa f7 90 <0f> 0b 90 43
-+80 7c 35 00 00 0f 85 23 fe ff ff e9 26 fe ff ff 89 d9
-RSP: 0018:ffffc900045af780 EFLAGS: 00010293
-RAX: ffffffff89ca45bd RBX: 00000000fffffff4 RCX: ffff888028111e40
-RDX: 0000000000000000 RSI: 00000000fffffff4 RDI: 0000000000000000
-RBP: ffffc900045af870 R08: 0000000000400dc0 R09: 00000000ffffffff
-R10: dffffc0000000000 R11: fffffbfff1d141db R12: ffffc900045af7e0
-R13: 1ffff920008b5f24 R14: dffffc0000000000 R15: ffffc900045af920
-FS:  000055557a6a5500(0000) GS:ffff888125496000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fb5ea271fc0 CR3: 000000003269e000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __nft_release_table+0xceb/0x11f0 net/netfilter/nf_tables_api.c:12115
- nft_rcv_nl_event+0xc25/0xdb0 net/netfilter/nf_tables_api.c:12187
- notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
- blocking_notifier_call_chain+0x6a/0x90 kernel/notifier.c:380
- netlink_release+0x123b/0x1ad0 net/netlink/af_netlink.c:761
- __sock_release net/socket.c:662 [inline]
- sock_close+0xc3/0x240 net/socket.c:1455
+This results in the following warning splat:
 
-Restrict set clone to the flush set command in the preparation phase.
-Add NFT_ITER_UPDATE_CLONE and use it for this purpose, update the rbtree
-and pipapo backends to only clone the set when this iteration type is
-used.
+ WARNING: net/ipv4/nexthop.c:3395 at rtm_get_nexthop+0x176/0x1c0, CPU#20: rep/4608
+ [...]
+ RIP: 0010:rtm_get_nexthop (net/ipv4/nexthop.c:3395)
+ [...]
+ Call Trace:
+  <TASK>
+  rtnetlink_rcv_msg (net/core/rtnetlink.c:6989)
+  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
+  netlink_unicast (net/netlink/af_netlink.c:1319 net/netlink/af_netlink.c:1344)
+  netlink_sendmsg (net/netlink/af_netlink.c:1894)
+  ____sys_sendmsg (net/socket.c:721 net/socket.c:736 net/socket.c:2585)
+  ___sys_sendmsg (net/socket.c:2641)
+  __sys_sendmsg (net/socket.c:2671)
+  do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+  </TASK>
 
-As for the existing NFT_ITER_UPDATE type, update the pipapo backend to
-use the existing set clone if available, otherwise use the existing set
-representation. After this update, there is no need to clone a set that
-is being deleted, this includes bound anonymous set.
+Fix this by allocating the size dynamically using nh_nlmsg_size() and
+using nlmsg_new(), this is consistent with nexthop_notify() behavior. In
+addition, adjust nh_nlmsg_size_grp() so it calculates the size needed
+based on flags passed. While at it, also add the size of NHA_FDB for
+nexthop group size calculation as it was missing too.
 
-An alternative approach to NFT_ITER_UPDATE_CLONE is to add a .clone
-interface and call it from the flush set path.
+This cannot be reproduced via iproute2 as the group size is currently
+limited and the command fails as follows:
 
-Reported-by: syzbot+4924a0edc148e8b4b342@syzkaller.appspotmail.com
-Fixes: 3f1d886cc7c3 ("netfilter: nft_set_pipapo: move cloning of match info to insert/removal path")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+addattr_l ERROR: message exceeded bound of 1048
+
+Fixes: 430a049190de ("nexthop: Add support for nexthop groups")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAL_bE8Li2h4KO+AQFXW4S6Yb_u5X4oSKnkywW+LPFjuErhqELA@mail.gmail.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260402072613.25262-2-fmancera@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 ++
- net/netfilter/nf_tables_api.c     | 10 +++++++++-
- net/netfilter/nft_set_pipapo.c    | 14 ++++++++++++--
- 3 files changed, 23 insertions(+), 3 deletions(-)
+ net/ipv4/nexthop.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index ab228acb04c4c..b2e49f3b2bf1c 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -309,11 +309,13 @@ struct nft_set_elem {
-  *
-  * @NFT_ITER_READ: read-only iteration over set elements
-  * @NFT_ITER_UPDATE: iteration under mutex to update set element state
-+ * @NFT_ITER_UPDATE_CLONE: clone set before iteration under mutex to update element
-  */
- enum nft_iter_type {
- 	NFT_ITER_UNSPEC,
- 	NFT_ITER_READ,
- 	NFT_ITER_UPDATE,
-+	NFT_ITER_UPDATE_CLONE,
- };
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index b48fbc0f42899..790135fd80e7f 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -790,7 +790,8 @@ static size_t nh_nlmsg_size_grp(struct nexthop *nh)
+ 	struct nh_group *nhg = rtnl_dereference(nh->nh_grp);
+ 	size_t sz = sizeof(struct nexthop_grp) * nhg->num_nh;
+ 	size_t tot = nla_total_size(sz) +
+-		nla_total_size(2); /* NHA_GROUP_TYPE */
++		nla_total_size(2) +	/* NHA_GROUP_TYPE */
++		nla_total_size(0);	/* NHA_FDB */
  
- struct nft_set;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index afc7f369b8f69..1a47904c377f7 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -628,6 +628,11 @@ static void nft_map_catchall_deactivate(const struct nft_ctx *ctx,
- 	}
- }
+ 	if (nhg->resilient)
+ 		tot += nh_nlmsg_size_grp_res(nhg);
+@@ -3070,15 +3071,15 @@ static int rtm_get_nexthop(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 	if (err)
+ 		return err;
  
-+/* Use NFT_ITER_UPDATE iterator even if this may be called from the preparation
-+ * phase, the set clone might already exist from a previous command, or it might
-+ * be a set that is going away and does not require a clone. The netns and
-+ * netlink release paths also need to work on the live set.
-+ */
- static void nft_map_deactivate(const struct nft_ctx *ctx, struct nft_set *set)
- {
- 	struct nft_set_iter iter = {
-@@ -7076,9 +7081,12 @@ static int nft_set_catchall_flush(const struct nft_ctx *ctx,
- 
- static int nft_set_flush(struct nft_ctx *ctx, struct nft_set *set, u8 genmask)
- {
-+	/* The set backend might need to clone the set, do it now from the
-+	 * preparation phase, use NFT_ITER_UPDATE_CLONE iterator type.
-+	 */
- 	struct nft_set_iter iter = {
- 		.genmask	= genmask,
--		.type		= NFT_ITER_UPDATE,
-+		.type		= NFT_ITER_UPDATE_CLONE,
- 		.fn		= nft_setelem_flush,
- 	};
- 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 2e98592a04288..13cb3059744e5 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -2200,13 +2200,20 @@ static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
- 	const struct nft_pipapo_match *m;
- 
- 	switch (iter->type) {
--	case NFT_ITER_UPDATE:
-+	case NFT_ITER_UPDATE_CLONE:
- 		m = pipapo_maybe_clone(set);
- 		if (!m) {
- 			iter->err = -ENOMEM;
- 			return;
- 		}
+-	err = -ENOBUFS;
+-	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
+-	if (!skb)
+-		goto out;
 -
-+		nft_pipapo_do_walk(ctx, set, m, iter);
-+		break;
-+	case NFT_ITER_UPDATE:
-+		if (priv->clone)
-+			m = priv->clone;
-+		else
-+			m = rcu_dereference_protected(priv->match,
-+						      nft_pipapo_transaction_mutex_held(set));
- 		nft_pipapo_do_walk(ctx, set, m, iter);
- 		break;
- 	case NFT_ITER_READ:
-@@ -2387,6 +2394,9 @@ static void nft_pipapo_destroy(const struct nft_ctx *ctx,
- 	if (m) {
- 		rcu_barrier();
- 
-+		if (!priv->clone)
-+			nft_set_pipapo_match_destroy(ctx, set, m);
+ 	err = -ENOENT;
+ 	nh = nexthop_find_by_id(net, id);
+ 	if (!nh)
+-		goto errout_free;
++		goto out;
 +
- 		for_each_possible_cpu(cpu)
- 			pipapo_free_scratch(m, cpu);
- 		free_percpu(m->scratch);
++	err = -ENOBUFS;
++	skb = nlmsg_new(nh_nlmsg_size(nh), GFP_KERNEL);
++	if (!skb)
++		goto out;
+ 
+ 	err = nh_fill_node(skb, nh, RTM_NEWNEXTHOP, NETLINK_CB(in_skb).portid,
+ 			   nlh->nlmsg_seq, 0);
 -- 
 2.53.0
 
