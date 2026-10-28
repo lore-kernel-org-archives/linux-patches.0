@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209079;
-	b=Z+JFvjpBFc9mjwVOyLsuDZHLzfv1Y5WCJCY0eYlyEZdSSXoKDEj5w2nN4t+T4S7mEdgV
-	 FSEhoDInqWIzCSGSLVygzf+hWKZKIidiTH56hc7vjz7v6UJChhcMqxKXb7Z27WX4H1RXU
-	 fVpgdRujAoigaEKgcL6TiHmFa/2X1BU98yvfOz6V3pcSLNu/g8eTrDJhGK1IZ/wwhACwC
-	 ZtppN40YcyMm/2KXDlwhEvCEFGrCJejQ9RXt8jdemyzkmGKM3qDzW8Mfspq/f4qeGU5od
-	 eynigsRF7T05II1puPLcyU9WUbbp22INMEPEBVO1TwSIp+X8bmYto1mpQWVvFDraYLQ==
+	t=1793209082;
+	b=5kLS2NtUc9ZQLwuCpBkXweOV3BXSKeLLw0ElgFpSELjStuJIsr9+I4odyYHAIfJd50YK
+	 gjiuFPapj4IRQSOWPLQn1/ks8KwsnmG3qBy2lfE8FA67boZcsfbaFJyUHAgJu8sST10Am
+	 JP56i1Nn+3cPcSmJ/Cd2hArWdhAyjqKCC69sYkguXSrdgtbGbjyOm5AU0Xb/0x27S4xPX
+	 mG1IcsSZ1mVtTkCDk2I6JpJsAg2IUy5Vej7pIRNWj4VFKO7ACD37mahBasPaAWV+rYPTT
+	 nm3ofXYp1q53W+Er6v/UzERGhiW/DTDGxltCdZ1GC13tn2MhPwObPAgTz0FHM8rRVTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/b8xONO+q5hZv1NLXdauMz72QYPkt39xQv0ZEEx5hPE=;
-	b=H0P7GeJw8xJbJUDF8sqdVkZ7IBhziLDhpuT9AfSBYV8IoGY5qQbta7JdCdik4GYx1FPJ
-	 mKKjOo0zhjgRrBtHiULCXgyUWYhWtyUWLcXRdUVp4IfqIaTw7mnksJJ6OtnL40LDyC8is
-	 q60D8NVR/OabRdtO0bB2Lh07qYV7JlfnAQr9Tqka/Nm6xHfnyZrRcE8oNNiSaQHcCtTxd
-	 Lkmir7hlqS02w+qWXkuFORGc6Gsj2HN6QCmBwpZhdklt0TKqtqJAY0l7gSeGPAB7Yid6v
-	 nkysVTf3kgo8+xk8Zn3r5fRLykyAk9cM7TaRNsEe0lbVtMv0bJ/vUjsjxyM//KqzUVQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=HNIqWM9YPY5XQ8pcGUb9L707B5JANjo2Wc3yfFKfIc4=;
+	b=F9yt/L+42w+Krn8ewIDVXRablee6IFOa8sIkZGg1XBWvua2HBPS2Vym924qHYlEXWQuT
+	 5FdKW90e1H4CqbCpuGEVAS4fUVqhJ9uw1+Y2IL+QGJWlc7kBrpUHjsqeoiLAJgJ/6Q8r5
+	 Wr7/zdf3ZwxO2jNOUfWBQNeZVZ8c5CsxtrvQR0WCMqzrb2+KBxxqnsesCn/KIq7EISgXQ
+	 m8L5yX+zelOjMWTzyUMFbYcky2SZmIxqSARM3XHrnh2/O7SuwrwF5/fKOh8YoP+akljVg
+	 D3F0i+Yc9TKD/uNuO2EJ9sc+CQnLHI3kzn2vXiOrWmhog2PmPRCJInHc86g1ZpPn0Rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrqaXedE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ey/vizKt";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9337560A2600;
-	Wed, 28 Oct 2026 17:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C591606A339;
+	Wed, 28 Oct 2026 17:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrqaXedE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E391B1F01825;
-	Wed, 28 Oct 2026 17:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ey/vizKt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD7B1F01825;
+	Wed, 28 Oct 2026 17:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209079;
-	bh=/b8xONO+q5hZv1NLXdauMz72QYPkt39xQv0ZEEx5hPE=;
+	s=korg; t=1793209082;
+	bh=HNIqWM9YPY5XQ8pcGUb9L707B5JANjo2Wc3yfFKfIc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GrqaXedELKm9dkJwnntIHl9hSOYf44ye0nDg/0dPhyLMf+thP4l+SwwZCUUhrbuFl
-	 Q0wRfFvWhMXVV00bGoZvEz3Ok3+PFOTKsJV0r0dWsykoWQVO0CcL1fvktEm1XVJLVe
-	 n+f1+KhSRPS1Zh/TcIw28QPKiYt7nIlr9kCQ8klo=
+	b=Ey/vizKtybRRMwB/p8FzQZKG65PW+Lv3zvi+SJB8P1lTv7KnX5/Wj8PChRBZB16tk
+	 Cmm6KefqzJ9+zZ15iQcZIh1cXlszTAA6iYDVQ76H65PCS1bpUXkpl/IbmPX7N2SLJA
+	 z5NxNKsyx8MGUeSA/R/o8Y6JhKiFldu/sPsCnSxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=EC=84=B1=EB=B3=91=EC=B0=AC?= <tjdqudcks0424@naver.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.10 328/516] KEYS: Fix add_key() race with keyring restriction
-Date: Wed, 28 Oct 2026 17:58:00 +0100
-Message-ID: <20261028170011.258422912@linuxfoundation.org>
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 5.10 346/516] drm/i915/gem: Prevent overstepping exec array boundary
+Date: Wed, 28 Oct 2026 17:58:18 +0100
+Message-ID: <20261028170011.686163670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -61,71 +62,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 성병찬 <tjdqudcks0424@naver.com>
+From: Krzysztof Karas <krzysztof.karas@intel.com>
 
-commit dd3ea3fcba7c75493760cdbccd35f029597e8d5e upstream.
+commit ebe162db655881a38de43301151ff7ac940602b5 upstream.
 
-__key_create_or_update() snapshots keyring->restrict_link before taking
-the destination keyring's semaphore.  keyring_restrict() installs a
-restriction while holding that semaphore.
+It is possible for eb_relocate_parse_slow() to call kvfree() on
+entries outside the original exec array during following
+scenario inside eb_relocate_parse_slow():
 
-This allows a writer to observe no restriction, wait for the keyring
-owner to install a reject-all restriction and return successfully, and
-then link a key using the stale NULL snapshot.  The writer only needs
-write permission on the destination keyring.
+1) eb_copy_relocations() allocates as many as eb->buffer_count
+   copies for exec entries;
+2) eb_parse() appends up to two VMAs, right after incrementing
+   eb->buffer_count;
+3) cleanup under "out" label uses this incremented buffer_count
+   to release relocation pointers from exec array via kvfree(),
+   not from VMA array.
 
-Move the restrict_link read after __key_link_lock() and
-__key_link_begin().  The read and the subsequent restriction check are
-then serialized with restriction installation by keyring->sem.
+To amend this problem, ensure that relocation cleanup uses the
+original exec object count, excluding the VMAs appended by the
+command parser.
 
-The race was reproduced on v7.2.8 in 19 executions where restriction
-installation returned before the link completed.  All 19 linked the key
-despite the reject-all restriction.  With this change, 312 executions
-reached the same ordering and every add_key() call failed with -EPERM.
-
-The issue was found by manual concurrency analysis assisted by AI-based
-analysis and independently verified with a QEMU reproducer and kernel
-instrumentation.
-
-Fixes: 5ac7eace2d00 ("KEYS: Add a facility to restrict new links into a keyring")
-Cc: stable@vger.kernel.org
-Signed-off-by: 성병찬 <tjdqudcks0424@naver.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260930041802.6114-1-tjdqudcks0424@naver.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 8e4ba491b0ba ("drm/i915: Parse command buffer earlier in eb_relocate(slow)")
+Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Assisted-by: GitHub-Copilot:gpt-6-astra
+Cc: stable@vger.kernel.org # 5.10+
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patch.msgid.link/20260911061145.3535489-1-krzysztof.karas@intel.com
+(cherry picked from commit 2a0158925fb943c7ba8f3216e2734952128defc9)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/key.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/keys/key.c
-+++ b/security/keys/key.c
-@@ -844,9 +844,6 @@ key_ref_t key_create_or_update(key_ref_t
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -1902,6 +1902,7 @@ static int eb_prefault_relocations(const
+ static noinline int eb_relocate_parse_slow(struct i915_execbuffer *eb,
+ 					   struct i915_request *rq)
+ {
++	const unsigned int count = eb->buffer_count;
+ 	bool have_copy = false;
+ 	struct eb_vma *ev;
+ 	int err = 0;
+@@ -2028,7 +2029,6 @@ err:
  
- 	key_check(keyring);
+ out:
+ 	if (have_copy) {
+-		const unsigned int count = eb->buffer_count;
+ 		unsigned int i;
  
--	if (!(flags & KEY_ALLOC_BYPASS_RESTRICTION))
--		restrict_link = keyring->restrict_link;
--
- 	key_ref = ERR_PTR(-ENOTDIR);
- 	if (keyring->type != &key_type_keyring)
- 		goto error_put_type;
-@@ -883,6 +880,9 @@ key_ref_t key_create_or_update(key_ref_t
- 		goto error_link_end;
- 	}
- 
-+	if (!(flags & KEY_ALLOC_BYPASS_RESTRICTION))
-+		restrict_link = keyring->restrict_link;
-+
- 	if (restrict_link && restrict_link->check) {
- 		ret = restrict_link->check(keyring, index_key.type,
- 					   &prep.payload, restrict_link->key);
+ 		for (i = 0; i < count; i++) {
 
 
