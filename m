@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209472;
-	b=Mq75IJfz0VmSnt2b5CZ3WCds54RBcwNCsQfj/wvXhdRwdny1LoLBCvc2Bip/UvsPhGNn
-	 cRXI9mnL/u7mfmWUC9q2ccKINhu50IFriT2p7aNh7W1j+5vJ4WDfqA0F5CZ2yYGQ8HNEj
-	 AjtiBQ+Y50rgAtMhsxUWmvheNXy44ssUsUEKGH+FarqV3iaQCwWi6SSPHUd+QFJJJiBV4
-	 5jw/EpVoyi1GnWQxKY876XFSFt8L1c8luugQOz0MA9vV9+WUsODkodSkfCcvgZMnsGeQi
-	 1zT5eHRfVZYPOlSRL2dlXQDH8JUqL8adNZNq30wVyx2oY+7HkxLDjl1CTPwKmCRef5w==
+	t=1793209475;
+	b=wzvHKf+fJgnFW1qFCt1R/slh3LRytXLauuV2UpB9Ja5UknEsgv4RQX6VLVNcIzvQ8zFC
+	 t9wiRfrw+QoOGBrJkLwLAlk2TUCfYuvy5QUmJHEVbBkmLeI8nDrccvAA9WYS4ifNTolkv
+	 r0Yqn7TlolSksfX6jh5WoQt3UjZeUAYvvqQHjCgv5rEUG6cAtNhCvZT9siak5M4teF2aa
+	 JJ4PykzxZvZC1s2syvUztfi7uDyJfDPqWfek3HXvN2KBsWMmmfrs6JjpzFk9q64/6P8Kq
+	 gqx63MxORZFNvNnOSehRUelGOSsWm3cMO4hX8+n17ZtO1ecvFieTD/dWHTtKCYcFu9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209475;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pL5N8PEe/XFTklvyvjQdeBhQSEUHr5SpKOk7gIdNzuw=;
-	b=TrQ+drbpGd820A9tgCY0ipx8/wyTOaGMdfi+4lujeCSspC4DTFryJiZGPycVvGTAvYMc
-	 aBcnO1+WMR5C6ZotuPo+GSF1HcyiJlU2j8H69Pu/rBzofC/INtc7MCCAPWTWdJcFwOo3y
-	 bc4iCgMxwDaGlWO/4cRNan/CuAc/CYH5aj/msUaz6l9EygiyyNFoyANPx6Xf17u+VBll7
-	 XLSp2wGWz6UGemKeAyXLKy1cEqhjn3u5CFTyT0DXc94SBe482hfsCHFMA6It/7lXpQJH1
-	 wy2v7/dBHg+1qkSDsCnLKTjqwr9aoIsy8H1rBe4/NSYsR159bK2cqHUFZWmsUYiRfww==
+	bh=wE4prY3kpwys9K7mS5BdKW47Hp9XaTaUjtComn7Z9F0=;
+	b=TuT7Dt+xA2g8uVED/T66Pe1XL3XMWPpPH1DfivOID+i/779oGE6NCq+3Jt+1XuYQ1E1H
+	 hsAHsmaniTiq08v8vViXyzTLSa6phwKZWLMw4vXUiCjjCDTuCxRtbZUuFUJbywMhCukVX
+	 Emj1TJMyyqcdXh9RwyVhlbby7/F5yi+CvrOl3oTijlIXZo1RkF9gi8Par5VHP8/9BQJkq
+	 Gi6OxhJPicMvJcm6kYDX41lTMZwFt7+t6e8WOZy6qHweWBRYWBEAghczCcO08NHeIB92t
+	 4UywMpDPkqpT727FJvzs4OQm9MVT8zdK7udbVaqoDd0jqup+CqkC4lml3KsdJvzfp0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pz+6PDrI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqB4NQrG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96348606A31A;
-	Wed, 28 Oct 2026 17:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160BD606A31A;
+	Wed, 28 Oct 2026 17:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pz+6PDrI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966FB1F01828;
-	Wed, 28 Oct 2026 17:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqB4NQrG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699D51F01825;
+	Wed, 28 Oct 2026 17:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209472;
-	bh=pL5N8PEe/XFTklvyvjQdeBhQSEUHr5SpKOk7gIdNzuw=;
+	s=korg; t=1793209474;
+	bh=wE4prY3kpwys9K7mS5BdKW47Hp9XaTaUjtComn7Z9F0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pz+6PDrIieg72+lwnlrkI0Fw+N0OgUi0yTKzy++XJ1Vos8w4l33+bV1jEQFJU56jw
-	 0WPFWJ6WG0kLMoXY/DPPu+2edSYQwOrgVhaIsLkf2yCz2qnV2Pbb2z7x0riN75CL6h
-	 5bXe6d06nwX/dacLCD70x9VzZpA6GFv48qESNG1Q=
+	b=sqB4NQrG14wqycAT8n0DFnULy5YT5mXI49cW8ErAdTxPuRABkx4TDp56Gkjxt6a5K
+	 KcqCbAnQtskHIrGg4LtIpMrkFZ8D3JzqJ6OFOkMxoi46oWibDZsC4DwD9jihyKvpPe
+	 6cFRSTKHRATuIyyXZczTzzYZ005w+rTwsbbleSvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Oliver Upton <oupton@kernel.org>,
-	Aaron Ahmed <aarnahmd@amazon.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 484/516] KVM: arm64: vgic-its: Dont dereference a NULL collection on ITT save
-Date: Wed, 28 Oct 2026 18:00:36 +0100
-Message-ID: <20261028170014.943694114@linuxfoundation.org>
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Ben Cressey <ben@cressey.dev>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.10 467/516] dm-crypt: fix a tiny race condition in crypt_dec_pending
+Date: Wed, 28 Oct 2026 18:00:19 +0100
+Message-ID: <20261028170014.544351171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,58 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Ben Cressey <ben@cressey.dev>
 
-[ Upstream commit c6c156d931c33b92362383cf76f6d6e1291dcbfe ]
+commit 148845aa1921d95ef5dc851c76e6a284f6657df6 upstream.
 
-MAPC with V=0 drops ite->collection but leaves the ITE on the device's
-ITT list, and vgic_its_save_ite() dereferences it unconditionally. A
-guest that issues MAPD, MAPTI and then MAPC(V=0) therefore oopses the
-host when the VMM issues KVM_DEV_ARM_ITS_SAVE_TABLES to migrate it.
-That sequence is UNPREDICTABLE per the architecture, but KVM already
-handles the resulting state in the translate, MOVI and DISCARD paths.
+crypt_dec_pending reads io->error before calling atomic_dec_and_test.
+Another context, for example crypt_endio called from an interrupt, may
+set io->error and drop its reference between the read and the
+decrement. crypt_dec_pending then drops the last reference and completes
+the bio with the stale status - so a read that failed and was never
+decrypted, or a write that failed, is reported as successful.
 
-Save a zeroed entry, which vgic_its_restore_ite() reads back as
-invalid. Skipping the ITE instead would leave the ITT slot holding
-whatever is in guest memory, and restore rejects an entry naming a
-collection the restored collection table does not have.
+The read was placed before the decrement by commit b35f8caa0890 ("dm
+crypt: wait for endio to complete before destruction"), because that
+commit freed dm_crypt_io before calling bio_endio. This is no longer the
+case, dm_crypt_io lives in the per-bio data now.
 
-Fixes: eff484e0298da ("KVM: arm64: vgic-its: ITT save and restore")
+Read io->error after atomic_dec_and_test instead. atomic_dec_and_test is
+fully ordered, so no additional barrier is needed.
+
+Fixes: b35f8caa0890 ("dm crypt: wait for endio to complete before destruction")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260807104102.2410744-2-fuad.tabba@linux.dev
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-[aarnahmd: Upstream vgic_its_write_entry_lock() takes in the kind of table
- entry (ite) and looks up its size, while 5.10 takes in the size of an ite
- directly via ite_esz, because commit 3b2c81d5feb2 ("KVM: arm64: vgic-its:
- Add stronger type-checking to the ITS entry sizes") is not in 5.10.]
-Signed-off-by: Aaron Ahmed <aarnahmd@amazon.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Ben Cressey <ben@cressey.dev>
+Assisted-by: Claude:unspecified
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/dm-crypt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-index e6ec0701f5616..07b8ca72111f3 100644
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2151,6 +2151,14 @@ static int vgic_its_save_ite(struct vgic_its *its, struct its_device *dev,
- 	u32 next_offset;
- 	u64 val;
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -1748,7 +1748,6 @@ static void crypt_dec_pending(struct dm_
+ {
+ 	struct crypt_config *cc = io->cc;
+ 	struct bio *base_bio = io->base_bio;
+-	blk_status_t error = io->error;
  
-+	/*
-+	 * MAPC with V=0 keeps the ITEs mapped but drops their collection,
-+	 * and with it the ICID. Save a zeroed entry, which the restore path
-+	 * reads back as invalid.
-+	 */
-+	if (!ite->collection)
-+		return vgic_its_write_entry_lock(its, gpa, 0ULL, ite_esz);
-+
- 	next_offset = compute_next_eventid_offset(&dev->itt_head, ite);
- 	val = ((u64)next_offset << KVM_ITS_ITE_NEXT_SHIFT) |
- 	       ((u64)ite->irq->intid << KVM_ITS_ITE_PINTID_SHIFT) |
--- 
-2.53.0
-
+ 	if (!atomic_dec_and_test(&io->io_pending))
+ 		return;
+@@ -1761,7 +1760,7 @@ static void crypt_dec_pending(struct dm_
+ 	else
+ 		kfree(io->integrity_metadata);
+ 
+-	base_bio->bi_status = error;
++	base_bio->bi_status = io->error;
+ 
+ 	/*
+ 	 * If we are running this function from our tasklet,
 
 
