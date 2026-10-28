@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210383;
-	b=bgaxVhn7vEY52Uuc2Y4F3VmTms4thUfkCiq326AOdr5yJASwLi+TzUu/cikkikWEJgzy
-	 lm8yCSofyEUYt2BanodjyV+fbgTABAq5jRb7m+oqupX6Wsgdt668WZH7g2XZB9rRGKozg
-	 8Xekt9TVLH3rsZa4Msw1GBslgdX2PEJN6rbfkRFm4XrSd3zCFP9n6l8vaqpeZnmJZLz5z
-	 3azSyFFZ/O5QurHbIkpnTNkEzMzdiqOLulk3grfn55POiEL9UOP0iuWXn9S+WrNk+ob3L
-	 Q79hqnmJs0ydRksKN6+ruTeW4mjyr4fjQJOLCLlJhQdrIzf7702Eu2XG/WDLxDSjSVA==
+	t=1793210386;
+	b=SeFGH0a2OzCkR13WCsBppJoL7FaIL/CO8S6PNQutPWxBHmrpZcDi1ccz7qcB0DIasprZ
+	 eZRgWZexYz1zGcfQqkmi/ZqOgz2prVIfNzmhpXawYAmLr7ORFA34jDnKdYFiH4o3BvCmd
+	 xZSjMi2OZn6MweGQH6iJ76NM8QWCSRlRp6dFWyFZ/G3yyMowXJ8BOCPA76Z71AfnZ0mFx
+	 6iXQCQzAa958d1hEfQayyMVkjKbZgt6dsDZn8bZ1jMrJXr5wKCBiEp7G5YiuDJeNwvJ8v
+	 4MNpN9RhgLzEgxxpi3HFyCLKuN8sG+k5hMWGHzVKKUMVAgsgXyrZW1UneE8GkXzs/HA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210386;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O6OknoB0OEZkvxmC0Wi3RxKnbmjmFRVgaPQ8pqIQEy8=;
-	b=Jb7mGT/0L9qB8C68Hr3W5DFVpvR4zq/kuA9GDq//LM4UYwgcTRN06fv7QAb0EBAbyHte
-	 9kb31m+2uzI5gXSqGBO56T95S3ob8O+BuyK83D5MlhSvKqH1IN6OQcRFEjgQD9FahKUrD
-	 ildkY6avXrdfzkanMGXrVqNc+t6f5eGPQk5EG/SOXiKWL5mI+E0oCv1VhUUTFtXQLjjvm
-	 Tsbe5znEDdfD36Wzo0Pqu30fwKc7Z+fd5c+/RhYjP9BqJe93bfFb6z0d1AA++sw7TgF/Z
-	 b98KhPnrMaVOj2ulh7U4+3miQ3AHe0vmqD/HRcHmNARgwsxifjTNSCSKYpqrzwEzkug==
+	bh=i26LHE3vzFT30j44KhkNLmxbnd8hMuzQ9rsL6jgVjjk=;
+	b=JxcepFmgHkloetYiy7utvITxM7dSLpKpw76tWKNYLjMxOOZk/qnaRicHxfCb6zmrlxh7
+	 0g6/hRpyCmv853j4ifujvyMefYHylLjC95JegEujWoxBTgPh5/cKKDZf+psUe1P8wuCqy
+	 OjaR7oUfk71WMXiAke6RfI7hL6bSp6f5SqmIYf7rtKr5dNC4mRcimRDUlTDprYCF+gGzp
+	 OgcrTTcOwVfHupVaHFzjH1TdnqmzRIx1oPR30SfZuztnCluAGKkK+v4xLIWoCbyQlBDQ8
+	 TdojYeGRfTktZ/2fhyPfRDfcOjVmEqrlkwbgloUsMN/O+D1vpZheADheGFV5ijwikfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g21XNJV9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CZM/XgX+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825B0606A31C;
-	Wed, 28 Oct 2026 17:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA81606A31A;
+	Wed, 28 Oct 2026 17:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g21XNJV9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D327E1F01825;
-	Wed, 28 Oct 2026 17:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CZM/XgX+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5501F01825;
+	Wed, 28 Oct 2026 17:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210383;
-	bh=O6OknoB0OEZkvxmC0Wi3RxKnbmjmFRVgaPQ8pqIQEy8=;
+	s=korg; t=1793210386;
+	bh=i26LHE3vzFT30j44KhkNLmxbnd8hMuzQ9rsL6jgVjjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g21XNJV9FAjhYg7GboUp3cCF5ZW9HrN/rWDN4/Yj4ivhXILjP9mFWL0lnH5zOAZ9F
-	 2UKvjp8xDF8Q3MGTxLZVdufsblE7fdr3pjP1ty7uB2dUVJEFNyHtcUrglNqOQt0Nal
-	 KY9Qc2sOsCQ1l12HuGkLaRuBuqEoy9ySaRrwh62U=
+	b=CZM/XgX+J6kEOl452FMqNUBXY2am3kpa4yJAR89YoTv6VigVEWMsIXkqq+BSq1g65
+	 dYhPjoHbgH5oWeGn8Rx42fPjtOGiNB73oj/IOVIz9UTVgR8flwOQzICVpHVNFFFIlk
+	 rYzgjSyFf+96//RsMoyFzTZDskkLdWrfjoOyWtsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	"Claude Fable 5.1" <noreply@anthropic.com>
-Subject: [PATCH 6.6 145/168] io_uring: dont pass restart error codes to userspace
-Date: Wed, 28 Oct 2026 18:01:21 +0100
-Message-ID: <20261028165946.517537545@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/571] tls: device: fix out-of-bounds write in tls_append_frag()
+Date: Wed, 28 Oct 2026 17:52:28 +0100
+Message-ID: <20261028170008.049298839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
-References: <20261028165943.089486480@linuxfoundation.org>
+In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
+References: <20261028170008.009143722@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -64,129 +64,111 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-Commit e1a64bc64897f4c2fe460922c345f2ed8f889b5f upstream.
+[ Upstream commit b17cf742eaad70ae29ac558cefb3aa9bbeea03d4 ]
 
--ERESTARTSYS and friends are instructions for the system call exit code,
-which either restarts the call or turns them into -EINTR. They are not
-supposed to be seen by applications. A request isn't a system call,
-nobody looks at what it returns before that is put into a CQE.
+Found with syzkaller and a local syzbot instance running on top of a
+netdevsim TLS offload emulation; tls_device.c is otherwise only reachable
+on a machine with a NIC that implements the offload.
 
-The read/write and the networking opcodes convert these codes to -EINTR
-by hand. The others don't. An io-wq worker that is blocked in the open of
-a FIFO, a tty or some other device, or in a splice from an empty pipe,
-and that gets interrupted because the request is cancelled, completes it
-with -512:
+tls_push_data() only checks whether the open record still has room for
+another frag at the bottom of its loop, and the MSG_MORE early break
+skips that check.  The record survives to the next syscall with the frag
+count it already had, and tls_append_frag() does not check either, so
+with TLS_TX_ZEROCOPY_RO every splice(SPLICE_F_MORE) of a byte or two adds
+a non-coalescing pipe page and num_frags walks off the end of
+tls_record_info.frags[MAX_SKB_FRAGS].  Once the record is pushed,
+tls_push_record() runs the same index over sg_tx_data[MAX_SKB_FRAGS] and
+the sg_set_page() writes land on the destruct_work that follows it, which
+the workqueue then calls.
 
-  IORING_OP_OPENAT, IOSQE_ASYNC       // FIFO without a writer
-  IORING_OP_ASYNC_CANCEL              // -EALREADY, worker is signalled
-  CQE of the open: res == -512
+The byte limit is fine because copy drops to 0 and the loop falls through
+to the same check; the frag count has no such feedback.
 
-There are more candidates, like whatever a file system or driver returns
-from ->flush(), ->fsync(), ->fallocate() or ->uring_cmd(), or breaking a
-lease or delegation.
+Push the record rather than keep a full one open, which is what a plain
+TCP socket does - tcp_sendmsg_locked() uses tcp_mark_push() and
+new_segment in both the copy and the MSG_SPLICE_PAGES paths, and tls_sw
+already sets full_record when the sk_msg ring fills up, MSG_MORE or not.
 
-Take care of it in io_issue_sqe(), which all of them go through. The
-helper is moved from rw.c as is. The cost is a compare and a branch that
-is not taken per request.
+  BUG: KASAN: slab-out-of-bounds in tls_append_frag ( net/tls/tls_device.c:269)
+  Write of size 8 at addr ffff8881104d1530 by task tls_oob/450
 
-[ 6.6: io_issue_sqe() returns IOU_OK and an error straight away ]
-Fixes: 15b71abe7b52 ("io_uring: add support for IORING_OP_OPENAT")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-39-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  CPU: 2 UID: 0 PID: 450 Comm: tls_oob Not tainted 7.2.0-rc7+ #329 PREEMPT
+  Call Trace:
+   <TASK>
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   tls_append_frag (net/tls/tls_device.c:269)
+   tls_push_data (net/tls/tls_device.c:518)
+   tls_device_sendmsg (net/tls/tls_device.c:583)
+   inet_sendmsg (net/ipv4/af_inet.c:865)
+   sock_sendmsg (net/socket.c:775 net/socket.c:790 net/socket.c:813)
+   splice_to_socket (fs/splice.c:884)
+   do_splice (fs/splice.c:936 fs/splice.c:1349)
+   __do_splice (fs/splice.c:1431)
+   __x64_sys_splice (fs/splice.c:1634 fs/splice.c:1616)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+   </TASK>
+
+and, once the record is pushed:
+
+  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:300:24
+  index 18 is out of range for type 'skb_frag_t [17]'
+  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:301:41
+  index 18 is out of range for type 'scatterlist [17]'
+  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:302:39
+  index 18 is out of range for type 'scatterlist [17]'
+  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:307:38
+  index 26 is out of range for type 'scatterlist [17]'
+
+  kernel tried to execute NX-protected page - exploit attempt? (uid: 0)
+  BUG: unable to handle page fault for address: ffffea000411a680
+  #PF: supervisor instruction fetch in kernel mode
+  #PF: error_code(0x0011) - permissions violation
+  Oops: Oops: 0011 [#1] SMP KASAN PTI
+  Workqueue: ktls_device_destruct 0xffffea000411a680
+  RIP: 0010:0xffffea000411a680
+  Call Trace:
+   <TASK>
+   worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+   </TASK>
+
+Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260823084758.20936-1-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |    8 +++++++-
- io_uring/io_uring.h |   18 ++++++++++++++++++
- io_uring/rw.c       |   18 ------------------
- 3 files changed, 25 insertions(+), 19 deletions(-)
+ net/tls/tls_device.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1906,6 +1906,9 @@ static int io_issue_sqe(struct io_kiocb
- 	}
- 
- 	if (ret == IOU_OK) {
-+		/* not all handlers take care of the internal restart codes */
-+		if (unlikely(req->cqe.res <= -ERESTARTSYS))
-+			req->cqe.res = io_fixup_restart_res(req->cqe.res);
- 		if (issue_flags & IO_URING_F_COMPLETE_DEFER)
- 			io_req_complete_defer(req);
- 		else
-@@ -1914,8 +1917,11 @@ static int io_issue_sqe(struct io_kiocb
- 		return 0;
- 	}
- 
--	if (ret != IOU_ISSUE_SKIP_COMPLETE)
-+	if (ret != IOU_ISSUE_SKIP_COMPLETE) {
-+		if (unlikely(ret <= -ERESTARTSYS))
-+			ret = io_fixup_restart_res(ret);
- 		return ret;
-+	}
- 
- 	/* If the op doesn't have a file, we're not polling for it */
- 	if ((req->ctx->flags & IORING_SETUP_IOPOLL) && def->iopoll_queue)
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -193,6 +193,24 @@ static __always_inline bool io_fill_cqe_
- 	return true;
- }
- 
-+static inline ssize_t io_fixup_restart_res(ssize_t ret)
-+{
-+	switch (ret) {
-+	case -ERESTARTSYS:
-+	case -ERESTARTNOINTR:
-+	case -ERESTARTNOHAND:
-+	case -ERESTART_RESTARTBLOCK:
-+		/*
-+		 * We can't just restart the syscall, since previously
-+		 * submitted sqes may already be in progress. Just fail
-+		 * this IO with EINTR.
-+		 */
-+		return -EINTR;
-+	default:
-+		return ret;
-+	}
-+}
-+
- static inline void req_set_fail(struct io_kiocb *req)
- {
- 	req->flags |= REQ_F_FAIL;
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -140,24 +140,6 @@ void io_readv_writev_cleanup(struct io_k
- 	kfree(io->free_iovec);
- }
- 
--static inline ssize_t io_fixup_restart_res(ssize_t ret)
--{
--	switch (ret) {
--	case -ERESTARTSYS:
--	case -ERESTARTNOINTR:
--	case -ERESTARTNOHAND:
--	case -ERESTART_RESTARTBLOCK:
--		/*
--		 * We can't just restart the syscall, since previously
--		 * submitted sqes may already be in progress. Just fail
--		 * this IO with EINTR.
--		 */
--		return -EINTR;
--	default:
--		return ret;
--	}
--}
--
- static inline void io_rw_done(struct kiocb *kiocb, ssize_t ret)
- {
- 	/* IO was queued async, completion will happen later */
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 10f7b35673bc6..2060380265a75 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -493,7 +493,8 @@ static int tls_push_data(struct sock *sk,
+ 		if (!size) {
+ last_record:
+ 			tls_push_record_flags = flags;
+-			if (flags & (MSG_SENDPAGE_NOTLAST | MSG_MORE)) {
++			if ((flags & (MSG_SENDPAGE_NOTLAST | MSG_MORE)) &&
++			    record->num_frags < MAX_SKB_FRAGS - 1) {
+ 				more = true;
+ 				break;
+ 			}
+-- 
+2.53.0
+
 
 
