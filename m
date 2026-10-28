@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212953;
-	b=vUU8adms3p5fcRPHERCoC7BHJBiLrYNWapIMVPF6983eFlcP4KOkTCq01q6IKCgp8Uzh
-	 v71swMrF3CcVQ3HBA07QZ7C97bxhCmNWeyohPOzNOlqbZNPE/cB8eqoS5yOR+49FfTCYk
-	 IfbfWohhkfV0cGZ3R0Ovhj4LP6tsa2vnvYmtmKYcUEJJSRjdn4elRjSPGjrZ/xkaYzx++
-	 xeLwFDQ8pKgOG6HVNsTDJbiGxcuhkX4gB2+vR6ttm2NA69IvmHGq53G+Uglc/u3PY1LRG
-	 bx46Ei5PTL+ADNrXDMnmuaWKPSeKx+7GCyNJQk32eSGJ2aUBl5JPShnJ7Q8Pj6HNyww==
+	t=1793212956;
+	b=R/0nj1JUjq6XBMhZjbFpZT/+nTCrjcrONCh/vq/5eSsIFZ+ajT9wXzlZnBPlAO5VYtdt
+	 D4+MHeoFJz2/aLmZLtOn8Nz9seiYSvibRqU6NBgjE6y+Yx0ZmOv5jlP5IpQUv0RdntOMb
+	 KX0bj/SnL5qiQZtCEJAh2xpOPD0Yzkt3K6U1vAeK6n+TzxW9k2T2VYbZfZPTyP4uB5CJn
+	 4QzPtx17mbJHVyEVnPGj11nC0w+YSjiuI2tsJTBDQGRt07veROqSxXGiD9e7hBxy7GcWb
+	 OsSbO/WAl1giX9aaf+7OHi/TBk916xcC9PiOagku8yRMPAMzzv9fLOsD9fpsUkSWXkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212953;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212956;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f59DN8t7wvUGyjIGwH2pv9w47+O3IwQONaNF48tAcdI=;
-	b=IBy15SssBu30n20YRLN8LfqV/RmXPCnNN7A5pkXhWmNFz8LbbDOIlySI2DLFik6Vm//m
-	 XLqdVzMXmjS/LYROpbmZAYr/eAjHNvRFkm+j2Ey+ThKHdOnY2LmV00fYPGsdeQUCouCh+
-	 I62/6VTm37WdgrRlPG0ohQHy/kwCn7lUHqCIULncF0qsVzncukDmMuu44XaDZFnZThu0a
-	 Jcz9iCTshXGIBRVNloTLPe8E+Cf7fyUTVO8fmdSipIBDczDQ7s1rPtktHGvbVlJACGrQW
-	 Vgble1/Z+MqmZEe5E2dP2M2tUADUQTRVCEfFWEKAwRqNzikhwAJk4IlzF/U7w/d3nxw==
+	bh=WfH6ewfN9F8XAdZOcB+4T/ofigzlp4yO8hCZXv7M17E=;
+	b=YvMafjhn99OzizBjR7MtDmI1USMOr1Ka2BDXgTA7JYnE77DWcKShR8FPeWydn61ucueE
+	 XELV8LkOhU1pHBZQLOQAJWU6ZCw8UCM0404ScIwMD9IRHsi4RwwAs1pSwZOw62CQPI7Pw
+	 6V3hQ/CMTMb2honm0tPFa5joxLX8T4AqmHir2TQpvnmpmfUoMtgPnes1CBP4Og6pZkqIF
+	 8VE7x4GtRzBXW3DBr0dORznKUPyBvR2/XO2DgPiiBDIovZ/1wu5qGaVdrBOhvyi7wIc6N
+	 kFSesUCq/d72T3GIShM4e2sEDIbq7oTApb0Zp5N1B4UEnZa7MnKGsYnKbdlkCsY+pxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAYq6XUA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNuFtH8B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1906606A325;
-	Wed, 28 Oct 2026 18:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F65606A31A;
+	Wed, 28 Oct 2026 18:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAYq6XUA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03671F031E1;
-	Wed, 28 Oct 2026 18:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNuFtH8B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F4B1F01825;
+	Wed, 28 Oct 2026 18:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212953;
-	bh=f59DN8t7wvUGyjIGwH2pv9w47+O3IwQONaNF48tAcdI=;
+	s=korg; t=1793212956;
+	bh=WfH6ewfN9F8XAdZOcB+4T/ofigzlp4yO8hCZXv7M17E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAYq6XUAtzWLM6m5y17c57eshysV4CQ/ykT+aJkKsaHLtRKItxyKcRSDujt6wVlyJ
-	 uUwNp01QXbjzHcGbgtyiGPt3WPd5ZzjddxYT8w9CweIYa/5ujOK6iVG/U7DY0yJqYg
-	 UhybPrwEX55IlslKrSvbmooTGLPLT1Vuww6rvdJc=
+	b=NNuFtH8B9m6DqIm/ChJuRfAmVC6XWklT/MFiPdGymF0Mabp/UM8R+l2yrn/rED8+4
+	 8HxCHNNyPn6ljX1/PS7KP/gVIWjnynHGjqjbchLLtW9oEmWuQq/wlglTPHpoR2eNt/
+	 jCl4YHD67juITt0xfsmqppvwc3te9TG+tXE25N60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zimeng Li <me@lizi.moe>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 0298/1887] ASoC: qcom: lpass-cpu: use DAI table index for playback constraints
-Date: Wed, 28 Oct 2026 17:39:54 +0100
-Message-ID: <20261028170506.011260224@linuxfoundation.org>
+	Felix Gu <ustc.gu@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.1 0334/1887] iio: adc: sun4i-gpadc-iio: clean up on thermal zone registration failure
+Date: Wed, 28 Oct 2026 17:40:30 +0100
+Message-ID: <20261028170506.829041174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,50 +67,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zimeng Li <me@lizi.moe>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit ca51771c8efde5df05476ac98dd1b2af4e2b149f upstream.
+commit 2cdc7ef31827db4fbc6283750420639569e1f0e9 upstream.
 
-The DAI ID is a hardware port ID and is not necessarily the index of
-the corresponding entry in variant->dai_driver.
+If devm_thermal_of_zone_register() fails, probe returns without
+unregistering the IIO map array or disabling runtime PM.
 
-When configuring a DAI with LPAIF_I2SCTL_MODE_QUAD01, the probe code
-currently uses dai_id to index variant->dai_driver. This is incorrect
-for platforms where DAI IDs are sparse. For example, the IPQ806x MI2S
-DAI has ID 4 while it is the only entry in the DAI driver table. If
-that DAI is configured for QUAD01 and probe reaches this branch, the
-code writes beyond that single entry via dai_driver[4] instead of
-updating the DAI being processed.
+Jump to err_map to release them.
 
-Use the loop index i when updating the current DAI's playback channel
-constraints, while retaining dai_id for indexing the hardware-port
-specific playback SD-line mode array.
-
-This fixes the incorrect DAI table access for platforms where the DAI
-ID does not match its position in the driver table.
-
-Fixes: c223f41c1a52 ("ASoC: qcom: Add four speaker support on MI2S secondary")
+Fixes: b0a242894f11 ("iio: adc: sun4i-gpadc-iio: register in the thermal after registering in pm")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zimeng Li <me@lizi.moe>
-Assisted-by: LLM-assisted source analysis
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260927010911.51980-1-me@lizi.moe
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass-cpu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/sun4i-gpadc-iio.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -1228,8 +1228,8 @@ int asoc_qcom_lpass_cpu_platform_probe(s
- 		}
- 		if (drvdata->mi2s_playback_sd_mode[dai_id] ==
- 			LPAIF_I2SCTL_MODE_QUAD01) {
--			variant->dai_driver[dai_id].playback.channels_min = 4;
--			variant->dai_driver[dai_id].playback.channels_max = 4;
-+			variant->dai_driver[i].playback.channels_min = 4;
-+			variant->dai_driver[i].playback.channels_max = 4;
+--- a/drivers/iio/adc/sun4i-gpadc-iio.c
++++ b/drivers/iio/adc/sun4i-gpadc-iio.c
+@@ -645,10 +645,10 @@ static int sun4i_gpadc_probe(struct plat
+ 		 * thermal because no thermal DT node is found.
+ 		 */
+ 		if (IS_ERR(info->tzd) && PTR_ERR(info->tzd) != -ENODEV) {
+-			dev_err(&pdev->dev,
+-				"could not register thermal sensor: %ld\n",
+-				PTR_ERR(info->tzd));
+-			return PTR_ERR(info->tzd);
++			ret = dev_err_probe(&pdev->dev,
++					    PTR_ERR(info->tzd),
++					    "could not register thermal sensor\n");
++			goto err_map;
  		}
  	}
  
