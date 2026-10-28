@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217314;
-	b=QEagFo3qadIawFoi0Dx0SFSdWHr0ZUnFopLjiZQyVFkglcXQOwe+m7miC0OSzPh1a6hI
-	 kPqLtQfPHJ9DwDNYH8eFCZ3hNVj4hoxp9/Hud2IoU7MmZYtqrbN0PeXTlS1LidjnZ56dC
-	 qwTn+VmsKQVT/uXsmqKDWb1721ANzRecv7ElPtzGBrUFfzAVWp9DzNXCujP9TmTDCTbdm
-	 3LyfRXXB36XRXa/gtfGFH5CrzbLNw+u/Wwk9Gre4R6eDJV2vl+Sojm8reC4Dp542OGyFa
-	 RsCJH+24PC6A6AA4JSL8RpyoFaRRYaEd4gdJV6QOXEFR0EIJRFDWvaWrEUvbCP7itnw==
+	t=1793217317;
+	b=T8vgFlLh5HRmeki74U66Ook5TcAdncLWhEOSxYFwevjMtaOLqM56XJdi4PzThkciRvcM
+	 vwkYXT6ttSzsevHAnb7cPmmHE6tgX4R7A3niMYCa5GLnZa1xISZqhLLKIXIaBBi4L9cAi
+	 f7SMDWiEhtJr8L/jCtukp68bLH0AzkVf0FqSgzfb7+gKY5lFkXzIq8VJnQliTdELsDN6+
+	 /hS+oOQX4eG2qRkiSLkcwU1fFH2W/+pAu6OtCU2arx2Xisv+fYB2+kffzjDSbuD169SMd
+	 x/WxlyHmn5TTsC1e/lzusFYC1jmcU9npfQKXylbPh5rRUfJFn6qbHon+QMjycqogqEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=AR/UMl4M8e4AqqEVdb9oo5xH5DS5hSQKnVuCHKHzjGw=;
-	b=mKvN+65NhK23mLBh3m6hmLKn2kaYfI4qGKHqmC2m3mDDDKTORpCWrC0mEdKhqaON+/p5
-	 ub4m6FtXQOwET5neNnqYFajglVOExceYOu/WidzrjUduT+CjZsWuM7VHysnq/K5PwlLMl
-	 TcjhgzActYyYiWmcFXKVRTEqkxboYc00t3hUxk8G4FS3IltKpEdfFp34Iv5utoUeZwjSo
-	 E2wX0uYDirJgtNChUFBO7rYKQed8NwPzcDQRseBMghKRYGsG8EQQlhXpXaCsXNIx68pDh
-	 ohajO4VI1LL155kZD9Inkki/kg0PIbVFjXkUa/s0SAAfGlRZmy0sNqZ2SKp9grutgiw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=TqmjzdpnLsVcsiMNBVWdP8CCrnjM3Ib7yIinsdqzdrc=;
+	b=jvBcuHP2+MpSaPKaViPZ1KlVsuDiSj9cKeyutNgPdUN+frPq+lfmCafTSrYZTQwxsvuy
+	 QRw72uRykaiBYgSFLnGpYkOhAagHjdlORFC5dRWu9OqCuKvtg8AxjQFAttHINl41cTQ1W
+	 XK/NpWR/nZCXe0+LSLWsMPsjwU2C9JQB+b+jjYz8dWRzYm3jQQlNH2ou84HfYLlWUiKKX
+	 ySpZZ3x/uVDpJBqEwOBAw5fU7iYTJIhlUka/CCXoS9RoKTe1JEkZ/7FKWOOwRPHyJo9qw
+	 DOkHHcXe7/D9fRfrPw5//rBjKBgYa51ac1vG4cDSuaM15rLKAZmZIOGAOSKupIq9xOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfUyKNXT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Np45PXBG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB1E606A325;
-	Wed, 28 Oct 2026 19:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFE6606A31D;
+	Wed, 28 Oct 2026 19:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfUyKNXT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF701F01829;
-	Wed, 28 Oct 2026 19:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Np45PXBG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2521F01825;
+	Wed, 28 Oct 2026 19:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217314;
-	bh=AR/UMl4M8e4AqqEVdb9oo5xH5DS5hSQKnVuCHKHzjGw=;
+	s=korg; t=1793217317;
+	bh=TqmjzdpnLsVcsiMNBVWdP8CCrnjM3Ib7yIinsdqzdrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YfUyKNXToAn/iBkWVTmbhKh1fA2c8yeI4LhiMMIe7FiCWrJzis7RzOzViLReDCCG4
-	 l4OQW9vwpyqZTKzZ0aqz7SChhfOxdkhyWmDXxy02ULUjG5hyY07qFpEwYJn1PwvNop
-	 wqDZnSWhW2SafQ+TNUNDTWs+m3mQZDI4TUUb6Zec=
+	b=Np45PXBGechYHX7m9028KFe7qQGrwY43V2VgZA9l7K/Tf+Pa0CL5+cQ4ONYAAkw4q
+	 DdjPMNnEFCEs9CBGinkpGX+UUlWkyQEZ4nMsY1l54YMVmpm33XWUjNOsEZfXmL/dZ4
+	 1Xybl6g9ztmWb8icjUSenBbr7iB4QgOcljnsGUvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Prike Liang <Prike.Liang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1834/1887] firmware: arm_scmi: Use channel ID for transport teardown
-Date: Wed, 28 Oct 2026 18:05:30 +0100
-Message-ID: <20261028170541.180944277@linuxfoundation.org>
+Subject: [PATCH 6.1 1861/1887] drm/amdgpu: fix the idr allocation flags
+Date: Wed, 28 Oct 2026 18:05:57 +0100
+Message-ID: <20261028170541.801363373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,53 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit a71a3d4d8a6e9e399fd988c0e6da47a6ee21c99e ]
+[ Upstream commit ea56aa2625708eaf96f310032391ff37746310ef ]
 
-SCMI protocols can share the BASE transport channel when firmware does
-not describe a dedicated channel for the protocol. In that case multiple
-IDR entries can point at the same scmi_chan_info, whose owning transport
-device was created with cinfo->id.
+Fix the IDR allocation flags by using atomic GFP
+flags in non‑sleepable contexts to avoid the __might_sleep()
+complaint.
 
-scmi_chan_destroy() used the IDR iterator key when destroying the
-transport device. If an alias entry is visited before the owning channel
-entry, the lookup can miss the device because the iterator key does not
-match the protocol ID used when the transport device was created. The
-code then clears cinfo->dev, so the later owning entry skips teardown and
-leaks the transport device.
+  268.290239] [drm] Initialized amdgpu 3.64.0 for 0000:03:00.0 on minor 0
+[  268.294900] BUG: sleeping function called from invalid context at ./include/linux/sched/mm.h:323
+[  268.295355] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1744, name: modprobe
+[  268.295705] preempt_count: 1, expected: 0
+[  268.295886] RCU nest depth: 0, expected: 0
+[  268.296072] 2 locks held by modprobe/1744:
+[  268.296077]  #0: ffff8c3a44abd1b8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xe4/0x210
+[  268.296100]  #1: ffffffffc1a6ea78 (amdgpu_pasid_idr_lock){+.+.}-{3:3}, at: amdgpu_pasid_alloc+0x26/0xe0 [amdgpu]
+[  268.296494] CPU: 12 UID: 0 PID: 1744 Comm: modprobe Tainted: G     U     OE       6.19.0-custom #16 PREEMPT(voluntary)
+[  268.296498] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[  268.296499] Hardware name: AMD Majolica-RN/Majolica-RN, BIOS RMJ1009A 06/13/2021
+[  268.296501] Call Trace:
 
-Destroy the transport device using cinfo->id, which is the protocol ID
-that owns the channel and was used when creating the transport device.
-
-Fixes: 05a2801d8b90 ("firmware: arm_scmi: Use dedicated devices to initialize channels")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-8-3afe499d46e3@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 8f1de51f49be ("drm/amdgpu: prevent immediate PASID reuse case")
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 3c863ff920b4 ("drm/amdgpu: replace PASID IDR with XArray")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 6c9107c32993c..2f959a3183273 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2217,7 +2217,7 @@ static int scmi_chan_destroy(int id, void *p, void *idr)
- 		struct scmi_device *sdev = to_scmi_dev(cinfo->dev);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
+index 5b248c4df12d5..e526a2824d1ff 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
+@@ -68,8 +68,11 @@ int amdgpu_pasid_alloc(unsigned int bits)
+ 		return -EINVAL;
  
- 		of_node_put(cinfo->dev->of_node);
--		scmi_device_destroy(info->dev, id, sdev->name);
-+		scmi_device_destroy(info->dev, cinfo->id, sdev->name);
- 		cinfo->dev = NULL;
- 	}
+ 	spin_lock(&amdgpu_pasid_idr_lock);
++	/* TODO: Need to replace the idr with an xarry, and then
++	 * handle the internal locking with ATOMIC safe paths.
++	 */
+ 	pasid = idr_alloc_cyclic(&amdgpu_pasid_idr, NULL, 1,
+-				 1U << bits, GFP_KERNEL);
++				 1U << bits, GFP_ATOMIC);
+ 	spin_unlock(&amdgpu_pasid_idr_lock);
  
+ 	if (pasid >= 0)
 -- 
 2.53.0
 
