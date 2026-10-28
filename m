@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213818;
-	b=VY+UQtVja0oWuP40U13wN9nnP5BsAYadIT+b1cBP6k54z6RjA2JbqvueJFTbPlXNddAB
-	 NnxHG9Zoxe6XpWNFZP70WcUOIroGOt10GEX/mSme+M6L3cu825ldOOVGSwQ9I4EnwVR5E
-	 qmiz7rvUhAfEb/8BM8wqKrA69/c/sE7WWUwad/Jir9mhxypOuhhBWm9dSdlAy1dMHZVm9
-	 ioaUkJfUBv6r/b99ClO4OYq2keRQmlD7j2lTi29oimmApGDpZycajA75qCkBWotI2uY7q
-	 O5E9AwCFujHqkenVNF7l9/PrYJ3S0x8xQDFDXNuI+OP1QG6msg4frpxUozS/Ae3Gpfg==
+	t=1793213821;
+	b=XC0A6OYuRhCBf4QLA4OY4AUNmmyg5/UjiCz+6boQLHml+vMQ2YojEZKVUeSuSVp1L+oM
+	 D4qQUqQoNQJr67PTpByWI+sKQNR4+6opmwPP8OT5nZQMMaxJJmrAKHiZ16IC7hnggORRp
+	 WuhmS6vfTqVUlMkNuA0HWYIWRIjgBF6+/+Qe6bUQ+IGbGJVzcnygRh6P3r36BWNf8/ISC
+	 2ls7cq+2qg58Oe3rpDmgHw7guYKz+qkuH0wsOpdXnKwLWzSyHrDhS25E3awgix/hI0iyK
+	 Qdb4AnGKL8HQQxIr+/UxQPYGkYFiS0fVF8KZjE0Kvwp/ILwxEax+9PW1vUeHgX2epPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6k3PxehrfSu3v+beRbDRLql320ui3YUJ5Q4Xw8k1wnE=;
-	b=FO/GcHQ+Jjc5UNkwKsU4/cbi4CCcxXhaA5wcCHjxYVDLruKIzpvLhlVBb50gL2Zyt1mq
-	 ICK9C/w6VewTJEXh7M7wlQ7U6Xxx8C8GZRRDmNjeUG1B3BXf3Rn8MVIBT7K/x2X9wdiCX
-	 3aMJvRZtAIwXW1snqNLEmv7rDndDd7xn8w2flMLxF4Fo1DkuzBrVDBavLO9S97CCMLpuj
-	 3e5udOmHNkRlmsrt0D7XKMHkp3HAgdb3ObLdR19h1vH9fZFKbe8Fa7FD2SVfYBDlqbNsR
-	 s/Wx8y+F2m30e/vhnHKAu1KiW9Bfl4XB1mNtnSMGtFVty3S5tydt38jiWCVz+gGXX1Q==
+	bh=i56M0XgOhjA5DO81mbm8Gc4AsiJ4waoocAcK77c6RCQ=;
+	b=mTr5zzDOs75vy4eb09LHaWSe3uI/vhLpFnYAs2zLTiIqBPbv12x1z0WLyFKTY52PsmTs
+	 bAwM/JThi01YXUqbi+Uv4laE8LPD7XwJEcp6MrXdqGvjkbQ0jEjg/8ijIF+U4R4AjAdot
+	 fAutaXEPwLOrWFfUzdkeWJ0cpAmXHgOMql2RPV7j19eRkK2AlsI7mk4A00FfmPJnQPoyk
+	 fgb7WaRbIL5o+wfrUADyAoFVv40c/VmX7mQP/LyojxrmG01r1tzg6ShUwoJsvCv9hLNZs
+	 FGyUlODla35k1YphiLv9yUdTR7tw/TjsVe30kBDX5amR47miJp+p2YTOTwKByEFQsyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmyPhFA6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtGzlO6i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C91606A31D;
-	Wed, 28 Oct 2026 18:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8DC606A31D;
+	Wed, 28 Oct 2026 18:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmyPhFA6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C222A1F01825;
-	Wed, 28 Oct 2026 18:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtGzlO6i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6A41F01825;
+	Wed, 28 Oct 2026 18:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213818;
-	bh=6k3PxehrfSu3v+beRbDRLql320ui3YUJ5Q4Xw8k1wnE=;
+	s=korg; t=1793213821;
+	bh=i56M0XgOhjA5DO81mbm8Gc4AsiJ4waoocAcK77c6RCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DmyPhFA6zWt/VJuJ4Wk7DA36A/tzAutVpOVsjzgBNcIAjVlnQesp/OFV0XjM57x6S
-	 W1de5XLvsrZ3xZNT3bDB7VTugdjQxbz4Q/V4aaChyEJ2K60PuSmYXAq6e7YQfJ4ieT
-	 mA6Cyuy5EHvvDp1+ct5yQwN7X/F3yjTnfwIYZXhY=
+	b=KtGzlO6iwlKxiXWHxtNxZ5WWn91+aFE/eGBgdlrA2aq4wa1hEKLThNzkpuCAxyTxO
+	 mrYmwz+1ixmuqqaAELHTFdM7eDwVhAz+3j3UsUF4SRW2hwCoAhCe3H04mxIYPMfdg0
+	 /RVJk2CDBcqeBJgzBNurPOQf83aN+AQzSGCi62DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0641/1887] soc: qcom: icc-bwmon: Fix refcount imbalance seen during bwmon_remove
-Date: Wed, 28 Oct 2026 17:45:37 +0100
-Message-ID: <20261028170513.998186452@linuxfoundation.org>
+Subject: [PATCH 6.1 0624/1887] ext4: refactoring to use the unified helper ext4_quotas_off()
+Date: Wed, 28 Oct 2026 17:45:20 +0100
+Message-ID: <20261028170513.609516655@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,68 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sibi Sankar <quic_sibis@quicinc.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 24086640ab39396eb1a92d1cb1cd2f31b2677c52 ]
+[ Upstream commit f3c1c42e0c40656e73f12ab5dcb1110f83ef8e65 ]
 
-The following warning is seen during bwmon_remove due to refcount
-imbalance, fix this by releasing the OPPs after use.
+Rename ext4_quota_off_umount() to ext4_quotas_off(), and add type
+parameter to replace open code in ext4_enable_quotas().
 
-Logs:
-WARNING: at drivers/opp/core.c:1640 _opp_table_kref_release+0x150/0x158
-Hardware name: Qualcomm Technologies, Inc. X1E80100 CRD (DT)
-...
-Call trace:
-_opp_table_kref_release+0x150/0x158
-dev_pm_opp_remove_table+0x100/0x1b4
-devm_pm_opp_of_table_release+0x10/0x1c
-devm_action_release+0x14/0x20
-devres_release_all+0xa4/0x104
-device_unbind_cleanup+0x18/0x60
-device_release_driver_internal+0x1ec/0x228
-driver_detach+0x50/0x98
-bus_remove_driver+0x6c/0xbc
-driver_unregister+0x30/0x60
-platform_driver_unregister+0x14/0x20
-bwmon_driver_exit+0x18/0x524 [icc_bwmon]
-__arm64_sys_delete_module+0x184/0x264
-invoke_syscall+0x48/0x118
-el0_svc_common.constprop.0+0xc8/0xe8
-do_el0_svc+0x20/0x2c
-el0_svc+0x34/0xdc
-el0t_64_sync_handler+0x13c/0x158
-el0t_64_sync+0x190/0x194
---[ end trace 0000000000000000 ]---
-
-Fixes: 0276f69f13e2 ("soc: qcom: icc-bwmon: Set default thresholds dynamically")
-Fixes: b9c2ae6cac40 ("soc: qcom: icc-bwmon: Add bandwidth monitoring driver")
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240613164506.982068-1-quic_sibis@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230327141630.156875-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: b4b4fda34e53 ("ext4: fix uninitialized ratelimit_state->lock access in __ext4_fill_super()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/icc-bwmon.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/super.c | 26 +++++++-------------------
+ 1 file changed, 7 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-index 7829549993c92..2e0a45cd6921f 100644
---- a/drivers/soc/qcom/icc-bwmon.c
-+++ b/drivers/soc/qcom/icc-bwmon.c
-@@ -604,11 +604,13 @@ static int bwmon_probe(struct platform_device *pdev)
- 	opp = dev_pm_opp_find_bw_floor(dev, &bwmon->max_bw_kbps, 0);
- 	if (IS_ERR(opp))
- 		return dev_err_probe(dev, PTR_ERR(opp), "failed to find max peak bandwidth\n");
-+	dev_pm_opp_put(opp);
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index f2a569868e416..76c8c364c5dd1 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1167,12 +1167,12 @@ static void dump_orphan_list(struct super_block *sb, struct ext4_sb_info *sbi)
+ #ifdef CONFIG_QUOTA
+ static int ext4_quota_off(struct super_block *sb, int type);
  
- 	bwmon->min_bw_kbps = 0;
- 	opp = dev_pm_opp_find_bw_ceil(dev, &bwmon->min_bw_kbps, 0);
- 	if (IS_ERR(opp))
- 		return dev_err_probe(dev, PTR_ERR(opp), "failed to find min peak bandwidth\n");
-+	dev_pm_opp_put(opp);
+-static inline void ext4_quota_off_umount(struct super_block *sb)
++static inline void ext4_quotas_off(struct super_block *sb, int type)
+ {
+-	int type;
++	BUG_ON(type > EXT4_MAXQUOTAS);
  
- 	bwmon->dev = dev;
+ 	/* Use our quota_off function to clear inode flags etc. */
+-	for (type = 0; type < EXT4_MAXQUOTAS; type++)
++	for (type--; type >= 0; type--)
+ 		ext4_quota_off(sb, type);
+ }
  
+@@ -1188,7 +1188,7 @@ static inline char *get_qf_name(struct super_block *sb,
+ 					 lockdep_is_held(&sb->s_umount));
+ }
+ #else
+-static inline void ext4_quota_off_umount(struct super_block *sb)
++static inline void ext4_quotas_off(struct super_block *sb, int type)
+ {
+ }
+ #endif
+@@ -1283,7 +1283,7 @@ static void ext4_put_super(struct super_block *sb)
+ 		ext4_msg(sb, KERN_INFO, "unmounting filesystem.");
+ 
+ 	ext4_unregister_li_request(sb);
+-	ext4_quota_off_umount(sb);
++	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
+ 
+ 	flush_work(&sbi->s_error_work);
+ 	destroy_workqueue(sbi->rsv_conversion_wq);
+@@ -5605,7 +5605,7 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 	return 0;
+ 
+ failed_mount10:
+-	ext4_quota_off_umount(sb);
++	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
+ failed_mount9: __maybe_unused
+ 	ext4_release_orphan_info(sb);
+ failed_mount8:
+@@ -7091,20 +7091,8 @@ int ext4_enable_quotas(struct super_block *sb)
+ 					"(type=%d, err=%d, ino=%lu). "
+ 					"Please run e2fsck to fix.", type,
+ 					err, qf_inums[type]);
+-				for (type--; type >= 0; type--) {
+-					struct inode *inode;
+-
+-					inode = sb_dqopt(sb)->files[type];
+-					if (inode)
+-						inode = igrab(inode);
+-					dquot_quota_off(sb, type);
+-					if (inode) {
+-						lockdep_set_quota_inode(inode,
+-							I_DATA_SEM_NORMAL);
+-						iput(inode);
+-					}
+-				}
+ 
++				ext4_quotas_off(sb, type);
+ 				return err;
+ 			}
+ 		}
 -- 
 2.53.0
 
