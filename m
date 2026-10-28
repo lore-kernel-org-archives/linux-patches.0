@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215402;
-	b=oo370tYKwqtmIBgVFH7f910ncKrC9ly4P/rv7zTkHVi88XEOjMWxFq8dnIOA1Q6WWwuS
-	 B1pnB7rthxtohPzrmz3YRHHmbML+gf5cLxvbS3dZ2LaZEgSVul1MJhXPylfqHREPCEuR2
-	 JADp4iJTsUcsieMsGzAJZM5o6FZfezMZNtyDZf+P/Y1GQG69GswYnrd2avY5qfFCE/NVK
-	 gkpkmt5QhqYoMSv4+WlBMXkfZPN+F7Y50cWK+Lc8Npfytd+vP8trAxYXW8WdssR5bNOJL
-	 rx9mDrOlDjavl9kC999uye9IJv+1kM8X2bAfD2QxZpK/NnOr5Qpy9ZztuCjiGWKkceA==
+	t=1793215404;
+	b=0cQE+DiCaFNTkMGoJy7H47zlWNOpChslNHiRQfDEFCxrofS0JrSm0NOYaq8h0UaYftcI
+	 VQxzf3t010VrePFtpbCkX5OiGeZmjRJBWxyfIo/zFjc/Uv0TJkjegfgDSUe2bUxztiJSm
+	 64NJZ53fV9YB0uXGG/7x5AiGn1n8nX2cJbdMPY2/SBW+RNgjlDag96Zixs2JXw5K9NGSV
+	 jbYjEgTsPZHgo6WJ5AWlX0PQx6T+K0gkd4ZoBOzaBO1qazkOo1lD2gcGa1YeRN+0Mm168
+	 MxAwuX1uITXV+mRM/IxXeAZkLkRxe2xqjRKesKLuqPEP9FWAdGOrPAiKPRmdPJMb6Bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215402;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215404;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mWqMJ0P7JKendBSuSSuAVCxm+fEH63DNCt1xfKZFgGI=;
-	b=XFaHW/Fn6lug9Lv0xP0vs/dppgGyAmK2lIjR5W7Ouf7nd84fs+egoV8WWugEg7zxitJ5
-	 epafHFzFa6yXQiWuWChX3a9y/OSntYt/QGXQ+fMODANghE4+gXDLg8+uYhN5GQgVtdO+C
-	 HBoURaPLlT3YxvICPZMCzoP45SFOy+9/MDzXF066sXUL8mIuSzh0CldU/NKmlebQdpHnE
-	 DVc5ODa2utXYO5GJ176yeglbZKotXYCAixlEnunhvwDEK4YzYeO0Bt3JQ68xRoYc73K/J
-	 5DYdzqNnoIi9xzjepYcQFMY7EOg37Mz0LE7iOOIbvozO4IlagZ8d3fbMSwwa/OisL/w==
+	bh=M0t0ctyBBE74jO2A78YpioEoj+8U3RWPeLsrpvWS5Eo=;
+	b=H8UdPLbOeKbhsKbjwE2B9TYYSoHNis6ISzKUNZLnnmVkb/UoJVhNLHiUutOJ2zsLf7Ah
+	 94uAOotJ1Tz4tdFie0kp7+5skCcedrIHq+2WIm2OaSTEmz8wVZ+o33rfSZ/D5GMi5+zsI
+	 0o4vaBbNd6JxfqivTMnQD2iuq+XF0HUNmrBOpsHIDO92iPCnYdVwU68wyw9/I6Rgnte/b
+	 l9//5stZe+/RCZ1rvJNWcRtpAAgM/353UC2+cTJJk2EWYjhObWGYtZalt/EZ90jqcmV2x
+	 U9XqWDobC/xncSDTQ2RFSjHE4Quiszn8DDoCcD6GIKIZkZBNnEDUBb0xbNl4uZ5Lebg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKSgCfRP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1KX2F0al;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E92606A334;
-	Wed, 28 Oct 2026 19:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE78606A32C;
+	Wed, 28 Oct 2026 19:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKSgCfRP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3FE1F031E0;
-	Wed, 28 Oct 2026 19:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1KX2F0al
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8CC1F01828;
+	Wed, 28 Oct 2026 19:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215401;
-	bh=mWqMJ0P7JKendBSuSSuAVCxm+fEH63DNCt1xfKZFgGI=;
+	s=korg; t=1793215404;
+	bh=M0t0ctyBBE74jO2A78YpioEoj+8U3RWPeLsrpvWS5Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YKSgCfRP3+2vMxkR1J1nvHMTrU+ECTzpnfhs5itjkYCo0Apq2i7GOUvuwiC/OgUt8
-	 3kM5U3wCEAPm6aViw/wY2VJyZK/1FSdbR5QDdHHvMXDRUMB5aPkOZ+MAIBqanE5uSE
-	 MCMDcWm5jCCFcbLjH340phTZtIscrVYMaBCv3CMw=
+	b=1KX2F0ali6C/GYhwRkUtd2YAjSysXNXTpOMKEMOxP3ZKncO64JHZYbfI1wSrbC1Cy
+	 x/S68xTP9Jbdme1CNwFZtGBzFuKrOYQ918buOSjauvR6Z+uza5RSjRPXtRuIIF+h/H
+	 PjpSqLQ7m4sPq2rnIHR+XEIbcpHP3GiSo0S+vmzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1181/1887] tipc: serialize udp bearer replicast list updates
-Date: Wed, 28 Oct 2026 17:54:37 +0100
-Message-ID: <20261028170526.281983262@linuxfoundation.org>
+Subject: [PATCH 6.1 1199/1887] wifi: ieee80211: validate MLE common info length
+Date: Wed, 28 Oct 2026 17:54:55 +0100
+Message-ID: <20261028170526.689910116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,192 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 350e592ff4e30e48ffb55e142d11a73e63f4869c ]
+[ Upstream commit 293baeae9b2434a3e432629d7720b5603db2d77e ]
 
-tipc_udp_rcast_add() and cleanup_bearer() both update ub->rcast.list with
-list_add_rcu() / list_del_rcu(), but nothing serializes them. The add runs
-from the encap receive softirq (via tipc_udp_rcast_disc()) without
-rtnl_lock(), so it can race the cleanup delete and corrupt the list:
+ieee80211_mle_common_size() uses the first common-info octet as the
+common information length for all known MLE types. However,
+ieee80211_mle_size_ok() only validates that octet for Basic, Probe
+Request, and TDLS MLEs.
 
-  list_del corruption. prev->next should be ffff8880298d7ab8,
-    but was ffff88802449ad38. (prev=ffff888027e3ec98)
-  kernel BUG at lib/list_debug.c:62!
-  RIP: __list_del_entry_valid_or_report+0x17a/0x200
-  Workqueue: events cleanup_bearer
-  Call Trace:
-   cleanup_bearer (net/tipc/udp_media.c:811)
-   process_one_work (kernel/workqueue.c:3302)
-   worker_thread (kernel/workqueue.c:3466)
+Reconfiguration MLEs also skipped the length octet when calculating the
+minimum common size, and Priority Access MLEs skipped validation of the
+advertised common information length.
 
-The bearer can be enabled from an unprivileged user namespace, as the
-TIPCv2 generic-netlink ops carry no GENL_ADMIN_PERM.
+Account for the Reconfiguration common-info length octet and validate
+the advertised common information length for all known MLE types. Keep
+unknown-type handling unchanged.
 
-Add a spinlock to struct udp_bearer and take it around the list_add_rcu()
-in tipc_udp_rcast_add() and the list_del_rcu() loop in cleanup_bearer() so
-the two writers can no longer corrupt the list.
-
-Reject a duplicate peer under the same lock before allocating, and remove
-tipc_udp_is_known_peer(). The old lockless pre-check in
-tipc_udp_rcast_disc() was racy: two softirqs discovering the same peer
-could both find it absent and add it twice.
-
-cleanup_bearer() runs from a workqueue after tipc_udp_disable() clears the
-bearer's up bit, so an encap softirq can still reach tipc_udp_rcast_add()
-and add a peer after cleanup_bearer() has already emptied the list, leaking
-that entry when the bearer is freed. Mark the bearer disabled under
-rcast_lock once the list is emptied and refuse further additions.
-
-Fixes: ef20cd4dd163 ("tipc: introduce UDP replicast")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Suggested-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260716025203.9332-2-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260611173506.36838-2-enderaoelyther@gmail.com
+[remove now misleading comment]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 56 +++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 29 deletions(-)
+ include/linux/ieee80211.h | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index e1305d159834b..9c4f75a93e637 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -94,6 +94,8 @@ struct udp_replicast {
-  * @ifindex:	local address scope
-  * @work:	used to schedule deferred work on a bearer
-  * @rcast:	associated udp_replicast container
-+ * @rcast_lock:	serialize updates to @rcast.list against concurrent updaters
-+ * @disabled:	bearer is being torn down; reject further @rcast.list additions
-  */
- struct udp_bearer {
- 	struct tipc_bearer __rcu *bearer;
-@@ -101,6 +103,8 @@ struct udp_bearer {
- 	u32 ifindex;
- 	struct work_struct work;
- 	struct udp_replicast rcast;
-+	spinlock_t rcast_lock;
-+	bool disabled;
- };
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index c16e90c5588ee..d7ad2e9b0baa2 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -4601,7 +4601,7 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, u8 len)
+ 	const struct ieee80211_multi_link_elem *mle = (const void *)data;
+ 	u8 fixed = sizeof(*mle);
+ 	u8 common = 0;
+-	bool check_common_len = false;
++	u8 common_len;
+ 	u16 control;
  
- static int tipc_udp_is_mcast_addr(struct udp_media_addr *addr)
-@@ -279,26 +283,6 @@ static int tipc_udp_send_msg(struct net *net, struct sk_buff *skb,
- 	return err;
+ 	if (!data || len < fixed)
+@@ -4612,7 +4612,6 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, u8 len)
+ 	switch (u16_get_bits(control, IEEE80211_ML_CONTROL_TYPE)) {
+ 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
+ 		common += sizeof(struct ieee80211_mle_basic_common_info);
+-		check_common_len = true;
+ 		if (control & IEEE80211_MLC_BASIC_PRES_LINK_ID)
+ 			common += 1;
+ 		if (control & IEEE80211_MLC_BASIC_PRES_BSS_PARAM_CH_CNT)
+@@ -4630,15 +4629,14 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, u8 len)
+ 		common += sizeof(struct ieee80211_mle_preq_common_info);
+ 		if (control & IEEE80211_MLC_PREQ_PRES_MLD_ID)
+ 			common += 1;
+-		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_RECONF:
++		common += 1;
+ 		if (control & IEEE80211_MLC_RECONF_PRES_MLD_MAC_ADDR)
+ 			common += ETH_ALEN;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
+ 		common += sizeof(struct ieee80211_mle_tdls_common_info);
+-		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+ 		common = ETH_ALEN + 1;
+@@ -4651,11 +4649,9 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, u8 len)
+ 	if (len < fixed + common)
+ 		return false;
+ 
+-	if (!check_common_len)
+-		return true;
++	common_len = mle->variable[0];
+ 
+-	/* if present, common length is the first octet there */
+-	return mle->variable[0] >= common;
++	return common_len >= common && common_len <= len - fixed;
  }
  
--static bool tipc_udp_is_known_peer(struct tipc_bearer *b,
--				   struct udp_media_addr *addr)
--{
--	struct udp_replicast *rcast, *tmp;
--	struct udp_bearer *ub;
--
--	ub = rcu_dereference_rtnl(b->media_ptr);
--	if (!ub) {
--		pr_err_ratelimited("UDP bearer instance not found\n");
--		return false;
--	}
--
--	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
--		if (!memcmp(&rcast->addr, addr, sizeof(struct udp_media_addr)))
--			return true;
--	}
--
--	return false;
--}
--
- static int tipc_udp_rcast_add(struct tipc_bearer *b,
- 			      struct udp_media_addr *addr)
- {
-@@ -309,16 +293,34 @@ static int tipc_udp_rcast_add(struct tipc_bearer *b,
- 	if (!ub)
- 		return -ENODEV;
- 
-+	spin_lock_bh(&ub->rcast_lock);
-+	if (ub->disabled) {
-+		spin_unlock_bh(&ub->rcast_lock);
-+		return 0;
-+	}
-+	list_for_each_entry(rcast, &ub->rcast.list, list) {
-+		if (!memcmp(&rcast->addr, addr, sizeof(*addr))) {
-+			spin_unlock_bh(&ub->rcast_lock);
-+			return 0;
-+		}
-+	}
-+
- 	rcast = kmalloc(sizeof(*rcast), GFP_ATOMIC);
--	if (!rcast)
-+	if (!rcast) {
-+		spin_unlock_bh(&ub->rcast_lock);
- 		return -ENOMEM;
-+	}
- 
- 	if (dst_cache_init(&rcast->dst_cache, GFP_ATOMIC)) {
-+		spin_unlock_bh(&ub->rcast_lock);
- 		kfree(rcast);
- 		return -ENOMEM;
- 	}
- 
- 	memcpy(&rcast->addr, addr, sizeof(struct udp_media_addr));
-+	list_add_rcu(&rcast->list, &ub->rcast.list);
-+	b->bcast_addr.broadcast = TIPC_REPLICAST_SUPPORT;
-+	spin_unlock_bh(&ub->rcast_lock);
- 
- 	if (ntohs(addr->proto) == ETH_P_IP)
- 		pr_info("New replicast peer: %pI4\n", &rcast->addr.ipv4);
-@@ -326,8 +328,6 @@ static int tipc_udp_rcast_add(struct tipc_bearer *b,
- 	else if (ntohs(addr->proto) == ETH_P_IPV6)
- 		pr_info("New replicast peer: %pI6\n", &rcast->addr.ipv6);
- #endif
--	b->bcast_addr.broadcast = TIPC_REPLICAST_SUPPORT;
--	list_add_rcu(&rcast->list, &ub->rcast.list);
- 	return 0;
- }
- 
-@@ -362,9 +362,6 @@ static int tipc_udp_rcast_disc(struct tipc_bearer *b, struct sk_buff *skb)
- 		return 0;
- 	}
- 
--	if (likely(tipc_udp_is_known_peer(b, &src)))
--		return 0;
--
- 	return tipc_udp_rcast_add(b, &src);
- }
- 
-@@ -646,9 +643,6 @@ int tipc_udp_nl_bearer_add(struct tipc_bearer *b, struct nlattr *attr)
- 		return -EINVAL;
- 	}
- 
--	if (tipc_udp_is_known_peer(b, &addr))
--		return 0;
--
- 	return tipc_udp_rcast_add(b, &addr);
- }
- 
-@@ -680,6 +674,7 @@ static int tipc_udp_enable(struct net *net, struct tipc_bearer *b,
- 		return -ENOMEM;
- 
- 	INIT_LIST_HEAD(&ub->rcast.list);
-+	spin_lock_init(&ub->rcast_lock);
- 
- 	if (!attrs[TIPC_NLA_BEARER_UDP_OPTS])
- 		goto err;
-@@ -813,11 +808,14 @@ static void cleanup_bearer(struct work_struct *work)
- 	struct udp_replicast *rcast, *tmp;
- 	struct tipc_net *tn;
- 
-+	spin_lock_bh(&ub->rcast_lock);
- 	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
- 		dst_cache_destroy(&rcast->dst_cache);
- 		list_del_rcu(&rcast->list);
- 		kfree_rcu(rcast, rcu);
- 	}
-+	ub->disabled = true;
-+	spin_unlock_bh(&ub->rcast_lock);
- 
- 	tn = tipc_net(sock_net(ub->ubsock->sk));
- 
+ enum ieee80211_mle_subelems {
 -- 
 2.53.0
 
