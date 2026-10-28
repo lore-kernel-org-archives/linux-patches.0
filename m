@@ -1,61 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209241;
-	b=NuXKUgPwNwTD9WC85kA8sAyqt5QIJg/po9JEvUTExmHRbRZzYGK24/TbyMzJz5h/4d/H
-	 tNdGWoxx+Z5GXs95qLHGjQgVbeZhfkOmGG7ATDGtOPzrnvjmEFc20DTuzeQWBo7wioWGq
-	 wz9cskOO2DLDrPU9FaokiwDZAFWD3OOZbJenbmh5TNkqyhdV5FPixBXIWWKFBrlpVzlYh
-	 32FobP0103TfdJI4oCbDBMXPzxta8fQAcsnYYinUTPn28gG5MRlwsXij1dXVGDiDRwKgn
-	 T/SoKg9Yec5lN7Z0z+F3Kn7Fbq9VAQarbf9/L2sNMSyvqOWcX0gXZtWuxJgxfM5nGBA==
+	t=1793209244;
+	b=H44Mbl0ko1JRq3oprgs1FGudYGdx4NxAdmuvifxQCd7ZrXYjRhO3kHhTM/Az/jyXsm8T
+	 /OiFAKXP2P+eLsUDBQL09yfAi+a9dJvoZgcWMIoJ5DDwAuO0n3E5EojOTIp8KOzYcuBTu
+	 Exr+W4SsfkCZYZc+s20BSn1LlG0mKnX03r11JCqdS6unQ9IyxMZBzqCu3ENBC5NohyHsV
+	 iEsimGb20NwF7J6LIYMsoz9eGPcw/zzKgnFvytx91ZcJ0eF2qvKAHvvt9dPxQabPjVfsh
+	 vC51IZmWc5wqXIrRbZhISb9WduGABDtKruRBUAKTLbpNnVhNCfCQNLt6FA/gz6eKzDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209241;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wErNaXL/Y7thRg3K3/BIsWCFZB4gLwcMGbBT7BCHCNI=;
-	b=21/Deab4k77rPmQ9fCIH1RPRQ4yGOfuaCe5BzFysmUx/kr+ST3FcCeIsU5W0QqobBRvB
-	 HgZ+rrrLv2FN1EI9ouxzm9hln/DapAabscNK56fGnLSQD14ddUkvqHwHWrzqdM4z+q7pr
-	 nRGYIXZCnty8+TCcR9hdXcYBVv95TQBS3V48v5QkvA5bamD5STatOt6/CH8nOwJuyRYPX
-	 /RUwHi/dEfgiSDw6SRbnTOze0u4mBa5Lg8mdj04PuE/aBgwn26hMYD2uT+iRFl+EHA1bk
-	 fo8DlXFZlQ+5t+LJVnIpNhxjyEs2UxNmd0KNwJOPFlPOFozDfAZ4ibEKWN0+gRIrSCA==
+	bh=g3JGb6xhq+pZPqrqwPMn04wFKN8yHOxci+QJigy0/wA=;
+	b=CgWn04vdXP9vqWA4Pt1GhgWGJSjSlc7oou9GWeylT4w6Kwx3C4znYjgUftNTiii603tv
+	 e/KPEvng6dolKqZGy2c4Vn1i14O9RLhVg1+xyZmBxtTujqopEehjM69bLhFVNSq+EFyCD
+	 QxIJRs8KIraOYtERrKf8FE9qkdRI1clURzyXGqDqLo2p3KaIO8P1sxnhE30bZTbskQYFg
+	 0/Bqnl9iE/Ie6HGfkU2vFDV/nfy8zo4qMc5yyvCD/p4GwMvRDsIqCockudecC+Tw6EB2B
+	 YNbsPGSCAtLjh5szm3gN480XowY74Pntp/WeZFKic0ZNOTWihjKdRfsAb1i6zmZ+JRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSKTwijO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ekg/VKPc";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7661A606A31C;
-	Wed, 28 Oct 2026 17:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BF4606A31A;
+	Wed, 28 Oct 2026 17:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSKTwijO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBA91F01825;
-	Wed, 28 Oct 2026 17:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ekg/VKPc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BE01F01825;
+	Wed, 28 Oct 2026 17:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209241;
-	bh=wErNaXL/Y7thRg3K3/BIsWCFZB4gLwcMGbBT7BCHCNI=;
+	s=korg; t=1793209244;
+	bh=g3JGb6xhq+pZPqrqwPMn04wFKN8yHOxci+QJigy0/wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSKTwijOEVvxrXMdqiLC7gcrOFxWEHs1AtQvLvGOd6Ez2z9NFBavKNfTynjRxAXX/
-	 GeVPTebhTX3cSvxF0Ur4FKTy7T9GMQe/ojdcHBT+dQVXb4eEweiZGhVCfZKQ+9YBSZ
-	 GQ0UiHTAxHYyaKANCNOsNYTPNuF3635U6Ja+4a5w=
+	b=Ekg/VKPcF1+AtR8zVFvJLOVANZS1HGrrgGXrjchb52HNylix0KMv5J+yjajVZRubC
+	 H6VgVujmAfOjXpo6yO2opsG0Tu0Zd/w2S/OFtVzqLmatdhFYPMX6IBKlWkM6+68lh9
+	 H/0GRYWX4j7DR1v0G6Q3pXcc/sTq8JvxYVEl1aJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Minchan Kim <minchan@kernel.org>,
+	Tahera Fahimi <taherafahimi@linux.microsoft.com>,
+	Allen Pais <apais@linux.microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 375/516] mm/mremap: fix locked_vm leak by splitting VMA for MREMAP_DONTUNMAP
-Date: Wed, 28 Oct 2026 17:58:47 +0100
-Message-ID: <20261028170012.367305576@linuxfoundation.org>
+Subject: [PATCH 5.10 402/516] xfrm: prevent policy_hthresh.work from racing with netns teardown
+Date: Wed, 28 Oct 2026 17:59:14 +0100
+Message-ID: <20261028170013.004167701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -77,111 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Tahera Fahimi <taherafahimi@linux.microsoft.com>
 
-[ Upstream commit 597e4b9ab48a3f841080f627722064853d3f650e ]
+An XFRM_MSG_NEWSPDINFO request can queue the per-net work item
+policy_hthresh.work onto the system workqueue. xfrm_hash_rebuild()
+retrieves the enclosing struct net from the work item, so the callback
+can dereference freed memory if it runs after net namespace teardown.
 
-The MREMAP_DONTUNMAP feature is highly unusual in that it permits mremap()
-operations that keep the original VMA in place.
+Mainline commit 29fe3a61bcdc ("xfrm: prevent policy_hthresh.work
+from racing with netns teardown") fixes this issue using
+disable_work_sync(). That API is not available in Linux 5.10, so the
+mainline change cannot be directly backported.
 
-Historically this has led to a lot of bugs where non-obvious interactions
-occur between existing mremap() operations and the original VMA.
+Provide the same guarantee with an XFRM-local work_disabled flag. Protect
+the flag and schedule_work() with the existing policy_hthresh seqlock so
+teardown can atomically stop new queueing attempts. Then use
+cancel_work_sync() to synchronize work that was queued before the flag was
+set. This ensures policy_hthresh.work cannot outlive its struct net.
 
-Fix another of these - partial copies.
-
-The long-standing mremap() partial VMA logic has the baked-in assumption
-that the originating VMA is unmapped and thus moved.
-
-However MREMAP_DONTUNMAP defeats this by performing a partial copy
-instead since it keeps the source VMA around.
-
-An mremap(..., MREMAP_DONTUNMAP) operation disallows resizing of the VMA,
-but the operation can be performed partially:
-
-                           |-----------------|
-                           |                 |
-                           |                 v
-                        <------>          <------>
-                        .new_sz.           new_sz
-                     |--.------.--|       |------|
-                     |  .source.  |       | dest |
-                     |--.------.--|       |------|
-                     <------------>
-                         old_sz
-
-The page tables in the specified range are moved, but the original VMA is
-kept intact.
-
-This interacts poorly with mlock()'d VMAs, as the VMA_LOCKED_BIT flag is
-cleared for the entire source VMA and set for the entire destination VMA.
-
-This results in an mm->locked_vm leak as the change is therefore not
-accounted correctly.
-
-The clear solution here is to make the portion of the source VMA which is
-mremap()'d distinct from the rest of it, a.k.a. split it.
-
-Therefore resolve this issue by splitting it ahead of the rest of the
-mremap() operation if the VMA is mlock()'d.
-
-This is valid, as the source VMA will lose its VMA_LOCKED_BIT flag, so if a
-partial remap it will become distinct from the rest of the VMA.
-
-In order to make this change re-expose split_vma() in vma.h for
-CONFIG_MMU (nommu doesn't compile mremap.c and uses a static helper
-instead).
-
-Finally, update the sys_map_count check to account for this case.
-
-Note that the early check does not use needs_pre_split() - this is because
-the VMA has not been looked up by this point, so be conservative and assume
-that the VMA is mlock()'d in this case for the purposes of the
-sys_map_count check.
-
-Link: https://lore.kernel.org/20260930-fix-dontunmap-partial-self-merge-v2-2-f388985a0f0a@kernel.org
-Fixes: e346b3813067 ("mm/mremap: add MREMAP_DONTUNMAP to mremap()")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Replaced upstream VMA preparation helpers with inline logic in move_vma() using the existing split_vma(mm, ...) API. ]
+Fixes: 880a6fab8f6b ("xfrm: configure policy hash table thresholds by netlink")
+Assisted-by: GitHub-Copilot:GPT-5.6 Sol
+Signed-off-by: Tahera Fahimi <taherafahimi@linux.microsoft.com>
+Reviewed-by: Allen Pais <apais@linux.microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ include/net/netns/xfrm.h |  1 +
+ net/xfrm/xfrm_policy.c   | 19 ++++++++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 3334c40222101..8d8b39f821380 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -366,6 +366,19 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 	if (err)
- 		return err;
+diff --git a/include/net/netns/xfrm.h b/include/net/netns/xfrm.h
+index 47bc0ec051eb5..bafdfdccbd954 100644
+--- a/include/net/netns/xfrm.h
++++ b/include/net/netns/xfrm.h
+@@ -23,6 +23,7 @@ struct xfrm_policy_hash {
+ struct xfrm_policy_hthresh {
+ 	struct work_struct	work;
+ 	seqlock_t		lock;
++	bool			work_disabled;
+ 	u8			lbits4;
+ 	u8			rbits4;
+ 	u8			lbits6;
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 26bc082139550..c14f495f62b80 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -1378,7 +1378,10 @@ static void xfrm_hash_rebuild(struct work_struct *work)
  
-+	/*
-+	 * To account mlock()'d pages correctly in the MREMAP_DONTUNMAP
-+	 * case perform any split ahead of time for an mlock()'d VMA.
+ void xfrm_policy_hash_rebuild(struct net *net)
+ {
+-	schedule_work(&net->xfrm.policy_hthresh.work);
++	write_seqlock(&net->xfrm.policy_hthresh.lock);
++	if (!net->xfrm.policy_hthresh.work_disabled)
++		schedule_work(&net->xfrm.policy_hthresh.work);
++	write_sequnlock(&net->xfrm.policy_hthresh.lock);
+ }
+ EXPORT_SYMBOL(xfrm_policy_hash_rebuild);
+ 
+@@ -4129,6 +4132,7 @@ static int __net_init xfrm_policy_init(struct net *net)
+ 	net->xfrm.policy_hthresh.rbits6 = 128;
+ 
+ 	seqlock_init(&net->xfrm.policy_hthresh.lock);
++	net->xfrm.policy_hthresh.work_disabled = false;
+ 
+ 	INIT_LIST_HEAD(&net->xfrm.policy_all);
+ 	INIT_LIST_HEAD(&net->xfrm.inexact_bins);
+@@ -4154,6 +4158,19 @@ static void xfrm_policy_fini(struct net *net)
+ 	unsigned int sz;
+ 	int dir;
+ 
++	/* Prevent new policy hash rebuilds before draining the work item.
++	 *
++	 * The upstream fix uses disable_work_sync(), which is unavailable
++	 * in v6.6. Protecting work_disabled and schedule_work() with the
++	 * same seqlock closes the check-to-queue race, while the subsequent
++	 * cancel_work_sync() drains work that was queued or running before
++	 * teardown disabled it.
 +	 */
-+	if ((flags & MREMAP_DONTUNMAP) && (vma->vm_flags & VM_LOCKED)) {
-+		if (vma->vm_start != old_addr)
-+			err = split_vma(mm, vma, old_addr, 1);
-+		if (!err && vma->vm_end != old_addr + old_len)
-+			err = split_vma(mm, vma, old_addr + old_len, 0);
-+		if (err)
-+			return err;
-+	}
++	write_seqlock(&net->xfrm.policy_hthresh.lock);
++	net->xfrm.policy_hthresh.work_disabled = true;
++	write_sequnlock(&net->xfrm.policy_hthresh.lock);
++	cancel_work_sync(&net->xfrm.policy_hthresh.work);
 +
- 	new_pgoff = vma->vm_pgoff + ((old_addr - vma->vm_start) >> PAGE_SHIFT);
- 	new_vma = copy_vma(&vma, new_addr, new_len, new_pgoff,
- 			   &need_rmap_locks);
+ 	flush_work(&net->xfrm.policy_hash_work);
+ #ifdef CONFIG_XFRM_SUB_POLICY
+ 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_SUB, false);
 -- 
 2.53.0
 
