@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208522;
-	b=txJU6IeS14gFoQAdQ/9o9VZI7V/C252R8q58cy5ji6jB5ndTiCknL8gIpqoQKGoD2SXf
-	 x+PIxIFqqHWv5DOHpRLg4Z+MqsWAUbzbe93vYTKbpx6JdkDLUyrfH3iryC/yipFRqpg3u
-	 yH1Gmf/eWRIC1eLyxDlotE6Pk27uKCgB7u+KA/Fr4C/6/ijleuJpBxojh8MoQHBvy5I8R
-	 Gqg1qie59L4UYEK73q7LsnLJzYtOGa4qTCOn/BDCbkbzIs/CNxmBGzGoT2Ve8C8/327CP
-	 w53CQG6wFu3RRycMvXBPB0AQy9YU8em4DswYxJTidvmh8FbVtgtt0snOg6QE+pI34iA==
+	t=1793208525;
+	b=hWaKbDXN2QhKjwONkCRFCj/xhiREKFgvUexDB5u2nfmH3YRi31rJgE/mWWKIxr5TtcSb
+	 fGZ6IOUaC3JVQgAOKNbAcJJFBV29pp5411trqVpi8bTgd6oU98Y0n78E3Ici4k3caLS1E
+	 5XrrxgIHJSZ7ePg28QqP/f4w1d7dHQySqKBXrvZhYoomOIbO0chxMC0Y52XdBQEpb7voS
+	 BMUFvaa84D2aznccH+hRnwBUxUwWNpu+jPRE1sTBWuoeWRue0RvTDRqD1WKvVtW5ca0aa
+	 tp8u4ZSjMwxBMfKifzuQVIlGec3LZ+4oYe2Cif7gtQAU3jo+p91GK+xkIJ4YJz/IsOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208525;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=oisb49U8Bvvx4q/VGUVBJR0mba4q/tUQG1F2t+Vp2Ts=;
-	b=ztU6o9NSsJVIDb1kLxDPSVvVgFAjZlT2oJ8TXKBBpNDSghivbyjpiEyFSTh7gnf1vzUW
-	 AEqk05YpwAGBRtk9+JcAPuc2ooE4H5Qql08i2rB4t4dQYt+KlP+0sBRxKdvi4oyD1yzIP
-	 7sTRVYpThK0dGmL4IwRZIhnB+70qvPLbwi1JAvwUkxoHf6D23S+9JVoRl4eOCRBxstH1t
-	 x/FbhF9Y/wkIgHdTkuGT5BC4lDPm8ZJYr9eUkV7zCOfudxH5UKb6hN8/tNpA9KIQe63rT
-	 vRd9EJAOIJ7CqCEFDj5vbfUrL3S1F3kSwawQguAY2q/1aeR92bdK/SkGhaOrKzbTQNg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=TKjv5rx6psh7IjzMAJxqCPUAmVjqT9WxL6RhmE7isi4=;
+	b=3K5GrBlQZcTRXLmR6+78Gj2ikMjV2FwFMER04a3FwAIPgW5+PJRYplF/jZ4SlR3LtexC
+	 cFx26DO4qUqPd3i18ODTHLxRnHD6/zG9LlGlwwqtjltutxvL90seSty2nDnhaZaoSeZAo
+	 Leg0b18QMlZWygePK4QyJYADTnrcpFXEdXFq/tfUTJpXt0LV40+oqnjlZsLGosTOaE7lA
+	 +yfGnytXzDOryEiJW5YCudbbJGcTtZTyMJl8lW2WKRsfq9QG1u0/plr7o0IU2jDQsCi5S
+	 rkpS6z13eHtzyY4Ipd17FBHhWRTUtwEYHqUhIEj0Rohu1cc/ury/nmyuA/rt38cmNKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z2p0vq6m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x418YahD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57646606A31A;
-	Wed, 28 Oct 2026 17:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F294606A31A;
+	Wed, 28 Oct 2026 17:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z2p0vq6m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CE11F01825;
-	Wed, 28 Oct 2026 17:28:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x418YahD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807F81F01825;
+	Wed, 28 Oct 2026 17:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208522;
-	bh=oisb49U8Bvvx4q/VGUVBJR0mba4q/tUQG1F2t+Vp2Ts=;
+	s=korg; t=1793208525;
+	bh=TKjv5rx6psh7IjzMAJxqCPUAmVjqT9WxL6RhmE7isi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z2p0vq6mLLDa5aKkBTSxTsfboG6fMB4nTClYcH8qv54RhJ0l/PAkFnIwY+JLVQuBU
-	 aZVE1N9mBC2w7tFi1CU0c3KOoY6v3XwH0sVhczrN9STybHE22JWRnqiVq0BenoS8PX
-	 j4IYs1E0Lnw5kzbz8tCeXsy6VMN8iEMI45GUE1wg=
+	b=x418YahDb/dbCOjePYAwJPFhFJCcqNH9KT3kPHmCeKApJekkYPdN4sdQ0giwR/dNn
+	 mSX44+caNEcMt/7kVYkZGiCFSnOGiUEPnwp6uzly7gFuzhYphovA4/B8UEcByKy1RT
+	 L+OdX22LfFyMuCAL206merf3hR/cKde1Miw2JkM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilkka=20Lappetel=C3=A4inen?= <ilkka.lappetelainen@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 142/516] net/packet: prevent TX_RING byte count overflow
-Date: Wed, 28 Oct 2026 17:54:54 +0100
-Message-ID: <20261028170006.873509161@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zizhi Wo <wozizhi@huawei.com>
+Subject: [PATCH 5.10 151/516] vt: skip screen update for DEC alignment test on backgroup consoles
+Date: Wed, 28 Oct 2026 17:55:03 +0100
+Message-ID: <20261028170007.084474724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -62,58 +61,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-commit 2cf81fc9505b148b1b70068303ea6ea4b1212403 upstream.
+commit 0928ed9bd7946baee911efa401088697836e3b1e upstream.
 
-tpacket_snd() drains every SEND_REQUEST frame in a TX ring and adds
-each valid packet length to the signed int len_sum. Userspace can
-recycle completed frames concurrently, so a single blocking send call
-is not bounded by the ring size.
+[BUG]
+Recently, we encountered a KASAN warning as follows:
 
-After enough successful transmissions len_sum wraps into the negative
-range. In particular, 65536 65535-byte frames followed by a 65007-byte
-frame produce 0xfffffdef, or -EIOCBQUEUED. sock_sendmsg_nosec() treats
-that as an impossible return and triggers a BUG. On systems configured
-to panic on oops, a CAP_NET_RAW holder can panic the host kernel.
+BUG: KASAN: slab-out-of-bounds in fb_pad_aligned_buffer+0x11f/0x140
+Read of size 1 at addr ff1100015fd9f6a4 by task tty_fbcon_oob/1239
+CPU: 7 UID: 0 PID: 1239 Comm: tty_fbcon_oob Not tainted 7.3.0-rc1 #100 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+Call Trace:
+ <TASK>
+ ...
+ kasan_report+0xf0/0x120
+ fb_pad_aligned_buffer+0x11f/0x140
+ ccw_putcs+0x86c/0xa80
+ fbcon_putcs+0x338/0x410
+ do_update_region+0x21d/0x450
+ do_con_write+0x1e0e/0x4880
+ con_write+0x13/0x80
+ n_tty_write+0x374/0x1010
+ file_tty_write.isra.0+0x404/0x7a0
+ ...
 
-Stop before the next frame would make the byte count exceed INT_MAX.
-The positive short count leaves that frame pending for a later send
-call.
+reproduce:
+1) open /dev/tty0, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 8 and op.height = 16 (visible VC1)
+2) open /dev/tty1, set a KDFONTOP ioctl with op.op = KD_FONT_OP_SET,
+op.width = 28 and op.height = 24 (invisible VC2)
+3) echo 3 > /sys/devices/virtual/graphics/fbcon/rotate_all
+4) write EShash8(esc hash8) to tty1
 
-A two-thread TPACKET_V2 reproducer triggered the BUG on an arm64 build
-of Linux 7.3-rc4. With this change, the same reproducer returned the
-expected positive short count without an oops.
+[CAUSE]
+All VCs render to the framebuffer. setfont only modifies the target VC's
+font without resizing the framebuffer backing buffer (par->rotated.buf);
+the buffer is only resized for the visible VC
+(fbcon_do_set_font -> ... -> vc_do_resize -> update_screen). This relies on
+the con_should_update() check performed before every update_region().
 
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilkka Lappeteläinen <ilkka.lappetelainen@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260925124829.6595-1-ilkka.lappetelainen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, the ESC # 8 path (do_con_trol -> do_update_region) omits the
+con_should_update() check. After changing the font size of an invisible VC,
+do_update_region() fills using the new font size against a buffer that was
+never resized, causing an out-of-bounds access.
+
+[FIX]
+Only push the update when the console is visible and not blanked, add
+the con_should_update() check in the do_con_trol() like every other call
+site of do_update_region() (update_region(), invert_screen(), ...).
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260905064337.3083103-1-wozizhi@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/vt/vt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2867,6 +2867,9 @@ static int tpacket_snd(struct packet_soc
- 						    vnet_hdr.hdr_len);
- 			has_vnet_hdr = true;
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -2544,7 +2544,8 @@ static void do_con_trol(struct tty_struc
+ 			csi_J(vc, 2);
+ 			vc->vc_video_erase_char =
+ 				(vc->vc_video_erase_char & 0xff00) | ' ';
+-			do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
++			if (con_should_update(vc))
++				do_update_region(vc, vc->vc_origin, vc->vc_screenbuf_size / 2);
  		}
-+		/* Prevent the byte count from wrapping into a negative errno */
-+		if (unlikely(tp_len > INT_MAX - len_sum))
-+			break;
- 		copylen = max_t(int, copylen, hard_header_len);
- 		skb = sock_alloc_send_skb(&po->sk,
- 				hlen + tlen + sizeof(struct sockaddr_ll) +
+ 		return;
+ 	case ESsetG0:
 
 
