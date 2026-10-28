@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208813;
-	b=mC8Rf0pikF5WJBnGwQLmk4NejK88EQdUpYONp6CfApvOHPDOR0fH0dReI2qAu3LU8eXf
-	 Le/JaStSNUgpw0595UWoc3ECTJHGsF30U68OrgWrJpiWDnSiAAbMduL9/I6e6hQMERxFR
-	 H0E5HgwqNfDQsQXmMG30bJrZ44HSebkVu3hP6mgB85pBv892JclDqqX7s9Mkv61htB1rk
-	 5PH//JBdQM8UH32TCIi5Ofi3RhzPC21F22S4T2kIU54VdQqIL1Ef26SsFO/0yzd1QD4Jv
-	 p7/zRd6OYptF5gjeB4bY/qqy1pZQoho3EB3qeYuS2551nMcjmyP/LpgVMQ3J0ERJ5FA==
+	t=1793208816;
+	b=WPrpdQXlhgcIiCINycRQVYNCNxCCg+pDf68+NhHWZw5sA7+cBh+fcwgYFPkPHo3Hp3wG
+	 yuDpDFXE3MTkbwNLwTp0xl/O+5NUgcqYLXCObIyCfMeXlN2drQb/sYFu+DZ5GQcVjBG41
+	 f7j136i2uiJ/As1CBmPUrP6RpKyTf8L+Tc/mMRJugJD90Zbg/8rUKgRHaEwTBNFT1TVcj
+	 mOGL3T/JDmWuxfN04dejRd0fNfY95T3/5zp8DGlxlcv124nKx+q1M6Io+n8Ou/MV31FfB
+	 GLLevHXhvhkcLY1+LMfL6PdmESTvsflHngi/bP58PA93rW1/XWpvMHIu8Eyw8DQ3L/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208816;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=foXxKP3l+cku9kXrdQom7Cnv4Ox7TSNK17Trk8DHhMA=;
-	b=tfAG6iWN071UJs9i/OKCcTw1vHCYg+2S4mLiYDi7AzgxDB7P9XV7vyVuVhZ4vVVdGMDO
-	 lUj+d1ma44RgUVC/YNNLFOc+DbJr5KIshaOKt7JfJ6E1IeAohE3i/lbJhUarWz59pXCe1
-	 d2BmW+C3REh6PeGPqJwRWsdNCodJ9bEHFp7UJV/UTEPLYJSL93Hi2MQIK0ZwhTORQInTS
-	 NvJKksaEYIGk6teIpyKWNCFyDTrW38jtcWxmIpus0SmOc0QXY/BHHqUlyLLbFLpkseX/m
-	 wQYdswN6a9Xvo0SjCn3/11JDqJIji6qOZqjnZMKykvUk5Q0qA6NSJaJ6P/92m20my9g==
+	bh=lSjs+A7LU5zh279d9Ydpsw1knuU34QN4VakHY8UqUkw=;
+	b=ryxosk76MxbAleUp/4VddEg9/6U3bxgLomUMF5cFJ9NNytYCn+ZfnHActC8LGjidlT1B
+	 D3ySUJQjjiEnYWmZnK/ae3xjRafPT6Jlr0eTN+oeJ/fNbmZUSYGHNBaRakj2ZxbdPMiLv
+	 1/N40GXbY8BVVdol09jOah9eOHF+MpvyuRBTgk3DRrs6bwPvjSvmlFdzJe/1XepfTDIUN
+	 uWP1F0xVsG2zx8xRY/nkOuW6BJKsdYw9uXi7wghBY7l9WEpYIfGFb0mOxT4RYugOozJGQ
+	 rs+jemZFjNJLJrQ+lOWZOpbQNX3pI9vfqpu+LWGBki44dlJvmC4DyDqfv6xPpHsa9cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eWkSXR6K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXvXCAzR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03A8606A327;
-	Wed, 28 Oct 2026 17:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1785606A338;
+	Wed, 28 Oct 2026 17:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eWkSXR6K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1DA1F031E6;
-	Wed, 28 Oct 2026 17:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXvXCAzR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206AB1F031E0;
+	Wed, 28 Oct 2026 17:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208812;
-	bh=foXxKP3l+cku9kXrdQom7Cnv4Ox7TSNK17Trk8DHhMA=;
+	s=korg; t=1793208815;
+	bh=lSjs+A7LU5zh279d9Ydpsw1knuU34QN4VakHY8UqUkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eWkSXR6Kx2k8DJ/sE2BkcUSQoYN+AVVGQojnZlItwVYsPsPpfJKxiW3OZtsVLEZjd
-	 ic+yN2d6FLZa/BfrT/h5NXwnv9BdJp06X/qNpsYbdIQCczetekyNYsJl4kN73Et2wt
-	 ogFqEi3AIq0SvOBzCr1oTwgVXyBl9ETcWp7oUUBo=
+	b=LXvXCAzRHZcpgjEuw5GX/16XNFbtzTjYuwmNO42ktaznY8VrtLeqkxXadOWd+3aSf
+	 /rhC1b6nQtvBP2a2CCFaBzbmqSS+PNqAuYFVuiWbwXLD9iXb1VwWbdC3jLxi3Od5rQ
+	 eg8ke27ulepo0ljBYVcxQFF9tn6olzmJgEuoc+9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Karpicz <webmaster@toradex.com>,
-	Mehmet Fide <mehmet.fide@screeningeagle.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 252/516] mtd: rawnand: vf610_nfc: fix false bitflips on reads of erased pages
-Date: Wed, 28 Oct 2026 17:56:44 +0100
-Message-ID: <20261028170009.465296060@linuxfoundation.org>
+Subject: [PATCH 5.10 253/516] smb: client: split cifsFileInfo bitfields to avoid shared-byte RMW races
+Date: Wed, 28 Oct 2026 17:56:45 +0100
+Message-ID: <20261028170009.488833807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,86 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehmet Fide <mehmet.fide@screeningeagle.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 68fe2faf5c69d0e21f94cd695d28f0ba677d484f ]
+[ Upstream commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446 ]
 
-When the ECC engine fails to decode a page, the driver re-reads the OOB
-area with the engine bypassed, but runs the erased-page check for the
-data area on the buffer left in the controller SRAM by the failed
-transfer.
+The invalidHandle, swapfile, oplock_break_cancelled, offload,
+and status_file_deleted fields are stored in the same bitfield byte
+in struct cifsFileInfo, but are updated in different code paths that
+may run simultaneously, and are protected by different locks.  Since
+bitfield assignments generate byte-level read-modify-write operations,
+a modification to one flag can overwrite a concurrent modification to
+another flag.
 
-That buffer does not hold what is on the flash: the failing engine
-writes a bogus single-bit "correction" into it. In the 60-byte ECC mode
-the all-0xff content of an erased page always decodes to the same error
-location, so every erased page shows one stale zero bit at data offset
-0x5FD, which the erased-page check then reports as a corrected bitflip.
+To avoid these races, convert these flags from a bitfield to
+separate bool fields.
 
-Edward Karpicz discovered this behaviour and identified the offset on a
-Colibri VF61; the analysis and the fix build on his finding. Measured
-with an instrumented driver on a Colibri VF50 (MX30LF1G18AC, 32-bit
-ECC): reading a 126 MiB partition with nanddump increased the corrected
-counter by 18035, exactly one per erased page, while raw reads of the
-same pages return clean 0xff. A v4.4 kernel on the VF61 (MX30LF4G28AC)
-accumulates the same false counts, so the behaviour follows the
-controller rather than the chip or the driver generation. Neither the
-Vybrid reference manual nor the published mask set errata (VFXXX_2N02G)
-document it. The 45-byte ECC mode is not affected.
-
-Restoring the known byte is not enough: on pages that fail to decode
-with content other than all-0xff the engine writes its correction
-wherever the syndrome points (measured at a different offset on such a
-page), so the check has to run on what the flash holds. Re-read the data
-area with the ECC engine bypassed, exactly as already done for the OOB
-area. The corrected counter then stays at zero on both boards.
-
-Reported-by: Edward Karpicz <webmaster@toradex.com>
-Link: https://community.toradex.com/t/colibri-vf50-vf61-on-the-current-bsp-mainline-u-boot-v2026-07-and-linux-6-18-lts/30735
-Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Closes: https://lore.kernel.org/r/7689764e-c0f6-4016-9557-b54cf4a3de4e@redhat.com
+Fixes: 3bc303c254335 ("cifs: convert oplock breaks to use slow_work facility (try #4)")
+Fixes: 4e8aea30f7751 ("smb3: enable swap on SMB3 mounts")
+Fixes: ffceb7640cbfe ("smb: client: do not defer close open handles to deleted files")
+Fixes: 173217bd73365 ("smb3: retrying on failed server close")
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+(cherry picked from commit 19465a9aeb664f1d710d0d22c07c31bfb7c85446)
+[ status_file_deleted and offload not present in kernel 5.10 ]
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/vf610_nfc.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ fs/cifs/cifsglob.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/vf610_nfc.c b/drivers/mtd/nand/raw/vf610_nfc.c
-index 6332e5c2765f1..4e536e53df9b7 100644
---- a/drivers/mtd/nand/raw/vf610_nfc.c
-+++ b/drivers/mtd/nand/raw/vf610_nfc.c
-@@ -518,6 +518,7 @@ static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
- 	u8 ecc_status;
- 	u8 ecc_count;
- 	int flips_threshold = nfc->chip.ecc.strength / 2;
-+	int ret;
- 
- 	ecc_status = vf610_nfc_read(nfc, ecc_status_off) & 0xff;
- 	ecc_count = ecc_status & ECC_STATUS_ERR_COUNT;
-@@ -525,15 +526,21 @@ static inline int vf610_nfc_correct_data(struct nand_chip *chip, uint8_t *dat,
- 	if (!(ecc_status & ECC_STATUS_MASK))
- 		return ecc_count;
- 
-+	/* The failed decode leaves a bogus correction in SRAM; re-read without ECC */
- 	nfc->data_access = true;
--	nand_read_oob_op(&nfc->chip, page, 0, oob, vf610_nfc_spare_size(mtd));
-+	ret = nand_read_page_op(&nfc->chip, page, 0, dat, mtd->writesize);
-+	if (!ret)
-+		ret = nand_read_oob_op(&nfc->chip, page, 0, oob,
-+				       vf610_nfc_spare_size(mtd));
- 	nfc->data_access = false;
-+	if (ret)
-+		return ret;
- 
- 	/*
--	 * On an erased page, bit count (including OOB) should be zero or
--	 * at least less then half of the ECC strength.
-+	 * Run the erased-page check with the driver's historic threshold
-+	 * of half the ECC strength.
- 	 */
--	return nand_check_erased_ecc_chunk(dat, nfc->chip.ecc.size, oob,
-+	return nand_check_erased_ecc_chunk(dat, mtd->writesize, oob,
- 					   vf610_nfc_spare_size(mtd), NULL, 0,
- 					   flips_threshold);
- }
+diff --git a/fs/cifs/cifsglob.h b/fs/cifs/cifsglob.h
+index d0905aa0b04cd..8a5cdf4ba0ae6 100644
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -1322,9 +1322,9 @@ struct cifsFileInfo {
+ 	struct dentry *dentry;
+ 	struct tcon_link *tlink;
+ 	unsigned int f_flags;
+-	bool invalidHandle:1;	/* file closed via session abend */
+-	bool swapfile:1;
+-	bool oplock_break_cancelled:1;
++	bool invalidHandle;	/* file closed via session abend */
++	bool swapfile;
++	bool oplock_break_cancelled;
+ 	unsigned int oplock_epoch; /* epoch from the lease break */
+ 	__u32 oplock_level; /* oplock/lease level from the lease break */
+ 	int count;
 -- 
 2.53.0
 
