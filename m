@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210458;
-	b=0xA6JkKFCctD9zXaUU8CMolKctEsLp1amwz+cxQk1Qf+Wu1tUsAxBZCQADd3SX7TmHn9
-	 aaUrNjYJT20wnHCQym5APJyZFvpJjfOPj1h8thL+ybGRbm0TbMJwwqxHgIoNV8vxppChh
-	 IipRpj6xRYWs8AmFjgVYkxwNEOCIjuzHyHdYBQybKbuo2ZmRzL+uFpubS9oYHh0Qbygx5
-	 fdEy66akoSDfecFJgIaIyTVOFtpM32QtN8FJrmNR/TsCpwIN4v6mSyd/xWhdVKMannLrh
-	 oiQ3gEXGa4efHdYDeUdsjeOKbVHniQFp5YMAVmTaUY6RN0sT9Bur+9N9sU0DsXBc0JQ==
+	t=1793210461;
+	b=OICSin69UkZC5X9PzA3w1y2ze7DsV6rOon06Q32Hpo5G0NY0aFqZamLlTaVqM31QXiCM
+	 7a1mgi9pC1jhQ0ykE/+yXfvIyTJnLPh9FF5J7vd8FcYX/o5Y4VErGMQRdmnTj9z7P8Qpe
+	 el3+w/n7VnqtqNkM+7muIJCnGlHR8HkznmPSV7feuAqXHXinrZGk8rPJ0p/lxxMnxmlF7
+	 89SOad27A8vvMEghJtJuFLs5e2L2Ut/WX5hudTkTCGGQfQOz7CVVq+KJVYdzEl62pJZOz
+	 Augm1eGXvB6fY9ArMoQ+Nuj1NhpsmUeIdpsn/4ZegJDiI9DNPpek6OWSzJ/UVnhvUDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210461;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=s2Jmo/iKvo6gT3tbGZabmLxzTFHFUs7mMQOXw2iRuss=;
-	b=kxssP4Mb8VafqITioAmBECWgWlkhaDBv7GMHt85ghlq1Vszm8I5kg5+30tPwowoWH4LO
-	 Rr87R3ctpzUuaauPGS5n5l9XkGRRUhj5cWPuaIrdqkkK0Y+8egDBZCahShhKrcwdLO5Vk
-	 CcN8o+frm69qJY8vJnpg37mU22nTUk0qOg3NFVycgY174YeMW5put2j69TBjQkKqqmqce
-	 A291s8lfqcCZXTLm055jBw5FU6va5JN4KLHVBWjU247h0CpoOxkreXYgybOeGAFjZ72r+
-	 P9D8lzG/t+xXuC7Eq+U3cUeo8Ez9jzQCl09qf6M6Vi0p+Okobf2h525Dy/Ong6QSe9A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=PIVzTwE5CgRhkkPyz+8rd+/xdmdGz43ZscgzIhN5WR0=;
+	b=F/HYi6NYTQBmPFOBEBx8Adyba88RhaFgsUTrbISkeH7BJtJI9TFXKNdyGVV1wq17TQeX
+	 wAe8A+REP2zGWejssJaizHT1DVKdSE9pNJUdJP7om7XR8qSi/XK9uenzXJ6qXq5G9AbYj
+	 7aTH1erM9CgSikPn69TdrIhpUb/zvyx/EDaEQhEeTf1UtWXejqibpQ5qDKfafhRHcwXzy
+	 QqjZlA5DHmGkUFgxoH2YhMqhpJhNuBJhf3G4tiP+s1aglKKLEqPhO4Cx8AkBIyFL1VTyu
+	 18wZZTf58qpkBbhVif0O+2a1/mqbSGaFbMUKApKNeR5p6LBmhDJU+IIfQLNfzDCmYlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POFLJiPg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZArPdqN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED511606A32C;
-	Wed, 28 Oct 2026 18:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A0E606A326;
+	Wed, 28 Oct 2026 18:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POFLJiPg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492CD1F01825;
-	Wed, 28 Oct 2026 18:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZArPdqN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E34A1F031E1;
+	Wed, 28 Oct 2026 18:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210457;
-	bh=s2Jmo/iKvo6gT3tbGZabmLxzTFHFUs7mMQOXw2iRuss=;
+	s=korg; t=1793210460;
+	bh=PIVzTwE5CgRhkkPyz+8rd+/xdmdGz43ZscgzIhN5WR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=POFLJiPgo8sZeS32+kGlfd1CUCRxJrGDrcnL0dZlRm08capzZu5KLSg9rWnLaMYRz
-	 zKDqm5Hk6BkgwFXz/EDNzIk4hH2kTwX/pIEzb2+EwnvjXR1PD6EvrWRERumsLE38Ub
-	 ANzC8pjze1FigHNDz3Iawh+u85s4VvEkVE7922e0=
+	b=JZArPdqNvaRVuunSdvyvXmoB2Z+FdiLZVA5Y9laMHyugbpyh2dTjMvPwJTtRSvYnY
+	 eQaAq2H1O0A0CxyrnYZ3On1v+o59WB3sgOY8wPROUw+hWyU3zmkkpZtNgQT9vOsg/T
+	 cLm9+pUfrLvWJgOWUxr6zZ00nWq58xB995J1xcFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/571] device property: fix infinite loop in fwnode_for_each_child_node()
-Date: Wed, 28 Oct 2026 17:52:31 +0100
-Message-ID: <20261028170008.121698248@linuxfoundation.org>
+Subject: [PATCH 5.15 005/571] nfsd: fix nfsd_file leak on inter-server COPY setup failure
+Date: Wed, 28 Oct 2026 17:52:32 +0100
+Message-ID: <20261028170008.145777357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,104 +62,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 1900692555826753adab8799a1a8d50bb1ee200c ]
+[ Upstream commit 88a76145451d703eedd867b5989bf73d17340399 ]
 
-When iterate over children of a fwnode that has a secondary fwnode,
-fwnode_get_next_child_node() can enter an infinite loop if the secondary
-fwnode has more than one child.
+When nfsd4_setup_inter_ssc() fails, nfsd4_copy() returns
+nfserr_offload_denied directly, bypassing the out: label where
+release_copy_files() would drop the nf_dst reference taken by
+nfs4_preprocess_stateid_op(). Each failed inter-server COPY
+leaks one nfsd_file, pinning file/inode/dentry/vfsmount.
 
-                       Parent        Child
-      (Primary fwnode)   FWa:   {FWa1, FWa2, FWa3}
-    (Secondary fwnode)   FWb:   {FWb1, FWb2}
+Fix by setting status and jumping to out: instead of returning
+directly.
 
-In this case:
-
- ┌─> fwnode_get_next_child_node(FWa, FWa1)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa1) returns FWa2
- │
- │   ...
- │
- │   fwnode_get_next_child_node(FWa, FWa3)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa3) returns NULL
- │    - fwnode_call_ptr_op(FWb, get_next_child_node, FWa3) returns FWb1
- │
- │   fwnode_get_next_child_node(FWa, FWb1)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWb1) returns FWa1
- └────┘
-
-This cause fwnode_for_each_child_node() to loop indefinitely, reapeatedly
-output {FWa1, FWa2, FWa3, FWb1, FWa1, ...}.
-
-The root cause is that when the current child (FWb1) belongs to the
-secondary fwnode, calling get_next_child_node() on the parimary fwnode
-incorrectly returns the first child (FWa1) again instead of NULL.
-
-Fix this by dynamically checking the parent fwnode of the current child
-before calling get_next_child_node(). This approach follows the pattern
-established in commit b5b41ab6b0c1 ("device property: Check
-fwnode->secondary in fwnode_graph_get_next_endpoint()").
-
-Fixes: 2692c614f8f0 ("device property: Allow secondary lookup in fwnode_get_next_child_node()")
+Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Tested-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260611203537.1786399-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260531-nfsd-testing-v1-3-7bfa481b0540@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ adjusted cleanup paths to omit unavailable trace_nfsd_copy_*() calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/property.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4proc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index e490166261d9a..262e43a9e8bad 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -748,18 +748,31 @@ struct fwnode_handle *
- fwnode_get_next_child_node(const struct fwnode_handle *fwnode,
- 			   struct fwnode_handle *child)
- {
-+	const struct fwnode_handle *parent;
-+	struct fwnode_handle *child_parent __free(fwnode_handle) = NULL;
- 	struct fwnode_handle *next;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 8db5b820ac558..ecf10e6fdab36 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1778,12 +1778,14 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 			goto out;
+ 		}
+ 		status = nfsd4_setup_inter_ssc(rqstp, cstate, copy);
+-		if (status)
+-			return nfserr_offload_denied;
++		if (status) {
++			status = nfserr_offload_denied;
++			goto out;
++		}
+ 	} else {
+ 		status = nfsd4_setup_intra_ssc(rqstp, cstate, copy);
+ 		if (status)
+-			return status;
++			goto out;
+ 	}
  
--	if (IS_ERR_OR_NULL(fwnode))
-+	/*
-+	 * If this function is in a loop and the previous iteration returned
-+	 * an child from fwnode->secondary, then we need to use the secondary
-+	 * as parent rather than @fwnode.
-+	 */
-+	if (child) {
-+		child_parent = fwnode_get_parent(child);
-+		parent = child_parent;
-+	} else {
-+		parent = fwnode;
-+	}
-+	if (IS_ERR_OR_NULL(parent))
- 		return NULL;
- 
- 	/* Try to find a child in primary fwnode */
--	next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
-+	next = fwnode_call_ptr_op(parent, get_next_child_node, child);
- 	if (next)
- 		return next;
- 
- 	/* When no more children in primary, continue with secondary */
--	return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
-+	return fwnode_get_next_child_node(parent->secondary, NULL);
- }
- EXPORT_SYMBOL_GPL(fwnode_get_next_child_node);
- 
+ 	memcpy(&copy->fh, &cstate->current_fh.fh_handle,
 -- 
 2.53.0
 
