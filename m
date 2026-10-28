@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212348;
-	b=JgjYf2XHCerSJzZBqDgvG/pW9qtUeXR9JsMNSUfKHE8dRsqL8UCt8Y5ZHSHa7eGiOykR
-	 GJSpC+ZI6FNlp+vjGYZ2zZTVlTAER/03r3lc9CUA/i81l0Z66pgLw/lTP3gIPrZiaZMud
-	 TgZixFOakqs9W4Oy7IfBonn2LvUVDNBGivNE1pteUzMl2lAN+ovik7eisyRoZVZKb2tYs
-	 83UryTF441d9sSVKQ3meZ4M9JW0HE13Tg9IB9GgD+rtqivRL6aIjihu6sNctwPLlSTowB
-	 kkGrdLNVcnvtDLAkqoitwSdagRS/rwY12fJVRJXgxxkr+IkWoo2ofjk1QBZhZ3Ld5BA==
+	t=1793212351;
+	b=kOZLJgJ4RtvMGQH1wujcds0fznNPl4RQ4jhK7sHBVeq8URsFb+Gvki/nizfmSiaerq46
+	 I2urOS+11eHWZxnRon+6KtmZ+3I77lfNNQ88zNJ6Xgy/y6AKTCwq3ZgjyWp58IMm/2Ge5
+	 euqp57eSANTD3hHUG3SREe0Pe/ZkXJxaSIEAzUEiIsWHPLxG+1cy8KlYJ6NsZ9tyH2jQA
+	 RS+h+Vp8NhvUvgw5X+O2oUJ0mOXd4phnsQXLv2EJuvDi11O0ScZuuuFF+5XZKSQ350cGf
+	 gV21QGQIeqhabwULLAoJJDk9qpdb+UoQDVNDgGXbE+yd1x/sbnUWkZ4WC6LXRknJs/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5OY8S8Gb6HoqDJsOZ4VXZxtYuO0xWxxEnoMvD2o2Wfw=;
-	b=OgDGcfH8yAReHFR1D82r6xBuUGsA7tn0oBnt2ELeTj9YcQwsjCq0BaqJnGYjHT0ZpBfT
-	 5tehAGh7/tUfl47Wvh7e/uadOOijJlavVo4BuNf1AzpJ4A4Lj6IFQEbKTIV+vMg6NWm7z
-	 pFKQmxPXeXYPgqyfMdRyojXnNWlZxjS4aRU5fK+9Wo/2Ha/KwFxK3onCqjo1w7urA2zxH
-	 6FvXXw/L6XEAHY1ryeA3OLZQxnU0iDRQyFnpOgumqjv+CXP89JpuG6JBxqb/CVuBVYsTj
-	 oB3jJqUImb6YpV5sewwUhw3LZaJbbbSPSzf4kT+nBCqIibXbJjclfqYuGtnfI72Cy5Q==
+	bh=tFHJM7RGbkNRco4eZ31h2lc7Q5D5VmhmKxPVHr3B2oM=;
+	b=lIIL6Njn3CDA2EvN826QU1vqrrK8dJ1/I/eKgaTQWLOT8fnyFNQbo9J63mgtei28KLPX
+	 glfQXjQCesZvWlKtTEVCF2oYgoOFMyReyOX1v9pvyNh/z71iX4+cN9XfE7lGjXobU71RC
+	 /U4AUdzGOMQIloWqnZz3lDKTp+H2X79j1jcR8FBiJewyY1RGjDFNKHF1qG87jbskLlPN4
+	 P5NqBYGxP+x41g2BydCY0fEgwUjqISBUqBMriFyL5fCOjAsOkITqeoPRgLaauYi816He1
+	 LT2VOQ7TeI/nCiZEPstRfZNugcq8Janf4sxQ48qUZ+gBB2Ix6+syN/p3U6AEEgFtXcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8XUEYbt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv2sokv+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9987606A31C;
-	Wed, 28 Oct 2026 18:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50DD606A330;
+	Wed, 28 Oct 2026 18:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8XUEYbt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C821F01828;
-	Wed, 28 Oct 2026 18:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv2sokv+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116641F01829;
+	Wed, 28 Oct 2026 18:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212347;
-	bh=5OY8S8Gb6HoqDJsOZ4VXZxtYuO0xWxxEnoMvD2o2Wfw=;
+	s=korg; t=1793212350;
+	bh=tFHJM7RGbkNRco4eZ31h2lc7Q5D5VmhmKxPVHr3B2oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r8XUEYbtrs8001v+Ru+P1km7mNLf3kTN8rlo3C4DRNol0kGzjMveHj6EQosBDhbZh
-	 jV9JVnLiAweN0/7PagzmxkkdrpVrAV0L1QhjWd9WaFf0THUZDeX2KjZaiizSmx3UCr
-	 Kwmc2NFSyZvQTkrEjwbbURhNWyOJg2fGYW/gvk3c=
+	b=zv2sokv+MdH02kf14ps6t8DZsxUn6yjp6esWPXoFyDWkJencyvTnLMico0Ehxdun3
+	 0gP9mLiSnTfXBhysStf9hdkIZZqiKXgU40GHkFyO9XHNuo5voLu0psfcLLFfncIgRN
+	 EszPRNKrnCABglQ35+OJtIlY5sJN96T1Z1zh1tnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Geliang Tang <tanggeliang@kylinos.cn>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0123/1887] mptcp: pm: drop match in userspace_pm_append_new_local_addr
-Date: Wed, 28 Oct 2026 17:36:59 +0100
-Message-ID: <20261028170502.038032705@linuxfoundation.org>
+Subject: [PATCH 6.1 0124/1887] sock: add sock_kmemdup helper
+Date: Wed, 28 Oct 2026 17:37:00 +0100
+Message-ID: <20261028170502.060239256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,69 +72,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 640e3d69d0bc70d7d3de34800a1640793262bd08 ]
+[ Upstream commit 456cc675b6d4cadd4872a477d8976ff56eef4b6f ]
 
-The variable 'match' in mptcp_userspace_pm_append_new_local_addr() is a
-redundant one, and this patch drops it.
-
-No need to define 'match' as 'struct mptcp_pm_addr_entry *' type. In this
-function, it's only used to check whether it's NULL. It can be defined as
-a Boolean one.
-
-Also other variables 'addr_match' and 'id_match' make 'match' a redundant
-one, which can be replaced by directly checking 'addr_match && id_match'.
+This patch adds the sock version of kmemdup() helper, named sock_kmemdup(),
+to duplicate the input "src" memory block using the socket's option memory
+buffer.
 
 Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250221-net-next-mptcp-pm-misc-cleanup-3-v1-5-2b70ab1cee79@kernel.org
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/f828077394c7d1f3560123497348b438c875b510.1740735165.git.tanggeliang@kylinos.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: f9f0068e8813 ("mptcp: pm: userspace: fix address ID overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_userspace.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ include/net/sock.h |  2 ++
+ net/core/sock.c    | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/net/mptcp/pm_userspace.c b/net/mptcp/pm_userspace.c
-index 129ae1fef054e..e203b7f878a90 100644
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -43,7 +43,6 @@ static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
- 						    bool needs_id)
- {
- 	DECLARE_BITMAP(id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
--	struct mptcp_pm_addr_entry *match = NULL;
- 	struct sock *sk = (struct sock *)msk;
- 	struct mptcp_pm_addr_entry *e;
- 	bool addr_match = false;
-@@ -62,16 +61,12 @@ static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
- 		if (addr_match && entry->addr.id == 0 && needs_id)
- 			entry->addr.id = e->addr.id;
- 		id_match = (e->addr.id == entry->addr.id);
--		if (addr_match && id_match) {
--			match = e;
-+		if (addr_match || id_match)
- 			break;
--		} else if (addr_match || id_match) {
--			break;
--		}
- 		__set_bit(e->addr.id, id_bitmap);
- 	}
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 9fe621f985740..d195cddb8559b 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1977,6 +1977,8 @@ static inline struct sk_buff *sock_alloc_send_skb(struct sock *sk,
+ }
  
--	if (!match && !addr_match && !id_match) {
-+	if (!addr_match && !id_match) {
- 		/* Memory for the entry is allocated from the
- 		 * sock option buffer.
- 		 */
-@@ -89,7 +84,7 @@ static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
- 		list_add_tail_rcu(&e->list, &msk->pm.userspace_pm_local_addr_list);
- 		msk->pm.local_addr_used++;
- 		ret = e->addr.id;
--	} else if (match) {
-+	} else if (addr_match && id_match) {
- 		ret = entry->addr.id;
- 	}
+ void *sock_kmalloc(struct sock *sk, int size, gfp_t priority);
++void *sock_kmemdup(struct sock *sk, const void *src,
++		   int size, gfp_t priority);
+ void sock_kfree_s(struct sock *sk, void *mem, int size);
+ void sock_kzfree_s(struct sock *sk, void *mem, int size);
+ void sk_send_sigurg(struct sock *sk);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 899ddf069940f..8593dc1b33eb3 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2670,6 +2670,22 @@ void *sock_kmalloc(struct sock *sk, int size, gfp_t priority)
+ }
+ EXPORT_SYMBOL(sock_kmalloc);
  
++/*
++ * Duplicate the input "src" memory block using the socket's
++ * option memory buffer.
++ */
++void *sock_kmemdup(struct sock *sk, const void *src,
++		   int size, gfp_t priority)
++{
++	void *mem;
++
++	mem = sock_kmalloc(sk, size, priority);
++	if (mem)
++		memcpy(mem, src, size);
++	return mem;
++}
++EXPORT_SYMBOL(sock_kmemdup);
++
+ /* Free an option memory block. Note, we actually want the inline
+  * here as this allows gcc to detect the nullify and fold away the
+  * condition entirely.
 -- 
 2.53.0
 
