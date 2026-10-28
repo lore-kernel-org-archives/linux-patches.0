@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210766;
-	b=svx8V+2IZBRysxVhbKuEVD4lXhSW9ru4vorfVM+ApufMsdH19L1S6NM2q0q9cxBR4Yyd
-	 +K35IKTldv4vti7eBCoa4i1hSOxgTPTkzVYSC3iswsrBriZ3ipTuVmO++PCop/nV4pP95
-	 03JqsEYlXU2eNyubXwOsL52qOc3VgPgL2fVmDhV37hVnrJYzHgyFbep8MU50nT2EOtW6t
-	 Gh45/vbsLEYg9UEaEgzXC8tf7SArbB0t+zJjSfkz8jhVahvdWRoezZOXM/4bUc+Gxj06c
-	 qVC/Ax+ZJQT4Np+dOrOHAV7ba32jHkY9zusCI1T7W2yr5HGZya/f3IlyLApdG1MNJkw==
+	t=1793210769;
+	b=PzYwFMZdqGycHN/MhklY3uoXfmboMwNT8OIGTUhUQtoy5Hzjuzh0BRczGpC7N32z4/Sl
+	 6bzrgyNlMN1OjKgVa5soFp/VUbRhvp1idiM+YXCZT8GoYxBD5VUbpuoMgB99WmPQqDN+9
+	 JH0A/UFu2EPbyomGCavFd3ceq2LxjFoYhCHEficabPy9Zz5Xw45IMN4kDHYxW0OlaH8F8
+	 QcJnALgSXMIaftLaTZk2DN0BTHyWB/q43GxW3oVy+/dOx57wOUA9RH9eW0Efi8/hWpp9b
+	 hIUQmmX1lfP0JMulS7OTnNpET2tyTrCnlwGfmU/hizXg/KU1wi4+C6qre+/cLjw5poA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8FO8qZ9gARGDgK3w5w2rU+iPtfOgPtkf6Geza2EirgE=;
-	b=smSKk0acnMQVnftPsXbA9CDJqyyv8uCv3xZJCJJarlbttoxru/L+WyZCTqCnPGablkTt
-	 338cfs7qagn5Yz5moNWJ2JI3tMmh6LnBDqishSujJjP/0dK0jZz5uR9mXlqySGsH7NmAf
-	 Dwe+LokQXz8veoSaTN+DF0A3U5hRp8igYk1nlaDxUZHwCumhQjHoulepiEGsmbtW3YPyG
-	 D/BjGQyxD3m4zPB3CVT4zVKSixMQI947HkLpG3/2S33j2sHljMy9czu1bHu5ET0VHmhBN
-	 K7mXITv61hovDsw9BgVxqTkGqraRwTgIgVjYfDmgGjEKBVGtJALLUqY3ojyADkbrUUA==
+	bh=5W+DxxflY88qNWP42JACFeGRqnzRtfJuTymnqCRrsEc=;
+	b=V9fiCsQYNDH9l4KJGFnPRvV5sGMNzScpPRXXOGz9Dn64GH/cqLOAV0q/Sc8VL5VDGLLa
+	 7QG04/eBukkSyLiwrFOlNn/RHKUoVSxon1wYHuJ/WphS5IDgX3M7WXoyYOsgcw/Oexehr
+	 VvDClpfK/lovynvQWrEIfn3yVeofrQTdNJ9TjjRm51i4g9UsGCWJ73gquZpmlu7d1WiLC
+	 +hAQG66w3+N0XgVC0ZVfYToeLHzmsLJgzbpx+Yvyc+UyLiYCXHPKvqQidYOi9yI+5cgXW
+	 HmUlzyA4JwXC2F6bncYSYdSc0hj9snyHIYbipLoxcYk66tRJZYVhI4A54xWYp4ekiQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h7YgccpT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7bxNWxY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F104606A31A;
-	Wed, 28 Oct 2026 18:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED960606A31E;
+	Wed, 28 Oct 2026 18:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h7YgccpT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7546B1F01825;
-	Wed, 28 Oct 2026 18:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7bxNWxY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4982E1F01825;
+	Wed, 28 Oct 2026 18:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210766;
-	bh=8FO8qZ9gARGDgK3w5w2rU+iPtfOgPtkf6Geza2EirgE=;
+	s=korg; t=1793210768;
+	bh=5W+DxxflY88qNWP42JACFeGRqnzRtfJuTymnqCRrsEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h7YgccpTM+ryFTYWVhrxBSVe19VfMRKBR+bpxTf5QYk0YZVpFCcEnSNd5dmXikC5x
-	 DOux3gIOpLkCSeL7Z0nFiXjyAjSIgFcZo1LHwRo9Tcs/xYIqzBmgAy54y2m/3ESjdJ
-	 Uy0P8x6KCaIX770yop4406UHAJ+2gblD2HE5m0uo=
+	b=b7bxNWxYZnzrKHBRj32h9zb7foorg0mA42CLX5tQMuyuQW+AvHcbYjsRgCdLhunE0
+	 qDR1dah78d7rFgMX5379BiJfQLQhji7idvuHSzqtdtIYnjvqBoHXXfSU6Sml3Mw2Aa
+	 nwrGDodrZxXECRd4sW9oDopLYFcDZ18ksa/8D5sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 142/571] sctp: check RCV_SHUTDOWN after the sendmsg connect wait
-Date: Wed, 28 Oct 2026 17:54:49 +0100
-Message-ID: <20261028170011.385311203@linuxfoundation.org>
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 143/571] wifi: cfg80211: avoid double free if updating BSS fails
+Date: Wed, 28 Oct 2026 17:54:50 +0100
+Message-ID: <20261028170011.408356051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,49 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-commit 4f1da630d13de0370e2f6361f961f1c8b384af1c upstream.
+[ Upstream commit acc44cbd7727115f9381c35c2898b1b5af665ec8 ]
 
-sctp_wait_for_connect() drops the socket lock while it sleeps. An
-out-of-the-blue ABORT can then be processed from the socket backlog and
-unlink the association. If a concurrent shutdown(fd, SHUT_RD) sets
-RCV_SHUTDOWN, the waiter breaks with err == 0 before checking
-asoc->base.dead. Its final sctp_association_put() can then free the
-association, leaving sctp_sendmsg_to_asoc() to continue with a dangling
-pointer.
+cfg80211_update_known_bss will always consume the passed IEs. As such,
+cfg80211_update_assoc_bss_entry also needs to always set the pointers to
+NULL so that no double free can occur.
 
-Check RCV_SHUTDOWN along with the wait error in sctp_sendmsg_to_asoc()
-before using the association again. The check only accesses the socket,
-so it needs no additional association reference. Return the existing
--ESRCH so that sctp_sendmsg() skips freeing a new association that may
-already have been destroyed.
+Note that hitting this would probably require being connected to a
+hidden BSS which is then doing a channel switch while also switching to
+be not hidden anymore at the same time.
 
-Keep sctp_wait_for_connect() unchanged to preserve its behavior for the
-connect() caller.
-
-Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
-Cc: stable@vger.kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260926095606.68601-1-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231220133549.8891edb28d51.Id09c5145363e990ff5237decd58296302e2d53c8@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/scan.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1844,7 +1844,7 @@ static int sctp_sendmsg_to_asoc(struct s
- 		if (asoc->ep->intl_enable) {
- 			timeo = sock_sndtimeo(sk, 0);
- 			err = sctp_wait_for_connect(asoc, &timeo);
--			if (err) {
-+			if (err || sk->sk_shutdown & RCV_SHUTDOWN) {
- 				err = -ESRCH;
- 				goto err;
- 			}
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 5063f43cceda7..375ffdbae1d8b 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2756,10 +2756,9 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
+ 
+ 	if (new) {
+ 		/* to save time, update IEs for transmitting bss only */
+-		if (cfg80211_update_known_bss(rdev, cbss, new, false)) {
+-			new->pub.proberesp_ies = NULL;
+-			new->pub.beacon_ies = NULL;
+-		}
++		cfg80211_update_known_bss(rdev, cbss, new, false);
++		new->pub.proberesp_ies = NULL;
++		new->pub.beacon_ies = NULL;
+ 
+ 		list_for_each_entry_safe(nontrans_bss, tmp,
+ 					 &new->pub.nontrans_list,
+-- 
+2.53.0
+
 
 
