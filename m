@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214221;
-	b=LyXgaNx+NnVS16sG67LvDWrnMcXgGFQt7t16ZWMVeeqlKBoKyPhUie+V2b0l3A/UicsL
-	 wOIl00+3hUhGvtRh3y4FH8CMXO5bXR9U8IVexsFOL5C8HApBzofqfsr5/DSKi10MM/4rb
-	 UXhReaCRJpl4XGlgLZBn9TAvQEB1UkVbA/u3TLQYKR+uans1uorQ6oklFsPlegRHfIyyz
-	 Sf4NC+W5akuL98U0cOKVPPjO/i0rGr2r2dD4RZRMAbhCQGDLaaT0KhY9zfwK4OZ2Abytg
-	 lBi589srHhPer6hbSJ/Mg6FQSwLQv9nYEvd/TEYcBpUNCP276irxn87KS1ZaFpbTrBA==
+	t=1793214224;
+	b=jYiOvt/Ujk8bcbH/kplGw1ZgaApgNLEIPNN9bzCmTpAE1cYTI9YlUnsDPlrwSdjMK7xr
+	 wLTaY+/C16Q2ckbfUALg4pwtv5kZbH2Ku6Wk4Njg1g5DyPLtKIlq2Wrurd3kpc5Ai7F4+
+	 qEAxjGyJA6T0fVG0DyRb/fX35O76WXgAk2JgciEnm/gjssRtkonl2wT7MkJY8Q7RTVN9h
+	 iQcxNfdDozT68EeIbHqgvkU0+b+mn6yQUtduOJkePOei4fh7FVjV7oZtotlyQ9ya1i5AV
+	 5to9MQdc0+EZrpuF1vOY/MCO7XkbdWkrisqHfYlo4q7hKkWjk5kVxhnpf39BL0i8z/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2vNMLPiAi5I7+u4HlTHG6Z7B4HYl7zLL19m+qlYBlRY=;
-	b=Jd5C4jBKafA3KM957bb75pVTUFdyOGgqlBFge5n8SLWgAFayycn7I2pu7EapcY0RSkIP
-	 O8nv82mPtF3rkt8s5qjkafBG4TQyU846ygjsYWy/RJtIjEWRGGuU9TDNbsgCsxrAp19Fq
-	 g76o9cM3Svqh2W0uova9i4DIG/J8yd0Qks50GJAMLSle9eZw8wJXuD/ZI+7vYtdDJclgD
-	 R5RFW27jHytwRZzl9QYaejfj/G5gcFDe0xGFPLr2bv3w5XNWYGb7R7VSV8ni3UEm4/ak3
-	 gpgXPqWW2Wj+HJWYvikpyw6SN5nHPHC1mAam4591yhaExbSNSc/TlyKzREy1iTOm+sQ==
+	bh=SD2Sq3GReykw2NUT7j7PFVTJO3pRGQ/ZJoSW+wg+R9c=;
+	b=ynM8TykpW5sgsUcVukB9BX/AstzZ8EYhKnUUuGBYcOhgw7yVazSF/nhubs6pgGEopLUi
+	 +Vdfs1OlgLFIx5378aLu4G0rQWXPqVZEulEC5A3vUfjFLaoOk+EFMSS50vWofY9Izp110
+	 QNQkFYaiS0pt/EkxksxkYOpooEeDMbD6aOGFbuikessbzyP7hoifS4SfM1NKm39VMDSNA
+	 mCFqcSaTPxpBP426MBsD8kNU+goBnjnK+/ejCSjDYA+1cN1ZxxqOj9TL+ltD2CZ7e7acn
+	 wxfBXNTAk4VKTEsrLdDaAohbll8mUEfLizyvyfzlvs1FxAFlkzUHegXd7UrqdKldaaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tplxPFTk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bAjMPbJl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380E060A2622;
-	Wed, 28 Oct 2026 19:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078F9606A331;
+	Wed, 28 Oct 2026 19:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tplxPFTk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F811F013C8;
-	Wed, 28 Oct 2026 19:03:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bAjMPbJl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB5D1F013C0;
+	Wed, 28 Oct 2026 19:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214221;
-	bh=2vNMLPiAi5I7+u4HlTHG6Z7B4HYl7zLL19m+qlYBlRY=;
+	s=korg; t=1793214223;
+	bh=SD2Sq3GReykw2NUT7j7PFVTJO3pRGQ/ZJoSW+wg+R9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tplxPFTkVtUR8EIBkNj5ean4YuL+/sW0zbLKye1y7YqZGjRA9CZvTr6TF11/qYjUD
-	 L1IhNLKeTczQcH2kFxdooojcHixYRVpcbAoDUT4q8SNN7fgJjaDRfGhUzzKRtSoL7H
-	 6Xb2vuLksDb9gzKJLO27t6NygSC6R0uhe3aDX1I4=
+	b=bAjMPbJlC5O0tE7c/PfDbRk2p0kq2I0PFUI42aTTTKnWSbjSp2LXtQg9T5m8D5i1K
+	 rq1Ccpmwj5BeZsRU6aqoOdIQm1pQRL6hEnT2vLRSsUBIVHTkl5SU2uek80o3Lrwsk/
+	 0u9ASi5L5VNUviMKmYuT/Zwv9I23wTpG7YWO6v9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com,
-	syzbot+1065a199625a388fce60@syzkaller.appspotmail.com,
-	Matt Johnston <matt@codeconstruct.com.au>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrey Konovalov <andreyknvl@google.com>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	kernel test robot <lkp@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0782/1887] net: mctp: Dont access ifa_index when missing
-Date: Wed, 28 Oct 2026 17:47:58 +0100
-Message-ID: <20261028170517.234858016@linuxfoundation.org>
+Subject: [PATCH 6.1 0783/1887] kasan: use unchecked __memset internally
+Date: Wed, 28 Oct 2026 17:47:59 +0100
+Message-ID: <20261028170517.257249644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,66 +73,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Andrey Konovalov <andreyknvl@google.com>
 
-[ Upstream commit f11cf946c0a92c560a890d68e4775723353599e1 ]
+[ Upstream commit 01a5ad81637672940844052404678678a0ec8854 ]
 
-In mctp_dump_addrinfo, ifa_index can be used to filter interfaces, but
-only when the struct ifaddrmsg is provided. Otherwise it will be
-comparing to uninitialised memory - reproducible in the syzkaller case from
-dhcpd, or busybox "ip addr show".
+KASAN code is supposed to use the unchecked __memset implementation when
+accessing its metadata.
 
-The kernel MCTP implementation has always filtered by ifa_index, so
-existing userspace programs expecting to dump MCTP addresses must
-already be passing a valid ifa_index value (either 0 or a real index).
+Change uses of memset to __memset in mm/kasan/.
 
-BUG: KMSAN: uninit-value in mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
- mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
- rtnl_dump_all+0x3ec/0x5b0 net/core/rtnetlink.c:4380
- rtnl_dumpit+0xd5/0x2f0 net/core/rtnetlink.c:6824
- netlink_dump+0x97b/0x1690 net/netlink/af_netlink.c:2309
-
-Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
-Reported-by: syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68135815.050a0220.3a872c.000e.GAE@google.com/
-Reported-by: syzbot+1065a199625a388fce60@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/681357d6.050a0220.14dd7d.000d.GAE@google.com/
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://patch.msgid.link/20250508-mctp-addr-dump-v2-1-c8a53fd2dd66@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/6f621966c6f52241b5aaa7220c348be90c075371.1696605143.git.andreyknvl@google.com
+Fixes: 59e6e098d1c1 ("kasan: introduce kasan_complete_mode_report_info")
+Fixes: 3c5c3cfb9ef4 ("kasan: support backing vmalloc space with real shadow memory")
+Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: kernel test robot <lkp@intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: b6ea95a34cbd ("kasan: avoid sleepable page allocation from atomic context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/device.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ mm/kasan/report.c | 4 ++--
+ mm/kasan/shadow.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/mctp/device.c b/net/mctp/device.c
-index 47407c07afc27..365726010340d 100644
---- a/net/mctp/device.c
-+++ b/net/mctp/device.c
-@@ -120,12 +120,19 @@ static int mctp_dump_addrinfo(struct sk_buff *skb, struct netlink_callback *cb)
- 	struct net_device *dev;
- 	struct ifaddrmsg *hdr;
- 	struct mctp_dev *mdev;
--	int ifindex;
-+	int ifindex = 0;
- 	int idx = 0, rc;
+diff --git a/mm/kasan/report.c b/mm/kasan/report.c
+index 240560ec8d99a..a69d0812a9220 100644
+--- a/mm/kasan/report.c
++++ b/mm/kasan/report.c
+@@ -477,7 +477,7 @@ void kasan_report_invalid_free(void *ptr, unsigned long ip, enum kasan_report_ty
  
--	hdr = nlmsg_data(cb->nlh);
--	// filter by ifindex if requested
--	ifindex = hdr->ifa_index;
-+	/* Filter by ifindex if a header is provided */
-+	if (cb->nlh->nlmsg_len >= nlmsg_msg_size(sizeof(*hdr))) {
-+		hdr = nlmsg_data(cb->nlh);
-+		ifindex = hdr->ifa_index;
-+	} else {
-+		if (cb->strict_check) {
-+			NL_SET_ERR_MSG(cb->extack, "mctp: Invalid header for addr dump request");
-+			return -EINVAL;
-+		}
-+	}
+ 	start_report(&flags, true);
  
- 	rcu_read_lock();
- 	for (; mcb->h < NETDEV_HASHENTRIES; mcb->h++, mcb->idx = 0) {
+-	memset(&info, 0, sizeof(info));
++	__memset(&info, 0, sizeof(info));
+ 	info.type = type;
+ 	info.access_addr = ptr;
+ 	info.access_size = 0;
+@@ -512,7 +512,7 @@ bool kasan_report(unsigned long addr, size_t size, bool is_write,
+ 
+ 	start_report(&irq_flags, true);
+ 
+-	memset(&info, 0, sizeof(info));
++	__memset(&info, 0, sizeof(info));
+ 	info.type = KASAN_REPORT_ACCESS;
+ 	info.access_addr = ptr;
+ 	info.access_size = size;
+diff --git a/mm/kasan/shadow.c b/mm/kasan/shadow.c
+index ecb7acb3897cd..578877ed49564 100644
+--- a/mm/kasan/shadow.c
++++ b/mm/kasan/shadow.c
+@@ -272,7 +272,7 @@ static int kasan_populate_vmalloc_pte(pte_t *ptep, unsigned long addr,
+ 	if (!page)
+ 		return -ENOMEM;
+ 
+-	memset((void *)page, KASAN_VMALLOC_INVALID, PAGE_SIZE);
++	__memset((void *)page, KASAN_VMALLOC_INVALID, PAGE_SIZE);
+ 	pte = pfn_pte(PFN_DOWN(__pa(page)), PAGE_KERNEL);
+ 
+ 	spin_lock(&init_mm.page_table_lock);
 -- 
 2.53.0
 
