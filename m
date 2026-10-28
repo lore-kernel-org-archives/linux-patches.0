@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214575;
-	b=s9cF+R4Zs2Q5lWPaIc8cSXcGx/Qt97/uxd2GYDq7EUGfYp1aglNBAZo0LNxCvLBna5tY
-	 MYx+cEpN2hGufiUcSKTIGRdI3lCftUtliSNyOKNC9fpD9mc6ruQuBw8U3nVZevw3shnU5
-	 yf6FDNw8xkzdT/B2FjelJAsT0fkPE1evZz4F7fITxTxMSqO1vAqlH/Bd8saXz+sluEyrA
-	 GN2rlyF924zDSlQT6QBvOych0aBQmOyP9n1c/jO5jIO+65GpsyO/d6S1qBkR6HezE3t9+
-	 i3N0mZ3HHLRjGcQ3gShQa4WnRcDh4KZzcCMPNg06odHxP3dF8mipLjsr3nclLK0qRTA==
+	t=1793214579;
+	b=cxIy8zXG7PgtRTAtU6X7HoSe8E+s2adqhzMY89yU+8sE57ifVHpCzoiADKGadzWImq56
+	 tPciLoPyQg2IucG2TVl7gWCYZ1MuVRTILuXvvTablCWz+D4uKB5Xn4/ThtWjpWQebPfWq
+	 ZLeYtJWFYJjTDdfkaMCsz8r7OFCer2MG8HwhrwMBuYopqYy76aXRcAT5Y37qrx0w033yG
+	 FVQjKrsGvw8gGsmVXUYL2t0zwZeD8k2py0MWeiTRS7vbwfwF4uKfM3SEB04iKEtdP20cD
+	 MAAGfakUDS1eJ/IsdJh/vlfPyD+SWOk7Wua4wz/KG2Av3fcrPWZ5kteoZ7lw3iFpKSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214579;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W0y/5ZNIx01TFQRvbZeNG8fyo1gtBeoqRyfoGCLQ+G0=;
-	b=sIH1izZ/ZLmDtj9N/qOeAvfgju2mcYzHXMXPstLtNOcUyQeSELswa80uQP8ZzGineTJ2
-	 Ja5rytK2YUIG/wMbPUmmtpVivkdOkY57svGgEihovrh3WvJJ7B/c8juXDkgLInhzYwlP5
-	 qcBnHWe8yyeNJ8GsBjHP18b32ybFTEy0C+eb/6aeluWla1J2At4JjwkSGDpnDIHUU0Dko
-	 8FbyQ/sr2YgXhRf+y6x4OzXIUqc7TKSNqp63uhb0bG7eZ2gi3uAcWnuP50E/z9CUoDiMl
-	 uf5vk4Z0XX7bOfqMPgkV6aTZ3LsTiv8wN1mQ15gvvDyQmiF+97ZSnnbbdALfEWfIGZQ==
+	bh=E2plLFvdiZjDAVInLRva7MgDRXOAohscK4XpqrDJZ2s=;
+	b=2PwwsdvpzylFzLbN78b9bw/+0dXuvs5i41E5vZylv0aOLagLZNREaKOW6inEuxFra4Z7
+	 8Hi8wGyQDnU/XQV5IrGRku0ZSw9AynvVlid4HA9ADW0l4z4A8JNExc6Qp4pRsN6zbLmZV
+	 +d5BECCKhA8kQ4Rn79Ng0Z/YeE0RBYhEQpoYrNSF/NlIuCZFyjZKC/lQW7EnoaYvH24uV
+	 88kDrZZgrxv4j8DXhEOnQw56gij4G7dpjbVxS/HLXcjLxzqNZEZ1xec01lfm7cBWNC4Jl
+	 eehk8Bz6kPqRfz24IB2UB961Xrx6VCDyCN/ssxbC9ziDw//DVOpfTdaWCCLPZmSLfhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaFRmWfE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIny7IAL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8685760A2624;
-	Wed, 28 Oct 2026 19:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73FB60A263E;
+	Wed, 28 Oct 2026 19:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaFRmWfE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DD81F01829;
-	Wed, 28 Oct 2026 19:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIny7IAL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B7E1F031E0;
+	Wed, 28 Oct 2026 19:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214575;
-	bh=W0y/5ZNIx01TFQRvbZeNG8fyo1gtBeoqRyfoGCLQ+G0=;
+	s=korg; t=1793214578;
+	bh=E2plLFvdiZjDAVInLRva7MgDRXOAohscK4XpqrDJZ2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zaFRmWfEqdpoUpgesWtz1uWiWJMPWd+p9vQYKIGGKeo2+UWdTapR6RSwAoaMpbOn4
-	 Oa9n7D0dNY173stbaa5CCwuI3DnPMWsVG+kl9bCrxmC4SuVGZObaAAhxkDbNZvzVlb
-	 a8Nf1QsRKYUHlPv/rHk4JLSpDuZyHIbc+Q8ZUJ9c=
+	b=gIny7IALi3xHCtfgUp5yWNHjZO0p0ant55p9nwoQ9XHVJAz+wouS7dHHumNFpShU4
+	 Uk9kcN2vAiV7C87F2InnejjxSi1R0Q39rgbO5nTxCN3sX5V732vvkR6YOtxJHfHJiE
+	 la/8wXfcBwkInlFq78+/8c6SATAHPUPAKjeOAv9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianchang Zhao <pioooooooooip@gmail.com>,
-	Zhitong Liu <liuzhitong1993@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0900/1887] ksmbd: vfs: fix race on m_flags in vfs_cache
-Date: Wed, 28 Oct 2026 17:49:56 +0100
-Message-ID: <20261028170519.898856883@linuxfoundation.org>
+Subject: [PATCH 6.1 0909/1887] MIPS: ftrace: Fix memory corruption when kernel is located beyond 32 bits
+Date: Wed, 28 Oct 2026 17:50:05 +0100
+Message-ID: <20261028170520.101891462@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,186 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianchang Zhao <pioooooooooip@gmail.com>
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 
-[ Upstream commit 991f8a79db99b14c48d20d2052c82d65b9186cad ]
+[ Upstream commit 36dac9a3dda1f2bae343191bc16b910c603cac25 ]
 
-ksmbd maintains delete-on-close and pending-delete state in
-ksmbd_inode->m_flags. In vfs_cache.c this field is accessed under
-inconsistent locking: some paths read and modify m_flags under
-ci->m_lock while others do so without taking the lock at all.
+Since commit e424054000878 ("MIPS: Tracing: Reduce the overhead of
+dynamic Function Tracer"), the macro UASM_i_LA_mostly has been used,
+and this macro can generate more than 2 instructions. At the same
+time, the code in ftrace assumes that no more than 2 instructions can
+be generated, which is why it stores them in an int[2] array. However,
+as previously noted, the macro UASM_i_LA_mostly (and now UASM_i_LA)
+causes a buffer overflow when _mcount is beyond 32 bits. This leads to
+corruption of the variables located in the __read_mostly section.
 
-Examples:
+This corruption was observed because the variable
+__cpu_primary_thread_mask was corrupted, causing a hang very early
+during boot.
 
- - ksmbd_query_inode_status() and __ksmbd_inode_close() use
-   ci->m_lock when checking or updating m_flags.
- - ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
-   ksmbd_clear_inode_pending_delete() and ksmbd_fd_set_delete_on_close()
-   used to read and modify m_flags without ci->m_lock.
+This fix prevents the corruption by avoiding the generation of
+instructions if they could exceed 2 instructions in
+length. Fortunately, insn_la_mcount is only used if the instrumented
+code is located outside the kernel code section, so dynamic ftrace can
+still be used, albeit in a more limited scope. This is still
+preferable to corrupting memory and/or crashing the kernel.
 
-This creates a potential data race on m_flags when multiple threads
-open, close and delete the same file concurrently. In the worst case
-delete-on-close and pending-delete bits can be lost or observed in an
-inconsistent state, leading to confusing delete semantics (files that
-stay on disk after delete-on-close, or files that disappear while still
-in use).
-
-Fix it by:
-
- - Making ksmbd_query_inode_status() look at m_flags under ci->m_lock
-   after dropping inode_hash_lock.
- - Adding ci->m_lock protection to all helpers that read or modify
-   m_flags (ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
-   ksmbd_clear_inode_pending_delete(), ksmbd_fd_set_delete_on_close()).
- - Keeping the existing ci->m_lock protection in __ksmbd_inode_close(),
-   and moving the actual unlink/xattr removal outside the lock.
-
-This unifies the locking around m_flags and removes the data race while
-preserving the existing delete-on-close behaviour.
-
-Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
-Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 86 +++++++++++++++++++++++++++------------
- 1 file changed, 61 insertions(+), 25 deletions(-)
+ arch/mips/kernel/ftrace.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 4b35e4f960694..d10cd67d6793c 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -104,40 +104,62 @@ int ksmbd_query_inode_status(struct dentry *dentry)
+diff --git a/arch/mips/kernel/ftrace.c b/arch/mips/kernel/ftrace.c
+index f39e85fd58fa9..b15615b285690 100644
+--- a/arch/mips/kernel/ftrace.c
++++ b/arch/mips/kernel/ftrace.c
+@@ -54,10 +54,20 @@ static inline void ftrace_dyn_arch_init_insns(void)
+ 	u32 *buf;
+ 	unsigned int v1;
  
- 	read_lock(&inode_hash_lock);
- 	ci = __ksmbd_inode_lookup(dentry);
--	if (ci) {
--		ret = KSMBD_INODE_STATUS_OK;
--		if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
--			ret = KSMBD_INODE_STATUS_PENDING_DELETE;
--		atomic_dec(&ci->m_count);
--	}
- 	read_unlock(&inode_hash_lock);
-+	if (!ci)
-+		return ret;
-+
-+	read_lock(&ci->m_lock);
-+	if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
-+		ret = KSMBD_INODE_STATUS_PENDING_DELETE;
-+	else
-+		ret = KSMBD_INODE_STATUS_OK;
-+	read_unlock(&ci->m_lock);
-+
-+	atomic_dec(&ci->m_count);
- 	return ret;
- }
+-	/* la v1, _mcount */
+-	v1 = 3;
+-	buf = (u32 *)&insn_la_mcount[0];
+-	UASM_i_LA(&buf, v1, MCOUNT_ADDR);
++	/* If we are not in compat space, the number of generated
++	 * instructions will exceed the maximum expected limit of 2.
++	 * To prevent buffer overflow, we avoid generating them.
++	 * insn_la_mcount will not be used later in ftrace_make_call.
++	 */
++	if (uasm_in_compat_space_p(MCOUNT_ADDR)) {
++		/* la v1, _mcount */
++		v1 = 3;
++		buf = (u32 *)&insn_la_mcount[0];
++		UASM_i_LA(&buf, v1, MCOUNT_ADDR);
++	} else {
++		pr_warn("ftrace: mcount address beyond 32 bits is not supported (%lX)\n",
++			MCOUNT_ADDR);
++	}
  
- bool ksmbd_inode_pending_delete(struct ksmbd_file *fp)
- {
--	return (fp->f_ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
-+	struct ksmbd_inode *ci = fp->f_ci;
-+	int ret;
-+
-+	read_lock(&ci->m_lock);
-+	ret = (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
-+	read_unlock(&ci->m_lock);
-+
-+	return ret;
- }
+ 	/* jal (ftrace_caller + 8), jump over the first two instruction */
+ 	buf = (u32 *)&insn_jal_ftrace_caller;
+@@ -189,6 +199,13 @@ int ftrace_make_call(struct dyn_ftrace *rec, unsigned long addr)
+ 	unsigned int new;
+ 	unsigned long ip = rec->ip;
  
- void ksmbd_set_inode_pending_delete(struct ksmbd_file *fp)
- {
--	fp->f_ci->m_flags |= S_DEL_PENDING;
-+	struct ksmbd_inode *ci = fp->f_ci;
++	/* When the code to patch does not belong to the kernel code
++	 * space, we must use insn_la_mcount. However, if MCOUNT_ADDR
++	 * is not in compat space, insn_la_mcount is not usable.
++	 */
++	if (!core_kernel_text(ip) && !uasm_in_compat_space_p(MCOUNT_ADDR))
++		return -EFAULT;
 +
-+	write_lock(&ci->m_lock);
-+	ci->m_flags |= S_DEL_PENDING;
-+	write_unlock(&ci->m_lock);
- }
+ 	new = core_kernel_text(ip) ? insn_jal_ftrace_caller : insn_la_mcount[0];
  
- void ksmbd_clear_inode_pending_delete(struct ksmbd_file *fp)
- {
--	fp->f_ci->m_flags &= ~S_DEL_PENDING;
-+	struct ksmbd_inode *ci = fp->f_ci;
-+
-+	write_lock(&ci->m_lock);
-+	ci->m_flags &= ~S_DEL_PENDING;
-+	write_unlock(&ci->m_lock);
- }
- 
- void ksmbd_fd_set_delete_on_close(struct ksmbd_file *fp,
- 				  int file_info)
- {
--	if (ksmbd_stream_fd(fp)) {
--		fp->f_ci->m_flags |= S_DEL_ON_CLS_STREAM;
--		return;
--	}
-+	struct ksmbd_inode *ci = fp->f_ci;
- 
--	fp->f_ci->m_flags |= S_DEL_ON_CLS;
-+	write_lock(&ci->m_lock);
-+	if (ksmbd_stream_fd(fp))
-+		ci->m_flags |= S_DEL_ON_CLS_STREAM;
-+	else
-+		ci->m_flags |= S_DEL_ON_CLS;
-+	write_unlock(&ci->m_lock);
- }
- 
- static void ksmbd_inode_hash(struct ksmbd_inode *ci)
-@@ -249,26 +271,40 @@ static void __ksmbd_inode_close(struct ksmbd_file *fp)
- 	struct file *filp;
- 
- 	filp = fp->filp;
--	if (ksmbd_stream_fd(fp) && (ci->m_flags & S_DEL_ON_CLS_STREAM)) {
--		ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
--		err = ksmbd_vfs_remove_xattr(file_mnt_user_ns(filp),
--					     &filp->f_path,
--					     fp->stream.name);
--		if (err)
--			pr_err("remove xattr failed : %s\n",
--			       fp->stream.name);
-+
-+	if (ksmbd_stream_fd(fp)) {
-+		bool remove_stream_xattr = false;
-+
-+		write_lock(&ci->m_lock);
-+		if (ci->m_flags & S_DEL_ON_CLS_STREAM) {
-+			ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
-+			remove_stream_xattr = true;
-+		}
-+		write_unlock(&ci->m_lock);
-+
-+		if (remove_stream_xattr) {
-+			err = ksmbd_vfs_remove_xattr(file_mnt_user_ns(filp),
-+						     &filp->f_path,
-+						     fp->stream.name);
-+			if (err)
-+				pr_err("remove xattr failed : %s\n",
-+				       fp->stream.name);
-+		}
- 	}
- 
- 	if (atomic_dec_and_test(&ci->m_count)) {
-+		bool do_unlink = false;
-+
- 		write_lock(&ci->m_lock);
- 		if (ci->m_flags & (S_DEL_ON_CLS | S_DEL_PENDING)) {
- 			ci->m_flags &= ~(S_DEL_ON_CLS | S_DEL_PENDING);
--			write_unlock(&ci->m_lock);
--			ksmbd_vfs_unlink(filp);
--			write_lock(&ci->m_lock);
-+			do_unlink = true;
- 		}
- 		write_unlock(&ci->m_lock);
- 
-+		if (do_unlink)
-+			ksmbd_vfs_unlink(filp);
-+
- 		ksmbd_inode_free(ci);
- 	}
- }
+ #ifdef CONFIG_64BIT
 -- 
 2.53.0
 
