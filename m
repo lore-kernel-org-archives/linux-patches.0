@@ -1,59 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213166;
-	b=VOxySKg5Oy+O+I75tYaCq7vDiiNWYM1TfBQmVVWxSusq/76eki1hab41lZ+uLZPqQnIR
-	 uZWaR5lO8AF/u4cciqv6xMOAXTmnUBFA9gLOmxNBOGtAEEH5kBPIh7BuezqeHKMSuqhyT
-	 Dgck90NoWRUXZ5ol0p6ZLPo632lCgUad4ryhcJDXIc15Fpxa6oXB/cEQlNG4Avx+8sx99
-	 /T9E9fdgQxXQsCT805V51sFXHuQnzZWO/FwTmw/N5eTsBICr0YPYX58w0aUdYlPwzyEUE
-	 SsgqYGbAWKm0ciNuZPZcWIAIMBuTV/Zh0kg4oYmAWsA3dQr93yY1BOuamggetfKp+Fg==
+	t=1793213169;
+	b=GnoG1/5eawkVlGx6l8hJ858hoyn/pQdjQpozqETUKWqVhQ0afA0dcXMc05yQTI2yNYzJ
+	 FO5y/wTtua3pviJNovG4uDSBlnja7xwKxr44omXA6nguks4aQdHZIXGaNYnSDwrD92UqW
+	 r2SSxUtCboE0WPBBPCxaiN4kNYkMgCbIdkKnDj1Zq1ceJSpA/H3Snh1bNHkQp4Qv8DNkn
+	 c1hlo08oBwGOSOjOl/pVNDWoy7Hi4VnklLS9RbfVT8kF0FiIqfOM4ox/2+zaMAmM0KcWR
+	 u/D9JzJR4sddriZZTeuErrYrDB/ItQ+c2INLBjsvPWphPXaT9FoW7k+Dp7TZ5v+aW/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=7wyfPaNs08Xciwf6GGSYXQIaJ8x6Eq10qHjTXX+AHKU=;
-	b=zkrTeQBUgXtIvIE8OQy9a3BSa5x26g9+aCciIp7I2fQW0E6nsItlidQYnzHttn1hHBmc
-	 rIZQvf7SkdPDPsu8MikHNelg/PC6SGPveLGbEgb4GKsRJTUCOgcv3s4V7mITCQZ+8aNQw
-	 xac+gKbn2s46BlaChcGOpZNBqH1z5NHhbSpAdlC4pNjQcQz9QuMwMPEhBU4dCFq3+2BC8
-	 X7CO+wn987Vdy+xnhmm+1I5nCGZyWASdJHXLmTjtEOo/N22kDEdGpe6xIGJQT7TlPyaz0
-	 xZVG0UKX9f80GEgpxRsh3p4YEqI+ymmteIcEmREEuhN61zZQCd7jY375vy0E6PuPoeA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=up65b0bl77wX0RXhzzQjcTYbrkKN8eUW9EyOGdxs9gM=;
+	b=rIyWxeh3gmEFxd+zcMAxuUc06i1yJg1r+7DsCYoWL8nkvdogz1AGlv6yyP1l86cv69a1
+	 //KIkIqT8zn1oct5QkkIfYgxXciryedtwk8CbGBk643KH/Zh7qWL6HaIcpnq5xkJUAmKN
+	 al+Cq65r7ZwYoo5hglge8WVRNZzwQNkl6pJbCZ6INqykKiS6g0N6n+DKJTFd3yUue7jnL
+	 rKK3Nj52wkM7JkUxtrzmci/tI2SLCsSwpeEQzmOzzQ4mij0wX+YZ0KTVGhdjNNbKPOFdm
+	 vdTHMLjJM60XaTzrdyYsFZJ9OZTJ/41co79mYSq1ldiPxYzblJB9rTVASkGPkxPhdIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MtLAyOtN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vcGQmgJL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F74606A31A;
-	Wed, 28 Oct 2026 18:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4153F606A31D;
+	Wed, 28 Oct 2026 18:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MtLAyOtN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7491F01825;
-	Wed, 28 Oct 2026 18:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vcGQmgJL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9148B1F01825;
+	Wed, 28 Oct 2026 18:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213166;
-	bh=7wyfPaNs08Xciwf6GGSYXQIaJ8x6Eq10qHjTXX+AHKU=;
+	s=korg; t=1793213169;
+	bh=up65b0bl77wX0RXhzzQjcTYbrkKN8eUW9EyOGdxs9gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MtLAyOtN/Tpvrg+0mdWjJ6PgZcoTC5jXfSnrBYly44ZO+B8x7bGwb/2v+PBXXIV1D
-	 73AIDM10mZNyNuPh8V9UkceKRfTq7gRPGLLQm3QIYsxEXMSG9ftOgBbi9hdnKwi6Qb
-	 kU3IW47TKvC/CiuQT4LjgCa100y1EGj9UDi48bQ4=
+	b=vcGQmgJLuM+ghVZgP5boQeemZ03DpGjkk2BW3rC6JYFSkSxsoXYx9bXbTP39l2tJR
+	 mS9heqjkykuAwJoYhJBPNuwFqsPTk8bHBClv80Yku52kyScI2Xh6/7L+oZMroWWbKD
+	 FJoNrfZz8bPfi5QxBvwAfSlIuChT5ksJZL/1L2WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0410/1887] smb: client: discard post-EOF pagecache when extending a file via zero range
-Date: Wed, 28 Oct 2026 17:41:46 +0100
-Message-ID: <20261028170508.566223552@linuxfoundation.org>
+Subject: [PATCH 6.1 0411/1887] iio: adc: ad_sigma_delta: fix use-after-free on unbind
+Date: Wed, 28 Oct 2026 17:41:47 +0100
+Message-ID: <20261028170508.589474429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,58 +64,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit da4fe97fb6c730d9c94a115c7bfa6f98e0d578d0 ]
+[ Upstream commit 9ee8306121495d2a25aa5d1bfd519f2748786b83 ]
 
-smb3_zero_range() removed the pagecache only for the range being zeroed,
-so when it extends the file the folio straddling the old EOF - which may
-hold data dirtied past EOF through an mmap - was never dropped and became
-visible as file content once the file was extended.
+ad_sd_buffer_postenable() allocates sigma_delta->samples_buf with
+devm_krealloc() at runtime, so its devres entry sits after all
+probe-time entries of the driver. devm resources are released in
+reverse allocation order, which means unbind frees samples_buf before
+iio_device_unregister() disables the buffers and detaches the trigger
+pollfunc. The data ready IRQ is still enabled at that point, so
+ad_sd_trigger_handler() can still run and memcpy() incoming samples
+into the freed samples_buf.
 
-Lower the discard boundary to the smaller of the zero-range offset and the
-old EOF.
+Fix this by preallocating the buffer in
+devm_ad_sd_setup_buffer_and_trigger(), before the triggered buffer and
+the IRQ are set up, so it is freed only after iio_device_unregister()
+has drained the trigger handler via free_irq(). Size it for the worst
+case of all sequencer slots being active; ad_sd_validate_scan_mask()
+already caps the number of active channels at num_slots.
 
-Fixes: 72c419d9b073 ("cifs: fix smb3_zero_range so it can expand the file-size when required")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+This issue was found by an in-house static analysis tool.
+
+Fixes: 8bea9af887de ("iio: adc: ad_sigma_delta: Add sequencer support")
 Cc: stable@vger.kernel.org
-[ sashal: Adjusted context because smb3_zero_range() lacks netfs_wait_for_outstanding_io(). ]
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ sashal: adapted buffer allocation to the unconditional buffer setup code. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ad_sigma_delta.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 973a46daa37b3..3278591b3647b 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3542,8 +3542,11 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	/*
- 	 * We zero the range through ioctl, so we need remove the page caches
- 	 * first, otherwise the data may be inconsistent with the server.
-+	 *
-+	 * Start at the old EOF when extending so the folio straddling it, which
-+	 * may hold data written past EOF through an mmap, is dropped too.
- 	 */
--	truncate_pagecache_range(inode, offset, offset + len - 1);
-+	truncate_pagecache_range(inode, min(offset, i_size), offset + len - 1);
+diff --git a/drivers/iio/adc/ad_sigma_delta.c b/drivers/iio/adc/ad_sigma_delta.c
+index 914274ed899ec..45e0f638c0ed1 100644
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -343,9 +343,8 @@ EXPORT_SYMBOL_NS_GPL(ad_sigma_delta_single_conversion, IIO_AD_SIGMA_DELTA);
+ static int ad_sd_buffer_postenable(struct iio_dev *indio_dev)
+ {
+ 	struct ad_sigma_delta *sigma_delta = iio_device_get_drvdata(indio_dev);
+-	unsigned int i, slot, samples_buf_size;
++	unsigned int i, slot;
+ 	unsigned int channel;
+-	uint8_t *samples_buf;
+ 	int ret;
  
- 	/* if file not oplocked can't be sure whether asking to extend size */
- 	rc = -EOPNOTSUPP;
+ 	if (sigma_delta->num_slots == 1) {
+@@ -378,15 +377,6 @@ static int ad_sd_buffer_postenable(struct iio_dev *indio_dev)
+ 			return ret;
+ 	}
+ 
+-	samples_buf_size = ALIGN(slot * indio_dev->channels[0].scan_type.storagebits / 8, 8);
+-	samples_buf_size += sizeof(int64_t);
+-	samples_buf = devm_krealloc(&sigma_delta->spi->dev, sigma_delta->samples_buf,
+-				    samples_buf_size, GFP_KERNEL);
+-	if (!samples_buf)
+-		return -ENOMEM;
+-
+-	sigma_delta->samples_buf = samples_buf;
+-
+ 	spi_bus_lock(sigma_delta->spi->master);
+ 	sigma_delta->bus_locked = true;
+ 	sigma_delta->keep_cs_asserted = true;
+@@ -620,6 +610,7 @@ static int devm_ad_sd_probe_trigger(struct device *dev, struct iio_dev *indio_de
+ int devm_ad_sd_setup_buffer_and_trigger(struct device *dev, struct iio_dev *indio_dev)
+ {
+ 	struct ad_sigma_delta *sigma_delta = iio_device_get_drvdata(indio_dev);
++	unsigned int samples_buf_size;
+ 	int ret;
+ 
+ 	sigma_delta->slots = devm_kcalloc(dev, sigma_delta->num_slots,
+@@ -627,6 +618,19 @@ int devm_ad_sd_setup_buffer_and_trigger(struct device *dev, struct iio_dev *indi
+ 	if (!sigma_delta->slots)
+ 		return -ENOMEM;
+ 
++	/*
++	 * Worst-case size: all sequencer slots can be active, capped
++	 * at num_slots by ad_sd_validate_scan_mask().
++	 */
++	samples_buf_size =
++		ALIGN(sigma_delta->num_slots *
++		      BITS_TO_BYTES(indio_dev->channels[0].scan_type.storagebits),
++		      sizeof(s64));
++	samples_buf_size += sizeof(s64);
++	sigma_delta->samples_buf = devm_kzalloc(dev, samples_buf_size, GFP_KERNEL);
++	if (!sigma_delta->samples_buf)
++		return -ENOMEM;
++
+ 	ret = devm_iio_triggered_buffer_setup(dev, indio_dev,
+ 					      &iio_pollfunc_store_time,
+ 					      &ad_sd_trigger_handler,
 -- 
 2.53.0
 
