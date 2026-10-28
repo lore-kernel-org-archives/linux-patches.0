@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216257;
-	b=JAnsifkBrFunmJcmgc59tdRvDGz4eNHlMs8yGG4PqckJtyChcMKn6osZ7DQlfsqZH7bW
-	 fAHogLoky5sW0ndoEL/caVqkiy6HWf4iAephEAj0eZ60069tgcWy3V5TOa28P5tGgaxCs
-	 2t1b1M3IondZZEw08P0Zs34JE2+JrHbqNIpCVcUWm29BnwYpGdLhOTZT283xDy/oPYyH8
-	 uobhR2i6sG6nAUD51TlepueXz3gFHhLtY0RnNOkVloOc9uZhMKEjo6qkIrKfBhAPBlxlQ
-	 t3KDqRDRDn7Hv5/dweUs8m0IinOVHFCObZI2VKYM+RuDey5AHP4Cln5RSS/SLJ2MWWA==
+	t=1793216260;
+	b=P1SjUqn+/P0QComLYRSYy3s3L7i9qn1Sea5ybxch5vZhdGXtggGkoCt0RFcQa/zvNSuH
+	 +LOSb/iE2aWMRuoZoyq9wSUV+8oJ6PiRq7/tUubE2CDtEU1lrtphKflDjpGu9dbP1fzxl
+	 MlpIRjo+4LvSXTkiWKPcykue5WMTLxEay23GfPS7ah7UYxvad4F3ot5WA7bbQRhSpCiWC
+	 sY6XNZ7BKAOGqCdBu5M0BTpGyr6eFCW4EIg01otKIay3DQaxch/B9Xm3e4oUjMUodS9EN
+	 KOonSxY+Ma5/jvm0DrH+tJO5aCrrbwMO9hpaMe0Ph5Ivx1ITrXOEJvJ/SB9PH6D8EWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216257;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dPaxjAn41peaADPAPb3llUZ1n36c9ltY2sWjXSm8RwQ=;
-	b=1nLiqxoLYADnH3il+lkPi/XfVuAXme7aYwaB0YiKSw6qbUQcILOxzt8wtd2zb5eJ2W7A
-	 zyrVSUPu/ZXeVkwtgdhafPybzZOEM4vGmGAbwqIvQJhvEQ0a9g+9MOF/6dtJxhvS3HFpg
-	 2vcHI0O1m2LNcVFTzZPf/LMxC9XMgNIDD/JmpwaV+Iy0ib9rQKVzFGQZPCLN5WgHCZhGX
-	 GzfILzCY0Jiq7MN5dy/PFt2p5a15DGl1jtHYoKxyg0MWrCvq5qURemveKHeBQpfZpZUN/
-	 vi48aue6vlIRGd7hQqxffPBQakHVerV1S3Zq8MmTZftMGMT/gqWu5TCHGxT26zDZ6pw==
+	bh=r+ayuslOpNMDeQ9gWFcOHlUPWFbhUCn+m+cn9UIX6kQ=;
+	b=YdYIk4Re1X42TAeLbYbW9ugoJup6sJYSmJzQl+ukaUREsFQhqI7q1Czp1Ba4P48g9X0N
+	 RhVZzTLQJowwtxJEkkKwN7mMyt54XqqIf9AIfvRWmlvogPkF0b43BYJUeUQPAW8/Fq47X
+	 KEmSIZBuTP5DnPrEQt7kTmBbRaWJF9avNd43qOJSe2MK4+dA7MB7zu1Oy7hWvkBffLpih
+	 jBGJv4Be+fR1uHa3OypAGMsN3H2frON754G+6hbDWfRpfPw/D25ezTJwO4WdzX7xS7ztR
+	 tJactw9Hmcrqap0bRBgBLhmY952ca/QnlS1SLpTb99WjXZ7SB1Ys/qMuj1HY0jFRZcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXqBHBde;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DbMJoEX/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22512606A31C;
-	Wed, 28 Oct 2026 19:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB524606A31D;
+	Wed, 28 Oct 2026 19:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXqBHBde
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3801F01825;
-	Wed, 28 Oct 2026 19:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DbMJoEX/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127161F01825;
+	Wed, 28 Oct 2026 19:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216256;
-	bh=dPaxjAn41peaADPAPb3llUZ1n36c9ltY2sWjXSm8RwQ=;
+	s=korg; t=1793216259;
+	bh=r+ayuslOpNMDeQ9gWFcOHlUPWFbhUCn+m+cn9UIX6kQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qXqBHBdeJPPwCBri8BTuWJZb7eCOSFaP1qcrkNigkSHlEmegwHx2pKrLt+lqF5XQh
-	 JjJHTya0abWaeDoAkMUzM7Emu+r2j+O7oeGA1rj+EL+z9p1OJ9l1rh8nISwMPONvUs
-	 M+g26wcVefRg/Zl+qndU1sIXbD9//lLd2voQfpuQ=
+	b=DbMJoEX/NCyxi7Bw8LYSIgkwG1uJ/2Rued4UJdo67LD37teCB6ROGGob8NUM/thvP
+	 RzK8aq/o+Fxyp/24WksWL5/pbEWPshDtKQiDKScGkTR92IYQPfjDwTRPm6rJ0gughw
+	 iFBtd+s+5/HOH4CE+DWROsTMLOJBiA21qhLM0F6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shreeya Patel <shreeya.patel@collabora.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Vidhu Sarwal <vidhu.linux@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1494/1887] iio: light: ltrf216a: Return floating point values
-Date: Wed, 28 Oct 2026 17:59:50 +0100
-Message-ID: <20261028170533.453310092@linuxfoundation.org>
+Subject: [PATCH 6.1 1495/1887] iio: light: ltrf216a: fix runtime PM reference leak in error path
+Date: Wed, 28 Oct 2026 17:59:51 +0100
+Message-ID: <20261028170533.477997993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,58 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shreeya Patel <shreeya.patel@collabora.com>
+From: Vidhu Sarwal <vidhu.linux@gmail.com>
 
-[ Upstream commit 00799564bafdd73db1bb0482eefbe1aba7d5e15f ]
+[ Upstream commit c132aef0e757a39036b1d40faf0569f2e343b13e ]
 
-For better precision of input light intesity, return floating point
-values through sysfs instead of an integer value
+ltrf216a_get_lux() acquires a runtime PM reference by calling
+ltrf216a_set_power_state(data, true). However, if
+ltrf216a_read_data() fails, the function returns immediately without
+dropping the reference.
 
-Signed-off-by: Shreeya Patel <shreeya.patel@collabora.com>
-Link: https://lore.kernel.org/r/20231107192005.285534-1-shreeya.patel@collabora.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: c132aef0e757 ("iio: light: ltrf216a: fix runtime PM reference leak in error path")
+This leaves the runtime PM usage count unbalanced, preventing the device
+from autosuspending after a failed read.
+
+Fix this by releasing the runtime PM reference before returning from the
+error path.
+
+Fixes: 83f0bcd40d5c ("iio: light: Add support for ltrf216a sensor")
+Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/ltrf216a.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/iio/light/ltrf216a.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/iio/light/ltrf216a.c b/drivers/iio/light/ltrf216a.c
-index 4b8ef36b69125..45011be4207b3 100644
+index 45011be4207b3..85d8f5329bcee 100644
 --- a/drivers/iio/light/ltrf216a.c
 +++ b/drivers/iio/light/ltrf216a.c
-@@ -234,7 +234,7 @@ static int ltrf216a_read_data(struct ltrf216a_data *data, u8 addr)
- static int ltrf216a_get_lux(struct ltrf216a_data *data)
- {
- 	int ret, greendata;
--	u64 lux, div;
-+	u64 lux;
+@@ -241,11 +241,10 @@ static int ltrf216a_get_lux(struct ltrf216a_data *data)
+ 		return ret;
  
- 	ret = ltrf216a_set_power_state(data, true);
- 	if (ret)
-@@ -246,10 +246,9 @@ static int ltrf216a_get_lux(struct ltrf216a_data *data)
+ 	greendata = ltrf216a_read_data(data, LTRF216A_ALS_DATA_0);
++	ltrf216a_set_power_state(data, false);
+ 	if (greendata < 0)
+ 		return greendata;
  
- 	ltrf216a_set_power_state(data, false);
+-	ltrf216a_set_power_state(data, false);
+-
+ 	lux = greendata * 45 * LTRF216A_WIN_FAC;
  
--	lux = greendata * 45 * LTRF216A_WIN_FAC * 100;
--	div = data->als_gain_fac * data->int_time_fac * 100;
-+	lux = greendata * 45 * LTRF216A_WIN_FAC;
- 
--	return div_u64(lux, div);
-+	return lux;
- }
- 
- static int ltrf216a_read_raw(struct iio_dev *indio_dev,
-@@ -279,7 +278,8 @@ static int ltrf216a_read_raw(struct iio_dev *indio_dev,
- 		if (ret < 0)
- 			return ret;
- 		*val = ret;
--		return IIO_VAL_INT;
-+		*val2 = data->als_gain_fac * data->int_time_fac;
-+		return IIO_VAL_FRACTIONAL;
- 	case IIO_CHAN_INFO_INT_TIME:
- 		mutex_lock(&data->lock);
- 		ret = ltrf216a_get_int_time(data, val, val2);
+ 	return lux;
 -- 
 2.53.0
 
