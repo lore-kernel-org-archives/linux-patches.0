@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210814;
-	b=ess4baiORiUzlHUCEni308euKwxsBi+xQwTHosUmHKEfvc/BF2en6Gorlzo5HJOx+xl/
-	 KAyLvfNPZA+f4E3Htrs6KVONlX5Ybk1n2JW6mJzTqrMPXc0L7resC0poY5Q0Zn+ISN9s+
-	 5eNldJIwJznnO411JB/rnxICPwJU2O7CTgER8vtuE+UiW+0zCYQf+S0DJPFOTyNs08DlC
-	 QuMKflRqZDxtJDckJaq+aWIHxmenVeglyOxD8OWnvzY8T3YIH5rLZ2C/Me4A0flKa148T
-	 fVe4a2RsxECWi2aNMc8wzAQS+0lTddKDmlR0JKJIULDFr7Q6VBBiyfBS+9bjQLL/jqg==
+	t=1793210817;
+	b=PzofFw/S5o8GRU7sz6V8jRrWP9AbTj2zL2zps+8M5VyFf6aMPdxRxOOpD1UYrqudr81N
+	 AdnHTx+i04QRLqHKflS1wqS5FOClrtFLBhPYjjoXqRf36pxPtySBJpk11TEduYc53qiOV
+	 FRR8bd/oTV11MQQDNXEYm9iqaC32op2bfp8Dm0UsxQDRrOaKbVpqAtydekODqvEzUsAWv
+	 QSvAGSj4v/6CSPW+QH7ljFPw4pFEPXb4vQrP5UjXlAVneR1XW1aZUkpu9H+yLbhodzuVo
+	 z5OdsPft/D4PANZoOBTgoT7vqU/OExM9U2+2IVw4a7fKJOesr+zov6Ll8L5bWM3U3dA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nMXlOsFAEirtTcSrNKFyUah+nAF3Cd0mSDQHtGrdcgE=;
-	b=1J+i00vgwGvUwiI0Vi7tdNbIs2sXFObf8OqlAIMieblK453rtSQ/7xbKh4ZSG1C7JOVC
-	 nBjAKjhleQcsGTdvRu8vjZqd/zg9/mFQSHzHjeTNh/4LpNJDHQxC1HYLYqgoJX2lBs67o
-	 p56k+m7ZtS6FJjIiEui1R5zvTmfVX09rxGqT3cvgjLLrzIR46RVh3jfTe71TMTEyJZYnX
-	 D/z26GqARHqSMbw9tud8uFDpv3MML+34a3hGGTIdqGjUOSsR0q5pzVeqBxy22vJWDA2W8
-	 eCfe4hXo9n5Ug1N1qzOZS79cAg0HHfTmWU0L7iEZtr/lAChEwiJfTA8aSQ0hbGnFROA==
+	bh=tlYwtDPXEaAfbnmPmxiUSHM771olpcpKFFeYIZWYHqo=;
+	b=fqtn0dta8ZXSj4N8JVIlag0CfNhpc7QXeuecw1zi8OoUxcZkNMDLdYLcbxxTqmFF0LZM
+	 m0aa7oK+RLXsxzVLHMGFd6+KNYh9D9TXOm1FKApNSFrvEgqKfQ6lHL3I97rShucENCEtZ
+	 YUl2IxnZLj5zLogdzyJr4dJJpdK9FsCmK1w4ILpf9LA9HIe4PypaOmqmL9ejjyDXn3YG3
+	 2BpPwQb/y1HS3/piwRodWoGtvs7yDwcp+Bj6813CCdRzXM77Y/AALzM6DyzA6TwLwQ9Tj
+	 ip1n/DICP074tXZ/k+TeweMY0kCT+s9IXGUEvrlfxqRsKpc4g4fjEkz3UwLi9N3etiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4d99ahg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bp6/A40D";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6885D606A31A;
-	Wed, 28 Oct 2026 18:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5227D606A322;
+	Wed, 28 Oct 2026 18:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4d99ahg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A091F031E0;
-	Wed, 28 Oct 2026 18:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bp6/A40D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA7E1F01828;
+	Wed, 28 Oct 2026 18:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210814;
-	bh=nMXlOsFAEirtTcSrNKFyUah+nAF3Cd0mSDQHtGrdcgE=;
+	s=korg; t=1793210817;
+	bh=tlYwtDPXEaAfbnmPmxiUSHM771olpcpKFFeYIZWYHqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c4d99ahgz+jqTd4DOD8Ku0mLI81xEo6L52X/h6aBNTjCC3cfbvu9usWVtUnlAdi6D
-	 MLd7xfe1C3NKZP8FEx9OPeSCCDavVtHhp9WGoC+MH1ujC4tAkPZYmFuajla4GrzymS
-	 V2ZjIJq6tWpgkLkXgNTFGpFaBuCFvZcKAqhz4Qls=
+	b=bp6/A40D0ryFMsKpnF4MmtzPcR7Wz06U9w3+eKtKOat021NCKBaN8RtAbtF+999gZ
+	 a1hE9iioIXsoIebYL4OPLu01WX5lnX2+QyYpyEG3H3rCClvE0zHqrkYRqFEY6WC6Lp
+	 lz/79za/YJucjYw54UteG6IsLTRKWEfPuP9jXEUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Zev Weiss <zev@bewilderbeest.net>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 157/571] scsi: qla2xxx: Fix NVMe abort reference leak on repeated abort
-Date: Wed, 28 Oct 2026 17:55:04 +0100
-Message-ID: <20261028170011.741410948@linuxfoundation.org>
+Subject: [PATCH 5.15 158/571] mtd: core: clear out unregistered devices a bit more
+Date: Wed, 28 Oct 2026 17:55:05 +0100
+Message-ID: <20261028170011.765573663@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,62 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Zev Weiss <zev@bewilderbeest.net>
 
-[ Upstream commit 06b5b2a5d499323f1c3256ead35798e8e3d15e60 ]
+[ Upstream commit 00596576a05145a1b5672897a82ef87af00becf4 ]
 
-qla_nvme_ls_abort() and qla_nvme_fcp_abort() take a command reference with
-kref_get_unless_zero() and then call schedule_work() on priv->abort_work,
-ignoring its return value. qla_nvme_abort_work() runs once and drops
-exactly one reference via kref_put(&sp->cmd_kref, sp->put_fn).
+This allows an MTD device that has been unregistered to be easily
+re-registered later without triggering spurious "already registered"
+warnings in mtd_device_parse_register() and add_mtd_device().
 
-Since the per-abort INIT_WORK() was moved to submission time,
-schedule_work() now returns false when the work is already pending, for
-example on a concurrent transport teardown and timeout-driven abort of
-the same command. In that case the reference taken for the second abort
-is never released because the work still executes only once, leaking a
-reference. The command is then never returned to the NVMe-FC transport,
-which can hang the port.
-
-Drop the reference when schedule_work() returns false, so each
-kref_get_unless_zero() is balanced regardless of whether the work was
-newly queued. The held reference keeps priv->sp valid for the put.
-
-Fixes: 7e85f6dbc856 ("scsi: qla2xxx: Initialize NVMe abort_work once at submission")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-25-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20211015185049.3318-1-zev@bewilderbeest.net
+Stable-dep-of: 12b31d1acd20 ("mtd: core: call _get_device() with the master MTD")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mtd/mtdcore.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_nvme.c b/drivers/scsi/qla2xxx/qla_nvme.c
-index f286254ec7750..84caaa188000b 100644
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -304,7 +304,8 @@ static void qla_nvme_ls_abort(struct nvme_fc_local_port *lport,
- 	}
- 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index 16077e5a2df1c..cd49719ca3410 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -750,6 +750,9 @@ int del_mtd_device(struct mtd_info *mtd)
  
--	schedule_work(&priv->abort_work);
-+	if (!schedule_work(&priv->abort_work))
-+		kref_put(&priv->sp->cmd_kref, priv->sp->put_fn);
- }
+ 		device_unregister(&mtd->dev);
  
- static int qla_nvme_ls_req(struct nvme_fc_local_port *lport,
-@@ -386,7 +387,8 @@ static void qla_nvme_fcp_abort(struct nvme_fc_local_port *lport,
- 	}
- 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
++		/* Clear dev so mtd can be safely re-registered later if desired */
++		memset(&mtd->dev, 0, sizeof(mtd->dev));
++
+ 		idr_remove(&mtd_idr, mtd->index);
+ 		of_node_put(mtd_get_of_node(mtd));
  
--	schedule_work(&priv->abort_work);
-+	if (!schedule_work(&priv->abort_work))
-+		kref_put(&priv->sp->cmd_kref, priv->sp->put_fn);
- }
+@@ -1031,8 +1034,10 @@ int mtd_device_unregister(struct mtd_info *master)
+ {
+ 	int err;
  
- static inline int qla2x00_start_nvme_mq(srb_t *sp)
+-	if (master->_reboot)
++	if (master->_reboot) {
+ 		unregister_reboot_notifier(&master->reboot_notifier);
++		memset(&master->reboot_notifier, 0, sizeof(master->reboot_notifier));
++	}
+ 
+ 	if (master->otp_user_nvmem)
+ 		nvmem_unregister(master->otp_user_nvmem);
 -- 
 2.53.0
 
