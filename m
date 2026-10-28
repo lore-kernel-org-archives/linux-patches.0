@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210312;
-	b=sakFJuyNuNQKbMjc0enM5d9BeoilbnEYf1Br3frQV9LvrFSd+sWhsBp3VM5JVGoroDYQ
-	 GWjUYf78LzjfLmmVQw/t6ge9cihQnvKDVLy0wGgT25Lz27Sa2+GYiZoBhQL0Zxzo1dvav
-	 O1YrVQXXXPhoHdEg888dUCiA8IF1qrwcuaPP9pkUOndyva6vQsPix7HLROs4c/q5vwY8Z
-	 iiVadJB18kUXAMddFHAwOX2bbH3F1Tz85g0EoxOzO2oOHd0xG6E6qEHr/8UU/IAdV/kmN
-	 /mvDwhOd7Uh2B4jud1VJk7fd80NdANThXql5wvJYkr+8KI3MIjTYHdPTzbik/Wi8M4Q==
+	t=1793210315;
+	b=2bARFA9wOy2lkkkQclHaN6h3fbyh5OZ90DGxBfoxnuxuI7vmVzL1uZQ75bWgzP4JK2fN
+	 DGrOZjdFwzmXwqElelBOWfbRd1Ro7FNLEH1DboH4mLL96EaRt1q/ibw343UT6TMs9WgCS
+	 AV3zlq7aYQ8TM5JJ8LV47BHNutYbXmY6P979VI+eVtSH1XVs/GJN5nub1AAT9V3U9UYEp
+	 RKqhSrH2k+9gMkGspAhkHGU22Si/vEYkjITuubGUY2GqO3XkGCyGeTRt/86iYxZbzCly3
+	 dcGvYoBxWyROvHorxrPbMNjsRJzVQV06UuFAXT140QH/3B0HhYjKqguwAR20JaRPz3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210312;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210315;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GdUPDjA1RgvZNfRM6cUNnQmRFWHGtZgM397W4gboW+w=;
-	b=vzrUUK+AMt0U0HpRbTLw2yqzMDxB1dZqHDJiRKIM8quhoBFJ1r32eJoW2WbtS8mLXYBf
-	 nSY38Sl0AB0tYoSpYheZkG/ph9FO/xwPYgia80qPfVLGAIl8HXJclrfpuxC4OSMirz/Go
-	 zOxKlSgiU3Y+xreuUrDQGFnBDooIWJQ5mLNRbS/x5bTIP4bYR+o/cVzTGYmZAFhWXMn0j
-	 QrIRzxgU/cIMUQTCsjwqApCBm/+9gS/Xk06t9Gj0viyfBqrxQD8Oe1y6fim7KOll7WBb5
-	 xbZE1+kN0GLXY94tIjPhB0he/plXZN11V1I/CnD/OV8vFKxPQmh0/2twsyJTdwpnVng==
+	bh=IRrYKeT/76ddCQPlGjnPi0Ok2/AYluU5Bw6oFxG0KR4=;
+	b=dKa03BvWc7vK3kWiPy5ht16q9a801QGVC07s8J06P2ofYDBqkJKOYdhn9CcH/bNlDwLE
+	 tau4awTHemdYwPNNx6pXhG86rH+ThuwSAOAQUEYQjzlIc4hQHbWGBrIdFkz4qneTOGCqc
+	 GnxMiWqDg7y6WtKoLX/mEdTiSe2eCoUMNlnIvFMQq7D7wMgLcfmVVc0nJTGFbqRV8Ie7S
+	 oWe/fOYeMjDugbABDf/iz0KtgSqWpYl1948T8Cmnl9BBTBqH1ZCqi58j+SZDBUH4HnYp6
+	 nCeH/b8hQKcWb1RHDx7XO27B29VYr6LWo+FZfcGSyMqQOns/80wNrySit039KUEvARA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SuWHNj6J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pApT2mfh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACFD606A31C;
-	Wed, 28 Oct 2026 17:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C1D606A31A;
+	Wed, 28 Oct 2026 17:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SuWHNj6J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA85E1F01825;
-	Wed, 28 Oct 2026 17:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pApT2mfh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8652B1F01825;
+	Wed, 28 Oct 2026 17:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210312;
-	bh=GdUPDjA1RgvZNfRM6cUNnQmRFWHGtZgM397W4gboW+w=;
+	s=korg; t=1793210315;
+	bh=IRrYKeT/76ddCQPlGjnPi0Ok2/AYluU5Bw6oFxG0KR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SuWHNj6JI7uZvJRbbwj2ksVNGyQbUHVasvPbwBYzngXS6/KHTBgjsr/b8odjRr9jc
-	 WLhwD29X6XK4MIjx1YCpYSINBOCEhKZSGzBnHC3/N40dQVIKoRYVI1sI0HHLPxE8Kr
-	 B4zEAKi9mqpWvEYNWpgIC4gepNFminrONQ1FeGMo=
+	b=pApT2mfh1eF/JoxQdkHV33GV+gAz5ArIftgrGFIrw6mcLTnXtnpZQkCwPpbO9xFYC
+	 djlLueX39ZQ2RazOssqVVpz3JIWuM5o4V2D4XC4YaeEvWxTAfIwxW+qBi3GosVrdbU
+	 enx8qPbkQ2VHxjxhZk0ZOWalLktJHaMIucVNeCZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 106/168] vsock/virtio: validate packet source for connected sockets
-Date: Wed, 28 Oct 2026 18:00:42 +0100
-Message-ID: <20261028165945.599535565@linuxfoundation.org>
+Subject: [PATCH 6.6 097/168] ext4: free the sbi after a grace period
+Date: Wed, 28 Oct 2026 18:00:33 +0100
+Message-ID: <20261028165945.384908101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -70,121 +67,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit dee44f41f206becb41c492899c1996cfd7f82a1b ]
+[ Upstream commit c17b44266a1f9fcb49b894d4611d1254bf1aa313 ]
 
-virtio_transport_recv_pkt() looks up sockets first by the full source and
-destination tuple, then by destination only in the bound table. The
-fallback is needed for listening and connecting sockets, but sockets remain
-in the bound table after connect(), so it can also return a non-listening
-socket.
+ext4_get_link() follows a symlink that keeps its target in a data block
+in rcu pathwalk mode with ext4_getblk(EXT4_GET_BLOCKS_CACHED_NOWAIT).
+That reads s_mount_state in the ASSERT() of ext4_getblk() and again in
+ext4_es_lookup_extent(), and the lookup bumps the extent status hit or
+miss counter, all through sb->s_fs_info.
 
-The fallback does not validate the source address. In TCP_SYN_SENT, a
-RESPONSE from an unrelated source can transition the victim socket to
-TCP_ESTABLISHED while its stored remote address remains unchanged.
-Subsequent RW packets from that source are delivered through the same
-destination-only fallback.
+ext4_put_super() destroys those counters, clears sb->s_fs_info and frees
+the sbi without waiting for a grace period. A pathwalk that is still in
+ext4_get_link() when the last reference to the mount goes away then
+dereferences a NULL s_fs_info, the freed sbi or the destroyed percpu
+counters.
 
-This was reproduced with capability-empty processes under different UIDs.
-The attacker discovered the target tuple through unprivileged AF_VSOCK
-sock_diag and caused the victim socket to read 16 attacker-chosen bytes;
-the intended peer-side socket read 0 of those 16 bytes.
+With a pathwalk held up in ext4_get_link() while the last reference
+goes away:
 
-Add vsock_check_source() to validate the transport, source port and source
-CID against the peer stored in a non-listening socket. The local transport
-is the CID exception because its packets are generated internally with
-VMADDR_CID_LOCAL as their source, including connections using CID aliases.
+  KASAN: null-ptr-deref in range [0x00000000000000a8-0x00000000000000af]
+  RIP: 0010:ext4_getblk+0xf0/0x640
+  Call Trace:
+   <TASK>
+   ext4_get_link+0x26c/0x410
+   pick_link+0xf96/0x1780
+   step_into_slowpath+0x9b8/0x1250
+   path_lookupat+0x484/0xb00
+   filename_lookup+0x1f1/0x5b0
+   vfs_statx+0xd7/0x3b0
+   vfs_fstatat+0x4d/0x90
+   __do_sys_newfstatat+0xa0/0x100
+   do_syscall_64+0x10e/0x5e0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Use the helper after lock_sock() in the virtio receive path.
+So far that has been hard to hit. umount(2) waits for a grace period in
+namespace_unlock() before it drops the mount, so only a mount whose last
+reference goes away elsewhere, like the close of a file or a chdir out of
+a lazily unmounted directory, can race a walker.
 
-Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
-Closes: https://lore.kernel.org/netdev/20260813121236.2328599-1-4ncienth@gmail.com/
+Keep sb->s_fs_info and free the sbi together with the extent status
+counters after a grace period. Split the counters out of
+ext4_es_unregister_shrinker() for that. The shrinker still gets wasted
+in ext4_put_super(), the counters go with the sbi.
+
+Fixes: 6493792d3299 ("ext4: convert symlink external data block mapping to bdev")
 Cc: stable@vger.kernel.org
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260826003929.966160-2-4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: adjusted context for vsock lookup and reset helpers without network namespace arguments ]
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-1-7446d2d335e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Replaced shrinker_free() with unregister_shrinker() for the embedded shrinker. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/af_vsock.h                  |  3 +++
- net/vmw_vsock/af_vsock.c                | 32 +++++++++++++++++++++++++
- net/vmw_vsock/virtio_transport_common.c |  3 ++-
- 3 files changed, 37 insertions(+), 1 deletion(-)
+ fs/ext4/ext4.h           |  2 ++
+ fs/ext4/extents_status.c |  7 ++++++-
+ fs/ext4/extents_status.h |  1 +
+ fs/ext4/super.c          | 13 +++++++++++--
+ 4 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/af_vsock.h b/include/net/af_vsock.h
-index 1820b87b8b7ff..d00f017948ed7 100644
---- a/include/net/af_vsock.h
-+++ b/include/net/af_vsock.h
-@@ -210,6 +210,9 @@ void vsock_remove_connected(struct vsock_sock *vsk);
- struct sock *vsock_find_bound_socket(struct sockaddr_vm *addr);
- struct sock *vsock_find_connected_socket(struct sockaddr_vm *src,
- 					 struct sockaddr_vm *dst);
-+bool vsock_check_source(const struct vsock_sock *vsk,
-+			const struct vsock_transport *transport,
-+			const struct sockaddr_vm *src);
- void vsock_remove_sock(struct vsock_sock *vsk);
- void vsock_for_each_connected_socket(struct vsock_transport *transport,
- 				     void (*fn)(struct sock *sk));
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 8be8d7c55034c..9d6dce5311990 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -334,6 +334,38 @@ struct sock *vsock_find_connected_socket(struct sockaddr_vm *src,
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 5654a1cd2b4af..58746c5130ac6 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -1669,6 +1669,8 @@ struct ext4_sb_info {
+ 	struct list_head s_es_list;	/* List of inodes with reclaimable extents */
+ 	long s_es_nr_inode;
+ 	struct ext4_es_stats s_es_stats;
++	/* ext4_get_link() reads the sbi in rcu pathwalk */
++	struct rcu_head s_rcu;
+ 	struct mb_cache *s_ea_block_cache;
+ 	struct mb_cache *s_ea_inode_cache;
+ 	spinlock_t s_es_lock ____cacheline_aligned_in_smp;
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index d9d5cfb9c951a..cd5160e72d5ae 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -1749,12 +1749,17 @@ int ext4_es_register_shrinker(struct ext4_sb_info *sbi)
  }
- EXPORT_SYMBOL_GPL(vsock_find_connected_socket);
  
-+/**
-+ * vsock_check_source - validate a packet source against a socket peer
-+ * @vsk: socket receiving the packet
-+ * @transport: transport receiving the packet
-+ * @src: source address from the packet
-+ *
-+ * Return: true if the packet arrived on the socket's assigned transport and
-+ * its source matches the stored peer. Loopback packets are generated
-+ * internally and always use the local CID as their source, including
-+ * connections using a valid CID alias.
-+ *
-+ * The caller must hold the socket lock and must not call this for listening
-+ * sockets, which accept packets from any source and have no assigned
-+ * transport.
-+ */
-+bool vsock_check_source(const struct vsock_sock *vsk,
-+			const struct vsock_transport *transport,
-+			const struct sockaddr_vm *src)
+ void ext4_es_unregister_shrinker(struct ext4_sb_info *sbi)
 +{
-+	if (vsk->transport != transport)
-+		return false;
-+
-+	if (src->svm_port != vsk->remote_addr.svm_port)
-+		return false;
-+
-+	if (src->svm_cid == vsk->remote_addr.svm_cid)
-+		return true;
-+
-+	return transport->get_local_cid() == VMADDR_CID_LOCAL;
++	unregister_shrinker(&sbi->s_es_shrinker);
 +}
-+EXPORT_SYMBOL_GPL(vsock_check_source);
 +
- void vsock_remove_sock(struct vsock_sock *vsk)
++/* ext4_get_link() bumps the hit and miss counters in rcu pathwalk */
++void ext4_es_destroy_stats(struct ext4_sb_info *sbi)
  {
- 	/* Transport reassignment must not remove the binding. */
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 16431ef52799d..e6e04cbb7a4be 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1470,7 +1470,8 @@ void virtio_transport_recv_pkt(struct virtio_transport *t,
- 	 * lock_sock (note: listener sockets are not assigned to any transport)
- 	 */
- 	if (sock_flag(sk, SOCK_DONE) ||
--	    (sk->sk_state != TCP_LISTEN && vsk->transport != &t->transport)) {
-+	    (sk->sk_state != TCP_LISTEN &&
-+	     !vsock_check_source(vsk, &t->transport, &src))) {
- 		(void)virtio_transport_reset_no_sock(t, skb);
- 		release_sock(sk);
- 		sock_put(sk);
+ 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_cache_hits);
+ 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_cache_misses);
+ 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_all_cnt);
+ 	percpu_counter_destroy(&sbi->s_es_stats.es_stats_shk_cnt);
+-	unregister_shrinker(&sbi->s_es_shrinker);
+ }
+ 
+ /*
+diff --git a/fs/ext4/extents_status.h b/fs/ext4/extents_status.h
+index d9847a4a25dba..b2c6579b2c9dd 100644
+--- a/fs/ext4/extents_status.h
++++ b/fs/ext4/extents_status.h
+@@ -241,6 +241,7 @@ static inline void ext4_es_store_pblock_status(struct extent_status *es,
+ 
+ extern int ext4_es_register_shrinker(struct ext4_sb_info *sbi);
+ extern void ext4_es_unregister_shrinker(struct ext4_sb_info *sbi);
++extern void ext4_es_destroy_stats(struct ext4_sb_info *sbi);
+ 
+ extern int ext4_seq_es_shrinker_info_show(struct seq_file *seq, void *v);
+ 
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 349e2b087769d..94d40e03ff2f0 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1289,6 +1289,14 @@ static void ext4_flex_groups_free(struct ext4_sb_info *sbi)
+ 	}
+ }
+ 
++static void ext4_put_sbi_rcu(struct rcu_head *head)
++{
++	struct ext4_sb_info *sbi = container_of(head, struct ext4_sb_info, s_rcu);
++
++	ext4_es_destroy_stats(sbi);
++	kfree(sbi);
++}
++
+ static void ext4_put_super(struct super_block *sb)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+@@ -1378,7 +1386,6 @@ static void ext4_put_super(struct super_block *sb)
+ 	ext4_stop_mmpd(sbi);
+ 
+ 	brelse(sbi->s_sbh);
+-	sb->s_fs_info = NULL;
+ 	/*
+ 	 * Now that we are completely done shutting down the
+ 	 * superblock, we need to actually destroy the kobject.
+@@ -1393,7 +1400,8 @@ static void ext4_put_super(struct super_block *sb)
+ #if IS_ENABLED(CONFIG_UNICODE)
+ 	utf8_unload(sb->s_encoding);
+ #endif
+-	kfree(sbi);
++	/* ext4_get_link() reads the sbi and the counters in rcu pathwalk */
++	call_rcu(&sbi->s_rcu, ext4_put_sbi_rcu);
+ }
+ 
+ static struct kmem_cache *ext4_inode_cachep;
+@@ -5688,6 +5696,7 @@ failed_mount8: __maybe_unused
+ 	}
+ failed_mount3a:
+ 	ext4_es_unregister_shrinker(sbi);
++	ext4_es_destroy_stats(sbi);
+ failed_mount3:
+ 	/* flush s_sb_upd_work before sbi destroy */
+ 	flush_work(&sbi->s_sb_upd_work);
 -- 
 2.53.0
 
