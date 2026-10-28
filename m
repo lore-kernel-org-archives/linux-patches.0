@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207235;
-	b=DoTz0+Qxw1msRBQQxk9oZnZHWzRLJYbwPHGZqCQmx8D+PFKQrcKPInvLDxLD4fdRZJUl
-	 H9Q+ReGrTfh/N/Ql5oBoSDTgkf+zkhIKDpCJVPwW7mMpUCndZGwLgeAoqYLKDeo5IuZS1
-	 /LTgzhW5ryKjsd9cE3kCCHAVboSfBxr/68H3giq8b9gi7ospFAXIftSWduszp5nk6/EY2
-	 uXflo2uUwLsvvBBKEyhSXa8Jo89JiFTrXvYc1oOPk3CFyTbol+xQkkmP9KNNRYARwG5iP
-	 PW4cWgTGqAmLMdCbboNVwCfVj7Q/eiXRKvoECm2Zh6iy2+ZKHo+vhM7zp98Mj+YhvhA==
+	t=1793207238;
+	b=sVrJNXQT3u6ozuDRp3TDplLWdfseklWO4AmoHaeMlGTkTlLzx/kU7ZVL51/UzWiQFQxa
+	 2QIw8ZQJJwJ24AfVESAj21VSVJFMUTLsYr1ArfbiDnFqzchpYP+2ejqk9RunbcCRXJFPt
+	 Nx+zeaJPDaEeORDCK+DuO65tFzu9bZZN7TF3EAx1W/I5Q5KYxxfG7EZCx8cirER0NRUBj
+	 HGHsu5aP/8s1QIuL6cCLXmngsaFaiVJ0UuzMxr9PIl7EN03Klfb1LlU0mlRldONp0zWDP
+	 GI8/AL66/7iSFvtpJq2Vd9tg1W4+2MGdqlShH7nAb3HHssyASFVivDAGTf+0v8OdFfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jk6yk6AAwiZ9uVF5oG2OG5RXRarPRuwVqOVh/2WI9Fw=;
-	b=qNLwG6Y4zcrEW2pm5CDJqIy4YAYAw0N7UHTBBGhOuf5tKuOuiRfMqDpndlvftnhwtOEB
-	 cCMBZW3h3Due69+6Jyn/kr7+8LaNBqU3h5grkxLyPlV1SFL73oY/tIu/WNL+AEpac3GdG
-	 RedS+cMfUyDEIqCaoXvkoKdeLxygTmGsQSm0p98767kNxBWRBU58fhcLM8kWddDl3VkbJ
-	 FizPSMdtBhutdZW//7KFHh3LsDA8yhioic4xYC4JwXIQHL/Y9PsqsswA3GLqeHn6APvST
-	 pUfPgMQEpCqbwlQINZVtIFvzBoGqgHgtcifoC6ajhDllU3OufwJO3V0ZaIPpldtxA0A==
+	bh=bPBfGOEZSR1t/Qr98G2O6q+V8xNJmMuhiBbGe2nbjdY=;
+	b=AHp18Ob7Iw+YyqnfqumJ/2G0J+DzvEahojHpyf0OGDg+TJL6r9hIwdWoDJJputr/nO0x
+	 1kNxMoMClVXLP2DC2CdIDEp4h1ggA0BWPJJTcJLMzEi2LHHCheubKcIV3iOuhfENWGa46
+	 7SQrpxSBiCOvHTUlAGIKcIwHMRhZzz33OS3TmPVIX6LP308xuk76sawDuilrF6pQa0WTh
+	 2LEjw7KIuonvnbVjQFKg+hZA1K8pU8w8D2ScB8/BBDNTA3UkWLL+dj9egH/lmMRoLz+dg
+	 MHxj+lQLOQvZGbFin9UDjfzR2Y0+Dbf8lE9aKYo8ULcxS4PS0l2uxCAez7d0awv04Lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2WvCKzC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1aTdfLnQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54891606A31C;
-	Wed, 28 Oct 2026 17:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D44B606A320;
+	Wed, 28 Oct 2026 17:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2WvCKzC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DE51F01825;
-	Wed, 28 Oct 2026 17:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1aTdfLnQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1FF1F01828;
+	Wed, 28 Oct 2026 17:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207235;
-	bh=Jk6yk6AAwiZ9uVF5oG2OG5RXRarPRuwVqOVh/2WI9Fw=;
+	s=korg; t=1793207238;
+	bh=bPBfGOEZSR1t/Qr98G2O6q+V8xNJmMuhiBbGe2nbjdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q2WvCKzCR0B33UjSbjbfFYopb4BKtoXNhNg3cndaEQ3VhcqXo6IfmzQgGevcQ0TYN
-	 leITgnzmazZLFBjcIpS3l00uoMBCrplVlbg77OCmyip99MsGsU7tW/5GdkvkpYDmAy
-	 Abcy8V9CfGJ7JVJtKwLMOYEyEzwOLULVTU5jRC5s=
+	b=1aTdfLnQVInVU14Wzg7tL0QInwzdXPdAI+kAm/mPwfFvRj0Ltsu1u3+leMMTyClIM
+	 q8w7w5yrhhxZLoABg6t6iTNkA0e02AzVKtF9P/6bOqL+2EmTjv7BWQ7BMJCdR1C5ya
+	 JlsGtyR12p+UVHMFNdsGmoepCJ2NO/Z6xtxymbdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 35/88] io_uring: wake ring pollers for local task_work
-Date: Wed, 28 Oct 2026 17:59:43 +0100
-Message-ID: <20261028165942.939568314@linuxfoundation.org>
+Subject: [PATCH 7.2 36/88] io_uring/wait: look at all CQ waiters on wake up
+Date: Wed, 28 Oct 2026 17:59:44 +0100
+Message-ID: <20261028165942.962907984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -69,108 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit b88902d8745a701d24275d012f0830e3628e2a22 upstream.
+Commit 356f92f2412686f822383b784fa102924407457a upstream.
 
-With IORING_SETUP_DEFER_TASKRUN completions are queued as local work, and
-only become CQEs when the submitter enters the kernel to wait for events.
-For an application that finds out via poll() or epoll on the ring fd when
-it is time to do that, io_uring_poll() reports EPOLLIN if local work is
-pending.
+io_wake_function() returns -1 if the waiter it is called for doesn't have
+enough events yet, which makes __wake_up_common() stop walking the wait
+queue. That assumes that the waiters behind it can't be satisfied either.
+Each waiter has its own target though, computed from the min_complete it
+passed in:
 
-That only helps if the work is there at the time of the call. When
-DEFER_TASKRUN was added, io_req_local_work_add() did io_cqring_wake(),
-which took care of tasks sleeping in poll() as well. Then polling got a
-wait queue of its own, ->poll_wq, and the wake up in
-io_req_local_work_add() was replaced by waking the submitter directly.
-Since then ->poll_wq is only woken when CQEs are committed, which for
-such a ring is done by the very task that is waiting to be told to:
+  thread A: io_uring_enter(GETEVENTS, min_complete = 10)  // queued first
+  thread B: io_uring_enter(GETEVENTS, min_complete = 1)
+  one CQE is posted: A isn't woken, and B isn't even considered
 
-  submitter                           completion
-  poll(ring_fd)
-    io_uring_poll()  // nothing yet
-    schedule()
-                                      io_req_local_work_add()
-                                        // ->cq_wait_nr: nobody waits
-  // sleeps on
+B keeps sleeping with the event it asked for sitting in the CQ ring, until
+A's demand is met or a timeout or signal ends the wait.
 
-Wake ->poll_wq when the first entry is put on the work list. Like for the
-eventfd, that must not be done right away if the work is queued from a
-wake up handler, as the chain of wake ups could get back to the wait
-queue whose lock is held. Use an RCU callback in that case, with a
-reference to the ring.
+Return 0 to carry on with the next waiter. Only waiters whose condition
+is met are woken, like before.
 
-Fixes: 130bd686d9be ("io_uring: waitqueue-less cq waiting")
+Fixes: bda521624e75 ("io_uring: make CQ ring wakeups be more efficient")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-19-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-20-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/io_uring_types.h |    3 +++
- io_uring/tw.c                  |   34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+)
+ io_uring/wait.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/linux/io_uring_types.h
-+++ b/include/linux/io_uring_types.h
-@@ -513,6 +513,9 @@ struct io_ring_ctx {
- 	u32				iowq_limits[2];
- 
- 	struct callback_head		poll_wq_task_work;
-+	/* deferred ->poll_wq wake up for local task_work */
-+	struct rcu_head			poll_wq_rcu;
-+	atomic_t			poll_wq_rcu_pending;
- 	struct list_head		defer_list;
- 	unsigned			nr_drained;
- 
---- a/io_uring/tw.c
-+++ b/io_uring/tw.c
-@@ -148,6 +148,37 @@ static void io_ctx_mark_taskrun(struct i
- 	}
+--- a/io_uring/wait.c
++++ b/io_uring/wait.c
+@@ -26,7 +26,8 @@ static int io_wake_function(struct wait_
+ 	 */
+ 	if (io_should_wake(iowq) || io_has_work(iowq->ctx))
+ 		return autoremove_wake_function(curr, mode, wake_flags, key);
+-	return -1;
++	/* keep going, a waiter further down may be content with less */
++	return 0;
  }
  
-+static void io_poll_wq_wake_rcu(struct rcu_head *rcu)
-+{
-+	struct io_ring_ctx *ctx = container_of(rcu, struct io_ring_ctx,
-+					       poll_wq_rcu);
-+
-+	atomic_set(&ctx->poll_wq_rcu_pending, 0);
-+	io_poll_wq_wake(ctx);
-+	percpu_ref_put(&ctx->refs);
-+}
-+
-+/*
-+ * io_uring_poll() reports pending local work as EPOLLIN, as it takes a trip to
-+ * the kernel to turn it into CQEs. Let those know who are asleep already.
-+ */
-+static void io_local_work_wake_poll(struct io_ring_ctx *ctx, unsigned int flags)
-+{
-+	if (!(flags & IOU_F_TWQ_IN_WAKE)) {
-+		io_poll_wq_wake(ctx);
-+		return;
-+	}
-+	/*
-+	 * Called from a wake up handler with some wait queue lock held, this
-+	 * one could lead back to it. Do it from a clean context.
-+	 */
-+	if (!wq_has_sleeper(&ctx->poll_wq) ||
-+	    atomic_xchg(&ctx->poll_wq_rcu_pending, 1))
-+		return;
-+	percpu_ref_get(&ctx->refs);
-+	call_rcu_hurry(&ctx->poll_wq_rcu, io_poll_wq_wake_rcu);
-+}
-+
- void io_req_local_work_add(struct io_kiocb *req, unsigned flags)
- {
- 	struct io_ring_ctx *ctx = req->ctx;
-@@ -174,6 +205,9 @@ void io_req_local_work_add(struct io_kio
- 		io_ctx_mark_taskrun(ctx);
- 		if (data_race(ctx->int_flags) & IO_RING_F_HAS_EVFD)
- 			io_eventfd_signal(ctx, false, flags & IOU_F_TWQ_IN_WAKE);
-+		/* whoever sets the flag wakes ->poll_wq afterwards */
-+		if (data_race(ctx->int_flags) & IO_RING_F_POLL_ACTIVATED)
-+			io_local_work_wake_poll(ctx, flags);
- 	}
- 
- 	/*
+ int io_run_task_work_sig(struct io_ring_ctx *ctx)
 
 
