@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211991;
-	b=3ztZoGmM6gk0PAoK4XDardTlaMkMpyiM+A0w2cbGYWdb+YMvp/0uq5qRXH1n6R2zNow8
-	 mAF4payEQFjZOnZJSZsouq/qWKRPrQumzqT7CeqrqzyVIGVPyxLMKMGEE4TJZ8Uby5tFe
-	 ARXYhhSIAinhobSC8tVrQoOm6JolDLoGeBezDASnN0KrP3cxMsdmT3u/uN7QExmGonvGW
-	 RI/IYTZrOjz2DowB1/gDFvrxMObcst9AzqldXFsKqWDHAaHXm6xg8c9IvxY3HQ2hD5nqm
-	 871yiSmjk9kqoetFmLfyv+ABmADG4tk5xFxOMinT60fJR/6baKzYdfOVkO8gM48LI1A==
+	t=1793211994;
+	b=SWcNEnMjjQcd6b+1oCYEzoyjEV6Y4Em1qRBgbjVC8xE15ngJsiOA7jwIPIcLAKv6u4HU
+	 3ISxJpvRnwG7v6wYBl61pgWTxqQ53J1FNy88F2duyMJQKIzCHN78JpYGFiLEU2IiSkJHe
+	 eQrFkqmTI2tIYYET7DGnr6CM2SELwPiZItNgH9eNpdYBAUEQMvEF10FLfdk5AxEG7bu9A
+	 5DG7vJq8C7dyuKvKC/YlNEvetf0mYI340JtwlMCzmQNRKIVDk4g8CvKkuQerlogsn1tn/
+	 p+MNDaDGPXiOYPskMaAgFfoISU+SMBH+qpFgdD4kh98OZUuNRv8Pw/It5ZGiHfHuEJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=arRU94tv5CLElX6wlC1Ee+cVkTixsi55ecRiccZGxTU=;
-	b=nOLs79U5aQR4ywky9BJGUQf+qk2PGN/tk18BAWlIvPbrOfFUmT/FKu1YSVo6K1L49rQW
-	 wKI0mFytZNIb56ZfqMt12hzfpyE2MT0GK07W6ywdyXKKjOOm0y3RqEbqyyzWbMEjpsDxN
-	 W1WEaJZhyj4IQllibeiRYsM5gyWZmOvq3MM1gUhAuexWAemjHdiTlqtF2g54KfKaOVbJ0
-	 4xvK1NL2RLht+N7/FNLTK8CFsIlO+0aefRWi3OVQiYuXLMQEt2AHCrq+mrvVB2a5Ckzoj
-	 x9K13mAZpQ98WcoDeVke8qMx9qdnEgdAYLiJN3RDiO6Z97Q84u51U9951pMtd4T6uvg==
+	bh=IL84w4uXbdyoqeIxkreDArHwoxvUXKTcX3Sk2+6rFfM=;
+	b=NB+IWoWBS81Z4SA144x/bZqajucwfvT54OhOCQAcuK5o7T4pFBS1tWA4Px+SsrkNCq2t
+	 O3M524T9J7DNwz52g5V/oiTXJg2lBr3xalXOKvkTRtYhBNuOlYm01g3gdF7jKRfA4SGxQ
+	 IW2YRInJZqYgwm1skYJWmeH9o6sX2ZVgEkk6gt5vyc7e9yKG/ntNnSIE8zW8XlpnWKbVv
+	 Rqmk67hEeNvpfX0atCczSXJLkfsUNRFSFt6sboQwaHNpUEHgwO3dF58kNBhzfCPfy8jpH
+	 fqRLCTb4dNQrjwkGQjW08cmTT69ZEEB6xuK60k2KmYRKLmBtY1hRP2i2V6HXHddtUBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EsEiRVCj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxstBXba;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DFF606A31C;
-	Wed, 28 Oct 2026 18:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCE6606A31D;
+	Wed, 28 Oct 2026 18:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EsEiRVCj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24301F01825;
-	Wed, 28 Oct 2026 18:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxstBXba
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EF61F01825;
+	Wed, 28 Oct 2026 18:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211991;
-	bh=arRU94tv5CLElX6wlC1Ee+cVkTixsi55ecRiccZGxTU=;
+	s=korg; t=1793211994;
+	bh=IL84w4uXbdyoqeIxkreDArHwoxvUXKTcX3Sk2+6rFfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EsEiRVCjMqnwDo3bgb6Dxd8+kq97dxOFYWn+axUiSLPkGL8VTnFeSyzKKRmlz8C5f
-	 9qGOjFHHXnz8lkPRv5UhArKKHAhKR6fHeUpupJGWoM8nKTXfG4zGbkruEnOZAkOEYX
-	 zgv2G5lPt4o6LdhgySy/y76AR8nJZAnX0N8qooxc=
+	b=SxstBXba5XbFDrnVYZUCoN1vLjNyxcaBSjp0ZPKkFeXEi+Bwuw4Azhy52vnoOVw/p
+	 NQUNul6Lt7Wi1BVQ0Ly6MvaqC2Gl0C5HVyPMKS8oURvo9tolK81c56FBZyoq1evXuQ
+	 ecbiFWaJnQ058RpN8ShvBiAnvxLGOYkNRfbwys68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.15 562/571] keys: Avoid the owner account dereference in named keyring lookup
-Date: Wed, 28 Oct 2026 18:01:49 +0100
-Message-ID: <20261028170021.368676189@linuxfoundation.org>
+Subject: [PATCH 5.15 563/571] keys: Check the authorization payload in process keyring searches
+Date: Wed, 28 Oct 2026 18:01:50 +0100
+Message-ID: <20261028170021.393202088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,66 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 51409aaa01f8602552c336009fd22b226b0cdf1d upstream.
+commit 0a0ec45bf577a9b4d4960567f20d3877ef480de9 upstream.
 
-Named keyring lookup must keep the storage containing the owner UID
-alive through the namespace mapping check.  find_keyring_by_name()
-reads keyring->user->uid under keyring_name_lock, but that lock protects
-the keyring's name entry and allocation, not its separate key_user.
+An authorization payload and its saved credentials must remain valid
+while search_process_keyrings_rcu() searches the requestor's keyrings.
+The function validates the authorization key, then separately loads
+payload.data[0] and unconditionally reads rka->cred. Validation does
+not prevent request_key_auth_revoke() from clearing the payload.
 
-A named session-keyring join can overlap a privileged KEYCTL_CHOWN on
-another CPU.  If the keyring holds the last reference to its old dynamic
-key_user and the ownership transfer succeeds, the following ordering is
-possible:
+A request-key helper can assume authority and fork a descendant that
+inherits the authorization key. If the descendant misses in its own
+keyrings, it falls back to the saved requestor credentials. Successful
+target instantiation invalidates the authorization key without clearing
+the payload. After the helper exits, UMH_WAIT_PROC returns to the
+requester, which calls complete_request_key() and revokes that key.
 
-    Named join                         Chown
-    find_keyring_by_name()              keyctl_chown_key()
-      read_lock(keyring_name_lock)       down_write(key->sem)
-      load old keyring->user
-                                         replace key->user and key->uid
-                                         up_write(key->sem)
-                                         key_put(key)
-                                         key_user_put(old user): free
-      read old user->uid
-      read_unlock(keyring_name_lock)
+With the descendant paused after validation, the paths can interleave
+as follows:
 
-Chown neither takes keyring_name_lock nor key_session_mutex, so it can
-free the old account between the pointer load and the UID read.  The
-lookup then reads freed memory even though the keyring itself is alive.
+  1. The descendant enters search_process_keyrings_rcu() under RCU and
+     key_validate() succeeds.
+  2. The helper instantiates the target, invalidates the authorization
+     key, and exits.
+  3. The requester resumes from UMH_WAIT_PROC, calls
+     complete_request_key(), and revokes the authorization key.
+     request_key_auth_revoke() sets its payload pointer to NULL.
+  4. The descendant loads NULL and dereferences rka->cred.
 
-Use keyring->uid for the mapping check.  key_alloc() initializes this
-inline owner UID and keyctl_chown_key() updates it on chown.
-The existing name lock keeps its containing keyring allocated throughout
-the check, so lookup no longer depends on the account's lifetime.  This
-also matches the owner UID used by the permission check.
+This NULL dereference can oops the kernel. RCU delays payload disposal
+but does not prevent the pointer from being cleared.
+
+Load the payload with dereference_key_rcu() and require a non-NULL
+result before validating the authorization key and searching its saved
+credentials. A non-NULL payload and its credentials remain alive for
+the caller's RCU read-side section; a cleared payload skips the fallback
+search and follows the existing error selection.
 
 KASAN report as below:
 
-    BUG: KASAN: slab-use-after-free in find_keyring_by_name+0x577/0x5d0
-    Read of size 4 at addr ffff8881128ae2ec by task keycase/500
+    Oops: general protection fault, probably for non-canonical address 0xdffffc0000000005: 0000 [#1] SMP KASAN NOPTI
+    KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+    RIP: 0010:search_process_keyrings_rcu+0x32b/0x790
 
 Cc: stable@vger.kernel.org
-Fixes: 2ea190d0a006 ("keys: skip keys from another user namespace")
+Fixes: e59428f721ee ("keys: Move the RCU locks outwards from the keyring search functions")
 Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0002-v3-2baa8cad2bb554364e10@gmail.com
+Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0004-v3-598361863b76bc25d58d@gmail.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/keyring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/keys/process_keys.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -1158,7 +1158,7 @@ struct key *find_keyring_by_name(const c
- 	 * grants Search permission and that hasn't been revoked
- 	 */
- 	list_for_each_entry(keyring, &ns->keyring_name_list, name_link) {
--		if (!kuid_has_mapping(ns, keyring->user->uid))
-+		if (!kuid_has_mapping(ns, keyring->uid))
- 			continue;
+--- a/security/keys/process_keys.c
++++ b/security/keys/process_keys.c
+@@ -556,9 +556,8 @@ key_ref_t search_process_keyrings_rcu(st
+ 	    ) {
+ 		const struct cred *cred = ctx->cred;
  
- 		if (test_bit(KEY_FLAG_REVOKED, &keyring->flags))
+-		if (key_validate(cred->request_key_auth) == 0) {
+-			rka = ctx->cred->request_key_auth->payload.data[0];
+-
++		rka = dereference_key_rcu(cred->request_key_auth);
++		if (rka && key_validate(cred->request_key_auth) == 0) {
+ 			//// was search_process_keyrings() [ie. recursive]
+ 			ctx->cred = rka->cred;
+ 			key_ref = search_cred_keyrings_rcu(ctx);
 
 
