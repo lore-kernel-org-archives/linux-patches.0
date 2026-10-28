@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211058;
-	b=QiDpW6X0kIIR1csG/Re5zfGZm0eLPUc6Vl+fpYG0WodNex88/gsIxCfyt0931TOgzrFq
-	 /DyhB5A5Va4kWFt/42JWp6XOjKQT4W6KE7itkHLRZPy2OgWrjxkWdaevR26mTFQTeNjFF
-	 ELhF8mOFqURSiMSChdWD68F1tmbo3ydugPgZCJ4D+Cg5xkYHo9CbWHJUJDdN3AGWev7XW
-	 g5LsZ/pJrSb69kbOSGVHqOqZa5nHI84/3BEDexvzxujzkwlNWB1nTtYJWPNuL9svyAGSg
-	 +8u7JUmPSHJSVgK/BOSc3kPDJpnrQPda/V3WGtH4cX/BwHoAaS7HkFEHgfFR19nTHCA==
+	t=1793211061;
+	b=i1MHB9xbElipmJddA7ej26815NiHy+I+/hPUH44G4dwQxirRqHJVwNhu55UYM0X/oXlB
+	 Ftx5GCCdGAbff52uCCwzLfkbqbJc5BsNN7ylYcP/+si6NcIJB0YWlaUmZV413E1XlmcfR
+	 VFKqyBvLjppSOzFq8csrus3Yj+vWLelzsZQLmDMAc6puQes25ZDUWxOwlGWo5OwS4fnO1
+	 zXO3DgFj2u8o7krIlYCofH4WLbpVyxx8xQAg8kcmCK4WQKlfAoctAuZ2OqmP8kmrVZazc
+	 JGYZFRPLCZrAjT8LESUEMwVJfYQEZMYZ2RgegflV0Z2vQDvcRNDv0xralTxtHYeWRoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211058;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OTakROPhkF5Vq+ji66gmzB7VcfhJV781phDDCVBDob8=;
-	b=NgpRK9QAnoHGmPv0pm89B5kCRsCffgRui/j9djpZ0q3q15JksKcWj+Bd0I8qqLI9hrff
-	 GCZePFjKJlFNjpxmfJZB9Qbd79+UdcEJwhN04OmFV3hjqLRd6FUz9xoFkgeChUf2FuTx4
-	 sLkhna6+4t+qj3msoWulEcgU8oibXwjtm1BEG2sKsjRZFijpgOnQKAKs67N88ATALpx+3
-	 OdpUOXYlPS7mt4MgjdMNfAFx0jBip56vlKGRWkEjN0OZopUycRIQfj31ntHKGWJE9ezhf
-	 hXzfR+T9qCCWj7QMRHmlxTyW8m4XKUFI/e9fPpoI6EJWO9j1k+vZ38d6UOG3tCLhrHQ==
+	bh=5yFu2x+iST67jTnUKZt7sOvIBTmt89v6CMhfA+hpnzM=;
+	b=BU9cHaC6iHMAGo71ZikL0bHgtRnQVdfL2U5keUEk/W4prlVLWLPYToaLBujL9+gbO8rJ
+	 HsyY3RibsjE5mF1P7YjHynGMU2xzprptWTXOQm0Lb9WAdR5/70AzjJPcZKlkx1IhT4z8N
+	 mWsPlEz1/mocNmHGA7EwWKtrHc4tNvNTOurVBeNi9EJ6XkT7LUvIKAJEoIU2i3Uy+b83f
+	 +7iGvuNZ79kEV9+dyQvAvBMFJrT8vQ6Bss26l8q1Nwrtyx8s72jiTXxvahCxpC9Majn0u
+	 aw7b9fctn1//NYqgEBuDd9aKRjWGQ0HcmlvuKrp1L1kc6PO15OUFNtCH+d74qB6AySw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NlqaWERJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuLKb29S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764A2606A969;
-	Wed, 28 Oct 2026 18:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1873D606A32E;
+	Wed, 28 Oct 2026 18:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NlqaWERJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68761F031E3;
-	Wed, 28 Oct 2026 18:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuLKb29S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896551F01828;
+	Wed, 28 Oct 2026 18:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211058;
-	bh=OTakROPhkF5Vq+ji66gmzB7VcfhJV781phDDCVBDob8=;
+	s=korg; t=1793211060;
+	bh=5yFu2x+iST67jTnUKZt7sOvIBTmt89v6CMhfA+hpnzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NlqaWERJzswDO/ynEfD0Y6AvWC1NZ/VVo3uhXl1PoU42cK8JQSsYNULV5c92i1prc
-	 ZAsTstzjIh6l++MoonRbVdRBoXgfg3RX48vTGf5e+swEzDkZI1+2EwT529fpG6IFs4
-	 rkeJRR5Oks4ProYfL5OsAfqfK0onwmb8EEqQLx/M=
+	b=JuLKb29S8WcA4Y7AWzhWkZjXJF98IJFG1DYzeg8zW1iQi9JsPraQ5H0+EZYd9Cu+o
+	 avl1/lxDtUsQhPm71fMfYtb1V472c4h/gDqmIvKa/QVOZFKF1/i/vZkk2Vd87lA1jv
+	 d/B8xBpppfOzoK1ddoLEP0C0xs/Z77XApaJ7WTcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 244/571] USB: serial: fix dynamic id driver deregistration race
-Date: Wed, 28 Oct 2026 17:56:31 +0100
-Message-ID: <20261028170013.796172407@linuxfoundation.org>
+Subject: [PATCH 5.15 245/571] USB: serial: option: add support for SIMCom SIM8260C
+Date: Wed, 28 Oct 2026 17:56:32 +0100
+Message-ID: <20261028170013.819359879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -66,32 +67,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit 63594e8ffe097bc0b7639936f33799a7653dded2 upstream.
+commit 35c950c9ec2c4c4d45dc9b63cfe8fca774ce33a0 upstream.
 
-Only free the dynamic ids after having deregistered the driver and
-removed the "new_id" attribute to avoid leaking any id added by a racing
-write to the attribute.
+Add support for SIMCom SIM8260C (1e0e:902b).
 
-Fixes: 93bacefc4cc0 ("USB serial: add dynamic id support to usb-serial core")
-Cc: stable@vger.kernel.org	# 2.6.21
+T:  Bus=08 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1e0e ProdID=902b Rev= 5.04
+S:  Manufacturer=SIMCOM
+S:  Product=SDXLEMUR-LITE-MTP _SN:120696AB
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=896mA
+A:  FirstIf#= 5 IfCount= 3 Cls=01(audio) Sub=00 Prot=20
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan_simcom
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 0 Cls=01(audio) Sub=01 Prot=20 Driver=snd-usb-audio
+I:* If#= 6 Alt= 0 #EPs= 0 Cls=01(audio) Sub=02 Prot=20 Driver=snd-usb-audio
+I:  If#= 6 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=20 Driver=snd-usb-audio
+E:  Ad=05(O) Atr=0d(Isoc) MxPS=  34 Ivl=1ms
+I:* If#= 7 Alt= 0 #EPs= 0 Cls=01(audio) Sub=02 Prot=20 Driver=(none)
+I:  If#= 7 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=20 Driver=(none)
+E:  Ad=89(I) Atr=0d(Isoc) MxPS=  34 Ivl=1ms
+
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/bus.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/bus.c
-+++ b/drivers/usb/serial/bus.c
-@@ -167,7 +167,7 @@ int usb_serial_bus_register(struct usb_s
- 
- void usb_serial_bus_deregister(struct usb_serial_driver *driver)
- {
--	free_dynids(driver);
- 	driver_unregister(&driver->driver);
-+	free_dynids(driver);
- }
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2169,6 +2169,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9003, 0xff) },	/* Simcom SIM7500/SIM7600 MBIM mode */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9011, 0xff),	/* Simcom SIM7500/SIM7600 RNDIS mode */
+ 	  .driver_info = RSVD(7) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x902b, 0xff),
++	  .driver_info = RSVD(4) },
+ 	{ USB_DEVICE(0x1e0e, 0x9071),				/* Simcom SIM8230 RMNET mode */
+ 	  .driver_info = RSVD(3) | RSVD(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9078, 0xff),	/* Simcom SIM8230 ECM mode */
 
 
