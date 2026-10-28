@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211944;
-	b=qIWJ5yeuFKo7hSAA3MLb+R6B4EZsmRVNPKvlTnsJ2hme9FYj1XPnGPF5lzd2Uigaaffr
-	 Hg+P92k8UqB0H3lYqFlIR04bgLWWOpK+2oHN4l4D2fOBOHW6odynnVoN5nMKbIvhq+25n
-	 /PNe1wi+WAaDIhsoMFWvz0yyWh/YiMoPd91U25nMpMzEzfq52hc8U+gsvstsO90w3PVx1
-	 o0i5px3g+hFG/49c/J1dpR14FtxYXVxL1VlriRDqEastbq9SKhnK/vyx0Uuyj/6sGNa71
-	 I/Yisje1GTGR55G59x1rIGVl9Yd/zZmUVgG5N0I9Jrsi+sodKS1Zj1KWrF46t3SjDTA==
+	t=1793211946;
+	b=RAjibN0gVkRmr8YNAT7yAHUdSxQQzI5vx7yFnVWoW/2b3b30LizP64NRcXZFp5N4xHEm
+	 x2YbTtCst7eeVje+E8vWzG/EkPwzUQFv4G+7tGv0gAiqeSsbJdg56fzPVF/yi3dlVejlJ
+	 0ZNhXQUbGkfRlZ1IGSwqzv9C5DlKRrWagKdH8vi4BOIftCGVGZ0aptCte5Y/mibE6mvQv
+	 0ecgUgvQWJRjaDZ2r2hzdq69TPR04NLLBkTKk/g0YNXyuE7Cvf2gCbH7ZNN9ZnjGeh+S6
+	 DSxqIXJF19dyGxfoHzTMjUgjWg5p64KVr4ogZ33ecFC2Jm7RrjJYbk1tDX2nhMi0ESg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211944;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p1DvK5w7yidq51jZNM8fwTRLHGgFtxfFpRpvIfmGwIQ=;
-	b=YC/EIGc07+vlOmrq/FRQNs4aB4q96E7F9IhcRf2H5bJOEJCIgqc3tDHpZvJYfGPwcEr7
-	 7SqHJM5uyr454cClAb+lGJzkzib9zAMuT//7CozUvWVCVa9kx1F3W0rSmc+R9LpLpC38f
-	 GJ/JGdwjDtT3ym4mN9hsqQ387tcUplkWYQEFB6CRqYEOqL/qy+X9vp/NLcpg7ZaCleVSa
-	 VHxl7GWFSXEwEAj00lySS1Ye/JEGsHFGY1ixTlMJfF2OC/cphPA5TBF1Gta7J1WWCSHYV
-	 1J1T424etyyC+Z9LsYfNq7PYcZN4vBCodtLjwqxZXMzqWD66YNLJGRCNTDAv9h9u6CQ==
+	bh=Cp7hWUjpdzIVOw7C6ui5T6r8dehJh+/YE/8evXE1Rrg=;
+	b=qNIlQNrXNArvhya6lFowXvsV+4wGA3gWQyTW9H7Vgy0KpT6BOAlhVJ8Ge+xbnddQR21P
+	 wF2X5fVzU8twQTwf49xbTXi/OKZTLSXnPsvx7CF5f2iUOPeaB5HHplr3j/jpM4pOi1xHk
+	 TROGIiWKLXaFau9DRnazM2L5rQDMm6g2WUQqRf/qYWf+1wvqApAomb6135o3RypoGGk4J
+	 0EDbFjXFSTlw3Vitx3JEZ1kMFfK3yODZdlpos+T84WhZ8CrZDiCDxqy2p0T0aUsmAe+lC
+	 DWxWKSlVwRLm8t4iKSgEHq+2ThnUWaznU9bxR6TVKDw8R1rs3WxXS8yqJOPLgrRvzzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EClacsy1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSePreyC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DE1606A31C;
-	Wed, 28 Oct 2026 18:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DC0606A31D;
+	Wed, 28 Oct 2026 18:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EClacsy1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C989C1F01825;
-	Wed, 28 Oct 2026 18:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSePreyC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956F31F01825;
+	Wed, 28 Oct 2026 18:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211943;
-	bh=p1DvK5w7yidq51jZNM8fwTRLHGgFtxfFpRpvIfmGwIQ=;
+	s=korg; t=1793211946;
+	bh=Cp7hWUjpdzIVOw7C6ui5T6r8dehJh+/YE/8evXE1Rrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EClacsy1lpKfwhg+j7xTPLVcKjzK5Up6gLwhqwdFwKVtf/2UuUG4ky+WYuTpS7XLA
-	 g8nCTl6QuPAT7Me6qIciQMX+gmDLaP7fRJoV7F6VMK9VEWGGoOC+Yft3tMnp3IAFVD
-	 PpGm3fLQ1XoAacfVE3vshnW1LTPP7fhMus7ZqVJc=
+	b=eSePreyCoRUGinTJyrZuuy3O8j7nvQnZYUGkSORfRlFwU7rjf9NWlWFGkzrYYRG+a
+	 Kh6E4cHyFZ58DHowrbuSCCQOjMmlcadAJ3CdwSugCFehwnxxuG9YAyeKwQSrc1e6Wg
+	 rOUPeFIlst1Y5XdIEr8tERljmolM4vbtUTQHrKnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inseo An <y0un9sa@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Steffen Pfendtner <steffen.pfendtner@kernelscan.io>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 553/571] netfilter: nf_tables: unconditionally bump set->nelems before insertion
-Date: Wed, 28 Oct 2026 18:01:40 +0100
-Message-ID: <20261028170021.158121392@linuxfoundation.org>
+Subject: [PATCH 5.15 554/571] md: move initialization and destruction of io_acct_set to md.c
+Date: Wed, 28 Oct 2026 18:01:41 +0100
+Message-ID: <20261028170021.182280732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,102 +69,276 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit def602e498a4f951da95c95b1b8ce8ae68aa733a ]
+[ Upstream commit c567c86b90d4715081adfe5eb812141a5b6b4883 ]
 
-In case that the set is full, a new element gets published then removed
-without waiting for the RCU grace period, while RCU reader can be
-walking over it already.
+'io_acct_set' is only used for raid0 and raid456, prepare to use it for
+raid1 and raid10, so that io accounting from different levels can be
+consistent.
 
-To address this issue, add the element transaction even if set is full,
-but toggle the set_full flag to report -ENFILE so the abort path safely
-unwinds the set to its previous state.
+By the way, follow up patches will also use this io clone mechanism to
+make sure 'active_io' represents in flight io, not io that is dispatching,
+so that mddev_suspend will wait for io to be done as designed.
 
-As for element updates, decrement set->nelems to restore it.
-
-A simpler fix is to call synchronize_rcu() in the error path.
-However, with a large batch adding elements to already maxed-out set,
-this could cause noticeable slowdown of such batches.
-
-Fixes: 35d0ac9070ef ("netfilter: nf_tables: fix set->nelems counting with no NLM_F_EXCL")
-Reported-by: Inseo An <y0un9sa@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Backport to 5.15.y: applies on top of d4b7f29eb85c ("netfilter:
-  nf_tables: always increment set element count"), as in 6.1.y. 5.15
-  has no nft_set_maxsize() helper (introduced by 8d738c1869f6
-  "netfilter: nf_tables: fix set size with rbtree backend", not in
-  5.15), so the ceiling is the same expression the prerequisite inlines:
-  set->size ? set->size + set->ndeact : UINT_MAX. The update-path hunk
-  from the upstream commit does not apply: 5.15 has no in-place
-  element-update path here. ]
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Steffen Pfendtner <steffen.pfendtner@kernelscan.io>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230621165110.1498313-2-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |   29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/md/md.c    | 28 +++++++++++-----------------
+ drivers/md/md.h    |  2 --
+ drivers/md/raid0.c | 16 ++--------------
+ drivers/md/raid5.c | 41 +++++++++++------------------------------
+ 4 files changed, 24 insertions(+), 63 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6261,6 +6261,7 @@ static int nft_add_set_elem(struct nft_c
- 	enum nft_registers dreg;
- 	struct nft_trans *trans;
- 	void *elem_priv;
-+	bool set_full = false;
- 	u64 timeout;
- 	u64 expiration;
- 	int err, i;
-@@ -6547,10 +6548,19 @@ static int nft_add_set_elem(struct nft_c
- 	if (err < 0)
- 		goto err_elem_expr;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index a37a821830246..ab95d77ce8831 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -5662,6 +5662,7 @@ static void md_free(struct kobject *ko)
  
-+	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
-+		unsigned int max = set->size ? set->size + set->ndeact : UINT_MAX;
-+		unsigned int nelems;
-+
-+		nelems = atomic_inc_return(&set->nelems);
-+		if (nelems > max)
-+			set_full = true;
+ 	bioset_exit(&mddev->bio_set);
+ 	bioset_exit(&mddev->sync_set);
++	bioset_exit(&mddev->io_acct_set);
+ 	kfree(mddev);
+ }
+ 
+@@ -5949,6 +5950,13 @@ int md_run(struct mddev *mddev)
+ 			goto exit_bio_set;
+ 	}
+ 
++	if (!bioset_initialized(&mddev->io_acct_set)) {
++		err = bioset_init(&mddev->io_acct_set, BIO_POOL_SIZE,
++				  offsetof(struct md_io_acct, bio_clone), 0);
++		if (err)
++			goto exit_sync_set;
 +	}
 +
- 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_NEWSETELEM, set);
- 	if (trans == NULL) {
- 		err = -ENOMEM;
--		goto err_elem_expr;
-+		goto err_set_size;
- 	}
+ 	spin_lock(&pers_lock);
+ 	pers = find_pers(mddev->level, mddev->clevel);
+ 	if (!pers || !try_module_get(pers->owner)) {
+@@ -6124,6 +6132,8 @@ int md_run(struct mddev *mddev)
+ 	module_put(pers->owner);
+ 	md_bitmap_destroy(mddev);
+ abort:
++	bioset_exit(&mddev->io_acct_set);
++exit_sync_set:
+ 	bioset_exit(&mddev->sync_set);
+ exit_bio_set:
+ 	bioset_exit(&mddev->bio_set);
+@@ -6361,6 +6371,7 @@ void md_stop(struct mddev *mddev)
+ 	__md_stop(mddev);
+ 	bioset_exit(&mddev->bio_set);
+ 	bioset_exit(&mddev->sync_set);
++	bioset_exit(&mddev->io_acct_set);
+ }
  
- 	ext->genmask = nft_genmask_cur(ctx->net);
-@@ -6583,23 +6593,16 @@ static int nft_add_set_elem(struct nft_c
- 		goto err_element_clash;
- 	}
+ EXPORT_SYMBOL_GPL(md_stop);
+@@ -8674,23 +8685,6 @@ void md_submit_discard_bio(struct mddev *mddev, struct md_rdev *rdev,
+ }
+ EXPORT_SYMBOL_GPL(md_submit_discard_bio);
  
--	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
--		unsigned int max = set->size ? set->size + set->ndeact : UINT_MAX;
+-int acct_bioset_init(struct mddev *mddev)
+-{
+-	int err = 0;
 -
--		if (!atomic_add_unless(&set->nelems, 1, max)) {
--			err = -ENFILE;
--			goto err_set_full;
--		}
+-	if (!bioset_initialized(&mddev->io_acct_set))
+-		err = bioset_init(&mddev->io_acct_set, BIO_POOL_SIZE,
+-			offsetof(struct md_io_acct, bio_clone), 0);
+-	return err;
+-}
+-EXPORT_SYMBOL_GPL(acct_bioset_init);
+-
+-void acct_bioset_exit(struct mddev *mddev)
+-{
+-	bioset_exit(&mddev->io_acct_set);
+-}
+-EXPORT_SYMBOL_GPL(acct_bioset_exit);
+-
+ static void md_end_io_acct(struct bio *bio)
+ {
+ 	struct md_io_acct *md_io_acct = bio->bi_private;
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index 99780e89531e5..1c84daba6bb7e 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -729,8 +729,6 @@ extern void md_error(struct mddev *mddev, struct md_rdev *rdev);
+ extern void md_finish_reshape(struct mddev *mddev);
+ void md_submit_discard_bio(struct mddev *mddev, struct md_rdev *rdev,
+ 			struct bio *bio, sector_t start, sector_t size);
+-int acct_bioset_init(struct mddev *mddev);
+-void acct_bioset_exit(struct mddev *mddev);
+ void md_account_bio(struct mddev *mddev, struct bio **bio);
+ 
+ extern bool __must_check md_flush_request(struct mddev *mddev, struct bio *bio);
+diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
+index 2290307e0910f..ba046c41b34a6 100644
+--- a/drivers/md/raid0.c
++++ b/drivers/md/raid0.c
+@@ -381,7 +381,6 @@ static void raid0_free(struct mddev *mddev, void *priv)
+ 	struct r0conf *conf = priv;
+ 
+ 	free_conf(mddev, conf);
+-	acct_bioset_exit(mddev);
+ }
+ 
+ static int raid0_run(struct mddev *mddev)
+@@ -396,16 +395,11 @@ static int raid0_run(struct mddev *mddev)
+ 	if (md_check_no_bitmap(mddev))
+ 		return -EINVAL;
+ 
+-	if (acct_bioset_init(mddev)) {
+-		pr_err("md/raid0:%s: alloc acct bioset failed.\n", mdname(mddev));
+-		return -ENOMEM;
 -	}
 -
- 	nft_trans_elem(trans) = elem;
- 	nft_trans_commit_list_add_tail(ctx->net, trans);
--	return 0;
+ 	/* if private is not null, we are here after takeover */
+ 	if (mddev->private == NULL) {
+ 		ret = create_strip_zones(mddev, &conf);
+ 		if (ret < 0)
+-			goto exit_acct_set;
++			return ret;
+ 		mddev->private = conf;
+ 	}
+ 	conf = mddev->private;
+@@ -445,15 +439,9 @@ static int raid0_run(struct mddev *mddev)
  
--err_set_full:
--	nft_setelem_remove(ctx->net, set, &elem);
-+	return set_full ? -ENFILE : 0;
-+
- err_element_clash:
- 	kfree(trans);
-+err_set_size:
-+	if (!(flags & NFT_SET_ELEM_CATCHALL))
-+		atomic_dec(&set->nelems);
- err_elem_expr:
- 	nf_tables_set_elem_destroy(ctx, set, elem.priv);
- err_parse_data:
+ 	ret = md_integrity_register(mddev);
+ 	if (ret)
+-		goto free;
++		free_conf(mddev, conf);
+ 
+ 	return ret;
+-
+-free:
+-	free_conf(mddev, conf);
+-exit_acct_set:
+-	acct_bioset_exit(mddev);
+-	return ret;
+ }
+ 
+ /*
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 901d1c8218746..95d72dcc40fbd 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -7472,19 +7472,12 @@ static int raid5_run(struct mddev *mddev)
+ 	struct md_rdev *rdev;
+ 	struct md_rdev *journal_dev = NULL;
+ 	sector_t reshape_offset = 0;
+-	int i, ret = 0;
++	int i;
+ 	long long min_offset_diff = 0;
+ 	int first = 1;
+ 
+-	if (acct_bioset_init(mddev)) {
+-		pr_err("md/raid456:%s: alloc acct bioset failed.\n", mdname(mddev));
++	if (mddev_init_writes_pending(mddev) < 0)
+ 		return -ENOMEM;
+-	}
+-
+-	if (mddev_init_writes_pending(mddev) < 0) {
+-		ret = -ENOMEM;
+-		goto exit_acct_set;
+-	}
+ 
+ 	if (mddev->recovery_cp != MaxSector)
+ 		pr_notice("md/raid:%s: not clean -- starting background reconstruction\n",
+@@ -7515,8 +7508,7 @@ static int raid5_run(struct mddev *mddev)
+ 	    (mddev->bitmap_info.offset || mddev->bitmap_info.file)) {
+ 		pr_notice("md/raid:%s: array cannot have both journal and bitmap\n",
+ 			  mdname(mddev));
+-		ret = -EINVAL;
+-		goto exit_acct_set;
++		return -EINVAL;
+ 	}
+ 
+ 	if (mddev->reshape_position != MaxSector) {
+@@ -7541,15 +7533,13 @@ static int raid5_run(struct mddev *mddev)
+ 		if (journal_dev) {
+ 			pr_warn("md/raid:%s: don't support reshape with journal - aborting.\n",
+ 				mdname(mddev));
+-			ret = -EINVAL;
+-			goto exit_acct_set;
++			return -EINVAL;
+ 		}
+ 
+ 		if (mddev->new_level != mddev->level) {
+ 			pr_warn("md/raid:%s: unsupported reshape required - aborting.\n",
+ 				mdname(mddev));
+-			ret = -EINVAL;
+-			goto exit_acct_set;
++			return -EINVAL;
+ 		}
+ 		old_disks = mddev->raid_disks - mddev->delta_disks;
+ 		/* reshape_position must be on a new-stripe boundary, and one
+@@ -7565,8 +7555,7 @@ static int raid5_run(struct mddev *mddev)
+ 		if (sector_div(here_new, chunk_sectors * new_data_disks)) {
+ 			pr_warn("md/raid:%s: reshape_position not on a stripe boundary\n",
+ 				mdname(mddev));
+-			ret = -EINVAL;
+-			goto exit_acct_set;
++			return -EINVAL;
+ 		}
+ 		reshape_offset = here_new * chunk_sectors;
+ 		/* here_new is the stripe we will write to */
+@@ -7588,8 +7577,7 @@ static int raid5_run(struct mddev *mddev)
+ 			else if (mddev->ro == 0) {
+ 				pr_warn("md/raid:%s: in-place reshape must be started in read-only mode - aborting\n",
+ 					mdname(mddev));
+-				ret = -EINVAL;
+-				goto exit_acct_set;
++				return -EINVAL;
+ 			}
+ 		} else if (mddev->reshape_backwards
+ 		    ? (here_new * chunk_sectors + min_offset_diff <=
+@@ -7599,8 +7587,7 @@ static int raid5_run(struct mddev *mddev)
+ 			/* Reading from the same stripe as writing to - bad */
+ 			pr_warn("md/raid:%s: reshape_position too early for auto-recovery - aborting.\n",
+ 				mdname(mddev));
+-			ret = -EINVAL;
+-			goto exit_acct_set;
++			return -EINVAL;
+ 		}
+ 		pr_debug("md/raid:%s: reshape will continue\n", mdname(mddev));
+ 		/* OK, we should be able to continue; */
+@@ -7624,10 +7611,8 @@ static int raid5_run(struct mddev *mddev)
+ 	else
+ 		conf = mddev->private;
+ 
+-	if (IS_ERR(conf)) {
+-		ret = PTR_ERR(conf);
+-		goto exit_acct_set;
+-	}
++	if (IS_ERR(conf))
++		return PTR_ERR(conf);
+ 
+ 	if (test_bit(MD_HAS_JOURNAL, &mddev->flags)) {
+ 		if (!journal_dev) {
+@@ -7827,10 +7812,7 @@ static int raid5_run(struct mddev *mddev)
+ 	free_conf(conf);
+ 	mddev->private = NULL;
+ 	pr_warn("md/raid:%s: failed to run raid set.\n", mdname(mddev));
+-	ret = -EIO;
+-exit_acct_set:
+-	acct_bioset_exit(mddev);
+-	return ret;
++	return -EIO;
+ }
+ 
+ static void raid5_free(struct mddev *mddev, void *priv)
+@@ -7838,7 +7820,6 @@ static void raid5_free(struct mddev *mddev, void *priv)
+ 	struct r5conf *conf = priv;
+ 
+ 	free_conf(conf);
+-	acct_bioset_exit(mddev);
+ 	mddev->to_remove = &raid5_attrs_group;
+ }
+ 
+-- 
+2.53.0
+
 
 
