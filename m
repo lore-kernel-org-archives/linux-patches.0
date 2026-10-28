@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210452;
-	b=ZJLn9f1qQSt2c5p7wS+qiX1K2AS6ZEf8fEcx3DpZQA57GtZ881HHrx8pQimRth+jkXk+
-	 DccSqb7KPa4uhchzEY0HsrL/SyItesRvyq02OvTJPTPeKrAT7IPWkS8ge6T7oqxtHNlUG
-	 eHPYiefbTcwIekAXFv3xuAQoifeYa7+v2ysZ3YA3Bt6hbKIlIrfFH2A5HsWtzkhGhPXMo
-	 hdGTlkvqmWBGPwQhNh7qlkC9u5iZJoHCX1+Yk6Yv3Qh6DnuEFAoxgZR3+ZA6fcKjKLipI
-	 1IfrGPTj4EUWFj+RC7RRArs0+H9BtgJLbkqGmwijW0t883liSYcke18A57ihAobZreg==
+	t=1793210455;
+	b=LGjXbIEZV3OvEuIYu/B6H7tEJmdUaodEI3Z1Z7WKe8REQHRReB06sRjHPU4gPHLJT67a
+	 +AEf2c15kXf5FKbhXnJfd//mY6n4tSliJVpVYrndqm2D56Geg10x9HgxuFAKosl9Yls/0
+	 1goMxj3aTRMHl82pgq4oW3+JXHfRW2Q8x73TbGH2MIgaBQH/pV2HdoP3doLSxHl6Xa73m
+	 WYD7TjvG5wYT5/GzdgTu09sL1lYmCKzx4KzGSHlHJtGMT+mbihvpbe6D5d9qCBUbnaWHM
+	 rHINY5ft4p2MONmVkQxYTsGTPHqO6UTcO0paCq9C++/ED+GB7KVkS7clqGkbRDxh3vQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210455;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=pWzXYWx1tKUXYaIVFpQS0ECvUe/IoEWouoQ0SxTUIKw=;
-	b=qioCIye++w5uP+25Qq9EyvqJpRdA+uusC/oRIz2aQpWB6vXZfH4+MXDmC6UwxfcvGoc2
-	 vLdyydn9aKB9ZFg5eHjSXZcgYXuhth81X4b5h2c7hirMQBzVAe7qWH2CEXnFxvnxWCYId
-	 v3D3pR0CjAqLKEUqFcveD5RSemhuG/7LT2tTkmVzFzvJHXJf+rr4fFxFPHzvUhtn+dNG7
-	 9oXfFiLoMvKogpSqmIAMzCz8MkD9zRSW+dgogoiQ+LSU0XJ8Z3FskU0TwWzoYlhP8GRV3
-	 JCMtYs993KoR2hm8SrUxQiNplZ30B7g14QZJ+EwHqmnuZAVTPLz/0+/OEvs7PPviwLg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CvQLetR2AS9uPHtx//nt/ffC/QH04pAv1gaMExR31lg=;
+	b=dRa4UQwSCOCzcfx5gH0otkbrDtRH5RtCo3BVemQEC/jPMiG2/Rkh5gQaV6lBdI+2GAp5
+	 r5R+E7MgFp+0CZtZ5pST3x40sA4TiuV7yaGBO1oE0Yx06ybUv3jIEEIo6+2u4UI21q5uS
+	 6ipASdnpJSqXTc1+ql0/mPrHJBSmnMQSR1EkwkTpoLrDIlIUHT5J8bRTP5zCnVj5vM3Zw
+	 xahrxNKqZAEqrEvfP6RPOH5g3aspXYF1bu3P+RwwP0LFV9YThAy5nXKWJum7b4ZIhewhc
+	 u+ldljl0h+k+zydo3jRlRYsHOPXX+Qzn87bgMXTqzvNJATdHXY88fLP/2xAA/kEm3bQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJXrgLK3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fmmx09yL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430FE606A31A;
-	Wed, 28 Oct 2026 18:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E677606A32D;
+	Wed, 28 Oct 2026 18:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJXrgLK3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDA51F01825;
-	Wed, 28 Oct 2026 18:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fmmx09yL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5DC1F01825;
+	Wed, 28 Oct 2026 18:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210452;
-	bh=pWzXYWx1tKUXYaIVFpQS0ECvUe/IoEWouoQ0SxTUIKw=;
+	s=korg; t=1793210455;
+	bh=CvQLetR2AS9uPHtx//nt/ffC/QH04pAv1gaMExR31lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJXrgLK3h5H8gUmHPvaIh58D+lLzVFNOJN3/267vmapyZ4QgyLbBbiugHVrMb10+l
-	 tUUGycKBVPYes/5MmGmofcJcHf32pKHCYVc+0gj39rPa53DTXp1WnsUGnUvS22eCJx
-	 wJ+acRaLgh6UHefjGR54wZOmodjK10+sHKd/RHoc=
+	b=fmmx09yL57k7Sj7HvGkbjnz/rhFvdHHf97VzbNmjJW4QQAB3GPQlchYQfYVr/xXt8
+	 xWgu8hHBaz1e6sYT+yc3omgFwGoOwV2cRUh1l+lSUgHK91/b+P0P6+1zoFg87O7cp7
+	 8U9Vz7L9hPLqTMuVutYaT9kV1ZQOeS/CxRGUEZOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	XingWang Xiang <v3rdant.xiang@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+2eb3d983669d3e49d4fa@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/571] genetlink: pin family module during policy dump
-Date: Wed, 28 Oct 2026 17:52:57 +0100
-Message-ID: <20261028170008.737531799@linuxfoundation.org>
+Subject: [PATCH 5.15 031/571] io_uring/rw: end write accounting from ->ki_complete
+Date: Wed, 28 Oct 2026 17:52:58 +0100
+Message-ID: <20261028170008.761945530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,115 +62,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: XingWang Xiang <v3rdant.xiang@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 6a1094c34d176827b2b173e163dcc964a13af93f ]
+[ Upstream commit 796aa0547557e63338657ed1c487906f9fac4c73 ]
 
-The generic netlink controller's policy dump keeps pointers to the target
-family's operation and policy tables in its callback state.  A dump may be
-split across multiple skbs and remain pending after the initial request.
+Commit b000145e9907 moved both the fsnotify calls and the write
+accounting out of the kiocb completion handler and into the
+io_req_rw_complete() task_work. However, only the fsnotify part actually
+needed to move as it may sleep. Ending the write accounting is just a
+percpu_up_read() on the superblock writers sem.
 
-Netlink pins the module which owns the dump callback, but in this case
-that is the controller's owner rather than the target family's owner.  The
-target family can consequently be unregistered and its module unloaded
-while a policy dump is pending.  Advancing the dump then dereferences
-policy memory from the unloaded module.
+Deferring it is a problem, because it makes dropping SB_FREEZE_WRITE
+protection depend on the ring owner getting to running task_work. But
+the task may be blocked in freeze_super(), causing it to never get to
+that:
 
-Take a reference to the target family's module when the dump starts.
-Drop it from the error and done paths.  This matches the lifetime for which
-the dump context retains the family and policy pointers.
+  task                             io-wq worker
+  --------------------------------------------------------------
+  io_write()
+    io_kiocb_start_write()         (takes sb_writers, hidden from
+                                    lockdep by __sb_writers_release)
+    write_iter() -> -EIOCBQUEUED
+  ioctl(FS_IOC_SHUTDOWN)
+    bdev_freeze()
+      freeze_super()
+        percpu_down_write()        <- waits for the reader above
+                                   io_write()
+                                     kiocb_start_write()
+                                       percpu_down_read()  <- queued
+                                                              behind the
+                                                              writer
+  <bio completes>
+    io_complete_rw()
+      queues io_req_rw_complete()  <- never runs, task is in D state
 
-Fixes: d07dcf9aadd6 ("netlink: add infrastructure to expose policies to userspace")
+End the write from io_complete_rw() instead, and leave only the fsnotify
+calls in task_work.
+
+Reported-by: syzbot+2eb3d983669d3e49d4fa@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: XingWang Xiang <v3rdant.xiang@gmail.com>
-Link: https://patch.msgid.link/20260902084317.4092542-1-v3rdant.xiang@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted split-operation iterator handling to the older genl_ops and opidx interfaces. ]
+Fixes: b000145e9907 ("io_uring/rw: defer fsnotify calls to task context")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ placed write-accounting release after __io_complete_rw_common() to accommodate the older retry path’s early return. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/genetlink.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ io_uring/io_uring.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
-index 7a568292e0d10..c0d6950e21651 100644
---- a/net/netlink/genetlink.c
-+++ b/net/netlink/genetlink.c
-@@ -1101,6 +1101,7 @@ static int genl_ctrl_event(int event, const struct genl_family *family,
- struct ctrl_dump_policy_ctx {
- 	struct netlink_policy_dump_state *state;
- 	const struct genl_family *rt;
-+	struct module *owner;
- 	unsigned int opidx;
- 	u32 op;
- 	u16 fam_id;
-@@ -1144,6 +1145,9 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
- 		return -ENOENT;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 8747c585a0770..8d5791d8f4031 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2797,7 +2797,10 @@ static void io_req_task_complete(struct io_kiocb *req, bool *locked)
  
- 	ctx->rt = rt;
-+	ctx->owner = rt->module;
-+	if (!try_module_get(ctx->owner))
-+		return -ENOENT;
- 
- 	if (tb[CTRL_ATTR_OP]) {
- 		ctx->single_op = true;
-@@ -1152,14 +1156,19 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
- 		err = genl_get_cmd(ctx->op, rt, &op);
- 		if (err) {
- 			NL_SET_BAD_ATTR(cb->extack, tb[CTRL_ATTR_OP]);
--			return err;
-+			goto err_put_owner;
- 		}
- 
--		if (!op.policy)
--			return -ENODATA;
-+		if (!op.policy) {
-+			err = -ENODATA;
-+			goto err_put_owner;
-+		}
- 
--		return netlink_policy_dump_add_policy(&ctx->state, op.policy,
--						      op.maxattr);
-+		err = netlink_policy_dump_add_policy(&ctx->state, op.policy,
-+						     op.maxattr);
-+		if (err)
-+			goto err_free_state;
-+		return 0;
- 	}
- 
- 	for (i = 0; i < genl_get_cmd_cnt(rt); i++) {
-@@ -1174,12 +1183,16 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
- 		}
- 	}
- 
--	if (!ctx->state)
--		return -ENODATA;
-+	if (!ctx->state) {
-+		err = -ENODATA;
-+		goto err_put_owner;
-+	}
- 	return 0;
- 
- err_free_state:
- 	netlink_policy_dump_free(ctx->state);
-+err_put_owner:
-+	module_put(ctx->owner);
- 	return err;
+ static void io_req_rw_complete(struct io_kiocb *req, bool *locked)
+ {
+-	io_req_io_end(req);
++	if (req->rw.kiocb.ki_flags & IOCB_WRITE)
++		fsnotify_modify(req->file);
++	else
++		fsnotify_access(req->file);
+ 	io_req_task_complete(req, locked);
  }
  
-@@ -1314,6 +1327,7 @@ static int ctrl_dumppolicy_done(struct netlink_callback *cb)
- 	struct ctrl_dump_policy_ctx *ctx = (void *)cb->ctx;
+@@ -2807,6 +2810,10 @@ static void io_complete_rw(struct kiocb *kiocb, long res, long res2)
  
- 	netlink_policy_dump_free(ctx->state);
-+	module_put(ctx->owner);
- 	return 0;
- }
- 
+ 	if (__io_complete_rw_common(req, res))
+ 		return;
++	/* ring owner may block in freeze_super() before task_work runs */
++	if (kiocb->ki_flags & IOCB_WRITE)
++		io_req_end_write(req);
++
+ 	req->result = io_fixup_rw_res(req, res);
+ 	req->io_task_work.func = io_req_rw_complete;
+ 	io_req_task_work_add(req);
 -- 
 2.53.0
 
