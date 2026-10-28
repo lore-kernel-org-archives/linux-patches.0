@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216199;
-	b=MhvX/W/mQiQehxvbe56SZhv2DmJYEnyzkPuyprSxuGeMBwpz9flesPHmw1o4gNquOdXZ
-	 jH+2oO804hmAfaQIywZ1i+iUk54nw+Fulgpsis/gh/147QnJaOLKQQdQQ4I3gCfiYbiix
-	 4qgJsDLdQi2cjRzyCrjWZ2kfVr1Ul745CKHjp16ZnGGo/J5+fWVsKaQ5LU+eahvvqg6y3
-	 +mTqFyetnt4AUHYkWSZplfpf3HoEO6nJJwvY5mRzB0JxhmWTW6MjgVb29gxMozYZBRCVO
-	 OEeeMsNB+mzQw7tC4yUGWnKGcGmFEpN4Bk4vJ7AlRX/RNHxWEvag3vnc9bxl+mrDkow==
+	t=1793216202;
+	b=a9PuUgz8HrFmwyckYtJ0BNx3OTpiihX+RtjGJhVqWUC0FGCFi4ITCtnc9L0X2DENpi6v
+	 kz6cmuDlvKQ/68zEwk9f0FpGrIwykVdeCdtzXvynH83qND8bHTxD5vtsS4L+B9P8GYRou
+	 s9srvxdedxXKI4/uWXpf27EGRr9rXgRWNN6LF7WQmOmlgtG81F5RqqzIR/whjYyC23Y0Y
+	 5eRF+nrzs2dG41Uj2MzZoXAa19QB8Cmb9Dv9V+QMWRhJcB45oXgdbK/E4cUaVQxGWzIZl
+	 Jpu8ZMTNP6lWcPXIXAvfIU+J6l40lCw7dzbJamTmaoDCkk9zpuI3g6lixEvcYLIJgQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nywHVFCWiezvzrXSafvvsktaW68auTd1HSLFOhpMvxg=;
-	b=ZZ6p0tkLff4cOMwb7Np91q3nfNreD3lqEwjAPyTuPh+B+osLF+igrRyjUEUWjvvvC1yM
-	 Vk53GkD56SzylWgREiWK6cybOmWc6O7/cSfLMEQ16lXiGuqaK5B5DXBoHytj2k0KMsy0Z
-	 MYXRczbxTWkG662V333v0rPtsbnHR9R4qsMZxhQnIUoQA24Xp9fsLotMa/q7XuiQiyM36
-	 4tM43av95rEXRxV8nIU2/Ouxg3QbEzmyo7giNhzF0fMilkONfBpHcJzuYMPpxtdXJdbUr
-	 hmm3gUa6nmwplrbkn4E8quU7lm7Bt54Nh4QNbUSYpW8WyKzoj0BXYVsL6Rd980zF9oQ==
+	bh=BEKejvSOZhC/cny3p1G6bs96R5oeR6SuQ6VZYjk6FNc=;
+	b=BQRTFcE/+t8g9L3QU3W+bTi3HMqgqxQ0CRHbxSzTuXujZ2uDF79guflS6PRwZOUEtOMK
+	 UBc96Pr28LSotnMAw/pOOz6fp7CvB3tnHX8HH55w1qJ7Kik3T24v4XAhTNH0f49+WJ/dW
+	 qB9DpaA/RZcnWL/fFcZjy9W2QneBTBWgZviWFOiAmWL11DGjyK/UjSHrH6ayG6TgFXVVh
+	 GHNjdXaQMyME5hDsVtbnZIn/+vIS1ZZ+aJu+4uvI/0Jgh7alSWre6PnDCrmu8PU54l26g
+	 r2xyjOThAhnfGxZnSn/rP0f9XO72JxYFKm1UmjupUIJ2hGHsjp1hr5fdPsL7Q3y4Vgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xvUBOqHv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=19z1xPSj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450BC606A31F;
-	Wed, 28 Oct 2026 19:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A98606A31A;
+	Wed, 28 Oct 2026 19:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xvUBOqHv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9703A1F01825;
-	Wed, 28 Oct 2026 19:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=19z1xPSj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA0A1F01825;
+	Wed, 28 Oct 2026 19:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216199;
-	bh=nywHVFCWiezvzrXSafvvsktaW68auTd1HSLFOhpMvxg=;
+	s=korg; t=1793216202;
+	bh=BEKejvSOZhC/cny3p1G6bs96R5oeR6SuQ6VZYjk6FNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xvUBOqHvEC/R+DkplwxODPoDYVtwaSKwT6OCr2EgqJ16k0UbvctY74du8ur3NXxD/
-	 jeetALzhg+9uLsyLKNMaQWZF0J5AEm9F60thlHq/Y4BWYBfQkBSmZoQGLp39QDOxOB
-	 c/du7mM4NHQ/RWQDSQ/dZ5+UOATUHXGgjR2eQ3yQ=
+	b=19z1xPSjusFAE39ePv38QTOIajb9GkvBM1WPPvtr0iPA36tFzyXS76Fp149oSSCYD
+	 EsSIoaU4Agm/G2J5cA24nPucC8VQOA9XMdSzxSN+Fqw9jHB40Y12NDTDmr0FnTE/yG
+	 ntzyQ+/xnDoVVhBVcUWXG44vOfCREYwW7XIXMc4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Tyrel Datwyler <tyreld@linux.ibm.com>,
-	linuxppc-dev@lists.ozlabs.org,
+	Carol L Soto <csoto@nvidia.com>,
+	Jamie Nguyen <jamien@nvidia.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1476/1887] PCI: Introduce PCI_SLOT_PLACEHOLDER constant for slot_nr placeholder value
-Date: Wed, 28 Oct 2026 17:59:32 +0100
-Message-ID: <20261028170533.041972923@linuxfoundation.org>
+Subject: [PATCH 6.1 1459/1887] fs/ntfs3: resize log->one_page_buf when adopting on-disk page size
+Date: Wed, 28 Oct 2026 17:59:15 +0100
+Message-ID: <20261028170532.661109692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,125 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Jamie Nguyen <jamien@nvidia.com>
 
-[ Upstream commit c243e6c470c4695965cc8287767925bc1d9a7867 ]
+[ Upstream commit 5a35454179fe1041d9cd286f5d320ce0d448c12a ]
 
-Introduce a constant for placeholder value and update the kerneldoc for
-pci_create_slot() to reference PCI_SLOT_PLACEHOLDER instead of -1
-throughout. No functional change.
+log_replay() allocates log->one_page_buf using the page size that was
+chosen from the host PAGE_SIZE:
 
-Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Tyrel Datwyler <tyreld@linux.ibm.com>
-Cc: linuxppc-dev@lists.ozlabs.org
-Link: https://patch.msgid.link/20260805165518.794-2-alifm@linux.ibm.com
-Stable-dep-of: dcc5bec09e23 ("PCI: Allow per function PCI slots to fix slot reset on s390")
+	log->one_page_buf = kmalloc(log->page_size, GFP_NOFS);
+
+Later, when a restart area is found, the log page size recorded on disk
+is adopted:
+
+	t32 = le32_to_cpu(log->rst_info.r_page->sys_page_size);
+	if (log->page_size != t32) {
+		log->l_size = log->orig_file_size;
+		log->page_size = norm_file_page(t32, &log->l_size,
+						t32 == DefaultLogPageSize);
+	}
+
+If the on-disk page size is larger than the size used for the initial
+allocation, log->page_size grows but one_page_buf is left at its
+original, smaller size. A subsequent unaligned read_log_page() then
+reads log->page_size bytes into the undersized scratch buffer:
+
+	page_buf = page_off ? log->one_page_buf : *buffer;
+	err = ntfs_read_run_nb_ra(ni->mi.sbi, &ni->file.run, page_vbo, page_buf,
+				  log->page_size, NULL, &log->read_ahead);
+
+overflowing the allocation. This is reachable when mounting a dirty
+NTFS volume whose log was formatted with a page size larger than the
+buffer initially allocated on the mounting host (for example a 64K-log
+volume mounted on a host that allocated a 4K scratch buffer).
+
+Grow one_page_buf when the adopted on-disk page size exceeds the size
+used for the initial allocation. On krealloc() failure the original
+buffer is left intact and freed by the existing error path.
+
+Fixes: b46acd6a6a627 ("fs/ntfs3: Add NTFS journal")
+Reported-by: Carol L Soto <csoto@nvidia.com>
+Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pnv_php.c     |  2 +-
- drivers/pci/hotplug/rpaphp_slot.c |  2 +-
- drivers/pci/slot.c                | 21 +++++++++++----------
- include/linux/pci.h               |  3 +++
- 4 files changed, 16 insertions(+), 12 deletions(-)
+ fs/ntfs3/fslog.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
-index ec7828ad66617..2bd2b7599d1c4 100644
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -799,7 +799,7 @@ static struct pnv_php_slot *pnv_php_alloc_slot(struct device_node *dn)
- 	if (dn->child && PCI_DN(dn->child))
- 		php_slot->slot_no = PCI_SLOT(PCI_DN(dn->child)->devfn);
- 	else
--		php_slot->slot_no = -1;   /* Placeholder slot */
-+		php_slot->slot_no = PCI_SLOT_PLACEHOLDER;   /* Placeholder slot */
- 
- 	kref_init(&php_slot->kref);
- 	php_slot->state	                = PNV_PHP_STATE_INITIALIZED;
-diff --git a/drivers/pci/hotplug/rpaphp_slot.c b/drivers/pci/hotplug/rpaphp_slot.c
-index 779eab12e9810..ac8c512190df4 100644
---- a/drivers/pci/hotplug/rpaphp_slot.c
-+++ b/drivers/pci/hotplug/rpaphp_slot.c
-@@ -85,7 +85,7 @@ int rpaphp_register_slot(struct slot *slot)
- 	struct device_node *child;
- 	u32 my_index;
- 	int retval;
--	int slotno = -1;
-+	int slotno = PCI_SLOT_PLACEHOLDER;
- 
- 	dbg("%s registering slot:path[%pOF] index[%x], name[%s] pdomain[%x] type[%d]\n",
- 		__func__, slot->dn, slot->index, slot->name,
-diff --git a/drivers/pci/slot.c b/drivers/pci/slot.c
-index 7f4bcf359b917..a3551f12780e7 100644
---- a/drivers/pci/slot.c
-+++ b/drivers/pci/slot.c
-@@ -38,7 +38,7 @@ static const struct sysfs_ops pci_slot_sysfs_ops = {
- 
- static ssize_t address_read_file(struct pci_slot *slot, char *buf)
- {
--	if (slot->number == 0xff)
-+	if (slot->number == PCI_SLOT_PLACEHOLDER)
- 		return sysfs_emit(buf, "%04x:%02x\n",
- 				  pci_domain_nr(slot->bus),
- 				  slot->bus->number);
-@@ -189,7 +189,7 @@ static struct pci_slot *get_slot(struct pci_bus *parent, int slot_nr)
- /**
-  * pci_create_slot - create or increment refcount for physical PCI slot
-  * @parent: struct pci_bus of parent bridge
-- * @slot_nr: PCI_SLOT(pci_dev->devfn) or -1 for placeholder
-+ * @slot_nr: PCI_SLOT(pci_dev->devfn) or PCI_SLOT_PLACEHOLDER for placeholder
-  * @name: user visible string presented in /sys/bus/pci/slots/<name>
-  * @hotplug: set if caller is hotplug driver, NULL otherwise
-  *
-@@ -214,15 +214,16 @@ static struct pci_slot *get_slot(struct pci_bus *parent, int slot_nr)
-  * In most cases, @pci_bus, @slot_nr will be sufficient to uniquely identify
-  * a slot. There is one notable exception - pSeries (rpaphp), where the
-  * @slot_nr cannot be determined until a device is actually inserted into
-- * the slot. In this scenario, the caller may pass -1 for @slot_nr.
-+ * the slot. In this scenario, the caller may pass PCI_SLOT_PLACEHOLDER for @slot_nr.
-  *
-  * The following semantics are imposed when the caller passes @slot_nr ==
-- * -1. First, we no longer check for an existing %struct pci_slot, as there
-- * may be many slots with @slot_nr of -1.  The other change in semantics is
-- * user-visible, which is the 'address' parameter presented in sysfs will
-- * consist solely of a dddd:bb tuple, where dddd is the PCI domain of the
-- * %struct pci_bus and bb is the bus number. In other words, the devfn of
-- * the 'placeholder' slot will not be displayed.
-+ * PCI_SLOT_PLACEHOLDER. First, we no longer check for an existing %struct
-+ * pci_slot, as there may be many slots with @slot_nr of
-+ * PCI_SLOT_PLACEHOLDER. The other change in semantics is user-visible,
-+ * which is the 'address' parameter presented in sysfs will consist solely
-+ * of a dddd:bb tuple, where dddd is the PCI domain of the %struct pci_bus
-+ * and bb is the bus number. In other words, the devfn of the 'placeholder'
-+ * slot will not be displayed.
-  */
- struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
- 				 const char *name,
-@@ -235,7 +236,7 @@ struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
- 
- 	mutex_lock(&pci_slot_mutex);
- 
--	if (slot_nr == -1)
-+	if (slot_nr == PCI_SLOT_PLACEHOLDER)
- 		goto placeholder;
- 
- 	/*
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 282e86b9a35fe..440e0ef0a134c 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -71,6 +71,9 @@
- /* return bus from PCI devid = ((u16)bus_number) << 8) | devfn */
- #define PCI_BUS_NUM(x) (((x) >> 8) & 0xff)
- 
-+/* Used to identify a slot as a placeholder */
-+#define PCI_SLOT_PLACEHOLDER	0xff
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index c7762a24f8fed..df80905fe9805 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -4061,6 +4061,22 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
+ 		l_size = orig_file_size;
+ 		page_size =
+ 			norm_file_page(t32, &l_size, t32 == DefaultLogPageSize);
 +
- /* pci_slot represents a physical slot */
- struct pci_slot {
- 	struct pci_bus		*bus;		/* Bus this slot is on */
++		/*
++		 * If the adopted on-disk page size is larger than the size used
++		 * to allocate one_page_buf above, grow the scratch buffer so a
++		 * later read_log_page() cannot overflow it.
++		 */
++		if (page_size > log->page_size) {
++			void *buf;
++
++			buf = krealloc(log->one_page_buf, page_size, GFP_NOFS);
++			if (!buf) {
++				err = -ENOMEM;
++				goto out;
++			}
++			log->one_page_buf = buf;
++		}
+ 	}
+ 
+ 	if (page_size != t32 ||
 -- 
 2.53.0
 
