@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214678;
-	b=sUU61ToL7perWdtTHi2Y+Z5fr50wmopXvy0A2afdyYy4XgoJkBgNnyGQzCU1yd3mLqli
-	 SLVA0v/RqY+k2tGbtucZKlY1HTH8wapXF5IXc1wnHaEXOWrfqCF4K9GKhpO76i4JOeH5z
-	 4Jd7UEnKDe7p7V9sIE6dMLfuo87Bjtu7WqzjCt3DFDw54j9HIZZEkoyvLg03LTIbPGISj
-	 OQPWCh2o3DdWSdu257IxivzuP0PVwhBUtXIKD6sKGBoJkb8EjFgJyj+K+VSZtfSlq0wYd
-	 vJYqBTjJ6iyB2xXFzbOzTGdZCQau+/ATN+nxCrhLmZ2WG0y+Q6B9Xbq7kYHrjhDkU7Q==
+	t=1793214680;
+	b=Ux77DtPSBHGSiK83AQZwIViT0VFL9jdYX0/0WRGMVI+4PiLoQNYtieFmfmKI72aLy/8r
+	 0GayWeed0jEtIrR8daO2dJ6w8AVXaKfxsT6XlXcERobRzbbTL5/62cR7RrMwXWjVCpfE3
+	 n7q5XRYjJiLPoy7oVx+1pGrd0Vl58ItcNtp8L8OsMwbDSIQ2E1jlvh9PPPM4LTTaeXxCn
+	 y/7JJkg+m8q76ZzjPtCttcjnmQFOeIu0axOz/2IJvLw5dNqUl+BeFN+bOrMQuXD1U5d85
+	 lJ12zbav/G83Mu4dK5Z8B9DpJEoGfEA1yP/p7HcW00Q3/QQYH86e7cCcgeVuv8ZSS1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214678;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=REyuPWM199pgTz2iqSja3imXcbVNMrXm2TE2DGdzCFs=;
-	b=lnXl/8aos7J4TWivUn52wT2/qoko75GH9MWjNR5CsTQql0zAevo94e/P+PIV+PA2M2SN
-	 EDg++ZTnDRFo9UiB7ZHEaZfRYboNstj4jTgoRjvrPmttgB61b2J66Y1Xn+a/lqI2/dSBy
-	 yi2n26oK+B2uw6hoAiEbWlMaBT5r1JXnQlORcjQPE842pEB2utrsz4jsfXLSVMfqrjcPt
-	 R+JzRehUQl4WAUEozGkgi8Xs646Mf2705ZKVimMSXurJ75Mg0pQe4WxOs1//OnKtnYSvC
-	 YoGB4EZwixINohMecFl4n/szXw3dS3naKMpBuyoZ/25zBYrFMKax5BNTOFqgv3qbklw==
+	bh=F3FNMK0dojaU21ZQuQrd8yqov6EByVyN+tONzg+e6i0=;
+	b=znl32gs8y73fJHmj7XSveLL4WDFiSrqXN8VV+pZpmY8GGl9GKHI7kFQ9pf97CTOVOLUR
+	 B/Tesf1vFkR4Z7A6VnfUl0IVp7bvyP7xT4i8LzVMg7axwRyCWWOFC8FS0A9dP4SQO8G22
+	 YZ4MDLk/w/Hb1gNwxK47VCDH3duDdkfz5ecaXqT00lzSqJn4xBIu6dnOruwdcyA/T4l4L
+	 TjBhqeZ1r2NcfQqdBMr8bGnY4yS7/FpzlHTMHg32Ji9UdB3rKwOc6bLiHSHMy+6RFQvFu
+	 +VsbcOCe8oDzYidfzXFZ0t81TLDYeGqO5jj+6i8z47klPlURcRIQ2ZeZ3ZB9DE7Ml4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNS82Voo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x6yGHofi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01D7606A31D;
-	Wed, 28 Oct 2026 19:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F550606B7CF;
+	Wed, 28 Oct 2026 19:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNS82Voo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC79B1F01825;
-	Wed, 28 Oct 2026 19:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x6yGHofi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13481F01825;
+	Wed, 28 Oct 2026 19:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214677;
-	bh=REyuPWM199pgTz2iqSja3imXcbVNMrXm2TE2DGdzCFs=;
+	s=korg; t=1793214680;
+	bh=F3FNMK0dojaU21ZQuQrd8yqov6EByVyN+tONzg+e6i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNS82VoodnyODrxTrFQX0Oa+o9Rv5gJllREyxnbMLDwt+31KynR4SWh09L4TOJa1G
-	 oSzbtJDcLPTI32X768e6ntE4hyQ7M2ptVHG3ZCq6Zu8V40SDpAlFLU5gIeDacGbK64
-	 3xqpyn16nOrijVe0SQITW3IAvEkN5cRdhgrv1/B0=
+	b=x6yGHofi5laHIhxlZKaQbrh1ATcHUrPGXvirN0WWSHC012xSFqsXyHPbjPJSMnyGt
+	 vd2iDDSj7B6p+TzfPtKWTQBPT8E0PpMzQlRbhIpI0GGrIwEmGsKs5x1OTMXZQyksS4
+	 PNUErq6+mKREOB+AcyjiATctiubc7Z28qiJJoXEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <tabba@google.com>,
-	Will Deacon <will@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+2e2cf5331207053b8106@syzkaller.appspotmail.com,
+	Allison Henderson <achender@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0941/1887] bpf, arm64: Force 8-byte alignment for JIT buffer to prevent atomic tearing
-Date: Wed, 28 Oct 2026 17:50:37 +0100
-Message-ID: <20261028170520.825759781@linuxfoundation.org>
+Subject: [PATCH 6.1 0942/1887] net/rds: Fix circular locking dependency in rds_tcp_tune
+Date: Wed, 28 Oct 2026 17:50:38 +0100
+Message-ID: <20261028170520.847458590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,55 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <tabba@google.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit ef06fd16d48704eac868441d98d4ef083d8f3d07 ]
+[ Upstream commit 6a877ececd6daa002a9a0002cd0fbca6592a9244 ]
 
-struct bpf_plt contains a u64 target field. Currently, the BPF JIT
-allocator requests an alignment of 4 bytes (sizeof(u32)) for the JIT
-buffer.
+syzbot reported a circular locking dependency in rds_tcp_tune() where
+sk_net_refcnt_upgrade() is called while holding the socket lock:
 
-Because the base address of the JIT buffer can be 4-byte aligned (e.g.,
-ending in 0x4 or 0xc), the relative padding logic in build_plt() fails
-to ensure that target lands on an 8-byte boundary.
+======================================================
+WARNING: possible circular locking dependency detected
+======================================================
+kworker/u10:8/15040 is trying to acquire lock:
+ffffffff8e9aaf80 (fs_reclaim){+.+.}-{0:0},
+at: __kmalloc_cache_noprof+0x4b/0x6f0
 
-This leads to two issues:
-1. UBSAN reports misaligned-access warnings when dereferencing the
-   structure.
-2. More critically, target is updated concurrently via WRITE_ONCE() in
-   bpf_arch_text_poke() while the JIT'd code executes ldr. On arm64,
-   64-bit loads/stores are only guaranteed to be single-copy atomic if
-   they are 64-bit aligned. A misaligned target risks a torn read,
-   causing the JIT to jump to a corrupted address.
+but task is already holding lock:
+ffff88805a3c1ce0 (k-sk_lock-AF_INET6){+.+.}-{0:0},
+at: rds_tcp_tune+0xd7/0x930
 
-Fix this by increasing the allocation alignment requirement to 8 bytes
-(sizeof(u64)) in bpf_jit_binary_pack_alloc(). This anchors the base of
-the JIT buffer to an 8-byte boundary, allowing the relative padding math
-in build_plt() to correctly align the target field.
+The issue occurs because sk_net_refcnt_upgrade() performs memory
+allocation (via get_net_track() -> ref_tracker_alloc()) while the
+socket lock is held, creating a circular dependency with fs_reclaim.
 
-Fixes: b2ad54e1533e ("bpf, arm64: Implement bpf_arch_text_poke() for arm64")
-Signed-off-by: Fuad Tabba <tabba@google.com>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20260226075525.233321-1-tabba@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fix this by moving sk_net_refcnt_upgrade() outside the socket lock
+critical section. This is safe because the fields modified by the
+sk_net_refcnt_upgrade() call (sk_net_refcnt, ns_tracker) are not
+accessed by any concurrent code path at this point.
+
+v2:
+  - Corrected fixes tag
+  - check patch line wrap nits
+  - ai commentary nits
+
+Reported-by: syzbot+2e2cf5331207053b8106@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2e2cf5331207053b8106
+Fixes: 3a58f13a881e ("net: rds: acquire refcount on TCP sockets")
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260227202336.167757-1-achender@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rds/tcp.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index e66218aed831d..1a8627ab4f2cc 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -1589,7 +1589,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- 	extable_offset = round_up(prog_size + PLT_TARGET_SIZE, extable_align);
- 	image_size = extable_offset + extable_size;
- 	header = bpf_jit_binary_alloc(image_size, &image_ptr,
--				      sizeof(u32), jit_fill_hole);
-+				      sizeof(u64), jit_fill_hole);
- 	if (header == NULL) {
- 		prog = orig_prog;
- 		goto out_off;
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index 020baff6ad514..5b4af800dcdc5 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -569,19 +569,25 @@ bool rds_tcp_tune(struct socket *sock)
+ 	struct rds_tcp_net *rtn;
+ 
+ 	tcp_sock_set_nodelay(sock->sk);
+-	lock_sock(sk);
+ 	/* TCP timer functions might access net namespace even after
+ 	 * a process which created this net namespace terminated.
+ 	 */
+ 	if (!sk->sk_net_refcnt) {
+-		if (!maybe_get_net(net)) {
+-			release_sock(sk);
++		if (!maybe_get_net(net))
+ 			return false;
+-		}
++		/*
++		 * The sk_net_refcnt upgrade must be done before lock_sock()
++		 * because netns_tracker_alloc() does a GFP_KERNEL allocation,
++		 * which can trigger fs_reclaim and create a circular lock
++		 * dependency with the socket lock.  The fields it modifies
++		 * (sk_net_refcnt, ns_tracker) are not accessed by any
++		 * concurrent code path at this point.
++		 */
+ 		sk->sk_net_refcnt = 1;
+ 		netns_tracker_alloc(net, &sk->ns_tracker, GFP_KERNEL);
+ 		sock_inuse_add(net, 1);
+ 	}
++	lock_sock(sk);
+ 	rtn = net_generic(net, rds_tcp_netid);
+ 	if (rtn->sndbuf_size > 0) {
+ 		sk->sk_sndbuf = rtn->sndbuf_size;
 -- 
 2.53.0
 
