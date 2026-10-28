@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209091;
-	b=ABi/0+H2c1xckQzWObXbL2oIl2zoJkc6QmncmRAgdq9xjuo4DjYPBzOYZqugGjT4koLV
-	 6u1m6jGX4FCOr4ZXXGZAl7/WviHWwqBukL3ze3i0DF2AEkLVtbMWfV3h6MVvrCeMO0saP
-	 dxXYz8m33A1zA4Kmqo7D60dJSbKTQREnPJU3FZyu1WqYc7Hxq6/zGJbgChKIT7yT7FcwI
-	 bKKkccF7tM21tl6+HCCg/TX3epceMs7yF6HFnkSSEAAD9rSqBy1tBq03S8BYnAJ9wZXVt
-	 vlQ1uoS+EUGPlMPkRuKA0VhU3t/CKyhsf6HZhWFaC1apgWabVXYrpYMqL6ha7PL/e3g==
+	t=1793209094;
+	b=Ww/8s0axWffPOxXCRSjAWc75bnIF3gwvMlqAjfHnMbw0Ks4vkT8wsWJD15K9sRSgfvlD
+	 kkt+W2V0BqibZZalprT7JxNpXGfcg49FT5uGuoOOKiWpJ4fpruO+EaZ/BRL1Nj1Tu5rrd
+	 cvP+au67UpLvvYTmXUk6vDlyHND6dJLkQkpqHtuAoNFFPijQRtUD13nnURtHWKX6Cdaqc
+	 EvAV5Hz+tRzSOrpYz9nFag7yk/HY8eNu+tH1wSNSH4eFcn52f6CpX23c1KO7htpnQezPZ
+	 qBpV8nptdDw9++Jn4T9zVcVEBY9twihPnT66jAoSu0obomgmK61HhUnyYgM71zYab1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209094;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XWCSbzhrZVY4I/IEbjTA+YIV2/tJX34RmUTSjbSxvZA=;
-	b=xsprFq4xo15rQuWGvY77TCb+7NiCLsWf+hBQ17jORfIB6gQCip4jq9HufoGdOHoYQmv3
-	 YpZO4xP3Enl98c+TQ7EODOI14CI2jWFSrxbhBS+6SQ1wRhbuTgaEBxAu2JG1kXL1A1mi4
-	 fS+j28Fz72juU2qihjDi14tIxYxY3rntOu4xi7yRkuPr2PnAHbowcuyiyCAG4Y3ZHpBdt
-	 Eip9knNB6MNrgjLewmwK9KnRXbLGsIT6TFYeRexyKe+9+07FmE/t4kMUJcR46VT+mU9kH
-	 X3rLQBpAUSxdQdNwfuOO7BNhklsJ8gdVw0fWtCR+278UBdiOPe2RJvv/VUOAdhUluZQ==
+	bh=PhL3ooGXC51XjthC8kNdTzj37EyjDnSwsSxvs3sADIU=;
+	b=upEuGOHK9SS+EZ1lepU1fyHB5irW828ZYnpUwGoXAfj04k2LPyxpBFE/jLnJGRQoGkDN
+	 QhCvfDZ2T6zfmCLumBjt2/UviAMAbv1qq+YbyqsN2D1anu23lciW3+/F69NUD5e8O8hks
+	 Y/N+mjW62w5z7GbkqWsrusnIs53qGmXT4Z1NleJW5RRgsJ0EFQ7+wuBf0koPOLpTNZc1Z
+	 TM2pBQpFqmRMpUcqMqFIBI3QJ2j3abJ7QFv+Dkd1iRS0bFwfqMqRG/Hu5CuHCWLADxrD5
+	 K/fB5Wb6YZh8sWhkNIGOrR6IfSYqw00iU9oIszO0E6wBPD1K/jwrVAKxJNnMlUKcq7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqiuAQGh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JkY2btAU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B94606A324;
-	Wed, 28 Oct 2026 17:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA07606A324;
+	Wed, 28 Oct 2026 17:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqiuAQGh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357021F01825;
-	Wed, 28 Oct 2026 17:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JkY2btAU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178AA1F01825;
+	Wed, 28 Oct 2026 17:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209090;
-	bh=XWCSbzhrZVY4I/IEbjTA+YIV2/tJX34RmUTSjbSxvZA=;
+	s=korg; t=1793209093;
+	bh=PhL3ooGXC51XjthC8kNdTzj37EyjDnSwsSxvs3sADIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tqiuAQGhpTXzqeY54ztVq4w619FSPB6k/8G772kQ7VZHppx1SwHzpRcUAnNy5zIZX
-	 02uHgnVUA5gHx1rRjYX7HIV4qwElmLLb4b1EC8NKjMA4ipxQutQ+Rjap18cUo7X1W5
-	 JJNawRkr5kTgSrEJk8DKNInqBmCP+6fg9W1vDZfs=
+	b=JkY2btAUs4X1BCGCO7bRgkXLYXDNui20OU05u9Q0+K7MY/Q15+eWyIickwCr0eZ5t
+	 MX6AKVbJ+JhX5TLX05FecIjov3jKFzqCK6WeMDGijCZLLl5yfvqNEmjy+t32kZxVlL
+	 P4hON515pHaZk5cruCXl6VFmoYdilFcrgH7ZcnSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.10 349/516] namespace: check a submount for references right before unmounting it
-Date: Wed, 28 Oct 2026 17:58:21 +0100
-Message-ID: <20261028170011.760148507@linuxfoundation.org>
+Subject: [PATCH 5.10 350/516] dcache: dont put a mountpoint on a dentry thats being removed
+Date: Wed, 28 Oct 2026 17:58:22 +0100
+Message-ID: <20261028170011.783793215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,165 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 32bf92416614a1e3ff3524fc6b780259c7aad3ef upstream.
+commit 75f4197f1e11d2eb75c2d6f916a7d4764db621e5 upstream.
 
-shrink_submounts() and mark_mounts_for_expiry() first collect all the
-mounts they are allowed to unmount and then unmount them.
+rmdir(), unlink() and rename() call dont_mount() on the victim and then
+detach_mounts() with the victim's inode locked. do_lock_mount() takes
+the inode lock of the mountpoint and checks cant_mount() so a mount
+can't show up after detach_mounts().
 
-Whether a mount is busy is decided by propagate_mount_busy() on the
-tree. But unmounting the first mount changes the tree that the second
-one propagates into. propagate_umount()
-moves a surviving overmount off a copy it unmounts and mounts it where
-the copy was mounted. If that's where the propagated copy of the second
-victim is looked up the overmount becomes a candidate of the second
-umount_tree(). It's childless and so trim_one() commits it without
-looking at its reference count.
+But attach_recursive_mnt() makes a second mountpoint for the root of the
+source mount so that the mounts already located at the destination can
+be put on top of it. No inode is locked for that one and d_set_mounted()
+only refuses a dentry that is unlinked. Between detach_mounts() and
+d_delete() the victim is still hashed:
 
-So a synchronous umount pulls out a busy mount that is in use somewhere
-else and marks it MNT_SYNC_UMOUNT while it has users:
+  rmrace: b passed dont_mount() and detach_mounts(), sleeping
+  T2: move_mount(S, /tmp/plcant/x, BENEATH) = 0 errno 0 ()
+  T1: rmdir(/tmp/plcant/d/b) = 0 errno 0
+      109 107 0:61 /d/b//deleted /tmp/plcant/x rw,relatime - tmpfs tmpfs rw
+      108 109 0:63 / /tmp/plcant/x rw,relatime - tmpfs T rw
 
-  umount2(/tmp/plshrink/p1, 0) = 0 errno 0
-  cwd is (unreachable)
+A bind mount of the directory that's being removed is moved beneath an
+existing mount while the rmdir() is located between the two calls. The
+mount ends up on the removed directory and nothing will ever detach it.
 
-The same two umounts requested one after the other fail with EBUSY.
-This needs a mount with MNT_SHRINKABLE, i.e., automounted submounts of
-NFS, AFS and CIFS or the tracefs mount below debugfs. Bind mounts
-inherit the flag.
-
-Check each mount right before it is unmounted under the same hold of
-namespace_sem and mount_lock as the umount itself. Make sure that the
-algorithm stays linear.
+Check cant_mount() in d_set_mounted() as well. dont_mount() raises the
+flag under d_lock before detach_mounts() runs so either the mountpoint
+is set first and detach_mounts() finds the mount or the flag is seen and
+the mount is refused.
 
 Fixes: 1064f874abc0 ("mnt: Tuck mounts under others instead of creating shadow/side mounts.")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-2-be34c83956ae@kernel.org
+Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-15-be34c83956ae@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |   78 ++++++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 53 insertions(+), 25 deletions(-)
+ fs/dcache.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -3126,6 +3126,11 @@ void mark_mounts_for_expiry(struct list_
- 	}
- 	while (!list_empty(&graveyard)) {
- 		mnt = list_first_entry(&graveyard, struct mount, mnt_expire);
-+		/* an earlier umount_tree() may have moved a busy mount here */
-+		if (propagate_mount_busy(mnt, 1)) {
-+			list_move(&mnt->mnt_expire, mounts);
-+			continue;
-+		}
- 		touch_mnt_namespace(mnt->mnt_ns);
- 		umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
- 	}
-@@ -3136,16 +3141,36 @@ void mark_mounts_for_expiry(struct list_
- EXPORT_SYMBOL_GPL(mark_mounts_for_expiry);
- 
- /*
-+ * Unmount @mnt if it's a shrinkable mount without children that nobody uses.
-+ *
-+ * mount_lock must be held for write
-+ */
-+static bool shrink_submount(struct mount *mnt)
-+{
-+	if (propagate_mount_busy(mnt, 1))
-+		return false;
-+	touch_mnt_namespace(mnt->mnt_ns);
-+	umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
-+	return true;
-+}
-+
-+/*
-  * Ripoff of 'select_parent()'
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -1442,6 +1442,8 @@ EXPORT_SYMBOL(path_has_submounts);
   *
-- * search the list of submounts for a given mountpoint, and move any
-- * shrinkable submounts to the 'graveyard' list.
-+ * unmount the shrinkable submounts of @parent that aren't busy, children
-+ * before their parent, and say whether anything went
-+ *
-+ * The cursor into the children of @this_parent survives the umount of a
-+ * child mount without child mounts. The mounts that get umounted together with
-+ * it are located under receiving mounts of @this_parent and never under
-+ * @this_parent itself. The one exception is @this_parent getting unmounted
-+ * then the walk starts over.
+  * Only one of d_invalidate() and d_set_mounted() must succeed.  For
+  * this reason take rename_lock and d_lock on dentry and ancestors.
++ * Likewise for dont_mount() which marks a dentry that is being removed
++ * under d_lock.
   */
--static int select_submounts(struct mount *parent, struct list_head *graveyard)
-+static bool __shrink_submounts(struct mount *parent)
+ int d_set_mounted(struct dentry *dentry)
  {
- 	struct mount *this_parent = parent;
- 	struct list_head *next;
--	int found = 0;
-+	bool shrunk = false;
- 
- repeat:
- 	next = this_parent->mnt_mounts.next;
-@@ -3164,42 +3189,45 @@ resume:
- 			this_parent = mnt;
- 			goto repeat;
- 		}
--
--		if (!propagate_mount_busy(mnt, 1)) {
--			list_move_tail(&mnt->mnt_expire, graveyard);
--			found++;
--		}
-+		if (!shrink_submount(mnt))
-+			continue;
-+		shrunk = true;
-+		if (unlikely(this_parent->mnt.mnt_flags & MNT_UMOUNT))
-+			return true;
+@@ -1458,7 +1460,7 @@ int d_set_mounted(struct dentry *dentry)
+ 		spin_unlock(&p->d_lock);
  	}
- 	/*
- 	 * All done at this level ... ascend and resume the search
- 	 */
- 	if (this_parent != parent) {
--		next = this_parent->mnt_child.next;
--		this_parent = this_parent->mnt_parent;
-+		struct mount *mnt = this_parent;
-+
-+		next = mnt->mnt_child.next;
-+		this_parent = mnt->mnt_parent;
-+		/* its children are gone, maybe it can go as well */
-+		if (shrink_submount(mnt)) {
-+			shrunk = true;
-+			if (unlikely(this_parent->mnt.mnt_flags & MNT_UMOUNT))
-+				return true;
-+		}
- 		goto resume;
- 	}
--	return found;
-+	return shrunk;
- }
- 
- /*
-- * process a list of expirable mountpoints with the intent of discarding any
-- * submounts of a specific parent mountpoint
-+ * unmount the shrinkable submounts of @mnt that aren't busy
-+ *
-+ * The busy check and the umount of a mount are adjacent. An umount can
-+ * still empty or move a mount in a part of the tree that was walked
-+ * already, so walk again until nothing goes.
-  *
-  * mount_lock must be held for write
-  */
- static void shrink_submounts(struct mount *mnt)
- {
--	LIST_HEAD(graveyard);
--	struct mount *m;
--
--	/* extract submounts of 'mountpoint' from the expiration list */
--	while (select_submounts(mnt, &graveyard)) {
--		while (!list_empty(&graveyard)) {
--			m = list_first_entry(&graveyard, struct mount,
--						mnt_expire);
--			touch_mnt_namespace(m->mnt_ns);
--			umount_tree(m, UMOUNT_PROPAGATE|UMOUNT_SYNC);
--		}
-+	for (;;) {
-+		if (!__shrink_submounts(mnt))
-+			break;
- 	}
- }
- 
+ 	spin_lock(&dentry->d_lock);
+-	if (!d_unlinked(dentry)) {
++	if (!d_unlinked(dentry) && !cant_mount(dentry)) {
+ 		ret = -EBUSY;
+ 		if (!d_mountpoint(dentry)) {
+ 			dentry->d_flags |= DCACHE_MOUNTED;
 
 
