@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211274;
-	b=tNXenvIYslQOODb7Vaa04yYf456iAYtqdP9m+iiBEQjgNoJ3iycTaSY4PnGKBWKMVzE9
-	 /517rEgJQrFARdCrQHFWmAM7fTMceiGLf9ljUXeElAhw7zV+DkmlWaApthvXxihkETSu6
-	 +UDiCsrwH+C77bExkdp58zzyKv/UBq+4hcQU/WZ7J6aKl/Kd58sIdupkqaLWUsr7Q3tqE
-	 skp6No8+lZaIK6xVWHFCpOXDa1W4gyHO8PyuaZi5405f5no36goaoqNIZlcyuM0mQz3vn
-	 R5k+tnGab8Jo44e01IultgCy/bU8e7IQ7hHGARJl/JH7RTfjuzeolqtnbakxCIr4XJw==
+	t=1793211277;
+	b=PncYM/PCOR2bO1AO96JMhRsIJIfgYn7PpulRTunO7G7XUpVEVtC90FsLv3BolXKAUVDX
+	 uzlL+Eno/n7al6vIjLuKvK+vTW5YbF+F0pSK26LiL1PoBA+9IyXpLhiZ3Q5Bx9TEDTp+n
+	 b6mXpDN1PRnQFKa6FlbzQ9AmkWEed2IwxoaV8w+RyvfcItVBlgUjgYeP6+blR1szot28R
+	 7SYeC+OR5yFwhKfKgqnHfpHoWxemBJm8sKykKtm+dPImTHngzlZ9+pPjalAd9k5JWGyNx
+	 ZstFLOKpixVbpSv1aAx/q6s2QDja25Y0maJjwpkLVKA7MKK7qvbk5v43h6N8m7NAY8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211274;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211277;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1bj+W81ptaJdtmH4BCFJMz8xCly9ksgZ/Qy0nXO5cLA=;
-	b=OGoYjxIRr+NKXookaCnHw1RYmEVbGJJXzHkTdhT6NJR0qgf8O8Nl7Uv1h2vvIsrC321M
-	 +x1QqRLUByHdiMN586eOvGcmoa+l0LjNISOljHptE+VCmbv4sq9LXsrSR1VTZ7b/7ojx6
-	 iCCHP3Rvjhe2U52CjUO7Kw9128AHRIKcDLQMEm9doCkHMBQBVYm7/V9Sc/TRV/21YAWpS
-	 0GPXm1ELBuz7AIEhlvcNvn2a55a4CGEFoe/+KTmALnAtg1JfiJxcWsNDeTF0PEhlvCe/n
-	 tgOEHPbEDUY8vMnAkSz8U9YkFXawTMoiPhUVyT2bKbvEED4YTV72yjwTFvMGOYTCVyg==
+	bh=GEYQ+SFgG8OqA+d0OygusuYrZ13mlcQxiJv+Tel0kkY=;
+	b=nd99notMe0V57SwRwfQAEbouFHiFAIwJDDiV0WY6wiSktdmdrWYKlDNVdTa9sJbUuzys
+	 OgyJKsZT8GvfW/DyygxNQVo48kgEVBBfsCcWhDdcbzFTJu8wERomif1rp4KRLdTPh6BFM
+	 ttDM9jNgmzVgCRi4Oc9FChC/bKHnuvQD619k9Msea313jLCvD6bzeYmyM74AaLBiZ5QvV
+	 Ar0E67POi93EMDQWMJDHNvOOVIreTQJf/+cDX8IA2KgzloMfO8IFRkk8xq4GSn0qds73m
+	 g1hqefGF6ZNhbDz3rbZqHyTSnsdcdepC/97bV95AeYlRHuC6rx5SEZfaiJJYK4FMvOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLuSRb17;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kD+59mTk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4C1606BF7D;
-	Wed, 28 Oct 2026 18:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747EA60A2616;
+	Wed, 28 Oct 2026 18:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLuSRb17
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC3D1F031E0;
-	Wed, 28 Oct 2026 18:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kD+59mTk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B127A1F01828;
+	Wed, 28 Oct 2026 18:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211274;
-	bh=1bj+W81ptaJdtmH4BCFJMz8xCly9ksgZ/Qy0nXO5cLA=;
+	s=korg; t=1793211277;
+	bh=GEYQ+SFgG8OqA+d0OygusuYrZ13mlcQxiJv+Tel0kkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JLuSRb17o+wYnU+MUcC2xUF0MacGmA2ABdiBewD1EcYLVNIA9mJphYDa+kjBwnZid
-	 jGGzMz+O3ATLzpl5Uf6xXy3MkJnMxSVLe1NVJ/b6xB1HHFyZ967JTfcHC0vatHGod2
-	 4TPEyo4xLd5pelG4fWffMYLsi1uYJ8AFivzOvDiA=
+	b=kD+59mTkAtU9lLmmPH03EZI1qx4CQnwc/6PKqkjP82OPZfFPIUVHy+N1kx1Sl9uM1
+	 VaFasJteY7ZmLPq3bnFqQ9EKSmDbUUE6sqlMC2KGN24KJKSK1FSfaVEtW1Cd5Y/UKk
+	 kx7Rh/5eRMQRYRJa1VElyv1sGzdLqsYtVRsrGkn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.15 276/571] RDMA/hns: Fix WQ_MEM_RECLAIM warning
-Date: Wed, 28 Oct 2026 17:57:03 +0100
-Message-ID: <20261028170014.552509305@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Artem Novikov <naa@amicon.ru>,
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 5.15 277/571] vxlan: Fix potential null-ptr-deref in vxlan_gro_prepare_receive().
+Date: Wed, 28 Oct 2026 17:57:04 +0100
+Message-ID: <20261028170014.576164118@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,59 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit c0a26bbd3f99b7b03f072e3409aff4e6ec8af6f6 upstream.
+commit 30a45c0bffdd62350261e2f2689fdba426a33578 upstream.
 
-When sunrpc is used, if a reset triggered, our wq may lead the
-following trace:
+udp_tunnel_sock_release() could set sk->sk_user_data to NULL
+while vxlan_gro_prepare_receive() is running.
 
-workqueue: WQ_MEM_RECLAIM xprtiod:xprt_rdma_connect_worker [rpcrdma]
-is flushing !WQ_MEM_RECLAIM hns_roce_irq_workq:flush_work_handle
-[hns_roce_hw_v2]
-WARNING: CPU: 0 PID: 8250 at kernel/workqueue.c:2644 check_flush_dependency+0xe0/0x144
-Call trace:
-  check_flush_dependency+0xe0/0x144
-  start_flush_work.constprop.0+0x1d0/0x2f0
-  __flush_work.isra.0+0x40/0xb0
-  flush_work+0x14/0x30
-  hns_roce_v2_destroy_qp+0xac/0x1e0 [hns_roce_hw_v2]
-  ib_destroy_qp_user+0x9c/0x2b4
-  rdma_destroy_qp+0x34/0xb0
-  rpcrdma_ep_destroy+0x28/0xcc [rpcrdma]
-  rpcrdma_ep_put+0x74/0xb4 [rpcrdma]
-  rpcrdma_xprt_disconnect+0x1d8/0x260 [rpcrdma]
-  xprt_rdma_connect_worker+0xc0/0x120 [rpcrdma]
-  process_one_work+0x1cc/0x4d0
-  worker_thread+0x154/0x414
-  kthread+0x104/0x144
-  ret_from_fork+0x10/0x18
+Let's check if rcu_dereference_sk_user_data() is NULL after
+skb_gro_remcsum_init().
 
-Since QP destruction frees memory, this wq should have the WQ_MEM_RECLAIM.
-
-Fixes: ffd541d45726 ("RDMA/hns: Add the workqueue framework for flush cqe handler")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260104064057.1582216-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Fixes: 5602c48cf875 ("vxlan: change vxlan to use UDP socket GRO")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260502031401.3557229-7-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Artem Novikov: Apply the check to the older vxlan_gro_receive()
+  implementation. Initialize the remcsum state first and use the
+  existing out path for cleanup when sk_user_data has been cleared. ]
+Signed-off-by: Artem Novikov <naa@amicon.ru>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_core.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -6209,7 +6209,8 @@ static int hns_roce_v2_init_eq_table(str
- 		}
- 	}
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -791,12 +791,16 @@ static struct sk_buff *vxlan_gro_receive
+ 	struct vxlanhdr *vh, *vh2;
+ 	unsigned int hlen, off_vx;
+ 	int flush = 1;
+-	struct vxlan_sock *vs = rcu_dereference_sk_user_data(sk);
++	struct vxlan_sock *vs;
+ 	__be32 flags;
+ 	struct gro_remcsum grc;
  
--	hr_dev->irq_workq = alloc_ordered_workqueue("hns_roce_irq_workq", 0);
-+	hr_dev->irq_workq = alloc_ordered_workqueue("hns_roce_irq_workq",
-+						    WQ_MEM_RECLAIM);
- 	if (!hr_dev->irq_workq) {
- 		dev_err(dev, "failed to create irq workqueue.\n");
- 		ret = -ENOMEM;
+ 	skb_gro_remcsum_init(&grc);
+ 
++	vs = rcu_dereference_sk_user_data(sk);
++	if (!vs)
++		goto out;
++
+ 	off_vx = skb_gro_offset(skb);
+ 	hlen = off_vx + sizeof(*vh);
+ 	vh   = skb_gro_header_fast(skb, off_vx);
 
 
