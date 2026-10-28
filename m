@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213739;
-	b=TLOXMy423X3LTTQoQLxWgaVzkqYjaK1pNXxqAQvY0JV3EvFHyg7qtlLVSHYjtuH8+g1t
-	 VI+ZjfOeuMYmSQEOXZjgeQ2Z/9DkUdf0Dae6x5jkxF3Go2LQpScZuoHtBksKqpQEmvCBk
-	 bXP4WemLs7kFfP11z/bLxISfwdYSt6k7BHqXW1Hn9bntu0QDZUGa83I0BfX6GH1UyM0y6
-	 z6zPa5V0uRHu5DhwFpwtTbPE4MrvY4Cn/14FjEBRD0uI9kOcE7vk2qaBjnDcrA+/aylca
-	 uPz7VCvfSUk+yYU3bpDdVfqlVNlvpCVabMLhSx3brAhSvuMtoUz/+z1RLVOJM/uMOjw==
+	t=1793213742;
+	b=EsINfSMmkaATvaqTGfEsPXMzJUuAQ81Sy3MJNPq9RBIdZE3FgsOxouOMbfiugQlePTV7
+	 C770J9YX06fn6is2Yvjs+R7Qv331taMOiYQXk89X+qkH0zFR7wy2rqyJeGGM5XrAfMfPx
+	 /XawOR4ut79mU2kOss2jxSnUqsvAT1mizRER7CN3oTiCl6OTbnHXILAqYQEVjamz/6Uws
+	 5vo7BNJVg+d6r7UrG02Gwx92YPadNqUNAoUgbNXDJ3fx90bPDAlNVePpHmsVBtmmZi21i
+	 KPLQeBiWpWo97MfpxPWk5JjnSqm6JlhyQXj/15r07o1DG4kQdueO+c6k1Lw7+DaRbrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i07dAP0YzpT27C8YK7Egf1YW7NlA705O6w0HsaQgGFs=;
-	b=X/xMdnsHaOudF/cGdRMKzNUOw+hodle9Gtko2chEdgZJDpnb7SjhB/LsFKjMeWSPkvrt
-	 GL+U/xwFewRCDCLbeQb2DQaD9LiLzYI9N70wMIK2KHRxOMEPcAI5c6HjyHzivXTemH9BG
-	 1tPkxWxx/Bid+54x1qdmZEl5zfYho922lCFX/Eb7FLts973l+NWigoJzS1sLzJ8gIQf+z
-	 On7+gfLTVcAlNyAy1P3k1ypIuozcYTCVoV5R5JMkZTrQAGKHJGfuBeZesPQPwKC+wBjPi
-	 VnZ09VmgEae1MhGt37b8XXR+xqbUlwdmZtUhwWcqbH7FfA9A0J2quWQOO99B4XMrN1A==
+	bh=TIgjZtSMdBx8C1Rx6Ao1RlI1IhIOAmXGBPcsHVs912E=;
+	b=Ve4aNdzEbPFOLETqg9su+uvCarCWLzMHb+2Wetjbfzedt90/AerVnaykD5J4ja9duYPI
+	 rq9IxyD5nbbtNnK5HuoryfMrfDvw29IAJlwiTI1lK6rdEP4B/bQ9rMjW3w7I4Txuj/G2B
+	 rsAYKtwsWj9XsuDItB8GcFBxpchr7XCtc4oaIGnOJMDbqm9vHvOaso8rQRx8iYQukzskh
+	 19cdG4AbrLd9NSZDyWe0KbXXrtWR358xslDCdxWXC+HFO7DqKdThumuxCXO+1SfADEBjt
+	 bMz5ZqWRR5oZTTmrAarK35vGsskMFoLTCmXwp8XuErn6pj/iPx5Fwfdrl/SraUuLx/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i8xQBs1g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p/Q/7Mvr";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55222606A31A;
-	Wed, 28 Oct 2026 18:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69629606A31A;
+	Wed, 28 Oct 2026 18:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i8xQBs1g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A976A1F01825;
-	Wed, 28 Oct 2026 18:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p/Q/7Mvr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816B61F01825;
+	Wed, 28 Oct 2026 18:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213739;
-	bh=i07dAP0YzpT27C8YK7Egf1YW7NlA705O6w0HsaQgGFs=;
+	s=korg; t=1793213742;
+	bh=TIgjZtSMdBx8C1Rx6Ao1RlI1IhIOAmXGBPcsHVs912E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i8xQBs1gs9f7e3B2NPSyfik0FlZtFg+AmU6zmoqXhqFqcol/tekq8g7k2JlkJ24Mt
-	 Kbf72iT5F/wX6kU6s3dd/JiwcwbFF3azGTsyOxBx951hfQvQHGUm5BR/6JHHl9yoAA
-	 zgabxE99zt+nxbDtCGgXJ1oYwg4yEi0O2ZNrUbuk=
+	b=p/Q/7Mvrg+n+Ln/7y3dGfSQpq0/FRabF41j8+UIIKJTGsnTIM6wy+zKwj7lMHIf0s
+	 hzfXxZdunl3jcFBVelhHnti0ZPctP7EwjIi4MkbYajBcvYyXskO2PE6OySIXH5Fto6
+	 knobGLJQIVCusckxC81dNfj/hWNOmTqmLb1KOsco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Werner <andre.werner@systec-electronic.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Po-Hao Huang <phhuang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0611/1887] net: phy: phy_device: Prevent nullptr exceptions on ISR
-Date: Wed, 28 Oct 2026 17:45:07 +0100
-Message-ID: <20261028170513.316277716@linuxfoundation.org>
+Subject: [PATCH 6.1 0612/1887] wifi: rtw89: fix null pointer access when abort scan
+Date: Wed, 28 Oct 2026 17:45:08 +0100
+Message-ID: <20261028170513.338237546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,61 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Werner <andre.werner@systec-electronic.com>
+From: Po-Hao Huang <phhuang@realtek.com>
 
-[ Upstream commit 61c81872815f46006982bb80460c0c80a949b35b ]
+[ Upstream commit 7e11a2966f51695c0af0b1f976a32d64dee243b2 ]
 
-If phydev->irq is set unconditionally, check
-for valid interrupt handler or fall back to polling mode to prevent
-nullptr exceptions in interrupt service routine.
+During cancel scan we might use vif that weren't scanning.
+Fix this by using the actual scanning vif.
 
-Signed-off-by: Andre Werner <andre.werner@systec-electronic.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240129135734.18975-2-andre.werner@systec-electronic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Po-Hao Huang <phhuang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240119081501.25223-6-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 9b0c88c19795e..96dcd1d70bf4a 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1404,6 +1404,11 @@ int phy_sfp_probe(struct phy_device *phydev,
- }
- EXPORT_SYMBOL(phy_sfp_probe);
+diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
+index f7880499aeb09..2c3a72900b9fb 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -383,7 +383,7 @@ static void rtw89_ops_bss_info_changed(struct ieee80211_hw *hw,
+ 			 * when disconnected by peer
+ 			 */
+ 			if (rtwdev->scanning)
+-				rtw89_hw_scan_abort(rtwdev, vif);
++				rtw89_hw_scan_abort(rtwdev, rtwdev->scan_info.scanning_vif);
+ 		}
+ 	}
  
-+static bool phy_drv_supports_irq(struct phy_driver *phydrv)
-+{
-+	return phydrv->config_intr && phydrv->handle_interrupt;
-+}
-+
- /**
-  * phy_attach_direct - attach a network device to a given PHY device pointer
-  * @dev: network device to attach
-@@ -1513,6 +1518,9 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
- 
- 	phydev->interrupts = PHY_INTERRUPT_DISABLED;
- 
-+	if (!phy_drv_supports_irq(phydev->drv) && phy_interrupt_is_valid(phydev))
-+		phydev->irq = PHY_POLL;
-+
- 	/* Port is set to PORT_TP by default and the actual PHY driver will set
- 	 * it to different value depending on the PHY configuration. If we have
- 	 * the generic PHY driver we can't figure it out, thus set the old
-@@ -2951,11 +2959,6 @@ s32 phy_get_internal_delay(struct phy_device *phydev, struct device *dev,
- }
- EXPORT_SYMBOL(phy_get_internal_delay);
- 
--static bool phy_drv_supports_irq(struct phy_driver *phydrv)
--{
--	return phydrv->config_intr && phydrv->handle_interrupt;
--}
--
- /**
-  * fwnode_mdio_find_device - Given a fwnode, find the mdio_device
-  * @fwnode: pointer to the mdio_device's fwnode
 -- 
 2.53.0
 
