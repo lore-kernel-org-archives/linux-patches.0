@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216435;
-	b=OQeF0hJ9UsjMYlquQwvtyjaO0o7T6x0+PpmPV2BFhwj+NO00FoE0a+RyiNEmwFD0XWSo
-	 BhDW+bNJ4TAjx29iQyzuaXK7u3YuGjVFSvSejpNQ52iajZzm9S24cqFgqsOZKZwiz9XhP
-	 EvAh+Ax3OttvRks4aCwUOZ0mus+8K7xcg7ScAIQJUUaqTZZyDb8zL1HXG+SUH0Lsy7zhW
-	 ECo98tZ5hYanvHplyJhW7xPQkSm5TrllDOCCL9uyoGGErOjh0m+qhDIyPKNnN7WLPn0B0
-	 qlpf3leBrhR92tVrSCKsS/0j+wo1SD/F3DSv1Qn/hTQVMS/olp/QE8YFv0i6y5g1dgA==
+	t=1793216438;
+	b=TFzmpDvV1SEacbx6kemxgqU00RENJfDZ3nIAA7i7LQHU2FXvH/YBzp/01LCbEoK1HC7p
+	 QFfYqvlV6RWOSIyAX7tgTUxdeuuAojvgmtAljPBF43KbcNcGb0TC/KppHOvqA8UQWoi+P
+	 Q7tSawpUoRc6miIoNHZWRIH12+Mw1yYNzwFLOyEL9TYKPsECXmM+Ovw9TroyyHTgwmLwX
+	 d9lVNKL7jZ1ngrPgnTEHyQ4hAQwq9/8F44U13eKft8xGVZYXYPq+pn3NkciwT2l8QBRpH
+	 BOE0iP821e6o5hKERm0HDlafwZJT1kOSgYbD/5SY4ppIDJXSfpQuCBP7P9E6tDtZaEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216438;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HgFe3Z90c8195tu9CGXnRTt7iKkgmHM8EH54vTbFTVo=;
-	b=dXE6I/ZGf7ijtbITUpweiOS/OVe/AK+zpqSNq7lJ1HK2W3TwFUEAhDoG+rVC6X9FqVNX
-	 PoW4T+wFYDILnKTlwmpBfnSPgl7asrBwI+G0yT+LHIcWCAh0XXyYZRrKD8ITM8rEcMTDb
-	 XFXbmuDZLbE61CxDswU8thSjhvCcwMuXn9fzsJvaA0pBRShJFCtYuKhXE983fXZcZdqoJ
-	 FWnxH6JmTriHQCc6s4Kn66wQDilcooVTCGmAPey0+pBlsbmyejqeDobmdg5AzboNfHpaX
-	 zPRKSJqNIAYrHxPpubrwC1peiJeDWroQwldSVl585Ip1gPwByRztexMr45yKHT4TbwQ==
+	bh=glnvxXJoW8X5OoqJogXIggFqf0GwFYmnMY4s6HXie4o=;
+	b=hXXYPOKn+gYFX2Jm1kJyI1n/V56N4heEuNP6636C3PRhGvHZP8evBjsVb3borjupCwbH
+	 F1nMXN3mtrA2fdhnva3nQK8EyQJmrW5fw0SVAflChkWcL8oQbsgMhIayTQU3uINJqr9cJ
+	 PO4UF6GAG+i7Zmuj6ttzT+ANFztQf49SffJydv2oug5YA1QfWUcnScW8U8ge/SDl3heZT
+	 6vNVpKb2kXdTKxwTTonAZrksvLEKq9oX+lKXtoWDdv7zaoY3ixoQUCJt/baX0T52uXQkr
+	 09XaeSFcP0Z/FTXZB4zpU6Ivxv8aMjoTfZ1/ElZbYJZQcDBKQzs+K+afW7j5OKlbYyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GG7byFNi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DB10VDeY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920E0606A332;
-	Wed, 28 Oct 2026 19:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D76606A31E;
+	Wed, 28 Oct 2026 19:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GG7byFNi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37CD1F01825;
-	Wed, 28 Oct 2026 19:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DB10VDeY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945421F01825;
+	Wed, 28 Oct 2026 19:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216435;
-	bh=HgFe3Z90c8195tu9CGXnRTt7iKkgmHM8EH54vTbFTVo=;
+	s=korg; t=1793216438;
+	bh=glnvxXJoW8X5OoqJogXIggFqf0GwFYmnMY4s6HXie4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GG7byFNimwgHLxfzjP/IeAtltcCAEpP4uTu7a+eNDn5SD7IKRt+McWvbPdQIkK9vC
-	 ZA9c4UxYdW8Kw5FAGAQWJ7OFjrddA+NpGgUzwhbnsVrAPDc8ijYYp7TktNEgeIdkQp
-	 CkybW5EYmrSdG1ZznVfMZ04vYbMyizXeCc/2UbXM=
+	b=DB10VDeYAIf5DgYTJF6bVsdqh4OCff2LaaigS6euRgrw8IpRAtHfL9zxm05IdcPQ6
+	 AD1bDcL0MhDyH2gqJLQR+jidhta/kOFXDDouQf3LUo2cqeBIFrAxomRUZSCLkBkT6H
+	 LWL554+XUs57yHzQWZHW4ILQyjOlKViS0SV8yrC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1512/1887] samples/ftrace: Fix kthread_stop() on ERR_PTR in ftrace-direct-multi-modify
-Date: Wed, 28 Oct 2026 18:00:08 +0100
-Message-ID: <20261028170533.871563732@linuxfoundation.org>
+Subject: [PATCH 6.1 1513/1887] net/sched: fq: add overflow bounds to quantum and initial quantum
+Date: Wed, 28 Oct 2026 18:00:09 +0100
+Message-ID: <20261028170533.893833548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,54 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 6727b7618f49401acf373fa3ec5712e2ec52e5cf ]
+[ Upstream commit 709f34f7c28dc4dd6c40343d101850f11e172312 ]
 
-ftrace_direct_multi_init() assigns kthread_run()'s return value to
-simple_tsk without an IS_ERR() check. When kthread_run() fails it
-returns ERR_PTR(-ENOMEM), but init still returns 0, so the module loads
-with simple_tsk holding an error pointer. On unload,
-ftrace_direct_multi_exit() then passes that ERR_PTR to kthread_stop(),
-leading to a null-pointer-dereference.
+fq_init() computes quantum = 2 * psched_mtu() and initial_quantum = 10 *
+psched_mtu() with no overflow check. A device with a huge MTU (e.g. dummy
+with max_mtu == 0 accepting MTU 2147483634) makes psched_mtu() return
+0x80000000; the 2 * and 10 * multiplications wrap to 0 in 32-bit
+arithmetic, so q->quantum == 0. Then in fq_dequeue() the credit-refill
+loop adds 0 to f->credit (which stays <= 0) and goto begin loops
+forever under the qdisc lock, creating a soft lockup.
 
-Check the return value of kthread_run() with IS_ERR(); on failure,
-unregister the ftrace direct call and propagate the error code.
+Clamp psched_mtu() to [1, 1 << 20] before multiplying so the product
+cannot wrap, then cap the result at 1 << 20, matching the bound already
+enforced on TCA_FQ_QUANTUM in fq_change().
 
-Link: https://patch.msgid.link/20260826015050.10772-1-vulab@iscas.ac.cn
-Fixes: e1067a07cfbc ("ftrace/samples: Add module to test multi direct modify interface")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) is large enough that 2 * psched_mtu() wraps (e.g. a
+dummy device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
+
+Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260822195509.112717-2-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/ftrace/ftrace-direct-multi-modify.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/sched/sch_fq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/samples/ftrace/ftrace-direct-multi-modify.c b/samples/ftrace/ftrace-direct-multi-modify.c
-index 6f23b1413745c..6859bc931ad01 100644
---- a/samples/ftrace/ftrace-direct-multi-modify.c
-+++ b/samples/ftrace/ftrace-direct-multi-modify.c
-@@ -140,9 +140,16 @@ static int __init ftrace_direct_multi_init(void)
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index 2223edfd7aa77..ee8629d116473 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -930,12 +930,14 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
+ 		   struct netlink_ext_ack *extack)
+ {
+ 	struct fq_sched_data *q = qdisc_priv(sch);
++	u32 mtu;
+ 	int err;
  
- 	ret = register_ftrace_direct_multi(&direct, my_tramp);
- 
--	if (!ret)
--		simple_tsk = kthread_run(simple_thread, NULL, "event-sample-fn");
--	return ret;
-+	if (ret)
-+		return ret;
-+	simple_tsk = kthread_run(simple_thread, NULL, "event-sample-fn");
-+	if (IS_ERR(simple_tsk)) {
-+		unregister_ftrace_direct_multi(&direct, my_tramp);
-+		ftrace_free_filter(&direct);
-+		return PTR_ERR(simple_tsk);
-+	}
-+
-+	return 0;
- }
- 
- static void __exit ftrace_direct_multi_exit(void)
+ 	sch->limit		= 10000;
+ 	q->flow_plimit		= 100;
+-	q->quantum		= 2 * psched_mtu(qdisc_dev(sch));
+-	q->initial_quantum	= 10 * psched_mtu(qdisc_dev(sch));
++	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
++	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
++	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
+ 	q->flow_refill_delay	= msecs_to_jiffies(40);
+ 	q->flow_max_rate	= ~0UL;
+ 	q->time_next_delayed_flow = ~0ULL;
 -- 
 2.53.0
 
