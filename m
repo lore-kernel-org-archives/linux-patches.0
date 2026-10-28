@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209372;
-	b=RpOwSsHZrgBXdKfAOlLKowUAYtNKBFBu1sdj5YUFL4GBB3RHGW5gNZwOmUpaK02exivB
-	 ghJwbq63dl2/L6PWy9fRacldfe99dlfKSOz+Wpd1z9NMvQC9iHBELUfT/+wIdbagCq8v+
-	 IEVJS4R9z0vRxAqpqqA5qsK3S7Tylsq/JZxUFTY/UVUxJCnELP4962R1WUBR0xE/aHD8a
-	 icmUGlLGMMepRViwAe3IJXvq6olQyX8z1YjYKeGgtzZi5CKV/yO5NwP5SJ8P+ZMavP9dj
-	 klkK7vn5va9gF0N3fbj8m/W2L/xJUcbYJGsxN5Z25psI2rYUC8A6ut4wkL5RdYhe4+A==
+	t=1793209375;
+	b=ODhcE7UdfEeZvAjN/JDx5VwCfQdLVmi2ggtJJMBiYiOYs3vNzDmbvwwItCbtOPtkir+9
+	 r5gELHR5812FSyIJ3iLeqMYDxlI4zQw0nnTR68ED/Zd9neFBuiMNidV8R+IV4g6Oyp64r
+	 hDWQPz3um+WcV7+gMbcoLYGj3TyHSXHPtWLFSsoF6drRTAFF1eLmMYRcxuGbqF53fpqWJ
+	 3Nd1u9RIHh/O/jc29JkfTrBINnRIGxYEl1NWBdNRh1biDqGxXXWuSPMQiRHUPhW95I9bl
+	 FkNLF5GIZZ6ouLMLrUL1xvlGmh9Nf9M/tJRc/eHMObriGWQSCTSFfWtMMt2wI/ucCaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=emxsnaytwpjZN46mB+qqVyQ3MTrsWeZtbvsg2PlAB7U=;
-	b=1sTO99SngYEGwo7hbUrzANHIGxk7uWGWiT6L1YtJBIFM8Jacoif9kdk+cJayi/+I39ig
-	 BtEZf9qs53hJ0yyTMvn7+CTRuraq1g/PXTscvdyyTCQ7SHSjXEqV5Z6L4HwujB5jCdWco
-	 TFmI4qwlD5Qqp+dohmuvoO2nkSDWWe/xyUzNwaTJ3XxezedS3b/1JzhfsbJrWfgpgkPQ8
-	 8qACFj4ti8xB1zM9kE6DJvJ9cUD4oFexlIkp+q34FNlxGuQuoZlOFUUmUpy1b9VJ4VRHC
-	 SDlZ3DWxOd8nr62WkHUcxceKBeh2/IwaMlsavNMCpcDRCMlUQTc6zvv78QeO31gb1JA==
+	bh=VM9O6RUDyE7kis0EPJShCVYhw9OZYoPQhshnJmRK09I=;
+	b=vo3kMWXopnDhAGmBG5HJvCx0FihWUOHo9gjtwRxTO+6o5BVWk8tQN81JOnVP1Ri+iIKU
+	 G+QJRpzgPd8+uKVwZunLllVBv5XI9h8yInBxHexkdUrvH2ZaArp3+8teJmKK5m4mblFRP
+	 57SXBsOwB9eWY3jHfKhWwpWOmvD/zdWOfudpfWX+ZQpkedmTXn6L07UMa7UUrBIC+PI6s
+	 iP3ejWqrJr0/JCNjyKH8avLAbNvN4h4yeiCsF8UcneMpyVS3gFjBEKLO25mE3El/hfAu8
+	 c8+56Dt4BTbNYNUkUvuWaevJPjmKiNEjqCGoEnyyp5VFrS4q1OHq+HZRLmialTS15pQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G+FEaPV4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rTl4fxQG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7913C606A31A;
-	Wed, 28 Oct 2026 17:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4EF606A31A;
+	Wed, 28 Oct 2026 17:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G+FEaPV4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82281F01825;
-	Wed, 28 Oct 2026 17:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rTl4fxQG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99001F01825;
+	Wed, 28 Oct 2026 17:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209372;
-	bh=emxsnaytwpjZN46mB+qqVyQ3MTrsWeZtbvsg2PlAB7U=;
+	s=korg; t=1793209375;
+	bh=VM9O6RUDyE7kis0EPJShCVYhw9OZYoPQhshnJmRK09I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G+FEaPV4vkkvn16RN5ypYSzRMJN0equlcw/cNGxai/leLSo1ULbHwpGmpfqiAcdow
-	 WoSCitbhTsAL+VzGYgZShKGDMQHVEDCHxJ4tIw43Yvs7OheoyKsmFbK0BOnTOeFcEb
-	 hgCBzFJYQcrrYOlmvYIxNnh+RftctyJEW5mq6sgA=
+	b=rTl4fxQG0jrVk1Pa2RXhq+G8CVRdSTZSme2GvuLPxMmgyrkQXDQ/O8szeufFOo75K
+	 TVlG1E1xfs55AaLXCQFWXp3zipC5jvYrYA1bE+PBHujo4RtPJVXnyFNJQQKFmAnR3I
+	 ElM7Dc211V/e9VIHkIfQYAhwgiwll0JJXGA4B/3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 421/516] xfs: fix unmount hang with unflushable inodes stuck in the AIL
-Date: Wed, 28 Oct 2026 17:59:33 +0100
-Message-ID: <20261028170013.461680655@linuxfoundation.org>
+Subject: [PATCH 5.10 448/516] netlink: avoid hashing the network namespace pointer
+Date: Wed, 28 Oct 2026 18:00:00 +0100
+Message-ID: <20261028170014.094001750@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,331 +70,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 7b5f775be14ac1532c049022feadcfe44769566d ]
+[ Upstream commit f88bb3606e4bd11ee035b682cddc2999e604609a ]
 
-Unmount of a shutdown filesystem can hang with stale inode cluster
-buffers in the AIL like so:
+The netlink rhashtable key includes a raw struct net pointer and a
+user-controlled port ID. Both /proc/net/netlink and socket diagnostics
+expose the table's bucket order. By binding and rebinding chosen
+NETLINK_USERSOCK port IDs, an unprivileged reader can distinguish equal
+buckets and recover the low bits of the Jenkins hash. Its 32-bit seed
+and the limited set of kernel-image slides can then be searched offline
+to recover the address of init_net.
 
-[95964.140623] Call Trace:
-[95964.144641]  __schedule+0x699/0xb70
-[95964.154003]  schedule+0x64/0xd0
-[95964.156851]  xfs_ail_push_all_sync+0x9b/0xf0
-[95964.164816]  xfs_unmount_flush_inodes+0x41/0x70
-[95964.168698]  xfs_unmountfs+0x7f/0x170
-[95964.171846]  xfs_fs_put_super+0x3b/0x90
-[95964.175216]  generic_shutdown_super+0x77/0x160
-[95964.178060]  kill_block_super+0x1b/0x40
-[95964.180553]  xfs_kill_sb+0x12/0x30
-[95964.182796]  deactivate_locked_super+0x38/0x100
-[95964.185735]  deactivate_super+0x41/0x50
-[95964.188245]  cleanup_mnt+0x9f/0x160
-[95964.190519]  __cleanup_mnt+0x12/0x20
-[95964.192899]  task_work_run+0x89/0xb0
-[95964.195221]  resume_user_mode_work+0x4f/0x60
-[95964.197931]  syscall_exit_to_user_mode+0x76/0xb0
-[95964.201003]  do_syscall_64+0x74/0x130
+Use the namespace's unique, non-address net_cookie in the comparison
+key instead. It is assigned before the per-net initializers run and
+remains unchanged for the namespace's lifetime. The lookup key and
+object hash are still built by netlink_compare_arg_init(), keeping
+lookup, insertion, removal and rehashing consistent while preserving
+namespace separation. Neither public table walker needs to change.
 
-$ pstree -N mnt |grep umount
-	     |-check-parallel---nsexec---run_test.sh---753---umount
+Reading the socket's namespace cookie in netlink_compare() is safe
+under RCU, including during namespace teardown. netlink_release()
+removes the socket from the hash table and defers its final put with
+call_rcu(). cleanup_net() runs the per-net exit methods and waits for
+outstanding RCU callbacks with rcu_barrier() before freeing namespace
+storage.
 
-It always seems to be generic/753 that triggers this, and repeating
-a quick group test run triggers it every 10-15 iterations. Hence it
-generally triggers once up every 30-40 minutes of test time. just
-running generic/753 by itself or concurrently with a limited group
-of tests doesn't reproduce this issue at all.
+Unlike ns.ns_id, net_cookie is also available and initialized during
+setup_net() in older stable kernels, making the change straightforward
+to backport to v5.15 and later.
 
-Tracing on a hung system shows the AIL repeating every 50ms a log
-force followed by an attempt to push pinned, aborted inodes from the
-AIL (trimmed for brevity):
-
- xfs_log_force:   lsn 0x1c caller xfsaild+0x18e
- xfs_log_force:   lsn 0x0 caller xlog_cil_flush+0xbd
- xfs_log_force:   lsn 0x1c caller xfs_log_force+0x77
- xfs_ail_pinned:  lip 0xffff88826014afa0 lsn 1/37472 type XFS_LI_INODE flags IN_AIL|ABORTED
- xfs_ail_pinned:  lip 0xffff88814000a708 lsn 1/37472 type XFS_LI_INODE flags IN_AIL|ABORTED
- xfs_ail_pinned:  lip 0xffff88810b850c80 lsn 1/37472 type XFS_LI_INODE flags IN_AIL|ABORTED
- xfs_ail_pinned:  lip 0xffff88810b850af0 lsn 1/37472 type XFS_LI_INODE flags IN_AIL|ABORTED
- xfs_ail_pinned:  lip 0xffff888165cf0a28 lsn 1/37472 type XFS_LI_INODE flags IN_AIL|ABORTED
- xfs_ail_pinned:  lip 0xffff88810b850bb8 lsn 1/37472 type XFS_LI_INODE flags IN_AIL|ABORTED
- ....
-
-The inode log items are marked as aborted, which means that either:
-
-a) a transaction commit has occurred, seen an error or shutdown, and
-called xfs_trans_free_items() to abort the items. This should happen
-before any pinning of log items occurs.
-
-or
-
-b) a dirty transaction has been cancelled. This should also happen
-before any pinning of log items occurs.
-
-or
-
-c) AIL insertion at journal IO completion is marked as aborted. In
-this case, the log item is pinned by the CIL until journal IO
-completes and hence needs to be unpinned. This is then done after
-the ->iop_committed() callback is run, so the pin count should be
-balanced correctly.
-
-Yet none of these seemed to be occurring. Further tracing indicated
-this:
-
-d) Shutdown during CIL pushing resulting in log item completion
-being called from checkpoint abort processing. Items are unpinned
-and released without serialisation against each other, journal IO
-completion or transaction commit completion.
-
-In this case, we may still have a transaction commit in flight that
-holds a reference to a xfs_buf_log_item (BLI) after CIL insertion.
-e.g. a synchronous transaction will flush the CIL before the
-transaction is torn down.  The concurrent CIL push then aborts
-insertion it and drops the commit/AIL reference to the BLI. This can
-leave the transaction commit context with the last reference to the
-BLI which is dropped here:
-
-xfs_trans_free_items()
-  ->iop_release
-    xfs_buf_item_release
-      xfs_buf_item_put
-        if (XFS_LI_ABORTED)
-	  xfs_trans_ail_delete
-	xfs_buf_item_relse()
-
-Unlike the journal completion ->iop_unpin path, this path does not
-run stale buffer completion process when it drops the last
-reference, hence leaving the stale inodes attached to the buffer
-sitting the AIL. There are no other references to those inodes, so
-there is no other mechanism to remove them from the AIL. Hence
-unmount hangs.
-
-The buffer lock context for stale buffers is passed to the last BLI
-reference. This is normally the last BLI unpin on journal IO
-completion. The unpin then processes the stale buffer completion and
-releases the buffer lock.  However, if the final unpin from journal
-IO completion (or CIL push abort) does not hold the last reference
-to the BLI, there -must- still be a transaction context that
-references the BLI, and so that context must perform the stale
-buffer completion processing before the buffer is unlocked and the
-BLI torn down.
-
-The fix for this is to rework the xfs_buf_item_relse() path to run
-stale buffer completion processing if it drops the last reference to
-the BLI. We still hold the buffer locked, so the buffer owner and
-lock context is the same as if we passed the BLI and buffer to the
-->iop_unpin() context to finish stale process on journal commit.
-
-However, we have to be careful here. In a shutdown state, we can be
-freeing dirty BLIs from xfs_buf_item_put() via xfs_trans_brelse()
-and xfs_trans_bdetach().  The existing code handles this case by
-considering shutdown state as "aborted", but in doing so
-largely masks the failure to clean up stale BLI state from the
-xfs_buf_item_relse() path. i.e  regardless of the shutdown state and
-whether the item is in the AIL, we must finish the stale buffer
-cleanup if we are are dropping the last BLI reference from the
-->iop_relse path in transaction commit context.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Fixes: c428ecd1a21f ("netlink: Move namespace into hash key")
+Assisted-by: LLM
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261008011359.63727-2-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_buf_item.c | 121 +++++++++++++++++++++++++++++-------------
- fs/xfs/xfs_buf_item.h |   2 +-
- 2 files changed, 86 insertions(+), 37 deletions(-)
+ net/netlink/af_netlink.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
-index 3a96279f97a1a..8250347e2a943 100644
---- a/fs/xfs/xfs_buf_item.c
-+++ b/fs/xfs/xfs_buf_item.c
-@@ -627,43 +627,42 @@ xfs_buf_item_push(
-  * Drop the buffer log item refcount and take appropriate action. This helper
-  * determines whether the bli must be freed or not, since a decrement to zero
-  * does not necessarily mean the bli is unused.
-- *
-- * Return true if the bli is freed, false otherwise.
-  */
--bool
-+void
- xfs_buf_item_put(
- 	struct xfs_buf_log_item	*bip)
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 291f7eabd37c4..7e608b03ec5eb 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -455,7 +455,7 @@ netlink_unlock_table(void)
+ 
+ struct netlink_compare_arg
  {
--	struct xfs_log_item	*lip = &bip->bli_item;
--	bool			aborted;
--	bool			dirty;
-+
-+	ASSERT(xfs_buf_islocked(bip->bli_buf));
+-	possible_net_t pnet;
++	u64 net_cookie;
+ 	u32 portid;
+ };
  
- 	/* drop the bli ref and return if it wasn't the last one */
- 	if (!atomic_dec_and_test(&bip->bli_refcount))
--		return false;
-+		return;
+@@ -470,14 +470,14 @@ static inline int netlink_compare(struct rhashtable_compare_arg *arg,
+ 	const struct netlink_sock *nlk = ptr;
  
--	/*
--	 * We dropped the last ref and must free the item if clean or aborted.
--	 * If the bli is dirty and non-aborted, the buffer was clean in the
--	 * transaction but still awaiting writeback from previous changes. In
--	 * that case, the bli is freed on buffer writeback completion.
--	 */
--	aborted = test_bit(XFS_LI_ABORTED, &lip->li_flags) ||
--			xlog_is_shutdown(lip->li_log);
--	dirty = bip->bli_flags & XFS_BLI_DIRTY;
--	if (dirty && !aborted)
--		return false;
-+	/* If the BLI is in the AIL, then it is still dirty and in use */
-+	if (test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags)) {
-+		ASSERT(bip->bli_flags & XFS_BLI_DIRTY);
-+		return;
-+	}
- 
- 	/*
--	 * The bli is aborted or clean. An aborted item may be in the AIL
--	 * regardless of dirty state.  For example, consider an aborted
--	 * transaction that invalidated a dirty bli and cleared the dirty
--	 * state.
-+	 * In shutdown conditions, we can be asked to free a dirty BLI that
-+	 * isn't in the AIL. This can occur due to a checkpoint aborting a BLI
-+	 * instead of inserting it into the AIL at checkpoint IO completion. If
-+	 * there's another bli reference (e.g. a btree cursor holds a clean
-+	 * reference) and it is released via xfs_trans_brelse(), we can get here
-+	 * with that aborted, dirty BLI. In this case, it is safe to free the
-+	 * dirty BLI immediately, as it is not in the AIL and there are no
-+	 * other references to it.
-+	 *
-+	 * We should never get here with a stale BLI via that path as
-+	 * xfs_trans_brelse() specifically holds onto stale buffers rather than
-+	 * releasing them.
- 	 */
--	if (aborted)
--		xfs_trans_ail_delete(lip, 0);
-+	ASSERT(!(bip->bli_flags & XFS_BLI_DIRTY) ||
-+			test_bit(XFS_LI_ABORTED, &bip->bli_item.li_flags));
-+	ASSERT(!(bip->bli_flags & XFS_BLI_STALE));
- 	xfs_buf_item_relse(bip);
--	return true;
+ 	return nlk->portid != x->portid ||
+-	       !net_eq(sock_net(&nlk->sk), read_pnet(&x->pnet));
++	       sock_net(&nlk->sk)->net_cookie != x->net_cookie;
  }
  
- /*
-@@ -684,6 +683,15 @@ xfs_buf_item_put(
-  * if necessary but do not unlock the buffer.  This is for support of
-  * xfs_trans_bhold(). Make sure the XFS_BLI_HOLD field is cleared if we don't
-  * free the item.
-+ *
-+ * If the XFS_BLI_STALE flag is set, the last reference to the BLI *must*
-+ * perform a completion abort of any objects attached to the buffer for IO
-+ * tracking purposes. This generally only happens in shutdown situations,
-+ * normally xfs_buf_item_unpin() will drop the last BLI reference and perform
-+ * completion processing. However, because transaction completion can race with
-+ * checkpoint completion during a shutdown, this release context may end up
-+ * being the last active reference to the BLI and so needs to perform this
-+ * cleanup.
-  */
- STATIC void
- xfs_buf_item_release(
-@@ -691,18 +699,19 @@ xfs_buf_item_release(
+ static void netlink_compare_arg_init(struct netlink_compare_arg *arg,
+ 				     struct net *net, u32 portid)
  {
- 	struct xfs_buf_log_item	*bip = BUF_ITEM(lip);
- 	struct xfs_buf		*bp = bip->bli_buf;
--	bool			released;
- 	bool			hold = bip->bli_flags & XFS_BLI_HOLD;
- 	bool			stale = bip->bli_flags & XFS_BLI_STALE;
--#if defined(DEBUG) || defined(XFS_WARN)
--	bool			ordered = bip->bli_flags & XFS_BLI_ORDERED;
--	bool			dirty = bip->bli_flags & XFS_BLI_DIRTY;
- 	bool			aborted = test_bit(XFS_LI_ABORTED,
- 						   &lip->li_flags);
-+	bool			dirty = bip->bli_flags & XFS_BLI_DIRTY;
-+#if defined(DEBUG) || defined(XFS_WARN)
-+	bool			ordered = bip->bli_flags & XFS_BLI_ORDERED;
- #endif
- 
- 	trace_xfs_buf_item_release(bip);
- 
-+	ASSERT(xfs_buf_islocked(bp));
-+
- 	/*
- 	 * The bli dirty state should match whether the blf has logged segments
- 	 * except for ordered buffers, where only the bli should be dirty.
-@@ -718,16 +727,56 @@ xfs_buf_item_release(
- 	bp->b_transp = NULL;
- 	bip->bli_flags &= ~(XFS_BLI_LOGGED | XFS_BLI_HOLD | XFS_BLI_ORDERED);
- 
-+	/* If there are other references, then we have nothing to do. */
-+	if (!atomic_dec_and_test(&bip->bli_refcount))
-+		goto out_release;
-+
-+	/*
-+	 * Stale buffer completion frees the BLI, unlocks and releases the
-+	 * buffer. Neither the BLI or buffer are safe to reference after this
-+	 * call, so there's nothing more we need to do here.
-+	 *
-+	 * If we get here with a stale buffer and references to the BLI remain,
-+	 * we must not unlock the buffer as the last BLI reference owns lock
-+	 * context, not us.
-+	 */
-+	if (stale) {
-+		xfs_buf_item_finish_stale(bip);
-+		xfs_buf_relse(bp);
-+		ASSERT(!hold);
-+		return;
-+	}
-+
-+	/*
-+	 * Dirty or clean, aborted items are done and need to be removed from
-+	 * the AIL and released. This frees the BLI, but leaves the buffer
-+	 * locked and referenced.
-+	 */
-+	if (aborted || xlog_is_shutdown(lip->li_log)) {
-+		ASSERT(list_empty(&bip->bli_buf->b_li_list));
-+		xfs_buf_item_done(bp);
-+		goto out_release;
-+	}
-+
-+	/*
-+	 * Clean, unreferenced BLIs can be immediately freed, leaving the buffer
-+	 * locked and referenced.
-+	 *
-+	 * Dirty, unreferenced BLIs *must* be in the AIL awaiting writeback.
-+	 */
-+	if (!dirty)
-+		xfs_buf_item_relse(bip);
-+	else
-+		ASSERT(test_bit(XFS_LI_IN_AIL, &lip->li_flags));
-+
-+	/* Not safe to reference the BLI from here */
-+out_release:
- 	/*
--	 * Unref the item and unlock the buffer unless held or stale. Stale
--	 * buffers remain locked until final unpin unless the bli is freed by
--	 * the unref call. The latter implies shutdown because buffer
--	 * invalidation dirties the bli and transaction.
-+	 * If we get here with a stale buffer, we must not unlock the
-+	 * buffer as the last BLI reference owns lock context, not us.
- 	 */
--	released = xfs_buf_item_put(bip);
--	if (hold || (stale && !released))
-+	if (stale || hold)
- 		return;
--	ASSERT(!stale || aborted);
- 	xfs_buf_relse(bp);
+ 	memset(arg, 0, sizeof(*arg));
+-	write_pnet(&arg->pnet, net);
++	arg->net_cookie = net->net_cookie;
+ 	arg->portid = portid;
  }
  
-diff --git a/fs/xfs/xfs_buf_item.h b/fs/xfs/xfs_buf_item.h
-index e3ccbf3ca8014..c39202c0135a6 100644
---- a/fs/xfs/xfs_buf_item.h
-+++ b/fs/xfs/xfs_buf_item.h
-@@ -51,7 +51,7 @@ struct xfs_buf_log_item {
- 
- int	xfs_buf_item_init(struct xfs_buf *, struct xfs_mount *);
- void	xfs_buf_item_done(struct xfs_buf *bp);
--bool	xfs_buf_item_put(struct xfs_buf_log_item *);
-+void	xfs_buf_item_put(struct xfs_buf_log_item *bip);
- void	xfs_buf_item_log(struct xfs_buf_log_item *, uint, uint);
- bool	xfs_buf_item_dirty_format(struct xfs_buf_log_item *);
- void	xfs_buf_inode_iodone(struct xfs_buf *);
 -- 
 2.53.0
 
