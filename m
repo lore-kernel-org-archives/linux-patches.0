@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215057;
-	b=C9YVRmvpATfQg6sUuuyF7QGypD2CpUvW0yMnEr3pPc2JX/7k2neYZxm1p4LCjnI5/pnv
-	 Dd+aFnnl1j/FWScQfLawLptpLWH3vEVcWIIxDa4ISzPmdchTBnyrLMztk08vhEiNwDizk
-	 svZ0e5FGpuma52AS4w6rNtL8/C/wnNt/TDC13Behd7WPLtn1MogvOcgMOAa2/BetIeZM9
-	 S3C6EyiRbVGS6XHDEtCbLM71B6xx6HEJxfCabGisJpYiA+M45kjJCqtqEi6HKrurQdASN
-	 Juh2nVW5h/2aU134huHD244cpVhPUAmtKoer0EZdtQjja1sul6Q5fockk36AgXmL7Fg==
+	t=1793215060;
+	b=yiq6bweR+jYyB2Ymu1BFE2rkVEH8D++E5cUHLEGFwwbcbvrppEwBZIe2KWIvELlKa3j7
+	 9TljiYQR2DNEEr/nd8HUuoK0HZxNCC7HOGF1D+nRQJC7gDN2FAuGAvPxengkL7b2U26R3
+	 9QOuB7xUlfqYqwWIEUh9qdNNQKaoG2w6tM8YYWteUUDacRi5G9yjhbgLDBdkGpkx9vePk
+	 lT8E3GlvHhh/M1mmKdR2Pvhs5LGfZFTNApj5wIVR4YqUB73WkkVG0UZ6rBQ/5PS5KZ2dY
+	 tQfIfGvkb0hUfJhBkpAhroj235d1HZhKfbq2xfiTLOq5JC+bE8uwXJZXu2QIpMgsAaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QR6vMzcJQgHUnAzRyu/7UHECvb0iK/Tlpn3sqlPJFPQ=;
-	b=acN0A0rWIz2jRCry3dBntcRC85i+S+VI2kF8xYvNldeb+in4+PdqJ9KjDUib9pXVnBHx
-	 ppjub23ko/+dJLeCZ2qoSJcQ3MfEZz/68QC5wom11VHd2epYWy0Xhv6vgHRC2X+eNB4k8
-	 N66uJeVgGZlcDZvCqOtG/7xxUTlAFZlKpi0Cq/ia9BOJ4DOZ1U4ZqKcAgu63D1WZjWAbn
-	 xbKImnfaOOL7XFHzTFbl6J41O3E5OwFlsRyPM7IMCpHahFl40h95a83rrczVTyIBRIg4R
-	 Z4nxFuYx1mYlnYZkT/P50S/o7BD0Rt/6VR4sk8YoCurD4LAiZJLwZ+Rh8JqYvvh07cw==
+	bh=Fjhg//POjmXCx9op3CzQ4vnzjObKUsnDNDgXWWQC0YI=;
+	b=WToQcNAd0xDh2V0i6+3z/pLUOVCZZGHclHAMO0IBvMv1J8qcPw3uPJ0ahbfnbTV4LZoq
+	 MJkjfrsVtMdHhF15+B1mDa9ZGMgNBd0Gv2Sjd16peAE7rPOAVLtu5tlsjbYoSW26mNlSD
+	 xYCd2TzT8tW5FKaGfd8x5hfJxz/3aVlHPtsSLuIzRnGawxBcdo5hXvbjLr/549l4jJIie
+	 KGh8kPt1IYyYCuIJXWfrvE6XvgQK/ec1uQT77y9TD8W0XthQdNlpMpdZa9l8xPYYk3orm
+	 P8JcxjSo+Ki3d/Lx+OHSETlZFGKZ14TN/HcerR0y4bQiU7xrDdpDf3ArG79V1naqbow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x401TdOk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFLRBJX5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4000A606A31C;
-	Wed, 28 Oct 2026 19:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EC5606A31A;
+	Wed, 28 Oct 2026 19:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x401TdOk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91EFE1F01825;
-	Wed, 28 Oct 2026 19:17:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFLRBJX5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A901F01825;
+	Wed, 28 Oct 2026 19:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215057;
-	bh=QR6vMzcJQgHUnAzRyu/7UHECvb0iK/Tlpn3sqlPJFPQ=;
+	s=korg; t=1793215059;
+	bh=Fjhg//POjmXCx9op3CzQ4vnzjObKUsnDNDgXWWQC0YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x401TdOkUX/woUNW3VmElRYI2G7LONMjAMnMena3KQ6wtNzlV3Kvv1h2m8vxTYhrZ
-	 2TH80N+at+chcaoTztQVIaMt4W8rfHw254IALFNpP1seJcWeBN7HI6y++wTG2JuxIt
-	 Fmkyzd+NIN8E1Vau6WhM+ATWR/Xk5c/Pc8/YYcnM=
+	b=EFLRBJX5uAZ0Omxjxq+S+0OyeNlySvaUjkFXl9WWUw4IYmIbnya8sBSZGjtJtG8xd
+	 ZFLlK79EmmptvJKey0WmnKxR+YSpEGKvjY215DiOdPgFFgd/vTwgR2qtmmi9d3igNi
+	 CvY/o1JWU0GleO9QF8dSFd7DZYweG8cO5E2HrxQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1076/1887] netfilter: nat: use kfree_rcu to release ops
-Date: Wed, 28 Oct 2026 17:52:52 +0100
-Message-ID: <20261028170523.892687528@linuxfoundation.org>
+Subject: [PATCH 6.1 1077/1887] ice: fix double-free of tx_buf skb
+Date: Wed, 28 Oct 2026 17:52:53 +0100
+Message-ID: <20261028170523.914543072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,126 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 6eda0d771f94267f73f57c94630aa47e90957915 ]
+[ Upstream commit 1a303baa715e6b78d6a406aaf335f87ff35acfcd ]
 
-Florian Westphal says:
+If ice_tso() or ice_tx_csum() fail, the error path in
+ice_xmit_frame_ring() frees the skb, but the 'first' tx_buf still points
+to it and is marked as valid (ICE_TX_BUF_SKB).
+'next_to_use' remains unchanged, so the potential problem will
+likely fix itself when the next packet is transmitted and the tx_buf
+gets overwritten. But if there is no next packet and the interface is
+brought down instead, ice_clean_tx_ring() -> ice_unmap_and_free_tx_buf()
+will find the tx_buf and free the skb for the second time.
 
-"Historically this is not an issue, even for normal base hooks: the data
-path doesn't use the original nf_hook_ops that are used to register the
-callbacks.
+The fix is to reset the tx_buf type to ICE_TX_BUF_EMPTY in the error
+path, so that ice_unmap_and_free_tx_buf().
+Move the initialization of 'first' up, to ensure it's already valid in
+case we hit the linearization error path.
 
-However, in v5.14 I added the ability to dump the active netfilter
-hooks from userspace.
+The bug was spotted by AI while I had it looking for something else.
+It also proposed an initial version of the patch.
 
-This code will peek back into the nf_hook_ops that are available
-at the tail of the pointer-array blob used by the datapath.
+I reproduced the bug and tested the fix by adding code to inject
+failures, on a build with KASAN.
 
-The nat hooks are special, because they are called indirectly from
-the central nat dispatcher hook. They are currently invisible to
-the nfnl hook dump subsystem though.
+I looked for similar bugs in related Intel drivers and did not find any.
 
-But once that changes the nat ops structures have to be deferred too."
-
-Update nf_nat_register_fn() to deal with partial exposition of the hooks
-from error path which can be also an issue for nfnetlink_hook.
-
-Fixes: e2cf17d3774c ("netfilter: add new hook nfnl subsystem")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
+Assisted-by: Claude:claude-4.6-opus-high Cursor
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-4-686c33c9828d@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter.h         |  2 ++
- net/ipv4/netfilter/iptable_nat.c  |  4 ++--
- net/ipv6/netfilter/ip6table_nat.c |  4 ++--
- net/netfilter/nf_nat_core.c       | 10 ++++++----
- 4 files changed, 12 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/netfilter.h b/include/linux/netfilter.h
-index e5f4b6f8d1c09..caa775ec9ac94 100644
---- a/include/linux/netfilter.h
-+++ b/include/linux/netfilter.h
-@@ -83,6 +83,8 @@ enum nf_hook_ops_type {
- };
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index 1d64966da1e8a..73c974747ac4a 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -2277,6 +2277,9 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
  
- struct nf_hook_ops {
-+	struct rcu_head		rcu;
+ 	ice_trace(xmit_frame_ring, tx_ring, skb);
+ 
++	/* record the location of the first descriptor for this packet */
++	first = &tx_ring->tx_buf[tx_ring->next_to_use];
 +
- 	/* User fills in from here down. */
- 	nf_hookfn		*hook;
- 	struct net_device	*dev;
-diff --git a/net/ipv4/netfilter/iptable_nat.c b/net/ipv4/netfilter/iptable_nat.c
-index 12ca666d6e2c1..a8fe357bc6ecc 100644
---- a/net/ipv4/netfilter/iptable_nat.c
-+++ b/net/ipv4/netfilter/iptable_nat.c
-@@ -79,7 +79,7 @@ static int ipt_nat_register_lookups(struct net *net)
- 			while (i)
- 				nf_nat_ipv4_unregister_fn(net, &ops[--i]);
+ 	count = ice_xmit_desc_count(skb);
+ 	if (ice_chk_linearize(skb, count)) {
+ 		if (__skb_linearize(skb))
+@@ -2302,8 +2305,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
  
--			kfree(ops);
-+			kfree_rcu(ops, rcu);
- 			return ret;
- 		}
- 	}
-@@ -100,7 +100,7 @@ static void ipt_nat_unregister_lookups(struct net *net)
- 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv4_ops); i++)
- 		nf_nat_ipv4_unregister_fn(net, &ops[i]);
+ 	offload.tx_ring = tx_ring;
  
--	kfree(ops);
-+	kfree_rcu(ops, rcu);
+-	/* record the location of the first descriptor for this packet */
+-	first = &tx_ring->tx_buf[tx_ring->next_to_use];
+ 	first->skb = skb;
+ 	first->bytecount = max_t(unsigned int, skb->len, ETH_ZLEN);
+ 	first->gso_segs = 1;
+@@ -2365,6 +2366,7 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ out_drop:
+ 	ice_trace(xmit_frame_ring_drop, tx_ring, skb);
+ 	dev_kfree_skb_any(skb);
++	first->skb = NULL;
+ 	return NETDEV_TX_OK;
  }
  
- static int iptable_nat_table_init(struct net *net)
-diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
-index 52d597b16b658..21957d53e9c95 100644
---- a/net/ipv6/netfilter/ip6table_nat.c
-+++ b/net/ipv6/netfilter/ip6table_nat.c
-@@ -81,7 +81,7 @@ static int ip6t_nat_register_lookups(struct net *net)
- 			while (i)
- 				nf_nat_ipv6_unregister_fn(net, &ops[--i]);
- 
--			kfree(ops);
-+			kfree_rcu(ops, rcu);
- 			return ret;
- 		}
- 	}
-@@ -102,7 +102,7 @@ static void ip6t_nat_unregister_lookups(struct net *net)
- 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv6_ops); i++)
- 		nf_nat_ipv6_unregister_fn(net, &ops[i]);
- 
--	kfree(ops);
-+	kfree_rcu(ops, rcu);
- }
- 
- static int ip6table_nat_table_init(struct net *net)
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index 6586cce471eb6..47416bafd2c05 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -1050,9 +1050,11 @@ int nf_nat_register_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
- 		ret = nf_register_net_hooks(net, nat_ops, ops_count);
- 		if (ret < 0) {
- 			mutex_unlock(&nf_nat_proto_mutex);
--			for (i = 0; i < ops_count; i++)
--				kfree(nat_ops[i].priv);
--			kfree(nat_ops);
-+			for (i = 0; i < ops_count; i++) {
-+				priv = nat_ops[i].priv;
-+				kfree_rcu(priv, rcu_head);
-+			}
-+			kfree_rcu(nat_ops, rcu);
- 			return ret;
- 		}
- 
-@@ -1116,7 +1118,7 @@ void nf_nat_unregister_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
- 		}
- 
- 		nat_proto_net->nat_hook_ops = NULL;
--		kfree(nat_ops);
-+		kfree_rcu(nat_ops, rcu);
- 	}
- unlock:
- 	mutex_unlock(&nf_nat_proto_mutex);
 -- 
 2.53.0
 
