@@ -1,51 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208029;
-	b=5FNMdxH6kA74YhytUFaEZiJBhc3RPgI5bYT0dai4JG5mWNCYlEwseS4E4FBM3GqRr/dx
-	 BtHF61ns9AYv2jBL3C6U6D1eYsccZ6uJIiwElj9nqd9fMosTBDhlb0JRyp13ou8JLjlmI
-	 jQAOMkh5a75neoH069Hsd8AAiy/2jqae4i0GWtq5ed6GIgdz5jUtmA16ISb+4E7yRAE8o
-	 2Y6oUN2cKA3S4Xg3KO1svklySQo0oO4kMa+l3IlKQxwU32VZxW3SPGSp4vdbk39mS2SSr
-	 YgiadYMHvUWHDgIa+kpEXifv3gH+kWbdLlVo4nUvdjbsWeHefoIyuuwGgFohJfK3Eqw==
+	t=1793208032;
+	b=AuC+fjDRAw2Bj5pe/IaKinbmVWvZH2dlgZqYhoPBRwnKH0GSHgMhjmSCo/gPivsJyC1L
+	 GvIyyECIHmxP45TLtVu3lZiKlBxa0XvSVGG7v//o7QpU3Z4d9KYr5uP9TjOvHHJBV9jRn
+	 buLUxzwVaVg81eGi8x4ne7hUtZs+DQkdI2Wod5L4F9FFPP1wQPhchERJ5fMZvpkpS972t
+	 e+VaXl/KJII4XBBv5eDwi+UpwQiLldf6D2yGWuT7Dosi9I17Lh+wGnnHriFi3npW/X5v1
+	 uknEIHMMhuUa0Mv2+H4UQb/tdd9TfZjn+/areo49z03nSNMLkdFwKdVIIs0aHmRsx/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208029;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FGXIpAAg0nTBrMwGSk98AzopYTUBpsK6QfINb7sx408=;
-	b=itEeTVHpZvpuphExNRi0JdV9+pyA4Fv6jJBooOaHW4tCh8IaDXaL9mCsvNSeJIwpzTfO
-	 8DlefQKZki75ez/BRGN60IFM7gQf8f9mg3MiSKU1nnzgV1un8LvZ1EaI/khZlL9yL+WLI
-	 KlVvOr91IxaIb1J35NjJXtAFTBWCwcMKGt5B83DmXNXf++zRejTzRlVbxQfNDtUCZsHx/
-	 WUojFRUzBxY1W3gLPO3Pn3xemlfAeMOw/OzJ0KmnO7UIEIy8yG3erZYY+3JmQkrcVzMuo
-	 H2csj94ARdgzd8bIbMMpantUIz5S9YE7BAbCym8XeONIA8wMqYGCUrUsFXKahyIPgBA==
+	bh=l/xhMgZFcrbYkuA7b09PddJ7yyCB1RGBpKl71+GJU/0=;
+	b=Jtt3xUi3VG6qbu6qlNChwzCrFgjByJDCd74ppPioLMDIR9MOJz4zizAQHYAdipJ+ePNa
+	 sDjcwfeFFnV1Nf2QDt1s754rXOGVpdOoFxzIBptl36kVQC79Slec4JLjFeR4rEgwtirUG
+	 nTweE1KpTKFcw+jYg20GJ+P8Fug4qiEGg4LSJT5TUw79Lsab2fdY5IWXVljN+TLkl1VhZ
+	 Q6NbceD+8sZYxlWjMFXBYJdIrUfgukkJt/Xaf9p/49O5XsQnlSsrR9Y1YNOVUHIIjMh2y
+	 Cuo0WqYjDA8wKnW6cnvFR+pHskcacOtS/GD/Nj39G3eqSalyP0md7XHOWZbddmxozng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dDVlOi4w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOZpWrif;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E3606A31A;
-	Wed, 28 Oct 2026 17:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220F0606A31C;
+	Wed, 28 Oct 2026 17:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dDVlOi4w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03921F01829;
-	Wed, 28 Oct 2026 17:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cOZpWrif
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6E51F01825;
+	Wed, 28 Oct 2026 17:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208029;
-	bh=FGXIpAAg0nTBrMwGSk98AzopYTUBpsK6QfINb7sx408=;
+	s=korg; t=1793208032;
+	bh=l/xhMgZFcrbYkuA7b09PddJ7yyCB1RGBpKl71+GJU/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dDVlOi4wi06WpJasO2K2sBTuvlFWb2nfsK6xX48JP0i0lkGC3z21psRb3zMVWmadA
-	 jL9hJ0xxy8i6pNb1iEO5A+UtOFeWRwjZuhEYUsgxWry40D1jCktsviPsctg9QKcQSH
-	 exfB42+JRFRg9QsQ6bfXfizqmLMuF6FMFoVcgIL0=
+	b=cOZpWrifHaY6REGZS6eorV8ta9hoz87v2OZgSMzQjOKSy3A5HGg/M5lkZpzQyyl3E
+	 w2peYAdyPtS1jk0fXNwHrK0r95WbAnfB4Io7ifERSvqAF7y893TXVfYxTLOyEfnFqy
+	 wzlyBd3NLeSzbKa+oJFxuDABIcabQW+TR1h3Xoco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Max Boone <mboone@akamai.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 181/247] ax25: dont free an incoming SABM skb left on the listeners queue
-Date: Wed, 28 Oct 2026 17:59:44 +0100
-Message-ID: <20261028165951.705758852@linuxfoundation.org>
+Subject: [PATCH 6.12 182/247] mm/pagewalk: fix stale walk->action escaping walk_pmd_range()
+Date: Wed, 28 Oct 2026 17:59:45 +0100
+Message-ID: <20261028165951.728820435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,80 +76,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-When a SABM comes in for a listening socket, ax25_rcv() creates the new
-socket, puts the skb on the listener's receive queue and only then
-allocates the digipeater path. If that allocation fails, the skb is
-freed with kfree_skb() while it is still linked on the queue, and the
-accept backlog count taken by sk_acceptq_added() is never given back.
-The next accept() or the close of the listener then walks a queue that
-contains a freed skb.
+[ Upstream commit aedf2efd18977e0cef7eb963166e2b1fcc0aa321 ]
 
-Allocate the path before the skb is queued, so that the error path only
-has to free an skb nobody else knows about and to destroy the new
-socket. The later allocation remains for a connection that has no
-listening socket.
+If ->pmd_entry() sets walk->action = ACTION_AGAIN, the pmd_none() check is
+retried.  The PMD entry may be cleared at the point of retry.
 
-Only reachable when the atomic allocation fails for a call that comes
-through digipeaters. Regression tested in QEMU (6.12.94 with lockdep
-and KASAN): 14 incoming connections to a listening socket, each
-accepted, served and closed, before and after; no report.
+In this case, if walk->ops->install_pte is not specified, the code
+continues to the next PMD entry in the range without resetting
+walk->action to ACTION_SUBTREE.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 2d67e8e9f3d627327114fb946c3a28ef72becb2d)
+This leaves walk->action erroneously set to ACTION_AGAIN, which is
+incorrect.
+
+This was incorrect but not problematic up until commit 3b89863c3fa4
+("mm/pagewalk: fix race between concurrent split and refault") which
+updated walk_pud_range() to check for walk->action == ACTION_AGAIN upon
+walk_pmd_range()'s return, causing the PUD walk to be retried.
+
+In this case this results in duplicate walk callbacks being invoked,
+which is erroneous and will break any caller that is not idempotent
+with respect to this (and waste time for those which are).  The result
+is an out-of-bounds write, triggered by a local fuzzer:
+
+[    2.272695] ==================================================================
+[    2.273471] BUG: KASAN: slab-out-of-bounds in __mincore_unmapped_range+0x14f/0x190
+[    2.274302] Write of size 1 at addr ffff888008d9b000 by task poc/106
+[    2.274966]
+[    2.275154] CPU: 0 UID: 1000 PID: 106 Comm: poc Not tainted 7.2.0-rc6-00429-ga7c7074b58d2 #55 PREEMPT(lazy)
+[    2.275159] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    2.275164] Call Trace:
+[    2.275170]  <TASK>
+[    2.275172]  dump_stack_lvl+0x53/0x70
+[    2.275200]  print_report+0xd0/0x630
+[    2.275210]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[    2.275219]  ? irqentry_exit+0xd2/0x670
+[    2.275224]  ? irqentry_exit+0xd2/0x670
+[    2.275226]  ? __virt_addr_valid+0xef/0x1a0
+[    2.275239]  ? __mincore_unmapped_range+0x14f/0x190
+[    2.275242]  kasan_report+0xce/0x100
+[    2.275245]  ? __mincore_unmapped_range+0x14f/0x190
+[    2.275248]  __mincore_unmapped_range+0x14f/0x190
+[    2.275252]  mincore_unmapped_range+0x45/0x70
+[    2.275254]  walk_pgd_range+0xafc/0xfc0
+[    2.275261]  ? __pfx_walk_pgd_range+0x10/0x10
+[    2.275264]  ? __update_load_avg_se+0x3d1/0x670
+[    2.275275]  __walk_page_range+0xc0/0x310
+[    2.275278]  ? __pfx_find_vma+0x10/0x10
+[    2.275281]  ? finish_task_switch.isra.0+0x16d/0x4f0
+[    2.275290]  walk_page_range_mm_unsafe+0x26f/0x3a0
+[    2.275293]  ? __pfx_mtree_load+0x10/0x10
+[    2.275298]  ? __pfx_walk_page_range_mm_unsafe+0x10/0x10
+[    2.275302]  ? __free_frozen_pages+0x54d/0x7e0
+[    2.275308]  __do_sys_mincore+0x132/0x380
+[    2.275311]  do_syscall_64+0xf9/0x540
+[    2.275316]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[    2.275322] RIP: 0033:0x422ccd
+[    2.275326] Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+[    2.275329] RSP: 002b:00007fffffffec18 EFLAGS: 00000287 ORIG_RAX: 000000000000001b
+[    2.275337] RAX: ffffffffffffffda RBX: 0000000000000066 RCX: 0000000000422ccd
+[    2.275339] RDX: 00000000004d0940 RSI: 0000000001000000 RDI: 00007ffff4000000
+[    2.275340] RBP: 00000000004d0940 R08: 0000000000000100 R09: 0000000000000100
+[    2.275342] R10: 0000000000000100 R11: 0000000000000287 R12: 20c49ba5e353f7cf
+[    2.275343] R13: 00000000004990d3 R14: 0000000000000000 R15: 0000000000000001
+[    2.275346]  </TASK>
+[    2.275347]
+[    2.296904] The buggy address belongs to the object at ffff888008d9b000
+[    2.296904]  which belongs to the cache sigqueue of size 80
+[    2.298151] The buggy address is located 0 bytes inside of
+[    2.298151]  allocated 80-byte region [ffff888008d9b000, ffff888008d9b050)
+[    2.299408]
+[    2.299601] The buggy address belongs to the physical page:
+[    2.300191] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8d9b
+[    2.301001] flags: 0x100000000000000(node=0|zone=1)
+[    2.301535] page_type: f5(slab)
+[    2.301884] raw: 0100000000000000 ffff888107e46780 dead000000000122 0000000000000000
+[    2.302687] raw: 0000000000000000 0000000800240024 00000000f5000000 0000000000000000
+[    2.303489] page dumped because: kasan: bad access detected
+[    2.304092]
+[    2.304276] Memory state around the buggy address:
+[    2.304801]  ffff888008d9af00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    2.305567]  ffff888008d9af80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[    2.306340] >ffff888008d9b000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.307115]                    ^
+[    2.307474]  ffff888008d9b080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.308237]  ffff888008d9b100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    2.308997] ==================================================================
+
+A specific example of this breaking things is mincore which walks an
+internal cursor data structure a byte at a time on assumption that page
+table entry callbacks are called only once for each entry.
+
+Fix the problem by resetting walk->action to ACTION_SUBTREE prior to the
+none check.
+
+The pattern also exists in walk_pud_range() so fix it there too.
+
+This issue was found through AI-based fuzzing.
+
+Link: https://lore.kernel.org/20260811161949.3879321-2-imv4bel@gmail.com
+Fixes: 3b89863c3fa4 ("mm/pagewalk: fix race between concurrent split and refault")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Max Boone <mboone@akamai.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_in.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ mm/pagewalk.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index c81bc8c4563b5..1bcb5e321467d 100644
---- a/net/ax25/ax25_in.c
-+++ b/net/ax25/ax25_in.c
-@@ -383,6 +383,24 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
+diff --git a/mm/pagewalk.c b/mm/pagewalk.c
+index 3d795ad47a897..150e641d03913 100644
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -108,6 +108,7 @@ static int walk_pmd_range(pud_t *pud, unsigned long addr, unsigned long end,
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ again:
++		walk->action = ACTION_SUBTREE;
+ 		next = pmd_addr_end(addr, end);
+ 		if (pmd_none(*pmd)) {
+ 			if (ops->pte_hole)
+@@ -117,8 +118,6 @@ static int walk_pmd_range(pud_t *pud, unsigned long addr, unsigned long end,
+ 			continue;
  		}
  
- 		ax25 = sk_to_ax25(make);
-+
-+		/*
-+		 * Get the digipeater path before the skb goes on the
-+		 * listener's queue: once queued it belongs to that queue
-+		 * and cannot simply be freed if the allocation fails.
-+		 */
-+		if (dp.ndigi && !ax25->digipeat) {
-+			ax25->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC);
-+			if (!ax25->digipeat) {
-+				kfree_skb(skb);
-+				ax25_destroy_socket(ax25);
-+				bh_unlock_sock(sk);
-+				sock_put(sk);
-+
-+				return 0;
-+			}
-+		}
-+
- 		skb_set_owner_r(skb, make);
- 		skb_queue_head(&sk->sk_receive_queue, skb);
+-		walk->action = ACTION_SUBTREE;
+-
+ 		/*
+ 		 * This implies that each ->pmd_entry() handler
+ 		 * needs to know about pmd_trans_huge() pmds
+@@ -167,6 +166,7 @@ static int walk_pud_range(p4d_t *p4d, unsigned long addr, unsigned long end,
+ 	pud = pud_offset(p4d, addr);
+ 	do {
+  again:
++		walk->action = ACTION_SUBTREE;
+ 		next = pud_addr_end(addr, end);
+ 		if (pud_none(*pud)) {
+ 			if (ops->pte_hole)
+@@ -176,8 +176,6 @@ static int walk_pud_range(p4d_t *p4d, unsigned long addr, unsigned long end,
+ 			continue;
+ 		}
  
-@@ -406,14 +424,13 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
- 	ax25->dest_addr   = src;
- 
- 	/*
--	 *	Sort out any digipeated paths.
-+	 *	Sort out any digipeated paths. A socket made from a listener
-+	 *	already has its path allocated, see above.
- 	 */
- 	if (dp.ndigi && !ax25->digipeat &&
- 	    (ax25->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC)) == NULL) {
- 		kfree_skb(skb);
- 		ax25_destroy_socket(ax25);
--		if (sk)
--			sock_put(sk);
- 		return 0;
- 	}
- 
+-		walk->action = ACTION_SUBTREE;
+-
+ 		if (ops->pud_entry)
+ 			err = ops->pud_entry(pud, addr, next, walk);
+ 		if (err)
 -- 
 2.53.0
 
