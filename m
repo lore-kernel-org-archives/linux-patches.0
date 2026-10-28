@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214312;
-	b=5RSkXTPKvjzB6KS+PDlHBi6iTV/jdvId5bONU2lJncObeNdBzngBXeeNGH253HYM1RpV
-	 jFUcCkEAHIe/30zgqwGEygHU9Wz1eWSViZGocdV2JUzIBBIMUbYA9qDMUSTrkko4k5iic
-	 GcIXIj16nf49pmsbbIrIfa4kkxF6aUWVmeGuKbJpLz+UxWsVgZagfSwhQVlKdLdGS99/L
-	 ntpKsB7jV1SmU2zue1lUgXDVQ5m6beNC4uTTBO1pp7EjCWoMdSyo4sUndj2/1HNN4eNYG
-	 az0FEd4HcJyk4uJcplOrHhxO16APlun7ssFObWtXjCEoJvQqgml2A4tMSnDDnxLpxng==
+	t=1793214315;
+	b=a8Y5sTQ5Olz/3DutfZubzF4fVDPgwUU/v4+/qxdwjyMNmiN6x2mhwoI9YBLeZym/T9aa
+	 Dksvs61CgPkK4UpSkzEvOpzxxDPr3fGowBXUtud4eWxv0DISiAJcQbukGK8NLIpMftPmP
+	 8nQlWJMB56N6qZAnjR0jcLRU3Sw4AgduiyHF3EW/ZKhx4GGbEffais9kZvIA5QX47dyDS
+	 z/xKnC36mCL2QBkME1PC9YpRALqVdeLF9fCobgLqOJlrBmMFbJvWFvf40vlA2awppwrY6
+	 x6qcXdup/qpsNtmhQr5tgwvNp44ZDkDOHWWSKgOfxeiBES6WnoTdJzFWK+xdSj5cHtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214312;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214315;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UtlzzKlGfzZCu85/DEVWkwx8wKGrQKK2bMHx77Yq+KE=;
-	b=CFZl8hHQRtykUpOwvogg876olSNEVc63G+LiowxeFA2O21jO1sWEFAm/FeeGIsm6rhP7
-	 zsaWJfiHev9wMHe65Z4zlwdxUM9hEgqyL0ASeR1IYwIk5fSAv2zBgmbqzoYJA5J60VNv2
-	 QA5c0FR9f3xGLGKSJXaqmSNaIPrSKMVGZdJIaVaL/XqN+PWdR04x9vjfNX4g6OZIxIFUy
-	 ONtw0llXgofaayLGeyhp91gHeIbQ8utsLm0EnUU0wm70iUqm/4fzWqLyvo2UrFAgQ0UN4
-	 t1TLw9fwk7xkqGtVYiFWAy38UuETPjmvv23p/OM/36XT9CH8JVKQ1chl8ZVPaA0AP9w==
+	bh=e9PuSgkhqjkRwxvKhoUF8iyZzjmZhkjrOzLEgmnugnI=;
+	b=GANH4pNb7yqXE0Vf8HbA9TDXH0gaHtWPZXwr0cd0WeFamARb9N4xNrayfbNBBYznaBll
+	 eKSpS9llqRleTcWEhiL5mHTa14O7UGXxVfdi2EqC5xmkuVK2X8/O5O988CHHSg7KCQoLd
+	 7nPS42712jsZ41yykO+EIc2h/4Kn3Mxv+xOROtSHrLu8cFYVqNwd/IGWs77Q5VQz5Zj+3
+	 bZ7op9TCAYyDDqlvYz25BcJjh89ZUrjV5yi47XKFdssG1Jl8ouax+SncNaqkVhlVN2bbX
+	 zARmgCos+6e53QGPjSsqAOwbS4Nnw/SCwjgKvLDe6Hf4chfa3c2iaGzg7kJTF0OIQgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RCA8l8xD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nVUMwy+3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658CB606BF88;
-	Wed, 28 Oct 2026 19:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278F2606BF9E;
+	Wed, 28 Oct 2026 19:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RCA8l8xD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B471A1F01825;
-	Wed, 28 Oct 2026 19:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nVUMwy+3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806971F01825;
+	Wed, 28 Oct 2026 19:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214312;
-	bh=UtlzzKlGfzZCu85/DEVWkwx8wKGrQKK2bMHx77Yq+KE=;
+	s=korg; t=1793214315;
+	bh=e9PuSgkhqjkRwxvKhoUF8iyZzjmZhkjrOzLEgmnugnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RCA8l8xD6UNHE1hebig07BcydoqUFaLoPOy7QBekrE0BjNk4rfmzpouCBoeJty/e9
-	 xCggFzMiaLPieoZRfJUTi+bR3+pD38VycsG2BklCH8lcztwQqd/ZZsxmMKvfGuPTjw
-	 Uv2dNsCicajabVMdyfHysO7EEsHLZIAW9B9Kn1SY=
+	b=nVUMwy+3yTrA28QjPGBe1djKQkhhu6/JsA05s89Vbr/h7dggN3Lo9cb1eWI1PDNja
+	 wUCpUDbZ5SifIF39ClNYUqAyfxv3IcxzgVNax8obvhBklaOq9PDzDs8M2qmvP9hZME
+	 xidDrekDcugio9xGLgwpkvinCNp+j5YWgXwgEQQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Marquardt <davemarq@linux.ibm.com>,
-	Nick Child <nnac123@linux.ibm.com>,
+	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	LePremierHomme <kwqcheii@proton.me>,
+	Marc Dionne <marc.dionne@auristor.com>,
 	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0761/1887] net: ibmveth: make veth_pool_store stop hanging
-Date: Wed, 28 Oct 2026 17:47:37 +0100
-Message-ID: <20261028170516.761605649@linuxfoundation.org>
+Subject: [PATCH 6.1 0808/1887] rxrpc: Fix recv-recv race of completed call
+Date: Wed, 28 Oct 2026 17:48:24 +0100
+Message-ID: <20261028170517.816372892@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,209 +74,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Marquardt <davemarq@linux.ibm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 053f3ff67d7feefc75797863f3d84b47ad47086f ]
+[ Upstream commit 962fb1f651c2cf2083e0c3ef53ba69e3b96d3fbc ]
 
-v2:
-- Created a single error handling unlock and exit in veth_pool_store
-- Greatly expanded commit message with previous explanatory-only text
+If a call receives an event (such as incoming data), the call gets placed
+on the socket's queue and a thread in recvmsg can be awakened to go and
+process it.  Once the thread has picked up the call off of the queue,
+further events will cause it to be requeued, and once the socket lock is
+dropped (recvmsg uses call->user_mutex to allow the socket to be used in
+parallel), a second thread can come in and its recvmsg can pop the call off
+the socket queue again.
 
-Summary: Use rtnl_mutex to synchronize veth_pool_store with itself,
-ibmveth_close and ibmveth_open, preventing multiple calls in a row to
-napi_disable.
+In such a case, the first thread will be receiving stuff from the call and
+the second thread will be blocked on call->user_mutex.  The first thread
+can, at this point, process both the event that it picked call for and the
+event that the second thread picked the call for and may see the call
+terminate - in which case the call will be "released", decoupling the call
+from the user call ID assigned to it (RXRPC_USER_CALL_ID in the control
+message).
 
-Background: Two (or more) threads could call veth_pool_store through
-writing to /sys/devices/vio/30000002/pool*/*. You can do this easily
-with a little shell script. This causes a hang.
+The first thread will return okay, but then the second thread will wake up
+holding the user_mutex and, if it sees that the call has been released by
+the first thread, it will BUG thusly:
 
-I configured LOCKDEP, compiled ibmveth.c with DEBUG, and built a new
-kernel. I ran this test again and saw:
+	kernel BUG at net/rxrpc/recvmsg.c:474!
 
-    Setting pool0/active to 0
-    Setting pool1/active to 1
-    [   73.911067][ T4365] ibmveth 30000002 eth0: close starting
-    Setting pool1/active to 1
-    Setting pool1/active to 0
-    [   73.911367][ T4366] ibmveth 30000002 eth0: close starting
-    [   73.916056][ T4365] ibmveth 30000002 eth0: close complete
-    [   73.916064][ T4365] ibmveth 30000002 eth0: open starting
-    [  110.808564][  T712] systemd-journald[712]: Sent WATCHDOG=1 notification.
-    [  230.808495][  T712] systemd-journald[712]: Sent WATCHDOG=1 notification.
-    [  243.683786][  T123] INFO: task stress.sh:4365 blocked for more than 122 seconds.
-    [  243.683827][  T123]       Not tainted 6.14.0-01103-g2df0c02dab82-dirty #8
-    [  243.683833][  T123] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-    [  243.683838][  T123] task:stress.sh       state:D stack:28096 pid:4365  tgid:4365  ppid:4364   task_flags:0x400040 flags:0x00042000
-    [  243.683852][  T123] Call Trace:
-    [  243.683857][  T123] [c00000000c38f690] [0000000000000001] 0x1 (unreliable)
-    [  243.683868][  T123] [c00000000c38f840] [c00000000001f908] __switch_to+0x318/0x4e0
-    [  243.683878][  T123] [c00000000c38f8a0] [c000000001549a70] __schedule+0x500/0x12a0
-    [  243.683888][  T123] [c00000000c38f9a0] [c00000000154a878] schedule+0x68/0x210
-    [  243.683896][  T123] [c00000000c38f9d0] [c00000000154ac80] schedule_preempt_disabled+0x30/0x50
-    [  243.683904][  T123] [c00000000c38fa00] [c00000000154dbb0] __mutex_lock+0x730/0x10f0
-    [  243.683913][  T123] [c00000000c38fb10] [c000000001154d40] napi_enable+0x30/0x60
-    [  243.683921][  T123] [c00000000c38fb40] [c000000000f4ae94] ibmveth_open+0x68/0x5dc
-    [  243.683928][  T123] [c00000000c38fbe0] [c000000000f4aa20] veth_pool_store+0x220/0x270
-    [  243.683936][  T123] [c00000000c38fc70] [c000000000826278] sysfs_kf_write+0x68/0xb0
-    [  243.683944][  T123] [c00000000c38fcb0] [c0000000008240b8] kernfs_fop_write_iter+0x198/0x2d0
-    [  243.683951][  T123] [c00000000c38fd00] [c00000000071b9ac] vfs_write+0x34c/0x650
-    [  243.683958][  T123] [c00000000c38fdc0] [c00000000071bea8] ksys_write+0x88/0x150
-    [  243.683966][  T123] [c00000000c38fe10] [c0000000000317f4] system_call_exception+0x124/0x340
-    [  243.683973][  T123] [c00000000c38fe50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec
-    ...
-    [  243.684087][  T123] Showing all locks held in the system:
-    [  243.684095][  T123] 1 lock held by khungtaskd/123:
-    [  243.684099][  T123]  #0: c00000000278e370 (rcu_read_lock){....}-{1:2}, at: debug_show_all_locks+0x50/0x248
-    [  243.684114][  T123] 4 locks held by stress.sh/4365:
-    [  243.684119][  T123]  #0: c00000003a4cd3f8 (sb_writers#3){.+.+}-{0:0}, at: ksys_write+0x88/0x150
-    [  243.684132][  T123]  #1: c000000041aea888 (&of->mutex#2){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x154/0x2d0
-    [  243.684143][  T123]  #2: c0000000366fb9a8 (kn->active#64){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x160/0x2d0
-    [  243.684155][  T123]  #3: c000000035ff4cb8 (&dev->lock){+.+.}-{3:3}, at: napi_enable+0x30/0x60
-    [  243.684166][  T123] 5 locks held by stress.sh/4366:
-    [  243.684170][  T123]  #0: c00000003a4cd3f8 (sb_writers#3){.+.+}-{0:0}, at: ksys_write+0x88/0x150
-    [  243.684183][  T123]  #1: c00000000aee2288 (&of->mutex#2){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x154/0x2d0
-    [  243.684194][  T123]  #2: c0000000366f4ba8 (kn->active#64){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x160/0x2d0
-    [  243.684205][  T123]  #3: c000000035ff4cb8 (&dev->lock){+.+.}-{3:3}, at: napi_disable+0x30/0x60
-    [  243.684216][  T123]  #4: c0000003ff9bbf18 (&rq->__lock){-.-.}-{2:2}, at: __schedule+0x138/0x12a0
+Fix this by just dequeuing the call and ignoring it if it is seen to be
+already released.  We can't tell userspace about it anyway as the user call
+ID has become stale.
 
->From the ibmveth debug, two threads are calling veth_pool_store, which
-calls ibmveth_close and ibmveth_open. Here's the sequence:
-
-  T4365             T4366
-  ----------------- ----------------- ---------
-  veth_pool_store   veth_pool_store
-                    ibmveth_close
-  ibmveth_close
-  napi_disable
-                    napi_disable
-  ibmveth_open
-  napi_enable                         <- HANG
-
-ibmveth_close calls napi_disable at the top and ibmveth_open calls
-napi_enable at the top.
-
-https://docs.kernel.org/networking/napi.html]] says
-
-  The control APIs are not idempotent. Control API calls are safe
-  against concurrent use of datapath APIs but an incorrect sequence of
-  control API calls may result in crashes, deadlocks, or race
-  conditions. For example, calling napi_disable() multiple times in a
-  row will deadlock.
-
-In the normal open and close paths, rtnl_mutex is acquired to prevent
-other callers. This is missing from veth_pool_store. Use rtnl_mutex in
-veth_pool_store fixes these hangs.
-
-Signed-off-by: Dave Marquardt <davemarq@linux.ibm.com>
-Fixes: 860f242eb534 ("[PATCH] ibmveth change buffer pools dynamically")
-Reviewed-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250402154403.386744-1-davemarq@linux.ibm.com
+Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: LePremierHomme <kwqcheii@proton.me>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20250717074350.3767366-3-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 39 +++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 12 deletions(-)
+ net/rxrpc/recvmsg.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 468b3ac118af0..69e8233920a1e 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1848,18 +1848,22 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
- 	long value = simple_strtol(buf, NULL, 10);
- 	long rc;
- 
-+	rtnl_lock();
+diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
+index 99c679f40e7b6..870fab693653f 100644
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -546,6 +546,15 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 	write_lock_bh(&rx->recvmsg_lock);
+ 	l = rx->recvmsg_q.next;
+ 	call = list_entry(l, struct rxrpc_call, recvmsg_link);
 +
- 	if (attr == &veth_active_attr) {
- 		if (value && !pool->active) {
- 			if (netif_running(netdev)) {
- 				if (ibmveth_alloc_buffer_pool(pool)) {
- 					netdev_err(netdev,
- 						   "unable to alloc pool\n");
--					return -ENOMEM;
-+					rc = -ENOMEM;
-+					goto unlock_err;
- 				}
- 				pool->active = 1;
- 				ibmveth_close(netdev);
--				if ((rc = ibmveth_open(netdev)))
--					return rc;
-+				rc = ibmveth_open(netdev);
-+				if (rc)
-+					goto unlock_err;
- 			} else {
- 				pool->active = 1;
- 			}
-@@ -1879,48 +1883,59 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
- 
- 			if (i == IBMVETH_NUM_BUFF_POOLS) {
- 				netdev_err(netdev, "no active pool >= MTU\n");
--				return -EPERM;
-+				rc = -EPERM;
-+				goto unlock_err;
- 			}
- 
- 			if (netif_running(netdev)) {
- 				ibmveth_close(netdev);
- 				pool->active = 0;
--				if ((rc = ibmveth_open(netdev)))
--					return rc;
-+				rc = ibmveth_open(netdev);
-+				if (rc)
-+					goto unlock_err;
- 			}
- 			pool->active = 0;
- 		}
- 	} else if (attr == &veth_num_attr) {
- 		if (value <= 0 || value > IBMVETH_MAX_POOL_COUNT) {
--			return -EINVAL;
-+			rc = -EINVAL;
-+			goto unlock_err;
- 		} else {
- 			if (netif_running(netdev)) {
- 				ibmveth_close(netdev);
- 				pool->size = value;
--				if ((rc = ibmveth_open(netdev)))
--					return rc;
-+				rc = ibmveth_open(netdev);
-+				if (rc)
-+					goto unlock_err;
- 			} else {
- 				pool->size = value;
- 			}
- 		}
- 	} else if (attr == &veth_size_attr) {
- 		if (value <= IBMVETH_BUFF_OH || value > IBMVETH_MAX_BUF_SIZE) {
--			return -EINVAL;
-+			rc = -EINVAL;
-+			goto unlock_err;
- 		} else {
- 			if (netif_running(netdev)) {
- 				ibmveth_close(netdev);
- 				pool->buff_size = value;
--				if ((rc = ibmveth_open(netdev)))
--					return rc;
-+				rc = ibmveth_open(netdev);
-+				if (rc)
-+					goto unlock_err;
- 			} else {
- 				pool->buff_size = value;
- 			}
- 		}
- 	}
-+	rtnl_unlock();
- 
- 	/* kick the interrupt handler to allocate/deallocate pools */
- 	ibmveth_interrupt(netdev->irq, netdev);
- 	return count;
++	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
++		list_del_init(&call->recvmsg_link);
++		write_unlock_bh(&rx->recvmsg_lock);
++		release_sock(&rx->sk);
++		rxrpc_put_call(call, rxrpc_call_put);
++		goto try_again;
++	}
 +
-+unlock_err:
-+	rtnl_unlock();
-+	return rc;
- }
+ 	if (!(flags & MSG_PEEK))
+ 		list_del_init(&call->recvmsg_link);
+ 	else
+@@ -568,8 +577,11 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
  
+ 	release_sock(&rx->sk);
  
+-	if (test_bit(RXRPC_CALL_RELEASED, &call->flags))
+-		BUG();
++	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
++		mutex_unlock(&call->user_mutex);
++		rxrpc_put_call(call, rxrpc_call_put);
++		goto try_again;
++	}
+ 
+ 	if (test_bit(RXRPC_CALL_HAS_USERID, &call->flags)) {
+ 		if (flags & MSG_CMSG_COMPAT) {
 -- 
 2.53.0
 
