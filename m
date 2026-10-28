@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210569;
-	b=HKA7HbEsfp+nq051PqdA64HwKqjaBFHjdDPPttfhdQiT9x5F+SfIundWRUw8oX/K6PWx
-	 +g0xA3qDGl921HO0I8U8ilHWieYkDwxqKmRKJZAoQb20/rALkGciTMRjvp6yCjCGFg/bS
-	 iaPwXe0Ulk+SfRD4pTqSAR/rAL3z71k717iTsF3nRzhiWAils+y0bms6Zeya8S3aRyHiO
-	 prrL6AATI10y4FrYZJVe18LuSJfJ1nZK/KLpsR54Pw5GN7/Sb2uB104+ks9HESGbrkKpl
-	 bpg8a8XyqSkse5Wl+HwugFRgGqshSrEGbfkK7ZCDj9oAFCc5MV6QsF/3cPDrEzmsFTg==
+	t=1793210572;
+	b=EZtwhqVVBV7uQlV93lObgcI6c+1mw/Jk/80wvah/7BtBi8ynx5Gsl3IvjyUBU9HhtOux
+	 B8tIkgtXeLEKg7vENwtoa4QIUc1BRnBcRsyoksNnUzexySNkZa9IKDqHU3pptEpdySwmq
+	 HLOQRCIw0FTlWsMI1el3CpAY1HL0ZZd3dSXG9bovAaNBEg2s7/oIf8a6+a3zWuEzkcIoZ
+	 pRC7QYGvlD37h0rFNDBZUlgiLbUn4lVnO22rE3Gk3GxWPT6iZ2WAgdS81Kjtkti4qZQdq
+	 bDHyMvFpjAzcDvuc5qdQXxziVIipvPy4xJf3NXvdSlPy8yHDKrlLd2SSQpgmMZldE5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=teGCMIH99Vwq8BFhpNxS1m5haPuMTkTyun91ampDaYs=;
-	b=OKHodCWUoGio0mm23Baka7alBaVXbTWsv0NFqG6vBc3uu1pXAPR43eQA6vkbC4LUj8KM
-	 Rvf8XJXEKZxnb2sl5WCSSiAv+4OnaZqk4yAYXntdLxsmhrUKJNhl9aB87hUHPCTnPw6v2
-	 nkdwPVUm4bYc0/fOlrZ7h9Wsmh2sbu7MCwniY2XwyDf1ae/gS6EU/JlsqLkqocn2wYM46
-	 oE4Ilvg59cLARB44gWvefxzL7t9Rxv6fVn/DfbiOcWqu1QxCE9A1orHHETmydpASfJA3w
-	 thdbDEn3i4RbhyFhZW5wJl+aDlgrUnkFO4wjcvzrYVSG+pV2S8bAsXxe/UJy5htNEeA==
+	bh=ffO4710DpFkbcaZQARZYAeEOgZC8pUd8eMgt44eySUM=;
+	b=FXe24RmSbV9MhSzh9vVXN9xvGoi6i349vPFWAQhXM7GCi1mdgccu8xh7vsEcd0TLBF8H
+	 JJzkfOBElmlQMLodFO1wr8LjDZTOabczhh5cvJ02ykTV+BHNuOXMBHzoRdh+rNnNsKbUs
+	 YjHlf36K0SgX1r4nkEr4mSxsmNN3nu3ZVqxGXhDilTEk1dOlcYCzTBAN+MSCd+StbEsoa
+	 bOoRCf7pjCbmn2VJ7A6yvFnctjw67C6647X6j3saxpKdndYxvrlH52FexVFDz7Q8xs+e8
+	 lGfgRBKn6yzIVMA9Sy3aC8w453MiW6nUSclwvQB+CfJk8+vGF6LCNRVUHb77DwAmZsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxNppKJq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVPu0z2F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4C1606A31A;
-	Wed, 28 Oct 2026 18:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55303606A31D;
+	Wed, 28 Oct 2026 18:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxNppKJq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C699A1F01825;
-	Wed, 28 Oct 2026 18:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVPu0z2F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66CE1F01825;
+	Wed, 28 Oct 2026 18:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210569;
-	bh=teGCMIH99Vwq8BFhpNxS1m5haPuMTkTyun91ampDaYs=;
+	s=korg; t=1793210572;
+	bh=ffO4710DpFkbcaZQARZYAeEOgZC8pUd8eMgt44eySUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nxNppKJqXnynIbmaqK21Oqw6yjBMFSl/+NIQSNQjkxaMKrojqDytmHi6PdTntbepf
-	 I0YSYYkoZwlj46tS2z2JIMYZ3B2RwARUz7CXjQet1Ywp8DFahquACvOcOjJZTfiTjh
-	 1jXVYMHkaBJiZmdMgDRxCsE5g+ecF7AClFGJDxeQ=
+	b=kVPu0z2FdaPaDEev41HdI09ccARnwKEMgIZ76SsSVMrzibE+v/kAXsxiPAVPcyHAr
+	 GXoxZrwljddO/X9dDoWzSAzlsjUnRmrTxmT7fj8VVkbEiJyzKw5jasIL7pF63aVYiG
+	 ai9hDj0Cq5UF6XKzusLcKvFOS5kjbmh6Z4iafOwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/571] mmc: via-sdmmc: cancel card-detect work on remove
-Date: Wed, 28 Oct 2026 17:53:38 +0100
-Message-ID: <20261028170009.710843401@linuxfoundation.org>
+Subject: [PATCH 5.15 036/571] ALSA: usb-audio: Optimize the copy of packet sizes for implicit fb handling
+Date: Wed, 28 Oct 2026 17:53:03 +0100
+Message-ID: <20261028170008.882129667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,50 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 57e5d877f898d5e5c9d672a77bb6bdd24f0d9bf5 ]
+[ Upstream commit 36adb51ac0b19edb32ffeea3fe66b174bad25ead ]
 
-Disabling the device interrupt and freeing the IRQ prevents new card-detect
-work from being queued, but carddet_work already queued by the handler can
-still run after via_sd_remove() returns. via_sdc_card_detect() recovers the
-host through container_of() and dereferences its MMIO base; once remove()
-returns the host can be freed, so that work would touch freed memory.
+We did manual copies over loop for the packet data update of the
+implicit feedback, but this can be optimized with a simple memcpy().
 
-Cancel carddet_work after freeing the IRQ and before cancelling
-finish_bh_work, which the card-detect handler can also queue. carddet_work
-can re-enable the interrupt through via_reset_pcictrl(); mask it again
-afterwards.
+Along with it, change the data type of snd_usb_packet_info struct to
+align with other (from uint32_t to int).
 
-This issue was found by an in-house static analysis tool and confirmed by
-manual code review.
+No functional changes but only code optimizations.
 
-Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-[ adjusted context to retain del_timer_sync() instead of timer_delete_sync(). ]
+Link: https://patch.msgid.link/20260216141209.1849200-3-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 76a986c980bb ("ALSA: usb-audio: Clamp implicit feedback packet count to URB capacity")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/via-sdmmc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/usb/card.h     | 2 +-
+ sound/usb/endpoint.c | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
-index 5bf508b6db0e3..3ae8f005f8fe0 100644
---- a/drivers/mmc/host/via-sdmmc.c
-+++ b/drivers/mmc/host/via-sdmmc.c
-@@ -1208,6 +1208,10 @@ static void via_sd_remove(struct pci_dev *pcidev)
+diff --git a/sound/usb/card.h b/sound/usb/card.h
+index 6ec95b2edf863..ac5505ce046de 100644
+--- a/sound/usb/card.h
++++ b/sound/usb/card.h
+@@ -89,7 +89,7 @@ struct snd_usb_endpoint {
+ 	struct snd_urb_ctx urb[MAX_URBS];
  
- 	free_irq(pcidev->irq, sdhost);
+ 	struct snd_usb_packet_info {
+-		uint32_t packet_size[MAX_PACKS_HS];
++		int packet_size[MAX_PACKS_HS];
+ 		int packets;
+ 	} next_packet[MAX_URBS];
+ 	unsigned int next_packet_head;	/* ring buffer offset to read */
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index e995b7ab88b19..aab0ea614f4a8 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -477,7 +477,7 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
+ 		unsigned long flags;
+ 		struct snd_usb_packet_info *packet;
+ 		struct snd_urb_ctx *ctx = NULL;
+-		int err, i;
++		int err;
  
-+	cancel_work_sync(&sdhost->carddet_work);
-+	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
-+	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
-+
- 	del_timer_sync(&sdhost->timer);
+ 		spin_lock_irqsave(&ep->lock, flags);
+ 		if ((!implicit_fb || ep->next_packet_queued > 0) &&
+@@ -497,8 +497,8 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
+ 		/* copy over the length information */
+ 		if (implicit_fb) {
+ 			ctx->packets = packet->packets;
+-			for (i = 0; i < packet->packets; i++)
+-				ctx->packet_size[i] = packet->packet_size[i];
++			memcpy(ctx->packet_size, packet->packet_size,
++			       packet->packets * sizeof(packet->packet_size[0]));
+ 		}
  
- 	tasklet_kill(&sdhost->finish_tasklet);
+ 		/* call the data handler to fill in playback data */
 -- 
 2.53.0
 
