@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207807;
-	b=V81I9clx8A/dDEDGyYdzkFLu4XMYUnVbm0ol9Qae1HXcaCG3hfhZs7usYFPoRNPyFGAO
-	 MXkszbI/FY+QizlotN8f7GTcqkvogkR1DpzayOctqKgI1tgdQa7JyE5zdeGmu98XZv6bV
-	 bmvStq9XxsqLJrz17mLZIbRqDCrGss5K7B4linPhRGLqZ6TjmJd3aEoIH+C33QV09/I0Y
-	 y3KaIGdmXjIAlc+5rKeINW6f/T9/9HS75ty3nJa4j+HQURIEwbfTyroeEqv1JdnAaZAID
-	 kojMBWr/Ql+0eWTQWtGZIT4/R9ftDTydMCLQfkx0aTJBUDoRTEKbHz9yQWiphP29gOg==
+	t=1793207810;
+	b=IqU7oTYIW1InToVIE11jQW89+xRFDfueQf5q7mSpfIoZpL6bh6TuN5ARyfNBHc3uer32
+	 VHGa7Z7Ry+manDBGmA9FABJlNPh8AI4OybVu8fgafuB3CmKcU62s6w4WU9bmf+nGcNNZz
+	 1NKUwxzrw7hBm41Glnzs1Udrc0keKaUQjoJ1hNUttsEjmfThe6A82DdI+qRmw9noMu55R
+	 at5r5fgyRxC/wus+GXiWQ0iCqULyJXivJzEZQ01BuQHHT79YMJDOuVCc2eOHB+5J2uGzm
+	 udpBGOnjmpipjBFcJtx6oThPPhmSdfTMRx6XhbGND5WyPIIC6Nw1OH3aSk9PHZxDOMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207810;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GNDGkzf/yyLxUwC12Jc5OId9kCSj7k6CowNcI6xA5lY=;
-	b=dEAbo/kyE8Gex7PmseN2i58Xbs9dIPcZADepvcICimnh//1fl2tGJ3JSb4Yk3lqKmVoQ
-	 9I4ttXQuGw6Raggz66j6FLOUtA2D3C7Gz96aAF90SXDmp2U/JTtA51KYQMnVWQFOZZxJj
-	 M56FNHk9rRpfIl8U1xm4kCCmcObL7j6rOmW7P6ifLkYhweaUw7wLgW4MCyKos/owu8Wu/
-	 WbLEfQukdRv0d+izWr88FvwWK4at3oLICL8A4D3HseuliUb90ocg6zrl1RXmUo1E27Dw6
-	 jh5hz/dPx+0QXlHGdYgZ5y1PO28R88jWT013DJ+7P6b741K0YL44VkE0vr1w19S8hFQ==
+	bh=BVgCw1SmogznHiRiFS9hxyzGtKfUSi0YdXA9wsqcp+Q=;
+	b=gXbocAPphswEyr0z00O+TYYAPnemBnIK2n8G9YiMprtP2PQm1cBjdBjI4A7aXJGE7ssn
+	 Kfwiw1L8fG0EIYFwHGKdXNqjqX29DGcnEPnDN8j2Sop+Y5OUfRsPejh2xzoswBBz9xSPh
+	 Zgl1gK29a+cACyrEt3pOwl+ArmxzZcFN0+lN+hYnlBpdV0rt2AFmTEkdEItQJ7m603q4p
+	 ygj0RTol9s7ELxUCpRLbXGAfkQYWEAYpM0HvCy/eDN//uj8qhEOWrJPJHsFD3q4YcQOlI
+	 w8EnfCv6Xp27b6+WSeRnIlX3a/UTKyyo419439gO9QRVZLLBaBrHt0VQmk2GBqNW1dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwrRm4Ti;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+EkRw74;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43E5606A31A;
-	Wed, 28 Oct 2026 17:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE6A606A31A;
+	Wed, 28 Oct 2026 17:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwrRm4Ti
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483E21F01825;
-	Wed, 28 Oct 2026 17:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+EkRw74
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199701F01825;
+	Wed, 28 Oct 2026 17:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207806;
-	bh=GNDGkzf/yyLxUwC12Jc5OId9kCSj7k6CowNcI6xA5lY=;
+	s=korg; t=1793207809;
+	bh=BVgCw1SmogznHiRiFS9hxyzGtKfUSi0YdXA9wsqcp+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RwrRm4TizP8ZY+8pjqcMYZI+3WCIhSKcx2nYIy14DJSKeTJBpo2wwod+LvYGRapRw
-	 GEbFttJPcmds0PmdyMJhcftG/VbQx4uNFzE4QXb4BfZEHAdJkxLyJMWhTShlbWUTpK
-	 pjgUlZFSJA+pCawnG8rvGc+5mizv/k3lLbR/R4/0=
+	b=V+EkRw74sDc8/Cb7Nyl9ZW3DclLpPD1axAg8Zf88F6ahR+zn4yaI1W+zWykpKipHp
+	 ly5231Ct5nkBO+EUko6SKQB8Q33BEfTAqKpBKcVJDHApueShKhRM8ORslnKaG7oDEQ
+	 BaouOYrqLuuDBlQ7khaUvAEXgbuIyFp3f5T/S5OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Shivers <jshivers@redhat.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 129/247] smb: client: fix multiuser mount with krb5
-Date: Wed, 28 Oct 2026 17:58:52 +0100
-Message-ID: <20261028165950.459310896@linuxfoundation.org>
+	Enrico Zanda <e.zanda1@gmail.com>,
+	Andi Shyti <andi@smida.it>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 147/247] i2c: viai2c-wmt: Replace dev_err() with dev_err_probe() in probe function
+Date: Wed, 28 Oct 2026 17:59:10 +0100
+Message-ID: <20261028165950.892608887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -72,94 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Enrico Zanda <e.zanda1@gmail.com>
 
-commit 69499395867332364ed4ac8b546537eb3bab6ebb upstream.
+[ Upstream commit 3b7d8d151a7ebebc5257766110c102ab173b5844 ]
 
-Customer reported that they could no longer mount their SMB shares
-with multiuser mount option and krb5.  Turned out that the client
-wasn't duplicating username option when creating multiuser
-connections, therefore failing to retrieve credentials as
-cifs.upcall(8) couldn't find them in keytab.
+This simplifies the code while improving log.
 
-Fix this by duplicating username option (if set) from original fs
-context before creating multiuser connections with krb5.
-
-Reproducer:
-
-  ```
-  $ ktutil
-  ktutil:  add_entry -password -p testuser -k 1 -e aes256-cts
-  Password for testuser@ZELDA.TEST:
-  ktutil:  write_kt /etc/krb5.keytab
-  ktutil:  quit
-  $ klist -ke
-  Keytab name: FILE:/etc/krb5.keytab
-  KVNO Principal
-   ---- ----------------------------------------------------------------
-     1 testuser@ZELDA.TEST (aes256-cts-hmac-sha1-96)
-  $ mount.cifs //w22-root2/scratch /mnt/1 -o \
-      	uid=1000,sec=krb5,username=testuser@ZELDA.TEST,multiuser
-  mount error(13): Permission denied
-  Refer to the mount.cifs(8) manual page (e.g. man mount.cifs) and
-  kernel log messages (dmesg)
-  ```
-
-Reported-by: Jacob Shivers <jshivers@redhat.com>
-Fixes: 12b4c5d98cd7 ("smb: client: fix krb5 mount with username option")
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Enrico Zanda <e.zanda1@gmail.com>
+Link: https://lore.kernel.org/r/20250513210246.528370-2-e.zanda1@gmail.com
+Signed-off-by: Andi Shyti <andi@smida.it>
+Stable-dep-of: aaabefc79b0f ("i2c: viai2c-wmt: Fix clock leak in wmt_i2c_probe()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-viai2c-wmt.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4151,14 +4151,25 @@ cifs_setup_session(const unsigned int xi
- 	return rc;
- }
+diff --git a/drivers/i2c/busses/i2c-viai2c-wmt.c b/drivers/i2c/busses/i2c-viai2c-wmt.c
+index 3415683dab91c..133dc41fe387b 100644
+--- a/drivers/i2c/busses/i2c-viai2c-wmt.c
++++ b/drivers/i2c/busses/i2c-viai2c-wmt.c
+@@ -44,16 +44,13 @@ static int wmt_i2c_reset_hardware(struct viai2c *i2c)
+ 	int err;
  
--static int
--cifs_set_vol_auth(struct smb3_fs_context *ctx, struct cifs_ses *ses)
-+static int set_fs_context_auth(struct smb3_fs_context *ctx,
-+			       struct cifs_ses *ses)
- {
- 	ctx->sectype = ses->sectype;
+ 	err = clk_prepare_enable(i2c->clk);
+-	if (err) {
+-		dev_err(i2c->dev, "failed to enable clock\n");
+-		return err;
+-	}
++	if (err)
++		return dev_err_probe(i2c->dev, err, "failed to enable clock\n");
  
--	/* krb5 is special, since we don't need username or pw */
--	if (ctx->sectype == Kerberos)
-+	/*
-+	 * krb5 is special as we might need to pass username (passwordless) down
-+	 * to cifs.upcall(8) for keytab.
-+	 */
-+	if (ctx->sectype == Kerberos) {
-+		if (ses->user_name && ses->user_name[0]) {
-+			ctx->username = kstrndup(ses->user_name,
-+						 CIFS_MAX_USERNAME_LEN,
-+						 GFP_KERNEL);
-+			if (!ctx->username)
-+				return -ENOMEM;
-+		}
- 		return 0;
-+	}
+ 	err = clk_set_rate(i2c->clk, 20000000);
+ 	if (err) {
+-		dev_err(i2c->dev, "failed to set clock = 20Mhz\n");
+ 		clk_disable_unprepare(i2c->clk);
+-		return err;
++		return dev_err_probe(i2c->dev, err, "failed to set clock = 20Mhz\n");
+ 	}
  
- 	return cifs_set_cifscreds(ctx, ses);
- }
-@@ -4197,7 +4208,7 @@ cifs_construct_tcon(struct cifs_sb_info
- 	ctx->witness = master_tcon->use_witness;
- 	ctx->dfs_root_ses = master_tcon->ses->dfs_root_ses;
+ 	writew(0, i2c->base + VIAI2C_REG_CR);
+@@ -121,10 +118,9 @@ static int wmt_i2c_probe(struct platform_device *pdev)
+ 				"failed to request irq %i\n", i2c->irq);
  
--	rc = cifs_set_vol_auth(ctx, master_tcon->ses);
-+	rc = set_fs_context_auth(ctx, master_tcon->ses);
- 	if (rc) {
- 		tcon = ERR_PTR(rc);
- 		goto out;
+ 	i2c->clk = of_clk_get(np, 0);
+-	if (IS_ERR(i2c->clk)) {
+-		dev_err(&pdev->dev, "unable to request clock\n");
+-		return PTR_ERR(i2c->clk);
+-	}
++	if (IS_ERR(i2c->clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(i2c->clk),
++				     "unable to request clock\n");
+ 
+ 	err = of_property_read_u32(np, "clock-frequency", &clk_rate);
+ 	if (!err && clk_rate == I2C_MAX_FAST_MODE_FREQ)
+@@ -139,10 +135,8 @@ static int wmt_i2c_probe(struct platform_device *pdev)
+ 	adap->dev.of_node = pdev->dev.of_node;
+ 
+ 	err = wmt_i2c_reset_hardware(i2c);
+-	if (err) {
+-		dev_err(&pdev->dev, "error initializing hardware\n");
++	if (err)
+ 		return err;
+-	}
+ 
+ 	err = i2c_add_adapter(adap);
+ 	if (err)
+-- 
+2.53.0
+
 
 
