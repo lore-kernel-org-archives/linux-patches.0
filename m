@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217218;
-	b=0WOsOdePL4TINmZnq/SuLEliQmF6QYsK4GTvUpW2nn2FPtj5IW3Ei1tum1BMeQgnefby
-	 //b7RuFZarlD0KEmjfBs7FKeVHslQ+rcKXORz+dE+bZWLFgWctENDdholFxqjPMPkr/hq
-	 8T+tTXRVFtzcd04ZoWTg8IfcZ+vYSH+sijFeCmtSVKFd33XBjq/xnji08b/qQ3kg8OWXs
-	 3tX+erAlCzxhm9w7wsodP3JEpLq/DC8eeqk5ZzN0+1lgahehiNcF7IvfQNz8dRGk96ldO
-	 QhXvwVAwN8Advf5gLL5rbchwwxK0DouUBocuvVXPJ5QX0N5tG/6HuoDTcXjDmdadkTQ==
+	t=1793217221;
+	b=gJn5dAWAoboIECnodIesEdXBz/LyxwmCqYHejT2CNOCYEJ1PKc9BSbVrdBH/sovYk47X
+	 0T7mBgrdzrFgEELF7ZC5Sn0rbDUx/56zI++cQeQx83G3gtyD6BQmgHugPs/01wsERyM1Y
+	 FMFvnF0oI0x9omsmfs4MJJrv0KVbxi/yBGWjyDnzL4uzdsKKngZjElN0KyLwbWEWl4zHK
+	 zKdk8+8ukRuFc5r5d2h5wbizBY1vXkVcq343XfxkAF7iWpuZPPrX7sVCfE22BjwG3uNXG
+	 zk5XYUBnbnOY16b9y6YP2B+K7p9hi6XYMSJJObXAUYz/hUMKhNclzz+DNg/CeOuhZFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A8cmwkFQbH5TaF7ti87W704ik38sB1Y/Sjl02vFx4sk=;
-	b=Lo6mtkvXwEbFHWYFKwE34UDDy5esCqD7JHNLChsE+/c36/BqfEKT+RPkl4yIifNbyWTh
-	 6Q0l1jr/DVgnYXNQxh4ReHDDs5Ecrnww7xJkInNu773zT+2M/thp/28m9eRDD2e2cs/EZ
-	 /dcy0FbwxcxI+8MzhSDoL/Kj44THSxjd09hx0PUZB/etYxiKFQ4KFS1vjsBQvjIBbrtRe
-	 fFIqJXY0Q4PQC8tcZNbSmeiORBp6OFYIBs+T0cuwiT5F/9td47Qd8J4RJ/tqaG8s1QD2v
-	 edPw09kC0tzOm58bG/UlIiWN0sIVZ72KtLjMJXBekFhbU+y+6QDMObSUQgfedKQ/xJw==
+	bh=ysYu5yYTjEhNPZry+mb3JVMURHIz4Yg7tSDeYgWUX6o=;
+	b=IJsfmlZ0/TVNpcS49eGtBKQBHNM0NCmHcRT+u6coIxquXbkybY7bHyMWJ/dmd3f05UuB
+	 dw1A2xj+0X2MxrjwRYJvWbg/oYVG5YxcwvPULfjDEHN3OubCvvl7gYy49YGDmCImGuJM6
+	 nSvItzPPt1RqGbgqU9wnkNK0i/QDLd7pBmvgVPstb0EE4w4/U+g+BXvCgn4tC0YMkpOg2
+	 ocqGeUlbejdjpC28ySiIUYngx2PFvSGrazR1zc56KP05L6RKDeDN9rHjuf8hJx1VhbAf2
+	 N3vLqCzLwESRU+95D95vjE/DwfQy+Ej9DGDDxw/DebKuGzT4u0IXwzBSQQkMqYF1+7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="TOOR6K/T";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bNR7IH89;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E349606A31E;
-	Wed, 28 Oct 2026 19:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7B2606A31A;
+	Wed, 28 Oct 2026 19:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TOOR6K/T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D72B1F01825;
-	Wed, 28 Oct 2026 19:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bNR7IH89
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FB71F01825;
+	Wed, 28 Oct 2026 19:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217218;
-	bh=A8cmwkFQbH5TaF7ti87W704ik38sB1Y/Sjl02vFx4sk=;
+	s=korg; t=1793217221;
+	bh=ysYu5yYTjEhNPZry+mb3JVMURHIz4Yg7tSDeYgWUX6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TOOR6K/TwxbqiUJr/lX81Xfj8VimxpnKJg922GP25F2kh95fcwTfFLoDyQ0GMmbd8
-	 /sM3psxtsTSXuYnT+GGylNiv+AyKDx4j5In+FuAeLuSR1CZBXL4RWFqI+FJ3NZ5vZv
-	 oCxCCEu76Pk3IlnORBZu5Tvp5c7HnBMSvOO+Xf3s=
+	b=bNR7IH89rPeiTtgFOKoAgqtgMCmtAi7vm57Q56YfMDhwhXjSZCiTqZ4miulJS8bG2
+	 pulcqd/0qcxHqkTQLUF8Nsjr3vk2RlpX69eYthMOvjZRXEWuDthw0XIn2tlK+2X0ae
+	 q4rlgfGaCyDHJGfhBvM0OjINGiRlXQp0HFAXh0lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1989ee16d94720836244@syzkaller.appspotmail.com,
-	Cong Wang <cong.wang@bytedance.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1826/1887] bpf: Fix a potential use-after-free in bpf_link_free()
-Date: Wed, 28 Oct 2026 18:05:22 +0100
-Message-ID: <20261028170540.995863340@linuxfoundation.org>
+Subject: [PATCH 6.1 1827/1887] f2fs: fix node_cnt race between extent node destroy and writeback
+Date: Wed, 28 Oct 2026 18:05:23 +0100
+Message-ID: <20261028170541.017998053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,72 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-[ Upstream commit 2884dc7d08d98a89d8d65121524bb7533183a63a ]
+[ Upstream commit ed78aeebef05212ef7dca93bd931e4eff67c113f ]
 
-After commit 1a80dbcb2dba, bpf_link can be freed by
-link->ops->dealloc_deferred, but the code still tests and uses
-link->ops->dealloc afterward, which leads to a use-after-free as
-reported by syzbot. Actually, one of them should be sufficient, so
-just call one of them instead of both. Also add a WARN_ON() in case
-of any problematic implementation.
+f2fs_destroy_extent_node() does not set FI_NO_EXTENT before clearing
+extent nodes. When called from f2fs_drop_inode() with I_SYNC set,
+concurrent kworker writeback can insert new extent nodes into the same
+extent tree, racing with the destroy and triggering f2fs_bug_on() in
+__destroy_extent_node(). The scenario is as follows:
 
-Fixes: 1a80dbcb2dba ("bpf: support deferring bpf_link dealloc to after RCU grace period")
-Reported-by: syzbot+1989ee16d94720836244@syzkaller.appspotmail.com
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20240602182703.207276-1-xiyou.wangcong@gmail.com
+drop inode                            writeback
+ - iput
+  - f2fs_drop_inode  // I_SYNC set
+   - f2fs_destroy_extent_node
+    - __destroy_extent_node
+     - while (node_cnt) {
+        write_lock(&et->lock)
+        __free_extent_tree
+        write_unlock(&et->lock)
+                                       - __writeback_single_inode
+                                        - f2fs_outplace_write_data
+                                         - f2fs_update_read_extent_cache
+                                          - __update_extent_tree_range
+                                           // FI_NO_EXTENT not set,
+                                           // insert new extent node
+       } // node_cnt == 0, exit while
+     - f2fs_bug_on(node_cnt)  // node_cnt > 0
+
+Additionally, __update_extent_tree_range() only checks FI_NO_EXTENT for
+EX_READ type, leaving EX_BLOCK_AGE updates completely unprotected.
+
+This patch set FI_NO_EXTENT under et->lock in __destroy_extent_node(),
+consistent with other callers (__update_extent_tree_range and
+__drop_extent_tree) and check FI_NO_EXTENT for both EX_READ and
+EX_BLOCK_AGE tree.
+
+Fixes: 3fc5d5a182f6 ("f2fs: fix to shrink read extent node in batches")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/f2fs/extent_cache.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index df9ce9cc7c112..97dbfb8832aef 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2725,6 +2725,7 @@ static int bpf_obj_get(const union bpf_attr *attr)
- void bpf_link_init(struct bpf_link *link, enum bpf_link_type type,
- 		   const struct bpf_link_ops *ops, struct bpf_prog *prog)
- {
-+	WARN_ON(ops->dealloc && ops->dealloc_deferred);
- 	atomic64_set(&link->refcnt, 1);
- 	link->type = type;
- 	link->id = 0;
-@@ -2781,16 +2782,17 @@ static void bpf_link_defer_dealloc_mult_rcu_gp(struct rcu_head *rcu)
- /* bpf_link_free is guaranteed to be called from process context */
- static void bpf_link_free(struct bpf_link *link)
- {
-+	const struct bpf_link_ops *ops = link->ops;
- 	bool sleepable = false;
+diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
+index f84493c7b072c..b4c14efc83cd8 100644
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -76,9 +76,10 @@ static bool __may_extent_tree(struct inode *inode, enum extent_type type)
+ 	if (!__init_may_extent_tree(inode, type))
+ 		return false;
  
- 	bpf_link_free_id(link->id);
- 	if (link->prog) {
- 		sleepable = link->prog->aux->sleepable;
- 		/* detach BPF program, clean up used resources */
--		link->ops->release(link);
-+		ops->release(link);
- 		bpf_prog_put(link->prog);
++	if (is_inode_flag_set(inode, FI_NO_EXTENT))
++		return false;
++
+ 	if (type == EX_READ) {
+-		if (is_inode_flag_set(inode, FI_NO_EXTENT))
+-			return false;
+ 		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
+ 				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
+ 			return false;
+@@ -623,6 +624,8 @@ static unsigned int __destroy_extent_node(struct inode *inode,
+ 
+ 	while (atomic_read(&et->node_cnt)) {
+ 		write_lock(&et->lock);
++		if (!is_inode_flag_set(inode, FI_NO_EXTENT))
++			set_inode_flag(inode, FI_NO_EXTENT);
+ 		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
+ 		write_unlock(&et->lock);
  	}
--	if (link->ops->dealloc_deferred) {
-+	if (ops->dealloc_deferred) {
- 		/* schedule BPF link deallocation; if underlying BPF program
- 		 * is sleepable, we need to first wait for RCU tasks trace
- 		 * sync, then go through "classic" RCU grace period
-@@ -2799,9 +2801,8 @@ static void bpf_link_free(struct bpf_link *link)
- 			call_rcu_tasks_trace(&link->rcu, bpf_link_defer_dealloc_mult_rcu_gp);
- 		else
- 			call_rcu(&link->rcu, bpf_link_defer_dealloc_rcu_gp);
--	}
--	if (link->ops->dealloc)
--		link->ops->dealloc(link);
-+	} else if (ops->dealloc)
-+		ops->dealloc(link);
- }
+@@ -654,12 +657,12 @@ static void __update_extent_tree_range(struct inode *inode,
+ 						tei->blk, 0);
+ 	write_lock(&et->lock);
  
- static void bpf_link_put_deferred(struct work_struct *work)
+-	if (type == EX_READ) {
+-		if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
+-			write_unlock(&et->lock);
+-			return;
+-		}
++	if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
++		write_unlock(&et->lock);
++		return;
++	}
+ 
++	if (type == EX_READ) {
+ 		prev = et->largest;
+ 		dei.len = 0;
+ 
 -- 
 2.53.0
 
