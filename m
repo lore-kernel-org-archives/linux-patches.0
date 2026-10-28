@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209974;
-	b=G0pKcYlou2+utfW/juBEYnr0eYchMbQH8Ripq8JLO2AY8UOto11ec0r4ZXlyb2N66PMQ
-	 aJLrI2QapDkpWrpks2l9X5B3z9vg35ZnxSfTRx9IOzVwx0T+eVHfBch7wvjuuz6DAUdnM
-	 LWINaEi+vGE7MokOvARfPCbFxhQzvv47ci8oPfxUA3hJ0qEETaY9sgq8+/9uwLGiUOmYi
-	 sLiNtOIdvOJYDQy3qEVu2uX6c2acE0CTosSNzwSPYuDVXTRWWxJnoZXAlCHRpMGIY/5TA
-	 maoDYM6s9KU8ZdcFzmAeCBxmSlLLHG3pSZs+j4kHrKqt4qZAfXQOVasxAL6MpshJXUg==
+	t=1793209977;
+	b=zzmFBw9O8YZMlPuw0iqWCDS/p7hwhfZq5ROEjVtJSqRsDqdR3B/kCZ7hvzDEbjldsW5x
+	 6pc1HH4NLNkQ8PUGeDOQ4ub98GY3uSXvarDvATK/UCnhC7ET8SUGk3Ow1T5ZloEkKKrHM
+	 wFAwJWho0mDhm13a9J35drGEkfw+UB3aBTGes8LC9fHocztqhc09Xd+q2GaKJEIAwEFcR
+	 WqaIUglZkRTxaR2xKbl1gX5+bxMoJBt3FDNaKzcc6ml7JcAWXYlZsIzGB/rorCbjmZ+3n
+	 IPUVe6nZpOBLJEBNCBl2F/GItppYj8+FBlW7RX9rk/aQI4ojY38AiodunXwPoF+eqow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XXg6dK7HlB4vQnVqtLTE9CD2DtTvECfkSmSABiKV04w=;
-	b=A1PiThzogelLZO+m5/NIa6KStFPrt+i2Y4A6ZIVIqT5+Sgy4hvKONy1269zIvSM0TS8D
-	 BRAitZjb46mZG7WU1o1gFPBEiZWqNlzgB5umeP9h9qi+9v7v5rhb87BuWx/FJgmTDurik
-	 kt9kENHB8+afW1qtmC9cZ5D4n4dm2mgdvOC2/5WfX4x3YxBJe2z0UPuTiiT/LSsf7Vq1/
-	 FM6KNPk/4WLJUixsqOMvwg49zucOS28pWaE9wjl57/a0Ytwbk9lMuJyAcNYKrtWU0obDR
-	 oQAzxukvYVW+YQwnbo4Qigb2uPZAqPvWCpTZdQvVeP1wt3wJwJ619kehUiqueVX00hQ==
+	bh=7t2bfSrvwjDyryM2vP8hlD4yqoHLmtEeQ58LMdIzVy0=;
+	b=j/X4q7URSg7tWRg92iMbwEDEywbjnvZc+chroatL/9wHt1BA3Ot4gsZGmQqU0l0YDVzY
+	 dT+/WL7yJczbpjbSZ95YIjPskNmUJnPpD0DWRm/PbfqGbY5St77w37S5o4yNyG8BqDY6W
+	 UQZt4QdWZjYZHUm7xoDHZY9GUpj/LgD+Ti72b89vE5eO+e4HUdOk/ESIPBuOWH7neqmK7
+	 wdqCCillpqm5zPUkCqcunDQftBxy4DP15WuICuZwNDZp6HUeL144HYjkwQq5yFbKmdMfa
+	 /+KtDSdXzf+8Rdena8K7G8kySaOuzu4OHXIVxN4mMM9Uo3AGjzjLu9O3tp4u1SiVLGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmBSwmxR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z22HVpNC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB120606A31D;
-	Wed, 28 Oct 2026 17:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19384606A31C;
+	Wed, 28 Oct 2026 17:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmBSwmxR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E0D1F01825;
-	Wed, 28 Oct 2026 17:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z22HVpNC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A1E1F01825;
+	Wed, 28 Oct 2026 17:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209973;
-	bh=XXg6dK7HlB4vQnVqtLTE9CD2DtTvECfkSmSABiKV04w=;
+	s=korg; t=1793209976;
+	bh=7t2bfSrvwjDyryM2vP8hlD4yqoHLmtEeQ58LMdIzVy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vmBSwmxRf26BniTs02Ma1A3pcUnFLq2MOwAG45INdzcYPwvq94luZuMpOmTqnM4rI
-	 CSecgQvmQyPFxRevsIsWk65wUrC0pnt24d85ldisIyX44NMwLKPvHYXUyUWFdqbXd1
-	 f+T1/Zxdv5pHIrsdayBIHcZ8eluX4eZCIMSuZfB8=
+	b=z22HVpNC3LEN4GEu0w+1F8Vg9Vkqh1AIMpKkGm8I9k6nh1oYGIP2FzixXwo9/QUEX
+	 MptEwvbyEPHXVRMFG9sL5egwHKCMEemdSn0nBQIxkGkxfEe+nkuv8U5MOOaFBOb3+w
+	 aPR8tKXfr0zBkZUf0epLPtkJkW5g5BzpdIxm6lus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	John Garry <john.garry@linux.dev>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/168] scsi: libsas: Fix SMP IO deadlock during HA resume
-Date: Wed, 28 Oct 2026 17:59:27 +0100
-Message-ID: <20261028165943.833514220@linuxfoundation.org>
+Subject: [PATCH 6.6 032/168] netlink: avoid hashing the network namespace pointer
+Date: Wed, 28 Oct 2026 17:59:28 +0100
+Message-ID: <20261028165943.856295753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,103 +70,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 81e097a064b28b4a1f6ca1a8b433e659c1bd64c0 ]
+[ Upstream commit f88bb3606e4bd11ee035b682cddc2999e604609a ]
 
-smp_execute_task_sg() calls pm_runtime_get_sync() on the host before
-issuing an SMP command. When that command is itself issued from the HA
-resume path, the get_sync() deadlocks: it waits for the ongoing resume
-(the device is RPM_RESUMING), while the resume is blocked in
-sas_drain_work() waiting for that same SMP IO to complete.
+The netlink rhashtable key includes a raw struct net pointer and a
+user-controlled port ID. Both /proc/net/netlink and socket diagnostics
+expose the table's bucket order. By binding and rebinding chosen
+NETLINK_USERSOCK port IDs, an unprivileged reader can distinguish equal
+buckets and recover the low bits of the Jenkins hash. Its 32-bit seed
+and the limited set of kernel-image slides can then be searched offline
+to recover the address of init_net.
 
-The deadlock needs an expander-attached SATA disk. During
-sas_resume_ha() -> sas_drain_work(), DISCE_RESUME -> sas_resume_sata()
--> ata_sas_port_resume() requests ATA_EH_RESET, and the hard reset for
-such a disk is done via SMP PHY CONTROL (sas_ata_hard_reset() ->
-sas_phy_reset() -> sas_smp_phy_control() ->
-smp_execute_task_sg()). Direct-attached SATA resets through
-lldd_control_phy() and SSP devices use TMFs, so neither hits this.
+Use the namespace's unique, non-address net_cookie in the comparison
+key instead. It is assigned before the per-net initializers run and
+remains unchanged for the namespace's lifetime. The lookup key and
+object hash are still built by netlink_compare_arg_init(), keeping
+lookup, insertion, removal and rehashing consistent while preserving
+namespace separation. Neither public table walker needs to change.
 
-Replace the get_sync()/put_sync() pair with
-pm_runtime_get_noresume()/pm_runtime_put(). smp_execute_task_sg() only
-needs to hold off autosuspend while the SMP is in flight, and it must
-not try to resume the host: a sync resume issued from the HA resume path
-itself is what deadlocks, and by the time sas_resume_ha() runs, hw_init
-has already reinitialized the hardware, so the device is accessible
-without one.
+Reading the socket's namespace cookie in netlink_compare() is safe
+under RCU, including during namespace teardown. netlink_release()
+removes the socket from the hash table and defers its final put with
+call_rcu(). cleanup_net() runs the per-net exit methods and waits for
+outstanding RCU callbacks with rcu_barrier() before freeing namespace
+storage.
 
-The usage reference is still required. Discovery work normally runs
-inside an event worker's PM reference, taken at sas_notify_port_event()
-notify time and held until the handler has flushed the disco
-queue. sas_rediscover_ex_phy() however requeues DISCE_REVALIDATE_DOMAIN
-from within the revalidation worker itself, and flush_workqueue() does
-not wait for work items queued during execution, so that chained
-revalidation runs with no outer PM reference - without the
-get_noresume(), its SMP could race autosuspend.
+Unlike ns.ns_id, net_cookie is also available and initialized during
+setup_net() in older stable kernels, making the change straightforward
+to backport to v5.15 and later.
 
-For the BSG path, sas_smp_handler() is the only caller which may find
-the host autosuspended: expander SMP requests do not go through any SCSI
-device request queue, so nothing else in that path holds the host
-awake. Resume it there with pm_runtime_resume_and_get() and check the
-result.
-
-Fixes: 3dbbbf656b850 ("scsi: libsas: Fix HA resume deadlock and hisi_sas disk-wake race")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Reviewed-by: John Garry <john.garry@linux.dev>
-Link: https://patch.msgid.link/20260928040234.992912-1-yangxingui@huawei.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: c428ecd1a21f ("netlink: Move namespace into hash key")
+Assisted-by: LLM
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261008011359.63727-2-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libsas/sas_expander.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/netlink/af_netlink.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
-index e97f4e01a865a..16cc1c14b9f45 100644
---- a/drivers/scsi/libsas/sas_expander.c
-+++ b/drivers/scsi/libsas/sas_expander.c
-@@ -40,7 +40,11 @@ static int smp_execute_task_sg(struct domain_device *dev,
- 		to_sas_internal(dev->port->ha->shost->transportt);
- 	struct sas_ha_struct *ha = dev->port->ha;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index e539b0a632fad..a7d3673ca72fc 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -463,7 +463,7 @@ netlink_unlock_table(void)
  
--	pm_runtime_get_sync(ha->dev);
-+	/*
-+	 * Non-blocking: a sync resume here would deadlock against
-+	 * sas_drain_work() during HA resume.
-+	 */
-+	pm_runtime_get_noresume(ha->dev);
- 	mutex_lock(&dev->ex_dev.cmd_mutex);
- 	for (retry = 0; retry < 3; retry++) {
- 		if (test_bit(SAS_DEV_GONE, &dev->state)) {
-@@ -113,7 +117,7 @@ static int smp_execute_task_sg(struct domain_device *dev,
- 		}
- 	}
- 	mutex_unlock(&dev->ex_dev.cmd_mutex);
--	pm_runtime_put_sync(ha->dev);
-+	pm_runtime_put(ha->dev);
+ struct netlink_compare_arg
+ {
+-	possible_net_t pnet;
++	u64 net_cookie;
+ 	u32 portid;
+ };
  
- 	BUG_ON(retry == 3 && task != NULL);
- 	sas_free_task(task);
-@@ -2142,6 +2146,11 @@ void sas_smp_handler(struct bsg_job *job, struct Scsi_Host *shost,
- 		goto out;
- 	}
+@@ -478,14 +478,14 @@ static inline int netlink_compare(struct rhashtable_compare_arg *arg,
+ 	const struct netlink_sock *nlk = ptr;
  
-+	/* The host may have autosuspended, resume it here. */
-+	ret = pm_runtime_resume_and_get(dev->port->ha->dev);
-+	if (ret)
-+		goto out;
-+
- 	ret = smp_execute_task_sg(dev, job->request_payload.sg_list,
- 			job->reply_payload.sg_list);
- 	if (ret >= 0) {
-@@ -2149,6 +2158,7 @@ void sas_smp_handler(struct bsg_job *job, struct Scsi_Host *shost,
- 		rcvlen = job->reply_payload.payload_len - ret;
- 		ret = 0;
- 	}
-+	pm_runtime_put(dev->port->ha->dev);
+ 	return nlk->portid != x->portid ||
+-	       !net_eq(sock_net(&nlk->sk), read_pnet(&x->pnet));
++	       sock_net(&nlk->sk)->net_cookie != x->net_cookie;
+ }
  
- out:
- 	bsg_job_done(job, ret, rcvlen);
+ static void netlink_compare_arg_init(struct netlink_compare_arg *arg,
+ 				     struct net *net, u32 portid)
+ {
+ 	memset(arg, 0, sizeof(*arg));
+-	write_pnet(&arg->pnet, net);
++	arg->net_cookie = net->net_cookie;
+ 	arg->portid = portid;
+ }
+ 
 -- 
 2.53.0
 
