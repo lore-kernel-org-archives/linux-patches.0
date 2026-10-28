@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215049;
-	b=VHwEI0DgYS3Els7554XqcmcbluPvmM0VTdB+wm01Ds/E+zX9L6pDaAFvwt+wHWxWraBP
-	 1jTFjElZslOxQp05BVAPFIF3zakc1PTJ0OWs4NkgiWWACvII9npD+So+kdlp10CAI/6Nr
-	 1SOtwVX8TJsxMXdgBGQlvqPpmnePW3IQ2JrtZJZne5+n8DTww8XUGTlKTEN9/PG4MlTV3
-	 9bzm4oTnIuv0vhSp8KHDht1emwTBKBKR3lwLtu0g+vm0C0hgTdna4werbVIdMTv+IEdSW
-	 ctAgbXxfmTACxmzU0NRccQsFJ3hxSq6tedGyr1QSekP5OJxRC//dgIQwQCrAGlJEGoA==
+	t=1793215052;
+	b=4UarI0duUgUyY4kShKnSlsjWup7ELEC35sJNqC3LsKVRnOvViaMVxG/rmAguQLWGEEcS
+	 c2dXkpE3L33ky6Vw1vrgt5aViJy7IrAOAFqhOlxgCQUR2qZ6426xyASk+ZTMCYo5OtP9G
+	 0GS/hE4Z/g34k3mGlThnw3gCD+cWfGjzA5J21+I63+YhgLP/1V4F8g71UetY3Gf5JjaCM
+	 HPnLBoa1xypBCzjzhE6EtFdMTiJgkUeUEFtPuilsDijiy8GU69lVj+E6Bnm/VxdI9xHPY
+	 MulkndkVEHPZaCMCymH3FWVEjzjaeq63D5VAc5ntbiwa7UJIM0+3H3t3DSjXYRp4FoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=TqYb0/sWM2AXOnnOR+Xdhp+u5hcSmB1+l6JrUcK+TPI=;
-	b=NJ/j/pAV2AlYLRMTWhMpXf/0WhuOsJRJsNn9AxS4aYyG/ZtJ7Qy/fzeBxrt/EzZLQhif
-	 F+xbMZlJUv+qRig8lFkE/IW9dsBEvM0iaeAxYp42V8mDRjAfkVJird3ZNOVlKG3mKSX1X
-	 6yAFOtwXj6gAEUFY+Lx4Yw7GVdOVTjhrWG0k83Ru5FE4a2VByNQlQX/WzLlXCK2addRXr
-	 SSvhHKTIOwr1Bq30PjtRazDT1GbTnH+KoDSOrp8v22bHq4GxYWlVvgKeKOwupYGt60Q55
-	 B5Ykqw+xwXlU9irIbezfw58xmH2ht4iK3fL+BNkq0xBKp2b4XwPWbYQTEuKMEUT7gDQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4F9axttJ8UFHjOk1K/QBEySeHgt1yqMWWN2wRc1BVQc=;
+	b=JZ3hNwfx3i+O8tABHbyaMKLduFJJj9HDbzjaFMWA1vr7W66ew7Uh+i3vDZEjowtkvvO0
+	 d7afAfxgaBDKLboQ09XAVovD3IFLgGXmaLTqYsGmSdqYB7VZ/83lpc1CD0v/9T0RegkZh
+	 OovqVq3rxTIsrSNv7bI+XJcgDwwGLTkFnzACp2dGVqrYavdoysLzWUEmhbP3fHO/pTLI1
+	 RLXxPBDpAyL9E1/6Bf7jR2X66W37hZNXpLBEf/wIsfYn15gSjEmqbXyOXdfkLgTsPziAk
+	 G9yG7lQgWNF5cTgvStJWUOcJiXi4enJ+i8H/FzUz7QdCvIJJU4qFA7gHvu5DMfQhUtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O09VWPLB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OBPRrPL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9DD606A31A;
-	Wed, 28 Oct 2026 19:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEC3606A31E;
+	Wed, 28 Oct 2026 19:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O09VWPLB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261021F01825;
-	Wed, 28 Oct 2026 19:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OBPRrPL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D091F01825;
+	Wed, 28 Oct 2026 19:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215048;
-	bh=TqYb0/sWM2AXOnnOR+Xdhp+u5hcSmB1+l6JrUcK+TPI=;
+	s=korg; t=1793215051;
+	bh=4F9axttJ8UFHjOk1K/QBEySeHgt1yqMWWN2wRc1BVQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O09VWPLBkH5Asj5WaZAzMDYIqcTTGulqX9IPES87hsAc0GA2GWRacNOVTOzwReNH9
-	 zzssoB/cFafs0HZMYHGvhLfZ2mHJgwU9lfWUeF4XygBt1PCNoLD+a6Qdc+Ggd2hn4g
-	 7Z0xAc740p82IL6k24qu+oaLpOQ/l0aLIk3Tu+lI=
+	b=2OBPRrPLTifDIL3DMOloQqv6Zi4BdbWHoIRlOLZ7KDDRB7BplXfB385DOss4Acq9p
+	 ZppI9tnxoHRMEhF4xaUlHscPzigMD5/85syqff3r7rSg74qJ5y3bskJNf6GmirEJqA
+	 zthQFoGFsJDu/jjxESCDcEVp1ZoJFkWQPuIRVxTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Xin Yin <yinxin.x@bytedance.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1073/1887] ceph: fix BUG_ON in __ceph_build_xattrs_blob() due to stale blob size
-Date: Wed, 28 Oct 2026 17:52:49 +0100
-Message-ID: <20261028170523.828538901@linuxfoundation.org>
+Subject: [PATCH 6.1 1074/1887] fsnotify: fix inode reference leak in fsnotify_recalc_mask()
+Date: Wed, 28 Oct 2026 17:52:50 +0100
+Message-ID: <20261028170523.849628697@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,134 +63,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 0c22d9511cbde746622f8e4c11aaa63fe76d45f9 ]
+[ Upstream commit 4aca914ac152f5d055ddcb36704d1e539ac08977 ]
 
-The generic/642 test-case can reproduce the kernel crash:
+fsnotify_recalc_mask() fails to handle the return value of
+__fsnotify_recalc_mask(), which may return an inode pointer that needs
+to be released via fsnotify_drop_object() when the connector's HAS_IREF
+flag transitions from set to cleared.
 
-[40243.605254] ------------[ cut here ]------------
-[40243.605956] kernel BUG at fs/ceph/xattr.c:918!
-[40243.607142] Oops: invalid opcode: 0000 [#1] SMP PTI
-[40243.608067] CPU: 7 UID: 0 PID: 498762 Comm: kworker/7:1 Not tainted 7.0.0-rc7+ #3 PREEMPT(full)
-[40243.609700] Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[40243.611820] Workqueue: ceph-msgr ceph_con_workfn
-[40243.612715] RIP: 0010:__ceph_build_xattrs_blob+0x1b8/0x1e0
-[40243.613731] Code: 0f 84 82 fe ff ff e9 cf 8e 56 ff 48 8d 65 e8 31 c0 5b 41 5c 41 5d 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 c3 cc cc cc cc <0f> 0b 4c 8b 62 08 41 8b 85 24 07 00 00 49 83 c4 04 41 89 44 24 fc
-[40243.616888] RSP: 0018:ffffcc80c4d4b688 EFLAGS: 00010287
-[40243.617773] RAX: 0000000000010026 RBX: 0000000000000001 RCX: 0000000000000000
-[40243.618928] RDX: ffff8a773798dee0 RSI: 0000000000000000 RDI: 0000000000000000
-[40243.620158] RBP: ffffcc80c4d4b6a0 R08: 0000000000000000 R09: 0000000000000000
-[40243.621573] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8a75f3b58000
-[40243.622907] R13: ffff8a75f3b58000 R14: 0000000000000080 R15: 000000000000bffd
-[40243.624054] FS:  0000000000000000(0000) GS:ffff8a787d1b4000(0000) knlGS:0000000000000000
-[40243.625331] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[40243.626269] CR2: 000072f390b623c0 CR3: 000000011c02a003 CR4: 0000000000372ef0
-[40243.627408] Call Trace:
-[40243.627839]  <TASK>
-[40243.628188]  __prep_cap+0x3fd/0x4a0
-[40243.628789]  ? do_raw_spin_unlock+0x4e/0xe0
-[40243.629474]  ceph_check_caps+0x46a/0xc80
-[40243.630094]  ? __lock_acquire+0x4a2/0x2650
-[40243.630773]  ? find_held_lock+0x31/0x90
-[40243.631347]  ? handle_cap_grant+0x79f/0x1060
-[40243.632068]  ? lock_release+0xd9/0x300
-[40243.632696]  ? __mutex_unlock_slowpath+0x3e/0x340
-[40243.633429]  ? lock_release+0xd9/0x300
-[40243.634052]  handle_cap_grant+0xcf6/0x1060
-[40243.634745]  ceph_handle_caps+0x122b/0x2110
-[40243.635415]  mds_dispatch+0x5bd/0x2160
-[40243.636034]  ? ceph_con_process_message+0x65/0x190
-[40243.636828]  ? lock_release+0xd9/0x300
-[40243.637431]  ceph_con_process_message+0x7a/0x190
-[40243.638184]  ? kfree+0x311/0x4f0
-[40243.638749]  ? kfree+0x311/0x4f0
-[40243.639268]  process_message+0x16/0x1a0
-[40243.639915]  ? sg_free_table+0x39/0x90
-[40243.640572]  ceph_con_v2_try_read+0xf58/0x2120
-[40243.641255]  ? lock_acquire+0xc8/0x300
-[40243.641863]  ceph_con_workfn+0x151/0x820
-[40243.642493]  process_one_work+0x22f/0x630
-[40243.643093]  ? process_one_work+0x254/0x630
-[40243.643770]  worker_thread+0x1e2/0x400
-[40243.644332]  ? __pfx_worker_thread+0x10/0x10
-[40243.645020]  kthread+0x109/0x140
-[40243.645560]  ? __pfx_kthread+0x10/0x10
-[40243.646125]  ret_from_fork+0x3f8/0x480
-[40243.646752]  ? __pfx_kthread+0x10/0x10
-[40243.647316]  ? __pfx_kthread+0x10/0x10
-[40243.647919]  ret_from_fork_asm+0x1a/0x30
-[40243.648556]  </TASK>
-[40243.648902] Modules linked in: overlay hctr2 libpolyval chacha libchacha adiantum libnh libpoly1305 essiv intel_rapl_msr intel_rapl_common intel_uncore_frequency_common skx_edac_common nfit kvm_intel kvm irqbypass joydev ghash_clmulni_intel aesni_intel rapl input_leds mac_hid psmouse vga16fb serio_raw vgastate floppy i2c_piix4 pata_acpi bochs qemu_fw_cfg i2c_smbus sch_fq_codel rbd dm_crypt msr parport_pc ppdev lp parport efi_pstore
-[40243.654766] ---[ end trace 0000000000000000 ]---
+This manifests as a hung task with the following call trace:
 
-Commit d93231a6bc8a ("ceph: prevent a client from exceeding the MDS
-maximum xattr size") moved the required_blob_size computation to before
-the __build_xattrs() call, introducing a race.
+  INFO: task umount:1234 blocked for more than 120 seconds.
+  Call Trace:
+   __schedule
+   schedule
+   fsnotify_sb_delete
+   generic_shutdown_super
+   kill_anon_super
+   cleanup_mnt
+   task_work_run
+   do_exit
+   do_group_exit
 
-__build_xattrs() releases and reacquires i_ceph_lock during execution.
-In that window, handle_cap_grant() may update i_xattrs.blob with a
-newer MDS-provided blob and bump i_xattrs.version.  When
-__build_xattrs() detects that index_version < version, it destroys and
-rebuilds the entire xattr rb-tree from the new blob, potentially
-increasing count, names_size, and vals_size.
+The race window that triggers the iref leak:
 
-The prealloc_blob size check that follows still uses the stale
-required_blob_size computed before the rebuild, so it passes even when
-prealloc_blob is too small for the now-larger tree. After __set_xattr()
-adds one more xattr on top, __ceph_build_xattrs_blob() is called from
-the cap flush path and hits:
+  Thread A (adding mark)              Thread B (removing mark)
+  ──────────────────────              ────────────────────────
+  fsnotify_add_mark_locked():
+    fsnotify_add_mark_list():
+      spin_lock(conn->lock)
+      add mark_B(evictable) to list
+      spin_unlock(conn->lock)
+    return
 
-    BUG_ON(need > ci->i_xattrs.prealloc_blob->alloc_len);
+    /* ---- gap: no lock held ---- */
 
-Fix this by recomputing required_blob_size after __build_xattrs()
-returns, using the current tree state. Also re-validate against
-m_max_xattr_size to fall back to the sync path if the rebuilt tree now
-exceeds the MDS limit.
+                                      fsnotify_detach_mark(mark_A):
+                                        spin_lock(mark_A->lock)
+                                        clear ATTACHED flag on mark_A
+                                        spin_unlock(mark_A->lock)
+                                        fsnotify_put_mark(mark_A)
 
-Cc: stable@vger.kernel.org
-Fixes: d93231a6bc8a ("ceph: prevent a client from exceeding the MDS maximum xattr size")
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+    fsnotify_recalc_mask():
+      spin_lock(conn->lock)
+      __fsnotify_recalc_mask():
+        /* mark_A skipped: ATTACHED cleared */
+        /* only mark_B(evictable) remains */
+        want_iref = false
+        has_iref = true  /* not yet cleared */
+        -> HAS_IREF transitions true -> false
+        -> returns inode pointer
+      spin_unlock(conn->lock)
+      /* BUG: return value discarded!
+       * iput() and fsnotify_put_sb_watched_objects()
+       * are never called */
+
+Fix this by deferring the transition true -> false of HAS_IREF flag from
+fsnotify_recalc_mask() (Thread A) to fsnotify_put_mark() (thread B).
+
+Fixes: c3638b5b1374 ("fsnotify: allow adding an inode mark without pinning inode")
+Signed-off-by: Xin Yin <yinxin.x@bytedance.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/CAOQ4uxiPsbHb0o5voUKyPFMvBsDkG914FYDcs4C5UpBMNm0Vcg@mail.gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/xattr.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/notify/mark.c | 39 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ceph/xattr.c b/fs/ceph/xattr.c
-index e0f517db6455e..9c5445eb671e8 100644
---- a/fs/ceph/xattr.c
-+++ b/fs/ceph/xattr.c
-@@ -1208,6 +1208,22 @@ int __ceph_setxattr(struct inode *inode, const char *name,
- 	     ceph_cap_string(issued));
- 	__build_xattrs(inode);
+diff --git a/fs/notify/mark.c b/fs/notify/mark.c
+index b419a5ccf192d..951d7de29f824 100644
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -153,7 +153,12 @@ static struct inode *fsnotify_update_iref(struct fsnotify_mark_connector *conn,
+ 	return inode;
+ }
  
-+	/*
-+	 * __build_xattrs() may have released and reacquired i_ceph_lock,
-+	 * during which handle_cap_grant() could have replaced i_xattrs.blob
-+	 * with a newer MDS-provided blob and bumped i_xattrs.version. If that
-+	 * caused __build_xattrs() to rebuild the rb-tree from the new blob,
-+	 * count/names_size/vals_size may now be larger than when
-+	 * required_blob_size was computed above. Recompute it here so the
-+	 * prealloc_blob size check below reflects the current tree state.
-+	 */
-+	required_blob_size = __get_required_blob_size(ci, name_len, val_len);
-+	if (required_blob_size > mdsc->mdsmap->m_max_xattr_size) {
-+		dout("sync (size too large): %d > %llu\n",
-+		     required_blob_size, mdsc->mdsmap->m_max_xattr_size);
-+		goto do_sync;
-+	}
+-static void *__fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
++/*
++ * Calculate mask of events for a list of marks.
++ *
++ * Return true if any of the attached marks want to hold an inode reference.
++ */
++static bool __fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
+ {
+ 	u32 new_mask = 0;
+ 	bool want_iref = false;
+@@ -173,6 +178,34 @@ static void *__fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
+ 	}
+ 	*fsnotify_conn_mask_p(conn) = new_mask;
+ 
++	return want_iref;
++}
 +
- 	if (!ci->i_xattrs.prealloc_blob ||
- 	    required_blob_size > ci->i_xattrs.prealloc_blob->alloc_len) {
- 		struct ceph_buffer *blob;
++/*
++ * Calculate mask of events for a list of marks after attach/modify mark
++ * and get an inode reference for the connector if needed.
++ *
++ * A concurrent add of evictable mark and detach of non-evictable mark can
++ * lead to __fsnotify_recalc_mask() returning false want_iref, but in this
++ * case we defer clearing iref to fsnotify_recalc_mask_clear_iref() called
++ * from fsnotify_put_mark().
++ */
++static void fsnotify_recalc_mask_set_iref(struct fsnotify_mark_connector *conn)
++{
++	bool has_iref = conn->flags & FSNOTIFY_CONN_FLAG_HAS_IREF;
++	bool want_iref = __fsnotify_recalc_mask(conn) || has_iref;
++
++	(void) fsnotify_update_iref(conn, want_iref);
++}
++
++/*
++ * Calculate mask of events for a list of marks after detach mark
++ * and return the inode object if its reference is no longer needed.
++ */
++static void *fsnotify_recalc_mask_clear_iref(struct fsnotify_mark_connector *conn)
++{
++	bool want_iref = __fsnotify_recalc_mask(conn);
++
+ 	return fsnotify_update_iref(conn, want_iref);
+ }
+ 
+@@ -209,7 +242,7 @@ void fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
+ 
+ 	spin_lock(&conn->lock);
+ 	update_children = !fsnotify_conn_watches_children(conn);
+-	__fsnotify_recalc_mask(conn);
++	fsnotify_recalc_mask_set_iref(conn);
+ 	update_children &= fsnotify_conn_watches_children(conn);
+ 	spin_unlock(&conn->lock);
+ 	/*
+@@ -342,7 +375,7 @@ void fsnotify_put_mark(struct fsnotify_mark *mark)
+ 		objp = fsnotify_detach_connector_from_object(conn, &type);
+ 		free_conn = true;
+ 	} else {
+-		objp = __fsnotify_recalc_mask(conn);
++		objp = fsnotify_recalc_mask_clear_iref(conn);
+ 		type = conn->type;
+ 	}
+ 	WRITE_ONCE(mark->connector, NULL);
 -- 
 2.53.0
 
