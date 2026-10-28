@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216740;
-	b=Cp7ZuQmDBS77EdysHV+QsqXLLoiZr+HkI4OkG1x4CE5bpYZgFT4LGMuMWkvRCgd1LiQl
-	 bo6l5dJPRj0GSvaHEjKpdy7yW4+/sMUXaFtCl+x3zdx2h1q4gwGhCT7kMyeD/rwsJ/F60
-	 +e92YYbxQ0xB32aAm6w/QxARfsVl1vvro0V0vMVcTu+5ECOMpyR0MKqvf80/KpH1mZBmS
-	 zCT9dt9gIedz6x5Q0xd0UWvZEEkyBmhsJGFMdtFSj89dNhgZTUp/xf8cERRBhM3bzMDHP
-	 HnHNRtSZQtiqnkT16t/SCv8ok40hFgz6lC3vphePxH79Ff9PHIwVYWiUW+egrIxjIJA==
+	t=1793216742;
+	b=TsUnDkQDXEoD27V6pvZDVOVSGzpYjyvtK+HgYcpIr1ceNKEbUt+wmJczlUV/4/+/yLIT
+	 n+hE/o0F4ZSAjspdv5ZbHPqX0xezn8JtIg7XU5ne5k8s2TQ82dt0q1Kf5h6b0u/H7av3j
+	 L81sctp7q8ZunUolhszNOwvOcqAgfGxoMCBQHVhsphH4TSoJibpwBOloBrwa7bib4lLWA
+	 Ma0/gQlBp2XeudMH5t/f6cZfxcP05Kl2az59yn/q6zYJviSy7bfJGmkJMl193HiXvG1+w
+	 UgJy/x5aBl0OeIGcQwiekCf2DV8TW6zoadMNm9DVs8iKG1HDubQ6HaXABBPS1BkOzfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DzbfhUb1tu7MMWAv3gKpbr0dJWUBpTucyw2nbg11To0=;
-	b=GHzluLAEPBRih2l9CnPXlRDwCRHzw9uJTocfBm+u3ccnuVoGsmZmVMUVmkfIbnrexlkV
-	 zLb1rd3NB9yUY1PIfFmWooDWI9S7G8E4llPorNI/2ySqblOqbSuSkbj1AXZPUXPmjTLj7
-	 ZezTzaOeefnycNQv8bOex2kwpZpVd8iNWpfpSth2yUeSvMAaOpeeW99Yvep8hH4ktYjyk
-	 WBs8/hFLa0OXUg2WM9BCPDDKbSDEYRND/3eMrnBJcJ9nNBZNUvQpljwLGivfcMiwI6PoD
-	 9rqIHuoeiaRAdAnG0ZGf8RH1Plb0avKNvsURNKjUZ37ChgTwi1pVQuKOeVAF0wuaE8w==
+	bh=sctXtH8HEgEVd5hDAU61FM3VhxGdX0tjsBqxT30use8=;
+	b=K6GirdTAs8XzkMnY3DYrIufVvuVZ8WREdlFI8+NRw5e4m1ryqzCX3WvZFj9xvVd1ORNe
+	 ZE30wKBSm9dP+bJbMPqdjuoFf44Y2m8cj/eO91TIZ19F8jvQS0SkASy0i5x4YJZcf8CPR
+	 7TXXwivWe5VKj7WRBuxdoS7t+di8sM8ws06R1RsED74FSIHk6nhP17B/aDCK609cx6eGg
+	 aFqwm0YmxQ9CFgSlVmZH6dVOS5cNcvdhEs6bCuzbMiiGZgnriPT0PMycpk7ux6CTfMK5v
+	 Zplb+wY264T4VgmarvrviVuOx2rtMNGzeimSRfRUYMWjmlVCC0SUxhKKm9yj/15Eu1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCT+eMOl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H6LwMr12;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC299606A321;
-	Wed, 28 Oct 2026 19:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954AA606A31E;
+	Wed, 28 Oct 2026 19:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCT+eMOl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EDB1F031E0;
-	Wed, 28 Oct 2026 19:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H6LwMr12
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69D41F01828;
+	Wed, 28 Oct 2026 19:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216739;
-	bh=DzbfhUb1tu7MMWAv3gKpbr0dJWUBpTucyw2nbg11To0=;
+	s=korg; t=1793216742;
+	bh=sctXtH8HEgEVd5hDAU61FM3VhxGdX0tjsBqxT30use8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qCT+eMOla2LpSZQ+6hvsSRKfSKBpH/p0L5viuUw8XVaBQ7ndqA7fVKKQUIn+hrzKY
-	 nNwuqdUtEyDWf7IhvqLr9VZLGdDjEt6TA6vmlCX76NGADrp3L1/RQ5/E7WdUbyNXOG
-	 g/Vu0M2you6JT3FENFONE8eGQKMV5kcVlEihei9Q=
+	b=H6LwMr127k5DdlTy+m8PeO36a3beuaA/XOcsbGNbqUVFqE8DwlNt0bU/obDdrGeVZ
+	 TKskV4O4esp4Sw9kVy+9pxIUAu2KJCGfV/Y36dsEVHCAuerRudDTuzrMRiMuXf0WLj
+	 hYjIvHpp8IjGoYxsUMkc6LKl8klp0Gl7lN9BXGXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Lee Jia Jie <jiajie.lee@starlabs.sg>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1645/1887] nvdimm: virtio_pmem: refcount requests for token lifetime
-Date: Wed, 28 Oct 2026 18:02:21 +0100
-Message-ID: <20261028170536.899233799@linuxfoundation.org>
+Subject: [PATCH 6.1 1663/1887] perf: Fix addr_filter_ranges lifetime
+Date: Wed, 28 Oct 2026 18:02:39 +0100
+Message-ID: <20261028170537.303280575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,166 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit e57140944b5a47a7fd5a142faab29a02af040bc8 ]
+[ Upstream commit e62d4192e593630f355094adc467058a05bdc935 ]
 
-KASAN reports slab-use-after-free in __wake_up_common():
-BUG: KASAN: slab-use-after-free in __wake_up_common+0x114/0x160
-Read of size 8 at addr ffff88810fdcb710 by task swapper/0/0
+Lee Jia Jie reported that since event::addr_filter_ranges is used
+under RCU, it should be RCU freed.
 
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted
-6.19.0-next-20260220-00006-g1eae5f204ec3 #4 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux
-1.17.0-2-2 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x6d/0xb0
- print_report+0x170/0x4e2
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? __virt_addr_valid+0x1dc/0x380
- kasan_report+0xbc/0xf0
- ? __wake_up_common+0x114/0x160
- ? __wake_up_common+0x114/0x160
- __wake_up_common+0x114/0x160
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- __wake_up+0x36/0x60
- virtio_pmem_host_ack+0x11d/0x3b0
- ? sched_balance_domains+0x29f/0xb00
- ? __pfx_virtio_pmem_host_ack+0x10/0x10
- ? _raw_spin_lock_irqsave+0x98/0x100
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- vring_interrupt+0x1c9/0x5e0
- ? __pfx_vp_interrupt+0x10/0x10
- vp_vring_interrupt+0x87/0x100
- ? __pfx_vp_interrupt+0x10/0x10
- __handle_irq_event_percpu+0x17f/0x550
- ? __pfx__raw_spin_lock+0x10/0x10
- handle_irq_event+0xab/0x1c0
- handle_fasteoi_irq+0x276/0xae0
- __common_interrupt+0x65/0x130
- common_interrupt+0x78/0xa0
- </IRQ>
-
-virtio_pmem_host_ack() wakes a request that has already been freed by the
-submitter.
-
-This happens when the request token is still reachable via the virtqueue,
-but virtio_pmem_flush() returns and frees it.
-
-Fix the token lifetime by refcounting struct virtio_pmem_request.
-virtio_pmem_flush() holds a submitter reference, and the virtqueue holds an
-extra reference once the request is queued. The completion path drops the
-virtqueue reference, and the submitter drops its reference before
-returning.
-
-Fixes: 6e84200c0a29 ("virtio-pmem: Add virtio pmem driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Chen <me@linux.beauty>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630092338.2094628-9-me@linux.beauty>
+Reported-by: Lee Jia Jie <jiajie.lee@starlabs.sg>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/nd_virtio.c   | 32 ++++++++++++++++++++++++++++----
- drivers/nvdimm/virtio_pmem.h |  2 ++
- 2 files changed, 30 insertions(+), 4 deletions(-)
+ kernel/events/core.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/nvdimm/nd_virtio.c b/drivers/nvdimm/nd_virtio.c
-index 90b0fdb72024a..5bde34e7a143f 100644
---- a/drivers/nvdimm/nd_virtio.c
-+++ b/drivers/nvdimm/nd_virtio.c
-@@ -9,6 +9,14 @@
- #include "virtio_pmem.h"
- #include "nd.h"
- 
-+static void virtio_pmem_req_release(struct kref *kref)
-+{
-+	struct virtio_pmem_request *req;
-+
-+	req = container_of(kref, struct virtio_pmem_request, kref);
-+	kfree(req);
-+}
-+
-  /* The interrupt handler */
- void virtio_pmem_host_ack(struct virtqueue *vq)
- {
-@@ -29,6 +37,7 @@ void virtio_pmem_host_ack(struct virtqueue *vq)
- 			wake_up(&req_buf->wq_buf);
- 			list_del(&req_buf->list);
- 		}
-+		kref_put(&req_data->kref, virtio_pmem_req_release);
- 	}
- 	spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 972686eec8125..95dcc8e6907e2 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4802,6 +4802,7 @@ static void free_event_rcu(struct rcu_head *head)
+ 	if (event->ns)
+ 		put_pid_ns(event->ns);
+ 	perf_event_free_filter(event);
++	kfree(event->addr_filter_ranges);
+ 	kmem_cache_free(perf_event_cache, event);
  }
-@@ -59,6 +68,7 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
- 	if (!req_data)
- 		return -ENOMEM;
  
-+	kref_init(&req_data->kref);
- 	req_data->done = false;
- 	init_waitqueue_head(&req_data->host_acked);
- 	init_waitqueue_head(&req_data->wq_buf);
-@@ -76,10 +86,23 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
- 	  * to req_list and wait for host_ack to wake us up when free
- 	  * slots are available.
- 	  */
--	while ((err = virtqueue_add_sgs(vpmem->req_vq, sgs, 1, 1, req_data,
--					GFP_ATOMIC)) == -ENOSPC) {
-+	for (;;) {
-+		err = virtqueue_add_sgs(vpmem->req_vq, sgs, 1, 1, req_data,
-+					GFP_ATOMIC);
-+		if (!err) {
-+			/*
-+			 * Take the virtqueue reference while @pmem_lock is
-+			 * held so completion cannot run concurrently.
-+			 */
-+			kref_get(&req_data->kref);
-+			break;
-+		}
-+
-+		if (err != -ENOSPC)
-+			break;
+@@ -5048,7 +5049,6 @@ static void _free_event(struct perf_event *event)
  
--		dev_info(&vdev->dev, "failed to send command to virtio pmem device, no free slots in the virtqueue\n");
-+		dev_info_ratelimited(&vdev->dev,
-+				     "failed to send command to virtio pmem device, no free slots in the virtqueue\n");
- 		req_data->wq_buf_avail = false;
- 		list_add_tail(&req_data->list, &vpmem->req_list);
- 		spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
-@@ -88,6 +111,7 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
- 		wait_event(req_data->wq_buf, req_data->wq_buf_avail);
- 		spin_lock_irqsave(&vpmem->pmem_lock, flags);
+ 	perf_event_free_bpf_prog(event);
+ 	perf_addr_filters_splice(event, NULL);
+-	kfree(event->addr_filter_ranges);
+ 
+ 	if (event->destroy)
+ 		event->destroy(event);
+@@ -12058,8 +12058,6 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
+ 			put_callchain_buffers();
  	}
-+
- 	err1 = virtqueue_kick(vpmem->req_vq);
- 	spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
- 	/*
-@@ -103,7 +127,7 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
- 		err = le32_to_cpu(req_data->resp.ret);
- 	}
- 
--	kfree(req_data);
-+	kref_put(&req_data->kref, virtio_pmem_req_release);
- 	return err;
- };
- 
-diff --git a/drivers/nvdimm/virtio_pmem.h b/drivers/nvdimm/virtio_pmem.h
-index f72cf17f9518f..1017e498c9b4c 100644
---- a/drivers/nvdimm/virtio_pmem.h
-+++ b/drivers/nvdimm/virtio_pmem.h
-@@ -12,11 +12,13 @@
- 
- #include <linux/module.h>
- #include <uapi/linux/virtio_pmem.h>
-+#include <linux/kref.h>
- #include <linux/libnvdimm.h>
- #include <linux/mutex.h>
- #include <linux/spinlock.h>
- 
- struct virtio_pmem_request {
-+	struct kref kref;
- 	struct virtio_pmem_req req;
- 	struct virtio_pmem_resp resp;
+ err_addr_filters:
+-	kfree(event->addr_filter_ranges);
+-
+ err_per_task:
+ 	exclusive_event_destroy(event);
  
 -- 
 2.53.0
