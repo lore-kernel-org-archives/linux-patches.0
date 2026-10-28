@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214232;
-	b=UAcSSGu5f+DW05X0RM8Gepl/d/cf6rbZkoVSZVdwoGBHqVXKzFZ0yy7CryCPAJmnhpo9
-	 PoDPdl6gvY+vN+NtxX9h++ES8KQxt/iFfyrYFwYE8gRs7ZcoYL7uY+dRpM84EkfBJWUTo
-	 eylyr8KRUDGTaAIwFqTOAEswH1OYV3+S1Mi/OkaaheLiYv2Xe1kNu3r1+9oGdK3UhMZqf
-	 BlI5HLoip9O8kB+lv5Q+gi067Pyz/8JGc1sS+WRJd7fU91DG9pFhFTGqesFaLZ/O9S7ap
-	 Q3yzwVuxKLVooDm0WsopCkTIgUyWKGs5utJe8nbOQy/cmEO++g5vU48I3+E9SZOqWQg==
+	t=1793214235;
+	b=qijbChD1SuIlOBz15msrpaOo1iUkk5uFhYi2lHV/X1zbEhv/KhX7LH2JHoNFAKvyGb4B
+	 wzx2uJJw96Fa4v3nYz0dTcfKKP8ULUBf7/TaOxQdNoSbMrvj+UxPienKpJGGccVjLSTOU
+	 JuM1l8pU83oV8A+w455kva5bIDIDIUUee6iz/8H+1gXtI7FyR+CRMCnA2NHOcPB08XfQQ
+	 9b+cFTLpJ+31Bxo2kA0sAlXORuEJK+NX+HpfN09fmnGVmQL8LiOgl2LGNFy8DWlCugmHm
+	 HCwkJmTOhBuonUBHy7t0aeqlQZgKlE2F4NDDLzrBQ7/uWOwdH63Cz+yynVBuLvgBrtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214232;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214235;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ie+ea88qX1WYv5Al8j5dG5EFXLU70WwpOvlhPt5djIA=;
-	b=L8nmTOWXWwAZ+BlXQYJwC9Gh1YWEejrCQaVC/BjJQuFVQPgfVluA/2Eh6qjR+wSShBtx
-	 sKplPbODypabE8Fw1MVNnxoiw+JkcVuKKLJzrrRbH8HdbRDsmnfwHfk7gBe/ZO2WnI0FR
-	 cMm5pDbjXe7mKfXbR/vAtiXXuTTldCVmHNkJo58USwaffn9pH1ChqFjUH8+Wid0Wd/ZHi
-	 EeG+DjLv92uPYpOqh5SKjIwbB2X8Dljrl5yyzitcOFIphfLgnHCrYaKYNey1WWXC93RrY
-	 0cERlJymUzD1mNLapEAiNDaAEX8HmWuipPUxPbfkDtiin5sGcHdM2jYOicgGAh7vBQg==
+	bh=1hl6XS0uW9A/1I5B2xLJjj0OBDPJ8QBhc/GWjeGZ1Zg=;
+	b=peK6Jg3u9BnFD3nRLmwyh7GXxPlY2iTjn9FNmYvhE591RFssN45uSZOQsgUfpOLyYv/K
+	 9vVYgj26XrplwmUgJwuQ+IBeTEVr+0jdodigFOgGfJY4kC/Jg6VGPlWi3ig+iTCrJyS38
+	 58tvlhI2iPTWefc0z5DFG0luijodGWezysOugostGUPyGaRQnkWLvwW5jYl6FPBa+32Zx
+	 xY8g7lJkuoKW3YlkaI9ynjfOXhPdV/Qem7AndyL+xdfFEwubq5GPIu5m6oXGoPNccbMMF
+	 5aDxahGI9+4qyWimSVtASYOZVKYfzqpxR+X+VBGkNpAyf7vUBQ3dsTy3TtGYJ5eU9BQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGoPZw+2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6gX6776;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814E3606A329;
-	Wed, 28 Oct 2026 19:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD54606A31D;
+	Wed, 28 Oct 2026 19:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGoPZw+2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47011F01825;
-	Wed, 28 Oct 2026 19:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6gX6776
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3211F01825;
+	Wed, 28 Oct 2026 19:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214232;
-	bh=ie+ea88qX1WYv5Al8j5dG5EFXLU70WwpOvlhPt5djIA=;
+	s=korg; t=1793214235;
+	bh=1hl6XS0uW9A/1I5B2xLJjj0OBDPJ8QBhc/GWjeGZ1Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eGoPZw+2YXdzaYRuAx8TrNRRk6X0HJVkWvq8PqjlKhPFzdklH/9zrODaUdZA4+rCZ
-	 JqbZyIIeooS/EDImdEGaHRvEd8jFYoUzmemCIFR3sLDpLzpBOnHsCzCbyhiN/+FJP8
-	 /4ezLYglOSd+bMua4wvCCxQM4KU/qW4QgYJOXvVo=
+	b=w6gX6776YJvALwkloG3M6/UBPPudGkSSL5QNSj5tHnn7zc+xMDOAoDt2IOWSVlRvv
+	 xiBX25bE9cWniE3zEtqJXdUyNYQ/zbYzNGoaKE+mJle6cvdCZgoFUP18jt6s9ImO+7
+	 G1nPT5EftlaX7C/PTN+CfK5a16z8i191Y9zQLwl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philippe Simons <simons.philippe@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0786/1887] clk: sunxi-ng: h616: Reparent GPU clock during frequency changes
-Date: Wed, 28 Oct 2026 17:48:02 +0100
-Message-ID: <20261028170517.324213703@linuxfoundation.org>
+Subject: [PATCH 6.1 0787/1887] dmaengine: ti: k3-udma-glue: Drop skip_fdq argument from k3_udma_glue_reset_rx_chn
+Date: Wed, 28 Oct 2026 17:48:03 +0100
+Message-ID: <20261028170517.347011590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,101 +70,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philippe Simons <simons.philippe@gmail.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit eb963d7948ce6571939c6875424b557b25f16610 ]
+[ Upstream commit 0da30874729baeb01889b0eca16cfda122687503 ]
 
-The H616 manual does not state that the GPU PLL supports
-dynamic frequency configuration, so we must take extra care when changing
-the frequency. Currently any attempt to do device DVFS on the GPU lead
-to panfrost various ooops, and GPU hangs.
+The user of k3_udma_glue_reset_rx_chn() e.g. ti_am65_cpsw_nuss can
+run on multiple platforms having different DMA architectures.
+On some platforms there can be one FDQ for all flows in the RX channel
+while for others there is a separate FDQ for each flow in the RX channel.
 
-The manual describes the algorithm for changing the PLL
-frequency, which the CPU PLL notifier code already support, so we reuse
-that to reparent the GPU clock to GPU1 clock during frequency
-changes.
+So far we have been relying on the skip_fdq argument of
+k3_udma_glue_reset_rx_chn().
 
-Signed-off-by: Philippe Simons <simons.philippe@gmail.com>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250220113808.1122414-2-simons.philippe@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Instead of relying on the user to provide this information, infer it
+based on DMA architecture during k3_udma_glue_request_rx_chn() and save it
+in an internal flag 'single_fdq'. Use that flag at
+k3_udma_glue_reset_rx_chn() to deicide if the FDQ needs
+to be cleared for every flow or just for flow 0.
+
+Fixes the below issue on ti_am65_cpsw_nuss driver on AM62-SK.
+
+> ip link set eth1 down
+> ip link set eth0 down
+> ethtool -L eth0 rx 8
+> ip link set eth0 up
+> modprobe -r ti_am65_cpsw_nuss
+
+[  103.045726] ------------[ cut here ]------------
+[  103.050505] k3_knav_desc_pool size 512000 != avail 64000
+[  103.050703] WARNING: CPU: 1 PID: 450 at drivers/net/ethernet/ti/k3-cppi-desc-pool.c:33 k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
+[  103.068810] Modules linked in: ti_am65_cpsw_nuss(-) k3_cppi_desc_pool snd_soc_hdmi_codec crct10dif_ce snd_soc_simple_card snd_soc_simple_card_utils display_connector rtc_ti_k3 k3_j72xx_bandgap tidss drm_client_lib snd_soc_davinci_mcas
+p drm_dma_helper tps6598x phylink snd_soc_ti_udma rti_wdt drm_display_helper snd_soc_tlv320aic3x_i2c typec at24 phy_gmii_sel snd_soc_ti_edma snd_soc_tlv320aic3x sii902x snd_soc_ti_sdma sa2ul omap_mailbox drm_kms_helper authenc cfg80211 r
+fkill fuse drm drm_panel_orientation_quirks backlight ip_tables x_tables ipv6 [last unloaded: k3_cppi_desc_pool]
+[  103.119950] CPU: 1 UID: 0 PID: 450 Comm: modprobe Not tainted 6.13.0-rc7-00001-g9c5e3435fa66 #1011
+[  103.119968] Hardware name: Texas Instruments AM625 SK (DT)
+[  103.119974] pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  103.119983] pc : k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
+[  103.148007] lr : k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool]
+[  103.154709] sp : ffff8000826ebbc0
+[  103.158015] x29: ffff8000826ebbc0 x28: ffff0000090b6300 x27: 0000000000000000
+[  103.165145] x26: 0000000000000000 x25: 0000000000000000 x24: ffff0000019df6b0
+[  103.172271] x23: ffff0000019df6b8 x22: ffff0000019df410 x21: ffff8000826ebc88
+[  103.179397] x20: 000000000007d000 x19: ffff00000a3b3000 x18: 0000000000000000
+[  103.186522] x17: 0000000000000000 x16: 0000000000000000 x15: 000001e8c35e1cde
+[  103.193647] x14: 0000000000000396 x13: 000000000000035c x12: 0000000000000000
+[  103.200772] x11: 000000000000003a x10: 00000000000009c0 x9 : ffff8000826eba20
+[  103.207897] x8 : ffff0000090b6d20 x7 : ffff00007728c180 x6 : ffff00007728c100
+[  103.215022] x5 : 0000000000000001 x4 : ffff000000508a50 x3 : ffff7ffff6146000
+[  103.222147] x2 : 0000000000000000 x1 : e300b4173ee6b200 x0 : 0000000000000000
+[  103.229274] Call trace:
+[  103.231714]  k3_cppi_desc_pool_destroy+0xa0/0xa8 [k3_cppi_desc_pool] (P)
+[  103.238408]  am65_cpsw_nuss_free_rx_chns+0x28/0x4c [ti_am65_cpsw_nuss]
+[  103.244942]  devm_action_release+0x14/0x20
+[  103.249040]  release_nodes+0x3c/0x68
+[  103.252610]  devres_release_all+0x8c/0xdc
+[  103.256614]  device_unbind_cleanup+0x18/0x60
+[  103.260876]  device_release_driver_internal+0xf8/0x178
+[  103.266004]  driver_detach+0x50/0x9c
+[  103.269571]  bus_remove_driver+0x6c/0xbc
+[  103.273485]  driver_unregister+0x30/0x60
+[  103.277401]  platform_driver_unregister+0x14/0x20
+[  103.282096]  am65_cpsw_nuss_driver_exit+0x18/0xff4 [ti_am65_cpsw_nuss]
+[  103.288620]  __arm64_sys_delete_module+0x17c/0x25c
+[  103.293404]  invoke_syscall+0x44/0x100
+[  103.297149]  el0_svc_common.constprop.0+0xc0/0xe0
+[  103.301845]  do_el0_svc+0x1c/0x28
+[  103.305155]  el0_svc+0x28/0x98
+[  103.308207]  el0t_64_sync_handler+0xc8/0xcc
+[  103.312384]  el0t_64_sync+0x198/0x19c
+[  103.316040] ---[ end trace 0000000000000000 ]---
+
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20250224-k3-udma-glue-single-fdq-v2-1-cbe7621f2507@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-h616.c | 36 +++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/dma/ti/k3-udma-glue.c            | 15 +++++++++++----
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c |  4 ++--
+ include/linux/dma/k3-udma-glue.h         |  3 +--
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun50i-h616.c b/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
-index e52f94822aff8..5831bcfbe5002 100644
---- a/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun50i-h616.c
-@@ -318,10 +318,16 @@ static SUNXI_CCU_M_WITH_MUX_GATE(gpu0_clk, "gpu0", gpu0_parents, 0x670,
- 				       24, 1,	/* mux */
- 				       BIT(31),	/* gate */
- 				       CLK_SET_RATE_PARENT);
-+
-+/*
-+ * This clk is needed as a temporary fall back during GPU PLL freq changes.
-+ * Set CLK_IS_CRITICAL flag to prevent from being disabled.
-+ */
-+#define SUN50I_H616_GPU_CLK1_REG        0x674
- static SUNXI_CCU_M_WITH_GATE(gpu1_clk, "gpu1", "pll-periph0-2x", 0x674,
- 					0, 2,	/* M */
- 					BIT(31),/* gate */
--					0);
-+					CLK_IS_CRITICAL);
- 
- static SUNXI_CCU_GATE(bus_gpu_clk, "bus-gpu", "psi-ahb1-ahb2",
- 		      0x67c, BIT(0), 0);
-@@ -1103,6 +1109,19 @@ static struct ccu_pll_nb sun50i_h616_pll_cpu_nb = {
- 	.lock		= BIT(28),
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index a739e60b07648..2d18463a6a582 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -83,6 +83,7 @@ struct k3_udma_glue_rx_channel {
+ 	struct k3_udma_glue_rx_flow *flows;
+ 	u32 flow_num;
+ 	u32 flows_ready;
++	bool single_fdq;	/* one FDQ for all flows */
  };
  
-+static struct ccu_mux_nb sun50i_h616_gpu_nb = {
-+	.common		= &gpu0_clk.common,
-+	.cm		= &gpu0_clk.mux,
-+	.delay_us	= 1, /* manual doesn't really say */
-+	.bypass_index	= 1, /* GPU_CLK1@400MHz */
-+};
-+
-+static struct ccu_pll_nb sun50i_h616_pll_gpu_nb = {
-+	.common		= &pll_gpu_clk.common,
-+	.enable		= BIT(29),	/* LOCK_ENABLE */
-+	.lock		= BIT(28),
-+};
-+
- static int sun50i_h616_ccu_probe(struct platform_device *pdev)
+ static void k3_udma_chan_dev_release(struct device *dev)
+@@ -896,10 +897,13 @@ k3_udma_glue_request_rx_chn_priv(struct device *dev, const char *name,
+ 
+ 	ep_cfg = rx_chn->common.ep_config;
+ 
+-	if (xudma_is_pktdma(rx_chn->common.udmax))
++	if (xudma_is_pktdma(rx_chn->common.udmax)) {
+ 		rx_chn->udma_rchan_id = ep_cfg->mapped_channel_id;
+-	else
++		rx_chn->single_fdq = false;
++	} else {
+ 		rx_chn->udma_rchan_id = -1;
++		rx_chn->single_fdq = true;
++	}
+ 
+ 	/* request and cfg UDMAP RX channel */
+ 	rx_chn->udma_rchanx = xudma_rchan_get(rx_chn->common.udmax,
+@@ -1060,6 +1064,9 @@ k3_udma_glue_request_remote_rx_chn(struct device *dev, const char *name,
+ 		rx_chn->common.chan_dev.dma_coherent = true;
+ 		dma_coerce_mask_and_coherent(&rx_chn->common.chan_dev,
+ 					     DMA_BIT_MASK(48));
++		rx_chn->single_fdq = false;
++	} else {
++		rx_chn->single_fdq = true;
+ 	}
+ 
+ 	ret = k3_udma_glue_allocate_rx_flows(rx_chn, cfg);
+@@ -1321,7 +1328,7 @@ EXPORT_SYMBOL_GPL(k3_udma_glue_tdown_rx_chn);
+ 
+ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 		u32 flow_num, void *data,
+-		void (*cleanup)(void *data, dma_addr_t desc_dma), bool skip_fdq)
++		void (*cleanup)(void *data, dma_addr_t desc_dma))
  {
- 	void __iomem *reg;
-@@ -1151,6 +1170,14 @@ static int sun50i_h616_ccu_probe(struct platform_device *pdev)
- 	val &= ~(GENMASK(21, 16) | BIT(0));
- 	writel(val | (11 << 16) | BIT(0), reg + SUN50I_H616_PLL_AUDIO_REG);
+ 	struct k3_udma_glue_rx_flow *flow = &rx_chn->flows[flow_num];
+ 	struct device *dev = rx_chn->common.dev;
+@@ -1333,7 +1340,7 @@ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 	dev_dbg(dev, "RX reset flow %u occ_rx %u\n", flow_num, occ_rx);
  
-+	/*
-+	 * Set the input-divider for the gpu1 clock to 3, to reach a safe 400 MHz.
-+	 */
-+	val = readl(reg + SUN50I_H616_GPU_CLK1_REG);
-+	val &= ~GENMASK(1, 0);
-+	val |= 2;
-+	writel(val, reg + SUN50I_H616_GPU_CLK1_REG);
-+
+ 	/* Skip RX FDQ in case one FDQ is used for the set of flows */
+-	if (skip_fdq)
++	if (rx_chn->single_fdq && flow_num)
+ 		goto do_reset;
+ 
  	/*
- 	 * First clock parent (osc32K) is unusable for CEC. But since there
- 	 * is no good way to force parent switch (both run with same frequency),
-@@ -1171,6 +1198,13 @@ static int sun50i_h616_ccu_probe(struct platform_device *pdev)
- 	/* Re-lock the CPU PLL after any rate changes */
- 	ccu_pll_notifier_register(&sun50i_h616_pll_cpu_nb);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 450fd4fb58d1a..a4184e9dddf15 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -514,7 +514,7 @@ static int am65_cpsw_nuss_common_stop(struct am65_cpsw_common *common)
+ 	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
+ 		k3_udma_glue_reset_rx_chn(common->rx_chns.rx_chn, i,
+ 					  &common->rx_chns,
+-					  am65_cpsw_nuss_rx_cleanup, !!i);
++					  am65_cpsw_nuss_rx_cleanup);
  
-+	/* Reparent GPU during GPU PLL rate changes */
-+	ccu_mux_notifier_register(pll_gpu_clk.common.hw.clk,
-+				  &sun50i_h616_gpu_nb);
-+
-+	/* Re-lock the GPU PLL after any rate changes */
-+	ccu_pll_notifier_register(&sun50i_h616_pll_gpu_nb);
-+
- 	return 0;
- }
+ 	k3_udma_glue_disable_rx_chn(common->rx_chns.rx_chn);
  
+@@ -2583,7 +2583,7 @@ static int am65_cpsw_nuss_register_ndevs(struct am65_cpsw_common *common)
+ 
+ 	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
+ 		k3_udma_glue_reset_rx_chn(rx_chan->rx_chn, i, rx_chan,
+-					  am65_cpsw_nuss_rx_cleanup, !!i);
++					  am65_cpsw_nuss_rx_cleanup);
+ 
+ 	k3_udma_glue_disable_rx_chn(rx_chan->rx_chn);
+ 
+diff --git a/include/linux/dma/k3-udma-glue.h b/include/linux/dma/k3-udma-glue.h
+index e443be4d3b4b7..a76f1c09a884a 100644
+--- a/include/linux/dma/k3-udma-glue.h
++++ b/include/linux/dma/k3-udma-glue.h
+@@ -130,8 +130,7 @@ void k3_udma_glue_rx_put_irq(struct k3_udma_glue_rx_channel *rx_chn,
+ 			     u32 flow_num);
+ void k3_udma_glue_reset_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 		u32 flow_num, void *data,
+-		void (*cleanup)(void *data, dma_addr_t desc_dma),
+-		bool skip_fdq);
++		void (*cleanup)(void *data, dma_addr_t desc_dma));
+ int k3_udma_glue_rx_flow_enable(struct k3_udma_glue_rx_channel *rx_chn,
+ 				u32 flow_idx);
+ int k3_udma_glue_rx_flow_disable(struct k3_udma_glue_rx_channel *rx_chn,
 -- 
 2.53.0
 
