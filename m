@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215239;
-	b=kFe1YKeaQyq+1eWa5U4Or/SmXzhMu597twFFQ+EVJGnTWFOy944+VK45ahTGj3RRUhJ2
-	 uEkl0nK1jh9TqK2g73lVEAtVnMfuDcEEiUKiWZWBwUSvi5MfzXTEXgicKwEmumOpG/0Ap
-	 xrNs5RrsZRS3gIOMvW+I85rnIL0qPY2Rku6bug3Qj86Df18JwRQraU39Cb/uA2+d8B4ve
-	 s1vml7NgD5h7TQBojIe8uaBAW+/AUXELB4G74KKLk/YyY3qDkwB1R32VHBEwwMT7m92zs
-	 1fM+EKt/Z5IU0xamt8Wdne8L7MfoeuMMEnQoMqf+8vUAzNaL3qcpsrKr6GRJOWleU7Q==
+	t=1793215241;
+	b=GUqYSk1r5plnY4vXp64grhwB7TULSZ1nFgsLKF424d1EPoM5rzHZsv+a0pJBPsX/hbKi
+	 ShabYQb3lcL3jjyxsuBg66kmdU9TzgVgQnzfQwck9GUc/t9QRC983po8wgSjbwWEAOyBv
+	 m4dawvk1phwWp3ts9g1F8cevyDMAyI95m11VUQULn/CCWXg3pNHf+FnnX4NRI6PeyoBOn
+	 pSul8vkra5g/PWXtJR2fUgyssTbthvTjaOYoYHF5jJD270W8IULuaxqu4IyqWkIp9pwzl
+	 BCJFIPZSD/GEFEPOaVDqmL4+VNtEJ6E9JG30DZTK56KD2+cwR5xbCfpWv5L8ojBukyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215239;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7+27MriC8M3M4/j6MdlP4mKZcOVmVZsUXQLpglrn8+U=;
-	b=OpIHPTturRS2hhiIolrOwEYI0qp2AZH/ai2UY2p/fcIti6mjENOI4FO6jqedG7Cc867D
-	 EaPODt8CXbplLl7Sq/5aO77d6+/IieVaDO+tTdIMgC24GzgooZLQQpk7Zqh2ek7nAlsk4
-	 cLLe7vXbuNdyODxZiMcBNyz30kuhpaFIXdwfrDdjyJyiH90F2MAkEESsLw62zLyaKZ/M+
-	 zoPyAtMyvqdjVoNNL1HBfhjXU2h5MyzrwgVHqycbyvEy7+flI59RwniUabZnDALRY218I
-	 xWveQanf9neEjzs3adx+V1w0ep9LMYKjHVUWsaJDOooG6ar9CF5QOnITR3CnXdG2eFQ==
+	bh=Q+cervjzq7L8A4bPCDJQjnA/5fR4vT9MPqUuLaFBazQ=;
+	b=C39hOqOA2DN3RR8mODHzuWGC6MEg8Jp74+sXuZzzjS28XDHPMMz+XWFjjVxbB1yZMrnl
+	 1fNkSvTbZHfXdGDIOuBRaerChRZRJ9lMKIGl1g7DT8h4sNBSUfIBYEWV6OIabGz/cAWEM
+	 LHdpLIIdAMFIiG9HFDR74zxQoCbWGmq36Aihdkheg3aBe8DK/P3wkYEyt1k/ed51znp+C
+	 filGAcqKhKPnatW0AGJ6z2V6HnZoGK5ks9ZPXfrfWXAdbAUPeCzeZuEID17x7ME9jgWnz
+	 mJLCQVxsR1uM97RrKsas6uq2crHAFxZzOGAiVHlwKpYSKIzUmiBMYQ4BgAS5ctkW81Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3Tp4PFr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nSDPgxvm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEA2606A31A;
-	Wed, 28 Oct 2026 19:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9C7606A31A;
+	Wed, 28 Oct 2026 19:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3Tp4PFr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DE41F01825;
-	Wed, 28 Oct 2026 19:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nSDPgxvm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE9601F01825;
+	Wed, 28 Oct 2026 19:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215238;
-	bh=7+27MriC8M3M4/j6MdlP4mKZcOVmVZsUXQLpglrn8+U=;
+	s=korg; t=1793215241;
+	bh=Q+cervjzq7L8A4bPCDJQjnA/5fR4vT9MPqUuLaFBazQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w3Tp4PFrdf23VFB1+vlfZHKnLG9trH2gg81OORk32S8oj39IpLnqCFpRX9nWLE4k/
-	 3a3STOoEmuyd6crIOcY2KL/EVl8dt2K2B2VAmXYDZOPIxEsNvh+jg7ZI3ICCu4EC+2
-	 F9gKYm2Rqgh2HhoEXijgjulBKVI1WKxYy4QODKwQ=
+	b=nSDPgxvmFuL9KUy+mcMn4zmobgKqMH0qnseQAQF68lABtSjOtYwfIJUVwAeyTZPR+
+	 vcqqy8CvndUdNMtVk7BDax99hFCrOhw90GHuBOvNMJRJjIuAqQhu2dxEldJbNxNb+e
+	 UV7vVfz1fkU+29hN6DkbxfBv5ckoQctwmFhLdOUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingwang Xiang <v3rdant.xiang@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Maksim Lukoshkov <maksim.lukoshkov@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1134/1887] bpf, skmsg: fix verdict sk_data_ready racing with ktls rx
-Date: Wed, 28 Oct 2026 17:53:50 +0100
-Message-ID: <20261028170525.210326672@linuxfoundation.org>
+Subject: [PATCH 6.1 1143/1887] crypto: qat - protect service table iterations with service_lock
+Date: Wed, 28 Oct 2026 17:53:59 +0100
+Message-ID: <20261028170525.417557534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,78 +70,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingwang Xiang <v3rdant.xiang@gmail.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit ddf8029623a1af20e984c040e89ff918158397ab ]
+[ Upstream commit 5c6f845e77ec35f9b7b047cc8f9789bf397cdd3e ]
 
-sk_psock_strp_data_ready() already checks tls_sw_has_ctx_rx() and
-defers to psock->saved_data_ready when a TLS RX context is present,
-avoiding a conflict with the TLS strparser's ownership of the receive
-queue (commit e91de6afa81c, "bpf: Fix running sk_skb program types
-with ktls").
+The service_table list is protected by service_lock when entries are
+added or removed (in adf_service_add() and adf_service_remove()), but
+several functions iterate over the list without holding this lock.
 
-sk_psock_verdict_data_ready() has no equivalent guard.  When a socket
-is inserted into a sockmap (BPF_SK_SKB_VERDICT) before TLS RX is
-configured, tls_sw_strparser_arm() saves sk_psock_verdict_data_ready
-as rx_ctx->saved_data_ready.  On data arrival:
+A concurrent adf_service_register() or adf_service_unregister() call
+could modify the list during traversal, leading to list corruption or
+a use-after-free.
 
-  tls_data_ready -> tls_strp_data_ready -> tls_rx_msg_ready
-    -> saved_data_ready() = sk_psock_verdict_data_ready()
-      -> tcp_read_skb() drains sk_receive_queue via __skb_unlink()
-         without calling tcp_eat_skb(), so copied_seq is not advanced.
+Fix this by holding service_lock across all list_for_each_entry()
+iterations of service_table in adf_dev_init(), adf_dev_start(),
+adf_dev_stop(), adf_dev_shutdown(), adf_dev_restarting_notify(),
+adf_dev_restarted_notify(), and adf_error_notifier().
 
-tls_strp_msg_load() then finds tcp_inq() >= full_len (stale), calls
-tcp_recv_skb() on the now-empty queue, hits WARN_ON_ONCE(!first), and
-returns with rx_ctx->strp.anchor.frag_list pointing at a psock-owned
-(potentially freed) skb.  tls_decrypt_sg() subsequently walks that
-frag_list: use-after-free.
+The lock ordering is safe: callers of the static helpers (adf_dev_up()
+and adf_dev_down()) acquire state_lock before service_lock, and no
+event_hld callback or service_lock holder ever acquires state_lock in
+the reverse order.
 
-Apply the same fix as sk_psock_strp_data_ready(): if a TLS RX context
-is present, call psock->saved_data_ready (sock_def_readable) to wake
-recv() waiters and return immediately, leaving the receive queue
-untouched.  TLS retains sole ownership of the queue and decrypts the
-record normally through tls_sw_recvmsg().
-
-Fixes: ef5659280eb1 ("bpf, sockmap: Allow skipping sk_skb parser program")
-Signed-off-by: Xingwang Xiang <v3rdant.xiang@gmail.com>
-Link: https://patch.msgid.link/20260517145630.20521-2-v3rdant.xiang@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Co-developed-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
+Signed-off-by: Maksim Lukoshkov <maksim.lukoshkov@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/crypto/qat/qat_common/adf_init.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 8163bcf574f01..02d3f2ddd25d0 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1267,10 +1267,17 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
- static void sk_psock_verdict_data_ready(struct sock *sk)
- {
- 	const struct proto_ops *ops = NULL;
-+	struct sk_psock *psock;
- 	struct socket *sock;
- 	int copied;
+diff --git a/drivers/crypto/qat/qat_common/adf_init.c b/drivers/crypto/qat/qat_common/adf_init.c
+index 9d54dc3beafd5..c397c58bd4a96 100644
+--- a/drivers/crypto/qat/qat_common/adf_init.c
++++ b/drivers/crypto/qat/qat_common/adf_init.c
+@@ -136,16 +136,19 @@ int adf_dev_init(struct adf_accel_dev *accel_dev)
+ 	 * This is to facilitate any ordering dependencies between services
+ 	 * prior to starting any of the accelerators.
+ 	 */
++	mutex_lock(&service_lock);
+ 	list_for_each(list_itr, &service_table) {
+ 		service = list_entry(list_itr, struct service_hndl, list);
+ 		if (service->event_hld(accel_dev, ADF_EVENT_INIT)) {
+ 			dev_err(&GET_DEV(accel_dev),
+ 				"Failed to initialise service %s\n",
+ 				service->name);
++			mutex_unlock(&service_lock);
+ 			return -EFAULT;
+ 		}
+ 		set_bit(accel_dev->accel_id, service->init_status);
+ 	}
++	mutex_unlock(&service_lock);
  
- 	rcu_read_lock();
-+	psock = sk_psock(sk);
-+	if (psock && tls_sw_has_ctx_rx(sk)) {
-+		psock->saved_data_ready(sk);
-+		rcu_read_unlock();
-+		return;
-+	}
- 	sock = READ_ONCE(sk->sk_socket);
- 	if (likely(sock))
- 		ops = READ_ONCE(sock->ops);
-@@ -1280,8 +1287,6 @@ static void sk_psock_verdict_data_ready(struct sock *sk)
+ 	return 0;
+ }
+@@ -190,16 +193,19 @@ int adf_dev_start(struct adf_accel_dev *accel_dev)
+ 		return -EFAULT;
+ 	}
  
- 	copied = ops->read_skb(sk, sk_psock_verdict_recv);
- 	if (copied >= 0) {
--		struct sk_psock *psock;
--
- 		rcu_read_lock();
- 		psock = sk_psock(sk);
- 		if (psock)
++	mutex_lock(&service_lock);
+ 	list_for_each(list_itr, &service_table) {
+ 		service = list_entry(list_itr, struct service_hndl, list);
+ 		if (service->event_hld(accel_dev, ADF_EVENT_START)) {
+ 			dev_err(&GET_DEV(accel_dev),
+ 				"Failed to start service %s\n",
+ 				service->name);
++			mutex_unlock(&service_lock);
+ 			return -EFAULT;
+ 		}
+ 		set_bit(accel_dev->accel_id, service->start_status);
+ 	}
++	mutex_unlock(&service_lock);
+ 
+ 	clear_bit(ADF_STATUS_STARTING, &accel_dev->status);
+ 	set_bit(ADF_STATUS_STARTED, &accel_dev->status);
+@@ -249,6 +255,7 @@ void adf_dev_stop(struct adf_accel_dev *accel_dev)
+ 	}
+ 	clear_bit(ADF_STATUS_CRYPTO_ALGS_REGISTERED, &accel_dev->status);
+ 
++	mutex_lock(&service_lock);
+ 	list_for_each(list_itr, &service_table) {
+ 		service = list_entry(list_itr, struct service_hndl, list);
+ 		if (!test_bit(accel_dev->accel_id, service->start_status))
+@@ -261,6 +268,7 @@ void adf_dev_stop(struct adf_accel_dev *accel_dev)
+ 			clear_bit(accel_dev->accel_id, service->start_status);
+ 		}
+ 	}
++	mutex_unlock(&service_lock);
+ 
+ 	if (wait)
+ 		msleep(100);
+@@ -307,6 +315,7 @@ void adf_dev_shutdown(struct adf_accel_dev *accel_dev)
+ 				  &accel_dev->status);
+ 	}
+ 
++	mutex_lock(&service_lock);
+ 	list_for_each(list_itr, &service_table) {
+ 		service = list_entry(list_itr, struct service_hndl, list);
+ 		if (!test_bit(accel_dev->accel_id, service->init_status))
+@@ -318,6 +327,7 @@ void adf_dev_shutdown(struct adf_accel_dev *accel_dev)
+ 		else
+ 			clear_bit(accel_dev->accel_id, service->init_status);
+ 	}
++	mutex_unlock(&service_lock);
+ 
+ 	hw_data->disable_iov(accel_dev);
+ 
+@@ -347,6 +357,7 @@ int adf_dev_restarting_notify(struct adf_accel_dev *accel_dev)
+ 	struct service_hndl *service;
+ 	struct list_head *list_itr;
+ 
++	mutex_lock(&service_lock);
+ 	list_for_each(list_itr, &service_table) {
+ 		service = list_entry(list_itr, struct service_hndl, list);
+ 		if (service->event_hld(accel_dev, ADF_EVENT_RESTARTING))
+@@ -354,6 +365,7 @@ int adf_dev_restarting_notify(struct adf_accel_dev *accel_dev)
+ 				"Failed to restart service %s.\n",
+ 				service->name);
+ 	}
++	mutex_unlock(&service_lock);
+ 	return 0;
+ }
+ 
+@@ -362,6 +374,7 @@ int adf_dev_restarted_notify(struct adf_accel_dev *accel_dev)
+ 	struct service_hndl *service;
+ 	struct list_head *list_itr;
+ 
++	mutex_lock(&service_lock);
+ 	list_for_each(list_itr, &service_table) {
+ 		service = list_entry(list_itr, struct service_hndl, list);
+ 		if (service->event_hld(accel_dev, ADF_EVENT_RESTARTED))
+@@ -369,6 +382,7 @@ int adf_dev_restarted_notify(struct adf_accel_dev *accel_dev)
+ 				"Failed to restart service %s.\n",
+ 				service->name);
+ 	}
++	mutex_unlock(&service_lock);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
