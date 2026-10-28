@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210184;
-	b=zjAuUTlbLbBbMP9bLa5A0sORAeHPZei/z+UcC7bKWnpz36RURXIyJzzyOmo7WnC/U2D2
-	 f/qbb3yUg3PW7q2KFrSiqjdolNSyzwhlqd2hEqF49MXzNTin7caWeT5yjq39jJGILT1vM
-	 tdAZOw/hpVFQrCLkowmk8z4MBM9lmV8AlpTNocldlBQ7i/BxWifht7Iwi2BNMS0xaw4fW
-	 BLsQIPd0obvTej4sLc7RyhXxyYVt+/APEkIaLi/g/ptmcpG6Em8/AXnbNTrSrT16PsIZI
-	 rozRAewo9DTn7JUmE9ZTGr0ePeDyxN2RnkKn5GF4Hyn+gocjQQJi+FXOZKlifSLoTrQ==
+	t=1793210187;
+	b=YOdneKml6me9MsrEK9SkNbnDMZSQdV22h4JyqSVY5HMZ7yVXyj1Wc1Eb8wXaHPbf26ap
+	 XdrKDVPGkPJOnC5Cx0ETv65gchL3qAb/qMo0UGa92Gq0/gFN8X5P33E1qdJM8JjoXatqq
+	 2DcbzQq//kfNCKWxbzYwoE/V5zQ4YtjnE0dvogV94IXmkqfb5veqNX4A2DxAmR5+MJ2jF
+	 mNt05tRNIqGvQQ/Q1loT82oqy6Myg4olqxyuvikYhWcp0ZTlzQhs3VusGAFcVQdhS3apb
+	 HecBRzQ1y8KteVPQF5gXko28tBLGShfF0cVuC5nocEmYhCfql1Ad5+Tm7WePI0a2IZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210184;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210187;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z4eEcje/jBPh1eSZxaNvdFWNxqvLh6xh0hRIqiq4f5g=;
-	b=0e59/scw/SX9v6vjVwVc0lrKabkYeomxg2CEOIPbs79ZVlTMYQdGNH96/K57ckrjh5AV
-	 vShVI20KNa12hLRLXmjlviUIvVxCjBkQwSmlLvBelR0NcO/6QGej30zJB3MUh3x42tkCG
-	 zYGWXMhAPrL0or1JqTXajb3I/BSrFKAX6YT5Kk2xo227nZ5z/6e+3zVABJnn/1i+ibsuR
-	 bm+k16GG0fdRMrwNM4b0h4DWHX6QAf3Et6IaytxHVkHVSUJREK1sBrt+9SFYuaumYVYmi
-	 ihRCzTIxrsKD+m3x8Ev1qn5gFV7enRAR21/wiWroI0R/cOPtp9xAooiniI9HJfikn9Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=9n/5/N3wzVShK0/ISRXpX6uSSJ5plj6f5rTOhZPmp0Q=;
+	b=nNn9DQIxJnmVthHKvHVrbe7k3FHYmmYG6C67IitUy4RkL16XY3RpqQEKVPqR6IiRuPLO
+	 iuc+KC1xwVgLG3GuvHdMD9VsVbDHsPm4Cwfq+9aQIKFhmcppKQxgrfSfT08U+GYB8q9pn
+	 9v4fmeCkFx3zmhATVoz9xTQ1A4BujAY9eZhPWJnT2DtxONE+2PIZse7qFZU5tkuP+udwd
+	 o7r0BYAdkEcKgwufpltSPPVlxkbGcuO2O7nhn2TDZYP4/H13vYZHxeKpRUWnn7bl1x+Kz
+	 /Mh2kts5YQ/f1tLOTOMjSl/Bxnyu6b6tdcZvXEqBAHuyjeawiIXe7T+u2+QaoolRaXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgLTNie7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihoNsxnL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FD760A380B;
-	Wed, 28 Oct 2026 17:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE1060A3811;
+	Wed, 28 Oct 2026 17:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YgLTNie7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7501F01825;
-	Wed, 28 Oct 2026 17:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihoNsxnL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE681F01825;
+	Wed, 28 Oct 2026 17:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210184;
-	bh=Z4eEcje/jBPh1eSZxaNvdFWNxqvLh6xh0hRIqiq4f5g=;
+	s=korg; t=1793210187;
+	bh=9n/5/N3wzVShK0/ISRXpX6uSSJ5plj6f5rTOhZPmp0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YgLTNie7Iv1gASqrIBvTyvI2ehKDUVUnN/56xJkPyyh/aWleWayUBO0s6MqV1LEbR
-	 CyHn4VN7k1pCwBsNOgVnEZGurKQla0QiW4/e15IPeIaK+aKBt8qdm8VvD1MD2X3o26
-	 JEoBFAi9kHz+NW+BWoQeg7ttDidrTsVIK774wDMY=
+	b=ihoNsxnLySxUdVibp0a3aGVKTVsTRdLR2WuaJXeA1OEvitx3UutwhJpyiDi2qbB4n
+	 cm5IcNdqP02h9DMrDxm3U6afbHmuP+alA5tEUOWHVp5HNdQBofP7HegJUEQw/GCexK
+	 gSVCpo/J5BNPE3X9U8XbkS23z0BckWAWBnGLeSK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Klein <aksecurity@gmail.com>,
-	Noam Caspi <noam.caspi@mail.huji.ac.il>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
+	David Carlier <devnexen@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Ting-Han Hou <ue081723@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/168] ipv4: udp: Create exceptions before socket matching
-Date: Wed, 28 Oct 2026 18:00:43 +0100
-Message-ID: <20261028165945.621553924@linuxfoundation.org>
+Subject: [PATCH 6.6 108/168] gtp: disable BH before calling udp_tunnel_xmit_skb()
+Date: Wed, 28 Oct 2026 18:00:44 +0100
+Message-ID: <20261028165945.645543028@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -65,94 +63,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 4c3499f79f8c7e8561266bcc220a18538cec0458 ]
+[ Upstream commit 5638504a2aa9e1b9d72af9060df1a160cce2d379 ]
 
-Currently, when ICMP Fragmentation Needed and Redirect Message packets
-are locally delivered and quote a UDP packet, a FIB nexthop exception
-(FNHE) is only created if the kernel can match the UDP packet to an
-existing socket.
+gtp_genl_send_echo_req() runs as a generic netlink doit handler in
+process context with BH not disabled. It calls udp_tunnel_xmit_skb(),
+which eventually invokes iptunnel_xmit() — that uses __this_cpu_inc/dec
+on softnet_data.xmit.recursion to track the tunnel xmit recursion level.
 
-This behavior allows off-path attackers to conduct a side-channel attack
-on the FNHE cache in order to discover the ephemeral port used by a
-connected UDP socket.
+Without local_bh_disable(), the task may migrate between
+dev_xmit_recursion_inc() and dev_xmit_recursion_dec(), breaking the
+per-CPU counter pairing. The result is stale or negative recursion
+levels that can later produce false-positive
+SKB_DROP_REASON_RECURSION_LIMIT drops on either CPU.
 
-Commit 6457378fe796 ("ipv4: use siphash instead of Jenkins in
-fnhe_hashfun()") and commit 67d6d681e15b ("ipv4: make exception cache
-less predictible") tried to mitigate such attacks by making it harder
-for attackers to discover hash collisions in the FNHE cache and by
-randomizing the number of exceptions a hash bucket can hold,
-respectively. Unfortunately, both of the mitigations can be bypassed.
+The other udp_tunnel_xmit_skb() call sites in gtp.c are unaffected:
+the data path runs under ndo_start_xmit and the echo response handlers
+run from the UDP encap rx softirq, both with BH already disabled.
 
-Instead, mitigate such attacks by always creating a FNHE, even before
-trying to find a matching socket. Do that by calling ipv4_update_pmtu()
-and ipv4_redirect(), the helpers used when the quoted packet did not
-originate from a socket.
+Fix it by disabling BH around the udp_tunnel_xmit_skb() call, mirroring
+commit 2cd7e6971fc2 ("sctp: disable BH before calling
+udp_tunnel_xmit_skb()").
 
-This means that guesses (right or wrong) from an off-path attacker will
-always result in a FNHE being created or updated in the cache that the
-attacker can observe.
-
-Pass an oif of 0, in a similar fashion to icmp_err(). This is also the
-oif used by the socket path for sockets that are not bound to a device.
-
-Note that this does not allow attackers to create FNHEs that they could
-not create before, as both helpers can already be reached with little to
-no validation. For example, by sending an ICMP error that quotes an ICMP
-Echo Reply or one that quotes a UDP source port that matches a wildcard
-socket.
-
-Also note that in the good case (matched socket) the above scheme comes
-at the cost of an extra route lookup, as the no socket helpers perform
-their own lookup before the one performed by ipv4_sk_update_pmtu() /
-ipv4_sk_redirect(). When the two resolve to different nexthops, it also
-results in two exceptions being created for the same destination IP. One
-in the FNHE cache of the nexthop resolved by the no socket helpers and
-another in the FNHE cache of the nexthop used by the socket.
-
-Fixes: 4895c771c7f0 ("ipv4: Add FIB nexthop exceptions.")
+Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
 Cc: stable@vger.kernel.org
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Reported-by: Noam Caspi <noam.caspi@mail.huji.ac.il>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260828192344.2596928-3-idosch@nvidia.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260417055408.4667-1-devnexen@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: inlined udp_err_update_exception() into the existing udp_err() wrapper ]
+[ Ting-Han: this tree does not have commit e3411e326fa4 ("net: ipv4: Add a
+  flags argument to iptunnel_xmit(), udp_tunnel_xmit_skb()") or commit
+  1bec9d0c0046 ("ipv4: Convert ->flowi4_tos to dscp_t."), so the
+  udp_tunnel_xmit_skb() call differs in context; the change is the same ]
+Assisted-by: LLM
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/gtp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 86a1b2c9e71fe..8ceaeef5c184c 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -870,7 +870,16 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index f0ee46d3c873e..39515aba86e68 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1827,6 +1827,7 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
+ 		return -ENODEV;
+ 	}
  
- int udp_err(struct sk_buff *skb, u32 info)
- {
--	return __udp4_lib_err(skb, info, dev_net(skb->dev)->ipv4.udp_table);
-+	const int type = icmp_hdr(skb)->type;
-+	const int code = icmp_hdr(skb)->code;
-+	struct net *net = dev_net(skb->dev);
-+
-+	if (type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED)
-+		ipv4_update_pmtu(skb, net, info, 0, IPPROTO_UDP);
-+	else if (type == ICMP_REDIRECT)
-+		ipv4_redirect(skb, net, 0, IPPROTO_UDP);
-+
-+	return __udp4_lib_err(skb, info, net->ipv4.udp_table);
++	local_bh_disable();
+ 	udp_tunnel_xmit_skb(rt, sk, skb_to_send,
+ 			    fl4.saddr, fl4.daddr,
+ 			    fl4.flowi4_tos,
+@@ -1836,6 +1837,7 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
+ 			    !net_eq(sock_net(sk),
+ 				    dev_net(gtp->dev)),
+ 			    false);
++	local_bh_enable();
+ 	return 0;
  }
  
- /*
 -- 
 2.53.0
 
