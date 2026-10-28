@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216361;
-	b=Ye39PMsSMkBEZdyvZds2whotnSbAhmkIC+/8tPCZ3lGxPaDC4Nww8eth2N43PlOmBJjA
-	 K0dX39taXSADGtLZS/OJ0CSxPBE6vZreoJbJmMyatFNENE61WlZTUFBNjo/XVvMI21qbi
-	 QxGHtDqA+QoDuKdBM31jla5s3x0puKRKFOcj+Y/3om1mF+5ldnmlDbl7BH4X6bK6LMuv6
-	 TeiYRrc2eoDdP4oLyguQhEqOA3UwMMrdd5PyGBeeg782GMQcwrGCVJmDaW/PaekBoGQxb
-	 E3yzCXQJVIPLk32oE80+ILBaEqsrKCHM9hFftp2boZYKNpXhJYztVluFk5SWazzy+Tw==
+	t=1793216365;
+	b=nzLDgF3RRVBRihEeUI6n5wMj6yuWDpvngoJSFDZwKILtQ+UiQo+LrQExuQuBhkCxL05/
+	 VdexgRodkyj10eQGc36DamgEmqqhhy4G+akp+GBxKMMKPQgsfO4MEiW2LwyWnvnqD8qUe
+	 ninEBj/ZemEba1cUQQ6l2BvxxucO4XGDOfN+VIVPe5GZEQs/kTerIch5UDC2hYN+0c87R
+	 NyyEjLy8rBtdAS/lR5e0Uy5a5UR6X/l6FwMYBj5Scp20M574jw05oIIK9bEw2zuV9N1ah
+	 rZ5JRsBCvckVf8o27gLD1Zd9GXNGdtEyqcjKRUMrmlLMEkvvtW0LSc+T9+gRSYtH7yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hRm/NNZA0s3haJPKJc6U3ZQH7BeydrrRFajwxWfDmxA=;
-	b=OXNbLF7O7pRAFTbfOpTZMUch4bYtjtSaPtMeoB1YCxftx2zWx4H7aRA+aPG/yoT3snKj
-	 SfNLsFvAV3zIZxkHCQJtvmLQ3WnMGDR+h7+l6L/1UnS7v6ufgC/H4GBWQQGHehGC8+/A9
-	 9yd1sVzAjDbbd0EZNWX3Tx/sqnJkpTVLICDbaCfx12ki/l3xHC/ZvSg+N6NKI3U2dJf7B
-	 9eEyNqZII3afZLr/3SiP9fYnqM5s7HHF42nV0RNKwiilltoMt7BVN/qsk3ZcEiRKUlMeu
-	 IC+LQeitkzZgNDsiFybQgCGHUrIVvns8t9e76u9FULZpU1BpZ8xjB7re/ZwshOzymcw==
+	bh=nqw5lS7SB786aP29O0mkLDRA0sEOrHLRYAhx+HRNGXA=;
+	b=ywb1QJ1iuQy/sdRQIY7dqz9eUWIfDsVTf/bpPCC26BOAlj2i51s61TL7ywIAEbauxzxx
+	 Rcb3qIQNz2tVBz3zTVm2M2kJsAOjO9fTRYAoLVv+jt4RrYAsG0rsKtjJaqvaASVJlYGCG
+	 HNm03EJn2rNnMzv9iUfRNQZ8ga/r2UgTGmgaoFDUJSgqIwjCDnymwhj6eja2h6OYFEa2q
+	 iSp1V66tSvrtvOMsH/x7C2ZVYxclC1wB2w+rrz64HBfieAPlD0Z4NDz8VJ+s/O/Nn5fD+
+	 TuYCCv2VpWMlBLwSjo8iyCvyphC+2JF0E4Yuu4upGMAWj4Ji5f7wsqWDlXYMbVnwFaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6BFEym3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V0Z3d2Yn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993E2606A31D;
-	Wed, 28 Oct 2026 19:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE64D606A31A;
+	Wed, 28 Oct 2026 19:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6BFEym3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A091F01825;
-	Wed, 28 Oct 2026 19:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V0Z3d2Yn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246FB1F01825;
+	Wed, 28 Oct 2026 19:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216361;
-	bh=hRm/NNZA0s3haJPKJc6U3ZQH7BeydrrRFajwxWfDmxA=;
+	s=korg; t=1793216364;
+	bh=nqw5lS7SB786aP29O0mkLDRA0sEOrHLRYAhx+HRNGXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6BFEym3lA3gn4iLGqADJ6TXj5iVXqb+fToo++6d1gEIKrBgIONgPO8Et1ETC8BL9
-	 XOh1laGVaa3QIpEQld74TaFUuEk+0z1EsMoZHq89fAIkayfgfOUZ2pNMVjtoSZjLgn
-	 yKqxb2Mvaf3ZtcPVKVWMwE02fKfEZdG20FGSlsOE=
+	b=V0Z3d2YnH7lLVVe+tv/IMbK3eyqmm0dEdU024h5zKaUxv220B37IlpUe96RuXDpun
+	 jN5/bcxigYpenUQManyFMqiseh8SufLqiylwCwMItIYvCsVpafsE6jFPiQ5lGxLh/f
+	 1Hm7wa8NedLHB1nWvIcv4VhhvSdrdhYth4zFvRDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhansong Gao <zhsgao@hotmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1531/1887] bpf, xdp: move offload check into dev_xdp_install()
-Date: Wed, 28 Oct 2026 18:00:27 +0100
-Message-ID: <20261028170534.303563406@linuxfoundation.org>
+Subject: [PATCH 6.1 1532/1887] NFSv4: Fix incorrect argument passed to nfs4_delete_lease() in nfs4_add_lease()
+Date: Wed, 28 Oct 2026 18:00:28 +0100
+Message-ID: <20261028170534.326919832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,96 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Zhansong Gao <zhsgao@hotmail.com>
 
-[ Upstream commit ad27ed7d2309419a129078d781504f486b1b469a ]
+[ Upstream commit 468e458ffde907ba19acd2102ca1fbb8f6fbede2 ]
 
-bpf_xdp_link_update() calls dev_xdp_install() directly and skips
-dev_xdp_attach(), so the checks in dev_xdp_attach() do not run. A user can
-make an XDP link with a normal program and then swap in an offloaded or
-device-bound program with BPF_LINK_UPDATE, which puts it on the software
-path.
+When nfs4_add_lease() races with a delegation return, it calls
+nfs4_delete_lease() to clean up. Previously, it passed priv,
+which can legitimately be NULL. Passing a NULL priv eventually
+leads to a NULL pointer dereference in generic_setlease().
 
-dev_xdp_install() is the one place all three paths go through:
-"ip link set xdp" and BPF_LINK_CREATE reach it via dev_xdp_attach(), and
-BPF_LINK_UPDATE calls it directly. So move the program checks (offloaded,
-bound to another device, device-bound in generic mode, native vs generic,
-DEVMAP and CPUMAP) there, and keep only the netlink-flag check
-(XDP_FLAGS_UPDATE_IF_NOEXIST) in dev_xdp_attach().
-
-Fixes: 026a4c28e1db3 ("bpf, xdp: Implement LINK_UPDATE for BPF XDP link")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e93a5e9306a5 ("NFSv4: Add support for application leases underpinned by a delegation")
+Signed-off-by: Zhansong Gao <zhsgao@hotmail.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 43 +++++++++++++++++++++++--------------------
- 1 file changed, 23 insertions(+), 20 deletions(-)
+ fs/nfs/nfs4proc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 804752cc864f4..7c0d0905dd31b 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -9249,6 +9249,29 @@ static int dev_xdp_install(struct net_device *dev, enum bpf_xdp_mode mode,
- 	struct netdev_bpf xdp;
- 	int err;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index bde81060f833e..321c6e86b0b0a 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7640,6 +7640,7 @@ static int nfs4_add_lease(struct file *file, long arg, struct file_lock **lease,
+ {
+ 	struct inode *inode = file_inode(file);
+ 	fmode_t type = arg == F_RDLCK ? FMODE_READ : FMODE_WRITE;
++	fl_owner_t owner = (*lease)->fl_owner;
+ 	int ret;
  
-+	if (prog) {
-+		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
-+					       ? XDP_MODE_DRV : XDP_MODE_SKB;
-+		bool offload = mode == XDP_MODE_HW;
-+
-+		if (!offload && dev_xdp_prog(dev, other_mode)) {
-+			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
-+			return -EEXIST;
-+		}
-+		if (!offload && bpf_prog_is_dev_bound(prog->aux)) {
-+			NL_SET_ERR_MSG(extack, "Using device-bound program without HW_MODE flag is not supported");
-+			return -EINVAL;
-+		}
-+		if (prog->expected_attach_type == BPF_XDP_DEVMAP) {
-+			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
-+			return -EINVAL;
-+		}
-+		if (prog->expected_attach_type == BPF_XDP_CPUMAP) {
-+			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
-+			return -EINVAL;
-+		}
-+	}
-+
- 	memset(&xdp, 0, sizeof(xdp));
- 	xdp.command = mode == XDP_MODE_HW ? XDP_SETUP_PROG_HW : XDP_SETUP_PROG;
- 	xdp.extack = extack;
-@@ -9377,30 +9400,10 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
- 		new_prog = link->link.prog;
+ 	/* No delegation, no lease */
+@@ -7649,7 +7650,8 @@ static int nfs4_add_lease(struct file *file, long arg, struct file_lock **lease,
+ 	if (ret || nfs4_have_delegation(inode, type))
+ 		return ret;
+ 	/* We raced with a delegation return */
+-	nfs4_delete_lease(file, priv);
++	dprintk("%s: raced with a delegation return\n", __func__);
++	nfs4_delete_lease(file, &owner);
+ 	return -EAGAIN;
+ }
  
- 	if (new_prog) {
--		bool offload = mode == XDP_MODE_HW;
--		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
--					       ? XDP_MODE_DRV : XDP_MODE_SKB;
--
- 		if ((flags & XDP_FLAGS_UPDATE_IF_NOEXIST) && cur_prog) {
- 			NL_SET_ERR_MSG(extack, "XDP program already attached");
- 			return -EBUSY;
- 		}
--		if (!offload && dev_xdp_prog(dev, other_mode)) {
--			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
--			return -EEXIST;
--		}
--		if (!offload && bpf_prog_is_dev_bound(new_prog->aux)) {
--			NL_SET_ERR_MSG(extack, "Using device-bound program without HW_MODE flag is not supported");
--			return -EINVAL;
--		}
--		if (new_prog->expected_attach_type == BPF_XDP_DEVMAP) {
--			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
--			return -EINVAL;
--		}
--		if (new_prog->expected_attach_type == BPF_XDP_CPUMAP) {
--			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
--			return -EINVAL;
--		}
- 	}
- 
- 	/* don't call drivers if the effective program didn't change */
 -- 
 2.53.0
 
