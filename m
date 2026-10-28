@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215859;
-	b=MtE5FNHG/G6iqKTfO/b0iXWqe4I3l44lK1tb1KNT75FiffIlFU5aWqwIC7CAgBce0IGn
-	 fTjuL8bETmYI9sVleMND6dl4riyaY2psjIX9aKDDXToL/d3799kbzYwtlmsiMK+tNr085
-	 FOsQTX/52M6g5G/74zMr5YzLoWmalybBpK1AGZIZmNrNcFF0jQa/dm+tMq2KKYLwZ8znX
-	 ca4CBsZ+eRJVnWZqhkggGLFrE339WQd/oF6Ur6h85OQ6meAGxOCWrEdPHtcMIcnxTt6dp
-	 +VhLW3P+NcBPxBIp9IXHq9JdZVBW/9Ey8udF4yMLtYYQ+rd5OtXjtIEOAQZlSsMuXPA==
+	t=1793215862;
+	b=eEjfgSuyedw36Oc7WeclDLdJ9ldRK4fxijCRRGDDpdOEuI45KiHG6SxqMUUU7Y/py04C
+	 T/uObgjSoZop3cM4n2yBA7W9RQXDbgyAzzBDzCpDr/ikMAJVl0D1JIXixvaMlGAJ3ETrt
+	 jjHaJ72aAyL8YZ+bKAL0S4ZSjuYz3Xa2jD6//i3UKb4CSfCOc+riP8OI7bK2G0Z2siBPE
+	 0mOW5yH+/BQ8xffzDJkUxOHZuea6sOeAas2Z8qQt6Cz03Fptskpbe7uSJA98GlrPGLTmG
+	 PZI0++q3ax8//E9laCOEYgtjePeqytIfkV1xBdk1+TZUVkQj7N4a4IIpg9ycUrx4U5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215859;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215862;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pKBMm/arIJbNxhxLOpoAT67fVgeZ2n3nNT7BpdccUNA=;
-	b=rJaDjw6+OY6t83mqPbTlsEXHZl6P81JWMTwGaoHkhARMJ8/4m/Awm+3v17NN1g3sJORS
-	 T7+9y0TZwdUSGQ5k7fpHW7k2VE7XIH5MWLbIX/tMSDc4m+ZhsXlGCB4e2KZn0hm60z3SP
-	 pPyviXZKm4DFPPr3X4jz95ZAS0Dknu6gwzqgA4abxTXqVHWZ6t4IiGDFIuWwgJ6hkRueE
-	 LYCrBGDKXM5lyYSaEtvX+n9VC1xA/e8q008pFKzBihHFWp0PZyp8lfXqWiDRWi/jJ4EKm
-	 W62Qd7is9Ddw9eOIpjK5IDXHe3bgCDQcQp9BJFV7RGIMeR5eUQ5IUPRkFbZsJ52H2+g==
+	bh=0/ICduoDEjCf3M3Plc06LBP7iq/nKEx65QAZ07c3KTs=;
+	b=EKTVAAc1u9GJ3EdkPe2YWvTQeRB44EjqGbpJ5pwD7A8zMx7fByk6ATt+LSeLj7ctznPa
+	 5YpdnKmx/sz01jhezRlom4qMj59jlNbaz9xJWmUsSa3e7nKUE6RkHy1yD7fBhGri1Lza8
+	 ekvyRnOpZQgxZbtqHw0nvoeYZI6uo8hT1WwFOd9yEhZaZKm+HyvbsVKDOH5DCKvbfcTmW
+	 R8DR6UrJHRBP5VkQ3O/CDCZzygfhEk3ArCj21jD7u+4FLFJt8aXEuhOfxubs2gqNjI6Qa
+	 /QhB7Dp1SRxdKrVjO7YlKF0bUEMl6gu3ag2tbZvd+NWKZYp6QGOx0KKwxMR7sJGAOcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jG0e+tnK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VNBDmQxe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6197606A31A;
-	Wed, 28 Oct 2026 19:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F76606A31A;
+	Wed, 28 Oct 2026 19:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jG0e+tnK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233131F01825;
-	Wed, 28 Oct 2026 19:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VNBDmQxe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F42271F01825;
+	Wed, 28 Oct 2026 19:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215858;
-	bh=pKBMm/arIJbNxhxLOpoAT67fVgeZ2n3nNT7BpdccUNA=;
+	s=korg; t=1793215861;
+	bh=0/ICduoDEjCf3M3Plc06LBP7iq/nKEx65QAZ07c3KTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jG0e+tnKFN+dTP/epruf+POIu3RdoBjgmtNlsxZEyvbspOJfr1nbhv8P60fu9rd8H
-	 SBIJhTG9RRL/CRDvTSRGc88Q/BlQ/WvsIhMj7MEd+iyZPr4vaSuf3kJJ/20TI9M9I7
-	 j1H5FILyCTnEg3FBHqNMhuYX92Xs5moWEg68l+xc=
+	b=VNBDmQxe0B7HSUASRo/3Q6hIJUdRHsNQtaJafzLFFSsROglPKBJJOxc9HmUol7XZY
+	 NnUVzy3pbfysVnIIC9tWhl6AT0CsLeJvkwvNVNR/Tj+XzHEGQHG4JvxJrkfstV4f1l
+	 AgPzWYDZr2LdNzTprAn2MTkecql+knQiHDxDsbMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Yong Wang <edragain@163.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1356/1887] tcp: clamp route advmss to TCP_MIN_MSS
-Date: Wed, 28 Oct 2026 17:57:32 +0100
-Message-ID: <20261028170530.300363291@linuxfoundation.org>
+Subject: [PATCH 6.1 1321/1887] octeontx2-af: npc: Fix size of entry2cntr_map
+Date: Wed, 28 Oct 2026 17:56:57 +0100
+Message-ID: <20261028170529.489752203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,127 +69,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yong Wang <edragain@163.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 870a9e42ecc6fe1b8c25d87af043cb0d9c178fe1 ]
+[ Upstream commit f9cd6fabe0e7c7f6fc30c6c192c7ed72aba37232 ]
 
-tcp_select_initial_window() assumes that callers never pass an MSS
-smaller than 1, but route-derived advmss values can violate that
-assumption.
+KASAN prints below splat. This is caused by allocating counter for
+reserved mcam entry for cpt 2nd pass entry. But mcam->entry2cntr_map
+is not allocated for reserved entries.
 
-A too-small explicit RTAX_ADVMSS is one way to get there, but it is not
-the only one. The same divide-by-zero can also be reached through the
-"default advmss" path when RTAX_ADVMSS is left at 0 and the effective
-advmss is later driven down by route MTU and min_adv_mss.
+BUG: KASAN: slab-out-of-bounds in npc_map_mcam_entry_and_cntr+0xb0/0x1a0
+Write of size 2 at addr ffff0001033e7ffe by task kworker/0:1/14
 
-Introduce a tcp_dst_advmss() helper that clamps route advmss to
-TCP_MIN_MSS before TCP consumes it, and use it in the TCP paths that
-derive advmss from dst metrics. This keeps the effective MSS from
-dropping to zero before tcp_select_initial_window() rounds the receive
-window.
+CPU: 0 PID: 14 Comm: kworker/0:1 Not tainted 6.1.67 #1
+Hardware name: Marvell CN106XX board (DT)
+Workqueue: events work_for_cpu_fn
+Call trace:
+ dump_backtrace.part.0+0xe4/0xf0
+ show_stack+0x18/0x30
+ dump_stack_lvl+0x88/0xb4
+ print_report+0x154/0x458
+ kasan_report+0xb8/0x194
+ __asan_store2+0x7c/0xa0
+ npc_map_mcam_entry_and_cntr+0xb0/0x1a0
+ rvu_mbox_handler_npc_mcam_write_entry+0x268/0x280
+ npc_install_flow+0x840/0xfe0
+ rvu_npc_install_cpt_pass2_entry+0x138/0x190
+ rvu_nix_init+0x148c/0x2880
+ rvu_probe+0x1800/0x30b0
+ local_pci_probe+0x78/0xe0
+ work_for_cpu_fn+0x30/0x50
+ process_one_work+0x4cc/0x97c
+ worker_thread+0x360/0x630
+ kthread+0x1a0/0x1b0
+ ret_from_fork+0x10/0x20
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Yong Wang <edragain@163.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/251eaf8277fa7c66364c9815c5da01662d269181.1787074852.git.edragain@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 55307fcb9258 ("octeontx2-af: Add mbox messages to install and delete MCAM rules")
+Cc: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260610022344.969774-1-rkannoth@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h        | 5 +++++
- net/ipv4/tcp_ipv4.c      | 2 +-
- net/ipv4/tcp_minisocks.c | 2 +-
- net/ipv4/tcp_output.c    | 6 +++---
- net/ipv6/tcp_ipv6.c      | 2 +-
- 5 files changed, 11 insertions(+), 6 deletions(-)
+ .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 40 +++++++------------
+ 1 file changed, 15 insertions(+), 25 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 4161bd71fb50f..ff8025ff25a4e 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1483,6 +1483,11 @@ static inline int tcp_full_space(const struct sock *sk)
- 	return tcp_win_from_space(sk, READ_ONCE(sk->sk_rcvbuf));
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index ed1b66ea0aeff..c8146e3afb1b8 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -1934,7 +1934,7 @@ static int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
+ 	/* Alloc memory for MCAM entry to counter mapping and for tracking
+ 	 * counter's reference count.
+ 	 */
+-	mcam->entry2cntr_map = devm_kcalloc(rvu->dev, mcam->bmap_entries,
++	mcam->entry2cntr_map = devm_kcalloc(rvu->dev, mcam->total_entries,
+ 					    sizeof(u16), GFP_KERNEL);
+ 	if (!mcam->entry2cntr_map)
+ 		goto free_mem;
+@@ -1950,10 +1950,11 @@ static int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
+ 	if (!mcam->entry2target_pffunc)
+ 		goto free_mem;
  
-+static inline u32 tcp_dst_advmss(const struct dst_entry *dst)
-+{
-+	return max_t(u32, dst_metric_advmss(dst), TCP_MIN_MSS);
-+}
+-	for (index = 0; index < mcam->bmap_entries; index++) {
++	for (index = 0; index < mcam->bmap_entries; index++)
+ 		mcam->entry2pfvf_map[index] = NPC_MCAM_INVALID_MAP;
 +
- static inline void __tcp_adjust_rcv_ssthresh(struct sock *sk, u32 new_ssthresh)
++	for (index = 0; index < mcam->total_entries; index++)
+ 		mcam->entry2cntr_map[index] = NPC_MCAM_INVALID_MAP;
+-	}
+ 
+ 	for (cntr = 0; cntr < mcam->counters.max; cntr++)
+ 		mcam->cntr2pfvf_map[cntr] = NPC_MCAM_INVALID_MAP;
+@@ -3040,7 +3041,7 @@ int rvu_mbox_handler_npc_mcam_free_counter(struct rvu *rvu,
+ 		struct npc_mcam_oper_counter_req *req, struct msg_rsp *rsp)
  {
- 	int unused_mem = sk_unused_reserved_mem(sk);
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index e68f84c08e1c1..0e6d03af09e5b 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1572,7 +1572,7 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 	tcp_ca_openreq_child(newsk, dst);
+ 	struct npc_mcam *mcam = &rvu->hw->mcam;
+-	u16 index, entry = 0;
++	u16 index;
+ 	int blkaddr, err;
  
- 	tcp_sync_mss(newsk, dst_mtu(dst));
--	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), dst_metric_advmss(dst));
-+	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), tcp_dst_advmss(dst));
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
+@@ -3058,20 +3059,16 @@ int rvu_mbox_handler_npc_mcam_free_counter(struct rvu *rvu,
+ 	mcam->cntr2pfvf_map[req->cntr] = NPC_MCAM_INVALID_MAP;
+ 	rvu_free_rsrc(&mcam->counters, req->cntr);
  
- 	tcp_initialize_rcv_mss(newsk);
- 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index 675f3c412c443..7ccb6f67c6dd9 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -378,7 +378,7 @@ void tcp_openreq_init_rwin(struct request_sock *req,
- 	u32 rcv_wnd;
- 	int mss;
- 
--	mss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
-+	mss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
- 	window_clamp = READ_ONCE(tp->window_clamp);
- 	/* Set this up on the first call only */
- 	req->rsk_window_clamp = window_clamp ? : dst_metric(dst, RTAX_WINDOW);
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 39f25b886678c..9e1d20f105b98 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -125,7 +125,7 @@ static __u16 tcp_advertise_mss(struct sock *sk)
- 	int mss = tp->advmss;
- 
- 	if (dst) {
--		unsigned int metric = dst_metric_advmss(dst);
-+		unsigned int metric = tcp_dst_advmss(dst);
- 
- 		if (metric < mss) {
- 			mss = metric;
-@@ -3639,7 +3639,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+-	/* Disable all MCAM entry's stats which are using this counter */
+-	while (entry < mcam->bmap_entries) {
++	/* Disable all MCAM entry's stats which are using this counter.
++	 * Scan the full MCAM index range: AF-reserved rules (e.g. CPT pass-2)
++	 */
++	for (index = 0; index < mcam->total_entries; index++) {
+ 		if (!mcam->cntr_refcnt[req->cntr])
+ 			break;
+-
+-		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
+-		if (index >= mcam->bmap_entries)
+-			break;
+-		entry = index + 1;
+ 		if (mcam->entry2cntr_map[index] != req->cntr)
+ 			continue;
+-
+-		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
+-					      index, req->cntr);
++		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
++					      req->cntr);
  	}
- 	skb_dst_set(skb, dst);
  
--	mss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
-+	mss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
+ 	mutex_unlock(&mcam->lock);
+@@ -3082,7 +3079,7 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
+ 		struct npc_mcam_unmap_counter_req *req, struct msg_rsp *rsp)
+ {
+ 	struct npc_mcam *mcam = &rvu->hw->mcam;
+-	u16 index, entry = 0;
++	u16 index;
+ 	int blkaddr, rc;
  
- 	memset(&opts, 0, sizeof(opts));
- 	now = tcp_clock_ns();
-@@ -3756,7 +3756,7 @@ static void tcp_connect_init(struct sock *sk)
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
+@@ -3105,20 +3102,13 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
+ 	}
  
- 	if (!tp->window_clamp)
- 		tp->window_clamp = dst_metric(dst, RTAX_WINDOW);
--	tp->advmss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
-+	tp->advmss = tcp_mss_clamp(tp, tcp_dst_advmss(dst));
- 
- 	tcp_initialize_rcv_mss(sk);
- 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 8503070683d17..62ed0886af74b 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1335,7 +1335,7 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 	tcp_ca_openreq_child(newsk, dst);
- 
- 	tcp_sync_mss(newsk, dst_mtu(dst));
--	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), dst_metric_advmss(dst));
-+	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), tcp_dst_advmss(dst));
- 
- 	tcp_initialize_rcv_mss(newsk);
- 
+ 	/* Disable all MCAM entry's stats which are using this counter */
+-	while (entry < mcam->bmap_entries) {
++	for (index = 0; index < mcam->total_entries; index++) {
+ 		if (!mcam->cntr_refcnt[req->cntr])
+ 			break;
+-
+-		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
+-		if (index >= mcam->bmap_entries)
+-			break;
+-		entry = index + 1;
+-
+ 		if (mcam->entry2cntr_map[index] != req->cntr)
+ 			continue;
+-
+-		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
+-					      index, req->cntr);
++		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
++					      req->cntr);
+ 	}
+ exit:
+ 	mutex_unlock(&mcam->lock);
 -- 
 2.53.0
 
