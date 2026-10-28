@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215497;
-	b=WR8agH+dgGUz0IdCA+tAImy36AGy8E9Nv64UKrCVf6XAvpj185ux2MNNQBfpoVu+n7l6
-	 GcIGgOxbZdACus4Xhkc0enWo1/8IsXbKyyRkgXVsD2C2ZoBFJTp7UzsbxynbqQzt/FbJc
-	 lIi2Y6jd770Owpz5PrUCLHsDtvwl6pU18KhcCGf3RcOa0QIrHuzR2qa9Svak5hzCYeMaV
-	 PHLrnNJ7+GLrnP7GX3x1iXbRCm0xEJ/sZMwm2q0BnmZATNWLH5aWexcrZnp6PwrawbuBo
-	 yCypRZZk86k/2qJZYbZlli+DcGwN7yvuz2MRCIve8s7j33yqmVN3RTwu2AMhZqEBP4A==
+	t=1793215500;
+	b=S9nxDFVVBBz2fYMkkJxPXZ3Hd9dZHwU7NTarFa1RP3QT/3FWbEkkW2iUSz+nLvycPHsn
+	 nFTycKHvt+XxVyoFPutaxa7OM6+0ddDXQzqauDTNQvhhs+VrVcT7xRNWZ4KhMMSRAe5OE
+	 6EfeH+ljfq2LNs5uzlUymqs9J7thhJIKU5o1sQk8MiNqMIDtLxy8raxsEKrJc7xp4aCfy
+	 7r7ALxP22C50NUaAb+zBvnCZ9IfLJBFXy9Gzs1Bh6m1bfI9CLTFZvxEA7/6d04/GVlNHQ
+	 qwMjNYLu4k83WegJ24NjCw0IJDuZ+ULoEfpiJjlUP+QD6ljUprHkW21DwRWFTrvbJdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AArskoDhPGAulSFXqpTmlujgoB1wl5cJ2aAZ/I40IOY=;
-	b=tHCYXiprNFyddcubKiPkg4WZvBRJSoJXYU/leP+TznNgg3AF2aTuF7dT1UXRU/7aDxCK
-	 5PhGd/AYJP2PM/wxZZgQ+YmCYgI1RqwzZo0nZlIdoygEqQrob9AyESjP5RqPf14hRqGUf
-	 pRWfjb/bNGl8BcT+97GOzYbyGpupynG08fJtQBiHWatq3zmtvZH4W4vZaPf6hjFWmIFfg
-	 zw7XV/N1dOEuhgKOUPyffVZ9yM3u3Cmvpc68N2Z5nk7jffxmDNlH9PdeSxRpIgjJ8d3Ud
-	 V8PrfCDhJq8rlCQW2Z+ciyYhGnq1rUHBS41N0eXd9krFnkgyZaWYPmoygPJMAc/wDag==
+	bh=HzkdLfBW7bOZEVldGsD2rwyzBc4c5tMhuWhC2/ccIWU=;
+	b=ULhth1nk7U5T3zbyWBAG+s6mpcizj6oo/0yzpYq0U2IV1eOB2UOemf0KFm0ZvRrHmcJq
+	 fZd6w951QawEirYKtwEg2CVj0vnWCfofdEsLZ8BBae9t4+3mIRsWl37JXsuIvjx3Gbsxy
+	 qfkwDUUSZxJWEOfxJeklfOKVFQdX7RWGuIOktzDumA+bnADcrCBiRfbOCjM1v4Ck0lB8+
+	 xqroyvcOyT7HsUq0lSz6IVuXlp1zQrjyyY2ByPVbBMH67f+2KxwM6KJIUNKjDIAtek3A7
+	 yxd/wN1m4uG1RX4NODJG2ZNeonaw79rmJj/mb3jkSgBj2j8oPdUMRi6eUJhsbZVjoFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dwzyoz0b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZvaJ0kHn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39583606A31D;
-	Wed, 28 Oct 2026 19:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCA1606A31A;
+	Wed, 28 Oct 2026 19:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dwzyoz0b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABFC1F01825;
-	Wed, 28 Oct 2026 19:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZvaJ0kHn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688DD1F01828;
+	Wed, 28 Oct 2026 19:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215497;
-	bh=AArskoDhPGAulSFXqpTmlujgoB1wl5cJ2aAZ/I40IOY=;
+	s=korg; t=1793215500;
+	bh=HzkdLfBW7bOZEVldGsD2rwyzBc4c5tMhuWhC2/ccIWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dwzyoz0b0N0cbdch7VbfSS5HBq9c1Hvs9K6c1NHtEZ8SA7qiIMswcQ1/tKKsS09Yd
-	 ITI0PjNknkR8IvQHMdDaFLrszBLWnZS26D6I3OhQh0uL3if2qWbtPDWcQG5YScaSha
-	 rpDGC9iVLFteyN6XvTZQqvkf4uN+gNbN84Lb4xH0=
+	b=ZvaJ0kHnzAWe42fqlda5VnzB8Hwu/nvqSLmqsFOuXLiR6QhnzNQ6iDohQz/FHz11X
+	 Y5zHVQcp9ANs0O+NKU6Ewnku1tgQwOVh8BscmaeWIM5wLg99spc/0Ayw9TbXRFsm0q
+	 vzLd4xjxgmcawoM2EZCMjYFq134NJL23o7ta7hgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <quic_sarishar@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1188/1887] wifi: mac80211: refactor populating mesh related fields in sinfo
-Date: Wed, 28 Oct 2026 17:54:44 +0100
-Message-ID: <20261028170526.440012271@linuxfoundation.org>
+Subject: [PATCH 6.1 1179/1887] cifs: prevent readdir from changing file size due to stale directory metadata
+Date: Wed, 28 Oct 2026 17:54:35 +0100
+Message-ID: <20261028170526.235499215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,118 +68,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <quic_sarishar@quicinc.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit e5328c14590d034dc586e56aaab88e966d06efa7 ]
+[ Upstream commit e8a8d54c2d508891c142a928fc7d298c4c8bd0dd ]
 
-Introduce the sta_set_mesh_sinfo() to populate mesh related
-fields in sinfo structure for station statistics.
-This will allow for the simplified population of other fields in the
-sinfo structure for link level in a subsequent patch to add support
-for MLO station statistics.
-No functionality changes added.
+Windows Server's directory enumeration metadata lags behind the actual
+file size after a write+close or rename.  A concurrent readdir() in the
+window between close() returning to userspace and stat() being called
+overwrites the correct cached i_size with the stale server value, causing
+stat() to return the wrong size.
 
-Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
-Link: https://patch.msgid.link/20250213171632.1646538-3-quic_sarishar@quicinc.com
-[reword since it's just an internal thing]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: aa2eb6252518 ("wifi: mac80211: defer link RX stats percpu free to RCU")
+Once _cifsFileInfo_put() removes the last writable handle from
+openFileList, is_size_safe_to_change() permits readdir to overwrite
+i_size.  smb2_close_getattr() then stamps cifs_i->time = jiffies, making
+the corrupt cached value appear fresh to the next stat().
+
+The existing check (see Fixes:) only blocked stale size updates while
+an active RW lease was held, not after the last writable handle closes.
+
+Add cifsInodeInfo->time_last_write, written via smp_store_release() at
+writable close and on setattr/truncate.  is_size_safe_to_change() checks
+is_inode_writable() first (acquiring open_file_lock), then rejects a
+readdir size update if time_last_write falls within acregmax jiffies.
+The spinlock release in _cifsFileInfo_put() forms a store-release barrier
+that pairs with the spin_lock() (load-acquire) in is_inode_writable(),
+ensuring the subsequent smp_load_acquire() on time_last_write observes
+any update from a concurrent close().  When a size update is rejected and
+the server value differs from the cached one, cifs_i->time is cleared to
+force a fresh QUERY_INFO on the next stat().
+
+readdir is also blocked from changing i_size while writable handles are
+open or an RW lease is held, even on direct-IO mounts.
+
+For deferred close (closetimeo > 0), time_last_write is refreshed at the
+actual server close in smb2_deferred_work_close() and in the
+cifs_close_deferred_file*() drain paths invoked by lease/oplock breaks
+and tcon teardown, anchoring the protection window to the real close time
+rather than the earlier userspace close.
+
+time_last_write == 0 skips the time_before() check to avoid false
+positives near boot on 32-bit systems where jiffies starts close to
+INITIAL_JIFFIES.
+
+Does not reproduce against Samba or with actimeo=0.
+
+Fixes: e4b61f3b1c67 ("cifs: prevent updating file size from server if we have a read/write lease")
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+
+[ Adapted for this tree: only the time_last_write field, its initialisation and the
+  stores at writable close, deferred close, truncate and the deferred-close drain
+  paths are kept; the readdir size-check hunks do not apply here. ]
+
+Stable-dep-of: c2f2e83e3bbc ("cifs: fix cifsFileInfo leak on kmalloc failure in deferred close drain paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 64 ++++++++++++++++++++++-------------------
- 1 file changed, 35 insertions(+), 29 deletions(-)
+ fs/smb/client/cifsfs.c   |  1 +
+ fs/smb/client/cifsglob.h |  1 +
+ fs/smb/client/file.c     | 18 ++++++++++++++++--
+ fs/smb/client/inode.c    |  4 ++++
+ fs/smb/client/misc.c     | 27 ++++++++++++++++++++++++---
+ 5 files changed, 46 insertions(+), 5 deletions(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index ffa77f229c289..9b8f25a6126cd 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -2498,6 +2498,39 @@ static inline u64 sta_get_stats_bytes(struct ieee80211_sta_rx_stats *rxstats)
- 	return value;
- }
- 
-+#ifdef CONFIG_MAC80211_MESH
-+static void sta_set_mesh_sinfo(struct sta_info *sta,
-+			       struct station_info *sinfo)
-+{
-+	struct ieee80211_local *local = sta->sdata->local;
-+
-+	sinfo->filled |= BIT_ULL(NL80211_STA_INFO_LLID) |
-+			 BIT_ULL(NL80211_STA_INFO_PLID) |
-+			 BIT_ULL(NL80211_STA_INFO_PLINK_STATE) |
-+			 BIT_ULL(NL80211_STA_INFO_LOCAL_PM) |
-+			 BIT_ULL(NL80211_STA_INFO_PEER_PM) |
-+			 BIT_ULL(NL80211_STA_INFO_NONPEER_PM) |
-+			 BIT_ULL(NL80211_STA_INFO_CONNECTED_TO_GATE) |
-+			 BIT_ULL(NL80211_STA_INFO_CONNECTED_TO_AS);
-+
-+	sinfo->llid = sta->mesh->llid;
-+	sinfo->plid = sta->mesh->plid;
-+	sinfo->plink_state = sta->mesh->plink_state;
-+	if (test_sta_flag(sta, WLAN_STA_TOFFSET_KNOWN)) {
-+		sinfo->filled |= BIT_ULL(NL80211_STA_INFO_T_OFFSET);
-+		sinfo->t_offset = sta->mesh->t_offset;
-+	}
-+	sinfo->local_pm = sta->mesh->local_pm;
-+	sinfo->peer_pm = sta->mesh->peer_pm;
-+	sinfo->nonpeer_pm = sta->mesh->nonpeer_pm;
-+	sinfo->connected_to_gate = sta->mesh->connected_to_gate;
-+	sinfo->connected_to_as = sta->mesh->connected_to_as;
-+
-+	sinfo->filled |= BIT_ULL(NL80211_STA_INFO_AIRTIME_LINK_METRIC);
-+	sinfo->airtime_link_metric = airtime_link_metric_get(local, sta);
-+}
-+#endif
-+
- void sta_set_sinfo(struct sta_info *sta, struct station_info *sinfo,
- 		   bool tidstats)
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index 8046b54976aa5..c43c937b3f577 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -399,6 +399,7 @@ cifs_alloc_inode(struct super_block *sb)
+ 		return NULL;
+ 	cifs_inode->cifsAttrs = 0x20;	/* default */
+ 	cifs_inode->time = 0;
++	cifs_inode->time_last_write = 0;
+ 	/*
+ 	 * Until the file is open and we have gotten oplock info back from the
+ 	 * server, can not assume caching of file data or metadata.
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 4e463ee8e40bb..761dd1795fbf4 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1505,6 +1505,7 @@ struct cifsInodeInfo {
+ 	spinlock_t writers_lock;
+ 	unsigned int writers;		/* Number of writers on this inode */
+ 	unsigned long time;		/* jiffies of last update of inode */
++	unsigned long time_last_write;	/* jiffies of last writable close or truncate */
+ 	u64  server_eof;		/* current file size on server -- protected by i_lock */
+ 	u64  uniqueid;			/* server inode number */
+ 	u64  createtime;		/* creation time on server */
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index d2187882c236f..af2e918313a2b 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -1001,11 +1001,21 @@ void smb2_deferred_work_close(struct work_struct *work)
  {
-@@ -2681,31 +2714,10 @@ void sta_set_sinfo(struct sta_info *sta, struct station_info *sinfo,
- 			sta_set_tidstats(sta, &sinfo->pertid[i], i);
- 	}
+ 	struct cifsFileInfo *cfile = container_of(work,
+ 			struct cifsFileInfo, deferred.work);
++	struct cifsInodeInfo *cinode = CIFS_I(d_inode(cfile->dentry));
  
--	if (ieee80211_vif_is_mesh(&sdata->vif)) {
- #ifdef CONFIG_MAC80211_MESH
--		sinfo->filled |= BIT_ULL(NL80211_STA_INFO_LLID) |
--				 BIT_ULL(NL80211_STA_INFO_PLID) |
--				 BIT_ULL(NL80211_STA_INFO_PLINK_STATE) |
--				 BIT_ULL(NL80211_STA_INFO_LOCAL_PM) |
--				 BIT_ULL(NL80211_STA_INFO_PEER_PM) |
--				 BIT_ULL(NL80211_STA_INFO_NONPEER_PM) |
--				 BIT_ULL(NL80211_STA_INFO_CONNECTED_TO_GATE) |
--				 BIT_ULL(NL80211_STA_INFO_CONNECTED_TO_AS);
--
--		sinfo->llid = sta->mesh->llid;
--		sinfo->plid = sta->mesh->plid;
--		sinfo->plink_state = sta->mesh->plink_state;
--		if (test_sta_flag(sta, WLAN_STA_TOFFSET_KNOWN)) {
--			sinfo->filled |= BIT_ULL(NL80211_STA_INFO_T_OFFSET);
--			sinfo->t_offset = sta->mesh->t_offset;
--		}
--		sinfo->local_pm = sta->mesh->local_pm;
--		sinfo->peer_pm = sta->mesh->peer_pm;
--		sinfo->nonpeer_pm = sta->mesh->nonpeer_pm;
--		sinfo->connected_to_gate = sta->mesh->connected_to_gate;
--		sinfo->connected_to_as = sta->mesh->connected_to_as;
-+	if (ieee80211_vif_is_mesh(&sdata->vif))
-+		sta_set_mesh_sinfo(sta, sinfo);
- #endif
--	}
- 
- 	sinfo->bss_param.flags = 0;
- 	if (sdata->vif.bss_conf.use_cts_prot)
-@@ -2761,12 +2773,6 @@ void sta_set_sinfo(struct sta_info *sta, struct station_info *sinfo,
- 		sinfo->filled |=
- 			BIT_ULL(NL80211_STA_INFO_ACK_SIGNAL_AVG);
- 	}
--
--	if (ieee80211_vif_is_mesh(&sdata->vif)) {
--		sinfo->filled |= BIT_ULL(NL80211_STA_INFO_AIRTIME_LINK_METRIC);
--		sinfo->airtime_link_metric =
--			airtime_link_metric_get(local, sta);
--	}
+-	spin_lock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
++	spin_lock(&cinode->deferred_lock);
+ 	cifs_del_deferred_close(cfile);
+ 	cfile->deferred_close_scheduled = false;
+-	spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
++	spin_unlock(&cinode->deferred_lock);
++	/*
++	 * Refresh time_last_write immediately before the actual server close
++	 * so the protection window is anchored to the real close time, not
++	 * the earlier userspace close time stored by cifs_close().
++	 */
++	if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++		smp_store_release(&cinode->time_last_write, jiffies);
++	}
+ 	_cifsFileInfo_put(cfile, true, false);
  }
  
- u32 sta_get_expected_throughput(struct sta_info *sta)
+@@ -1021,6 +1031,10 @@ int cifs_close(struct inode *inode, struct file *file)
+ 	if (file->private_data != NULL) {
+ 		cfile = file->private_data;
+ 		file->private_data = NULL;
++		if (file->f_mode & FMODE_WRITE) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&cinode->time_last_write, jiffies);
++		}
+ 		dclose = kmalloc(sizeof(struct cifs_deferred_close), GFP_KERNEL);
+ 		if ((cifs_sb->ctx->closetimeo && cinode->oplock == CIFS_CACHE_RHW_FLG)
+ 		    && cinode->lease_granted &&
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 9ea5f5b9dca91..df85fcbe93907 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -2898,6 +2898,8 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
+ 
+ 	if ((attrs->ia_valid & ATTR_SIZE) &&
+ 	    attrs->ia_size != i_size_read(inode)) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++		smp_store_release(&cifsInode->time_last_write, jiffies);
+ 		truncate_setsize(inode, attrs->ia_size);
+ 		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
+ 	}
+@@ -3112,6 +3114,8 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+ 
+ 	if ((attrs->ia_valid & ATTR_SIZE) &&
+ 	    attrs->ia_size != i_size_read(inode)) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++		smp_store_release(&cifsInode->time_last_write, jiffies);
+ 		truncate_setsize(inode, attrs->ia_size);
+ 		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
+ 	}
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index fc6fe4c386342..6942253def3b0 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -784,7 +784,14 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+ 	spin_unlock(&cifs_inode->open_file_lock);
+ 
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+-		_cifsFileInfo_put(tmp_list->cfile, false, false);
++		struct cifsFileInfo *cfile = tmp_list->cfile;
++
++		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(cfile, false, false);
+ 		list_del(&tmp_list->list);
+ 		kfree(tmp_list);
+ 	}
+@@ -817,7 +824,14 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
+ 	spin_unlock(&tcon->open_file_lock);
+ 
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+-		_cifsFileInfo_put(tmp_list->cfile, true, false);
++		struct cifsFileInfo *cfile = tmp_list->cfile;
++
++		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(cfile, true, false);
+ 		list_del(&tmp_list->list);
+ 		kfree(tmp_list);
+ 	}
+@@ -891,7 +905,14 @@ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
+ 	spin_unlock(&tcon->open_file_lock);
+ 
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+-		_cifsFileInfo_put(tmp_list->cfile, true, false);
++		struct cifsFileInfo *cfile = tmp_list->cfile;
++
++		if (OPEN_FMODE(cfile->f_flags) & FMODE_WRITE) {
++		/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(cfile, true, false);
+ 		list_del(&tmp_list->list);
+ 		kfree(tmp_list);
+ 	}
 -- 
 2.53.0
 
