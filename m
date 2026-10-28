@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216263;
-	b=sYFn7M2OAlNLTjgLwzzlWIqC5pLrmZWtifbMDxPFU68kxIga9PKPd+PmB5idYEUu5hZp
-	 mlgGoX8Dx19feb/z3zpwMO41bsC0wQC4LWcpsqjCaLH6vKMqYKPgYHmOaSkQzVLDGhXKn
-	 TIpMrBjlXNJZw65axpGfPP0NmaVRmRJmX9bIBlOGirJMXg7aKqGaAM2b11OkJTH4bkrAE
-	 LpA/KlqkMlOnGi8XKSvYV7WIKuTbB0w+Wojtj02Yym+melP95JieoLrhpHsbRYovjk7r3
-	 /mzzY9HYsORIiGfXZiUzXz7niiMkmHEV/ZRKhyHRg+t71d4A06FHaykIx7hvnTUeETg==
+	t=1793216266;
+	b=OGzoXt5JV4FQPN8HUIDIQgPF6YALPk12m0EILf0JynmpiL4ZcvmaS8GpqxuBg3waWJ3l
+	 WvMyPuYecsTkZaFYqE4+r/mL0l/KeYHB/iyzAMynRvWKiHia1oPkCly0QsdfFQvQxgNBM
+	 FyFxqIc3xzwKEODSQOO0j1DGU8+CG50vkz7tIC90NBsU1S3zGQejiHyJl6/OhdaHY3VMY
+	 318q1l44Y0tdUej30VbJadbS7Pl3pZSSJG8MsSwBcmvH5flNCMqWHkkzt0ZYTnpLu5UpN
+	 DgcI7x9xfEl9DLv8SE5qMs5pfeqVqSkA1M6mPs4XZ/RzKkkuZyNitx2iLy5nNeXa/9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=usMPjI43EB8304cRKh28+oJ0JVB4k7oIbk1CaeBFfUs=;
-	b=DWvQLf8opmK1gxsEma1iYZvVc0ZEtlfY0yqDyme4vgigpKlphhOgmJ552JVYx1L6VNks
-	 SphGmEt+qFAglcRxo/8WhETP5us/gcne6qIf6ZCwduKIT5Ph79QD3HRTa17U99siFdQcd
-	 kw2/9INlTmD3kR9d69N6ZK8C/e+Q8UWO3kCGmfQihajZu84E8ZeTq4PhoOw7hX8FWvfZf
-	 2sEXe90yl0wuLvEMYJmwe7SPEvX9Id+F0kgUfkMyi/zKEHtcIAjhDBzAcGFuUIBqfC6Ab
-	 DaALaE48+Fymaz7m3I6TTFY6mvFHwgxz+lergFJP2d96yw8SCLRskN4nlU4z2Jowo1w==
+	bh=QC78ALNvs/iFndd/DEEN6HIWxVy/1eiX0GnyK6oVYoY=;
+	b=SEh4iMU048s5yr5SipoFKmKYZCLqqF4T1qG+4zfiHjQN3kdeUv7mWnxPQ4z5yy1hh1Dc
+	 92GwQ7Q/AUDembb85X4eroTDmDcqhnT2D2yxL2F0txDo/KX4b8jmhAI3p/uO0TEpJWeCt
+	 JSWJNceN+CyAx3GwGyoW9llCZYyaRNAFtzSZVYH1nfvvq/g2fnpLt65Ej4mKF27NRZ4Hs
+	 PsSH4sYfUSQdHMoC/GV3jolyfwZ5hyB2bOWP0TK+wOdvAoZH4GY26urQrlfTi1YWShIpU
+	 gCB6JuNo/iyBLnBooOM3B5mXWff4oRnXrHJ83dZ58J7UmRbZIBAYlZO1moWTsKAyg1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILeIq4cO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4MTj8UC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5567606A33D;
-	Wed, 28 Oct 2026 19:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86ED606A32D;
+	Wed, 28 Oct 2026 19:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILeIq4cO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFB91F01828;
-	Wed, 28 Oct 2026 19:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4MTj8UC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D011A1F01828;
+	Wed, 28 Oct 2026 19:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216262;
-	bh=usMPjI43EB8304cRKh28+oJ0JVB4k7oIbk1CaeBFfUs=;
+	s=korg; t=1793216265;
+	bh=QC78ALNvs/iFndd/DEEN6HIWxVy/1eiX0GnyK6oVYoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ILeIq4cO2pheUq2mmw0ZhG/BjLAVJufZBYpRPTbQw1RqGKOhPypwNvc+5tPvFmtFS
-	 6a1YEbv591iIdTO7j7uOvEw+HfADgYI0phR/DENTS8J3S/OfEuI+DJmoCLgLhdO2s+
-	 IyCryxm/BqFjbKz+WKfQdefCoJWkFRyqsVK6J4ZM=
+	b=i4MTj8UCjJcNmLuiaqocVL7dXtaqElfcRqWBrK+ABvSXWBb8COC4YLTLiEXQjlzRh
+	 vSxP88MsQn3ble9qybnGCcwzF0DMkZOu39YwFUBeKbAkEcvyLURiXCK39I4x1/4vCH
+	 EOaHnvpDm49ASmWFipnfNaBofXKRqIVXNJrnxWdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jordan Walters <jaggyaur@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1496/1887] ASoC: hdac_hda: Fix hlink refcount leak on component registration failure
-Date: Wed, 28 Oct 2026 17:59:52 +0100
-Message-ID: <20261028170533.500327368@linuxfoundation.org>
+Subject: [PATCH 6.1 1461/1887] Bluetooth: hci_core: Fix UAF in hci_unregister_dev()
+Date: Wed, 28 Oct 2026 17:59:17 +0100
+Message-ID: <20261028170532.703938548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,43 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Jordan Walters <jaggyaur@gmail.com>
 
-[ Upstream commit 6ad4892c4f5cb437a928a02f5b7d37d496aa9268 ]
+[ Upstream commit 5edcc018fa6e80b2c478454a4a8229c23d67c181 ]
 
-hdac_hda_dev_probe() gets the HDA link with snd_hdac_ext_bus_link_get()
-before registering the ASoC component. If component registration fails,
-the function returns without dropping the link reference.
+hci_unregister_dev() does not disable cmd_timer and ncmd_timer
+before the hci_dev structure is freed. If a timeout fires
+during device teardown, the callback dereferences freed memory
+(including the hdev->reset function pointer), leading to a
+use-after-free.
 
-Always call snd_hdac_ext_bus_link_put() after the registration attempt so
-the reference taken during probe is balanced on both success and failure.
+Add disable_delayed_work_sync() calls alongside the existing
+disable_work_sync() calls to ensure both timers are fully
+quiesced before teardown proceeds.
 
-Fixes: 6bae5ea94989 ("ASoC: hdac_hda: add asoc extension for legacy HDA codec drivers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622145645.1184986-1-haoxiang_li2024@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0d151a103775 ("Bluetooth: hci_core: cancel all works upon hci_unregister_dev()")
+Signed-off-by: Jordan Walters <jaggyaur@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/bluetooth/hci_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index 21a00c86a1398..4dcb4eb04ec25 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -612,10 +612,8 @@ static int hdac_hda_dev_probe(struct hdac_device *hdev)
- 						&hdac_hda_codec, hdac_hda_dais,
- 						ARRAY_SIZE(hdac_hda_dais));
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 20bf36e88bea3..d01a91fa88797 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2718,6 +2718,8 @@ void hci_unregister_dev(struct hci_dev *hdev)
+ 	hci_unregister_suspend_notifier(hdev);
  
--	if (ret < 0) {
-+	if (ret < 0)
- 		dev_err(&hdev->dev, "failed to register HDA codec %d\n", ret);
--		return ret;
--	}
+ 	hci_dev_do_close(hdev);
++	cancel_delayed_work_sync(&hdev->cmd_timer);
++	cancel_delayed_work_sync(&hdev->ncmd_timer);
  
- 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 
+ 	if (!test_bit(HCI_INIT, &hdev->flags) &&
+ 	    !hci_dev_test_flag(hdev, HCI_SETUP) &&
 -- 
 2.53.0
 
