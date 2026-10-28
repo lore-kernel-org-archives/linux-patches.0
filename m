@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211994;
-	b=SWcNEnMjjQcd6b+1oCYEzoyjEV6Y4Em1qRBgbjVC8xE15ngJsiOA7jwIPIcLAKv6u4HU
-	 3ISxJpvRnwG7v6wYBl61pgWTxqQ53J1FNy88F2duyMJQKIzCHN78JpYGFiLEU2IiSkJHe
-	 eQrFkqmTI2tIYYET7DGnr6CM2SELwPiZItNgH9eNpdYBAUEQMvEF10FLfdk5AxEG7bu9A
-	 5DG7vJq8C7dyuKvKC/YlNEvetf0mYI340JtwlMCzmQNRKIVDk4g8CvKkuQerlogsn1tn/
-	 p+MNDaDGPXiOYPskMaAgFfoISU+SMBH+qpFgdD4kh98OZUuNRv8Pw/It5ZGiHfHuEJg==
+	t=1793211999;
+	b=seOqMqjmLKZO4Rma3/oqTBZK6szFOwGzxjVJFUMRN12vcR3FBpQ7Dn5jPrMdcxJaXkhe
+	 X3FvPTw+F0YO78ys1VD5bHfr5ECZFSfm4n4FL1zsjx1y+JHbLKbXVCqS88Q5r3cUGBwu1
+	 8bhPd0ABuzvaaCwWjfhRwQhJI8/CjgcaECbsgD7wRCppTaFbgYG249viefpepYiv/vzSJ
+	 ECLL+XZ76wrJ/FPeqKAcfCJnHU4uWx7z5pxAntyUg7ndnIAk9uUQin/EXGb1+HiF6J0ZH
+	 7OqvbotrCQ6qbdLj2RtENLHTLqb7PiW7a3gbBMkWjg4j21vUW8UHiGmv8UVWUl/weZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211999;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IL84w4uXbdyoqeIxkreDArHwoxvUXKTcX3Sk2+6rFfM=;
-	b=NB+IWoWBS81Z4SA144x/bZqajucwfvT54OhOCQAcuK5o7T4pFBS1tWA4Px+SsrkNCq2t
-	 O3M524T9J7DNwz52g5V/oiTXJg2lBr3xalXOKvkTRtYhBNuOlYm01g3gdF7jKRfA4SGxQ
-	 IW2YRInJZqYgwm1skYJWmeH9o6sX2ZVgEkk6gt5vyc7e9yKG/ntNnSIE8zW8XlpnWKbVv
-	 Rqmk67hEeNvpfX0atCczSXJLkfsUNRFSFt6sboQwaHNpUEHgwO3dF58kNBhzfCPfy8jpH
-	 fqRLCTb4dNQrjwkGQjW08cmTT69ZEEB6xuK60k2KmYRKLmBtY1hRP2i2V6HXHddtUBg==
+	bh=k1k/v55b08OBA/o1efb0hphE1TBqIKrHdLqHtVfy9Ws=;
+	b=kMoQvjv/WzWkmqNIAGo53HQiGuaAeAoKz9T1eyrhJDISJaCCxGqGXUrWacHgdXY8G1Qf
+	 rikkjnEDnb8TN+ggL0RG1EAeUM8+DNGyIKoEBe7HUckhYvCX0oMy/fieM+2w2Ews4b6qZ
+	 RhJUDsgJ/jPKBVesuST71Zbz5GdsfNhlvl7AsdMbWSqdioUisLnw1wfE2kNMFuUcCXUKs
+	 e+pf6yfxxLKj52r7DwdUIfCx36bdUJXyH8EKQ2vosFUJcNULRewiW7VotOehXjT4n9Q6M
+	 tymxnCKqyddv84AHoXqWjRnC3+av5jB9V1DSTLqx7UvG8J0WYNDpfo8mDug0VvoqqAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxstBXba;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NXftq1KE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCE6606A31D;
-	Wed, 28 Oct 2026 18:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CCC606A31A;
+	Wed, 28 Oct 2026 18:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxstBXba
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EF61F01825;
-	Wed, 28 Oct 2026 18:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NXftq1KE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7631F01825;
+	Wed, 28 Oct 2026 18:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211994;
-	bh=IL84w4uXbdyoqeIxkreDArHwoxvUXKTcX3Sk2+6rFfM=;
+	s=korg; t=1793211998;
+	bh=k1k/v55b08OBA/o1efb0hphE1TBqIKrHdLqHtVfy9Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SxstBXba5XbFDrnVYZUCoN1vLjNyxcaBSjp0ZPKkFeXEi+Bwuw4Azhy52vnoOVw/p
-	 NQUNul6Lt7Wi1BVQ0Ly6MvaqC2Gl0C5HVyPMKS8oURvo9tolK81c56FBZyoq1evXuQ
-	 ecbiFWaJnQ058RpN8ShvBiAnvxLGOYkNRfbwys68=
+	b=NXftq1KEAevFneDObXuK+IdQzjIlOglzMn8VH4c2kfNcJvzkoZ+Rnv29+q4huC9WQ
+	 OyyDtXALaAbtkCg88/FRh7QycF3M0VJEF2w/VBTCmBTPVwxejk0dLq2GZOBXPv/FJ/
+	 jnFvbfLB7sqQcMJywN/IQuOd7buBTM9qHpYSWiiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.15 563/571] keys: Check the authorization payload in process keyring searches
-Date: Wed, 28 Oct 2026 18:01:50 +0100
-Message-ID: <20261028170021.393202088@linuxfoundation.org>
+Subject: [PATCH 5.15 564/571] keys: Protect the type name while describing a key
+Date: Wed, 28 Oct 2026 18:01:51 +0100
+Message-ID: <20261028170021.417158132@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,73 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 0a0ec45bf577a9b4d4960567f20d3877ef480de9 upstream.
+commit fced7238b7e80cf8aa688d5af976e4aa6e33c329 upstream.
 
-An authorization payload and its saved credentials must remain valid
-while search_process_keyrings_rcu() searches the requestor's keyrings.
-The function validates the authorization key, then separately loads
-payload.data[0] and unconditionally reads rka->cred. Validation does
-not prevent request_key_auth_revoke() from clearing the payload.
+keyctl_describe_key() must keep the key type's name alive until
+kasprintf() has consumed it. The retained key reference keeps the key
+and its description alive, but does not pin the module providing its
+type. The name is passed to kasprintf() without holding key->sem.
 
-A request-key helper can assume authority and fork a descendant that
-inherits the authorization key. If the descendant misses in its own
-keyrings, it falls back to the saved requestor credentials. Successful
-target instantiation invalidates the authorization key without clearing
-the payload. After the helper exits, UMH_WAIT_PROC returns to the
-requester, which calls complete_request_key() and revokes that key.
+kvasprintf() uses the saved name pointer in two formatting passes, with
+a GFP_KERNEL allocation between them. With AF_RXRPC=m, a task that
+passes View permission before type retirement can overlap a privileged
+module unload in this order:
 
-With the descendant paused after validation, the paths can interleave
-as follows:
+1. KEYCTL_DESCRIBE looks up the key, saves key->type->name in the
+   kasprintf() arguments and completes the first formatting pass.
+2. While the formatter is delayed before its second pass,
+   af_rxrpc_exit() calls unregister_key_type(), which removes the type
+   from the registry and waits for key_gc_keytype().
+3. The collector takes key->sem for writing, retypes the retained key
+   to key_type_dead and completes retirement. Unregistration and module
+   exit return, allowing free_module() to release the type and name.
+4. The formatter resumes its second pass and reads the saved name from
+   released module storage, which can fault in string().
 
-  1. The descendant enters search_process_keyrings_rcu() under RCU and
-     key_validate() succeeds.
-  2. The helper instantiates the target, invalidates the authorization
-     key, and exits.
-  3. The requester resumes from UMH_WAIT_PROC, calls
-     complete_request_key(), and revokes the authorization key.
-     request_key_auth_revoke() sets its payload pointer to NULL.
-  4. The descendant loads NULL and dereferences rka->cred.
+Hold key->sem for reading across kasprintf(). The collector then cannot
+retype the key or complete retirement until both formatting passes have
+finished. If retirement wins the lock first, formatting uses the core
+key_type_dead name instead. Release the semaphore immediately after
+kasprintf(), including on allocation failure, before copying to
+userspace.
 
-This NULL dereference can oops the kernel. RCU delays payload disposal
-but does not prevent the pointer from being cleared.
+Oops report as below:
 
-Load the payload with dereference_key_rcu() and require a non-NULL
-result before validating the authorization key and searching its saved
-credentials. A non-NULL payload and its credentials remain alive for
-the caller's RCU read-side section; a cleared payload skips the fallback
-search and follows the existing error selection.
-
-KASAN report as below:
-
-    Oops: general protection fault, probably for non-canonical address 0xdffffc0000000005: 0000 [#1] SMP KASAN NOPTI
-    KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
-    RIP: 0010:search_process_keyrings_rcu+0x32b/0x790
+    BUG: unable to handle page fault for address: fffffbfff8054794
+    #PF: supervisor read access in kernel mode
+    #PF: error_code(0x0000) - not-present page
+    RIP: 0010:string+0x23f/0x470
+    Call Trace:
+     vsnprintf+0x330/0x1110
 
 Cc: stable@vger.kernel.org
-Fixes: e59428f721ee ("keys: Move the RCU locks outwards from the keyring search functions")
+Fixes: aa9d4437893f ("KEYS: Fix the size of the key description passed to/from userspace")
 Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0004-v3-598361863b76bc25d58d@gmail.com
+Link: https://lore.kernel.org/r/pm-key-management-objects-candidate-0009-v4-6b537c5732fd957c33fa@gmail.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/process_keys.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ security/keys/keyctl.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/security/keys/process_keys.c
-+++ b/security/keys/process_keys.c
-@@ -556,9 +556,8 @@ key_ref_t search_process_keyrings_rcu(st
- 	    ) {
- 		const struct cred *cred = ctx->cred;
+--- a/security/keys/keyctl.c
++++ b/security/keys/keyctl.c
+@@ -677,12 +677,14 @@ okay:
  
--		if (key_validate(cred->request_key_auth) == 0) {
--			rka = ctx->cred->request_key_auth->payload.data[0];
--
-+		rka = dereference_key_rcu(cred->request_key_auth);
-+		if (rka && key_validate(cred->request_key_auth) == 0) {
- 			//// was search_process_keyrings() [ie. recursive]
- 			ctx->cred = rka->cred;
- 			key_ref = search_cred_keyrings_rcu(ctx);
+ 	/* calculate how much information we're going to return */
+ 	ret = -ENOMEM;
++	down_read(&key->sem);
+ 	infobuf = kasprintf(GFP_KERNEL,
+ 			    "%s;%d;%d;%08x;",
+ 			    key->type->name,
+ 			    from_kuid_munged(current_user_ns(), key->uid),
+ 			    from_kgid_munged(current_user_ns(), key->gid),
+ 			    key->perm);
++	up_read(&key->sem);
+ 	if (!infobuf)
+ 		goto error2;
+ 	infolen = strlen(infobuf);
 
 
