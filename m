@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216410;
-	b=guVn88F5Xad4EYMhMIUpgLs+l3TQ2vuPypgx9roWZtagPUFUvAXMkytlid8VoRCn4NHr
-	 T1yBWtdZB1vDBNXtrbjtjCQ3FeymMV13RHwJNKDkzOvIXfxt5RMMBXR5+8eeroBpwDNp4
-	 7xuL6LpQh6E7txu/k/K9+rj09fhYjXEveAwOxy5c4w5g6giRI6//ITAizFR7SSDuykz4U
-	 teo10C+1LrJkePNDozYSscXb2Qk+Fjlm+3O+Q6bNYoGrq4aD1lYlNOZwObu2BcuuRixVf
-	 /7BPiH0AOnepcsFG2vCKxY+7F6yc9FilXGsQDnrO7yGB6XzQLK4urjvVHX3hIO4BYYA==
+	t=1793216412;
+	b=Zctt3vr3qdHiGrY9H+1BHm2JlcGRgl56iCv/P5UtfDaXm5n8CNc8Kt6qeIDmkiOdXLDb
+	 zz92QO1ad2CL/FM97YsULg9Fl2G988gQ2SDtak0nXu+o4f1mnDoD7JJB+CmYWkaGYTnXb
+	 Mkbhz2+Ie0hEs1oObP7elm0FjraUEkga9CjVe7UCOgDqIFRerwrI4oH2CGa3+ofO/LZit
+	 6RnM6LvQUkbNiHyDSZCg4fLI4Sjm59R8/REpkxJhSahfsgoK7LC6TGCriTBgvuw8dauD+
+	 7qHoeOt5br12QgfmhzeAbokD4aEe746nEZ0bnO7J2uuukOWICIvN4AxP9CUB1yKEkvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=yeeTCyea19Hyl494yB0KWomyRTLAu9NTlmjA1IA17rU=;
-	b=tkOPqz/3DmhlSiDsNXeo8mIdOVQ+n3u1lf+wWE0IWUGy6Uw99if00UaDCAxB/sPZepoo
-	 LjnjjNSRB1DYfFiwKjdM9qTi0ikLFEsKU2wheaEh8o5joThFTarBDp5WPy0GNsV7gt3k1
-	 VJ+je/vS0vf9YIoL/TiQ2U5pCfpc+m+TQepQGDpm/M/ax0/azCto19qTx0IDgA+06LMCx
-	 9qaTPxzl7Nk4vbE6Fnnc093WDbjZcZOSbcDorngSYhwNU2HUXLRs5ZbaTifWq1PN8Q2fG
-	 LHaS2vG9uluIHmQTZDVB8X5FbBU6LncHlVJaHb5/f4qSMxVAaKr1+GHNWXU5vRUvJNg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=EZVRR6PJ/4cPYFkO9R+Zd/z8ZDDIiHlwdhj9BJoiBxY=;
+	b=033e66x1rGdrN1f6UYmmqbSGrrBxY3SrvSICdOLThjBXoH824bvM1MTlPt5W8/+NgWyr
+	 tg7hwli31D3+sij2cgFkokDAW+rB5OLnMDfwVP3jbi1qkA4x1bwOdmZXp/nc3vMwuENlV
+	 /JsDqXTmJCy4CkMjSr8lonTdNyANT/koNn7fRkcdKhnR/LpxVypFpKxH+pYeZJHuPCSY9
+	 jugkQagqwwNeASkYG7i1xzzmjTafA9NaHYxyCWJoR4+U/EcT+hsUATS/ygLShcxU0WMNi
+	 Zm/uBxbC2AUryU1aIZ3g4Ray/ZDNdSNWIExesYHPJhlxQ3uVaZuAz4hO9I3Dngrf0qw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8VCcetk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H5JLo4DX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9287560A2617;
-	Wed, 28 Oct 2026 19:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763BC60A2633;
+	Wed, 28 Oct 2026 19:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8VCcetk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D700E1F01829;
-	Wed, 28 Oct 2026 19:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H5JLo4DX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48B61F031E0;
+	Wed, 28 Oct 2026 19:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216409;
-	bh=yeeTCyea19Hyl494yB0KWomyRTLAu9NTlmjA1IA17rU=;
+	s=korg; t=1793216412;
+	bh=EZVRR6PJ/4cPYFkO9R+Zd/z8ZDDIiHlwdhj9BJoiBxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b8VCcetkQqcO92EJb+Kk611R/naki34Dy5+H+T2UosWZrTQy//c/YK3xn3cEUiUxd
-	 pxQ7P+z8cAcYGjkJEsfeM40TWwHz61VI9kvkPtBy6dERgf4ranptfT36zTLGdroMcu
-	 XRdHqGrf71WgnHEZtgUOMIIQQjVPwY/fwVaxkDUg=
+	b=H5JLo4DX0fOGth9ZnkftaMWf99eXR0kq2KRAU8h85VECyU9SI3FtbgAevC79esH/Z
+	 9tOpUt1SbVZcugcayzj4m5O0o3jEgwwbql712eBL0Gdln7sFMyVnK3C+peZxfWeTsv
+	 itnNxfyMBb2A28VWFWevoQi00XFQWMPNGhsZdt1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <yunseong.kim@est.tech>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Martin Petricek <mp@petricek.net>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1544/1887] ksmbd: fix slab-out-of-bounds read in ksmbd_alloc_user()
-Date: Wed, 28 Oct 2026 18:00:40 +0100
-Message-ID: <20261028170534.605288091@linuxfoundation.org>
+Subject: [PATCH 6.1 1545/1887] apparmor: fix deadlock in complain-mode change_hat
+Date: Wed, 28 Oct 2026 18:00:41 +0100
+Message-ID: <20261028170534.627294942@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,162 +62,288 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yunseong Kim <yunseong.kim@est.tech>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 7405d0ba294306721843bc551611775e6edef516 ]
+[ Upstream commit 4ec11f14d1d6fdda787d991b142537be7841d395 ]
 
-ksmbd_alloc_user() copies resp->hash_sz bytes out of the mountd IPC
-login response with
+The use of change_hat when in complain mode can cause a deadlock
+when the hat doesn't exist and a new learning profile is created
+for the missing profile. This is because change_hat() has taken
+the lock to search the hat list and creating the new learning
+profile needs to take the lock to add it to the list.
 
-	user->passkey_sz = resp->hash_sz;
-	user->passkey = kmalloc(resp->hash_sz, KSMBD_DEFAULT_GFP);
-	if (user->passkey)
-		memcpy(user->passkey, resp->hash, resp->hash_sz);
+>From the bug report:
 
-resp->hash_sz is a __u16 supplied by the response, but resp->hash[] is
-only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or malicious login
-response can set hash_sz well beyond that (up to 65535), so the memcpy()
-reads past the end of the response object.  ipc_validate_msg() does not
-bound hash_sz, so reject any response whose hash_sz exceeds the on-stack
-hash[] buffer before allocating and copying.
+Originally found in 7.0.0 in LTS ubuntu 26.04 with pam_apparmor + su
+in complain mode set to change hats.  Then verified in newest
+available vanilla kernel I've compiled to see if still present:
 
-[ 2030.238706] BUG: KASAN: slab-out-of-bounds in ksmbd_alloc_user+0x278/0x680
-[ 2030.240549] Read of size 65535 at addr ffff888121bb6680 by task kworker/4:1/18611
-[ 2030.242296]
-[ 2030.242710] CPU: 4 UID: 0 PID: 18611 Comm: kworker/4:1 Not tainted 7.1.0-next-20260623-virtme #96 PREEMPT(lazy)
-[ 2030.242732] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-[ 2030.242743] Workqueue: ksmbd-io handle_ksmbd_work
-[ 2030.242763] Call Trace:
-[ 2030.242769]  <TASK>
-[ 2030.242776]  dump_stack_lvl+0xa2/0xd0
-[ 2030.242794]  print_address_description+0x77/0x200
-[ 2030.242815]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242831]  print_report+0x58/0x70
-[ 2030.242848]  kasan_report+0x117/0x150
-[ 2030.242869]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242888]  kasan_check_range+0x3c7/0x3f0
-[ 2030.242908]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242925]  __asan_memcpy+0x29/0x70
-[ 2030.242942]  ksmbd_alloc_user+0x278/0x680
-[ 2030.242960]  ksmbd_login_user+0xc3/0x120
-[ 2030.242978]  ntlm_authenticate+0x5e6/0x1b00
-[ 2030.243017]  ? __pfx_ntlm_authenticate+0x10/0x10
-[ 2030.243035]  ? ksmbd_session_lookup+0x188/0x1d0
-[ 2030.243054]  ? __pfx_ksmbd_session_lookup+0x10/0x10
-[ 2030.243090]  ? __sanitizer_cov_trace_switch+0x7b/0x140
-[ 2030.243108]  smb2_sess_setup+0x1e4a/0x27b0
-[ 2030.243126]  ? copy_from_kernel_nofault+0x199/0x300
-[ 2030.243156]  ? __pfx_smb2_sess_setup+0x10/0x10
-[ 2030.243173]  ? get_smb2_cmd_val+0xe3/0x1c0
-[ 2030.243208]  handle_ksmbd_work+0x954/0x1280
-[ 2030.243230]  ? __pfx_handle_ksmbd_work+0x10/0x10
-[ 2030.243249]  ? process_scheduled_works+0xa07/0x1490
-[ 2030.243270]  ? process_scheduled_works+0xa07/0x1490
-[ 2030.243291]  process_scheduled_works+0xa70/0x1490
-[ 2030.243320]  ? __pfx_process_scheduled_works+0x10/0x10
-[ 2030.243340]  ? do_raw_spin_lock+0x130/0x300
-[ 2030.243358]  ? lock_is_held_type+0x7b/0x110
-[ 2030.243388]  worker_thread+0x932/0xe20
-[ 2030.243415]  kthread+0x38a/0x470
-[ 2030.243431]  ? __pfx_worker_thread+0x10/0x10
-[ 2030.243451]  ? __pfx_kthread+0x10/0x10
-[ 2030.243467]  ret_from_fork+0x484/0x910
-[ 2030.243485]  ? __pfx_ret_from_fork+0x10/0x10
-[ 2030.243501]  ? __switch_to+0xc77/0x12c0
-[ 2030.243523]  ? __pfx_kthread+0x10/0x10
-[ 2030.243540]  ret_from_fork_asm+0x1a/0x30
-[ 2030.243564]  </TASK>
-[ 2030.243570]
-[ 2030.290164] Allocated by task 19279:
-[ 2030.290911]  kasan_save_track+0x3e/0x80
-[ 2030.292179]  __kasan_kmalloc+0x72/0x90
-[ 2030.293217]  __kvmalloc_node_noprof+0x3ff/0x6b0
-[ 2030.294467]  handle_generic_event+0x59b/0x750
-[ 2030.295345]  genl_family_rcv_msg_doit+0x238/0x340
-[ 2030.296553]  genl_rcv_msg+0x606/0x7b0
-[ 2030.297129]  netlink_rcv_skb+0x22b/0x4a0
-[ 2030.298500]  genl_rcv+0x2d/0x40
-[ 2030.299273]  netlink_unicast+0x7ba/0x930
-[ 2030.300019]  netlink_sendmsg+0x8c3/0xb00
-[ 2030.301073]  __sock_sendmsg+0xec/0x140
-[ 2030.301579]  __sys_sendto+0x357/0x470
-[ 2030.302255]  __x64_sys_sendto+0xe3/0x100
-[ 2030.303425]  do_syscall_64+0x135/0x460
-[ 2030.304763]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[ 2030.305594]
-[ 2030.305819] The buggy address belongs to the object at ffff888121bb6640
-[ 2030.305819]  which belongs to the cache kmalloc-192 of size 192
-[ 2030.309595] The buggy address is located 64 bytes inside of
-[ 2030.309595]  allocated 166-byte region [ffff888121bb6640, ffff888121bb66e6)
-[ 2030.312484]
-[ 2030.312719] The buggy address belongs to the physical page:
-[ 2030.314315] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x121bb6
-[ 2030.316481] head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[ 2030.318248] flags: 0x100000000000040(head|node=0|zone=2)
-[ 2030.319662] page_type: f5(slab)
-[ 2030.320242] raw: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
-[ 2030.321911] raw: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
-[ 2030.324413] head: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
-[ 2030.326150] head: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
-[ 2030.327960] head: 0100000000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
-[ 2030.329615] head: ffff888121bb7ab0 0000000000000000 00000000ffffffff 0000000000000000
-[ 2030.331861] page dumped because: kasan: bad access detected
-[ 2030.332946]
-[ 2030.333502] Memory state around the buggy address:
-[ 2030.334698]  ffff888121bb6580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2030.336475]  ffff888121bb6600: fc fc fc fc fc fc fc fc 00 00 00 00 00 00 00 00
-[ 2030.338143] >ffff888121bb6680: 00 00 00 00 00 00 00 00 00 00 00 00 06 fc fc fc
-[ 2030.339116]                                                        ^
-[ 2030.341315]  ffff888121bb6700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2030.342801]  ffff888121bb6780: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
-[ 2030.344643] ==================================================================
+7.2-rc7 vanilla -> affected
 
-Found with ksmbdzzer [2], a KSMBD fuzzer that drives libFuzzer with a
-kcov-dataflow [1] coverage vector: it folds each instrumented
-comparison/argument's runtime operand value together with its PC (the
-default arm mixes them as pc⊕val) so that a new operand value at a known
-site counts as new coverage.
+checked also some other kernels:
+6.18.44 vanilla -> affected
+6.12.95 with debian patches -> unaffected
 
-[1] https://lwn.net/Articles/1077606/
-[2] https://github.com/yskzalloc/kcov-dataflow
+On systems without bug (for example 6.12.95 debian) it just prints:
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+aa_change_hat rc=0
+
+On systems with bug, the executable always hangs, prints nothing and
+becomes unkillable.  (And once stuck this way, it will cause any
+further hat changes to also cause the changing process to get stuck)
+
+Then in syslog you can find hint about cause:
+
+kernel: INFO: task hat:3409 blocked for more than 483 seconds.
+kernel:       Not tainted 7.2.0-rc7 #1
+kernel: "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+kernel: task:hat             state:D stack:0     pid:3409  tgid:3409  ppid:2605   task_flags:0x400000 flags:0x00080800
+kernel: Call Trace:
+kernel:  <TASK>
+kernel:  __schedule+0x48f/0xfe0
+kernel:  schedule+0x27/0xa0
+kernel:  schedule_preempt_disabled+0x15/0x30
+kernel:  __mutex_lock.constprop.0+0x569/0xa10
+kernel:  aa_new_learning_profile+0x15f/0x210
+kernel:  build_change_hat+0x19f/0x3b0
+kernel:  change_hat.isra.0+0x5dd/0xd60
+kernel:  aa_change_hat+0x2f3/0x710
+kernel:  aa_setprocattr_changehat+0x121/0x1f0
+kernel:  do_setattr+0x28c/0x340
+kernel:  apparmor_setselfattr+0x20/0x50
+kernel:  security_setselfattr+0xf6/0x110
+kernel:  __x64_sys_lsm_set_self_attr+0x53/0x90
+kernel:  do_syscall_64+0xdd/0x5e0
+kernel:  ? __mod_memcg_lruvec_state+0xfd/0x260
+kernel:  ? lruvec_stat_mod_folio+0x8d/0xd0
+kernel:  ? __folio_mod_stat+0x2d/0x90
+kernel:  ? map_anon_folio_pte_nopf+0xd1/0x1f0
+kernel:  ? do_anonymous_page+0x184/0xa10
+kernel:  ? __handle_mm_fault+0x805/0x870
+kernel:  ? count_memcg_events+0xef/0x230
+kernel:  ? handle_mm_fault+0x1f0/0x2f0
+kernel:  ? do_user_addr_fault+0x2bb/0x7b0
+kernel:  ? do_syscall_64+0x94/0x5e0
+kernel:  ? exc_page_fault+0x75/0x160
+kernel:  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+kernel: RIP: 0033:0x7f815e134c8d
+kernel: RSP: 002b:00007fff6df94ea8 EFLAGS: 00000246 ORIG_RAX: 00000000000001cc
+kernel: RAX: ffffffffffffffda RBX: 0000556d8c81d040 RCX: 00007f815e134c8d
+kernel: RDX: 0000000000000046 RSI: 0000556d8c81d040 RDI: 0000000000000064
+kernel: RBP: 00007fff6df94ef0 R08: 00007f815e212ac8 R09: 000000000000000c
+kernel: R10: 0000000000000000 R11: 0000000000000246 R12: 0000556d8c81d010
+kernel: R13: 0000000000000026 R14: 0000000000000046 R15: 0000000000000064
+kernel:  </TASK>
+kernel: INFO: task hat:3409 is blocked on a mutex likely owned by task hat:3409.
+
+To fix the issue, lift the locking out of the core of
+aa_new_learning_profile(), introduce a wrapper function that takes the
+lock where needed, and have build_change_hat() call the core function
+that no longer takes the lock.
+
+In addition fix 4 other issues introduced by commit
+32e92764d6f8d ("apparmor: grab ns lock and refresh when looking up changehat child profiles")
+- aa_get_profile_rcu() was replaced-by: aa_get_profile without the
+  accompanying rcu_dereference_protected()
+- an extra aa_get_label(label) was introduced at the start of
+  change_hat() without an accompanying aa_put_label() causing a
+  reference count leak.
+- a reference count leak was introduced in the label_is_stale(label)
+  case, where the newest profile would be leaked instead of the
+  label passed to the function.
+- a potential UAF when the lookup walks up the tree with new_ns != ns
+  the new label reference is put, and then used for the next lookup.
+  The mutex_lock, will block replacement, and removal in the locked
+  ns. However there are two cases where putting the reference can
+  result in the label being freed even with the lock held.
+
+  1. the label does not have a list reference (possible for temporary
+     or special profiles) in which case the put can trigger the
+     cleanup.
+  2. the new label reference is in a different namespace, which does
+     not have a lock held on it. This extends case 1 to also include
+     replacement, and removal that could be occurring in the namespace
+     new is in.
+
+Reported-by: Martin Petricek <mp@petricek.net>
+Link: https://lists.ubuntu.com/archives/apparmor/2026-August/014907.html
+Fixes: 32e92764d6f8d ("apparmor: grab ns lock and refresh when looking up changehat child profiles")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_config.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ security/apparmor/domain.c         | 25 +++++++++++++++++--------
+ security/apparmor/include/policy.h |  2 ++
+ security/apparmor/policy.c         | 21 ++++++++++++++++-----
+ 3 files changed, 35 insertions(+), 13 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
-index 279d00feff216..a9c0d80dc3680 100644
---- a/fs/smb/server/mgmt/user_config.c
-+++ b/fs/smb/server/mgmt/user_config.c
-@@ -31,6 +31,17 @@ struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp)
- {
- 	struct ksmbd_user *user = NULL;
+diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
+index 52e16e75e63fa..e844e0e489436 100644
+--- a/security/apparmor/domain.c
++++ b/security/apparmor/domain.c
+@@ -1006,8 +1006,8 @@ static struct aa_label *build_change_hat(struct aa_profile *profile,
+ 	if (!hat) {
+ 		error = -ENOENT;
+ 		if (COMPLAIN_MODE(profile)) {
+-			hat = aa_new_null_profile(profile, true, name,
+-						  GFP_KERNEL);
++			hat = __aa_new_null_profile(profile, true, name,
++						   GFP_KERNEL);
+ 			if (!hat) {
+ 				info = "failed null profile create";
+ 				error = -ENOMEM;
+@@ -1043,6 +1043,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 	bool sibling = false;
+ 	const char *name, *info = NULL;
+ 	int i, error;
++	bool needput = false;
  
-+	/*
-+	 * resp->hash_sz is a __u16 taken from the mountd IPC login response but
-+	 * resp->hash[] is only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or
-+	 * malicious response can set hash_sz far beyond that (up to 65535),
-+	 * making the memcpy() below read past the response object
-+	 * (slab-out-of-bounds in ksmbd_alloc_user()).  Reject any oversized
-+	 * hash rather than trust the length.
-+	 */
-+	if (resp->hash_sz > sizeof(resp->hash))
-+		return NULL;
+ 	AA_BUG(!label);
+ 	AA_BUG(!hats);
+@@ -1055,7 +1056,6 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 	 * the profiles and label, we can rely on the namespaces being live
+ 	 * and avoid incrementing their refcounts while grabbing the lock.
+ 	 */
+-	label = aa_get_label(label);
+ 	ns = labels_ns(label);
+ 
+ retry:
+@@ -1063,15 +1063,19 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 	if (label_is_stale(label)) {
+ 		new = aa_get_newest_label(label);
+ 		new_ns = labels_ns(new);
 +
- 	user = kmalloc(sizeof(struct ksmbd_user), GFP_KERNEL);
- 	if (!user)
- 		return NULL;
++		if (needput)
++			/* aa_put_label() is safe to call when under lock */
++			aa_put_label(label);
++		label = new;
++		needput = true;
++		/* check if replaced with label in parent ns, and lock there */
+ 		if (new_ns != ns) {
+-			aa_put_label(new);
+ 			mutex_unlock(&ns->lock);
+ 			ns = new_ns;
+-			label = new;
++			/* retry will bottom out at the root of the tree */
+ 			goto retry;
+ 		}
+-		aa_put_label(label);
+-		label = new;
+ 	}
+ 
+ 	if (PROFILE_IS_HAT(labels_profile(label)))
+@@ -1082,7 +1086,8 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 		name = hats[i];
+ 		label_for_each_in_ns(it, labels_ns(label), label, profile) {
+ 			if (sibling && PROFILE_IS_HAT(profile)) {
+-				root = aa_get_profile(profile->parent);
++				root = aa_get_profile(rcu_dereference_protected(profile->parent,
++						      mutex_is_locked(&ns->lock)));
+ 			} else if (!sibling && !PROFILE_IS_HAT(profile)) {
+ 				root = aa_get_profile(profile);
+ 			} else {	/* conflicting change type */
+@@ -1142,6 +1147,8 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 		}
+ 	}
+ 	mutex_unlock(&ns->lock);
++	if (needput)
++		aa_put_label(label);
+ 	return ERR_PTR(error);
+ 
+ build:
+@@ -1154,6 +1161,8 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 		goto fail;
+ 	} /* else if (IS_ERR) build_change_hat has logged error so return new */
+ 	mutex_unlock(&ns->lock);
++	if (needput)
++		aa_put_label(label);
+ 	return new;
+ }
+ 
+diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
+index 44471bb057623..ae8a3626ac75a 100644
+--- a/security/apparmor/include/policy.h
++++ b/security/apparmor/include/policy.h
+@@ -181,6 +181,8 @@ void aa_add_profile(struct aa_policy *common, struct aa_profile *profile);
+ void aa_free_proxy_kref(struct kref *kref);
+ struct aa_profile *aa_alloc_profile(const char *name, struct aa_proxy *proxy,
+ 				    gfp_t gfp);
++struct aa_profile *__aa_new_null_profile(struct aa_profile *parent, bool hat,
++					 const char *base, gfp_t gfp);
+ struct aa_profile *aa_new_null_profile(struct aa_profile *parent, bool hat,
+ 				       const char *base, gfp_t gfp);
+ void aa_free_profile(struct aa_profile *profile);
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 257ca96a3d067..13d3041200cba 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -507,7 +507,7 @@ struct aa_profile *aa_fqlookupn_profile(struct aa_label *base,
+ }
+ 
+ /**
+- * aa_new_null_profile - create or find a null-X learning profile
++ * __aa_new_null_profile - create or find a null-X learning profile
+  * @parent: profile that caused this profile to be created (NOT NULL)
+  * @hat: true if the null- learning profile is a hat
+  * @base: name to base the null profile off of
+@@ -524,14 +524,15 @@ struct aa_profile *aa_fqlookupn_profile(struct aa_label *base,
+  *
+  * Returns: new refcounted profile else NULL on failure
+  */
+-struct aa_profile *aa_new_null_profile(struct aa_profile *parent, bool hat,
+-				       const char *base, gfp_t gfp)
++struct aa_profile *__aa_new_null_profile(struct aa_profile *parent, bool hat,
++					 const char *base, gfp_t gfp)
+ {
+ 	struct aa_profile *p, *profile;
+ 	const char *bname;
+ 	char *name = NULL;
+ 
+ 	AA_BUG(!parent);
++	AA_BUG(!mutex_is_locked(&parent->ns->lock));
+ 
+ 	if (base) {
+ 		name = kmalloc(strlen(parent->base.hname) + 8 + strlen(base),
+@@ -572,7 +573,6 @@ struct aa_profile *aa_new_null_profile(struct aa_profile *parent, bool hat,
+ 	profile->file.dfa = aa_get_dfa(nulldfa);
+ 	profile->policy.dfa = aa_get_dfa(nulldfa);
+ 
+-	mutex_lock_nested(&profile->ns->lock, profile->ns->level);
+ 	p = __find_child(&parent->base.profiles, bname);
+ 	if (p) {
+ 		aa_free_profile(profile);
+@@ -580,7 +580,6 @@ struct aa_profile *aa_new_null_profile(struct aa_profile *parent, bool hat,
+ 	} else {
+ 		__add_profile(&parent->base.profiles, profile);
+ 	}
+-	mutex_unlock(&profile->ns->lock);
+ 
+ 	/* refcount released by caller */
+ out:
+@@ -594,6 +593,18 @@ struct aa_profile *aa_new_null_profile(struct aa_profile *parent, bool hat,
+ 	return NULL;
+ }
+ 
++struct aa_profile *aa_new_null_profile(struct aa_profile *parent, bool hat,
++				       const char *base, gfp_t gfp)
++{
++	struct aa_profile *profile;
++
++	mutex_lock_nested(&parent->ns->lock, parent->ns->level);
++	profile = __aa_new_null_profile(parent, hat, base, gfp);
++	mutex_unlock(&parent->ns->lock);
++
++	return profile;
++}
++
+ /**
+  * replacement_allowed - test to see if replacement is allowed
+  * @profile: profile to test if it can be replaced  (MAYBE NULL)
 -- 
 2.53.0
 
