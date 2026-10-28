@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207872;
-	b=iyJvuUEzMw5YcpttNUfMFQBdlSrhflQX5PDn1NFJB8Uok8YHxY3qUXN4uYcxX/sYmiRV
-	 SJFXDYlTT0pvXWPuyXTHjwBpuFbDss3zUeQfPNPg6mpNOmpV006DBFsUWEtx1wjklE21O
-	 pNhgk2ZOiWCMCsw0RTRbR1vKTdxEC2o59ksDR0bBmbRDhms8aGKaCR7/xUlI4qikh5vA4
-	 5Nyhkr1OlUBSBDVUiw8UfszHP0k5Tz0UnqFh+kbr0oqNhRNjBP7QJ5u09vucp96uS072b
-	 fKhdZ61aEgEfjKaFYopwMRFEcL+gCK/JOaQom01scCxIrRg+78FljlCRK4IdPT4wNUQ==
+	t=1793207875;
+	b=jK6MRXWrW4YDg2gj0gVFmb98WTh8uioj6/4HNrSSrYTNv52DlANUK0759yiN0k8xd0eH
+	 C7yAt+AvGVdzGNbqVyMOYb2dPAdrnSLFf3ANDDlN0DgLsl/W45RtyaQmJX96hpSRgKhDu
+	 O/LvfaQa8uswDXh0/mYN453Gas4cpPvf6JNz+RrMSvbqHuIRYNeyne4VXhfCnz1Tfl2OV
+	 99LfMfFoGlOaLanlGRMjkr91pvym+JcMhScsBHx+NBGDgBlcFgX2cDnePEuV3XvZ3qmqe
+	 tmQ/1mXkxxMx9frArVXDXsuXtqJZBpLQOd8/OBLsxli+FcyZNUlrd8w19C03ydrNzIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5ZBC2awo5nv9PZCMQt8sNKfYjqRz39tkW0zqvU/vtjw=;
-	b=aVSCXp6ah/91qlbuw1qAlbXRHFOkG/4Sm3Rnz84b9Ia/cd3MYNLBbJwfhgbwg6+vGIGi
-	 AjWJQYawxTdszjtaRGH6StnraVWZl2OtEFXWnTZkjpB08JNJVHLi8XKNOzDs+y3W5uaWT
-	 eiZg43gof//bJwZZTtDhk6Q082/ghRciwmq7if7xyshJLlpLtImfHMrWv8GRrthhN5frh
-	 VNYp2pzwquQ/WFX5FqVAaefkHdz8HzZlISDn8k7z8SfpGt/HYlQf4gkTtEiZ2Ok8IssgI
-	 Xj95z5H9oJ+9kbbinTHLqho9QqUIZTFplxxBjKufwg5GwflxA1DzIrWR+Zh41E0vurw==
+	bh=Q/iyakcc44uQGfkDO9sVhLz0+RbXmprSXnLNerEZHQg=;
+	b=nObM8nBPfPbqfXlgkAYcPp/h1hFpTRAXQa/qkbFpsHFT+Z598ZgNdPNiax9Fup4X448p
+	 CQj8ucsOR1hHaZsyJsoY0zoyboRMYJm0Ilsa/X9Q6ZnClC5oG5fn60ySpFmPd22KpIreJ
+	 jFXAxkeHNX5oYAwe+9kJZtWRdQEk44+9rwCZxA0noIK5jJ/ZZN9CoZPQW0sTyNH4K23qr
+	 CbAcOh7Tw9iCJfOSMuD3EBtnh0L8riiQ8za8pR/xSn3bs23n0BSdAoxEaok9dHtUN9yia
+	 zrcCtOCSJ0UF+JN4s/Jmb3sBHgLTuqEBEiGnDLFp0OHXbTS+EubEE0CRDVrr9b/lFJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNOSNdYy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IBCuHyDc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EC5606A33F;
-	Wed, 28 Oct 2026 17:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE48606A31F;
+	Wed, 28 Oct 2026 17:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNOSNdYy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E9D1F01825;
-	Wed, 28 Oct 2026 17:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IBCuHyDc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B891F031E2;
+	Wed, 28 Oct 2026 17:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207872;
-	bh=5ZBC2awo5nv9PZCMQt8sNKfYjqRz39tkW0zqvU/vtjw=;
+	s=korg; t=1793207875;
+	bh=Q/iyakcc44uQGfkDO9sVhLz0+RbXmprSXnLNerEZHQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jNOSNdYyUb/pwthyy+A3hrLmDHfVU+0b/VveCyaBRApGfaO3vI+g85ST2Oznuwyoc
-	 gUXCc1NNzxV5NwIDSPpOEGi6QIeyfBuAifVpnN8mZCcVjhjw/PxeRq8XcmaRKbXPqC
-	 I5ctH55wvciaa/JEtUv5u+x2fq76ziUDvHSKFljU=
+	b=IBCuHyDc6Npo5j1o73Iv2kLj6LU/O/nEVgNtHkt+0sjykI2Zo79EpTXoPyX5pXLQP
+	 Y6VGXPhjAFZq6QktyKChB4rjgkoimKign1iECLC0PNfv2ntV4zET5ksvzM0GyeQ6XR
+	 Eb4BPIwdTO/3FSRZO/WHJiH0jOFmK3yW9cZ1Eb1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 167/247] netrom: clear nr_neigh->ax25 under the routing lock in nr_link_failed()
-Date: Wed, 28 Oct 2026 17:59:30 +0100
-Message-ID: <20261028165951.375112897@linuxfoundation.org>
+Subject: [PATCH 6.12 168/247] netrom: fix nr_node leak when nr_del_node() removes the last route
+Date: Wed, 28 Oct 2026 17:59:31 +0100
+Message-ID: <20261028165951.399529802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,78 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-nr_route_frame() swaps nr_neigh->ax25 for the ax25_cb returned by
-ax25_send_frame() and puts the old one while holding nr_route_lock.
-nr_link_failed(), called by AX.25 when that link fails, looks the
-neighbour up under the lock but then clears nr_neigh->ax25, puts the
-ax25_cb and bumps nr_neigh->failed after dropping it. If a frame is
-routed to the same neighbour at that moment, both paths can see the
-same ax25_cb and put it twice.
+nr_del_node() takes a reference on the node with its lookup. When the
+route it deletes is not the last one, it drops that reference before
+returning. When it is the last one, it only unlinks the node with
+nr_remove_node_locked(), which drops the list's reference, and returns
+still holding its own: the unlinked node is never freed.
 
-Do the whole of nr_link_failed() in one critical section. The
-neighbour no longer needs a temporary reference, since it cannot be
-unlinked while the lock is held.
+Seen with kmemleak on a live node after adding and then deleting a
+route to a dummy node with nrparms (SIOCADDRT then SIOCDELRT): the
+96-byte nr_node allocated by nr_add_node(), callsign and mnemonic of
+the dummy node in its hex dump, is reported as unreferenced.
 
-This depends on "netrom: use a single lock for the node and neighbour
-lists".
+Drop the lookup reference in both cases.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 6e6f80bff5c901f317c3750cdf375766800ecc1a)
+(cherry picked from commit a4b96115783fdefae9599f9a84a39e24fb288d6b)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ net/netrom/nr_route.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 67d9ed0006b40..98ba317ada637 100644
+index 98ba317ada637..288c4a91ea9b7 100644
 --- a/net/netrom/nr_route.c
 +++ b/net/netrom/nr_route.c
-@@ -715,34 +715,35 @@ void nr_link_failed(ax25_cb *ax25, int reason)
- 	struct nr_neigh *s, *nr_neigh = NULL;
- 	struct nr_node  *nr_node = NULL;
- 
-+	/*
-+	 * nr_route_frame() replaces nr_neigh->ax25 under nr_route_lock;
-+	 * clear it and drop its reference under the same lock, so that the
-+	 * two paths cannot both put the same ax25_cb.
-+	 */
- 	spin_lock_bh(&nr_route_lock);
- 	nr_neigh_for_each(s, &nr_neigh_list) {
- 		if (s->ax25 == ax25) {
--			nr_neigh_hold(s);
- 			nr_neigh = s;
- 			break;
+@@ -388,8 +388,9 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 				case 2:
+ 					break;
+ 				}
+-				nr_node_put(nr_node);
+ 			}
++			/* Drop the reference taken by __nr_node_get() */
++			nr_node_put(nr_node);
+ 			ret = 0;
+ 			goto out;
  		}
- 	}
--	spin_unlock_bh(&nr_route_lock);
- 
- 	if (nr_neigh == NULL)
--		return;
-+		goto out;
- 
- 	nr_neigh->ax25 = NULL;
- 	ax25_cb_put(ax25);
- 
--	if (++nr_neigh->failed < READ_ONCE(sysctl_netrom_link_fails_count)) {
--		nr_neigh_put(nr_neigh);
--		return;
--	}
--	spin_lock_bh(&nr_route_lock);
-+	if (++nr_neigh->failed < READ_ONCE(sysctl_netrom_link_fails_count))
-+		goto out;
-+
- 	nr_node_for_each(nr_node, &nr_node_list) {
- 		if (nr_node->which < nr_node->count &&
- 		    nr_node->routes[nr_node->which].neighbour == nr_neigh)
- 			nr_node->which++;
- 	}
-+out:
- 	spin_unlock_bh(&nr_route_lock);
--	nr_neigh_put(nr_neigh);
- }
- 
- /*
 -- 
 2.53.0
 
