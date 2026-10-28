@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211342;
-	b=I4ZTKMiwa1sND7U6jyyRkyUgXjo0euRkxAXsRPR/DQ5NpigqJNjHll2jaXpaHmfyMl4O
-	 wJokrUKE+RZ7O/m5p4SP8LB/Uwv3Qef8VSTNHkAEEkYVqiPdcM5YdPxvO5N5NFD1lRfEb
-	 aQ3QxcAxv+jxrUJ9JN86rSjGUpXLFKAa5pDwr2B2GbJGwUH/b9eZ4i2iem9J508rew8al
-	 PGmWFWRHzf6Q/EQj0MWP0mnkpUOmhqXJii6RKtTAi1wuxEuFUOxcIExji3Q+CV5/sUhkb
-	 XkHdSZN4qdGCK7CG9z8M5MqC6DPIFKdeb29+wLa+lM3wRXtguDvVlqfmgY4fhU0XgFQ==
+	t=1793211345;
+	b=MlxmczRCjY/LnWs3c+96vFHg95eSJODGa0R45D8MhKmnsIXw6jYpTuh0T38ZmHiFihn7
+	 E4wOcS2Ikg07LRImsFpw9tGuf/1UUTDsa6Kf0OKjtrHEgsifVxb86E248n8aK2YQepnMJ
+	 BpzVmPFFN/af6GidIdX3IWHzd8mh9AmFZO/+zZmTyGxpVhXth/F/i1gTeGmd0evozZE7I
+	 Ypc6SWthew/hCCn38kr2lBixaWnGOZXi4YX8pAzwLfWJagGrGD+wyOYpZbdN/UwK70jcL
+	 NrXy/JFifKIpiacc2jFGJ6BA7YfnQlWOGurAmvSOfF7jaEjUyRiCW0etgdJMFKwFYMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211342;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sezW3KiwMTOsU0OigU9PJVT8QQ7f6hS5Q6ICaoMMmG8=;
-	b=MyN6LSFJ2alPMn5OCTQuzh7FeXYMLpd135PhqHCEyY0Zyqqn7pzoeQQWYw/ujHNC0Kyw
-	 DXh54uAp94LOab/HdOnLvI8q6AAlcor2GEJd1TU/Umld8TGplqZ2IAf6nV8kS1pu2YtX3
-	 4Y9bXa0kpNQLKiYwZWTXNcbnNRyq7yr8XglLMJK5hjlDwSVhSjaCPjyz9u2fCDo6+K7Fb
-	 46wjgQDsxHo+bEyydkW5+Uz3bMbGBz15t9D+KoxHQygBQTalMM8TQOt2k8iM+wmiTZTHX
-	 gvcNB7O3VcFqoKfdOGAZ537gsRMUVgvaguyRwgaVJk9bQ0n+mDSJaqe0EvcJ3bjFRWQ==
+	bh=20CFTGHSnyzGjmnH1nBQIsBtPdqDuE3N1bY81N5B07c=;
+	b=aqwqM9wRuLZa1HLemQmwsUPPsS1RN093dceuqqsTEFgwxAnYiaV1/urP+rWXAK0XgnE5
+	 qusJ5jHEAGkE3ZRsqji58ezwv2iMLjgkxQxcMWoWYN+XhNvo0jCW5YgwU1hNBR4DoFplL
+	 oT7q69qsLtWlLANeNiw5uZllWYU0YsRPNi4MkhCu9CyTFkOP4tgdAmJmRbikhtBD4APRT
+	 OROtBTYSL8Xn2p0/r39Fs5GDu0BXenSkYbL5Fy9UAYH2kT71ETM3WypufUaMSLQpXtpyf
+	 HgeOcCy8+eLy1rSI3YuTHuGJysDYNMyiegEWuzu+mak2es5Eh+ZHKw9XwNyi1E3y00w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6RmH+YW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KoOd7YIJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34970606A95C;
-	Wed, 28 Oct 2026 18:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123DA606A32A;
+	Wed, 28 Oct 2026 18:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6RmH+YW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856F01F01825;
-	Wed, 28 Oct 2026 18:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KoOd7YIJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C551F01825;
+	Wed, 28 Oct 2026 18:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211342;
-	bh=sezW3KiwMTOsU0OigU9PJVT8QQ7f6hS5Q6ICaoMMmG8=;
+	s=korg; t=1793211344;
+	bh=20CFTGHSnyzGjmnH1nBQIsBtPdqDuE3N1bY81N5B07c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6RmH+YWv5w+LtA2SePV0kg2juivjDqEvKIKlPjIV8xcrejiuvovXR+7bvO6Srq2W
-	 JAXpEkK3QPcgXK2RShp1BtMlMVDOkclnzC9S264NUJEZA7Nex7U2VA9kMX7lh9WSQT
-	 kiIJDyiuTJwA3DjPzg/u7KbH8CAHsHkyGLNvLtYw=
+	b=KoOd7YIJ5l6LmVtQjqXtv3tL/7hFiSWelAmGzmoXgRLIOoCoUVbeqqklvjQ0+PycG
+	 UxiIQWLhSOHIf7v7ao8H9y/+sfCfncg2GZEYPG0B5s4xbIWDgpZHengooqPqLFjdxD
+	 cdK2EWEJzFhYqEohkR+lXI+a6WJVQrzlSWfNEp5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
 	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 344/571] ipv4: stop route notification sizing when nexthop group shrinks
-Date: Wed, 28 Oct 2026 17:58:11 +0100
-Message-ID: <20261028170016.180164808@linuxfoundation.org>
+Subject: [PATCH 5.15 345/571] ipv4: do not warn on route notification size race
+Date: Wed, 28 Oct 2026 17:58:12 +0100
+Message-ID: <20261028170016.203729766@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -70,43 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit d3daa33c7af92e38f2274bbd2576f58bfbaf89e6 upstream.
+commit e02a5b6588161673ef75a4bc5cdfb62bd493374d upstream.
 
-Commit 680aea08e78c ("net: ipv4: Emit notification when fib
-hardware flags are changed") added an RCU-only fib_nlmsg_size() call
-for asynchronous hardware flag notifications.
+Commit 680aea08e78c ("net: ipv4: Emit notification when fib hardware
+flags are changed") added asynchronous route notifications for hardware
+flag changes.
 
-fib_nlmsg_size() checks fib_info_num_path() before each iteration,
-then fib_info_nhc() independently reloads nh->nh_grp. If
-RTM_NEWNEXTHOP replaces a group with fewer paths between those loads,
-fib_info_nhc() returns NULL and fib_nexthop_nlmsg_size() dereferences
-it.
+fib_alias_hw_flags_set() sizes the skb with fib_nlmsg_size() and later
+fills it with fib_dump_info() while holding only RCU.  With nexthop
+compatibility mode enabled, a concurrent replacement can grow the group
+between these independent snapshots.  fib_dump_info() can then
+legitimately return -EMSGSIZE, so the warning does not prove a sizing bug.
 
-Stop sizing when the indexed path is absent. Nexthop groups are
-dense, so the current snapshot has no later path.
+Remove the warning.  The existing error path still frees the skb and
+reports the error to listeners.
 
 Fixes: 680aea08e78c ("net: ipv4: Emit notification when fib hardware flags are changed")
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/netdev/20261004082043.GB92032@shredder/
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/1054fa46165bba1b473782fa41367804aa908e86.1790915964.git.4ncienth@gmail.com
+Link: https://patch.msgid.link/b7e203fc5867651cb67ef84aa03e082f0f76008e.1791423190.git.4ncienth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_semantics.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/fib_trie.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -512,6 +512,9 @@ size_t fib_nlmsg_size(struct fib_info *f
- 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
- 			size_t nhsize;
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -1079,8 +1079,6 @@ void fib_alias_hw_flags_set(struct net *
  
-+			if (!nhc)
-+				break;
-+
- 			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
- 
- 			if (nhs != 1)
+ 	err = fib_dump_info(skb, 0, 0, RTM_NEWROUTE, fri, 0);
+ 	if (err < 0) {
+-		/* -EMSGSIZE implies BUG in fib_nlmsg_size() */
+-		WARN_ON(err == -EMSGSIZE);
+ 		kfree_skb(skb);
+ 		goto errout;
+ 	}
 
 
