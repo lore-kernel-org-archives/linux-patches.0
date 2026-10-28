@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210959;
-	b=1NHX/XYdAgJOsjGpWApsXkhkCmwNND2Thcc0CPD7iKS/E8JeoVqjtDhD4FMNB36M/CpL
-	 y9thuxHQy1FeGWAj51ICZWyQOBoEntVlBkC6zxVk9iPynFpugvg3R0esLmBoae9jHQK8b
-	 EMTnsn9P5lnSoPcMlDd1dx6fWPvhI9Udr2OVEGxVzWvKAuBRzBIFURr/GTwzh5o+7wxGN
-	 7AbDeVU2llEldVvu2gVTWZ3wc+Nh1joQuRSySv4Kc0FdPPH0WF6dPde7d3BORIhm5eFhM
-	 11lUpR+jRYUcyAs/F130CwXDlbLR2siCRbNGvTvOk4U+hXkzbOkDBx5MZfeb0NYVovQ==
+	t=1793210962;
+	b=chIVhDXzbpQEvlKek+h+dZ3R7wGsmfFLzdDDV8E3yO5OGAsJACx/JzW7O71kfK8feTLK
+	 RWn3MnZhLGxuugkzDFvCIsuGfznLDX+lVN89d9S5LkEOkrTF1ae9fJHLe+fIchn8S2zky
+	 r9UUoY+aMCVyOyjwOd0HU4vN7h7JERMBvrck2iCs0VF3MunBaXTKMW9q0zx2LArm7Pjzi
+	 7OM6lba2NrF3pVzmM+LvA3Jd/d1g8KoiiqGgPPKL5oRMjAJm6fWHcpt3yMFSbMXPmZJkU
+	 hQbS1Eh8bbupfSIztBea1j8THuopR2iqW71UJ6IKBcRy1psVeHT5vfN74eTHuGURVsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=IeONskHq/Htz7VDUskedKTohiF9/TsRn7i2K6Ajsy6g=;
-	b=nJ/pRjT9RBsLBv6u2PumYuGmu1PnS3v+5JWoR6xZoLYwS1B6geB5SKStSVcGUZzv5fm8
-	 s678S1bVxb4sOKEVbuCICCxERw4M1P2diLDWfJh+/qwU+kdAWPqCTEqRUgBRQ6NAVls+Z
-	 gOBPOE5TRey7Ar3cvKpNjR/JwVfbJxGUO3+jX8DANfHzOgcZElSCy2IODCzku69qbza5i
-	 98yhqOZ2YUbK99a2Mgfsn2PW3sFOGh5/rMtgFBWuhyW8pf9JCTXfBG8escbohYBTKm6om
-	 5skFAHff9mDKxBumIcsJ2FhQ0SnltpPfhi6v33uFzhIpaXKsXDka8NZADG5PxiWuXnA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=awtIS3ynaYJ8DLzcg1rGaR+sd6CPwQFQ5Mav3/7N9FI=;
+	b=IYeNtHjOWH8MFPoCom9m+2FF8ADs5PKNMfcytdvG6yg4Di0FxvIgnKpP7lvrh4HjNvyF
+	 sy9S41WYgKXqQhLpr0cdH8mwOwGR0BqpE/peO798jeLBi4e7ig2T58DZpghzkVSWX001I
+	 m8BzUk82/0gGbg0G35qOoLLGBX8JVwxb2Bm4V+tZTcQBTBExboFlka2W0lrsBnav86ras
+	 WlTJMFiOyndLc2DExzXx2RzUW0gr0V/KxM1cGg6GjN3N0c0Fs1WOHKNMzoGoWHe3TPSk+
+	 NTBmjAnOznaWsGj0ejaqLjg6+IQ7GiS86296VhyB1QqvgnwpcxSerhZyjLl/FnWB6WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBdiJ+71;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bwj00ECI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BC9606A31D;
-	Wed, 28 Oct 2026 18:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F76606A324;
+	Wed, 28 Oct 2026 18:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBdiJ+71
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7FD1F01825;
-	Wed, 28 Oct 2026 18:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bwj00ECI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC231F031E2;
+	Wed, 28 Oct 2026 18:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210958;
-	bh=IeONskHq/Htz7VDUskedKTohiF9/TsRn7i2K6Ajsy6g=;
+	s=korg; t=1793210961;
+	bh=awtIS3ynaYJ8DLzcg1rGaR+sd6CPwQFQ5Mav3/7N9FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBdiJ+71NitFMoFA9non2GAX6bXNyAJJjetjyYTqtntog8Sb4YUhn2Z3GmzzxOWx6
-	 9Hj3up5tfgEbinnuA80ETaBemu3Fb/vj08z2kpioXgwIRyV5X3rEviXYesEMZWvFpF
-	 HhIme52lqLQWR0X1MXkSJ2bN482EL2thVdXw6sQM=
+	b=bwj00ECICeKKdh5DxdBXoPBZIltRYo640MqOxq/Nc+DjAoIVRygYjmbwYSpzN/Von
+	 OMn4Yyc3JIg1Hk+UYdFsajjHV9JkYNXsbqTaD1XU4S/OgZ/TsOotWIrpoKAyUfl43q
+	 whmCuBUBEq2eWQxi18xHYW8+/I0H7EsmxUQf6lKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuchao Zhang <ndaugoing@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Nazarewicz?= <mina86@mina86.com>
-Subject: [PATCH 5.15 208/571] usb: gadget: f_fs: Fix NULL pointer dereference in FUNCTIONFS_ENDPOINT_DESC
-Date: Wed, 28 Oct 2026 17:55:55 +0100
-Message-ID: <20261028170012.938941228@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Hui Peng <benquike@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.15 209/571] usb: core: clear both ep_in and ep_out for non-ep0 control endpoints
+Date: Wed, 28 Oct 2026 17:55:56 +0100
+Message-ID: <20261028170012.962028980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,95 +62,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuchao Zhang <ndaugoing@gmail.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit 9cd072788c76595529eb38f42bf94d23852f8534 upstream.
+commit 0e8baa78d872f2db440d8b9ded946ab8dceb89eb upstream.
 
-When user space sets up FunctionFS with only full-speed descriptors
-(e.g., flags = FUNCTIONFS_HAS_FS_DESC) and the gadget operates at a
-higher speed (such as USB_SPEED_HIGH or USB_SPEED_SUPER),
-config_ep_by_speed() detects that the function lacks descriptors for
-the current speed, logs a warning, and falls back to full-speed
-descriptors. The endpoint is then successfully enabled via
-usb_ep_enable(), and epfile->ep becomes valid.
+In usb_enable_endpoint(), non-zero control endpoints (where
+usb_endpoint_xfer_control(&ep->desc) is true) populate both
+dev->ep_in[epnum] and dev->ep_out[epnum] with the same struct
+usb_host_endpoint pointer.
 
-However, when user space subsequently issues the FUNCTIONFS_ENDPOINT_DESC
-ioctl to query the endpoint descriptor, ffs_epfile_ioctl() selects the
-descriptor index solely based on gadget->speed:
+However, usb_disable_endpoint() only clears either dev->ep_out[epnum] or
+dev->ep_in[epnum] depending on the direction bit of epaddr when
+reset_hardware is set, leaving the opposite direction's array slot
+pointing to the disabled/freed endpoint.
 
-	switch (epfile->ffs->gadget->speed) {
-	case USB_SPEED_SUPER:
-	case USB_SPEED_SUPER_PLUS:
-		desc_idx = 2;
-		break;
-	case USB_SPEED_HIGH:
-		desc_idx = 1;
-		break;
-	default:
-		desc_idx = 0;
-	}
-	desc = epfile->ep->descs[desc_idx];
-	memcpy(&desc1, desc, desc->bLength);
+Clear both dev->ep_out[epnum] and dev->ep_in[epnum] when disabling a
+non-ep0 control endpoint with reset_hardware set, and update the
+function kerneldoc accordingly.
 
-Because user space only supplied full-speed descriptors,
-epfile->ep->descs[1] is NULL. Dereferencing desc->bLength triggers an
-immediate kernel NULL pointer dereference panic.
+Tested in QEMU against Linux 7.3.0-rc3 using dummy_hcd and raw-gadget to
+enumerate a USB device with a non-zero control endpoint
+(bEndpointAddress 0x01, bmAttributes USB_ENDPOINT_XFER_CONTROL),
+verifying that both dev->ep_in[1] and dev->ep_out[1] are cleared when
+the interface is disabled.
 
-Fix this by falling back through lower speed descriptors if the current
-speed descriptor was not supplied, matching the fallback logic in
-config_ep_by_speed() and historical f_fs behavior. If still missing,
-fall back to epfile->ep->ep->desc (the active descriptor), and return
--EINVAL safely if no valid descriptor is found. In addition, mark desc
-as const to match struct usb_ep::desc and avoid discarding qualifiers.
-
-Fixes: c559a3534109 ("usb: gadget: f_fs: add ioctl returning ep descriptor")
-Cc: stable@kernel.org
-Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
-Acked-by: Michał Nazarewicz <mina86@mina86.com>
-Link: https://patch.msgid.link/20260918005438.81263-2-ndaugoing@gmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260920231702.110963-1-benquike@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/usb/core/message.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1351,8 +1351,9 @@ static long ffs_epfile_ioctl(struct file
- 		break;
- 	case FUNCTIONFS_ENDPOINT_DESC:
- 	{
-+		const struct usb_endpoint_descriptor *desc;
-+		struct usb_endpoint_descriptor desc1;
- 		int desc_idx;
--		struct usb_endpoint_descriptor desc1, *desc;
- 
- 		switch (epfile->ffs->gadget->speed) {
- 		case USB_SPEED_SUPER:
-@@ -1366,7 +1367,17 @@ static long ffs_epfile_ioctl(struct file
- 			desc_idx = 0;
- 		}
- 
--		desc = epfile->ep->descs[desc_idx];
-+		do {
-+			desc = epfile->ep->descs[desc_idx];
-+		} while (!desc && --desc_idx >= 0);
-+
-+		if (!desc)
-+			desc = epfile->ep->ep->desc;
-+		if (!desc) {
-+			ret = -EINVAL;
-+			break;
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -1331,7 +1331,8 @@ static void remove_intf_ep_devs(struct u
+  *
+  * Disables the endpoint for URB submission and nukes all pending URBs.
+  * If @reset_hardware is set then also deallocates hcd/hardware state
+- * for the endpoint.
++ * for the endpoint (clearing both ep_in and ep_out pointers for
++ * bidirectional non-ep0 control endpoints).
+  */
+ void usb_disable_endpoint(struct usb_device *dev, unsigned int epaddr,
+ 		bool reset_hardware)
+@@ -1352,6 +1353,11 @@ void usb_disable_endpoint(struct usb_dev
+ 			dev->ep_in[epnum] = NULL;
+ 	}
+ 	if (ep) {
++		if (reset_hardware && epnum != 0 &&
++		    usb_endpoint_xfer_control(&ep->desc)) {
++			dev->ep_out[epnum] = NULL;
++			dev->ep_in[epnum] = NULL;
 +		}
-+
- 		memcpy(&desc1, desc, desc->bLength);
- 
- 		spin_unlock_irq(&epfile->ffs->eps_lock);
+ 		ep->enabled = 0;
+ 		usb_hcd_flush_endpoint(dev, ep);
+ 		if (reset_hardware)
 
 
