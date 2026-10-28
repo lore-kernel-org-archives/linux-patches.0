@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215390;
-	b=29bqz1OXfgqOBU7fZgBNvDD7gUiLS83tKtBjCay/bO8Iwaf6S9roeew3M8187jMoSHeW
-	 qs28+IjX1VPxpR6WthYL2q0Vrg8XynGq1jMGvU3SwcAuxbo1Ct3L91sFH3PGKnoETyXhX
-	 bGsjq6BCozsJpR+90wP6ZUuDljbGa1dfyWrTQVFcfUoVxHtYlFFBHIK+uw871q2DTsktp
-	 L4WFGxeOhrv6ybX8RYWnnhzAFr0xQFW6r0u2nuRNwgSjtrluNzjp3wLpn92BS3PSYP1wr
-	 RM812KQ1YSn0H+aewIfWSm2eGJAMedg+22GkesSM75sYn1ipp76BpKdcKOJ2mvWCRKQ==
+	t=1793215393;
+	b=m9QmayQQ4WoJCMGjRiF9rgHE5sU1nTKHlGohSJNCyhmRvu71Zl9JCCu5PFnL7BIHD4Oe
+	 fIRimTb7WVIEbUz19SS73gzK7WO3Ws/IUz2s39D7xK3GvMaApjXBoYdDTUdo8b58Tj9hx
+	 NOM1p6wvDbqJyISrmbOfWqDcjDCoosuVVofhycLRFm+UYSdF06XS5THZmUpzi5rSG33Wk
+	 PXLl6fLOD9afaL5BEt8olu4gwoIDA/2m6vcQZ8j+T7bUyenRbcN3tuvo72mmJE+5wdlvY
+	 fun6f+fd9WFQx0xDDVoyF0HW99F2qorvyXeXL0n6Npuf4zkhbmj7S9EOZGL5NXk+DMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215393;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=im7kbvgKq/9cjQWniFD3tQAt+6OqZNAgf7lS9s3Zm6k=;
-	b=zrAgqLfC+ZVpqcBkV76rIfgKVtirmNffsJq1rh93O5M2lZ+exmJcSw4brPXYMfucMJfC
-	 AyZyr7IVANO4Gjtufun4qMGVqa21x4F6uvbQBnOK8V2PVPtzMeIRQhB7/v+GPjWrPOLKW
-	 piMBhmVIZs0cUTJd7cZ81a2+liFNkFq2VLnqRJ7X0wFLsZFWTmzTZB5sXljJ1kO2pHRWh
-	 y56hgGHg68Bs7z3Ol6oRggAhabstqFyOad7SVQMPAZJH1wEkZ9cpFmvl6XrPPCV8kF1Ga
-	 hxbZTuc6gnA/txgbFDMQwORX81ulP0vc+X1Hy0OnLrnpNlFqtH2P5xmPsmZGSPMoHMw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=QIcJ7JMOucwlmisZIp1k0mSnuqnaMFDYH+OxchgLOVQ=;
+	b=TsVQriKwsz85JBDPJi+76JdvTvo/JUFs7Ip6qZkeI9K6Kuh74OT5ZCA1UxWpQwihVTpD
+	 7ohRgIZf2E+Q357j4sqeL5iw3oImJ128W+kBOV5iGOWrDpBXZyDgRLeDPXjtjmCVDsTmG
+	 +aqxjc1GRDs4aJPE2TtTrDCnwJAqhd6saQMWDEp7AS5+oPR41I3u4B3eEiBXEqgiShiNr
+	 N2CkaiQ4ISkMmUcjDX8gH3PvwUMjjnbKpEmq0H7qgKqRI+gwuOOclKOXrQjJPbXnrroM6
+	 e9mdni315ahaO5O3aGJ9JWM2TiLGW8RW6kbSNgdfudjVl+dw5B6nSP2xHjJCGqA1cWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LM1pOhtx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNiZ43iQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151D8606A31A;
-	Wed, 28 Oct 2026 19:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181CD606A31A;
+	Wed, 28 Oct 2026 19:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LM1pOhtx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ECB31F01828;
-	Wed, 28 Oct 2026 19:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNiZ43iQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620E11F01828;
+	Wed, 28 Oct 2026 19:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215389;
-	bh=im7kbvgKq/9cjQWniFD3tQAt+6OqZNAgf7lS9s3Zm6k=;
+	s=korg; t=1793215392;
+	bh=QIcJ7JMOucwlmisZIp1k0mSnuqnaMFDYH+OxchgLOVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LM1pOhtxjWVOno1xwVGJMwl0HrRsxRmhc+jidy39GmQMkcINPrWAa7XOrV8mWohKd
-	 68mWm3mH5bSr+qdpwfbcKzRl2mPyWqycIX3/vwosCWESre0g0cicIWi5IC4IXoarbS
-	 j8fLnIWA2dIdSJ1w2VUz2bfR/2qo+g/sPa896ViM=
+	b=yNiZ43iQ5RfcQo5YdrCxrLEjhhzb+3bifVTOKl30Y8Ehpw+sIgLnyqo7KCW12Rd/z
+	 Rlc+Q5yLO2FQ6ttx6jg2eVhJfB6sThoqMFyPsj8amlu51lqyt59hvXLcADMHSAimAE
+	 AN1d6WDdUnxZCq5Q+wiJquxJCg7TRwZHqrFlJlHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Linmao Li <lilinmao@kylinos.cn>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1195/1887] drm/vc4: Prevent shader BO mappings from becoming writable
-Date: Wed, 28 Oct 2026 17:54:51 +0100
-Message-ID: <20261028170526.600080358@linuxfoundation.org>
+Subject: [PATCH 6.1 1196/1887] ovl: check access to copy_file_range source with src mounter creds
+Date: Wed, 28 Oct 2026 17:54:52 +0100
+Message-ID: <20261028170526.622617885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,63 +62,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 0c9e6367639548307d3f578f6943ce72c9d39087 ]
+[ Upstream commit a1e0eb8f55cfe09bb31a202a388babc411292656 ]
 
-vc4_gem_object_mmap() rejects a writable mapping of a validated shader
-BO, but leaves VM_MAYWRITE set.  Userspace can map the BO read-only and
-then turn it writable with mprotect().
+Commit 5dae222a5ff0c ("vfs: allow copy_file_range to copy across devices")
+allowed filesystems that implement the copy_file_range() f_op to decide
+if they want to access cross-sb copy from/to the same fs type.
 
-Validated shader BOs must stay read-only: the validator checks the
-instructions once and the GPU trusts them afterwards.  A writable
-mapping lets userspace rewrite the code after validation, bypassing the
-validator.
+The same commit added checks to verify same sb copy for filesystems that
+implement ->copy_file_range() and do not support cross-sb copy at the
+time, namely, to ceph, fuse and nfs.
 
-Clear VM_MAYWRITE on the read-only path so the mapping cannot be
-upgraded, as i915 already does for its read-only objects.
+The two remaining fs which implement ->copy_file_range(), cifs and
+overlayfs started to support cross-sb copy from this time.
 
-Fixes: 463873d57014 ("drm/vc4: Add an API for creating GPU shaders in GEM BOs.")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260720085554.B0AF01F000E9@smtp.kernel.org/
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260721011558.1672477-1-lilinmao@kylinos.cn
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+While overlayfs does support cross-sb copy when the two underlying files
+are on the same base fs, the copy operation on the two real files from
+two different overalyfs filesystems is performed with the mounter
+creds of the destination overlayfs and the read permission access hook
+for the source file was called with the wrong creds.
+
+This could cause either deny of access to copy which would otherwise be
+allowed (e.g. with splice) or allow read access to file which would
+otherwise be denied.
+
+Fix the latter case by explicitly verifying read access to source file
+with the source overlayfs mounter creds.
+
+The former case remains a quirk of cross-sb overlayfs copy, but
+userspace could fall back to regular copy so no harm done.
+
+Fixes: 5dae222a5ff0c ("vfs: allow copy_file_range to copy across devices")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20260712122421.203113-1-amir73il@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_bo.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/overlayfs/file.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
-index 898aabca45a71..df1b8bfb1c215 100644
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -733,9 +733,13 @@ static int vc4_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index cc0c077165bde..3eec30bb6406e 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -570,6 +570,7 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 			    struct file *file_out, loff_t pos_out,
+ 			    loff_t len, unsigned int flags, enum ovl_copyop op)
  {
- 	struct vc4_bo *bo = to_vc4_bo(obj);
- 
--	if (bo->validated_shader && (vma->vm_flags & VM_WRITE)) {
--		DRM_DEBUG("mmaping of shader BOs for writing not allowed.\n");
--		return -EINVAL;
-+	if (bo->validated_shader) {
-+		if (vma->vm_flags & VM_WRITE) {
-+			DRM_DEBUG("mmaping of shader BOs for writing not allowed.\n");
-+			return -EINVAL;
-+		}
-+
-+		vma->vm_flags &= ~VM_MAYWRITE;
++	struct inode *inode_in = file_inode(file_in);
+ 	struct inode *inode_out = file_inode(file_out);
+ 	struct fd real_in, real_out;
+ 	const struct cred *old_cred;
+@@ -594,7 +595,23 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 		goto out_unlock;
  	}
  
- 	mutex_lock(&bo->madv_lock);
+-	old_cred = ovl_override_creds(file_inode(file_out)->i_sb);
++	/*
++	 * For cross-sb copy, vfs_copy_file_range() will verify read access with
++	 * the mounter creds of the dest fs mounter, so we need to explicitly
++	 * verify read access with the source mounter creds.
++	 */
++	if (unlikely(inode_in->i_sb != inode_out->i_sb)) {
++		old_cred = ovl_override_creds(inode_in->i_sb);
++		ret = rw_verify_area(READ, real_in.file, &pos_in, len);
++		revert_creds(old_cred);
++		if (unlikely(ret)) {
++			fdput(real_in);
++			fdput(real_out);
++			goto out_unlock;
++		}
++	}
++
++	old_cred = ovl_override_creds(inode_out->i_sb);
+ 	switch (op) {
+ 	case OVL_COPY:
+ 		ret = vfs_copy_file_range(real_in.file, pos_in,
 -- 
 2.53.0
 
