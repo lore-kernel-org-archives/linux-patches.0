@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207909;
-	b=EX1x853cfCYXN+/EYkzLSDiRWH12wCU7TtlKYlvJaHlM4bmdoJh/ms0VTQY0Ts7PXL4F
-	 HkQFJvcr81QPM1adMGGdR3qUmOd5d9Hx01MnzN9H9ohAxYiv99lVhE0KkaBTnERPMjl0u
-	 lEHkWlgF7G2kYTH/dRYqnvUyQHZBlElBAks9OHJ6EWtUCgHiJGqKnyw5vr9sb9HDifDue
-	 98EbbYcTRoULJML6abc5wX9doHobLGy+PS8LNJY6HzTWK50sI2fMDG9Phc16u1Kz/n1iN
-	 wdfyXswsfmX05KYydJw0C8AVphc5UHSEuvvW/1BywZk/D51X5WspOaPYEQ+oAjaRGcQ==
+	t=1793207912;
+	b=Lr1IbUx26+LuOGP5v5GuUtMsLGzJmLVoh4jhjZIK68rsYls+O8eLnNY+M/2ALErU/l2u
+	 QdIuntMLuqF/Ep9LXe2up8mLvwzL9OCMtfAB06QFTh78KU3mos7xVkHBa9FkG+P+cIgc6
+	 GxCXCcg5AuQX4nlescIcCwBHHjpliXJmgCxTqjdsVLWGuBkN5g+X0S56Tqv6LAafB6vDo
+	 GEVo+kJiBIymo7sjDY10D9u/gw1i9hc8ncTNb2kqNgGrKCzNbAA0MR8dBjenpkH+zqYAG
+	 yeSfvoLjeghcGWp9SRsxM88sbGFbsHZu48Cq5mftWDqJkOoCKWc28NkUbXOzJYmg7+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207909;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YBDce2htL4XKw5BCbIalf3chXxHL1RhOXjdteOZrVhE=;
-	b=de5OK70jUsCzBgU7xz3IjaWM0hQkCu/YPPrDAMGWG0wjZYSkBUk94BuoEW+H7qqTz5Vn
-	 Hay7ApGcE9MneTsadicvvX2MvtjoCHhSHsvDbPVE1tFd5eRIl90ZNfwTWypC0dkq+ovNi
-	 ljFygT3n8UIat2WuK30Tla3KgEqq5CPqDjgLjXl5jAXaM4j744xxoCFVnh57rgWw96xyg
-	 PfFbv8su38Q4Noc729g6w6GKCrzT0cFSgj93X4qTyCyR7Slr0hKMBK9k9PMjlpQBLke0H
-	 HJFZhNsAXK5GAiLWVlqqQKj/VNqUaNbEOkvpGPtO7MzypfawGLobSTe98gzAVAR2LIw==
+	bh=VI+MexuF3F7adYasrUQlFMQBpFErf05XoKJn6/80ydg=;
+	b=QjJF4TvPTqch3gOE1JAV8d+U2cxGzcoCZSOg3AhiPEyyiip74F3MA1eOIGAQdiHSDIhf
+	 93o/W9hSqcjidjWIHloBouPSfRA8QqBUH5d3bTrXZIm1jhmOU0j5ctEjCzQ2DY636Hsdn
+	 FGI+jJjtdoLyI1Jt3/xkPB/btAIpiW5sByeyJV97JwyjsiPy/Z0U8NzCTUrtAbAvrTiQ9
+	 WN5XcYRk9C3ffVYvBwlTWrwLb6+nn4jA2ZOfr6iXaOwTBoOebs0tzmCq05RzZqLtpRUWD
+	 IW+6hOZkR/4w0+BP0b9bz1hDlel1J6n5LgCnQv43mpM9HgrNterwbfzfloAYZbbwN9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhznjsGC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PTnHCdwX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379E5606A31A;
-	Wed, 28 Oct 2026 17:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94813606A32C;
+	Wed, 28 Oct 2026 17:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhznjsGC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1CD1F01825;
-	Wed, 28 Oct 2026 17:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PTnHCdwX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D09D1F01825;
+	Wed, 28 Oct 2026 17:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207909;
-	bh=YBDce2htL4XKw5BCbIalf3chXxHL1RhOXjdteOZrVhE=;
+	s=korg; t=1793207911;
+	bh=VI+MexuF3F7adYasrUQlFMQBpFErf05XoKJn6/80ydg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JhznjsGCe6gGoKo0TcxrRvhyf4+gpMeuWi6h8BwEKo867WC2CHQKzy4c0y3/AyTNr
-	 HPpGDpx+QYHzRPd5s5ydbaGpIiH3GhG8CU1LXTchsX+B2mU6axgKG0Z/3G8ZEdgtJY
-	 U1zMwQ4EL5DM7Eym525lVn6IKJwOhVV3oINI0jvc=
+	b=PTnHCdwXWvEOLs+3WjYohhVAPNIeET24PwbY7TuPyz2DXDEOoZ+A1sYcY8/niZkhs
+	 phZGQwNabFBHGnwTPp9bUvdWQFPADk6dYMakoQ6i1zBScNahcUKX1Dbwg7S6CmDFVp
+	 EHbP/u1lXPqL/r+kw1gfooqxyw1gNJfYwDT5m4AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@vger.kernek.org,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Stanley Jhu <stanleyjhu@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/247] block: avoid potential deadlock on zone revalidation failure
-Date: Wed, 28 Oct 2026 17:59:46 +0100
-Message-ID: <20261028165951.754539833@linuxfoundation.org>
+Subject: [PATCH 6.12 184/247] Revert "srcu: Use irq_work to start GP in tiny SRCU"
+Date: Wed, 28 Oct 2026 17:59:47 +0100
+Message-ID: <20261028165951.778087455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -72,226 +67,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+This reverts commit 2127e6b79d9d579ea538a350d1bbe859e39814d5.
 
-commit 3dd63dba8f9cb6990a40af7ed66ee0159f475819 upstream.
-
-If revalidating the zones of a zoned block device with
-blk_revalidate_disk_zones() fails during a SCSI disk rescan, the following
-lockdep splat is thrown:
-
-[  347.251859] [  T11230] sda: failed to revalidate zones
-
-[  347.261380] [  T11230] ======================================================
-[  347.263882] [  T11230] WARNING: possible circular locking dependency detected
-[  347.266353] [  T11230] 7.1.0+ #1194 Not tainted
-[  347.268052] [  T11230] ------------------------------------------------------
-[  347.270537] [  T11230] tcsh/11230 is trying to acquire lock:
-[  347.272555] [  T11230] ffffffff8f91d400 (wq_pool_mutex){+.+.}-{4:4}, at: destroy_workqueue+0x15d/0x8d0
-[  347.275914] [  T11230]
-                          but task is already holding lock:
-[  347.278646] [  T11230] ffff88812fa1bcc0 (&q->q_usage_counter(io)#5){++++}-{0:0}, at: blk_mq_freeze_queue_nomemsave+0x16/0x30
-[  347.282503] [  T11230]
-                          which lock already depends on the new lock.
-
-[  347.286239] [  T11230]
-                          the existing dependency chain (in reverse order) is:
-[  347.289408] [  T11230]
-                          -> #2 (&q->q_usage_counter(io)#5){++++}-{0:0}:
-[  347.292437] [  T11230]        blk_alloc_queue+0x5ca/0x750
-[  347.294379] [  T11230]        blk_mq_alloc_queue+0x14c/0x240
-[  347.296375] [  T11230]        scsi_alloc_sdev+0x871/0xd10 [scsi_mod]
-[  347.298619] [  T11230]        scsi_probe_and_add_lun+0x600/0xc50 [scsi_mod]
-[  347.301056] [  T11230]        __scsi_scan_target+0x187/0x3b0 [scsi_mod]
-[  347.303385] [  T11230]        scsi_scan_channel+0xf2/0x180 [scsi_mod]
-[  347.305651] [  T11230]        scsi_scan_host_selected+0x20b/0x2d0 [scsi_mod]
-[  347.308119] [  T11230]        do_scan_async+0x42/0x420 [scsi_mod]
-[  347.310276] [  T11230]        async_run_entry_fn+0x94/0x5a0
-[  347.312284] [  T11230]        process_one_work+0x8da/0x1690
-[  347.314287] [  T11230]        worker_thread+0x5fe/0x1010
-[  347.316216] [  T11230]        kthread+0x358/0x450
-[  347.317675] [  T11230]        ret_from_fork+0x5b9/0x8e0
-[  347.319181] [  T11230]        ret_from_fork_asm+0x11/0x20
-[  347.320778] [  T11230]
-                          -> #1 (fs_reclaim){+.+.}-{0:0}:
-[  347.322890] [  T11230]        fs_reclaim_acquire+0xd5/0x120
-[  347.324464] [  T11230]        __kmalloc_cache_node_noprof+0x39/0x620
-[  347.326223] [  T11230]        init_rescuer+0x19b/0x560
-[  347.327697] [  T11230]        workqueue_init+0x33b/0x6a0
-[  347.329224] [  T11230]        kernel_init_freeable+0x2eb/0x600
-[  347.330881] [  T11230]        kernel_init+0x1c/0x140
-[  347.332334] [  T11230]        ret_from_fork+0x5b9/0x8e0
-[  347.333847] [  T11230]        ret_from_fork_asm+0x11/0x20
-[  347.335360] [  T11230]
-                          -> #0 (wq_pool_mutex){+.+.}-{4:4}:
-[  347.337510] [  T11230]        __lock_acquire+0xdea/0x2260
-[  347.339030] [  T11230]        lock_acquire+0x187/0x2f0
-[  347.340495] [  T11230]        __mutex_lock+0x1ab/0x2600
-[  347.341464] [  T11230]        destroy_workqueue+0x15d/0x8d0
-[  347.342485] [  T11230]        disk_free_zone_resources+0xd5/0x560
-[  347.343577] [  T11230]        blk_revalidate_disk_zones+0x620/0xac7
-[  347.344723] [  T11230]        sd_zbc_revalidate_zones+0x1dd/0x790 [sd_mod]
-[  347.345938] [  T11230]        sd_revalidate_disk+0xc66/0x8e60 [sd_mod]
-[  347.347112] [  T11230]        scsi_rescan_device+0x1f9/0x310 [scsi_mod]
-[  347.348318] [  T11230]        store_rescan_field+0x19/0x20 [scsi_mod]
-[  347.349507] [  T11230]        kernfs_fop_write_iter+0x3d2/0x5e0
-[  347.350565] [  T11230]        vfs_write+0x469/0x1000
-[  347.351484] [  T11230]        ksys_write+0x116/0x250
-[  347.352403] [  T11230]        do_syscall_64+0xf0/0x6e0
-[  347.353361] [  T11230]        entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[  347.354533] [  T11230]
-                          other info that might help us debug this:
-
-[  347.356432] [  T11230] Chain exists of:
-                            wq_pool_mutex --> fs_reclaim --> &q->q_usage_counter(io)#5
-
-[  347.358919] [  T11230]  Possible unsafe locking scenario:
-
-[  347.360307] [  T11230]        CPU0                    CPU1
-[  347.361327] [  T11230]        ----                    ----
-[  347.362340] [  T11230]   lock(&q->q_usage_counter(io)#5);
-[  347.363344] [  T11230]                                lock(fs_reclaim);
-[  347.364526] [  T11230]                                lock(&q->q_usage_counter(io)#5);
-[  347.365968] [  T11230]   lock(wq_pool_mutex);
-[  347.366811] [  T11230]
-                           *** DEADLOCK ***
-
-This happens because SCSI disk rescan is executed from a work context
-and a failure of blk_revalidate_disk_zones() causes a call to
-disk_free_zone_resources() which will free the disk zone write plug
-workqueue.
-
-Avoid this by delaying the destruction of the disk zone write plug
-workqueue to disk_release(). Do this by introducing the function
-disk_release_zone_resources() and using this new function from
-disk_release(). This new function destroys the zone write plugs workqueue
-and calls disk_free_zone_resources(), thus allowing to remove the call to
-destroy_workqueue() from disk_free_zone_resources().
-disk_alloc_zone_resources() is modified to not create the disk zone
-write plug work queue if it already exists.
-
-Fixes: a8f59e5a5dea ("block: use a per disk workqueue for zone write plugging")
-Cc: stable@vger.kernek.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260701082155.1369996-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ stanleyjhu: 6.12.y has no zone write plug kthread worker and does not
-  use WQ_PERCPU, so only the workqueue part applies:
-  disk_alloc_zone_resources() reuses an existing workqueue,
-  disk_free_zone_resources() drains it instead of destroying it, and
-  the new disk_release_zone_resources() destroys it from
-  disk_release(). ]
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/49da816c-8082-46f1-bb12-f0d6187bb06a@roeck-us.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-zoned.c | 37 +++++++++++++++++++++++++++----------
- block/blk.h       |  4 ++--
- block/genhd.c     |  2 +-
- 3 files changed, 30 insertions(+), 13 deletions(-)
+ include/linux/srcutiny.h |  4 ----
+ kernel/rcu/srcutiny.c    | 19 +------------------
+ 2 files changed, 1 insertion(+), 22 deletions(-)
 
-diff --git a/block/blk-zoned.c b/block/blk-zoned.c
-index e3d6e7a18868a..d6f7e487bfe56 100644
---- a/block/blk-zoned.c
-+++ b/block/blk-zoned.c
-@@ -1408,11 +1408,20 @@ static int disk_alloc_zone_resources(struct gendisk *disk,
- 	if (!disk->zone_wplugs_pool)
- 		goto free_hash;
+diff --git a/include/linux/srcutiny.h b/include/linux/srcutiny.h
+index 6f39d3d8ef879..4d96bbdb45f08 100644
+--- a/include/linux/srcutiny.h
++++ b/include/linux/srcutiny.h
+@@ -11,7 +11,6 @@
+ #ifndef _LINUX_SRCU_TINY_H
+ #define _LINUX_SRCU_TINY_H
  
--	disk->zone_wplugs_wq =
--		alloc_workqueue("%s_zwplugs", WQ_MEM_RECLAIM | WQ_HIGHPRI,
--				pool_size, disk->disk_name);
--	if (!disk->zone_wplugs_wq)
--		goto destroy_pool;
-+	/*
-+	 * We may already have a zone write plug workqueue as this function may
-+	 * be called after disk_free_zone_resources(), which does not destroy
-+	 * the workqueue (the zone write plugs workqueue is destroyed at
-+	 * disk_release() time).
-+	 */
-+	if (!disk->zone_wplugs_wq) {
-+		disk->zone_wplugs_wq =
-+			alloc_workqueue("%s_zwplugs",
-+					WQ_MEM_RECLAIM | WQ_HIGHPRI,
-+					pool_size, disk->disk_name);
-+		if (!disk->zone_wplugs_wq)
-+			goto destroy_pool;
-+	}
+-#include <linux/irq_work_types.h>
+ #include <linux/swait.h>
  
+ struct srcu_struct {
+@@ -25,21 +24,18 @@ struct srcu_struct {
+ 	struct rcu_head *srcu_cb_head;	/* Pending callbacks: Head. */
+ 	struct rcu_head **srcu_cb_tail;	/* Pending callbacks: Tail. */
+ 	struct work_struct srcu_work;	/* For driving grace periods. */
+-	struct irq_work srcu_irq_work;	/* Defer schedule_work() to irq work. */
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
+ 	struct lockdep_map dep_map;
+ #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
+ };
+ 
+ void srcu_drive_gp(struct work_struct *wp);
+-void srcu_tiny_irq_work(struct irq_work *irq_work);
+ 
+ #define __SRCU_STRUCT_INIT(name, __ignored, ___ignored)			\
+ {									\
+ 	.srcu_wq = __SWAIT_QUEUE_HEAD_INITIALIZER(name.srcu_wq),	\
+ 	.srcu_cb_tail = &name.srcu_cb_head,				\
+ 	.srcu_work = __WORK_INITIALIZER(name.srcu_work, srcu_drive_gp),	\
+-	.srcu_irq_work = { .func = srcu_tiny_irq_work },		\
+ 	__SRCU_DEP_MAP_INIT(name)					\
+ }
+ 
+diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
+index ddea40b68e5f6..4dcbf8aa80ff7 100644
+--- a/kernel/rcu/srcutiny.c
++++ b/kernel/rcu/srcutiny.c
+@@ -9,7 +9,6 @@
+  */
+ 
+ #include <linux/export.h>
+-#include <linux/irq_work.h>
+ #include <linux/mutex.h>
+ #include <linux/preempt.h>
+ #include <linux/rcupdate_wait.h>
+@@ -38,7 +37,6 @@ static int init_srcu_struct_fields(struct srcu_struct *ssp)
+ 	ssp->srcu_idx_max = 0;
+ 	INIT_WORK(&ssp->srcu_work, srcu_drive_gp);
+ 	INIT_LIST_HEAD(&ssp->srcu_work.entry);
+-	init_irq_work(&ssp->srcu_irq_work, srcu_tiny_irq_work);
  	return 0;
- 
-@@ -1469,15 +1478,13 @@ static unsigned int disk_set_conv_zones_bitmap(struct gendisk *disk,
- 	return nr_conv_zones;
  }
  
--void disk_free_zone_resources(struct gendisk *disk)
-+static void disk_free_zone_resources(struct gendisk *disk)
+@@ -82,7 +80,6 @@ EXPORT_SYMBOL_GPL(init_srcu_struct);
+ void cleanup_srcu_struct(struct srcu_struct *ssp)
  {
- 	if (!disk->zone_wplugs_pool)
- 		return;
- 
--	if (disk->zone_wplugs_wq) {
--		destroy_workqueue(disk->zone_wplugs_wq);
--		disk->zone_wplugs_wq = NULL;
--	}
-+	if (disk->zone_wplugs_wq)
-+		drain_workqueue(disk->zone_wplugs_wq);
- 
- 	disk_destroy_zone_wplugs_hash_table(disk);
- 
-@@ -1496,6 +1503,16 @@ void disk_free_zone_resources(struct gendisk *disk)
- 	disk->nr_zones = 0;
+ 	WARN_ON(ssp->srcu_lock_nesting[0] || ssp->srcu_lock_nesting[1]);
+-	irq_work_sync(&ssp->srcu_irq_work);
+ 	flush_work(&ssp->srcu_work);
+ 	WARN_ON(ssp->srcu_gp_running);
+ 	WARN_ON(ssp->srcu_gp_waiting);
+@@ -171,20 +168,6 @@ void srcu_drive_gp(struct work_struct *wp)
  }
+ EXPORT_SYMBOL_GPL(srcu_drive_gp);
  
-+void disk_release_zone_resources(struct gendisk *disk)
-+{
-+	if (disk->zone_wplugs_wq) {
-+		destroy_workqueue(disk->zone_wplugs_wq);
-+		disk->zone_wplugs_wq = NULL;
-+	}
-+
-+	disk_free_zone_resources(disk);
-+}
-+
- static inline bool disk_need_zone_resources(struct gendisk *disk)
+-/*
+- * Use an irq_work to defer schedule_work() to avoid acquiring the workqueue
+- * pool->lock while the caller might hold scheduler locks, causing lockdep
+- * splats due to workqueue_init() doing a wakeup.
+- */
+-void srcu_tiny_irq_work(struct irq_work *irq_work)
+-{
+-	struct srcu_struct *ssp;
+-
+-	ssp = container_of(irq_work, struct srcu_struct, srcu_irq_work);
+-	schedule_work(&ssp->srcu_work);
+-}
+-EXPORT_SYMBOL_GPL(srcu_tiny_irq_work);
+-
+ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
  {
- 	/*
-diff --git a/block/blk.h b/block/blk.h
-index b3a7e518d7999..4500ba33dc7af 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -489,7 +489,7 @@ static inline struct bio *blk_queue_bounce(struct bio *bio,
- 
- #ifdef CONFIG_BLK_DEV_ZONED
- void disk_init_zone_resources(struct gendisk *disk);
--void disk_free_zone_resources(struct gendisk *disk);
-+void disk_release_zone_resources(struct gendisk *disk);
- static inline bool bio_zone_write_plugging(struct bio *bio)
- {
- 	return bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING);
-@@ -550,7 +550,7 @@ int blkdev_zone_mgmt_ioctl(struct block_device *bdev, blk_mode_t mode,
- static inline void disk_init_zone_resources(struct gendisk *disk)
- {
- }
--static inline void disk_free_zone_resources(struct gendisk *disk)
-+static inline void disk_release_zone_resources(struct gendisk *disk)
- {
- }
- static inline bool bio_zone_write_plugging(struct bio *bio)
-diff --git a/block/genhd.c b/block/genhd.c
-index f4f18ca70aa05..4063ee78c27bd 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1219,7 +1219,7 @@ static void disk_release(struct device *dev)
- 
- 	disk_release_events(disk);
- 	kfree(disk->random);
--	disk_free_zone_resources(disk);
-+	disk_release_zone_resources(disk);
- 	xa_destroy(&disk->part_tbl);
- 
- 	disk->queue->disk = NULL;
+ 	unsigned long cookie;
+@@ -198,7 +181,7 @@ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
+ 	WRITE_ONCE(ssp->srcu_idx_max, cookie);
+ 	if (!READ_ONCE(ssp->srcu_gp_running)) {
+ 		if (likely(srcu_init_done))
+-			irq_work_queue(&ssp->srcu_irq_work);
++			schedule_work(&ssp->srcu_work);
+ 		else if (list_empty(&ssp->srcu_work.entry))
+ 			list_add(&ssp->srcu_work.entry, &srcu_boot_list);
+ 	}
 -- 
 2.53.0
 
