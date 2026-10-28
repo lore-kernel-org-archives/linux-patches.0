@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210743;
-	b=rCgNH4yp+MCWHyYyfn38E50SBNxlQOb65Luz/W5AtxuqJfsiSAGlJmP4fLeIfjDtSdm8
-	 UTrzQpiI/LnXMzYUDMNRAOEh6gT8HR1aQ2LQBhGQrQvgWPwtVpc+2ZwPNg7P1RYoin/Bb
-	 06J/YGJRBPEQjrNQVkwa+29J2tAcB72YRkvGZvysF4K2z/4mNofAcTlxyzfpzY1YM3Xir
-	 /EKOJkRmXoGISlbJQFK4aMRO3kkRMpQvGEBIOPAYE8NDcBimbCiKQLip/nK7InSU2jAhn
-	 M4iWVhaxy/ZgrfrnDaGnfc4zhVuXc8mbcsLVdBnCiEKGwaB46jbvBJMt8tw7GeP1Nxw==
+	t=1793210746;
+	b=d7acpUU0kwq/i1oH53PtDPOo3oEAVabht7G82twba7/6UrrC12l+7j+PmiKXPkJD3fE+
+	 BQqP7F+Zct/ApU8NqngeGZGi3JYokcnrGhrx29kL8M1RRP0NLDnHvuXXp1depZXvEd0iR
+	 Bru7KsxdhGN13qYWjW7qMVnHzBOqqhzypkUQptlTZfjAqQM3IHrTD4SgB16s2DtSZsZBb
+	 bc87FpZdi1YtxzIiOKgG5pduNGGPU0m/rfCuVG6WKH6I4G3HeaVD3wVfzwB7sScxp+DWy
+	 J+h64hHgHDmSKLBRA0ZAb6W4ngADh8NIqptq96IYUOyPS4NazItN32/1XUG3WEhQMsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210746;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0ZF4qDkq4jxhj1ZqBbA/5xV1UGaW9i0XsGEqDqGfahI=;
-	b=i8j+aBLDphRM6zUF6HFxdRHncP0q6sjUHOT7LUoMnmK+o5mqEiwa7NtJ14YKIYOWTzVe
-	 kc8aPKS2IpcaHn26LIUpZND8BFhfbXfxI6u8wmwogk0pfzH2P/bxNiPq/QliDF7rSvE7d
-	 r6loiNsk/kYHK7gNyGEzuCwnYLAYfN8s4i8Jqbhx3wx83dVGM+LU4XQbvMKNBwfbUtqLh
-	 tCOIMGTuUQ/w5GM4euI6RgHVjlaWfyvOcTMmTj6VfQMXjmVXUdqiw7R5FtRUMZatvAVKd
-	 YbsZUsjVUDAWiezICTxLeSkAW3bYXmUL72t8xF1JoQijUkbEBYFl3uHzH/2p+oOri0w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yExc0Il9Reo6gCpt5psJAMXOXesZM4iSWUeDRDCT0z4=;
+	b=KdkSnQgbYmPCdLU4By56Es+mGN22nnyl/yuzJIKQsBNizvZ+FBMHiTH/F1QWc/NUjR2k
+	 fgRGnOge0MELn4sq5mXEDKk1NrnUC2lLqEsL27PLxI8Udellj3gsyBeRjye4LPptRobPJ
+	 QB0uRHW9ecqqkZ84mIl2WILvesqBw1Vym4UQE1xHv7AzyiNkq2TlyNK1eEjfFI89VwG/T
+	 uTplig/RNKEqgWMiCxTOLlH/1WvT0iINELQO8ShJoqJwkr/7/t62npEewx1bgYykOBQaS
+	 EvDZ4Xm6Q9KY6P7BcIWqx4vBaygdXOOpfvsVKa966hvDqHSxXeFGUIUuNd0XhuXElAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="18FXj/Wf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxXWWXrt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859EE606A31A;
-	Wed, 28 Oct 2026 18:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86ECE606A31A;
+	Wed, 28 Oct 2026 18:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=18FXj/Wf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D673A1F01825;
-	Wed, 28 Oct 2026 18:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxXWWXrt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05701F01825;
+	Wed, 28 Oct 2026 18:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210743;
-	bh=0ZF4qDkq4jxhj1ZqBbA/5xV1UGaW9i0XsGEqDqGfahI=;
+	s=korg; t=1793210746;
+	bh=yExc0Il9Reo6gCpt5psJAMXOXesZM4iSWUeDRDCT0z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=18FXj/Wf2TzPz0Li6cbRdBTMb95fofZvMoJ/L1nz3jXEUxBOjPdPzmjP42EZ8qFvj
-	 nbBvYnvXnaImb5er2YnrClmpgN8r2Ae1/DBuangmR3AOia/SDwJZwjEHnnpqVOXauH
-	 vNBC/SIiOlfb9QW9QNhTOTIWs/UEItIC2/6Zcy70=
+	b=QxXWWXrt2wZXuPH7bDpnQ2sdUgniivCKLL2F0b0lawlajmcBRFN1WsoLyTZEPPBFF
+	 5IAbiXPQhQJ/2mC1gHL2cbXyN1vfmsFbMGDaPBhWTC9eBs7ub7XScYPaDIHuRz2RY+
+	 jd0daiJ5xGrnQ07TKKStfdj6h2nxUA29LsuapKmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/571] scsi: qla2xxx: Fix soft lockup polling continuation IOCB signature
-Date: Wed, 28 Oct 2026 17:53:56 +0100
-Message-ID: <20261028170010.136776288@linuxfoundation.org>
+Subject: [PATCH 5.15 080/571] arm64: mm: Fix the lockless page-table walk in show_pte()
+Date: Wed, 28 Oct 2026 17:53:47 +0100
+Message-ID: <20261028170009.925111657@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -63,101 +62,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit d7e3fa7d06bf7fcaac186d3c4d635caac166d36c ]
+[ Upstream commit a77644d009dece1104b6fcc6e322b0e4503db0d6 ]
 
-qla27xx_copy_multiple_pkt() and qla27xx_copy_fpin_pkt() poll
-rsp_q->ring_ptr->signature for RESPONSE_PROCESSED (0xDEADDEAD) to decide
-whether the next continuation IOCB has arrived, spinning on cpu_relax()
-without advancing the ring or decrementing the entry count while it has
-not. response_t::signature lives at byte offset 60, but a continuation
-IOCB (sts_cont_entry_t / struct sts_cont_entry_ext) carries raw FC frame
-payload at that offset (data[56..59]). A received frame whose payload
-bytes happen to equal 0xDEADDEAD is therefore misread as "not yet
-arrived", and the loop spins forever in interrupt/DPC context, causing a
-CPU soft lockup.
+show_pte() walks page tables locklessly and can run with interrupts
+enabled. A concurrent teardown can free a table page while it is being
+walked. It can also clear a parent entry after show_pte() checked it; the
+regular pXd_offset() helpers then reread the cleared entry and can derive a
+bogus lower-level pointer and fault again.
 
-The poll is also unnecessary: callers of qla27xx_copy_multiple_pkt()
-(PT_LS4_UNSOL and the NVMe purls path) already gate on
-qla_chk_cont_iocb_avail(), which guarantees all entry_count IOCBs are
-present before copying begins. The sibling helper
-__qla_copy_purex_to_buffer() already drops the signature poll and relies
-on the entry_type == STATUS_CONT_TYPE guard instead.
+Use the lockless offset helpers with the saved parent entries, as
+gup_fast() does, and pass the saved PMD to pte_offset_map().
 
-Remove the signature busy-wait from both helpers, keeping the entry_type
-guard, and gate the FPIN path with qla_chk_cont_iocb_avail() so it defers
-and re-processes on the next interrupt once all continuation IOCBs have
-arrived, mirroring the ELS_AUTH_ELS and PT_LS4_UNSOL arms. With this the
-signature field is never read on a continuation IOCB, eliminating the
-payload-aliasing lockup.
+For task page tables, arm64 selects MMU_GATHER_RCU_TABLE_FREE. Disable
+local interrupts around the walk to hold off RCU-deferred table frees and
+block the tlb_remove_table_sync_one() IPI until the walk is finished.
 
-Fixes: 9f2475fe7406 ("scsi: qla2xxx: SAN congestion management implementation")
+Place the IRQ guard after the header print. This does not make the output a
+consistent snapshot, but prevents the task page-table walk from
+dereferencing a released table page or deriving a pointer from a different
+parent value.
+
+Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-15-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ made __update_rsp_in() unconditional before the availability check to accommodate 5.15’s conditional producer-pointer reads. ]
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+[ replaced guard(irqsave)() with explicit local_irq_save()/local_irq_restore() calls to avoid declarations after statements. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_isr.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ arch/arm64/mm/fault.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
-index 509853860ada6..870962df1f9c9 100644
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -1053,14 +1053,6 @@ qla27xx_copy_fpin_pkt(struct scsi_qla_host *vha, void **pkt,
+diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+index 39f03d18717eb..0155330b9d0da 100644
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -15,6 +15,7 @@
+ #include <linux/mm.h>
+ #include <linux/hardirq.h>
+ #include <linux/init.h>
++#include <linux/irqflags.h>
+ #include <linux/kasan.h>
+ #include <linux/kprobes.h>
+ #include <linux/uaccess.h>
+@@ -123,6 +124,7 @@ static void show_pte(unsigned long addr)
+ 	struct mm_struct *mm;
+ 	pgd_t *pgdp;
+ 	pgd_t pgd;
++	unsigned long flags;
  
- 	do {
- 		while ((total_bytes > 0) && (entry_count_remaining > 0)) {
--			if (rsp_q->ring_ptr->signature == RESPONSE_PROCESSED) {
--				ql_dbg(ql_dbg_async, vha, 0x5084,
--				       "Ran out of IOCBs, partial data 0x%x\n",
--				       buffer_copy_offset);
--				cpu_relax();
--				continue;
--			}
--
- 			new_pkt = (sts_cont_entry_t *)rsp_q->ring_ptr;
- 			*pkt = new_pkt;
- 
-@@ -3963,10 +3955,25 @@ void qla24xx_process_response_queue(struct scsi_qla_host *vha,
- 					       "SCM not active for this port\n");
- 					break;
- 				}
-+				__update_rsp_in(1, is_shadow_hba, rsp, rsp_in);
-+				if (qla_chk_cont_iocb_avail(vha, rsp,
-+				    (response_t *)pkt, rsp_in)) {
-+					/*
-+					 * ring_ptr and ring_index were
-+					 * pre-incremented above. Reset them
-+					 * back to current. Wait for next
-+					 * interrupt with all IOCBs to arrive
-+					 * and re-process.
-+					 */
-+					rsp->ring_ptr = (response_t *)pkt;
-+					rsp->ring_index = cur_ring_index;
+ 	if (is_ttbr0_addr(addr)) {
+ 		/* TTBR0 */
+@@ -144,6 +146,9 @@ static void show_pte(unsigned long addr)
+ 	pr_alert("%s pgtable: %luk pages, %llu-bit VAs, pgdp=%016lx\n",
+ 		 mm == &init_mm ? "swapper" : "user", PAGE_SIZE / SZ_1K,
+ 		 vabits_actual, mm_to_pgd_phys(mm));
 +
-+					ql_dbg(ql_dbg_init, vha, 0x5095,
-+					    "Defer processing FPIN...\n");
-+					return;
-+				}
- 				pure_item = qla27xx_copy_fpin_pkt(vha,
- 							  (void **)&pkt, &rsp);
--				__update_rsp_in(follow_inptr, is_shadow_hba,
--						rsp, rsp_in);
- 				if (!pure_item)
- 					break;
- 				qla24xx_queue_purex_item(vha, pure_item,
++	local_irq_save(flags);
++
+ 	pgdp = pgd_offset(mm, addr);
+ 	pgd = READ_ONCE(*pgdp);
+ 	pr_alert("[%016lx] pgd=%016llx", addr, pgd_val(pgd));
+@@ -157,25 +162,25 @@ static void show_pte(unsigned long addr)
+ 		if (pgd_none(pgd) || pgd_bad(pgd))
+ 			break;
+ 
+-		p4dp = p4d_offset(pgdp, addr);
++		p4dp = p4d_offset_lockless(pgdp, pgd, addr);
+ 		p4d = READ_ONCE(*p4dp);
+ 		pr_cont(", p4d=%016llx", p4d_val(p4d));
+ 		if (p4d_none(p4d) || p4d_bad(p4d))
+ 			break;
+ 
+-		pudp = pud_offset(p4dp, addr);
++		pudp = pud_offset_lockless(p4dp, p4d, addr);
+ 		pud = READ_ONCE(*pudp);
+ 		pr_cont(", pud=%016llx", pud_val(pud));
+ 		if (pud_none(pud) || pud_bad(pud))
+ 			break;
+ 
+-		pmdp = pmd_offset(pudp, addr);
++		pmdp = pmd_offset_lockless(pudp, pud, addr);
+ 		pmd = READ_ONCE(*pmdp);
+ 		pr_cont(", pmd=%016llx", pmd_val(pmd));
+ 		if (pmd_none(pmd) || pmd_bad(pmd))
+ 			break;
+ 
+-		ptep = pte_offset_map(pmdp, addr);
++		ptep = pte_offset_map(&pmd, addr);
+ 		if (!ptep)
+ 			break;
+ 
+@@ -185,6 +190,7 @@ static void show_pte(unsigned long addr)
+ 	} while(0);
+ 
+ 	pr_cont("\n");
++	local_irq_restore(flags);
+ }
+ 
+ /*
 -- 
 2.53.0
 
