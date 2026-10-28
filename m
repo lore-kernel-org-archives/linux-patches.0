@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216245;
-	b=NqYus2XpYtjxgg/VFPRQ1QwetjvtR+j8umCVGqEAAJ8GCEJvUnuO14c4YZzUTDwTIuq5
-	 mgCMvJQPD05G/NuoPBdPQsxfbxDQpIzv0NZFWHbaKYKZnL0gXHw8tpcCccFzBEnZuB80i
-	 sknX/85KJPFbHXN3S1NQwzkY5J/Br6JV5vN+06+4BnnKfJjOG3tjgwzFxxN0WoAXkcdX1
-	 InM/kPR4gYqvNto43U5RtmcLbhqu4rVZvBNWExLqqdKS1xoc7W4+sXZsXcd8NIvPTboYA
-	 5yt+AlngM7jAKOkJHlrPKzN4mkO9nsRH7e1zJUOpgiPluMeoKNRmbQzKTqyLoVPWUfg==
+	t=1793216249;
+	b=gkcjf2KgXcHcf4/gnp8PJOdItAlaDHgIlEfM+dGVp8D0z5J0omy1HUiPUNoo79H6FgvN
+	 v3gjVPrH/l3Eo5DJdamYIL0Dzwgd03H/BTTIg4U8uWJmlO7hmqthPfrvxLIBpSOjzS3tF
+	 voyN7QkpamKewtP77OQrUakpCwUX0OT9MA6lVpmkoi8498l0bDafQ7A0XNlDJbiZMHo4V
+	 ptDXwgj5dJJJpNTbXEDh50Js9SLbt4DiulrjenoPWhQbb5D1G8EKFlp/IKro5phwJx5R7
+	 7tSape7apgeReYejhEB8OZEPCWSyoRRapF9lGENtnDDj26f/j4X/+d8vw1I0wNonp6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TahMk1v1O0gZXHo2AC3TWzQTO9HAbIfVNPRT1PJ6pJU=;
-	b=RoZMk+ygzUsrb9Qi2RgS/HWPxVb9I8Wr55dRYuQjKJQhc2vrghLfOHQrlZMxCYxoM1kq
-	 jw0SSE9SrBlOsew6zlD1sUsEN9oOILXOywOW2A+sfsJm8MF3VUf9aqOc7jXS4GRvDrZj8
-	 VrC+xaD5eryfZ4t8Blor7OSF4t6UMqWviGAWTtruExdibqVYNGhueeMLSXdx0mYgV/Gfr
-	 blAmdL5QehrTbP/xJUTWGJ2T/N8O1d22k5ipqAe3ujvkClD7bjzQVYNvjdcX8nZUCi1xe
-	 OZpJfLvTb6c0MEI/pQ7T70ffCCPk9h6EQQ7fzXeOM17fdsotv4ecaC8tqjsdnwZpU1w==
+	bh=SpZN+oWxykA46H+kekkyXozwqNlbGDqWQ0bTwizReG4=;
+	b=vfY7iwpGTuKaEqhiEEVjIyq8KObsRJ3sY7W8lcdYfp2HGvRmk7M0Q3+Yyje0hsXpkYPx
+	 ho240CCSVW6UuJj7f6xqcvdesmM/cmxCarBTvH/6mwfL25mZaR6PngMhht4kR4DZcjtYg
+	 zZ8VNMfMo0LqsdyipsXQXc3fdUDlV2lqieIQRBnZDlb4oDL6tEWMqGtUOulXdsW+CTknx
+	 9qYx4DVcXufV5C6zKkeX0NSygR10LzFTsOwDhXQTqg+b6RPv0a4qYdFhIjA6uIjdNS55b
+	 8M6+K7tzDYW6kxPlOBdBInKAlwguV+9I7gjfW8da33vmlpSHDrq4t++KOOGVoIdblng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1XuT9qsg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b8GRU/zh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F37606A31D;
-	Wed, 28 Oct 2026 19:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37912606A31A;
+	Wed, 28 Oct 2026 19:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1XuT9qsg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91981F01825;
-	Wed, 28 Oct 2026 19:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8GRU/zh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866C41F01825;
+	Wed, 28 Oct 2026 19:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216245;
-	bh=TahMk1v1O0gZXHo2AC3TWzQTO9HAbIfVNPRT1PJ6pJU=;
+	s=korg; t=1793216248;
+	bh=SpZN+oWxykA46H+kekkyXozwqNlbGDqWQ0bTwizReG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1XuT9qsglf0eX3xtaQJfY8OFYjkMP1sYEqJudQaOy6KB4bjuDrnu7vvK8QPI/7xCs
-	 ydbHzv2LGogdxug1AQ0QcHYHp4dlf6ZDOScKA63tRLmYAjzj2kSUYJUcS9W+6aMdZH
-	 z1Exd3HmWU9h+javQbe9OosBP4MREvAN8GVYeZ2o=
+	b=b8GRU/zhvX5ZfXrGwFHpG7BAHOybkkpmytfAWpBmT0JQ5BkYHoYNJw9cb3j1N/ele
+	 GDqcNfsiOAYu6MtMthV6sFTUmAf0d/rr3uvxUu7Ps8y25E6unnVPFskRbDlbWe3f10
+	 AgmiOC0V1NTSYg52OE7qXMjfQa3vlDbiReenFr3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1490/1887] f2fs: avoid NULL checkpoint thread access in sysfs
-Date: Wed, 28 Oct 2026 17:59:46 +0100
-Message-ID: <20261028170533.362997880@linuxfoundation.org>
+Subject: [PATCH 6.1 1491/1887] f2fs: validate MOVE_RANGE destination size
+Date: Wed, 28 Oct 2026 17:59:47 +0100
+Message-ID: <20261028170533.385428647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,62 +72,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit 5cb33b00c8fbb6e8f1fa3d281c3036d5f7c7c41f ]
+[ Upstream commit e533889fc26aea0cd83c90327063f272061dd820 ]
 
-checkpoint_merge can be enabled even when no checkpoint merge thread is
-running. A read-only mount is one case: f2fs does not start
-f2fs_issue_ckpt there, but ckpt_thread_ioprio is still writable through
-sysfs.
+F2FS_IOC_MOVE_RANGE checks the source range, but not the destination end
+before updating i_size. A source hole can expose this: __clone_blkaddrs()
+skips NULL_ADDR entries and returns success, so the caller can still extend
+the destination inode with unchecked pos_out + len.
 
-The ckpt_thread_ioprio store path updates the saved ioprio value and,
-when checkpoint_merge is enabled, calls set_task_ioprio() for the
-checkpoint thread. If cprc->f2fs_issue_ckpt is NULL, that dereferences a
-NULL task pointer.
+Reject destination overflow and use inode_newsize_ok() before extending
+the destination inode.
 
-Protect ckpt_thread_ioprio sysfs writes with s_umount as well, so the
-checkpoint thread cannot disappear under the store path while updating
-its ioprio.
-
-Fixes: e65920661708 ("f2fs: add ckpt_thread_ioprio sysfs node")
+Fixes: 4dd6f977fc77 ("f2fs: support an ioctl to move a range of data blocks")
 Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.5
 Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/sysfs.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/f2fs/file.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
-index f6f5da3b2a376..52457176e95ee 100644
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -471,7 +471,7 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
- 			return -EINVAL;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index c35b2a25a66d6..4dd995b0c472b 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2932,8 +2932,9 @@ static int f2fs_move_file_range(struct file *file_in, loff_t pos_in,
+ 	struct inode *src = file_inode(file_in);
+ 	struct inode *dst = file_inode(file_out);
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(src);
+-	size_t olen = len, dst_max_i_size = 0;
+-	size_t dst_osize;
++	size_t olen = len;
++	loff_t dst_max_i_size = 0;
++	loff_t dst_osize, dst_end;
+ 	int ret;
  
- 		cprc->ckpt_thread_ioprio = IOPRIO_PRIO_VALUE(class, level);
--		if (test_opt(sbi, MERGE_CHECKPOINT)) {
-+		if (cprc->f2fs_issue_ckpt) {
- 			ret = set_task_ioprio(cprc->f2fs_issue_ckpt,
- 					cprc->ckpt_thread_ioprio);
- 			if (ret)
-@@ -703,13 +703,14 @@ static ssize_t f2fs_sbi_store(struct f2fs_attr *a,
- 	ssize_t ret;
- 	bool gc_entry = (!strcmp(a->attr.name, "gc_urgent") ||
- 					a->struct_type == GC_THREAD);
-+	bool thread_entry = !strcmp(a->attr.name, "ckpt_thread_ioprio");
- 
--	if (gc_entry) {
-+	if (gc_entry || thread_entry) {
- 		if (!down_read_trylock(&sbi->sb->s_umount))
- 			return -EAGAIN;
+ 	if (file_in->f_path.mnt != file_out->f_path.mnt ||
+@@ -2990,8 +2991,16 @@ static int f2fs_move_file_range(struct file *file_in, loff_t pos_in,
  	}
- 	ret = __sbi_store(a, sbi, buf, count);
--	if (gc_entry)
-+	if (gc_entry || thread_entry)
- 		up_read(&sbi->sb->s_umount);
  
- 	return ret;
+ 	dst_osize = dst->i_size;
+-	if (pos_out + olen > dst->i_size)
+-		dst_max_i_size = pos_out + olen;
++	if (olen > LLONG_MAX - pos_out)
++		goto out_unlock;
++	dst_end = pos_out + olen;
++	if (dst_end > dst->i_size) {
++		ret = inode_newsize_ok(dst, dst_end);
++		if (ret)
++			goto out_unlock;
++		ret = -EINVAL;
++		dst_max_i_size = dst_end;
++	}
+ 
+ 	/* verify the end result is block aligned */
+ 	if (!IS_ALIGNED(pos_in, F2FS_BLKSIZE) ||
 -- 
 2.53.0
 
