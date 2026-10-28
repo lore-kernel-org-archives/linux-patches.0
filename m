@@ -1,60 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208252;
-	b=b3Z1LwKN+I09FptFzZNCMaGWW5+RbakweRU5zYEleGmIvdrRdzC6oiDlrvSt4MNVBL1p
-	 1M+blGP8YyPLvuny6EMWTPgRqlDEhzFnfUzX6PdxZvqolTv70Ab/DmJvwaqxUhLovs9JH
-	 0Qhy2b6BNrCB1jKua8nuy45Wfv7XBcOfYZ6vEDT98hDYDRThXDvLZuvzs8MX7HliPYodL
-	 9iXEwa3SemrJVJgChT4ESXO/Ed+vpqHGMH3bRcZPGfrHSgyrFxeVdvw3QHBLT6tdwxrW7
-	 DDebdySnkopuCsV0JKJlkHjS77bo/27Kwp4wHJpwVuTcMgStHIi4FIhtutAZaOt7BzQ==
+	t=1793208255;
+	b=eG/eOaULLY6TSVMTsJL6X2ryaZGxX2QC9/Jtg9e2hJ0cAdjEo48TiElVI4wIkfCs4+ju
+	 b1it5HuT4i3CxIS3JORF3DvBJlWtZ8AecDaKf0BxI5H7A1nj1O02QBPb1YVXVuDM7F0Sw
+	 iNH1UcdwLqTmO9IRDGmh2GDKktF6idifVHQb1AGJSdlfBxc2cELyzIdWURF+hPSNoK/0x
+	 NAXjjty6M18zGfCL3FNk1P2F422aTj0v62yC0mudnYf1g7gBOaFYJQIAIDVun3+4h4ZmM
+	 zwsETr+c4HegyDA0eTPpkCCE3L8BWsGjT9I3GEks10+zS+/N4yjr4QupdruhdVzDqfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+xtady6Mq2re0xftNw7nLOF4Xo2NtmPTKX2yoo3SL/g=;
-	b=yBxZXCdTBMu5aap9sQ958hvtOi74W5w0Zoa94KDI0XdalmoktCTu8EhFjXBUtK0O8Dcw
-	 B/TRCUlunLnFxnQAk+eQtKpfoTQ0BNv5rvr5uzEppdZ9wog9D5n0tZgSIBSTzb+1dexkg
-	 zcj+ZFxUK+Z5el541E55Ylnn8W328A65E1SbNuEF0oFMAWXR83BqUxq0BzvtRHz0fpjwd
-	 tCVWBOw9+vVVyEc8e0P9egb+b/Dh3dVlP/YyzF1YVoPOVhNzXcpdtoYkzmA9RIJilJS/V
-	 GVhzy6ygAml5KvWdLLfzZ1Kl2V5rIpT/xj1fnNAE8I05KtOHS4HCm5VR7vAMXYaR7gg==
+	bh=91z8JyPvziNKdNrCLBNpmLawnBas1SfcEmeQ955gISI=;
+	b=WLrJFVwShlh6RdBknMKdN2mSj1HI3GHo0gCu6c8w+yzXdEHG37FkHzxyJlLqVXO/siGU
+	 yKRek2H+DMmRXFcOSKro3NvHa8g34dnRv5as+zpiKbaQK5pxQgIwZLXRknimUwIFkpeyu
+	 B0CdLNIL4tqsLHhNafr9igptpAgmURbCDOoJiHdAxMw6b/yhkOVW1SxhDYyDHshgDVyFH
+	 nizDkNpm3acR5VSLmgxxdAaqULeuFvVh3mglsoBXLlYIHQKv3KE34ZBlpq7eOEAKA//jw
+	 gUN2687TXtP1GxZXVwnt85fqYZJ01lDky9cC2RUjqB6/1qSs+dqnkjNsb3aZ1akv/2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WicUqYmD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MmKUYARh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFE4606A31C;
-	Wed, 28 Oct 2026 17:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC013606A31C;
+	Wed, 28 Oct 2026 17:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WicUqYmD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C301F01825;
-	Wed, 28 Oct 2026 17:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MmKUYARh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056261F01825;
+	Wed, 28 Oct 2026 17:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208251;
-	bh=+xtady6Mq2re0xftNw7nLOF4Xo2NtmPTKX2yoo3SL/g=;
+	s=korg; t=1793208254;
+	bh=91z8JyPvziNKdNrCLBNpmLawnBas1SfcEmeQ955gISI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WicUqYmD9Gg1hdNVcv7vrU0U/Ty5+6ig3CvhY6T0UF8yel7mGmTWHuyFp09sgRBTv
-	 54nj7sO5cl48Sn+llQxOzm/lm9mVH63hECY48G8gIQDf8L9AldNYgnDU84NNQlvyeh
-	 DTATzwTPkupsaYKf8Vf3FbsfXdoff++WLPZdtS9w=
+	b=MmKUYARhxXZC74WNRAhxwbDe3CaOnLPddHKKaHz6wIxpXXrIkzQ5JXBGaQ4JlCdcI
+	 jjCLCwE/yN+y0ohgV7s3LbQvsooyltXjhosbpYajMjJD0E6SVF541yF94vBY2QDbMM
+	 EmWDrWqtxcMNdaPIEG//nb/hBEAXkEVx06SbcjA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kees Cook <kees@kernel.org>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Varun Prakash <varun@chelsio.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/516] ocfs2: validate directory-index entry counts when reading metadata
-Date: Wed, 28 Oct 2026 17:52:43 +0100
-Message-ID: <20261028170003.795783452@linuxfoundation.org>
+Subject: [PATCH 5.10 012/516] nvme-tcp: validate R2T PDU in nvme_tcp_handle_r2t()
+Date: Wed, 28 Oct 2026 17:52:44 +0100
+Message-ID: <20261028170003.817919998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -76,126 +69,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Varun Prakash <varun@chelsio.com>
 
-[ Upstream commit bc70726ddad53c7e9a9a85915bf2415b0d4f42f9 ]
+[ Upstream commit 1d3ef9c3a39e04be31155c27ebf80342350c3abf ]
 
-ocfs2_validate_dx_leaf() and ocfs2_validate_dx_root() check the ECC and
-signature of an indexed-directory block before it reaches higher-level
-callers, but neither validator bounds the ocfs2_dx_entry_list counts
-against the capacity of the block that holds them.
+If maxh2cdata < r2t_length then driver will form multiple
+H2CData PDUs, validate R2T PDU in nvme_tcp_handle_r2t() to
+reuse nvme_tcp_setup_h2c_data_pdu().
 
-ocfs2_dx_dir_search() then walks
+Also set req->state to NVME_TCP_SEND_H2C_PDU in
+nvme_tcp_setup_h2c_data_pdu().
 
-	for (i = 0; i < le16_to_cpu(entry_list->de_num_used); i++)
-		dx_entry = &entry_list->de_entries[i];
-
-over de_num_used entries with no bounds check.  entry_list is either
-dx_leaf->dl_list (from ocfs2_read_dx_leaf) or, for an inline root,
-dx_root->dr_entries.  A crafted on-disk image can set de_num_used (and
-de_count, which is the __counted_by_le() bound of de_entries) to 0xffff
-and make the walk read far past the end of the 4KB metadata block, giving
-a slab out-of-bounds read reachable from any path lookup, stat() or open()
-on an indexed directory once the image is mounted.
-
-Commit 775c17386a6f ("ocfs2: validate dx_root extent list fields during
-block read") already bounds dr_list for the non-inline dx_root, but left
-the inline dr_entries path and the dx_leaf dl_list unchecked.  Add the
-same read-time validation for both entry lists: de_count must equal the
-capacity of the block (ocfs2_dx_entries_per_leaf()/per_root()) and
-de_num_used must not exceed de_count, rejecting corrupted metadata with
--EFSCORRUPTED before ocfs2_dx_dir_search() can walk an out-of-range entry
-array.
-
-de_count is always written as exactly the block capacity when a leaf or
-inline root is formatted, so the equality check does not reject any valid
-image.
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Link: https://lore.kernel.org/20260713205625.92391-1-doruk@0sec.ai
-Fixes: 9b7895efac90 ("ocfs2: Add a name indexed b-tree to directory inodes")
-Fixes: 4ed8a6bb083b ("ocfs2: Store dir index records inline")
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Varun Prakash <varun@chelsio.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: 6efbc52237fa ("nvme-tcp: fix host memory disclosure on R2T for a read command")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dir.c | 45 +++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 4 deletions(-)
+ drivers/nvme/host/tcp.c | 55 ++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 31 deletions(-)
 
-diff --git a/fs/ocfs2/dir.c b/fs/ocfs2/dir.c
-index b74775e56bb2f..b9218b4a62991 100644
---- a/fs/ocfs2/dir.c
-+++ b/fs/ocfs2/dir.c
-@@ -613,6 +613,28 @@ static int ocfs2_validate_dx_root(struct super_block *sb,
- 					  le16_to_cpu(el->l_count));
- 			goto bail;
- 		}
-+	} else {
-+		struct ocfs2_dx_entry_list *dl_list = &dx_root->dr_entries;
-+
-+		if (le16_to_cpu(dl_list->de_count) !=
-+		    ocfs2_dx_entries_per_root(sb)) {
-+			ret = ocfs2_error(sb,
-+					  "Dir Index Root # %llu has invalid de_count %u (expected %u)\n",
-+					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
-+					  le16_to_cpu(dl_list->de_count),
-+					  ocfs2_dx_entries_per_root(sb));
-+			goto bail;
-+		}
-+
-+		if (le16_to_cpu(dl_list->de_num_used) >
-+		    le16_to_cpu(dl_list->de_count)) {
-+			ret = ocfs2_error(sb,
-+					  "Dir Index Root # %llu has invalid de_num_used %u (de_count %u)\n",
-+					  (unsigned long long)le64_to_cpu(dx_root->dr_blkno),
-+					  le16_to_cpu(dl_list->de_num_used),
-+					  le16_to_cpu(dl_list->de_count));
-+			goto bail;
-+		}
- 	}
- 
- bail:
-@@ -652,10 +674,25 @@ static int ocfs2_validate_dx_leaf(struct super_block *sb,
- 		return ret;
- 	}
- 
--	if (!OCFS2_IS_VALID_DX_LEAF(dx_leaf)) {
--		ret = ocfs2_error(sb, "Dir Index Leaf has bad signature %.*s\n",
--				  7, dx_leaf->dl_signature);
--	}
-+	if (!OCFS2_IS_VALID_DX_LEAF(dx_leaf))
-+		return ocfs2_error(sb, "Dir Index Leaf has bad signature %.*s\n",
-+				   7, dx_leaf->dl_signature);
-+
-+	if (le16_to_cpu(dx_leaf->dl_list.de_count) !=
-+	    ocfs2_dx_entries_per_leaf(sb))
-+		return ocfs2_error(sb,
-+				   "Dir Index Leaf # %llu has invalid de_count %u (expected %u)\n",
-+				   (unsigned long long)le64_to_cpu(dx_leaf->dl_blkno),
-+				   le16_to_cpu(dx_leaf->dl_list.de_count),
-+				   ocfs2_dx_entries_per_leaf(sb));
-+
-+	if (le16_to_cpu(dx_leaf->dl_list.de_num_used) >
-+	    le16_to_cpu(dx_leaf->dl_list.de_count))
-+		return ocfs2_error(sb,
-+				   "Dir Index Leaf # %llu has invalid de_num_used %u (de_count %u)\n",
-+				   (unsigned long long)le64_to_cpu(dx_leaf->dl_blkno),
-+				   le16_to_cpu(dx_leaf->dl_list.de_num_used),
-+				   le16_to_cpu(dx_leaf->dl_list.de_count));
- 
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index e08fce47e237c..e47c73a74177c 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -607,7 +607,7 @@ static int nvme_tcp_handle_comp(struct nvme_tcp_queue *queue,
  	return ret;
  }
+ 
+-static int nvme_tcp_setup_h2c_data_pdu(struct nvme_tcp_request *req,
++static void nvme_tcp_setup_h2c_data_pdu(struct nvme_tcp_request *req,
+ 		struct nvme_tcp_r2t_pdu *pdu)
+ {
+ 	struct nvme_tcp_data_pdu *data = req->pdu;
+@@ -616,32 +616,11 @@ static int nvme_tcp_setup_h2c_data_pdu(struct nvme_tcp_request *req,
+ 	u8 hdgst = nvme_tcp_hdgst_len(queue);
+ 	u8 ddgst = nvme_tcp_ddgst_len(queue);
+ 
++	req->state = NVME_TCP_SEND_H2C_PDU;
++	req->offset = 0;
+ 	req->pdu_len = le32_to_cpu(pdu->r2t_length);
+ 	req->pdu_sent = 0;
+ 
+-	if (unlikely(!req->pdu_len)) {
+-		dev_err(queue->ctrl->ctrl.device,
+-			"req %d r2t len is %u, probably a bug...\n",
+-			rq->tag, req->pdu_len);
+-		return -EPROTO;
+-	}
+-
+-	if (unlikely(req->data_sent + req->pdu_len > req->data_len)) {
+-		dev_err(queue->ctrl->ctrl.device,
+-			"req %d r2t len %u exceeded data len %u (%zu sent)\n",
+-			rq->tag, req->pdu_len, req->data_len,
+-			req->data_sent);
+-		return -EPROTO;
+-	}
+-
+-	if (unlikely(le32_to_cpu(pdu->r2t_offset) < req->data_sent)) {
+-		dev_err(queue->ctrl->ctrl.device,
+-			"req %d unexpected r2t offset %u (expected %zu)\n",
+-			rq->tag, le32_to_cpu(pdu->r2t_offset),
+-			req->data_sent);
+-		return -EPROTO;
+-	}
+-
+ 	memset(data, 0, sizeof(*data));
+ 	data->hdr.type = nvme_tcp_h2c_data;
+ 	data->hdr.flags = NVME_TCP_F_DATA_LAST;
+@@ -657,7 +636,6 @@ static int nvme_tcp_setup_h2c_data_pdu(struct nvme_tcp_request *req,
+ 	data->command_id = nvme_cid(rq);
+ 	data->data_offset = pdu->r2t_offset;
+ 	data->data_length = cpu_to_le32(req->pdu_len);
+-	return 0;
+ }
+ 
+ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
+@@ -665,7 +643,7 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
+ {
+ 	struct nvme_tcp_request *req;
+ 	struct request *rq;
+-	int ret;
++	u32 r2t_length = le32_to_cpu(pdu->r2t_length);
+ 
+ 	rq = nvme_find_rq(nvme_tcp_tagset(queue), pdu->command_id);
+ 	if (!rq) {
+@@ -676,13 +654,28 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
+ 	}
+ 	req = blk_mq_rq_to_pdu(rq);
+ 
+-	ret = nvme_tcp_setup_h2c_data_pdu(req, pdu);
+-	if (unlikely(ret))
+-		return ret;
++	if (unlikely(!r2t_length)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"req %d r2t len is %u, probably a bug...\n",
++			rq->tag, r2t_length);
++		return -EPROTO;
++	}
+ 
+-	req->state = NVME_TCP_SEND_H2C_PDU;
+-	req->offset = 0;
++	if (unlikely(req->data_sent + r2t_length > req->data_len)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"req %d r2t len %u exceeded data len %u (%zu sent)\n",
++			rq->tag, r2t_length, req->data_len, req->data_sent);
++		return -EPROTO;
++	}
++
++	if (unlikely(le32_to_cpu(pdu->r2t_offset) < req->data_sent)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"req %d unexpected r2t offset %u (expected %zu)\n",
++			rq->tag, le32_to_cpu(pdu->r2t_offset), req->data_sent);
++		return -EPROTO;
++	}
+ 
++	nvme_tcp_setup_h2c_data_pdu(req, pdu);
+ 	nvme_tcp_queue_request(req, false, true);
+ 
+ 	return 0;
 -- 
 2.53.0
 
