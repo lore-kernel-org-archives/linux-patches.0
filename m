@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216387;
-	b=oWnBsWnV9uPfBjIoUfpl4enJtkUPwpeIFsnZy1Y1SFVKl38q0WWL3VemHgM/WjdjN5k6
-	 XNVPX1sTSCETScLxd+Q7ebQCxkv/H+BjW1KCSNxXRpLtQ1rnKDJtWn60QHCTt+YvXF4Z9
-	 s+qsnpmgLe4ZZW0UzgoiLgOkt994AzPS1xjdoIFGT9yBM7YjIKCZCjSD3+KQ9DGnKG6Wx
-	 OCqGHd5Y09ZpdRc6UAgoGZ82wxTQpBnAq5rLx4BkHUE32wUJG2wCKNZPrDAlwZPPD18ci
-	 XJCPF7vo3B/bf6/JAYyx3TJszmI2qLO4L2rJhPENBEvXeH9Ud1TeSDHQqA4aKJdT9ng==
+	t=1793216390;
+	b=pe7F+N4XPq/4ghyKYQiY9tgUWNgkVNhu5xy9g3R8/cdcMzqj6FpfAbpvIweMU0FlAdV2
+	 taXPVkxqweYGLdKdGY6qDRjMDdmFqquAlltLSEQs8Ua1gxeTbZgtFBQ8wV2ZpVrVA9brz
+	 vds8YIMkcGhv4XgkNbxBySeRo5SnSD87nNdGb8nwWtSzJ/07IaBlw8yKvqyZlPUlZ0ZaF
+	 6xaKyLyOdwbz+KAYoiplrlkKlYd3/dY/scu07vrqiaA++hVTnc3HX2k2G7H0JM2faFfG3
+	 T+0F6wZCjBuzyE2uxyW7FGcutXgI8ob3NQhyRfs/xvnlvH9my1ztUa0WSh3a9kO8JfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216387;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216390;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XUbc5lqRDBNtyftuXEN/glzxFsJFIXiPfgxknnBjZJ8=;
-	b=rC3DZgow9L8mTKCT4JPSHXmDH1X97Q2NoCtMu9PsyKlGTD47xBgZGFjZBL6akTkm4woX
-	 IV2Q/3sow4cQS+AGFx8uFB3lRajl0E9KlZFa6xiQ2UQNzR3DnCIDBGVYf1pPtmbX4f/Sz
-	 jYftphGGZ21zdF5UoiW3Ub2S8wnZdq1JgsxIRu6J/OjSDRDbJlwtJesd+TEJ8dMMim0XW
-	 bizfzAmRkMv8bKrY1jQI5Jybr5yM7Ckk7cdCOB0lFS/elPp0KKH4V1vWYTEJrbPaSA4AT
-	 R0w/HbumWaLHlg0N71a/Sy8ciwbdatnq/UJh955k0zy24/rqldl1Wlj6Vp+d8CrGUAQ==
+	bh=ab78U59qGS+qWOruqI1Ho4kAdvg2jmwp6gJfNILlNpU=;
+	b=lr0uu9BrdjARrczS6E7FxIZqszNFw/x0/uZy738fjyVTAdJtfScvxSy6JyZf3DoUCcKr
+	 nJCnnte8msg5asajbP23Lz8NQ1VItzLUckU9AdLONlzbQQbirtvfG0Gvvd+qScn5at1Cz
+	 v2F1xgL76XkHiPXMHC64FOf/Rg9HfUM40kyFl3IGVGP8buUeTRqAaHbKhHA/Iy6zUJJfl
+	 8lVjYjouOmwD/yEzpJHQoSxdmCCsAPFhdTzZY9iHvl1qAa8ZcsguCx6Sn7EItgqdTcGnk
+	 skdyDbm8/VCopwCnH8ml4aWNem942PAz3b5JhZThvxLssgHX21bg0Proi6KSExYkI1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7AQhmrL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JUekQf7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE6B606A31A;
-	Wed, 28 Oct 2026 19:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67299606A31A;
+	Wed, 28 Oct 2026 19:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7AQhmrL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F981F01825;
-	Wed, 28 Oct 2026 19:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JUekQf7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C881F01825;
+	Wed, 28 Oct 2026 19:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216387;
-	bh=XUbc5lqRDBNtyftuXEN/glzxFsJFIXiPfgxknnBjZJ8=;
+	s=korg; t=1793216390;
+	bh=ab78U59qGS+qWOruqI1Ho4kAdvg2jmwp6gJfNILlNpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7AQhmrLmMNCa2y+9fTIhre8UGT4G6k1VeU3XDTzUk70wmdDPAt+7fUpUbpIY4fFP
-	 M1Pbq7PwtRIE0AuYbYeeuJ95fJb+EaS/yK68xee4B1hyiMNSBzSPmmOrbqRgtC1U2h
-	 /NQkMOD4Zww9sGrXoAI5UqLa/8Dle42fkLSzRQBc=
+	b=1JUekQf7rrtc3+rN7+UTI1VFsmKK2i6DgcYp6ihICAxBkwNh1Bm57BAdiMT/I41aV
+	 OxKGabUg7afW9JXLlrYNUg4f8g61unArbsuefu2aOF1qUPNEyQ/X/pzx0rIQDB7D9u
+	 1lPUSBoTcR3QrUxFH2sY1gXFE2LXqmFIjPFJJ4+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Haiyang Huang <huanghaiyang83@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1538/1887] ksmbd: safely discard unregistered deferred locks
-Date: Wed, 28 Oct 2026 18:00:34 +0100
-Message-ID: <20261028170534.466225634@linuxfoundation.org>
+Subject: [PATCH 6.1 1539/1887] erofs: fix interlaced ztailpacking pclusters
+Date: Wed, 28 Oct 2026 18:00:35 +0100
+Message-ID: <20261028170534.488387347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,70 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Gao Xiang <xiang@kernel.org>
 
-[ Upstream commit 054bcca4cd9f00719b01f7108b51a2168fb94f15 ]
+[ Upstream commit 862427ebb81d1f6abbf74d799790e1694b37b187 ]
 
-When vfs_lock_file() defers a lock, smb2_lock() puts its ksmbd_lock on
-rollback_list before allocating and registering the asynchronous work.
-If either operation fails, rollback assumes that smb_lock->conn is
-initialized and dereferences NULL. The deferred file_lock also remains
-linked into the VFS blocked-lock state while it is freed.
+On-disk sizes of interlaced pclusters should be block-aligned, and
+ztailpacking interlaced pclusters should be invalid at all.
 
-Keep the lock off rollback_list until async setup succeeds. On setup
-failures, explicitly unblock and wake the deferred lock before freeing it
-and its ksmbd wrapper.
+Currently, mkfs.erofs won't generate any interlaced pcluster with
+ztailpacking enabled, so this doesn't affect any existing valid
+filesystems.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+However, crafted images can contain invalid interlaced ztailpacking
+pclusters, resulting in an out-of-bounds read from a kmap'd page and
+copying irrelevant kernel memory into userspace-visible page cache.
+
+Reported-by: Haiyang Huang <huanghaiyang83@gmail.com>
+Closes: https://lore.kernel.org/r/20260806065253.1083865-1-huanghaiyang83@gmail.com
+Fixes: fdffc091e6f9 ("erofs: support interlaced uncompressed data for compressed files")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/erofs/zmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index f89b90eb9bf31..5acfa540f8f9b 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -7087,6 +7087,13 @@ static void smb2_free_lock(struct file_lock *flock)
- 	locks_free_lock(flock);
- }
- 
-+static void smb2_free_blocked_lock(struct file_lock *flock)
-+{
-+	ksmbd_vfs_posix_lock_unblock(flock);
-+	wake_up(&flock->fl_wait);
-+	locks_free_lock(flock);
-+}
-+
- static inline bool lock_defer_pending(struct file_lock *fl)
- {
- 	/* check pending lock waiters */
-@@ -7329,11 +7336,12 @@ int smb2_lock(struct ksmbd_work *work)
- 
- 				ksmbd_debug(SMB,
- 					    "would have to wait for getting lock\n");
--				list_add(&smb_lock->llist, &rollback_list);
- 
- 				argv = kmalloc(sizeof(void *), GFP_KERNEL);
- 				if (!argv) {
- 					err = -ENOMEM;
-+					smb2_free_blocked_lock(flock);
-+					kfree(smb_lock);
- 					goto out;
- 				}
- 				argv[0] = flock;
-@@ -7344,8 +7352,11 @@ int smb2_lock(struct ksmbd_work *work)
- 				if (rc) {
- 					kfree(argv);
- 					err = -ENOMEM;
-+					smb2_free_blocked_lock(flock);
-+					kfree(smb_lock);
- 					goto out;
- 				}
-+				list_add(&smb_lock->llist, &rollback_list);
- 				spin_lock(&fp->f_lock);
- 				list_add(&work->fp_entry, &fp->blocked_works);
- 				spin_unlock(&fp->f_lock);
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index c120de200eb37..9159461be6109 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -577,7 +577,8 @@ static int z_erofs_do_map_blocks(struct inode *inode,
+ 			err = -EFSCORRUPTED;
+ 			goto unmap_out;
+ 		}
+-		afmt = vi->z_advise & Z_EROFS_ADVISE_INTERLACED_PCLUSTER ?
++		afmt = (vi->z_advise & Z_EROFS_ADVISE_INTERLACED_PCLUSTER) &&
++		       !(map->m_flags & EROFS_MAP_META) ?
+ 			Z_EROFS_COMPRESSION_INTERLACED :
+ 			Z_EROFS_COMPRESSION_SHIFTED;
+ 	} else {
 -- 
 2.53.0
 
