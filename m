@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216805;
-	b=MP3etSSjkBtL5q8tP9CRrs3ctd+/qolXbWY7RedFh3rUGChbA0be6HVK6HgcZf9HXtu0
-	 eNJrp/EzXQDnQYDrqMJXa6UISaQ9kHU+MMnwQ9qx8o5mOB2Lp27hijKnI6TBit7OPTZ8c
-	 xZE/rLIXXShXOAayrR0DWDPvE7mX0/dZpx5erHRrfaOum3NOVehas/SZdpYyc1PjWMczw
-	 V7ixOQUmK4LXhChgfd4z1qE62uqMmDv9OYxjdYAXjJooz2HCrQUoH1RoIyA8RhEgfkUS2
-	 EoxG/LoYX+Rj8jz5lipUIwC75rWDixZ2zgeaIyHT7/m5i9sufwoWrF6dWBpYZGWny2w==
+	t=1793216808;
+	b=pnCvkmyQwzFdjXDqOqH3ipZNVZaYuwZBNH/tGFTMOyowADIqtGZ3M08A92CGXhjYTCek
+	 MrRg/14lo+jBF3Xl2N1jTdaBkbGU0sedf7wt3RIQddR1FFZdNIwqerXsP0I7+eMyjkhF0
+	 oKLi4HzAf4bDnOZCGFpQTKZDX00tk1QcpmM7q8j7eziQl8PRTpUGqNwhr5Pxbxpz4IswS
+	 mmDWHVogUPUi9r83Th3iQBRgpBNcMSgn0kljK5uhy8jlgxGdcdcM5p0d98aKaPiCg3W2x
+	 //ilvg0Ecx0WGtHv6dJtzrd4x4EIifyflcugOCJwx760jBOqxDUovLuRuv/iQ4Ug/eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216808;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=uf3R8LgnvmKgupGlMSOecSMM42UbI9wONphSG/dA0yI=;
-	b=wliWytttGNwtEyDkG5DoFcoXj7FZUCxkHAb7V2bBehAY2I6Ux+ffdyDZBSr7B3pkvLNI
-	 TJRRD0FiTJ1L6s2nyl6WqMSZXxrvC++CSVLZWRU3ry9RaEh19k8j1+uYdJQDpawn5jAm5
-	 y80eH+ao1S2U+G/CACGUKDx4ZQ94eO/a9hXA1u42ke3gsAhFLsBl6u/aisACm1KmkvNQI
-	 c+GehbenB/2H6BE2nwsAPAFrkBI9goPvWgs+y+9hSv917SMx221BrOS6YJijLRY2nIH4d
-	 clNCiXL5bPFDdRcoEp2hN2oaJL8CGRLkmhCMvr0byI3Pyyukrgy/vjYP4rphC2MC6sg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=TqjNmh/cfnYB2ZmCJgbmH3sDhigylAuBUPPlEvShUMY=;
+	b=S8NMYXooDAYvTCz4Gs/qtphF/pttDNC1soY5FmcLm9A1SqaqHGz7qums8IryEMCSU2Le
+	 VdK0m2EvLNrn90aq7yzEsOwc0Ngwms42VMLl280V4hxFho8ZExGv+QIwuPeILpUHm3+r/
+	 BOaaq4ICWQ8xJ3ff/294okfixyZK0NpYlZiVT25MZszWA6INij5IyGE3QIYIMGwmLfZsr
+	 fVQ+Xisj5vAmyJq4cI9vaC4dbmuYUXDoRRJKlLNHoFWoEPz6J8raxEIrg9dKfoi+hC9j5
+	 AWRINGRTyHCDGiv2HuwxGlPU8d+iFBHjI+X1MtL8RpefCaDykTszBP/dt87E/UCjuGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztjhe03l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixihkW5K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE1D606A31A;
-	Wed, 28 Oct 2026 19:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E73606A31A;
+	Wed, 28 Oct 2026 19:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztjhe03l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3ED1F01825;
-	Wed, 28 Oct 2026 19:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixihkW5K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86C21F01825;
+	Wed, 28 Oct 2026 19:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216805;
-	bh=uf3R8LgnvmKgupGlMSOecSMM42UbI9wONphSG/dA0yI=;
+	s=korg; t=1793216808;
+	bh=TqjNmh/cfnYB2ZmCJgbmH3sDhigylAuBUPPlEvShUMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztjhe03lugfrCjHbH0IY7fMfNyKQ+l/OQ5avDhmhCD+gBpRFtaAUG7CbBZ1F6UHbs
-	 XeQf9p3+exwHtUvKTlgS6Sg72+8LCHm1OSBMu1hpEjnhHE+rl4iotiJwPivqg38xGn
-	 hDcL8Cynj9g8iUc6eXz/8WOppD92f7fnKcuhRRm8=
+	b=ixihkW5Kc/NPjk4cD+RGVPv9/YhuBpiYjGjynghEdQcqMnjzYxyRsaoTSy1uhiLwk
+	 8vohMVTDE/rHPRN/CeDbl+3LFlDC/BERzNmEHLV6M0c83DARsMyDrfP74bqOCbtdPe
+	 bJE4GXbJus2YzCA7HXqsNVFiFoGDdX+NgDEVfrRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1683/1887] PCI/sysfs: Add CAP_SYS_ADMIN check to __resource_resize_store()
-Date: Wed, 28 Oct 2026 18:02:59 +0100
-Message-ID: <20261028170537.756174552@linuxfoundation.org>
+Subject: [PATCH 6.1 1684/1887] spi: spi-qcom-qspi: Support pinctrl sleep states
+Date: Wed, 28 Oct 2026 18:03:00 +0100
+Message-ID: <20261028170537.779748804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,52 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 25ec7f57deceec633f27bc93b615f951e2ade814 ]
+[ Upstream commit 0098c52745112c4387942a37559ababeaf072f0c ]
 
-Currently, the __resource_resize_store() allows writing to the
-resourceN_resize sysfs attribute to change a BAR's size without checking
-for capabilities, currently relying only on the file access check.
+It's fairly common practice for drivers to switch to a "sleep" pinctrl
+state at the end of its runtime_suspend function and then back to
+"default" at the beginning of runtime_resume. Let's do that for
+spi-qcom-qspi.
 
-Resizing a BAR modifies PCI device configuration and can disrupt active
-drivers.  After the upcoming conversion to static attributes, it will also
-trigger resource file updates via sysfs_update_groups().
-
-Add a CAP_SYS_ADMIN check to prevent unprivileged users from performing BAR
-resize operations.
-
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260508043543.217179-6-kwilczynski@kernel.org
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230323102605.5.I79544b9486033bd7b27f2be55adda6d36f62a366@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: d283d5d4d9f6 ("spi: spi-qcom-qspi: Fix incomplete error handling in runtime PM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-sysfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-qcom-qspi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-index f6bf0b99ce63c..528b4efc95d75 100644
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -1456,6 +1456,9 @@ static ssize_t __resource_resize_store(struct device *dev, int n,
- 	int ret;
- 	u16 cmd;
+diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+index a6d5f287eddca..3fb9cc85d554f 100644
+--- a/drivers/spi/spi-qcom-qspi.c
++++ b/drivers/spi/spi-qcom-qspi.c
+@@ -8,6 +8,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
++#include <linux/pinctrl/consumer.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/pm_opp.h>
+ #include <linux/spi/spi.h>
+@@ -581,6 +582,8 @@ static int __maybe_unused qcom_qspi_runtime_suspend(struct device *dev)
+ 		return ret;
+ 	}
  
-+	if (!capable(CAP_SYS_ADMIN))
-+		return -EPERM;
++	pinctrl_pm_select_sleep_state(dev);
 +
- 	if (kstrtoul(buf, 0, &size) < 0)
- 		return -EINVAL;
+ 	return 0;
+ }
  
+@@ -590,6 +593,8 @@ static int __maybe_unused qcom_qspi_runtime_resume(struct device *dev)
+ 	struct qcom_qspi *ctrl = spi_master_get_devdata(master);
+ 	int ret;
+ 
++	pinctrl_pm_select_default_state(dev);
++
+ 	ret = icc_enable(ctrl->icc_path_cpu_to_qspi);
+ 	if (ret) {
+ 		dev_err_ratelimited(ctrl->dev, "%s: ICC enable failed for cpu: %d\n",
 -- 
 2.53.0
 
