@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214573;
-	b=uRLPAB1tskQhu3dn7InwDXiNPUTdNFUy3kxBMRgaOLAIMigg7V3BiEsZ6NEN+23pLrYK
-	 jxwnAOTAyHb+XFK/VQfEtM/ShgZrJye8UNDXrgPOqQCfNyBE6UwMHF7Pc8YzaxIV9slBy
-	 Rkb22XPDxPtt9dC0bDJ3exUETvkq0jgQaCavmlInaHOCUbF2bn7fhIgwvc7wXK8K06cT9
-	 ABu5GZjk/Ahbq4PRcfsG2n+9krI8hfEhxuqyYpexhjQqV18lP0+PonZ2pSL++KKfRXfgB
-	 P3jRvte8COxxemiP/dW3sqagLrVWVMVXrL5cK7gAVdKdypHny1hdhN32ySZHQaUwLyg==
+	t=1793214575;
+	b=s9cF+R4Zs2Q5lWPaIc8cSXcGx/Qt97/uxd2GYDq7EUGfYp1aglNBAZo0LNxCvLBna5tY
+	 MYx+cEpN2hGufiUcSKTIGRdI3lCftUtliSNyOKNC9fpD9mc6ruQuBw8U3nVZevw3shnU5
+	 yf6FDNw8xkzdT/B2FjelJAsT0fkPE1evZz4F7fITxTxMSqO1vAqlH/Bd8saXz+sluEyrA
+	 GN2rlyF924zDSlQT6QBvOych0aBQmOyP9n1c/jO5jIO+65GpsyO/d6S1qBkR6HezE3t9+
+	 i3N0mZ3HHLRjGcQ3gShQa4WnRcDh4KZzcCMPNg06odHxP3dF8mipLjsr3nclLK0qRTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T7Zgx5C5ilhgwFKMM2GmLEsCxh5OG+J1T9wJE0PdzFM=;
-	b=NEebkXB93gT3zxGp/RtrnpcRsAVIWS3ReugXgzYUZxob4nFHZy6q5G4AdE6WyO1hTJgV
-	 LeUvN/Q/vp/Cal4UEL2caloc2QwSraEjejnf0aSWWSzSKsrM5T5x766Aiie8spxE79OWc
-	 OuWQ4X5hynBP0nz3FaWQJRTdEGpYdVeDl9nNLTu6HUNzADex2qzqhrf/GGfCBTIal0reF
-	 NO1fsUbb9+vlWcbuqtyX9GAAZ2Pqrg0pCze/H+1q0MMLpQoRxzBj/dEFS1t0wXugIjtHG
-	 lN2JxwhELbsh5jr8EEbakY+oK/qdeN7TGJI5s2UVCyoOou0D61bgJ7vlKCSSWi4Qf7w==
+	bh=W0y/5ZNIx01TFQRvbZeNG8fyo1gtBeoqRyfoGCLQ+G0=;
+	b=sIH1izZ/ZLmDtj9N/qOeAvfgju2mcYzHXMXPstLtNOcUyQeSELswa80uQP8ZzGineTJ2
+	 Ja5rytK2YUIG/wMbPUmmtpVivkdOkY57svGgEihovrh3WvJJ7B/c8juXDkgLInhzYwlP5
+	 qcBnHWe8yyeNJ8GsBjHP18b32ybFTEy0C+eb/6aeluWla1J2At4JjwkSGDpnDIHUU0Dko
+	 8FbyQ/sr2YgXhRf+y6x4OzXIUqc7TKSNqp63uhb0bG7eZ2gi3uAcWnuP50E/z9CUoDiMl
+	 uf5vk4Z0XX7bOfqMPgkV6aTZ3LsTiv8wN1mQ15gvvDyQmiF+97ZSnnbbdALfEWfIGZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y+VYdTqm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaFRmWfE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC67E60A263E;
-	Wed, 28 Oct 2026 19:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8685760A2624;
+	Wed, 28 Oct 2026 19:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y+VYdTqm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06AAA1F01825;
-	Wed, 28 Oct 2026 19:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaFRmWfE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DD81F01829;
+	Wed, 28 Oct 2026 19:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214572;
-	bh=T7Zgx5C5ilhgwFKMM2GmLEsCxh5OG+J1T9wJE0PdzFM=;
+	s=korg; t=1793214575;
+	bh=W0y/5ZNIx01TFQRvbZeNG8fyo1gtBeoqRyfoGCLQ+G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y+VYdTqm7C7cvrF0HVEsRBPdnbEHryyRV503aOA1UWA9a5NziJGanpjZFn3PEhqHl
-	 rm0dfMTtDSZwfInilQD1zjDylR8aFXFDbUzfPeJ0HWzjdpwfNobZ1C6l43Oa6ToDEX
-	 B2L62kv7/e8cOEqtaZ+rgankS7XeraxfJ74xpNh8=
+	b=zaFRmWfEqdpoUpgesWtz1uWiWJMPWd+p9vQYKIGGKeo2+UWdTapR6RSwAoaMpbOn4
+	 Oa9n7D0dNY173stbaa5CCwuI3DnPMWsVG+kl9bCrxmC4SuVGZObaAAhxkDbNZvzVlb
+	 a8Nf1QsRKYUHlPv/rHk4JLSpDuZyHIbc+Q8ZUJ9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Qianchang Zhao <pioooooooooip@gmail.com>,
+	Zhitong Liu <liuzhitong1993@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0853/1887] i915: Move list_count() to list.h as list_count_nodes() for broader use
-Date: Wed, 28 Oct 2026 17:49:09 +0100
-Message-ID: <20261028170518.836693679@linuxfoundation.org>
+Subject: [PATCH 6.1 0900/1887] ksmbd: vfs: fix race on m_flags in vfs_cache
+Date: Wed, 28 Oct 2026 17:49:56 +0100
+Message-ID: <20261028170519.898856883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,90 +70,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Qianchang Zhao <pioooooooooip@gmail.com>
 
-[ Upstream commit 4d70c74659d9746502b23d055dba03d1d28ec388 ]
+[ Upstream commit 991f8a79db99b14c48d20d2052c82d65b9186cad ]
 
-Some of the existing users, and definitely will be new ones, want to
-count existing nodes in the list. Provide a generic API for that by
-moving code from i915 to list.h.
+ksmbd maintains delete-on-close and pending-delete state in
+ksmbd_inode->m_flags. In vfs_cache.c this field is accessed under
+inconsistent locking: some paths read and modify m_flags under
+ci->m_lock while others do so without taking the lock at all.
 
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221130134838.23805-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Examples:
 
-In this tree the i915 list_count() helper and its only user live in
-intel_execlists_submission.c rather than intel_engine_cs.c, so the
-i915 conversion is applied there instead.
+ - ksmbd_query_inode_status() and __ksmbd_inode_close() use
+   ci->m_lock when checking or updating m_flags.
+ - ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
+   ksmbd_clear_inode_pending_delete() and ksmbd_fd_set_delete_on_close()
+   used to read and modify m_flags without ci->m_lock.
 
-Stable-dep-of: e9f35294e18d ("ptp: Add a upper bound on max_vclocks")
+This creates a potential data race on m_flags when multiple threads
+open, close and delete the same file concurrently. In the worst case
+delete-on-close and pending-delete bits can be lost or observed in an
+inconsistent state, leading to confusing delete semantics (files that
+stay on disk after delete-on-close, or files that disappear while still
+in use).
+
+Fix it by:
+
+ - Making ksmbd_query_inode_status() look at m_flags under ci->m_lock
+   after dropping inode_hash_lock.
+ - Adding ci->m_lock protection to all helpers that read or modify
+   m_flags (ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
+   ksmbd_clear_inode_pending_delete(), ksmbd_fd_set_delete_on_close()).
+ - Keeping the existing ci->m_lock protection in __ksmbd_inode_close(),
+   and moving the actual unlink/xattr removal outside the lock.
+
+This unifies the locking around m_flags and removes the data race while
+preserving the existing delete-on-close behaviour.
+
+Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
+Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/i915/gt/intel_execlists_submission.c  | 15 ++-------------
- include/linux/list.h                              | 15 +++++++++++++++
- 2 files changed, 17 insertions(+), 13 deletions(-)
+ fs/smb/server/vfs_cache.c | 86 +++++++++++++++++++++++++++------------
+ 1 file changed, 61 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-index 321dbecba0f3c..1a396eb13c2e4 100644
---- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-+++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-@@ -4153,17 +4153,6 @@ void intel_execlists_show_requests(struct intel_engine_cs *engine,
- 	spin_unlock_irqrestore(&sched_engine->lock, flags);
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 4b35e4f960694..d10cd67d6793c 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -104,40 +104,62 @@ int ksmbd_query_inode_status(struct dentry *dentry)
+ 
+ 	read_lock(&inode_hash_lock);
+ 	ci = __ksmbd_inode_lookup(dentry);
+-	if (ci) {
+-		ret = KSMBD_INODE_STATUS_OK;
+-		if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
+-			ret = KSMBD_INODE_STATUS_PENDING_DELETE;
+-		atomic_dec(&ci->m_count);
+-	}
+ 	read_unlock(&inode_hash_lock);
++	if (!ci)
++		return ret;
++
++	read_lock(&ci->m_lock);
++	if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
++		ret = KSMBD_INODE_STATUS_PENDING_DELETE;
++	else
++		ret = KSMBD_INODE_STATUS_OK;
++	read_unlock(&ci->m_lock);
++
++	atomic_dec(&ci->m_count);
+ 	return ret;
  }
  
--static unsigned long list_count(struct list_head *list)
--{
--	struct list_head *pos;
--	unsigned long count = 0;
--
--	list_for_each(pos, list)
--		count++;
--
--	return count;
--}
--
- void intel_execlists_dump_active_requests(struct intel_engine_cs *engine,
- 					  struct i915_request *hung_rq,
- 					  struct drm_printer *m)
-@@ -4174,8 +4163,8 @@ void intel_execlists_dump_active_requests(struct intel_engine_cs *engine,
- 
- 	intel_engine_dump_active_requests(&engine->sched_engine->requests, hung_rq, m);
- 
--	drm_printf(m, "\tOn hold?: %lu\n",
--		   list_count(&engine->sched_engine->hold));
-+	drm_printf(m, "\tOn hold?: %zu\n",
-+		   list_count_nodes(&engine->sched_engine->hold));
- 
- 	spin_unlock_irqrestore(&engine->sched_engine->lock, flags);
+ bool ksmbd_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	return (fp->f_ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
++	struct ksmbd_inode *ci = fp->f_ci;
++	int ret;
++
++	read_lock(&ci->m_lock);
++	ret = (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
++	read_unlock(&ci->m_lock);
++
++	return ret;
  }
-diff --git a/include/linux/list.h b/include/linux/list.h
-index a2f9a62c577a4..38e8ed08d598c 100644
---- a/include/linux/list.h
-+++ b/include/linux/list.h
-@@ -662,6 +662,21 @@ static inline void list_splice_tail_init(struct list_head *list,
- 	     !list_is_head(pos, (head)); \
- 	     pos = n, n = pos->prev)
  
-+/**
-+ * list_count_nodes - count nodes in the list
-+ * @head:	the head for your list.
-+ */
-+static inline size_t list_count_nodes(struct list_head *head)
-+{
-+	struct list_head *pos;
-+	size_t count = 0;
+ void ksmbd_set_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	fp->f_ci->m_flags |= S_DEL_PENDING;
++	struct ksmbd_inode *ci = fp->f_ci;
 +
-+	list_for_each(pos, head)
-+		count++;
++	write_lock(&ci->m_lock);
++	ci->m_flags |= S_DEL_PENDING;
++	write_unlock(&ci->m_lock);
+ }
+ 
+ void ksmbd_clear_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	fp->f_ci->m_flags &= ~S_DEL_PENDING;
++	struct ksmbd_inode *ci = fp->f_ci;
 +
-+	return count;
-+}
++	write_lock(&ci->m_lock);
++	ci->m_flags &= ~S_DEL_PENDING;
++	write_unlock(&ci->m_lock);
+ }
+ 
+ void ksmbd_fd_set_delete_on_close(struct ksmbd_file *fp,
+ 				  int file_info)
+ {
+-	if (ksmbd_stream_fd(fp)) {
+-		fp->f_ci->m_flags |= S_DEL_ON_CLS_STREAM;
+-		return;
+-	}
++	struct ksmbd_inode *ci = fp->f_ci;
+ 
+-	fp->f_ci->m_flags |= S_DEL_ON_CLS;
++	write_lock(&ci->m_lock);
++	if (ksmbd_stream_fd(fp))
++		ci->m_flags |= S_DEL_ON_CLS_STREAM;
++	else
++		ci->m_flags |= S_DEL_ON_CLS;
++	write_unlock(&ci->m_lock);
+ }
+ 
+ static void ksmbd_inode_hash(struct ksmbd_inode *ci)
+@@ -249,26 +271,40 @@ static void __ksmbd_inode_close(struct ksmbd_file *fp)
+ 	struct file *filp;
+ 
+ 	filp = fp->filp;
+-	if (ksmbd_stream_fd(fp) && (ci->m_flags & S_DEL_ON_CLS_STREAM)) {
+-		ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
+-		err = ksmbd_vfs_remove_xattr(file_mnt_user_ns(filp),
+-					     &filp->f_path,
+-					     fp->stream.name);
+-		if (err)
+-			pr_err("remove xattr failed : %s\n",
+-			       fp->stream.name);
 +
- /**
-  * list_entry_is_head - test if the entry points to the head of the list
-  * @pos:	the type * to cursor
++	if (ksmbd_stream_fd(fp)) {
++		bool remove_stream_xattr = false;
++
++		write_lock(&ci->m_lock);
++		if (ci->m_flags & S_DEL_ON_CLS_STREAM) {
++			ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
++			remove_stream_xattr = true;
++		}
++		write_unlock(&ci->m_lock);
++
++		if (remove_stream_xattr) {
++			err = ksmbd_vfs_remove_xattr(file_mnt_user_ns(filp),
++						     &filp->f_path,
++						     fp->stream.name);
++			if (err)
++				pr_err("remove xattr failed : %s\n",
++				       fp->stream.name);
++		}
+ 	}
+ 
+ 	if (atomic_dec_and_test(&ci->m_count)) {
++		bool do_unlink = false;
++
+ 		write_lock(&ci->m_lock);
+ 		if (ci->m_flags & (S_DEL_ON_CLS | S_DEL_PENDING)) {
+ 			ci->m_flags &= ~(S_DEL_ON_CLS | S_DEL_PENDING);
+-			write_unlock(&ci->m_lock);
+-			ksmbd_vfs_unlink(filp);
+-			write_lock(&ci->m_lock);
++			do_unlink = true;
+ 		}
+ 		write_unlock(&ci->m_lock);
+ 
++		if (do_unlink)
++			ksmbd_vfs_unlink(filp);
++
+ 		ksmbd_inode_free(ci);
+ 	}
+ }
 -- 
 2.53.0
 
