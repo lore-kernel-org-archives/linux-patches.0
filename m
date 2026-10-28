@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212391;
-	b=vovlkFHbqMFSi9rQhK853cq3Makw+ai/oHOcTG2uHTOa1XKnL5amUHqs1U6gQfkdU1Aw
-	 vlVuEcSiob2OlgIeavkGO+kXhL2sz/aUtijDXUeJ2X1HUZV+BU4Llgjd8iny30wE1doIH
-	 CcGVamhSxbK21LZ+w7NxgWOKzkwlkq7ZHGKscN2rJlls7qXV1phklmIpGggYpZO78h2Lb
-	 sqlzyc8oqFevzA5xY7Rz3Sl8Q8VGlZ0fxiT9MvOCpWkW75+zJOn9zFtyOKeeYLS2i93qm
-	 vGFcAXU4Kih7jJBn044gj7JjHyCkvnYLJbwSDph+uS0bdDJZxFf6g7kaYRPHelLDLTQ==
+	t=1793212393;
+	b=fAiPlKyKM2rEwTb06P0qjarifNuMyehtZ1os7ducfAKCx1HJEI3WiSaH8Hm7r4J0Xz+w
+	 sU5XhDIsNYGFwL3mQeRNxDMXO20f2/+XvgWiLpcD5LgCmel6CtZTEnHVQ4wt7FcBIvKKJ
+	 qWaA19QcHz/wPGmFJmRroVHPgF684UMp8/ci27PBHG9xEXWeTJm4XPrdJ3l38ImP0orNl
+	 alMwdMM6bXp43UiLyVqmLr/xZpf6fruItCu7GBSI5iYFz/urF+ekkOhPt9/CBPiH5bH94
+	 8sMbiQxiJIpWxZ+w8ouINCh4SLrDIcbZkIY0SQsL+rA1yLhQ9xurRnyfpYlv6ExWVhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212393;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=STlJzTgc53k31uZSK0tpEFV0kuuJoQDIyG36IgBI2V0=;
-	b=APllJBjMFb+Z2AaG+d2oPtMqgFbffPJvGt+1RZbBQ11VnEBA7efQQ1iI6DSvV3f6/bRQ
-	 DbrqWBrA/gYhGrbArv1rOXfNoAjh2wTYz2c6M/1d4HKuAI0CKNyvw8M3FCJz05a9GNUnr
-	 B1dReW8RQeQurUVoDizn/az9oHd98KPPg89DMpEENRvPiJ4eQ3z61JgLPuO+YyPENBdNd
-	 FgIoPUp9qW11+eliSyCBcHGpxWFkauONSvAgEEL+kgMqPhqR1fQs1NEMdlFLAI6ZBsfnH
-	 kEV1FIiJY+u8PWc5KcGwHrgB/9ZVdOyHcI60wOhAHUOWGmwVg7OLO+/fg9+6TyTf9HA==
+	bh=R7Q5OG18ZCn6gNAPXMQU7ISSLsXnt29jUC0D0R5JVD0=;
+	b=QM4NqR5YAVW3j/4vV1KeGs8CmUmoXpHFs+wwdlYQMlLdibnmkKjizFoDr1l+Z9+OJwVV
+	 7vNzOqytM+rhnWT+VpgDQro4ajMumj0sU9RIhQpck7UlxaPyKgT+H8YLqxDrLqHhyHLIQ
+	 Wdj6+6ky0RRgurBsBaTkgEmm3uEIRsA5xlrzeAusLsO82tBP1dkZvgB2l8lceD+KUyyxG
+	 oF0LXOsUXRO5P8sojqLnJGqifp/9f2TqpJVsufHog9iaZDwgWnOOBrZLtV+XWdKGKfL+b
+	 P7IfIXRjp6maUJibSpZxuM0Kj45gf478OTNiZBuqJJmmlJGudcI2etqLASjNwBgdALA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDSERJUs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eG/Vw8M1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8C8606A31A;
-	Wed, 28 Oct 2026 18:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A37606A31C;
+	Wed, 28 Oct 2026 18:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDSERJUs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F9C1F01825;
-	Wed, 28 Oct 2026 18:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eG/Vw8M1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CC01F01825;
+	Wed, 28 Oct 2026 18:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212390;
-	bh=STlJzTgc53k31uZSK0tpEFV0kuuJoQDIyG36IgBI2V0=;
+	s=korg; t=1793212393;
+	bh=R7Q5OG18ZCn6gNAPXMQU7ISSLsXnt29jUC0D0R5JVD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YDSERJUs66kLdYP9XhXQVcEaLPmXzp6lym1q396Jn44wl82b3xM94LgufDvalN+GR
-	 obliefT/Vzn3GhFvUHKqGPJvd69gmBFTmrdiPEseqT4lhcnbShASsKK8qcEqeOFvwY
-	 F1kKmoJkLrOVESJzfqsmxj9jYSbfd65PtiYnMqEY=
+	b=eG/Vw8M1sgmGetAm+4Oo/B75oM4ImO9Q30x5i8MR6G8k3aw19VgP7OWdADtkbBWSw
+	 9HiRN1t6WuxqHUtOQQEBJ4nxQT4/jEMjhNOpm+6Kju/ysXN+ddpKSnbb8QSDhE7VfB
+	 9vggQiCfIuBIiF2uP+jUaFmEms21+qrXht/P9Ou4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0137/1887] bna: prevent IOC timer rearm during teardown
-Date: Wed, 28 Oct 2026 17:37:13 +0100
-Message-ID: <20261028170502.353301811@linuxfoundation.org>
+Subject: [PATCH 6.1 0111/1887] scsi: qla2xxx: Use memset_io() to clear QLAFX00 request ring slot
+Date: Wed, 28 Oct 2026 17:36:47 +0100
+Message-ID: <20261028170501.762571635@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,78 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 77b1718e39e5c9f6956fb60807326af20baf889d ]
+[ Upstream commit 626e44f3d8a924a97a3848a9fd45833947e081e9 ]
 
-bna: prevent IOC timer rearm during teardown
+For QLAFX00 the request ring is ioremapped device I/O memory
+(ha->iobase + req_que_off), not DMA-coherent RAM, which is why the rest
+of the FX00 path accesses it through memcpy_toio() and the wrt_reg_*
+helpers. __qla2x00_alloc_iocbs() however zeroed the producer slot with a
+plain memset(). On architectures such as ARM64 a regular memset() may
+emit unaligned or block-zeroing instructions (e.g. DC ZVA) that are
+invalid on Device memory, leading to a synchronous external abort.
 
-bnad_pci_remove() and the probe disable_ioceth path call
-timer_delete_sync() for ioc_timer, sem_timer and hb_timer, but not for
-iocpf_timer.  bnad_iocpf_timeout() then takes bnad->bna_lock after
-free_netdev() has freed the struct bnad.
+Use memset_io() to clear the slot for QLAFX00, matching the I/O
+accessors used elsewhere on this ring. Other adapters keep the plain
+memset() on their DMA-coherent rings. The zero-fill is retained for FX00
+because its IOCB builders (e.g. qlafx00_fxdisc_iocb()) copy only part of
+the entry and rely on the unused tail being pre-zeroed.
 
-Deleting iocpf_timer last does not fix this.  sem_timer and
-iocpf_timer rearm each other: bnad_iocpf_sem_timeout() can arm
-iocpf_timer, and bnad_iocpf_timeout() arms sem_timer from
-bfa_ioc_hw_sem_get() when the semaphore is busy.
-timer_delete_sync() only waits out its own callback.
-bnad_ioceth_disable() can time out and leave that callback live.
-
-Shut all four IOC timers down with timer_shutdown_sync() on both
-paths, so a later mod_timer() is ignored.
-
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: 1d32f7696286 ("bna: IOC failure auto recovery fix")
+Fixes: 8ae6d9c7eb10 ("[SCSI] qla2xxx: Enhancements to support ISPFx00.")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260922014605.588040-1-mhun512@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ inlined bnad_ioc_timers_shutdown() into the existing teardown functions. ]
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-12-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ replaced qla_req_ring_slot() and qla_req_entry_size() with req->ring_ptr and REQUEST_ENTRY_SIZE. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/brocade/bna/bnad.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/scsi/qla2xxx/qla_iocb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/brocade/bna/bnad.c b/drivers/net/ethernet/brocade/bna/bnad.c
-index aecdb98f8a9c1..1733ccb89311d 100644
---- a/drivers/net/ethernet/brocade/bna/bnad.c
-+++ b/drivers/net/ethernet/brocade/bna/bnad.c
-@@ -3728,9 +3728,11 @@ bnad_pci_probe(struct pci_dev *pdev,
- 	bnad_res_free(bnad, &bnad->mod_res_info[0], BNA_MOD_RES_T_MAX);
- disable_ioceth:
- 	bnad_ioceth_disable(bnad);
--	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	/* The IOC timers rearm one another.  Shut down all of them. */
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
- 	spin_lock_irqsave(&bnad->bna_lock, flags);
- 	bna_uninit(bna);
- 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
-@@ -3771,9 +3773,11 @@ bnad_pci_remove(struct pci_dev *pdev)
- 
- 	mutex_lock(&bnad->conf_mutex);
- 	bnad_ioceth_disable(bnad);
--	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	/* The IOC timers rearm one another.  Shut down all of them. */
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
- 	spin_lock_irqsave(&bnad->bna_lock, flags);
- 	bna_uninit(bna);
- 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
+diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
+index 7bccd525ee19b..f080e19529272 100644
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -2347,11 +2347,13 @@ __qla2x00_alloc_iocbs(struct qla_qpair *qpair, srb_t *sp)
+ 	/* Prep packet */
+ 	req->cnt -= req_cnt;
+ 	pkt = req->ring_ptr;
+-	memset(pkt, 0, REQUEST_ENTRY_SIZE);
+ 	if (IS_QLAFX00(ha)) {
++		memset_io((void __iomem __force *)pkt, 0,
++			  REQUEST_ENTRY_SIZE);
+ 		wrt_reg_byte((u8 __force __iomem *)&pkt->entry_count, req_cnt);
+ 		wrt_reg_dword((__le32 __force __iomem *)&pkt->handle, handle);
+ 	} else {
++		memset(pkt, 0, REQUEST_ENTRY_SIZE);
+ 		pkt->entry_count = req_cnt;
+ 		pkt->handle = handle;
+ 	}
 -- 
 2.53.0
 
