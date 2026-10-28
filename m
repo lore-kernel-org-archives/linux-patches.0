@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207171;
-	b=4UIRklWRheRlSiHQpW6ijr52Q5NzZ2YYYRCH7SnYTejdpuvzxkGJ5bGWLMZ84sx4Maeg
-	 29fXeQKmGoUA4gq5tvysk0G+kv1792kIHTVR/Jzu2ttjsRqPsM4yWczno5r4A1Lxw91O5
-	 hAOwZpbFTNznR9xlxYSz1q8qsmoNPAvAJ3Yl9hw+s1qNWn3tQl8kpihEw/UIHx+Zw9Rp6
-	 pHRKK+k4ChfCWU6w3jec+StloGeppIdXOyGZo3Ck5dqh0uTVECqb9H/gd9r4a9r/ER15Q
-	 5U9ijVBYCVvge6f1oe1aVFZTSmTih1bnhbfPdZnFkiEL8THgTuHFoe7iBNEkKzt6rJA==
+	t=1793207173;
+	b=tMUhHpgt62A/ZSKV6bUeh3lhzPUM0vfMDFXazPO8ClqTlR+GUFQs+jg6Ab6kl/ZSrBwl
+	 s5ANwa56noOMfc7Zyk4cywOc0srTPr9fttVW2qBDEezFbl1gB6uQQ+Q7Fx8kW0twp+GIV
+	 JUpUnr/QSHuuQV1dF/As7EFCphHtltyCvUw1Am2+3ogtvB1R+C9i45AjHoBZjvL/cdxxR
+	 WA6YXxa30225GLAL+YG0IdzRdQ6/Ro3dO6gh4euaMl+ZIAjmQ6d9Zly2n79Ur8HZUOuQY
+	 zOM6byJl5/Q3jj41IgN6dW8r/mSfEn9tMDGbR42KtPWRP0GiLxEz06ikyhJdmaoAGEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WpQz9Wih48tgcXzqCPaiczv8b+3PAfA+CxALRVQnywE=;
-	b=Rgtn7itQaDioY6y0PImBqPlvSGGJhk9r+WbPX0j1AwUPC/rgibYLgV5klZNPjbZSyYv5
-	 nOq3G/OLb19AtV6pmc9DeSROYRMsaApZ9rQh0gJ5+QoBN7pajcUNK7WCF2ITh7v0k/8LG
-	 rZspVlG239hw86Rbx9LTBu6Twc05wLKjJ2gvbsYiXejXkn18/ljqb7YScnW9pB2ZHQWtS
-	 CQPQ+2zCJluQlKO8P8IFH81i+L5DoTICtGimnmL8WEeXG8cKM+Abj8KL3SZEeLuVkJoNB
-	 Qwtp23E6+aK624BwJc9LlUI4ybNaCtIrEqsP9z2R5gsecsqy1x1oVfGjlufifNZclxA==
+	bh=axpP+Ej5XcD28w+qxR8djXhX4MS6I6gQg/bOkBiDVdw=;
+	b=IY8FUd2NTJ35BmGACVmeAHa3+UlexDwxuyndP+rr+ln5Ycjrhpn/gUKbnkqZ91qDdZ/1
+	 agjjhKhBKsnyEmPU+Is9jEuN18uhiqLnHmlqgB4FtRhZp+3qw2yD14IDJ+V+kJlmajIW/
+	 zvu7w813piUl8pID6PrPaW6f5smhwVPxzik01BHoHPdhW2CM/hB7s7uUM6e1gvxTzbSN0
+	 ZJBcGOXxjnO4X0aleNHEuFDBXwxORYFviOcn744BE2jvjff9DDY3YI2qugD7YR2GjM8OC
+	 V54KIIQPot41mgS5cMhCgv4oqpATo1KE/U9hWF+YtVw9Lpxd8ULq8/N6K7vTjqPtIwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e/wxJ1GH";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0nxN37I5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8067606A333;
-	Wed, 28 Oct 2026 17:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955DD606A333;
+	Wed, 28 Oct 2026 17:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e/wxJ1GH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0871F031E2;
-	Wed, 28 Oct 2026 17:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0nxN37I5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7601F031EC;
+	Wed, 28 Oct 2026 17:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207170;
-	bh=WpQz9Wih48tgcXzqCPaiczv8b+3PAfA+CxALRVQnywE=;
+	s=korg; t=1793207173;
+	bh=axpP+Ej5XcD28w+qxR8djXhX4MS6I6gQg/bOkBiDVdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e/wxJ1GHpmHJv0s2E4KzgYNgUXc4TPyGdx6tRrmRnP+BDDvuedWBQI3TpkblkAM1X
-	 zPI2Mzh12NdC0HnMp20SxXw8+cclwKU04HFgVhn+69qCmz+U4BDWULJAOhDjtii7Hd
-	 WgtlMNzBmQlMQASkM0EtX5JRPriFoXF0VKT8vBDI=
+	b=0nxN37I5zvu7yqoEHXHaXiRg6b6pesmMTZVgr5176D9hM4++hIxrrk4j0h0WJGg9H
+	 WNE63PzTw7uBeSgRM7vcQbZWS4kOea9RuximNfSJALbyRHjLsr1yKYlhX3aJQoM8hS
+	 BlLSIhTUKul+iSrGsLK1roPVbRlLV63BqC2EO+3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	sashiko-bot@kernel.org,
 	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 12/88] tracing: Unregister field variable histograms when the command fails
-Date: Wed, 28 Oct 2026 17:59:20 +0100
-Message-ID: <20261028165942.404848631@linuxfoundation.org>
+Subject: [PATCH 7.2 13/88] tracing: Fix 64-bit and signed histogram fields on 32-bit kernels
+Date: Wed, 28 Oct 2026 17:59:21 +0100
+Message-ID: <20261028165942.427325638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -70,90 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 91c14d6c13096091c56304120aaa26e479130b8b upstream.
+commit 443d23176812803d0fa182b8d05ef066a7b8271f upstream.
 
-An action that names a field on another event needs that field as a
-variable, so create_field_var_hist() registers a second hist trigger on
-that event to provide it, and records it in
-target_hist_data->field_var_hists[].
+DEFINE_HIST_FIELD_FN() reads a trace event field and widens it to the u64
+the histogram uses as a key or a value:
 
-If a later part of the same command fails, create_actions() returns an
-error and event_hist_trigger_parse() jumps to out_free. The write fails
-with -EINVAL and sched_switch gets no trigger, but:
+	type *addr = (type *)(event + hist_field->field->offset);
 
-  # echo 'hist:keys=pid:ts0=common_timestamp.usecs' >> \
-      events/sched/sched_waking/trigger
-  # echo 'my_synth u64 lat; int a; int b' >> synthetic_events
-  # echo 'hist:keys=next_pid:wakeup_lat=common_timestamp.usecs-$ts0:\
-      onmatch(sched.sched_waking).my_synth($wakeup_lat,prio,nosuchfld)'\
-      >> events/sched/sched_switch/trigger
-  # cat events/sched/sched_waking/trigger
-  hist:keys=pid:vals=hitcount:ts0=common_timestamp.usecs:sort=hitcount:size=2048:clock=global [active]
-  hist:keys=pid:vals=hitcount:synthetic_prio=prio:sort=hitcount:size=2048 [active]
+	return (u64)(unsigned long)*addr;
 
-The second histogram is the one created for 'prio'. It is still active and
-still counting.
+unsigned long is 32 bits on a 32-bit kernel, so the intermediate cast
+discards the upper half of a 64-bit field, and widens a signed field by
+zero extension from 32 bits rather than sign extension from its own
+width. Five of the eight instantiations are wrong there: s64, u64, s32,
+s16 and s8.
 
-out_free reaches destroy_field_var_hists(), which frees the
-field_var_hists[] entries, but never unregister_field_var_hists(), which is
-what removes the triggers and runs only from event_hist_trigger_free(). The
-entry is freed and the trigger is left with nothing tracking it.
+The cast came in with commit 79e577cbce4c ("tracing: Support string type
+key properly"), which also added hist_field_dynstring() and
+hist_field_pstring(). Those convert a char * to u64 and do warn without
+an unsigned long in between on 32-bit. DEFINE_HIST_FIELD_FN() converts an
+integer and never a pointer, so it gains nothing from the cast and only
+loses information.
 
-Unregister the field variable histograms in out_free as well, and record
-each one as soon as its trigger is registered rather than after the lookup
-that follows it, so no exit can leave a registered trigger untracked. The
-entry then belongs to field_var_hists[] and is released by
-destroy_field_var_hists(), so freeing it on that exit would be a double
-free.
+Drop the intermediate cast and let the usual arithmetic conversions widen
+*addr according to its own type. unsigned long is 64 bits on LP64, so the
+two forms are identical there and 64-bit kernels are unaffected.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260914104036.1768529-1-donggeunyoo.kernel@gmail.com
-Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
+Link: https://patch.msgid.link/20260917015532.103081-1-donggeunyoo.kernel@gmail.com
+Fixes: 79e577cbce4c ("tracing: Support string type key properly")
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260913204302.DB2551F000FF@smtp.kernel.org/
+Closes: https://lore.kernel.org/all/20260914054614.82A9B1F000FF@smtp.kernel.org/
 Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -3115,20 +3115,18 @@ create_field_var_hist(struct hist_trigge
- 
- 	kfree(cmd);
- 
-+	n = target_hist_data->n_field_var_hists;
-+	target_hist_data->field_var_hists[n] = var_hist;
-+	target_hist_data->n_field_var_hists++;
-+
- 	/* If we can't find the variable, something went wrong */
- 	event_var = find_synthetic_field_var(target_hist_data, subsys_name,
- 					     event_name, field_name);
- 	if (IS_ERR_OR_NULL(event_var)) {
--		kfree(var_hist->cmd);
--		kfree(var_hist);
- 		hist_err(tr, HIST_ERR_SYNTH_VAR_NOT_FOUND, errpos(field_name));
- 		return ERR_PTR(-EINVAL);
- 	}
- 
--	n = target_hist_data->n_field_var_hists;
--	target_hist_data->field_var_hists[n] = var_hist;
--	target_hist_data->n_field_var_hists++;
--
- 	return event_var;
+@@ -467,7 +467,7 @@ static u64 hist_field_unary_minus(struct
+ {									\
+ 	type *addr = (type *)(event + hist_field->field->offset);	\
+ 									\
+-	return (u64)(unsigned long)*addr;				\
++	return (u64)*addr;						\
  }
  
-@@ -6967,6 +6965,8 @@ static int event_hist_trigger_parse(stru
- 
- 	trigger_data_free(trigger_data);
- 
-+	unregister_field_var_hists(hist_data);
-+
- 	destroy_hist_data(hist_data);
- 	goto out;
- }
+ DEFINE_HIST_FIELD_FN(s64);
 
 
