@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207249;
-	b=Pi7NMS6omaQcOhwU+uohgrGzVypfsJpzQb7CvcLVxdGIfBUmz5DZlLZg8dAMhS5Y97cX
-	 VZ/NHt0W5WqTlxJ00deFHx7dfPwmlcTu2kesNDhm0Fo0LTQ3iMxK+JjS2xar0O+Fafae4
-	 tbvsROHPZahFy/Cs4VTUpK2TvQZgUCVFwJE/0MSqmtCJukJEZN9VjrIarNv5JyukPA17w
-	 pzzVD9fbh4ScgGuqgUIXkBIzBnmqiTGhsNysJOMqKkeaZzm68vVfSnDotER3OCf9GbKeN
-	 +kRx4F6jhJxeH84vz2f98iwOeqWmULDDrh9Mr4BvvbnESI3nJ7K6E+ttJlGcswG5fsg==
+	t=1793207252;
+	b=hUMhnzMKDwucIfwhLlO2WI9CEQzH5uTJ4C4puJ1Uygh8hn2uNh+cCS9PDZIkCB0KFi07
+	 hCgoRtaQVdRT26LDby8AKvHN7CABG+6zrB57464Zv+vXAaYDwBhkEljBLqb0n/8FzCoos
+	 bQ32vr+9ExXBJuWuIKhhJTAhsN8Rs8w1vVRNW3f6Q+Ut2RSa7AU/IJemapTYr7Oyfvq7v
+	 VFA2qS7k65kkRYu4bgD7eYU27MDLFZmmzVWHvdwxm5JOGXY/Kofrn8JXI3Rdedm8t/QBE
+	 WBLNU9uzlsqFzp0jKcv63bD/8KbOlvCf3IL2l64q38XrlgibyF4oUi1jquN4PbHLJYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TpynhrRuTFWsB22nzofapXjwIk7mKxUjrKxC1AhPBp4=;
-	b=klmMKIXn+X2xdZLKnVL/DFoaajBKJPvWIhTh6m+aXEiEHicOIMadqDdpJFO3TAr78OGK
-	 hnT9eVKk+2veFLotQrtlB/WRgGf+Lz7C09WbDIUZJ41htgd0b7Od6TD1SbB/UoJnlB2vB
-	 vYCEsFhnnrwj7jfKxmSeHswyJZGNWO1QwcqwdW7monHTubXLzAQJRolJbe4UxI9lgPmnW
-	 FMDMHzIBPti1kZD4EzFledTP+B39GgzR1NdpeUJutiWZ+OFsOuH/Fpd2J5zBqnNWx/692
-	 tj1IUrUVvNd+v4c9g3kIFKDB4QdFcYZPSS1Mxp9oPwZZvHmmr3/TGBol1R1D2X+K35A==
+	bh=cwEC5Qvfm+Vqwy828TOvFc0OY+bny5U6YER/2/9VEOU=;
+	b=v/XkF6+4Ejg5RV5q2IPPjGn9WE5T7LSqGW+48tAuqDdLSTFTGALQ+44jcW5GI2kDkX7R
+	 J+hJlTSf28EpbYZM3mEL4/6bCGthKNo8a4nWHmz7ZPhsulAZ+GhBxxFESKbc3KS3wmZqJ
+	 +TVaCauU+DShyi+hgXd2K+wcc/Lq/U+Fxz9yK7QyZGeGDye9eBoZ4/JYXggvlDBtTl7ci
+	 30EXQtEp462gAlsAq+JML0ZzPuuV6mwalWVi8R5AIMkBta7TZTcMroiaQzaEjZUgjltxd
+	 otR0z9DaTlmOA6MiM5+sIrLs4SAng4wbZx1v1a3nRuTJc+GrLCb+rA9eGHWyRoEbvDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mUuK6aS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkvQQE8f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758CB606A31A;
-	Wed, 28 Oct 2026 17:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACE0606A31C;
+	Wed, 28 Oct 2026 17:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mUuK6aS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FD51F01825;
-	Wed, 28 Oct 2026 17:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkvQQE8f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F7B1F01825;
+	Wed, 28 Oct 2026 17:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207249;
-	bh=TpynhrRuTFWsB22nzofapXjwIk7mKxUjrKxC1AhPBp4=;
+	s=korg; t=1793207252;
+	bh=cwEC5Qvfm+Vqwy828TOvFc0OY+bny5U6YER/2/9VEOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2mUuK6aS6bNIJLVGtBclbI45T50NMzfhy3BHc7+SVgc1iayF86rBlAGTdiuNwqvMd
-	 EAmoXhRKHvCQlGSbN2qGjLsdJw/y9h/38iab7wkfM5Kv3VNp58Pzo3QoUHRZy/aXSE
-	 s1InsbdYrAzlJDmGdR6UltL1eCybwVKEq+mtdvRY=
+	b=XkvQQE8fSQvjphIqfFr7Bbj8rwGFA0XDwa/ai1FzoCD/p++pq+8w6qKz0hRn6U/1J
+	 fe83GvvgOGwrPeoK153JFH2z89M4Yi6STWP/8rG/L2l9VgYophuYQIt95xlXR5eigq
+	 iK/ERLk/v1l3BF0s+tiswjjvzNIs1r+UbTwYoghc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonid Ovchinnikov <teiny.work@gmail.com>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 39/88] io_uring: drop the CQE cache if a refill fails
-Date: Wed, 28 Oct 2026 17:59:47 +0100
-Message-ID: <20261028165943.031121717@linuxfoundation.org>
+Subject: [PATCH 7.2 40/88] io_uring: dont split 128b SQEs at the SQPOLL cap
+Date: Wed, 28 Oct 2026 17:59:48 +0100
+Message-ID: <20261028165943.053931542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.107695352@linuxfoundation.org>
 References: <20261028165942.107695352@linuxfoundation.org>
@@ -70,53 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 78f9c9cffef02a290b6e97672aaa9c75df0d21da upstream.
+Commit 79956bb39b4d372eb146955ea159ecb6fba37f5b upstream.
 
-->cqe_cached and ->cqe_sentinel delimit the CQ entries which can be
-handed out without looking at the ring. io_get_cqe_overflow() only calls
-io_cqe_cache_refill() if that range is too small. Without
-IORING_SETUP_CQE_MIXED too small means empty. With it, a 32b CQE needs
-two entries, and one may be left. If the refill then fails, the entry
-stays in the cache, and the next 16b CQE gets it without any checks.
+If an SQPOLL thread serves more than one ring, __io_sq_thread() submits
+no more than IORING_SQPOLL_CAP_ENTRIES_VALUE entries per ring and round,
+for fairness. On a ring with IORING_SETUP_SQE_MIXED the cap may fall
+between the two entries of a 128b SQE. io_init_req() finds that just one
+entry is left of what it was asked to submit and fails the request with
+-EINVAL, although the second entry is sitting in the SQ ring.
 
-That CQE overtakes the 32b one, which went to the overflow list. The test
-for IO_CHECK_CQ_OVERFLOW_BIT, which is there to prevent that, is part of
-the refill:
+In the next round the second entry is taken for an SQE of its own, so on
+top of the failed request the application gets whatever its payload
+amounts to when it is read as an SQE.
 
-  CQ ring with 4 entries, head == 0
-  16b CQE, 32b CQE       tail == 3, one entry cached
-  32b CQE                no room, the CQE overflows
-  16b CQE                written to entry 3, ahead of the 32b CQE
+The application has done nothing wrong, and it can't know where the cap
+is going to be applied. For SQPOLL, let the request have its second entry
+if the SQ ring holds it, in excess of the number of entries that were to
+be submitted.
 
-Forget about the rest of the cache when it is refilled.
-
-Fixes: e26dca67fde1 ("io_uring: add support for IORING_SETUP_CQE_MIXED")
-Reported-by: Leonid Ovchinnikov <teiny.work@gmail.com>
-Closes: https://lore.kernel.org/io-uring/CAECZYD5OMD9vMTzjteFMMP40Dn+SWKj9SFj=43U6uO3XMnxJbw@mail.gmail.com/
+Fixes: 1cba30bf9fdd ("io_uring: add support for IORING_SETUP_SQE_MIXED")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-23-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-24-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ io_uring/io_uring.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -739,6 +739,13 @@ bool io_cqe_cache_refill(struct io_ring_
- 		return false;
+@@ -1778,17 +1778,27 @@ static int io_init_req(struct io_ring_ct
+ 		 * A 128b op on a non-128b SQ requires mixed SQE support as
+ 		 * well as 2 contiguous entries.
+ 		 */
+-		if (!(ctx->flags & IORING_SETUP_SQE_MIXED) || *left < 2 ||
++		if (!(ctx->flags & IORING_SETUP_SQE_MIXED) ||
+ 		    (unsigned)(sqe - ctx->sq_sqes) >= ctx->sq_entries - 1)
+ 			return io_init_fail_req(req, -EINVAL);
++		if (*left >= 2) {
++			/*
++			 * A 128b operation on a mixed SQ uses two entries, so
++			 * we have to increment the head and cached refs, and
++			 * decrement what's left.
++			 */
++			current->io_uring->cached_refs++;
++			(*left)--;
++		} else if (!(ctx->flags & IORING_SETUP_SQPOLL) ||
++			   !__io_sqring_entries(ctx)) {
++			return io_init_fail_req(req, -EINVAL);
++		}
+ 		/*
+-		 * A 128b operation on a mixed SQ uses two entries, so we have
+-		 * to increment the head and cached refs, and decrement what's
+-		 * left.
++		 * else: the SQPOLL thread caps the number of entries it submits
++		 * in one go, which is none of the application's business. Take
++		 * the 2nd entry on top.
+ 		 */
+-		current->io_uring->cached_refs++;
+ 		ctx->cached_sq_head++;
+-		(*left)--;
+ 	}
  
- 	/*
-+	 * A single entry may be left if a 32b CQE is asked for. It must not be
-+	 * handed out later on if this fails, as the CQE is going to overflow.
-+	 */
-+	ctx->cqe_cached = NULL;
-+	ctx->cqe_sentinel = NULL;
-+
-+	/*
- 	 * Post dummy CQE if a 32b CQE is needed and there's only room for a
- 	 * 16b CQE before the ring wraps.
- 	 */
+ 	if (unlikely(sqe_flags & ~SQE_COMMON_FLAGS)) {
 
 
