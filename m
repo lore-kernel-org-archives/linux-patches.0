@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208878;
-	b=fv6taboNolSqK+3oLp5J124KB0lQIE9iKsjxhT/6rrjcTGqrJ7U8YxbkYhOQeM928mTt
-	 De4fcIsGEFv7lCN/sQwuBLGH3xZ11i8Z5qW4YyLzCKiq44zGMaO0YRWok4Ci+bOwOj/EV
-	 1QRhFxqlA8Oj/RCO5KGMT1WOtfMAkZeJSjLUhsqrBz+D00aRxABIg2qq/etvQ9/5z+m71
-	 POuAVDcAtPADz4yGyTv17/3k8UERVfNX1jbfSPaucwOXnUggiZicUFbHRnt3ajHoMAoeC
-	 o551M+U7gPII/WHAHibCfd1H+7ebbAusJ52jdwh8qLqLW9Kphq8Ued8gUkrflIJb4RA==
+	t=1793208880;
+	b=e1+ZyCD4fNMOpuyIxJB3O0k/Dar+ny9wXTqICRz0/j6nOJVRApzYSxvATM+gUMw+eCgV
+	 nWjhBxZq1b7Pbdu9gSkwUl1Imq6VFidU6Lwi9h5DY82QuvlWjOXtGwlloP32k7x8FP2Z+
+	 g3Bd//QX4XaJfIhvRSrOoKEeSGD/LK8/yN5SD5mAhABoVhLb9CUYiXnR0ynk9SNyZoWsL
+	 uiDdjlk+DxejVBltDzkrZHayLzbhlaKDWNoZccqhYPWjNcOuZkKUNn/+IZ1KMQt5QAJu5
+	 Yp2ZS62sdg/qVundOJ9CG7c7Cjs/fcBowvz75GOdZduaUl2RGg+T4FCjS9bTf//d0hA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208880;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9wvicJtUFP++8wfS6ng8VTrcUw5giHEH7IH2sYzqpmA=;
-	b=LCCvmcJ0hi1bZOKjjvDEpNgIFTGCJZLE3tQhZL5FTBqqfMpbNcnf3YEXqTzK+ORG4PYX
-	 Gyw+HiA6c/+uFjnSuAEN0/KGASsARxMQl6O8LrW7YYtpdkoy72lMG9Bah176SKU0Weam5
-	 R9riHRn/C2nKte21YRrICqcyEPxi86xy2WUrnpxONAzvVXlx9lYcj73W+KXIjThhuinpe
-	 DLnMIb1GfSEXEmNCBwtSuca9ieC3xX0CmG2F7as8xFvUlViUzXbeSNvoigLkoMvT3zAUi
-	 YTiGESe1iO9JSBunLPnyrb1AqQTPqw7evyUzQaeiuZ45skKXjsUoiegLIJFvwXmWCFg==
+	bh=yAOejjyr2i0nFRFssHJeupEoQSdeMmXGZpyCZvyF8hE=;
+	b=tusBGxvG/7MtdmtjDWqvBgVQx3x89FEclQYichci3ASalJjgDCaTSuCFSUyZ7tB64KaA
+	 hxVeFmS1shdqXkep4hlo+oAhPCUfU3QWkPEmxRz8J7k0vMrCz5n2p26DV3LpfNAtoyFT6
+	 Tqv9J1aoulhWuF7Jlg0WPtkRNT79C9PtH4cGgwX6aq90QP/6NrX+V/DQwaAt/vpG4MuO3
+	 mpF96eI50pucozl6D5vaVYt+OAVQhFdps3B+6gHnTx0xeVqTGhSScE4M75YnSdFLYFWcO
+	 n37Bf0MCMbMoeSs4K+PHlSquSRWjhCircIvy3G7OdACIZVqH/Kxx72Rb3AmmcC86NPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pitrIYWE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LvbiTvwo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA0A606A31D;
-	Wed, 28 Oct 2026 17:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EEF606A31A;
+	Wed, 28 Oct 2026 17:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pitrIYWE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197E91F01825;
-	Wed, 28 Oct 2026 17:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LvbiTvwo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCC41F01825;
+	Wed, 28 Oct 2026 17:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208877;
-	bh=9wvicJtUFP++8wfS6ng8VTrcUw5giHEH7IH2sYzqpmA=;
+	s=korg; t=1793208880;
+	bh=yAOejjyr2i0nFRFssHJeupEoQSdeMmXGZpyCZvyF8hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pitrIYWE8ojLSoO7LW1I7aGwxz1YcKvTufUD2w99lFrMvytXTaSVTH1hN9emuhHf6
-	 eZRgZVSNbp/rJIcEr8Rjx4v93d9XJ6G+LuspTWBiJvJmT2VzwHNqtyxGfeGZwHAP5k
-	 auKeuya9e4Zs4hY4yG0wDmLFMocOv0ProLXE2oiE=
+	b=LvbiTvwofC1pP7VpRTU+7iWeXFhXSu28e1wZUiB2mFyDsRkpn+edfmSOlGUa2hKkJ
+	 FlRzioxgqixlsPLRmn+Igm41qaqtnGFVPR/4/ehxCRXSLTHIuVCuLk6PqXpXBoxObv
+	 TDWrEdi33vXUPGmFk7nmpIbwGlAbjEy6xg18ccw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beata Michalska <beata.michalska@arm.com>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 273/516] arm64: errata: Factor out broken AMU const counter cap
-Date: Wed, 28 Oct 2026 17:57:05 +0100
-Message-ID: <20261028170009.959656179@linuxfoundation.org>
+	Arka Mondal <arkamondalofficial@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 5.10 238/516] iio: imu: adis16400: fix unprotected debugfs reads
+Date: Wed, 28 Oct 2026 17:56:30 +0100
+Message-ID: <20261028170009.140302051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,123 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beata Michalska <beata.michalska@arm.com>
+From: Arka Mondal <arkamondalofficial@gmail.com>
 
-[ Upstream commit 573371caf7aea8582212da81dcead2c3f48fac4b ]
+commit d94787287a113a1326211647d5e0deed1e9de105 upstream.
 
-Move the workaround from the erratum 2457168-specific cpucap to a generic
-broken AMU constant-counter one. This keeps the existing Cortex-A510
-handling unchanged while allowing other errata with similar AMU constant
-counter issue to share the capability bit and call sites.
+adis16400_serial_number_fops is open coded and never calls
+debugfs_file_get(), so debugfs_remove_recursive() does not wait for a
+read in progress and unbind frees the iio_dev underneath it.
 
-Signed-off-by: Beata Michalska <beata.michalska@arm.com>
-Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Commit ae1d37a9bb4b ("iio: imu: adis16400: use DEFINE_DEBUGFS_ATTRIBUTE
+instead of DEFINE_SIMPLE_ATTRIBUTE") converted product_id and
+flash_count to DEFINE_DEBUGFS_ATTRIBUTE, which protects itself, but
+moved all three files to debugfs_create_file_unsafe().
 
-Dropped changes related to CPPC/FFH as support for that is not available
-here. Additionally renamed define for WORKAROUND_2457168 to new one,
-WORKAROUND_BROKEN_AMU_CONSTCNT to reuse it as this kernel still relies
-on the cpucaps header file for the workaround/errata ids.
+serial_number prints three registers as "%.4x-%.4x-%.4x" and
+DEFINE_DEBUGFS_ATTRIBUTE() formats a single u64, so it cannot be
+converted without changing what the file returns. adis16475 and
+adis16550 already use debugfs_create_file() for their open coded
+files. Use it here too.
 
-[ Beata: Dropped changes related to CPPC/FFH as support for that is not available here. Additionally renamed define for WORKAROUND_2457168 to new one, WORKAROUND_BROKEN_AMU_CONSTCNT to reuse it as this kernel still relies on the cpucaps header file for the workaround/errata ids. ]
-Signed-off-by: Beata Michalska <beata.michalska@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ae1d37a9bb4b ("iio: imu: adis16400: use DEFINE_DEBUGFS_ATTRIBUTE instead of DEFINE_SIMPLE_ATTRIBUTE")
+Signed-off-by: Arka Mondal <arkamondalofficial@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/Kconfig               |  8 ++++++++
- arch/arm64/include/asm/cpucaps.h |  2 +-
- arch/arm64/kernel/cpu_errata.c   | 19 ++++++++++++++-----
- arch/arm64/kernel/cpufeature.c   |  2 +-
- 4 files changed, 24 insertions(+), 7 deletions(-)
+ drivers/iio/imu/adis16400.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 15182435b7a4f..ae4036d549fc9 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -673,9 +673,17 @@ config ARM64_ERRATUM_1508412
+--- a/drivers/iio/imu/adis16400.c
++++ b/drivers/iio/imu/adis16400.c
+@@ -286,7 +286,7 @@ static int adis16400_debugfs_init(struct
+ 	struct dentry *d = iio_get_debugfs_dentry(indio_dev);
  
- 	  If unsure, say Y.
- 
-+config ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
-+	bool
-+	# Targeting errata affecting AMEVCNTR01, the AMU constant counter.
-+	# On affected CPUs the counter may not increment at the expected rate,
-+	# making it unreliable. As a result, AMU users should treat it as
-+	# unavailable rather than relying on misleading counter values.
-+
- config ARM64_ERRATUM_2457168
- 	bool "Cortex-A510: 2457168: workaround for AMEVCNTR01 incrementing incorrectly"
- 	depends on ARM64_AMU_EXTN
-+	select ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
- 	default y
- 	help
- 	  This option adds the workaround for ARM Cortex-A510 erratum 2457168.
-diff --git a/arch/arm64/include/asm/cpucaps.h b/arch/arm64/include/asm/cpucaps.h
-index 931c88182fb8b..419eb982335fb 100644
---- a/arch/arm64/include/asm/cpucaps.h
-+++ b/arch/arm64/include/asm/cpucaps.h
-@@ -67,7 +67,7 @@
- #define ARM64_MTE				57
- #define ARM64_WORKAROUND_1508412		58
- #define ARM64_SPECTRE_BHB			59
--#define ARM64_WORKAROUND_2457168		60
-+#define ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT	60
- #define ARM64_WORKAROUND_1742098		61
- #define ARM64_WORKAROUND_SPECULATIVE_SSBS	62
- 
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index 201a7e29fa113..df83ff9a767d0 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -260,6 +260,16 @@ static const struct arm64_cpu_capabilities arm64_repeat_tlbi_list[] = {
- };
- #endif
- 
-+#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
-+static const struct midr_range workaround_amu_constcnt_list[] = {
-+#ifdef CONFIG_ARM64_ERRATUM_2457168
-+	/* Cortex-A510 r0p0-r1p1 */
-+	MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1),
-+#endif
-+	{}
-+};
-+#endif /* CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT */
-+
- #ifdef CONFIG_CAVIUM_ERRATUM_27456
- const struct midr_range cavium_erratum_27456_cpus[] = {
- 	/* Cavium ThunderX, T88 pass 1.x - 2.1 */
-@@ -611,13 +621,12 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
- 				  1, 0),
- 	},
- #endif
--#ifdef CONFIG_ARM64_ERRATUM_2457168
-+#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
- 	{
--		.desc = "ARM erratum 2457168",
--		.capability = ARM64_WORKAROUND_2457168,
-+		.desc = "Broken AMU AMEVCNTR01 (const counter)",
-+		.capability = ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT,
- 		.type = ARM64_CPUCAP_WEAK_LOCAL_CPU_FEATURE,
--		/* Cortex-A510 r0p0-r1p1 */
--		CAP_MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1)
-+		CAP_MIDR_RANGE_LIST(workaround_amu_constcnt_list)
- 	},
- #endif
- #ifdef CONFIG_ARM64_ERRATUM_1742098
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index e055ec3a5cfb8..63ffb1993dcd7 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -1608,7 +1608,7 @@ static void cpu_amu_enable(struct arm64_cpu_capabilities const *cap)
- 		cpumask_set_cpu(smp_processor_id(), &amu_cpus);
- 
- 		/* 0 reference values signal broken/disabled counters */
--		if (!this_cpu_has_cap(ARM64_WORKAROUND_2457168))
-+		if (!this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT))
- 			init_cpu_freq_invariance_counters();
- 	}
- }
--- 
-2.53.0
-
+ 	if (st->variant->flags & ADIS16400_HAS_SERIAL_NUMBER)
+-		debugfs_create_file_unsafe("serial_number", 0400,
++		debugfs_create_file("serial_number", 0400,
+ 				d, st, &adis16400_serial_number_fops);
+ 	if (st->variant->flags & ADIS16400_HAS_PROD_ID)
+ 		debugfs_create_file_unsafe("product_id", 0400,
 
 
