@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216737;
-	b=K54PCm/u2AUHFv7HWfSMGaGnje4Io8jRRqrYHN8sGh61b3/j3CWbfH8GnhJWi1IoUyJi
-	 ToV7MHr5KFAHR6fadSuONbvPCZyYyggm82q+Kq00ogBS4CE7BFB0IEzLGO/268vDpIAE9
-	 RSM3f3PGfdacGjordxwzrSlU+tIwHYP0I4DJWQAZE00UIX+V2e5uVww3FE5FMyO3o8GLV
-	 /NovLwPEkOECkJwUUAFLbYmyJW0JAMeqOd2jLMdpQ/d4DURr/iCFc4uYbZYdmNVOI8XWS
-	 U5iM+D4kRVFaulVwmG/stNXM6PkRrSRcZQ2rNZqZaI0Yt/jgTnEwsV1laUn1bbQ+pvw==
+	t=1793216740;
+	b=Cp7ZuQmDBS77EdysHV+QsqXLLoiZr+HkI4OkG1x4CE5bpYZgFT4LGMuMWkvRCgd1LiQl
+	 bo6l5dJPRj0GSvaHEjKpdy7yW4+/sMUXaFtCl+x3zdx2h1q4gwGhCT7kMyeD/rwsJ/F60
+	 +e92YYbxQ0xB32aAm6w/QxARfsVl1vvro0V0vMVcTu+5ECOMpyR0MKqvf80/KpH1mZBmS
+	 zCT9dt9gIedz6x5Q0xd0UWvZEEkyBmhsJGFMdtFSj89dNhgZTUp/xf8cERRBhM3bzMDHP
+	 HnHNRtSZQtiqnkT16t/SCv8ok40hFgz6lC3vphePxH79Ff9PHIwVYWiUW+egrIxjIJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FB0LsekdqGoSi54UiQZg7qvlAZCcW7INMxMl6ThXAbo=;
-	b=oGxrWQZTwgIU6GrLENmWGSbmX5ceDGU4VETT1IA3R2f5Je4FZx3gVfT5lvOuYyxCIYFx
-	 9YiGrfmXdu7sJCBp7XDAT0k3HSvw9xA9OUy5MNazJDnA9Umwa/rH5x61lM4Gt/t1nZEFx
-	 0e1Q2Qc5ab+Iw2czvo2k0tZmnaGWJEILfzLEYcXPQSuKZ/JnIvNIFhwOthueZ/KJ4dR7n
-	 vw6SLS5TH8psKbuLG9bxfyfE10o4GW1SXXQyZf+8cz4sFjanZ4xP1oct3EKtArA6DLtve
-	 pa6nEQvOFGjQNJkbnzEhOuG5uj2YGEL8K2Bb/R5yYhKC6QnMPB6NOvKFQhlETRCpiOw==
+	bh=DzbfhUb1tu7MMWAv3gKpbr0dJWUBpTucyw2nbg11To0=;
+	b=GHzluLAEPBRih2l9CnPXlRDwCRHzw9uJTocfBm+u3ccnuVoGsmZmVMUVmkfIbnrexlkV
+	 zLb1rd3NB9yUY1PIfFmWooDWI9S7G8E4llPorNI/2ySqblOqbSuSkbj1AXZPUXPmjTLj7
+	 ZezTzaOeefnycNQv8bOex2kwpZpVd8iNWpfpSth2yUeSvMAaOpeeW99Yvep8hH4ktYjyk
+	 WBs8/hFLa0OXUg2WM9BCPDDKbSDEYRND/3eMrnBJcJ9nNBZNUvQpljwLGivfcMiwI6PoD
+	 9rqIHuoeiaRAdAnG0ZGf8RH1Plb0avKNvsURNKjUZ37ChgTwi1pVQuKOeVAF0wuaE8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCISzmCA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCT+eMOl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445BC606A31A;
-	Wed, 28 Oct 2026 19:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC299606A321;
+	Wed, 28 Oct 2026 19:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCISzmCA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A401F01825;
-	Wed, 28 Oct 2026 19:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCT+eMOl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EDB1F031E0;
+	Wed, 28 Oct 2026 19:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216736;
-	bh=FB0LsekdqGoSi54UiQZg7qvlAZCcW7INMxMl6ThXAbo=;
+	s=korg; t=1793216739;
+	bh=DzbfhUb1tu7MMWAv3gKpbr0dJWUBpTucyw2nbg11To0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iCISzmCASiVMI3fuNqtqXVcv76jcafeHmCq/fuGzH0enzwtHMuOIItEtCntf/lbvM
-	 PCUbfCQsz0X/k9LCwQIHvTgZOgluxwO2d8c4qrdmctlCsoL97gy72hMxVCqHVihVU/
-	 szJz8vD+kV1WCPnD4HLgr4IHFxlsZjAJAvVsIajM=
+	b=qCT+eMOla2LpSZQ+6hvsSRKfSKBpH/p0L5viuUw8XVaBQ7ndqA7fVKKQUIn+hrzKY
+	 nNwuqdUtEyDWf7IhvqLr9VZLGdDjEt6TA6vmlCX76NGADrp3L1/RQ5/E7WdUbyNXOG
+	 g/Vu0M2you6JT3FENFONE8eGQKMV5kcVlEihei9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Li Chen <me@linux.beauty>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1662/1887] wifi: mac80211: ibss: wait for in-flight TX on disconnect
-Date: Wed, 28 Oct 2026 18:02:38 +0100
-Message-ID: <20261028170537.279558752@linuxfoundation.org>
+Subject: [PATCH 6.1 1645/1887] nvdimm: virtio_pmem: refcount requests for token lifetime
+Date: Wed, 28 Oct 2026 18:02:21 +0100
+Message-ID: <20261028170536.899233799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,76 +68,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Li Chen <me@linux.beauty>
 
-[ Upstream commit d0e69d9afa59b93c30294eba89b1f15f69e91105 ]
+[ Upstream commit e57140944b5a47a7fd5a142faab29a02af040bc8 ]
 
-While leaving an IBSS in ieee80211_ibss_disconnect() mac80211 flushes
-stations, turns the carrier off and immediately tells the driver to
-leave as well. While there may be synchronize_net() in station flush
-and in this code later, packets can still be transmitted due to
-cross-CPU race conditions after carrier off is set.
-Therefore, it's possible for a race to happen where a TX to the
-driver occurs while or after telling it to leave the IBSS. This can
-be confusing to drivers, and in the case of iwlwifi leads to an
-attempt to use invalid queues.
+KASAN reports slab-use-after-free in __wake_up_common():
+BUG: KASAN: slab-use-after-free in __wake_up_common+0x114/0x160
+Read of size 8 at addr ffff88810fdcb710 by task swapper/0/0
 
-Move netif_carrier_off() to occur before sta_info_flush() during
-IBSS disconnect, and add synchronize_net() if flushing didn't,
-so that the synchronize_net() always happens between turning the
-carrier off and telling the driver, avoiding this race.
+CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted
+6.19.0-next-20260220-00006-g1eae5f204ec3 #4 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux
+1.17.0-2-2 04/01/2014
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x6d/0xb0
+ print_report+0x170/0x4e2
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ ? __virt_addr_valid+0x1dc/0x380
+ kasan_report+0xbc/0xf0
+ ? __wake_up_common+0x114/0x160
+ ? __wake_up_common+0x114/0x160
+ __wake_up_common+0x114/0x160
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ __wake_up+0x36/0x60
+ virtio_pmem_host_ack+0x11d/0x3b0
+ ? sched_balance_domains+0x29f/0xb00
+ ? __pfx_virtio_pmem_host_ack+0x10/0x10
+ ? _raw_spin_lock_irqsave+0x98/0x100
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ vring_interrupt+0x1c9/0x5e0
+ ? __pfx_vp_interrupt+0x10/0x10
+ vp_vring_interrupt+0x87/0x100
+ ? __pfx_vp_interrupt+0x10/0x10
+ __handle_irq_event_percpu+0x17f/0x550
+ ? __pfx__raw_spin_lock+0x10/0x10
+ handle_irq_event+0xab/0x1c0
+ handle_fasteoi_irq+0x276/0xae0
+ __common_interrupt+0x65/0x130
+ common_interrupt+0x78/0xa0
+ </IRQ>
 
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260706223751.da1ce439cc93.If5cf482f87ab98ce66dd48724e24c81fed236d3f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+virtio_pmem_host_ack() wakes a request that has already been freed by the
+submitter.
+
+This happens when the request token is still reachable via the virtqueue,
+but virtio_pmem_flush() returns and frees it.
+
+Fix the token lifetime by refcounting struct virtio_pmem_request.
+virtio_pmem_flush() holds a submitter reference, and the virtqueue holds an
+extra reference once the request is queued. The completion path drops the
+virtqueue reference, and the submitter drops its reference before
+returning.
+
+Fixes: 6e84200c0a29 ("virtio-pmem: Add virtio pmem driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Chen <me@linux.beauty>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260630092338.2094628-9-me@linux.beauty>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ibss.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/nvdimm/nd_virtio.c   | 32 ++++++++++++++++++++++++++++----
+ drivers/nvdimm/virtio_pmem.h |  2 ++
+ 2 files changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
-index 363e7e4fdd02b..f2d4c68cf3aa2 100644
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -692,7 +692,9 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
+diff --git a/drivers/nvdimm/nd_virtio.c b/drivers/nvdimm/nd_virtio.c
+index 90b0fdb72024a..5bde34e7a143f 100644
+--- a/drivers/nvdimm/nd_virtio.c
++++ b/drivers/nvdimm/nd_virtio.c
+@@ -9,6 +9,14 @@
+ #include "virtio_pmem.h"
+ #include "nd.h"
  
- 	ifibss->state = IEEE80211_IBSS_MLME_SEARCH;
- 
--	sta_info_flush(sdata);
-+	netif_carrier_off(sdata->dev);
-+	if (!sta_info_flush(sdata))
-+		synchronize_net();
- 
- 	spin_lock_bh(&ifibss->incomplete_lock);
- 	while (!list_empty(&ifibss->incomplete_stations)) {
-@@ -706,8 +708,6 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
++static void virtio_pmem_req_release(struct kref *kref)
++{
++	struct virtio_pmem_request *req;
++
++	req = container_of(kref, struct virtio_pmem_request, kref);
++	kfree(req);
++}
++
+  /* The interrupt handler */
+ void virtio_pmem_host_ack(struct virtqueue *vq)
+ {
+@@ -29,6 +37,7 @@ void virtio_pmem_host_ack(struct virtqueue *vq)
+ 			wake_up(&req_buf->wq_buf);
+ 			list_del(&req_buf->list);
+ 		}
++		kref_put(&req_data->kref, virtio_pmem_req_release);
  	}
- 	spin_unlock_bh(&ifibss->incomplete_lock);
+ 	spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
+ }
+@@ -59,6 +68,7 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
+ 	if (!req_data)
+ 		return -ENOMEM;
  
--	netif_carrier_off(sdata->dev);
--
- 	sdata->vif.cfg.ibss_joined = false;
- 	sdata->vif.cfg.ibss_creator = false;
- 	sdata->vif.bss_conf.enable_beacon = false;
-@@ -737,7 +737,6 @@ static void ieee80211_csa_connection_drop_work(struct work_struct *work)
- 	sdata_lock(sdata);
++	kref_init(&req_data->kref);
+ 	req_data->done = false;
+ 	init_waitqueue_head(&req_data->host_acked);
+ 	init_waitqueue_head(&req_data->wq_buf);
+@@ -76,10 +86,23 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
+ 	  * to req_list and wait for host_ack to wake us up when free
+ 	  * slots are available.
+ 	  */
+-	while ((err = virtqueue_add_sgs(vpmem->req_vq, sgs, 1, 1, req_data,
+-					GFP_ATOMIC)) == -ENOSPC) {
++	for (;;) {
++		err = virtqueue_add_sgs(vpmem->req_vq, sgs, 1, 1, req_data,
++					GFP_ATOMIC);
++		if (!err) {
++			/*
++			 * Take the virtqueue reference while @pmem_lock is
++			 * held so completion cannot run concurrently.
++			 */
++			kref_get(&req_data->kref);
++			break;
++		}
++
++		if (err != -ENOSPC)
++			break;
  
- 	ieee80211_ibss_disconnect(sdata);
--	synchronize_rcu();
- 	skb_queue_purge(&sdata->skb_queue);
+-		dev_info(&vdev->dev, "failed to send command to virtio pmem device, no free slots in the virtqueue\n");
++		dev_info_ratelimited(&vdev->dev,
++				     "failed to send command to virtio pmem device, no free slots in the virtqueue\n");
+ 		req_data->wq_buf_avail = false;
+ 		list_add_tail(&req_data->list, &vpmem->req_list);
+ 		spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
+@@ -88,6 +111,7 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
+ 		wait_event(req_data->wq_buf, req_data->wq_buf_avail);
+ 		spin_lock_irqsave(&vpmem->pmem_lock, flags);
+ 	}
++
+ 	err1 = virtqueue_kick(vpmem->req_vq);
+ 	spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
+ 	/*
+@@ -103,7 +127,7 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
+ 		err = le32_to_cpu(req_data->resp.ret);
+ 	}
  
- 	/* trigger a scan to find another IBSS network to join */
-@@ -1878,8 +1877,6 @@ int ieee80211_ibss_leave(struct ieee80211_sub_if_data *sdata)
- 	memset(&ifibss->ht_capa, 0, sizeof(ifibss->ht_capa));
- 	memset(&ifibss->ht_capa_mask, 0, sizeof(ifibss->ht_capa_mask));
+-	kfree(req_data);
++	kref_put(&req_data->kref, virtio_pmem_req_release);
+ 	return err;
+ };
  
--	synchronize_rcu();
--
- 	skb_queue_purge(&sdata->skb_queue);
+diff --git a/drivers/nvdimm/virtio_pmem.h b/drivers/nvdimm/virtio_pmem.h
+index f72cf17f9518f..1017e498c9b4c 100644
+--- a/drivers/nvdimm/virtio_pmem.h
++++ b/drivers/nvdimm/virtio_pmem.h
+@@ -12,11 +12,13 @@
  
- 	del_timer_sync(&sdata->u.ibss.timer);
+ #include <linux/module.h>
+ #include <uapi/linux/virtio_pmem.h>
++#include <linux/kref.h>
+ #include <linux/libnvdimm.h>
+ #include <linux/mutex.h>
+ #include <linux/spinlock.h>
+ 
+ struct virtio_pmem_request {
++	struct kref kref;
+ 	struct virtio_pmem_req req;
+ 	struct virtio_pmem_resp resp;
+ 
 -- 
 2.53.0
 
