@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217398;
-	b=l64pJQxaZYT1Rir2Tp8K0bXAJZ3NWEIE5eTjNXuEYiJIj3ZB2cR3VerLPPh214xmDD39
-	 BUyVuKA7l9dy1daS8kFxeQTgk9o81kaFAnCH/HbFVtf8JYWzeqBxhKp6gvB1yXUWNJcV4
-	 bFb6joCsmVvCXu4GH5PciezqNzx784bu5JbO4vswgXg9RgeZXk0Ez8QOlJQOYuglKWCE4
-	 ULdEmI4cSCv05XyKSvfEr16J8zDokZzF5nRqyoPpn798i85qSdSR8ECF2nMJh1Fxwam2S
-	 CaAZG9eN2svlYkIAQc/00Wnd1RKk47gjn+9Z2KOZ9msr/N6X6KKUA0Qml9Yf5Jk1ZsQ==
+	t=1793217401;
+	b=DwLSDuZovoeNmI+VmBQj8XTOIQgzT9Pc5szAetrQ0j2XTVmBcSy6yhwTC/M4kyWqb6JO
+	 zTEhXnpXmFSmuM5nUDTZw9G3ta7U7I80l4qoz6yeAYnFu/7KvHVuv/PoDRGJhKPUEcdlS
+	 tvOZIlBNqDRX4HksMnTD19QnKMt10cYKtHxpqgg2JomoQQl50ih0x3mrGhH1Qle/M2Pji
+	 hXJYZPuN7oVac148ADbXGVsXs3wauN1TBwnwz1V8Wzc4B7fQFsi0Y08XhPVcooRRTGrFQ
+	 Sp313R32witghru9iMyYG54edbJPPxARchxLOH0FuVFEb8vTdL3Nv4FuYvcPWI/UMrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217401;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qI+R7K53uCCPfGttklgZbW3RJtRsyQD62lti4Heke1s=;
-	b=yfILyOcLHDEG4pdt0AMsOdHDrPJHu3FT+DxcR3Bt9qU2X1fchJsVUD6xdMcPoOTQ3Wxl
-	 HDFUgrkGCqV3iOG/lihdZ79GRY6cvsbfsN6Cdqk8NOC75vuYcsA4GeAsPzuSC6Pp1Tvip
-	 8IzDtxfSg7ti6ESndZlw0L768aqrikI3w39MqPsAhbtxUu+sXNIlplj9A97NskfdeJ2ql
-	 SxUH9vz9amR2dgxs+9M2txvaWwFZbD7rULnp2TGBx+d8HpJa1CQrAYdAGzMHie1LJsRDs
-	 Gdy1sdUAxsYgNsYfSJt2KWSnKufWvcR8sLO3iwnQYdPUgvp2WFnUTpMPdslahROUUXg==
+	bh=wxUqn7vtSQ+JQpiuL5OJdxcoY/6+vh5uagu7kxHPu5k=;
+	b=cx462gt48d5ZtHTB021xj1owY53IixMxpXAWAxv3C4kYYndf1MEkNopYv2t5A97Mx5eT
+	 t5z0ShHQx6QY17JZbOX2ad7YomEzaLvx2cwy8zGnSPxaThVWqlXBZa2Nl0NH9AnSes9il
+	 IDGG+f4x5/r780Gk6NUy+ImN6IOhBJoBfl3VmHFN6RAMUc/1r81fxJgNUm1pWaCKsqiCa
+	 dv4NatSBh5wULTNkP5egi/CUiXNIaUqRy+Os0/6LFgrmlzWlX1CG0498Asq+xGCXhp3aG
+	 FPNQ1Kx/qz9M4+G0vVsXPdfTmFrs5Fit9b1t0NfUrHf3GaV+TvpGT8H5XROH4nepC+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lo2fUsV0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFFSlavN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A356606A31C;
-	Wed, 28 Oct 2026 19:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4521606A31A;
+	Wed, 28 Oct 2026 19:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lo2fUsV0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E9E1F01825;
-	Wed, 28 Oct 2026 19:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFFSlavN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008761F01825;
+	Wed, 28 Oct 2026 19:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217397;
-	bh=qI+R7K53uCCPfGttklgZbW3RJtRsyQD62lti4Heke1s=;
+	s=korg; t=1793217400;
+	bh=wxUqn7vtSQ+JQpiuL5OJdxcoY/6+vh5uagu7kxHPu5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lo2fUsV0RkmDBdfg3SqW7NK+28tgH7liZcb9nMGqHM3l8HB94SeBqbhwDXykGqwOS
-	 Vs+bXAGGT6xx/mKKJU2OLIlPE6jxlhnADb1HXPxhFqH3wHtTD8NY6ZSEgmqesKE9TR
-	 v3Ug7e7uAVhuw7TUOyc4G3K/Uqbd5u4GNr79/Uu4=
+	b=XFFSlavNYRq/wKuA5LKNCqTJ2RIeDmpP9M/0t6YBWmws5KReoCZzSfRgl91h8TvCO
+	 C9zIJRn4RYZwI/BAN3alIyvn+G9/DWSO2K+uq5ldK7pRuq4bBbO3nR8HSjbGV+++JA
+	 Hi0yt3gKvIO/zEDDyKD/vzBZT9QQWKpWGs8/fEPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Haojie Li <lihaojie@kylinos.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1883/1887] Revert "esp: do not unref managed frag pages in esp_ssg_unref()"
-Date: Wed, 28 Oct 2026 18:06:19 +0100
-Message-ID: <20261028170542.306894866@linuxfoundation.org>
+Subject: [PATCH 6.1 1884/1887] drm/amdkfd: fix dma_buf reference leak in get_dmabuf_info
+Date: Wed, 28 Oct 2026 18:06:20 +0100
+Message-ID: <20261028170542.330548196@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,58 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Klassert <steffen.klassert@secunet.com>
+From: Haojie Li <lihaojie@kylinos.cn>
 
-[ Upstream commit 0fda52de8bbd4ca9a852c8a7ef6536cf82bd71fd ]
+[ Upstream commit e6895021a328594368a2a19406a53ffca1ce51c7 ]
 
-This reverts commit 21697720ff43b8dfa25b8e8d9ca7f56f4597fc80.
+When kzalloc fails for metadata_buffer in
+amdgpu_amdkfd_get_dmabuf_info(), the function returns -ENOMEM directly
+without calling dma_buf_put(), leaking the dma_buf reference obtained
+earlier via dma_buf_get().
 
-The patch does not fix the issue completely, so revert for
-now and wait for an updated version.
+Fix both issues by:
+- Adding an error check after the first amdgpu_bo_get_metadata() call
+- Replacing the direct return with r = -ENOMEM and goto out_put to
+  ensure dma_buf_put() is called on all error paths
 
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: f54ce9e8cbd3 ("drm/amdkfd: Let driver decide buffer size at AMDKFD_IOC_GET_DMABUF_INFO ioctl")
+Signed-off-by: Haojie Li <lihaojie@kylinos.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ffa699553332f8caf8688d312279ddcea9e3c141)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4.c | 7 -------
- net/ipv6/esp6.c | 7 -------
- 2 files changed, 14 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index 908775cdb8fc6..55b5c890b15a8 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -103,13 +103,6 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb)
- 	struct aead_request *req;
- 	struct scatterlist *sg;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+index 596abe49c19c4..355173a6ac3d6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -534,6 +534,8 @@ int amdgpu_amdkfd_get_dmabuf_info(struct amdgpu_device *adev, int dma_buf_fd,
+ 		/* first get metadata_size by buffer = NULL */
+ 		r = amdgpu_bo_get_metadata(bo, NULL, 0,
+ 					   metadata_size, NULL);
++		if (r)
++			goto out_put;
  
--	/* Managed frags are owned by the zerocopy ubuf; the skb holds no
--	 * per-frag page reference, so we must not drop one here.  Mirrors
--	 * the SKBFL_MANAGED_FRAG_REFS handling in skb_release_data().
--	 */
--	if (skb_zcopy_managed(skb))
--		return;
--
- 	if (x->props.flags & XFRM_STATE_ESN)
- 		extralen += sizeof(struct esp_output_extra);
- 
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index a90c9f4c5fd02..72490d27d15f5 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -120,13 +120,6 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb)
- 	struct aead_request *req;
- 	struct scatterlist *sg;
- 
--	/* Managed frags are owned by the zerocopy ubuf; the skb holds no
--	 * per-frag page reference, so we must not drop one here.  Mirrors
--	 * the SKBFL_MANAGED_FRAG_REFS handling in skb_release_data().
--	 */
--	if (skb_zcopy_managed(skb))
--		return;
--
- 	if (x->props.flags & XFRM_STATE_ESN)
- 		extralen += sizeof(struct esp_output_extra);
- 
+ 		/* user buf_size is bigger than bo metadata_size
+ 		 * allocate a buf at kernel space and copy */
 -- 
 2.53.0
 
