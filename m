@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217111;
-	b=bcaM/YjaGcc6gHxIS7wh0Gz0eFdqaSciuYhqludEeywN/enqwxXnfCC/rXtUoTi2FG0p
-	 wtjjPG4E0vEsNy6LV+HH3W78EyWG0+fBi8/lZqqI/RsVBwY5G5xaNaEym+4fDjb186SRy
-	 X7aAUWJuYK39Iphhp6VURnEAzwpD7rKbGOMH6M49BS07boiFcgON1U3VnShC6IXbCjpfh
-	 uXwVIQmck6+az/pKiADi2I8nl0I90jp4KzsfmXvrK7X2blND2U9OUx71hgmkUAfUxKeGi
-	 rMyicGjOUuD0QZb/2MbK3v243/6v6sw3V0SKFBbMzUaPzvij9sRa2ZUpJqGb3R3yOqw==
+	t=1793217114;
+	b=bMViOkU/jmu/iUkgSShiuLm0ITGAIhU+w/rKStWpe2Yq/ea5+KVZAgMUwgnCpCBM0hfX
+	 MH8JlmiDgN/iQgmEHBDzDr/tHY0uGwte/zbpRRs+yR9z+g1MmCaWLxlSymJWi8cj+j+Q2
+	 OLNih7AMCvPXfoSzFr1aF6b0UJjbDiVSDu6DQltWUfwsAZ4TpF68Co4KOU46B71JnOlOU
+	 J5BVIxYArRHQOnGynjF0u+ro9WUpoyezv+p9c9Y14QoRZ0Np7KspY8J/fewqxLvyJWeXW
+	 NW3RwFXvYDLZO9nJRW0IwK0h/FNSj3Q6Vcd1tAjV5wPYpqQ05+7VYkfFghDAgwZVVsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zWsblQ9LipAsLKXaXPUyB5qpFHNha/xBhJfi6xfHOT8=;
-	b=PCmxQZ1TekN4oenYxih9+Ou27dNemREBEelubn7p0/QNZphVkIosr2bCucu5onMA87FR
-	 Cjw9bSOCP4SDukHSrRWYWd0DAtmxXp89gGTZzNIKO/Ipve27ekgXW9DSOX61hUFlLLY2V
-	 TtU/nepGHNfBRpObbOo/ZdcKWYjDr8yP52N5ZWajvPZIb7Qoqhz3+3uZpgvpZ/AxqSPoo
-	 jWkGBtvGqIg9tYMvzPoxsKKZNEltnnczIEGYsGjL3SAqay66ryVZETQ3wQyLIEQL93cUg
-	 Jbb9rBFnr7v753S0De0X0Px6GmTdGzegQ6SAQb0rBG35+ontjq6DBtrzN2yd33Rkpbw==
+	bh=hPEfIMS6TRICaKjHFKnNDwh1rkNZGMDpWP9nbQh4Y+c=;
+	b=Zh36/7AHQcnA3DtDUoIhdW2b0lUow9Q70v2UjrxOHc/tm5f2Utq6xWo05CJda/WdZPbV
+	 23Z+b/PCpw45ehApJ20gmJ5YBexnZs/ury6MLO5xn91hSc3WW5nW35zumCX4FNGdZJJ6S
+	 cIQCb9OKir6xATcuA4WW/P5nyVe0BqBdfbgWkOD7Lg1QPOHXjUCs0jcceAcnZdAg4O+w4
+	 YgOw8r+2R/JJ1Y+Ozvru532mi7LyiphY8neYY33exg06bjz5GBMdKSdRnO4P+GuaAhHzY
+	 AQ0860kB1o9bkBP7K/MUrDoeRev020/xHD7cmIJy26rFTiccME/Dbg0ti9xlaf5RUAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzCc2raL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TcgNFmOn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318C9606A322;
-	Wed, 28 Oct 2026 19:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C87606A31F;
+	Wed, 28 Oct 2026 19:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzCc2raL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8479F1F01825;
-	Wed, 28 Oct 2026 19:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TcgNFmOn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9471F01825;
+	Wed, 28 Oct 2026 19:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217111;
-	bh=zWsblQ9LipAsLKXaXPUyB5qpFHNha/xBhJfi6xfHOT8=;
+	s=korg; t=1793217113;
+	bh=hPEfIMS6TRICaKjHFKnNDwh1rkNZGMDpWP9nbQh4Y+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kzCc2raL0Ee5Nv1tN7U/pJKEYdv6rBFNNwzXIAgRKr81qjjY0WU2p8ja/Iq2TKDkY
-	 MF4wJFEjyIIR/RpssAN8paSZvBxpYibCXZAnm6BHMsn3GTHckyG1Zas/z8DbefzreE
-	 T6vrxMwKKhoIyOo9RuzprobGrYufpUvaUVqD2lck=
+	b=TcgNFmOnRD+VlHFWse4neJKWrUk1BF+P9uaEDM/8qJ7IxqyqYMz+T8Wlrs7o9cYF7
+	 vvrLS+9n4ficKgX1k0n4EUlpJkIY3WOvROw594VwGX2zlvUW3xn09HC4CV5rIPAkaF
+	 cmY5X5qPbrryRI5uxShei/6bEulCi26IO6o/ns6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+837bcd54843dd6262f2f@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Liang Li <liali@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1793/1887] xfs: dont hold buffer locks across sync transaction commit in xfs_sync_sb_buf
-Date: Wed, 28 Oct 2026 18:04:49 +0100
-Message-ID: <20261028170540.248793849@linuxfoundation.org>
+Subject: [PATCH 6.1 1794/1887] bonding: do not set usable_slaves for broadcast mode
+Date: Wed, 28 Oct 2026 18:04:50 +0100
+Message-ID: <20261028170540.272260129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,73 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 41a28c865d1d5843f8cb9e0af17a8f4d9e2961ff ]
+[ Upstream commit 45fc134bcfadde456639c1b1e206e6918d69a553 ]
 
-xfs_sync_sb_buf() holds sb/rtsb buffer locks across a synchronous
-xfs_trans_commit(), which flushes the CIL push workqueue internally.
-If shutdown occurs during the CIL push, xfs_buf_item_unpin() needs to
-lock these buffers to fail them, causing a deadlock:
+After commit e0caeb24f538 ("net: bonding: update the slave array for broadcast mode"),
+broadcast mode will also set all_slaves and usable_slaves during
+bond_enslave(). But if we also set updelay, during enslave, the
+slave init state will be BOND_LINK_BACK. And later
+bond_update_slave_arr() will alloc usable_slaves but add nothing.
+This will cause bond_miimon_inspect() to have ignore_updelay
+always true. So the updelay will be always ignored. e.g.
 
-  setlabel:          holds buf lock -> flush_workqueue(xfs-cil)
-  CIL push worker:   xfs_buf_item_unpin -> xfs_buf_lock(same buf)
+[    6.498368] bond0: (slave veth2): link status definitely down, disabling slave
+[    7.536371] bond0: (slave veth2): link status up, enabling it in 0 ms
+[    7.536402] bond0: (slave veth2): link status definitely up, 10000 Mbps full duplex
 
-Remove the xfs_trans_bhold() calls so that commit releases the buffer
-locks normally.  After the sync commit, re-acquire the buffers via
-mp->m_sb_bp / mp->m_rtsb_bp for the on-disk writeback.
+To fix it, we can either always call bond_update_slave_arr() on every
+place when link changes. Or, let's just not set usable_slaves for
+broadcast mode.
 
-Fixes: f7664b31975b ("xfs: implement online get/set fs label")
-Reported-by: syzbot+837bcd54843dd6262f2f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=837bcd54843dd6262f2f
-Cc: stable@vger.kernel.org
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: omitted realtime superblock changes because the target code lacks that support ]
+Fixes: e0caeb24f538 ("net: bonding: update the slave array for broadcast mode")
+Reported-by: Liang Li <liali@redhat.com>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20260304-b4-bond_updelay-v1-1-f72eb2e454d0@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_sb.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/net/bonding/bond_main.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
-index b5f081993cd4f..6c5c2b40056d8 100644
---- a/fs/xfs/libxfs/xfs_sb.c
-+++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -1148,26 +1148,23 @@ xfs_sync_sb_buf(
- 	struct xfs_mount	*mp)
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 0764bff68d97c..cd148bd014fae 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -5173,13 +5173,18 @@ static void bond_set_slave_arr(struct bonding *bond,
  {
- 	struct xfs_trans	*tp;
--	struct xfs_buf		*bp;
- 	int			error;
+ 	struct bond_up_slave *usable, *all;
  
- 	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_sb, 0, 0, 0, &tp);
- 	if (error)
- 		return error;
- 
--	bp = xfs_trans_getsb(tp);
- 	xfs_log_sb(tp);
--	xfs_trans_bhold(tp, bp);
- 	xfs_trans_set_sync(tp);
- 	error = xfs_trans_commit(tp);
- 	if (error)
--		goto out;
--	/*
--	 * write out the sb buffer to get the changes to disk
--	 */
--	error = xfs_bwrite(bp);
--out:
--	xfs_buf_relse(bp);
-+		return error;
+-	usable = rtnl_dereference(bond->usable_slaves);
+-	rcu_assign_pointer(bond->usable_slaves, usable_slaves);
+-	kfree_rcu(usable, rcu);
+-
+ 	all = rtnl_dereference(bond->all_slaves);
+ 	rcu_assign_pointer(bond->all_slaves, all_slaves);
+ 	kfree_rcu(all, rcu);
 +
-+	/* Re-acquire and write the sb to disk. */
-+	xfs_buf_lock(mp->m_sb_bp);
-+	error = xfs_bwrite(mp->m_sb_bp);
-+	xfs_buf_unlock(mp->m_sb_bp);
++	if (BOND_MODE(bond) == BOND_MODE_BROADCAST) {
++		kfree_rcu(usable_slaves, rcu);
++		return;
++	}
 +
- 	return error;
++	usable = rtnl_dereference(bond->usable_slaves);
++	rcu_assign_pointer(bond->usable_slaves, usable_slaves);
++	kfree_rcu(usable, rcu);
  }
  
+ static void bond_reset_slave_arr(struct bonding *bond)
 -- 
 2.53.0
 
