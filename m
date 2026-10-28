@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211704;
-	b=2kbZ/zqjBhORce/NCR827eSPc/T+FbRw1h7rjtDf1MSWZpkilFZAjfCbDIQRPEZQzHc8
-	 8G50rDWFsFosZlhwh6rsnx0aCx8WSbTqKh4Wy3FUIHWcFBQaAUvNl4LO8bgGCdQzmVm8u
-	 CEcvSTMxENWQOIT/lhUFHy/ToGMNIk3fQKvFqvlXfZoOqT8oZyIAept/UiXws5KXhMe/5
-	 +23eDqaHgTNXAr8DNvNLbX8eLFgLs5yaMGMyQxBsje5OB7m0WlujbnWGpy8m69cH9JhXy
-	 uSdaHFJbgIe/HGgtQ6bkLfJ8lXmAdShziPiOkAZ1qfJJTnvYH5JtLc27wGYCDMXtI+w==
+	t=1793211707;
+	b=D7FLWwsvWWQIAd6vP37Ixx4jaOc4HeGG91aa/224SbsQULh/omWDVy9I9SzUz6uWzhg4
+	 nyzCvTUpUsSFUZfHVD6Ze3Gi2uJDRZ/vjqG8C1koktxn7svGmBt8ZxYuZqfg+viqMKB9L
+	 YkzM4YfiKtRUZ0UzvNUlCryWijuN73Z18aKW4qydsJMR4uGZsxhK0l9jxVUho5CYJPlGg
+	 1yZ1X2qmhcCSQbIvmazQpxwP4w93eWFQR55uXECNpT3g7/4kSHEvDh+zn0Cb32Cad3v2L
+	 NffLGPwsfA80ELNJItcBhwY9ui+hYwtE2sovp3qeuaE6y3lsK3DA+oV/rGgg5CvVcyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211704;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211707;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZITwQFsz24P8y5QzvI7ENnUcWXEya/ZAuiVveWVXWUQ=;
-	b=5OGtxC2iksgKMEhefGLnxDMo/jGLDJJTAwCpE7FiLkOa5MMstkCgmsbpzpLVsSyMYn6o
-	 3FJUYsjT+GbA9wREBRndTtqxCtcx+vIthtyohrzVYqYScRCuos+nXBGjf3+qNy/i8NzHb
-	 uUFfMRQXmaIVO7+yNlnQy/EomRtK/Mb7JFzSSFkoT7FEr/P9iWt/hffhJWKrND/34yY4u
-	 TNO90fEZmHpNCO4RN3TOnhzoiI9Yf7+2T89KVZnQLGFzfHBEDSK6wsi4tQz4rUF8QGY+U
-	 GTRAe68wPaxh3+bjwztTUfz4ELkFkxvJZfpDSeE3al/XzTH706C6Y7THCXPkGHp96TQ==
+	bh=3uHPoqd68Wu1cnWR2mrRu9NIoN4r//RteY3sAOxNq20=;
+	b=hkZc7L87MhHnz4x3EyXpBfszd/SIvhMPkerTCUBdZbuJ7DmpgPtthbXFYiWMPST//Ggb
+	 UU2QPCuOzbiMX+09Z2rCJdsXjCLlCrp3HhrrkCj2gMK5Ll9yE5DAIfSLbWyWI0MOTCD+9
+	 W/1/NxdUHlcz+M0TqkU4G9QsoZRWgDIrNAhlNtsXFT46BHFEOrc0oPj0X90F3jWtHLGAu
+	 K8FnuqD2uo8P9PJSZNeq6X91Dw85s0P3MVORkc4VFXbmdcLgrGkSO1u/F29WdyMnp74po
+	 QMUT5ELMlFf7LaCAo4Xt/bkClSlEkRSfMAB3IL5wP2pIdcWkSHgQ1mf/TfQwDXSn0Og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksQF+EFG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IMS7mr4H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE23606A31A;
-	Wed, 28 Oct 2026 18:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A282B606A33D;
+	Wed, 28 Oct 2026 18:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksQF+EFG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDAD1F01825;
-	Wed, 28 Oct 2026 18:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IMS7mr4H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5B51F01825;
+	Wed, 28 Oct 2026 18:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211703;
-	bh=ZITwQFsz24P8y5QzvI7ENnUcWXEya/ZAuiVveWVXWUQ=;
+	s=korg; t=1793211706;
+	bh=3uHPoqd68Wu1cnWR2mrRu9NIoN4r//RteY3sAOxNq20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ksQF+EFGeR2A+0xzDYF0eGfo4IjwMidx/9nsXIE8NUB1G89YWTJNF++hExbtjXoZn
-	 EZclA47g1ydEGDOgLERo0tcbYxvoDrCwiR6sAChmeOrvOifiQ5Y9T8KX7sG/7eSmHk
-	 5CQv3lBZXp0lyAJbe5mrBJmG+v/JcoDNSATFZnNM=
+	b=IMS7mr4HydfPUccLPtspfW5QmVJ8Sej5ck3jRKlon+ScL6jzMraFJakiqUi1DwC4Y
+	 IPkqiYETgZxiIMzub6gTD8vkIIXyG0m2YU3fgreDMhOs2UZ+e1WvlTG4alX66hplPs
+	 48irkgFt60q9dTgWPwRMguc7juj8CNScqawcaMjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 472/571] net/rds: dont let the rdma_cm destroy an id RDS still owns on route failure
-Date: Wed, 28 Oct 2026 18:00:19 +0100
-Message-ID: <20261028170019.221374398@linuxfoundation.org>
+Subject: [PATCH 5.15 473/571] ASoC: stm32: spdifrx: fix synchronization state check
+Date: Wed, 28 Oct 2026 18:00:20 +0100
+Message-ID: <20261028170019.244800377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,61 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 98d446b7c013254a8a7b49720557676a3a851fde ]
+[ Upstream commit 0936bbd35a247665c64886135835faa3c3f4f29f ]
 
-rds_rdma_cm_event_handler_cmn() hands the return value of
-rdma_resolve_route() straight back to the rdma_cm on
-RDMA_CM_EVENT_ADDR_RESOLVED.  A synchronous failure there - -ENOMEM
-from the route work allocation, an SA query that cannot be set up, a
-RoCE route with no usable device - makes addr_handler() destroy the
-id the event was delivered on.  That id is ic->i_cm_id, and nothing
-clears the pointer: the connection sits in RDS_CONN_CONNECTING with a
-freed id until its shutdown calls rdma_disconnect() and
-rdma_destroy_id() on it.
+The interrupt handler uses a logical AND to check whether SPDIFRX
+was in the SYNC state before clearing errors. Since both SYNC (1)
+and ENABLE (3) are nonzero, this also treats ENABLE as SYNC (and
+any other non-zero value that might be added).
 
-The ROUTE_RESOLVED case already avoids this: rds_ib_cm_initiate_connect()
-forces a zero return while ic->i_cm_id == cm_id, as the comment there
-explains.  Do the same here - drop the connection and return 0 - so
-the id stays RDS's to destroy from the shutdown, and the reconnect
-gets a fresh one.
+The logical && basically just converts this to check for != 0.
 
-Fixes: 55b7ed0b582f ("RDS: Common RDMA transport code")
-Assisted-by: LLM
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261003163408.250568-3-achender@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+So errors occurring while SPDIFRX is enabled cause the driver
+to retry synch instead of disconnecting the PCM stream.
+
+Fix is to change the logical && to equality (==) and only retry
+when exactly in sync state.
+
+Fixes: 0c93c291321f2 ("ASoC: stm32: spdifrx: retry synchronization in sync state")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://patch.msgid.link/20261011035459.2289403-1-thnkslprpt@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rdma_transport.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ sound/soc/stm/stm32_spdifrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
-index f71f073fd27ac..af9510c9e9702 100644
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -89,9 +89,19 @@ static int rds_rdma_cm_event_handler_cmn(struct rdma_cm_id *cm_id,
- 		if (conn) {
- 			rdma_set_service_type(cm_id, conn->c_tos);
- 			rdma_set_min_rnr_timer(cm_id, IB_RNR_TIMER_000_32);
--			/* XXX do we need to clean up if this fails? */
- 			ret = rdma_resolve_route(cm_id,
- 						 RDS_RDMA_RESOLVE_TIMEOUT_MS);
-+			if (ret) {
-+				/* A non-zero return has the rdma_cm destroy
-+				 * the id, but it is still ic->i_cm_id, which
-+				 * the connection's shutdown would then
-+				 * disconnect and destroy again.  Drop the
-+				 * connection and keep the id for that
-+				 * shutdown.
-+				 */
-+				rds_conn_drop(conn);
-+				ret = 0;
-+			}
- 		}
- 		break;
+diff --git a/sound/soc/stm/stm32_spdifrx.c b/sound/soc/stm/stm32_spdifrx.c
+index 80f7761cbcb7b..441e2a7c3daf1 100644
+--- a/sound/soc/stm/stm32_spdifrx.c
++++ b/sound/soc/stm/stm32_spdifrx.c
+@@ -727,7 +727,7 @@ static irqreturn_t stm32_spdifrx_isr(int irq, void *devid)
  
+ 	if (err) {
+ 		regmap_read(spdifrx->regmap, STM32_SPDIFRX_CR, &cr);
+-		sync_state = FIELD_GET(SPDIFRX_CR_SPDIFEN_MASK, cr) &&
++		sync_state = FIELD_GET(SPDIFRX_CR_SPDIFEN_MASK, cr) ==
+ 			     SPDIFRX_SPDIFEN_SYNC;
+ 
+ 		/* SPDIFRX is in STATE_STOP. Disable SPDIFRX to clear errors */
 -- 
 2.53.0
 
