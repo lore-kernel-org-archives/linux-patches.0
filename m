@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215111;
-	b=TI71F9LkbGLv7efTJa5WWa9vgjp+pK1keDsPLDL1Z1AGWBmlYeLH+GVrePo8+rASA3gL
-	 sGASqPfhy57QtGCYXq8js2D8Q3jCWbwWI6cSHKYzMKe/n+Xchz+uhdfzhtt7U10ztTCMD
-	 JW5ybmw8ecOEoBMisGNo2msboT45Dm8IeHUzw7tqA9E8uP4Ani/SoPqFKTz8MZ4JgFQVZ
-	 GtD4LhuEPh2dYhopFAnsxmsf9ntxYGB5K28NXIMFvra6ern//GUdimbCBy1yzKtPgrL3F
-	 kEnRN2CqHET86vu2fWKWFIVowcs2gmAdQLgf7nSKcjdn2vF7XsdU0zlftA6RVe91+Dw==
+	t=1793215114;
+	b=rGTixChsGaygOUN9Xq/Jm9tYnePbH3wEHB4phXLw1ZmdaodQmakpCGEYjv45sWWWPxMH
+	 1xNEUAVQ0uJPpn+0CodMbTbs2WqM1mKOEv7i5hzLmvL7Jh4RHkrSrTprjMhOQlnzSYh4g
+	 KkPXEzjOM9/FXO7PUb2rXvUZhXRXKQfF2AZ7TXaI4yW5Pwkc3gETKnW3QxA8FXP/V/1+f
+	 6/86Ngr8P2eqq4ki1nRS20YdPOi+dM479YGkp79Q+It1KC730vy0dMGYQgEiMy+NyWoMu
+	 b03s3woOjWZH6J7sIePhpHalzekGd8Fntlxs81Xu+bcJwiFkxqixV6DlRJPB0z2dnSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z1k8pn0EBdb+4f1A6ATAdNHEMYrq7ahjxlYPV4o/qRs=;
-	b=ecTvb3nPER5yDmo0GM0PaI5QzctTQPNTe1/68fZyPEypepuVv2sitP3/6YzoFwYf7jcT
-	 fufL6gmt11AI5JwXRW8TrX+dJcyHhWJNw/rieJ+pzWUEAUFopOldNBbToPWph8fJOYe9H
-	 NXV48GigR9Z5KsjJo0Z7GrUp5wNiq2iw76BZMc3QQUtYjdK85w+Lc8HPNJRj7dLuQeh6b
-	 7NjLD4xSDGWAJtlApWd8c/qCbGysSYfs9Bq2gzS+8U6xJfcUekHKbI+jNyWqXAygOAKG/
-	 En1tYVrCcdZGOlGkuB5EptfALouyEcTqygGLyKvBnm9CSgtpcM9yRMKRCrsCigmldvA==
+	bh=E+/KHq82JeYylFNQW3wIRE5P0SrQ0TaZo5bLkiycEtI=;
+	b=wleBx+0l1d0JQaLDonBi3LuHeW3yUUtPnYZ2wRd9+NlaqDO+A6IV62kpJDmBsqPUJAu2
+	 42z+XR0IvdduQQONsWxB26amEr5MsqSL96IwghFRdyrlcpKgcgm0ZOiOZlywAInHV9G5C
+	 r56oW9UBw04w7kDDNSwglf1UMcyC1eSAVAFXAJEtuCC/NSAw2xRYNj5oj4TizLvB447lt
+	 jR6ece89IxQ0LsxFkIp75CXPS/a+1zifWAwbRnCOfu2ss24JO2yogyCaXc5xLiJDwU1g3
+	 qGUQZcSEGF3WJn+Q5f6t1U6s7JLCbcx8MZ0PApJ8D8HWPqdo1gaF43gsByuo0FVdRLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwDo1UEY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="I9G0zR1/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D2B606A31C;
-	Wed, 28 Oct 2026 19:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06960606A31A;
+	Wed, 28 Oct 2026 19:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwDo1UEY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46ECF1F01829;
-	Wed, 28 Oct 2026 19:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I9G0zR1/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8561F01825;
+	Wed, 28 Oct 2026 19:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215110;
-	bh=z1k8pn0EBdb+4f1A6ATAdNHEMYrq7ahjxlYPV4o/qRs=;
+	s=korg; t=1793215113;
+	bh=E+/KHq82JeYylFNQW3wIRE5P0SrQ0TaZo5bLkiycEtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CwDo1UEY9GSFoWpRcifx+qoJNqlIr8wsZl13yyFBeQsUoR74NA+22Ytl3XlchOyFq
-	 /qBWhFcPc4zWGfi6VB7GIrFdFYw5JgTuva18muUet58yPAX8fkWIsIelfExp6eoSWn
-	 eKFcllB3OlnhVeMDRDSfpfaNaH/HQphEbD+mSfLM=
+	b=I9G0zR1/uTaeWb5AZfe1Ffihac7VcNJgtA8IasSTE8he6k0yKm+XxSd51jBKp+xZp
+	 1WuvrQG5gHhK9edJiDWEc2IWnJfDiuM6q/C7JOV8ttr0X3M1tex/EZNfsFwWVb97gm
+	 zgOiy36bleLYGPvhoQaSFbd3cJnaHjHyQjvnRGLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1097/1887] gpio: mvebu: fix NULL pointer dereference in suspend/resume
-Date: Wed, 28 Oct 2026 17:53:13 +0100
-Message-ID: <20261028170524.369206623@linuxfoundation.org>
+Subject: [PATCH 6.1 1098/1887] wifi: fix leak if split 6 GHz scanning fails
+Date: Wed, 28 Oct 2026 17:53:14 +0100
+Message-ID: <20261028170524.391471531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,83 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit b9ad50d7505ebd48282ec3630258dc820fc85c81 ]
+[ Upstream commit e8694f7cc29287e843648d1075177b9a2000d957 ]
 
-mvebu_pwm_suspend() and mvebu_pwm_resume() are called for all GPIO
-banks during suspend/resume, but not all banks have PWM functionality.
-GPIO banks without PWM have mvchip->mvpwm set to NULL.
+rdev->int_scan_req is leaked if cfg80211_scan() fails.  Note that it's
+supposed to be released at ___cfg80211_scan_done() but this doesn't happen
+as rdev->scan_req is NULL at that point, too, leading to the early return
+from the freeing function.
 
-Calling mvebu_pwm_suspend() with mvpwm == NULL causes a NULL pointer
-dereference when it tries to access mvpwm->blink_select.
+unreferenced object 0xffff8881161d0800 (size 512):
+  comm "wpa_supplicant", pid 379, jiffies 4294749765
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 f0 81 13 16 81 88 ff ff  ................
+  backtrace (crc c867fdb6):
+    kmemleak_alloc+0x89/0x90
+    __kmalloc_noprof+0x2fd/0x410
+    cfg80211_scan+0x133/0x730
+    nl80211_trigger_scan+0xc69/0x1cc0
+    genl_family_rcv_msg_doit+0x204/0x2f0
+    genl_rcv_msg+0x431/0x6b0
+    netlink_rcv_skb+0x143/0x3f0
+    genl_rcv+0x27/0x40
+    netlink_unicast+0x4f6/0x820
+    netlink_sendmsg+0x797/0xce0
+    __sock_sendmsg+0xc4/0x160
+    ____sys_sendmsg+0x5e4/0x890
+    ___sys_sendmsg+0xf8/0x180
+    __sys_sendmsg+0x136/0x1e0
+    __x64_sys_sendmsg+0x76/0xc0
+    x64_sys_call+0x13f0/0x17d0
 
-  Unable to handle kernel NULL pointer dereference at virtual address 00000020 when write
-  [00000020] *pgd=00000000
-  Internal error: Oops: 815 [#1] PREEMPT ARM
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 406 Comm: sh Not tainted 6.12.74-rt12-yocto-standard-g4e96f98fb7db-dirty #353
-  Hardware name: Marvell Armada 370/XP (Device Tree)
-  PC is at regmap_mmio_read+0x38/0x54
-  LR is at regmap_mmio_read+0x38/0x54
-  pc : [<c05fd2ac>]    lr : [<c05fd2ac>]    psr: 200f0013
-  sp : f0c11d10  ip : 00000000  fp : c100d2f0
-  r10: c14fb854  r9 : 00000000  r8 : 00000000
-  r7 : c1799c00  r6 : 00000020  r5 : 00000020  r4 : c179c7c0
-  r3 : f0a231a0  r2 : 00000020  r1 : 00000020  r0 : 00000000
-  Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
-  Control: 10c5387d  Table: 135ec059  DAC: 00000051
-  Call trace:
-   regmap_mmio_read from _regmap_bus_reg_read+0x78/0xac
-   _regmap_bus_reg_read from _regmap_read+0x60/0x154
-   _regmap_read from regmap_read+0x3c/0x60
-   regmap_read from mvebu_gpio_suspend+0xa4/0x14c
-   mvebu_gpio_suspend from dpm_run_callback+0x54/0x180
-   dpm_run_callback from device_suspend+0x124/0x630
-   device_suspend from dpm_suspend+0x124/0x270
-   dpm_suspend from dpm_suspend_start+0x64/0x6c
-   dpm_suspend_start from suspend_devices_and_enter+0x140/0x8e8
-   suspend_devices_and_enter from pm_suspend+0x2fc/0x308
-   pm_suspend from state_store+0x6c/0xc8
-   state_store from kernfs_fop_write_iter+0x10c/0x1f8
-   kernfs_fop_write_iter from vfs_write+0x270/0x468
-   vfs_write from ksys_write+0x70/0xf0
-   ksys_write from ret_fast_syscall+0x0/0x54
+Found by Linux Verification Center (linuxtesting.org).
 
-Add a NULL check for mvchip->mvpwm before calling the PWM
-suspend/resume functions.
-
-Fixes: 757642f9a584 ("gpio: mvebu: Add limited PWM support")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Link: https://patch.msgid.link/20260608084334.2960803-1-yun.zhou@windriver.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: c8cb5b854b40 ("nl80211/cfg80211: support 6 GHz scanning")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20260601094157.92703-1-pchelkin@ispras.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mvebu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/wireless/scan.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
-index c38d28de2e620..f58f835d0acb3 100644
---- a/drivers/gpio/gpio-mvebu.c
-+++ b/drivers/gpio/gpio-mvebu.c
-@@ -1002,7 +1002,7 @@ static int mvebu_gpio_suspend(struct platform_device *pdev, pm_message_t state)
- 		BUG();
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index d6bd95857abf2..8998a48d0be54 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -995,6 +995,7 @@ int cfg80211_scan(struct cfg80211_registered_device *rdev)
+ 	struct cfg80211_scan_request *request;
+ 	struct cfg80211_scan_request *rdev_req = rdev->scan_req;
+ 	u32 n_channels = 0, idx, i;
++	int err;
+ 
+ 	if (!(rdev->wiphy.flags & WIPHY_FLAG_SPLIT_SCAN_6GHZ))
+ 		return rdev_scan(rdev, rdev_req);
+@@ -1021,8 +1022,14 @@ int cfg80211_scan(struct cfg80211_registered_device *rdev)
  	}
  
--	if (IS_REACHABLE(CONFIG_PWM))
-+	if (IS_REACHABLE(CONFIG_PWM) && mvchip->mvpwm)
- 		mvebu_pwm_suspend(mvchip);
+ 	rdev_req->scan_6ghz = false;
++	err = rdev_scan(rdev, request);
++	if (err) {
++		kfree(request);
++		return err;
++	}
++
+ 	rdev->int_scan_req = request;
+-	return rdev_scan(rdev, request);
++	return 0;
+ }
  
- 	return 0;
-@@ -1054,7 +1054,7 @@ static int mvebu_gpio_resume(struct platform_device *pdev)
- 		BUG();
- 	}
- 
--	if (IS_REACHABLE(CONFIG_PWM))
-+	if (IS_REACHABLE(CONFIG_PWM) && mvchip->mvpwm)
- 		mvebu_pwm_resume(mvchip);
- 
- 	return 0;
+ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
 -- 
 2.53.0
 
