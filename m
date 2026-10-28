@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211394;
-	b=oJK2pAsEVNgtMcdunbOYNNb2yeoeTaLcYT+GeV2XhLVYoJaC7jbQDvM4MxlpPqweeFli
-	 eeQI/IdhUamd3Q6lPWOlNuXr5/7hThQNOBBngJ0OLZLpMsWo6rfVeDq+HixkWcFrs/tkO
-	 brsjS2ceVaDc1J+Z6dTGj0kZJNzEgDXo4qgwzEmnfLcNt3rpaHPeIF6EWldhyWOSPtAcT
-	 LW6Qsy7wgpJJu4EW+puaEexI6JjexJz0wLAhLhy5xStJM/lMzwv9q8yc5g024pB7m1KLm
-	 /SgiMBvzKtypD4+4zU2LHMT1KvsWg8om6RqyQFNLJcjWCN2Xhqg/0Cl5veQM3SIzbiw==
+	t=1793211396;
+	b=tKHl6YxmHJ1lvlIsK2xxq3FX8AxUl4Qa9uqekSgz0fFjPcWmPWXXePArq7IrX11b7BfF
+	 2Y/rdiIY+T0Mq4redL81X61S6pqASRinlOeIf2/XFHGKxLTN+RMiswkP5vdk8xVTgWuCL
+	 WoLJmciEtKs+EEwo3lkl+Q70gpDjxMS9fsbS+xGcYweAMMCch5oT+MtLBueJAu4oZZ5zD
+	 4LdnTCDHsBO8WoQfL+V2SBAZScuLjNGAG59WAyoHibURwmjJQEA1Q4xqUnbY8Tb/K6toX
+	 C+UPjNMzLhXLNi+9JFIpoq641LCL4kNWhBT3So7MEXcbOMmz27aDfT0oiLvN2t2dl5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4MJEabgqZdZMJZjVntX4LBgNlZuHVm3DnYSAia6KLqk=;
-	b=w6/EGsgpOl7NsGI/v1D896ny79kvyiyr62pUeDllfeFDtACaPt+LSMHbR2qJ8DbC4QIK
-	 6CWPk1cP3QxdY04AB333+igq9C8q30OrIl6+z0aAOQnKQjoB78iyF0vWx0wL85VZZW3MP
-	 VbyTZt1BtGApgkM+3p29tSogXgox3sFQaqggeHMspNtKBfJ9rcpvU8rU0KzZQVYjTM+ON
-	 jafczo1AJIZ18jJOgNExsBcadnu/CK9Ilg7Wd4i0TL9EuUJrZ5kBBJfWY8hJJerKVoOhV
-	 MH5rvk1ucDhn5YuYhllLrS5LbYOZ2iwDePIzQ5B7tNjAinJFGVynqMbuEW7Q7OOQFFA==
+	bh=YXFuMmQiCn1NPh797bJnHHlGKPsu9CbU7sKnaAy0LCc=;
+	b=XmhcN0/f2NVQHMfSFW3f39Y4YGUtzqeEUdLCDn/bVTg9i22o1dnVKIE1zU5XbkI/yfeJ
+	 4NSsoz9Muc9WPxZIXUBlFvn/GHU5VnVavdeqfkixlH1utH5FKAfAxXphVVEh3RiiAzSWb
+	 RX5/fs6OMjSHlfvuIofCnvb6Q8QGEQdDNBotE3Bme2I3nTwJY9GyUgwWCSj+MXKQPan3Z
+	 sDsooF4VovyeShP1cbp3qINqML+ZlqalYh8MF32gCS5CQ2i9KdOx5TKS58RM0Vjlkd1KW
+	 PJQaBidUkuJC9mBR13plWUXn/Uoa/fl8ehZ/rvUce/qz3h51MtaiqoVu6WSrVhhodjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Swi7NdDm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvYMFQ2c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A39606B452;
-	Wed, 28 Oct 2026 18:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAE6606A942;
+	Wed, 28 Oct 2026 18:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Swi7NdDm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA35A1F01825;
-	Wed, 28 Oct 2026 18:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvYMFQ2c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25B11F01825;
+	Wed, 28 Oct 2026 18:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211393;
-	bh=4MJEabgqZdZMJZjVntX4LBgNlZuHVm3DnYSAia6KLqk=;
+	s=korg; t=1793211396;
+	bh=YXFuMmQiCn1NPh797bJnHHlGKPsu9CbU7sKnaAy0LCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Swi7NdDmDpwTa+rw0T8+Kw6DgWXoasi0a8iU8ohv8FCTaxgDgf4kxkDKYxxZtwH6p
-	 40CA38Nb2VUe1B7hZdvZOfxmYHVQs6VjVG9BEbBB4pfIYAmUfL0c6Zs6eNZRyZXuV6
-	 F5ywqsQtPjhNUWZv5vSStxkIWUMbszWoeVhe/+2Y=
+	b=jvYMFQ2cRfHQVdkf6x834ucSYrFNi0oP7ecO4afyGMpKnr/cqvYUV4gwarsUOzcqS
+	 xHzGjUphNqbRc2pUBY2TXdsGVEq6QstfcNkaInxjOqRWmFqOruSIuxwPpT05qR+3PO
+	 3IRmPLk6YtVdaGNnL9FOsMTRq8MgYFK9iS3dNQEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Dave Marquardt <davemarq@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 360/571] ibmveth: h_free logical LAN on open-fail after register
-Date: Wed, 28 Oct 2026 17:58:27 +0100
-Message-ID: <20261028170016.557936322@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.15 361/571] keys: finalize persistent keyring timeout after link attempt
+Date: Wed, 28 Oct 2026 17:58:28 +0100
+Message-ID: <20261028170016.581089061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,52 +67,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit af0524bf4ce1a4cbd2946aa81751582951cfcab5 upstream.
+commit 25bf14f817168079f731975b8998fc2af380f29e upstream.
 
-ibmveth_open() registers the logical LAN, then allocates the RX
-buffer pools. A pool failure jumps to out_free_buffer_pools without
-h_free_logical_lan(), so PHYP still owns the buffer-list page when
-it is unmapped. request_irq() failure already issued the hypercall
-before taking the same label.
+When no keyring exists for the requested UID, KEYCTL_GET_PERSISTENT
+creates and registers one before linking it to the requested destination.
+The configured timeout is set only after the destination link succeeds.
 
-Move that h_free to the shared post-register unwind so both paths
-deregister before the buffer list is unmapped.
+A destination restricted with KEYCTL_RESTRICT_KEYRING makes that link fail
+with -EPERM. With persistent_keyring_expiry set to 60 seconds, /proc/keys
+still reports the registered keyring's expiry as "perm".
+The failed call therefore leaves a quota-exempt keyring in the namespace's
+hidden register, where it may remain until namespace teardown.
 
-Fixes: d43732ce021f ("ibmveth: properly unwind on init errors")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
-Link: https://patch.msgid.link/7a56fbfb9e0674f011f4e310fbd7dfd8e67c30aa.1790357373.git.mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Rename the write-locked helper to key_get_or_create_persistent() and return
+the key reference through a result parameter. Return 0 when it creates a
+keyring and 1 when the retry finds an existing one. Return a negative error
+on failure. Another caller may create the keyring between the initial
+read-locked lookup and the retry under the write lock.
+
+Set the timeout after permission checking and linking. Do this on success,
+or on failure if the call allocated the keyring. This leaves a new keyring
+collectible after failure without starting its timeout while linking is
+still in progress.
+
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: f36f8c75ae2e ("KEYS: Add per-user_namespace registers for persistent per-UID kerberos caches")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260912095440.79864-1-kmehltretter@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ security/keys/persistent.c |   55 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -597,10 +597,6 @@ static int ibmveth_open(struct net_devic
- 	if (rc != 0) {
- 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
- 			   netdev->irq, rc);
--		do {
--			lpar_rc = h_free_logical_lan(adapter->vdev->unit_address);
--		} while (H_IS_LONG_BUSY(lpar_rc) || (lpar_rc == H_BUSY));
--
- 		goto out_free_buffer_pools;
+--- a/security/keys/persistent.c
++++ b/security/keys/persistent.c
+@@ -33,25 +33,31 @@ static int key_create_persistent_registe
+ }
+ 
+ /*
+- * Create the persistent keyring for the specified user.
++ * Get or create the persistent keyring for the specified user.
+  *
+  * Called with the namespace's sem locked for writing.
++ *
++ * Returns a boolean indicating whether the keyring already existed,
++ * or a negative error. On success, *persistent_ref holds a reference
++ * to the keyring.
+  */
+-static key_ref_t key_create_persistent(struct user_namespace *ns, kuid_t uid,
+-				       struct keyring_index_key *index_key)
++static int key_get_or_create_persistent(struct user_namespace *ns, kuid_t uid,
++					struct keyring_index_key *index_key,
++					key_ref_t *persistent_ref)
+ {
+ 	struct key *persistent;
+-	key_ref_t reg_ref, persistent_ref;
++	key_ref_t reg_ref;
+ 
+ 	if (!ns->persistent_keyring_register) {
+-		long err = key_create_persistent_register(ns);
++		int err = key_create_persistent_register(ns);
++
+ 		if (err < 0)
+-			return ERR_PTR(err);
++			return err;
+ 	} else {
+ 		reg_ref = make_key_ref(ns->persistent_keyring_register, true);
+-		persistent_ref = find_key_to_update(reg_ref, index_key);
+-		if (persistent_ref)
+-			return persistent_ref;
++		*persistent_ref = find_key_to_update(reg_ref, index_key);
++		if (*persistent_ref)
++			return 1;
  	}
  
-@@ -632,6 +628,9 @@ out_free_bounce_buffer:
- out_free_irq:
- 	free_irq(netdev->irq, netdev);
- out_free_buffer_pools:
-+	do {
-+		lpar_rc = h_free_logical_lan(adapter->vdev->unit_address);
-+	} while (H_IS_LONG_BUSY(lpar_rc) || (lpar_rc == H_BUSY));
- 	while (--i >= 0) {
- 		if (adapter->rx_buff_pool[i].active)
- 			ibmveth_free_buffer_pool(adapter,
+ 	persistent = keyring_alloc(index_key->description,
+@@ -61,9 +67,10 @@ static key_ref_t key_create_persistent(s
+ 				   KEY_ALLOC_NOT_IN_QUOTA, NULL,
+ 				   ns->persistent_keyring_register);
+ 	if (IS_ERR(persistent))
+-		return ERR_CAST(persistent);
++		return PTR_ERR(persistent);
+ 
+-	return make_key_ref(persistent, true);
++	*persistent_ref = make_key_ref(persistent, true);
++	return 0;
+ }
+ 
+ /*
+@@ -78,6 +85,7 @@ static long key_get_persistent(struct us
+ 	key_ref_t reg_ref, persistent_ref;
+ 	char buf[32];
+ 	long ret;
++	bool created = false;
+ 
+ 	/* Look in the register if it exists */
+ 	memset(&index_key, 0, sizeof(index_key));
+@@ -100,23 +108,24 @@ static long key_get_persistent(struct us
+ 	 * also need to create the register.
+ 	 */
+ 	down_write(&ns->keyring_sem);
+-	persistent_ref = key_create_persistent(ns, uid, &index_key);
++	ret = key_get_or_create_persistent(ns, uid, &index_key,
++					   &persistent_ref);
+ 	up_write(&ns->keyring_sem);
+-	if (!IS_ERR(persistent_ref))
+-		goto found;
+-
+-	return PTR_ERR(persistent_ref);
++	if (ret < 0)
++		return ret;
++	created = ret == 0;
+ 
+ found:
++	persistent = key_ref_to_ptr(persistent_ref);
+ 	ret = key_task_permission(persistent_ref, current_cred(), KEY_NEED_LINK);
+-	if (ret == 0) {
+-		persistent = key_ref_to_ptr(persistent_ref);
++	if (ret == 0)
+ 		ret = key_link(key_ref_to_ptr(dest_ref), persistent);
+-		if (ret == 0) {
+-			key_set_timeout(persistent, persistent_keyring_expiry);
+-			ret = persistent->serial;
+-		}
+-	}
++
++	if (ret == 0 || created)
++		key_set_timeout(persistent, persistent_keyring_expiry);
++
++	if (ret == 0)
++		ret = persistent->serial;
+ 
+ 	key_ref_put(persistent_ref);
+ 	return ret;
 
 
