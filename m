@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211960;
-	b=I+uisYu+Hbft89Qr6TR67dGI+rGSd5BqLaRWo5OzoSEasqLHJvNT5j+DCrmPt+IVwT8F
-	 69XHajGr6c8XQfvgU7GjqzOn4Z23V2oad/iAoPac4VKmC+Gf4wzLN1jSZEnzIQDoaF2kf
-	 N6b5JqdjnD6C1IqZ1BJEzUOzAGsWUqN7l7xw9g7ZWVKFCgz+INpWSNli+pr7mALIsTVSt
-	 k4B6Pjfpt9cpGpSIu+GtCmEnWWP6s/WAMwLFcu7ccLDANruiBkjkBJ6ZV9c6r76j7fIdt
-	 joauT+KHc2clid0bo8UHJ8WGZ3LxLSmxWScmKS01C2c6SlKixid9igcYR8U/GooXeqA==
+	t=1793211963;
+	b=nzb2Oux1dRcIclgxfwCHJXpKFoVNLyI+YeDwSVfwxf6/Z2t5JXaoFHfHFmUvVbf/Fu7J
+	 3Y+SVXZUWvMgyGilw70MuOnlTBgqeYj3xPZQBwhgHerYjxTKQ/ANIKsi3HLs56CSziD26
+	 p7NaxoPwe+/dRX5mxqCcCBg8uFHVI62m6PA8Pn4BVYaZdnNGeHx5n5t8xkT+Zg1vrvc9C
+	 H1yexbgFst3w2URh/kcL+R3CpIebNYz+v5xYKJ+0r8ScyMF+w/WLosZwekM5OefaBipte
+	 U5Hkr2UkoPl2pLPlQggjkoCpjKESuHkwb0JHMvnBipdRJMGXxcRzDZ/OhY+uqMDUOPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211960;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211963;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kZxIhZFOHNqbfukmd7aKlZxvDzTm4Xf8Wt1fefBAjvo=;
-	b=vzSmuL3yj4uro1cgI5a8yz5K3ZGzw5J+sKhK63l2HZu5zX4z1v3ansvm6/RgjeWdr8Mu
-	 kqOF/ZYqtp+bxg5+7XGrlIwesqg5q03YZ6PQRk5E2U7hFm6fcVtRIeBvix8zNvvRTZhva
-	 4bYakriXMJy4vB7NkgNK9NafYyaLLCAV7UxFKvV+eLa0Wu4h9442dT/O6jnzXrIoUgCUh
-	 23T42vztIFhPulvMO07gvHfVrPELS5xUyMM/YQ3hWPIC7gs8Sjd/HfxOQrxwdVrV5PyFq
-	 r9R51Pe1QWNVk/ZU/dFYKeZnDRNhqElxMMSij6UElmFgX+XJokDBECt8FCVUT38Ovhw==
+	bh=x5knw/V6ZewgqE46Txp7s+HC3UHXzWRnEz4ag9YtrcM=;
+	b=lj5ie8ozsiAzvIurXyX5iFjXKmnEZ+d9ibadX6eYQZUIbB1D1NaoCWWpk3v5EZO8XLix
+	 4wlyX2jpzkX+NCMi5WXLGubdQb1j5vvJ02ffldvZBMOenS/DuYQrneBckxJL2AUJU9qGC
+	 4V6lv5bbjTBK2JXSjCQjGB4YmBtq0QY4T+VqXZSERWY6eafnIROgkxpDFQQ4On+eSgxd7
+	 GXkggB0FwW+l/7yPxpjXjsTW8OkYrBoD7rLWzZdaSkc+32NsYdW5Jg6yDE/innX0nwVy6
+	 kruguoPGegRx84mvjHACPwG3VxAdl7qBElw08UcZLqnE9jIgCoz4oBpAcuWD4AFa8/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8xJYwdC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wlRDEIFu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747E5606A31C;
-	Wed, 28 Oct 2026 18:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836FF606A31A;
+	Wed, 28 Oct 2026 18:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8xJYwdC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C543D1F01825;
-	Wed, 28 Oct 2026 18:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wlRDEIFu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CA81F01828;
+	Wed, 28 Oct 2026 18:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211960;
-	bh=kZxIhZFOHNqbfukmd7aKlZxvDzTm4Xf8Wt1fefBAjvo=;
+	s=korg; t=1793211963;
+	bh=x5knw/V6ZewgqE46Txp7s+HC3UHXzWRnEz4ag9YtrcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8xJYwdC3vdSX6W52B7ZTP+eXUOUUF8y4TJWIP9QJkU7VOuKxhd6jCkwhyRHHJKGL
-	 LspAlhv5c4aU341sEzGbogGeIHQI338h2o3s+AoHSdfaey+oejtFCJ/aJgKUNw9gz7
-	 osQ12yfIcadUwMNCom6ai5ZG8X4v1wkOUm81VzJI=
+	b=wlRDEIFuLqYctD9pJb2ICsx3aa0HP1WKWpmTNkhdJTvYEDUSqiKaN+2fC4PCH1eat
+	 AElBsjz8/dFVdmRYBF+29EaqvrF4AfJAE6wb4kGK+YLritPE/YmdmKHutlsqQpW+tC
+	 9+KQbxxTi+FNecH/Xlz50BWlbEZ3C5RmcqWllFXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Vosburgh <theminershive@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Florian Schauer <florian@schauer.to>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 516/571] sctp: validate chunk length in the inqueue parser
-Date: Wed, 28 Oct 2026 18:01:03 +0100
-Message-ID: <20261028170020.274043665@linuxfoundation.org>
+Subject: [PATCH 5.15 517/571] page_pool: keep frag_offset aligned for odd-sized requests
+Date: Wed, 28 Oct 2026 18:01:04 +0100
+Message-ID: <20261028170020.298055623@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,67 +69,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Vosburgh <theminershive@gmail.com>
+From: Florian Schauer <florian@schauer.to>
 
-commit 6cfc1b90cb86f4aabc69fb8e30128e07e2cdfa3a upstream.
+commit dc0df5a0c62ccea1d0e08d39a4dc9064de81d411 upstream.
 
-SCTP chunks always include a four-byte generic header, but
-sctp_inq_pop() currently accepts shorter declared lengths. A zero-length
-chunk leaves chunk_end at the current header.
+page_pool_alloc_frag_netmem() rounds the requested fragment size with
 
-When ASCONF is covered by the association's SCTP-AUTH policy,
-sctp_assoc_bh_rcv() can continue before the state machine performs its
-normal chunk-length check. sctp_inq_pop() then returns the same malformed
-chunk repeatedly and the receive softirq can lock up.
+	size = ALIGN(size, dma_get_cache_alignment());
 
-A remote SCTP peer can trigger this after establishing an association on
-a kernel built with CONFIG_IP_SCTP and configured with
-net.sctp.addip_enable=1 and net.sctp.auth_enable=1. The reproducer did
-not require application credentials, a shared SCTP AUTH key, or
-net.sctp.addip_noauth_enable=1.
+dma_get_cache_alignment() returns 1 unless the architecture defines
+ARCH_DMA_MINALIGN, which DMA-coherent architectures such as x86 do not.
+There the ALIGN() is a no-op and pool->frag_offset advances by the raw,
+unrounded size.
 
-On commit f967455fb2a5 ("seg6: reset IP6CB after IPv6 decapsulation"),
-one zero-length ASCONF caused repeated
-watchdog soft-lockup reports in a two-vCPU KVM guest. All 3 pre-trigger
-health probes succeeded, while 36 of 37 post-trigger probes failed. With
-this change, all 37 post-trigger probes succeeded and no equivalent
-soft-lockup signature appeared.
+A single caller asking for an odd size then leaves frag_offset misaligned
+for every fragment carved out of that page afterwards.  The pool is shared,
+so the damage is not confined to the caller that caused it.
 
-Reject chunks shorter than the generic SCTP header at the shared inqueue
-parser boundary. Mark the packet for discard before either caller can
-continue processing it, while preserving the four-byte generic minimum.
-Declared-length 1 through 4 controls and kernel-generated ASCONF traffic
-remained healthy. The patched sctp_hello selftest passed for IPv4 and
-IPv6.
+The per-cpu system_page_pool used by generic XDP hits this.
+skb_pp_cow_data() allocates its fragments with the raw packet length:
 
-The complete private reproducer and validation evidence are available
-directly to maintainers on request.
+	size = min_t(u32, len, PAGE_SIZE);
+	truesize = size;
+	page = page_pool_dev_alloc(pool, &page_off, &truesize);
 
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
+leaving frag_offset odd for whatever is carved out of that page next.  Its
+own head allocation is already aligned -- SKB_HEAD_ALIGN(size) plus the
+XDP_PACKET_HEADROOM its callers pass -- so it is a later user of the shared
+pool that pays: page_pool_dev_alloc_va() returns a misaligned buffer,
+napi_build_skb() installs it as skb->head, and skb_shinfo(skb) ==
+skb->head + skb->end is misaligned with it.
+
+skb_shinfo()->dataref is a 4-byte atomic_t at offset 0x20, so the
+atomic_inc() in __skb_clone() straddles a cache line.  On x86 with split
+lock detection -- fatal for kernel split locks by default -- this panics
+the machine:
+
+  Oops: Split lock detected
+  RIP: 0010:skb_clone+0x154/0x1e0
+  Call Trace:
+   <IRQ>
+   raw_local_deliver+0x1ed/0x2c0
+   ip_protocol_deliver_rcu+0x54/0x1c0
+   ip_local_deliver_finish+0x85/0x100
+   ip_local_deliver+0x67/0x100
+   __netif_receive_skb_one_core+0x85/0xa0
+   process_backlog+0x87/0x130
+
+Reproduced by attaching any generic-mode XDP program to loopback and
+opening a RAW IPPROTO_UDP socket, which makes raw_local_deliver() clone
+every locally delivered UDP packet; ordinary DNS traffic then triggers it,
+roughly once per 2500 clones.  Observed on 6.12.101 and 7.1.8.
+
+Tracing page_pool_alloc_frag_netmem() over one such run shows the
+amplification -- two odd-sized requests, nine misaligned offsets:
+
+  requested size & 7:   0: 17035    5: 1    7: 1
+  frag_offset & 7:      0: 17028    3: 1    4: 1    5: 1    6: 1    7: 5
+
+and skb_pp_cow_data() returning heads that were aligned on entry:
+
+  head 0xffff8f4c86aeac00 -> 0xffff8f4c53a9a9c4 (&7=4)
+  head 0xffff8f4d6a8a42c0 -> 0xffff8f4c4f7b7a45 (&7=5)
+
+Round the fragment size up to at least the alignment struct skb_shared_info
+requires, so fragments are always suitably aligned for the objects callers
+build on them.  Architectures needing a larger DMA alignment keep it.
+
+This also makes the remainder computed in page_pool_alloc_netmem(),
+
+	*size = max_size - *offset;
+
+aligned, since max_size is a power of two -- which fixes the matching
+misalignment of skb->end.
+
+Verified with a controlled A/B under QEMU/KVM: same tree, same config,
+same compiler, same rootfs and identical traffic, differing only by this
+patch.  A SEC("xdp.frags") XDP_PASS program on lo plus UDP datagrams
+larger than max_head_size drives skb_pp_cow_data()'s fragment loop, which
+passes raw packet lengths to the pool.  Measured at the return of
+skb_pp_cow_data():
+
+                          unpatched   patched
+  skb_pp_cow_data calls       40800     40800
+  misaligned skb->head         1120         0
+  dataref at line offset >60     80         0
+
+The last row counts the accesses that actually fault:
+skb_shinfo()->dataref sits at head+end+0x20 and is a 4-byte atomic, so
+`lock incl` splits a 64-byte cache line only when that address lands at
+offset 61..63.  All 80 occurrences were at offset 61; the panic reported
+above was at offset 62.  Eliminating the misalignment removes every one
+of them.
+
+Same class of bug as commit 3bed3cc4156e ("net: Do not allocate page
+fragments that are not skb aligned"), which fixed the older
+netdev_alloc_frag()/napi_alloc_frag() allocators.
+
+Fixes: 53e0961da1c7 ("page_pool: add frag page recycling support in page pool")
 Cc: stable@vger.kernel.org
-Signed-off-by: Charles Vosburgh <theminershive@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260827-sctp-zero-chunk-inqueue-v2-1-2e7669c6a6cb@gmail.com
+Signed-off-by: Florian Schauer <florian@schauer.to>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260828060822.2628276-1-florian@schauer.to
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/inqueue.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/core/page_pool.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -206,8 +206,10 @@ new_skb:
- 	chunk->chunk_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));
- 	skb_pull(chunk->skb, sizeof(*ch));
- 	chunk->subh.v = NULL; /* Subheader is no longer valid.  */
--
--	if (chunk->chunk_end + sizeof(*ch) <= skb_tail_pointer(chunk->skb)) {
-+	if (unlikely(ntohs(ch->length) < sizeof(*ch))) {
-+		chunk->pdiscard = 1;
-+	} else if (chunk->chunk_end + sizeof(*ch) <=
-+		   skb_tail_pointer(chunk->skb)) {
- 		/* This is not a singleton */
- 		chunk->singleton = 0;
- 	} else if (chunk->chunk_end > skb_tail_pointer(chunk->skb)) {
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -594,7 +594,8 @@ struct page *page_pool_alloc_frag(struct
+ 		    size > max_size))
+ 		return NULL;
+ 
+-	size = ALIGN(size, dma_get_cache_alignment());
++	size = ALIGN(size, max_t(unsigned int, dma_get_cache_alignment(),
++				 __alignof__(struct skb_shared_info)));
+ 	*offset = pool->frag_offset;
+ 
+ 	if (page && *offset + size > max_size) {
 
 
