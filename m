@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214941;
-	b=Moc2P08dq8vcQNI4DJ/DaWWXHcrZ5LGS/84kFreDTpTiRMvarZ2nJlxOVnyDI7SjxAg9
-	 kepQiiNHhXVkjHN6FpAT/QuB5rphJjYFaeVMLpeUFqAAJ/a+tUiqxqBpWGjFBgYYtqMQr
-	 FjJWVWcv+dSnXBi37yXdKAZvFomGeMf9C5zHWcybpZukCwF/nGbHzlPtjaicFZ7doTEd4
-	 VoQbDWHtInP+ldjsxMjvp6IQE+QQPD7bOx66i07COiyMGq+CITFAjWDR7jPA6F7ITlVsp
-	 jAJ/JsJCNgo613FgvENaeuziKngqK4UHSEPH8FTqz2/JSAqoRI7tOUbYkh0abSJuHFA==
+	t=1793214946;
+	b=3xzTljD7R9UzMWVFToxmlCMFTYjTglGxuVfTueQzIrx6z22m4K4fxhasA8Q7/+RjIskC
+	 9hnnrD4mXf75Jigx//4DXzztKyQ+x/IHVrJN+xH2haoJBhKym3QxrG+jTZ1YFLBlgXu1h
+	 fnw296pFygZaUe00WrZ9U2bIOgYiFORLKPVHX0QnftpqGzgxIXoWj8LZ7yLgTzpvTOvvi
+	 +NdtvY+Dn2kT2RvhejeDC66zADvBL64JxYuC9PfArO8EIzVgelMAgzCPWiCNi4NBmXQBb
+	 WlL8tIwYIwqvmGTrFy2M4w1rD5IqNcERpXG4YhFGOpLMme2UMbyNqiSlxaDUhFunBxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/Y7/Os4Q7ZWM+QlsA4yBHD70V+b+KkAUzgOBlnyCjJg=;
-	b=k+tl0meaZc8FCab5ADDuPjgv+jxMxeTbr2MA7NjacC462GUtDuefYCPJs/7Svg5allLj
-	 3muUk7vMDvqTsf8kGFQtAZWxfIzjHMeLC33L8aHblK+Ghmgt/bhcYntuQNerz28vq7cXc
-	 zQagx6GSFtTGY5suVudnLtdJG1waXeiLknrbPfViVtLJ546tFsdHCaTgMOFenQYp1hhLU
-	 MXcY2Gkby+icqU2MCaylyAzexXDUPJh838Kuj2f7xwNdZEKO2kA4mpjHcukQh9DeIg8H4
-	 BfQFPDyVk0sfCVCjNzdhXEwyfzxLNNWPWZWpraNYZoIgpYf3MNuUnCi+Zhff85xAxrQ==
+	bh=h5C/av4NsRN8Vv89n1oQwdmp/lM2vZzW2IpAc2wj1BM=;
+	b=CYGSwzj41tsZVN4jBeuD5ygrlfTi7lCceSi8fLQHr8ybo1x8TMR4RBSY7I+ThZ0uebq1
+	 ZPBvhz9I2zrOFOOUabpmwLky0A5XGfAgtxf8ZTnBmZr3uEj4Y2k8hqA+xqNcC5vJ/Pihg
+	 2dOzrTKTCjDc9tcd8zYBatepQhP5Fs/fXDaGWX0POdXOVQEcSJrIIsyJI6gOptVlvd8g5
+	 1lK36w/u7v0lk2jRc+a26g6x8ye3YrfC49TPbzNV3FN1/eqXQvZwdoc1bcj4KQuvLU2D7
+	 JcZoq9344W0Q4HAcMWxSbLkw4iETpP5vp8/rs+sXslq3uRlG58+aVFHwwWiRgGerIEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XrvVEwXG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEYkhiqJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD45606A320;
-	Wed, 28 Oct 2026 19:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AE0606A330;
+	Wed, 28 Oct 2026 19:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XrvVEwXG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386D81F01825;
-	Wed, 28 Oct 2026 19:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEYkhiqJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E061F01825;
+	Wed, 28 Oct 2026 19:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214940;
-	bh=/Y7/Os4Q7ZWM+QlsA4yBHD70V+b+KkAUzgOBlnyCjJg=;
+	s=korg; t=1793214946;
+	bh=h5C/av4NsRN8Vv89n1oQwdmp/lM2vZzW2IpAc2wj1BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XrvVEwXGiF1xsgXufPru++G+mVYwgTroUUVsmTl6qUzzLZckjxv9FClaRnH2ptfof
-	 QuR39gHH6VibwqIN/1cZCFOZfrug64RaHWxnIlzHE5AOcPDTl8rxmWSS28TwyRmnqT
-	 ETFEXLtaR30QCS32uPv4mkJfyH2c/HhWfwKM3nQ8=
+	b=vEYkhiqJkXE/hiYa2HU/B9c4c/vWHgRqWskQINwoAWeUPRZwjp1Pt42cyXytThUdD
+	 vsiz5ImPm4kxoSTs+3QGjwGOH9AHrBBZ5GxioRJf/GpbEFpYixzO7R9NBr+4QgIb28
+	 kcsg5mS3Ltcj82Pnu4cWTNM2jh18Agw2xKYQifEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gou Hao <gouhao@uniontech.com>,
-	Jan Kara <jack@suse.cz>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1034/1887] ext4: delete redundant calculations in ext4_mb_get_buddy_page_lock()
-Date: Wed, 28 Oct 2026 17:52:10 +0100
-Message-ID: <20261028170522.942578280@linuxfoundation.org>
+Subject: [PATCH 6.1 1036/1887] ext4: convert bd_buddy_page to bd_buddy_folio
+Date: Wed, 28 Oct 2026 17:52:12 +0100
+Message-ID: <20261028170522.987971651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,39 +68,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gou Hao <gouhao@uniontech.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit f2fec3e99a32d7c14dbf63c824f8286ebc94b18d ]
+[ Upstream commit 5eea586b47f05b5f5518cf8f9dd9283a01a8066d ]
 
-'blocks_per_page' is always 1 after 'if (blocks_per_page >= 2)',
-'pnum' and 'block' are equal in this case.
+There is no need to make this a multi-page folio, so leave all the
+infrastructure around it in pages.  But since we're locking it, playing
+with its refcount and checking whether it's uptodate, it needs to move
+to the folio API.
 
-Signed-off-by: Gou Hao <gouhao@uniontech.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231024035215.29474-1-gouhao@uniontech.com
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Link: https://lore.kernel.org/r/20240416172900.244637-3-willy@infradead.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: bdc56a9c46b2 ("ext4: fix e4b bitmap inconsistency reports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/ext4/mballoc.c | 91 +++++++++++++++++++++++------------------------
+ fs/ext4/mballoc.h |  2 +-
+ 2 files changed, 46 insertions(+), 47 deletions(-)
 
 diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index c1968918366ee..3b9a345b94140 100644
+index 4b3635438632f..64b1e2f5367ff 100644
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -1385,9 +1385,8 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
- 		return 0;
+@@ -1351,7 +1351,7 @@ static int ext4_mb_init_cache(struct page *page, char *incore, gfp_t gfp)
+  * Lock the buddy and bitmap pages. This make sure other parallel init_group
+  * on the same buddy page doesn't happen whild holding the buddy page lock.
+  * Return locked buddy and bitmap pages on e4b struct. If buddy and bitmap
+- * are on the same page e4b->bd_buddy_page is NULL and return value is 0.
++ * are on the same page e4b->bd_buddy_folio is NULL and return value is 0.
+  */
+ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
+ 		ext4_group_t group, struct ext4_buddy *e4b, gfp_t gfp)
+@@ -1359,10 +1359,9 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
+ 	struct inode *inode = EXT4_SB(sb)->s_buddy_cache;
+ 	int block, pnum, poff;
+ 	int blocks_per_page;
+-	struct page *page;
+ 	struct folio *folio;
+ 
+-	e4b->bd_buddy_page = NULL;
++	e4b->bd_buddy_folio = NULL;
+ 	e4b->bd_bitmap_folio = NULL;
+ 
+ 	blocks_per_page = PAGE_SIZE / sb->s_blocksize;
+@@ -1388,11 +1387,12 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
  	}
  
--	block++;
--	pnum = block / blocks_per_page;
--	page = find_or_create_page(inode->i_mapping, pnum, gfp);
-+	/* blocks_per_page == 1, hence we need another page for the buddy */
-+	page = find_or_create_page(inode->i_mapping, block + 1, gfp);
- 	if (!page)
- 		return -ENOMEM;
- 	BUG_ON(page->mapping != inode->i_mapping);
+ 	/* blocks_per_page == 1, hence we need another page for the buddy */
+-	page = find_or_create_page(inode->i_mapping, block + 1, gfp);
+-	if (!page)
+-		return -ENOMEM;
+-	BUG_ON(page->mapping != inode->i_mapping);
+-	e4b->bd_buddy_page = page;
++	folio = __filemap_get_folio(inode->i_mapping, block + 1,
++			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
++	if (IS_ERR(folio))
++		return PTR_ERR(folio);
++	BUG_ON(folio->mapping != inode->i_mapping);
++	e4b->bd_buddy_folio = folio;
+ 	return 0;
+ }
+ 
+@@ -1402,9 +1402,9 @@ static void ext4_mb_put_buddy_page_lock(struct ext4_buddy *e4b)
+ 		folio_unlock(e4b->bd_bitmap_folio);
+ 		folio_put(e4b->bd_bitmap_folio);
+ 	}
+-	if (e4b->bd_buddy_page) {
+-		unlock_page(e4b->bd_buddy_page);
+-		put_page(e4b->bd_buddy_page);
++	if (e4b->bd_buddy_folio) {
++		folio_unlock(e4b->bd_buddy_folio);
++		folio_put(e4b->bd_buddy_folio);
+ 	}
+ }
+ 
+@@ -1419,7 +1419,6 @@ int ext4_mb_init_group(struct super_block *sb, ext4_group_t group, gfp_t gfp)
+ 
+ 	struct ext4_group_info *this_grp;
+ 	struct ext4_buddy e4b;
+-	struct page *page;
+ 	struct folio *folio;
+ 	int ret = 0;
+ 
+@@ -1456,7 +1455,7 @@ int ext4_mb_init_group(struct super_block *sb, ext4_group_t group, gfp_t gfp)
+ 		goto err;
+ 	}
+ 
+-	if (e4b.bd_buddy_page == NULL) {
++	if (e4b.bd_buddy_folio == NULL) {
+ 		/*
+ 		 * If both the bitmap and buddy are in
+ 		 * the same page we don't need to force
+@@ -1466,11 +1465,11 @@ int ext4_mb_init_group(struct super_block *sb, ext4_group_t group, gfp_t gfp)
+ 		goto err;
+ 	}
+ 	/* init buddy cache */
+-	page = e4b.bd_buddy_page;
+-	ret = ext4_mb_init_cache(page, e4b.bd_bitmap, gfp);
++	folio = e4b.bd_buddy_folio;
++	ret = ext4_mb_init_cache(&folio->page, e4b.bd_bitmap, gfp);
+ 	if (ret)
+ 		goto err;
+-	if (!PageUptodate(page)) {
++	if (!folio_test_uptodate(folio)) {
+ 		ret = -EIO;
+ 		goto err;
+ 	}
+@@ -1492,7 +1491,6 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
+ 	int block;
+ 	int pnum;
+ 	int poff;
+-	struct page *page;
+ 	struct folio *folio;
+ 	int ret;
+ 	struct ext4_group_info *grp;
+@@ -1511,7 +1509,7 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
+ 	e4b->bd_info = grp;
+ 	e4b->bd_sb = sb;
+ 	e4b->bd_group = group;
+-	e4b->bd_buddy_page = NULL;
++	e4b->bd_buddy_folio = NULL;
+ 	e4b->bd_bitmap_folio = NULL;
+ 
+ 	if (unlikely(EXT4_MB_GRP_NEED_INIT(grp))) {
+@@ -1577,7 +1575,7 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
+ 		goto err;
+ 	}
+ 
+-	/* Pages marked accessed already */
++	/* Folios marked accessed already */
+ 	e4b->bd_bitmap_folio = folio;
+ 	e4b->bd_bitmap = folio_address(folio) + (poff * sb->s_blocksize);
+ 
+@@ -1585,48 +1583,49 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
+ 	pnum = block / blocks_per_page;
+ 	poff = block % blocks_per_page;
+ 
+-	page = find_get_page_flags(inode->i_mapping, pnum, FGP_ACCESSED);
+-	if (page == NULL || !PageUptodate(page)) {
+-		if (page)
+-			put_page(page);
+-		page = find_or_create_page(inode->i_mapping, pnum, gfp);
+-		if (page) {
+-			if (WARN_RATELIMIT(page->mapping != inode->i_mapping,
+-	"ext4: buddy bitmap's page->mapping != inode->i_mapping\n")) {
++	folio = __filemap_get_folio(inode->i_mapping, pnum, FGP_ACCESSED, 0);
++	if (IS_ERR(folio) || !folio_test_uptodate(folio)) {
++		if (!IS_ERR(folio))
++			folio_put(folio);
++		folio = __filemap_get_folio(inode->i_mapping, pnum,
++				FGP_LOCK | FGP_ACCESSED | FGP_CREAT, gfp);
++		if (!IS_ERR(folio)) {
++			if (WARN_RATELIMIT(folio->mapping != inode->i_mapping,
++	"ext4: buddy bitmap's mapping != inode->i_mapping\n")) {
+ 				/* should never happen */
+-				unlock_page(page);
++				folio_unlock(folio);
+ 				ret = -EINVAL;
+ 				goto err;
+ 			}
+-			if (!PageUptodate(page)) {
+-				ret = ext4_mb_init_cache(page, e4b->bd_bitmap,
++			if (!folio_test_uptodate(folio)) {
++				ret = ext4_mb_init_cache(&folio->page, e4b->bd_bitmap,
+ 							 gfp);
+ 				if (ret) {
+-					unlock_page(page);
++					folio_unlock(folio);
+ 					goto err;
+ 				}
+ 			}
+-			unlock_page(page);
++			folio_unlock(folio);
+ 		}
+ 	}
+-	if (page == NULL) {
+-		ret = -ENOMEM;
++	if (IS_ERR(folio)) {
++		ret = PTR_ERR(folio);
+ 		goto err;
+ 	}
+-	if (!PageUptodate(page)) {
++	if (!folio_test_uptodate(folio)) {
+ 		ret = -EIO;
+ 		goto err;
+ 	}
+ 
+-	/* Pages marked accessed already */
+-	e4b->bd_buddy_page = page;
+-	e4b->bd_buddy = page_address(page) + (poff * sb->s_blocksize);
++	/* Folios marked accessed already */
++	e4b->bd_buddy_folio = folio;
++	e4b->bd_buddy = folio_address(folio) + (poff * sb->s_blocksize);
+ 
+ 	return 0;
+ 
+ err:
+-	if (page)
+-		put_page(page);
++	if (folio)
++		folio_put(folio);
+ 	if (e4b->bd_bitmap_folio)
+ 		folio_put(e4b->bd_bitmap_folio);
+ 
+@@ -1645,8 +1644,8 @@ static void ext4_mb_unload_buddy(struct ext4_buddy *e4b)
+ {
+ 	if (e4b->bd_bitmap_folio)
+ 		folio_put(e4b->bd_bitmap_folio);
+-	if (e4b->bd_buddy_page)
+-		put_page(e4b->bd_buddy_page);
++	if (e4b->bd_buddy_folio)
++		folio_put(e4b->bd_buddy_folio);
+ }
+ 
+ 
+@@ -2071,7 +2070,7 @@ static void ext4_mb_use_best_found(struct ext4_allocation_context *ac,
+ 	 */
+ 	ac->ac_bitmap_page = &e4b->bd_bitmap_folio->page;
+ 	get_page(ac->ac_bitmap_page);
+-	ac->ac_buddy_page = e4b->bd_buddy_page;
++	ac->ac_buddy_page = &e4b->bd_buddy_folio->page;
+ 	get_page(ac->ac_buddy_page);
+ 	/* store last allocated for subsequent stream allocation */
+ 	if (ac->ac_flags & EXT4_MB_STREAM_ALLOC) {
+@@ -3730,7 +3729,7 @@ static void ext4_free_data_in_buddy(struct super_block *sb,
+ 		/* No more items in the per group rb tree
+ 		 * balance refcounts from ext4_mb_free_metadata()
+ 		 */
+-		put_page(e4b.bd_buddy_page);
++		folio_put(e4b.bd_buddy_folio);
+ 		folio_put(e4b.bd_bitmap_folio);
+ 	}
+ 	ext4_unlock_group(sb, entry->efd_group);
+@@ -5894,7 +5893,7 @@ ext4_mb_free_metadata(handle_t *handle, struct ext4_buddy *e4b,
+ 
+ 	BUG_ON(!ext4_handle_valid(handle));
+ 	BUG_ON(e4b->bd_bitmap_folio == NULL);
+-	BUG_ON(e4b->bd_buddy_page == NULL);
++	BUG_ON(e4b->bd_buddy_folio == NULL);
+ 
+ 	new_node = &new_entry->efd_node;
+ 	cluster = new_entry->efd_start_cluster;
+@@ -5905,7 +5904,7 @@ ext4_mb_free_metadata(handle_t *handle, struct ext4_buddy *e4b,
+ 		 * otherwise we'll refresh it from
+ 		 * on-disk bitmap and lose not-yet-available
+ 		 * blocks */
+-		get_page(e4b->bd_buddy_page);
++		folio_get(e4b->bd_buddy_folio);
+ 		folio_get(e4b->bd_bitmap_folio);
+ 	}
+ 	while (*n) {
+diff --git a/fs/ext4/mballoc.h b/fs/ext4/mballoc.h
+index 24e7c7a04f674..fe4dbbbbe8725 100644
+--- a/fs/ext4/mballoc.h
++++ b/fs/ext4/mballoc.h
+@@ -201,7 +201,7 @@ struct ext4_allocation_context {
+ #define AC_STATUS_BREAK		3
+ 
+ struct ext4_buddy {
+-	struct page *bd_buddy_page;
++	struct folio *bd_buddy_folio;
+ 	void *bd_buddy;
+ 	struct folio *bd_bitmap_folio;
+ 	void *bd_bitmap;
 -- 
 2.53.0
 
