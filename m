@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216803;
-	b=C3gPRiF8lsNr5idkTNelYbFmfntNtZt//OcaAcRvG5IGsDaJd8XXqPhaQ5RYTiHwe9/y
-	 l/GYQ8DAmrHnGNrTg4bhjmusSr+yXuQymWdqnJtaZPMrOWpi2m3g6Snq41KnYwOBwmSDV
-	 FVz+NN4rNSQQHGwy4seGzbV6fXzXL41Vmsq/CD87p8c4hOjrsOArJ3SXliKTjiWsEvQGZ
-	 iWYFB2vwoBICXOxQ4+Nh+LD9krpy3N4WibtuEQOt/41R7lVaPFfrNiAxtU1ngJlv4j4xd
-	 Uk1WZcJFW9W1/13zV15qMtOUCdhQUWNd1ntevJe1BKC/IoFDjprJPTKrllcUjEl+HoA==
+	t=1793216805;
+	b=MP3etSSjkBtL5q8tP9CRrs3ctd+/qolXbWY7RedFh3rUGChbA0be6HVK6HgcZf9HXtu0
+	 eNJrp/EzXQDnQYDrqMJXa6UISaQ9kHU+MMnwQ9qx8o5mOB2Lp27hijKnI6TBit7OPTZ8c
+	 xZE/rLIXXShXOAayrR0DWDPvE7mX0/dZpx5erHRrfaOum3NOVehas/SZdpYyc1PjWMczw
+	 V7ixOQUmK4LXhChgfd4z1qE62uqMmDv9OYxjdYAXjJooz2HCrQUoH1RoIyA8RhEgfkUS2
+	 EoxG/LoYX+Rj8jz5lipUIwC75rWDixZ2zgeaIyHT7/m5i9sufwoWrF6dWBpYZGWny2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216803;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=U/tbWPAJei/3yUH5qRpKDM21sOlsFTGAyQv9ZFv00lE=;
-	b=xMlLPeW4Lh7D5WV28MIDwKcmtp4M87voK1UEn1hrErHB12sCTzTmYufhAMuiwur1e8vs
-	 /gMdeD1zht8VQCywAK3/QMugqicyNHgVAW47Rxf+lGbFllWOzw4eJqsBQxxD85kzREzZq
-	 gPbPBcdvsmTx4fL0iUXILVLsnOgZwXruip42jh2MhkdE7IZD4XsmH+ce0U82lIz0nvK7g
-	 iQ1EzOP2IiXSy5OsEydBcLpz4WV1f54mXEvuqULD6FtTPfnj6Qq7wxmElBABEPcs4HXgT
-	 /XJ8R1JAbXDhPpDgvS8MKiVeiwG6mo3Iok72SZQ7UoaTbSDmvd+7hlpNAYC6dFC/cCA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=uf3R8LgnvmKgupGlMSOecSMM42UbI9wONphSG/dA0yI=;
+	b=wliWytttGNwtEyDkG5DoFcoXj7FZUCxkHAb7V2bBehAY2I6Ux+ffdyDZBSr7B3pkvLNI
+	 TJRRD0FiTJ1L6s2nyl6WqMSZXxrvC++CSVLZWRU3ry9RaEh19k8j1+uYdJQDpawn5jAm5
+	 y80eH+ao1S2U+G/CACGUKDx4ZQ94eO/a9hXA1u42ke3gsAhFLsBl6u/aisACm1KmkvNQI
+	 c+GehbenB/2H6BE2nwsAPAFrkBI9goPvWgs+y+9hSv917SMx221BrOS6YJijLRY2nIH4d
+	 clNCiXL5bPFDdRcoEp2hN2oaJL8CGRLkmhCMvr0byI3Pyyukrgy/vjYP4rphC2MC6sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eblNsiKZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztjhe03l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3605606A31A;
-	Wed, 28 Oct 2026 19:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE1D606A31A;
+	Wed, 28 Oct 2026 19:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eblNsiKZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F9C1F01825;
-	Wed, 28 Oct 2026 19:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ztjhe03l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3ED1F01825;
+	Wed, 28 Oct 2026 19:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216802;
-	bh=U/tbWPAJei/3yUH5qRpKDM21sOlsFTGAyQv9ZFv00lE=;
+	s=korg; t=1793216805;
+	bh=uf3R8LgnvmKgupGlMSOecSMM42UbI9wONphSG/dA0yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eblNsiKZneukdwK9p41+usznZKkOLaTSgS/49EsLQ0VL38mNlkZGyElojE13hC+cN
-	 xoVi/MsZoFtBiHZPlSMNSRG8VPkFp3arzGnVZnzKcVinUzfe+auvx2cupaC6qvZVVo
-	 r2Z90vkFvwKub6BkuqEBpqFPCwFXe9205uQ/0CuU=
+	b=ztjhe03lugfrCjHbH0IY7fMfNyKQ+l/OQ5avDhmhCD+gBpRFtaAUG7CbBZ1F6UHbs
+	 XeQf9p3+exwHtUvKTlgS6Sg72+8LCHm1OSBMu1hpEjnhHE+rl4iotiJwPivqg38xGn
+	 hDcL8Cynj9g8iUc6eXz/8WOppD92f7fnKcuhRRm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Shameer Kolothum <skolothumtho@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1647/1887] iommu/arm-smmu-v3: Manage teardown with devm
-Date: Wed, 28 Oct 2026 18:02:23 +0100
-Message-ID: <20261028170536.944003365@linuxfoundation.org>
+Subject: [PATCH 6.1 1683/1887] PCI/sysfs: Add CAP_SYS_ADMIN check to __resource_resize_store()
+Date: Wed, 28 Oct 2026 18:02:59 +0100
+Message-ID: <20261028170537.756174552@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -65,144 +64,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit 2bd22a0d40503a65d243b011de146603c8ce1cbc ]
+[ Upstream commit 25ec7f57deceec633f27bc93b615f951e2ade814 ]
 
-arm_smmu_device_remove() manually frees the IOPF queue, destroys the
-vmid_map and disables the device, while the IRQs and queues are devm
-managed. devm unwinds only after remove() returns, so the cleanup runs
-in the wrong order. The IOPF queue is freed before the event-queue IRQ
-whose handler uses it.
+Currently, the __resource_resize_store() allows writing to the
+resourceN_resize sysfs attribute to change a BAR's size without checking
+for capabilities, currently relying only on the file access check.
 
-Manage all of it with devm so the unwind order is correct. Free the IOPF
-queue and vmid_map via devm actions, and disable the device from one
-registered after arm_smmu_device_reset().
+Resizing a BAR modifies PCI device configuration and can disrupt active
+drivers.  After the upcoming conversion to static attributes, it will also
+trigger resource file updates via sysfs_update_groups().
 
-This is also a prerequisite for fixing a Tegra241 CMDQV CMD_SYNC
-use-after-free in the subsequent patch.
+Add a CAP_SYS_ADMIN check to prevent unprivileged users from performing BAR
+resize operations.
 
-Cc: stable@vger.kernel.org
-Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260508043543.217179-6-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 45 ++++++++++++++-------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+ drivers/pci/pci-sysfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index a4e4849c1c8e5..79d907c57b6b6 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2968,6 +2968,13 @@ static int arm_smmu_cmdq_init(struct arm_smmu_device *smmu)
- 	return 0;
- }
- 
-+static void arm_smmu_free_iopf_action(void *data)
-+{
-+	struct iopf_queue *queue = data;
-+
-+	iopf_queue_free(queue);
-+}
-+
- static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
- {
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index f6bf0b99ce63c..528b4efc95d75 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1456,6 +1456,9 @@ static ssize_t __resource_resize_store(struct device *dev, int n,
  	int ret;
-@@ -2995,6 +3002,11 @@ static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
- 		smmu->evtq.iopf = iopf_queue_alloc(dev_name(smmu->dev));
- 		if (!smmu->evtq.iopf)
- 			return -ENOMEM;
-+		ret = devm_add_action_or_reset(smmu->dev,
-+					       arm_smmu_free_iopf_action,
-+					       smmu->evtq.iopf);
-+		if (ret)
-+			return ret;
- 	}
+ 	u16 cmd;
  
- 	/* priq */
-@@ -3317,6 +3329,13 @@ static int arm_smmu_device_disable(struct arm_smmu_device *smmu)
- 	return ret;
- }
- 
-+static void arm_smmu_disable_action(void *data)
-+{
-+	struct arm_smmu_device *smmu = data;
++	if (!capable(CAP_SYS_ADMIN))
++		return -EPERM;
 +
-+	arm_smmu_device_disable(smmu);
-+}
-+
- static int arm_smmu_device_reset(struct arm_smmu_device *smmu, bool bypass)
- {
- 	int ret;
-@@ -3898,7 +3917,7 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
- 	/* Initialise in-memory data structures */
- 	ret = arm_smmu_init_structures(smmu);
- 	if (ret)
--		goto err_free_iopf;
-+		return ret;
+ 	if (kstrtoul(buf, 0, &size) < 0)
+ 		return -EINVAL;
  
- 	/* Record our private device structure */
- 	platform_set_drvdata(pdev, smmu);
-@@ -3908,30 +3927,30 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
- 
- 	/* Reset the device */
- 	ret = arm_smmu_device_reset(smmu, bypass);
-+	if (ret) {
-+		arm_smmu_device_disable(smmu);
-+		return ret;
-+	}
-+
-+	/* Register last so it unwinds first, while the CMDQ is still up. */
-+	ret = devm_add_action_or_reset(smmu->dev, arm_smmu_disable_action, smmu);
- 	if (ret)
--		goto err_disable;
-+		return ret;
- 
- 	/* And we're up. Go go go! */
- 	ret = iommu_device_sysfs_add(&smmu->iommu, dev, NULL,
- 				     "smmu3.%pa", &ioaddr);
- 	if (ret)
--		goto err_disable;
-+		return ret;
- 
- 	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
- 	if (ret) {
- 		dev_err(dev, "Failed to register iommu\n");
--		goto err_free_sysfs;
-+		iommu_device_sysfs_remove(&smmu->iommu);
-+		return ret;
- 	}
- 
- 	return 0;
--
--err_free_sysfs:
--	iommu_device_sysfs_remove(&smmu->iommu);
--err_disable:
--	arm_smmu_device_disable(smmu);
--err_free_iopf:
--	iopf_queue_free(smmu->evtq.iopf);
--	return ret;
- }
- 
- static int arm_smmu_device_remove(struct platform_device *pdev)
-@@ -3940,8 +3959,6 @@ static int arm_smmu_device_remove(struct platform_device *pdev)
- 
- 	iommu_device_unregister(&smmu->iommu);
- 	iommu_device_sysfs_remove(&smmu->iommu);
--	arm_smmu_device_disable(smmu);
--	iopf_queue_free(smmu->evtq.iopf);
- 
- 	return 0;
- }
 -- 
 2.53.0
 
