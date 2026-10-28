@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216464;
-	b=up/YUGq/FTqOSkZKaIDFPsygR6BEbbseo4cYYcA95aqomI+bENylH8M4a7jcJMsAqIOk
-	 bWUn1xVZ+GV3aHx1C0UuKYbfjm4lTkGuBbWKOMjDpJeTSA3KZ+wm43RLY+xxmGA0ZGK+t
-	 nlnYW0rHYdTxyrT+LiFOq3Vvqy/aaeRttVaDmI1rV0IemVSqaL5OnEfQlY9tdjTvCaGLa
-	 POKyQZvwAntXgBSAkUKM0jMsGe64DWTSmel8fc6EzWSzQYBj+5kQgLVCWHPK4adG9egO7
-	 6ZmIAzMXDJYYSVSl5cuW6VGartdZV/WG6IjjP8MEOPoe48jSnFHWrHkCKpGNnR3ceAg==
+	t=1793216466;
+	b=pX4VBV72c3zovgAr7k/KeyMit+ZcnJcUZWet+nbfGjGneLQHEKYDmbsjdM3wHl38AdjC
+	 KQzjerlx3UNdP0PDODlglnRIeEMt/1zUqI364dGSBC7e/dIEW15BDXkhuvclVeN51WEyf
+	 MptsRAw/b5/1oT8npO1GkME6ekh2Zs/keXBIyIzXoSPxMzM/ZYF2TAaIr2/PIgkPetpsX
+	 LfpqOQF/VvPtKlMXaBQGtFGXxJp+JW9F7ZDCTc1vdL2YvsEEHIsBNU0SBjZXirbzVPxOn
+	 Lmmhb/G1No8NSAkQyJ0i68XxYgcSA0Y5S22v6OCg/OgD3KTloFHC1LceBDv3vd2+ptw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xbvykV8TeOpihO76jy4JXgjAn2GYBcQ3iPMVGuLuNs4=;
-	b=I/7DF7OsqWgNgFyjM0KjYcoJwjxnSGV7esnnmdu+iIHPpiZp08I465iFifnP6OWrRUv1
-	 qQEEObf0FngyP6zqxknGkzZA1W+gXUZovytrgONjB+iHLQJZ+Vb+cXvoPE2qAXQZ9Uohc
-	 3O6wNR0YE0VoZ/zKjzu+0AZDDXmUZW/3gm5MmLgjJxPO+CISKDdSJ0wb0hoEaQ7ljbwYH
-	 yyXao9vGVNMM9Sv3XWm/b5dXLPJ7ryZ6u5ereOh+qmNtMAx+uVyMrbUEDoZLxuxl+2ByZ
-	 VcBi0Pvgw7zZTIxM4lv4i5gpDvUG0pOnuMMsN0xvP/ESE8dzafeQKM2NldOPq0OqULw==
+	bh=YfaizDnQkKn1EZpJfr4phO6UJO7eNOHMw3XbpNts7B4=;
+	b=tO/OzxmCo8rDpnhc0mTm5dW7vFk8z2Um1maWcURtvTsSLF9VfeDObqT1m//phgvpLR5p
+	 qNyPJWvE/LmsMzRu4EpEf1km6JUhVFfy4wfyYs/VdAw8Cp4PSYZET8A9pLkH2sW1M6+Vd
+	 u8ZQODG5YUpPIkLJtbaK9qBLIoLJ7LuJq95ZjfUsQ1WKfSfA5j/N5uHTie2fNv6TI+21N
+	 wI51XliujYo7MDrFhUlyA/4iY2yO4M287nPtm4lwyuutepiiwWdYNMI7Si49VGv+ObZfb
+	 F+9U2aZ0y/WQx1SZhsDYTXB//ed+LrLfidL/XGLtp41xc8adedmIXQRInPee1g2VJtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ajq2IjQ+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nK6rJO2/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2D5606A32F;
-	Wed, 28 Oct 2026 19:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF41606A32E;
+	Wed, 28 Oct 2026 19:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ajq2IjQ+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2321F01828;
-	Wed, 28 Oct 2026 19:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nK6rJO2/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2E21F01828;
+	Wed, 28 Oct 2026 19:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216463;
-	bh=xbvykV8TeOpihO76jy4JXgjAn2GYBcQ3iPMVGuLuNs4=;
+	s=korg; t=1793216466;
+	bh=YfaizDnQkKn1EZpJfr4phO6UJO7eNOHMw3XbpNts7B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ajq2IjQ+ehFWfxx1yp7+2Puor/y+U6GiJdUGvHqSsETA9+dyxBqHFuEvaRsgDW99X
-	 YTiFnXpStPsoz1H/rRKvVMKWnV9cEik+YSLu2rCuiBFW7nsgrhuvm+V/46X5oktuJX
-	 kr3ZMgMOjFFcwqgeJ1nrzxIa1ry1DvD5XWmDPjao=
+	b=nK6rJO2/WobE/cOx2jwbNzdS/l6iB1eGWOiw0aJyNmTo7aCxcmOWrLHMeDrXkamye
+	 hOG6olXHY6HAr+FmtJfuubLo0Vk+NwGUJeu/4wrAdZxBHzKR38ava1RhoMkBVRDhzw
+	 fQlOFNSd4KVI9/9oUTTzZLt3tuDsG7/EjsP1bXsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Amery Hung <ameryhung@gmail.com>,
-	Leon Hwang <leon.hwang@linux.dev>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1566/1887] bpf, cgroup: Fix storage null-ptr-deref after replacing prog
-Date: Wed, 28 Oct 2026 18:01:02 +0100
-Message-ID: <20261028170535.102550483@linuxfoundation.org>
+Subject: [PATCH 6.1 1567/1887] btrfs: qgroup: fix a wrong length calculation in qgroup_free_reserved_data()
+Date: Wed, 28 Oct 2026 18:01:03 +0100
+Message-ID: <20261028170535.126377193@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,73 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 3f562c537e9ecf4bc5e206cfffc2cc047f1b7e94 ]
+[ Upstream commit 9102b179512e11644fb0489ae62010a09afa199c ]
 
-Syzkaller reported a storage null-ptr-deref issue after replacing prog.
-This occurs in the following scenario:
-1. prog A, an empty prog, is attached to a cgrp.
-2. prog B uses BPF_MAP_TYPE_PERCPU_CGROUP_STORAGE and calls the
-   bpf_get_local_storage helper.
-3. link_update is called to replace prog A with prog B.
+In that function, we round down the start position and round up the
+ending position.
 
-The reason is that __cgroup_bpf_replace fails to alloc and assign the
-required cgrp storage for the incoming replacement prog. Consequently,
-the new prog inherits an uninit storage, leading to null-ptr-deref panic
-when kick the new prog.
+But during the calculation of @len, we use "round_up(start + len,
+sectorsize)", which is the rounded up end position, not the rounded up
+length.
 
-Fix this by rejecting a link update if new_prog's cgroup storage is
-incompatible with link->prog.
+Which results a much larger length, and later we are still using
+"start + len", which is completely incorrect.
 
-Fixes: 0c991ebc8c69 ("bpf: Implement bpf_prog replacement for an active bpf_cgroup_link")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260728132336.2857800-1-pulehui@huaweicloud.com [0]
-Link: https://lore.kernel.org/bpf/f87b53c0-8f00-45a6-82db-8242fa9b143f@huaweicloud.com [1]
-Link: https://lore.kernel.org/bpf/20260807104403.1013064-1-pulehui@huaweicloud.com
+Fix it by declaring a local @aligned_start and @aligned_len and use them
+instead.
+
+Fixes: bc42bda22345 ("btrfs: qgroup: Fix qgroup reserved space underflow by only freeing reserved ranges")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/btrfs/qgroup.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 6158b021f617f..3771a041d9de5 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -797,6 +797,20 @@ static void replace_effective_prog(struct cgroup *cgrp,
- 	}
- }
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index e927111567fa2..ff3cced9eff02 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3878,12 +3878,13 @@ static int qgroup_free_reserved_data(struct btrfs_inode *inode,
+ 	struct ulist_node *unode;
+ 	struct ulist_iterator uiter;
+ 	struct extent_changeset changeset;
++	const u32 sectorsize = root->fs_info->sectorsize;
++	const u64 aligned_start = round_down(start, sectorsize);
++	const u64 aligned_len = round_up(start + len, sectorsize) - aligned_start;
+ 	u64 freed = 0;
+ 	int ret;
  
-+static bool cgroup_bpf_storages_compatible(struct bpf_prog *old_prog,
-+					   struct bpf_prog *new_prog)
-+{
-+	enum bpf_cgroup_storage_type stype;
-+
-+	for_each_cgroup_storage_type(stype) {
-+		if (old_prog->aux->cgroup_storage[stype] !=
-+		    new_prog->aux->cgroup_storage[stype])
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
- /**
-  * __cgroup_bpf_replace() - Replace link's program and propagate the change
-  *                          to descendants
-@@ -834,6 +848,9 @@ static int __cgroup_bpf_replace(struct cgroup *cgrp,
- 	if (!found)
- 		return -ENOENT;
+ 	extent_changeset_init(&changeset);
+-	len = round_up(start + len, root->fs_info->sectorsize);
+-	start = round_down(start, root->fs_info->sectorsize);
  
-+	if (!cgroup_bpf_storages_compatible(link->link.prog, new_prog))
-+		return -EINVAL;
-+
- 	old_prog = xchg(&link->link.prog, new_prog);
- 	replace_effective_prog(cgrp, atype, link);
- 	bpf_prog_put(old_prog);
+ 	ULIST_ITER_INIT(&uiter);
+ 	while ((unode = ulist_next(&reserved->range_changed, &uiter))) {
+@@ -3895,12 +3896,15 @@ static int qgroup_free_reserved_data(struct btrfs_inode *inode,
+ 
+ 		extent_changeset_release(&changeset);
+ 
+-		/* Only free range in range [start, start + len) */
+-		if (range_start >= start + len ||
+-		    range_start + range_len <= start)
++		/*
++		 * Only free the range within
++		 * [aligned_start, aligned_start + aligned_len).
++		 */
++		if (range_start >= aligned_start + aligned_len ||
++		    range_start + range_len <= aligned_start)
+ 			continue;
+-		free_start = max(range_start, start);
+-		free_len = min(start + len, range_start + range_len) -
++		free_start = max(range_start, aligned_start);
++		free_len = min(aligned_start + aligned_len, range_start + range_len) -
+ 			   free_start;
+ 		/*
+ 		 * TODO: To also modify reserved->ranges_reserved to reflect
 -- 
 2.53.0
 
