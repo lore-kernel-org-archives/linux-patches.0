@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208841;
-	b=49lzkjAl8paAYEv8utoHFzdW361td4bbt++UE6jciiOWNAt3gStwFaQlpozQu8xg2pdA
-	 2g2jl7g4ikX2FkuX9M2/+sSBQubxx1MhEOyAfUWzh5Ign1vSR7+dVsmY1Rwl1aS54I4Ip
-	 3Rn7I2E06spCndn4E9PEXYAy4U9Gm4KTlH6g3+VJEH04iFnlFFnIsjdQaD4ZSWmOo1aKA
-	 LXOES6srhoHMT1l1is0Swdlc55L5o2+J5+GbLxIaZM/k1UyIzQQVJkzfBk1Y3hqiW1VWF
-	 B3ut3UGealNLRWgurtJjrAYLgl7fpmpgSm9Bo95frAkRmwlalK66o0H04JSV8u1yG1Q==
+	t=1793208844;
+	b=4YS4L9IlPjz35vGiFiGAPT59BNSPloJuylStnBIeraOv0TQ+WgnKvwPoJFlT49GUkL/A
+	 zf/r5P96vaDfw3x8IjDjJLHsRSzjHwe6nr+DK4OnUNISHt89ROYuiy4c4zIgvM4ODBUCs
+	 er9CUnLnt288k2TIVS0qUJ7LVDUA1U4VJeyuZNlsPDYkQSHRTRfa73sI+P6z4za+tcqtb
+	 BCqjw+q2klT19Ss/rRs+s37BDejZxNymghz73AegCa1DnYz2anqtbrYvnp75RQ1/d54kI
+	 RA7W7gAbz6gq9N1vOiEXSIIxEbYK+I7tvVmxFG3IRuRZRXoQ5K86oRbbpVal7/CIJRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208844;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ibNMJEGtxsC3jc24bviUWBxU1+5yoY+ZOpLKgJtTAnE=;
-	b=DNKpo7CD1XnyulQTccaRcs7v4yyYCKIGSrfFfYEBCd5AtMqE6bOnAHH2wbkIrPElHdRp
-	 iv399IYg9SaDg2XdQBLFDsrVd6FIKXz+tXxK1X2SqVLQbzH9p5pN79oRs3hQuOQoDh9zO
-	 tFDBDRhHyihrs0gs/pkykqxZVy48ZZ3G62LlvFyF85THVZjE+QLSIWJ+hmUNaUWcHBNCV
-	 MY5l4Ly5BkZ2xLVxMmys6Ifs0G1hjteO9So41thW8kktVuGReLONNChVjgx7HGCkdRYGT
-	 fJzb9pai8NUqpItAE2NDo1vM/mC6hXLBgQKfluq7PvsrQi9Xs7MWKS8uWVHYkOlaVFw==
+	bh=DxOr/FaBMLWKer7RSA3oJjqRRp79iaWeDXfFMIx4fPI=;
+	b=2oN5xT8FFCv0rjwfG8M3qscEiLZUsWD0J3VJExB6saDR+iX/RXsIl5yXi1U3OgV9WaFE
+	 ZOqnsCP2IrxDWkvVzV2JpvP/+NevTEN3RK+m+NupRBNh7FCVMCyvGD73UAyKrPkMA0+vG
+	 jZNNmzQi6ABnW7B0UBA1AKkY6LxOGUkpNd4oKKmvDO7faZpvYRMv0TVhioM/CGRLYGK+K
+	 KU9bnGU3fLLwd89Dd99MAA75J0OJ6Z3l6Y/QhT7vgx9ymSSr7iYHbXxVOgJPQzOCWNdGH
+	 l9kzMZSIH5I/eUT9sQ2qaOY0e9Z9E1ZhliNXiBlXmEEriOoriYLzmRVHrxHaRrISBjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfLf+Rw+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzKKlhGE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502C3606A31A;
-	Wed, 28 Oct 2026 17:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FC8606A31C;
+	Wed, 28 Oct 2026 17:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfLf+Rw+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926D71F01825;
-	Wed, 28 Oct 2026 17:34:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzKKlhGE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EA31F01825;
+	Wed, 28 Oct 2026 17:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208840;
-	bh=ibNMJEGtxsC3jc24bviUWBxU1+5yoY+ZOpLKgJtTAnE=;
+	s=korg; t=1793208843;
+	bh=DxOr/FaBMLWKer7RSA3oJjqRRp79iaWeDXfFMIx4fPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dfLf+Rw+m75wrM31oarBZRctQnL9PwqrgM2d0Xx5vJoa7GAifKPL7TU3URKxDfA1b
-	 9V7SAD2+oS+fr2hDaVA+aftkTcNyhg4fLH4ylUzFAYAsLTmZk1FbAmCDZtMaZOuY2M
-	 qSCxmpKI7uNtdff4YIhikjlGuhNvcs5SFYOTLHws=
+	b=YzKKlhGEGo5XE0ryGzytLb1gMqljF9jgL41JbWf6cdjhBPkQB4TDs9UWWEBwbCAQf
+	 zXqgm7WF8Zi11bw0li4DMmPHNeXnVZLIWoIF9RAZorWkiFBOUPGvtCmPmaFlo/UyJY
+	 FRIzZkBw09zr/Gpjs6IMZeoLVg64TxbkYItkwkFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
 	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.10 261/516] ALSA: seq: Clear variable event pointer on read
-Date: Wed, 28 Oct 2026 17:56:53 +0100
-Message-ID: <20261028170009.675223686@linuxfoundation.org>
+Subject: [PATCH 5.10 262/516] wifi: wcn36xx: fix heap overflow from oversized firmware HAL response
+Date: Wed, 28 Oct 2026 17:56:54 +0100
+Message-ID: <20261028170009.699730897@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,44 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 705dd6dcbc0ea87351c660c1a6443f85f1001c76 upstream.
+commit 88a240d86d3d64521f9194abe185ac71cc74d0bd upstream.
 
-snd_seq_read() copies a queued variable-length event header to userspace
-before expanding the payload. Queued variable-length events use
-SNDRV_SEQ_EXT_CHAINED internally, and data.ext.ptr points at the first
-extension cell.
+The firmware response dispatcher copies all synchronous HAL responses
+into the 4096-byte hal_buf without validating the response length. A
+response exceeding WCN36XX_HAL_BUF_SIZE causes a heap buffer overflow
+with firmware-controlled content.
 
-The read side strips SNDRV_SEQ_EXT_* bits from data.ext.len before the
-copy, but it leaves data.ext.ptr untouched. A userspace sequencer client
-can therefore write a direct variable event to itself and read back the
-extension-cell kernel address from the returned header.
+Add a bounds check on the response length.
 
-Clear the temporary header pointer before copy_to_user(). The original
-queued event remains unchanged and is still passed to
-snd_seq_expand_var_event(), so payload expansion keeps using the
-internal chain.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20260607004129.61345-1-kylebot@openai.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260421135018.352774-2-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_clientmgr.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/wcn36xx/smd.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -441,6 +441,7 @@ static ssize_t snd_seq_read(struct file
- 			struct snd_seq_event tmpev;
- 			tmpev = cell->event;
- 			tmpev.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
-+			tmpev.data.ext.ptr = NULL;
- 			if (copy_to_user(buf, &tmpev, sizeof(struct snd_seq_event))) {
- 				err = -EFAULT;
- 				break;
+--- a/drivers/net/wireless/ath/wcn36xx/smd.c
++++ b/drivers/net/wireless/ath/wcn36xx/smd.c
+@@ -2835,6 +2835,10 @@ int wcn36xx_smd_rsp_process(struct rpmsg
+ 	case WCN36XX_HAL_8023_MULTICAST_LIST_RSP:
+ 	case WCN36XX_HAL_START_SCAN_OFFLOAD_RSP:
+ 	case WCN36XX_HAL_STOP_SCAN_OFFLOAD_RSP:
++		if (len > WCN36XX_HAL_BUF_SIZE) {
++			wcn36xx_warn("HAL response too large: %d\n", len);
++			break;
++		}
+ 		memcpy(wcn->hal_buf, buf, len);
+ 		wcn->hal_rsp_len = len;
+ 		complete(&wcn->hal_rsp_compl);
 
 
