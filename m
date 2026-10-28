@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209364;
-	b=RXyze0WPHT0rMG+0f4c1Oj5Fu33Xl2LfGquo+w/TcuHf28XZVfGC2vQmWOATDxZqawG1
-	 l1gazIBgDiSqQVBlfda872dPoaEXlliLL0/5IDFqWtnI1lRThlIyDUJ6YN6R8jMY4DLoe
-	 V4wUuY7K6bbrIra1GHC6ep13kOn/e4us+nOffMJKW4IbLwB0/bZ3Q7qmfauUyVmnx45px
-	 AS9d79Unfkwg6DBtNc0j1ybALskCbpEWQVSknYQUQkPSXhIoE+hS1lcpU/hE6wNh7FGFm
-	 i8fv1cbuAQJhbhQROyctETjQcCfj8p0im5bkytKaRhsf9qS0rd+s+fi4if0tLMHKyuA==
+	t=1793209367;
+	b=YVSry0CQP8hruJ6BDnF9C1h0gmEaeIJr/6Ua0pG5tat22STramc2kgQ3GM7tbyYNMQ/O
+	 4Y1iDBUlkAYjV7QAwUYdWD1niYgFra+QCjy2B8D2eGUZHQsWtjnCr1gReFDDsn+21wPbu
+	 Jt8oseTCUnG3S8Cy+0zIdxN6NQcDqcB5dl7Cz93FJDJ3Xg7OIPlHcygVDRZzppUnjDFul
+	 VpZ0gVdo+y94lAQYibvR7DaW/c/RtPCrBD4Hf1CoqeBl52JJme8TNaEiIGMKv1wry+2b9
+	 ev/6/8mrPzzYXdVIEawZP8PCtADFembqSBE4IGT+ErcMvYZRxK+8wvaRis032neyRqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209364;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209367;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gA6eAkBd7tbZj+7CZgPOSS7BwQWWRwOa7g/VxU+Kn/E=;
-	b=fUTiXP+UITrT621us8YFHNkBY8R0x9gj+CpIGY/gcyMyY6rZ2tQGKlI7Mih5P0uvgAcy
-	 GiL+OBqM6WeMYpnmMwXhSsPJdy+GsV6weqCXkzGTq20KQ/o0G5sWDgUbzFAMUrUN3GeCn
-	 jI3sRuOdph3tGJ/RVaaqiYL266u3DnpefRy94GoOJPA/W0PcQsTV75MW+uo/bOEvDdXJ1
-	 fAY5q9KzAYXI9w2s6/nk/O7BFnVgnOnarIVudpdkoCai2/KiTGAZRsH2jXqzYJ4HuSF5K
-	 h/ya2xJ7rKm1NN3O9CdjtCnOiwL+ONP4W9J88ABe3iSOqqc3UPj7FlXY/FWIbGKl8NQ==
+	bh=cxMdapTVbyF7ODDTVncyRysWqrdWdEji9VSwNncEpB0=;
+	b=vZdttML64/UBzaj/jKYgiTyyYXs5K3bGjGL/YFrApZHZyFg3ALG9AVSj8pUjWk8SvH1x
+	 DYYuxHdwcJpZVMyTj6ZMrL3UF2swX/CPZ3H/eJ6W262tiTvlUd1oO7cSHDn59fbOJlA5H
+	 wPfb6IikcXdlNsLuerRgrkYqrlPtstnet7enqP3lBMFDfs3LT172o0zjeDndga21HUdEB
+	 dZKZWQf5rfm57EJsQ5GS6RPmeIprx1EOV7i7mxQSgAuSOE2Oi7OJ2jzHE0pBeFbvTcoB6
+	 y950js3fkbYpU+dw8/UkWLtCGcSTKwvs23yaXcZDyyTo/Mr4Cyll30WLDYeVZ6SbLHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eouswU2e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RB549wiv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1233606A31A;
-	Wed, 28 Oct 2026 17:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CD8606A31A;
+	Wed, 28 Oct 2026 17:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eouswU2e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425B31F01825;
-	Wed, 28 Oct 2026 17:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RB549wiv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DE91F01825;
+	Wed, 28 Oct 2026 17:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209363;
-	bh=gA6eAkBd7tbZj+7CZgPOSS7BwQWWRwOa7g/VxU+Kn/E=;
+	s=korg; t=1793209366;
+	bh=cxMdapTVbyF7ODDTVncyRysWqrdWdEji9VSwNncEpB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eouswU2eNBCEXJBxZoYv97ON+RZy5gfE+rTAjp+q2iArunqZyrTqyjtgHKGtJsR4k
-	 t287d8ZcXLKXilnKXpFhzrxf2ZYe9W93AzbqUlP14kQMpaLV8epCwuUvlJiWdCL0sj
-	 11lq1xxnXbV1p96cnaUMd1MZqH4oAae1gak5UTqA=
+	b=RB549wivCQISTK5wkCNsEeF6rKDewJrVQOzDze0YBff6tS9bjfhBBYk071CshqRAd
+	 YvdpndzJxZ8dHMK6A6tavxSz1z9yKJEGJO4md0attEeg4CmHu6uwCbcRnOZZPTd9C7
+	 ELT2wQ/XC39qoyIPapjdyT3Aq9pbdhr207ljttGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Oleg Nesterov <oleg@redhat.com>,
+	Kyle Zeng <kylebot@openai.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 445/516] exit: fix lost-update race on the child_subreaper bitfields
-Date: Wed, 28 Oct 2026 17:59:57 +0100
-Message-ID: <20261028170014.022818955@linuxfoundation.org>
+Subject: [PATCH 5.10 446/516] pipe: preserve existing fasync readers on writer setup failure
+Date: Wed, 28 Oct 2026 17:59:58 +0100
+Message-ID: <20261028170014.047281488@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,89 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 28d2905d77bc2e7c20260a6bc6b4179bdf95cb06 ]
+[ Upstream commit 40bb03d3ea6f6a915218508819ecc4d7a7fa260d ]
 
-is_child_subreaper, has_child_subreaper, autoreap and, with
-CONFIG_POSIX_TIMERS=y, timer_create_restore_ids are 1-bit fields that
-share one memory location in struct signal_struct.  A store to any of
-them is a read-modify-write of the whole word, and three of the stores
-run without a common lock:
+F_SETFL and FIOASYNC decide whether to invoke ->fasync() before
+pipe_fasync() takes pipe->mutex. Two enables of one O_RDWR FIFO can
+therefore both enter the callback.
 
-  - PR_SET_CHILD_SUBREAPER writes me->signal->is_child_subreaper with
-    no lock held.
+fasync_helper() allocates before checking for an existing entry. If the
+first enable installs both entries, a second enable can update the
+reader entry and then fail the allocation for the writer entry. The
+error path removes the pre-existing reader entry, clearing FASYNC while
+the writer entry remains registered. __fput() then skips ->fasync(), so a
+later pipe notification can dereference the freed file or its f_owner.
+An unprivileged memory-pressure reproducer triggers a KASAN
+slab-use-after-free in send_sigio() through this path.
 
-  - propagate_has_child_subreaper(), run by walk_process_tree() from
-    the same prctl in an ancestor, writes p->signal->has_child_subreaper
-    of every descendant p under read_lock(&tasklist_lock), which does
-    not exclude the other writers.
+Keep the reader helper's result and undo the registration only if this
+call added it. The pipe mutex serializes changes to both lists, so a
+failed new registration still removes its reader, while a failed
+duplicate preserves the existing registrations and FASYNC. Successful
+duplicate enables continue to update fa_fd as before.
 
-  - PR_TIMER_CREATE_RESTORE_IDS writes
-    current->signal->timer_create_restore_ids with no lock held.
-
-When a process calls prctl(PR_SET_CHILD_SUBREAPER, 1) while an
-ancestor's PR_SET_CHILD_SUBREAPER walk visits it, or while another
-thread of the same process calls prctl(PR_TIMER_CREATE_RESTORE_IDS),
-the read-modify-write sequences interleave and one of the bits is
-silently lost:
-
-  - If has_child_subreaper is lost, the process's orphaned descendants
-    are reparented straight to init when it exits: find_new_reaper()
-    tests father->signal->has_child_subreaper first and never looks for
-    the ancestor subreaper.  The service manager that registered as the
-    subreaper never gets SIGCHLD for them and cannot wait() on them.
-
-  - If is_child_subreaper is lost, the prctl returned 0 but the process
-    is not a subreaper: orphans of its descendants skip it and are
-    reparented to the next subreaper up or to init.
-    PR_GET_CHILD_SUBREAPER reads back 0.
-
-  - If timer_create_restore_ids is lost, the prctl returned 0 but
-    timer_create() does not restore the requested timer ids (or keeps
-    restoring them after _OFF), and _GET reads back the old value.
-
-Documentation/memory-barriers.txt requires all fields of one bitfield
-to be protected by one lock for exactly this reason.  No lock is taken
-or documented for these flags, and the prctls need no privilege, so any
-process can hit the race against its own ancestors or descendants, or
-between two of its own threads.
-
-Make is_child_subreaper and has_child_subreaper separate bool members.
-Each store then has its own memory location and no read-modify-write
-of a neighbour.  The readers and their locking are unchanged.
-
-autoreap stays a bit-field and so shares a memory location only with
-timer_create_restore_ids.  That pair is race-free: autoreap is stored
-exactly once, in copy_process() before the new signal_struct is
-reachable by any other task, and timer_create_restore_ids is only
-stored to the signal_struct of an already running process.
-
-Fixes: 749860ce2427 ("prctl: propagate has_child_subreaper flag to every descendant")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261011123440.768054-1-nickolai@csail.mit.edu
-Acked-by: Oleg Nesterov <oleg@redhat.com>
+Fixes: 76398425bb06 ("Move FASYNC bit handling to f_op->fasync()")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/signal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/pipe.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
-index 80cb96ab7bcb9..3a1b4c5118cd2 100644
---- a/include/linux/sched/signal.h
-+++ b/include/linux/sched/signal.h
-@@ -119,8 +119,8 @@ struct signal_struct {
- 	 * process will inherit a flag if they should look for a
- 	 * child_subreaper process at exit.
- 	 */
--	unsigned int		is_child_subreaper:1;
--	unsigned int		has_child_subreaper:1;
-+	bool			is_child_subreaper;
-+	bool			has_child_subreaper;
- 	unsigned int		autoreap:1;
- 
- #ifdef CONFIG_POSIX_TIMERS
+diff --git a/fs/pipe.c b/fs/pipe.c
+index 588fe37d8d955..2a3d673fe3d63 100644
+--- a/fs/pipe.c
++++ b/fs/pipe.c
+@@ -742,9 +742,11 @@ pipe_fasync(int fd, struct file *filp, int on)
+ 	if (filp->f_mode & FMODE_READ)
+ 		retval = fasync_helper(fd, filp, on, &pipe->fasync_readers);
+ 	if ((filp->f_mode & FMODE_WRITE) && retval >= 0) {
++		int read_ret = retval;
++
+ 		retval = fasync_helper(fd, filp, on, &pipe->fasync_writers);
+-		if (retval < 0 && (filp->f_mode & FMODE_READ))
+-			/* this can happen only if on == T */
++		/* Undo only a reader entry added by this call. */
++		if (retval < 0 && read_ret > 0)
+ 			fasync_helper(-1, filp, 0, &pipe->fasync_readers);
+ 	}
+ 	__pipe_unlock(pipe);
 -- 
 2.53.0
 
