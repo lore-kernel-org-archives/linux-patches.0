@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213078;
-	b=FiV06jQuu7Dz4LpHQibEFrOzB/ii511GY5HfgTjjMvmSSZfPKLpwM8Q8w+SWfVqNRfPb
-	 0U8IUKISbqM3irBKaX4KcNhX9ZbDkZYiOc1R50lAn8ri1UcJPTjnaXsX5vKhixmQPq+Vu
-	 TDX3LwyZhSH0XhX239oFRfxy/ijrROB3+fbjNX3ES4ajpnu9xiFHwcK04CFpZHOz9a7P5
-	 eMUdq+KGmRjBKzAgARiXNZYDrRFMq37w1LhiM+6ll4jkHirpR2fbSrNabMhyt625V0WkV
-	 FkG3RfM/dyqCqnrxGZVaCom7R0QhP0qG6xBZM3eSi4LdsA7x8zBLhCwGOp9nTHvfXBw==
+	t=1793213081;
+	b=SpFVysTxc6Ap6uygRk8MfSw6H2hwywIjmlQNlm9JhLvy0nCmRkeXlkSTDsuwn1MgY9a9
+	 4h2Z2HGa+T+/1S/anKu55zu78zODJZht5FlLEmQNfxHybOYMEYcQH0hQ/gKqO23VFKi+K
+	 vnRh6awpcgi2wsIAyDKcp0DEmPxlRnRf2c6HNrWktdXo/e4geM89gcOJzt0joNExMWFHT
+	 vpEcUwNj3IbZxPJ8HChjYlgZwSWBg2EqS+H8vmjEqur7qrsr6YcMBWvPJ27arKUq5jK/X
+	 YqySGjcqutRus/4hBb/MXe84s8tkoxnzOqhDGmljjrE5+KzyPykt5W++sTlQZvQjRsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213078;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213081;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=dSZ7rbxMfCLuUjqxn02W3CU1rV3Uc/SkRiRWqp1aaCA=;
-	b=QfhPWe0GQ6ky/rKt9SgVT/oT8Bp8jH4BNvkzG6oWLFP4+k84fpKGOL7O1KASyrt5gjSq
-	 XAUNh8TmDRVVzNobEexWxVYM6gJJGls0/Y3xpz4X5TV38EloodYtYQjt8+5f9OttQzQWv
-	 yLlVpD919U9zCHwlNEmgA1eElfS7OiCJhL4NWNiGY2pN1zzZTPTPXp/fCanGURRboT6xL
-	 ZFgNB/Ux+ckAjbd/noS+awr//s6T65pFTqWrU+K4DfTNqeDtBexuCcYioHQCXIDG+o1aF
-	 E78wCsVYG90Hy5GVY/s9aTACqiXiO6zMhsjIE93mwLnFBI2mV7pl0s2UvpLOUZZOFaA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=6gTOZbkz6g6vmx5tQJJtkB3IORj3ePqRmoT/VnPhgio=;
+	b=kikA4pooiQ67ViTA5EJmZ3O/J/fEUjI4NOQUbtOSu4yN63u4+9CCqgHRyf3ollaYDZAh
+	 YIf7BC5FtfFaJQ6D6kuAAUEJUL4QYi5+3hcV7LkdW9kwZ1HDln6kj6fveO0dIKp4kdjRL
+	 C0DakUHoMbeYQU5ynvWOd2oNDS1bKp+ir+EeveoPuxvVcpeM06inSJus3U2GhxwyKgzJu
+	 jYHZdWAppxrtSeJoEl0VKfsvlwMts/ek/nSatRfTg7bR8BrAd9tkRZX/Q8KYR80iF50Vw
+	 vYPnHqRgQZBEzmUIZTKEACLtGmvLLRrbapgFysZ3pfaDkCcjCV6EBjjPxFTyVQpddRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmAkTm8g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gesfcYal;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96830606A31D;
-	Wed, 28 Oct 2026 18:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6647F606A31D;
+	Wed, 28 Oct 2026 18:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmAkTm8g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44341F01828;
-	Wed, 28 Oct 2026 18:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gesfcYal
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6AE1F01825;
+	Wed, 28 Oct 2026 18:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213078;
-	bh=dSZ7rbxMfCLuUjqxn02W3CU1rV3Uc/SkRiRWqp1aaCA=;
+	s=korg; t=1793213081;
+	bh=6gTOZbkz6g6vmx5tQJJtkB3IORj3ePqRmoT/VnPhgio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vmAkTm8gWwoK25QX35Ot51NAuZOxvfg1Mugkq2yfGW7rWcMDLGpdJguF1VWNjLCa9
-	 aWZLLXDTss1VKtQVK80tmekDhYe0HzixGwc1SNVpDVymhY2FF6I4sKIZ8enxAtqM+9
-	 JqcneQEpdyhE05CphGaUJwoxx19uZww9gbx+Pv7g=
+	b=gesfcYalpK2OnFIG+Py79QvbN1UztT5XkPEz0R2WTNa+RCMing90r+AbmDYukPaIW
+	 4DaL3jJTkmoe0sowQPDKMpDODrse4sQDae/9w2k7WPYKhw1jW8gDPu684X9E8iF+pp
+	 b6OkQ8ZZVLSJwi6IuTrZZUUQi5X8ocV3V3qu0mys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beata Michalska <beata.michalska@arm.com>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Jinseob Kim <kimjinseob88@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0378/1887] arm64: errata: Add Cortex-A725 erratum 3821522 workaround
-Date: Wed, 28 Oct 2026 17:41:14 +0100
-Message-ID: <20261028170507.832894396@linuxfoundation.org>
+Subject: [PATCH 6.1 0379/1887] iio: buffer: serialize buffer teardown with mode claims
+Date: Wed, 28 Oct 2026 17:41:15 +0100
+Message-ID: <20261028170507.856188528@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,129 +65,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Beata Michalska <beata.michalska@arm.com>
+From: Jinseob Kim <kimjinseob88@gmail.com>
 
-[ Upstream commit 45f7304679875eb000d67e194090ee7abd05c89c ]
+commit 84bb0fc46ccf6a545b8fdf57cda83770186ed8dd upstream.
 
-Cortex-A725 erratum 3821522 affects the CNT_CYCLES event, which can
-incur a significant increment error when a CPU enters and subsequently
-exits WFE or WFI, and may no longer track the system counter
-frequency.
+Buffer-mode claims hold mlock to guarantee that the device remains in
+buffer mode until the claim is released. Normal buffer updates take
+info_exist_lock followed by mlock in iio_update_buffers().
 
-The AMEVCNTR01_EL0 counter is used as the AMU constant counter for
-frequency invariance and CPPC FFH feedback counters. Wire the affected
-Cortex-A725 range into the shared broken AMU constant-counter capability
-so the affected counter is treated as unavailable by returning zero in
-the AMU counter paths. This prevents the broken counter from being used
-as a reference source.
+However, iio_device_unregister() disables and deactivates all buffers
+without taking mlock. This can invalidate buffer state, including
+active_scan_mask, while a buffer-mode claim is held.
 
-The erratum can also affect PMUv3 users of the CNT_CYCLES event,
-but this workaround intentionally does not change PMU event handling.
-Hiding or rejecting the PMU event from the erratum code would change
-the perf-visible PMU event interface, including raw event selection,
-and would need a separate PMU-specific approach rather than being
-folded into the AMU reference-counter workaround.
+Take mlock in iio_disable_all_buffers() so that unregister honors the
+mode-claim lifetime guarantee. The info_exist_lock -> mlock ordering
+matches iio_update_buffers().
 
+Fixes: 0a8565425afd ("iio: core: introduce iio_device_{claim|release}_buffer_mode() APIs")
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Jinseob Kim <kimjinseob88@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Beata Michalska <beata.michalska@arm.com>
-Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Beata Michalska <beata.michalska@arm.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+
+[ Backport by Jinseob Kim to 6.1.y: mlock is still in struct iio_dev,
+  so use indio_dev->mlock instead of iio_dev_opaque->mlock. ]
+
+Signed-off-by: Jinseob Kim <kimjinseob88@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arm64/silicon-errata.rst |  2 ++
- arch/arm64/Kconfig                     | 22 ++++++++++++++++++++++
- arch/arm64/kernel/cpu_errata.c         |  4 ++++
- arch/arm64/kernel/topology.c           |  9 +++++----
- 4 files changed, 33 insertions(+), 4 deletions(-)
+ drivers/iio/industrialio-buffer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
-index fe7b90ac52d7b..74ae9e4f637a7 100644
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -155,6 +155,8 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A725     | #3456106        | ARM64_ERRATUM_3194386       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | Cortex-A725     | #3821522        | ARM64_ERRATUM_3821522       |
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-X1       | #3324344        | ARM64_ERRATUM_3194386       |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-X1       | #4193791        | ARM64_ERRATUM_4118414       |
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 370bde2b2b07b..1b8ee28f23830 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -991,6 +991,28 @@ config ARM64_ERRATUM_2457168
+diff --git a/drivers/iio/industrialio-buffer.c b/drivers/iio/industrialio-buffer.c
+index af02e52183bec..37ea4a2d85f85 100644
+--- a/drivers/iio/industrialio-buffer.c
++++ b/drivers/iio/industrialio-buffer.c
+@@ -1291,6 +1291,8 @@ EXPORT_SYMBOL_GPL(iio_update_buffers);
  
- 	  If unsure, say Y.
- 
-+config ARM64_ERRATUM_3821522
-+	bool "Cortex-A725: 3821522: workaround for possible CNT_CYCLES increment error due to WFE/WFI"
-+	depends on ARM64_AMU_EXTN
-+	select ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
-+	default y
-+	help
-+	  This option adds the workaround for ARM Cortex-A725 erratum 3821522.
-+
-+	  On affected A725 cores, the CNT_CYCLES event may incur a significant
-+	  increment error when entering and subsequently exiting WFx.
-+	  As a result, the CNT_CYCLES may diverge from the system counter
-+	  frequency at which it is expected to increment.
-+	  This renders the AMU counter AMEVCNTR01, that implements CNT_CYCLES,
-+	  being unreliable and unsuitable for use.
-+
-+	  Since there is no hardware workaround, reads of the affected CNT_CYCLES
-+	  counter return 0 in the relevant paths. This causes users of the counter
-+	  to treat it as unavailable and is functionally equivalent to firmware
-+	  disabling the affected counter.
-+
-+	  If unsure, say Y.
-+
- config ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
- 	bool
- 
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index 518e3b6877b53..660b3ff16ebc6 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -280,6 +280,10 @@ static const struct midr_range workaround_amu_constcnt_list[] = {
- #ifdef CONFIG_ARM64_ERRATUM_2457168
- 	/* Cortex-A510 r0p0-r1p1 */
- 	MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1),
-+#endif
-+#ifdef CONFIG_ARM64_ERRATUM_3821522
-+	/* Cortex-A725 r0p0 - r0p2 */
-+	MIDR_RANGE(MIDR_CORTEX_A725, 0, 0, 0, 2),
- #endif
- 	{}
- };
-diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
-index d61d1afdee158..61df0918585ba 100644
---- a/arch/arm64/kernel/topology.c
-+++ b/arch/arm64/kernel/topology.c
-@@ -268,10 +268,11 @@ static void cpu_read_corecnt(void *val)
- static void cpu_read_constcnt(void *val)
+ void iio_disable_all_buffers(struct iio_dev *indio_dev)
  {
- 	/*
--	 * Return 0 if the current CPU is affected by erratum 2457168. A value
--	 * of 0 is also returned if the current CPU does not support AMUs or if
--	 * the counter is disabled. A return value of 0 at counter read is
--	 * properly handled as an error case by the users of the counter.
-+	 * Return 0 if the current CPU is affected by a HW erratum.
-+	 * A value of 0 is also returned if the current CPU does not
-+	 * support AMUs or if the counter is disabled. A return
-+	 * value of 0 at counter read is properly handled as an error
-+	 * case by the users of the counter.
- 	 */
- 	*(u64 *)val = this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT) ?
- 		      0UL : read_constcnt();
++	guard(mutex)(&indio_dev->mlock);
++
+ 	iio_disable_buffers(indio_dev);
+ 	iio_buffer_deactivate_all(indio_dev);
+ }
 -- 
 2.53.0
 
