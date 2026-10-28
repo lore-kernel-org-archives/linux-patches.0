@@ -1,51 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209193;
-	b=jOSnAUpkIVmZI/cSU743uct8HGvFDwrgqHUgOtDNwLbAJjSXy7DwmVYjKvfUgDl+gbCV
-	 U8Rq7FdbgwNEQfk3FkEZZrNPQxPh+TtVzQc6izWI/9uHxjSRIPTrUwI/GCScGls1Udjrr
-	 PWzlcWplZ3Tm31VOCk9t8r3cA372hTSrhv7RHI0vuKpRQGfq3qVeGTfOLoqm80CClk7tn
-	 4H9BZR07DT3aBUTPMfJ5O9s6wzSWoHqDW58eOARurXkvIvxMj2IufYqDV5oRdrOrl5rfV
-	 Ta+0cwe0EC4RXV2RPcH+e0pggD60TDKmhKObQ8MVWqE2HfdjXeJKDUzwu1fBbYYRBlQ==
+	t=1793209196;
+	b=BfEUxfaER1DUinG6gHEMKCSo4gxQJn9ah/hGgNuptK6P02K4eAZ1AxgglejfxUwcH7Fg
+	 gXiustDWMs4U3ZIhhOcJIA7SpTGeUiszGxIFo04X3TfB4BSF5I86827GFe1KwRXUbBEiw
+	 MZ3G1QucLnsdUxYkDjV5FKOH+PU7Gvn4AjOX77G0rTMobXPSonrKHKVrKa4UfMwAXcR8e
+	 1UEWPW0yd0vtaeOtU0SDspF5b2zJuIAYMvq3eXVxZzZRBfpBrt6vDln4qZ05WvAX5G3ZQ
+	 a3S/Mb4aqWMZQ5fEb6Pm6bxatRm04s7o6OEDSua3hwB+I2tCbMo0l0C9MgLjF0Lx+8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZPfEeHZ7nVbOoWXHasRGG3oZW0dyZFN0BXxOcbgACTc=;
-	b=05d4dUy2dsnDkNqEJ4+87NE+KDBFARmUg9c3D1hP0q2jYplhCET+a3phPq/HzKV4SlpE
-	 BOGGw+s/Imz/EKZUbOFsofs6dyvClQcnRV70YOXB8LCWHUN5VupkEj/huM61mNSuNU4rN
-	 4n8orTqJW+iYY6e6Yfl+u6nbizAvBcbiwN/jRTC7nb3W5ghfWM2zgo9PiB14optcXRzJY
-	 +HR8gCLGymkOwaCpIXXk47azUykahXOIkyynCoFkK0lXCtSj+QDtPeJQlYafwXtGOe8/P
-	 4NuIcTDkSfVdMBrOEB11hXsOtNoV943+FqUK308o8W/9CGdAWme2ID1g7H8RTCnk0YQ==
+	bh=+RD6fbbA1nLuC5rCf1RCJ6aeMYisNTZrPKRAc4WKO5I=;
+	b=1oOXFGUG1tpgvF8OO5nLsacb+ZKuRrJqrW6mz3or5b/DHNvyN13dokeeKtu0xTa+hkI9
+	 CkJOnoyQgIO8YcSZHiNzVjd00DfVepnmE1N7iH0KgH4Tk5/R2xlf5PH8CT8eVeo6LlpNQ
+	 LCoz1nmUC++8UEJo/5AplNC7VGjEm7aucL7PGGkx6xOH2QDkZDTa7u6Ovxd/uTEBnJaQD
+	 BZ9CgJcyc/P4+t1skQCZIGFfpox5asWzxttc11/IqpvMgT4TNIi2HLvWLm9RtDNVCnju5
+	 3jI6tby8hjROIpbzbhow8bzREgWDpnZHNfQXNmuWNP5hi6jLNgfKu0tL7ZtYOltjMeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mTopKI9H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UOeNd02v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C32C606A325;
-	Wed, 28 Oct 2026 17:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CE1606A321;
+	Wed, 28 Oct 2026 17:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mTopKI9H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD45F1F031E0;
-	Wed, 28 Oct 2026 17:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UOeNd02v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF51F01825;
+	Wed, 28 Oct 2026 17:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209193;
-	bh=ZPfEeHZ7nVbOoWXHasRGG3oZW0dyZFN0BXxOcbgACTc=;
+	s=korg; t=1793209196;
+	bh=+RD6fbbA1nLuC5rCf1RCJ6aeMYisNTZrPKRAc4WKO5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mTopKI9H1Tcj4mHM47sMbu5rHECRnzE5C8s9t/Kl+QnLgEeyMG6n0bSiEsJe+2X5L
-	 5HmJt/WRStmveegjDEiAIpurQcs5yaxXpRVV4d8nUFvlO2W8IcwOAeVUA3fz/0Yrho
-	 sUIbfYzUMxMvbaMTblhM4DP27ueTw78ht9sd8Dy8=
+	b=UOeNd02vS/hNxFUBpbMxvv0+DgVY65Z9iYozD5WtDoEClZQzmKETqML6p5dc2R8K+
+	 NeYuQLdSiGADnOGlVRg+rrl5OjZeYziCrjSi9NN5cNUdNfz0/NvUh8bGSW8IoLnPw9
+	 DQs6vdfI3Sss/J/i/8MxSZItQqr0r3RYofIIz5n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ira Weiny <ira.weiny@intel.com>,
+	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Helge Deller <deller@gmx.de>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	David Sterba <dsterba@suse.com>,
+	Kees Cook <keescook@chromium.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Tony Luck <tony.luck@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Gyokhan Kochmarla <gyokhan@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 386/516] namespace: check the mounts before reading their parents in pivot_root()
-Date: Wed, 28 Oct 2026 17:58:58 +0100
-Message-ID: <20261028170012.627317779@linuxfoundation.org>
+Subject: [PATCH 5.10 387/516] highmem: round down the address passed to kunmap_flush_on_unmap()
+Date: Wed, 28 Oct 2026 17:58:59 +0100
+Message-ID: <20261028170012.649771961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,75 +81,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 6b7c001eb5857fa09041f47673666060a2e5fc1c ]
+commit 88d7b12068b95731c280af8ce88e8ee9561f96de upstream.
 
-path_pivot_root() reads the parents of new_root and of the caller's root
-and checks whether they are shared before it checks that either mount is
-in the caller's mount namespace. Only namespace_sem is held. That's fine
-for a mount that is in the caller's mount namespace.
+We already round down the address in kunmap_local_indexed() which is the
+other implementation of __kunmap_local().  The only implementation of
+kunmap_flush_on_unmap() is PA-RISC which is expecting a page-aligned
+address.  This may be causing PA-RISC to be flushing the wrong addresses
+currently.
 
-But new_root can be a file descriptor to a mount that has been unmounted
-and that only the file descriptor keeps alive. If that mount stayed
-attached to its parent when it was unmounted nothing pins the parent for
-it. The final mntput() of the parent unhooks the children under
-mount_lock alone and frees the parent afterwards:
-
-  pivot_root()                     close(fd), last ref on the parent
-  ------------                     ---------------------------------
-  ex_parent = new_mnt->mnt_parent
-                                   mntput_no_expire_slowpath()
-                                     __umount_mnt(new_mnt)
-                                   cleanup_mnt()
-                                     call_rcu()
-  IS_MNT_SHARED(ex_parent)
-
-  BUG: KASAN: slab-use-after-free in path_pivot_root+0xf1a/0x1840
-  Read of size 4 at addr ffff8881047382f8 by task pivot_widen/157
-   path_pivot_root+0xf1a/0x1840
-   __x64_sys_pivot_root+0x165/0x190
-
-The same goes for the caller's root via chroot(). Both outcomes of the
-check end in EINVAL so nothing but the read itself goes wrong. It's the
-same thing commit bb4609405752 ("statmount: read the parent of an
-unmounted mount under mount_lock") fixed for statmount().
-
-Check that both mounts are in the caller's namespace before their
-parents are read. Every path returns EINVAL either way.
-
-Fixes: e0c9c0afd2fc ("mnt: Update detach_mounts to leave mounts connected")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-10-be34c83956ae@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Adapted the checks to the pivot_root syscall implementation using goto out4 instead of return -EINVAL. ]
+Link: https://lkml.kernel.org/r/20230126200727.1680362-1-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: 298fa1ad5571 ("highmem: Provide generic variant of kmap_atomic*")
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Cc: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: David Sterba <dsterba@suse.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ 5.10 has no include/linux/highmem-internal.h and no
+  kmap_local API, so __kunmap_local() does not exist. Therefore,
+  I applied the __kunmap_atomic() hunk to include/linux/highmem.h ]
+Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/highmem.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index a87eb7fdc9838..9d1d5aa94215e 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -3886,14 +3886,15 @@ SYSCALL_DEFINE2(pivot_root, const char __user *, new_root,
- 	new_mnt = real_mount(new.mnt);
- 	root_mnt = real_mount(root.mnt);
- 	old_mnt = real_mount(old.mnt);
-+	/* only a mounted mount has a parent that namespace_sem pins */
-+	if (!check_mnt(root_mnt) || !check_mnt(new_mnt))
-+		goto out4;
- 	ex_parent = new_mnt->mnt_parent;
- 	root_parent = root_mnt->mnt_parent;
- 	if (IS_MNT_SHARED(old_mnt) ||
- 		IS_MNT_SHARED(ex_parent) ||
- 		IS_MNT_SHARED(root_parent))
- 		goto out4;
--	if (!check_mnt(root_mnt) || !check_mnt(new_mnt))
--		goto out4;
- 	if (new_mnt->mnt.mnt_flags & MNT_LOCKED)
- 		goto out4;
- 	error = -ENOENT;
+diff --git a/include/linux/highmem.h b/include/linux/highmem.h
+index 5f7cd58db4780..a2a252a93d760 100644
+--- a/include/linux/highmem.h
++++ b/include/linux/highmem.h
+@@ -218,7 +218,7 @@ static inline void __kunmap_atomic(void *addr)
+ 	 * handles re-enabling faults and preemption
+ 	 */
+ #ifdef ARCH_HAS_FLUSH_ON_KUNMAP
+-	kunmap_flush_on_unmap(addr);
++	kunmap_flush_on_unmap(PTR_ALIGN_DOWN(addr, PAGE_SIZE));
+ #endif
+ }
+ 
 -- 
 2.53.0
 
