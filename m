@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212402;
-	b=i8Vynbbyw+ms1AjYmwyuG3oEK4GHSvjxS0mo8+zj6ZQ7QZ98f2VCtWzHA9/oaZ2bBl1S
-	 LQKA8zN+ty835F28FiM5Izi7+jIoWfyyNr20dBIWuEXIaPi0j7rZRD/tLXVWQUqAkP+QO
-	 tX2zum5t5u8XHJm2LVAlxarQwxUhRGuil9ZAluvLK6/RCRJHLDl9YxiNFMJzzdwEHET6k
-	 8YNiaovOVnIPLUWUHB9GTP0mVBO15tN/92Z9IXalCasykeAnEzGN2A5AZnuj0MGjI3nwX
-	 gzhKCOwynwX9UxIpQDxmPdHYNr1YYEf/g9VhXSsMg4ONts62UEsA7JaLnZkMCEsATtA==
+	t=1793212405;
+	b=ss5TXjEUxlqbVFHbA96s0DW2P/JQNpnIdvv+EDPzNNgtuz4X9RL3eCt2zFIULYNaDutH
+	 q3T3FrUrW1+mYQFjWsB4ldfCSB2Sfa282k4rBujMu8r6L2LBFsovcdUBvWmWBLawUhGw/
+	 Q1XXxYV8o4QLUpWgUo0njFPi1EXoDf6e/aOF5B+vtz8Wa1MWruy+KZ/O0gbZfpkXdm1qL
+	 tdlt7+PrFaJG812V5x2mDXIYWDL5jzQFkmAEpNfkWOqxlg7KwGLaMPLgya9/702OoP/ic
+	 ZmuMXQnYL6sQoNeAuopfNNkL0l7OtqHhdkQINlkYRATJGB6Eae6UiXSbmzXcNWttntA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212402;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212405;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lyO+Lthi9LY6kv16BEf2YQCh+dJL/I6jBLVkhBoZ4FU=;
-	b=MWeQ/Jh9LSBb4cVQ0eIrAg4pKYsJnE6FpMIHGI4pMocMDw6YMuTygjClpviuiX0EllBv
-	 2RcEIVc2NcwzhchpcRzikNlcKIMQXtAPwllWR3mYf2L2haJ+wkg8KLSFNEpl54w9OG0/G
-	 jaINF2zKHsfsRbN7KhUHKEnQNvGzdXKxTDyWXw66+AX6FtXMipHcQju/amhW7tywFM7jI
-	 b3dj37nQNj4wEb1e8bvmIqkc6shPQETEUA6HzZxrqOSVI6QcVBbeY7tIQOdQ6/zMiSgB3
-	 cqlvJ6EwuFA3UD1rEBeSKbcwGeNEz+XIHudAq2E4Brp6PuetyWxSP+DT28wFMDr0B4A==
+	bh=YRHU3R/iFHqENP/5s/lWNy+VMuLhRKuT11xRtt5y5fo=;
+	b=SXO9aCUa6JwIjI2GUJAMbW5G6y+yNqwC8kG4Vlwhz275LTD7dVnFs2PYh3NEYoZe8P01
+	 apfqODpOBFl81xn3/zH5GFzXthKcRMVf745SFZhh1flvLBEPlgSE54mR9tR6Kj/EUsnnd
+	 lFDp0KtnvAazaEU7NXmWIlso9Eyw7z6AnN9Ya2tFURYezlv5gpB0D5c1RYGN8bB/Sv6Ue
+	 t7ZHbTZv5pCn42tSw5LkLQYtLCKnVdZcpNA+gIDhBJru7VjpbdNSZsEmOl2++287Up8uV
+	 9qnUmw1ZlduxNVc+dFp9ZK7p98Nt0oE2aoC8xw/lgFCXzc3RKm9o6UqX59cUDEyffug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3PSAKcg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AldO+RRe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F076B606A325;
-	Wed, 28 Oct 2026 18:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9A2606A329;
+	Wed, 28 Oct 2026 18:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3PSAKcg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E58A1F01825;
-	Wed, 28 Oct 2026 18:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AldO+RRe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254951F031E3;
+	Wed, 28 Oct 2026 18:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212401;
-	bh=lyO+Lthi9LY6kv16BEf2YQCh+dJL/I6jBLVkhBoZ4FU=;
+	s=korg; t=1793212404;
+	bh=YRHU3R/iFHqENP/5s/lWNy+VMuLhRKuT11xRtt5y5fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b3PSAKcg5f3bYrtzJKTH4az0fnJ/OqIj3Rl/URfWLWteHardsCykq0NRSmQpjGBG/
-	 v417eLgEJNNtrmXcXn/DsJRxjsx+TyjJKKrXB+usXykZg6+q5Dj+2nb4ea0BwQ+KAy
-	 sknyNAj0C6Fv/qqzgILrg2oHA7WeJYyoz3K93GWg=
+	b=AldO+RReIQV+J3W8bkxa6ydKnoBQOJgEYGxjLjjqzxDcULHowa61GH5FGYZHrqk9g
+	 N0XRhb96cin/5GgoaRODmWLUaSPG6SN9TruBr6Bzxl0N2ShyVcy4Sz9wSpnU3a1CiW
+	 1LJyR02CqHbeU5Yzp6gXRF5z+u0P+edXpP2DAiwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Beau Belgrave <beaub@linux.microsoft.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Waiman Long <longman@redhat.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0140/1887] tracing/user_events: Dont destroy fields when event removal fails
-Date: Wed, 28 Oct 2026 17:37:16 +0100
-Message-ID: <20261028170502.420552359@linuxfoundation.org>
+Subject: [PATCH 6.1 0141/1887] mm/kmemleak: simplify kmemleak_cond_resched() usage
+Date: Wed, 28 Oct 2026 17:37:17 +0100
+Message-ID: <20261028170502.443467623@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,93 +70,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 2deb753127d7b7035e893955c5e91875e767d1f8 ]
+[ Upstream commit 6061e740822530a4ef443548b19c4e0bc6342c7a ]
 
-destroy_user_event() destroys the event's fields before attempting to
-remove the trace event call. If user_event_set_call_visible() fails,
-e.g. because the event is still enabled and trace_remove_event_call()
-returns -EBUSY, the event is left registered with an irreversibly
-destroyed field list. Any subsequent interaction with the event then
-operates on an empty field list while it is still fully visible in
-tracefs.
+Patch series "mm/kmemleak: Simplify kmemleak_cond_resched() & fix UAF", v2.
 
-Move the field destruction after the call removal, and splice the
-field list back onto the event when the removal fails so the event
-remains in a consistent state.
+It was found that a KASAN use-after-free error was reported in the
+kmemleak_scan() function.  After further examination, it is believe that
+even though a reference is taken from the current object, it does not
+prevent the object pointed to by the next pointer from going away after a
+cond_resched().
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260904115223.2976446-1-bsdhenrymartin@gmail.com
-Fixes: 7f5a08c79df35 ("user_events: Add minimal support for trace_event into ftrace")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Beau Belgrave <beaub@linux.microsoft.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ Adjusted context for the missing lockdep_assert_held(&event_mutex) in destroy_user_event(). ]
+To fix that, additional flags are added to make sure that the current
+object won't be removed from the object_list during the duration of the
+cond_resched() to ensure the validity of the next pointer.
+
+While making the change, I also simplify the current usage of
+kmemleak_cond_resched() to make it easier to understand.
+
+This patch (of 2):
+
+The presence of a pinned argument and the 64k loop count make
+kmemleak_cond_resched() a bit more complex to read.  The pinned argument
+is used only by first kmemleak_scan() loop.
+
+Simplify the usage of kmemleak_cond_resched() by removing the pinned
+argument and always do a get_object()/put_object() sequence.  In addition,
+the 64k loop is removed by using need_resched() to decide if
+kmemleak_cond_resched() should be called.
+
+Link: https://lkml.kernel.org/r/20230119040111.350923-1-longman@redhat.com
+Link: https://lkml.kernel.org/r/20230119040111.350923-2-longman@redhat.com
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_user.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ mm/kmemleak.c | 48 ++++++++++++------------------------------------
+ 1 file changed, 12 insertions(+), 36 deletions(-)
 
-diff --git a/kernel/trace/trace_events_user.c b/kernel/trace/trace_events_user.c
-index bff699fe9e712..6186474c027fa 100644
---- a/kernel/trace/trace_events_user.c
-+++ b/kernel/trace/trace_events_user.c
-@@ -430,10 +430,9 @@ static void user_event_destroy_validators(struct user_event *user)
- 	}
+diff --git a/mm/kmemleak.c b/mm/kmemleak.c
+index d3c9a63d7a9d5..fa01854e32b09 100644
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -1466,22 +1466,17 @@ static void scan_gray_list(void)
+ /*
+  * Conditionally call resched() in a object iteration loop while making sure
+  * that the given object won't go away without RCU read lock by performing a
+- * get_object() if !pinned.
+- *
+- * Return: false if can't do a cond_resched() due to get_object() failure
+- *	   true otherwise
++ * get_object() if necessaary.
+  */
+-static bool kmemleak_cond_resched(struct kmemleak_object *object, bool pinned)
++static void kmemleak_cond_resched(struct kmemleak_object *object)
+ {
+-	if (!pinned && !get_object(object))
+-		return false;
++	if (!get_object(object))
++		return;	/* Try next object */
+ 
+ 	rcu_read_unlock();
+ 	cond_resched();
+ 	rcu_read_lock();
+-	if (!pinned)
+-		put_object(object);
+-	return true;
++	put_object(object);
  }
  
--static void user_event_destroy_fields(struct user_event *user)
-+static void user_event_destroy_fields(struct list_head *head)
- {
- 	struct ftrace_event_field *field, *next;
--	struct list_head *head = &user->fields;
+ /*
+@@ -1495,15 +1490,12 @@ static void kmemleak_scan(void)
+ 	struct zone *zone;
+ 	int __maybe_unused i;
+ 	int new_leaks = 0;
+-	int loop_cnt = 0;
  
- 	list_for_each_entry_safe(field, next, head, link) {
- 		list_del(&field->link);
-@@ -821,15 +820,30 @@ static int user_event_set_call_visible(struct user_event *user, bool visible)
+ 	jiffies_last_scan = jiffies;
  
- static int destroy_user_event(struct user_event *user)
- {
-+	LIST_HEAD(fields);
- 	int ret = 0;
+ 	/* prepare the kmemleak_object's */
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(object, &object_list, object_list) {
+-		bool obj_pinned = false;
+-
+ 		raw_spin_lock_irq(&object->lock);
+ #ifdef DEBUG
+ 		/*
+@@ -1529,19 +1521,13 @@ static void kmemleak_scan(void)
  
--	/* Must destroy fields before call removal */
--	user_event_destroy_fields(user);
-+	/*
-+	 * Detach the fields before removing the call. Removing the event
-+	 * frees the field list memory (trace_destroy_fields() is run on
-+	 * successful removal and kmem_cache_free()s the fields), but the
-+	 * fields here are allocated and owned by user_events. Destroy
-+	 * them separately once removal has succeeded.
-+	 */
-+	list_splice_init(&user->fields, &fields);
+ 		/* reset the reference count (whiten the object) */
+ 		object->count = 0;
+-		if (color_gray(object) && get_object(object)) {
++		if (color_gray(object) && get_object(object))
+ 			list_add_tail(&object->gray_list, &gray_list);
+-			obj_pinned = true;
+-		}
  
- 	ret = user_event_set_call_visible(user, false);
+ 		raw_spin_unlock_irq(&object->lock);
  
--	if (ret)
-+	if (ret) {
-+		/*
-+		 * Removal failed and the event stays registered, recover
-+		 * the fields so it is left in a consistent state.
-+		 */
-+		list_splice(&fields, &user->fields);
- 		return ret;
-+	}
-+
-+	user_event_destroy_fields(&fields);
+-		/*
+-		 * Do a cond_resched() every 64k objects to avoid soft lockup.
+-		 */
+-		if (!(++loop_cnt & 0xffff) &&
+-		    !kmemleak_cond_resched(object, obj_pinned))
+-			loop_cnt--; /* Try again on next object */
++		if (need_resched())
++			kmemleak_cond_resched(object);
+ 	}
+ 	rcu_read_unlock();
  
- 	dyn_event_remove(&user->devent);
+@@ -1608,14 +1594,9 @@ static void kmemleak_scan(void)
+ 	 * scan and color them gray until the next scan.
+ 	 */
+ 	rcu_read_lock();
+-	loop_cnt = 0;
+ 	list_for_each_entry_rcu(object, &object_list, object_list) {
+-		/*
+-		 * Do a cond_resched() every 64k objects to avoid soft lockup.
+-		 */
+-		if (!(++loop_cnt & 0xffff) &&
+-		    !kmemleak_cond_resched(object, false))
+-			loop_cnt--;	/* Try again on next object */
++		if (need_resched())
++			kmemleak_cond_resched(object);
  
-@@ -1360,7 +1374,7 @@ static int user_event_parse(struct user_event_group *group, char *name,
- put_user_lock:
- 	mutex_unlock(&event_mutex);
- put_user:
--	user_event_destroy_fields(user);
-+	user_event_destroy_fields(&user->fields);
- 	user_event_destroy_validators(user);
- 	kfree(user->call.print_fmt);
- 	kfree(user);
+ 		/*
+ 		 * This is racy but we can save the overhead of lock/unlock
+@@ -1650,14 +1631,9 @@ static void kmemleak_scan(void)
+ 	 * Scanning result reporting.
+ 	 */
+ 	rcu_read_lock();
+-	loop_cnt = 0;
+ 	list_for_each_entry_rcu(object, &object_list, object_list) {
+-		/*
+-		 * Do a cond_resched() every 64k objects to avoid soft lockup.
+-		 */
+-		if (!(++loop_cnt & 0xffff) &&
+-		    !kmemleak_cond_resched(object, false))
+-			loop_cnt--;	/* Try again on next object */
++		if (need_resched())
++			kmemleak_cond_resched(object);
+ 
+ 		/*
+ 		 * This is racy but we can save the overhead of lock/unlock
 -- 
 2.53.0
 
