@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208226;
-	b=A9FjTVPkrYTzRxvWetsaM4nIITwBsBSItvnHkqm+BjGObgxTzN6csVX/e0y59P6+xQ8l
-	 CIoRo1pJbnNtsz0iK6WVQ7uP8axt8VT0o7lybcebOVxASwYTFBS+FyrGiq/j2W0q2kpfW
-	 PX63sU5vf6aG1PvfAC2yhTnQ+3BTDCVwN1vvNbDxiMPc+KiFOewu/nvdCEsb111AC+T2X
-	 c0Zb4x2rU+E88rV9TCRBMc9CCYHo8O00F9fWryZSezcq40tXXq/ybzPbbaORmTRbFpSCI
-	 BBSZYUujRUtDDjLqo4t4KlgUjz7JaUTuZKB8W9a+4vAPxccv76RXvkti7Lj8SxHJqmQ==
+	t=1793208229;
+	b=4ORZmpvvUKeiEAYMLLIk7mwyknxoiV21rF6eyIr5qb9ETTnBS8tEe/xqUsfnTV6WZRyO
+	 KYbGnLfFagmqLHgIXl+UrAoLYwyiJiJ3P7DndYqeaA47Tpw9CoRIPI5q6wd1MQtGP7dMd
+	 PgUZ8F8YxewX99zPLNYaElhtA4slmm2x0BLy6dLNPs6Wzn/66g3OfQdOU8MmbW96FfhTT
+	 Eds3rnjwB/h9/IOn8gmAYh3/fTx0TTIkgSXgjhR99WDsxDV95eTtl8SaNZFXSd39M24vY
+	 y2LbMRX+UJ9Cm6pJz8S8zrlGL+wgV3kMQ5fluVgbGzGD37NEx6XgckHrl52YVqS6rvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208226;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208229;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=leU5fl7cZr8zaH+Z1XdN/LUDUkLOWmnAu0OWFOLOr8I=;
-	b=ZAQJ+M903fw58h61z9wTwc26buRkNriASlxrWZqd2L37lgVFK0bPEQ/ekXss1GOSvDJt
-	 qiFm92Z/R2El2iMRqKp7mNXG+AWMlqcWnHpX9IzyTUCxjSKkhhWBwiHENEkis7gX+BMua
-	 VE3WY+zj2kmlR95Eb6glKRoZY71tpkwyDBvyUu/RsRvUE1JndRfm7jP7CO6C7jnLNCIrU
-	 ENMiOiFnnsT99dYMTnVRHZ/RK6xMiFViFcZx4mPaHD1E076OECj0yzTa2/tDBJuj4kb9W
-	 07+BAmPYIn/hrRbvMXv6NZwah8k1EwsWNuT63JZ08OWj57jUNSRN8Ncfeo/cna9/y1Q==
+	bh=CYoUAF36lPR0nF6YimsH2J3efiNt/9UZ+g8qm7lkOdU=;
+	b=YB3cVkkmXzRS4JEA+bxxQYZuZ+xUEm+bdk7xAS7yxFVab7Vwth6AkCDT90d5sKrkjz7U
+	 2DcfMeZVx+23yY6zwZNXFgPJb+AcCPXGVXMabwli+0lkqmdLfx+Dbow36liCfT/RlXYhf
+	 cBZhzqNrNE5FblCCpCV1c6ht0b7ikD/1/1XsL7hsLeMlPAslYdQkgoQP9wPZByoaPl2ba
+	 sCBTnGxI7+j1F/klR7WRuwDxCDQVnstxK8ky8geq8YSGN9GtOfiWQglBRJvOHZsBEGRf5
+	 4gL/Bn68x+DQHrObLac5eTzZ1ZWt5zXpysEqUnJjzexAZyJotEKe7YEF8zCqhJPhSPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WoxdhxIw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnGgFBrF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588F8606A324;
-	Wed, 28 Oct 2026 17:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E61606A31C;
+	Wed, 28 Oct 2026 17:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WoxdhxIw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E111F01829;
-	Wed, 28 Oct 2026 17:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnGgFBrF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E411F01829;
+	Wed, 28 Oct 2026 17:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208226;
-	bh=leU5fl7cZr8zaH+Z1XdN/LUDUkLOWmnAu0OWFOLOr8I=;
+	s=korg; t=1793208229;
+	bh=CYoUAF36lPR0nF6YimsH2J3efiNt/9UZ+g8qm7lkOdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WoxdhxIwssqxUXAa2ibanUKOQMGuk676MSIEnISXdwvOkhjIXqJo6L4IOCPlE/Dmp
-	 pWoFQxr5ePhsf6u/TLYd3SARMFFwgr52VXQ3p2soDWA/VgCLqzvW+/DZYcE3ZZ4p+I
-	 8bckk+CgmQr9wHM3FgHtDPMagcL4tqz768hExeYg=
+	b=tnGgFBrFWMFkRhZIFzdx5XX3FSjWhJlPzgMSjvG3q/agC3W3Ch2BS+UCfuZepitIS
+	 J6cEqHpUJflZHtzYyM8gr4ynPmPuiVJWTHScTbhnLr1A2/q3D5oYjOtdWkvC/g64Ty
+	 Z3z50+WUWnLjkjmKBaU74evl94TAWPiyGDvSOScA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/516] gtp: serialize PDP context updates
-Date: Wed, 28 Oct 2026 17:53:15 +0100
-Message-ID: <20261028170004.553152098@linuxfoundation.org>
+Subject: [PATCH 5.10 044/516] KEYS: trusted: Fix TPM teardown ordering
+Date: Wed, 28 Oct 2026 17:53:16 +0100
+Message-ID: <20261028170004.576402764@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,136 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 498386b6d402737db1e2eeed4c385acbf0ef9e34 ]
+[ Upstream commit 5e2d672280d97d83de43031d93761b12dadd7b8a ]
 
-PDP contexts can be deleted through GTP_CMD_DELPDP or while the GTP
-network device is being unregistered. The latter is serialized by RTNL,
-but the generic-netlink delete path only holds RCU.
+trusted_tpm_exit() drops the TPM chip reference and frees the digest
+array before unregistering the trusted key type. key_type_lookup()
+holds key_types_sem for reading until the key operation finishes, while
+unregister_key_type() takes it for writing. It therefore provides the
+synchronization point that must precede backend teardown.
 
-Running both paths concurrently can therefore make both paths delete the
-same PDP context. The issue was found through static analysis and
-reproduced on a KASAN-enabled kernel by a simple two-thread program
-racing GTP_CMD_DELPDP against RTM_DELLINK:
+The current order permits this interleaving:
 
-  Oops: general protection fault, probably for non-canonical address
-  KASAN: maybe wild-memory-access in range
-         [0xdead000000000120-0xdead000000000127]
-  RIP: gtp_genl_del_pdp+0x1c1/0x420 [gtp]
-  RBP: dead000000000122
+  CPU 0                              CPU 1
+  trusted_tpm_exit()                 key_type_lookup("trusted")
+    put_device(&chip->dev)             trusted_tpm_seal()
+    kfree(digests)                       pcrlock()
+    unregister_key_type()                  tpm_pcr_extend(..., digests)
 
-The second deletion dereferenced the poisoned hlist pprev pointer.
+CPU 1 can consequently dereference the freed digest array. The chip can
+also be released before callbacks stop using it.
 
-Serialize gtp_pdp_add(), gtp_genl_del_pdp(), and gtp_dellink() with a
-shared mutex. Keep the mutex held until the final use of a PDP context in
-the NEWPDP path, and keep the RCU read-side section around the complete
-PDP context use in the DELPDP path.
+KASAN reported:
 
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+  BUG: KASAN: slab-use-after-free in tpm_pcr_extend+0x1f0/0x200
+  Read of size 2 at addr ffff88810872d000 by task poc/89
+  Call Trace:
+    tpm_pcr_extend+0x1f0/0x200
+    pcrlock+0x42/0x70 [trusted]
+    trusted_tpm_seal+0x1b6/0x570 [trusted]
+    trusted_instantiate+0x293/0x340 [trusted]
+    __key_instantiate_and_link+0xb2/0x2b0
+    __key_create_or_update+0x61e/0xb50
+    __do_sys_add_key+0x1b8/0x310
+  Allocated by task 88:
+    __kmalloc_noprof+0x1a7/0x490
+    do_one_initcall+0xa1/0x390
+    do_init_module+0x2df/0x840
+  Freed by task 90:
+    kfree+0x131/0x3c0
+    trusted_tpm_exit+0x59/0xa0 [trusted]
+    __do_sys_delete_module+0x346/0x510
+
+Move unregister_key_type() before releasing either resource. This stops
+new lookups and waits for in-flight key operations to finish before the
+backend state is destroyed.
+
+Fixes: 0b6cf6b97b7e ("tpm: pass an array of tpm_extend_digest structures to tpm_pcr_extend()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Link: https://patch.msgid.link/20260818150000.7670-1-a0yami@mailbox.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted the locking changes to the older IPv4-only PDP context API and omitted the absent IPv6 lookup hunk. ]
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Link: https://lore.kernel.org/r/20260731140925.2973492-1-nicoyip.dev@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+[ preserved the additional trusted_shash_release() cleanup after unregister_key_type() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ security/keys/trusted-keys/trusted_tpm1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 624220f8ec132..89f46e50d817b 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -12,6 +12,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/skbuff.h>
- #include <linux/udp.h>
- #include <linux/rculist.h>
-@@ -82,6 +83,7 @@ struct gtp_net {
- };
- 
- static u32 gtp_h_initval;
-+static DEFINE_MUTEX(gtp_pdp_lock);
- 
- static void pdp_context_delete(struct pdp_ctx *pctx);
- 
-@@ -109,7 +111,8 @@ static struct pdp_ctx *gtp0_pdp_find(struct gtp_dev *gtp, u64 tid)
- 
- 	head = &gtp->tid_hash[gtp0_hashfn(tid) % gtp->hash_size];
- 
--	hlist_for_each_entry_rcu(pdp, head, hlist_tid) {
-+	hlist_for_each_entry_rcu(pdp, head, hlist_tid,
-+				 lockdep_is_held(&gtp_pdp_lock)) {
- 		if (pdp->gtp_version == GTP_V0 &&
- 		    pdp->u.v0.tid == tid)
- 			return pdp;
-@@ -125,7 +128,8 @@ static struct pdp_ctx *gtp1_pdp_find(struct gtp_dev *gtp, u32 tid)
- 
- 	head = &gtp->tid_hash[gtp1u_hashfn(tid) % gtp->hash_size];
- 
--	hlist_for_each_entry_rcu(pdp, head, hlist_tid) {
-+	hlist_for_each_entry_rcu(pdp, head, hlist_tid,
-+				 lockdep_is_held(&gtp_pdp_lock)) {
- 		if (pdp->gtp_version == GTP_V1 &&
- 		    pdp->u.v1.i_tei == tid)
- 			return pdp;
-@@ -141,7 +145,8 @@ static struct pdp_ctx *ipv4_pdp_find(struct gtp_dev *gtp, __be32 ms_addr)
- 
- 	head = &gtp->addr_hash[ipv4_hashfn(ms_addr) % gtp->hash_size];
- 
--	hlist_for_each_entry_rcu(pdp, head, hlist_addr) {
-+	hlist_for_each_entry_rcu(pdp, head, hlist_addr,
-+				 lockdep_is_held(&gtp_pdp_lock)) {
- 		if (pdp->af == AF_INET &&
- 		    pdp->ms_addr_ip4.s_addr == ms_addr)
- 			return pdp;
-@@ -709,9 +714,11 @@ static void gtp_dellink(struct net_device *dev, struct list_head *head)
- 	struct pdp_ctx *pctx;
- 	int i;
- 
-+	mutex_lock(&gtp_pdp_lock);
- 	for (i = 0; i < gtp->hash_size; i++)
- 		hlist_for_each_entry_safe(pctx, next, &gtp->tid_hash[i], hlist_tid)
- 			pdp_context_delete(pctx);
-+	mutex_unlock(&gtp_pdp_lock);
- 
- 	list_del(&gtp->list);
- 	unregister_netdevice_queue(dev, head);
-@@ -1096,6 +1103,7 @@ static int gtp_genl_new_pdp(struct sk_buff *skb, struct genl_info *info)
- 		goto out_unlock;
+diff --git a/security/keys/trusted-keys/trusted_tpm1.c b/security/keys/trusted-keys/trusted_tpm1.c
+index 3e9dc03d59c91..ca5efa7988e6a 100644
+--- a/security/keys/trusted-keys/trusted_tpm1.c
++++ b/security/keys/trusted-keys/trusted_tpm1.c
+@@ -1287,10 +1287,10 @@ static int __init init_trusted(void)
+ static void __exit cleanup_trusted(void)
+ {
+ 	if (chip) {
++		unregister_key_type(&key_type_trusted);
+ 		put_device(&chip->dev);
+ 		kfree(digests);
+ 		trusted_shash_release();
+-		unregister_key_type(&key_type_trusted);
  	}
- 
-+	mutex_lock(&gtp_pdp_lock);
- 	pctx = gtp_pdp_add(gtp, sk, info);
- 	if (IS_ERR(pctx)) {
- 		err = PTR_ERR(pctx);
-@@ -1103,6 +1111,7 @@ static int gtp_genl_new_pdp(struct sk_buff *skb, struct genl_info *info)
- 		gtp_tunnel_notify(pctx, GTP_CMD_NEWPDP, GFP_KERNEL);
- 		err = 0;
- 	}
-+	mutex_unlock(&gtp_pdp_lock);
- 
- out_unlock:
- 	rtnl_unlock();
-@@ -1157,6 +1166,8 @@ static int gtp_genl_del_pdp(struct sk_buff *skb, struct genl_info *info)
- 	if (!info->attrs[GTPA_VERSION])
- 		return -EINVAL;
- 
-+	mutex_lock(&gtp_pdp_lock);
-+
- 	rcu_read_lock();
- 
- 	pctx = gtp_find_pdp(sock_net(skb->sk), info->attrs);
-@@ -1177,6 +1188,7 @@ static int gtp_genl_del_pdp(struct sk_buff *skb, struct genl_info *info)
- 
- out_unlock:
- 	rcu_read_unlock();
-+	mutex_unlock(&gtp_pdp_lock);
- 	return err;
  }
  
 -- 
