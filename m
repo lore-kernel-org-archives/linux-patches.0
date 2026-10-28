@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208130;
-	b=l0nIvUqDHTWF+DRX04FBjPTKaopGQ/I2yu8iFvTgtYU2axXnyBPqNWmX4skRnzFCq2fx
-	 PfmZYQOSa1z6EviTMP/o8acv6yzhmrtOCtsAkKbsA8deYT56oDdRqv1k9NKrkj+ak2yB9
-	 OhmxejE/dskTcT8xfmYivG1uohId/2FaiKvxYsHazpyRvWmcd/fp89Hg5ehYEMYEN0Woj
-	 CaZYxAnCq4oTryHAQhyZfdbyAyVslhqnyxBUciIMQShM1mt/oPVQ490nL1LUI23um9Fsg
-	 6jM1v+OdRSF4vLc1cgWRLgZiQdcfpVREwFCLgef4snypa6QYe9rBQN92WAbSrGWbRyQ==
+	t=1793208132;
+	b=rjClsG91vn6QxVZZZ4TxB7JFFyGTgYx8G6ZzcMl1H2cl/WHn7B8vbBRO1q1O/4mCHLLu
+	 BmF5huCFnPiE1OhwNaNIZHKNJzmKwt+Qc5cAli9RRI5MG2v5+dC4Uqf5nHuH1x/2ZKUcA
+	 U1lEzSogGcZ+EPGDK/ZWbIvZhT0DH31CrRYwsnqwEhoWYsqOYFAmD9WwrmFuC1AOkv9bB
+	 nx8dOtZTR1X+4mZnz/J3TKa8xOQYaPxZFdi6WV8MDQdtlZcclAfRhHm+C5/DG9eV7Vzvq
+	 A2PAu3n8qZOtk2CJAqWdDKawRUKBQlrOp3uDri+3llEd8W2v+Yr6YXfoaiCSoRuzbyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208130;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208132;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=AwKYHpiBBsa2I3YuvDgz5iNUuviSwSrYb7fLM6O8p3k=;
-	b=Rprzm3/2ZNscs1IzyfTxbbEPg8H3J/VqlZUchFioDecgfeij91sqwhgPBVc1fB1qjD8z
-	 X1xfB21exfTMROrKNWiOhnjj+TihUowEuHSZjGb4uoTZv3ktf9oRRPB/cf36J+yKVxDDH
-	 7gRPcH3OHfJaOI18/7nLtARKhm2I4SmJSqzlb3OIAd17Ta7GnopTgIfQELJvxiSAOPORB
-	 NcGgT80MjaLcPaDmpfa0RDWOL4/g7GSUsEl7PZhCLjSJXhwl8oygfieEAQi2Z5T1IDpky
-	 u1cbEerSopa4cOmqUdsXYy73WdB0RwHnwekaqkm9vTyd0RlGmUtESJPuV+b4DDtdKZQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=0FS9YFJcDE+2iMTJCaraT9/qGyCVwyso3OXgga55mg0=;
+	b=0d2gps7zckc0W8olsphzWlQNo6PFPATAlMUVe8GJHbpAWmdbIlci28ee8azSVV/avm/J
+	 odfzyTSIi2tvTscRKGEEPzmZfXCgfXRGzZ7EMbUvSsAyAftw8kG/l0LsjSHxT0i19CIrM
+	 UWYv38Bwc7RJgF16ZcyX2GVqjBbmdiJO1WmxnxZe6bWic/tE7AkuqM8pPXDW8pjNjB/ey
+	 9MjmmhebCRIAmvNrzY2cBKs58ByYqLT50lV2/eXJDIWxoPnmuVkSnXxTsXWZGv7ZpNj9b
+	 /AYSC4IEzKJP0JhQRH9FbdaNDi7yN0g3PcrQW6fjeHu4hBXUGGAeBJcBaG7WEVcDq9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FgdA8vo+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02dyD3BB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF270606A331;
-	Wed, 28 Oct 2026 17:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A429606A324;
+	Wed, 28 Oct 2026 17:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FgdA8vo+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F6E1F01825;
-	Wed, 28 Oct 2026 17:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02dyD3BB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA7E1F01825;
+	Wed, 28 Oct 2026 17:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208129;
-	bh=AwKYHpiBBsa2I3YuvDgz5iNUuviSwSrYb7fLM6O8p3k=;
+	s=korg; t=1793208132;
+	bh=0FS9YFJcDE+2iMTJCaraT9/qGyCVwyso3OXgga55mg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FgdA8vo+pDWjixYhlvd0GQesECo/f1WUH83/dxjnS/EFdIsMwrN8NG2SyW47tYaX4
-	 cRtcUFfPJhLysH6kqsjGuLh9iEtCY+/zmFkvEyGWNqYTAEx0v3Tr20LA6vQixJKaMx
-	 AlN29/rDbd0eSrayaeOVRihuUsxQXiKataUmft5g=
+	b=02dyD3BBnjW8f5lkXB8IotIAUOTzdTUIIE/haaXLR0Nhlpmv0+yzbpF+BY+xtLZn1
+	 cATLiTMnDZiMc4cnfnsNwKIgmmP/XADlYfkQe9pmhz+9eBu9urvH7q93c1a7uiG4A0
+	 tBA5eGw6zIJfwZPYCnbAJKASvDRI59j58Po+K4f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 004/516] device property: fix infinite loop in fwnode_for_each_child_node()
-Date: Wed, 28 Oct 2026 17:52:36 +0100
-Message-ID: <20261028170003.631388847@linuxfoundation.org>
+Subject: [PATCH 5.10 013/516] nvme-tcp: fix host memory disclosure on R2T for a read command
+Date: Wed, 28 Oct 2026 17:52:45 +0100
+Message-ID: <20261028170003.840936623@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -62,104 +62,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 1900692555826753adab8799a1a8d50bb1ee200c ]
+[ Upstream commit 6efbc52237facda35d2d874fe1765bb4839275d8 ]
 
-When iterate over children of a fwnode that has a secondary fwnode,
-fwnode_get_next_child_node() can enter an infinite loop if the secondary
-fwnode has more than one child.
+nvme_tcp_handle_r2t() does not check the direction of the request the
+R2T refers to. A malicious controller can send an R2T for a READ and
+the host will answer it: nvme_tcp_setup_h2c_data_pdu() builds the
+H2CData header and nvme_tcp_try_send_data() sends the request's data
+buffer. That buffer is the READ destination, so its contents go to the
+controller.
 
-                       Parent        Child
-      (Primary fwnode)   FWa:   {FWa1, FWa2, FWa3}
-    (Secondary fwnode)   FWb:   {FWb1, FWb2}
+The command then completes normally and nothing is logged.
 
-In this case:
+Against a test controller that answers every READ with an R2T, a 4096
+byte buffered read returned all 4096 bytes, split over two R2Ts. The
+pages contained stale kernel data, including an array of struct page
+pointers.
 
- ┌─> fwnode_get_next_child_node(FWa, FWa1)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa1) returns FWa2
- │
- │   ...
- │
- │   fwnode_get_next_child_node(FWa, FWa3)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa3) returns NULL
- │    - fwnode_call_ptr_op(FWb, get_next_child_node, FWa3) returns FWb1
- │
- │   fwnode_get_next_child_node(FWa, FWb1)
- │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWb1) returns FWa1
- └────┘
+Reject an R2T for a request that is not a write.
 
-This cause fwnode_for_each_child_node() to loop indefinitely, reapeatedly
-output {FWa1, FWa2, FWa3, FWb1, FWa1, ...}.
-
-The root cause is that when the current child (FWb1) belongs to the
-secondary fwnode, calling get_next_child_node() on the parimary fwnode
-incorrectly returns the first child (FWa1) again instead of NULL.
-
-Fix this by dynamically checking the parent fwnode of the current child
-before calling get_next_child_node(). This approach follows the pattern
-established in commit b5b41ab6b0c1 ("device property: Check
-fwnode->secondary in fwnode_graph_get_next_endpoint()").
-
-Fixes: 2692c614f8f0 ("device property: Allow secondary lookup in fwnode_get_next_child_node()")
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Tested-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260611203537.1786399-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/property.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/nvme/host/tcp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index 4b16531d77916..2601c1d806c51 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -740,18 +740,31 @@ struct fwnode_handle *
- fwnode_get_next_child_node(const struct fwnode_handle *fwnode,
- 			   struct fwnode_handle *child)
- {
-+	const struct fwnode_handle *parent;
-+	struct fwnode_handle *child_parent __free(fwnode_handle) = NULL;
- 	struct fwnode_handle *next;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index e47c73a74177c..9e1c45d7cc999 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -654,6 +654,13 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
+ 	}
+ 	req = blk_mq_rq_to_pdu(rq);
  
--	if (IS_ERR_OR_NULL(fwnode))
-+	/*
-+	 * If this function is in a loop and the previous iteration returned
-+	 * an child from fwnode->secondary, then we need to use the secondary
-+	 * as parent rather than @fwnode.
-+	 */
-+	if (child) {
-+		child_parent = fwnode_get_parent(child);
-+		parent = child_parent;
-+	} else {
-+		parent = fwnode;
++	if (unlikely(rq_data_dir(rq) != WRITE)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"req %d unexpected r2t for a non-write command\n",
++			rq->tag);
++		return -EPROTO;
 +	}
-+	if (IS_ERR_OR_NULL(parent))
- 		return NULL;
- 
- 	/* Try to find a child in primary fwnode */
--	next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
-+	next = fwnode_call_ptr_op(parent, get_next_child_node, child);
- 	if (next)
- 		return next;
- 
- 	/* When no more children in primary, continue with secondary */
--	return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
-+	return fwnode_get_next_child_node(parent->secondary, NULL);
- }
- EXPORT_SYMBOL_GPL(fwnode_get_next_child_node);
- 
++
+ 	if (unlikely(!r2t_length)) {
+ 		dev_err(queue->ctrl->ctrl.device,
+ 			"req %d r2t len is %u, probably a bug...\n",
 -- 
 2.53.0
 
