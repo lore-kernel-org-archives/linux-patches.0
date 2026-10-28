@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207804;
-	b=tL9Q4+6EoRPgPvrAvmY9vRQoOas9HFkkFwXwxMhwIj26Ir3EokS+NALpMenQkPXkig6V
-	 RKj21yY+V8moQ3nJzi142QobW7jPfXQyzGkmta8nAWqP3htHFWumu012FQtO+zaJ/L3vp
-	 v43sS28ekvxlmI2nGk0m0RBWi/YxzsvLyo+UVN75avHK9Iyrxd+ohnznV8Y7ao4y5pzmJ
-	 RJYERSH0a+7nluSCJNyq4pThtdo11sgB/hM+7JmqORZHvvekP8vpWivpm2S8k3Mq+akWR
-	 A6xOw/nI1VV1Bn0EwV1n+lfiUm6edw5QRMSVS6UE7jx9Q1nXgBwqG/tE2udkbZCXN4Q==
+	t=1793207807;
+	b=V81I9clx8A/dDEDGyYdzkFLu4XMYUnVbm0ol9Qae1HXcaCG3hfhZs7usYFPoRNPyFGAO
+	 MXkszbI/FY+QizlotN8f7GTcqkvogkR1DpzayOctqKgI1tgdQa7JyE5zdeGmu98XZv6bV
+	 bmvStq9XxsqLJrz17mLZIbRqDCrGss5K7B4linPhRGLqZ6TjmJd3aEoIH+C33QV09/I0Y
+	 y3KaIGdmXjIAlc+5rKeINW6f/T9/9HS75ty3nJa4j+HQURIEwbfTyroeEqv1JdnAaZAID
+	 kojMBWr/Ql+0eWTQWtGZIT4/R9ftDTydMCLQfkx0aTJBUDoRTEKbHz9yQWiphP29gOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X/ByYQiSYLONY2QSsIsUEEDsKQWrsi0RzM0WEpcXV58=;
-	b=ETAVN8R6dMhWjN4ty69XaHaM278GbARjG1H1tPA+thn2qje6wKkBAnKTK+C/RN96IsaX
-	 U/McabuUFWGe0IrFuo50N6Dda4DaZa0uC11OJTvHUgwGlCwnWbgpekvB4Na/+InQok64H
-	 PPjcba5dWwr2xOV5nEvLmmm8nNgTU0mQHRIx4WC5Gu9OK9kAxcxS45Lx3v1VVozkeoUhU
-	 S9QS6jklrHnxT9hvaUvzDjez/xrT8mi7ewFK9v8ALMIyEHrqMDPNtY+k8uVImQVy9pvm4
-	 ww66SNNg/TH/TxLsC3xS5HDNqpJQTmpywZtquFZWRNorZaHDyZzVR/vAyBbO+LhKwng==
+	bh=GNDGkzf/yyLxUwC12Jc5OId9kCSj7k6CowNcI6xA5lY=;
+	b=dEAbo/kyE8Gex7PmseN2i58Xbs9dIPcZADepvcICimnh//1fl2tGJ3JSb4Yk3lqKmVoQ
+	 9I4ttXQuGw6Raggz66j6FLOUtA2D3C7Gz96aAF90SXDmp2U/JTtA51KYQMnVWQFOZZxJj
+	 M56FNHk9rRpfIl8U1xm4kCCmcObL7j6rOmW7P6ifLkYhweaUw7wLgW4MCyKos/owu8Wu/
+	 WbLEfQukdRv0d+izWr88FvwWK4at3oLICL8A4D3HseuliUb90ocg6zrl1RXmUo1E27Dw6
+	 jh5hz/dPx+0QXlHGdYgZ5y1PO28R88jWT013DJ+7P6b741K0YL44VkE0vr1w19S8hFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NkAp8ICZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwrRm4Ti;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D801606A31A;
-	Wed, 28 Oct 2026 17:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43E5606A31A;
+	Wed, 28 Oct 2026 17:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NkAp8ICZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C84F1F01825;
-	Wed, 28 Oct 2026 17:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwrRm4Ti
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483E21F01825;
+	Wed, 28 Oct 2026 17:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207804;
-	bh=X/ByYQiSYLONY2QSsIsUEEDsKQWrsi0RzM0WEpcXV58=;
+	s=korg; t=1793207806;
+	bh=GNDGkzf/yyLxUwC12Jc5OId9kCSj7k6CowNcI6xA5lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NkAp8ICZIpZEwjPjgQcAt/ShaoZp+jZq8HZSPL7Ztf9u/soImCw7D2nGG6jEf2OlL
-	 T3vbioltKUBjgMoXfPy8lqPDyf0sTaeGmvhuDaGKPEd12MsTbmCKOZ3LGeKhR7mlR5
-	 7AGk0FoQlCJSz+jWqmnx0rNEjdQNT+1kTvDPcL+w=
+	b=RwrRm4TizP8ZY+8pjqcMYZI+3WCIhSKcx2nYIy14DJSKeTJBpo2wwod+LvYGRapRw
+	 GEbFttJPcmds0PmdyMJhcftG/VbQx4uNFzE4QXb4BfZEHAdJkxLyJMWhTShlbWUTpK
+	 pjgUlZFSJA+pCawnG8rvGc+5mizv/k3lLbR/R4/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Kai <yaokai34@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 146/247] workqueue: Fix unbound pool lifetime for pending pwqs
-Date: Wed, 28 Oct 2026 17:59:09 +0100
-Message-ID: <20261028165950.869318641@linuxfoundation.org>
+	Jacob Shivers <jshivers@redhat.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.12 129/247] smb: client: fix multiuser mount with krb5
+Date: Wed, 28 Oct 2026 17:58:52 +0100
+Message-ID: <20261028165950.459310896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,99 +72,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Kai <yaokai34@huawei.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit cf9c8aaea0d47410df8708bec195889f3a85cd3c ]
+commit 69499395867332364ed4ac8b546537eb3bab6ebb upstream.
 
-KASAN reports a use-after-free of an unbound worker_pool in
-node_activate_pending_pwq():
+Customer reported that they could no longer mount their SMB shares
+with multiuser mount option and krb5.  Turned out that the client
+wasn't duplicating username option when creating multiuser
+connections, therefore failing to retrieve credentials as
+cifs.upcall(8) couldn't find them in keytab.
 
-  BUG: KASAN: slab-use-after-free in _raw_spin_trylock+0x6d/0x120
-  Read of size 4 at addr ffff8880089ce000 by task kworker/u22:0/318
+Fix this by duplicating username option (if set) from original fs
+context before creating multiuser connections with krb5.
 
-  CPU: 1 UID: 0 PID: 318 Comm: kworker/u22:0 Not tainted 7.2.0 #1 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  Workqueue:  0x0 (flush-8:0)
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x53/0x70
-   print_report+0xce/0x610
-   kasan_report+0xce/0x100
-   _raw_spin_trylock+0x6d/0x120
-   pwq_dec_nr_in_flight+0x4b4/0xcb0
-   process_one_work+0x921/0x11a0
-   worker_thread+0x4d0/0xd20
-   kthread+0x2de/0x3c0
-   ret_from_fork+0x3aa/0x620
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+Reproducer:
 
-  Allocated by task 311:
-   alloc_pwq+0x439/0xca0
-   apply_wqattrs_prepare+0x75e/0xd10
-   apply_workqueue_attrs_locked+0x44/0xa0
-   wq_nice_store+0x350/0x450
+  ```
+  $ ktutil
+  ktutil:  add_entry -password -p testuser -k 1 -e aes256-cts
+  Password for testuser@ZELDA.TEST:
+  ktutil:  write_kt /etc/krb5.keytab
+  ktutil:  quit
+  $ klist -ke
+  Keytab name: FILE:/etc/krb5.keytab
+  KVNO Principal
+   ---- ----------------------------------------------------------------
+     1 testuser@ZELDA.TEST (aes256-cts-hmac-sha1-96)
+  $ mount.cifs //w22-root2/scratch /mnt/1 -o \
+      	uid=1000,sec=krb5,username=testuser@ZELDA.TEST,multiuser
+  mount error(13): Permission denied
+  Refer to the mount.cifs(8) manual page (e.g. man mount.cifs) and
+  kernel log messages (dmesg)
+  ```
 
-  Freed by task 0:
-   kfree+0x127/0x3b0
-   rcu_core+0x523/0x1780
-   handle_softirqs+0x1b3/0x610
-
-  Last potentially related work creation:
-   put_unbound_pool+0x3f3/0x7d0
-   pwq_release_workfn+0x494/0x8e0
-   kthread_worker_fn+0x1ff/0x790
-
-Canceling the last inactive work skips pwq_dec_nr_active(), so an empty
-pwq can remain on pending_pwqs when its refcnt reaches zero.
-pwq_release_workfn() currently puts the pool before removing that pwq.
-If this drops the last pool reference, the pool can be RCU-freed while
-the pwq remains reachable, and node_activate_pending_pwq() may trylock
-the freed pool->lock.
-
-Remove the pwq from pending_pwqs before putting the pool.
-
-Fixes: 5797b1c18919 ("workqueue: Implement system-wide nr_active enforcement for unbound workqueues")
+Reported-by: Jacob Shivers <jshivers@redhat.com>
+Fixes: 12b4c5d98cd7 ("smb: client: fix krb5 mount with username option")
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Yao Kai <yaokai34@huawei.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/smb/client/connect.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 14a3d1775c2ff..f6dde83c9466f 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -5123,12 +5123,6 @@ static void pwq_release_workfn(struct kthread_work *work)
- 		mutex_unlock(&wq->mutex);
- 	}
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -4151,14 +4151,25 @@ cifs_setup_session(const unsigned int xi
+ 	return rc;
+ }
  
--	if (!is_percpu_pool(pool)) {
--		mutex_lock(&wq_pool_mutex);
--		put_unbound_pool(pool);
--		mutex_unlock(&wq_pool_mutex);
--	}
--
- 	if (!list_empty(&pwq->pending_node)) {
- 		struct wq_node_nr_active *nna =
- 			wq_node_nr_active(pwq->wq, pwq->pool->node);
-@@ -5138,6 +5132,12 @@ static void pwq_release_workfn(struct kthread_work *work)
- 		raw_spin_unlock_irq(&nna->lock);
- 	}
+-static int
+-cifs_set_vol_auth(struct smb3_fs_context *ctx, struct cifs_ses *ses)
++static int set_fs_context_auth(struct smb3_fs_context *ctx,
++			       struct cifs_ses *ses)
+ {
+ 	ctx->sectype = ses->sectype;
  
-+	if (!is_percpu_pool(pool)) {
-+		mutex_lock(&wq_pool_mutex);
-+		put_unbound_pool(pool);
-+		mutex_unlock(&wq_pool_mutex);
+-	/* krb5 is special, since we don't need username or pw */
+-	if (ctx->sectype == Kerberos)
++	/*
++	 * krb5 is special as we might need to pass username (passwordless) down
++	 * to cifs.upcall(8) for keytab.
++	 */
++	if (ctx->sectype == Kerberos) {
++		if (ses->user_name && ses->user_name[0]) {
++			ctx->username = kstrndup(ses->user_name,
++						 CIFS_MAX_USERNAME_LEN,
++						 GFP_KERNEL);
++			if (!ctx->username)
++				return -ENOMEM;
++		}
+ 		return 0;
 +	}
-+
- 	kfree_rcu(pwq, rcu);
  
- 	/*
--- 
-2.53.0
-
+ 	return cifs_set_cifscreds(ctx, ses);
+ }
+@@ -4197,7 +4208,7 @@ cifs_construct_tcon(struct cifs_sb_info
+ 	ctx->witness = master_tcon->use_witness;
+ 	ctx->dfs_root_ses = master_tcon->ses->dfs_root_ses;
+ 
+-	rc = cifs_set_vol_auth(ctx, master_tcon->ses);
++	rc = set_fs_context_auth(ctx, master_tcon->ses);
+ 	if (rc) {
+ 		tcon = ERR_PTR(rc);
+ 		goto out;
 
 
