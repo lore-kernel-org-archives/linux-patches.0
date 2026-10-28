@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211536;
-	b=ufkcOYcIDm+fU1vCsajt6yglYlUD7ZBhvAtHXH5jp6GSkHz5tSOetgsuvhwlxh72zVdz
-	 a5aroRwRz+bpWGvdIB0QtKw2WsMFxP2JzWVl2j2iz6ua2lUPrA26EWQzlVBXX/+cJEXr/
-	 DQED2UGXyBgqhsNSte5hxvvooxXR1SpaKb4cIbgEHa6y36mjZXYq37vwZPx3EqFQzCpAN
-	 9VUVM1mhanEFJn7D0AbD8mMdEGXRCUFSTshFCS6LRMgXYfgGScF9cDtztT8nY8MH+ZxWW
-	 KEk1n0y3kIQVxHVDKzliyahWu2kMa0tx89ouKie8o9ceSJZIcx2TtNpMJKqqbrKYcLg==
+	t=1793211539;
+	b=U0naEoU7zFz3I2PKavoROPqPTefRTDYkQBatV4OocgCmjg+9WCH5mY0iaSaJc4A3Qn8+
+	 EfCOop4YlO/UimcpoAILi5pL4+Zn6qyhAguNBBk3zDd5sJF8K/03GT+a++1nhfqfkhtrh
+	 RW4KdWi+E6vcywFK0jSX9NxEJwn9qgoJOfYgihR4CbwfprnbY2Mlw74Xpz0pMrHpzOBu0
+	 hiDzEabPo2QDZOFyCT/qNEQcAdh2Dlzlt+EtL6tL8WG7HeFVOoKt68G2XCzOxwiiDTNoY
+	 nEu8vK8O2LuRm2LEc8oijnat3Wp0IsSMXtvuMkM8y7yk1btOLhK0wcRb0UZPoSYyHgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VaA88n3Iv+mVNmr0qzAmagTxG3eV+iuT48/x5HYXxpM=;
-	b=O15A8qH3ReIvvvY3nN4091FsrLAPWLrms7FrBylwTiAVTnKk8DqxKMhXbtVBeKaRb4po
-	 wECKod3+ukFhjAtpmtwxNJXoMHJvlsjIO0Gn+s6pEo2t0FEemcomJIMcUjUQ4+46Ced/X
-	 WoJ+cj19ldjXyh+17ejDPytJi50dFvMscLb69JEORem7X5A08dZJHCV3av9aCK4JE8Qcg
-	 86osaK2095THx5rnS6uUvUKqNjjOM7N/Kz4xrDFoJDlGAOQ48/UWHH6iBgw/QYJdlsxLA
-	 GYFfoFI5urn8eCRmkJT6dNbN2HghxeYl4KJ+6Hc6Rze1FOQTu6a9SJsftE1P19w/GrA==
+	bh=sgSOcrrgQBX8BOOYN3pJQ8TAPF5gqcWhuQsHojskedQ=;
+	b=qarjf+N7ThUNAMHVSHvQr9X3yY+pxBlbh+frk5o6J8aLPxYR+n8+Vxq/1GgdED3gSqe4
+	 MIy1BuJuOKa5/P2UoreWZDIlrLFhwNtZPXgPMqHq9VdXUCeh5RAys3kw/qnnyDjegnghm
+	 9YK4P7G2CUcSyRPZt6TcwoDuqbDv7zDg42PeZBTNHv40Oibp21s2xv50kuOz6y6nTkmp9
+	 U2ip/ukg4vO73CdcDHz/RBolD+YMBIVAJG9EKke6xeBrC8j8dPcI5wZVg7fz9EeloRcpp
+	 Zizl7fLmN6hnVu9uS8ANVUi377vACe+1hAL+FzBT/cKgjsQ698NkueE6nQTCvQEI5tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2QwrN+5A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OtU7jiR1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8AF606A31C;
-	Wed, 28 Oct 2026 18:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF26606A333;
+	Wed, 28 Oct 2026 18:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2QwrN+5A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2BD1F01825;
-	Wed, 28 Oct 2026 18:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OtU7jiR1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7721F031E2;
+	Wed, 28 Oct 2026 18:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211535;
-	bh=VaA88n3Iv+mVNmr0qzAmagTxG3eV+iuT48/x5HYXxpM=;
+	s=korg; t=1793211538;
+	bh=sgSOcrrgQBX8BOOYN3pJQ8TAPF5gqcWhuQsHojskedQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2QwrN+5AjPcaL1NphtDI5s6Xdce1G4q5Z6vqcUbY3+JJtmWNNhBSoHiWtVzJtf79x
-	 BFjYTcCpVsgagcpezCg3/cOaC3BYcqH/xI1p/3ztWgxrwdt+B2j19e1akv3nl9c5Pg
-	 D8Gpk5IaE7l7U8U82o7f+82v5gU+T/kpJqSpr/Yg=
+	b=OtU7jiR1QFmlPVekFzMZHCbqK3YnOedxscBEZsN6pbhFaE77u2p341djO03bEnnE4
+	 5AEBjOkdK38rD7WJRuNYcf9fnpp7+vUCpat0ZNdEdGRTBg3w8uC3UKWZHOsEcc21De
+	 zNVo2YZj7cDpTGvnJQpdiJFVvzTzQATW72m54e0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 410/571] openvswitch: vport: fix self-deadlock on release of tunnel ports
-Date: Wed, 28 Oct 2026 17:59:17 +0100
-Message-ID: <20261028170017.743185144@linuxfoundation.org>
+Subject: [PATCH 5.15 411/571] netfilter: nf_tables: release flowtable after rcu grace period on error
+Date: Wed, 28 Oct 2026 17:59:18 +0100
+Message-ID: <20261028170017.766676111@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -71,65 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit aa69918bd418e700309fdd08509dba324fb24296 ]
+[ Upstream commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce ]
 
-vports are used concurrently and protected by RCU, so netdev_put()
-must happen after the RCU grace period.  So, either in an RCU call or
-after the synchronize_net().  The rtnl_delete_link() must happen under
-RTNL and so can't be executed in RCU context.  Calling synchronize_net()
-while holding RTNL is not a good idea for performance and system
-stability under load in general, so calling netdev_put() in RCU call
-is the right solution here.
+Call synchronize_rcu() after unregistering the hooks from error path,
+since a hook that already refers to this flowtable can be already
+registered, exposing this flowtable to packet path and nfnetlink_hook
+control plane.
 
-However,
-when the device is deleted, rtnl_unlock() will call netdev_run_todo()
-and block until all the references are gone.  In the current code this
-means that we never reach the call_rcu() and the vport is never freed
-and the reference is never released, causing a self-deadlock on device
-removal.
+This error path is rare, it should only happen by reaching the maximum
+number hooks or by failing to set up to hardware offload, just call
+synchronize_rcu().
 
-Fix that by moving the rcu_call() before the rtnl_unlock(), so the
-scheduled RCU callback will be executed when synchronize_net() is
-called from the rtnl_unlock()->netdev_run_todo() while the RTNL itself
-is already released.
+There is a check for already used device hooks by different flowtable
+that could result in EEXIST at this late stage. The hook parser can be
+updated to perform this check earlier to this error path really becomes
+rarely exercised.
 
-Fixes: 6931d21f87bc ("openvswitch: defer tunnel netdev_put to RCU release")
-Cc: stable@vger.kernel.org
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260430233848.440994-2-i.maximets@ovn.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-(cherry picked from commit aa69918bd418e700309fdd08509dba324fb24296)
-[Harshit: Resolved minor conflicts because 5.15.y has one-argument
-rtnl_delete_link() call.]
+Uncovered by KASAN reported as use-after-free from nfnetlink_hook path
+when dumping hooks.
+
+Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+
+(cherry picked from commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce)
+The cherry-pick did not apply cleanly and required manual conflict
+resolution because the nftables code differs between the 5.15.y and
+Linux 6.12.y branches.
+
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/vport-netdev.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
-index 7e8fc1e027501..7c31995618d6c 100644
---- a/net/openvswitch/vport-netdev.c
-+++ b/net/openvswitch/vport-netdev.c
-@@ -190,9 +190,13 @@ void ovs_netdev_tunnel_destroy(struct vport *vport)
- 	 */
- 	if (vport->dev->reg_state == NETREG_REGISTERED)
- 		rtnl_delete_link(vport->dev);
--	rtnl_unlock();
- 
-+	/* We can't put the device reference yet, since it can still be in
-+	 * use, but rtnl_unlock()->netdev_run_todo() will block until all
-+	 * the references are released, so the RCU call must be before it.
-+	 */
- 	call_rcu(&vport->rcu, vport_netdev_free);
-+	rtnl_unlock();
- }
- EXPORT_SYMBOL_GPL(ovs_netdev_tunnel_destroy);
- 
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 90048faccf2a3..b4c3615a2bf6a 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -8121,6 +8121,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
+ 					       &flowtable->hook_list,
+ 					       flowtable);
+ 	if (err < 0) {
++		synchronize_rcu();
+ 		nft_flowtable_hooks_destroy(&flowtable->hook_list);
+ 		goto err4;
+ 	}
 -- 
 2.53.0
 
