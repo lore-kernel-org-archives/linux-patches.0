@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211132;
-	b=IX9i4iASKCTtgfVvez6tykNfbpr3Enm8BJRVV9br7bZFIqByLa3nOs3XSOs2L3HsQceu
-	 1BDla22EhzEupizWXLCZXbfLxvrl90lcjMOpK/yRph1qSvUtnHh7Uh5VfGWMLBq7ZSC4e
-	 XmCLSjivZ8FYfuRJNcUXREKzOEmIdEJM2nT0/VGyLHBzaEcs+0wm/Mfj/sPIN+aAfEgis
-	 2r5er6f3aex2Kjj1Ex86925thYpc2FGhN/6qiW8jY4+K459bnZ/Kkc1QecclaukFm22RU
-	 R9Rus9sGHoNQyxBbf6dj/RvirKEjj2Hxou8hOLTPL7P7A2Snf7a4S0eLe/gQ5GQz4KA==
+	t=1793211135;
+	b=t+4heFTTVXO0FZiXxbgEnJ4oFcT34WzP/XuPFp5e5MvOGwJWsjTqUZ/jbo8Nue/QGgnZ
+	 QET1dXjbupRZo4cQHWHuCdQ7UFeuggd+R0rSD1VfeM1mhpsS57dx7rS1LwP4oxzpKQMNY
+	 GSIZqkUBk6Di7wqaE4nvqRd8dG1GVJthl2URgGsTtJdqvcBtszZMZDndQjvrMB+Xz2uqZ
+	 wSks/cC3k3ZXt8rGqp/ssHUcaaeMc6+wxuaYcItevwtnKfPGF8ruxzMc1P/+lJR1a2Qib
+	 eGERZi08ON7ZGfNnOpHmNtirVv95pu2X4aj+6Ggi42XXWKDeqvyoq3FXI5DO4Jv67EA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iMxKPgIZXcRvq9UCs9fgz/Z+4VO7/pFaJlvXZcHEN3E=;
-	b=OnTEsfyOTgTKLdGr0XS5FUB0PZmLZNzrcNRA5AZWj5cBz8fd3sQVsR/Z/IEabdKj44A4
-	 byut63jAbrA8u63FWDEFxXXgOXZ2dP8WRpVs5Jki2m1JyVZnaJ8Wh+RQTdE3GSEx/aQ6/
-	 8PUEjd2H8VYNkV+PPLPAQwPeqB+TMUwq0JclVJHScQX0EqMoY2m6p/GVVM1kRgrLKjxnY
-	 OHGpy1GV+1NwXrbkr979B+ggjTR8Pz0T/rdoasIsgXfBAazYwtcy2/oNtnI/oXc/WlgTA
-	 KlKcLOPOdgoBjI7caIQWNUbtGLoXr8m193euiAwnYYd6/mCp00JMPTkE62dIi+cqung==
+	bh=cMKQ+tUqxZIp1fwkHdxCZSfPITggSurhovx2WtK0Ewk=;
+	b=egNtGsgkomsH2hgamsYarU9ovpqYtxb57NWPJIm9EXMWQA+2blqFvQqiN2CWYJl0zn9N
+	 Rog6+sowFGB2iFMUPIKkXNTbWce6NE3wEN+gAPm8aODQblcO6r7T6kbcAHaXqey6GHIHQ
+	 vZ7bSLP742RifWWX5lcCO53YQtR6Ye3B5bMHqtQ95hROxohrDbwOtihnfkH0jYw/4bJEq
+	 A14o0aRBs9xlOFCpTWQD73wdYP+v+Qb/vI2ltZjvx6po88ePdETq5t90M543QbN1L1LNh
+	 qNga5FI/HKYu77fOZyd8QmgAMTGrrSuhm7akhgeqnBqZ/e8XKBVOSOCT0ZFKJfGQnZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECRQ4FoB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZEpEgAY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C844F606B461;
-	Wed, 28 Oct 2026 18:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8349606A95F;
+	Wed, 28 Oct 2026 18:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECRQ4FoB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107E71F01829;
-	Wed, 28 Oct 2026 18:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZEpEgAY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF7D1F01829;
+	Wed, 28 Oct 2026 18:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211131;
-	bh=iMxKPgIZXcRvq9UCs9fgz/Z+4VO7/pFaJlvXZcHEN3E=;
+	s=korg; t=1793211134;
+	bh=cMKQ+tUqxZIp1fwkHdxCZSfPITggSurhovx2WtK0Ewk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ECRQ4FoB9E1Gq/+Vp0dojXmZBQnFJAZs4Eiy6WlS12Kw0XhFJAXiS9FhC43llp8I9
-	 2xFfxs1gI7EOZ/lS0gfZwehQhezHT5P68BwyzYE43H/6sfhFdJhlEjRgiW0gCYqOuQ
-	 b1pL9f2PgvwM4EcYvdGGMTceEWre+zKCi1RVfydo=
+	b=MZEpEgAYnz33iGKc85Eg+DXMMNQuiRRsuAcbR/jhk9375E5dk2Mu3KTy1cIjjKYDP
+	 dw1AZkyGtkQTC87a43k3TIsyt+z0nrjCojkt+rhED9jsAjPW0ownWRMNsGl0TCpY9d
+	 qY2jETg8X82ApSRZraW9hAfzWGoYoxdHqA4vxWUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 268/571] SUNRPC: fix gssx_dec_option_array error path bugs
-Date: Wed, 28 Oct 2026 17:56:55 +0100
-Message-ID: <20261028170014.362920058@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 227/571] Bluetooth: hci_core: Serialize ACL scheduling with channel deletion
+Date: Wed, 28 Oct 2026 17:56:14 +0100
+Message-ID: <20261028170013.389942897@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,116 +67,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 5e9a94539b1ec17a89177d952badfd0d844d694a ]
+commit f4845ab191a4f686a5da481fbba90ed73bb693b0 upstream.
 
-Four coupled defects in the gssx XDR option-array decoder make the
-error paths unsafe: a NULL deref in the caller, a refcount leak on
-the decoded group_info, and a latent use-after-free that the leak
-fix would otherwise expose.
+hci_chan_sent() selects a channel under RCU but drops the read lock before
+accessing chan->conn and returning the channel. The ACL and LE schedulers
+then use its packet queue and update its transmit counters without any
+protection against channel deletion.
 
-gssx_dec_option_array() sets oa->count = 1 before allocating
-oa->data.  If that allocation fails, -ENOMEM is returned with
-oa->count == 1 and oa->data == NULL.  All other error paths jump
-to free_oa: which frees oa->data and NULLs it but also leaves
-oa->count == 1.  The caller trusts the count:
+After TX selects a channel and releases RCU, a disconnect command timeout
+on the separate request workqueue can run hci_conn_failed() and
+l2cap_conn_del(). hci_chan_del() can then unlink the channel, complete
+synchronize_rcu(), purge its queue and free it before TX resumes. This
+causes use-after-free both in hci_chan_sent() and in its callers.
 
-    gssp_accept_sec_context_upcall()
-      gssx_dec_accept_sec_context()
-        gssx_dec_option_array()        /* fails, count=1 data=NULL */
-      data = res.options.data[0].value /* NULL deref */
+KASAN reported:
 
-Independently, free_creds: releases the partially decoded svc_cred
-with a bare kfree(creds).  gssx_dec_linux_creds() installs a
-groups_alloc() result into creds->cr_group_info; that object is
-kvmalloc-backed and refcounted, and only put_group_info() reaches
-kvfree().  A plain kfree(creds) drops the wrapper and leaks the
-group_info allocation.
+  BUG: KASAN: slab-use-after-free in hci_chan_sent+0x892/0x9b0
+  Workqueue: hci0 hci_tx_work
+  Call Trace:
+   hci_chan_sent+0x892/0x9b0
+   hci_tx_work+0x5e6/0xb70
+  Allocated by task 91:
+   hci_chan_create+0xe3/0x350
+   l2cap_conn_add.part.0+0x12/0xa30
+   l2cap_chan_connect+0x110d/0x1b60
+   l2cap_sock_connect+0x310/0x530
+  Freed by task 99:
+   hci_chan_del+0x11f/0x170
+   l2cap_conn_del+0x4f1/0x800
+   l2cap_connect_cfm+0x88c/0xd30
+   hci_conn_failed+0x150/0x250
+   hci_abort_conn_sync+0x3e3/0x800
+   hci_cmd_sync_run+0x7e/0xc0
+   hci_abort_conn+0x105/0x1f0
+   disconnect_sync+0x157/0x290
+   hci_cmd_sync_work+0x13c/0x290
 
-The natural fix for the leak is to call free_svc_cred(creds) before
-kfree(creds), but free_svc_cred() invokes put_group_info() on
-creds->cr_group_info unconditionally when non-NULL.  The existing
-out_free_groups: path in gssx_dec_linux_creds() already called
-groups_free() on that pointer without clearing it, so once
-free_svc_cred() is wired in, the subsequent put_group_info() would
-touch freed memory.
+Hold the existing device mutex across channel selection and transmission
+in both schedulers to serialize them with channel teardown. Keep timeout
+handling outside the critical sections because hci_link_tx_to() acquires
+the same mutex. This also permits the transmit path to sleep, unlike
+extending the RCU read-side critical section across packet submission.
 
-Fix all four together:
-
-  - Move the oa->count = 1 assignment below the oa->data allocation
-    so it is never set when oa->data is NULL.
-  - Reset oa->count to 0 at free_oa: so count and data stay
-    coherent and the caller sees an empty option array.
-  - Call free_svc_cred(creds) before kfree(creds) at free_creds:
-    so the refcounted cr_group_info is released.  free_svc_cred()
-    either NULL-guards each field explicitly (cr_group_info has
-    an if() check) or delegates to a helper that is NULL-safe
-    itself (kfree for the string fields, gss_mech_put() which
-    guards with if(gm) at gss_mech_switch.c:342), so it is safe
-    to call on a partially decoded svc_cred where only
-    cr_uid/cr_gid/cr_group_info have been written and everything
-    else is zero from kzalloc.
-  - In gssx_dec_linux_creds()'s out_free_groups: path, release
-    cr_group_info with put_group_info() rather than groups_free()
-    so the teardown matches free_svc_cred()'s refcount-aware path,
-    and clear the pointer so a later free_svc_cred() on the same
-    creds does not release it a second time.
-
-Fixes: 3cfcfc102a5e ("SUNRPC: fix some memleaks in gssx_dec_option_array")
+Fixes: 3eff45eaf817 ("Bluetooth: convert tx_task to workqueue")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-2-d026a1415e0b@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/gss_rpc_xdr.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_core.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/sunrpc/auth_gss/gss_rpc_xdr.c b/net/sunrpc/auth_gss/gss_rpc_xdr.c
-index ee91f4d641e6f..ac9ae42a69762 100644
---- a/net/sunrpc/auth_gss/gss_rpc_xdr.c
-+++ b/net/sunrpc/auth_gss/gss_rpc_xdr.c
-@@ -222,7 +222,8 @@ static int gssx_dec_linux_creds(struct xdr_stream *xdr,
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4794,6 +4794,8 @@ static void hci_sched_acl_pkt(struct hci
  
- 	return 0;
- out_free_groups:
--	groups_free(creds->cr_group_info);
-+	put_group_info(creds->cr_group_info);
-+	creds->cr_group_info = NULL;
- 	return err;
+ 	__check_timeout(hdev, cnt, ACL_LINK);
+ 
++	hci_dev_lock(hdev);
++
+ 	while (hdev->acl_cnt &&
+ 	       (chan = hci_chan_sent(hdev, ACL_LINK, &quote))) {
+ 		u32 priority = (skb_peek(&chan->data_q))->priority;
+@@ -4825,6 +4827,8 @@ static void hci_sched_acl_pkt(struct hci
+ 
+ 	if (cnt != hdev->acl_cnt)
+ 		hci_prio_recalculate(hdev, ACL_LINK);
++
++	hci_dev_unlock(hdev);
  }
  
-@@ -242,12 +243,12 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
- 		return 0;
+ static void hci_sched_acl_blk(struct hci_dev *hdev)
+@@ -4919,6 +4923,8 @@ static void hci_sched_le(struct hci_dev
  
- 	/* we recognize only 1 currently: CREDS_VALUE */
--	oa->count = 1;
--
- 	oa->data = kmalloc(sizeof(struct gssx_option), GFP_KERNEL);
- 	if (!oa->data)
- 		return -ENOMEM;
+ 	__check_timeout(hdev, *cnt, LE_LINK);
  
-+	oa->count = 1;
++	hci_dev_lock(hdev);
 +
- 	creds = kzalloc(sizeof(struct svc_cred), GFP_KERNEL);
- 	if (!creds) {
- 		err = -ENOMEM;
-@@ -294,8 +295,10 @@ static int gssx_dec_option_array(struct xdr_stream *xdr,
- 	return 0;
+ 	tmp = *cnt;
+ 	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
+ 		u32 priority = (skb_peek(&chan->data_q))->priority;
+@@ -4947,6 +4953,8 @@ static void hci_sched_le(struct hci_dev
  
- free_creds:
-+	free_svc_cred(creds);
- 	kfree(creds);
- free_oa:
-+	oa->count = 0;
- 	kfree(oa->data);
- 	oa->data = NULL;
- 	return err;
--- 
-2.53.0
-
+ 	if (*cnt != tmp)
+ 		hci_prio_recalculate(hdev, LE_LINK);
++
++	hci_dev_unlock(hdev);
+ }
+ 
+ static void hci_tx_work(struct work_struct *work)
 
 
