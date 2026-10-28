@@ -1,50 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210008;
-	b=ixP882+UTI9adQvn0sDIkuDIFi1baYXJh5XL+fATqmBLI783tmwavQQvCvIWx6jH2ik8
-	 +9ZM+DLefFHSiQILMhlrRY+pSQnFxQIHZncDfl2ATvN/NfG8cAKyQKmIzZbAf3GLh4oH0
-	 1O5vs0LY3UpFE318rPffiDcRKU6hQHjWgv8+FsZ1fgOArc9fmyUWHvdFm42EKYVjhEf/Q
-	 1/rQxZpbYz/poX2NTkxn/UwbxZUFNr9ewmL3FJRYBWtiaAhql5tRlpDLdZDKaycWuNXIh
-	 MNJ8Mfx+2EKqVv5XsjkAp/nry5iaWbCLW304z4xw/Fj8KNA1hIr1FFcCOUYS7IuJvVg==
+	t=1793210011;
+	b=4PtUqUNTzqj/XtHCXvj2FYG3PHlRCo3c6zOgPeDKF4yqB0ljMbEVpEy2tcqJbOZrCr7b
+	 tF5oEbQDmBv6bbUjST91IBGYACud7GHKRmkH6joWz32+4sb10sRKVCTVGFsIQAzb1Ur/5
+	 7EvsbJA7+ESk6shS/uxkXiG/JlRktZLAvvXVJC4hCFJBA2YG0VMTCoJMHbTfRRMQ3JXDv
+	 xENUbz5laIhn2Rs3VdBph/UPp/CaLs33tT7qa9wvXJKEM0P5Ynueuivq4bGidsEl2H+aV
+	 KAIXoL7awgRaxFMcn846vZiE/J28mm2xAmIKvp8Jms39Al54mzWsnYXSKXHY9pL9Dzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gbno2xsMupQj/uCDtB0ldgd7sjwzoTwTL9A4mWn6HXk=;
-	b=FNuCcbO3C6hv3n5IfkMbORzOpDRceDp63pLkK3l90KsJe/2jYCS5AqPnjoNJwGY/mTNA
-	 SbbL0gsh0OuNEX5qU2jnlnaFxKQ2MbIQk8YE4lhMwAiNrSDIEI70RRD0S47TW+axEYAkv
-	 BUhxy/bF6I5Lh0VS2rpUZ6hSQm3pmY6irCe7lhzAczg+nhAfkPkxefTuJX7erfuBTNRX7
-	 Tavb6vsnnRbfJVW8zF62pt2OPqXtuEKkBOkWVZta8fg4ZXyxJCT6lreZ79SPCh4s2ftu7
-	 64pd05ZdUUcuyIQ58gq/2eeXXN2yiXWUgkJnwzonAnaDYP1a2P+rVwtFMB7pVwUlpwA==
+	bh=Ljo2bwrVfFvHDCbnlCyA7eZ8ft3+wQJnZuzx6zy1A5k=;
+	b=CU0M3eSWKbBJ7qWyzEPseTVMQJ8fUqp+ZeNiywZI2m13BROB6jiw89A4Jb0DXWPwSqtP
+	 X/XN/DHjw6zhay7/nJRNNZjGT1WUbOPys86Aw6PUMe0NelmUx/5srk0iBYY3L9Bmf+0MV
+	 vBkGWdM/XFVn8RHzvEg1hD/TCdYEYWxubWMeeTVqYSuMtPofF/iWotybkO4C2IiAuwHUO
+	 MmZ/qfVvBnFDI/2m6y0edNb+p0JmAu5EtUdiSDsUVLo0+XdcEEihZ6j85NdNjIGHs0ArY
+	 xhozPl+nNUrkylKo8xs7W3mAj1ThHTcrf4F1AESXbMo7McH75dQrj/brPoffpE8b7SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RfA6Iui2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rdKZKry5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1DC606A31A;
-	Wed, 28 Oct 2026 17:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF95606A323;
+	Wed, 28 Oct 2026 17:53:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RfA6Iui2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1E01F01825;
-	Wed, 28 Oct 2026 17:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rdKZKry5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669371F01828;
+	Wed, 28 Oct 2026 17:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210008;
-	bh=Gbno2xsMupQj/uCDtB0ldgd7sjwzoTwTL9A4mWn6HXk=;
+	s=korg; t=1793210010;
+	bh=Ljo2bwrVfFvHDCbnlCyA7eZ8ft3+wQJnZuzx6zy1A5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RfA6Iui2usRMcwgMYCaOfJppLzKZpds0iu6xND5UgoBphVVSdCcfYyAsBuleyw+m+
-	 qmXgiKkqWmnataFllkacsITe8inti96c/Ii24Lhj5vUa07PfdQvERkwG+W8GpjxneD
-	 7B1hL2uvm4rSvAKNX3NfFgqp3vmPVk5FuE6oMPT8=
+	b=rdKZKry58HN0kZHyelqEpvWOlpmqPrDVBJmZH8CsSS6HJhXzqFgnOQho0b3cesv+k
+	 ibZXgH2goT2kGWeyc92bnvieqfidvKOExujQg5AysImgJ8BR8vFmKOPZIYlY/xQoOO
+	 OE5a50O2ajSQqHoC32Up7DyGKwSYDsK2EmrZvXZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 042/168] unicode: free the map after a grace period
-Date: Wed, 28 Oct 2026 17:59:38 +0100
-Message-ID: <20261028165944.086696010@linuxfoundation.org>
+	David Woodhouse <dwmw2@infradead.org>,
+	Amirmohammad Eftekhar <amirmohammadeftekhar@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 043/168] KVM: nVMX: Reset MMU back to the root MMU if loading L2 state fails for !VM-Entry
+Date: Wed, 28 Oct 2026 17:59:39 +0100
+Message-ID: <20261028165944.109549901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -66,122 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Amirmohammad Eftekhar <amirmohammadeftekhar@gmail.com>
 
-commit a96c5299bd7305eb984377681eb3222a57376405 upstream.
+commit c8f4cfe1cf93bce924e27f2abead7a4c4a487505 upstream.
 
-generic_ci_d_hash() and generic_ci_d_compare() read sb->s_encoding and
-dereference the unicode map while a pathwalk in rcu mode holds nothing
-but rcu_read_lock(). The filesystems that use them, ext4, f2fs and
-tmpfs, drop the map with utf8_unload() from ->put_super(), which runs
-when the last reference to the mount goes away. A lookup that is still
-inside such a filesystem at that point reads a freed map.
+Reset the vCPU's MMU pointer back to the root MMU if loading L2 state fails
+in the "not from VM-Entry" case, i.e. when emulating RSM or handling
+KVM_SET_NESTED_STATE.  Failure to unwind the MMU pointer results in KVM
+trying to run L1 with a nested MMU, and is especially problematic if the
+vCPU manages to free its nested state before the VM crashes.  Constructing
+the root for a nested EPT MMU goes through vmcs12, which is dynamically
+allocated/freed when nVMX is enabled/disabled.  And so if the nested state
+is freed with the MMU still pointing at the nested MMU, KVM will hit a NULL
+pointer deref when attempting to get L1=>L2 EPTP.
 
-With a pathwalk held up in utf8_casefold_hash() while the last reference
-to a casefolded tmpfs goes away:
-
-  BUG: KASAN: slab-use-after-free in utf8nlookup+0x74c/0x950
-  Read of size 8 at addr ff110001030fe658 by task walker/98
+  BUG: kernel NULL pointer dereference, address: 0000000000000078
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 114a2d067 P4D 111743067 PUD 11141f067 PMD 0
+  Oops: Oops: 0000 [#1] SMP
+  CPU: 20 UID: 1000 PID: 1272 Comm: nested_tdp_faul Not tainted 7.3.0-rc4-8c89f11d1a99b-sink-vm #1914 PREEMPTLAZY
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:nested_ept_get_eptp+0xb/0x10 [kvm_intel]
   Call Trace:
    <TASK>
-   utf8nlookup+0x74c/0x950
-   utf8byte+0x160/0x1560
-   utf8_casefold_hash+0x167/0x230
-   generic_ci_d_hash+0xdd/0x1c0
-   link_path_walk+0x11ad/0x1d30
-   path_lookupat+0x63/0xb00
-   filename_lookup+0x1f1/0x5b0
-   vfs_statx+0xd7/0x3b0
-  [...]
-  Allocated by task 94:
-   __kmalloc_cache_noprof+0x249/0x560
-   utf8_load+0x4e/0x570
-   shmem_parse_opt_casefold.isra.0+0x92/0x270
-  [...]
-  Freed by task 97:
-   kfree+0x1db/0x5b0
-   shmem_put_super+0x72/0x170
-   generic_shutdown_super+0x14c/0x530
-   kill_anon_super+0x3a/0x60
-   deactivate_locked_super+0x9c/0xf0
-   cleanup_mnt+0x9f/0x130
+   kvm_mmu_load+0xcd/0x870 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x18f5/0x1f80 [kvm]
+   kvm_vcpu_ioctl+0x2c7/0x970 [kvm]
+   __x64_sys_ioctl+0x90/0xd0
+   do_syscall_64+0x9c/0x4d0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x47491b
+   </TASK>
+  Modules linked in: kvm_intel kvm irqbypass
+  CR2: 0000000000000078
+  ---[ end trace 0000000000000000 ]---
+  RIP: 0010:nested_ept_get_eptp+0xb/0x10 [kvm_intel]
 
-So far that has been hard to hit. umount(2) waits for a grace period
-in namespace_unlock() before it drops the mount, so only a mount whose
-last reference goes away elsewhere, like the close of a file or a chdir
-out of a lazily unmounted directory, can race a walker. So it is
-reachable.
-
-Delay the free until a grace period has passed. The map and the data
-table it holds a reference to then outlive any pathwalk that found the
-superblock before the mount went away. The reference on the data table
-module is dropped from the rcu callback as well. utf8-core is built in
-whenever CONFIG_UNICODE is set, so there is no module exit that would
-have to wait for the callbacks.
-
-Overlayfs points the s_encoding of an overlay at the map of its first
-layer without taking a reference of its own. That stays correct. The
-layer is held by the overlay, so its map is dropped only after the
-overlay is gone.
-
-Fixes: b886ee3e778e ("ext4: Support case-insensitive file name lookups")
+Cc: David Woodhouse <dwmw2@infradead.org>
+Fixes: 72e9cbdb4338 ("KVM: nVMX: fix SMI injection in guest mode")
+Fixes: 8fcc4b5923af ("kvm: nVMX: Introduce KVM_CAP_NESTED_STATE")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-6-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Amirmohammad Eftekhar <amirmohammadeftekhar@gmail.com>
+[sean: write changelog]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20261001214356.3825100-2-seanjc@google.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/unicode/utf8-core.c  |   21 +++++++++++++++++----
- include/linux/unicode.h |    1 +
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ arch/x86/kvm/vmx/nested.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/unicode/utf8-core.c
-+++ b/fs/unicode/utf8-core.c
-@@ -3,6 +3,7 @@
- #include <linux/kernel.h>
- #include <linux/string.h>
- #include <linux/slab.h>
-+#include <linux/rcupdate.h>
- #include <linux/parser.h>
- #include <linux/errno.h>
- #include <linux/stringhash.h>
-@@ -205,12 +206,24 @@ out_free_um:
- }
- EXPORT_SYMBOL(utf8_load);
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3568,8 +3568,10 @@ vmentry_fail_vmexit_guest_mode:
+ vmentry_fail_vmexit:
+ 	vmx_switch_vmcs(vcpu, &vmx->vmcs01);
  
-+static void utf8_unload_rcu(struct rcu_head *head)
-+{
-+	struct unicode_map *um = container_of(head, struct unicode_map, rcu);
-+
-+	symbol_put(utf8_data_table);
-+	kfree(um);
-+}
-+
-+/*
-+ * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare() of a
-+ * filesystem that is being torn down and read the map through its
-+ * superblock, so the map and the tables it points to have to outlive the
-+ * grace period.
-+ */
- void utf8_unload(struct unicode_map *um)
- {
--	if (um) {
--		symbol_put(utf8_data_table);
--		kfree(um);
--	}
-+	if (um)
-+		call_rcu(&um->rcu, utf8_unload_rcu);
- }
- EXPORT_SYMBOL(utf8_unload);
+-	if (!from_vmentry)
++	if (!from_vmentry) {
++		nested_ept_uninit_mmu_context(vcpu);
+ 		return NVMX_VMENTRY_VMEXIT;
++	}
  
---- a/include/linux/unicode.h
-+++ b/include/linux/unicode.h
-@@ -51,6 +51,7 @@ struct unicode_map {
- 	unsigned int version;
- 	const struct utf8data *ntab[UTF8_NMAX];
- 	const struct utf8data_table *tables;
-+	struct rcu_head rcu;
- };
- 
- int utf8_validate(const struct unicode_map *um, const struct qstr *str);
+ 	kvm_vcpu_unmap(vcpu, &vmx->nested.apic_access_page_map, false);
+ 	kvm_vcpu_unmap(vcpu, &vmx->nested.virtual_apic_map, true);
 
 
