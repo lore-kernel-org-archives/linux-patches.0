@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208106;
-	b=il931AtY9c1aQh06b4bBQv04nmnT4OJT5ZTklVLhn1Q62pmo0yCYhJo6B34kQ/gRFvdQ
-	 NJekvLHY6J24q8lNA/R7rGrk+zY8VEaTVuFe6SbYRmPfiKfMNwzdoI/XcBUA8bcUrmCQf
-	 gWD9dcapkMk9dcptGutWXoz172LSzakX3GojmU8a5+W/ai/E9N1cVVVUhacZjhomGIC/q
-	 70U6rk3dL+vC0rPTz2vrG3nUrO1Uvj+hpCJ4Wm3XSYz1zoNmXzY1GdA/f7SUhq803/U06
-	 WeZs90mI9KEXkgHFt8X+hGGF1HaHRqtY6/YeFGRnFJyjwkjgcfjpQi25irbT1ZfLOUg==
+	t=1793208109;
+	b=PsvtX4USKYkc88v4NqIuGA3plAPJLSW1IIz+J1ONv2NKi1Ky3NwBDzQyqm3CyWqWLSH2
+	 FEuAc0O6q8Zav3aVl138vx37NYPliQ9potNzHVuFo9+TUA8P0mFpFe0ts8Cy4XK1k/UzO
+	 AlNX6DNhk2Bo3skNIkFkZ4Uso8gAcpYAV8bQSPwfbhxsf9h32GYfMY6adgvLbrdKFHN1A
+	 M19FZpYbuUoEfA8jzlwAlZxxB2dAO+MCTyWp+dGUnSVVoL+oI8MmRQkIcJlHBsWUkMJtp
+	 L8HgaKV6Q74Vg42l4VJVIIyKQQsHzX6Dc2nAzfyLKlY/fM2rdAVLuWlTBcYXdOdA3Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208106;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208109;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rBJz6q9nT+IT7uSmv3KxZsDbvm5XZIyH+BVYc5eebYw=;
-	b=ce6ED6Ob9CNju6oCD3DRC58Dopm/lrqu4gOoglV38fdRZ/hRnmIG7BSA+BiBJK0uXRXQ
-	 yRW2Dt48mSYiHMyC09PXfbJTqVdAzjtYnKf0nmzxgQZ89gNK6xt0VHecM3KKY6CG84BMP
-	 taiVlsUVg2Mac6pI/JdAWBMK46SoBX+7BTZ3m1ip0529qfvtn2+Zc0N1K/43N87r+xPhr
-	 nH4l/T/7PZIv3J3fL6UHczEjtEvZDY7xNJs7nskKPSla7TITcBraig58TQzfLOPMAEjU4
-	 cz6UkhfaCHhPBSxpFPu7c69Vy+koCs+ISvKuwwUpZcd+ndXSt0OMgEUr0wqjYIWQqsQ==
+	bh=2v7xeNzQ4URpmVMkdH5zrGtD1YVBag7gTHV1iWUfRRY=;
+	b=vU5Ig27XUBhHREbz9VoWifbLYs6cT58JyIZny6G+LXhYI880bCC0SYiF/NwFmSuIErsZ
+	 JnVurxSnd4IEW1z+/JOwVbkJDAnIjZNbRnobOUabmITnY6hjUHXOQgV5haLDQemDf33eH
+	 vrZh5/pWeMcQLzusma6JYesmNaHPgNdUHYfbCp/kOaklCaYi6UNhf9DF+qPgE1b+w8QSQ
+	 03zytVbfA2QuQgx4g7ENquhZ0CAwz8Tz1UpjaXuvYR6Jy+hWC+pdutA+IoBxkheIuB04d
+	 p0nle71S18BJjN8O+sZYvb4WzV3QX+W8RZvcPMN7tH62vheyzv8dI7oRGgRl5U5Xh+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dtk0LdDK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x52RHmEU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E58606A31C;
-	Wed, 28 Oct 2026 17:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750FA606A31F;
+	Wed, 28 Oct 2026 17:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dtk0LdDK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82F81F01825;
-	Wed, 28 Oct 2026 17:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x52RHmEU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909451F01828;
+	Wed, 28 Oct 2026 17:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208106;
-	bh=rBJz6q9nT+IT7uSmv3KxZsDbvm5XZIyH+BVYc5eebYw=;
+	s=korg; t=1793208109;
+	bh=2v7xeNzQ4URpmVMkdH5zrGtD1YVBag7gTHV1iWUfRRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dtk0LdDKZQXH8tiuWNZv4wxFYpak4KsGeGMF3DKi6nNtfEjI4SgbAy0WzYHTYBdzo
-	 JndwYU4cRoygk20/M6r/V+lRX6p6hm29okjTItWCZJilJn3jME7HfeBFC99aYeRi3c
-	 Y1c4JXPxIIqifC2kFOlXolWka4NYXiC0yhLeLM8g=
+	b=x52RHmEUQSe0hnxuX/xV0ROacvhD1qTfnAD94g9LRIxawRYMKRSSWBu03Yu3ZQZnJ
+	 G+kH+GLKf1s3R9hsyTm5AdHRcpTNE1zeAsAdjdb2xT7C7W/0Gp7otD0Wh1IigyhP+D
+	 EEpe6H8fiVW4mWa1LnI+fKPL2fd56FCL45ZKL0Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jens Axboe <axboe@kernel.dk>,
 	"Claude Fable 5.1" <noreply@anthropic.com>
-Subject: [PATCH 6.12 225/247] io_uring/timeout: dont lose a cancel as io-wq arms a timeout
-Date: Wed, 28 Oct 2026 18:00:28 +0100
-Message-ID: <20261028165952.748420341@linuxfoundation.org>
+Subject: [PATCH 6.12 226/247] io_uring/poll: dont loop on HUP with multiple references
+Date: Wed, 28 Oct 2026 18:00:29 +0100
+Message-ID: <20261028165952.771621503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,89 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Commit 89f193dc3ef462059387e9691bf6af4b1808379a upstream.
+Commit cf1d5c9d335e2c673811da641531da82cb01393a upstream.
 
-An IORING_OP_TIMEOUT run by io-wq, because of IOSQE_ASYNC, has the same
-problem as poll, futex and waitid. io_wq_submit_work() looks at
-IO_WQ_WORK_CANCEL once, before it issues the request. A cancel in between
-flags the work, gets -EALREADY, and searches ->timeout_list in vain,
-while the worker then adds the request and starts the timer:
+io_poll_check_events() drops down to one reference when a multishot
+request sees HUP with more than one, so that the loop goes around once
+more. It did so by subtracting one less than it had. With the cmpxchg
+that only takes the local count down: the exchange fails, the next pass
+reads the unchanged count, and goes through the same motions again. The
+loop then only ends once io_poll_issue() stops the request.
 
-  io-wq worker                          io_try_cancel()
-  io_wq_submit_work()
-    IO_WQ_WORK_CANCEL isn't set
-                                        io_async_cancel_one()
-                                          sets IO_WQ_WORK_CANCEL
-                                          = -EALREADY
-                                        io_timeout_cancel() = -ENOENT
-    io_timeout()
-      adds the request to ->timeout_list
-      hrtimer_start()
-    = IOU_ISSUE_SKIP_COMPLETE
+Drop the extra references from the counter instead, and loop once more
+without trying the exchange. The next pass sees one reference, like it
+did before, and ends unless a wake up came in.
 
-Nobody looks at the flag again, and the timeout runs its course. At ring
-exit, io_uring_try_cancel_requests() cancels io-wq work and then kills
-the timeouts the same way, so an exiting task can get stuck for the full
-duration of such a timeout.
-
-Look at the flag under ->timeout_lock, which the search takes as well,
-and fail the request if it is set. If the search came first, the flag is
-visible. If it comes later, it finds the request on the list.
-
-[ 6.12: ->timeout_lock is a spinlock here ]
-Fixes: ce35a47a3a02 ("io_uring: add IOSQE_ASYNC")
+Fixes: 937d38dcacd6 ("io_uring/poll: avoid retry wakeup loss when dropping ownership")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.h |   14 ++++++++++----
- io_uring/timeout.c  |    7 +++++++
- 2 files changed, 17 insertions(+), 4 deletions(-)
+ io_uring/poll.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -274,16 +274,22 @@ static inline void io_ring_submit_lock(s
-  * cancellations find it, rather than completing it. Whoever tried to cancel
-  * the request before that found it running. It has flagged the work item,
-  * has searched the list in vain, and won't come back. To be called with
-- * ->uring_lock held, which the search needs as well, once the request is on
-- * the list: if the search came first, the flag is visible.
-+ * the lock the search takes held: if the search came first, the flag is
-+ * visible. For most lists that is ->uring_lock, timeouts use ->timeout_lock.
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -264,12 +264,14 @@ static inline void io_poll_execute(struc
   */
-+static inline bool __io_wq_cancel_seen(struct io_kiocb *req,
-+				       unsigned int issue_flags)
-+{
-+	return (issue_flags & IO_URING_F_IOWQ) &&
-+	       (atomic_read(&req->work.flags) & IO_WQ_WORK_CANCEL);
-+}
-+
- static inline bool io_wq_cancel_seen(struct io_kiocb *req,
- 				     unsigned int issue_flags)
+ static int io_poll_check_events(struct io_kiocb *req, struct io_tw_state *ts)
  {
- 	lockdep_assert_held(&req->ctx->uring_lock);
++	bool again;
+ 	int v;
  
--	return (issue_flags & IO_URING_F_IOWQ) &&
--	       (atomic_read(&req->work.flags) & IO_WQ_WORK_CANCEL);
-+	return __io_wq_cancel_seen(req, issue_flags);
- }
+ 	if (unlikely(io_should_terminate_tw(req->ctx)))
+ 		return -ECANCELED;
  
- static inline void io_commit_cqring(struct io_ring_ctx *ctx)
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -607,6 +607,13 @@ int io_timeout(struct io_kiocb *req, uns
+ 	do {
++		again = false;
+ 		v = atomic_read(&req->poll_refs);
  
- 	spin_lock_irq(&ctx->timeout_lock);
+ 		if (unlikely(v != 1)) {
+@@ -331,9 +333,15 @@ static int io_poll_check_events(struct i
+ 		} else {
+ 			int ret;
  
-+	/* the list is searched under ->timeout_lock, see io_wq_cancel_seen() */
-+	if (__io_wq_cancel_seen(req, issue_flags)) {
-+		spin_unlock_irq(&ctx->timeout_lock);
-+		io_req_task_queue_fail(req, -ECANCELED);
-+		return IOU_ISSUE_SKIP_COMPLETE;
-+	}
-+
- 	/*
- 	 * sqe->off holds how many events that need to occur for this
- 	 * timeout event to be satisfied. If it isn't set, then this is
+-			/* multiple refs and HUP, ensure we loop once more */
+-			if ((req->cqe.res & (POLLHUP | POLLRDHUP)) && v != 1)
+-				v--;
++			/*
++			 * Multiple refs and HUP, ensure we loop once more. Drop
++			 * down to one ref now, so the next pass ends unless a
++			 * wake up came in.
++			 */
++			if ((req->cqe.res & (POLLHUP | POLLRDHUP)) && v != 1) {
++				atomic_sub(v - 1, &req->poll_refs);
++				again = true;
++			}
+ 			ret = io_poll_issue(req, ts);
+ 			if (ret == IOU_STOP_MULTISHOT)
+ 				return IOU_POLL_REMOVE_POLL_USE_RES;
+@@ -351,7 +359,7 @@ static int io_poll_check_events(struct i
+ 		 * task_work while we were executing it.
+ 		 */
+ 		v &= IO_POLL_REF_MASK;
+-	} while (atomic_cmpxchg(&req->poll_refs, v, 0) != v);
++	} while (again || atomic_cmpxchg(&req->poll_refs, v, 0) != v);
+ 
+ 	io_napi_add(req);
+ 	return IOU_POLL_NO_ACTION;
 
 
