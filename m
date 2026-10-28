@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214099;
-	b=QyWCgrf70Pv4QUmr4MC2LpGTHsWf85NVAKatkZtx36m7N0L42VeW7gefXTmQVEt0g3ZK
-	 QVFEB7XcxAocF0zbxltaE1PP5u1h/tRZekNkhqazsu6raCqbBDX+9Ea+c4H3kdULBfPmS
-	 SM2uJ09FKxapvTy9xiU5sHzyJsALt7UCnPpbtrS6tUxG2iCwXB2QwkWmH0oy0z/F7hpVw
-	 +Cw4NxPam/ZlcaCu931nlb0p/ubpio4OOHh1AKWLiJKldGB9p+91Gs+dfk3in1qK2oCoz
-	 BfNMJcdk6eXPyzh6bUfoSTTLUizW5TrA5PLte0u+SfwxFltYh+8NwS25SbzJ0sXS1gw==
+	t=1793214102;
+	b=VPMIbD2j4lKFSw5ZcQ/pU1gAqL8lTkRt7eg7YLTN62wOf6t/Rd+H6ByTD4dAJJhVzmK6
+	 GtaRblpC6uV9YI2qUXjB2mEpiRlJp42lWpkCSp8r2r1BR9pdMnkfH+KI56yjX7nQxlvOS
+	 kaRZZtyT8cfJRGckyw5eBxHltqmMlOS7V+fA6H2aRB9cOwWVRpf41oWDr5bwWA4OF2F2P
+	 Dh9iEyiEzgkGWzN6iWzl/GpGaH3defDk3GDh0XbYdo/TDRoWry/CpVB2bdy/SMC5djVIv
+	 zhwyOIoSf/CWIgwjMKX4MEFxTPtrOSDKQH3T9QZqJfzlfHka/X+5OVkj0a9SiG1UW2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ldJUSmWmTO+l02wayCpITRmQgaGDr7M2fI5MlF7ywe0=;
-	b=hW2WCnIPN360scK3d9IjnSX81Xfysql6gzprcfwsOuSah2nYG4aPNYmhowQK5zHO2i8Q
-	 aNy3p3FwzxZJhEAkJTw2Ar+Bg5PTUN5uhj6pD1E0lEqhcQwd+CriUObjGZ6QwRroot9PL
-	 IBfL8PHBnqFQ4k4nJRBUXwA7hhtk9d4Lc/muF0O2Q5ZfLliXw3e+gCLaGUjaYKRIg20TB
-	 GBRkycCuoc4VACvLrAmBR9CRDWUIO36nyAvyANfZ04ktEq3WjBIyvZZK8f6yq6oht/gRL
-	 lqSe+QcehatnzvOVoq3IVP47BaDxyofF9AY5EFPqT+Pfn6h6447uO8faNNE2qVF6ZgA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gn2Z9u3Nx+wWYCqhc7G5CcXDjVINPKXSET2H5FlMU0w=;
+	b=Xi3xj1hsmwZm1kqFphOQjsUqDiDvJ0RaipkYd97Tm79I4B40grOkdasEEYeVrYjZ9Lzz
+	 NaHgYeDy+zTzrJLIDUJttzYVEXGdjuwPeSpzA/Fi6rK0NJL15LCRO7OpgU98FNB/u3vNy
+	 n0WjLb5iAbodeOkiIoTomTB9m3gkHITbzKpiHa05hl15VXUgetQ6wtm2e9eQjKR8T+bH7
+	 Jh7qa6DMteOOiacxC/bespAZIgXm7wOpn/IlcpkuYQqhe5TOaBqYhkIx5OEb8g0pMrSuy
+	 fXKTjVmf6SQZ/XH9rE3gWmvII79BIjdu1+S/0HXXkFKcy99M8NLqqbRvJpGzBip33Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfZwPdIs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=napDZGa9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EAE606A31A;
-	Wed, 28 Oct 2026 19:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD14606A31A;
+	Wed, 28 Oct 2026 19:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfZwPdIs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895B41F01825;
-	Wed, 28 Oct 2026 19:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=napDZGa9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E2E1F01825;
+	Wed, 28 Oct 2026 19:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214099;
-	bh=ldJUSmWmTO+l02wayCpITRmQgaGDr7M2fI5MlF7ywe0=;
+	s=korg; t=1793214102;
+	bh=gn2Z9u3Nx+wWYCqhc7G5CcXDjVINPKXSET2H5FlMU0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfZwPdIsn5LvJrRqXQbUTCJ8wpCh/Xgjs5QpCfJmC5xTPxJzLyuAZ3woBBDhOZwCI
-	 i0H9DVF+C7Aso7ccNVNsm0AITaGh4/waBXXagLurF4yhdDX3ezGW1AQsSnThemyGCT
-	 DLuG/83bjsoL+HoBR2J6Yl9caW5TRctMsO6rwzP4=
+	b=napDZGa9ekMUKCK3iFKMy9p6KDeFWDYQ/OSOdZcY3Mglabx2kU16vMwGFgpAQaalc
+	 Syen8pcVUK7Rh3XDkKP/86PQsi404MhzDMgmZiKydeqOdsnPZmWHERowPx/E7mLzNM
+	 aZJsQBuZk6oaQB4xloUWI/oIZpOM9oU9zMKB2/Pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iain Lane <iain@orangesquash.org.uk>,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0739/1887] x86/PCI: Avoid PME from D3hot/D3cold for AMD Rembrandt and Phoenix USB4
-Date: Wed, 28 Oct 2026 17:47:15 +0100
-Message-ID: <20261028170516.263401886@linuxfoundation.org>
+Subject: [PATCH 6.1 0740/1887] PCI: Avoid putting some root ports into D3 on TUXEDO Sirius Gen1
+Date: Wed, 28 Oct 2026 17:47:16 +0100
+Message-ID: <20261028170516.285485993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,129 +64,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit 7d08f21f8c6307cb05cabb8d86e90ff6ccba57e9 ]
+[ Upstream commit b1049f2d68693c80a576c4578d96774a68df2bad ]
 
-Iain reports that USB devices can't be used to wake a Lenovo Z13 from
-suspend.  This occurs because on some AMD platforms, even though the Root
-Ports advertise PME_Support for D3hot and D3cold, wakeup events from
-devices on a USB4 controller don't result in wakeup interrupts from the
-Root Port when amd-pmc has put the platform in a hardware sleep state.
+commit 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend") sets the
+policy that all PCIe ports are allowed to use D3.  When the system is
+suspended if the port is not power manageable by the platform and won't be
+used for wakeup via a PME this sets up the policy for these ports to go
+into D3hot.
 
-If amd-pmc will be involved in the suspend, remove D3hot and D3cold from
-the PME_Support mask of Root Ports above USB4 controllers so we avoid those
-states if we need wakeups.
+This policy generally makes sense from an OSPM perspective but it leads to
+problems with wakeup from suspend on the TUXEDO Sirius 16 Gen 1 with a
+specific old BIOS. This manifests as a system hang.
 
-Restore D3 support at resume so that it can be used by runtime suspend.
+On the affected Device + BIOS combination, add a quirk for the root port of
+the problematic controller to ensure that these root ports are not put into
+D3hot at suspend.
 
-This affects both AMD Rembrandt and Phoenix SoCs.
+This patch is based on
 
-"pm_suspend_target_state == PM_SUSPEND_ON" means we're doing runtime
-suspend, and amd-pmc will not be involved.  In that case PMEs work as
-advertised in D3hot/D3cold, so we don't need to do anything.
+  https://lore.kernel.org/linux-pci/20230708214457.1229-2-mario.limonciello@amd.com
 
-Note that amd-pmc is technically optional, and there's no need for this
-quirk if it's not present, but we assume it's always present because power
-consumption is so high without it.
+but with the added condition both in the documentation and in the code to
+apply only to the TUXEDO Sirius 16 Gen 1 with a specific old BIOS and only
+the affected root ports.
 
 Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
-Link: https://lore.kernel.org/r/20231004144959.158840-1-mario.limonciello@amd.com
-Reported-by: Iain Lane <iain@orangesquash.org.uk>
-Closes: https://forums.lenovo.com/t5/Ubuntu/Z13-can-t-resume-from-suspend-with-external-USB-keyboard/m-p/5217121
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-[bhelgaas: commit log, move to arch/x86/pci/fixup.c, add #includes]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Stable-dep-of: b1049f2d6869 ("PCI: Avoid putting some root ports into D3 on TUXEDO Sirius Gen1")
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250114222436.1075456-1-wse@tuxedocomputers.com
+Co-developed-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.1+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/fixup.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ arch/x86/pci/fixup.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
 diff --git a/arch/x86/pci/fixup.c b/arch/x86/pci/fixup.c
-index 6ea3a64764b9a..0e9f26e236d48 100644
+index 0e9f26e236d48..7d06107ab9826 100644
 --- a/arch/x86/pci/fixup.c
 +++ b/arch/x86/pci/fixup.c
-@@ -3,9 +3,11 @@
-  * Exceptions for specific devices. Usually work-arounds for fatal design flaws.
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/delay.h>
- #include <linux/dmi.h>
- #include <linux/pci.h>
-+#include <linux/suspend.h>
- #include <linux/vgaarb.h>
- #include <asm/amd_nb.h>
- #include <asm/hpet.h>
-@@ -944,3 +946,60 @@ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
- 			quirk_amd_nbio_7_11_disable_enhanced_atomic);
- 
- #endif
+@@ -1002,4 +1002,34 @@ DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_suspend);
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_resume);
+ DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_suspend);
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_resume);
 +
-+#ifdef CONFIG_SUSPEND
 +/*
-+ * Root Ports on some AMD SoCs advertise PME_Support for D3hot and D3cold, but
-+ * if the SoC is put into a hardware sleep state by the amd-pmc driver, the
-+ * Root Ports don't generate wakeup interrupts for USB devices.
++ * Putting PCIe root ports on Ryzen SoCs with USB4 controllers into D3hot
++ * may cause problems when the system attempts wake up from s2idle.
 + *
-+ * When suspending, remove D3hot and D3cold from the PME_Support advertised
-+ * by the Root Port so we don't use those states if we're expecting wakeup
-+ * interrupts.  Restore the advertised PME_Support when resuming.
++ * On the TUXEDO Sirius 16 Gen 1 with a specific old BIOS this manifests as
++ * a system hang.
 + */
-+static void amd_rp_pme_suspend(struct pci_dev *dev)
++static const struct dmi_system_id quirk_tuxeo_rp_d3_dmi_table[] = {
++	{
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
++			DMI_EXACT_MATCH(DMI_BOARD_NAME, "APX958"),
++			DMI_EXACT_MATCH(DMI_BIOS_VERSION, "V1.00A00_20240108"),
++		},
++	},
++	{}
++};
++
++static void quirk_tuxeo_rp_d3(struct pci_dev *pdev)
 +{
-+	struct pci_dev *rp;
++	struct pci_dev *root_pdev;
 +
-+	/*
-+	 * PM_SUSPEND_ON means we're doing runtime suspend, which means
-+	 * amd-pmc will not be involved so PMEs during D3 work as advertised.
-+	 *
-+	 * The PMEs *do* work if amd-pmc doesn't put the SoC in the hardware
-+	 * sleep state, but we assume amd-pmc is always present.
-+	 */
-+	if (pm_suspend_target_state == PM_SUSPEND_ON)
-+		return;
-+
-+	rp = pcie_find_root_port(dev);
-+	if (!rp->pm_cap)
-+		return;
-+
-+	rp->pme_support &= ~((PCI_PM_CAP_PME_D3hot|PCI_PM_CAP_PME_D3cold) >>
-+				    PCI_PM_CAP_PME_SHIFT);
-+	dev_info_once(&rp->dev, "quirk: disabling D3cold for suspend\n");
++	if (dmi_check_system(quirk_tuxeo_rp_d3_dmi_table)) {
++		root_pdev = pcie_find_root_port(pdev);
++		if (root_pdev)
++			root_pdev->dev_flags |= PCI_DEV_FLAGS_NO_D3;
++	}
 +}
-+
-+static void amd_rp_pme_resume(struct pci_dev *dev)
-+{
-+	struct pci_dev *rp;
-+	u16 pmc;
-+
-+	rp = pcie_find_root_port(dev);
-+	if (!rp->pm_cap)
-+		return;
-+
-+	pci_read_config_word(rp, rp->pm_cap + PCI_PM_PMC, &pmc);
-+	rp->pme_support = FIELD_GET(PCI_PM_CAP_PME_MASK, pmc);
-+}
-+/* Rembrandt (yellow_carp) */
-+DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x162e, amd_rp_pme_suspend);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x162e, amd_rp_pme_resume);
-+DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x162f, amd_rp_pme_suspend);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x162f, amd_rp_pme_resume);
-+/* Phoenix (pink_sardine) */
-+DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_suspend);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_resume);
-+DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_suspend);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_resume);
-+#endif /* CONFIG_SUSPEND */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1502, quirk_tuxeo_rp_d3);
+ #endif /* CONFIG_SUSPEND */
 -- 
 2.53.0
 
