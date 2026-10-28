@@ -1,50 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209096;
-	b=0Ma+yEEaj7KQDyrYvqL8ZWIW4Af997bh0CHLYGyv6AHh7JxYaUY79e6qEHZThyzCBniu
-	 TplHdIPlkzNZhDKZP5FwUzp3fQEk75nr2lR9baLOLlLP88xvCsHIi4m2GYWFDLlFfSOdW
-	 vTN+J4O8axs+gRAQ0sFKePxPlrbOjpio7Rj4ZyESnzczuUNHtZwf6BS5/CYwQ9dwW3Db9
-	 3OLnYdZusyfjWBKymko7c6asRqxI2Aoa94cVv2PKSmduV7JBZqsaD5wR+5Jq9gT/C8qDm
-	 C2OiiWeRAWoMNh7/Gmn2+OjKsO1loh7iYx73e3zT0c1hb4NtLj7wa/umPB5amtn5cZg==
+	t=1793209099;
+	b=NTBVOQjegPkHfSBod8yTP/wzGHyGac48zzLYnmvxR2NYn8A82lvH+anVR28jfB0ZbUzG
+	 tybpz2ZB258UGHo31CQpnzU5wgpQOkSWtK9jSRCVqL/s4H+bfDJ4wYOF4p0wLEzL8ZNJq
+	 7Edcd1/U6hvZpNfNaEbdrxlm7h23QONPNMz7UyijHvBNRaWZt95q0l8TV62o4YsmQegk0
+	 Zsv1QeMLW++8t9aKW8MsLRVUwZu79BuUaK/ERILzHvS/hczce6so4BFkouE1qWvervVHb
+	 uOieflU+jBq4rVWxWClYmxADlxv/iv57uCetPkb6zaxBw48H5AoDSYaf+oC7xHBZBuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1L/lIL73gqHwJeU+Ns5NGnmjddJ3Sfy6AMnPMXNIezQ=;
-	b=JVtDacNEcU+NTi5JEliWgjHNiWluGLLCXhVzkkuJzRdce5sB3Gm+hhlfPn9uBwOHyUVX
-	 Lt5PSJ/VDrlclFH6TAy5ktWN00KI86zNwQImc/5DKBJU8Qhl5pCG3eDWm4jO4NXEFJ+wA
-	 IIVJmTe5Fu6dY8dOr9QNC/fAQabN0i17H9SHER6eb24KY1mF7igPs/SQGJFuwX0mX3Ded
-	 xxsOWys/7kLhQ4oTUipWaKWD/ucYrY60h6Sv5aKxj7LeSwSKUHDxsRUGPUcisqx3A+ewY
-	 9BT9LeuH0fLtV0B+CwwuMo5kZk3nPWYwoVRC5IneiJKSmsbCzvrfkZwgGQxdKOC+h+g==
+	bh=CXP19pMq7Vv3pYHZwLcyAOESmnHC754AQ4G3rdANkzc=;
+	b=e9ieFrAfaMV9NyFvE2FzMicjL5kv7lh8qHJlqjCW4mhnXA4TFTTtl54rtwms4NKgX5ED
+	 eRc+8DmWEvGlz5MF9rbD8BVUGPdy3UyRjJd9W4pVteY12ItxtMcn9I49FJMcNodyo6YL1
+	 QXQX4eULRkEBsbsRPA2rUrsvK5L2EHUidOf1jZekRmZNbzKaOXMglm6UhbN8m3Cgjz8v8
+	 fYTg1UszQDN1GUBQJkRwU1s0EBc5u2zL1n9K2aAVRrhWIcU/ZmDkdrSiPQSyxH7f+2q8X
+	 dtDnpAw09UEVleOaI7EPsvVH1aQpNjqaTx7x88B4SdtYHGxlALJsbnsZXDhr6rTh2hA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q5uy80Zs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HeBx0Rwa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02C2606A324;
-	Wed, 28 Oct 2026 17:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CCB60A260D;
+	Wed, 28 Oct 2026 17:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q5uy80Zs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFEFD1F01825;
-	Wed, 28 Oct 2026 17:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HeBx0Rwa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF3B1F01825;
+	Wed, 28 Oct 2026 17:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209096;
-	bh=1L/lIL73gqHwJeU+Ns5NGnmjddJ3Sfy6AMnPMXNIezQ=;
+	s=korg; t=1793209099;
+	bh=CXP19pMq7Vv3pYHZwLcyAOESmnHC754AQ4G3rdANkzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q5uy80ZscwBVfEY2CQWPEta5p+5e+HfGRu5rxoX7syC31LQQF/FQ03PFU8ypOFNle
-	 PhG2xe7XTarbEM/cfWM0kRWNOfdxlQNk44k5r35YYF5zk3EO8v4xlG0VWsnyWWlNlI
-	 845NUbYmvBn12y5p6SXtPc6glqAYqnMmUMIXTL4o=
+	b=HeBx0Rwaa5Eyw1hZiQ47xyqn+MO5MtJKW+aTcwtXjaZfy/XN+Ih29otbfgU8nOsmq
+	 6aFWcM+aT2nVHvDTRC7Uq/L3YEIRrJ4XBtXN6McIqP8GbKIq9ml087xG7/A+y10ffr
+	 SOFy9IxkE76RV5wZDyOoFFR8Xr4KdnQRBh5YWBjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.10 351/516] namespace: refuse an automount below a mount that is in no namespace
-Date: Wed, 28 Oct 2026 17:58:23 +0100
-Message-ID: <20261028170011.806414588@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
+Subject: [PATCH 5.10 352/516] staging: rtl8723bs: fix OOB read in OnAssocRsp() IE loop
+Date: Wed, 28 Oct 2026 17:58:24 +0100
+Message-ID: <20261028170011.828918244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -66,59 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit ba985ce08471c555af2a2fbe217c1bc2e72a6d8c upstream.
+commit f9654207e92283e0acac5d64fe5f8835383b5a23 upstream.
 
-It's possible to add autmounts even when the parent mount isn't in the
-mount namespace of the caller. The only requirement we have is that the
-parent mount namespace must not be NULL, i.e., unmounted.
+The IE parsing loop in OnAssocRsp() advances by (pIE->length + 2) each
+iteration but only guards on i < pkt_len. When a malicious AP sends an
+AssocResponse whose last IE has only one byte remaining in the frame
+(the element_id byte lands at pkt_len-1), the loop reads pIE->length
+from pframe[pkt_len], which is one byte past the allocated receive buffer.
 
-Problem is that clone_private_mount() has MNT_NS_INTERNAL which makes
-that trivially true. So that passes the test and attach_recursive_mnt()
-accepts that as a mount point and funny enough, count_mounts()
-dereferences MNT_NS_INTERNAL. The problem is it is an error pointer...
+Additionally, even when the header bytes are in bounds, pIE->length
+itself can extend the data window beyond pkt_len, silently passing a
+truncated IE to the handler functions.
 
-So we can reach this in userspace via fanotify. A filesystem mark on the
-lower filesystem of an overlay reports paths on the layer clone and
-reading the event hands out a descriptor on it. For example with debugfs
-as the lower layer it goes kaboom:
+Add two guards at the top of the loop body:
+  1. Break if fewer than sizeof(*pIE) bytes remain (can't read header).
+  2. Break if the IE's declared data extends past pkt_len.
 
-  openat(evfd, "tracing", O_DIRECTORY)
-
-  Oops: general protection fault
-  KASAN: null-ptr-deref in range [0x1d0-0x1d7]
-  RIP: 0010:count_mounts+0x35/0x200
-   attach_recursive_mnt
-   finish_automount
-
-And since that sleeping beauty happens under namespace_sem held for
-writing every mount operation on the system blocks from then on.
-Congrats.
-
-Use is_mounted() instead which rejects unmounted and internal mounts
-alike. The open fails with EINVAL just as it did before
-clone_private_mount() used MNT_NS_INTERNAL.
-
-Fixes: df820f8de4e4 ("ovl: make private mounts longterm")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-5-dd44b89d44ce@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Link: https://patch.msgid.link/20260522004531.1038924-6-hossu.alexandru@gmail.com
+[ mdmitrichenko: adapt to 5.10: struct ndis_80211_var_ie still has the
+  CamelCase Length field and a one-element data[1] array here, so
+  sizeof(*pIE) is 3 rather than the 2-byte IE header. Use the explicit
+  header size 2, as the existing i += (pIE->Length + 2) does, so that a
+  valid IE ending exactly at pkt_len is not dropped. ]
+Signed-off-by: Mikhail Dmitrichenko <mdmitrichenko@astralinux.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2893,7 +2893,7 @@ static int do_add_mount(struct mount *ne
- 		if (!(mnt_flags & MNT_SHRINKABLE))
- 			return -EINVAL;
- 		/* ... and for those we'd better have mountpoint still alive */
--		if (!parent->mnt_ns)
-+		if (!is_mounted(&parent->mnt))
- 			return -EINVAL;
- 	}
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -1682,7 +1682,11 @@ unsigned int OnAssocRsp(struct adapter *
+ 	/* to handle HT, WMM, rate adaptive, update MAC reg */
+ 	/* for not to handle the synchronous IO in the tasklet */
+ 	for (i = (6 + WLAN_HDR_A3_LEN); i < pkt_len;) {
++		if (i + 2 > pkt_len)
++			break;
+ 		pIE = (struct ndis_80211_var_ie *)(pframe + i);
++		if (i + 2 + pIE->Length > pkt_len)
++			break;
  
+ 		switch (pIE->ElementID) {
+ 		case _VENDOR_SPECIFIC_IE_:
 
 
