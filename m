@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209447;
-	b=m5x3xlsDfUCZ8hhBJXyc7xs5YpQNK7A/Ov7ouu4gWmaWXuWDXg5zJu8uTFmADSYYcp0U
-	 Y64Zs9ZSo0JZb4ACVFyKMK1MvfElQ/anhcMyvj92//FIOYDnCKBubra/mdugNyD/u0lrx
-	 x8+arLFkW7hfust4GMr+FSH8PPmfs8/RiysFW7hosaObsHAPmtL3Afh5l2Yb3wO3khTfm
-	 HrMDEwxmqQoGFTTDYdhavgfaezRIOpaKXJ3AfEeAQil0c3A+tjZlxePbamoAOUasmEz0B
-	 GrFrOJ4Dx6WdaeE79SW/8d+gVNpPZ5d9p8kQcssjCz1VVE7/cm8XKMDJRfSV/hwOI4g==
+	t=1793209449;
+	b=4Fk1kEC/H6EqhEaVLBk8Cm5DgyP2g4NxM/vlx9q40SL/lglIwttXDbRnfCLhPWAIapOa
+	 l3YsRJMIVIDca5NQImri726Y+iqaZnc9+u1qQEtsFTuhnhEErZUBfR3rc7oAI0FiOeCrp
+	 rM++lwYaiuMDY+WmZqWa7NrnMgOgD/c1Bvdpqfs/QZrlUX0HE1SowesvpJCVUbRTZcHvl
+	 NQlU0HxR3OZVBaathVpBDD0UmHHOb1t4nuzDhA+Wf3OF1UzQ/1WA1zt3SLc0RZ5V8GjkD
+	 u+x08cWn8fqWe7awFQEN2brL5vGrhbDqLMGQsnPah6yQRGDZOO1b2endmh+flU6b9dg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209447;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dSn2FPkkolOdu9CzkVlDooP1Emp67HylTvxQNVPqVN8=;
-	b=lamoyzgNCOeXyuNTx/z43HA/dsqjO5UxMcK8jt+u0qAgwDZDT2BMmYaDwd2cxlOfvOUv
-	 p64bc0rwVujSoXtjsWV8YGwHxf8wvyB7J6tFZ2YMBQuzhNT5UEXsT2SZou0iU/31bSDPH
-	 9gcGekx9YyKf8UOOTOI09HbaBwHvx+VccOgz7Y56x/qZItT5QowN4kgWwyAZNMKNs+o7s
-	 4wqkWqwJTWoZCOcxrjD6tmA/kjzQ8UEUEhhfy1B1BUFhtLVxk+/gkbAiKTREv79luIszI
-	 MP3iy149JiYRlybGHHJ6gPnBwtOZtyfvG+5HGy0Z9zwWDBem0oV0SgmUU+zqG4i79vg==
+	bh=6yfsuFE00Xa0/8YwBhOF3e28TIZ4zQuNbE9T8RIh2MY=;
+	b=nuL3NNiFvH0wBy4P5fQgd3/GNkELKk+xi0Gc2nmPv+o42Y3bAYL+VKfhxnfNkc1rV20D
+	 AQrtMAo0audMzOHss86Gi1WLx9uts8iMLPfIM0KCVgrMx3JxdcbzgyzmDBq80yZL2bRM2
+	 lWSilEm0u9KB2GYLU1WExbz+BDdIbvNOWMuQGvxVUwX/RgnPibNoXv/D8uE7KnweOZTcl
+	 MWwPGCXwN0YsLz/w+IpQcLWc8gfDAndwQzB4/KhFJx+odwQ3ok9neEjTQAbfhi9u5LAXA
+	 mlMTp+pfjjFw1a6E53/Rf1atrlBFHOhHF2f4PbMjHak2Dzjh1V35tu9hvGyUWUGYyUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fB5UjU/g";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHGOtXAh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F6F606A31D;
-	Wed, 28 Oct 2026 17:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7096F606A31C;
+	Wed, 28 Oct 2026 17:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fB5UjU/g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54741F01825;
-	Wed, 28 Oct 2026 17:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHGOtXAh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12A11F01825;
+	Wed, 28 Oct 2026 17:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209446;
-	bh=dSn2FPkkolOdu9CzkVlDooP1Emp67HylTvxQNVPqVN8=;
+	s=korg; t=1793209449;
+	bh=6yfsuFE00Xa0/8YwBhOF3e28TIZ4zQuNbE9T8RIh2MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fB5UjU/gWVbSwu79yJMyEYm50e8bcb+2yfhG4HZLyVjC+wzzII6GwwPmScpOfM5QR
-	 BFfv0nEzD/LnadNCEkJq5Iokxtd3qKxtcVPRLsM+h6OcXL/IXNm38ZbOuUY0Jyglp/
-	 mngo2o8jh6bOA+XZZ1qYSCBBWzi0nCWP3wCB335s=
+	b=GHGOtXAh/mD+fTPzmvoe1o+uABTCuCZKLo9JDgEcG21YUHPUxrqj6k0d5wgINQvxk
+	 kgCJPP2/ZrlATtWresZR7xdEuo5CKw8HgI4NJ7S3vHguJZiySJN9LXT19E0OpWgz0R
+	 UqHXWfPNqQbQ9CHK91YD9YkE5zE1f38dtage5kHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	syzbot+fd95a72470f5a44e464c@syzkaller.appspotmail.com,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	David Rosca <david.rosca@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 475/516] mm/vmalloc: acquire init_mm lock on huge vmap to avoid ptdump UAF
-Date: Wed, 28 Oct 2026 18:00:27 +0100
-Message-ID: <20261028170014.733661490@linuxfoundation.org>
+Subject: [PATCH 5.10 476/516] drm/amdgpu: Fix VCE 3 ring align_mask
+Date: Wed, 28 Oct 2026 18:00:28 +0100
+Message-ID: <20261028170014.756793979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -73,175 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: David Rosca <david.rosca@amd.com>
 
-[ Upstream commit 26444eb71465c9934d9d418ef69c43f61185329b ]
+[ Upstream commit 2ee9836545e690c9e66ec203445d7705959fd7a8 ]
 
-Currently there is a nasty race between ptdump and ioremap when attempting
-to map a huge P4D, PUD or PMD entry:
+The largest frame is 20 dwords, so 0xf mask is too small.
+This was always wrong, but we were lucky with the VCE_CMD_END
+commands inserted after fence and vm_flush.
 
-* ptdump walks kernel page table ranges it doesn't own.
-
-* When ioremap maps ranges it tries to promote existing ones to huge
-  page tables in ioremap_try_huge_[p4d,pud,pmd]() at P4D, PUD and PMD
-  level, freeing the lower page table in
-  [p4d,pud,pmd]_free_[pud,pmd,pte]_page() when it succeeds.
-
-Both of these things can happen at the same time and as a result ptdump
-can access a freed page table, resulting in a use-after-free and memory
-corruption.
-
-This is possible because while ptdump_walk_pgd() holds both the mem
-hotplug lock and the mmap write lock before invoking
-walk_page_range_novma(), ioremap takes no relevant locks at all.
-
-Fix this by holding the mmap read lock in ioremap_try_huge_*() when freeing
-page tables.
-
-The read lock is sufficient: ptdump is the only walker that must be
-excluded and it holds the mmap write lock.  Other holders of the read lock
-may run concurrently, but each exclusively owns the range it operates on
-and cannot reach the page tables freed here.
-
-We also hold the lock while assigning the huge page table entry, which
-means page table walkers observe only the huge or non-huge page table
-entry.
-
-We use a trylock to prevent ptdump from blocking ioremap making forward
-progress.  This is fine because it's an optimisation in any case, and thus
-the ioremap can safely proceed regardless.
-
-All other kernel page table walkers that touch vmalloc ranges either
-exclusively own the memory walked or acquire the mmap lock, so this
-correctly excludes those walkers.
-
-The issue has existed as long as ptdump was available and vmap freed page
-tables when promoting to a huge leaf entry, that is, since commit
-b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page table")
-for huge ioremap, and commit 121e6f3258fe ("mm/vmalloc: hugepage vmalloc
-mappings") for huge vmalloc.
-
-Since the former is the earlier of the two we choose that for our Fixes
-tag.
-
-This patch is based on work by David Carlier (linked), with gratitude!
-
-Fixes: b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page table")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reported-by: syzbot+fd95a72470f5a44e464c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a287988.39669fcc.33b062.00a0.GAE@google.com/T/
-Link: https://lore.kernel.org/linux-mm/20260706203128.162335-1-devnexen@gmail.com/
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ ljs - Applied to ioremap_try_huge_*() in mm/ioremap.c, open-coded missing
-   stuff + other smaller changes. Updated commit msg to reflect. ]
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Fixes: 8897ea8c761b ("drm/amdgpu: Implement insert_end for VCE 3")
+Cc: stable@vger.kernel.org
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/ioremap.c | 45 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vce_v3_0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/ioremap.c b/mm/ioremap.c
-index 5fa1ab41d1526..0f3087e4ea9ef 100644
---- a/mm/ioremap.c
-+++ b/mm/ioremap.c
-@@ -85,6 +85,8 @@ static int ioremap_try_huge_pmd(pmd_t *pmd, unsigned long addr,
- 				unsigned long end, phys_addr_t phys_addr,
- 				pgprot_t prot)
- {
-+	int ret = 0;
-+
- 	if (!ioremap_pmd_enabled())
- 		return 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
+index 89f5bdf7f2c3c..8429cf773dc2b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
+@@ -932,7 +932,7 @@ static const struct amdgpu_ring_funcs vce_v3_0_ring_phys_funcs = {
  
-@@ -97,10 +99,23 @@ static int ioremap_try_huge_pmd(pmd_t *pmd, unsigned long addr,
- 	if (!IS_ALIGNED(phys_addr, PMD_SIZE))
- 		return 0;
- 
--	if (pmd_present(*pmd) && !pmd_free_pte_page(pmd, addr))
-+	if (!pmd_present(*pmd))
-+		return pmd_set_huge(pmd, phys_addr, prot);
-+
-+	/*
-+	 * Acquire the mmap read lock to exclude ptdump, which walks
-+	 * kernel page tables it does not own under the mmap write lock.
-+	 *
-+	 * Concurrent read lock holders are safe: each exclusively owns
-+	 * the range it operates on and cannot reach this page table.
-+	 */
-+	if (!mmap_read_trylock(&init_mm))
- 		return 0;
-+	if (pmd_free_pte_page(pmd, addr))
-+		ret = pmd_set_huge(pmd, phys_addr, prot);
-+	mmap_read_unlock(&init_mm);
- 
--	return pmd_set_huge(pmd, phys_addr, prot);
-+	return ret;
- }
- 
- static inline int ioremap_pmd_range(pud_t *pud, unsigned long addr,
-@@ -131,6 +146,8 @@ static int ioremap_try_huge_pud(pud_t *pud, unsigned long addr,
- 				unsigned long end, phys_addr_t phys_addr,
- 				pgprot_t prot)
- {
-+	int ret = 0;
-+
- 	if (!ioremap_pud_enabled())
- 		return 0;
- 
-@@ -143,10 +160,17 @@ static int ioremap_try_huge_pud(pud_t *pud, unsigned long addr,
- 	if (!IS_ALIGNED(phys_addr, PUD_SIZE))
- 		return 0;
- 
--	if (pud_present(*pud) && !pud_free_pmd_page(pud, addr))
-+	if (!pud_present(*pud))
-+		return pud_set_huge(pud, phys_addr, prot);
-+
-+	/* See comment in ioremap_try_huge_pmd(). */
-+	if (!mmap_read_trylock(&init_mm))
- 		return 0;
-+	if (pud_free_pmd_page(pud, addr))
-+		ret = pud_set_huge(pud, phys_addr, prot);
-+	mmap_read_unlock(&init_mm);
- 
--	return pud_set_huge(pud, phys_addr, prot);
-+	return ret;
- }
- 
- static inline int ioremap_pud_range(p4d_t *p4d, unsigned long addr,
-@@ -177,6 +201,8 @@ static int ioremap_try_huge_p4d(p4d_t *p4d, unsigned long addr,
- 				unsigned long end, phys_addr_t phys_addr,
- 				pgprot_t prot)
- {
-+	int ret = 0;
-+
- 	if (!ioremap_p4d_enabled())
- 		return 0;
- 
-@@ -189,10 +215,17 @@ static int ioremap_try_huge_p4d(p4d_t *p4d, unsigned long addr,
- 	if (!IS_ALIGNED(phys_addr, P4D_SIZE))
- 		return 0;
- 
--	if (p4d_present(*p4d) && !p4d_free_pud_page(p4d, addr))
-+	if (!p4d_present(*p4d))
-+		return p4d_set_huge(p4d, phys_addr, prot);
-+
-+	/* See comment in ioremap_try_huge_pmd(). */
-+	if (!mmap_read_trylock(&init_mm))
- 		return 0;
-+	if (p4d_free_pud_page(p4d, addr))
-+		ret = p4d_set_huge(p4d, phys_addr, prot);
-+	mmap_read_unlock(&init_mm);
- 
--	return p4d_set_huge(p4d, phys_addr, prot);
-+	return ret;
- }
- 
- static inline int ioremap_p4d_range(pgd_t *pgd, unsigned long addr,
+ static const struct amdgpu_ring_funcs vce_v3_0_ring_vm_funcs = {
+ 	.type = AMDGPU_RING_TYPE_VCE,
+-	.align_mask = 0xf,
++	.align_mask = 0x1f,
+ 	.nop = VCE_CMD_NO_OP,
+ 	.support_64bit_ptrs = false,
+ 	.no_user_fence = true,
 -- 
 2.53.0
 
