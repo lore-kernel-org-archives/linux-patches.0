@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207648;
-	b=qfLfBl9nbu6atIn03J3dnmmX1SMk/ZOin4TUM4bZ30ia90o9hLvbayj3isrG3jdJUsGl
-	 wtUgQSwar8uI1nXJvvR8v2PF8X040GDbhRagxWnGwoz3gVxO/k+AnnFg2JNnsUBg47TuC
-	 2OhOemLAm39IfWWzo7PT2oNh0miyt0/wC75rptbFFiyO/XxgwUMzGUXsI16Kczr6wGObM
-	 M4u/kN5UOKgpC0ZIT+hOwK9fk+YOdN7fFK67Hq3XeiySY573EBSKgUYOvvdBuWwIwkvs2
-	 3Zl6OIVfhbw3N/fLYeZJpP60PTwr6ChqP9NTLXPHLlicYr7F4hEvhxqoCi3RExzPZYA==
+	t=1793207651;
+	b=mtkFjmBcscmG9QzkOfd+gkIzxs/kbZQNgoaO2S66IQxG7CMopXcL9sudNuGBDs+1jQl6
+	 /guKbfvQtYUrO1SKPcyX9xatRRzFS/EApwTvjRoF2Qg9zlCpVuqVlzZDgdpAolebMg2SY
+	 N/Lbooc3QCShIxqUyeoFzXkoJti/FYY472wSamU5uATgASb7VG8B7QvnLKIidYtjACR8/
+	 B2P10+j7eh4F1OWO/a9yh1alBPFVovisqttct+abqYWu87937dPfFAyOg09iNW2CQaoe2
+	 GGpsBCIesOoGNS7vY0mTpfw8p6qNeORjlGYBoY5yil95Yo679KyaD5mhzyol4XhCCVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207648;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207651;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5+BgWPRmqd1sRFZezGfvOpaBOKus2+EdAuVG36goVAs=;
-	b=VDWlPow0V8MGroM70nlPmuhg0/LGHJZl8PZeukVi3MmoS6nLbGYc5aQJpjwDS+OcsoDt
-	 4Hiqr/46srjTvKslOLlR0CxlJeJ7eBHNLojgLoGvWCDezOcOZKu32WoAz6k0BRQd/tgVr
-	 5pgwgvobhQZiZlr032Wlbc3PujBzuKN1cFIbUvPaARUDiNRtUZIikbFmsJrcoMLSSaABp
-	 m3FVbuydeeTTpL87tI3VgA5TBQviX0KjeDsAvFIIzxf+7W5Re4WCDet8RCYEjm4yvSmSt
-	 jq0zgMNAy648oDO+c+2PfYs/Ngd8Em4T/VLE4Yog5EvFMcaH7/KS0lV//GmMoMDqRGQ==
+	bh=tAXiGXhzSaKq3rcCdAGfjUNZS5+kZYf7pE3twLBUnQc=;
+	b=qgeKkqyIJS6DO19+/he+oNtSySIEm/dt6+I8mkZxv0iGofm5JSPt/hNOGYaJ8n/zbDcN
+	 jsnbeFanlMnvCY2J2pqMfaq1LdeghAqh72G6j/2eXYDBBc2heNw6jk0QzMZ58KKKrC7Ms
+	 PvYrl/p063wtHl2R/W82lTlz5kGjQMWZCxVEO8PSdJxUho8xsvWxKT3CjU8NzO4zFoW7A
+	 is1cp+C6VqBF0Bym/jhgY9gcfEMDMocBKxM7r8ye7GEyLldMX3ItDQ5V5ra//qvuC5lwj
+	 9Eynz665eLs7gFyAMcZzZlj2k5rWYI27po/qwRNpC71zvM9YcfyhvaiTIsu1PVas9cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XndIutdj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p36mHGWk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB84B606A31A;
-	Wed, 28 Oct 2026 17:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4681606A31A;
+	Wed, 28 Oct 2026 17:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XndIutdj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281851F01828;
-	Wed, 28 Oct 2026 17:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p36mHGWk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1801F01825;
+	Wed, 28 Oct 2026 17:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207647;
-	bh=5+BgWPRmqd1sRFZezGfvOpaBOKus2+EdAuVG36goVAs=;
+	s=korg; t=1793207650;
+	bh=tAXiGXhzSaKq3rcCdAGfjUNZS5+kZYf7pE3twLBUnQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XndIutdj7tUcXRWuXb6NYAD3dkskkKQoBb0GdO8IbAfM9rxpNU/qMs0rIN1SXUsQe
-	 mePz935Ccorzqo4EphJRfmgi2kOeU60rCsKd4nC8e1S3NT1WIVCXVutDsJdrwBIkPe
-	 wbvu8pCEvnWXFFgu14GqveuvGhKHA4lZJkmoxqQM=
+	b=p36mHGWkCYVYHmDyQKG34Q5vYEXXVsh4mGdiZyguckmG61uFnyFDUMNoZer1JxfAC
+	 I1VagK9EGRwI+Jspmin/22sA9FVpGlt1sb5Q599pfflswiZpQ1ZFROTKSXVCvsMUQH
+	 onXidoldLXvTzBc2LQs6hrx0jHX62rktkKWnR3E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
+	Taeyang Lee <0wn@theori.io>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 091/247] tracing: Take trace_types_lock when dropping the buffer_meta reference
-Date: Wed, 28 Oct 2026 17:58:14 +0100
-Message-ID: <20261028165949.548818887@linuxfoundation.org>
+Subject: [PATCH 6.12 092/247] tracing: Check operator stack capacity before pushing
+Date: Wed, 28 Oct 2026 17:58:15 +0100
+Message-ID: <20261028165949.572618988@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,35 +67,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Taeyang Lee <0wn@theori.io>
 
-commit 2afe7575fb24b9d0476ae4a3a9862f7997216aa4 upstream.
+commit c47a7b11bcb3d45e29723afcf6336866476b1d08 upstream.
 
-tracing_buffer_meta_open() drops the trace_array reference with
-__trace_array_put() when ring_buffer_meta_seq_init() fails, without
-holding trace_types_lock. Use trace_array_put() like every other open
-error path.
+predicate_parse() uses the first operator stack entry before processing
+any opening parentheses. A push then increments top before writing.
+The existing check still permits that write when top already points to
+the last allocated entry, which can access beyond the operator stack.
+
+Reject the push when top reaches the last allocated entry.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260914133506.4865-2-devnexen@gmail.com
-Fixes: 950032ffcee7 ("ring-buffer: Add output of ring buffer meta page")
-Signed-off-by: David Carlier <devnexen@gmail.com>
+Fixes: 39f7c41c908b ("tracing/filters: Enable filtering a cpumask field by another cpumask")
+Link: https://patch.msgid.link/atELO9L0I9kg5CpC@Taeyangs-MacBook-Pro.local
+Signed-off-by: Taeyang Lee <0wn@theori.io>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    2 +-
+ kernel/trace/trace_events_filter.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6839,7 +6839,7 @@ static int tracing_buffer_meta_open(stru
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -512,7 +512,7 @@ predicate_parse(const char *str, int nr_
  
- 	ret = ring_buffer_meta_seq_init(filp, tr->array_buffer.buffer, cpu);
- 	if (ret < 0)
--		__trace_array_put(tr);
-+		trace_array_put(tr);
- 	return ret;
- }
- 
+ 		switch (*next) {
+ 		case '(':					/* #2 */
+-			if (top - op_stack > nr_parens) {
++			if (top - op_stack >= nr_parens - 1) {
+ 				ret = -EINVAL;
+ 				goto out_free;
+ 			}
 
 
