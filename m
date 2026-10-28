@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210638;
-	b=mqROITcAagCHQwFizxDvlFkTuJSNeRO0pZ7jIK0Z4evmsA0QTVpa06fgfal4lK4x+zMY
-	 iYogFMsQHXE1xMG6qjK7JQamzqPDanz2jsIE043hztCM18HWYo/AQHIzuQ8oMPBxMOhIB
-	 is8851pt6GBh7ExbM+fIkRQtlXayiyWRHjKx03vKnp4fHkN8X8yhdjFEUFMag4YcF6iZW
-	 82fZzIOrOu+/+1ouiw711H51eJlw/6f1jVgrQiWTInyOvN4ky4yM/YQpVZe0OKnjhVcYk
-	 tVF3s8j4TF2rthZWxtotsxH4UvU7vCM60SCBNR9uz0VcbrvCWLr4n1tsoi9ltoKxq9g==
+	t=1793210641;
+	b=Beg2SSbNb/SRan+aYiiA1l1M2hC6UK60cxyKDzXP/+27bJRjxP0Vf8kBFvP3ChkeLd9n
+	 XgGSfjoZNTjYp9YhwQVC4rAYDHKISgJio4TCuOgBeE6prfVBaHh60cmrQrYn2HBOtJAbJ
+	 kYOvgaeGqXaKyPwN3cSsmjWjEwbkXbgL77HaK8hIziIr3n8YMIpo2hEg6iwp4tDT65Yb+
+	 rgTaSGCQMVljZnyYc+PD2TmrZAYEz87dFGdWVETd1LnXZPthKkC8JogvXlpkJqfUkp2Sd
+	 9QvxvJbXskB+BvmNWDjeITDnTUM82oxZUg5Rzlu83Rzx2DrENu6tJBxH9Y2mNgmvfUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8AUKT1rnZ9UCdYxsIeVXpU5DPRLkYTJrDd6boskTjc8=;
-	b=dGjuaeCditzW+pKHw7I/1RShK6Xlcelr4xcbo9xynUW9WMM+HDC98XaYda+5CRLlOwCe
-	 Xf0M07K1gQwe6nOqUmfQxbwK0/5fUUinlQv4R1QPLp9sOyGDXGvLsZkTPnA1w8t24bgvD
-	 MyVxpCrrhr2IYa2+HfFf81sNWQfRcF8Eg0W/0vkdK5U1HYTMcXaCNSjzsh52mBWUise9h
-	 WalT0m9dxlVbdX7B7dw/g1B/id7TtVCix1d3Uu5XKvIWX6uxj19neElDShJDaGWrYnZP8
-	 2lFw0Ptr2NbI37TnuVKXuDRHV6fxx+irjkWdCpTM15ZvOG0qLSuvXvpGJ1JyBju6fxw==
+	bh=pI1qaWg0nDpyDmhqC9n4rrWxx3PyD0teCnhaDYzgPKU=;
+	b=UnbV3n+NYTifdM9lzbAu5vjJth/nk1PcHRUUeAIboN2G3A2z5zeLRav4vl5M3FWLW7aj
+	 wVN+QBki3BkkM3WVsemxgllQpjRIgnNBUiAc7KkUoC0XfE+aYXP2R1Nliu+ixBz7FISop
+	 jC9HYijq4/P+DGJwtuEMcBf69fugtsUHq0SEKG9ogvWk54LEzXAK8hCnnXvuLa6ZnA5XI
+	 HiTjtfPtVOp+kxtltfNUs14VQZm9tVnUugND0YxJsseqbdct5k7entaRuuOD5NFcBETSr
+	 K3Qz8LaT5x8hvnr8vs7iaWInXrAMVVc5ZDbDdVAfF6qc3iWyKHlCkxjnwWoSGwJkT2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mpivml4B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MuGjjdeH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADFB606A31C;
-	Wed, 28 Oct 2026 18:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BC5606A31C;
+	Wed, 28 Oct 2026 18:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mpivml4B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD7E1F01825;
-	Wed, 28 Oct 2026 18:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MuGjjdeH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CB31F01825;
+	Wed, 28 Oct 2026 18:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210637;
-	bh=8AUKT1rnZ9UCdYxsIeVXpU5DPRLkYTJrDd6boskTjc8=;
+	s=korg; t=1793210640;
+	bh=pI1qaWg0nDpyDmhqC9n4rrWxx3PyD0teCnhaDYzgPKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mpivml4BZ2S1IRYPbVPewNuR5Oj1r5lpOYAjfIZSsygaVDa11X+x2fww8J+tOdrUT
-	 11Bfg6VwpreDPX9yPfN9qN5QJhF0QTNi5sNFpRMLRr+z9YEDTYZsgqlom66P5VcD+b
-	 LQa6aho6oKPD4vQwpUs416wvJ33NCWEOwEv8JCqw=
+	b=MuGjjdeH52l2XHRBPOUwmHxpQCt59DZu2n8rGPvkw7CZ7I0/mNiJExiDZfoVDiWlG
+	 C4vEc5XrP+iW4G34ysQnIDG/PnQwB1UM+z+cWxpU/qS372N4YaFnZFmdkmdg3yV79F
+	 XFojfxxffkAqLaatUwZoayia2q+yTHfvahvNLITg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjoern Doebel <doebel@amazon.de>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Yuho Choi <oss.patchbox@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/571] smb: client: avoid leaking refcount when cifs_sb_tlink() fails
-Date: Wed, 28 Oct 2026 17:54:04 +0100
-Message-ID: <20261028170010.323784404@linuxfoundation.org>
+Subject: [PATCH 5.15 098/571] ALSA: virtio: reset device before deleting virtqueues
+Date: Wed, 28 Oct 2026 17:54:05 +0100
+Message-ID: <20261028170010.347911555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,60 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit 23b26f4408ac3f35a482d2e5cf6fc865d4201b71 ]
+[ Upstream commit 6c05d00af307560e6a9f1631d6270d3df5aa2272 ]
 
-cifs_oplock_break() takes over the reference that
-cifs_queue_oplock_break() acquired when it queued the work, and drops it
-with _cifsFileInfo_put() once the break has been processed.
+virtsnd_remove() and virtsnd_freeze() delete the virtqueues before
+resetting the device. del_vqs() frees the vring backing, but does not
+provide a generic device quiesce operation. In particular, modern
+virtio-pci keeps enabled queues active until the device is reset.
 
-Only in setups with "-o multiuser", cifs_sb_tlink() may fail, at which
-point cifs_oplock_break() returns without putting the file reference,
-mirroring the reference leak we already fixed in the companion patch to
-cifs_queue_oplock_break().
+Reset the device before deleting the virtqueues so it can no longer
+access the vring memory when that memory is released. This also covers
+probe failures after DRIVER_OK, which unwind through virtsnd_remove().
 
-This would trigger a crash due to busy inodes on the next unmount:
-
-  BUG: Dentry ... still in use (1) [unmount of cifs cifs]
-  VFS: Busy inodes after unmount of cifs (cifs)
-
-Drop the reference on that path as well. Doing so before the out label
-mirrors the normal path, which also puts the reference before
-cifs_done_oplock_break().
-
-Found by Sashiko code review. The failure path was not exercised at
-runtime.
-
-Fixes: e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break")
+Fixes: de3a9980d8c3 ("ALSA: virtio: add virtio sound driver")
+Fixes: 575483e90a32 ("ALSA: virtio: introduce device suspend/resume support")
 Cc: stable@vger.kernel.org
-Assisted-by: Kiro:claude-opus-5
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ Changed the target path from fs/smb/client/file.c to fs/cifs/file.c. ]
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+Link: https://patch.msgid.link/20260911031121.1542502-1-oss.patchbox@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ Replaced virtio_reset_device(vdev) calls with vdev->config->reset(vdev) for the older API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/virtio/virtio_card.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cifs/file.c b/fs/cifs/file.c
-index b776fb2989df9..affb1ade0c15f 100644
---- a/fs/cifs/file.c
-+++ b/fs/cifs/file.c
-@@ -4893,8 +4893,11 @@ void cifs_oplock_break(struct work_struct *work)
- 			TASK_UNINTERRUPTIBLE);
+diff --git a/sound/virtio/virtio_card.c b/sound/virtio/virtio_card.c
+index 150ab3e37013e..1a4007c99c538 100644
+--- a/sound/virtio/virtio_card.c
++++ b/sound/virtio/virtio_card.c
+@@ -349,8 +349,8 @@ static void virtsnd_remove(struct virtio_device *vdev)
+ 	if (snd->card)
+ 		snd_card_free(snd->card);
  
- 	tlink = cifs_sb_tlink(cifs_sb);
--	if (IS_ERR(tlink))
-+	if (IS_ERR(tlink)) {
-+		/* drop the reference taken when the break was queued */
-+		_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
- 		goto out;
-+	}
- 	tcon = tlink_tcon(tlink);
- 	server = tcon->ses->server;
+-	vdev->config->del_vqs(vdev);
+ 	vdev->config->reset(vdev);
++	vdev->config->del_vqs(vdev);
  
+ 	for (i = 0; snd->substreams && i < snd->nsubstreams; ++i) {
+ 		struct virtio_pcm_substream *vss = &snd->substreams[i];
+@@ -378,8 +378,8 @@ static int virtsnd_freeze(struct virtio_device *vdev)
+ 	virtsnd_disable_event_vq(snd);
+ 	virtsnd_ctl_msg_cancel_all(snd);
+ 
+-	vdev->config->del_vqs(vdev);
+ 	vdev->config->reset(vdev);
++	vdev->config->del_vqs(vdev);
+ 
+ 	for (i = 0; i < snd->nsubstreams; ++i)
+ 		cancel_work_sync(&snd->substreams[i].elapsed_period);
 -- 
 2.53.0
 
