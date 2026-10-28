@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213363;
-	b=HqSShWZMWFdYuFS0Q5A9S2PORkQkD1zdO0Ao3PW3gY+aISWDGwQDDGUpifHhH49uNe6Q
-	 MNu3cmMf+gr3AFFswMYUmgT+TwgX49Z+M36M9/oxMonq9M3xIO9sd+bS1JISppM75heMC
-	 oqP3VA/sGuBMOHaKXJvcalutBIXLwSTnYv1hrhViVdBGe5KSGLgeA2drZUjrZO0H0MgAL
-	 X8RoRvHKXE1rRkW2pVi9WRwA6xVzy3ZFbgxwtivQ2TOir3BDq9vDn5VIPNxE0xDd0fjyT
-	 PYLNCiitMT4tH0jxj0+oonDmAYG/JQJbuODxuIzU/lYXTVuz6lMns/4yNaBYCHzvfAA==
+	t=1793213366;
+	b=FN/8Jgt1bif569st6X0l/8ea9p7d4r6JVIl1zSB2ZAp9Km11aqpnphczUa2IZWYoLeh2
+	 bI7W+O4jkz7Mq4HtjlSjFKJESlfkrgDV0wRZlYQR8awZFBXGJ0bV+nEc987c2647uvqz6
+	 Cpy7Z1SdTcE4gfLRg1vdntXHnV25572OtQOCjenuZGXNHY6F0S79GTKFuN0473hEdMHpJ
+	 IlnpcikXTohJfF6mmu5p/DSq6HBTfR0Fg7MPMM+uIF5wpoK9Beb96BsiM81wX0A/gFGSu
+	 sFJRB+8mdkfmrAVr8krYT13tiojYoEPjl+Iqek1sRXmWfM1bGOlgJb5QFep4hB7Y3bQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=EwaWyxzAcMip938tYPQSTdjtGuyW8xEbLpEwEiXGtnw=;
-	b=3NS8CRKrXWP6N79FMMWLTt1KuCNoW5ka0IukKAsaYH0NIw3rPkWac3sIXzovc7E4zLms
-	 p+1cWvYMj2F3KLfX8RHlbXwkqbkpfOwdjHvixIyDEamkj8RNFBB9BIvyPSmsTmLRY5TL3
-	 ViRKM3z+IlPifMyR8MeaGNb7m0j8o8fipY5PNzmUz1BnaHsvacu2v0IUPF/2xTN0s3UXl
-	 nWTCHoC1FjTCZedATMud2MG98P67dII9bL4z/NVMWltmedaDYi9drh9VBX+fXG29rwLd6
-	 WiqVoFimBjGW11nok6QD9gjiRT6aZfgEyZHVvFyFrxBUE0ssr+XmcMpG9tB9p9zGlvg==
+	bh=Gg+IKGXBxVnJznuMbMhyMPZ9y6dXbGduIs2RH4JmrDY=;
+	b=pVJg/TlTzva5bkwNlAnBHgIo6X9OLhXlH2n8Z6Nhfa5MArlXaw61tqvY/XhAj4S5xo5d
+	 uA9d1unEvVlJdhZ+s1Pyto68TY8RmTGoURONhlVnWvlMD/pPQLTWgwKgif6tgBdxshxcr
+	 jbSnACNTz6wvEgVOcSBov4duKkS5Bpi1Jf4ONvWp6H12W+0DKBXkYRJepx6nK2m0exWwb
+	 OCHyyAc9RR6qqmjr8+73w3jy/w+wveoxYHTblyWsEwC7o3TuFzNkEHPqfnfS2YeGHg9gy
+	 wdP+fkLa8AUuODCjXylJNViyUzmmJdEiaGWbzDR9b4lOzn1QuBUE4Q0QenyqMXhqVAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLIKcdr8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMIjtUZy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD787606A31C;
-	Wed, 28 Oct 2026 18:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45D7606A31A;
+	Wed, 28 Oct 2026 18:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLIKcdr8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2DE1F01825;
-	Wed, 28 Oct 2026 18:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMIjtUZy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEBC1F01825;
+	Wed, 28 Oct 2026 18:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213362;
-	bh=EwaWyxzAcMip938tYPQSTdjtGuyW8xEbLpEwEiXGtnw=;
+	s=korg; t=1793213365;
+	bh=Gg+IKGXBxVnJznuMbMhyMPZ9y6dXbGduIs2RH4JmrDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLIKcdr8ve7Yp7AIxyatDTGytthclVxqmCUcMCJXZKAAOI2Y4MH3Uf8g5IHdVhkHg
-	 RoSQRZiYic/uSEREQnEGXUug3nE0f2ciFu8VBYiWU0w3X5HJYCY0Wp9s1zHsQTL5iA
-	 AfquA3hbHWTIL0cGZ+2JyzgK2cHFOSHiIbB/uwE8=
+	b=bMIjtUZy4/wRn29YIHAwUkf0X3OXjBD+7CdTcQBWkHt6QHxb00FaukAM09sprg6xI
+	 HCnAawGVWaFCwKaLZsBCCGgcQw0Df54ayqNgqAFPT7inRmlbvAGV+LOAqOXkNb4X1P
+	 g+Zw21W67INsa45WtpgtAenL2gqEkd81fN8yYYeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.1 0477/1887] drm/vc4: drain the hangcheck timer and works on V3D unbind
-Date: Wed, 28 Oct 2026 17:42:53 +0100
-Message-ID: <20261028170510.103940093@linuxfoundation.org>
+	=?UTF-8?q?Ayhan=20=C3=87i=C3=A7ek?= <ayhancicek@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 0478/1887] drm/amdgpu: make Mac FB workaround generic
+Date: Wed, 28 Oct 2026 17:42:54 +0100
+Message-ID: <20261028170510.128878550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,65 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 94cf5971b1d04c6382437387c4dc3836cc7a1437 upstream.
+commit c7f44ec5c4ec760e74351f1843dcb8322f67cbf6 upstream.
 
-Nothing stops the hangcheck timer that submitted jobs arm, or the
-job_done_work that the render-done interrupt queues, at teardown:
-vc4_irq_disable() cancels only overflow_mem_work, and vc4_gem_destroy()
-runs from the drm-managed release, after vc4_v3d_unbind() has already
-uninstalled the V3D interrupt and cleared vc4->v3d. A timer still armed
-by then reads V3D registers through the NULL vc4->v3d pointer, and the
-late callbacks run on the vc4_dev embedding them after it has been
-freed.
+Rather than adding a case of every chip where this is seen
+just check if the FB is at 0 and the ssid is apple.  This
+should cover all chips which fall into this case.
 
-Drain them in vc4_v3d_unbind(): shut the timer down and cancel
-reset_work before the interrupt is taken down, because its
-vc4_irq_reset() re-enables it, then flush job_done_work so that
-completions queued at teardown still release their jobs.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: d5b1a78a772f ("drm/vc4: Add support for drawing 3D frames.")
-Cc: stable@vger.kernel.org # 6.2+
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260915095103.156007-1-fanwu01@zju.edu.cn
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Tested-by: Ayhan Çiçek <ayhancicek@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c54e4d10507722398dc90cf3c532e50b86cf425a)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_v3d.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |   17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -9,6 +9,7 @@
- #include <linux/component.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
-+#include <linux/timer.h>
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -652,20 +652,17 @@ void amdgpu_gmc_get_vbios_allocations(st
+ 	case CHIP_RENOIR:
+ 		adev->mman.keep_stolen_vga_memory = true;
+ 		break;
+-	case CHIP_POLARIS10:
+-	case CHIP_POLARIS11:
+-	case CHIP_POLARIS12:
+-		/* MacBookPros with switchable graphics put VRAM at 0 when
+-		 * the iGPU is enabled which results in cursor issues if
+-		 * the cursor ends up at 0.  Reserve vram at 0 in that case.
+-		 */
+-		if (adev->gmc.vram_start == 0)
+-			adev->mman.keep_stolen_vga_memory = true;
+-		break;
+ 	default:
+ 		adev->mman.keep_stolen_vga_memory = false;
+ 		break;
+ 	}
++	/* MacBookPros with switchable graphics put VRAM at 0 when
++	 * the iGPU is enabled which results in cursor issues if
++	 * the cursor ends up at 0.  Reserve vram at 0 in that case.
++	 */
++	if ((adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE) &&
++	    (adev->gmc.vram_start == 0))
++		adev->mman.keep_stolen_vga_memory = true;
  
- #include "vc4_drv.h"
- #include "vc4_regs.h"
-@@ -513,8 +514,15 @@ static void vc4_v3d_unbind(struct device
- 	struct drm_device *drm = dev_get_drvdata(master);
- 	struct vc4_dev *vc4 = to_vc4_dev(drm);
- 
-+	/* A straggler vc4_reset() re-enables the interrupt. */
-+	timer_shutdown_sync(&vc4->hangcheck.timer);
-+	cancel_work_sync(&vc4->hangcheck.reset_work);
-+
- 	vc4_irq_uninstall(drm);
- 
-+	/* Flush rather than cancel, so queued completions release their jobs. */
-+	flush_work(&vc4->job_done_work);
-+
- 	/* Disable the binner's overflow memory address, so the next
- 	 * driver probe (if any) doesn't try to reuse our old
- 	 * allocation.
+ 	if (amdgpu_sriov_vf(adev) ||
+ 	    !amdgpu_device_has_display_hardware(adev)) {
 
 
