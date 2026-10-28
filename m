@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212516;
-	b=dpuWuKUZ7PottoBjhSYMNTtwMZQysKcUved5f+MHZ2jsydZK+uyWJfjgqyXluprpgGAz
-	 3ZCcnxizsYyXQgbIEPu+T07lO1Ed3QH5M/pQ8tWJMzFq4U/leRJgr5WVCfrcAH81SSPGe
-	 8yY1kGJy7fX6vLM6MGSNA8KGo6FOWLxpywF2Vygm4qwmV2GY/RfaWsErLpRG66P5LZ4qC
-	 Ul5QSb61O6f1nABgu28CILWsb96a5zkY0EOPsAoO0aQQRf83qj9sON1Mb34Zfkqp5xNOw
-	 pUV3mEBjN0/I7G5KfFMR+qfINosVqnRAra21AfPoopVAqxrQKW+RhLamfA5QIgQWqsQ==
+	t=1793212518;
+	b=Lq74gTj9MJKgWk7B/FVcXeEIyZI20ezA6joJK1Tckvm7hwaE7ZjeF8o0JnXS01nyhRjP
+	 zX/ypJAA3w3SVV9m5G9mOjHs4AZGcd3S0YOa1qOb4zBdHMttck9g+wQEeaI9/T886Ux4p
+	 uMw9XE/o/O1ElvLzYaodCXMQCLsjg+F7CjFQQfj2v0mKCw3e/gTBbNOkXXrgVb3rQThC3
+	 LjQykFw+34WOIp/GDuJSzMRaBvC8VdMn/lFLokbF2s39R5GossLmF+bkxbCQCPpSnQZ+B
+	 GO0iJXbrO+knnJuEShify6BVfh6MUFvxjxdqED1bTgPoGlpqoOlseH6IJuH+6FvPu+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212516;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212518;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=40Zvf9B7Q8MM342fAN+aGbgVus60ZH+OxnUDGsjoPdY=;
-	b=AThrD8O8aU//b3cPWdODUxpilGnX3r+uNQulEIAWZLrHS7JhVAJyWd5BXBLjxZXA4SNx
-	 gKdlaA/YxIScGQJT9Wnok59Lv3+9MJ+/sxZmor7NcWsymrD7xpvq9g2lANTPo+1iQfVlm
-	 EtT07ebKdIiU19ncbOKBZCSZ3uCkHToiIUzzIIxUwaxEAwYkSUVwRKcZWw87vkmot/lDT
-	 jfSuUpvCgWQbcI9IS+/CbTldulArgq4pG4O7oSA0bhPrqxIsEDYmg+YcR/hRvSLa9LE0d
-	 4F/rXZZ9HCkF3FnJmhncstE2rkLRIMWX3T/758XuB5al3ZDLNNxTbJNRvV/qvsbJp1g==
+	bh=XPWBkhY2MBEaczG/WCn/AML9708/JZqBEIgZMycA3hE=;
+	b=dmql8imNo71Ux0uJ4CSZtsNCQnKv9mqcfYa++tK7X24DSMk2HaPnv6Osv3KUW/vZNGlv
+	 KodGt3xlBDDUyqQOE2s00rgim6pt7IH6xlhEmuu4VPgOwWrWvQYQeCdUQkPscMvKly/Er
+	 BEK2Jze3uRtHQM5ahMuGG/9E5Em4zLpISZzNPL1YdMpkbLMk40gkLY6HsyRWEraSWZr08
+	 h3uZGmudalilirCYydMO+WGW+aPXMj5uzrxrcBHbwytV+2r5BDyK/HrJ45UyMlOyCp1dW
+	 zJQ0SKAN64X7MMJbubxDkvN2g0urHrvgkrke85KAO9jWdG24rv8V0ZX1V6thrKnyzHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkLQg6nW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHVxfCid;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAF8606A31A;
-	Wed, 28 Oct 2026 18:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C45B606A31A;
+	Wed, 28 Oct 2026 18:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkLQg6nW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE69C1F01825;
-	Wed, 28 Oct 2026 18:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHVxfCid
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93FC1F01825;
+	Wed, 28 Oct 2026 18:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212515;
-	bh=40Zvf9B7Q8MM342fAN+aGbgVus60ZH+OxnUDGsjoPdY=;
+	s=korg; t=1793212518;
+	bh=XPWBkhY2MBEaczG/WCn/AML9708/JZqBEIgZMycA3hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HkLQg6nWF9rNdt7oIKaT9UB+0EjdNjflNhVVyyR8JO214xddr7NrfbtD/bAQfBsTq
-	 irFaokvqns24Bnh6Va1DQifKNpA/bvpAeNAFG97sD+cK+Td7n5pywT5qBc81NHgzo+
-	 rS/TgsihJ3osUAYkXWEkx0nOgVoKU7WnoRaaedYY=
+	b=FHVxfCidvehKEW3t21Q/9o+DkQe3YChWO8Co3u8Qn8FnbQHKf0QuxtRjkBHiqVAQF
+	 xrB2FkqAoCy5jq/Js5KG4MVBg8lL+kD0JQzJw89TD+/jlOlAburKxiMYeTI5JaBp4Z
+	 /hoUl4qKvvATb33eRgj+yp2FKkhF3cqqC/HWYypY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dohyun Kim <dohyunkim@google.com>,
-	Neel Natu <neelnatu@google.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0181/1887] bpf: Fail bpf_timer_cancel when callback is being cancelled
-Date: Wed, 28 Oct 2026 17:37:57 +0100
-Message-ID: <20261028170503.355051068@linuxfoundation.org>
+Subject: [PATCH 6.1 0182/1887] bpf: Defer work in bpf_timer_cancel_and_free
+Date: Wed, 28 Oct 2026 17:37:58 +0100
+Message-ID: <20261028170503.377357879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -73,162 +71,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit d4523831f07a267a943f0dde844bf8ead7495f13 ]
+[ Upstream commit a6fcd19d7eac1335eb76bc16b6a66b7f574d1d69 ]
 
-Given a schedule:
+Currently, the same case as previous patch (two timer callbacks trying
+to cancel each other) can be invoked through bpf_map_update_elem as
+well, or more precisely, freeing map elements containing timers. Since
+this relies on hrtimer_cancel as well, it is prone to the same deadlock
+situation as the previous patch.
 
-timer1 cb			timer2 cb
+It would be sufficient to use hrtimer_try_to_cancel to fix this problem,
+as the timer cannot be enqueued after async_cancel_and_free. Once
+async_cancel_and_free has been done, the timer must be reinitialized
+before it can be armed again. The callback running in parallel trying to
+arm the timer will fail, and freeing bpf_hrtimer without waiting is
+sufficient (given kfree_rcu), and bpf_timer_cb will return
+HRTIMER_NORESTART, preventing the timer from being rearmed again.
 
-bpf_timer_cancel(timer2);	bpf_timer_cancel(timer1);
+However, there exists a UAF scenario where the callback arms the timer
+before entering this function, such that if cancellation fails (due to
+timer callback invoking this routine, or the target timer callback
+running concurrently). In such a case, if the timer expiration is
+significantly far in the future, the RCU grace period expiration
+happening before it will free the bpf_hrtimer state and along with it
+the struct hrtimer, that is enqueued.
 
-Both bpf_timer_cancel calls would wait for the other callback to finish
-executing, introducing a lockup.
+Hence, it is clear cancellation needs to occur after
+async_cancel_and_free, and yet it cannot be done inline due to deadlock
+issues. We thus modify bpf_timer_cancel_and_free to defer work to the
+global workqueue, adding a work_struct alongside rcu_head (both used at
+_different_ points of time, so can share space).
 
-Add an atomic_t count named 'cancelling' in bpf_hrtimer. This keeps
-track of all in-flight cancellation requests for a given BPF timer.
-Whenever cancelling a BPF timer, we must check if we have outstanding
-cancellation requests, and if so, we must fail the operation with an
-error (-EDEADLK) since cancellation is synchronous and waits for the
-callback to finish executing. This implies that we can enter a deadlock
-situation involving two or more timer callbacks executing in parallel
-and attempting to cancel one another.
+Update existing code comments to reflect the new state of affairs.
 
-Note that we avoid incrementing the cancelling counter for the target
-timer (the one being cancelled) if bpf_timer_cancel is not invoked from
-a callback, to avoid spurious errors. The whole point of detecting
-cur->cancelling and returning -EDEADLK is to not enter a busy wait loop
-(which may or may not lead to a lockup). This does not apply in case the
-caller is in a non-callback context, the other side can continue to
-cancel as it sees fit without running into errors.
+[ Backport to 6.1.y: mapped deferred cancellation onto the older pre-BPF-
+  workqueue timer object layout. ]
 
-Background on prior attempts:
-
-Earlier versions of this patch used a bool 'cancelling' bit and used the
-following pattern under timer->lock to publish cancellation status.
-
-lock(t->lock);
-t->cancelling = true;
-mb();
-if (cur->cancelling)
-	return -EDEADLK;
-unlock(t->lock);
-hrtimer_cancel(t->timer);
-t->cancelling = false;
-
-The store outside the critical section could overwrite a parallel
-requests t->cancelling assignment to true, to ensure the parallely
-executing callback observes its cancellation status.
-
-It would be necessary to clear this cancelling bit once hrtimer_cancel
-is done, but lack of serialization introduced races. Another option was
-explored where bpf_timer_start would clear the bit when (re)starting the
-timer under timer->lock. This would ensure serialized access to the
-cancelling bit, but may allow it to be cleared before in-flight
-hrtimer_cancel has finished executing, such that lockups can occur
-again.
-
-Thus, we choose an atomic counter to keep track of all outstanding
-cancellation requests and use it to prevent lockups in case callbacks
-attempt to cancel each other while executing in parallel.
-
-[ Backport to 6.1.y: mapped the atomic cancellation guard directly onto
-  the pre-refactor bpf_hrtimer layout. ]
-
-Reported-by: Dohyun Kim <dohyunkim@google.com>
-Reported-by: Neel Natu <neelnatu@google.com>
 Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20240709185440.1104957-2-memxor@gmail.com
+Link: https://lore.kernel.org/r/20240709185440.1104957-3-memxor@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 37 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 34 insertions(+), 3 deletions(-)
+ kernel/bpf/helpers.c | 58 +++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 46 insertions(+), 12 deletions(-)
 
 diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 4cd7854932944..d5dcc172647c8 100644
+index d5dcc172647c8..a5ab200c48663 100644
 --- a/kernel/bpf/helpers.c
 +++ b/kernel/bpf/helpers.c
-@@ -1110,6 +1110,7 @@ const struct bpf_func_proto bpf_snprintf_proto = {
-  */
- struct bpf_hrtimer {
- 	struct hrtimer timer;
-+	atomic_t cancelling;
- 	struct bpf_map *map;
+@@ -1115,7 +1115,10 @@ struct bpf_hrtimer {
  	struct bpf_prog *prog;
  	void __rcu *callback_fn;
-@@ -1204,6 +1205,7 @@ BPF_CALL_3(bpf_timer_init, struct bpf_timer_kern *, timer, struct bpf_map *, map
- 	t->map = map;
+ 	void *value;
+-	struct rcu_head rcu;
++	union {
++		struct rcu_head rcu;
++		struct work_struct delete_work;
++	};
+ };
+ 
+ /* the actual struct hidden inside uapi struct bpf_timer */
+@@ -1169,6 +1172,22 @@ static enum hrtimer_restart bpf_timer_cb(struct hrtimer *hrtimer)
+ 	return HRTIMER_NORESTART;
+ }
+ 
++static void bpf_timer_delete_work(struct work_struct *work)
++{
++	struct bpf_hrtimer *t = container_of(work, struct bpf_hrtimer,
++					     delete_work);
++
++	/* Cancel the timer and wait for callback to complete if it was running.
++	 * If hrtimer_cancel() can be safely called it's safe to call
++	 * kfree_rcu(t) right after for both preallocated and non-preallocated
++	 * maps. The timer->timer = NULL was already done and no code path can see
++	 * address 't' anymore. A timer armed before bpf_timer_cancel_and_free()
++	 * will have been cancelled.
++	 */
++	hrtimer_cancel(&t->timer);
++	kfree_rcu(t, rcu);
++}
++
+ BPF_CALL_3(bpf_timer_init, struct bpf_timer_kern *, timer, struct bpf_map *, map,
+ 	   u64, flags)
+ {
+@@ -1206,6 +1225,7 @@ BPF_CALL_3(bpf_timer_init, struct bpf_timer_kern *, timer, struct bpf_map *, map
  	t->prog = NULL;
  	rcu_assign_pointer(t->callback_fn, NULL);
-+	atomic_set(&t->cancelling, 0);
+ 	atomic_set(&t->cancelling, 0);
++	INIT_WORK(&t->delete_work, bpf_timer_delete_work);
  	hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
  	t->timer.function = bpf_timer_cb;
  	WRITE_ONCE(timer->timer, t);
-@@ -1331,7 +1333,8 @@ static void drop_prog_refcnt(struct bpf_hrtimer *t)
- 
- BPF_CALL_1(bpf_timer_cancel, struct bpf_timer_kern *, timer)
- {
--	struct bpf_hrtimer *t;
-+	struct bpf_hrtimer *t, *cur_t;
-+	bool inc = false;
- 	int ret = 0;
- 
- 	if (in_nmi())
-@@ -1343,14 +1346,40 @@ BPF_CALL_1(bpf_timer_cancel, struct bpf_timer_kern *, timer)
- 		ret = -EINVAL;
- 		goto out;
- 	}
--	if (this_cpu_read(hrtimer_running) == t) {
-+	cur_t = this_cpu_read(hrtimer_running);
-+	if (cur_t == t) {
- 		/* If bpf callback_fn is trying to bpf_timer_cancel()
- 		 * its own timer the hrtimer_cancel() will deadlock
--		 * since it waits for callback_fn to finish
-+		 * since it waits for callback_fn to finish.
-+		 */
-+		ret = -EDEADLK;
-+		goto out;
-+	}
-+
-+	/* Only account in-flight cancellations when invoked from a timer
-+	 * callback, since we want to avoid waiting only if other _callbacks_
-+	 * are waiting on us, to avoid introducing lockups. Non-callback paths
-+	 * are ok, since nobody would synchronously wait for their completion.
-+	 */
-+	if (!cur_t)
-+		goto drop;
-+	atomic_inc(&t->cancelling);
-+	/* Need full barrier after relaxed atomic_inc */
-+	smp_mb__after_atomic();
-+	inc = true;
-+	if (atomic_read(&cur_t->cancelling)) {
-+		/* We're cancelling timer t, while some other timer callback is
-+		 * attempting to cancel us. In such a case, it might be possible
-+		 * that timer t belongs to the other callback, or some other
-+		 * callback waiting upon it (creating transitive dependencies
-+		 * upon us), and we will enter a deadlock if we continue
-+		 * cancelling and waiting for it synchronously, since it might
-+		 * do the same. Bail!
- 		 */
- 		ret = -EDEADLK;
- 		goto out;
- 	}
-+drop:
- 	drop_prog_refcnt(t);
- out:
+@@ -1426,14 +1446,8 @@ void bpf_timer_cancel_and_free(void *val)
  	__bpf_spin_unlock_irqrestore(&timer->lock);
-@@ -1358,6 +1387,8 @@ BPF_CALL_1(bpf_timer_cancel, struct bpf_timer_kern *, timer)
- 	 * if it was running.
+ 	if (!t)
+ 		return;
+-	/* Cancel the timer and wait for callback to complete if it was running.
+-	 * If hrtimer_cancel() can be safely called it's safe to call kfree(t)
+-	 * right after for both preallocated and non-preallocated maps.
+-	 * The timer->timer = NULL was already done and no code path can
+-	 * see address 't' anymore.
+-	 *
+-	 * Check that bpf_map_delete/update_elem() wasn't called from timer
+-	 * callback_fn. In such case don't call hrtimer_cancel() (since it will
++	/* We check that bpf_map_delete/update_elem() was called from timer
++	 * callback_fn. In such case we don't call hrtimer_cancel() (since it will
+ 	 * deadlock) and don't call hrtimer_try_to_cancel() (since it will just
+ 	 * return -1). Though callback_fn is still running on this cpu it's
+ 	 * safe to do kfree(t) because bpf_timer_cb() read everything it needed
+@@ -1441,10 +1455,30 @@ void bpf_timer_cancel_and_free(void *val)
+ 	 * since timer->timer = NULL was already done. The timer will be
+ 	 * effectively cancelled because bpf_timer_cb() will return
+ 	 * HRTIMER_NORESTART.
++	 *
++	 * However, it is possible the timer callback_fn calling us armed the
++	 * timer _before_ calling us, such that failing to cancel it here will
++	 * cause it to possibly use struct hrtimer after freeing bpf_hrtimer.
++	 * Therefore, we _need_ to cancel any outstanding timers before we do
++	 * kfree_rcu, even though no more timers can be armed.
++	 *
++	 * Moreover, we need to schedule work even if timer does not belong to
++	 * the calling callback_fn, as on two different CPUs, we can end up in a
++	 * situation where both sides run in parallel, try to cancel one
++	 * another, and we end up waiting on both sides in hrtimer_cancel
++	 * without making forward progress, since timer1 depends on timer2
++	 * callback to finish, and vice versa.
++	 *
++	 *  CPU 1 (timer1_cb)			CPU 2 (timer2_cb)
++	 *  bpf_timer_cancel_and_free(timer2)	bpf_timer_cancel_and_free(timer1)
++	 *
++	 * To avoid these issues, punt to workqueue context when we are in a
++	 * timer callback.
  	 */
- 	ret = ret ?: hrtimer_cancel(&t->timer);
-+	if (inc)
-+		atomic_dec(&t->cancelling);
- 	rcu_read_unlock();
- 	return ret;
+-	if (this_cpu_read(hrtimer_running) != t)
+-		hrtimer_cancel(&t->timer);
+-	kfree_rcu(t, rcu);
++	if (this_cpu_read(hrtimer_running))
++		queue_work(system_unbound_wq, &t->delete_work);
++	else
++		bpf_timer_delete_work(&t->delete_work);
  }
+ 
+ BPF_CALL_2(bpf_kptr_xchg, void *, map_value, void *, ptr)
 -- 
 2.53.0
 
