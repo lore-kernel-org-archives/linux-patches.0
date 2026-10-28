@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214273;
-	b=FBkT5yEQp8oZqwJhWPBwJw0JkWkycpmxpzOO96U3thqEpaPi28gym3OH5RRES9EOeXt1
-	 YFFBb7FQ9jw+q1XLSlVWUpwVmYc6Gv01Ao1OJgxCpC9qmjSDh6rs5Bg+eu+Db/EQagcWP
-	 c4r1QFX2mxR9yN6+epqckp/kXTqSp8dM3tOybrPGYS6OTrgwkLL91a7KXX9whTt6vR8iS
-	 HSM0XiV9KNMoVUB9xOZABUZrFln0Ga4Q6o4vGoBabORizbSggvDkP+2zjt0IfC46h7AT2
-	 A9hunLCsxkddk8fagA97EMXU8UG6BZf/081m1iHw2O8w5QueKht3zpZkJOr+GOJ1XGw==
+	t=1793214275;
+	b=FcFpPO9thWqug2DCh77rHGxkBwPFPg/mlCom1TbXXLyP6LBmYSlZGHxw62kgRGV/EIHl
+	 cDvbIHkqW70Db4z/M64Gt+0Hx0FwuYI8OCs6Lk2GABnPNah7De7w+Mq+ZWpr2s77FPkUk
+	 gIDPqWh/RYDQ/4dzAEdumGVXtx6gXrFD9v6CA8pLUNkgEjCfeuyOZEB1y1brSgH/YJeOb
+	 QHmJXivdgkivC8/QWALykODqqrSddCEH0h2w42jI7xJdwMwFYIF129ibpDsuyExQJ2HIJ
+	 iFi6rjAPZTsTX306k9W7QwBcJbO7MF7ov3INZfiMbsd1FD0opgFnVKfoHfsdM5oF5GQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=03OPWAPfRAeawCvWNuFYm8tQ7NQsXyTuf4FaquQwQ50=;
-	b=Rfk0j/etIhmw+/O80tzQK9axi9SqYeTVeK6+2nWNvKM7L9Rxv7ybPyArEYcjJHiehbwU
-	 PemmAvucinF9GXAbMLuJnxVko45Hy5QQycOVVoXtLVqk4I+I8+3EzVAVDi2C9YD1EX8a1
-	 kBngEcaDZrww7cuYpXK9j/+mPb4PqeVEGypWaVvYwwyBHqitYuuH6+vvYtRACAqj5rAzn
-	 p32Av6241fk22O1FfaSNWUejiPxcrsH5Kceu1gfNHn4xUnsJVqVhkPLSoOEe17cMlT7dU
-	 yFCo2oVZsrlsEm2IuJIQo6Wnr9i3QIRTeZIVPo8qaJu+Nwo6K3hgrtrDok6HEj1S2Wg==
+	bh=mQ7lWxrJrOqloPP55YAVvP1TUERxnKNW9RJ/UF+yYF8=;
+	b=wxkQ31v97N7LxfwcmpPnuqF7cmnoqD7RkHllyECGrn0CjsrfzT9AqrE4yuGR/6d4ZDGB
+	 UzLLp0ILxyds2CoVRe6DdE5L13weg03tdsrEQZRw1oFO8LohqgvcR7WsrlNJtR2z4KGAe
+	 Ltr3MZQcF/8fu/8K0raX+5il8iSTNwUYiWRfZTKiVs08PcSf9LtfRobmite9Dkn8eoXpw
+	 yGFswegnofpIXZ6v+GZuPZh0SAdc2ewbcxuF+DctpTH0Mde03eKwBrt5ubEDyJxuJQof8
+	 i2UxOH6XbcV9KgQGoJQAxuDF2bkbDV/O9rS0qoLiZLFNgQ7001J077lMIKmotPd+tvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DflmmeC5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cr+En43e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F16260A2634;
-	Wed, 28 Oct 2026 19:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803CA60A5BC5;
+	Wed, 28 Oct 2026 19:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DflmmeC5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DDD1F01829;
-	Wed, 28 Oct 2026 19:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cr+En43e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A881F01829;
+	Wed, 28 Oct 2026 19:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214272;
-	bh=03OPWAPfRAeawCvWNuFYm8tQ7NQsXyTuf4FaquQwQ50=;
+	s=korg; t=1793214275;
+	bh=mQ7lWxrJrOqloPP55YAVvP1TUERxnKNW9RJ/UF+yYF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DflmmeC5DSUbbVRnJxTM+nupas5RbtcpcyRCH/wwREJddj/zs/GRv2iG/jRfn5ail
-	 5ZbKBwpWL5mEMnx1f9YzqYeaAXe9H2YXzhvqc5mBWHF1srMF9Gc/Y8p/HHmI0TaOWp
-	 rK5X2Pp2KN5OAHYVqgOzPObGxfao5yKLw78V3Q8A=
+	b=Cr+En43en5cACLZ46vA05HH3rr6cWr3XE9K6GEUgIYHIYERAmwP2ciqJN/cK67l/8
+	 r+EN5T7SgjDBQfLpBzddkOzYVyNshjl6JA1uToTWiB9CJrAQkOrRRy/M3NCOK0TmUv
+	 vB07HvB7LWzTzqtDNeec7yiEBzeoWsAFCyN4SAQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>,
+	Andrew Rzeznik <arzeznik@cloudflare.com>,
+	Yan Zhai <yan@cloudflare.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Andy Gospodarek <gospo@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0799/1887] smb: client: fix potential deadlock when reconnecting channels
-Date: Wed, 28 Oct 2026 17:48:15 +0100
-Message-ID: <20261028170517.612235809@linuxfoundation.org>
+Subject: [PATCH 6.1 0800/1887] bnxt: properly flush XDP redirect lists
+Date: Wed, 28 Oct 2026 17:48:16 +0100
+Message-ID: <20261028170517.635067017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,209 +72,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Yan Zhai <yan@cloudflare.com>
 
-[ Upstream commit 711741f94ac3cf9f4e3aa73aa171e76d188c0819 ]
+[ Upstream commit 9caca6ac0e26cd20efd490d8b3b2ffb1c7c00f6f ]
 
-Fix cifs_signal_cifsd_for_reconnect() to take the correct lock order
-and prevent the following deadlock from happening
+We encountered following crash when testing a XDP_REDIRECT feature
+in production:
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.16.0-rc3-build2+ #1301 Tainted: G S      W
-------------------------------------------------------
-cifsd/6055 is trying to acquire lock:
-ffff88810ad56038 (&tcp_ses->srv_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x134/0x200
+[56251.579676] list_add corruption. next->prev should be prev (ffff93120dd40f30), but was ffffb301ef3a6740. (next=ffff93120dd
+40f30).
+[56251.601413] ------------[ cut here ]------------
+[56251.611357] kernel BUG at lib/list_debug.c:29!
+[56251.621082] Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+[56251.632073] CPU: 111 UID: 0 PID: 0 Comm: swapper/111 Kdump: loaded Tainted: P           O       6.12.33-cloudflare-2025.6.
+3 #1
+[56251.653155] Tainted: [P]=PROPRIETARY_MODULE, [O]=OOT_MODULE
+[56251.663877] Hardware name: MiTAC GC68B-B8032-G11P6-GPU/S8032GM-HE-CFR, BIOS V7.020.B10-sig 01/22/2025
+[56251.682626] RIP: 0010:__list_add_valid_or_report+0x4b/0xa0
+[56251.693203] Code: 0e 48 c7 c7 68 e7 d9 97 e8 42 16 fe ff 0f 0b 48 8b 52 08 48 39 c2 74 14 48 89 f1 48 c7 c7 90 e7 d9 97 48
+ 89 c6 e8 25 16 fe ff <0f> 0b 4c 8b 02 49 39 f0 74 14 48 89 d1 48 c7 c7 e8 e7 d9 97 4c 89
+[56251.725811] RSP: 0018:ffff93120dd40b80 EFLAGS: 00010246
+[56251.736094] RAX: 0000000000000075 RBX: ffffb301e6bba9d8 RCX: 0000000000000000
+[56251.748260] RDX: 0000000000000000 RSI: ffff9149afda0b80 RDI: ffff9149afda0b80
+[56251.760349] RBP: ffff9131e49c8000 R08: 0000000000000000 R09: ffff93120dd40a18
+[56251.772382] R10: ffff9159cf2ce1a8 R11: 0000000000000003 R12: ffff911a80850000
+[56251.784364] R13: ffff93120fbc7000 R14: 0000000000000010 R15: ffff9139e7510e40
+[56251.796278] FS:  0000000000000000(0000) GS:ffff9149afd80000(0000) knlGS:0000000000000000
+[56251.809133] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[56251.819561] CR2: 00007f5e85e6f300 CR3: 00000038b85e2006 CR4: 0000000000770ef0
+[56251.831365] PKRU: 55555554
+[56251.838653] Call Trace:
+[56251.845560]  <IRQ>
+[56251.851943]  cpu_map_enqueue.cold+0x5/0xa
+[56251.860243]  xdp_do_redirect+0x2d9/0x480
+[56251.868388]  bnxt_rx_xdp+0x1d8/0x4c0 [bnxt_en]
+[56251.877028]  bnxt_rx_pkt+0x5f7/0x19b0 [bnxt_en]
+[56251.885665]  ? cpu_max_write+0x1e/0x100
+[56251.893510]  ? srso_alias_return_thunk+0x5/0xfbef5
+[56251.902276]  __bnxt_poll_work+0x190/0x340 [bnxt_en]
+[56251.911058]  bnxt_poll+0xab/0x1b0 [bnxt_en]
+[56251.919041]  ? srso_alias_return_thunk+0x5/0xfbef5
+[56251.927568]  ? srso_alias_return_thunk+0x5/0xfbef5
+[56251.935958]  ? srso_alias_return_thunk+0x5/0xfbef5
+[56251.944250]  __napi_poll+0x2b/0x160
+[56251.951155]  bpf_trampoline_6442548651+0x79/0x123
+[56251.959262]  __napi_poll+0x5/0x160
+[56251.966037]  net_rx_action+0x3d2/0x880
+[56251.973133]  ? srso_alias_return_thunk+0x5/0xfbef5
+[56251.981265]  ? srso_alias_return_thunk+0x5/0xfbef5
+[56251.989262]  ? __hrtimer_run_queues+0x162/0x2a0
+[56251.996967]  ? srso_alias_return_thunk+0x5/0xfbef5
+[56252.004875]  ? srso_alias_return_thunk+0x5/0xfbef5
+[56252.012673]  ? bnxt_msix+0x62/0x70 [bnxt_en]
+[56252.019903]  handle_softirqs+0xcf/0x270
+[56252.026650]  irq_exit_rcu+0x67/0x90
+[56252.032933]  common_interrupt+0x85/0xa0
+[56252.039498]  </IRQ>
+[56252.044246]  <TASK>
+[56252.048935]  asm_common_interrupt+0x26/0x40
+[56252.055727] RIP: 0010:cpuidle_enter_state+0xb8/0x420
+[56252.063305] Code: dc 01 00 00 e8 f9 79 3b ff e8 64 f7 ff ff 49 89 c5 0f 1f 44 00 00 31 ff e8 a5 32 3a ff 45 84 ff 0f 85 ae
+ 01 00 00 fb 45 85 f6 <0f> 88 88 01 00 00 48 8b 04 24 49 63 ce 4c 89 ea 48 6b f1 68 48 29
+[56252.088911] RSP: 0018:ffff93120c97fe98 EFLAGS: 00000202
+[56252.096912] RAX: ffff9149afd80000 RBX: ffff9141d3a72800 RCX: 0000000000000000
+[56252.106844] RDX: 00003329176c6b98 RSI: ffffffe36db3fdc7 RDI: 0000000000000000
+[56252.116733] RBP: 0000000000000002 R08: 0000000000000002 R09: 000000000000004e
+[56252.126652] R10: ffff9149afdb30c4 R11: 071c71c71c71c71c R12: ffffffff985ff860
+[56252.136637] R13: 00003329176c6b98 R14: 0000000000000002 R15: 0000000000000000
+[56252.146667]  ? cpuidle_enter_state+0xab/0x420
+[56252.153909]  cpuidle_enter+0x2d/0x40
+[56252.160360]  do_idle+0x176/0x1c0
+[56252.166456]  cpu_startup_entry+0x29/0x30
+[56252.173248]  start_secondary+0xf7/0x100
+[56252.179941]  common_startup_64+0x13e/0x141
+[56252.186886]  </TASK>
 
-but task is already holding lock:
-ffff888119c64330 (&ret_buf->chan_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0xcf/0x200
+>From the crash dump, we found that the cpu_map_flush_list inside
+redirect info is partially corrupted: its list_head->next points to
+itself, but list_head->prev points to a valid list of unflushed bq
+entries.
 
-which lock already depends on the new lock.
+This turned out to be a result of missed XDP flush on redirect lists. By
+digging in the actual source code, we found that
+commit 7f0a168b0441 ("bnxt_en: Add completion ring pointer in TX and RX
+ring structures") incorrectly overwrites the event mask for XDP_REDIRECT
+in bnxt_rx_xdp. We can stably reproduce this crash by returning XDP_TX
+and XDP_REDIRECT randomly for incoming packets in a naive XDP program.
+Properly propagate the XDP_REDIRECT events back fixes the crash.
 
-the existing dependency chain (in reverse order) is:
-
--> #2 (&ret_buf->chan_lock){+.+.}-{3:3}:
-       validate_chain+0x1cf/0x270
-       __lock_acquire+0x60e/0x780
-       lock_acquire.part.0+0xb4/0x1f0
-       _raw_spin_lock+0x2f/0x40
-       cifs_setup_session+0x81/0x4b0
-       cifs_get_smb_ses+0x771/0x900
-       cifs_mount_get_session+0x7e/0x170
-       cifs_mount+0x92/0x2d0
-       cifs_smb3_do_mount+0x161/0x460
-       smb3_get_tree+0x55/0x90
-       vfs_get_tree+0x46/0x180
-       do_new_mount+0x1b0/0x2e0
-       path_mount+0x6ee/0x740
-       do_mount+0x98/0xe0
-       __do_sys_mount+0x148/0x180
-       do_syscall_64+0xa4/0x260
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
--> #1 (&ret_buf->ses_lock){+.+.}-{3:3}:
-       validate_chain+0x1cf/0x270
-       __lock_acquire+0x60e/0x780
-       lock_acquire.part.0+0xb4/0x1f0
-       _raw_spin_lock+0x2f/0x40
-       cifs_match_super+0x101/0x320
-       sget+0xab/0x270
-       cifs_smb3_do_mount+0x1e0/0x460
-       smb3_get_tree+0x55/0x90
-       vfs_get_tree+0x46/0x180
-       do_new_mount+0x1b0/0x2e0
-       path_mount+0x6ee/0x740
-       do_mount+0x98/0xe0
-       __do_sys_mount+0x148/0x180
-       do_syscall_64+0xa4/0x260
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
--> #0 (&tcp_ses->srv_lock){+.+.}-{3:3}:
-       check_noncircular+0x95/0xc0
-       check_prev_add+0x115/0x2f0
-       validate_chain+0x1cf/0x270
-       __lock_acquire+0x60e/0x780
-       lock_acquire.part.0+0xb4/0x1f0
-       _raw_spin_lock+0x2f/0x40
-       cifs_signal_cifsd_for_reconnect+0x134/0x200
-       __cifs_reconnect+0x8f/0x500
-       cifs_handle_standard+0x112/0x280
-       cifs_demultiplex_thread+0x64d/0xbc0
-       kthread+0x2f7/0x310
-       ret_from_fork+0x2a/0x230
-       ret_from_fork_asm+0x1a/0x30
-
-other info that might help us debug this:
-
-Chain exists of:
-  &tcp_ses->srv_lock --> &ret_buf->ses_lock --> &ret_buf->chan_lock
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&ret_buf->chan_lock);
-                               lock(&ret_buf->ses_lock);
-                               lock(&ret_buf->chan_lock);
-  lock(&tcp_ses->srv_lock);
-
- *** DEADLOCK ***
-
-3 locks held by cifsd/6055:
- #0: ffffffff857de398 (&cifs_tcp_ses_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x7b/0x200
- #1: ffff888119c64060 (&ret_buf->ses_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0x9c/0x200
- #2: ffff888119c64330 (&ret_buf->chan_lock){+.+.}-{3:3}, at: cifs_signal_cifsd_for_reconnect+0xcf/0x200
-
-Cc: linux-cifs@vger.kernel.org
-Reported-by: David Howells <dhowells@redhat.com>
-Fixes: d7d7a66aacd6 ("cifs: avoid use of global locks for high contention data")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Tested-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: a7559bc8c17c ("bnxt: support transmit and free of aggregation buffers")
+Tested-by: Andrew Rzeznik <arzeznik@cloudflare.com>
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
+Link: https://patch.msgid.link/aFl7jpCNzscumuN2@debian.debian
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |  1 +
- fs/smb/client/connect.c  | 56 ++++++++++++++++++++++++++--------------
- 2 files changed, 38 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index c37f10eedddf2..4e463ee8e40bb 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -589,6 +589,7 @@ get_rfc1002_length(void *buf)
- struct TCP_Server_Info {
- 	struct list_head tcp_ses_list;
- 	struct list_head smb_ses_list;
-+	struct list_head rlist; /* reconnect list */
- 	spinlock_t srv_lock;  /* protect anything here that is not protected */
- 	__u64 conn_id; /* connection identifier (useful for debugging) */
- 	int srv_count; /* reference counter */
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 9172b4136a925..abc03adb692b5 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -185,6 +185,14 @@ static void cifs_resolve_server(struct work_struct *work)
- 	cifs_server_unlock(server);
- }
- 
-+#define set_need_reco(server) \
-+do { \
-+	spin_lock(&server->srv_lock); \
-+	if (server->tcpStatus != CifsExiting) \
-+		server->tcpStatus = CifsNeedReconnect; \
-+	spin_unlock(&server->srv_lock); \
-+} while (0)
-+
- /*
-  * Update the tcpStatus for the server.
-  * This is used to signal the cifsd thread to call cifs_reconnect
-@@ -198,35 +206,45 @@ void
- cifs_signal_cifsd_for_reconnect(struct TCP_Server_Info *server,
- 				bool all_channels)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 321504790948f..de7bef33641a8 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -2543,6 +2543,7 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
  {
--	struct TCP_Server_Info *pserver;
-+	struct TCP_Server_Info *nserver;
- 	struct cifs_ses *ses;
-+	LIST_HEAD(reco);
- 	int i;
- 
--	/* If server is a channel, select the primary channel */
--	pserver = CIFS_SERVER_IS_CHAN(server) ? server->primary_server : server;
--
- 	/* if we need to signal just this channel */
- 	if (!all_channels) {
--		spin_lock(&server->srv_lock);
--		if (server->tcpStatus != CifsExiting)
--			server->tcpStatus = CifsNeedReconnect;
--		spin_unlock(&server->srv_lock);
-+		set_need_reco(server);
- 		return;
- 	}
- 
--	spin_lock(&cifs_tcp_ses_lock);
--	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
--		if (cifs_ses_exiting(ses))
--			continue;
--		spin_lock(&ses->chan_lock);
--		for (i = 0; i < ses->chan_count; i++) {
--			spin_lock(&ses->chans[i].server->srv_lock);
--			ses->chans[i].server->tcpStatus = CifsNeedReconnect;
--			spin_unlock(&ses->chans[i].server->srv_lock);
-+	if (CIFS_SERVER_IS_CHAN(server))
-+		server = server->primary_server;
-+	scoped_guard(spinlock, &cifs_tcp_ses_lock) {
-+		set_need_reco(server);
-+		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
-+			spin_lock(&ses->ses_lock);
-+			if (ses->ses_status == SES_EXITING) {
-+				spin_unlock(&ses->ses_lock);
-+				continue;
-+			}
-+			spin_lock(&ses->chan_lock);
-+			for (i = 1; i < ses->chan_count; i++) {
-+				nserver = ses->chans[i].server;
-+				if (!nserver)
-+					continue;
-+				nserver->srv_count++;
-+				list_add(&nserver->rlist, &reco);
-+			}
-+			spin_unlock(&ses->chan_lock);
-+			spin_unlock(&ses->ses_lock);
+ 	struct bnxt_napi *bnapi = cpr->bnapi;
+ 	u32 raw_cons = cpr->cp_raw_cons;
++	bool flush_xdp = false;
+ 	u32 cons;
+ 	int tx_pkts = 0;
+ 	int rx_pkts = 0;
+@@ -2580,6 +2581,8 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 			else
+ 				rc = bnxt_force_rx_discard(bp, cpr, &raw_cons,
+ 							   &event);
++			if (event & BNXT_REDIRECT_EVENT)
++				flush_xdp = true;
+ 			if (likely(rc >= 0))
+ 				rx_pkts += rc;
+ 			/* Increment rx_pkts when rc is -ENOMEM to count towards
+@@ -2607,7 +2610,7 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
  		}
--		spin_unlock(&ses->chan_lock);
  	}
--	spin_unlock(&cifs_tcp_ses_lock);
-+
-+	list_for_each_entry_safe(server, nserver, &reco, rlist) {
-+		list_del_init(&server->rlist);
-+		set_need_reco(server);
-+		cifs_put_tcp_session(server, 0);
-+	}
- }
  
- /*
+-	if (event & BNXT_REDIRECT_EVENT)
++	if (flush_xdp)
+ 		xdp_do_flush();
+ 
+ 	if (event & BNXT_TX_EVENT) {
 -- 
 2.53.0
 
