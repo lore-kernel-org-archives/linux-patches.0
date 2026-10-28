@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214898;
-	b=kImNr1GK4qSEN/rgtDrfUy/iuBMcsqzVNmASb5GYhV40YephWTT3flI6wdRX8hNM/P/W
-	 NRASo5nmHoFaAbvP8rn4XFr3b5CX5/rttXtbVWyA7uSpvz0WNjMddGHyOz0nWrAFNZCob
-	 /PTPLJ3zEFr+S9mJ+vVmQZZ0mVdZGXm2J5Pz82oK3oXKjMwIlL09AnYvKIPe0Q1MIXdih
-	 Q4Sp61WnedGXXhgVJu6UCZm7XLdg/1z22p8Hf5vSndJE119bfVuN/DAy4oAKbOMeIvnkr
-	 +j1X0O6DwyvZJwNMKtek0NBYlnaHuSr6VVgLMTohvwtiQkT4SHCuAwEsJc71YWSDxJA==
+	t=1793214901;
+	b=NHwmC36+b8S5RP//1FYMU0GE0f4pEcPKoqUg2CuJGMSfnQU5eF3Thsp//CLXRunR8l6x
+	 1iCN7nG2hMPhU4jZCSH/4aJGosqbWL7Zakfa3Qth8gAztxpkcZYL7zvdk1SlBgShdRNgW
+	 pcKdPLJllMDtUbmlRfQtg6yRPRNxw934gdNtSILQu6nsGlMLhiH5surEaovEa3A8lrE2C
+	 enOEW1GJHbtWJAtvnW7k8VZq4NDYWT58vZfys44elUife7NzZ71vd/9TQ2z/1NyuT4xsn
+	 Q7Qd1h6k4K7vGbY+ZPMVtVvdAcfUz0z/AkONYqu1xUK6Px8oLcWJZKzpKjerDBqAFow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214901;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1VjD1TTXjjDQaBbo+q68Q0D3lqhqWxuCcVRxJT1q+/I=;
-	b=qPLFxC43np66XtdoE7MyW26uiosigR7A4kuNF+vZASA2eNcuApw3nglBKV3U3dXe3KXr
-	 uHzKXU2QbZyvVC673rHBDShUzjqzWiqgF7mBwknrpPG0c6v1yfchX7TSplgbS4V9uxGlC
-	 VFf2EpSMxoOpavBNhx2ucH/pmzMyF6JGL6Vs6C+qKqaJlddp25sHO5ByrwRgbyvWKDrQx
-	 1rg1dDWwDhSeS9/8Rd4yPB2v8OUdPDVgNUwKUlXZ8fsrRPz6desdw5oVJ1hYTW6a6yL4E
-	 ZLPIomdssNNNd/XptG2KYS5+gtgvcxNqL0MNhWvfM1btZsRcPhkb8kn7iC9jGeSOVBw==
+	bh=6s6puFskJDceLHooS5i1Tg3T5xhC9c2Q5QMevwuVmM0=;
+	b=lzZXL9HkFicTpV+32tRCigW4En82M2lsBviuZYLcmoA6naS8d532ChVBl0DAGg05S8EV
+	 HpOUcp+zAIFiBKEZKZ4h0iFBBdcM1yJaPRjTIrC7u00Js44y9my7hUHp1njPYlkpDYMfR
+	 SBjtNMAEmkHb++Q9aBPpGLeJUqWQ+9+vVOvxm0D4Ymp4C4X2Eth1KUd7kPz5EBRcBZAEf
+	 jv3+2NCUYoCxfukpgS//0MaBCF1NZeP0n3qoqyiRARFI9ufbD748exz/R2m3p+5Sr7ye+
+	 HZRIL0LsjrVbZOwTpBMzErkAX1T14+doPxZqz6WZ0Wc0KlKd5bA/NmW1pH7fIEWTsLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CsMXUA1D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZ3M5t+S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073D0606A31C;
-	Wed, 28 Oct 2026 19:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E09606AB0E;
+	Wed, 28 Oct 2026 19:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CsMXUA1D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A851F01825;
-	Wed, 28 Oct 2026 19:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aZ3M5t+S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343A91F01825;
+	Wed, 28 Oct 2026 19:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214897;
-	bh=1VjD1TTXjjDQaBbo+q68Q0D3lqhqWxuCcVRxJT1q+/I=;
+	s=korg; t=1793214900;
+	bh=6s6puFskJDceLHooS5i1Tg3T5xhC9c2Q5QMevwuVmM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CsMXUA1Df4wWM35WtIGKZ2eu/Sbv2CBfy9BVq3Eu23hDbat/TTKQlrTvr3KyQhTFu
-	 iVAAKuVdNZVBikMxzKTswsTQz9Yb6gki/Iwd0+VqaJh2jbl60tX8wSqUFyBYKtZsLi
-	 fHqmuV6dlMTQ7K2MNJpz2hr/dFPtAYyWtw5YVbJ8=
+	b=aZ3M5t+SaGCr9sFDXhZSgd6WYNVOv/zkNmPtpvpcTqDddc4N4KYjiy6ctenqlHFCj
+	 q7/2F+M8Y8SMeXkpb5PkKAPLicZGk45pqoSYwmwxuFxJPbgf6THKZZ4NAejJWYAWT8
+	 c/TyarGm5L9OcfYW/ZKygtkEH6XCnizKIgDWKwKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shota Zaizen <s@zaizen.me>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1021/1887] bonding: fix type confusion in bond_setup_by_slave()
-Date: Wed, 28 Oct 2026 17:51:57 +0100
-Message-ID: <20261028170522.651120661@linuxfoundation.org>
+Subject: [PATCH 6.1 1022/1887] ksmbd: validate inherited ACE SID length
+Date: Wed, 28 Oct 2026 17:51:58 +0100
+Message-ID: <20261028170522.673064148@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,149 +69,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Shota Zaizen <s@zaizen.me>
 
-[ Upstream commit 950803f7254721c1c15858fbbfae3deaaeeecb11 ]
+[ Upstream commit 996454bc0da84d5a1dedb1a7861823087e01a7ae ]
 
-kernel BUG at net/core/skbuff.c:2306!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-RIP: 0010:pskb_expand_head+0xa08/0xfe0 net/core/skbuff.c:2306
-RSP: 0018:ffffc90004aff760 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff88807e3c8780 RCX: ffffffff89593e0e
-RDX: ffff88807b7c4900 RSI: ffffffff89594747 RDI: ffff88807b7c4900
-RBP: 0000000000000820 R08: 0000000000000005 R09: 0000000000000000
-R10: 00000000961a63e0 R11: 0000000000000000 R12: ffff88807e3c8780
-R13: 00000000961a6560 R14: dffffc0000000000 R15: 00000000961a63e0
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fe1a0ed8df0 CR3: 000000002d816000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- ipgre_header+0xdd/0x540 net/ipv4/ip_gre.c:900
- dev_hard_header include/linux/netdevice.h:3439 [inline]
- packet_snd net/packet/af_packet.c:3028 [inline]
- packet_sendmsg+0x3ae5/0x53c0 net/packet/af_packet.c:3108
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg net/socket.c:742 [inline]
- ____sys_sendmsg+0xa54/0xc30 net/socket.c:2592
- ___sys_sendmsg+0x190/0x1e0 net/socket.c:2646
- __sys_sendmsg+0x170/0x220 net/socket.c:2678
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x106/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fe1a0e6c1a9
+smb_inherit_dacl() walks the parent directory DACL loaded from the
+security descriptor xattr. It verifies that each ACE contains the fixed
+SID header before using it, but does not verify that the variable-length
+SID described by sid.num_subauth is fully contained in the ACE.
 
-When a non-Ethernet device (e.g. GRE tunnel) is enslaved to a bond,
-bond_setup_by_slave() directly copies the slave's header_ops to the
-bond device:
+A malformed inheritable ACE can advertise more subauthorities than are
+present in the ACE. compare_sids() may then read past the ACE.
+smb_set_ace() also clamps the copied destination SID, but used the
+unchecked source SID count to compute the inherited ACE size. That could
+advance the temporary inherited ACE buffer pointer and nt_size accounting
+past the allocated buffer.
 
-    bond_dev->header_ops = slave_dev->header_ops;
+Fix this by validating the parent ACE SID count and SID length before
+using the SID during inheritance. Compute the inherited ACE size from the
+copied SID so the size matches the bounded destination SID. Reject the
+inherited DACL if size accumulation would overflow smb_acl.size or the
+security descriptor allocation size.
 
-This causes a type confusion when dev_hard_header() is later called
-on the bond device. Functions like ipgre_header(), ip6gre_header(),all use
-netdev_priv(dev) to access their device-specific private data. When
-called with the bond device, netdev_priv() returns the bond's private
-data (struct bonding) instead of the expected type (e.g. struct
-ip_tunnel), leading to garbage values being read and kernel crashes.
-
-Fix this by introducing bond_header_ops with wrapper functions that
-delegate to the active slave's header_ops using the slave's own
-device. This ensures netdev_priv() in the slave's header functions
-always receives the correct device.
-
-The fix is placed in the bonding driver rather than individual device
-drivers, as the root cause is bond blindly inheriting header_ops from
-the slave without considering that these callbacks expect a specific
-netdev_priv() layout.
-
-The type confusion can be observed by adding a printk in
-ipgre_header() and running the following commands:
-
-    ip link add dummy0 type dummy
-    ip addr add 10.0.0.1/24 dev dummy0
-    ip link set dummy0 up
-    ip link add gre1 type gre local 10.0.0.1
-    ip link add bond1 type bond mode active-backup
-    ip link set gre1 master bond1
-    ip link set gre1 up
-    ip link set bond1 up
-    ip addr add fe80::1/64 dev bond1
-
-Fixes: 1284cd3a2b74 ("bonding: two small fixes for IPoIB support")
-Suggested-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260306021508.222062-1-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Shota Zaizen <s@zaizen.me>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 47 ++++++++++++++++++++++++++++++++-
- 1 file changed, 46 insertions(+), 1 deletion(-)
+ fs/smb/server/smbacl.c | 66 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 52 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index c94be63284841..0764bff68d97c 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1543,6 +1543,50 @@ static void bond_compute_features(struct bonding *bond)
- 	netdev_change_features(bond_dev);
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index fb48a504435d6..a338884d2115f 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1105,7 +1105,26 @@ static void smb_set_ace(struct smb_ace *ace, const struct smb_sid *sid, u8 type,
+ 	ace->flags = flags;
+ 	ace->access_req = access_req;
+ 	smb_copy_sid(&ace->sid, sid);
+-	ace->size = cpu_to_le16(1 + 1 + 2 + 4 + 1 + 1 + 6 + (sid->num_subauth * 4));
++	ace->size = cpu_to_le16(1 + 1 + 2 + 4 + 1 + 1 + 6 +
++				(ace->sid.num_subauth * 4));
++}
++
++static int smb_append_inherited_ace(struct smb_ace **ace, int *nt_size,
++				    int *ace_cnt, const struct smb_sid *sid,
++				    u8 type, u8 flags, __le32 access_req)
++{
++	int ace_size;
++
++	smb_set_ace(*ace, sid, type, flags, access_req);
++	ace_size = le16_to_cpu((*ace)->size);
++	/* pdacl->size is __le16 and includes struct smb_acl. */
++	if (check_add_overflow(*nt_size, ace_size, nt_size) ||
++	    *nt_size > U16_MAX - (int)sizeof(struct smb_acl))
++		return -EINVAL;
++
++	(*ace_cnt)++;
++	*ace = (struct smb_ace *)((char *)*ace + ace_size);
++	return 0;
  }
  
-+static int bond_header_create(struct sk_buff *skb, struct net_device *bond_dev,
-+			      unsigned short type, const void *daddr,
-+			      const void *saddr, unsigned int len)
-+{
-+	struct bonding *bond = netdev_priv(bond_dev);
-+	const struct header_ops *slave_ops;
-+	struct slave *slave;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	slave = rcu_dereference(bond->curr_active_slave);
-+	if (slave) {
-+		slave_ops = READ_ONCE(slave->dev->header_ops);
-+		if (slave_ops && slave_ops->create)
-+			ret = slave_ops->create(skb, slave->dev,
-+						type, daddr, saddr, len);
-+	}
-+	rcu_read_unlock();
-+	return ret;
-+}
-+
-+static int bond_header_parse(const struct sk_buff *skb, unsigned char *haddr)
-+{
-+	struct bonding *bond = netdev_priv(skb->dev);
-+	const struct header_ops *slave_ops;
-+	struct slave *slave;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	slave = rcu_dereference(bond->curr_active_slave);
-+	if (slave) {
-+		slave_ops = READ_ONCE(slave->dev->header_ops);
-+		if (slave_ops && slave_ops->parse)
-+			ret = slave_ops->parse(skb, haddr);
-+	}
-+	rcu_read_unlock();
-+	return ret;
-+}
-+
-+static const struct header_ops bond_header_ops = {
-+	.create	= bond_header_create,
-+	.parse	= bond_header_parse,
-+};
-+
- static void bond_setup_by_slave(struct net_device *bond_dev,
- 				struct net_device *slave_dev)
- {
-@@ -1550,7 +1594,8 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
+ int smb_inherit_dacl(struct ksmbd_conn *conn,
+@@ -1193,6 +1212,12 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 				CIFS_SID_BASE_SIZE)
+ 			break;
  
- 	dev_close(bond_dev);
++		if (parent_aces->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
++		    pace_size < offsetof(struct smb_ace, sid) +
++				CIFS_SID_BASE_SIZE +
++				sizeof(__le32) * parent_aces->sid.num_subauth)
++			break;
++
+ 		aces_size -= pace_size;
  
--	bond_dev->header_ops	    = slave_dev->header_ops;
-+	bond_dev->header_ops	    = slave_dev->header_ops ?
-+				      &bond_header_ops : NULL;
+ 		flags = parent_aces->flags;
+@@ -1222,22 +1247,24 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 		}
  
- 	bond_dev->type		    = slave_dev->type;
- 	bond_dev->hard_header_len   = slave_dev->hard_header_len;
+ 		if (is_dir && creator && flags & CONTAINER_INHERIT_ACE) {
+-			smb_set_ace(aces, psid, parent_aces->type, inherited_flags,
+-				    parent_aces->access_req);
+-			nt_size += le16_to_cpu(aces->size);
+-			ace_cnt++;
+-			aces = (struct smb_ace *)((char *)aces + le16_to_cpu(aces->size));
++			rc = smb_append_inherited_ace(&aces, &nt_size, &ace_cnt,
++						      psid, parent_aces->type,
++						      inherited_flags,
++						      parent_aces->access_req);
++			if (rc)
++				goto free_aces_base;
+ 			flags |= INHERIT_ONLY_ACE;
+ 			psid = creator;
+ 		} else if (is_dir && !(parent_aces->flags & NO_PROPAGATE_INHERIT_ACE)) {
+ 			psid = &parent_aces->sid;
+ 		}
+ 
+-		smb_set_ace(aces, psid, parent_aces->type, flags | inherited_flags,
+-			    parent_aces->access_req);
+-		nt_size += le16_to_cpu(aces->size);
+-		aces = (struct smb_ace *)((char *)aces + le16_to_cpu(aces->size));
+-		ace_cnt++;
++		rc = smb_append_inherited_ace(&aces, &nt_size, &ace_cnt, psid,
++					      parent_aces->type,
++					      flags | inherited_flags,
++					      parent_aces->access_req);
++		if (rc)
++			goto free_aces_base;
+ pass:
+ 		parent_aces = (struct smb_ace *)((char *)parent_aces + pace_size);
+ 	}
+@@ -1247,7 +1274,7 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 		struct smb_acl *pdacl;
+ 		struct smb_sid *powner_sid = NULL, *pgroup_sid = NULL;
+ 		int powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
+-		int pntsd_alloc_size;
++		size_t pntsd_alloc_size;
+ 
+ 		if (parent_pntsd->osidoffset) {
+ 			powner_sid = (struct smb_sid *)((char *)parent_pntsd +
+@@ -1260,8 +1287,19 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 			pgroup_sid_size = 1 + 1 + 6 + (pgroup_sid->num_subauth * 4);
+ 		}
+ 
+-		pntsd_alloc_size = sizeof(struct smb_ntsd) + powner_sid_size +
+-			pgroup_sid_size + sizeof(struct smb_acl) + nt_size;
++		if (check_add_overflow(sizeof(struct smb_ntsd),
++				       (size_t)powner_sid_size,
++				       &pntsd_alloc_size) ||
++		    check_add_overflow(pntsd_alloc_size,
++				       (size_t)pgroup_sid_size,
++				       &pntsd_alloc_size) ||
++		    check_add_overflow(pntsd_alloc_size, sizeof(struct smb_acl),
++				       &pntsd_alloc_size) ||
++		    check_add_overflow(pntsd_alloc_size, (size_t)nt_size,
++				       &pntsd_alloc_size)) {
++			rc = -EINVAL;
++			goto free_aces_base;
++		}
+ 
+ 		pntsd = kzalloc(pntsd_alloc_size, GFP_KERNEL);
+ 		if (!pntsd) {
 -- 
 2.53.0
 
