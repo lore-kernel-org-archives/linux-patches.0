@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214164;
-	b=a2bL+Oziz/YeobbGVOgV3BSPvqzTbgVn2Ljmijmc9DBb78kf06OQwO7liRe+hKY7yVpC
-	 uhKRCUCAX04yhrcWmqHNqN/w0MwjqaFo1KClbRHQM6GYD8rLFkO+XbJD/C/u/BJ/5AgT4
-	 NINUPFm6rE4C4PzOFpsT1oJQWbB2r5HI8W3Qqc8kyIPL/XK97qeIXH1trzl0BlEOi32En
-	 AriXSc/7daOamsVH52mbB/RD1eAJ9CH9h1LjHPZ/qBKrBQ8CEExMmv5XUzKunXN1R0sZ+
-	 pvdATePv+gdz5Wv1qTdkq9DR22QCWOMS0lOgOzxYfZWcFmJWiIUikwC0BySrVWnJDSQ==
+	t=1793214167;
+	b=WFIN7SWFUiMPY1oy1I+/gyADcYNtrEKCFaWOeiQzhFGBnaSgWdF0oSyh143hF5kiNJJe
+	 1OvKmhYVrNsolZpKdwrnAdin8BVpKYWGbj97yKKGKotg2jd8TcbwByhrUJTFU5ynuRXuO
+	 XYAkjN3Xga4gYkZubs7JmxC9eKTlOA9ZgQRYdzrXA1PR7eMxFUvcGWyiiqP0Hp02UA/Y7
+	 axbq1a1RnX73l1xzKrTFp84k25BoU/xJbkI6vm/6/Xdw7d9sqd0lZf+0LuBSOsgbW/R7p
+	 ZvsP9OWM/n+EFIGyTbzE8BGph8Kq9vvkMxCPjpnDV8wDtGvWVW7B1vbu/AGNtjTtLug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214164;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214167;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RBhOhiPXxIYtofQTqB0HmrTIoOQH+4HCKN0rmMRz33U=;
-	b=uGLId7v2Q2D0OciiLX9mf0IWPMxE+ZJfeorROJTB9pF67UUy361Holdo23kHYNpOwRcM
-	 pVhqeboAwl7RwYoC9ag2ld0rag2r/F/VLu3Ao3HnMM0+z99eTDhUmH5HLBbCTSknwXwrA
-	 qhrvs8U6OA7f2TfDJQrYCceGqR41cgAFBSWoYeDYKGlu/oAQfzO19U6iQftW3GXshQEtQ
-	 mbKW15y2M/rQ7E20qbuIYxmzvKqK3d5XmYO0bUZWsG53QgqTXBq4JkqrO2qVMZi5ohXqN
-	 oMusYYd8pSW31eysCHcdIsZuBOjQT1qPJM+t9YM31Oe6oMQ2tMNaYlJVyDxRcw7ETCA==
+	bh=Tk6fjlgFunS3oi2SG3rZq7Sf9NSd0as0ZS/aFRgLEQY=;
+	b=19FerMeF9cPOCQVH40fsGi6gSywxTfnyyjffFMW80F/GlM6TZYNQO2BynaEYUmYuDXiW
+	 XxFnll2hGxaKiVd2sIGXz7+LuxC5jt24RzMy3pFB+Tx8C6XqacvqSVeTY2uQ7DDZx1Gd5
+	 L2rh4g3Hx8OopFamXh249XrE21vbIfq/x4rn2+McfwqrfrWULRpo6sgryKZJahhohjFKJ
+	 3kT9qROj64qjvj5t0RY/iJY0YfXtho/EQIOKJmpwcbnK1xDQc5pxjl/P0TX4DiqDZaSkx
+	 KzA+WuOiw6PG8PfbC8tGjujsrqvMl8HXW5CIpb+SR6k6JkA2Yvs/DHdEtd9UK1x+zKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0WJE93S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="TLaxx9/S";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A420606A330;
-	Wed, 28 Oct 2026 19:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD06606A323;
+	Wed, 28 Oct 2026 19:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0WJE93S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACB41F01825;
-	Wed, 28 Oct 2026 19:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TLaxx9/S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11501F01825;
+	Wed, 28 Oct 2026 19:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214164;
-	bh=RBhOhiPXxIYtofQTqB0HmrTIoOQH+4HCKN0rmMRz33U=;
+	s=korg; t=1793214167;
+	bh=Tk6fjlgFunS3oi2SG3rZq7Sf9NSd0as0ZS/aFRgLEQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n0WJE93Si5LCwAPLrzSmxSGmLq8CeRpn+ZlprViFX8ApVfRdNZllEYUTka6Ht52N2
-	 8/prmgtrTjb5rD9EypXnefH/hTP1gefF6KPM2dHQxTYQvF42gmui7Fes55E6q5Nwr8
-	 +b/2vq8jAiGPzNcQ3S+SLzoBC49xEXrD2wwimz8w=
+	b=TLaxx9/Sd8TEVxEDS1NrE1Ln+b8r9ofkGj+Xr/oSSm5sS8fcYrXUku10E6tou21wD
+	 uKWYSNdAMJOBQjP8hm4nmAuwlbz3s2JNcrjALg6zEQmYX2ah6qhh7rdAfqd2kDdJgr
+	 keTFwt18DtaQp3JCjAVBjp6ITdk+XBWyjb5lS5sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paul Aurich <paul@darkrain42.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0760/1887] ibmveth: Always stop tx queues during close
-Date: Wed, 28 Oct 2026 17:47:36 +0100
-Message-ID: <20261028170516.739326339@linuxfoundation.org>
+Subject: [PATCH 6.1 0720/1887] smb: Initialize cfid->tcon before performing network ops
+Date: Wed, 28 Oct 2026 17:46:56 +0100
+Message-ID: <20261028170515.823626721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,154 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Paul Aurich <paul@darkrain42.org>
 
-[ Upstream commit 127b7218bfdd60205cfe2fa3f06d95e85a2650ed ]
+[ Upstream commit c353ee4fb119a2582d0e011f66a76a38f5cf984d ]
 
-netif_stop_all_queues must be called before calling H_FREE_LOGICAL_LAN.
-As a result, we can remove the pool_config field from the ibmveth
-adapter structure.
+Avoid leaking a tcon ref when a lease break races with opening the
+cached directory. Processing the leak break might take a reference to
+the tcon in cached_dir_lease_break() and then fail to release the ref in
+cached_dir_offload_close, since cfid->tcon is still NULL.
 
-Some device configuration changes call ibmveth_close in order to free
-the current resources held by the device. These functions then make
-their changes and call ibmveth_open to reallocate and reserve resources
-for the device.
-
-Prior to this commit, the flag pool_config was used to tell ibmveth_close
-that it should not halt the transmit queue. pool_config was introduced in
-commit 860f242eb534 ("[PATCH] ibmveth change buffer pools dynamically")
-to avoid interrupting the tx flow when making rx config changes. Since
-then, other commits adopted this approach, even if making tx config
-changes.
-
-The issue with this approach was that the hypervisor freed all of
-the devices control structures after the hcall H_FREE_LOGICAL_LAN
-was performed but the transmit queues were never stopped. So the higher
-layers in the network stack would continue transmission but any
-H_SEND_LOGICAL_LAN hcall would fail with H_PARAMETER until the
-hypervisor's structures for the device were allocated with the
-H_REGISTER_LOGICAL_LAN hcall in ibmveth_open. This resulted in
-no real networking harm but did cause several of these error
-messages to be logged: "h_send_logical_lan failed with rc=-4"
-
-So, instead of trying to keep the transmit queues alive during network
-configuration changes, just stop the queues, make necessary changes then
-restart the queues.
-
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 053f3ff67d7f ("net: ibmveth: make veth_pool_store stop hanging")
+Fixes: ebe98f1447bb ("cifs: enable caching of directories for which a lease is held")
+Signed-off-by: Paul Aurich <paul@darkrain42.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 18 +-----------------
- drivers/net/ethernet/ibm/ibmveth.h |  1 -
- 2 files changed, 1 insertion(+), 18 deletions(-)
+ fs/smb/client/cached_dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 53ce857f9ec1c..468b3ac118af0 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -692,8 +692,7 @@ static int ibmveth_close(struct net_device *netdev)
- 
- 	napi_disable(&adapter->napi);
- 
--	if (!adapter->pool_config)
--		netif_tx_stop_all_queues(netdev);
-+	netif_tx_stop_all_queues(netdev);
- 
- 	h_vio_signal(adapter->vdev->unit_address, VIO_IRQ_DISABLE);
- 
-@@ -801,9 +800,7 @@ static int ibmveth_set_csum_offload(struct net_device *dev, u32 data)
- 
- 	if (netif_running(dev)) {
- 		restart = 1;
--		adapter->pool_config = 1;
- 		ibmveth_close(dev);
--		adapter->pool_config = 0;
+diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
+index 194cf24f52df9..baca533953fd1 100644
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -211,6 +211,7 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 		}
  	}
+ 	cfid->dentry = dentry;
++	cfid->tcon = tcon;
  
- 	set_attr = 0;
-@@ -885,9 +882,7 @@ static int ibmveth_set_tso(struct net_device *dev, u32 data)
- 
- 	if (netif_running(dev)) {
- 		restart = 1;
--		adapter->pool_config = 1;
- 		ibmveth_close(dev);
--		adapter->pool_config = 0;
+ 	/*
+ 	 * We do not hold the lock for the open because in case
+@@ -284,7 +285,6 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 		}
+ 		goto oshr_free;
  	}
+-	cfid->tcon = tcon;
+ 	cfid->is_open = true;
  
- 	set_attr = 0;
-@@ -1536,9 +1531,7 @@ static int ibmveth_change_mtu(struct net_device *dev, int new_mtu)
- 	   only the buffer pools necessary to hold the new MTU */
- 	if (netif_running(adapter->netdev)) {
- 		need_restart = 1;
--		adapter->pool_config = 1;
- 		ibmveth_close(adapter->netdev);
--		adapter->pool_config = 0;
- 	}
- 
- 	/* Look for an active buffer pool that can hold the new MTU */
-@@ -1724,7 +1717,6 @@ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
- 	adapter->vdev = dev;
- 	adapter->netdev = netdev;
- 	adapter->mcastFilterSize = be32_to_cpu(*mcastFilterSize_p);
--	adapter->pool_config = 0;
- 	ibmveth_init_link_settings(netdev);
- 
- 	netif_napi_add_weight(netdev, &adapter->napi, ibmveth_poll, 16);
-@@ -1865,9 +1857,7 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
- 					return -ENOMEM;
- 				}
- 				pool->active = 1;
--				adapter->pool_config = 1;
- 				ibmveth_close(netdev);
--				adapter->pool_config = 0;
- 				if ((rc = ibmveth_open(netdev)))
- 					return rc;
- 			} else {
-@@ -1893,10 +1883,8 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
- 			}
- 
- 			if (netif_running(netdev)) {
--				adapter->pool_config = 1;
- 				ibmveth_close(netdev);
- 				pool->active = 0;
--				adapter->pool_config = 0;
- 				if ((rc = ibmveth_open(netdev)))
- 					return rc;
- 			}
-@@ -1907,9 +1895,7 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
- 			return -EINVAL;
- 		} else {
- 			if (netif_running(netdev)) {
--				adapter->pool_config = 1;
- 				ibmveth_close(netdev);
--				adapter->pool_config = 0;
- 				pool->size = value;
- 				if ((rc = ibmveth_open(netdev)))
- 					return rc;
-@@ -1922,9 +1908,7 @@ static ssize_t veth_pool_store(struct kobject *kobj, struct attribute *attr,
- 			return -EINVAL;
- 		} else {
- 			if (netif_running(netdev)) {
--				adapter->pool_config = 1;
- 				ibmveth_close(netdev);
--				adapter->pool_config = 0;
- 				pool->buff_size = value;
- 				if ((rc = ibmveth_open(netdev)))
- 					return rc;
-diff --git a/drivers/net/ethernet/ibm/ibmveth.h b/drivers/net/ethernet/ibm/ibmveth.h
-index 0e1dff1024442..bc1c1bb83c40c 100644
---- a/drivers/net/ethernet/ibm/ibmveth.h
-+++ b/drivers/net/ethernet/ibm/ibmveth.h
-@@ -148,7 +148,6 @@ struct ibmveth_adapter {
-     dma_addr_t filter_list_dma;
-     struct ibmveth_buff_pool rx_buff_pool[IBMVETH_NUM_BUFF_POOLS];
-     struct ibmveth_rx_q rx_queue;
--    int pool_config;
-     int rx_csum;
-     int large_send;
-     bool is_active_trunk;
+ 	spin_lock(&cfids->cfid_list_lock);
 -- 
 2.53.0
 
