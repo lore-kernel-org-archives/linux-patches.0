@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213113;
-	b=Htm+rK0wX75jm7Wvtnzu5X8N91NxfR4nbWMwcK3Gt00cVNGKJzA5rtqjQSftztZJjqzO
-	 N1oONhE1QlRnTV3XjUMBcXX+vCA0XBZ0sTCPbpir5GtBQFjDQ4qjw3Oi89l0J2y5Jreay
-	 iaxkM6DipCen0tJvtR9yMgvst8RKWQrVGz5EQFr2QaLaUNwVbzfJJ3mApykjE//Y+BDzp
-	 C8f9AGdpb35wcDAav+e42IV0zpyFlh87ah8Td0hjBYyPQwFKIzyKhMoXlo8lUzQPA75dE
-	 ls5FhYtoyUUFeJhR6mGhC01fg8LHfqqCdue+/ZAmjvcv9LGozSOsG4gt4e6YSu56T7Q==
+	t=1793213115;
+	b=sPDbohF6wtp0S9FUMC58TMuVDzVq55otULAEalvk2qSIgREr/FApSwIT/0PqI2QylLoO
+	 L+t/Qins6W0hTEgaILVZdQiy37ktfxjhJHhWF++pnmsmabGDuKV9FImR6jKP4VjD9P9cu
+	 VYhR41s4pTSwSWWOTufyJjkw1QlIcOfniGfWlW7iVS41WGyNl4jaLWEMuWLMShdTFpFz9
+	 gMSp2Lqc7C0bE78ReaghCiz0K1LlO9/qlCpTLt1uFx+vY18vChUHVf4kJjMhHms0PVlK8
+	 gKdyfsDa1/J3QWP0dBuGlM71U6fXDSVUDWG5DKh3rw6BEY5KFKAgRqUXCOvSBxsYz0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rbx75PnjkoT6iNsyB/bgHp2oe/p8Tr9eANGsjSfBz8c=;
-	b=eWBGzYPdndq42F11CuDdhzPRpXe3Y5Vf/5P1FsUDn7GcxWuGfWkcPD7L6+v+Ks6VjO6E
-	 RVfs4p773jpljUgdykFsZp+MD6GnxQHc7Qi2BAlnZi5LRpixJt96NdPT/gm9a3RsiKDWi
-	 IYzT0xLkK4Xg0WKmYQYtMKI0wfpUdMGRya2+h5XCufBUWihaQObZ/y4J2OZcMiq2ERxS5
-	 VTmQfDaGk4dyHjz5dc78c1LShtIP2VkiHqc2hPCN0FQe988L7xJd9c0pXuKyJdZSFZ90k
-	 vJ2El+f7ezAlNEOu6zqcpVL0UcmhGuwOPU4ucxVlCeAsWpH71BsA8rjuY5JCF5itG4A==
+	bh=i9oC5c6ZCeV9TZVzu3ESLydxwYQ3g1P/JAlLnXCZ2kk=;
+	b=qowNqAkrTFn73Qz94SZqlQt2aK7v2DmYwi7/fPm9iF0rwTWMATqTXkaCU4oP90MC9RrL
+	 455wvI2bpAJFJZ+UYot+ARJ2h9Jv9qUgeCIrePNxb+lXtVpJ7+Td7lqFuuxIwd3la5wZi
+	 dB4hLSD4cKDXCbwlewTCw5ZrdILOkWJqe12UeIDogMy2HmtFtaREVMxuZR5dwpfdx6g+Q
+	 QAyotrDtESXnZi8vX6aLG80EfH46PB4LxPIrt7iLR86mRcRP6Psbgffb1BpsJzvTzRMZM
+	 GFDGxRuuP9+KSCQ9UW/CgVSKkfKMHQrNs55pkUmUpgTBCGb1rurBLOKroEwYECqP3kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P/HLQ5m9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jRmUSTQm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CEC606A320;
-	Wed, 28 Oct 2026 18:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC04606A31E;
+	Wed, 28 Oct 2026 18:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P/HLQ5m9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6961F01825;
-	Wed, 28 Oct 2026 18:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jRmUSTQm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF59C1F01825;
+	Wed, 28 Oct 2026 18:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213112;
-	bh=Rbx75PnjkoT6iNsyB/bgHp2oe/p8Tr9eANGsjSfBz8c=;
+	s=korg; t=1793213115;
+	bh=i9oC5c6ZCeV9TZVzu3ESLydxwYQ3g1P/JAlLnXCZ2kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/HLQ5m9F0RhvwUFsY4wGqBROUhr+Umw3muloPeosUvlmI6oG7EC4OQXqSfnF8H6N
-	 GJ3tUhPqvnR3xB12JanHiyW2DG7iiE2idvS8yTvhiEx0BkRN6oFNDz4ewz2jIOmAYC
-	 0uvR3KQLkS26lo2WjRqUPWE3CjE88btRpzVhSJlI=
+	b=jRmUSTQmTncNWgX7Xm+B4IUeTld4posV7pJuJE2/6NlfZfchrPNniLssrBOUctZu9
+	 XxsqfFTIlDWK2ABKV5m5RpLjs9nUGQe/hNpBc97mSvcpaXbJ2ItbEFTr+pF7Jkcn8p
+	 FCmVy1nVm2gwNNkL4JwWhDyx/KYRk2STFBrtMkGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Ivan Mikhaylov <fr0st61te@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.1 0347/1887] iio: proximity: vcnl3020: fix ISR bitmask check in IRQ handler
-Date: Wed, 28 Oct 2026 17:40:43 +0100
-Message-ID: <20261028170507.126461063@linuxfoundation.org>
+Subject: [PATCH 6.1 0348/1887] iio: trigger: cancel reenable_work before freeing trigger
+Date: Wed, 28 Oct 2026 17:40:44 +0100
+Message-ID: <20261028170507.149172881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,77 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 7d38af8f20239a66e90de7632a79c9425256c574 upstream.
+commit 2a57b9246cecd5dd797a42eb310d6c8816f26d9e upstream.
 
-The threaded IRQ handler contained multiple issues in handling interrupt
-events and clearing status flags:
+iio_trigger_notify_done_atomic() defers ->reenable() into
+trig->reenable_work on the system workqueue, and the worker dereferences
+the owning trigger through container_of().  Nothing cancels this work
+before iio_trig_release() frees the trigger, so a worker armed by the
+last in-flight IRQ can outlive the free and touch freed memory.
 
-1. ISR bit check: The handler incorrectly checked the Interrupt Status
-   Register (VCNL_ISR) against VCNL_ICR_THRES_EN (BIT(1)), which is a
-   bitmask meant for the Control Register (VCNL_PS_ICR). In VCNL_ISR,
-   BIT(1) corresponds only to low-threshold interrupts. A high-threshold
-   interrupt (VCNL_INT_TH_HI, BIT(0)) on its own was completely ignored and
-   returned IRQ_NONE.
+Cancel it at the top of iio_trig_release(), which every free path
+reaches through the device core's final put_device().
 
-2. Event direction & channel index: The handler unconditionally pushed a
-   RISING event code on channel index 1. The driver only registers a single
-   proximity channel (index 0), and low-threshold interrupts should be
-   reported with IIO_EV_DIR_FALLING.
+Found by an in-house static analysis tool.
 
-3. ISR clearing: The write-back to acknowledge the interrupt only preserved
-   BIT(1) instead of masking against both valid status bits.
-
-Fix this by checking both VCNL_INT_TH_HI and VCNL_INT_TH_LOW bits in
-VCNL_ISR, pushing separate IIO events with the correct direction and
-channel index (0), and properly clearing handled status bits.
-
-Fixes: 3363fbbe19e5 ("iio: proximity: vcnl3020: add periodic mode")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Ivan Mikhaylov <fr0st61te@gmail.com>
+Fixes: 9020ef659885 ("iio: trigger: Fix a scheduling whilst atomic issue seen on tsc2046")
 Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/vcnl3020.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/iio/industrialio-trigger.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/proximity/vcnl3020.c
-+++ b/drivers/iio/proximity/vcnl3020.c
-@@ -584,16 +584,26 @@ static irqreturn_t vcnl3020_handle_irq_t
- 		return IRQ_HANDLED;
- 	}
+--- a/drivers/iio/industrialio-trigger.c
++++ b/drivers/iio/industrialio-trigger.c
+@@ -506,6 +506,8 @@ static void iio_trig_release(struct devi
+ 	struct iio_trigger *trig = to_iio_trigger(device);
+ 	int i;
  
--	if (!(isr & VCNL_ICR_THRES_EN))
-+	if (!(isr & (VCNL_INT_TH_HI | VCNL_INT_TH_LOW)))
- 		return IRQ_NONE;
- 
--	iio_push_event(indio_dev,
--		       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 1,
--				            IIO_EV_TYPE_THRESH,
--				            IIO_EV_DIR_RISING),
--		       iio_get_time_ns(indio_dev));
-+	if (isr & VCNL_INT_TH_HI) {
-+		iio_push_event(indio_dev,
-+			       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 0,
-+						    IIO_EV_TYPE_THRESH,
-+						    IIO_EV_DIR_RISING),
-+			       iio_get_time_ns(indio_dev));
-+	}
++	cancel_work_sync(&trig->reenable_work);
 +
-+	if (isr & VCNL_INT_TH_LOW) {
-+		iio_push_event(indio_dev,
-+			       IIO_UNMOD_EVENT_CODE(IIO_PROXIMITY, 0,
-+						    IIO_EV_TYPE_THRESH,
-+						    IIO_EV_DIR_FALLING),
-+			       iio_get_time_ns(indio_dev));
-+	}
- 
--	rc = regmap_write(data->regmap, VCNL_ISR, isr & VCNL_ICR_THRES_EN);
-+	rc = regmap_write(data->regmap, VCNL_ISR, isr & (VCNL_INT_TH_HI | VCNL_INT_TH_LOW));
- 	if (rc)
- 		dev_err(data->dev, "Error (%d) writing in reg (0x%x)\n",
- 			rc, VCNL_ISR);
+ 	if (trig->subirq_base) {
+ 		for (i = 0; i < CONFIG_IIO_CONSUMERS_PER_TRIGGER; i++) {
+ 			irq_modify_status(trig->subirq_base + i,
 
 
