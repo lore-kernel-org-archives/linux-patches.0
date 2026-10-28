@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208263;
-	b=MeiUgrbmLwFB9Sw6z9i5Chjp1lpExD0Yrf04FGuByQDZn3xKCAFVAQsLXPH13eJ9bKHj
-	 W+rBOqjOXBCZNjtXBdGL2PVsdx1NQSZH2Jrd9BeUvKt3BTD4Lkn/hVIQCEmhBHdoLbP/J
-	 fP8f0TAV1JULiq8zulUNAqr6BxAR8KoFLBj+f/NlAwOverf9MgR1rWKNjlBbbWcCUqJhR
-	 f3guy34k0GNn/nD7zDTcqMCNEQLTLTsSTtWb6YV3eeqd++GlRXMi8BWNA51bdgia3zt8J
-	 1MjeBbbrzzyr3lafvlATgUQeVKDOLky9eOkK1oHz9gYNU2dJgv9hP97OkBg4zy7Olow==
+	t=1793208266;
+	b=1Vf1tqUDeBRp7iwYwWVeP/8nd2QuW0MqdxdAzVggsvnAVYcUWthXsUVTxOcjQ0II5nBC
+	 N9JNqEp4ZQBvPWPX0PwpXjzYWcgcg8sLaGiSXWqZpNRng9Tp4bF25JB9wtir6QeB07il6
+	 pyD69XuSZdbp0zs4XXGyMbf64d6FTgSSHLiyP5AdQm+iIlXH5ofF0Wkzfcnxs8qTQBFax
+	 u7+XbnEsDwRK4Y+zJvWObuF4DjkbEVi4Cb0wHxZGBOOyvjtzf+LvsGNFnfymv/NXkvEkj
+	 GHbzR6pZ9tnmYKVbGO7Ci2xYSGi3VWgJTDZ5/yga//aRendCNg7rYOw2VIrYbOgafKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=sAxCv85Z4VC4bGAWQ3uicUdRwjZr7scFfgAvySA2ca8=;
-	b=wct4EOR7miJRs3XqLQ4b9hJUTpQNeIrk3h/JpbzW+OQKdlDUjZwFZBPOQ2BeaMAQK28O
-	 UboaexPlrkXKAPG/Th45Va4GgBnWSkBIDeXJ53Uw7WzWvu4P89qJP7Hh3Q0f3n/6y/6VN
-	 kUfR+bbMu8/SvX+CvxjBR7XjDt6wIpi0IpNt0g2gXvYmS3YpdwJ8eDNsfJGVUC83Ru+xY
-	 fM8rwCd5IX713koA0K59jcxXmq23YO8CNc8Ad9zjoTERU/2fP7bRh0BM85H6TmoLej8W9
-	 8zpu5rfDQaBZdbzyga997rlm6d0tM2k3+Su7Yyg2s14uSwkdwIIDY+yLxzLhh0RdBZA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=lgmay0/jJ7T5RsQtrZiFkjeyw96y5mr+i356gF2kZu4=;
+	b=lLIMRccY39QAGLi9lIXDfHTG7hqBtYgxD8uQWSQMQ/S3dMHCClU9hhsHoBgcTcswZZ7C
+	 e+gQ4SrMvXoL+eIzCyLOp+2d0ahL1Cn8ZCdxs4a+6hNrcfqKEcFCUbA6RGgGf3lyVjZyo
+	 Yliz9J0egRUYPXhuoWi/xs0zHlHYaUSt4+0mtFzMU1Y9KtUeKwqUWEjGoZaMzENGWJKns
+	 da7SI+IrkoCdqj81mtmYhmK5QfTVv3g9CSPfYnBuN4rBDzu8NHSlQqNE8szbTmdEX7oo8
+	 IDK8bjAf3mSYBjY/Q+5FJlvlvprJ9IE1j5KBWZkizcoz7fTVxofUIhNAx9kVdJk2IJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dmPVkRkt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWBn7Tjo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306F4606A31A;
-	Wed, 28 Oct 2026 17:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090DA606A31C;
+	Wed, 28 Oct 2026 17:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dmPVkRkt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852481F01825;
-	Wed, 28 Oct 2026 17:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWBn7Tjo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D7F1F01825;
+	Wed, 28 Oct 2026 17:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208263;
-	bh=sAxCv85Z4VC4bGAWQ3uicUdRwjZr7scFfgAvySA2ca8=;
+	s=korg; t=1793208265;
+	bh=lgmay0/jJ7T5RsQtrZiFkjeyw96y5mr+i356gF2kZu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dmPVkRktptAQSmrInf6WH0ofa2clsR7fncgAmAAK42HmfbQ+TcE07RkDqIM92tI18
-	 FkB8wfe6AJEnFBOdZDrFKyuG854Ed52X8PHd5y1ql/8FMk9pf6+0+0MoI9LqUrNL6k
-	 NqY40qIWKiNviWNLk/7tMFSxHnn9hZVqpJ94+y0A=
+	b=xWBn7TjoCRfA2v/ZpwizfW7dcUDRH2tQsf5kCfzwih3D0/Iq+lkhvYkjbn9N71Xvb
+	 lm47/knUGHYAQpANCCoHhOhyu22xp4IpxMcQ1i8jxe9ZssdQ4GO6BtqW4cfHzZlq9g
+	 rrVL3I/XxaymdaEwLFq5Cd9NygKHJTkqB0CswGg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/516] dmaengine: Add devm_dma_request_chan()
-Date: Wed, 28 Oct 2026 17:53:31 +0100
-Message-ID: <20261028170004.925992036@linuxfoundation.org>
+Subject: [PATCH 5.10 060/516] i2c: mxs: fix DMA channel leak on probe error
+Date: Wed, 28 Oct 2026 17:53:32 +0100
+Message-ID: <20261028170004.950178656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -62,96 +63,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bence Csókás <csokas.bence@prolan.hu>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 08bf1663c21a3e815eda28fa242d84c945ca3b94 ]
+[ Upstream commit 777979e627115734052b323d2721cdb500e81dcf ]
 
-Expand the arsenal of devm functions for DMA devices, this time for
-requesting channels.
+mxs_i2c_probe() requests an exclusive DMA channel before resetting the
+controller and registering the I2C adapter. If either later operation
+fails, probe returns without releasing the channel because the remove
+callback is not invoked after a failed probe.
 
-Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-Link: https://lore.kernel.org/r/20250610082256.400492-2-csokas.bence@prolan.hu
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 777979e62711 ("i2c: mxs: fix DMA channel leak on probe error")
+Use devm_dma_request_chan() so the device core releases the channel on
+probe failure and driver detach. Remove the manual release from the
+remove callback because the channel is now device-managed.
+
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 62885f59a261 ("MXS: Implement DMA support into mxs-i2c")
+Assisted-by: unnamed:claude-opus-4.8 typestate
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Cc: <stable@vger.kernel.org> # v3.7+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260815151720.3757460-1-ruoyuw560@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmaengine.c   | 30 ++++++++++++++++++++++++++++++
- include/linux/dmaengine.h |  7 +++++++
- 2 files changed, 37 insertions(+)
+ drivers/i2c/busses/i2c-mxs.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 41a677a82ed41..fe148431ad9cf 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -934,6 +934,36 @@ void dma_release_channel(struct dma_chan *chan)
- }
- EXPORT_SYMBOL_GPL(dma_release_channel);
+diff --git a/drivers/i2c/busses/i2c-mxs.c b/drivers/i2c/busses/i2c-mxs.c
+index abad24808e855..cfd81b748ee0f 100644
+--- a/drivers/i2c/busses/i2c-mxs.c
++++ b/drivers/i2c/busses/i2c-mxs.c
+@@ -840,7 +840,7 @@ static int mxs_i2c_probe(struct platform_device *pdev)
+ 	}
  
-+static void dmaenginem_release_channel(void *chan)
-+{
-+	dma_release_channel(chan);
-+}
-+
-+/**
-+ * devm_dma_request_chan - try to allocate an exclusive slave channel
-+ * @dev:	pointer to client device structure
-+ * @name:	slave channel name
-+ *
-+ * Returns pointer to appropriate DMA channel on success or an error pointer.
-+ *
-+ * The operation is managed and will be undone on driver detach.
-+ */
-+
-+struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name)
-+{
-+	struct dma_chan *chan = dma_request_chan(dev, name);
-+	int ret = 0;
-+
-+	if (!IS_ERR(chan))
-+		ret = devm_add_action_or_reset(dev, dmaenginem_release_channel, chan);
-+
-+	if (ret)
-+		return ERR_PTR(ret);
-+
-+	return chan;
-+}
-+EXPORT_SYMBOL_GPL(devm_dma_request_chan);
-+
- /**
-  * dmaengine_get - register interest in dma_channels
-  */
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 4e4cce0ad4d79..0f3a35da0c99c 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -1476,6 +1476,7 @@ struct dma_chan *__dma_request_channel(const dma_cap_mask_t *mask,
+ 	/* Setup the DMA */
+-	i2c->dmach = dma_request_chan(dev, "rx-tx");
++	i2c->dmach = devm_dma_request_chan(dev, "rx-tx");
+ 	if (IS_ERR(i2c->dmach)) {
+ 		return dev_err_probe(dev, PTR_ERR(i2c->dmach),
+ 				     "Failed to request dma\n");
+@@ -878,9 +878,6 @@ static int mxs_i2c_remove(struct platform_device *pdev)
  
- struct dma_chan *dma_request_chan(struct device *dev, const char *name);
- struct dma_chan *dma_request_chan_by_mask(const dma_cap_mask_t *mask);
-+struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name);
+ 	i2c_del_adapter(&i2c->adapter);
  
- void dma_release_channel(struct dma_chan *chan);
- int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps);
-@@ -1512,6 +1513,12 @@ static inline struct dma_chan *dma_request_chan_by_mask(
- {
- 	return ERR_PTR(-ENODEV);
- }
-+
-+static inline struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name)
-+{
-+	return ERR_PTR(-ENODEV);
-+}
-+
- static inline void dma_release_channel(struct dma_chan *chan)
- {
- }
+-	if (i2c->dmach)
+-		dma_release_channel(i2c->dmach);
+-
+ 	writel(MXS_I2C_CTRL0_SFTRST, i2c->regs + MXS_I2C_CTRL0_SET);
+ 
+ 	return 0;
 -- 
 2.53.0
 
