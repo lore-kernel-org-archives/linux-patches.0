@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216438;
-	b=TFzmpDvV1SEacbx6kemxgqU00RENJfDZ3nIAA7i7LQHU2FXvH/YBzp/01LCbEoK1HC7p
-	 QFfYqvlV6RWOSIyAX7tgTUxdeuuAojvgmtAljPBF43KbcNcGb0TC/KppHOvqA8UQWoi+P
-	 Q7tSawpUoRc6miIoNHZWRIH12+Mw1yYNzwFLOyEL9TYKPsECXmM+Ovw9TroyyHTgwmLwX
-	 d9lVNKL7jZ1ngrPgnTEHyQ4hAQwq9/8F44U13eKft8xGVZYXYPq+pn3NkciwT2l8QBRpH
-	 BOE0iP821e6o5hKERm0HDlafwZJT1kOSgYbD/5SY4ppIDJXSfpQuCBP7P9E6tDtZaEA==
+	t=1793216441;
+	b=ODKe3WpbrMPi+dBOiHJzklLQoRGGBEXSTG+3ifwrYTIKDAIQGTo3h9kJj/9OifjAE75M
+	 zLGPpZo3hmJCTEwp7qP5Ia3Oi+vxh7pB2uBDvFWEoMlULwjGau4OdN12/VMQtrm7oD+43
+	 qAGVVeXVXVmJNrK7nIFKOd/9ACDaF5wmnanlbUrq2uWxFFAf74YQhL/dlsCZ4o82CwUzh
+	 vA2QPebiZzV6Bqg9sT+XqkKtHc4MJnQGZW7ec9qEni/3irlsNos98GrcAmxqRtWapWQCo
+	 AlTCYwIGYZWRm2z1Sv/oyssspg5442OW+ZRBLzJRDKXDBfllcIOW9+qcUttlEcEPZtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216441;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=glnvxXJoW8X5OoqJogXIggFqf0GwFYmnMY4s6HXie4o=;
-	b=hXXYPOKn+gYFX2Jm1kJyI1n/V56N4heEuNP6636C3PRhGvHZP8evBjsVb3borjupCwbH
-	 F1nMXN3mtrA2fdhnva3nQK8EyQJmrW5fw0SVAflChkWcL8oQbsgMhIayTQU3uINJqr9cJ
-	 PO4UF6GAG+i7Zmuj6ttzT+ANFztQf49SffJydv2oug5YA1QfWUcnScW8U8ge/SDl3heZT
-	 6vNVpKb2kXdTKxwTTonAZrksvLEKq9oX+lKXtoWDdv7zaoY3ixoQUCJt/baX0T52uXQkr
-	 09XaeSFcP0Z/FTXZB4zpU6Ivxv8aMjoTfZ1/ElZbYJZQcDBKQzs+K+afW7j5OKlbYyQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=0zkCNORqdEMvKHNQdvSJjRzT9nsaTE6SKNmN+zad6H8=;
+	b=F1OARdHhygzQajTaRVLogdPC+7KpUnjtwOvVDqXPh9K6ANtL+HJ9Hi6jq9xAsY/3VUtb
+	 yzodp/w7FaSV3pd6s0tSxVWNSrJfx1cW7wYPKVDLigwhYoC2ShwlT6gOwvOXVusjs7LxU
+	 mS0o2U9uOEavK4VjuDnjc2I3aTma1E8wxAI/Hnucto0OFskZFFBX+ikTHekemKSOzSAmT
+	 Kh1XBeSFOj3gez2y3+d3OEdqV6RcgVRAeXZU4gTXn2ZDJfs5gzHTm4Xh67dflQDtA/q5C
+	 NTjysADUUThm8d5rCI6PBWFhVnWbtTKXworpiQAEgSMB38v7oV+kg5l52QUDwAOXKog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DB10VDeY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13cf3ngm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D76606A31E;
-	Wed, 28 Oct 2026 19:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB01606A31E;
+	Wed, 28 Oct 2026 19:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DB10VDeY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945421F01825;
-	Wed, 28 Oct 2026 19:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13cf3ngm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDD71F01825;
+	Wed, 28 Oct 2026 19:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216438;
-	bh=glnvxXJoW8X5OoqJogXIggFqf0GwFYmnMY4s6HXie4o=;
+	s=korg; t=1793216441;
+	bh=0zkCNORqdEMvKHNQdvSJjRzT9nsaTE6SKNmN+zad6H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DB10VDeYAIf5DgYTJF6bVsdqh4OCff2LaaigS6euRgrw8IpRAtHfL9zxm05IdcPQ6
-	 AD1bDcL0MhDyH2gqJLQR+jidhta/kOFXDDouQf3LUo2cqeBIFrAxomRUZSCLkBkT6H
-	 LWL554+XUs57yHzQWZHW4ILQyjOlKViS0SV8yrC8=
+	b=13cf3ngmzDJ/Q36w0Q9DvVCd9N07Zy1TSQZ6dNGqaXyTnsmJUf3BH31yi7ndebqBX
+	 QkRSH8PxBa+Q1ekQSyNp81Ph6SaVzdd7U3bvlluqMjvKAjemZ/Mq43F35O+d+EFYu2
+	 m3lxHBRQg39KB+N1ueA7Fui0SZsngUYAj2xHDmok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Baineng Shou <shoubaineng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1513/1887] net/sched: fq: add overflow bounds to quantum and initial quantum
-Date: Wed, 28 Oct 2026 18:00:09 +0100
-Message-ID: <20261028170533.893833548@linuxfoundation.org>
+Subject: [PATCH 6.1 1504/1887] dma-buf: dma-heap: dont publish fd before copy_to_user() succeeds
+Date: Wed, 28 Oct 2026 18:00:00 +0100
+Message-ID: <20261028170533.686522055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -64,65 +64,251 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Baineng Shou <shoubaineng@gmail.com>
 
-[ Upstream commit 709f34f7c28dc4dd6c40343d101850f11e172312 ]
+[ Upstream commit 30d0aff2c65a277135cfd8ea28fa1ee75e0ea4e0 ]
 
-fq_init() computes quantum = 2 * psched_mtu() and initial_quantum = 10 *
-psched_mtu() with no overflow check. A device with a huge MTU (e.g. dummy
-with max_mtu == 0 accepting MTU 2147483634) makes psched_mtu() return
-0x80000000; the 2 * and 10 * multiplications wrap to 0 in 32-bit
-arithmetic, so q->quantum == 0. Then in fq_dequeue() the credit-refill
-loop adds 0 to f->credit (which stays <= 0) and goto begin loops
-forever under the qdisc lock, creating a soft lockup.
+DMA_HEAP_IOCTL_ALLOC allocates a dma-buf and installs an fd into the
+caller's fd table via dma_buf_fd() -> fd_install() before
+dma_heap_ioctl() copies the result back to userspace.  If the trailing
+copy_to_user() fails, userspace never learns the fd number, but the
+fd (and the underlying dma-buf reference) are already visible to
+other threads in the same process and are leaked for the lifetime of
+the process.
 
-Clamp psched_mtu() to [1, 1 << 20] before multiplying so the product
-cannot wrap, then cap the result at 1 << 20, matching the bound already
-enforced on TCA_FQ_QUANTUM in fq_change().
+The obvious "close it on the failure path" fix is unsafe: once
+fd_install() has run, another thread can already dup() the fd, send
+it via SCM_RIGHTS, or close() it and let its number be reused, so a
+subsequent close_fd() from the ioctl path can operate on an unrelated
+file.  This was pointed out by Christian König on v1 [1].
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) is large enough that 2 * psched_mtu() wraps (e.g. a
-dummy device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
+Restructure the allocation path so that fd_install() is the last,
+unfailable step of a successful ioctl:
 
-Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-2-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  1. heap->ops->allocate()      creates the dma_buf.
+  2. get_unused_fd_flags()      reserves an fd number in the caller's
+                                fd table without publishing it, so
+                                no other thread can observe it.
+  3. copy_to_user()             delivers the fd number to userspace;
+                                on failure the fd is returned with
+                                put_unused_fd() and the dma_buf
+                                reference is dropped with
+                                dma_buf_put(), leaving no user-
+                                visible state behind.
+  4. dma_buf_fd_install()       publishes the fd and emits the
+                                trace_dma_buf_fd tracepoint -- from
+                                here on the ioctl cannot fail.
+
+A new dma_buf_fd_install() helper is introduced in dma-buf.c to wrap
+fd_install() together with the DMA_BUF_TRACE() call, preserving the
+export tracing that dma_buf_fd() provides.  dma_heap_ioctl_allocate()
+is refactored to return the struct dma_buf * directly (returning
+ERR_PTR on failure) so the caller holds the dmabuf reference across
+steps 3 and 4.
+
+The failure at step 3 is easily reachable from userspace: pass a
+struct dma_heap_allocation_data that lives in a page whose protection
+is flipped to PROT_READ between copy_from_user() and copy_to_user()
+(e.g. via mprotect()).  Before this change each such ioctl leaks one
+dmabuf fd; after it, the fd table is unchanged on failure and only
+/dev/dma_heap/<name> remains open.
+
+No UAPI or heap-driver interface change.
+
+[1] https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a8f7f62@amd.com/
+
+Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
+Cc: stable@vger.kernel.org
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
+Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
+Link: https://lore.kernel.org/r/20260817050457.1005285-2-shoubaineng@gmail.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma-buf/dma-buf.c  | 15 +++++++
+ drivers/dma-buf/dma-heap.c | 80 +++++++++++++++++++-------------------
+ include/linux/dma-buf.h    |  1 +
+ 3 files changed, 56 insertions(+), 40 deletions(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 2223edfd7aa77..ee8629d116473 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -930,12 +930,14 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
- 		   struct netlink_ext_ack *extack)
- {
- 	struct fq_sched_data *q = qdisc_priv(sch);
-+	u32 mtu;
- 	int err;
+diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
+index 3d58514d04826..36177d14a724d 100644
+--- a/drivers/dma-buf/dma-buf.c
++++ b/drivers/dma-buf/dma-buf.c
+@@ -715,6 +715,21 @@ int dma_buf_fd(struct dma_buf *dmabuf, int flags)
+ }
+ EXPORT_SYMBOL_NS_GPL(dma_buf_fd, DMA_BUF);
  
- 	sch->limit		= 10000;
- 	q->flow_plimit		= 100;
--	q->quantum		= 2 * psched_mtu(qdisc_dev(sch));
--	q->initial_quantum	= 10 * psched_mtu(qdisc_dev(sch));
-+	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
-+	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
-+	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
- 	q->flow_refill_delay	= msecs_to_jiffies(40);
- 	q->flow_max_rate	= ~0UL;
- 	q->time_next_delayed_flow = ~0ULL;
++/**
++ * dma_buf_fd_install - install a reserved fd for a dma-buf
++ * @dmabuf:	[in]	pointer to dma_buf
++ * @fd:		[in]	fd reserved with get_unused_fd_flags()
++ *
++ * Publishes a previously reserved fd into the caller's fd table.
++ * Must only be called after all fallible work (e.g. copy_to_user)
++ * has succeeded, as it cannot be undone safely once called.
++ */
++void dma_buf_fd_install(struct dma_buf *dmabuf, int fd)
++{
++	fd_install(fd, dmabuf->file);
++}
++EXPORT_SYMBOL_NS_GPL(dma_buf_fd_install, DMA_BUF);
++
+ /**
+  * dma_buf_get - returns the struct dma_buf related to an fd
+  * @fd:	[in]	fd associated with the struct dma_buf to be returned
+diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
+index 59d158873f4cb..38b425c8e1119 100644
+--- a/drivers/dma-buf/dma-heap.c
++++ b/drivers/dma-buf/dma-heap.c
+@@ -49,33 +49,6 @@ static dev_t dma_heap_devt;
+ static struct class *dma_heap_class;
+ static DEFINE_XARRAY_ALLOC(dma_heap_minors);
+ 
+-static int dma_heap_buffer_alloc(struct dma_heap *heap, size_t len,
+-				 unsigned int fd_flags,
+-				 unsigned int heap_flags)
+-{
+-	struct dma_buf *dmabuf;
+-	int fd;
+-
+-	/*
+-	 * Allocations from all heaps have to begin
+-	 * and end on page boundaries.
+-	 */
+-	len = PAGE_ALIGN(len);
+-	if (!len)
+-		return -EINVAL;
+-
+-	dmabuf = heap->ops->allocate(heap, len, fd_flags, heap_flags);
+-	if (IS_ERR(dmabuf))
+-		return PTR_ERR(dmabuf);
+-
+-	fd = dma_buf_fd(dmabuf, fd_flags);
+-	if (fd < 0) {
+-		dma_buf_put(dmabuf);
+-		/* just return, as put will call release and that will free */
+-	}
+-	return fd;
+-}
+-
+ static int dma_heap_open(struct inode *inode, struct file *file)
+ {
+ 	struct dma_heap *heap;
+@@ -93,30 +66,42 @@ static int dma_heap_open(struct inode *inode, struct file *file)
+ 	return 0;
+ }
+ 
+-static long dma_heap_ioctl_allocate(struct file *file, void *data)
++static struct dma_buf *dma_heap_ioctl_allocate(struct file *file, void *data)
+ {
+ 	struct dma_heap_allocation_data *heap_allocation = data;
+ 	struct dma_heap *heap = file->private_data;
++	struct dma_buf *dmabuf;
+ 	int fd;
++	size_t len;
+ 
+ 	if (heap_allocation->fd)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (heap_allocation->fd_flags & ~DMA_HEAP_VALID_FD_FLAGS)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (heap_allocation->heap_flags & ~DMA_HEAP_VALID_HEAP_FLAGS)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
++
++	len = PAGE_ALIGN(heap_allocation->len);
++	if (!len)
++		return ERR_PTR(-EINVAL);
++
++	dmabuf = heap->ops->allocate(heap, len, heap_allocation->fd_flags,
++				     heap_allocation->heap_flags);
+ 
+-	fd = dma_heap_buffer_alloc(heap, heap_allocation->len,
+-				   heap_allocation->fd_flags,
+-				   heap_allocation->heap_flags);
+-	if (fd < 0)
+-		return fd;
++	if (IS_ERR(dmabuf))
++		return dmabuf;
++
++	fd = get_unused_fd_flags(heap_allocation->fd_flags);
++	if (fd < 0) {
++		dma_buf_put(dmabuf);
++		return ERR_PTR(fd);
++	}
+ 
+ 	heap_allocation->fd = fd;
+ 
+-	return 0;
++	return dmabuf;
+ }
+ 
+ static unsigned int dma_heap_ioctl_cmds[] = {
+@@ -132,6 +117,8 @@ static long dma_heap_ioctl(struct file *file, unsigned int ucmd,
+ 	unsigned int in_size, out_size, drv_size, ksize;
+ 	int nr = _IOC_NR(ucmd);
+ 	int ret = 0;
++	int fd;
++	struct dma_buf *dmabuf;
+ 
+ 	if (nr >= ARRAY_SIZE(dma_heap_ioctl_cmds))
+ 		return -EINVAL;
+@@ -168,15 +155,28 @@ static long dma_heap_ioctl(struct file *file, unsigned int ucmd,
+ 
+ 	switch (kcmd) {
+ 	case DMA_HEAP_IOCTL_ALLOC:
+-		ret = dma_heap_ioctl_allocate(file, kdata);
++		dmabuf = dma_heap_ioctl_allocate(file, kdata);
++
++		if (IS_ERR(dmabuf)) {
++			ret = PTR_ERR(dmabuf);
++			break;
++		}
++
++		fd = ((struct dma_heap_allocation_data *)kdata)->fd;
++		if (copy_to_user((void __user *)arg, kdata, out_size) != 0) {
++			put_unused_fd(fd);
++			dma_buf_put(dmabuf);
++			ret = -EFAULT;
++		} else {
++			dma_buf_fd_install(dmabuf, fd);
++		}
++
+ 		break;
+ 	default:
+ 		ret = -ENOTTY;
+ 		goto err;
+ 	}
+ 
+-	if (copy_to_user((void __user *)arg, kdata, out_size) != 0)
+-		ret = -EFAULT;
+ err:
+ 	if (kdata != stack_kdata)
+ 		kfree(kdata);
+diff --git a/include/linux/dma-buf.h b/include/linux/dma-buf.h
+index 9c31f1f430d8e..f4e2ec3320c4b 100644
+--- a/include/linux/dma-buf.h
++++ b/include/linux/dma-buf.h
+@@ -615,6 +615,7 @@ void dma_buf_unpin(struct dma_buf_attachment *attach);
+ struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info);
+ 
+ int dma_buf_fd(struct dma_buf *dmabuf, int flags);
++void dma_buf_fd_install(struct dma_buf *dmabuf, int fd);
+ struct dma_buf *dma_buf_get(int fd);
+ void dma_buf_put(struct dma_buf *dmabuf);
+ 
 -- 
 2.53.0
 
