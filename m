@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215821;
-	b=3K37M9ONCNQR1zEVEUvO6W4ToC5QJdSIGsxvwSGLCjMd9Ar9zMQ2tdPT/dsYZFgF0aue
-	 Un/yGwfeMuq6uRQEEAMqkbfn+9nVkKtCGVj7gVAwtlntJB+IBhf7cT9Rw+G/d0dhE2N5e
-	 R0MJMxur++zJ0hQj4pK0qASgB5HntYrwsUEpUuyIAJaHRAa5/TGsI+GAi7vznQ8no8MhA
-	 HLyfPeWmNp0v5Yswt+mF/cqyqlKGOZflN0ujTe5e92pJHirV7vPXv9jbFYEy4GrECzqEF
-	 YbWMIGXz1Qj/BQtKYbWkWVuUctsMpyx/AkHr8wd66/oOFFT0U6XbxhJ2kL9zkpDa3ww==
+	t=1793215824;
+	b=xn9ILWI91S/QQFNTYuKOMyKccIBNvfkKCNPFj6cjqJr+AhqBbavTimZySoqMWqKGUxyb
+	 w0Z3UE33IYSsEzc3qndsYY2tckkx7uJkK9Qcv9l2cNd23d7rE3LqXHxri3XDRLQu9AePX
+	 mmwMurrs12an1RPWxlfc4xk0GQHr90PYDA3FkjGosOKWIpbLUb7MRAptrYtfzQQ4/CUM3
+	 qtXavRFb3aozncHbUGjB/MzBhYxRAiGseoBjtvvE6wXWjLE4VAOc/z//5N/2+X7dEUPCR
+	 gDbhuwlJJpAn/+RWTD8tOBNKONsIGK6x2HCVVkyn/lsfuYk5qpf5Iewv4WOXfTmGEhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215821;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QZQlokM2JHRRzIdxIPSjAeTUlVbnXVCfLheJBPrCDc0=;
-	b=H+LOdusA4UvpSLyn94JFA5paPwl9TB8h/95c6h+PyEL96H6rNSUbuMN1+a65p9tRdxWj
-	 VpBLqPj9FXpYDkgiGWbRFB5EABh2yq49BeLDzL9s/L73pPVlhC7sMNuC2cTDL/+Y+cV3g
-	 dunvp18nTSRlaYV/5eqwiUVzS8zzkiK/z8sX40eabTKjx4OUm2yKyIHTlcLEnuC+yxusr
-	 4RXn7Yr9bSeRhtl/DaMOnoSFmxiFu09IzDwsSOR2VuWE9ijFOQZVdTWPFJvDnEiYCmFPR
-	 hqLCPWWGUcqDWCYRCBp/wFOoEyO1QC+CaU+j5Lb/INTWDl9xnu5blxKkwyHwtHRb0vg==
+	bh=YKxjxfz4lxa+Ay1uXqUSsgr4X7SoDObCZfnM42XijhU=;
+	b=NEUL71yAgIs/mfYRtGLoDGmw+7CoxX1LwnCAJEXp6JRTBUXvnDBbg/PYkwFfuxePmbip
+	 BJqhkyjH5AXowD5grhUAC+XteOlzqJmCM6MJTbEmZFgXt/LJu/eCblKhYuZh+vUGmRt4+
+	 3ZpSeHEW39DGvUSVzJWENRJShYkgFYQW5VvCT4BTeuT9qvV4vC1+o3v8+USF2iZHmLgF5
+	 Em9ybYebxysZZ+91bpHjQIKNK5LQj1zjNg/4hPypvlj22uQKDrU5KD7dixmhNvbKTfAmT
+	 3th97hMFzsm1AvnH8o3/MxD1cvhimjx8a1SztMnx1iMBmG01GpslPnxlmLVD8n5kAsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RQ5I/cGi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wOX/8PNu";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F133D606A31A;
-	Wed, 28 Oct 2026 19:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28265606A320;
+	Wed, 28 Oct 2026 19:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQ5I/cGi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466B11F01825;
-	Wed, 28 Oct 2026 19:30:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wOX/8PNu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345841F01825;
+	Wed, 28 Oct 2026 19:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215820;
-	bh=QZQlokM2JHRRzIdxIPSjAeTUlVbnXVCfLheJBPrCDc0=;
+	s=korg; t=1793215823;
+	bh=YKxjxfz4lxa+Ay1uXqUSsgr4X7SoDObCZfnM42XijhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQ5I/cGiDP13GqUDLovyEa0l9I/dtCSHGHV8qWynvqUDSKsjjvsxQk0XgVFexAQp5
-	 d2ERVcML419siz2uNl5cC5C5J3O7u4x7i7ie0IVgMtzuguFOjx/UqtQeyn8ps8mZ3N
-	 8Xl2/ZdwJq8/dJM+mPoLgIR87BWFGudKt6JjHJoo=
+	b=wOX/8PNubG46IxgOrn383ng5OKKGOjQM3Li1FkG0I+qPpi5YdTcFUCbYt9uaaXRMD
+	 UI5s1s37oxgRJTx3Ep1h5rC7u+7OgtoXAq47vuoOpcyPtBlB61atTQcY9zhXMVKO42
+	 WsPFpCGyZmKxl3pXO0Dju8J2KPX9kwGmLDhRXDMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Sun <Yongqiang.Sun@amd.com>,
+	William Palacek <William.Palacek@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1344/1887] drm/amdkfd: Fix infinite loop parsing CRAT with zero subtype length
-Date: Wed, 28 Oct 2026 17:57:20 +0100
-Message-ID: <20261028170530.025162141@linuxfoundation.org>
+Subject: [PATCH 6.1 1345/1887] drm/amdkfd: Add bounds check for CRAT subtype length
+Date: Wed, 28 Oct 2026 17:57:21 +0100
+Message-ID: <20261028170530.047155722@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,38 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongqiang Sun <Yongqiang.Sun@amd.com>
+From: William Palacek <William.Palacek@amd.com>
 
-[ Upstream commit 961323c26ad4c895e3b0ea1711fc41dfd6368c12 ]
+[ Upstream commit 6e7566ba4739dd573c331adde1c96690f7a567bd ]
 
-Malformed ACPI CRAT tables can advertise a zero or undersized subtype
-length. The parser then fails to advance the cursor and loops forever
-while the remaining image still looks large enough for a generic header.
+The CRAT parser validates that the subtype header fits within the image,
+but does not verify that the advertised subtype length fits. A malformed
+CRAT table with an oversized length field causes out-of-bounds reads when
+kfd_parse_subtype() casts the header to specific subtype structures.
 
-Validate sub_type_hdr->length on each iteration before parsing or
-advancing. Return -EINVAL and warn when length is zero or smaller than
-the generic subtype header.
+Add validation that sub_type_hdr + length does not exceed the image
+boundary before parsing the subtype contents.
 
-Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: William Palacek <William.Palacek@amd.com>
+Reviewed-by: Alysa Liu <Alysa.Liu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 6e7566ba4739 ("drm/amdkfd: Add bounds check for CRAT subtype length")
+(cherry picked from commit 48e1d1e6e8798aef0312e68d8e586021b5b3cf4d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-index e45c6bc8d10bb..9c0ab7f41278c 100644
+index 9c0ab7f41278c..78a5119c86eca 100644
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -1316,6 +1316,14 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
- 	sub_type_hdr = (struct crat_subtype_generic *)(crat_table+1);
- 	while ((char *)sub_type_hdr + sizeof(struct crat_subtype_generic) <
- 			((char *)crat_image) + image_len) {
-+		if (!sub_type_hdr->length ||
-+		    sub_type_hdr->length < sizeof(struct crat_subtype_generic)) {
-+			pr_warn("Invalid CRAT subtype length %u\n",
+@@ -1324,6 +1324,15 @@ int kfd_parse_crat_table(void *crat_image, struct list_head *device_list,
+ 			break;
+ 		}
+ 
++		/* Validate subtype fits within remaining image */
++		if ((char *)sub_type_hdr + sub_type_hdr->length >
++		    (char *)crat_image + image_len) {
++			pr_warn("CRAT subtype length %u exceeds image bounds\n",
 +				sub_type_hdr->length);
 +			ret = -EINVAL;
 +			break;
