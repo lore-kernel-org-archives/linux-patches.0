@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212362;
-	b=EdyGClckNbFYCcphnzzyCM4jw02cGwccEevpx08nt4lCNsa0LEvZZ0hrdrrevWT8W7oY
-	 JZVobcHSynJXSJblJMcZRBLuARux9LVN6uWI9IJMZ14mqNYoBERgxcnRAIBJSm9k2CyQS
-	 SIAxmqlfYEo4w+s5X9SMgbadXP3o9I9bYhRXhSoIsXE1ygOChPD3ixNxImZNnJb6DjNbx
-	 oEoAPDTuWzM2L+IZNq1pUifiyfOZKBQHQwp2ALRVNz7JE0fNlxdjRVQ3xp3QCCrpP3DjB
-	 maoR02V/2iNjxZ9LQJWHwmEZmpcr171NZ0WU0M9LioDxJLb0fsHhAILR2mxrXQlYtdQ==
+	t=1793212365;
+	b=rcDsGN4P00Hhksf7hD8pUKVbR7NAcEvO7VNKv9QDrO+zuKbp2M5kPYSV20Q+cwd1apF1
+	 KNZARGlEYq7/dFMgYEnoaMVsHFgDrEEgEUJy7AQaPnL1Fqe6x3fn30HCyBK7A2DtqW+6V
+	 LKnl9FXY+QkwKmos6QwDmwEx49aXLjqIkl0JkmspRAD7D21EdVbmNq+P+oB6ToyqeQLxy
+	 NsxvCFPGC3A5IF8hjQUFhKE/aksFCFBuJovH7wYa8jifVVjbzT4XAbLtF/h7KOG4yrShq
+	 Cr646seEv884R4dSS1a0cXduxDxRB1gpab49AoptzhmKVWfIR5krVuYCg0grjlIwddg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=li1oRMI7K64A/y2kVyYez9ekAYJVydm3DbMXQt61LD8=;
-	b=rL5QMMKaxSfm30ZdHmIU5x2MULIRKDxUj75NT2rctrWcJp9l7/LuratW6VHKMY1mOwwI
-	 tnnGK91+f73ZpwwIB/1yyzp8RpJ22D2/narSrFZ+lagBL2P9G7KTu73hXtTKhpIWQBWhk
-	 0br8E5kQwA3EaFGpMNplEMFbriyMYrf04FxZF94NEzzHYRSLy0adKy1GpjLVdrJ8SvzSt
-	 LAnelVc/ULoy4VpB/SuDx7Gf0OyoqIlKKITB5zu1djFWnu0ju/zXRqi+KKkwOghBLuefE
-	 77isXpD1aSX1pGGRCFRMVLX6qfjSleE+ctoTEK+/Gt7lzyk3iW/xC3J6XCtBxC3/D1g==
+	bh=zuyqDdWQ1E1Mn3NFkO+qzuriNqUJjfcb8WzlQdZbvl8=;
+	b=e2q/8l7lsP/8EVPEf587MZrg+gzdWsW2hOCt8cepG1+v56sZeUE9q+xAgrD/cF82Acak
+	 hee/Bg/9Hz+Ikf4Y+3MOL1fR6qIhZyCfBUXNPUrp04Waxi2c1f8fDjUw0NQO0vwiKMVVF
+	 PIc95pjoc4eyaBiDpo2oSMR9RO+Ep3QWPkxEf49hp+wrAll0hQFQhAIo4Pk476hUXAh5X
+	 tWATLoJrePOyIUYIODfEz0yVM4RBcnZNtTlOivdxg4mrTDCgcSWrwmFUMcQEFx0NJgjTX
+	 ksGi2VLutW8tQ0XpWGMKk02Z4vQ1f6aFLPLHwJ6HwRkvFDzqsPiQra+NED+fQsCbtew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9Jzi0+t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KxxMbyO2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9388F606A31A;
-	Wed, 28 Oct 2026 18:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2113A606A31A;
+	Wed, 28 Oct 2026 18:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9Jzi0+t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967141F01828;
-	Wed, 28 Oct 2026 18:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KxxMbyO2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C2C1F01825;
+	Wed, 28 Oct 2026 18:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212362;
-	bh=li1oRMI7K64A/y2kVyYez9ekAYJVydm3DbMXQt61LD8=;
+	s=korg; t=1793212365;
+	bh=zuyqDdWQ1E1Mn3NFkO+qzuriNqUJjfcb8WzlQdZbvl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9Jzi0+tSy5kso01SNisAlVE+NcNDH19IizgJrchcpWA/nzLlyuI3LA7bDfezaACC
-	 BJMB8grs5T4O4UT3bt4sfrjrOh8R/13qZ+wn2cr7qcCvBkwXr/afmK5qHM6WPWCub7
-	 DQPgueyzX4W/UDrh1F6ynjdqU1r+IiHJ0fXduK18=
+	b=KxxMbyO2FbMW0Oay4iteu1reJCXme1RQw+5wIef6jW1j+1IiUlmixnDP4SvJCNwCp
+	 BOXPp6CGEO3UKbknQoiu1xZ03utTHYJaaRF4JWJ3aycbjRzAlCwB59GxGIVaJ6fQ0X
+	 cn53Q2YmtXWec97KjpX/67owk52haZIyW9CfBCmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0110/1887] scsi: qla2xxx: Quiesce response IRQ before freeing request queue
-Date: Wed, 28 Oct 2026 17:36:46 +0100
-Message-ID: <20261028170501.739125896@linuxfoundation.org>
+Subject: [PATCH 6.1 0128/1887] smb: client: fix file type corruption in cifs_reparse_point_to_fattr()
+Date: Wed, 28 Oct 2026 17:37:04 +0100
+Message-ID: <20261028170502.150448814@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,74 +72,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 505753ec2594c6af09a601f0dd60be7d840c1d2d ]
+[ Upstream commit 6bd360447941357e959414a525aa62576a448116 ]
 
-qla2xxx_delete_qpair() deletes the request queue before the response
-queue. qla25xx_delete_req_que() frees the request queue memory
-(kfree(req) in qla25xx_free_req_que()), but the response-queue MSI-X is
-only released later, in qla25xx_free_rsp_que(). In that window the
-response interrupt can still fire, qla2xxx_msix_rsp_q() queues
-qpair->q_work, and qla_do_work() -> qla24xx_process_response_queue()
-dereferences the now-freed rsp->req (LOGINOUT/CT/ELS entries and the
-status path), a use-after-free.
+Setting the file type in cf_mode without clearing the existing S_IFMT
+bits first is wrong as it corrupts the file type when cf_mode already
+has type bits set (e.g. S_IFREG | S_IFLNK == S_IFDIR | S_IFREG).
 
-The cancel_work_sync() added for the qpair teardown lives in the
-response free path, which runs after the request queue is already freed,
-so it does not protect rsp->req.
+Clear S_IFMT before setting S_IFLNK for native and SMB1 symlinks.
 
-Release the response-queue interrupt and flush qpair->q_work before
-deleting the request queue, so no late completion can reach the freed
-request queue. Clearing have_irq makes the subsequent
-qla25xx_free_rsp_que() skip its free_irq(), and the firmware
-queue-delete order (request then response) is preserved; the
-request-delete mailbox completes on the default vector and is unaffected
-by dropping the qpair response interrupt early.
-
-Fixes: d74595278f4a ("scsi: qla2xxx: Add multiple queue pair functionality.")
+Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-18-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ adjusted context due to missing qla_free_buf_pool() call ]
+[ Moved the fix from missing reparse.c to smb311_posix_info_to_fattr() in inode.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/smb/client/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index ace35581fd941..16470cfa333b3 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -9908,9 +9908,26 @@ int qla2xxx_delete_qpair(struct scsi_qla_host *vha, struct qla_qpair *qpair)
- {
- 	int ret = QLA_FUNCTION_FAILED;
- 	struct qla_hw_data *ha = qpair->hw;
-+	struct rsp_que *rsp = qpair->rsp;
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 51d38449ca855..5d21cb051a602 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -672,6 +672,7 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr, struct cifs_ope
+ 	/* fattr->cf_rdev = le32_to_cpu(info->DeviceId); */
  
- 	qpair->delete_in_progress = 1;
- 
-+	/*
-+	 * The response-queue interrupt schedules qla_do_work(), which
-+	 * dereferences qpair->rsp->req.  Release the interrupt and flush
-+	 * any pending work before the request queue is freed below so a
-+	 * late completion cannot touch the freed request queue.  The
-+	 * firmware queue-delete order (request then response) is kept.
-+	 */
-+	if (rsp && rsp->msix && rsp->msix->have_irq) {
-+		free_irq(rsp->msix->vector, rsp->msix->handle);
-+		rsp->msix->have_irq = 0;
-+		rsp->msix->in_use = 0;
-+		rsp->msix->handle = NULL;
-+	}
-+	if (rsp && ha->wq)
-+		cancel_work_sync(&qpair->q_work);
-+
- 	ret = qla25xx_delete_req_que(vha, qpair->req);
- 	if (ret != QLA_SUCCESS)
- 		goto fail;
+ 	if (symlink) {
++		fattr->cf_mode &= ~S_IFMT;
+ 		fattr->cf_mode |= S_IFLNK;
+ 		fattr->cf_dtype = DT_LNK;
+ 		fattr->cf_symlink_target = data->symlink_target;
 -- 
 2.53.0
 
