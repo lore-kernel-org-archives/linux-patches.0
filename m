@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213481;
-	b=tJUkAfS2tvOnDGvENYQra8I9/f4XSsMoE1Y1hey4BdODBnE/jfqrtviQlLjQXg61zK88
-	 ca/BxjkdKWZfd0F0C7zHaeedPoKNHQf55Fyn17edF/l+5VXQrLcmKw8yW9W+3aYTUThcA
-	 fhJdOkbBnosQQQcOLPbDftaZcz1yvuNXj/i4C65MVbxeVeJ8P6ni1GgOzCASJq4/FCNfw
-	 JBOYOHApquX7DQ9CJmWNxb7v/BYihB+yZoj/DaNDCrkwOxTH/pZx3cBodSJPJd79DvKS4
-	 Ke2MC7GLnDCTVTL7u4WtN2D+q9bnaJKsT0It8gpZnl78Ti+tNkV38M4BZ2BEK+Mwb3Q==
+	t=1793213483;
+	b=dGuMIm51RLL3jmKvBNch0nVmWA3s3Qz+r6hagRuJ9L/xGbTmeqHven+OPnBkf0Zu3DGY
+	 638Vt7v+uVWnC6StMIYqykbkhNVjmcGgjmuXOWCS28+fYE+YUWRZMCPGlMglyihv0rA6I
+	 nI0WS+ZrV/w319jLeZstUrTAYoqNvDmgmBy0PV3AQUojHh6/q5M+FOM9SGOg04yuwpcY7
+	 ku5bxXHPAmZ8z+1k+rmHxwOtl/wA0Xxkq3dIO361mEgfO0yYANC8Rzp+URuoxTwD62msC
+	 PTegVEOCMIWWvALT/P48Q8JO4w1AozCAeqM0WHtVAH3IaYIVlZ+rBzDtl0VFv5mtMRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=85pPu74+E3kUcwv53vRTJZcF8XyS4U5dyl90n3VJUTA=;
-	b=2uY+X2PCiBzy/rWPY7V6Dj/jNMb9RaQtkHO5/h1CdA0XQqAtglsq5GjEWdgwIIgD+wIi
-	 RKsj7axl9br5dWZR7CYQwdE0GZ1GW/OMC8uV5kOcRpyppSeLb6LG4fjRdins7/mX/60ew
-	 0nVfR2XggkUgShpRobodIuH+JwqTc9mnlJFb9KoV2UNySoPvNDy+66O3d+0agB/21U2DF
-	 8qGoONsyqIUkJNSKLnyQcF/4b8n1MKndjcveinzgTjDls/ZLytsUBv1WJX5ovLA4sooUq
-	 FrxoyEQckmaWf4342/ruxcv7qsvRZ8CAKt/v4zbUvIhR5Dcwwcaxod5+7ZKh7PWNLSw==
+	bh=lWasm+OqxAzG/iv6x5zSkcSokui9n/c/CHRMqBxmjnI=;
+	b=e5XpG1iR6lBsJIm1uaHySGcBtRDFnvA6lEuLsbzj3+aynaMlJWc8RwopP7Lb57R/aeZh
+	 tLSO2+vKnwoYHcpNnPetdwp+0x62/PXti23AJZeqjbOuORpjzNJx+pdVIDhzxDPpVIGde
+	 YbZGdcwtzkQjtwVNhsJ80m0WhtS8DtZjcGng+YV3fGd/ZBaajLiMvGBMID8zapaYX8Jb/
+	 tZFzuotzgVoUAP9puWTLffnoDr9Bhu71d7VVwfQJzQHaCKFiUcPgudwMeT+Lns59AvlAX
+	 GPwCerWE/MIj/DyZo8/FBNLTjtw2FLhl4q835cMPn2/zV8pvfj+Wxq1lkADU0XZ3h5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vTKmdglD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1A5gPvG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D0B606A31E;
-	Wed, 28 Oct 2026 18:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4B5606A31C;
+	Wed, 28 Oct 2026 18:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vTKmdglD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FF81F01825;
-	Wed, 28 Oct 2026 18:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1A5gPvG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00EC1F01828;
+	Wed, 28 Oct 2026 18:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213481;
-	bh=85pPu74+E3kUcwv53vRTJZcF8XyS4U5dyl90n3VJUTA=;
+	s=korg; t=1793213478;
+	bh=lWasm+OqxAzG/iv6x5zSkcSokui9n/c/CHRMqBxmjnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vTKmdglDo371UOzH2paaPn9K7WwiVIuq6W3vSHzCER/lTFloBD3A6dxUbrvYsbCzR
-	 1AcMnVvR1V01AXkMYq8aTMeKco7cmsDlITh8DceaO+Txe0PKGXleGzuSyrenGoFq0p
-	 zuL/fpNzgoAxQ96wl+KXMXoeSTaueAHOV5pRNJPo=
+	b=i1A5gPvG6CUXXOY4cjEGn5PmdW2nBD+lSz980+AAadWBjJarpb1pwaqOcW+y5URoB
+	 2B/QeHAqjGBNuqAgIRC4SYG4Q2mTeOhc447RiRgHhNZdL0ALV3879TSfKTc/on2QuX
+	 zbsYzI/prqx/zcFRlYuFLG5szQBZUl1Rg0u8wjak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Tahera Fahimi <taherafahimi@linux.microsoft.com>,
+	Allen Pais <apais@linux.microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0520/1887] netfilter: nf_tables: fix bidirectional offload regression
-Date: Wed, 28 Oct 2026 17:43:36 +0100
-Message-ID: <20261028170511.160086564@linuxfoundation.org>
+Subject: [PATCH 6.1 0519/1887] xfrm: prevent policy_hthresh.work from racing with netns teardown
+Date: Wed, 28 Oct 2026 17:43:35 +0100
+Message-ID: <20261028170511.134536639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,37 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Tahera Fahimi <taherafahimi@linux.microsoft.com>
 
-[ Upstream commit 84443741faab9045d53f022a9ac6a6633067a481 ]
+An XFRM_MSG_NEWSPDINFO request can queue the per-net work item
+policy_hthresh.work onto the system workqueue. xfrm_hash_rebuild()
+retrieves the enclosing struct net from the work item, so the callback
+can dereference freed memory if it runs after net namespace teardown.
 
-Commit 8f84780b84d6 ("netfilter: flowtable: allow unidirectional rules")
-made unidirectional flow offload possible, while completely ignoring (and
-breaking) bidirectional flow offload for nftables.
-Add the missing flag that was left out as an exercise for the reader :)
+Mainline commit 29fe3a61bcdc ("xfrm: prevent policy_hthresh.work
+from racing with netns teardown") fixes this issue using
+disable_work_sync(). That API is not available in Linux 6.1, so the
+mainline change cannot be directly backported.
 
-Cc: Vlad Buslov <vladbu@nvidia.com>
-Fixes: 8f84780b84d6 ("netfilter: flowtable: allow unidirectional rules")
-Reported-by: Daniel Golle <daniel@makrotopia.org>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Provide the same guarantee with an XFRM-local work_disabled flag. Protect
+the flag and schedule_work() with the existing policy_hthresh seqlock so
+teardown can atomically stop new queueing attempts. Then use
+cancel_work_sync() to synchronize work that was queued before the flag was
+set. This ensures policy_hthresh.work cannot outlive its struct net.
+
+Fixes: 880a6fab8f6b ("xfrm: configure policy hash table thresholds by netlink")
+Assisted-by: GitHub-Copilot:GPT-5.6 Sol
+Signed-off-by: Tahera Fahimi <taherafahimi@linux.microsoft.com>
+Reviewed-by: Allen Pais <apais@linux.microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_flow_offload.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/netns/xfrm.h |  1 +
+ net/xfrm/xfrm_policy.c   | 19 ++++++++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
-index 4bc2664f33958..c65175ef47816 100644
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -374,6 +374,7 @@ static void nft_flow_offload_eval(const struct nft_expr *expr,
- 	if (tcph)
- 		flow_offload_ct_tcp(ct);
+diff --git a/include/net/netns/xfrm.h b/include/net/netns/xfrm.h
+index 7922ec72eaa68..eb9edddd73092 100644
+--- a/include/net/netns/xfrm.h
++++ b/include/net/netns/xfrm.h
+@@ -23,6 +23,7 @@ struct xfrm_policy_hash {
+ struct xfrm_policy_hthresh {
+ 	struct work_struct	work;
+ 	seqlock_t		lock;
++	bool			work_disabled;
+ 	u8			lbits4;
+ 	u8			rbits4;
+ 	u8			lbits6;
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 2a47f5b5776e8..76b7b94132c00 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -1381,7 +1381,10 @@ static void xfrm_hash_rebuild(struct work_struct *work)
  
-+	__set_bit(NF_FLOW_HW_BIDIRECTIONAL, &flow->flags);
- 	ret = flow_offload_add(flowtable, flow);
- 	if (ret < 0)
- 		goto err_flow_add;
+ void xfrm_policy_hash_rebuild(struct net *net)
+ {
+-	schedule_work(&net->xfrm.policy_hthresh.work);
++	write_seqlock(&net->xfrm.policy_hthresh.lock);
++	if (!net->xfrm.policy_hthresh.work_disabled)
++		schedule_work(&net->xfrm.policy_hthresh.work);
++	write_sequnlock(&net->xfrm.policy_hthresh.lock);
+ }
+ EXPORT_SYMBOL(xfrm_policy_hash_rebuild);
+ 
+@@ -4094,6 +4097,7 @@ static int __net_init xfrm_policy_init(struct net *net)
+ 	net->xfrm.policy_hthresh.rbits6 = 128;
+ 
+ 	seqlock_init(&net->xfrm.policy_hthresh.lock);
++	net->xfrm.policy_hthresh.work_disabled = false;
+ 
+ 	INIT_LIST_HEAD(&net->xfrm.policy_all);
+ 	INIT_LIST_HEAD(&net->xfrm.inexact_bins);
+@@ -4119,6 +4123,19 @@ static void xfrm_policy_fini(struct net *net)
+ 	unsigned int sz;
+ 	int dir;
+ 
++	/* Prevent new policy hash rebuilds before draining the work item.
++	 *
++	 * The upstream fix uses disable_work_sync(), which is unavailable
++	 * in v6.6. Protecting work_disabled and schedule_work() with the
++	 * same seqlock closes the check-to-queue race, while the subsequent
++	 * cancel_work_sync() drains work that was queued or running before
++	 * teardown disabled it.
++	 */
++	write_seqlock(&net->xfrm.policy_hthresh.lock);
++	net->xfrm.policy_hthresh.work_disabled = true;
++	write_sequnlock(&net->xfrm.policy_hthresh.lock);
++	cancel_work_sync(&net->xfrm.policy_hthresh.work);
++
+ 	flush_work(&net->xfrm.policy_hash_work);
+ #ifdef CONFIG_XFRM_SUB_POLICY
+ 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_SUB, false);
 -- 
 2.53.0
 
