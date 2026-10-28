@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216825;
-	b=KaQFUPzL8zqQ9oeoonwuhKRE290QtT8T09d76YwwhxuTMSEpTVOqEOO6KEL+o5Qbl/up
-	 4+EoWXxfvYvyhkVyd8gF2FGDuFDqgureYC/h01XjQEvRINQnyNxyKoy9Pe8yuhyGRkQuo
-	 XD3Dhz84CTdJWoRjIvzDbw8fHAk8N3QqGtgls9qVvqNwstDTTV7BzHrT1/SKalk9+xbvJ
-	 8Hp5Lgcsk3OFLpCLG3a0n7NANtapIko7tC3txQGnMPtDBNGKBdGczgtPrvMz0tX/ZPgnL
-	 5pu4QBNhQKTbev4pnN/bRLzDFY6pVRMDIWzmgNGNaFr3bLhCVpDEwiX+9W2zIicCYtQ==
+	t=1793216828;
+	b=1ayTlOUsGFrM/bB5tYEh6rKTeDb9J9ThOffQ2YVePExn1hnx1IfawhtzHSPaix2uPmOH
+	 GrGKLBSXnL3iLY10GBm9QRhuUhX0TzbLHTX4bu2p1Q0hnf8Q/ubF8rQXprpcnzmXRrQwu
+	 QheGwbvTXsj6ObCFg/Yps4FKC8XNoIKsS1Z99h9hD8psLpq0VPW7LoDh9YbomEvyBaVkj
+	 L9A/rkv9jZ3ryF8NAXShS/qgxmr3DGDZqtohUX8YezPjNNUGlNRz/s+gUtNoBnQQhrxNY
+	 IVlGJYMA4QdzbkArWFHoYWq+B+NFFR2xzh9egcLD/H9lDBR3lkC1Xx/N4chV9yrsZkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216825;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216828;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LicnQNuUYJMQ70lbggxwb0VmCRNWghm6V6RQr0b6aoI=;
-	b=tIO36gu/R3gsto0JkR4YFRBCi+GCrSy8WQam+QvtcfptbxLGXVdyUggIKEYChr1K9UR1
-	 mJE61oEy0iv4FNo2U9Uj1vtK9pelnzBZoS9FFmyd/ui2J3vw4XkEeePILHDAB4Vr2SnZf
-	 JPyiRKcI/UEWrxzLOu10Fm0fA8DLHz4BfYj6TzPeUCZ/IAAw4wX2k3An7rH4u341qhZLU
-	 y2JJwDD1+ED0J0G6PwGLWO5XHlfqUV6jyftOnCzzV8kD8XYtnhtZsN5xorKZ+i/u/bwB6
-	 Wooc0Vv/KmVvjjIZTvJw/oFMHHoxUlLkVraxx1eZhap5XNJRjI3Bgq8RVg22leNsJYQ==
+	bh=pAKsgPZw0Fj2F9+ordR0zXYo2l2EFXcWFkBdywsVe60=;
+	b=B+esB7gu2zOwz6vJ10pyDNpk/WUiLYV84U+rwEeDSLiispd4wpqJAbPFqDcuffbnZZM3
+	 daB0pBXf7nbShT2qko/u/sS6aLRDR0F8yPe7lqrvsjxGWBmh2qghJfe1ixMzCWajmfnCr
+	 pwvQTG1G7Oo0m1T1Ud8op0SoLvh57IwyzE9opSWeLpKZvrBh/vcW3m9O/IB3ufcmhCsO6
+	 kx/G5l35hyF02G5dV3sVN/j0dLlE3Y/Tph6Q3HfGumsk3cKRVK5uzVA5B483XRQTpG7n7
+	 WjfAYp8b7hSEDBwJoXWWf936StJ0q8U7JwWRm23gKI9wD0/Kv9DEPIa7taWfAi1wgGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SyAkw2qS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V0hbFWH6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FCE606A31A;
-	Wed, 28 Oct 2026 19:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DEF606A31D;
+	Wed, 28 Oct 2026 19:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SyAkw2qS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23301F01825;
-	Wed, 28 Oct 2026 19:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V0hbFWH6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42E91F01825;
+	Wed, 28 Oct 2026 19:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216825;
-	bh=LicnQNuUYJMQ70lbggxwb0VmCRNWghm6V6RQr0b6aoI=;
+	s=korg; t=1793216828;
+	bh=pAKsgPZw0Fj2F9+ordR0zXYo2l2EFXcWFkBdywsVe60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SyAkw2qSJ+p947qi3GkhJ4B/wXfQ1a+x+IHn7LxYOjJc0FyiegSyvhoDWywC/qwax
-	 6FOfZF/0hV//DxWpaSEit32jdg/hnj8ucAUqtj1C0kHccKSz4oYvjNvB4zkiswz0xB
-	 eUN18CpeR8sODWZAlI5iFPokNsNz4WSqYQziCslg=
+	b=V0hbFWH6qPdDRAArZEQVORC8sS5mFfJ96eIWbrxu2n0SzPErAfQ1azXTMIav3XCX8
+	 XSWrPLd1XRB0cwNwTTMgAPNInJ/ajbL4d9SHQgkqQviHzuMVnkW6wzFwjuNzL997gM
+	 SYtTVg5xJ+ifCUx71cknC+P3HzHG048Y5SrUFP4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1648/1887] svcrdma: Reject Write/Reply chunks with segcount 0
-Date: Wed, 28 Oct 2026 18:02:24 +0100
-Message-ID: <20261028170536.966689224@linuxfoundation.org>
+Subject: [PATCH 6.1 1649/1887] ACPI: bus: Introduce acpi_bus_get_primary_device()
+Date: Wed, 28 Oct 2026 18:02:25 +0100
+Message-ID: <20261028170536.988749316@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,91 +68,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 9808eb7656666acc7291bae9ab6b987bd16e47e0 ]
+[ Upstream commit 72530e1f72b0515a73fd88292254d04fecf03649 ]
 
-A peer can send a Write or Reply chunk whose segcount field is zero.
-xdr_check_write_chunk() only rejects segcount > rc_maxpages, so zero
-passes the range check, and xdr_inline_decode(stream, 0) returns the
-current (non-NULL) cursor without advancing. The function returns
-true and pcl_alloc_write() then links a struct svc_rdma_chunk with
-ch_segcount == 0 onto rc_write_pcl or rc_reply_pcl.
+The function used for obtaining the first "physical" device for which
+the given ACPI one is the ACPI companion, acpi_get_first_physical_node(),
+may return a stale device pointer (mostly in theory) because
+acpi_unbind_one() may run as a whole after dropping the ACPI device's
+physical_node_lock in acpi_get_first_physical_node() and before it
+returns.  The last reference to the "physical" device may be dropped
+then before the pointer to it is returned to the caller.
 
-An earlier patch in this series made pcl_for_each_segment() safe for
-ch_segcount == 0, so this no longer drives the memory walk it used
-to. Rejecting the malformed frame at the decode boundary is still
-worthwhile as defense in depth: it keeps degenerate zero-segment
-chunks off the parsed chunk lists entirely, so any future consumer
-that walks ch_segments directly cannot observe one, and it makes the
-zero-floor easy to backport to trees where the macro change is more
-intrusive. RFC 8166 has no meaning for a Write/Reply chunk that
-describes no remote buffer, so no legitimate client is affected.
+If that happens and the acpi_get_first_physical_node() caller invokes
+get_device() on the pointer obtained from it, which is done by the
+majority of its callers, a use-after-free will occur.
 
-xdr_check_reply_chunk() funnels Reply chunks through
-xdr_check_write_chunk() and inherits the same rejection.
+To prepare for addressing this problem, introduce a new function for
+getting the first "physical" device associated with the given ACPI one
+(the "primary physical device") that will also reference count the
+device in question before returning a pointer to it.
 
-pcl_alloc_write() also links each chunk onto the parsed chunk list
-before filling its segment array. If a future change weakens the
-segcount-0 rejection, an incomplete chunk is visible to consumers
-during the fill loop. Reorder so that list_add_tail() follows the
-segment fill loop, ensuring only fully-populated chunks appear on
-the list.
+Make that new function and acpi_get_first_physical_node() share the
+physical node list lookup code.
 
-Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
-Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-5-e251306ccca9@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/2843318.mvXUDI8C0e@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_pcl.c      | 2 +-
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 9 ++++++---
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/acpi/bus.c      | 54 +++++++++++++++++++++++++++++------------
+ include/acpi/acpi_bus.h |  6 +++++
+ 2 files changed, 44 insertions(+), 16 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_pcl.c b/net/sunrpc/xprtrdma/svc_rdma_pcl.c
-index b63cfeaa29234..a1c61311714da 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_pcl.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_pcl.c
-@@ -213,7 +213,6 @@ bool pcl_alloc_write(struct svc_rdma_recv_ctxt *rctxt,
- 		chunk = pcl_alloc_chunk(segcount, 0);
- 		if (!chunk)
- 			return false;
--		list_add_tail(&chunk->ch_list, &pcl->cl_chunks);
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index fafa15507b141..4ec726be27a63 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -643,30 +643,52 @@ static int __init acpi_setup_sb_notify_handler(void)
+                              Device Matching
+    -------------------------------------------------------------------------- */
  
- 		for (j = 0; j < segcount; j++) {
- 			segment = &chunk->ch_segments[j];
-@@ -225,6 +224,7 @@ bool pcl_alloc_write(struct svc_rdma_recv_ctxt *rctxt,
- 			chunk->ch_length += segment->rs_length;
- 			chunk->ch_segcount++;
- 		}
-+		list_add_tail(&chunk->ch_list, &pcl->cl_chunks);
- 	}
- 	return true;
++
++static struct device *primary_physical_device(struct acpi_device *adev)
++{
++	struct acpi_device_physical_node *pn;
++
++	pn = list_first_entry_or_null(&adev->physical_node_list,
++				      struct acpi_device_physical_node, node);
++	if (pn)
++		return pn->dev;
++
++	return NULL;
++}
++
+ /**
+- * acpi_get_first_physical_node - Get first physical node of an ACPI device
++ * acpi_bus_get_primary_device - Get first physical device for a given ACPI one
++ * @adev: ACPI device to get the first physical device for.
++ *
++ * Find the first physical device for which @adev is the ACPI companion and
++ * reference count it if present.
++ *
++ * Return: Pointer to the first physical counterpart of @adev or NULL if there
++ * are none.  Callers are responsible for invoking put_device() on the returned
++ * device.
++ */
++struct device *acpi_bus_get_primary_device(struct acpi_device *adev)
++{
++	if (!adev)
++		return NULL;
++
++	guard(mutex)(&adev->physical_node_lock);
++
++	return get_device(primary_physical_device(adev));
++}
++EXPORT_SYMBOL_GPL(acpi_bus_get_primary_device);
++
++/**
++ * acpi_get_first_physical_node - Find first physical node of an ACPI device
+  * @adev:	ACPI device in question
+  *
+  * Return: First physical node of ACPI device @adev
+  */
+ struct device *acpi_get_first_physical_node(struct acpi_device *adev)
+ {
+-	struct mutex *physical_node_lock = &adev->physical_node_lock;
+-	struct device *phys_dev;
+-
+-	mutex_lock(physical_node_lock);
+-	if (list_empty(&adev->physical_node_list)) {
+-		phys_dev = NULL;
+-	} else {
+-		const struct acpi_device_physical_node *node;
++	guard(mutex)(&adev->physical_node_lock);
+ 
+-		node = list_first_entry(&adev->physical_node_list,
+-					struct acpi_device_physical_node, node);
+-
+-		phys_dev = node->dev;
+-	}
+-	mutex_unlock(physical_node_lock);
+-	return phys_dev;
++	return primary_physical_device(adev);
  }
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-index b66ded5b039a8..06c64aeed5fdb 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -491,10 +491,13 @@ static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
- 		return false;
+ EXPORT_SYMBOL_GPL(acpi_get_first_physical_node);
  
- 	/* Before trusting the segcount value enough to use it in
--	 * a computation, perform a simple range check. This is an
--	 * arbitrary but sensible limit (ie, not architectural).
-+	 * a computation, perform a simple range check. A zero
-+	 * segcount describes no remote buffer and is rejected so
-+	 * downstream consumers never see a degenerate ch_segcount==0
-+	 * chunk. The upper bound is an arbitrary but sensible limit
-+	 * (ie, not architectural).
- 	 */
--	if (unlikely(segcount > RPCSVC_MAXPAGES))
-+	if (segcount == 0 || unlikely(segcount > RPCSVC_MAXPAGES))
- 		return false;
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index 6badc50ec4e66..147b560947c66 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -556,6 +556,7 @@ void acpi_bus_unregister_driver(struct acpi_driver *driver);
+ int acpi_bus_scan(acpi_handle handle);
+ void acpi_bus_trim(struct acpi_device *start);
+ acpi_status acpi_bus_get_ejd(acpi_handle handle, acpi_handle * ejd);
++struct device *acpi_bus_get_primary_device(struct acpi_device *adev);
+ int acpi_match_device_ids(struct acpi_device *device,
+ 			  const struct acpi_device_id *ids);
+ void acpi_set_modalias(struct acpi_device *adev, const char *default_id,
+@@ -797,6 +798,11 @@ static inline void acpi_put_acpi_dev(struct acpi_device *adev)
+ }
+ #else	/* CONFIG_ACPI */
  
- 	p = xdr_inline_decode(&rctxt->rc_stream,
++static inline struct device *acpi_bus_get_primary_device(struct acpi_device *adev)
++{
++	return NULL;
++}
++
+ static inline int register_acpi_bus_type(void *bus) { return 0; }
+ static inline int unregister_acpi_bus_type(void *bus) { return 0; }
+ 
 -- 
 2.53.0
 
