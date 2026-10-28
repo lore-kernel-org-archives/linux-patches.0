@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208980;
-	b=ruS3UEBhI0vSB953Ss7tDEtSBeNWUtNjB3PQHHrSz8porpJSRnZhrv+D8guH4oEeWwbR
-	 JXALoyHy/R4gwHKC5cQ2jatGvK0yQeCuwH/bqAeoVN6tVUOCYuZ1JnmsX/S9URt0Ykvpf
-	 RVoXE9CTqKXOOjKunpbXxATLDCOLZrYeTjBcqDU8YNQhKhfYqjLMKpHoiIY6+fNuJjzPh
-	 bI8a2QGtME8S31rBcQif/KRkmq4Ok5hpXEQdCYnT9aM8IhqzLJo7yjGHN9qkPMbJD16Wg
-	 TIbueB6CgX/euyAsFVzSaW9ueachQpgvaZAA/AdKxZ43xguD/tF3FjkrHtlrz90xs9g==
+	t=1793208983;
+	b=P1g72kiszgLO0ypaG4M+GrITK/Wtdts1I1g7PQakFzaLmvt6hDQFFbfXxt3JvOSCJOK+
+	 TDezH8QA8FA/CwRSIrJmDuqb1k5gw1G7nY55igsZgOQ0uy0dCTiqgZlsnfzhevPkh6I6l
+	 FTJ3sX1+PAdPn8ifhPn1b727C3KSbP1eBFyNv6Jyl2smzHuoqpadDIk3Eq2l87fFdHYyQ
+	 I5912KP5KKTezDZ+G4hOsB8oNZXAYgTvywid7Ag61ycd8GikI/g6+sISSfvuBzda5ok8a
+	 /wZUFfO9rwTdO7i2kh6DaNMhh06ZdwTVSq8xPrSvNH6bA5rNKbu0WY6akN0bIBEyprA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208983;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Groa30+0DX8Ym/N26LOCiE3zBSnbKVI6y5iFEriwi6k=;
-	b=y+RR4MI83NCGKK0TO5d0LYiaNrBAMk49a8QLsNl25kI72GgqNd+pBQxu1WERbyIBb6xI
-	 Yfj3ny1T1xKEU8Ff/uRWmGbRfhRvRkXJqmO1Gm1fKZCEygAxzJHHMvqb67XpaaPOA2hPN
-	 E2dLx6JCLKUbXpOEkhwILXyDlyuhPp0QkDbpq5CxdFvzlvuvX+gFJ3R1a9p1CDVqKPpL+
-	 enOVu5qRkc1yBZsqBpQET0t4JLNlgrwdj3u+m5qwuhI8ouc5sP/gCyuPrQMlYk5JCnn72
-	 MrAWlYXMTqWu0tIpkW5cB2Fnw+q4SFMw/n2KDIVy8UsvI+L5UYsZSdmZHblOb1n9HYw==
+	bh=tFh+VYH1SLVTo+3u46ZXqJDUTNCeENLQX4a1lZtnH/8=;
+	b=5k9Eg++X4N7TzRUJh3yG4mjWEqBJjHYU71lW1wAgfgfhsSJXOZZgG71Au/lqgVs4PF/Y
+	 hLfXHAd7+Cs/5bU/BAicVKMhlzcRhJQE5b+mX11HdlidjgubwHnDLovVEaHheeTDSQnlT
+	 ReKkeTIwa0IY88rSuJp8ipD5Q+M9N6PEkRTXhgBjf1OUmxJyI93FKp94BtpqKxK6eFWDZ
+	 JrrDr7AeMtdPpn68uVk0PMuc48x8gp/oiD2qhxBO97IggUkyzJC+oj5BsqwH3ZZDkASlJ
+	 s/iro/YFrl9JiHwiESUJjbvssWEnAt7JTrfFcn3WYvROElV7bIKRrwcLtbI3bePX1GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oe6C+q9b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhrgU26O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFF2606A31A;
-	Wed, 28 Oct 2026 17:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA62E606A31D;
+	Wed, 28 Oct 2026 17:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oe6C+q9b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EAA1F01825;
-	Wed, 28 Oct 2026 17:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhrgU26O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E010C1F01825;
+	Wed, 28 Oct 2026 17:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208979;
-	bh=Groa30+0DX8Ym/N26LOCiE3zBSnbKVI6y5iFEriwi6k=;
+	s=korg; t=1793208982;
+	bh=tFh+VYH1SLVTo+3u46ZXqJDUTNCeENLQX4a1lZtnH/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oe6C+q9bZrXXaayxzU9g590lF1NsG8dgcGSFvd86AeIZzUU61ZotjhQZMnhedOn2R
-	 l8Uxa/Wj40HcMTTdVc3ZFYRjCvuVTVkqmvDRWi1CZ6E3brWzswoPAmsjYwJ+8MU3VQ
-	 kW+/lnMKR8siSg3WjGfBVlC3aAugoQUtZhdeU7ew=
+	b=hhrgU26OUZs4hWw3p+DmE/6GPHME6l8ELxnRHyafmUGsZr1+RJb4wkDhMBXaS1taI
+	 qKef9UhjBXZAWr4nIR7hHkCps8zOwtsiFtp9aneEYjrHrGRTyUFgj3CsKPLhpIBh1l
+	 03TwMPszcGBoJ8jP20zTgigWHk/2xMuLIUVw4kY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 283/516] usb: ohci-spear: disable controller wakeup on removal
-Date: Wed, 28 Oct 2026 17:57:15 +0100
-Message-ID: <20261028170010.195599158@linuxfoundation.org>
+Subject: [PATCH 5.10 310/516] iio: adc: aspeed: propagate reset deassert errors
+Date: Wed, 28 Oct 2026 17:57:42 +0100
+Message-ID: <20261028170010.833844617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,45 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit b1b0f8bdbbc891a4ee7f3b1a878c633e02b7bbeb ]
+[ Upstream commit 95e4eb426b4bd666fa2f37886c0ddf74a0cc6167 ]
 
-Probe enables controller wakeup after the OHCI core marks controllers with
-RemoteWakeupConnected as wakeup-capable. Removal does not undo this, so the
-wakeup source can remain attached after driver unbind.
+aspeed_adc_probe() continues to register ADC resources after deasserting
+the shared reset, even if the reset controller reports a failure.
 
-Disable controller wakeup after removing the HCD.
+A failed deassertion leaves the hardware unavailable, so stop probing
+before installing the cleanup action and enabling the ADC.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: a6eeeb9f45b5 ("USB: Update USB default wakeup settings")
-Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260915012011.61874-4-mhun512@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: edf7550a1f93 ("iio: adc: aspeed: Deassert reset in probe")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ sashal: Changed the direct error return to a jump to the existing reset_error label. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/ohci-spear.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/aspeed_adc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/ohci-spear.c b/drivers/usb/host/ohci-spear.c
-index ed019c459ea0d..8dd9b77c12fd4 100644
---- a/drivers/usb/host/ohci-spear.c
-+++ b/drivers/usb/host/ohci-spear.c
-@@ -105,6 +105,7 @@ static int spear_ohci_hcd_drv_remove(struct platform_device *pdev)
- 	struct spear_ohci *sohci_p = to_spear_ohci(hcd);
+diff --git a/drivers/iio/adc/aspeed_adc.c b/drivers/iio/adc/aspeed_adc.c
+index 34ec0c28b2dff..012cc9291bef3 100644
+--- a/drivers/iio/adc/aspeed_adc.c
++++ b/drivers/iio/adc/aspeed_adc.c
+@@ -221,7 +221,9 @@ static int aspeed_adc_probe(struct platform_device *pdev)
+ 		ret = PTR_ERR(data->rst);
+ 		goto reset_error;
+ 	}
+-	reset_control_deassert(data->rst);
++	ret = reset_control_deassert(data->rst);
++	if (ret)
++		goto reset_error;
  
- 	usb_remove_hcd(hcd);
-+	device_wakeup_disable(hcd->self.controller);
- 	clk_disable_unprepare(sohci_p->clk);
+ 	model_data = of_device_get_match_data(&pdev->dev);
  
- 	usb_put_hcd(hcd);
 -- 
 2.53.0
 
