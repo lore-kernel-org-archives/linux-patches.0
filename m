@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215219;
-	b=Y5Yi+QDjBIV0xGdD0HB4IDiZDp7w5LFShDorLH6GBWxv4fOvGn3HVi78IuthpUvgom0O
-	 HacgVoDaqR4TYjXdJ/3D4HLcfEnv3jFhvDIT1cEdnxpXQRRejySTp1vs1qtgFFHUIy4Hv
-	 AnHmJm8ooGCG11NdQn9XiLMcYTaeQG8UOdU8qrc/8a1pHCGAP5An20txQlMInSDNWSTYq
-	 M6h7VEBal4NN9PwLuPrry6soRg4FPcgpIOR1OAvMPDxJU8SoSFgJac3LHTs1nRgkrL3Pq
-	 CUNEvDQRNGlBP6VYB8zRPEs8SRT6C1n8aeZfuAzuCjjc+xbJK1gccP57ugv4gfHEV/w==
+	t=1793215222;
+	b=3C/T+miD0kNsgNuxx5JYXZmA9eWBG6WX3VW6qEMq8iDBiJtFSfwDBxXQ9RFHfcxT8e9h
+	 aCovAKPUCh29SzmJ9mM+4TOTymXffmPJXz2q29ETtQNSbvetDe+EVd2lsU8EvAM0DspVN
+	 5CumdDu8Kiyn67kICKJskcJHMtt+3k4RPxC4aQwXqUbrZDGDPdCH/FvsKhd+GO57QsB8O
+	 GbPzAzx1gUdojYydSA7k4EFgLrbj0tjNugz1bETXkHmVeXUEZa3DZA3dqnpFWK3N/07Ck
+	 siTZfC3eoeflkd+CHfy+Qh5/95v4R+XtRYGBa+0r/ECJwbSzN7/ceVvAKygqzR8Vtqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215219;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215222;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YdwXSkhDAqozvB0pkEMB5wHuy1aeRgc5y0O94Ls/ulc=;
-	b=3AS+tW6uMaARPAX2Dy3Y36dvspU3XZ3Ai8cAeC3/RFcIjIn0VQhifB4BtGWCM7hT+JNM
-	 fduOcHRTvrJkqVhVJcnrapHUxJduhvpixmNhZQLKuFVSshqvHzUVzWaz83EhQG2cvroac
-	 x2XcP4o9p0PXQBqjCwR6TDF5Ckg0TEBB9Qh47FgbPy2bb1/0Klvn/C0AxLWJpYzcsql3E
-	 P8tIHDBhZRXroQxTFtmg8mD5wFZHmm22x5BIPsCTdVInxsgznnG+Dw5F6LlD9Bnx6WrMN
-	 Es7KSJozOH5c0NuWGlz4tvlC+ffqPQxfMUc5Bq0rQ8eh4EPOGXgsUQZKVuhJlyyWUZQ==
+	bh=FBc5vqIyuFfXwtxjf8UBEtgi7dLe+NRzMDNk6aTHY7E=;
+	b=JF248bsViS9knezfHZVJUt6B7jV/XZVkaIEloURK+ZfaurmVzrCc9vffP6mU7kNq1weW
+	 PJG0hj/RKCuSu/veJTsZuvXtXg/LLx4Drp+VvsjDFurbO62c+JCDD9MYvH7/ox5guvP5y
+	 4SdMErQuqZN7AKxNz+UZh+POhpAaKncJSnuGJ9tRn2n+91x4ZRZHgUVsdPPgT2NBt+IYY
+	 VIoQQM00/dQvSMmLgXMW4nCUZ1PfIAdkOeDjDoHLgabAu/2d6Q+4J5AM8/XjCKYOF8iMA
+	 ayTD+QHlDO8N8nnwk6T11UmB8ExtX+9+imdc82ZLdzSqNDNyNbNoXoqnsdEGTSlKN9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7ZOtizA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MvJquC9c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07AB606A31E;
-	Wed, 28 Oct 2026 19:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB35606A31A;
+	Wed, 28 Oct 2026 19:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7ZOtizA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C90D1F01825;
-	Wed, 28 Oct 2026 19:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MvJquC9c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A911F01825;
+	Wed, 28 Oct 2026 19:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215218;
-	bh=YdwXSkhDAqozvB0pkEMB5wHuy1aeRgc5y0O94Ls/ulc=;
+	s=korg; t=1793215221;
+	bh=FBc5vqIyuFfXwtxjf8UBEtgi7dLe+NRzMDNk6aTHY7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7ZOtizAauL3l4o1wmfaWkJeIxfz/7QTG5WuX5xRRmL8NqyMMveBjbqQVvSkM6ebH
-	 K4ybC/qhz0rGy2oxrzspoX8j37SFSbx5uVo+f7kFeSq+lwHjlQYXiciSSJvDg4jiVI
-	 bH03hDyb9E7DyLTmmFjtd1dhawp/ITOQ0gAfCgDc=
+	b=MvJquC9cjtBEsyjxol9fiboDoaKF4DWyw0tcgzQ64qplAlrVp3WgVNvDNnY/1KK60
+	 nTHkEoltKUzmpBA3w6HMqMaFHv6JQH5q/Gc2AgA0EX4c+hrUwAXiOz/ixHLlGQx9mH
+	 RbMV/LVXqnWIQc2jV2qgeYQouTN/7soOGFEttYx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1132/1887] netfilter: nf_tables: fix dst corruption in same register operation
-Date: Wed, 28 Oct 2026 17:53:48 +0100
-Message-ID: <20261028170525.164040642@linuxfoundation.org>
+Subject: [PATCH 6.1 1091/1887] sctp: validate embedded INIT chunk and address list lengths in cookie
+Date: Wed, 28 Oct 2026 17:53:07 +0100
+Message-ID: <20261028170524.234289312@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,129 +69,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 18014147d3ee7831dce53fe65d7fc8d428b02552 ]
+[ Upstream commit 6f4c80a2a7e6d06753b89a578b710a2499a5e62b ]
 
-For lshift and rshift, the shift operations are performed in a loop over
-32-bit words. The loop calculates the shifted value and write it to dst,
-and then immediately reads from src to calculate the carry for the next
-iteration. Because src and dst could point to the same memory location,
-the carry is incorrectly calculated using the newly modified dst value
-instead of the original src value.
+sctp_unpack_cookie() only checked that the embedded INIT chunk length
+did not exceed the remaining cookie payload, but did not ensure that the
+INIT chunk is large enough to contain a complete INIT header.
 
-Adding a temporary local variable to cache the original value before
-writing to dst and using it for the carry calculation solves the
-problem. In addition, partial overlap is rejected from control plane for
-all kind of operations including byteorder. This was tested with the
-following bytecode:
+A malformed COOKIE_ECHO can therefore carry a truncated INIT chunk whose
+length field is smaller than sizeof(struct sctp_init_chunk).  Later,
+sctp_process_init() accesses INIT parameters unconditionally, which may
+lead to out-of-bounds reads.
 
-table test_table ip flags 0 use 1 handle 1
-ip test_table test_chain use 3 type filter hook input prio 0 policy accept packets 0 bytes 0 flags 1
-ip test_table test_chain 2
-  [ immediate reg 1 0x44332211 0x88776655 ]
-  [ bitwise reg 1 = ( reg 1 << 0x08000000 ) ]
-  [ cmp eq reg 1 0x66443322 0x00887766 ]
-  [ counter pkts 0 bytes 0 ]
-ip test_table test_chain 4 3
-  [ immediate reg 1 0x44332211 0x88776655 ]
-  [ bitwise reg 1 = ( reg 1 << 0x08000000 ) ]
-  [ cmp eq reg 1 0x55443322 0x00887766 ]
-  [ counter pkts 21794 bytes 1917798 ]
+In addition, raw_addr_list_len is not fully validated against the
+remaining cookie payload. When cookie authentication is disabled, an
+attacker can supply an oversized raw_addr_list_len and cause
+sctp_raw_to_bind_addrs() to read beyond the end of the cookie. The
+address parser also lacks sufficient bounds checks for parameter headers
+and lengths, allowing malformed address parameters to trigger
+out-of-bounds reads.
 
-Fixes: 567d746b55bc ("netfilter: bitwise: add support for shifts.")
-Acked-by: Jeremy Sowden <jeremy@azazel.net>
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fix this by:
+
+- requiring the embedded INIT chunk length to be at least sizeof(struct
+  sctp_init_chunk);
+- validating that the INIT chunk and raw address list together fit
+  within the cookie payload;
+- verifying sufficient data exists for each address parameter header and
+  payload before parsing it.
+
+Note that sctp_verify_init() must be called after sctp_unpack_cookie()
+and before sctp_process_init() when cookie authentication is disabled.
+This will be addressed in a separate patch.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/75af23a89adf881a0895d511775e4770da367cbf.1780873427.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  7 +++++++
- net/netfilter/nft_bitwise.c       | 15 +++++++++++----
- net/netfilter/nft_byteorder.c     | 13 ++++++++++---
- 3 files changed, 28 insertions(+), 7 deletions(-)
+ net/sctp/bind_addr.c     | 11 ++++++++++-
+ net/sctp/sm_make_chunk.c | 12 +++++++++++-
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 6d07f70b77ec0..ab228acb04c4c 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -187,6 +187,13 @@ static inline u64 nft_reg_load64(const u32 *sreg)
- 	return get_unaligned((u64 *)sreg);
- }
+diff --git a/net/sctp/bind_addr.c b/net/sctp/bind_addr.c
+index 6b95d3ba8fe1c..0947b276d1e08 100644
+--- a/net/sctp/bind_addr.c
++++ b/net/sctp/bind_addr.c
+@@ -275,6 +275,16 @@ int sctp_raw_to_bind_addrs(struct sctp_bind_addr *bp, __u8 *raw_addr_list,
+ 		param = (struct sctp_paramhdr *)raw_addr_list;
+ 		rawaddr = (union sctp_addr_param *)raw_addr_list;
  
-+static inline bool nft_reg_overlap(u8 src, u8 dst, u32 len)
-+{
-+	unsigned int n = DIV_ROUND_UP(len, sizeof(u32));
++		if (addrs_len < sizeof(*param)) {
++			retval = -EINVAL;
++			goto out_err;
++		}
++		len = ntohs(param->length);
++		if (addrs_len < len) {
++			retval = -EINVAL;
++			goto out_err;
++		}
 +
-+	return src != dst && src < dst + n && dst < src + n;
-+}
-+
- static inline void nft_data_copy(u32 *dst, const struct nft_data *src,
- 				 unsigned int len)
- {
-diff --git a/net/netfilter/nft_bitwise.c b/net/netfilter/nft_bitwise.c
-index a8f266d18501d..ca478f2bee8b7 100644
---- a/net/netfilter/nft_bitwise.c
-+++ b/net/netfilter/nft_bitwise.c
-@@ -42,8 +42,10 @@ static void nft_bitwise_eval_lshift(u32 *dst, const u32 *src,
- 	u32 carry = 0;
+ 		af = sctp_get_af_specific(param_type2af(param->type));
+ 		if (unlikely(!af) ||
+ 		    !af->from_addr_param(&addr, rawaddr, htons(port), 0)) {
+@@ -291,7 +301,6 @@ int sctp_raw_to_bind_addrs(struct sctp_bind_addr *bp, __u8 *raw_addr_list,
+ 			goto out_err;
  
- 	for (i = DIV_ROUND_UP(priv->len, sizeof(u32)); i > 0; i--) {
--		dst[i - 1] = (src[i - 1] << shift) | carry;
--		carry = src[i - 1] >> (BITS_PER_TYPE(u32) - shift);
-+		u32 tmp_src = src[i - 1];
-+
-+		dst[i - 1] = (tmp_src << shift) | carry;
-+		carry = tmp_src >> (BITS_PER_TYPE(u32) - shift);
+ next:
+-		len = ntohs(param->length);
+ 		addrs_len -= len;
+ 		raw_addr_list += len;
  	}
- }
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index 649384ff0e547..742ba54755e8b 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -1750,8 +1750,9 @@ struct sctp_association *sctp_unpack_cookie(
+ 	struct sk_buff *skb = chunk->skb;
+ 	struct sctp_cookie *bear_cookie;
+ 	__u8 *digest = ep->digest;
++	struct sctp_chunkhdr *ch;
++	unsigned int len, chlen;
+ 	enum sctp_scope scope;
+-	unsigned int len;
+ 	ktime_t kt;
  
-@@ -55,8 +57,10 @@ static void nft_bitwise_eval_rshift(u32 *dst, const u32 *src,
- 	u32 carry = 0;
+ 	/* Header size is static data prior to the actual cookie, including
+@@ -1779,6 +1780,15 @@ struct sctp_association *sctp_unpack_cookie(
+ 	cookie = chunk->subh.cookie_hdr;
+ 	bear_cookie = &cookie->c;
  
- 	for (i = 0; i < DIV_ROUND_UP(priv->len, sizeof(u32)); i++) {
--		dst[i] = carry | (src[i] >> shift);
--		carry = src[i] << (BITS_PER_TYPE(u32) - shift);
-+		u32 tmp_src = src[i];
++	ch = (struct sctp_chunkhdr *)(bear_cookie + 1);
++	chlen = ntohs(ch->length);
++	if (chlen < sizeof(struct sctp_init_chunk))
++		goto malformed;
++	if (chlen > len - fixed_size)
++		goto malformed;
++	if (bear_cookie->raw_addr_list_len > len - fixed_size - chlen)
++		goto malformed;
 +
-+		dst[i] = carry | (tmp_src >> shift);
-+		carry = tmp_src << (BITS_PER_TYPE(u32) - shift);
- 	}
- }
+ 	if (!sctp_sk(ep->base.sk)->hmac)
+ 		goto no_hmac;
  
-@@ -183,6 +187,9 @@ static int nft_bitwise_init(const struct nft_ctx *ctx,
- 	if (err < 0)
- 		return err;
- 
-+	if (nft_reg_overlap(priv->sreg, priv->dreg, priv->len))
-+		return -EINVAL;
-+
- 	if (tb[NFTA_BITWISE_OP]) {
- 		priv->op = ntohl(nla_get_be32(tb[NFTA_BITWISE_OP]));
- 		switch (priv->op) {
-diff --git a/net/netfilter/nft_byteorder.c b/net/netfilter/nft_byteorder.c
-index 010d0d2f3423d..7218f8e3c6d45 100644
---- a/net/netfilter/nft_byteorder.c
-+++ b/net/netfilter/nft_byteorder.c
-@@ -144,9 +144,16 @@ static int nft_byteorder_init(const struct nft_ctx *ctx,
- 	if (err < 0)
- 		return err;
- 
--	return nft_parse_register_store(ctx, tb[NFTA_BYTEORDER_DREG],
--					&priv->dreg, NULL, NFT_DATA_VALUE,
--					priv->len);
-+	err = nft_parse_register_store(ctx, tb[NFTA_BYTEORDER_DREG],
-+				       &priv->dreg, NULL, NFT_DATA_VALUE,
-+				       priv->len);
-+	if (err < 0)
-+		return err;
-+
-+	if (nft_reg_overlap(priv->sreg, priv->dreg, priv->len))
-+		return -EINVAL;
-+
-+	return 0;
- }
- 
- static int nft_byteorder_dump(struct sk_buff *skb,
 -- 
 2.53.0
 
