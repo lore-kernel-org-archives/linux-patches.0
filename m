@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215734;
-	b=Cc7kgv6h7Wsk6wKvlcxzSixwJ3pLlaYwK8QILHjJ0iqvF6QdQNRsOuGnaDmnZXxhK6Mr
-	 vpDqujLFDPBmT05QbyXAcfyNzANP3E2WYwQBXCum38+i0D8bRXFL0Ylck0ylLVfNwk0Gp
-	 hXb/IHyV7gA3fyhr853D587wwcJNPWzKsa6IV2GQif4XFB/Naw5UZhGIChwfLeiJ9ls4D
-	 IH33UDBFL7FwauhbifxwrBN9bpIeYlhJ6vpiDw1sh659YtqSbXhEK8+3W2kthvHlH0ttQ
-	 e/2T5PdDS6IwDe2/ypSHyFFa80iSGS8cSV0VmiXH3gC9DSQMgxjc6GxwFBE6+thn2eg==
+	t=1793215737;
+	b=wnzEDa/HdEauk0TV38tAxky7liTZbmx8cDIfdjQ4s50qL44s4k1kQ1+GItsiT3g4yv8O
+	 0S7a/5GlMLYwEdyT9sVLwLk8nP9SkoleWzybRl6gv+ZtCbDVVdrSQVwDsLp7xpsFwQRAc
+	 bDyM57jI+pjl6dtggh4b7uhiwA6aoteY6QrubiZvVM+BgABrv2h5vOn00PT8z2eowP6Pl
+	 J1u6Z74/ODiNJkGm2OUxHOoxzORkEqX1X9LjVwii6UdE0z/hm9RdFzYSZ3zN2euR8cfv8
+	 pe88JeON1gQ2kNYadeBWzgq06hAnu+h5H2QESbbTNrPMLgo5V9kckcy/mcS63wVmFlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215737;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0s78ASaOXfOLQ7Xng4Zv7ib81HZV1IDqKeaZ5fugxOU=;
-	b=Ez8sAk3vV2Ku9+h6R66eDZbc9b9HeMLTUJeT2yZFZTZy+EAC2V8hPgHSxi2QurWhCMeP
-	 5ofnwDkxjCY37sBL21jVGDJWYgapgmle017CBeLEvzN+6zNW1+8adGQQqLlTxAEctOfuX
-	 I4pnm7U1SBAcCZE6NTybFkyWZamyMqYNqqA0xPz+iF77uMlzyNRFkBBRJ0xqSRIAs15I6
-	 tjcK09urLPvSf/ffUsKezLc/LLrRO7BwUU63OD1tqn6u6RNwl0PLg1cbZG8rVcKr86nGX
-	 KpyWErZLb/DgH+Nx4gG+n22EYN5KT07dgRigTeOWWcxHQToY/n9FEbFr6zMhXfqtiOA==
+	bh=WstO2VIpCPycgrbpULi2v1XYuqSRTd1LauNW1o9yQ7w=;
+	b=JUqCPbUaVVRaDQSQVIpcrYpUGYbQbSKk1I7FJwJeLs+YTPkeYGsKnuxok9Mic4F6SkYV
+	 jk+Y/Jwz4FuvCGJdI363p5pUckwwU8HLJsss38Kd2+68gl+jUVeRumdmzQugKEwtqB+ni
+	 dFDGRsjs3xyNeLum1tO67NXPB0Kl56tYDRt9LgbqvD4Q/gzoc/zZHK0odb9j4AO9RFX0Q
+	 eg9WKS0pCV7/UB/41TcLhLadSbl7k91mUhlGMRqcXIDwWvU/Av2oXEr/a6skm5U/Vw2nm
+	 MJ1AEZVRHmr4YyWSW8NZ3dYu1zRkLAakadIA70tX5w17ntXTTqHn8WT5yTBz5xEl2DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01AamFr0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=my641H3Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C1E606A31A;
-	Wed, 28 Oct 2026 19:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C36606A31A;
+	Wed, 28 Oct 2026 19:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01AamFr0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E6C1F01825;
-	Wed, 28 Oct 2026 19:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=my641H3Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928C71F01825;
+	Wed, 28 Oct 2026 19:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215734;
-	bh=0s78ASaOXfOLQ7Xng4Zv7ib81HZV1IDqKeaZ5fugxOU=;
+	s=korg; t=1793215737;
+	bh=WstO2VIpCPycgrbpULi2v1XYuqSRTd1LauNW1o9yQ7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=01AamFr02ieIfpgLFhWGs4VW2CxI4BfLoU/Oz8mh/ndgDMXbi8UrF8fF8ceSsjK7m
-	 U6Ulw5qL9CUMiaBRzGFvrUb8cPDkUVsGqDOhWAC65tYCFA53TDFwwuebUQFznOmJTE
-	 ayMiCVo6dKI5/96UVpES3Lem+HMMJmLuFoGJ5DeM=
+	b=my641H3Y8sdM91eHrt1tq2kv0F9fFPS5AupgjIsCxgLEnhqsGP+MzROgHkU2E5676
+	 hWU/4XnLnSgJR0i7D68o9QAV3Wpv6+3q8yS5aIPuNiiEkB/dIjEp8b/4b3BrzBx/c8
+	 UA64BywGbKf3V9xXR141mDm29Pc3dQZmTU9myC7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongjie Fang <hongjiefang@asrmicro.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1312/1887] scsi: core: pair EH runtime PM get and put
-Date: Wed, 28 Oct 2026 17:56:48 +0100
-Message-ID: <20261028170529.286593468@linuxfoundation.org>
+Subject: [PATCH 6.1 1313/1887] ASoC: tas2562: Validate values for volume writes
+Date: Wed, 28 Oct 2026 17:56:49 +0100
+Message-ID: <20261028170529.308163824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,131 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongjie Fang <hongjiefang@asrmicro.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 872f486259ae0bc6b73ca4735a15d013241f73e9 ]
+[ Upstream commit 8fb41964f7e4e4207c8999af2056894caa7a252a ]
 
-shost->eh_noresume is currently consulted twice in one error handling
-iteration: once before scsi_autopm_get_host() and once again before
-scsi_autopm_put_host().
+tas2562_volume_control_put() does not do any validation of the control
+value written by userspace, it uses it to look up a value in a fixed
+size array which can easily be overflowed and then writes whatever value
+it gets back to the device.  Add validation that we are loading a value
+we have in the array.
 
-That is racy when a PM-triggered error path flips shost->eh_noresume
-while the SCSI EH thread is still running.
-
-The problem flow looks like this:
-PM path
-  ufshcd_set_dev_pwr_mode()
-    shost->eh_noresume = 1
-    ufshcd_execute_start_stop  <-- trigger EH
-    ...
-    shost->eh_noresume = 0
-
-EH path
-  scsi_error_handler()
-    if (!shost->eh_noresume)
-      scsi_autopm_get_host()  <-- skipped
-    ...
-    if (!shost->eh_noresume)
-       scsi_autopm_put_host()  <-- executed later
-
-In that case one EH iteration can skip autoresume on entry and still
-drop a runtime PM reference on exit. That leaves an unmatched runtime PM
-put and can trigger a runtime PM usage count underflow.
-
-Fix this by making eh_noresume a regular bool so it can be accessed with
-READ_ONCE() and WRITE_ONCE(). Snapshot it once per EH iteration and use
-that snapshot for both runtime PM get and put decisions.
-
-Fixes: ae0751ffc77e ("[SCSI] add flag to skip the runtime PM calls on the host")
-Signed-off-by: Hongjie Fang <hongjiefang@asrmicro.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/20260729111614.2407559-1-hongjiefang@asrmicro.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260715-asoc-tas2562-put-retval-v1-1-97bf467c924e@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 6 ++++--
- drivers/ufs/core/ufshcd.c | 4 ++--
- include/scsi/scsi_host.h  | 6 +++---
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ sound/soc/codecs/tas2562.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 8063ec6c82645..b458a8cb619f9 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -2277,6 +2277,7 @@ static void scsi_unjam_host(struct Scsi_Host *shost)
- int scsi_error_handler(void *data)
+diff --git a/sound/soc/codecs/tas2562.c b/sound/soc/codecs/tas2562.c
+index 07336352272b3..bb9dfd10d2d7a 100644
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -474,10 +474,14 @@ static int tas2562_volume_control_put(struct snd_kcontrol *kcontrol,
  {
- 	struct Scsi_Host *shost = data;
-+	bool eh_noresume;
+ 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+ 	struct tas2562_data *tas2562 = snd_soc_component_get_drvdata(component);
+-	int ret;
++	int ret, index;
+ 	u32 reg_val;
  
- 	/*
- 	 * We use TASK_INTERRUPTIBLE so that the thread is not
-@@ -2318,7 +2319,8 @@ int scsi_error_handler(void *data)
- 		 * what we need to do to get it up and online again (if we can).
- 		 * If we fail, we end up taking the thing offline.
- 		 */
--		if (!shost->eh_noresume && scsi_autopm_get_host(shost) != 0) {
-+		eh_noresume = READ_ONCE(shost->eh_noresume);
-+		if (!eh_noresume && scsi_autopm_get_host(shost) != 0) {
- 			SCSI_LOG_ERROR_RECOVERY(1,
- 				shost_printk(KERN_ERR, shost,
- 					     "scsi_eh_%d: unable to autoresume\n",
-@@ -2342,7 +2344,7 @@ int scsi_error_handler(void *data)
- 		 * which are still online.
- 		 */
- 		scsi_restart_operations(shost);
--		if (!shost->eh_noresume)
-+		if (!eh_noresume)
- 			scsi_autopm_put_host(shost);
- 	}
- 	__set_current_state(TASK_RUNNING);
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index f8f64b8f111c9..0e9ea032711b9 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -8838,7 +8838,7 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
- 	 * we are functional while we are here, skip host resume in error
- 	 * handling context.
- 	 */
--	hba->host->eh_noresume = 1;
-+	WRITE_ONCE(hba->host->eh_noresume, 1);
- 
- 	cmd[4] = pwr_mode << 4;
- 
-@@ -8872,7 +8872,7 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
- 		hba->curr_dev_pwr_mode = pwr_mode;
- 
- 	scsi_device_put(sdp);
--	hba->host->eh_noresume = 0;
-+	WRITE_ONCE(hba->host->eh_noresume, 0);
- 	return ret;
- }
- 
-diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index 71d47d4ec04d9..4be73c771ed0c 100644
---- a/include/scsi/scsi_host.h
-+++ b/include/scsi/scsi_host.h
-@@ -623,6 +623,9 @@ struct Scsi_Host {
- 	 */
- 	unsigned nr_hw_queues;
- 	unsigned nr_maps;
-+	/* Don't resume host in EH */
-+	bool eh_noresume;
+-	reg_val = float_vol_db_lookup[ucontrol->value.integer.value[0]/2];
++	index = ucontrol->value.integer.value[0] / 2;
++	if (index < 0 || index >= ARRAY_SIZE(float_vol_db_lookup))
++		return -EINVAL;
 +
- 	unsigned active_mode:2;
- 
++	reg_val = float_vol_db_lookup[index];
  	/*
-@@ -644,9 +647,6 @@ struct Scsi_Host {
- 	/* Asynchronous scan in progress */
- 	unsigned async_scan:1;
- 
--	/* Don't resume host in EH */
--	unsigned eh_noresume:1;
--
- 	/* The controller does not support WRITE SAME */
- 	unsigned no_write_same:1;
- 
+ 	 * The device applies the 32-bit coefficient to the playback path on
+ 	 * the write to DVC_CFG4 (the LSB, book 0 page 2 reg 0x0F), so the
 -- 
 2.53.0
 
