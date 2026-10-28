@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211974;
-	b=TyzBgxr8ykGu4m0GLB4IrWuSGj5p5ypIhNvPCp4SBBabEyqBj4jp0jquKlFB/oVCIp3r
-	 5K7xwk6Aaubswwao59TEZp0Mq2PxxMPzVd20kvHt+pNPPh4VR20JN1aHcUYiKEKtxwPBD
-	 gANMGtCTgqu2voQFs4L/rMGXBhUHtzHlrtD3prr4yPJLdWWtZP9fEZ7i+kUsqPiCgmgun
-	 nXzhuZSaBSEjfedgxHTrUJEouJzQ0kc2P8dFh0PY4GqA0WlfwYeznQYiWGmE022GdF1B7
-	 XewB9MBZFYi03KMTyuphkZz2Hf2PU9nsbXw9tyO1yI2poqoU+lzD0lPr0w/AUM3+A0Q==
+	t=1793211977;
+	b=el9g1I01vqQzPH1wNU4OARncarIiOJwxv3/AheTZzQCxz+YgSVqbkp6gL/uom6gStCcJ
+	 oSUrQfd5Bxi7t9FcNgdJCW6qI/laY8qvR9uxVkbOkWUkCQdM5+VV2m5MzeNXBQEcQ4ldJ
+	 4U28IVYsKruexDnz3QMZ6daV674jo/iWyBpi4EFjyfElPpAbfRanNWusuK2x3ZmpCTwLG
+	 FspzQp4IA9j4sfiJ6vKoMPnMvvvN/mcqr/XYbgu8oZ7y5gsZBnY7p9tgXzvWQaDWX6VTS
+	 qC7O7bhqPGejtoDOlMilA7Yu6ELBaxz9TN/ob37cVuuaIw01o92L6TpcXDrUDNODVdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=knEZNTC5OV4VmIx0aR8NydGMgniqOhens6xctKC+hkA=;
-	b=RJaR0S7GHKaLDWXajSL4aMwcQ46e+NuSINf42wHgSG072nKsf26EI7W7ncwrNDkc+Vxx
-	 v8/Rp7/E5XwjP28ExS7obbcjQV62WWUIiv2w8eELouNf6cPNb92ahxtHFyMD3e1qeo573
-	 k67DEkgWBHmigTlzoubDJ7JNnlgocHQNhH5VBByyu+3SFgF5fkCaizfZHtnOhNi0QHVG1
-	 /0OqsgaEF1WHAk8D7uQE0ddLNAya54rafYYGBsFkzyQpzIHdYA3wXPv1zRc9WAOAfgr6Q
-	 KHfEfW25nk7pWNLNAo14Eurlt4ngRUDaTlXGyML5lbrH/h2IK70vox56XfLB9Q2wXVA==
+	bh=747KpoAtOlTM+DZcTA8WT3eOFE9n6w8CthT6WbzCt7c=;
+	b=T8TsWxtMl9afCIjwEmYu2K9aXJRTYzk15YTsZWShO6DZ7sR2OT+tYc3pmSFxS4qKmmpR
+	 oPxD10EQaZCOQWk9R0Io9KjcJj6IfyPTQhB7LFNSZ6CweQCskLfdGXIpnOt0d0RtCcTbm
+	 VcNmbCjYZKmcYzCtWav7s7dRqyqWrQmSA4EcQzbLpkzQsOtQ6sYXel/9ybAhDHaPWMkVF
+	 c2PYRHkrgzfd3tadHI1MwSs1ppSFbIQFRLb9rscirRTA8PmF7eMg0prJ+5KrgzPU9A1ck
+	 hkIfdi+t4AFk+A5ENXSHdT3O7ldHL/dPwgthoVxyYWwpY5Z7b+TH0QteN9+TUilfqfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EDG0WyQS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsfYc5t8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5AD606A31A;
-	Wed, 28 Oct 2026 18:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A82606A31A;
+	Wed, 28 Oct 2026 18:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EDG0WyQS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3081F01825;
-	Wed, 28 Oct 2026 18:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsfYc5t8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65A11F01828;
+	Wed, 28 Oct 2026 18:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211974;
-	bh=knEZNTC5OV4VmIx0aR8NydGMgniqOhens6xctKC+hkA=;
+	s=korg; t=1793211977;
+	bh=747KpoAtOlTM+DZcTA8WT3eOFE9n6w8CthT6WbzCt7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EDG0WyQSXCqTW9kBmuc9iuIie7QEztIp7la9fYZtD5Bfw4/5Ftl6eTVxCIEIvgZqS
-	 dR/W7F3kIiuyNlDR8dgDZa2AYoyYSLyV7lFa7h/1gci9vc6l3Y6aayHibEk1jEYk+v
-	 b0aI3oy4Piu3PCQGTi7z8dCJYbGjuTPFMYuS9oaU=
+	b=BsfYc5t8J63oDDtZ62RqlulhZlKmPTZAi38FzIog/iAF9FPHKQrRMZA9HACSO9lX6
+	 Ly5C7sYC596aRNJl/pgcJu/fGxwNYDBoRYqhJq4k9DFTnlASuGgwabOtwGdqHA/+z1
+	 jOEVEa1FiCKWENiK5CB8aTTad9GRqUiOTfOvsQE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Matthew Sakai <msakai@redhat.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 511/571] dm cache: fix issue with background work locking
-Date: Wed, 28 Oct 2026 18:00:58 +0100
-Message-ID: <20261028170020.154956252@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.15 560/571] tracing: Unregister field variable histograms when the command fails
+Date: Wed, 28 Oct 2026 18:01:47 +0100
+Message-ID: <20261028170021.322797189@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,158 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit bc9781c0247de107876f32929f1637db93a42b34 upstream.
+commit 91c14d6c13096091c56304120aaa26e479130b8b upstream.
 
-dm cache used a rw_semaphore for background_work_lock. Write locks on
-rw_semaphores have strict owner semantics, but there was no guarantee
-that the process that locked background_work_lock was the same process
-that unlocked it. This can be easily seen using a kernel compiled with
-CONFIG_DEBUG_RWSEMS. Given a dm cache device <cache>, run: 'dmsetup
-suspend <cache> && dmsetup resume <cache>'. This will trigger a kernel
-warning:
+An action that names a field on another event needs that field as a
+variable, so create_field_var_hist() registers a second hist trigger on
+that event to provide it, and records it in
+target_hist_data->field_var_hists[].
 
-DEBUG_RWSEMS_WARN_ON((rwsem_owner(sem) != current) && !rwsem_test_oflags(sem, RWSEM_NONSPINNABLE))
+If a later part of the same command fails, create_actions() returns an
+error and event_hist_trigger_parse() jumps to out_free. The write fails
+with -EINVAL and sched_switch gets no trigger, but:
 
-triggered by cache_resume(). To fix this, switch from a rw_semaphore to
-a spinlock and a wait queue. dm cache already has a wait queue and
-associated counter, migration_wait and nr_allocated_migrations, that was
-getting woken up when background work was getting completed, but wasn't
-actually used by anything. This is replaced by the background_work queue
-and counter.
+  # echo 'hist:keys=pid:ts0=common_timestamp.usecs' >> \
+      events/sched/sched_waking/trigger
+  # echo 'my_synth u64 lat; int a; int b' >> synthetic_events
+  # echo 'hist:keys=next_pid:wakeup_lat=common_timestamp.usecs-$ts0:\
+      onmatch(sched.sched_waking).my_synth($wakeup_lat,prio,nosuchfld)'\
+      >> events/sched/sched_switch/trigger
+  # cat events/sched/sched_waking/trigger
+  hist:keys=pid:vals=hitcount:ts0=common_timestamp.usecs:sort=hitcount:size=2048:clock=global [active]
+  hist:keys=pid:vals=hitcount:synthetic_prio=prio:sort=hitcount:size=2048 [active]
 
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
+The second histogram is the one created for 'prio'. It is still active and
+still counting.
+
+out_free reaches destroy_field_var_hists(), which frees the
+field_var_hists[] entries, but never unregister_field_var_hists(), which is
+what removes the triggers and runs only from event_hist_trigger_free(). The
+entry is freed and the trigger is left with nothing tracking it.
+
+Unregister the field variable histograms in out_free as well, and record
+each one as soon as its trigger is registered rather than after the lookup
+that follows it, so no exit can leave a registered trigger untracked. The
+entry then belongs to field_var_hists[] and is released by
+destroy_field_var_hists(), so freeing it on that exit would be a double
+free.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Reviewed-by: Matthew Sakai <msakai@redhat.com>
-Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Link: https://patch.msgid.link/20260914104036.1768529-1-donggeunyoo.kernel@gmail.com
+Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260913204302.DB2551F000FF@smtp.kernel.org/
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |   55 +++++++++++++++++++++----------------------
- 1 file changed, 28 insertions(+), 27 deletions(-)
+ kernel/trace/trace_events_hist.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -338,8 +338,6 @@ struct cache {
- 	struct list_head invalidation_requests;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -2634,20 +2634,18 @@ create_field_var_hist(struct hist_trigge
  
- 	sector_t migration_threshold;
--	wait_queue_head_t migration_wait;
--	atomic_t nr_allocated_migrations;
+ 	kfree(cmd);
  
- 	/*
- 	 * The number of in flight migrations that are performing
-@@ -395,7 +393,11 @@ struct cache {
- 	bool loaded_mappings:1;
- 	bool loaded_discards:1;
++	n = target_hist_data->n_field_var_hists;
++	target_hist_data->field_var_hists[n] = var_hist;
++	target_hist_data->n_field_var_hists++;
++
+ 	/* If we can't find the variable, something went wrong */
+ 	event_var = find_synthetic_field_var(target_hist_data, subsys_name,
+ 					     event_name, field_name);
+ 	if (IS_ERR_OR_NULL(event_var)) {
+-		kfree(var_hist->cmd);
+-		kfree(var_hist);
+ 		hist_err(tr, HIST_ERR_SYNTH_VAR_NOT_FOUND, errpos(field_name));
+ 		return ERR_PTR(-EINVAL);
+ 	}
  
--	struct rw_semaphore background_work_lock;
-+	/* background work management */
-+	bool background_work_allowed;
-+	unsigned background_work_nr;
-+	spinlock_t background_work_lock;
-+	wait_queue_head_t background_work_wait;
- 
- 	struct batcher committer;
- 	struct work_struct commit_ws;
-@@ -486,19 +488,13 @@ static struct dm_cache_migration *alloc_
- 	memset(mg, 0, sizeof(*mg));
- 
- 	mg->cache = cache;
--	atomic_inc(&cache->nr_allocated_migrations);
- 
- 	return mg;
- }
- 
- static void free_migration(struct dm_cache_migration *mg)
- {
--	struct cache *cache = mg->cache;
+-	n = target_hist_data->n_field_var_hists;
+-	target_hist_data->field_var_hists[n] = var_hist;
+-	target_hist_data->n_field_var_hists++;
 -
--	if (atomic_dec_and_test(&cache->nr_allocated_migrations))
--		wake_up(&cache->migration_wait);
--
--	mempool_free(mg, &cache->migration_pool);
-+	mempool_free(mg, &mg->cache->migration_pool);
+ 	return event_var;
  }
  
- /*----------------------------------------------------------------*/
-@@ -1026,34 +1022,39 @@ static void calc_discard_block_range(str
+@@ -5996,6 +5994,8 @@ enable:
  
- static void prevent_background_work(struct cache *cache)
- {
--	lockdep_off();
--	down_write(&cache->background_work_lock);
--	lockdep_on();
-+	spin_lock_irq(&cache->background_work_lock);
-+	cache->background_work_allowed = false;
-+	wait_event_lock_irq(cache->background_work_wait,
-+			    cache->background_work_nr == 0,
-+			    cache->background_work_lock);
-+	spin_unlock_irq(&cache->background_work_lock);
+ 	kfree(trigger_data);
+ 
++	unregister_field_var_hists(hist_data);
++
+ 	destroy_hist_data(hist_data);
+ 	goto out;
  }
- 
- static void allow_background_work(struct cache *cache)
- {
--	lockdep_off();
--	up_write(&cache->background_work_lock);
--	lockdep_on();
-+	spin_lock_irq(&cache->background_work_lock);
-+	cache->background_work_allowed = true;
-+	spin_unlock_irq(&cache->background_work_lock);
- }
- 
- static bool background_work_begin(struct cache *cache)
- {
- 	bool r;
- 
--	lockdep_off();
--	r = down_read_trylock(&cache->background_work_lock);
--	lockdep_on();
--
-+	spin_lock_irq(&cache->background_work_lock);
-+	r = cache->background_work_allowed;
-+	if (r)
-+		cache->background_work_nr++;
-+	spin_unlock_irq(&cache->background_work_lock);
- 	return r;
- }
- 
- static void background_work_end(struct cache *cache)
- {
--	lockdep_off();
--	up_read(&cache->background_work_lock);
--	lockdep_on();
-+	spin_lock_irq(&cache->background_work_lock);
-+	if (--cache->background_work_nr == 0)
-+		wake_up(&cache->background_work_wait);
-+	spin_unlock_irq(&cache->background_work_lock);
- }
- 
- /*----------------------------------------------------------------*/
-@@ -2477,9 +2478,7 @@ static int cache_create(struct cache_arg
- 
- 	spin_lock_init(&cache->lock);
- 	bio_list_init(&cache->deferred_bios);
--	atomic_set(&cache->nr_allocated_migrations, 0);
- 	atomic_set(&cache->nr_io_migrations, 0);
--	init_waitqueue_head(&cache->migration_wait);
- 
- 	r = -ENOMEM;
- 	atomic_set(&cache->nr_dirty, 0);
-@@ -2561,8 +2560,10 @@ static int cache_create(struct cache_arg
- 		     issue_op, cache, cache->wq);
- 	dm_iot_init(&cache->tracker);
- 
--	init_rwsem(&cache->background_work_lock);
--	prevent_background_work(cache);
-+	init_waitqueue_head(&cache->background_work_wait);
-+	spin_lock_init(&cache->background_work_lock);
-+	cache->background_work_allowed = false;
-+	cache->background_work_nr = 0;
- 
- 	*result = cache;
- 	return 0;
 
 
