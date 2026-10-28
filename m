@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211018;
-	b=g+P0XecXjst/OSIjPim3ITSpPRqjwpjXfKyr0M8rh+6kaSLmd0VgDEM7MUr+weUJlmE0
-	 Bg6dsBrLZkGnAqFwl+RJqmyQlKqrzfnKacBaTBcSZnwzeVRTlcQOhHtVupOVgEHu4OK0F
-	 TLClJmpTDDWdELU4PcJdoaVM9ADOd0zEYt6i1oRYF5AeLgumBNQruHnwdgCWDTW/Jq3nj
-	 P5JUN1bGJ8BfRZ+EF+WHMBt777ma3u3BF4fVu2dWVgnIZiLEj/bBH98U5Kcr8K0D8fWCz
-	 3TbVb4pbU09siKQRpleumYnZ095nqgRK75ljTtGAVBbrRNZ1Hqk5+UJq/UtlVNxHusA==
+	t=1793211021;
+	b=ECn0GuKzPqJvaPqI3WHiAYjl6vGvuUj0mKERhVDzC6fDdepkxWj46Y9Wyi1MLBpDwjLN
+	 6SRYogRsXZGuCurZjaHoNtiOr9d8FXPNEZow1YxPQmcT1tCAvXp6gWb6tWaBhsGSXmmXu
+	 /snEB9Gr716oZM72to7FkDLcBhiSe+qGIoZxfy0+85g/Pk8pW4xrnEGxUXbL7Mhk/FGLH
+	 XyJri5QrmbA5hbh1l9R+cLcjluiH2U/bHkrJjfYVU4uaDaWIwqkJtRXxNetgUYJivsF7m
+	 xmOpcj5jWU1E8lLjnE3p99fxsE9oNLPRrKEtOYWcZh4vIAqWZYwFcHDW6dI/p8T1/ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211021;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nw0QWq2dVdhgOCdsYFPytUB1UFu7w0SCphchrLm/iSM=;
-	b=z/0zXOh0aZxL3Lp4n+7ngq4fL4X1T/XNJOB2HT0TmcYaygfe2rhzsktqCf5WP5ByAHfA
-	 y7UxebTwg/lH5Njq6PRfMcLQhKL65YFdsvityH1cLin7TSEWegwhWXj5oKh1iDGI7mXG9
-	 gwjIzKw2JRsCNisZmu4jv33g3E2whdbWzFIcSWwyesh2ZvKPrYRcNlO4YbgtQL3cSktEl
-	 tXsaHMPzDW7Qgajf6fG8X0NcWUW7IQyezqfgPxJi6lVCFaykh6AkO8Zu2zxNm/DCknN2I
-	 yKN8VWdzA0HR7XWrZDq9/rDZOUJjyeRKmU9g4sapB+aFWG+wgGQt2By2GYA9u/Jm+Yw==
+	bh=gpV7cajhJQHslPG8srlh7VFiGuJ+MWZKJQpi6K2cTQQ=;
+	b=WVvOj7ng2kqNbYJFf/OfUS1O812gSpLlZ4zU6T+pCzalYMOSYfkDyDGIXdkYPnz/PCNt
+	 HXEoEAIiJmtR6ayg2a/Sk4YmDtxyFckVlelEqTgRwnipbEXnsrkM9ovbSO8ThAbBCu3yY
+	 4RfkMqeEbbfFZv0V/k8kvdlPnuhN/N5M8iGrTCnL/WFK6WkY70BB+uY1g/jfRR3tOdQfu
+	 dGaO8Gq5BAhH/VlMt/dCvH9dtGXWUQhpyNLfo8B4VhcD45TGLx+N0c5Xjw9Q+ucRoIxH2
+	 wglpfpVcprG8lRrtXIFsdFlkERlyafRCR4VjTMuWOKP+7Izf6A+MvR07h1T7QgnNuFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PKkPtQR6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fqmWukzI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97536606A325;
-	Wed, 28 Oct 2026 18:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE44606A31C;
+	Wed, 28 Oct 2026 18:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PKkPtQR6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006651F01828;
-	Wed, 28 Oct 2026 18:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fqmWukzI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8811F01829;
+	Wed, 28 Oct 2026 18:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211018;
-	bh=Nw0QWq2dVdhgOCdsYFPytUB1UFu7w0SCphchrLm/iSM=;
+	s=korg; t=1793211021;
+	bh=gpV7cajhJQHslPG8srlh7VFiGuJ+MWZKJQpi6K2cTQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PKkPtQR6rCQiNfzIj/O8256h9iIz/MhSf2ssR5TPGAoIGmHdibnGMntqNEspW8NJx
-	 n05XtdrCKfXkguhWM59JR1TpWIlWATwSgq4RmhYnGWXptJEcCFqP2bRsKktxguSS9l
-	 0FarDVqb+UoPLn6j2cBLMw+Tbhk8lnkutXZ6fhso=
+	b=fqmWukzIU3MpEZX2dmuugNZQlTlgosdWTzJjC5I1HLT1KFRThQcw7tycw2EMHd50N
+	 6urufCb2Wt5yGzlSmOOQ/gBcwdoTjfM5+UDyCY/1D6Me1h2hGv6DoNpoSRqngiF7e6
+	 g/tJUZrObO1p/6oZEuHrvgkUPnPDrcNTOCBYN8bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zimeng Li <me@lizi.moe>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 223/571] ASoC: qcom: lpass-cpu: use DAI table index for playback constraints
-Date: Wed, 28 Oct 2026 17:56:10 +0100
-Message-ID: <20261028170013.292706092@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.15 232/571] mtd: rawnand: cadence: Initialize IRQ state before requesting IRQ
+Date: Wed, 28 Oct 2026 17:56:19 +0100
+Message-ID: <20261028170013.510194075@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,52 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zimeng Li <me@lizi.moe>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit ca51771c8efde5df05476ac98dd1b2af4e2b149f upstream.
+commit 21f027016b1290d13c30b198ae7a00e6b3d1d5a5 upstream.
 
-The DAI ID is a hardware port ID and is not necessarily the index of
-the corresponding entry in variant->dai_driver.
+The Cadence NAND interrupt handler uses both the IRQ lock and completion
+object. Registering the IRQ before initializing them leaves a window in
+which a pending interrupt can access uninitialized synchronization state.
 
-When configuring a DAI with LPAIF_I2SCTL_MODE_QUAD01, the probe code
-currently uses dai_id to index variant->dai_driver. This is incorrect
-for platforms where DAI IDs are sparse. For example, the IPQ806x MI2S
-DAI has ID 4 while it is the only entry in the DAI driver table. If
-that DAI is configured for QUAD01 and probe reaches this branch, the
-code writes beyond that single entry via dai_driver[4] instead of
-updating the DAI being processed.
+Initialize them before registering the handler.
 
-Use the loop index i when updating the current DAI's playback channel
-constraints, while retaining dai_id for indexing the hardware-port
-specific playback SD-line mode array.
-
-This fixes the incorrect DAI table access for platforms where the DAI
-ID does not match its position in the driver table.
-
-Fixes: c223f41c1a52 ("ASoC: qcom: Add four speaker support on MI2S secondary")
+Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zimeng Li <me@lizi.moe>
-Assisted-by: LLM-assisted source analysis
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260927010911.51980-1-me@lizi.moe
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass-cpu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/cadence-nand-controller.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -967,8 +967,8 @@ int asoc_qcom_lpass_cpu_platform_probe(s
- 		}
- 		if (drvdata->mi2s_playback_sd_mode[dai_id] ==
- 			LPAIF_I2SCTL_MODE_QUAD01) {
--			variant->dai_driver[dai_id].playback.channels_min = 4;
--			variant->dai_driver[dai_id].playback.channels_max = 4;
-+			variant->dai_driver[i].playback.channels_min = 4;
-+			variant->dai_driver[i].playback.channels_max = 4;
- 		}
+--- a/drivers/mtd/nand/raw/cadence-nand-controller.c
++++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
+@@ -2850,6 +2850,9 @@ static int cadence_nand_init(struct cdns
+ 		goto free_buf_desc;
  	}
  
++	spin_lock_init(&cdns_ctrl->irq_lock);
++	init_completion(&cdns_ctrl->complete);
++
+ 	if (devm_request_irq(cdns_ctrl->dev, cdns_ctrl->irq, cadence_nand_isr,
+ 			     IRQF_SHARED, "cadence-nand-controller",
+ 			     cdns_ctrl)) {
+@@ -2858,9 +2861,6 @@ static int cadence_nand_init(struct cdns
+ 		goto free_buf;
+ 	}
+ 
+-	spin_lock_init(&cdns_ctrl->irq_lock);
+-	init_completion(&cdns_ctrl->complete);
+-
+ 	ret = cadence_nand_hw_init(cdns_ctrl);
+ 	if (ret)
+ 		goto disable_irq;
 
 
