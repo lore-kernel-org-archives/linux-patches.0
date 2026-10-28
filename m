@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210159;
-	b=w1m6pBddm4NnS7VSVYdx4k+UlkV1lzBLzFEUWWrf85QDapqSzRqUBM0XTy/KHB0BETB4
-	 Wfd1knhs2+gvbUn0O+iORMuU2iiDdgJa31H3mBpulp4HlBsKG5vnOmf3XHEJ6GcaV/nFU
-	 cJ6BdFQSb9DwPNkUYrmxZxV0X041KtAAu96fKzAtfwXkITZLugEBmDXq0LlFJA+ot4rQh
-	 arkrc67JGHK8+s+w49lGDxrHxwI8fSDQKm9xgJQK9npvHGQVVekgaWiZbY53TOvfxnybS
-	 Tw+5h3J7OhbgCWY41Ex2ypuQ65nedvrYoh0N34o64U5JQUxaXANXCg82Q6mSo/MISNQ==
+	t=1793210162;
+	b=PVCfzjoJMHxPH9ZA36rIaA7croV3SanYEd/fKSRCzq/9ZN3zHrSbmrCRpCdDqO15yW6O
+	 /XyXA1/OSbIdrkqefCb9b/5ZYL//SjVT0V5AW95zFuR0kkabMv5qARduY9SIVcs5btjh+
+	 Ip10FbeVCrjfszMf9PHD+2aCroleF0XubqHYSSP3L3kTNclhaOH6lkjupYJBTC9nHCGvs
+	 FS+a9OBjI95JqurA7afok2Cm/6LaijXinx8EsglIgU+o2LtmyhYGf2wYvpwyztXuQ86lk
+	 TQ1yPTu7gZypqjfux7gHrApxLHXEnQX5730V1WlDj0dFgzBa3HsApbztHoPwi/bV2/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=prtqZVi86yAlHtD/fd1IQi1BD+Zl4MykMi0HCLYOVlo=;
-	b=XxF3rS8sMa+cGAOxOF28VF/9c+Aj2Irh7fsR77Hs/9+8zDMzaj1qH9N2nwahVHrQrU0e
-	 WQ3g7+w/FuwLfajmI1HjvgPsIUdh5KtSzCFxLIdTRbpW2I/Jf86j52h6RQJ7zFGb3MGVU
-	 HAwKiGJvEFR44rXQUjAHuQ5tNjlA1rIr2G3rCv+8VzjqtTj0ZSwUjLA7CiC1au+LP6laL
-	 xlzJ5mVyFAEVuIXQQo0mk4frkNQCsLbmgg2Pazf5B/nPVQux8WGJiddVp8W28bhW24mKt
-	 Sh8xXPfeCdE+/oYg9KPv9Z9tAwwi8LZ5rXat51F+d4H/rY8jgAxZ1T7MYJcSO3xsdfw==
+	bh=I6B+xnFaZg27JN2jHVdz9A8xR2SwXYbUhYXiIoP2dNI=;
+	b=DXn+QcJeuElzzd0qgjFeW2yVr0gOL4SlQviy/HAp324h8IvGJDvwcP0q+Icel4BGF3Ow
+	 lv8MbTG18drlx/A7HKaw/f32VeiHOn0rhFVkLk0sRieoGU/quk25RrViqm6TcurMPM72k
+	 oqbg8ziWqGBgkrtKCVC2PfVBTI3zuzutgRvZyLgtrbBg+36PSikuqpE0ZwZy9ZhC7Fm+Z
+	 l5ZUPktqOyhx7zGeLZyDliNnPx+0I59XCaszFoNE139a8catJoaha3eUfuTIuduqcLz5q
+	 2kD65OmiKz6s7kpy1v3IOBjCgI54MPhR+TQ/F37MtZK3NSN+hVrNmyDC5AfLxwMoEjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PluWu0Gy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc+VdMkd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437E860A2630;
-	Wed, 28 Oct 2026 17:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D160760A380D;
+	Wed, 28 Oct 2026 17:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PluWu0Gy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5605A1F01828;
-	Wed, 28 Oct 2026 17:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc+VdMkd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCF81F01825;
+	Wed, 28 Oct 2026 17:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210158;
-	bh=prtqZVi86yAlHtD/fd1IQi1BD+Zl4MykMi0HCLYOVlo=;
+	s=korg; t=1793210161;
+	bh=I6B+xnFaZg27JN2jHVdz9A8xR2SwXYbUhYXiIoP2dNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PluWu0GyhVJY93p2yzb4PUYhrrtq5Y0p74uOIEdsVimCRs2DnjY/xuwYreNKA5zD0
-	 3tXhX8Vp5CKJq9XrBIzJ5vCgJQjg76Nzc9AiEIs6TrnYkPL2XpsK/cmmCHE+KiaR7w
-	 GF2n2E31S2N7eAdzlUI1l/2CNOQBP+DeERj+wDcA=
+	b=wc+VdMkdT5Dq8ddYdFZtkRDNGVgQJDLJQjQraW0Psnbjva5rEE1YH2RTDhqcOLvhu
+	 2L0ss7WfeZAfxE6fzZCSJFfyvGJbGvexwns995jPqwU7LLMOg0ifSCTYPBBOUlOHgK
+	 /SXqC0TBHOAZawX+qX5cZZrhShNHFh6Zg596z1mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dae R. Jeong" <threeearcat@gmail.com>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
-	Bradley Morgan <brads@mainlining.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/168] watch_queue: Fix note pool publication race in watch_queue_set_size()
-Date: Wed, 28 Oct 2026 18:00:31 +0100
-Message-ID: <20261028165945.338576743@linuxfoundation.org>
+Subject: [PATCH 6.6 096/168] ntfs3: free the sbi after a grace period
+Date: Wed, 28 Oct 2026 18:00:32 +0100
+Message-ID: <20261028165945.361100689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -71,92 +67,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 5e531d62f1f8834faf7a4eed0d41105cf6570a8f ]
+[ Upstream commit c01b091b06412d3b1b53d8c2925f6de586c8a2fc ]
 
-There is a race between watch_queue_set_size() and post_one_notification().
-watch_queue_set_size() publishes wqueue->notes, notes_bitmap, nr_pages and
-nr_notes with plain stores, and post_one_notification() reads them with
-plain loads under a different lock, so nothing orders the four stores
-against the poster's loads: depending on the build, notes can be stored
-last (gcc 14 on x86-64 does this).  Since keyctl_watch_key() lets a watch
-attach to a queue before it is sized, post_one_notification() can already
-be running on another CPU at that moment: it reads nr_notes > 0, passes
-its bounds check, and then reads notes while it is still NULL,
-dereferencing notes[0].
+If the "nocase" mount option ntfs3 uses custom hash and dentry compare
+functions. Both access ntfs3 superblock private information in rcu
+pathwalk. ntfs_put_super() and ntfs3_kill_sb() drop the info without any
+rcu delay. A lookup that's still inside the filesystem when the last
+reference to the mount is dropped causes a UAF. With a pathwalk held up
+in ntfs_d_hash() while the last reference to the mount goes away:
 
-An unprivileged user triggers this reliably by watching one of its own
-keys through a notification pipe and racing ioctl(IOC_WATCH_QUEUE_SET_SIZE)
-on that pipe against keyctl(KEYCTL_SETPERM) on the key from another CPU,
-triggering:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:post_one_notification.isra.0+0xa2/0x1e0
+  BUG: KASAN: slab-use-after-free in ntfs_nls_to_utf16+0x752/0x940
+  Read of size 8 at addr ff1100010453c850 by task walker/99
   Call Trace:
-   __post_watch_notification+0x148/0x180
-   keyctl_setperm_key+0x119/0x130
-   do_syscall_64+0x108/0x4c0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  Kernel panic - not syncing: Fatal exception in interrupt
+   <TASK>
+   ntfs_nls_to_utf16+0x752/0x940
+   ntfs_d_hash+0x22b/0x500
+   link_path_walk+0x11ad/0x1d30
+   path_lookupat+0x63/0xb00
+   filename_lookup+0x1f1/0x5b0
+   vfs_statx+0xd7/0x3b0
+  [...]
+  Allocated by task 95:
+   __kmalloc_cache_noprof+0x249/0x560
+   ntfs_init_fs_context+0x2db/0x5a0
+   alloc_fs_context+0x52e/0xc70
+  [...]
+  Freed by task 98:
+   kfree+0x1db/0x5b0
+   deactivate_locked_super+0x9c/0xf0
+   cleanup_mnt+0x9f/0x130
+   task_work_run+0x131/0x250
 
-Fix this by publishing nr_notes last with smp_store_release(), and by
-reading it once with smp_load_acquire() in post_one_notification() before
-the bitmap and the page array are touched.  A poster that observes a
-non-zero nr_notes then also observes the pool behind it; one that observes
-zero drops the notification as before.
+The bug is currently masked by the grace period in namespace_unlock()
+for umount(2). Keep the necessary information until the filesystem
+private info is freed and free it with an rcu delay.
 
-Fixes: c73be61cede5 ("pipe: Add general notification queue support")
-Reported-by: Dae R. Jeong <threeearcat@gmail.com>
-Closes: https://lore.kernel.org/all/ZT-S8Q7tyutcvu_q@dragonet/
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Suggested-by: Dae R. Jeong <threeearcat@gmail.com>
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
-Link: https://patch.msgid.link/20261009224715.46121-1-cenzhang@linux.microsoft.com
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Cc: <stable@vger.kernel.org>
+ntfs3_free_sbi() now runs from an rcu callback and drops the upcase
+table via ntfs_put_shared(). So switch s_shared_lock over to
+spin_lock_bh(). Otherwise the callback can deadlock against a task
+holding the lock on the same cpu.
+
+Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-7-7446d2d335e6@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Omitted removal of mount-option cleanup already absent from ntfs_put_super(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watch_queue.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/ntfs3/ntfs_fs.h |  1 +
+ fs/ntfs3/super.c   | 29 ++++++++++++++++++++++-------
+ 2 files changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
-index 0840603c91e37..d5a76a5efd204 100644
---- a/kernel/watch_queue.c
-+++ b/kernel/watch_queue.c
-@@ -101,7 +101,7 @@ static bool post_one_notification(struct watch_queue *wqueue,
- 	struct pipe_inode_info *pipe = wqueue->pipe;
- 	struct pipe_buffer *buf;
- 	struct page *page;
--	unsigned int head, tail, note, offset, len;
-+	unsigned int head, tail, note, offset, len, nr_notes;
- 	bool done = false;
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 5e7536ad0b94c..8850ee2b75b11 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -209,6 +209,7 @@ struct ntfs_index {
+ /* Ntfs file system in-core superblock data. */
+ struct ntfs_sb_info {
+ 	struct super_block *sb;
++	struct rcu_head rcu;
  
- 	spin_lock_irq(&pipe->rd_wait.lock);
-@@ -111,8 +111,10 @@ static bool post_one_notification(struct watch_queue *wqueue,
- 	if (pipe_full(head, tail, pipe->ring_size))
- 		goto lost;
+ 	u32 discard_granularity;
+ 	u64 discard_granularity_mask_inv; // ~(discard_granularity_mask_inv-1)
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 15b1f2027b4ed..3b7731b188302 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -183,7 +183,7 @@ void *ntfs_set_shared(void *ptr, u32 bytes)
+ 	void *ret = NULL;
+ 	int i, j = -1;
  
--	note = find_first_bit(wqueue->notes_bitmap, wqueue->nr_notes);
--	if (note >= wqueue->nr_notes)
-+	/* Pairs with the smp_store_release() in watch_queue_set_size(). */
-+	nr_notes = smp_load_acquire(&wqueue->nr_notes);
-+	note = find_first_bit(wqueue->notes_bitmap, nr_notes);
-+	if (note >= nr_notes)
- 		goto lost;
+-	spin_lock(&s_shared_lock);
++	spin_lock_bh(&s_shared_lock);
+ 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
+ 		if (!s_shared[i].cnt) {
+ 			j = i;
+@@ -201,7 +201,7 @@ void *ntfs_set_shared(void *ptr, u32 bytes)
+ 		s_shared[j].cnt = 1;
+ 		ret = ptr;
+ 	}
+-	spin_unlock(&s_shared_lock);
++	spin_unlock_bh(&s_shared_lock);
  
- 	page = wqueue->notes[note / WATCH_QUEUE_NOTES_PER_PAGE];
-@@ -297,7 +299,8 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
- 	wqueue->notes = pages;
- 	wqueue->notes_bitmap = bitmap;
- 	wqueue->nr_pages = nr_pages;
--	wqueue->nr_notes = nr_notes;
-+	/* Pairs with the smp_load_acquire() in post_one_notification(). */
-+	smp_store_release(&wqueue->nr_notes, nr_notes);
- 	return 0;
+ 	return ret;
+ }
+@@ -218,7 +218,7 @@ void *ntfs_put_shared(void *ptr)
+ 	void *ret = ptr;
+ 	int i;
  
- error_p:
+-	spin_lock(&s_shared_lock);
++	spin_lock_bh(&s_shared_lock);
+ 	for (i = 0; i < ARRAY_SIZE(s_shared); i++) {
+ 		if (s_shared[i].cnt && s_shared[i].ptr == ptr) {
+ 			if (--s_shared[i].cnt)
+@@ -226,7 +226,7 @@ void *ntfs_put_shared(void *ptr)
+ 			break;
+ 		}
+ 	}
+-	spin_unlock(&s_shared_lock);
++	spin_unlock_bh(&s_shared_lock);
+ 
+ 	return ret;
+ }
+@@ -624,6 +624,8 @@ static noinline void ntfs3_put_sbi(struct ntfs_sb_info *sbi)
+ 
+ static void ntfs3_free_sbi(struct ntfs_sb_info *sbi)
+ {
++	if (sbi->options)
++		put_mount_options(sbi->options);
+ 	kfree(sbi->new_rec);
+ 	kvfree(ntfs_put_shared(sbi->upcase));
+ 	kvfree(sbi->def_table);
+@@ -635,6 +637,11 @@ static void ntfs3_free_sbi(struct ntfs_sb_info *sbi)
+ 	kfree(sbi);
+ }
+ 
++static void ntfs3_free_sbi_rcu(struct rcu_head *head)
++{
++	ntfs3_free_sbi(container_of(head, struct ntfs_sb_info, rcu));
++}
++
+ static void ntfs_put_super(struct super_block *sb)
+ {
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+@@ -651,6 +658,12 @@ static void ntfs_put_super(struct super_block *sb)
+ 
+ 	/* Mark rw ntfs as clear, if possible. */
+ 	ntfs_set_state(sbi, NTFS_DIRTY_CLEAR);
++
++	/*
++	 * The mount options stay until the sbi is freed: ->d_hash() and
++	 * ->d_compare() of a pathwalk in rcu mode read the nls table through
++	 * them.
++	 */
+ 	ntfs3_put_sbi(sbi);
+ }
+ 
+@@ -1807,9 +1820,11 @@ static void ntfs3_kill_sb(struct super_block *sb)
+ 
+ 	kill_block_super(sb);
+ 
+-	if (sbi->options)
+-		put_mount_options(sbi->options);
+-	ntfs3_free_sbi(sbi);
++	/*
++	 * A pathwalk in rcu mode may still be in ->d_hash() or ->d_compare()
++	 * and read the upcase table and the nls table through the sbi.
++	 */
++	call_rcu(&sbi->rcu, ntfs3_free_sbi_rcu);
+ }
+ 
+ // clang-format off
 -- 
 2.53.0
 
