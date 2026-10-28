@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215105;
-	b=3Bw07gwHe04uOqjAk4ll92Yx90YGV2OXJS1QJ0dYYJmJ/3jycFiRemzbBlnMyqnDulQ6
-	 +2RK65+0CfgFM62WXZI4jNwGuctARmOvVioutJ6Ou8XS/nV2ZQYf7/wubmxkZRREGUwap
-	 tB9ycjdGG3UerJev888yLOfMCQCBs6S1H77d0q/hu0wOMtj8p2WrSUAavgXtjHpymocDx
-	 YzImJ/AwOebbdq/yslHla9WeCN87GPntMzxWtHM91yXKKgZtLbuXv9A+2fyiIYaE5XL5G
-	 NzVdxFzAREIJ8vlCALvrpV6C1I5mqq6JWvVRsJu0xiKaOKjRzSNiyayZBu9r7vtPBgg==
+	t=1793215108;
+	b=Ykl7LwXNwc7nLcDOogIdy/LSeooWNFBuTWPIPFyfJtzoaRtblDqr9lmfnvCe2uRPq/qP
+	 RwyQRjwZZInCL9NB4gzlz6LYAowack2mzm1l3D+QpqYJbOqhPOFzsdOeGI6bMk2GRFlX6
+	 TVbqNYd2EF5JEnz9cgRg8qnUrXCdprFK5uadrzdWtnv+GhKSav2YUihO3Ieezre3dL+1B
+	 KLD4ujebGBtaZOuPNkLWS1oJqhDSV2d/+Rsln0gf1xsslZURYB4SawBYKYq3RwtOQ/VV/
+	 S5sNIzizwuPSFuKM37PVXg2CSP6i5g+9s4VvKGERyZR7KEeqostY4snIpiRwh939rsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=etvnE9l2YaDGAL9jc6RoVIRig0OrGR4Q2dGGfUejQU0=;
-	b=mjEJhenrYhNVQWkIuxBV+2/rt+kkqtOnfwMeJHyCMkyE/bvfBlwSRMoaB9+IarV3jUq8
-	 J+3GqYkkzuYiQF0aPkHsSSPj6WdhrQZTvUdNOWUWFCVf6kTOcSZdJwoKaHsWcXx/z5zPU
-	 elaOP31SHwpjW0EI3yUr6zJvsslKBWiCIGDygzlO3DYpp1LUjpbvOz6AuQxMkbilUg9dj
-	 VYiOc1no0pIR+6Ghzsa3DcRpft0wuJhyG0YHdRFelOfJo9xVcZC8i6ED+ohM8jIpPkeNN
-	 WUK/M2Q1FwKZoHOZC2grxYro6kOM/UYdZpEZOKYUVdCLCU4CwdKTlDEdITNZoLWB/JA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SxeV/rb0eaTVQaF3y36N2kKl3OG6Dc+EkxrvM38fG6s=;
+	b=QiNmk8Wfpul7dLWPY4bR37rQa5QkjezSHBcmWglPwZiV99aEAMpcFBDGZCzrGd9SPQBs
+	 PX74FnDkzLEocs+eC+XXrAFd6g9CeeXgTWhbxa2hRKcyIkQYKogKO2kJOKJxtpnlPWJBu
+	 jbXkomksjjWQ4TAwrTL5tgQyPvnTNSUJ6nGl/hWgDIoxQFYJThReIeUvqLEGXLeTc9DUM
+	 8kIRPey5RU4yqNXbrbQ2cRTzQEC/qCDSKWo2JWTC9xu3U6wDwr9rhCZEiFBWKv1VNiBvR
+	 sceKzhAhYOhR2Aa4kfgKcAgPgfqaH/ZlZNECG7eX2vShBKQ3xDNwd5lQIr5cJI3EOUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1FfSf5Qn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnKwUrI5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EEE606A31D;
-	Wed, 28 Oct 2026 19:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C59606A31A;
+	Wed, 28 Oct 2026 19:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1FfSf5Qn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACD81F01825;
-	Wed, 28 Oct 2026 19:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnKwUrI5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D571F01825;
+	Wed, 28 Oct 2026 19:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215105;
-	bh=etvnE9l2YaDGAL9jc6RoVIRig0OrGR4Q2dGGfUejQU0=;
+	s=korg; t=1793215108;
+	bh=SxeV/rb0eaTVQaF3y36N2kKl3OG6Dc+EkxrvM38fG6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1FfSf5Qnz6OI103ZEaqfP5+iwv4IgS4cowvhxV10yx6RJNBfEEdyRyC8wB5fPNUV7
-	 lbZzewlkr/4O7if14qA0fZCd76bCXQrwvC9ATBujuVNLGeVK8RKBB/klTnaeB6eS7a
-	 wmflT4Y9CuuN2rdc9+JJ343Vvd2+ak49OiiBMODQ=
+	b=hnKwUrI5tiQvHUSQ9BZi8/XEjQV3bWDjSBM+fuw4xlWIgIjSTnQeJPHnF1IBfjFoD
+	 wE2JVHI5tOhPoIodeuTtXmMWdW06BT5oZHNaQoIbUjNQbsaJcrwiz5aR1E+EDZheUt
+	 tM5ODDak3sfKjfmR9Cnyau+tyULO5bGRDYQ4yhi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1087/1887] wifi: mt76: Fix memory leak after mt76_connac_mcu_alloc_sta_req()
-Date: Wed, 28 Oct 2026 17:53:03 +0100
-Message-ID: <20261028170524.140989901@linuxfoundation.org>
+Subject: [PATCH 6.1 1096/1887] gpio: mvebu: Use IS_REACHABLE instead of IS_ENABLED for CONFIG_PWM
+Date: Wed, 28 Oct 2026 17:53:12 +0100
+Message-ID: <20261028170524.346757849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -62,60 +62,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit c41075ce8cf05ed8c0e7b7efef000dce548ffc42 ]
+[ Upstream commit 3101b1e4ba3874a7dbcc4da6d788e1408a69a5d7 ]
 
-mt76_connac_mcu_alloc_sta_req() allocates an skb which is expected to
-be freed eventually by mt76_mcu_skb_send_msg(). However, currently if
-an intermediate function fails before sending, the allocated skb is
-leaked.
+To check if a certain function (here e.g. pwmchip_add()) can be called
+IS_REACHABLE is the better check. The relevant difference to IS_ENABLED
+is that IS_REACHABLE evaluates to 0 if the current code is builtin but the
+checked symbol is =m and so must not be used.
 
-Specifically, mt76_connac_mcu_sta_wed_update() and
-mt76_connac_mcu_sta_key_tlv() may fail, leading to an immediate memory
-leak in the error path.
+Today there is no practical impact as CONFIG_PWM is a bool.
 
-Fix this by explicitly freeing the skb in these error paths.
-Commit 7c0f63fe37a5 ("wifi: mt76: mt7996: fix memory leak on
-mt7996_mcu_sta_key_tlv error") made a similar change.
-
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Fixes: d1369e515efe ("wifi: mt76: connac: introduce mt76_connac_mcu_sta_wed_update utility routine")
-Fixes: 6683d988089c ("mt76: connac: move mt76_connac_mcu_add_key in connac module")
-Fixes: 4f831d18d12d ("wifi: mt76: mt7915: enable WED RX support")
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20260116144919.1482558-1-zilin@seu.edu.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: b9ad50d7505e ("gpio: mvebu: fix NULL pointer dereference in suspend/resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-mvebu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 6f4b1a784a078..e6ca72363e0f7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -2652,8 +2652,10 @@ int mt76_connac_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
- 		return PTR_ERR(skb);
+diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
+index 3ead4c95fa3d0..c38d28de2e620 100644
+--- a/drivers/gpio/gpio-mvebu.c
++++ b/drivers/gpio/gpio-mvebu.c
+@@ -1002,7 +1002,7 @@ static int mvebu_gpio_suspend(struct platform_device *pdev, pm_message_t state)
+ 		BUG();
+ 	}
  
- 	ret = mt76_connac_mcu_sta_key_tlv(sta_key_conf, skb, key, cmd);
--	if (ret)
-+	if (ret) {
-+		dev_kfree_skb(skb);
- 		return ret;
-+	}
+-	if (IS_ENABLED(CONFIG_PWM))
++	if (IS_REACHABLE(CONFIG_PWM))
+ 		mvebu_pwm_suspend(mvchip);
  
- 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
- }
+ 	return 0;
+@@ -1054,7 +1054,7 @@ static int mvebu_gpio_resume(struct platform_device *pdev)
+ 		BUG();
+ 	}
+ 
+-	if (IS_ENABLED(CONFIG_PWM))
++	if (IS_REACHABLE(CONFIG_PWM))
+ 		mvebu_pwm_resume(mvchip);
+ 
+ 	return 0;
+@@ -1238,7 +1238,7 @@ static int mvebu_gpio_probe(struct platform_device *pdev)
+ 				     "failed to register gpiochip\n");
+ 
+ 	/* Some MVEBU SoCs have simple PWM support for GPIO lines */
+-	if (IS_ENABLED(CONFIG_PWM)) {
++	if (IS_REACHABLE(CONFIG_PWM)) {
+ 		err = mvebu_pwm_probe(pdev, mvchip, id);
+ 		if (err)
+ 			return err;
 -- 
 2.53.0
 
