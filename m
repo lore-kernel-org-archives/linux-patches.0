@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208997;
-	b=RLTQxLZC3gvWyMyeR8D4u7NSNBPSWpTTM69MuQ5573mlJeoqMonwEFcc6HyMTSKxAz6g
-	 vRjhfUQIOMbhu8LwJ5QAQDIekT8P/lScZknTi5iU/geLnKB/jrAvd3Nip29yP8AwTF/Ub
-	 TBWQW4rRtPGHssmETU1+cQp7h36OytroIgzwjTi++V/x7veB3EZ0GhNCMJJMltCbDeIi2
-	 wHiGjCUgQwyQRRFQlcAALNZTQ4KW7DVnagj3gjxzipijGZWF9sIToljlNQVvwuQav2uh/
-	 dYdtCMirLJWJ64DafjzTuvdaL0SItLh/nAEZkjdqqI+qRPfOwwj7tIUH/zW9B5f7Idw==
+	t=1793208999;
+	b=zy5AdbdgVajg9+XgWr0d+eaOn9gRbOybliICkYy9oBMpmzUSMnP2BF0F9EOHFOkWgGde
+	 Ol8CW54KZa674w+rMItg9pqF1+WojX550f2TX/0tjFv/lHDe4dRBvRpCjld5K9te/56JH
+	 ZbHKNUvBjB2Y8kZiQ5aXANc8R8CPtwMxbcmjq7rIn1wJ63NM68QO9qm+pgLp42Vx13XqX
+	 Yd6i9T4e27FaUeJbHe9U5C7SATQUrDxmnIoEhu3uOY5G8k5KjXmoKLtQP4Q/owONOyfAv
+	 JByJhKth2YMNWuioF3/guzLM3A20FoA5ofjeyUg7UTYk9317EQ47uin85khrXAaBsgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208999;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gXgEcJXufK5O0QURTCDk0ldW3g6Kt8ZLuCb6gJ2apAQ=;
-	b=Hvr21P6mWOtP9cUUeMHXeTUuC40rm4IwCvlDzTJdFDd1LOlMxUI7lF1ZffFzgwpdWQqW
-	 T5lzfqrwqr2P4ldMMSqXSMTP8IGpcmDnLqU+Z9Tf3XRsQEQtu0mXNQ41eHFe/Ob0Z4Tyd
-	 XRGvNAAUjaThe42sPz6PmTX1yx0KQmIEAC6S02g2R4SNOojra/WOYkyGppSfGkFlyOuOq
-	 nfrDTjDyrzO8ERFOcPnnWxIvc05WA6lTs/2av1WFI5CYa2tu7nlo2qBHs31slKAfV9MbA
-	 nQNCVK337FICnnlxKoekzTaa2EDRxZNwLEezUE8tXMYYuNbkcf5WVdz13CzX8WLohlg==
+	bh=pfiapnkJvHI7Vhw0Z/XF+eKjiEpaBfLz+zPMW43lV5w=;
+	b=WMA2MU7sRHb8B+qsw6ckeoNkgxDfYYVzUd5U5La5q5qMt9qeaQuFsNh/DxzjSLM/TmTC
+	 coSBG0aY12FAI5xhX6nX60avQgP1MP/5Xq9vWsh3P0VV2haqkRwyZ0UeDZAl/zWGlb6EL
+	 rDue4tO02xoBiqu7ybeTZh3ea1sIVj5+5YlKqeGP4+xKor+Q7c5riJAcOytum0E0dScdt
+	 96OLC+1G1K/9h7HOnvRXxQKpf1gM3H6/UMc0rv+62KD/DfMUlU16Auhs4gv3jeeKehPD5
+	 HuexjfC2nAxmgPskT+fQ5mN4dNhXVU+V6m0u6b/bJ2G9+vp0UnapeB/yo0UbpW7taWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e59BIBOj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OMqi2gpM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D226F606A31D;
-	Wed, 28 Oct 2026 17:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF23606A31A;
+	Wed, 28 Oct 2026 17:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e59BIBOj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0291F01828;
-	Wed, 28 Oct 2026 17:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OMqi2gpM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A441F01825;
+	Wed, 28 Oct 2026 17:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208996;
-	bh=gXgEcJXufK5O0QURTCDk0ldW3g6Kt8ZLuCb6gJ2apAQ=;
+	s=korg; t=1793208999;
+	bh=pfiapnkJvHI7Vhw0Z/XF+eKjiEpaBfLz+zPMW43lV5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e59BIBOjOCehGZHdIXH+wRGYtn15nzqJO4S4EirtwY0cWSWLfHUpDbmc14VA+oPxp
-	 aKMq45V+DJcJkaAJ1G7NDiI2mUUozcADx8OcwHv+cjFVgD0KSC2A+BUPF5dHfygjEk
-	 ysPs4lqMF6vnAb7i9KJei6fEoit32tCKs831wdLw=
+	b=OMqi2gpMFfQXbxIUdU5TRKLgezjJ+71qlw59uBOE9v5TWmoQkhXJjXci93X2go51E
+	 fRTOtEeG1nyU8OzI2/DXmdZ1m12dilZAOdAaZqT0BWjSwepaDBhEvU9bauBtIsFUiX
+	 wqOxNWQXXsfqRoYETgUPN7QfM/XUY7HxDBOIAUc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 315/516] btrfs: scrub: fix local_root reference leak in scrub_print_warning_inode()
-Date: Wed, 28 Oct 2026 17:57:47 +0100
-Message-ID: <20261028170010.951589046@linuxfoundation.org>
+	syzbot+48d935cf48a4a76be346@syzkaller.appspotmail.com,
+	Palla Raghunath <raghunathpalla.0209@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.10 316/516] dm ioctl: dont let data_start run past the buffer
+Date: Wed, 28 Oct 2026 17:57:48 +0100
+Message-ID: <20261028170010.975380313@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,42 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Palla Raghunath <raghunathpalla.0209@gmail.com>
 
-commit 1fd742c7479961da6d0bb794ef8ac6b7b9442847 upstream.
+commit 9b3fcf519d370df94a56f3b272d9eddffffa5be8 upstream.
 
-When paths_from_inode() fails, scrub_print_warning_inode() jumps to err
-without dropping the reference taken by btrfs_get_fs_root(), leaking a
-reference to the root every time path resolution fails while printing
-scrub warnings.  Every other error and success path of the function
-drops the reference.
+struct dm_ioctl has seven bytes of trailing padding, so the smallest
+buffer userspace is allowed to ask for, offsetof(struct dm_ioctl, data),
+is seven bytes shorter than sizeof(struct dm_ioctl).
 
-Drop the reference on the paths_from_inode() failure path too.
+get_result_buffer() sets data_start to sizeof(struct dm_ioctl) without
+looking at how big the buffer actually is. Ask for the minimum and
+data_start ends up seven bytes past the end. Callers add it to
+data_size, and ctl_ioctl() copies that much back to userspace:
 
-Fixes: 558540c17771 ("btrfs scrub: print paths of corrupted files")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0xad/0xd0
+  Read of size 312 at addr ffff8880169e4c00 by task repro-dm/140
+   ctl_ioctl+0x5e3/0xcb0
+   dm_ctl_ioctl+0x25/0x40
+  allocated 305-byte region [ffff8880169e4c00, ffff8880169e4d31)
+
+A DM_LIST_DEVICES with data_size set to 305 is enough to hit it, and the
+seven bytes that leak are whatever sat next to the allocation.
+
+Clamp data_start to the buffer size.
+
+Note that this is not a security bug because the out-of-bounds read can
+only be triggered by root.
+
+Reported-by: syzbot+48d935cf48a4a76be346@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=48d935cf48a4a76be346
+Fixes: 76c072b48e39 ("dm ioctl: move compat code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/scrub.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-ioctl.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -692,8 +692,10 @@ static int scrub_print_warning_inode(u64
- 	}
- 	ret = paths_from_inode(inum, ipath);
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -496,10 +496,16 @@ static void *get_result_buffer(struct dm
+ {
+ 	param->data_start = align_ptr(param + 1) - (void *) param;
  
--	if (ret < 0)
-+	if (ret < 0) {
-+		btrfs_put_root(local_root);
- 		goto err;
+-	if (param->data_start < param_size)
++	if (param->data_start < param_size) {
+ 		*len = param_size - param->data_start;
+-	else
++	} else {
++		/*
++		 * The buffer can be as small as offsetof(*param, data), which
++		 * is less than sizeof(*param), so don't run off the end of it.
++		 */
+ 		*len = 0;
++		param->data_start = param_size;
 +	}
  
- 	/*
- 	 * we deliberately ignore the bit ipath might have been too small to
+ 	return ((void *) param) + param->data_start;
+ }
 
 
