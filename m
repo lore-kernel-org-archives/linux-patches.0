@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212359;
-	b=SsAD3Vfu4klEIB1t//SJHtK386W+lNxNdtDcFKXQ+6HmEkycm3rlhF37eNXQc11EZRT9
-	 +mPbPgZ78dkwR72Ly3vXsHbE68FWVbtQvblcubsWBZVbTy1aj2b6+oS9geA/tWHq1GABK
-	 OEjuPBoyLJ9lyuiCi/P6tPlgeApDwufLJcosX3gYqTeeRJrKyLL2OasMbOZyex4u2okQr
-	 uNNnTU1LDtvJjRwlsEpW6a8/z+i3LD4SnOSAzaogHXEADtEOq/gKm8QNBXbEC+G2zz2lF
-	 8WhQOZ/m/LsP+YoJNbQCdText4GtpZvi+oK+oiCZ0eOIk9EZbVxLnR3HhmYMo3lDCrQ==
+	t=1793212362;
+	b=EdyGClckNbFYCcphnzzyCM4jw02cGwccEevpx08nt4lCNsa0LEvZZ0hrdrrevWT8W7oY
+	 JZVobcHSynJXSJblJMcZRBLuARux9LVN6uWI9IJMZ14mqNYoBERgxcnRAIBJSm9k2CyQS
+	 SIAxmqlfYEo4w+s5X9SMgbadXP3o9I9bYhRXhSoIsXE1ygOChPD3ixNxImZNnJb6DjNbx
+	 oEoAPDTuWzM2L+IZNq1pUifiyfOZKBQHQwp2ALRVNz7JE0fNlxdjRVQ3xp3QCCrpP3DjB
+	 maoR02V/2iNjxZ9LQJWHwmEZmpcr171NZ0WU0M9LioDxJLb0fsHhAILR2mxrXQlYtdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LNMRxQ+nPRDI9DfI7/Jm/4kNJMNgv7ueXZpHUHhG0Ik=;
-	b=TwagkGXR3CouivoJXsZq6pY7+HHJxmp5fRh23J5kcXSQkkBsk/9cqWaQDGGhiGglZHkF
-	 DSckFhBjh+6HVLiO/EDDqfkQ+s7cNgu2aS3d7CqLgqT//xU7z0u4/FoUeeFFoCk7ebKMH
-	 UfGWpMMcOt3wf2bAcRUlDaE3L2gLpWEGyBd7w1ml9BQaXv4vaolPHIKXWGB68X9Vd/6bb
-	 jMfJyF8ncB08oJSRqV31n/HsfOyU7z8ZuPbSE0QJlzuKjxsLAeuejaJq/Za/8DCUvXyIl
-	 IyOKyZdn12jbfHF3aOf31NkRTXGr61zuZePD3uTONMowZhfpvGY6dcSeWIOw7avowYw==
+	bh=li1oRMI7K64A/y2kVyYez9ekAYJVydm3DbMXQt61LD8=;
+	b=rL5QMMKaxSfm30ZdHmIU5x2MULIRKDxUj75NT2rctrWcJp9l7/LuratW6VHKMY1mOwwI
+	 tnnGK91+f73ZpwwIB/1yyzp8RpJ22D2/narSrFZ+lagBL2P9G7KTu73hXtTKhpIWQBWhk
+	 0br8E5kQwA3EaFGpMNplEMFbriyMYrf04FxZF94NEzzHYRSLy0adKy1GpjLVdrJ8SvzSt
+	 LAnelVc/ULoy4VpB/SuDx7Gf0OyoqIlKKITB5zu1djFWnu0ju/zXRqi+KKkwOghBLuefE
+	 77isXpD1aSX1pGGRCFRMVLX6qfjSleE+ctoTEK+/Gt7lzyk3iW/xC3J6XCtBxC3/D1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZFy+V0Bs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9Jzi0+t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6936B606A31A;
-	Wed, 28 Oct 2026 18:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9388F606A31A;
+	Wed, 28 Oct 2026 18:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZFy+V0Bs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84DE1F01825;
-	Wed, 28 Oct 2026 18:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9Jzi0+t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967141F01828;
+	Wed, 28 Oct 2026 18:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212359;
-	bh=LNMRxQ+nPRDI9DfI7/Jm/4kNJMNgv7ueXZpHUHhG0Ik=;
+	s=korg; t=1793212362;
+	bh=li1oRMI7K64A/y2kVyYez9ekAYJVydm3DbMXQt61LD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZFy+V0BskCc47L4yy2e6ZK6VdempTIAWrbZynqplp4DsZzW1OuTTL3228WdfVGlCY
-	 tacZrualvmXihH6hy8j2lgjcBBcxwi6RQRWLD2Jb0YFtTuOFMfjeyONc33XXYqv4t0
-	 swQibc/hGN2z3z2bTUjIwkLzBQsYwc+IlmN3vaYc=
+	b=N9Jzi0+tSy5kso01SNisAlVE+NcNDH19IizgJrchcpWA/nzLlyuI3LA7bDfezaACC
+	 BJMB8grs5T4O4UT3bt4sfrjrOh8R/13qZ+wn2cr7qcCvBkwXr/afmK5qHM6WPWCub7
+	 DQPgueyzX4W/UDrh1F6ynjdqU1r+IiHJ0fXduK18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0127/1887] mptcp: pm: reset retrans_time when ADD_ADDR entry is reused
-Date: Wed, 28 Oct 2026 17:37:03 +0100
-Message-ID: <20261028170502.127131007@linuxfoundation.org>
+Subject: [PATCH 6.1 0110/1887] scsi: qla2xxx: Quiesce response IRQ before freeing request queue
+Date: Wed, 28 Oct 2026 17:36:46 +0100
+Message-ID: <20261028170501.739125896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,47 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit f968190c0b42ea2004dc1426359a53ec365a7a37 ]
+[ Upstream commit 505753ec2594c6af09a601f0dd60be7d840c1d2d ]
 
-When an ADD_ADDR entry is reused, the timer is re-armed, because the
-goal is to re-announce an ADD_ADDR, and eventually retransmit it if
-needed.
+qla2xxx_delete_qpair() deletes the request queue before the response
+queue. qla25xx_delete_req_que() frees the request queue memory
+(kfree(req) in qla25xx_free_req_que()), but the response-queue MSI-X is
+only released later, in qla25xx_free_rsp_que(). In that window the
+response interrupt can still fire, qla2xxx_msix_rsp_q() queues
+qpair->q_work, and qla_do_work() -> qla24xx_process_response_queue()
+dereferences the now-freed rsp->req (LOGINOUT/CT/ELS entries and the
+status path), a use-after-free.
 
-In this case, the retransmission counter should be reset as well, so the
-re-announced address gets its retransmissions back instead of relying on
-what was left before, and possibly not being able to retransmit it.
+The cancel_work_sync() added for the qpair teardown lives in the
+response free path, which runs after the request queue is already freed,
+so it does not protect rsp->req.
 
-Fixes: 304ab97f4c7c ("mptcp: allow ADD_ADDR reissuance by userspace PMs")
+Release the response-queue interrupt and flush qpair->q_work before
+deleting the request queue, so no late completion can reach the freed
+request queue. Clearing have_irq makes the subsequent
+qla25xx_free_rsp_que() skip its free_irq(), and the firmware
+queue-delete order (request then response) is preserved; the
+request-delete mailbox completes on the default vector and is unaffected
+by dropping the qpair response interrupt early.
+
+Fixes: d74595278f4a ("scsi: qla2xxx: Add multiple queue pair functionality.")
 Cc: stable@vger.kernel.org
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-0-b8f496d71664%40kernel.org?part=4
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-9-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted mptcp_pm_announced_alloc() in pm.c to mptcp_pm_alloc_anno_list() in pm_netlink.c. ]
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-18-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ adjusted context due to missing qla_free_buf_pool() call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 0d8316bc50775..532f75d29124d 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -428,10 +428,10 @@ bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index ace35581fd941..16470cfa333b3 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -9908,9 +9908,26 @@ int qla2xxx_delete_qpair(struct scsi_qla_host *vha, struct qla_qpair *qpair)
+ {
+ 	int ret = QLA_FUNCTION_FAILED;
+ 	struct qla_hw_data *ha = qpair->hw;
++	struct rsp_que *rsp = qpair->rsp;
  
- 	add_entry->addr = *addr;
- 	add_entry->sock = msk;
--	add_entry->retrans_times = 0;
+ 	qpair->delete_in_progress = 1;
  
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
- reset_timer:
-+	add_entry->retrans_times = 0;
- 	add_entry->timer_done = false;
- 	timeout = mptcp_get_add_addr_timeout(net);
- 	if (timeout)
++	/*
++	 * The response-queue interrupt schedules qla_do_work(), which
++	 * dereferences qpair->rsp->req.  Release the interrupt and flush
++	 * any pending work before the request queue is freed below so a
++	 * late completion cannot touch the freed request queue.  The
++	 * firmware queue-delete order (request then response) is kept.
++	 */
++	if (rsp && rsp->msix && rsp->msix->have_irq) {
++		free_irq(rsp->msix->vector, rsp->msix->handle);
++		rsp->msix->have_irq = 0;
++		rsp->msix->in_use = 0;
++		rsp->msix->handle = NULL;
++	}
++	if (rsp && ha->wq)
++		cancel_work_sync(&qpair->q_work);
++
+ 	ret = qla25xx_delete_req_que(vha, qpair->req);
+ 	if (ret != QLA_SUCCESS)
+ 		goto fail;
 -- 
 2.53.0
 
