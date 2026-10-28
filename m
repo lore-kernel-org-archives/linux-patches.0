@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216748;
-	b=cKnMKg3gOYpxxmurtv1RFvvWqU5uJEAXgGzmrBd2ZHTYOGrYTZ7H+Q5fe1u0rxY845St
-	 tEPw0OHZBiu3H+ogcARHAJb4wfJLm2I0ySJqhINmGOkOSUua/AytKyHkMLO3Aklwt1IxU
-	 i6a7178dLGDJ/DpMWdWrSpuVKbXVbLN9kAR1dP/lBCMqBoLE9/d3J5NmaXWmQCyp/aSl0
-	 DcsTu5GYT4rIyUsd5FJkWNP6lXvJHZ+PONDdIGSOkWf5Fgy3SCKt8CfVlB2miOOrCOfO5
-	 UcQFld1kiaNrzIU80bn/6fMmnWWCYQ7gNo03COvQS0+UfniiSNM8IgVIQz46fK5sODA==
+	t=1793216751;
+	b=YLDoq2OLE83AISVIJFuuQRR9jqw7I24oN/RydAb3QuKBvJ2XtgNLeh4BuDCEMGAFY/te
+	 LXLB1SzanSx5fGSImCYO973NMEdF76D10I8obZHNaG7N8XidlaWNJDChcT9R27AZc5A2m
+	 AX1enR10/BpdeMRb04hxSzezVOqkFh2+AkeVAsCbmsHMpcv4+qabM2BItAagAEbVvQJVR
+	 5DUaFUNlHBY2DNeHVzB2T7GvwjK3pNf0V1laKUMjZpSdx4bi0l7OMxEX63RH5m8Ywkwal
+	 bue1hW/MqWqutqeBubCZd6OvlWM4vk7PuTxWmnxQwfgXDqVSI+vmr2PoRqajKgE/02Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216748;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216751;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/VW5nx+hgizstCr2i14s8afkeMop8UDlheerDqL1UmU=;
-	b=KOwWUSXamw/BBkR5VxiPeGTz++OlT0UENeanzsU+26CPGOeoOWJgaKJjM3FmLgIlPlut
-	 IQ1D8B6NtB4wrHZtItEpom0f/D2//GbqRLuxRV9PVwGKRhgccjr+oLvmJ6FtBOQSrnwbH
-	 kLkmwinzuqqIQ4l83/wkHCWFcfEExbeFMlRgFh+Jl1pvBDarkUh+eh+w7mG3//UbJPc35
-	 7LAchWDBftpieZPB7FTAfVyPeNz6IP/PRtCjscW4gwI7GrUridl9XgpicbOVMvxmr+Lgd
-	 Yg1D3EZ+k8xrOyednOu8AzRjuYKfy8Qyf5LS/2km8/56W1Hwaq5KueR3UEx/CyL4o7Q==
+	bh=gcRfK1p8VSWL+c4HSEWNaOp5p9Jv8ioozOpOvxgecv8=;
+	b=w75dci92Zdi8sCUFgPYgXXxrNcHbqVh9ikagBmQqZjukg+SClw2tszCl50xwHx8uzfpk
+	 MqBpsBNOE06NqSPq2gF/707fKH395N3bCdjunq4Zqy6kId64yGCj1V4+fSJ0ogQHt9pvl
+	 rxmVIJsFp4uWCNP1dtJJKU073iip+QpNZcIqYZ7tQnsavbrtD9yopMd9H7J0dUGwcMcLb
+	 WGadCAHkxxoOVA2tc/Zc4LHPkbFI54Za5HAStYMjkB1HCQVG099cMzQvrB1BPM5+DpDcI
+	 5eZjKr2Um+j4+2hUFFFIgUy68OLkH898IhcgGrl/oe/5boRh0OV7BpWzHtRn8uxyRag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="U86/W2f8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvJiCxOm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522A6606A31E;
-	Wed, 28 Oct 2026 19:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39940606A31A;
+	Wed, 28 Oct 2026 19:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U86/W2f8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28581F01825;
-	Wed, 28 Oct 2026 19:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvJiCxOm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869261F01825;
+	Wed, 28 Oct 2026 19:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216748;
-	bh=/VW5nx+hgizstCr2i14s8afkeMop8UDlheerDqL1UmU=;
+	s=korg; t=1793216751;
+	bh=gcRfK1p8VSWL+c4HSEWNaOp5p9Jv8ioozOpOvxgecv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U86/W2f8y8ADNZuwXI7P+tVmDz7AW72oa71DiyHAZyM+KFSxTNU3UxQIsw3IhTy3r
-	 KapefYfyuz/Y6INPnnecGBN15YKbCIijwZgCI2aijbFiFRdo1XlJoQWvl0Y+JTbQvy
-	 ySozI6NVt3iw2W+dzPfsX1aIGHTBHMHjNbPyz+VI=
+	b=NvJiCxOmbLKkLtEr/JsaqGNpTO3vGMm3dYvxXjvSx4gta6L60El2vezuzWkcziFa9
+	 X1Fba6NJdcBwplWD2DsGYa16bjUbGVszE7RVb+fX1pOa6ncK5dNNvptZnlYakp2JnX
+	 riKVRiZT5k6vXNfTch4L+mp1YfmavX9onnNbZbnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e1c69cadec0f1a078e3d@syzkaller.appspotmail.com,
-	Daniel Yang <danielyangkang@gmail.com>,
+	David Timber <dxdt@dev.snart.me>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1665/1887] exfat: resolve memory leak from exfat_create_upcase_table()
-Date: Wed, 28 Oct 2026 18:02:41 +0100
-Message-ID: <20261028170537.347277913@linuxfoundation.org>
+Subject: [PATCH 6.1 1666/1887] exfat: fix handling of damaged volume in exfat_create_upcase_table()
+Date: Wed, 28 Oct 2026 18:02:42 +0100
+Message-ID: <20261028170537.371018584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,46 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Yang <danielyangkang@gmail.com>
+From: David Timber <dxdt@dev.snart.me>
 
-[ Upstream commit c290fe508eee36df1640c3cb35dc8f89e073c8a8 ]
+[ Upstream commit 20dd3185d13865214ff25b0bf7b931e8d73be1ac ]
 
-If exfat_load_upcase_table reaches end and returns -EINVAL,
-allocated memory doesn't get freed and while
-exfat_load_default_upcase_table allocates more memory, leading to a
-memory leak.
+When the size of the upcase table is set to zero in the dentry for any
+reason(e.g. corrupted media or misbehaving device), an integer overflow
+causes the module to loop indefinitely.
 
-Here's link to syzkaller crash report illustrating this issue:
-https://syzkaller.appspot.com/text?tag=CrashReport&x=1406c201980000
+If the size of the upcase table is read zero, do not attempt to load the
+table. Instead, fallback to loading the default upcase table. If the
+size of the upcase table is zero or no upcase table is found, raise
+exfat_fs_error() to mark the volume read-only.
 
-Reported-by: syzbot+e1c69cadec0f1a078e3d@syzkaller.appspotmail.com
-Fixes: a13d1a4de3b0 ("exfat: move freeing sbi, upcase table and dropping nls into rcu-delayed helper")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Yang <danielyangkang@gmail.com>
+Signed-off-by: David Timber <dxdt@dev.snart.me>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Stable-dep-of: 20dd3185d138 ("exfat: fix handling of damaged volume in exfat_create_upcase_table()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/nls.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/exfat/nls.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
-index 0e05c6b5a2864..e027b34356969 100644
+index e027b34356969..4bfe807716deb 100644
 --- a/fs/exfat/nls.c
 +++ b/fs/exfat/nls.c
-@@ -785,8 +785,11 @@ int exfat_create_upcase_table(struct super_block *sb)
- 				le32_to_cpu(ep->dentry.upcase.checksum));
+@@ -778,13 +778,18 @@ int exfat_create_upcase_table(struct super_block *sb)
  
- 			brelse(bh);
--			if (ret && ret != -EIO)
-+			if (ret && ret != -EIO) {
-+				/* free memory from exfat_load_upcase_table call */
-+				exfat_free_upcase_table(sbi);
- 				goto load_default;
+ 			tbl_clu  = le32_to_cpu(ep->dentry.upcase.start_clu);
+ 			tbl_size = le64_to_cpu(ep->dentry.upcase.size);
+-
+-			sector = exfat_cluster_to_sector(sbi, tbl_clu);
+-			num_sectors = ((tbl_size - 1) >> blksize_bits) + 1;
+-			ret = exfat_load_upcase_table(sb, sector, num_sectors,
+-				le32_to_cpu(ep->dentry.upcase.checksum));
+-
++			if (tbl_size) {
++				sector = exfat_cluster_to_sector(sbi, tbl_clu);
++				num_sectors = ((tbl_size - 1) >> blksize_bits) + 1;
++				ret = exfat_load_upcase_table(sb, sector, num_sectors,
++					le32_to_cpu(ep->dentry.upcase.checksum));
++			} else {
++				exfat_fs_error(sb,
++					       "bad upcase table size (0 bytes). Please run fsck");
++				ret = -EINVAL;
 +			}
+ 			brelse(bh);
++
+ 			if (ret && ret != -EIO) {
+ 				/* free memory from exfat_load_upcase_table call */
+ 				exfat_free_upcase_table(sbi);
+@@ -799,6 +804,8 @@ int exfat_create_upcase_table(struct super_block *sb)
+ 			return -EIO;
+ 	}
  
- 			/* load successfully */
- 			return ret;
++	exfat_fs_error(sb, "no upcase table entry. Please run fsck");
++
+ load_default:
+ 	/* load default upcase table */
+ 	return exfat_load_default_upcase_table(sb);
 -- 
 2.53.0
 
