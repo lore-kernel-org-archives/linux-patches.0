@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214904;
-	b=T/ZBL7mmAnR9MMEzypFAZxGvorh+gzKVbuzhPKcGv9THq/3lR9v1xPDDsDkTXPKzfmft
-	 kiRPPcM8KDf39e3nsVh3fR75/D6BZA73H3PB13GBYvmEuV3JHJY0G3bj/xbb7TR46qhJO
-	 BN+XBRthimCagZUcMj2MJyVFBIuh0mFxqjrZBIv+XQmcL0iH2bTZReWqJQ5cxohepP+Z1
-	 78jiIdobM6zfCZyu88bGyy5gH9ghH+3x3PTDnn86x7W8LYlTEnAXo+XqOZd5Xv5TBwvRH
-	 ZVilhCbUnt1xb//704IUei/ifr4R9txmwb9xWd7rcSKE/7jeiOfOwo5cSQw3weWADXw==
+	t=1793214906;
+	b=24vG22bo7q2OsWAe4uzAio0dL5BNTVp6eIOOyGFFEFaSDr0SSK2GaxUebVNdGYLPQ2Td
+	 BbDwUpQL9nrLuxWrIsdRdZyrtZYRS0SsepTsoyaVxhdfwob6kYkbWE6ZJOD/XjeK2IGVm
+	 2lxTnrf/IAc2cBjiMYAUyaGCgXC4OKUtAcH/f2KLRFDWFGs0BxYJAw1vk8UZX+qfz4orL
+	 20zFSC12gFrZbopDTyTvDF7amHBLLd9uNEaRkdxXxd586iyazGiU4OXNXLeSLf7bQ9qBW
+	 LxaT3pHk94j7amfNBCUjbkjlTbYonEDVPNUXF1rX7SQymiKFKTrMXJQEmW3I80prlRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214904;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qLgMoITsx/q+U8dPEgDRdl6uFMWPjR8CCaL5Jds6Y0o=;
-	b=i9KkUUwxM6NEHXKjsrx2/cWgTEz2vjjQYzpIrKocihmNmTjwpZrA0tx8u/gvbk//F4W+
-	 kKqZVZJZ+m4JPCHz1MWx/agKz5Dq2Lod9Ceq27CbaPsmeeCGFXqqgr5h+eCVeiPz5XbKL
-	 37+03bICHIFprqn2JUtXY1nTbZEDbHi34k5PaJ53OtdFDJP10gqgNiB6ngyNMM4U3psCc
-	 yQWM9XiKf3cznaKGuPqQs2pVkoIipfDalIKxSa3W4uUfbCJsFWOBTpEmjGQcdPVW1Nbs7
-	 XseRX7/edkcna++uZgheIUR89c2sUwVxYqI/OTLQUycoWq05Oy0v/fWbz+WAbuxOjqA==
+	bh=YN6mVclCjjW3lrWaL6UwQQH9mdozOaLjOZO86ZkmTU8=;
+	b=j0QgTwXmbV8An54ZatItAw1iuL70OiredwLWnPcTzu00Y/nKjjJqrUhIAZDN0PFO0j2T
+	 cZwXDQlsX/MqsW2hRmNN834TlACrWcTs00nxwHgWofjFxasE+CHwIBsj21CYcfbeaEAhh
+	 dgw493VJQq9V6U/ruhAIR2imA12M2kCTnoKLTv0KSL2fGEUOvU5eZJOeTTFi+5pBkZEZX
+	 +BZmkL6eiysaWGrcOR2myVvuYjNCF67e2gLbaJB/Dyhz+fRnTkrRfEKYuAfxq/hBxfMhd
+	 2RhlO+odcJw2eEJboKPtYaLwPz9LyRG+I56Uef1JcKuvWdK+6A5qIRrl8SOpa08nJIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ax0LDgad;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o00Ssomp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BAE606A339;
-	Wed, 28 Oct 2026 19:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C96F606A324;
+	Wed, 28 Oct 2026 19:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ax0LDgad
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106C31F01825;
-	Wed, 28 Oct 2026 19:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o00Ssomp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD96A1F01825;
+	Wed, 28 Oct 2026 19:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214903;
-	bh=qLgMoITsx/q+U8dPEgDRdl6uFMWPjR8CCaL5Jds6Y0o=;
+	s=korg; t=1793214906;
+	bh=YN6mVclCjjW3lrWaL6UwQQH9mdozOaLjOZO86ZkmTU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ax0LDgadLcZoRfY1bgBCf69Isz8W+KDEdfs6zWtHr84allBzWzuw35eXtddBEwFxY
-	 CTK6PBGIwPdRNQ7WfQ/qd6/OfaQnHjK0JGTegqiu2bBnKMMtzo60UNj9fcBoB+jTdt
-	 InEgH6IRZLQz/kQtI8/son1t3V/vISvQ+SvLhFXU=
+	b=o00SsompTdLkwwRcPtv0PpRxgT27+fWjpWzagFg9Jb4jQkeJlfEGY7wwIMvnriclY
+	 gVmXuFm7yjPD8r1Okxcpv8JpxNvhSHtwt+Unpo5b8zzDYaddJH9PjNK8/RFucj0oJx
+	 /dqDaNP9RLWRatiNg8ucQtlraLm5Gh+WWzs6aRCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0996/1887] team: avoid NETDEV_CHANGEMTU event when unregistering slave
-Date: Wed, 28 Oct 2026 17:51:32 +0100
-Message-ID: <20261028170522.079888535@linuxfoundation.org>
+Subject: [PATCH 6.1 1023/1887] ata: libata-scsi: avoid Non-NCQ command starvation
+Date: Wed, 28 Oct 2026 17:51:59 +0100
+Message-ID: <20261028170522.696088425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,143 +72,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit bb4c698633c0e19717586a6524a33196cff01a32 ]
+[ Upstream commit 0ea84089dbf62a92dc7889c79e6b18fc89260808 ]
 
-syzbot is reporting
+When a non-NCQ command is issued while NCQ commands are being executed,
+ata_scsi_qc_issue() indicates to the SCSI layer that the command issuing
+should be deferred by returning SCSI_MLQUEUE_XXX_BUSY.  This command
+deferring is correct and as mandated by the ACS specifications since
+NCQ and non-NCQ commands cannot be mixed.
 
-  unregister_netdevice: waiting for netdevsim0 to become free. Usage count = 3
-  ref_tracker: netdev@ffff88807dcf8618 has 1/2 users at
-       __netdev_tracker_alloc include/linux/netdevice.h:4400 [inline]
-       netdev_hold include/linux/netdevice.h:4429 [inline]
-       inetdev_init+0x201/0x4e0 net/ipv4/devinet.c:286
-       inetdev_event+0x251/0x1610 net/ipv4/devinet.c:1600
-       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
-       call_netdevice_notifiers_mtu net/core/dev.c:2318 [inline]
-       netif_set_mtu_ext+0x5aa/0x800 net/core/dev.c:9886
-       netif_set_mtu+0xd7/0x1b0 net/core/dev.c:9907
-       dev_set_mtu+0x126/0x260 net/core/dev_api.c:248
-       team_port_del+0xb07/0xcb0 drivers/net/team/team_core.c:1333
-       team_del_slave drivers/net/team/team_core.c:1936 [inline]
-       team_device_event+0x207/0x5b0 drivers/net/team/team_core.c:2929
-       notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
-       call_netdevice_notifiers_extack net/core/dev.c:2281 [inline]
-       call_netdevice_notifiers net/core/dev.c:2295 [inline]
-       __dev_change_net_namespace+0xcb7/0x2050 net/core/dev.c:12592
-       do_setlink+0x2ce/0x4590 net/core/rtnetlink.c:3060
-       rtnl_changelink net/core/rtnetlink.c:3776 [inline]
-       __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
-       rtnl_newlink+0x15a9/0x1be0 net/core/rtnetlink.c:4072
-       rtnetlink_rcv_msg+0x7d5/0xbe0 net/core/rtnetlink.c:6958
-       netlink_rcv_skb+0x232/0x4b0 net/netlink/af_netlink.c:2550
-       netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
-       netlink_unicast+0x80f/0x9b0 net/netlink/af_netlink.c:1344
-       netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1894
+However, in the case of a host adapter using multiple submission queues,
+when the target device is under a constant load of NCQ commands, there
+are no guarantees that requeueing the non-NCQ command will be executed
+later and it may be deferred again repeatedly as other submission queues
+can constantly issue NCQ commands from different CPUs ahead of the
+non-NCQ command. This can lead to very long delays for the execution of
+non-NCQ commands, and even complete starvation for these commands in the
+worst case scenario.
 
-problem. Ido Schimmel found steps to reproduce
+Since the block layer and the SCSI layer do not distinguish between
+queueable (NCQ) and non queueable (non-NCQ) commands, libata-scsi SAT
+implementation must ensure forward progress for non-NCQ commands in the
+presence of NCQ command traffic. This is similar to what SAS HBAs with a
+hardware/firmware based SAT implementation do.
 
-  ip link add name team1 type team
-  ip link add name dummy1 mtu 1499 master team1 type dummy
-  ip netns add ns1
-  ip link set dev dummy1 netns ns1
-  ip -n ns1 link del dev dummy1
+Implement such forward progress guarantee by limiting requeueing of
+non-NCQ commands from ata_scsi_qc_issue(): when a non-NCQ command is
+received and NCQ commands are in-flight, do not force a requeue of the
+non-NCQ command by returning SCSI_MLQUEUE_XXX_BUSY and instead return 0
+to indicate that the command was accepted but hold on to the qc using
+the new deferred_qc field of struct ata_port.
 
-and also found that the same issue was fixed in the bond driver in
-commit f51048c3e07b ("bonding: avoid NETDEV_CHANGEMTU event when
-unregistering slave").
+This deferred qc will be issued using the work item deferred_qc_work
+running the function ata_scsi_deferred_qc_work() once all in-flight
+commands complete, which is checked with the port qc_defer() callback
+return value indicating that no further delay is necessary. This check
+is done using the helper function ata_scsi_schedule_deferred_qc() which
+is called from ata_scsi_qc_complete(). This thus excludes this mechanism
+from all internal non-NCQ commands issued by ATA EH.
 
-Let's do similar thing for the team driver, with commit ad7c7b2172c3 ("net:
-hold netdev instance lock during sysfs operations") and commit 303a8487a657
-("net: s/__dev_set_mtu/__netif_set_mtu/") also applied.
+When a port deferred_qc is non NULL, that is, the port has a command
+waiting for the device queue to drain, the issuing of all incoming
+commands (both NCQ and non-NCQ) is deferred using the regular busy
+mechanism. This simplifies the code and also avoids potential denial of
+service problems if a user issues too many non-NCQ commands.
 
-Reported-by: syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260224125709.317574-2-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Finally, whenever ata EH is scheduled, regardless of the reason, a
+deferred qc is always requeued so that it can be retried once EH
+completes. This is done by calling the function
+ata_scsi_requeue_deferred_qc() from ata_eh_set_pending(). This avoids
+the need for any special processing for the deferred qc in case of NCQ
+error, link or device reset, or device timeout.
+
+Reported-by: Xingui Yang <yangxingui@huawei.com>
+Reported-by: Igor Pylypiv <ipylypiv@google.com>
+Fixes: bdb01301f3ea ("scsi: Add host and host template flag 'host_tagset'")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Tested-by: Igor Pylypiv <ipylypiv@google.com>
+Tested-by: Xingui Yang <yangxingui@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/ata/libata-core.c |  5 +++
+ drivers/ata/libata-eh.c   |  6 +++
+ drivers/ata/libata-scsi.c | 93 +++++++++++++++++++++++++++++++++++++++
+ drivers/ata/libata.h      |  2 +
+ include/linux/libata.h    |  3 ++
+ 5 files changed, 109 insertions(+)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 386c989641a3e..9d5f7026adec4 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -1361,7 +1361,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index ce4dac033578a..d171b5815b60f 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -5499,6 +5499,7 @@ struct ata_port *ata_port_alloc(struct ata_host *host)
+ 	mutex_init(&ap->scsi_scan_mutex);
+ 	INIT_DELAYED_WORK(&ap->hotplug_task, ata_scsi_hotplug);
+ 	INIT_DELAYED_WORK(&ap->scsi_rescan_task, ata_scsi_dev_rescan);
++	INIT_WORK(&ap->deferred_qc_work, ata_scsi_deferred_qc_work);
+ 	INIT_LIST_HEAD(&ap->eh_done_q);
+ 	init_waitqueue_head(&ap->eh_wait_q);
+ 	init_completion(&ap->park_req_pending);
+@@ -6114,6 +6115,10 @@ static void ata_port_detach(struct ata_port *ap)
+ 		}
+ 	}
  
- static void __team_port_change_port_removed(struct team_port *port);
++	/* Make sure the deferred qc work finished. */
++	cancel_work_sync(&ap->deferred_qc_work);
++	WARN_ON(ap->deferred_qc);
++
+ 	/* Tell EH to disable all devices */
+ 	ap->pflags |= ATA_PFLAG_UNLOADING;
+ 	ata_port_schedule_eh(ap);
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 586982a2a61ff..21cb05e50c26a 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -910,6 +910,12 @@ static void ata_eh_set_pending(struct ata_port *ap, int fastdrain)
  
--static int team_port_del(struct team *team, struct net_device *port_dev)
-+static int team_port_del(struct team *team, struct net_device *port_dev, bool unregister)
- {
- 	struct net_device *dev = team->dev;
- 	struct team_port *port;
-@@ -1399,7 +1399,10 @@ static int team_port_del(struct team *team, struct net_device *port_dev)
- 	__team_port_change_port_removed(port);
+ 	ap->pflags |= ATA_PFLAG_EH_PENDING;
  
- 	team_port_set_orig_dev_addr(port);
--	dev_set_mtu(port_dev, port->orig.mtu);
-+	if (unregister)
-+		__dev_set_mtu(port_dev, port->orig.mtu);
-+	else
-+		dev_set_mtu(port_dev, port->orig.mtu);
- 	kfree_rcu(port, rcu);
- 	netdev_info(dev, "Port device %s removed\n", portname);
- 	__team_compute_features(team);
-@@ -1714,7 +1717,7 @@ static void team_uninit(struct net_device *dev)
++	/*
++	 * If we have a deferred qc, requeue it so that it is retried once EH
++	 * completes.
++	 */
++	ata_scsi_requeue_deferred_qc(ap);
++
+ 	if (!fastdrain)
+ 		return;
  
- 	mutex_lock(&team->lock);
- 	list_for_each_entry_safe(port, tmp, &team->port_list, list)
--		team_port_del(team, port->dev);
-+		team_port_del(team, port->dev, false);
- 
- 	__team_change_mode(team, NULL); /* cleanup */
- 	__team_options_unregister(team, team_options, ARRAY_SIZE(team_options));
-@@ -2025,13 +2028,14 @@ static int team_add_slave(struct net_device *dev, struct net_device *port_dev,
- 	return err;
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index ff31b99dab36f..3a495116ff0c1 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1690,6 +1690,75 @@ static void ata_qc_done(struct ata_queued_cmd *qc)
+ 	done(cmd);
  }
  
--static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
-+static int __team_del_slave(struct net_device *dev, struct net_device *port_dev,
-+			    bool unregister)
- {
- 	struct team *team = netdev_priv(dev);
- 	int err;
- 
- 	mutex_lock(&team->lock);
--	err = team_port_del(team, port_dev);
-+	err = team_port_del(team, port_dev, unregister);
- 	mutex_unlock(&team->lock);
- 
- 	if (err)
-@@ -2047,6 +2051,11 @@ static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
- 	return err;
- }
- 
-+static int team_del_slave(struct net_device *dev, struct net_device *port_dev)
++void ata_scsi_deferred_qc_work(struct work_struct *work)
 +{
-+	return __team_del_slave(dev, port_dev, false);
++	struct ata_port *ap =
++		container_of(work, struct ata_port, deferred_qc_work);
++	struct ata_queued_cmd *qc;
++	unsigned long flags;
++
++	spin_lock_irqsave(ap->lock, flags);
++
++	/*
++	 * If we still have a deferred qc and we are not in EH, issue it. In
++	 * such case, we should not need any more deferring the qc, so warn if
++	 * qc_defer() says otherwise.
++	 */
++	qc = ap->deferred_qc;
++	if (qc && !(ap->pflags &
++		    (ATA_PFLAG_EH_PENDING | ATA_PFLAG_EH_IN_PROGRESS))) {
++		WARN_ON_ONCE(ap->ops->qc_defer(qc));
++		ap->deferred_qc = NULL;
++		ata_qc_issue(qc);
++	}
++
++	spin_unlock_irqrestore(ap->lock, flags);
 +}
 +
- static netdev_features_t team_fix_features(struct net_device *dev,
- 					   netdev_features_t features)
++void ata_scsi_requeue_deferred_qc(struct ata_port *ap)
++{
++	struct ata_queued_cmd *qc = ap->deferred_qc;
++	struct scsi_cmnd *scmd;
++
++	lockdep_assert_held(ap->lock);
++
++	/*
++	 * If we have a deferred qc when a reset occurs or NCQ commands fail,
++	 * do not try to be smart about what to do with this deferred command
++	 * and simply retry it by completing it with DID_SOFT_ERROR.
++	 */
++	if (!qc)
++		return;
++
++	scmd = qc->scsicmd;
++	ap->deferred_qc = NULL;
++	ata_qc_free(qc);
++	scmd->result = (DID_SOFT_ERROR << 16);
++	scsi_done(scmd);
++}
++
++static void ata_scsi_schedule_deferred_qc(struct ata_port *ap)
++{
++	struct ata_queued_cmd *qc = ap->deferred_qc;
++
++	lockdep_assert_held(ap->lock);
++
++	/*
++	 * If we have a deferred qc, then qc_defer() is defined and we can use
++	 * this callback to determine if this qc is good to go, unless EH has
++	 * been scheduled.
++	 */
++	if (!qc)
++		return;
++
++	if (ap->pflags & (ATA_PFLAG_EH_PENDING | ATA_PFLAG_EH_IN_PROGRESS)) {
++		ata_scsi_requeue_deferred_qc(ap);
++		return;
++	}
++	if (!ap->ops->qc_defer(qc))
++		queue_work(system_highpri_wq, &ap->deferred_qc_work);
++}
++
+ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
  {
-@@ -3146,7 +3155,7 @@ static int team_device_event(struct notifier_block *unused,
- 					       !!netif_oper_up(port->dev));
- 		break;
- 	case NETDEV_UNREGISTER:
--		team_del_slave(port->team->dev, dev);
-+		__team_del_slave(port->team->dev, dev, true);
- 		break;
- 	case NETDEV_FEAT_CHANGE:
- 		if (!port->team->notifier_ctx) {
+ 	struct ata_port *ap = qc->ap;
+@@ -1720,6 +1789,8 @@ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
+ 		ata_dump_status(ap, &qc->result_tf);
+ 
+ 	ata_qc_done(qc);
++
++	ata_scsi_schedule_deferred_qc(ap);
+ }
+ 
+ static int ata_scsi_qc_issue(struct ata_port *ap, struct ata_queued_cmd *qc)
+@@ -1729,6 +1800,16 @@ static int ata_scsi_qc_issue(struct ata_port *ap, struct ata_queued_cmd *qc)
+ 	if (!ap->ops->qc_defer)
+ 		goto issue;
+ 
++	/*
++	 * If we already have a deferred qc, then rely on the SCSI layer to
++	 * requeue and defer all incoming commands until the deferred qc is
++	 * processed, once all on-going commands complete.
++	 */
++	if (ap->deferred_qc) {
++		ata_qc_free(qc);
++		return SCSI_MLQUEUE_DEVICE_BUSY;
++	}
++
+ 	/* Check if the command needs to be deferred. */
+ 	ret = ap->ops->qc_defer(qc);
+ 	switch (ret) {
+@@ -1747,6 +1828,18 @@ static int ata_scsi_qc_issue(struct ata_port *ap, struct ata_queued_cmd *qc)
+ 	}
+ 
+ 	if (ret) {
++		/*
++		 * We must defer this qc: if this is not an NCQ command, keep
++		 * this qc as a deferred one and report to the SCSI layer that
++		 * we issued it so that it is not requeued. The deferred qc will
++		 * be issued with the port deferred_qc_work once all on-going
++		 * commands complete.
++		 */
++		if (!ata_is_ncq(qc->tf.protocol)) {
++			ap->deferred_qc = qc;
++			return 0;
++		}
++
+ 		/* Force a requeue of the command to defer its execution. */
+ 		ata_qc_free(qc);
+ 		return ret;
+diff --git a/drivers/ata/libata.h b/drivers/ata/libata.h
+index 25e18bcc0192b..c60d9ce89b6c0 100644
+--- a/drivers/ata/libata.h
++++ b/drivers/ata/libata.h
+@@ -142,6 +142,8 @@ extern int ata_scsi_user_scan(struct Scsi_Host *shost, unsigned int channel,
+ void ata_scsi_sdev_config(struct scsi_device *sdev);
+ int ata_scsi_dev_config(struct scsi_device *sdev, struct ata_device *dev);
+ int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev);
++void ata_scsi_deferred_qc_work(struct work_struct *work);
++void ata_scsi_requeue_deferred_qc(struct ata_port *ap);
+ 
+ /* libata-eh.c */
+ extern unsigned int ata_internal_cmd_timeout(struct ata_device *dev, u8 cmd);
+diff --git a/include/linux/libata.h b/include/linux/libata.h
+index d7f86de11d18e..a1e9a637de591 100644
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -830,6 +830,9 @@ struct ata_port {
+ 	u64			qc_active;
+ 	int			nr_active_links; /* #links with active qcs */
+ 
++	struct work_struct	deferred_qc_work;
++	struct ata_queued_cmd	*deferred_qc;
++
+ 	struct ata_link		link;		/* host default link */
+ 	struct ata_link		*slave_link;	/* see ata_slave_link_init() */
+ 
 -- 
 2.53.0
 
