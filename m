@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211383;
-	b=jQbiuasCuDXo5WwDpXFFlJiv+53dQlueyBXjJG6GGsXFpVqVQXNwGXcYO3kz1HA+g+1H
-	 J+QusOAI2dH1g6kuK+d3UI/1y9OoVT1ebH922dqvqDV6CffSVmARYgjbzUsoDEdq+nPZ9
-	 hnsgLBm89FXWbzxVwTooDS1F2+hGB2l5G3lBjQIOQHVooCLSaKRFykOm+AgPHlj9zoPiD
-	 fqzJQBguT2j+QXFvqgOaoGl0iOKc8DIwMhCH6LeZWCe8De5KOrk2SFKgJrRcB5lwRD2Uw
-	 laEDMPYvuufAfJgVgySxh/HOS1xn+TFk12bkPWQlrvpAnRob162MhBNPVIVo/VJdZ+Q==
+	t=1793211385;
+	b=MGAVdFVfXPzoR7jCQ2EVYXC8Ncqfr+gYFpqPaay5S47wTX6nl947q8kJ221eTEHg3DnW
+	 Z+Ujqr0CHSQTTM2DiSSXNbHXirK8rAt9S7IIoQmuQnmA9BNWZr6e3FiuxZ/Z27Yp1DEuU
+	 fVarzI4LgsJt8WhiY5jeFlVJF1euuNE4RuBkcjx3CIFkFfuTVmZE4eGxfGMqn/28hLp4X
+	 r6xivgUpJ37jVb4OyWX7hth5FG+v2fbbrLwIqMnn+O4lILx9JBN3lBYg3ho7RwZM1DqjV
+	 N8JDqCvK9u7PAxCpj7D+iDGTZYITYjSOYsA4kJIidmgd7nbtINdGW4kD78F4/89v9dQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rwWgAzDm8hqT2OWYGGGkc/S5MMzwi8dipYFyB5Nxfqw=;
-	b=IEzHZNSDBDu1fkTBzuYsTnvuWRCHGfP4zdWN1gtuGyxtUHXfcP1MdKyyYRc2Jdz33RtJ
-	 TayVQh4DvpT61lGsOMhKWgRR5EcjKYi4KR65aVbEFtNEBJ/4miq9gRq5u0ce0tN36s9NF
-	 GVLRcI2zI1bUpgQdmu+2Czprlnb0fsexzhzcu9Zh1C9rnNICh4xOjyZ5uEXPZ6VELP6TF
-	 v+UZabgguesCV9bNv9S9qweSs+94HLmX2GQ1vIqogNRSTALhxjLO80Ab3rSsAc1W/SB5v
-	 qOYSRLj8UtF0spzgazCnUXxgg01LAdpE6KNvhzTWbVh5aPr9Cv4fGC3qRFiqe6LA9Pw==
+	bh=ourxh922c3rrI9o3+lu3jfcb95A+/lf5P3qgcWMaAgg=;
+	b=nOQ9kOr9ZemhBJopoIDMazgv8pXIQScYTX+GBaFYBebTqZQlgZo4OfIEniFB9vSzUiUN
+	 /XoUW5BGKKaJMhTceKAYE8pJ2OEB+vsgZveyLkf+6hTlGCFUQtqOAkIZFsN5fY5vVcqTk
+	 Lipcdtp4X1h5LsTJUAC3S/kE0DBvN79SdO44V4g8dZrNZlUwdCt3+2u+84kOVHPGJK7Vq
+	 rrehBXA3wUv2AaYvEkbNDrJ2gSZckiO5mZ5W4ErCxKQ7/PJtxM0oLvzk3OTqKy51wc4nB
+	 gI6TPfhBoXI4mO5AW7yZ3cFEHBq9wzkeHVG8dK5Cs0X4CfSo12us9EQl6HFiX3/drgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQvnibaM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yslJIWS9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294C3606A325;
-	Wed, 28 Oct 2026 18:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC82606A325;
+	Wed, 28 Oct 2026 18:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQvnibaM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB001F01825;
-	Wed, 28 Oct 2026 18:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yslJIWS9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADFB1F01825;
+	Wed, 28 Oct 2026 18:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211382;
-	bh=rwWgAzDm8hqT2OWYGGGkc/S5MMzwi8dipYFyB5Nxfqw=;
+	s=korg; t=1793211384;
+	bh=ourxh922c3rrI9o3+lu3jfcb95A+/lf5P3qgcWMaAgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQvnibaMGb8PARD+jPJ3E8JL5LbXyPI8lvg/ISYvxZbjBXzNl26rlzINL6i1TEBQd
-	 Ww8D1Fz4DQx6qIWmZyCkJwAseDjYgBWLY39iUzs2nNOLHeOaJ/H1IE1F60jdJOipwC
-	 n3l90qFIfM3A4M70uBMoqmCj7BAERT+0HxoAd49w=
+	b=yslJIWS9p2rswNDYSmqMdWUUBFssFaWpvTNmTSOq54DZW/lvCs+T0m8SbmAfoe81u
+	 H7KcZbV1M6IZ9Rl68mNuFZUSxgOZcNdfEmSDB7fm20eUOiBItL35MqHU+tc1REU2uL
+	 emenpDqnPxLtiD1j0x5TFnuybYT5UkW3YAujPdHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 356/571] Revert "wifi: libertas: reject short monitor TX frames"
-Date: Wed, 28 Oct 2026 17:58:23 +0100
-Message-ID: <20261028170016.465250731@linuxfoundation.org>
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.15 357/571] selinux: preserve NATIVE_LABELS on already-initialized sb in set_mnt_opts
+Date: Wed, 28 Oct 2026 17:58:24 +0100
+Message-ID: <20261028170016.487937903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -67,39 +67,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-commit 9727d1c4e1c971fc42b049b645fdda6852758835 upstream.
+commit 28b7260548af3d35773477993ad4e4de41578dd7 upstream.
 
-This reverts commit 13ff543e0b2c713aedeaadadde686686e949dc78.
+When an NFSv4 filesystem exported with security_label is mounted a
+second time, sget_fc() returns the existing superblock and
+nfs_get_root() calls security_sb_set_mnt_opts() again on it. Since the
+superblock is already SB_INITIALIZED, selinux_set_mnt_opts() takes an
+early exit without setting SECURITY_LSM_NATIVE_LABELS in
+*set_kern_flags. nfs_get_root() then sees kflags without
+SECURITY_LSM_NATIVE_LABELS set and clears NFS_CAP_SECURITY_LABEL on
+the shared nfs_server, silently disabling per-file labeling for both
+the new and the original mount.
 
-The 'goto free' just made things worse, causing a spinlock
-to be handled incorrectly. Revert this for now.
+Commit 3815a245b501 ("security/selinux: fix SECURITY_LSM_NATIVE_LABELS
+on reused superblock") fixed the same problem in
+selinux_sb_clone_mnt_opts().  The reused-superblock path for a plain
+second mount now goes through sb_set_mnt_opts rather than
+sb_clone_mnt_opts, so it needs the same treatment: on both
+SE_SBINITIALIZED early exits, set SECURITY_LSM_NATIVE_LABELS in
+*set_kern_flags when the superblock was already using
+SECURITY_FS_USE_NATVE.
 
-Reported-by: Takashi Iwai <tiwai@suse.de>
 Cc: stable@vger.kernel.org
-Fixes: 13ff543e0b2c ("wifi: libertas: reject short monitor TX frames")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Closes: https://github.com/SELinuxProject/selinux-kernel/issues/69
+Closes: https://github.com/SELinuxProject/selinux-kernel/issues/70
+Closes: https://github.com/SELinuxProject/selinux-testsuite/issues/91
+Closes: https://github.com/SELinuxProject/selinux-testsuite/issues/92
+Fixes: eb9ae686507b ("SELinux: Add new labeling type native labels")
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/libertas/tx.c |    7 -------
- 1 file changed, 7 deletions(-)
+ security/selinux/hooks.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/libertas/tx.c
-+++ b/drivers/net/wireless/marvell/libertas/tx.c
-@@ -116,13 +116,6 @@ netdev_tx_t lbs_hard_start_xmit(struct s
- 	if (priv->wdev->iftype == NL80211_IFTYPE_MONITOR) {
- 		struct tx_radiotap_hdr *rtap_hdr = (void *)skb->data;
+--- a/security/selinux/hooks.c
++++ b/security/selinux/hooks.c
+@@ -677,8 +677,12 @@ static int selinux_set_mnt_opts(struct s
+ 	 * will be used for both mounts)
+ 	 */
+ 	if ((sbsec->flags & SE_SBINITIALIZED) && (sb->s_type->fs_flags & FS_BINARY_MOUNTDATA)
+-	    && !opts)
++		&& !opts) {
++		if ((kern_flags & SECURITY_LSM_NATIVE_LABELS) &&
++		    sbsec->behavior == SECURITY_FS_USE_NATIVE)
++			*set_kern_flags |= SECURITY_LSM_NATIVE_LABELS;
+ 		goto out;
++	}
  
--		if (skb->len < sizeof(*rtap_hdr) + 4 + ETH_ALEN) {
--			lbs_deb_tx("tx err: short monitor frame %u\n", skb->len);
--			dev->stats.tx_dropped++;
--			dev->stats.tx_errors++;
--			goto free;
--		}
--
- 		/* set txpd fields from the radiotap header */
- 		txpd->tx_control = cpu_to_le32(convert_radiotap_rate_to_mv(rtap_hdr->rate));
+ 	root_isec = backing_inode_security_novalidate(root);
  
+@@ -730,6 +734,9 @@ static int selinux_set_mnt_opts(struct s
+ 		/* previously mounted with options, but not on this attempt? */
+ 		if ((sbsec->flags & SE_MNTMASK) && !opts)
+ 			goto out_double_mount;
++		if ((kern_flags & SECURITY_LSM_NATIVE_LABELS) &&
++		    sbsec->behavior == SECURITY_FS_USE_NATIVE)
++			*set_kern_flags |= SECURITY_LSM_NATIVE_LABELS;
+ 		rc = 0;
+ 		goto out;
+ 	}
 
 
