@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214244;
-	b=sRTOz6Z+cnrD/d6r6SwQBy/pkVztmVxAH0iV2X3oOP9ZLBLKsc4oo+mwWYQD3dNViSQE
-	 qXndtYn1ukZ6cNHt4kLgvjePFj9GOlHjbyisSn5tZ81pdr4GybuTYFysUjwL2iuyIf3dB
-	 Ktm3gQXhM1W3Fz0VBY3Re/P4I0dNv4uTNJEX0L751svz2h895zN9waVQwSNgKLJxuJeoy
-	 7t7SyCLygHD008y80SigKYMmJnwTHdb3OA8wexnBDnq/3GJiQ4jgoq+NYoyucXuuGEmzc
-	 79GlpjUEKRK0RirqKFSzzew9KtMGK9b2Am27nM7uQdNOLPifmv1A6Nbjxq+Fgt3tP7w==
+	t=1793214247;
+	b=rQUqy6nJ/NFImGQhJ0n1se9XSxmC5mJehuYoJQHI7SDCMphJgQ+7DGy1FPkKNjRXlsEX
+	 QfXwAjylgT3j307MxTkb0tTI9kx9cZa94RwFtxoFBa6y8VflGRr19QSWrQ0I1aaWs0bfc
+	 Lu0dBc4HXGKvYHJb5lxUzHEQ0MezO58QpACRgWcmU7eJ/bE1Y2PC9I33A54zrvNeMiBl4
+	 Jqm1M17zXV8oYRZVOsEWnDi4HJrmoswinhIfIhDnD7LOtc30MlwS6tqrFvqNIiVwYbj8a
+	 zjh6f9uC3G+EUeXBELrLmEDcVRG8DlSSpWPYZm9nDC0sc2pLF256eZ7HxOfo1iiJuHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qf3xBflMxV0t1bQfMfsjSpLiQuZymbet7qNNh4j20uE=;
-	b=Mx4c3TcEho/MezbRRO3Zw+Zhmo7lZxiDYd28RvUKiCfDorBHHQV0xvuvth7qx3Un1WcJ
-	 vd04RUjjyKKRcVk8nA9yEo7JfRU0bT2MJeDT8LG650274L1osIKtVB6fsRv6vMGvnObdo
-	 Yri+9ba2Y1WECz+J9Zo4TtDsSswbzip2qaNO/Fq3qSVIjTVd8bYsziqM2YVnsKhXI6ylt
-	 y6Tdi5gDSVAPE77TXkC+7rFQJ4lk2rh+WpOrfFnGCX4jLfagMqDYd33S+GrPuD8dgwxqJ
-	 +F/wxFkiUk/6VTNDdZTJC0KLGsamxWfeiIdi+62BKexvISemcNcGuf3jqp2RZFqLorw==
+	bh=4eNRnOpxULF7efB+btNx56pBuzayB25HPyh1I20TngQ=;
+	b=F3KJSqyIeCgjislJt3pqMRe27Q94flNO7uO6OJ46UbuoLvCDrWdYL9kgmEjQ38xOqDXE
+	 AsedidZb8dAYUV4F+0pc1YcNg0jycBtQ9ASOlDEdaXWQ30/rUWG/ee2QYV8TLV6Miche6
+	 gvxTp9Jht1HHgGrrdC4gJk7xTKHIQq2vpEVyOYmvC28Vz/Vw0aN79krbjqKvGgqpUGbSD
+	 5W9RCBbfJ89oe0X5k6rhEboG2k0eudRPK7nzEI0jpvRo62wfKG/cc+kA1/QX1wpgQphh7
+	 rJI4z6HzZvS6jGAsQezwqTQxebNU57j91F2aOEYeBxNNvJk5+fFOOXztzF1f76ARipQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yn2Juc39;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfRv7qXs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E984860A380E;
-	Wed, 28 Oct 2026 19:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C183960A3825;
+	Wed, 28 Oct 2026 19:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yn2Juc39
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8591F031E2;
-	Wed, 28 Oct 2026 19:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfRv7qXs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F10D1F031E0;
+	Wed, 28 Oct 2026 19:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214243;
-	bh=Qf3xBflMxV0t1bQfMfsjSpLiQuZymbet7qNNh4j20uE=;
+	s=korg; t=1793214246;
+	bh=4eNRnOpxULF7efB+btNx56pBuzayB25HPyh1I20TngQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yn2Juc39n+JMVQYR9+zM/1lrMg8gub5ZiWDXuIdmZ47ZCB2IKOquzYZLJIXs5qAJG
-	 /wdHZnSjmc9aRl9MFY3MGJUODz/i3AIjR0R4cK5uFWwa4wDfFYwr8JqApRX+hDTsxX
-	 m6H+r2T3+UgOyNdB6TRNDhJWqC4EJTHuLOFC0ukE=
+	b=FfRv7qXsW7+saOdmv+ygT/xCyf4Eftf7LtK52Vnzbyw9D/7vnnoHD8NHWe0Zv/BJ9
+	 6PMlKB+ds+kpeOtzIn8kiwAJpbFAJrbk4YcNNoLmSSEijYx9uDXjapHR+H/5k4ofZJ
+	 xbTQ7qSeowGqMfC9NvuSSJQgbNuXxKSj8QbMNP3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eauger@redhat.com>,
-	Hongyu Ning <hongyu.ning@linux.intel.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0790/1887] virtio: break and reset virtio devices on device_shutdown()
-Date: Wed, 28 Oct 2026 17:48:06 +0100
-Message-ID: <20261028170517.411226577@linuxfoundation.org>
+Subject: [PATCH 6.1 0764/1887] ax25: Remove broken autobind
+Date: Wed, 28 Oct 2026 17:47:40 +0100
+Message-ID: <20261028170516.827632563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,88 +69,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 8bd2fa086a04886798b505f28db4002525895203 ]
+[ Upstream commit 2f6efbabceb6b2914ee9bafb86d9a51feae9cce8 ]
 
-Hongyu reported a hang on kexec in a VM. QEMU reported invalid memory
-accesses during the hang.
+Binding AX25 socket by using the autobind feature leads to memory leaks
+in ax25_connect() and also refcount leaks in ax25_release(). Memory
+leak was detected with kmemleak:
 
-	Invalid read at addr 0x102877002, size 2, region '(null)', reason: rejected
-	Invalid write at addr 0x102877A44, size 2, region '(null)', reason: rejected
-	...
+================================================================
+unreferenced object 0xffff8880253cd680 (size 96):
+backtrace:
+__kmalloc_node_track_caller_noprof (./include/linux/kmemleak.h:43)
+kmemdup_noprof (mm/util.c:136)
+ax25_rt_autobind (net/ax25/ax25_route.c:428)
+ax25_connect (net/ax25/af_ax25.c:1282)
+__sys_connect_file (net/socket.c:2045)
+__sys_connect (net/socket.c:2064)
+__x64_sys_connect (net/socket.c:2067)
+do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+================================================================
 
-It was traced down to virtio-console. Kexec works fine if virtio-console
-is not in use.
+When socket is bound, refcounts must be incremented the way it is done
+in ax25_bind() and ax25_setsockopt() (SO_BINDTODEVICE). In case of
+autobind, the refcounts are not incremented.
 
-The issue is that virtio-console continues to write to the MMIO even after
-underlying virtio-pci device is reset.
+This bug leads to the following issue reported by Syzkaller:
 
-Additionally, Eric noticed that IOMMUs are reset before devices, if
-devices are not reset on shutdown they continue to poke at guest memory
-and get errors from the IOMMU. Some devices get wedged then.
+================================================================
+ax25_connect(): syz-executor318 uses autobind, please contact jreuter@yaina.de
+------------[ cut here ]------------
+refcount_t: decrement hit 0; leaking memory.
+WARNING: CPU: 0 PID: 5317 at lib/refcount.c:31 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
+Modules linked in:
+CPU: 0 UID: 0 PID: 5317 Comm: syz-executor318 Not tainted 6.14.0-rc4-syzkaller-00278-gece144f151ac #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:31
+...
+Call Trace:
+ <TASK>
+ __refcount_dec include/linux/refcount.h:336 [inline]
+ refcount_dec include/linux/refcount.h:351 [inline]
+ ref_tracker_free+0x6af/0x7e0 lib/ref_tracker.c:236
+ netdev_tracker_free include/linux/netdevice.h:4302 [inline]
+ netdev_put include/linux/netdevice.h:4319 [inline]
+ ax25_release+0x368/0x960 net/ax25/af_ax25.c:1080
+ __sock_release net/socket.c:647 [inline]
+ sock_close+0xbc/0x240 net/socket.c:1398
+ __fput+0x3e9/0x9f0 fs/file_table.c:464
+ __do_sys_close fs/open.c:1580 [inline]
+ __se_sys_close fs/open.c:1565 [inline]
+ __x64_sys_close+0x7f/0x110 fs/open.c:1565
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ ...
+ </TASK>
+================================================================
 
-The problem can be solved by breaking all virtio devices on virtio
-bus shutdown, then resetting them.
+Considering the issues above and the comments left in the code that say:
+"check if we can remove this feature. It is broken."; "autobinding in this
+may or may not work"; - it is better to completely remove this feature than
+to fix it because it is broken and leads to various kinds of memory bugs.
 
-Reported-by: Eric Auger <eauger@redhat.com>
-Reported-by: Hongyu Ning <hongyu.ning@linux.intel.com>
-Message-ID: <c1dbc7dbad9b445245d3348f19e6742b0be07347.1740094946.git.mst@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Now calling connect() without first binding socket will result in an
+error (-EINVAL). Userspace software that relies on the autobind feature
+might get broken. However, this feature does not seem widely used with
+this specific driver as it was not reliable at any point of time, and it
+is already broken anyway. E.g. ax25-tools and ax25-apps packages for
+popular distributions do not use the autobind feature for AF_AX25.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=33841dc6aa3e1d86b78a
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ include/net/ax25.h    |  1 -
+ net/ax25/af_ax25.c    | 30 ++++++------------
+ net/ax25/ax25_route.c | 74 -------------------------------------------
+ 3 files changed, 10 insertions(+), 95 deletions(-)
 
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index 1ef094427f299..0d3481250fb98 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -340,6 +340,34 @@ static void virtio_dev_remove(struct device *_d)
- 	of_node_put(dev->dev.of_node);
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index e9465aa07a4e7..6b29f3a30cfa0 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -419,7 +419,6 @@ void ax25_rt_device_down(struct net_device *);
+ int ax25_rt_ioctl(unsigned int, void __user *);
+ extern const struct seq_operations ax25_rt_seqops;
+ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev);
+-int ax25_rt_autobind(ax25_cb *, ax25_address *);
+ struct sk_buff *ax25_rt_build_path(struct sk_buff *, ax25_address *,
+ 				   ax25_address *, ax25_digi *);
+ void ax25_rt_free(void);
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 862e03493b7ed..64b81a693e25e 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1270,28 +1270,18 @@ static int __must_check ax25_connect(struct socket *sock,
+ 		}
+ 	}
+ 
+-	/*
+-	 *	Must bind first - autobinding in this may or may not work. If
+-	 *	the socket is already bound, check to see if the device has
+-	 *	been filled in, error if it hasn't.
+-	 */
++	/* Must bind first - autobinding does not work. */
+ 	if (sock_flag(sk, SOCK_ZAPPED)) {
+-		/* check if we can remove this feature. It is broken. */
+-		printk(KERN_WARNING "ax25_connect(): %s uses autobind, please contact jreuter@yaina.de\n",
+-			current->comm);
+-		if ((err = ax25_rt_autobind(ax25, &fsa->fsa_ax25.sax25_call)) < 0) {
+-			kfree(digi);
+-			goto out_release;
+-		}
++		kfree(digi);
++		err = -EINVAL;
++		goto out_release;
++	}
+ 
+-		ax25_fillin_cb(ax25, ax25->ax25_dev);
+-		ax25_cb_add(ax25);
+-	} else {
+-		if (ax25->ax25_dev == NULL) {
+-			kfree(digi);
+-			err = -EHOSTUNREACH;
+-			goto out_release;
+-		}
++	/* Check to see if the device has been filled in, error if it hasn't. */
++	if (ax25->ax25_dev == NULL) {
++		kfree(digi);
++		err = -EHOSTUNREACH;
++		goto out_release;
+ 	}
+ 
+ 	if (sk->sk_type == SOCK_SEQPACKET &&
+diff --git a/net/ax25/ax25_route.c b/net/ax25/ax25_route.c
+index 69de75db0c9c2..10577434f40bf 100644
+--- a/net/ax25/ax25_route.c
++++ b/net/ax25/ax25_route.c
+@@ -373,80 +373,6 @@ ax25_route *ax25_get_route(ax25_address *addr, struct net_device *dev)
+ 	return ax25_rt;
  }
  
-+static void virtio_dev_shutdown(struct device *_d)
-+{
-+	struct virtio_device *dev = dev_to_virtio(_d);
-+	struct virtio_driver *drv = drv_to_virtio(dev->dev.driver);
-+
-+	/*
-+	 * Stop accesses to or from the device.
-+	 * We only need to do it if there's a driver - no accesses otherwise.
-+	 */
-+	if (!drv)
-+		return;
-+
-+	/*
-+	 * Some devices get wedged if you kick them after they are
-+	 * reset. Mark all vqs as broken to make sure we don't.
-+	 */
-+	virtio_break_device(dev);
-+	/*
-+	 * Guarantee that any callback will see vq->broken as true.
-+	 */
-+	virtio_synchronize_cbs(dev);
-+	/*
-+	 * As IOMMUs are reset on shutdown, this will block device access to memory.
-+	 * Some devices get wedged if this happens, so reset to make sure it does not.
-+	 */
-+	dev->config->reset(dev);
-+}
-+
- static struct bus_type virtio_bus = {
- 	.name  = "virtio",
- 	.match = virtio_dev_match,
-@@ -347,6 +375,7 @@ static struct bus_type virtio_bus = {
- 	.uevent = virtio_uevent,
- 	.probe = virtio_dev_probe,
- 	.remove = virtio_dev_remove,
-+	.shutdown = virtio_dev_shutdown,
- };
+-/*
+- *	Adjust path: If you specify a default route and want to connect
+- *      a target on the digipeater path but w/o having a special route
+- *	set before, the path has to be truncated from your target on.
+- */
+-static inline void ax25_adjust_path(ax25_address *addr, ax25_digi *digipeat)
+-{
+-	int k;
+-
+-	for (k = 0; k < digipeat->ndigi; k++) {
+-		if (ax25cmp(addr, &digipeat->calls[k]) == 0)
+-			break;
+-	}
+-
+-	digipeat->ndigi = k;
+-}
+-
+-
+-/*
+- *	Find which interface to use.
+- */
+-int ax25_rt_autobind(ax25_cb *ax25, ax25_address *addr)
+-{
+-	ax25_uid_assoc *user;
+-	ax25_route *ax25_rt;
+-	int err = 0;
+-
+-	ax25_route_lock_use();
+-	ax25_rt = ax25_get_route(addr, NULL);
+-	if (!ax25_rt) {
+-		ax25_route_lock_unuse();
+-		return -EHOSTUNREACH;
+-	}
+-	rcu_read_lock();
+-	if ((ax25->ax25_dev = ax25_dev_ax25dev(ax25_rt->dev)) == NULL) {
+-		err = -EHOSTUNREACH;
+-		goto put;
+-	}
+-
+-	user = ax25_findbyuid(current_euid());
+-	if (user) {
+-		ax25->source_addr = user->call;
+-		ax25_uid_put(user);
+-	} else {
+-		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
+-			err = -EPERM;
+-			goto put;
+-		}
+-		ax25->source_addr = *(ax25_address *)ax25->ax25_dev->dev->dev_addr;
+-	}
+-
+-	if (ax25_rt->digipeat != NULL) {
+-		ax25->digipeat = kmemdup(ax25_rt->digipeat, sizeof(ax25_digi),
+-					 GFP_ATOMIC);
+-		if (ax25->digipeat == NULL) {
+-			err = -ENOMEM;
+-			goto put;
+-		}
+-		ax25_adjust_path(addr, ax25->digipeat);
+-	}
+-
+-	if (ax25->sk != NULL) {
+-		local_bh_disable();
+-		bh_lock_sock(ax25->sk);
+-		sock_reset_flag(ax25->sk, SOCK_ZAPPED);
+-		bh_unlock_sock(ax25->sk);
+-		local_bh_enable();
+-	}
+-
+-put:
+-	rcu_read_unlock();
+-	ax25_route_lock_unuse();
+-	return err;
+-}
  
- int register_virtio_driver(struct virtio_driver *driver)
+ struct sk_buff *ax25_rt_build_path(struct sk_buff *skb, ax25_address *src,
+ 	ax25_address *dest, ax25_digi *digi)
 -- 
 2.53.0
 
