@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211319;
-	b=WXocFbfBPJCKhR61EMqqywVTDEMxIomnlr1uSOJNlW92uuxfXbIuKPOmKr5u3vFcS43e
-	 O0+6XPen/JRNlT7Qx/DGWCnxBDHuFmeGqAMuAgvGj71SZdaovXuB4QhVRt2Y/L1t7dI4H
-	 BpW5MbicV4jR0yURik0NyiPlkl0Tc3gTiwDwz/pMKPs5aH4gY8/WqkMwucq5WcosAG2QN
-	 ATF6DI/9mwd78B96LI8lwwXZ9pwvw2wi8sXF1gAjh/Nb2twI5F4K8CuMSMaHkn58THWfZ
-	 aCKo88U4NeQBgNqM5//fccl/WTlXTBacPike5A2+zdUMZEntAQuf/G9BQ1urSdyTPsw==
+	t=1793211322;
+	b=g4QrFk3fPodRLMITVv61PjzLwv6R+zO5zSwqSyH/SO5e6yHAFtGQC1aw2Bs2y5QZfxCO
+	 nhF7aMsnOABC97gz2/NGi7CFbGa7/hiDw44jOBQadoPK2eNzA5WUieqWDXM9SgK1cmyci
+	 /txj7yU4ilYwKhtfO5AlRFXCfSwAcqUbtgE/NUBayEbtgdGjcHiJmaWZp9Ry+oomIyIid
+	 ZSzaBUj/UOHvcVsj35qY7zcxteL0PmojN3o/JdWloquMdxwp50xapZ/1iZ5ClRcnns3LT
+	 /xxJ8BsilA8C7W33WDapOtdJj7XNsFqtNYagGtapnZyhqapkjL4ynAwjlRxTUDCdqdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211322;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S2djrZGxPe9qy+cdNI7gSxhKiHPIfKbWE2qXAfS2O2g=;
-	b=uCn5uFwhfWQjQiH5dwStUpQVFR5cMNQSU+EcFP2dtX19fG5eoyV+w+zl5lXn4xZGTZpq
-	 a3EU2+8siNGhn7zFRVMCI8Typ/ur8ITIuU+NGusfHVTvWrsy3yvB1gV5yfIXm/+PuNujf
-	 1h+JVbfvJiR1TcjYSn0e6iuAr97meQcVokskQa4+Xy5e2cxfQoI8MYSUhCEKLiIw2Y6hz
-	 3GM2g3zQJnYRsCKmO0OcgjNbnAP2QfiGMBTwfWD9Ml8o4oy3RLLqBgmKq0pNguUyxxUF1
-	 PcYk9VK/Dz/kC86B3cFoUWo0P7++79mBs31oPrEvcLZ+fzjw7IixbE30KtaziHDpYsg==
+	bh=dCbbW/+Y9uwRRwEZgS+yaLwLiL6WGu2S4v5rIdwzx3Y=;
+	b=EGxDwy7apv6TuskdDUEmW6CVC03raCUTNhNJOD5Ad+11awWyE29i2Khl0F8twBeMJpNW
+	 6GN/kzo7W/dGVpqdzsNlEFOGTB4vImaRadIfDD5Ews6FI5KKt0QHDn/55Y1Mim7I91X9p
+	 Haf6IDp4puRzUSr7BVeLPRw/f4xh6ObQ3IaXfHZnQRvMQJ9m+rgK1XrR2TPaV971fAQvp
+	 nOCnfSBVrBrbIKb3978Sv4iKADraYdsQVIaVKVZcejplqI9Neei3JfrNYNWDqih2xahXT
+	 1MUAyRsQmJAYQhezHFvSSjGqIwPE7LkDkqvnx8Ahffe/B+slzaqrk2K9vaWL10+hQJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueBs34E4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CxajyLwC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B6E606A32E;
-	Wed, 28 Oct 2026 18:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83552606A333;
+	Wed, 28 Oct 2026 18:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueBs34E4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE971F01825;
-	Wed, 28 Oct 2026 18:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CxajyLwC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3BD1F01825;
+	Wed, 28 Oct 2026 18:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211319;
-	bh=S2djrZGxPe9qy+cdNI7gSxhKiHPIfKbWE2qXAfS2O2g=;
+	s=korg; t=1793211322;
+	bh=dCbbW/+Y9uwRRwEZgS+yaLwLiL6WGu2S4v5rIdwzx3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ueBs34E4aUK0iZDoNrJfTz26HErOwwyZTU0SUX6+pROHTdVs9tsCn15rblq1k6Tpw
-	 /VTzKxsf3WWcBPJ0S7fYHlmHM1s9amPXpN0/1kJnSGThjlEEOKfFpqCaBKL/VYtScr
-	 lqghY/BurB3V38SfFTxKY4t5QOhT295LbIHjHQ9E=
+	b=CxajyLwC9thlbVPsOW9hF2zTSrkv7xjQoQ4DccCdtFui/1tddhbJP0mHr002bDnzw
+	 lLxiO6eKaTxFc+b6qE81yT/ZDTJIeNGBMMWqE21ncDmN3NxbTVrL+wHYFKZTAYMLj/
+	 W9TaiayjdRgzKY7m07ADi0cZ2BSwxfWDrtfFf4TE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Pesaresi <andreapesaresi82@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 336/571] wifi: mac80211: set info->band for 802.3 encap offload frames
-Date: Wed, 28 Oct 2026 17:58:03 +0100
-Message-ID: <20261028170015.985072168@linuxfoundation.org>
+Subject: [PATCH 5.15 337/571] smb: client: discard post-EOF pagecache when extending a file via zero range
+Date: Wed, 28 Oct 2026 17:58:04 +0100
+Message-ID: <20261028170016.009935633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,53 +75,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 4febc02cd02f021f2b6d0768332be643ef14a12d ]
+[ Upstream commit da4fe97fb6c730d9c94a115c7bfa6f98e0d578d0 ]
 
-Unlike the 802.11 TX paths, ieee80211_8023_xmit() does not set
-info->band from the channel context on non-MLD interfaces. It stays at
-0, so ieee80211_get_tx_rates() uses the wrong band for these frames.
+smb3_zero_range() removed the pagecache only for the range being zeroed,
+so when it extends the file the folio straddling the old EOF - which may
+hold data dirtied past EOF through an mmap - was never dropped and became
+visible as file content once the file was extended.
 
-Set it the same way as ieee80211_build_hdr(): drop the frame if there is
-no channel context, and leave the band at 0 on MLD interfaces.
+Lower the discard boundary to the smaller of the zero-range offset and the
+old EOF.
 
-Reported-by: Andrea Pesaresi <andreapesaresi82@gmail.com>
-Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
+Fixes: 72c419d9b073 ("cifs: fix smb3_zero_range so it can expand the file-size when required")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260926120216.4054712-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: Changed vif.bss_conf.chanctx_conf access to vif.chanctx_conf. ]
+[ sashal: Replaced the unavailable local i_size variable with i_size_read(inode). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/cifs/smb2ops.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index b7865f3b97879..a919d585b6b1b 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4467,6 +4467,7 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- {
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
- 	struct ieee80211_local *local = sdata->local;
-+	struct ieee80211_chanctx_conf *chanctx_conf;
- 	struct tid_ampdu_tx *tid_tx;
- 	u8 tid;
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index deed3b5e78065..2f5c446de223c 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -3601,8 +3601,12 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	/*
+ 	 * We zero the range through ioctl, so we need remove the page caches
+ 	 * first, otherwise the data may be inconsistent with the server.
++	 *
++	 * Start at the old EOF when extending so the folio straddling it, which
++	 * may hold data written past EOF through an mmap, is dropped too.
+ 	 */
+-	truncate_pagecache_range(inode, offset, offset + len - 1);
++	truncate_pagecache_range(inode, min(offset, i_size_read(inode)),
++				 offset + len - 1);
  
-@@ -4514,6 +4515,11 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 		sdata = container_of(sdata->bss,
- 				     struct ieee80211_sub_if_data, u.ap);
- 
-+	chanctx_conf = rcu_dereference(sdata->vif.chanctx_conf);
-+	if (unlikely(!chanctx_conf))
-+		goto out_free;
-+	info->band = chanctx_conf->def.chan->band;
-+
- 	info->flags |= IEEE80211_TX_CTL_HW_80211_ENCAP;
- 	info->control.vif = &sdata->vif;
- 
+ 	/* if file not oplocked can't be sure whether asking to extend size */
+ 	if (!CIFS_CACHE_READ(cifsi))
 -- 
 2.53.0
 
