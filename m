@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215598;
-	b=isNutSS5hIyjZ2Mtuw6vb3irRmWYesBW98x3lC0qEENWm4ZQspAKxPOzeRiCb+LmfR4A
-	 AfNSh6J8uvnkIUdSk22IrFSNrgDURqZ3ezGk60Mp/f/5oDPcL0XXLE1zZh29I3SqSa4q2
-	 M2nRxn+Y3JaF9Gb1bF67tiXmHZGYQWDmJh1O4X3T23rd/Qvw/AUUIfhr7lFweE4DGy8ha
-	 P0VADjBj8+lcBYlBwJDnNbS8hZrWt5jdjq7fMx5RaYvzGINqEoYv6FXCrVltRWP+QB/pv
-	 aoA7W16vwrfo2YcIma8R5Vx/qPll/hje9F4p7C0zyCfWU0VQvrFp+Ox8jwDfA+4y3CQ==
+	t=1793215601;
+	b=bP+xe+AhqsjA7nyyo2h99y3JqODAt+HdfnYiqPxMlaj7o/pwptZOcdGizS2FR1q0zXQe
+	 HiimjxqAolTvMpJkwp9z9KDXQ/AsAVM2T7Dzu/5kXe5apGFXN0Nq2wB87jOCThv7B0dCl
+	 1UGrEDTlq0Ls1ib9Mo48s5DtFVE+3HfhyFzEyY+er/AIhzCcc3K6MYgtSsv/FCrriiYE6
+	 CpRwBj8jl4W4aq3FeKbzE734PWtv0oigIbzaTHJLVEp/B4B6fRqFiF+Gzd8Wb6Y1vzX2g
+	 8/Yka76ePCaDkSFahpdVBQ1930rHiuyQ6odQJUMQ8RUTKCYKa7bj+mkMADFThdcNVbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215598;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zRxctR7sbrMGsLjhKsUjstWtaSXl9Gn5OZbFwxPij18=;
-	b=XewxRKtH5MY+IREx4+zsEU9/6oLdRdTsgehAMRGNvVImYxCm2TnGQjM916k008R+sIHA
-	 /KYGMcMPdnzVV8PvFXiP437ZHWkqHNAFYsAMl3q+aEbIYXwDhWKGnyNMQenzhMHaWqGIm
-	 j9MsFF7F2SG3xbDLKkwGRcTwJsWf5IBel7vfCdeJqOuMbRdDPULuKPqefMKm3DH/R1uAs
-	 F5K1iBGIAVXSf/mYVn5Gp1J+L2ksDxIBTMPNFr/rdvDwEOZ1LO0y/jquQ1EuLmKXKaTe4
-	 jax96EUCJXmCQ3PzMRd2KFwgZK1XCYq+j08fRlQL+DJQz2wqG/FrDmanxpqmOiHhqVA==
+	bh=EpG0AjdU7MwFkJtK45rJ2Gg5u7UTm2uNVmPfL7YH8n4=;
+	b=Mu5hAxDjFU2uo9FXOsGq+AWii5K7h3idgMpIzu/0ljK6A3UbAX4oEC3++KTWa3j/kokl
+	 6sl2ChGn4TxV+b07ZXOSHG6a/N0V0+G0baf8Nu4iIF95TE/IhAW7ZYUUbDFlqLJfpHdCv
+	 4bdgBc61qS4MLZTYYznN2xtf5dOOJtl4mRPaWlp4zcC+lpYX4J3/GFaWxP2+OSgVT1+6r
+	 /fvJ0Kcy2+6qesVzNbiK9gVNs3rInOhbGvcqsinQ911bMe0BqOUzpbBc5UMpq0MpanRWM
+	 7bz0oZRmGfaMSjLzc+/IJ6VnueS+78pgCI3P/NB/WHwj2mto4SGwe8hJssoaq2MFreA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2ZW7onG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZPjCyBzq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECACC606A31A;
-	Wed, 28 Oct 2026 19:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C131B606A31A;
+	Wed, 28 Oct 2026 19:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2ZW7onG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5471F031E2;
-	Wed, 28 Oct 2026 19:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZPjCyBzq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226391F01825;
+	Wed, 28 Oct 2026 19:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215597;
-	bh=zRxctR7sbrMGsLjhKsUjstWtaSXl9Gn5OZbFwxPij18=;
+	s=korg; t=1793215600;
+	bh=EpG0AjdU7MwFkJtK45rJ2Gg5u7UTm2uNVmPfL7YH8n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2ZW7onGnhiMqu5pdTR/DwOVg1iC0IQUCA5AatQqwxiRRqZoOA0jWfCQmN85YtYAX
-	 tz9Y12Bo8xhtU2S0nZ0C4AHHwToaKzU5ZSJgZIZU9XBQ52jJOthWhApGDFOVOkFYKV
-	 vvAxQtJbTPyHovCLod5pt0o7sHboT0bSwBMGOYDE=
+	b=ZPjCyBzqlWS/HFaApywdz2l5ELZhXg6a94A1qs2t61bE9OHx1HyBjRlFjtZpXMBGa
+	 AmmJ0CPmB7KvAuPersqDLONJFo5TKjH/QJMM9EUdqCnP/je+DHx+qlX/vgK7EAFgxq
+	 87fUt9qay8+cir2OPEI8v/sqoL4UefrkUYHH3J7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	linux-afs@lists.infradead.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	ShuangYu <shuangyu@yunyoo.cc>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1229/1887] afs: Fix reinitialisation of the inode, in particular ->lock_work
-Date: Wed, 28 Oct 2026 17:55:25 +0100
-Message-ID: <20261028170527.390209021@linuxfoundation.org>
+Subject: [PATCH 6.1 1265/1887] vhost: fix vhost_get_avail_idx for a non empty ring
+Date: Wed, 28 Oct 2026 17:56:01 +0100
+Message-ID: <20261028170528.210635618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,92 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 5597fbd1e7c161914f20315a726e54025b0fdadb ]
+[ Upstream commit 09861858a68342f851f71c669ac0f69865c32151 ]
 
-It seems that initalising afs_vnode::lock_work a single time in the slab's
-init function isn't sufficient for work_structs.  This results in the
-DEBUG_OBJECTS debugging stuff producing a warning occasionally when running
-the generic/131 xfstest:
+vhost_get_avail_idx is supposed to report whether it has updated
+vq->avail_idx. Instead, it returns whether all entries have been
+consumed, which is usually the same. But not always - in
+drivers/vhost/net.c and when mergeable buffers have been enabled, the
+driver checks whether the combined entries are big enough to store an
+incoming packet. If not, the driver re-enables notifications with
+available entries still in the ring. The incorrect return value from
+vhost_get_avail_idx propagates through vhost_enable_notify and causes
+the host to livelock if the guest is not making progress, as vhost will
+immediately disable notifications and retry using the available entries.
 
- ODEBUG: activate not available (active state 0) object: 0000000016d8760f object type: work_struct hint: afs_lock_work+0x0/0x220
- WARNING: lib/debugobjects.c:629 at debug_print_object+0x4b/0x90, CPU#3: locktest/7695
- ...
- CPU: 3 UID: 0 PID: 7695 Comm: locktest Tainted: G S                  7.1.0-build3+ #2771 PREEMPT
- ...
- RIP: 0010:debug_print_object+0x65/0x90
- ...
- Call Trace:
-  <TASK>
-  ? __pfx_afs_lock_work+0x10/0x10
-  debug_object_activate+0x122/0x170
-  insert_work+0x25/0x60
-  __queue_work+0x2e0/0x340
-  queue_delayed_work_on+0x48/0x70
-  afs_fl_release_private+0x57/0x70
-  locks_release_private+0x5c/0xa0
-  locks_free_lock+0xe/0x20
-  posix_lock_inode+0x55f/0x5b0
-  locks_lock_inode_wait+0x81/0x140
-  ? file_write_and_wait_range+0x50/0x70
-  afs_lock+0xcd/0x110
-  fcntl_setlk+0x10d/0x260
-  do_fcntl+0x24e/0x5b0
-  __do_sys_fcntl+0x6a/0x90
-  do_syscall_64+0x11e/0x310
-  entry_SYSCALL_64_after_hwframe+0x71/0x79
+This goes back to commit d3bb267bbdcb ("vhost: cache avail index in
+vhost_enable_notify()") which changed vhost_enable_notify() to compare
+the freshly read avail index against vq->last_avail_idx instead of the
+previously cached vq->avail_idx. Commit 7ad472397667 ("vhost: move
+smp_rmb() into vhost_get_avail_idx()") then carried over the same
+comparison when refactoring vhost_enable_notify() to call the unified
+vhost_get_avail_idx().
 
-Fix this by reinitialising ->lock_work after allocating an inode.
+The obvious fix is to make vhost_get_avail_idx do what the comment
+says it does and report whether new entries have been added.
 
-Also, flush ->lock_work when the inode is being evicted to make sure it's
-not still running.
-
-Fixes: e8d6c554126b ("AFS: implement file locking")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-13-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Thomas Gleixner <tglx@kernel.org>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reported-by: ShuangYu <shuangyu@yunyoo.cc>
+Fixes: d3bb267bbdcb ("vhost: cache avail index in vhost_enable_notify()")
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <559b04ae6ce52973c535dc47e461638b7f4c3d63.1772441455.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/inode.c | 1 +
- fs/afs/super.c | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/vhost/vhost.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/afs/inode.c b/fs/afs/inode.c
-index 5921dd3687e39..524e5a106337e 100644
---- a/fs/afs/inode.c
-+++ b/fs/afs/inode.c
-@@ -809,6 +809,7 @@ void afs_evict_inode(struct inode *inode)
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 5958bca8e2720..85d4585c526cc 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1011,6 +1011,7 @@ static void vhost_dev_unlock_vqs(struct vhost_dev *d)
+ static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
+ {
+ 	__virtio16 idx;
++	u16 avail_idx;
+ 	int r;
  
- 	ASSERTCMP(inode->i_ino, ==, vnode->fid.vnode);
+ 	r = vhost_get_avail(vq, idx, &vq->avail->idx);
+@@ -1021,17 +1022,19 @@ static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
+ 	}
  
-+	flush_delayed_work(&vnode->lock_work);
- 	truncate_inode_pages_final(&inode->i_data);
+ 	/* Check it isn't doing very strange thing with available indexes */
+-	vq->avail_idx = vhost16_to_cpu(vq, idx);
+-	if (unlikely((u16)(vq->avail_idx - vq->last_avail_idx) > vq->num)) {
++	avail_idx = vhost16_to_cpu(vq, idx);
++	if (unlikely((u16)(avail_idx - vq->last_avail_idx) > vq->num)) {
+ 		vq_err(vq, "Invalid available index change from %u to %u",
+-		       vq->last_avail_idx, vq->avail_idx);
++		       vq->last_avail_idx, avail_idx);
+ 		return -EINVAL;
+ 	}
  
- 	afs_set_cache_aux(vnode, &aux);
-diff --git a/fs/afs/super.c b/fs/afs/super.c
-index 1dd6c7c9713be..3fa0c38d7a7c0 100644
---- a/fs/afs/super.c
-+++ b/fs/afs/super.c
-@@ -670,7 +670,6 @@ static void afs_i_init_once(void *_vnode)
- 	INIT_LIST_HEAD(&vnode->wb_keys);
- 	INIT_LIST_HEAD(&vnode->pending_locks);
- 	INIT_LIST_HEAD(&vnode->granted_locks);
--	INIT_DELAYED_WORK(&vnode->lock_work, afs_lock_work);
- 	INIT_LIST_HEAD(&vnode->cb_mmap_link);
- 	seqlock_init(&vnode->cb_lock);
- }
-@@ -702,6 +701,7 @@ static struct inode *afs_alloc_inode(struct super_block *sb)
+ 	/* We're done if there is nothing new */
+-	if (vq->avail_idx == vq->last_avail_idx)
++	if (avail_idx == vq->avail_idx)
+ 		return 0;
  
- 	init_rwsem(&vnode->rmdir_lock);
- 	INIT_WORK(&vnode->cb_work, afs_invalidate_mmap_work);
-+	INIT_DELAYED_WORK(&vnode->lock_work, afs_lock_work);
- 
- 	_leave(" = %p", &vnode->netfs.inode);
- 	return &vnode->netfs.inode;
++	vq->avail_idx = avail_idx;
++
+ 	/*
+ 	 * We updated vq->avail_idx so we need a memory barrier between
+ 	 * the index read above and the caller reading avail ring entries.
 -- 
 2.53.0
 
