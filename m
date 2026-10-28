@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216234;
-	b=0Q0oRKA4kbYMhIr80J65Z5jt2J/3SLJ/UDpTZ/liGciFjdHLyX9bm8Vk6/SBehb5r85v
-	 GAtysrA24jNaxmQpRFp5GyF6xpXTdYTHknXVf5vDv0hQwPlT054NicHB1GxLysOdaGFLj
-	 +ZOLPq3sitgAfd8+lYL6K+8xeyjj1Hbq8DuCzOYAhaxoOU+/1Cmw73fxYuE2N/HU2Ra5K
-	 m3nTgmIgO6bc/Vxz8fqwl8XotKn0tnXCFGjII79AYxfwuAqNs7b9hzvp/MPv12MupDZtF
-	 YBIO3PNzLZLRPB4HTm9iO8UG0WXDS/ZO4RN3VFyqOrGLwqK89VgVXyuUcLhNaQUyjPQ==
+	t=1793216237;
+	b=reYRcPf0MlzPbKwxaB2hQmzNQp8dKl/QRh8CXOefBrM9XCKKMGwPmvDLODAKEI7OY5lC
+	 x8us/6ksMbebGzBOLlLZZL+65MQy6v+Ypcy4gjIvA5cDXT1yXgoLImDhB1w9LB8PHxVHa
+	 xvF01VJ76bzp2HFsv71Mjnj5hGLgAuwUWW+xszIgK5238kBP0THaROfYDSjWGMapxbAdO
+	 o0crXVIDm3J82N6mhou2Ep/jFsdiJSJYRcDnKWUnd+TvR/VokPE97SGkdHaNj3MO8Z5PI
+	 Tv0sD987kVTOaVgCBoxbpB92hAxFKdm+LBLk4uVBsXcttpBrUpgdL0b6t45l9IYvLjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216234;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216237;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dVZi7TNQZzrH52A+okS/++F42ceQ4W9CNEe33ZyR7bQ=;
-	b=RmvwUE5+CiJSXUY7HprCjMLrtVB6iEpVF5kIy+op9QtCw75ztPRfJcUrB/wtCz16FX8+
-	 iEYwJdEVFrx52m9sftUlNmwtXPcYuXN0AJ4ax/pr2dM5KJeSBI+0g64Uc1vgJ2haOq7Jl
-	 H+9wQcbV9Qf02/0D37QpWR5YHzGrU+VqMF73oJtN9Qgda9I5BH8DZeTrDgjorfIhqLvXP
-	 oS2d2+Q7MpO267ifCUGhxzrNgrgp8vSiMm9ej56pqz3uOlp8PARvLLMLiUJ6xnv/yx2l3
-	 uwJItgex0RRtSEiHQBQnYBfm95ndSK48xD7tpC/5eR3KAOcllljx64RTYQpvJYhbNCg==
+	bh=o5+6gjC9jek6n7vAwJN7kbmOpUitPBfHrycbX9qZmZY=;
+	b=vw3E6iKaLskSBF4KO8cSIKcehglX1VEwKrLlDheqqTUkKcgvFULUoew9sHUoxrer1y1P
+	 F5pXUV+lDJLpesbzrmsh/JIIhv1HE3q02UBbDhWOhyLQjnjBR97tzKvPrcFTEnIDiPWUv
+	 rV2RKagVtOlcB2y1kozv04Kri/8ehCX5KXPy4TidPJZlfzIz6BcdCMyOlMt36eHTUchzy
+	 eZ6f9y4G4UO0WCcvre+WqdSZbFVgVikTzdeFaHYH9dEre7brGRWoT07Rfx71XBoXhSwOp
+	 dLWLbL1f+9MmvRkasYRzeDTAb+KRNme9HptHxzZN/JALhvkTzuXVVto4lwtVq4Bfeow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2LN2I3e8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COblz+ii;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099DD606A321;
-	Wed, 28 Oct 2026 19:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E44606A31F;
+	Wed, 28 Oct 2026 19:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2LN2I3e8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D3B1F031E0;
-	Wed, 28 Oct 2026 19:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COblz+ii
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36441F01828;
+	Wed, 28 Oct 2026 19:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216233;
-	bh=dVZi7TNQZzrH52A+okS/++F42ceQ4W9CNEe33ZyR7bQ=;
+	s=korg; t=1793216236;
+	bh=o5+6gjC9jek6n7vAwJN7kbmOpUitPBfHrycbX9qZmZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2LN2I3e84UbmsRXyxwfomIqZUQv0g3uGX9tjx/lXeA8IldLvSBMuv9GtXV/78krjA
-	 tCjkkqJWfhZ86hmQfzrUtqN0+KzK47V67g349XQyowweYuiq1WSotHzDxMUMPh2d08
-	 uocH3aS53pftrH7V0yTEgBS7x73Rg1Yw+YAWrQr8=
+	b=COblz+iiVHIigkNTxRE+QzfDh9DpSk+iPF7EykBSIL/6sYWJ5VVEgllalIl8hqDZX
+	 7cQBcIvcAIDCHp7Vka7usbhYwYSaROC+Fv5MwnWjmMLuZjfo5HWBUR3plLdF+f2R3E
+	 ioBBJhdveY4W/90faH63WFSWbpqJp2GqJiK+Qc3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+381d82bbf0253710b35d@syzkaller.appspotmail.com,
-	syzbot+3479efbc2821cb2a79f2@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yangtao Li <frank.li@vivo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1460/1887] net: watchdog: fix refcount tracking races
-Date: Wed, 28 Oct 2026 17:59:16 +0100
-Message-ID: <20261028170532.682680450@linuxfoundation.org>
+Subject: [PATCH 6.1 1487/1887] f2fs: convert to use sysfs_emit
+Date: Wed, 28 Oct 2026 17:59:43 +0100
+Message-ID: <20261028170533.290174905@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,200 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 8eed5519e496b7a07f441a0f579cb228a33189f7 ]
+[ Upstream commit 084e15ea14bbb1ad40163438cfa74a76a1521c16 ]
 
-Blamed commit converted the untracked dev_hold()/dev_put() calls
-in the watchdog code to use the tracked dev_hold_track()/dev_put_track()
-(which were later renamed/interfaced to netdev_hold() and netdev_put()).
+Let's use sysfs_emit.
 
-By introducing dev->watchdog_dev_tracker to store the
-reference tracking information without adding synchronization
-between netdev_watchdog_up() and dev_watchdog(), it enabled the
-race condition where this pointer could be overwritten or freed
-concurrently, leading to the list corruption crash syzbot reported:
-
-list_del corruption, ffff888114a18c00->next is NULL
- kernel BUG at lib/list_debug.c:52 !
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 1 UID: 0 PID: 91 Comm: kworker/u8:5 Not tainted syzkaller #0 PREEMPT(lazy)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/09/2026
-Workqueue: events_unbound linkwatch_event
- RIP: 0010:__list_del_entry_valid_or_report.cold+0x22/0x2a lib/list_debug.c:52
-Call Trace:
- <TASK>
-  __list_del_entry_valid include/linux/list.h:132 [inline]
-  __list_del_entry include/linux/list.h:246 [inline]
-  list_move_tail include/linux/list.h:341 [inline]
-  ref_tracker_free+0x1a7/0x6c0 lib/ref_tracker.c:329
-  netdev_tracker_free include/linux/netdevice.h:4491 [inline]
-  netdev_put include/linux/netdevice.h:4508 [inline]
-  netdev_put include/linux/netdevice.h:4504 [inline]
-  netdev_watchdog_down net/sched/sch_generic.c:600 [inline]
-  dev_deactivate_many+0x28c/0xfe0 net/sched/sch_generic.c:1363
-  dev_deactivate+0x109/0x1d0 net/sched/sch_generic.c:1397
-  linkwatch_do_dev net/core/link_watch.c:184 [inline]
-  linkwatch_do_dev+0xd3/0x120 net/core/link_watch.c:166
-  __linkwatch_run_queue+0x3a5/0x810 net/core/link_watch.c:240
-  linkwatch_event+0x8f/0xc0 net/core/link_watch.c:314
-  process_one_work+0xa0e/0x1980 kernel/workqueue.c:3314
-  process_scheduled_works kernel/workqueue.c:3397 [inline]
-  worker_thread+0x5ef/0xe50 kernel/workqueue.c:3478
-  kthread+0x370/0x450 kernel/kthread.c:436
-  ret_from_fork+0x69a/0xc80 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
-This patch has three coordinated parts:
-
-1) Add dev->watchdog_lock and dev->watchdog_ref_held to serialize watchdog operations.
-
-2) Remove netdev_watchdog_up() call from netif_carrier_on():
-   This ensures netdev_watchdog_up() is only called from process/BH context
-   (via linkwatch workqueue dev_activate()), allowing us to use
-   spin_lock_bh() for synchronization.
-
-3) Synchronize watchdog up and watchdog timer:
-   Protect netdev_watchdog_up() with tx_global_lock and watchdog_lock.
-   Only allocate a new tracker in netdev_watchdog_up() if one is
-   not already present.
-   In dev_watchdog(), ensure we don't release the tracker if the
-   timer was rescheduled either by dev_watchdog() itself or concurrently
-   by netdev_watchdog_up().
-
-Fixes: f12bf6f3f942 ("net: watchdog: add net device refcount tracker")
-Reported-by: syzbot+381d82bbf0253710b35d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a26b751.c25708ab.1b19ef.0013.GAE@google.com/T/#u
-Tested-by: syzbot+3479efbc2821cb2a79f2@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260611152737.2580480-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 5cb33b00c8fb ("f2fs: avoid NULL checkpoint thread access in sysfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  4 ++++
- net/core/dev.c            |  3 ++-
- net/sched/sch_generic.c   | 45 ++++++++++++++++++++++++++++-----------
- 3 files changed, 38 insertions(+), 14 deletions(-)
+ fs/f2fs/sysfs.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index e97967ca27601..683896a9af446 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -1938,6 +1938,8 @@ enum netdev_reg_state {
-  *	@qdisc_hash:		qdisc hash table
-  *	@watchdog_timeo:	Represents the timeout that is used by
-  *				the watchdog (see dev_watchdog())
-+ *	@watchdog_lock:		protect watchdog_ref_held
-+ *	@watchdog_ref_held:	True if the watchdog device ref is taken.
-  *	@watchdog_timer:	List of timers
-  *
-  *	@proto_down_reason:	reason a netdev interface is held down
-@@ -2267,6 +2269,8 @@ struct net_device {
- 	/* These may be needed for future network-power-down code. */
- 	struct timer_list	watchdog_timer;
- 	int			watchdog_timeo;
-+	spinlock_t		watchdog_lock;
-+	bool			watchdog_ref_held;
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index b0607fdd5ad40..031dd0079dbd6 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -326,19 +326,14 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
  
- 	u32                     proto_down_reason;
+ 	if (!strcmp(a->attr.name, "ckpt_thread_ioprio")) {
+ 		struct ckpt_req_control *cprc = &sbi->cprc_info;
+-		int len = 0;
+ 		int class = IOPRIO_PRIO_CLASS(cprc->ckpt_thread_ioprio);
+ 		int data = IOPRIO_PRIO_DATA(cprc->ckpt_thread_ioprio);
  
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 7eccf0fb1709e..4a1b16a0c04b8 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10078,7 +10078,8 @@ static int netif_alloc_netdev_queues(struct net_device *dev)
+-		if (class == IOPRIO_CLASS_RT)
+-			len += scnprintf(buf + len, PAGE_SIZE - len, "rt,");
+-		else if (class == IOPRIO_CLASS_BE)
+-			len += scnprintf(buf + len, PAGE_SIZE - len, "be,");
+-		else
++		if (class != IOPRIO_CLASS_RT && class != IOPRIO_CLASS_BE)
+ 			return -EINVAL;
  
- 	netdev_for_each_tx_queue(dev, netdev_init_one_queue, NULL);
- 	spin_lock_init(&dev->tx_global_lock);
--
-+	spin_lock_init(&dev->watchdog_lock);
-+	dev->watchdog_ref_held = false;
- 	return 0;
- }
- 
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index b9cc8e90d6554..9b95e6b120e63 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -541,28 +541,43 @@ static void dev_watchdog(struct timer_list *t)
- 				dev->netdev_ops->ndo_tx_timeout(dev, i);
- 				netif_unfreeze_queues(dev);
- 			}
--			if (!mod_timer(&dev->watchdog_timer,
--				       round_jiffies(oldest_start +
--						     dev->watchdog_timeo)))
--				release = false;
-+			spin_lock(&dev->watchdog_lock);
-+			mod_timer(&dev->watchdog_timer,
-+				  round_jiffies(oldest_start +
-+						dev->watchdog_timeo));
-+			release = false;
-+			spin_unlock(&dev->watchdog_lock);
- 		}
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%d\n", data);
+-		return len;
++		return sysfs_emit(buf, "%s,%d\n",
++			class == IOPRIO_CLASS_RT ? "rt" : "be", data);
  	}
- 	spin_unlock(&dev->tx_global_lock);
  
--	if (release)
-+	spin_lock(&dev->watchdog_lock);
-+	if (timer_pending(&dev->watchdog_timer))
-+		release = false;
-+	if (release && dev->watchdog_ref_held) {
- 		netdev_put(dev, &dev->watchdog_dev_tracker);
-+		dev->watchdog_ref_held = false;
-+	}
-+	spin_unlock(&dev->watchdog_lock);
- }
- 
- void __netdev_watchdog_up(struct net_device *dev)
- {
--	if (dev->netdev_ops->ndo_tx_timeout) {
--		if (dev->watchdog_timeo <= 0)
--			dev->watchdog_timeo = 5*HZ;
--		if (!mod_timer(&dev->watchdog_timer,
--			       round_jiffies(jiffies + dev->watchdog_timeo)))
-+	if (!dev->netdev_ops->ndo_tx_timeout)
-+		return;
-+	if (dev->watchdog_timeo <= 0)
-+		dev->watchdog_timeo = 5*HZ;
-+
-+	spin_lock_bh(&dev->watchdog_lock);
-+	if (!mod_timer(&dev->watchdog_timer,
-+		       round_jiffies(jiffies + dev->watchdog_timeo))) {
-+		if (!dev->watchdog_ref_held) {
- 			netdev_hold(dev, &dev->watchdog_dev_tracker,
- 				    GFP_ATOMIC);
-+			dev->watchdog_ref_held = true;
-+		}
- 	}
-+	spin_unlock_bh(&dev->watchdog_lock);
- }
- EXPORT_SYMBOL_GPL(__netdev_watchdog_up);
- 
-@@ -574,8 +589,14 @@ static void dev_watchdog_up(struct net_device *dev)
- static void dev_watchdog_down(struct net_device *dev)
- {
- 	netif_tx_lock_bh(dev);
--	if (del_timer(&dev->watchdog_timer))
-+
-+	spin_lock(&dev->watchdog_lock);
-+	if (del_timer(&dev->watchdog_timer)) {
- 		netdev_put(dev, &dev->watchdog_dev_tracker);
-+		dev->watchdog_ref_held = false;
-+	}
-+	spin_unlock(&dev->watchdog_lock);
-+
- 	netif_tx_unlock_bh(dev);
- }
- 
-@@ -592,8 +613,6 @@ void netif_carrier_on(struct net_device *dev)
- 			return;
- 		atomic_inc(&dev->carrier_up_count);
- 		linkwatch_fire_event(dev);
--		if (netif_running(dev))
--			__netdev_watchdog_up(dev);
- 	}
- }
- EXPORT_SYMBOL(netif_carrier_on);
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
 -- 
 2.53.0
 
