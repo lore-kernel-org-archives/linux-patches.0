@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215746;
-	b=RcShriD/TfOA0VV8hIdqHN4hRLrabD4t0sHYqLuCtJuiTpV0jAXT9COt9n/1CChF79oY
-	 ZPuASR4NG28c1C2rfudv9CnKsNaxtE8YEd2Rxs77HmDyJXLSK6ssps0vV2Kg6SoJ2I1w6
-	 Cx8wl4dN3ji+Qlbmb2WuVgY7csZee8xxF5mVv03tx9DcrJvzCN9C+MHPKmariIpbiBQCa
-	 my5rYM7Mi4JP2U2kPSke9vPi+5SPIHEKnnsC7MNTgZKvJQSqnwYkKn/66y0b4znMfgw6c
-	 GXlejPjWI42ReraeiTr4yUVOZbo8+fhdhS1hY/5+v+0e4WTb/jQfmschrtyVwz79tiA==
+	t=1793215749;
+	b=lRNq5xF9e4j5Wfn14BT0ZEnL24/HP5Ln6xdVylNTSch95gVF6CEG9SKrke9cb0O0ea2P
+	 Ak5HZ7uRxUXay00PsTDQjl+gc6enT20JX8pVKqo+5l7vOEqDhzfkeKmFRsVwiEc9yBH5a
+	 FOjwJhSk/D33DGXw+yq/Q4VYLdahZ+bw0pSu81JOEkl68sDoPYfgB0pq5CjlHBZqKb/KQ
+	 oG30Zbl6GXP6h5QrZp1uYbWyJtHsSANHU0uTLdKbA+ErE+9h59GCjCckYOFu3WJRrtSon
+	 pigppaaI42H7NNoxmpB11U7IN0RGX82zusvXHX+o/ua3i9QZ6r9VBOFpN9OwcaUmidw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215749;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kmnG7sTuKB841G/O2Phv4Pswr+UxXI+2YO8XU+PL2nU=;
-	b=sIck0SnXFJuddk/ped3QwizFe3efZQHAAvGT/izhJipxE14eetAf4+6cXP2VXGL1L+JS
-	 BxYoufbQF2ZPwJL6K9RcnN1xW38UAXOzOiO9BNqLsKJraYcJqcVFL7RK94l5F4qcjWTm6
-	 9+NU2OOoLyR3KD3T8Z8ukh3kQ1feC8XRqo/8CN+uogXK9ttIiAil9NUPGCRqiacAz1R5R
-	 yU+R4e5HdCexgknNc1VXfOXixEFJ6MKKT+o155eILsyZoS1CWXhOCskj9bYJDUqp4g0ig
-	 pgzbOWoY+W4gr4NtAce0JC0QlKH2rAbbdiPq5BTBhpLsTE/g+aR+w6orFMW2Sub2Cvg==
+	bh=0FywTvhFPDVf5E3sdEli/TC46j3AAFd15DmdCwLO0Oc=;
+	b=IeeS/mp3Mw8IQCm5QHTWZVRSLrsS5E392YQ7XEjogyV6EwC23ixkM+vb/bIgVm3XRzrh
+	 U7KYnV4COMt+rlXZsyAqBSnfzZyGldUkRA1Mq5tA03OvQfYO6T0b4sGNRBMpFqrOs/TEt
+	 gDznK7hGpHKZGKmcFIYUyP1Al2RrTgfOjYB7zMw2KxpglcUSdhH8/uFouWKdGNyZ7cEOc
+	 0U895lzWAR4KI74eihvA2ObH/8RrvoJfV3jPOGgkAj33h2jVlwIMtKG8DznwPZ5V/eE+i
+	 djv6WpJ79mjKGPDML2v1edU6eRTb0MCLAl/Cc+9wfad3/ujUjrZSzD9ucvV78V9Xzog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m23wHJSK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zQssp+/f";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1578A606A31A;
-	Wed, 28 Oct 2026 19:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77EB606A325;
+	Wed, 28 Oct 2026 19:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m23wHJSK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236901F01825;
-	Wed, 28 Oct 2026 19:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQssp+/f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019071F01829;
+	Wed, 28 Oct 2026 19:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215745;
-	bh=kmnG7sTuKB841G/O2Phv4Pswr+UxXI+2YO8XU+PL2nU=;
+	s=korg; t=1793215748;
+	bh=0FywTvhFPDVf5E3sdEli/TC46j3AAFd15DmdCwLO0Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m23wHJSKyq6P3sPlV2ZYF8fbdkGdMnRVf9BgH3wT0C/bp/Cz6HPtx4U3KKG3l8n95
-	 eIGK/RojzZn1zGXH0nI/tPWzV/+JlcfW4ukteAgs7YsS//JqX6jy8viWVuBTaJvIFV
-	 6kEd7AffORsS/SltCuEmE2iJNQkrVaTGOCz/KXCs=
+	b=zQssp+/faqdSYLFUwwiVdN+IqJ5NPKttuMNtUovL2dtDKA20l4HGrGfsbFIL2ft+R
+	 YUJNrXHj6AQE/aqjRw58Prir/WuCoLM/8tahu5n6hrLSQF5qTnsKqpoQMzstwct03N
+	 mEQsyRfybFEafRZeFlikZ2UOFwbGTigxJwQY414o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wei Zhang <wei.zhang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1316/1887] mptcp: avoid combining some incoming suboptions
-Date: Wed, 28 Oct 2026 17:56:52 +0100
-Message-ID: <20261028170529.375536877@linuxfoundation.org>
+Subject: [PATCH 6.1 1276/1887] wifi: ath11k: cancel SSR work items during PCI shutdown
+Date: Wed, 28 Oct 2026 17:56:12 +0100
+Message-ID: <20261028170528.458427805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,259 +70,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Wei Zhang <wei.zhang@oss.qualcomm.com>
 
-[ Upstream commit b6ee361524641f57b2e2363f7737f20e17f67827 ]
+[ Upstream commit 8c79aac429b583301f387374ff37c59be671df87 ]
 
-Some MPTCP suboptions are mutually exclusive according to the RFC8684,
-but also because in different places, the code doesn't expect some
-combinations to be present. That's specially true for suboptions that
-would be present twice, but with different attributes.
+A reboot can crash the kernel if it overlaps with WLAN firmware crash
+recovery (SSR). The crash is a NULL pointer dereference in the MHI teardown
+path while freeing DMA-backed MHI contexts.
 
-The new restrictions are the same as the ones applied on the output
-side, with mptcp_write_options. The same rules can be reused with a
-small fix: an MP_FASTCLOSE can be used with a DSS when the sender picks
-this option [1], which is not the case on Linux. Here are the rules:
+Simplified trace:
+  dma_free_attrs
+  mhi_deinit_dev_ctxt [mhi]
+  ath11k_pci_power_down [ath11k_pci]
+  ath11k_pci_shutdown [ath11k_pci]
+  device_shutdown
+  kernel_restart
 
-  Which options can be used together?
+On the host side, SSR is driven by the MHI RDDM callback, which queues
+reset_work to perform device recovery. reset_work power-cycles the device
+by calling ath11k_hif_power_down() followed by ath11k_hif_power_up(). The
+power-down phase deinitializes MHI and frees DMA resources.
 
-  X: mutually exclusive
-  O: often used together
-  C: can be used together in some cases
-  P: could be used together but we prefer not to (optimisations)
+Shutdown/reboot runs fully asynchronously with this RDDM-driven SSR
+recovery flow. As a result, the shutdown path
+(ath11k_pci_shutdown() -> ath11k_pci_power_down()) can race with the SSR
+recovery sequence.
 
-  | Opt: | MPC  | MPJ  | DSS  | ADD  |  RM  | PRIO | FAIL |  FC  |
-  |------|------|------|------|------|------|------|------|------|
-  | MPC  |------|------|------|------|------|------|------|------|
-  | MPJ  |  X   |------|------|------|------|------|------|------|
-  | DSS  |  X   |  X   |------|------|------|------|------|------|
-  | ADD  |  X   |  X   |  P   |------|------|------|------|------|
-  | RM   |  C   |  C   |  C   |  P   |------|------|------|------|
-  | PRIO |  X   |  C   |  C   |  C   |  C   |------|------|------|
-  | FAIL |  X   |  X   |  C   |  X   |  X   |  X   |------|------|
-  | FC   |  X   |  X   |  P   |  X   |  X   |  X   |  X   |------|
-  | RST  |  X   |  X   |  X   |  X   |  X   |  X   |  O   |  O   |
-  |------|------|------|------|------|------|------|------|------|
+Fix this by canceling SSR-related work items during PCI shutdown, marking
+the device as unregistering, and serializing the RDDM callback path that
+checks and queues reset_work. This ensures that no new SSR recovery work
+can be queued once teardown has started, and that any in-flight recovery
+work is fully synchronized before device power-down, preventing MHI
+teardown and DMA resource freeing from running more than once.
 
-The only difference is with the 'P': another stack could send and
-ADD_ADDR with other suboptions (DSS, RM_ADDR), and this should be
-allowed.
+Note: This issue only affects PCI/MHI-based devices. AHB-based ath11k
+devices do not queue reset_work in normal SSR flows.
 
-A few points of attention:
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
 
- - In theory, an MP_CAPABLE could be used with a RM_ADDR, but there is
-   no reason to add it with a SYN. Note that even with a 4th ACK, it
-   doesn't seem to be useful, except when IDs are known in advance via
-   another channel. Better not to break that.
-
- - Now, combining both an MP_CAPABLE and an MP_JOIN will no longer
-   result to a reject of the two options, but only the second suboption
-   is ignored. That seems OK to do that for this unexpected error. At
-   least now all inconsistent combinations are handled the same way.
-   This could change later in next. This also means the explicit checks
-   for having both MPC + MPJ in subflow.c will now be unreachable.
-   That's fine, they will be removed in a follow-up patch.
-
- - In case of conflicting combinations, the extra suboption(s) is/are
-   ignored: having such combinations either means the remote peer is
-   buggy, or is evil. The simplest action is then taken in this case:
-   stop processing the current suboption.
-
- - In mp_opt->suboptions, there is also a bit reserved to the checksum,
-   which can be used in an MP_CAPABLE and a DSS. Each time a DSS option
-   can be used in parallel with another option, the checksum can be set,
-   so the verification is combined into a new OPTIONS_MPTCP_DSS macro.
-
- - An MP_CAPABLE ACK can carry a Data-Level Length, and an optional
-   Checksum: they are the same as the ones found in a DSS, because a DSS
-   cannot be used in parallel to an MP_CAPABLE. Similarly, even if there
-   is room, a DSS cannot be used with an MP_JOIN.
-
-Fixes: eda7acddf808 ("mptcp: Handle MPTCP TCP options")
-Cc: stable@vger.kernel.org
-Link: https://www.rfc-editor.org/rfc/rfc8684.html#section-3.5-5.1 [1]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-2-b8f496d71664@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 13da397f884d ("ath11k: add support for device recovery for QCA6390/WCN6855")
+Fixes: 5edbb148bc57 ("wifi: ath11k: Add firmware coredump collection support")
+Signed-off-by: Wei Zhang <wei.zhang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260404043050.3433754-1-wei.zhang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/options.c  | 70 +++++++++++++++++++++++++++++++++++++++++---
- net/mptcp/protocol.h |  1 +
- 2 files changed, 67 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath11k/mhi.c | 2 ++
+ drivers/net/wireless/ath/ath11k/pci.c | 7 +++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index 6f82517b8f6f5..79c5f731a5e12 100644
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -26,6 +26,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- {
- 	u8 subtype = *ptr >> 4;
- 	int expected_opsize;
-+	u16 subopt;
- 	u8 version;
- 	u8 flags;
- 	u8 i;
-@@ -38,11 +39,23 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 				expected_opsize = TCPOLEN_MPTCP_MPC_ACK_DATA;
- 			else
- 				expected_opsize = TCPOLEN_MPTCP_MPC_ACK;
-+			subopt = OPTION_MPTCP_MPC_ACK;
- 		} else {
--			if (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_ACK)
-+			if (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_ACK) {
- 				expected_opsize = TCPOLEN_MPTCP_MPC_SYNACK;
--			else
-+				subopt = OPTION_MPTCP_MPC_SYNACK;
-+			} else {
- 				expected_opsize = TCPOLEN_MPTCP_MPC_SYN;
-+				subopt = OPTION_MPTCP_MPC_SYN;
-+			}
-+		}
-+
-+		/* Only the MPC + ACK can be used with a RM_ADDR */
-+		if (subopt == OPTION_MPTCP_MPC_ACK) {
-+			if ((mp_opt->suboptions & ~OPTION_MPTCP_RM_ADDR) != 0)
-+				break;
-+		} else if (mp_opt->suboptions != 0) {
-+			break;
- 		}
- 
- 		/* Cfr RFC 8684 Section 3.3.0:
-@@ -86,7 +99,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 
- 		mp_opt->deny_join_id0 = !!(flags & MPTCP_CAP_DENY_JOIN_ID0);
- 
--		mp_opt->suboptions |= OPTIONS_MPTCP_MPC;
-+		mp_opt->suboptions |= subopt;
- 		if (opsize >= TCPOLEN_MPTCP_MPC_SYNACK) {
- 			mp_opt->sndr_key = get_unaligned_be64(ptr);
- 			ptr += 8;
-@@ -118,6 +131,11 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
+index 0e838721aafb2..7d53baa28f4fb 100644
+--- a/drivers/net/wireless/ath/ath11k/mhi.c
++++ b/drivers/net/wireless/ath/ath11k/mhi.c
+@@ -329,8 +329,10 @@ static void ath11k_mhi_op_status_cb(struct mhi_controller *mhi_cntrl,
+ 		ath11k_warn(ab, "firmware crashed: MHI_CB_SYS_ERROR\n");
  		break;
- 
- 	case MPTCPOPT_MP_JOIN:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTION_MPTCP_RM_ADDR |
-+					    OPTION_MPTCP_PRIO)) != 0)
-+			break;
-+
- 		if (opsize == TCPOLEN_MPTCP_MPJ_SYN) {
- 			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYN;
- 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
-@@ -149,6 +167,14 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 	case MHI_CB_EE_RDDM:
++		spin_lock_bh(&ab->base_lock);
+ 		if (!(test_bit(ATH11K_FLAG_UNREGISTERING, &ab->dev_flags)))
+ 			queue_work(ab->workqueue_aux, &ab->reset_work);
++		spin_unlock_bh(&ab->base_lock);
  		break;
- 
- 	case MPTCPOPT_DSS:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTION_MPTCP_ADD_ADDR |
-+					    OPTION_MPTCP_RM_ADDR |
-+					    OPTION_MPTCP_PRIO |
-+					    OPTION_MPTCP_FASTCLOSE |
-+					    OPTION_MPTCP_FAIL)) != 0)
-+			break;
-+
- 		pr_debug("DSS\n");
- 		ptr++;
- 
-@@ -236,6 +262,12 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 	default:
  		break;
+diff --git a/drivers/net/wireless/ath/ath11k/pci.c b/drivers/net/wireless/ath/ath11k/pci.c
+index b50361490b9b2..3a92ac80d8aef 100644
+--- a/drivers/net/wireless/ath/ath11k/pci.c
++++ b/drivers/net/wireless/ath/ath11k/pci.c
+@@ -972,6 +972,13 @@ static void ath11k_pci_shutdown(struct pci_dev *pdev)
+ 	struct ath11k_pci *ab_pci = ath11k_pci_priv(ab);
  
- 	case MPTCPOPT_ADD_ADDR:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_RM_ADDR |
-+					    OPTION_MPTCP_PRIO)) != 0)
-+			break;
+ 	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
 +
- 		mp_opt->echo = (*ptr++) & MPTCP_ADDR_ECHO;
- 		if (!mp_opt->echo) {
- 			if (opsize == TCPOLEN_MPTCP_ADD_ADDR ||
-@@ -295,6 +327,14 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 		break;
- 
- 	case MPTCPOPT_RM_ADDR:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTION_MPTCP_MPC_ACK |
-+					    OPTIONS_MPTCP_MPJ |
-+					    OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_ADD_ADDR |
-+					    OPTION_MPTCP_PRIO)) != 0)
-+			break;
++	spin_lock_bh(&ab->base_lock);
++	set_bit(ATH11K_FLAG_UNREGISTERING, &ab->dev_flags);
++	spin_unlock_bh(&ab->base_lock);
 +
- 		if (opsize < TCPOLEN_MPTCP_RM_ADDR_BASE + 1 ||
- 		    opsize > TCPOLEN_MPTCP_RM_ADDR_BASE + MPTCP_RM_IDS_MAX)
- 			break;
-@@ -309,6 +349,13 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 		break;
- 
- 	case MPTCPOPT_MP_PRIO:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_MPJ |
-+					    OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_ADD_ADDR |
-+					    OPTION_MPTCP_RM_ADDR)) != 0)
-+			break;
++	cancel_work_sync(&ab->reset_work);
 +
- 		if (opsize != TCPOLEN_MPTCP_PRIO)
- 			break;
+ 	ath11k_pci_power_down(ab);
+ }
  
-@@ -318,6 +365,11 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 		break;
- 
- 	case MPTCPOPT_MP_FASTCLOSE:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_RST)) != 0)
-+			break;
-+
- 		if (opsize != TCPOLEN_MPTCP_FASTCLOSE)
- 			break;
- 
-@@ -329,6 +381,11 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 		break;
- 
- 	case MPTCPOPT_RST:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTION_MPTCP_FAIL |
-+					    OPTION_MPTCP_FASTCLOSE)) != 0)
-+			break;
-+
- 		if (opsize != TCPOLEN_MPTCP_RST)
- 			break;
- 
-@@ -344,6 +401,11 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 		break;
- 
- 	case MPTCPOPT_MP_FAIL:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_RST)) != 0)
-+			break;
-+
- 		if (opsize != TCPOLEN_MPTCP_FAIL)
- 			break;
- 
-@@ -1416,7 +1478,7 @@ void mptcp_write_options(struct tcphdr *th, __be32 *ptr, struct tcp_sock *tp,
- 	 *  RM   |  C   |  C   |  C   |  P   |------|------|------|------|
- 	 *  PRIO |  X   |  C   |  C   |  C   |  C   |------|------|------|
- 	 *  FAIL |  X   |  X   |  C   |  X   |  X   |  X   |------|------|
--	 *  FC   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |------|
-+	 *  FC   |  X   |  X   |  P   |  X   |  X   |  X   |  X   |------|
- 	 *  RST  |  X   |  X   |  X   |  X   |  X   |  X   |  O   |  O   |
- 	 * ------|------|------|------|------|------|------|------|------|
- 	 *
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 716a6947fba74..6728f08970f2f 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -36,6 +36,7 @@
- 				 OPTION_MPTCP_MPC_ACK)
- #define OPTIONS_MPTCP_MPJ	(OPTION_MPTCP_MPJ_SYN | OPTION_MPTCP_MPJ_SYNACK | \
- 				 OPTION_MPTCP_MPJ_ACK)
-+#define OPTIONS_MPTCP_DSS	(OPTION_MPTCP_DSS | OPTION_MPTCP_CSUMREQD)
- 
- /* MPTCP option subtypes */
- #define MPTCPOPT_MP_CAPABLE	0
 -- 
 2.53.0
 
