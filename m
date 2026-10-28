@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208144;
-	b=sotEYE8UQM8WPP5tJWiBK47EWPXqDUpqrcTBnJIChhk9Zd/kWG70pz3W9S0XATtZVJXd
-	 w9F7wAriPf/K1C65QSRLvns2VpohVohwHy2YIB2vw97gZ+Y0GIiLDTCLATh22jtDc4rOM
-	 L8J5Cq+xXPQpGro9Mnp2iQYZe/QU+82DHKA2f+wPlzi4CqxJLob9ZQbrRItLJVMdJvykU
-	 8sjTDs2MSKi4sCQavx+wISpc6i/7WA0PBWyb0R2RNVnrk3xyZN8TFwpOqIei5ZKDJhIlr
-	 JHS34Qym8bVnjhwp/hoHh0DcwnLwghfKsOpC+5Vy1Mrj53hdAa/C3/LsdpAYTqYFJPA==
+	t=1793208147;
+	b=JuxFJXdSyqqxKLciFNDNB7jgbFbRV9fuIXVYBS5c1PCbi3NuJF3Ssg+n9MqEnCll8WHG
+	 A4CbvIRO0RtLSTj3pF3XX6bElGedP2zfoL/O4BoyUBrVZOvCOQKn6kYsRv49qMK9gEMb0
+	 YX/bEPEqRy3bJJLV3dd3IciEbSsNO4x4Bgk+QBzNlgLoizLKwD28GgkBm0s4OObxwgdWe
+	 gKdtuTKohNYZlCUcB6480kBI+5e5+kXi+wmVHs/z9+vTc7NEtuIdWyqqk36p11MWwmXpU
+	 QJk9ZMbbmxezbrtZzaJMqEbdB5Do4XXKyoQgSJXTcRv0CutkrqP8k2v6CTbuSsfRdSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208147;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vggXA15JGflXNIlkpyvguTS0T4L4lOlRZcqye1cyE5U=;
-	b=4ahqzCLkyvwIlLUSEch+sbhXgNt6mX0V48zmbbqUA3tAomIK6iY1WiRLIVubdvWWIS8w
-	 jiC2N01ii0EL+UYkZ4Kov3fOrl4MMV+6wvgLx/kmKs5Hk4ZD/oqs4Blx6iYRS2NMcMS7+
-	 tOLu1tlPE3x9RzNVyxXMiZ8l2aQGja2zJz3KURPxJV3U+x8eHaSuIWdCm1ULF3SZ7g7gK
-	 6Qp31yc6fLj0unYoBrOnHyZp8omydYzgcnvVjZZycoEZuNLDg07NUlFBWKNUH5YwLPwRA
-	 CCF228K8NdblL3IKkQVR4fz2x8QoB9MdOSpG2SclBxwGV8tJt5+QOglyAAlQQhr/qfw==
+	bh=hMO0jzFniSHVfrce2kLWuZNDPTZpbQ0RNzVJK8PjI60=;
+	b=QE7KTv41UtrsRLh46SCGbIqca5fkGFNOMLxIN99upvLMbCAEwh7wQPTkYiA+G/s0LN5H
+	 dlR7hqC+6SlREUWrFmLtKKN6WilfKdf+3B4SEGqKWxmpPvKRtJarkANIX2sekK/iTR/fq
+	 v7jQc8YEPavfuK15mhr6lUwKXg/6ImhqXU2UHsHgFLWdFwVMpJ+a71Gy+Z85qdBj0aJ8g
+	 ucfBC4g2xtaudpv9dgeTm9rQS3+M0OGRL/2dcc5Dc8x5LDfzFpMDczLMiGu13Pp3ctRCs
+	 LGtSiR16b5Q86uKOHGr/LGzflZeq8IRnoiMcPAzL6J+u469oPzBZuKHckvHSEd+zAjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D8SLWBaY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ORU/KHGS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C4D606A339;
-	Wed, 28 Oct 2026 17:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7303606A320;
+	Wed, 28 Oct 2026 17:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D8SLWBaY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC291F031E0;
-	Wed, 28 Oct 2026 17:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORU/KHGS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35941F031E0;
+	Wed, 28 Oct 2026 17:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208143;
-	bh=vggXA15JGflXNIlkpyvguTS0T4L4lOlRZcqye1cyE5U=;
+	s=korg; t=1793208146;
+	bh=hMO0jzFniSHVfrce2kLWuZNDPTZpbQ0RNzVJK8PjI60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8SLWBaYm0v1drn15isX9N911cDlN40Jkn5otbR6wtdbmy/ro7Hnxxd5b5b9Y5j48
-	 jdFyBdKOuZrfqEUBSIoAcyynU0gCjnpFr4ENRVkrkp+YX6Z/p875L5i7W6+bLIYlNV
-	 chGIBp/Y0RpxMTasV4U3qCnVRDYlmpRspnkGkT5I=
+	b=ORU/KHGSTTsZZAEr2STpi+0XVLNVbuDtRoX8QwiS9psw+DJb4HsTHvGZOEcy7/y6f
+	 ftcnz9Ne0TVLdYWKYf3NJeask0Y7g+6bkZvhozoRWDJHqKN8SZJTeZvKDjo47wmXjf
+	 hSR7ZoDgshfNLj8RHJDTwdbigC/SbBg5+ua0xD58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vivek BalachandharTN <vivek.balachandhar@gmail.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/516] staging: rtl8723bs: fix spacing around operators
-Date: Wed, 28 Oct 2026 17:52:49 +0100
-Message-ID: <20261028170003.935188763@linuxfoundation.org>
+Subject: [PATCH 5.10 018/516] staging: rtl8723bs: fix OOB read in rtw_restruct_wmm_ie()
+Date: Wed, 28 Oct 2026 17:52:50 +0100
+Message-ID: <20261028170003.958539610@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,46 +67,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vivek BalachandharTN <vivek.balachandhar@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 2038fe84b8bdf894b634f777096685e78e8f3774 ]
+[ Upstream commit 28a289beaf226b30b1e6e7d7b1a2946fe2d6e852 ]
 
-Fix several instances where operators lacked spaces around them.
-This improves readability and brings the driver closer to kernel
-coding-style guidelines. No functional change.
+rtw_restruct_wmm_ie() scans in_ie for a WMM IE with:
 
-Signed-off-by: Vivek BalachandharTN <vivek.balachandhar@gmail.com>
-Link: https://patch.msgid.link/20251205021417.2705864-3-vivek.balachandhar@gmail.com
+	while (i < in_len) {
+		...
+		if (i + 5 < in_len && in_ie[i] == 0xDD && ...) {
+			...
+			break;
+		}
+		i += (in_ie[i + 1] + 2); /* to the next IE element */
+	}
+
+When the "i + 5 < in_len" match check fails simply because i is
+within 5 bytes of the end of the buffer (i.e. no WMM IE was found
+near the tail of in_ie), execution falls through to
+"i += (in_ie[i + 1] + 2)", which reads in_ie[i + 1]. If i == in_len
+- 1 at that point, this is a 1-byte out-of-bounds read of an
+attacker-influenced IE buffer built from association/scan data.
+
+Commit a75281626fc8f ("staging: rtl8723bs: fix potential
+out-of-bounds read in rtw_restruct_wmm_ie") added the "i + 5 <
+in_len" guard to the match condition itself, but did not add an
+equivalent guard before the fallthrough advance, so the same class
+of OOB read remained reachable through the non-matching path.
+
+Add an explicit bounds check before advancing to the next IE.
+
+Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260728125456.32359-4-meatuni001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-For this stable dependency, retain only the spacing change to the IE
-advance in rtw_restruct_wmm_ie(). This supplies the exact context needed
-by target commit 28a289beaf226 ("staging: rtl8723bs: fix OOB read in
-rtw_restruct_wmm_ie()"). Drop the unrelated operator-spacing hunks.
-
-Keep the existing bounds-first WMM match condition from stable commit
-4dd2d9cf563c5 (upstream a75281626fc8f); applying the older condition
-would undo its out-of-bounds-read fix. No functional change.
-
-Stable-dep-of: 28a289beaf22 ("staging: rtl8723bs: fix OOB read in rtw_restruct_wmm_ie()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-index 3517a5a4c492f..b08186a2af5fa 100644
+index b08186a2af5fa..c7fab90550f01 100644
 --- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
 +++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -2274,7 +2274,7 @@ int rtw_restruct_wmm_ie(struct adapter *adapter, u8 *in_ie, u8 *out_ie, uint in_
+@@ -2274,6 +2274,9 @@ int rtw_restruct_wmm_ie(struct adapter *adapter, u8 *in_ie, u8 *out_ie, uint in_
  			break;
  		}
  
--		i += (in_ie[i+1]+2); /*  to the next IE element */
-+		i += (in_ie[i + 1] + 2); /*  to the next IE element */
++		if (i + 1 >= in_len)
++			break;
++
+ 		i += (in_ie[i + 1] + 2); /*  to the next IE element */
  	}
  
- 	return ielength;
 -- 
 2.53.0
 
