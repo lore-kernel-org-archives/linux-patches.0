@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214842;
-	b=0zMz1cvZpO+knMXf9Rl8IGyh3FNNz3PzECv9B04jthxuBpxFHaN2ZroOzvLNbuMMHs4O
-	 YUsVGLUaX8p6g6MHhVMAKRAy5wgbZqx5x6TCGKSVGm93GYHTL2CZZZTFHYkMHTi2p/cgy
-	 EDPXkkU+6krH7jVvc0cjeTCTGsGPJrp6NWnFpqefP+p/HYKajNNqI5CcdXwDKBNEMaSQS
-	 co+U314YbhP0V+qJH4t9zsa6GVYD2GOVxK+DqHDTA6F7pDo5+MPld+HDR2a3nN+DgHTKr
-	 5EBYa55eRcxkqCAheFKpUc5Jd49TNLha/xaa3GWTKCn/NjvWG8Bkt71nf00MYk9NkZA==
+	t=1793214844;
+	b=pgsSpC1SKKcWQUMkBzHCHPuWdww+l8vDZu0WsraMNFRi41icOZoVxXyxwPoXwhpiVFHk
+	 +srCdvMM+NucWnWIclcUqhP9GJGcJgdCTgWP+E685arl5NXCLUoGTllLj16UaxE1T+497
+	 Pmmz9oBgX21BF2J7r/2S9JXsT/qAUDcYkaJsfVJMUlbFAxFSB2TWPkeRRdBLBDiJ6o7RH
+	 YjYNV2QgOeqv38zKDRimJhwI9pyj2uzK5zbfHXm76qasrw3Jxtu33NANRIE8BGGUWLJ4C
+	 DavKEBVhJzIwRwUPrXSUum3N+0liTg2rvifLuyB/BcgGqzBsjYfczw97njrn03BJexg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214844;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+GQSrigJWGoPTOLDsZ6BzxI6xJj9Ztj2UPylXcx87ZA=;
-	b=L6aAVlk+xouautUf2cx5KMCIeGH8fb5cIyAdBA4tyVoHAN1RWaXQ/pzztk1bqE3oYOtM
-	 qbDVZM7bqRMOH63lZEeqkOPRxZFv5XQsoa30pvFebl3EfOun0o6QZBTzVWTEXbfoanJUQ
-	 ISo2Q9us7yr9E7xM6Onirbecvz0j0AJf0meMTICzCvC25zsunEasf9FJiRQ9RJYDyEepb
-	 c0pT5L5d6KiFP5m40vGaXwai+qm+7EAI97hxZEy6YYp+UUE3ataJoU20MMMwAdMWa1Jus
-	 JRbSR4eSBLN4r10ZH+xbN0VEaArMExf4/fcr/UvxcWCjo68x8Vw4s94a6SoNEZY6sSQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ru7RmFtkUZFC0c1UwHu7ZDNqynQ1DGtMaFdiq6mgQPo=;
+	b=d5HEczjcQcnBWGrI1KqsgmjnPpzZRBIHsA/oLJaw8HPlObpel3HXKhAXRpy/3Kkgck/f
+	 Zwhp807Zkw3eTIscEuUGj6zP41iopSZwLvDRxzhfG0hB+Bj4kkd1iGciVF7a8QP4wH37q
+	 dxLHoTYwQQ0xyLrYktgXpSom2lgWddyFNgSRKYdPxUa/KW1+3pQdL2JVCjoFa//aaN6bf
+	 mi00/FwUG1OytHboKbmhZEYTvDz0algj79sUDVxHscXnJtkwT4sAsFalH0fO9wJ0TRt5v
+	 hBnVnfcJVrAcsbgsAdH0b1wQIxQYk2CeVjTj0Lh+HCFd8cbf2/O8A1EbTfA5rsoZIBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lGJrRjRa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4CRGKFC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D625B606A320;
-	Wed, 28 Oct 2026 19:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D363606AB28;
+	Wed, 28 Oct 2026 19:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lGJrRjRa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21B11F01825;
-	Wed, 28 Oct 2026 19:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4CRGKFC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B971F01825;
+	Wed, 28 Oct 2026 19:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214841;
-	bh=+GQSrigJWGoPTOLDsZ6BzxI6xJj9Ztj2UPylXcx87ZA=;
+	s=korg; t=1793214844;
+	bh=ru7RmFtkUZFC0c1UwHu7ZDNqynQ1DGtMaFdiq6mgQPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGJrRjRaQ3NdFdO/jIzu6NpcQeCMRwj7IwoZy9niPhN6pbMfgenrolhuvmO2mceA0
-	 FkBT0w/eEMasmoG57OGmc4u3tj8ApvL6j27nCSTVd/4u+tjyYPELeqOH8+D2tqvFUo
-	 BRUq3yULkR3dVf+wqBRsPdyolGqebQ8AJycc/OWc=
+	b=t4CRGKFC0EvFtsP1ARJ/clcWkDaCgjslXUw1iI1pKiULDogOra4AywbqyXA32YA0q
+	 Uz4jPR1YPsycAHKMCArUdIHL5bNlrOOMcTwquCK9tx950tTk6LAtHhVG0FqJvD4Jie
+	 HWDtPMu52TVOj7nHHEk5PkdY0q/eoRJpMDP5z/M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Stephen Rothwell <sfr@rothwell.id.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0994/1887] wifi: rtw89: pci: validate sequence number of TX release report
-Date: Wed, 28 Oct 2026 17:51:30 +0100
-Message-ID: <20261028170522.033656896@linuxfoundation.org>
+Subject: [PATCH 6.1 1003/1887] arch: turn off -Werror for architectures with known warnings
+Date: Wed, 28 Oct 2026 17:51:39 +0100
+Message-ID: <20261028170522.235432027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -61,79 +65,146 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 957eda596c7665f2966970fd1dcc35fe299b38e8 ]
+[ Upstream commit 0f0d2871e78db648a2578abbeb9103f484f9b754 ]
 
-Hardware rarely reports abnormal sequence number in TX release report,
-which will access out-of-bounds of wd_ring->pages array, causing NULL
-pointer dereference.
+A couple of architectures enable -Werror for their own files regardless of
+CONFIG_WERROR but also have known warnings that fail the build with
+-Wmissing-prototypes enabled by default:
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 1 PID: 1085 Comm: irq/129-rtw89_p Tainted: G S   U
-             6.1.145-17510-g2f3369c91536 #1 (HASH:69e8 1)
-  Call Trace:
-   <IRQ>
-   rtw89_pci_release_tx+0x18f/0x300 [rtw89_pci (HASH:4c83 2)]
-   rtw89_pci_napi_poll+0xc2/0x190 [rtw89_pci (HASH:4c83 2)]
-   net_rx_action+0xfc/0x460 net/core/dev.c:6578 net/core/dev.c:6645 net/core/dev.c:6759
-   handle_softirqs+0xbe/0x290 kernel/softirq.c:601
-   ? rtw89_pci_interrupt_threadfn+0xc5/0x350 [rtw89_pci (HASH:4c83 2)]
-   __local_bh_enable_ip+0xeb/0x120 kernel/softirq.c:499 kernel/softirq.c:423
-   </IRQ>
-   <TASK>
-   rtw89_pci_interrupt_threadfn+0xf8/0x350 [rtw89_pci (HASH:4c83 2)]
-   ? irq_thread+0xa7/0x340 kernel/irq/manage.c:0
-   irq_thread+0x177/0x340 kernel/irq/manage.c:1205 kernel/irq/manage.c:1314
-   ? thaw_kernel_threads+0xb0/0xb0 kernel/irq/manage.c:1202
-   ? irq_forced_thread_fn+0x80/0x80 kernel/irq/manage.c:1220
-   kthread+0xea/0x110 kernel/kthread.c:376
-   ? synchronize_irq+0x1a0/0x1a0 kernel/irq/manage.c:1287
-   ? kthread_associate_blkcg+0x80/0x80 kernel/kthread.c:331
-   ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
-   </TASK>
+arch/alpha/lib/memcpy.c:153:8: error: no previous prototype for 'memcpy' [-Werror=missing-prototypes]
+arch/alpha/kernel/irq.c:96:1: error: no previous prototype for 'handle_irq' [-Werror=missing-prototypes]
+arch/mips/kernel/signal.c:673:17: error: no previous prototype for ‘sys_rt_sigreturn’ [-Werror=missing-prototypes]
+arch/mips/kernel/signal.c:636:17: error: no previous prototype for ‘sys_sigreturn’ [-Werror=missing-prototypes]
+arch/mips/kernel/syscall.c:51:16: error: no previous prototype for ‘sysm_pipe’ [-Werror=missing-prototypes]
+arch/mips/mm/fault.c:323:17: error: no previous prototype for ‘do_page_fault’ [-Werror=missing-prototypes]
+arch/sparc/vdso/vma.c:246:12: warning: no previous prototype for ‘init_vdso_image’ [-Wmissing-prototypes]v
+arch/sparc/vdso/vdso32/../vclock_gettime.c:343:1: warning: no previous prototype for ‘__vdso_gettimeofday_stick’ [-Wmissing-prototypes]
+arch/sparc/vdso/vclock_gettime.c:343:1: warning: no previous prototype for ‘__vdso_gettimeofday_stick’ [-Wmissing-prototypes]
+arch/sparc/prom/p1275.c:52:6: warning: no previous prototype for ‘prom_cif_init’ [-Wmissing-prototypes]
+arch/sparc/prom/misc_64.c:165:5: warning: no previous prototype for ‘prom_get_mmu_ihandle’ [-Wmissing-prototypes]
 
-To prevent crash, validate rpp_info.seq before using.
+This appears to be an artifact from the times when this architecture code
+was better maintained that most device drivers and before CONFIG_WERROR
+was added.  Now it just gets in the way, so remove all of these.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260110022019.2254969-2-pkshih@realtek.com
+Powerpc and x86 both still have their own Kconfig options to enable
+-Werror for some of their files.  These architectures are better
+maintained than most and the options are easy to disable, so leave those
+untouched.
+
+Link: https://lkml.kernel.org/r/4be73872-c1f5-4c31-8201-712c19290a22@app.fastmail.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reported-by: Stephen Rothwell <sfr@rothwell.id.au>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: dd5712f3379c ("alpha: fix user-space corruption during memory compaction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/pci.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/alpha/lib/Makefile    | 1 -
+ arch/alpha/mm/Makefile     | 2 --
+ arch/mips/Kbuild           | 6 ------
+ arch/sparc/kernel/Makefile | 1 -
+ arch/sparc/lib/Makefile    | 1 -
+ arch/sparc/mm/Makefile     | 1 -
+ arch/sparc/prom/Makefile   | 1 -
+ 7 files changed, 13 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
-index ac76697dc4627..11634b6d40145 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -472,11 +472,16 @@ static void rtw89_pci_release_rpp(struct rtw89_dev *rtwdev,
- 	tx_status = le32_get_bits(rpp->dword, RTW89_PCI_RPP_TX_STATUS);
- 	txch = rtw89_core_get_ch_dma(rtwdev, qsel);
+diff --git a/arch/alpha/lib/Makefile b/arch/alpha/lib/Makefile
+index 1cc74f7b50efb..6a779b9018fd1 100644
+--- a/arch/alpha/lib/Makefile
++++ b/arch/alpha/lib/Makefile
+@@ -4,7 +4,6 @@
+ #
  
--	if (txch == RTW89_TXCH_CH12) {
-+	if (unlikely(txch == RTW89_TXCH_CH12)) {
- 		rtw89_warn(rtwdev, "should no fwcmd release report\n");
- 		return;
- 	}
+ asflags-y := $(KBUILD_CFLAGS)
+-ccflags-y := -Werror
  
-+	if (unlikely(seq >= RTW89_PCI_TXWD_NUM_MAX)) {
-+		rtw89_warn(rtwdev, "invalid seq %d\n", seq);
-+		return;
-+	}
-+
- 	tx_ring = &rtwpci->tx_rings[txch];
- 	wd_ring = &tx_ring->wd_ring;
- 	txwd = &wd_ring->pages[seq];
+ # Many of these routines have implementations tuned for ev6.
+ # Choose them iff we're targeting ev6 specifically.
+diff --git a/arch/alpha/mm/Makefile b/arch/alpha/mm/Makefile
+index bd770302eb824..101dbd06b4ceb 100644
+--- a/arch/alpha/mm/Makefile
++++ b/arch/alpha/mm/Makefile
+@@ -3,6 +3,4 @@
+ # Makefile for the linux alpha-specific parts of the memory manager.
+ #
+ 
+-ccflags-y := -Werror
+-
+ obj-y	:= init.o fault.o
+diff --git a/arch/mips/Kbuild b/arch/mips/Kbuild
+index 9e8071f0e58ff..ed09e894749b5 100644
+--- a/arch/mips/Kbuild
++++ b/arch/mips/Kbuild
+@@ -1,10 +1,4 @@
+ # SPDX-License-Identifier: GPL-2.0
+-# Fail on warnings - also for files referenced in subdirs
+-# -Werror can be disabled for specific files using:
+-# CFLAGS_<file.o> := -Wno-error
+-ifeq ($(W),)
+-subdir-ccflags-y := -Werror
+-endif
+ 
+ # platform specific definitions
+ include arch/mips/Kbuild.platforms
+diff --git a/arch/sparc/kernel/Makefile b/arch/sparc/kernel/Makefile
+index 0984bb6f0f17b..58ea4ef9b622b 100644
+--- a/arch/sparc/kernel/Makefile
++++ b/arch/sparc/kernel/Makefile
+@@ -5,7 +5,6 @@
+ #
+ 
+ asflags-y := -ansi
+-ccflags-y := -Werror
+ 
+ # Undefine sparc when processing vmlinux.lds - it is used
+ # And teach CPP we are doing $(BITS) builds (for this case)
+diff --git a/arch/sparc/lib/Makefile b/arch/sparc/lib/Makefile
+index 063556fe2cb1d..59669ebddd4e1 100644
+--- a/arch/sparc/lib/Makefile
++++ b/arch/sparc/lib/Makefile
+@@ -3,7 +3,6 @@
+ #
+ 
+ asflags-y := -ansi -DST_DIV0=0x02
+-ccflags-y := -Werror
+ 
+ lib-$(CONFIG_SPARC32) += ashrdi3.o
+ lib-$(CONFIG_SPARC32) += memcpy.o memset.o
+diff --git a/arch/sparc/mm/Makefile b/arch/sparc/mm/Makefile
+index 871354aa3c002..809d993f6d888 100644
+--- a/arch/sparc/mm/Makefile
++++ b/arch/sparc/mm/Makefile
+@@ -3,7 +3,6 @@
+ #
+ 
+ asflags-y := -ansi
+-ccflags-y := -Werror
+ 
+ obj-$(CONFIG_SPARC64)   += ultra.o tlb.o tsb.o
+ obj-y                   += fault_$(BITS).o
+diff --git a/arch/sparc/prom/Makefile b/arch/sparc/prom/Makefile
+index 397b79af77f7b..a1adc75d80551 100644
+--- a/arch/sparc/prom/Makefile
++++ b/arch/sparc/prom/Makefile
+@@ -3,7 +3,6 @@
+ # Linux.
+ #
+ asflags := -ansi
+-ccflags := -Werror
+ 
+ lib-y                 := bootstr_$(BITS).o
+ lib-y                 += init_$(BITS).o
 -- 
 2.53.0
 
