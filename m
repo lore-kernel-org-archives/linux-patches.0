@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213719;
-	b=rmAeoB5hy2ttgEGQc8nOYdrWCxzoB/NsiQbJWtMDcUDL2LTNjy0OTvrWuj2lAQ32Bgrh
-	 2MiB3h1ROYiTsuG0Fi29PBMF8wXrc/m1Iv59tEWNf0+V8YuC+zbLDCpqLvWMuKoYcRLtK
-	 tRNFVN9/LJ3ERoK807bGh4oRVMLKNlOTOPMoXy3IhJuaQQrkwHicNILGHEXqvzY4omgQW
-	 kNibnyLAWixo2v8oj0TOlonZubdt/QIRbBG+rbU5HsP0ifuO90937LvIhJd0yuxnTcQsA
-	 HRmCKSry5aOXsPMGMG2QMxiXiS6/dIpT2zyI1Bd2bal/rvonyHgE5YcmrLIiusdxysw==
+	t=1793213722;
+	b=fkipUHfM2U0Vo2J/xYEvcRqnIpMoZdKs1OwQaDeBopdyd+eHlNRWRK6yy9z/GpAXo1tE
+	 fcFFJouEWLdSXeSXidqljJBZKHhfzIv3zJg1yaoiePPMS8hgeahs8DCXR4ehrJRlCYzNs
+	 mSA9PLVWet1uMIIp2CYIGViK24D6Cn8/kgGJnfAhBxgBq0O+00vwSXV9ligRBvAUQ5P6P
+	 HKJuaTJbm4qxLdJlIJHMFOxvekzY3aOuLBNMzdMcPJ6EQYbWwzGMgyn5pl7+EQg4cxixl
+	 FUaN00W3dszngbq5dfn7ZZByAa+s5MmeGdV/aDJEgaEvxtblJYo41gMHfjEa0KEci2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bURC2zMtGvHK8QjqG6x0apEKiiptxYN1e6NhjSXI+bA=;
-	b=uAk8l1L/DwJggHrqr3vWsLOJMdqdrpWs7W6JTbbcZVCbxFOtXaulKDlyFYbsojh+eSPO
-	 BZBXKtAd8KMYafGU8aeVbyjAv/gkzX9DNJNFz5zWyTB1+qlU3naPBwQ5xI0lPofzD1AY2
-	 MVw7YgQkAQiMn8lH1iHxyZSMciWjtGnXSpmrVxvPrEE9vI6gu0txB4sJJjAfCN/UfTbY+
-	 8nLuykXiXYzneByTgdZkswhcf00zfXR0trLyi4soJ41RDWpIyGIaoldOl1h/qGUYt6LH8
-	 C5N+gr1SMDQ5slsKdAhah+hlLfsfgvAIrunrFcvUWejrSMl1heU5k+UyuiTvSc/MOhQ==
+	bh=3eOYe2MkBSCiGhElbh4z5mTi/CAoB/DQDYKOpPgg59s=;
+	b=DcyhZx3kOQtCBtKorDLIl5OhKvTe0Aqig/dNWEYlsb4G3+e6VvM58KiWRjefvv5pMeIS
+	 iwFnz7AQBx74BUJZ0Lgi+LSHbHc1oEGHDe1xKAOd5O2WINMtyOXAT7SS9DK9Uoio020xu
+	 jR5sWxhZTmANk0wLTvtcYBgvl90+XTls5Jxqqu0bDRTk/MI057enDGYCgo5IMO1NXAGdM
+	 XSabNlCz21FfRDTm/jhdh6LwR1QEoa8XAvInnlNz+E37Laxfrf5WhCMkPWd2SLUF1P4Ih
+	 QYe9lrJ78IviNxpz1qhHi54rE1ahF0Zkgui0ul8u4zOev3Hp5oTVD7hTdlFC3XpytEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NwKm7fbu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=euNtOBd5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7997E606A31A;
-	Wed, 28 Oct 2026 18:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59090606A320;
+	Wed, 28 Oct 2026 18:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NwKm7fbu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01661F01825;
-	Wed, 28 Oct 2026 18:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=euNtOBd5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72851F01825;
+	Wed, 28 Oct 2026 18:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213719;
-	bh=bURC2zMtGvHK8QjqG6x0apEKiiptxYN1e6NhjSXI+bA=;
+	s=korg; t=1793213722;
+	bh=3eOYe2MkBSCiGhElbh4z5mTi/CAoB/DQDYKOpPgg59s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NwKm7fbu7rEZBgx7t0rBQQDVmnqqejD4Dy9wCmNhfCr5czzTe+chZiUYSzO7UoYdw
-	 DIKvr6zAjYx95Ty7dAXxjgBEKNvKLrMAnP73k/Ju8ZByzhQvQ1F6OwrBLU09XJX7qk
-	 zDng4bCt17JECLah964st2h9vykeQsoKzZbSO7eU=
+	b=euNtOBd5PfQpZUMg/DW9viX0vcOt+PYofEDDr8woXiDZsCS9clm9bMA6bxG4a9YxZ
+	 9w54AO5fUD8OIr/KrTX2vQ2kDRuu3c5dKWH5nL2M/dlGoBBK59G41H8AxyPBqB+0O4
+	 1bvFLO88n+FpeVz20b0s9cx7SlwA2tRXmkDrO7zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0578/1887] net: nexthop: Increase weight to u16
-Date: Wed, 28 Oct 2026 17:44:34 +0100
-Message-ID: <20261028170512.567486613@linuxfoundation.org>
+Subject: [PATCH 6.1 0605/1887] btrfs: fix deadlock with fiemap and extent locking
+Date: Wed, 28 Oct 2026 17:45:01 +0100
+Message-ID: <20261028170513.184200223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,233 +69,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit b72a6a7ab9573e06d5c2fcb92eaa28614a735bfd ]
+[ Upstream commit b0ad381fa7690244802aed119b478b4bdafc31dd ]
 
-In CLOS networks, as link failures occur at various points in the network,
-ECMP weights of the involved nodes are adjusted to compensate. With high
-fan-out of the involved nodes, and overall high number of nodes,
-a (non-)ECMP weight ratio that we would like to configure does not fit into
-8 bits. Instead of, say, 255:254, we might like to configure something like
-1000:999. For these deployments, the 8-bit weight may not be enough.
+While working on the patchset to remove extent locking I got a lockdep
+splat with fiemap and pagefaulting with my new extent lock replacement
+lock.
 
-To that end, in this patch increase the next hop weight from u8 to u16.
+This deadlock exists with our normal code, we just don't have lockdep
+annotations with the extent locking so we've never noticed it.
 
-Increasing the width of an integral type can be tricky, because while the
-code still compiles, the types may not check out anymore, and numerical
-errors come up. To prevent this, the conversion was done in two steps.
-First the type was changed from u8 to a single-member structure, which
-invalidated all uses of the field. This allowed going through them one by
-one and audit for type correctness. Then the structure was replaced with a
-vanilla u16 again. This should ensure that no place was missed.
+Since we're copying the fiemap extent to user space on every iteration
+we have the chance of pagefaulting.  Because we hold the extent lock for
+the entire range we could mkwrite into a range in the file that we have
+mmap'ed.  This would deadlock with the following stack trace
 
-The UAPI for configuring nexthop group members is that an attribute
-NHA_GROUP carries an array of struct nexthop_grp entries:
+[<0>] lock_extent+0x28d/0x2f0
+[<0>] btrfs_page_mkwrite+0x273/0x8a0
+[<0>] do_page_mkwrite+0x50/0xb0
+[<0>] do_fault+0xc1/0x7b0
+[<0>] __handle_mm_fault+0x2fa/0x460
+[<0>] handle_mm_fault+0xa4/0x330
+[<0>] do_user_addr_fault+0x1f4/0x800
+[<0>] exc_page_fault+0x7c/0x1e0
+[<0>] asm_exc_page_fault+0x26/0x30
+[<0>] rep_movs_alternative+0x33/0x70
+[<0>] _copy_to_user+0x49/0x70
+[<0>] fiemap_fill_next_extent+0xc8/0x120
+[<0>] emit_fiemap_extent+0x4d/0xa0
+[<0>] extent_fiemap+0x7f8/0xad0
+[<0>] btrfs_fiemap+0x49/0x80
+[<0>] __x64_sys_ioctl+0x3e1/0xb50
+[<0>] do_syscall_64+0x94/0x1a0
+[<0>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
-	struct nexthop_grp {
-		__u32	id;	  /* nexthop id - must exist */
-		__u8	weight;   /* weight of this nexthop */
-		__u8	resvd1;
-		__u16	resvd2;
-	};
+I wrote an fstest to reproduce this deadlock without my replacement lock
+and verified that the deadlock exists with our existing locking.
 
-The field resvd1 is currently validated and required to be zero. We can
-lift this requirement and carry high-order bits of the weight in the
-reserved field:
+To fix this simply don't take the extent lock for the entire duration of
+the fiemap.  This is safe in general because we keep track of where we
+are when we're searching the tree, so if an ordered extent updates in
+the middle of our fiemap call we'll still emit the correct extents
+because we know what offset we were on before.
 
-	struct nexthop_grp {
-		__u32	id;	  /* nexthop id - must exist */
-		__u8	weight;   /* weight of this nexthop */
-		__u8	weight_high;
-		__u16	resvd2;
-	};
+The only place we maintain the lock is searching delalloc.  Since the
+delalloc stuff can change during writeback we want to lock the extent
+range so we have a consistent view of delalloc at the time we're
+checking to see if we need to set the delalloc flag.
 
-Keeping the fields split this way was chosen in case an existing userspace
-makes assumptions about the width of the weight field, and to sidestep any
-endianness issues.
+With this patch applied we no longer deadlock with my testcase.
 
-The weight field is currently encoded as the weight value minus one,
-because weight of 0 is invalid. This same trick is impossible for the new
-weight_high field, because zero must mean actual zero. With this in place:
-
-- Old userspace is guaranteed to carry weight_high of 0, therefore
-  configuring 8-bit weights as appropriate. When dumping nexthops with
-  16-bit weight, it would only show the lower 8 bits. But configuring such
-  nexthops implies existence of userspace aware of the extension in the
-  first place.
-
-- New userspace talking to an old kernel will work as long as it only
-  attempts to configure 8-bit weights, where the high-order bits are zero.
-  Old kernel will bounce attempts at configuring >8-bit weights.
-
-Renaming reserved fields as they are allocated for some purpose is commonly
-done in Linux. Whoever touches a reserved field is doing so at their own
-risk. nexthop_grp::resvd1 in particular is currently used by at least
-strace, however they carry an own copy of UAPI headers, and the conversion
-should be trivial. A helper is provided for decoding the weight out of the
-two fields. Forcing a conversion seems preferable to bending backwards and
-introducing anonymous unions or whatever.
-
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://patch.msgid.link/483e2fcf4beb0d9135d62e7d27b46fa2685479d4.1723036486.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/nexthop.h        |  4 ++--
- include/uapi/linux/nexthop.h |  7 ++++++-
- net/ipv4/nexthop.c           | 37 ++++++++++++++++++++++--------------
- 3 files changed, 31 insertions(+), 17 deletions(-)
+ fs/btrfs/extent_io.c | 62 ++++++++++++++++++++++++++++++++------------
+ 1 file changed, 45 insertions(+), 17 deletions(-)
 
-diff --git a/include/net/nexthop.h b/include/net/nexthop.h
-index f7d4239347351..f37e96f93f20b 100644
---- a/include/net/nexthop.h
-+++ b/include/net/nexthop.h
-@@ -97,7 +97,7 @@ struct nh_res_table {
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index aeea8930b973f..1427c42007300 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -3706,15 +3706,33 @@ static int fiemap_process_hole(struct btrfs_inode *inode,
+ 	 * it beyond i_size.
+ 	 */
+ 	while (cur_offset < end && cur_offset < i_size) {
++		struct extent_state *cached_state = NULL;
+ 		u64 delalloc_start;
+ 		u64 delalloc_end;
+ 		u64 prealloc_start;
++		u64 lockstart;
++		u64 lockend;
+ 		u64 prealloc_len = 0;
+ 		bool delalloc;
  
- struct nh_grp_entry {
- 	struct nexthop	*nh;
--	u8		weight;
-+	u16		weight;
- 
- 	union {
- 		struct {
-@@ -180,7 +180,7 @@ struct nh_notifier_single_info {
- };
- 
- struct nh_notifier_grp_entry_info {
--	u8 weight;
-+	u16 weight;
- 	struct nh_notifier_single_info nh;
- };
- 
-diff --git a/include/uapi/linux/nexthop.h b/include/uapi/linux/nexthop.h
-index d8ffa8c9ca784..6b0de563beec1 100644
---- a/include/uapi/linux/nexthop.h
-+++ b/include/uapi/linux/nexthop.h
-@@ -16,10 +16,15 @@ struct nhmsg {
- struct nexthop_grp {
- 	__u32	id;	  /* nexthop id - must exist */
- 	__u8	weight;   /* weight of this nexthop */
--	__u8	resvd1;
-+	__u8	weight_high;	/* high order bits of weight */
- 	__u16	resvd2;
- };
- 
-+static inline __u16 nexthop_grp_weight(const struct nexthop_grp *entry)
-+{
-+	return ((entry->weight_high << 8) | entry->weight) + 1;
-+}
++		lockstart = round_down(cur_offset, inode->root->fs_info->sectorsize);
++		lockend = round_up(end, inode->root->fs_info->sectorsize);
 +
- enum {
- 	NEXTHOP_GRP_TYPE_MPATH,  /* hash-threshold nexthop group
- 				  * default type if not specified
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 0bf7b83bec1b9..b48fbc0f42899 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -660,6 +660,7 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
- 	size_t len = nhg->num_nh * sizeof(*p);
- 	struct nlattr *nla;
- 	u16 group_type = 0;
-+	u16 weight;
- 	int i;
++		/*
++		 * We are only locking for the delalloc range because that's the
++		 * only thing that can change here.  With fiemap we have a lock
++		 * on the inode, so no buffered or direct writes can happen.
++		 *
++		 * However mmaps and normal page writeback will cause this to
++		 * change arbitrarily.  We have to lock the extent lock here to
++		 * make sure that nobody messes with the tree while we're doing
++		 * btrfs_find_delalloc_in_range.
++		 */
++		lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 		delalloc = btrfs_find_delalloc_in_range(inode, cur_offset, end,
+ 							&delalloc_start,
+ 							&delalloc_end);
++		unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 		if (!delalloc)
+ 			break;
  
- 	if (nhg->hash_threshold)
-@@ -676,9 +677,12 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
+@@ -3884,7 +3902,6 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 		  u64 start, u64 len)
+ {
+ 	const u64 ino = btrfs_ino(inode);
+-	struct extent_state *cached_state = NULL;
+ 	struct btrfs_path *path;
+ 	struct btrfs_root *root = inode->root;
+ 	struct fiemap_cache cache = { 0 };
+@@ -3893,8 +3910,9 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 	struct ulist *tmp_ulist;
+ 	u64 last_extent_end;
+ 	u64 prev_extent_end;
+-	u64 lockstart;
+-	u64 lockend;
++	u64 range_start;
++	u64 range_end;
++	const u64 sectorsize = inode->root->fs_info->sectorsize;
+ 	bool stopped = false;
+ 	int ret;
  
- 	p = nla_data(nla);
- 	for (i = 0; i < nhg->num_nh; ++i) {
-+		weight = nhg->nh_entries[i].weight - 1;
-+
- 		*p++ = (struct nexthop_grp) {
- 			.id = nhg->nh_entries[i].nh->id,
--			.weight = nhg->nh_entries[i].weight - 1,
-+			.weight = weight,
-+			.weight_high = weight >> 8,
- 		};
+@@ -3907,12 +3925,11 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 		goto out;
  	}
  
-@@ -1062,11 +1066,14 @@ static int nh_check_attr_group(struct net *net,
+-	lockstart = round_down(start, root->fs_info->sectorsize);
+-	lockend = round_up(start + len, root->fs_info->sectorsize);
+-	prev_extent_end = lockstart;
++	range_start = round_down(start, sectorsize);
++	range_end = round_up(start + len, sectorsize);
++	prev_extent_end = range_start;
  
- 	nhg = nla_data(tb[NHA_GROUP]);
- 	for (i = 0; i < len; ++i) {
--		if (nhg[i].resvd1 || nhg[i].resvd2) {
--			NL_SET_ERR_MSG(extack, "Reserved fields in nexthop_grp must be 0");
-+		if (nhg[i].resvd2) {
-+			NL_SET_ERR_MSG(extack, "Reserved field in nexthop_grp must be 0");
- 			return -EINVAL;
- 		}
--		if (nhg[i].weight > 254) {
-+		if (nexthop_grp_weight(&nhg[i]) == 0) {
-+			/* 0xffff got passed in, representing weight of 0x10000,
-+			 * which is too heavy.
+ 	btrfs_inode_lock(&inode->vfs_inode, BTRFS_ILOCK_SHARED);
+-	lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 
+ 	ret = fiemap_find_last_extent_offset(inode, path, &last_extent_end);
+ 	if (ret < 0)
+@@ -3920,7 +3937,7 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 	btrfs_release_path(path);
+ 
+ 	path->reada = READA_FORWARD;
+-	ret = fiemap_search_slot(inode, path, lockstart);
++	ret = fiemap_search_slot(inode, path, range_start);
+ 	if (ret < 0) {
+ 		goto out_unlock;
+ 	} else if (ret > 0) {
+@@ -3932,7 +3949,7 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 		goto check_eof_delalloc;
+ 	}
+ 
+-	while (prev_extent_end < lockend) {
++	while (prev_extent_end < range_end) {
+ 		struct extent_buffer *leaf = path->nodes[0];
+ 		struct btrfs_file_extent_item *ei;
+ 		struct btrfs_key key;
+@@ -3955,17 +3972,17 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 		 * The first iteration can leave us at an extent item that ends
+ 		 * before our range's start. Move to the next item.
+ 		 */
+-		if (extent_end <= lockstart)
++		if (extent_end <= range_start)
+ 			goto next_item;
+ 
+ 		/* We have in implicit hole (NO_HOLES feature enabled). */
+ 		if (prev_extent_end < key.offset) {
+-			const u64 range_end = min(key.offset, lockend) - 1;
++			const u64 hole_end = min(key.offset, range_end) - 1;
+ 
+ 			ret = fiemap_process_hole(inode, fieinfo, &cache,
+ 						  backref_cache, 0, 0, 0,
+ 						  roots, tmp_ulist,
+-						  prev_extent_end, range_end);
++						  prev_extent_end, hole_end);
+ 			if (ret < 0) {
+ 				goto out_unlock;
+ 			} else if (ret > 0) {
+@@ -3975,7 +3992,7 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 			}
+ 
+ 			/* We've reached the end of the fiemap range, stop. */
+-			if (key.offset >= lockend) {
++			if (key.offset >= range_end) {
+ 				stopped = true;
+ 				break;
+ 			}
+@@ -4070,28 +4087,40 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 	btrfs_free_path(path);
+ 	path = NULL;
+ 
+-	if (!stopped && prev_extent_end < lockend) {
++	if (!stopped && prev_extent_end < range_end) {
+ 		ret = fiemap_process_hole(inode, fieinfo, &cache, backref_cache,
+ 					  0, 0, 0, roots, tmp_ulist,
+-					  prev_extent_end, lockend - 1);
++					  prev_extent_end, range_end - 1);
+ 		if (ret < 0)
+ 			goto out_unlock;
+-		prev_extent_end = lockend;
++		prev_extent_end = range_end;
+ 	}
+ 
+ 	if (cache.cached && cache.offset + cache.len >= last_extent_end) {
+ 		const u64 i_size = i_size_read(&inode->vfs_inode);
+ 
+ 		if (prev_extent_end < i_size) {
++			struct extent_state *cached_state = NULL;
+ 			u64 delalloc_start;
+ 			u64 delalloc_end;
++			u64 lockstart;
++			u64 lockend;
+ 			bool delalloc;
+ 
++			lockstart = round_down(prev_extent_end, sectorsize);
++			lockend = round_up(i_size, sectorsize);
++
++			/*
++			 * See the comment in fiemap_process_hole as to why
++			 * we're doing the locking here.
 +			 */
- 			NL_SET_ERR_MSG(extack, "Invalid value for weight");
- 			return -EINVAL;
- 		}
-@@ -1655,9 +1662,9 @@ static void nh_res_table_cancel_upkeep(struct nh_res_table *res_table)
- static void nh_res_group_rebalance(struct nh_group *nhg,
- 				   struct nh_res_table *res_table)
- {
--	int prev_upper_bound = 0;
--	int total = 0;
--	int w = 0;
-+	u16 prev_upper_bound = 0;
-+	u32 total = 0;
-+	u32 w = 0;
- 	int i;
++			lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 			delalloc = btrfs_find_delalloc_in_range(inode,
+ 								prev_extent_end,
+ 								i_size - 1,
+ 								&delalloc_start,
+ 								&delalloc_end);
++			unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 			if (!delalloc)
+ 				cache.flags |= FIEMAP_EXTENT_LAST;
+ 		} else {
+@@ -4102,7 +4131,6 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 	ret = emit_last_fiemap_cache(fieinfo, &cache);
  
- 	INIT_LIST_HEAD(&res_table->uw_nh_entries);
-@@ -1667,11 +1674,12 @@ static void nh_res_group_rebalance(struct nh_group *nhg,
- 
- 	for (i = 0; i < nhg->num_nh; ++i) {
- 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
--		int upper_bound;
-+		u16 upper_bound;
-+		u64 btw;
- 
- 		w += nhge->weight;
--		upper_bound = DIV_ROUND_CLOSEST(res_table->num_nh_buckets * w,
--						total);
-+		btw = ((u64)res_table->num_nh_buckets) * w;
-+		upper_bound = DIV_ROUND_CLOSEST_ULL(btw, total);
- 		nhge->res.wants_buckets = upper_bound - prev_upper_bound;
- 		prev_upper_bound = upper_bound;
- 
-@@ -1737,8 +1745,8 @@ static void replace_nexthop_grp_res(struct nh_group *oldg,
- 
- static void nh_hthr_group_rebalance(struct nh_group *nhg)
- {
--	int total = 0;
--	int w = 0;
-+	u32 total = 0;
-+	u32 w = 0;
- 	int i;
- 
- 	for (i = 0; i < nhg->num_nh; ++i)
-@@ -1746,7 +1754,7 @@ static void nh_hthr_group_rebalance(struct nh_group *nhg)
- 
- 	for (i = 0; i < nhg->num_nh; ++i) {
- 		struct nh_grp_entry *nhge = &nhg->nh_entries[i];
--		int upper_bound;
-+		u32 upper_bound;
- 
- 		w += nhge->weight;
- 		upper_bound = DIV_ROUND_CLOSEST_ULL((u64)w << 31, total) - 1;
-@@ -2492,7 +2500,8 @@ static struct nexthop *nexthop_create_group(struct net *net,
- 			nhg->has_v4 = true;
- 
- 		nhg->nh_entries[i].nh = nhe;
--		nhg->nh_entries[i].weight = entry[i].weight + 1;
-+		nhg->nh_entries[i].weight = nexthop_grp_weight(&entry[i]);
-+
- 		list_add(&nhg->nh_entries[i].nh_list, &nhe->grp_list);
- 		nhg->nh_entries[i].nh_parent = nh;
- 	}
+ out_unlock:
+-	unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 	btrfs_inode_unlock(&inode->vfs_inode, BTRFS_ILOCK_SHARED);
+ out:
+ 	kfree(backref_cache);
 -- 
 2.53.0
 
