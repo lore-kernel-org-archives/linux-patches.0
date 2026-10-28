@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210967;
-	b=g430f5cM9dBLRMQHOdpIU9TgLlkbaRwkgTLZ5DqkqGtgQz0rsetkHVYuulsC9vFy8Lzj
-	 zyGql7blmo57w3mCinV9sZRr00bX7xkJl3w51GXSId43gwxTzq+5aHO+KapKPzUdityG4
-	 jBWtWFOKmmHB/gcaavDogrGRm3r/4iOefMJuvLMsv7Y6FUsakhOGhO4SkVC3l8KRoyeDI
-	 +p1ZNT6wZ/+LY7OYiT3gj4mOoOw67HauFXGCOFrQzzRNx2BZg5QdxDcpRyTsKrZG24ZHs
-	 OBHsNLO/faiCaN5uRn0G4a9+GYYvqefQ7uV+ZO+5MWi+6T+KK7jqfJeHtfRdlnf6tVg==
+	t=1793210970;
+	b=UcVtpgvGrohqk1WtkHZilIz7ZLH/MENwTVUWpV4PuAJWw3Ld+U5SQN2nmmL+yr7YSfkt
+	 y3A5DZYJVuyfzBY+bcP5UYzTCu9h8vBN6L6BwjH5Osn7r2j5oN+JILWWRNwv8RMD0k3hK
+	 k2eU/akPsdZ6iTTdzDuZ4uIKmc/aE5KC/k244OFtcUbrJSo45c/T3YrASC/fXXEcRdiVd
+	 kR/rZsOtgDlHY8hMyQhY/9MEt/KN7xm5amOVjnzXbwCHTD683ByTOeU2+Thx6qs2F/KA8
+	 OKVJFXqDSk3tZKLJZim3lCUphK78t8MOuJJx9yTCUIhP771f/EPPVXwxBmPzM4n9vDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qJV/RNvaBK89HmxNXLV5qNGH9p5NqQA4EuZFUAWiJZE=;
-	b=jn0LENcMCrnBnkOORZonvJJteNVNtwR03ntzvD8ME7A02fej02TQ1J4WYSELOWnH+Y0w
-	 dEULNjv3DleaC9bVet7Ri8UUGAo6jg/+HSPwMmyXM/hYQmMplpVeYl2xhzp2bwEJb9bfH
-	 Ran8GB+oYFSV/5mTTFZvfmM16dfP3abF1AZfh9KKn+bZFweLGmXi9/tPUVmIlx0XyJP3w
-	 UIX0cFJ11qEaslXUxMu795x09IzEFW12kbVyJWomudM/NteiRciXUDMJS7tzAGN4Jxbw8
-	 H6V0PKoBZ1imUe8J7Kl54LVZe/rvL2xvu0e8Zar5ZEq3W5AglReoaWcdZpqhnT22X2w==
+	bh=YjHLWzw6j6YQVbqIXPniact+HaOpQr80mkkYs8OAwWg=;
+	b=G8bxlK/DeY71CeLoXQ72HO9McyvCClrPAwDWTi++1UpncWBrbmgvu5pFug7m5nBDoOH3
+	 MWxzWx6Ihozf7kTibTak1asDI5SgOU/0wnDaBWfjTKkybX3RXHm94cKQnbLteXC0F3IyP
+	 tALc228g7tiocgFv2xQpGXNPfH3ki8fOJJsIOgJPU9JT38T6fd/CNIl27S6WO/yDJkBZI
+	 zxcpPjk/aMWwmhsgR33QCq6sLXO9D2vI+hr40SJ7ZSI6nMK62dJnJ2mlPM3jeuo0BVus8
+	 47lAteQPVMiFfV86OvW1nPmBXL2enbT8sit14KVXJ26c0DqsDISzjZAgBA8ZE3ti7ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nizdbw+J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lH96aAp0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE52606A31A;
-	Wed, 28 Oct 2026 18:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C84C606A31C;
+	Wed, 28 Oct 2026 18:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nizdbw+J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4351F01828;
-	Wed, 28 Oct 2026 18:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lH96aAp0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2401F01825;
+	Wed, 28 Oct 2026 18:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210967;
-	bh=qJV/RNvaBK89HmxNXLV5qNGH9p5NqQA4EuZFUAWiJZE=;
+	s=korg; t=1793210970;
+	bh=YjHLWzw6j6YQVbqIXPniact+HaOpQr80mkkYs8OAwWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nizdbw+JNv/QdXuCN48LQoIke8JBJUMHWYBLFDVcUcqm+Yd6E0Nu7m4TiIozRfwpU
-	 lFihfk3IjHVPUJSysDzv/0udS1djMtccxGx0tWk6Bsl9C8Q21G2lUNw+3DL/rc4IBe
-	 PlXE4otyljYyVdCMn4mIe+LBCaGxUzyeL7wG5ghM=
+	b=lH96aAp0rldtVIAjEaIDUfaTrHKMS2LRDeUCi4wgOe/kOJzAb2A1djeUYMLdbjByi
+	 1yreQEGvl1wzXs8rJgtUwLKoWEMWwyVnEJkSaAAOL6DVIvMl5ZsU9QhnkYkd0F3eT4
+	 UAd4rXMTo4GLGLDbqw3koFqJ7lmDSL7Xm6rRUUXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 211/571] usb: typec: tipd: fix uninitialized typec_partner_desc in tps6598x_connect()
-Date: Wed, 28 Oct 2026 17:55:58 +0100
-Message-ID: <20261028170013.009273398@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Prashanth K <prashanth.k@oss.qualcomm.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.15 212/571] usb: typec: ucsi: Get the connector fwnode based on reg value
+Date: Wed, 28 Oct 2026 17:55:59 +0100
+Message-ID: <20261028170013.034173788@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,51 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Prashanth K <prashanth.k@oss.qualcomm.com>
 
-commit c4b27b3605788bbf9e4251f3cd4ab94645ab036f upstream.
+commit 6c51f09c6db5868a5090e8dd4d7764660c87f1ad upstream.
 
-tps6598x_connect() passes a stack-allocated typec_partner_desc to
-typec_register_partner() after initializing only usb_pd, accessory and
-identity.
+ucsi_find_fwnode() currently maps UCSI connectors to Device tree
+connector nodes based on the order in which connector child nodes
+are described in DT.
 
-typec_register_partner() copies attach and deattach from the descriptor
-into the partner. With those fields left unset, garbage function pointers
-may be stored and later invoked from typec_partner_link_device() when a USB
-device is linked to the port. Uninitialized pd_revision and usb_capability
-similarly leak stack data through partner sysfs.
+This can fail because the ordering of child nodes isn't guaranteed
+in Device-tree. For example, DTB may contain connector@1 before
+connector@0, causing connector numbers to be associated with the wrong
+fwnode. As a result, role switch and Type-C notifications can be
+delivered to the wrong remote endpoints.
 
-Zero-initialize the descriptor so optional callbacks remain NULL and the
-remaining fields are zero.
+Fix this by using the "reg" property of each connector to match
+its corresponding fwnode. While at it, if the reg property isn't
+present, then fall back to the old method.
 
-Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
-Cc: stable <stable@kernel.org> # 5.15+
+Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260906131942.83153-2-radhey.shyam.pandey@amd.com
+Link: https://patch.msgid.link/20260916042808.2879079-1-prashanth.k@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -218,7 +218,7 @@ static void tps6598x_set_data_role(struc
- 
- static int tps6598x_connect(struct tps6598x *tps, u32 status)
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1081,10 +1081,21 @@ static struct fwnode_handle *ucsi_find_f
  {
--	struct typec_partner_desc desc;
-+	struct typec_partner_desc desc = { };
- 	enum typec_pwr_opmode mode;
- 	u16 pwr_status;
- 	int ret;
-@@ -234,7 +234,6 @@ static int tps6598x_connect(struct tps65
+ 	struct fwnode_handle *fwnode;
+ 	int i = 1;
++	int ret;
++	u32 port;
  
- 	desc.usb_pd = mode == TYPEC_PWR_MODE_PD;
- 	desc.accessory = TYPEC_ACCESSORY_NONE; /* XXX: handle accessories */
--	desc.identity = NULL;
+-	device_for_each_child_node(con->ucsi->dev, fwnode)
+-		if (i++ == con->num)
+-			return fwnode;
++	device_for_each_child_node(con->ucsi->dev, fwnode) {
++		ret = fwnode_property_read_u32(fwnode, "reg", &port);
++		if (ret < 0) {
++			if (i == con->num)
++				return fwnode;
++		} else {
++			if (port == con->num - 1)
++				return fwnode;
++		}
++
++		i++;
++	}
+ 	return NULL;
+ }
  
- 	if (desc.usb_pd) {
- 		ret = tps6598x_read_partner_identity(tps);
 
 
