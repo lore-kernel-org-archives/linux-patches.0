@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211567;
-	b=jJXr4E4grw9F/DAVtwWIOOnTv99crPBAHDC/joxfsTac1+mEz8BbUHmd7inuUnNr3x6s
-	 X5IcBtiARVhNUKYRZC7VSGVLkFZ9/i3EfKl0FrDYNdp5scNkUGBlkrSd+grwPfEwjHH+z
-	 ZJOD4J+p9YF5k+X/EXB4H2elVcCGsUiyJDZz98vUcDGtkuQVYN2yNPCQxtVnPRsIMbJPm
-	 h624iiPJYKW+N5LAZ8OUiDzpg4OdqEgsuy2I3bE2QxLGZdVskJHZjN43pMQtcHuxs4zL3
-	 cWJEBaKRW13tsDD80Q70QHlmbzCV0yEb6xro/W0WDC8mFgmndsw9dIs6HWGjDOEkp+g==
+	t=1793211570;
+	b=IP1q90lBmzjFykgWqqFa8H8X8SBEM79CXrk6CIuK4sFSwUZlfXt6JfSDvtZvw5tNY4/6
+	 s6WxxQcg3btvrHbk/eB0DwS2qvtAf1rIt8nEUIQ7unVey9rOT0I7yi5gOfzeZLrDNFfFA
+	 xRm7MMJuDgipZRKIExZgB2WhxdQyJEPbDSlHWwBmizBjI4VWay5wbYCHUYRnTvji6X7PP
+	 PfZfCVIbs+wxVzFY1rtYJhao9FAcHSOQUHz9hZhqD30SwcpaNByMACXiVMJ1nxNOr3Sm0
+	 7044ezbrOomUIpCxR2VFLNJDLZRaRZ2XDG5gpvy/G5VIctGgWQyNAmT4JMO+l/8QUsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I17q1oKLVYL/q8vbFWRp847vc+wT8NOUiKXY7Pn+VLI=;
-	b=lvCq/lPU5ZdQbhO2x7xMaNqPn2BhTpOTVqATozeIIIlTGnJNAK96AoKV2M7Sv9q9z0DG
-	 g1EqhrnWvpAlTpJZLglvckh4NIxejUs5N33xrK3ky+vh+/yRiS06gxEGYDKlWL71av8ji
-	 VupOlIZmi7dYUJ/qBrGFSVDyMGrLHCRL4grz9AfftpLe4sQj2qiowPat8CX1c4gePYU79
-	 0y8QUFfq4tytLxJw1Dc9eAbSnUBSpiC/uxSam8xj/FhXTXl+CQievGB5UINxbCqIBQ5Ot
-	 sG52FTqt2eGKb0JwE/1jWy4p/+pT0tsJMwdEelfEWkV8XT1oWBC1JUubBzY35BAMZFQ==
+	bh=TsoV1HosN7gKFlnjEHDGLUrA6bHb5voq2p1iGH50vmk=;
+	b=0QD3d27vyNRFqk5qlaBWE8pWNbOR3IYbueDMs6I8BpSh3LqePPIQXiqzkUbbuZ+ImwTp
+	 JlztGJNBbWeYwUL9x2DrnVgmh3PNmL4niJEPXg9aIUVTnh1o1BuNhTATYKdlPGbOH64ND
+	 GtkOw45dbFbqeCXdRkG65vlUG/vXW2/I9gAkWg2TKdHPLf/RQOi7du5b4U48WwxAEwM8p
+	 weR8CSgbrXcmCLW+tgO482sqqQbUEH1cJg+R9hLHWPyRnJ63mQIOuBAGGpoycXqxFS7cJ
+	 PlzTZ2qqbYaiRHA916WMH/I3qtsG4SEkPxHXOPL2FcsSNSFVzwjL+1hvMc3kKpF0RkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gO0caLjb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uHCxyJD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505B3606A31A;
-	Wed, 28 Oct 2026 18:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F4C606A31F;
+	Wed, 28 Oct 2026 18:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gO0caLjb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBB01F01825;
-	Wed, 28 Oct 2026 18:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uHCxyJD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775611F01825;
+	Wed, 28 Oct 2026 18:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211567;
-	bh=I17q1oKLVYL/q8vbFWRp847vc+wT8NOUiKXY7Pn+VLI=;
+	s=korg; t=1793211570;
+	bh=TsoV1HosN7gKFlnjEHDGLUrA6bHb5voq2p1iGH50vmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gO0caLjbnvP7wFE6Pu2Xsgcu0i5qAz7SO1x8At3+f46pt6SAtzpJ6m2KNFpInkLW9
-	 /SIQ2x2EHs4utJRTa9dVfSGc2uvZusACeILTjX16qMEksIrawzJt+mfCu+MLnjdX+L
-	 Gr0X+WKAWkgHadgToth1eW+4jlOgC6XHNiP68Sik=
+	b=1uHCxyJDhhCgTUzNCo1LwRwG0Sh/xRw9sL2BJIA+ZmDHrYidtCYYvMkAC4Rlzc+9w
+	 A3Ea/sF0xeAhlNfXjKrzg+Jh3DHmf1S1OhWRjuGZmJ95cPSO5B406bnHXHH+/nDuXT
+	 Hv8y3rC8am7aGpyn1UwcMTWR7pb7XwGFo3ptsjuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Lee Jones <lee@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 424/571] tracing: Set the trace clock before registering the histogram trigger
-Date: Wed, 28 Oct 2026 17:59:31 +0100
-Message-ID: <20261028170018.076567853@linuxfoundation.org>
+Subject: [PATCH 5.15 425/571] ip6_gre: remove obsolete ERSPAN PMTU update
+Date: Wed, 28 Oct 2026 17:59:32 +0100
+Message-ID: <20261028170018.101317597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,103 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 6ede78d0563a2a3ae3e46f9c07cedb5d79645429 ]
+[ Upstream commit 8bc60db48e8cba35488bbd6e1f94aa990afa275a ]
 
-hist_register_trigger() puts the trigger on the global named_triggers
-list in cmd_ops->init(), and only then sets the trace clock:
+A tc tunnel_key action can attach a METADATA_IP_TUNNEL dst to an skb,
+and mirred can redirect it to a native ip6erspan device. The legacy PMTU
+update in ip6erspan_tunnel_xmit() treats that metadata dst as a route.
+Since it has no output device, dst_dev(dst)->mtu dereferences NULL.
 
-	if (data->cmd_ops->init) {
-		ret = data->cmd_ops->init(data);
-		if (ret < 0)
-			goto out;
-	}
+On v7.2 with KASAN, an initial UID/GID 65534 process with CapEff 0 used
+self-created user and network namespaces to trigger:
 
-	if (hist_data->enable_timestamps) {
-		ret = tracing_set_clock(file->tr, hist_data->attrs->clock);
-		if (ret) {
-			hist_err(tr, HIST_ERR_SET_CLOCK_FAIL, errpos(clock));
-			goto out;
-		}
+  KASAN: null-ptr-deref
+  RIP: ip6erspan_tunnel_xmit+0x10fc/0x2cc0
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-The clock string is not checked anywhere before that call, so a named
-trigger using common_timestamp with an unknown clock fails after it has
-already become findable. event_hist_trigger_parse() then frees it
-without taking it off the list, and the next lookup by name reads the
-freed object:
+The update is obsolete. Commit fe1a4ca0a2b7 ("ip6_gre: process toobig
+in a better way") changed IPv6 GRE Too Big handling to update the
+underlay route and removed the equivalent block from __gre6_xmit().
+ip6_tnl_xmit() then propagates the underlay PMTU to the overlay route.
 
- ~# cd /sys/kernel/tracing/events/sched/sched_switch
- ~# echo 'hist:name=foo:keys=common_pid:ts=common_timestamp:clock=bogus' > trigger
- bash: echo: write error: Invalid argument
- ~# echo 'hist:name=foo:keys=common_pid' > trigger
+Remove the stale ERSPAN copy and its now-unused dst variable. This
+eliminates the metadata-dst dereference and keeps ERSPAN aligned with
+IPv6 GRE PMTU handling.
 
-  BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
-  Read of size 8 at addr ffff88800915d760 by task init/1
-   find_named_trigger+0xac/0xc0
-   hist_register_trigger+0xc1/0x900
-   event_hist_trigger_parse+0x3146/0x6af0
-   event_trigger_write+0xce/0x160
-  Freed by task 63:
-   kfree+0x154/0x420
-   trigger_kthread_fn+0xfd/0x160
-
-Set the clock before the trigger is registered, so that nothing which
-can fail runs after it is published, the way commit 6f86bdeab633
-("tracing: Fix bad hist from corrupting named_triggers list") moved the
-registration below the rest of the setup.
-
-tracing_set_filter_buffering() is reference counted, so the init failure
-path has to drop the reference that the clock block now takes first.
-
+Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
 Cc: stable@vger.kernel.org
-Fixes: a4072fe85ba3 ("tracing: Add a clock attribute for hist triggers")
-Link: https://patch.msgid.link/20260907091415.554535-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[Lee: Call data->ops->init(data->ops, data) as b052d70f7c9c ("tracing:
-      Merge struct event_trigger_ops into struct event_command") and
-      476705419518 ("tracing: Remove redundant trigger_ops params") are
-      not present]
-Signed-off-by: Lee Jones <lee@kernel.org>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261002033058.358137-1-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Adjusted PMTU block context for direct dst->dev->mtu access instead of READ_ONCE(dst_dev(dst)->mtu). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/ipv6/ip6_gre.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 69a7e83926a28..3105208e517c7 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5641,12 +5641,6 @@ static int hist_register_trigger(char *glob, struct event_trigger_ops *ops,
- 		data->ops = &event_hist_trigger_named_ops;
- 	}
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index fb766066bcb0d..fc1b27cd75541 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -917,7 +917,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ {
+ 	struct ip_tunnel_info *tun_info = NULL;
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct dst_entry *dst = skb_dst(skb);
+ 	struct net_device_stats *stats;
+ 	bool truncate = false;
+ 	int encap_limit = -1;
+@@ -1050,10 +1049,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 	/* Push GRE header. */
+ 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
  
--	if (data->ops->init) {
--		ret = data->ops->init(data->ops, data);
--		if (ret < 0)
--			goto out;
--	}
+-	/* TooBig packet may have updated dst->dev's mtu */
+-	if (!t->parms.collect_md && dst && dst_mtu(dst) > dst->dev->mtu)
+-		dst->ops->update_pmtu(dst, NULL, skb, dst->dev->mtu, false);
 -
- 	if (hist_data->enable_timestamps) {
- 		char *clock = hist_data->attrs->clock;
- 
-@@ -5659,6 +5653,15 @@ static int hist_register_trigger(char *glob, struct event_trigger_ops *ops,
- 		tracing_set_filter_buffering(file->tr, true);
- 	}
- 
-+	if (data->ops->init) {
-+		ret = data->ops->init(data->ops, data);
-+		if (ret < 0) {
-+			if (hist_data->enable_timestamps)
-+				tracing_set_filter_buffering(file->tr, false);
-+			goto out;
-+		}
-+	}
-+
- 	if (named_data)
- 		destroy_hist_data(hist_data);
- 
+ 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
+ 			   NEXTHDR_GRE);
+ 	if (err != 0) {
 -- 
 2.53.0
 
