@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209825;
-	b=k1DyDx/5kqBA2RZW1A66xwkEQKk9hflpGiCMGAat+vo2Km3pvDA68Lxbz2Xc1h7vQVw0
-	 z7FG5MjqCBqnCg8mYxp7Lsbaw9WFnnXEvJ4mBXz+BxMrmLk6nZDZ19ag6BlrrI2ssZJWS
-	 GfT8OjwkueT4GeGz8OIyhNVNrm+80FsyX/MzhDaSn+nDjDfdjTuPnXGamkgo9X0Ug8G2E
-	 oR/DKqBMiNzk0fSUAkgZaYIMzeQRf9vMdJIFfj0d2X8cCN8fCfVwVpdOu6MrRAvMunxGg
-	 KouRPJ2x7mn6SA5XcxXjxcj5zlwiiFWu+fDMow0OCBLq08w3A5+Knzn5B4e1SQKIh+A==
+	t=1793209828;
+	b=KlBKmh9TpZGxkd5WR+lbZ/ECroakafhF6yGktUijq0rHD0HsFiu9XH6TZxlfGmy5aUDI
+	 230g77vaa+VIcSAzbLa2X0IgCortsUfGnAvoZEKoXTxjp7jIuAFWzpwQJMCeAgipDfG+4
+	 J8P0Coi77/kLzgZ3Nf93qqSH5wEqbbBAhJcDilX6ZmTmOHJVSGYdUDPRde4YkoSj8pIQF
+	 RhXnwmTS6TAcEAO4ftER0VK54x6kBQOBNIdSrfwWrBe43YIqtwDM1JXDUfcFnDLpAGpf3
+	 eNCV/zt/hCQbZymy7Vom6zy88zMj2MTk6jSTnq7O+LmXrAjgGHhCOs5xMbBweZ8g8dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209825;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209828;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qesQRzcrX62ktFGUm+2mR5Enn79QxsMMYxDtZkXm9+w=;
-	b=bUhnOjlC7f4a7N46PgZbg4aFFcMHQqCV0WeYIbm9YIoA2oPWzPFNWearffvXf0yAM/AD
-	 73iNMuBiIboTngZLzzUmNt1HDG63kubLNWd4OYy347R4DO0ZsMFECblvsSMXVRr2TfTSg
-	 OE9Lmv/hQRUoGTYOq8f4X66Mpx9wD9u2J7CxLVCbsmi+EJlVPeAlmTPhj24wCfpqSvRAe
-	 v7c2nOH3RLLU/71TtjM/e/ch2Rf2lmImtpWUhaWNVUxDmsmTLJopQ3Qn4/xjmjh8AR3VY
-	 RXvfJTZLZWngVqMmNG1QPemsik6lpha0UbF1zLs3I+Nnd0Y5risO4M5p/lFtQqqOS3Q==
+	bh=f9pVE12hO8Y1RV/ipFInn0X+zXFQGA4xXITiltE88GE=;
+	b=Qa4r9Br4mMRV0STjfOlzf/tWsdSGBHi2bPvSVhXf2h6+EqBxq1dPLWKmOEMT53PZAmX1
+	 pgcc3LfueZH9MiZP3/qZ165sdH3i8E13VgHijylwdmBQLR8DzTJ04pWUQ41lYtGfypfsy
+	 iiuD8BD/F6+7HOGtT+At44t/sHhNL4q6MI2fIPHCJixdtgfIqfCB1tidTDxU2jN40qmec
+	 jG5net7tUEbL4pDQz7D7paa+Y2CW4webC3X4b/BYKElqFxJ5SDH+09RCGc/VMBdF1mP60
+	 d5b/qwRQfKi9R3HHCfbyDCq512FYIrHiQq2QSa/rp0soGi5xmiP+ctSiD/lViUo+8Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u3r5Tagy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9KQYOZ4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B48606A31C;
-	Wed, 28 Oct 2026 17:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459E6606A31C;
+	Wed, 28 Oct 2026 17:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u3r5Tagy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA76D1F01825;
-	Wed, 28 Oct 2026 17:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9KQYOZ4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966421F01825;
+	Wed, 28 Oct 2026 17:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209825;
-	bh=qesQRzcrX62ktFGUm+2mR5Enn79QxsMMYxDtZkXm9+w=;
+	s=korg; t=1793209828;
+	bh=f9pVE12hO8Y1RV/ipFInn0X+zXFQGA4xXITiltE88GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u3r5TagyEthzG2cmgMJmh52zwUfzibMunUXVZXwYgyclOUSKs3sMV5YyOovbIKHx1
-	 NOmg/hPaLP5HhWSLyLBkxJogWTM8dktQVME1PajDqMUNJDeG2PPbe78yzfJXlC+vz/
-	 7ZK+OI6zR0uXupDTDfNqTpaOh4KVKBBM3vfljA60=
+	b=e9KQYOZ4he+t0fjYIpOOcfF3TTAWiyUt9VHPtL5eg/ygRfxhnqh8Mf+UNxUNTl9Ws
+	 kZ4nB3dnNk3whqhI9vJAWa3ZUTdFnjVFTjWBr5x6BTEx33sQf6roMqIr7NWc85mweC
+	 41fkJy4M3IXzCIW7RGUVjjtUE062VMhMCscf9Iko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 044/109] io_uring/waitid: own the request before clearing ->head
-Date: Wed, 28 Oct 2026 18:00:28 +0100
-Message-ID: <20261028165943.400148277@linuxfoundation.org>
+Subject: [PATCH 6.18 045/109] io_uring/cmd: dont leave list poison in ->hash_node
+Date: Wed, 28 Oct 2026 18:00:29 +0100
+Message-ID: <20261028165943.423031612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,78 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-Commit c254eec4364b9f4b4cbdce43be3fb4df5a651a70 upstream.
+Commit 4c83e39f4d1944d7146fd06094f2c8053238d55c upstream.
 
-io_waitid_remove_wq() only takes the wait queue lock if ->head is set.
-io_waitid_wait() clears ->head first thing, before it tries to become the
-owner of the request by bumping ->refs. If somebody else owns the request
-at that point, nothing keeps it from completing the request while the
-wake up handler is still going to touch it:
+io_uring_cmd_del_cancelable() uses hlist_del() to take a command off
+->cancelable_uring_cmd, which leaves LIST_POISON1/2 behind in
+->hash_node. Requests are recycled through the request cache without
+being reinitialised, and not every user of ->hash_node sets it up before
+it is used:
 
-CPU0 (io_waitid_wait)                 CPU1 (io_waitid, holds a ref)
-list_del_init(&wait->entry)
-smp_store_release(&iw->head, NULL)
-                                      __do_wait() finds another child
-                                      io_waitid_remove_wq()
-                                        // ->head == NULL, no locking
-                                      io_waitid_finish(), IOU_COMPLETE
-                                      // request freed and reused
-atomic_fetch_inc(&iw->refs)
+If a vectored futex wait is woken while futex_wait_multiple_setup() is
+still queueing the futexes, io_futexv_wait() doesn't add the request to
+->futex_list, and leaves the completion to the task_work queued by the
+wake up. io_futexv_complete() ends in __io_futex_complete(), whose
+hlist_del_init() is fine for a request that is unhashed, which is how all
+other users of the node leave it. If the request was a cancelable
+uring_cmd in its previous life, e.g. a ublk FETCH_REQ, it writes through
+LIST_POISON2:
 
-The same goes for __io_waitid_cancel() if it claims the request in that
-window. ->refs is part of the per opcode data of the request, so this
-increments whatever the next user of the request keeps there. If that
-happens to be zero, the handler concludes that it owns the request, and
-queues io_waitid_cb() for it. With the window held open by a delay, and
-the request reused for a receive that is waiting for data:
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: maybe wild-memory-access in range [0xdead000000000120-...]
+  RIP: 0010:io_futexv_complete+0x219/0x420
+  Call Trace:
+   tctx_task_work_run+0x804/0x950
+   tctx_task_work+0x71/0xa0
+   task_work_run+0x118/0x200
 
-  BUG: KASAN: slab-use-after-free in __wake_up_common+0x1ca/0x1f0
-   __wake_up_sync_key+0x36/0x50
-   sock_def_readable+0xf1/0x420
-   unix_stream_sendmsg+0x60b/0x1110
-  Allocated by task 87:
-   io_arm_apoll+0x1ed/0x940
-  Freed by task 87:
-   __io_submit_flush_completions+0x118d/0x1a10
-   tctx_task_work_run+0x327/0x950
+Leave the node unhashed.
 
-Only clear ->head once the handler owns the request. If it doesn't, the
-owner finds ->head set and has to wait for the lock, which is held by the
-caller of the handler. Deleting the already deleted entry again is
-harmless.
-
-Fixes: ab673c1bcaf2 ("io_uring/waitid: use io_waitid_remove_wq() consistently")
+Fixes: 93b8cc60c37b ("io_uring: cancelable uring_cmd")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-1-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-2-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/waitid.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ io_uring/uring_cmd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -265,12 +265,18 @@ static int io_waitid_wait(struct wait_qu
- 		return 0;
+--- a/io_uring/uring_cmd.c
++++ b/io_uring/uring_cmd.c
+@@ -87,7 +87,7 @@ static void io_uring_cmd_del_cancelable(
  
- 	list_del_init(&wait->entry);
--	smp_store_release(&iw->head, NULL);
+ 	cmd->flags &= ~IORING_URING_CMD_CANCELABLE;
+ 	io_ring_submit_lock(ctx, issue_flags);
+-	hlist_del(&req->hash_node);
++	hlist_del_init(&req->hash_node);
+ 	io_ring_submit_unlock(ctx, issue_flags);
+ }
  
--	/* cancel is in progress */
-+	/*
-+	 * Cancel or issue is in progress. Leave ->head alone, so that whoever
-+	 * owns the request has to take the wait queue lock, which we hold,
-+	 * before it can complete and free it.
-+	 */
- 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
- 		return 1;
- 
-+	/* pairs with the smp_load_acquire() in io_waitid_remove_wq() */
-+	smp_store_release(&iw->head, NULL);
-+
- 	req->io_task_work.func = io_waitid_cb;
- 	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
- 	return 1;
 
 
