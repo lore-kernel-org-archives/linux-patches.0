@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209583;
-	b=Zbflb3WqTtDxCwrUIzuzqnxJsxyYFTKrTBDG/GZgQw/OVG70/1pIJwZS9UJIGxJklk3x
-	 AubtnnfAAegWKuKfxUG7mnfzQMMSqcEk1Z3Qumroy1p+2P1ouSxZ9Azcebi5yHlfTOp5G
-	 K5VDqoWej6zxNQi676WQmIpcZ1P3h3Q3B1lu1R1OGN/OahVLk/EIhASeB2RY2xne0hhIn
-	 OExKWlctT8htCDJZ0HFWwgGfvLcemEnS4DYsyyGaBum6jJhwUiGBaIq9jo8uFplWpYH6Z
-	 LnNNLqWeL41Qt9KPK710mAwl7MqTLUR3Hha70VJlKaRSZ22HpORg92b9KWoCIM0FBjA==
+	t=1793209586;
+	b=3n/U2dYoFRovBxnG+aZ7HZ47iTOymULJvho81VNgoQGSI8uNqQlynz8jGUpspmik/uO+
+	 F8mtBp27zPHkraNrckLHaLbAlV96IwziIvkb4DumGn2lkHLXwoiHXzgoytwppQcejAtlH
+	 D9/Xzrbu25uGbxl8082/lvl4vwtgUQOlJOPLeoAHYQ0wbwrC+QqX7ebB7kqPEY9gNQHdE
+	 2Rpe2EX2F3YZKimfTjODqQuIYeKNU7YHJ0ST0AxCAuhcM34GjkwRU6sUxlAF9H5hsS3bW
+	 M9JSJqHZoK1MwpehHDFQgs6ln0xiVF7wBhf8sMggZ4zA13pmVnRCPANFW5cc23qei6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6mAl9nhEfkoQk4qRCQPxy1XYQwyYxJ/hgAdnK+VCjH8=;
-	b=K5X+oWUHPjAdNgZSTS1W1pv22rTYnN8OrJD1yLWENYTtiENXlYDrPaaguth5d2IL8/E8
-	 LpyzKe4aGjGx1bwOWDFeqGEMaYOrOGEowihuhdQSEyy8rly3q5GEADwoN8GT7zno3woL2
-	 1QiJ8YHWwiuSDa4UspKqkMqSPTp4V6hiWeMm8SLRNITrdBk1MEIvpCnXcfURuUgNQUu7x
-	 RJUuzEndyOJMPzRFvc07/OIx6/Yru1lccFxsMnWWf2qgeWgiRlPtilExF2epK+yY23Z15
-	 ah4ZR1LlQFN63oOdjxAEIf4wyuPXYIuJ4sgVIIdyYG5bXKJygT/sqpgDm9m6WghW1rg==
+	bh=ELEXb1AQczi3BlxvZHTmfAMABbzrbdz9d8diuRQ3Il4=;
+	b=TdW2GY563KpnWBCHnLXhYeY4XPPgH34VzSpZVpy0Cnyy/tiWON0g1hMK80tWEXCSgyIF
+	 mP8MJ5w7ngqfn86+HjxMXPW1EYbPfOwcDd4jSTDbgMfRBeCUyLOWM1VUh0iOs1DAVGqcv
+	 mJ27MfVXU43By0IudDeKaXiJfteC26utaAiwPHNe4Y2/fDaZypxrkLArXqwBwLNEGR9ML
+	 ssWIy5m7Dyf09wGNu9mewlW7AmNCKclKHDkTNZoPKFuCzwhgENYXuH9E1eLAKfbwOO056
+	 gJgiHlg3SokHfCD4OtUHzyUcQ5/a+OC37tUest6pWCxxB6TZY8z+gG1iF+UAaL5pkGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BubHhmcA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5WwaXXq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0906606A31C;
-	Wed, 28 Oct 2026 17:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA92606A31A;
+	Wed, 28 Oct 2026 17:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BubHhmcA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2A91F01829;
-	Wed, 28 Oct 2026 17:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5WwaXXq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF7E1F01825;
+	Wed, 28 Oct 2026 17:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209582;
-	bh=6mAl9nhEfkoQk4qRCQPxy1XYQwyYxJ/hgAdnK+VCjH8=;
+	s=korg; t=1793209585;
+	bh=ELEXb1AQczi3BlxvZHTmfAMABbzrbdz9d8diuRQ3Il4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BubHhmcA1DgCR2HwJJC3BOOvSir1ALBr1q5yYPxiSy5nq2tfcWaSzgRGn5y68bsWw
-	 F8f5ZE7rAIIxlvigp15ADllz/Ehm2pgKAKC9TdDSiXNhEN5xr0CU885/IfK0swwUUY
-	 la/7KOM8LynF+ALjIRwGvKSwzmA83MZ9toDQMpqU=
+	b=e5WwaXXqhNCVh2vVdY+iSY53RvSXlzLzjiNBihecsT+29BouGxeq7WcU8Kxb14aea
+	 pMj6OusyN+3j5bnlG54LIJ9nhYf739U99EyR3NoHYeHOkW78euKM4FmDZ6SN8X1DvJ
+	 BaIAyXEW55ah3dk/fStVMo8ZJuo2EL5xX8To43co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Adrian Martinez <adrimg3196@gmail.com>
-Subject: [PATCH 5.10 515/516] KEYS: Fix key_reject_and_link() race with keyring restriction
-Date: Wed, 28 Oct 2026 18:01:07 +0100
-Message-ID: <20261028170015.676359775@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 5.10 516/516] signal: dont retarget shared signals in a dying thread group
+Date: Wed, 28 Oct 2026 18:01:08 +0100
+Message-ID: <20261028170015.699648478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,52 +67,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Martinez <adrimg3196@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 0b157166e612b70f98a332b6c7be7eac6f8e9593 upstream.
+commit c0e659511d4f49087da095a95799edb5b775a705 upstream.
 
-The restrict_link check in key_reject_and_link() is done before taking
-the keyring semaphore, racing with a concurrent keyring_restrict()
-that installs the restriction while holding the semaphore in write
-mode.
+If the calling thread has blocked a signal then
+retarget_shared_pending() slingshots a shared pending signal to a
+sibling thread. Today it only skips PF_EXITING threads but not a
+coredumping thread.
 
-Move the check to after __key_link_lock(), so it is done under the
-semaphore, matching the pattern used in __key_create_or_update().
+But if SIGNAL_GROUP_EXIT is set no thread in the thread-group can
+dequeue such signals anymore as get_signal() sends SIGKILL to every
+thread and prepare_signal() drops any other signal.
 
+exit_signals() also returns early on SIGNAL_GROUP_EXIT. But neither
+sigprocmask() nor the mask restore in sigtimedwait() do.
+
+Say a thread sleeps in sigtimedwait() and a sibling thread crashes. The
+sleeping thread gets woken by the zap call. It restores its mask on the
+way out and retargets a signal that was queued for the coredumping
+process. That means TIF_SIGPENDING is set on the coredumping task which
+zap_threads() had cleared. So a blocking write sees TIF_SIGPENDING and
+truncates the dump.
+
+Stop retargeting signals when SIGNAL_GROUP_EXIT is set and avoid
+needlessly truncating coredumps.
+
+Fixes: e6fa16ab9c1e ("signal: sigprocmask() should do retarget_shared_pending()")
 Cc: stable@vger.kernel.org
-Fixes: 5ac7eace2d00 ("KEYS: Add a facility to restrict new links into a keyring")
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Adrian Martinez <adrimg3196@gmail.com>
-Link: https://lore.kernel.org/r/CACO1+RT+m==BY+ZPkE+fo536D0qu3wog4xE1dfuXQ56g+=Qv=A@mail.gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-5-8e4adb1619e6@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/key.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ kernel/signal.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/security/keys/key.c
-+++ b/security/keys/key.c
-@@ -585,11 +585,18 @@ int key_reject_and_link(struct key *key,
- 	ret = -EBUSY;
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -2830,6 +2830,10 @@ static void retarget_shared_pending(stru
+ 	sigset_t retarget;
+ 	struct task_struct *t;
  
- 	if (keyring) {
--		if (keyring->restrict_link)
--			return -EPERM;
--
- 		link_ret = __key_link_lock(keyring, &key->index_key);
- 		if (link_ret == 0) {
-+			/*
-+			 * Check the restriction under the keyring semaphore.
-+			 * keyring_restrict() installs it while holding the
-+			 * semaphore, so testing it beforehand races with a
-+			 * concurrent restriction install.
-+			 */
-+			if (keyring->restrict_link) {
-+				__key_link_end(keyring, &key->index_key, edit);
-+				return -EPERM;
-+			}
- 			link_ret = __key_link_begin(keyring, &key->index_key, &edit);
- 			if (link_ret < 0)
- 				__key_link_end(keyring, &key->index_key, edit);
++	/* Nobody dequeues them in a dying group, see get_signal(). */
++	if (tsk->signal->flags & SIGNAL_GROUP_EXIT)
++		return;
++
+ 	sigandsets(&retarget, &tsk->signal->shared_pending.signal, which);
+ 	if (sigisemptyset(&retarget))
+ 		return;
 
 
