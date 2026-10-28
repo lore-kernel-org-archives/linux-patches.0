@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208437;
-	b=AhujjyhX75R6VBM9WEAj5JFFpKU47F9fyrV48U6Zdp5VExGX3MACpIaVoOUMnz/2xTSQ
-	 2eCh5aJfOoHTE6Bh2rGs53R4KG0W8cnHytJxfaZ4+6njOqXexhAhbAI4q5ffUxEgB1kPl
-	 WMQSt10ODNuQxPz5jT/QTXN+UNnq6WpiIuZJkf94i8pXgY1ORhRkI4qq28OZdZL0cqP56
-	 4aAYf2HDoQUerY/pKTZ45C7WYsu0YjRlaEUGGaYJ5wojucRZ2+UbLSrHBDmsuXZPMEFnG
-	 WeEcLEEEP17dHv0RwK3MX+Yt0oI1lAIQIXHtyF4s9BCyibGmxwOD3+mMlzVSWmBmgJA==
+	t=1793208440;
+	b=ym48pvYDstc+5IuMMZGQAn1IPFeiEXjTqLn0iU9m27Fek0fDTwHdTSoaucjepca4moP9
+	 H0/btHlcyjfj2lbkBKQmb/ItTjqYo+h3gs651eSyenDrtYIG3prMxWsOt6fVgzUeAQ7zL
+	 2rK+l7qpsJpIrTuXRLlLrTcRqiTZbP7iwNJnJHG8ElHJshhHxNIg3RlYFBW0Kzb619dL9
+	 iJJQiPydJC39Y2HVjzaD5GyJ2CpqPZKBFY8wTu6AQ8y3LrC1WCQwUGPFn6e0Z2CP51qt6
+	 pzUhb/vEY++bGZaW5c4h99EZwonfcDynZwH/jt5Afeq82M4T9Nk+PM9v5KYCT7bzXOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uD8b2ecO6V5apR2tgoRFgHIRbYigKRSqddyrXWMctUQ=;
-	b=tj6x9OjmC921LnQuQs7n0xWuYvYtvPqFwF5m1SdtM64Ok2T3XlOOjK+/Aqa9JVMjI8Gj
-	 7PqpE4lbxgvWW1ULSXi4ICqAO6uEnHW8ALcPhFbX/h3Sa/0bgmcxo1RsLziox0Kh0/RdL
-	 JN7SYf1nY3yeMQYvh6Go//3eAKDt1ND7Dzq+00/l1oK3lgE/kQlwAM3Xbt1oES97VeKP1
-	 raqO+G2iSwfhXeYui91KzvtcewOHyPbRZurOkS0AIhjwsCWBlkEHVAOlRDWuXIPVQd6SX
-	 rrXaelM95RaMqSPz8gGJRNu/I2aUbiMkD3MSrHsRuD5Lm57sl72S9gB1kAlBazoXJAA==
+	bh=IketQeLb/pcA97i/01QugjYA3Ds4Hv+lLgmmxcMEio0=;
+	b=TBINbNpy6XSP57XRgRD9388LZNQ8qXyiOEDuSia2Va5sPjcCWJykFwGrJcNSw4daA89y
+	 5lOqQlh5Z99WEVDA07M1FGUr2X9HmIz4t1SnFnC02Xug4Bye2MXgX/lwSw2vT11nit8gj
+	 oKtod3HGWxmYruZPBeKJnWVHqp9hHFAUmsuwr8tTx0577/v70X3BNYKd2odYoBHq4ZoSl
+	 cfElr7XxiHn6O5vB8ANGkY+fRw+8QdNVbVL0nlsbtlYcFW8kXDgy1vi+RHeTMveVlTFPG
+	 Pxdal5Zk1+5+sQazE2rlj5FBXgu1N4kZvw5AKio8S0YNBMoD0/qJ+i9wnMlpIRnX04Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=REolW5QB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWYpulE5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA22606A31A;
-	Wed, 28 Oct 2026 17:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFE6606A31A;
+	Wed, 28 Oct 2026 17:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=REolW5QB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1CA1F01825;
-	Wed, 28 Oct 2026 17:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWYpulE5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7372C1F01825;
+	Wed, 28 Oct 2026 17:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208437;
-	bh=uD8b2ecO6V5apR2tgoRFgHIRbYigKRSqddyrXWMctUQ=;
+	s=korg; t=1793208440;
+	bh=IketQeLb/pcA97i/01QugjYA3Ds4Hv+lLgmmxcMEio0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REolW5QBEbieeXQykR71kuLua7Uv8i4X8Mu/VaFse37QjIX+MOGueS+TIUmikSXQs
-	 KsdcH8z3+9QDaG4tMw/hLIRy8DRrfEjS1m3OH4CmB9Tp/k1FeCM70rXwIhimgZGkJG
-	 nB8PADyCrSUkPBQ9OMTmHEN1iQaVtwpcRoRuk7DA=
+	b=TWYpulE5gqkyxonUtdhHn2tO4WkgWxN6RPe/SRc6sjTJedyoA5ZsyRrHx5WRv5y5L
+	 Aty4NWhnCJ89uTmwx2hkuKpxcuT8Fwte7JwkHow021GsQQBxnnvLwAT9ZfKRGKez2i
+	 NfcIe8vApwV4Ub4FU6BI9MI/Lhm/G2mgJRB5M+UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Yuqi Xu <xuyuqiabc@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 119/516] net: ipconfig: Remove outdated comment and indent code block
-Date: Wed, 28 Oct 2026 17:54:31 +0100
-Message-ID: <20261028170006.336465233@linuxfoundation.org>
+Subject: [PATCH 5.10 120/516] net: ipconfig: bound DHCP option construction
+Date: Wed, 28 Oct 2026 17:54:32 +0100
+Message-ID: <20261028170006.359375429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,130 +71,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-[ Upstream commit e405b3c9d4aaa10972525fe2ea5cf94224020561 ]
+[ Upstream commit e47a1958e12abc3a17b5231a4f21c8f1bf662e08 ]
 
-The comment has been around ever since commit 1da177e4c3f4
-("Linux-2.6.12-rc2") and can be removed. Remove it and indent the code
-block accordingly.
+ic_dhcp_init_options() appends the hostname (option 12), vendor-class
+(option 60) and client-ID (option 61) options into the fixed 312-byte
+bootp_pkt.exten[] buffer.  Only the client-ID branch checked the
+remaining space; the hostname and vendor-class writes were unbounded.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20260109121128.170020-2-thorsten.blum@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e47a1958e12a ("net: ipconfig: bound DHCP option construction")
+A 64-byte hostname together with the maximum 252-byte dhcpclass=
+identifier needs 18 + (2 + 64) + (2 + 252) = 338 of the 312 available
+bytes even before the terminating END marker, so the vendor-class memcpy
+runs past the end of exten[].  With CONFIG_FORTIFY_SOURCE this is
+reported as a field-spanning write and, when the kernel is booted with
+panic_on_warn=1, aborts boot with a panic.
+
+Route the optional options through a common helper that makes sure the
+option, its 2-byte header and the END marker all fit and drops an option
+that would not.  Configurations with short options keep sending exactly
+the same bytes as before.
+
+Fixes: 130c0f47fdf9 ("ipconfig: send host-name in DHCP requests")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Reviewed-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/7808dfbfa2162dfd0b19f59aff5742d6e0db2abb.1789798023.git.xuyuqiabc@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipconfig.c | 89 +++++++++++++++++++++------------------------
- 1 file changed, 42 insertions(+), 47 deletions(-)
+ net/ipv4/ipconfig.c | 45 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 19 deletions(-)
 
 diff --git a/net/ipv4/ipconfig.c b/net/ipv4/ipconfig.c
-index 213a1c91507d9..986d469651d2e 100644
+index 986d469651d2e..8e24dc3c326bb 100644
 --- a/net/ipv4/ipconfig.c
 +++ b/net/ipv4/ipconfig.c
-@@ -652,8 +652,18 @@ static const u8 ic_bootp_cookie[4] = { 99, 130, 83, 99 };
+@@ -649,6 +649,24 @@ static const u8 ic_bootp_cookie[4] = { 99, 130, 83, 99 };
+ 
+ #ifdef IPCONFIG_DHCP
+ 
++static bool __init
++ic_dhcp_add_option(u8 **options, const u8 *end, u8 type, const void *value,
++		   int len)
++{
++	u8 *e = *options;
++
++	/* leave room for the option header and the END marker */
++	if (len > U8_MAX || end - e < len + 3)
++		return false;
++
++	*e++ = type;
++	*e++ = len;
++	memcpy(e, value, len);
++	*options = e + len;
++
++	return true;
++}
++
  static void __init
  ic_dhcp_init_options(u8 *options, struct ic_device *d)
  {
--	u8 mt = ((ic_servaddr == NONE)
--		 ? DHCPDISCOVER : DHCPREQUEST);
-+	static const u8 ic_req_params[] = {
-+		1,	/* Subnet mask */
-+		3,	/* Default gateway */
-+		6,	/* DNS server */
-+		12,	/* Host name */
-+		15,	/* Domain name */
-+		17,	/* Boot path */
-+		26,	/* MTU */
-+		40,	/* NIS domain name */
-+		42,	/* NTP servers */
-+	};
-+	u8 mt = (ic_servaddr == NONE) ? DHCPDISCOVER : DHCPREQUEST;
+@@ -664,6 +682,7 @@ ic_dhcp_init_options(u8 *options, struct ic_device *d)
+ 		42,	/* NTP servers */
+ 	};
+ 	u8 mt = (ic_servaddr == NONE) ? DHCPDISCOVER : DHCPREQUEST;
++	u8 *end = options + sizeof(((struct bootp_pkt *)0)->exten);
  	u8 *e = options;
  	int len;
  
-@@ -678,51 +688,36 @@ ic_dhcp_init_options(u8 *options, struct ic_device *d)
- 		e += 4;
- 	}
+@@ -694,31 +713,19 @@ ic_dhcp_init_options(u8 *options, struct ic_device *d)
+ 	e += sizeof(ic_req_params);
  
--	/* always? */
--	{
--		static const u8 ic_req_params[] = {
--			1,	/* Subnet mask */
--			3,	/* Default gateway */
--			6,	/* DNS server */
--			12,	/* Host name */
--			15,	/* Domain name */
--			17,	/* Boot path */
--			26,	/* MTU */
--			40,	/* NIS domain name */
--			42,	/* NTP servers */
--		};
--
--		*e++ = 55;	/* Parameter request list */
--		*e++ = sizeof(ic_req_params);
--		memcpy(e, ic_req_params, sizeof(ic_req_params));
--		e += sizeof(ic_req_params);
--
--		if (ic_host_name_set) {
--			*e++ = 12;	/* host-name */
--			len = strlen(utsname()->nodename);
--			*e++ = len;
--			memcpy(e, utsname()->nodename, len);
--			e += len;
--		}
--		if (*vendor_class_identifier) {
--			pr_info("DHCP: sending class identifier \"%s\"\n",
--				vendor_class_identifier);
--			*e++ = 60;	/* Class-identifier */
--			len = strlen(vendor_class_identifier);
--			*e++ = len;
--			memcpy(e, vendor_class_identifier, len);
--			e += len;
--		}
--		len = strlen(dhcp_client_identifier + 1);
--		/* the minimum length of identifier is 2, include 1 byte type,
--		 * and can not be larger than the length of options
--		 */
--		if (len >= 1 && len < 312 - (e - options) - 1) {
--			*e++ = 61;
--			*e++ = len + 1;
--			memcpy(e, dhcp_client_identifier, len + 1);
--			e += len + 1;
--		}
-+	*e++ = 55;	/* Parameter request list */
-+	*e++ = sizeof(ic_req_params);
-+	memcpy(e, ic_req_params, sizeof(ic_req_params));
-+	e += sizeof(ic_req_params);
-+
-+	if (ic_host_name_set) {
-+		*e++ = 12;	/* host-name */
-+		len = strlen(utsname()->nodename);
-+		*e++ = len;
-+		memcpy(e, utsname()->nodename, len);
-+		e += len;
-+	}
-+	if (*vendor_class_identifier) {
-+		pr_info("DHCP: sending class identifier \"%s\"\n",
-+			vendor_class_identifier);
-+		*e++ = 60;	/* Class-identifier */
-+		len = strlen(vendor_class_identifier);
-+		*e++ = len;
-+		memcpy(e, vendor_class_identifier, len);
-+		e += len;
-+	}
-+	len = strlen(dhcp_client_identifier + 1);
-+	/* the minimum length of identifier is 2, include 1 byte type,
-+	 * and can not be larger than the length of options
-+	 */
-+	if (len >= 1 && len < 312 - (e - options) - 1) {
-+		*e++ = 61;
-+		*e++ = len + 1;
-+		memcpy(e, dhcp_client_identifier, len + 1);
-+		e += len + 1;
+ 	if (ic_host_name_set) {
+-		*e++ = 12;	/* host-name */
+ 		len = strlen(utsname()->nodename);
+-		*e++ = len;
+-		memcpy(e, utsname()->nodename, len);
+-		e += len;
++		ic_dhcp_add_option(&e, end, 12, utsname()->nodename, len);
  	}
+ 	if (*vendor_class_identifier) {
+-		pr_info("DHCP: sending class identifier \"%s\"\n",
+-			vendor_class_identifier);
+-		*e++ = 60;	/* Class-identifier */
+ 		len = strlen(vendor_class_identifier);
+-		*e++ = len;
+-		memcpy(e, vendor_class_identifier, len);
+-		e += len;
++		if (ic_dhcp_add_option(&e, end, 60, vendor_class_identifier, len))
++			pr_info("DHCP: sending class identifier \"%s\"\n",
++				vendor_class_identifier);
+ 	}
+ 	len = strlen(dhcp_client_identifier + 1);
+-	/* the minimum length of identifier is 2, include 1 byte type,
+-	 * and can not be larger than the length of options
+-	 */
+-	if (len >= 1 && len < 312 - (e - options) - 1) {
+-		*e++ = 61;
+-		*e++ = len + 1;
+-		memcpy(e, dhcp_client_identifier, len + 1);
+-		e += len + 1;
+-	}
++	/* the minimum length of identifier is 2, include 1 byte type */
++	if (len >= 1)
++		ic_dhcp_add_option(&e, end, 61, dhcp_client_identifier, len + 1);
  
  	*e++ = 255;	/* End of the list */
+ }
 -- 
 2.53.0
 
