@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210301;
-	b=TKLWR72DiUyWP75B6ohydQF0jxbAcHi6vVvAYSmzTRBsEHCesXF+Oei2KlYbmjhEir7h
-	 SK7t80YEKYUNlNg03QSn1q77yZodlSTJzOkqknAlSRp8eWp8+qDBnVnl8TNZsl+QTw1qk
-	 tNwmfDCFHzpLl1+nrp6V3UHWTE1nRT3M+p4j3GuT8iHaRKlTpVyihGkVxifpQ4/kTWsOJ
-	 b09Ng53kDXT9OHTZ0qwHkfJrc81tDBehIoXcl0UzRmZSZGZCC6uzGyngjtdpUOZb0DgMO
-	 WKGDROgEcw354hrbJWwCurpvdAhNBznZCxoHibcZ5LuwmnKziEbvoix14mzF6rIeZpQ==
+	t=1793210304;
+	b=ag5jiYGaE/Vz+bvFO66LMITbucKio1T4vez44I4NVzLX9p3RumQWHtCoxzkWCUaoAz8n
+	 Ws479VIEXPupIRPkUdCN1R9tO8WXLRegX8VUNl+XE2gCtrxQi8wT9L7l1pNj+3jnzeNP4
+	 R9ED1OtKCqN/r/BesZSGUAdoTd6wwJFm0ZvkfI+LWzy/FwgZ/W0z19/ATgaeJwfLHTlE/
+	 FwBxe1j4bbA1FHldhEZW+nS5u+oQpCcu62lEzTID167gWsNkJwmHYNF8ArOZAWcgGA8S5
+	 6lXe1P1NC688WKyQWUs+wU4n6MD/M8+cNTxWRRlB5emJaQALzAN+9ThHgKMilZtZ86A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1O/BpWtEaekIzbtaCV7z89BT2nJuOwUCKRvVMK92UDU=;
-	b=uKAU8V1tMN+lHNUXGguSkoZ1m5a3k3vBJfqcaXQs2vmSfYugtgkklGMn/vVJ8We+B+3z
-	 G+IASOdeww7O7aIapuwesyhnvVu5qjr1cIhtKUSOL5tIlv3uMrwxyx7g4JGIDWCQQRvpY
-	 UntXcd36wWnzUZGQe/cka1IqMNcN2CpQ8GKauB3YaPuC5cko74nkiLwcqnAJGwISkaXLo
-	 A8GLtou9G+rgbH4PK7CWo7aoeQSgK8AjV1tz413T570RM4nfhJSC7CiUw28kzHtX9ysdj
-	 k8pt55r/UWYMcUP09Cwxn7xOu91r6jT/S/tCgv9Y8xC+ulj1bBVoWaxzJBjhzxdO+AQ==
+	bh=GOyHkdCkSP0NR/h3qpb++chJ0hkU7x2ZqzQ6dW/dh7k=;
+	b=J3I6ciqkmJ/WKG/5eoBMLvcCt3Vr6ys2d6l9q9pyNmBfrUUwyrprieyZ2Bzb1OAmweAz
+	 A11dSM34V1w1Sq6HCIrr7zBzmI8i9LqdWBhcWY3TzhOkasHdUg41Njoliu6U3FOuAyumD
+	 QpxQGNL0y4pO/PgteiOHkpaicleRxwkt4RGx1yaKis4nGQQ0Nh9FDZB6v7uHhJvdav1yk
+	 9qpE21XTrh0O6RrNNqr2Ga5LknaxTMG0gpvOBg9fCV8r2TjBi28HkEy76fkRJEUM/rhqu
+	 7wKFXTBfJMvbX7fTEOqX1DmqmVkKtPcayJz0KwPNpy1rBPzMifrdN1pQdHSL2mFPnHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YARsLfnb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXjOhT0d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E09F606A31A;
-	Wed, 28 Oct 2026 17:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF93606A31A;
+	Wed, 28 Oct 2026 17:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YARsLfnb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7521F01825;
-	Wed, 28 Oct 2026 17:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXjOhT0d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276221F01825;
+	Wed, 28 Oct 2026 17:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210300;
-	bh=1O/BpWtEaekIzbtaCV7z89BT2nJuOwUCKRvVMK92UDU=;
+	s=korg; t=1793210303;
+	bh=GOyHkdCkSP0NR/h3qpb++chJ0hkU7x2ZqzQ6dW/dh7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YARsLfnbcvULyuswif6hDQz4g6e/fjsWKMFNlBCAG8BxZe/OzOju+QglBLFhpQMXi
-	 tAxuQ+9Gnbetm2HHYcWB7Op38dcF4jpbQZqDUuDVWthtujrqoIWR+5DlpFJen9FZe0
-	 la8tIJD8tcBSTU4egRfOdMMV4BxCeNpUIt0ivFYw=
+	b=LXjOhT0doHYWjDohEvi+tKnK27OmkOwJBpNsfyLzcD1mR/JQgdGi8Y1FTK1ujBDJS
+	 kvjjf5WoWB/EShEQjOkuwrVBzhdhj9P8DtIgXRYGr3zaTg+OfpXwrleEwUYtqgFpkx
+	 ARbTHSTBoBP7miPWNMJyAUgHmXms4tNn9/797HGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Taeyang Lee <0wn@theori.io>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/168] ASoC: SOF: ipc4-topology: Fix shift-out-of-bounds for aggregated ALH capture
-Date: Wed, 28 Oct 2026 18:00:38 +0100
-Message-ID: <20261028165945.503295414@linuxfoundation.org>
+Subject: [PATCH 6.6 103/168] tracing: Keep the predicate limit separate from program capacity
+Date: Wed, 28 Oct 2026 18:00:39 +0100
+Message-ID: <20261028165945.526497197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
 References: <20261028165943.089486480@linuxfoundation.org>
@@ -69,64 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Taeyang Lee <0wn@theori.io>
 
-[ Upstream commit 746de48c3a250f0c264105dcbfcdf0c5001e970b ]
+[ Upstream commit 803aa6fc2dbea25ab9d3ed19eca1c96d0ab17445 ]
 
-When ch_count is smaller than blob->alh_cfg.device_count (e.g. a mono
-capture stream, such as a SmartMic, aggregated across multiple SDW
-links), step = ch_count / blob->alh_cfg.device_count truncates to 0.
-The subsequent GENMASK(step - 1, 0) then underflows step - 1 (u32) to
-UINT_MAX, causing GENMASK()'s internal shift to use an out-of-bounds
-exponent:
+predicate_parse() adds two to nr_preds to reserve the terminal TRUE
+and FALSE entries. It also uses that increased value as the limit for
+parsed predicates. If the initial count is smaller than the number
+actually parsed, the program can fill the allocation and subsequent
+accesses can go past its end.
 
-  UBSAN: shift-out-of-bounds in sound/soc/sof/ipc4-topology.c:2363:13
-  shift exponent 18446744069414584384 is too large for 64-bit type 'long unsigned int'
+Keep nr_preds as the predicate limit and use a separate value for the
+allocation size. This leaves space for both terminal entries and a
+zeroed entry when parsing stops at the limit.
 
-Treat ch_count < device_count the same way as the existing "channels
-equal to output reference channels" case: apply the same ch_mask to
-every aggregated device instead of trying to split channels that
-can't be evenly divided.
-
-Fixes: 0390a102cc18 ("ASoC: SOF: ipc4-topology: use different channel mask for each sdw amp feedback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20261008090130.15135-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: used a standalone guard because the playback-specific conditional is absent ]
+Fixes: 39f7c41c908b ("tracing/filters: Enable filtering a cpumask field by another cpumask")
+Link: https://patch.msgid.link/atELCd1XjKVhrkFL@Taeyangs-MacBook-Pro.local
+Signed-off-by: Taeyang Lee <0wn@theori.io>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ sashal: Adapted kzalloc_objs() allocation to kcalloc(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-topology.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_filter.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
-index 8911c075251ca..8e16ec8038382 100644
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -1690,8 +1690,20 @@ sof_ipc4_prepare_copier_module(struct snd_sof_widget *swidget,
- 				ch_map >>= 4;
- 			}
+diff --git a/kernel/trace/trace_events_filter.c b/kernel/trace/trace_events_filter.c
+index ada02ae893c20..cd89fbf2fb208 100644
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -482,18 +482,17 @@ predicate_parse(const char *str, int nr_parens, int nr_preds,
+ 	int len;
+ 	int N = 0;
+ 	int i;
+-
+-	nr_preds += 2; /* For TRUE and FALSE */
++	int nr_preds_alloc = nr_preds + 2; /* For TRUE and FALSE */
  
--			step = ch_count / blob->alh_cfg.device_count;
--			mask =  GENMASK(step - 1, 0);
-+			if (ch_count < blob->alh_cfg.device_count) {
-+				/*
-+				 * When there are fewer channels than aggregated devices
-+				 * (e.g. a mono capture stream split across multiple links),
-+				 * set step = 0 to ensure all the ch_mask is applied to all
-+				 * alh mappings.
-+				 */
-+				mask = ch_mask;
-+				step = 0;
-+			} else {
-+				step = ch_count / blob->alh_cfg.device_count;
-+				mask =  GENMASK(step - 1, 0);
-+			}
-+
- 			/*
- 			 * Set each gtw_cfg.node_id to blob->alh_cfg.mapping[]
- 			 * for all widgets with the same stream name
+ 	op_stack = kmalloc_array(nr_parens, sizeof(*op_stack), GFP_KERNEL);
+ 	if (!op_stack)
+ 		return ERR_PTR(-ENOMEM);
+-	prog_stack = kcalloc(nr_preds, sizeof(*prog_stack), GFP_KERNEL);
++	prog_stack = kcalloc(nr_preds_alloc, sizeof(*prog_stack), GFP_KERNEL);
+ 	if (!prog_stack) {
+ 		parse_error(pe, -ENOMEM, 0);
+ 		goto out_free;
+ 	}
+-	inverts = kmalloc_array(nr_preds, sizeof(*inverts), GFP_KERNEL);
++	inverts = kmalloc_array(nr_preds_alloc, sizeof(*inverts), GFP_KERNEL);
+ 	if (!inverts) {
+ 		parse_error(pe, -ENOMEM, 0);
+ 		goto out_free;
 -- 
 2.53.0
 
